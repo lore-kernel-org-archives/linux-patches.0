@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371152AEE1;
-	Mon, 17 Aug 2026 14:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2746A3CDBC3;
+	Mon, 17 Aug 2026 14:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977780; cv=none; b=S+AjQ2jCdOjP4ZQPKhpbun9KKTjea05W+IPzpqzJnAZBp3H1ygqul2MvIbfxi/3VS1af1TETCkdYiWkljv2Ib6coxhDAZ+sKV6bQrYLmd9KPfG9Ups0k+5qPkQIAnY40i+EUEY5MYbRnQVaOqMw/C4QFXWNKE2heGeLA36ezmlI=
+	t=1786977783; cv=none; b=eqIuLaGxFhPfcJvdgVDdp8p14azbUgZRGsUwJufm+vg2wtrvdZFhqAyc/v11yOef+ydTUZpbRIwHC3aTu9+yrFIJEh7ZM0JkHflAjv8Kr9u9etpNLUSn9+6ZxF3yL+fP7egmLC9dzIR8nilaUOb2DkLPr19ScKOQoDQLYXqbxQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977780; c=relaxed/simple;
-	bh=tVqynr1YvF/AlrTouj75C8jfak/llHLo4ynTQor3Lx8=;
+	s=arc-20240116; t=1786977783; c=relaxed/simple;
+	bh=r0mCPUHNx6bNkhABgWceF2R21ALF98D+kt9XxlAX8K0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MuQyD29p0VhLlZRuAgQOxQLxbCjDtKtJKnIJvk63V+qLQQ7ak/THLtTpqhfd6X+uaVpCxasGWErtnPYQyzHxGFhzuGIY9bKj2ptZskT2FsEZcFmYaulwYPL+pBqrcqmFLzZ/YZJw0Xc6lyNnybaHu1/J4jq9W3afCh7SsSmu49E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nr6As1jD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d7yCLE5tgxXsitfpudjuGxfiwDeHCaHZCKz0sCoqS2HRhzG/h8YKO3H0dLMpYz9XFVv1333+jfSMypxwNX+Yc97W/b/bWLy6NMTgqyA+cnRFoeoDZJ6QeJdvZfiZlNVAoDWhtkpV/6ux3FYjrWEdc++mlLx/4V0k521rn4NtDqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mm9RzaDO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nr6As1jD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913761F00A3A;
-	Mon, 17 Aug 2026 14:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mm9RzaDO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0F51F000E9;
+	Mon, 17 Aug 2026 14:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977779;
-	bh=K9eD+xs0mAllxml1A9RSgiyngDSvjcdbvZyAOnod+LI=;
+	s=korg; t=1786977782;
+	bh=h1LqZHVWScMrf4gpG9DnCu47VZ2CiH1Dgo+mYhm0CtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nr6As1jD+ZgWouHl/yp+42NMO7V5ZRlDQvYrkgjnOT2yGlOdZWoyec11qjX4mlkEO
-	 4RojtZ6wLscKynIjyaqdRsrB0zteeFbBknouDYVBK4xoouY06j8osHEyY9hlmfGoyx
-	 Mt7HAuIvmfCUKavkmwi+c56vGMr2ONvjST2sKJJ4=
+	b=mm9RzaDO67uDtmvIfP/tzNgsIa8Pl/oxCOe652znD7LHewKFq/FiL1f2vadfDbvUe
+	 5dceo10+ZscvkZJV1H7MaNVaZV+2Y4mZ5oJXi4JLMTS0MWw3TZmhzT2ZEQIp4NkfL0
+	 oerf0e1vPHpYzFKRbATj3UJ83XDKYZq0G4bFDoyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 5.15 448/456] ring-buffer: Use current_context for safe per-CPU buffer swap
-Date: Mon, 17 Aug 2026 15:33:58 +0200
-Message-ID: <20260817132556.574885360@linuxfoundation.org>
+	Yuejie Shi <syjcnss@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 449/456] ipv6: fix Route Information option length validation
+Date: Mon, 17 Aug 2026 15:33:59 +0200
+Message-ID: <20260817132556.607319341@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,77 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tengda Wu <wutengda@huaweicloud.com>
+From: Yuejie Shi <syjcnss@gmail.com>
 
-commit f27bdc43077e4fcb5557dfc315ee8d91e741f483 upstream.
+commit d1ad8fb2ac6a1afb71dc22d9ae8efb4dda96c824 upstream.
 
-The ring_buffer_swap_cpu() function currently checks the per-CPU
-committing counter to determine if a buffer is actively being written to
-before performing the swap. However, there exists a race window where
-this check can be bypassed:
+rt6_route_rcv() validates the Route Information option (RFC 4191) length
+against the prefix length, but both checks are off by one.
 
-    ring_buffer_lock_reserve
-        cpu_buffer = buffer->buffers[cpu];       // cpu_buffer_a
-        rb_reserve_next_event
-            rb_start_commit // inc committing
-            if (unlikely(READ_ONCE(cpu_buffer->buffer) != buffer)) {...}
-            __rb_reserve_next
-                rb_move_tail
-                    rb_end_commit(cpu_buffer);   // dec committing => 0
-                    /* interrupt hits here, successfully swaps! */
-                    local_inc(&cpu_buffer->committing);
+rinfo->length is the ND option length in units of 8 octets and it
+*includes* the 8-byte option header, so an option carrying N bytes of
+prefix has length == 1 + N/8.  RFC 4191 section 2.3 requires length 3
+when Prefix Length is greater than 64, and 2 or 3 when it is greater
+than 0.  The code accepts length >= 2 and length >= 1 respectively.
 
-    ring_buffer_unlock_commit
-        cpu_buffer = buffer->buffers[cpu];      // cpu_buffer_b
-        rb_commit
-            rb_end_commit
-            RB_WARN_ON(cpu_buffer, !local_read(&cpu_buffer->committing))
-                                                // triggers warning
+ipv6_addr_prefix() then copies prefix_len/8 bytes out of rinfo->prefix,
+so a Router Advertisement with (prefix_len=128, length=2) or
+(prefix_len=64, length=1) makes the kernel read up to 8 bytes past the
+end of the option.  Those bytes end up in the prefix of the route that
+gets installed, so they are visible to userspace:
 
-The committing counter can temporarily drop to 0 during a single write
-operation (within rb_move_tail), creating a window where swap can
-succeed even though the write is still in progress. This leads to
-inconsistent buffer state and triggers the RB_WARN_ON in rb_commit().
+  # RA with a Route Information option (prefix_len=128, length=2)
+  # followed by a source link-layer address option, 01 01 de ad be ef ca fe
+  $ ip -6 route show
+  2001:db8:dead:beef:101:dead:beef:cafe via fe80::1234 dev veth0 proto ra
+                     ^^^^^^^^^^^^^^^^^^ the next option, read out of bounds
 
-Replace the committing counter check with current_context checks, which
-are set at the entry of ring_buffer_lock_reserve() and remain valid
-throughout the entire write operation, providing a reliable indicator of
-buffer busy state during swap.
+When the Route Information option is the last one in the packet, those
+eight bytes come from the skb tail room instead.
 
+Reject the option lengths RFC 4191 does not allow.
+
+Fixes: 70ceb4f53929 ("[IPV6]: ROUTE: Add experimental support for Route Information Option in RA (RFC4191).")
 Cc: stable@vger.kernel.org
-Fixes: 4239c38fe0b3 ("ring-buffer: Process commits whenever moving to a new page.")
-Link: https://patch.msgid.link/20260803005640.2445666-2-wutengda@huaweicloud.com
-Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Yuejie Shi <syjcnss@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260730035310.74584-1-syjcnss@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    8 ++++----
+ net/ipv6/route.c |    8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -5415,7 +5415,7 @@ int ring_buffer_swap_cpu(struct trace_bu
- {
- 	struct ring_buffer_per_cpu *cpu_buffer_a;
- 	struct ring_buffer_per_cpu *cpu_buffer_b;
--	int ret = -EINVAL;
-+	int ret = -EBUSY;
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -947,13 +947,13 @@ int rt6_route_rcv(struct net_device *dev
+ 	} else if (rinfo->prefix_len > 128) {
+ 		return -EINVAL;
+ 	} else if (rinfo->prefix_len > 64) {
+-		if (rinfo->length < 2) {
++		/* RFC 4191: Length MUST be 3 when Prefix Length > 64 */
++		if (rinfo->length < 3)
+ 			return -EINVAL;
+-		}
+ 	} else if (rinfo->prefix_len > 0) {
+-		if (rinfo->length < 1) {
++		/* RFC 4191: Length MUST be 2 or 3 when Prefix Length > 0 */
++		if (rinfo->length < 2)
+ 			return -EINVAL;
+-		}
+ 	}
  
- 	if (!cpumask_test_cpu(cpu, buffer_a->cpumask) ||
- 	    !cpumask_test_cpu(cpu, buffer_b->cpumask))
-@@ -5451,10 +5451,10 @@ int ring_buffer_swap_cpu(struct trace_bu
- 	atomic_inc(&cpu_buffer_a->record_disabled);
- 	atomic_inc(&cpu_buffer_b->record_disabled);
- 
--	ret = -EBUSY;
--	if (local_read(&cpu_buffer_a->committing))
-+	/* Do not swap if either buffer is in the process of writing */
-+	if (cpu_buffer_a->current_context)
- 		goto out_dec;
--	if (local_read(&cpu_buffer_b->committing))
-+	if (cpu_buffer_b->current_context)
- 		goto out_dec;
- 
- 	/*
+ 	pref = rinfo->route_pref;
 
 
