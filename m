@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBF64418FF;
-	Mon, 17 Aug 2026 15:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86833D7D70;
+	Mon, 17 Aug 2026 15:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980181; cv=none; b=c+fGHCikJDFVkeq881EjiMia1ij5hd6NMAYkKpXIk0GBVHrJf8Hb7VGgWFMBeGIZIgOH04xLlLQWPCP+wErHQDp5uSmziMSSDgu9cdNFCKzBbvUj/VitvIItsU7wK0C2twkWE/xQWyn10KkZ72xjJLO94z71U+ZDrLuoYbWhP7I=
+	t=1786980184; cv=none; b=Q6PwoDr7OPH/KkhUerzNSkhW0YI6z7JE5a+PNvfMB8d6cqVwXBAo9/V1aPzZ2kGFFBgXTVxvUCN1QaqX8zttdOAOfHnhx7ziWl32VyyuiI+3FA+oAirh8sHlMQbTbiolQMQsq9kBcuzCY9el2tAJrwAE0stOoCVC/pUZ+/seLPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980181; c=relaxed/simple;
-	bh=jnvQrkXdnss+1QjOwD4tjkqUwnJQbANe2N0cWPu+vuk=;
+	s=arc-20240116; t=1786980184; c=relaxed/simple;
+	bh=HsxFl1ph7fYkFw8lWGHyD3rRf+v4ULUJIr45VdNpQ1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vGo/s6qHhwf7ssolhLSz0bn0mB+PlBsoDsjndVTkYdEmC3wWY6LTXWVW0x8MD72/Ht6cFzXZxRYvGO8QAdPSc69XqC1ZsqhJldSJwtobYWpOA2qX4tGIIMQk+O1PX/YVguinUMYH+l6MaiL8YLIxpYO4Z2HqVzb33PYvEGHhtvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p4T1DA9z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JROReQN8ckwupjbPqZRZrFlBbedOzb7+whjBv31Pll4y3KrnNhIyNADCkxMqHByheXkkBNwM4vuL+zJeEoF7fDLhM0qhqgrNsXelkaydvMx0RWjJ2QfzC7pfqy9b3iYmXyDWcD/esMnxK3U21C/vPeyv9YimFYNqJ8WWbTyXgRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPcV7SHb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p4T1DA9z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CDB51F00A3A;
-	Mon, 17 Aug 2026 15:22:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPcV7SHb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59DAB1F00A3A;
+	Mon, 17 Aug 2026 15:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980180;
-	bh=PRYv49D1xSyY/mr87o1PwTdlPFtBsDl6HAzTQZxdAi0=;
+	s=korg; t=1786980182;
+	bh=J5RjhsyZnEO9HAc/TjIO7i/lPk01FUFzhEtPe+Y+L5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p4T1DA9ziIyVmjxntNEP6/0gorSD7Tv3EwC/+jWszM8v0cRbPmCpcVxIif+7MfZIN
-	 20HmTbCbl5ISnCC9dleryEHYUqesnNIhVPDLpPVOf5NonrTVL69N2xkTpd1mPNwQE/
-	 YdM8RsYuJy6QrM/g+n5zA+jPGsJtM7NdB35aJduc=
+	b=NPcV7SHbsUrT8jbaU6Wu80bou/Uem2DNAlyTGSgseAuSLsERTg+3bRhKMtlRg2Jfs
+	 WvSg/UfGqRJ0pROC9RmjGl4zyavj9+8ZLv4pU0FzSP8hu1ezdY5o2qku0sZhP7UDhq
+	 sIx1HyhvMN1eEMlCvngwR6xwd8EKRTNMU7lINRTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"H. Nikolaus Schaller" <hns@goldelico.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.1 446/609] i2c: jz4780: Cache host clock rate at probe to prevent CCF prepare_lock deadlock
-Date: Mon, 17 Aug 2026 15:32:22 +0200
-Message-ID: <20260817132558.993446755@linuxfoundation.org>
+	Junjie Cao <junjie.cao@intel.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 482/609] gpio: pch: use raw_spinlock_t for the register lock
+Date: Mon, 17 Aug 2026 15:32:58 +0200
+Message-ID: <20260817132600.064181403@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,75 +52,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: H. Nikolaus Schaller <hns@goldelico.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-commit d99607c888f26e8a4e9fe9772860cef4aff86bb4 upstream.
+[ Upstream commit a02b8950d619123da64f69b70fe1dadef217dfe4 ]
 
-Fix a severe AB/BA deadlock between the Common Clock Framework (CCF)
-and the I2C adapter lock, which triggers when an I2C-controlled clock
-generator client (like the Si5351) is registered or modified under the CCF.
+pch_irq_type() is registered as the irq_chip .irq_set_type callback and
+takes chip->spinlock with spin_lock_irqsave().  This callback is reached
+from __setup_irq() -> __irq_set_trigger() -> chip->irq_set_type() while
+the caller holds desc->lock, a raw_spinlock_t, with hardirqs disabled.
+That context is not sleepable, but on PREEMPT_RT a regular spinlock_t is
+an rtmutex-backed sleeping lock, so acquiring it there is invalid.
 
-During an i2c client clock (generator) frequency change, the CCF acquires its global
-'prepare_lock' mutex and the driver calls i2c_transfer() to update the client's
-chip registers, stalling for the adapter's I2C bus lock.
+This was confirmed on a PREEMPT_RT kernel with lockdep
+(PROVE_RAW_LOCK_NESTING and DEBUG_ATOMIC_SLEEP).  A grounded PoC mirrored
+pch_irq_type()'s locking and drove it through the real genirq carrier
+irq_set_irq_type() -> __irq_set_trigger() -> chip->irq_set_type(), i.e.
+the same __irq_set_trigger() edge that __setup_irq() takes for a
+requested IRQ.  With the original spin_lock_irqsave() edge lockdep
+reported an invalid wait context, immediately followed by:
 
-Concurrently, an independent, parallel transfer on the same bus (e.g., a GPIO
-expander handling LEDs) can hold the I2C adapter lock. Inside this parallel
-transfer path, jz4780_i2c_set_speed() calls clk_get_rate() on the host
-controller's input clock to calculate bus timings. This call attempts to acquire
-the blocked CCF 'prepare_lock', creating a circular dependency that freezes
-the system.
+  BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
+  in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 95, name: insmod
+  hardirqs last disabled at (3784): _raw_spin_lock_irqsave+0x4f/0x60
+   rt_spin_lock+0x3a/0x1c0
+   repro_irq_set_type+0x64/0xa0 [pch_repro]
+   __irq_set_trigger+0x69/0x140
+   irq_set_irq_type+0x78/0xd0
 
-The jz4780 host controller clock itself is static and never changes at runtime.
+Switching the mirrored lock to raw_spinlock_t made both splats go away.
 
-However, calling clk_get_rate() inside the active transfer path introduces
-an unnecessary dependency on the CCF internal locks.
+Convert the register lock to raw_spinlock_t.  The same lock also
+serializes the GPIO direction/value callbacks and the suspend/resume
+register save/restore, but all of those critical sections only perform
+MMIO register accesses (ioread32()/iowrite32()) and
+irq_set_handler_locked(); none of them contain sleepable operations.
+Keeping this register lock non-sleeping is therefore appropriate for the
+irqchip callbacks and does not change the GPIO-side locking contract.
 
-Eliminate this synchronous clk_get_rate() call from the active transfer
-path by caching the static host peripheral clock rate once - inside the private
-jz4780_i2c structure during jz4780_i2c_probe(). Update jz4780_i2c_set_speed()
-to use this cached value, safely decoupling active I2C transactions from the
-CCF internal locks without any risk of stale timings.
+This is the same class of issue and fix as recently addressed for other
+GPIO controllers, e.g. commit 286533cb14a3 ("gpio: sch: use raw_spinlock_t
+in the irq startup path") and commit 90f0109019e6 ("gpio: eic-sprd: use
+raw_spinlock_t in the irq startup path").
 
-Assisted-by web based Google AI (pinpointing the bug and writing the message).
-
-Fixes: ba92222ed63a12 ("i2c: jz4780: Add i2c bus controller driver for Ingenic JZ4780")
-Signed-off-by: H. Nikolaus Schaller <hns@goldelico.com>
-Cc: <stable@vger.kernel.org> # v4.1+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/2db6fd233aceb7238474e4833f4d25ca681c3ffb.1784492382.git.hns@goldelico.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 38eb18a6f92d ("gpio-pch: Support interrupt function")
+Cc: stable@vger.kernel.org
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260723014129.1129730-1-junjie.cao@intel.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+(cherry picked from commit a02b8950d619123da64f69b70fe1dadef217dfe4)
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-jz4780.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-pch.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
---- a/drivers/i2c/busses/i2c-jz4780.c
-+++ b/drivers/i2c/busses/i2c-jz4780.c
-@@ -141,6 +141,7 @@ struct jz4780_i2c {
- 	void __iomem		*iomem;
- 	int			 irq;
- 	struct clk		*clk;
-+	unsigned long		 clk_rate_khz;
- 	struct i2c_adapter	 adap;
- 	const struct ingenic_i2c_config *cdata;
+diff --git a/drivers/gpio/gpio-pch.c b/drivers/gpio/gpio-pch.c
+index ee37ecb615cb1..77e84e0e6c1ba 100644
+--- a/drivers/gpio/gpio-pch.c
++++ b/drivers/gpio/gpio-pch.c
+@@ -97,7 +97,7 @@ struct pch_gpio {
+ 	struct pch_gpio_reg_data pch_gpio_reg;
+ 	int irq_base;
+ 	enum pch_type_t ioh;
+-	spinlock_t spinlock;
++	raw_spinlock_t spinlock;
+ };
  
-@@ -246,7 +247,7 @@ static int jz4780_i2c_set_target(struct
+ static void pch_gpio_set(struct gpio_chip *gpio, unsigned int nr, int val)
+@@ -106,7 +106,7 @@ static void pch_gpio_set(struct gpio_chip *gpio, unsigned int nr, int val)
+ 	struct pch_gpio *chip =	gpiochip_get_data(gpio);
+ 	unsigned long flags;
  
- static int jz4780_i2c_set_speed(struct jz4780_i2c *i2c)
- {
--	int dev_clk_khz = clk_get_rate(i2c->clk) / 1000;
-+	int dev_clk_khz = i2c->clk_rate_khz;
- 	int cnt_high = 0;	/* HIGH period count of the SCL clock */
- 	int cnt_low = 0;	/* LOW period count of the SCL clock */
- 	int cnt_period = 0;	/* period count of the SCL clock */
-@@ -800,6 +801,8 @@ static int jz4780_i2c_probe(struct platf
- 	if (ret)
- 		return ret;
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	reg_val = ioread32(&chip->reg->po);
+ 	if (val)
+ 		reg_val |= BIT(nr);
+@@ -114,7 +114,7 @@ static void pch_gpio_set(struct gpio_chip *gpio, unsigned int nr, int val)
+ 		reg_val &= ~BIT(nr);
  
-+	i2c->clk_rate_khz = clk_get_rate(i2c->clk) / 1000;
-+
- 	ret = of_property_read_u32(pdev->dev.of_node, "clock-frequency",
- 				   &clk_freq);
- 	if (ret) {
+ 	iowrite32(reg_val, &chip->reg->po);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ }
+ 
+ static int pch_gpio_get(struct gpio_chip *gpio, unsigned int nr)
+@@ -132,7 +132,7 @@ static int pch_gpio_direction_output(struct gpio_chip *gpio, unsigned int nr,
+ 	u32 reg_val;
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 
+ 	reg_val = ioread32(&chip->reg->po);
+ 	if (val)
+@@ -146,7 +146,7 @@ static int pch_gpio_direction_output(struct gpio_chip *gpio, unsigned int nr,
+ 	pm |= BIT(nr);
+ 	iowrite32(pm, &chip->reg->pm);
+ 
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -157,12 +157,12 @@ static int pch_gpio_direction_input(struct gpio_chip *gpio, unsigned int nr)
+ 	u32 pm;
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	pm = ioread32(&chip->reg->pm);
+ 	pm &= BIT(gpio_pins[chip->ioh]) - 1;
+ 	pm &= ~BIT(nr);
+ 	iowrite32(pm, &chip->reg->pm);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -264,7 +264,7 @@ static int pch_irq_type(struct irq_data *d, unsigned int type)
+ 		return 0;
+ 	}
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 
+ 	/* Set interrupt mode */
+ 	im = ioread32(im_reg) & ~(PCH_IM_MASK << (im_pos * 4));
+@@ -276,7 +276,7 @@ static int pch_irq_type(struct irq_data *d, unsigned int type)
+ 	else if (type & IRQ_TYPE_EDGE_BOTH)
+ 		irq_set_handler_locked(d, handle_edge_irq);
+ 
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 	return 0;
+ }
+ 
+@@ -373,7 +373,7 @@ static int pch_gpio_probe(struct pci_dev *pdev,
+ 	chip->ioh = id->driver_data;
+ 	chip->reg = chip->base;
+ 	pci_set_drvdata(pdev, chip);
+-	spin_lock_init(&chip->spinlock);
++	raw_spin_lock_init(&chip->spinlock);
+ 	pch_gpio_setup(chip);
+ 
+ 	ret = devm_gpiochip_add_data(dev, &chip->gpio, chip);
+@@ -406,9 +406,9 @@ static int __maybe_unused pch_gpio_suspend(struct device *dev)
+ 	struct pch_gpio *chip = dev_get_drvdata(dev);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	pch_gpio_save_reg_conf(chip);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -418,11 +418,11 @@ static int __maybe_unused pch_gpio_resume(struct device *dev)
+ 	struct pch_gpio *chip = dev_get_drvdata(dev);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	iowrite32(0x01, &chip->reg->reset);
+ 	iowrite32(0x00, &chip->reg->reset);
+ 	pch_gpio_restore_reg_conf(chip);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+-- 
+2.53.0
+
 
 
