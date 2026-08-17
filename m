@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BBE2D9EFF;
-	Mon, 17 Aug 2026 13:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8087C427F84;
+	Mon, 17 Aug 2026 13:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974934; cv=none; b=p9EGs/RtHh4NpiLI+ICFTZQXFeJZilw6nhX94perN3XyQqakjsBOqgV4Yiv/+V8XvGC7CQmPc6O4r2t5thC7DVQ4hfP7bUIOPbFsJ3C0wCSZ0CpBCk4KmtmWEanYUSgBEDEksF3b0W1VTATV8JP0efDG36hcEBbpHgO0YTMuflI=
+	t=1786974939; cv=none; b=CGgpapSJeNslfEBYean3a36Hc9RRf/Db8rbLz+0e7pvlipEVBEBav/p/6j37E9UkO1LRFxseQNmsq8qAJJNv9meAA4fYmMm5eHsIofPqApnVI5WJmCCdC58zxVF0mTZgm0Es+eGm3b55L3Wb+OBu5ONBICQ5hFNNA8QRogZ5+XI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974934; c=relaxed/simple;
-	bh=kzTPB7dQZHvz3A22hIYHySyxltIfXLe2QCigaPPcnC0=;
+	s=arc-20240116; t=1786974939; c=relaxed/simple;
+	bh=nv1G6TXVo1YX5F49mhmoDQO5K7ieNtAlUWbw59R06sg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UWBGHTaZSbCRsu+3iJMj3A5ZS9v0mLUivvkQi6DRaC7HaByf9AwSOJ/qOVE90yh9dzwFw0ptYf2gIkhbZliijYUU9O/8GoEC9Zy8Ywg6tMY9nnBUAaYhxk9JDM5bTumTPjNDT9beREZa+HPJuKqbd/k3/E/Aom8dfCrik2oHleU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xy5xPj5/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QUFZqNiuOZXxwKy/hJFEZwSNzZvZlzvPYTvhiq4lmjYOjzi/RpKfmOYlos472uFmfjBq3eEttUgyewXsGyXmO+XzHGTKqPuQwR/poZVKyXHJNf0wQEt86lji0LdasS0BZZFuQlz5KDl6cENTcy+Z6n/SgQZleHfO7HkGGtMiDeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k75PKo+L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xy5xPj5/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42BC01F00A3D;
-	Mon, 17 Aug 2026 13:55:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k75PKo+L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D441A1F00A3F;
+	Mon, 17 Aug 2026 13:55:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974923;
-	bh=AeeDJ8jN2u7Uig8+x6SwL9c3qQoxAo5+PDVBBFk1eu0=;
+	s=korg; t=1786974932;
+	bh=fcciespyxniXtiQrCSu68d30oojsD7X7M6pwvfnNnVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xy5xPj5/U2SGDG1vG2CV6jU7M2xuAfDwiOcUvhGMF7Lk/WA90Xsn2QR/4LS0R5vVz
-	 HAA815ytwM7ubcfVEbOEOpy+Wf0gEt3f8LUSpb5L98TE1mkpjLHAzOt+FEg6fvHJk9
-	 7zoB/pnPgcI1Zzr4TD/fPJKdeFWFGq1VlI/y7BHc=
+	b=k75PKo+LFCGhaWziymR9oPVqthXEXI3gfA2HPZnOr0j9LZoTi/bFWGZQlPdEZAuUT
+	 gQbJPp5uhoa7S3VLFSwuqTavP5mlRFUyyN+x5H0q55vDHNxDdq/k/6uwb9L2D6Vxqd
+	 /uaK8E3IPRHW1E/giWSHzkxmv+ZufVdywcJEGdIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
+	Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 100/250] s390/ism: Fix UAF of sba and ieq during ism_dev_exit()
-Date: Mon, 17 Aug 2026 15:31:01 +0200
-Message-ID: <20260817132540.611851133@linuxfoundation.org>
+Subject: [PATCH 6.18 103/250] tls: dont abort the connection on signal-interrupted sends
+Date: Mon, 17 Aug 2026 15:31:04 +0200
+Message-ID: <20260817132540.742142307@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,89 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
 
-[ Upstream commit b1896543ce59c4258625a35cf41e23a9a1f80ea2 ]
+[ Upstream commit af0e5cdd031f4f4a8f6d4160bfbda4f36872b0ed ]
 
-A ism interrupt handler can be active in parallel with ism_dev_exit(),
-accessing freed data structures.
+When a signal interrupts a blocking send, tls_tx_records() treats the
+resulting -ERESTARTSYS as a transmission failure and marks the socket
+errored via tls_err_abort() with the raw error code. Later syscalls
+return the kernel-internal errno 512 (ERESTARTSYS) to userspace, as the
+signal it stems from is no longer pending during syscall exit and thus
+never translated.
 
-No new interrupts will be generated after unregister_ieq(). Drain ongoing
-interrupt handlers by free_irq(), before freeing ism data structures.
+An interrupted send is not a connection error: the partially sent record
+stays queued and is resent later. Interrupt error codes are therefore
+excluded from the abort in the same way as -EAGAIN.
 
-Fixes: 684b89bc39ce ("s390/ism: add device driver for internal shared memory")
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Link: https://patch.msgid.link/20260805131043.954639-1-wintera@linux.ibm.com
+Fixes: b341ca51d267 ("tls: Fix tls_sw_sendmsg error handling")
+Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
+Link: https://patch.msgid.link/20260805063109.1772314-1-maxbr@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/net/ism_drv.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ net/tls/tls_sw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
-index f84aa2e676e9b..b842410cf41cc 100644
---- a/drivers/s390/net/ism_drv.c
-+++ b/drivers/s390/net/ism_drv.c
-@@ -149,13 +149,16 @@ static int unregister_sba(struct ism_dev *ism)
- 	if (ret && ret != ISM_ERROR)
- 		return -EIO;
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index f19b504efa5d0..0bb710c5fa601 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -458,7 +458,7 @@ int tls_tx_records(struct sock *sk, int flags)
+ 	}
  
-+	return 0;
-+}
-+
-+static void ism_free_sba(struct ism_dev *ism)
-+{
- 	dma_free_coherent(&ism->pdev->dev, PAGE_SIZE,
- 			  ism->sba, ism->sba_dma_addr);
+ tx_err:
+-	if (rc < 0 && rc != -EAGAIN)
++	if (rc < 0 && rc != -EAGAIN && rc != -EINTR && rc != -ERESTARTSYS)
+ 		tls_err_abort(sk, rc);
  
- 	ism->sba = NULL;
- 	ism->sba_dma_addr = 0;
--
--	return 0;
- }
- 
- static int unregister_ieq(struct ism_dev *ism)
-@@ -169,13 +172,16 @@ static int unregister_ieq(struct ism_dev *ism)
- 	if (ret && ret != ISM_ERROR)
- 		return -EIO;
- 
-+	return 0;
-+}
-+
-+static void ism_free_ieq(struct ism_dev *ism)
-+{
- 	dma_free_coherent(&ism->pdev->dev, PAGE_SIZE,
- 			  ism->ieq, ism->ieq_dma_addr);
- 
- 	ism->ieq = NULL;
- 	ism->ieq_dma_addr = 0;
--
--	return 0;
- }
- 
- static int ism_read_local_gid(struct dibs_dev *dibs)
-@@ -574,6 +580,7 @@ static int ism_dev_init(struct ism_dev *ism)
- 
- unreg_sba:
- 	unregister_sba(ism);
-+	ism_free_sba(ism);
- free_irq:
- 	free_irq(pci_irq_vector(pdev, 0), ism);
- free_vectors:
-@@ -586,9 +593,13 @@ static void ism_dev_exit(struct ism_dev *ism)
- {
- 	struct pci_dev *pdev = ism->pdev;
- 
-+	/* ism will only generate new IRQs while ieq & sba are registered */
- 	unregister_ieq(ism);
- 	unregister_sba(ism);
-+	/* drain ongoing irpt handlers */
- 	free_irq(pci_irq_vector(pdev, 0), ism);
-+	ism_free_ieq(ism);
-+	ism_free_sba(ism);
- 	pci_free_irq_vectors(pdev);
- }
- 
+ 	return rc;
 -- 
 2.53.0
 
