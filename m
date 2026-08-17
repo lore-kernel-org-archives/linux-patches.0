@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC7440FDB9;
-	Mon, 17 Aug 2026 14:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F60A42D75B;
+	Mon, 17 Aug 2026 14:31:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977063; cv=none; b=fFHFY+ZwN4xa4ybUdY3QkOkuk79H4Vmi8sheV0kFSpZCuUNKxEyH0f0gPml0dr9PfL/IZS8jI9xEjhIPTGAu1Tf6tZaIgec/eDjetMn+Q9AnwnRtlXydXKWj2Bf5wISoPzloVj0wiRo/JJVX+HLaimVF+O4Z+UfrvfEY0YPIV0w=
+	t=1786977066; cv=none; b=H3u5bg6D8lkaLv/Ip8AdtUg5Y1kOQIbPoOnko03ZDZrY2w/GqH8OruV0tR/gd2iMV/w7R8jx48Nf48MYA/oupl3ZRWgBMm2tZeNJ+IqhGMp4Rn7SrcT9Zqys5I26ohu8kjMO2lttJfSthw3JBmScHJQbVTI/pWDAoCjBorODSKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977063; c=relaxed/simple;
-	bh=k+1kl77GU+GVYqtHzOF7jUmYSHBUar+DEz1R1TlH8lI=;
+	s=arc-20240116; t=1786977066; c=relaxed/simple;
+	bh=3OwuUSXvPPPiNQBnZL4Xdggr7ePgoqdboAc4GzS+sjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Si+rLAjotDalIqlA69W0UAX1GU8yiF6gJLieDwamgHjJFzeI4/Bi5BOo5uSOR48N+vhqLEqF4B6gSVjq60v0ibfkovER8saO4d+9GV0g6DJNc6ydmUz8b/HZjyi7QC2eGitsLbARW1gBIHqTRiIDibVV5QSujSyeWdUugwrt9aA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jUCPQABK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iGtkQedGy2NS3hO+JhhU4h6QRR8ffaZ1xjusDLhVIAuPyUFPCqkiAoGnCyPdYyT17DLaD/xnjIPDAQZo4NZFF53NDNGf5IqGHGOzuauBBgcjew7ScCxVjP4svkDU5aWdxfEY5uzYSNyNJLLFJH2EKpjV7VeQ5E6Xx9bLwqossM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxUlBDVs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jUCPQABK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7DC1F000E9;
-	Mon, 17 Aug 2026 14:31:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxUlBDVs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E830B1F000E9;
+	Mon, 17 Aug 2026 14:31:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977062;
-	bh=F4M+pTgW+d0xoTpCwIC9vDmm5ZUyRwGBY7ik0wkC510=;
+	s=korg; t=1786977065;
+	bh=ZGGns4xkrI9CnUBsktejzhhMhS0JvDKqaXNsrm28TgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jUCPQABKJrBtBPMilVYwlvlKbTKBD+/LPK5Eerg0Kz68XRRLMK+Fgu2XM8WKLUE9W
-	 b3Jjs1opYoq0mhFnbx8XIzgvbk9xBOz9cBsWkWjomf4oOwtEEgc+V2eBJ9INqC/h5D
-	 lXi1zLz/Z2DDFGh0e6T2iXVelyPTTNKiBeDo3eWQ=
+	b=KxUlBDVsGSEUi4QkkZGxi+fjsxrPiBNHDF2VH8cUWNnhWK5zNMniFuMP3qBoAFoEc
+	 PQMLrcmH4QJKrdaRYd11rv6+pI1q4hJzFb+NeBiG4CuCWEkRpbnfxQfxr1S54PdzY8
+	 19GYtz7KlGM5IqQwM6i1YpkcO7Nwk7EszbSp9GBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jun Yang <junvyyang@tencent.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 200/456] sctp: dont free the ASCONFs own transport in DEL-IP processing
-Date: Mon, 17 Aug 2026 15:29:50 +0200
-Message-ID: <20260817132547.941398461@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 5.15 201/456] ceph: fix pre-auth out-of-bounds read on snaptrace in ceph_handle_caps()
+Date: Mon, 17 Aug 2026 15:29:51 +0200
+Message-ID: <20260817132547.992546707@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,62 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Yang <junvyyang@tencent.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 9b2854f86f0b56e9027d68e7a3fc909d1a9b566f upstream.
+commit 4dbc71bcaf9a30abf3920a4e2cc4ed33bba78c02 upstream.
 
-sctp_process_asconf() caches the transport the ASCONF chunk is processed
-against in asconf->transport (== chunk->transport, set once in sctp_rcv()).
-For an ASCONF located through its Address Parameter by
-__sctp_rcv_asconf_lookup(), that cached transport corresponds to the
-Address Parameter, which need not be the packet's source address.
+ceph_handle_caps() reads snap_trace_len from the wire-format
+ceph_mds_caps header and uses it unconditionally to build a fake
+end pointer (snaptrace + snaptrace_len) that is later handed to
+ceph_update_snap_trace() in the CEPH_CAP_OP_IMPORT case:
 
-sctp_process_asconf_param() rejects a DEL-IP for the packet source address
-(ADDIP D8, SCTP_ERROR_DEL_SRC_IP), but nothing protects asconf->transport.
-A single ASCONF can therefore carry, in order:
+    snaptrace     = h + 1;
+    snaptrace_len = le32_to_cpu(h->snap_trace_len);
+    p             = snaptrace + snaptrace_len;
+    ...
+    case CEPH_CAP_OP_IMPORT:
+        if (snaptrace_len) {
+            ...
+            if (ceph_update_snap_trace(mdsc, snaptrace,
+                                       snaptrace + snaptrace_len,
+                                       false, &realm)) { ... }
 
-    [Address Parameter L] [DEL-IP L] [DEL-IP 0.0.0.0]
+ceph_update_snap_trace() then decodes a struct ceph_mds_snap_realm
+from snaptrace using ceph_decode_need(&p, e, sizeof(*ri), bad)
+with the attacker-supplied fake end e == snaptrace + snaptrace_len.
+With snaptrace_len == 0xFFFFFFFF the bound check is trivially
+satisfied, ri = p reads sizeof(struct ceph_mds_snap_realm) past
+the legitimate msg->front buffer, and ri->num_snaps /
+ri->num_prior_parent_snaps then drive further out-of-bounds
+reads of the encoded snap arrays.
 
-where L differs from the source. The DEL-IP for L passes the D8 check and
-calls sctp_assoc_rm_peer() on the transport that asconf->transport still
-points at, freeing it (RCU-deferred). The following wildcard DEL-IP then
-reuses the now-dangling asconf->transport in sctp_assoc_set_primary() and
-sctp_assoc_del_nonprimary_peers(): set_primary() dereferences the freed
-transport (->ipaddr, ->state) and plants the dangling pointer into
-asoc->peer.primary_path / active_path, and del_nonprimary_peers(), keeping
-only the pointer that is no longer on the list, removes every real
-transport, leaving the association with a transport_count of 0 and
-primary_path/active_path pointing at freed memory.
+The eleven msg_version >= 2 .. msg_version >= 12 decoder blocks
+above the op switch each catch this OOB through their
+ceph_decode_*_safe() / ceph_decode_need() helpers, but they sit
+behind a hdr.version-gated if, so a malicious or compromised
+MDS that sets msg->hdr.version = 1 reaches the IMPORT path with
+no version-gated decoder having validated snap_trace_len. The
+shape has been present since ceph_handle_caps() was introduced.
 
-Reject a DEL-IP that targets the transport the ASCONF is being processed
-against, mirroring the existing source-address guard, so the wildcard
-branch can never reuse a freed transport.
+Validate snap_trace_len against the message front buffer before
+consuming it, using the canonical ceph_decode_need() / ceph_has_room()
+helper.  The helper bounds the length with subtraction (n <= end - p,
+guarded by end >= p) rather than pointer addition, so it is wrap-safe
+for the attacker-controlled u32 length on 32-bit builds where
+p + snap_trace_len could overflow the address space.  This matches the
+rest of the ceph decode path (e.g. the pool_ns_len check a few lines
+below), and the existing goto bad cleanup already covers this exit
+path.
 
-Fixes: 42e30bf3463c ("[SCTP]: Handle the wildcard ADD-IP Address parameter")
-Cc: stable@kernel.org
-Signed-off-by: Jun Yang <junvyyang@tencent.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/tencent_73762ED1DF08CC9D5F5F61954B01350CFE0A@qq.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: a8599bd821d0 ("ceph: capability management")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sm_make_chunk.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ceph/caps.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -3179,6 +3179,12 @@ static __be16 sctp_process_asconf_param(
- 		if (!peer)
- 			return SCTP_ERROR_DNS_FAILED;
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -4067,6 +4067,7 @@ void ceph_handle_caps(struct ceph_mds_se
  
-+		/* Don't free asconf->transport; a later wildcard DEL-IP
-+		 * parameter reuses it.
-+		 */
-+		if (peer == asconf->transport)
-+			return SCTP_ERROR_REQ_REFUSED;
-+
- 		sctp_assoc_rm_peer(asoc, peer);
- 		break;
- 	case SCTP_PARAM_SET_PRIMARY:
+ 	snaptrace = h + 1;
+ 	snaptrace_len = le32_to_cpu(h->snap_trace_len);
++	ceph_decode_need(&snaptrace, end, snaptrace_len, bad);
+ 	p = snaptrace + snaptrace_len;
+ 
+ 	if (msg_version >= 2) {
 
 
