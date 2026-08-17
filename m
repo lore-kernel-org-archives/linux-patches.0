@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6BC2D2495;
-	Mon, 17 Aug 2026 15:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F1D2D2495;
+	Mon, 17 Aug 2026 15:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978907; cv=none; b=QkFE+DhL4TWkDm9Za91oyCWJ0YRwn5Chl08l5k26g0j4GqBIIj+tEmq3w7VrshxE4+3blb6jw6nkZABKO75Cnom7OgW0yaLAZgSSwcUARKEZgcPBnpGbgZ8bFHdY+itwKPVX1qGEDbw69TriCR5/1DkeSTzguwa+oKop4IiLcLc=
+	t=1786978910; cv=none; b=kc+LIr1TxC2CPzIcxornNjKsQvavWrH3VVGanS/dsPMp3WoW8CFAN26qiVyYaxliVw3eUt4IwSzKhxdqFOv36BqWSMTTpS9GVGxzJrf9lZ+WaRLwZnW+U6xz3YGyuhGhbGYha/gpWA4mdyZ8S0LxEWVt98DAB178/SLz5h+OhkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978907; c=relaxed/simple;
-	bh=EyQBeEhk25OQwuXQG9QDFGaHeXJCv885YuruQCfbpsE=;
+	s=arc-20240116; t=1786978910; c=relaxed/simple;
+	bh=UVBL86edsPvlK5dojKiWcBC0io7iL5jWj5YnFUyhtBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eHd/1CgQx7jqy6LA+WV7qyBnx+zuMxG9sA/7RxUgVk4jxTX6+ijbhkyvwWE0hgBo9db0OL+lq00GzykY5jFzSMlQFSpC0iywS4XujLl7vLfCMUTOeUO2MWA+2Y07JJRZcKwueZLeCPeZ2g72hBYJz6ipekwxo5FMZ/JngpDZZPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CBMskfbH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RZ1G6Grw1GtrWZvWSq9XBXpJgGxkfRh9+dbp8i8zeXNmjbjTyqQpbGDKUkAvFWCSkJMvw/aaZe/dwwxpkp5EGv8bgvGo3ebz+QlrNBE60SYRyCzkf31e0Titj/kG4JtEuqP3nmA7ArYgojBtwA3tqmWk+oCN3VcqXDcqnz30P5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWh7UQ1b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CBMskfbH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000021F000E9;
-	Mon, 17 Aug 2026 15:01:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWh7UQ1b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22C21F000E9;
+	Mon, 17 Aug 2026 15:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978906;
-	bh=MDlGdtwtlkdMmLXH1rdJb3kPlhM/gFZsQEf0/HLFwTU=;
+	s=korg; t=1786978909;
+	bh=gzj6ix9qEEqPT8HDiTwBAFWZ101WmrxIDfeQwOOg1CI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CBMskfbHpCvpRmsc0uFujhVXhQXrzM8Gao7/iYk7SFNiuz1XAtFdFzSCIl75d16GH
-	 1nY0gp1HUtLCFSeBkqNZ48XS+Znm0c7POhc1W0+CyRYr4lPO7wjdp3mqDB8M6l9GOx
-	 Pujn6tzHjOcXnFC6u0dQ0iS2RHwX/V3GezmPuhb8=
+	b=WWh7UQ1b7KJILtwxpTmqnHbpPMno6jQbedisg3UuJtoyoq4CPjoauBdd+WE43JqR7
+	 8aC0kk3wPsaeGrbGOscNZaJL+H9m6qcB2vUFSXBkS6R39NnyQXClBJrYAa6tm5Wd+K
+	 HHPVf0cWbcMu1JJlX0TOUlWwvVooLr5rdPw3GnW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Gupta <sumitg@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/609] arm64: tegra: Fix CPU compatible string to cortex-a78ae on Tegra234
-Date: Mon, 17 Aug 2026 15:25:20 +0200
-Message-ID: <20260817132544.038757032@linuxfoundation.org>
+Subject: [PATCH 6.1 042/609] wifi: mac80211_hwsim: clamp virtio RX length before skb_put
+Date: Mon, 17 Aug 2026 15:25:38 +0200
+Message-ID: <20260817132544.719503107@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,141 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumit Gupta <sumitg@nvidia.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 0dfa1e960f86e032007882b032c5cc7d14ebe73e ]
+[ Upstream commit 10a2b430f8f06ae14b9590b6f6faa6b588ef0654 ]
 
-The Tegra234 SoC uses Cortex-A78AE cores, not Cortex-A78. Update the
-compatible string for all CPU nodes to match the actual hardware.
+hwsim_virtio_rx_work() passes the virtqueue used-ring length reported by
+the device straight to skb_put() on a fixed-size receive skb. A backend
+reporting a length larger than the skb tailroom drives skb_put() past the
+buffer end and hits skb_over_panic() -- a host-triggerable guest panic
+(denial of service).
 
-Tegra234 hardware reports:
-  # head /proc/cpuinfo | egrep 'implementer|part'
-  CPU implementer : 0x41
-  CPU part        : 0xd42
+Clamp the length to the skb's available room before skb_put(). A
+conforming device never reports more than the posted buffer size, so valid
+frames are unaffected; a truncated over-report then fails the
+length/header checks in hwsim_virtio_handle_cmd() and is dropped, so
+truncating rather than dropping here cannot be turned into a parsing
+problem.
 
-Which maps to (from arch/arm64/include/asm/cputype.h):
-  #define ARM_CPU_IMP_ARM              0x41
-  #define ARM_CPU_PART_CORTEX_A78AE    0xD42
-
-Fixes: a12cf5c339b08 ("arm64: tegra: Describe Tegra234 CPU hierarchy")
-Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Fixes: 5d44fe7c9808 ("mac80211_hwsim: add frame transmission support over virtio")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260620-b4-disp-474bee37-v1-1-1a4d37f3e2d4@proton.me
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra234.dtsi | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/net/wireless/mac80211_hwsim.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra234.dtsi b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-index 94eff4092b3858..482c913915a774 100644
---- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-@@ -2659,7 +2659,7 @@ cpus {
- 		#size-cells = <0>;
+diff --git a/drivers/net/wireless/mac80211_hwsim.c b/drivers/net/wireless/mac80211_hwsim.c
+index 316b5f56b6e53f..bb9dabbf1f22c6 100644
+--- a/drivers/net/wireless/mac80211_hwsim.c
++++ b/drivers/net/wireless/mac80211_hwsim.c
+@@ -5564,6 +5564,7 @@ static void hwsim_virtio_rx_work(struct work_struct *work)
  
- 		cpu0_0: cpu@0 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x00000>;
- 
-@@ -2675,7 +2675,7 @@ cpu0_0: cpu@0 {
- 		};
- 
- 		cpu0_1: cpu@100 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x00100>;
- 
-@@ -2691,7 +2691,7 @@ cpu0_1: cpu@100 {
- 		};
- 
- 		cpu0_2: cpu@200 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x00200>;
- 
-@@ -2707,7 +2707,7 @@ cpu0_2: cpu@200 {
- 		};
- 
- 		cpu0_3: cpu@300 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x00300>;
- 
-@@ -2723,7 +2723,7 @@ cpu0_3: cpu@300 {
- 		};
- 
- 		cpu1_0: cpu@10000 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x10000>;
- 
-@@ -2739,7 +2739,7 @@ cpu1_0: cpu@10000 {
- 		};
- 
- 		cpu1_1: cpu@10100 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x10100>;
- 
-@@ -2755,7 +2755,7 @@ cpu1_1: cpu@10100 {
- 		};
- 
- 		cpu1_2: cpu@10200 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x10200>;
- 
-@@ -2771,7 +2771,7 @@ cpu1_2: cpu@10200 {
- 		};
- 
- 		cpu1_3: cpu@10300 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x10300>;
- 
-@@ -2787,7 +2787,7 @@ cpu1_3: cpu@10300 {
- 		};
- 
- 		cpu2_0: cpu@20000 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x20000>;
- 
-@@ -2803,7 +2803,7 @@ cpu2_0: cpu@20000 {
- 		};
- 
- 		cpu2_1: cpu@20100 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x20100>;
- 
-@@ -2819,7 +2819,7 @@ cpu2_1: cpu@20100 {
- 		};
- 
- 		cpu2_2: cpu@20200 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x20200>;
- 
-@@ -2835,7 +2835,7 @@ cpu2_2: cpu@20200 {
- 		};
- 
- 		cpu2_3: cpu@20300 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x20300>;
+ 	skb->data = skb->head;
+ 	skb_reset_tail_pointer(skb);
++	len = min(len, skb_end_offset(skb));
+ 	skb_put(skb, len);
+ 	hwsim_virtio_handle_cmd(skb);
  
 -- 
 2.53.0
