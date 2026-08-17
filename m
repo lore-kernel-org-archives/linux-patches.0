@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935751D435F;
-	Mon, 17 Aug 2026 13:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DEB40EBAE;
+	Mon, 17 Aug 2026 13:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974173; cv=none; b=P8XYopsre9OgXk2TZaU1zPy1AQnq2V72H+J4w6we5eAcuHYgZjRu4F+oSooUpZBmx4rz9/7ZhhxceGtkSj6vkP30XWRFmEKotFHZDnumegt9Wx6byl4nfi8C0UplNMwQP3f2SxRyIOkECPwPwsiuIth3KCLcxrruB3QTeKC10hw=
+	t=1786974176; cv=none; b=SBF6IDtihhqwWDY5BLCkBDmzJ29/cDM04YXHMPC9073E5ucRj4ttvEn0orWUMBCRshUclTh1Km2/J0NaT3RVfyIcGyFmCy1CusNBiI5iZsaWkq6QCDmMVVG9kLF+qpw6vDZ06t+TMSupbEcMuMN2RkuIkO4Yr5B8rjXE8Rbc0Mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974173; c=relaxed/simple;
-	bh=mBXNoB5oGfDrPe2bQoCdGpkWZod/jdzd8Dq4prczsEU=;
+	s=arc-20240116; t=1786974176; c=relaxed/simple;
+	bh=Q5q616Nl6GeP4ERKPlAXo3OeW0/RG2VUIaHa6ow2uxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nmFl/K0QbOVzIT6ute4PEKLhghsJX5lLaTnBbByrZwz8gkpq9qV3/X4ikYUgIioCRnhbyQ/4mehRmxdvOull8utMQqHeboOWxcKPX/nHEGhiVw3XJjhMlkoSUZBGVNn5H96SC1b1cR91tzUTCYNnqFG9f2XHAtRlYsTBLPmhuwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DRQHo8J1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AK2j/NMcDpMV9RvIfBkxRYwRm8oTvNomjNyqi3GK4oPSGO7XIUHqF3xOZ4nstgqdFi73Y/2Gdj1Q8eYR+mMQ2GdC+D4DQyMZbiZQnu5alwwDkIb1BQ+UhZcnf4vR4G0LzNnVJs4G/vhyrdO6D5cRyD3yrf+He/fsWFWnhqgsRAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bj58Oc4r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DRQHo8J1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE46B1F000E9;
-	Mon, 17 Aug 2026 13:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bj58Oc4r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF6251F000E9;
+	Mon, 17 Aug 2026 13:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974172;
-	bh=ZPE9wmDZFcCX5mT1+VGN9hDvkIhAW79mx8MghDAybUE=;
+	s=korg; t=1786974175;
+	bh=clO8WBn5a3C5tC9rsfMIEcyF/bcCqFy0X0K54HZJaH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DRQHo8J1JRHiimO1kwCo/ue3GMxYcu3K8UKNLa23F2XstveWe19OmJvqnp3j/FnKG
-	 OSdFk5TrKQhtr+nL9pkM8ih6D5pLcZe92/TVzv03ovNt1k4uOXucmYRMyjUqeQU/oZ
-	 fcHpUzAjYApCzYgLqicTUUCwfESqeaHcwQfPlq9c=
+	b=Bj58Oc4rSDoqXPwNAZYWo2riadDs4Ibv+scWXBz8cmj8B95hpZOujQSc8RUKhyP3Q
+	 OxO7/TI2wuqfhjbLsu0DsEAHYaxuH1stT68iIHmqlf5YufInEWfFjwdlRXLha4x+JH
+	 fd6ZM4+JY7/5Q9195Lq5znRsfOnaS33sw1nlQDyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 113/271] tls: dont abort the connection on signal-interrupted sends
-Date: Mon, 17 Aug 2026 15:30:38 +0200
-Message-ID: <20260817132541.536891062@linuxfoundation.org>
+Subject: [PATCH 7.1 114/271] watchdog: at91sam9_wdt: prevent timer rearm during teardown
+Date: Mon, 17 Aug 2026 15:30:39 +0200
+Message-ID: <20260817132541.574855688@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -51,43 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit af0e5cdd031f4f4a8f6d4160bfbda4f36872b0ed ]
+[ Upstream commit 8444d66aa6b6e7fe0a26fa1a00a11cb4d0523783 ]
 
-When a signal interrupts a blocking send, tls_tx_records() treats the
-resulting -ERESTARTSYS as a transmission failure and marks the socket
-errored via tls_err_abort() with the raw error code. Later syscalls
-return the kernel-internal errno 512 (ERESTARTSYS) to userspace, as the
-signal it stems from is no longer pending during syscall exit and thus
-never translated.
+at91_ping() rearms the watchdog timer from its callback. timer_delete()
+neither waits for a running callback nor prevents it from rearming the
+timer, so probe failure or driver removal can leave the timer accessing the
+devm-allocated at91wdt after it has been freed.
 
-An interrupted send is not a connection error: the partially sent record
-stays queued and is resent later. Interrupt error codes are therefore
-excluded from the abort in the same way as -EAGAIN.
+Use timer_shutdown_sync() on both teardown paths. It waits for a running
+callback and rejects any attempt by the callback to rearm the timer.
 
-Fixes: b341ca51d267 ("tls: Fix tls_sw_sendmsg error handling")
-Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
-Link: https://patch.msgid.link/20260805063109.1772314-1-maxbr@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5161b31dc39a ("watchdog: at91sam9_wdt: better watchdog support")
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Link: https://lore.kernel.org/r/20260806060613.1830-1-getshell@seu.edu.cn
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/watchdog/at91sam9_wdt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index ba95f9d927a35..a8c3adc0fad0a 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -458,7 +458,7 @@ int tls_tx_records(struct sock *sk, int flags)
- 	}
+diff --git a/drivers/watchdog/at91sam9_wdt.c b/drivers/watchdog/at91sam9_wdt.c
+index aba66b8e9d033..80ba04df54adf 100644
+--- a/drivers/watchdog/at91sam9_wdt.c
++++ b/drivers/watchdog/at91sam9_wdt.c
+@@ -242,7 +242,7 @@ static int at91_wdt_init(struct platform_device *pdev, struct at91wdt *wdt)
+ 	return 0;
  
- tx_err:
--	if (rc < 0 && rc != -EAGAIN)
-+	if (rc < 0 && rc != -EAGAIN && rc != -EINTR && rc != -ERESTARTSYS)
- 		tls_err_abort(sk, rc);
+ out_stop_timer:
+-	timer_delete(&wdt->timer);
++	timer_shutdown_sync(&wdt->timer);
+ 	return err;
+ }
  
- 	return rc;
+@@ -378,7 +378,7 @@ static void at91wdt_remove(struct platform_device *pdev)
+ 	watchdog_unregister_device(&wdt->wdd);
+ 
+ 	pr_warn("I quit now, hardware will probably reboot!\n");
+-	timer_delete(&wdt->timer);
++	timer_shutdown_sync(&wdt->timer);
+ }
+ 
+ #if defined(CONFIG_OF)
 -- 
 2.53.0
 
