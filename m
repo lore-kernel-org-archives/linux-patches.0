@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A62E3D1709;
-	Mon, 17 Aug 2026 13:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465E83ACA74;
+	Mon, 17 Aug 2026 13:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974726; cv=none; b=BDvR1cPyeLaU2YVE3G6KiQohfBtuYQGqpkKsRl3EmKgjx7QYfMRdF45ZcmZHrHRYjXdl2cBPzyaOO2WEuUXcFwOOVV5hm1+mZtvap0HfiLn/S7qsHu7pwAOHaw03L6yDbiKF5a5fpeeAM1H8d0V0oXtN2ZPKYTamhlNOt5XulQU=
+	t=1786974726; cv=none; b=tGGTOA0w4fs5pTnxUjSdvED8hQynn9F8GT7BN/VyvnyXoX3GuFUfQPzy8jYdMd9mgivznW2OVaK06IwEikp5bgBCrjSQ7n8p+B2UE71DgF4PdXOgguJ1p+N/r3Jv60dwtaB51xkx0rpgPrbAI7TnJ2buftyiyMs1RQ0TkolE50k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1786974726; c=relaxed/simple;
-	bh=glsEFfuvBraJo4+fZqxK30h4XU9/x31ACChEQkKXj+U=;
+	bh=5ikyfm1wAbqsG7TbiFog9lhwss6WFORYccw274O5tio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JOhMPSsSouq9waZFG+7CfDuGYNHoYFbLz09ySmcddpA/5fkDIBoAJRBqIUl/WR/W7A+wLWgKgxwaow8uSP4WE5+PTwzpPXfYx1oJjlM3udd/c1IR22IE3+FyHbNdMJy0XV7hB6ouQ6Wra9p4nOhbdf+qS/jIJpTeGHwcNymLNUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DUaRa09W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PEiSG72bJq2vm1p8NxdOIKd8iVCZ8ny0h8dZ3V1/BZ0aZM0gP68YyhkZUuKUBc4rjawLZdoQkBwECiig+iC9g4UwW0D4fog2sBPbYfuk4gnYVH036Nb9YV+oEgy1hSKVq1CKHOHo5D/RjKAJp89uJ4O5Jh+l0uj0QyjWuUyTnnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ornbGwHR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DUaRa09W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 890FE1F00A3D;
-	Mon, 17 Aug 2026 13:52:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ornbGwHR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3AAD1F00A3E;
+	Mon, 17 Aug 2026 13:51:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974721;
-	bh=2b4NGx53M33zfKIjHRZ9YV3iX2R2SPSEIGI9E3+5bik=;
+	s=korg; t=1786974718;
+	bh=6eIX2Q58UbdCsY+9Bb28j2utdLY88SAPBTRpEWKYoBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DUaRa09W0yO7rYURy7sKjNBt8bTwShKBYGUyzLGuO8SnaCtcdC1rmxvqBJ89kKNIw
-	 NEHo93PsKwTko4t5fcyiubPkQHqmw3cW/JAh0uRlHPmSlmHo+DP1BpP+oNcLVzhsjX
-	 U+d0qpW+lt3EyCvqapT7q8P74g5OKAHb3GsdZc1U=
+	b=ornbGwHRMUl54MTMNJMuNima5JgOZGYwdOYT8dNMy4GnaRugZPUvnHaiaGRZp6CgA
+	 1ZX0JDGPNfkL0gCgxm+jCOSImXOXQLvQ8I5J8xqsZijJVqGcEIC7oS/lAkJWbgYrMo
+	 /YRY6VF6JLaOezR0Tp/1p9p/SH0QPiWUT+8zwme0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?Viktor=20J=C3=A4gersk=C3=BCpper?= <viktor_jaegerskuepper@freenet.de>,
+	Ray Wu <ray.wu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 008/250] arm64: dts: qcom: rename x1e80100 to hamoa
-Date: Mon, 17 Aug 2026 15:29:29 +0200
-Message-ID: <20260817132536.799093922@linuxfoundation.org>
+Subject: [PATCH 6.18 007/250] drm/amd/display: Check for tg ops in dce110_set_avmute
+Date: Mon, 17 Aug 2026 15:29:28 +0200
+Message-ID: <20260817132536.761305488@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -45,327 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Ray Wu <ray.wu@amd.com>
 
-[ Upstream commit 8c0b058ab5983a4be6690a76be9b0294853e8e55 ]
+[ Upstream commit 3141e3d61469bba2624a91c5e2407f110b33b29e ]
 
-The X1E80100 and several other similar names (X1E78100, X1E001DE) all
-belong to the platform now known as 'hamoa'. Follow the example of
-'lemans' and rename the x1e80100.dtsi to hamoa.dtsi and
-x1e80100-pmics.dtsi to hamoa-pmics.dtsi.
+Some older DCE timing generators do not implement is_tg_enabled in
+their ops table. Calling it unconditionally when waiting for AV mute
+frames causes a NULL pointer dereference on Southern Islands dGPUs
+when turning the display off over HDMI.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250923-rename-dts-v1-2-21888b68c781@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 4cd774c1feb3 ("arm64: dts: qcom: purwa: Fix GPU IOMMU property")
+Check that tg and the required ops exist before waiting for frames.
+
+Fixes: 414da24137ac ("drm/amd/display: Add AV mute wait frames to dce110_set_avmute")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5557
+Tested-by: Viktor Jägersküpper <viktor_jaegerskuepper@freenet.de>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 2686a0c0aaa07bec2e24131835cf27b5fd4935a5)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi                   | 4 ++--
- .../boot/dts/qcom/{x1e80100-pmics.dtsi => hamoa-pmics.dtsi}   | 0
- arch/arm64/boot/dts/qcom/{x1e80100.dtsi => hamoa.dtsi}        | 0
- arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi             | 2 +-
- arch/arm64/boot/dts/qcom/x1-crd.dtsi                          | 2 +-
- arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi                   | 2 +-
- arch/arm64/boot/dts/qcom/x1e001de-devkit.dts                  | 4 ++--
- arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi   | 4 ++--
- arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts       | 4 ++--
- arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dts        | 2 +-
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts                     | 2 +-
- .../boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts     | 2 +-
- arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts      | 2 +-
- arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts         | 4 ++--
- arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts         | 4 ++--
- arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts      | 4 ++--
- arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi      | 4 ++--
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts                     | 4 ++--
- arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts         | 2 +-
- arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts     | 2 +-
- arch/arm64/boot/dts/qcom/x1p42100.dtsi                        | 4 ++--
- 21 files changed, 29 insertions(+), 29 deletions(-)
- rename arch/arm64/boot/dts/qcom/{x1e80100-pmics.dtsi => hamoa-pmics.dtsi} (100%)
- rename arch/arm64/boot/dts/qcom/{x1e80100.dtsi => hamoa.dtsi} (100%)
+ drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi b/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
-index 1aead50b8920b..4de7c0abb25a1 100644
---- a/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
-+++ b/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
-@@ -3,8 +3,8 @@
-  * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+index 13ae93b945a33..fe02dc4e97e4a 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+@@ -1277,7 +1277,10 @@ void dce110_set_avmute(struct pipe_ctx *pipe_ctx, bool enable)
+ 		 * process the mute state, especially after link re-establishment
+ 		 * with HDMI 2.0 scrambling enabled.
+ 		 */
+-		if (enable && pipe_ctx->stream_res.tg->funcs->is_tg_enabled(pipe_ctx->stream_res.tg)) {
++		if (enable && pipe_ctx->stream_res.tg &&
++		    pipe_ctx->stream_res.tg->funcs->is_tg_enabled &&
++		    pipe_ctx->stream_res.tg->funcs->wait_for_state &&
++		    pipe_ctx->stream_res.tg->funcs->is_tg_enabled(pipe_ctx->stream_res.tg)) {
+ 			int i;
  
--#include "x1e80100.dtsi"
--#include "x1e80100-pmics.dtsi"
-+#include "hamoa.dtsi"
-+#include "hamoa-pmics.dtsi"
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi b/arch/arm64/boot/dts/qcom/hamoa-pmics.dtsi
-similarity index 100%
-rename from arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
-rename to arch/arm64/boot/dts/qcom/hamoa-pmics.dtsi
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/hamoa.dtsi
-similarity index 100%
-rename from arch/arm64/boot/dts/qcom/x1e80100.dtsi
-rename to arch/arm64/boot/dts/qcom/hamoa.dtsi
-diff --git a/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi b/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
-index ee3c8c5e2c50c..69eccad1a09c2 100644
---- a/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
-@@ -11,7 +11,7 @@
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
--#include "x1e80100-pmics.dtsi"
-+#include "hamoa-pmics.dtsi"
- 
- / {
- 	model = "ASUS Zenbook A14";
-diff --git a/arch/arm64/boot/dts/qcom/x1-crd.dtsi b/arch/arm64/boot/dts/qcom/x1-crd.dtsi
-index 3c9455fede5c0..5e324f35547a4 100644
---- a/arch/arm64/boot/dts/qcom/x1-crd.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1-crd.dtsi
-@@ -9,7 +9,7 @@
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
--#include "x1e80100-pmics.dtsi"
-+#include "hamoa-pmics.dtsi"
- 
- / {
- 	model = "Qualcomm Technologies, Inc. X1E80100 CRD";
-diff --git a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
-index 5b5a10a31a253..aee3fafbe7fcc 100644
---- a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
-@@ -12,7 +12,7 @@
- #include <dt-bindings/leds/common.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
--#include "x1e80100-pmics.dtsi"
-+#include "hamoa-pmics.dtsi"
- 
- / {
- 	chassis-type = "laptop";
-diff --git a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
-index bfc649d4b643c..701f35af7d5cd 100644
---- a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
-@@ -8,8 +8,8 @@
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
--#include "x1e80100.dtsi"
--#include "x1e80100-pmics.dtsi"
-+#include "hamoa.dtsi"
-+#include "hamoa-pmics.dtsi"
- 
- / {
- 	model = "Qualcomm Technologies, Inc. X1E001DE Snapdragon Devkit for Windows";
-diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-index 654cbce9d6ecb..169726984d3b0 100644
---- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-@@ -12,8 +12,8 @@
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
--#include "x1e80100.dtsi"
--#include "x1e80100-pmics.dtsi"
-+#include "hamoa.dtsi"
-+#include "hamoa-pmics.dtsi"
- 
- / {
- 	model = "Lenovo ThinkPad T14s Gen 6";
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-index 0113d856b3ad4..f2960953e608f 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-@@ -11,8 +11,8 @@
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- 
--#include "x1e80100.dtsi"
--#include "x1e80100-pmics.dtsi"
-+#include "hamoa.dtsi"
-+#include "hamoa-pmics.dtsi"
- 
- / {
- 	model = "ASUS Vivobook S 15";
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dts
-index 0d0bcc50207d7..c3cd04c9703d3 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dts
-@@ -6,7 +6,7 @@
- 
- /dts-v1/;
- 
--#include "x1e80100.dtsi"
-+#include "hamoa.dtsi"
- #include "x1-asus-zenbook-a14.dtsi"
- 
- / {
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-index dfc378e1a056a..429deffcf3e9d 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-@@ -5,7 +5,7 @@
- 
- /dts-v1/;
- 
--#include "x1e80100.dtsi"
-+#include "hamoa.dtsi"
- #include "x1-crd.dtsi"
- 
- / {
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts b/arch/arm64/boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts
-index cf2a7c2628881..75e10d97c3867 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts
-@@ -4,7 +4,7 @@
-  */
- /dts-v1/;
- 
--#include "x1e80100.dtsi"
-+#include "hamoa.dtsi"
- #include "x1-dell-thena.dtsi"
- 
- / {
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts b/arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts
-index 32ad9679550ef..a8ff7ef258a13 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts
-@@ -4,7 +4,7 @@
-  */
- /dts-v1/;
- 
--#include "x1e80100.dtsi"
-+#include "hamoa.dtsi"
- #include "x1-dell-thena.dtsi"
- 
- / {
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-index 58f8caaa72580..c1f49cba61fc4 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-@@ -12,8 +12,8 @@
- #include <dt-bindings/leds/common.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
--#include "x1e80100.dtsi"
--#include "x1e80100-pmics.dtsi"
-+#include "hamoa.dtsi"
-+#include "hamoa-pmics.dtsi"
- 
- / {
- 	model = "Dell XPS 13 9345";
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts b/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts
-index e5a839d458402..b79e59e1c413a 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts
-@@ -6,8 +6,8 @@
- 
- /dts-v1/;
- 
--#include "x1e80100.dtsi"
--#include "x1e80100-pmics.dtsi"
-+#include "hamoa.dtsi"
-+#include "hamoa-pmics.dtsi"
- #include "x1-hp-omnibook-x14.dtsi"
- 
- / {
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-index e0642fe8343f6..56e4d13cca111 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-@@ -9,8 +9,8 @@
- #include <dt-bindings/input/gpio-keys.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
--#include "x1e80100.dtsi"
--#include "x1e80100-pmics.dtsi"
-+#include "hamoa.dtsi"
-+#include "hamoa-pmics.dtsi"
- 
- / {
- 	model = "Lenovo Yoga Slim 7x";
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-index ed468b93ba50e..3b319f65dde1e 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-@@ -9,8 +9,8 @@
- #include <dt-bindings/leds/common.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
--#include "x1e80100.dtsi"
--#include "x1e80100-pmics.dtsi"
-+#include "hamoa.dtsi"
-+#include "hamoa-pmics.dtsi"
- 
- / {
- 	aliases {
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-index 4a9b6d791e7f4..5a121fc449401 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-@@ -8,8 +8,8 @@
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
--#include "x1e80100.dtsi"
--#include "x1e80100-pmics.dtsi"
-+#include "hamoa.dtsi"
-+#include "hamoa-pmics.dtsi"
- 
- / {
- 	model = "Qualcomm Technologies, Inc. X1E80100 QCP";
-diff --git a/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts b/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts
-index 6696cab2de3ec..47ab0c5b30341 100644
---- a/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts
-+++ b/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts
-@@ -3,7 +3,7 @@
- /dts-v1/;
- 
- #include "x1p42100.dtsi"
--#include "x1e80100-pmics.dtsi"
-+#include "hamoa-pmics.dtsi"
- #include "x1-hp-omnibook-x14.dtsi"
- /delete-node/ &pmc8380_6;
- /delete-node/ &pmc8380_6_thermal;
-diff --git a/arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts b/arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts
-index 1ac46cdc43861..f7d372d2e9612 100644
---- a/arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts
-+++ b/arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts
-@@ -14,7 +14,7 @@
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
- #include "x1p42100.dtsi"
--#include "x1e80100-pmics.dtsi"
-+#include "hamoa-pmics.dtsi"
- 
- /delete-node/ &pmc8380_6;
- /delete-node/ &pmc8380_6_thermal;
-diff --git a/arch/arm64/boot/dts/qcom/x1p42100.dtsi b/arch/arm64/boot/dts/qcom/x1p42100.dtsi
-index 10d26958d3c66..2cecd2dd0de8c 100644
---- a/arch/arm64/boot/dts/qcom/x1p42100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1p42100.dtsi
-@@ -3,8 +3,8 @@
-  * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
--/* X1P42100 is heavily based on X1E80100, with some meaningful differences */
--#include "x1e80100.dtsi"
-+/* X1P42100 is heavily based on hamoa, with some meaningful differences */
-+#include "hamoa.dtsi"
- 
- /delete-node/ &bwmon_cluster0;
- /delete-node/ &cluster_pd2;
+ 			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
 -- 
 2.53.0
 
