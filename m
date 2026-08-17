@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A95C3F23B1;
-	Mon, 17 Aug 2026 14:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FE32E738B;
+	Mon, 17 Aug 2026 14:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977635; cv=none; b=lqeZtam3n2yx3KGJWy+4nImwt+R9TcMLc+cxtd023xwav/O6BYbM0Q6mMU2PZflN2Zy/04D4OWZPZzUoWElXeZlENZxR/3tJdmhwvtb4Lh4b/UwSWlhiFMPMJJTWqPkxAb5Qy7X3MZFcQdylE4K+n8X1uzoYG9AjCZSE+gjAURU=
+	t=1786977638; cv=none; b=tcOafkpF6RJ1wc+BbjTB4fC04yX6UgpTyXndC7I82Wa+0JNE/arnwpTWWWI2Y23n0LYjgdeYz9o5HAehT4go/BFEg+ER+4pVNgsZD5vtVOsBgIxKnpI9ttK08rXdMOv+PtkPDQDecQtCCeCMDRcB2KpJVHDgvdX58PRuPAXzaVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977635; c=relaxed/simple;
-	bh=0aydJzTQpWP8V8JaAC4J4PiSpSgTAkcqfSzZ5oGsg/4=;
+	s=arc-20240116; t=1786977638; c=relaxed/simple;
+	bh=xx1XKJR13I/szF2Vu25iLkcoySMBYRdiDv+J/ZYzCSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l+eRlRDKNzDl+FTzD1Ow8U14+cKbYednhDgeA0qenx3oy64P8FCkPBmsCSI4zkqFYqzj3yUBdmXaosIecnISIfkJ16PoYNyLj11egi6POOGOinOIDoWYUueANO55vZ2gQ0Q+en8iRQQJHxXG0uIw3VU3nTBvkMjE97WvqU4D4x8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u6fjjk1K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LbL8FZmGxZKmvY4kAuoV38hdUawdeH5eYG/KpbFhvFn5OwpwkDrGDJhHxpdgQKr9obExAxMNWfegFbb36Hly2Gh8QZ4CeFSZDpd40EGU+37XQFeo18FbKDLWBw+/TV4tB5Z6ENp7PUO7ct47ivegqRd+KB/JdR9eXlTpSeinf5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdjoAv3c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u6fjjk1K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C250B1F000E9;
-	Mon, 17 Aug 2026 14:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdjoAv3c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E0451F00A3A;
+	Mon, 17 Aug 2026 14:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977634;
-	bh=zdUQCRax7H2IUxN/Ym1zVgh/uvt8Awjw3/wDCEu5Awk=;
+	s=korg; t=1786977637;
+	bh=XshSo/YIP+3c79w/hc1HlxBAzS2IfqIor/LT5Zyqb9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u6fjjk1KDko6NIPTv4uRibF1Km2Nn0sKcqFlZo+eXkaWkAVnRWDJ+6wzZQ6OF6Jyx
-	 CcDmYziCG19y4ZfrQxB6U4QwVSBGh5sxBb37hAGC0dXgqKWXW0jeVYOE1Z/82n5NxN
-	 LnUT3WLvDAUBfQ/BkNZwwfMm6g9Ij0JK543H+HOg=
+	b=EdjoAv3cQcQ7kiC9U8T4B9sgn2eoSrbnnUO6q2wB6sh65uwc+6x/VWTOnpY+KydCr
+	 GPaXq1rCS5tFwSDJhed6KcT1Flg0mFG62wpFnhW2dL/GaHAWTINml38obHIzej4FoX
+	 OVfk3zzlO1K51hKX7+u4p/jpgK/DtIY/TwRMt8Mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harkirat Gill <harkirat.gill@amd.com>,
-	David Francis <David.Francis@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 358/456] drm/amdgpu: cap GTT size to physical RAM on APUs
-Date: Mon, 17 Aug 2026 15:32:28 +0200
-Message-ID: <20260817132553.527291277@linuxfoundation.org>
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Ian Forbes <ian.forbes@broadcom.com>
+Subject: [PATCH 5.15 359/456] drm/vmwgfx: validate DRAW_PRIMITIVES header size before division
+Date: Mon, 17 Aug 2026 15:32:29 +0200
+Message-ID: <20260817132553.560835450@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,60 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harkirat Gill <harkirat.gill@amd.com>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-commit 5e70f6804b4d6256058c360b10e044ee04ea4a4e upstream.
+commit 85891d174707d8bddcec7a888fb4e1d17def34f3 upstream.
 
-On APUs, the GTT pool is backed by system RAM, but its size is not bound
-to the non-carveout memory that actually backs it. A user can end up
-with GTT + VRAM exceeding total physical memory through the following
-sequence:
+vmw_cmd_draw() computes
 
- - Have a large non-carveout memory space (~128GB) and accordingly set a
-   large GTT (~100GB) via the ttm module parameter.
- - Lower the non-carveout memory space in BIOS by increasing the UMA
-   Frame Buffer Size (VRAM) to 64GB.
- - The previously set GTT value (~100GB) persists, even though the new
-   non-carveout space (64GB) can no longer back it.
+	maxnum = (header->size - sizeof(cmd->body)) / sizeof(*decl);
 
-This leads to a case where kernel reports GTT (100GB) + VRAM (64GB)
-despite the sum being greater than total physical memory (128GB).
+where header->size is u32 and is taken straight from the user-supplied
+command stream.  When header->size is less than sizeof(cmd->body) the
+unsigned subtraction wraps to nearly 4 GiB, producing a huge maxnum.
+Any user-controlled cmd->body.numVertexDecls then passes the bound and
+the loop dereferences decl[i] far past the end of the kernel command
+bounce buffer, producing an out-of-bounds read of kernel memory.
 
-Cap the GTT size to totalram_pages() on APUs. totalram_pages() already
-excludes the VRAM carveout, so the resulting GTT can never exceed the
-system RAM that actually backs it.
+Reject undersized headers up front.
 
-Signed-off-by: Harkirat Gill <harkirat.gill@amd.com>
-Reviewed-by: David Francis <David.Francis@amd.com>
-Assisted-by: Claude:claude-opus-4
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5dafdd649280c7dc6c22c8f877da3f54fcc441e1)
+Fixes: 7a73ba7469cb ("drm/vmwgfx: Use TTM handles instead of SIDs as user-space surface handles.")
 Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4.7
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
+Link: https://patch.msgid.link/20260505222728.519626-7-zack.rusin@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -1768,6 +1768,18 @@ int amdgpu_ttm_init(struct amdgpu_device
- 	else
- 		gtt_size = (uint64_t)amdgpu_gtt_size << 20;
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+@@ -1595,11 +1595,17 @@ static int vmw_cmd_draw(struct vmw_priva
+ 	uint32_t maxnum;
+ 	int ret;
  
-+	/* Cap GTT so that it does not exceed total physical RAM. */
-+	if (adev->flags & AMD_IS_APU) {
-+		u64 phys_ram = (u64)totalram_pages() << PAGE_SHIFT;
++	cmd = container_of(header, typeof(*cmd), header);
 +
-+		if (gtt_size > phys_ram) {
-+			gtt_size = phys_ram;
-+			dev_info(adev->dev,
-+				 "Capping GTT to %uM to not exceed available system memory\n",
-+				 (unsigned int)(gtt_size / (1024 * 1024)));
-+		}
++	if (unlikely(header->size < sizeof(cmd->body))) {
++		VMW_DEBUG_USER("Illegal DRAW_PRIMITIVES header size.\n");
++		return -EINVAL;
 +	}
 +
- 	/* Initialize GTT memory pool */
- 	r = amdgpu_gtt_mgr_init(adev, gtt_size);
- 	if (r) {
+ 	ret = vmw_cmd_cid_check(dev_priv, sw_context, header);
+ 	if (unlikely(ret != 0))
+ 		return ret;
+ 
+-	cmd = container_of(header, typeof(*cmd), header);
+ 	maxnum = (header->size - sizeof(cmd->body)) / sizeof(*decl);
+ 
+ 	if (unlikely(cmd->body.numVertexDecls > maxnum)) {
 
 
