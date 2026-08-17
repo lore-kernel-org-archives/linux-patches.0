@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5323C442B32;
-	Mon, 17 Aug 2026 14:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45947439009;
+	Mon, 17 Aug 2026 14:38:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977487; cv=none; b=aaSP7nYdk8OIaLn5/nhs/0njGV8XTjFw1wm+6qnnQjTvHZJ3h1J4atPN84Kcv7wkeatOSkEL+bxs7aLA82BwUgRGg8LJwPelofjB+Z1oAxMu0yPzq7VvqXxVM1symWCjNuqWT1vkrGy/6cejD+q1KCxWLhbIDoSUAK3VFjgunwI=
+	t=1786977490; cv=none; b=njBOsU0c4yTrUKHFIq/TAMLKmEMsGVi9gmMf/Dbf4vSoucLK0welVajH7XynCmOeh5MjTVcs560xSlmwpXc4N+yr7VR3u7TVQHXutws/V1AJo43OqxPZhrcy0fvPYOE6gRtHl1ldUuPrBNQvuh89DlbIF8pxzpM6jEb03peyOsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977487; c=relaxed/simple;
-	bh=1rjgbPRFxQ10RhlgfSegG0hQNSlj0MeCnrihDaKX6Q0=;
+	s=arc-20240116; t=1786977490; c=relaxed/simple;
+	bh=suuKNDbw89t6PGgdxVU7B3lAF9Mph/A5HH1sKnRbylQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RCBjSIp2mG/7k1okmHZiAnv/GbH9+XbxXsSm5qJa8Kxo2hGac9v7qqndgQ7BTttTTyGhir9BeT8xGPJI35HS7AGrU7XiBgl5j23cxxRL0On6KZqK5eQiFWXkFThwXhj/QJGG5mwO7U58nfZyZuPwDropteW7kfKfqOwO+FaTPFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IIqkriCG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aM+I+Fs4aEf1an+nh1/Na3KwB2dyj2a77Y5s89BiVBXkvolDpGT7Nh1HUDvdgdEuM1NhnEh0HX4H/A9NyFc90jD4ExOxCoyGijPjQdk652kcmO+XK+Igtt9lCv6Hql00pJt8ZP9CRTnL742NIfOSsyN4CCtD029wy8KDyNM2zBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGwgFOLy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IIqkriCG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A26E81F00A3A;
-	Mon, 17 Aug 2026 14:38:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGwgFOLy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8925E1F000E9;
+	Mon, 17 Aug 2026 14:38:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977486;
-	bh=lmxK0o+F5Dm9Px4DWDt9TgfmBv2OLDcAMArWr74AaT8=;
+	s=korg; t=1786977489;
+	bh=bP/AvaITVOIGT4CogzyIDu1p4tg6u10XMtIuwUKPZa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IIqkriCGLMLlI1F8VtkhsjggE42yW4I/Z4tjOYG1IVxgprWyXnO/cZqB/6se+5csA
-	 BFXXo37jJDxiAoWuSzKIxxE07AFO9z9xj53RB64HqXR+tS2hdeI5vmwl6+Iw9Z+yaD
-	 DyfkQpvxsSRdQ1G5r27WV+TPmJnvHmVd591IYFqM=
+	b=lGwgFOLySNmCSkqHfJ8AeJlYF6ZbH04SidCIGYjuq9gTZRCyF9dxnx934u14D6MJx
+	 sLSEpd7zPcTYJuXbaZUUlG0yOM23IuBr8TA+MkteA6tFefms91U83LjHhWxfYI5uds
+	 PvFIVfgfb012brGlZ4k2G9dP9rmIli+I1SWWfvZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liem <liem16213@gmail.com>,
-	Carlos Song <carlos.song@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 5.15 345/456] i2c: imx: Cancel hrtimer before clearing slave pointer
-Date: Mon, 17 Aug 2026 15:32:15 +0200
-Message-ID: <20260817132553.065094263@linuxfoundation.org>
+	Lucas Martins Alves <lucas.alves@lumal21.com.br>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.15 346/456] can: c_can: c_can_chip_config(): keep controller in init mode until bittiming is configured
+Date: Mon, 17 Aug 2026 15:32:16 +0200
+Message-ID: <20260817132553.096184313@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,42 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liem <liem16213@gmail.com>
+From: Lucas Martins Alves <lucas.alves@lumal21.com.br>
 
-commit 6ac7702b6cc2b94aaed9ef2d95bfbefcdc90061f upstream.
+commit 26504844613fb44c7cab1c5f6fcff77861709baa upstream.
 
-In i2c_imx_unreg_slave(), the slave pointer is set to NULL after
-disabling interrupts.  However, a pending interrupt might already
-have started the hrtimer (i2c_imx_slave_timeout) before the pointer
-was cleared.  If the hrtimer fires after i2c_imx->slave is set to
-NULL, the timer callback i2c_imx_slave_finish_op() will call
-i2c_imx_slave_event() with a NULL slave pointer, which results in a
-use-after-free / NULL pointer dereference.
+c_can_chip_config() was programming C_CAN_CTRL_REG without CONTROL_INIT,
+which may allow the controller to become active before
+c_can_set_bittiming() finishes.
 
-Fix by canceling the hrtimer and waiting for it to complete after
-disabling interrupts, before clearing the slave pointer.
+That creates a short timing window where the peripheral can interact with
+the bus using a different/default bitrate, potentially generating bus
+errors and corrupting traffic.
 
-Fixes: f7414cd6923f ("i2c: imx: support slave mode for imx I2C driver")
-Signed-off-by: Liem <liem16213@gmail.com>
-Cc: <stable@vger.kernel.org> # v5.11+
-Acked-by: Carlos Song <carlos.song@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260629023829.152651-3-liem16213@gmail.com
+Set CONTROL_INIT together with the control-mode writes in
+c_can_chip_config() (normal, loopback and listen-only paths), so the
+controller stays halted until bit timing is fully programmed.
+
+This prevents transient bus disturbance during startup when the configured
+bitrate differs from the active bus bitrate.
+
+Signed-off-by: Lucas Martins Alves <lucas.alves@lumal21.com.br>
+Link: https://patch.msgid.link/20260714164839.771123-1-lucas.alves@lumal21.com.br
+Fixes: 881ff67ad450 ("can: c_can: Added support for Bosch C_CAN controller")
+Cc: stable@kernel.org
+[mkl: remove space before close parenthesis]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-imx.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/can/c_can/c_can_main.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/i2c/busses/i2c-imx.c
-+++ b/drivers/i2c/busses/i2c-imx.c
-@@ -865,6 +865,7 @@ static int i2c_imx_unreg_slave(struct i2
+--- a/drivers/net/can/c_can/c_can_main.c
++++ b/drivers/net/can/c_can/c_can_main.c
+@@ -599,20 +599,20 @@ static int c_can_chip_config(struct net_
+ 		return err;
  
- 	i2c_imx_reset_regs(i2c_imx);
+ 	/* enable automatic retransmission */
+-	priv->write_reg(priv, C_CAN_CTRL_REG, CONTROL_ENABLE_AR);
++	priv->write_reg(priv, C_CAN_CTRL_REG, CONTROL_ENABLE_AR | CONTROL_INIT);
  
-+	hrtimer_cancel(&i2c_imx->slave_timer);
- 	i2c_imx->slave = NULL;
+ 	if ((priv->can.ctrlmode & CAN_CTRLMODE_LISTENONLY) &&
+ 	    (priv->can.ctrlmode & CAN_CTRLMODE_LOOPBACK)) {
+ 		/* loopback + silent mode : useful for hot self-test */
+-		priv->write_reg(priv, C_CAN_CTRL_REG, CONTROL_TEST);
++		priv->write_reg(priv, C_CAN_CTRL_REG, CONTROL_TEST | CONTROL_INIT);
+ 		priv->write_reg(priv, C_CAN_TEST_REG, TEST_LBACK | TEST_SILENT);
+ 	} else if (priv->can.ctrlmode & CAN_CTRLMODE_LOOPBACK) {
+ 		/* loopback mode : useful for self-test function */
+-		priv->write_reg(priv, C_CAN_CTRL_REG, CONTROL_TEST);
++		priv->write_reg(priv, C_CAN_CTRL_REG, CONTROL_TEST | CONTROL_INIT);
+ 		priv->write_reg(priv, C_CAN_TEST_REG, TEST_LBACK);
+ 	} else if (priv->can.ctrlmode & CAN_CTRLMODE_LISTENONLY) {
+ 		/* silent mode : bus-monitoring mode */
+-		priv->write_reg(priv, C_CAN_CTRL_REG, CONTROL_TEST);
++		priv->write_reg(priv, C_CAN_CTRL_REG, CONTROL_TEST | CONTROL_INIT);
+ 		priv->write_reg(priv, C_CAN_TEST_REG, TEST_SILENT);
+ 	}
  
- 	/* Suspend */
 
 
