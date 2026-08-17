@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DA725C804;
-	Mon, 17 Aug 2026 15:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85BD22D0C8F;
+	Mon, 17 Aug 2026 15:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978884; cv=none; b=ZwnD7Qrr0LCquvfLHye3BvGTL/ohgTXWRQqfO6Voo3JLmgwNrCUmC8llyyjO8AN54mmXDG4bewcksiwMOwhSI+nOHXr+lt4HcUzUKjrs0wyo5FlAvJ4yFp3NaAiQwR6trZJp1Z23/+hSHH0gHbdJPv8XHyE+hjXMnZ6hic2b89g=
+	t=1786978887; cv=none; b=CdDW+BD3znyTC9y9nULMpN7s5LncnouICy/tRK6rkh+s890DJAOyfovQOD3rXyKEyRERS3VzG0PrnNgC052pSrFou+jFg8CfTK2dWGojTQDYmiSc7FyFt53DxXH17IEnlodv8YTvEB7ixnBC6+UgyetDXWM8AGUwYTXlFiHuanY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978884; c=relaxed/simple;
-	bh=Y98jY7BRs5y2lj4QLPz0t7Zsy4oeJE1cKHpyG31tMmk=;
+	s=arc-20240116; t=1786978887; c=relaxed/simple;
+	bh=ilAb+LwgBw0JDrZBZoWGgftYoyO2gq98PwdTGFBaHsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kOdXWnQqyHMmd1w9iRFkWzcYJRJ0JB+ZN6dYnbCtFzEDOEUFY+ujt7QzuxohBBCE6kdaYfjlYjxpNksbwmN983hE0c/4Moqxa38GE6RAz9zA8ziwMTRrEIvovCwmvQ78FAMhBzARxDqO9wKXAuhGbphbNsVDDwrX8h/Kp4SG/6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/LxR/li; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pbSG6SKlMIuZFLXLJQ1SXoxtpVmGk+zKRsYSxJyP7iEs22tOfzlDKz24B5rBdOzkI+BAb3q6Vq+U7mga+dUWBUWE3MXQ3p/On4y1+A75RPSks34L+00debdtDHKb3H/ZHAXIX84iSmOuHhMFE7y9PSSQcKkZA/5k5pbPSz4sH/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ExcSZLV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/LxR/li"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 092791F000E9;
-	Mon, 17 Aug 2026 15:01:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ExcSZLV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDFC61F000E9;
+	Mon, 17 Aug 2026 15:01:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978883;
-	bh=z3lRVzBM0yry1yzdsfRpVB69GysmMaAA0vRVNWCuLk0=;
+	s=korg; t=1786978886;
+	bh=ybTDRld5KvsPvk2/ACAzNcf1HhuYgIjXer00R470Vh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W/LxR/liVUcYfHIXLv3s7BYK+/z57APltcu7oaQZDQQGW7vrdU+KqSK06xnIJkcDL
-	 NBYAytDsvorn85Jab7JXCocIXj12UcBlbuzn8tzIjlwm1seqw+KFMbbeNeQ0abvvMB
-	 j5crOsT3Wvhfg92Tajc9bb03EyHNaB5dF6hCjTVE=
+	b=2ExcSZLVeY4XlaqwoGf+VszeFAbEQ4Y5RukGs49IuLDRJrYIssuDcy1t8gc22x85V
+	 VccrXzM61PDRgvOUanIjLpdAEQHrSP478ebzwYGdxpZgqhsWGCkJwg0/i2+VyrwtGT
+	 YlVFaKxbxHDpm0mNkYp9sj7BIWljEKjTvpDXnPb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Metzler <bmt@zurich.ibm.com>,
-	Guoqing Jiang <guoqing.jiang@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 034/609] RDMA/siw: Only check attrs->cap.max_send_wr in siw_create_qp
-Date: Mon, 17 Aug 2026 15:25:30 +0200
-Message-ID: <20260817132544.411767247@linuxfoundation.org>
+Subject: [PATCH 6.1 035/609] RDMA/siw: publish QP after initialization
+Date: Mon, 17 Aug 2026 15:25:31 +0200
+Message-ID: <20260817132544.448754709@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,67 +52,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guoqing Jiang <guoqing.jiang@linux.dev>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 788bbf4c2fc6e0c35bae9ed5068f484272539d3e ]
+[ Upstream commit bb27fcc67c429d97f785c92c35a6c5adebb05d7f ]
 
-We can just check max_send_wr here given both max_send_wr and
-max_recv_wr are defined as u32 type, and we also need to ensure
-num_sqe (derived from max_send_wr) shouldn't be zero.
+siw_create_qp() currently calls siw_qp_add() before the queues, CQ
+pointers, state, completion, and device list entry are ready. A QPN
+lookup can therefore reach a QP that is still being constructed.
 
-Acked-by: Bernard Metzler <bmt@zurich.ibm.com>
-Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
-Link: https://lore.kernel.org/r/20231113115726.12762-16-guoqing.jiang@linux.dev
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: bb27fcc67c42 ("RDMA/siw: publish QP after initialization")
+Move siw_qp_add() to the end of siw_create_qp(), after QP
+initialization and before adding the QP to the siw device list.
+
+Fixes: f29dd55b0236 ("rdma/siw: queue pair methods")
+Link: https://patch.msgid.link/r/20260630060040.966461-1-ruoyuw560@gmail.com
+Suggested-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_verbs.c | 18 +++++-------------
- 1 file changed, 5 insertions(+), 13 deletions(-)
+ drivers/infiniband/sw/siw/siw_verbs.c | 44 +++++++++++++++------------
+ 1 file changed, 24 insertions(+), 20 deletions(-)
 
 diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
-index dce86f5aee1f76..336702bcbfa9f8 100644
+index 336702bcbfa9f8..8e89e32435d455 100644
 --- a/drivers/infiniband/sw/siw/siw_verbs.c
 +++ b/drivers/infiniband/sw/siw/siw_verbs.c
-@@ -336,11 +336,10 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
- 		goto err_atomic;
- 	}
- 	/*
--	 * NOTE: we allow for zero element SQ and RQ WQE's SGL's
--	 * but not for a QP unable to hold any WQE (SQ + RQ)
-+	 * NOTE: we don't allow for a QP unable to hold any SQ WQE
- 	 */
--	if (attrs->cap.max_send_wr + attrs->cap.max_recv_wr == 0) {
--		siw_dbg(base_dev, "QP must have send or receive queue\n");
-+	if (attrs->cap.max_send_wr == 0) {
-+		siw_dbg(base_dev, "QP must have send queue\n");
- 		rv = -EINVAL;
- 		goto err_atomic;
- 	}
-@@ -360,21 +359,14 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
- 	if (rv)
- 		goto err_atomic;
+@@ -302,6 +302,7 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	struct siw_ucontext *uctx =
+ 		rdma_udata_to_drv_context(udata, struct siw_ucontext,
+ 					  base_ucontext);
++	struct siw_uresp_create_qp uresp = {};
+ 	unsigned long flags;
+ 	int num_sqe, num_rqe, rv = 0;
+ 	size_t length;
+@@ -355,11 +356,6 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	spin_lock_init(&qp->rq_lock);
+ 	spin_lock_init(&qp->orq_lock);
  
--	num_sqe = attrs->cap.max_send_wr;
--	num_rqe = attrs->cap.max_recv_wr;
- 
+-	rv = siw_qp_add(sdev, qp);
+-	if (rv)
+-		goto err_atomic;
+-
+-
  	/* All queue indices are derived from modulo operations
  	 * on a free running 'get' (consumer) and 'put' (producer)
  	 * unsigned counter. Having queue sizes at power of two
- 	 * avoids handling counter wrap around.
- 	 */
--	if (num_sqe)
--		num_sqe = roundup_pow_of_two(num_sqe);
--	else {
--		/* Zero sized SQ is not supported */
+@@ -377,14 +373,14 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 
+ 	if (qp->sendq == NULL) {
+ 		rv = -ENOMEM;
+-		goto err_out_xa;
++		goto err_out;
+ 	}
+ 	if (attrs->sq_sig_type != IB_SIGNAL_REQ_WR) {
+ 		if (attrs->sq_sig_type == IB_SIGNAL_ALL_WR)
+ 			qp->attrs.flags |= SIW_SIGNAL_ALL_WR;
+ 		else {
+ 			rv = -EINVAL;
+-			goto err_out_xa;
++			goto err_out;
+ 		}
+ 	}
+ 	qp->pd = pd;
+@@ -410,7 +406,7 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 
+ 		if (qp->recvq == NULL) {
+ 			rv = -ENOMEM;
+-			goto err_out_xa;
++			goto err_out;
+ 		}
+ 		qp->attrs.rq_size = num_rqe;
+ 	}
+@@ -425,11 +421,8 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	qp->attrs.state = SIW_QP_STATE_IDLE;
+ 
+ 	if (udata) {
+-		struct siw_uresp_create_qp uresp = {};
+-
+ 		uresp.num_sqe = num_sqe;
+ 		uresp.num_rqe = num_rqe;
+-		uresp.qp_id = qp_id(qp);
+ 
+ 		if (qp->sendq) {
+ 			length = num_sqe * sizeof(struct siw_sqe);
+@@ -438,7 +431,7 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 						      length, &uresp.sq_key);
+ 			if (!qp->sq_entry) {
+ 				rv = -ENOMEM;
+-				goto err_out_xa;
++				goto err_out;
+ 			}
+ 		}
+ 
+@@ -450,9 +443,23 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 			if (!qp->rq_entry) {
+ 				uresp.sq_key = SIW_INVAL_UOBJ_KEY;
+ 				rv = -ENOMEM;
+-				goto err_out_xa;
++				goto err_out;
+ 			}
+ 		}
++	}
++	qp->tx_cpu = siw_get_tx_cpu(sdev);
++	if (qp->tx_cpu < 0) {
++		rv = -EINVAL;
++		goto err_out;
++	}
++	init_completion(&qp->qp_free);
++
++	rv = siw_qp_add(sdev, qp);
++	if (rv)
++		goto err_out_tx;
++
++	if (udata) {
++		uresp.qp_id = qp_id(qp);
+ 
+ 		if (udata->outlen < sizeof(uresp)) {
+ 			rv = -EINVAL;
+@@ -462,22 +469,19 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 		if (rv)
+ 			goto err_out_xa;
+ 	}
+-	qp->tx_cpu = siw_get_tx_cpu(sdev);
+-	if (qp->tx_cpu < 0) {
 -		rv = -EINVAL;
 -		goto err_out_xa;
 -	}
-+	num_sqe = roundup_pow_of_two(attrs->cap.max_send_wr);
-+	num_rqe = attrs->cap.max_recv_wr;
- 	if (num_rqe)
- 		num_rqe = roundup_pow_of_two(num_rqe);
++
+ 	INIT_LIST_HEAD(&qp->devq);
+ 	spin_lock_irqsave(&sdev->lock, flags);
+ 	list_add_tail(&qp->devq, &sdev->qp_list);
+ 	spin_unlock_irqrestore(&sdev->lock, flags);
  
+-	init_completion(&qp->qp_free);
+-
+ 	return 0;
+ 
+ err_out_xa:
+ 	xa_erase(&sdev->qp_xa, qp_id(qp));
++err_out_tx:
++	siw_put_tx_cpu(qp->tx_cpu);
++err_out:
+ 	if (uctx) {
+ 		rdma_user_mmap_entry_remove(qp->sq_entry);
+ 		rdma_user_mmap_entry_remove(qp->rq_entry);
 -- 
 2.53.0
 
