@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9372439909;
-	Mon, 17 Aug 2026 13:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AD743BDB1;
+	Mon, 17 Aug 2026 13:42:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974126; cv=none; b=QUtA5sUT7hf4gukHoLLPmv1tOS4hQRpIeBUBx698OAUmaGHY3YfTYJPRyEX1mAHz/GxYadx5N2m0rV1Fm8RVOxzF0UBsggqJfiZR9XrPDWkqOOG+Lea7Mv0a16a0SNX33yCTZdFtfVwc0WYe5+19ASf5KWt2SbO/HNdmbccwNr8=
+	t=1786974128; cv=none; b=Lkllw6aFwVjgJ//8TdWjq5NFEbeuvJ/t8b9+tNKfjMsJLAgsABLMNnUay0oblYbWuMk+9t8INLhZYkRkYq+5wInQsZCSQydtvkoHdmwaSzw5Y2geCLtUIJYO7wMkdi2Jd2yqrvye8mwp3+JqR4CI8aBkno5w9DyD5xP0znc1ARw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974126; c=relaxed/simple;
-	bh=hpLb8A5CMOYSbVV02fCBeLbCCsw7rVb27UPrfziLy6s=;
+	s=arc-20240116; t=1786974128; c=relaxed/simple;
+	bh=ABXlD4FSbPY6g8WBcqs1lI8V5aJ2MZxp73f67gIyiv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nqFaC9ANston1IzyiG+mlUOGKEiunF4NX7b1p4ImiMtamw/NWULcZB23dWKdVlfgNrhXp+sGpdQ5sQY7T06x5p+Xh7U9vF6aoKr5aML51WqgSNDaPaslcZXAzRMOLIIfiOqhtgl9g2xtHB/01pfk2KWchED2vLafqlIJeaRrCoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bjq8HGjC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u4swRoY5gtB0B3VuAbmh3toUBSZxBM8Cz2CvKObsLUBcsZIVRgzNR8qzCObGbqCyhAqqrjKlQ+u4E8zHE7Uf9rlUcbiot++2k5sp765G+3M1gZq++N5esZ5EhRkGzwVPV6hUusOMlRKzglNnxuQd86MCwKwZ7n3PtalkGD7s5NE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+yapaS4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bjq8HGjC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070211F000E9;
-	Mon, 17 Aug 2026 13:42:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+yapaS4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C6C1F00A3D;
+	Mon, 17 Aug 2026 13:42:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974123;
-	bh=ppBd02aMZxpqRySr0nNyHg80ob63xoDgjOf5PJ80KSg=;
+	s=korg; t=1786974126;
+	bh=mwto5VBEJHieUXYxfAq7cEHLpKWOHbOFOqzGUWEwrDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bjq8HGjC/aklmiQlM3xDjKBtW39LxJzGbNHFLLtdlw+yaGOxIO9BfWhkEc1c8B5za
-	 JQNprGsB2vgS0d9M4jC3aKcT9yVsQW24sbZrI3PDApmunFrA5xM74GmcqXBmohR3Dd
-	 BzPBoo3S7qDjHSAuY091KYjDWBQFCKDm3oudEG1Q=
+	b=k+yapaS4jvTzksWiHy7SBpFoE+7hkL8OakcOs6CYHh0SkKKXtr4Wi4S2Nt0A5wy7C
+	 wea1ciIIQrpBcbcxhMXfmcWSt+r8Iyei0v8hfgVNpYS7oKFRSUoRFWeXN6gqeFmg4n
+	 tsHBAsTuPekNbI+F2HZxckf+jHh0dOtYO3cGzzDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Luo <luoqing@kylinos.cn>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jia Jia <physicalmtea@gmail.com>,
+	Linfeng Sun <linfeng.sun.dev@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 098/271] sctp: fix addip_serial increment on ASCONF_ACK allocation failure
-Date: Mon, 17 Aug 2026 15:30:23 +0200
-Message-ID: <20260817132540.834601195@linuxfoundation.org>
+Subject: [PATCH 7.1 081/271] vhost-scsi: Validate T10 PI scatterlist counts
+Date: Mon, 17 Aug 2026 15:30:06 +0200
+Message-ID: <20260817132540.072452994@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -52,55 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Luo <luoqing@kylinos.cn>
+From: Linfeng Sun <slf@hdu.edu.cn>
 
-[ Upstream commit aa2e13ae8d3cbe2c15ef4f7e971b2de0832794aa ]
+[ Upstream commit d876c493fc4b811941bfeb4c80beb2dfc4bf025e ]
 
-In sctp_process_asconf(), when sctp_make_asconf_ack() fails to allocate
-the ASCONF_ACK chunk due to memory pressure, the code jumps to the
-done label where asoc->peer.addip_serial is unconditionally incremented.
+When T10 PI is negotiated, vhost-scsi splits protection bytes from
+the data iterator before mapping the request scatterlists. A malformed
+request can claim protection bytes that cover or exceed the full payload
+length. The former leaves no data bytes to map, while the latter
+underflows exp_data_len before advancing the iterator. Both cases can let
+a zero data SGL count reach sg_alloc_table_chained(), which triggers
+BUG_ON(!nents).
 
-This leaves the peer's ASCONF (serial N) unacknowledged while the local
-endpoint now expects serial N+1. When the peer retransmits serial N, it
-falls into the serial < addip_serial + 1 branch ,
-which attempts to look up a cached ACK for serial N. No cached ACK
-exists since the allocation failed, so the retransmission is silently
-discarded. The peer eventually times out and ABORTs the association.
+Reject protection lengths that cover or exceed the payload before
+subtracting prot_bytes and advancing the iterator. Also propagate
+negative errors from the protection SGL calculation before calling the
+allocator, matching the data SGL path.
 
-Move the addip_serial increment inside the if (asconf_ack) block so that
-the serial number is only advanced when the ASCONF_ACK is successfully
-created and cached. This way, on allocation failure, the serial number
-is unchanged and the peer's retransmitted ASCONF will be correctly
-re-processed.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Qing Luo <luoqing@kylinos.cn>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260804025514.241767-1-l1138897701@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: bca939d5bcd0 ("vhost-scsi: Dynamically allocate scatterlists")
+Suggested-by: Jia Jia <physicalmtea@gmail.com>
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+Assisted-by: OpenAI-Codex:GPT-5
+Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
+Message-ID: <20260727081841.923151-1-slf@hdu.edu.cn>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_make_chunk.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/vhost/scsi.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
-index 0ae30c3c8913a..e25612e9d0821 100644
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -3336,12 +3336,11 @@ struct sctp_chunk *sctp_process_asconf(struct sctp_association *asoc,
- 			goto done;
- 	}
- done:
--	asoc->peer.addip_serial++;
--
- 	/* If we are sending a new ASCONF_ACK hold a reference to it in assoc
- 	 * after freeing the reference to old asconf ack if any.
- 	 */
- 	if (asconf_ack) {
-+		asoc->peer.addip_serial++;
- 		sctp_chunk_hold(asconf_ack);
- 		list_add_tail(&asconf_ack->transmitted_list,
- 			      &asoc->asconf_ack_list);
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index 9a1253b9d8c50..c79197edb1637 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -972,6 +972,9 @@ vhost_scsi_mapal(struct vhost_scsi *vs, struct vhost_scsi_cmd *cmd,
+ 	if (prot_bytes) {
+ 		sgl_count = vhost_scsi_calc_sgls(prot_iter, prot_bytes,
+ 						 VHOST_SCSI_PREALLOC_PROT_SGLS);
++		if (sgl_count < 0)
++			return sgl_count;
++
+ 		cmd->prot_table.sgl = cmd->prot_sgl;
+ 		ret = sg_alloc_table_chained(&cmd->prot_table, sgl_count,
+ 					     cmd->prot_table.sgl,
+@@ -1416,6 +1419,11 @@ vhost_scsi_handle_vq(struct vhost_scsi *vs, struct vhost_virtqueue *vq)
+ 			 * actual data payload length.
+ 			 */
+ 			if (prot_bytes) {
++				if (prot_bytes >= exp_data_len) {
++					vq_err(vq, "Protection data exceeds payload length\n");
++					goto err;
++				}
++
+ 				exp_data_len -= prot_bytes;
+ 				prot_iter = data_iter;
+ 				iov_iter_truncate(&prot_iter, prot_bytes);
 -- 
 2.53.0
 
