@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2023F88B9;
-	Mon, 17 Aug 2026 14:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFE13F88B9;
+	Mon, 17 Aug 2026 14:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976229; cv=none; b=V7UMbhj69O6fHZfCGRbegewNpJK7J2ogi7sNZdtP47kXGkKtX6/ktldChFW55FNRZZLDKw85CSQxBGs+papASQW2nilw7k0zKy0AxB5SF9a+ifTv0WSC2+Hs0IG4mKxFxxxIdC6BQGLZATMBNDguJCAcpMEHQFkgYWLpqoXngsE=
+	t=1786976231; cv=none; b=Upp4zfWvknblQE3Y/Cz/Rve+4djg9HAjpILPnmilt9ilZSqVreOLzQd6U9ltE+nzHW+XS1u8LGcy9KimIO1p4EpCXk8MQCWzlQv7Kq8iQd7W0KeX466kvu/3vraC9YldvspIUGaZumjTyAs3rlf9OVpdncpMwHK9U5SVEOMYG9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976229; c=relaxed/simple;
-	bh=vRwS251jJvWDU880Qq9Ceu6V2A1xsZO5yjYO0cbeOKw=;
+	s=arc-20240116; t=1786976231; c=relaxed/simple;
+	bh=zDFfR5mKNac+pJ0Zat7bRua6Qih9Yk62F85Awvp7M+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZUjcXOM98O7v/9+mlWhnu5c8x+IbIgegtS2G1SlgvgUk9gmYFZQvyGknw1B3lErCKu428+81Cc4hF6JhkBdauGvpTlcR2WGPSlgnDL8Vc2Yka3CDupet8PelDmw1UGP3Gs/epd/k8RkzhmXYXP2qevWfFLBwIJzxN4u3Lpf9oX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPBpn/+7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W0laUmdLg6DKfqPsNjNlszC9evMRqx+V8tK5x8p4MyeYtPRArwgLJ581+lkJwmjrDMvBxvXYE/I7msgejv8fjuakTiES6fFvr79xjIvaGJ0gDBxBjbyIdnBJvD3Ypl2m1x/Mty8iO+EUr3itmWfsxo41ncrU2AfvN+34KarWRLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwPAYh7y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPBpn/+7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2FA41F000E9;
-	Mon, 17 Aug 2026 14:17:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwPAYh7y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6CC01F000E9;
+	Mon, 17 Aug 2026 14:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976227;
-	bh=ggEM1+wluaZ0I/NZEXsXRuW/WtZr7MFAKpjC4Kn4omQ=;
+	s=korg; t=1786976230;
+	bh=TSYywbBuwgL8nxktvyehmFKmknhCzA0vSJnEQO7NyUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qPBpn/+7RkhkuZHNWMILHYvnfqE9ugw/ML0p9vmHUzVRqex9Yb2u4YGVdWNDrfOZO
-	 mn0b2nAXo51xJZp4MuZh9VO6rdGvsHpQa+PvMtebV23/+8IfuciTVQa6gozU3fgvKL
-	 9IbHQ/6XUciu5n/2yJEfYdzHb+to9OsTuaCNPiFo=
+	b=xwPAYh7yWkzdVhAg74yct5PHuehd6HNGnjY5YpaFzXYHm4IDJcOkpz3gnNQmfh6BE
+	 v+euUCL7Ealg8EFe23fVYoFSBmUAdC0jBlERO2rKJ8cS8QFy03FeEj3VzKEjwySlOJ
+	 p7TFG/8DuzyVqcGVnd34ZXJcOmAVmOq5JSsO8s/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Ian Forbes <ian.forbes@broadcom.com>
-Subject: [PATCH 5.10 301/389] drm/vmwgfx: bound DMA command body size against suffix pointer
-Date: Mon, 17 Aug 2026 15:32:20 +0200
-Message-ID: <20260817132550.793337459@linuxfoundation.org>
+	HyeongJun An <sammiee5311@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 5.10 302/389] HID: logitech-dj: Fix maxfield check in DJ short report validation
+Date: Mon, 17 Aug 2026 15:32:21 +0200
+Message-ID: <20260817132550.830003278@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -50,49 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit f4f1db96bfd68b81053693ba53405b6f510ac16c upstream.
+commit 590cc4d782487632a52f37c2171bee1eeea29627 upstream.
 
-vmw_cmd_dma() locates the DMA suffix at
+Commit b6a57912854e ("HID: logitech-dj: Prevent REPORT_ID_DJ_SHORT
+related user initiated OOB write") added validation for the DJ short
+output report, but the error path dereferences rep->field[0] even when
+rep->maxfield is zero.
 
-	(unsigned long) &cmd->body + header->size - sizeof(*suffix)
+Commit 8b9a097eb2fc ("HID: logitech-dj: fix wrong detection of bad
+DJ_SHORT output report") made the check conditional on rep being present,
+but a crafted descriptor can still create report ID 0x20 with only padding
+output items. hid-core registers the report, ignores the padding field,
+and leaves rep->maxfield as zero.
 
-without checking that header->size is large enough to contain both
-cmd->body and the suffix.  An undersized header makes the suffix
-pointer underflow back into the previous command in the bounce
-buffer.  The verifier later writes suffix->maximumOffset, clobbering
-verified fields of an already-relocated earlier command -- a TOCTOU
-on the device-visible command stream that lets one command rewrite
-another's GMR id, surface id, or other authenticated fields.
+In that case the validation enters the rep->maxfield < 1 branch and then
+dereferences rep->field[0]->report_count while printing the error message,
+causing a NULL pointer dereference during probe. This is reproducible with
+uhid by emulating a Logitech receiver with a padding-only DJ short output
+report:
 
-Reject the command if the body is too small for the suffix to fit.
+  BUG: KASAN: null-ptr-deref in logi_dj_probe+0xb1/0x754 [hid_logitech_dj]
+  Read of size 4 at addr 0000000000000028 by task kworker/4:1/129
+  ...
+  Call Trace:
+   logi_dj_probe+0xb1/0x754 [hid_logitech_dj]
+   hid_device_probe+0x329/0x3f0 [hid]
+   really_probe+0x162/0x570
+   __device_attach+0x137/0x2c0
+   bus_probe_device+0x38/0xc0
+   device_add+0xa56/0xce0
+   hid_add_device+0x19c/0x280 [hid]
+   uhid_device_add_worker+0x2c/0xb0 [uhid]
 
-Fixes: 4e4ddd477743 ("drm/vmwgfx: Fix queries if no dma buffer thrashing is occuring.")
+Reject the zero-field report before printing the field report_count.
+
+Fixes: b6a57912854e ("HID: logitech-dj: Prevent REPORT_ID_DJ_SHORT related user initiated OOB write")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4.7
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
-Link: https://patch.msgid.link/20260505222728.519626-8-zack.rusin@broadcom.com
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/hid/hid-logitech-dj.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -1529,6 +1529,12 @@ static int vmw_cmd_dma(struct vmw_privat
- 	bool dirty;
+--- a/drivers/hid/hid-logitech-dj.c
++++ b/drivers/hid/hid-logitech-dj.c
+@@ -1715,8 +1715,13 @@ static int logi_dj_probe(struct hid_devi
+ 	output_report_enum = &hdev->report_enum[HID_OUTPUT_REPORT];
+ 	rep = output_report_enum->report_id_hash[REPORT_ID_DJ_SHORT];
  
- 	cmd = container_of(header, typeof(*cmd), header);
-+
-+	if (unlikely(header->size < sizeof(cmd->body) + sizeof(*suffix))) {
-+		VMW_DEBUG_USER("Illegal SVGA_3D_CMD_SURFACE_DMA size.\n");
+-	if (rep && (rep->maxfield < 1 ||
+-		    rep->field[0]->report_count != DJREPORT_SHORT_LENGTH - 1)) {
++	if (rep && rep->maxfield < 1) {
++		hid_err(hdev, "Expected size of DJ short report is %d, but got 0",
++			DJREPORT_SHORT_LENGTH - 1);
 +		return -EINVAL;
 +	}
 +
- 	suffix = (SVGA3dCmdSurfaceDMASuffix *)((unsigned long) &cmd->body +
- 					       header->size - sizeof(*suffix));
- 
++	if (rep && rep->field[0]->report_count != DJREPORT_SHORT_LENGTH - 1) {
+ 		hid_err(hdev, "Expected size of DJ short report is %d, but got %d",
+ 			DJREPORT_SHORT_LENGTH - 1, rep->field[0]->report_count);
+ 		return -EINVAL;
 
 
