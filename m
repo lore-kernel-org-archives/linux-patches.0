@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53EE941D227;
-	Mon, 17 Aug 2026 14:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E5B42586E;
+	Mon, 17 Aug 2026 14:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976912; cv=none; b=Os7cjPXsbCWS1Z+BaHM/V9qldmD1UUnPMyuguj07isMTCZgZZDbTT/rj8N4qOQEsnjGa0ue0eO6kDpgUnIu/xzqvy+rUWPhsffyt15wMejJavCGRpfyro12u+rqVdDQeIgQVbZ/PL4pd48h3fcTfaXUNsLw5EZDi3ElMJck+Z5U=
+	t=1786976915; cv=none; b=BRICipSaTLI8PXG76ddfSXusovl1w/F40twogss5D/DoKxBagVzLuXi7aO/1yJgW0E2hc2gf2QcPMuUiJgjOdv6UNjYfvnFmiF2BeoiYebxRVDa+fT0UjnzcOhIJil8ZkNAa8yer/YkPZ6BT2JG9aIPTsLLHXc+MoJ3LqJZr/XA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976912; c=relaxed/simple;
-	bh=nzBSHSmd3or91MMe9tlCA7dF3XIii57RKMNOrCATtI8=;
+	s=arc-20240116; t=1786976915; c=relaxed/simple;
+	bh=TS//Sx9aUDGddikzFNjkPVu7Kwr8zQhr4/CbjqAeUY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q9w0JZh0esyRrwAWEg1kXALcKzwkpPEaC1aamldT+eURpRVVA7LEu0rC0YLmJV92659VcMe8eBEHnYOS3trZ28uFF3qzsuUsq4+9NmslZy+qdoecEGOn5RiU2exPRPAL4Gpuf31SEZZyw6XM+r1otw5Rwscd5DtWAGJoK6D1L/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJAUU/ms; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WPysom5VZEegyPsk8aba4dvdK4QY/jgIu2f5yaMGqqTC/ISgHd9aqdNvQwPgUy7OlPbtFrWzCtgbOTCulwJHcFxlUEGDs9H0211fRwVoz1N6sVKAzFxpKqWRHq84qvH4Rff/BzxAlMD4eAQ+teW2fOCpDmbWq5b8FaeGlHFcUT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uynT9V2b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJAUU/ms"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC48C1F00A3D;
-	Mon, 17 Aug 2026 14:28:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uynT9V2b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE7B1F00A3D;
+	Mon, 17 Aug 2026 14:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976911;
-	bh=CM1IceG+etn2nPRwlMaplcmZhabHxntRecGhQ+X1ECM=;
+	s=korg; t=1786976914;
+	bh=01H4swl8+WWP4+4JKlaBCO3ZtzKh0pNHZjOoopjCHRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hJAUU/ms6YVXlbSk1Fcp0Tjnaw56TTuArqbiejhfQ3FNHcnOdMujuTvMxJRMZW80i
-	 54M4smWYQIut1xb89gzIYYAGwg45DYb/dhOQG1zlezQFbzNqQ/beWQM4g3k9b8F6wT
-	 BanDahU9FbEWfWElchR7wwtSAjLWfnmI/pLMmmEg=
+	b=uynT9V2b4RVPXgP/PEmpk/EH371rBethldlOJCLIGD19/A00Cba+1J2peNaQEZUYI
+	 st0TRLFdotop7Y1WzZnXuxEUFgeHQ7UXxAovfLTIbvlQJ651ymC8ClJIQ61my+AzP2
+	 5tYYuVh/bCHTieWgdSDqo2kk56gRmUlgt/qTKGyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Pope <andrew.pope@morsemicro.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	Allison Henderson <achender@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 108/456] wifi: mac80211: recalculate TIM when a station enters power save
-Date: Mon, 17 Aug 2026 15:28:18 +0200
-Message-ID: <20260817132544.319856498@linuxfoundation.org>
+Subject: [PATCH 5.15 099/456] rds: drop incoming messages that cross network namespace boundaries
+Date: Mon, 17 Aug 2026 15:28:09 +0200
+Message-ID: <20260817132543.970037215@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,54 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Pope <andrew.pope@morsemicro.com>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-[ Upstream commit a007a384c9eb17610f53a53e2f59944c31f1565a ]
+[ Upstream commit 5521ae71e32a8069ed4ca6e792179dc57bc43ab2 ]
 
-When an AP buffers frames for a station on its per-station TXQs and the
-station subsequently enters power save, sta_ps_start() records the
-buffered TIDs in txq_buffered_tids but does not update the TIM. The
-station's TIM bit is only ever set when a further frame is buffered
-while the station is already asleep
-(ieee80211_tx_h_unicast_ps_buf() -> sta_info_recalc_tim()).
+rds_find_bound() looks up the destination socket using a global
+rhashtable keyed solely on (addr, port, scope_id).  Network namespaces
+are not part of the key, so a sender in netns A can deliver an incoming
+message (inc) to a socket that lives in a different netns B.
 
-If no further downlink frame arrives for that station the beacon
-TIM never advertises the buffered traffic. A station relying on the
-TIM then remains in doze indefinitely on top of a non-empty queue. Its
-TXQs were removed from the scheduler's active list at PS entry, nothing
-pages it, and the flow deadlocks until an unrelated event wakes the
-station.
+When this happens, inc->i_conn points to an rds_connection whose c_net
+is netns A, but the receiving rs lives in netns B.  Once the child
+process that created netns A exits, cleanup_net() calls
+rds_loop_exit_net() -> rds_loop_kill_conns() -> rds_conn_destroy(),
+freeing that connection.  If the survivor socket in netns B still holds
+the inc, any subsequent dereference of inc->i_conn is a use-after-free.
 
-Recalculate the TIM at the end of sta_ps_start(), so traffic
-already buffered at PS entry is advertised immediately.
-sta_info_recalc_tim() already consults txq_buffered_tids, which is
-updated above, and is safe in this context (it is already called
-from equivalent paths such as the tx handlers and
-ieee80211_handle_filtered_frame()).
+There are two dangerous sites in rds_clear_recv_queue():
+  1. inc->i_conn->c_lcong (offset 88 of freed rds_connection, size 200)
+     read via rds_recv_rcvbuf_delta() -- confirmed by KASAN.
+  2. inc->i_conn->c_trans->inc_free(inc) (function pointer at offset 80)
+     called via rds_inc_put() when the inc refcount reaches zero -- same
+     race window, potential call-through-freed-object primitive.
 
-Fixes: ba8c3d6f16a1 ("mac80211: add an intermediate software queue implementation")
-Signed-off-by: Andrew Pope <andrew.pope@morsemicro.com>
-Link: https://patch.msgid.link/20260717011751.79524-1-andrew.pope@morsemicro.com
-[add wifi: subject prefix]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The bug is reachable from unprivileged user namespaces
+(CLONE_NEWUSER + CLONE_NEWNET), available since Linux 3.8.
+
+Fix this by rejecting the delivery in rds_recv_incoming() when the
+socket returned by rds_find_bound() belongs to a different network
+namespace than the connection that carried the message.  Use the
+existing rds_conn_net() / sock_net() helpers and net_eq() for the
+comparison.
+
+Fixes: c809195f5523 ("rds: clean up loopback rds_connections on netns deletion")
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Tested-by: Allison Henderson <achender@kernel.org>
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260708024314.601139-1-achender@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/rx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/rds/recv.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index 15933e9abc9b9e..dda1ee11f8a8cb 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -1591,6 +1591,8 @@ static void sta_ps_start(struct sta_info *sta)
- 		else
- 			clear_bit(tid, &sta->txq_buffered_tids);
+diff --git a/net/rds/recv.c b/net/rds/recv.c
+index a316180d3c32ec..7fd77e1b4fe71c 100644
+--- a/net/rds/recv.c
++++ b/net/rds/recv.c
+@@ -365,6 +365,21 @@ void rds_recv_incoming(struct rds_connection *conn, struct in6_addr *saddr,
+ 		goto out;
  	}
-+
-+	sta_info_recalc_tim(sta);
- }
  
- static void sta_ps_end(struct sta_info *sta)
++	/*
++	 * rds_find_bound() uses a global (netns-agnostic) hash table.
++	 * An RDS connection created in netns A can match a socket bound
++	 * in the init netns, delivering inc cross-netns with inc->i_conn
++	 * pointing into netns A.  When cleanup_net() then frees that conn,
++	 * any subsequent dereference of inc->i_conn is a use-after-free.
++	 * Drop the inc if the receiving socket lives in a different netns.
++	 */
++	if (!net_eq(sock_net(rds_rs_to_sk(rs)), rds_conn_net(conn))) {
++		rds_stats_inc(s_recv_drop_no_sock);
++		rds_sock_put(rs);
++		rs = NULL;
++		goto out;
++	}
++
+ 	/* Process extension headers */
+ 	rds_recv_incoming_exthdrs(inc, rs);
+ 
 -- 
 2.53.0
 
