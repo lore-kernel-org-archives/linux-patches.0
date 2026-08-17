@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B2821CC5C;
-	Mon, 17 Aug 2026 14:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCCD439F71;
+	Mon, 17 Aug 2026 14:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978608; cv=none; b=GY1aPdkTgFBYMma5ONtZmTHbb4gi0xg/447kMnk39b4UHDzeVRPsB69ahtRSU/6DKy+0HZ/V0HlGg39WCV/vffLKik7LA1AN75dJz2UGOgiZXQrjNXRLYCz506jAeYucidi0hjII+JfE6JB9JYrMHgRuJ77TtQRRjLXrOdXusWU=
+	t=1786978611; cv=none; b=krlXz6W83fhXyYTGAu/TN3SHs0e83XqkxeNe4URt5H0YG3f16McpJ35bJCwxll6VVM/WXEXy+/UbSAJqa3pVdeRRv94A/0ZrMbEjO/O2ky/g5XX8J2KaKeVca+h3J/NyB1hmZpdckl0PQw2v7rjct2emAl1NBU7LNvjK7GdYeFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978608; c=relaxed/simple;
-	bh=a5BeRxFhfhyNlDMLAmwl0EqWlTm0ycU8RezrHWtX8QI=;
+	s=arc-20240116; t=1786978611; c=relaxed/simple;
+	bh=DCAmWBklopJuWB5q1Tcfyl4vcd3vOJr0zuE6yzNmFz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zy1/O/0YYqX441GLjDHCDELz0fSCaFTTm/JUBM2St2JZEdWkscZ2ZFU96d6tDtBfkX3wE4foQ0JlBPoDJ1QFN+ZtVbOgH1x6ryGUvqql0V7TPMqQIBtHGzLa+LDORW3x2TchSdC+0HkwyjGITEzMnhmoMYpLlNgD8YNr00lblS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1Cy7ui2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mZpIFz/PC03GtpMUsmjuQP0dBkzWLdxgJh2UW0ZThx9jNZHia2q2WUsOkFtT4JE5XdRoMUEDCsysdcWw4oMoeGR3mA/d+BD59Nc4v8oCBuU6dST9eED3j/DA7ts9zGH200MsCmGYzGkb2S4KLV0LKeqM72BVNi3sdAHOXuxSr7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YIpCDzxl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1Cy7ui2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECFFA1F00A3A;
-	Mon, 17 Aug 2026 14:56:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YIpCDzxl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A3F1F000E9;
+	Mon, 17 Aug 2026 14:56:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978607;
-	bh=qrex3BcQ2PoUoYp3kOU3GBA5imBKRyjhJA//5iReZgI=;
+	s=korg; t=1786978610;
+	bh=q23R043zkbCRV5tOVwa70NKBA+OUws1/ATFhWnmLYv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u1Cy7ui2dswSkynFs6uaaYq/zeAPBuvSesb0TcWf9TzEhJvRdUkMPdLlnis0GzAAN
-	 pVf7mXvlKLE+SZ0A75IhWqXMz7ypQZV82CdnzqHHrBF2c9e9b6EQ/KCj7ktoSZTJN6
-	 TRbVFINwHEcFnFtDCk6CbvjjZT13qKegdhz5Z+RA=
+	b=YIpCDzxllIwFOHlCbyRKoSIq8zDmp4JCkaPSunWQAL099ObkANDgZGmn0piNZ4BtB
+	 Pc1OiHgn721JK6r7LvFCheWUNj3t1lXvFVTgC2otvfu6Yss6oYJA+5pPv9I0d6+Nih
+	 G/O87WmOXSu2yMLn8egGQ6ZlHcKcPsYdSfUhqxkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Kees Cook <kees@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 096/156] fortify: refactor test_fortify Makefile to fix some build problems
-Date: Mon, 17 Aug 2026 15:33:50 +0200
-Message-ID: <20260817132538.374840037@linuxfoundation.org>
+	Qihang Tang <q.h.hack.winter@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 079/156] packet: use consistent hard_header_len in non-ring send paths
+Date: Mon, 17 Aug 2026 15:33:33 +0200
+Message-ID: <20260817132537.689874537@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -52,175 +51,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Qihang Tang <q.h.hack.winter@gmail.com>
 
-commit 4e9903b0861c9df3464b82db4a7025863bac1897 upstream.
+commit 03390aa32e669cc4ecd7d34108e2e1afc13d689d upstream.
 
-There are some issues in the test_fortify Makefile code.
+packet_snd() reads dev->hard_header_len multiple times while allocating
+and constructing an skb. Device reconfiguration can change this value
+concurrently, for example through bonding device type changes.
 
-Problem 1: cc-disable-warning invokes compiler dozens of times
+For SOCK_RAW, packet_snd() can save a larger value in reserve and later
+allocate headroom using a smaller value. Moving skb->data back by reserve
+then places it before skb->head, and the following copy from userspace can
+attempt an out-of-bounds write.
 
-To see how many times the cc-disable-warning is evaluated, change
-this code:
+packet_sendmsg_spkt() has the same issue because it calculates its
+reservation and header offset from separate reads before dropping the RCU
+read lock to allocate the skb.
 
-  $(call cc-disable-warning,fortify-source)
+Add LL_RESERVED_SPACE_EX() for callers that already saved a header length.
+Read hard_header_len once in packet_snd() and use it for allocation and
+construction. In packet_sendmsg_spkt(), preserve the allocation-time value
+through the device lookup retry.
 
-to:
+The separate SOCK_DGRAM consistency problem between hard_header_len and
+header_ops->create is not addressed here.
 
-  $(call cc-disable-warning,$(shell touch /tmp/fortify-$$$$)fortify-source)
-
-Then, build the kernel with CONFIG_FORTIFY_SOURCE=y. You will see a
-large number of '/tmp/fortify-<PID>' files created:
-
-  $ ls -1 /tmp/fortify-* | wc
-       80      80    1600
-
-This means the compiler was invoked 80 times just for checking the
--Wno-fortify-source flag support.
-
-$(call cc-disable-warning,fortify-source) should be added to a simple
-variable instead of a recursive variable.
-
-Problem 2: do not recompile string.o when the test code is updated
-
-The test cases are independent of the kernel. However, when the test
-code is updated, $(obj)/string.o is rebuilt and vmlinux is relinked
-due to this dependency:
-
-  $(obj)/string.o: $(obj)/$(TEST_FORTIFY_LOG)
-
-always-y is suitable for building the log files.
-
-Problem 3: redundant code
-
-  clean-files += $(addsuffix .o, $(TEST_FORTIFY_LOGS))
-
-... is unneeded because the top Makefile globally cleans *.o files.
-
-This commit fixes these issues and makes the code readable.
-
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Link: https://lore.kernel.org/r/20240727150302.1823750-2-masahiroy@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
-[nathan: Fixed conflicts]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b84bbaf7a6c8 ("packet: in packet_snd start writing at link layer allocation")
+Cc: stable@vger.kernel.org
+Signed-off-by: Qihang Tang <q.h.hack.winter@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260805125729.19220-3-q.h.hack.winter@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/.gitignore              |  2 --
- lib/Makefile                | 34 +---------------------------------
- lib/test_fortify/.gitignore |  2 ++
- lib/test_fortify/Makefile   | 28 ++++++++++++++++++++++++++++
- scripts/remove-stale-files  |  2 ++
- 5 files changed, 33 insertions(+), 35 deletions(-)
- create mode 100644 lib/test_fortify/.gitignore
- create mode 100644 lib/test_fortify/Makefile
+ include/linux/netdevice.h |    6 ++++--
+ net/packet/af_packet.c    |   26 ++++++++++++++++----------
+ 2 files changed, 20 insertions(+), 12 deletions(-)
 
-diff --git a/lib/.gitignore b/lib/.gitignore
-index 54596b634ecbf..101a4aa92fb53 100644
---- a/lib/.gitignore
-+++ b/lib/.gitignore
-@@ -5,5 +5,3 @@
- /gen_crc32table
- /gen_crc64table
- /oid_registry_data.c
--/test_fortify.log
--/test_fortify/*.log
-diff --git a/lib/Makefile b/lib/Makefile
-index b9d2577fbbe19..62737ad5aa74e 100644
---- a/lib/Makefile
-+++ b/lib/Makefile
-@@ -407,36 +407,4 @@ CFLAGS_longest_symbol_kunit.o += $(call cc-disable-warning, missing-prototypes)
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -301,9 +301,11 @@ struct hh_cache {
+  * We could use other alignment values, but we must maintain the
+  * relationship HH alignment <= LL alignment.
+  */
+-#define LL_RESERVED_SPACE(dev) \
+-	((((dev)->hard_header_len + READ_ONCE((dev)->needed_headroom)) \
++#define LL_RESERVED_SPACE_EX(dev, hlen) \
++	((((hlen) + READ_ONCE((dev)->needed_headroom)) \
+ 	  & ~(HH_DATA_MOD - 1)) + HH_DATA_MOD)
++#define LL_RESERVED_SPACE(dev) \
++	LL_RESERVED_SPACE_EX(dev, (dev)->hard_header_len)
+ #define LL_RESERVED_SPACE_EXTRA(dev,extra) \
+ 	((((dev)->hard_header_len + READ_ONCE((dev)->needed_headroom) + (extra)) \
+ 	  & ~(HH_DATA_MOD - 1)) + HH_DATA_MOD)
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2005,8 +2005,9 @@ static int packet_sendmsg_spkt(struct so
+ 	struct net_device *dev;
+ 	struct sockcm_cookie sockc;
+ 	__be16 proto = 0;
+-	int err;
++	int hard_header_len;
+ 	int extra_len = 0;
++	int err;
  
- obj-$(CONFIG_GENERIC_LIB_DEVMEM_IS_ALLOWED) += devmem_is_allowed.o
+ 	/*
+ 	 *	Get and verify the address.
+@@ -2049,14 +2050,18 @@ retry:
+ 		extra_len = 4; /* We're doing our own CRC */
+ 	}
  
--# FORTIFY_SOURCE compile-time behavior tests
--TEST_FORTIFY_SRCS = $(wildcard $(srctree)/$(src)/test_fortify/*-*.c)
--TEST_FORTIFY_LOGS = $(patsubst $(srctree)/$(src)/%.c, %.log, $(TEST_FORTIFY_SRCS))
--TEST_FORTIFY_LOG = test_fortify.log
--
--quiet_cmd_test_fortify = TEST    $@
--      cmd_test_fortify = $(CONFIG_SHELL) $(srctree)/scripts/test_fortify.sh \
--			$< $@ "$(NM)" $(CC) $(c_flags) \
--			$(call cc-disable-warning,fortify-source) \
--			-DKBUILD_EXTRA_WARN1
--
--targets += $(TEST_FORTIFY_LOGS)
--clean-files += $(TEST_FORTIFY_LOGS)
--clean-files += $(addsuffix .o, $(TEST_FORTIFY_LOGS))
--$(obj)/test_fortify/%.log: $(src)/test_fortify/%.c \
--			   $(src)/test_fortify/test_fortify.h \
--			   $(srctree)/include/linux/fortify-string.h \
--			   $(srctree)/scripts/test_fortify.sh \
--			   FORCE
--	$(call if_changed,test_fortify)
--
--quiet_cmd_gen_fortify_log = GEN     $@
--      cmd_gen_fortify_log = cat </dev/null $(filter-out FORCE,$^) 2>/dev/null > $@ || true
--
--targets += $(TEST_FORTIFY_LOG)
--clean-files += $(TEST_FORTIFY_LOG)
--$(obj)/$(TEST_FORTIFY_LOG): $(addprefix $(obj)/, $(TEST_FORTIFY_LOGS)) FORCE
--	$(call if_changed,gen_fortify_log)
--
--# Fake dependency to trigger the fortify tests.
--ifeq ($(CONFIG_FORTIFY_SOURCE),y)
--$(obj)/string.o: $(obj)/$(TEST_FORTIFY_LOG)
--endif
-+subdir-$(CONFIG_FORTIFY_SOURCE) += test_fortify
-diff --git a/lib/test_fortify/.gitignore b/lib/test_fortify/.gitignore
-new file mode 100644
-index 0000000000000..c1ba37d14b50e
---- /dev/null
-+++ b/lib/test_fortify/.gitignore
-@@ -0,0 +1,2 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+/*.log
-diff --git a/lib/test_fortify/Makefile b/lib/test_fortify/Makefile
-new file mode 100644
-index 0000000000000..7887e6126e79c
---- /dev/null
-+++ b/lib/test_fortify/Makefile
-@@ -0,0 +1,28 @@
-+# SPDX-License-Identifier: GPL-2.0
++	/* Keep the allocation-time header length across retry. */
++	if (!skb)
++		hard_header_len = READ_ONCE(dev->hard_header_len);
 +
-+ccflags-y := $(call cc-disable-warning,fortify-source)
-+
-+quiet_cmd_test_fortify = TEST    $@
-+      cmd_test_fortify = $(CONFIG_SHELL) $(srctree)/scripts/test_fortify.sh \
-+			$< $@ "$(NM)" $(CC) $(c_flags) -DKBUILD_EXTRA_WARN1
-+
-+$(obj)/%.log: $(src)/%.c $(srctree)/scripts/test_fortify.sh \
-+	      $(src)/test_fortify.h \
-+	      $(srctree)/include/linux/fortify-string.h \
-+	      FORCE
-+	$(call if_changed,test_fortify)
-+
-+logs = $(patsubst $(srctree)/$(src)/%.c, %.log, $(wildcard $(srctree)/$(src)/*-*.c))
-+targets += $(logs)
-+
-+quiet_cmd_gen_fortify_log = CAT     $@
-+      cmd_gen_fortify_log = cat $(or $(real-prereqs),/dev/null) > $@
-+
-+$(obj)/test_fortify.log: $(addprefix $(obj)/, $(logs)) FORCE
-+	$(call if_changed,gen_fortify_log)
-+
-+always-y += test_fortify.log
-+
-+# Some architectures define __NO_FORTIFY if __SANITIZE_ADDRESS__ is undefined.
-+# Pass CFLAGS_KASAN to avoid warnings.
-+KASAN_SANITIZE := y
-diff --git a/scripts/remove-stale-files b/scripts/remove-stale-files
-index 8b1a636f85434..38eb84eb605b6 100755
---- a/scripts/remove-stale-files
-+++ b/scripts/remove-stale-files
-@@ -39,3 +39,5 @@ rm -rf include/ksym
- find . -name '*.usyms' | xargs rm -f
+ 	err = -EMSGSIZE;
+-	if (len > dev->mtu + dev->hard_header_len + VLAN_HLEN + extra_len)
++	if (len > dev->mtu + hard_header_len + VLAN_HLEN + extra_len)
+ 		goto out_unlock;
  
- rm -f binkernel.spec
-+
-+rm -f lib/test_fortify.log
--- 
-2.53.0
-
+ 	if (!skb) {
+-		size_t reserved = LL_RESERVED_SPACE(dev);
++		size_t reserved = LL_RESERVED_SPACE_EX(dev, hard_header_len);
+ 		int tlen = dev->needed_tailroom;
+-		unsigned int hhlen = dev->header_ops ? dev->hard_header_len : 0;
++		unsigned int hhlen = dev->header_ops ? hard_header_len : 0;
+ 
+ 		rcu_read_unlock();
+ 		skb = sock_wmalloc(sk, len + reserved + tlen, 0, GFP_KERNEL);
+@@ -2086,7 +2091,7 @@ retry:
+ 		err = -EINVAL;
+ 		goto out_unlock;
+ 	}
+-	if (len > (dev->mtu + dev->hard_header_len + extra_len) &&
++	if (len > (dev->mtu + hard_header_len + extra_len) &&
+ 	    !packet_extra_vlan_len_allowed(dev, skb)) {
+ 		err = -EMSGSIZE;
+ 		goto out_unlock;
+@@ -3015,7 +3020,7 @@ static int packet_snd(struct socket *soc
+ 	int offset = 0;
+ 	struct packet_sock *po = pkt_sk(sk);
+ 	int vnet_hdr_sz = READ_ONCE(po->vnet_hdr_sz);
+-	int hlen, tlen, linear;
++	int hard_header_len, hlen, tlen, linear;
+ 	int extra_len = 0;
+ 
+ 	/*
+@@ -3056,8 +3061,9 @@ static int packet_snd(struct socket *soc
+ 			goto out_unlock;
+ 	}
+ 
++	hard_header_len = READ_ONCE(dev->hard_header_len);
+ 	if (sock->type == SOCK_RAW)
+-		reserve = dev->hard_header_len;
++		reserve = hard_header_len;
+ 	if (vnet_hdr_sz) {
+ 		err = packet_snd_vnet_parse(msg, &len, &vnet_hdr, vnet_hdr_sz);
+ 		if (err)
+@@ -3078,10 +3084,10 @@ static int packet_snd(struct socket *soc
+ 		goto out_unlock;
+ 
+ 	err = -ENOBUFS;
+-	hlen = LL_RESERVED_SPACE(dev);
++	hlen = LL_RESERVED_SPACE_EX(dev, hard_header_len);
+ 	tlen = dev->needed_tailroom;
+ 	linear = __virtio16_to_cpu(vio_le(), vnet_hdr.hdr_len);
+-	linear = max(linear, min_t(int, len, dev->hard_header_len));
++	linear = max(linear, min_t(int, len, hard_header_len));
+ 	skb = packet_alloc_skb(sk, hlen + tlen, hlen, len, linear,
+ 			       msg->msg_flags & MSG_DONTWAIT, &err);
+ 	if (skb == NULL)
+@@ -3097,7 +3103,7 @@ static int packet_snd(struct socket *soc
+ 	} else if (reserve) {
+ 		skb_reserve(skb, -reserve);
+ 		if (len < reserve + sizeof(struct ipv6hdr) &&
+-		    dev->min_header_len != dev->hard_header_len)
++		    dev->min_header_len != hard_header_len)
+ 			skb_reset_network_header(skb);
+ 	}
+ 
 
 
