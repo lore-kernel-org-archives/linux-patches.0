@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79923FA5E7;
-	Mon, 17 Aug 2026 14:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1403E025C;
+	Mon, 17 Aug 2026 14:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975718; cv=none; b=h8v7t2XB2Bpp3jRszlXZYJ8patdzoZ17tZ3ELeKLpd6WCxN+GKuxuEuJz6edmznWIHLYv2Qh13QptlCRa2UNCo8Fet0knMN5H6MnMfKjCcIGDa1EL2P32ZQHxrkafY/MPNs7HQLv3Q9CWzrPAIqOkDo6DWarfuaeN1XVETMxggI=
+	t=1786975720; cv=none; b=QA1jggk3r+4PKppRmXrFhsgUc6aLwVTcXD1w6JOZIDAm92mW40GT+FrHU88/t9SrW3wY5mqepnh3vQOmB1ev1O7nTCSsQoeqXKJaiFRA/cSOlDGaWpfVpBdP8Ucno9o7fQoIxU8htzJgiRsE4px4EwOl6FlF6klHpjlcR4vp6+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975718; c=relaxed/simple;
-	bh=tNdLWV8jn6krV/YOBYDQ+0VAwXmyZXCuyqMzZvf3ve4=;
+	s=arc-20240116; t=1786975720; c=relaxed/simple;
+	bh=v9NcA9E2cI8Vr21u4zpXPKcUrCuv1i+SNHKb6Nqducg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TLOir4DEIAmu5H8h4d9BjbrM0rgKoyRT9KjWdzIvpQScby3YKT6noZm0rHIoo3BdrbEPQ/RD3QjJbh0SxB1Mnb8SqGEyw6JPEVsX+hQZN1QtnMEPWkcWYCeTcg/APDUZlE53DNG3yGhiNDEWfu6b4CA0efgbE7cARS/FV2lVs9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GTFyxSYI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BZDUuWwjQDUnaeM37daPG1SW+GQ7j7kSeGZGMJUsbhYO4UFlv4uwGJyOjdLefr2QaOE3gAeiJQXHkB3VTaxrD3Tj7+Tsiuk0768eweXFT7HUzkotxxA1oyRWEXHkz6tzcI/YuUgywmHH4fxZOUwTEFM62W6hfJ6A37u56EeF7tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hLKeqkYu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GTFyxSYI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09ADC1F00A3A;
-	Mon, 17 Aug 2026 14:08:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hLKeqkYu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FB11F000E9;
+	Mon, 17 Aug 2026 14:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975716;
-	bh=nP2iiZBSbUuR7Gus1682W31HNw5Klwuzv4GkZciLmWU=;
+	s=korg; t=1786975719;
+	bh=CvBepDhfru4/T0Dv7JvHKaoyHGzhBtY13MhuSx4oXDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GTFyxSYIez8a67Yz7HvS5keUHRLaagQq+eLoqnGfbWd2r8rMfE9s+fp4DqLW1bijH
-	 eMWi9KRxu7Jh5GpIEl5I5mIhoQ4xuB2zsECZkuG+XiC9vjEwAb5rgdTgYBq2UtT30V
-	 pTv9eAf2cJbqHb7LAIBdXsqQE8cSV5d3IDQ/nqUU=
+	b=hLKeqkYuJc0mKMMyI14K5nFRznx6dkbxtk7n48wWlyLw9vCQKunjMK/o92VbPe+zC
+	 djR/fDkHn+m0LBVraBJfWd2Yd9X1YGxxYre2gYGsAou491AVQkMjEg33l+UXkAr32N
+	 9ZPxxo/o7U85PSqciLjpYZYeQxTclnyCPD25Sr/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
+	Wang Jun <1742789905@qq.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.10 125/389] media: cx231xx: fix devres lifetime
-Date: Mon, 17 Aug 2026 15:29:24 +0200
-Message-ID: <20260817132544.037463496@linuxfoundation.org>
+Subject: [PATCH 5.10 126/389] media: cx23885: add ioremap return check and cleanup
+Date: Mon, 17 Aug 2026 15:29:25 +0200
+Message-ID: <20260817132544.076135788@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -50,79 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Wang Jun <1742789905@qq.com>
 
-commit 7d6358ab02866e5b7ed8d3a00805297617bbb0ec upstream.
+commit a0701e387b46e2481c05b47f1235b954bfc2af3e upstream.
 
-USB drivers bind to USB interfaces and any device managed resources
-should have their lifetime tied to the interface rather than parent USB
-device. This avoids issues like memory leaks when drivers are unbound
-without their devices being physically disconnected (e.g. on probe
-deferral or configuration changes).
+Add a check for the return value of pci_ioremap_bar()
+in cx23885_dev_setup().
+If ioremap for BAR0 fails, release the already allocated
+PCI memory region,
+decrement the device count, and return -ENODEV.
 
-Fix the driver state lifetime so that it is released on driver unbind.
+This prevents a potential null pointer dereference and
+ensures proper cleanup
+on memory mapping failure.
 
-Fixes: 184a82784d50 ("[media] cx231xx: use devm_ functions to allocate memory")
-Cc: stable@vger.kernel.org	# 3.17
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: d19770e5178a ("V4L/DVB (6150): Add CX23885/CX23887 PCIe bridge driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wang Jun <1742789905@qq.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/cx231xx/cx231xx-cards.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/media/pci/cx23885/cx23885-core.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/media/usb/cx231xx/cx231xx-cards.c
-+++ b/drivers/media/usb/cx231xx/cx231xx-cards.c
-@@ -1577,7 +1577,8 @@ static int cx231xx_init_v4l2(struct cx23
- 		 dev->video_mode.end_point_addr,
- 		 dev->video_mode.num_alt);
+--- a/drivers/media/pci/cx23885/cx23885-core.c
++++ b/drivers/media/pci/cx23885/cx23885-core.c
+@@ -990,8 +990,12 @@ static int cx23885_dev_setup(struct cx23
+ 	}
  
--	dev->video_mode.alt_max_pkt_size = devm_kmalloc_array(&udev->dev, 32, dev->video_mode.num_alt, GFP_KERNEL);
-+	dev->video_mode.alt_max_pkt_size = devm_kmalloc_array(&interface->dev, 32,
-+							      dev->video_mode.num_alt, GFP_KERNEL);
- 	if (dev->video_mode.alt_max_pkt_size == NULL)
- 		return -ENOMEM;
+ 	/* PCIe stuff */
+-	dev->lmmio = ioremap(pci_resource_start(dev->pci, 0),
+-			     pci_resource_len(dev->pci, 0));
++	dev->lmmio = pci_ioremap_bar(dev->pci, 0);
++	if (!dev->lmmio) {
++		dev_err(&dev->pci->dev, "CORE %s: can't ioremap MMIO memory\n",
++			dev->name);
++		goto err_release_region;
++	}
  
-@@ -1618,7 +1619,8 @@ static int cx231xx_init_v4l2(struct cx23
- 		 dev->vbi_mode.num_alt);
+ 	dev->bmmio = (u8 __iomem *)dev->lmmio;
  
- 	/* compute alternate max packet sizes for vbi */
--	dev->vbi_mode.alt_max_pkt_size = devm_kmalloc_array(&udev->dev, 32, dev->vbi_mode.num_alt, GFP_KERNEL);
-+	dev->vbi_mode.alt_max_pkt_size = devm_kmalloc_array(&interface->dev, 32,
-+							    dev->vbi_mode.num_alt, GFP_KERNEL);
- 	if (dev->vbi_mode.alt_max_pkt_size == NULL)
- 		return -ENOMEM;
+@@ -1096,6 +1100,12 @@ static int cx23885_dev_setup(struct cx23
+ 	}
  
-@@ -1660,7 +1662,9 @@ static int cx231xx_init_v4l2(struct cx23
- 		 "sliced CC EndPoint Addr 0x%x, Alternate settings: %i\n",
- 		 dev->sliced_cc_mode.end_point_addr,
- 		 dev->sliced_cc_mode.num_alt);
--	dev->sliced_cc_mode.alt_max_pkt_size = devm_kmalloc_array(&udev->dev, 32, dev->sliced_cc_mode.num_alt, GFP_KERNEL);
-+	dev->sliced_cc_mode.alt_max_pkt_size = devm_kmalloc_array(&interface->dev, 32,
-+								  dev->sliced_cc_mode.num_alt,
-+								  GFP_KERNEL);
- 	if (dev->sliced_cc_mode.alt_max_pkt_size == NULL)
- 		return -ENOMEM;
+ 	return 0;
++
++err_release_region:
++	release_mem_region(pci_resource_start(dev->pci, 0),
++			   pci_resource_len(dev->pci, 0));
++	cx23885_devcount--;
++	return -ENODEV;
+ }
  
-@@ -1724,7 +1728,7 @@ static int cx231xx_usb_probe(struct usb_
- 	udev = usb_get_dev(interface_to_usbdev(interface));
- 
- 	/* allocate memory for our device state and initialize it */
--	dev = devm_kzalloc(&udev->dev, sizeof(*dev), GFP_KERNEL);
-+	dev = devm_kzalloc(&interface->dev, sizeof(*dev), GFP_KERNEL);
- 	if (dev == NULL) {
- 		retval = -ENOMEM;
- 		goto err_if;
-@@ -1854,7 +1858,9 @@ static int cx231xx_usb_probe(struct usb_
- 			 dev->ts1_mode.end_point_addr,
- 			 dev->ts1_mode.num_alt);
- 
--		dev->ts1_mode.alt_max_pkt_size = devm_kmalloc_array(&udev->dev, 32, dev->ts1_mode.num_alt, GFP_KERNEL);
-+		dev->ts1_mode.alt_max_pkt_size = devm_kmalloc_array(&interface->dev, 32,
-+								    dev->ts1_mode.num_alt,
-+								    GFP_KERNEL);
- 		if (dev->ts1_mode.alt_max_pkt_size == NULL) {
- 			retval = -ENOMEM;
- 			goto err_video_alt;
+ static void cx23885_dev_unregister(struct cx23885_dev *dev)
 
 
