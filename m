@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B022E43F4A0;
-	Mon, 17 Aug 2026 13:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C05F43E9C6;
+	Mon, 17 Aug 2026 13:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974570; cv=none; b=XieRYSJFPw/nSg4JhVGL00TdKhiIfu5opqz0EEuNLUaeROGGyfjbhEycr9K2p8UYwpoZWpA3uH8S71sZ1vzmJ6DvO//NxVMS5l8TNlFT+uzF6Py2HfsjjFiz3rbOvWUflQE9HeRyQlUV3qppMbhozCtadfJL4VivoeR0H+lGeNs=
+	t=1786974574; cv=none; b=tDX/Oq+NrpFMRKZbeJw2GXBYHxwVOAOvDT8AEAcJBbOPo5yPjQums0pjDnaqvStx6G3514jZCIiQ9npgTQJ6CmCRcX8LWQtXJy0mACQCpZwNOcs5eKQV/TzTkJuuWKpHNzEbaMai3JBdT/hQqCrqZqS92NYM0PQ0tDTWY0d86Fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974570; c=relaxed/simple;
-	bh=QYH7vDlYUoCEAeDEonc8RaJhBhfQ5rrfCZc9sSl1ngA=;
+	s=arc-20240116; t=1786974574; c=relaxed/simple;
+	bh=g449n2U3e3pyO43ykrRCCxxrz8xM7vmcI5VVhWQa7LY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=htnRpmi9P3B2e8chd6/julNv7TiuiYzF7NlU18C+IjCdd7Vdo09wXMPgI9J1dDFVCu6PRSol/IPo+6RiVvJbJHJ3Mgw3+MVAWfwx0t8sfz7F3sCtXe2iCmWBrwdO/uwt3LB9/upY8Wl/6WeYlgsMjrw7oQgyeKRekERRaCJ7rE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fn5vELOj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KuZnghheBVs4iZQRVz3yA4S0WgH7zTH99Pi4XZeDkBvjJ4moVs1AAuPbfHj/vQPvt8iTys+fev55Rl0/t9HAITqhaD3bqshwWQ13XqeamgapWkYeDGmhKuAiQ1dkRMqEjyxskBanwacAMlOpTeehi5/qvY4vIpXJjfyjZPEwC+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bSYJjCa8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fn5vELOj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 347011F00A3A;
-	Mon, 17 Aug 2026 13:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bSYJjCa8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A31B1F000E9;
+	Mon, 17 Aug 2026 13:49:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974566;
-	bh=3vpwQVTlMSqckN6/OHjSRFWG4fAVPVV5BT+Hh4bJX8s=;
+	s=korg; t=1786974569;
+	bh=Hb+xjwDM7AA/TaYN5Thqnwr/xoMCv0hf+V0J3EbXC9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fn5vELOjLQuzAgSgkq07Nt3CsvFfd0NzM6Vzct0WYsc7SGGwHDfqT3sGuEfsZCNQh
-	 yCep+Y+FH4csWM8midKVy7d3Plo8qTpPcYmmmcAsn9mIftclyCGQmLqC57dtBasirS
-	 NCMytiYKMVvv/K2rDx4Vqkb9DHRdCrzNvodPFYLY=
+	b=bSYJjCa8XeRWirS0PQMwcit+8r9A6GPQu8ACUdE5CiN780bg8/27EzRAsiZispixd
+	 8lI5XUnONRNkkvCDYdRQNgtXu3DI9nA/f7ZAY+HxEBEfTfW2lTH3R8/Fwe4D5oQ92q
+	 HqAZQ5i96ewPQQuLmdDI2G+lNiziUAyQHOAdRC9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmed Naseef <naseefkm@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.1 211/271] net: phy: mediatek: fix TX blink masks using the RX bits
-Date: Mon, 17 Aug 2026 15:32:16 +0200
-Message-ID: <20260817132545.486862635@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Xiao Liu <lx24@stu.ynu.edu.cn>,
+	Daming Li <d4n.for.sec@gmail.com>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 212/271] net: smc: fix splice entry lifetime imbalance in smc_rx_splice
+Date: Mon, 17 Aug 2026 15:32:17 +0200
+Message-ID: <20260817132545.524253033@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -51,55 +55,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmed Naseef <naseefkm@gmail.com>
+From: Daming Li <d4n.for.sec@gmail.com>
 
-commit f684c514f7965385dae21f2535f99938e73ec1af upstream.
+commit 5d9686af2976741bbd79b150d1c9e60b81e7f12e upstream.
 
-MTK_GPHY_LED_TX_BLINK_SET and MTK_2P5GPHY_LED_TX_BLINK_SET are built
-from the RX blink bits instead of the TX ones, so both TX masks are
-identical to their RX counterparts. The TX bits they should be using,
-MTK_PHY_LED_BLINK_{10,100,1000,2500}TX, are otherwise only referenced
-by the per-speed branch of mtk_phy_led_hw_ctrl_set().
+smc_rx_splice() passes pages to splice_to_pipe() before taking the
+references that cover the lifetime of each splice entry. In the
+VM-backed RMB path, splice_to_pipe() may drop unqueued entries through
+smc_rx_spd_release(), while queued entries are released later via the
+pipe buffer callback.
 
-A TX trigger selected without a link trigger therefore programs the RX
-blink bits, and the LED blinks on received traffic. The masks are also
-used to decode the blink register in mtk_phy_led_hw_ctrl_get(), which
-as a result cannot tell the two triggers apart: an RX-only
-configuration reads back as RX and TX, and a TX-only configuration
-reads back as neither.
+The old post-splice accounting also derives the number of queued VM pages
+from an offset mutated while building the descriptor, and a multi-page
+splice pairs one sock_hold() with multiple sock_put() calls.
 
-Fixes: 7f9c320c98db ("net: phy: mediatek: Move LED helper functions into mtk phy lib")
+Take the page and socket references for every candidate entry before
+splice_to_pipe(), and drop the matching private state, page reference,
+and socket reference from smc_rx_spd_release() for entries that never
+get queued. This fixes a refcount imbalance that can underflow page
+refcounts and trigger a use-after-free.
+
+Fixes: 9014db202cb7 ("smc: add support for splice()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ahmed Naseef <naseefkm@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260804113511.3371248-1-naseefkm@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Vega <vega@nebusec.ai>
+Co-developed-by: Xiao Liu <lx24@stu.ynu.edu.cn>
+Signed-off-by: Xiao Liu <lx24@stu.ynu.edu.cn>
+Signed-off-by: Daming Li <d4n.for.sec@gmail.com>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Link: https://patch.msgid.link/20260730145552.360287-2-enjou1224z@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/mediatek/mtk.h |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/smc/smc_rx.c |   19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
---- a/drivers/net/phy/mediatek/mtk.h
-+++ b/drivers/net/phy/mediatek/mtk.h
-@@ -53,15 +53,15 @@
- #define MTK_GPHY_LED_RX_BLINK_SET		(MTK_PHY_LED_BLINK_1000RX | \
- 						 MTK_PHY_LED_BLINK_100RX | \
- 						 MTK_PHY_LED_BLINK_10RX)
--#define MTK_GPHY_LED_TX_BLINK_SET		(MTK_PHY_LED_BLINK_1000RX | \
--						 MTK_PHY_LED_BLINK_100RX | \
--						 MTK_PHY_LED_BLINK_10RX)
-+#define MTK_GPHY_LED_TX_BLINK_SET		(MTK_PHY_LED_BLINK_1000TX | \
-+						 MTK_PHY_LED_BLINK_100TX | \
-+						 MTK_PHY_LED_BLINK_10TX)
+--- a/net/smc/smc_rx.c
++++ b/net/smc/smc_rx.c
+@@ -150,7 +150,12 @@ static const struct pipe_buf_operations
+ static void smc_rx_spd_release(struct splice_pipe_desc *spd,
+ 			       unsigned int i)
+ {
++	struct smc_spd_priv *priv = (struct smc_spd_priv *)spd->partial[i].private;
++	struct sock *sk = &priv->smc->sk;
++
++	kfree(priv);
+ 	put_page(spd->pages[i]);
++	sock_put(sk);
+ }
  
- #define MTK_2P5GPHY_LED_ON_SET			(MTK_PHY_LED_ON_LINK2500 | \
- 						 MTK_GPHY_LED_ON_SET)
- #define MTK_2P5GPHY_LED_RX_BLINK_SET		(MTK_PHY_LED_BLINK_2500RX | \
- 						 MTK_GPHY_LED_RX_BLINK_SET)
--#define MTK_2P5GPHY_LED_TX_BLINK_SET		(MTK_PHY_LED_BLINK_2500RX | \
-+#define MTK_2P5GPHY_LED_TX_BLINK_SET		(MTK_PHY_LED_BLINK_2500TX | \
- 						 MTK_GPHY_LED_TX_BLINK_SET)
+ static int smc_rx_splice(struct pipe_inode_info *pipe, char *src, size_t len,
+@@ -209,6 +214,10 @@ static int smc_rx_splice(struct pipe_ino
+ 			offset = 0;
+ 		}
+ 	}
++	for (i = 0; i < nr_pages; i++) {
++		get_page(pages[i]);
++		sock_hold(&smc->sk);
++	}
+ 	spd.nr_pages_max = nr_pages;
+ 	spd.nr_pages = nr_pages;
+ 	spd.pages = pages;
+@@ -217,16 +226,8 @@ static int smc_rx_splice(struct pipe_ino
+ 	spd.spd_release = smc_rx_spd_release;
  
- #define MTK_PHY_LED_STATE_FORCE_ON	0
+ 	bytes = splice_to_pipe(pipe, &spd);
+-	if (bytes > 0) {
+-		sock_hold(&smc->sk);
+-		if (!lgr->is_smcd && smc->conn.rmb_desc->is_vm) {
+-			for (i = 0; i < PAGE_ALIGN(bytes + offset) / PAGE_SIZE; i++)
+-				get_page(pages[i]);
+-		} else {
+-			get_page(smc->conn.rmb_desc->pages);
+-		}
++	if (bytes > 0)
+ 		atomic_add(bytes, &smc->conn.splice_pending);
+-	}
+ 	kfree(priv);
+ 	kfree(partial);
+ 	kfree(pages);
 
 
