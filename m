@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B79442EEDD;
-	Mon, 17 Aug 2026 14:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD15142EEDD;
+	Mon, 17 Aug 2026 14:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977974; cv=none; b=DAnQcUovW8WTDsm6WIIOTtLOQSAv5bRxIzqvndfTxmNNviekrlBCC65uSH5mkCoIVLAJ8U1FJVMt/pvzv4u+7dwpCOqOe3EjZssjxMDUhzBRHpiFPEp/PgiaYDG5XZnzmjplymCAGZewNaTz6rP6Ordu9/Wq53JZQUm7mDTdWRQ=
+	t=1786977977; cv=none; b=uXoYs4J3zAYrqoES4EnoKdsoVudfPjC2wNWGwHL7DgYDFrZkkSrLXFycGEbhACJ1X10q9kkNHvvMrVB7uMBu8b+FnDzxWCabTqw61Q6Fz27BP2m78dGJG2o3F43RNAFKeNxnaBeUowFbJKhNzTCCR40qaWB0zACZDDDoYkSvMLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977974; c=relaxed/simple;
-	bh=6D5LfPbDIvGw+tNnlvIvjtSuaYFWKFIbQA+OJn+Kr+A=;
+	s=arc-20240116; t=1786977977; c=relaxed/simple;
+	bh=JBeGyYAtPPMNZKw/gcibb2tKtW36Ixd4Yjfr+9RekIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PSz4+P65M5tEiWbwDuIvZIruMnfrAIYnkC0/AsiZWbhOwHrrOCStZbkaMOvfkoUEx8JedFP1QgpJUgjYiD9N7qN5W51bxTSd7fTCLBW5BjzSJaunq6EyyjmGCTNVpdVUZbf1lPivmRUO80Z9PeMW6my24Nk3c1SFECGG7SCQj7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZklcEp3S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ot4h5QS7CbCPvg6zl/ZaVkJhR3pu5BJOZEbaq6wFbR+X8QkM4QCJK+BPQLq7HNl5c364aC6sesLyvzf/i3hzD4viCrBtM73SNiCk6kpdQtHw+0eIpXtClQfXsxnb0Fm0Om24Foi+aKCd7wEC5HJD6FA8fvQggPgIlaLT5Pr2QKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hweNFqQl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZklcEp3S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63E6F1F00A3A;
-	Mon, 17 Aug 2026 14:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hweNFqQl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 426C31F000E9;
+	Mon, 17 Aug 2026 14:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977972;
-	bh=iPS+Re6vVCwq7H82D5NPvSSQWZ1+nFQZShc/XGSoFBw=;
+	s=korg; t=1786977975;
+	bh=Pi0LBZzt1U0vjJsoME+6H6vYbUAYwIcLzj7qeiJKceE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZklcEp3SlNxes13/95OLSAyyuLzh3yNS8S6cnqV/FjXNe6Y6X2BezfIbOz2zXOT3K
-	 ec5p/RztKme+TxPAoTQ+qtA4toTd9/RJPg0JKzEgBqih6ZIBIYshgHiAztOBkUTrCX
-	 6kDYPEJnLHyiYChFMAImooSKs7nNrR4qTpNtKD1w=
+	b=hweNFqQl++LkHKpFNcghQOzRN0E3/5EyVRSHAF3ol2AY7C7Lp664+preyZkApgmHC
+	 +kiMkXAWacJSwNhkRePE5GDE4VAac1BHGy8ZgcMCo7kcFOW2Q6ewbUx5RMAZh3F+8A
+	 oUGRq93jkg/H6sQqc57ul/VHH0Uwww1UbrcH24HY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan XinRan <shinjiangjiang@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 057/181] net: thunderbolt: Tear down DMA paths before stopping the rings
-Date: Mon, 17 Aug 2026 15:32:31 +0200
-Message-ID: <20260817132537.661810584@linuxfoundation.org>
+Subject: [PATCH 6.12 058/181] ata: pata_sl82c105: fix bridge revision use-after-free
+Date: Mon, 17 Aug 2026 15:32:32 +0200
+Message-ID: <20260817132537.698890419@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -52,115 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan XinRan <shinjiangjiang@gmail.com>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit 68bf02b6b4ad3f748c6db71fd77b6c0402d252f4 ]
+[ Upstream commit 7700a31039cdc6715cb6cce7e7a664ee4e945f67 ]
 
-tbnet_tear_down() stops both rings and frees their frame buffers before
-calling tb_xdomain_disable_paths().  tb_ring_stop() zeroes the ring's
-descriptor base and tbnet_free_buffers() unmaps and frees the pages the
-frames sit in, so by the time __tb_path_deactivate_hop() polls the hop's
-'pending' bit, anything still in flight has nowhere to drain to.
+pci_get_slot() returns a referenced PCI device. Commit 44c10138fd4b
+("PCI: Change all drivers to use pci_device->revision") replaced a
+configuration-space read with direct access to the cached revision field,
+but left that access after pci_dev_put(). The bridge may therefore be freed
+before its revision is read.
 
-The teardown sequence has been in this order since the driver was added.
-The setup path has not: commit ff7cd07f3064 ("net: thunderbolt: Enable
-DMA paths only after rings are enabled") moved the path enable to the end
-of tbnet_connected_work() and documented why:
+Read the revision before dropping the reference.
 
-	/* Both logins successful so enable the rings, high-speed DMA
-	 * paths and start the network device queue.
-	 *
-	 * Note we enable the DMA paths last to make sure we have primed
-	 * the Rx ring before any incoming packets are allowed to
-	 * arrive.
-	 */
-
-Teardown was never updated to match, so the rings and the paths now come
-down in the same order they go up instead of in reverse.
-
-On an ASMedia ASM4242 host router the 'pending' bit then never clears:
-every teardown burns the full 500 ms timeout and
-__tb_path_deactivate_hop() returns -ETIMEDOUT.  Raising the timeout to
-5 s does not help, so the hop is not slow to drain, it never drains
-at all.
-
-The failure is invisible above the thunderbolt core.
-__tb_path_deactivate_hops() is void and only calls tb_port_warn();
-tb_path_deactivate(), tb_tunnel_deactivate() and
-__tb_disconnect_xdomain_paths() are void as well, and
-tb_disconnect_xdomain_paths() ends in an unconditional "return 0".  So
-tb_xdomain_disable_paths() reports success and the netdev_warn() below
-it never fires.  Repeated teardowns eventually take the XDomain control
-channel down, after which the peer node is gone and only a power cycle
-brings the controller back.
-
-Deactivating the paths first fixes it.  Measured with kretprobes on a
-stock v6.17 tree with no other patches applied, on a link that was up
-and had just carried traffic:
-
-  before: __tb_path_deactivate_hop() returns 0 for the first hop, then
-          -ETIMEDOUT for the second 500335 us later
-  after:  0 for both, 525 us apart
-
-Alternating the two orderings ABBA over three load levels, four
-teardowns per arm: every teardown failed before the change (21 of 21
-that ran), none failed after (0 of 24).  The before arms ran short
-because the link died partway through.  The same split shows up when
-the interface is enslaved to a bond instead of just brought down, which
-is how I ran into this in the first place.  Throughput and latency after
-the change are unchanged.
-
-Hosts whose routers drain the hop despite the stale descriptor base see
-no functional difference, since the paths end up deactivated either way.
-
-Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
-Signed-off-by: Fan XinRan <shinjiangjiang@gmail.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://patch.msgid.link/20260803-b4-tbnet-teardown-v2-1-27de6a13ca2d@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 44c10138fd4b ("PCI: Change all drivers to use pci_device->revision")
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/thunderbolt/main.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/ata/pata_sl82c105.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/thunderbolt/main.c b/drivers/net/thunderbolt/main.c
-index 960839a651e51..ceaba08cd378a 100644
---- a/drivers/net/thunderbolt/main.c
-+++ b/drivers/net/thunderbolt/main.c
-@@ -389,11 +389,16 @@ static void tbnet_tear_down(struct tbnet *net, bool send_logout)
- 				break;
- 		}
+diff --git a/drivers/ata/pata_sl82c105.c b/drivers/ata/pata_sl82c105.c
+index 93882e976ede4..2a5ce46af5a0a 100644
+--- a/drivers/ata/pata_sl82c105.c
++++ b/drivers/ata/pata_sl82c105.c
+@@ -264,6 +264,7 @@ static struct ata_port_operations sl82c105_port_ops = {
+ static int sl82c105_bridge_revision(struct pci_dev *pdev)
+ {
+ 	struct pci_dev *bridge;
++	u8 revision;
  
--		tb_ring_stop(net->rx_ring.ring);
--		tb_ring_stop(net->tx_ring.ring);
--		tbnet_free_buffers(&net->rx_ring);
--		tbnet_free_buffers(&net->tx_ring);
--
-+		/* Tear the paths down before stopping the rings.  This mirrors
-+		 * tbnet_connected_work(), which enables the paths last so the
-+		 * Rx ring is primed before packets can arrive.  Stopping a
-+		 * ring zeroes its descriptor base and tbnet_free_buffers()
-+		 * unmaps and frees the frame buffers, leaving anything still
-+		 * in flight with nowhere to drain to;
-+		 * __tb_path_deactivate_hop() then waits for the hop's
-+		 * 'pending' bit, which on some host routers never clears in
-+		 * that state.
-+		 */
- 		ret = tb_xdomain_disable_paths(net->xd,
- 					       net->local_transmit_path,
- 					       net->tx_ring.ring->hop,
-@@ -402,6 +407,11 @@ static void tbnet_tear_down(struct tbnet *net, bool send_logout)
- 		if (ret)
- 			netdev_warn(net->dev, "failed to disable DMA paths\n");
+ 	/*
+ 	 * The bridge should be part of the same device, but function 0.
+@@ -285,8 +286,9 @@ static int sl82c105_bridge_revision(struct pci_dev *pdev)
+ 	/*
+ 	 * We need to find function 0's revision, not function 1
+ 	 */
++	revision = bridge->revision;
+ 	pci_dev_put(bridge);
+-	return bridge->revision;
++	return revision;
+ }
  
-+		tb_ring_stop(net->rx_ring.ring);
-+		tb_ring_stop(net->tx_ring.ring);
-+		tbnet_free_buffers(&net->rx_ring);
-+		tbnet_free_buffers(&net->tx_ring);
-+
- 		tb_xdomain_release_in_hopid(net->xd, net->remote_transmit_path);
- 		net->remote_transmit_path = 0;
- 	}
+ static void sl82c105_fixup(struct pci_dev *pdev)
 -- 
 2.53.0
 
