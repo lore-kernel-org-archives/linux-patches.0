@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BEDB426693;
-	Mon, 17 Aug 2026 14:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5598041F5EA;
+	Mon, 17 Aug 2026 14:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978229; cv=none; b=DlNFZSeolObhFlavn8apW2IsdDufbV7Azky5B7yRyiB28n6rKQMDk3RKE/GIg37gtaykhMHqAImB7IkOMGpBg9t84Z1W0FXOaU9tQ3pB8qtWq6rOygRlkSbGoAfRFXTKOIQAUW2Pcoc0nl9rncVFs/BOQw8DC6urZBf56D5sBPA=
+	t=1786978232; cv=none; b=nX1BtephHwvN4ATTFVnO4QMoV349eKloM8WohXjanBlLqoyse+eyLUp4IApm5y8lX5Evpt6oyKJdPWfcwXXwUjP4spnucvTCpql/qqKX0pzfUXm6NfUIJJodPTjoY5/FkStJFmbUrrODTUucwHRkA8HNOKfthITpky6pdLED2O8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978229; c=relaxed/simple;
-	bh=wBtZPcfoHTTN9/wQD5UatNrf3rNn0WlCGlWiYrzv7tI=;
+	s=arc-20240116; t=1786978232; c=relaxed/simple;
+	bh=hyFBSAE2yKL3L3slID1abWYNzS5X50G7lPEHbHkdsNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k0wxNRYeajbsPjxDoGoC15SLCtG/erom2zYm8AjyhzM3TYa4GDq2oldaSY6QBNxFDPkRmo474kp1yIJbdJH5MQAeGVYAMBIddyFpvAFw80sQ4ySIv6JP6914inTBaSvlY8QI+0oq34XI5aqdwXShSbYRiXdA/KS2OOekDZashrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9UrvvJV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aCpd3z0zAvGNbftLbKz6Rk32KVC4BNuESn1/hHNeIa8UuBPnNUonFFw/EzGol1MndHs0/ACdQpDomBd7k9xd4rN3avrwQ6YIgMD8KPG3j88DZe+P2g4tt09pCh5Dw0ZfhII7/+3S/TMVviZrlroCd9WHCDrUXhfDbU1ZseWOqR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rj61luvN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9UrvvJV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D24BC1F000E9;
-	Mon, 17 Aug 2026 14:50:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rj61luvN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEAF1F000E9;
+	Mon, 17 Aug 2026 14:50:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978228;
-	bh=dOORW3bODgi6aoxszSJGw+9lFhv3zanw5+pGVu5RWDs=;
+	s=korg; t=1786978231;
+	bh=jcc5A7HnKljlUgESDk5f0F34opX53NAewemNxAHTQN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W9UrvvJVPmZLEIXrYZ/kq8P+ZraXUcCdi/q4l6VPp0aPfi2wscFg3EyrC2QRVcc8V
-	 oPh6jpUx7u2VdnjEnuh7Ry0JlLLUM/wdF9mkTVLFLiRzxiYQbhlSX0s2+7i0e8PUTZ
-	 n0h9IwS9d1+9bH1nhom0sh6DM+7CaB7bN0SldpBE=
+	b=Rj61luvN19aERG2848T3sazke3P4L21JIyBLaSsJ4VdoairHLpSn5dl35MDtKYFyX
+	 l4u4BRt9i4WMi7p+B/6HuBf5UyvdV8t0bLdmLpoxlD1wPwp0zwRbA/W7g5EyqFqXj6
+	 A8LQ3Om/KNpnXaNG0ADIEdY4IfwUiSZVX1iP+IfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sukhdeep Singh <sukhdeeps@marvell.com>,
-	Yangyu Chen <cyy@cyyself.name>,
-	Mina Almasry <almasrymina@google.com>,
+	Hyunjung Ko <hj351016@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 146/181] net: atlantic: free RX pages of consumed but not refilled buffers
-Date: Mon, 17 Aug 2026 15:34:00 +0200
-Message-ID: <20260817132541.426047158@linuxfoundation.org>
+Subject: [PATCH 6.12 147/181] net/sched: act_ct: fix sk_buff leak when the header checks reject a packet
+Date: Mon, 17 Aug 2026 15:34:01 +0200
+Message-ID: <20260817132541.467769763@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -52,71 +51,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yangyu Chen <cyy@cyyself.name>
+From: Hyunjung Ko <hj351016@gmail.com>
 
-commit e8e7471ef686b6c002218fee9671cc61992ae01a upstream.
+commit 8a7ed561671aa6a911a2de99e59ef670a4d0b1df upstream.
 
-aq_ring_rx_deinit() only walks [sw_head, sw_tail), the region posted to
-hardware. Since the page reuse strategy was added, a cleaned RX buffer
-keeps its page (and its DMA mapping) in the ring for reuse, and refill
-is batched: aq_ring_rx_fill() returns early until AQ_CFG_RX_REFILL_THRES
-slots are free. Slots that were consumed but not yet reposted therefore
-sit in the complementary [sw_tail, sw_head) gap with a live page, and
-the deinit walk never visits them: up to a refill batch worth of pages
-and DMA mappings leak on every interface down.
+tcf_ct_handle_fragments() runs its header sanity checks before handing
+anything to the defragmentation engine:
 
-Walk the whole ring instead and release whatever is still there. Also
-bail out if the buffer ring is already gone: a partial
-aq_ptp_ring_alloc() failure frees the ring but leaves aq_nic set, so
-aq_ptp_ring_deinit() still gets here on the unwind path.
+	if (family == NFPROTO_IPV4)
+		err = tcf_ct_ipv4_is_fragment(skb, &frag);
+	else
+		err = tcf_ct_ipv6_is_fragment(skb, &frag);
+	if (err || !frag)
+		return err;
 
-Cc: stable@vger.kernel.org # v5.2+
-Fixes: 46f4c29d9de6 ("net: aquantia: optimize rx performance by page reuse strategy")
-Reviewed-by: Sukhdeep Singh <sukhdeeps@marvell.com>
-Signed-off-by: Yangyu Chen <cyy@cyyself.name>
-Acked-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/tencent_607CBA8237DA438E36B844318B21538DE008@qq.com
+tcf_ct_ipv4_is_fragment() returns -EINVAL or -ENOMEM;
+tcf_ct_ipv6_is_fragment() adds -EPROTO when ipv6_find_hdr() fails. None of
+them frees or queues the skb, so on that path the caller still owns it.
+
+tcf_ct_act() however funnels every non-zero return into the
+ownership-transfer exit:
+
+	err = tcf_ct_handle_fragments(net, skb, family, p->zone, &defrag);
+	if (err)
+		goto out_frag;
+	...
+out_frag:
+	if (err != -EINPROGRESS)
+		tcf_action_inc_drop_qstats(&c->common);
+	return TC_ACT_CONSUMED;
+
+TC_ACT_CONSUMED means the action took ownership of the skb, so no caller
+frees it - sch_handle_ingress(), sch_handle_egress() and
+tcf_qevent_handle() all deliberately skip the free for that verdict. The
+skb is therefore orphaned: one sk_buff plus its data buffer is leaked per
+malformed packet, unbounded. Note the drop counter is already incremented
+for these errors, so the statistics claim a drop that never happens.
+
+Three different ownership states reach out_frag: today - the skb may be
+queued by the defrag engine (-EINPROGRESS), already freed by
+nf_ct_handle_fragments(), or still owned by us. Tell the caller which of
+those it is, and free the packet ourselves in the last case, which
+restores the TC_ACT_SHOT behaviour that predated the Fixes: commit.
+
+Reproduced on v7.2-rc6 with a 54-byte frame carrying a 40-byte IPv6
+header with nexthdr = 0 (hop-by-hop) and nothing after it, on a
+clsact ingress chain with "action ct". kmemleak reports one leaked
+232-byte skbuff_head_cache object plus its 704-byte data buffer per
+packet; with this patch it reports none.
+
+Fixes: 3f14b377d01d ("net/sched: act_ct: fix skb leak and crash on ooo frags")
+Cc: stable@vger.kernel.org # v6.8+
+Signed-off-by: Hyunjung Ko <hj351016@gmail.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260806101235.809370-1-hj351016@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/aquantia/atlantic/aq_ring.c |   22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ net/sched/act_ct.c |   29 +++++++++++++++++++++++++----
+ 1 file changed, 25 insertions(+), 4 deletions(-)
 
---- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-@@ -926,15 +926,29 @@ err_exit:
- 
- void aq_ring_rx_deinit(struct aq_ring_s *self)
- {
--	if (!self)
-+	unsigned int i;
-+
-+	if (!self || !self->buff_ring)
- 		return;
- 
--	for (; self->sw_head != self->sw_tail;
--		self->sw_head = aq_ring_next_dx(self, self->sw_head)) {
--		struct aq_ring_buff_s *buff = &self->buff_ring[self->sw_head];
-+	/* Release every page still owned by the ring.
-+	 *
-+	 * Walking [sw_head, sw_tail) is not enough: refill is batched
-+	 * (aq_ring_rx_fill() waits for AQ_CFG_RX_REFILL_THRES free slots),
-+	 * so slots that were cleaned but not yet reposted accumulate in the
-+	 * [sw_tail, sw_head) gap, and they keep their page for reuse. Walk
-+	 * the whole ring and release whatever is left.
-+	 */
-+	for (i = 0; i < self->size; i++) {
-+		struct aq_ring_buff_s *buff = &self->buff_ring[i];
-+
-+		if (!buff->rxdata.page)
-+			continue;
- 
- 		aq_free_rxpage(&buff->rxdata, aq_nic_get_dev(self->aq_nic));
- 	}
-+
-+	self->sw_head = self->sw_tail;
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -838,8 +838,15 @@ static int tcf_ct_ipv6_is_fragment(struc
+ 	return 0;
  }
  
- void aq_ring_free(struct aq_ring_s *self)
++/* On error, tells the caller whether it still owns @skb and must free it
++ * itself.  @skb is ours only when the header checks below reject the packet
++ * before it is handed to the defragmentation engine; once nf_ct_handle_
++ * fragments() has been called the skb is either queued (-EINPROGRESS) or has
++ * already been freed by it.
++ */
+ static int tcf_ct_handle_fragments(struct net *net, struct sk_buff *skb,
+-				   u8 family, u16 zone, bool *defrag)
++				   u8 family, u16 zone, bool *defrag,
++				   bool *skb_is_ours)
+ {
+ 	enum ip_conntrack_info ctinfo;
+ 	struct tc_skb_cb cb;
+@@ -857,8 +864,12 @@ static int tcf_ct_handle_fragments(struc
+ 		err = tcf_ct_ipv4_is_fragment(skb, &frag);
+ 	else
+ 		err = tcf_ct_ipv6_is_fragment(skb, &frag);
+-	if (err || !frag)
++	if (err) {
++		*skb_is_ours = true;
+ 		return err;
++	}
++	if (!frag)
++		return 0;
+ 
+ 	cb = *tc_skb_cb(skb);
+ 	err = nf_ct_handle_fragments(net, skb, zone, family, &proto, &cb.mru);
+@@ -975,6 +986,7 @@ TC_INDIRECT_SCOPE int tcf_ct_act(struct
+ 	int nh_ofs, err, retval;
+ 	struct tcf_ct_params *p;
+ 	bool add_helper = false;
++	bool skb_is_ours = false;
+ 	bool skip_add = false;
+ 	bool defrag = false;
+ 	struct nf_conn *ct;
+@@ -1010,9 +1022,18 @@ TC_INDIRECT_SCOPE int tcf_ct_act(struct
+ 	 */
+ 	nh_ofs = skb_network_offset(skb);
+ 	skb_pull_rcsum(skb, nh_ofs);
+-	err = tcf_ct_handle_fragments(net, skb, family, p->zone, &defrag);
+-	if (err)
++	err = tcf_ct_handle_fragments(net, skb, family, p->zone, &defrag,
++				      &skb_is_ours);
++	if (err) {
++		/* The skb is still ours only when the header checks rejected
++		 * it; returning TC_ACT_CONSUMED for such a packet would leak
++		 * it, since no caller frees an skb it was told it no longer
++		 * owns.
++		 */
++		if (skb_is_ours)
++			goto drop;
+ 		goto out_frag;
++	}
+ 
+ 	err = nf_ct_skb_network_trim(skb, family);
+ 	if (err)
 
 
