@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F1F43CEC7;
-	Mon, 17 Aug 2026 13:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C3C3C9893;
+	Mon, 17 Aug 2026 13:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974778; cv=none; b=P1nauj4ksgR7Y04+QttU8FGNevQanP2eQcMXIGFxkDevFiSdOnyrZ/fmCQnKzFv6errY2c3aGf33CaZ7ZAISNJvA30rDxjyA2uo5IhD/xK8GjP21v4HB6o66V8Z1nB0UmB5plLwO0pWdsgeaYqtEyh7DJ86HcOKcKMzJlQ0COak=
+	t=1786974778; cv=none; b=Zmm+/dZKXkvQj2pJYNtouTqtTHQWwGp02MA05+ibZYr3vANhue5bDoxMlVVFZXAg/My0HadYjvk47JHlsf/8wX6+51dLTeod2M9g/UAis62k/YFscn1NGImgWUJqLwzZ3ikVZv1kvkkcZh6akKXraxQKndrfzlfju5mL6NaexAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1786974778; c=relaxed/simple;
-	bh=0P0b+9ZD5gROOX3Uga1Z4CccMQlxHemQjegj9DLb9YQ=;
+	bh=kGnHsouTsyBy+VJM/8Jm77CiTQV2LssmBkKPEAGcSiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nr2vzNO5ReTyoqpP1mg0DjQMxN1Tr/jz4Y8DniEqcH3WuSQ6LluwCWFbJM7VolMFloczs9yAGelfxe1SeD/YxrFDOulst3tqgkhmWetns/gS5pjqKxwtB2xPlYH0+pRkqOkCCOVUcU650v1UVuxuZU6Ph52DrIJhuf9YuU8brf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TmfFecRI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rqx/DvTHREwW9YEPcPbY7PjGRNWVIY50CeW2Elfj5jjKF91HCwyBxZY94frfS4LxyQbe4zn6bSCJELbg7NV+ZVks8dgkESBiQ/6lEUINQBC8AMy1C7yFaAs/d0lXhZyCJKiBlWYSAzCxLS6XgElYiXr+ugoVgbqzZCQ8c9lz2ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUIM48Kk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TmfFecRI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 576EF1F00A3F;
-	Mon, 17 Aug 2026 13:52:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUIM48Kk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CCC61F000E9;
+	Mon, 17 Aug 2026 13:52:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974772;
-	bh=bJx/Pc+hVLN1+ReOJBkJRy1jKMfPb/1zavE2jVtQcl0=;
+	s=korg; t=1786974770;
+	bh=JZrYln9A5qCCCGglBY3F/wPq4RITeQ6aEHQ0Olw6us4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TmfFecRIQc0JI/WZOuHpxg33YC83Xy9ZPuqIV8E08jagSnU4eeWZRnpNewYOYCTcT
-	 TgUAo69AEcg+VWyUAfG6X1ZerDmxw0FX6rwAU8M8ZMScwF7eQk4x7FE/CoZiQZWO/e
-	 6UbZb/pAZLuGLK6UYpnxbb+KWZUkbFQjZgCDBmEo=
+	b=hUIM48KkDCvsVBeTt8UEOnMG16gEc7IpaMaACBPz+YYQAeYAByiiRPNZFwHr77pfZ
+	 A6W6FG5m7e+NP3aF0WUWFWMvlipUv7vmimbnFxW2Xef3ati6aOQd3/ymcDqbuUPBBW
+	 hl1OxXVgchI50sDo3RSxYFrd3e52ijO7Z2/jVV48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Or Har-Toov <ohartoov@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Antoine Tenart <atenart@kernel.org>,
+	Jiawen Liu <1298662399@qq.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 049/250] devlink: fix net namespace reference leak in reload
-Date: Mon, 17 Aug 2026 15:30:10 +0200
-Message-ID: <20260817132538.453782760@linuxfoundation.org>
+Subject: [PATCH 6.18 048/250] net: hisilicon: hix5hd2_gmac: remove redundant NAPI delete
+Date: Mon, 17 Aug 2026 15:30:09 +0200
+Message-ID: <20260817132538.417415281@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -54,40 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Or Har-Toov <ohartoov@nvidia.com>
+From: Jiawen Liu <1298662399@qq.com>
 
-[ Upstream commit 1c4dac9bf1d2ac31da63b794bdec697777cbd0fd ]
+[ Upstream commit f307a7dc32097c11413178fca437a10d20890bc2 ]
 
-devlink_nl_reload_doit() calls devlink_netns_get(), which returns a net
-with a held reference. When the requested namespace differs from the
-current one and the reload action is not DRIVER_REINIT, the function
-returns -EOPNOTSUPP without releasing the reference. Add the missing
-put_net() on this error path.
+hix5hd2_dev_remove() calls netif_napi_del() before unregister_netdev().
+This is not needed because free_netdev() deletes all NAPI instances
+attached to the net_device.
 
-Fixes: 2edd92570441 ("devlink: don't allow to change net namespace for FW_ACTIVATE reload action")
-Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Antoine Tenart <atenart@kernel.org>
-Link: https://patch.msgid.link/20260729080600.2427721-1-tariqt@nvidia.com
+Remove the redundant call and let the networking core tear down the NAPI
+instance during unregister_netdev(). The probe error path still keeps its
+explicit netif_napi_del(), because the device has not been registered
+there.
+
+Fixes: 57c5bc9ad7d7 ("net: hisilicon: add hix5hd2 mac driver")
+Signed-off-by: Jiawen Liu <1298662399@qq.com>
+Link: https://patch.msgid.link/tencent_5FFD37A252B4FEA6A80AD25B17C8E904F005@qq.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/devlink/dev.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/hisilicon/hix5hd2_gmac.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/devlink/dev.c b/net/devlink/dev.c
-index 02602704bdeaa..ed442c1bed8db 100644
---- a/net/devlink/dev.c
-+++ b/net/devlink/dev.c
-@@ -577,6 +577,7 @@ int devlink_nl_reload_doit(struct sk_buff *skb, struct genl_info *info)
- 		    action != DEVLINK_RELOAD_ACTION_DRIVER_REINIT) {
- 			NL_SET_ERR_MSG_MOD(info->extack,
- 					   "Changing namespace is only supported for reinit action");
-+			put_net(dest_net);
- 			return -EOPNOTSUPP;
- 		}
- 	}
+diff --git a/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c b/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
+index e3e7f2270560c..02282dc86faf4 100644
+--- a/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
++++ b/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
+@@ -1282,7 +1282,6 @@ static void hix5hd2_dev_remove(struct platform_device *pdev)
+ 	struct net_device *ndev = platform_get_drvdata(pdev);
+ 	struct hix5hd2_priv *priv = netdev_priv(ndev);
+ 
+-	netif_napi_del(&priv->napi);
+ 	unregister_netdev(ndev);
+ 	mdiobus_unregister(priv->bus);
+ 	mdiobus_free(priv->bus);
 -- 
 2.53.0
 
