@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445B8442391;
-	Mon, 17 Aug 2026 15:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BBA243B498;
+	Mon, 17 Aug 2026 15:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979532; cv=none; b=YNJseUfQR1r0HthxcKvf+iwHmWDm/DUrkzEtA3liX4kxaYE2AKqx4GJbx+q5jebY64wYac6cZMWKD0puqWHSWrJpraXYBvpP76lZvU1WIpd5mXcVvLsTl+SDIjfshH59V+rCSj6K75/SjJMqxLRPKjKtQ2R0I3+LJf67JtuBRMo=
+	t=1786979535; cv=none; b=Q6fUrVSRL0rG4Vk2q/MoeF9YhseF0jGecLpIrwg+b7WXWLxlR08QvqEeRtPB7UkIEvzsEiBQxSFOlDX8Fz6nITe4MYV4bPwQAr2u7lKZDaKIAAOptcHPcRzdR6F97aDzCR5k/k3jZm+9g0Io2gH5TOgaRfxipcctrHBXEy0iFaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979532; c=relaxed/simple;
-	bh=VzaelBY3/Vt1DqlaG7L3/VXBiJFR04e00QtZGb8oRPs=;
+	s=arc-20240116; t=1786979535; c=relaxed/simple;
+	bh=mJbANmDAxzfk5XaObQUwZJtkbZM86sBUsxTe6AkUijg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jq8sUfYAXN/X77UO8eqh+PJ6gcYzUa7Dl0hoTwwY9tuAW8JbGfxZZPh2orYrkjUWMARJDxdDC0GfBkO95mOuXnJJtXGE+eoMmSi1+jhvDvFTHegZb7j9wP4mSJmPOQtXoSyOxOy5fkQzhzm5rZnKSRHdoKy2oRjHPXH9F5G8ldM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pt9ZfrFM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mNRggnnnLteqZmxqlFejLwwTBFOzXug5hDCh3+3qSagTuhe8N8Y4T4zhHpn6Xo645UZc4/li/z4F9NM8zcYloxbHZVd6P/ela7DvkF8MmsNUhY8TixZ8BjRyMIFbzZLDcbfNPrtb5E+DBTpGM8yYpLwL6Gv/o4hDj1SJ9+nEGqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaCf/GrQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pt9ZfrFM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86DBF1F000E9;
-	Mon, 17 Aug 2026 15:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaCf/GrQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B0A1F000E9;
+	Mon, 17 Aug 2026 15:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979531;
-	bh=so6AbQ3gGCrCkWNYzmsHlmG3YdD0r+qxgy4gO3eFVks=;
+	s=korg; t=1786979533;
+	bh=nza6jWyFm2jqVQepsvFdYyUSVI6jdiYiohhvZv39Wk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pt9ZfrFMpIfBYAffxnhLfvqEfaH2+WaGBHyhrQBDExUtnT+P1aqba7El0kKznXFeg
-	 BEtSZSt5IYpVlWD95G3cwRTtF41sRaX/jV/KvL7a/XyrBmPE8zsP4xo8A9ZY9XV61V
-	 XPDnss+qpDoEX8sxl7KwHPhebf3AUTr+ZsQyB+jc=
+	b=WaCf/GrQJ7eYAvWYdHXfu+/RWRDu2cVMEAsotgqLXTRx8Xo+UFCqVbxTX9FKsOY02
+	 YAwn80Fk1sg3do6ctwo/US/5mEN2MenDmjYQ0E9hu2XTooWj70X7i0dQrfu9RW/cNl
+	 29luNBQ3P99yx8TRkFwaw+qmoHTapW4RY+O9XShU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.1 258/609] fscrypt: Add missing superblock check in find_or_insert_direct_key()
-Date: Mon, 17 Aug 2026 15:29:14 +0200
-Message-ID: <20260817132552.737750291@linuxfoundation.org>
+	Tengda Wu <wutengda@huaweicloud.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.1 259/609] ftrace: Add global mutex to serialize trace_parser access
+Date: Mon, 17 Aug 2026 15:29:15 +0200
+Message-ID: <20260817132552.772932607@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,66 +50,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-commit b5fa40226e71c17847b9ff2816c6ca4133d0d994 upstream.
+commit 7720b63bcef3f54c7fe288774b720a227d54a306 upstream.
 
-The legacy 'fscrypt_direct_keys' table caches master keys that are used
-by v1 encryption policies that have FSCRYPT_POLICY_FLAG_DIRECT_KEY.
-It's just a global table for all filesystems (since the keys can be
-provided by the legacy process-subscribed keyrings mechanism, which
-makes it difficult to reuse super_block::s_master_keys).
+In ftrace, the trace_parser structure is allocated and initialized when
+a trace file is opened, and is subsequently used across write and release
+handlers to parse user input.
 
-The entries in it ('struct fscrypt_direct_key') do contain a super_block
-pointer, though, for passing to fscrypt_destroy_inline_crypt_key() when
-the last inode that references the key is evicted.
+The affected handler paths and their specific functions are:
+  - Open paths: ftrace_regex_open(), ftrace_graph_open()
+  - Write paths: ftrace_regex_write(), ftrace_graph_write()
+  - Release paths: ftrace_regex_release(), ftrace_graph_release()
 
-However, when finding the fscrypt_direct_key for an inode, we weren't
-actually comparing the super_block pointer.  As a result, inodes with
-different super_blocks could point to the same fscrypt_direct_key.  That
-could extend the lifetime of a fscrypt_direct_key beyond the
-super_block it points to, causing a use-after-free later.
+If userspace opens a trace file descriptor and shares it across multiple
+threads, concurrent write calls will race on the parser's internal state,
+specifically the 'idx', 'cont', and 'buffer' fields, leading to corrupted
+input or undefined behavior.
 
-Fix this by creating distinct fscrypt_direct_key structs for distinct
-super_block structs.
+Fix this by adding a global mutex, parser_lock, to serialize all access
+to trace_parser across write and release paths, preventing concurrent
+corruption of parser state.
 
-Note that this problem doesn't exist in the v2 policy equivalent
-("per-mode keys"), since the data structures there are per super_block.
-
-Fixes: 22e9947a4b2b ("fscrypt: stop holding extra request_queue references")
+Fixes: e704eff3ff51 ("ftrace: Have set_graph_function handle multiple functions in one write")
+Fixes: 689fd8b65d66 ("tracing: trace parser support for function and graph")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260717044303.425265-1-ebiggers%40kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260719033120.122120-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Link: https://patch.msgid.link/20260725024721.1983675-1-wutengda@huaweicloud.com
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/crypto/keysetup_v1.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ kernel/trace/ftrace.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/fs/crypto/keysetup_v1.c
-+++ b/fs/crypto/keysetup_v1.c
-@@ -199,13 +199,19 @@ find_or_insert_direct_key(struct fscrypt
- 		if (memcmp(ci->ci_policy.v1.master_key_descriptor,
- 			   dk->dk_descriptor, FSCRYPT_KEY_DESCRIPTOR_SIZE) != 0)
- 			continue;
-+		/* The sb is used at eviction time, so it must be the same. */
-+		if (ci->ci_inode->i_sb != dk->dk_sb)
-+			continue;
- 		if (ci->ci_mode != dk->dk_mode)
- 			continue;
- 		if (!fscrypt_is_key_prepared(&dk->dk_key, ci))
- 			continue;
- 		if (crypto_memneq(raw_key, dk->dk_raw, ci->ci_mode->keysize))
- 			continue;
--		/* using existing tfm with same (descriptor, mode, raw_key) */
-+		/*
-+		 * Use an existing prepared key with the same (descriptor, sb,
-+		 * mode, inlinecrypt, raw_key) combination.
-+		 */
- 		refcount_inc(&dk->dk_refcount);
- 		spin_unlock(&fscrypt_direct_keys_lock);
- 		free_direct_key(to_insert);
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -1037,6 +1037,12 @@ struct ftrace_ops global_ops = {
+ };
+ 
+ /*
++ * parser_lock - Protects trace_parser state against concurrent operations.
++ * Held across trace_get_user() and subsequent buffer parsing to prevent races.
++ */
++static DEFINE_MUTEX(parser_lock);
++
++/*
+  * Used by the stack unwinder to know about dynamic ftrace trampolines.
+  */
+ struct ftrace_ops *ftrace_ops_trampoline(unsigned long addr)
+@@ -5077,6 +5083,8 @@ ftrace_regex_write(struct file *file, co
+ 	/* iter->hash is a local copy, so we don't need regex_lock */
+ 
+ 	parser = &iter->parser;
++
++	guard(mutex)(&parser_lock);
+ 	read = trace_get_user(parser, ubuf, cnt, ppos);
+ 
+ 	if (read >= 0 && trace_parser_loaded(parser) &&
+@@ -6129,12 +6137,14 @@ int ftrace_regex_release(struct inode *i
+ 		iter = file->private_data;
+ 
+ 	parser = &iter->parser;
++	mutex_lock(&parser_lock);
+ 	if (trace_parser_loaded(parser)) {
+ 		int enable = !(iter->flags & FTRACE_ITER_NOTRACE);
+ 
+ 		ftrace_process_regex(iter, parser->buffer,
+ 				     parser->idx, enable);
+ 	}
++	mutex_unlock(&parser_lock);
+ 
+ 	trace_parser_put(parser);
+ 
+@@ -6452,10 +6462,12 @@ ftrace_graph_release(struct inode *inode
+ 
+ 		parser = &fgd->parser;
+ 
++		mutex_lock(&parser_lock);
+ 		if (trace_parser_loaded((parser))) {
+ 			ret = ftrace_graph_set_hash(fgd->new_hash,
+ 						    parser->buffer);
+ 		}
++		mutex_unlock(&parser_lock);
+ 
+ 		trace_parser_put(parser);
+ 
+@@ -6575,6 +6587,7 @@ ftrace_graph_write(struct file *file, co
+ 
+ 	parser = &fgd->parser;
+ 
++	guard(mutex)(&parser_lock);
+ 	read = trace_get_user(parser, ubuf, cnt, ppos);
+ 
+ 	if (read >= 0 && trace_parser_loaded(parser) &&
 
 
