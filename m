@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0744443BDBB;
-	Mon, 17 Aug 2026 13:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E2B43DA2E;
+	Mon, 17 Aug 2026 13:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974497; cv=none; b=pbPytpp+42prqRUaBOakq3Qc7gMRBrpxjOTmKLq1hrm98vHWrMQ3bvcxqOxT+9RxmVBKLK7PWqbDco93QFKjGT2tm8hzpetxbOlodekHspwokpxgHios/NwsHMuUCfLqNDhUr20lcquOV0sj3bVC4IxZYa0U8FxkA0p04u0S/gs=
+	t=1786974499; cv=none; b=PF8YIduqjdMAb4Oi12h2CvY2JVBwXPb8qsfiGy6pYJC2afPWdp6ZVOy+2wAg9YuoK+GCygP+WQixUT3LvhScvWEWJl11N3TB01RkRRuklJ/xobawlD4ABC5QbPM6yDEbwUTu/NxHCX1WK6y+Kzux9rlV53dyViM+HiwOuBRh0Cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974497; c=relaxed/simple;
-	bh=4hlNr3r/EIbT6lB0RwjdZOENUGifHvVgXOKQ5iUJitw=;
+	s=arc-20240116; t=1786974499; c=relaxed/simple;
+	bh=roXn7WYkbYsMf/5TzZZZtw8daCg7oK4Zn3+Ovl1HVSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FLcdEvxsjtT4aZFLr6FTI2XARJf0JWoDgJ1MRQn/eHmlKKW0Ouzqn8jE2DsIngR9tc/ACfz75b3lIWyOXm26QLz0RJXDUESUjFjjFmvei5wXPcbtxUet33IqZtanCJwrqOq/0KsOS+ZhxYPsXWNvW3+hiOBVx0aR5zR7KtH3hx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCkKvJsC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EncRXRvlyaUsgiJ4iulw6pth3igT9cUggpNNuFO4KOSM/5PrKOqR7xwNGMeDr+98mkUnpifFhJ324VZ8X0/idO9JkKzRymUntsRQ7bvP5GJ8asH3ZbNQd/oTH72CBckEAqVK9rxqFY3Zuho+JkLbXEq/Kz05QUdLNUNXPTF7+H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ar3WWL75; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCkKvJsC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF601F01564;
-	Mon, 17 Aug 2026 13:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ar3WWL75"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A4161F01568;
+	Mon, 17 Aug 2026 13:48:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974492;
-	bh=ocmf/7TxMvRFsux0fTSxtLKJC0QH5m9Gm8qzVnLZ+KM=;
+	s=korg; t=1786974494;
+	bh=RHVZ2IzVjA/1ejPBlGU14gb1aAPY8JeGeIOItA+QxRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DCkKvJsCFpYagFXsPug91K5miNKRAByTO9rwPf+St49Z4+mQC4WHtNnM1C+fIPGm1
-	 fzgfCikzm2TcmNaG+msEd/uU15TFqmWgWcU5nuCoCrR+j+jxDgexNMA92muYqQjmdQ
-	 eKSuWynRDWRwDvbXSUjf96kJKOVkbkPomPngb1po=
+	b=Ar3WWL75MfveBCir5u7Ttwy54+cCDtZcJw+g+dNZ+6pyrhRZcDPVvhjhOAQZBgCkJ
+	 ckSvw6pX67WdALfgfJNqFiY32NwHt5i2oK3/MFuF9PhjYI0RKbneOonkXsGW4DiSZ4
+	 IfudE2kWkunmwOCxx0IacBFoZgJpKkMqGDWXLnGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.1 225/271] binfmt_misc: dont warn when the mount is completed from another user namespace
-Date: Mon, 17 Aug 2026 15:32:30 +0200
-Message-ID: <20260817132546.017765990@linuxfoundation.org>
+	syzbot+4d3143c8e28f6266c636@syzkaller.appspotmail.com,
+	Hui Su <sh_def@163.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 7.1 208/271] tracing: Fix NULL pointer dereference in module event cache removal
+Date: Mon, 17 Aug 2026 15:32:13 +0200
+Message-ID: <20260817132545.367773774@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -50,68 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Hui Su <sh_def@163.com>
 
-commit 79fdf39f1a31f88cb3833b6f8091fbf6acdca2c6 upstream.
+commit b69859204d4db3acd86c1c2dadcef0d77b451933 upstream.
 
-fsopen() records the caller's user namespace in fc->user_ns and hands
-back an ordinary file descriptor. Nothing ties the task that calls
-fsconfig(FSCONFIG_CMD_CREATE) to the task that created the context. The
-fd is inherited across fork() and exec() and it can be passed over a
-unix socket.
+A module-only event filter such as ":mod:foo" is cached with a NULL
+event_mod->match when foo has not been loaded. If a later write tries to
+remove a specific match from the same module, remove_cache_mod() passes
+the NULL cached match to strcmp(), causing a NULL pointer dereference.
 
-Completing a context from another user namespace is allowed on purpose.
-vfs_cmd_create() authorizes the create with mount_capable(), which for
-FS_USERNS_MOUNT checks ns_capable(fc->user_ns, CAP_SYS_ADMIN), and that
-succeeds for a task holding CAP_SYS_ADMIN in an ancestor of fc->user_ns.
-So an unprivileged task can reach the WARN_ON() in bm_fill_super():
-create a user and a mount namespace in a child, call
-fsopen("binfmt_misc") there, send the fscontext fd to the parent and let
-the parent issue FSCONFIG_CMD_CREATE. Both namespaces come from a plain
-unshare(1) and no capability is needed anywhere:
+The issue can be reproduced from userspace:
 
-  WARNING: fs/binfmt_misc.c:938 at bm_fill_super+0xa2/0xc0 [binfmt_misc]
-  CPU: 15 UID: 1000 PID: 3243382 Comm: fswarn
+  echo ':mod:trace_events_kunit_missing' > /sys/kernel/tracing/set_event
+  echo '!foo_bar:mod:trace_events_kunit_missing' >> /sys/kernel/tracing/set_event
+
+The second write must be a concatenation (">>") to not include O_TRUNC as
+that would cause ftrace_clear_events() to clear the cached modules lines.
+
+The crash was reproduced on x86_64 QEMU while KUnit workers contended on
+the event tracing path:
+
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  #PF: supervisor read access in kernel mode
+  RIP: 0010:strcmp+0x10/0x30
   Call Trace:
-   get_tree_keyed+0x7d/0xb0
-   bm_get_tree+0x34/0x90 [binfmt_misc]
-   vfs_get_tree+0x2a/0x100
-   vfs_cmd_create+0x60/0xf0
-   __do_sys_fsconfig+0x4b2/0x500
+   __ftrace_set_clr_event_nolock+0x373/0x4a0
+   ftrace_set_clr_event+0xf0/0x180
+   ftrace_event_write+0xdf/0x110
+   vfs_write+0xf6/0x440
+   ksys_write+0x68/0xe0
+   do_syscall_64+0xf9/0x540
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-The child needs the mount namespace because fsopen() itself gates on
-may_mount(), which asks for CAP_SYS_ADMIN in the user namespace owning
-the caller's mount namespace. fsconfig() doesn't repeat that check.
+Check event_mod->match before comparing it, consistent with the existing
+NULL checks for the cached system and event fields. The mismatched removal
+continues to return -EINVAL; a broad cached module filter is removed with
+"!:mod:<module>".
 
-It is a WARN_ON() and not a WARN_ON_ONCE(), so the condition can be
-raised in a loop to taint the kernel and flood the log, and it panics a
-kernel booted with panic_on_warn.
-
-Keep refusing the mount and stop warning about it. Nothing in
-bm_fill_super() depends on the two namespaces matching, it derives
-everything from sb->s_user_ns.
-
-Fixes: 21ca59b365c0 ("binfmt_misc: enable sandboxed mounts")
-Cc: stable@vger.kernel.org # v6.7+
-Link: https://patch.msgid.link/20260802-work-fill_super-warn-v1-2-4e987911a39a@kernel.org
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260811173902.1927376-2-sh_def@163.com
+Fixes: b355247df104 ("tracing: Cache \":mod:\" events for modules not loaded yet")
+Reported-by: syzbot+4d3143c8e28f6266c636@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/lkml/6a7a6b7f.9c11d2ce.289b96.00f8.GAE@google.com/
+Signed-off-by: Hui Su <sh_def@163.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_misc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/trace_events.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/binfmt_misc.c
-+++ b/fs/binfmt_misc.c
-@@ -937,7 +937,8 @@ static int bm_fill_super(struct super_bl
- 		/* last one */ {""}
- 	};
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -945,7 +945,7 @@ static int remove_cache_mod(struct trace
+ 		if (strcmp(event_mod->module, mod) != 0)
+ 			continue;
  
--	if (WARN_ON(user_ns != current_user_ns()))
-+	/* The fscontext fd may have been passed to another user namespace. */
-+	if (user_ns != current_user_ns())
- 		return -EINVAL;
+-		if (match && strcmp(event_mod->match, match) != 0)
++		if (match && (!event_mod->match || strcmp(event_mod->match, match) != 0))
+ 			continue;
  
- 	/* Never exec off this instance and never let anything stack on it. */
+ 		if (system &&
 
 
