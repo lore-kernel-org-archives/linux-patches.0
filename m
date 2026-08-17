@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37C9303C97;
-	Mon, 17 Aug 2026 14:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C449A3EC82D;
+	Mon, 17 Aug 2026 14:10:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975837; cv=none; b=bB+AKSz9kENO+F08E/403daMzptiHEsmOIb0DjOlbvfr2Ba04vAi2iCwt7vxG4E5lR1f1+CqJrex3RBu6hbNzA4RwdPmby2cgOxfRbotJinpB+/pqcMxWp8aH0OtPvYj8tve2MJysfF78sUmfQfs8clpyzScAi4RIkROFSWIn1I=
+	t=1786975840; cv=none; b=tfeaXSNAHuz79mSm/mqNxqID54ma/9fDv4/L2ipAEcGtH+p4wBKUAOg6aK+DQJVs98Elu0dn1ogxbrcJdrJEE19qMf4UgCX3kaOxahtZuD4xL4OnTwdi2QMUUmE/IV1ZuDikEOvB60+Z7S3Ye/m3mRpes4j81DHNsC8S6EU2ed4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975837; c=relaxed/simple;
-	bh=Uf5gKUm/s8AeSJeKGnPkaGgcfNVgXme+rhMBycuIIbA=;
+	s=arc-20240116; t=1786975840; c=relaxed/simple;
+	bh=rfeKh57d1yS9/nNeg+rK/PM3IMnhA7qgT86vTcPWTlc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TKVWc+cpuVGsYCro1Fv+8X8G8ql8axHzGhBKP4mYMJQfRhk4FxfGmxm0iKBUPGZbJJ3btE/pRuPNqkkrWV80cxvTK1ipR9mm1vwSauqR2FBf5MoHqimFNVu0dXPxt6u+LEqlzIHt8qllRXF7d9/xGucD0aWhpxO3kKcpyL6tZKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iA31/KLS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u6AKqnbLX7ichR5C7dfuCgRMccPek6Oln9IE8H/QGudmJTTtUjW4QPJ8nJ/b4lUHdO2xfLPKVUbbt30v6kYdDx5VFvWhCWw/PErre5OOqbM28d01in5Hc0n+UY1aq+fBeoYe1jh/LwazZjjRVX/Q6c6ZJh3iwNWM+BBAaoZnF8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DL3cYpaX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iA31/KLS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2831F000E9;
-	Mon, 17 Aug 2026 14:10:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DL3cYpaX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28E681F000E9;
+	Mon, 17 Aug 2026 14:10:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975835;
-	bh=x9Z+n+rJM6ADmbo6R9hxW67mlKD4GMTXyPTccJxNxxE=;
+	s=korg; t=1786975838;
+	bh=8lzEgq5IoMwzowb9z+f19ZY2A2ISv61boyxlzywloCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iA31/KLSs4kHR8b7797u6EBKXfyXTjj6kIyLG77uHXIcGPY7eN3qR4Dr4fW4EmSLG
-	 XzhxsohsZ+PGMCJDl4U9BEthKQbcsqQnnrquT6PzYo0XRrtwySItqbgWp3B9lhR/ZO
-	 g/OkfqDrl0KtKol7Q7o6CqiLBS24X/+CNRaMiafc=
+	b=DL3cYpaXBddAzxLrWtUpF219uKFpxJUyZiGs/6DlWkmVpZmxJVC/CVfj953z5NSxo
+	 lWoBIUa01vGQyv+5WSqR1nineNXrj2IqpRV8vLahqwu3qOa1RlIwQVO6+h3o/z6Tqk
+	 3WZKBSKM5/NjaN/of5AEcXu3c5o7Ow+TZd/D4lF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Douya Le <ldy3087146292@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.10 166/389] libceph: remove debugfs files before client teardown
-Date: Mon, 17 Aug 2026 15:30:05 +0200
-Message-ID: <20260817132545.656826989@linuxfoundation.org>
+	Jori Koolstra <jkoolstra@xs4all.nl>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 5.10 167/389] binfmt_elf_fdpic: only honour the first PT_INTERP
+Date: Mon, 17 Aug 2026 15:30:06 +0200
+Message-ID: <20260817132545.693860257@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -55,51 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douya Le <ldy3087146292@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit e4c804726c4afce3ba648b982d564f6af2cfa328 upstream.
+commit 3349ef6a366a61d631f6a263d12cea240957719d upstream.
 
-ceph_destroy_client() tears down the monitor client before removing
-the per-client debugfs files. A concurrent read of the monmap debugfs
-file can enter monmap_show() after ceph_monc_stop() has freed
-monc->monmap, triggering a use-after-free.
+The program header scan handles PT_INTERP from a switch nested in the
+scan loop, so its break leaves the switch and not the loop. A binary
+carrying more than one PT_INTERP runs the case again and overwrites both
+interpreter_name and interpreter. The previous name allocation leaks and
+so does the previous interpreter reference, along with the write denial
+open_exec() took on it. The denial is never released, so the file stays
+unwritable for as long as the system runs.
 
-Remove the debugfs files before stopping the OSD and monitor clients.
-debugfs_remove() drains active handlers and prevents new accesses, so
-the debugfs callbacks can no longer race the rest of client teardown.
+An unprivileged caller reaches this with a crafted binary and repeats it
+at will. binfmt_elf stops at the first PT_INTERP. Do the same here.
 
+The flaw dates back to the driver's introduction in the pre-git history
+tree introduced in v2.6.11 by 91808d6ebe39 ("[PATCH] FRV: Add FDPIC ELF
+binary format driver").
+
+Link: https://patch.msgid.link/20260721-gezittert-medium-kreide-b41fc1f0277e@brauner
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Fixes: 76aa844d5b2f ("ceph: debugfs")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Douya Le <ldy3087146292@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Jori Koolstra <jkoolstra@xs4all.nl>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/ceph_common.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/binfmt_elf_fdpic.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/ceph/ceph_common.c
-+++ b/net/ceph/ceph_common.c
-@@ -727,13 +727,13 @@ void ceph_destroy_client(struct ceph_cli
- 
- 	atomic_set(&client->msgr.stopping, 1);
- 
-+	ceph_debugfs_client_cleanup(client);
+--- a/fs/binfmt_elf_fdpic.c
++++ b/fs/binfmt_elf_fdpic.c
+@@ -231,6 +231,10 @@ static int load_elf_fdpic_binary(struct
+ 	for (i = 0; i < exec_params.hdr.e_phnum; i++, phdr++) {
+ 		switch (phdr->p_type) {
+ 		case PT_INTERP:
++			/* elf ABI allows only one interpreter */
++			if (interpreter_name)
++				continue;
 +
- 	/* unmount */
- 	ceph_osdc_stop(&client->osdc);
- 	ceph_monc_stop(&client->monc);
- 	ceph_messenger_fini(&client->msgr);
- 
--	ceph_debugfs_client_cleanup(client);
--
- 	ceph_destroy_options(client->options);
- 
- 	kfree(client);
+ 			retval = -ENOMEM;
+ 			if (phdr->p_filesz > PATH_MAX)
+ 				goto error;
 
 
