@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191853B811F;
-	Mon, 17 Aug 2026 14:09:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E8A3033E7;
+	Mon, 17 Aug 2026 14:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975755; cv=none; b=o9MGRf3XqDDkrCgSlqZAZwWnIW9xSmXl6HF1pHI0sWSC9+mZprhYGVfyHMW+E+jBs/WvBhMWFj+uP56F5iBbpoV6rpeQzTBzrT88eflnkZVDEVTkIJWaubXTedI8QhpXvrfS49/pDM34yf/hsIuDKBnLroRUaOdUQ3rMHDXDMhM=
+	t=1786975758; cv=none; b=Z4tLTpoV0omMXsTwXOzE29ViLWO+HN2078Xd+zB0sUdg9dgI24gPhu0r5zFGyoiAWSNUXKvkXXAA15chLsPnY74AHURFa8To6cuMfL0IDSa2CBAvufEe9upHRr3S9Nh5x42axJqn7V4fqB8JXGTttV1KiMShE6ry39L4Rl9unVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975755; c=relaxed/simple;
-	bh=L1d5pFg3C8vboXFlf16aMLiP0e7VROz7ecNCDpbXCFo=;
+	s=arc-20240116; t=1786975758; c=relaxed/simple;
+	bh=bPwCtZWeXW7eGvvHj9hmNIujZx1urMF1a7ijUcjTYAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E/Z2Mvxbi33ASbXxRqCFyal/V5ahX/lVMyiADxUjCn4/F04WcNbJaIPaE4FSbLtot831XG7ctNNxE8L0Mvt5BrBe6KMVfLCzZvw6UYihPXGK7y8gjbmORY+ly04hUeN/yX6ldXpezcqXajU/iFLW6+SUIzwPCY9utU3Q5eMvIwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OW6XXAjD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CZv7c5dyA2lvPHP7WTvFHUuTMcFXsmaa2b3Enma7aTj52CCbchjVQ84uOhghit2Q2QZMztn3Luvq0fqc8ElHCf+iCOON+oCg1j3X33H/P4l4aH+EBI0qtmVCwBxdNpsOdtZKCg2SZhjtgRz4Y1xYW8rYOWM9ABXo4E3gxy5+Qy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OdMMzh9Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OW6XXAjD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73C0E1F000E9;
-	Mon, 17 Aug 2026 14:09:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OdMMzh9Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500BE1F000E9;
+	Mon, 17 Aug 2026 14:09:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975754;
-	bh=LHB12YIANuCQfB7hOIIMw+HSvoNmxILgUjE8COV7lwo=;
+	s=korg; t=1786975756;
+	bh=buLbWsLjL1vXS7W3lzgfSoQcnikx8WPdIjUmBGw4Ozc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OW6XXAjDNsRCcQpdilGW1BRHyNOMgT1cwoWiiRvckGhIhW6j1aKo3O6H4GqHgI1Wl
-	 TVeVf/aII42bjRVXprJXbL1Cx3VoylhTIX08923+qHFhjjDrddT8g2mNSFnjDoD22r
-	 lssQP9du6bM8W9qUqRHloerRaItDIhY1hsrpri94=
+	b=OdMMzh9Z3nmv2DZbcBZdaz74ne478EOz+i0qnRnjdY9BfafZ0cdlD+J69SsMsBXVr
+	 wlMb1n45kj/Z59/ZIrP+C1KOQqiDZlqTk28W3gmpqr369iBg3ooi1ZJZTEQh1/y1Cx
+	 6N+tYX7DTlT4bcyuFt1DN7AQbF6bdiKV4fVdYPig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 110/389] can: bcm: extend bcm_tx_lock usage for data and timer updates
-Date: Mon, 17 Aug 2026 15:29:09 +0200
-Message-ID: <20260817132543.468737512@linuxfoundation.org>
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Hungyu Lin <dennylin0707@gmail.com>
+Subject: [PATCH 5.10 137/389] media: tegra-video: vi: fix invalid u32 return value in format lookup
+Date: Mon, 17 Aug 2026 15:29:36 +0200
+Message-ID: <20260817132544.495928469@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,230 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-commit 12ce799f7ab1e05bd8fbf79e46f403bfe5597ebc upstream.
+commit d5b50055338e131a1a99f923ebb0361974a00f36 upstream.
 
-Stage new CAN frame content for an existing tx op into a kmalloc()'d
-buffer and validate it there, mirroring the approach already used in
-bcm_rx_setup(). Only copy the validated data into op->frames while
-holding op->bcm_tx_lock, so bcm_can_tx() and bcm_tx_timeout_handler()
-can no longer observe a partially updated or unvalidated frame.
+tegra_get_format_fourcc_by_idx() returns a u32 but uses -EINVAL to
+signal an out-of-bounds index. This results in a large unsigned
+value being returned, which may be interpreted as a valid fourcc.
 
-Add a missing error path for memcpy_from_msg() when copying CAN frame
-data from userspace.
+Returning 0 is not a valid fourcc either. This condition should
+never happen, so use WARN_ON_ONCE() to catch unexpected out-of-bounds
+access and return a valid fallback format instead.
 
-Also move the kt_ival1/kt_ival2/ival1/ival2 updates in bcm_tx_setup()
-under op->bcm_tx_lock, and read kt_ival1/kt_ival2/count under the same
-lock in bcm_tx_set_expiry() and bcm_tx_timeout_handler(), closing the
-torn 64-bit ktime_t read on 32-bit platforms.
-
-Fixes: c2aba69d0c36 ("can: bcm: add locking for bcm_op runtime updates")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260714-bcm_fixes-v15-6-562f7e3e42da@hartkopp.net
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Suggested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 3d8a97eabef0 ("media: tegra-video: Add Tegra210 Video input driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/bcm.c | 104 ++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 75 insertions(+), 29 deletions(-)
+ drivers/staging/media/tegra-video/vi.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/can/bcm.c b/net/can/bcm.c
-index 5d5904076d211d..93552b65c00ee4 100644
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -125,7 +125,7 @@ struct bcm_op {
- 	struct canfd_frame last_sframe;
- 	struct sock *sk;
- 	struct net_device *rx_reg_dev;
--	spinlock_t bcm_tx_lock; /* protect currframe/count in runtime updates */
-+	spinlock_t bcm_tx_lock; /* protect tx data and timer updates */
- 	spinlock_t bcm_rx_update_lock; /* protect filter/timer data updates */
- };
- 
-@@ -440,12 +440,18 @@ static bool bcm_tx_set_expiry(struct bcm_op *op, struct hrtimer *hrt)
+--- a/drivers/staging/media/tegra-video/vi.c
++++ b/drivers/staging/media/tegra-video/vi.c
+@@ -76,8 +76,8 @@ static int tegra_get_format_idx_by_code(
+ static u32 tegra_get_format_fourcc_by_idx(struct tegra_vi *vi,
+ 					  unsigned int index)
  {
- 	ktime_t ival;
+-	if (index >= vi->soc->nformats)
+-		return -EINVAL;
++	if (WARN_ON_ONCE(index >= vi->soc->nformats))
++		return vi->soc->video_formats[0].fourcc;
  
-+	spin_lock_bh(&op->bcm_tx_lock);
-+
- 	if (op->kt_ival1 && op->count)
- 		ival = op->kt_ival1;
--	else if (op->kt_ival2)
-+	else if (op->kt_ival2) {
- 		ival = op->kt_ival2;
--	else
-+	} else {
-+		spin_unlock_bh(&op->bcm_tx_lock);
- 		return false;
-+	}
-+
-+	spin_unlock_bh(&op->bcm_tx_lock);
- 
- 	hrtimer_set_expires(hrt, ktime_add(ktime_get(), ival));
- 	return true;
-@@ -462,25 +468,47 @@ static enum hrtimer_restart bcm_tx_timeout_handler(struct hrtimer *hrtimer)
- {
- 	struct bcm_op *op = container_of(hrtimer, struct bcm_op, timer);
- 	struct bcm_msg_head msg_head;
-+	bool tx_ival1, tx_ival2;
-+
-+	/* snapshot kt_ival1/kt_ival2/count under lock to avoid torn
-+	 * ktime_t reads racing with concurrent bcm_tx_setup() updates
-+	 */
-+	spin_lock_bh(&op->bcm_tx_lock);
-+	tx_ival1 = op->kt_ival1 && (op->count > 0);
-+	tx_ival2 = !!op->kt_ival2;
-+	spin_unlock_bh(&op->bcm_tx_lock);
-+
-+	if (tx_ival1) {
-+		u32 flags, count;
-+		struct bcm_timeval ival1, ival2;
- 
--	if (op->kt_ival1 && (op->count > 0)) {
- 		bcm_can_tx(op, NULL);
--		if (!op->count && (op->flags & TX_COUNTEVT)) {
- 
-+		/* snapshot variables under lock to avoid torn reads racing
-+		 * with concurrent bcm_tx_setup() updates
-+		 */
-+		spin_lock_bh(&op->bcm_tx_lock);
-+		flags = op->flags;
-+		count = op->count;
-+		ival1 = op->ival1;
-+		ival2 = op->ival2;
-+		spin_unlock_bh(&op->bcm_tx_lock);
-+
-+		if (!count && (flags & TX_COUNTEVT)) {
- 			/* create notification to user */
- 			memset(&msg_head, 0, sizeof(msg_head));
- 			msg_head.opcode  = TX_EXPIRED;
--			msg_head.flags   = op->flags;
--			msg_head.count   = op->count;
--			msg_head.ival1   = op->ival1;
--			msg_head.ival2   = op->ival2;
-+			msg_head.flags   = flags;
-+			msg_head.count   = count;
-+			msg_head.ival1   = ival1;
-+			msg_head.ival2   = ival2;
- 			msg_head.can_id  = op->can_id;
- 			msg_head.nframes = 0;
- 
- 			bcm_send_to_user(op, &msg_head, NULL, 0);
- 		}
- 
--	} else if (op->kt_ival2) {
-+	} else if (tx_ival2) {
- 		bcm_can_tx(op, NULL);
- 	}
- 
-@@ -983,6 +1011,8 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 	/* check the given can_id */
- 	op = bcm_find_op(&bo->tx_ops, msg_head, ifindex);
- 	if (op) {
-+		void *new_frames;
-+
- 		/* update existing BCM operation */
- 
- 		/*
-@@ -993,11 +1023,23 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 		if (msg_head->nframes > op->nframes)
- 			return -E2BIG;
- 
--		/* update CAN frames content */
-+		/* get new CAN frames content into a staging buffer before
-+		 * locking: validate and normalize the frames there so that
-+		 * bcm_can_tx() / bcm_tx_timeout_handler() never observe a
-+		 * partially updated or unvalidated frame in op->frames
-+		 */
-+		new_frames = kmalloc(msg_head->nframes * op->cfsiz, GFP_KERNEL);
-+		if (!new_frames)
-+			return -ENOMEM;
-+
- 		for (i = 0; i < msg_head->nframes; i++) {
- 
--			cf = op->frames + op->cfsiz * i;
-+			cf = new_frames + op->cfsiz * i;
- 			err = memcpy_from_msg((u8 *)cf, msg, op->cfsiz);
-+			if (err < 0) {
-+				kfree(new_frames);
-+				return err;
-+			}
- 
- 			if (op->flags & CAN_FD_FRAME) {
- 				if (cf->len > 64)
-@@ -1007,36 +1049,38 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 					err = -EINVAL;
- 			}
- 
--			if (err < 0)
-+			if (err < 0) {
-+				kfree(new_frames);
- 				return err;
-+			}
- 
- 			if (msg_head->flags & TX_CP_CAN_ID) {
- 				/* copy can_id into frame */
- 				cf->can_id = msg_head->can_id;
- 			}
- 		}
-+
-+		spin_lock_bh(&op->bcm_tx_lock);
-+
-+		/* update CAN frames content */
-+		memcpy(op->frames, new_frames, msg_head->nframes * op->cfsiz);
-+
- 		op->flags = msg_head->flags;
- 
--		/* only lock for unlikely count/nframes/currframe changes */
- 		if (op->nframes != msg_head->nframes ||
--		    op->flags & TX_RESET_MULTI_IDX ||
--		    op->flags & SETTIMER) {
--
--			spin_lock_bh(&op->bcm_tx_lock);
-+		    op->flags & TX_RESET_MULTI_IDX) {
-+			/* potentially update changed nframes */
-+			op->nframes = msg_head->nframes;
-+			/* restart multiple frame transmission */
-+			op->currframe = 0;
-+		}
- 
--			if (op->nframes != msg_head->nframes ||
--			    op->flags & TX_RESET_MULTI_IDX) {
--				/* potentially update changed nframes */
--				op->nframes = msg_head->nframes;
--				/* restart multiple frame transmission */
--				op->currframe = 0;
--			}
-+		if (op->flags & SETTIMER)
-+			op->count = msg_head->count;
- 
--			if (op->flags & SETTIMER)
--				op->count = msg_head->count;
-+		spin_unlock_bh(&op->bcm_tx_lock);
- 
--			spin_unlock_bh(&op->bcm_tx_lock);
--		}
-+		kfree(new_frames);
- 
- 	} else {
- 		/* insert new BCM operation for the given can_id */
-@@ -1113,10 +1157,12 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 
- 	if (op->flags & SETTIMER) {
- 		/* set timer values */
-+		spin_lock_bh(&op->bcm_tx_lock);
- 		op->ival1 = msg_head->ival1;
- 		op->ival2 = msg_head->ival2;
- 		op->kt_ival1 = bcm_timeval_to_ktime(msg_head->ival1);
- 		op->kt_ival2 = bcm_timeval_to_ktime(msg_head->ival2);
-+		spin_unlock_bh(&op->bcm_tx_lock);
- 
- 		/* disable an active timer due to zero values? */
- 		if (!op->kt_ival1 && !op->kt_ival2)
--- 
-2.53.0
-
+ 	return vi->soc->video_formats[index].fourcc;
+ }
 
 
