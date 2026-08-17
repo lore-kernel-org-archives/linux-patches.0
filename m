@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD06B428470;
-	Mon, 17 Aug 2026 14:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA0943CE4B;
+	Mon, 17 Aug 2026 14:32:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977144; cv=none; b=OVDb6XiptnhSJiHEd9jNUO/YAHUu5XmSsxeoGghhbvBh6aTbdD3wcXPsQ5oRQ6A6zCmd0zReaukm+33vk/QRuldlRlfbNVySro50+iDOb4abnSQ1o/pGvUdC/iUo8oym/sbhoWuyiu+SOP0wt4YdBoyk9zdBgMRq5ZOuHG6aTes=
+	t=1786977147; cv=none; b=lj5Rn7CUcV8UZNOT7SJvlwm9EGnIdT6EtdO69KC+yx+2lR2d8DRLMppuOcT4djstfHM3ZlCsydbHEUILTDbN4C/zjtAugZrI//Xtd3kvCBT92qBPSeVqbmp0h5gFeCMhJg2xMUR+Ac5qNLcYZgt+hTH1mAJuEfPGHC3R7Ox2tCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977144; c=relaxed/simple;
-	bh=tmUKfF369ixUeC6qEjVphMmrKAhKAINdOKRvqsZLrcM=;
+	s=arc-20240116; t=1786977147; c=relaxed/simple;
+	bh=yf0ZFz9L6BxoCCQt+lrWaVIXJXRhfHiH6iR4GTt0j9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UOJb7+ALl12dc6lxaf3Wf0Xc3bp1FUm+b7iCz3xqSVWWBghAzGrch6AuEYMH05/0VDjdZDV/3cTEDGT5Vy8i+DppEazmSf8RYrBx8B+yWT7eff4cwmC4S/US+NPJfFu50rHzLH7jttoKIXSaCp5yxx+NnYwkblQ0OU0cjrlnz1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyZKaJcO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ObdUhwKhV3C826PjKKu0e7YgSxluwkr7PoNnHyqqOBu3O0a78fjvBv8BCXfI3kcuDj4mhF383LpX9zd9+FE1mC9bwCwbevv9wGzxjfryqApCvE8AuL8ascvYcXOWXbKJLynheiM8ZRr4FSXNSDDUPlFbQHJDnkk/6j6hlVB18Zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u5ran1OL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyZKaJcO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3691F000E9;
-	Mon, 17 Aug 2026 14:32:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5ran1OL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 261441F00A3A;
+	Mon, 17 Aug 2026 14:32:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977142;
-	bh=L2V+tq6xHl+F6iCu1jpxEsSlforQoRLQM3B5LMf6HqU=;
+	s=korg; t=1786977145;
+	bh=iu0RbXmmLZcI7f2oVkDcnHnnEx3PiG7G3vNI+JDJFjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DyZKaJcO6yViJfdTyIxhvdywI5pRI7E1Y69SsLcDOiDS06O6mPjs6DuRK9KWFQkKW
-	 op1IeLUvemG6HRjMu90HPC8kuNPyKTJIptW9arza7x5gTK19vGiHeoIAKf9xhzQ2tv
-	 0zLIAj2U2gkZ975mEj2hJJBKlq9r5lIyK3nIMQ8U=
+	b=u5ran1OLTORWleVbAVcNMWaPGAT2Qnj9yOBld8Bxx34XhchHBVLxgTtTBU1HqncY6
+	 J4TUYrzg87nGKa/nXyKq8IdMICxubiDA95RSxBYLW6oYGdGYIDEeU/iquSPttvwGmj
+	 z3kb1pHGNYsIdJk8lQY17VxxXCY07s7mWIpDledc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Breno Leitao <leitao@debian.org>,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 225/456] tipc: clear sock->sk on the failed-insert path in tipc_sk_create()
-Date: Mon, 17 Aug 2026 15:30:15 +0200
-Message-ID: <20260817132548.949428806@linuxfoundation.org>
+	syzbot+f24c3d5d316011bacc70@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 5.15 189/456] comedi: comedi_parport: deal with premature interrupt
+Date: Mon, 17 Aug 2026 15:29:39 +0200
+Message-ID: <20260817132547.514614416@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -53,82 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit ba0533fc163f905fe817cfabdf8ed4058da44800 upstream.
+commit 17221216ae8ce6a24e8a4e787382e3ebc81b88a8 upstream.
 
-When tipc_sk_create() fails to insert the new socket (tipc_sk_insert()
-returns non-zero), its error path frees the sk with sk_free() but leaves
-sock->sk pointing at the freed object:
+Syzbot reported a general protection fault in
+`comedi_get_is_subdevice_running()`, which was called from the interrupt
+handler `parport_interrupt()` in the "comedi_parport" driver, but it
+does not currently have a C reproducer for the problem.  It's
+probably due to a premature interrupt for one of two reasons:
 
-	if (tipc_sk_insert(tsk)) {
-		sk_free(sk);
-		pr_warn("Socket create failed; port number exhausted\n");
-		return -EINVAL;
-	}
+1. The driver sets up the interrupt handler before the comedi subdevices
+   used by the interrupt handler have been allocated, but does not
+   disable the interrupt in the parallel port's CTRL register first.
+2. The driver uses a user-supplied I/O port base address which Syzbot
+   would have supplied, but it might not be backed by real parallel port
+   hardware.
 
-This is harmless for plain socket(): the syscall layer clears sock->ops
-before releasing, so tipc_release() is never called. It is not harmless
-on the accept() path. tipc_accept() creates the pre-allocated child
-socket with tipc_sk_create(net, new_sock, 0, kern); on failure it leaves
-new_sock->sk dangling and new_sock->ops non-NULL, and do_accept() then
-fput()s the new file, so __sock_release() -> tipc_release() runs
-lock_sock(new_sock->sk) on the freed sk -- a use-after-free write of the
-sk_lock spinlock.
+Change the initialization order in the driver's comedi "attach" handler
+(`parport_attach()`) so that the hardware registers are initialized
+before the interrupt handler is requested.  This should prevent
+premature interrupts occurring for real hardware.
 
-tipc_release() already guards this exact "failed accept() releases a
-pre-allocated child" case with "if (sk == NULL) return 0;", but the
-guard is bypassed because tipc_sk_create() left sock->sk non-NULL
-(dangling) rather than NULL.
+Also add a test to the interrupt handler to ensure the comedi device is
+fully attached and return early if it isn't.
 
-Clear sock->sk on the failed-insert path so the existing tipc_release()
-NULL check fires and the use-after-free is avoided.
-
-The tipc_sk_insert() failure is reached when the per-netns socket
-rhashtable hits its max_size (tsk_rht_params.max_size = 1048576, ~2M
-elements) -- i.e. once a netns holds ~2M TIPC sockets every insert
-returns -E2BIG.
-
-  BUG: KASAN: slab-use-after-free in lock_sock_nested (net/core/sock.c:3839)
-  Write of size 8 at addr ffff8880047cdc38 by task init/1
-   lock_sock_nested (net/core/sock.c:3839)
-   tipc_release (net/tipc/socket.c:638)
-   __sock_release (net/socket.c:710)
-   sock_close (net/socket.c:1501)
-   __fput (fs/file_table.c:512)
-  Allocated by task 1:
-   sk_alloc (net/core/sock.c:2308)
-   tipc_sk_create (net/tipc/socket.c:487)
-   tipc_accept (net/tipc/socket.c:2744)
-   do_accept (net/socket.c:2034)
-  Freed by task 1:
-   __sk_destruct (net/core/sock.c:2391)
-   tipc_sk_create (net/tipc/socket.c:504)
-   tipc_accept (net/tipc/socket.c:2744)
-   do_accept (net/socket.c:2034)
-
-Fixes: 00aff3590fc0 ("net: tipc: fix possible refcount leak in tipc_sk_create()")
-Cc: stable@vger.kernel.org
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260714131939.1255974-1-4ncienth@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 241ab6ad7108e ("Staging: comedi: add comedi_parport driver")
+Reported-by: syzbot+f24c3d5d316011bacc70@syzkaller.appspotmail.com
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260527125104.96596-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/socket.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/comedi/drivers/comedi_parport.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/net/tipc/socket.c
-+++ b/net/tipc/socket.c
-@@ -503,6 +503,7 @@ static int tipc_sk_create(struct net *ne
- 	tipc_set_sk_state(sk, TIPC_OPEN);
- 	if (tipc_sk_insert(tsk)) {
- 		sk_free(sk);
-+		sock->sk = NULL;
- 		pr_warn("Socket create failed; port number exhausted\n");
- 		return -EINVAL;
+--- a/drivers/comedi/drivers/comedi_parport.c
++++ b/drivers/comedi/drivers/comedi_parport.c
+@@ -212,6 +212,13 @@ static irqreturn_t parport_interrupt(int
+ 	unsigned int ctrl;
+ 	unsigned short val = 0;
+ 
++	/*
++	 * Check device is fully attached.  Device interrupts should have
++	 * been disabled, but do this in case of bad hardware.
++	 */
++	if (!dev->attached)
++		return IRQ_NONE;
++
+ 	ctrl = inb(dev->iobase + PARPORT_CTRL_REG);
+ 	if (!(ctrl & PARPORT_CTRL_IRQ_ENA))
+ 		return IRQ_NONE;
+@@ -232,6 +239,9 @@ static int parport_attach(struct comedi_
+ 	if (ret)
+ 		return ret;
+ 
++	outb(0, dev->iobase + PARPORT_DATA_REG);
++	outb(0, dev->iobase + PARPORT_CTRL_REG);
++
+ 	if (it->options[1]) {
+ 		ret = request_irq(it->options[1], parport_interrupt, 0,
+ 				  dev->board_name, dev);
+@@ -287,9 +297,6 @@ static int parport_attach(struct comedi_
+ 		s->cancel	= parport_intr_cancel;
  	}
+ 
+-	outb(0, dev->iobase + PARPORT_DATA_REG);
+-	outb(0, dev->iobase + PARPORT_CTRL_REG);
+-
+ 	return 0;
+ }
+ 
 
 
