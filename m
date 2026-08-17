@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC8C3EC2CD;
-	Mon, 17 Aug 2026 15:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B41442370;
+	Mon, 17 Aug 2026 15:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979838; cv=none; b=Z3kABWFvK9qy4V8nlBDBsAJSgjoujkzuy+T9tu2riJd4Wze8EGoKTW6cjzBvU9Iv+QeyyubuSIV7F38j1YKKxNjaDtvyRPbx5HNVaWuafYRicnixnaWm2CDh1Svz7KNf8e1ex14i8jJ7CabUwJwtZaeZlbOjVVam902K3MJpzMo=
+	t=1786979841; cv=none; b=IkvwZJ8HaDZvYYeNF5zwH9OnJ6dBmZWXGZuRvuoflRkxgbrvdoDh6XDZoL3DF7UzbI8Pyd+7Czi7AaZUDXp4IRb98k7Nv1r32L7YFjBP8gGxFtW+pnUA6BlLbSQJFUJLpNFqzWsvxwFAOs35lv1OjFIJRM+PBKH0F59hizv00nU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979838; c=relaxed/simple;
-	bh=y2zd9qlKTFX7DT5nzH/VewVed7KzzC+Phod91Bzznwc=;
+	s=arc-20240116; t=1786979841; c=relaxed/simple;
+	bh=ABTWIkZNXAeIgxZb8lzy5eIPQGDg246i7zEbHOTQp9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IYnxSyjL0NBczZKmCseaHg51lhJwh38RChEXrJTQU5x5vRDU1a117ijaHS6dsxhK+JpkI0us3WvxQNoHB/gitNvxPscfLTfbmoVSgye8chiPPY3KBrzyKSXCAGKw5M+jmq0abNWWhsal1e4OWoqH0aat4exUsQg6UyjBxlVIqsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNRgSrpn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HaIVFC09YWc3pX7NjMfAfSWPPT+NsD23l/1rKfZF3cuKca0Xr2veljzC26D+/xVLKC8YnU1X7G3/tEOVUJVlcWvgPQWeGNnpaQexk+uep3iCrtHYq7+AhFA6aBaVBrgtnSSqQmC6+EP8K0ibfqS7M+Ib+sji6lcmPVk5zRHfzd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JS3zXwWS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNRgSrpn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6291F000E9;
-	Mon, 17 Aug 2026 15:17:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JS3zXwWS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A051F00A3A;
+	Mon, 17 Aug 2026 15:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979836;
-	bh=57jv6CZkW/y92aT2lxHtgYTa/doULrPx/mWclXZWiGg=;
+	s=korg; t=1786979838;
+	bh=46aXk6qTde31syoD/wA9jmPZ5W7L96/3hJ1EwBGA6+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qNRgSrpnEFihYLNkOJMnrWXgVUcauStOSYMvmPTLh2onGHH1E/hAhAD4uLPQp7WzN
-	 g1yGnmnTABDC6sCHPCyE64OmfZkGCYeWacrsM6533xVHR/bN7UAnFxNyyWiwNmN7wP
-	 ohG0LVCfd8tOxVWC2TtU+busr010P4k/WaHV2KPE=
+	b=JS3zXwWSEey2d6JSv6v08FuiDlJ9vsRxlRI1iMN6zHW1dVm3Aw0GlPj4r2fhFCLBX
+	 hWdQnvwmtTWreyS0YSS8vUY5tRe2p80IjrUVXA1FhspnVVzJOWCFn8HA+iy/JkQ1sT
+	 Op27n4mEVnvmaFPHiQLGbkWqXzAcKPMdM01CDaEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Uday Khare <udaykhare77@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 325/609] assoc_array: trim the final shortcut word using the current chunk end
-Date: Mon, 17 Aug 2026 15:30:21 +0200
-Message-ID: <20260817132555.111057486@linuxfoundation.org>
+Subject: [PATCH 6.1 316/609] ASoC: max98090: fix missing IS_ERR() before PTR_ERR() on mclk lookup
+Date: Mon, 17 Aug 2026 15:30:12 +0200
+Message-ID: <20260817132554.811946303@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,64 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Uday Khare <udaykhare77@gmail.com>
 
-[ Upstream commit a82c8a05e86f3f84e09698f65b4515b5d04633f6 ]
+[ Upstream commit a792ce0fad61a70793ec565743f11d6ca534de59 ]
 
-assoc_array_walk() masks off the bits past shortcut->skip_to_level in the
-word that contains skip_to_level, gated on
-round_up(sc_level, ASSOC_ARRAY_KEY_CHUNK_SIZE) > skip_to_level.
+In max98090_probe(), the -EPROBE_DEFER check after devm_clk_get() is
+broken due to a missing IS_ERR() guard.
 
-That guard is wrong in two opposite ways:
+The code intends to return -EPROBE_DEFER only when the clock lookup
+fails with that specific error.  However, without IS_ERR() the check:
 
- - When sc_level is word-aligned (every word after the first) round_up()
-   is a no-op, so the guard is sc_level > skip_to_level and never fires for
-   the word that holds skip_to_level.  A shortcut that spans more than one
-   word and ends in the middle of its last word leaves that word untrimmed,
-   and its stale high bits leak into the dissimilarity word and can steer
-   the walk down the wrong descendant.
+    if (PTR_ERR(max98090->mclk) == -EPROBE_DEFER)
 
- - When sc_level is unaligned (the first word) and skip_to_level sits on
-   the next chunk boundary, sc_level + CHUNK would exceed skip_to_level and
-   fire the trim with shift = skip_to_level & CHUNK_MASK == 0, which clears
-   the whole dissimilarity word and makes a differing shortcut compare
-   equal.
+is called unconditionally, including when devm_clk_get() succeeds and
+returns a valid pointer.  Calling PTR_ERR() on a valid pointer
+reinterprets its address as a signed long; the result is arbitrary
+and is almost never equal to -EPROBE_DEFER, so the check silently
+does nothing in the success case.  When devm_clk_get() fails with
+any error other than -EPROBE_DEFER the check is also skipped, leaving
+max98090->mclk holding an error pointer with no indication to the caller.
 
-Use the end of the chunk that contains sc_level instead:
+This means a deferred probe will never actually be triggered for this
+device, and any non-EPROBE_DEFER clock error is silently swallowed with
+the error pointer left in the mclk field.
 
-	skip_to_level < round_down(sc_level, CHUNK) + CHUNK
+Fix this by adding the missing IS_ERR() guard around the PTR_ERR() call,
+matching the pattern already used in the sibling max98088 and wm8960
+drivers.
 
-For an aligned sc_level whose word holds skip_to_level this now fires (the
-first bug); for an unaligned sc_level with skip_to_level on the following
-boundary it does not, so shift is never 0 when the branch runs and the trim
-never clears the whole word.
-
-Fixes: 3cb989501c26 ("Add a generic associative array implementation.")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20260719161505.2423935-4-michael.bommarito@gmail.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: b10ab7b838bd ("ASoC: max98090: Add master clock handling")
+Signed-off-by: Uday Khare <udaykhare77@gmail.com>
+Link: https://patch.msgid.link/20260720104254.14948-1-udaykhare77@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/assoc_array.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/max98090.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/lib/assoc_array.c b/lib/assoc_array.c
-index ca0b4f360c1a0..65409f0d2e0e5 100644
---- a/lib/assoc_array.c
-+++ b/lib/assoc_array.c
-@@ -255,7 +255,8 @@ assoc_array_walk(const struct assoc_array *array,
- 		sc_segments = shortcut->index_key[sc_level >> ASSOC_ARRAY_KEY_CHUNK_SHIFT];
- 		dissimilarity = segments ^ sc_segments;
+diff --git a/sound/soc/codecs/max98090.c b/sound/soc/codecs/max98090.c
+index f5acf84ee20cc..e64e2352c6aa4 100644
+--- a/sound/soc/codecs/max98090.c
++++ b/sound/soc/codecs/max98090.c
+@@ -2391,8 +2391,9 @@ static int max98090_probe(struct snd_soc_component *component)
+ 	dev_dbg(component->dev, "max98090_probe\n");
  
--		if (round_up(sc_level, ASSOC_ARRAY_KEY_CHUNK_SIZE) > shortcut->skip_to_level) {
-+		if (shortcut->skip_to_level < round_down(sc_level,
-+				ASSOC_ARRAY_KEY_CHUNK_SIZE) + ASSOC_ARRAY_KEY_CHUNK_SIZE) {
- 			/* Trim segments that are beyond the shortcut */
- 			int shift = shortcut->skip_to_level & ASSOC_ARRAY_KEY_CHUNK_MASK;
- 			dissimilarity &= ~(ULONG_MAX << shift);
+ 	max98090->mclk = devm_clk_get(component->dev, "mclk");
+-	if (PTR_ERR(max98090->mclk) == -EPROBE_DEFER)
+-		return -EPROBE_DEFER;
++	if (IS_ERR(max98090->mclk))
++		if (PTR_ERR(max98090->mclk) == -EPROBE_DEFER)
++			return -EPROBE_DEFER;
+ 
+ 	max98090->component = component;
+ 
 -- 
 2.53.0
 
