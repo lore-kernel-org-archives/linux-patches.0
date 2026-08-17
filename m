@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF30C2D5A01;
-	Mon, 17 Aug 2026 14:07:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901752D5A01;
+	Mon, 17 Aug 2026 14:07:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975625; cv=none; b=lnYbLjBQNNQ/XMGsrk24jNSIOVfXgLgH+zMlCEhCZySEelnCy3arDqWwXxNyeUk8qD0bhip914Mu7JiOVb5IVG8a2wM0FIuHDMqH2kYMGH/LB55pomJtx6Sj64mHdN+tbyrazc6L73Qd5zIseYg0ntB+xe2ny11H/HZvLvZllBE=
+	t=1786975628; cv=none; b=pnEkhe1UmvA8lzASDRL2Xc2TaoL5cBfZKa2aNNTMnoUdTi+vSLO/rnCVFyH8ATg+Uu/iYfdP8m8tCBTLU5S8yysl2TVpc8OhFo95xmCG5jMLn+CtFjU8hKbB6nXEq0Gwic+ktoXMJNNKKGw6uwWbz7/IIBb5j1j9EZusQBny5Tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975625; c=relaxed/simple;
-	bh=M4JuEIadrNYIcDKGOJ48wBhuR9saRsbVY2YiON1CtVo=;
+	s=arc-20240116; t=1786975628; c=relaxed/simple;
+	bh=linphz6hmVvE3huGHMwRWPdV5BfUiX/vLjKLVep4NLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B+T7cPBKSpXuc5E+9xqYaE5XFLvqf4KFTgzyB92lHxe0sAwDDxIdh8TJmwUP7+3IAwnqYNznZ3JrDOBh4vNSnuZyhAwuLSMtWQzVEEiey9PZXvyw2Z7hzY4pm3XZMymMjUvPTjygCJcJmbMhjkoxqmlVRBJuxFJKopqWHDc53cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ES6II+it; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bbohwf/ILqs3YTEvyCGSBI9VMR1B6a5t8WahMVu3hzasZrM5XXJlQSEbUuBGZD1KRsiCf5snaC+w7YRI5Y8iVvK8Apq8frFmblBtygM7RYa5DtwRk98n6u2DzzQ7asvaNCw14Dfb48wkunNhwl9lxmMoM0aCf2sAQbeMmMb3hHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ksBaERRI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ES6II+it"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ABF11F000E9;
-	Mon, 17 Aug 2026 14:07:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ksBaERRI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D7E1F000E9;
+	Mon, 17 Aug 2026 14:07:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975624;
-	bh=IoKBhMFCDDP9s0agMdXbUs/g6RRzY+4mURHu8vNz72w=;
+	s=korg; t=1786975627;
+	bh=xzkZpDHCSsD/qF168L7U24+xKPW6TU+lAFXrJvf3gXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ES6II+iteowbaf6ZvliVp0XTkXtBGreo/K1pdhsOxnT/o+6VhYCnqi6iwmDnNlFcr
-	 0nKgPxijKYQKEaWAqzu7G/PxraIiCo69kgv+YY/HREv7ZOic8SkEpqDYpzz8s89z+9
-	 FHDG1MlePKU5XDHDhZSoW0iJODgujidD17o2IqnQ=
+	b=ksBaERRI9+X0bTAWyvMsANbu8MtLY1jQnZjapGidv9ocrVXotQuhyXBJVCIO90ZGN
+	 QEz7VT5p3SSIAINvcG7v7j4xvdSeSf6s3GnAzJe4QpoOt2mNpvHNFj5toJund0lX2r
+	 jKMQYE86dhQ6LFRI+iLHzVxroExyfsQfXb0f575A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohan G Thomas <rohan.g.thomas@altera.com>,
-	Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Raczynski <j.raczynski@samsung.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Muhammad Ziad <muhzi100@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 092/389] net: stmmac: reset residual action in L3L4 filters on delete
-Date: Mon, 17 Aug 2026 15:28:51 +0200
-Message-ID: <20260817132542.699078110@linuxfoundation.org>
+Subject: [PATCH 5.10 093/389] ipv4: icmp: fill flow parameters in icmp_route_lookup decoy lookup
+Date: Mon, 17 Aug 2026 15:28:52 +0200
+Message-ID: <20260817132542.738522731@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -54,41 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit a448f821289934b961dd9d8d0beb006cc8937ba2 ]
+[ Upstream commit 853e164c2b321f0711361bc23505aaeb7dc432c3 ]
 
-When deleting an L3/L4 flower filter entry, the action field is not
-reset. If a filter was previously configured with a drop action, that
-action may persist and affect subsequent filter configurations
-unintentionally.
+When Linux forwards a packet and needs to generate an ICMP error,
+icmp_route_lookup() performs a reverse-path relookup. For non-local
+destinations, it performs a decoy lookup to find the expected egress
+interface (rt2->dst.dev) before validating the path with ip_route_input().
 
-Clear the action field when the filter entry is deleted.
+Currently, the decoy flow structure (fl4_2) only sets .daddr = fl4_dec.saddr,
+leaving .saddr, .flowi4_dscp, .flowi4_proto, .flowi4_mark, .flowi4_oif,
+.fl4_sport, .fl4_dport, and .flowi4_uid zeroed out.
 
-Fixes: 425eabddaf0f ("net: stmmac: Implement L3/L4 Filters using TC Flower")
-Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
-Signed-off-by: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260714023716.29865-5-muhammad.nazim.amirul.nazle.asmade@altera.com
-Reviewed-by: Jakub Raczynski <j.raczynski@samsung.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+When policy routing rules (such as ip rule add from $SRC lookup 100, or
+dscp/fwmark/ipproto/port rules, or VRF bindings) are configured:
+1. The decoy lookup fails to match the policy rule because saddr and other
+   key flow selectors are missing in fl4_2.
+2. It resolves a route using the default table instead, returning an incorrect
+   egress netdev.
+3. Passing the wrong netdev to ip_route_input() causes strict reverse-path
+   filtering (rp_filter=1) to fail, logging false-positive "martian source"
+   warnings and causing the relookup to fail.
+
+Fix this by initializing fl4_2 from fl4_dec and:
+- Swapping source/destination IP addresses.
+- Swapping L4 ports for transport protocols with ports (TCP, UDP, SCTP, DCCP)
+  so port-based policy routing matches correctly. Non-port protocols (such as
+  ICMP or GRE) leave the flowi_uli union fields intact to prevent corruption.
+- Setting .flowi4_oif = l3mdev_master_ifindex(route_lookup_dev) to ensure
+  VRF routing tables are respected.
+- Setting .flowi4_flags |= FLOWI_FLAG_ANYSRC to allow output route lookups
+  for non-local source IP addresses.
+- Using __ip_route_output_key() instead of ip_route_output_key() for fl4_2
+  so that raw FIB routing is used without triggering spurious XFRM policy
+  lookups on the decoy flow (the actual XFRM lookup is performed later using
+  fl4_dec).
+
+Fixes: 415b3334a21a ("icmp: Fix regression in nexthop resolution during replies.")
+Reported-by: Muhammad Ziad <muhzi100@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAOAwikA60AYKdFr_UDLyja3oU4hqyAE7uFZWqum5uRdaQsgRYg@mail.gmail.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260722104236.2938082-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv4/icmp.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-index 3539c1542eb8c6..f5977539129cfd 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-@@ -603,6 +603,7 @@ static int tc_del_flow(struct stmmac_priv *priv,
- 	entry->in_use = false;
- 	entry->cookie = 0;
- 	entry->is_l4 = false;
-+	entry->action = 0;
- 	return ret;
- }
+diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
+index 3c74fecce2382c..e919d2a5169e79 100644
+--- a/net/ipv4/icmp.c
++++ b/net/ipv4/icmp.c
+@@ -533,11 +533,23 @@ static struct rtable *icmp_route_lookup(struct net *net,
+ 		if (IS_ERR(rt2))
+ 			err = PTR_ERR(rt2);
+ 	} else {
+-		struct flowi4 fl4_2 = {};
++		struct flowi4 fl4_2 = fl4_dec;
+ 		unsigned long orefdst;
  
+-		fl4_2.daddr = fl4_dec.saddr;
+-		rt2 = ip_route_output_key(net, &fl4_2);
++		swap(fl4_2.daddr, fl4_2.saddr);
++		switch (fl4_2.flowi4_proto) {
++		case IPPROTO_TCP:
++		case IPPROTO_UDP:
++		case IPPROTO_SCTP:
++		case IPPROTO_DCCP:
++			swap(fl4_2.fl4_sport, fl4_2.fl4_dport);
++			break;
++		}
++
++		fl4_2.flowi4_oif = l3mdev_master_ifindex(route_lookup_dev);
++		fl4_2.flowi4_flags |= FLOWI_FLAG_ANYSRC;
++
++		rt2 = __ip_route_output_key(net, &fl4_2);
+ 		if (IS_ERR(rt2)) {
+ 			err = PTR_ERR(rt2);
+ 			goto relookup_failed;
 -- 
 2.53.0
 
