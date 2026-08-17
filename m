@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6DB2EEE85;
-	Mon, 17 Aug 2026 15:07:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0AD23AB9D;
+	Mon, 17 Aug 2026 15:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979242; cv=none; b=NUg/Zp9P0lViRme98cDggjkH8RFr7WWtqpKN1TpE3oCjBulffqsza0rjb4YTXGmrzd1tbB3XDO15cqi3UnVv8gCyyvgQ4srJp/PdzD/n+Rwjlovq0e6XBv1pO0gXPCFMCPRwjIqMXUM0ihsB18ra7E3wm63IKK+JvLG8XL4Zk0Y=
+	t=1786979245; cv=none; b=MjkR1JAGDidZdlm/7EqGY8Y3w5s5nbtFf/q9YdxDPliu43fd/heFYR/HHrPVQT7PpGPDZP2wv7PessqPSrvfYrNmtawFhLJ2CtM8bhv2aDTmmE+kKCqQQcFNCtB4maPm5chJrdhFapjkjTUphiVuQLrRpLSgu0Ifhswr0O3Iuv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979242; c=relaxed/simple;
-	bh=+OnEAL/7laADzleUOqldK1yPS0hKHjxLUAWQS2z+vvo=;
+	s=arc-20240116; t=1786979245; c=relaxed/simple;
+	bh=dMrUvU/yue2eqMxlDm79zN6NGBdlNeykly/6zpDYOQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DL4Zj6epPsggqpODh9Q+RFY+8TmgG7cHwyyIT+PyQBhPdFJMMpHm0a5SGkq4dJmNr7W4fxEuPE+BE4ry7zdByUlA2szbSNcp7xNo3iER6FeTZ/eznlf+d12qyLvN+0JRQawV7zTZFssMNFlTWphaGajFI2dMV4PuGUoLJIJbFmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=upzZiT5t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ruT4ssSZc4mPKpAsnlE0wtkATY5h51Kep4XY8hpH2VFAFeUw2+DIcKNmJrAyLxi39dfAWgPG7Vfo9qOpOhasMEQ2cgR1TupFgYJ2qVCtNAMPvqpqkJlMnr0nG9RZGWixqyeNCOgx5ojT4FFwKdRCL/xUD7sqAux/n1kBO3F8qv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZAzr8Yc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="upzZiT5t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 447E11F000E9;
-	Mon, 17 Aug 2026 15:07:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZAzr8Yc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2875F1F000E9;
+	Mon, 17 Aug 2026 15:07:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979240;
-	bh=Okz0vSuyRBDe58eIAa70rX8wg1m7lehKtLTs7gbklgc=;
+	s=korg; t=1786979243;
+	bh=vWuMyachQTzEeCSlZa2w0fqP2vAtmFRdH5z23FucQHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=upzZiT5twRFI1yvl2PSzMvzWGWHNiOWSaGUmoqw36+8/X2NPBqGWsVDXqMTdH3reg
-	 xJCrlOQUikI6JssrSbM9j7n9+EeMtoyzXBVVlFLGnFdKCv01wLEknNKbv9jsMdTPk7
-	 y/aQEm4/ZpfaU/l/jC4v77o+imkJ1PkfhHyjT8ck=
+	b=yZAzr8Yco8sGRKZQTgOw5Tcu+M7H6CSsO1NTvYydojkejmC+IJQoeKDwWwljTyrog
+	 HVS0GRrv01zQMWpRx1sLsRwOA29CZEe7N+y6G2wa5T0HJz4N+n8xMNkCnYu5+SmYBh
+	 xNUI6uH9/y+FKrUpRX+qMAJsZhB3AB0grypB8Bm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Luo <luoqing@kylinos.cn>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Qingfang Deng <dqfext@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 150/609] sctp: auth: verify auth requirement when auth_chunk is NULL
-Date: Mon, 17 Aug 2026 15:27:26 +0200
-Message-ID: <20260817132549.029684793@linuxfoundation.org>
+Subject: [PATCH 6.1 159/609] ppp: enable TX scatter-gather
+Date: Mon, 17 Aug 2026 15:27:35 +0200
+Message-ID: <20260817132549.332851954@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,49 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Luo <luoqing@kylinos.cn>
+From: Qingfang Deng <dqfext@gmail.com>
 
-[ Upstream commit 8e04823c120b376ef7dab14b60ebf6823aa16c14 ]
+[ Upstream commit 42fcb213e58a7da33d5d2d7517b4e521025c68c3 ]
 
-sctp_auth_chunk_verify() returns true unconditionally when
-chunk->auth_chunk is NULL, silently skipping authentication.
-This is incorrect when:
+PPP channels using chan->direct_xmit prepend the PPP header to a skb and
+call dev_queue_xmit() directly. In this mode the skb does not need to be
+linear, but the PPP netdevice currently does not advertise
+scatter-gather features, causing unnecessary linearization and
+preventing GSO.
 
-1. skb_clone() failed in the BH receive path, leaving auth_chunk
-   NULL. In sctp_endpoint_bh_rcv() asoc is NULL for new
-   connections, so the early sctp_auth_recv_cid() check cannot
-   catch this.
+Enable NETIF_F_SG and NETIF_F_FRAGLIST on PPP devices. In case a linear
+buffer is required (PPP compression, multilink, and channels without
+direct_xmit), call skb_linearize() explicitly.
 
-2. No AUTH chunk precedes COOKIE-ECHO, so skb_clone() is never
-   called and auth_chunk remains NULL.
-
-Fix by checking sctp_auth_recv_cid() when auth_chunk is NULL:
-if authentication is required, return false to drop the chunk;
-otherwise continue normally.
-
-Fixes: bbd0d59809f9 ("[SCTP]: Implement the receive and verification of AUTH chunk")
-Signed-off-by: Qing Luo <luoqing@kylinos.cn>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260721015532.120157-2-l1138897701@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Qingfang Deng <dqfext@gmail.com>
+Link: https://patch.msgid.link/20260129012902.941-1-dqfext@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 543adf072165 ("ppp: annotate data races in ppp_generic")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ppp/ppp_generic.c | 30 +++++++++++++++++++++++++-----
+ 1 file changed, 25 insertions(+), 5 deletions(-)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index d1cbc806fe84cb..86a0cb0a02503c 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -640,7 +640,7 @@ static bool sctp_auth_chunk_verify(struct net *net, struct sctp_chunk *chunk,
- 	struct sctp_chunk auth;
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index 2575aaf316bc93..a657155076af9d 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -1636,6 +1636,8 @@ static void ppp_setup(struct net_device *dev)
+ 	dev->flags = IFF_POINTOPOINT | IFF_NOARP | IFF_MULTICAST;
+ 	dev->priv_destructor = ppp_dev_priv_destructor;
+ 	dev->pcpu_stat_type = NETDEV_PCPU_STAT_TSTATS;
++	dev->features = NETIF_F_SG | NETIF_F_FRAGLIST;
++	dev->hw_features = dev->features;
+ 	netif_keep_dst(dev);
+ }
  
- 	if (!chunk->auth_chunk)
--		return true;
-+		return !sctp_auth_recv_cid(chunk->chunk_hdr->type, asoc);
+@@ -1700,6 +1702,10 @@ pad_compress_skb(struct ppp *ppp, struct sk_buff *skb)
+ 		ppp->xcomp->comp_extra + ppp->dev->hard_header_len;
+ 	int compressor_skb_size = ppp->dev->mtu +
+ 		ppp->xcomp->comp_extra + PPP_HDRLEN;
++
++	if (skb_linearize(skb))
++		return NULL;
++
+ 	new_skb = alloc_skb(new_skb_size, GFP_ATOMIC);
+ 	if (!new_skb) {
+ 		if (net_ratelimit())
+@@ -1787,6 +1793,10 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
+ 	case PPP_IP:
+ 		if (!ppp->vj || (ppp->flags & SC_COMP_TCP) == 0)
+ 			break;
++
++		if (skb_linearize(skb))
++			goto drop;
++
+ 		/* try to do VJ TCP header compression */
+ 		new_skb = alloc_skb(skb->len + ppp->dev->hard_header_len - 2,
+ 				    GFP_ATOMIC);
+@@ -1884,19 +1894,26 @@ ppp_push(struct ppp *ppp)
+ 	}
  
- 	/* SCTP-AUTH:  auth_chunk pointer is only set when the cookie-echo
- 	 * is supposed to be authenticated and we have to do delayed
+ 	if ((ppp->flags & SC_MULTILINK) == 0) {
++		struct ppp_channel *chan;
+ 		/* not doing multilink: send it down the first channel */
+ 		list = list->next;
+ 		pch = list_entry(list, struct channel, clist);
+ 
+ 		spin_lock(&pch->downl);
+-		if (pch->chan) {
+-			if (pch->chan->ops->start_xmit(pch->chan, skb))
+-				ppp->xmit_pending = NULL;
+-		} else {
+-			/* channel got unregistered */
++		chan = pch->chan;
++		if (unlikely(!chan || (!chan->direct_xmit && skb_linearize(skb)))) {
++			/* channel got unregistered, or it requires a linear
++			 * skb but linearization failed
++			 */
+ 			kfree_skb(skb);
+ 			ppp->xmit_pending = NULL;
++			goto out;
+ 		}
++
++		if (chan->ops->start_xmit(chan, skb))
++			ppp->xmit_pending = NULL;
++
++out:
+ 		spin_unlock(&pch->downl);
+ 		return;
+ 	}
+@@ -1981,6 +1998,8 @@ static int ppp_mp_explode(struct ppp *ppp, struct sk_buff *skb)
+ 		return 0; /* can't take now, leave it in xmit_pending */
+ 
+ 	/* Do protocol field compression */
++	if (skb_linearize(skb))
++		goto err_linearize;
+ 	p = skb->data;
+ 	len = skb->len;
+ 	if (*p == 0 && mp_protocol_compress) {
+@@ -2139,6 +2158,7 @@ static int ppp_mp_explode(struct ppp *ppp, struct sk_buff *skb)
+ 
+  noskb:
+ 	spin_unlock(&pch->downl);
++ err_linearize:
+ 	if (ppp->debug & 1)
+ 		netdev_err(ppp->dev, "PPP: no memory (fragment)\n");
+ 	++ppp->dev->stats.tx_errors;
 -- 
 2.53.0
 
