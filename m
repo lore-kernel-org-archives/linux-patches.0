@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF623EDE54;
-	Mon, 17 Aug 2026 13:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2471E3F7A9B;
+	Mon, 17 Aug 2026 13:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974847; cv=none; b=TWnYdZmPJ7x04ejV7Aqa3IP03hbLrr+7xvKWynHWW9fJARBqio2dllZaXXPQzcCkoyq01IRZD7fiwlyBDJRMVLjNPXAxO+j0r0aqm/a2Luhr3i781qlO5Fng49aP4KER4haeCFV+n3SG4CBFh6WgsqyZh+7s5PboEVkrkJ6fF7I=
+	t=1786974848; cv=none; b=lcnTeqOEYv+Z0/eQIDIUez2e0iYWkNikZiZu/bH4/Uk+asnSqcllf9y0t2T0kH0Z4nsUg9zJcdOEExdcB7nS9rmb2VSLobCmDcBEUfjyopYwuXCos0hu1ICKxbtUTEkiI4jNdgj6vwoxwLMIj1xq6oFpiFlABr0GNKWoGv62r8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974847; c=relaxed/simple;
-	bh=DKsI7m4XFFpZLqlVgoKmB1uuKSNvpmQ+bjo/0YiKkVo=;
+	s=arc-20240116; t=1786974848; c=relaxed/simple;
+	bh=c0MpQfiAJeB1gvkL0Jrjqzg/KWOUpZ603yhzs23f2S4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ocr97pc9T30u8RSHddV6MYKMg8LHTzgEAbUxfi9g1CY/kApi9HkcdnA+Y8U2qXWZD1THW2A0mhV154KfW//cslrA7aceSSGM/TIs7M81cr2xE9KXb1mepX/2XJoNIc9rIhs6q0yPfpHI+IlxjJ+rQA3sq63RzL2X1Xock8T8zJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qGl43xB9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G3NBSIMtmqF5o7lbbjp2tXvBkMBhU1kmlwi3RGmgkxL3mXPn2pCUIYrv83yYApSOuXOmZmGnLQeUepWo1fUftpHAHtgtkhuf+jPzrrfMK65prSkscqHzaejP33xuly1fqvNYFST4xuGWlEaQjdEWBy4cJypf7fJ6O/ph0uLdWm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yo33laLF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qGl43xB9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9031C1F00A3A;
-	Mon, 17 Aug 2026 13:53:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yo33laLF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50FDD1F000E9;
+	Mon, 17 Aug 2026 13:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974836;
-	bh=wlcgS6PX/wRUf41bGicm772csIrKW44Twg+V//BWdis=;
+	s=korg; t=1786974841;
+	bh=dj8VjlclRETNhdM4Li5KhgwCdgoTC2/KemczXW8eSTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qGl43xB9XtTWpXgoKYu+ZLj+RDacYDS3lbGoBhntgXzi8X4lIScykTejODQ/26xyc
-	 k6i8z6MgHUaI8XezADs0CRzEap9pg4RXnhL1AevOqMifaQh+6X6+vRTZtsz3YRZG+Z
-	 AOERecgJw8WIn757A7UrJsvhDgfyqoW2XLKM0p8g=
+	b=Yo33laLFlakKHw7K0rvzSwOY0VSinQ+g04M6e0YhyhT0ey3rWao43fIu1TZygyMqe
+	 /n1RBbbGav4V7Aa85eT9D5my9slu7WnOFxFETUsorDCX8n/mdLZiXRpydty+z0/+wv
+	 JyXbMEuq60SL27b2Y1L/RZ2YPi3YXAlLwq0yPe1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jijie Shao <shaojijie@huawei.com>,
-	Simon Horman <horms@kernel.org>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jay Vosburgh <jv@jvosburgh.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 031/250] net: hns3: fix speed configuration residue after driver reload
-Date: Mon, 17 Aug 2026 15:29:52 +0200
-Message-ID: <20260817132537.725195333@linuxfoundation.org>
+Subject: [PATCH 6.18 033/250] bonding: alb: re-check primary_is_promisc under RTNL in bond_alb_monitor
+Date: Mon, 17 Aug 2026 15:29:54 +0200
+Message-ID: <20260817132537.806878457@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,74 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jijie Shao <shaojijie@huawei.com>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-[ Upstream commit 3860d8748af315bfee6fe669fddc1fc17d3214db ]
+[ Upstream commit 683c6ba6e58e6ed1037831ea97dd58d9c0e76b8d ]
 
-After setting a 100G optical port to 40G via ethtool and reloading
-the driver, the port remains at 40G instead of reverting to the
-firmware default speed of 100G.
+bond_alb_monitor() reads primary_is_promisc under RCU, then drops RCU and
+takes RTNL via rtnl_trylock() before undoing the promiscuity it set on the
+active slave. In that window the active slave can change under RTNL
+(RTM_DELLINK -> __bond_release_one() -> bond_alb_handle_active_change()),
+which already drops the promiscuity and clears primary_is_promisc. The
+monitor still acts on the stale decision: if the slave was removed with no
+failover, curr_active_slave is now NULL and the deref faults; if it failed
+over, the stale dev_set_promiscuity(-1) underflows the new slave's
+promiscuity counter and pins it in IFF_PROMISC.
 
-The commit referenced in Fixes: added two overwrites in
-hclge_init_ae_dev() for non-copper media, so that optical ports
-connected to forced-mode remotes inherit the firmware-preset
-autoneg and speed instead of the hardcoded defaults:
+  Oops: general protection fault, probably for non-canonical address ...
+  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+  Workqueue: b42 bond_alb_monitor
+  RIP: 0010:bond_alb_monitor (drivers/net/bonding/bond_alb.c:1600)
+   process_one_work (kernel/workqueue.c:3322)
+   worker_thread (kernel/workqueue.c:3486)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+  Kernel panic - not syncing: Fatal exception
 
-  req_autoneg = mac.autoneg
-  req_speed   = mac.speed         (when autoneg disabled)
+Re-check primary_is_promisc (and curr_active_slave) after taking RTNL so
+the monitor only undoes an increment it still owns. The other bonding
+monitors already re-read state under RTNL in their commit phase
+(bond_miimon_commit/bond_ab_arp_commit); bond_alb_monitor() was the only
+one acting on the pre-trylock decision.
 
-The autoneg overwrite keeps existing behavior:
-hclge_set_autoneg_speed_dup() already uses mac.autoneg (not
-req_autoneg) since it was introduced, so autoneg inheritance from
-firmware was already in place. This part is kept.
-
-The speed overwrite, however, introduces the residue: mac.speed
-reflects whatever was last programmed into the MAC, and after unload
-firmware does not restore the MAC speed to the flash default. So if
-the user changed speed via ethtool in a prior load, mac.speed still
-carries that value on reload and req_speed inherits it.
-
-Fix by dropping the req_speed overwrite only. req_speed keeps the
-firmware default value set in hclge_configure() (cfg.default_speed),
-so a reload reverts the speed to default, matching the expectation
-that a driver reload resets link configuration.
-
-Trade-off: on optical ports whose firmware default speed does not
-match a forced-mode remote, reload now drops the link and the user
-must re-apply ethtool configuration. This is acceptable: a driver
-reload is expected to reset link configuration, not to inherit
-runtime state from before unload. The autoneg inheritance is left
-in place as established behavior; changing it is out of scope for
-this patch and would itself be a user-perceivable behavior change.
-
-Fixes: d9d349c4e8a0 ("net: hns3: differentiate autoneg default values between copper and fiber")
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260724093036.426631-1-shaojijie@huawei.com
+Fixes: d0e81b7e2246 ("bonding: Acquire correct locks in alb for promisc change")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Link: https://patch.msgid.link/20260725233930.2957317-1-xmei5@asu.edu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/net/bonding/bond_alb.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 7f174453928c1..02fee71c20886 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -11930,12 +11930,8 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
- 	if (ret)
- 		goto err_ptp_uninit;
+diff --git a/drivers/net/bonding/bond_alb.c b/drivers/net/bonding/bond_alb.c
+index 2d37b07c8215c..839f7482dc182 100644
+--- a/drivers/net/bonding/bond_alb.c
++++ b/drivers/net/bonding/bond_alb.c
+@@ -1534,8 +1534,8 @@ void bond_alb_monitor(struct work_struct *work)
+ 	struct bonding *bond = container_of(work, struct bonding,
+ 					    alb_work.work);
+ 	struct alb_bond_info *bond_info = &(BOND_ALB_INFO(bond));
++	struct slave *slave, *curr;
+ 	struct list_head *iter;
+-	struct slave *slave;
  
--	if (hdev->hw.mac.media_type != HNAE3_MEDIA_TYPE_COPPER) {
-+	if (hdev->hw.mac.media_type != HNAE3_MEDIA_TYPE_COPPER)
- 		hdev->hw.mac.req_autoneg = hdev->hw.mac.autoneg;
--		if (hdev->hw.mac.autoneg == AUTONEG_DISABLE &&
--		    hdev->hw.mac.speed != SPEED_UNKNOWN)
--			hdev->hw.mac.req_speed = hdev->hw.mac.speed;
--	}
+ 	if (!bond_has_slaves(bond)) {
+ 		atomic_set(&bond_info->tx_rebalance_counter, 0);
+@@ -1597,9 +1597,11 @@ void bond_alb_monitor(struct work_struct *work)
+ 			 * because a slave was disabled then
+ 			 * it can now leave promiscuous mode.
+ 			 */
+-			dev_set_promiscuity(rtnl_dereference(bond->curr_active_slave)->dev,
+-					    -1);
+-			bond_info->primary_is_promisc = 0;
++			curr = rtnl_dereference(bond->curr_active_slave);
++			if (bond_info->primary_is_promisc && curr) {
++				dev_set_promiscuity(curr->dev, -1);
++				bond_info->primary_is_promisc = 0;
++			}
  
- 	ret = hclge_set_autoneg_speed_dup(hdev);
- 	if (ret) {
+ 			rtnl_unlock();
+ 			rcu_read_lock();
 -- 
 2.53.0
 
