@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E48C3B38A9;
-	Mon, 17 Aug 2026 14:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7314B175A6B;
+	Mon, 17 Aug 2026 14:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977378; cv=none; b=jYNXGPX0j4YNge2MqOybUwrrt5twV+KIqnToP26UfRJ1Tk7Kzy5KTCclIUqZ4uhvcqrXdimKD69lf9QSWi9GSAPp5Davzs8XiGKWi8mIhblHSKFUFZ9fK9ezIBD9kLMtqNLNcbOc11szRX5embTmUmgVV/1LHZyS1UhqhzuBwl4=
+	t=1786977381; cv=none; b=kqA1NEp1zaTXU1lzEAgfcb9/ARTTJ4BeQRskWXXFkOzt6PWaRAnvTSBetYGpbvPS5njK4gElrnp78EwKhp4lo5j+gEHPrm7AsytHsfF6Tkj4K86msjxLehjqpyKvxFIg0v5yyWmeGJ17HvDQ0dQ23HLgwJ1uk6e+RNTz6Ul2w0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977378; c=relaxed/simple;
-	bh=Hpm0oufxJ5JKKDzK7GzQtKUKkyRI0JXuVpgQLirwS/Y=;
+	s=arc-20240116; t=1786977381; c=relaxed/simple;
+	bh=gekItzdmT9c6A8pzpSaohdtrHWHiHS4z1ChmzKBzzYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=izchKJlQcXJMvZ16Vc9hoR0fMCA3h+fj4jCUTMhaZ35YXbg3qa0VTtce9r76CuSReOP6Tuqu7nwAmVcOiwMNGsaRPDdumU/0AFze2Jl25QQcEI+4w8kZ8LAMVukqMY+TB/Hc70Vlwd0L5sqrbF29ANN8pGf5ZOPY2nFs7+DyDzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NkUPPav6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qsXNPRJyVrYLXhBkml45fZOlQOP28YP5HfEbt2TEnUE/Qq8mLGGuXuTm5sh4WzZrQ9k8F9jby1nrKRh5pP7dITSMuvMPWhNDUGydUkhVFSlAvS4kXw1wV+XGGJq0Ucs6dQrLJ4psqiunDQYl+vfj5yy8s8MFVjONWyaw27nysvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tbqqRw02; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NkUPPav6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E71731F000E9;
-	Mon, 17 Aug 2026 14:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tbqqRw02"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB5CB1F000E9;
+	Mon, 17 Aug 2026 14:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977377;
-	bh=d5IoEsAVXCgBgfZd3SUnrBik0SsgfRlwjJu18b+E4TY=;
+	s=korg; t=1786977380;
+	bh=ZgLA8as3mJFBrYivExLm2SHKBSk2+NK/vnK46BmeWEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NkUPPav6r9SE4hUD+FllNydo3I6cUHdZ59W4s7RS5y61pa0+tF57eoZR6maeUY9i+
-	 RrcjsVMS1zZqXAa9hgAHyFLssGBtPX9NftXzbdMXNYjh4idmrzEs5V8J0lcmijgvLk
-	 fpZCODCXPPV3fmqRyjFWb3Sky88Oa6qH+okCLwlw=
+	b=tbqqRw02neSFpwyu0V9VuuufSDP/0t6B4GFlAoJQ3jzMt+vb/xpsgSNngLchkjd1Z
+	 yhiYmx2gu2uXP49jNPPNnFthlDDIfswd9J1ofEIjNLc/SXoZtOXRDA/M6Laj5r8gMj
+	 cej/N0QL+Ynpt+mvUpA5zdXLLa0rH2jFAiG1Z6U4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 271/456] hwmon: (adt7470) Fix temperature alarm logic in hwmon_temp_read()
-Date: Mon, 17 Aug 2026 15:31:01 +0200
-Message-ID: <20260817132550.580451922@linuxfoundation.org>
+	Sonali Pradhan <sonalipradhan@google.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 307/456] ALSA: usb-audio: Fix DMA buffer out-of-bounds write when fill_max is set
+Date: Mon, 17 Aug 2026 15:31:37 +0200
+Message-ID: <20260817132551.783069160@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,71 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+From: Sonali Pradhan <sonalipradhan@google.com>
 
-[ Upstream commit 1a18c79c4bc44cc5349c60e16b0b744dc6ec5f77 ]
+commit d0199ae1666ff9ae2d1d568d64c3430d4c47f0e5 upstream.
 
-During the conversion the alarm callback started interpreting the
-channel index as an alarm bitmask, resulting in incorrect alarm
-reporting. Compute the proper alarm bit instead.
+When a USB audio endpoint requests full packet transfers via the fill_max
+descriptor flag, data_ep_set_params() promotes ep->curpacksize to
+ep->maxpacksize. However, maxsize is left at the original sample-rate
+derived value.
 
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/r/20260717211224.B9E291F000E9@smtp.kernel.org
-Fixes: fc958a61ff6d ("hwmon: (adt7470) Convert to devm_hwmon_device_register_with_info API")
-Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-5-598e38a46ba6@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Since u->buffer_size is allocated as maxsize * packets, the resulting
+DMA buffer is far too small for the requested transfer length. When the
+USB host controller streams up to curpacksize bytes per packet, it writes
+past the end of the buffer via DMA, corrupting kernel heap memory.
+
+Update maxsize to curpacksize when fill_max is set so that the allocated
+DMA buffer size matches the actual transfer request size.
+
+[ changed to reassign maxsize only when ep->fill_max is set -- tiwai ]
+
+Fixes: 8fdff6a319e7 ("ALSA: snd-usb: implement new endpoint streaming model")
+Cc: stable@vger.kernel.org
+Assisted-by: Jetski:Gemini-3.6-Flash
+Signed-off-by: Sonali Pradhan <sonalipradhan@google.com>
+Link: https://patch.msgid.link/20260728201716.2347726-1-sonalipradhan@google.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/adt7470.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ sound/usb/endpoint.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
-index 0874d3684fbce..68658cb566a1a 100644
---- a/drivers/hwmon/adt7470.c
-+++ b/drivers/hwmon/adt7470.c
-@@ -110,6 +110,21 @@ static const unsigned short normal_i2c[] = { 0x2C, 0x2E, 0x2F, I2C_CLIENT_END };
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -1162,10 +1162,12 @@ static int data_ep_set_params(struct snd
+ 				<< (16 - ep->datainterval);
+ 	}
  
- #define ALARM2(x)		((x) << 8)
+-	if (ep->fill_max)
++	if (ep->fill_max) {
+ 		ep->curpacksize = ep->maxpacksize;
+-	else
++		maxsize = ep->curpacksize;
++	} else {
+ 		ep->curpacksize = maxsize;
++	}
  
-+/* TEMP1..TEMP7 (ch 0..6) are, respectively BIT(0)..BIT(6) of reg 0x41 and
-+ * 0x72, or BIT(0)..BIT(6) of data->alarm.
-+ * TEMP8..TEMP9 (ch 7..9) are, respectively BIT(0)..BIT(2) of reg 0x42 and
-+ * 0x73, or BIT(8)..BIT(10) of data->alarm.
-+ */
-+#define TEMP_ALARM_BIT(ch)	({		\
-+	typeof(ch) _ch = (ch);			\
-+	(1 << (_ch < 7 ? _ch : _ch + 1));	\
-+})
-+
-+/* FAN1..FAN4 (ch 0..3) are respectively BIT(4)..BIT(7) in
-+ * reg 0x42 and 0x73 or BIT(12)..BIT(15) in data->alarm.
-+ */
-+#define FAN_ALARM_BIT(ch)	(1 << (12 + (ch)))
-+
- #define ADT7470_VENDOR		0x41
- #define ADT7470_DEVICE		0x70
- /* datasheet only mentions a revision 2 */
-@@ -569,7 +584,7 @@ static int adt7470_temp_read(struct device *dev, u32 attr, int channel, long *va
- 		*val = 1000 * data->temp_max[channel];
- 		break;
- 	case hwmon_temp_alarm:
--		*val = !!(data->alarm & channel);
-+		*val = !!(data->alarm & TEMP_ALARM_BIT(channel));
- 		break;
- 	default:
- 		return -EOPNOTSUPP;
-@@ -668,7 +683,7 @@ static int adt7470_fan_read(struct device *dev, u32 attr, int channel, long *val
- 			*val = 0;
- 		break;
- 	case hwmon_fan_alarm:
--		*val = !!(data->alarm & (1 << (12 + channel)));
-+		*val = !!(data->alarm & FAN_ALARM_BIT(channel));
- 		break;
- 	default:
- 		return -EOPNOTSUPP;
--- 
-2.53.0
-
+ 	if (snd_usb_get_speed(chip->dev) != USB_SPEED_FULL) {
+ 		packs_per_ms = 8 >> ep->datainterval;
 
 
