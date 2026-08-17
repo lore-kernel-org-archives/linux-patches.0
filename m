@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321C03ACEFE;
-	Mon, 17 Aug 2026 14:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D763EB0F3;
+	Mon, 17 Aug 2026 14:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978129; cv=none; b=XJefWQP88N3Kz8Pr8ArMFO2w3lj3EC7QS6FQnO7MP0bchXiTnGvKKuBZO73vO5EvnHdjB5DJnDc2/9PMapNzzmClx+DtrCOpVbFM49Bl86kwkwdu3/0qs71E/xeCdYnZJHI86kKf6QHWv84pPb2PbX1aDVndRHESFwQclAItqY0=
+	t=1786978131; cv=none; b=ZKu1dEljVx1FiwSx3pPmQusGBTKIQiTwiWTTP6hAxJB1gd2+uSZsCz4mt7naVPK0RlSWD98Ts5d52GHKJFkCMOCadNOcjOPGByvC65dnhwSlnyRNNzwXlBZcMUB/TBBQ6rmntKHQuIX//I2W4OVtLlKgv38vL7jEKGdIhQ5cnwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978129; c=relaxed/simple;
-	bh=6yhceNrFKVnRkfxYD5XrxcuCPVzTDq0EaHoy5VFZom8=;
+	s=arc-20240116; t=1786978131; c=relaxed/simple;
+	bh=H0z53aNjID9T+xswoJAOo9bzs/Gbm4yfX6fGnG3X7og=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f3QlczVJNktC2jfKftK3lcR1MMEF+uGw/XiSq5rDCrys7Mryg2mexkM34Ih1jrNYvTxVR/fOOJE6RmUQrB35NC3oPIv8mNgYgxtbHPaZbN9/iE/Fvq1aIV6cFGH/QbwyKxe4xanTUGxGhtf0FDmGxDPL+9jee4ENnz45T3yoGqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mITska1b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YuXdOWJTYPFeBN90B3ukPfyLQMMepPt4TsJKjSw50EBeEl+Lb3l6IMhm5sbVK2Z3Fuc0L90jd6NUhzO5VnZN+2lANW4lsIraBxZt+bXHOLK76r70ywsni8VFXJhf0vGTemx6aFpTe4S7bHE7kxmn4HWZ5vUtjtGRKEUMEB8K9j8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QrUGqgck; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mITska1b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 548BB1F000E9;
-	Mon, 17 Aug 2026 14:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QrUGqgck"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A6E1F000E9;
+	Mon, 17 Aug 2026 14:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978127;
-	bh=cR5Rs0upEBn3F1rANpMbch4sfKyWYdbMEqjJ02p/Xds=;
+	s=korg; t=1786978130;
+	bh=qGfK/3fcrVzsV1G9TRiuDlE5ZRZiwHsYAYLGdfWGLUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mITska1bDoNp87Di1IB8NUHDyPQQS8q8TOwqtXLsa/WOVrW4D/TbiEzRjoTBzmTrV
-	 7PtMIQkDJcrTWAPw5B6tJo8lpoaL0+CmcMiiQt5H1sUOJbUeBwOc8elT6R1uBlRNUl
-	 t7rg9pmAk1eC5hNjOlp+D7k1WZG0SsjYoGTVgvy8=
+	b=QrUGqgck6a9qOwX8i1pvS4sqIIjBbqxTNQC3geDSJ9f2+cYzFNvGMdOuip0MXnJib
+	 33LxncxTBhz7ztq9wX+XFpVDLDnindXXPKsb64KaeRpXX+msT8qexPlc22/IZRPR+B
+	 nUgHPw5EHckl0DvRLF7wCLBzn/Beanmx+1QrW798=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dionna Glaze <dionnaglaze@google.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Tom Lendacky <thomas.lendacky@amd.com>,
 	Ashish Kalra <ashish.kalra@amd.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Jack Wang <jinpu.wang@cloud.ionos.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 110/181] crypto: ccp - Add new SEV/SNP platform shutdown API
-Date: Mon, 17 Aug 2026 15:33:24 +0200
-Message-ID: <20260817132539.838327203@linuxfoundation.org>
+Subject: [PATCH 6.12 111/181] KVM: SVM: Add support to initialize SEV/SNP functionality in KVM
+Date: Mon, 17 Aug 2026 15:33:25 +0200
+Message-ID: <20260817132539.879554007@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -56,63 +56,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Ashish Kalra <ashish.kalra@amd.com>
 
-commit f7b86e0e75bc234751cb7a82d888083a57ef28b2 upstream.
+commit 6f1d5a3513c2370bbd6115dd430906bc2f4bdc53 upstream.
 
-Add new API interface to do SEV/SNP platform shutdown when KVM module
-is unloaded.
+Move platform initialization of SEV/SNP from CCP driver probe time to
+KVM module load time so that KVM can do SEV/SNP platform initialization
+explicitly if it actually wants to use SEV/SNP functionality.
 
-Reviewed-by: Dionna Glaze <dionnaglaze@google.com>
+Add support for KVM to explicitly call into the CCP driver at load time
+to initialize SEV/SNP. If required, this behavior can be altered with KVM
+module parameters to not do SEV/SNP platform initialization at module load
+time. Additionally, a corresponding SEV/SNP platform shutdown is invoked
+during KVM module unload time.
+
+Continue to support SEV deferred initialization as the user may have the
+file containing SEV persistent data for SEV INIT_EX available only later
+after module load/init.
+
+Suggested-by: Sean Christopherson <seanjc@google.com>
 Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Jack Wang <jinpu.wang@cloud.ionos.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/sev-dev.c | 9 +++++++++
- include/linux/psp-sev.h      | 3 +++
- 2 files changed, 12 insertions(+)
+ arch/x86/kvm/svm/sev.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
-index d668f9318c286..7c05cae7e5778 100644
---- a/drivers/crypto/ccp/sev-dev.c
-+++ b/drivers/crypto/ccp/sev-dev.c
-@@ -2444,6 +2444,15 @@ static void sev_firmware_shutdown(struct sev_device *sev)
- 	mutex_unlock(&sev_cmd_mutex);
- }
- 
-+void sev_platform_shutdown(void)
-+{
-+	if (!psp_master || !psp_master->sev_data)
+diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
+index 6cec696461da2..bd0344bacaf1e 100644
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -2972,6 +2972,7 @@ void __init sev_set_cpu_caps(void)
+ void __init sev_hardware_setup(void)
+ {
+ 	unsigned int eax, ebx, ecx, edx, sev_asid_count, sev_es_asid_count;
++	struct sev_platform_init_args init_args = {0};
+ 	bool sev_snp_supported = false;
+ 	bool sev_es_supported = false;
+ 	bool sev_supported = false;
+@@ -3088,6 +3089,15 @@ void __init sev_hardware_setup(void)
+ 	sev_supported_vmsa_features = 0;
+ 	if (sev_es_debug_swap_enabled)
+ 		sev_supported_vmsa_features |= SVM_SEV_FEAT_DEBUG_SWAP;
++
++	if (!sev_enabled)
 +		return;
 +
-+	sev_firmware_shutdown(psp_master->sev_data);
-+}
-+EXPORT_SYMBOL_GPL(sev_platform_shutdown);
++	/*
++	 * Do both SNP and SEV initialization at KVM module load.
++	 */
++	init_args.probe = true;
++	sev_platform_init(&init_args);
+ }
+ 
+ void sev_hardware_unsetup(void)
+@@ -3103,6 +3113,8 @@ void sev_hardware_unsetup(void)
+ 
+ 	misc_cg_set_capacity(MISC_CG_RES_SEV, 0);
+ 	misc_cg_set_capacity(MISC_CG_RES_SEV_ES, 0);
 +
- void sev_dev_destroy(struct psp_device *psp)
- {
- 	struct sev_device *sev = psp->sev_data;
-diff --git a/include/linux/psp-sev.h b/include/linux/psp-sev.h
-index 613a8209bed27..6a4435cfa977e 100644
---- a/include/linux/psp-sev.h
-+++ b/include/linux/psp-sev.h
-@@ -947,6 +947,7 @@ int sev_do_cmd(int cmd, void *data, int *psp_ret);
- void *psp_copy_user_blob(u64 uaddr, u32 len);
- void *snp_alloc_firmware_page(gfp_t mask);
- void snp_free_firmware_page(void *addr);
-+void sev_platform_shutdown(void);
++	sev_platform_shutdown();
+ }
  
- #else	/* !CONFIG_CRYPTO_DEV_SP_PSP */
- 
-@@ -981,6 +982,8 @@ static inline void *snp_alloc_firmware_page(gfp_t mask)
- 
- static inline void snp_free_firmware_page(void *addr) { }
- 
-+static inline void sev_platform_shutdown(void) { }
-+
- #endif	/* CONFIG_CRYPTO_DEV_SP_PSP */
- 
- #endif	/* __PSP_SEV_H__ */
+ int sev_cpu_init(struct svm_cpu_data *sd)
 -- 
 2.53.0
 
