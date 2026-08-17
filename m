@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978C143D50C;
-	Mon, 17 Aug 2026 14:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77218442373;
+	Mon, 17 Aug 2026 14:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977106; cv=none; b=EugSshbY7fwTPHGFg31tKQrycp+9R7r1n8GjxIiYJ24LhH7ufoZ4RbAiKlrNjqzUQQ0migXseW2dBso/0VX3h//F2Z24GPx3J/DdVCVJDfp/EQ0SMSrD2G1t21wKgq9q21bcfX7zNIKHcaznrPczUhUf1MGyRLKCL/2avIr/JGE=
+	t=1786977109; cv=none; b=WQ1sRJq33A3gp18FiLeqkykWR/C0tnGHe31LU1khN9Kl2N8H/zapbKWDKCgz15CPf9bNTyoUuPb5YpjHOAMNUh4dKgYAZTo0f3IcgqdwYTa4jLT75s59K8ADVoBYfnMovID4b+TpAmveJ71JXS8D0HVVyLytjDEBBr8n1wHdbPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977106; c=relaxed/simple;
-	bh=gMtGZqKybEd+HKxpdy9pfSV5E5jwnuWGI6NwgLF51C4=;
+	s=arc-20240116; t=1786977109; c=relaxed/simple;
+	bh=w4hFokrVx3yRvpUVkk7JDzfPgRYW/2aawEm5sDbJr/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PopiAsgZAeEnNH/DUsvHMDIJOXjQGm7vWvOuomZmUJEWPc97WBPLSb6bEegpCN8yGUEtWNnaS+frG8P8Eash93JuONZC+Ds1UoTykxAYKlKxqlwq8S3+ZjVyeF1eaQGkMoOkHvxXh2TsCV7CDau4YEJ370glnTowdVPdqwIbDPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJpNmR/8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fw+fpHH/sRF3RDghWwpKZMIFaMXe4kdVIwER0oPgoz7FMb8TzsaDGmlUHUeiskXp/rnxV/RkV63Hts3bIVIUCtMNACLwhJ7HIYNsviHnQkj6VxFVvih0ViRO2PQ3dASBL0dypbB32P2PEik1YjKhY86IPqxj1zjFYYLP7cBFw8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NIQqkA3e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJpNmR/8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEFB41F000E9;
-	Mon, 17 Aug 2026 14:31:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NIQqkA3e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4851F00A3D;
+	Mon, 17 Aug 2026 14:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977105;
-	bh=Y3LqRMpJ/jvTTwy/To8mnMkTb7U5cUvxC2OK/S/013Q=;
+	s=korg; t=1786977108;
+	bh=wrTk8lTBcXf+ayLEfbXGM8TlSME9Y2Sw4l4oJBjs6Z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TJpNmR/8BzcObRJfjHiO2wdYS0MNCy1Ga/RKaMYLWbVf+pwk/1SpKSe8kDzlzRBNy
-	 iXpElNpRjN5XiQ4w/+bQ0mS471GS67bXt0rndV4VTTJyKqfTL9u0w9OzeNVCHhSDoZ
-	 IE4BaMDKPoI2Wk5HxEYCp1E2XNUBigBTUah2gmeQ=
+	b=NIQqkA3eBa5a03q+sh/gTFmFM/v+K8w/vd3irGAbOL1gDX/hoyFrgOPw9N53lecN4
+	 6B7stVN+nm6jteagBFTHSzvO8uI99awbn2jyI6Giu65PaG2LnT2HoktWtCFXLE6wZd
+	 8UyrvGWVb/eQWC4wstznvcW18/xZXlLM2PfxAKJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Phillip Potter <phil@philpotter.co.uk>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 187/456] cdrom: fix stack out-of-bounds read in CDROMVOLCTRL
-Date: Mon, 17 Aug 2026 15:29:37 +0200
-Message-ID: <20260817132547.438740148@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 214/456] geneve: require CAP_NET_ADMIN in the device netns for changelink
+Date: Mon, 17 Aug 2026 15:30:04 +0200
+Message-ID: <20260817132548.559544599@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,54 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit b27e195d4db8dea263050bdbeb11881b2999c9c6 upstream.
+commit 8efb8f8bbb353b8f2fdf4f37534c6d96c9f69e01 upstream.
 
-mmc_ioctl_cdrom_volume() first reads the audio control mode page into a
-32-byte stack buffer with cgc->buflen set to 24.  If the device reports a
-block descriptor, the function increases cgc->buflen to include that
-descriptor and reads the page again.
+A tunnel changelink() operates on at most two netns, dev_net(dev) and
+the sticky underlay netns geneve->net. They differ once the device is
+created in or moved to a netns other than the one the request runs in.
+The rtnl changelink path checks CAP_NET_ADMIN only against dev_net(dev),
+so a caller privileged there but not in geneve->net can rewrite a geneve
+device whose underlay lives in geneve->net.
 
-For CDROMVOLCTRL, the function then builds a MODE SELECT parameter list
-by moving cgc->buffer forward by offset - 8 bytes.  This drops the block
-descriptor from the outgoing payload and leaves a new 8-byte mode
-parameter header in front of the audio control page.  However, cgc->buflen
-is left unchanged.
+geneve_changelink() applies the new configuration against geneve->net:
+geneve_link_config() and the geneve_quiesce()/geneve_unquiesce() pair
+reopen the underlay sockets in that netns (geneve_sock_add() uses
+geneve->net), so the same reasoning as the tunnel changelink series
+applies here.
 
-With a standard 8-byte block descriptor, cgc->buffer points at buffer + 8
-but cgc->buflen remains 32.  cdrom_mode_select() therefore asks the low
-level packet path to write 32 bytes from that adjusted pointer, reading 8
-bytes past the end of the 32-byte stack buffer.
+Gate geneve_changelink() with rtnl_dev_link_net_capable(), at the top of
+the op before any attribute is parsed, matching ipgre_changelink() and
+the rest of the "require CAP_NET_ADMIN in the device netns for
+changelink" series.
 
-This is not hit by CDROMVOLREAD, and CDROMVOLCTRL only triggers it on
-drives that return a non-zero block descriptor length, which helps explain
-why it has gone unnoticed.  The overread is also sent to the device as
-extra MODE SELECT payload, so it may not produce an obvious local failure.
+Found by 0sec automated security-research tooling (https://0sec.ai).
 
-Reduce cgc->buflen by the same amount as the buffer pointer adjustment so
-the MODE SELECT transfer covers only the intended parameter list.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 5b861f6baa3a ("geneve: add rtnl changelink support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Phillip Potter <phil@philpotter.co.uk>
-Link: https://patch.msgid.link/20260720194421.1497-2-phil@philpotter.co.uk
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Link: https://patch.msgid.link/20260716203500.70573-3-doruk@0sec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cdrom/cdrom.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/geneve.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/cdrom/cdrom.c
-+++ b/drivers/cdrom/cdrom.c
-@@ -3165,6 +3165,7 @@ static noinline int mmc_ioctl_cdrom_volu
+--- a/drivers/net/geneve.c
++++ b/drivers/net/geneve.c
+@@ -1754,6 +1754,9 @@ static int geneve_changelink(struct net_
+ 	struct geneve_config cfg;
+ 	int err;
  
- 	/* set volume */
- 	cgc->buffer = buffer + offset - 8;
-+	cgc->buflen -= offset - 8;
- 	memset(cgc->buffer, 0, 8);
- 	return cdrom_mode_select(cdi, cgc);
- }
++	if (!rtnl_dev_link_net_capable(dev, geneve->net))
++		return -EPERM;
++
+ 	/* If the geneve device is configured for metadata (or externally
+ 	 * controlled, for example, OVS), then nothing can be changed.
+ 	 */
 
 
