@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929AC43CE45;
-	Mon, 17 Aug 2026 14:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63EE6439905;
+	Mon, 17 Aug 2026 14:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975207; cv=none; b=V9cNcHgJDVS0Es1Fx2Z7ONBgd5asKLBRCJhQ2G6fH53IMQ5kL7H9y8WEd79JPU/jfHIM1qPxUrgf2zHp7JbUhT1kvgZtPUtL0+iY7BX6yUKj11Df3Tdzg6vtTaNTlvMSCbGJ03Po2T4+giO+2c3b7B+PzugmFUxhrv7eqwkXoVI=
+	t=1786975208; cv=none; b=WnlolNOJ/AF46p2sRZMB6Q9H8Pp6nNy9ak0rGjNTK6Ye3emAggrr0JiBEWYv39OfnpXfFIO34Ho4JsBztbLkjHJhLF1DKhAToWPhvpiZi9tZn5t63SJ7SyrBC74atAFIYO75U5P2y0A4ZfQyW39Jv2WCiZS7fw1qwgZ/9ftGUYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975207; c=relaxed/simple;
-	bh=eGWJrTGAOucwR1FWwCwbpHEVW7moHlgiZI5c9MthZ58=;
+	s=arc-20240116; t=1786975208; c=relaxed/simple;
+	bh=zV51jCsEabqzca7bplXlRSD7aSHMpYUe0upWweUhVwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ixqsfujbGmIwH3zumWmBFLIm3RbLYivBtpOmIBnHQikzDnK6WsJCASQxvxKHUiJ+wrWm8C+dhQJyU8Rpma8YmhGpoIbpz2BMIaH2qD+DcIfsWv80PS23HZkizBrD3OYjAc+zpWIzFc2JWlCHxAgx4qblxCZf/cYCl7qQu0kZBU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pg/BENAY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RIh8yrjEyF7hZvtN/mwRNuw/WcYktTpwC+0iaZZCI5VlbGF/TZclo/Z+k5HuuyBuVSxWhghDB2yscIwAiQ/MRWJ1Sadlhukz27XgKrDwLToXU3FfgYgU94Tsydi/R0+u/BaTYnWY252PHZCPGv26fEycX9JJiZHi1a53t9vSr90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nncYmVDj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pg/BENAY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAAF71F000E9;
-	Mon, 17 Aug 2026 14:00:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nncYmVDj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2471F00A3A;
+	Mon, 17 Aug 2026 14:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975204;
-	bh=khOeSb95ML2+gNSTacHag2LA78ong/6Go49YWmYjfXg=;
+	s=korg; t=1786975207;
+	bh=gOzQe34UlCa3TrTxe0JMtqkF+ewjP2V1LFchQ9etcaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pg/BENAYNEbj0FU/q1+n1OL/NqFUIfYnsrJXm0pxvGDfTyAV3k6rwRy+GtfMzkLOk
-	 kiPi2N91LS5mVROuSgCD7f9DF2oAT+HcgOIZ8bwhvKzgbJ8nLt9eSchT9dxScojkR4
-	 koXyZBxUkYPHIz9LNQIB/TX9aw6aHOMgCFi15fOQ=
+	b=nncYmVDjeBLundWjXmlEpiqTrYCa2ypzsIDr+icdHorSig/NCP9107Vvvyon3B/6E
+	 BlL38b2OH9Re5jcMaMzVN+dY7QAqVVCCQrbm2UvgKGr9ntQDsRomxtO0MDs+eJQ7xW
+	 TMA9TazAhWFsi2TtQzDMIRbfFT68D2wLA4gNPm+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Xiao Liu <lx24@stu.ynu.edu.cn>,
-	Daming Li <d4n.for.sec@gmail.com>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Sidraya Jayagond <sidraya@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 196/250] net: smc: fix splice entry lifetime imbalance in smc_rx_splice
-Date: Mon, 17 Aug 2026 15:32:37 +0200
-Message-ID: <20260817132544.568349899@linuxfoundation.org>
+	Ido Schimmel <idosch@nvidia.com>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 159/250] ipv4: fix use-after-free in fib_nhc_update_mtu()
+Date: Mon, 17 Aug 2026 15:32:00 +0200
+Message-ID: <20260817132543.069567275@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -55,85 +51,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daming Li <d4n.for.sec@gmail.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 5d9686af2976741bbd79b150d1c9e60b81e7f12e upstream.
+commit bc5bde9ce3cc36502839dfe98e068f7303a50982 upstream.
 
-smc_rx_splice() passes pages to splice_to_pipe() before taking the
-references that cover the lifetime of each splice entry. In the
-VM-backed RMB path, splice_to_pipe() may drop unqueued entries through
-smc_rx_spd_release(), while queued entries are released later via the
-pipe buffer callback.
+fib_nhc_update_mtu() walks the nexthop exception table under RTNL, but
+RTNL does not serialize this walk with PMTU exception updates. The walk
+uses rcu_dereference_protected() with a constant true condition without
+holding fnhe_lock.
 
-The old post-splice accounting also derives the number of queued VM pages
-from an offset mutated while building the descriptor, and a multi-page
-splice pairs one sock_hold() with multiple sock_put() calls.
+The following interleaving can therefore occur:
 
-Take the page and socket references for every candidate entry before
-splice_to_pipe(), and drop the matching private state, page reference,
-and socket reference from smc_rx_spd_release() for entries that never
-get queued. This fixes a refcount imbalance that can underflow page
-refcounts and trigger a use-after-free.
+  CPU 0                              CPU 1
+  fib_nhc_update_mtu()               update_or_create_fnhe()
+    load fnhe                          spin_lock_bh(&fnhe_lock)
+                                       fnhe_remove_oldest()
+                                         unlink fnhe
+                                         kfree_rcu(fnhe, rcu)
+    <quiescent state>
+    access fnhe after grace period
 
-Fixes: 9014db202cb7 ("smc: add support for splice()")
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in fib_nhc_update_mtu+0x3df/0x410
+  Read of size 8 at addr ffff888107d49000 by task poc/90
+  Call Trace:
+   fib_nhc_update_mtu+0x3df/0x410
+   fib_sync_mtu+0x7a/0xd0
+   fib_netdev_event+0x229/0x3f0
+   netif_set_mtu_ext+0x33a/0x570
+   dev_set_mtu+0x88/0x120
+
+The same walk updates fnhe_pmtu and fnhe_mtu_locked. These fields form a
+pair and other writers serialize them with fnhe_lock. RCU alone prevents
+reclamation, but would still allow concurrent writers to leave a mixed
+pair.
+
+Walk the table under RCU and acquire fnhe_lock only while updating each
+exception. RCU keeps the current entry alive while the short critical
+section serializes its paired PMTU fields. This avoids holding the global
+lock while scanning all 2048 buckets for every nexthop.
+
+Fixes: af7d6cce5369 ("net: ipv4: update fnhe_pmtu when first hop's MTU changes")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Co-developed-by: Xiao Liu <lx24@stu.ynu.edu.cn>
-Signed-off-by: Xiao Liu <lx24@stu.ynu.edu.cn>
-Signed-off-by: Daming Li <d4n.for.sec@gmail.com>
-Signed-off-by: Ren Wei <enjou1224z@gmail.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
-Link: https://patch.msgid.link/20260730145552.360287-2-enjou1224z@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260807181710.1178747-1-nicoyip.dev@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/smc_rx.c |   19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ include/net/route.h      |    2 ++
+ net/ipv4/fib_semantics.c |   34 +++++++++++-----------------------
+ net/ipv4/route.c         |   29 +++++++++++++++++++++++++++++
+ 3 files changed, 42 insertions(+), 23 deletions(-)
 
---- a/net/smc/smc_rx.c
-+++ b/net/smc/smc_rx.c
-@@ -150,7 +150,12 @@ static const struct pipe_buf_operations
- static void smc_rx_spd_release(struct splice_pipe_desc *spd,
- 			       unsigned int i)
- {
-+	struct smc_spd_priv *priv = (struct smc_spd_priv *)spd->partial[i].private;
-+	struct sock *sk = &priv->smc->sk;
+--- a/include/net/route.h
++++ b/include/net/route.h
+@@ -276,6 +276,8 @@ int fib_dump_info_fnhe(struct sk_buff *s
+ 		       u32 table_id, struct fib_info *fi,
+ 		       int *fa_index, int fa_start, unsigned int flags);
+ 
++void fnhe_update_pmtu(struct fib_nh_exception *fnhe, u32 new, u32 orig);
 +
-+	kfree(priv);
- 	put_page(spd->pages[i]);
-+	sock_put(sk);
+ static inline void ip_rt_put(struct rtable *rt)
+ {
+ 	/* dst_release() accepts a NULL parameter.
+--- a/net/ipv4/fib_semantics.c
++++ b/net/ipv4/fib_semantics.c
+@@ -1901,42 +1901,30 @@ static int call_fib_nh_notifiers(struct
+ 	return NOTIFY_DONE;
  }
  
- static int smc_rx_splice(struct pipe_inode_info *pipe, char *src, size_t len,
-@@ -209,6 +214,10 @@ static int smc_rx_splice(struct pipe_ino
- 			offset = 0;
- 		}
- 	}
-+	for (i = 0; i < nr_pages; i++) {
-+		get_page(pages[i]);
-+		sock_hold(&smc->sk);
-+	}
- 	spd.nr_pages_max = nr_pages;
- 	spd.nr_pages = nr_pages;
- 	spd.pages = pages;
-@@ -217,16 +226,8 @@ static int smc_rx_splice(struct pipe_ino
- 	spd.spd_release = smc_rx_spd_release;
+-/* Update the PMTU of exceptions when:
+- * - the new MTU of the first hop becomes smaller than the PMTU
+- * - the old MTU was the same as the PMTU, and it limited discovery of
+- *   larger MTUs on the path. With that limit raised, we can now
+- *   discover larger MTUs
+- * A special case is locked exceptions, for which the PMTU is smaller
+- * than the minimal accepted PMTU:
+- * - if the new MTU is greater than the PMTU, don't make any change
+- * - otherwise, unlock and set PMTU
++/* Walk the exceptions of a nexthop after its first hop MTU changed. The
++ * chain is RCU protected here, while fnhe_update_pmtu() takes fnhe_lock
++ * for the update of each entry.
+  */
+ void fib_nhc_update_mtu(struct fib_nh_common *nhc, u32 new, u32 orig)
+ {
+ 	struct fnhe_hash_bucket *bucket;
+ 	int i;
  
- 	bytes = splice_to_pipe(pipe, &spd);
--	if (bytes > 0) {
--		sock_hold(&smc->sk);
--		if (!lgr->is_smcd && smc->conn.rmb_desc->is_vm) {
--			for (i = 0; i < PAGE_ALIGN(bytes + offset) / PAGE_SIZE; i++)
--				get_page(pages[i]);
--		} else {
--			get_page(smc->conn.rmb_desc->pages);
+-	bucket = rcu_dereference_protected(nhc->nhc_exceptions, 1);
++	rcu_read_lock();
++	bucket = rcu_dereference(nhc->nhc_exceptions);
+ 	if (!bucket)
+-		return;
++		goto out;
+ 
+ 	for (i = 0; i < FNHE_HASH_SIZE; i++) {
+ 		struct fib_nh_exception *fnhe;
+ 
+-		for (fnhe = rcu_dereference_protected(bucket[i].chain, 1);
++		for (fnhe = rcu_dereference(bucket[i].chain);
+ 		     fnhe;
+-		     fnhe = rcu_dereference_protected(fnhe->fnhe_next, 1)) {
+-			if (fnhe->fnhe_mtu_locked) {
+-				if (new <= fnhe->fnhe_pmtu) {
+-					fnhe->fnhe_pmtu = new;
+-					fnhe->fnhe_mtu_locked = false;
+-				}
+-			} else if (new < fnhe->fnhe_pmtu ||
+-				   orig == fnhe->fnhe_pmtu) {
+-				fnhe->fnhe_pmtu = new;
+-			}
 -		}
-+	if (bytes > 0)
- 		atomic_add(bytes, &smc->conn.splice_pending);
--	}
- 	kfree(priv);
- 	kfree(partial);
- 	kfree(pages);
++		     fnhe = rcu_dereference(fnhe->fnhe_next))
++			fnhe_update_pmtu(fnhe, new, orig);
+ 	}
++out:
++	rcu_read_unlock();
+ }
+ 
+ void fib_sync_mtu(struct net_device *dev, u32 orig_mtu)
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -741,6 +741,35 @@ out_unlock:
+ 	spin_unlock_bh(&fnhe_lock);
+ }
+ 
++/* Update the PMTU of an exception when:
++ * - the new MTU of the first hop becomes smaller than the PMTU
++ * - the old MTU was the same as the PMTU, and it limited discovery of
++ *   larger MTUs on the path. With that limit raised, we can now
++ *   discover larger MTUs
++ * A special case is locked exceptions, for which the PMTU is smaller
++ * than the minimal accepted PMTU:
++ * - if the new MTU is greater than the PMTU, don't make any change
++ * - otherwise, unlock and set PMTU
++ *
++ * fnhe_lock keeps fnhe_pmtu and fnhe_mtu_locked consistent against
++ * update_or_create_fnhe(), which sets both under the same lock.
++ */
++void fnhe_update_pmtu(struct fib_nh_exception *fnhe, u32 new, u32 orig)
++{
++	spin_lock_bh(&fnhe_lock);
++
++	if (fnhe->fnhe_mtu_locked) {
++		if (new <= fnhe->fnhe_pmtu) {
++			fnhe->fnhe_pmtu = new;
++			fnhe->fnhe_mtu_locked = false;
++		}
++	} else if (new < fnhe->fnhe_pmtu || orig == fnhe->fnhe_pmtu) {
++		fnhe->fnhe_pmtu = new;
++	}
++
++	spin_unlock_bh(&fnhe_lock);
++}
++
+ static void __ip_do_redirect(struct rtable *rt, struct sk_buff *skb, struct flowi4 *fl4,
+ 			     bool kill_route)
+ {
 
 
