@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83655427FB2;
-	Mon, 17 Aug 2026 14:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF653F3265;
+	Mon, 17 Aug 2026 14:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976273; cv=none; b=qkY4PzoNeqC25CJBkhAhHpNERDix0VhrPTOt8trbyklrTrZFghSim/7ca1JDv38J8oNo4p7OQ9TlEC7D2BkidOfydmUVbiHk3aw5O6oeeBrED/f42k8AdsQ3u+lWabnI7CdWGn4IG0n3H1Lz3zJPMCAMGpbjBS5d+fgY1kU8hpE=
+	t=1786976276; cv=none; b=oJeTCCbEvxL1czm2hn64bfXRpK3JD8yg/dMHdUGqZHrt/mQc7GU6jiidxsfQ3MEsyqMkp7zAE2hxVtNc9OxD1ShOLX2/0JrddAvcsN2A+/A/8o6MNjzgmiMuPGYUOdU5Zu35iWpxHPQXhvL/5wEtwwV9EGHxXuxPjpO7YNw6MtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976273; c=relaxed/simple;
-	bh=PORun8/rizgWfN1mi1waHmcMyN7rgaIksfzMg/vze6o=;
+	s=arc-20240116; t=1786976276; c=relaxed/simple;
+	bh=1S4oAWxTRDYs+QuYy/XyD8NX6yC9Osy8xE/yr9yO7vo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bzY6gfWQQ/oRnwqfY7/++/wqRKaM5i0DZjydN1kGXsN0pbV/ReG5Eoq9ot8zS/5nV7Bkf1gZux+e8sWlmuoHybG3tatFGWXZX868fmwrnSpzVUUZv5vhCXeBcVvXZ0iDs5RNQrrMkrR4H2u3AtXlb3jO9Nf9ltP2hqGTs3W3qkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQNjX5Uj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OWCBhiH+FkvttZyY8P3URSUEAHR9Un70hDGlu9pkrOyVY7r8y+SE/R3694YKB1ez5rHr7QNxrIEm0k57pVELwi81Ej63ql2AaogiJYmWSUEyA/RUAR3+ZJ63obdGQG3UwyCxKvEso2uQay/7D6g4suNekfKNMYf5/p0gcNCSOfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tGuFmchv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQNjX5Uj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCBC51F000E9;
-	Mon, 17 Aug 2026 14:17:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tGuFmchv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D901F000E9;
+	Mon, 17 Aug 2026 14:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976272;
-	bh=tNO9hvbxYKR2k0q0mp9w60F5mQsU8EgWd94ipN94oU4=;
+	s=korg; t=1786976275;
+	bh=5tRaGwjUNx7boWCXmG5nOFyVsCUKM6yFxeWxAbJ30RI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UQNjX5Uj4Cppk3ql0Yuq24M4/W9+6zmwCzQNAPt0CyAE5Uwqqly/MVBCNL43pHmwg
-	 oH/P/uGCwT/vyehDS8aSHXbJQOLSO0eMdLeYbRzEjnl87pyDJsHzihosMHmN11Zqu2
-	 tIS7EXd1MWi3ryBX40DUwAeSEQo7zvPMIjmGmgHE=
+	b=tGuFmchvSkTYVFsUEKyAn5ZOhRpwP3nxmsrBIAttkr9wcL0qS8DHr4PH93/8NaGiS
+	 y9nukualW9Ro0y6rQh/kgsSOHge3Hwx+R7nOlG4Z8Yhj+L6YBYADz6uDhoqPggYJTg
+	 5/CXvg6elRZp6GGoccaaEafmXX5aKwiT7x1ZuHJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>,
-	Daniel Wade <danjwade95@gmail.com>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 315/389] bpf: Preserve pointer state for commuted arithmetic
-Date: Mon, 17 Aug 2026 15:32:34 +0200
-Message-ID: <20260817132551.267984417@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 5.10 280/389] i2c: amd-mp2: Unregister callback on adapter add failure
+Date: Mon, 17 Aug 2026 15:31:59 +0200
+Message-ID: <20260817132550.060399501@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -53,74 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit a4c6f804b44c5c790269b25e0e61cf4e9f117c86 ]
+commit 82048795242f04275a3f49ffc66ad851b6120954 upstream.
 
-When scalar += pointer is handled in adjust_ptr_min_max_vals(), the
-destination register inherits the pointer state from the source pointer.
-Copying only selected fields is fragile because pointer provenance is
-tracked by several bpf_reg_state fields.
+amd_mp2_register_cb() stores the platform I2C context in the MP2 PCI
+driver's callback table before the adapter is registered. If
+i2c_add_adapter() fails, probe returns and devres frees the context,
+but the PCI driver can still dereference the stale pointer from its IRQ
+and system-sleep callbacks.
 
-Use the caller's temporary offset register to preserve the scalar operand
-while replacing the destination with the full pointer state. This preserves
-the frame number for PTR_TO_STACK registers and keeps parent identity
-fields consistent.
+Unregister the callback before returning the adapter registration error.
 
-Fixes: f4d7e40a5b71 ("bpf: introduce function calls (verification)")
-Signed-off-by: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
-Tested-by: Daniel Wade <danjwade95@gmail.com>
-Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Link: https://patch.msgid.link/20260729-c3-035-public-bpf-v4-v4-2-8ee297e2346b@mails.tsinghua.edu.cn
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 529766e0a011 ("i2c: Add drivers for the AMD PCIe MP2 I2C controller")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Cc: <stable@vger.kernel.org> # v5.2+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260721144147.31150-1-mhun512@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/i2c/busses/i2c-amd-mp2-plat.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 058c05e7f144c..9866599171782 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -6301,11 +6301,12 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
- 		break;
- 	}
+--- a/drivers/i2c/busses/i2c-amd-mp2-plat.c
++++ b/drivers/i2c/busses/i2c-amd-mp2-plat.c
+@@ -327,8 +327,10 @@ static int i2c_amd_probe(struct platform
  
--	/* In case of 'scalar += pointer', dst_reg inherits pointer type and id.
--	 * The id may be overwritten later if we create a new variable offset.
-+	/* For 'scalar += pointer', dst_reg inherits the complete pointer
-+	 * register state. Individual fields may be adjusted later by pointer
-+	 * arithmetic. Callers guarantee that below does not overwrite off_reg.
- 	 */
--	dst_reg->type = ptr_reg->type;
--	dst_reg->id = ptr_reg->id;
-+	if (dst_reg != ptr_reg)
-+		*dst_reg = *ptr_reg;
+ 	amd_mp2_pm_runtime_put(mp2_dev);
  
- 	if (!check_reg_sane_offset(env, off_reg, ptr_reg->type) ||
- 	    !check_reg_sane_offset(env, ptr_reg, ptr_reg->type))
-@@ -6373,7 +6374,7 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
- 		}
- 		break;
- 	case BPF_SUB:
--		if (dst_reg == off_reg) {
-+		if (dst_reg != ptr_reg) {
- 			/* scalar -= pointer.  Creates an unknown scalar */
- 			verbose(env, "R%d tried to subtract pointer from scalar\n",
- 				dst);
-@@ -7232,8 +7233,8 @@ static int adjust_reg_min_max_vals(struct bpf_verifier_env *env,
- 				err = mark_chain_precision(env, insn->dst_reg);
- 				if (err)
- 					return err;
--				return adjust_ptr_min_max_vals(env, insn,
--							       src_reg, dst_reg);
-+				off_reg = *dst_reg;
-+				return adjust_ptr_min_max_vals(env, insn, src_reg, &off_reg);
- 			}
- 		} else if (ptr_reg) {
- 			/* pointer += scalar */
--- 
-2.53.0
-
+-	if (ret < 0)
++	if (ret < 0) {
+ 		dev_err(&pdev->dev, "i2c add adapter failed = %d\n", ret);
++		amd_mp2_unregister_cb(&i2c_dev->common);
++	}
+ 
+ 	return ret;
+ }
 
 
