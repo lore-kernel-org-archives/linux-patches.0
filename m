@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59FA0438023;
-	Mon, 17 Aug 2026 14:10:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCBEB42903B;
+	Mon, 17 Aug 2026 14:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975801; cv=none; b=U3oN5BsoJKyDq2H+U7uI2M9pob6pcN+kLMziU/JzCyFlNXlpIMuz26aKNRfj8xwwfjtomG1xOtp8WENX6dMUdFwJEvudl6SXbp8TVVcLFwEtbJwPXNv8S7DeGMY3hcS0S9BocdLpX2GFn5a7105gkISiZMrMGa+sW+rns7awbVo=
+	t=1786975804; cv=none; b=ShGRWG/1Egx/Ot4KLgJUnXFzzixg0qMrIG33A9IknJljtXm2OYcqejK/TzdNPXlHSnLQ3/vzcm3MyQKxW9wIhC1XBEg+6Ln4PB56W8Ust6bPTIU0UGbIab2UWJys7ccXh3h+igPK9bxSumHj4+Y8uyyypIsbOWSq5G4O1Ccnc+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975801; c=relaxed/simple;
-	bh=50MORC/Zvc81FjTsOAVozrqO+jaO/2CeW9ML+LnjNlY=;
+	s=arc-20240116; t=1786975804; c=relaxed/simple;
+	bh=LioFLZ3F85cSskftIsq6B7o1lPqoBlQJD8v4rbLYSlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FlEddpkSt83ltpMhoFmuH+XhPPVy0nJx5esvnAJVtEVtujQVKos5KZ+8CinZD/dVEPcFxHBFJ9KFLU89Hk7D3gpUGf2wB+g8Q92WWo8nV7677JkvxuCv2ZVEgkyyuwUDvoCx/taRZrCgyQci9Jz/HYNw4FCzb6re0HTFYktwHw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wWhqmRjV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QVtgj2jbnL5vtrJb+OUsv6SWlVE9LKiObQgie+u+Iw5f/hfWyAvggwbQ7XwrX9OwT9yBJ7/rXDimX3mS7J9HM9IZlVKXZHzTqdmCnQ2HI8EcbMPmHQfEc6D2ECQEKaZlbIUcctSC2lBvc+6qV2jcR1byecbLI6zn8cbrJunU8JY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ff2QaChy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wWhqmRjV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63BC51F000E9;
-	Mon, 17 Aug 2026 14:09:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ff2QaChy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C36C1F000E9;
+	Mon, 17 Aug 2026 14:10:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975799;
-	bh=pFMKtooZbGW6ryEh+Sn6v6iu7MWFX+QR8m8f+FO18PI=;
+	s=korg; t=1786975802;
+	bh=WkbwSaihUEozAsWD91CJCltGEegUuEGdEEuUyA9sQTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wWhqmRjV5PG3BCM7r4foIOqO9kJDuF0Hjugcs850welHqNDCSrV/DItRbAC3lwtzD
-	 WkH6QH3p3XdB5n9EmXIaPwnjfuZi1lfDuhjAsQwlVE9+YV4/ibHDFam4LtETLk31u9
-	 ZftY5X52aQAjjBwQQTE1ZgN2Vdo6QlKFRX7fRl+o=
+	b=Ff2QaChyZt3kEB6Y7TPoYN7W2PMqhdV+AzLuG1HnEhjzvz50Wt/UfNaur3iilctWa
+	 RNmS7Z543FrviMarM/LN/MiXZQRtNQW6Ruy8MOvioj45orkm4Gq77a0+zZihSx8SEJ
+	 9V7HD+7SGMwC2BCU71xIbozG3hx/H1Oc6WE3Rm0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 114/389] can: bcm: fix data race on rx_stamp/rx_ifindex in bcm_rx_handler()
-Date: Mon, 17 Aug 2026 15:29:13 +0200
-Message-ID: <20260817132543.625606972@linuxfoundation.org>
+Subject: [PATCH 5.10 115/389] can: bcm: track a single source interface for ANYDEV timeout/throttle ops
+Date: Mon, 17 Aug 2026 15:29:14 +0200
+Message-ID: <20260817132543.660634157@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -55,70 +55,138 @@ Content-Transfer-Encoding: 8bit
 
 From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit 58fd6cbc8541216af1d7ed272ea7ac2b66d50fd8 upstream.
+commit 2f5976f54a04e9f18b25283036ac3136be453b17 upstream.
 
-For an rx op subscribed on all interfaces (ifindex == 0), the same op
-is registered once in the shared per-netns wildcard filter list, so
-bcm_rx_handler() can run concurrently on different CPUs for frames
-arriving on different net devices.
+An ANYDEV rx op (ifindex == 0) with an active RX timeout and/or
+throttle timer has no defined semantics when matching frames arrive
+from several interfaces: bcm_rx_handler() can run concurrently for
+the same op on different CPUs, racing hrtimer_cancel()/
+bcm_rx_starttimer() against bcm_rx_timeout_handler() and causing
+spurious RX_TIMEOUT notifications and last_frames corruption. The
+same concurrency lets throttled multiplex frames from different
+interfaces clobber the single rx_ifindex/rx_stamp fields shared by
+the op.
 
-op->rx_stamp and op->rx_ifindex were written before bcm_rx_update_lock was
-taken, allowing concurrent writers to race each other - including a torn
-store of the 64-bit rx_stamp on 32-bit platforms.
+Add op->if_detected to track the first interface that delivers a
+matching frame while a timeout/throttle timer is configured, and
+reject frames from any other interface for that op. The claim is
+decided in bcm_rx_handler() before hrtimer_cancel() touches
+op->timer, so a rejected frame can never disturb the claimed
+interface's watchdog. RTR-mode ops are excluded via RX_RTR_FRAME,
+independent of kt_ival1/kt_ival2, since those may briefly hold a
+stale value from an earlier non-RTR configuration.
 
-Beyond a torn store bcm_send_to_user() must report the timestamp/ifindex
-of the very same frame whose content it is delivering. So the assignment
-is placed in the same unbroken bcm_rx_update_lock section as the content
-comparison.
+The claim is released in bcm_notify() on NETDEV_UNREGISTER and in
+bcm_rx_setup() when SETTIMER reconfigures the timer values.
 
-As a side effect, the RTR-request frame feature (which never reach
-bcm_send_to_user()) no longer updates rx_stamp/rx_ifindex, since only
-the notification path needs them.
+A (re-)claim is only possible on CAN devices in NETREG_REGISTERED
+dev->reg_state to cover the release in bcm_notify() where reg_state
+becomes NETREG_UNREGISTERING until synchronize_net().
 
 Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
 Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/linux-can/20260707145135.5BC831F00A3A@smtp.kernel.org/
+Closes: https://lore.kernel.org/linux-can/20260709105031.1A39C1F000E9@smtp.kernel.org/
 Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260714-bcm_fixes-v15-10-562f7e3e42da@hartkopp.net
+Link: https://patch.msgid.link/20260714-bcm_fixes-v15-11-562f7e3e42da@hartkopp.net
 Cc: stable@kernel.org
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/bcm.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ net/can/bcm.c | 49 ++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 44 insertions(+), 5 deletions(-)
 
 diff --git a/net/can/bcm.c b/net/can/bcm.c
-index 3c4abb6397bc66..93572cb59cf7a9 100644
+index 93572cb59cf7a9..f655764aae83ef 100644
 --- a/net/can/bcm.c
 +++ b/net/can/bcm.c
-@@ -756,11 +756,6 @@ static void bcm_rx_handler(struct sk_buff *skb, void *data)
+@@ -114,6 +114,7 @@ struct bcm_op {
+ 	struct hrtimer timer, thrtimer;
+ 	ktime_t rx_stamp, kt_ival1, kt_ival2, kt_lastmsg;
+ 	int rx_ifindex;
++	int if_detected; /* first received ifindex in ANYDEV rx_op mode */
+ 	int cfsiz;
+ 	u32 count;
+ 	u32 nframes;
+@@ -753,6 +754,33 @@ static void bcm_rx_handler(struct sk_buff *skb, void *data)
+ 	if (skb->len != op->cfsiz)
+ 		return;
+ 
++	/* An ANYDEV op with an active RX timeout and/or throttle timer
++	 * tracks a single source interface: claim the first interface that
++	 * delivers a matching frame and reject frames from any other one,
++	 * before hrtimer_cancel() below can touch op->timer - this avoids
++	 * racing bcm_rx_timeout_handler() across concurrent interfaces.
++	 * RX_RTR_FRAME ops are excluded, as kt_ival1/kt_ival2 may briefly
++	 * hold a stale value from an earlier non-RTR configuration.
++	 */
++	if (!op->ifindex) {
++		spin_lock_bh(&op->bcm_rx_update_lock);
++
++		if (!(op->flags & RX_RTR_FRAME) &&
++		    (op->kt_ival1 || op->kt_ival2)) {
++			/* don't claim to vanishing interface */
++			if (!op->if_detected &&
++			    skb->dev->reg_state == NETREG_REGISTERED)
++				op->if_detected = skb->dev->ifindex;
++
++			if (op->if_detected != skb->dev->ifindex) {
++				spin_unlock_bh(&op->bcm_rx_update_lock);
++				return;
++			}
++		}
++
++		spin_unlock_bh(&op->bcm_rx_update_lock);
++	}
++
  	/* disable timeout */
  	hrtimer_cancel(&op->timer);
  
--	/* save rx timestamp */
--	op->rx_stamp = skb->tstamp;
--	/* save originator for recvfrom() */
--	op->rx_ifindex = skb->dev->ifindex;
--
- 	/* op->flags/op->frames may be updated concurrently by bcm_rx_setup() */
- 	spin_lock_bh(&op->bcm_rx_update_lock);
- 
-@@ -784,6 +779,14 @@ static void bcm_rx_handler(struct sk_buff *skb, void *data)
+@@ -779,10 +807,9 @@ static void bcm_rx_handler(struct sk_buff *skb, void *data)
  	 */
  	bcm_update_rx_stats(op);
  
-+	/* save rx timestamp and originator for recvfrom() under lock.
-+	 * For an op subscribed on all interfaces (ifindex == 0)
-+	 * bcm_rx_handler() can run concurrently on different CPUs so
-+	 * the CAN content and the meta data must be bundled correctly.
-+	 */
-+	op->rx_stamp = skb->tstamp;
-+	op->rx_ifindex = skb->dev->ifindex;
+-	/* save rx timestamp and originator for recvfrom() under lock.
+-	 * For an op subscribed on all interfaces (ifindex == 0)
+-	 * bcm_rx_handler() can run concurrently on different CPUs so
+-	 * the CAN content and the meta data must be bundled correctly.
++	/* save rx timestamp and originator for recvfrom() under lock: an
++	 * ANYDEV op without an active timer can still run concurrently on
++	 * different CPUs, so content and meta data must be bundled here.
+ 	 */
+ 	op->rx_stamp = skb->tstamp;
+ 	op->rx_ifindex = skb->dev->ifindex;
+@@ -1316,6 +1343,7 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 			op->kt_ival1 = bcm_timeval_to_ktime(msg_head->ival1);
+ 			op->kt_ival2 = bcm_timeval_to_ktime(msg_head->ival2);
+ 			op->kt_lastmsg = 0;
++			op->if_detected = 0; /* reclaim ifindex in ANYDEV mode */
+ 		}
+ 		spin_unlock_bh(&op->bcm_rx_update_lock);
+ 
+@@ -1719,10 +1747,21 @@ static void bcm_notify(struct bcm_sock *bo, unsigned long msg,
+ 		lock_sock(sk);
+ 
+ 		/* rx_ops: remove device specific receive entries */
+-		list_for_each_entry(op, &bo->rx_ops, list)
++		list_for_each_entry(op, &bo->rx_ops, list) {
+ 			if (op->rx_reg_dev == dev)
+ 				bcm_rx_unreg(dev, op);
+ 
++			/* release an ANYDEV op's claim (see bcm_rx_handler())
++			 * on this now confirmed-gone interface.
++			 */
++			if (!op->ifindex) {
++				spin_lock_bh(&op->bcm_rx_update_lock);
++				if (op->if_detected == dev->ifindex)
++					op->if_detected = 0;
++				spin_unlock_bh(&op->bcm_rx_update_lock);
++			}
++		}
 +
- 	if (op->flags & RX_FILTER_ID) {
- 		/* the easiest case */
- 		bcm_rx_update_and_send(op, op->last_frames, rxframe);
+ 		/* tx_ops: stop device specific cyclic transmissions on the
+ 		 * vanishing ifindex. Cancelling the timer is enough to stop
+ 		 * cyclic bcm_can_tx() calls as there is no re-arming.
 -- 
 2.53.0
 
