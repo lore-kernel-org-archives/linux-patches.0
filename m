@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A543DA5A7;
-	Mon, 17 Aug 2026 14:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5FC4322E5;
+	Mon, 17 Aug 2026 14:49:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978140; cv=none; b=fwTQMo4b0zD1bt1fc5eiMucWoyHZeCGJw12SectQA+YNnGiUxizqsRh7vHBc+LPKpnSgLCLQ0ZlhMiGOE4lUlppv2S+Ka2ev8GKBaR1R16ohL0vYLXxniD2/ldLZyZv+baUeAf0OS1g6BaEC3cuPJlDkb5+Ig9Ok1WzI+Ig7qGg=
+	t=1786978147; cv=none; b=Rjfja0UFj4Om0RotHUVSWVVOMvvuqayUV/kHHMgb11zLpan0yh+dXJktto6gLwtmbzVdPqkLorFijSpLz4X9ST4cpD86LosJYLbqLeQ5r4WJ1Oh19Ll9xj1grY3p3ltE5TQHnwfl/qSkBbT8BQc7V90kuVOeAwuNzr/6kD5iwFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978140; c=relaxed/simple;
-	bh=n8/ZbUd1Xpx6oQPTYFcFp43rmuPvMu2Fcs1SCwK/x7s=;
+	s=arc-20240116; t=1786978147; c=relaxed/simple;
+	bh=c5HbaV+7W8sNSoCbymAiJXD+9QC4Ed3aAjtr9+NMhjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fa4abn+8jjGKCWipj4TNbKVTv2xOg7K3wBgFkN9SXHDDHbTzSOJ+Y37+iRmnNGp6AQWJIWHtkLTJBiQ6evRrmyQ8afllRE52I44rTG2d5ASAkjPvJ2Ecl6yQ3FP/UHBSn+tpnWb3k8N1VDCOGb2aA8DPUg/XoPCBvfP5G2G4Uog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TIOUJ0sN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HWPFACG2Yx1DcEIS9z7FUtjo7faYM8+l5noidcprtR44oLIK9jMMITl3Aee2SXQ8DWrI8roN83bxRoxIZjHs5Z3J2ObYkJFpN9C7bHle+sJ81PTXZooYEbn7V2n/3hovXe56jf1fVFyoqhYDU4jy32ZauAlqyRwdAYt67+cu/fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kg4ssrLC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TIOUJ0sN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ED711F000E9;
-	Mon, 17 Aug 2026 14:48:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kg4ssrLC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726851F000E9;
+	Mon, 17 Aug 2026 14:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978139;
-	bh=33CUyeK31m83OO3oLYOov0BkZG+OKPzKSV/SDhkH+nM=;
+	s=korg; t=1786978142;
+	bh=BwFespvO4jerqGlwtCv3irY+7JUvViuOlN4P3u0f9Vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TIOUJ0sNQDqIPuELO5U0nRC66/xJKTyCp/ZCJQzlAWGN2UQpkBAi+45KKQJ+jbvUt
-	 AazBX71/0lSXnfWj1LzfxN6ZDvh0lHK8R1jagikUFVwc+9s36TzFRHTGap82rP5owe
-	 pUK9caPnyg6Lt9tDk+2MlxW9rwJ2gE1hWYM8Afiw=
+	b=Kg4ssrLCai9aGcFlnjvUCc13UMlwKz7Obd/3gURS2HUkaiCgUdaa9wzIsmK8T1bJL
+	 o01DL44Abp1aRrvWV7uko+rnvcBtNbsMaADS660DhsX/Bm45ypnvnSmfIYBVJAKHWT
+	 U5KDrfkjtiZJE+Xx/tSSM0rS5U7d38tvuOFLbeAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keno Fischer <keno@juliahub.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 114/181] futex: Prevent robust futex exit race some more
-Date: Mon, 17 Aug 2026 15:33:28 +0200
-Message-ID: <20260817132540.013601218@linuxfoundation.org>
+Subject: [PATCH 6.12 115/181] kunit/fortify: Replace "volatile" with OPTIMIZER_HIDE_VAR()
+Date: Mon, 17 Aug 2026 15:33:29 +0200
+Message-ID: <20260817132540.057803524@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -52,185 +51,318 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keno Fischer <keno@juliacomputing.com>
+From: Kees Cook <kees@kernel.org>
 
-commit 6d4514ca9cdf61fec4ec634cf50386f6f7e69748 upstream.
+commit 6ee149f61bcce39692f0335a01e99355d4cec8da upstream.
 
-A robust futex unlock stores 0 over the whole futex value - wiping
-FUTEX_WAITERS - and wakes a single waiter. That wakeup is a one-shot
-notification: the protocol relies on its recipient to either acquire the
-futex (and eventually unlock while aware of the remaining contention) or
-re-arm FUTEX_WAITERS before sleeping again.  If the woken waiter is killed
-before it can do either, the kernel must jump in and wake the next task
-down the line.
+It does seem that using "volatile" isn't going to be sane compared to
+using OPTIMIZER_HIDE_VAR() going forward. Some strange interactions[1]
+with the sanitizers have been observed in the self-test code, so replace
+the logic.
 
-This is a known complication of the futex protocol with a previous
-partial fix in commit ca16d5bee598 ("futex: Prevent robust futex exit
-race"). Unfortunately, that fix is insufficient.
-
-If a third task re-acquired the futex through the uncontended fast
-path in the meantime, the notification is lost: robust exit processing
-sees that it is owned by another task and does nothing, while the new
-owner sees no FUTEX_WAITERS when it unlocks and wakes nobody.
-The remaining waiters sleep forever behind a free futex:
-
-  A owns the futex, B and C sleep in FUTEX_WAIT
-                                        uval == A | FUTEX_WAITERS
-  A robust unlock: store 0, FUTEX_WAKE(1) wakes B
-                                        uval == 0
-  D fast path acquire: cmpxchg(0 -> D)
-                                        uval == D, no FUTEX_WAITERS
-  B killed before acting on the wakeup
-  B exit walk, pending op: owner D != B -> no action
-  D unlock: no FUTEX_WAITERS -> no wake
-                                        C sleeps forever
-
-This is clearly a shortcoming in the implementation, which fails to keep
-the FUTEX_WAITERS bit consistent.
-
-Work around this by augmenting the robust list exit processing to also
-perform the extra wakeup if the futex word is owned by another thread but
-FUTEX_WAITERS is not set.
-
-This does not fix the problem of a non-contended take over/release and free
-sequence, which has been discussed for years and has been addressed by
-commit 3ca9595d9fb6 ("futex: Add support for unlocking robust futexes") and
-subsequent changes, but failed to take the problem described above into
-account.
-
-A more complete solution which is based on the in kernel unlock of
-contended robust futexes has been discussed in the context of this change
-and should show up in mainline sooner than later.
-
-[ tglx: Amend change log slightly and fixup coding style ]
-
-Fixes: ca16d5bee598 ("futex: Prevent robust futex exit race")
-Signed-off-by: Keno Fischer <keno@juliahub.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Assisted-by: ClaudeCode:claude-fable-5 tla+
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260730194705.38981-1-keno@juliacomputing.com
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2075 [1]
+Link: https://lore.kernel.org/r/20250312000439.work.112-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/futex/core.c | 85 +++++++++++++++++++++++++++++++--------------
- 1 file changed, 58 insertions(+), 27 deletions(-)
+ lib/fortify_kunit.c | 139 ++++++++++++++++++++++++--------------------
+ 1 file changed, 77 insertions(+), 62 deletions(-)
 
-diff --git a/kernel/futex/core.c b/kernel/futex/core.c
-index 010607a991949..c37d2263c21fe 100644
---- a/kernel/futex/core.c
-+++ b/kernel/futex/core.c
-@@ -674,8 +674,11 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
- 		return -1;
+diff --git a/lib/fortify_kunit.c b/lib/fortify_kunit.c
+index ecb638d4cde1e..1541b2a1694e4 100644
+--- a/lib/fortify_kunit.c
++++ b/lib/fortify_kunit.c
+@@ -394,8 +394,6 @@ struct fortify_padding {
+ 	char buf[32];
+ 	unsigned long bytes_after;
+ };
+-/* Force compiler into not being able to resolve size at compile-time. */
+-static volatile int unconst;
  
- 	/*
--	 * Special case for regular (non PI) futexes. The unlock path in
--	 * user space has two race scenarios:
-+	 * Special case for regular (non PI) futexes. Ordinarily, we do
-+	 * not perform any processing here unless the current thread was
-+	 * the owner of the futex (by the TID check below).
-+	 *
-+	 * However, the unlock path has three race scenarios:
- 	 *
- 	 * 1. The unlock path releases the user space futex value and
- 	 *    before it can execute the futex() syscall to wake up
-@@ -684,42 +687,70 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
- 	 * 2. A woken up waiter is killed before it can acquire the
- 	 *    futex in user space.
- 	 *
--	 * In the second case, the wake up notification could be generated
--	 * by the unlock path in user space after setting the futex value
--	 * to zero or by the kernel after setting the OWNER_DIED bit below.
-+	 * 3. A woken up waiter is killed in user space after another
-+	 *    thread has acquired the futex, but before it can set
-+	 *    FUTEX_WAITERS.
-+	 *
-+	 * Note that, if userspace uses the FUTEX_ROBUST_UNLOCK flag, we
-+	 * will not see case 1 here.
-+	 *
-+	 * In the second and third case, the wake up notification could
-+	 * be generated from any of:
-+	 *
-+	 *    i.   An ordinary futex wakeup after unlock (with or
-+	 *         without FUTEX_ROBUST_UNLOCK)
-+	 *    ii.  A robust wakeup from another thread's death
-+	 *    iii. A previous round through this special case
-+	 *
-+	 * As a result, the futex world will be in one of four states:
-+	 *
-+	 *    A. The futex word is 0 (unlocked)
-+	 *    B. The futex word is owned by another thread
-+	 *       (FUTEX_WAITERS is not set)
-+	 *    C. The futex word is owned by another thread
-+	 *       (FUTEX_WAITERS set)
-+	 *    D. The futex's owner died and OWNER_DIED is set
-+	 *       (the owner part of the word is 0)
- 	 *
--	 * In both cases the TID validation below prevents a wakeup of
--	 * potential waiters which can cause these waiters to block
--	 * forever.
-+	 * The key issue is that the kernel usually (at least from
-+	 * sources ii. and iii. or when so requested by userspace from
-+	 * source i.) only ever wakes *one* waiter at a time. If this
-+	 * waiter dies before acquiring the futex (or setting the
-+	 * FUTEX_WAITERS bit), the kernel *must* still wake the next
-+	 * waiter down the line to uphold the futex invariants and
-+	 * avoid lost wakeups. Note we do not need to handle state C,
-+	 * as it does not matter to us whether *we* successfully set
-+	 * the bit or a third thread did so in the meantime.
- 	 *
--	 * In both cases the following conditions are met:
-+	 * Therefore, in these cases we must issue an additional
-+	 * futex_wake(). Note however that we *must not* set OWNER_DIED
-+	 * here. Our thread is *not* the owner of the futex.
- 	 *
--	 *	1) task->robust_list->list_op_pending != NULL
--	 *	   @pending_op == true
--	 *	2) The owner part of user space futex value == 0
-+	 * Thus to summarize, the conditions for needing the additional
-+	 * futex_wake() are:
-+	 *
-+	 *	1) @pending_op == true (the thread has not finished the
-+	 *	   mutex operation)
-+	 *	2) The futex word is in one of the states A, B or D
- 	 *	3) Regular futex: @pi == false
- 	 *
--	 * If these conditions are met, it is safe to attempt waking up a
--	 * potential waiter without touching the user space futex value and
--	 * trying to set the OWNER_DIED bit. If the futex value is zero,
--	 * the rest of the user space mutex state is consistent, so a woken
--	 * waiter will just take over the uncontended futex. Setting the
--	 * OWNER_DIED bit would create inconsistent state and malfunction
--	 * of the user space owner died handling. Otherwise, the OWNER_DIED
--	 * bit is already set, and the woken waiter is expected to deal with
--	 * this.
-+	 * Note in particular that in all of the states A-D the owner
-+	 * portion of the futex word differs from our thread's TID
-+	 * (unless the actual owner has the same TID in another PID
-+	 * namespace, but we cannot currently distinguish that
-+	 * scenario), so this can be a special-case wakeup in the bail
-+	 * path of the ordinary TID check.
- 	 */
- 	owner = uval & FUTEX_TID_MASK;
+ static void fortify_test_strlen(struct kunit *test)
+ {
+@@ -520,57 +518,56 @@ static void fortify_test_strncpy(struct kunit *test)
+ {
+ 	struct fortify_padding pad = { };
+ 	char src[] = "Copy me fully into a small buffer and I will overflow!";
++	size_t sizeof_buf = sizeof(pad.buf);
++
++	OPTIMIZER_HIDE_VAR(sizeof_buf);
  
--	if (pending_op && !pi && !owner) {
--		futex_wake(uaddr, FLAGS_SIZE_32 | FLAGS_SHARED, 1,
--			   FUTEX_BITSET_MATCH_ANY);
-+	if (owner != task_pid_vnr(curr)) {
-+		if (pending_op && !pi && (!owner || !(uval & FUTEX_WAITERS))) {
-+			futex_wake(uaddr, FLAGS_SIZE_32 | FLAGS_SHARED, 1,
-+				   FUTEX_BITSET_MATCH_ANY);
-+		}
- 		return 0;
- 	}
+ 	/* Destination is %NUL-filled to start with. */
+ 	KUNIT_EXPECT_EQ(test, pad.bytes_before, 0);
+-	KUNIT_EXPECT_EQ(test, pad.buf[sizeof(pad.buf) - 1], '\0');
+-	KUNIT_EXPECT_EQ(test, pad.buf[sizeof(pad.buf) - 2], '\0');
+-	KUNIT_EXPECT_EQ(test, pad.buf[sizeof(pad.buf) - 3], '\0');
++	KUNIT_EXPECT_EQ(test, pad.buf[sizeof_buf - 1], '\0');
++	KUNIT_EXPECT_EQ(test, pad.buf[sizeof_buf - 2], '\0');
++	KUNIT_EXPECT_EQ(test, pad.buf[sizeof_buf - 3], '\0');
+ 	KUNIT_EXPECT_EQ(test, pad.bytes_after, 0);
  
--	if (owner != task_pid_vnr(curr))
--		return 0;
--
- 	/*
- 	 * Ok, this dying thread is truly holding a futex
- 	 * of interest. Set the OWNER_DIED bit atomically
+ 	/* Legitimate strncpy() 1 less than of max size. */
+-	KUNIT_ASSERT_TRUE(test, strncpy(pad.buf, src,
+-					sizeof(pad.buf) + unconst - 1)
++	KUNIT_ASSERT_TRUE(test, strncpy(pad.buf, src, sizeof_buf - 1)
+ 				== pad.buf);
+ 	KUNIT_EXPECT_EQ(test, fortify_write_overflows, 0);
+ 	/* Only last byte should be %NUL */
+-	KUNIT_EXPECT_EQ(test, pad.buf[sizeof(pad.buf) - 1], '\0');
+-	KUNIT_EXPECT_NE(test, pad.buf[sizeof(pad.buf) - 2], '\0');
+-	KUNIT_EXPECT_NE(test, pad.buf[sizeof(pad.buf) - 3], '\0');
++	KUNIT_EXPECT_EQ(test, pad.buf[sizeof_buf - 1], '\0');
++	KUNIT_EXPECT_NE(test, pad.buf[sizeof_buf - 2], '\0');
++	KUNIT_EXPECT_NE(test, pad.buf[sizeof_buf - 3], '\0');
+ 
+ 	/* Legitimate (though unterminated) max-size strncpy. */
+-	KUNIT_ASSERT_TRUE(test, strncpy(pad.buf, src,
+-					sizeof(pad.buf) + unconst)
++	KUNIT_ASSERT_TRUE(test, strncpy(pad.buf, src, sizeof_buf)
+ 				== pad.buf);
+ 	KUNIT_EXPECT_EQ(test, fortify_write_overflows, 0);
+ 	/* No trailing %NUL -- thanks strncpy API. */
+-	KUNIT_EXPECT_NE(test, pad.buf[sizeof(pad.buf) - 1], '\0');
+-	KUNIT_EXPECT_NE(test, pad.buf[sizeof(pad.buf) - 2], '\0');
+-	KUNIT_EXPECT_NE(test, pad.buf[sizeof(pad.buf) - 2], '\0');
++	KUNIT_EXPECT_NE(test, pad.buf[sizeof_buf - 1], '\0');
++	KUNIT_EXPECT_NE(test, pad.buf[sizeof_buf - 2], '\0');
++	KUNIT_EXPECT_NE(test, pad.buf[sizeof_buf - 2], '\0');
+ 	/* But we will not have gone beyond. */
+ 	KUNIT_EXPECT_EQ(test, pad.bytes_after, 0);
+ 
+ 	/* Now verify that FORTIFY is working... */
+-	KUNIT_ASSERT_TRUE(test, strncpy(pad.buf, src,
+-					sizeof(pad.buf) + unconst + 1)
++	KUNIT_ASSERT_TRUE(test, strncpy(pad.buf, src, sizeof_buf + 1)
+ 				== pad.buf);
+ 	/* Should catch the overflow. */
+ 	KUNIT_EXPECT_EQ(test, fortify_write_overflows, 1);
+-	KUNIT_EXPECT_NE(test, pad.buf[sizeof(pad.buf) - 1], '\0');
+-	KUNIT_EXPECT_NE(test, pad.buf[sizeof(pad.buf) - 2], '\0');
+-	KUNIT_EXPECT_NE(test, pad.buf[sizeof(pad.buf) - 2], '\0');
++	KUNIT_EXPECT_NE(test, pad.buf[sizeof_buf - 1], '\0');
++	KUNIT_EXPECT_NE(test, pad.buf[sizeof_buf - 2], '\0');
++	KUNIT_EXPECT_NE(test, pad.buf[sizeof_buf - 2], '\0');
+ 	/* And we will not have gone beyond. */
+ 	KUNIT_EXPECT_EQ(test, pad.bytes_after, 0);
+ 
+ 	/* And further... */
+-	KUNIT_ASSERT_TRUE(test, strncpy(pad.buf, src,
+-					sizeof(pad.buf) + unconst + 2)
++	KUNIT_ASSERT_TRUE(test, strncpy(pad.buf, src, sizeof_buf + 2)
+ 				== pad.buf);
+ 	/* Should catch the overflow. */
+ 	KUNIT_EXPECT_EQ(test, fortify_write_overflows, 2);
+-	KUNIT_EXPECT_NE(test, pad.buf[sizeof(pad.buf) - 1], '\0');
+-	KUNIT_EXPECT_NE(test, pad.buf[sizeof(pad.buf) - 2], '\0');
+-	KUNIT_EXPECT_NE(test, pad.buf[sizeof(pad.buf) - 2], '\0');
++	KUNIT_EXPECT_NE(test, pad.buf[sizeof_buf - 1], '\0');
++	KUNIT_EXPECT_NE(test, pad.buf[sizeof_buf - 2], '\0');
++	KUNIT_EXPECT_NE(test, pad.buf[sizeof_buf - 2], '\0');
+ 	/* And we will not have gone beyond. */
+ 	KUNIT_EXPECT_EQ(test, pad.bytes_after, 0);
+ }
+@@ -579,55 +576,56 @@ static void fortify_test_strscpy(struct kunit *test)
+ {
+ 	struct fortify_padding pad = { };
+ 	char src[] = "Copy me fully into a small buffer and I will overflow!";
++	size_t sizeof_buf = sizeof(pad.buf);
++	size_t sizeof_src = sizeof(src);
++
++	OPTIMIZER_HIDE_VAR(sizeof_buf);
++	OPTIMIZER_HIDE_VAR(sizeof_src);
+ 
+ 	/* Destination is %NUL-filled to start with. */
+ 	KUNIT_EXPECT_EQ(test, pad.bytes_before, 0);
+-	KUNIT_EXPECT_EQ(test, pad.buf[sizeof(pad.buf) - 1], '\0');
+-	KUNIT_EXPECT_EQ(test, pad.buf[sizeof(pad.buf) - 2], '\0');
+-	KUNIT_EXPECT_EQ(test, pad.buf[sizeof(pad.buf) - 3], '\0');
++	KUNIT_EXPECT_EQ(test, pad.buf[sizeof_buf - 1], '\0');
++	KUNIT_EXPECT_EQ(test, pad.buf[sizeof_buf - 2], '\0');
++	KUNIT_EXPECT_EQ(test, pad.buf[sizeof_buf - 3], '\0');
+ 	KUNIT_EXPECT_EQ(test, pad.bytes_after, 0);
+ 
+ 	/* Legitimate strscpy() 1 less than of max size. */
+-	KUNIT_ASSERT_EQ(test, strscpy(pad.buf, src,
+-				      sizeof(pad.buf) + unconst - 1),
++	KUNIT_ASSERT_EQ(test, strscpy(pad.buf, src, sizeof_buf - 1),
+ 			-E2BIG);
+ 	KUNIT_EXPECT_EQ(test, fortify_write_overflows, 0);
+ 	/* Keeping space for %NUL, last two bytes should be %NUL */
+-	KUNIT_EXPECT_EQ(test, pad.buf[sizeof(pad.buf) - 1], '\0');
+-	KUNIT_EXPECT_EQ(test, pad.buf[sizeof(pad.buf) - 2], '\0');
+-	KUNIT_EXPECT_NE(test, pad.buf[sizeof(pad.buf) - 3], '\0');
++	KUNIT_EXPECT_EQ(test, pad.buf[sizeof_buf - 1], '\0');
++	KUNIT_EXPECT_EQ(test, pad.buf[sizeof_buf - 2], '\0');
++	KUNIT_EXPECT_NE(test, pad.buf[sizeof_buf - 3], '\0');
+ 
+ 	/* Legitimate max-size strscpy. */
+-	KUNIT_ASSERT_EQ(test, strscpy(pad.buf, src,
+-				      sizeof(pad.buf) + unconst),
++	KUNIT_ASSERT_EQ(test, strscpy(pad.buf, src, sizeof_buf),
+ 			-E2BIG);
+ 	KUNIT_EXPECT_EQ(test, fortify_write_overflows, 0);
+ 	/* A trailing %NUL will exist. */
+-	KUNIT_EXPECT_EQ(test, pad.buf[sizeof(pad.buf) - 1], '\0');
+-	KUNIT_EXPECT_NE(test, pad.buf[sizeof(pad.buf) - 2], '\0');
+-	KUNIT_EXPECT_NE(test, pad.buf[sizeof(pad.buf) - 2], '\0');
++	KUNIT_EXPECT_EQ(test, pad.buf[sizeof_buf - 1], '\0');
++	KUNIT_EXPECT_NE(test, pad.buf[sizeof_buf - 2], '\0');
++	KUNIT_EXPECT_NE(test, pad.buf[sizeof_buf - 2], '\0');
+ 
+ 	/* Now verify that FORTIFY is working... */
+-	KUNIT_ASSERT_EQ(test, strscpy(pad.buf, src,
+-				      sizeof(pad.buf) + unconst + 1),
++	KUNIT_ASSERT_EQ(test, strscpy(pad.buf, src, sizeof_buf + 1),
+ 			-E2BIG);
+ 	/* Should catch the overflow. */
+ 	KUNIT_EXPECT_EQ(test, fortify_write_overflows, 1);
+-	KUNIT_EXPECT_EQ(test, pad.buf[sizeof(pad.buf) - 1], '\0');
+-	KUNIT_EXPECT_NE(test, pad.buf[sizeof(pad.buf) - 2], '\0');
+-	KUNIT_EXPECT_NE(test, pad.buf[sizeof(pad.buf) - 2], '\0');
++	KUNIT_EXPECT_EQ(test, pad.buf[sizeof_buf - 1], '\0');
++	KUNIT_EXPECT_NE(test, pad.buf[sizeof_buf - 2], '\0');
++	KUNIT_EXPECT_NE(test, pad.buf[sizeof_buf - 2], '\0');
+ 	/* And we will not have gone beyond. */
+ 	KUNIT_EXPECT_EQ(test, pad.bytes_after, 0);
+ 
+ 	/* And much further... */
+-	KUNIT_ASSERT_EQ(test, strscpy(pad.buf, src,
+-				      sizeof(src) * 2 + unconst),
++	KUNIT_ASSERT_EQ(test, strscpy(pad.buf, src, sizeof_src * 2),
+ 			-E2BIG);
+ 	/* Should catch the overflow. */
+ 	KUNIT_EXPECT_EQ(test, fortify_write_overflows, 2);
+-	KUNIT_EXPECT_EQ(test, pad.buf[sizeof(pad.buf) - 1], '\0');
+-	KUNIT_EXPECT_NE(test, pad.buf[sizeof(pad.buf) - 2], '\0');
+-	KUNIT_EXPECT_NE(test, pad.buf[sizeof(pad.buf) - 2], '\0');
++	KUNIT_EXPECT_EQ(test, pad.buf[sizeof_buf - 1], '\0');
++	KUNIT_EXPECT_NE(test, pad.buf[sizeof_buf - 2], '\0');
++	KUNIT_EXPECT_NE(test, pad.buf[sizeof_buf - 2], '\0');
+ 	/* And we will not have gone beyond. */
+ 	KUNIT_EXPECT_EQ(test, pad.bytes_after, 0);
+ }
+@@ -767,7 +765,9 @@ static void fortify_test_strlcat(struct kunit *test)
+ 	struct fortify_padding pad = { };
+ 	char src[sizeof(pad.buf)] = { };
+ 	int i, partial;
+-	int len = sizeof(pad.buf) + unconst;
++	int len = sizeof(pad.buf);
++
++	OPTIMIZER_HIDE_VAR(len);
+ 
+ 	/* Fill 15 bytes with valid characters. */
+ 	partial = sizeof(src) / 2 - 1;
+@@ -857,28 +857,32 @@ struct fortify_zero_sized {
+ #define __fortify_test(memfunc)					\
+ static void fortify_test_##memfunc(struct kunit *test)		\
+ {								\
+-	struct fortify_zero_sized zero = { };			\
++	struct fortify_zero_sized empty = { };			\
+ 	struct fortify_padding pad = { };			\
+ 	char srcA[sizeof(pad.buf) + 2];				\
+ 	char srcB[sizeof(pad.buf) + 2];				\
+-	size_t len = sizeof(pad.buf) + unconst;			\
++	size_t len = sizeof(pad.buf);				\
++	size_t zero = 0;					\
++								\
++	OPTIMIZER_HIDE_VAR(len);				\
++	OPTIMIZER_HIDE_VAR(zero);				\
+ 								\
+ 	memset(srcA, 'A', sizeof(srcA));			\
+ 	KUNIT_ASSERT_EQ(test, srcA[0], 'A');			\
+ 	memset(srcB, 'B', sizeof(srcB));			\
+ 	KUNIT_ASSERT_EQ(test, srcB[0], 'B');			\
+ 								\
+-	memfunc(pad.buf, srcA, 0 + unconst);			\
++	memfunc(pad.buf, srcA, zero);				\
+ 	KUNIT_EXPECT_EQ(test, pad.buf[0], '\0');		\
+ 	KUNIT_EXPECT_EQ(test, fortify_read_overflows, 0);	\
+ 	KUNIT_EXPECT_EQ(test, fortify_write_overflows, 0);	\
+-	memfunc(pad.buf + 1, srcB, 1 + unconst);		\
++	memfunc(pad.buf + 1, srcB, zero + 1);			\
+ 	KUNIT_EXPECT_EQ(test, pad.buf[0], '\0');		\
+ 	KUNIT_EXPECT_EQ(test, pad.buf[1], 'B');			\
+ 	KUNIT_EXPECT_EQ(test, pad.buf[2], '\0');		\
+ 	KUNIT_EXPECT_EQ(test, fortify_read_overflows, 0);	\
+ 	KUNIT_EXPECT_EQ(test, fortify_write_overflows, 0);	\
+-	memfunc(pad.buf, srcA, 1 + unconst);			\
++	memfunc(pad.buf, srcA, zero + 1);			\
+ 	KUNIT_EXPECT_EQ(test, pad.buf[0], 'A');			\
+ 	KUNIT_EXPECT_EQ(test, pad.buf[1], 'B');			\
+ 	KUNIT_EXPECT_EQ(test, fortify_read_overflows, 0);	\
+@@ -904,10 +908,10 @@ static void fortify_test_##memfunc(struct kunit *test)		\
+ 	/* Reset error counter. */				\
+ 	fortify_write_overflows = 0;				\
+ 	/* Copy nothing into nothing: no errors. */		\
+-	memfunc(zero.buf, srcB, 0 + unconst);			\
++	memfunc(empty.buf, srcB, zero);				\
+ 	KUNIT_EXPECT_EQ(test, fortify_read_overflows, 0);	\
+ 	KUNIT_EXPECT_EQ(test, fortify_write_overflows, 0);	\
+-	memfunc(zero.buf, srcB, 1 + unconst);			\
++	memfunc(empty.buf, srcB, zero + 1);			\
+ 	KUNIT_EXPECT_EQ(test, fortify_read_overflows, 0);	\
+ 	KUNIT_EXPECT_EQ(test, fortify_write_overflows, 1);	\
+ }
+@@ -919,7 +923,9 @@ static void fortify_test_memscan(struct kunit *test)
+ 	char haystack[] = "Where oh where is my memory range?";
+ 	char *mem = haystack + strlen("Where oh where is ");
+ 	char needle = 'm';
+-	size_t len = sizeof(haystack) + unconst;
++	size_t len = sizeof(haystack);
++
++	OPTIMIZER_HIDE_VAR(len);
+ 
+ 	KUNIT_ASSERT_PTR_EQ(test, memscan(haystack, needle, len),
+ 				  mem);
+@@ -938,7 +944,9 @@ static void fortify_test_memchr(struct kunit *test)
+ 	char haystack[] = "Where oh where is my memory range?";
+ 	char *mem = haystack + strlen("Where oh where is ");
+ 	char needle = 'm';
+-	size_t len = sizeof(haystack) + unconst;
++	size_t len = sizeof(haystack);
++
++	OPTIMIZER_HIDE_VAR(len);
+ 
+ 	KUNIT_ASSERT_PTR_EQ(test, memchr(haystack, needle, len),
+ 				  mem);
+@@ -957,7 +965,9 @@ static void fortify_test_memchr_inv(struct kunit *test)
+ 	char haystack[] = "Where oh where is my memory range?";
+ 	char *mem = haystack + 1;
+ 	char needle = 'W';
+-	size_t len = sizeof(haystack) + unconst;
++	size_t len = sizeof(haystack);
++
++	OPTIMIZER_HIDE_VAR(len);
+ 
+ 	/* Normal search is okay. */
+ 	KUNIT_ASSERT_PTR_EQ(test, memchr_inv(haystack, needle, len),
+@@ -976,8 +986,11 @@ static void fortify_test_memcmp(struct kunit *test)
+ {
+ 	char one[] = "My mind is going ...";
+ 	char two[] = "My mind is going ... I can feel it.";
+-	size_t one_len = sizeof(one) + unconst - 1;
+-	size_t two_len = sizeof(two) + unconst - 1;
++	size_t one_len = sizeof(one) - 1;
++	size_t two_len = sizeof(two) - 1;
++
++	OPTIMIZER_HIDE_VAR(one_len);
++	OPTIMIZER_HIDE_VAR(two_len);
+ 
+ 	/* We match the first string (ignoring the %NUL). */
+ 	KUNIT_ASSERT_EQ(test, memcmp(one, two, one_len), 0);
+@@ -998,7 +1011,9 @@ static void fortify_test_kmemdup(struct kunit *test)
+ {
+ 	char src[] = "I got Doom running on it!";
+ 	char *copy;
+-	size_t len = sizeof(src) + unconst;
++	size_t len = sizeof(src);
++
++	OPTIMIZER_HIDE_VAR(len);
+ 
+ 	/* Copy is within bounds. */
+ 	copy = kmemdup(src, len, GFP_KERNEL);
 -- 
 2.53.0
 
