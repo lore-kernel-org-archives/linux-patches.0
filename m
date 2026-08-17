@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5D2420472;
-	Mon, 17 Aug 2026 14:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3890D420472;
+	Mon, 17 Aug 2026 14:37:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977427; cv=none; b=OL1N9t1BmvGaZ3M9kiLt8Mej7oD8YGLLhri4hqYdJn/Zp6BZFIkKJAWqYkoWMqTkPX8KDh+jpdH2vHqoOIFcfkvB2aLw9ihYSLPIdpvqS8DJ3AWTlaRNxqnAlkynm0UBmWMzsm81+OloH+OkxnffF4ej0pNw2O2mGyuDh+xHMo0=
+	t=1786977430; cv=none; b=lsv3GdPAJWzITrVmEfdW7XEsHLOGDuDXdLBvYnSWRLonCqIkkFJtrYpjuYgkykPwHrQOLCXdoLWxZe+shFcVGeGlfx5k/5A1nR6iSKbnrwHAhU3DKq56kGsWredOyfbeRi3LkvpuobnOHMqi597Vn1LVr3FCnpKJ2Ch0Dk0UbrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977427; c=relaxed/simple;
-	bh=OOfrCQut+CoaGZE4M8F+2jk1Cmd8T31103V/M/tUL+w=;
+	s=arc-20240116; t=1786977430; c=relaxed/simple;
+	bh=rPoNT99HhxP6rRsL9vRbU5Z2hmcApk3DlIANFxPIhrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D4FHgorQ6YTTa164B4SkhQ462nVfm8nrAxEBEobMwwCjyKMwcN9/ha5eCJUvbXy6xSIyddRsC+oMCn17RfKlZ/7uWvKc330Inw3eJAKe0kexiVSFcxq1yMHZB07J8FS/ultwmSPaJN1QU1wT8SIeHWVSB0GtNlk6rH0vuSJrdzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SYfpDOeV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AFus2BxerioGpxO6vhgzgQ+bL4dcC0LROz445WqV+7vNOJPjqZdWJLRY/3FGR8GNpbvARKzRsacZcBtFHhXcAVD4w3+of2dLQKHuKgqWIlliyjwHfxXxLsGkKtYCrYNE4CNcXKd6Sr0InKZWx01rzmpaunpvCxt4j3ZghKIjUYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rAZlLDwl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SYfpDOeV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67BC1F000E9;
-	Mon, 17 Aug 2026 14:37:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rAZlLDwl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E62F1F000E9;
+	Mon, 17 Aug 2026 14:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977426;
-	bh=Y9uyewcZlfY46q9Cqck3EXP7WYrlT5s7gZWGSZyts0U=;
+	s=korg; t=1786977429;
+	bh=LHUrXrCfpAeNOHHFbtJNZFWrcUXzmiiWbsAF3NTus5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SYfpDOeVfuj8yDVAuUMyaJk209jDrGfAfB8wo9oGZ37OwHWxHqje/42S3QXEDLu2K
-	 KGUXx0Xe/kJaBJqSVqF5/dskl0b54iMg9E75wcfbE2JqaCCNBm3Bsf9W1NkTK0g60X
-	 aleks0/KoWzgkrNFQ+XtMRMWc4XbYwyuSw95IoJY=
+	b=rAZlLDwl0nvfkovabU0L94lszzS0VavE29fMtfpKmCWQAVjyE04Z6I78/pxEGmFTP
+	 1YD7DEr45qfsm7SMAV0ojiADgnvoCTWAsGk8JwCs0ijTaMEmgmQmNapgXVQm4OHmID
+	 T5SMIU80reOEtx/KDGQVaMm733hi+3e6Zlkf95Mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 326/456] vxlan: use pskb_network_may_pull() in route_shortcircuit()
-Date: Mon, 17 Aug 2026 15:31:56 +0200
-Message-ID: <20260817132552.413623654@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.15 327/456] tracing: Check return value of __register_event() in trace_module_add_events()
+Date: Mon, 17 Aug 2026 15:31:57 +0200
+Message-ID: <20260817132552.445255219@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,53 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 26bb2dd0a8839617e2c79ffbbe1923f8e4bab9fb upstream.
+commit ac8719969e6c3c54e939834df812bc41f25453cf upstream.
 
-route_shortcircuit() currently calls pskb_may_pull(skb, sizeof(struct iphdr))
-(or ipv6hdr), which checks if bytes are available starting from skb->data.
+trace_module_add_events() ignores the return value of __register_event()
+and unconditionally calls __add_event_to_tracers() for each event.
 
-However, in vxlan_xmit(), skb->data points to the MAC header, so
-skb_network_offset(skb) is ETH_HLEN (14 bytes). Using pskb_may_pull(skb, 20)
-only checks 20 bytes from skb->data (which is 14 bytes MAC header + 6 bytes of
-IP header), leaving the rest of the IP header potentially un-pulled in non-linear
-frags. Subsequent dereferences of ip_hdr(skb)->daddr can read beyond the pulled
-linear buffer length.
+If __register_event() fails (for example, if event_init() fails), the
+trace_event_call is not added to ftrace_events list, but
+__add_event_to_tracers() still creates a trace_event_file pointing to it.
+If module loading subsequently fails and module memory is freed, tracing
+state retains a stale trace_event_call pointer in trace_event_file,
+leading to a use-after-free when tracefs or tracing subsystem operations
+are later executed.
 
-Fix this by using pskb_network_may_pull(), which adds skb_network_offset(skb) to
-the length check to ensure the full network header is present in the linear buffer.
+Fix this by checking the return value of __register_event() and only
+calling __add_event_to_tracers() if event registration succeeded.
 
-Fixes: e4f67addf158 ("add DOVE extensions for VXLAN")
+Fixes: ae63b31e4d0e ("tracing: Separate out trace events from global variables")
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20260723144249.759100-5-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/178528487878.124250.14170824576025743236.stgit@devnote2
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vxlan/vxlan_core.c |    4 ++--
+ kernel/trace/trace_events.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -2240,7 +2240,7 @@ static bool route_shortcircuit(struct ne
- 	{
- 		struct iphdr *pip;
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -3089,8 +3089,8 @@ static void trace_module_add_events(stru
+ 	end = mod->trace_events + mod->num_trace_events;
  
--		if (!pskb_may_pull(skb, sizeof(struct iphdr)))
-+		if (!pskb_network_may_pull(skb, sizeof(struct iphdr)))
- 			return false;
- 		pip = ip_hdr(skb);
- 		n = neigh_lookup(&arp_tbl, &pip->daddr, dev);
-@@ -2266,7 +2266,7 @@ static bool route_shortcircuit(struct ne
- 		 */
- 		if (!ipv6_stub->nd_tbl)
- 			return false;
--		if (!pskb_may_pull(skb, sizeof(struct ipv6hdr)))
-+		if (!pskb_network_may_pull(skb, sizeof(struct ipv6hdr)))
- 			return false;
- 		pip6 = ipv6_hdr(skb);
- 		n = neigh_lookup(ipv6_stub->nd_tbl, &pip6->daddr, dev);
+ 	for_each_event(call, start, end) {
+-		__register_event(*call, mod);
+-		__add_event_to_tracers(*call);
++		if (!__register_event(*call, mod))
++			__add_event_to_tracers(*call);
+ 	}
+ }
+ 
 
 
