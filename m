@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0223F0A8C;
-	Mon, 17 Aug 2026 15:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08C53AAF6D;
+	Mon, 17 Aug 2026 15:12:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979564; cv=none; b=S67BnH+RsJdO3h3Ec3xdQBscUezzu3NFonTtWHkO8oWa6hymYnPknwcAoJAX91QsqUCbnDuJu5zslxb68f7sSqDbkd9qSjXV56M5GSQo2WraunjGmhN7vVB3vlBd8U7UvLOo5SeCL2c4wJ7RraNNWgVbAdRVIcJ5+cQUR0DlibM=
+	t=1786979566; cv=none; b=oM/sTrE/QCJOBgHYq5+ZNyUkneb+bnLnFS64XILS2bivRvDLluhAifftonzI5ZFMSNEpXAEiAUisWQ0ZjRMT/F566q+8FooMVvMNxLPGsxUXi+1725VGBYCzd3VkxbWTlkAgf3O/koXhYW//NVDE1n7p1mYduwcfRlafJhyKHuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979564; c=relaxed/simple;
-	bh=7uSor7utd0e+uxlG+b6GiVif8rJLfaxIVe/Wj3sLuCU=;
+	s=arc-20240116; t=1786979566; c=relaxed/simple;
+	bh=rTWN9RntF2spNWweKetMMCwXaZa3dQjWo4E4KabMTxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hi9ye5AjqaeLMnB+6YoWzvdIRBacmQNbq19sv4wRY7vOwLaA2G+76/7jX0HLaCNR26HR8ZR5axo48gFEZd3GaodUsUGPo2jWznFTHGBU58zUOCHKRwmoOCMFfhQa6Cky2EbUJo0V9mxxyKZE8xK9phr+FGtM6jJv9EtzepBwMAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ncuW356v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e0mbYzLLFswwGp0ADAvGP75mWTRUqyEl88tYIy48iFf05djMAuds0NoRUVWSdaFTjnMt5+hFkbr4VAQQtYOkf3aXGJ3dOeLPlpYoPCNPLarEl58X5c5UMmgKQ/tl6mNZZObYHNc1jAj303quYjOTtZWDfVaulV7QLaT6eYP73Yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dj4qQGz+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ncuW356v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BAD21F000E9;
-	Mon, 17 Aug 2026 15:12:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dj4qQGz+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA7C1F000E9;
+	Mon, 17 Aug 2026 15:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979562;
-	bh=uh3WyWaq6+kegdIbCZhFRlbcVbS/+/dvoXYhFIYiElo=;
+	s=korg; t=1786979565;
+	bh=hNu8Kv6MlbUMZFGV4IrK4qS3LjSFJxa6ZzIUifZvaps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ncuW356vKEBNlZ+tctfTTqK57uP1KZmNnd/gOYmqqWdGLx5Pn471cGzEoGf9yXf//
-	 Xmqk9L9kUa4q/knAaw8PluKBbRlGCuWpYCYUAF0V9ZZQcEQrCibfu3iVeQ5cev9Mj5
-	 HsJLcsn5xuWJnDJ6BmoT1nPLYYljAXZQpB7tOIjc=
+	b=dj4qQGz+pwHrdbGtk9mnKpSHjXaDBc0yH2HtFpjSuYogNeqz/x+svTiR7BYfOC6Ho
+	 TCI+t1bVcHaw/gDoMf7b/h97nHX7IuhyljhDBDMRmJVPTQy9MB/G4aa09eaMdpb5G3
+	 ElD/oHSsamqNhoEKHFKjzbEeZfB/hsE3xnSKI2Gs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 268/609] net: hip04: fix RX buffer leak on build_skb failure
-Date: Mon, 17 Aug 2026 15:29:24 +0200
-Message-ID: <20260817132553.082476990@linuxfoundation.org>
+	Magnus Lindholm <linmag7@gmail.com>,
+	Jann Horn <jannh@google.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.1 269/609] proc: Fix broken error paths for namespace links
+Date: Mon, 17 Aug 2026 15:29:25 +0200
+Message-ID: <20260817132553.114117963@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,64 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Jann Horn <jannh@google.com>
 
-commit 14fa65d10f5696b063a7d8d26e8291ea84a2c6ed upstream.
+commit 425224c2d700391729be7fe6929a88ef4e2d7a4e upstream.
 
-When build_skb() fails in hip04_rx_poll(), the driver jumps to the
-refill path without releasing the current RX buffer and its DMA mapping.
-Installing a replacement buffer then overwrites the slot references and
-leaks both resources.
+Don't return the return value of down_read_killable() (0) when a ptrace
+access check fails, return -EACCES as intended.
 
-Keep the current slot intact and return budget so NAPI retries the same
-buffer.  Also free a newly allocated RX fragment when dma_map_single()
-fails.
-
-This issue was found by an in-house static analysis tool.
-
-Fixes: 701a0fd52318 ("hip04_eth: fix missing error handle for build_skb failed")
+Reported-by: Magnus Lindholm <linmag7@gmail.com>
+Closes: https://lore.kernel.org/r/20260706170735.2941493-1-linmag7@gmail.com
+Fixes: 6650527444da ("proc: protect ptrace_may_access() with exec_update_lock (part 1)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260712142729.2057636-1-fanwu01@zju.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://patch.msgid.link/20260706-procfs-ns-eacces-fix-v1-1-a69ab14c02e6@google.com
+Tested-by: Magnus Lindholm <linmag7@gmail.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/hisilicon/hip04_eth.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ fs/proc/namespaces.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/hisilicon/hip04_eth.c
-+++ b/drivers/net/ethernet/hisilicon/hip04_eth.c
-@@ -594,7 +594,11 @@ static int hip04_rx_poll(struct napi_str
- 		skb = build_skb(buf, priv->rx_buf_size);
- 		if (unlikely(!skb)) {
- 			net_dbg_ratelimited("build_skb failed\n");
--			goto refill;
-+			/* Retain the slot; return budget so NAPI retries this
-+			 * buffer. Refill would overwrite rx_buf[]/rx_phys[]
-+			 * and leak them.
-+			 */
-+			return budget;
- 		}
+--- a/fs/proc/namespaces.c
++++ b/fs/proc/namespaces.c
+@@ -46,7 +46,7 @@ static const char *proc_ns_get_link(stru
+ 	const struct proc_ns_operations *ns_ops = PROC_I(inode)->ns_ops;
+ 	struct task_struct *task;
+ 	struct path ns_path;
+-	int error = -EACCES;
++	int error;
  
- 		dma_unmap_single(priv->dev, priv->rx_phys[priv->rx_head],
-@@ -622,14 +626,15 @@ static int hip04_rx_poll(struct napi_str
- 			rx++;
- 		}
+ 	if (!dentry)
+ 		return ERR_PTR(-ECHILD);
+@@ -59,6 +59,7 @@ static const char *proc_ns_get_link(stru
+ 	if (error)
+ 		goto out_put_task;
  
--refill:
- 		buf = netdev_alloc_frag(priv->rx_buf_size);
- 		if (!buf)
- 			goto done;
- 		phys = dma_map_single(priv->dev, buf,
- 				      RX_BUF_SIZE, DMA_FROM_DEVICE);
--		if (dma_mapping_error(priv->dev, phys))
-+		if (dma_mapping_error(priv->dev, phys)) {
-+			skb_free_frag(buf);
- 			goto done;
-+		}
- 		priv->rx_buf[priv->rx_head] = buf;
- 		priv->rx_phys[priv->rx_head] = phys;
- 		hip04_set_recv_desc(priv, phys);
++	error = -EACCES;
+ 	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS))
+ 		goto out;
+ 
+@@ -90,6 +91,7 @@ static int proc_ns_readlink(struct dentr
+ 	if (res)
+ 		goto out_put_task;
+ 
++	res = -EACCES;
+ 	if (ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS)) {
+ 		res = ns_get_name(name, sizeof(name), task, ns_ops);
+ 		if (res >= 0)
 
 
