@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DABB421259;
-	Mon, 17 Aug 2026 15:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B473D5C07;
+	Mon, 17 Aug 2026 15:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980232; cv=none; b=aPVZcDETAVmd0lRE+6fUEpxsweHlAvo3VUecrIdql2BtheqqVv0u9Dn3D72bdbHckGGwefzV+LdKbZpb/O+h2IuZe9+6hYxLxv+0kVn2GyK2Cq1BEguDaC0BycFpI/yeGWaAcF63KgocoeC4sdNXO4VkjwnpvxhmR3lXNZF6De0=
+	t=1786980235; cv=none; b=H/BsU1znCN+W3wUHCVHJ8rTrwbgZviAeIm9WxAOm1sTfVq0ON0G8JKZH73+E/DVnWOGZF/j5RgFEonKX3xEK70CzQ0EqdFYGnJCyzKA6Gi2ZBMx1vHohv2tlDWi8r6yaeE2VNo7aGDvsrU2ZLeiZEhMfeesdCeimnqQORM5jLAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980232; c=relaxed/simple;
-	bh=5VpCAKderRgd29aVC8aQkbbmwW1UF1ho0KyDS7CjKoA=;
+	s=arc-20240116; t=1786980235; c=relaxed/simple;
+	bh=1s8kYdx9EeIcTNukeJzJc62itDs2dcIZYPwVyZAkGRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KX5vWwUl5pzh/iGLv4+0XY73erlTqHnFg87s3scTGXN9hUXd+Ejk0J7ZdCTz5XT13sST2KaaPr+5TY+SZCBLV61pQZ9wMzFN6Poai6U5PIKLWQxTXu1xJuseUQe+fcSogWpJa1/vg2l6gumNGALmFS6PggtbdJuoa9qLoZeL3uY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oodPmxPL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k5zAMNDVNoj1HMRlHN5YGFHeYRUwwXVJjbvf0lGjV4ZIokZSPSTvb4TPE5G6CuVT+gy+KhpdgLZGymaytQJZeqNJmEbi0F6pzCuxbqudzQMflJaGu4C3KKJwYPy2j2mkisb+p/jnZALYGR1M8a5SD7Suj9XtomMaQ/616kYyES0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GEe3BcA0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oodPmxPL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F2A1F000E9;
-	Mon, 17 Aug 2026 15:23:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GEe3BcA0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913AC1F000E9;
+	Mon, 17 Aug 2026 15:23:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980231;
-	bh=Y4PPAuw2IzSAIQKyb5zd0o9vwazC0oM+T4SOQXBaF4s=;
+	s=korg; t=1786980234;
+	bh=ll8gyrC+JRZfXa5RNUlcprQHk33AqnyLBY+j+rgQ/cY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oodPmxPLAA8gWCkCM4LNtYvs24Eo37Pu1siZI//KUGdqgnn67yED8b70U+S6811ab
-	 bFxKj2NG54Wjvp3ff1BO2r4bqkxx5FM7WUX26HW71KtdwZiHWBJu3vkoOMYACtBuTr
-	 nV99zpj7V2SIMj9sa25//P2dezNmf/4fnGT6gc2E=
+	b=GEe3BcA0MNCzYdxaz7DYkS+H8gNh2CyW3RcuUyKTwe4IusWUlqygGW/gOTLW/SW7x
+	 vHQmgtaItcT7+XSwdtqrqmGWsdsaHsEwOd9Fz8ian3mNf5IT84bmQw0wD3UIdrNhqd
+	 Mj8pQwDyuIFWXXKSa3RXd86IftQ6Q1u0R4OhMWuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Wen <wenjian1@xiaomi.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jordan Rife <jordan@jrife.io>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 502/609] tcp: add a scheduling point in established_get_first()
-Date: Mon, 17 Aug 2026 15:33:18 +0200
-Message-ID: <20260817132600.680896186@linuxfoundation.org>
+Subject: [PATCH 6.1 503/609] bpf: tcp: Make mem flags configurable through bpf_iter_tcp_realloc_batch
+Date: Mon, 17 Aug 2026 15:33:19 +0200
+Message-ID: <20260817132600.710862488@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,57 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Wen <wenjianhn@gmail.com>
+From: Jordan Rife <jordan@jrife.io>
 
-[ Upstream commit 9f4a7c930284bf2b5b84d3636a8e88857149328f ]
+[ Upstream commit 8271bec9fc1cfe522b1a18cacbefd6712a3d41c2 ]
 
-Kubernetes[1] is going to stick with /proc/net/tcp for a while.
+Prepare for the next patch which needs to be able to choose either
+GFP_USER or GFP_NOWAIT for calls to bpf_iter_tcp_realloc_batch.
 
-This commit reduces the scheduling latency introduced by
-established_get_first(), similar to commit acffb584cda7 ("net: diag:
-add a scheduling point in inet_diag_dump_icsk()").
-
-In our environment, the scheduling latency affects the performance of
-latency-sensitive services like Redis.
-
-Changes in V2 :
- - call cond_resched() before checking if a bucket is empty as
-   suggested by Eric Dumazet
- - removed the delay of synchronize_net() from the commit message
-
-[1] https://github.com/google/cadvisor/blob/v0.47.2/container/libcontainer/handler.go#L130
-
-Signed-off-by: Jian Wen <wenjian1@xiaomi.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230711032405.3253025-1-wenjian1@xiaomi.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jordan Rife <jordan@jrife.io>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
 Stable-dep-of: e5fd3f514e27 ("bpf: tcp: Fix use-after-free in bpf_iter_tcp_established_batch()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv4/tcp_ipv4.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 00348cb9a211b..89200b4314018 100644
+index 89200b4314018..7823e55bc9e73 100644
 --- a/net/ipv4/tcp_ipv4.c
 +++ b/net/ipv4/tcp_ipv4.c
-@@ -57,6 +57,7 @@
- #include <linux/init.h>
- #include <linux/times.h>
- #include <linux/slab.h>
-+#include <linux/sched.h>
+@@ -2759,12 +2759,12 @@ static void bpf_iter_tcp_put_batch(struct bpf_tcp_iter_state *iter)
+ }
  
- #include <net/net_namespace.h>
- #include <net/icmp.h>
-@@ -2412,6 +2413,8 @@ static void *established_get_first(struct seq_file *seq)
- 		struct hlist_nulls_node *node;
- 		spinlock_t *lock = inet_ehash_lockp(hinfo, st->bucket);
+ static int bpf_iter_tcp_realloc_batch(struct bpf_tcp_iter_state *iter,
+-				      unsigned int new_batch_sz)
++				      unsigned int new_batch_sz, gfp_t flags)
+ {
+ 	struct sock **new_batch;
  
-+		cond_resched();
-+
- 		/* Lockless fast path for the common case of empty buckets */
- 		if (empty_bucket(hinfo, st))
- 			continue;
+ 	new_batch = kvmalloc(sizeof(*new_batch) * new_batch_sz,
+-			     GFP_USER | __GFP_NOWARN);
++			     flags | __GFP_NOWARN);
+ 	if (!new_batch)
+ 		return -ENOMEM;
+ 
+@@ -2876,7 +2876,8 @@ static struct sock *bpf_iter_tcp_batch(struct seq_file *seq)
+ 		return sk;
+ 	}
+ 
+-	if (!resized && !bpf_iter_tcp_realloc_batch(iter, expected * 3 / 2)) {
++	if (!resized && !bpf_iter_tcp_realloc_batch(iter, expected * 3 / 2,
++						    GFP_USER)) {
+ 		resized = true;
+ 		goto again;
+ 	}
+@@ -3293,7 +3294,7 @@ static int bpf_iter_init_tcp(void *priv_data, struct bpf_iter_aux_info *aux)
+ 	if (err)
+ 		return err;
+ 
+-	err = bpf_iter_tcp_realloc_batch(iter, INIT_BATCH_SZ);
++	err = bpf_iter_tcp_realloc_batch(iter, INIT_BATCH_SZ, GFP_USER);
+ 	if (err) {
+ 		bpf_iter_fini_seq_net(priv_data);
+ 		return err;
 -- 
 2.53.0
 
