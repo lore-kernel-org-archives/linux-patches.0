@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7669443E2D;
-	Mon, 17 Aug 2026 14:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E5A440A2B;
+	Mon, 17 Aug 2026 14:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976029; cv=none; b=SM8zo/LtYSZqcwpDblYpLaPeSe7SY4fKavWO/SDzOGSZyvFNwqSAOcV165JmbemLNMLIRlW/ELnkSBZflLzPux60LpUKR8P/OCQlYOW/Q1T7Zf7Mr3UobhtpsuRfMxI2A0d8qPW3gDA1VWlOAL3oadPoGLw+Qa49knzb5ADTyyM=
+	t=1786976032; cv=none; b=WNAn6tYQy4g/Jgh+txxARzxKGDnHCR3UC04ycARAUw/idSOMm2Ncpa2Ep8J0VhuNbM2xICvmYJJvOoh7ZFVvfx/eHxNklh3wAqn/dOB4OuJFOAGlRCehIJ+DP6kn+tqLxjczFe2H42HK2Z2MRp4ahLmSFRiO4WEc9XsYqgFAfgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976029; c=relaxed/simple;
-	bh=QblBfxtsf33BAwN4Q5NwT3wthACB/hSvhwVmqZqNcuA=;
+	s=arc-20240116; t=1786976032; c=relaxed/simple;
+	bh=4fuO7xJ1dEiqDmsk0ZzdoLh18mske3onpkEF4XhOADA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kdOcXgY4s7UwlaPLqgdxPGeveBLU48eP+hq8M4m7padLGtgxbOutW3+PpU3EtAqGPsYfeuL+/+cQbOwdHr5a10BdYyQPSMzNuzqCGtDd0dwSWkRPdB2CO6UxlyQw+cMe1BhWsg5IJcsrgbSGBRM6zZiMClDdeKJ4RSOJzapYtkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vGT8uMbL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BqQkT0bRpjdG0CqBqWvjsnfZlAHIPZq/rhTKcSYWgWaYkopSoVADNOVqExbkhWZBJVaJOgaRgUMcVLw7PZo/9LZSS0NIFr5UkcTl4rIwjM6CFO0gFX/jlSdsKIfbZzh18azXmXBDYa7360moh2cafLebe2GxXFpeK5lZ4SRV5ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kP2XkXeC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vGT8uMbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157861F000E9;
-	Mon, 17 Aug 2026 14:13:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kP2XkXeC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB591F000E9;
+	Mon, 17 Aug 2026 14:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976028;
-	bh=NbI/Ex74anPOP3XYErN3199USCiAWFuIn1Waa5/wXD0=;
+	s=korg; t=1786976031;
+	bh=G1e7DAT/0Lcq77jWi4RAT1YBQtLr76gjpKlr1whjO60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vGT8uMbLdlH2zFJ0IAleKmp2J1ACfTmJT/sGI/QR2nqias9cR8iKN9z2vn5UWZlkM
-	 SySXudU3ZiwaCMJlub93wLomoYetu+kRmd+F6b365sXbGBwGW5KfXe+GyEuL52QtDE
-	 +u+FSk2/vMqDWjNa11KU8dh4bIvm2ev9bkEL7hOA=
+	b=kP2XkXeCF6rG6mNOizoAHpZ9WmaTu4XrWoofjYvaC3FUKkDyLJ/88/jhP0bd0kCOM
+	 M5/qR8KLxmIj4Y8uQaVQY722iQxAeqebZ9mJcqVg9TDwJR5aKRk7x04Xhi0pSWsLvO
+	 Ak6o9g3xGtft+ob0iaO1iHVLZ77cWYkwz+ZI2WOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Block <bblock@linux.ibm.com>,
-	M Nikhil <nikh1092@linux.ibm.com>,
-	Chinmaya Kajagar <chinmayk@linux.ibm.com>,
-	Nihar Panda <niharp@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	stable@kernel.org,
+	Hans de Goede <hansg@kernel.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 231/389] scsi: zfcp: Fix memory leak during adapter release by destroying gid_pn_req
-Date: Mon, 17 Aug 2026 15:31:10 +0200
-Message-ID: <20260817132548.244940655@linuxfoundation.org>
+Subject: [PATCH 5.10 196/389] media: uvcvideo: Fix sequence number when no EOF
+Date: Mon, 17 Aug 2026 15:30:35 +0200
+Message-ID: <20260817132546.862261321@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -54,63 +55,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Block <bblock@linux.ibm.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit b601fa590e667bd9643feed8c869b6b3e418480d ]
+commit f078966ca1fb1b3865d8e6bbe2705cfd277fc637 upstream.
 
-When releasing an adapter we don't free the mempool 'gid_pn_req' that is
-allocated during the enqueue. This leaks memory:
+If the driver could not detect the EOF, the sequence number is increased
+twice:
+ 1) When we enter uvc_video_decode_start() with the old buffer and FID has
+   flipped => We return -EAGAIN and last_fid is not flipped
+ 2) When we enter uvc_video_decode_start() with the new buffer.
 
-  unreferenced object 0xd8d29297de700 (size 256):
-    comm "(udev-worker)", pid 2105, jiffies 4294945794
-    hex dump (first 32 bytes):
-      00 00 00 00 de ad 4e ad ff ff ff ff 00 00 00 00  ......N.........
-      ff ff ff ff ff ff ff ff 00 0d c4 5f 67 9d 99 e0  ..........._g...
-    backtrace (crc 4a5b5da2):
-      [<000dc45f64da418c>] kmemleak_alloc+0x6c/0xa0
-      [<000dc45f62b430aa>] __kmalloc_cache_node_noprof+0x36a/0x4d0
-      [<000dc45f629a535a>] mempool_create_node_noprof+0xaa/0x150
-      [<000dc45ee2c065e6>] zfcp_allocate_low_mem_buffers+0x96/0x370 [zfcp]
-      [<000dc45ee2c070f8>] zfcp_adapter_enqueue+0x598/0xd40 [zfcp]
-      [<000dc45ee2c08eb0>] zfcp_ccw_set_online+0x160/0x210 [zfcp]
-      [<000dc45f643d4762>] ccw_device_set_online+0x232/0xd80
-      [<000dc45f643d53d4>] online_store_recog_and_online+0x124/0x390
-      [<000dc45f643d8238>] online_store+0x298/0x5b0
-      [<000dc45f62eb0a04>] kernfs_fop_write_iter+0x2c4/0x480
-      [<000dc45f62c81150>] new_sync_write+0x370/0x4b0
-      [<000dc45f62c87abe>] vfs_write+0x43e/0x5b0
-      [<000dc45f62c87ff4>] ksys_write+0x114/0x1f0
-      [<000dc45f621c4a16>] do_syscall+0x2f6/0x430
-      [<000dc45f64d9d5d8>] __do_syscall+0xc8/0x1c0
-      [<000dc45f64dc2224>] system_call+0x74/0xa0
+Fix this issue by moving the new frame detection logic earlier in
+uvc_video_decode_start().
 
-Fix this by destroying the mempool during the adapter's release.
+This also has some nice side affects:
 
-Fixes: 799b76d09aee ("[SCSI] zfcp: Decouple gid_pn requests from erp")
-Signed-off-by: Benjamin Block <bblock@linux.ibm.com>
-Tested-by: M Nikhil <nikh1092@linux.ibm.com>
-Acked-by: M Nikhil <nikh1092@linux.ibm.com>
-Reviewed-by: Chinmaya Kajagar <chinmayk@linux.ibm.com>
-Reviewed-by: Nihar Panda <niharp@linux.ibm.com>
-Link: https://patch.msgid.link/20260720072736.3381816-2-niharp@linux.ibm.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+- The error status from the new packet will no longer get propagated
+  to the previous frame-buffer.
+- uvc_video_clock_decode() will no longer update the previous frame
+  buf->stf with info from the new packet.
+- uvc_video_clock_decode() and uvc_video_stats_decode() will no longer
+  get called twice for the same packet.
+
+Cc: stable@kernel.org
+Fixes: 650b95feee35 ("[media] uvcvideo: Generate discontinuous sequence numbers when frames are lost")
+Reported-by: Hans de Goede <hansg@kernel.org>
+Closes: https://lore.kernel.org/linux-media/CANiDSCuj4cPuB5_v2xyvAagA5FjoN8V5scXiFFOeD3aKDMqkCg@mail.gmail.com/T/#me39fb134e8c2c085567a31548c3403eb639625e4
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/scsi/zfcp_aux.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/usb/uvc/uvc_video.c | 94 ++++++++++++++++---------------
+ 1 file changed, 49 insertions(+), 45 deletions(-)
 
-diff --git a/drivers/s390/scsi/zfcp_aux.c b/drivers/s390/scsi/zfcp_aux.c
-index 36c2bd2016f22..d472d0ea7957b 100644
---- a/drivers/s390/scsi/zfcp_aux.c
-+++ b/drivers/s390/scsi/zfcp_aux.c
-@@ -254,6 +254,7 @@ static int zfcp_allocate_low_mem_buffers(struct zfcp_adapter *adapter)
- static void zfcp_free_low_mem_buffers(struct zfcp_adapter *adapter)
- {
- 	mempool_destroy(adapter->pool.erp_req);
-+	mempool_destroy(adapter->pool.gid_pn_req);
- 	mempool_destroy(adapter->pool.scsi_req);
- 	mempool_destroy(adapter->pool.scsi_abort);
- 	mempool_destroy(adapter->pool.qtcb_pool);
+diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
+index 7d462e346abd..909e158a017a 100644
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -1093,7 +1093,55 @@ static int uvc_video_decode_start(struct uvc_streaming *stream,
+ 	header_len = data[0];
+ 	fid = data[1] & UVC_STREAM_FID;
+ 
+-	/* Increase the sequence number regardless of any buffer states, so
++	/*
++	 * Mark the buffer as done if we're at the beginning of a new frame.
++	 * End of frame detection is better implemented by checking the EOF
++	 * bit (FID bit toggling is delayed by one frame compared to the EOF
++	 * bit), but some devices don't set the bit at end of frame (and the
++	 * last payload can be lost anyway). We thus must check if the FID has
++	 * been toggled.
++	 *
++	 * stream->last_fid is initialized to -1, and buf->bytesused to 0,
++	 * so the first isochronous frame will never trigger an end of frame
++	 * detection.
++	 *
++	 * Empty buffers (bytesused == 0) don't trigger end of frame detection
++	 * as it doesn't make sense to return an empty buffer. This also
++	 * avoids detecting end of frame conditions at FID toggling if the
++	 * previous payload had the EOF bit set.
++	 */
++	if (fid != stream->last_fid && buf && buf->bytesused != 0) {
++		uvc_trace(UVC_TRACE_FRAME,
++			  "Frame complete (FID bit toggled)\n");
++		buf->state = UVC_BUF_STATE_READY;
++
++		return -EAGAIN;
++	}
++
++	/*
++	 * Some cameras, when running two parallel streams (one MJPEG alongside
++	 * another non-MJPEG stream), are known to lose the EOF packet for a frame.
++	 * We can detect the end of a frame by checking for a new SOI marker, as
++	 * the SOI always lies on the packet boundary between two frames for
++	 * these devices.
++	 */
++	if (stream->dev->quirks & UVC_QUIRK_MJPEG_NO_EOF &&
++	    (stream->cur_format->fcc == V4L2_PIX_FMT_MJPEG ||
++	     stream->cur_format->fcc == V4L2_PIX_FMT_JPEG) &&
++	    buf && buf->bytesused != 0) {
++		const u8 *packet = data + header_len;
++
++		if (len >= header_len + 2 &&
++		    packet[0] == 0xff && packet[1] == JPEG_MARKER_SOI) {
++			buf->state = UVC_BUF_STATE_READY;
++			buf->error = 1;
++			stream->last_fid ^= UVC_STREAM_FID;
++			return -EAGAIN;
++		}
++	}
++
++	/*
++	 * Increase the sequence number regardless of any buffer states, so
+ 	 * that discontinuous sequence numbers always indicate lost frames.
+ 	 */
+ 	if (stream->last_fid != fid) {
+@@ -1157,50 +1205,6 @@ static int uvc_video_decode_start(struct uvc_streaming *stream,
+ 			meta_buf->state = UVC_BUF_STATE_ACTIVE;
+ 	}
+ 
+-	/* Mark the buffer as done if we're at the beginning of a new frame.
+-	 * End of frame detection is better implemented by checking the EOF
+-	 * bit (FID bit toggling is delayed by one frame compared to the EOF
+-	 * bit), but some devices don't set the bit at end of frame (and the
+-	 * last payload can be lost anyway). We thus must check if the FID has
+-	 * been toggled.
+-	 *
+-	 * stream->last_fid is initialized to -1, so the first isochronous
+-	 * frame will never trigger an end of frame detection.
+-	 *
+-	 * Empty buffers (bytesused == 0) don't trigger end of frame detection
+-	 * as it doesn't make sense to return an empty buffer. This also
+-	 * avoids detecting end of frame conditions at FID toggling if the
+-	 * previous payload had the EOF bit set.
+-	 */
+-	if (fid != stream->last_fid && buf->bytesused != 0) {
+-		uvc_trace(UVC_TRACE_FRAME, "Frame complete (FID bit "
+-				"toggled).\n");
+-		buf->state = UVC_BUF_STATE_READY;
+-		return -EAGAIN;
+-	}
+-
+-	/*
+-	 * Some cameras, when running two parallel streams (one MJPEG alongside
+-	 * another non-MJPEG stream), are known to lose the EOF packet for a frame.
+-	 * We can detect the end of a frame by checking for a new SOI marker, as
+-	 * the SOI always lies on the packet boundary between two frames for
+-	 * these devices.
+-	 */
+-	if (stream->dev->quirks & UVC_QUIRK_MJPEG_NO_EOF &&
+-	    (stream->cur_format->fcc == V4L2_PIX_FMT_MJPEG ||
+-	    stream->cur_format->fcc == V4L2_PIX_FMT_JPEG)) {
+-		const u8 *packet = data + header_len;
+-
+-		if (len >= header_len + 2 &&
+-		    packet[0] == 0xff && packet[1] == JPEG_MARKER_SOI &&
+-		    buf->bytesused != 0) {
+-			buf->state = UVC_BUF_STATE_READY;
+-			buf->error = 1;
+-			stream->last_fid ^= UVC_STREAM_FID;
+-			return -EAGAIN;
+-		}
+-	}
+-
+ 	stream->last_fid = fid;
+ 
+ 	return header_len;
 -- 
 2.53.0
 
