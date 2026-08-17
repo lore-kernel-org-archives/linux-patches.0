@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F3C3F9A0B;
-	Mon, 17 Aug 2026 13:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B5F3E025C;
+	Mon, 17 Aug 2026 13:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786973939; cv=none; b=Wff7efw/jPudtozPM8zd8M8nn4/duj1pbhq19o7FMuWpDBJyaxhmaKc3n3mK1ebmz9K+ClKm23zwkSTvT24qduIKKMEHI9nvdB/rBwEZ+3Ry4atFSUbQAJXGLnMZpLiUh5PDkPGf9LrN1nxNIV+2WlM0Ql6lhnyG/ObZUBzo1uc=
+	t=1786973942; cv=none; b=bqEGa8RzWCQYXy3nXHqHd1WS7861tdrYOJVJmTcGSOCa9tbOO/ai5r+eXoNT8U8flrYGp/N2uaMl7sMPpJuKl7UNU0y+aKCDF4eU8yrWHUNcr59QCXH6JeLLSRFkJxYKEQ0LZ6vktjbpRec/mqfJ/WbtuMEDqR0tHK0qB49kNgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786973939; c=relaxed/simple;
-	bh=6KaTBJxuyuEpx84z/AlArqt1d1+KTDq/JC1wYcE2TYc=;
+	s=arc-20240116; t=1786973942; c=relaxed/simple;
+	bh=EXJmBIrc08hHK8Y4H2HAjbm1K18pboCbi2m16C55Pns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f22h70ikuTHHUwDykgkfHLMr1fwrLqbY/bm7jidAbi1E2r2DKpRiHRoBnGP1TURwqAphFkiWDneeEaPbVUoQFWSps3D5EeHgb2F7k/UhpIeWK3Cx8iZLvI4zQ2tckIUfARunb0L13hm/tC4ZnEj+6rpibJc6LkRuFkCNOGGOOs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAFD9s6S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P3NcY4Jt/BIorWGvTh1ZxLb6mt65hOOZT2fDMHpMd8gmY6xv7abqHBBPHZpqrnrKPxvEnTBKo3VYJKE+Zwdxs35lQ+9R/D9rVxLhUQ5GuF+WXjl6sVKvHnBM/+7U3IVsQIxJTO36LuNvexBhNMUEquvvcKTDmIj+EohRP/3SRFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NOFuk4E6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAFD9s6S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9631F000E9;
-	Mon, 17 Aug 2026 13:38:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NOFuk4E6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EFE71F000E9;
+	Mon, 17 Aug 2026 13:39:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786973937;
-	bh=Il3fppaXU+NDOPl2OMVgncSj0EAkAtcGdUlCuJ3Ktw0=;
+	s=korg; t=1786973940;
+	bh=Y8UUnIyacCJcEutNvwgjzl9kyEppPjSzuVoM6ZNAVgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fAFD9s6SYFMpbF5sFuXnueFduqLka3m6uhuBjQvcXEAx+sxJOg4ZXAfA1dT7ARIp6
-	 R4/WMSS0ShCiwyJv1/wHjYIm6ixsWOHxKPW1dWz29Sa5GETUt8JBP1C+osos0qV+Ig
-	 lM7VC6Z9ctkbw+R7R+MN1zkSaL1qE49sw+qy44/w=
+	b=NOFuk4E6NQMDyejNTSiW8q1eJXJZ2PuTV2EvzbUdHT0q0mXeK17gV2RxfxlKanh/y
+	 S6Gxgs6kp8hMrTZr9drp5UW7n41QUCjKNO+0jmfReyumIiSR88UjwEb3jLPBvFykLT
+	 D42bXiq6Nqf5CPDZx8B8IZCclVNk0OUoKrX9trTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 032/271] ovpn: disable IPv4 redirects on MP interfaces
-Date: Mon, 17 Aug 2026 15:29:17 +0200
-Message-ID: <20260817132538.071415123@linuxfoundation.org>
+Subject: [PATCH 7.1 033/271] ovpn: ensure TCP vars are initialized first
+Date: Mon, 17 Aug 2026 15:29:18 +0200
+Message-ID: <20260817132538.109431395@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -52,126 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Antonio Quartulli <antonio@openvpn.net>
 
-[ Upstream commit 0301aa324941698bec3dd455df1c5abc7afb10db ]
+[ Upstream commit 4680c0ebd958fc18e53c8b91d80436b236a8fc09 ]
 
-ovpn_mp_alloc() tried to disable SEND_REDIRECTS on a multipeer
-interface, but it runs from ovpn_net_init() (->ndo_init), which
-register_netdevice() invokes before the NETDEV_REGISTER notifier
-chain. The IPv4 in_device is only created when that notifier reaches
-inetdev_event() -> inetdev_init(), so __in_dev_get_rtnl() always
-returned NULL at ndo_init time and the whole redirect-disabling block
-(both the per-device and the per-netns IPV4_DEVCONF_ALL write) was
-dead. MP interfaces therefore kept emitting ICMP redirects.
+Netlink calls may access TCP global vars (i.e. when attaching
+a TCP socket), therefore we need to make sure the
+latters are initialized beforehand.
 
-Disabling redirects only once is not enough either: the IPv4
-in_device is destroyed and recreated when the interface is moved to a
-different network namespace (NETDEV_UNREGISTER/NETDEV_REGISTER), and
-the newly created in_device inherits the destination namespace
-defaults, silently re-enabling SEND_REDIRECTS.
+For this reason move the global TCP initialization at the top
+of the module init function.
 
-Disable redirects from ovpn_net_open() (->ndo_open) instead: it runs
-every time the interface is brought up, including after the in_device
-has been recreated, so the setting is always re-applied. This mirrors
-what wireguard does in wg_open(). RTNL is held on the ndo_open() path,
-so __in_dev_get_rtnl() is safe.
-
-Fixes: 05003b408c20 ("ovpn: implement multi-peer support")
+Fixes: 11851cbd60ea ("ovpn: implement TCP transport")
 Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/main.c | 50 ++++++++++++++++++++++++++++-------------
- 1 file changed, 35 insertions(+), 15 deletions(-)
+ drivers/net/ovpn/main.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/ovpn/main.c b/drivers/net/ovpn/main.c
-index 9d9a0ff690d66..3a04757d5c31e 100644
+index 3a04757d5c31e..168cfe9b59a98 100644
 --- a/drivers/net/ovpn/main.c
 +++ b/drivers/net/ovpn/main.c
-@@ -35,25 +35,11 @@ static void ovpn_priv_free(struct net_device *net)
+@@ -260,8 +260,11 @@ static struct rtnl_link_ops ovpn_link_ops = {
  
- static int ovpn_mp_alloc(struct ovpn_priv *ovpn)
+ static int __init ovpn_init(void)
  {
--	struct in_device *dev_v4;
- 	int i;
+-	int err = rtnl_link_register(&ovpn_link_ops);
++	int err;
  
- 	if (ovpn->mode != OVPN_MODE_MP)
- 		return 0;
++	ovpn_tcp_init();
++
++	err = rtnl_link_register(&ovpn_link_ops);
+ 	if (err) {
+ 		pr_err("ovpn: can't register rtnl link ops: %d\n", err);
+ 		return err;
+@@ -273,8 +276,6 @@ static int __init ovpn_init(void)
+ 		goto unreg_rtnl;
+ 	}
  
--	dev_v4 = __in_dev_get_rtnl(ovpn->dev);
--	if (dev_v4) {
--		/* disable redirects as Linux gets confused by ovpn
--		 * handling same-LAN routing.
--		 * This happens because a multipeer interface is used as
--		 * relay point between hosts in the same subnet, while
--		 * in a classic LAN this would not be needed because the
--		 * two hosts would be able to talk directly.
--		 */
--		IN_DEV_CONF_SET(dev_v4, SEND_REDIRECTS, false);
--		IPV4_DEVCONF_ALL(dev_net(ovpn->dev), SEND_REDIRECTS) = false;
--	}
+-	ovpn_tcp_init();
 -
- 	/* the peer container is fairly large, therefore we allocate it only in
- 	 * MP mode
- 	 */
-@@ -97,9 +83,38 @@ static void ovpn_net_uninit(struct net_device *dev)
- 	gro_cells_destroy(&ovpn->gro_cells);
- }
+ 	return 0;
  
-+static int ovpn_net_open(struct net_device *dev)
-+{
-+	struct ovpn_priv *ovpn = netdev_priv(dev);
-+	struct in_device *dev_v4;
-+
-+	/* the IPv4 in_device (and thus its config) is recreated whenever the
-+	 * interface is moved to a new netns, so redirects must be disabled on
-+	 * every bring-up rather than once at creation time, otherwise the
-+	 * setting is silently lost after such a move
-+	 */
-+	if (ovpn->mode == OVPN_MODE_MP) {
-+		dev_v4 = __in_dev_get_rtnl(dev);
-+		if (dev_v4) {
-+			/* disable redirects as Linux gets confused by ovpn
-+			 * handling same-LAN routing.
-+			 * This happens because a multipeer interface is used as
-+			 * relay point between hosts in the same subnet, while
-+			 * in a classic LAN this would not be needed because the
-+			 * two hosts would be able to talk directly.
-+			 */
-+			IN_DEV_CONF_SET(dev_v4, SEND_REDIRECTS, false);
-+			IPV4_DEVCONF_ALL(dev_net(dev), SEND_REDIRECTS) = false;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static const struct net_device_ops ovpn_netdev_ops = {
- 	.ndo_init		= ovpn_net_init,
- 	.ndo_uninit		= ovpn_net_uninit,
-+	.ndo_open		= ovpn_net_open,
- 	.ndo_start_xmit		= ovpn_net_xmit,
- };
- 
-@@ -183,6 +198,7 @@ static int ovpn_newlink(struct net_device *dev,
- 	struct ovpn_priv *ovpn = netdev_priv(dev);
- 	struct nlattr **data = params->data;
- 	enum ovpn_mode mode = OVPN_MODE_P2P;
-+	int ret;
- 
- 	if (data && data[IFLA_OVPN_MODE]) {
- 		mode = nla_get_u8(data[IFLA_OVPN_MODE]);
-@@ -207,7 +223,11 @@ static int ovpn_newlink(struct net_device *dev,
- 	else
- 		netif_carrier_off(dev);
- 
--	return register_netdevice(dev);
-+	ret = register_netdevice(dev);
-+	if (ret < 0)
-+		return ret;
-+
-+	return 0;
- }
- 
- static size_t ovpn_get_size(const struct net_device *dev)
+ unreg_rtnl:
 -- 
 2.53.0
 
