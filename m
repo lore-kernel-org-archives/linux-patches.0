@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404F743B6E7;
-	Mon, 17 Aug 2026 14:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8C942CB0D;
+	Mon, 17 Aug 2026 14:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978156; cv=none; b=mtCunMIb+yFS0sE/q1Udo42L3yBXoWeypCAH9OVqheVT4yyn+gy7O9A5iwy94R/a0ykmKoaQ/cHlBN8okfqIX8WNa7Tpu5SIIrZRI6YevWThXPVzt2OygsxrdH1Wj76l1hvDBJu+OYFK3fEFcDr5NJhcmM5yhbpErvKJRYKskQo=
+	t=1786978160; cv=none; b=sN6w6DNZ2vMFVC6FlaZy6c55uZJJgnMI13A299Rya+yoe6inbBCVVrDHTOv+S1gIpQSQi8QzbTmwYsAJe63+VPO38GbDMlFmxiTMb64JfQ3yp4y1W3HQvvDwxe7vmU4X127AnNfuE8w9rqFwdMEWbBdHFvfNeOVcdomDVzCqrc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978156; c=relaxed/simple;
-	bh=riQaZL3mmp4SdBd3jhQKYx3an6ju8mY7CA70ZhU44Vc=;
+	s=arc-20240116; t=1786978160; c=relaxed/simple;
+	bh=kWcOeVSutPJJKfh0eJtqJTKFzW4TerDMLovZ0rYCZMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R0TEe7fTUY8XfNz60Vt2+aW/Qe14itXVxnWL2Grp7oABgwhaKjp5c6WxkmwuJcWsn/aCHzL/+apyPiF4aaBmdb/9GqD5hiCkGxhF6aeTgXLyGjZr1GcDMV3+u76zzFBq2cHXnCpjmGs+IO20uQv7bfCLajKyo5gEnw7LMZkB52w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qik7trvh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CpJZhfHf+k+zAx64/++kPIwsrAcO29pGypoP46O+Klh85Ski6AK8ssxkCxpRjbtXJBNzQ6Hs+RiGLwcupjBXk06qqhXyZk+w5SHuiwOuR/UqUj1cpyhe33XS3Oa5fyTw+xFi8Q8b45+4ZmDpf/jsOsEjN2aq/k5a5bkS5SaCWyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InCUT6Dw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qik7trvh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B030B1F000E9;
-	Mon, 17 Aug 2026 14:49:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InCUT6Dw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C37C1F00A3A;
+	Mon, 17 Aug 2026 14:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978148;
-	bh=uqVYyfcbaD1nG4M4g4tpbDjU4KySU5/vwiDVXdz2A4U=;
+	s=korg; t=1786978151;
+	bh=A26DIMsPpk/Yw+NGJxQTsn1I3ustIR1IMVQlYyhjcLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qik7trvhY2SH7tP4FxnG4so86Ax9MLD+Ef2wQvKLFKKlYcLPciM9vG5vCRQo8cA+0
-	 MVObxjjE2XtmQFIMJVnMRglgHIUUO1O77MyUj1e4lTNrNVDqlsIN77ye+YgoWxcl4s
-	 cGsA5P00HawDHmUqidcBYAA7XFPgoy7tdjWACgBo=
+	b=InCUT6DwhmYVPsSCQ/5pwPHauZXwhAdXomPu8EiBHVW9xXW17/SuVh5ID6hM/0njl
+	 bsYnevgELvky8Id3nsYMBjKD1KpPlJEbTX+1zrVWHCb2YoKTz/cpaQNtSi73pDuukU
+	 WlRv3WGeStEBm2cedtdHiD3FG7nNRAcx5W8eeuwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 081/181] net: usb: ipheth: fix carrier_work UAF on disconnect
-Date: Mon, 17 Aug 2026 15:32:55 +0200
-Message-ID: <20260817132538.630235576@linuxfoundation.org>
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 117/181] pinctrl: renesas: rzg2l: Use -ENOTSUPP instead of -EOPNOTSUPP
+Date: Mon, 17 Aug 2026 15:33:31 +0200
+Message-ID: <20260817132540.147394170@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -50,104 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit fde39b8a521780391fb4e5bda2c0aa4928947f12 upstream.
+commit c1492da3939c89372929e062d731f328f7693f1e upstream.
 
-ipheth_sndbulk_callback() re-arms the carrier-check work on any
-non-zero URB status:
+The pinctrl and GPIO core code make exceptions for the -ENOTSUPP error
+code.  One such example is gpio_set_config_with_argument_optional(),
+which returns success when gpio_set_config_with_argument() returns
+-ENOTSUPP, but reports failure for all other error codes.
 
-	else
-		schedule_delayed_work(&dev->carrier_work, 0);
+Returning -EOPNOTSUPP from the pinctrl driver on the unsupported pinctrl
+operation may lead to boot failures when pinctrl drivers implements
+struct gpio_chip::set_config, the system uses GPIO hogs, and the
+struct gpio_chip::set_config implementation returns -EOPNOTSUPP for the
+unsupported operations.
 
-Nothing ties that to the interface being up, so the work can be armed
-again after ipheth_close() has already drained it, and stay armed
-until the netdev whose private area embeds it is freed.
+Return -ENOTSUPP for the unsupported pinctrl operation.
 
-On unplug with a TX URB in flight, ipheth_disconnect() drains the work
-through unregister_netdev() -> ipheth_close() ->
-cancel_delayed_work_sync() and only then calls ipheth_kill_urbs().
-usb_kill_urb() completes the in-flight TX URB with -ENOENT, so
-ipheth_sndbulk_callback() runs after the drain and re-arms
-carrier_work.
-
-The same completion also re-arms the work if the interface is only
-brought down while a TX URB is in flight, and
-ipheth_carrier_check_work() then keeps re-queueing itself once a
-second. unregister_netdev() does not call ipheth_close() for an
-already-down interface, so nothing drains it on the later unplug
-either.
-
-In both cases free_netdev() frees the netdev while carrier_work is
-still pending, and ipheth_carrier_check_work() dereferences freed
-memory.
-
-Tie the work to the interface state instead of chasing the completion:
-disable it in ipheth_close() and enable it in ipheth_open(), so a
-schedule_delayed_work() from the URB completion is a no-op whenever
-the interface is not up. disable_delayed_work_sync() also waits for a
-running instance, so it fully replaces the cancel_delayed_work_sync()
-it takes the place of. The work starts out disabled in ipheth_probe()
-so the enable/disable counts balance from the first open.
-
-Reproduced under KASAN on linux-next (next-20260731) with dummy_hcd and
-raw-gadget standing in for the device, driving the second path above (the
-interface is already down, so unregister_netdev() does not call
-ipheth_close()): 15 of 15 unpatched boots report a slab-use-after-free in
-__run_timers(), freed by ipheth_disconnect() and re-armed from
-ipheth_sndbulk_callback() via queue_delayed_work_on(). The
-same trigger on a kernel differing only by this patch reports 0 of 15,
-and the carrier check still functions across open/close cycles.
-
-The reproducer needs an attached USB device that stops draining bulk OUT,
-plus a link down and unplug, driven as root. It is not a privilege
-boundary crossing and no exploit primitive was developed.
-
-Found by 0sec (https://0sec.ai).
-
-Fixes: bb1b40c7cb86 ("usbnet: ipheth: prevent TX queue timeouts when device not ready")
+Fixes: 560c633d378a ("pinctrl: renesas: rzg2l: Drop oen_read and oen_write callbacks")
+Fixes: c4c4637eb57f ("pinctrl: renesas: Add RZ/G2L pin and gpio controller driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Link: https://patch.msgid.link/20260802120602.42595-1-doruk@0sec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260515124008.2947838-2-claudiu.beznea@kernel.org
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+[claudiu.beznea: fixed conflict by keeping the code v6.12 stable]
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/ipheth.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/pinctrl/renesas/pinctrl-rzg2l.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/usb/ipheth.c
-+++ b/drivers/net/usb/ipheth.c
-@@ -490,6 +490,7 @@ static int ipheth_open(struct net_device
- 	if (retval)
- 		return retval;
+diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+index 17e27879fd623..6fd79907f17e9 100644
+--- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
++++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+@@ -1478,7 +1478,7 @@ static int rzg2l_pinctrl_pinconf_set(struct pinctrl_dev *pctldev,
+ 			break;
  
-+	enable_delayed_work(&dev->carrier_work);
- 	schedule_delayed_work(&dev->carrier_work, IPHETH_CARRIER_CHECK_TIMEOUT);
- 	return retval;
- }
-@@ -499,7 +500,11 @@ static int ipheth_close(struct net_devic
- 	struct ipheth_device *dev = netdev_priv(net);
- 
- 	netif_stop_queue(net);
--	cancel_delayed_work_sync(&dev->carrier_work);
-+	/* A TX URB can still complete with an error after this point and
-+	 * try to re-arm the carrier work. Disable it instead of cancelling
-+	 * it, so that such a schedule_delayed_work() is a no-op.
-+	 */
-+	disable_delayed_work_sync(&dev->carrier_work);
- 	return 0;
- }
- 
-@@ -633,6 +638,10 @@ static int ipheth_probe(struct usb_inter
+ 		default:
+-			return -EOPNOTSUPP;
++			return -ENOTSUPP;
+ 		}
  	}
  
- 	INIT_DELAYED_WORK(&dev->carrier_work, ipheth_carrier_check_work);
-+	/* Armed only between ipheth_open() and ipheth_close(). Start out
-+	 * disabled so the enable/disable counts balance from the first open.
-+	 */
-+	disable_delayed_work(&dev->carrier_work);
+@@ -1560,7 +1560,7 @@ static int rzg2l_pinctrl_pinconf_group_get(struct pinctrl_dev *pctldev,
  
- 	retval = ipheth_alloc_urbs(dev);
- 	if (retval) {
+ 		/* Check config matching between to pin  */
+ 		if (i && prev_config != *config)
+-			return -EOPNOTSUPP;
++			return -ENOTSUPP;
+ 
+ 		prev_config = *config;
+ 	}
+-- 
+2.53.0
+
 
 
