@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83C22F0C48;
-	Mon, 17 Aug 2026 14:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3305421249;
+	Mon, 17 Aug 2026 14:39:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977578; cv=none; b=ZSY1RLHewZ1qtFDUTYPNL9QfnOUm0I5Gxbjt91ZBJLfDVUkMkiFHU0B4lJdlxcFI4rMY23eD/8LgJzOGbPLKsyXAOJgLyrxROA55EDRNPbf1N5off2OMWuxHkLMwvCsHXEQatV1ObO7xH0UPK0VJU08fhVXRfs36omXfde4oitQ=
+	t=1786977580; cv=none; b=brCviwuLMADLQvizaMhaE2YCksnD/q52rBEbNTwshXPIxBdlhDp93pbo9Id2QAIUfzH8LZno9eVoN9LTFmtIqDTu7vcLNLr+xkZtovUdXr1OHLokl2/dXQ2YlIQlP4k3aAtqJa/R9MMwAwGK2s1EayaJToALJ1v6oADEhrUZZog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977578; c=relaxed/simple;
-	bh=BY3ooO/zwc+keEhZqUlsiMfZm7SIm/xCt7KmKSG9UsY=;
+	s=arc-20240116; t=1786977580; c=relaxed/simple;
+	bh=XA84r+R6hRlZmgEL3O0pwuiMAHipNwsLRc/RTnu+Ivs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fQZnpWEQf9/agDcfjP27nRp0SMGnwwYBgvZroOZ7hEaz+km1Fl8qh/Mh3fMVavLYNgYi/quiYlIvC4AGgJdlo8qYM1nEjDrptH0ltGChwAPbY6rAJasi3p4KNY47b3hKUQDlZtBxoxcHt+lTiUdFRHSQSDwAYcsuaO9AiGYkG6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0JNa2Zs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L/I8PDmiI7ULLEdNdTW2QyqhuauSRwMczPAwiJxxyCwroRwewg2P4wdtxY46+TwtZiEv3n9DDd2VJDCEZrBt/PCmGuzgl0GFnSIzIlW8jqKHTftvGesJt+RGg1hLlEZoH7kzMI5ebvCdcNH/HSb9ZLBnQ6jUjeNUzU5av4Hd5SA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cumn6ZoJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0JNa2Zs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D81C1F000E9;
-	Mon, 17 Aug 2026 14:39:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cumn6ZoJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A961F000E9;
+	Mon, 17 Aug 2026 14:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977576;
-	bh=yj87o6n2Da2OByoioh/5SbYAnSfL/PKUSPoyNmTTTi8=;
+	s=korg; t=1786977579;
+	bh=N9MHUKPrcB7x2abzyCsOYvXIb+nWPeJUvJEQmUGeoRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f0JNa2ZsmobJt+LV8VrZu6ynEo5X8gndNxBJNmkh/IaBs3iuX0h/zxXLmyj+WWb7D
-	 GVetfQRhbMZFaLTMhjwD/eBMDSfs5cMI4DxuxROLeDy9VbKcMgljy57ia9Y1KokWBN
-	 9WH6lCxHwjnrep5TQSeWcxch+rUrgyowrEikRC7M=
+	b=cumn6ZoJ0RgUh7TeBaDZaCfRrnIDqVhyWCtGjiR0se1hsjwGJO9msusaVelPxCL/P
+	 PTfoH9BKxycHJHt/ryZzDC6WpA/Enzna6rQjJHhUqDzVmI4zg3kiHxsa6HtH/zsojn
+	 gRAFz51XKFweSungE6bwPKDFFrV9eiTqw0hwkPQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Babanpreet Singh <bbnpreetsingh@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	William Breathitt Gray <wbg@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 377/456] counter: microchip-tcb-capture: Fix DT channel validation
-Date: Mon, 17 Aug 2026 15:32:47 +0200
-Message-ID: <20260817132554.221913171@linuxfoundation.org>
+Subject: [PATCH 5.15 378/456] vhost/vdpa: reject overflowing PA map page counts on 32-bit
+Date: Mon, 17 Aug 2026 15:32:48 +0200
+Message-ID: <20260817132554.266512251@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,68 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Babanpreet Singh <bbnpreetsingh@gmail.com>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit f1a3a9946aab611dd2200c01ff122f64b033dad2 ]
+[ Upstream commit 0619aaa34c0c2a2dcb07f0e9c8a34e7efb8c4cdf ]
 
-mchp_tc_probe() reads the devicetree "reg" cell - a u32, per the API
-contract of of_property_read_u32_index() - into a signed int, so the
-bounds check "channel > 2" fails to reject cell values at or above
-0x80000000: reinterpreted as a negative int, they compare below 2 and
-pass validation.
+vhost_vdpa_pa_map() adds the IOVA page offset to the user-controlled map
+size before computing the number of pages to pin. On 32-bit systems,
+where unsigned long is narrower than u64, that addition can overflow and
+the code can pin and map fewer pages than the requested IOTLB range.
 
-A malformed devicetree can therefore drive a negative channel into the
-ATMEL_TC_REG() offset arithmetic, making the driver access syscon
-regmap offsets outside the TC block's register window, and into the
-"t%d_clk" clock-name formatting, where it truncates clk_name (sized
-for "t0_clk".."t2_clk").
+Reject sizes that overflow the unsigned long page-count calculation.
 
-Declare channel as u32, matching the API contract; the unsigned
-comparison then rejects everything except channels 0..2. Adjust the
-format specifier to %u accordingly, which also resolves the W=1
-warning that exposed the gap:
-
-  microchip-tcb-capture.c:520:56: warning: '%d' directive output may
-    be truncated writing between 1 and 11 bytes into a region of size
-    6 [-Wformat-truncation=]
-  note: directive argument in the range [-2147483648, 2]
-
-No behavior change for well-formed devicetrees: channels 0..2 take
-identical paths before and after.
-
-Fixes: 106b104137fd ("counter: Add microchip TCB capture counter")
-Assisted-by: Claude:claude-fable-5 [gcc W=1]
-Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Link: https://lore.kernel.org/r/20260714042910.7-1-bbnpreetsingh@gmail.com
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
+Fixes: 22af48cf91aa ("vdpa: factor out vhost_vdpa_pa_map() and vhost_vdpa_pa_unmap()")
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <CAMuQ4bX-iDvcUOPPY+NLz95tkRJYwWqvzAr=U48uNaub_HZLGw@mail.gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/counter/microchip-tcb-capture.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/vhost/vdpa.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/counter/microchip-tcb-capture.c b/drivers/counter/microchip-tcb-capture.c
-index 2625823152ead..1195fbcd639e3 100644
---- a/drivers/counter/microchip-tcb-capture.c
-+++ b/drivers/counter/microchip-tcb-capture.c
-@@ -310,7 +310,7 @@ static int mchp_tc_probe(struct platform_device *pdev)
- 	char clk_name[7];
- 	struct regmap *regmap;
- 	struct clk *clk[3];
--	int channel;
-+	u32 channel;
- 	int ret, i;
+diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+index 17907e61f8e0c..080413757eea3 100644
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -717,6 +717,7 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
+ 	unsigned int gup_flags = FOLL_LONGTERM;
+ 	unsigned long npages, cur_base, map_pfn, last_pfn = 0;
+ 	unsigned long lock_limit, sz2pin, nchunks, i;
++	unsigned long page_offset;
+ 	u64 start = iova;
+ 	long pinned;
+ 	int ret = 0;
+@@ -729,7 +730,13 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
+ 	if (perm & VHOST_ACCESS_WO)
+ 		gup_flags |= FOLL_WRITE;
  
- 	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
-@@ -345,7 +345,7 @@ static int mchp_tc_probe(struct platform_device *pdev)
- 
- 		priv->channel[i] = channel;
- 
--		snprintf(clk_name, sizeof(clk_name), "t%d_clk", channel);
-+		snprintf(clk_name, sizeof(clk_name), "t%u_clk", channel);
- 
- 		clk[i] = of_clk_get_by_name(np->parent, clk_name);
- 		if (IS_ERR(clk[i])) {
+-	npages = PFN_UP(size + (iova & ~PAGE_MASK));
++	page_offset = iova & ~PAGE_MASK;
++	if (size > ULONG_MAX - page_offset) {
++		ret = -EINVAL;
++		goto free;
++	}
++
++	npages = PFN_UP(size + page_offset);
+ 	if (!npages) {
+ 		ret = -EINVAL;
+ 		goto free;
 -- 
 2.53.0
 
