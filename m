@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CBC2F5A36;
-	Mon, 17 Aug 2026 15:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F34D304BB3;
+	Mon, 17 Aug 2026 15:06:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979210; cv=none; b=dhG0ip7cJH/wE0cXg+1h7OUBX4DzFc9FqzrXkXgjtZfy2xcM94MEnuZSBFMNmihuzTXHEfNyKX4eUBrPTgbJkFDca9xvvehtCsZiW+THr44ZGVkgzhmjHAkfHnHuEbAf6vUO8mEzzHvxGP2MLmyaCFFmJ0MdR0I3VOBJUGdY3bk=
+	t=1786979213; cv=none; b=q3G5BkgVs4vprCEU/LSsYK+Ao6CmyUVwfBKJspvezsDY19m/g0HseOfI+ahuvwoQX0MKoKHTAGVoUHJ0I2oevT6Gxpq7DVgbQWuC/eY6YCiSBR2gNlgDTl49Kut5NCMjgTWY+T1VLFNszOmomS6T5gVwqWYbtOSz2laOmY63EFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979210; c=relaxed/simple;
-	bh=JJLAP7aMXtpviIc829dZnt+zfDOi2iHYsxe1N7SrwaM=;
+	s=arc-20240116; t=1786979213; c=relaxed/simple;
+	bh=kKX7pBZlZy83Xiwc1wxiS/1Dc0iHrUsxlSU2STLYX7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AXNQimCTBi/Une3EDSfgpQOttS1bm8f9FBz2T2LipVkFkkU1PIhgRmLQsOV9hf+bdno27g1kzl5UsDL/W89QQ5ZLNO+xxi4IzIXdnRakBqfxxlm2FSX2yX6BhURWnFV3t32HIp24Lu9lWrV6WaN+I6L282bFrzwh/mUNP6VZAL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtZxFFC7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bVq9cOXX1XYpZ/FoQYuww5O5APtQnbRMtc5tsKQkKQUi8XIow8TRRX7aUrQJ1hUdOm8TaWR9nets2akdRvtxy3agGSwtxwnJpAc7/+fPBAvkI++oU0/57Js7ZWCivGIKaXkyDasNjdZlKRics0uKKWN93xeCdYH+uR7bFzVzfdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBsL+S+9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtZxFFC7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 845161F00A3D;
-	Mon, 17 Aug 2026 15:06:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBsL+S+9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F4F1F00A3D;
+	Mon, 17 Aug 2026 15:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979209;
-	bh=ZfdEWJa2DTUHfUs/ab2jq4KAwBbtN/n5oKVOHFy3q1c=;
+	s=korg; t=1786979212;
+	bh=j1HQzW02De6Bzzar0EdYD9nQCNmuyBgF5f4hUPImlj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PtZxFFC77nvXYPRtCEX0nSHLtPuOLfio13PmPwysCFhyU6CrFYBVsKdlk3PZZ1JqL
-	 9H2Ix7bhJtUYN6nr6FtGYScb6q76Sn2z8xe++DqK9SrqGtsHVxeXtKPCLc6q5OC97B
-	 yL7SDVITlsYoCqIfONsiyHBhWdaMm0u9guRznE9U=
+	b=SBsL+S+9RGtc7Us1mX4lXnILt8kTR7S92pvfiBML2NjBw7fkq+MDBJ/BtRge+sg06
+	 37rbjNvj9WWEVACOZGiH/mdbI6NMVAnszCTYKuyVAxGi2xlpuqHFBqOgXkzkpmpt3D
+	 2881RwL091Chts/iMIiA+91fNyeh0ao1miBrjXe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shelley Yang <shelley.yang@infineon.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 145/609] wifi: brcmfmac: fix 802.1X-SHA256 call trace warning
-Date: Mon, 17 Aug 2026 15:27:21 +0200
-Message-ID: <20260817132548.860974371@linuxfoundation.org>
+Subject: [PATCH 6.1 146/609] amt: re-read skb header pointers after every pull
+Date: Mon, 17 Aug 2026 15:27:22 +0200
+Message-ID: <20260817132548.892408065@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -46,71 +47,371 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shelley Yang <shelley.yang@infineon.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 7cb34f6c4fe8a68af621d870abe63bfca2275dd6 ]
+[ Upstream commit 3656a79f94c471827a08f2cacce5f94ad5e52c24 ]
 
-Based on wpa_auth as 1x_256 mode, need to set up
-"use_fwsup" with BRCMF_PROFILE_FWSUP_1X.
-Or it will happen trace warning when call brcmf_cfg80211_set_pmk().
+Several AMT receive and transmit paths cache a pointer into the skb head
+(ip_hdr(), ipv6_hdr(), eth_hdr() or the AMT message header) and then call
+a helper that can reallocate that head before the cached pointer is used
+again.  pskb_may_pull(), ip_mc_may_pull(), ipv6_mc_may_pull(),
+iptunnel_pull_header(), ip_mc_check_igmp() and ipv6_mc_check_mld() can all
+free the old head and move the data, so a pointer taken before the call
+dangles afterwards and the later access is a use-after-free of the freed
+head.
 
-[ 4481.831101] ------------[ cut here ]------------
-[ 4481.831102] WARNING: CPU: 1 PID: 2997 at
-drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c:7242 brcmf_cfg80211_set_pmk+0x77/0xd0 [brcmfmac]
-[...]
-[ 4481.831202] Call Trace:
-[ 4481.831204]  <TASK>
-[ 4481.831205]  nl80211_set_pmk+0x183/0x250 [cfg80211]
-[ 4481.831233]  genl_family_rcv_msg_doit+0xea/0x150
-[ 4481.831237]  genl_rcv_msg+0x104/0x240
-[ 4481.831239]  ? cfg80211_probe_status+0x2c0/0x2c0 [cfg80211]
-[ 4481.831257]  ? genl_family_rcv_msg_doit+0x150/0x150
-[ 4481.831259]  netlink_rcv_skb+0x4e/0x100
-[ 4481.831261]  genl_rcv+0x24/0x40
-[ 4481.831262]  netlink_unicast+0x236/0x380
-[ 4481.831264]  netlink_sendmsg+0x250/0x4b0
-[ 4481.831266]  sock_sendmsg+0x5c/0x70
-[ 4481.831269]  ____sys_sendmsg+0x236/0x2b0
-[ 4481.831271]  ? copy_msghdr_from_user+0x6d/0xa0
-[ 4481.831272]  ___sys_sendmsg+0x86/0xd0
-[ 4481.831274]  ? avc_has_perm+0x8c/0x1a0
-[ 4481.831276]  ? preempt_count_add+0x6a/0xa0
-[ 4481.831279]  ? sock_has_perm+0x82/0xa0
-[ 4481.831280]  __sys_sendmsg+0x57/0xa0
-[ 4481.831282]  do_syscall_64+0x38/0x90
-[ 4481.831284]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-[ 4481.831286] RIP: 0033:0x7fd270d369b4
+The affected sites are:
 
-Fixes: 2526ff21aa77 ("brcmfmac: support 4-way handshake offloading for 802.1X")
-Signed-off-by: Shelley Yang <shelley.yang@infineon.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260525083859.581246-1-shelley.yang@infineon.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+  amt_rcv() caches ip_hdr() before amt_parse_type() pulls, then reads
+  iph->saddr.
+
+  amt_dev_xmit() caches ip_hdr()/ipv6_hdr() before ip_mc_check_igmp()/
+  ipv6_mc_check_mld() and pskb_may_pull(), then reads the group address.
+
+  amt_multicast_data_handler() caches eth_hdr() before pskb_may_pull(),
+  then writes the L2 header.
+
+  amt_membership_query_handler() caches the AMT header, the outer and
+  inner eth_hdr() and ip_hdr() before iptunnel_pull_header() and several
+  pulls, then reads and writes them.
+
+  amt_igmpv3_report_handler() and amt_mldv2_report_handler() cache
+  ip_hdr()/ipv6_hdr() and the current group record and read the record
+  count from the report header inside the record loop, across the
+  *_mc_may_pull() calls.
+
+  amt_update_handler() caches ip_hdr() and the AMT membership-update
+  header before pskb_may_pull(), iptunnel_pull_header(),
+  ip_mc_check_igmp() and the report handler, then reads iph->daddr and
+  amtmu->nonce / amtmu->response_mac.
+
+Fix each site by either snapshotting the scalar that is used after the
+pull before the first pull runs, or re-deriving the header pointer from
+the skb after the last pull that can move the head.  Values that are
+stable across the pull (source and group address, the response MAC and
+nonce, the record count, the outer source MAC) are snapshotted; pointers
+that are written through or read repeatedly are re-derived.
+
+Fixes: cbc21dc1cfe9 ("amt: add data plane of amt interface")
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Taehee Yoo <ap420073@gmail.com>
+Link: https://patch.msgid.link/20260711151934.2955226-2-michael.bommarito@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/amt.c | 79 +++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 55 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 6e7de5dce49eb7..66c139bf49283a 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -1791,7 +1791,7 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
- 				 sme->crypto.akm_suites[0]);
- 			return -EINVAL;
+diff --git a/drivers/net/amt.c b/drivers/net/amt.c
+index f2da0c49171f5d..64aff304c51c66 100644
+--- a/drivers/net/amt.c
++++ b/drivers/net/amt.c
+@@ -1206,7 +1206,7 @@ static netdev_tx_t amt_dev_xmit(struct sk_buff *skb, struct net_device *dev)
+ 			data = true;
  		}
--	} else if (val & (WPA2_AUTH_PSK | WPA2_AUTH_UNSPECIFIED)) {
-+	} else if (val & (WPA2_AUTH_PSK | WPA2_AUTH_UNSPECIFIED | WPA2_AUTH_1X_SHA256)) {
- 		switch (sme->crypto.akm_suites[0]) {
- 		case WLAN_AKM_SUITE_8021X:
- 			val = WPA2_AUTH_UNSPECIFIED;
+ 		v6 = false;
+-		group.ip4 = iph->daddr;
++		group.ip4 = ip_hdr(skb)->daddr;
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	} else if (iph->version == 6) {
+ 		ip6h = ipv6_hdr(skb);
+@@ -1230,7 +1230,7 @@ static netdev_tx_t amt_dev_xmit(struct sk_buff *skb, struct net_device *dev)
+ 			data = true;
+ 		}
+ 		v6 = true;
+-		group.ip6 = ip6h->daddr;
++		group.ip6 = ipv6_hdr(skb)->daddr;
+ #endif
+ 	} else {
+ 		dev->stats.tx_errors++;
+@@ -1273,12 +1273,12 @@ static netdev_tx_t amt_dev_xmit(struct sk_buff *skb, struct net_device *dev)
+ 			hlist_for_each_entry_rcu(gnode, &tunnel->groups[hash],
+ 						 node) {
+ 				if (!v6) {
+-					if (gnode->group_addr.ip4 == iph->daddr)
++					if (gnode->group_addr.ip4 == group.ip4)
+ 						goto found;
+ #if IS_ENABLED(CONFIG_IPV6)
+ 				} else {
+ 					if (ipv6_addr_equal(&gnode->group_addr.ip6,
+-							    &ip6h->daddr))
++							    &group.ip6))
+ 						goto found;
+ #endif
+ 				}
+@@ -1995,14 +1995,18 @@ static void amt_igmpv3_report_handler(struct amt_dev *amt, struct sk_buff *skb,
+ 	struct igmpv3_report *ihrv3 = igmpv3_report_hdr(skb);
+ 	int len = skb_transport_offset(skb) + sizeof(*ihrv3);
+ 	void *zero_grec = (void *)&igmpv3_zero_grec;
+-	struct iphdr *iph = ip_hdr(skb);
+ 	struct amt_group_node *gnode;
+ 	union amt_addr group, host;
+ 	struct igmpv3_grec *grec;
++	__be32 saddr;
+ 	u16 nsrcs;
++	u16 ngrec;
+ 	int i;
+ 
+-	for (i = 0; i < ntohs(ihrv3->ngrec); i++) {
++	saddr = ip_hdr(skb)->saddr;
++	ngrec = ntohs(ihrv3->ngrec);
++
++	for (i = 0; i < ngrec; i++) {
+ 		len += sizeof(*grec);
+ 		if (!ip_mc_may_pull(skb, len))
+ 			break;
+@@ -2014,10 +2018,13 @@ static void amt_igmpv3_report_handler(struct amt_dev *amt, struct sk_buff *skb,
+ 		if (!ip_mc_may_pull(skb, len))
+ 			break;
+ 
++		grec = (void *)(skb->data + len - sizeof(*grec) -
++				nsrcs * sizeof(__be32));
++
+ 		memset(&group, 0, sizeof(union amt_addr));
+ 		group.ip4 = grec->grec_mca;
+ 		memset(&host, 0, sizeof(union amt_addr));
+-		host.ip4 = iph->saddr;
++		host.ip4 = saddr;
+ 		gnode = amt_lookup_group(tunnel, &group, &host, false);
+ 		if (!gnode) {
+ 			gnode = amt_add_group(amt, tunnel, &group, &host,
+@@ -2157,14 +2164,18 @@ static void amt_mldv2_report_handler(struct amt_dev *amt, struct sk_buff *skb,
+ 	struct mld2_report *mld2r = (struct mld2_report *)icmp6_hdr(skb);
+ 	int len = skb_transport_offset(skb) + sizeof(*mld2r);
+ 	void *zero_grec = (void *)&mldv2_zero_grec;
+-	struct ipv6hdr *ip6h = ipv6_hdr(skb);
+ 	struct amt_group_node *gnode;
+ 	union amt_addr group, host;
+ 	struct mld2_grec *grec;
++	struct in6_addr saddr;
+ 	u16 nsrcs;
++	u16 ngrec;
+ 	int i;
+ 
+-	for (i = 0; i < ntohs(mld2r->mld2r_ngrec); i++) {
++	saddr = ipv6_hdr(skb)->saddr;
++	ngrec = ntohs(mld2r->mld2r_ngrec);
++
++	for (i = 0; i < ngrec; i++) {
+ 		len += sizeof(*grec);
+ 		if (!ipv6_mc_may_pull(skb, len))
+ 			break;
+@@ -2176,10 +2187,13 @@ static void amt_mldv2_report_handler(struct amt_dev *amt, struct sk_buff *skb,
+ 		if (!ipv6_mc_may_pull(skb, len))
+ 			break;
+ 
++		grec = (void *)(skb->data + len - sizeof(*grec) -
++				nsrcs * sizeof(struct in6_addr));
++
+ 		memset(&group, 0, sizeof(union amt_addr));
+ 		group.ip6 = grec->grec_mca;
+ 		memset(&host, 0, sizeof(union amt_addr));
+-		host.ip6 = ip6h->saddr;
++		host.ip6 = saddr;
+ 		gnode = amt_lookup_group(tunnel, &group, &host, true);
+ 		if (!gnode) {
+ 			gnode = amt_add_group(amt, tunnel, &group, &host,
+@@ -2300,7 +2314,6 @@ static bool amt_multicast_data_handler(struct amt_dev *amt, struct sk_buff *skb)
+ 	skb_push(skb, sizeof(*eth));
+ 	skb_reset_mac_header(skb);
+ 	skb_pull(skb, sizeof(*eth));
+-	eth = eth_hdr(skb);
+ 
+ 	if (!pskb_may_pull(skb, sizeof(*iph)))
+ 		return true;
+@@ -2310,6 +2323,7 @@ static bool amt_multicast_data_handler(struct amt_dev *amt, struct sk_buff *skb)
+ 		if (!ipv4_is_multicast(iph->daddr))
+ 			return true;
+ 		skb->protocol = htons(ETH_P_IP);
++		eth = eth_hdr(skb);
+ 		eth->h_proto = htons(ETH_P_IP);
+ 		ip_eth_mc_map(iph->daddr, eth->h_dest);
+ #if IS_ENABLED(CONFIG_IPV6)
+@@ -2323,6 +2337,7 @@ static bool amt_multicast_data_handler(struct amt_dev *amt, struct sk_buff *skb)
+ 		if (!ipv6_addr_is_multicast(&ip6h->daddr))
+ 			return true;
+ 		skb->protocol = htons(ETH_P_IPV6);
++		eth = eth_hdr(skb);
+ 		eth->h_proto = htons(ETH_P_IPV6);
+ 		ipv6_eth_mc_map(&ip6h->daddr, eth->h_dest);
+ #endif
+@@ -2346,10 +2361,12 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
+ 					 struct sk_buff *skb)
+ {
+ 	struct amt_header_membership_query *amtmq;
+-	struct igmpv3_query *ihv3;
+ 	struct ethhdr *eth, *oeth;
++	struct igmpv3_query *ihv3;
++	u8 h_source[ETH_ALEN];
+ 	struct iphdr *iph;
+ 	int hdr_size, len;
++	u64 response_mac;
+ 
+ 	hdr_size = sizeof(*amtmq) + sizeof(struct udphdr);
+ 	if (!pskb_may_pull(skb, hdr_size))
+@@ -2362,6 +2379,8 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
+ 	if (amtmq->nonce != amt->nonce)
+ 		return true;
+ 
++	response_mac = amtmq->response_mac;
++
+ 	hdr_size -= sizeof(*eth);
+ 	if (iptunnel_pull_header(skb, hdr_size, htons(ETH_P_TEB), false))
+ 		return true;
+@@ -2371,6 +2390,7 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
+ 	skb_pull(skb, sizeof(*eth));
+ 	skb_reset_network_header(skb);
+ 	eth = eth_hdr(skb);
++	ether_addr_copy(h_source, oeth->h_source);
+ 	if (!pskb_may_pull(skb, sizeof(*iph)))
+ 		return true;
+ 
+@@ -2383,6 +2403,7 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
+ 				   sizeof(*ihv3)))
+ 			return true;
+ 
++		iph = ip_hdr(skb);
+ 		if (!ipv4_is_multicast(iph->daddr))
+ 			return true;
+ 
+@@ -2390,10 +2411,11 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
+ 		skb_reset_transport_header(skb);
+ 		skb_push(skb, sizeof(*iph) + AMT_IPHDR_OPTS);
+ 		WRITE_ONCE(amt->ready4, true);
+-		amt->mac = amtmq->response_mac;
++		amt->mac = response_mac;
+ 		amt->req_cnt = 0;
+ 		amt->qi = ihv3->qqic;
+ 		skb->protocol = htons(ETH_P_IP);
++		eth = eth_hdr(skb);
+ 		eth->h_proto = htons(ETH_P_IP);
+ 		ip_eth_mc_map(iph->daddr, eth->h_dest);
+ #if IS_ENABLED(CONFIG_IPV6)
+@@ -2416,10 +2438,11 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
+ 		skb_reset_transport_header(skb);
+ 		skb_push(skb, sizeof(*ip6h) + AMT_IP6HDR_OPTS);
+ 		WRITE_ONCE(amt->ready6, true);
+-		amt->mac = amtmq->response_mac;
++		amt->mac = response_mac;
+ 		amt->req_cnt = 0;
+ 		amt->qi = mld2q->mld2q_qqic;
+ 		skb->protocol = htons(ETH_P_IPV6);
++		eth = eth_hdr(skb);
+ 		eth->h_proto = htons(ETH_P_IPV6);
+ 		ipv6_eth_mc_map(&ip6h->daddr, eth->h_dest);
+ #endif
+@@ -2427,7 +2450,7 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
+ 		return true;
+ 	}
+ 
+-	ether_addr_copy(eth->h_source, oeth->h_source);
++	ether_addr_copy(eth->h_source, h_source);
+ 	skb->pkt_type = PACKET_MULTICAST;
+ 	skb->ip_summed = CHECKSUM_NONE;
+ 	len = skb->len;
+@@ -2450,8 +2473,11 @@ static bool amt_update_handler(struct amt_dev *amt, struct sk_buff *skb)
+ 	struct ethhdr *eth;
+ 	struct iphdr *iph;
+ 	int len, hdr_size;
++	u64 response_mac;
++	__be32 saddr;
++	__be32 nonce;
+ 
+-	iph = ip_hdr(skb);
++	saddr = ip_hdr(skb)->saddr;
+ 
+ 	hdr_size = sizeof(*amtmu) + sizeof(struct udphdr);
+ 	if (!pskb_may_pull(skb, hdr_size))
+@@ -2461,15 +2487,18 @@ static bool amt_update_handler(struct amt_dev *amt, struct sk_buff *skb)
+ 	if (amtmu->reserved || amtmu->version)
+ 		return true;
+ 
++	nonce = amtmu->nonce;
++	response_mac = amtmu->response_mac;
++
+ 	if (iptunnel_pull_header(skb, hdr_size, skb->protocol, false))
+ 		return true;
+ 
+ 	skb_reset_network_header(skb);
+ 
+ 	list_for_each_entry_rcu(tunnel, &amt->tunnel_list, list) {
+-		if (tunnel->ip4 == iph->saddr) {
+-			if ((amtmu->nonce == tunnel->nonce &&
+-			     amtmu->response_mac == tunnel->mac)) {
++		if (tunnel->ip4 == saddr) {
++			if ((nonce == tunnel->nonce &&
++			     response_mac == tunnel->mac)) {
+ 				mod_delayed_work(amt_wq, &tunnel->gc_wq,
+ 						 msecs_to_jiffies(amt_gmi(amt))
+ 								  * 3);
+@@ -2503,6 +2532,7 @@ static bool amt_update_handler(struct amt_dev *amt, struct sk_buff *skb)
+ 		eth = eth_hdr(skb);
+ 		skb->protocol = htons(ETH_P_IP);
+ 		eth->h_proto = htons(ETH_P_IP);
++		iph = ip_hdr(skb);
+ 		ip_eth_mc_map(iph->daddr, eth->h_dest);
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	} else if (iph->version == 6) {
+@@ -2522,6 +2552,7 @@ static bool amt_update_handler(struct amt_dev *amt, struct sk_buff *skb)
+ 		eth = eth_hdr(skb);
+ 		skb->protocol = htons(ETH_P_IPV6);
+ 		eth->h_proto = htons(ETH_P_IPV6);
++		ip6h = ipv6_hdr(skb);
+ 		ipv6_eth_mc_map(&ip6h->daddr, eth->h_dest);
+ #endif
+ 	} else {
+@@ -2767,7 +2798,7 @@ static void amt_gw_rcv(struct amt_dev *amt, struct sk_buff *skb)
+ static int amt_rcv(struct sock *sk, struct sk_buff *skb)
+ {
+ 	struct amt_dev *amt;
+-	struct iphdr *iph;
++	__be32 saddr;
+ 	int type;
+ 	bool err;
+ 
+@@ -2780,7 +2811,7 @@ static int amt_rcv(struct sock *sk, struct sk_buff *skb)
+ 	}
+ 
+ 	skb->dev = amt->dev;
+-	iph = ip_hdr(skb);
++	saddr = ip_hdr(skb)->saddr;
+ 	type = amt_parse_type(skb);
+ 	if (type == -1) {
+ 		err = true;
+@@ -2790,7 +2821,7 @@ static int amt_rcv(struct sock *sk, struct sk_buff *skb)
+ 	if (amt->mode == AMT_MODE_GATEWAY) {
+ 		switch (type) {
+ 		case AMT_MSG_ADVERTISEMENT:
+-			if (iph->saddr != amt->discovery_ip) {
++			if (saddr != amt->discovery_ip) {
+ 				netdev_dbg(amt->dev, "Invalid Relay IP\n");
+ 				err = true;
+ 				goto drop;
+@@ -2802,7 +2833,7 @@ static int amt_rcv(struct sock *sk, struct sk_buff *skb)
+ 			}
+ 			goto out;
+ 		case AMT_MSG_MULTICAST_DATA:
+-			if (iph->saddr != amt->remote_ip) {
++			if (saddr != amt->remote_ip) {
+ 				netdev_dbg(amt->dev, "Invalid Relay IP\n");
+ 				err = true;
+ 				goto drop;
+@@ -2813,7 +2844,7 @@ static int amt_rcv(struct sock *sk, struct sk_buff *skb)
+ 			else
+ 				goto out;
+ 		case AMT_MSG_MEMBERSHIP_QUERY:
+-			if (iph->saddr != amt->remote_ip) {
++			if (saddr != amt->remote_ip) {
+ 				netdev_dbg(amt->dev, "Invalid Relay IP\n");
+ 				err = true;
+ 				goto drop;
 -- 
 2.53.0
 
