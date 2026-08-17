@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C1541B8F9;
-	Mon, 17 Aug 2026 13:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657493B8BDA;
+	Mon, 17 Aug 2026 13:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974960; cv=none; b=lGuAd9shq8VohDv3IeRPCv1fMaxhkccdKJuMPOPNZmCyzgxqfsW9RvDTtV+cB9hfdHKItCFRV1WqYND09OesmB7IGLQGu1N33z4gdz1MNj2bCugZ7Fs7vSRdRDW8IYCANEkSUvk7YRfmy3/l6XcECEaT6i0pA07/cPBqMgB0Y9c=
+	t=1786974962; cv=none; b=McuVyKdTnUNzq9CwO5a33OspE/GaFxJAt9OMFwXn4z4HftOTVhvWb90F8reZvSjKG/tkitV/cowWzdG5KW+tIHBui9psIatvbEesKT8O5PvI40JbfIkDfAIS3QFftv6jVF/PY9hAmfnmQCMz/PtWfZlM2xFNNIxueAbQ3Ke1o+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974960; c=relaxed/simple;
-	bh=SyH0sBlJc41zPHuSxlBnTBJlE/wOinPCAkJABpwqcnE=;
+	s=arc-20240116; t=1786974962; c=relaxed/simple;
+	bh=SAK7L5tPtXgn+y9ccx1YBsW4lrlGBbSG9bjdx6laeqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=laJx+j6HsaF9JvdIFe+b6Uf1zxkOVLSQ+zozXnVYTU5FlhLinCQulCDxOMH5iXvpccITSv9Niayo9qN3JO1cjFqNvY3DuwjOhWw3BeD+JPrq+LDdlv7DZEQwufHzmS0cHCz/Xaj9ub/COMdxMxtU70qe+/2Gu6NJp61eOiiRR1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JPUGxxr8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fyMubidNkttmlwvACA7EkjlKcodIRr3ZhgKSlYl9KgY6h0xz7xBe4fSRiFyXv+MUwI7ryTanZzbyad4Y6vls/wD2+zqm3h2a+ig7KEy9n9KYlv1H+raAiVElyRZgPtkEDbW8BC7dBjAIAiYFTym2XfXkWQUISX4FP/8tayye49E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k7mdctVJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JPUGxxr8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029B11F000E9;
-	Mon, 17 Aug 2026 13:55:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k7mdctVJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA49F1F00A3D;
+	Mon, 17 Aug 2026 13:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974955;
-	bh=xjZnoMXEoq5PyrlO2TNtgPTZlr1k2R4VYzzTkCLfr8c=;
+	s=korg; t=1786974958;
+	bh=DEco5GD/l46AmEQV4FjnG+og7WOm7CzwNm/trdXtzAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JPUGxxr8bEAzExLb6Ok9ojwrM0lKXD1vHWqqMMLnFPXgIsigWAj7mwxChC16da2gp
-	 Yu2MzIaXYyUOcbfDOInofWpn9MOxKKNtvhnDcutGXE8VyIEisd6wWPPNdYttvSLzw6
-	 v1iIHfR91JCpVpH4vDK/f61kT1cC/fDWHqG0iI/g=
+	b=k7mdctVJDu+nxCSAEX9xiWecrkGXU/OZ86IbaSd6+rSSUsvGheNoBr/f3AkmJpgmV
+	 s9qWjR+qsCDHrr+r6iMVzrleRk2kyqTZmbIiSHr+9tbl1KANNvhSpWgZFcjTIt72jV
+	 oaORsQSidKUFtL6wJEyDuyfCOfxW9eRhN1erF5fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mehmet Fide <mehmet.fide@screeningeagle.com>,
+	Jia Jia <physicalmtea@gmail.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 110/250] net: fec: do not release NULL pages when RX buffer allocation fails
-Date: Mon, 17 Aug 2026 15:31:11 +0200
-Message-ID: <20260817132541.060907347@linuxfoundation.org>
+Subject: [PATCH 6.18 074/250] vhost-scsi: reject feature changes after endpoint
+Date: Mon, 17 Aug 2026 15:30:35 +0200
+Message-ID: <20260817132539.467595082@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -50,72 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mehmet Fide <mehmet.fide@screeningeagle.com>
+From: Jia Jia <physicalmtea@gmail.com>
 
-fec_enet_alloc_rxq_buffers() leaves the loop as soon as
-page_pool_dev_alloc_pages() returns NULL and jumps to err_alloc, which
-calls fec_enet_free_buffers(). That helper walks the whole ring and
-hands every rx_skb_info[i].page to page_pool_put_full_page(), including
-the entries the allocation loop never reached. Those are still NULL,
-because the queue was allocated with kzalloc(), and
-page_pool_put_full_page() dereferences the page, so an open that runs
-out of memory oopses instead of returning -ENOMEM:
+[ Upstream commit 42bc45df5905e2b7dccb72adaf7730f66cfbe03f ]
 
-  Unable to handle kernel NULL pointer dereference at virtual address 00000014 when read
-  Internal error: Oops: 5 [#1] SMP ARM
-  CPU: 0 PID: 384 Comm: connmand Not tainted 6.18.43 #1
-  Hardware name: Freescale Vybrid VF5xx/VF6xx (Device Tree)
-  PC is at fec_enet_free_buffers+0xb0/0x2a8
-  Call trace:
-   fec_enet_free_buffers from fec_enet_open+0x1e0/0x504
-   fec_enet_open from __dev_open+0x114/0x238
-   __dev_open from __dev_change_flags+0x190/0x208
-   __dev_change_flags from netif_change_flags+0x1c/0x58
-   netif_change_flags from dev_change_flags+0x44/0x74
-   dev_change_flags from devinet_ioctl+0x3a4/0x768
+vhost_scsi_setup_vq_cmds() runs from VHOST_SCSI_SET_ENDPOINT and allocates
+each command's protection scatterlist array (prot_sgl) according to the
+acknowledged VIRTIO_SCSI_F_T10_PI bit.  The command pools are not rebuilt
+when VHOST_SET_FEATURES changes that bit later.
 
-Seen on a Colibri VF50, 128 MiB of RAM, on the first ifup after boot.
+Although virtio feature bits must not change after feature negotiation,
+vhost_scsi_set_features() currently accepts such a request after the
+endpoint is active and updates acked_features.  Enabling T10-PI after
+endpoint setup therefore leaves prot_sgl NULL while the I/O path follows
+the new feature bit.
 
-Skip the entries that hold no page, and clear the ones that do after
-releasing them, so that a later failed open cannot release the same page
-a second time.
+For a 129-page protection payload, vhost_scsi_mapal() passes the missing
+first chunk to sg_alloc_table_chained():
 
-Mainline is not affected. Commit a2ae70c0efe4 ("net: fec: add
-fec_alloc_rxq_buffers_pp() to allocate buffers from page pool") replaced
-this loop with fec_free_rxq_buffers(), which skips and clears the empty
-entries. That commit is part of the XDP zero copy series and is not a
-stable candidate, so this is the equivalent minimal fix for 6.18.y.
+  sg_alloc_table_chained(table, 129, first_chunk=NULL,
+                         nents_first_chunk=inline_sg_cnt)
 
-Fixes: 95698ff6177b ("net: fec: using page pool to manage RX buffers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
+sg_pool_index() then hits:
+
+  BUG_ON(nents > SG_CHUNK_SIZE);   /* 129 > 128 */
+
+The kernel reported the following call trace and register state:
+
+  Call Trace:
+   <TASK>
+   ? __sg_alloc_table+0x1d8/0x250
+   ? __pfx_vhost_run_work_list+0x10/0x10 [vhost]
+   sg_alloc_table_chained+0x59/0xf0
+   ? __pfx_sg_pool_alloc+0x10/0x10
+   ? vhost_scsi_calc_sgls.constprop.0+0x43/0x60 [vhost_scsi]
+   vhost_scsi_handle_vq+0xf02/0x1700 [vhost_scsi]
+   ? __pfx_vhost_scsi_handle_vq+0x10/0x10 [vhost_scsi]
+   vhost_scsi_handle_kick+0x37/0x50 [vhost_scsi]
+   vhost_run_work_list+0x8e/0xd0 [vhost]
+   vhost_task_fn+0xe1/0x210
+   ret_from_fork+0x348/0x540
+   </TASK>
+
+  RIP: 0010:0x4
+  CR2 = 0x4
+  RSP: 0018:ffffc90000dbf940 EFLAGS: 00010202
+  RAX: ffffffff82396810 RBX: ffff88811dc28b80 RCX: 0000000000000000
+  RDX: 0000000000000000 RSI: 0000000000000820 RDI: 0000000000000081
+
+VHOST_F_LOG_ALL is a vhost-specific runtime feature and remains the only
+exception.
+
+Reject changes to any feature other than VHOST_F_LOG_ALL while the
+endpoint is active.  This preserves the existing runtime log toggle while
+preventing feature-dependent command resources and data-path state from
+becoming inconsistent.  Userspace must clear the endpoint before changing
+any other negotiated feature and set the endpoint up again afterward.
+
+Fixes: bf2d650391be ("vhost-scsi: Allocate T10 PI structs only when enabled")
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260726144314.1652934-1-physicalmtea@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/vhost/scsi.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index a2cf8cbe2539e..7699a970cb25e 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -3341,8 +3341,15 @@ static void fec_enet_free_buffers(struct net_device *ndev)
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index 65a57de0080ef..29716ce714554 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -2231,6 +2231,7 @@ static int vhost_scsi_set_features(struct vhost_scsi *vs, u64 features)
+ {
+ 	struct vhost_virtqueue *vq;
+ 	bool is_log, was_log;
++	u64 old_features;
+ 	int i;
  
- 	for (q = 0; q < fep->num_rx_queues; q++) {
- 		rxq = fep->rx_queue[q];
--		for (i = 0; i < rxq->bd.ring_size; i++)
--			page_pool_put_full_page(rxq->page_pool, rxq->rx_skb_info[i].page, false);
-+		for (i = 0; i < rxq->bd.ring_size; i++) {
-+			struct page *page = rxq->rx_skb_info[i].page;
-+
-+			if (!page)
-+				continue;
-+
-+			page_pool_put_full_page(rxq->page_pool, page, false);
-+			rxq->rx_skb_info[i].page = NULL;
-+		}
+ 	if (features & ~VHOST_SCSI_FEATURES)
+@@ -2246,6 +2247,14 @@ static int vhost_scsi_set_features(struct vhost_scsi *vs, u64 features)
+ 	if (!vs->dev.nvqs)
+ 		goto out;
  
- 		for (i = 0; i < XDP_STATS_TOTAL; i++)
- 			rxq->stats[i] = 0;
++	old_features = vs->vqs[0].vq.acked_features;
++	if (vs->vs_tpg &&
++	    ((features ^ old_features) &
++	     ~(1ULL << VHOST_F_LOG_ALL))) {
++		mutex_unlock(&vs->dev.mutex);
++		return -EBUSY;
++	}
++
+ 	is_log = features & (1 << VHOST_F_LOG_ALL);
+ 	/*
+ 	 * All VQs should have same feature.
 -- 
 2.53.0
 
