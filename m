@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56BA32EEE73;
-	Mon, 17 Aug 2026 15:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36724279903;
+	Mon, 17 Aug 2026 15:27:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980451; cv=none; b=XwtTW0IAxGyJcXkZF1HeM5BrGbLkGTShUziu2inH3ozcoCRz0bbh7CMvPTxSkUdU7Ub9Mqzk/tqHWFjBly9ccV6EdXOAgxrNu0Gk6+GX9XsBMedVCzWRvkAbqNnzmN2vvTaNDTgX2IP8dDNE2oltefnge3MLQNAOzO7EbTTKnhQ=
+	t=1786980454; cv=none; b=bum7xGQzvQeLVoA6tyDriMYQiffGCUbmWoA003XkM+rzQ+2DP51skIeGzKazofG/zSuqG6dYBIxT4Bwi5ob4mDunO6oGRCBfuDVf42TPFqwYO7LcL7jytpbDmj7Z1MGjX06a6Ot6k/5A37h09oDM946Ea7kvlGDTJxuj4xnjnLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980451; c=relaxed/simple;
-	bh=dFDfzQd8ACSqL6VdpbZ+a+sodWYwkk4Tg1hTno12z2o=;
+	s=arc-20240116; t=1786980454; c=relaxed/simple;
+	bh=PAMEs+1/3bCgwg/wI7ZcDlEimfETtxY3pRP+T/MJG9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HtZ9yrHOGsofo+kqOTVP0bOtEPjIgFa8LKDab5I9omYY73kwowaNaiYOD4sjd0gQ3Rq+FPQZDHk7a0q6YxE3AHppaM1Nu5PFvoyZAuUsPjF08l7ekoalZZtUOsDZq3wjoqptNb2lVtoGpp8zs7fMDGrPpWx6csS0TaAhbdOGd5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0rGpzGXH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PhWUcIt0EI3kBFLjlIOEa2/2BWLyN8bssWUgB2ArL2tjXe2tKmefsNyvTZ6k+ujEpfLhRiI5ZgBDs3Fsg2/Ps3CkHdqS3SERWth9I/wmoFWqtq2/fVF4V9jWWKdKFykNbf5ZUwJyA2ktP4ImQaUjHa3b6jAqfirnRqpHeBsv9m4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zUhqRrzP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0rGpzGXH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F431F000E9;
-	Mon, 17 Aug 2026 15:27:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zUhqRrzP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 901E41F000E9;
+	Mon, 17 Aug 2026 15:27:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980450;
-	bh=K7Q3yolYG//4f0msuArne/NTo49aCTgH06muvgzFHzk=;
+	s=korg; t=1786980453;
+	bh=dmxz7jVx/BUO7QZD2MpCXM87k/pnwEswQyO8uI+erfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0rGpzGXHvvzocAkjSQuSwcL6VQvxysmYMSU9fbQtiBtzHLre0pAn/jKdPJra1rzd5
-	 4kijYr4FLhhO0q4Mw/0LYSxFNvsZMU/Km5md//nKywO8K/ZtBWpi6LBYUV2TgObhFL
-	 iD1tyQ7pWl/NJX8iuyHKs1pXgKd3joOg4iW/M7Ko=
+	b=zUhqRrzPGwaXWYkhew66jHLUM2+dKI8jaonsNGeDtqAO1cllS3YsHJFzlLnLC1Qwk
+	 VxW3thjkuP9/7P1dy5SwSAnVl+ogitpcpukyMumCWBkRR0abUxwrS6BEo8/NXLADEv
+	 JEYMlNMz9zgOiP5Pa6c7RLWK1/XhaKdJfkp48DFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Muhammad Bilal <meatuni001@gmail.com>
-Subject: [PATCH 6.1 570/609] staging: rtl8723bs: fix OOB read in rtw_get_wpa_ie()
-Date: Mon, 17 Aug 2026 15:34:26 +0200
-Message-ID: <20260817132602.795585488@linuxfoundation.org>
+	syzbot+61b1db46218109869c14@syzkaller.appspotmail.com,
+	Rik van Riel <riel@surriel.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 579/609] fbdev: bitblit: bound-check glyph index in bit_cursor()
+Date: Mon, 17 Aug 2026 15:34:35 +0200
+Message-ID: <20260817132603.073121819@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -44,61 +45,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Rik van Riel <riel@surriel.com>
 
-commit 1c3e23e78862493e8cf1adad02b10ffcb8b9921c upstream.
+commit e033cbf3975a8465f879ebd5989dc35b04423a4d upstream.
 
-rtw_get_wpa_ie() reads bytes at fixed offsets into a vendor-specific
-information element without checking that the element is long enough,
-causing an out-of-bounds read for a short trailing IE.
+bit_cursor() fetches the glyph under the cursor with
 
-The function locates a vendor-specific IE (EID 221) with rtw_get_ie()
-and then compares a 4-byte OUI+type at pbuf + 2 and reads a 2-byte
-version word at pbuf + 6. Those accesses require the IE body to be at
-least 6 bytes, but rtw_get_ie() only guarantees that the element fits
-within the buffer; it does not enforce a minimum body length. A
-vendor-specific IE whose length byte is 0 to 5, placed at the end of
-the buffer, therefore makes these reads run past the end of the IE and
-past the end of the buffer itself.
+	c = scr_readw(vc_pos);
+	src = vc_font.data + ((c & charmask) * w * height);
 
-The buffer holds information elements taken from received management
-frames and from the IE blob passed to rtw_cfg80211_set_wpa_ie(), which
-is kmemdup'd to its exact length, so the read can run off the end of
-the allocation.
+where charmask is 0x1ff when vc_hi_font_mask is set. The screen buffer
+value comes directly from scr_readw() and may be larger than the current
+font's glyph count.
 
-The sibling helpers rtw_get_sec_ie(), rtw_get_wapi_ie() and
-rtw_get_wps_ie() in this file already reject too-short vendor-specific
-IEs before their OUI memcmp(); rtw_get_wpa_ie() was never brought in
-line with them, and needs a minimum of 6 rather than 4 bytes because
-of the version word. Add the missing length check.
+Syzkaller triggers this via vcs_write(). The Call Trace shows
+vcs_write() in vc_screen.c writing an arbitrary 16-bit value with
+writev() to /dev/vcsa, which vcs_write_buf() in vc_screen.c stores via
+vcs_scr_writew() without checking charcount. The stored value is later
+read in bit_cursor() in bitblit.c.
 
-Fixes: 554c0a3abf216 ("staging: Add rtl8723bs sdio wifi driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260719030631.88254-1-meatuni001@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+When the font is changed from a font with 512 glyphs to a font with
+256 glyphs, the screen buffer can retain characters with the high
+bit set from the previous mode, which could also produce the same
+out-of-bounds access.
+
+  BUG: KASAN: global-out-of-bounds in soft_cursor+0x378/0x6bc drivers/video/fbdev/core/softcursor.c:70
+  Read of size 16 at addr ffff800086c57970
+
+  Call Trace:
+   soft_cursor+0x378/0x6bc drivers/video/fbdev/core/softcursor.c:70
+   bit_cursor+0xa90/0x1108 drivers/video/fbdev/core/bitblit.c:365
+   fbcon_cursor+0x344/0x498 drivers/video/fbdev/core/fbcon.c:1427
+   hide_cursor+0xdc/0x2d0 drivers/tty/vt/vt.c:883
+   update_region+0x100/0x18c drivers/tty/vt/vt.c:669
+   vcs_write+0x8ec/0xaf0 drivers/tty/vt/vc_screen.c:685
+
+bit_putcs_aligned() and bit_putcs_unaligned() already clamp the glyph
+index to vc_font.charcount. Apply the same clamp in bit_cursor() after
+extracting the attribute and masking, before indexing fontdata.
+
+The fix completes the bounds checking started in commit 18c4ef4e765a
+("fbdev: bitblit: bound-check glyph index in bit_putcs*"), which missed
+the cursor path.
+
+This change should be safe because the clamp reuses the existing
+contract from fbcon: charcount is maintained under console_lock in
+con_font_set() and fbcon_font_set(), and hi_font_mask is cleared when
+switching from 512 to 256 glyphs. When stale screen data with high bits
+remains after a font switch, or when vcs_write() stores an arbitrary
+value, clamping the index to 0 prevents the out-of-bounds read without
+changing cursor semantics — the same fallback bit_putcs uses.
+
+Reported-by: syzbot+61b1db46218109869c14@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=61b1db46218109869c14
+Link: https://lore.kernel.org/all/6a75205c.01d0871a.3a0d52.0032.GAE@google.com/
+Fixes: 18c4ef4e765a ("fbdev: bitblit: bound-check glyph index in bit_putcs*")
+Cc: stable@vger.kernel.org
+Assisted-by: Hermes:muse-spark-1.2 syzkaller
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_ieee80211.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/video/fbdev/core/bitblit.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-@@ -371,6 +371,9 @@ unsigned char *rtw_get_wpa_ie(unsigned c
- 		pbuf = rtw_get_ie(pbuf, WLAN_EID_VENDOR_SPECIFIC, &len, limit_new);
+--- a/drivers/video/fbdev/core/bitblit.c
++++ b/drivers/video/fbdev/core/bitblit.c
+@@ -274,9 +274,14 @@ static void bit_cursor(struct vc_data *v
+ 	if (!vc->vc_font.data)
+ 		return;
  
- 		if (pbuf) {
-+			if (len < 6)
-+				goto check_next_ie;
+- 	c = scr_readw((u16 *) vc->vc_pos);
++	c = scr_readw((u16 *) vc->vc_pos);
+ 	attribute = get_attribute(info, c);
+-	src = vc->vc_font.data + ((c & charmask) * (w * vc->vc_font.height));
++	c &= charmask;
 +
- 			/* check if oui matches... */
- 			if (memcmp((pbuf + 2), wpa_oui_type, sizeof(wpa_oui_type)))
- 				goto check_next_ie;
++	/* Clamp to font size, same as bit_putcs_aligned() */
++	if (c >= vc->vc_font.charcount)
++		c = 0;
++	src = vc->vc_font.data + (c * (w * vc->vc_font.height));
+ 
+ 	if (ops->cursor_state.image.data != src ||
+ 	    ops->cursor_reset) {
 
 
