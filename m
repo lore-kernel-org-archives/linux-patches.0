@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8FD43F089;
-	Mon, 17 Aug 2026 15:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBA54432FE;
+	Mon, 17 Aug 2026 15:18:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979920; cv=none; b=jGwzoWAmgUnZiRd38n+CZJfveoR0BJW4h6JxYZ6SiyrP13ytD/kPxeiBMnJM6TgJBexs2My5r3s0zF3PEep2SSdSgg6dDYt7mxWKDSq7zyA3n1xLD3uUNaTYUi2dNwDgsDZ1zf+9owB5F/Z1K/78yU6aEB2ekDNaGrojZEEJnFw=
+	t=1786979924; cv=none; b=WffO2vmOF5xcCJus9TYVK4hMTPmVrqYnVhysSa97C4IuVaOYIAmQTyP2svsEN+/KvHL5vlAfVZdFy4glARNgfz9qL4SPCJaJS02S5YRndlmRbUXPGp4DB7vSeckOvTGM9bJxaU/6DVqNQDLHZVNqiuW3hE5lFd9K75P9MWEs2iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979920; c=relaxed/simple;
-	bh=P+MBCptm3mFdTRDL4K3nLyRnm7q3urVGKTupLnXcDOA=;
+	s=arc-20240116; t=1786979924; c=relaxed/simple;
+	bh=w9s1tbEc4EMCKFSI0+b5E5QTWfbGv3YrjRnxaybFOU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tin5inXU+4+yJyGOe6GDH+nm15iICf2qfR9l7TOkPi/BHr+3e/pemuNh8uWT/mS70RjIn6uzoQMSQweMV6RTci7/kxyMmiCbevvOzg6lEhsErbk2cESiWZW2PwEvfsnJlILcnPeOK+33DefzVnr56KTHDLlNylzTvqNViCPoYqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JSh7AkNX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TbqTJ9pkawWPyidpMckyDwmmUwdGa5f+pN/UxmLBKXi4Ngu0RO53Nc8wR1uuTEF4HmZeR7QE1c1B0J8hgDNu+MBbeGHteiDLIFXXhBRUeATUc1nJlTQ6j8D7aq+Pkiegs9TL6ACg1ABhz4L1EjzvKtFB4G5g9aOTikRWrfq7744=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHjGrOjC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSh7AkNX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000511F000E9;
-	Mon, 17 Aug 2026 15:18:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHjGrOjC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B2C1F000E9;
+	Mon, 17 Aug 2026 15:18:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979919;
-	bh=wxVIuIUA6nqMc9aF5UnqqYckS/217DHVfz4zI2XZ3vI=;
+	s=korg; t=1786979922;
+	bh=UAFjt0nXn4qZyBzxoycgBo2Byi662QWmKaqx3nCAifE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JSh7AkNXy4OrLWx4mcYtuZa4NifPGyd/hsbAnMFtNTXJesB3y3I6388ZJEOLRXl1z
-	 hPHqNg9m9bLHxJuytfUGse/5RWEUIU7k9xOAN1uVdTtAVlO34CFNchXn+FhGaeIyTs
-	 3VtWe1nku2EaDs8oxPcFZbONCa0Hu9Py28GDzKW4=
+	b=EHjGrOjCTd+Ov+5et18QDU8MMQIlafHjQdCVLUomEef8kq/AxSVf8tx9QluxrsM4N
+	 cohZF1ZrwoY04bePjEy7bpwvov2qmie+OrXxoqE2EUPfotOtCTbKdQuRB5ktCMvjmH
+	 ZGFCTaCC0Q9fYIA2OoMe4PrAb+Ox5VddsXLM27sY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Vega <vega@nebusec.ai>,
+	Luxiao Xu <rakukuip@gmail.com>,
+	Ren Wei <enjou1224z@gmail.com>,
 	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.1 392/609] audit: fix potential integer overflow in audit_log_n_string()
-Date: Mon, 17 Aug 2026 15:31:28 +0200
-Message-ID: <20260817132557.355301701@linuxfoundation.org>
+Subject: [PATCH 6.1 393/609] audit: fix potential use-after-free in audit_del_rule()
+Date: Mon, 17 Aug 2026 15:31:29 +0200
+Message-ID: <20260817132557.385910978@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,61 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Luxiao Xu <rakukuip@gmail.com>
 
-commit f865c143629d4094866a811dba5f329250bad486 upstream.
+commit 246df90b5f1a8a6e6abbd2f058b029558720adec upstream.
 
-audit_log_n_string() computes new_len as "slen + 3" (enclosing quotes
-plus the NUL terminator) and stores it into an int, while slen is a
-size_t.  For a sufficiently large slen the addition can overflow and/or
-the result be truncated when assigned to the int new_len, so the
-"new_len > avail" check can be bypassed and the subsequent
-memcpy(ptr, string, slen) can write past the skb tail.
+`audit_del_rule()` destroys `e->rule.exe` via `audit_remove_mark_rule()`
+before unlinking the rule from RCU-visible filter lists and waiting for a
+grace period. Concurrent readers in `audit_filter()` and
+`audit_filter_rules()` still dereference `e->rule.exe`, while the fsnotify
+mark can be freed on an independent lifetime path. This creates a
+use-after-free window during rule deletion.
 
-This is the same class of bug that was fixed for the hex sibling in
-commit 65dfde57d1e2 ("audit: fix potential integer overflow in
-audit_log_n_hex()"); both helpers are reached through
-audit_log_n_untrustedstring() with the same length source.
-
-Make new_len a size_t and use check_add_overflow() to catch the
-overflow, mirroring the audit_log_n_hex() fix.  No functional change for
-the in-tree callers, which all pass bounded lengths.
+Fix this by unlinking the rule from the RCU-visible lists and invoking
+`synchronize_rcu()` before calling `audit_remove_mark_rule()` (and other
+rule removal helpers). This ensures that all existing RCU readers have
+exited the critical section before any underlying resources are destroyed.
 
 Cc: stable@vger.kernel.org
-Fixes: 168b7173959f ("AUDIT: Clean up logging of untrusted strings")
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Fixes: 34d99af52ad4 ("audit: implement audit by executable")
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
 Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/audit.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ kernel/auditfilter.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/kernel/audit.c
-+++ b/kernel/audit.c
-@@ -2075,7 +2075,8 @@ void audit_log_n_hex(struct audit_buffer
- void audit_log_n_string(struct audit_buffer *ab, const char *string,
- 			size_t slen)
- {
--	int avail, new_len;
-+	int avail;
-+	size_t new_len;
- 	unsigned char *ptr;
- 	struct sk_buff *skb;
+--- a/kernel/auditfilter.c
++++ b/kernel/auditfilter.c
+@@ -1045,6 +1045,10 @@ int audit_del_rule(struct audit_entry *e
+ 		goto out;
+ 	}
  
-@@ -2085,7 +2086,13 @@ void audit_log_n_string(struct audit_buf
- 	BUG_ON(!ab->skb);
- 	skb = ab->skb;
- 	avail = skb_tailroom(skb);
--	new_len = slen + 3;	/* enclosing quotes + null terminator */
++	list_del_rcu(&e->list);
++	list_del(&e->rule.list);
++	synchronize_rcu();
 +
-+	/* enclosing quotes + null terminator */
-+	if (check_add_overflow(slen, 3, &new_len)) {
-+		audit_log_format(ab, "?");
-+		return;
-+	}
-+
- 	if (new_len > avail) {
- 		avail = audit_expand(ab, new_len);
- 		if (!avail)
+ 	if (e->rule.watch)
+ 		audit_remove_watch_rule(&e->rule);
+ 
+@@ -1062,8 +1066,6 @@ int audit_del_rule(struct audit_entry *e
+ 		audit_signals--;
+ #endif
+ 
+-	list_del_rcu(&e->list);
+-	list_del(&e->rule.list);
+ 	call_rcu(&e->rcu, audit_free_rule_rcu);
+ 
+ out:
 
 
