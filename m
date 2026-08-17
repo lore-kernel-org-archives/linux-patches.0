@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812743F12C6;
-	Mon, 17 Aug 2026 15:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999B03DD851;
+	Mon, 17 Aug 2026 15:10:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979453; cv=none; b=s6TufnoT9hJraLDA6TLILnxtCNMqbtvSy6gLDAIQ2ZH88Ky56nXvzly88qqNLQrcMEpqVBKooKSkVlyUCpj0jxc8qok1C6LwQMzU6POURzeGp/L3mAdvsYY5DzJypKTLx/wDBLid3LBkjl2PYZ+rgw+H+4cXW9Vsk8KwfIm/kRw=
+	t=1786979456; cv=none; b=R52YDwTy/fz6MqBUayX0dtcbv3K4pKG9Za88mlcWNtU2s7wUx/Uc/rfZ5pC9pDTYZnpMQGpYWDVZewsbOHgrwAvkXCtaJj4mVDwRpcSDW3eiU6O1HapQDEb8EfYA5GQcQVnVGD5CTs+350sEOwlz45kMlIwFgGGwpAspOx3j4tQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979453; c=relaxed/simple;
-	bh=CSSSyTT2Y2ChrhZjlnHT7acNfZw1ODOWCUq5jk8IodM=;
+	s=arc-20240116; t=1786979456; c=relaxed/simple;
+	bh=zgD+Ck9RQ6J+sNb/VirycoSvcWx0dOl/nBXqkwJOnPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FUNuC3ZP0JmPCarifi+7sJzV5QXWip7T9VRTuKA5KKZdqy8cV9ioyPt3yVTd1WckXxMPhRISqYNHuXzuD8uqnwhkWaSRXdi4Fb4z9aRoPtgHKO1GplXbIAIy8YlIvik3AJIjzNzAze4jWdVqiyPSGVQaqwj6edUadyosp51GpvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DkKoYck3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QdJvb7Red73jsyDUu8bDoTC5SUsRvo6mg8pwmmlFWwH4XiHrefTuGkeQYw0YWkqCLgiT2sS6BYcIdU40c22OkTj99gBNcTS9V0fh6HIefF7Oa8oOASODenO2EFAo0GBGhgk4Y8RzRYf2zrxyIPVnctxWi9mqSXw8cM5tBhykcy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qojVWMtP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DkKoYck3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB08E1F000E9;
-	Mon, 17 Aug 2026 15:10:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qojVWMtP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B962C1F000E9;
+	Mon, 17 Aug 2026 15:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979452;
-	bh=CnHmBYZxIAMo3Zr/aDFo+tUkJspxMRR6DI5Up0/GmPo=;
+	s=korg; t=1786979455;
+	bh=6iFrz65CoAqU54AZP+tLlPzV/IJJgCOZdtN/U46+Bdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DkKoYck3L6rBE61rY0ZsVWHl2h2OZ+EJ8ZfgxOVa2LpK9JxzGRNwDMiTRLKBZy5W0
-	 XAqFGrvsSm+jovcNbIWVWub9alDsjI3tvQaJVjkYFDYT2D5/97xJmcydi6LKbS9XmY
-	 vSUNvqPbpM4YHQxQns4T3c78GQFuRBZcZB6RtNwQ=
+	b=qojVWMtPzhY6ReQhfy6cN2bcNLmr/cbIullNugivVpNkFByW6BPQp4lm3TZstyI2/
+	 Ht03zkpI4MoxRM1KdV/Iz0ZmenEF3JB9/WahaKfioOeMlpOrhewk3+GI/8gPenWcJA
+	 iD0Vi4fW/C/GTEegDavOKzKyiGmWM/39D1acizis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 194/609] media: cx231xx: fix devres lifetime
-Date: Mon, 17 Aug 2026 15:28:10 +0200
-Message-ID: <20260817132550.577250366@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.1 230/609] binfmt_misc: set have_execfd only once the interpreter is opened
+Date: Mon, 17 Aug 2026 15:28:46 +0200
+Message-ID: <20260817132551.784153123@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,79 +49,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 7d6358ab02866e5b7ed8d3a00805297617bbb0ec upstream.
+commit bbf5f639918dc011aaf60aab8480218758ee68c5 upstream.
 
-USB drivers bind to USB interfaces and any device managed resources
-should have their lifetime tied to the interface rather than parent USB
-device. This avoids issues like memory leaks when drivers are unbound
-without their devices being physically disconnected (e.g. on probe
-deferral or configuration changes).
+load_misc_binary() raises bprm->have_execfd as soon as it sees the 'O'
+(or 'C') flag. This happens well before it opens the interpreter. If
+that open fails the flag stays set on the bprm. binfmt_misc is at the
+head of the format list so an interpreter open failure that returns
+-ENOEXEC lets the search fall through to a later format. This means it
+runs the matched binary directly having never staged an interpreter. So
+bprm->executable is NULL while have_execfd falsely claims a descriptor
+is present.
 
-Fix the driver state lifetime so that it is released on driver unbind.
+Consequently, begin_new_exec() dereferences the missing executable:
 
-Fixes: 184a82784d50 ("[media] cx231xx: use devm_ functions to allocate memory")
-Cc: stable@vger.kernel.org	# 3.17
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+  would_dump(bprm, bprm->executable);
+
+and NULL derefs. Had it not, the hand-off later in the same function
+would have failed anyway. FD_ADD(0, bprm->executable) rejects a NULL
+file with -ENOMEM. Both sites are past the point of no return so the
+exec cannot be unwound either way.
+
+This can be reached by unprivileged users as binfmt_misc can be mounted
+in user namespaces. So a user can register an 'O' entry whose
+interpreter lives on a FUSE mount, have the FUSE server fail the open
+with -ENOEXEC and execute a native ELF file that matches the entry.
+
+have_execfd only means anything alongside the executable it describes
+which is not set until the interpreter has been opened and staged.
+So lets raise it there, next to execfd_creds, which is already set at
+that point. An open failure now leaves it clear, so the fallback format
+derives credentials from the binary and emits no AT_EXECFD, as it would
+for any native exec. The argv rewrite load_misc_binary() performs before
+the open is still not undone. This means the binary sees the interpreter
+path in argv[0] and its own path in argv[1] but that predates this
+change and only became observable once the exec stopped faulting.
+
+Link: https://patch.msgid.link/20260720-beglichen-kognitiv-organismus-5e1e55326c56@brauner
+Fixes: bc2bf338d54b ("exec: Remove recursion from search_binary_handler")
+Cc: stable@vger.kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/cx231xx/cx231xx-cards.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ fs/binfmt_misc.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/media/usb/cx231xx/cx231xx-cards.c
-+++ b/drivers/media/usb/cx231xx/cx231xx-cards.c
-@@ -1577,7 +1577,8 @@ static int cx231xx_init_v4l2(struct cx23
- 		 dev->video_mode.end_point_addr,
- 		 dev->video_mode.num_alt);
+--- a/fs/binfmt_misc.c
++++ b/fs/binfmt_misc.c
+@@ -199,9 +199,6 @@ static int load_misc_binary(struct linux
+ 			goto ret;
+ 	}
  
--	dev->video_mode.alt_max_pkt_size = devm_kmalloc_array(&udev->dev, 32, dev->video_mode.num_alt, GFP_KERNEL);
-+	dev->video_mode.alt_max_pkt_size = devm_kmalloc_array(&interface->dev, 32,
-+							      dev->video_mode.num_alt, GFP_KERNEL);
- 	if (dev->video_mode.alt_max_pkt_size == NULL)
- 		return -ENOMEM;
+-	if (fmt->flags & MISC_FMT_OPEN_BINARY)
+-		bprm->have_execfd = 1;
+-
+ 	/* make argv[1] be the path to the binary */
+ 	retval = copy_string_kernel(bprm->interp, bprm);
+ 	if (retval < 0)
+@@ -231,6 +228,8 @@ static int load_misc_binary(struct linux
+ 		goto ret;
  
-@@ -1618,7 +1619,8 @@ static int cx231xx_init_v4l2(struct cx23
- 		 dev->vbi_mode.num_alt);
+ 	bprm->interpreter = interp_file;
++	if (fmt->flags & MISC_FMT_OPEN_BINARY)
++		bprm->have_execfd = 1;
+ 	if (fmt->flags & MISC_FMT_CREDENTIALS)
+ 		bprm->execfd_creds = 1;
  
- 	/* compute alternate max packet sizes for vbi */
--	dev->vbi_mode.alt_max_pkt_size = devm_kmalloc_array(&udev->dev, 32, dev->vbi_mode.num_alt, GFP_KERNEL);
-+	dev->vbi_mode.alt_max_pkt_size = devm_kmalloc_array(&interface->dev, 32,
-+							    dev->vbi_mode.num_alt, GFP_KERNEL);
- 	if (dev->vbi_mode.alt_max_pkt_size == NULL)
- 		return -ENOMEM;
- 
-@@ -1660,7 +1662,9 @@ static int cx231xx_init_v4l2(struct cx23
- 		 "sliced CC EndPoint Addr 0x%x, Alternate settings: %i\n",
- 		 dev->sliced_cc_mode.end_point_addr,
- 		 dev->sliced_cc_mode.num_alt);
--	dev->sliced_cc_mode.alt_max_pkt_size = devm_kmalloc_array(&udev->dev, 32, dev->sliced_cc_mode.num_alt, GFP_KERNEL);
-+	dev->sliced_cc_mode.alt_max_pkt_size = devm_kmalloc_array(&interface->dev, 32,
-+								  dev->sliced_cc_mode.num_alt,
-+								  GFP_KERNEL);
- 	if (dev->sliced_cc_mode.alt_max_pkt_size == NULL)
- 		return -ENOMEM;
- 
-@@ -1724,7 +1728,7 @@ static int cx231xx_usb_probe(struct usb_
- 	udev = usb_get_dev(interface_to_usbdev(interface));
- 
- 	/* allocate memory for our device state and initialize it */
--	dev = devm_kzalloc(&udev->dev, sizeof(*dev), GFP_KERNEL);
-+	dev = devm_kzalloc(&interface->dev, sizeof(*dev), GFP_KERNEL);
- 	if (dev == NULL) {
- 		retval = -ENOMEM;
- 		goto err_if;
-@@ -1854,7 +1858,9 @@ static int cx231xx_usb_probe(struct usb_
- 			 dev->ts1_mode.end_point_addr,
- 			 dev->ts1_mode.num_alt);
- 
--		dev->ts1_mode.alt_max_pkt_size = devm_kmalloc_array(&udev->dev, 32, dev->ts1_mode.num_alt, GFP_KERNEL);
-+		dev->ts1_mode.alt_max_pkt_size = devm_kmalloc_array(&interface->dev, 32,
-+								    dev->ts1_mode.num_alt,
-+								    GFP_KERNEL);
- 		if (dev->ts1_mode.alt_max_pkt_size == NULL) {
- 			retval = -ENOMEM;
- 			goto err_video_alt;
 
 
