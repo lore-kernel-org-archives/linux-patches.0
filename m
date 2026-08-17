@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EAFD3AAF76;
-	Mon, 17 Aug 2026 14:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4DC3B811F;
+	Mon, 17 Aug 2026 14:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975531; cv=none; b=pBLv4en+OO5v+sBKKeG6hecUQwcZ9JJjnMStvR+hPdZED1Ks4OvA81efYfNWM1D4QAbbEkKSd+E8xGdQCKOJ8z8sK8S9FCcSSC7cwz0+tNbHBq1Jvg5K7Pe/Z+NQk54wkLOBLS7AwpaOKVZS8s4h1060BpWx0u4EmmR0q0n+QXM=
+	t=1786975534; cv=none; b=pX34W2d3dYwek+meYEt+4JQG40fZzsb6XTkR6A81+UCEWCcGhr11RiT1zjRYAcmG2+MB8smmYHDBVoEVmA1IKTjsDxCeC31xoE/7VZ3HR6aOn/ud0KGCzqDbt6MtUejnJswiiTyN0iafpmmBf66pZTU0EidRx1w5rMCaUXHJBi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975531; c=relaxed/simple;
-	bh=+g6Tc5EeAZqiY99T9dyXDuL4e5akRRm/k6Yd60u9T8c=;
+	s=arc-20240116; t=1786975534; c=relaxed/simple;
+	bh=d97tFoI/vWOTImnuJNNrtttTR6jX0xDOksDoH8NfCs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q3QwDAHNKvTp07eBzh4mzQzALvITR2v0IsLz3XKlqHffp+/jdMm2+b+BjgaXmTpHq4WOkDLQh0Dn6TvANVqCa7BW6cVBucKqEPq/zShEaJPuiSebwidSziXyrmnuPgNNR58hmHuPbOI/HfHksPCju1dSkxeGEDeDIaEPl7nMtf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYFy3YZ1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WzeLPukSYWTCy2LZ3kl/lz75urWqCVaZo97QxKCOQRuWTd0IK7zbWVSESNWhXc/vhP1CW4Fy2PTtGhSj2JbcudBWL9vFXPD/10Hd0ewmskS2WPH7V+bscbgC1aw3HZxfcinNs2qr1pVT9oWd+fSK5pjOzdOJ7KKmRTHDjgmxGPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h5XJGVTC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYFy3YZ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65EA51F000E9;
-	Mon, 17 Aug 2026 14:05:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5XJGVTC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EF8F1F00A3A;
+	Mon, 17 Aug 2026 14:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975529;
-	bh=7PGr0lEKtt5sGoIopmILj2b0hAFnHEvNnHvoTMKaG14=;
+	s=korg; t=1786975532;
+	bh=PRFwKsLwqc/tysWE2h/JTpVrcrOhJAItSoNgKeuGtP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FYFy3YZ1y3pOAnr8exkSuCiZo4GSQrj7b3X+jCVUsMCblMAoz4+iiCejdIu0oNB/w
-	 mzBYwI3gLg2ZRQerR41Od128dwDxBKAA6qqUoQWuysI4lJqcSJeAtetBT7mtT7cJg5
-	 r+UnxZdVPTP6hCiV5LS+0I3FA/d6lIUdjTJWF2pw=
+	b=h5XJGVTCdrIjT85wtzQ3VFdq9gXe2m9n4xdnal/VGI8qH3TKWK3/82uyeERqeUOFs
+	 fFmfW7f6ioLmwxSwsmdMIcllRU7lgNcWj4z90W273EobY88qSuQJ5yH+JASpahqdMy
+	 Az2D6iMk4xIt/iQJe6rj66owuWWhPdSELvmzpwgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Lukas Wunner <lukas@wunner.de>,
+	STAR Labs SG <info@starlabs.sg>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Philo Lu <lulie@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 058/389] crypto: rsa-pkcs1pad: Dont WARN on an empty digest
-Date: Mon, 17 Aug 2026 15:28:17 +0200
-Message-ID: <20260817132541.337811553@linuxfoundation.org>
+Subject: [PATCH 5.10 059/389] bpf: Fix ld_{abs,ind} failure path analysis in subprogs
+Date: Mon, 17 Aug 2026 15:28:18 +0200
+Message-ID: <20260817132541.383330048@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,52 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-KEYCTL_PKEY_VERIFY lets an unprivileged caller supply a zero-length
-digest (in_len == 0).  keyctl_pkey_params_get_2() accepts the zero
-length and the request reaches pkcs1pad_verify(), where the empty
-digest is rejected but only after being passed through
-WARN_ON(!req->dst_len).  The warning is therefore directly
-user-triggerable, and on kernels built with panic_on_warn=1 an
-unprivileged process can panic the machine -- a local denial of
-service.  Reproduced as UID 65534 in a setuid sandbox.
+commit ee861486e377edc55361c08dcbceab3f6b6577bd upstream.
 
-Keep rejecting the invalid request with -EINVAL, but do not emit a
-warning for the user-controlled length.
+Usage of ld_{abs,ind} instructions got extended into subprogs some time
+ago via commit 09b28d76eac4 ("bpf: Add abnormal return checks."). These
+are only allowed in subprograms when the latter are BTF annotated and
+have scalar return types.
 
-This is the 5.10.y/5.15.y form of the fix, where the length is read
-directly from req->dst_len rather than cached in a digest_size local.
-Mainline does not contain this code path; commit 1e562deacecc
-("crypto: rsassa-pkcs1 - Migrate to sig_alg backend") removed
-pkcs1pad_verify() in v6.13-rc1.  This is a minimal fix for the
-affected stable branches.  The 6.1.y/6.6.y/6.12.y form
-(WARN_ON(!digest_size)) is sent as a separate patch.
+The code generator in bpf_gen_ld_abs() has an abnormal exit path (r0=0 +
+exit) from legacy cBPF times. While the enforcement is on scalar return
+types, the verifier must also simulate the path of abnormal exit if the
+packet data load via ld_{abs,ind} failed.
 
-Found by 0sec automated security-research tooling (https://0sec.ai).
+This is currently not the case. Fix it by having the verifier simulate
+both success and failure paths, and extend it in similar ways as we do
+for tail calls. The success path (r0=unknown, continue to next insn) is
+pushed onto stack for later validation and the r0=0 and return to the
+caller is done on the fall-through side.
 
-Fixes: c7381b012872 ("crypto: akcipher - new verify API for public key algorithms")
-Cc: stable@vger.kernel.org
-Assisted-by: 0sec:multi-model
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Fixes: 09b28d76eac4 ("bpf: Add abnormal return checks.")
+Reported-by: STAR Labs SG <info@starlabs.sg>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20260408191242.526279-2-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+[ Dropped visit_abnormal_return_insn changes: depends on 7.0 symbols from
+ e40f5a6bf88a ("bpf: correct stack liveness for tail calls");
+ Hunk1: adapted IS_ERR/PTR_ERR to !branch/-EFAULT to match push_stack()
+ NULL-on-failure convention;
+ Dropped mark_reg_scratched(), which only affects log verbosity, introduced
+ by 0f55f9ed21f9 ("bpf: Only print scratched registers and stack slots to
+ verifier logs.").]
+Signed-off-by: Philo Lu <lulie@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/rsa-pkcs1pad.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/crypto/rsa-pkcs1pad.c b/crypto/rsa-pkcs1pad.c
-index a4ebbb889274eb..1cde1e7c9ae43d 100644
---- a/crypto/rsa-pkcs1pad.c
-+++ b/crypto/rsa-pkcs1pad.c
-@@ -535,7 +535,7 @@ static int pkcs1pad_verify(struct akcipher_request *req)
- 	int err;
- 
- 	if (WARN_ON(req->dst) ||
--	    WARN_ON(!req->dst_len) ||
-+	    !req->dst_len ||
- 	    !ctx->key_size || req->src_len != ctx->key_size)
- 		return -EINVAL;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 19e1f7fff07a9c..058c05e7f144c7 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -8556,6 +8556,22 @@ static int check_ld_abs(struct bpf_verifier_env *env, struct bpf_insn *insn)
+ 	mark_reg_unknown(env, regs, BPF_REG_0);
+ 	/* ld_abs load up to 32-bit skb data. */
+ 	regs[BPF_REG_0].subreg_def = env->insn_idx + 1;
++	/*
++	 * See bpf_gen_ld_abs() which emits a hidden BPF_EXIT with r0=0
++	 * which must be explored by the verifier when in a subprog.
++	 */
++	if (env->cur_state->curframe) {
++		struct bpf_verifier_state *branch;
++
++		branch = push_stack(env, env->insn_idx + 1, env->insn_idx, false);
++		if (!branch)
++			return -EFAULT;
++		mark_reg_known_zero(env, regs, BPF_REG_0);
++		err = prepare_func_exit(env, &env->insn_idx);
++		if (err)
++			return err;
++		env->insn_idx--;
++	}
+ 	return 0;
+ }
  
 -- 
 2.53.0
