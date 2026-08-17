@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A234D175A6B;
-	Mon, 17 Aug 2026 14:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895D73E025C;
+	Mon, 17 Aug 2026 14:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977043; cv=none; b=b5iM9oNSO2Txdn9VKQIFbT9aRLcd78TjtU9Q+bdNHILPIw+JYlVpHNK9ZwbiavZWORK/91t+aLazGtUXJJpVIanhY+Jv0O6B/zLK1QOHNZet7NyBPRnOJDPAKUe5w1UK+E6UgrsfZiPQe8Tu4YMw3QXYfqXi64f8vsr5xcK6wtw=
+	t=1786977046; cv=none; b=Vq0vNBjPX+uymknb9Hbf55wuCDbhnWhg1FDhP57PuYsWwmupOsrrlnBjEjtBA/iYpfddhepKeKS4RoOaDOoPtfvlQZt6y6fZ614UPYts7FXo4SDZm5j2czsimflvz28BSgkGn2N+ACQgHZjJI8IKwQQRFYeUvvhzopJXI598KOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977043; c=relaxed/simple;
-	bh=kZsiH6oQjbNAPq+A77d6gNYAAOfxBuhOPwjAaIzLyj8=;
+	s=arc-20240116; t=1786977046; c=relaxed/simple;
+	bh=ahPcE5Bst3mlMVL2v4+mzxjfkYz31l2GsMh/WKT0DRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fNGg+Cy0FB5P5n/ixMaW+CFxFQ65JEyVmd6wluyRm2M95+nMTrNWEXYjiXJ2UDSulm8qbfvVK+C4CphnZE1a7BjHpD56b4hiTwWXBhN7tfhlpLU9AyjQSZDjb0na6TEHejkWRY+4hyvK+v8U07rofELMIaWm4tWhUW14Lyw/x1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oRbZ8MuN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A7eD2WjhtcWo+7NhUP0bWV4gD0lU6nBLZID2eTTqbN1eeRQUnrwTybVTlZ2TtaQBnmT0nxaPWJBBBDfDXiVd8rgdIbsY4hMecZgWpxdpEF5+mOnPJVo6JTR0FBUsbHOYit+zomMtjfddQMnQrFNrIYgN8GADHdfi6ZcKW6DUEHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIo4la8N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oRbZ8MuN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07BAE1F000E9;
-	Mon, 17 Aug 2026 14:30:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIo4la8N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD191F000E9;
+	Mon, 17 Aug 2026 14:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977042;
-	bh=iatKckDIPPuMbHXG6CJQ/yx5rIYjXOmUysQ5mj7NYm8=;
+	s=korg; t=1786977045;
+	bh=MT6CUDC+QvkcMbdjM5moKB+bFUgtf+na5IlfG82nmJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oRbZ8MuNi9SYxO+HI8H/4IpMKInuUEmlUh/JwZjF1XWubYyELPGkbsjcfbyDXrln7
-	 dfcFVKw2lLJvw0LDyUbRnH0DsSoiY4aakRA6Ehwp2/+M/oeWKFJ6iO8ovR7hvjiFR5
-	 SbvN6hyccjtOGtZR731VNIpi57xSmOV5L0vhhSn0=
+	b=yIo4la8NT+TSa8F29naSYpDMwcwtXG4/kddyuTSHxOapr8gPuFZhL0zFh1cswyV1x
+	 cZDFPEE4ckXGcC0g6upXbqhggt4uf0LwRRbxuqBluOaCVUq7aEQ0CFqppHoTa5WATL
+	 9WoGJYz0diGaKhM0xbK9ersTDt2cOUqbPCrDuB9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 5.15 185/456] exec: fix unsigned loop counter wrap in transfer_args_to_stack()
-Date: Mon, 17 Aug 2026 15:29:35 +0200
-Message-ID: <20260817132547.366323948@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 5.15 194/456] tracing/probes: Avoid temporary buffer truncation in trace_probe_match_command_args()
+Date: Mon, 17 Aug 2026 15:29:44 +0200
+Message-ID: <20260817132547.708679219@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,79 +49,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 16cc4f5c1c4b9e45eca7f7deefa5410a292db599 upstream.
+commit 15f197856d68882af9416fc97516bb55079b7677 upstream.
 
-The stop value is derived from bprm->p >> PAGE_SHIFT. The index variable
-is an unsigned long. If bprm->p drops below PAGE_SIZE and stop becomes
-zero the loop condition index >= stop is always true.
+In trace_probe_match_command_args(), a stack buffer buf[MAX_ARGSTR_LEN + 1]
+(256 bytes) is used to format "<name>=<comm>". However, since name can
+be up to 32 bytes (MAX_ARG_NAME_LEN) and comm up to 255 bytes
+(MAX_ARGSTR_LEN), the formatted string can exceed 256 bytes and get
+truncated by snprintf(), causing spurious argument matching failures.
 
-After the index == 0 iteration the decrement wraps to ULONG_MAX and
-bprm->page[ULONG_MAX] reads sizeof(void *) bytes in front of the array.
-The pointer has wrapped to -1. That garbage pointer is then passed to
-kmap_local_page() and PAGE_SIZE bytes are copied from wherever that
-lands into the stack of the process being created. And the loop doesn't
-terminate either...
+Instead of formatting into a temporary buffer on stack, compare the
+argument name, the '=' delimiter, and the comm expression directly.
 
-Getting there only requires bprm->p < PAGE_SIZE. On !MMU
-bprm_set_stack_limit() and bprm_hit_stack_limit() are empty. So the only
-constraint on how far bprm->p is pushed down is valid_arg_len(), i.e.
-that each individual string still fits in what is left.
+Link: https://lore.kernel.org/all/178454233010.290363.10428767141343428804.stgit@devnote2/
 
-bprm->p starts at PAGE_SIZE * MAX_ARG_PAGES - sizeof(void *) so a
-single argument or environment string of a little over 31 pages leaves
-it in the first page:
-
-  Oops - load access fault [#1]
-  CPU: 0 UID: 0 PID: 1 Comm: victim Not tainted 7.2.0-rc4 #1
-  epc : __memcpy+0xd4/0xf8
-   ra : transfer_args_to_stack+0xaa/0xae
-   s4 : ffffffffffffffff   s2 : 0000000000000000
-   a1 : ffffffdc98000000   a2 : 0000000000001000
-  status: 0000000a00001880 badaddr: ffffffdc98000000 cause: 0000000000000005
-  [<801a5324>] __memcpy+0xd4/0xf8
-  [<800d5f6a>] load_flat_binary+0x43a/0x65e
-  [<800a2de4>] bprm_execve+0x1d4/0x316
-  [<800a351a>] do_execveat_common+0x12e/0x138
-  [<800a3d44>] __riscv_sys_execve+0x38/0x4e
-  Kernel panic - not syncing: Fatal exception in interrupt
-
-This is an arcane bug but we should still fix it.
-
-Count down from MAX_ARG_PAGES so the loop ends when index reaches stop,
-stop == 0 included. The iterations performed are unchanged for every
-other value of stop.
-
-Only CONFIG_MMU=n builds are affected, transfer_args_to_stack() is used
-by binfmt_flat and binfmt_elf_fdpic on nommu only.
-
-The loop predates git history. commit 7e7ec6a93434
-("elf_fdpic_transfer_args_to_stack(): make it generic") only moved it
-from binfmt_elf_fdpic.c into fs/exec.c and narrowed the copy to the used
-part of the first page. The condition and the decrement are unchanged
-from 2.6.12-rc2.
-
-Link: https://patch.msgid.link/20260721-hochachtung-staumauer-pigmente-15d71f7d7d04@brauner
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: eb5bf81330a7 ("tracing/kprobe: Add per-probe delete from event")
 Cc: stable@vger.kernel.org
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exec.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_probe.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -876,7 +876,7 @@ int transfer_args_to_stack(struct linux_
- 	stop = bprm->p >> PAGE_SHIFT;
- 	sp = *sp_location;
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -1212,16 +1212,17 @@ int trace_probe_compare_arg_type(struct
+ bool trace_probe_match_command_args(struct trace_probe *tp,
+ 				    int argc, const char **argv)
+ {
+-	char buf[MAX_ARGSTR_LEN + 1];
+ 	int i;
  
--	for (index = MAX_ARG_PAGES - 1; index >= stop; index--) {
-+	for (index = MAX_ARG_PAGES; index-- > stop; ) {
- 		unsigned int offset = index == stop ? bprm->p & ~PAGE_MASK : 0;
- 		char *src = kmap(bprm->page[index]) + offset;
- 		sp -= PAGE_SIZE - offset;
+ 	if (tp->nr_args < argc)
+ 		return false;
+ 
+ 	for (i = 0; i < argc; i++) {
+-		snprintf(buf, sizeof(buf), "%s=%s",
+-			 tp->args[i].name, tp->args[i].comm);
+-		if (strcmp(buf, argv[i]))
++		int len = strlen(tp->args[i].name);
++
++		if (strncmp(argv[i], tp->args[i].name, len) ||
++		    argv[i][len] != '=' ||
++		    strcmp(argv[i] + len + 1, tp->args[i].comm))
+ 			return false;
+ 	}
+ 	return true;
 
 
