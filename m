@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4C63ABD99;
-	Mon, 17 Aug 2026 15:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C4D3F1ABB;
+	Mon, 17 Aug 2026 15:18:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979932; cv=none; b=ZFwGMAH1+z6wT4kA1DA0xO3Ahdrj3ua5vsTsq/bghZZwTb09LZAPcWMe9U4DgvezxPud7ffp/DUiP6Ubnlpw4BVF5bGeaT8x7oa5uJBe4CA+Tos5x86Q5/meyMeU0bcVgcCuEES86m3mZKiADk/GIAJCx0kjV1hD+HIH1arP+B4=
+	t=1786979935; cv=none; b=USw6IQVnZNnPmxD9JXdIBWdDchigGk5ZZ6IHRR13W2DidEEF+5PW1R5pdIMVFwqdTNCmTWkyNABta2oODGijdvqVVwHYX4LmJjuX7Jh/EyUzl6+YgTskxDYRpUQ8jsPDQN8zEkse3c7kr+uBueHhMTJfZLgk5Gaa2b0gKJiKqss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979932; c=relaxed/simple;
-	bh=TpfrjZJMh7EcVFUHQnAX4KAkrJK9d5FKKuRdUznG3Iw=;
+	s=arc-20240116; t=1786979935; c=relaxed/simple;
+	bh=dYf084edICvJvarZNlWHKxvJ80zldAkbDYsYmpOHYvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hBRN7RUze4U6PVBNKfjpVusZZ1dfFVhEYII8nMeLDrStCVlTiNQdf9grbcCYjqt7gBh33WRvZJdrqASlnV+VOoWnykfqaZDmiKKvTt1ch2Txe0qH9CiaEay2+uyaeO+W8hQvcn/J9dKSs4na+1udJ9YQg0TnXt62Kv2crJvRME0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lUkL8jLr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GIZKRRGxinfFivL1EFJjNOxcUbaD8RlPlwyj0GA6IHzTtLs7Vlp2zL6h/hsQ+aJhIc7CiZ2DdEX0eSEh0TeLQTmNYP1pujUjn3sk+923HtKTmqc1EJyUJOHtTGyCUIAouM8qxzOh3c5m9gm8mA16wAOQruHOa8PubdGYhbGl3l8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gng2Ei+6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lUkL8jLr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D881F000E9;
-	Mon, 17 Aug 2026 15:18:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gng2Ei+6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A5A41F000E9;
+	Mon, 17 Aug 2026 15:18:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979931;
-	bh=24MMRzFOBAbaidVnXs2BmyrKH/sMRKXlPx9DXU5Txbk=;
+	s=korg; t=1786979933;
+	bh=3X8nC6kO5feXrMm5FvogwrG6A930ZJiXRx0Dch4XRXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lUkL8jLrmwmsmZIfUf3rX2VNTjqCJQLuqQ67p32y9YV2SeQgAeEkyRnQbTnReDaU8
-	 bTsbVRzSrv7rh3bOiswImbyoroCyW5baI52forux4RwC+siXIqPnqWi8X1yaE9bw+P
-	 vyb7fXw1G+cH3czALPTLHk4gjihWpIiCFJH7gbOs=
+	b=Gng2Ei+6BV6TLnwzm8TDPAuxg/Kv0sECbv9qo8DEv39zdXtyyvJuDUr6Ekmxs95Aa
+	 bE9zMued94S1AnJSZWxBugW9rtVsoAxCCBwc69fb/b/07cJq3TvL0sbpcxx4604PHU
+	 i0nRAwSYlD03t1erE6IQO0jtIJxhVs4KpuLyKSAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 396/609] bpf: lwt: Fix dst reference leak on reroute failure
-Date: Mon, 17 Aug 2026 15:31:32 +0200
-Message-ID: <20260817132557.475564904@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Subject: [PATCH 6.1 397/609] ALSA: 6fire: Fix UAF at error handling during probe
+Date: Mon, 17 Aug 2026 15:31:33 +0200
+Message-ID: <20260817132557.503694380@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,41 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 88c17de85ddb459c3fe1e3c65d61fa366b1cf0a8 upstream.
+commit a54bf16965f896415c3337bc4fbb40fb11941d99 upstream.
 
-bpf_lwt_xmit_reroute() obtains a referenced dst from the route
-lookup. When skb_cow_head() fails before that dst is installed on the
-skb, the error path only frees the skb. The skb still owns its previous
-dst, so the newly looked up dst reference is leaked.
+Although 6fire driver had a few fixes for dealing with the early error
+handling during the probe phase, it forgot a pending URB before
+freeing the resources, which may lead to a UAF.
 
-Release the new dst reference before freeing the skb on this error
-path.
+This patch addresses it by doing the almost same cleanup procedure
+like the normal disconnect phase at the error path.
 
-Fixes: 3bd0b15281af ("bpf: add handling of BPF_LWT_REROUTE to lwt_bpf.c")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Link: https://patch.msgid.link/20260723060445.21926-1-xuanqiang.luo@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-and-tested-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Closes: https://lore.kernel.org/20260724030900.1984491-1-shuangpeng.kernel@gmail.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260726074821.2288158-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/lwt_bpf.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/usb/6fire/chip.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/core/lwt_bpf.c
-+++ b/net/core/lwt_bpf.c
-@@ -246,8 +246,10 @@ static int bpf_lwt_xmit_reroute(struct s
- 	 * if there is enough header space in skb.
- 	 */
- 	err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
--	if (unlikely(err))
-+	if (unlikely(err)) {
-+		dst_release(dst);
- 		goto err;
-+	}
+--- a/sound/usb/6fire/chip.c
++++ b/sound/usb/6fire/chip.c
+@@ -158,6 +158,10 @@ static int usb6fire_chip_probe(struct us
+ 	return 0;
  
- 	skb_dst_drop(skb);
- 	skb_dst_set(skb, dst);
+ destroy_chip:
++	chip->shutdown = true;
++	if (card)
++		snd_card_disconnect(card);
++	usb6fire_chip_abort(chip);
+ 	snd_card_free(card);
+ 	return ret;
+ }
 
 
