@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E073911DC;
-	Mon, 17 Aug 2026 14:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5273B38A9;
+	Mon, 17 Aug 2026 14:37:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977438; cv=none; b=KUfp3UkmPqAJsjKB++V8mchpNoNoPplPVywnNToxdEAfmxtE0xSAQBF/YrSAvcUsxCn+k53rlgCoqzI8ORu/NuupNy+Kk7w9aGjeJzoq80a8juQdp9uoeL2JwWhQz1I4mTgQeGXZ65wXSJRGopBiNmwSDma1iu091FuuSr1YVHI=
+	t=1786977441; cv=none; b=PPB+kVbH4dPAaslIyQgIwAXDpNM7zQRlPQYTFSFhgLk4i+zS6uacop572Rca8zBQhEn6y/yIlDSGTmACe4zN4bFnTPtMoZv5RjDUl3RFSFRIlFeJ1kyr8MdhFYbDLiUDQelORFG4LcDRw01VC0ejQQc2bFrIWgMxcvm+V4NKV/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977438; c=relaxed/simple;
-	bh=43dYgcWu3b9uqvfV8Xk78ZTyr15fq5xoJ3TcSItX2QI=;
+	s=arc-20240116; t=1786977441; c=relaxed/simple;
+	bh=i35gAbWDiwcEbk3T2wz1DcuGL9Y469nV3AXmhWWfT0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kdORW1e5J3mNKeNDaEI3TPUARm9JoKfUjUzH55IkVPgf95xcH9vajizeLAWKN6enEcnSzlVEytoBLZ2ndxTFLDnKAKmH3o3TKvuSgAECBVa6s2H7xjjxQ8RT9LpC/LDtAp+rV7HOzcy+wjM4I5yuqNbOOQ0EA0AVL1TY5/LyAts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZH9MI6fr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MhjlNZMeBJuy7WUiqwBngdRHPW4hcZN2zeOooHKfB7GnbdkUGqXMkXL7GcDeRZWhjaYqp+rAW5chD7Rxke+r27LeWv5mx8lgAbVOlIXVbNkz/G9Ip/yrR02+ERCMU8EYtJRW+wIOAZYGtlcKu7hA76Mwweh9W+gB6xaOffWSbqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RRB6jT8z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZH9MI6fr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA8D1F000E9;
-	Mon, 17 Aug 2026 14:37:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RRB6jT8z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7AAF1F000E9;
+	Mon, 17 Aug 2026 14:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977437;
-	bh=SciGDXnytOtEAKLTtzsi8gS0i9t7pkxArtwAh+PFOV0=;
+	s=korg; t=1786977440;
+	bh=cVFzCMmDmugPKhSA5frRGyDjXZaulUpo8v5767xkBM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZH9MI6frLL4Z9VkgkUH1+WjhO+DqRektOtDDch6RdQ2A3/ne/9j327kLHhZi8KMg9
-	 T0sjYGLfA/Xj9wl8uevX28ddhd/JZomms/B3ScRbXUspKgreXU6LlHvgoeaxC9UlFJ
-	 7DW2t9Sb8ub8I+7IatwjAg1pxacBHcdXUA/heroQ=
+	b=RRB6jT8zN44lceK+wzMxH9pg0UWwjztjJ+TqmKfLJg3v5/M3jEyq2omWD8H+pJYIb
+	 O/QAJLOt8LgF/csjDMNi5jN4J1dTomVLOMVn+bS7Ch2ptm46fwn7jI+vlOa+j1jg3F
+	 qaRZZdrKZ1EhNhoGgby5jdIkmMKGpYIW8ipUfBtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Julian Anastasov <ja@ssi.bg>,
-	Zhiling Zou <roxy520tt@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.15 312/456] ipvs: do not propagate one-packet flag to synced conns
-Date: Mon, 17 Aug 2026 15:31:42 +0200
-Message-ID: <20260817132551.950450860@linuxfoundation.org>
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 330/456] sctp: reject stale cookies with mismatched verification tags
+Date: Mon, 17 Aug 2026 15:32:00 +0200
+Message-ID: <20260817132552.548420690@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -56,50 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <roxy520tt@gmail.com>
+From: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
 
-commit a63d2dbaeb50a85d4c976b15a36e6b0c7113db5b upstream.
+commit 9d8da8e0a9bce4a340af60dd0446bc7eb8d07587 upstream.
 
-Synced connections can be created before their destination exists. When
-the destination is later added, ip_vs_bind_dest() copies connection flags
-from the destination into cp->flags.
+sctp_unpack_cookie() skips cookie expiration checks whenever an
+association already exists.  This is broader than the exception in
+RFC 9260 Section 5.2.4.
 
-IP_VS_CONN_F_ONE_PACKET connections are not synced. If a synced
-connection inherits IP_VS_CONN_F_ONE_PACKET while it is already hashed,
-expiry can treat it as a one-packet connection and skip unlinking the
-existing conn_tab node, leaving stale hash nodes pointing at a freed
-struct ip_vs_conn.
+For an existing association, Section 5.2.4 permits an expired State
+Cookie only when both Verification Tags in the cookie match the current
+association.  Otherwise, the packet SHOULD be discarded and a Stale
+Cookie ERROR MUST be sent.
 
-Drop IP_VS_CONN_F_ONE_PACKET from destination flags when binding synced
-connections.
+The broad check lets an expired Action A restart cookie reach
+sctp_sf_do_dupcook_a().  In a runtime test with the default 60 second
+cookie lifetime, replaying such a cookie after 65 seconds returned a
+COOKIE-ACK and restarted the association.
 
-Fixes: 26ec037f9841 ("IPVS: one-packet scheduling")
+Check cookie expiration unless both Verification Tags match.  This
+preserves the Action D exception for a lost COOKIE ACK while rejecting
+expired cookies in all other cases.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Suggested-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260723225623.2658868-1-yangyx22@mails.tsinghua.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_conn.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/sctp/sm_make_chunk.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/net/netfilter/ipvs/ip_vs_conn.c
-+++ b/net/netfilter/ipvs/ip_vs_conn.c
-@@ -599,6 +599,9 @@ ip_vs_bind_dest(struct ip_vs_conn *cp, s
- 	flags = cp->flags;
- 	/* Bind with the destination and its corresponding transmitter */
- 	if (flags & IP_VS_CONN_F_SYNC) {
-+		/* Synced conns are hashed, so they can not get this flag */
-+		conn_flags &= ~IP_VS_CONN_F_ONE_PACKET;
-+
- 		/* if the connection is not template and is created
- 		 * by sync, preserve the activity flag.
- 		 */
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -1821,9 +1821,9 @@ no_hmac:
+ 		goto fail;
+ 	}
+ 
+-	/* Check to see if the cookie is stale.  If there is already
+-	 * an association, there is no need to check cookie's expiration
+-	 * for init collision case of lost COOKIE ACK.
++	/* Check to see if the cookie is stale.  RFC 9260 Section 5.2.4
++	 * exempts an expired cookie only when both Verification Tags match
++	 * the current association.
+ 	 * If skb has been timestamped, then use the stamp, otherwise
+ 	 * use current time.  This introduces a small possibility that
+ 	 * a cookie may be considered expired, but this would only slow
+@@ -1834,7 +1834,10 @@ no_hmac:
+ 	else
+ 		kt = ktime_get_real();
+ 
+-	if (!asoc && ktime_before(bear_cookie->expiration, kt)) {
++	if ((!asoc ||
++	     asoc->c.my_vtag != bear_cookie->my_vtag ||
++	     asoc->c.peer_vtag != bear_cookie->peer_vtag) &&
++	    ktime_before(bear_cookie->expiration, kt)) {
+ 		suseconds_t usecs = ktime_to_us(ktime_sub(kt, bear_cookie->expiration));
+ 		__be32 n = htonl(usecs);
+ 
 
 
