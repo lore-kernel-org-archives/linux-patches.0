@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ECC32DC331;
-	Mon, 17 Aug 2026 15:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD1E282F29;
+	Mon, 17 Aug 2026 15:01:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978862; cv=none; b=qWG5n4os17s3+3c0ZBPOFTgCY+YRtQa5ScFpEBnhUg+7h6Ano5eq3e6g8ru9WSqjTxeul9R0hXJMHF8uR28htzhRktNFIEvZmjvB+9Am8etMfs9lMzb2Mq9NtvgGGOfutIbRpTcB10815l4DqsyUCMFDYXgakbCbVXh1Df+95EE=
+	t=1786978865; cv=none; b=diioOXBiP54Dlp/Fs1uKjssglHZhl1VYqEqpXCVax6ohmBpUGPtr/8UmQljqb9kzqaSXwXlEbKpSwMJ3qXH4eLwfUW/CRO+ZbZpp1U/D3zcXWkPyteqPUA2XKz5NXWT54yuaD0cM5X0iXSb9cTJz5r2s975GA+dgaCS3klEe8Ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978862; c=relaxed/simple;
-	bh=H9f1By+hVrHMnC3QaB/tsSvx3IwmENcxw20uUUlJ+pQ=;
+	s=arc-20240116; t=1786978865; c=relaxed/simple;
+	bh=M6gAAGifeX/3X7Ku05TrN40OPN0FeJjmoJfeaCZxQcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rhKO/DgLpzG5lnEbMJlRKiyWXqJ+ziRER0lOda25L1kXdRdSY7s+ne3+Ung63rCz/qNBKhOgsWwxXMZZRkKfPIjhqZv3cc0kz2likjK8H91uYiVoUP4d686u669sS8xZM+ZxAZdU4jqJ1Z6X/nPjnFQKI2uC17YtCXzMUjjOnAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T99i68cW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uzox3RtPgPSWJBipi/X02hkG3cZ/c3XkuWsGhIvXu8zYDNFrnzJDY96y5ZvErJanPLUk68zOBQhMCNGDt+Q8KEw1YIwaQarGh4zHw4SH8Q9tj2aTjKoObNn9rdLIKW9wGLPunqGXngWPoVHWZkXte053hFA4FWWBfSBYvO3kPV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nO/MgHSp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T99i68cW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40021F000E9;
-	Mon, 17 Aug 2026 15:01:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nO/MgHSp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62E21F000E9;
+	Mon, 17 Aug 2026 15:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978861;
-	bh=T+7xCoHAZCsVexeovnjbWKep4sAaCYd65wbSWLe40oE=;
+	s=korg; t=1786978864;
+	bh=kJXmiTd26GBhU5h94I6g7uvQkHloCN8XTRD5t6+Q6Wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T99i68cWaxzjND2QbDf7cHh3TOp2BcE7Ew9I6fHn4f4RE+xbIwykibu7DOaoGdPj6
-	 w53lymur/mDTiNgAFHhHEYvTcVpanr36YTBpzLcW8chcFMmvXHHFoTKDUCvMdI171A
-	 tk2AkAvW3yu5YgZzuAFqNuDuFJmQpcvvQLjvmENw=
+	b=nO/MgHSpBZeDWGzA/Ngi2wFq5/CflJF2sVtkrMTMlzfJQ04BO9RqRP20Ok2/QyiUZ
+	 9xuX2kAZtwsA6W9lloXo1VoSwX7pCvm89EeXrQJPUV3Wbyl8bktBJedFw6F3C5YieP
+	 En5ZNN35PqbHv7jLY6am8DFBdTIZ0W9yWZEPuM8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
+	Phil Rosenthal <phil@phil.gs>,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.1 007/609] KVM: nVMX: Hide shadow VMCS right after VMCLEAR
-Date: Mon, 17 Aug 2026 15:25:03 +0200
-Message-ID: <20260817132543.387227913@linuxfoundation.org>
+Subject: [PATCH 6.1 008/609] KVM: x86/mmu: Fix use-after-free on vendor module reload
+Date: Mon, 17 Aug 2026 15:25:04 +0200
+Message-ID: <20260817132543.425893563@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,54 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Phil Rosenthal <phil@phil.gs>
 
-commit 622ebfac01ba4f9c0060cebd41257fe46fc4a0b3 upstream.
+commit 52f2f7c30126037975389aa04d24c506a5177c35 upstream.
 
-free_nested() frees the shadow VMCS while vmcs01 still points to it. But
-because it is asynchronous with respect to loaded_vmcs_clear(), the vCPU
-might migrate before the pointer is cleared and __loaded_vmcs_clear()
-may then execute VMCLEAR.
+mmu_destroy_caches() destroys pte_list_desc_cache and
+mmu_page_header_cache, but leaves both pointers unchanged.  The pointers
+live in kvm.ko, and therefore survive when a vendor module is unloaded
+while kvm.ko remains loaded.
 
-The VMCS needs to stay attached until its explicit VMCLEAR completes, but
-then it can be hidden and the page safely freed.
+If creation of pte_list_desc_cache fails during a subsequent vendor
+module load, its assignment sets pte_list_desc_cache to NULL and the
+error path calls mmu_destroy_caches().  mmu_page_header_cache still
+points to the cache destroyed during the preceding vendor module
+unload.  Passing that stale pointer to kmem_cache_destroy() causes a
+slab use-after-free.
 
-Fixes: 355f4fb1405e ("kvm: nVMX: VMCLEAR an active shadow VMCS after last use")
+Reproduce the issue on a v7.1.3 kernel with CONFIG_KASAN=y,
+CONFIG_KASAN_GENERIC=y, CONFIG_KVM=m, and CONFIG_KVM_INTEL=m.  A
+one-shot test hook forces pte_list_desc_cache to NULL on the second
+invocation of kvm_mmu_vendor_module_init():
+
+  1. Load kvm.ko and kvm-intel.ko, creating both caches.
+  2. Unload only kvm_intel, leaving kvm.ko loaded.
+  3. Reload kvm_intel and force initialization through the -ENOMEM path.
+
+KASAN reports:
+
+  BUG: KASAN: slab-use-after-free in
+  kvm_mmu_vendor_module_init+0x5b/0x170 [kvm]
+  ...
+  kmem_cache_destroy+0x21/0x1d0
+  kvm_mmu_vendor_module_init+0x5b/0x170 [kvm]
+  ...
+  Allocated by task 16817:
+  __kmem_cache_create_args+0x12c/0x3b0
+  __kmem_cache_create.constprop.0+0xb6/0xf0 [kvm]
+  kvm_mmu_vendor_module_init+0x13b/0x170 [kvm]
+  ...
+  Freed by task 16820:
+  kmem_cache_destroy+0x117/0x1d0
+  kvm_mmu_vendor_module_exit+0x21/0x30 [kvm]
+
+Clear both pointers immediately after destroying their caches so that
+the stored state reflects the caches' lifetime and repeated cleanup is
+safe.
+
+With the fix applied, the same injected vendor module reload fails with
+-ENOMEM as expected and produces no KASAN report.
+
+Fixes: cb498ea2ce1d ("KVM: Portability: Combine kvm_init and kvm_init_x86")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Phil Rosenthal <phil@phil.gs>
+Message-ID: <20260718-kvm-mmu-cache-uaf-v3-1-e103b93c74e1@phil.gs>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/nested.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ arch/x86/kvm/mmu/mmu.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -287,6 +287,7 @@ static void vmx_switch_vmcs(struct kvm_v
- static void free_nested(struct kvm_vcpu *vcpu)
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -6643,7 +6643,9 @@ static struct shrinker mmu_shrinker = {
+ static void mmu_destroy_caches(void)
  {
- 	struct vcpu_vmx *vmx = to_vmx(vcpu);
-+	struct vmcs *shadow_vmcs;
+ 	kmem_cache_destroy(pte_list_desc_cache);
++	pte_list_desc_cache = NULL;
+ 	kmem_cache_destroy(mmu_page_header_cache);
++	mmu_page_header_cache = NULL;
+ }
  
- 	if (WARN_ON_ONCE(vmx->loaded_vmcs != &vmx->vmcs01))
- 		vmx_switch_vmcs(vcpu, &vmx->vmcs01);
-@@ -304,9 +305,15 @@ static void free_nested(struct kvm_vcpu
- 	vmx->nested.current_vmptr = INVALID_GPA;
- 	if (enable_shadow_vmcs) {
- 		vmx_disable_shadow_vmcs(vmx);
--		vmcs_clear(vmx->vmcs01.shadow_vmcs);
--		free_vmcs(vmx->vmcs01.shadow_vmcs);
-+
-+		/*
-+		 * Keep the pointer visible until after VMCLEAR, so migration
-+		 * can clear an active shadow VMCS on the old CPU.
-+		 */
-+		shadow_vmcs = vmx->vmcs01.shadow_vmcs;
-+		vmcs_clear(shadow_vmcs);
- 		vmx->vmcs01.shadow_vmcs = NULL;
-+		free_vmcs(shadow_vmcs);
- 	}
- 	kfree(vmx->nested.cached_vmcs12);
- 	vmx->nested.cached_vmcs12 = NULL;
+ static int get_nx_huge_pages(char *buffer, const struct kernel_param *kp)
 
 
