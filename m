@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221C62F7F02;
-	Mon, 17 Aug 2026 14:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7CA64B0481;
+	Mon, 17 Aug 2026 14:41:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977700; cv=none; b=fdO16IKNB5FkdGa9T37kDDofZw8zZqj5UabvgxpMLwl0x4tA9Z7ulcS+zx8j5VqZNxbtPq3EWTb8r7iXB/73+6hYJxq4iCS+5Fvz71HjBULeJi0DKH8k6mJj8FIDzr+eHzFv/r0ttJ1pXUqB2kMFh95W8p3+SVZ1XqDeODEEcjQ=
+	t=1786977703; cv=none; b=n64EFmZviyeiSnVcBgQ/8Nt1O9CKYXobhtmBHjs2NULD48fZlid8HR9a9Jt1TglDR8xHOmV91STOOeBSKzK5X4L1zx7uoJHWKZXFx0DrK3FWkn7cjRlSnvtHDc2zSZkVP5rXiCAvT6gXkZDrjbfZWOcjlKlP6hYyG07XA2C+VdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977700; c=relaxed/simple;
-	bh=kE4GpBymgBDQSLO5huYZQ8V+TfhGybyAb5n3/qJ8A+A=;
+	s=arc-20240116; t=1786977703; c=relaxed/simple;
+	bh=IZIPfqDBbceVPDi5f6y2SQ/406HJ+ukWAXh3EpARm6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SLQi5dI0bmqsBxVsZkxNUK2KiKTpMUWI77eR5LYOk+aMZ+Jczas+NN4cSYnI45IABpZlWyrzi3xlYLl6p1KThNPb2bslNl44JMoWc7Y1wFPJa+/L7r4mVg0rEB34Pc8SrGQWm/B9t2COqqoSSxZoid4+i9h/jXBzebMvcdenyRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=He2OAeSb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DEy48zLLDKK7YE5u6DdRjdfMfiDYE2RaptKTQcA+q3utWr1cP76otsUpjSHSpA36c8/hQnNijz6SYhpCEq9c/nfEJyZUuhXSaJof8+4wRsHqsUoeeyLEFqgADqR3GRbK6r1RaQ0vrpSvnd3X7xMv+BpdGbRuBIkNbGouiUJ+GzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mT9p6zWt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="He2OAeSb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6A31F000E9;
-	Mon, 17 Aug 2026 14:41:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mT9p6zWt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8991F000E9;
+	Mon, 17 Aug 2026 14:41:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977699;
-	bh=PGCzDT1Y+y961Al63zT6fPKX6U0vLW6KKtdTQaJVibo=;
+	s=korg; t=1786977701;
+	bh=1FPpiR+8pgkNgvOm+RlwuUlvLpi48D4A5J+oUMiW3+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=He2OAeSbbQCqzk1PMIlPAD7L4gWrBhzV9pdpdvz39xMnIbDQ0piTGxlblZfJEZkIb
-	 bZ8iv4B0qSR91JRp73qBHo0MEfGj9Ds2v7QlIzge/rlcRkoQ6Qhp4zRGtgooIaWW+x
-	 HTeLamz9JravpbA86KZnGyqXr8yqxbH8pu/p6joQ=
+	b=mT9p6zWt2gu3mc+DnjVotkCylvhOsC4Y1/ECqlQ0qy5Xo6ZE3c32kMPNW7iHVxTVu
+	 Vy3Nkh8uCu+OwiWsnJocqqJKV1agur30Zr+hPAxnf4twqPjh+K3WdKJzuWYC8zrA2J
+	 7oKh20akhBRIm99tfXAvXLGHJqXGqGt5kwF6PkCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siwei Zhang <oss@fourdim.xyz>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Marco Elver <elver@google.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Todd Kjos <tkjos@google.com>
-Subject: [PATCH 5.15 419/456] Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref
-Date: Mon, 17 Aug 2026 15:33:29 +0200
-Message-ID: <20260817132555.597851940@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 420/456] Bluetooth: 6lowpan: Fix using chan->conn as indication to no remote netdev
+Date: Mon, 17 Aug 2026 15:33:30 +0200
+Message-ID: <20260817132555.630812479@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -53,253 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit b66774b48dd98f07254951f74ea6f513efe7ff8b ]
+[ Upstream commit d38eaf611839b85ade3dd3db309dbc8aaaaf0095 ]
 
-l2cap_chan_timeout() runs asynchronously and accesses chan->conn. If
-the connection is torn down while the timer is running or pending,
-chan->conn can be freed, leading to a use-after-free when the timer
-worker attempts to lock conn->lock:
+b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding
+conn ref") don't reset the chan->conn to NULL anymore making the bt#
+netdev not be remove once the last l2cap_chan_del is removed.
 
-| BUG: KASAN: slab-use-after-free in instrument_atomic_read_write include/linux/instrumented.h:112 [inline]
-| BUG: KASAN: slab-use-after-free in atomic_long_try_cmpxchg_acquire include/linux/atomic/atomic-instrumented.h:4456 [inline]
-| BUG: KASAN: slab-use-after-free in __mutex_trylock_fast kernel/locking/mutex.c:161 [inline]
-| BUG: KASAN: slab-use-after-free in mutex_lock+0x4f/0xa0 kernel/locking/mutex.c:318
-| Write of size 8 at addr ffff8881298d9550 by task kworker/2:1/83
-|
-| CPU: 2 UID: 0 PID: 83 Comm: kworker/2:1 Not tainted 7.1.0-rc6-next-20260601-dirty #6 PREEMPT(full)
-| Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-| Workqueue: events l2cap_chan_timeout
-| Call Trace:
-|  <TASK>
-|  instrument_atomic_read_write include/linux/instrumented.h:112 [inline]
-|  atomic_long_try_cmpxchg_acquire include/linux/atomic/atomic-instrumented.h:4456 [inline]
-|  __mutex_trylock_fast kernel/locking/mutex.c:161 [inline]
-|  mutex_lock+0x4f/0xa0 kernel/locking/mutex.c:318
-|  l2cap_chan_timeout+0x5d/0x1b0 net/bluetooth/l2cap_core.c:422
-|  process_one_work kernel/workqueue.c:3326 [inline]
-|  process_scheduled_works+0x7c8/0xfb0 kernel/workqueue.c:3409
-|  worker_thread+0x8a9/0xcf0 kernel/workqueue.c:3490
-|  kthread+0x346/0x430 kernel/kthread.c:436
-|  ret_from_fork+0x1a3/0x470 arch/x86/kernel/process.c:158
-|  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-|  </TASK>
-|
-| Allocated by task 320:
-|  l2cap_conn_add+0xa7/0x820 net/bluetooth/l2cap_core.c:7075
-|  l2cap_connect_cfm+0xdb/0xd70 net/bluetooth/l2cap_core.c:7452
-|  hci_connect_cfm include/net/bluetooth/hci_core.h:2139 [inline]
-|  hci_remote_features_evt+0x52f/0x9f0 net/bluetooth/hci_event.c:3760
-|  hci_event_func net/bluetooth/hci_event.c:7796 [inline]
-|  hci_event_packet+0x561/0xa70 net/bluetooth/hci_event.c:7847
-|  hci_rx_work+0x370/0x890 net/bluetooth/hci_core.c:4040
-|  process_one_work kernel/workqueue.c:3326 [inline]
-|  process_scheduled_works+0x7c8/0xfb0 kernel/workqueue.c:3409
-|  worker_thread+0x8a9/0xcf0 kernel/workqueue.c:3490
-|  kthread+0x346/0x430 kernel/kthread.c:436
-|  ret_from_fork+0x1a3/0x470 arch/x86/kernel/process.c:158
-|  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-|
-| Freed by task 322:
-|  hci_disconn_cfm include/net/bluetooth/hci_core.h:2154 [inline]
-|  hci_conn_hash_flush+0x101/0x1f0 net/bluetooth/hci_conn.c:2736
-|  hci_dev_close_sync+0x889/0xde0 net/bluetooth/hci_sync.c:5405
-|  hci_dev_do_close net/bluetooth/hci_core.c:502 [inline]
-|  hci_unregister_dev+0x1f7/0x370 net/bluetooth/hci_core.c:2679
-|  vhci_release+0x12a/0x180 drivers/bluetooth/hci_vhci.c:690
-|  __fput+0x369/0x890 fs/file_table.c:510
-|  task_work_run+0x160/0x1d0 kernel/task_work.c:233
-|  get_signal+0xf5b/0x1120 kernel/signal.c:2810
-|  arch_do_signal_or_restart+0x4d/0x600 arch/x86/kernel/signal.c:337
-|  __exit_to_user_mode_loop kernel/entry/common.c:64 [inline]
-|  exit_to_user_mode_loop+0x85/0x510 kernel/entry/common.c:98
-|  do_syscall_64+0x263/0x3d0 arch/x86/entry/syscall_64.c:100
-|  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-|
-| The buggy address belongs to the object at ffff8881298d9400
-|  which belongs to the cache kmalloc-512 of size 512
-| The buggy address is located 336 bytes inside of
-|  freed 512-byte region [ffff8881298d9400, ffff8881298d9600)
+Instead of restoring the original behavior this remove the logic of
+keeping the interface after the last channel is removed because it
+never worked as intended and the l2cap_chan_del always detach its
+l2cap_conn which results in always removing the channel anyway.
 
-Fix it by having chan->conn hold a reference to l2cap_conn (via
-l2cap_conn_get) when the channel is added to the connection, and
-releasing it in the channel destructor. This ensures the l2cap_conn
-remains alive as long as the channel exists.
-
-A new FLAG_DEL channel flag is introduced to indicate that the channel
-has been deleted from its connection. l2cap_chan_del() atomically sets
-this flag using test_and_set_bit() instead of setting chan->conn to
-NULL. All asynchronous workers (l2cap_chan_timeout, l2cap_ack_timeout,
-l2cap_monitor_timeout, l2cap_retrans_timeout) and l2cap_chan_send()
-check FLAG_DEL to determine whether the channel has been torn down,
-rather than testing chan->conn for NULL.
-
-Fixes: 8c8e620467a7 ("Bluetooth: L2CAP: use chan timer to close channels in cleanup_listen()")
-Cc: <stable@vger.kernel.org>
-Cc: Siwei Zhang <oss@fourdim.xyz>
-Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Assisted-by: Gemini:gemini-3.1-pro-preview
-Reported-by: https://sashiko.dev/#/patchset/20260521021249.3258069-1-oss%40fourdim.xyz
-Change-Id: Ie9862976d25c3e6d386689cd198ebe5ab4cc5509
-Signed-off-by: Marco Elver <elver@google.com>
+Fixes: b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Todd Kjos <tkjos@google.com>
 ---
- include/net/bluetooth/l2cap.h |  1 +
- net/bluetooth/l2cap_core.c    | 36 +++++++++++++++++++++--------------
- 2 files changed, 23 insertions(+), 14 deletions(-)
+ net/bluetooth/6lowpan.c | 18 +++---------------
+ 1 file changed, 3 insertions(+), 15 deletions(-)
 
-diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
-index beb690a162ff2..57315b9dc059e 100644
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -776,6 +776,7 @@ enum {
- 	FLAG_ECRED_CONN_REQ_SENT,
- 	FLAG_PENDING_SECURITY,
- 	FLAG_HOLD_HCI_CONN,
-+	FLAG_DEL,
- };
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index 9424d153f323f..d0b1882f5b4b7 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -775,20 +775,10 @@ static void chan_close_cb(struct l2cap_chan *chan)
+ 	struct lowpan_btle_dev *dev = NULL;
+ 	struct lowpan_peer *peer;
+ 	int err = -ENOENT;
+-	bool last = false, remove = true;
++	bool last = false;
  
- /* Lock nesting levels for L2CAP channels. We need these because lockdep
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 913c0d04a481a..bf031426c912e 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -435,7 +435,7 @@ static void l2cap_chan_timeout(struct work_struct *work)
+ 	BT_DBG("chan %p conn %p", chan, chan->conn);
  
- 	BT_DBG("chan %p state %s", chan, state_to_string(chan->state));
+-	if (chan->conn && chan->conn->hcon) {
+-		if (!is_bt_6lowpan(chan->conn->hcon))
+-			return;
+-
+-		/* If conn is set, then the netdev is also there and we should
+-		 * not remove it.
+-		 */
+-		remove = false;
+-	}
+-
+ 	spin_lock(&devices_lock);
  
--	if (!conn) {
-+	if (!conn || test_bit(FLAG_DEL, &chan->flags)) {
- 		l2cap_chan_put(chan);
- 		return;
+ 	list_for_each_entry_rcu(entry, &bt_6lowpan_devices, list) {
+@@ -815,10 +805,8 @@ static void chan_close_cb(struct l2cap_chan *chan)
+ 
+ 		ifdown(dev->netdev);
+ 
+-		if (remove) {
+-			INIT_WORK(&entry->delete_netdev, delete_netdev);
+-			schedule_work(&entry->delete_netdev);
+-		}
++		INIT_WORK(&entry->delete_netdev, delete_netdev);
++		schedule_work(&entry->delete_netdev);
+ 	} else {
+ 		spin_unlock(&devices_lock);
  	}
-@@ -446,6 +446,9 @@ static void l2cap_chan_timeout(struct work_struct *work)
- 	 */
- 	l2cap_chan_lock(chan);
- 
-+	if (test_bit(FLAG_DEL, &chan->flags))
-+		goto unlock;
-+
- 	if (chan->state == BT_CONNECTED || chan->state == BT_CONFIG)
- 		reason = ECONNREFUSED;
- 	else if (chan->state == BT_CONNECT &&
-@@ -458,10 +461,11 @@ static void l2cap_chan_timeout(struct work_struct *work)
- 
- 	chan->ops->close(chan);
- 
-+unlock:
- 	l2cap_chan_unlock(chan);
--	l2cap_chan_put(chan);
- 
- 	mutex_unlock(&conn->chan_lock);
-+	l2cap_chan_put(chan);
- }
- 
- struct l2cap_chan *l2cap_chan_create(void)
-@@ -511,6 +515,9 @@ static void l2cap_chan_destroy(struct kref *kref)
- 	list_del(&chan->global_l);
- 	write_unlock(&chan_list_lock);
- 
-+	if (chan->conn)
-+		l2cap_conn_put(chan->conn);
-+
- 	kfree(chan);
- }
- 
-@@ -593,7 +600,7 @@ void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
- 
- 	conn->disc_reason = HCI_ERROR_REMOTE_USER_TERM;
- 
--	chan->conn = conn;
-+	chan->conn = l2cap_conn_get(conn);
- 
- 	switch (chan->chan_type) {
- 	case L2CAP_CHAN_CONN_ORIENTED:
-@@ -648,31 +655,28 @@ void l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
- 
- void l2cap_chan_del(struct l2cap_chan *chan, int err)
- {
--	struct l2cap_conn *conn = chan->conn;
--
- 	__clear_chan_timer(chan);
- 
--	BT_DBG("chan %p, conn %p, err %d, state %s", chan, conn, err,
-+	BT_DBG("chan %p, err %d, state %s", chan, err,
- 	       state_to_string(chan->state));
- 
- 	chan->ops->teardown(chan, err);
- 
--	if (conn) {
--		struct amp_mgr *mgr = conn->hcon->amp_mgr;
-+	if (chan->conn && !test_and_set_bit(FLAG_DEL, &chan->flags)) {
-+		struct amp_mgr *mgr = chan->conn->hcon->amp_mgr;
-+
- 		/* Delete from channel list */
- 		list_del(&chan->list);
- 
- 		l2cap_chan_put(chan);
- 
--		chan->conn = NULL;
--
- 		/* Reference was only held for non-fixed channels or
- 		 * fixed channels that explicitly requested it using the
- 		 * FLAG_HOLD_HCI_CONN flag.
- 		 */
- 		if (chan->chan_type != L2CAP_CHAN_FIXED ||
- 		    test_bit(FLAG_HOLD_HCI_CONN, &chan->flags))
--			hci_conn_drop(conn->hcon);
-+			hci_conn_drop(chan->conn->hcon);
- 
- 		if (mgr && mgr->bredr_chan == chan)
- 			mgr->bredr_chan = NULL;
-@@ -2044,7 +2048,7 @@ static void l2cap_monitor_timeout(struct work_struct *work)
- 
- 	l2cap_chan_lock(chan);
- 
--	if (!chan->conn) {
-+	if (!chan->conn || test_bit(FLAG_DEL, &chan->flags)) {
- 		l2cap_chan_unlock(chan);
- 		l2cap_chan_put(chan);
- 		return;
-@@ -2065,7 +2069,7 @@ static void l2cap_retrans_timeout(struct work_struct *work)
- 
- 	l2cap_chan_lock(chan);
- 
--	if (!chan->conn) {
-+	if (!chan->conn || test_bit(FLAG_DEL, &chan->flags)) {
- 		l2cap_chan_unlock(chan);
- 		l2cap_chan_put(chan);
- 		return;
-@@ -2690,7 +2694,7 @@ int l2cap_chan_send(struct l2cap_chan *chan, struct msghdr *msg, size_t len)
- 	int err;
- 	struct sk_buff_head seg_queue;
- 
--	if (!chan->conn)
-+	if (!chan->conn || test_bit(FLAG_DEL, &chan->flags))
- 		return -ENOTCONN;
- 
- 	/* Connectionless channel */
-@@ -3291,12 +3295,16 @@ static void l2cap_ack_timeout(struct work_struct *work)
- 
- 	l2cap_chan_lock(chan);
- 
-+	if (test_bit(FLAG_DEL, &chan->flags))
-+		goto unlock;
-+
- 	frames_to_ack = __seq_offset(chan, chan->buffer_seq,
- 				     chan->last_acked_seq);
- 
- 	if (frames_to_ack)
- 		l2cap_send_rr_or_rnr(chan, 0);
- 
-+unlock:
- 	l2cap_chan_unlock(chan);
- 	l2cap_chan_put(chan);
- }
 -- 
 2.53.0
 
