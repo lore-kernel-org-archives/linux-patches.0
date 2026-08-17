@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778AF3EC2CD;
-	Mon, 17 Aug 2026 15:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE39442385;
+	Mon, 17 Aug 2026 15:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979828; cv=none; b=AqRWbhyfoUZrTXlW94xlee7ac/J6hNden9iB2BVk9AmtpAtgjuNmVNDE/k/9iGh8U7Vr+c7RQ7cSjBqj1VuGY9X/qY3qeTY0/ZLKUpUuRBcKvAcFbM/RMwYDinj1PmM6q7m3En2HVj4uEwhyt/gtQGSR6dfk4NBvwhXG6/wviBc=
+	t=1786979832; cv=none; b=YVz8lGEej9B0ELV6yaOlo+YDhNfRPMXuFy7P4ChANLKB9ekRXShTzRTkhe0wn5zb4JFeQ6tXuFD64wvRzMDJv6h50xH2D/SIy58u+kUccqXRMde7DBHmJg5CU+xmHfqkYupJBidhpnIw5ImzaAoOpZir3k4QZ6CpczWUoxN+F98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979828; c=relaxed/simple;
-	bh=Z+3K/ONnjecoPd/U7Otu+pNQGFPaHssVG9dT0h+oOWg=;
+	s=arc-20240116; t=1786979832; c=relaxed/simple;
+	bh=f7z/fGXA9LxVQ8od9thX2mk/pwGtz9P6gkiARv7BnMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gZx35MQjii95ehP9+U6GQ4EWRL1n0b7uDF/Lc149cYb10mU1nM5Jba8YSaqhu+yxIwIW8bmZvvxfLI9DGkXPpceuCRzr519tOGZPB9EyIOB9T4H7cYS0jrjd93qoHtjRCbPEpmCuwjOHj3WY+yj56WT6xwdZu6iXNT+UXV0xQEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6BnZPSB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r21liBy28hCSoMILYMixT77lONnLhM6atqOGhKtNQzlHuMhdR3oHYCmPJ72KTmvtBhv1PhX55diNs29pIeXuzjXagCc6jmfDnbL6SM0RAyLz/0dcH+jZsNxDZiYbmbANGuOgT0NPGak77WriLRLEifD3PX5NO5JfcaMmho9iLJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXMSkFef; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6BnZPSB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16DC1F00A3A;
-	Mon, 17 Aug 2026 15:17:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXMSkFef"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C661F000E9;
+	Mon, 17 Aug 2026 15:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979827;
-	bh=PA6SbF+yZBqB1opz/r+mvtQtFU5wqWrPaDdqZuaq7H4=;
+	s=korg; t=1786979830;
+	bh=PModMqLUE5Jf84lJj6O07DMh7LTWjBao3PT5MVvGudo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j6BnZPSBAllZ2uLOiKv6Gu5YC+fXGiZBlGOoQSvbeKcbZPpoCG31V8X1hsPyzG2SB
-	 0Na6uu9jUIZO3ic4guOFkDmjEH2gM4iQPMYq13/+63q0TMY3HEUygvGtjIdXkeU8nd
-	 oInleHP77ErB7CX46N+MlYUhfiZWXUJkyjsaBFyQ=
+	b=nXMSkFefa3Hb6hNa4TcMXYB5bXkI3QZLsyNAq9hFUPbb+Dv4ftFrUBK7lLm+QpIXe
+	 mOFOT+MkPFFTPvOCfGet9wSsct9kEDXKrhxyVshKwfwJVtRBol3BD58lsTAqJoL9aC
+	 jif28YMr3zLfpOxDuyWseeunFaJIOWVKisVB+SGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 322/609] drm/mediatek: Check CRTC state before freeing
-Date: Mon, 17 Aug 2026 15:30:18 +0200
-Message-ID: <20260817132555.003831257@linuxfoundation.org>
+Subject: [PATCH 6.1 323/609] keys: fix out-of-bounds read in keyring_get_key_chunk()
+Date: Mon, 17 Aug 2026 15:30:19 +0200
+Message-ID: <20260817132555.041571862@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,49 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 233a4d3a39fc1585f5e271b2adab43c6af025ae0 ]
+[ Upstream commit 63918731f9ae25b5deb022f118e941e6dddfcef4 ]
 
-mtk_crtc_reset() destroys the current CRTC state only when crtc->state
-is non-NULL, but it always converts crtc->state to struct mtk_crtc_state
-and passes the result to kfree().
+For description-level chunks keyring_get_key_chunk() advances the read
+pointer by level * sizeof(long) past the inline prefix but only
+bounds-checks the prefix, so a long enough key description is read past
+its kmemdup(desc, desc_len + 1) allocation.  Compute the full byte
+offset and bounds-check the description against it before reading.
 
-When reset is called without an existing state, container_of(NULL, ...)
-does not produce NULL. Keep the mtk state free in the same crtc->state
-guard as the helper state destruction.
+The walk only reaches a description-level chunk when two keys collide
+through the hash, x, type and domain_tag chunks, so this is reached from
+an unprivileged add_key(2) with a crafted pair of same-type keys whose
+index hashes collide; KASAN reports a slab-out-of-bounds read.
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
-
-Fixes: 2d267b81898e ("drm/mtk: Use __drm_atomic_helper_crtc_reset")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20260707150528.2270739-1-ruoyuw560@gmail.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: f771fde82051 ("keys: Simplify key description management")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20260719161505.2423935-2-michael.bommarito@gmail.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_crtc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ security/keys/keyring.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-index aba26ec9a1425..59b310f7327c8 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-@@ -183,10 +183,10 @@ static void mtk_drm_crtc_reset(struct drm_crtc *crtc)
- {
- 	struct mtk_crtc_state *state;
+diff --git a/security/keys/keyring.c b/security/keys/keyring.c
+index e105349794f23..b9ca9dc9b0c3f 100644
+--- a/security/keys/keyring.c
++++ b/security/keys/keyring.c
+@@ -271,6 +271,7 @@ static unsigned long keyring_get_key_chunk(const void *data, int level)
+ 	unsigned long chunk = 0;
+ 	const u8 *d;
+ 	int desc_len = index_key->desc_len, n = sizeof(chunk);
++	unsigned int offset;
  
--	if (crtc->state)
-+	if (crtc->state) {
- 		__drm_atomic_helper_crtc_destroy_state(crtc->state);
--
--	kfree(to_mtk_crtc_state(crtc->state));
-+		kfree(to_mtk_crtc_state(crtc->state));
-+	}
- 	crtc->state = NULL;
+ 	level /= ASSOC_ARRAY_KEY_CHUNK_SIZE;
+ 	switch (level) {
+@@ -284,12 +285,12 @@ static unsigned long keyring_get_key_chunk(const void *data, int level)
+ 		return (unsigned long)index_key->domain_tag;
+ 	default:
+ 		level -= 4;
+-		if (desc_len <= sizeof(index_key->desc))
++		offset = sizeof(index_key->desc) + level * sizeof(long);
++		if (desc_len <= offset)
+ 			return 0;
  
- 	state = kzalloc(sizeof(*state), GFP_KERNEL);
+-		d = index_key->description + sizeof(index_key->desc);
+-		d += level * sizeof(long);
+-		desc_len -= sizeof(index_key->desc);
++		d = index_key->description + offset;
++		desc_len -= offset;
+ 		if (desc_len > n)
+ 			desc_len = n;
+ 		do {
 -- 
 2.53.0
 
