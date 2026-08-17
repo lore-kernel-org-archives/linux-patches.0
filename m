@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29F6280CE5;
-	Mon, 17 Aug 2026 14:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8300C13C9C4;
+	Mon, 17 Aug 2026 14:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976757; cv=none; b=fTfMpUDC4oisUg6e7Eyiti6g5V2wiSXhnsg8NXPpPJNy/6mdtb8/oWHfzsK+DWLZoIL9I1r0tedjsB9XTCnGkajpqs9+2hR+7wXNYutHl0B0na9wiY7JiUuO8WRRJt0/0dtlM2jVM92d2qvAa2R1bBI5lMD0bMENvJfdjwL4FKo=
+	t=1786976760; cv=none; b=YVoP60qWg7I/s9v2VKYleTDd//OeSOgbPRGRUYA47spVa6XXVYYs7osI8ZgmTOVIFEm7JoxDu2QiMII+UlRuDWFukTjZfsQCnMgsfXLKmgF9iU0P9vspO6Wb3573enfBQcP7YVuSj9xYb9oezqh0IwFhVleukhEDflMFnm9BbAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976757; c=relaxed/simple;
-	bh=zRyYyaXXzVoBzh5xjw4iTJ5sjLeN6KAECr9kCX+obIw=;
+	s=arc-20240116; t=1786976760; c=relaxed/simple;
+	bh=P5ZbtkZdSQ9ZdnfV6AGU+X4YwflamaK59zm3pI19zUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lXnJ8JRB+a1XROUT0v5BP7AdC/o3H6NDE7WDd+SCifKpxZwKZoWASyM3hoocc72JjvoWnNWszdDHUXUIhN0Dy7vHSwMcbNqhNvZMjmNBxLuW8XZl4fKy1QkXpKrdSSvLA/mpsBc1JRnldGfuGx1xpydeZwTKoqEzSch21mI415M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPF/fpKE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nzo6ybc+qcf2asLDT3/yidjajk/fA90+qM6LpZAhTutz/d+ouGM9YFqIvxpcYfg6pWeZVbFOtjxA7n/uKoVTr6aftpRSYqMbjnKd05THlnOEJLvozgu+mw0qhsy4yqr6EqDHj7Rmt9cI341u4PInxQK5TbBVZ31uxYGDjOriw3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uLlAUIWt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPF/fpKE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 073781F000E9;
-	Mon, 17 Aug 2026 14:25:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLlAUIWt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC4D1F000E9;
+	Mon, 17 Aug 2026 14:25:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976756;
-	bh=4TF5iHWVoYisMFYj6hx1Ydw/HG1z4uULsMFebqR+q5w=;
+	s=korg; t=1786976759;
+	bh=RCk+QYOjK+W1iJSSYNVc24xWYRlt24vokt9wJHNUp20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hPF/fpKEfmSdn0UWIQQevNwktdncm79VIfoSeQmptQQ2jomafQN1HfotGYAAMyim/
-	 whWGwS2lu6YzOD+C8IZjIIkgloqMaOcz/JeqeQgG/zDLChQ31L16dkCixXA+dnAEL+
-	 RwuyFy6+HfqlLGexhIUj1JmNsI6zWfGGGLqrFct0=
+	b=uLlAUIWtluNHS0vPZckmCQLC87dvEpqL3ndkQYCxVtPre+CnI3Imkd0a9+mWTplsy
+	 mLkJssYgCnvJ8iXLeMSSVxcW/7QjHCJ5OP6BoXejdaQ5YWTeblLQeyCOxS5exOHxvs
+	 H0SjmYIcHMl7BkHv3Qd6bP0ssJ42Hlx7ZjV8qGrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e62a973f8322b3bbe3ac@syzkaller.appspotmail.com,
-	Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Eddie James <eajames@linux.ibm.com>,
+	Joel Stanley <joel@jms.id.au>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 092/456] usb: atm: ueagle-atm: reject descriptors that confuse probe and disconnect
-Date: Mon, 17 Aug 2026 15:28:02 +0200
-Message-ID: <20260817132543.709860107@linuxfoundation.org>
+Subject: [PATCH 5.15 093/456] hwmon: (occ) Add sysfs entry for IPS (Idle Power Saver) status
+Date: Mon, 17 Aug 2026 15:28:03 +0200
+Message-ID: <20260817132543.746490379@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,90 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
+From: Eddie James <eajames@linux.ibm.com>
 
-[ Upstream commit 71132cedd1ecbc4032d76e9928c18a10f7e39b80 ]
+[ Upstream commit 6109c3e1905c3f8d0a3909c5f6a9ad5186822b2b ]
 
-uea_probe() distinguishes a pre-firmware device from a post-firmware one
-using the USB id (UEA_IS_PREFIRM()), and stores a different object as the
-interface data in each case: a 'struct completion' for a pre-firmware
-device (to be waited on in .disconnect()), or a 'struct usbatm_data' for a
-post-firmware one.
+BMC control applications need to check the Idle Power Saver status
+byte returned by the OCC poll response, so export it in sysfs with
+the other OCC-specific data.
 
-uea_disconnect() instead tells the two apart by the number of interfaces
-of the active configuration (a pre-firmware device exposes a single
-interface, ADI930 has 2 and eagle has 3), and casts the interface data
-accordingly.
-
-Because the two handlers use different criteria, a crafted device that
-advertises a pre-firmware id together with a multi-interface descriptor
-(or a post-firmware id with a single interface) makes them disagree: the
-small 'struct completion' stored by uea_probe() is then passed to
-usbatm_usb_disconnect(), which casts it to 'struct usbatm_data' and takes
-instance->serialize, reading past the end of the allocation:
-
-  BUG: KASAN: slab-out-of-bounds in __mutex_lock+0x152a/0x1b80
-  Read of size 8 at addr ffff8880470e2c60 by task kworker/1:2/982
-  ...
-   __mutex_lock+0x152a/0x1b80
-   usbatm_usb_disconnect+0x70/0x820
-   uea_disconnect+0x133/0x2c0
-   usb_unbind_interface+0x1dd/0x9e0
-  ...
-  which belongs to the cache kmalloc-96 of size 96
-  The buggy address is located 0 bytes to the right of
-   allocated 96-byte region [ffff8880470e2c00, ffff8880470e2c60)
-
-Reject such inconsistent descriptors in uea_probe() so that both handlers
-always make the same pre/post-firmware decision.
-
-Reported-by: syzbot+e62a973f8322b3bbe3ac@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e62a973f8322b3bbe3ac
-Fixes: e2674dfbed8a ("usb: atm: ueagle-atm: wait for pre-firmware load in .disconnect()")
-Signed-off-by: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
-Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Link: https://patch.msgid.link/20260717080704.1264-1-diegomancera.dev@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+Reviewed-by: Joel Stanley <joel@jms.id.au>
+Link: https://lore.kernel.org/r/20220215151022.7498-2-eajames@linux.ibm.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: 70e76e700fc6 ("hwmon: occ: validate poll response sensor blocks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/atm/ueagle-atm.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/hwmon/occ/common.h |  1 +
+ drivers/hwmon/occ/sysfs.c  | 11 +++++++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/drivers/usb/atm/ueagle-atm.c b/drivers/usb/atm/ueagle-atm.c
-index 661820041ca70d..6a282400027d68 100644
---- a/drivers/usb/atm/ueagle-atm.c
-+++ b/drivers/usb/atm/ueagle-atm.c
-@@ -2591,6 +2591,7 @@ static struct usbatm_driver uea_usbatm_driver = {
- static int uea_probe(struct usb_interface *intf, const struct usb_device_id *id)
- {
- 	struct usb_device *usb = interface_to_usbdev(intf);
-+	bool single_iface = usb->config->desc.bNumInterfaces == 1;
- 	int ret;
+diff --git a/drivers/hwmon/occ/common.h b/drivers/hwmon/occ/common.h
+index 7abf191020628e..ad7d169b517cf3 100644
+--- a/drivers/hwmon/occ/common.h
++++ b/drivers/hwmon/occ/common.h
+@@ -120,6 +120,7 @@ struct occ {
+ 	u8 prev_stat;
+ 	u8 prev_ext_stat;
+ 	u8 prev_occs_present;
++	u8 prev_ips_status;
+ };
  
- 	uea_enters(usb);
-@@ -2600,6 +2601,22 @@ static int uea_probe(struct usb_interface *intf, const struct usb_device_id *id)
- 		le16_to_cpu(usb->descriptor.bcdDevice),
- 		chip_name[UEA_CHIP_VERSION(id)]);
+ int occ_setup(struct occ *occ, const char *name);
+diff --git a/drivers/hwmon/occ/sysfs.c b/drivers/hwmon/occ/sysfs.c
+index 03b16abef67fd3..6dc69c9aa4c290 100644
+--- a/drivers/hwmon/occ/sysfs.c
++++ b/drivers/hwmon/occ/sysfs.c
+@@ -63,6 +63,9 @@ static ssize_t occ_sysfs_show(struct device *dev,
+ 		else
+ 			val = 1;
+ 		break;
++	case 8:
++		val = header->ips_status;
++		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+@@ -88,6 +91,7 @@ static SENSOR_DEVICE_ATTR(occ_mem_throttle, 0444, occ_sysfs_show, NULL, 4);
+ static SENSOR_DEVICE_ATTR(occ_quick_pwr_drop, 0444, occ_sysfs_show, NULL, 5);
+ static SENSOR_DEVICE_ATTR(occ_state, 0444, occ_sysfs_show, NULL, 6);
+ static SENSOR_DEVICE_ATTR(occs_present, 0444, occ_sysfs_show, NULL, 7);
++static SENSOR_DEVICE_ATTR(occ_ips_status, 0444, occ_sysfs_show, NULL, 8);
+ static DEVICE_ATTR_RO(occ_error);
  
-+	/*
-+	 * uea_probe() decides between the pre-firmware and post-firmware case
-+	 * from the USB id and stores a different object as interface data in
-+	 * each case: a struct completion for a pre-firmware device, a struct
-+	 * usbatm_data for a post-firmware one. uea_disconnect() instead tells
-+	 * the two apart by the number of interfaces (a pre-firmware device
-+	 * exposes a single interface, ADI930 has 2 and eagle has 3). A crafted
-+	 * device advertising a pre-firmware id together with a multi-interface
-+	 * descriptor (or the other way around) makes the two disagree, so that
-+	 * usbatm_usb_disconnect() treats the small completion object as a
-+	 * struct usbatm_data and reads out of bounds. Reject such inconsistent
-+	 * descriptors so both paths make the same decision.
-+	 */
-+	if (UEA_IS_PREFIRM(id) != single_iface)
-+		return -ENODEV;
+ static struct attribute *occ_attributes[] = {
+@@ -99,6 +103,7 @@ static struct attribute *occ_attributes[] = {
+ 	&sensor_dev_attr_occ_quick_pwr_drop.dev_attr.attr,
+ 	&sensor_dev_attr_occ_state.dev_attr.attr,
+ 	&sensor_dev_attr_occs_present.dev_attr.attr,
++	&sensor_dev_attr_occ_ips_status.dev_attr.attr,
+ 	&dev_attr_occ_error.attr,
+ 	NULL
+ };
+@@ -162,6 +167,11 @@ void occ_sysfs_poll_done(struct occ *occ)
+ 		sysfs_notify(&occ->bus_dev->kobj, NULL, name);
+ 	}
+ 
++	if (header->ips_status != occ->prev_ips_status) {
++		name = sensor_dev_attr_occ_ips_status.dev_attr.attr.name;
++		sysfs_notify(&occ->bus_dev->kobj, NULL, name);
++	}
 +
- 	usb_reset_device(usb);
+ 	if (occ->error && occ->error != occ->prev_error) {
+ 		name = dev_attr_occ_error.attr.name;
+ 		sysfs_notify(&occ->bus_dev->kobj, NULL, name);
+@@ -174,6 +184,7 @@ void occ_sysfs_poll_done(struct occ *occ)
+ 	occ->prev_stat = header->status;
+ 	occ->prev_ext_stat = header->ext_status;
+ 	occ->prev_occs_present = header->occs_present;
++	occ->prev_ips_status = header->ips_status;
+ }
  
- 	if (UEA_IS_PREFIRM(id)) {
+ int occ_setup_sysfs(struct occ *occ)
 -- 
 2.53.0
 
