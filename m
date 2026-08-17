@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24293429037;
-	Mon, 17 Aug 2026 14:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B79442EEDD;
+	Mon, 17 Aug 2026 14:46:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977971; cv=none; b=iTcil3CZRmI5OTU1rsRTM8D7OcdCErthLlPR0jLBCbMQHVWuragJL8PcymeWYegFZlztYGbkAxfBx0rAdlhT6+gq5UalSZTjDaJAl5eF50eTgPKvPMXI2I9mUuq2n6KUKk54w52L1TR401Te0Jh04lyNhJfv3cnSNOzrKeaq6So=
+	t=1786977974; cv=none; b=DAnQcUovW8WTDsm6WIIOTtLOQSAv5bRxIzqvndfTxmNNviekrlBCC65uSH5mkCoIVLAJ8U1FJVMt/pvzv4u+7dwpCOqOe3EjZssjxMDUhzBRHpiFPEp/PgiaYDG5XZnzmjplymCAGZewNaTz6rP6Ordu9/Wq53JZQUm7mDTdWRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977971; c=relaxed/simple;
-	bh=6GmDxDuuXDPmV4YI2CDe14m/MU9ZJE8ERA3zw+ajvAg=;
+	s=arc-20240116; t=1786977974; c=relaxed/simple;
+	bh=6D5LfPbDIvGw+tNnlvIvjtSuaYFWKFIbQA+OJn+Kr+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BcZf62Um7pKm8+kRSODikUtka2hKak0q0dtYktCzRUwqNcSLRHHVPDNxHWUlVkHAcHeQ6/W7ga+paLx/Bm8KeRzMT9HrYCoKriaaKElTUUo1QPuzeuQ9y1uZSI7Kw0S4OBsjPeTapW5/OVyW1fJ7/NMVr0tkbJcNNxt/xMBxkJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IExWOeTH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PSz4+P65M5tEiWbwDuIvZIruMnfrAIYnkC0/AsiZWbhOwHrrOCStZbkaMOvfkoUEx8JedFP1QgpJUgjYiD9N7qN5W51bxTSd7fTCLBW5BjzSJaunq6EyyjmGCTNVpdVUZbf1lPivmRUO80Z9PeMW6my24Nk3c1SFECGG7SCQj7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZklcEp3S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IExWOeTH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84FCE1F000E9;
-	Mon, 17 Aug 2026 14:46:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZklcEp3S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63E6F1F00A3A;
+	Mon, 17 Aug 2026 14:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977970;
-	bh=ORp+YATfk6JiYXS/Cg/eRQZlpbeEehfCz2hyByJzGGc=;
+	s=korg; t=1786977972;
+	bh=iPS+Re6vVCwq7H82D5NPvSSQWZ1+nFQZShc/XGSoFBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IExWOeTHlL+BuOiQc2LeYkLBS63ks3Nx7JS/fL+9akB75FihBynxeaLv4tYfc9eYZ
-	 xwZklo8D0xgqNsVQhylSGTa8JCXpbH6OmSuX/uQMhd2vKjSB7qLt2D3CJdBFhfOX2i
-	 cu8DsMrzNyv749x5Gb95dMynm/FeJKoXYU2R4sWU=
+	b=ZklcEp3SlNxes13/95OLSAyyuLzh3yNS8S6cnqV/FjXNe6Y6X2BezfIbOz2zXOT3K
+	 ec5p/RztKme+TxPAoTQ+qtA4toTd9/RJPg0JKzEgBqih6ZIBIYshgHiAztOBkUTrCX
+	 6kDYPEJnLHyiYChFMAImooSKs7nNrR4qTpNtKD1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Sidraya Jayagond <sidraya@linux.ibm.com>,
-	Breno Leitao <leitao@debian.org>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Fan XinRan <shinjiangjiang@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/181] net/smc: fix TOCTOU race between smc_listen_out() and listener close
-Date: Mon, 17 Aug 2026 15:32:30 +0200
-Message-ID: <20260817132537.621556464@linuxfoundation.org>
+Subject: [PATCH 6.12 057/181] net: thunderbolt: Tear down DMA paths before stopping the rings
+Date: Mon, 17 Aug 2026 15:32:31 +0200
+Message-ID: <20260817132537.661810584@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -54,69 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sidraya Jayagond <sidraya@linux.ibm.com>
+From: Fan XinRan <shinjiangjiang@gmail.com>
 
-[ Upstream commit 185a4caeecabc150106deda1da170b09f2ad803f ]
+[ Upstream commit 68bf02b6b4ad3f748c6db71fd77b6c0402d252f4 ]
 
-smc_listen_out() reads lsmc->sk.sk_state without the listener lock,
-then acquires lock_sock_nested() only after the check passes. This
-opens a window where smc_close_active() can transition the listener
-to SMC_CLOSED, call smc_close_cleanup_listen() to drain the accept
-queue, and release the lock, all between the lockless read and the
-delayed lock acquisition:
+tbnet_tear_down() stops both rings and frees their frame buffers before
+calling tb_xdomain_disable_paths().  tb_ring_stop() zeroes the ring's
+descriptor base and tbnet_free_buffers() unmaps and frees the pages the
+frames sit in, so by the time __tb_path_deactivate_hop() polls the hop's
+'pending' bit, anything still in flight has nowhere to drain to.
 
-  smc_listen_work (smc_hs_wq)          smc_close_active()
-  -------------------------------      -------------------------
-  release_sock(child)
-  if (sk_state == SMC_LISTEN) TRUE
-                                        lock_sock(listener)
-                                        sk_state = SMC_CLOSED
-                                        smc_close_cleanup_listen()
-                                        release_sock(listener)
-                                        flush_work(tcp_listen_work)
-  lock_sock_nested(listener)
-  smc_accept_enqueue(listener, child) /* child enqueued on dead listener */
+The teardown sequence has been in this order since the driver was added.
+The setup path has not: commit ff7cd07f3064 ("net: thunderbolt: Enable
+DMA paths only after rings are enabled") moved the path enable to the end
+of tbnet_connected_work() and documented why:
 
-smc_close_active() flushes only tcp_listen_work. Work items already
-dispatched onto smc_hs_wq for the CLC handshake continue running
-unguarded. smc_accept_enqueue() takes a sock_hold() on the child that
-is never released, so the child smc_sock, its clcsock, and the
-reference all leak. A remote peer that opens TCP connections while the
-server calls close() can exhaust kernel memory.
+	/* Both logins successful so enable the rings, high-speed DMA
+	 * paths and start the network device queue.
+	 *
+	 * Note we enable the DMA paths last to make sure we have primed
+	 * the Rx ring before any incoming packets are allowed to
+	 * arrive.
+	 */
 
-Move lock_sock_nested() to before the sk_state check so that the test
-and the enqueue are atomic under the listener lock.
+Teardown was never updated to match, so the rings and the paths now come
+down in the same order they go up instead of in reverse.
 
-Fixes: fd57770dd198 ("net/smc: wait for pending work before clcsock release_sock")
-Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Signed-off-by: Sidraya Jayagond <sidraya@linux.ibm.com>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Link: https://patch.msgid.link/20260803070701.126339-1-sidraya@linux.ibm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+On an ASMedia ASM4242 host router the 'pending' bit then never clears:
+every teardown burns the full 500 ms timeout and
+__tb_path_deactivate_hop() returns -ETIMEDOUT.  Raising the timeout to
+5 s does not help, so the hop is not slow to drain, it never drains
+at all.
+
+The failure is invisible above the thunderbolt core.
+__tb_path_deactivate_hops() is void and only calls tb_port_warn();
+tb_path_deactivate(), tb_tunnel_deactivate() and
+__tb_disconnect_xdomain_paths() are void as well, and
+tb_disconnect_xdomain_paths() ends in an unconditional "return 0".  So
+tb_xdomain_disable_paths() reports success and the netdev_warn() below
+it never fires.  Repeated teardowns eventually take the XDomain control
+channel down, after which the peer node is gone and only a power cycle
+brings the controller back.
+
+Deactivating the paths first fixes it.  Measured with kretprobes on a
+stock v6.17 tree with no other patches applied, on a link that was up
+and had just carried traffic:
+
+  before: __tb_path_deactivate_hop() returns 0 for the first hop, then
+          -ETIMEDOUT for the second 500335 us later
+  after:  0 for both, 525 us apart
+
+Alternating the two orderings ABBA over three load levels, four
+teardowns per arm: every teardown failed before the change (21 of 21
+that ran), none failed after (0 of 24).  The before arms ran short
+because the link died partway through.  The same split shows up when
+the interface is enslaved to a bond instead of just brought down, which
+is how I ran into this in the first place.  Throughput and latency after
+the change are unchanged.
+
+Hosts whose routers drain the hop despite the stale descriptor base see
+no functional difference, since the paths end up deactivated either way.
+
+Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
+Signed-off-by: Fan XinRan <shinjiangjiang@gmail.com>
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://patch.msgid.link/20260803-b4-tbnet-teardown-v2-1-27de6a13ca2d@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/thunderbolt/main.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 8d740f588a771..8e95839161aa1 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -1933,11 +1933,12 @@ static void smc_listen_out(struct smc_sock *new_smc)
- 		atomic_dec(&lsmc->queued_smc_hs);
+diff --git a/drivers/net/thunderbolt/main.c b/drivers/net/thunderbolt/main.c
+index 960839a651e51..ceaba08cd378a 100644
+--- a/drivers/net/thunderbolt/main.c
++++ b/drivers/net/thunderbolt/main.c
+@@ -389,11 +389,16 @@ static void tbnet_tear_down(struct tbnet *net, bool send_logout)
+ 				break;
+ 		}
  
- 	release_sock(newsmcsk); /* lock in smc_listen_work() */
-+	lock_sock_nested(&lsmc->sk, SINGLE_DEPTH_NESTING);
- 	if (lsmc->sk.sk_state == SMC_LISTEN) {
--		lock_sock_nested(&lsmc->sk, SINGLE_DEPTH_NESTING);
- 		smc_accept_enqueue(&lsmc->sk, newsmcsk);
- 		release_sock(&lsmc->sk);
- 	} else { /* no longer listening */
-+		release_sock(&lsmc->sk);
- 		smc_close_non_accepted(newsmcsk);
+-		tb_ring_stop(net->rx_ring.ring);
+-		tb_ring_stop(net->tx_ring.ring);
+-		tbnet_free_buffers(&net->rx_ring);
+-		tbnet_free_buffers(&net->tx_ring);
+-
++		/* Tear the paths down before stopping the rings.  This mirrors
++		 * tbnet_connected_work(), which enables the paths last so the
++		 * Rx ring is primed before packets can arrive.  Stopping a
++		 * ring zeroes its descriptor base and tbnet_free_buffers()
++		 * unmaps and frees the frame buffers, leaving anything still
++		 * in flight with nowhere to drain to;
++		 * __tb_path_deactivate_hop() then waits for the hop's
++		 * 'pending' bit, which on some host routers never clears in
++		 * that state.
++		 */
+ 		ret = tb_xdomain_disable_paths(net->xd,
+ 					       net->local_transmit_path,
+ 					       net->tx_ring.ring->hop,
+@@ -402,6 +407,11 @@ static void tbnet_tear_down(struct tbnet *net, bool send_logout)
+ 		if (ret)
+ 			netdev_warn(net->dev, "failed to disable DMA paths\n");
+ 
++		tb_ring_stop(net->rx_ring.ring);
++		tb_ring_stop(net->tx_ring.ring);
++		tbnet_free_buffers(&net->rx_ring);
++		tbnet_free_buffers(&net->tx_ring);
++
+ 		tb_xdomain_release_in_hopid(net->xd, net->remote_transmit_path);
+ 		net->remote_transmit_path = 0;
  	}
- 
 -- 
 2.53.0
 
