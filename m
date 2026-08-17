@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABCBA4399F8;
-	Mon, 17 Aug 2026 13:39:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DEC32ED40;
+	Mon, 17 Aug 2026 13:39:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786973992; cv=none; b=b9cEmE1+7/UqJatK/k3Fx1GDFtmPApspIjY6TZEwZnV68jNGuDy7AU/eiXJP58F+jSGH/2k1ijmB5+YwR8o49Cw3pvnCU+xLyV/9/R3q8ktiFhs/raSvyrz8Hus5tbhOea/9xHa3weazD3RK65TPHMdd+7h5su/qNJUjeFi99B4=
+	t=1786973995; cv=none; b=pQb3YYDLTQfVXyXQd++YrwiYdqfP/zUL1ECu7EasXojdnWGLr1EOIArS5adtNjb1biEZT9BElcvd7KWNSK4tXjDdEvMAiyZ6Yq+oCy4jno4YL8UdDonqcMlzYlslJ2A1XzX8KcBfq2+CvQmM+p/2AIhIjqxyal3sV/mmblFfmC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786973992; c=relaxed/simple;
-	bh=07D0eV8nPWanvn3MNAIQjDSup5aTP98Dr7Nx5JaEQJs=;
+	s=arc-20240116; t=1786973995; c=relaxed/simple;
+	bh=Ex4oeGNEC4cIrib6ftqoOihFHtKyMdldK0z0SAAg/iQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I1RcaDly0VqB8Prz232B+OhagqGmMGXC+A1z2kfc893ipA3WADq/ptz004jALzsjmU4G/P3XHgzRm6/nz2e4kxgDbE1wPCPZKEAcuPl8RWCtwf9wKgN+vZ0TDmj3YfiVP8fngCdU0277qsnvWATBixSvcCzKFApU6jAU+akGQkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tnCWTCUM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MPoSUjnVEdf5bN8fgP4s/GPQEgpsg0tEA/SnWV6D+lm2p0SOr4vlVZ+DInZ/g3zC86ot5qAmDvdnFV6fru/dpL5PgeKE/DjezVe0otm3JuHtZ1J6b59ZOsZAwYTaCmuAiPzzFIjilPtc0v1uMejQCMdujr0i8jRQCIjjdZSqmzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ckFCTjm0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tnCWTCUM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F0F1F00A3D;
-	Mon, 17 Aug 2026 13:39:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ckFCTjm0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E28C1F000E9;
+	Mon, 17 Aug 2026 13:39:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786973991;
-	bh=9nUVz+ZfB3A9EIKDZcJvh24qSdP52h+dIg22v4hcpjA=;
+	s=korg; t=1786973994;
+	bh=3W+JFat1KRsIDvemNHASkzb1dtA8qs3IovJTSf7hDMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tnCWTCUMT/9fcME72SOCt4+ZTvLZYNGYHYWAbpCuNdKtJuW85gVJNTA+q3wU3DiFf
-	 F17pSXToiv/8xdR2BgzpNhRmIFtE73ZEo4l5T8qDizx2Quh1+WbGB6+YNbfHRQQI6M
-	 GUSgCyLDey7EVH3z7lFk1VJq2ZBt+YWUPSrHkUVI=
+	b=ckFCTjm0C9k/6hyGTKoL2MrEKQOlkf79XdY4vejD8MR/Cv3uccsma/8D2uVpcG249
+	 1fP4msYZIknjpcN18VFmZ2b2B/DOIqezch0uEDpDIKVdC1u7afLQRcQcWnfI9pw1rn
+	 S+5WVJbHKh5XWrgPNCsrPGShjpFEFtLuDfzhf2y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>,
 	Daniel Wade <danjwade95@gmail.com>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 052/271] bpf: Preserve pointer state for commuted arithmetic
-Date: Mon, 17 Aug 2026 15:29:37 +0200
-Message-ID: <20260817132538.875133694@linuxfoundation.org>
+Subject: [PATCH 7.1 053/271] bpf: Propagate untrusted pointer state in commuted arithmetic
+Date: Mon, 17 Aug 2026 15:29:38 +0200
+Message-ID: <20260817132538.922638755@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -55,70 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
 
-[ Upstream commit a4c6f804b44c5c790269b25e0e61cf4e9f117c86 ]
+[ Upstream commit cdf19b1b3c01791de074ce282089131026f52261 ]
 
-When scalar += pointer is handled in adjust_ptr_min_max_vals(), the
-destination register inherits the pointer state from the source pointer.
-Copying only selected fields is fragile because pointer provenance is
-tracked by several bpf_reg_state fields.
+The untrusted PTR_TO_MEM early return skips pointer offset tracking
+because accesses go through probe-read handling. Moving it after full
+pointer-state propagation ensures scalar += untrusted_pointer leaves the
+destination as PTR_TO_MEM instead of an unrelated scalar.
 
-Use the caller's temporary offset register to preserve the scalar operand
-while replacing the destination with the full pointer state. This preserves
-the frame number for PTR_TO_STACK registers and keeps parent identity
-fields consistent.
-
-Fixes: f4d7e40a5b71 ("bpf: introduce function calls (verification)")
+Fixes: f2362a57aeff ("bpf: allow void* cast using bpf_rdonly_cast()")
 Signed-off-by: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
 Tested-by: Daniel Wade <danjwade95@gmail.com>
-Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Link: https://patch.msgid.link/20260729-c3-035-public-bpf-v4-v4-2-8ee297e2346b@mails.tsinghua.edu.cn
+Link: https://patch.msgid.link/20260729-c3-035-public-bpf-v4-v4-3-8ee297e2346b@mails.tsinghua.edu.cn
 Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ kernel/bpf/verifier.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 523f00e609e2b..ab88988d483d2 100644
+index ab88988d483d2..5bad71f003dcc 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -13837,11 +13837,12 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
+@@ -13801,13 +13801,6 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
  		return -EACCES;
  	}
  
--	/* In case of 'scalar += pointer', dst_reg inherits pointer type and id.
--	 * The id may be overwritten later if we create a new variable offset.
-+	/* For 'scalar += pointer', dst_reg inherits the complete pointer
-+	 * register state. Individual fields may be adjusted later by pointer
-+	 * arithmetic. Callers guarantee that below does not overwrite off_reg.
- 	 */
--	dst_reg->type = ptr_reg->type;
--	dst_reg->id = ptr_reg->id;
-+	if (dst_reg != ptr_reg)
-+		*dst_reg = *ptr_reg;
+-	/*
+-	 * Accesses to untrusted PTR_TO_MEM are done through probe
+-	 * instructions, hence no need to track offsets.
+-	 */
+-	if (base_type(ptr_reg->type) == PTR_TO_MEM && (ptr_reg->type & PTR_UNTRUSTED))
+-		return 0;
+-
+ 	switch (base_type(ptr_reg->type)) {
+ 	case PTR_TO_CTX:
+ 	case PTR_TO_MAP_VALUE:
+@@ -13844,6 +13837,13 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
+ 	if (dst_reg != ptr_reg)
+ 		*dst_reg = *ptr_reg;
  
++	/*
++	 * Accesses to untrusted PTR_TO_MEM are done through probe
++	 * instructions, hence no need to track offsets.
++	 */
++	if (base_type(ptr_reg->type) == PTR_TO_MEM && (ptr_reg->type & PTR_UNTRUSTED))
++		return 0;
++
  	if (!check_reg_sane_offset_scalar(env, off_reg, ptr_reg->type) ||
  	    !check_reg_sane_offset_ptr(env, ptr_reg, ptr_reg->type))
-@@ -13893,7 +13894,7 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
- 		}
- 		break;
- 	case BPF_SUB:
--		if (dst_reg == off_reg) {
-+		if (dst_reg != ptr_reg) {
- 			/* scalar -= pointer.  Creates an unknown scalar */
- 			verbose(env, "R%d tried to subtract pointer from scalar\n",
- 				dst);
-@@ -15137,8 +15138,8 @@ static int adjust_reg_min_max_vals(struct bpf_verifier_env *env,
- 				err = mark_chain_precision(env, insn->dst_reg);
- 				if (err)
- 					return err;
--				return adjust_ptr_min_max_vals(env, insn,
--							       src_reg, dst_reg);
-+				off_reg = *dst_reg;
-+				return adjust_ptr_min_max_vals(env, insn, src_reg, &off_reg);
- 			}
- 		} else if (ptr_reg) {
- 			/* pointer += scalar */
+ 		return -EINVAL;
 -- 
 2.53.0
 
