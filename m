@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11FC43636A;
-	Mon, 17 Aug 2026 14:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C90439F71;
+	Mon, 17 Aug 2026 14:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978429; cv=none; b=GaiKiMibGkoDlx0RPj/lNy4IsHNl8rTSHLa9UeUa7wRL1m8GDvvcot+x6CFDFGT22pi8u7A0dGPwuMr6RvcTKDcQaAlC6Nn6muvfHunhU5vGdsyrBFuvQyLw8H0DBAPWmQ9cTGJSBRYYFcFgCgqWQjYw71ElUU5c4++ybRDcTgE=
+	t=1786978432; cv=none; b=toZbvjAccaZ9aXczUAaFZuPKlBksFTo1x3pD6c6Z3JS7tFzbl5dJPPsXVuDEmJBnbBpYlUfNlssDsjUPd2rqgyQdfgiqjbnpnyboAPubgEFjgUr7ooRDJeWl3vkjhCtrN/malPpuUygbxGXviIH7dfcg6papQz6vTrUscvMV0lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978429; c=relaxed/simple;
-	bh=RNi6zFsz5LU4YTcXuH5RBYBsCHxt2cHOxjq+jT6h4Qo=;
+	s=arc-20240116; t=1786978432; c=relaxed/simple;
+	bh=seqLmLXKg4pVTZwb7H15zaM1oeYg7lW7Y+OSO2FIGjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FHTKac/wW3CJhCT+lqjBtOdPqTHH/G+auwZjl7e7Sf5SNIcTQHEsVhrKfBOGxoZjOybi7GfsRU12Vnxg7YmC/IuhfUQUN++McwRKVab1zf+Th/VxtucpSvFJzMN/3O/UWvMgcOwKM3cQehwBOeTEytehHj1sxvf/hS4T+qUgmfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GrzsYswh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=nb2OsnRXiDjga/4009ZuU0zrTMCTSBZo5U1yjgKTqN8eJ1OX5VvS1uLJCGTSwxEe+6Ig53/SDNsozq9TRNQK50w11I+ee1nC8slBqDs+whMPvfG8fV4Hl6lHgYgeKpb8Q6wuaz1AIzWBhdeMT4HRRUyFKCI1jvrJNOR0+MDbIL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZRZT5sWm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GrzsYswh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC8E1F000E9;
-	Mon, 17 Aug 2026 14:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZRZT5sWm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7BF1F000E9;
+	Mon, 17 Aug 2026 14:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978427;
-	bh=HpRxakKcpIkv4Ig12mgJP4Mh6F1woWGkNezGSvY8Mok=;
+	s=korg; t=1786978430;
+	bh=07b+EsgVfudgfRruiZ8BnpznliVnVlmEy+OK4FOTX0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GrzsYswh4o3Eccri/No9vJm7wRbXhAwo1XNssJ/NXPNClI0tnUgRCzcQkVDtM7WTv
-	 3rj5wtBQ2XTiLORn/bb0ALH7A02E8zL8mo6TXsWpJRxYsFOddBDCAE2otWbgzHtGdV
-	 Uoh3+sCNCrR7/G/6WWmsUq2so4WoiJJFpzf4lJXk=
+	b=ZRZT5sWmzGG3YeoEsSugWvU5x63L+ZaKCiNY/Wl14ofmY5gr8W557PxF6VppUzu7K
+	 0xGj/e8I6sifdnp3Q6KsL0J0Nuu0CkWVencpMW9jEg6/Bh2cfCeHJXjzGnruoSfepx
+	 zhaG+RqoZ1gRjUdMaex1SxJowF8essh8ohoaQLaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	Eelco Chaudron <echaudro@redhat.com>,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/156] net/openvswitch: check Ethernet header length in key_extract()
-Date: Mon, 17 Aug 2026 15:32:46 +0200
-Message-ID: <20260817132535.878578360@linuxfoundation.org>
+Subject: [PATCH 6.6 033/156] net: sched: cls_api: add skip_sw counter
+Date: Mon, 17 Aug 2026 15:32:47 +0200
+Message-ID: <20260817132535.917434177@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -48,82 +48,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Asbjørn Sloth Tønnesen <ast@fiberby.net>
 
-[ Upstream commit cf6f8b29befb92173659bcef6a441d274947bfae ]
+[ Upstream commit f631ef39d81956a2ee69d25039781ceae1162f62 ]
 
-When a packet arrives on an ARPHRD_NONE device (e.g. TUN),
-ovs_flow_key_extract() trusts the user-provided skb->protocol field: if
-it is ETH_P_TEB, the packet is classified as MAC_PROTO_ETHERNET and
-key_extract() is called without ensuring the skb has ETH_HLEN (14) bytes
-of linear data. key_extract() unconditionally pulls 2 * ETH_ALEN bytes
-for MAC addresses and parse_ethertype() pulls 2 more, either of which
-triggers a kernel BUG in __skb_pull() when the linear area is too small.
+Maintain a count of skip_sw filters.
 
-  kernel BUG at include/linux/skbuff.h:2848!
-  RIP: 0010:key_extract+0xa7e/0xd90 net/openvswitch/flow.c:933
-  ovs_flow_key_extract+0x419/0xa70
-  ovs_vport_receive+0x222/0x390
-  netdev_frame_hook+0x3e0/0x630
-  tun_get_user+0x2d0c/0x38e0
+This counter is protected by the cb_lock, and is updated
+at the same time as offloadcnt.
 
-Fixed by calling check_header() in key_extract() before accessing the
-Ethernet header.
-
-Fixes: 217ac77a3c25 ("openvswitch: allow L3 netdev ports")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/20260730222006.118652-1-blbllhy@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: a347304b2ca1 ("net/sched: cls_api: Always acquire rtnl_lock when destroying locked classifiers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/flow.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ include/net/sch_generic.h | 1 +
+ net/sched/cls_api.c       | 4 ++++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/net/openvswitch/flow.c b/net/openvswitch/flow.c
-index b80bd3a907739..52e261ce91e8e 100644
---- a/net/openvswitch/flow.c
-+++ b/net/openvswitch/flow.c
-@@ -893,8 +893,6 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
-  * Ethernet header
-  * @key: output flow key
-  *
-- * The caller must ensure that skb->len >= ETH_HLEN.
-- *
-  * Initializes @skb header fields as follows:
-  *
-  *    - skb->mac_header: the L2 header.
-@@ -914,8 +912,6 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
-  */
- static int key_extract(struct sk_buff *skb, struct sw_flow_key *key)
- {
--	struct ethhdr *eth;
--
- 	/* Flags are always used as part of stats */
- 	key->tp.flags = 0;
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index 385af747b0b4e..5df841ed0aeaa 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -477,6 +477,7 @@ struct tcf_block {
+ 	struct flow_block flow_block;
+ 	struct list_head owner_list;
+ 	bool keep_dst;
++	atomic_t skipswcnt; /* Number of skip_sw filters */
+ 	atomic_t offloadcnt; /* Number of oddloaded filters */
+ 	unsigned int nooffloaddevcnt; /* Number of devs unable to do offload */
+ 	unsigned int lockeddevcnt; /* Number of devs that require rtnl lock. */
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index e259ec6ed145d..792e7040ebc1f 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -3478,6 +3478,8 @@ static void tcf_block_offload_inc(struct tcf_block *block, u32 *flags)
+ 	if (*flags & TCA_CLS_FLAGS_IN_HW)
+ 		return;
+ 	*flags |= TCA_CLS_FLAGS_IN_HW;
++	if (tc_skip_sw(*flags))
++		atomic_inc(&block->skipswcnt);
+ 	atomic_inc(&block->offloadcnt);
+ }
  
-@@ -930,6 +926,13 @@ static int key_extract(struct sk_buff *skb, struct sw_flow_key *key)
- 		skb_reset_network_header(skb);
- 		key->eth.type = skb->protocol;
- 	} else {
-+		struct ethhdr *eth;
-+		int err;
-+
-+		err = check_header(skb, ETH_HLEN);
-+		if (unlikely(err))
-+			return err;
-+
- 		eth = eth_hdr(skb);
- 		ether_addr_copy(key->eth.src, eth->h_source);
- 		ether_addr_copy(key->eth.dst, eth->h_dest);
+@@ -3486,6 +3488,8 @@ static void tcf_block_offload_dec(struct tcf_block *block, u32 *flags)
+ 	if (!(*flags & TCA_CLS_FLAGS_IN_HW))
+ 		return;
+ 	*flags &= ~TCA_CLS_FLAGS_IN_HW;
++	if (tc_skip_sw(*flags))
++		atomic_dec(&block->skipswcnt);
+ 	atomic_dec(&block->offloadcnt);
+ }
+ 
 -- 
 2.53.0
 
