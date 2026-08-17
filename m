@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657493B8BDA;
-	Mon, 17 Aug 2026 13:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BEF44781B;
+	Mon, 17 Aug 2026 13:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974962; cv=none; b=McuVyKdTnUNzq9CwO5a33OspE/GaFxJAt9OMFwXn4z4HftOTVhvWb90F8reZvSjKG/tkitV/cowWzdG5KW+tIHBui9psIatvbEesKT8O5PvI40JbfIkDfAIS3QFftv6jVF/PY9hAmfnmQCMz/PtWfZlM2xFNNIxueAbQ3Ke1o+8=
+	t=1786974964; cv=none; b=rysEEFV6saUOnrZLZxUHzzJZeegdW/LMWUHj8GR9MIcEeFJiWsBDZ/NAxo7uyPXZmrKFgStMbHvXiME+8ZcWnTCeqMAmGe7Gc36nP9KCFzVGQ93jknFAleSrVw+wciGWy+uwAYMrh2tSpMaD562aS1FN2SoUKxGTDIIU8eVZlFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974962; c=relaxed/simple;
-	bh=SAK7L5tPtXgn+y9ccx1YBsW4lrlGBbSG9bjdx6laeqo=;
+	s=arc-20240116; t=1786974964; c=relaxed/simple;
+	bh=t6nQ/cYAL+gFVACinj1V6Fp9Al/YaRl3DeTrnIEykyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fyMubidNkttmlwvACA7EkjlKcodIRr3ZhgKSlYl9KgY6h0xz7xBe4fSRiFyXv+MUwI7ryTanZzbyad4Y6vls/wD2+zqm3h2a+ig7KEy9n9KYlv1H+raAiVElyRZgPtkEDbW8BC7dBjAIAiYFTym2XfXkWQUISX4FP/8tayye49E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k7mdctVJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kHg4GnbGGmIO9/LC+7uP+zRYsGY/7cxpFSVj4fS1hdRv8c1/82gBouZliC/Q9h0fEcXlPmpKBXqN/KKbBCKMd0Qp7UAQP3zCb3E+BUqX+xygEGarUn0caCJSp301xTlKutDDwMtsuaAb/ETvFksqjUEPiPi8Im6IVizQuXk9QwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=McbCnS++; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k7mdctVJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA49F1F00A3D;
-	Mon, 17 Aug 2026 13:55:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="McbCnS++"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C825D1F000E9;
+	Mon, 17 Aug 2026 13:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974958;
-	bh=DEco5GD/l46AmEQV4FjnG+og7WOm7CzwNm/trdXtzAU=;
+	s=korg; t=1786974961;
+	bh=ulema7CkOsO/gtCooTlpsfjP5vM4cbkZq1Kf2u7vtvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k7mdctVJDu+nxCSAEX9xiWecrkGXU/OZ86IbaSd6+rSSUsvGheNoBr/f3AkmJpgmV
-	 s9qWjR+qsCDHrr+r6iMVzrleRk2kyqTZmbIiSHr+9tbl1KANNvhSpWgZFcjTIt72jV
-	 oaORsQSidKUFtL6wJEyDuyfCOfxW9eRhN1erF5fw=
+	b=McbCnS++8h+Ma7WRulWdgDcJRAzYC7kljDwS5UtN81bR66FbZd4amViI0ZSYyEX2y
+	 lLSgt+ApeqLs0o/wAQbra/Q4uQh+NfnnORLwg4eeVJPquotpaXhBp+m4ATiSOsrcVk
+	 UDxIfybvbVB704S6SQqg8D7zU06ZSSmdmq0jpVj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Jia <physicalmtea@gmail.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	AutonomousCodeSecurity@microsoft.com,
+	Eelco Chaudron <echaudro@redhat.com>,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 074/250] vhost-scsi: reject feature changes after endpoint
-Date: Mon, 17 Aug 2026 15:30:35 +0200
-Message-ID: <20260817132539.467595082@linuxfoundation.org>
+Subject: [PATCH 6.18 075/250] net/openvswitch: check Ethernet header length in key_extract()
+Date: Mon, 17 Aug 2026 15:30:36 +0200
+Message-ID: <20260817132539.507613640@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,100 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Jia <physicalmtea@gmail.com>
+From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 
-[ Upstream commit 42bc45df5905e2b7dccb72adaf7730f66cfbe03f ]
+[ Upstream commit cf6f8b29befb92173659bcef6a441d274947bfae ]
 
-vhost_scsi_setup_vq_cmds() runs from VHOST_SCSI_SET_ENDPOINT and allocates
-each command's protection scatterlist array (prot_sgl) according to the
-acknowledged VIRTIO_SCSI_F_T10_PI bit.  The command pools are not rebuilt
-when VHOST_SET_FEATURES changes that bit later.
+When a packet arrives on an ARPHRD_NONE device (e.g. TUN),
+ovs_flow_key_extract() trusts the user-provided skb->protocol field: if
+it is ETH_P_TEB, the packet is classified as MAC_PROTO_ETHERNET and
+key_extract() is called without ensuring the skb has ETH_HLEN (14) bytes
+of linear data. key_extract() unconditionally pulls 2 * ETH_ALEN bytes
+for MAC addresses and parse_ethertype() pulls 2 more, either of which
+triggers a kernel BUG in __skb_pull() when the linear area is too small.
 
-Although virtio feature bits must not change after feature negotiation,
-vhost_scsi_set_features() currently accepts such a request after the
-endpoint is active and updates acked_features.  Enabling T10-PI after
-endpoint setup therefore leaves prot_sgl NULL while the I/O path follows
-the new feature bit.
+  kernel BUG at include/linux/skbuff.h:2848!
+  RIP: 0010:key_extract+0xa7e/0xd90 net/openvswitch/flow.c:933
+  ovs_flow_key_extract+0x419/0xa70
+  ovs_vport_receive+0x222/0x390
+  netdev_frame_hook+0x3e0/0x630
+  tun_get_user+0x2d0c/0x38e0
 
-For a 129-page protection payload, vhost_scsi_mapal() passes the missing
-first chunk to sg_alloc_table_chained():
+Fixed by calling check_header() in key_extract() before accessing the
+Ethernet header.
 
-  sg_alloc_table_chained(table, 129, first_chunk=NULL,
-                         nents_first_chunk=inline_sg_cnt)
-
-sg_pool_index() then hits:
-
-  BUG_ON(nents > SG_CHUNK_SIZE);   /* 129 > 128 */
-
-The kernel reported the following call trace and register state:
-
-  Call Trace:
-   <TASK>
-   ? __sg_alloc_table+0x1d8/0x250
-   ? __pfx_vhost_run_work_list+0x10/0x10 [vhost]
-   sg_alloc_table_chained+0x59/0xf0
-   ? __pfx_sg_pool_alloc+0x10/0x10
-   ? vhost_scsi_calc_sgls.constprop.0+0x43/0x60 [vhost_scsi]
-   vhost_scsi_handle_vq+0xf02/0x1700 [vhost_scsi]
-   ? __pfx_vhost_scsi_handle_vq+0x10/0x10 [vhost_scsi]
-   vhost_scsi_handle_kick+0x37/0x50 [vhost_scsi]
-   vhost_run_work_list+0x8e/0xd0 [vhost]
-   vhost_task_fn+0xe1/0x210
-   ret_from_fork+0x348/0x540
-   </TASK>
-
-  RIP: 0010:0x4
-  CR2 = 0x4
-  RSP: 0018:ffffc90000dbf940 EFLAGS: 00010202
-  RAX: ffffffff82396810 RBX: ffff88811dc28b80 RCX: 0000000000000000
-  RDX: 0000000000000000 RSI: 0000000000000820 RDI: 0000000000000081
-
-VHOST_F_LOG_ALL is a vhost-specific runtime feature and remains the only
-exception.
-
-Reject changes to any feature other than VHOST_F_LOG_ALL while the
-endpoint is active.  This preserves the existing runtime log toggle while
-preventing feature-dependent command resources and data-path state from
-becoming inconsistent.  Userspace must clear the endpoint before changing
-any other negotiated feature and set the endpoint up again afterward.
-
-Fixes: bf2d650391be ("vhost-scsi: Allocate T10 PI structs only when enabled")
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260726144314.1652934-1-physicalmtea@gmail.com>
+Fixes: 217ac77a3c25 ("openvswitch: allow L3 netdev ports")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/20260730222006.118652-1-blbllhy@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/scsi.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/openvswitch/flow.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-index 65a57de0080ef..29716ce714554 100644
---- a/drivers/vhost/scsi.c
-+++ b/drivers/vhost/scsi.c
-@@ -2231,6 +2231,7 @@ static int vhost_scsi_set_features(struct vhost_scsi *vs, u64 features)
+diff --git a/net/openvswitch/flow.c b/net/openvswitch/flow.c
+index 66366982f6044..46c1d66aad8c3 100644
+--- a/net/openvswitch/flow.c
++++ b/net/openvswitch/flow.c
+@@ -889,8 +889,6 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
+  * Ethernet header
+  * @key: output flow key
+  *
+- * The caller must ensure that skb->len >= ETH_HLEN.
+- *
+  * Initializes @skb header fields as follows:
+  *
+  *    - skb->mac_header: the L2 header.
+@@ -910,8 +908,6 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
+  */
+ static int key_extract(struct sk_buff *skb, struct sw_flow_key *key)
  {
- 	struct vhost_virtqueue *vq;
- 	bool is_log, was_log;
-+	u64 old_features;
- 	int i;
+-	struct ethhdr *eth;
+-
+ 	/* Flags are always used as part of stats */
+ 	key->tp.flags = 0;
  
- 	if (features & ~VHOST_SCSI_FEATURES)
-@@ -2246,6 +2247,14 @@ static int vhost_scsi_set_features(struct vhost_scsi *vs, u64 features)
- 	if (!vs->dev.nvqs)
- 		goto out;
- 
-+	old_features = vs->vqs[0].vq.acked_features;
-+	if (vs->vs_tpg &&
-+	    ((features ^ old_features) &
-+	     ~(1ULL << VHOST_F_LOG_ALL))) {
-+		mutex_unlock(&vs->dev.mutex);
-+		return -EBUSY;
-+	}
+@@ -926,6 +922,13 @@ static int key_extract(struct sk_buff *skb, struct sw_flow_key *key)
+ 		skb_reset_network_header(skb);
+ 		key->eth.type = skb->protocol;
+ 	} else {
++		struct ethhdr *eth;
++		int err;
 +
- 	is_log = features & (1 << VHOST_F_LOG_ALL);
- 	/*
- 	 * All VQs should have same feature.
++		err = check_header(skb, ETH_HLEN);
++		if (unlikely(err))
++			return err;
++
+ 		eth = eth_hdr(skb);
+ 		ether_addr_copy(key->eth.src, eth->h_source);
+ 		ether_addr_copy(key->eth.dst, eth->h_dest);
 -- 
 2.53.0
 
