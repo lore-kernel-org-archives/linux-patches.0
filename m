@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEC3443E22;
-	Mon, 17 Aug 2026 15:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9C8435EC8;
+	Mon, 17 Aug 2026 15:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980283; cv=none; b=BpqD0pRdQBugKTRf7zUzUCBYjG/jrQkTLXxUzGgvYamEd/wcHr4ILMrViBUjxprTgHLAkKahHpGoI+2omb46Xyc2DoQ+wEEXtrJ/r5gmdPBJ7Jh6Cflav+KVmEL8D++iBKjP3BUCLqzVZ8TG4tAMCe+ZMdE4qIi9uthm8eNS7Wk=
+	t=1786980286; cv=none; b=t65rG32dUzsWiSC9Ah/6lS288Ly/wR/p7G6bxcxx9L5WTL7IB20Qb6sz9abLWv47x1SJVZr5kDyreLui1SGx5e16k+qQIIM05QrNx6BZjV2abTNQ4jy47vVQE7W9rNw+jkmKCQ22U7BOC54Prmp3JyL54lGpYO6kax4eyU7a2g8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980283; c=relaxed/simple;
-	bh=8uW3MV6lhajFsvFt35ClnFibktg5vHBKa0XLYDe77fU=;
+	s=arc-20240116; t=1786980286; c=relaxed/simple;
+	bh=RzGIH0hbj7jIjMdAzfowc3lzTzqKYM8IEuPZsyxiWho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HznylbhbuV6A6eOpX41ileKUzfknXsgq5+j2FX/t972PJCupCoYEpQEyTC4IOvuRLaJDQsUH2NspzNBuUodqHNAkP+XVPhTEOutBKN9FywLxMec/XhaerRLY1UMkEnw1IB3VUIlV+r3BqMKiCmaYRviwNTLLm1tRa1kmIZ4PKg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+zBvhnv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P2NWNAUM7JAuOLSdNgvcJ6Nt2cg/Sxptp0L4G4NjTTs2OJYU+42NLCmFCmysV+8rtUKO2ei+x/2f31UhyG8ut9GyoI4I0kTo2s08ixCsDwTT3xm7sTIaxGzL0tIQsDf2JYtJ6eWMXqpJbdfFUZ851MbTkvJrN+HLxCRBLNLga+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uNWl/AvB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+zBvhnv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118E81F000E9;
-	Mon, 17 Aug 2026 15:24:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNWl/AvB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D96A11F000E9;
+	Mon, 17 Aug 2026 15:24:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980282;
-	bh=nO1GG/zc/gPepdLnPjmjgXmXawZTxtym/S0u3W/ZCJo=;
+	s=korg; t=1786980285;
+	bh=VSxXSSiQJDcGY82MYv53HLDeu2KMHh4o0l0v32b6R9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L+zBvhnv0vgqvQ7G/1aPE3d9dEzABRSSBPyUiMt1+2UioMwww5G8MnvECdFdDf+xU
-	 jVeyZG1GxYdn4Y7Sx8KlNL3AMcTmMcHa2bEf0oOl+20Jji7X//+lREYGZn3hKeslWE
-	 gC2z6i5ygT2JJLdAsnp93pz+t6kDjNwgLqFxSqZk=
+	b=uNWl/AvBWf5srEm3NCZRiuFvUN9C2TP45URjMO6effA/V/ptaYGojeuNXMR5PHQvt
+	 D8gd/Mmtnp9MZDKhWw1PFYQSgf6dcB1OMpLQu0nAmEM54URjXf8uHMGSuwEx9fMTjP
+	 J7Yt/RImt/WBTZHuJzpmDilDhG/QJDYdL9spxKzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Keegan Freyhof <keegan.freyhof@broadcom.com>,
 	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 518/609] bnxt_en: Disable EOP for TPA on all chips to prevent data corruption
-Date: Mon, 17 Aug 2026 15:33:34 +0200
-Message-ID: <20260817132601.166389430@linuxfoundation.org>
+Subject: [PATCH 6.1 519/609] bnxt_en: Fix PTP PPS setting bug
+Date: Mon, 17 Aug 2026 15:33:35 +0200
+Message-ID: <20260817132601.197723718@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,55 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Keegan Freyhof <keegan.freyhof@broadcom.com>
 
-[ Upstream commit c3faf548a00f4c17100cc9204746975fa46a73b9 ]
+[ Upstream commit 80eaf88efec33ac77ed7726d066c4f2f932cc329 ]
 
-EOP (End of frame padding) on the AGG ring may cause overlapping of
-zero padding at the end of one segment with the next segment's data.
-If Relaxed Ordering (RO) is enabled, the zero padding may overwrite
-valid data in the next segment and corrupt the data.  Older chips
-(P5 and older) do not automatically disable RO when EOP is enabled.
-On some ARM systems, data corruption was reported on 57508 (P5)
-chips with RO enabled.
+The existing driver logic is always turning on PTP_CLK_REQ_PPS
+regardless of the "on" parameter passed to bnxt_ptp_enable().
+During shutdown, PTP_CLK_REQ_PPS may be turned off and this
+bug will do the opposite and may trigger a PCIe PTM request TLP.
+On some systems this can trigger a PCIe AER.
 
-Always disable EOP on all chips on the AGG rings when TPA is enabled
-to fix the data corruption.
+Fix it by properly configuring PTP_CLK_REQ_PPS based on the "on"
+parameter.
 
-Fixes: bfcd8d791ec1 ("bnxt_en: Add fast path logic for TPA on 57500 chips.")
+Fixes: 9e518f25802c ("bnxt_en: 1PPS functions to configure TSIO pins")
 Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Keegan Freyhof <keegan.freyhof@broadcom.com>
 Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20260731190937.807270-5-michael.chan@broadcom.com
+Link: https://patch.msgid.link/20260731190937.807270-6-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index f11ca14c5c4d3..f69ad1ffc0c9d 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -3766,11 +3766,14 @@ static int bnxt_init_one_rx_ring(struct bnxt *bp, int ring_nr)
- 		type = ((u32)BNXT_RX_PAGE_SIZE << RX_BD_LEN_SHIFT) |
- 			RX_BD_TYPE_RX_AGG_BD;
- 
--		/* On P7, setting EOP will cause the chip to disable
--		 * Relaxed Ordering (RO) for TPA data.  Disable EOP for
--		 * potentially higher performance with RO.
-+		/* Disable EOP if TPA is enabled to prevent overlapping zero
-+		 * padding with the next segment's data.  On P7_PLUS, EOP will
-+		 * automatically disable Relaxed Ordering (RO) to prevent
-+		 * potential data corruption (and may degrade performance).  On
-+		 * older chips, RO will not be automatically disabled and may
-+		 * cause corruption.
- 		 */
--		if (BNXT_CHIP_P5_AND_MINUS(bp) || !(bp->flags & BNXT_FLAG_TPA))
-+		if (!(bp->flags & BNXT_FLAG_TPA))
- 			type |= RX_BD_FLAGS_AGG_EOP;
- 
- 		bnxt_init_rxbd_pages(ring, type);
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
+index 1c888d6c3aee8..850e4c44044ac 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
+@@ -460,12 +460,15 @@ static int bnxt_ptp_enable(struct ptp_clock_info *ptp_info,
+ 		return rc;
+ 	case PTP_CLK_REQ_PPS:
+ 		/* Configure PHC PPS IN */
+-		rc = bnxt_ptp_cfg_pin(bp, 0, BNXT_PPS_PIN_PPS_IN);
++		pin_id = 0;
++		if (!on)
++			break;
++		rc = bnxt_ptp_cfg_pin(bp, pin_id, BNXT_PPS_PIN_PPS_IN);
+ 		if (rc)
+ 			return rc;
+ 		rc = bnxt_ptp_cfg_event(bp, BNXT_PPS_EVENT_INTERNAL);
+ 		if (!rc)
+-			ptp->pps_info.pins[0].event = BNXT_PPS_EVENT_INTERNAL;
++			ptp->pps_info.pins[pin_id].event = BNXT_PPS_EVENT_INTERNAL;
+ 		return rc;
+ 	default:
+ 		netdev_err(ptp->bp->dev, "Unrecognized PIN function\n");
 -- 
 2.53.0
 
