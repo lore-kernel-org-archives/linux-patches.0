@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827F143CEC0;
-	Mon, 17 Aug 2026 13:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3B843F4C3;
+	Mon, 17 Aug 2026 13:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974992; cv=none; b=dymKhZaL2QYP/ZyynhfUx9jn0ZZhJim/0FE1EaKBZyp4bPXZkLdBzQUum+d9wwJjfYpHrZI5jJWFnsnG9Cz8WtmjKpuiDHRxyoI390Q0pD/QABkHVLI40oxiRHi+kljVFyxV8M3LYrc6smEFzH0nJEKURE0Fhm3QIVMWSHsV73E=
+	t=1786974993; cv=none; b=dLz530q3auTsY7yqxxiKS3mWIUgb0B2fgWc0lvFDiGm7PsKvE07EC19zLxfaR+qJWUWugQqH1bBV/rm/TAVqdBcQeHNtNuU/Gofqi4GQe2bFNFTpWsWkhh4Qxnya7YrTmjIQIQU/4MKdh+Ak5OsVmsou6u5x0MctUseYwI+2uXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974992; c=relaxed/simple;
-	bh=VBxjettDFkSMEQz7GNjlQHFutjlGkV23lEq4EmD1xWM=;
+	s=arc-20240116; t=1786974993; c=relaxed/simple;
+	bh=cJNBAJqWVxsK14kceL/F9zVvQuBGEWuGm5PFBPOKJPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q/Ual0z4w80uJy2g9KxLMGojjEg7mtn8XUJGh8Equt//c496upStVZYcU46OUn9MrWovK9sB8H6SIU9ethNV5EYFfkcmg2WiGuLeqDYpuLJ/sCXR6scBSXa2fvWyuRXSo/E7yQjxLk25vI3JtDfCVaWTIoVY04rMCTyPKH6yiqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSPoun2z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VQomZx7yMfFyT3k0vmGBX2/yd0KRc1+JYI6+NarSvTrabTqk44udRHqmtGFKE0pWCyxeBV7a8aq0T3V2Wod1gjKuEJw7L0VkI0G4wEsodvJP5rcWhozwZE9tvDRJshSBrDQ9gM/h98khWaZT0xvbqUQFmgQ42iVJLXHr2+ryJpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HYP8LIVP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSPoun2z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8932C1F000E9;
-	Mon, 17 Aug 2026 13:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HYP8LIVP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681831F00A3A;
+	Mon, 17 Aug 2026 13:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974987;
-	bh=UDiOjzDeQPffNDN/R900CpaExggcLd3lligiCz9P5ts=;
+	s=korg; t=1786974990;
+	bh=R/xBEqrToHsZNAZDZvwCs0nUKzsUq7rDFnFKFWK8gMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GSPoun2zWxkYmD3W8ozBhamJ0D7wH5g1qrSTlzSEieSuylWUxCIRuyVetWwDJY6jN
-	 QvQZo3IvBdYYwxJjV9r/lRQbTtJlHAdlYTvEXgBWCYtT3O/CuAEMYmatLE0sIC2ZOU
-	 uQBSqfZP1EqjBKGzbo2rrQnfEn5YW6vOkv35fvJo=
+	b=HYP8LIVPYpWxmpl7K6lP0l0/kBLd1Kw1eVG+PQEV0FD5KkVPSyibDxZisZoY8qSfc
+	 S0X2JhemqVz0gZsg+RU6ehmZ1DRAdf4X5+NCTYVlHtH+SULLWvk7/TbiEuXMjKYi+S
+	 OhzpMuZagdglgt31yZ17+cErGQUxtdXhW15O7row=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Rogers <linux@joshua.hu>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.18 124/250] vt: stabilize tty reference in kbd_keycode with tty_port_tty_get
-Date: Mon, 17 Aug 2026 15:31:25 +0200
-Message-ID: <20260817132541.664467915@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.18 125/250] Input: evdev - fix information leak in evdev_pass_values()
+Date: Mon, 17 Aug 2026 15:31:26 +0200
+Message-ID: <20260817132541.702704100@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -50,48 +50,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Rogers <linux@joshua.hu>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit e25d47a526939ad44b75f778b8a7500562b84fc1 upstream.
+commit 90f305f2c7a30257c683e13f4bf7c798eea992a0 upstream.
 
-kbd_keycode() reads vc->port.tty without acquiring a tty reference,
-racing against con_shutdown() which clears port.tty under a different
-lock. Use tty_port_tty_get()/tty_kref_put() to hold a proper reference
-for the duration the tty pointer is needed.
+In evdev_pass_values(), the input_event structure is allocated on the
+kernel stack and populated field-by-field. However, it is never fully
+initialized. On architectures where struct input_event contains explicit
+or implicit padding (such as the 32-bit __pad field on SPARC64), these
+padding bytes are left uninitialized.
 
-Assisted-by: AISLE:Snapshot
-Signed-off-by: Joshua Rogers <linux@joshua.hu>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260731-tty-vt-stuff-v1-1-be99b9da8e30@linuxfoundation.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+When this event structure is subsequently passed to the client buffer
+and later copied to userspace, the uninitialized padding bytes leak
+kernel stack memory, potentially exposing sensitive information.
+
+Similar issues exist in __evdev_queue_syn_dropped and __pass_event.
+
+Fix this by explicitly zeroing the entire event structure with memset()
+before populating its fields. This ensures all padding bytes are cleared
+before the data crosses the security boundary.
+
+Reported-by: sashiko-bot@kernel.org
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/ampGGKo4UMKru6f5@google.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/keyboard.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/input/evdev.c |   22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
---- a/drivers/tty/vt/keyboard.c
-+++ b/drivers/tty/vt/keyboard.c
-@@ -1396,7 +1396,7 @@ static void kbd_keycode(unsigned int key
- 	struct keyboard_notifier_param param = { .vc = vc, .value = keycode, .down = down };
- 	int rc;
+--- a/drivers/input/evdev.c
++++ b/drivers/input/evdev.c
+@@ -149,11 +149,11 @@ static void __evdev_queue_syn_dropped(st
+ 	struct timespec64 ts = ktime_to_timespec64(ev_time[client->clk_type]);
+ 	struct input_event ev;
  
--	tty = vc->port.tty;
-+	tty = tty_port_tty_get(&vc->port);
++	memset(&ev, 0, sizeof(ev));
+ 	ev.input_event_sec = ts.tv_sec;
+ 	ev.input_event_usec = ts.tv_nsec / NSEC_PER_USEC;
+ 	ev.type = EV_SYN;
+ 	ev.code = SYN_DROPPED;
+-	ev.value = 0;
  
- 	if (tty && (!tty->driver_data)) {
- 		/* No driver data? Strange. Okay we fix it then. */
-@@ -1456,9 +1456,12 @@ static void kbd_keycode(unsigned int key
- 		 * characters get aren't echoed locally. This makes key repeat
- 		 * usable with slow applications and under heavy loads.
+ 	client->buffer[client->head++] = ev;
+ 	client->head &= client->bufsize - 1;
+@@ -221,20 +221,20 @@ static void __pass_event(struct evdev_cl
+ 	client->head &= client->bufsize - 1;
+ 
+ 	if (unlikely(client->head == client->tail)) {
++		struct input_event ev;
++
++		memset(&ev, 0, sizeof(ev));
++		ev.input_event_sec = event->input_event_sec;
++		ev.input_event_usec = event->input_event_usec;
++		ev.type = EV_SYN;
++		ev.code = SYN_DROPPED;
++
+ 		/*
+ 		 * This effectively "drops" all unconsumed events, leaving
+ 		 * EV_SYN/SYN_DROPPED plus the newest event in the queue.
  		 */
-+		tty_kref_put(tty);
- 		return;
+ 		client->tail = (client->head - 2) & (client->bufsize - 1);
+-
+-		client->buffer[client->tail] = (struct input_event) {
+-			.input_event_sec = event->input_event_sec,
+-			.input_event_usec = event->input_event_usec,
+-			.type = EV_SYN,
+-			.code = SYN_DROPPED,
+-			.value = 0,
+-		};
+-
++		client->buffer[client->tail] = ev;
+ 		client->packet_head = client->tail;
  	}
  
-+	tty_kref_put(tty);
+@@ -256,6 +256,8 @@ static void evdev_pass_values(struct evd
+ 	if (client->revoked)
+ 		return;
+ 
++	memset(&event, 0, sizeof(event));
 +
- 	param.shift = shift_final = (shift_state | kbd->slockstate) ^ kbd->lockstate;
- 	param.ledstate = kbd->ledflagstate;
- 	key_map = key_maps[shift_final];
+ 	ts = ktime_to_timespec64(ev_time[client->clk_type]);
+ 	event.input_event_sec = ts.tv_sec;
+ 	event.input_event_usec = ts.tv_nsec / NSEC_PER_USEC;
 
 
