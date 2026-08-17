@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EBD62D249B;
-	Mon, 17 Aug 2026 15:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3958A2F1FDF;
+	Mon, 17 Aug 2026 15:03:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978996; cv=none; b=MLr9z/m5+5lQQhYvRmusoogzI/za24H3NPr7D2feyyOWL5uD+oYCy//KBp5HaMAtH6gyKS6NLqnIJXRIhhOpTlfEJOiDgAR9dZQinouZmf2P8nPmp69dM0DoisPW1q1qsd5f5/8IwzqgzkBkFet/qWivsn5tmgZDX9/1qC8e9F0=
+	t=1786978999; cv=none; b=Ws++78Smpz5b7TSBeoIqz9WEyWr8Ng/XoXAczfu60DZH3gkTPvZzLfdxzfTmeJmhDDRphXorJinWzgIWPwG6GIrlBTvo77m3kbh4nvCmS7+w8++Fs1HKi5jc7fxOoG9D9/MiIdd/gZcglyB7LbAD/633rgy6i1ZhpAiobScnpC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978996; c=relaxed/simple;
-	bh=M+/4Q5kOJyDJ/x3A7NwGSRWR9IlNDKz90JZf33AqSqQ=;
+	s=arc-20240116; t=1786978999; c=relaxed/simple;
+	bh=yk9+snyWF+wNhaShfrOdH4cr64pefuRPm/gx6ou3kv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XQZ66xoN7lZrPJoKcT7Gxeub0YJpjLswECjOYDHi71/1tDQm+SFqSMTp+EXhd819lSPTdcR7NFRylu5vMIVkl5HM8/5gV8v1KrSYgNIm+JrT6fvv44aG0GBPOJxnBwj5xIk/ec72GCOs/jhgfCoSePGZ6lXfjqaljWJRloIZh/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7SKtUhL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NX4H9HmVNnScDvL0n//mb0J1eVfsmQyqUxJ99ArDTMmoL3rvrBBWMrsVNymO90cHhPhIpIKzUSzyj896YYZ2R4gKUeCjfB+46YfUIJ5oqqjBsaDAltsYDyDMFaBo8NHtP7GoVzJLhWD8kgwV9XnQcH8+k3t+Q0uhQzQIHSRAkOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZnGBvZzr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7SKtUhL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C640D1F000E9;
-	Mon, 17 Aug 2026 15:03:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnGBvZzr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB561F000E9;
+	Mon, 17 Aug 2026 15:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978995;
-	bh=5dnFUKdIyV8fj76L1Q9t3OkryBvRokoSwDpMtC8fplQ=;
+	s=korg; t=1786978998;
+	bh=0WSQ/ZbcWr3zgfzeG3q0ApsYdTID6y9i6fxCySdDnb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M7SKtUhLxdZElSi/RybicUHAgAu3t5UowMvZvIY88w5IYxe2bxYg9eYqERU48c437
-	 G/E0RgB9AeQWBhivFNhENWJtei8q3K7jBQ3Elw9nLGkMhd6gEao1Jk1/NUVgeAiFCJ
-	 oBkij5qm8/LU5/c55q2CA9+r6uHjzLgZpj8v7dxY=
+	b=ZnGBvZzr46ZdhAPOYEY7BK40kbvNNiY9LzI5YF2mydBfF7W6CqBzgy93tsPdvVL8F
+	 2WA/yoHIBrgylC67S8u84S2LF9GJISwt+AUBrKSFXVauAbeRkW9a1e8RzDM1ZGeiRA
+	 lDn0/JBlg+qYLm0OVr0jmmm83tyEUT5cinmqiFgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanghoon Choi <csh0052@gmail.com>,
-	Seungjin Bae <eeodqql09@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/609] Input: ims-pcu - fix heap-buffer-overflow in ims_pcu_process_data()
-Date: Mon, 17 Aug 2026 15:25:18 +0200
-Message-ID: <20260817132543.961691460@linuxfoundation.org>
+Subject: [PATCH 6.1 066/609] bpf, sockmap: Reject unhashed UDP sockets on sockmap update
+Date: Mon, 17 Aug 2026 15:26:02 +0200
+Message-ID: <20260817132545.694509655@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,112 +54,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seungjin Bae <eeodqql09@gmail.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit 875115b82c295277b81b6dfee7debc725f44e854 ]
+[ Upstream commit 66efd3368ae10d05e08fbe6425b50fdec7186ac7 ]
 
-The `ims_pcu_process_data()` processes incoming URB data byte by byte.
-However, it fails to check if the `read_pos` index exceeds
-IMS_PCU_BUF_SIZE.
+UDP sockets get SOCK_RCU_FREE set when (auto-)bound. This means
+sk_is_refcounted(unbound) = true, while sk_is_refcounted(bound) = false.
 
-If a malicious USB device sends a packet larger than IMS_PCU_BUF_SIZE,
-`read_pos` will increment indefinitely. Moreover, since `read_pos` is
-located immediately after `read_buf`, the attacker can overwrite
-`read_pos` itself to arbitrarily control the index.
+Because sockmap accepts unbound UDP sockets, a BPF program can increment a
+socket's refcount via lookup. If the socket is subsequently bound, the
+transition from unbound to bound causes bpf_sk_release() to skip the
+decrement of the refcount, causing a memory leak.
 
-This manipulated `read_pos` is subsequently used in
-`ims_pcu_handle_response()` to copy data into `cmd_buf`, leading to a
-heap buffer overflow.
+unreferenced object 0xffff88810bc2eb40 (size 1984):
+  comm "test_progs", pid 2451, jiffies 4295320596
+  hex dump (first 32 bytes):
+    7f 00 00 01 7f 00 00 01 d2 04 1b b7 04 d2 00 00  ................
+    02 00 01 40 00 00 00 00 00 00 00 00 00 00 00 00  ...@............
+  backtrace (crc bdee079d):
+    kmem_cache_alloc_noprof+0x557/0x660
+    sk_prot_alloc+0x69/0x240
+    sk_alloc+0x30/0x460
+    inet_create+0x2ce/0xf80
+    __sock_create+0x25b/0x5c0
+    __sys_socket+0x119/0x1d0
+    __x64_sys_socket+0x72/0xd0
+    do_syscall_64+0xa1/0x5f0
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Specifically, an attacker can overwrite the `cmd_done.wait.head` located
-at offset 136 relative to `cmd_buf` in the `ims_pcu_handle_response()`.
-Consequently, when the driver calls `complete(&pcu->cmd_done)`, it
-triggers a control flow hijack by using the manipulated pointer.
+Instead of special-casing for refcounted sockets, reject unhashed UDP
+sockets during sockmap updates, as there is no benefit to supporting those.
+This effectively reverts the commit under Fixes, with two exceptions:
 
-Fix this by adding a bounds check for `read_pos` before writing to
-`read_buf`. If the packet is too long, discard it, log a warning,
-and reset the parser state.
+1. sock_map_sk_state_allowed() maintains a fall-through `return true`.
+2. In the spirit of commit b8b8315e39ff ("bpf, sockmap: Remove unhash
+   handler for BPF sockmap usage"), the proto::unhash BPF handler is not
+   reintroduced.
 
-Fixes: 628329d524743 ("Input: add IMS Passenger Control Unit driver")
-Co-developed-by: Sanghoon Choi <csh0052@gmail.com>
-Signed-off-by: Sanghoon Choi <csh0052@gmail.com>
-Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
-Link: https://patch.msgid.link/20251221211442.841549-2-eeodqql09@gmail.com
-[dtor: factor out resetting packet state, reset checksum as well]
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Historical note: this issue is related to commit 67312adc96b5 ("bpf: reject
+unhashed sockets in bpf_sk_assign").
+
+Fixes: 0c48eefae712 ("sock_map: Lift socket state restriction for datagram sockets")
+Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/20260707-sockmap-lookup-udp-leak-v4-2-f878346f27ab@rbox.co
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/ims-pcu.c | 32 ++++++++++++++++++++++++++------
- 1 file changed, 26 insertions(+), 6 deletions(-)
+ net/core/sock_map.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/input/misc/ims-pcu.c b/drivers/input/misc/ims-pcu.c
-index 2bac9d9c7b0c9c..af1dfc08b10b25 100644
---- a/drivers/input/misc/ims-pcu.c
-+++ b/drivers/input/misc/ims-pcu.c
-@@ -448,6 +448,14 @@ static void ims_pcu_handle_response(struct ims_pcu *pcu)
- 	}
- }
- 
-+static void ims_pcu_reset_packet(struct ims_pcu *pcu)
-+{
-+	pcu->have_stx = true;
-+	pcu->have_dle = false;
-+	pcu->read_pos = 0;
-+	pcu->check_sum = 0;
-+}
-+
- static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
+diff --git a/net/core/sock_map.c b/net/core/sock_map.c
+index f4cca477b0477e..fb10c33acc3fd2 100644
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -542,6 +542,8 @@ static bool sock_map_sk_state_allowed(const struct sock *sk)
  {
- 	int i;
-@@ -460,6 +468,14 @@ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
- 			continue;
- 
- 		if (pcu->have_dle) {
-+			if (pcu->read_pos >= IMS_PCU_BUF_SIZE) {
-+				dev_warn(pcu->dev,
-+					 "Packet too long (%d bytes), discarding\n",
-+					 pcu->read_pos);
-+				ims_pcu_reset_packet(pcu);
-+				continue;
-+			}
-+
- 			pcu->have_dle = false;
- 			pcu->read_buf[pcu->read_pos++] = data;
- 			pcu->check_sum += data;
-@@ -472,10 +488,8 @@ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
- 				dev_warn(pcu->dev,
- 					 "Unexpected STX at byte %d, discarding old data\n",
- 					 pcu->read_pos);
-+			ims_pcu_reset_packet(pcu);
- 			pcu->have_stx = true;
--			pcu->have_dle = false;
--			pcu->read_pos = 0;
--			pcu->check_sum = 0;
- 			break;
- 
- 		case IMS_PCU_PROTOCOL_DLE:
-@@ -495,12 +509,18 @@ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
- 				ims_pcu_handle_response(pcu);
- 			}
- 
--			pcu->have_stx = false;
--			pcu->have_dle = false;
--			pcu->read_pos = 0;
-+			ims_pcu_reset_packet(pcu);
- 			break;
- 
- 		default:
-+			if (pcu->read_pos >= IMS_PCU_BUF_SIZE) {
-+				dev_warn(pcu->dev,
-+					 "Packet too long (%d bytes), discarding\n",
-+					 pcu->read_pos);
-+				ims_pcu_reset_packet(pcu);
-+				continue;
-+			}
-+
- 			pcu->read_buf[pcu->read_pos++] = data;
- 			pcu->check_sum += data;
- 			break;
+ 	if (sk_is_tcp(sk))
+ 		return (1 << sk->sk_state) & (TCPF_ESTABLISHED | TCPF_LISTEN);
++	if (sk_is_udp(sk))
++		return sk_hashed(sk);
+ 	if (sk_is_stream_unix(sk))
+ 		return (1 << sk->sk_state) & TCPF_ESTABLISHED;
+ 	return true;
 -- 
 2.53.0
 
