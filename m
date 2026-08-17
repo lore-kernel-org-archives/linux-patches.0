@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6649B41D118;
-	Mon, 17 Aug 2026 13:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EECAB43E085;
+	Mon, 17 Aug 2026 13:52:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974740; cv=none; b=Gz5dHZ88/SZXCW/WJUTjOC8ENOfeRGN168+s1b+fGlaKL5miyiZEap0+ymnVnUEiLkI7poAe9F2UhOhpF/+KWBTjh4K8E6j+L8xvE6cDU/Wq5IsnaRPxw+t7x0ypy+J9ro8qGU47f558Pdf/cyFuE1MUjKw1Ln21+DpF3CUNUk8=
+	t=1786974749; cv=none; b=jnY91ugMBVuQLv2Eg6PXCy2UnCB9x6blecEG/6dbpqzHg/p2M/TqwY76iXQUPRCWmGxu2bZpyDoVjzNd4IefLYHW6Ui8V1GWBqRr3F9Nqq8hm1vwUrEF5S2Q4SGcX7rkeTIN4FQUAXm7sks16FOplF8ffZVRx2GEpTg8mPSZN2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974740; c=relaxed/simple;
-	bh=MQH5Qhm6kxE2NRbdrSdK8IplP6EAk9DK9/yarzBO+UQ=;
+	s=arc-20240116; t=1786974749; c=relaxed/simple;
+	bh=F7rirEv1Sl8VEj1tTq6LCGFHorjq/wCUGOqGTqleS+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KzmP23eyYoG0fphjjp2C5T9HQ49g5krUWT9izsZKqT2XEu24HOcx97tIo0V88Xc437QIgk4LgmnSLezRSiien5byEUmWgQspSl9aA1T3ZdzE0zdyw1+hvJp7a4srvIp8T+jOsOoikLurKF+zYt+1NMVYssT2p/kvzVJSSdcw6r8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sg9HuaOX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DPbU5bJ6tbr6d/85BQQzkOHSkgd56i+hnRFbBalvFwEqorI0s2s88pcFn/HW14jezMef5SOF7FmketPCHtBGIS0e0KTaymDZ3gSIfZLUq9nxRg75Rhg21rIiw+za4TKAkkYX8YJsxS3r5IgKklkGf4ZXmA7ngOGCt3jC6zE/QRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHwOpw3S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sg9HuaOX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 704791F000E9;
-	Mon, 17 Aug 2026 13:52:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHwOpw3S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE3FA1F000E9;
+	Mon, 17 Aug 2026 13:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974723;
-	bh=58U0zGLa/ueDqHnWugw5FgwadyRHhokpVgmudC6NfA0=;
+	s=korg; t=1786974741;
+	bh=atX87GwpGXc+VTqnaJqCjM+g8qRELjDWXZOCgxt7WPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sg9HuaOXCyZvESYHjS+E0zIBJoSEfiMwfORgnQY9c4a/99mK53DETQmy7+i9SsNhg
-	 LY7DgjNT0q+BpxjEs9Gf+2m44SVW17XrO/spsI3gA4eOMwWqdg7vP6o96Vm0pfLn4/
-	 QclicuELieV/sBq01sRNSmMTPXd2dJqn227UhkfA=
+	b=aHwOpw3SZnRSI9X0hY47eIICX0B8lmEmp7yikFAUnOmJTEMgZepFRhzH2yqw+yyIb
+	 buKC2GiNs1TcPadLV1gLUIFrNMvZbkTg7tX/NoRmS7C8bOJY0H0nSlb537XJ+v3kly
+	 6K4DPlhHSi1fsusUcei/Blghl8UPEHl7ic9FeWm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Aleksandrs Vinarskis <alex@vinarskis.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 009/250] arm64: dts: qcom: Rework X1-based Asus Zenbook A14s displays
-Date: Mon, 17 Aug 2026 15:29:30 +0200
-Message-ID: <20260817132536.835143996@linuxfoundation.org>
+Subject: [PATCH 6.18 039/250] ipvs: avoid out-of-bounds write in ip_vs_nat_icmp
+Date: Mon, 17 Aug 2026 15:30:00 +0200
+Message-ID: <20260817132538.053344886@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -53,469 +51,257 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandrs Vinarskis <alex@vinarskis.com>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit 462b39931cab3415ffc47863a58372399e600f4f ]
+[ Upstream commit 646922a0379496154e8c8faca4f8e2fd9100cacc ]
 
-The laptop comes in two variants:
+Sashiko warns that local attacker can modify the packet
+while it is processed by IPVS. Some places read the
+IP ihl field multiple times which can cause out-of-bounds
+access. One such place is ip_vs_nat_icmp where we
+can write after the validated area.
 
-* UX3407RA, higher end, FHD+ OLED or WOXGA+ OLED panels
-* UX3407QA, lower end, FHD+ OLED or FHD+ LCD panels
+Fix it by providing ciph argument just like it is done for
+IPv6 and use ciph->len as offset to the embedded transport
+header.
 
-Even though all three panels work with "edp-panel", unfortunately the
-brightness adjustmenet of LCD panel is PWM based, requiring a dedicated
-device-tree. Convert "x1p42100-asus-zenbook-a14.dts" into ".dtsi" to
-allow for this split, introduce new LCD variant. Leave current variant
-without postfix and with the unchanged model name, as some distros
-(eg. Ubuntu) rely on this for automatic device-tree detection during
-kernel installation/upgrade.
+Modify some IPv4 header checks by reading the ihl field
+only once.
 
-As dedicated device-tree is required, update compatibles of OLED
-variants to correct ones. Keep "edp-panel" as fallback, since it is
-enough to make the panels work.
-
-While at it moving .dts, .dtsi around, drop 'model' from the top level
-x1-asus-zenbook-a14.dtsi as well.
-
-Co-developed-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Aleksandrs Vinarskis <alex@vinarskis.com>
-Link: https://lore.kernel.org/r/20250927-zenbook-improvements-v3-2-d46c7368dc70@vinarskis.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 4cd774c1feb3 ("arm64: dts: qcom: purwa: Fix GPU IOMMU property")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://sashiko.dev/#/patchset/20260722101517.36313-1-ja%40ssi.bg
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/Makefile             |   2 +
- .../boot/dts/qcom/x1-asus-zenbook-a14.dtsi    |   7 +-
- .../dts/qcom/x1e80100-asus-zenbook-a14.dts    |   8 +
- .../qcom/x1p42100-asus-zenbook-a14-lcd.dts    |  62 ++++++++
- .../dts/qcom/x1p42100-asus-zenbook-a14.dts    | 133 +----------------
- .../dts/qcom/x1p42100-asus-zenbook-a14.dtsi   | 138 ++++++++++++++++++
- 6 files changed, 218 insertions(+), 132 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14-lcd.dts
- create mode 100644 arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtsi
+ include/net/ip_vs.h             |  2 +-
+ net/netfilter/ipvs/ip_vs_core.c | 67 +++++++++++++++++----------------
+ net/netfilter/ipvs/ip_vs_xmit.c |  2 +-
+ 3 files changed, 36 insertions(+), 35 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 296688f7cb265..dffdb219f33dc 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -344,6 +344,8 @@ x1e80100-qcp-el2-dtbs	:= x1e80100-qcp.dtb x1-el2.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-qcp.dtb x1e80100-qcp-el2.dtb
- x1p42100-asus-zenbook-a14-el2-dtbs	:= x1p42100-asus-zenbook-a14.dtb x1-el2.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-asus-zenbook-a14.dtb x1p42100-asus-zenbook-a14-el2.dtb
-+x1p42100-asus-zenbook-a14-lcd-el2-dtbs	:= x1p42100-asus-zenbook-a14-lcd.dtb x1-el2.dtbo
-+dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-asus-zenbook-a14-lcd.dtb x1p42100-asus-zenbook-a14-lcd-el2.dtb
- x1p42100-crd-el2-dtbs	:= x1p42100-crd.dtb x1-el2.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-crd.dtb x1p42100-crd-el2.dtb
- x1p42100-hp-omnibook-x14-el2-dtbs := x1p42100-hp-omnibook-x14.dtb x1-el2.dtbo
-diff --git a/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi b/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
-index 69eccad1a09c2..8e5c5575a5320 100644
---- a/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi
-@@ -14,7 +14,6 @@
- #include "hamoa-pmics.dtsi"
+diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
+index 17a97086b294f..cbad9c74a8868 100644
+--- a/include/net/ip_vs.h
++++ b/include/net/ip_vs.h
+@@ -1720,7 +1720,7 @@ static inline char ip_vs_fwd_tag(struct ip_vs_conn *cp)
  
- / {
--	model = "ASUS Zenbook A14";
- 	chassis-type = "laptop";
+ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		    struct ip_vs_conn *cp, int dir, unsigned int toff,
+-		    bool has_ports);
++		    bool has_ports, struct ip_vs_iphdr *ciph);
  
- 	aliases {
-@@ -1005,14 +1004,10 @@ &mdss_dp3 {
- 	status = "okay";
+ #ifdef CONFIG_IP_VS_IPV6
+ void ip_vs_nat_icmp_v6(struct sk_buff *skb, struct ip_vs_protocol *pp,
+diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
+index 6207a91e93f3b..586346110cd89 100644
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -747,28 +747,27 @@ static int ip_vs_route_me_harder(struct netns_ipvs *ipvs, int af,
+  */
+ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		    struct ip_vs_conn *cp, int inout, unsigned int toff,
+-		    bool has_ports)
++		    bool has_ports, struct ip_vs_iphdr *ciph)
+ {
+ 	struct iphdr *iph	 = ip_hdr(skb);
+ 	struct icmphdr *icmph	 = (struct icmphdr *)(skb->data + toff);
+-	struct iphdr *ciph	 = (struct iphdr *)(icmph + 1);
+-	unsigned int coff __maybe_unused = toff + sizeof(struct icmphdr);
++	struct iphdr *cih	 = (struct iphdr *)(icmph + 1);
  
- 	aux-bus {
--		panel {
-+		panel: panel {
- 			compatible = "edp-panel";
--			enable-gpios = <&pmc8380_3_gpios 4 GPIO_ACTIVE_HIGH>;
- 			power-supply = <&vreg_edp_3p3>;
+ 	if (inout) {
+ 		iph->saddr = cp->vaddr.ip;
+ 		ip_send_check(iph);
+-		ciph->daddr = cp->vaddr.ip;
+-		ip_send_check(ciph);
++		cih->daddr = cp->vaddr.ip;
++		ip_send_check(cih);
+ 	} else {
+ 		iph->daddr = cp->daddr.ip;
+ 		ip_send_check(iph);
+-		ciph->saddr = cp->daddr.ip;
+-		ip_send_check(ciph);
++		cih->saddr = cp->daddr.ip;
++		ip_send_check(cih);
+ 	}
  
--			pinctrl-0 = <&edp_bl_en>;
--			pinctrl-names = "default";
--
- 			port {
- 				edp_panel_in: endpoint {
- 					remote-endpoint = <&mdss_dp3_out>;
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dts
-index c3cd04c9703d3..49b12a0a7cb1e 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dts
-@@ -22,6 +22,14 @@ &gpu_zap_shader {
- 	firmware-name = "qcom/x1e80100/ASUSTeK/zenbook-a14/qcdxkmsuc8380.mbn";
- };
+ 	/* the TCP/UDP/SCTP port */
+ 	if (has_ports) {
+-		__be16 *ports = (void *)ciph + ciph->ihl*4;
++		__be16 *ports = (void *)(skb->data + ciph->len);
  
-+&panel {
-+	compatible = "samsung,atna40cu11", "samsung,atna33xc20";
-+	enable-gpios = <&pmc8380_3_gpios 4 GPIO_ACTIVE_HIGH>;
-+
-+	pinctrl-0 = <&edp_bl_en>;
-+	pinctrl-names = "default";
-+};
-+
- &remoteproc_adsp {
- 	firmware-name = "qcom/x1e80100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
- 			"qcom/x1e80100/ASUSTeK/zenbook-a14/adsp_dtbs.elf";
-diff --git a/arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14-lcd.dts b/arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14-lcd.dts
-new file mode 100644
-index 0000000000000..be756069131d7
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14-lcd.dts
-@@ -0,0 +1,62 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2025 Aleksandrs Vinarskis <alex@vinarskis.com>
-+ */
-+
-+/dts-v1/;
-+
-+#include "x1p42100-asus-zenbook-a14.dtsi"
-+
-+/ {
-+	model = "ASUS Zenbook A14 (UX3407QA, LCD)";
-+	compatible = "asus,zenbook-a14-ux3407qa-lcd", "asus,zenbook-a14-ux3407qa", "qcom,x1p42100";
-+
-+	backlight: backlight {
-+		compatible = "pwm-backlight";
-+		pwms = <&pmk8550_pwm 0 416667>;
-+		enable-gpios = <&pmc8380_3_gpios 4 GPIO_ACTIVE_HIGH>;
-+		power-supply = <&vreg_edp_bl>;
-+
-+		pinctrl-0 = <&edp_bl_en>, <&edp_bl_pwm>;
-+		pinctrl-names = "default";
-+	};
-+
-+	vreg_edp_bl: regulator-edp-bl {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VBL9";
-+		regulator-min-microvolt = <3600000>;
-+		regulator-max-microvolt = <3600000>;
-+
-+		gpio = <&pmc8380_3_gpios 10 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&edp_bl_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+};
-+
-+&panel {
-+	backlight = <&backlight>;
-+};
-+
-+&pmc8380_3_gpios {
-+	edp_bl_reg_en: edp-bl-reg-en-state {
-+		pins = "gpio10";
-+		function = "normal";
-+	};
-+};
-+
-+&pmk8550_gpios {
-+	edp_bl_pwm: edp-bl-pwm-state {
-+		pins = "gpio5";
-+		function = "func3";
-+	};
-+};
-+
-+&pmk8550_pwm {
-+	status = "okay";
-+};
-diff --git a/arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dts b/arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dts
-index bd75ff898601a..68cd318d69073 100644
---- a/arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dts
-+++ b/arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dts
-@@ -6,136 +6,17 @@
+ 		if (inout)
+ 			ports[1] = cp->vport;
+@@ -782,10 +781,10 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 	skb->ip_summed = CHECKSUM_UNNECESSARY;
  
- /dts-v1/;
+ 	if (inout)
+-		IP_VS_DBG_PKT(11, AF_INET, pp, skb, coff,
++		IP_VS_DBG_PKT(11, AF_INET, pp, skb, ciph->off,
+ 			      "Forwarding altered outgoing ICMP");
+ 	else
+-		IP_VS_DBG_PKT(11, AF_INET, pp, skb, coff,
++		IP_VS_DBG_PKT(11, AF_INET, pp, skb, ciph->off,
+ 			      "Forwarding altered incoming ICMP");
+ }
  
--#include "x1p42100.dtsi"
--#include "x1-asus-zenbook-a14.dtsi"
--
--/delete-node/ &pmc8380_6;
--/delete-node/ &pmc8380_6_thermal;
-+#include "x1p42100-asus-zenbook-a14.dtsi"
+@@ -878,7 +877,7 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
+ 		ip_vs_nat_icmp_v6(skb, pp, cp, 1, toff, has_ports, ciph);
+ 	else
+ #endif
+-		ip_vs_nat_icmp(skb, pp, cp, 1, toff, has_ports);
++		ip_vs_nat_icmp(skb, pp, cp, 1, toff, has_ports, ciph);
  
- / {
- 	model = "ASUS Zenbook A14 (UX3407QA)";
--	compatible = "asus,zenbook-a14-ux3407qa", "qcom,x1p42100";
--
--	wcn6855-pmu {
--		compatible = "qcom,wcn6855-pmu";
--
--		vddaon-supply = <&vreg_wcn_0p95>;
--		vddio-supply = <&vreg_wcn_1p9>;
--		vddpcie1p3-supply = <&vreg_wcn_1p9>;
--		vddpcie1p9-supply = <&vreg_wcn_1p9>;
--		vddpmu-supply = <&vreg_wcn_0p95>;
--		vddpmucx-supply = <&vreg_wcn_0p95>;
--		vddpmumx-supply = <&vreg_wcn_0p95>;
--		vddrfa0p95-supply = <&vreg_wcn_0p95>;
--		vddrfa1p3-supply = <&vreg_wcn_1p9>;
--		vddrfa1p9-supply = <&vreg_wcn_1p9>;
--
--		bt-enable-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
--		wlan-enable-gpios = <&tlmm 117 GPIO_ACTIVE_HIGH>;
--
--		pinctrl-0 = <&wcn_bt_en>, <&wcn_wlan_en>;
--		pinctrl-names = "default";
--
--		regulators {
--			vreg_pmu_rfa_cmn_0p8: ldo0 {
--				regulator-name = "vreg_pmu_rfa_cmn_0p8";
--			};
--
--			vreg_pmu_aon_0p8: ldo1 {
--				regulator-name = "vreg_pmu_aon_0p8";
--			};
--
--			vreg_pmu_wlcx_0p8: ldo2 {
--				regulator-name = "vreg_pmu_wlcx_0p8";
--			};
--
--			vreg_pmu_wlmx_0p8: ldo3 {
--				regulator-name = "vreg_pmu_wlmx_0p8";
--			};
--
--			vreg_pmu_btcmx_0p8: ldo4 {
--				regulator-name = "vreg_pmu_btcmx_0p8";
--			};
--
--			vreg_pmu_pcie_1p8: ldo5 {
--				regulator-name = "vreg_pmu_pcie_1p8";
--			};
--
--			vreg_pmu_pcie_0p9: ldo6 {
--				regulator-name = "vreg_pmu_pcie_0p9";
--			};
--
--			vreg_pmu_rfa_0p8: ldo7 {
--				regulator-name = "vreg_pmu_rfa_0p8";
--			};
--
--			vreg_pmu_rfa_1p2: ldo8 {
--				regulator-name = "vreg_pmu_rfa_1p2";
--			};
--
--			vreg_pmu_rfa_1p7: ldo9 {
--				regulator-name = "vreg_pmu_rfa_1p7";
--			};
--		};
--	};
-+	compatible = "asus,zenbook-a14-ux3407qa-oled", "asus,zenbook-a14-ux3407qa", "qcom,x1p42100";
- };
+ 	if (ip_vs_route_me_harder(cp->ipvs, af, skb, hooknum))
+ 		goto out;
+@@ -914,7 +913,7 @@ static int ip_vs_out_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb,
+ 	struct ip_vs_iphdr ciph;
+ 	struct ip_vs_conn *cp;
+ 	struct ip_vs_protocol *pp;
+-	unsigned int offset, ihl;
++	unsigned int offset;
+ 	union nf_inet_addr snet;
  
--&gpu {
--	status = "okay";
--};
--
--&gpu_zap_shader {
--	firmware-name = "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn";
--};
--
--&pcie4_port0 {
--	wifi@0 {
--		compatible = "pci17cb,1103";
--		reg = <0x10000 0x0 0x0 0x0 0x0>;
--
--		vddaon-supply = <&vreg_pmu_aon_0p8>;
--		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
--		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
--		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
--		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
--		vddrfa1p8-supply = <&vreg_pmu_rfa_1p7>;
--		vddrfacmn-supply = <&vreg_pmu_rfa_cmn_0p8>;
--		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
--		vddwlmx-supply = <&vreg_pmu_wlmx_0p8>;
--
--		qcom,calibration-variant = "UX3407Q";
--	};
--};
--
--&remoteproc_adsp {
--	firmware-name = "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
--			"qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf";
--
--	status = "okay";
--};
--
--&remoteproc_cdsp {
--	firmware-name = "qcom/x1p42100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
--			"qcom/x1p42100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf";
--
--	status = "okay";
--};
--
--&uart14 {
--	status = "okay";
--
--	bluetooth {
--		compatible = "qcom,wcn6855-bt";
--
--		vddaon-supply = <&vreg_pmu_aon_0p8>;
--		vddbtcmx-supply = <&vreg_pmu_btcmx_0p8>;
--		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
--		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
--		vddrfa1p8-supply = <&vreg_pmu_rfa_1p7>;
--		vddrfacmn-supply = <&vreg_pmu_rfa_cmn_0p8>;
--		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
--		vddwlmx-supply = <&vreg_pmu_wlmx_0p8>;
-+&panel {
-+	compatible = "samsung,atna40ct06", "samsung,atna33xc20";
-+	enable-gpios = <&pmc8380_3_gpios 4 GPIO_ACTIVE_HIGH>;
+ 	*related = 1;
+@@ -927,7 +926,6 @@ static int ip_vs_out_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb,
+ 			return NF_ACCEPT;
+ 	}
  
--		max-speed = <3000000>;
--	};
-+	pinctrl-0 = <&edp_bl_en>;
-+	pinctrl-names = "default";
- };
-diff --git a/arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtsi b/arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtsi
-new file mode 100644
-index 0000000000000..7ccb2076bab66
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtsi
-@@ -0,0 +1,138 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2025 Aleksandrs Vinarskis <alex@vinarskis.com>
-+ */
+-	ihl = ipvsh->len;
+ 	offset = ipvsh->len;
+ 	ic = skb_header_pointer(skb, offset, sizeof(_icmph), &_icmph);
+ 	if (ic == NULL)
+@@ -953,11 +951,15 @@ static int ip_vs_out_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb,
+ 
+ 	/* Now find the contained IP header */
+ 	offset += sizeof(_icmph);
++	if (!ip_vs_fill_iph_skb_icmp(AF_INET, skb, offset, true, &ciph))
++		return NF_ACCEPT; /* The packet looks wrong, ignore */
 +
-+/dts-v1/;
+ 	cih = skb_header_pointer(skb, offset, sizeof(_ciph), &_ciph);
+-	if (!(cih && cih->version == 4 && cih->ihl >= 5))
++	if (!(cih && cih->version == 4 &&
++	      ciph.len - ciph.off >= sizeof(struct iphdr)))
+ 		return NF_ACCEPT; /* The packet looks wrong, ignore */
+ 
+-	pp = ip_vs_proto_get(cih->protocol);
++	pp = ip_vs_proto_get(ciph.protocol);
+ 	if (!pp)
+ 		return NF_ACCEPT;
+ 
+@@ -968,8 +970,6 @@ static int ip_vs_out_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb,
+ 	IP_VS_DBG_PKT(11, AF_INET, pp, skb, offset,
+ 		      "Checking outgoing ICMP for");
+ 
+-	ip_vs_fill_iph_skb_icmp(AF_INET, skb, offset, true, &ciph);
+-
+ 	/* The embedded headers contain source and dest in reverse order */
+ 	cp = INDIRECT_CALL_1(pp->conn_out_get, ip_vs_conn_out_get_proto,
+ 			     ipvs, AF_INET, skb, &ciph);
+@@ -977,8 +977,8 @@ static int ip_vs_out_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb,
+ 		return NF_ACCEPT;
+ 
+ 	snet.ip = ipvsh->saddr.ip;
+-	return handle_response_icmp(AF_INET, skb, &snet, cp, pp, &ciph, ihl,
+-				    hooknum);
++	return handle_response_icmp(AF_INET, skb, &snet, cp, pp, &ciph,
++				    ipvsh->len, hooknum);
+ }
+ 
+ #ifdef CONFIG_IP_VS_IPV6
+@@ -1625,10 +1625,12 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 	/* Now find the contained IP header */
+ 	offset += sizeof(_icmph);
+ 	cih = skb_header_pointer(skb, offset, sizeof(_ciph), &_ciph);
+-	if (!(cih && cih->version == 4 && cih->ihl >= 5))
++	if (!cih)
+ 		return NF_ACCEPT; /* The packet looks wrong, ignore */
+-	raddr = (union nf_inet_addr *)&cih->daddr;
+ 	hlen_ipip = cih->ihl * 4;
++	if (!(cih->version == 4 && hlen_ipip >= sizeof(struct iphdr)))
++		return NF_ACCEPT; /* The packet looks wrong, ignore */
++	raddr = (union nf_inet_addr *)&cih->daddr;
+ 
+ 	/* Special case for errors for IPIP/UDP/GRE tunnel packets */
+ 	tunnel = false;
+@@ -1645,9 +1647,6 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 		if (!dest || dest->tun_type != IP_VS_CONN_F_TUNNEL_TYPE_IPIP)
+ 			return NF_ACCEPT;
+ 		offset += hlen_ipip;
+-		cih = skb_header_pointer(skb, offset, sizeof(_ciph), &_ciph);
+-		if (!(cih && cih->version == 4 && cih->ihl >= 5))
+-			return NF_ACCEPT; /* The packet looks wrong, ignore */
+ 		tunnel = true;
+ 	} else if ((cih->protocol == IPPROTO_UDP ||	/* Can be UDP encap */
+ 		    cih->protocol == IPPROTO_GRE) &&	/* Can be GRE encap */
+@@ -1672,21 +1671,25 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 			/* Skip IP and UDP/GRE tunnel headers */
+ 			offset = offset2 + ulen;
+ 			/* Now we should be at the original IP header */
+-			cih = skb_header_pointer(skb, offset, sizeof(_ciph),
+-						 &_ciph);
+-			if (cih && cih->version == 4 && cih->ihl >= 5 &&
+-			    iproto == IPPROTO_IPIP)
++			if (iproto == IPPROTO_IPIP)
+ 				tunnel = true;
+ 			else
+ 				return NF_ACCEPT;
+ 		}
+ 	}
+ 
+-	pd = ip_vs_proto_data_get(ipvs, cih->protocol);
++	if (!ip_vs_fill_iph_skb_icmp(AF_INET, skb, offset, !tunnel, &ciph))
++		return NF_ACCEPT;
++	pd = ip_vs_proto_data_get(ipvs, ciph.protocol);
+ 	if (!pd)
+ 		return NF_ACCEPT;
+ 	pp = pd->pp;
+ 
++	cih = skb_header_pointer(skb, offset, sizeof(_ciph), &_ciph);
++	if (!(cih && cih->version == 4 &&
++	      ciph.len - ciph.off >= sizeof(struct iphdr)))
++		return NF_ACCEPT; /* The packet looks wrong, ignore */
 +
-+#include "x1p42100.dtsi"
-+#include "x1-asus-zenbook-a14.dtsi"
-+
-+/delete-node/ &pmc8380_6;
-+/delete-node/ &pmc8380_6_thermal;
-+
-+/ {
-+	wcn6855-pmu {
-+		compatible = "qcom,wcn6855-pmu";
-+
-+		vddaon-supply = <&vreg_wcn_0p95>;
-+		vddio-supply = <&vreg_wcn_1p9>;
-+		vddpcie1p3-supply = <&vreg_wcn_1p9>;
-+		vddpcie1p9-supply = <&vreg_wcn_1p9>;
-+		vddpmu-supply = <&vreg_wcn_0p95>;
-+		vddpmucx-supply = <&vreg_wcn_0p95>;
-+		vddpmumx-supply = <&vreg_wcn_0p95>;
-+		vddrfa0p95-supply = <&vreg_wcn_0p95>;
-+		vddrfa1p3-supply = <&vreg_wcn_1p9>;
-+		vddrfa1p9-supply = <&vreg_wcn_1p9>;
-+
-+		bt-enable-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
-+		wlan-enable-gpios = <&tlmm 117 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&wcn_bt_en>, <&wcn_wlan_en>;
-+		pinctrl-names = "default";
-+
-+		regulators {
-+			vreg_pmu_rfa_cmn_0p8: ldo0 {
-+				regulator-name = "vreg_pmu_rfa_cmn_0p8";
-+			};
-+
-+			vreg_pmu_aon_0p8: ldo1 {
-+				regulator-name = "vreg_pmu_aon_0p8";
-+			};
-+
-+			vreg_pmu_wlcx_0p8: ldo2 {
-+				regulator-name = "vreg_pmu_wlcx_0p8";
-+			};
-+
-+			vreg_pmu_wlmx_0p8: ldo3 {
-+				regulator-name = "vreg_pmu_wlmx_0p8";
-+			};
-+
-+			vreg_pmu_btcmx_0p8: ldo4 {
-+				regulator-name = "vreg_pmu_btcmx_0p8";
-+			};
-+
-+			vreg_pmu_pcie_1p8: ldo5 {
-+				regulator-name = "vreg_pmu_pcie_1p8";
-+			};
-+
-+			vreg_pmu_pcie_0p9: ldo6 {
-+				regulator-name = "vreg_pmu_pcie_0p9";
-+			};
-+
-+			vreg_pmu_rfa_0p8: ldo7 {
-+				regulator-name = "vreg_pmu_rfa_0p8";
-+			};
-+
-+			vreg_pmu_rfa_1p2: ldo8 {
-+				regulator-name = "vreg_pmu_rfa_1p2";
-+			};
-+
-+			vreg_pmu_rfa_1p7: ldo9 {
-+				regulator-name = "vreg_pmu_rfa_1p7";
-+			};
-+		};
-+	};
-+};
-+
-+&gpu {
-+	status = "okay";
-+};
-+
-+&gpu_zap_shader {
-+	firmware-name = "qcom/x1p42100/ASUSTeK/zenbook-a14/qcdxkmsucpurwa.mbn";
-+};
-+
-+&pcie4_port0 {
-+	wifi@0 {
-+		compatible = "pci17cb,1103";
-+		reg = <0x10000 0x0 0x0 0x0 0x0>;
-+
-+		vddaon-supply = <&vreg_pmu_aon_0p8>;
-+		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
-+		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p8-supply = <&vreg_pmu_rfa_1p7>;
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn_0p8>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p8>;
-+
-+		qcom,calibration-variant = "UX3407Q";
-+	};
-+};
-+
-+&remoteproc_adsp {
-+	firmware-name = "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
-+			"qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf";
-+
-+	status = "okay";
-+};
-+
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/x1p42100/ASUSTeK/zenbook-a14/qccdsp8380.mbn",
-+			"qcom/x1p42100/ASUSTeK/zenbook-a14/cdsp_dtbs.elf";
-+
-+	status = "okay";
-+};
-+
-+&uart14 {
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn6855-bt";
-+
-+		vddaon-supply = <&vreg_pmu_aon_0p8>;
-+		vddbtcmx-supply = <&vreg_pmu_btcmx_0p8>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p8-supply = <&vreg_pmu_rfa_1p7>;
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn_0p8>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p8>;
-+
-+		max-speed = <3000000>;
-+	};
-+};
+ 	/* Is the embedded protocol header present? */
+ 	if (unlikely(cih->frag_off & htons(IP_OFFSET) && !pp->dont_defrag))
+ 		return NF_ACCEPT;
+@@ -1694,9 +1697,6 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 	IP_VS_DBG_PKT(11, AF_INET, pp, skb, offset,
+ 		      "Checking incoming ICMP for");
+ 
+-	offset2 = offset;
+-	ip_vs_fill_iph_skb_icmp(AF_INET, skb, offset, !tunnel, &ciph);
+-
+ 	/* The embedded headers contain source and dest in reverse order.
+ 	 * For IPIP/UDP/GRE tunnel this is error for request, not for reply.
+ 	 */
+@@ -1726,11 +1726,12 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 	}
+ 
+ 	if (tunnel) {
+-		unsigned int hlen_orig = cih->ihl * 4;
++		unsigned int hlen_orig = ciph.len - ciph.off;
+ 		__be32 info = ic->un.gateway;
+ 		__u8 type = ic->type;
+ 		__u8 code = ic->code;
+ 
++		offset2 = offset;
+ 		/* Update the MTU */
+ 		if (ic->type == ICMP_DEST_UNREACH &&
+ 		    ic->code == ICMP_FRAG_NEEDED) {
+diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
+index ac1827ef78949..7db74b2ea358c 100644
+--- a/net/netfilter/ipvs/ip_vs_xmit.c
++++ b/net/netfilter/ipvs/ip_vs_xmit.c
+@@ -1577,7 +1577,7 @@ ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
+ 	if (skb_cow(skb, rt->dst.dev->hard_header_len))
+ 		goto tx_error;
+ 
+-	ip_vs_nat_icmp(skb, pp, cp, 0, toff, has_ports);
++	ip_vs_nat_icmp(skb, pp, cp, 0, toff, has_ports, ciph);
+ 
+ 	/* Another hack: avoid icmp_send in ip_fragment */
+ 	skb->ignore_df = 1;
 -- 
 2.53.0
 
