@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A67432309;
-	Mon, 17 Aug 2026 13:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ADC1439F77;
+	Mon, 17 Aug 2026 13:48:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974484; cv=none; b=pQP6mmiAxvHCkCASkWWxsCSH1lpm2ihDvvZ1JibvP/JgByk5HFij2+YyUC7s5Uq01bGqHHSiX9f4oYeBV35sBt4ht4Ecl6/kEzGizyT/bjMcLAHai5Ciy6kHYKFMwgVMBEuLdkCTwh5x3L5vz8H/dQHHkIiDjDirwK7vokO5Ydg=
+	t=1786974484; cv=none; b=o9D0F61EDKgI38++mWyGnBrshr8VtsRu8EFu38mJgNYSdSgkWTWGmm08wYnnXLVE4xI9ybW8sh4jjkuK44QFQWczjUyt+QL/CEibkiAOGOuEMkZYCcjNIAEWjMaHCs/Vf4MQ1Qrn+YXKJ9tjsnyzV22TM1eRYCULvhOwayVO2mY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1786974484; c=relaxed/simple;
-	bh=lj/gl8tt9tV3kj1h7dVnnMJxWmJ5tm+nbQuSurZVyDY=;
+	bh=8fKG1iM68dmfWwXJKIaHkdmmmV7apmL5nOAXFhsesLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q5/1C/nwwMdkIYb3bMQSzFLpvKZao4hwFJUNO8jjg+lOxelIlfxhohHnTz2UBwgv/ui9yXkIRFw9klW8YOQ1bPnkrvefhej+72Nll8vhwIa/wqr5FSsfqDK2p+rB9UxvFuP0HzLrrd6cBozst+LeFnqhRi3KpIBvXCM6sOVYHx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PANr62Jf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IdvcBKOtCAkW+sCTjcG3zc4Gw0iw3X1dpO7f1cuduul+1wqFHpxWKz1YA0QzmTnU90C0ccPvi6O6VrPW7g3QVqzHzhNBPBO6cZwN6dIxkstpsioqRCsQKH5UJOMbOmkzULGzuJ9Xc7qibdg1n/0uooIpJUJasFs5bEm1LKzKUIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=capcxLwO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PANr62Jf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 150D31F00ADB;
-	Mon, 17 Aug 2026 13:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="capcxLwO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7CBB1F000E9;
+	Mon, 17 Aug 2026 13:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974477;
-	bh=vqY3DmTPyGuAByegfzBKq1FE1BkMSFq1Y2lGR4suuIw=;
+	s=korg; t=1786974480;
+	bh=5T67ab3vukY23ixZOm2qI6yCJiYPnR4BkmCSXmZWGI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PANr62JfjZIbchf2W1QIlZHogtYdwY9m7R6NcaznzOJQYZc8LkMb0a2P14qE3+vft
-	 /8PxnHL2okh8ANwgzeAJQAdzuPoT/5cPmat1GD46dnQYtgRoIMzgNscEx2DnBXQJKF
-	 NbJ+eIqCpuPGlQl0oDNP5iEH348ZT2PZ4OMKX2Cg=
+	b=capcxLwO8B5y9qgi7UsmVTSRcMdZ5lD/G+h7QTFFTo8TJSBeK/3JwlJdgfyGEYPr+
+	 uUgH64pMuiZls7ASrgh5ok8PiCYPZ7C5k6JYmMACZJmvbUB4rhqTOCRQI1bJ6zrosR
+	 fZ1J76M3udXInT8i+9wCCSVTzBp9HZLSYqQ7BUXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yangyu Chen <cyy@cyyself.name>,
 	Mina Almasry <almasrymina@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 220/271] net: atlantic: free stranded TX buffers on ring deinit
-Date: Mon, 17 Aug 2026 15:32:25 +0200
-Message-ID: <20260817132545.814080090@linuxfoundation.org>
+Subject: [PATCH 7.1 221/271] net: atlantic: free RX pages of consumed but not refilled buffers
+Date: Mon, 17 Aug 2026 15:32:26 +0200
+Message-ID: <20260817132545.856055598@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -54,103 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Yangyu Chen <cyy@cyyself.name>
 
-commit 452636ea5410a96e02ebaaf80b21e3620b98e0dd upstream.
+commit e8e7471ef686b6c002218fee9671cc61992ae01a upstream.
 
-aq_vec_deinit() drains the TX rings with a single aq_ring_tx_clean()
-call, which frees at most AQ_CFG_TX_CLEAN_BUDGET (256) descriptors and
-stops at hw_head, which no longer moves once aq_vec_stop() has stopped
-the hardware and NAPI. Completed descriptors beyond the budget and
-everything still posted in [hw_head, sw_tail) keep their skb or
-xdp_frame when the interface goes down: aq_vec_ring_free() then frees
-the buffer ring and the references are lost for good.
+aq_ring_rx_deinit() only walks [sw_head, sw_tail), the region posted to
+hardware. Since the page reuse strategy was added, a cleaned RX buffer
+keeps its page (and its DMA mapping) in the ring for reuse, and refill
+is batched: aq_ring_rx_fill() returns early until AQ_CFG_RX_REFILL_THRES
+slots are free. Slots that were consumed but not yet reposted therefore
+sit in the complementary [sw_tail, sw_head) gap with a live page, and
+the deinit walk never visits them: up to a refill batch worth of pages
+and DMA mappings leak on every interface down.
 
-Today this is a silent memory leak on every interface down under
-TX/XDP_TX load. With the conversion of the RX path to page_pool posted
-for net-next it becomes much more visible: XDP_TX frames carry fragment
-references on the RX ring's page_pool, so a single stranded frame keeps
-the pool's inflight count above zero forever. page_pool_destroy() then
-never completes, the pool is leaked together with its pages, and
-"page_pool_release_retry() stalled pool shutdown" is warned every 60
-seconds from that point on, on every ifdown, XDP detach or ring resize
-under XDP_TX load.
+Walk the whole ring instead and release whatever is still there. Also
+bail out if the buffer ring is already gone: a partial
+aq_ptp_ring_alloc() failure frees the ring but leaves aq_nic set, so
+aq_ptp_ring_deinit() still gets here on the unwind path.
 
-Bring back aq_ring_tx_deinit() as it was before the removal and use it
-for teardown again, with one extension: TX rings can hold xdp_frames
-nowadays, so release those too. They are returned with
-xdp_return_frame() since this runs in process context.
-
-Fixes: eb36bedf28be ("net: aquantia: remove function aq_ring_tx_deinit")
-Cc: stable@vger.kernel.org # v4.11+
+Cc: stable@vger.kernel.org # v5.2+
+Fixes: 46f4c29d9de6 ("net: aquantia: optimize rx performance by page reuse strategy")
 Reviewed-by: Sukhdeep Singh <sukhdeeps@marvell.com>
 Signed-off-by: Yangyu Chen <cyy@cyyself.name>
 Acked-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/tencent_EEDC35FAF2750A3A6A0B39BAE0E2C484860A@qq.com
+Link: https://patch.msgid.link/tencent_607CBA8237DA438E36B844318B21538DE008@qq.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/aquantia/atlantic/aq_ring.c |   29 +++++++++++++++++++++++
- drivers/net/ethernet/aquantia/atlantic/aq_ring.h |    1 
- drivers/net/ethernet/aquantia/atlantic/aq_vec.c  |    2 -
- 3 files changed, 31 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/aquantia/atlantic/aq_ring.c |   22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
 --- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
 +++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-@@ -336,6 +336,35 @@ out:
- 	return !!budget;
+@@ -926,15 +926,29 @@ err_exit:
+ 
+ void aq_ring_rx_deinit(struct aq_ring_s *self)
+ {
+-	if (!self)
++	unsigned int i;
++
++	if (!self || !self->buff_ring)
+ 		return;
+ 
+-	for (; self->sw_head != self->sw_tail;
+-		self->sw_head = aq_ring_next_dx(self, self->sw_head)) {
+-		struct aq_ring_buff_s *buff = &self->buff_ring[self->sw_head];
++	/* Release every page still owned by the ring.
++	 *
++	 * Walking [sw_head, sw_tail) is not enough: refill is batched
++	 * (aq_ring_rx_fill() waits for AQ_CFG_RX_REFILL_THRES free slots),
++	 * so slots that were cleaned but not yet reposted accumulate in the
++	 * [sw_tail, sw_head) gap, and they keep their page for reuse. Walk
++	 * the whole ring and release whatever is left.
++	 */
++	for (i = 0; i < self->size; i++) {
++		struct aq_ring_buff_s *buff = &self->buff_ring[i];
++
++		if (!buff->rxdata.page)
++			continue;
+ 
+ 		aq_free_rxpage(&buff->rxdata, aq_nic_get_dev(self->aq_nic));
+ 	}
++
++	self->sw_head = self->sw_tail;
  }
  
-+void aq_ring_tx_deinit(struct aq_ring_s *self)
-+{
-+	if (!self)
-+		return;
-+
-+	for (; self->sw_head != self->sw_tail;
-+		self->sw_head = aq_ring_next_dx(self, self->sw_head)) {
-+		struct aq_ring_buff_s *buff = &self->buff_ring[self->sw_head];
-+		struct device *ndev = aq_nic_get_dev(self->aq_nic);
-+
-+		if (buff->is_mapped) {
-+			if (buff->is_sop) {
-+				dma_unmap_single(ndev, buff->pa, buff->len,
-+						 DMA_TO_DEVICE);
-+			} else {
-+				dma_unmap_page(ndev, buff->pa, buff->len,
-+					       DMA_TO_DEVICE);
-+			}
-+		}
-+
-+		if (buff->is_eop) {
-+			if (buff->skb)
-+				dev_kfree_skb_any(buff->skb);
-+			else if (buff->xdpf)
-+				xdp_return_frame(buff->xdpf);
-+		}
-+	}
-+}
-+
- static void aq_rx_checksum(struct aq_ring_s *self,
- 			   struct aq_ring_buff_s *buff,
- 			   struct sk_buff *skb)
---- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.h
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.h
-@@ -199,6 +199,7 @@ void aq_ring_update_queue_state(struct a
- void aq_ring_queue_wake(struct aq_ring_s *ring);
- void aq_ring_queue_stop(struct aq_ring_s *ring);
- bool aq_ring_tx_clean(struct aq_ring_s *self);
-+void aq_ring_tx_deinit(struct aq_ring_s *self);
- int aq_xdp_xmit(struct net_device *dev, int num_frames,
- 		struct xdp_frame **frames, u32 flags);
- int aq_ring_rx_clean(struct aq_ring_s *self,
---- a/drivers/net/ethernet/aquantia/atlantic/aq_vec.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_vec.c
-@@ -275,7 +275,7 @@ void aq_vec_deinit(struct aq_vec_s *self
- 
- 	for (i = 0U; self->tx_rings > i; ++i) {
- 		ring = self->ring[i];
--		aq_ring_tx_clean(&ring[AQ_VEC_TX_ID]);
-+		aq_ring_tx_deinit(&ring[AQ_VEC_TX_ID]);
- 		aq_ring_rx_deinit(&ring[AQ_VEC_RX_ID]);
- 	}
- 
+ void aq_ring_free(struct aq_ring_s *self)
 
 
