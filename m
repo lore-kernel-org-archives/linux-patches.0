@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3958A2F1FDF;
-	Mon, 17 Aug 2026 15:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B3C2D7DC8;
+	Mon, 17 Aug 2026 15:03:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978999; cv=none; b=Ws++78Smpz5b7TSBeoIqz9WEyWr8Ng/XoXAczfu60DZH3gkTPvZzLfdxzfTmeJmhDDRphXorJinWzgIWPwG6GIrlBTvo77m3kbh4nvCmS7+w8++Fs1HKi5jc7fxOoG9D9/MiIdd/gZcglyB7LbAD/633rgy6i1ZhpAiobScnpC8=
+	t=1786979002; cv=none; b=YYUvofqLfaCXE3Gt6pmSq1gMzlYFiMhKhSbcxWY8LcYlDsvnsWVC5aKORvjS+9vAelBvBvEddkwfuF64e32WUticDBtgZWDVh4WmceZiqZ2EXhpATsxrjS2gAWwVvnZJTWHIrlI3vBcwfFBjtZcMFVRrTLgFuSo4ryKnr+bEKLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978999; c=relaxed/simple;
-	bh=yk9+snyWF+wNhaShfrOdH4cr64pefuRPm/gx6ou3kv8=;
+	s=arc-20240116; t=1786979002; c=relaxed/simple;
+	bh=xhCjMZZzg4deid40Duvu2YZT0o9SRYiV1LSDONDHcAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NX4H9HmVNnScDvL0n//mb0J1eVfsmQyqUxJ99ArDTMmoL3rvrBBWMrsVNymO90cHhPhIpIKzUSzyj896YYZ2R4gKUeCjfB+46YfUIJ5oqqjBsaDAltsYDyDMFaBo8NHtP7GoVzJLhWD8kgwV9XnQcH8+k3t+Q0uhQzQIHSRAkOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZnGBvZzr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ssApLJgiTIvsg6GzVSFcWbv5efoJ3/dCj4E1Eckj9USzPm3XgygfHAXKNiuSdq6ZPeUqavb3z+xWvJ6a/7Ef2VC/KsNIcb2jXjrjhMB8N6jXnwgRvXIG/wPq/nNKLh0FqhthPYxCay7d+nge8HIUpqa+HAtfbUlw41SWXObV+Sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pefQLWDb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnGBvZzr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB561F000E9;
-	Mon, 17 Aug 2026 15:03:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pefQLWDb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4111F000E9;
+	Mon, 17 Aug 2026 15:03:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978998;
-	bh=0WSQ/ZbcWr3zgfzeG3q0ApsYdTID6y9i6fxCySdDnb8=;
+	s=korg; t=1786979001;
+	bh=/3iMF7IKd3U2km9OrMIwLAMQ/Ku2pcuoximvVDyrU54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZnGBvZzr46ZdhAPOYEY7BK40kbvNNiY9LzI5YF2mydBfF7W6CqBzgy93tsPdvVL8F
-	 2WA/yoHIBrgylC67S8u84S2LF9GJISwt+AUBrKSFXVauAbeRkW9a1e8RzDM1ZGeiRA
-	 lDn0/JBlg+qYLm0OVr0jmmm83tyEUT5cinmqiFgM=
+	b=pefQLWDbfCP245cPjWuHBeHDdZ97QX2/reFZhO8UfU0NV0oPXpzsw05a/0jon6aNJ
+	 Jbuq0idtgPfb9moVle+NpdkCV76W7laGf5b33b2sQVnr0ViQ+jy7NV/OAx5h5D+K2h
+	 RZP7enUfkDr2It0viWFI+j8vOunKpWE1fSL3qUaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Michal Luczaj <mhal@rbox.co>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 066/609] bpf, sockmap: Reject unhashed UDP sockets on sockmap update
-Date: Mon, 17 Aug 2026 15:26:02 +0200
-Message-ID: <20260817132545.694509655@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 6.1 075/609] usb: chipidea: fix usage_count leak when autosuspend_delay is negative
+Date: Mon, 17 Aug 2026 15:26:11 +0200
+Message-ID: <20260817132546.033823261@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -54,74 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit 66efd3368ae10d05e08fbe6425b50fdec7186ac7 ]
+commit fc3afb5728e297994863f8a2a01b88a920bbf53e upstream.
 
-UDP sockets get SOCK_RCU_FREE set when (auto-)bound. This means
-sk_is_refcounted(unbound) = true, while sk_is_refcounted(bound) = false.
+The probe() calls pm_runtime_use_autosuspend(), but remove() does not call
+pm_runtime_dont_use_autosuspend(). This can lead to a usage_count leak if
+autosuspend_delay is set to a negative value.
 
-Because sockmap accepts unbound UDP sockets, a BPF program can increment a
-socket's refcount via lookup. If the socket is subsequently bound, the
-transition from unbound to bound causes bpf_sk_release() to skip the
-decrement of the refcount, causing a memory leak.
+The pm_runtime_use_autosuspend() also notes that it's important to undo
+this with pm_runtime_dont_use_autosuspend() at driver exit time.
 
-unreferenced object 0xffff88810bc2eb40 (size 1984):
-  comm "test_progs", pid 2451, jiffies 4295320596
-  hex dump (first 32 bytes):
-    7f 00 00 01 7f 00 00 01 d2 04 1b b7 04 d2 00 00  ................
-    02 00 01 40 00 00 00 00 00 00 00 00 00 00 00 00  ...@............
-  backtrace (crc bdee079d):
-    kmem_cache_alloc_noprof+0x557/0x660
-    sk_prot_alloc+0x69/0x240
-    sk_alloc+0x30/0x460
-    inet_create+0x2ce/0xf80
-    __sock_create+0x25b/0x5c0
-    __sys_socket+0x119/0x1d0
-    __x64_sys_socket+0x72/0xd0
-    do_syscall_64+0xa1/0x5f0
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Instead of special-casing for refcounted sockets, reject unhashed UDP
-sockets during sockmap updates, as there is no benefit to supporting those.
-This effectively reverts the commit under Fixes, with two exceptions:
-
-1. sock_map_sk_state_allowed() maintains a fall-through `return true`.
-2. In the spirit of commit b8b8315e39ff ("bpf, sockmap: Remove unhash
-   handler for BPF sockmap usage"), the proto::unhash BPF handler is not
-   reintroduced.
-
-Historical note: this issue is related to commit 67312adc96b5 ("bpf: reject
-unhashed sockets in bpf_sk_assign").
-
-Fixes: 0c48eefae712 ("sock_map: Lift socket state restriction for datagram sockets")
-Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20260707-sockmap-lookup-udp-leak-v4-2-f878346f27ab@rbox.co
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1f874edcb731 ("usb: chipidea: add runtime power management support")
+Cc: stable <stable@kernel.org>
+Assisted-by: Claude:claude-sonnet-4.6
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260716104126.2763454-1-xu.yang_2@oss.nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/sock_map.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/chipidea/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index f4cca477b0477e..fb10c33acc3fd2 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -542,6 +542,8 @@ static bool sock_map_sk_state_allowed(const struct sock *sk)
- {
- 	if (sk_is_tcp(sk))
- 		return (1 << sk->sk_state) & (TCPF_ESTABLISHED | TCPF_LISTEN);
-+	if (sk_is_udp(sk))
-+		return sk_hashed(sk);
- 	if (sk_is_stream_unix(sk))
- 		return (1 << sk->sk_state) & TCPF_ESTABLISHED;
- 	return true;
--- 
-2.53.0
-
+--- a/drivers/usb/chipidea/core.c
++++ b/drivers/usb/chipidea/core.c
+@@ -1251,6 +1251,7 @@ static int ci_hdrc_remove(struct platfor
+ 		usb_role_switch_unregister(ci->role_switch);
+ 
+ 	if (ci->supports_runtime_pm) {
++		pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 		pm_runtime_get_sync(&pdev->dev);
+ 		pm_runtime_disable(&pdev->dev);
+ 		pm_runtime_put_noidle(&pdev->dev);
 
 
