@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D64D2EC0B0;
-	Mon, 17 Aug 2026 14:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E0A3ABD99;
+	Mon, 17 Aug 2026 14:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975585; cv=none; b=MT0zqAwFnoVmj8Exb4NwH4LJs0quls7exOPiJAIRiVNK0UfnqaKMqxCPE1ZTlffSbzNhtHot+FOqRPSh1MrZeXBnOfWQdaHQOtZHMGu7ouLyWMOVPCRCQRD25yZiNTuFytDwEJL0m9cOZ0KHPQJAaF0/2lYlrUWNa4T/B9R93+w=
+	t=1786975588; cv=none; b=VyMG2VmsducjvtFNVhOt+FyNSLNP+NSEMeOL23a0s5g1xmOZ3DfdML/4/6h2FzEyjYaFltOE9otYXufRkR+ENwhLVl0JE1bXFQWph6FRPzOnv42hZMxE2GFD6ps+HgBPXyL5zDF1PcuPF81OFUKYQgAHF1xLYZ1DN3YVt9EQDlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975585; c=relaxed/simple;
-	bh=mdWtjO7hGzGxZYMZLKb5rG9B1mjiiXtOBtrW4HagvZk=;
+	s=arc-20240116; t=1786975588; c=relaxed/simple;
+	bh=GF5speeDC2mK96InvlJaIsRQw2CF6u5d6E8ytzQUbtI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NhT/45OaK/ZC6WwZ7z3a4OBJBWvBQEhBJCbhdVnXohHPyoqD4svzUWxbJiEkqi0efZNsQnpSVdqPPZ+6rFk2geR3pOHq8lRqlGeVzQppBR711R5JjsMkJSUUcPDi02JH0sZxbOiDqrBNZx8RWLSxeO7kFoji9wNqXQruPZkZ+AU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nc4gz7Tx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TKU2X3Q4yOiQV+q54l8IM8jrGC+mGuULLxVPxzXyCT0IZbT+DXwsEPFsiY0cGGIK1bNol5xRLL1CLIv7AZxb95hAE/DvEm09ptbyTwQly1OnRtbaeMm+OrUUk/YnrU2FJC/JFHvw+pg9Xdmyn25KAoVCZPdVvNhKFgCGKjyCZlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4t1r12y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nc4gz7Tx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D716B1F000E9;
-	Mon, 17 Aug 2026 14:06:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4t1r12y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0BC1F000E9;
+	Mon, 17 Aug 2026 14:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975584;
-	bh=Mnf/0s4m8OXwEvlRWgE/yrcrTpWsBNUaslUcaHKm4hU=;
+	s=korg; t=1786975587;
+	bh=XC9ruF6Y+xv/BPAuWt8dFClAMEFOMD3buk5SzEaEdTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nc4gz7TxtGstFEKrYYRhQ2BjIXxMAjZL8i0OhSyLBlnmI6Zu5CcOGqFFOXa1pev8H
-	 r8LrY5qqYz/YYwXUYGns73yNMOUnZ8/UsIoEgW/+rYKQwM7g9+Jx93gmP/wdtLyqLX
-	 4HMXzIMqDQZxRziu111P0gT8TUtHllpYYDy0zmx4=
+	b=U4t1r12yELPc09KxOdrVpG44JoU3jlQPvuLqdWK5BI4RztSVf32sU34yROw8AS1su
+	 m6fTByC1QjVrBv8dUWlWDj1B/5LA3x587yhZx/1S/VSK/s53eyS5aGcW2/OlVhOLPW
+	 ZnIn8xnvISFTwija8QokmeH5GaaYhM4wGMtzM+c8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Ankit Soni <Ankit.Soni@amd.com>,
-	Will Deacon <will@kernel.org>,
+	Andrew Pope <andrew.pope@morsemicro.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 079/389] iommu/amd: Bound the early ACPI HID map
-Date: Mon, 17 Aug 2026 15:28:38 +0200
-Message-ID: <20260817132542.180923599@linuxfoundation.org>
+Subject: [PATCH 5.10 080/389] wifi: mac80211: recalculate TIM when a station enters power save
+Date: Mon, 17 Aug 2026 15:28:39 +0200
+Message-ID: <20260817132542.225766507@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,43 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Andrew Pope <andrew.pope@morsemicro.com>
 
-[ Upstream commit fb80117fddb5b477218dc99bb53911b72c3847f8 ]
+[ Upstream commit a007a384c9eb17610f53a53e2f59944c31f1565a ]
 
-The ivrs_acpihid command-line parser appends entries to a fixed
-four-element early_acpihid_map array. Unlike the sibling IOAPIC and HPET
-parsers, it does not reject a fifth entry before incrementing the map size.
+When an AP buffers frames for a station on its per-station TXQs and the
+station subsequently enters power save, sta_ps_start() records the
+buffered TIDs in txq_buffered_tids but does not update the TIM. The
+station's TIM bit is only ever set when a further frame is buffered
+while the station is already asleep
+(ieee80211_tx_h_unicast_ps_buf() -> sta_info_recalc_tim()).
 
-Check the capacity at the common found label before parsing the HID and
-UID or writing the entry.
+If no further downlink frame arrives for that station the beacon
+TIM never advertises the buffered traffic. A station relying on the
+TIM then remains in doze indefinitely on top of a non-empty queue. Its
+TXQs were removed from the scheduler's active list at PS entry, nothing
+pages it, and the flow deadlocks until an unrelated event wakes the
+station.
 
-Fixes: ca3bf5d47cec ("iommu/amd: Introduces ivrs_acpihid kernel parameter")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Ankit Soni <Ankit.Soni@amd.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Recalculate the TIM at the end of sta_ps_start(), so traffic
+already buffered at PS entry is advertised immediately.
+sta_info_recalc_tim() already consults txq_buffered_tids, which is
+updated above, and is safe in this context (it is already called
+from equivalent paths such as the tx handlers and
+ieee80211_handle_filtered_frame()).
+
+Fixes: ba8c3d6f16a1 ("mac80211: add an intermediate software queue implementation")
+Signed-off-by: Andrew Pope <andrew.pope@morsemicro.com>
+Link: https://patch.msgid.link/20260717011751.79524-1-andrew.pope@morsemicro.com
+[add wifi: subject prefix]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/mac80211/rx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 1ba6adb5b91241..1b7a0fae423ce9 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -3227,6 +3227,12 @@ static int __init parse_ivrs_acpihid(char *str)
- 	return 1;
- 
- found:
-+	if (early_acpihid_map_size == EARLY_MAP_SIZE) {
-+		pr_err("Early ACPI HID map overflow - ignoring ivrs_acpihid%s\n",
-+		       str);
-+		return 1;
-+	}
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index 8f497fe234edb2..8ec630a4d069e3 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -1585,6 +1585,8 @@ static void sta_ps_start(struct sta_info *sta)
+ 		else
+ 			clear_bit(tid, &sta->txq_buffered_tids);
+ 	}
 +
- 	p = acpiid;
- 	hid = strsep(&p, ":");
- 	uid = p;
++	sta_info_recalc_tim(sta);
+ }
+ 
+ static void sta_ps_end(struct sta_info *sta)
 -- 
 2.53.0
 
