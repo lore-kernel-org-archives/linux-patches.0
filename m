@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06273E4C94;
-	Mon, 17 Aug 2026 13:47:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FED270545;
+	Mon, 17 Aug 2026 13:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974436; cv=none; b=BwF52yPPm4W0euDybJGmP678zlFY73RFQasz8FtdMlBwOcCA8uT6cAXfmXwzjvJdkeXs3H/2E8yJu575IR89NFzAHs2sJ4jdrIgAR+uH+2EgcKkey7gmMPkMSkCe0B/9Ypil+9GKvz2mdIbiQKuYHF1HzalEPAKbcLBeaGpdLkM=
+	t=1786974440; cv=none; b=sVP6Fz9yVKIvIeBzVdqV3M4LS4T9OYCVDkF4QlzWL7ST92eVM4fjXp2/cQXtTt/iccA0VGSuEm/zGKuExyUSAUTUbIcAjYeLXV18CW5IRNE6wpMgxun9D+8ALHUBl0el2DJQ5KZYVaw04neHugb58+0JSSOBZBoii9Y4mUnoIKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974436; c=relaxed/simple;
-	bh=uLh5E+WQ/dH7Lt4H/7HzluafV1BqgHK+mGW8DST67H4=;
+	s=arc-20240116; t=1786974440; c=relaxed/simple;
+	bh=dyttsqbR00Kpq181Uwb7A3/1ulnWp5dY0l6ye4iuGvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m6R8ERn+8wGH3wQi1taa96khQ03bJGsLNIZ4oVplADDisJDd0ePOWDjTKkKcif0ZHKB7xeIPu5F6zHWGkoQM5UINRs3ir3HIYqPDopo831JZDpi4RnpakhJzqQzd+jeStfL8duETXmTFKiff2ZImzHKABh+H4Ql3qOVlFUmPTW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3O5JkT9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NGyC6n1NUwJGeJdA/LWIJvI7urQEaVyk6qZLIxrx7AiS6UZOww0b0nGiDw1Oc20D5D4O1nMejbX5CXKrMGken3PEMm6PfUbSsL7mlJ/TJlX1Cd5CV9qoVxR+o3jt0nr1z1HNDs99gSuHVGxCOkK8ofC/ggG0dtmIEWIjL9P8bRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGywfkSl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3O5JkT9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDC61F00A3A;
-	Mon, 17 Aug 2026 13:47:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGywfkSl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A8C1F00A3D;
+	Mon, 17 Aug 2026 13:47:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974431;
-	bh=uAfarvOaQrBygu7W/+cE3kQliL4thSeRJbF5couAqjY=;
+	s=korg; t=1786974434;
+	bh=wwBbNuyzGrowgcWx15lwTmfI+QSoXSiD6x/TN+OoPcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B3O5JkT9iTewP0FHrqgbzprv+Rb7pzBgObhGt0tRclD1zltHTyIgdpVRb8fqu0oe1
-	 QMA3Nv9QDW8lGmB4AnGWrXvEVeCZ0/6rM3HTtlAkEv0zbtnQyv0Bc9vMRTlU7iUgAk
-	 NBVWiCpOmH//DeH83KhK2ebQNHTyrLt05QpFM4ko=
+	b=EGywfkSltI0pENGwJMKqzCloJSil6k4GFfw1KVvAZj3cduKLD2vpP6JnJyNv6MjLW
+	 AR9KOSOT95ydX5aE8uDGPLR/b948392OXkmFeXIFfkBHJVF2ZnDNw3JJGAC3PjV5p7
+	 3jQa4cMFqwkf4j79X7yED+Ah7docZldZkcJR+DNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.1 202/271] ALSA: us144mkii: re-anchor capture URBs on resubmission
-Date: Mon, 17 Aug 2026 15:32:07 +0200
-Message-ID: <20260817132545.135664876@linuxfoundation.org>
+	Iago Toral Quiroga <itoral@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
+Subject: [PATCH 7.1 203/271] drm/v3d: Serialize the scheduler timeout handlers
+Date: Mon, 17 Aug 2026 15:32:08 +0200
+Message-ID: <20260817132545.175307840@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -45,96 +44,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-commit 2615f0fb90df8cf5a96133ca4be74294ed288604 upstream.
+commit 4da94744707b27a3ae1197bdd7127da4505dc5b1 upstream.
 
-capture_urb_complete() resubmits each capture URB without anchoring it:
+V3D exposes several independent hardware queues (BIN, RENDER, TFU and
+CSD) but has only a single, global reset. A timeout on any one queue
+therefore has to stop, reset and restart the schedulers of every other
+queue as well. That makes concurrent timeout handlers unsafe.
 
-	usb_get_urb(urb);
-	ret = usb_submit_urb(urb, GFP_ATOMIC);
+`reset_lock` was never able to make them safe, as a driver-side lock can
+only cover the driver's &drm_sched_backend_ops.timedout_job callback.
+The scheduler handles the timed out job and its pending list around that
+callback, outside of the driver's control, so a global reset triggered
+by one queue can still interfere with another queue that is in the
+middle of handling a timeout of its own.
 
-Anchoring is a property of a submission, not of the URB.  The giveback
-path calls usb_unanchor_urb() before urb->complete(), so an URB
-resubmitted from its own completion handler is off the anchor.  The
-capture URBs are anchored once, at stream start, so from the first
-completion onward tascam->capture_anchor is empty.
+Consequently, if a reset happens in the CSD queue while a CL-intensive
+application is running, the global reset stops and restarts the CL
+queue's scheduler while that queue is handling a timeout of its own. As
+drm_sched_stop() and drm_sched_start() subtract and add the credits of
+every job sitting on the pending list of the scheduler they are called
+on, and as the CL queue's handler concurrently takes its job off that
+same list and puts it back, the stop and the start no longer see the
+same set of jobs. The CL queue is left with more credits in flight than
+its limit:
 
-tascam_free_urbs(), tascam_disconnect(), tascam_suspend() and the
-stop-work path all call usb_kill_anchored_urbs(&tascam->capture_anchor)
-to reap the capture URBs before anything is freed.  With the anchor empty
-those calls return immediately and the URBs stay queued on the host
-controller.
+[  327.302739] ------------[ cut here ]------------
+[  327.302744] WARNING: CPU: 2 PID: 43 at drivers/gpu/drm/scheduler/sched_main.c:102 drm_sched_run_job_work+0x238/0x4d0 [gpu_sched]
+[  327.302884] CPU: 2 UID: 0 PID: 43 Comm: kworker/u16:1 Not tainted 6.18.39-v8-16k+ #3 PREEMPT
+[  327.302889] Hardware name: Raspberry Pi 5 Model B Rev 1.0 (DT)
+[  327.302893] Workqueue: v3d_bin drm_sched_run_job_work [gpu_sched]
+[  327.302984] Call trace:
+[  327.302987]  drm_sched_run_job_work+0x238/0x4d0 [gpu_sched] (P)
+[  327.302997]  process_scheduled_works+0x180/0x3d0
+[  327.303010]  worker_thread+0x268/0x3e8
+[  327.303016]  kthread+0x140/0x250
+[  327.303022]  ret_from_fork+0x10/0x20
+[  327.303031] ---[ end trace 0000000000000000 ]---
 
-tascam_free_urbs() then returns the capture transfer buffers with
-usb_free_coherent(), and snd_card_free() releases the snd_card
-allocation that embeds tascam (card->private_data).  The controller
-completes the queued URBs afterwards, writing device-supplied data into
-the freed transfer buffer, and capture_urb_complete() dereferences the
-freed driver object.
+>From that point on, the credit count of the CL queue is broken, causing
+a complete GPU hang and UI freeze.
 
-KASAN on 7.2.0-rc5 (arm64):
+The DRM scheduler already provides a mechanism to serialize the timeout
+handlers of different schedulers: an ordered workqueue passed as
+drm_sched_init()'s @timeout_wq parameter. By default, each scheduler
+queues its timeout work on the system workqueue, which runs the handlers
+concurrently. Give all of the queues a shared ordered workqueue instead,
+as recommended by the DRM scheduler documentation for hardware that has
+distinct queues but resets globally.
 
-  BUG: KASAN: slab-use-after-free in dummy_timer
-  Write of size 512 at addr ffff000015b62000
-   __asan_memcpy
-   dummy_timer
-   hrtimer_run_softirq
-  Allocated by task 64:
-   usb_alloc_coherent
-   tascam_alloc_urbs
-   tascam_probe
-  Freed by task 170:
-   usb_free_coherent
-   tascam_free_urbs
-   tascam_disconnect
-   usb_unbind_interface
-
-  BUG: KASAN: slab-use-after-free in capture_urb_complete
-  Read of size 4 at addr ffff0000170ee878
-  Freed by task 170:
-   release_card_device
-   snd_card_free
-   tascam_disconnect
-
-Restore the usb_anchor_urb() between the reference count bump and the
-resubmission.  That also makes the handler's usb_unanchor_urb() failure
-arm meaningful again and restores usb_kill_anchored_urbs() as a barrier
-on the disconnect, suspend and stop-work paths.
-
-The anchoring was removed on the premise that the URB is already anchored
-from the initial submission, which does not hold once the first giveback
-has run.
-
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: 5cff1529a2f9 ("ALSA: us144mkii: capture_urb_complete: redundant usb_anchor_urb corrupts anchor list on each resubmission")
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260804123625.91769-1-baul.lee@xbow.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org # 6.15
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patch.msgid.link/20260728-v3d-order-global-reset-v1-1-e47be838158d@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/usx2y/us144mkii_capture.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/v3d/v3d_drv.h   |    6 ++++++
+ drivers/gpu/drm/v3d/v3d_sched.c |    9 ++++++++-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
---- a/sound/usb/usx2y/us144mkii_capture.c
-+++ b/sound/usb/usx2y/us144mkii_capture.c
-@@ -302,6 +302,7 @@ void capture_urb_complete(struct urb *ur
- 	}
+--- a/drivers/gpu/drm/v3d/v3d_drv.h
++++ b/drivers/gpu/drm/v3d/v3d_drv.h
+@@ -181,6 +181,12 @@ struct v3d_dev {
+ 	 */
+ 	struct mutex reset_lock;
  
- 	usb_get_urb(urb);
-+	usb_anchor_urb(urb, &tascam->capture_anchor);
- 	ret = usb_submit_urb(urb, GFP_ATOMIC);
- 	if (ret < 0) {
- 		dev_err_ratelimited(tascam->card->dev,
++	/* Ordered workqueue shared by every queue's scheduler timeout work.
++	 * V3D reset is global to all queues, so the timeout handlers must not
++	 * run concurrently.
++	 */
++	struct workqueue_struct *reset_wq;
++
+ 	/* Lock taken when creating and pushing the GPU scheduler
+ 	 * jobs, to keep the sched-fence seqnos in order.
+ 	 */
+--- a/drivers/gpu/drm/v3d/v3d_sched.c
++++ b/drivers/gpu/drm/v3d/v3d_sched.c
+@@ -838,6 +838,7 @@ v3d_queue_sched_init(struct v3d_dev *v3d
+ 		.num_rqs = DRM_SCHED_PRIORITY_COUNT,
+ 		.credit_limit = 1,
+ 		.timeout = msecs_to_jiffies(500),
++		.timeout_wq = v3d->reset_wq,
+ 		.dev = v3d->drm.dev,
+ 	};
+ 
+@@ -852,9 +853,13 @@ v3d_sched_init(struct v3d_dev *v3d)
+ {
+ 	int ret;
+ 
++	v3d->reset_wq = alloc_ordered_workqueue("v3d_reset", 0);
++	if (!v3d->reset_wq)
++		return -ENOMEM;
++
+ 	ret = v3d_queue_sched_init(v3d, &v3d_bin_sched_ops, V3D_BIN, "v3d_bin");
+ 	if (ret)
+-		return ret;
++		goto fail;
+ 
+ 	ret = v3d_queue_sched_init(v3d, &v3d_render_sched_ops, V3D_RENDER,
+ 				   "v3d_render");
+@@ -897,4 +902,6 @@ v3d_sched_fini(struct v3d_dev *v3d)
+ 		if (v3d->queue[q].sched.ready)
+ 			drm_sched_fini(&v3d->queue[q].sched);
+ 	}
++
++	destroy_workqueue(v3d->reset_wq);
+ }
 
 
