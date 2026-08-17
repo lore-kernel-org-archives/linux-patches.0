@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81C53D5C07;
-	Mon, 17 Aug 2026 15:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AB5443E2D;
+	Mon, 17 Aug 2026 15:26:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980384; cv=none; b=o0Gbl1EOLhehafVZ1zCU9k/HN+sr7HoZj9dUJ4pEIQkQweG170V5g3JBN0xyvLX2Y27kPGeLXk0BLX4V1N4/DHVFj1xubPA5K6+7d9TvGKRsz4YjavrlL4ZHWvHflNS33RA/2uN/4cf+5KG+YJDY2EtVRo2qYscVz18Uf3vCeLs=
+	t=1786980386; cv=none; b=kEXC63xSOtO59XMg2p79IHNWwtZeVCI5XxZjZzDd32m2mNBJ4IJmn0Xh5Qfw/bBSHWz8F1V1XKh0TLb+rtWvWciqjSkFerIe15Nn7KzW/oRVhPZfWHKO+FJbkjE6X7tZ69XE4uTgmauXMUhBugSei+LZynw6muC1dzF2qFdhfTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980384; c=relaxed/simple;
-	bh=ZsGLbfI/Hv9UZvkd2YVhr/3sKTTWpWRVcXpwRyoChtA=;
+	s=arc-20240116; t=1786980386; c=relaxed/simple;
+	bh=W5Kge/VQM6YmbrmYfMW0VTnV7GfU2toErcugTGKX2TM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZaEVMgSBxTvub4i/4yxNaSwsS+jRizMFneK+ZltDcBq8jWfoH5Kqiyj1BtNRIKGH0mhgcrHYI6cDVG6kjcDEoJ8nxrLhnNIrnVoFmSvHn5bf4m3rXNH0+rHAhh/bzjsFXbwKCmdlB1LrzBtX0aNT/XB2jVo3KFewpsU6JSeAC9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VlSj5BUc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fDYD+52lHcb/0JizPCFy8xze3IHNER1lYT6fsJ8Ygqd4SzpyNfweg2QreoQNzXZGx/LFdJVhcsJ+XYzs/DAu/3/x9VAifZkmowrnwpEAzGc/lgJHLEPoLRI6xvpu/4hNUi3cYpQiIdo5TzI9C1BGEgCQH7jJAq1Q/8jZWs5ApRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpVgsYfw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VlSj5BUc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467A31F000E9;
-	Mon, 17 Aug 2026 15:26:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpVgsYfw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C80D1F000E9;
+	Mon, 17 Aug 2026 15:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980382;
-	bh=XupQjSmzRB29vx6Z9D3+d2RWpgCOAv8oqMvaAtieZ88=;
+	s=korg; t=1786980385;
+	bh=fTVJzF29EBbkoDAiI2mGb2/6ru/VJeWX61GmyHJTx7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VlSj5BUcI+JwiXi/3fOc8TzNR55BHXNo+6wWsHsn47LA5bdA+eRsj3OsHCX55s7B7
-	 fn8c9K4GCiNdlp+iiqtzUEBQ8DyD4JNUldn5Z0blMVhkFgQ+jZvq/3ot5jsd3EJZit
-	 oJmf/tT6oxOsG50bdLSIgWqY34rJZd8NK/qpa4/s=
+	b=LpVgsYfwOGvmhnDHZXmbJO4d845YvYI7LLx5CK2jr3/sXiukE+dhGdak+Jb78MfK5
+	 Co0KiUxvt5aGZAKcdC9F8nDJhFOjRfzMl/aatBUm+LV1I5bMunuP9wkofglHFayqP7
+	 wQJZfcmq8n0m4t+U5Pj3CVVfpDhFbLNLGFOuK3RI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Vega <vega@nebusec.ai>,
-	Zijie Huang <milkory@outlook.com>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Victor Nogueira <victor@mojatatu.com>,
+	"Sergey V. Frolov" <Sergey.V.Frolov@kaspersky.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Sunil Goutham <sgoutham@marvell.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 554/609] net/sched: reject overly deep qdisc hierarchies
-Date: Mon, 17 Aug 2026 15:34:10 +0200
-Message-ID: <20260817132602.278806788@linuxfoundation.org>
+Subject: [PATCH 6.1 555/609] net: octeontx2-pf: Fix UB in shift operation
+Date: Mon, 17 Aug 2026 15:34:11 +0200
+Message-ID: <20260817132602.308155451@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -54,73 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijie Huang <milkory@outlook.com>
+From: Sergey V. Frolov <Sergey.V.Frolov@kaspersky.com>
 
-commit dedd34b0f2310e28c5f6d4875cfbf4b7ed821c01 upstream.
+commit 7e2d693af0d4c05bddccb3541a0aabd69f4cb244 upstream.
 
-Deep qdisc hierarchies can lead to excessive recursion in qdisc tree
-walkers and exhaust the kernel stack. The existing loop check does not
-cover the create-and-graft path, so a hierarchy can still be extended by
-creating a new child qdisc below an already deep parent.
+In function otx2_get_egress_burst_cfg, when the parameter `burst` is
+255 and the max mantissa is 255 (0xFFULL), `burst_exp` is set to
+`ilog2(255) - 1`, which equals 6.
 
-Store the hierarchy depth in struct Qdisc and update it when qdiscs are
-grafted. Reject new child qdiscs once the parent is already at the maximum
-allowed depth.
+This results in an unsigned wrap-around when calculating
+`(1ULL << (*burst_exp - 7))`, since `*burst_exp - 7` becomes -1,
+which makes the shift operand 0xFFFFFFFF. This value is greater than
+the width of the left operand.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+According to standard 6.5.7 p.3:
+"The type of the result is that of the promoted left operand.
+If the value of the right operand is negative or is greater than
+or equal to the width of the promoted left operand, the behavior
+is undefined."
+
+Fix the off-by-one boundary condition.
+
+Add a WARN_ON(*burst_exp < 7) before the else branch as an
+explicit safeguard. This ensures that if max_mantissa ever changes
+in a way that reintroduces this condition, it will be immediately
+caught at runtime rather than silently triggering UB.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: e638a83f167e ("octeontx2-pf: TC_MATCHALL egress ratelimiting offload")
+Signed-off-by: Sergey V. Frolov <Sergey.V.Frolov@kaspersky.com>
 Cc: stable@vger.kernel.org
-Suggested-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Zijie Huang <milkory@outlook.com>
-Signed-off-by: Ren Wei <enjou1224z@gmail.com>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/1e9ab39597423fd5d13cfaaf52279b8ee3d9fc3c.1785434373.git.milkory@outlook.com
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Sunil Goutham <sgoutham@marvell.com>
+Link: https://patch.msgid.link/20260804120446.1955448-1-Sergey.V.Frolov@kaspersky.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/sch_generic.h |    1 +
- net/sched/sch_api.c       |    9 +++++++++
- 2 files changed, 10 insertions(+)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -100,6 +100,7 @@ struct Qdisc {
- 	struct hlist_node       hash;
- 	u32			handle;
- 	u32			parent;
-+	int			depth;
- 
- 	struct netdev_queue	*dev_queue;
- 
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -1063,6 +1063,9 @@ static int qdisc_graft(struct net_device
- 		unsigned int i, num_q, ingress;
- 		struct netdev_queue *dev_queue;
- 
-+		if (new)
-+			new->depth = 0;
-+
- 		ingress = 0;
- 		num_q = dev->num_tx_queues;
- 		if ((q && q->flags & TCQ_F_INGRESS) ||
-@@ -1160,9 +1163,15 @@ skip:
- 			NL_SET_ERR_MSG(extack, "STAB not supported on a non root");
- 			return -EINVAL;
- 		}
-+		if (new && parent->depth >= 7) {
-+			NL_SET_ERR_MSG(extack, "Qdisc hierarchy is too deep");
-+			return -E2BIG;
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
+@@ -86,10 +86,12 @@ static void otx2_get_egress_burst_cfg(st
+ 	if (burst) {
+ 		*burst_exp = ilog2(burst) ? ilog2(burst) - 1 : 0;
+ 		tmp = burst - rounddown_pow_of_two(burst);
+-		if (burst < max_mantissa)
++		if (burst <= max_mantissa) {
+ 			*burst_mantissa = tmp * 2;
+-		else
++		} else {
++			WARN_ON(*burst_exp < 7);
+ 			*burst_mantissa = tmp / (1ULL << (*burst_exp - 7));
 +		}
- 		err = cops->graft(parent, cl, new, &old, extack);
- 		if (err)
- 			return err;
-+		if (new)
-+			new->depth = parent->depth + 1;
- 		notify_and_destroy(net, skb, n, classid, old, new, extack);
- 	}
- 	return 0;
+ 	} else {
+ 		*burst_exp = MAX_BURST_EXPONENT;
+ 		*burst_mantissa = max_mantissa;
 
 
