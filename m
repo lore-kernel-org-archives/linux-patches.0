@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049EF43BDB8;
-	Mon, 17 Aug 2026 14:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D62A539B96A;
+	Mon, 17 Aug 2026 14:32:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977173; cv=none; b=HTqWHrM7slh3P1Tun5JJkY3lrjSdhXdjdNXtWdzzxrllcp2RjFA/R4dkZKC98xIzmbRGWmbhQEhvoVOgV02SdyJOU+JP9C/rxsbUjoCuAP8ZGk/fULSmtR3IHE1+/0IoCq7lYuC30qkumpg7/e8DC3rtVbQc4cALjxLEbjMENw4=
+	t=1786977176; cv=none; b=pxKwlRqdSm8PEiWPi7jBv1jO0DumeThz1W9QQUqh7RuWzg8IDK2fBops2H2N3E8r6wg1L4hE2XRjPMpLgS6w+TsYNDNb8WNPUrVNFVV76OAh+UsoohHYs0iEjPTZ6odnjGg4LXEUXdiKsg85nfV6wL/uWgCPsFk3nV5MYXIDtPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977173; c=relaxed/simple;
-	bh=G11pLuVLe7blx8d6ltcZNNUj848caEy5flqk2AO1zM4=;
+	s=arc-20240116; t=1786977176; c=relaxed/simple;
+	bh=XzFl7Gm02NWskxAHXks5BRbd47DUwphTonQxCg4cnX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JY5vX2QuxPcsyCeRzh0nbLAqq6yA+0hmFEijYgy9HoxCpEE2G4pNgq5U3I6IQ1oL17TmaDUzOkVWaiUMEpCI5zG0WCLmGrrqc9Y4hiGw79pu791yQBSbhzTPn3a0h70HdjPO/U97Pc9/T7od9WYxWWy0Wyg2k2FhZIT0oPc+zts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AWGE2XPl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m0VBjw6W63FCcuJfWWfdBv81CYeKTmx+Sd5FwYECRFmYDT+WweLhMOPwD58XA7NRHuR1Zj8diwn+tuYLRHour2c5fHAwiCwDzzhz60Env2hlutF2/o8j8Hy7VxC2zMCIlzWwc/1Ga8vMDZEs9eM6r0mHcL7e/Y3/EEG6xK64YG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BNmbT3Zz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AWGE2XPl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B05B1F000E9;
-	Mon, 17 Aug 2026 14:32:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BNmbT3Zz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62E01F00A3A;
+	Mon, 17 Aug 2026 14:32:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977171;
-	bh=wufDzPO2WvXJPR5fSmkAnC6yCUB8P8Bx3wUeVqXEgeg=;
+	s=korg; t=1786977174;
+	bh=aVOIvYEw/eTNMIe/9HM/9lbC9FBGj9hfzqm6sX8SH2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AWGE2XPlmAGLl5bYsEFF36EfInMi4hBm1Yo1XNyjjBCW2M5d4/fjWB4GQ53EQMSIE
-	 EC+RV2qcaqDpTlS2a5IxJAY8bLnqyneKcMmzlfCDyXFiUkGXgnWOlDxqWjE2FLtHi6
-	 XgKEMg8I1UIKzeOlRG6qXMjvlF7c7WTUBw9WuXDI=
+	b=BNmbT3ZzehdqhwihHlHlYLQNOHzMHe1K8Qd5IFmF4f4/Eqy0in6/bvnacgx0r39uP
+	 r08lfQRqTiVm+V9A2mlJcCwb4Upz/HUwTgO5aHL7DjhR7eYFtXJL34IrpH443cT89I
+	 KjSTH69bu4cC+lSWd1S9DrIVJV+fCo0ZCyFn+760=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Hans de Goede <hansg@kernel.org>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Jordan Rhee <jordanrhee@google.com>,
+	Eddie Phillips <eddiephillips@google.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 238/456] media: uvcvideo: Fix sequence number when no EOF
-Date: Mon, 17 Aug 2026 15:30:28 +0200
-Message-ID: <20260817132549.384454391@linuxfoundation.org>
+Subject: [PATCH 5.15 239/456] gve: fix Rx queue stall on alloc failure
+Date: Mon, 17 Aug 2026 15:30:29 +0200
+Message-ID: <20260817132549.415526166@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -55,155 +54,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Eddie Phillips <eddiephillips@google.com>
 
-commit f078966ca1fb1b3865d8e6bbe2705cfd277fc637 upstream.
+commit b65352a1bac64442ad95e64f385b40ccb9f1b0db upstream.
 
-If the driver could not detect the EOF, the sequence number is increased
-twice:
- 1) When we enter uvc_video_decode_start() with the old buffer and FID has
-   flipped => We return -EAGAIN and last_fid is not flipped
- 2) When we enter uvc_video_decode_start() with the new buffer.
+When the system is under extreme memory pressure, page allocations can
+fail during the Rx buffer refill loop. If the number of buffers posted
+to hardware falls below a critical low threshold and the refill loop
+exits due to allocation failures, the queue can stall:
 
-Fix this issue by moving the new frame detection logic earlier in
-uvc_video_decode_start().
+1. The device drops incoming packets because there are no descriptors.
+2. Since no packets are processed, no Rx completions are generated.
+3. Because no completions occur, NAPI is never scheduled, preventing
+   the refill loop from running again even after memory is freed.
 
-This also has some nice side affects:
+This results in a permanent queue stall.
 
-- The error status from the new packet will no longer get propagated
-  to the previous frame-buffer.
-- uvc_video_clock_decode() will no longer update the previous frame
-  buf->stf with info from the new packet.
-- uvc_video_clock_decode() and uvc_video_stats_decode() will no longer
-  get called twice for the same packet.
+Resolve this by introducing a starvation recovery timer for each Rx queue.
+If the number of buffers posted to hardware falls below a critical low
+threshold, start a timer to periodically reschedule NAPI. Once NAPI runs
+and successfully refills the queue above the threshold, the timer is
+not rescheduled.
 
-Cc: stable@kernel.org
-Fixes: 650b95feee35 ("[media] uvcvideo: Generate discontinuous sequence numbers when frames are lost")
-Reported-by: Hans de Goede <hansg@kernel.org>
-Closes: https://lore.kernel.org/linux-media/CANiDSCuj4cPuB5_v2xyvAagA5FjoN8V5scXiFFOeD3aKDMqkCg@mail.gmail.com/T/#me39fb134e8c2c085567a31548c3403eb639625e4
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+The threshold is set to 32 because a single maximum-sized Receive Segment
+Coalescing (RSC) packet can consume up to 19 descriptors in the Rx path.
+Lower thresholds (such as 8 or 16) would be insufficient to process a
+complete maximum-sized RSC packet, risking packet drops or unexpected
+hardware behavior under memory pressure. Setting the threshold to 32
+guarantees a safe margin to handle at least one full RSC packet.
+
+Cc: stable@vger.kernel.org
+Fixes: 9b8dd5e5ea48 ("gve: DQO: Add RX path")
+Reviewed-by: Jordan Rhee <jordanrhee@google.com>
+Signed-off-by: Eddie Phillips <eddiephillips@google.com>
+Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Link: https://patch.msgid.link/20260709211906.3322883-1-hramamurthy@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_video.c | 94 ++++++++++++++++---------------
- 1 file changed, 49 insertions(+), 45 deletions(-)
+ drivers/net/ethernet/google/gve/gve.h        |  3 ++
+ drivers/net/ethernet/google/gve/gve_main.c   |  3 ++
+ drivers/net/ethernet/google/gve/gve_rx_dqo.c | 33 ++++++++++++++++++++
+ 3 files changed, 39 insertions(+)
 
-diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
-index 2a2c10daa07a..d0415ebe54d0 100644
---- a/drivers/media/usb/uvc/uvc_video.c
-+++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -1095,7 +1095,55 @@ static int uvc_video_decode_start(struct uvc_streaming *stream,
- 	header_len = data[0];
- 	fid = data[1] & UVC_STREAM_FID;
+diff --git a/drivers/net/ethernet/google/gve/gve.h b/drivers/net/ethernet/google/gve/gve.h
+index 822bdaff66f6..75773524ba81 100644
+--- a/drivers/net/ethernet/google/gve/gve.h
++++ b/drivers/net/ethernet/google/gve/gve.h
+@@ -10,6 +10,7 @@
+ #include <linux/dma-mapping.h>
+ #include <linux/netdevice.h>
+ #include <linux/pci.h>
++#include <linux/timer.h>
+ #include <linux/u64_stats_sync.h>
  
--	/* Increase the sequence number regardless of any buffer states, so
-+	/*
-+	 * Mark the buffer as done if we're at the beginning of a new frame.
-+	 * End of frame detection is better implemented by checking the EOF
-+	 * bit (FID bit toggling is delayed by one frame compared to the EOF
-+	 * bit), but some devices don't set the bit at end of frame (and the
-+	 * last payload can be lost anyway). We thus must check if the FID has
-+	 * been toggled.
-+	 *
-+	 * stream->last_fid is initialized to -1, and buf->bytesused to 0,
-+	 * so the first isochronous frame will never trigger an end of frame
-+	 * detection.
-+	 *
-+	 * Empty buffers (bytesused == 0) don't trigger end of frame detection
-+	 * as it doesn't make sense to return an empty buffer. This also
-+	 * avoids detecting end of frame conditions at FID toggling if the
-+	 * previous payload had the EOF bit set.
-+	 */
-+	if (fid != stream->last_fid && buf && buf->bytesused != 0) {
-+		uvc_dbg(stream->dev, FRAME,
-+			"Frame complete (FID bit toggled)\n");
-+		buf->state = UVC_BUF_STATE_READY;
+ #include "gve_desc.h"
+@@ -35,6 +36,7 @@
+ 
+ /* Interval to schedule a stats report update, 20000ms. */
+ #define GVE_STATS_REPORT_TIMER_PERIOD	20000
++#define GVE_RX_NAPI_RESCHED_MS 20 /* msecs */
+ 
+ /* Numbers of NIC tx/rx stats in stats report. */
+ #define NIC_TX_STATS_REPORT_NUM	0
+@@ -218,6 +220,7 @@ struct gve_rx_ring {
+ 	struct u64_stats_sync statss; /* sync stats for 32bit archs */
+ 
+ 	struct gve_rx_ctx ctx; /* Info for packet currently being processed in this ring. */
++	struct timer_list starvation_timer; /* for queue starvation recovery */
+ };
+ 
+ /* A TX desc ring entry */
+diff --git a/drivers/net/ethernet/google/gve/gve_main.c b/drivers/net/ethernet/google/gve/gve_main.c
+index a8fb51e77fea..38333731f5d0 100644
+--- a/drivers/net/ethernet/google/gve/gve_main.c
++++ b/drivers/net/ethernet/google/gve/gve_main.c
+@@ -508,6 +508,9 @@ static void gve_remove_napi(struct gve_priv *priv, int ntfy_idx)
+ {
+ 	struct gve_notify_block *block = &priv->ntfy_blocks[ntfy_idx];
+ 
++	if (block->rx && !gve_is_gqi(priv))
++		timer_shutdown_sync(&block->rx->starvation_timer);
 +
-+		return -EAGAIN;
-+	}
+ 	netif_napi_del(&block->napi);
+ }
+ 
+diff --git a/drivers/net/ethernet/google/gve/gve_rx_dqo.c b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
+index 8756f9cbd631..c9bc85293c27 100644
+--- a/drivers/net/ethernet/google/gve/gve_rx_dqo.c
++++ b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
+@@ -16,6 +16,16 @@
+ #include <net/ipv6.h>
+ #include <net/tcp.h>
+ 
++static void gve_rx_starvation_timer(struct timer_list *t)
++{
++	struct gve_rx_ring *rx = from_timer(rx, t, starvation_timer);
++	struct gve_priv *priv = rx->gve;
++	struct gve_notify_block *block;
 +
-+	/*
-+	 * Some cameras, when running two parallel streams (one MJPEG alongside
-+	 * another non-MJPEG stream), are known to lose the EOF packet for a frame.
-+	 * We can detect the end of a frame by checking for a new SOI marker, as
-+	 * the SOI always lies on the packet boundary between two frames for
-+	 * these devices.
-+	 */
-+	if (stream->dev->quirks & UVC_QUIRK_MJPEG_NO_EOF &&
-+	    (stream->cur_format->fcc == V4L2_PIX_FMT_MJPEG ||
-+	     stream->cur_format->fcc == V4L2_PIX_FMT_JPEG) &&
-+	    buf && buf->bytesused != 0) {
-+		const u8 *packet = data + header_len;
++	block = &priv->ntfy_blocks[rx->ntfy_id];
++	napi_schedule(&block->napi);
++}
 +
-+		if (len >= header_len + 2 &&
-+		    packet[0] == 0xff && packet[1] == JPEG_MARKER_SOI) {
-+			buf->state = UVC_BUF_STATE_READY;
-+			buf->error = 1;
-+			stream->last_fid ^= UVC_STREAM_FID;
-+			return -EAGAIN;
-+		}
-+	}
-+
-+	/*
-+	 * Increase the sequence number regardless of any buffer states, so
- 	 * that discontinuous sequence numbers always indicate lost frames.
- 	 */
- 	if (stream->last_fid != fid) {
-@@ -1159,50 +1207,6 @@ static int uvc_video_decode_start(struct uvc_streaming *stream,
- 			meta_buf->state = UVC_BUF_STATE_ACTIVE;
+ static int gve_buf_ref_cnt(struct gve_rx_buf_state_dqo *bs)
+ {
+ 	return page_count(bs->page_info.page) - bs->page_info.pagecnt_bias;
+@@ -185,6 +195,7 @@ static void gve_rx_free_ring_dqo(struct gve_priv *priv, int idx)
+ 	completion_queue_slots = rx->dqo.complq.mask + 1;
+ 	buffer_queue_slots = rx->dqo.bufq.mask + 1;
+ 
++	timer_shutdown_sync(&rx->starvation_timer);
+ 	gve_rx_remove_from_block(priv, idx);
+ 
+ 	if (rx->q_resources) {
+@@ -237,6 +248,7 @@ static int gve_rx_alloc_ring_dqo(struct gve_priv *priv, int idx)
+ 	memset(rx, 0, sizeof(*rx));
+ 	rx->gve = priv;
+ 	rx->q_num = idx;
++	timer_setup(&rx->starvation_timer, gve_rx_starvation_timer, 0);
+ 	rx->dqo.bufq.mask = buffer_queue_slots - 1;
+ 	rx->dqo.complq.num_free_slots = completion_queue_slots;
+ 	rx->dqo.complq.mask = completion_queue_slots - 1;
+@@ -334,6 +346,7 @@ void gve_rx_post_buffers_dqo(struct gve_rx_ring *rx)
+ 	struct gve_rx_compl_queue_dqo *complq = &rx->dqo.complq;
+ 	struct gve_rx_buf_queue_dqo *bufq = &rx->dqo.bufq;
+ 	struct gve_priv *priv = rx->gve;
++	u32 num_bufs_avail_to_hw;
+ 	u32 num_avail_slots;
+ 	u32 num_full_slots;
+ 	u32 num_posted = 0;
+@@ -374,6 +387,26 @@ void gve_rx_post_buffers_dqo(struct gve_rx_ring *rx)
  	}
  
--	/* Mark the buffer as done if we're at the beginning of a new frame.
--	 * End of frame detection is better implemented by checking the EOF
--	 * bit (FID bit toggling is delayed by one frame compared to the EOF
--	 * bit), but some devices don't set the bit at end of frame (and the
--	 * last payload can be lost anyway). We thus must check if the FID has
--	 * been toggled.
--	 *
--	 * stream->last_fid is initialized to -1, so the first isochronous
--	 * frame will never trigger an end of frame detection.
--	 *
--	 * Empty buffers (bytesused == 0) don't trigger end of frame detection
--	 * as it doesn't make sense to return an empty buffer. This also
--	 * avoids detecting end of frame conditions at FID toggling if the
--	 * previous payload had the EOF bit set.
--	 */
--	if (fid != stream->last_fid && buf->bytesused != 0) {
--		uvc_dbg(stream->dev, FRAME,
--			"Frame complete (FID bit toggled)\n");
--		buf->state = UVC_BUF_STATE_READY;
--		return -EAGAIN;
--	}
--
--	/*
--	 * Some cameras, when running two parallel streams (one MJPEG alongside
--	 * another non-MJPEG stream), are known to lose the EOF packet for a frame.
--	 * We can detect the end of a frame by checking for a new SOI marker, as
--	 * the SOI always lies on the packet boundary between two frames for
--	 * these devices.
--	 */
--	if (stream->dev->quirks & UVC_QUIRK_MJPEG_NO_EOF &&
--	    (stream->cur_format->fcc == V4L2_PIX_FMT_MJPEG ||
--	    stream->cur_format->fcc == V4L2_PIX_FMT_JPEG)) {
--		const u8 *packet = data + header_len;
--
--		if (len >= header_len + 2 &&
--		    packet[0] == 0xff && packet[1] == JPEG_MARKER_SOI &&
--		    buf->bytesused != 0) {
--			buf->state = UVC_BUF_STATE_READY;
--			buf->error = 1;
--			stream->last_fid ^= UVC_STREAM_FID;
--			return -EAGAIN;
--		}
--	}
--
- 	stream->last_fid = fid;
+ 	rx->fill_cnt += num_posted;
++
++	/* If the queue has fewer than GVE_RX_BUF_THRESH_DQO descriptors
++	 * visible to the hardware, the hardware is in danger of starving
++	 * and cannot trigger interrupts.
++	 *
++	 * We use a threshold of 32 because a single maximum-sized RSC
++	 * packet can consume up to 19 descriptors in the Rx path. Lower
++	 * thresholds (e.g., 8 or 16) would be unsafe as they could cause
++	 * the device to drop/stall on a maximum-sized RSC packet.
++	 *
++	 * Start the timer to periodically reschedule NAPI and recover.
++	 */
++	num_bufs_avail_to_hw =
++		((bufq->tail & ~(GVE_RX_BUF_THRESH_DQO - 1)) -
++		 bufq->head) & bufq->mask;
++
++	if (num_bufs_avail_to_hw < GVE_RX_BUF_THRESH_DQO) {
++		mod_timer(&rx->starvation_timer,
++			  jiffies + msecs_to_jiffies(GVE_RX_NAPI_RESCHED_MS));
++	}
+ }
  
- 	return header_len;
+ static void gve_try_recycle_buf(struct gve_priv *priv, struct gve_rx_ring *rx,
 -- 
 2.53.0
 
