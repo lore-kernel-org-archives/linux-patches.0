@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0352DC783;
-	Mon, 17 Aug 2026 14:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E026F43B6EC;
+	Mon, 17 Aug 2026 14:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977396; cv=none; b=BuRKmD+I31xwUbc2yNYiHkpAcF8bTtENzYPNGSu8hnwy8udgkJNexNBDfRyLB1vjaaAUldn2PzaYQetQqSvx8tWCVDy5OMOvAbbeItjfOjWqNUzgIgzKK5h7OX2PuhTQjOfroxGNT8NRyLV9yRUQC4GG00b9WlIQQB8SzvKjnNI=
+	t=1786977399; cv=none; b=e+iCXTzX60guR4lJIacEb7EZkkzrva+BhXI35cWf8TPGf1uimT2qrQSeuZ78g9KH2gVd3W1d360cQLmk5ZhKgfksUZRRgO/7QdPV2QCnxTT5xVXlRi/TAns4tCJyhAI+xrSASMUlfhu/PlpGiTzZ6UdnSbCPnGD8VfaO3nqdvE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977396; c=relaxed/simple;
-	bh=G2Id+jUO5AEz7kmOE2mlNUrRiooNDQbFgfHB/GQHJXU=;
+	s=arc-20240116; t=1786977399; c=relaxed/simple;
+	bh=Fuf5pN3vDlBshe5GzggPoTNhnYuDvlNA+GAIb6k+/AY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QsjZxORxOGfLHHtvtWlo8I9UK3kdJ/d/ceN7au949QYf/wEC498ijSFGzzs7DS1XiE3TDsC5aniHhae5MMdztlii4L7gkMuuQWDVc2E+oEq9y6MF8fGBBirspaooWZP457d804T2OROjHqgH/87pfC+a1smMLg7WiEgRTVP+RP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h81ntuS6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CyFFJrXla7ezRyl3DDuRHhGeQiB8qTtD2LLK4KVjSPad0h8JoIykowekNfUf0igukYFB1LH/3p+f+k0eAZVW27U66LcREfqYAD1UZhbjw/8FtZQTzaOHIe2l7ogr4MiLCo4o2Ti0bHfPJa1Ig7pXWX9mRzkJ6E+YrKNiN8tQHLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pxvqaiQe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h81ntuS6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 359C51F000E9;
-	Mon, 17 Aug 2026 14:36:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxvqaiQe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17EBA1F000E9;
+	Mon, 17 Aug 2026 14:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977394;
-	bh=cfa8Fp4X4E5dLd+DTIjCrr5zOD8Y+39OiR43z/eJ3Eg=;
+	s=korg; t=1786977397;
+	bh=lgPEffUduqXErhuCJVFo34Gpr8e3k0p4qihFsBp/Og8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h81ntuS620cxLBDu5SMe124rHo2ylX2wbAr0dzrqpmlvYJxXqT+3OfMaOWev17k8w
-	 oPpznF8uQwV2GzD5OADpVtkfBb0msGO45A/oIWvqSzU+h/JTYXaJccEO9nV8E4jpT0
-	 najR0C4CV1mwTxTFSVg8pOm8SOdcY1+E0FcCaEfM=
+	b=pxvqaiQeJtAwPWesC87degzWsGSTm+hSmyPI+jlWfm1I7oWQa5rJHcfkVCWgFj3QG
+	 0fTrJeUomausss1Y5KIag+CptQEADE6LbbAeOk8MeQb5/s+jKWDG9FI00ndxnQv2xs
+	 ovVlVhc9cggnsDp4nZgIGiotUe1UmkJfcZYrTLxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 274/456] hwmon: (adt7470) Fix divide-by-zero TOCTOU crash in fan speed read
-Date: Mon, 17 Aug 2026 15:31:04 +0200
-Message-ID: <20260817132550.687461444@linuxfoundation.org>
+Subject: [PATCH 5.15 275/456] hwmon: (adt7470) Fix PWM auto temp state array and bounds check
+Date: Mon, 17 Aug 2026 15:31:05 +0200
+Message-ID: <20260817132550.724371200@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -54,76 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
 
-[ Upstream commit 1b46fe9dc8f8de59310f37e6c5e5c0e05ded46c3 ]
+[ Upstream commit 92413f439d1ec5e55b73ede8d66a7b971cbd1ced ]
 
-If the fan data becomes 0 between the FAN_DATA_VALID() check and the
-FAN_PERIOD_TO_RPM() conversion, it will result in a divide-by-zero crash
-due to a race with a concurrent update of the cached fan value.
+In pwm_auto_temp_store(), the parsed user input was missing bounds
+checks, allowing values > 0xF to overflow into the adjacent channel's
+bits. Furthermore, the value was being incorrectly written to the
+pwm_automatic state array instead of pwm_auto_temp.
 
-Fix a TOCTOU issue by reading fan data once.
+Fix this by rejecting values > 0xF with -EINVAL, and assigning the
+value to the correct array only after a successful I2C write.
 
 Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/r/20260727034929.E29B71F000E9@smtp.kernel.org/
-Fixes: fc958a61ff6d ("hwmon: (adt7470) Convert to devm_hwmon_device_register_with_info API")
+Closes: https://lore.kernel.org/all/20260727034932.0B7C41F000E9@smtp.kernel.org/#t
+Fixes: 6f9703d0be16 ("hwmon: add support for adt7470")
 Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-7-598e38a46ba6@gmail.com
+Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-8-598e38a46ba6@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/adt7470.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ drivers/hwmon/adt7470.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
-index 3fcc10d0d3639..394f0aba3493a 100644
+index 394f0aba3493a..e4be1750d9b60 100644
 --- a/drivers/hwmon/adt7470.c
 +++ b/drivers/hwmon/adt7470.c
-@@ -660,36 +660,33 @@ static ssize_t alarm_mask_store(struct device *dev,
- static int adt7470_fan_read(struct device *dev, u32 attr, int channel, long *val)
- {
- 	struct adt7470_data *data = adt7470_update_device(dev);
-+	u16 fan_data;
+@@ -1057,8 +1057,10 @@ static ssize_t pwm_auto_temp_store(struct device *dev,
+ 	if (temp < 0)
+ 		return temp;
  
- 	if (IS_ERR(data))
- 		return PTR_ERR(data);
++	if (temp > 0xF)
++		return -EINVAL;
++
+ 	mutex_lock(&data->lock);
+-	data->pwm_automatic[attr->index] = temp;
  
- 	switch (attr) {
- 	case hwmon_fan_input:
--		if (FAN_DATA_VALID(data->fan[channel]))
--			*val = FAN_PERIOD_TO_RPM(data->fan[channel]);
--		else
--			*val = 0;
-+		fan_data = READ_ONCE(data->fan[channel]);
- 		break;
- 	case hwmon_fan_min:
--		if (FAN_DATA_VALID(data->fan_min[channel]))
--			*val = FAN_PERIOD_TO_RPM(data->fan_min[channel]);
--		else
--			*val = 0;
-+		fan_data = READ_ONCE(data->fan_min[channel]);
- 		break;
- 	case hwmon_fan_max:
--		if (FAN_DATA_VALID(data->fan_max[channel]))
--			*val = FAN_PERIOD_TO_RPM(data->fan_max[channel]);
--		else
--			*val = 0;
-+		fan_data = READ_ONCE(data->fan_max[channel]);
- 		break;
- 	case hwmon_fan_alarm:
- 		*val = !!(data->alarm & FAN_ALARM_BIT(channel));
--		break;
-+		return 0;
- 	default:
- 		return -EOPNOTSUPP;
+ 	if (!(attr->index % 2)) {
+ 		mask = 0xF0;
+@@ -1069,6 +1071,9 @@ static ssize_t pwm_auto_temp_store(struct device *dev,
  	}
  
-+	if (FAN_DATA_VALID(fan_data))
-+		*val = FAN_PERIOD_TO_RPM(fan_data);
-+	else
-+		*val = 0;
+ 	err = regmap_update_bits(data->regmap, pwm_auto_reg, mask, val);
++	if (!err)
++		data->pwm_auto_temp[attr->index] = temp;
 +
- 	return 0;
- }
+ 	mutex_unlock(&data->lock);
  
+ 	return err < 0 ? err : count;
 -- 
 2.53.0
 
