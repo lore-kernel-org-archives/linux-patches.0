@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F282DC783;
-	Mon, 17 Aug 2026 14:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48AFD3B1B4;
+	Mon, 17 Aug 2026 14:27:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976866; cv=none; b=FZw522sEuMkYDXbgRyj+oa5NvtSMVamrckVJ/3Mo5WUzz0v/ZKa1utadQoOZ1A4Wlb6Map31q6CKWs9AcinBQzKkQurTKbamV/jp4+p3FHFGSOjXWGzx13M5ehdeDwitE5koeX2ScL9kk7HDFkFB7wUj55/Cd5Z5cecHK25EB9s=
+	t=1786976869; cv=none; b=dBedy5yGS1sXnAIGMecfdfrrPDOpc6ffBpzR9sTjxCjzXS48/3ZsPSI3Lm4HAwOyQiUPcl4BAGPZq5o5j0yMkEW3Bb7jdHgtzkacKEMsVfBNmm0vftsUkJIJUkogCJJ1xvqB2ILjnoj3jxvF8TL7cSzUM+uYrD/uIYQt1Wfwwgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976866; c=relaxed/simple;
-	bh=t0kxuyEmWJKv55kuch19QVD1+wzdWL85VsNOT3hbcBc=;
+	s=arc-20240116; t=1786976869; c=relaxed/simple;
+	bh=SfRGlRiHcrtTt7CQy6XoaLr0w8aCq5OrNMNBH6YN13s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R0sgeY1KhxcG0+ctoLdfvY7SXleZTy+0mlmCXsvk0xoniUP6YNXLAbzKxonKqJLqvAxm9bh9dxl+csLOP9DCo7W1qzwrVAsIm2DIrAgWgZLIHhy6RFHXwZBoOTbGllFv/8aDMuY+h5/TCsEa3sitAxvxVG8zETx8OZcYQUMnJBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TE/+JxAA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LonN2oJ5B+c9Q7nJJk0Fm0okqaasKhXVzVGJ4ko5Bt8QThZu716cR4rpaCnevEehywwcFUCw7mPQxUW7lyGJ3T7H0mAmuvHsb31NqldbXRJnVnvKsvdFTQ/rN8CYuX5/4iYYM1UGArxhvW6BPyCAy4jS1MpfKWHfJSRs76c5Wys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XdRpgvw1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TE/+JxAA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C50061F000E9;
-	Mon, 17 Aug 2026 14:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XdRpgvw1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F38C1F000E9;
+	Mon, 17 Aug 2026 14:27:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976865;
-	bh=b1lX9BSIQxfgI2oJHQTRtBu8faS3fsSzBMIcvWXHAtY=;
+	s=korg; t=1786976868;
+	bh=dHWemnihuEkb6FmJWLxACxhRwjOhL2machFY6DMRels=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TE/+JxAAor8Vbt8xPvS7X5BMyw7FGqhENrXIms4/SAhlltsryXdHGBeIGCAIWi1lE
-	 1gAosR9EanDjumEbS21lv7YkfPeLIwUeMXlCcm2tcMCSDGMLHcmb+yWG3pT1PRZyP+
-	 +tluzGLmaJFDUm8YDSmXZXpMGWrgNLUdnvlqm2CI=
+	b=XdRpgvw1xh9Q+DW3Q3T6KVnsItPVfnl8PVkopI9heidoe62PkVX+KJGkflqqgtFta
+	 958a7W5NlMXVZUlHO43XFIruTzkLpHZj0pc/KwVbDGUaNqY/zIouOM76SCWFmypayE
+	 9/cQsfI09Y7FwH3ArNM7aYy0hgnuni1BNg8hQPag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Lazar <alazar@nvidia.com>,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 130/456] net/mlx5e: Reject unsupported CB Shaper TSA in ETS validation
-Date: Mon, 17 Aug 2026 15:28:40 +0200
-Message-ID: <20260817132545.194429630@linuxfoundation.org>
+Subject: [PATCH 5.15 131/456] raw: use more conventional iterators
+Date: Mon, 17 Aug 2026 15:28:41 +0200
+Message-ID: <20260817132545.231644979@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -54,46 +51,438 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Lazar <alazar@nvidia.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9173e1d3c7c7d49a71eee813091f9e834ec7cee5 ]
+[ Upstream commit ba44f8182ec299c5d1c8a72fc0fde4ec127b5a6d ]
 
-Credit Based (CB) TSA is not supported by the mlx5 driver, so reject
-any configurations that specify it.
+In order to prepare the following patch,
+I change raw v4 & v6 code to use more conventional
+iterators.
 
-Fixes: 08fb1dacdd76 ("net/mlx5e: Support DCBNL IEEE ETS")
-Signed-off-by: Alexei Lazar <alazar@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://patch.msgid.link/20260717075125.1244877-3-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 440e274da4d1 ("net: ipv6: fix dif and sdif mismatch in raw6_icmp_error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/net/raw.h   |    5 +-
+ include/net/rawv6.h |    6 +--
+ net/ipv4/raw.c      |   95 +++++++++++++++++------------------------------
+ net/ipv4/raw_diag.c |   33 ++++++++--------
+ net/ipv6/raw.c      |  103 ++++++++++++++++++----------------------------------
+ 5 files changed, 92 insertions(+), 150 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-index bb1dd223ecf5ed..4be89f0d020ea4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-@@ -309,6 +309,14 @@ static int mlx5e_dbcnl_validate_ets(struct net_device *netdev,
+--- a/include/net/raw.h
++++ b/include/net/raw.h
+@@ -20,9 +20,8 @@
+ extern struct proto raw_prot;
+ 
+ extern struct raw_hashinfo raw_v4_hashinfo;
+-struct sock *__raw_v4_lookup(struct net *net, struct sock *sk,
+-			     unsigned short num, __be32 raddr,
+-			     __be32 laddr, int dif, int sdif);
++bool raw_v4_match(struct net *net, struct sock *sk, unsigned short num,
++		  __be32 raddr, __be32 laddr, int dif, int sdif);
+ 
+ int raw_abort(struct sock *sk, int err);
+ void raw_icmp_error(struct sk_buff *, int, u32);
+--- a/include/net/rawv6.h
++++ b/include/net/rawv6.h
+@@ -5,9 +5,9 @@
+ #include <net/protocol.h>
+ 
+ extern struct raw_hashinfo raw_v6_hashinfo;
+-struct sock *__raw_v6_lookup(struct net *net, struct sock *sk,
+-			     unsigned short num, const struct in6_addr *loc_addr,
+-			     const struct in6_addr *rmt_addr, int dif, int sdif);
++bool raw_v6_match(struct net *net, struct sock *sk, unsigned short num,
++		  const struct in6_addr *loc_addr,
++		  const struct in6_addr *rmt_addr, int dif, int sdif);
+ 
+ int raw_abort(struct sock *sk, int err);
+ 
+--- a/net/ipv4/raw.c
++++ b/net/ipv4/raw.c
+@@ -117,24 +117,19 @@ void raw_unhash_sk(struct sock *sk)
+ }
+ EXPORT_SYMBOL_GPL(raw_unhash_sk);
+ 
+-struct sock *__raw_v4_lookup(struct net *net, struct sock *sk,
+-			     unsigned short num, __be32 raddr, __be32 laddr,
+-			     int dif, int sdif)
+-{
+-	sk_for_each_from(sk) {
+-		struct inet_sock *inet = inet_sk(sk);
+-
+-		if (net_eq(sock_net(sk), net) && inet->inet_num == num	&&
+-		    !(inet->inet_daddr && inet->inet_daddr != raddr) 	&&
+-		    !(inet->inet_rcv_saddr && inet->inet_rcv_saddr != laddr) &&
+-		    raw_sk_bound_dev_eq(net, sk->sk_bound_dev_if, dif, sdif))
+-			goto found; /* gotcha */
+-	}
+-	sk = NULL;
+-found:
+-	return sk;
++bool raw_v4_match(struct net *net, struct sock *sk, unsigned short num,
++		  __be32 raddr, __be32 laddr, int dif, int sdif)
++{
++	struct inet_sock *inet = inet_sk(sk);
++
++	if (net_eq(sock_net(sk), net) && inet->inet_num == num	&&
++	    !(inet->inet_daddr && inet->inet_daddr != raddr) 	&&
++	    !(inet->inet_rcv_saddr && inet->inet_rcv_saddr != laddr) &&
++	    raw_sk_bound_dev_eq(net, sk->sk_bound_dev_if, dif, sdif))
++		return true;
++	return false;
+ }
+-EXPORT_SYMBOL_GPL(__raw_v4_lookup);
++EXPORT_SYMBOL_GPL(raw_v4_match);
+ 
+ /*
+  *	0 - deliver
+@@ -168,23 +163,21 @@ static int icmp_filter(const struct sock
+  */
+ static int raw_v4_input(struct sk_buff *skb, const struct iphdr *iph, int hash)
+ {
++	struct net *net = dev_net(skb->dev);
+ 	int sdif = inet_sdif(skb);
+ 	int dif = inet_iif(skb);
+-	struct sock *sk;
+ 	struct hlist_head *head;
+ 	int delivered = 0;
+-	struct net *net;
++	struct sock *sk;
+ 
+-	read_lock(&raw_v4_hashinfo.lock);
+ 	head = &raw_v4_hashinfo.ht[hash];
+ 	if (hlist_empty(head))
+-		goto out;
+-
+-	net = dev_net(skb->dev);
+-	sk = __raw_v4_lookup(net, __sk_head(head), iph->protocol,
+-			     iph->saddr, iph->daddr, dif, sdif);
+-
+-	while (sk) {
++		return 0;
++	read_lock(&raw_v4_hashinfo.lock);
++	sk_for_each(sk, head) {
++		if (!raw_v4_match(net, sk, iph->protocol,
++				  iph->saddr, iph->daddr, dif, sdif))
++			continue;
+ 		delivered = 1;
+ 		if ((iph->protocol != IPPROTO_ICMP || !icmp_filter(sk, skb)) &&
+ 		    ip_mc_sf_allow(sk, iph->daddr, iph->saddr,
+@@ -195,31 +188,16 @@ static int raw_v4_input(struct sk_buff *
+ 			if (clone)
+ 				raw_rcv(sk, clone);
+ 		}
+-		sk = __raw_v4_lookup(net, sk_next(sk), iph->protocol,
+-				     iph->saddr, iph->daddr,
+-				     dif, sdif);
+ 	}
+-out:
+ 	read_unlock(&raw_v4_hashinfo.lock);
+ 	return delivered;
+ }
+ 
+ int raw_local_deliver(struct sk_buff *skb, int protocol)
+ {
+-	int hash;
+-	struct sock *raw_sk;
+-
+-	hash = protocol & (RAW_HTABLE_SIZE - 1);
+-	raw_sk = sk_head(&raw_v4_hashinfo.ht[hash]);
+-
+-	/* If there maybe a raw socket we must check - if not we
+-	 * don't care less
+-	 */
+-	if (raw_sk && !raw_v4_input(skb, ip_hdr(skb), hash))
+-		raw_sk = NULL;
+-
+-	return raw_sk != NULL;
++	int hash = protocol & (RAW_HTABLE_SIZE - 1);
+ 
++	return raw_v4_input(skb, ip_hdr(skb), hash);
+ }
+ 
+ static void raw_err(struct sock *sk, struct sk_buff *skb, u32 info)
+@@ -286,29 +264,24 @@ static void raw_err(struct sock *sk, str
+ 
+ void raw_icmp_error(struct sk_buff *skb, int protocol, u32 info)
+ {
+-	int hash;
+-	struct sock *raw_sk;
++	struct net *net = dev_net(skb->dev);
++	int dif = skb->dev->ifindex;
++	int sdif = inet_sdif(skb);
++	struct hlist_head *head;
+ 	const struct iphdr *iph;
+-	struct net *net;
++	struct sock *sk;
++	int hash;
+ 
+ 	hash = protocol & (RAW_HTABLE_SIZE - 1);
++	head = &raw_v4_hashinfo.ht[hash];
+ 
+ 	read_lock(&raw_v4_hashinfo.lock);
+-	raw_sk = sk_head(&raw_v4_hashinfo.ht[hash]);
+-	if (raw_sk) {
+-		int dif = skb->dev->ifindex;
+-		int sdif = inet_sdif(skb);
+-
++	sk_for_each(sk, head) {
+ 		iph = (const struct iphdr *)skb->data;
+-		net = dev_net(skb->dev);
+-
+-		while ((raw_sk = __raw_v4_lookup(net, raw_sk, protocol,
+-						iph->daddr, iph->saddr,
+-						dif, sdif)) != NULL) {
+-			raw_err(raw_sk, skb, info);
+-			raw_sk = sk_next(raw_sk);
+-			iph = (const struct iphdr *)skb->data;
+-		}
++		if (!raw_v4_match(net, sk, iph->protocol,
++				  iph->saddr, iph->daddr, dif, sdif))
++			continue;
++		raw_err(sk, skb, info);
+ 	}
+ 	read_unlock(&raw_v4_hashinfo.lock);
+ }
+--- a/net/ipv4/raw_diag.c
++++ b/net/ipv4/raw_diag.c
+@@ -34,31 +34,30 @@ raw_get_hashinfo(const struct inet_diag_
+  * use helper to figure it out.
+  */
+ 
+-static struct sock *raw_lookup(struct net *net, struct sock *from,
+-			       const struct inet_diag_req_v2 *req)
++static bool raw_lookup(struct net *net, struct sock *sk,
++		       const struct inet_diag_req_v2 *req)
+ {
+ 	struct inet_diag_req_raw *r = (void *)req;
+-	struct sock *sk = NULL;
+ 
+ 	if (r->sdiag_family == AF_INET)
+-		sk = __raw_v4_lookup(net, from, r->sdiag_raw_protocol,
+-				     r->id.idiag_dst[0],
+-				     r->id.idiag_src[0],
+-				     r->id.idiag_if, 0);
++		return raw_v4_match(net, sk, r->sdiag_raw_protocol,
++				    r->id.idiag_dst[0],
++				    r->id.idiag_src[0],
++				    r->id.idiag_if, 0);
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	else
+-		sk = __raw_v6_lookup(net, from, r->sdiag_raw_protocol,
+-				     (const struct in6_addr *)r->id.idiag_src,
+-				     (const struct in6_addr *)r->id.idiag_dst,
+-				     r->id.idiag_if, 0);
++		return raw_v6_match(net, sk, r->sdiag_raw_protocol,
++				    (const struct in6_addr *)r->id.idiag_src,
++				    (const struct in6_addr *)r->id.idiag_dst,
++				    r->id.idiag_if, 0);
+ #endif
+-	return sk;
++	return false;
+ }
+ 
+ static struct sock *raw_sock_get(struct net *net, const struct inet_diag_req_v2 *r)
+ {
+ 	struct raw_hashinfo *hashinfo = raw_get_hashinfo(r);
+-	struct sock *sk = NULL, *s;
++	struct sock *sk;
+ 	int slot;
+ 
+ 	if (IS_ERR(hashinfo))
+@@ -66,9 +65,8 @@ static struct sock *raw_sock_get(struct
+ 
+ 	read_lock(&hashinfo->lock);
+ 	for (slot = 0; slot < RAW_HTABLE_SIZE; slot++) {
+-		sk_for_each(s, &hashinfo->ht[slot]) {
+-			sk = raw_lookup(net, s, r);
+-			if (sk) {
++		sk_for_each(sk, &hashinfo->ht[slot]) {
++			if (raw_lookup(net, sk, r)) {
+ 				/*
+ 				 * Grab it and keep until we fill
+ 				 * diag meaage to be reported, so
+@@ -81,10 +79,11 @@ static struct sock *raw_sock_get(struct
+ 			}
  		}
  	}
++	sk = ERR_PTR(-ENOENT);
+ out_unlock:
+ 	read_unlock(&hashinfo->lock);
  
-+	for (i = 0; i < IEEE_8021QAZ_MAX_TCS; i++) {
-+		if (ets->tc_tsa[i] == IEEE_8021QAZ_TSA_CB_SHAPER) {
-+			netdev_err(netdev,
-+				   "Failed to validate ETS: CB Shaper is not supported\n");
-+			return -EOPNOTSUPP;
-+		}
-+	}
+-	return sk ? sk : ERR_PTR(-ENOENT);
++	return sk;
+ }
+ 
+ static int raw_diag_dump_one(struct netlink_callback *cb,
+--- a/net/ipv6/raw.c
++++ b/net/ipv6/raw.c
+@@ -66,41 +66,27 @@ struct raw_hashinfo raw_v6_hashinfo = {
+ };
+ EXPORT_SYMBOL_GPL(raw_v6_hashinfo);
+ 
+-struct sock *__raw_v6_lookup(struct net *net, struct sock *sk,
+-		unsigned short num, const struct in6_addr *loc_addr,
+-		const struct in6_addr *rmt_addr, int dif, int sdif)
++bool raw_v6_match(struct net *net, struct sock *sk, unsigned short num,
++		  const struct in6_addr *loc_addr,
++		  const struct in6_addr *rmt_addr, int dif, int sdif)
+ {
+-	bool is_multicast = ipv6_addr_is_multicast(loc_addr);
++	if (inet_sk(sk)->inet_num != num ||
++	    !net_eq(sock_net(sk), net) ||
++	    (!ipv6_addr_any(&sk->sk_v6_daddr) &&
++	     !ipv6_addr_equal(&sk->sk_v6_daddr, rmt_addr)) ||
++	    !raw_sk_bound_dev_eq(net, sk->sk_bound_dev_if,
++				 dif, sdif))
++		return false;
 +
- 	/* Validate Bandwidth Sum */
- 	for (i = 0; i < IEEE_8021QAZ_MAX_TCS; i++) {
- 		if (ets->tc_tsa[i] == IEEE_8021QAZ_TSA_ETS) {
--- 
-2.53.0
-
++	if (ipv6_addr_any(&sk->sk_v6_rcv_saddr) ||
++	    ipv6_addr_equal(&sk->sk_v6_rcv_saddr, loc_addr) ||
++	    (ipv6_addr_is_multicast(loc_addr) &&
++	     inet6_mc_check(sk, loc_addr, rmt_addr)))
++		return true;
+ 
+-	sk_for_each_from(sk)
+-		if (inet_sk(sk)->inet_num == num) {
+-
+-			if (!net_eq(sock_net(sk), net))
+-				continue;
+-
+-			if (!ipv6_addr_any(&sk->sk_v6_daddr) &&
+-			    !ipv6_addr_equal(&sk->sk_v6_daddr, rmt_addr))
+-				continue;
+-
+-			if (!raw_sk_bound_dev_eq(net, sk->sk_bound_dev_if,
+-						 dif, sdif))
+-				continue;
+-
+-			if (!ipv6_addr_any(&sk->sk_v6_rcv_saddr)) {
+-				if (ipv6_addr_equal(&sk->sk_v6_rcv_saddr, loc_addr))
+-					goto found;
+-				if (is_multicast &&
+-				    inet6_mc_check(sk, loc_addr, rmt_addr))
+-					goto found;
+-				continue;
+-			}
+-			goto found;
+-		}
+-	sk = NULL;
+-found:
+-	return sk;
++	return false;
+ }
+-EXPORT_SYMBOL_GPL(__raw_v6_lookup);
++EXPORT_SYMBOL_GPL(raw_v6_match);
+ 
+ /*
+  *	0 - deliver
+@@ -156,31 +142,28 @@ EXPORT_SYMBOL(rawv6_mh_filter_unregister
+  */
+ static bool ipv6_raw_deliver(struct sk_buff *skb, int nexthdr)
+ {
++	struct net *net = dev_net(skb->dev);
+ 	const struct in6_addr *saddr;
+ 	const struct in6_addr *daddr;
++	struct hlist_head *head;
+ 	struct sock *sk;
+ 	bool delivered = false;
+ 	__u8 hash;
+-	struct net *net;
+ 
+ 	saddr = &ipv6_hdr(skb)->saddr;
+ 	daddr = saddr + 1;
+ 
+ 	hash = nexthdr & (RAW_HTABLE_SIZE - 1);
+-
++	head = &raw_v6_hashinfo.ht[hash];
++	if (hlist_empty(head))
++		return false;
+ 	read_lock(&raw_v6_hashinfo.lock);
+-	sk = sk_head(&raw_v6_hashinfo.ht[hash]);
+-
+-	if (!sk)
+-		goto out;
+-
+-	net = dev_net(skb->dev);
+-	sk = __raw_v6_lookup(net, sk, nexthdr, daddr, saddr,
+-			     inet6_iif(skb), inet6_sdif(skb));
+-
+-	while (sk) {
++	sk_for_each(sk, head) {
+ 		int filtered;
+ 
++		if (!raw_v6_match(net, sk, nexthdr, daddr, saddr,
++				  inet6_iif(skb), inet6_sdif(skb)))
++			continue;
+ 		delivered = true;
+ 		switch (nexthdr) {
+ 		case IPPROTO_ICMPV6:
+@@ -219,23 +202,14 @@ static bool ipv6_raw_deliver(struct sk_b
+ 				rawv6_rcv(sk, clone);
+ 			}
+ 		}
+-		sk = __raw_v6_lookup(net, sk_next(sk), nexthdr, daddr, saddr,
+-				     inet6_iif(skb), inet6_sdif(skb));
+ 	}
+-out:
+ 	read_unlock(&raw_v6_hashinfo.lock);
+ 	return delivered;
+ }
+ 
+ bool raw6_local_deliver(struct sk_buff *skb, int nexthdr)
+ {
+-	struct sock *raw_sk;
+-
+-	raw_sk = sk_head(&raw_v6_hashinfo.ht[nexthdr & (RAW_HTABLE_SIZE - 1)]);
+-	if (raw_sk && !ipv6_raw_deliver(skb, nexthdr))
+-		raw_sk = NULL;
+-
+-	return raw_sk != NULL;
++	return ipv6_raw_deliver(skb, nexthdr);
+ }
+ 
+ /* This cleans up af_inet6 a bit. -DaveM */
+@@ -361,28 +335,25 @@ static void rawv6_err(struct sock *sk, s
+ void raw6_icmp_error(struct sk_buff *skb, int nexthdr,
+ 		u8 type, u8 code, int inner_offset, __be32 info)
+ {
++	const struct in6_addr *saddr, *daddr;
++	struct net *net = dev_net(skb->dev);
++	struct hlist_head *head;
+ 	struct sock *sk;
+ 	int hash;
+-	const struct in6_addr *saddr, *daddr;
+-	struct net *net;
+ 
+ 	hash = nexthdr & (RAW_HTABLE_SIZE - 1);
+-
++	head = &raw_v6_hashinfo.ht[hash];
+ 	read_lock(&raw_v6_hashinfo.lock);
+-	sk = sk_head(&raw_v6_hashinfo.ht[hash]);
+-	if (sk) {
++	sk_for_each(sk, head) {
+ 		/* Note: ipv6_hdr(skb) != skb->data */
+ 		const struct ipv6hdr *ip6h = (const struct ipv6hdr *)skb->data;
+ 		saddr = &ip6h->saddr;
+ 		daddr = &ip6h->daddr;
+-		net = dev_net(skb->dev);
+ 
+-		while ((sk = __raw_v6_lookup(net, sk, nexthdr, saddr, daddr,
+-					     inet6_iif(skb), inet6_iif(skb)))) {
+-			rawv6_err(sk, skb, NULL, type, code,
+-					inner_offset, info);
+-			sk = sk_next(sk);
+-		}
++		if (!raw_v6_match(net, sk, nexthdr, &ip6h->saddr, &ip6h->daddr,
++				  inet6_iif(skb), inet6_iif(skb)))
++			continue;
++		rawv6_err(sk, skb, NULL, type, code, inner_offset, info);
+ 	}
+ 	read_unlock(&raw_v6_hashinfo.lock);
+ }
 
 
