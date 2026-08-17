@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE8E43F4A1;
-	Mon, 17 Aug 2026 13:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C3F43D4FA;
+	Mon, 17 Aug 2026 13:56:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974976; cv=none; b=BG9fzjrr1bPwIurE2hTVWgjwnGq//cTAzknJvOqi1jEwOQDP8ozQA/PZEGgbDk4aGw5RmPGuPz6ZrOVDenxjZv8tmFmyRdEmoOiFXCoE/xeTckpLUULpQEyxItETCLvzhmaIs8tBlv7p3VGbkeGG8fDUY9JdO3Oh2u/MQy2KQ1Q=
+	t=1786974979; cv=none; b=Jd6MTTEgW0GZ3s35POVEpEoLqb37mc0yGKVeYNtvwqVPR0h1r+6JNnPFmPf+fXPmhn3pzJMGlloAANtkmx8Jq/CAWFrB5L3+WIXfGKbwYH7C2ms+TihMMMJz8yRP2gI/aVh8QEXMfH5OoYROfaNaOc91jLC2sG3x2otuhhoLzWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974976; c=relaxed/simple;
-	bh=FriHCdxY5UrFTdmDRlTP5+yyeS8Q/iHFGIh3CpRRXgo=;
+	s=arc-20240116; t=1786974979; c=relaxed/simple;
+	bh=PQ3LFN2npeFTu03ZFvoc7QMXo+8zoomV+xWnmwJsHwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IwrNwr9INi1qqGH0Ss7QhzIey/iKBis5GlX5AF4zcu7h/NnO4ThSp8dO0RE1o+2zy9Hb2W7coo+vBCEi6xqS/QibD4eFeMBO8wHTmuBmczvbLXF0HSbd8Bm/zEr5rAKMQ6dFefF35XQ25HtOt8wsGHgdOpQI4beN0/Hl0wQqiHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZ0BwE6r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YUBd7EgDHuAidQnfhHtStRqPHgRW0uTSsyiCkdV9ziEm3l8BA4OvyhnkX7XAvjSv1BDr9hwR7o6BOrcvhiRmSpuewjb2wnXFaiFeZhTkDc5GSoHe+LvZrrqVB/aZFRYUo+DfbeM02x2Tc68+4ey9mmR3ZWCXByHraVzouLGiL1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NSFeGMPO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZ0BwE6r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2A51F000E9;
-	Mon, 17 Aug 2026 13:56:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NSFeGMPO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3AFD1F00A3D;
+	Mon, 17 Aug 2026 13:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974972;
-	bh=9lz/V3FDcAdrLkf1t1SzTPIqtM8fYG+o/m3sqHTfuqc=;
+	s=korg; t=1786974975;
+	bh=VajI/QUjJiT0dbnLq8yYKSl2wA4M2xzGBOLPz4L3xSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yZ0BwE6r2HjR6CiNkXrKeNUD6BKbGN0AePwgbjpM0FwD1+wsenhnHeyL+9NbCZy4I
-	 7NTIPmH0ilsNp4sfJPT1EM1wOTtXu9umh7ZLtYORpDJ/2ljWkMLPR+5kIDOaVz73vj
-	 9EGORNEHVZCWXLfDH9iHGcoVjJ/lLCt1mBmB2eXo=
+	b=NSFeGMPORbnS/U0kQipmm/lA+3qjzYUlAglu5L8dXyYCcG1xQkk3h/Zj5208h8rL+
+	 iBkBF5P1vHXf0QbO0MyWaOut+t+1+ufUtjYilDJBF95zmtTuWkeigGhuEp0jDm9fBI
+	 SD5rrB5GkuwzUwXF2FSGxSRyVuDOo+Zh/8/kSkE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 069/250] xsk: move xsk_tx_metadata_request() to xdp_sock_drv.h
-Date: Mon, 17 Aug 2026 15:30:30 +0200
-Message-ID: <20260817132539.273389454@linuxfoundation.org>
+	"Wagenaar, C.C.J. (Chris)" <c.c.j.wagenaar@vu.nl>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.18 112/250] Input: evdev - sanitize event type index when fetching event masks
+Date: Mon, 17 Aug 2026 15:31:13 +0200
+Message-ID: <20260817132541.145547548@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,150 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Fomichev <sdf.kernel@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit ddd0d6c5bfe2fef7c7cf31f62265f29b7b9eb9ef ]
+commit 3abd29c61d2ef37c4102cf755b18be53bb9dbea6 upstream.
 
-xsk_tx_metadata_request() must validate metadata with
-xsk_buff_valid_tx_metadata(), which is defined in xdp_sock_drv.h. Move the
-helper there before adding that dependency. All callers already include
-the destination header, so this has no functional effect.
+The user-supplied event type index passed to EVIOCGMASK / EVIOCSMASK
+ioctls is used to index the static counts array in evdev_get_mask_cnt()
+and client evmasks array in evdev_get_mask().
 
-Fixes: ca4419f15abd ("xsk: Add launch time hardware offload support to XDP Tx metadata")
-Cc: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260727161959.885642-6-sdf@fomichev.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+While the event type is architecturally bounded by EV_CNT, speculative
+execution may mispredict bounds checks and perform out-of-bounds loads.
+
+Sanitize the event type index in evdev_get_mask_cnt() branchlessly using
+array_index_mask_nospec(). This clamps the index to 0 for safe array
+access and forces the returned count to 0 speculatively when the index
+is out of bounds.
+
+We do not need additional array_index_nospec() calls in evdev_get_mask()
+because evdev_get_mask_cnt() speculatively forces the count (and
+resulting xfer_size) to 0 for out-of-bounds types, preventing any
+speculative memory access to client evmasks array.
+
+Reported-by: "Wagenaar, C.C.J. (Chris)" <c.c.j.wagenaar@vu.nl>
+Cc: stable@vger.kernel.org
+Assisted-by: Antigravity:gemini-3.6-flash
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/anFCAfvxwXB5eJF1@google.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/xdp_sock.h     | 43 --------------------------------------
- include/net/xdp_sock_drv.h | 43 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 43 insertions(+), 43 deletions(-)
+ drivers/input/evdev.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/xdp_sock.h b/include/net/xdp_sock.h
-index e14e575178940..8bf17ba6c3bd7 100644
---- a/include/net/xdp_sock.h
-+++ b/include/net/xdp_sock.h
-@@ -152,43 +152,6 @@ static inline void xsk_tx_metadata_to_compl(struct xsk_tx_metadata *meta,
- 	compl->tx_timestamp = &meta->completion.tx_timestamp;
+--- a/drivers/input/evdev.c
++++ b/drivers/input/evdev.c
+@@ -21,6 +21,7 @@
+ #include <linux/init.h>
+ #include <linux/input/mt.h>
+ #include <linux/major.h>
++#include <linux/nospec.h>
+ #include <linux/device.h>
+ #include <linux/cdev.h>
+ #include "input-compat.h"
+@@ -67,8 +68,10 @@ static size_t evdev_get_mask_cnt(unsigne
+ 		[EV_SND]	= SND_CNT,
+ 		[EV_FF]		= FF_CNT,
+ 	};
++	unsigned long mask = array_index_mask_nospec(type, EV_CNT);
+ 
+-	return (type < EV_CNT) ? counts[type] : 0;
++	/* Returns 0 for out-of-bounds types, including speculatively */
++	return counts[type & mask] & mask;
  }
  
--/**
-- *  xsk_tx_metadata_request - Evaluate AF_XDP TX metadata at submission
-- *  and call appropriate xsk_tx_metadata_ops operation.
-- *  @pmeta: pointer to pointer to AF_XDP metadata area
-- *  @ops: pointer to struct xsk_tx_metadata_ops
-- *  @priv: pointer to driver-private aread
-- *
-- *  This function should be called by the networking device when
-- *  it prepares AF_XDP egress packet.
-- */
--static inline void xsk_tx_metadata_request(struct xsk_tx_metadata **pmeta,
--					   const struct xsk_tx_metadata_ops *ops,
--					   void *priv)
--{
--	const struct xsk_tx_metadata *meta = *pmeta;
--
--	if (!meta)
--		return;
--
--	if (ops->tmo_request_launch_time)
--		if (meta->flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
--			ops->tmo_request_launch_time(meta->request.launch_time,
--						     priv);
--
--	if (ops->tmo_request_timestamp)
--		if (meta->flags & XDP_TXMD_FLAGS_TIMESTAMP)
--			ops->tmo_request_timestamp(priv);
--
--	if (ops->tmo_request_checksum)
--		if (meta->flags & XDP_TXMD_FLAGS_CHECKSUM)
--			ops->tmo_request_checksum(meta->request.csum_start,
--						  meta->request.csum_offset, priv);
--
--	if (!(meta->flags & XDP_TXMD_FLAGS_TIMESTAMP))
--		*pmeta = NULL;
--}
--
- /**
-  *  xsk_tx_metadata_complete - Evaluate AF_XDP TX metadata at completion
-  *  and call appropriate xsk_tx_metadata_ops operation.
-@@ -232,12 +195,6 @@ static inline void xsk_tx_metadata_to_compl(struct xsk_tx_metadata *meta,
- {
- }
- 
--static inline void xsk_tx_metadata_request(struct xsk_tx_metadata **pmeta,
--					   const struct xsk_tx_metadata_ops *ops,
--					   void *priv)
--{
--}
--
- static inline void xsk_tx_metadata_complete(struct xsk_tx_metadata_compl *compl,
- 					    const struct xsk_tx_metadata_ops *ops,
- 					    void *priv)
-diff --git a/include/net/xdp_sock_drv.h b/include/net/xdp_sock_drv.h
-index ce8315f049684..6d4f65b0ed53a 100644
---- a/include/net/xdp_sock_drv.h
-+++ b/include/net/xdp_sock_drv.h
-@@ -267,6 +267,43 @@ xsk_buff_valid_tx_metadata(const struct xsk_buff_pool *pool,
- 	return !(*flags & ~XDP_TXMD_FLAGS_VALID);
- }
- 
-+/**
-+ *  xsk_tx_metadata_request - Evaluate AF_XDP TX metadata at submission
-+ *  and call appropriate xsk_tx_metadata_ops operation.
-+ *  @pmeta: pointer to pointer to AF_XDP metadata area
-+ *  @ops: pointer to struct xsk_tx_metadata_ops
-+ *  @priv: pointer to driver-private aread
-+ *
-+ *  This function should be called by the networking device when
-+ *  it prepares AF_XDP egress packet.
-+ */
-+static inline void xsk_tx_metadata_request(struct xsk_tx_metadata **pmeta,
-+					   const struct xsk_tx_metadata_ops *ops,
-+					   void *priv)
-+{
-+	const struct xsk_tx_metadata *meta = *pmeta;
-+
-+	if (!meta)
-+		return;
-+
-+	if (ops->tmo_request_launch_time)
-+		if (meta->flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
-+			ops->tmo_request_launch_time(meta->request.launch_time,
-+						     priv);
-+
-+	if (ops->tmo_request_timestamp)
-+		if (meta->flags & XDP_TXMD_FLAGS_TIMESTAMP)
-+			ops->tmo_request_timestamp(priv);
-+
-+	if (ops->tmo_request_checksum)
-+		if (meta->flags & XDP_TXMD_FLAGS_CHECKSUM)
-+			ops->tmo_request_checksum(meta->request.csum_start,
-+						  meta->request.csum_offset, priv);
-+
-+	if (!(meta->flags & XDP_TXMD_FLAGS_TIMESTAMP))
-+		*pmeta = NULL;
-+}
-+
- static inline struct xsk_tx_metadata *
- __xsk_buff_get_metadata(const struct xsk_buff_pool *pool, void *data)
- {
-@@ -479,6 +516,12 @@ xsk_buff_valid_tx_metadata(const struct xsk_buff_pool *pool,
- 	return false;
- }
- 
-+static inline void xsk_tx_metadata_request(struct xsk_tx_metadata **pmeta,
-+					   const struct xsk_tx_metadata_ops *ops,
-+					   void *priv)
-+{
-+}
-+
- static inline struct xsk_tx_metadata *
- __xsk_buff_get_metadata(const struct xsk_buff_pool *pool, void *data)
- {
--- 
-2.53.0
-
+ /* requires the buffer lock to be held */
 
 
