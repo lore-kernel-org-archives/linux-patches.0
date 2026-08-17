@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80BE426693;
-	Mon, 17 Aug 2026 14:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C53D41F34C;
+	Mon, 17 Aug 2026 14:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977952; cv=none; b=m9i8/5xQh1SgI5mx48RwibkDY6zk8ZpjnTXDqRFPHLzy6mDgfYr2L2J04AMTTp1ZBxp2+b5i4E8Zavd0rvrBpnNDWsqjv0jkU0I7GvCHR96qlxXSGcHbzBpelzWP/0kAp7TqeaLBAJ6nLAN/xXTnwHByksv81/RyOvx2DhTMhFI=
+	t=1786977956; cv=none; b=gqG/SfuzQBGfkq4UOpE63zb/Rib7AB+dJ7QDdX9T2UfXVgMcvxUBdEo04xbPvxOcR2CI52pJRlHHELIqq/3nt+BcFlqo2Va6bC9x4kzHYBk4PpvTMo5Kb7ywn6bch1DwJCz6CNWvsk2xzO6xOjE7g6AKwsxu6+9NV38TNRrJoE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977952; c=relaxed/simple;
-	bh=UWeosrbBhqO4Pu1he9P79zCCxvh0upaa2mo1Uy5hYI0=;
+	s=arc-20240116; t=1786977956; c=relaxed/simple;
+	bh=m9XMee6IM5suj7GvRJYJAnkNnx3ZH6UlQknVcsdyR3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U1eA4G2tsH2SohB8lLQsF2RDSqEU0oXT4T+i5Cx36Q5oBTDUI+JuuL9J/Qfyp/aSGg2jOF2hhmfQn3xHwM17nTAVUOv7MXHwat1VIEXbqhMqRPEKwUTFmjOkq/dhaG0D8WVTR7GPCfiBu+x4AAQFmlBRJyO2gE38ZnJHq4IRebg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aojQcznb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CspNjsqOk9BOpfvoHm8wBe7NcBbP1755v40rqe/o1vWLO+Ut6PaUtq18OGFXtYUqlfbYchi2sd5ZpnMIT1moRD8uEBNhfJK80wpK0J4MBGvjYWjurou+xVT6tCjSj4kZJte76F4tOEXxbngJGggLVE4ANca+kYnVSDb7gndPIVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrn2VXql; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aojQcznb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A981F000E9;
-	Mon, 17 Aug 2026 14:45:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrn2VXql"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88EB31F000E9;
+	Mon, 17 Aug 2026 14:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977951;
-	bh=QTt68oMnv3LH7qxFPIeKh9JBszi0uFE5FlXGNgHFhh0=;
+	s=korg; t=1786977955;
+	bh=bTFx6cqHi4/YGR8lCO6HTnJfZDG/01FASSWr9Qkg6KI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aojQcznb/ISZT+SXAvR8oNDLM1NTSsKQ9nRGWdxIjx2LeDbylhSfj30X+Yc37o9qk
-	 JsDhVKHa7LG2u6oEE8G5Wsmk4/nGRdSFj1aLBEucVLoWr+pAI2rqI133WQLf9rKDRR
-	 4RpG6dPgUZW2OXU6+aI5xKNYLtAXr16CDDn2sPxc=
+	b=nrn2VXqlw80CAY93J9Z7Rszk70FToXyAV/XcqUQLtISjInxIhi0yuSMfJmzOxoo7d
+	 Uwm+WUQZahMnFR74r71K4catK3LJt5GxqnW4DicPYgNX3rTw8Utx8FXlGCyzO9plTG
+	 gl/0UPj0JeJYg5X7mJVoC5tnDomTKuC5N1oPiBq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Luo <luoqing@kylinos.cn>,
-	Xin Long <lucien.xin@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 051/181] sctp: fix addip_serial increment on ASCONF_ACK allocation failure
-Date: Mon, 17 Aug 2026 15:32:25 +0200
-Message-ID: <20260817132537.413699339@linuxfoundation.org>
+Subject: [PATCH 6.12 052/181] tcp: fix TFO max_qlen accounting across reuseport migration
+Date: Mon, 17 Aug 2026 15:32:26 +0200
+Message-ID: <20260817132537.453269456@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -52,55 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Luo <luoqing@kylinos.cn>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit aa2e13ae8d3cbe2c15ef4f7e971b2de0832794aa ]
+[ Upstream commit a0ab2ba83e35159d81cec830a92e885ecf8139be ]
 
-In sctp_process_asconf(), when sctp_make_asconf_ack() fails to allocate
-the ASCONF_ACK chunk due to memory pressure, the code jumps to the
-done label where asoc->peer.addip_serial is unconditionally incremented.
+A listener's TCP_FASTOPEN max_qlen stops being accurate and lets through
+far more pending Fast Open requests than it was configured for.
 
-This leaves the peer's ASCONF (serial N) unacknowledged while the local
-endpoint now expects serial N+1. When the peer retransmits serial N, it
-falls into the serial < addip_serial + 1 branch ,
-which attempts to look up a cached ACK for serial N. No cached ACK
-exists since the allocation failed, so the retransmission is silently
-discarded. The peer eventually times out and ABORTs the association.
+This only shows up with SO_REUSEPORT listener migration, where closing a
+listener hands its still-pending TFO children over to a surviving one.
 
-Move the addip_serial increment inside the if (asconf_ack) block so that
-the serial number is only advanced when the ASCONF_ACK is successfully
-created and cached. This way, on allocation failure, the serial number
-is unchanged and the peer's retransmitted ASCONF will be correctly
-re-processed.
+fastopenq.qlen is charged in tcp_fastopen_create_child() when the child
+is created and uncharged in reqsk_fastopen_remove() when the handshake
+completes.  The uncharge follows rsk_listener of the request the child
+points at, and inet_reqsk_clone() has repointed the child at a new
+request owned by the new listener, so the ++ and the -- land on two
+different sockets.  The new listener's qlen drifts negative and its
+limit no longer binds.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Qing Luo <luoqing@kylinos.cn>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260804025514.241767-1-l1138897701@163.com
+Charge the new listener during migration, like reqsk_queue_migrated()
+already does for queue->young and queue->qlen.
+
+Fixes: 54b92e841937 ("tcp: Migrate TCP_ESTABLISHED/TCP_SYN_RECV sockets in accept queues.")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260803061739.134737-1-jiayuan.chen@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_make_chunk.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/ipv4/inet_connection_sock.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
-index 27a7739a7d424..b6eb79ef6a55d 100644
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -3354,12 +3354,11 @@ struct sctp_chunk *sctp_process_asconf(struct sctp_association *asoc,
- 			goto done;
- 	}
- done:
--	asoc->peer.addip_serial++;
--
- 	/* If we are sending a new ASCONF_ACK hold a reference to it in assoc
- 	 * after freeing the reference to old asconf ack if any.
- 	 */
- 	if (asconf_ack) {
-+		asoc->peer.addip_serial++;
- 		sctp_chunk_hold(asconf_ack);
- 		list_add_tail(&asconf_ack->transmitted_list,
- 			      &asoc->asconf_ack_list);
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index 5ff45bc854422..91dcdb7567ace 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -987,11 +987,23 @@ static struct request_sock *inet_reqsk_clone(struct request_sock *req,
+ 
+ 	nreq->rsk_listener = sk;
+ 
+-	/* We need not acquire fastopenq->lock
+-	 * because the child socket is locked in inet_csk_listen_stop().
+-	 */
+-	if (sk->sk_protocol == IPPROTO_TCP && tcp_rsk(nreq)->tfo_listener)
++	if (sk->sk_protocol == IPPROTO_TCP && tcp_rsk(nreq)->tfo_listener) {
++		struct fastopen_queue *fastopenq;
++
++		/* reqsk_fastopen_remove() will uncharge nreq->rsk_listener,
++		 * that is @sk, so charge it here.  Unlike the listener
++		 * being closed, @sk is live and needs its lock.
++		 */
++		fastopenq = &inet_csk(sk)->icsk_accept_queue.fastopenq;
++		spin_lock_bh(&fastopenq->lock);
++		fastopenq->qlen++;
++		spin_unlock_bh(&fastopenq->lock);
++
++		/* We need not acquire fastopenq->lock
++		 * because the child socket is locked in inet_csk_listen_stop().
++		 */
+ 		rcu_assign_pointer(tcp_sk(nreq->sk)->fastopen_rsk, nreq);
++	}
+ 
+ 	return nreq;
+ }
 -- 
 2.53.0
 
