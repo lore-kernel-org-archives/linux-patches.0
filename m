@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DEB23E0C5F;
-	Mon, 17 Aug 2026 14:05:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DAC3AAF76;
+	Mon, 17 Aug 2026 14:05:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975548; cv=none; b=hWrtnMD3u9AV0IlFn+I68VFL2ZJh6WJ4Pw1fPCK8/yhOvDSRGUgFFRtROYJ0TbPQhIcrHvq4JNHjHkj5ZxnqfErk0ov7T0rgDwyyO5yjSYGIvHLLaWSyFnJZEClitDcuqY/7p7xRLBK9n3NK+VUWlLoFb6api58VntARGcBUpng=
+	t=1786975551; cv=none; b=NLY5l3PcmCno99WNvV7o/2fJ9Aidu+FYMrEOV17hG0sx6fr34kALTA9/fkc3++gsgmdUQ5y5my2JIS2/9x6SNi4qhVhn7rALw+8zww6FZx4AzQemlt+2yoO8qajchwW/HsPVX+ILcT8Q1k8LbA0PZihgHMMx0fzt3AShuUUkQUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975548; c=relaxed/simple;
-	bh=oQGrC4J7TLRLU8QcnM49OFSasfHhGqlDX8O1JHUMv68=;
+	s=arc-20240116; t=1786975551; c=relaxed/simple;
+	bh=zo9ChCpoZOHxo/Qk60MlZCSXCYfZxsNN7O9TNZNF5G8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NfREEu/ImUZbmvNJcq2klZFQCac+2b/f9vxbqj6x9bOSs4/4FMz3eFf4YTmI0BBFj1YbiUJDHY9i6ZDFen9KuXkth7jdl8v2aWc9uk+pTGMZZm0NYgHuJQF9j34U9juvoF3eCW9s4OBXVeTXSnAfK1NMAtoieUvYu/fK3aHf0aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YCytDXjA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PEv2WSHG/NkHXTr3WndjVVAAZ7FnzDc917SWaJ4AdlyZThKF7Dcy2y5SJN5rQQ3k+8lnWVrN15j0WUhVK4Dm7VPIT68Nw4VTDbd1necNc4IQ9i86DBhMPMgPjve8X5MeOeeb+tlfBjONLaPVMLNJituvu7VZ69LC7HGiCJW+Oh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PYJhnGBR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCytDXjA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E271F000E9;
-	Mon, 17 Aug 2026 14:05:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PYJhnGBR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B59A1F000E9;
+	Mon, 17 Aug 2026 14:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975547;
-	bh=RuHqAWG5UkO3VCnTCV+WoyhKjLTJgTRLfWdRWR89tyw=;
+	s=korg; t=1786975550;
+	bh=0g3fgRBQhLDzF/jh7ZCfOGT+yu/cqXeWvEfVLlsalWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YCytDXjAHFeijgG4rXOxjdPCz0l12S8rEeDHDeI+IjEaMXLsFrfCHGIT+hhicrMKH
-	 Ab8s2caiIS4Eti12T0pcZ3FVycq9jop4zIs3I6S3PPHOcKVN+lUBoBrje1y65fe0kc
-	 SXTuGNKwOZlZIJ+/JsLPXBOElV2lvT26ognhyEDs=
+	b=PYJhnGBRGXDAm847+M9sqXpBLEz+mxWIoKcICkZOYTdF5N+NshOUuOXrloQm9XhKh
+	 kKZqNVwbPSszUvWLXfHpFaNyGbcfGmJ/+VAuGp2qXnmYRQKzeRWJlY6DWMqof+kzwd
+	 tfzYSOikwUuUj9QtR3pHkBBi3cJcGT2TFmRYMz00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Dmitry Morgun <d.morgun@ispras.ru>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 063/389] watchdog: pretimeout: Fix UAF in watchdog_unregister_governor()
-Date: Mon, 17 Aug 2026 15:28:22 +0200
-Message-ID: <20260817132541.552005425@linuxfoundation.org>
+Subject: [PATCH 5.10 064/389] wifi: ath11k: fix potential buffer underflow in ath11k_hal_rx_msdu_list_get()
+Date: Mon, 17 Aug 2026 15:28:23 +0200
+Message-ID: <20260817132541.596449564@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,46 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Dmitry Morgun <d.morgun@ispras.ru>
 
-[ Upstream commit 7362ba0f9c96ac3ad6a2ca3995bd9fc9a28a8661 ]
+[ Upstream commit 7f11e70629650ff6ea140984e5ce188b775b2683 ]
 
-When a watchdog governor is unregistered, it updates existing watchdog
-devices that were using this governor by falling back to `default_gov`.
+When the first entry in msdu_details has a zero buffer address,
+the code accesses msdu_details[i - 1] with i == 0, causing a
+buffer underflow.
 
-If the governor being unregistered is currently set as `default_gov`,
-the `default_gov` is never cleared.  This leads to 2 use-after-free
-issues:
-1. New watchdog devices registered after this point will inherit the
-   dangling `default_gov`.
-2. Existing watchdog devices using the unregistered governor will have
-   their `wdd->gov` reassigned to the dangling `default_gov`.
+Fix similarly to ath12k_wifi7_hal_rx_msdu_list_get() by adding
+a separate check for i == 0 before the main condition to prevent
+the out-of-bounds access.
 
-Fix the UAF by clearing `default_gov` if it matches the governor being
-unregistered.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: da0d12ff2b82 ("watchdog: pretimeout: add panic pretimeout governor")
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://lore.kernel.org/r/20260707101803.3598173-1-tzungbi@kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Dmitry Morgun <d.morgun@ispras.ru>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260530114252.42615-1-d.morgun@ispras.ru
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/watchdog_pretimeout.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/ath/ath11k/dp_rx.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/watchdog/watchdog_pretimeout.c b/drivers/watchdog/watchdog_pretimeout.c
-index 01ca84be240f6c..fe4c8ace9a4276 100644
---- a/drivers/watchdog/watchdog_pretimeout.c
-+++ b/drivers/watchdog/watchdog_pretimeout.c
-@@ -164,6 +164,8 @@ void watchdog_unregister_governor(struct watchdog_governor *gov)
- 	}
+diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
+index 720c94806e1a18..54edf4a61c61aa 100644
+--- a/drivers/net/wireless/ath/ath11k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
+@@ -4441,6 +4441,9 @@ static void ath11k_hal_rx_msdu_list_get(struct ath11k *ar,
+ 	msdu_details = &msdu_link->msdu_link[0];
  
- 	spin_lock_irq(&pretimeout_lock);
-+	if (default_gov == gov)
-+		default_gov = NULL;
- 	list_for_each_entry(p, &pretimeout_list, entry)
- 		if (p->wdd->gov == gov)
- 			p->wdd->gov = default_gov;
+ 	for (i = 0; i < HAL_RX_NUM_MSDU_DESC; i++) {
++		if (!i && FIELD_GET(BUFFER_ADDR_INFO0_ADDR,
++				    msdu_details[i].buf_addr_info.info0) == 0)
++			break;
+ 		if (FIELD_GET(BUFFER_ADDR_INFO0_ADDR,
+ 			      msdu_details[i].buf_addr_info.info0) == 0) {
+ 			msdu_desc_info = &msdu_details[i - 1].rx_msdu_info;
 -- 
 2.53.0
 
