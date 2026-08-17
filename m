@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741F241F34C;
-	Mon, 17 Aug 2026 14:29:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A5B43746C;
+	Mon, 17 Aug 2026 14:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976978; cv=none; b=kYtK1eMKFbR+yyu2XfMfOLmlTPNcFh2jMY4dgin2Ys5r5p7RdhgzWOS/UF0RpqXrDCyO8egf5kbticMy37pc5PSrBAm/9ASp9ro1sMF6lc4wdKMJoPSIYIfit7k6fxZSg3/0I7zuS6lSa0OFgr1SFKm1sRFLF0fAiYC55xw3v1I=
+	t=1786976981; cv=none; b=lLW+Sp5CmQunmUABW1s/0H92LjbCbC6y5FIFkCG+YZPqe/n4T91ZIbtpmmQz5z6sfrtWHw3khVsCoaMjrDqWGx2J9U6fQH+jQEXK0FfKTA0CmtYDUNd7ayoLEbi+GyaxjpgOLB+PA70tTXLfb8RtbWDO52h9EdVX6QDqe7893ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976978; c=relaxed/simple;
-	bh=UVyPe00UgbqjPzMwa3Yp/NEEF4MmJ2EsJ03xUZSGCXk=;
+	s=arc-20240116; t=1786976981; c=relaxed/simple;
+	bh=7CwRmfzBU/s38lB8FMW89X2/RUNGtNIHwE2XyqVCe0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nyq+bdRHcmDTR6KS+jiIhIXXzKWqAvMLuChNL6KEDjVO/rcvfusBHkQ+zpA/j0HKKMhlPGo1eM0gbAcxB1b6yIfvcvHz4DQp1q/4TULiA9Hvdbwme95XgxlblZ7uUWI7zR+zZd5ATYEMFPVuw1jeeF+/mwLSDqVPXFT0I3fSBFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gCP633Wq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GqWCWqkqn1UEbWwqJoMgMHFW7WkXVW/59qCPT61i2BBWU37PZt520Bxa4t9FrpudcOXB9A1v+x7Kf8o9Ha0aGecy8TwEVauausApu9bKiJH1UgJRve+G/L/5XDD8xQQPAu0oERFqpemU/uM6qoEm07LGw/dxLK0Rx447eLpBcJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHwm3JSe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gCP633Wq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD6541F00A3D;
-	Mon, 17 Aug 2026 14:29:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHwm3JSe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A95381F000E9;
+	Mon, 17 Aug 2026 14:29:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976977;
-	bh=9P+8ZyszIBecUeMZsCvfziMWv9CjkW0hRwWOZXNXX/w=;
+	s=korg; t=1786976980;
+	bh=HaK9+Rc2jJy3OVBsksCOFUzQrrNX0RmOV06S/4i7v6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gCP633Wqtk+OYuaOswf+1DjHSF4bk7sUBURc7jLLq8IUgMcFDSqhrlCQ4S9AZT6lj
-	 B4LQynueFzr+3pKJ5fXDADzzrD0DIdh62WmCiz7Z4GaWr9rpl0MiE4rk7q5u/j5zZl
-	 89HIxZ9crEhcIhmJsuY4Z+EOlLB8V+uiPJRm/IuY=
+	b=DHwm3JSeDE/swWXtN4ScUvff1Cfo9Xh2NZdAILXMXqMm+9rLN2gWMlneSb3vhyeXf
+	 H7z5lhdPntbkYDnXh0RJc3xEQCtLPjXt3cJ3UhHvoRxYH7Q9aajlj5k970jTUqqMRE
+	 +b1O/zzF4X/Exb52uIYm1e7BZYMSr3Hq4tEu0HDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 170/456] media: saa7134: Fix a possible memory leak in saa7134_video_init1
-Date: Mon, 17 Aug 2026 15:29:20 +0200
-Message-ID: <20260817132546.755869578@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 5.15 144/456] drm/nouveau/acr: fix missing nvkm_done() in error path of nvkm_acr_oneinit()
+Date: Mon, 17 Aug 2026 15:28:54 +0200
+Message-ID: <20260817132545.716231823@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,79 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit f86ed548386e3050e5f8f25b450d09dc009d9a88 upstream.
+commit c3027973f692077a1b66a9fb26d6a7c46c0dc72c upstream.
 
-In saa7134_video_init1(), the return value of the first
-saa7134_pgtable_alloc() is not checked. If it fails, the function
-continues as if successful, leaving the driver with an invalid page
-table. Additionally, if vb2_queue_init() for the VBI queue fails after
-the video queue page table has been allocated, the allocated memory is
-not freed before returning. The second saa7134_pgtable_alloc() also
-lacks a return value check. Errors occur during device probing before
-the device is fully registered, the normal cleanup path in
-saa7134_finidev() is not executed, leading to memory leaks and
-potential use of uninitialized DMA resources.
+In nvkm_acr_oneinit(), nvkm_kmap(acr->wpr) is invoked unconditionally
+at line 309 to obtain a mapping reference. Additionally, when both
+acr->wpr_fw and acr->wpr_comp are present, a second nvkm_kmap() is
+called inside the conditional block. Both mappings are expected to be
+released by nvkm_done(acr->wpr) at line 320 before the function returns
+successfully.
 
-Check the return value of both saa7134_pgtable_alloc() calls and
-propagate errors. On failure of any later step, free allocated page
-tables to avoid memory leaks. Ensure control handlers are also
-released on error to prevent further resource leakage.
+However, when a mismatch is detected during the loop within the
+conditional block, the function returns -EINVAL at line 318 without
+calling nvkm_done(). This results in a leak of the kmap reference(s)
+acquired earlier.
 
-Found by code review.
+Fix the issue by invoking nvkm_done(acr->wpr) prior to the early return
+to ensure proper release of the mapping references.
 
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Fixes: 22dcda45a3d1 ("drm/nouveau/acr: implement new subdev to replace "secure boot"")
 Cc: stable@vger.kernel.org
-Fixes: a00e68888d5d ("[media] saa7134: move saa7134_pgtable to saa7134_dmaqueue")
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260606155606.77593-1-vulab@iscas.ac.cn
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/saa7134/saa7134-video.c |   25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/pci/saa7134/saa7134-video.c
-+++ b/drivers/media/pci/saa7134/saa7134-video.c
-@@ -2126,8 +2126,10 @@ int saa7134_video_init1(struct saa7134_d
- 	q->dev = &dev->pci->dev;
- 	ret = vb2_queue_init(q);
- 	if (ret)
--		return ret;
--	saa7134_pgtable_alloc(dev->pci, &dev->video_q.pt);
-+		goto err_free_ctrl;
-+	ret = saa7134_pgtable_alloc(dev->pci, &dev->video_q.pt);
-+	if (ret)
-+		goto err_free_ctrl;
- 
- 	q = &dev->vbi_vbq;
- 	q->type = V4L2_BUF_TYPE_VBI_CAPTURE;
-@@ -2144,11 +2146,24 @@ int saa7134_video_init1(struct saa7134_d
- 	q->lock = &dev->lock;
- 	q->dev = &dev->pci->dev;
- 	ret = vb2_queue_init(q);
--	if (ret)
--		return ret;
--	saa7134_pgtable_alloc(dev->pci, &dev->vbi_q.pt);
-+	if (ret) {
-+		saa7134_pgtable_free(dev->pci, &dev->video_q.pt);
-+		goto err_free_ctrl;
-+	}
-+
-+	ret = saa7134_pgtable_alloc(dev->pci, &dev->vbi_q.pt);
-+	if (ret) {
-+		saa7134_pgtable_free(dev->pci, &dev->video_q.pt);
-+		goto err_free_ctrl;
-+	}
- 
- 	return 0;
-+
-+err_free_ctrl:
-+	v4l2_ctrl_handler_free(&dev->ctrl_handler);
-+	if (card_has_radio(dev))
-+		v4l2_ctrl_handler_free(&dev->radio_ctrl_handler);
-+	return ret;
- }
- 
- void saa7134_video_fini(struct saa7134_dev *dev)
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c
+@@ -314,6 +314,7 @@ nvkm_acr_oneinit(struct nvkm_subdev *sub
+ 					  i, us, fw);
+ 			}
+ 		}
++		nvkm_done(acr->wpr);
+ 		return -EINVAL;
+ 	}
+ 	nvkm_done(acr->wpr);
 
 
