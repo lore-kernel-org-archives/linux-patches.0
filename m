@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07C52E7BD6;
-	Mon, 17 Aug 2026 15:21:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D82742901B;
+	Mon, 17 Aug 2026 15:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980078; cv=none; b=ZvN7HAqfKaoKF+dP7Q4YZoC2IalGDb87Ir/Xa97IWDO5CfKhSmb5aHonvvt2tL9+kPLPaCpZeJygk0eiVfbTaKfPIX8pFsMfd3Rac+W5dzN1qyggaBWTjanDuYk4WPgEz1VO/VSoNOcn2WK7Y+vxA5NGl/5TkTZ0PaVaJy8xtDg=
+	t=1786980081; cv=none; b=Mu63K9BrbAshSgewsEPl3ujDp+gmGQfdUycvNlUImQbHyHLIDl3dkmxmHNiB56EfPh1D7m+bElTT1UPylLeFrQsnzShasnbPU2ZM4s9AdT2Ytet/dk8Df+OeqvqiP7s1Z424hNBN0jxl7pxZYw33zrfwsvR+Il9k6j5Riaw+22g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980078; c=relaxed/simple;
-	bh=91/lRlppNzPtVJhAMN9idm+q0gabbhkny8a2QiODGqw=;
+	s=arc-20240116; t=1786980081; c=relaxed/simple;
+	bh=cHeSow6f9dWZ2zJiYNXIbgKZojrb199P2iM69Pmgf84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o+ecewK7o44RyunuINI0o+kz6Eg99n9BHhH8RPQ+pZgqjHbX5xnfpejnFUb13U+7HtvYhC4TDVwitY4y+eLe62CuvKA5BaJCex8uAUbJSoYhV9isTrx7UjK3JtE467u+luE8VrJBjfcB5LFXr+eI7/rV6Z4/MrZK1Wsciv7PWT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXUDB6rN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tQCzo6dXSwK7Xyd9gqrvvS5Aag/X5MS3yTWax0BtpjeYXxszhjiFp3WR637GdyC+fc4k74YJAGDYdLNd93eomxj9gQqkGiuLA8ST5MeG+SNbsKNPqD/mJLZTWudhuYoOxX5VyBrbpKwsxSPfv9MdMjmZSHGotAGUqiRzmUQNZ7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=syEP5e76; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXUDB6rN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A2C1F000E9;
-	Mon, 17 Aug 2026 15:21:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="syEP5e76"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A501F00A3A;
+	Mon, 17 Aug 2026 15:21:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980076;
-	bh=ivqI4Vv9ffCxD32tsOmG72paWcakRb8/oAX73O038Vc=;
+	s=korg; t=1786980079;
+	bh=qQEwHc0hvmWMYboew+TNfPi59gz5xG/08WEWSwMsu8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rXUDB6rNVoGURbiUN9Ih/R5Lcvwx+90ser+ifgzz/HMdeP+/LGBj4w4sRu3qQOAZD
-	 QcW2kI0SXAVZ7TTk8dwcA5wEdnsJhc+EuYOuuZOshWRyLVDS2o+g6dbVSIZczQC874
-	 SSAPNTDKXAYhYhJk70sAeFWTmZw4CYrc5oulSr08=
+	b=syEP5e76dfrq+DYkaI9OgbM8XR30AQ8PHk84qTNWPGU6V/OEqAiKc2sN4nmZL6qz+
+	 EyTFc/CIsdqE45330QbYoWe8z2Z2Z7x67hX1U9OxgDIR7LU72M1CuK8LoRFDZaxluI
+	 7HcAUWly0Y32nNJP//LjSbWZ+u+k7mhTTbGP0iFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 409/609] net/smc: fix socket use-after-free during link group termination
-Date: Mon, 17 Aug 2026 15:31:45 +0200
-Message-ID: <20260817132557.854438728@linuxfoundation.org>
+	Haidar Lee <haidar.lee@adlinktech.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 400/609] ASoC: tas2562: fix DVC coefficient write order
+Date: Mon, 17 Aug 2026 15:31:36 +0200
+Message-ID: <20260817132557.590049117@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,60 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Haidar Lee <haidar.lee@adlinktech.com>
 
-commit f621d6ebeebb6374342571e4ddf45fdbc420f6cd upstream.
+commit 8e957e4907c58e9ca944f98799524f2bbb9cf68a upstream.
 
-__smc_lgr_terminate() drops conns_lock after finding a connection in
-lgr->conns_all, but before taking a reference on its socket. The connection
-is embedded in the socket, and its registration reference protects it only
-while the connection remains in the tree.
+The TAS2562 applies the 32-bit digital volume coefficient to the
+playback path when the last byte, DVC_CFG4 (book 0 page 2 reg 0x0F), is
+written. tas2562_volume_control_put() wrote DVC_CFG4 first and DVC_CFG1
+(the MSB) last, so every volume change latched a value made of the
+previous coefficient's upper three bytes combined with the new LSB; the
+remaining bytes only took effect on the next volume change.
 
-A concurrent close can unregister the connection and drop that reference,
-freeing the socket before the termination worker reaches sock_hold().
+In practice the control was unusable: the first setting after power-on
+always played at roughly 0 dB no matter what value was requested (the
+chip's default upper bytes were still latched), and most subsequent
+changes muted the output entirely or produced a distorted, over-unity
+gain.
 
-The race is reachable when close overlaps link group termination.
-Local stress testing reproduced the use-after-free and KASAN reported:
+Verified on a TAS2562 (ADLINK OSM-520 / MT8189 board) by tracing the
+I2C writes with ftrace and by writing the same coefficients manually in
+both byte orders: written MSB-first the register block behaves exactly
+as the driver expects, LSB-first reproduces the broken behaviour.
 
-  BUG: KASAN: slab-use-after-free in __smc_lgr_terminate.part.0 [smc]
-  Write of size 4 by task kworker/3:3
-  Workqueue: events smc_lgr_terminate_work [smc]
-  __smc_lgr_terminate.part.0 [smc]
+Write the bytes MSB first with DVC_CFG4 last so the complete new
+coefficient is latched atomically.
 
-The socket was allocated by smc_create(), freed through
-slab_free_after_rcu_debug(), and was followed by:
-
-  refcount_t: addition on 0; use-after-free.
-  __smc_lgr_terminate.part.0 [smc]
-
-Take the socket reference while conns_lock still protects the tree entry.
-The unregister path then cannot drop the last reference until termination
-has finished using the socket.
-
-Fixes: 69318b5215f2 ("net/smc: improve abnormal termination locking")
+Fixes: bf726b1c86f2 ("ASoC: tas2562: Add support for digital volume control")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Link: https://patch.msgid.link/20260723105454.87016-1-xuanqiang.luo@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Haidar Lee <haidar.lee@adlinktech.com>
+Link: https://patch.msgid.link/20260715-tas2562-dvc-fix-v1-1-072b13901b20@adlinktech.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/smc_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/tas2562.c |   23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
---- a/net/smc/smc_core.c
-+++ b/net/smc/smc_core.c
-@@ -1468,10 +1468,10 @@ static void __smc_lgr_terminate(struct s
- 	read_lock_bh(&lgr->conns_lock);
- 	node = rb_first(&lgr->conns_all);
- 	while (node) {
--		read_unlock_bh(&lgr->conns_lock);
- 		conn = rb_entry(node, struct smc_connection, alert_node);
- 		smc = container_of(conn, struct smc_sock, conn);
- 		sock_hold(&smc->sk); /* sock_put below */
-+		read_unlock_bh(&lgr->conns_lock);
- 		lock_sock(&smc->sk);
- 		smc_conn_kill(conn, soft);
- 		release_sock(&smc->sk);
+--- a/sound/soc/codecs/tas2562.c
++++ b/sound/soc/codecs/tas2562.c
+@@ -477,20 +477,27 @@ static int tas2562_volume_control_put(st
+ 	u32 reg_val;
+ 
+ 	reg_val = float_vol_db_lookup[ucontrol->value.integer.value[0]/2];
+-	ret = snd_soc_component_write(component, TAS2562_DVC_CFG4,
+-				      (reg_val & 0xff));
+-	if (ret)
+-		return ret;
+-	ret = snd_soc_component_write(component, TAS2562_DVC_CFG3,
+-				      ((reg_val >> 8) & 0xff));
++	/*
++	 * The device applies the 32-bit coefficient to the playback path on
++	 * the write to DVC_CFG4 (the LSB, book 0 page 2 reg 0x0F), so the
++	 * bytes must be written MSB first and DVC_CFG4 last. Writing CFG4
++	 * first latches a mix of the previous coefficient's upper bytes and
++	 * the new LSB instead of the requested value.
++	 */
++	ret = snd_soc_component_write(component, TAS2562_DVC_CFG1,
++				      ((reg_val >> 24) & 0xff));
+ 	if (ret)
+ 		return ret;
+ 	ret = snd_soc_component_write(component, TAS2562_DVC_CFG2,
+ 				      ((reg_val >> 16) & 0xff));
+ 	if (ret)
+ 		return ret;
+-	ret = snd_soc_component_write(component, TAS2562_DVC_CFG1,
+-				      ((reg_val >> 24) & 0xff));
++	ret = snd_soc_component_write(component, TAS2562_DVC_CFG3,
++				      ((reg_val >> 8) & 0xff));
++	if (ret)
++		return ret;
++	ret = snd_soc_component_write(component, TAS2562_DVC_CFG4,
++				      (reg_val & 0xff));
+ 	if (ret)
+ 		return ret;
+ 
 
 
