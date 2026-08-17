@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F412EEE85;
-	Mon, 17 Aug 2026 15:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFFB3B9943;
+	Mon, 17 Aug 2026 15:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979216; cv=none; b=AJMTWL8Jl3sKXtgbWkJNoCzaZ+5DcIJoCkaYXgz7Bm5Xr9Et8ozhmhR1YnqF2k6guahX1+pLUK80PPT85ZvoD1iQmZw3WBe4wXxrKt8m7UrqInvyJ7hrPdV2rRREVyL+bh9hH+hXhUK3cX15tbXXyXQR2Yvv+DFUhK7xPJinxVk=
+	t=1786979218; cv=none; b=BkNpai+n2z5g95mes4KRc5cZ2K2rE7u3OeJmQwXbr5P0CU2V1NLppBnCp2aQinaa/7x6yxlBZmK+QTidCUY0AkLK+ZNE7asBojUW7qGK6E54SyBJ+g9VOym09uk+avi1SR3gYayMquM2RU4/H6wECfDPNRoiKEFlTa0dJo/EvdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979216; c=relaxed/simple;
-	bh=CqVsPpYXlLafZSfonrCx817jvhBfUefzmI7Pc7XnD6w=;
+	s=arc-20240116; t=1786979218; c=relaxed/simple;
+	bh=v4mM/OMkOXO89duEKLZl+BijTTqIw6FI6/Q9sVNVvD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tfI9gybSWZgTmyhFfaxLvC79aCtR6ZCrVBenFF3Q5c+e+MP5RTDXtAFKmdFTXLtgaGZurHfmePcu77ChgY+Bev6lvxzdTgKrW4LNKtOAsts0VYn7u7Y87lOYo0IOCfv1HO4lUDcPDI2RXyPv+Y6Jt76Nw62aYjDpgSxWQslKDB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HHjxRFfZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kYFxj24xciYBZ4FUmfKsk8wBAmdoMphmViYUYTptWjD+kVBI0a3bTl728pVkhMHfB7LmPoXPk5IHVPI+9K5BpWPFui8joxm99Lk+EC46KvxJoPTCmMX8Q2w8PhQSmLEWARLp7QDx7rHyaZBYaK0/pR+awOc6JsbppIFSAGmxEf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IO4kra0e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HHjxRFfZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2891F00A3A;
-	Mon, 17 Aug 2026 15:06:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IO4kra0e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F48C1F000E9;
+	Mon, 17 Aug 2026 15:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979214;
-	bh=gEPJQIBCarM0D4yfC0L7rETz/FLSDq2qOVGX1p9+X90=;
+	s=korg; t=1786979217;
+	bh=JjocESmZvIzIxm0kX23a/weO1ZyauV825EGKWF9WUpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HHjxRFfZmekz4G0WfIDdYpiOZSYVEu5mWJCypALjnpC/YIxyM5Kxday6rY1aPnHiN
-	 jCL0pMuBaimPp6JdMIkR+AF5TfrVG9a1ohTGiup4r6jq9w5ObGtkNXp7l2sq5TEEzQ
-	 rFLSozRZkJ38yPC3EftZXJ6H7jgOdAYjenVlWy4M=
+	b=IO4kra0e7WIl8jxykYTF15cj5mIYK9e2fXmyyeUIpml9UUhqL0ChtBlKU+fC3gDbh
+	 CMJkegIdnZO7pyq79DvkAHSBZ9xtJW77jtiQLYjQMC+G+50sfwWevIU0VdbSOFuDtp
+	 rmvZ7xz4tq2mHu4TA30uE8fh8vlCSCMTSuJhQC6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Christian Lamparter <chunkeey@gmail.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 111/609] wifi: carl9170: fix buffer overflow in rx_stream failover path
-Date: Mon, 17 Aug 2026 15:26:47 +0200
-Message-ID: <20260817132547.461691622@linuxfoundation.org>
+Subject: [PATCH 6.1 147/609] amt: make the head writable before rewriting the L2 header
+Date: Mon, 17 Aug 2026 15:27:23 +0200
+Message-ID: <20260817132548.925963810@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,44 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit a1a21995c2e1cc2ca6b2226cfe4f5f018370182a ]
+[ Upstream commit 53969d704fa5b7c1751e277fac96bfc22b435eac ]
 
-The failover continuation in carl9170_rx_stream() copies the full tlen
-from the second USB transfer instead of capping at rx_failover_missing
-bytes. When both transfers are near maximum size, the total exceeds the
-65535-byte failover SKB, triggering skb_over_panic.
+amt_multicast_data_handler(), amt_membership_query_handler() and
+amt_update_handler() rewrite the ethernet header of the decapsulated skb
+in place (eth->h_proto, eth->h_dest and, for the query, also
+eth->h_source) before handing it up the stack.  The skb head may be
+shared, for example when a packet tap has cloned it on the underlay
+interface, so writing through it corrupts the other reader's copy.
 
-Limit the copy size to the missing byte count.
+Call skb_cow_head() before the rewrite so the head is private.  It is
+placed before the pointers into the head are (re-)derived, so a
+reallocation caused by the copy is picked up by those derivations.
 
-Fixes: a84fab3cbfdc ("carl9170: 802.11 rx/tx processing and usb backend")
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Acked-by: Christian Lamparter <chunkeey@gmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=5c1ca6ccaa1215781cac
-Link: https://patch.msgid.link/20260421134929.325662-4-tristmd@gmail.com
-[Fix checkpatch CHECK:PARENTHESIS_ALIGNMENT]
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: cbc21dc1cfe9 ("amt: add data plane of amt interface")
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Taehee Yoo <ap420073@gmail.com>
+Link: https://patch.msgid.link/20260711151934.2955226-3-michael.bommarito@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/carl9170/rx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/amt.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/carl9170/rx.c b/drivers/net/wireless/ath/carl9170/rx.c
-index 9a25c2a540b95f..bda30b1f940459 100644
---- a/drivers/net/wireless/ath/carl9170/rx.c
-+++ b/drivers/net/wireless/ath/carl9170/rx.c
-@@ -918,7 +918,9 @@ static void carl9170_rx_stream(struct ar9170 *ar, void *buf, unsigned int len)
- 				}
- 			}
+diff --git a/drivers/net/amt.c b/drivers/net/amt.c
+index 64aff304c51c66..4799f8fd03c45c 100644
+--- a/drivers/net/amt.c
++++ b/drivers/net/amt.c
+@@ -2315,6 +2315,9 @@ static bool amt_multicast_data_handler(struct amt_dev *amt, struct sk_buff *skb)
+ 	skb_reset_mac_header(skb);
+ 	skb_pull(skb, sizeof(*eth));
  
--			skb_put_data(ar->rx_failover, tbuf, tlen);
-+			skb_put_data(ar->rx_failover, tbuf,
-+				     min_t(unsigned int, tlen,
-+					   ar->rx_failover_missing));
- 			ar->rx_failover_missing -= tlen;
++	if (skb_cow_head(skb, 0))
++		return true;
++
+ 	if (!pskb_may_pull(skb, sizeof(*iph)))
+ 		return true;
+ 	iph = ip_hdr(skb);
+@@ -2391,6 +2394,8 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
+ 	skb_reset_network_header(skb);
+ 	eth = eth_hdr(skb);
+ 	ether_addr_copy(h_source, oeth->h_source);
++	if (skb_cow_head(skb, 0))
++		return true;
+ 	if (!pskb_may_pull(skb, sizeof(*iph)))
+ 		return true;
  
- 			if (ar->rx_failover_missing <= 0) {
+@@ -2516,6 +2521,9 @@ static bool amt_update_handler(struct amt_dev *amt, struct sk_buff *skb)
+ 	if (!pskb_may_pull(skb, sizeof(*iph)))
+ 		return true;
+ 
++	if (skb_cow_head(skb, 0))
++		return true;
++
+ 	iph = ip_hdr(skb);
+ 	if (iph->version == 4) {
+ 		if (ip_mc_check_igmp(skb)) {
 -- 
 2.53.0
 
