@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183D943B6F2;
-	Mon, 17 Aug 2026 14:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0570E4399F8;
+	Mon, 17 Aug 2026 14:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978272; cv=none; b=Y7AOnDSewVx/XpABUzxp9QOMnlaqTxzbfr5PsjTjyMxobHzUkr3jkJDWSpC5zO/PWpp0531TWs08pDBGhjjJrRbf+vRwhrm1JuybOlr3JduiLpr7m5MXECYaJNw8YVSlFuiyqWjmMHIJMWZKquD2uLKiLFPHsZxcdpfajTgjYp8=
+	t=1786978274; cv=none; b=tgXVTK3t0LRNRG+9EYc6Ny1iHu1GXuTFVySq46GujCKO6DSvRxk0fQf5nK/AfZvC2VeTEary7KhGgF+Z+00dT7DurvcFhOf8ivt1z8PLABUZ8K/KMRZ0sLmOOtbFHmk1Yy8EBObIg4KREI26FljL4WRAsUPGnnN4kJ9KY0oDcS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978272; c=relaxed/simple;
-	bh=YuCf1DjTu+895cykJRdlOP/x37tFpvqaMvLgmXY24q0=;
+	s=arc-20240116; t=1786978274; c=relaxed/simple;
+	bh=uwovhu0b/sA/NSFhnKOVGJsmrd5uYCgm8syWV+3cM3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dH8g1WayIbGIHNbBdaVO0Evh/IuPF4+LCW6U5DTEdv99Ke4r9tHEqwNUB8vn2Qeq8rojaVl4fW+3Pu2U2t866BL0T6cjfXR1kDpuoI70wmYcmhEmDPb1swgS3LUwlWGmEQRh8htbN1lYpogzF2z4nsd/uWXJdn85AvCSj5+iniw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RB19FudR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BOkZB3qg20tGNBsuj3J6vSMcO1TRAuQy67nc2QYX058xVXNWXAe6bzeOAvajf4QamN1+y0fp0l5aacM64lXykTnmfE1bfvD1wWMSekJuqW8EHjNP/TznNXbNaA4laBaRxgOzpxFLHc9Ejkv2IsVb0NT4mqKwGV+SZb4g9nOPjLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xiPMBQVY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RB19FudR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 747ED1F000E9;
-	Mon, 17 Aug 2026 14:51:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xiPMBQVY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B3751F00A3A;
+	Mon, 17 Aug 2026 14:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978270;
-	bh=mwEE7chQL8dhMYGkHM67sJfbLpdAuW8AGKscSWWecKg=;
+	s=korg; t=1786978272;
+	bh=1MhU8YqO+xTiyI6MbLbFrbs9cJ5jEZetRxA6wJ25CNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RB19FudRioD1Aq2kHsKnsC4vuQBjtLzkDGmct5nGjIUPjicvdXH3ASlZMjafAD3v2
-	 /ApclDsaHNW9ueNbhNGWj5WtloUZN1lTKvLYpVRrmnvQ4q2yd8C85pEmZdEJCoct7c
-	 QmAHvMx7SNrwRtsNTD1ZyCxsrywiONgwMQ55r59I=
+	b=xiPMBQVY/4Q54BbiHhR+5NZeIo4TJKWw0a5KyWZtmndiHWHdeJeHUoH309qQZnAao
+	 mCUz5XV3KB/2W5lllrMfPHESJHVAiDtnc8fTueaBKKNO2QAQsl+70yQzonX/liuH9G
+	 T0KIk2kEj5hln6C68A0SKhsJ19s80p/bJT5bynxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.12 123/181] nvmem: layouts: Add fixed-layout driver
-Date: Mon, 17 Aug 2026 15:33:37 +0200
-Message-ID: <20260817132540.402954428@linuxfoundation.org>
+	stable@kernel.org,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Jun Yang <junvyyang@tencent.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 159/181] tipc: read le->link under the node lock in tipc_node_link_down()
+Date: Mon, 17 Aug 2026 15:34:13 +0200
+Message-ID: <20260817132541.937194434@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -51,228 +53,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
+From: Jun Yang <junvyyang@tencent.com>
 
-commit b5be879519291f139fa7b365fd0dbc84710e4919 upstream.
+commit cba9ccb47e9fa4cc77692fb896cc5ab57a667882 upstream.
 
-Current implementation isn't working well when device tree nodes have a
-phandle on a fixed-layout nvmem node. As the fixed layout is handled in
-nvmem core, no driver is ever associated with the layout, and the device
-consumer driver probe is deferred indefinitely.
+tipc_node_link_down() caches the link pointer before taking n->lock:
 
-Remove the specific handling of fixed-layout and add a layout driver.
-This makes the fixed-layout similar to all other layouts, fixing the
-whole issue.
+	struct tipc_link *l = le->link;		/* unlocked */
 
-Fixes: fc29fd821d9a ("nvmem: core: Rework layouts to become regular devices")
-Cc: stable@vger.kernel.org
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260724223404.629248-3-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	if (!l)
+		return;
+	tipc_node_write_lock(n);
+	if (!tipc_link_is_establishing(l)) {	/* deref l */
+	...
+		tipc_link_reset(l);		/* write into l */
+	if (delete) {
+		kfree(l);
+		le->link = NULL;
+
+The delete=true caller frees that very object under n->lock, so the lock
+does not protect the cached pointer against it:
+
+ - CPU A, delete=false: tipc_rcv() on TIPC_LINK_DOWN_EVT, or the link
+   supervision timer via tipc_node_timeout(), reads l unlocked and then
+   dereferences it under n->lock;
+ - CPU B, delete=true: netlink TIPC_NL_BEARER_DISABLE -> bearer_disable()
+   -> tipc_node_delete_links() -> tipc_node_link_down(n, bearer_id, true)
+   -> kfree(l).
+
+The link is freed with plain kfree(), not kfree_rcu(), and for UDP bearers
+disable_media() only schedules the asynchronous cleanup_bearer() work, so
+its synchronize_net() runs after the links are already gone.  An in-flight
+CPU A that has read l therefore dereferences freed memory once B frees it:
+a use-after-free read in tipc_link_is_establishing(), and a use-after-free
+write via tipc_link_reset() on the establishing branch.
+
+The following trace was captured on 7.2.0-rc5-00284-gaf39eb111ce6:
+
+  BUG: KASAN: slab-use-after-free in tipc_link_is_establishing (net/tipc/link.c:285)
+  Read of size 4 at addr ffff88802e2aa068 by task swapper/2/0
+   tipc_link_is_establishing (net/tipc/link.c:285)
+   tipc_node_link_down (net/tipc/node.c:1076)
+   tipc_node_timeout (net/tipc/node.c:843)
+  Allocated by task 9549:
+   tipc_link_create (net/tipc/link.c:490)
+   tipc_node_check_dest (net/tipc/node.c:1279)
+   tipc_disc_rcv (net/tipc/discover.c:252)
+   tipc_udp_recv (net/tipc/udp_media.c:389)
+  Freed by task 9549:
+   tipc_node_link_down (net/tipc/node.c:1084)
+   tipc_node_delete_links (net/tipc/node.c:1320)
+   bearer_disable (net/tipc/bearer.c:414)
+   __tipc_nl_bearer_disable (net/tipc/bearer.c:992)
+
+Move the le->link read inside tipc_node_write_lock(), so it is serialised
+against the kfree() in the delete path.  A racing teardown now either has
+not run yet, and we see a valid link, or has already run, and we see NULL.
+
+Fixes: 73f646cec354 ("tipc: delay ESTABLISH state event when link is established")
+Cc: stable@kernel.org
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Assisted-by: tencentos-corvus-ai:kimi-k3
+Signed-off-by: Jun Yang <junvyyang@tencent.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260810102147.48191-1-juny24602@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- MAINTAINERS                          |    5 +++
- drivers/nvmem/core.c                 |   24 +-------------
- drivers/nvmem/internals.h            |    2 +
- drivers/nvmem/layouts.c              |   11 ------
- drivers/nvmem/layouts/Makefile       |    1 
- drivers/nvmem/layouts/fixed-layout.c |   58 +++++++++++++++++++++++++++++++++++
- include/linux/nvmem-provider.h       |    6 +++
- 7 files changed, 74 insertions(+), 33 deletions(-)
- create mode 100644 drivers/nvmem/layouts/fixed-layout.c
+ net/tipc/node.c |   15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -8849,6 +8849,11 @@ F:	drivers/base/firmware_loader/
- F:	rust/kernel/firmware.rs
- F:	include/linux/firmware.h
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -1061,18 +1061,23 @@ static void __tipc_node_link_down(struct
  
-+FIXED-LAYOUT NVMEM LAYOUT DRIVER
-+M:	Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
-+S:	Maintained
-+F:	drivers/nvmem/layouts/fixed-layout.c
-+
- FLEXTIMER FTM-QUADDEC DRIVER
- M:	Patrick Havelange <patrick.havelange@essensium.com>
- L:	linux-iio@vger.kernel.org
---- a/drivers/nvmem/core.c
-+++ b/drivers/nvmem/core.c
-@@ -811,7 +811,7 @@ static int nvmem_validate_keepouts(struc
- 	return 0;
- }
- 
--static int nvmem_add_cells_from_dt(struct nvmem_device *nvmem, struct device_node *np)
-+int nvmem_add_cells_from_dt(struct nvmem_device *nvmem, struct device_node *np)
+ static void tipc_node_link_down(struct tipc_node *n, int bearer_id, bool delete)
  {
- 	struct device *dev = &nvmem->dev;
- 	struct device_node *child;
-@@ -863,29 +863,13 @@ static int nvmem_add_cells_from_dt(struc
- 
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(nvmem_add_cells_from_dt);
- 
- static int nvmem_add_cells_from_legacy_of(struct nvmem_device *nvmem)
- {
- 	return nvmem_add_cells_from_dt(nvmem, nvmem->dev.of_node);
- }
- 
--static int nvmem_add_cells_from_fixed_layout(struct nvmem_device *nvmem)
--{
--	struct device_node *layout_np;
--	int err = 0;
+-	struct tipc_link_entry *le = &n->links[bearer_id];
+ 	struct tipc_media_addr *maddr = NULL;
+-	struct tipc_link *l = le->link;
+ 	int old_bearer_id = bearer_id;
++	struct tipc_link_entry *le;
+ 	struct sk_buff_head xmitq;
 -
--	layout_np = of_nvmem_layout_get_container(nvmem);
--	if (!layout_np)
--		return 0;
--
--	if (of_device_is_compatible(layout_np, "fixed-layout"))
--		err = nvmem_add_cells_from_dt(nvmem, layout_np);
--
--	of_node_put(layout_np);
--
--	return err;
--}
--
- int nvmem_layout_register(struct nvmem_layout *layout)
- {
- 	int ret;
-@@ -1038,10 +1022,6 @@ struct nvmem_device *nvmem_register(cons
- 			goto err_remove_cells;
- 	}
+-	if (!l)
+-		return;
++	struct tipc_link *l;
  
--	rval = nvmem_add_cells_from_fixed_layout(nvmem);
--	if (rval)
--		goto err_remove_cells;
--
- 	dev_dbg(&nvmem->dev, "Registering nvmem device %s\n", config->name);
+ 	__skb_queue_head_init(&xmitq);
  
- 	rval = device_add(&nvmem->dev);
---- a/drivers/nvmem/internals.h
-+++ b/drivers/nvmem/internals.h
-@@ -35,6 +35,8 @@ struct nvmem_device {
- 	bool			sysfs_cells_populated;
- };
- 
-+int nvmem_add_cells_from_dt(struct nvmem_device *nvmem, struct device_node *np);
++	/* Synchronize the link lookup with bearer teardown. */
+ 	tipc_node_write_lock(n);
++	le = &n->links[bearer_id];
++	l = le->link;
++	if (!l) {
++		tipc_node_write_unlock_fast(n);
++		return;
++	}
 +
- #if IS_ENABLED(CONFIG_OF)
- int nvmem_layout_bus_register(void);
- void nvmem_layout_bus_unregister(void);
---- a/drivers/nvmem/layouts.c
-+++ b/drivers/nvmem/layouts.c
-@@ -125,11 +125,6 @@ static int nvmem_layout_create_device(st
- 	return 0;
- }
- 
--static const struct of_device_id of_nvmem_layout_skip_table[] = {
--	{ .compatible = "fixed-layout", },
--	{}
--};
--
- static int nvmem_layout_bus_populate(struct nvmem_device *nvmem,
- 				     struct device_node *layout_dn)
- {
-@@ -142,12 +137,6 @@ static int nvmem_layout_bus_populate(str
- 		return 0;
- 	}
- 
--	/* Fixed layouts are parsed manually somewhere else for now */
--	if (of_match_node(of_nvmem_layout_skip_table, layout_dn)) {
--		pr_debug("%s() - skipping %pOF node\n", __func__, layout_dn);
--		return 0;
--	}
--
- 	if (of_node_check_flag(layout_dn, OF_POPULATED_BUS)) {
- 		pr_debug("%s() - skipping %pOF, already populated\n",
- 			 __func__, layout_dn);
---- a/drivers/nvmem/layouts/Makefile
-+++ b/drivers/nvmem/layouts/Makefile
-@@ -3,6 +3,7 @@
- # Makefile for nvmem layouts.
- #
- 
-+obj-$(CONFIG_NVMEM_LAYOUTS) += fixed-layout.o
- obj-$(CONFIG_NVMEM_LAYOUT_SL28_VPD) += sl28vpd.o
- obj-$(CONFIG_NVMEM_LAYOUT_ONIE_TLV) += onie-tlv.o
- obj-$(CONFIG_NVMEM_LAYOUT_U_BOOT_ENV) += u-boot-env.o
---- /dev/null
-+++ b/drivers/nvmem/layouts/fixed-layout.c
-@@ -0,0 +1,58 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright 2026 Bootlin
-+ *
-+ * Authors: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
-+ */
-+
-+#include <linux/nvmem-provider.h>
-+#include <linux/of.h>
-+
-+#include "../internals.h"
-+
-+static int fixed_layout_add_cells(struct nvmem_layout *layout)
-+{
-+	struct device_node *np;
-+	int ret;
-+
-+	np = of_nvmem_layout_get_container(layout->nvmem);
-+	if (!np)
-+		return -ENOENT;
-+
-+	ret = nvmem_add_cells_from_dt(layout->nvmem, np);
-+	of_node_put(np);
-+
-+	return ret;
-+}
-+
-+static int fixed_layout_probe(struct nvmem_layout *layout)
-+{
-+	layout->add_cells = fixed_layout_add_cells;
-+
-+	return nvmem_layout_register(layout);
-+}
-+
-+static void fixed_layout_remove(struct nvmem_layout *layout)
-+{
-+	nvmem_layout_unregister(layout);
-+}
-+
-+static const struct of_device_id fixed_layout_of_match_table[] = {
-+	{ .compatible = "fixed-layout", },
-+	{},
-+};
-+
-+static struct nvmem_layout_driver fixed_layout_layout = {
-+	.driver = {
-+		.name = "fixed-layout",
-+		.of_match_table = fixed_layout_of_match_table,
-+	},
-+	.probe = fixed_layout_probe,
-+	.remove = fixed_layout_remove,
-+};
-+module_nvmem_layout_driver(fixed_layout_layout);
-+
-+MODULE_AUTHOR("Mathieu Dubois-Briand");
-+MODULE_LICENSE("GPL");
-+MODULE_DEVICE_TABLE(of, fixed_layout_of_match_table);
-+MODULE_DESCRIPTION("NVMEM fixed-layout driver");
---- a/include/linux/nvmem-provider.h
-+++ b/include/linux/nvmem-provider.h
-@@ -238,6 +238,12 @@ static inline int nvmem_layout_register(
- 
- static inline void nvmem_layout_unregister(struct nvmem_layout *layout) {}
- 
-+static inline int nvmem_add_cells_from_dt(struct nvmem_device *nvmem,
-+					  struct device_node *np)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
- #endif /* CONFIG_NVMEM */
- 
- #if IS_ENABLED(CONFIG_NVMEM) && IS_ENABLED(CONFIG_OF)
+ 	if (!tipc_link_is_establishing(l)) {
+ 		__tipc_node_link_down(n, &bearer_id, &xmitq, &maddr);
+ 	} else {
 
 
