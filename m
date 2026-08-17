@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B013BB687;
-	Mon, 17 Aug 2026 14:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFA23BB687;
+	Mon, 17 Aug 2026 14:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975454; cv=none; b=YoAvMgZtKg4CbvqdviWl3ZTMQ0Dh8A+Fzup5fStZKxQo9DgcZAnzmfkfnLllSrYXtF8eUhLa0q4rDbTRDyDx4KiyKTuldyW4SJyt5bQF5tYHIfOGaKW0VFUAn5X71MBo32p0Pki42dcJ2NGeqhNw+0OM7QG7fnjNrO4Ki7MSy5w=
+	t=1786975457; cv=none; b=bjPuGNTvARPVstoCxbiybsZNffsE6POTWPJzrYWKwwn9VkLYsGX71a7NbPt7Gb9pA1j+l/J3poDfnyuU/0KB8h8cl42irIsGH17yOvCfAHwb2aHdIOi1F6TMZ353RaNaTyyMqfUzmSzY7unDqZI5Sohof73EhoaWCgLzPzFvELU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975454; c=relaxed/simple;
-	bh=lVydpfuswHMxMV7lbWXK12X9sdLTPTkFAmwXCKH5x1A=;
+	s=arc-20240116; t=1786975457; c=relaxed/simple;
+	bh=UWs+/P1orw79cSiEMi10xLGgaAQsXsAN3APsto68SXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DzuIERokuo5X+PXrhYqrzQJMUIwHs0lR/HHyYRHmQAomPI2F52Q08gGl+mpV48aoeFLHC4PvGrn2ZN0VJ2Y59Y5TPSMLr7rJq8idB1l2EjTPIdcA2hvBQwYHU87JaSqtcsqLlX8yTkXGXuIb+3qIwgBVwuOXWlNB4y1N9kC8M+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NuDvcfNE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hw10GJb8rYv+ARanzvp1NgmgYbWyc6YrRZohTiA7bi1TWTW1BwAi6ashC2EDmQ01zjVt4/vvLyVLEpeVwi96wC4AxBdGwf39N4UJS56l/WkowP5JbB9vbpd6FyyJLpLWkivGZTbEa62WPmjpTTQNpW3RrXJpxvzD12SXYIRfdco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pICG0jts; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NuDvcfNE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0EC21F00A3A;
-	Mon, 17 Aug 2026 14:04:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pICG0jts"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A650B1F000E9;
+	Mon, 17 Aug 2026 14:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975453;
-	bh=//yPDFaez1rZL13puMBRr6fK1WJhDeWHMwHhBOIhcYI=;
+	s=korg; t=1786975456;
+	bh=SLKtGRLs+qg83/Cs9viJX1kHKMqTc9EwEiZ90F3sUmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NuDvcfNEZMmsZ1EBSl5lE9jNQOLthoNapc/QQiBOY14LW1uN2h/enBwt3mmVee018
-	 6o2WIqT5xA2Su2dlGjqFouG81qtoK5YVpzXTHCYebT7Id/MLh8wgMhOuyTteL2HBH+
-	 jOWAL4dbZ/li5kd43QW4d/Gwcx1I8LZmGD0x8iYo=
+	b=pICG0jtsgDVvrt9auZqASzAS34A1IM3geQIPm8W0xhI7UI+fqpsA2RvAuHxQvk3Ap
+	 UjL7XsbqdlgQmBJeDMBWb6Bn+Kubrbk8ZzdB0apg89bB/6sPtYIs4HTD/a0vJINuQn
+	 YlDra7QXDd8xzMNSaxU5/YSe1oNGwtTD1Wz/2Zk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rosen Penev <rosenp@gmail.com>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 034/389] ata: sata_dwc_460ex: enable SATA interrupts only after IRQ handler is registered
-Date: Mon, 17 Aug 2026 15:27:53 +0200
-Message-ID: <20260817132540.301264906@linuxfoundation.org>
+Subject: [PATCH 5.10 035/389] ata: sata_dwc_460ex: fix clear_interrupt_bit() clearing all pending interrupts
+Date: Mon, 17 Aug 2026 15:27:54 +0200
+Message-ID: <20260817132540.338535730@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -53,18 +53,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 4bbc16a353a98023e5ddfca7c1fc0e49971cf4d0 ]
+[ Upstream commit 66c4e310ad71f41e41736d33dd8a1fb5eaaec7f3 ]
 
-sata_dwc_enable_interrupts() is called before platform_get_irq() and
-ata_host_activate(), leaving the SATA controller's interrupt mask
-enabled without a registered handler.  If a later step fails (irq
-request, phy init, etc.) or if the controller asserts an interrupt
-during probe, the irq line may fire with no handler, causing a
-spurious interrupt storm.
+clear_interrupt_bit() ignores the bit argument and performs a
+read-write-back of the entire INTPR register.  If INTPR uses standard
+Write-1-to-Clear semantics, this clears every pending interrupt bit,
+not just the intended one.  Coalesced interrupts (e.g. DMAT + NEWFP)
+would be cleared together, silently losing the second event.
 
-Move sata_dwc_enable_interrupts() after ata_host_activate() so that
-interrupts are only unmasked once the handler is registered and the
-core is fully initialized.
+Write only the specific bit to clear so that other pending interrupts
+are preserved.
 
 Fixes: 62936009f35a ("[libata] Add 460EX on-chip SATA driver, sata_dwc_460ex")
 Assisted-by: opencode:big-pickle
@@ -72,32 +70,23 @@ Signed-off-by: Rosen Penev <rosenp@gmail.com>
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/sata_dwc_460ex.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/ata/sata_dwc_460ex.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/ata/sata_dwc_460ex.c b/drivers/ata/sata_dwc_460ex.c
-index 464260f6687082..e9383db1b13a98 100644
+index e9383db1b13a98..6a7e9aac4814e6 100644
 --- a/drivers/ata/sata_dwc_460ex.c
 +++ b/drivers/ata/sata_dwc_460ex.c
-@@ -1246,9 +1246,6 @@ static int sata_dwc_probe(struct platform_device *ofdev)
- 	/* Save dev for later use in dev_xxx() routines */
- 	hsdev->dev = &ofdev->dev;
+@@ -443,8 +443,7 @@ static void clear_serror(struct ata_port *ap)
  
--	/* Enable SATA Interrupts */
--	sata_dwc_enable_interrupts(hsdev);
--
- 	/* Get SATA interrupt number */
- 	irq = irq_of_parse_and_map(np, 0);
- 	if (irq == NO_IRQ) {
-@@ -1281,6 +1278,8 @@ static int sata_dwc_probe(struct platform_device *ofdev)
- 	if (err)
- 		dev_err(&ofdev->dev, "failed to activate host");
+ static void clear_interrupt_bit(struct sata_dwc_device *hsdev, u32 bit)
+ {
+-	sata_dwc_writel(&hsdev->sata_dwc_regs->intpr,
+-			sata_dwc_readl(&hsdev->sata_dwc_regs->intpr));
++	sata_dwc_writel(&hsdev->sata_dwc_regs->intpr, bit);
+ }
  
-+	/* Enable SATA Interrupts */
-+	sata_dwc_enable_interrupts(hsdev);
- 	return 0;
- 
- error_out:
+ static u32 qcmd_tag_to_mask(u8 tag)
 -- 
 2.53.0
 
