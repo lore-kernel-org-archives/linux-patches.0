@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F592E762C;
-	Mon, 17 Aug 2026 15:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784682E7BD6;
+	Mon, 17 Aug 2026 15:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979877; cv=none; b=Vbl8gj/YBsIzqcFvLkYq2Gx4HgydctCcbiso1pLJnpDsELaO3OtibrCsobMjbFr32gbhokLhc7fol4BSGAuGMKXTCkyeyFtVAtq/Ln6bHhDMDsVAZcqLsV6MfHIWYaHCdG5LkhYeWdlV4VN0X2n7QavWrY8ehyWVmHfDT+ohbVE=
+	t=1786979880; cv=none; b=c89pVHZeu3ZTrKT0C3Talqwf7ethZZAK2+FGlHCjyO0+fLns7j9FeA3VQ1vsXq/NMEGS94u29y7pQje/oIpw31rqDp7t08DwJILSSpR0+v0XUYDFtOPQbtit77pW1DITFpR3BH9/msBHI4OoGvdxKhXur7+e3RFHzSSpoldLscY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979877; c=relaxed/simple;
-	bh=iMY2RvxWNGFgJd3j+FHzX/FdhZBK3FBtK85BgNISK0o=;
+	s=arc-20240116; t=1786979880; c=relaxed/simple;
+	bh=IpxZ0Amw8+QNW/cYzub6j1KtNH05G6TEInoQMLRkuUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J6YV7VSqD/rVLJWKpW3ytSqs54nBV2anrmp/4Y6bM8UvNBbUGflAVPB2QwYo8dbCzPY2Zcrz+98B7LXX/bdCc1L4xhgT6H8RWNGxLDrIty6vego6QWH38xXNCjukYCyNoxEc1DHVWk+7ZyWyXaOW5Zh/ORKem+iHNY+YyM+bEGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CieiFQdF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WkQ8uEMwhzDfapknsoiLNVfuSndRJf5qvDFCf5IrtDX077xQQUQklZcA2mPVvWnsLO/0Ej0JzPC/vQ1dWCu+TGU8smeSQmIKPpyjhGVBxYUHX5U6rZcWeDClRdtBlF/2T2FmJZuqgCRcoYG5KebWB9zQ1CRWaiVILvCsIuqOib4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZMv0/uxV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CieiFQdF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F02C91F000E9;
-	Mon, 17 Aug 2026 15:17:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZMv0/uxV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E9C1F000E9;
+	Mon, 17 Aug 2026 15:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979876;
-	bh=4r+LKyyMSCq9BF1UDv0ZEssmua7T0YT0rH4+Cl0EDzI=;
+	s=korg; t=1786979879;
+	bh=+38WUdov6rIpwA1TE9MZdP9xpW0FdxDC/AZuH2eMFvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CieiFQdFYagkik7KU8MUfqxa2CaEZbqovz8ao6pu4yKoubc1DlYi65dznsxQQnyqW
-	 wLHoitRVI5T2OodB3/p3ggUFyMUkIXMEfP4k4+hveMoO4PXFUgaQ5+K730K7UMxAlJ
-	 7CzCGwgxslTquejMT7JhJTafcAWNSP4A9olsW9m0=
+	b=ZMv0/uxVX1kKJkKVWr38jG6SJX0AtZ37zd0GwkqG0AlFur9+UKdvsyoJl44njhlaH
+	 idnRQIKnQfESWcb4LxLFr1IdGQLeZgq38Z069anw40dzDWDGSFo2gBMJidVXnFmTtP
+	 60tmfGm4MtliQXSKzTKy+kYV+EqK+EohuwjSnuws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunseong Kim <yunseong.kim@est.tech>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Pengfei Zhang <zhangfeionline@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 378/609] ksmbd: fix use-after-free in __close_file_table_ids()
-Date: Mon, 17 Aug 2026 15:31:14 +0200
-Message-ID: <20260817132556.917319549@linuxfoundation.org>
+Subject: [PATCH 6.1 379/609] ipv6: fib6: fix NULL deref in fib6_walk_continue() on multi-batch dump
+Date: Mon, 17 Aug 2026 15:31:15 +0200
+Message-ID: <20260817132556.950716437@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,48 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Pengfei Zhang <zhangfeionline@gmail.com>
 
-[ Upstream commit e7188199eff46a636f3436356f0aae039be6dd66 ]
+commit 9facb861dc6b9b9ea9793ef5032a9a826f7a4229 upstream.
 
-A ksmbd_file can remain alive after logical close while another session
-holds a temporary reference obtained through ksmbd_lookup_fd_inode().
-ksmbd_close_fd() currently marks the file closed and drops the idr-owned
-reference, but leaves the pointer published in the closing session's idr
-until the final reference is dropped.
+inet6_dump_fib() saves its progress in cb->args[1] as a positional
+index within the current hash chain.  Between batches, a concurrent
+fib6_new_table() can insert a new table at the chain head, shifting
+all existing entries.  The saved index then lands on a different
+table, causing fib6_dump_table() to set w->root to the wrong table
+while w->node still points into the previous one.
+fib6_walk_continue() dereferences w->node->parent (NULL) and panics:
 
-If the foreign holder performs the final ksmbd_fd_put(), __put_fd_final()
-supplies the foreign session's file table to __ksmbd_close_fd(). The object
-is then freed without being removed from its owner's idr, and the owner
-session later dereferences the stale pointer during file-table teardown.
+  BUG: kernel NULL pointer dereference, address: 0000000000000008
+  RIP: 0010:fib6_walk_continue+0x6e/0x170
+  Call Trace:
+   <TASK>
+   fib6_dump_table.isra.0+0xc5/0x240
+   inet6_dump_fib+0xf6/0x420
+   rtnl_dumpit+0x30/0xa0
+   netlink_dump+0x15b/0x460
+   netlink_recvmsg+0x1d6/0x2a0
+   ____sys_recvmsg+0x17a/0x190
 
-Remove the volatile id from the owner's idr while ksmbd_close_fd() still
-holds that table's lock, and clear volatile_id before dropping
-the idr-owned reference. A later foreign final put then only performs
-physical destruction and cannot remove the object from the wrong table.
+Fix by storing tb->tb6_id in cb->args[1] instead of a positional
+index.  On resume, skip entries until the id matches; a concurrent
+head-insert can never match the saved id, so the walker always
+resumes on the correct table.
 
-Fixes: 8510a043d334 ("ksmbd: increment reference count of parent fp")
-Reported-by: Yunseong Kim <yunseong.kim@est.tech>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 1b43af5480c3 ("[IPV6]: Increase number of possible routing tables to 2^32")
+Signed-off-by: Pengfei Zhang <zhangfeionline@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260625070517.965597-1-zhangfeionline@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[Adapted to 5.10/6.1/6.6: inet6_dump_fib() there predates 22e36ea9f5d7
+ and 5fc68320c1fb, so the return variable is "res" not "err" and the
+ RCU-protected hash walk exits via "out_unlock" instead of "unlock".
+ Context-only change; the fix itself is identical.]
+Signed-off-by: Pengfei Zhang <zhangfeionline@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs_cache.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv6/ip6_fib.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index e67b055b8eb3b..5b3a55bd700dc 100644
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -409,6 +409,8 @@ int ksmbd_close_fd(struct ksmbd_work *work, u64 id)
- 			fp = NULL;
- 		else {
- 			fp->f_state = FP_CLOSED;
-+			idr_remove(ft->idr, id);
-+			fp->volatile_id = KSMBD_NO_FID;
- 			closed = true;
- 			if (!atomic_dec_and_test(&fp->refcount))
- 				fp = NULL;
+diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
+index bb51a911a6ce7..b1276c247190f 100644
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -625,11 +625,11 @@ static int inet6_dump_fib(struct sk_buff *skb, struct netlink_callback *cb)
+ 	const struct nlmsghdr *nlh = cb->nlh;
+ 	struct net *net = sock_net(skb->sk);
+ 	unsigned int h, s_h;
+-	unsigned int e = 0, s_e;
+ 	struct fib6_walker *w;
+ 	struct fib6_table *tb;
+ 	struct hlist_head *head;
+ 	int res = 0;
++	u32 s_id;
+ 
+ 	if (cb->strict_check) {
+ 		int err;
+@@ -687,25 +687,24 @@ static int inet6_dump_fib(struct sk_buff *skb, struct netlink_callback *cb)
+ 	}
+ 
+ 	s_h = cb->args[0];
+-	s_e = cb->args[1];
++	s_id = cb->args[1];
+ 
+ 	rcu_read_lock();
+-	for (h = s_h; h < FIB6_TABLE_HASHSZ; h++, s_e = 0) {
+-		e = 0;
++	for (h = s_h; h < FIB6_TABLE_HASHSZ; h++, s_id = 0) {
+ 		head = &net->ipv6.fib_table_hash[h];
+ 		hlist_for_each_entry_rcu(tb, head, tb6_hlist) {
+-			if (e < s_e)
+-				goto next;
++			if (s_id && tb->tb6_id != s_id)
++				continue;
++
++			s_id = 0;
++			cb->args[1] = tb->tb6_id;
+ 			res = fib6_dump_table(tb, skb, cb);
+ 			if (res != 0)
+ 				goto out_unlock;
+-next:
+-			e++;
+ 		}
+ 	}
+ out_unlock:
+ 	rcu_read_unlock();
+-	cb->args[1] = e;
+ 	cb->args[0] = h;
+ out:
+ 	res = res < 0 ? res : skb->len;
 -- 
 2.53.0
 
