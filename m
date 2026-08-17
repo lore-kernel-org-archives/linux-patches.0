@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30D9424641;
-	Mon, 17 Aug 2026 14:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD96439B96A;
+	Mon, 17 Aug 2026 14:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977729; cv=none; b=IEdXrGZ1/fxFeEcnJW/i1pg2V0/hnBx96GT05iS9s0auBACKWyHRMQ4ObxF/llbPgNdNCTYRcV7SvHc7ihH289tFOStQB99OgxcgGaiqRFUMgbgcUUJOnuQF/Eo0tcwgHJKzt1RqDPXzPKSwm5lYIPN7hXbzSLgU82OX2ihdazs=
+	t=1786977731; cv=none; b=gzIoktu9Rv4AeI/rJU5/3BJZoDIzLq+eS8MoKErMT1uxEuMse9gjQQLH11zIzMKxszRK1ujqUe/om553kqOsQvx4QQbYPhm0O7omO+gR3ZlBCSiQh73Z2F2qyv3Eyny/JfcFCJ/C3pRKhnDFbp58IcNw16oG2z3ZZWHQoKmJMo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977729; c=relaxed/simple;
-	bh=7w9RDDkEkgb1rwwa7uIotjwxiUIXQfeaXyVaCB5e0NE=;
+	s=arc-20240116; t=1786977731; c=relaxed/simple;
+	bh=SLKt15cCMFN7rZR+6GIr6oLoWE2As3YFZ/lagHmIHNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I9Rq5ZhSXeKtjXaBZLncjGPKwmubdMeyrRg9wDfM7B/DDR2UKd1TBf/e661vS5bOfP7sRSGzsz0MdNtwbUuNClk9/Jw42pY/YCudbPFyvDpR9yuu3MgJv+IvK5ffo0a+XC2N3JgyImvga/y1aPCDKKuztEAlyPWYE4YHgqicQ0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ve6B+Txa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mFD2oJQQ4roBNlLRJ1hQ7kDE3YhumM9xjTPR5WfUX44BCE5Imf6gfSKFDildskGHiLtsMAwqF1I49E/BAjhr+y//YHu7Sxviz9OgOw3qF5Faq77r2KGrC5gIBeDsYKJLapUHvRxBnvxftMsOv17IYDr+pZl/VCOohIirZ1pBePA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BfGtIb+6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ve6B+Txa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234BE1F000E9;
-	Mon, 17 Aug 2026 14:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfGtIb+6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A0351F000E9;
+	Mon, 17 Aug 2026 14:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977727;
-	bh=LCi3rZ+FRPBlsbUGhdxqjFEYPyq5/wQFC5yBAXEuZHs=;
+	s=korg; t=1786977730;
+	bh=JrcPSuPLECUJYnlJKAdYosLD5eT5dUnreG9KyQQi4nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ve6B+TxamovudgxZDOBgm0nUAf8zOH3fx4CYqeIAQJhagAeBbcznCKB1PjjnoBU8X
-	 G5e2ARwmfxFV7HpuKVD/4TjY0NIEj3ETnnXevwOO+xZvlt5rskakoDq1NwzBKNiLj8
-	 hYp7q7BGVZIlNZgNgcFBH+Kn8yYY86W4Y5NNWydk=
+	b=BfGtIb+6YsOkGhROoAipDe3PwNzXEvqaXp4rwms/jiiazjOrR8XfzKikmEwLSU1x0
+	 i/MmWHc6917/OC7fGuAd/2/EtL2A8FxYqXmAXhDdiABMeD3S1TjoPpTRyjiDbnss1K
+	 waL3sEnv5BQlsVZYThEXNw1n8i55dRihRnX5JT4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
 	Muhammad Bilal <meatuni001@gmail.com>
-Subject: [PATCH 5.15 428/456] staging: rtl8723bs: fix OOB read in rtw_get_wpa_ie()
-Date: Mon, 17 Aug 2026 15:33:38 +0200
-Message-ID: <20260817132555.899560364@linuxfoundation.org>
+Subject: [PATCH 5.15 429/456] staging: rtl8723bs: fix OOB read in WMM_param_handler()
+Date: Mon, 17 Aug 2026 15:33:39 +0200
+Message-ID: <20260817132555.932850150@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,53 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 1c3e23e78862493e8cf1adad02b10ffcb8b9921c upstream.
+commit ae21407350151bddfd4fea7aa39bd0643c0ca9d3 upstream.
 
-rtw_get_wpa_ie() reads bytes at fixed offsets into a vendor-specific
-information element without checking that the element is long enough,
-causing an out-of-bounds read for a short trailing IE.
+WMM_param_handler() copies a fixed-size WMM parameter element out of a
+received information element without checking that the element is long
+enough, causing an out-of-bounds read for a short WMM IE.
 
-The function locates a vendor-specific IE (EID 221) with rtw_get_ie()
-and then compares a 4-byte OUI+type at pbuf + 2 and reads a 2-byte
-version word at pbuf + 6. Those accesses require the IE body to be at
-least 6 bytes, but rtw_get_ie() only guarantees that the element fits
-within the buffer; it does not enforce a minimum body length. A
-vendor-specific IE whose length byte is 0 to 5, placed at the end of
-the buffer, therefore makes these reads run past the end of the IE and
-past the end of the buffer itself.
+The handler reads sizeof(struct WMM_para_element) (18) bytes at
+pIE->data + 6, so it requires pIE->length to be at least 24
+(WLAN_WMM_LEN), but it never validates the length. Two of its three
+callers reach it after matching only the WMM OUI: OnAssocRsp() in
+rtw_mlme_ext.c matches a 6-byte OUI, and join_cmd_hdl() matches a
+4-byte OUI, before calling the handler. A vendor-specific IE carrying
+the WMM OUI but a length between 6 and 23, placed in an association
+response or in the IE blob handed to join_cmd_hdl(), passes the OUI
+check and then makes the memcmp() and memcpy() at pIE->data + 6 read
+past the end of the element. OnAssocRsp() parses a frame received from
+the AP, so this is reachable from a remote peer.
 
-The buffer holds information elements taken from received management
-frames and from the IE blob passed to rtw_cfg80211_set_wpa_ie(), which
-is kmemdup'd to its exact length, so the read can run off the end of
-the allocation.
+The remaining caller in rtw_wlan_util.c already guards the handler with
+"pIE->length == WLAN_WMM_LEN". Move the equivalent check into the
+handler itself so every caller is covered; the sibling IE handlers in
+the same parsing loop (HT_caps_handler(), HT_info_handler(),
+ERP_IE_handler()) likewise bound their accesses by pIE->length.
 
-The sibling helpers rtw_get_sec_ie(), rtw_get_wapi_ie() and
-rtw_get_wps_ie() in this file already reject too-short vendor-specific
-IEs before their OUI memcmp(); rtw_get_wpa_ie() was never brought in
-line with them, and needs a minimum of 6 rather than 4 bytes because
-of the version word. Add the missing length check.
-
-Fixes: 554c0a3abf216 ("staging: Add rtl8723bs sdio wifi driver")
-Cc: stable <stable@kernel.org>
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Cc: stable@vger.kernel.org
 Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260719030631.88254-1-meatuni001@gmail.com
+Link: https://patch.msgid.link/20260719041509.97894-1-meatuni001@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_ieee80211.c |    3 +++
+ drivers/staging/rtl8723bs/core/rtw_wlan_util.c |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-@@ -370,6 +370,9 @@ unsigned char *rtw_get_wpa_ie(unsigned c
- 		pbuf = rtw_get_ie(pbuf, WLAN_EID_VENDOR_SPECIFIC, &len, limit_new);
+--- a/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
++++ b/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
+@@ -731,6 +731,9 @@ int WMM_param_handler(struct adapter *pa
+ 		return false;
+ 	}
  
- 		if (pbuf) {
-+			if (len < 6)
-+				goto check_next_ie;
++	if (pIE->length != WLAN_WMM_LEN)
++		return false;
 +
- 			/* check if oui matches... */
- 			if (memcmp((pbuf + 2), wpa_oui_type, sizeof(wpa_oui_type)))
- 				goto check_next_ie;
+ 	if (!memcmp(&(pmlmeinfo->WMM_param), (pIE->data + 6), sizeof(struct WMM_para_element)))
+ 		return false;
+ 	else
 
 
