@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA22513C9C4;
-	Mon, 17 Aug 2026 14:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A04713790B;
+	Mon, 17 Aug 2026 14:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976501; cv=none; b=aFQT39lYcJcRS1+gPb3uoQwNnmCM2qMzwWP4mCT2Lpl4zb2jFTad8uRdJ/7tBrIzp4OU5gyg7xnVeCIjDdXsu2cN+4hq2lTZRVLPXonH9Arjhl/GFhjQcFWB1rm3B8RZZA9MoKm8Ltgx3+1URc7Iw/fizUAnM3MoR9LSnEXnehc=
+	t=1786976503; cv=none; b=r0VvAnKYhMIWmfWxM/YE1FrAZFVbcWlWL+V753wJoAK6oiavmerbW9bbSwCcMmySa0k0wjN6RcQP8ET5+gOCJEzJM8RzvY2GeatmkZexm+SBstLANvfSY/tQOkE2oZ5XxyZJD7YqUeN6I3hYMP5bYZo8JpXx9DiBBix7P06pX+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976501; c=relaxed/simple;
-	bh=gAQ71n4+65Bf14AL+3WX+iwym0/vfX85gR4fSPYx+58=;
+	s=arc-20240116; t=1786976503; c=relaxed/simple;
+	bh=Gw7KXu2zk8VYY5x8mFSDjg0b/7rcWVC6AfW5UjCKqEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sIJqY7XuxE3fIssJ2/pM/KZaxcn85O4j13d2tXJt52t+7A7bnw4uPRtgAA5mkkn+xiwD+zTkYY0gcU9PZeP9LPtUrIdVyl309xG4edROiWAYWzO0e2LXWyuSLX0vuFPeK2kr3C+A5jKkBJnFkmp19qgizPvmHDlhK8yBtgZXUf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EYyW04bM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OovtnsgrU0XXNrj13OwHVofzLPByG++QTiqGRa5wXHvOdnUW3CFwkCdgTSYiizqW/W8IXDFzoArsGY6j57OJW34b5X0kdg8ykMSEygWeREwu2F3PL5tdjI0vNMprHCY4JMg5XZSfGfrQl8Njnq4PIvbbdQqcZuZpvB2EvQt055o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tOeq/yk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EYyW04bM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148481F000E9;
-	Mon, 17 Aug 2026 14:21:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tOeq/yk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE421F000E9;
+	Mon, 17 Aug 2026 14:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976499;
-	bh=As1WmEitKUqGFA2ur/kF4V4KmeU02ussBWsKwBHUxyY=;
+	s=korg; t=1786976502;
+	bh=QZqff5YJhc+3MHRbVwG/C22+NLca09VFaSfJiNlNCSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EYyW04bM7bHEohDCHv4ZDL2Up4pIf/dFVhbSSyXE5b1ALkbG8rG0kN7R4L0eFATED
-	 IICuPzMyPMoyzaB7MxEEWbZXIxrlMbLl98ofXAr68Ek4TIGdnWdT0Vw8DpydD2J77U
-	 DtTXMuGeXQbDvpU5oNivndr38At0QvpQEN8Ocwfk=
+	b=2tOeq/ykGIosJC9gdctudI+qE6NbzWnx/0OBYJvYZVGHZ6W5JzSEOn8W1Mk+xfuOr
+	 4wyflviKYfQ5k1314IoGKt5oxPgM9wRcrE21naa5vHShwn+2G8Rd6zejxm4gD1YzWx
+	 SXPt0Z1bkvDRtOk4q1H7/5nuld0Yosi8fayK1sok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Anandu Krishnan E <anandu.e@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Eddie Lin <eddie.lin@oss.qualcomm.com>,
+	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
 	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 5.10 368/389] misc: fastrpc: fix channel ctx ref leak when session alloc fails
-Date: Mon, 17 Aug 2026 15:33:27 +0200
-Message-ID: <20260817132553.065238984@linuxfoundation.org>
+Subject: [PATCH 5.10 369/389] misc: fastrpc: fix memory leak in fastrpc_channel_ctx_free
+Date: Mon, 17 Aug 2026 15:33:28 +0200
+Message-ID: <20260817132553.095907584@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,37 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
+From: Eddie Lin <eddie.lin@oss.qualcomm.com>
 
-commit 310f7868399668c6d99d88acc9c4cf3462e69d5b upstream.
+commit 2fae94ee14f7fea11d3f95e10383a87c01d21518 upstream.
 
-fastrpc_channel_ctx_get() is called in fastrpc_device_open() before
-fastrpc_session_alloc(). If session alloc fails, the error path
-returns -EBUSY without calling fastrpc_channel_ctx_put(), leaking
-the reference. Fix by adding the missing put.
+The 'ctx_idr' is initialized but never destroyed when
+the channel context is freed, leading to a memory leak.
+Add idr_destroy() to properly clean up the IDR resources.
 
-Fixes: 278d56f970ae ("misc: fastrpc: Reference count channel context")
-Cc: stable@kernel.org
-Signed-off-by: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: f6f9279f2bf0 ("misc: fastrpc: Add Qualcomm fastrpc basic driver model")
+Cc: stable@vger.kernel.org
+Signed-off-by: Eddie Lin <eddie.lin@oss.qualcomm.com>
+Reviewed-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
 Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260724223342.629168-5-srini@kernel.org
+Link: https://patch.msgid.link/20260724223342.629168-6-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/fastrpc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -1273,7 +1273,7 @@ static int fastrpc_device_open(struct in
- 		dev_err(&cctx->rpdev->dev, "No session available\n");
- 		mutex_destroy(&fl->mutex);
- 		kfree(fl);
--
-+		fastrpc_channel_ctx_put(cctx);
- 		return -EBUSY;
- 	}
+@@ -342,6 +342,7 @@ static void fastrpc_channel_ctx_free(str
+ 
+ 	cctx = container_of(ref, struct fastrpc_channel_ctx, refcount);
+ 
++	idr_destroy(&cctx->ctx_idr);
+ 	kfree(cctx);
+ }
  
 
 
