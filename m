@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FD1442FA1;
-	Mon, 17 Aug 2026 14:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E97442FD6;
+	Mon, 17 Aug 2026 14:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977195; cv=none; b=ef4ww1ysfV5++sJWoJe8Wd6kwibwJ9TgHeEUHxSaDRCGXJPY1O1iwZ6k5TCqC7snv28GTFTDBDTXeXr1dSuC83JvtXcfmMgleThzG20QsxQPt4XxJIHd/Wyg3Ttodwi3cigYnchlodmXKkn589bVOT43GEE2SHGCBTsd36T1AGA=
+	t=1786977198; cv=none; b=K02Ue5ooqVB8zSf1AYRJNrkjtAOla2sE4Cv0laTf86ZCryS6TdaEO2xetaTV/UO2Q7SfmuIYykSEvkAQxlwtEt+a/RAZClozt0WzYiGnsAMOXsDXsUtNKIbcXHWgCFgV7qL1yi2IFFYyOARSXfZ0KiPQ9PNmVFiUACJnXdmsVcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977195; c=relaxed/simple;
-	bh=HvP9lUN/Znm2PIs/g5qvvmYOskYiOpwes8/8hXe0550=;
+	s=arc-20240116; t=1786977198; c=relaxed/simple;
+	bh=IqyMkFHI454QUgyVVnWjCBs10SDA4v20AN6Jv+4Hnlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bX84njL8KMe8qtOwMi8s5m6bBL8C6HFPpyJFngu0Nb3mOwA51zJwq6QhRQijkdsLF6D61R/8Lj707zhbk8dnR8OiY0+Tb6fdGQRu4VjHdb8rmEtrgoam4TmJiOAOhlcz9ghPRRs5Sx4tNpG71gwXqxcM8nqtv7k7aifn2gf7wRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEtOWcHh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QgSx6178cTmyu5ypRb3arZSEdyeKF/YvuPaHwsxAiAo1EM/f9mYEI1tvZZ/aSlmFPhtiDQ4RLuqc60j5MUlcvO/ULaiU5jBnEmK4w0zfGya9W5BnfMKPvR/XkzLqBLP4Mi0bmAeH4zZsJzeWLquFE//38DYA8RqWgaWQ8sk7gZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXAozKl7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEtOWcHh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFDAC1F000E9;
-	Mon, 17 Aug 2026 14:33:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXAozKl7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC0FD1F000E9;
+	Mon, 17 Aug 2026 14:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977194;
-	bh=YtzLkCIFp+dBWhjs56W552atZSCbzHdwdEfmXkLL7BU=;
+	s=korg; t=1786977197;
+	bh=/zGTym4Y74aRfn96VL7hVsNdIm2MZfaLYSwUtoVr71U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kEtOWcHhcS6wcnuFH43fJ08P4leqikd6E+3nKm4H7P3ca20DyfRG51rkgr7BhooxY
-	 haLYcvuACtR/9+mYWA8U6CRDjy+I4zdz8o2TrBPteEEUl6c/uX95U2NRPpZT3wPyV5
-	 xSGEIw6W/YcgMibje5Lk41t8NcOA4DcY6YS0f03c=
+	b=FXAozKl7IJQ1q/LGZfnTJl5gl3R3C8YdaoqLeEHUEKQKT5Y4Q/WmNrgFZH76XPvvn
+	 kaNl/BQtgLubZB6bBAuRcCpXjsljo+lSEwKWIzwGFoVk7ZPUHCXt+lP9ONGEuZZoVS
+	 l3ZQm/NmRoT0giPdDqYPVzgOORzdzMrY9CdXN4hM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 228/456] drm/amdgpu/gfx9: replace BUG_ON() with WARN_ON()
-Date: Mon, 17 Aug 2026 15:30:18 +0200
-Message-ID: <20260817132549.050592031@linuxfoundation.org>
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Frank Li <Frank.li@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 246/456] dmaengine: sun6i-dma: Fix reclaim descriptors while terminating DMA
+Date: Mon, 17 Aug 2026 15:30:36 +0200
+Message-ID: <20260817132549.705662294@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,61 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-commit 6302be10b521f5106ce01eb5a724b9e7945a5061 upstream.
+[ Upstream commit ab1150115e68a46b687eb38c1ab92782018c9f2c ]
 
-There's no need to crash the kernel for these cases.
+When terminating DMA transfers, active descriptors are not properly
+reclaimed. Only cyclic descriptors were handled, leaving non-cyclic
+descriptors and their LLI chains to be permanently leaked.
 
-Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit b71604f8685b0eba07866f4e8dc30f93e1931054)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix by using vchan_terminate_vdesc() which handles both cyclic and
+non-cyclic descriptors by adding them to desc_terminated queue for
+proper cleanup.
+
+Add pchan->desc != pchan->done check to prevent double-adding completed
+descriptors, which would corrupt the list.
+
+Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Suggested-by: Frank Li <Frank.li@oss.nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260701045733.33654-1-zenghongling@kylinos.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/dma/sun6i-dma.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -1052,7 +1052,7 @@ static void gfx_v9_0_wait_reg_mem(struct
- 				 WAIT_REG_MEM_ENGINE(eng_sel)));
+diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
+index 5cadd4d2b8246..fa216ef645d58 100644
+--- a/drivers/dma/sun6i-dma.c
++++ b/drivers/dma/sun6i-dma.c
+@@ -895,16 +895,13 @@ static int sun6i_dma_terminate_all(struct dma_chan *chan)
  
- 	if (mem_space)
--		BUG_ON(addr0 & 0x3); /* Dword align */
-+		WARN_ON(addr0 & 0x3); /* Dword align */
- 	amdgpu_ring_write(ring, addr0);
- 	amdgpu_ring_write(ring, addr1);
- 	amdgpu_ring_write(ring, ref);
-@@ -5395,7 +5395,7 @@ static void gfx_v9_0_ring_emit_ib_gfx(st
+ 	spin_lock_irqsave(&vchan->vc.lock, flags);
+ 
+-	if (vchan->cyclic) {
+-		vchan->cyclic = false;
+-		if (pchan && pchan->desc) {
+-			struct virt_dma_desc *vd = &pchan->desc->vd;
+-			struct virt_dma_chan *vc = &vchan->vc;
++	if (pchan && pchan->desc && pchan->desc != pchan->done) {
++		struct virt_dma_desc *vd = &pchan->desc->vd;
+ 
+-			list_add_tail(&vd->node, &vc->desc_completed);
+-		}
++		vchan_terminate_vdesc(vd);
  	}
  
- 	amdgpu_ring_write(ring, header);
--	BUG_ON(ib->gpu_addr & 0x3); /* Dword align */
-+	WARN_ON(ib->gpu_addr & 0x3); /* Dword align */
- 	amdgpu_ring_write(ring,
- #ifdef __BIG_ENDIAN
- 		(2 << 0) |
-@@ -5430,7 +5430,7 @@ static void gfx_v9_0_ring_emit_ib_comput
- 	}
++	vchan->cyclic = false;
+ 	vchan_get_all_descriptors(&vchan->vc, &head);
  
- 	amdgpu_ring_write(ring, PACKET3(PACKET3_INDIRECT_BUFFER, 2));
--	BUG_ON(ib->gpu_addr & 0x3); /* Dword align */
-+	WARN_ON(ib->gpu_addr & 0x3); /* Dword align */
- 	amdgpu_ring_write(ring,
- #ifdef __BIG_ENDIAN
- 				(2 << 0) |
-@@ -5464,9 +5464,9 @@ static void gfx_v9_0_ring_emit_fence(str
- 	 * aligned if only send 32bit data low (discard data high)
- 	 */
- 	if (write64bit)
--		BUG_ON(addr & 0x7);
-+		WARN_ON(addr & 0x7);
- 	else
--		BUG_ON(addr & 0x3);
-+		WARN_ON(addr & 0x3);
- 	amdgpu_ring_write(ring, lower_32_bits(addr));
- 	amdgpu_ring_write(ring, upper_32_bits(addr));
- 	amdgpu_ring_write(ring, lower_32_bits(seq));
+ 	if (pchan) {
+-- 
+2.53.0
+
 
 
