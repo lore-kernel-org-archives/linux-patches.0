@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F3D41F5EA;
-	Mon, 17 Aug 2026 14:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9FF5426D03;
+	Mon, 17 Aug 2026 14:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978408; cv=none; b=stPSwKdRbwrNg/0n4yHSYEuHmAlhtLOnWEbOwJ3dgjDU5PsQu+yL+aww1eyOV1oAMxRzpHCXFkenbB8kK0O6YepJw7BBdyi+yYPm4ZSY62g1N9sMMlHAGu1NuoVEOJAli9v1q/hCTqJz15l/+KxzTIy/nc9Fp83we91UCqsgvzk=
+	t=1786978412; cv=none; b=SoXdeLN6JL5culSLJVL+xYKl6PcxUEZJvlZBbKeoOTu+d3U6r5q+yRUfnqoUA3JjPvaJv0HEdfJ30Qph0nGywn4a0slGKoozlplVhImGUZWylU56cGXew//ZwVuriBduNRd0Q6xptJ8SYPx7AT8NE65+O9HrTXqJEjFO8BKaobI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978408; c=relaxed/simple;
-	bh=qDz46HVHcc942Mr6PgujgGu0k/mu+F175jNUIiMRDLM=;
+	s=arc-20240116; t=1786978412; c=relaxed/simple;
+	bh=3kwygFhE4uCZn6D9jn/EH63aceQfgIO2DTd0uvwH1S0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L3h+FdPQrE3W/5lBK6MdOlNjWBc0O3liJxjhuorR4LuQt+keSeKKhoi6eVnLcISS73bR4vueqv4AmGpi/t8zhQCWb5l7QbokUNF2e/fvYOB3fSZqpRcPSISxDdpt6Z64x0cyOWET5wDIT4cywWMApc+umTP8cYUQhTvHAWtzWXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJQyw4q5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=izzcxUW7xBmt358vRtomGFGm1qXjlvMX9mtRoQ9I1DgXeYwrD8TFzCIQNOppK6Wm23IkpVylb+Ab02juIkR0g6xJHesnD4QzIlHT7dVoomWoQ7FDH7Ck/yw89hblyrkGOevoS/7o4zyJJhBM3vMMDka64BWIBq5P/DhmXVLp5aU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tc67jwtZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJQyw4q5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F012D1F000E9;
-	Mon, 17 Aug 2026 14:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tc67jwtZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C86E81F000E9;
+	Mon, 17 Aug 2026 14:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978407;
-	bh=MoE/ieP6K4wvEgRPJ6zdrLn/5e6G7aNN9A6pv2l7Ykw=;
+	s=korg; t=1786978410;
+	bh=TSXDAynaEsDCKVGrzEd0vopsgPKNjlsO0JQA1iqZF0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eJQyw4q5ynQDFCHS9CdMugIm0y4WAUNmc5+wlMeIdKOMxy9UBHGAX+5FkskW98Pz8
-	 CqcB7d8Hy3LdRFQBHVzd/fP2HLHfTLw1pD7Odf5v9+aPH4uUmE1+UDlhOsdTiI0bhI
-	 iCiBPCx377GjoaNKe/PH34qe5dp9PoX8uXIIX8k0=
+	b=tc67jwtZmG/+CDE9ZP2OSNmbODcnvEJUxjgo8aaE5kHpNTd8Z58H6qzzNIRpCVr0J
+	 zwVv+ik2bcjwXetAjLRW+g7hgsB9TeCFH4RV1mbmmzwI6b44f99UsU8sGMDNf2zcl4
+	 60f4l3CNYCkwI/vaJcnVzXmxZinEI/Bgb2e8FMaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan Rife <jordan@jrife.io>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Stanislav Fomichev <sdf@fomichev.me>,
+	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 026/156] bpf: tcp: Avoid socket skips and repeats during iteration
-Date: Mon, 17 Aug 2026 15:32:40 +0200
-Message-ID: <20260817132535.654653214@linuxfoundation.org>
+Subject: [PATCH 6.6 027/156] bpf: tcp: Fix use-after-free in bpf_iter_tcp_established_batch()
+Date: Mon, 17 Aug 2026 15:32:41 +0200
+Message-ID: <20260817132535.692865524@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -52,237 +52,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan Rife <jordan@jrife.io>
+From: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
 
-[ Upstream commit f5080f612a1c587bf636bb23d2a2f4de276d60e4 ]
+[ Upstream commit e5fd3f514e27db1f05fbd72ba615d74941e23c51 ]
 
-Replace the offset-based approach for tracking progress through a bucket
-in the TCP table with one based on socket cookies. Remember the cookies
-of unprocessed sockets from the last batch and use this list to
-pick up where we left off or, in the case that the next socket
-disappears between reads, find the first socket after that point that
-still exists in the bucket and resume from there.
+reqsk_queue_hash_req() publishes a TCP_NEW_SYN_RECV request_sock onto
+the ehash chain, drops the bucket lock, and only afterwards sets
+rsk_refcnt to 3.
 
-This approach guarantees that all sockets that existed when iteration
-began and continue to exist throughout will be visited exactly once.
-Sockets that are added to the table during iteration may or may not be
-seen, but if they are they will be seen exactly once.
+Lockless readers such as __inet_lookup_established() handle this with
+refcount_inc_not_zero(), but bpf_iter_tcp_established_batch() uses plain
+sock_hold() while holding the bucket lock, on the assumption that the
+lock guarantees sk_refcnt > 0. That assumption does not hold for
+request_sock:
 
-Signed-off-by: Jordan Rife <jordan@jrife.io>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Stable-dep-of: e5fd3f514e27 ("bpf: tcp: Fix use-after-free in bpf_iter_tcp_established_batch()")
+  CPU 0                                CPU 1
+  -----                                -----
+  tcp_conn_request()
+   reqsk_queue_hash_req()
+    inet_ehash_insert(req)
+     spin_lock(bucket)
+     __sk_nulls_add_node_rcu(req)      // rsk_refcnt == 0
+     spin_unlock(bucket)
+                                       bpf_iter_tcp_established_batch()
+                                        spin_lock(bucket)
+                                        sock_hold(req)   <-- addition on 0
+                                        spin_unlock(bucket)
+    refcount_set(&req->rsk_refcnt, 3)  // clobbers saturated value
+
+which surfaces as:
+
+  refcount_t: addition on 0; use-after-free.
+  WARNING: lib/refcount.c:25 at refcount_warn_saturate+0x48/0x90, CPU#1
+  Call Trace:
+   bpf_iter_tcp_established_batch+0x14e/0x170
+   bpf_iter_tcp_batch+0x53/0x200
+   bpf_iter_tcp_seq_next+0x27/0x70
+   bpf_seq_read+0x107/0x410
+   vfs_read+0xb9/0x380
+
+The iterator's stolen reference is lost when the publishing CPU's
+refcount_set() overwrites the count, leaving the socket one reference
+short. When the last legitimate owner drops its reference the reqsk is
+freed while still reachable, leading to use-after-free.
+
+This reproduces in seconds with tcp_syncookies=0, a handful of threads
+doing connect()/close() to a local listener while others read an
+iter/tcp link in a tight loop.
+
+Use refcount_inc_not_zero() and skip the socket on failure. A skipped
+socket is still part of the bucket, so keep counting it in expected.
+The reallocations are sized from expected, and a request sock whose
+refcount gets published while the lock is held across the last realloc
+must already have room.
+
+A skipped socket is counted in expected but never batched, so end_sk
+can be short of expected on a batch that is actually complete. Decide
+completeness by whether the walk left any socket behind instead. The
+WARN after the locked realloc checks the same, replacing an
+end_sk == expected check that could not hold on that path since
+commit cdec67a489d4 ("bpf: tcp: Make sure iter->batch always
+contains a full bucket snapshot").
+
+If every matching socket in a bucket is mid-init (refcount 0), end_sk
+stays 0. Advance to the next bucket rather than returning a batch entry
+that was never filled this round.
+
+Fixes: 04c7820b776f ("bpf: tcp: Bpf iter batching and lock_sock")
+Assisted-by: Claude:unspecified
+Signed-off-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://lore.kernel.org/bpf/20260730-bpf-iter-tcp-refcnt-v3-1-754b9c8a6717@linux.dev
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 147 ++++++++++++++++++++++++++++++++++----------
- 1 file changed, 115 insertions(+), 32 deletions(-)
+ net/ipv4/tcp_ipv4.c | 43 ++++++++++++++++++++++++-------------------
+ 1 file changed, 24 insertions(+), 19 deletions(-)
 
 diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index a826d137c86b4..e9f191315593c 100644
+index e9f191315593c..868a593d63ad2 100644
 --- a/net/ipv4/tcp_ipv4.c
 +++ b/net/ipv4/tcp_ipv4.c
-@@ -58,6 +58,7 @@
- #include <linux/times.h>
- #include <linux/slab.h>
- #include <linux/sched.h>
-+#include <linux/sock_diag.h>
- 
- #include <net/net_namespace.h>
- #include <net/icmp.h>
-@@ -2778,6 +2779,7 @@ static int tcp4_seq_show(struct seq_file *seq, void *v)
- #ifdef CONFIG_BPF_SYSCALL
- union bpf_tcp_iter_batch_item {
- 	struct sock *sk;
-+	__u64 cookie;
- };
- 
- struct bpf_tcp_iter_state {
-@@ -2808,10 +2810,19 @@ static int tcp_prog_seq_show(struct bpf_prog *prog, struct bpf_iter_meta *meta,
- 
- static void bpf_iter_tcp_put_batch(struct bpf_tcp_iter_state *iter)
+@@ -2977,24 +2977,24 @@ static unsigned int bpf_iter_tcp_established_batch(struct seq_file *seq,
  {
-+	union bpf_tcp_iter_batch_item *item;
- 	unsigned int cur_sk = iter->cur_sk;
-+	__u64 cookie;
- 
--	while (cur_sk < iter->end_sk)
--		sock_gen_put(iter->batch[cur_sk++].sk);
-+	/* Remember the cookies of the sockets we haven't seen yet, so we can
-+	 * pick up where we left off next time around.
-+	 */
-+	while (cur_sk < iter->end_sk) {
-+		item = &iter->batch[cur_sk++];
-+		cookie = sock_gen_cookie(item->sk);
-+		sock_gen_put(item->sk);
-+		item->cookie = cookie;
-+	}
- }
- 
- static int bpf_iter_tcp_realloc_batch(struct bpf_tcp_iter_state *iter,
-@@ -2832,6 +2843,106 @@ static int bpf_iter_tcp_realloc_batch(struct bpf_tcp_iter_state *iter,
- 	return 0;
- }
- 
-+static struct sock *bpf_iter_tcp_resume_bucket(struct sock *first_sk,
-+					       union bpf_tcp_iter_batch_item *cookies,
-+					       int n_cookies)
-+{
-+	struct hlist_nulls_node *node;
-+	struct sock *sk;
-+	int i;
-+
-+	for (i = 0; i < n_cookies; i++) {
-+		sk = first_sk;
-+		sk_nulls_for_each_from(sk, node)
-+			if (cookies[i].cookie == atomic64_read(&sk->sk_cookie))
-+				return sk;
-+	}
-+
-+	return NULL;
-+}
-+
-+static struct sock *bpf_iter_tcp_resume_listening(struct seq_file *seq)
-+{
-+	struct inet_hashinfo *hinfo = seq_file_net(seq)->ipv4.tcp_death_row.hashinfo;
-+	struct bpf_tcp_iter_state *iter = seq->private;
-+	struct tcp_iter_state *st = &iter->state;
-+	unsigned int find_cookie = iter->cur_sk;
-+	unsigned int end_cookie = iter->end_sk;
-+	int resume_bucket = st->bucket;
-+	struct sock *sk;
-+
-+	if (end_cookie && find_cookie == end_cookie)
-+		++st->bucket;
-+
-+	sk = listening_get_first(seq);
-+	iter->cur_sk = 0;
-+	iter->end_sk = 0;
-+
-+	if (sk && st->bucket == resume_bucket && end_cookie) {
-+		sk = bpf_iter_tcp_resume_bucket(sk, &iter->batch[find_cookie],
-+						end_cookie - find_cookie);
-+		if (!sk) {
-+			spin_unlock(&hinfo->lhash2[st->bucket].lock);
-+			++st->bucket;
-+			sk = listening_get_first(seq);
-+		}
-+	}
-+
-+	return sk;
-+}
-+
-+static struct sock *bpf_iter_tcp_resume_established(struct seq_file *seq)
-+{
-+	struct inet_hashinfo *hinfo = seq_file_net(seq)->ipv4.tcp_death_row.hashinfo;
-+	struct bpf_tcp_iter_state *iter = seq->private;
-+	struct tcp_iter_state *st = &iter->state;
-+	unsigned int find_cookie = iter->cur_sk;
-+	unsigned int end_cookie = iter->end_sk;
-+	int resume_bucket = st->bucket;
-+	struct sock *sk;
-+
-+	if (end_cookie && find_cookie == end_cookie)
-+		++st->bucket;
-+
-+	sk = established_get_first(seq);
-+	iter->cur_sk = 0;
-+	iter->end_sk = 0;
-+
-+	if (sk && st->bucket == resume_bucket && end_cookie) {
-+		sk = bpf_iter_tcp_resume_bucket(sk, &iter->batch[find_cookie],
-+						end_cookie - find_cookie);
-+		if (!sk) {
-+			spin_unlock_bh(inet_ehash_lockp(hinfo, st->bucket));
-+			++st->bucket;
-+			sk = established_get_first(seq);
-+		}
-+	}
-+
-+	return sk;
-+}
-+
-+static struct sock *bpf_iter_tcp_resume(struct seq_file *seq)
-+{
-+	struct bpf_tcp_iter_state *iter = seq->private;
-+	struct tcp_iter_state *st = &iter->state;
-+	struct sock *sk = NULL;
-+
-+	switch (st->state) {
-+	case TCP_SEQ_STATE_LISTENING:
-+		sk = bpf_iter_tcp_resume_listening(seq);
-+		if (sk)
-+			break;
-+		st->bucket = 0;
-+		st->state = TCP_SEQ_STATE_ESTABLISHED;
-+		fallthrough;
-+	case TCP_SEQ_STATE_ESTABLISHED:
-+		sk = bpf_iter_tcp_resume_established(seq);
-+		break;
-+	}
-+
-+	return sk;
-+}
-+
- static unsigned int bpf_iter_tcp_listening_batch(struct seq_file *seq,
- 						 struct sock **start_sk)
- {
-@@ -2916,32 +3027,12 @@ static void bpf_iter_tcp_unlock_bucket(struct seq_file *seq)
- 
- static struct sock *bpf_iter_tcp_batch(struct seq_file *seq)
- {
--	struct inet_hashinfo *hinfo = seq_file_net(seq)->ipv4.tcp_death_row.hashinfo;
  	struct bpf_tcp_iter_state *iter = seq->private;
--	struct tcp_iter_state *st = &iter->state;
- 	unsigned int expected;
+ 	struct hlist_nulls_node *node;
+-	unsigned int expected = 1;
+-	struct sock *sk;
+-
+-	sock_hold(*start_sk);
+-	iter->batch[iter->end_sk++].sk = *start_sk;
++	struct sock *sk = *start_sk;
++	unsigned int expected = 0;
+ 
+-	sk = sk_nulls_next(*start_sk);
+ 	*start_sk = NULL;
+ 	sk_nulls_for_each_from(sk, node) {
+-		if (seq_sk_match(seq, sk)) {
+-			if (iter->end_sk < iter->max_sk) {
+-				sock_hold(sk);
+-				iter->batch[iter->end_sk++].sk = sk;
+-			} else if (!*start_sk) {
+-				/* Remember where we left off. */
+-				*start_sk = sk;
+-			}
+-			expected++;
++		if (!seq_sk_match(seq, sk))
++			continue;
++		expected++;
++		if (iter->end_sk < iter->max_sk) {
++			/* reqsk_queue_hash_req() inserts with sk_refcnt == 0
++			 * and refcount_set()s it after the bucket lock drops.
++			 */
++			if (unlikely(!refcount_inc_not_zero(&sk->sk_refcnt)))
++				continue;
++			iter->batch[iter->end_sk++].sk = sk;
++		} else if (!*start_sk) {
++			/* Remember where we left off. */
++			*start_sk = sk;
+ 		}
+ 	}
+ 
+@@ -3032,12 +3032,13 @@ static struct sock *bpf_iter_tcp_batch(struct seq_file *seq)
  	struct sock *sk;
  	int err;
  
--	/* The st->bucket is done.  Directly advance to the next
--	 * bucket instead of having the tcp_seek_last_pos() to skip
--	 * one by one in the current bucket and eventually find out
--	 * it has to advance to the next bucket.
--	 */
--	if (iter->end_sk && iter->cur_sk == iter->end_sk) {
--		st->offset = 0;
--		st->bucket++;
--		if (st->state == TCP_SEQ_STATE_LISTENING &&
--		    st->bucket > hinfo->lhash2_mask) {
--			st->state = TCP_SEQ_STATE_ESTABLISHED;
--			st->bucket = 0;
--		}
--	}
--
--	iter->cur_sk = 0;
--	iter->end_sk = 0;
--
--	sk = tcp_seek_last_pos(seq);
-+	sk = bpf_iter_tcp_resume(seq);
++again:
+ 	sk = bpf_iter_tcp_resume(seq);
  	if (!sk)
  		return NULL; /* Done */
  
-@@ -2957,10 +3048,7 @@ static struct sock *bpf_iter_tcp_batch(struct seq_file *seq)
- 	if (err)
+ 	expected = bpf_iter_fill_batch(seq, &sk);
+-	if (likely(iter->end_sk == expected))
++	if (likely(!sk))
+ 		goto done;
+ 
+ 	/* Batch size was too small. */
+@@ -3053,7 +3054,7 @@ static struct sock *bpf_iter_tcp_batch(struct seq_file *seq)
+ 		return NULL; /* Done */
+ 
+ 	expected = bpf_iter_fill_batch(seq, &sk);
+-	if (likely(iter->end_sk == expected))
++	if (likely(!sk))
+ 		goto done;
+ 
+ 	/* Batch size was still too small. Hold onto the lock while we try
+@@ -3066,10 +3067,14 @@ static struct sock *bpf_iter_tcp_batch(struct seq_file *seq)
  		return ERR_PTR(err);
- 
--	iter->cur_sk = 0;
--	iter->end_sk = 0;
--
--	sk = tcp_seek_last_pos(seq);
-+	sk = bpf_iter_tcp_resume(seq);
- 	if (!sk)
- 		return NULL; /* Done */
- 
-@@ -3012,11 +3100,6 @@ static void *bpf_iter_tcp_seq_next(struct seq_file *seq, void *v, loff_t *pos)
- 		 * meta.seq_num is used instead.
- 		 */
- 		st->num++;
--		/* Move st->offset to the next sk in the bucket such that
--		 * the future start() will resume at st->offset in
--		 * st->bucket.  See tcp_seek_last_pos().
--		 */
--		st->offset++;
- 		sock_gen_put(iter->batch[iter->cur_sk++].sk);
  	}
+ 
+-	expected = bpf_iter_fill_batch(seq, &sk);
+-	WARN_ON_ONCE(iter->end_sk != expected);
++	bpf_iter_fill_batch(seq, &sk);
++	WARN_ON_ONCE(sk);
+ done:
+ 	bpf_iter_tcp_unlock_bucket(seq);
++	if (unlikely(!iter->end_sk)) {
++		++iter->state.bucket;
++		goto again;
++	}
+ 	return iter->batch[0].sk;
+ }
  
 -- 
 2.53.0
