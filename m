@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B7F2EEE86;
-	Mon, 17 Aug 2026 15:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E882443E22;
+	Mon, 17 Aug 2026 15:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979997; cv=none; b=UVqE+cpvh2myn6AviOZ+q5pETOT2sfdQdTNxI4+Kag7YIb5axbZmQGA3vDwbhfURYvAenZkOBDUNjmNCiadeUD1ObKhTE2AOXDCALZbr2zvG7rWcRcd4ClWmzIM7UBbeATC6HkNKk9km0gxJrEJkncxRADqG5hYYiqeggySfuxM=
+	t=1786979998; cv=none; b=MrwZEHurz3pW30a+BAXpGMbm6kcpCNggGZSUqwVEfjygkOI5NNbqdTy9GLEPMs5aT1SqxgOQy2Q8hWDIs5vrj0AyfL5yLvYLta2NUGHgSTQZmKw1X1lZ7ROJPg+kD+acp4yDqw2V7xOkzoa5JTWioYjpiHhdXDHID4+8FiwqdSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979997; c=relaxed/simple;
-	bh=rjVEfgWlvoGsXpK2Z0j21cqqS/5VeyD0ba2KcoP8pFY=;
+	s=arc-20240116; t=1786979998; c=relaxed/simple;
+	bh=OjOzn96mlnSk4qvFdSeCfjbUpMIzyjw9s2gzCNojJok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uwVJClk1BbFVnd0LtxypNSKihRBchR4dczDELogJe4U66Nae2wejCA+7yXDziloosGD3dwCn+uhaVN8YDKZ873s+uh1XS/JeFR2z7VdNE18sIydbDgGGn/b4WAE85xrpCnHYLkH5FQurqQnfSo41ehYCQNLR4kIMzru/xf8xK3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=odRJC8Mm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uakwsZfixoEI3QZnvkXWmKnlfu7VGGysbN3QJFsN4rquh59355yLL9sSN4pi6DEaDwZNiMmXeKdMxoUg9gv1soB8SUTmSqxtzaGX5Yl13X0mwstjYWe/QCt2/Q3LoMG3n77x5e86YCcMssAYY9BLV8TFSu4blxjGkE+lAu83Dy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=durzdKfE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="odRJC8Mm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863E41F000E9;
-	Mon, 17 Aug 2026 15:19:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="durzdKfE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67BC11F00A3A;
+	Mon, 17 Aug 2026 15:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979994;
-	bh=C9dh20yhg5VnFQkDajdIlXwoM3eGZT48yvi2xStnVi8=;
+	s=korg; t=1786979997;
+	bh=kIy7cDW+2mPVsGQBMZ4Keq2wCRc4ccsOBA6OeefvhpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=odRJC8MmSN2/xluRmRVD6AvJVs1CJN2F/NA5+oaIPmxdPCtFPQrGBE9VsGsg5wROt
-	 Eqqs0azKMZkYF0yWFD+BQjhK8QWYqEGvb3MuXiuwB4VXQDXcyKWIgviZ1PalJsY0do
-	 ltVODbaxQeHByb11NIJVn8rcnwQG5mae3f6DpYPI=
+	b=durzdKfEfaDF5w56ve+VBmHEr2VVcGwm73BUD+tN/wTc3jm/sscE0L2qajhkueB5T
+	 BbNMwz8eYopdzD7iQ9nXCWuFS7UXSPN9uBSPMa5mM+/N4DJm+e/nb3HuJoQmVjsuFh
+	 6/+X0uW3sBPgpW7Vg0OHk42vXltnIqh2aK0e7ESo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>
-Subject: [PATCH 6.1 402/609] ALSA: usb-audio: fix OOB write in snd_usbmidi_akai_output()
-Date: Mon, 17 Aug 2026 15:31:38 +0200
-Message-ID: <20260817132557.649394740@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 420/609] vxlan: unclone skb head before modifying eth header in route_shortcircuit()
+Date: Mon, 17 Aug 2026 15:31:56 +0200
+Message-ID: <20260817132558.172953047@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,56 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 0970274613fb463d376211450cab066d34ebfe6a upstream.
+commit 760d36e737f2b3867762f42af36c663f55babcc4 upstream.
 
-snd_usbmidi_akai_output() computes its fill-loop bound
+When route_shortcircuit() performs L3 short-circuit routing, it modifies
+the Ethernet header of the skb in-place:
+    memcpy(eth_hdr(skb)->h_source, eth_hdr(skb)->h_dest, dev->addr_len);
+    memcpy(eth_hdr(skb)->h_dest, n->ha, dev->addr_len);
 
-	buf_end = ep->max_transfer - MAX_AKAI_SYSEX_LEN - 1;
+If the incoming skb is cloned (for example by packet sockets, tcpdump, or
+dev_queue_xmit), modifying the Ethernet header without uncloning can corrupt
+the packet header for other readers holding a reference to the cloned skb.
 
-as a signed int, so a small device-advertised bulk-OUT max_transfer
-makes buf_end negative.  The loop guard then compares the u32
-urb->transfer_buffer_length against that negative int: the usual
-arithmetic conversion turns buf_end into a large unsigned value, so the
-guard stays true and each iteration keeps appending SysEx framing and
-payload bytes past the end of the URB transfer buffer, which is only
-max_transfer bytes long.
+Ensure the skb header is writable and unshared by calling skb_cow_head(skb, 0)
+prior to updating the Ethernet header. If skb_cow_head() fails, abort short-circuiting
+and return false to allow standard packet processing fallback.
 
-A USB device that advertises a tiny bulk-OUT endpoint can therefore
-trigger an attacker-length- and content-controlled heap out-of-bounds
-write when a process writes to the created /dev/snd/midiC*D* node.
-
-Return early when there is no room for even one SysEx, so the loop is
-never entered with a bound that would wrap.  The loop is the last
-statement of the function, so bailing out is equivalent to it not
-running.
-
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: 4434ade8c933 ("ALSA: usb-audio: add support for Akai MPD16")
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
+Fixes: e4f67addf158 ("add DOVE extensions for VXLAN")
 Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260726074500.50145-1-baul.lee@xbow.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260723144249.759100-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/midi.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/vxlan/vxlan_core.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/sound/usb/midi.c
-+++ b/sound/usb/midi.c
-@@ -800,6 +800,8 @@ static void snd_usbmidi_akai_output(stru
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -2208,6 +2208,10 @@ static bool route_shortcircuit(struct ne
  
- 	msg = urb->transfer_buffer + urb->transfer_buffer_length;
- 	buf_end = ep->max_transfer - MAX_AKAI_SYSEX_LEN - 1;
-+	if (buf_end <= 0)
-+		return;
- 
- 	/* only try adding more data when there's space for at least 1 SysEx */
- 	while (urb->transfer_buffer_length < buf_end) {
+ 		diff = !ether_addr_equal(eth_hdr(skb)->h_dest, n->ha);
+ 		if (diff) {
++			if (skb_cow_head(skb, 0)) {
++				neigh_release(n);
++				return false;
++			}
+ 			memcpy(eth_hdr(skb)->h_source, eth_hdr(skb)->h_dest,
+ 				dev->addr_len);
+ 			memcpy(eth_hdr(skb)->h_dest, n->ha, dev->addr_len);
 
 
