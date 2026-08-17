@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6294B24EA90;
-	Mon, 17 Aug 2026 14:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36AC9280CE5;
+	Mon, 17 Aug 2026 14:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976701; cv=none; b=QAAJPAMluRRlG8M5YXa7P4vOLSD1ERjZeb7jbls97zSJQAnPyr/xviwHtpo98Gj765IfFEjBjT6WXV4oEj2IqHGRRCOyA2rxng2BLWwoAEfVKAq8NpNsCEvX/CfJb2OTKsStB9grXoV8PxEZQeDj00FeXE8SmrHaFsboS1ayyh4=
+	t=1786976704; cv=none; b=E0RJj30IyQ01zDoW0IfGcLaDPsXXrEUoIoajtK+PJXHXBY4UF/dXq3TTcm36IET7gLwvjAvvCi3LCMBOcxFANKzPjOHhEuUqA76/+JtuxABwaszSJN4NyCPpnW7zEp2k6ds3BzPfsGh1Ptj6kJ41aZAHIe1ey6jeBN5C4qMPqRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976701; c=relaxed/simple;
-	bh=sHG0g2j54yrdh925m8pzFiJCqfkHXv7Y6qC8VSyeFvE=;
+	s=arc-20240116; t=1786976704; c=relaxed/simple;
+	bh=bQvjpAIaphUXvNN7ZzN2kcoGjG5ah7OkFuweEtrn6hU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sjLrS1KbrdEwVGsEZlGphdaBG29ivw0KJ9WsTsIPRZyERCaw9oyR9a54HQlmH31fQz6MN2cb7WZRKNHmpq45ExOZ0maLdrHe4SP4Kgj2fNqw+eAY8FPCgNTWSfa9WAU6S/kJKVqZq51Od5W4tkzuwYFhVs9hBkMwcZXETc4i9wM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G2iSVx0q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mfyHetTeeKpyGaF6t5P8Yz/JKbndhKIgr+CIhKDVVcey8sfg0FCOPK+WEDnExgfau94FkYDDQlH7n14vP88fARDUqznXDYJDS7KVuSFA+1cb9CykB6LMR68D1AhPfiQbD2Yng+gscEpia9MIt6EnLO+wI9Vj8QeCYjXMSp9L0ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8K78vFK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G2iSVx0q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C2D1F00A3A;
-	Mon, 17 Aug 2026 14:24:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8K78vFK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922061F000E9;
+	Mon, 17 Aug 2026 14:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976700;
-	bh=r5FBBkcT/7f4vd+AfS0xQn/dXcqi+KU31iNYBvaItAI=;
+	s=korg; t=1786976703;
+	bh=ohEqir5qch2aJ/fUKr4C46gaJJsUNx6uQ3txGmZVXfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G2iSVx0qr28PydCSX75l/MLr+/XOGLdgHdLJ9kaUJLoJpGXlKVagjwbTKYlf9K+au
-	 8mffoleaBt7nhJfC3rs6otac730pwIT0yPj46OlZB1Klv4qVpIt5Z/pUP5GyuF0cY0
-	 gvJ++kz/UnY5Sn2dA5aR3ldEk8Qv8DjQ2g7NAJyU=
+	b=D8K78vFKRaqL2CJ5zG7TMK9hhW2eLEQuDwJMF3xVSUjYOmAkcUVgBFtiJuzFlOZpw
+	 vmrJhzQ/aSKFeu004aZXqE1uOrD2zTVSNGV0YP8bjv8g4rhYs7LsxqIDnTR1cV87LL
+	 EFp70ax2HiX0aW3ijiu18JlNRLiB9sYZOnY+SzmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	STAR Labs SG <info@starlabs.sg>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Philo Lu <lulie@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 075/456] Revert "drm/amd/display: Add missing kdoc for ALLM parameters"
-Date: Mon, 17 Aug 2026 15:27:45 +0200
-Message-ID: <20260817132543.009705554@linuxfoundation.org>
+Subject: [PATCH 5.15 076/456] bpf: Fix ld_{abs,ind} failure path analysis in subprogs
+Date: Mon, 17 Aug 2026 15:27:46 +0200
+Message-ID: <20260817132543.048426920@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -49,26 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit 904eed5c1044b52db948e0322a5f74ccaccd0b8e.
+From: Daniel Borkmann <daniel@iogearbox.net>
 
+commit ee861486e377edc55361c08dcbceab3f6b6577bd upstream.
+
+Usage of ld_{abs,ind} instructions got extended into subprogs some time
+ago via commit 09b28d76eac4 ("bpf: Add abnormal return checks."). These
+are only allowed in subprograms when the latter are BTF annotated and
+have scalar return types.
+
+The code generator in bpf_gen_ld_abs() has an abnormal exit path (r0=0 +
+exit) from legacy cBPF times. While the enforcement is on scalar return
+types, the verifier must also simulate the path of abnormal exit if the
+packet data load via ld_{abs,ind} failed.
+
+This is currently not the case. Fix it by having the verifier simulate
+both success and failure paths, and extend it in similar ways as we do
+for tail calls. The success path (r0=unknown, continue to next insn) is
+pushed onto stack for later validation and the r0=0 and return to the
+caller is done on the fall-through side.
+
+Fixes: 09b28d76eac4 ("bpf: Add abnormal return checks.")
+Reported-by: STAR Labs SG <info@starlabs.sg>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20260408191242.526279-2-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+[ Dropped visit_abnormal_return_insn changes: depends on 7.0 symbols from
+ e40f5a6bf88a ("bpf: correct stack liveness for tail calls");
+ Hunk1: adapted IS_ERR/PTR_ERR to !branch/-EFAULT to match push_stack()
+ NULL-on-failure convention;
+ Dropped mark_reg_scratched(), which only affects log verbosity, introduced
+ by 0f55f9ed21f9 ("bpf: Only print scratched registers and stack slots to
+ verifier logs.").]
+Signed-off-by: Philo Lu <lulie@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c | 2 --
- 1 file changed, 2 deletions(-)
+ kernel/bpf/verifier.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c b/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
-index c09e86523e291e..4e075b01d48bb4 100644
---- a/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
-+++ b/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
-@@ -415,8 +415,6 @@ void mod_build_vsc_infopacket(const struct dc_stream_state *stream,
-  *
-  *  @stream:      contains data we may need to construct VSIF (i.e. timing_3d_format, etc.)
-  *  @info_packet: output structure where to store VSIF
-- *  @ALLMEnabled: indicates whether ALLM HF-VSIF should be generated
-- *  @ALLMValue:   ALLM bit value to advertise in HF-VSIF
-  */
- void mod_build_hf_vsif_infopacket(const struct dc_stream_state *stream,
- 		struct dc_info_packet *info_packet)
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index ec447854f53450..5e71d58e4a3006 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -9644,6 +9644,22 @@ static int check_ld_abs(struct bpf_verifier_env *env, struct bpf_insn *insn)
+ 	mark_reg_unknown(env, regs, BPF_REG_0);
+ 	/* ld_abs load up to 32-bit skb data. */
+ 	regs[BPF_REG_0].subreg_def = env->insn_idx + 1;
++	/*
++	 * See bpf_gen_ld_abs() which emits a hidden BPF_EXIT with r0=0
++	 * which must be explored by the verifier when in a subprog.
++	 */
++	if (env->cur_state->curframe) {
++		struct bpf_verifier_state *branch;
++
++		branch = push_stack(env, env->insn_idx + 1, env->insn_idx, false);
++		if (!branch)
++			return -EFAULT;
++		mark_reg_known_zero(env, regs, BPF_REG_0);
++		err = prepare_func_exit(env, &env->insn_idx);
++		if (err)
++			return err;
++		env->insn_idx--;
++	}
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
