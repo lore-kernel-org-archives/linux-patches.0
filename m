@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1753AB5B8;
-	Mon, 17 Aug 2026 14:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D1D317144;
+	Mon, 17 Aug 2026 14:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975347; cv=none; b=Zg4AsQmnS6+21GlF0Oiw8Jr+cQzXkLatY+4VfbZEIQludUcAzZ1nwKRPfeKOxy22b8fhp3cRKMXglEbsuK+20AUW+SIO3Yd6lG9kU0ACkQnuT4LnIMabLCDwIGd87vATq9RuURdEMfwqI01EXabSbXgZZ1+o/eKNXTsZ2HvNq+0=
+	t=1786975350; cv=none; b=q7yHJ6pFxkRTFIqri2Aazcl93roBkkPrsaZDsP9R7iiKgxvCbq9ZfgwIflNnSDC/c/rlAAX+85uilk/V+Wojlg5keogzhh1MA1DqQ6YO6ZxkW54gtxjP+sVBPCSjZbR6d1csx/uQ/ytSKftkDtF4IzXnqllmk2VDMgqjE9eeP1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975347; c=relaxed/simple;
-	bh=xEG4osMbBnNB0foSfAyViImpjBxBo4SaU5VvBtfJ9Mk=;
+	s=arc-20240116; t=1786975350; c=relaxed/simple;
+	bh=KHKEC9lkeg1+Uv6/yzpesiXVHtqbrekjmJ9mftePcJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TViH0ziYsaWleaXFglaIZr/NPCQlioboeEW2mtOriZ7R02Q3krouedQgL9erFfERmpBNFpfANCM5yx7v8JfmU5vr7mp/mc2i/o5rtvXoEf8AA41QJzDV08hNADDBkDF0U2Bej7Y3DZp3iwC7h0LePN+fR8POruQcctHzCKsopzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hooATR70; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mDIn5mnEX7japKaaa+HGNA6eNX0kE7AtQOZPg8D/SnXXWjIi1n7/l78JPW7S8fsKCwfiaaDRZJmz30VnHPdkGYcMPVSj0xtVD/AwK2kD2GSqmGR1vt8OoXCfx04FJkeiNeeoAkK1fo5KM6PN9e/5jjlTrVyfY63HZoHroVGBWKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SwT4hdcm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hooATR70"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 666D51F000E9;
-	Mon, 17 Aug 2026 14:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SwT4hdcm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0F11F000E9;
+	Mon, 17 Aug 2026 14:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975346;
-	bh=zYlPqBWI/7mMVfx1qcxq0QfdLFKk/fH6E5paD6QI/h8=;
+	s=korg; t=1786975348;
+	bh=TM+Fk6RBZEDEtiePZa/aNbSU5w++Hb3xjLqVgmH2ndM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hooATR70pSAbK4YIL+NQvMvSQ2xUy9YNduKleyuKjPv3sFUIZl+eKw7r8FWXHgtQI
-	 6AneApZl6hGfep7u13BtG5YfCtAumHTYIbaJxOy/Cx5R/6BmCNCd4Ws009pG3Lw5uU
-	 uPHbZLZfzuVcEKbIdpy85z/qb1k4HXqEvv8pjx3M=
+	b=SwT4hdcmyWLHlMBBuQIg6X6a2nc0xJstxMM2s2SBcZOhivDW7QT5iKBh7ekQ8QkWr
+	 cXXLUahDD52XzYsnf1ENsOlFlz+ZvxapL3WQ41FPmjy+LjMrTtdhHvGG6XIKZZxxuT
+	 bOZ90Mab2ORPmF21C8sh1Ufu37fNOf5lN1ng4GLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.18 240/250] fsverity: Fix bpf_get_fsverity_digest() dynptr assumptions
-Date: Mon, 17 Aug 2026 15:33:21 +0200
-Message-ID: <20260817132546.295915542@linuxfoundation.org>
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.18 249/250] netfilter: always set route tuple out ifindex
+Date: Mon, 17 Aug 2026 15:33:30 +0200
+Message-ID: <20260817132546.659522197@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,68 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-commit 3e8ec7c0387273329374f5c7bd61f5f38af71fe1 upstream.
+commit 2bdc536c9da7fa08baf0fafe9d91243b83cb9c8b upstream.
 
-The BPF verifier and the dynptr abstraction ensure that the memory space
-referenced by a dynptr remains valid.  They do not, however, provide any
-guarantee that the contents of the memory are stable.  kfuncs are
-expected to remain memory-safe even if concurrent modifications occur.
+Always set nf_flow_route tuple out ifindex even if the indev is not one
+of the flowtable configured devices since otherwise the outdev lookup in
+nf_flow_offload_ip_hook() or nf_flow_offload_ipv6_hook() for
+FLOW_OFFLOAD_XMIT_NEIGH flowtable entries will fail.
+The above issue occurs in the following configuration since IP6IP6
+tunnel does not support flowtable acceleration yet:
 
-bpf_get_fsverity_digest() didn't follow that: it could crash if
-arg->digest_size was concurrently modified.
+$ip addr show
+5: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 00:11:22:33:22:55 brd ff:ff:ff:ff:ff:ff link-netns ns1
+    inet6 2001:db8:1::2/64 scope global nodad
+       valid_lft forever preferred_lft forever
+    inet6 fe80::211:22ff:fe33:2255/64 scope link tentative proto kernel_ll
+       valid_lft forever preferred_lft forever
+6: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 00:22:22:33:22:55 brd ff:ff:ff:ff:ff:ff link-netns ns3
+    inet6 2001:db8:2::1/64 scope global nodad
+       valid_lft forever preferred_lft forever
+    inet6 fe80::222:22ff:fe33:2255/64 scope link tentative proto kernel_ll
+       valid_lft forever preferred_lft forever
+7: tun0@NONE: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 1452 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/tunnel6 2001:db8:2::1 peer 2001:db8:2::2 permaddr a85:e732:2c37::
+    inet6 2002:db8:1::1/64 scope global nodad
+       valid_lft forever preferred_lft forever
+    inet6 fe80::885:e7ff:fe32:2c37/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
 
-Fix that by using the known-good value hash_alg->digest_size instead.
+$ip -6 route show
+2001:db8:1::/64 dev eth0 proto kernel metric 256 pref medium
+2001:db8:2::/64 dev eth1 proto kernel metric 256 pref medium
+2002:db8:1::/64 dev tun0 proto kernel metric 256 pref medium
+default via 2002:db8:1::2 dev tun0 metric 1024 pref medium
 
-Also widen 'dynptr_sz' and 'out_digest_sz' to u64 to match the return
-type of __bpf_dynptr_size().  It doesn't appear that it can actually be
-more than INT_MAX currently (since __bpf_dynptr_data_rw() excludes
-file-based pointers), but the correct type might as well be used.
+$nft list ruleset
+table inet filter {
+        flowtable ft {
+                hook ingress priority filter
+                devices = { eth0, eth1 }
+        }
 
-Fixes: 67814c00de31 ("bpf, fsverity: Add kfunc bpf_get_fsverity_digest")
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Acked-by: Song Liu <song@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/bpf/20260803181232.14743-2-ebiggers@kernel.org
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+        chain forward {
+                type filter hook forward priority filter; policy accept;
+                meta l4proto { tcp, udp } flow add @ft
+        }
+}
+
+Fixes: b5964aac51e0 ("netfilter: flowtable: consolidate xmit path")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/verity/measure.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ net/netfilter/nf_flow_table_path.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/verity/measure.c
-+++ b/fs/verity/measure.c
-@@ -122,11 +122,11 @@ __bpf_kfunc int bpf_get_fsverity_digest(
- {
- 	struct bpf_dynptr_kern *digest_ptr = (struct bpf_dynptr_kern *)digest_p;
- 	const struct inode *inode = file_inode(file);
--	u32 dynptr_sz = __bpf_dynptr_size(digest_ptr);
-+	u64 dynptr_sz = __bpf_dynptr_size(digest_ptr);
- 	struct fsverity_digest *arg;
- 	const struct fsverity_info *vi;
- 	const struct fsverity_hash_alg *hash_alg;
--	int out_digest_sz;
-+	u64 out_digest_sz;
+--- a/net/netfilter/nf_flow_table_path.c
++++ b/net/netfilter/nf_flow_table_path.c
+@@ -203,6 +203,9 @@ static void nft_dev_forward_path(struct
+ 	if (nft_dev_fill_forward_path(route, dst, ct, dir, ha, &stack) >= 0)
+ 		nft_dev_path_info(&stack, &info, ha, &ft->data);
  
- 	if (dynptr_sz < sizeof(struct fsverity_digest))
- 		return -EINVAL;
-@@ -150,11 +150,13 @@ __bpf_kfunc int bpf_get_fsverity_digest(
- 	out_digest_sz = dynptr_sz - sizeof(struct fsverity_digest);
++	if (info.outdev)
++		route->tuple[dir].out.ifindex = info.outdev->ifindex;
++
+ 	if (!info.indev || !nft_flowtable_find_dev(info.indev, ft))
+ 		return;
  
- 	/* copy digest */
--	memcpy(arg->digest, vi->file_digest,  min_t(int, hash_alg->digest_size, out_digest_sz));
-+	memcpy(arg->digest, vi->file_digest,
-+	       min(hash_alg->digest_size, out_digest_sz));
+@@ -213,7 +216,6 @@ static void nft_dev_forward_path(struct
+ 	}
+ 	route->tuple[!dir].in.num_encaps = info.num_encaps;
+ 	route->tuple[!dir].in.ingress_vlans = info.ingress_vlans;
+-	route->tuple[dir].out.ifindex = info.outdev->ifindex;
  
- 	/* fill the extra buffer with zeros */
- 	if (out_digest_sz > hash_alg->digest_size)
--		memset(arg->digest + arg->digest_size, 0, out_digest_sz - hash_alg->digest_size);
-+		memset(arg->digest + hash_alg->digest_size, 0,
-+		       out_digest_sz - hash_alg->digest_size);
- 
- 	return 0;
- }
+ 	if (info.xmit_type == FLOW_OFFLOAD_XMIT_DIRECT) {
+ 		memcpy(route->tuple[dir].out.h_source, info.h_source, ETH_ALEN);
 
 
