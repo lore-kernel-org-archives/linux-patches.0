@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB72442B2F;
-	Mon, 17 Aug 2026 13:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D8421B192;
+	Mon, 17 Aug 2026 13:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975068; cv=none; b=ZlWO3y9C1TZzvrlKsICwvBptPZdZOatDNmPnxyBEi+kf3GUH10CRdq45HBlItVZp9TJDl0VT5Gq8BZD/Z8Egn+yealA/hzspB6MvMeVYZDc+SFZKCuaBnTELiJme2yGdnsHQgBnUaunx2adil5VQXm1fdjnksxS+dikEmWBhQs4=
+	t=1786975071; cv=none; b=U6blLzK8ho+S193auJsXUoKv+oz/RGHh5fVliWFxvOaKLVLH26sxgAGCSEFqIIcFb2LzqNB6AKEqn5OhZUOUBwRJtEz5levh71WNINvep9uhRtiJpCqpfNsUnBxOOReewFGzQnaBc45GlZk9yP9VIgsiQoo1oT5Khaj4bR7GPtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975068; c=relaxed/simple;
-	bh=uDYdvX/MfF6PSKNJr8B2lPL2M2/GtFOtYKOfycWtmFU=;
+	s=arc-20240116; t=1786975071; c=relaxed/simple;
+	bh=0ke0eKBSGaWqLqcTGKt0BMAwSm5GoGJqFLI0Rmb+1fA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sv21qHwtEXtYIlNznKW8dyRiq7M6kcy3usYgRG7JFxQYJWVAXfsVxkwSK/9vz/0L1hun4tUEiaViVcBlVRj57yHqD8if1/R0w6vL5zkGz6iLN4FaCWwUMRpjMiXKadX8VImsXRIAHAcyzfNHjrRFvghA3fKIN/GZ3FFHHPNy+Kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xN1cPmEv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nfeXV/W8qnJbXO/pxXo+t/ikcKxrxlSP0LFrr6T0t884+y2eKuICIPordmcg/ZqvqeTMPCx+lv66UKU++AnCMfADeyWOcYigMHBfNq9tWv5AwoJ2fbr5bqegtaX834b2+aDHeJwv93tJgIch1Nabn7XLu0tn+ok5DNfBn5nS+j8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8+LADJu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xN1cPmEv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218431F000E9;
-	Mon, 17 Aug 2026 13:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8+LADJu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2EAA1F000E9;
+	Mon, 17 Aug 2026 13:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975067;
-	bh=OH3ScFurLeC/VSGrOMKQ7UGeXzweGSYjY3cU5i/HsTA=;
+	s=korg; t=1786975070;
+	bh=9VNupJAAzavtnCCgnNiBivQRMws42HoRHVtMYPleKaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xN1cPmEvUW9y9t90Ol4BsqrOxCxfydYz+YUvjG/vNbqjA3GCizM9dOy3C3JvD8NPc
-	 Qky4MAGkJ9f9kODriHiJkbUJBBV0rSXJNfdDxmJ1o+i2VXQPKV3o5ouGRlKQwQJ1Ly
-	 gMgUVDizzEUsWtnVk7CalyfgWVkT71Nfjq+wUDhU=
+	b=r8+LADJuv8uYVBMcbiOj2hmkBffDaQ6Qph8iSG/DR+6NAYXKL/L0+JRd+FeV93X3q
+	 RcP4nkUbNXnKI7akmq7NIXcosu0mVbG2L3QsvE3aDHEBTWUeW7ApVh6LosmzqMoPCE
+	 /jTWsfQsMFrnTIzRb1VyMxvF9reKsx9SQxx/OQY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Harshal Dev <harshal.dev@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 150/250] dt-bindings: crypto: qcom,ice: Fix missing power-domain and iface clk
-Date: Mon, 17 Aug 2026 15:31:51 +0200
-Message-ID: <20260817132542.676827551@linuxfoundation.org>
+	Ishaan Dandekar <ishaan.dandekar@gmail.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.18 115/250] usb: quirks: Add ShanWan gamepad to quirk list
+Date: Mon, 17 Aug 2026 15:31:16 +0200
+Message-ID: <20260817132541.269581886@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -53,69 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshal Dev <harshal.dev@oss.qualcomm.com>
+From: Ishaan Dandekar <ishaan.dandekar@gmail.com>
 
-[ Upstream commit e27264daac7d9ce892a2a5b4a864d6d9a3c9276a ]
+commit f3988e68fc089f6a5883f4f807955a3825bb7d45 upstream.
 
-The DT bindings for inline-crypto engine do not specify the UFS_PHY_GDSC
-power-domain and iface clock. Without enabling the iface clock and the
-associated power-domain the ICE hardware cannot function correctly and
-leads to unclocked hardware accesses being observed during probe.
+The ShanWan Wireless Gamepad (dongle ID 2563:0575) crashes with a -71
+EPROTO error during standard enumeration because it expects a 255-byte
+initial configuration request. Add this device to the quirk list to
+use the USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE flag.
 
-Extend and fix the DT bindings for inline-crypto engine by allowing
-description of the iface clock and UFS_PHY_GDSC power-domain.
-
-This patch has been adapted from the mentioned upstream commit to drop
-references to Eliza and Milos Qualcomm platforms which do not exist
-on the stable tree. Thus, patch now fixes the original commit which
-introduced the DT binding for Qualcomm inline-crypto engine.
-
-Fixes: f6ff91a47ac5 ("dt-bindings: crypto: Add Qualcomm Inline Crypto Engine")
-Reviewed-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260416-qcom_ice_power_and_clk_vote-v5-1-5ccf5d7e2846@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Ishaan Dandekar <ishaan.dandekar@gmail.com>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20260802120128.38302-1-ishaan.dandekar@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../crypto/qcom,inline-crypto-engine.yaml        | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/usb/core/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
-index 08fe6a707a371..70aa5193800e5 100644
---- a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
-+++ b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
-@@ -27,6 +27,16 @@ properties:
-     maxItems: 1
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -594,6 +594,9 @@ static const struct usb_device_id usb_qu
  
-   clocks:
-+    minItems: 1
-+    maxItems: 2
-+
-+  clock-names:
-+    minItems: 1
-+    items:
-+      - const: core
-+      - const: iface
-+
-+  power-domains:
-     maxItems: 1
+ 	{ USB_DEVICE(0x2386, 0x350e), .driver_info = USB_QUIRK_NO_LPM },
  
- required:
-@@ -44,6 +54,10 @@ examples:
-       compatible = "qcom,sm8550-inline-crypto-engine",
-                    "qcom,inline-crypto-engine";
-       reg = <0x01d88000 0x8000>;
--      clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-+      clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>,
-+               <&gcc GCC_UFS_PHY_AHB_CLK>;
-+      clock-names = "core",
-+                    "iface";
-+      power-domains = <&gcc UFS_PHY_GDSC>;
-     };
- ...
--- 
-2.53.0
-
++	/* ShanWan Wireless Gamepad */
++	{ USB_DEVICE(0x2563, 0x0575), .driver_info = USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE },
++
+ 	/* UGREEN 35871 - BOS descriptor fetch hangs at SuperSpeed Plus */
+ 	{ USB_DEVICE(0x2b89, 0x5871), .driver_info = USB_QUIRK_NO_BOS },
+ 
 
 
