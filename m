@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E279E41D111;
-	Mon, 17 Aug 2026 14:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB7C42EEDD;
+	Mon, 17 Aug 2026 14:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978678; cv=none; b=jbkl2IbDNDP+qZf50G4vTNdh13cXRRaDJH3sRTZD+q+TXX92fgQaF1sCNVROnI3W+tHIrqGfVJgtH8Mn7a5okvUAyD9J2q6ode08oOtrzvn1XS7NTDNPFLkcXw8VjGBUHR6A1CA2BQm/1yfsDiadOB3/Zwf4erbKo8wSNvUuqGc=
+	t=1786978680; cv=none; b=u1KozLGf/Gw99JeUh9vXXoBqCfqbEVyhJLPI/dgtHBytzZb3Ee32PdITvj7jfSxuogw75ma8R100CV1AC6th4np6Wb1AqWvZr2Rd9cgsr6H/hHEC4AO1oxb8R496t2vh53Ykgi8OmJGXm/dD6XvaUIUEhplU8OmOkGvPYkwnllI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978678; c=relaxed/simple;
-	bh=ekh/QPHyMuJx+ah8NKm+KH/1UpkWnY2EK7cyS9mJm8g=;
+	s=arc-20240116; t=1786978680; c=relaxed/simple;
+	bh=uYYl/Q1tiaoeWF3cV3HL10z5yIh4zPJjQ0MBTT1N7r4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tmcsljEQaQBbCFSKki7yj8ImMYbxPMEVPDKTJKb111aj0RZWFnqUP5MsHNHPxxquUvkLQvYZUxM2Cpuc4kWkqMRmhkRrXzJALnfdT2nPrnrz9FTXa7zraxnZohZ/GRU6oX51jdwnRZVjJ6v9NfPvGBSoj6mDU7zhFVHIsMcZ9B0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1JUWAF7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=unNMEIqMcVuvD5c0OIHkmLURSqUMYvkr4yrdtDWFqJzEPnv43vN26Orz9NIlJEON8JC1CypP10g2yY9Rw5Rd3QND0FqtZUtPEqZicjUU9Tch4vOl6OVGWRvBg8tx3rkxztdztLQHKoHTUok8KxAcTsbtLIvIV9tob6DOT5M07Os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SqAmdIDP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1JUWAF7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FB21F000E9;
-	Mon, 17 Aug 2026 14:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SqAmdIDP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5BC1F000E9;
+	Mon, 17 Aug 2026 14:57:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978676;
-	bh=Ig2jtjkS6b86lZwU+NRFhsi1mma2YjiExqWZMvhX/Kc=;
+	s=korg; t=1786978679;
+	bh=1v1smvrp8vIqi56ssBAxlDtPu9kmOkKgczcxbn6H43M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g1JUWAF7KUfddwR1qjjcpQMAyJo+4D6knqi/lxMd0yVRi5PuNMQV5WfhkqtgDSN0y
-	 NASxyVdaQCW3HLhtAyuDf0S2tmZxOrKwS3uMkWVKTxv/tfX+A+nj3tR9MaoG4WAJNz
-	 bkvx30luQdS9lqr6y7UGMMnEAfABS0E41DtUuSIw=
+	b=SqAmdIDPkPtiHZgU1Hju4IL8gq3WXYpUFZb4QsUnu4A0QZUrUMBGZImDc8DjY1Q38
+	 AxQryPO8UkSTPbrJxr2vcfTZBaUGJkV95iQLwOq7QW3isnRJ+oFTUS/8f5DtF3oI+r
+	 HEolI/RoHL7OV7nVTZZLr4abQRmKqHpMGOVsPEeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+61b1db46218109869c14@syzkaller.appspotmail.com,
-	Rik van Riel <riel@surriel.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 117/156] fbdev: bitblit: bound-check glyph index in bit_cursor()
-Date: Mon, 17 Aug 2026 15:34:11 +0200
-Message-ID: <20260817132539.215885347@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Xiao Liu <lx24@stu.ynu.edu.cn>,
+	Daming Li <d4n.for.sec@gmail.com>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 118/156] net: smc: fix splice entry lifetime imbalance in smc_rx_splice
+Date: Mon, 17 Aug 2026 15:34:12 +0200
+Message-ID: <20260817132539.258756946@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -45,95 +49,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Daming Li <d4n.for.sec@gmail.com>
 
-commit e033cbf3975a8465f879ebd5989dc35b04423a4d upstream.
+commit 5d9686af2976741bbd79b150d1c9e60b81e7f12e upstream.
 
-bit_cursor() fetches the glyph under the cursor with
+smc_rx_splice() passes pages to splice_to_pipe() before taking the
+references that cover the lifetime of each splice entry. In the
+VM-backed RMB path, splice_to_pipe() may drop unqueued entries through
+smc_rx_spd_release(), while queued entries are released later via the
+pipe buffer callback.
 
-	c = scr_readw(vc_pos);
-	src = vc_font.data + ((c & charmask) * w * height);
+The old post-splice accounting also derives the number of queued VM pages
+from an offset mutated while building the descriptor, and a multi-page
+splice pairs one sock_hold() with multiple sock_put() calls.
 
-where charmask is 0x1ff when vc_hi_font_mask is set. The screen buffer
-value comes directly from scr_readw() and may be larger than the current
-font's glyph count.
+Take the page and socket references for every candidate entry before
+splice_to_pipe(), and drop the matching private state, page reference,
+and socket reference from smc_rx_spd_release() for entries that never
+get queued. This fixes a refcount imbalance that can underflow page
+refcounts and trigger a use-after-free.
 
-Syzkaller triggers this via vcs_write(). The Call Trace shows
-vcs_write() in vc_screen.c writing an arbitrary 16-bit value with
-writev() to /dev/vcsa, which vcs_write_buf() in vc_screen.c stores via
-vcs_scr_writew() without checking charcount. The stored value is later
-read in bit_cursor() in bitblit.c.
-
-When the font is changed from a font with 512 glyphs to a font with
-256 glyphs, the screen buffer can retain characters with the high
-bit set from the previous mode, which could also produce the same
-out-of-bounds access.
-
-  BUG: KASAN: global-out-of-bounds in soft_cursor+0x378/0x6bc drivers/video/fbdev/core/softcursor.c:70
-  Read of size 16 at addr ffff800086c57970
-
-  Call Trace:
-   soft_cursor+0x378/0x6bc drivers/video/fbdev/core/softcursor.c:70
-   bit_cursor+0xa90/0x1108 drivers/video/fbdev/core/bitblit.c:365
-   fbcon_cursor+0x344/0x498 drivers/video/fbdev/core/fbcon.c:1427
-   hide_cursor+0xdc/0x2d0 drivers/tty/vt/vt.c:883
-   update_region+0x100/0x18c drivers/tty/vt/vt.c:669
-   vcs_write+0x8ec/0xaf0 drivers/tty/vt/vc_screen.c:685
-
-bit_putcs_aligned() and bit_putcs_unaligned() already clamp the glyph
-index to vc_font.charcount. Apply the same clamp in bit_cursor() after
-extracting the attribute and masking, before indexing fontdata.
-
-The fix completes the bounds checking started in commit 18c4ef4e765a
-("fbdev: bitblit: bound-check glyph index in bit_putcs*"), which missed
-the cursor path.
-
-This change should be safe because the clamp reuses the existing
-contract from fbcon: charcount is maintained under console_lock in
-con_font_set() and fbcon_font_set(), and hi_font_mask is cleared when
-switching from 512 to 256 glyphs. When stale screen data with high bits
-remains after a font switch, or when vcs_write() stores an arbitrary
-value, clamping the index to 0 prevents the out-of-bounds read without
-changing cursor semantics — the same fallback bit_putcs uses.
-
-Reported-by: syzbot+61b1db46218109869c14@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=61b1db46218109869c14
-Link: https://lore.kernel.org/all/6a75205c.01d0871a.3a0d52.0032.GAE@google.com/
-Fixes: 18c4ef4e765a ("fbdev: bitblit: bound-check glyph index in bit_putcs*")
+Fixes: 9014db202cb7 ("smc: add support for splice()")
 Cc: stable@vger.kernel.org
-Assisted-by: Hermes:muse-spark-1.2 syzkaller
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Reported-by: Vega <vega@nebusec.ai>
+Co-developed-by: Xiao Liu <lx24@stu.ynu.edu.cn>
+Signed-off-by: Xiao Liu <lx24@stu.ynu.edu.cn>
+Signed-off-by: Daming Li <d4n.for.sec@gmail.com>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Link: https://patch.msgid.link/20260730145552.360287-2-enjou1224z@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/bitblit.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/smc/smc_rx.c |   19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
---- a/drivers/video/fbdev/core/bitblit.c
-+++ b/drivers/video/fbdev/core/bitblit.c
-@@ -274,9 +274,14 @@ static void bit_cursor(struct vc_data *v
- 	if (!vc->vc_font.data)
- 		return;
- 
-- 	c = scr_readw((u16 *) vc->vc_pos);
-+	c = scr_readw((u16 *) vc->vc_pos);
- 	attribute = get_attribute(info, c);
--	src = vc->vc_font.data + ((c & charmask) * (w * vc->vc_font.height));
-+	c &= charmask;
+--- a/net/smc/smc_rx.c
++++ b/net/smc/smc_rx.c
+@@ -150,7 +150,12 @@ static const struct pipe_buf_operations
+ static void smc_rx_spd_release(struct splice_pipe_desc *spd,
+ 			       unsigned int i)
+ {
++	struct smc_spd_priv *priv = (struct smc_spd_priv *)spd->partial[i].private;
++	struct sock *sk = &priv->smc->sk;
 +
-+	/* Clamp to font size, same as bit_putcs_aligned() */
-+	if (c >= vc->vc_font.charcount)
-+		c = 0;
-+	src = vc->vc_font.data + (c * (w * vc->vc_font.height));
++	kfree(priv);
+ 	put_page(spd->pages[i]);
++	sock_put(sk);
+ }
  
- 	if (par->cursor_state.image.data != src ||
- 	    par->cursor_reset) {
+ static int smc_rx_splice(struct pipe_inode_info *pipe, char *src, size_t len,
+@@ -209,6 +214,10 @@ static int smc_rx_splice(struct pipe_ino
+ 			offset = 0;
+ 		}
+ 	}
++	for (i = 0; i < nr_pages; i++) {
++		get_page(pages[i]);
++		sock_hold(&smc->sk);
++	}
+ 	spd.nr_pages_max = nr_pages;
+ 	spd.nr_pages = nr_pages;
+ 	spd.pages = pages;
+@@ -217,16 +226,8 @@ static int smc_rx_splice(struct pipe_ino
+ 	spd.spd_release = smc_rx_spd_release;
+ 
+ 	bytes = splice_to_pipe(pipe, &spd);
+-	if (bytes > 0) {
+-		sock_hold(&smc->sk);
+-		if (!lgr->is_smcd && smc->conn.rmb_desc->is_vm) {
+-			for (i = 0; i < PAGE_ALIGN(bytes + offset) / PAGE_SIZE; i++)
+-				get_page(pages[i]);
+-		} else {
+-			get_page(smc->conn.rmb_desc->pages);
+-		}
++	if (bytes > 0)
+ 		atomic_add(bytes, &smc->conn.splice_pending);
+-	}
+ 	kfree(priv);
+ 	kfree(partial);
+ 	kfree(pages);
 
 
