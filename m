@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421CD43BDDE;
-	Mon, 17 Aug 2026 14:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2445E33B6F4;
+	Mon, 17 Aug 2026 14:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977072; cv=none; b=lQN74oKbHcdV6P3Z1eRxfUS1YLp/t7fVSAb+TEd43m3Y3wdEhfQPtTjTOaFDUXBg84QahO+YqbduyDx5eEH9RidGPFx7GE4OZtvCJ0gxAI13VbJH0AeFPuT3g2YcuaFFcb0+XhssVHOfUAOXkhahzZ4LNYBItEnJHu3bpP/OCZo=
+	t=1786977075; cv=none; b=KWsOwFeTkgL9MJh8YXocU83zVSOGtyyDyblT8wEUKFhsEbE6/QrOhp9N9xEsx54advcZ3vxbalfedfGU7fCCzS2SXtgB8yOXqKQwFw0WddR8SZ/32uaI5gg0Ops/CR1CCE6natB6l0OkTITpDIfLFSyWK9Vq4TFegABx4wEnwsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977072; c=relaxed/simple;
-	bh=nMykggGrQq3ZbYeCE/XjYJUntN7WrQxJNUgJGCbdGtA=;
+	s=arc-20240116; t=1786977075; c=relaxed/simple;
+	bh=3vZPr9n1w7F1wkM3s1F5t6RnAiZsBU5pn9+03fkKDPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i3rxxWktzxCz+ll1PFxcqCz1q7I2gCz44sF4rRDY63ppZZyux4N+mnenR86RtAvwkbVUOWV8bN9QN8HGxZKf5jrT5l71EBgbBkg2zKIxsaxs982KefEv0pFBVst6T0kE3p+hoPJfw61F6rhODQ1jLqSnEcFssIr691gXirlOr4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SP3dHS1Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pxLsPGyLZudojMOjgmivTHhQurp3kTjjfzEdwU7YKUN4p3oxveRyLdO0vv+C3V5H16xnoxE4JG/IauEPTV/zZKZuCSbo7SW3Vo0ijV+hzrUCWuSHTN3Ciz38reMKaSrRtI4JnqA3Ka/3yrCUIIK9N0tH3s3DjJQyg0sNiJ/5jN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vnYtnoEC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SP3dHS1Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A881F000E9;
-	Mon, 17 Aug 2026 14:31:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vnYtnoEC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFEA1F000E9;
+	Mon, 17 Aug 2026 14:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977071;
-	bh=E5ib63ParZQbo1EzAazV8l+QDNBf++26eDElxrIAzIk=;
+	s=korg; t=1786977074;
+	bh=gGlE6DS/Ply4pSGPCSbcKVnvtbBHHMRb1wfPjn3ksNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SP3dHS1Zd5Ew3mm5XorqeBIytpgCq9EOHKg85QdaqLiTm600/lF3nmDQpOV2R4n6+
-	 6SsT1DFg5doRO/yLJFeUBCrRJzu03AGld7CQ8ES5SYFYiHwI9sog4ecQ9sCgUT7GJ4
-	 aZVU8PEJ2ydyny+s/U1XGgY4UPMVb/nYGUZqVagM=
+	b=vnYtnoEC99YWAXPlpy5rqXOKxjrCEjYLbyMqaoGvpNRYbGnKJ+FLohbZ9DqFMiUZE
+	 fo42F5UEEWqELoUZo0xYObhwgnAQQwchf5j8CMDWLW+7CB2STipMDjYxSJZrSyozyd
+	 4TVzJ66f4WXM05/BvvRXgk2kAYFbvo9hYk9JMhXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.15 203/456] libceph: Fix multiplication overflow in decode_new_up_state_weight()
-Date: Mon, 17 Aug 2026 15:29:53 +0200
-Message-ID: <20260817132548.077294539@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 5.15 186/456] binfmt_misc: set have_execfd only once the interpreter is opened
+Date: Mon, 17 Aug 2026 15:29:36 +0200
+Message-ID: <20260817132547.398342329@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,55 +49,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 98917a499ec7064c14fc56d180a4fd636fc2784c upstream.
+commit bbf5f639918dc011aaf60aab8480218758ee68c5 upstream.
 
-If a message of type CEPH_MSG_OSD_MAP contains a (maliciously) corrupted
-osdmap, out-of-bounds memory accesses may occur in
-decode_new_up_state_weight(). This happens because the bounds check for
-the new_state part is based on calculating its length depending on a len
-value read from the incoming message. This calculation may overflow
-leading to an incorrect bounds check. Subsequently, out-of-bounds reads
-may occur when decoding this part.
+load_misc_binary() raises bprm->have_execfd as soon as it sees the 'O'
+(or 'C') flag. This happens well before it opens the interpreter. If
+that open fails the flag stays set on the bprm. binfmt_misc is at the
+head of the format list so an interpreter open failure that returns
+-ENOEXEC lets the search fall through to a later format. This means it
+runs the matched binary directly having never staged an interpreter. So
+bprm->executable is NULL while have_execfd falsely claims a descriptor
+is present.
 
-This patch switches the multiplication to use check_mul_overflow() to
-abort processing the osdmap if an overflow occurred. Therefore,
-osdmaps/messages containing large values for len that result in a
-multiplication overflow are treated as invalid.
+Consequently, begin_new_exec() dereferences the missing executable:
 
-[ idryomov: rename new_state_len -> new_state_item_size, formatting ]
+  would_dump(bprm, bprm->executable);
 
+and NULL derefs. Had it not, the hand-off later in the same function
+would have failed anyway. FD_ADD(0, bprm->executable) rejects a NULL
+file with -ENOMEM. Both sites are past the point of no return so the
+exec cannot be unwound either way.
+
+This can be reached by unprivileged users as binfmt_misc can be mounted
+in user namespaces. So a user can register an 'O' entry whose
+interpreter lives on a FUSE mount, have the FUSE server fail the open
+with -ENOEXEC and execute a native ELF file that matches the entry.
+
+have_execfd only means anything alongside the executable it describes
+which is not set until the interpreter has been opened and staged.
+So lets raise it there, next to execfd_creds, which is already set at
+that point. An open failure now leaves it clear, so the fallback format
+derives credentials from the binary and emits no AT_EXECFD, as it would
+for any native exec. The argv rewrite load_misc_binary() performs before
+the open is still not undone. This means the binary sees the interpreter
+path in argv[0] and its own path in argv[1] but that predates this
+change and only became observable once the exec stopped faulting.
+
+Link: https://patch.msgid.link/20260720-beglichen-kognitiv-organismus-5e1e55326c56@brauner
+Fixes: bc2bf338d54b ("exec: Remove recursion from search_binary_handler")
 Cc: stable@vger.kernel.org
-Fixes: 930c53286977 ("libceph: apply new_state before new_up_client on incrementals")
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/binfmt_misc.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -1830,6 +1830,8 @@ static int decode_new_up_state_weight(vo
- 	void *new_up_client;
- 	void *new_state;
- 	void *new_weight_end;
-+	const u32 new_state_item_size =
-+	    sizeof(u32) + (struct_v >= 5 ? sizeof(u32) : sizeof(u8));
- 	u32 len;
- 	int ret;
- 	int i;
-@@ -1850,7 +1852,8 @@ static int decode_new_up_state_weight(vo
+--- a/fs/binfmt_misc.c
++++ b/fs/binfmt_misc.c
+@@ -199,9 +199,6 @@ static int load_misc_binary(struct linux
+ 			goto ret;
+ 	}
  
- 	new_state = *p;
- 	ceph_decode_32_safe(p, end, len, e_inval);
--	len *= sizeof(u32) + (struct_v >= 5 ? sizeof(u32) : sizeof(u8));
-+	if (check_mul_overflow(len, new_state_item_size, &len))
-+		goto e_inval;
- 	ceph_decode_need(p, end, len, e_inval);
- 	*p += len;
+-	if (fmt->flags & MISC_FMT_OPEN_BINARY)
+-		bprm->have_execfd = 1;
+-
+ 	/* make argv[1] be the path to the binary */
+ 	retval = copy_string_kernel(bprm->interp, bprm);
+ 	if (retval < 0)
+@@ -231,6 +228,8 @@ static int load_misc_binary(struct linux
+ 		goto ret;
+ 
+ 	bprm->interpreter = interp_file;
++	if (fmt->flags & MISC_FMT_OPEN_BINARY)
++		bprm->have_execfd = 1;
+ 	if (fmt->flags & MISC_FMT_CREDENTIALS)
+ 		bprm->execfd_creds = 1;
  
 
 
