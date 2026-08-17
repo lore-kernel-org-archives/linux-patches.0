@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C56741D111;
-	Mon, 17 Aug 2026 14:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB86175A99;
+	Mon, 17 Aug 2026 14:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978506; cv=none; b=lEUwz4w/a4+9bm9EaTbWPsuzEfnwTinn0BQn7xSZD4TVDmFo0b9k8zgoFx8eStu7yCC58jQPqYu60QlYDNa1CVWniJCeONBiZMnmHAZFMD+6Sx9lJkIbxP5XOsoT78Hv75PCm9Q9JcQ1/QtCkiTctRnNawjDlxC1PGGH/aSqchU=
+	t=1786978509; cv=none; b=JWUdwBH18WkKQPdEUNcssqLeodg2K6KoJ9WYxlgyZkBVM2dkV4qYXvx7AFa95nnwff554w9zHTbPW/3m+fdzR7hF4n0NfzxsvGCsNve11Iydd3GeSmIdHNDRKvPv4gvHkfDsb0AJu2hgBOCk6yPTI3sR2QMrzsrji16Vb2edH48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978506; c=relaxed/simple;
-	bh=jnOTpnedk3B7MXO/Lu/xfMgselo7eu7x7acRk4VufNI=;
+	s=arc-20240116; t=1786978509; c=relaxed/simple;
+	bh=VgCkmhjkQN/Rx9DZ1NOS7ggbLrAlnEVbNw7NeVS9WFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sxeSv1TYeLP9uEFmRw9Q6TYW0hrGfCJVssVx7FRVnRR6k0rdNiWB0M0V79DOnh1Xz99XLu0wjrUkAASqwy19klArIe7/TasdiYmJtGUGScKKLqNrb1JfFCXXRu5g7NcXeSCWiJqsYxITQ822gAn1Po/1utVupdzCHFDsdnEHzZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvHkV8pe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BXmFGwyOty+PZVdGvyrYcH1pccZ/phd9vm64Tqirasks4ECjFj7N+T5lH+IVoIq0P8s+S/jSEZy8cR/GmWtwYlt53GWoNDzrMxRv60TFx5WchLlgYuHLXC98yflYyUQ3RJ5CHYJ2azivN9cKwdY4N1uhVQINcqQ2RoZQB4B8Tj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0ew9be5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvHkV8pe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D406A1F000E9;
-	Mon, 17 Aug 2026 14:55:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0ew9be5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67D11F000E9;
+	Mon, 17 Aug 2026 14:55:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978505;
-	bh=b76j4EYQW5SohH9A+RM+X2SDiQOcZWmpF1aFrkrS0Pw=;
+	s=korg; t=1786978508;
+	bh=4T+TGiHWM67TCdxbM2h5nI2J+6ZhRTLW1e4GQvsIJq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WvHkV8pehe53rlfw30HMoYNIWWQpJiYqicdAxC2w6ZgHBaSruZJwvTFNV+qv4RdC2
-	 GJcJXRTot3N2qKU7FMfm90oJiWwhrgW/4HQ5RVwQNXl918SRGY7ADrrc1PCNiNiPdI
-	 KhCLhMIJEbiZdeMQT4kZbEcGGdG/ujr2TbqnrHeU=
+	b=v0ew9be5ECzC3Iy4CtksPyndK9me8yUgjjL8wR6+lq6g5zWPXbNSvZZ6Sjn9Sw+2g
+	 2rYIcM8Se/mfR4kKKKC5AVm13YJE/2oOLVq8wmqt6Iu9zwNGyF06QgO8qWqJiYORsJ
+	 xiTRECtMjiz/na45yB/gvzwApKDVwCq2jOMzWeww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Qingshuang Fu <fuqingshuang@kylinos.cn>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 060/156] regulator: devres: add API for reference voltage supplies
-Date: Mon, 17 Aug 2026 15:33:14 +0200
-Message-ID: <20260817132536.934895243@linuxfoundation.org>
+Subject: [PATCH 6.6 061/156] hwmon: (ads7828) Fix external VREF regulator handling
+Date: Mon, 17 Aug 2026 15:33:15 +0200
+Message-ID: <20260817132536.977123035@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -51,133 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Qingshuang Fu <fuqingshuang@kylinos.cn>
 
-[ Upstream commit b250c20b64290808aa4b5cc6d68819a7ee28237f ]
+[ Upstream commit fddb5ceaf901b050ed2a1a7deeecbf97e003435a ]
 
-A common use case for regulators is to supply a reference voltage to an
-analog input or output device. This adds a new devres API to get,
-enable, and get the voltage in a single call. This allows eliminating
-boilerplate code in drivers that use reference supplies in this way.
+The driver currently has two issues with the external VREF regulator
+handling in ads7828_probe():
 
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://lore.kernel.org/r/20240429-regulator-get-enable-get-votlage-v2-1-b1f11ab766c1@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: fddb5ceaf901 ("hwmon: (ads7828) Fix external VREF regulator handling")
+1. All errors from devm_regulator_get_optional() are ignored, causing the
+   driver to incorrectly fall back to internal VREF even for transient
+   errors like -EPROBE_DEFER or genuine failures like -ENOMEM.
+
+2. The external regulator is never enabled. The driver calls
+   regulator_get_voltage() without first calling regulator_enable(),
+   so the VREF pin may remain unpowered if the regulator is not
+   configured as always-on.
+
+Fix both issues by switching to devm_regulator_get_enable_read_voltage(),
+which handles regulator get, enable, and voltage read in one call.
+Only -ENODEV (no regulator specified in device tree) should trigger the
+fallback to internal VREF. All other errors are propagated to the caller.
+
+Fixes: a8ddfea09566 ("hwmon: (ads7828) Accept optional parameters from device tree")
+Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
+Link: https://lore.kernel.org/r/20260805061645.1331652-1-fffsqian@163.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../driver-api/driver-model/devres.rst        |  1 +
- drivers/regulator/devres.c                    | 59 +++++++++++++++++++
- include/linux/regulator/consumer.h            |  7 +++
- 3 files changed, 67 insertions(+)
+ drivers/hwmon/ads7828.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/driver-api/driver-model/devres.rst b/Documentation/driver-api/driver-model/devres.rst
-index 8be086b3f8297..3fe1711dd587c 100644
---- a/Documentation/driver-api/driver-model/devres.rst
-+++ b/Documentation/driver-api/driver-model/devres.rst
-@@ -426,6 +426,7 @@ REGULATOR
-   devm_regulator_bulk_put()
-   devm_regulator_get()
-   devm_regulator_get_enable()
-+  devm_regulator_get_enable_read_voltage()
-   devm_regulator_get_enable_optional()
-   devm_regulator_get_exclusive()
-   devm_regulator_get_optional()
-diff --git a/drivers/regulator/devres.c b/drivers/regulator/devres.c
-index 90bb0d178885a..4f290b9b559b9 100644
---- a/drivers/regulator/devres.c
-+++ b/drivers/regulator/devres.c
-@@ -145,6 +145,65 @@ struct regulator *devm_regulator_get_optional(struct device *dev,
- }
- EXPORT_SYMBOL_GPL(devm_regulator_get_optional);
+diff --git a/drivers/hwmon/ads7828.c b/drivers/hwmon/ads7828.c
+index 809e830f52a6b..b9ed146a24cc1 100644
+--- a/drivers/hwmon/ads7828.c
++++ b/drivers/hwmon/ads7828.c
+@@ -108,12 +108,11 @@ static int ads7828_probe(struct i2c_client *client)
+ 	struct ads7828_data *data;
+ 	struct device *hwmon_dev;
+ 	unsigned int vref_mv = ADS7828_INT_VREF_MV;
+-	unsigned int vref_uv;
++	int vref_uv;
+ 	bool diff_input = false;
+ 	bool ext_vref = false;
+ 	unsigned int regval;
+ 	enum ads7828_chips chip;
+-	struct regulator *reg;
  
-+/**
-+ * devm_regulator_get_enable_read_voltage - Resource managed regulator get and
-+ *                                          enable that returns the voltage
-+ * @dev: device to supply
-+ * @id:  supply name or regulator ID.
-+ *
-+ * Get and enable regulator for duration of the device life-time.
-+ * regulator_disable() and regulator_put() are automatically called on driver
-+ * detach. See regulator_get_optional(), regulator_enable(), and
-+ * regulator_get_voltage() for more information.
-+ *
-+ * This is a convenience function for supplies that provide a reference voltage
-+ * where the consumer driver just needs to know the voltage and keep the
-+ * regulator enabled.
-+ *
-+ * In cases where the supply is not strictly required, callers can check for
-+ * -ENODEV error and handle it accordingly.
-+ *
-+ * Returns: voltage in microvolts on success, or an error code on failure.
-+ */
-+int devm_regulator_get_enable_read_voltage(struct device *dev, const char *id)
-+{
-+	struct regulator *r;
-+	int ret;
-+
-+	/*
-+	 * Since we need a real voltage, we use devm_regulator_get_optional()
-+	 * rather than getting a dummy regulator with devm_regulator_get() and
-+	 * then letting regulator_get_voltage() fail with -EINVAL. This way, the
-+	 * caller can handle the -ENODEV error code if needed instead of the
-+	 * ambiguous -EINVAL.
-+	 */
-+	r = devm_regulator_get_optional(dev, id);
-+	if (IS_ERR(r))
-+		return PTR_ERR(r);
-+
-+	ret = regulator_enable(r);
-+	if (ret)
-+		goto err_regulator_put;
-+
-+	ret = devm_add_action_or_reset(dev, regulator_action_disable, r);
-+	if (ret)
-+		goto err_regulator_put;
-+
-+	ret = regulator_get_voltage(r);
-+	if (ret < 0)
-+		goto err_release_action;
-+
-+	return 0;
-+
-+err_release_action:
-+	devm_release_action(dev, regulator_action_disable, r);
-+err_regulator_put:
-+	devm_regulator_put(r);
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(devm_regulator_get_enable_read_voltage);
-+
- static int devm_regulator_match(struct device *dev, void *res, void *data)
- {
- 	struct regulator **r = res;
-diff --git a/include/linux/regulator/consumer.h b/include/linux/regulator/consumer.h
-index 25d0684d37b3e..9a2f1e9a94a85 100644
---- a/include/linux/regulator/consumer.h
-+++ b/include/linux/regulator/consumer.h
-@@ -209,6 +209,7 @@ struct regulator *__must_check devm_regulator_get_optional(struct device *dev,
- 							   const char *id);
- int devm_regulator_get_enable(struct device *dev, const char *id);
- int devm_regulator_get_enable_optional(struct device *dev, const char *id);
-+int devm_regulator_get_enable_read_voltage(struct device *dev, const char *id);
- void regulator_put(struct regulator *regulator);
- void devm_regulator_put(struct regulator *regulator);
- 
-@@ -374,6 +375,12 @@ static inline int devm_regulator_get_enable_optional(struct device *dev,
- 	return 0;
- }
- 
-+static inline int devm_regulator_get_enable_read_voltage(struct device *dev,
-+							 const char *id)
-+{
-+	return -ENODEV;
-+}
-+
- static inline struct regulator *__must_check
- regulator_get_optional(struct device *dev, const char *id)
- {
+ 	data = devm_kzalloc(dev, sizeof(struct ads7828_data), GFP_KERNEL);
+ 	if (!data)
+@@ -127,9 +126,11 @@ static int ads7828_probe(struct i2c_client *client)
+ 	} else if (dev->of_node) {
+ 		diff_input = of_property_read_bool(dev->of_node,
+ 						   "ti,differential-input");
+-		reg = devm_regulator_get_optional(dev, "vref");
+-		if (!IS_ERR(reg)) {
+-			vref_uv = regulator_get_voltage(reg);
++		vref_uv = devm_regulator_get_enable_read_voltage(dev, "vref");
++		if (vref_uv < 0) {
++			if (vref_uv != -ENODEV)
++				return vref_uv;
++		} else {
+ 			vref_mv = DIV_ROUND_CLOSEST(vref_uv, 1000);
+ 			if (vref_mv < ADS7828_EXT_VREF_MV_MIN ||
+ 			    vref_mv > ADS7828_EXT_VREF_MV_MAX)
 -- 
 2.53.0
 
