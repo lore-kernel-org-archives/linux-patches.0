@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465833BED23;
-	Mon, 17 Aug 2026 15:14:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C0042E8CB;
+	Mon, 17 Aug 2026 15:14:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979672; cv=none; b=iTrXiMUfBu5WvmuCbcV/aM3DohxfYNEBlyUl1PJY4+3EGSVUw28aic4rgVkgoatKOQrZ95u9+EohmihSetQreTCPJ0jN4toDRT1NrhLUTQvxdBXH6JzvVTTOrRpcXlPMCX8LyOMkmOmWlsXfCsvfrN0jssl0meY90mf3oNBe36M=
+	t=1786979675; cv=none; b=KW0zNV8RjzXl7UEk02isdZrxJchwt0h9uW7CGMrr7FzqyXxLwg0uQ5qlNJgtQZ2lIU5p2EaP0HXVX6pVFHSEUvXdNLZjdzwHeKVk8udpUhacZA2e/GTORbc4UBg0fOyU5fy9WVL1NFFywDh3skw9eg5I4E9kg7ltxNKpGwCSV0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979672; c=relaxed/simple;
-	bh=QPMOPeKKMyAW/lNpFN5beCmvz1yboWgH4dF2VK7IQLM=;
+	s=arc-20240116; t=1786979675; c=relaxed/simple;
+	bh=/M+cHJfJBUZh2A7OzYMv739pLNVakd+DJ1Op8GZMjoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n7TA0iaGxuWJ7vu6rPXwvI6O2xWaAv5zkaGvB62TxGYCSFmlc1HjoZ3CCZ5ipN0uRpu8d+RgyRTlyde+YhHW8rP9v1vYrhUMWDZNmvvDun1HKPUuh9JhPgjecE4/zzMEESL+w6Ya/CcxAs2VeNawaYA3snUXTjIwUqZ61yJMSbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZzwrLcN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O11yhx481F8LwYIkPjmd5TynOM18XUlbdsRTYjGNMLvWJtvbpuZP10tqPfuzIvTggDyvWy/OChLFO7zf2Q2O3xJnt2Cfhc5xFMX9bXDOdud0zoVgdy2nU1HfbtxMEh2rvIlBxvYpTi+k0UkxbBkc+jDCbljsWNvhzE+FYO0pXZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dy9aORn3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZzwrLcN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE371F00ACF;
-	Mon, 17 Aug 2026 15:14:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dy9aORn3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E311F000E9;
+	Mon, 17 Aug 2026 15:14:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979671;
-	bh=0waXONIGK+y1iK9uzmrnqZY/fws6OFNWH4vIZbRpnko=;
+	s=korg; t=1786979674;
+	bh=beSc4Yv/yinDjfsCtjEnKJ3mYpGvtI7M1eWGX796+fM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RZzwrLcNZ46yfAonxS9K09p6ETYlJD/yQJfmEXLaCYARdAbQbfmPpQ8+k2Dy4Wcbu
-	 RVefB9ZpvR0KVN5P4+ZtrVPTBBlkI9pTqyx6kZ1z6fQkB/KoA9rMcbVlCaHYpZgPpE
-	 rHqWh/WkBYxJRGhDpuQd0UKjK5pKmwBvVH92NrD0=
+	b=Dy9aORn3Fdny2+X3kJQKGrYe1WgdBFv5stfpeQ2YcgQ9koMHrHXJpocIjKWLKrWRe
+	 +2c54exUOX4qTdE6+UQq1J5SiEAqyCoWrGnypYgoEU78cBfE8/uIgef8keEQQAtKhM
+	 Z7EnZe18W4g0Ems0Yi2YI5OSbsWrAX64/Gc82KCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Jiri Kosina <jkosina@suse.com>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 306/609] HID: logitech-dj: fix wrong detection of bad DJ_SHORT output report
-Date: Mon, 17 Aug 2026 15:30:02 +0200
-Message-ID: <20260817132554.484926569@linuxfoundation.org>
+Subject: [PATCH 6.1 307/609] net: qrtr: ns: Limit the maximum server registration per node
+Date: Mon, 17 Aug 2026 15:30:03 +0200
+Message-ID: <20260817132554.520853613@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,43 +54,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Tissoires <bentiss@kernel.org>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 8b9a097eb2fc37b486afd81388c693bf3ab44466 ]
+[ Upstream commit d5ee2ff98322337951c56398e79d51815acbf955 ]
 
-commit b6a57912854e ("HID: logitech-dj: Prevent REPORT_ID_DJ_SHORT
-related user initiated OOB write") assumed that all HID devices attached
-to the logitech-dj driver was having an output report of DJ_SHORT.
+Current code does no bound checking on the number of servers added per
+node. A malicious client can flood NEW_SERVER messages and exhaust memory.
 
-However, on the receiver itself, we have 2 other HID device we attach
-here: the mouse emulation and the keyboard emulation. For those devices
-the value of rep is NULL and we are triggered a segfault here.
+Fix this issue by limiting the maximum number of server registrations to
+256 per node. If the NEW_SERVER message is received for an old port, then
+don't restrict it as it will get replaced. While at it, also rate limit
+the error messages in the failure path of qrtr_ns_worker().
 
-This is doubly required because logitech-dj also handles non DJ devices
-that might not have the DJ collection.
+Note that the limit of 256 is chosen based on the current platform
+requirements. If requirement changes in the future, this limit can be
+increased.
 
-Fixes: b6a57912854e ("HID: logitech-dj: Prevent REPORT_ID_DJ_SHORT related user initiated OOB write")
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Cc: stable@vger.kernel.org
+Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260409-qrtr-fix-v3-1-00a8a5ff2b51@oss.qualcomm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-dj.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/qrtr/ns.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/hid/hid-logitech-dj.c b/drivers/hid/hid-logitech-dj.c
-index 591a8f56ad2e9..8b11aade46c4d 100644
---- a/drivers/hid/hid-logitech-dj.c
-+++ b/drivers/hid/hid-logitech-dj.c
-@@ -1797,7 +1797,8 @@ static int logi_dj_probe(struct hid_device *hdev,
- 	output_report_enum = &hdev->report_enum[HID_OUTPUT_REPORT];
- 	rep = output_report_enum->report_id_hash[REPORT_ID_DJ_SHORT];
+diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+index 559aad0e36215..91e43b0fd5669 100644
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -68,13 +68,9 @@ struct qrtr_server {
+ struct qrtr_node {
+ 	unsigned int id;
+ 	struct xarray servers;
++	u32 server_count;
+ };
  
--	if (rep->maxfield < 1 || rep->field[0]->report_count != DJREPORT_SHORT_LENGTH - 1) {
-+	if (rep && (rep->maxfield < 1 ||
-+		    rep->field[0]->report_count != DJREPORT_SHORT_LENGTH - 1)) {
- 		hid_err(hdev, "Expected size of DJ short report is %d, but got %d",
- 			DJREPORT_SHORT_LENGTH - 1, rep->field[0]->report_count);
- 		return -EINVAL;
+-/* Max lookup limit is chosen based on the current platform requirements. If the
+- * requirement changes in the future, this value can be increased.
+- */
+-#define QRTR_NS_MAX_LOOKUPS 64
+-
+ /* Max nodes, server, lookup limits are chosen based on the current platform
+  * requirements. If the requirement changes in the future, these values can be
+  * increased.
+@@ -249,6 +245,17 @@ static struct qrtr_server *server_add(unsigned int service,
+ 	if (!service || !port)
+ 		return NULL;
+ 
++	node = node_get(node_id);
++	if (!node)
++		return NULL;
++
++	/* Make sure the new servers per port are capped at the maximum value */
++	old = xa_load(&node->servers, port);
++	if (!old && node->server_count >= QRTR_NS_MAX_SERVERS) {
++		pr_err_ratelimited("QRTR client node %u exceeds max server limit!\n", node_id);
++		return NULL;
++	}
++
+ 	srv = kzalloc(sizeof(*srv), GFP_KERNEL);
+ 	if (!srv)
+ 		return NULL;
+@@ -258,10 +265,6 @@ static struct qrtr_server *server_add(unsigned int service,
+ 	srv->node = node_id;
+ 	srv->port = port;
+ 
+-	node = node_get(node_id);
+-	if (!node)
+-		goto err;
+-
+ 	/* Delete the old server on the same port */
+ 	old = xa_store(&node->servers, port, srv, GFP_KERNEL);
+ 	if (old) {
+@@ -272,6 +275,8 @@ static struct qrtr_server *server_add(unsigned int service,
+ 		} else {
+ 			kfree(old);
+ 		}
++	} else {
++		node->server_count++;
+ 	}
+ 
+ 	trace_qrtr_ns_server_add(srv->service, srv->instance,
+@@ -312,6 +317,7 @@ static int server_del(struct qrtr_node *node, unsigned int port, bool bcast)
+ 	}
+ 
+ 	kfree(srv);
++	node->server_count--;
+ 
+ 	return 0;
+ }
+@@ -708,7 +714,7 @@ static void qrtr_ns_worker(struct work_struct *work)
+ 		}
+ 
+ 		if (ret < 0)
+-			pr_err("failed while handling packet from %d:%d",
++			pr_err_ratelimited("failed while handling packet from %d:%d",
+ 			       sq.sq_node, sq.sq_port);
+ 	}
+ 
 -- 
 2.53.0
 
