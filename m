@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDFA93F210C;
-	Mon, 17 Aug 2026 15:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5843AAF6D;
+	Mon, 17 Aug 2026 15:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979637; cv=none; b=H6TaN/M1d0JpF4vS23NtJZoONMR1903qBZi4bOWczc2HAKSTebtzWzL7HmDQsUzCxBERoieitpxBpUONyQADxecSd/XjRX+N9xUjDjkMwqBoqgNHg7sn/UPmbWIfar9fZaCb8IRChXTUtz84WC1D+IuS22WcZnfExE+iYXX9Na4=
+	t=1786979640; cv=none; b=nhfL8DGDIhMaAA3PEY9nxwaCdeb7mddmywctpVNq0g5by+0vzmZFxc7pYOezEVZUQ2+dsmfAKZ9z/gXBfL1e4EgbfNf0KpLFMLpx8HAAt88nuncfeygYNrd6YHeAHpArjqOjQ9css1p0TBykfX8xKdTlbFQd3xce4wPG2vrTyyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979637; c=relaxed/simple;
-	bh=Uevjw92A6HhzH+lRGDgDmHuLRmB3+N0FmxepQs/K9yg=;
+	s=arc-20240116; t=1786979640; c=relaxed/simple;
+	bh=V5B3qYS7b5A3PqNSCyPdYZf0friTSf7PNNQygfSEZPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JJ8KFL9wYgWZunTfQlkxQrsuauOHopOvGGtKUEqoEnEwFwXhMkn6V1OT2MVlu3DAguiKh1dF9fu1K5MjnBsjb7QoQcLK+Qbom6qALjJ8X1lWgwbDkXORsSDCURJfvAkBvNEe4pUuB56d6FA/BQXKviGWtuZzu0bvQDbLFtpbHw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ri+2Pry3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HC5v7+zh9s7c4sK2ttXqBGiHL8EPhtjZDt6mJTmQmAwiCdYac8n3Gj3nRKUUlrbsEuFO2o5CZzaItStJgvi+Ija1UZ9Wr4wP59K3wo09rZrjC1JGd2C2Vs4j5t43wDLgbQzKuPLyxs0a/fDJiopUglmKSoyBOkyPiFcCGkcNZk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jK/C3yAb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ri+2Pry3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345C71F000E9;
-	Mon, 17 Aug 2026 15:13:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jK/C3yAb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1170A1F000E9;
+	Mon, 17 Aug 2026 15:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979636;
-	bh=x/MyDUq4qbcag7IhJWwE1x71Kb77+VZQEhDDsb6MwxU=;
+	s=korg; t=1786979639;
+	bh=gueS5PZLIw/ZSlBW8j1OLNFjy+w9eR/eR9OTubJGn30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ri+2Pry3b1DakmoBKdx5vFiBfvgx82BhYtW90AGHFc/8/juNRNuMijEHiO7ou6VKb
-	 ihA0pnNkHeZDGqp87OLcxA95ZWu8E8f8qZBWUY8tcrUlE9E1Wl0l/IaP1ievMks5E6
-	 7D4NnEKEgBCZqnhC1TEiD/4g21E9meWCziGJKgp0=
+	b=jK/C3yAb6Tf4e+oUF3lXnHxs76ho/VvLGwlwKqQdoTgXNlmGQcpXWE260MbX7FLn2
+	 3CTwBHPpxv1CtFcgENtQbvu63aKd1Bf+v8NfbqNHk+A/ab9HdRrx6hxwx4ehJf1Uee
+	 d8tc4dj1RbLkSFznzC0UmMnXtp4W1gUCSn9xj8IE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yitang Yang <yi1tang.yang@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	SJ Park <sj@kernel.org>,
+	Yang yingliang <yangyingliang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 295/609] io_uring/rw: fix missing ERESTARTSYS conversion in read paths
-Date: Mon, 17 Aug 2026 15:29:51 +0200
-Message-ID: <20260817132554.088827314@linuxfoundation.org>
+Subject: [PATCH 6.1 296/609] mm/damon/core: validate ranges in damon_set_regions()
+Date: Mon, 17 Aug 2026 15:29:52 +0200
+Message-ID: <20260817132554.125823813@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,87 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yitang Yang <yi1tang.yang@gmail.com>
+From: SJ Park <sj@kernel.org>
 
-Commit ab05caca123c6d0b41850b7c05b246e4dca4a770 upstream.
+commit 1292c0ecb1caefb8ca064a3639d5673991e8810c upstream.
 
-Both read and write may receive internal restart error codes from
-the filesystem layer and should be converted to -EINTR. However,
-when multishot read support was added, the error code normalization
-was lost for both io_read() and io_read_mshot().
+DAMON core logic assumes zero length regions don't exist.  However, a few
+DAMON API callers including DAMON_SYSFS, DAMON_RECLAIM and DAMON_LRU_SORT
+allow users to set empty monitoring target regions.  This could result in
+WARN_ONCE() on CONFIG_DAMON_DEBUG_SANITY enabled kernel, and
+divide-by-zero from damon_merge_two_regions().
 
-Extract the conversion into io_fixup_restart_res() and apply it
-in all three locations: io_rw_done(), io_read(), and io_read_mshot().
+For example, the WANR_ONCE() can be triggered like below.
 
-Fixes: a08d195b586a ("io_uring/rw: split io_read() into a helper")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yitang Yang <yi1tang.yang@gmail.com>
-Link: https://patch.msgid.link/20260722124551.130563-1-yi1tang.yang@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+    # grep DAMON_DEBUG_SANITY /boot/config-$(uname -r)
+    # CONFIG_DAMON_DEBUG_SANITY=y
+    # damo start
+    # cd /sys/kernel/mm/damon/admin/kdamonds/0
+    # echo 0 > contexts/0/targets/0/regions/0/start
+    # echo 0 > contexts/0/targets/0/regions/0/end
+    # echo commit > state
+    # dmesg
+    [....]
+    [   73.705780] ------------[ cut here ]------------
+    [   73.707552] start 0 >= end 0
+    [   73.708452] WARNING: mm/damon/core.c:359 at damon_new_region+0x6e/0x80, CPU#1: kdamond.0/758
+    [...]
+
+All DAMON API callers eventually use damon_set_regions() to setup the
+regions.  Add the validation logic in the function.
+
+Link: https://lore.kernel.org/20260630035221.146458-1-sj@kernel.org
+Fixes: 43b0536cb471 ("mm/damon: introduce DAMON-based Reclamation (DAMON_RECLAIM)")
+Signed-off-by: SJ Park <sj@kernel.org>
+Cc: Yang yingliang <yangyingliang@huawei.com>
+Cc: <stable@vger.kernel.org> # 5.16.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/rw.c | 28 +++++++++++++++++++---------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ mm/damon/core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/io_uring/rw.c b/io_uring/rw.c
-index b75f62dccce6..cbd3ee9a9373 100644
---- a/io_uring/rw.c
-+++ b/io_uring/rw.c
-@@ -129,27 +129,37 @@ void io_readv_writev_cleanup(struct io_kiocb *req)
- 	kfree(io->free_iovec);
- }
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 4b434ebd37c5..0a0bb033f28a 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -212,6 +212,12 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
+ 	unsigned int i;
+ 	int err;
  
--static inline void io_rw_done(struct kiocb *kiocb, ssize_t ret)
-+static inline ssize_t io_fixup_restart_res(ssize_t ret)
- {
- 	switch (ret) {
--	case -EIOCBQUEUED:
--		break;
- 	case -ERESTARTSYS:
- 	case -ERESTARTNOINTR:
- 	case -ERESTARTNOHAND:
- 	case -ERESTART_RESTARTBLOCK:
- 		/*
- 		 * We can't just restart the syscall, since previously
--		 * submitted sqes may already be in progress. Just fail this
--		 * IO with EINTR.
-+		 * submitted sqes may already be in progress. Just fail
-+		 * this IO with EINTR.
- 		 */
--		ret = -EINTR;
--		fallthrough;
-+		return -EINTR;
- 	default:
--		kiocb->ki_complete(kiocb, ret);
-+		return ret;
- 	}
- }
- 
-+static inline void io_rw_done(struct kiocb *kiocb, ssize_t ret)
-+{
-+	/* IO was queued async, completion will happen later */
-+	if (ret == -EIOCBQUEUED)
-+		return;
++	for (i = 0; i < nr_ranges; i++) {
++		if (ALIGN_DOWN(ranges[i].start, DAMON_MIN_REGION) >=
++				ALIGN(ranges[i].end, DAMON_MIN_REGION))
++			return -EINVAL;
++	}
 +
-+	/* transform internal restart error codes */
-+	if (unlikely(ret < 0))
-+		ret = io_fixup_restart_res(ret);
-+
-+	kiocb->ki_complete(kiocb, ret);
-+}
-+
- static inline loff_t *io_kiocb_update_pos(struct io_kiocb *req)
- {
- 	struct io_rw *rw = io_kiocb_to_cmd(req, struct io_rw);
-@@ -854,7 +864,7 @@ int io_read(struct io_kiocb *req, unsigned int issue_flags)
- 	if (ret >= 0)
- 		return kiocb_done(req, ret, issue_flags);
- 
--	return ret;
-+	return io_fixup_restart_res(ret);
- }
- 
- static bool io_kiocb_start_write(struct io_kiocb *req, struct kiocb *kiocb)
+ 	/* Remove regions which are not in the new ranges */
+ 	damon_for_each_region_safe(r, next, t) {
+ 		for (i = 0; i < nr_ranges; i++) {
 -- 
 2.53.0
 
