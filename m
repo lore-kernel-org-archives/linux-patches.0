@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC6D175A6B;
-	Mon, 17 Aug 2026 14:44:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9814B0481;
+	Mon, 17 Aug 2026 14:44:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977855; cv=none; b=DTaZ3hdpVspcmn4+l/z/mcnUBhET781VEbbSHskYRNWOsBOKyA5dJ2HiEKRnidpwONhiW8Q7mZghgsgRmVBkDOiamnLDNa6IypqTnJD10Cyd3SS0DXb1EPAoELz2bdrmLLv/1jyFgUKv0rLKk7A15fjvjXYQ40b2pY94k0CE05o=
+	t=1786977858; cv=none; b=gqbDk3MfXPmmVVaWtJhX6d1UEhrB+4H4vDPo09Nja48bpvmN7oSIkrD0/ICYOJrgmGDy3GZN3DM63eOnZFwn4Hb2KFU1O+1Bzpm9bAWbAQ8MdNefhqRDC0zAWKKoGLdmxqexTuAqqk75nSg7GTjRVbzErslsrbEqm9XYBVxRAZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977855; c=relaxed/simple;
-	bh=tldzCz3ygA0/FLTPE9lXMWh7/j5j5YxqjRcUzy4NvPo=;
+	s=arc-20240116; t=1786977858; c=relaxed/simple;
+	bh=ImJz0joq30MzJlxlfuxK1bJhZtVyjOAaD08bYHRQEnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jtz484IwE26h8R7QREfSyorSUyBBx5xr2lYOxErFafFAV8kHDb7cUu725OBFnh90DnhxF746uzi2pvxnOhOtqQh2Cg4GZZl/P3FeSSxvuuyMpa6Dvtyd2OIkKjqJ3lX+obNSVRan1hf6xW5Q7tB87eqENdxczysYq+d8+H3czKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fr8SPDyg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sJpc+QNx8kEg/d0ao7R5vfQ6Yw3opYvrFHccgcjAYnWaTDQvi+i8iAXd6jypGLc5ka7I+jdK3lGUWjus3c81LdK5wBeH4G9gFEQ8v5FYTOOfFrwd50SFOJRI3UWdWzDyH78X5Tzuzhhy4RJsNNaJ1by1ou3d7itmMvh+NKkQTLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIwoAQmr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fr8SPDyg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44E391F000E9;
-	Mon, 17 Aug 2026 14:44:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIwoAQmr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 235F51F000E9;
+	Mon, 17 Aug 2026 14:44:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977853;
-	bh=pdgdn320s+SmKd1KJEG+0C1qF+PT7lHU+ehNCqVp9hE=;
+	s=korg; t=1786977856;
+	bh=QIx/WZb1f+Jxmyza1iUmG1MnEHHLbQpAQHT7w48fga4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fr8SPDyggnxFQpU8T+DX4S55wHYETnToY+a5iqKK+H1q6K4ANzfFDZxZsGCPEdS7I
-	 jTggulMjvl27+YUBUn1UvmevXjbWsOosPSqejLAqUopRC2PBZyehR/vT81HZBedywK
-	 g5FoEXebaSSBJoMJeoImzisSSzX178HQwweck4o0=
+	b=rIwoAQmrbNF+i6h5VoBhw2l/y97pdKUQfJdOHh1cIfijbCDNv3GxxpKOaJjM8jScV
+	 prIY2VoSeghDsZR3EXNgC7mA94Z83w0FpRTHXGnJ2QY2EAz6nlC/MZpz+bzslkOrve
+	 3ztl4zb3Y+b0FBFy9VjsxFQzWL3f5riaa0qnA6b0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	"Nikhil P. Rao" <nikhil.rao@amd.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 017/181] pds_core: cancel pending PCI reset work on AER recovery
-Date: Mon, 17 Aug 2026 15:31:51 +0200
-Message-ID: <20260817132536.071978706@linuxfoundation.org>
+Subject: [PATCH 6.12 018/181] netfilter: ipset: switch ext_size to atomic64_t
+Date: Mon, 17 Aug 2026 15:31:52 +0200
+Message-ID: <20260817132536.113481920@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -53,52 +52,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil P. Rao <nikhil.rao@amd.com>
+From: Jozsef Kadlecsik <kadlec@netfilter.org>
 
-[ Upstream commit 57d635329d799b79096155cdf47ee0013d6780d1 ]
+[ Upstream commit 712a6f545c359b427daa9a5a782e30d2f8331e25 ]
 
-pdsc_check_pci_health() queues pci_reset_work when it sees a broken PCI
-connection, and nothing cancels it. When the PCI core starts AER
-recovery, pdsc_pci_error_detected() runs pdsc_reset_prepare() and
-recovers the device, but a pci_reset_work queued just before is left
-pending. If it runs after recovery released the device lock, it resets a
-device the driver now considers healthy, bouncing the link for no reason.
+The hash types do not acquire set->lock, they use 'region locking' where
+only part of the hash table is locked. Parallel inserts and deletes are
+possible and CPUs can race on ->ext_size update.  Switch to atomic64_t.
 
-Cancel pci_reset_work in pdsc_pci_error_detected() after
-pdsc_reset_prepare(), which has already stopped the health thread so it
-cannot requeue the work. cancel_work_sync() is safe under the device
-lock here because pdsc_pci_reset_thread() uses pci_try_reset_function(),
-which returns instead of blocking on the lock. Only PFs initialize
-pci_reset_work, so guard the cancel with !is_virtfn.
+This leaves another bug unresolved: there still can be a race on
+comment extension re-init.  This will be handled in a later commit
+when converting to rhashtable backend.
 
-Fixes: 81665adf25d2 ("pds_core: Fix pdsc_check_pci_health function to use work thread")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260714180223.1642792-2-nikhil.rao%40amd.com?part=1
-Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260727170030.361116-1-nikhil.rao@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f66ee0410b1c ("netfilter: ipset: Fix "INFO: rcu detected stall in hash_xxx" reports")
+Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/main.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/linux/netfilter/ipset/ip_set.h  | 2 +-
+ net/netfilter/ipset/ip_set_bitmap_gen.h | 4 ++--
+ net/netfilter/ipset/ip_set_core.c       | 6 +++---
+ net/netfilter/ipset/ip_set_hash_gen.h   | 2 +-
+ net/netfilter/ipset/ip_set_list_set.c   | 4 ++--
+ 5 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/main.c b/drivers/net/ethernet/amd/pds_core/main.c
-index 2329396ec3e25..9526223a72978 100644
---- a/drivers/net/ethernet/amd/pds_core/main.c
-+++ b/drivers/net/ethernet/amd/pds_core/main.c
-@@ -550,7 +550,11 @@ static pci_ers_result_t pdsc_pci_error_detected(struct pci_dev *pdev,
- 						pci_channel_state_t error)
- {
- 	if (error == pci_channel_io_frozen) {
-+		struct pdsc *pdsc = pci_get_drvdata(pdev);
-+
- 		pdsc_reset_prepare(pdev);
-+		if (!pdev->is_virtfn)
-+			cancel_work_sync(&pdsc->pci_reset_work);
- 		return PCI_ERS_RESULT_NEED_RESET;
- 	}
+diff --git a/include/linux/netfilter/ipset/ip_set.h b/include/linux/netfilter/ipset/ip_set.h
+index b98331572ad29..cadae9b2578f1 100644
+--- a/include/linux/netfilter/ipset/ip_set.h
++++ b/include/linux/netfilter/ipset/ip_set.h
+@@ -273,7 +273,7 @@ struct ip_set {
+ 	/* Number of elements (vs timeout) */
+ 	u32 elements;
+ 	/* Size of the dynamic extensions (vs timeout) */
+-	size_t ext_size;
++	atomic64_t ext_size;
+ 	/* Element data size */
+ 	size_t dsize;
+ 	/* Offsets to extensions in elements */
+diff --git a/net/netfilter/ipset/ip_set_bitmap_gen.h b/net/netfilter/ipset/ip_set_bitmap_gen.h
+index cb48a2b9cb9fd..cf8468bf987db 100644
+--- a/net/netfilter/ipset/ip_set_bitmap_gen.h
++++ b/net/netfilter/ipset/ip_set_bitmap_gen.h
+@@ -77,7 +77,7 @@ mtype_flush(struct ip_set *set)
+ 		mtype_ext_cleanup(set);
+ 	bitmap_zero(map->members, map->elements);
+ 	set->elements = 0;
+-	set->ext_size = 0;
++	atomic64_set(&set->ext_size, 0);
+ }
  
+ /* Calculate the actual memory size of the set data */
+@@ -93,7 +93,7 @@ mtype_head(struct ip_set *set, struct sk_buff *skb)
+ {
+ 	const struct mtype *map = set->data;
+ 	struct nlattr *nested;
+-	size_t memsize = mtype_memsize(map, set->dsize) + set->ext_size;
++	size_t memsize = mtype_memsize(map, set->dsize) + atomic64_read(&set->ext_size);
+ 
+ 	nested = nla_nest_start(skb, IPSET_ATTR_DATA);
+ 	if (!nested)
+diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
+index f51a1af31513c..29bf5ee74fe36 100644
+--- a/net/netfilter/ipset/ip_set_core.c
++++ b/net/netfilter/ipset/ip_set_core.c
+@@ -350,7 +350,7 @@ ip_set_init_comment(struct ip_set *set, struct ip_set_comment *comment,
+ 	size_t len = ext->comment ? strlen(ext->comment) : 0;
+ 
+ 	if (unlikely(c)) {
+-		set->ext_size -= sizeof(*c) + strlen(c->str) + 1;
++		atomic64_sub(sizeof(*c) + strlen(c->str) + 1, &set->ext_size);
+ 		rcu_assign_pointer(comment->c, NULL);
+ 		kfree_rcu(c, rcu);
+ 	}
+@@ -362,7 +362,7 @@ ip_set_init_comment(struct ip_set *set, struct ip_set_comment *comment,
+ 	if (unlikely(!c))
+ 		return;
+ 	strscpy(c->str, ext->comment, len + 1);
+-	set->ext_size += sizeof(*c) + strlen(c->str) + 1;
++	atomic64_add(sizeof(*c) + strlen(c->str) + 1, &set->ext_size);
+ 	rcu_assign_pointer(comment->c, c);
+ }
+ EXPORT_SYMBOL_GPL(ip_set_init_comment);
+@@ -392,7 +392,7 @@ ip_set_comment_free(struct ip_set *set, void *ptr)
+ 	c = rcu_dereference_protected(comment->c, 1);
+ 	if (unlikely(!c))
+ 		return;
+-	set->ext_size -= sizeof(*c) + strlen(c->str) + 1;
++	atomic64_sub(sizeof(*c) + strlen(c->str) + 1, &set->ext_size);
+ 	rcu_assign_pointer(comment->c, NULL);
+ 	kfree_rcu(c, rcu);
+ }
+diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
+index 4c1082e38e3d1..81d7f601ed06a 100644
+--- a/net/netfilter/ipset/ip_set_hash_gen.h
++++ b/net/netfilter/ipset/ip_set_hash_gen.h
+@@ -1289,7 +1289,7 @@ mtype_head(struct ip_set *set, struct sk_buff *skb)
+ 	rcu_read_lock_bh();
+ 	t = rcu_dereference_bh(h->table);
+ 	mtype_ext_size(set, &elements, &ext_size);
+-	memsize = mtype_ahash_memsize(h, t) + ext_size + set->ext_size;
++	memsize = mtype_ahash_memsize(h, t) + ext_size + atomic64_read(&set->ext_size);
+ 	htable_bits = t->htable_bits;
+ 	rcu_read_unlock_bh();
+ 
+diff --git a/net/netfilter/ipset/ip_set_list_set.c b/net/netfilter/ipset/ip_set_list_set.c
+index 83e1fdcc752d6..9d6ab69ca1a37 100644
+--- a/net/netfilter/ipset/ip_set_list_set.c
++++ b/net/netfilter/ipset/ip_set_list_set.c
+@@ -421,7 +421,7 @@ list_set_flush(struct ip_set *set)
+ 	list_for_each_entry_safe(e, n, &map->members, list)
+ 		list_set_del(set, e);
+ 	set->elements = 0;
+-	set->ext_size = 0;
++	atomic64_set(&set->ext_size, 0);
+ }
+ 
+ static void
+@@ -455,7 +455,7 @@ list_set_head(struct ip_set *set, struct sk_buff *skb)
+ {
+ 	const struct list_set *map = set->data;
+ 	struct nlattr *nested;
+-	size_t memsize = list_set_memsize(map, set->dsize) + set->ext_size;
++	size_t memsize = list_set_memsize(map, set->dsize) + atomic64_read(&set->ext_size);
+ 
+ 	nested = nla_nest_start(skb, IPSET_ATTR_DATA);
+ 	if (!nested)
 -- 
 2.53.0
 
