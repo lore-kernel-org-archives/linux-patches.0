@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6794B43B3EC;
-	Mon, 17 Aug 2026 13:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062B343B3C4;
+	Mon, 17 Aug 2026 13:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975008; cv=none; b=kBW+5FlqG7AFXIVml/HUTd7Y89NY2fzNe+fJrKzaVMFsUhFzCILJQ7Btb7xxGXVOI2+ASdo/6aFIS51NGB9U2xmfCwq98ygX3y3xX6QbblzUOATqvbjz1us1JqxHOkQJxNz+4ppWg/7Jhg6tGUxcVasM0eXNCyDrjLUo98QJyMk=
+	t=1786975011; cv=none; b=hQJZFnES651I07YUBRQPabvqtR8gwCDrCTHge+mvctTet+kerae5t2CmsiN5VXA98b7dU03jCbVV+SyK+0dv4EPplWh+xhFhRysQ5QEXJAeAqvk6X01yI6T8udjUr5Y3YXBjVzJAVdiSwH6kFgmcvhdiqdEt1mwYO8TurGCG6Pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975008; c=relaxed/simple;
-	bh=WczlVQvZq2aLugttCwe5VDgoqFqvfb2i4jW6Pe+d6l8=;
+	s=arc-20240116; t=1786975011; c=relaxed/simple;
+	bh=JfvbHyJdn7DdZPnOfnBMh9xGhVix4m1NBLpy/gRBP1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P/pKvO8xJ8XxhYDBgZxDGfdLJzFyYvb3+8HVGbO7OFqi/DvqWST27LlIAK4XYmMlVhQg+2PxaHuTf+kotFpxhYZakzrkiSjfNZbUrMlJd27mlw3/IZgtnvfAxO8DaFQ0MGpN1ScNiV6SWfEKfXSUsUGZrE+laUOHJwySiQX2xM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFLNZpRP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qx7Dz2cGpXpo9PzuyiJEshcOhZ1D0k9zs1WDTpbkCmyQtBgV0O6kT0pAkmoXkYdSSfDGY18Pt8/Z/WwpwGM6y9Dry7jLD+Bco5P8Peil3VYyk3LPTJ/cNhOivPqOV9GdBtcj60xwbpdB5kzXk1UzEdf5WGprBWrxPDpgNR1cmGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QKJh09ch; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFLNZpRP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8580A1F000E9;
-	Mon, 17 Aug 2026 13:56:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKJh09ch"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8A41F000E9;
+	Mon, 17 Aug 2026 13:56:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975007;
-	bh=/zmqaroxiJ48OPZ1JigIn8JVq8WLNC7dFo1t11lYQQM=;
+	s=korg; t=1786975009;
+	bh=f0i+GrBxoifxi+xW/J3AQD0j5nEU57haUTOKrIaSlyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VFLNZpRPrqiJ3mJMz2V0TWU8j54ZKG88XYwlzib309o8f6cC+M1jItD1OcEs6azaz
-	 ACcddQuzKtRJbmzhxlRkoSKoXDHFhnFIObZBYS3eG0cL+Olw/SsmkmOIFPbarpqV4Q
-	 UmJfeNvhZTWbgHjLBtYjuS2O8T5136iR3yLCi22Y=
+	b=QKJh09ch+1PRw/2PpXdE1rDHrU7BqeClu9e9ujFyL8HXkkuLxpa63Lb96z/xq/bhu
+	 hp3YrMsXjTazwRooc99xyZ5syImZzvFCpYlZn8tnfhFgUrUYDbpLg6hBVSBTc54OGA
+	 GX2Dz8XRhS72vrKmuck4dtWA6A5kBkXRRF5+Rv1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 113/250] ALSA: usb-audio: fix OOB write on Type II inbound URBs
-Date: Mon, 17 Aug 2026 15:31:14 +0200
-Message-ID: <20260817132541.184933539@linuxfoundation.org>
+	Kyle Zeng <kylebot@openai.com>,
+	David Lee <david.lee@trailofbits.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.18 131/250] ipvs: clear IPv4 options after rebasing tunnel ICMP errors
+Date: Mon, 17 Aug 2026 15:31:32 +0200
+Message-ID: <20260817132541.940585205@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,109 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit 69ee44e1a23be62318189dc4b37fa4ad94053269 upstream.
+commit e0ba936287dfe9783426aac27e5fd76fe35b38c9 upstream.
 
-data_ep_set_params() sizes each URB transfer buffer before it adds the
-Format Type II transfer delimiter:
+ip_vs_in_icmp() rebases an skb from the outer ICMP packet to the
+quoted original request before passing it to icmp_send(). However,
+IPCB(skb)->opt still describes the outer IPv4 header.
 
-	u->packets = urb_packs;
-	u->buffer_size = maxsize * u->packets;
+A timestamp option in the outer header can therefore leave an offset
+that points into the quoted transport header after the rebase.
+__ip_options_echo() treats a byte at that stale location as the option
+length and copies it into the fixed-size option storage on the
+__icmp_send() stack, causing a stack out-of-bounds write.
 
-	if (fmt->fmt_type == UAC_FORMAT_TYPE_II)
-		u->packets++; /* for transfer delimiter */
-	u->urb = usb_alloc_urb(u->packets, GFP_KERNEL);
+Clear the stale option metadata after resetting the network header.
+Keep the remaining control block fields, including the ingress
+interface used by the ICMP response path.
 
-buffer_size is computed from the pre-increment packet count and never
-recomputed, so for a Type II endpoint the buffer is one packet short of
-the packet count the URB is built with.
-
-prepare_inbound_urb() then lays out one iso frame per packet and never
-consults buffer_size:
-
-	offs = 0;
-	for (i = 0; i < urb_ctx->packets; i++) {
-		urb->iso_frame_desc[i].offset = offs;
-		urb->iso_frame_desc[i].length = ep->curpacksize;
-		offs += ep->curpacksize;
-	}
-
-	urb->transfer_buffer_length = offs;
-	urb->number_of_packets = urb_ctx->packets;
-
-The last descriptor therefore points one packet past the end of the
-transfer buffer, where the host controller writes device data on every
-inbound transfer.  prepare_silent_urb() and prepare_playback_urb() bound
-their fill loops by ctx->buffer_size, so only capture is affected.
-
-fmt_type comes from the device's audio streaming descriptors, so any
-device advertising a Type II capture format hits this once userspace sets
-hw_params on the stream.
-
-KASAN on 7.2.0-rc5 (arm64) with a dummy_hcd/raw-gadget device, one report
-per inbound transfer:
-
-  BUG: KASAN: slab-out-of-bounds in dummy_timer
-  Write of size 64 at addr ffff0000186171c0 by task cons02/166
-   __asan_memcpy
-   dummy_timer
-   hrtimer_run_softirq
-  Allocated by task 166:
-   usb_alloc_coherent
-   snd_usb_endpoint_set_params
-  The buggy address is located 0 bytes to the right of
-   allocated 64-byte region [ffff000018617180, ffff0000186171c0)
-
-Compute buffer_size after the delimiter packet has been accounted for,
-and bound the fill loop by buffer_size, as prepare_silent_urb() already
-does on the outbound side.  This grows every Type II URB allocation by
-one maxsize packet.
-
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: 8fdff6a319e7 ("ALSA: snd-usb: implement new endpoint streaming model")
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
+Fixes: f2edb9f7706d ("ipvs: implement passive PMTUD for IPIP packets")
 Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260805013441.38245-1-baul.lee@xbow.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Assisted-by: Codex:gpt-5.6-sol Codex:gpt-5.5-cyber
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Co-developed-by: David Lee <david.lee@trailofbits.com>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/endpoint.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/netfilter/ipvs/ip_vs_core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -385,13 +385,15 @@ static int prepare_inbound_urb(struct sn
- 	case SND_USB_ENDPOINT_TYPE_DATA:
- 		offs = 0;
- 		for (i = 0; i < urb_ctx->packets; i++) {
-+			if (offs + ep->curpacksize > urb_ctx->buffer_size)
-+				break;
- 			urb->iso_frame_desc[i].offset = offs;
- 			urb->iso_frame_desc[i].length = ep->curpacksize;
- 			offs += ep->curpacksize;
- 		}
- 
- 		urb->transfer_buffer_length = offs;
--		urb->number_of_packets = urb_ctx->packets;
-+		urb->number_of_packets = i;
- 		break;
- 
- 	case SND_USB_ENDPOINT_TYPE_SYNC:
-@@ -1239,10 +1241,10 @@ static int data_ep_set_params(struct snd
- 		u->index = i;
- 		u->ep = ep;
- 		u->packets = urb_packs;
--		u->buffer_size = maxsize * u->packets;
- 
- 		if (fmt->fmt_type == UAC_FORMAT_TYPE_II)
- 			u->packets++; /* for transfer delimiter */
-+		u->buffer_size = maxsize * u->packets;
- 		u->urb = usb_alloc_urb(u->packets, GFP_KERNEL);
- 		if (!u->urb)
- 			goto out_of_memory;
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -1772,6 +1772,7 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, s
+ 		if (pskb_pull(skb, offset2) == NULL)
+ 			goto ignore_tunnel;
+ 		skb_reset_network_header(skb);
++		memset(&(IPCB(skb)->opt), 0, sizeof(IPCB(skb)->opt));
+ 		/* Ensure the IP header is present in headroom */
+ 		if (!pskb_may_pull(skb, hlen_orig))
+ 			goto ignore_tunnel;
 
 
