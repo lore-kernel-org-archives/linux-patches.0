@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C238F43C7C1;
-	Mon, 17 Aug 2026 14:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11FC43636A;
+	Mon, 17 Aug 2026 14:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978426; cv=none; b=eU40kM6YTIFm5XkmlTujMm2pwRyhDonRIVA8MtgSWGXT/Dg6lqS40dVmYA0NV0+lZyxtN6WSBy73w57Am3MmHdTZaTtn0GQOFklGJB6Jhpur/iNMj3GpBINwtgimfDQaEXXVZB66n2M50rij8CSXegi0kG3R+gFo1oFQx06m0/A=
+	t=1786978429; cv=none; b=GaiKiMibGkoDlx0RPj/lNy4IsHNl8rTSHLa9UeUa7wRL1m8GDvvcot+x6CFDFGT22pi8u7A0dGPwuMr6RvcTKDcQaAlC6Nn6muvfHunhU5vGdsyrBFuvQyLw8H0DBAPWmQ9cTGJSBRYYFcFgCgqWQjYw71ElUU5c4++ybRDcTgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978426; c=relaxed/simple;
-	bh=AUjAD3BEBcxteYFT1rAErDmrpMycgS7/1MttnLQVsJM=;
+	s=arc-20240116; t=1786978429; c=relaxed/simple;
+	bh=RNi6zFsz5LU4YTcXuH5RBYBsCHxt2cHOxjq+jT6h4Qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o5EQ2Ic64r2AY4eXssHDOk8Ohii8kWp/jjAk1l1Ccsu9lGcyF/XZ+dAF/+/KawTkXIXGEeE7smwAFI72XxePlrgDc4OcJh6QFWPRpg+7VjI9QKgWWurOBYT26fVi+bCwk4Fd3oHhHpw0/gB107OK9KGlvwxa3++p7YFlgwEEhNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DUaz1Y1i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FHTKac/wW3CJhCT+lqjBtOdPqTHH/G+auwZjl7e7Sf5SNIcTQHEsVhrKfBOGxoZjOybi7GfsRU12Vnxg7YmC/IuhfUQUN++McwRKVab1zf+Th/VxtucpSvFJzMN/3O/UWvMgcOwKM3cQehwBOeTEytehHj1sxvf/hS4T+qUgmfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GrzsYswh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DUaz1Y1i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242251F000E9;
-	Mon, 17 Aug 2026 14:53:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GrzsYswh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC8E1F000E9;
+	Mon, 17 Aug 2026 14:53:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978424;
-	bh=Bd3pudSG+NLNddTqxIIyQwv/C8lFXlxtVabp3upmvRM=;
+	s=korg; t=1786978427;
+	bh=HpRxakKcpIkv4Ig12mgJP4Mh6F1woWGkNezGSvY8Mok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DUaz1Y1i0HtjXONsHJXfeIFopPvtSoL1FoPffIz1qtu4SMT7xeLJlp4ltgI22zTtj
-	 koivjou4iFfpnrx1jV9ms7ofVy4UFYID6y30KGGTDW7zIjzjFb2gs2Rfh4Rg/w8+PM
-	 BN6oMBuWKxVLjVePs7Oxv5TFJPWNbyP7aZiFr95M=
+	b=GrzsYswh4o3Eccri/No9vJm7wRbXhAwo1XNssJ/NXPNClI0tnUgRCzcQkVDtM7WTv
+	 3rj5wtBQ2XTiLORn/bb0ALH7A02E8zL8mo6TXsWpJRxYsFOddBDCAE2otWbgzHtGdV
+	 Uoh3+sCNCrR7/G/6WWmsUq2so4WoiJJFpzf4lJXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Ren Wei <enjou1224z@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Jakub Kicinski <kuba@kernel.org>,
+	AutonomousCodeSecurity@microsoft.com,
+	Eelco Chaudron <echaudro@redhat.com>,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 031/156] net/sched: sch_cake: drop WARN_ON(1) for malformed packets in ACK filter
-Date: Mon, 17 Aug 2026 15:32:45 +0200
-Message-ID: <20260817132535.838167306@linuxfoundation.org>
+Subject: [PATCH 6.6 032/156] net/openvswitch: check Ethernet header length in key_extract()
+Date: Mon, 17 Aug 2026 15:32:46 +0200
+Message-ID: <20260817132535.878578360@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -47,51 +48,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@toke.dk>
+From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 
-[ Upstream commit 2a33516f9ef59ad11844d4fc152f889449b5daf3 ]
+[ Upstream commit cf6f8b29befb92173659bcef6a441d274947bfae ]
 
-The sch_cake ACK filter parses packets to find the TCP header and filter
-duplicated ACKs if the flow is backlogged. The parsing code contains a
-WARN_ON(1) which can be triggered by a malformed IP header in certain
-cases. Depending on the system configuration, this leads either to
-either spamming dmesg with warnings, or a panic if panic_on_warn is set.
+When a packet arrives on an ARPHRD_NONE device (e.g. TUN),
+ovs_flow_key_extract() trusts the user-provided skb->protocol field: if
+it is ETH_P_TEB, the packet is classified as MAC_PROTO_ETHERNET and
+key_extract() is called without ensuring the skb has ETH_HLEN (14) bytes
+of linear data. key_extract() unconditionally pulls 2 * ETH_ALEN bytes
+for MAC addresses and parse_ethertype() pulls 2 more, either of which
+triggers a kernel BUG in __skb_pull() when the linear area is too small.
 
-The code already correctly skips the offending packet in the branch that
-triggers the warning, so the WARN_ON itself doesn't really serve any
-purpose. So just drop it altogether to avoid the inconvenient side
-effects.
+  kernel BUG at include/linux/skbuff.h:2848!
+  RIP: 0010:key_extract+0xa7e/0xd90 net/openvswitch/flow.c:933
+  ovs_flow_key_extract+0x419/0xa70
+  ovs_vport_receive+0x222/0x390
+  netdev_frame_hook+0x3e0/0x630
+  tun_get_user+0x2d0c/0x38e0
 
-Fixes: 8b7138814f29 ("sch_cake: Add optional ACK filter")
-Reported-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reported-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20260729191417.45665-1-toke@toke.dk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixed by calling check_header() in key_extract() before accessing the
+Ethernet header.
+
+Fixes: 217ac77a3c25 ("openvswitch: allow L3 netdev ports")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/20260730222006.118652-1-blbllhy@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_cake.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/openvswitch/flow.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
-index ce9ee43e9ee2b..4331097f813ec 100644
---- a/net/sched/sch_cake.c
-+++ b/net/sched/sch_cake.c
-@@ -1282,7 +1282,6 @@ static struct sk_buff *cake_ack_filter(struct cake_sched_data *q,
+diff --git a/net/openvswitch/flow.c b/net/openvswitch/flow.c
+index b80bd3a907739..52e261ce91e8e 100644
+--- a/net/openvswitch/flow.c
++++ b/net/openvswitch/flow.c
+@@ -893,8 +893,6 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
+  * Ethernet header
+  * @key: output flow key
+  *
+- * The caller must ensure that skb->len >= ETH_HLEN.
+- *
+  * Initializes @skb header fields as follows:
+  *
+  *    - skb->mac_header: the L2 header.
+@@ -914,8 +912,6 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
+  */
+ static int key_extract(struct sk_buff *skb, struct sw_flow_key *key)
+ {
+-	struct ethhdr *eth;
+-
+ 	/* Flags are always used as part of stats */
+ 	key->tp.flags = 0;
  
- 			seglen = ntohs(ipv6h_check->payload_len);
- 		} else {
--			WARN_ON(1);  /* shouldn't happen */
- 			continue;
- 		}
- 
+@@ -930,6 +926,13 @@ static int key_extract(struct sk_buff *skb, struct sw_flow_key *key)
+ 		skb_reset_network_header(skb);
+ 		key->eth.type = skb->protocol;
+ 	} else {
++		struct ethhdr *eth;
++		int err;
++
++		err = check_header(skb, ETH_HLEN);
++		if (unlikely(err))
++			return err;
++
+ 		eth = eth_hdr(skb);
+ 		ether_addr_copy(key->eth.src, eth->h_source);
+ 		ether_addr_copy(key->eth.dst, eth->h_dest);
 -- 
 2.53.0
 
