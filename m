@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35B8424D74;
-	Mon, 17 Aug 2026 14:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D2241D227;
+	Mon, 17 Aug 2026 14:27:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976821; cv=none; b=miwAz7Ln0Ty/lpy8lXB+gMAtoO/zY43EblOWtt7Abt8nK+0UCYV0mEGVcoBMDOWQ1Oq8jRY0bH+cduJO7WAVE6m5tZK/ysN/e216wcVZCk9g4y2FGQB9mQ3Wljn8gsNCOKshWxjUY6CdkKkfA+D1GTeClLIRHSk1Y5UtpquySMA=
+	t=1786976824; cv=none; b=TKkzQwP7xCSVjvKxHmgrXMk9yFGLZDB4voq75QSzd7M9NaAvnwMpEXRXjW1wJtKNPmPi3scYtoHYDVHWw1FKiZI+bRdGHBLZSrKyC5OePJw4aYpAeYyo145SWxZ4cEYzZyICsmTQc1gdSKTyyQUFnDqHW1Mwh78CE6nAAAxSEO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976821; c=relaxed/simple;
-	bh=9AdZAH0ewwUKo4We/S94tBGh5jhfJP+SS2xMdaft4UU=;
+	s=arc-20240116; t=1786976824; c=relaxed/simple;
+	bh=mzlBljGJNO+hiPVqUVmyTP3x8eNp4nNxe/xURjpnR74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IT4M8OXpOOXOt6agM9B1PN1OvSFSsDFoYO4RSU/Y/nnqNuUI26ddiOYgAInvCxRmzFn2ILn9q4Xtyaec1FhOC5tv+TaMhvDD3uaNGmWjm3Koyo1D0zfTjhu8Wf4vZuWRrfKq8lZq5gPzVdPM5k+tWZZq9m1AcWjZDUZwlOhrkP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bji6PQez; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jpju2ARjKssgdem4fJYPttZgZbZ9DO289B+hxu1HCggJRgPnRqCTZDQxb74yzHBnmygqdXm126nMBVu9uMeMr1Q43BHd1YAJRuxqcgKQArHQIv99qjVr4h/mjQSlzlCwWbF6wu0ft+YFEP1rIcb0I5jDGvYMvc7T8zn45sAYXK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlMdKBPz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bji6PQez"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189661F000E9;
-	Mon, 17 Aug 2026 14:26:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlMdKBPz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0472E1F000E9;
+	Mon, 17 Aug 2026 14:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976819;
-	bh=wQC+OqKVqi+eKFja+5zkZ0m1U1VzxGcvv8wxU5uSfEs=;
+	s=korg; t=1786976822;
+	bh=72JOm4OEA5ADdUWXWS2hdo0LRjz8wOrxOsr+XJ+ETug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bji6PQezczinKKo0kvRS3/UBmAMz1vp7SqybBArMK+11rkZ761u8yUgVbl7qrUA7D
-	 xB0+pLFsVxcg5UWpswet88IBnSeAL1oX5G6WeVA9LhTjWn0/Vr1+sIRzgNaHD5uTjB
-	 hQhd/6w3L/ihAyToAyvLJjTP2YQsP9XUUkNxg/Ko=
+	b=mlMdKBPzlezWU/OGKk10uvcS91CL8cOD5qlU2Ueptcvm1/sBQnIORWI4iVZF1uvXe
+	 nR6GCXBn8GzAseiQvPjmSU6HA9AHv4y97q4hN2zu0pXn6VwqHCx4M0b7AAAAavGWoD
+	 6/b/9VZMmcso3m+oxON1iXyPdbn0tLEXDwnCNZ78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
+	syzbot+456957213f32970c0762@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Felix Maurer <fmaurer@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 116/456] net: bridge: vlan: fix vlan range dumps starting with pvid
-Date: Mon, 17 Aug 2026 15:28:26 +0200
-Message-ID: <20260817132544.623244402@linuxfoundation.org>
+Subject: [PATCH 5.15 117/456] net: hsr: fix memory leak on slave unregistration by removing synced VLANs
+Date: Mon, 17 Aug 2026 15:28:27 +0200
+Message-ID: <20260817132544.664467350@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,147 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 43171c97e4714bf601b468401b37732244639c21 ]
+[ Upstream commit dcf15eaf5641812f1cfc5e96537380132a7da89d ]
 
-There is a bug in all range dumps that rely on br_vlan_can_enter_range()
-when the PVID is a range starting VLAN, all following VLANs that match
-its flags can enter the range, but when the range is filled in only the
-PVID VLAN is dumped and the rest of the range is discarded because
-br_vlan_fill_vids() checks for the PVID flag. Since the PVID VLAN can
-be only one, we need to break ranges around it, the best way to do that
-consistently for all is to alter br_vlan_can_enter_range() to take into
-account the PVID and return false to break the range when it's matched.
+When an HSR master device is brought UP, it auto-adds VLAN 0 via
+vlan_vid0_add(), which propagates VID 0 to its slave devices (slave A and B).
 
-Before the fix:
-$ ip l add br0 type bridge vlan_filtering 1
-$ ip l add dumdum type dummy
-$ ip l set dumdum master br0
-$ ip l set br0 up
-$ ip l set dumdum up
-$ bridge vlan add dev dumdum vid 1 pvid untagged master
-$ bridge vlan add dev dumdum vid 2 untagged master
-$ bridge vlan show dev dumdum # use legacy dump to show all vlans
-port              vlan-id
-dumdum            1 PVID Egress Untagged
-                  2 Egress Untagged
+If a slave device is later unregistered while HSR is active (e.g., during
+netns cleanup or interface destruction), hsr_del_port() is called to
+detach the slave port from the HSR master. However, hsr_del_port() currently
+does not delete the VLAN IDs that were synced to the slave device by HSR.
 
-$ bridge -d vlan show dev dumdum # use the new dump (RTM_GETVLAN)
-port              vlan-id
-dumdum            1 PVID Egress Untagged
-                    state forwarding mcast_router 1
+As a result, the slave device retains a refcount on VID 0 (and any other
+synced VLANs). When the slave device is destroyed, its vlan_info /
+vlan_vid_info structure remains allocated, leading to a memory leak.
 
-VLAN 2 is missing, and if there are more matching VLANs afterwards
-they'd be missing too.
+Fix this by calling vlan_vids_del_by_dev(port->dev, master->dev) in
+hsr_del_port() before unlinking slave A or slave B ports, matching the
+propagation logic in hsr_ndo_vlan_rx_add_vid() / hsr_ndo_vlan_rx_kill_vid()
+and the cleanup behavior in bonding and team drivers.
 
-After the fix:
-[ same setup steps ]
-$ bridge vlan show dev dumdum
-port              vlan-id
-dumdum            1 PVID Egress Untagged
-                  2 Egress Untagged
-$ bridge -d vlan show dev dumdum # use the new dump (RTM_GETVLAN)
-port              vlan-id
-dumdum            1 PVID Egress Untagged
-                    state forwarding mcast_router 1
-                  2 Egress Untagged
-                    state forwarding mcast_router 1
-
-Fixes: 0ab558795184 ("net: bridge: vlan: add rtm range support")
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260721140922.682265-2-razor@blackwall.org
+Fixes: 1a8a63a5305e ("net: hsr: Add VLAN CTAG filter support")
+Reported-by: syzbot+456957213f32970c0762@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a4cb6ca.57639fcc.86d58.000b.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Felix Maurer <fmaurer@redhat.com>
+Link: https://patch.msgid.link/20260721101240.995597-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_netlink_tunnel.c |  3 ++-
- net/bridge/br_private.h        |  6 ++++--
- net/bridge/br_vlan.c           | 10 ++++++----
- net/bridge/br_vlan_options.c   |  3 +--
- 4 files changed, 13 insertions(+), 9 deletions(-)
+ net/hsr/hsr_slave.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bridge/br_netlink_tunnel.c b/net/bridge/br_netlink_tunnel.c
-index 8914290c75d480..e4aab077527011 100644
---- a/net/bridge/br_netlink_tunnel.c
-+++ b/net/bridge/br_netlink_tunnel.c
-@@ -268,7 +268,8 @@ static void __vlan_tunnel_handle_range(const struct net_bridge_port *p,
- 	if (!*v_start)
- 		goto out_init;
- 
--	if (v && curr_change && br_vlan_can_enter_range(v, *v_end)) {
-+	if (v && curr_change &&
-+	    br_vlan_can_enter_range(v, *v_end, br_get_pvid(vg))) {
- 		*v_end = v;
- 		return;
+diff --git a/net/hsr/hsr_slave.c b/net/hsr/hsr_slave.c
+index b8230faa567f77..58e757dc555461 100644
+--- a/net/hsr/hsr_slave.c
++++ b/net/hsr/hsr_slave.c
+@@ -228,6 +228,8 @@ void hsr_del_port(struct hsr_port *port)
+ 		netdev_rx_handler_unregister(port->dev);
+ 		if (!port->hsr->fwd_offloaded)
+ 			dev_set_promiscuity(port->dev, -1);
++		if (port->type == HSR_PT_SLAVE_A || port->type == HSR_PT_SLAVE_B)
++			vlan_vids_del_by_dev(port->dev, master->dev);
+ 		netdev_upper_dev_unlink(port->dev, master->dev);
  	}
-diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
-index 9a5479868489e9..62fdafbcc7e720 100644
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -1475,7 +1475,8 @@ int br_vlan_replay(struct net_device *br_dev, struct net_device *dev,
- 		   const void *ctx, bool adding, struct notifier_block *nb,
- 		   struct netlink_ext_ack *extack);
- bool br_vlan_can_enter_range(const struct net_bridge_vlan *v_curr,
--			     const struct net_bridge_vlan *range_end);
-+			     const struct net_bridge_vlan *range_end,
-+			     u16 pvid);
  
- void br_vlan_fill_forward_path_pvid(struct net_bridge *br,
- 				    struct net_device_path_ctx *ctx,
-@@ -1715,7 +1716,8 @@ static inline void br_vlan_notify(const struct net_bridge *br,
- }
- 
- static inline bool br_vlan_can_enter_range(const struct net_bridge_vlan *v_curr,
--					   const struct net_bridge_vlan *range_end)
-+					   const struct net_bridge_vlan *range_end,
-+					   u16 pvid)
- {
- 	return true;
- }
-diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
-index 055d988d280cd6..5c41c6d00942d4 100644
---- a/net/bridge/br_vlan.c
-+++ b/net/bridge/br_vlan.c
-@@ -1958,9 +1958,11 @@ int br_vlan_replay(struct net_device *br_dev, struct net_device *dev,
- 
- /* check if v_curr can enter a range ending in range_end */
- bool br_vlan_can_enter_range(const struct net_bridge_vlan *v_curr,
--			     const struct net_bridge_vlan *range_end)
-+			     const struct net_bridge_vlan *range_end,
-+			     u16 pvid)
- {
--	return v_curr->vid - range_end->vid == 1 &&
-+	return v_curr->vid != pvid && range_end->vid != pvid &&
-+	       v_curr->vid - range_end->vid == 1 &&
- 	       range_end->flags == v_curr->flags &&
- 	       br_vlan_opts_eq_range(v_curr, range_end);
- }
-@@ -2042,8 +2044,8 @@ static int br_vlan_dump_dev(const struct net_device *dev,
- 			idx += range_end->vid - range_start->vid + 1;
- 
- 			range_start = v;
--		} else if (dump_stats || v->vid == pvid ||
--			   !br_vlan_can_enter_range(v, range_end)) {
-+		} else if (dump_stats ||
-+			   !br_vlan_can_enter_range(v, range_end, pvid)) {
- 			u16 vlan_flags = br_vlan_flags(range_start, pvid);
- 
- 			if (!br_vlan_fill_vids(skb, range_start->vid,
-diff --git a/net/bridge/br_vlan_options.c b/net/bridge/br_vlan_options.c
-index a6382973b3e701..87fe159efcf76e 100644
---- a/net/bridge/br_vlan_options.c
-+++ b/net/bridge/br_vlan_options.c
-@@ -262,8 +262,7 @@ int br_vlan_process_options(const struct net_bridge *br,
- 				continue;
- 			}
- 
--			if (v->vid == pvid ||
--			    !br_vlan_can_enter_range(v, curr_end)) {
-+			if (!br_vlan_can_enter_range(v, curr_end, pvid)) {
- 				br_vlan_notify(br, p, curr_start->vid,
- 					       curr_end->vid, RTM_NEWVLAN);
- 				curr_start = v;
 -- 
 2.53.0
 
