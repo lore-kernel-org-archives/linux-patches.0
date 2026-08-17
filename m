@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5658F442385;
-	Mon, 17 Aug 2026 14:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44889443AAD;
+	Mon, 17 Aug 2026 14:31:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977112; cv=none; b=QsSyEX4h1cVGMXfVDBF4fp4tDwbps+BIPdENGUvB4BBgMyQoojkrFNLhUc5nRrV1dyQ8o/F0a/9R4RrQn9g/E/yD/IyXq98J0Hm5N2On2G62BN8Ek8z9sE9ZXVIYdpEFyK/ReSe3eCj+kA8EVe6g+R06J9IMGKkz65h9C9M62VI=
+	t=1786977115; cv=none; b=kOp/uVZXgvcrFUI5ICrF8myBFN2PGM6a7/qonS0MpryqnPpHWr5w+UTx0sPdGZ4wmN4sLIAEUfUqfx4ZodWljhLv5FLsgHDHyRVNDrRWjpPlpEspTSGRZXS+oUSN6lw5syTDF5Zv/sH/zTBKsCDyrGlAh86m9Q19aojGy13Wgkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977112; c=relaxed/simple;
-	bh=djr22XcSqsfSJiTHjs7PH+OGWIooedueTmmHjUQ4idM=;
+	s=arc-20240116; t=1786977115; c=relaxed/simple;
+	bh=XEr/yoGkFusgwgVE1StH6FQAM9IU1V/QH+0AVCmD4dM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gWMJshXWzsUloayXM1MTeVbJ7ysJGmUbgpPSiL3StLU2ygO87pMyDAB3srhZ9cFqZqFjXfSWVUdPR6WDtI3N59ulrsMuMm5UlCCURCNrbNNW/jaD4krOtrOwXYqA8kGLGN1aMLDmOexeA616eaym6BbwPXGIDxlrfeAPNvBA5VE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdPKgydf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rtRbtkkK7ZMtGhSqsK+kz9ZX3RfTh2ffoDlt48DiL0OF5Y76sd+3t5FsuCMqu4SxTHjDvV940wOpYZuCENXYUBDpU2saPtqif88j7YXooBqAA8hk/Hs2HXgaTc1/NVumqDqOF6WYdu/+PfTpRZS4oco95QEdGmRFavQOk8aCPWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hhm/8NxC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdPKgydf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEDA71F000E9;
-	Mon, 17 Aug 2026 14:31:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hhm/8NxC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC311F000E9;
+	Mon, 17 Aug 2026 14:31:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977111;
-	bh=nsVGxIDhdp62pUNCPANqVuN8S0rCHm+SX7aFsamt5Nc=;
+	s=korg; t=1786977114;
+	bh=jzFU/bGOKoIXEjuAT822T8ghjpOmuKQvbWgnT4pmTUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WdPKgydfTztyay9/fm/07B2ANtJxgwHlxdg8KSHSzElxE97qQTJaqEz8N9IdeH43g
-	 JeaOvErOtBq/Vi15LIh8hvam4p/Iu9WoOfDOeNYmchXV8s+yMzfDakCX+JnndbGWdQ
-	 UlDjmPgJeotGbt/KFbW9K1IqbqdfYqPgrJKNKcpI=
+	b=Hhm/8NxCr4qg2y8eebj8GZ6gE66yAz/SqXlvdAXJYXixFzcBMdrOZ8fvcz+C9/8/l
+	 q9LqWGQ5hPskhPyMLvQDePmuWwhiHF0zs+V3YgB8H2SlLEG+bhazIfzgoT2kGKYWMZ
+	 Gd5rVBa3KLC7ILhyx3MAL/LBrQdjoG56QMWOziA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 215/456] net/af_iucv: fix NULL deref in afiucv_hs_callback_syn()
-Date: Mon, 17 Aug 2026 15:30:05 +0200
-Message-ID: <20260817132548.596778063@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 216/456] net/iucv: fix use-after-free of a severed iucv_path
+Date: Mon, 17 Aug 2026 15:30:06 +0200
+Message-ID: <20260817132548.633454782@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,46 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hidayath Khan <hidayath@linux.ibm.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 47a5116e56a6b6fe1e909f244e39cd0fc26ceee4 upstream.
+commit be7cc4656eb1f54029610e82d1f0fdd3f9b5ec0a upstream.
 
-afiucv_hs_callback_syn() allocates the child socket with GFP_ATOMIC.
-If the allocation fails, nsk is NULL.
+af_iucv queues not-yet-received message notifications on iucv->message_q,
+each holding a raw pointer to the connection's iucv_path.  When the peer
+severs the connection, iucv_sever_path() frees that path with
+iucv_path_free() but leaves the notifications queued.  A later recvmsg()
+drains message_q via iucv_process_message_q() and hands the stale path to
+message_receive() -- a use-after-free of the freed iucv_path.
 
-The connection-refused path is entered when the listen state check
-fails, the accept backlog is full, or nsk is NULL. The code
-unconditionally calls iucv_sock_kill(nsk) in that path.
+Drop the queued notifications when the path is severed; once the path is
+gone they can no longer be received.  This also frees the notifications
+leaked when a socket is closed with messages still queued.
 
-iucv_sock_kill() does not accept a NULL socket pointer and immediately
-dereferences sk via sock_flag(sk, SOCK_ZAPPED). When nsk is NULL,
-calling iucv_sock_kill(nsk) results in a NULL pointer dereference.
-
-Only call iucv_sock_kill() when a child socket was successfully
-allocated.
-
-Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
+Fixes: f0703c80e515 ("[AF_IUCV]: postpone receival of iucv-packets")
+Closes: https://sashiko.dev/#/patchset/20260705-b4-disp-fc79c0dc-v1-1-d2cdcb57afa9@proton.me?part=1
 Cc: stable@vger.kernel.org
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
-Link: https://patch.msgid.link/20260709191732.124092-1-hidayath@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260707-b4-disp-783fedbb-v1-1-463b9dbda2ea@proton.me
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/iucv/af_iucv.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/iucv/af_iucv.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 --- a/net/iucv/af_iucv.c
 +++ b/net/iucv/af_iucv.c
-@@ -1867,7 +1867,8 @@ static int afiucv_hs_callback_syn(struct
- 		afiucv_swap_src_dest(skb);
- 		trans_hdr->flags = AF_IUCV_FLAG_SYN | AF_IUCV_FLAG_FIN;
- 		err = dev_queue_xmit(skb);
--		iucv_sock_kill(nsk);
-+		if (nsk)
-+			iucv_sock_kill(nsk);
- 		bh_unlock_sock(sk);
- 		goto out;
+@@ -335,6 +335,7 @@ static void iucv_sever_path(struct sock
+ 	unsigned char user_data[16];
+ 	struct iucv_sock *iucv = iucv_sk(sk);
+ 	struct iucv_path *path = iucv->path;
++	struct sock_msg_q *p, *n;
+ 
+ 	/* Whoever resets the path pointer, must sever and free it. */
+ 	if (xchg(&iucv->path, NULL)) {
+@@ -346,6 +347,19 @@ static void iucv_sever_path(struct sock
+ 		} else
+ 			pr_iucv->path_sever(path, NULL);
+ 		iucv_path_free(path);
++
++		/*
++		 * Message notifications queued on message_q still reference
++		 * the now freed path; drop them, otherwise a later recvmsg()
++		 * would pass the freed iucv_path to message_receive() via
++		 * iucv_process_message_q().
++		 */
++		spin_lock_bh(&iucv->message_q.lock);
++		list_for_each_entry_safe(p, n, &iucv->message_q.list, list) {
++			list_del(&p->list);
++			kfree(p);
++		}
++		spin_unlock_bh(&iucv->message_q.lock);
  	}
+ }
+ 
 
 
