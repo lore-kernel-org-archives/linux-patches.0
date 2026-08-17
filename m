@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C2F12D8DDF;
-	Mon, 17 Aug 2026 14:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351DC3AB5B8;
+	Mon, 17 Aug 2026 14:00:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975254; cv=none; b=syRZwYG+i6mRdldcT+K575yKTfRkUbKt0yY0ESsd2ql29L6/4yxVepTlo6w9wl9x5kwhTZ5l6w1BE7Wp33J0cnzgroHl50x7lx65DSjnZMXtZM5IObKwEvaYkSbZa1hyXF5Bcc9ejPNbNF11Jrv1ANSE631z47R7gH0vUoic7Uk=
+	t=1786975257; cv=none; b=aPvA9Inzg+vJf3i9x+OmfAHYnqSP2N0BIGEQWVW2v5e+51+Aob4NIG3tBEWNl33JRdX6szFwrHFfaiG0goGcbbmxaNHVnEptl3M6C2Ksf4HAHY+yf28wrWlHmRhAc2lfsDzl9Xq4t03brnJ81JZ2BESyYarZFXPK1cm6hbg8vtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975254; c=relaxed/simple;
-	bh=g7CELtEuSh1xRML+CBsszn3EjBtebKlM8J3K0SmtIoQ=;
+	s=arc-20240116; t=1786975257; c=relaxed/simple;
+	bh=5ORB27TIi5o+53sKj+yh/Ztu9O5BXSRH5mHMv8OqdIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o8E0sIDebzgFOA3+HGzFoFj6TMCBjYAsiJkaI6P/i1g+7l5war730KT//YtVjXl1vlAUT5tJ7Vl3O0wCxcM6dDXDLy+2DB29aUN7b71LhmyQF4YmNWG6Id2Fo2upXEGoYvy1JsvXWBCSDA80GyLFjdADqbS8qg+KgBoS3PzjJII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTtHKWhb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M9T19Xc+yz0Fmf4/Yzb1HeJwElUAptOK8yako3eEkuUAqV6BxDenwfw1Kfcf74q1SNlOS7viHgCzZoxP4+NLRhoi+2qaSlOHnMRLZMmHQ6oQ50Pqc0Vfymz3e1F8BXsZJvOR7i1Qb+bjgkZaNS4Tjq7MkQYFtpcER96bo7DWrlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNYPR/Rk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTtHKWhb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A831F000E9;
-	Mon, 17 Aug 2026 14:00:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNYPR/Rk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8AF1F000E9;
+	Mon, 17 Aug 2026 14:00:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975253;
-	bh=vp7hst5DUmXIKF5X9PF8JEo0ynBwuomZ2GtM66wBXjs=;
+	s=korg; t=1786975256;
+	bh=cc1imrVhtLZJkpvuJtPgIRdhyTeWBPASznN7a3cI824=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KTtHKWhb7q2hrTHNNhG33Fe2AsAPqN3DXrpthG079ALx4iGEndiufpiA4WNtHWeny
-	 mQuql40qexCmxUz5FFJeq1xuH1YnKW44aVAAf74P+Ds9god+Q8syidHH30aJ4iWEiA
-	 ZrbGHkDjT9pxpU2l6B+xNVoGDVDpcq/3Jr9scAWI=
+	b=NNYPR/Rkmp5YFqjIjvjf9JzWFwS6X+CPE/7YRA5NGzq4PulwqPUN4mcTLHjU/1X+d
+	 H789o4Oomhaw0FN2VXX5cnFtK7RDv3w3XFcDZKQRpb7zySyTId+4Ew39SuIL7mTYuT
+	 d7p79LM+2QQwfYzuPp0IAlDJ213wjq+36kX867jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Bobby Eshleman <bobbyeshleman@meta.com>,
+	Baul Lee <baul.lee@xbow.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 216/250] vsock/virtio: read virtqueues under worker locks
-Date: Mon, 17 Aug 2026 15:32:57 +0200
-Message-ID: <20260817132545.357560245@linuxfoundation.org>
+Subject: [PATCH 6.18 199/250] net/x25: fix use-after-free of the socket by its timers
+Date: Mon, 17 Aug 2026 15:32:40 +0200
+Message-ID: <20260817132544.682326711@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,81 +50,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit ebac8f6b1ef0e9278afe204b8692a7479988dace upstream.
+commit 2195424c3da2ef1829a63b807e3a900a90e57d85 upstream.
 
-Commit bd50c5dc182b ("vsock/virtio: add support for device
-suspend/resume") made the *_run flags transition from false to true when
-restore installs replacement virtqueues.  The RX, TX and event workers
-read their virtqueue before locking and checking the corresponding flag,
-so a worker delayed across freeze and restore can observe the replacement
-queue's running state while retaining a pointer to the deleted queue.
+The x25 timers are armed with mod_timer() and cancelled with
+timer_delete(), so a pending timer holds no reference on the socket and a
+cancel does not wait for a callback already running on another CPU.
 
-Read each virtqueue under its mutex after checking the run flag, keeping
-the pointer and state in the same queue generation.
+x25_heartbeat_expiry() also rearms unconditionally, so it can reinstall
+sk->sk_timer after __x25_destroy_socket() has passed its cancel point.
+The following __sock_put() frees the socket while the timer is still
+queued, and the next expiry uses freed memory.  KASAN reports a
+slab-use-after-free on the kmalloc-2k object freed by close().
 
-Fixes: bd50c5dc182b ("vsock/virtio: add support for device suspend/resume")
+timer_delete_sync() cannot be used here: x25_heartbeat_expiry() and
+x25_timer_expiry() both reach the cancels from inside the timer they
+would wait on, through __x25_destroy_socket() and x25_disconnect().
+
+Arm the timers with sk_reset_timer() and cancel them with sk_stop_timer()
+so that an armed timer owns a reference, and release it in both expiry
+handlers.  Rearm the heartbeat only while sk_hashed(sk) is still true,
+since __x25_destroy_socket() unlinks the socket before dropping it.  Arm
+the deferred destroy timer the same way and drop its reference in
+x25_destroy_timer().
+
+Reproduced on net with KASAN, with the heartbeat period shortened so the
+window recurs.  With this patch the reproducer no longer triggers a
+report and /proc/net/x25 drains.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Link: https://lore.kernel.org/r/20260727035804.1860862-1-bestswngs@gmail.com
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Link: https://patch.msgid.link/e79f68ad9284c983364fc3ac46904b6d9ef50231.1785352330.git.bestswngs@gmail.com
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260726220342.47245-1-baul.lee@xbow.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ net/x25/af_x25.c    |    4 ++--
+ net/x25/x25_timer.c |   25 ++++++++++++++++---------
+ 2 files changed, 18 insertions(+), 11 deletions(-)
 
---- a/net/vmw_vsock/virtio_transport.c
-+++ b/net/vmw_vsock/virtio_transport.c
-@@ -343,12 +343,13 @@ static void virtio_transport_tx_work(str
- 	struct virtqueue *vq;
- 	bool added = false;
+--- a/net/x25/af_x25.c
++++ b/net/x25/af_x25.c
+@@ -362,6 +362,7 @@ static void x25_destroy_timer(struct tim
+ 	struct sock *sk = timer_container_of(sk, t, sk_timer);
  
--	vq = vsock->vqs[VSOCK_VQ_TX];
- 	mutex_lock(&vsock->tx_lock);
+ 	x25_destroy_socket_from_timer(sk);
++	sock_put(sk);
+ }
  
- 	if (!vsock->tx_run)
- 		goto out;
+ /*
+@@ -397,9 +398,8 @@ static void __x25_destroy_socket(struct
  
-+	vq = vsock->vqs[VSOCK_VQ_TX];
-+
- 	do {
- 		struct sk_buff *skb;
- 		unsigned int len;
-@@ -448,13 +449,13 @@ static void virtio_transport_event_work(
- 		container_of(work, struct virtio_vsock, event_work);
- 	struct virtqueue *vq;
+ 	if (sk_has_allocations(sk)) {
+ 		/* Defer: outstanding buffers */
+-		sk->sk_timer.expires  = jiffies + 10 * HZ;
+ 		sk->sk_timer.function = x25_destroy_timer;
+-		add_timer(&sk->sk_timer);
++		sk_reset_timer(sk, &sk->sk_timer, jiffies + 10 * HZ);
+ 	} else {
+ 		/* drop last reference so sock_put will free */
+ 		__sock_put(sk);
+--- a/net/x25/x25_timer.c
++++ b/net/x25/x25_timer.c
+@@ -36,45 +36,45 @@ void x25_init_timers(struct sock *sk)
  
--	vq = vsock->vqs[VSOCK_VQ_EVENT];
--
- 	mutex_lock(&vsock->event_lock);
+ void x25_start_heartbeat(struct sock *sk)
+ {
+-	mod_timer(&sk->sk_timer, jiffies + 5 * HZ);
++	sk_reset_timer(sk, &sk->sk_timer, jiffies + 5 * HZ);
+ }
  
- 	if (!vsock->event_run)
- 		goto out;
+ void x25_stop_heartbeat(struct sock *sk)
+ {
+-	timer_delete(&sk->sk_timer);
++	sk_stop_timer(sk, &sk->sk_timer);
+ }
  
-+	vq = vsock->vqs[VSOCK_VQ_EVENT];
-+
- 	do {
- 		struct virtio_vsock_event *event;
- 		unsigned int len;
-@@ -614,13 +615,13 @@ static void virtio_transport_rx_work(str
- 		container_of(work, struct virtio_vsock, rx_work);
- 	struct virtqueue *vq;
+ void x25_start_t2timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
  
--	vq = vsock->vqs[VSOCK_VQ_RX];
--
- 	mutex_lock(&vsock->rx_lock);
+-	mod_timer(&x25->timer, jiffies + x25->t2);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t2);
+ }
  
- 	if (!vsock->rx_run)
- 		goto out;
+ void x25_start_t21timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
  
-+	vq = vsock->vqs[VSOCK_VQ_RX];
-+
- 	do {
- 		virtqueue_disable_cb(vq);
- 		for (;;) {
+-	mod_timer(&x25->timer, jiffies + x25->t21);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t21);
+ }
+ 
+ void x25_start_t22timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t22);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t22);
+ }
+ 
+ void x25_start_t23timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t23);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t23);
+ }
+ 
+ void x25_stop_timer(struct sock *sk)
+ {
+-	timer_delete(&x25_sk(sk)->timer);
++	sk_stop_timer(sk, &x25_sk(sk)->timer);
+ }
+ 
+ unsigned long x25_display_timer(struct sock *sk)
+@@ -108,7 +108,7 @@ static void x25_heartbeat_expiry(struct
+ 			     sock_flag(sk, SOCK_DEAD))) {
+ 				bh_unlock_sock(sk);
+ 				x25_destroy_socket_from_timer(sk);
+-				return;
++				goto out;
+ 			}
+ 			break;
+ 
+@@ -120,8 +120,14 @@ static void x25_heartbeat_expiry(struct
+ 			break;
+ 	}
+ restart_heartbeat:
+-	x25_start_heartbeat(sk);
++	/* Do not rearm once __x25_destroy_socket() has unlinked the socket:
++	 * it is past its cancel point and owns the teardown from there on.
++	 */
++	if (sk_hashed(sk))
++		x25_start_heartbeat(sk);
+ 	bh_unlock_sock(sk);
++out:
++	sock_put(sk);
+ }
+ 
+ /*
+@@ -166,4 +172,5 @@ static void x25_timer_expiry(struct time
+ 	} else
+ 		x25_do_timer_expiry(sk);
+ 	bh_unlock_sock(sk);
++	sock_put(sk);
+ }
 
 
