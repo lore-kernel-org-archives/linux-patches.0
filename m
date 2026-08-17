@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDAF842EEDD;
-	Mon, 17 Aug 2026 15:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7B543F09A;
+	Mon, 17 Aug 2026 15:00:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978802; cv=none; b=OazKXZxvak6jaRNqI8mMmh480+D3URTkcrozHYPF8XsOeeAMSZcgAVpf6dr/0x4CdGJTgbihnTxshxx+WUTSKBMlcvxsGufeh1FQKPWdzXJ0HPEe00cvsYCSjHCEAZCtg+/alus3veWSs0UKq03lVilNlmLvc8yfqZcVgxX/pF8=
+	t=1786978804; cv=none; b=iLxT/Um9HvSIsHHetPylVb6NgK7ObxVSTn6oNqx63woc3qFiusOTnWZnu7KWkomPGGFjhdSxNCjxHSV+Ia2VFNufwsTdR4KasMFoEBuFEDliSPXcYOtXqtkc/JHGZ7f2gnhTddZWjyX3hppm1fHbz0TPm7+BY8Su0ggDDrV01zU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978802; c=relaxed/simple;
-	bh=NOzphSVaCkA1ZcSTnCnxDbve3uUbiyVH546PuBj0GV0=;
+	s=arc-20240116; t=1786978804; c=relaxed/simple;
+	bh=fiHfghn+0BzlzfRjyupMxe6EN8GljyoCV5eXUZGmJf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gJeLtP5yEZhU/UDFNaInSak8RHCFIJ9mNOH0vItQFv82EpYDIPukELdXMSLAfgy0bjThlcWGIGL9EHYs2OQzG/JC+xKQAzd7XD3zrjilWNOcyBcGoqFvTC2NuzSwlfvTWxF81fK/wiMRG9Zq4MAQbQ41pFhTOhsHiKcrU9BokFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EWnD48ll; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YPDEGNclt+P3nPu6jSw0b+IT+YlCpM/If8rFKE+O99lpHdlsY86n2t75zh4uX1ZWXnn/jYe/6WUc5TJl2geDpN6O1dCgXpWGtivVLXVQdpGIZzQT9Mu8GqsPGIpYJwjdt/KR1wkN5+ckDPM9k/FUcineqeW0cf4aDkgq1SGCsoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KWXma/NS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EWnD48ll"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50AFD1F000E9;
-	Mon, 17 Aug 2026 15:00:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KWXma/NS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF461F000E9;
+	Mon, 17 Aug 2026 15:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978800;
-	bh=1SpJ5a5osCFLo6rRoPagATiwLocQQEEPYCqPr6r1qkc=;
+	s=korg; t=1786978803;
+	bh=3OOz/MSTxkOAyJkZDydLOl7RKeUI9IWNcR9yJFo5VUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EWnD48llpnOKjQ3jptPz3vtE2AHuX+ofnqGeB78hmIEmoHXn+VAtJr9uk38auyUhP
-	 JisDN4JRiAt0/vXPY1MD8oX+ulmRi63Ipq+e18JYntd+/Ua5/1OwRhNuVtbreJ+NX4
-	 8eFRbDYxkNtWhuQ99GHzHXFGuZGppF9H/FzahU3A=
+	b=KWXma/NSPUmP7fJSFqp7+QiyGC1M4Iaxs0ZHxQx1kNMClYQxe/JQzKd0LhhXarUpT
+	 J8UmA3KKwnhFJ/7ksRIRtC2CHbM/Lwu0M8IAEF5mBt8qVK6l2389Ut/PwQ2j/txIHU
+	 pWVLOkq3A9xvXw8mkomEPDW3ui2LDNWZarDEWTZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuansheng Mao <yuansheng.mao@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 127/156] Revert "drm/amdgpu: fix aperture mapping leak"
-Date: Mon, 17 Aug 2026 15:34:21 +0200
-Message-ID: <20260817132539.648593645@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 128/156] xdp: reject clones that overrun skb_shared_info tailroom
+Date: Mon, 17 Aug 2026 15:34:22 +0200
+Message-ID: <20260817132539.686741554@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -53,111 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit b96c529cd2551b78316a4afa3237b2ed96ba03c8 upstream.
+commit e48e8edbef2eb824201495daa5234560f632b23c upstream.
 
-devres teardown is LIFO. The aperture devres node was registered after
-the DRM device node, so devres_release_all() unmaps the aperture before
-the DRM device release callback fires amdgpu_device_fini_sw(). IP
-sw_fini callbacks (e.g. vcn_v4_0_sw_fini) write to fw_shared through a
-pointer derived from aper_base_kaddr, causing a kernel page fault on
-probe failure / rollback:
+xdpf_clone() clones broadcast copies into a single page and sets
+frame_sz to PAGE_SIZE. __xdp_build_skb_from_frame() later treats that
+page like a normal XDP frame and expects the usual skb_shared_info
+tailroom at the end of the buffer.
 
-  BUG: unable to handle page fault ... PMD 0
-  RIP: vcn_v4_0_sw_fini+0x7b/0x170 [amdgpu]
-  Call Trace:
-    amdgpu_device_fini_sw
-    amdgpu_driver_release_kms
-    devm_drm_dev_init_release
-    devres_release_all
+The current check only rejects frames whose linear xdp_frame header,
+headroom, and packet data exceed PAGE_SIZE. A source frame backed by a
+larger allocation can still satisfy that check while extending into the
+clone's required shared-info area. When such a clone is converted back
+into an skb, build_skb_around() places skb_shared_info over live packet
+bytes and later writes can corrupt XDP return metadata.
 
-This reverts commit d871e99879cb5fd1fa798b006b4888887e63a17a.
+Reject clones unless their linear area fits inside
+SKB_WITH_OVERHEAD(PAGE_SIZE), matching the tailroom requirement already
+enforced by the XDP-to-skb conversion path.
 
-Fixes: d871e99879cb ("drm/amdgpu: fix aperture mapping leak")
-Reported-by: Yuansheng Mao <yuansheng.mao@amd.com>
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 336e0cd576817ac64a4b394ca2b3680029f3e37f)
+Fixes: e624d4ed4aa8 ("xdp: Extend xdp_redirect_map with broadcast support")
 Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Link: https://patch.msgid.link/6b2afef5d1738763c6965e8e466eb16e43e4f956.1785757386.git.zhilinz@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    2 +
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c    |   35 +++++++++++++++--------------
- 2 files changed, 21 insertions(+), 16 deletions(-)
+ net/core/xdp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3977,6 +3977,8 @@ static void amdgpu_device_unmap_mmio(str
+--- a/net/core/xdp.c
++++ b/net/core/xdp.c
+@@ -674,7 +674,7 @@ struct xdp_frame *xdpf_clone(struct xdp_
+ 	headroom = xdpf->headroom + sizeof(*xdpf);
+ 	totalsize = headroom + xdpf->len;
  
- 	iounmap(adev->rmmio);
- 	adev->rmmio = NULL;
-+	if (adev->mman.aper_base_kaddr)
-+		iounmap(adev->mman.aper_base_kaddr);
- 	adev->mman.aper_base_kaddr = NULL;
- 
- 	/* Memory manager related */
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -1887,23 +1887,17 @@ int amdgpu_ttm_init(struct amdgpu_device
- 	/* Change the size here instead of the init above so only lpfn is affected */
- 	amdgpu_ttm_set_buffer_funcs_status(adev, false);
- #ifdef CONFIG_64BIT
--	if (adev->gmc.xgmi.connected_to_cpu) {
--		void *kaddr = devm_memremap(adev->dev, adev->gmc.aper_base,
--					    adev->gmc.visible_vram_size,
--					    MEMREMAP_WB);
--		if (IS_ERR(kaddr))
--			return PTR_ERR(kaddr);
--		adev->mman.aper_base_kaddr = (__force void __iomem *)kaddr;
--	} else if (adev->gmc.is_app_apu) {
-+#ifdef CONFIG_X86
-+	if (adev->gmc.xgmi.connected_to_cpu)
-+		adev->mman.aper_base_kaddr = ioremap_cache(adev->gmc.aper_base,
-+				adev->gmc.visible_vram_size);
-+	else if (adev->gmc.is_app_apu)
- 		DRM_DEBUG_DRIVER(
- 			"No need to ioremap when real vram size is 0\n");
--	} else {
--		adev->mman.aper_base_kaddr = devm_ioremap_wc(adev->dev,
--							     adev->gmc.aper_base,
--							     adev->gmc.visible_vram_size);
--		if (!adev->mman.aper_base_kaddr)
--			return -ENOMEM;
--	}
-+	else
-+#endif
-+		adev->mman.aper_base_kaddr = ioremap_wc(adev->gmc.aper_base,
-+				adev->gmc.visible_vram_size);
- #endif
- 
- 	/*
-@@ -2050,6 +2044,8 @@ int amdgpu_ttm_init(struct amdgpu_device
-  */
- void amdgpu_ttm_fini(struct amdgpu_device *adev)
- {
-+	int idx;
-+
- 	if (!adev->mman.initialized)
- 		return;
- 
-@@ -2072,7 +2068,14 @@ void amdgpu_ttm_fini(struct amdgpu_devic
- 	amdgpu_ttm_fw_reserve_vram_fini(adev);
- 	amdgpu_ttm_drv_reserve_vram_fini(adev);
- 
--	adev->mman.aper_base_kaddr = NULL;
-+	if (drm_dev_enter(adev_to_drm(adev), &idx)) {
-+
-+		if (adev->mman.aper_base_kaddr)
-+			iounmap(adev->mman.aper_base_kaddr);
-+		adev->mman.aper_base_kaddr = NULL;
-+
-+		drm_dev_exit(idx);
-+	}
- 
- 	amdgpu_vram_mgr_fini(adev);
- 	amdgpu_gtt_mgr_fini(adev);
+-	if (unlikely(totalsize > PAGE_SIZE))
++	if (unlikely(totalsize > SKB_WITH_OVERHEAD(PAGE_SIZE)))
+ 		return NULL;
+ 	page = dev_alloc_page();
+ 	if (!page)
 
 
