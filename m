@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E8C3EFFB9;
-	Mon, 17 Aug 2026 13:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE97C3E2ADD;
+	Mon, 17 Aug 2026 13:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974635; cv=none; b=Rk0gxScJ+G2IFJXErDxIJEaZqC8I2qs5z81SnJY4ZP3Y61kyAJnDvp0SA+OI1dL5bN2gZ/I/D7G3tMg7QF3o4g3+OvSGgbaHLLnUbyCOq3Z5q0wCaL/8d8vQA1lJl5CsthwYUkWaONLbmTIE+iOECext+1shW0bkh6cidp+FCdA=
+	t=1786974639; cv=none; b=NlQyoybkZGoLB/6oKslA7RxFGJ6nqe8GqI8h/scWwm6s9t/saibtY5yx4QSlvO6fIH441WethiVIbCS+PJnlTRKynZ+pMSW1KSApIX6YTD21wpWx5XNQpf2Fol/g2CS8fa1iIk2rmVh1jy5H5Kr3A2lZtiM1AjKZbqx1GMwdzPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974635; c=relaxed/simple;
-	bh=HhbqKGwQF+xxsYOi1vHFeCSPLICp3RbsfEe7k5f/s8g=;
+	s=arc-20240116; t=1786974639; c=relaxed/simple;
+	bh=3gB+RI+6oDEh+nl3bNV2ClYLWnLnhj4Rs3x7gyMPyb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JVieDFacZah53zA/Hr9Ppp+nxCBPK2hPY3Fs1+NtJhk/3+pVRYrp6q4jjDvY5zWvxvLeO9//VnQJwHEyaUFKR0wShI3KAeWaOscsuDFaJ0ugRgYxDPOwKZPKIHHpKqhHz86fWjIEmlLrlpI1q1EhcN0+FyW7/mkifr56HCljMcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ocYax8fp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JXf4yesmyB2A5m0x6cg/qnifaDSWFOLa7Y2KlLduJitbgq2GNeL+ttAkALnw8nJCGY23gqn6XbFa7a7J3D50BFTeyhkGq0CXYfUVCplLXHel34vAqOdFvfmeB60HnZZgdd3i/m3Qv2lmgoOkucAa3HCJx1QbvIIMhryajK37gw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0aOcL8K9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ocYax8fp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652EC1F000E9;
-	Mon, 17 Aug 2026 13:50:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0aOcL8K9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F761F00A3A;
+	Mon, 17 Aug 2026 13:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974628;
-	bh=52ju4CbS9fCTlcg7DAHN8vl58w3hs3UjATdv833MKkk=;
+	s=korg; t=1786974631;
+	bh=6tSa+3v5dFbwLPvtefE5hLVY+lmiJAFLosTNziQl0nI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ocYax8fpd2TzuQhMtIONexfOEVBwAQRWFj+xhtY9jUfLDY9+P+H4yW6lRXgVOkEZI
-	 8kVEOzk0ZzAks4SGxnf6BPpsrkHBl68+7/p7sJHGg0w0TSye22A6OLUX/D74c1nI4P
-	 8SgJUBPcwzfVEMWod4LvlJv3eFVkRexnLSjhdoPA=
+	b=0aOcL8K9xGWqIIUtB6+x5bioWiK/xj25YiuRStik5afXxp916Eyxj/jR/jNGSlctq
+	 NhTQVmvtTR9TtkXa9tax2dDXgeoNlffDHWmRjMpsfSJjVPIiI7yMf9jYxSDuy5m92I
+	 1ySOBc+JeNrZDwh5SJ2XgnCFvGUWTc2afwQ/16F8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 7.1 271/271] thunderbolt: Fix bandwidth group reservation indexing
-Date: Mon, 17 Aug 2026 15:33:16 +0200
-Message-ID: <20260817132547.850903959@linuxfoundation.org>
+	Tengda Wu <wutengda@huaweicloud.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 7.1 251/271] ring-buffer: Use current_context for safe per-CPU buffer swap
+Date: Mon, 17 Aug 2026 15:32:56 +0200
+Message-ID: <20260817132547.065275922@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -50,41 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-commit d2ee4d47aacbd2ba456092eeec670dba35fde291 upstream.
+commit f27bdc43077e4fcb5557dfc315ee8d91e741f483 upstream.
 
-Valid bandwidth group IDs range from 1 through MAX_GROUPS, while Group
-ID 0 is reserved. tb_consumed_dp_bandwidth() uses the Group ID directly
-to index its local group_reserved[] array.
+The ring_buffer_swap_cpu() function currently checks the per-CPU
+committing counter to determine if a buffer is actively being written to
+before performing the swap. However, there exists a race window where
+this check can be bypassed:
 
-The array currently has MAX_GROUPS entries, so its valid indices are 0
-through MAX_GROUPS - 1. Group ID MAX_GROUPS therefore accesses one
-element past the end, and the final group's reserved bandwidth is not
-included when the array is summed.
+    ring_buffer_lock_reserve
+        cpu_buffer = buffer->buffers[cpu];       // cpu_buffer_a
+        rb_reserve_next_event
+            rb_start_commit // inc committing
+            if (unlikely(READ_ONCE(cpu_buffer->buffer) != buffer)) {...}
+            __rb_reserve_next
+                rb_move_tail
+                    rb_end_commit(cpu_buffer);   // dec committing => 0
+                    /* interrupt hits here, successfully swaps! */
+                    local_inc(&cpu_buffer->committing);
 
-Give group_reserved[] MAX_GROUPS + 1 entries so direct Group ID
-indexing covers the reserved ID 0 and valid IDs 1 through MAX_GROUPS.
+    ring_buffer_unlock_commit
+        cpu_buffer = buffer->buffers[cpu];      // cpu_buffer_b
+        rb_commit
+            rb_end_commit
+            RB_WARN_ON(cpu_buffer, !local_read(&cpu_buffer->committing))
+                                                // triggers warning
 
-Fixes: 52a4490e89d7 ("thunderbolt: Reserve released DisplayPort bandwidth for a group for 10 seconds")
+The committing counter can temporarily drop to 0 during a single write
+operation (within rb_move_tail), creating a window where swap can
+succeed even though the write is still in progress. This leads to
+inconsistent buffer state and triggers the RB_WARN_ON in rb_commit().
+
+Replace the committing counter check with current_context checks, which
+are set at the entry of ring_buffer_lock_reserve() and remain valid
+throughout the entire write operation, providing a reliable indicator of
+buffer busy state during swap.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Fixes: 4239c38fe0b3 ("ring-buffer: Process commits whenever moving to a new page.")
+Link: https://patch.msgid.link/20260803005640.2445666-2-wutengda@huaweicloud.com
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/tb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -609,7 +609,7 @@ static int tb_consumed_dp_bandwidth(stru
- 				    int *consumed_up,
- 				    int *consumed_down)
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -6683,7 +6683,7 @@ int ring_buffer_swap_cpu(struct trace_bu
  {
--	int group_reserved[MAX_GROUPS] = {};
-+	int group_reserved[MAX_GROUPS + 1] = {};
- 	struct tb_cm *tcm = tb_priv(tb);
- 	struct tb_tunnel *tunnel;
- 	bool downstream;
+ 	struct ring_buffer_per_cpu *cpu_buffer_a;
+ 	struct ring_buffer_per_cpu *cpu_buffer_b;
+-	int ret = -EINVAL;
++	int ret = -EBUSY;
+ 
+ 	if (!cpumask_test_cpu(cpu, buffer_a->cpumask) ||
+ 	    !cpumask_test_cpu(cpu, buffer_b->cpumask))
+@@ -6724,10 +6724,10 @@ int ring_buffer_swap_cpu(struct trace_bu
+ 	atomic_inc(&cpu_buffer_a->record_disabled);
+ 	atomic_inc(&cpu_buffer_b->record_disabled);
+ 
+-	ret = -EBUSY;
+-	if (local_read(&cpu_buffer_a->committing))
++	/* Do not swap if either buffer is in the process of writing */
++	if (cpu_buffer_a->current_context)
+ 		goto out_dec;
+-	if (local_read(&cpu_buffer_b->committing))
++	if (cpu_buffer_b->current_context)
+ 		goto out_dec;
+ 
+ 	/*
 
 
