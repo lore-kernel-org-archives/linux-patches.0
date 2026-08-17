@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77218442373;
-	Mon, 17 Aug 2026 14:31:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5658F442385;
+	Mon, 17 Aug 2026 14:31:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977109; cv=none; b=WQ1sRJq33A3gp18FiLeqkykWR/C0tnGHe31LU1khN9Kl2N8H/zapbKWDKCgz15CPf9bNTyoUuPb5YpjHOAMNUh4dKgYAZTo0f3IcgqdwYTa4jLT75s59K8ADVoBYfnMovID4b+TpAmveJ71JXS8D0HVVyLytjDEBBr8n1wHdbPc=
+	t=1786977112; cv=none; b=QsSyEX4h1cVGMXfVDBF4fp4tDwbps+BIPdENGUvB4BBgMyQoojkrFNLhUc5nRrV1dyQ8o/F0a/9R4RrQn9g/E/yD/IyXq98J0Hm5N2On2G62BN8Ek8z9sE9ZXVIYdpEFyK/ReSe3eCj+kA8EVe6g+R06J9IMGKkz65h9C9M62VI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977109; c=relaxed/simple;
-	bh=w4hFokrVx3yRvpUVkk7JDzfPgRYW/2aawEm5sDbJr/Y=;
+	s=arc-20240116; t=1786977112; c=relaxed/simple;
+	bh=djr22XcSqsfSJiTHjs7PH+OGWIooedueTmmHjUQ4idM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fw+fpHH/sRF3RDghWwpKZMIFaMXe4kdVIwER0oPgoz7FMb8TzsaDGmlUHUeiskXp/rnxV/RkV63Hts3bIVIUCtMNACLwhJ7HIYNsviHnQkj6VxFVvih0ViRO2PQ3dASBL0dypbB32P2PEik1YjKhY86IPqxj1zjFYYLP7cBFw8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NIQqkA3e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gWMJshXWzsUloayXM1MTeVbJ7ysJGmUbgpPSiL3StLU2ygO87pMyDAB3srhZ9cFqZqFjXfSWVUdPR6WDtI3N59ulrsMuMm5UlCCURCNrbNNW/jaD4krOtrOwXYqA8kGLGN1aMLDmOexeA616eaym6BbwPXGIDxlrfeAPNvBA5VE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdPKgydf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NIQqkA3e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4851F00A3D;
-	Mon, 17 Aug 2026 14:31:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdPKgydf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEDA71F000E9;
+	Mon, 17 Aug 2026 14:31:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977108;
-	bh=wrTk8lTBcXf+ayLEfbXGM8TlSME9Y2Sw4l4oJBjs6Z8=;
+	s=korg; t=1786977111;
+	bh=nsVGxIDhdp62pUNCPANqVuN8S0rCHm+SX7aFsamt5Nc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NIQqkA3eBa5a03q+sh/gTFmFM/v+K8w/vd3irGAbOL1gDX/hoyFrgOPw9N53lecN4
-	 6B7stVN+nm6jteagBFTHSzvO8uI99awbn2jyI6Giu65PaG2LnT2HoktWtCFXLE6wZd
-	 8UyrvGWVb/eQWC4wstznvcW18/xZXlLM2PfxAKJs=
+	b=WdPKgydfTztyay9/fm/07B2ANtJxgwHlxdg8KSHSzElxE97qQTJaqEz8N9IdeH43g
+	 JeaOvErOtBq/Vi15LIh8hvam4p/Iu9WoOfDOeNYmchXV8s+yMzfDakCX+JnndbGWdQ
+	 UlDjmPgJeotGbt/KFbW9K1IqbqdfYqPgrJKNKcpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Hidayath Khan <hidayath@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 214/456] geneve: require CAP_NET_ADMIN in the device netns for changelink
-Date: Mon, 17 Aug 2026 15:30:04 +0200
-Message-ID: <20260817132548.559544599@linuxfoundation.org>
+Subject: [PATCH 5.15 215/456] net/af_iucv: fix NULL deref in afiucv_hs_callback_syn()
+Date: Mon, 17 Aug 2026 15:30:05 +0200
+Message-ID: <20260817132548.596778063@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,52 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Hidayath Khan <hidayath@linux.ibm.com>
 
-commit 8efb8f8bbb353b8f2fdf4f37534c6d96c9f69e01 upstream.
+commit 47a5116e56a6b6fe1e909f244e39cd0fc26ceee4 upstream.
 
-A tunnel changelink() operates on at most two netns, dev_net(dev) and
-the sticky underlay netns geneve->net. They differ once the device is
-created in or moved to a netns other than the one the request runs in.
-The rtnl changelink path checks CAP_NET_ADMIN only against dev_net(dev),
-so a caller privileged there but not in geneve->net can rewrite a geneve
-device whose underlay lives in geneve->net.
+afiucv_hs_callback_syn() allocates the child socket with GFP_ATOMIC.
+If the allocation fails, nsk is NULL.
 
-geneve_changelink() applies the new configuration against geneve->net:
-geneve_link_config() and the geneve_quiesce()/geneve_unquiesce() pair
-reopen the underlay sockets in that netns (geneve_sock_add() uses
-geneve->net), so the same reasoning as the tunnel changelink series
-applies here.
+The connection-refused path is entered when the listen state check
+fails, the accept backlog is full, or nsk is NULL. The code
+unconditionally calls iucv_sock_kill(nsk) in that path.
 
-Gate geneve_changelink() with rtnl_dev_link_net_capable(), at the top of
-the op before any attribute is parsed, matching ipgre_changelink() and
-the rest of the "require CAP_NET_ADMIN in the device netns for
-changelink" series.
+iucv_sock_kill() does not accept a NULL socket pointer and immediately
+dereferences sk via sock_flag(sk, SOCK_ZAPPED). When nsk is NULL,
+calling iucv_sock_kill(nsk) results in a NULL pointer dereference.
 
-Found by 0sec automated security-research tooling (https://0sec.ai).
+Only call iucv_sock_kill() when a child socket was successfully
+allocated.
 
-Fixes: 5b861f6baa3a ("geneve: add rtnl changelink support")
+Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
 Cc: stable@vger.kernel.org
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20260716203500.70573-3-doruk@0sec.ai
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
+Link: https://patch.msgid.link/20260709191732.124092-1-hidayath@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/geneve.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/iucv/af_iucv.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/geneve.c
-+++ b/drivers/net/geneve.c
-@@ -1754,6 +1754,9 @@ static int geneve_changelink(struct net_
- 	struct geneve_config cfg;
- 	int err;
- 
-+	if (!rtnl_dev_link_net_capable(dev, geneve->net))
-+		return -EPERM;
-+
- 	/* If the geneve device is configured for metadata (or externally
- 	 * controlled, for example, OVS), then nothing can be changed.
- 	 */
+--- a/net/iucv/af_iucv.c
++++ b/net/iucv/af_iucv.c
+@@ -1867,7 +1867,8 @@ static int afiucv_hs_callback_syn(struct
+ 		afiucv_swap_src_dest(skb);
+ 		trans_hdr->flags = AF_IUCV_FLAG_SYN | AF_IUCV_FLAG_FIN;
+ 		err = dev_queue_xmit(skb);
+-		iucv_sock_kill(nsk);
++		if (nsk)
++			iucv_sock_kill(nsk);
+ 		bh_unlock_sock(sk);
+ 		goto out;
+ 	}
 
 
