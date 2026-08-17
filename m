@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D00D43CED7;
-	Mon, 17 Aug 2026 14:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA5E43DA3A;
+	Mon, 17 Aug 2026 14:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978657; cv=none; b=OULIGW+0fKf5/skfvgaKT3/rJNB4U7LoK877/haO5nKm/VA6TnJEGUCyiz/WUdG2sPqVasyKL3Z3TzmeasO85/G7KSfapX8Z+b8NdgAdI+Fe4tfcaOfBZO/z1EVEtNBlwzKjhpWS2nO21tMIL4JX/2JxZoJLpPcwwMWBRFAfvNc=
+	t=1786978660; cv=none; b=eNc2rL0YDd7wZg1pTZsFR3JD3pae1i1vx8TTqCjom3OFSE14omOFa+UjNabL0tuFufEj/4xFrdlPTb0+6IfuAS2NNh1rDXJmvYLcbgTHINyCImrceS9rPXZPQkkfbVFh6eZ4ZVAJLKMAwsCKmNS2hKi9MrkOSJ/2BGCBnQHFI7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978657; c=relaxed/simple;
-	bh=c8LYyJSzuX9nTlOYQg/HRKaZzef+yqd+M6u1icxs+Ms=;
+	s=arc-20240116; t=1786978660; c=relaxed/simple;
+	bh=h5qkGFCEKHTQpGCXHs8YfvV9JI0C7YcEO8dAw++c2oI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a+AATulC+MNDpX/V5ShfHglr70lKiEN7bP8YOCG2VimEOd/bR4q4oN/WYogxG9jpHdUxM0HVaFJnAFCQpQMlvWtdkH1uDLEnyF+mCoC+4Oh3bdd4PqIUD8oibnUizwFZeQFKGvhOvsiwhpaMURgCCX3knDl5wu4b/mtxu80kVjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u0acJ8mz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tq8g4sPHnglRtDBaUKo9+oUvyaCGywZImhSApcEk7nkBEpVQ7P4xHodCRSRIgxZbk/NHGm3Ubu0TtAUG4pZ/kO9n7vyxmB8SWDHta16xVDgAgjTqPvkXtCmtii0nIsHBlSY4Q3DnlDOewzwB7jr0ijJCx9o7GOKls7rPSXBFXVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xcU3SoKt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u0acJ8mz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04D141F000E9;
-	Mon, 17 Aug 2026 14:57:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xcU3SoKt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D383B1F000E9;
+	Mon, 17 Aug 2026 14:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978656;
-	bh=gtxz6K0FZUcFRzt+QwYhygo7LKhq9BNRx1Rl/sX6m2s=;
+	s=korg; t=1786978659;
+	bh=1yQMh+Cj7va6OSB5zljbV0E50/ik6QOm/srsEWHWQfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u0acJ8mzSvGSPomvBk/5zVTN/Ax5+FkPYmdUO43LdqOV4UO8OgIqZwXkVGqnOtehr
-	 LT4HUmeReIuCsUPUCk23slnD12DVVpNC1tdjQ9r5BlvuWK2LSp2n2VO+YKpkw6xmNu
-	 XR/vh5jwiMnTM1V79f2B96Abk5VMNo5KVGgfBN8s=
+	b=xcU3SoKtC57y/7lanX5aCKPIiYTsfdRMUkVxohPbM6st44D4oT45UhtsDyGa5Dqto
+	 JzOJ+IiRPk8skPMLkIjDJBANE/He0d2gpIDPLYz5nBCtCcm8tW1SkXtVUWHtHzmypE
+	 Q5ornPKeMPlnK7CqRnDeA+NDI/XUqg9YPiDlftOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Eddie Lin <eddie.lin@oss.qualcomm.com>,
+	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
 	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.6 111/156] misc: fastrpc: take fl->lock when moving mmaps on interrupted invoke
-Date: Mon, 17 Aug 2026 15:34:05 +0200
-Message-ID: <20260817132538.966956658@linuxfoundation.org>
+Subject: [PATCH 6.6 112/156] misc: fastrpc: fix memory leak in fastrpc_channel_ctx_free
+Date: Mon, 17 Aug 2026 15:34:06 +0200
+Message-ID: <20260817132539.012779094@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -52,46 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Eddie Lin <eddie.lin@oss.qualcomm.com>
 
-commit b85a0e91d7d6cd06a53c881a46f749cfcef416a2 upstream.
+commit 2fae94ee14f7fea11d3f95e10383a87c01d21518 upstream.
 
-When an invoke is interrupted by a signal,
-wait_for_completion_interruptible() returns -ERESTARTSYS and
-fastrpc_internal_invoke() moves every buffer from fl->mmaps onto
-cctx->invoke_interrupted_mmaps. This list_del()/list_add_tail() walk
-runs without holding fl->lock, the lock that serialises fl->mmaps in
-fastrpc_req_mmap() and fastrpc_req_munmap() everywhere else.
+The 'ctx_idr' is initialized but never destroyed when
+the channel context is freed, leading to a memory leak.
+Add idr_destroy() to properly clean up the IDR resources.
 
-Take fl->lock around the move, matching every other fl->mmaps accessor.
-
-Fixes: 76e8e4ace1ed ("misc: fastrpc: Safekeep mmaps on interrupted invoke")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Fixes: f6f9279f2bf0 ("misc: fastrpc: Add Qualcomm fastrpc basic driver model")
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Eddie Lin <eddie.lin@oss.qualcomm.com>
+Reviewed-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
 Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260724223342.629168-4-srini@kernel.org
+Link: https://patch.msgid.link/20260724223342.629168-6-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/misc/fastrpc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -1275,10 +1275,12 @@ bail:
- 	}
+@@ -468,6 +468,7 @@ static void fastrpc_channel_ctx_free(str
  
- 	if (err == -ERESTARTSYS) {
-+		spin_lock(&fl->lock);
- 		list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
- 			list_del(&buf->node);
- 			list_add_tail(&buf->node, &fl->cctx->invoke_interrupted_mmaps);
- 		}
-+		spin_unlock(&fl->lock);
- 	}
+ 	cctx = container_of(ref, struct fastrpc_channel_ctx, refcount);
  
- 	if (err)
++	idr_destroy(&cctx->ctx_idr);
+ 	kfree(cctx);
+ }
+ 
 
 
