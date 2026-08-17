@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8651429CD8;
-	Mon, 17 Aug 2026 14:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF94B41F5EA;
+	Mon, 17 Aug 2026 14:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977923; cv=none; b=VfUMepOu2/WDCR9rTXqoM6HTjUPnhYiBkH/ZC09uX4MTf+skmmB3e5zWl6ar/jUnaK6CO5dJmZESStSBdJNxgI5Ff0H44VHuNFG6J7IgZEn/WUDiF8pEs7hzMetVNsiuME2kButOi3h+7jW9FzW13/0/KZ1uM9avD1r/KjOz1y8=
+	t=1786977926; cv=none; b=tfYcFITLxp8KTndS62lJPs+h4UDnTuVkL4aH1joomKchUcwCCDqW6d+SHh8BdrjmoH3O25Cp+AGQ2XmFDs25lmTJ+FsbzRmSb7/KQWIX86UJsQyfbnPFxG3PxLVPUL9BtluMTF4EE2emSEogzPovD4djh8l1h3kTuvihZdzzD/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977923; c=relaxed/simple;
-	bh=3id6aUzk/mZPIqs8jHzXXaKTQUmJB3oRQHE7u23NJJw=;
+	s=arc-20240116; t=1786977926; c=relaxed/simple;
+	bh=aDmPX2FiKmrpWY50rP6T3v7MClLxt3zGt38nyuXdP8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PLf4KfINbbAEpxpobSLHbhaWg99LtvGDa+jBrNdBpbh8BfSAXfElahvNZzKCuLxfBjsuTRodKzrK7zj2aD6UHLHQ4Mp7jzGJJvJhUWr0+qPwph8WgKH6OjCCYB4O8irYJ5CPKbBAQ3djMvaNCMZn4RPmLc7z+9aWTHiWfZKkNWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPmG8731; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PVn4R1rP9BhxyCSWtTIZxK+3RFiUqwETIz3TkZs8LqYWkbXxBKyYXox8kyA2dzfGzOP0mcFJKSQb2RJwNpvTlW9EgdKjy0Y7IwSD2UghvfnoRIYRLLTDKL786xAvTkYJ9CrmRYCFalzwNwLGlmV089cqv6gJezeOAtV0bs8yTvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZLOopjw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPmG8731"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1FDB1F000E9;
-	Mon, 17 Aug 2026 14:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZLOopjw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD2631F000E9;
+	Mon, 17 Aug 2026 14:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977922;
-	bh=nPxp3weeYOGmJOmAwsI1Ly5suEu28z10O0T+2EbbiuI=;
+	s=korg; t=1786977925;
+	bh=26uCf5cm+1Wv8+J74rTD1ADmTzKtEpMaVe6WouuDP2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rPmG8731Qq7+cYB2hDg2A4+0Ko+rkfAKjeRKRWDPE7YKjEtBsJSuVYXMgoI9/lO7B
-	 cC+v4DpxCoGpk4R/6zwje0OMX/F7putuhzG/h9MjVff9FPcmn6ewoESuIKYPg28i/v
-	 3lL3Ar3xD3l0wtD4yOf/j3I+ZPmIvCuR6e9ZPtGk=
+	b=gZLOopjwUJBcXnFJJWEnvGxd1+VReKgYQn7Fzrv4DrLfg9KWrtPsS8sDFP+XMMrma
+	 akwsK7goEhQodLBSO2i5xLgAVkWP+HKFdY/mH4GTeYQ59xRKbXQmrdIMahirVCmHS8
+	 jTToZxDMSdiHLJY9pp+H4vMaC1MHAhvA8kFqjBkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Avi Fishman <avifishman70@gmail.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Rosen Penev <rosenp@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 008/181] ARM: npcm: Fix OF node refcount leaks in SMP setup
-Date: Mon, 17 Aug 2026 15:31:42 +0200
-Message-ID: <20260817132535.727893470@linuxfoundation.org>
+Subject: [PATCH 6.12 009/181] ARM: dts: BCM5301X: fix PCIe controller 2 second interrupt
+Date: Mon, 17 Aug 2026 15:31:43 +0200
+Message-ID: <20260817132535.766144634@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -52,48 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 8eb052f48331474c2789d07b7f11165c323bd2f9 ]
+[ Upstream commit bab4d538f8485e0d48538fcb82b285df3779278e ]
 
-npcm7xx_smp_boot_secondary() and npcm7xx_smp_prepare_cpus() look up
-the GCR and SCU nodes with of_find_compatible_node(). The returned
-nodes are used for of_iomap(), but the node references are never
-released.
+PCIe controller 2 has interrupts 0-4 mapping to GIC SPI 138-142. The
+mapping for interrupt 1 was incorrectly set to 138 due to a copy-paste
+error. Fix it to 139.
 
-of_iomap() does not consume the device node reference, and iounmap()
-only releases the MMIO mapping. Drop each node reference after the
-corresponding mapping attempt.
-
-Fixes: 7bffa14c9aed ("arm: npcm: add basic support for Nuvoton BMCs")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Avi Fishman <avifishman70@gmail.com>
-Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Link: https://lore.kernel.org/r/20260725215722.9323-1-rosenp@gmail.com
+Fixes: 3b3e35b279be ("ARM: dts: BCM5301X: Relicense AXI interrupts code to the GPL 2.0+ / MIT")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-npcm/platsmp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/boot/dts/broadcom/bcm-ns.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-npcm/platsmp.c b/arch/arm/mach-npcm/platsmp.c
-index 41891d3aa1247..4c1fc9983746c 100644
---- a/arch/arm/mach-npcm/platsmp.c
-+++ b/arch/arm/mach-npcm/platsmp.c
-@@ -32,6 +32,7 @@ static int npcm7xx_smp_boot_secondary(unsigned int cpu,
- 		goto out;
- 	}
- 	gcr_base = of_iomap(gcr_np, 0);
-+	of_node_put(gcr_np);
- 	if (!gcr_base) {
- 		pr_err("could not iomap gcr");
- 		ret = -ENOMEM;
-@@ -60,6 +61,7 @@ static void __init npcm7xx_smp_prepare_cpus(unsigned int max_cpus)
- 		return;
- 	}
- 	scu_base = of_iomap(scu_np, 0);
-+	of_node_put(scu_np);
- 	if (!scu_base) {
- 		pr_err("could not iomap scu");
- 		return;
+diff --git a/arch/arm/boot/dts/broadcom/bcm-ns.dtsi b/arch/arm/boot/dts/broadcom/bcm-ns.dtsi
+index d0d5f7e52a917..f08d0a27de0b4 100644
+--- a/arch/arm/boot/dts/broadcom/bcm-ns.dtsi
++++ b/arch/arm/boot/dts/broadcom/bcm-ns.dtsi
+@@ -138,7 +138,7 @@ axi@18000000 {
+ 
+ 			/* PCIe Controller 2 */
+ 			<0x00014000 0 &gic GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>,
+-			<0x00014000 1 &gic GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>,
++			<0x00014000 1 &gic GIC_SPI 139 IRQ_TYPE_LEVEL_HIGH>,
+ 			<0x00014000 2 &gic GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,
+ 			<0x00014000 3 &gic GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
+ 			<0x00014000 4 &gic GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
 -- 
 2.53.0
 
