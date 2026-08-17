@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A3613C9C4;
-	Mon, 17 Aug 2026 14:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66382F7F02;
+	Mon, 17 Aug 2026 14:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976581; cv=none; b=hYOAzTuL+y81Xkcc6tSV6418FVG/jPiBCTKKfMzHNm8bqcASkPgpDwqCVTD5UezAQ3UMkawT18YKr3i7rg/wDLGSJ9Jm39e1RHRG+bJryQ42/oE3IqF5Ebinn+fCl0X+CxI+KqX0kNmWe3pRuy82q3VPna120v6QoYsuhTeRKGM=
+	t=1786976584; cv=none; b=IFxVXiiSK/nijX1gms6pLGu1XOSbAoEhCXr+CqqgyPnoyIwfKZ2g+MXqCzh+bz+jG7nEXI6dMthfITYDO5Fan+xV4hsAbiFM6rsedB2nKy78n3dNl6GmCgY+jncVMCA4wKH7QW7pnVvjr4fljaMlJHUHvbG7CqMSdZOQZOsdc2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976581; c=relaxed/simple;
-	bh=rj0jEDfnmUoDknwd6wKAFkq3Vt0qPWtvDbh0O4kG2YY=;
+	s=arc-20240116; t=1786976584; c=relaxed/simple;
+	bh=aNertpvjxtUbFvnmY+rAXsdYobzU0inUaS4opit6Nj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pk8ZY+oelHAgC4XA70igXU6A+rgEQ5GYV8+83Z5Pw8wLZetk9QOpaZO7LM+sdQ0XvzlQBSKEvs424m+oezSNbHcfK+Sv6Y+ecsKWWGdrkGyIa/ueW4Rc7X180g3T0ZSH4AfDEiQB4a3XjFBv+VjHnMizzkvw8OIVYeI3OW4dxk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ayKOCviM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NN5jHN0u/IfOz1gY+SPZWTNYK09mlUZFywWnKdaukc9g0kzNHs6sZR7kRg0QDvV9cCXKugcEZra51GZej6/0obcPNcFyrBEx9YKg/lr+EOX2bwh4t2Y24FA+aifTR01NAnoUbZ21lTBi8kIYpnp70x/xHJ0Mry1rQ0jD5XQ7yAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0gfA/FNa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ayKOCviM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62FB81F000E9;
-	Mon, 17 Aug 2026 14:22:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gfA/FNa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8951F000E9;
+	Mon, 17 Aug 2026 14:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976579;
-	bh=qM48Ur/QpUTjCIl4gsQHudQBFyWHUsyJCY/1eAjbTyg=;
+	s=korg; t=1786976582;
+	bh=/hpuLs7tC1qQviMgVrESVESUdECQsNby+p+d1+jnWOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ayKOCviMSqCWu3gy43NvOdBj4tVHMeJS3LnbSKkQQyjzOgwQDNgnvls8tU1z3NJPo
-	 Ww966xhpkJp0ev8yACYM4zMztLVa2t2xw98CkXi+HXvs6s0IYG70kawzRgQ5JgY8RP
-	 0H+XDQ9mgSaNBRA7zaZaiYoXF5FQHTQWstaKyrVY=
+	b=0gfA/FNacCaYOL64Ay1LBlNr8cfNlutzCRx6IaeLGY31sHEVbsKmBKneQ+2ADN4E3
+	 DJX7IRDn9mopg2/s2IN+GC5N1sEeAmWDJ84jxKOS9N64G/HVbXiRdcyKzL01XMpHcR
+	 eE1XLRsufn505g/k7SsDx6JZ53Aubt0knGTLVslM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?HE=20WEI=20 ?= <skyexpoc@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Christian Hewitt <christianshewitt@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 033/456] wifi: cfg80211: bound element ID read when checking non-inheritance
-Date: Mon, 17 Aug 2026 15:27:03 +0200
-Message-ID: <20260817132541.315583397@linuxfoundation.org>
+Subject: [PATCH 5.15 034/456] ASoC: meson: aiu: fifo-spdif: soft reset the S/PDIF datapath on start/stop
+Date: Mon, 17 Aug 2026 15:27:04 +0200
+Message-ID: <20260817132541.356052269@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -45,60 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: HE WEI (ギカク) <skyexpoc@gmail.com>
+From: Christian Hewitt <christianshewitt@gmail.com>
 
-[ Upstream commit cb8afea4655ff004fa7feee825d5c79783525383 ]
+[ Upstream commit 6b59c53c8adc2b522327407af5e1793a65b67e4b ]
 
-cfg80211_is_element_inherited() reads the first data octet of the
-candidate element (id = elem->data[0]) to look it up in an extension
-non-inheritance list. It does so after testing elem->id, but without
-verifying that the element actually has a data octet. A zero-length
-extension element (WLAN_EID_EXTENSION with length 0) therefore makes it
-read one octet past the end of the element.
+The I2S FIFO soft-resets its fast domain on start (AIU_RST_SOFT bit 0 +
+AIU_I2S_SYNC read in aiu_fifo_i2s_trigger), mirroring the downstream
+vendor driver's audio_out_i2s_enable(). The S/PDIF FIFO has no equivalent:
+it only toggles the IEC958 DCU, so a stale datapath FIFO can be replayed,
+producing the "machine gun noise" buffer underrun - on start when switching
+outputs, and on stop when playback ends. The latter is audible on devices
+with an always-on S/PDIF-fed DAC (e.g. the ES7144 on the WeTek Play2).
 
-_ieee802_11_parse_elems_full() runs this check for every element of a
-frame once a non-inheritance context exists -- e.g. while parsing a
-per-STA profile of a Multi-Link element in a (re)association response,
-or a non-transmitted BSS profile -- so a crafted frame from an AP can
-trigger a one-octet slab-out-of-bounds read during element parsing:
+The vendor driver resets the IEC958 fast domain (AIU_RST_SOFT bit 2) on
+both enable and disable (audio_hw_958_enable), and when reconfiguring
+(audio_hw_958_reset clears AIU_958_DCU_FF_CTRL then resets). Do the same:
+reset before enabling the DCU on start, and before disabling on stop.
 
-  BUG: KASAN: slab-out-of-bounds in cfg80211_is_element_inherited
-  Read of size 1 ... in net/wireless/scan.c
-
-Return early (treat the element as inherited) when an extension element
-carries no data, mirroring the existing handling of empty ID lists.
-
-The bug was found by fuzzing ieee802_11_parse_elems_full() under KASAN.
-
-Fixes: f7dacfb11475 ("cfg80211: support non-inheritance element")
-Signed-off-by: HE WEI (ギカク) <skyexpoc@gmail.com>
-Link: https://patch.msgid.link/20260707094828.16465-1-skyexpoc@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 6ae9ca9ce986bf ("ASoC: meson: aiu: add i2s and spdif support")
+Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://patch.msgid.link/20260627131205.808800-1-christianshewitt@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/meson/aiu-fifo-spdif.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 1bc2aba69bd732..df9d0431864d39 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -240,7 +240,7 @@ bool cfg80211_is_element_inherited(const struct element *elem,
- 		return true;
+diff --git a/sound/soc/meson/aiu-fifo-spdif.c b/sound/soc/meson/aiu-fifo-spdif.c
+index 2fb30f89bf7a2c..515310e8eae79b 100644
+--- a/sound/soc/meson/aiu-fifo-spdif.c
++++ b/sound/soc/meson/aiu-fifo-spdif.c
+@@ -24,6 +24,7 @@
+ #define AIU_MEM_IEC958_CONTROL_MODE_16BIT	BIT(7)
+ #define AIU_MEM_IEC958_CONTROL_MODE_LINEAR	BIT(8)
+ #define AIU_MEM_IEC958_BUF_CNTL_INIT		BIT(0)
++#define AIU_RST_SOFT_958_FAST			BIT(2)
  
- 	if (elem->id == WLAN_EID_EXTENSION) {
--		if (!ext_id_len)
-+		if (!ext_id_len || !elem->datalen)
- 			return true;
- 		loop_len = ext_id_len;
- 		list = &non_inherit_elem->data[3 + id_len];
+ #define AIU_FIFO_SPDIF_BLOCK			8
+ 
+@@ -68,11 +69,15 @@ static int fifo_spdif_trigger(struct snd_pcm_substream *substream, int cmd,
+ 	case SNDRV_PCM_TRIGGER_START:
+ 	case SNDRV_PCM_TRIGGER_RESUME:
+ 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
++		snd_soc_component_write(component, AIU_RST_SOFT,
++					AIU_RST_SOFT_958_FAST);
+ 		fifo_spdif_dcu_enable(component, true);
+ 		break;
+ 	case SNDRV_PCM_TRIGGER_SUSPEND:
+ 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+ 	case SNDRV_PCM_TRIGGER_STOP:
++		snd_soc_component_write(component, AIU_RST_SOFT,
++					AIU_RST_SOFT_958_FAST);
+ 		fifo_spdif_dcu_enable(component, false);
+ 		break;
+ 	default:
 -- 
 2.53.0
 
