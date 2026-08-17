@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8916E43CE51;
-	Mon, 17 Aug 2026 13:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA4243CE46;
+	Mon, 17 Aug 2026 13:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974767; cv=none; b=n08cH7jCYFMmVEYoTud/MZX/MrsRjEhjVJrfXksw7VPiULh7UZLxOACqy+C4SwC0iQO6bz6/ut5n6mZW8H3e9Mj8Xko0ehAwUpCEOhiiWUHOr5HcmnRNUKzw2f8dxFqYu0F5+CI05ay9X+AY7K9yzVtTNMejZL/YBlf/n+7M75U=
+	t=1786974774; cv=none; b=B46mbRpLk+A1nwAjue5zQZlVjsQCsbN+RynIYP9kZJukxRNXNe+IM3SjHSm3DUmNM81MQr/hPOKs/Gf7B8LTCE5XeLfSlDLVpHvhH4cuQM1Wj9uqJ6O4FJhzyefE+zVA3GCEV7KnxGYubZqGet394rki955dwlMTdL00EZpmys4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974767; c=relaxed/simple;
-	bh=Cl/gbCORGvSSb0dCo+2BguIufNCXqrb8c1SMvEbIWpY=;
+	s=arc-20240116; t=1786974774; c=relaxed/simple;
+	bh=V8v5cNSgPeNNs2d99XShz8G/HuAcT1avGlBbCWPv9N4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pGpxgsMZBD08/Aysf/ln8FbbqFH6verbq98tZqkXtiCk/HOOzYHyzIKY1cDALOwUtBFC9tvHgRLsawRwlpqxhbm8TVhw6FYAafzTCY4Rnu+XmeKbogODxKKh3MFoncPJo6vaQbOVrw8/0Vz3mPwndzyOcptcuM7vd5phqmYPO+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBE57t4V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SRGBS2IH94dX5LpWUWrE5lrwe5pMxiPO5kvZ5k86SIXKGunPX7n2RCa/s5YwbhlHxP1aWaxB9BowdMhR4vnWpMss64Ku9RKdRItIIkyxtC/l3WzIOxBXUnli1DDY/4gGp4eJMueAYafYkMw72TGD7QQipMo102PVAlIr5MZ3g7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vX+pAJAP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBE57t4V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AFEA1F000E9;
-	Mon, 17 Aug 2026 13:52:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vX+pAJAP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF19E1F00A3D;
+	Mon, 17 Aug 2026 13:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974755;
-	bh=M9VCdR2WX50GiIn94Kg6qxnMM24NaqOmjzagAP9/Ki0=;
+	s=korg; t=1786974761;
+	bh=krbgCD+c7pfeRRTwi/VJRKmBelcprFEQ3S6zae94dto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mBE57t4VuB54vWtGj9GaEO1JDtpFsYrqhS3BJugDvRKdMFmNPuwTGrdLvhz2OaTVU
-	 Xy83ZUSj8Cxgg8DisWfKOzdOIc1F4a+D8B+wnY7TFAmguW42ssq2j4ODARaLQOjj7n
-	 v3P/qCC4RQiS3y7TPpCA7pXZzDLdBtga4EfJqhN8=
+	b=vX+pAJAPFkl7XU573ZImJxGKHnVHYwJJMlqDuauuOSVZ6LGcYVljAyOdaK3QsoZq6
+	 vi2JBPYOF3jkq/1IHKWmIQc2zZvLjWH/sYryGgm27b6YGU2QWdnwZw3jitT5vYW5pJ
+	 xMjRvL7GJ7wgPhHAHYS8h0ilkSfICpgjGhIYVKeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 044/250] bpf: split check_reg_sane_offset() in two parts
-Date: Mon, 17 Aug 2026 15:30:05 +0200
-Message-ID: <20260817132538.253959355@linuxfoundation.org>
+Subject: [PATCH 6.18 028/250] ovpn: ensure TCP vars are initialized first
+Date: Mon, 17 Aug 2026 15:29:49 +0200
+Message-ID: <20260817132537.605401680@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,110 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Antonio Quartulli <antonio@openvpn.net>
 
-[ Upstream commit ed20a14309e09216d1fa86e12b1578fa822119b4 ]
+[ Upstream commit 4680c0ebd958fc18e53c8b91d80436b236a8fc09 ]
 
-check_reg_sane_offset() is used when verifying operations like:
+Netlink calls may access TCP global vars (i.e. when attaching
+a TCP socket), therefore we need to make sure the
+latters are initialized beforehand.
 
-  dst_reg += src_reg
-  ^          ^
-  |          '-------- scalar
-  '------------------- pointer
+For this reason move the global TCP initialization at the top
+of the module init function.
 
-To verify range for both dst_reg and src_reg. Split it in two parts:
-- one to check a pointer offset
-- another to check scalar offset
-
-This would be useful for further refactoring.
-
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260212-ptrs-off-migration-v2-1-00820e4d3438@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: cdf19b1b3c01 ("bpf: Propagate untrusted pointer state in commuted arithmetic")
+Fixes: 11851cbd60ea ("ovpn: implement TCP transport")
+Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 39 +++++++++++++++++++++++++++------------
- 1 file changed, 27 insertions(+), 12 deletions(-)
+ drivers/net/ovpn/main.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 17c1ccff3ac20..80710cb8421ef 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -14291,9 +14291,9 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
- 	return 0;
- }
+diff --git a/drivers/net/ovpn/main.c b/drivers/net/ovpn/main.c
+index a3c15fc301d0d..0262926449f2e 100644
+--- a/drivers/net/ovpn/main.c
++++ b/drivers/net/ovpn/main.c
+@@ -260,8 +260,11 @@ static struct rtnl_link_ops ovpn_link_ops = {
  
--static bool check_reg_sane_offset(struct bpf_verifier_env *env,
--				  const struct bpf_reg_state *reg,
--				  enum bpf_reg_type type)
-+static bool check_reg_sane_offset_scalar(struct bpf_verifier_env *env,
-+					 const struct bpf_reg_state *reg,
-+					 enum bpf_reg_type type)
+ static int __init ovpn_init(void)
  {
- 	bool known = tnum_is_const(reg->var_off);
- 	s64 val = reg->var_off.value;
-@@ -14305,12 +14305,6 @@ static bool check_reg_sane_offset(struct bpf_verifier_env *env,
- 		return false;
+-	int err = rtnl_link_register(&ovpn_link_ops);
++	int err;
+ 
++	ovpn_tcp_init();
++
++	err = rtnl_link_register(&ovpn_link_ops);
+ 	if (err) {
+ 		pr_err("ovpn: can't register rtnl link ops: %d\n", err);
+ 		return err;
+@@ -273,8 +276,6 @@ static int __init ovpn_init(void)
+ 		goto unreg_rtnl;
  	}
  
--	if (reg->off >= BPF_MAX_VAR_OFF || reg->off <= -BPF_MAX_VAR_OFF) {
--		verbose(env, "%s pointer offset %d is not allowed\n",
--			reg_type_str(env, type), reg->off);
--		return false;
--	}
+-	ovpn_tcp_init();
 -
- 	if (smin == S64_MIN) {
- 		verbose(env, "math between %s pointer and register with unbounded min value is not allowed\n",
- 			reg_type_str(env, type));
-@@ -14326,6 +14320,27 @@ static bool check_reg_sane_offset(struct bpf_verifier_env *env,
- 	return true;
- }
+ 	return 0;
  
-+static bool check_reg_sane_offset_ptr(struct bpf_verifier_env *env,
-+				      const struct bpf_reg_state *reg,
-+				      enum bpf_reg_type type)
-+{
-+	s64 smin = reg->smin_value;
-+
-+	if (reg->off >= BPF_MAX_VAR_OFF || reg->off <= -BPF_MAX_VAR_OFF) {
-+		verbose(env, "%s pointer offset %d is not allowed\n",
-+			reg_type_str(env, type), reg->off);
-+		return false;
-+	}
-+
-+	if (smin >= BPF_MAX_VAR_OFF || smin <= -BPF_MAX_VAR_OFF) {
-+		verbose(env, "%s pointer offset %lld is not allowed\n",
-+			reg_type_str(env, type), smin);
-+		return false;
-+	}
-+
-+	return true;
-+}
-+
- enum {
- 	REASON_BOUNDS	= -1,
- 	REASON_TYPE	= -2,
-@@ -14741,8 +14756,8 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
- 	if (dst_reg != ptr_reg)
- 		*dst_reg = *ptr_reg;
- 
--	if (!check_reg_sane_offset(env, off_reg, ptr_reg->type) ||
--	    !check_reg_sane_offset(env, ptr_reg, ptr_reg->type))
-+	if (!check_reg_sane_offset_scalar(env, off_reg, ptr_reg->type) ||
-+	    !check_reg_sane_offset_ptr(env, ptr_reg, ptr_reg->type))
- 		return -EINVAL;
- 
- 	/* pointer types do not carry 32-bit bounds at the moment. */
-@@ -14871,7 +14886,7 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
- 		return -EACCES;
- 	}
- 
--	if (!check_reg_sane_offset(env, dst_reg, ptr_reg->type))
-+	if (!check_reg_sane_offset_ptr(env, dst_reg, ptr_reg->type))
- 		return -EINVAL;
- 	reg_bounds_sync(dst_reg);
- 	bounds_ret = sanitize_check_bounds(env, insn, dst_reg);
+ unreg_rtnl:
 -- 
 2.53.0
 
