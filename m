@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D39F3D8911;
-	Mon, 17 Aug 2026 14:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391E63D8911;
+	Mon, 17 Aug 2026 14:20:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976401; cv=none; b=R1kVFr0ZI4coSPo2WARzSW9kPSkCyfSeMs3oo2Dqj/Mya03oNTlcNI31sXBU8B2HUtUKZw/Nn5L9NhhGYNpdYSgZtb9zmfsG3pG1zctXdjuAQsKZiK0N6sWFiki3h8VVR70KllJItQJKnsdulFiDxMNzzRYo2o4Ut+WNBGx2EeY=
+	t=1786976404; cv=none; b=WMgjgtOy6EDdBDLzN1KDY3qphZPRGelo8qbK3vz7GgX04sh8fnYirJ2gP+jMY7wBJFL7Lf+MgybfoT0sWWWNREclQ2ud2XUVyhfkp3+/Jio6wxCmlD01PBMvm9BA1c8IBFc06+63971wFS+uc3EgJTT7SmIGxQK0OoH+Ri1AZHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976401; c=relaxed/simple;
-	bh=zzuEkZJ2aS8099+PUD12ykMEWIwse0JokDcFKh9Mnsc=;
+	s=arc-20240116; t=1786976404; c=relaxed/simple;
+	bh=0HsZikgRos6sxw8KGmeXmQrNiJMKVATiFZ/XTz/R9E0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XMEB/zsG7X1ZkoVIndEBRV8l0SKbFj/xlUzE0mVfzuXIK9k9SoXJZzMB5zogDIRsKg+8rS28/5rR/bs56JcwkmUnYRbWt44w3+wCfFe7oSBUCrvrOfGtptyvIjYhtKSA7AHFDLck+VIXahJwxmz7vAb/B3NabBbdMI3r6m8ORWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KSKQXfaw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IKyzgNFXwgDEHMw2M9LuAIFMmtyfwz1f+a1+NjCrvhOsUAadImZu+uTNxJsk1Sf243W6bcVPRWbZ4Z08ynQ4FsBRJttnV4afZ6Lexam904fdR+k4ciIVP94MGbenC1ja1ED/QT7TM7g4GErG/OPvEWwsp7RueSb+D6GiWoqwTY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M63lzVDi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KSKQXfaw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C091F000E9;
-	Mon, 17 Aug 2026 14:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M63lzVDi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 586891F000E9;
+	Mon, 17 Aug 2026 14:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976400;
-	bh=KujArSgxZ32ZrTKyP0gHtOlS6LW6RWkqC+cZz2PBejA=;
+	s=korg; t=1786976402;
+	bh=vhJ9uet7Aff4CCn7qd4nhd1M7DaI4MIl71AR7jTTWts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KSKQXfawXuUHX60KMbMSQzLQ++fPToLS9JP4fhng0CAsU1zLkobAj7H0w8Iw3hsyo
-	 ldutNiSD4rWC39QSQpne3gSLIsGRFizGY0WPS4K2xD9dvO0UD5njarsrydDEr0F43+
-	 d444ZhVZzmebOH/Sj7huccHfU08M5Zmj3Nax/qBo=
+	b=M63lzVDijN4K6Tt/cDwpUTQXibYh1kO9SJf8y9SS3CtkA/lG2bgK/TLFNsap2Bsgz
+	 vn3H02BTUOO+ZYA1uSc+oDvIFyjTbOdBSbnsg0WXG9KvvqBWmo1NBgd0ETKalOENO/
+	 TtrtSx+lSB1ZFLM5kAaHPdOyALQIwO4vdTxuWDt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Ren Wei <enjou1224z@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lincoln Wallace <locnnil0@gmail.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 323/389] net/sched: sch_cake: drop WARN_ON(1) for malformed packets in ACK filter
-Date: Mon, 17 Aug 2026 15:32:42 +0200
-Message-ID: <20260817132551.526351791@linuxfoundation.org>
+Subject: [PATCH 5.10 359/389] ima: fix out-of-bounds read in xattr_verify()
+Date: Mon, 17 Aug 2026 15:33:18 +0200
+Message-ID: <20260817132552.752532850@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -47,51 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@toke.dk>
+From: Lincoln Wallace <locnnil0@gmail.com>
 
-[ Upstream commit 2a33516f9ef59ad11844d4fc152f889449b5daf3 ]
+[ Upstream commit 5ff232d31106f45ac87c3b64e1d35a0667777797 ]
 
-The sch_cake ACK filter parses packets to find the TCP header and filter
-duplicated ACKs if the flow is backlogged. The parsing code contains a
-WARN_ON(1) which can be triggered by a malformed IP header in certain
-cases. Depending on the system configuration, this leads either to
-either spamming dmesg with warnings, or a panic if panic_on_warn is set.
+The digest-length check in xattr_verify() mixes int and size_t:
 
-The code already correctly skips the offending packet in the branch that
-triggers the warning, so the WARN_ON itself doesn't really serve any
-purpose. So just drop it altogether to avoid the inconvenient side
-effects.
+	if (xattr_len - sizeof(xattr_value->type) - hash_start >=
+			iint->ima_hash->length)
 
-Fixes: 8b7138814f29 ("sch_cake: Add optional ACK filter")
-Reported-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reported-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20260729191417.45665-1-toke@toke.dk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+sizeof() yields size_t, so the usual arithmetic conversions promote
+the whole left-hand side to unsigned 64-bit before the subtraction
+runs. For a truncated xattr this underflows instead of going negative:
+a 1-byte IMA_XATTR_DIGEST_NG xattr (xattr_len == 1, hash_start == 1)
+turns "1 - 1 - 1" into SIZE_MAX, which is trivially >= ima_hash->length.
+The check then passes and the following memcmp() reads
+iint->ima_hash->length bytes starting past the end of the buffer
+vfs_getxattr_alloc() allocated for it.
+
+Nothing upstream clamps xattr_len back into a safe range first:
+ima_get_hash_algo() only special-cases xattr_len < 2 to pick a default
+algorithm, and evm_verifyxattr() returns INTEGRITY_UNKNOWN rather than
+failing when no HMAC key is loaded, so a truncated security.ima value
+reaches the length check as-is.
+
+Rewrite the comparison so every operand stays a signed int and no
+implicit conversion to size_t can occur.
+
+Fixes: 3ea7a56067e6 ("ima: provide hash algo info in the xattr")
+Cc: stable@vger.kernel.org
+Signed-off-by: Lincoln Wallace <locnnil0@gmail.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Signed-off-by: Lincoln Wallace <locnnil0@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_cake.c | 1 -
- 1 file changed, 1 deletion(-)
+ security/integrity/ima/ima_appraise.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
-index 45b175e53aac0..8e3010a183822 100644
---- a/net/sched/sch_cake.c
-+++ b/net/sched/sch_cake.c
-@@ -1281,7 +1281,6 @@ static struct sk_buff *cake_ack_filter(struct cake_sched_data *q,
- 
- 			seglen = ntohs(ipv6h_check->payload_len);
- 		} else {
--			WARN_ON(1);  /* shouldn't happen */
- 			continue;
+diff --git a/security/integrity/ima/ima_appraise.c b/security/integrity/ima/ima_appraise.c
+index 7122a359a268e..615a20b9eb52b 100644
+--- a/security/integrity/ima/ima_appraise.c
++++ b/security/integrity/ima/ima_appraise.c
+@@ -242,8 +242,13 @@ static int xattr_verify(enum ima_hooks func, struct integrity_iint_cache *iint,
+ 			break;
  		}
- 
+ 		clear_bit(IMA_DIGSIG, &iint->atomic_flags);
+-		if (xattr_len - sizeof(xattr_value->type) - hash_start >=
+-				iint->ima_hash->length)
++		/*
++		 * Use addition, not subtraction: sizeof() forces unsigned
++		 * math and a short xattr_len would wrap around, bypassing
++		 * this bounds check.
++		 */
++		if (xattr_len >= (int)sizeof(xattr_value->type) + hash_start +
++				(int)iint->ima_hash->length)
+ 			/*
+ 			 * xattr length may be longer. md5 hash in previous
+ 			 * version occupied 20 bytes in xattr, instead of 16
 -- 
 2.53.0
 
