@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3E03C3C08;
-	Mon, 17 Aug 2026 13:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7613DB964;
+	Mon, 17 Aug 2026 13:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974858; cv=none; b=HU34X8cs+sjV8k3NvhlBtDHDFF6X72QwxWixapcKzJftv2vJo6cOQmpZPA7uGZUnklKyPbz1AkWUPU9nJf7GyOfFCUpujHFdolexcs0OsXekh9BRcSUXNnTaagtRcuTrahmuxrf+zN1x+PyqR/tEkPITCnNKc9bUEjQTiePR7uw=
+	t=1786974859; cv=none; b=trDMb2EaKi1HgbZqWJ6fig2Epzt0HLJ5jJglWMLuQ/vysiKMSAdvFxUmU4qq3qOByRIPX4evT4bel/tSjNV6h7MDdb7Lv5pxt20rWp/pQUkNpFuwNOL95K6ikSMDvFLtNTC0W5RWi0ZhahIT8pLEeFH2YGMnpkCVCL03GmAf5/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974858; c=relaxed/simple;
-	bh=xWoTB1WOpisyabuzrNdtM6YgXKPV5P/kfAQC0OunYz8=;
+	s=arc-20240116; t=1786974859; c=relaxed/simple;
+	bh=n+3zdYHSwHYyCjwMzIcBx4IevyubrY1v9OaOZY07nZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LPW+zbfy/LTcxkpnvZapLj6zCdLPd6p8+OyVTNjFqrwPR5RD9ee0NFFxzEU03MdpJSk1qSxALw31rrkMqGFZZPlnXVjjKOSrJZyWH9gUxDhkbtiOybdlZJ/ZVz+z1+ooCNiax0ZuYORjeJZnsbSy41YkBCIojSeuDcIciYaMOx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8SuGnln; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hFrgT4jxXxzkK8/zV27m4Npjy5tDiZVZkMEUW28LWg1BLxP1R/oiPYBh9NI+0m2WVkastZxykIr87YSQjNxjzvueLWksZk5szYr7bt+cfmG7qoGxtyI8PqEknEEKT0uCrVUZWvqDUXQmzXVomIVQj0oaRpQY/yEvPFuvobQBP+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orIPYOwZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8SuGnln"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7E7D1F00A3A;
-	Mon, 17 Aug 2026 13:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orIPYOwZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B303F1F00A3D;
+	Mon, 17 Aug 2026 13:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974853;
-	bh=Sre032Jd+Am6c+T8cMW5LGfyWDNpPiY8vTEEvi3ZGzc=;
+	s=korg; t=1786974856;
+	bh=SPCAofkezkIm3/vguRCYQNthSTNy+Vev0e1sNA49vWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y8SuGnlnA62RBRCYiwb1/lch662NdXxBLTsmLc7+khK++bj0OycIG4zIslehW6qwx
-	 9cdaUCsr/YGaviIHpxuLg19xksffysmwGdcXlzkHme8hlqr7gLzdNYatYwXLQhoDRu
-	 hIvpGSXk2v3UFHTmC4fwlF8GSeswJ62/XRQgqxMQ=
+	b=orIPYOwZawo0Vx8va8HzIbkOWIpjl2nuURGbS1Iriiu0xsUBo/ezwgadMPl5WATOq
+	 tpznQHNxAR/etUuDokigRyi1fkbwaxUuHtsIhCKGgkred6M1gPyCmxTLS2lFTnRPbB
+	 n1c/mfN3unETR60PmRw0edUvUPbJJdh5C+pJKi58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 070/250] xsk: validate metadata when processing requests
-Date: Mon, 17 Aug 2026 15:30:31 +0200
-Message-ID: <20260817132539.312643359@linuxfoundation.org>
+Subject: [PATCH 6.18 079/250] hwmon: (pmbus/lm25066) Fix PMBus coefficient calculations
+Date: Mon, 17 Aug 2026 15:30:40 +0200
+Message-ID: <20260817132539.672477858@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,222 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Fomichev <sdf.kernel@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 849b1664dbda1cf6c63e0fd4f9dec23782b8c851 ]
+[ Upstream commit 0dabe8a56f772f0ece46d2597799f412c277d874 ]
 
-The zero-copy path validates TX metadata while obtaining the descriptor
-context, then reads it again later when preparing the hardware request.
-User space can change the metadata between those operations and bypass the
-original validation.
+In lm25066_probe(), the PMBus coefficients for current and power are
+scaled based on the shunt resistor value. The calculation evaluates the
+multiplication using 32-bit arithmetic because info->m is an int and
+shunt is a u32:
 
-Validate the metadata in xsk_tx_metadata_request() and use the resulting
-flags snapshot for every feature check. Read request fields once so all
-zero-copy drivers process only values observed after successful
-validation.
+static int lm25066_probe(struct i2c_client *client) {
+    ...
+    info->m[PSC_CURRENT_IN] = info->m[PSC_CURRENT_IN] * shunt / 1000;
+    info->m[PSC_POWER] = info->m[PSC_POWER] * shunt / 1000;
+    ...
+}
 
-Fixes: ca4419f15abd ("xsk: Add launch time hardware offload support to XDP Tx metadata")
-Cc: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260727161959.885642-7-sdf@fomichev.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+For large coefficients like 26882 (LM25056) or 15076 (LM5066i), a device
+tree shunt-resistor-micro-ohms value exceeding approximately 159,000
+(159 mOhm, which is physically valid for low-current applications) causes
+the intermediate product to exceed UINT_MAX (4,294,967,295). This results
+in a silent wraparound before the division by 1000.
+
+Furthermore, if the wrapped value has the most significant bit set,
+converting it back to the signed int info->m results in negative
+coefficients. This logic error leads to drastically corrupted current and
+power readings, which can cause erratic thermal or power management
+behavior in the system.
+
+Fix the problem by using 64-bit operations for the multiply/divide
+operations. This can still overflow, but only for unreasonably large
+shunt resistor values.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 94ee5fcc240fe ("hwmon: (pmbus/lm25066) Support configurable sense resistor values")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c     |  2 +-
- .../net/ethernet/mellanox/mlx5/core/en/xdp.c  |  5 +-
- .../net/ethernet/stmicro/stmmac/stmmac_main.c |  4 +-
- include/net/libeth/xsk.h                      |  2 +-
- include/net/xdp_sock_drv.h                    | 51 ++++++++++---------
- net/xdp/xsk_buff_pool.c                       |  6 +--
- 6 files changed, 37 insertions(+), 33 deletions(-)
+ drivers/hwmon/pmbus/lm25066.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index f69523e35ac10..99a414440bcaa 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -3082,7 +3082,7 @@ static void igc_xdp_xmit_zc(struct igc_ring *ring)
- 		meta_req.tx_buffer = bi;
- 		meta_req.meta = meta;
- 		meta_req.used_desc = 0;
--		xsk_tx_metadata_request(&meta, &igc_xsk_tx_metadata_ops,
-+		xsk_tx_metadata_request(pool, &meta, &igc_xsk_tx_metadata_ops,
- 					&meta_req);
+diff --git a/drivers/hwmon/pmbus/lm25066.c b/drivers/hwmon/pmbus/lm25066.c
+index dd7275a67a0ab..7774d678022e2 100644
+--- a/drivers/hwmon/pmbus/lm25066.c
++++ b/drivers/hwmon/pmbus/lm25066.c
+@@ -14,6 +14,7 @@
+ #include <linux/slab.h>
+ #include <linux/i2c.h>
+ #include <linux/log2.h>
++#include <linux/math.h>
+ #include <linux/of.h>
+ #include "pmbus.h"
  
- 		/* xsk_tx_metadata_request() may have updated next_to_use */
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-index e467a7b067c7a..2f52e04b28de2 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-@@ -504,7 +504,7 @@ mlx5e_xmit_xdp_frame_mpwqe(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptx
- 		 */
- 		mlx5e_xdp_mpwqe_session_start(sq);
- 		if (meta)
--			xsk_tx_metadata_request(meta,
-+			xsk_tx_metadata_request(sq->xsk_pool, meta,
- 						&mlx5e_xsk_tx_metadata_ops,
- 						&session->wqe->eth);
- 	}
-@@ -652,7 +652,8 @@ mlx5e_xmit_xdp_frame(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptxd,
- 	sq->pc += num_wqebbs;
+@@ -540,8 +541,8 @@ static int lm25066_probe(struct i2c_client *client)
+ 	if (of_property_read_u32(client->dev.of_node, "shunt-resistor-micro-ohms", &shunt))
+ 		shunt = 1000;
  
- 	if (meta)
--		xsk_tx_metadata_request(meta, &mlx5e_xsk_tx_metadata_ops, eseg);
-+		xsk_tx_metadata_request(sq->xsk_pool, meta,
-+					&mlx5e_xsk_tx_metadata_ops, eseg);
+-	info->m[PSC_CURRENT_IN] = info->m[PSC_CURRENT_IN] * shunt / 1000;
+-	info->m[PSC_POWER] = info->m[PSC_POWER] * shunt / 1000;
++	info->m[PSC_CURRENT_IN] = DIV_ROUND_CLOSEST_ULL((u64)info->m[PSC_CURRENT_IN] * shunt, 1000);
++	info->m[PSC_POWER] = DIV_ROUND_CLOSEST_ULL((u64)info->m[PSC_POWER] * shunt, 1000);
  
- 	sq->doorbell_cseg = cseg;
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 3380ce960de24..bca81ed28e073 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -2574,8 +2574,8 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
- 		meta_req.set_ic = &set_ic;
- 		meta_req.tbs = tx_q->tbs;
- 		meta_req.edesc = &tx_q->dma_entx[entry];
--		xsk_tx_metadata_request(&meta, &stmmac_xsk_tx_metadata_ops,
--					&meta_req);
-+		xsk_tx_metadata_request(pool, &meta,
-+					&stmmac_xsk_tx_metadata_ops, &meta_req);
- 		if (set_ic) {
- 			tx_q->tx_count_frames = 0;
- 			stmmac_set_tx_ic(priv, tx_desc);
-diff --git a/include/net/libeth/xsk.h b/include/net/libeth/xsk.h
-index 1a55daa32cf16..23eb240d5ba72 100644
---- a/include/net/libeth/xsk.h
-+++ b/include/net/libeth/xsk.h
-@@ -205,7 +205,7 @@ __libeth_xsk_xmit_fill_buf_md(const struct xdp_desc *xdesc,
- 	BUILD_BUG_ON(!__builtin_constant_p(tmo == libeth_xsktmo));
- 	tmo = tmo == libeth_xsktmo ? &__libeth_xsktmo : tmo;
- 
--	xsk_tx_metadata_request(&ctx.meta, tmo, &desc);
-+	xsk_tx_metadata_request(sq->pool, &ctx.meta, tmo, &desc);
- 
- 	return desc;
- }
-diff --git a/include/net/xdp_sock_drv.h b/include/net/xdp_sock_drv.h
-index 6d4f65b0ed53a..d74ca548d4d6a 100644
---- a/include/net/xdp_sock_drv.h
-+++ b/include/net/xdp_sock_drv.h
-@@ -241,7 +241,7 @@ static inline void *xsk_buff_raw_get_data(struct xsk_buff_pool *pool, u64 addr)
-  * details.
-  *
-  * Return: new &xdp_desc_ctx struct containing desc's DMA address and metadata
-- * pointer, if it is present and valid (initialized to %NULL otherwise).
-+ * pointer, if it is present (initialized to %NULL otherwise).
-  */
- static inline struct xdp_desc_ctx
- xsk_buff_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr)
-@@ -270,54 +270,56 @@ xsk_buff_valid_tx_metadata(const struct xsk_buff_pool *pool,
- /**
-  *  xsk_tx_metadata_request - Evaluate AF_XDP TX metadata at submission
-  *  and call appropriate xsk_tx_metadata_ops operation.
-+ *  @pool: pointer to AF_XDP buffer pool, used to validate the metadata
-  *  @pmeta: pointer to pointer to AF_XDP metadata area
-  *  @ops: pointer to struct xsk_tx_metadata_ops
-- *  @priv: pointer to driver-private aread
-+ *  @priv: pointer to driver-private area
-  *
-  *  This function should be called by the networking device when
-  *  it prepares AF_XDP egress packet.
-  */
--static inline void xsk_tx_metadata_request(struct xsk_tx_metadata **pmeta,
--					   const struct xsk_tx_metadata_ops *ops,
--					   void *priv)
-+static inline void
-+xsk_tx_metadata_request(const struct xsk_buff_pool *pool,
-+			struct xsk_tx_metadata **pmeta,
-+			const struct xsk_tx_metadata_ops *ops, void *priv)
- {
- 	const struct xsk_tx_metadata *meta = *pmeta;
-+	u64 flags;
- 
- 	if (!meta)
- 		return;
- 
-+	if (unlikely(!xsk_buff_valid_tx_metadata(pool, meta, &flags))) {
-+		*pmeta = NULL;
-+		return; /* no way to signal the error to the user */
-+	}
-+
- 	if (ops->tmo_request_launch_time)
--		if (meta->flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
--			ops->tmo_request_launch_time(meta->request.launch_time,
--						     priv);
-+		if (flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
-+			ops->tmo_request_launch_time(
-+				READ_ONCE(meta->request.launch_time), priv);
- 
- 	if (ops->tmo_request_timestamp)
--		if (meta->flags & XDP_TXMD_FLAGS_TIMESTAMP)
-+		if (flags & XDP_TXMD_FLAGS_TIMESTAMP)
- 			ops->tmo_request_timestamp(priv);
- 
- 	if (ops->tmo_request_checksum)
--		if (meta->flags & XDP_TXMD_FLAGS_CHECKSUM)
--			ops->tmo_request_checksum(meta->request.csum_start,
--						  meta->request.csum_offset, priv);
-+		if (flags & XDP_TXMD_FLAGS_CHECKSUM)
-+			ops->tmo_request_checksum(
-+				READ_ONCE(meta->request.csum_start),
-+				READ_ONCE(meta->request.csum_offset), priv);
- 
--	if (!(meta->flags & XDP_TXMD_FLAGS_TIMESTAMP))
-+	if (!(flags & XDP_TXMD_FLAGS_TIMESTAMP))
- 		*pmeta = NULL;
- }
- 
- static inline struct xsk_tx_metadata *
- __xsk_buff_get_metadata(const struct xsk_buff_pool *pool, void *data)
- {
--	struct xsk_tx_metadata *meta;
--	u64 flags;
--
- 	if (!pool->tx_metadata_len)
- 		return NULL;
- 
--	meta = data - pool->tx_metadata_len;
--	if (unlikely(!xsk_buff_valid_tx_metadata(pool, meta, &flags)))
--		return NULL; /* no way to signal the error to the user */
--
--	return meta;
-+	return data - pool->tx_metadata_len;
- }
- 
- static inline struct xsk_tx_metadata *
-@@ -516,9 +518,10 @@ xsk_buff_valid_tx_metadata(const struct xsk_buff_pool *pool,
- 	return false;
- }
- 
--static inline void xsk_tx_metadata_request(struct xsk_tx_metadata **pmeta,
--					   const struct xsk_tx_metadata_ops *ops,
--					   void *priv)
-+static inline void
-+xsk_tx_metadata_request(const struct xsk_buff_pool *pool,
-+			struct xsk_tx_metadata **pmeta,
-+			const struct xsk_tx_metadata_ops *ops, void *priv)
- {
- }
- 
-diff --git a/net/xdp/xsk_buff_pool.c b/net/xdp/xsk_buff_pool.c
-index c9688735b643c..772fe1838cfb3 100644
---- a/net/xdp/xsk_buff_pool.c
-+++ b/net/xdp/xsk_buff_pool.c
-@@ -769,11 +769,11 @@ EXPORT_SYMBOL(xp_raw_get_dma);
-  * @addr: desc address (from userspace)
-  *
-  * Helper for getting desc's DMA address and metadata pointer, if present.
-- * Saves one call on hotpath, double calculation of the actual address,
-- * and inline checks for metadata presence and sanity.
-+ * Saves one call on hotpath and double calculation of the actual address.
-+ * Metadata is validated later by xsk_tx_metadata_request().
-  *
-  * Return: new &xdp_desc_ctx struct containing desc's DMA address and metadata
-- * pointer, if it is present and valid (initialized to %NULL otherwise).
-+ * pointer, if it is present (initialized to %NULL otherwise).
-  */
- struct xdp_desc_ctx xp_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr)
- {
+ #if IS_ENABLED(CONFIG_SENSORS_LM25066_REGULATOR)
+ 	/* LM25056 doesn't support OPERATION */
 -- 
 2.53.0
 
