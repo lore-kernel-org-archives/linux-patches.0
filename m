@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF2640EBAE;
-	Mon, 17 Aug 2026 13:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE73C3BBFA1;
+	Mon, 17 Aug 2026 13:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974188; cv=none; b=ShGyIGR6q9Rjj69hQ3neq8w2P1LOmczXc6XtMVqeDaEYXIOnGUs2rGOgQu9FOvWrSXdmizLVioCriFgAeTdILxIXXbBLR5fhrJYK2nWIpUbZzClGBFADL7KFOGHd9rlUdJOzEs7faV9TDS+H5FZXZoz3oh4JclqTijjENfCtHYA=
+	t=1786974191; cv=none; b=NNWOzXeO7dNLtj43G+pSzNu49J7h5CkrLXTLra1wIbHsK/6hBRAAelnjpGi0N4Pya0DmdTMUMph/pJ1W6TFT+3hBfQBIE8UPYxNr+9Mo1ciKFtSs4IOp/EAcWLATgtjczQnfp0wW+bp83cnMicA383261CUmA+RQJViyHunbUXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974188; c=relaxed/simple;
-	bh=9HNkmcKrzOFK3SJ9xk551Xl9nLO6o4bd3JpUtVW2WQI=;
+	s=arc-20240116; t=1786974191; c=relaxed/simple;
+	bh=ykf9bSEg00mbGHKEgPi/eWWn6OQpybD9+ijiB5QDWP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hnCXf8q6VQPZWv+zNmpou3rAKS8qSX/mAVk4u+mq02zYmmcQ8fPcv2iIc2vQ0YvC4JHImCh3m+E5mQfsQfdhqM+OIHdUwb3m2Vgf0PIeTJFwRhUprgw7Zp1Zp6gnmD5espvSxDeKY2dTXBRWAXs/fHKHXVL3h5baTMGHmhpFo4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uwMWJ1Kx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZOv/fPB8EHotWjx28CZ5032fPVrm+KMZMwH2z5+MWKdrUkaRBV7LlAvYS7OFtlMgxd4/oiiMDtNJ2ZLzIVo/a5W5c4599wLaZTMqo4c//Rxk3oa9Aalx61h3Z5coWJf2rK3stHssvyRTzlHV/yXtObkPLePV7Sp24uaNrN446YA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvP1h3NI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uwMWJ1Kx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC191F000E9;
-	Mon, 17 Aug 2026 13:43:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvP1h3NI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 386631F00AC4;
+	Mon, 17 Aug 2026 13:43:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974186;
-	bh=CnaxELv5WYMFIGFPai7q0b+DUlfviD5MBjVvWOGiQ68=;
+	s=korg; t=1786974189;
+	bh=OphCLVLicfYLo2aDfDaHnXV6SmmHC2cGgdu0vJJUC0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uwMWJ1Kx2mOMuBkx1AuYIZ/OYvt7NHSFxTbqxLA8I8eh6XnS718ZiOM3oKkXDZva/
-	 gBVhIHEuo9mhp9zs6c9b4XF5o55MkSG6cL3Fbyzb1Iq2TzwmQpMHoup4bP9JV+3iI7
-	 j5Vj1DnY4N8sX3yGtajIDX58fuIIg1NXog5IP2zc=
+	b=hvP1h3NImFZSXSlKXzLlnzGhloaV9NyWwds2UUhtjkLhp0RAsknM9Woj6DZk8LXEc
+	 cIZVnJQTvNoTQTx4rI4X+UoPvPE7dc97Yr9dJ58UQ/C2jiCUyg/Gzin/2xlCFMvcqF
+	 qtuCS9Ka+bZzmPeCt9bhE9+VSyptXWAJSbKogGAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	AutonomousCodeSecurity@microsoft.com,
+	Eelco Chaudron <echaudro@redhat.com>,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 118/271] hwmon: (ltc4282) Avoid overflow in maximum power calculation
-Date: Mon, 17 Aug 2026 15:30:43 +0200
-Message-ID: <20260817132541.729411799@linuxfoundation.org>
+Subject: [PATCH 7.1 083/271] net/openvswitch: check Ethernet header length in key_extract()
+Date: Mon, 17 Aug 2026 15:30:08 +0200
+Message-ID: <20260817132540.159632437@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -46,107 +48,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 
-[ Upstream commit edd11a94335747423569500a194c6eaa915f2963 ]
+[ Upstream commit cf6f8b29befb92173659bcef6a441d274947bfae ]
 
-During device initialization in ltc4282_set_max_limits(), the calculation
-of the maximum power limit can suffer from a 32-bit integer overflow.
+When a packet arrives on an ARPHRD_NONE device (e.g. TUN),
+ovs_flow_key_extract() trusts the user-provided skb->protocol field: if
+it is ETH_P_TEB, the packet is classified as MAC_PROTO_ETHERNET and
+key_extract() is called without ensuring the skb has ETH_HLEN (14) bytes
+of linear data. key_extract() unconditionally pulls 2 * ETH_ALEN bytes
+for MAC addresses and parse_ethertype() pulls 2 more, either of which
+triggers a kernel BUG in __skb_pull() when the linear area is too small.
 
-static int ltc4282_set_max_limits(struct ltc4282_state *st)
-{
-    ...
-    st->power_max = DIV_ROUND_CLOSEST(st->vsense_max * DECA * MILLI,
-                                      st->rsense) * st->vfs_out;
-    ...
-}
+  kernel BUG at include/linux/skbuff.h:2848!
+  RIP: 0010:key_extract+0xa7e/0xd90 net/openvswitch/flow.c:933
+  ovs_flow_key_extract+0x419/0xa70
+  ovs_vport_receive+0x222/0x390
+  netdev_frame_hook+0x3e0/0x630
+  tun_get_user+0x2d0c/0x38e0
 
-The result of DIV_ROUND_CLOSEST() evaluates to a 32-bit unsigned integer
-on 32-bit architectures. This result is then multiplied by st->vfs_out,
-which is a 16-bit unsigned integer. According to C promotion rules, since
-both operands are 32-bit or smaller, the multiplication is performed in
-32-bit precision.
+Fixed by calling check_header() in key_extract() before accessing the
+Ethernet header.
 
-If the device is configured with a low sense resistor value via the device
-tree (for example, 100 nano-ohms, resulting in st->rsense = 1) and the
-voltage is high, the division result can reach 343,750,000 and st->vfs_out
-can be 33,280. The product of these values is approximately 11.44 trillion,
-which exceeds the maximum capacity of a 32-bit integer and overflows
-before being stored in st->power_max.
-
-This overflow causes a truncated value to be assigned to st->power_max and
-written to the hardware limit register. An incorrect maximum power limit
-can trigger spurious power-bad faults or alarms, which may lead to the
-shutdown of the monitored power rail.
-
-Avoid the problem by calculating and storing the maximum power using 64-bit
-variables.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: cbc29538dbf7d ("hwmon: Add driver for LTC4282")
-Cc: Nuno Sa <nuno.sa@analog.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 217ac77a3c25 ("openvswitch: allow L3 netdev ports")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/20260730222006.118652-1-blbllhy@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ltc4282.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/openvswitch/flow.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/ltc4282.c b/drivers/hwmon/ltc4282.c
-index bdbf370233d71..9ccad99f42e7f 100644
---- a/drivers/hwmon/ltc4282.c
-+++ b/drivers/hwmon/ltc4282.c
-@@ -138,7 +138,7 @@ struct ltc4282_state {
- 	 */
- 	struct ltc4282_cache in0_1_cache[LTC4282_CHAN_VGPIO];
- 	u32 vsense_max;
--	long power_max;
-+	s64 power_max;
- 	u32 rsense;
- 	u16 vdd;
- 	u16 vfs_out;
-@@ -614,13 +614,12 @@ static int ltc4282_read(struct device *dev, enum hwmon_sensor_types type,
- }
- 
- static int ltc4282_write_power_byte(const struct ltc4282_state *st, u32 reg,
--				    long val)
-+				    s64 val)
+diff --git a/net/openvswitch/flow.c b/net/openvswitch/flow.c
+index 66366982f6044..46c1d66aad8c3 100644
+--- a/net/openvswitch/flow.c
++++ b/net/openvswitch/flow.c
+@@ -889,8 +889,6 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
+  * Ethernet header
+  * @key: output flow key
+  *
+- * The caller must ensure that skb->len >= ETH_HLEN.
+- *
+  * Initializes @skb header fields as follows:
+  *
+  *    - skb->mac_header: the L2 header.
+@@ -910,8 +908,6 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
+  */
+ static int key_extract(struct sk_buff *skb, struct sw_flow_key *key)
  {
- 	u32 power;
- 	u64 temp;
+-	struct ethhdr *eth;
+-
+ 	/* Flags are always used as part of stats */
+ 	key->tp.flags = 0;
  
--	if (val > st->power_max)
--		val = st->power_max;
-+	val = clamp(val, 0, st->power_max);
- 
- 	temp = val * int_pow(U8_MAX, 2) * st->rsense;
- 	power = DIV64_U64_ROUND_CLOSEST(temp,
-@@ -630,7 +629,7 @@ static int ltc4282_write_power_byte(const struct ltc4282_state *st, u32 reg,
- }
- 
- static int ltc4282_write_power_word(const struct ltc4282_state *st, u32 reg,
--				    long val)
-+				    u64 val)
- {
- 	u64 temp = int_pow(U16_MAX, 2) * st->rsense, temp_2;
- 	__be16 __raw;
-@@ -1223,7 +1222,8 @@ static int ltc4282_set_max_limits(struct ltc4282_state *st)
- 		return ret;
- 
- 	/* Power is given by ISENSE * Vout. */
--	st->power_max = DIV_ROUND_CLOSEST(st->vsense_max * DECA * MILLI, st->rsense) * st->vfs_out;
-+	st->power_max = DIV_ROUND_CLOSEST_ULL((u64)st->vsense_max * DECA * MILLI,
-+					      st->rsense) * st->vfs_out;
- 	ret = ltc4282_write_power_byte(st, LTC4282_POWER_MAX, st->power_max);
- 	if (ret)
- 		return ret;
+@@ -926,6 +922,13 @@ static int key_extract(struct sk_buff *skb, struct sw_flow_key *key)
+ 		skb_reset_network_header(skb);
+ 		key->eth.type = skb->protocol;
+ 	} else {
++		struct ethhdr *eth;
++		int err;
++
++		err = check_header(skb, ETH_HLEN);
++		if (unlikely(err))
++			return err;
++
+ 		eth = eth_hdr(skb);
+ 		ether_addr_copy(key->eth.src, eth->h_source);
+ 		ether_addr_copy(key->eth.dst, eth->h_dest);
 -- 
 2.53.0
 
