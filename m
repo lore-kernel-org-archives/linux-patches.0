@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A603EDAB8;
-	Mon, 17 Aug 2026 13:38:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39753DB324;
+	Mon, 17 Aug 2026 13:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786973916; cv=none; b=VNGZqN2jZYEu2+8nymqP3X3Wd7HRpXaR61MObw8sqOxI6t0ZxepgIgzjb4AnvyRxPnOnh1j6EmJduac8GXzEm+zwOOu7rkR7kMI9/snNDZMDUvZ+hbZQG9ubUoc+X3V6KKbSrIsMlyjFAqb0rOYdGgstrI5bFaScZPHj6KHfgew=
+	t=1786973919; cv=none; b=oxIWci1XlBnu8LHWnAIM6efbOSDQtRwnpW2kR775OhrOzD52PmIpCaCic9w9mWsu/3M0DdpVcFkm/ICdmdKSibG0824ZZ5uuuNCL7MVvqpAnVqMiep+6GelAsr1MPhQxZWjj1jtgqm4TQSp3EOmYCKe5cxsP64+tHwIQzspB8Rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786973916; c=relaxed/simple;
-	bh=woedMb4jaJC85/iVg3TwADtl/a7h7wg5C8Xi7LJgLXE=;
+	s=arc-20240116; t=1786973919; c=relaxed/simple;
+	bh=wH1e16cY4yLi57KJs8VPylvA7Vsw6dJmtUvcFSBWNLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b7a/tj5atWoMOktUFqycjRQIwL1oH4/dM9oxasUdPVGD39JetbIgajc5EeNHtIOCj5op88rJLuX+a2zm/QuRX6NldPmtaSu6DldVPWunOuJHneAqaHVpE/LDZSLnofE7p4MarreNj6z3tTjlQFPWOfhQ18MT8RgjlnOvWOF6868=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3GhTmTh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=heiLnhkKpTqky/CylpCCRor28oy6F8ivYWjFPr23n93er399gv10u/wkC8AYtHvKSA9t1Ma4s4EUMahxfsDQZf2BT2CCQ5usLnflC9wbr0Ei7LPdFdFuqKZuHdUZDGxD8m3uKdbjsFt2E5+Qez9W+1CzqvWIl4amSJot0HFMwWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2hHizm4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3GhTmTh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58FEE1F000E9;
-	Mon, 17 Aug 2026 13:38:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2hHizm4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4548E1F000E9;
+	Mon, 17 Aug 2026 13:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786973914;
-	bh=oxBkhkr/Tcu6NqUBOcV2GUgJU7xM4GLxYAvjjCwMCzk=;
+	s=korg; t=1786973917;
+	bh=3orQNjqz6LxmAGDEgtXg5l1H2DynNoUAvVbw4UPJKj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h3GhTmTh+lPaC/KLwYDiyV9dpFONdVg8sArqWY2nEPM45kaYIay2zGEHXNPHJV8U/
-	 xxmjJR5LSiXwX3Attj4yJdrl+ADWSaCrTQIbJ1yQr91pAyWUumtJg8dA2RIrLmg+KL
-	 6DC9n6jHb6Kz8/p7sR+eDrcSNu+1CNangoYVbSQo=
+	b=J2hHizm4qyG9wNyrsi0wGajUwOKMT9sBUv5xxl1IsxX+MCgPtWaSa2nG3CeZFYA1n
+	 Hrv2SMrMioG5qg0EfdirC7iG9icphedR/9qynsxUb3+pHcrNuXw2crPULzQ+8l2b+l
+	 kEg89+9pm8Sa21y6/XqdvvycoHr84BpmfvpKgDiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralf Lici <ralf@mandelbit.com>,
-	Antonio Quartulli <antonio@openvpn.net>,
+	Rosen Penev <rosenp@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 025/271] ovpn: add missing rtnl_link_ops->get_size callback
-Date: Mon, 17 Aug 2026 15:29:10 +0200
-Message-ID: <20260817132537.789361578@linuxfoundation.org>
+Subject: [PATCH 7.1 026/271] ARM: dts: BCM5301X: fix PCIe controller 2 second interrupt
+Date: Mon, 17 Aug 2026 15:29:11 +0200
+Message-ID: <20260817132537.827828065@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -51,54 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralf Lici <ralf@mandelbit.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 6e9f539e4f01153651dd77609b5ccadd44b74df8 ]
+[ Upstream commit bab4d538f8485e0d48538fcb82b285df3779278e ]
 
-ovpn_fill_info emits IFLA_OVPN_MODE inside IFLA_INFO_DATA, but
-ovpn_link_ops does not provide a get_size callback. Consequently,
-rtnetlink's size estimate for ovpn link messages does not include the
-nested mode attribute.
+PCIe controller 2 has interrupts 0-4 mapping to GIC SPI 138-142. The
+mapping for interrupt 1 was incorrectly set to 138 due to a copy-paste
+error. Fix it to 139.
 
-Available skb tailroom may hide this mismatch. When the remaining space
-is insufficient, however, ovpn_fill_info returns -EMSGSIZE and message
-construction fails.
-
-Add the callback and account for IFLA_OVPN_MODE.
-
-Fixes: c2d950c4672a ("ovpn: add basic interface creation/destruction/management routines")
-Signed-off-by: Ralf Lici <ralf@mandelbit.com>
-Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Link: https://lore.kernel.org/r/20260725215722.9323-1-rosenp@gmail.com
+Fixes: 3b3e35b279be ("ARM: dts: BCM5301X: Relicense AXI interrupts code to the GPL 2.0+ / MIT")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/main.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/arm/boot/dts/broadcom/bcm-ns.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ovpn/main.c b/drivers/net/ovpn/main.c
-index 9993c1dfe471d..9d9a0ff690d66 100644
---- a/drivers/net/ovpn/main.c
-+++ b/drivers/net/ovpn/main.c
-@@ -210,6 +210,12 @@ static int ovpn_newlink(struct net_device *dev,
- 	return register_netdevice(dev);
- }
+diff --git a/arch/arm/boot/dts/broadcom/bcm-ns.dtsi b/arch/arm/boot/dts/broadcom/bcm-ns.dtsi
+index 392a257136696..bd52de0faa3ea 100644
+--- a/arch/arm/boot/dts/broadcom/bcm-ns.dtsi
++++ b/arch/arm/boot/dts/broadcom/bcm-ns.dtsi
+@@ -141,7 +141,7 @@ axi@18000000 {
  
-+static size_t ovpn_get_size(const struct net_device *dev)
-+{
-+	/* IFLA_OVPN_MODE */
-+	return nla_total_size(sizeof(u8));
-+}
-+
- static int ovpn_fill_info(struct sk_buff *skb, const struct net_device *dev)
- {
- 	struct ovpn_priv *ovpn = netdev_priv(dev);
-@@ -228,6 +234,7 @@ static struct rtnl_link_ops ovpn_link_ops = {
- 	.policy = ovpn_policy,
- 	.maxtype = IFLA_OVPN_MAX,
- 	.newlink = ovpn_newlink,
-+	.get_size = ovpn_get_size,
- 	.fill_info = ovpn_fill_info,
- };
- 
+ 			/* PCIe Controller 2 */
+ 			<0x00014000 0 &gic GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>,
+-			<0x00014000 1 &gic GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>,
++			<0x00014000 1 &gic GIC_SPI 139 IRQ_TYPE_LEVEL_HIGH>,
+ 			<0x00014000 2 &gic GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,
+ 			<0x00014000 3 &gic GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
+ 			<0x00014000 4 &gic GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
 -- 
 2.53.0
 
