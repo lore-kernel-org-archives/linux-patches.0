@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD9A43CEE1;
-	Mon, 17 Aug 2026 13:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C4D418344;
+	Mon, 17 Aug 2026 13:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974748; cv=none; b=Tq+br9PABlCyak3shkLWIs5zFS9OJPDareQMqma0nFFQ5tAbuB8WNN8PD+3ZofnO8gUWfatNT4eAamUzQ0CZmJi7b0cx6pKOUjZdSRokzs9N/v+nnSfbo7cStax7E2nXFwnwhZUuoSA3/FPOpYRRgLDZiIxm561QBgjbVIARjU8=
+	t=1786974754; cv=none; b=kuNCYYqoybrkXrnuOxYepvrxPXcSjYOsm3BjYCZRu2E71QAA6NjhavTCNxWwwSPtcO6lfYRpN7+dIliF8el2aIwwiDvnCs03/gJRp6NnBbVhvqr+D9d7LaH1rMzkFlngQAG0hnq4X7hYa4whImpoIQlRIPR0tyHkHDRPN8eVn70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974748; c=relaxed/simple;
-	bh=erntgzwFi+JiSNqK2aw7azTZ87WcgumSzfBocdZksfM=;
+	s=arc-20240116; t=1786974754; c=relaxed/simple;
+	bh=puYPRVzaQjWogNWf93Bl3AS4DW5UDIn0VOuNtiPuIfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ko5We8WZ65n0en66vyHmJgp2SI9AxYJcwbtvTx9Zpq72JvVuvqHj7dCeTMCar0mBo4Sy20gpf9OhzlsyzrHCjkUSyH4f97mtaBAG43bBpDvki39IQyl1KSA47V9rnwVNTHsL38Z3XmAQHprR3fyWJMi3XhNHK4yHQPWkOWb4zis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jK4ybYr9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gRzAAHs/zpaLHwQrGxV9qLOf5O+nH7QTKDMEQpnSmOsEPm+NbDhgBXcoyNG6p4t7g5+faFhzKAJR3cS7SxwV4zC2fhMlTLfHfQtDsFrck7Wdz+8ZzRVueLpdj27on2/eSCuG6EyIR5jD9BNZ8xlPA6Niblz+O+13UfOMBaxxfSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xof81n7X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jK4ybYr9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A8A41F00A3E;
-	Mon, 17 Aug 2026 13:52:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xof81n7X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A3C51F000E9;
+	Mon, 17 Aug 2026 13:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974735;
-	bh=ejAUjI9KQT4k8AIj7KHv6hU27TOJ45ROhuU3pPtZd4k=;
+	s=korg; t=1786974749;
+	bh=7vlwEo2Hkse/GNYMS7hfgdbySqbkljTtR2bakzj3OFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jK4ybYr9upXJ++KK1ljNTwGr+HmBOC2vX/PNvFCWG6Hg/QwjBsDgLIUL5H5CFN9c2
-	 Y88ESsYrWESqfp/JbBn1Om0CKYSQdnbG5ljp5iiKT4mavekW0cxa7HiRXyw1Au7Dci
-	 XVcM6iRq2S3oNWbpyd9mM1SV56ANv/TU0RHSSWfs=
+	b=Xof81n7XxpLAJHRZgZjl2UeRU2rvFMMcNWk8EOOvnIpUtthpPTcwjOGMmaJ8XfpHo
+	 +q1hIt2VaCLdxHCMIQkLLKsNoVNgF1jrkd68lHf+ZdaKaHxhlM2oNa2qaeEngWDE7/
+	 yQs066gB/TmzemlX6TgdVnYGZt1ah4FwzLhnI9F8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	"Nikhil P. Rao" <nikhil.rao@amd.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 037/250] pds_core: cancel pending PCI reset work on AER recovery
-Date: Mon, 17 Aug 2026 15:29:58 +0200
-Message-ID: <20260817132537.973801376@linuxfoundation.org>
+Subject: [PATCH 6.18 042/250] btrfs: fix memory leak in btrfs_do_encoded_write()
+Date: Mon, 17 Aug 2026 15:30:03 +0200
+Message-ID: <20260817132538.168034254@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -53,52 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil P. Rao <nikhil.rao@amd.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 57d635329d799b79096155cdf47ee0013d6780d1 ]
+[ Upstream commit d2a4e4e626b2f4670b69b430c357f03f53eb6632 ]
 
-pdsc_check_pci_health() queues pci_reset_work when it sees a broken PCI
-connection, and nothing cancels it. When the PCI core starts AER
-recovery, pdsc_pci_error_detected() runs pdsc_reset_prepare() and
-recovers the device, but a pci_reset_work queued just before is left
-pending. If it runs after recovery released the device lock, it resets a
-device the driver now considers healthy, bouncing the link for no reason.
+Local fuzzing of 6.12.94 has found the following memory leak:
 
-Cancel pci_reset_work in pdsc_pci_error_detected() after
-pdsc_reset_prepare(), which has already stopped the health thread so it
-cannot requeue the work. cancel_work_sync() is safe under the device
-lock here because pdsc_pci_reset_thread() uses pci_try_reset_function(),
-which returns instead of blocking on the lock. Only PFs initialize
-pci_reset_work, so guard the cancel with !is_virtfn.
+Unreferenced object 0xffff888018050a80 (size 64):
+  comm "syz.0.17", pid 10297, jiffies 4294953601
+  hex dump (first 32 bytes):
+    00 10 00 00 00 00 00 00 01 00 00 00 00 00 00 00  ................
+    10 0a 05 18 80 88 ff ff 10 0a 05 18 80 88 ff ff  ................
+  backtrace (crc a8a6fc29):
+    kmemleak_alloc_recursive include/linux/kmemleak.h:42 [inline]
+    slab_post_alloc_hook mm/slub.c:4152 [inline]
+    slab_alloc_node mm/slub.c:4197 [inline]
+    __kmalloc_cache_noprof+0x168/0x2c0 mm/slub.c:4358
+    kmalloc_noprof include/linux/slab.h:878 [inline]
+    extent_changeset_alloc fs/btrfs/extent_io.h:207 [inline]
+    qgroup_reserve_data+0x1c5/0x7d0 fs/btrfs/qgroup.c:4305
+    btrfs_qgroup_reserve_data+0x2e/0xb0 fs/btrfs/qgroup.c:4355
+    btrfs_do_encoded_write+0x92e/0x1040 fs/btrfs/inode.c:9746
+    btrfs_encoded_write fs/btrfs/file.c:1482 [inline]
+    btrfs_do_write_iter+0x280/0x610 fs/btrfs/file.c:1507
+    btrfs_ioctl_encoded_write+0x3d6/0x490 fs/btrfs/ioctl.c:4738
+    btrfs_ioctl+0x6f9/0xc90 fs/btrfs/ioctl.c:-1
+    vfs_ioctl fs/ioctl.c:51 [inline]
+    __do_sys_ioctl fs/ioctl.c:906 [inline]
+    __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:892
+    do_syscall_x64 arch/x86/entry/common.c:47 [inline]
+    do_syscall_64+0xbe/0x1a0 arch/x86/entry/common.c:78
+    entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Fixes: 81665adf25d2 ("pds_core: Fix pdsc_check_pci_health function to use work thread")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260714180223.1642792-2-nikhil.rao%40amd.com?part=1
-Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260727170030.361116-1-nikhil.rao@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Unreferenced object 0xffff888018050a00 (size 64):
+  comm "syz.0.17", pid 10297, jiffies 4294953601
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 ff 0f 00 00 00 00 00 00  ................
+    90 0a 05 18 80 88 ff ff 90 0a 05 18 80 88 ff ff  ................
+  backtrace (crc cb5c9580):
+    kmemleak_alloc_recursive include/linux/kmemleak.h:42 [inline]
+    slab_post_alloc_hook mm/slub.c:4152 [inline]
+    slab_alloc_node mm/slub.c:4197 [inline]
+    __kmalloc_cache_noprof+0x168/0x2c0 mm/slub.c:4358
+    kmalloc_noprof include/linux/slab.h:878 [inline]
+    kzalloc_noprof include/linux/slab.h:1014 [inline]
+    ulist_prealloc+0x9c/0x110 fs/btrfs/ulist.c:114
+    extent_changeset_prealloc fs/btrfs/extent_io.h:217 [inline]
+    __set_extent_bit+0x16b/0x1a70 fs/btrfs/extent-io-tree.c:1086
+    set_record_extent_bits+0x50/0x90 fs/btrfs/extent-io-tree.c:1821
+    qgroup_reserve_data+0x274/0x7d0 fs/btrfs/qgroup.c:4312
+    btrfs_qgroup_reserve_data+0x2e/0xb0 fs/btrfs/qgroup.c:4355
+    btrfs_do_encoded_write+0x92e/0x1040 fs/btrfs/inode.c:9746
+    btrfs_encoded_write fs/btrfs/file.c:1482 [inline]
+    btrfs_do_write_iter+0x280/0x610 fs/btrfs/file.c:1507
+    btrfs_ioctl_encoded_write+0x3d6/0x490 fs/btrfs/ioctl.c:4738
+    btrfs_ioctl+0x6f9/0xc90 fs/btrfs/ioctl.c:-1
+    vfs_ioctl fs/ioctl.c:51 [inline]
+    __do_sys_ioctl fs/ioctl.c:906 [inline]
+    __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:892
+    do_syscall_x64 arch/x86/entry/common.c:47 [inline]
+    do_syscall_64+0xbe/0x1a0 arch/x86/entry/common.c:78
+    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fix this by freeing an extent changeset before returning from
+btrfs_do_encoded_write().
+
+Fixes: 7c0c7269f7b5 ("btrfs: add BTRFS_IOC_ENCODED_WRITE")
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/main.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/btrfs/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/main.c b/drivers/net/ethernet/amd/pds_core/main.c
-index dad7fd03287db..61be6def50b1c 100644
---- a/drivers/net/ethernet/amd/pds_core/main.c
-+++ b/drivers/net/ethernet/amd/pds_core/main.c
-@@ -562,7 +562,11 @@ static pci_ers_result_t pdsc_pci_error_detected(struct pci_dev *pdev,
- 						pci_channel_state_t error)
- {
- 	if (error == pci_channel_io_frozen) {
-+		struct pdsc *pdsc = pci_get_drvdata(pdev);
-+
- 		pdsc_reset_prepare(pdev);
-+		if (!pdev->is_virtfn)
-+			cancel_work_sync(&pdsc->pci_reset_work);
- 		return PCI_ERS_RESULT_NEED_RESET;
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 36f75c6a8344d..7af5ea0cf55fd 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -10037,6 +10037,7 @@ ssize_t btrfs_do_encoded_write(struct kiocb *iocb, struct iov_iter *from,
  	}
- 
+ 	kvfree(folios);
+ out:
++	extent_changeset_free(data_reserved);
+ 	if (ret >= 0)
+ 		iocb->ki_pos += encoded->len;
+ 	return ret;
 -- 
 2.53.0
 
