@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C4D418344;
-	Mon, 17 Aug 2026 13:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84ECE3EC829;
+	Mon, 17 Aug 2026 13:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974754; cv=none; b=kuNCYYqoybrkXrnuOxYepvrxPXcSjYOsm3BjYCZRu2E71QAA6NjhavTCNxWwwSPtcO6lfYRpN7+dIliF8el2aIwwiDvnCs03/gJRp6NnBbVhvqr+D9d7LaH1rMzkFlngQAG0hnq4X7hYa4whImpoIQlRIPR0tyHkHDRPN8eVn70=
+	t=1786974756; cv=none; b=lpZY29BYLAogFWsJC3vnbNpa53vGKaFV6vFFev3SObtbih0MpYHiWA4wJ74YPyQb4lXlYm/dGv0xGc7gl40no1EAv2mmsRBkSAintk4oiXGbCgeyxjcdtUCAQxf/8X8mql/skGecy3TT66fuX8okAJxz8zlAhhsP29vP0Vno2G0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974754; c=relaxed/simple;
-	bh=puYPRVzaQjWogNWf93Bl3AS4DW5UDIn0VOuNtiPuIfg=;
+	s=arc-20240116; t=1786974756; c=relaxed/simple;
+	bh=cQJdu+4QU2guWzOX5VayrEixewNinMMO6cRKvuniqTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gRzAAHs/zpaLHwQrGxV9qLOf5O+nH7QTKDMEQpnSmOsEPm+NbDhgBXcoyNG6p4t7g5+faFhzKAJR3cS7SxwV4zC2fhMlTLfHfQtDsFrck7Wdz+8ZzRVueLpdj27on2/eSCuG6EyIR5jD9BNZ8xlPA6Niblz+O+13UfOMBaxxfSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xof81n7X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZEia9NRyT2z7WQK9/1EKFyMo7RAxg7LNx7uj9zE4ToOwhMmKTQbSrMLfDoal2tilW5fQNDdWHxjzohfAsvTkPKTNpNJp9t6vpmGyGkya4mW2UsSNBK+kmpWto8KtjYG0jR2EwoSw8GLMMmO5Z4WFIO3+nKMRHDQlYLUHgFmCPQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaIlbfQ9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xof81n7X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A3C51F000E9;
-	Mon, 17 Aug 2026 13:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaIlbfQ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BCB71F00A3D;
+	Mon, 17 Aug 2026 13:52:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974749;
-	bh=7vlwEo2Hkse/GNYMS7hfgdbySqbkljTtR2bakzj3OFE=;
+	s=korg; t=1786974747;
+	bh=8LABmahqqdWiRWfTxTFTbKTbDZTTSXik/LaqEF6U4oM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xof81n7XxpLAJHRZgZjl2UeRU2rvFMMcNWk8EOOvnIpUtthpPTcwjOGMmaJ8XfpHo
-	 +q1hIt2VaCLdxHCMIQkLLKsNoVNgF1jrkd68lHf+ZdaKaHxhlM2oNa2qaeEngWDE7/
-	 yQs066gB/TmzemlX6TgdVnYGZt1ah4FwzLhnI9F8=
+	b=aaIlbfQ9rNXSNjgymG6ek55QvVv9X+8ZCS2OIqOBldGOSDZATXq/RkduBlqG9Zy3D
+	 HoFvqtfXdwI2AJ8L8i/2BfxE9ghI3Wei/j5D01KAQ8tQX6CIDlII/WCTookphjVmY0
+	 AqWncK8Zaw9rv/vmGF8fcKFa50fKd+NCxDudEadU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	David Sterba <dsterba@suse.com>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 042/250] btrfs: fix memory leak in btrfs_do_encoded_write()
-Date: Mon, 17 Aug 2026 15:30:03 +0200
-Message-ID: <20260817132538.168034254@linuxfoundation.org>
+Subject: [PATCH 6.18 041/250] watchdog: bd96801_wdt: Fix timeout for enabled WDG
+Date: Mon, 17 Aug 2026 15:30:02 +0200
+Message-ID: <20260817132538.131432455@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,94 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit d2a4e4e626b2f4670b69b430c357f03f53eb6632 ]
+[ Upstream commit 1246aa2b6ccc8944676bd24ff3e37cc56b93b51b ]
 
-Local fuzzing of 6.12.94 has found the following memory leak:
+When watchdog is enabled at the probe time, the bd96801 driver retrieves
+the timeout configuration from the registers to set-up the heart-beat
+values.
 
-Unreferenced object 0xffff888018050a80 (size 64):
-  comm "syz.0.17", pid 10297, jiffies 4294953601
-  hex dump (first 32 bytes):
-    00 10 00 00 00 00 00 00 01 00 00 00 00 00 00 00  ................
-    10 0a 05 18 80 88 ff ff 10 0a 05 18 80 88 ff ff  ................
-  backtrace (crc a8a6fc29):
-    kmemleak_alloc_recursive include/linux/kmemleak.h:42 [inline]
-    slab_post_alloc_hook mm/slub.c:4152 [inline]
-    slab_alloc_node mm/slub.c:4197 [inline]
-    __kmalloc_cache_noprof+0x168/0x2c0 mm/slub.c:4358
-    kmalloc_noprof include/linux/slab.h:878 [inline]
-    extent_changeset_alloc fs/btrfs/extent_io.h:207 [inline]
-    qgroup_reserve_data+0x1c5/0x7d0 fs/btrfs/qgroup.c:4305
-    btrfs_qgroup_reserve_data+0x2e/0xb0 fs/btrfs/qgroup.c:4355
-    btrfs_do_encoded_write+0x92e/0x1040 fs/btrfs/inode.c:9746
-    btrfs_encoded_write fs/btrfs/file.c:1482 [inline]
-    btrfs_do_write_iter+0x280/0x610 fs/btrfs/file.c:1507
-    btrfs_ioctl_encoded_write+0x3d6/0x490 fs/btrfs/ioctl.c:4738
-    btrfs_ioctl+0x6f9/0xc90 fs/btrfs/ioctl.c:-1
-    vfs_ioctl fs/ioctl.c:51 [inline]
-    __do_sys_ioctl fs/ioctl.c:906 [inline]
-    __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:892
-    do_syscall_x64 arch/x86/entry/common.c:47 [inline]
-    do_syscall_64+0xbe/0x1a0 arch/x86/entry/common.c:78
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+As Sashiko pointed out at
+https://lore.kernel.org/all/20260722085819.495211F000E9@smtp.kernel.org/
+the timeout values are incorrectly computed in driver, resulting wrong
+heartbeat. This leads to devere problems if watchdog was enabled at probe
+time.
 
-Unreferenced object 0xffff888018050a00 (size 64):
-  comm "syz.0.17", pid 10297, jiffies 4294953601
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 ff 0f 00 00 00 00 00 00  ................
-    90 0a 05 18 80 88 ff ff 90 0a 05 18 80 88 ff ff  ................
-  backtrace (crc cb5c9580):
-    kmemleak_alloc_recursive include/linux/kmemleak.h:42 [inline]
-    slab_post_alloc_hook mm/slub.c:4152 [inline]
-    slab_alloc_node mm/slub.c:4197 [inline]
-    __kmalloc_cache_noprof+0x168/0x2c0 mm/slub.c:4358
-    kmalloc_noprof include/linux/slab.h:878 [inline]
-    kzalloc_noprof include/linux/slab.h:1014 [inline]
-    ulist_prealloc+0x9c/0x110 fs/btrfs/ulist.c:114
-    extent_changeset_prealloc fs/btrfs/extent_io.h:217 [inline]
-    __set_extent_bit+0x16b/0x1a70 fs/btrfs/extent-io-tree.c:1086
-    set_record_extent_bits+0x50/0x90 fs/btrfs/extent-io-tree.c:1821
-    qgroup_reserve_data+0x274/0x7d0 fs/btrfs/qgroup.c:4312
-    btrfs_qgroup_reserve_data+0x2e/0xb0 fs/btrfs/qgroup.c:4355
-    btrfs_do_encoded_write+0x92e/0x1040 fs/btrfs/inode.c:9746
-    btrfs_encoded_write fs/btrfs/file.c:1482 [inline]
-    btrfs_do_write_iter+0x280/0x610 fs/btrfs/file.c:1507
-    btrfs_ioctl_encoded_write+0x3d6/0x490 fs/btrfs/ioctl.c:4738
-    btrfs_ioctl+0x6f9/0xc90 fs/btrfs/ioctl.c:-1
-    vfs_ioctl fs/ioctl.c:51 [inline]
-    __do_sys_ioctl fs/ioctl.c:906 [inline]
-    __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:892
-    do_syscall_x64 arch/x86/entry/common.c:47 [inline]
-    do_syscall_64+0xbe/0x1a0 arch/x86/entry/common.c:78
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+According to the data-sheet, the "too fast" ping limit is configured as
+multiple of FASTNG_MIN. Furthermore, the "too slow" ping limit is
+configured as multiples of "too fast" timeout. The FASTNG_MIN is set to
+11, meaning 1.1 mS and "too fast" and "too slow" limits are computed from
+this. Hence, converting the limits to mS should be done by dividing by 10,
+not by dividing by USEC_PER_MSEC.
 
-Fix this by freeing an extent changeset before returning from
-btrfs_do_encoded_write().
+Fix this by dividing the timeout values with correct scaling factor.
 
-Fixes: 7c0c7269f7b5 ("btrfs: add BTRFS_IOC_ENCODED_WRITE")
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+While at it, fix whitespace problem (double empty line).
+
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: 09dad69757b6 ("watchdog: ROHM BD96801 PMIC WDG driver")
+Link: https://lore.kernel.org/r/amxskHmQbi9v-8_l@mva-rohm
+[groeck: Added reference to whitespace change to description]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/watchdog/bd96801_wdt.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 36f75c6a8344d..7af5ea0cf55fd 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -10037,6 +10037,7 @@ ssize_t btrfs_do_encoded_write(struct kiocb *iocb, struct iov_iter *from,
- 	}
- 	kvfree(folios);
- out:
-+	extent_changeset_free(data_reserved);
- 	if (ret >= 0)
- 		iocb->ki_pos += encoded->len;
- 	return ret;
+diff --git a/drivers/watchdog/bd96801_wdt.c b/drivers/watchdog/bd96801_wdt.c
+index 12b74fd2bc052..a25b7cf1488b2 100644
+--- a/drivers/watchdog/bd96801_wdt.c
++++ b/drivers/watchdog/bd96801_wdt.c
+@@ -169,7 +169,6 @@ static int bd96801_set_wdt_mode(struct wdtbd96801 *w, unsigned int hw_margin,
+ 	int fastng, slowng, type, ret, reg, mask;
+ 	struct device *dev = w->dev;
+ 
+-
+ 	if (hw_margin_min * 1000 > FASTNG_MAX_US) {
+ 		dev_err(dev, "Unsupported fast timeout %u uS [max %u]\n",
+ 			hw_margin_min * 1000, FASTNG_MAX_US);
+@@ -258,10 +257,10 @@ static int bd96801_set_heartbeat_from_hw(struct wdtbd96801 *w,
+ 	fast = FASTNG_MIN << sel;
+ 
+ 	sel = (val & BD96801_WD_RATIO_MASK) + 1;
+-	w->wdt.max_hw_heartbeat_ms = (fast << sel) / USEC_PER_MSEC;
++	w->wdt.max_hw_heartbeat_ms = (fast << sel) / 10;
+ 
+ 	if ((conf_reg & BD96801_WD_TYPE_MASK) == BD96801_WD_TYPE_WIN)
+-		w->wdt.min_hw_heartbeat_ms = fast / USEC_PER_MSEC;
++		w->wdt.min_hw_heartbeat_ms = fast / 10;
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
