@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930C743E09A;
-	Mon, 17 Aug 2026 14:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E34938D01E;
+	Mon, 17 Aug 2026 14:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976933; cv=none; b=LxbUWJfrnBslhlohbuJ6BMbphm2eM8iD1tO/lYLSe+oijpHNqP+FtbfKeNR96v0AvYa9Dj9/lw4t2kZ8Q3/vjICBA5KccZ97tJYWweLvl6wkl0W6lSCla32Jk0AZ5HbNp9kf8CRZn3wvQIrrlAz+BzYG7fOphlhLoLHR/ZTHvGM=
+	t=1786976935; cv=none; b=ZvGqEOtjceOwnbkmIPy+d//kYV24oVh2wiBY3zs9311SD2PFNvTuzE+KN4G+C7/uQnhiRvV3Wi+dyv6ywz19qL2+xieBfnrBxV0dk1SxhNbYjrmsJc7rkCvfxVlHYquQJJ7fZw2pl6KfVnmeQFbFigEK8GMVJ9Gi497Pq4Zg+mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976933; c=relaxed/simple;
-	bh=JbUCRDDO4q8sIAYPA+kR/AEaZ4cmVIGpoLjvMgLadD4=;
+	s=arc-20240116; t=1786976935; c=relaxed/simple;
+	bh=ejraNiT1TPZ4WANjHAzjmHZdwWAxDPlAA7NdZ5Mqn/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sRyrxOnxakBpKcnVj5IiqKsJPAyBTO/io/XoBFepPPTXymy9ziBDp82cXYK/lrQu1YMufd+bBxnzdLKYRGgIumtc0bK6Lyw5/ahVhLooG4DnqsMvcyewUBl6ZUDIjBroQcPqMH7MsRnYQInn0U7nm9as6p1bw6FHwQaM4xMVyqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dDCoYkpB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vBmZTqM44NscCK6f27seVP5XIWLC8Jf9sWUHLBj6oizKIKAsQveQjWkOXfT93zWlzch7hsLazLz8BDglI11WMc8v0fV9x1vPqGExNPTvO6LpX8Xwmm3h5Nfu5DBo8l9fIC82m000I542iz/mHq8B6KT+UqrXK0nYpRnymOp5MLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uh4Hloh6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dDCoYkpB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC041F000E9;
-	Mon, 17 Aug 2026 14:28:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uh4Hloh6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4CB1F000E9;
+	Mon, 17 Aug 2026 14:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976931;
-	bh=iR9WI3NYpOQ3OakLFbWTz4w98koXXCPwj5coAoCh2ts=;
+	s=korg; t=1786976934;
+	bh=G2WnUsYSRtzXqHXnL6HS/ApsgKRgRX3jb/Irmr8EV7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dDCoYkpBcFPzXcGqaQmsAuQRlOfC/ONpaQJebszum+7eKk8uBzxcsfRTWUqs+6EYO
-	 VbMBbm8K7c+q9fxf6NOfY99ONdmRbtfZ89FMcZOHrz7OaKM1oymB62MudEOsSZ29CT
-	 ncDeRLLF/J2wDgPmOI4PCHnZsBDntgUeqVEC73s0=
+	b=uh4Hloh6Dl1S8nG8J8XghyDwFMel18PirZVnpvS8js0HDRd0PCY1DxwfT3nZcnFpB
+	 N5c1Xyy2lTsEIwzsUhOkurrrB5slppyTz0q+eTAAwS3q9D88b061tNlx7p/FmdKz2U
+	 kt7gEEan4XZLAcMEzDiG5DK3kiwnY1BPJOtRndeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valery Borovsky <vebohr@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 155/456] media: airspy: Return queued buffers on start_streaming() failure
-Date: Mon, 17 Aug 2026 15:29:05 +0200
-Message-ID: <20260817132546.148061222@linuxfoundation.org>
+Subject: [PATCH 5.15 156/456] media: cec: seco: unregister adapter on IR probe failure
+Date: Mon, 17 Aug 2026 15:29:06 +0200
+Message-ID: <20260817132546.186037820@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,52 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valery Borovsky <vebohr@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 04344d0b4929caa94c0df72f767752aa0935ef5d upstream.
+commit c3a78691be8245e52ced489f268e413f18061ac2 upstream.
 
-The vb2 framework hands buffers to the driver via buf_queue() before
-calling start_streaming().  If start_streaming() returns an error
-without first returning those buffers via vb2_buffer_done(),
-vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
-buffers leak.
+If secocec_ir_probe() fails after cec_register_adapter() succeeds,
+probe returns an error and the driver remove callback is not called.
+The current unwind path unregisters the notifier and then falls through
+to cec_delete_adapter(), which violates the CEC adapter lifetime rules
+after a successful registration.
 
-airspy_start_streaming() returned -ENODEV early when the USB device had
-been disconnected (s->udev == NULL) without returning any buffers that
-buf_queue() had already accepted.  Take v4l2_lock first and jump to the
-existing err_clear_bit label, which already drains s->queued_bufs via
-vb2_buffer_done(..., VB2_BUF_STATE_QUEUED) before unlocking.
+Add a registered-adapter unwind path that unregisters the notifier and
+the adapter instead.
 
-This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
-Return queued buffers on start_streaming() failure").
-
-Fixes: 634fe5033951 ("[media] airspy: AirSpy SDR driver")
+Fixes: daef95769b3a ("media: seco-cec: add Consumer-IR support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/airspy/airspy.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/media/cec/platform/seco/seco-cec.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/media/usb/airspy/airspy.c
-+++ b/drivers/media/usb/airspy/airspy.c
-@@ -518,11 +518,13 @@ static int airspy_start_streaming(struct
+--- a/drivers/media/cec/platform/seco/seco-cec.c
++++ b/drivers/media/cec/platform/seco/seco-cec.c
+@@ -662,7 +662,7 @@ static int secocec_probe(struct platform
  
- 	dev_dbg(s->dev, "\n");
+ 	ret = secocec_ir_probe(secocec);
+ 	if (ret)
+-		goto err_notifier;
++		goto err_unregister_adapter;
  
--	if (!s->udev)
--		return -ENODEV;
--
- 	mutex_lock(&s->v4l2_lock);
+ 	platform_set_drvdata(pdev, secocec);
  
-+	if (!s->udev) {
-+		ret = -ENODEV;
-+		goto err_clear_bit;
-+	}
-+
- 	s->sequence = 0;
+@@ -670,6 +670,10 @@ static int secocec_probe(struct platform
  
- 	set_bit(POWER_ON, &s->flags);
+ 	return ret;
+ 
++err_unregister_adapter:
++	cec_notifier_cec_adap_unregister(secocec->notifier, secocec->cec_adap);
++	cec_unregister_adapter(secocec->cec_adap);
++	goto err;
+ err_notifier:
+ 	cec_notifier_cec_adap_unregister(secocec->notifier, secocec->cec_adap);
+ err_delete_adapter:
 
 
