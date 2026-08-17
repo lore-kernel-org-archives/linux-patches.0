@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E932B3FADF1;
-	Mon, 17 Aug 2026 15:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8950F282F29;
+	Mon, 17 Aug 2026 15:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979199; cv=none; b=D/m8ca1IB8Kb8sxgGc/7cyKayP+mdidJD6GkR3K+T6v9nDQf64xT9q2+KWcSY7VIskX6zbuZBQUuII9JevBhVNq1LLT3TmXvtDvzwyNIl5RKEwd1OiTS9Eap76HPSYqE66h2V1QYgp1073Ue7KvB2/xL2gb4r5ZEzVztOlSGcXY=
+	t=1786979201; cv=none; b=QW8IF12o8segucKxI0aFxwEquxwO6slegxTDs6ih4iznHp6LluIa+U3GYhmXiSMMJroX34IgpWYSCXubxmpjcQteFSETTYkmWh6nfdtwwNUDwiK/AotaCYWPKOw6OQamW8eVt2a4CndqThLr27j+xY4mQeT689xFeacbpAgkUI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979199; c=relaxed/simple;
-	bh=0tJhsNT9KcWkKSzSMYH/IhOcQZ72kvN27DW2zHSlPt8=;
+	s=arc-20240116; t=1786979201; c=relaxed/simple;
+	bh=v+ywl1dgpAUq5S07+BEpX8baGmN0xnErs1Dx6VK6nAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iS/0qHKvLuBMuFbmxrRfxQBe+aicz8zfwqzntgf2YtyXbJH8RP1ea3QrEvpXlpAMvnhsWIG+FIYPHz0YDvalrC4V8VawkjZmbk3pm4B4ZAyqe78tEYsrItQ+wVlxt/y2qGt07RT+wrmyPhaSN7v4enNK0vq9WDfVPdstQrJAG+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qY8pcFyT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hhJJszPbZGvpnbJvx0GYQ6gj99YW6QTl/nAs3qdI+9LeSoV6X/Q9f9YnVwIfGKMOipBMlE+h9KwZ6HaGXKTAWcCPurv7LUAPYg4EvXAqRwx8nvNf/p65TYOqOy0Ho+vmVlxFZ8KCAFFPNkmAqpCQ5EBpsOhcqnAOwQ/W8dne+3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPTY4xI7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qY8pcFyT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0BA1F00A3A;
-	Mon, 17 Aug 2026 15:06:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPTY4xI7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F051F000E9;
+	Mon, 17 Aug 2026 15:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979197;
-	bh=57H/nXBofPeoaj7UqV51B6qNwRSz5osmqPZohjTCL1M=;
+	s=korg; t=1786979200;
+	bh=Z7e45+lRMAnG40syTrR4rLFUqLnhAg4uqg/ckJiq2nI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qY8pcFyTUlAgfxNOu4O9+l1FrZGOosoKwzUzftV5KSgFb5bag5KPjwE2wDaEA4XLd
-	 4zaEUxvaW561WNo6HomMc+p8wDuaxINm4Hg0Rdr6EIjSYXLmLUgLknm4U44pUgi8cv
-	 qI6tNCBHqQW1Tfm0SPNmRBs2xFACtIRtO33ICcxo=
+	b=MPTY4xI7PY+7Bftng0fYLO/KxvjkESnlj5NRk6s0m3g10EgA2jPd5dV0vrKxctRWU
+	 O7ArqwYV8vD0ptpNvUQTzRLpDTfol+33v/acXgI90fg00e2LJ/RVvMG6S+WOY9kvJl
+	 pajmg3SDtbDKoyeIsDOLqczIH5dhIoBA6jz9aE1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Ido Schimmel <idosch@nvidia.com>,
+	syzbot+85d0bec020d805014a3a@syzkaller.appspotmail.com,
+	Helen Koike <koike@igalia.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 141/609] nexthop: initialize extack in nh_res_bucket_migrate()
-Date: Mon, 17 Aug 2026 15:27:17 +0200
-Message-ID: <20260817132548.715869829@linuxfoundation.org>
+Subject: [PATCH 6.1 142/609] tipc: fix infinite loop in __tipc_nl_compat_dumpit
+Date: Mon, 17 Aug 2026 15:27:18 +0200
+Message-ID: <20260817132548.750514857@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,57 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Helen Koike <koike@igalia.com>
 
-[ Upstream commit 6347c5314cee49f364aaf2e40ff15415a57a116e ]
+[ Upstream commit 22f8aa35964e8f2ab026578f45befc9605fd1b28 ]
 
-nh_res_bucket_migrate() passes an uninitialized netlink_ext_ack to
-call_nexthop_res_bucket_notifiers(). When
-nh_notifier_res_bucket_info_init() fails (e.g. the kzalloc returns
--ENOMEM), the error is propagated back before any notifier sets
-extack._msg, and the error path formats the stale pointer with
-pr_err_ratelimited("%s\n", extack._msg). With CONFIG_INIT_STACK_NONE
-this dereferences uninitialized stack memory:
+cmd->dumpit callback can return a negative errno, causing an infinite
+loop due to the while(len) condition. As the loop never terminates,
+genl_mutex is never released, and other tasks waiting on it starve in D
+state.
 
-  Oops: general protection fault, probably for non-canonical address ...
-  KASAN: maybe wild-memory-access in range [...]
-  RIP: 0010:string (lib/vsprintf.c:730)
-   vsnprintf (lib/vsprintf.c:2945)
-   _printk (kernel/printk/printk.c:2504)
-   nh_res_bucket_migrate (net/ipv4/nexthop.c:1816)
-   nh_res_table_upkeep (net/ipv4/nexthop.c:1866)
-   rtm_new_nexthop (net/ipv4/nexthop.c:3323)
-   rtnetlink_rcv_msg (net/core/rtnetlink.c:7076)
-   netlink_sendmsg (net/netlink/af_netlink.c:1900)
-  Kernel panic - not syncing: Fatal exception
+Check dumpit's return value, propagate it and jump to err_out on error.
 
-Zero-initialize extack so _msg is NULL on error paths that never set it.
-
-Fixes: 7c37c7e00411 ("nexthop: Implement notifiers for resilient nexthop groups")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260713221551.3344650-1-xmei5@asu.edu
+Reported-by: syzbot+85d0bec020d805014a3a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=85d0bec020d805014a3a
+Fixes: d0796d1ef63d ("tipc: convert legacy nl bearer dump to nl compat")
+Signed-off-by: Helen Koike <koike@igalia.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260713204940.647668-1-koike@igalia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/nexthop.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/tipc/netlink_compat.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index 49871e5f46802d..13a798f9dc9cb4 100644
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -1504,8 +1504,8 @@ static bool nh_res_bucket_migrate(struct nh_res_table *res_table,
- 				  bool notify_nl, bool force)
- {
- 	struct nh_res_bucket *bucket = &res_table->nh_buckets[bucket_index];
-+	struct netlink_ext_ack extack = {};
- 	struct nh_grp_entry *new_nhge;
--	struct netlink_ext_ack extack;
- 	int err;
+diff --git a/net/tipc/netlink_compat.c b/net/tipc/netlink_compat.c
+index 9eb7cab6b2f60f..5a722a8fa36d1b 100644
+--- a/net/tipc/netlink_compat.c
++++ b/net/tipc/netlink_compat.c
+@@ -226,6 +226,10 @@ static int __tipc_nl_compat_dumpit(struct tipc_nl_compat_cmd_dump *cmd,
+ 		int rem;
  
- 	new_nhge = list_first_entry_or_null(&res_table->uw_nh_entries,
+ 		len = (*cmd->dumpit)(buf, &cb);
++		if (len < 0) {
++			err = len;
++			goto err_out;
++		}
+ 
+ 		nlmsg_for_each_msg(nlmsg, nlmsg_hdr(buf), len, rem) {
+ 			err = nlmsg_parse_deprecated(nlmsg, GENL_HDRLEN,
 -- 
 2.53.0
 
