@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5791B2EEE73;
-	Mon, 17 Aug 2026 15:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CCA29B795;
+	Mon, 17 Aug 2026 15:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980531; cv=none; b=pfteQCJ4nCRSfewpyPIRzx656ioRaVy8OcBeovnnkowMBOvNPfw290UHxL6Ng7i73d20P124REbijYEpCPl4bgXgHaDw5OlQ+6jJgQ4xXjyHOR+Z8XzwXUoc2gFhnKmSJr+4A+EDJLHW7YvxttZM1aT8FpQRf2tj6AP9T+O+Uhk=
+	t=1786980534; cv=none; b=bDV86Gm5f9GkoaANnR3mYYbMf6EMsBw3WdSbwFOyRWau/OBtSizVlOYwn+/btAsb7KtVVjDn9+lIgSgjmklv8Gpv1BcThPaWQ/EiSC2fUxtvnF7cy6aQGC4QMddUv7W/8QNgVA9eLh7cCu1CkCrkEjfybweMZnWVjgoNp1Qx+RM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980531; c=relaxed/simple;
-	bh=sVp7M9CI9eUGA69OdWpGic+SWSw9v13brW1u2vUFR2c=;
+	s=arc-20240116; t=1786980534; c=relaxed/simple;
+	bh=fVhiMjgfWzYctvYNIyeEwGgmi7jNNCQRkbcmuzNemTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZCSMcAdA7STV0DahmCakXiuNd5gNWyJ6KHmOtniry6nNG1wdqMWRSjHW2cW8CzjpldBNR9f3LzULbUIvn7gcdLkPwH//QRwIpO6MSCxALBxzEs65tvZFFES/4sotOuySDAF4umzIR/Y5Rf+CtwsuPo2ZlsuceWOyf1xz63hYBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=maLBP3xh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LgJJxjfwP8cn+LK6r5+4i3J48IeX65ezEjIKXlzRa8hiE0kxWDJOxaLJaEG/q+Gk5eMR3/yLWNKA77FUT6wvIC6OQCW69bqyTnL1i7HOriIbY3xXNiL+QvavvrjL9ifX6h1ZZsz9M2AC0urqZtRDs398+njdsDjd0kjjmPFGdPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKKYQpBd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maLBP3xh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B099A1F000E9;
-	Mon, 17 Aug 2026 15:28:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKKYQpBd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3FE1F000E9;
+	Mon, 17 Aug 2026 15:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980530;
-	bh=IAiJBx1XrD4WDKgcvk2Ly9YqyOHjS1Z7mtoxEt+0aO4=;
+	s=korg; t=1786980533;
+	bh=1lKElwSkZ31ND4Vpx21KlHDLWNdLJNkDk9YJvicdB4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=maLBP3xhWU3ps4mTYdmAuUXt6aJUKVAco6yviTZFvuTeMl+X452tP8hEDsnFWUj81
-	 0+zAB3WoFIr1fukf6dvJ+XPHe121jqwCkI//P83NmklXU54d5NH05BBK1KOaD56xkA
-	 rkBOXvZTPf7LFaA1lu3pCM1kwDa9s1lDXmrmOlc0=
+	b=xKKYQpBdowQJQjIOC2RFKZ9CxMiiLzdDu/xv8LIaDE0QQ6vngOz1NsZUNvHfaZ6GU
+	 Wzq/jDrYd/7YzC5ZanbT7lgcAIZi5wofHb9Jj9Lz9YOh0jAMMwfEOrnXxrcCZKNnzJ
+	 xL3IDorGP4yGa372HQObgI2cf3u4p633Z6AIwcXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Ming <a0yami@mailbox.org>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 604/609] sctp: clear new_transport when removing a peer
-Date: Mon, 17 Aug 2026 15:35:00 +0200
-Message-ID: <20260817132603.835142231@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.1 605/609] thunderbolt: Bound the DROM dual link port number before indexing sw->ports
+Date: Mon, 17 Aug 2026 15:35:01 +0200
+Message-ID: <20260817132603.871608035@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,82 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Ming <a0yami@mailbox.org>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit beb33f8ee1ca83acddb2a5ae80f3d22ec550b4c3 upstream.
+commit d6764992f17b23d91ff93ce905ab53c2aa7191f0 upstream.
 
-sctp_process_asconf_param() stores a newly added peer transport in
-asoc->new_transport. After all parameters in the ASCONF chunk have been
-processed, sctp_sf_do_asconf() uses this pointer to send a HEARTBEAT to the
-new transport.
+tb_drom_parse_entry_port() validates the device-supplied header->index
+against sw->config.max_port_number before indexing sw->ports[], but the
+sibling field entry->dual_link_port_nr -- a 6-bit value also read from
+the DROM -- indexes the same array with no such check. A malicious or
+malformed Thunderbolt device can set dual_link_port_nr beyond the
+allocated sw->ports[] (max_port_number + 1 entries), producing an
+out-of-bounds tb_port pointer that is stored and later dereferenced.
 
-An authenticated ASCONF from a remote SCTP peer can add a transport and
-remove it again with a wildcard DEL-IP parameter in the same chunk. The
-wildcard deletion preserves the transport on which the ASCONF arrived, but
-removes the newly added transport through
-sctp_assoc_del_nonprimary_peers(). The removal does not clear
-asoc->new_transport, leaving it pointing to the removed transport.
+Reject a port entry whose dual_link_port_nr exceeds max_port_number,
+the same bound already applied to header->index.
 
-sctp_sf_do_asconf() then creates a HEARTBEAT whose chunk->transport points
-to the removed transport without holding a transport reference. During
-local address replacement, src_out_of_asoc_ok keeps this HEARTBEAT on
-control_chunk_list. After the transport is freed by RCU, a successful
-ASCONF_ACK for the replacement address releases the queued HEARTBEAT and
-sctp_outq_select_transport() reads the freed transport's state.
-
-The issue was found during a static audit of SCTP objects. With an
-authenticated peer, the reproducer triggered the same KASAN report in 2
-of 2 unpatched runs on a KASAN-enabled netdev/main kernel:
-
-  BUG: KASAN: slab-use-after-free in sctp_outq_select_transport
-  Read of size 4 at addr ffff88800b9bd95c by task python3/197
-
-  Call Trace:
-   sctp_outq_select_transport+0x549/0x8b0 [sctp]
-   sctp_outq_flush+0x306/0x2c60 [sctp]
-   sctp_transport_immediate_rtx+0xaf/0x260 [sctp]
-   sctp_process_asconf_ack+0xa48/0xf70 [sctp]
-
-  Allocated by task 197:
-   sctp_transport_new+0x68/0x650 [sctp]
-   sctp_assoc_add_peer+0x258/0x12a0 [sctp]
-   sctp_process_asconf+0x5e9/0x1090 [sctp]
-
-  Last potentially related work creation:
-   __call_rcu_common.constprop.0+0x77/0xb70
-   sctp_assoc_del_nonprimary_peers+0x7c/0xd0 [sctp]
-   sctp_process_asconf+0xd9c/0x1090 [sctp]
-
-The first invalid access was a four-byte read of transport->state at
-net/sctp/outqueue.c:833. The same reproducer completed the full
-authenticated ASCONF and local-address replacement sequence with this
-change without a KASAN report or oops.
-
-Clear new_transport when its peer is removed, before it can be used to
-create the HEARTBEAT.
-
-Fixes: 6af29ccc223b ("sctp: Bundle HEAERTBEAT into ASCONF_ACK")
+Fixes: cd22e73bdf5e ("thunderbolt: Read port configuration from eeprom.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Qing Ming <a0yami@mailbox.org>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260811152803.5629-1-a0yami@mailbox.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/associola.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/thunderbolt/eeprom.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/net/sctp/associola.c
-+++ b/net/sctp/associola.c
-@@ -545,6 +545,9 @@ void sctp_assoc_rm_peer(struct sctp_asso
- 	    asoc->addip_last_asconf->transport == peer)
- 		asoc->addip_last_asconf->transport = NULL;
- 
-+	if (asoc->new_transport == peer)
-+		asoc->new_transport = NULL;
-+
- 	/* If we have something on the transmitted list, we have to
- 	 * save it off.  The best place is the active path.
- 	 */
+--- a/drivers/thunderbolt/eeprom.c
++++ b/drivers/thunderbolt/eeprom.c
+@@ -392,9 +392,16 @@ static int tb_drom_parse_entry_port(stru
+ 			return -EIO;
+ 		}
+ 		port->link_nr = entry->link_nr;
+-		if (entry->has_dual_link_port)
++		if (entry->has_dual_link_port) {
++			if (entry->dual_link_port_nr > sw->config.max_port_number) {
++				tb_sw_warn(sw,
++					"port entry has invalid dual link port number %u\n",
++					entry->dual_link_port_nr);
++				return -EIO;
++			}
+ 			port->dual_link_port =
+ 				&port->sw->ports[entry->dual_link_port_nr];
++		}
+ 	}
+ 	return 0;
+ }
 
 
