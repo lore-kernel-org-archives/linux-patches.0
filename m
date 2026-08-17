@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EC93EAC68;
-	Mon, 17 Aug 2026 14:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F5C43264CB;
+	Mon, 17 Aug 2026 14:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977337; cv=none; b=gMWU7YKvFKP7CT8HTw0DLedOgusGz9poIEP6EGXzTTwux6o4TFM4BNyY4Wb7GKJJiJUZwj5Qjrg4Xwb7U2ZSJyB8cg9gBLl4CeBpGTbEsa84dacJQIX5tPRBLmb1GDjnWwgUg1KdSb7Q1KwK1r4xxsE8NmvBJ1U8wBYWyNLTYPk=
+	t=1786977341; cv=none; b=aWGKS+XxMntVowzeA2YE7+KMT2Os1ws91aWVpOUcpk/ipwlz7mxyH+j2PBPAwf+OGqkldgvINEgRKvHWZP9f74bkPdgdKzKHrKgbx+SmZd0qDMwxR9NlaaZQiGlGopz3ShOTd9/P3Prs2AVIgfDJ0aV272OUkl/LE1t8D/Bp07A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977337; c=relaxed/simple;
-	bh=SrEqZtIAzs29JyowbK8lfeXdGUzuDGhTtw82albRk+U=;
+	s=arc-20240116; t=1786977341; c=relaxed/simple;
+	bh=cvsvmZeGua1zx/W8iCbDRN5vX11ZW6BnN30XzXhw8Dc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BXj+kAgm2o0elJfHRlib1Be5J6IPsKdlshxFlYWsJVDn3/WZL0oRQGGmUSIxwlZRmhtRVkOMW9q6q95ttEcCOhvrGCf2qgCLm4IDnoNkX7EUFp/kuc4CQ6MI+Bc2dnFgzSVeODoyyd5ACPCATu7DrMcWyxldE2jNqA8M4RkNQ3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VvjYWjVP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VziAmo9YhFvbYeZKTU3+4X2FiUASXGmIsGBQznNDR2PdlKCALNptDBrgeYaNpc+P+hZPI7OpqTUPBHTDw6fkMhnTtce7bP5/LIHOdxVde0Lb6nhezVWE78aLibN+HFS0jUFNtUZDNjrvsyuUvZ0tmD5dkMYlY+eJVWMhMn0qhxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6MR7weG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VvjYWjVP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335281F000E9;
-	Mon, 17 Aug 2026 14:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6MR7weG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F4B1F000E9;
+	Mon, 17 Aug 2026 14:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977335;
-	bh=K0S6s8mxOTrWMgiSvRiwJ5o3pkx1XW/qZ12Z0+mChBs=;
+	s=korg; t=1786977339;
+	bh=1XfYa7vzsSguSO6TotPNxS6//oTmabuC0dJR8aBM2ug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VvjYWjVPTmJn3xgpkahXhpD9mtchqJMqodIE2MpKs/xk6TIlm46ABOydrOSy/kGLM
-	 j2/Gyp4MIBg2wJi8uSQMyYGgoqj4e80+knf1gySL2L050FOLASb6U5/udq1XiNGEqx
-	 bzIBmyKv//ujxkcJdTK1J5LXExU4j5Q9dswPrGts=
+	b=l6MR7weGTIodBunVNylEN9J6xbxC/jRRiuYUm7rz465jnf1AKB8o/ypw3Jk2A1q4f
+	 eKRauL1hYpcyWXjGrVfR6PsGN7+MF+VC+M/fMc27ZuJ2B7HdIZ+5qNVh29vBtnoppP
+	 WxHjp5spwAxfejiXKTCKjd0H7VdupJTYimPkyWDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiangfeng Cai <caixiangfeng@bytedance.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Baoquan He <baoquan.he@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	Shuah Khan <shuah@kernel.org>,
-	Wei Yang <richard.weiyang@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 294/456] mm/hugetlb: fix list corruption in allocate_file_region_entries()
-Date: Mon, 17 Aug 2026 15:31:24 +0200
-Message-ID: <20260817132551.362162980@linuxfoundation.org>
+	Charles Vosburgh <trilobyte777@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 295/456] sctp: validate Adaptation Indication parameter length
+Date: Mon, 17 Aug 2026 15:31:25 +0200
+Message-ID: <20260817132551.396283074@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -56,77 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiangfeng Cai <caixiangfeng@bytedance.com>
+From: Charles Vosburgh <trilobyte777@gmail.com>
 
-commit dd9623f58ec702a07b2d67179d6fcea79c52231a upstream.
+commit 74b21f52c5c5a71a05c0ff70e513f4f04ff28b17 upstream.
 
-allocate_file_region_entries() tops up resv->region_cache with freshly
-allocated file_region descriptors.  The allocation uses GFP_KERNEL, so
-resv->lock is dropped around it: the new entries are gathered on a
-stack-local list head, allocated_regions, and spliced into
-resv->region_cache once the lock is re-acquired.
+The Adaptation Layer Indication parameter contains a fixed 32-bit
+Adaptation Code Point after its parameter header. However,
+sctp_verify_param() accepts a header-only parameter because the generic
+parameter walker only requires the header to be present.
 
-The splice used list_splice(), which moves the entries but does not
-re-initialize the source head, so allocated_regions is left pointing at an
-entry that now lives on resv->region_cache.  The top-up runs in a while
-loop that re-checks the cache deficit after re-acquiring the lock.  For a
-shared mapping the resv_map is shared by every mapper of the hugetlbfs
-inode, so a concurrent region_chg()/region_add()/region_del() on the same
-resv_map can consume cache entries during the unlocked window and force a
-second iteration.  That iteration calls list_add() on the stale head and
-corrupts the list; with CONFIG_DEBUG_LIST the __list_add_valid() check
-trips:
+sctp_process_param() then reads adaptation_ind beyond the declared
+parameter. When the malformed parameter is last in an INIT, the read
+starts at the receive skb tail, and the value is copied into the state
+cookie returned in the INIT ACK. This may disclose four receive-buffer
+tail bytes.
 
-  list_add corruption. next->prev should be prev (ffffc900011ff7f8),
-  but was ffff88814c281460. (next=ffff88814c545640).
-  kernel BUG at lib/list_debug.c:31!
-   allocate_file_region_entries+0x191/0x420
-   region_chg+0x267/0x300
-   hugetlb_reserve_pages+0x387/0xc80
-   hugetlbfs_file_mmap+0x2ce/0x3f0
-   mmap_region+0x1348/0x1a80
-   do_mmap+0x85e/0xb90
-   vm_mmap_pgoff+0x18c/0x330
-   ksys_mmap_pgoff+0x2a1/0x3e0
-   do_syscall_64+0xd7/0x420
+Require the declared parameter length to match the fixed structure size
+and abort the association through the existing invalid parameter length
+path otherwise.
 
-Without CONFIG_DEBUG_LIST the bad list_add() silently links a kernel-stack
-address into resv->region_cache, leading to later use-after-free.
-
-This was observed as a real host panic on a dense KVM host where a QEMU
-guest-RAM hugetlbfs file was mapped MAP_SHARED by both QEMU and a separate
-SPDK/DPDK vhost-user target, generating concurrent region_* traffic on one
-shared resv_map.
-
-Use list_splice_init() so the source head is re-initialized empty after
-each splice, making the retry loop safe.
-
-Link: https://lore.kernel.org/20260713171456.300518-2-caixiangfeng@bytedance.com
-Fixes: d3ec7b6e09e5 ("mm/hugetlb: use list_splice to merge two list at once")
-Signed-off-by: Xiangfeng Cai <caixiangfeng@bytedance.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: Baoquan He <baoquan.he@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Wei Yang <richard.weiyang@linux.alibaba.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Charles Vosburgh <trilobyte777@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260727-sctp-adaptation-length-v1-1-0ab58b2810a5@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/sm_make_chunk.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -485,7 +485,7 @@ static int allocate_file_region_entries(
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -2187,7 +2187,13 @@ static enum sctp_ierror sctp_verify_para
+ 	case SCTP_PARAM_HEARTBEAT_INFO:
+ 	case SCTP_PARAM_UNRECOGNIZED_PARAMETERS:
+ 	case SCTP_PARAM_ECN_CAPABLE:
++		break;
+ 	case SCTP_PARAM_ADAPTATION_LAYER_IND:
++		if (ntohs(param.p->length) != sizeof(*param.aind)) {
++			sctp_process_inv_paramlength(asoc, param.p,
++						     chunk, err_chunk);
++			retval = SCTP_IERROR_ABORT;
++		}
+ 		break;
  
- 		spin_lock(&resv->lock);
- 
--		list_splice(&allocated_regions, &resv->region_cache);
-+		list_splice_init(&allocated_regions, &resv->region_cache);
- 		resv->region_cache_count += to_allocate;
- 	}
- 
+ 	case SCTP_PARAM_SUPPORTED_EXT:
 
 
