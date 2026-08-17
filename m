@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B409D2773C3;
-	Mon, 17 Aug 2026 15:49:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806604334B5;
+	Mon, 17 Aug 2026 15:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786981780; cv=none; b=N3cmN22KQGNo1hUaTD81p0r3WSki3tx5nza4ZjMcjQ3o3bum/G/iGmu3wFEl8ZNU5ASZ/VvZJ2W8wcMf8wc8y2Gk5c/jiXo7DW6XAl9IKMbYbKI0SsPQPYGkTteYlhybwlKWt40u38q9noVRz33nb6R0I1asnTXCXPK3oWTbp4s=
+	t=1786981787; cv=none; b=KXheS4jlRhHNijZjx4BCKMIFK/dQ2fLgD/u6eJER4E1gZGZSgYmHxbVolorYxSGn5Q3YQIqSCXz9vAwTsZ8nmQ0zkLcJwVVkSptCP8oKow7rPl0HPM0pyP82Fj4q5aF+DcgsFHpPI6Bq+yaSie26oQZrrm2HuTP1uhOObz8kwyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786981780; c=relaxed/simple;
-	bh=KNqtq7cZH+z+YbRIDHrssZ7GumMCLkuaX3RHUb0Lcew=;
+	s=arc-20240116; t=1786981787; c=relaxed/simple;
+	bh=Vrm8sjoaRb/+7+Yf0FIuZTmiiWsu0T4V8Vo3yNJstno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AObrczf4d5CeKYkQgqvM2PLTECjKqWP+IJl6fud/vjOHj8wMZ8oVSwpBdA5pbBkKi8gh0aRl7jijg43u9QKE8w3BtfhHV2Hz5pACuQe2fv1YPawneqQ6Dqpqdadg7LbOgbWnm3T3J21X53fAPzNwtvqxrQwI/u/rjOpxr+kEyhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10hH2T+J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pfRzf4uoj7jw2w6ty3WmHV2mysG/0YMHzs0z/uFoImYQw7t9Tl2f896Iyzd0p0iLtuJXEM5NeJX52H1p5MnhlM1RSSnH26apDydXFYV/SOSiZszwX8a9Ulx+g7grRF9u2TIqVuA29mdmyss/VErFbxTWqHYdTEFtMc5HAiPUQ0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jx5O77LA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10hH2T+J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3DF1F000E9;
-	Mon, 17 Aug 2026 15:49:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jx5O77LA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 736621F00A3A;
+	Mon, 17 Aug 2026 15:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786981778;
-	bh=eiiXkoxCzkICIBoaYv0pHz0oOrj5p1ZL+U6ZxrizS30=;
+	s=korg; t=1786981781;
+	bh=0EzmneW1Rmy38W2KlLeCgjEVeBP1Cq/03b9rImtRyg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=10hH2T+JD23i0m61UBGkZQ27/KHwjh6USzpIhpa4KGDZiofwlz2AXr8kCxs71C5nz
-	 Hvl/91eCNuHVPVgiebPzqsPZ+lgSmYP97Y+6p1R/sWoAO0yxlO+hwlw4uKnXxS0/Hz
-	 AjlsUqBXC54bk7Q1kpx/7iPXWhGB5xitEffT6nPQ=
+	b=jx5O77LAOyDBWaYrSLnSCkTKMsFpcgbeHKLgjTeAqq/7BVathZ3uHXU+i5awd21vF
+	 noN/7Tkjxx1ki7CM9+SARHwfXQoCtZRgP1YxcT5vahuYi4yLjqmVMT6JeVIdmYDJRZ
+	 J/c8GYS46QnZcdNe/KrrSn5bMVae7wzZ1hVfpllQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,12 +31,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tze Yee Ng <tze.yee.ng@altera.com>,
 	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 307/389] firmware: stratix10-svc: fix memory leaks and list corruption bugs
-Date: Mon, 17 Aug 2026 15:32:26 +0200
-Message-ID: <20260817132550.998667043@linuxfoundation.org>
+Subject: [PATCH 5.15 364/456] firmware: stratix10-svc: fix memory leaks and list corruption bugs
+Date: Mon, 17 Aug 2026 15:32:34 +0200
+Message-ID: <20260817132553.741510506@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
-References: <20260817132538.796021292@linuxfoundation.org>
+In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
+References: <20260817132539.792407575@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,7 +48,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -73,7 +73,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/firmware/stratix10-svc.c b/drivers/firmware/stratix10-svc.c
-index 6b6a819fcddfa..ae6d942ab2d75 100644
+index 993ef210169c0..c5ddd20fe4b75 100644
 --- a/drivers/firmware/stratix10-svc.c
 +++ b/drivers/firmware/stratix10-svc.c
 @@ -911,13 +911,15 @@ void *stratix10_svc_allocate_memory(struct stratix10_svc_chan *chan,
