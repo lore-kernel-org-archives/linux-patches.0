@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5678B3DD851;
-	Mon, 17 Aug 2026 14:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4D43DD851;
+	Mon, 17 Aug 2026 14:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978761; cv=none; b=YFrupthiIUnnGd7Bhss8VoOna6FX5YUXhrkWbGyhs1qucwLh3YX30C0uUH00VRaTsUmeQdrcKthD7WfceIM/PJHx6jLoqrNww1pMXbdm59WhUKsI7Ief1pxarfw/R8XTy3KQJTAjYcUpNp2YvakItKg7Hah/d5ZyJVsvGzZghSo=
+	t=1786978764; cv=none; b=f0sdYhOHXAiM2VCf3J9+m65sGp7so10HztDzoDH8k5Ul+2VpJLFDYxu08gWgzrfGL2RVZuHIBzTTdbUGkTpdWOYBLwnF+p4yOPpQVXQSD3j7gYOOlUKyqt74rXU+wPQq2xRcEH+AiqCdpOAqMn2QjkvJXXuJNm7RpkVgymsDgNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978761; c=relaxed/simple;
-	bh=sIAb7zQY9aIG7MxCqinUez+uJPfkKjmHe+FBzXYC+eo=;
+	s=arc-20240116; t=1786978764; c=relaxed/simple;
+	bh=8B0aEzoHqpHiYUI8hPqTjufuCZvnMTPC9lacfjf1yc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UNyKw6f72qBfi/In3oHas287ql4QOa52GO4SjKtmuhTgwoDCONtVhejoh+FADNHhoonYmGffK/MmF0krr2gE6ECkQtQ14HenXfVFYl/YPMF6kS+QWsn1MajNogDBWUwWD+nqy2YIF0jo9kePEDZL9U8F8adTqiFTze3Oc7MYOvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V5UsCJe6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZaI82Zklqpf4umhH1J7Ri3EOcWC3TrCl1F5vDHFFUa7QHNdGJqb6MMC+a1Bhgfx4FesNmSR2lu5yadru1YrTO6uTOGKRC1WBEjk636tKRenQO5915NaBhjG62T6+U9ZA9/PXswRkICHhgbIXJLSo68wRyr4zGjLMAs9bKi2Qaqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tknflqH0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V5UsCJe6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B041E1F00A3A;
-	Mon, 17 Aug 2026 14:59:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tknflqH0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 948E81F000E9;
+	Mon, 17 Aug 2026 14:59:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978760;
-	bh=8l9GWySKVYEg7zQVt0HROn4SCWFbPY3hR0pgbuPSptk=;
+	s=korg; t=1786978763;
+	bh=BFMwS/+bgFnHz55Rf4G+rZqUTnndbGk7X2V5EeJ17kA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V5UsCJe6+Hz1OIuKSzFQN8uETMu8UBA7B+jiXJZlaz7fWjl2e/oAAB7RHToYvq5G0
-	 C4gtgCIjXqJSkHA4dHtUBPYIBA6hZrp5NAxdUJ3sBdJysx5sEfSnjuq2TeFT5n2QRz
-	 kUq+Ji8Rc+6KmnkK7srVnjZas1RD0CSv+UCsdi0w=
+	b=tknflqH0f0w3o/QtwpFcaBLh9N8l461OT2B26CplP7X021PZjoENzbzeuV2Jv+eTU
+	 CPfBkzoBwfVADNF7yTW4Bl3QNo8W9TAyicNVfB6yDJmdch+4Emo2BuZcTDCOoUYFam
+	 ivvE0f5wC80mwmROa1Ohl44QpeUmdaS1Ksi+aWKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.6 148/156] scsi: scsi_debug: Negate wrapped memcmp() result
-Date: Mon, 17 Aug 2026 15:34:42 +0200
-Message-ID: <20260817132540.528127491@linuxfoundation.org>
+	Sukhdeep Singh <sukhdeeps@marvell.com>,
+	Yangyu Chen <cyy@cyyself.name>,
+	Mina Almasry <almasrymina@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 122/156] net: atlantic: free stranded TX buffers on ring deinit
+Date: Mon, 17 Aug 2026 15:34:16 +0200
+Message-ID: <20260817132539.431207925@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -51,41 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Yangyu Chen <cyy@cyyself.name>
 
-commit c4f6916a99cf105c3ff340b6210fcbba3fa66b35 upstream.
+commit 452636ea5410a96e02ebaaf80b21e3620b98e0dd upstream.
 
-comp_write_worker() returns true when the compared data matches.
-memcmp() returns zero for equal data and non-zero for different data, so
-its result must be negated before it is stored in a bool.
+aq_vec_deinit() drains the TX rings with a single aq_ring_tx_clean()
+call, which frees at most AQ_CFG_TX_CLEAN_BUDGET (256) descriptors and
+stops at hw_head, which no longer moves once aq_vec_stop() has stopped
+the hardware and NAPI. Completed descriptors beyond the budget and
+everything still posted in [hw_head, sw_tail) keep their skb or
+xdp_frame when the interface goes down: aq_vec_ring_free() then frees
+the buffer ring and the references are lost for good.
 
-The first segment already uses !memcmp(), but the wrapped segment uses
-memcmp() directly, reversing the match result. Use !memcmp() there as
-well.
+Today this is a silent memory leak on every interface down under
+TX/XDP_TX load. With the conversion of the RX path to page_pool posted
+for net-next it becomes much more visible: XDP_TX frames carry fragment
+references on the RX ring's page_pool, so a single stranded frame keeps
+the pool's inflight count above zero forever. page_pool_destroy() then
+never completes, the pool is leaked together with its pages, and
+"page_pool_release_retry() stalled pool shutdown" is warned every 60
+seconds from that point on, on every ifdown, XDP detach or ring resize
+under XDP_TX load.
 
-Fixes: 38d5c8336e60 ("scsi_debug: add Report supported opcodes+tmfs; Compare and write")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Link: https://patch.msgid.link/E5AD42E9C0E18633+20260803095328.3445311-1-raoxu@uniontech.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Bring back aq_ring_tx_deinit() as it was before the removal and use it
+for teardown again, with one extension: TX rings can hold xdp_frames
+nowadays, so release those too. They are returned with
+xdp_return_frame() since this runs in process context.
+
+Fixes: eb36bedf28be ("net: aquantia: remove function aq_ring_tx_deinit")
+Cc: stable@vger.kernel.org # v4.11+
+Reviewed-by: Sukhdeep Singh <sukhdeeps@marvell.com>
+Signed-off-by: Yangyu Chen <cyy@cyyself.name>
+Acked-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/tencent_EEDC35FAF2750A3A6A0B39BAE0E2C484860A@qq.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_debug.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/aquantia/atlantic/aq_ring.c |   29 +++++++++++++++++++++++
+ drivers/net/ethernet/aquantia/atlantic/aq_ring.h |    1 
+ drivers/net/ethernet/aquantia/atlantic/aq_vec.c  |    2 -
+ 3 files changed, 31 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -3077,8 +3077,8 @@ static bool comp_write_worker(struct sde
- 	if (!res)
- 		return res;
- 	if (rest)
--		res = memcmp(fsp, arr + ((num - rest) * lb_size),
--			     rest * lb_size);
-+		res = !memcmp(fsp, arr + ((num - rest) * lb_size),
-+			      rest * lb_size);
- 	if (!res)
- 		return res;
- 	if (compare_only)
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
+@@ -336,6 +336,35 @@ out:
+ 	return !!budget;
+ }
+ 
++void aq_ring_tx_deinit(struct aq_ring_s *self)
++{
++	if (!self)
++		return;
++
++	for (; self->sw_head != self->sw_tail;
++		self->sw_head = aq_ring_next_dx(self, self->sw_head)) {
++		struct aq_ring_buff_s *buff = &self->buff_ring[self->sw_head];
++		struct device *ndev = aq_nic_get_dev(self->aq_nic);
++
++		if (buff->is_mapped) {
++			if (buff->is_sop) {
++				dma_unmap_single(ndev, buff->pa, buff->len,
++						 DMA_TO_DEVICE);
++			} else {
++				dma_unmap_page(ndev, buff->pa, buff->len,
++					       DMA_TO_DEVICE);
++			}
++		}
++
++		if (buff->is_eop) {
++			if (buff->skb)
++				dev_kfree_skb_any(buff->skb);
++			else if (buff->xdpf)
++				xdp_return_frame(buff->xdpf);
++		}
++	}
++}
++
+ static void aq_rx_checksum(struct aq_ring_s *self,
+ 			   struct aq_ring_buff_s *buff,
+ 			   struct sk_buff *skb)
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.h
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.h
+@@ -199,6 +199,7 @@ void aq_ring_update_queue_state(struct a
+ void aq_ring_queue_wake(struct aq_ring_s *ring);
+ void aq_ring_queue_stop(struct aq_ring_s *ring);
+ bool aq_ring_tx_clean(struct aq_ring_s *self);
++void aq_ring_tx_deinit(struct aq_ring_s *self);
+ int aq_xdp_xmit(struct net_device *dev, int num_frames,
+ 		struct xdp_frame **frames, u32 flags);
+ int aq_ring_rx_clean(struct aq_ring_s *self,
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_vec.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_vec.c
+@@ -275,7 +275,7 @@ void aq_vec_deinit(struct aq_vec_s *self
+ 
+ 	for (i = 0U; self->tx_rings > i; ++i) {
+ 		ring = self->ring[i];
+-		aq_ring_tx_clean(&ring[AQ_VEC_TX_ID]);
++		aq_ring_tx_deinit(&ring[AQ_VEC_TX_ID]);
+ 		aq_ring_rx_deinit(&ring[AQ_VEC_RX_ID]);
+ 	}
+ 
 
 
