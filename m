@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46B52E8DEC;
-	Mon, 17 Aug 2026 15:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8935926B2D3;
+	Mon, 17 Aug 2026 15:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979583; cv=none; b=syhxora8smTxXuLQ9Kw1w4svKBa/JliLTfwGlaF8Mia5m3Zx+QW6QjIuDjiTkv7eXaGOqdrGTQcmjtwyriKfDrHwddcjE0MPBjqN1qifSK2mL2GDxxE1/VNpD0Hqsz1EHGb9Z3xchLaQEWP5eK9uXBkIiiin+94dFcMEIHKnN/s=
+	t=1786979586; cv=none; b=eiKnzAFvwak+oQyzv0QZQXqmDvchYRYc/MQ0vkmQyJjSqIlCZxxVBvJu1ypIgShhI1KD8WZykdV0jM8p09Pu1Fdkm1LNPILRffmniSx4y798mjgYfzzkPW+wcWUisu6R3H0bdudPoWKTqT8eShv8VLj3jVUAcWuKt/SGJ73Ong0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979583; c=relaxed/simple;
-	bh=NvKDEch764BE+n3u8ytSY1+0yje8c3t5DMDYl6xy460=;
+	s=arc-20240116; t=1786979586; c=relaxed/simple;
+	bh=4egyFpiGnPP88p6DOTwrVr8bAkXvZb73b07EhmHkObc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QQEnY37+eIo9bKHkAHF9K60Ekc3b1MGQbu4BuAqc7EREnAQXvng8aHKaIo5UdH0G/RcLXi/bEZ36QMrF+PBMmKxZ+a9YCkXir85ZeXTYtZIAF3nQ/CJ68nf+JVPKyjmFTREaqU++M8h7JQl4G7qf7tvhM6srOFutDUBWApqJ+iU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yx1zVPND; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TJWKheEGJevHKmAh8Q+gobN/FBQzEADu9qIgR61JqZ/DS7lrSWM+06Hi4OmB2SXBz+sLBv+SdmXNtU864mB1+7HFAuEs0GcF3SMxvpElr04d3TXuJPiNDUqGBdprnKc4uFShlFoGuqkMTTol9MN05rR4icFpBV8a3Suip9s6k0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1U8R87K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yx1zVPND"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43AC41F000E9;
-	Mon, 17 Aug 2026 15:13:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1U8R87K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A051F000E9;
+	Mon, 17 Aug 2026 15:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979582;
-	bh=SVPv/SwaBlKRfh7PSSkIx58kGHFBiptN6dnZ6bWzEKk=;
+	s=korg; t=1786979585;
+	bh=0sekzrswNGLKndoLKR7YaDH8eWQHo9nHsHBVHpG6ols=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yx1zVPNDFvq4trPqOXF+jS9A1dJIM7BxTM14RaH0PF24J5PwysKE19hzCvaBgE7pL
-	 ENekMGI+3aaJS/+uK7WnsbzfZ4pxfvLC9/O+qizHtoVN5QfalTGtAW82P3qTaBneRW
-	 f/ISe+1LQCbiYREVoZ82b92TQnGwP1vcLxr9tmjI=
+	b=S1U8R87Kxy4d4y7GfM+hENTFPn6bMjUbdvvUkORVmqp21WCTC1zDoxnXy1rMx51m5
+	 R/SRhfdmSIa0MZyfpxYXbRcpFmxD0ourUuXprsLJWMaEtN1l93WiOg6g8l5ZX21BXv
+	 q6ST85RgsbcP1R9Rs6HWqTY3h2QMbOgY3z1P0gh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 274/609] mac802154: llsec: reject frames shorter than the authentication tag
-Date: Mon, 17 Aug 2026 15:29:30 +0200
-Message-ID: <20260817132553.313982946@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 237/609] intel_th: fix MSC output device reference leak
+Date: Mon, 17 Aug 2026 15:28:53 +0200
+Message-ID: <20260817132552.010638501@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,55 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit fd3a3f28ed60c6af4b2a39933b151d6b27842c3b upstream.
+commit 761b785a0cfbce43761227bc42a7f984f31f8921 upstream.
 
-llsec_do_decrypt_auth() computes the associated-data length for the
-AEAD request as
+intel_th_output_open() looks up the output device with
+bus_find_device_by_devt(), which returns the device with a reference that
+must be dropped after use.
 
-	assoclen += datalen - authlen;
+commit 95fc36a234da ("intel_th: fix device leak on output open()")
+attempted to drop the reference from intel_th_output_release(). However,
+a successful open replaces file->f_op with the output driver file
+operations before returning, so close runs the output driver release
+callback instead.
 
-where datalen is the number of bytes after the MAC header and authlen
-(4, 8 or 16) is the length of the authentication tag. Nothing verifies
-that the frame actually carries at least authlen payload bytes. A
-secured frame whose payload is shorter than the tag makes
-datalen - authlen negative; assoclen is then passed to
-aead_request_set_ad() as an unsigned value close to 4 GiB, so
-crypto_aead_decrypt() walks far off the end of the scatterlist that
-only spans the real frame.
+For MSC outputs, close runs intel_th_msc_release(), which only removes
+the per-file iterator and does not drop the device reference taken by
+intel_th_output_open(). Consequently, every successful MSC output open
+leaks one device reference.
 
-The frame is fully attacker-controlled and reaches this path from any
-IEEE 802.15.4 peer in radio range. Reject frames whose payload is
-shorter than the authentication tag before the subtraction.
+Drop the device reference from intel_th_msc_release(), which is the
+release path actually used for MSC output files. Remove the now-unused
+intel_th_output_release() callback from intel_th_output_fops.
 
-Dynamically reproduced on a KASAN kernel as a general-protection-fault
-in the AEAD scatterwalk, and the fix confirmed.
-
-Fixes: 4c14a2fb5d14 ("mac802154: add llsec decryption method")
-Cc: stable@vger.kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Link: https://patch.msgid.link/20260716193423.32498-1-doruk@0sec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 95fc36a234da ("intel_th: fix device leak on output open()")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260715070851.2077965-1-lgs201920130244@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac802154/llsec.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/hwtracing/intel_th/core.c |   10 ----------
+ drivers/hwtracing/intel_th/msu.c  |    2 ++
+ 2 files changed, 2 insertions(+), 10 deletions(-)
 
---- a/net/mac802154/llsec.c
-+++ b/net/mac802154/llsec.c
-@@ -888,6 +888,11 @@ llsec_do_decrypt_auth(struct sk_buff *sk
- 	data = skb_mac_header(skb) + skb->mac_len;
- 	datalen = skb_tail_pointer(skb) - data;
+--- a/drivers/hwtracing/intel_th/core.c
++++ b/drivers/hwtracing/intel_th/core.c
+@@ -843,18 +843,8 @@ out_put_device:
+ 	return err;
+ }
  
-+	if (datalen < authlen) {
-+		kfree_sensitive(req);
-+		return -EBADMSG;
-+	}
-+
- 	sg_init_one(&sg, skb_mac_header(skb), assoclen + datalen);
+-static int intel_th_output_release(struct inode *inode, struct file *file)
+-{
+-	struct intel_th_device *thdev = file->private_data;
+-
+-	put_device(&thdev->dev);
+-
+-	return 0;
+-}
+-
+ static const struct file_operations intel_th_output_fops = {
+ 	.open	= intel_th_output_open,
+-	.release = intel_th_output_release,
+ 	.llseek	= noop_llseek,
+ };
  
- 	if (!(hdr->sec.level & IEEE802154_SCF_SECLEVEL_ENC)) {
+--- a/drivers/hwtracing/intel_th/msu.c
++++ b/drivers/hwtracing/intel_th/msu.c
+@@ -1477,8 +1477,10 @@ static int intel_th_msc_release(struct i
+ {
+ 	struct msc_iter *iter = file->private_data;
+ 	struct msc *msc = iter->msc;
++	struct intel_th_device *thdev = msc->thdev;
+ 
+ 	msc_iter_remove(iter, msc);
++	put_device(&thdev->dev);
+ 
+ 	return 0;
+ }
 
 
