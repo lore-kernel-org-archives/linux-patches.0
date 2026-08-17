@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD370242925;
-	Mon, 17 Aug 2026 15:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 969D5175A6B;
+	Mon, 17 Aug 2026 15:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978947; cv=none; b=qgcUMGJGiiJZiwYTGr36Fq8iltOU94weiG240k5hAmfbl6j/1HjGcgX/ZhqMesNELlo1uUcvUtJLPuZWDOCwfodstMln2tnFWgaR7zfMma2jjniEw3GNWs9KtbxUHd4olZoiXi+A3400Us+b+tEJOagJIMvv7gbwzVsO3RAdqL0=
+	t=1786978950; cv=none; b=b4jGvJMqO9pBD9K4JU/JypuFyP0qyKaj4ssm7oXo3bNjItv58nHsDQTEWdY8mV5K2zTxRGB63BLjtOb8dIO8nkr3suGdO13gNs5L0nt5yg6aXtcpVOtK/vM8r9GCO3k4cgy6E8ytiTGiYH6qguBo/87kbTxm/G3Le8K2yT8Kdgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978947; c=relaxed/simple;
-	bh=bVOC/HPJnPm5FbW8Jt5ewodnpoljlY/MR+v4aYyVV68=;
+	s=arc-20240116; t=1786978950; c=relaxed/simple;
+	bh=KbKyvFrBxc40jjJ0MvhmuZE2Nm4n9xWpOGB/Fpki8nM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQ7ex4ef9VTVWGd3rbGlbuUCl/+fjk179oqO+00w0s0ayrSEvUZqefxiUsqvZ3yBw4R8o8/7eXiufibDmzFkg4uFPoFvN0Mb/fVLa+mR8LxdSDz6qE9z6cf/+DiMyCromRzYRxlSBYcybQLq7qIBx23iPa0SS8WFDn+lfzn3la0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dMSDKAO+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=neheg3EgA4LpYdVaIZJyY/nzWpXyS408GYO/pRpT8CLNFxRctE5OrH6kP1qUj07tfwCz8h9yVHJMwNYs8S3lHwnfUFKOOa88/xtpHYXLhaJqH9XNKUwmHoiGGRqd1idXtpde6EO5byGRZP3bFdDNZQPto3QKvrWiGkkNnASO+KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=njJiwlXk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dMSDKAO+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1186B1F000E9;
-	Mon, 17 Aug 2026 15:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="njJiwlXk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE0031F000E9;
+	Mon, 17 Aug 2026 15:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978946;
-	bh=xBKo06LF9opXpih/ivs5f/b2EJLjk8Apmx9+nkonSBY=;
+	s=korg; t=1786978949;
+	bh=qkmTH+IRx3W0GKqZ9vdFDRbVHQsd+jpjs+FhWHX7fjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dMSDKAO+lpBeyQwpotl7b21rGQ7JqNvdPG5wour763w+d/JiK6XY+Oc4MdAOIKDhE
-	 zi0HlzC6hmBWJT/kpYnXzU77lF+lmhEAwauCpn+T6NmxTrlmiMxNMhsn7sQBZkWqJk
-	 8UfCe3+W/3hZ0+dok4QQxVwxChXYjpl8c1Vk0T40=
+	b=njJiwlXkKh47L+kU7Fv7cneZOtsrMrKJIkhK0T4DBXuDn7GZMy5Qtb1jtkDtHJROR
+	 taQkEr5BjoNHFTIuOuZi6yhla1V3vkqI/5+WrBdPxJbD9wZELWjNgUOwywnSiB3x4j
+	 BbgT6Dkz/XjZHYl+D5Clr3tLQllQK3mWdgBuQ2Y0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Uday Khare <udaykhare77@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 054/609] ASoC: amd: ps: fix wrong ACP version string in pci_request_regions()
-Date: Mon, 17 Aug 2026 15:25:50 +0200
-Message-ID: <20260817132545.240044896@linuxfoundation.org>
+Subject: [PATCH 6.1 055/609] ASoC: tas2562: fix deprecated shut-down GPIO always cleared after lookup
+Date: Mon, 17 Aug 2026 15:25:51 +0200
+Message-ID: <20260817132545.279415278@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,37 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Uday Khare <udaykhare77@gmail.com>
 
-[ Upstream commit f7697ecf6eab9d4887dd731038b3dc405c7e755e ]
+[ Upstream commit 3238c634725afbb2a137fdda762208510828f71d ]
 
-The driver handles ACP6.3/7.0/7.1/7.2 platforms but the region was
-claimed with the stale name "AMD ACP6.2 audio" left over from the
-original ACP6.2 driver. Correct it to "AMD ACP6.3 audio".
+In tas2562_parse_dt(), the fallback lookup for the deprecated
+"shut-down" GPIO property is broken due to a missing pair of braces.
 
-Fixes: 95e43a170bb1 ("ASoC: amd: add Pink Sardine ACP PCI driver")
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/20260707060130.2514138-3-Vijendar.Mukunda@amd.com
+The code intends to reset sdz_gpio to NULL only when the lookup
+returns an error that is not -EPROBE_DEFER (so the driver gracefully
+continues without a GPIO). However, without braces the statement:
+
+    tas2562->sdz_gpio = NULL;
+
+falls outside the IS_ERR() check and is executed unconditionally
+for every path through the if block, including a successful GPIO
+lookup.
+
+This means any device using the deprecated 'shut-down' DT property
+will always have sdz_gpio == NULL after probe, making the GPIO
+completely non-functional.
+
+Fix this by adding the missing braces to scope the NULL assignment
+inside the IS_ERR() branch, matching the pattern already used for
+the primary 'shutdown' GPIO lookup above.
+
+Fixes: f78a97003b8b ("ASoC: tas2562: Update shutdown GPIO property")
+Signed-off-by: Uday Khare <udaykhare77@gmail.com>
+Link: https://patch.msgid.link/20260706153109.10953-1-udaykhare77@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/ps/pci-ps.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/tas2562.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/amd/ps/pci-ps.c b/sound/soc/amd/ps/pci-ps.c
-index 7c9751a7eedc22..c3bce6ed090d79 100644
---- a/sound/soc/amd/ps/pci-ps.c
-+++ b/sound/soc/amd/ps/pci-ps.c
-@@ -163,7 +163,7 @@ static int snd_acp63_probe(struct pci_dev *pci,
- 		return -ENODEV;
+diff --git a/sound/soc/codecs/tas2562.c b/sound/soc/codecs/tas2562.c
+index b486d0bd86c991..6d06b95f1c0137 100644
+--- a/sound/soc/codecs/tas2562.c
++++ b/sound/soc/codecs/tas2562.c
+@@ -685,11 +685,12 @@ static int tas2562_parse_dt(struct tas2562_data *tas2562)
+ 	if (tas2562->sdz_gpio == NULL) {
+ 		tas2562->sdz_gpio = devm_gpiod_get_optional(dev, "shut-down",
+ 							      GPIOD_OUT_HIGH);
+-		if (IS_ERR(tas2562->sdz_gpio))
++		if (IS_ERR(tas2562->sdz_gpio)) {
+ 			if (PTR_ERR(tas2562->sdz_gpio) == -EPROBE_DEFER)
+ 				return -EPROBE_DEFER;
+ 
+-		tas2562->sdz_gpio = NULL;
++			tas2562->sdz_gpio = NULL;
++		}
  	}
  
--	ret = pci_request_regions(pci, "AMD ACP6.2 audio");
-+	ret = pci_request_regions(pci, "AMD ACP6.3 audio");
- 	if (ret < 0) {
- 		dev_err(&pci->dev, "pci_request_regions failed\n");
- 		goto disable_pci;
+ 	if (tas2562->model_id == TAS2110)
 -- 
 2.53.0
 
