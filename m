@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F08043B3EC;
-	Mon, 17 Aug 2026 14:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D90175A99;
+	Mon, 17 Aug 2026 14:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977118; cv=none; b=GNDqQRPmUdshGDx09dROEIgj9xNWLTuhhK1qmG/c8lIFXPWbCpni/OooLA2hIDGGjoZozf9nZz3VX9EprcHqohD0iul5pyS5EmwR5hn9JgtHeP1d6hUH0S3tpAPNsmk9ecB0a0ox8PM3oE0Al9igVxhXiLMGKkmVntDsjoyM7OQ=
+	t=1786977121; cv=none; b=sH7+iqNjc40IzRG8au2KWYeucJWX2Kr7zrTsDj2dCOc0C84+RGe2c9HK52aqTNKvYTpbN754tjoMopvV3P3PLsWP6MQ1uARbCSBiT/Qkr5DYMbJeKOzfTr2gfFFvYDjJQdm7dTYYaxuT4zqarU1beNOQaWQ6Vr+aOylzXjq39ZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977118; c=relaxed/simple;
-	bh=T03AWWYYkdj0ufaBUh1ABXqBNPKkuxVdrIHN1pm+DKk=;
+	s=arc-20240116; t=1786977121; c=relaxed/simple;
+	bh=yTS1nfFnCBWeVyRnQQxlLP3Dd1ouGPO/KihdbdqOtZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fnlBjtx+QhpxueWfnTRiohRIGF98I9i89eFpu8+KVMPUWrYMtVz+h+pfQubmjdIz8GrjwDAshu5BcGbEhBcejkz/Q7Cr1d2ypR4U2uqJ6OUDRi2L6jYoBa5lwoVkqQPvOycDkTxcoiAFBSDDfnkYXSznrAMldJq9yNK5iuXaVLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/RsHR2W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OrGsjWHz8pAjINtOnTH//RFydw3ob7A9O+Rj8bzaEERl9Ki8o4+bBYNqrqzKRD7SC63xXqmlWZO77H1S3z1ht6RXVUeWzSfmlZ6VOHwQn2ww7RK18pi5pj/H2yJn9EQCEwW6EoAq7THaPbZpiG1wJrVHo8ceJ/jRN6SwPdwQpiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dpnPkqUW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/RsHR2W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A2A1F000E9;
-	Mon, 17 Aug 2026 14:31:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpnPkqUW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A7611F000E9;
+	Mon, 17 Aug 2026 14:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977117;
-	bh=7bchEMZtul9iDAvf1Ybz6bWYOgnEOV8qjctfKC3X7ik=;
+	s=korg; t=1786977119;
+	bh=dN7vaG1YnpqDRo7ia0NlReJ6tmD+ejXA3hVGcC4k4qY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y/RsHR2Wg5Rv0Ih4oi2Qm2TDfEhU+4HzEVI9Gp5NyXKtq1K7/hkLY2/s6C+26WHfx
-	 IPKIEILUpkKhCawjnMiI7iXbyuQm0KzeA/cUcwditMoUuiW08VxC8gEY9k5lfL/TXE
-	 KGh6E1T/z7wGWJFZBiMimqSwTZMhOcKNJJmxfg84=
+	b=dpnPkqUWzTOq+26coyL+UNQ7w3xryh3zZLpLvbwDcNvuFdwwiO/5wgbfdk38BkLF0
+	 BoCN6Eb/A/2kirOZ4SIpYUohJW62sDNWAVt9Yu/5Ng3AGMt6IVV8gvreUpxckwfSSD
+	 j5xAGUFUGBRqynnvzxlr5mSL6JWIUG9/vnVFgZj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lee <david.lee@trailofbits.com>,
-	Martin Schiller <ms@dev.tdt.de>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 217/456] net/x25: fix use-after-free in x25_kill_by_neigh()
-Date: Mon, 17 Aug 2026 15:30:07 +0200
-Message-ID: <20260817132548.675711348@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 218/456] net: hip04: fix RX buffer leak on build_skb failure
+Date: Mon, 17 Aug 2026 15:30:08 +0200
+Message-ID: <20260817132548.711219005@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,66 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lee <david.lee@trailofbits.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 5499e0602d2faafd42c580d25f615903c3fbe11b upstream.
+commit 14fa65d10f5696b063a7d8d26e8291ea84a2c6ed upstream.
 
-x25_kill_by_neigh() walks the global X.25 socket list looking for sockets
-attached to a terminating neighbour. x25_list_lock protects list membership
-while the lookup is in progress, but it does not pin a socket's lifetime
-after the lock is dropped.
+When build_skb() fails in hip04_rx_poll(), the driver jumps to the
+refill path without releasing the current RX buffer and its DMA mapping.
+Installing a replacement buffer then overwrites the slot references and
+leaks both resources.
 
-The function currently drops x25_list_lock before calling lock_sock(s). A
-concurrent close can run x25_release(), remove the same socket from
-x25_list, and drop the last socket reference in that window. The neighbour
-teardown path can then lock or inspect a freed struct sock/struct x25_sock.
+Keep the current slot intact and return budget so NAPI retries the same
+buffer.  Also free a newly allocated RX fragment when dma_map_single()
+fails.
 
-Take sock_hold(s) while x25_list_lock still proves that the list entry is
-live, then drop the temporary reference after the socket has been locked,
-rechecked, and released. Recheck x25_sk(s)->neighbour after lock_sock(),
-because another path may have disconnected the socket before this path
-acquired the socket lock. Restart the list walk after each disconnect
-because the list lock was dropped and the previous iterator state may no
-longer be valid.
+This issue was found by an in-house static analysis tool.
 
-A QEMU/KASAN run against origin/master reproduced a slab-use-after-free in
-x25_kill_by_neigh().
-
-Fixes: 7781607938c8 ("net/x25: Fix null-ptr-deref caused by x25_disconnect")
+Fixes: 701a0fd52318 ("hip04_eth: fix missing error handle for build_skb failed")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Assisted-by: Codex:gpt-5.5
-Acked-by: Martin Schiller <ms@dev.tdt.de>
-Link: https://patch.msgid.link/20260713104752.241175-1-david.lee@trailofbits.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260712142729.2057636-1-fanwu01@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/x25/af_x25.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/hisilicon/hip04_eth.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/net/x25/af_x25.c
-+++ b/net/x25/af_x25.c
-@@ -1769,15 +1769,19 @@ void x25_kill_by_neigh(struct x25_neigh
- {
- 	struct sock *s;
- 
-+again:
- 	write_lock_bh(&x25_list_lock);
- 
- 	sk_for_each(s, &x25_list) {
- 		if (x25_sk(s)->neighbour == nb) {
-+			sock_hold(s);
- 			write_unlock_bh(&x25_list_lock);
- 			lock_sock(s);
--			x25_disconnect(s, ENETUNREACH, 0, 0);
-+			if (x25_sk(s)->neighbour == nb)
-+				x25_disconnect(s, ENETUNREACH, 0, 0);
- 			release_sock(s);
--			write_lock_bh(&x25_list_lock);
-+			sock_put(s);
-+			goto again;
+--- a/drivers/net/ethernet/hisilicon/hip04_eth.c
++++ b/drivers/net/ethernet/hisilicon/hip04_eth.c
+@@ -594,7 +594,11 @@ static int hip04_rx_poll(struct napi_str
+ 		skb = build_skb(buf, priv->rx_buf_size);
+ 		if (unlikely(!skb)) {
+ 			net_dbg_ratelimited("build_skb failed\n");
+-			goto refill;
++			/* Retain the slot; return budget so NAPI retries this
++			 * buffer. Refill would overwrite rx_buf[]/rx_phys[]
++			 * and leak them.
++			 */
++			return budget;
  		}
- 	}
- 	write_unlock_bh(&x25_list_lock);
+ 
+ 		dma_unmap_single(priv->dev, priv->rx_phys[priv->rx_head],
+@@ -622,14 +626,15 @@ static int hip04_rx_poll(struct napi_str
+ 			rx++;
+ 		}
+ 
+-refill:
+ 		buf = netdev_alloc_frag(priv->rx_buf_size);
+ 		if (!buf)
+ 			goto done;
+ 		phys = dma_map_single(priv->dev, buf,
+ 				      RX_BUF_SIZE, DMA_FROM_DEVICE);
+-		if (dma_mapping_error(priv->dev, phys))
++		if (dma_mapping_error(priv->dev, phys)) {
++			skb_free_frag(buf);
+ 			goto done;
++		}
+ 		priv->rx_buf[priv->rx_head] = buf;
+ 		priv->rx_phys[priv->rx_head] = phys;
+ 		hip04_set_recv_desc(priv, phys);
 
 
