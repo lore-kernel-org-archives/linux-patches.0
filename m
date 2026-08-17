@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6F93E95AB;
-	Mon, 17 Aug 2026 14:12:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746C5420484;
+	Mon, 17 Aug 2026 14:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975960; cv=none; b=bXOl6vRhLGhimrDFFq1F87Z+pEE+qf5Kmot5jLaaUwYdkX1y37WbKqbSr3QwpeW7m1UgHzQiTf1aYnrnhhdE5QINJtu9kPkZ7CKdFAtx0E/kr9Xn/Fpa4RjMeFAj6CQ2P3imSPQtWIsz3rj4wb7Ms+AOcOK3L/Ea9+R1tQTHlV0=
+	t=1786975963; cv=none; b=GLBxba+bcOUDZtxa4w0DochQnWQBDkrATcM1teqlkuYd7vjBhhGKnKu655lOCNfIpU9HnvrZz+Ksv4+KV6Dg7VpT8yBNRuJ8eGJQvg8q/Uy/Zmson51uKpghWoPzHBbLNF4NyxzLy+EdHoboTLYmeak5IOO7yO6dyoGMQjXz+u4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975960; c=relaxed/simple;
-	bh=0BWDmtS/u+boYg7hLJwqv6MSG4kE7UYDewtWB9F/sx0=;
+	s=arc-20240116; t=1786975963; c=relaxed/simple;
+	bh=3LZZhbPsnvhNKMDgk4gnWpkRkVnHaykEMHmiNs47rqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dLi26Muey7zpRN+s0n9WmfSDgnG4ggwTj2W0dzOUohv3dpu4PdJJSIMEpVknhSTtQPk8d+pMSxt2rurNyKSyzDlIuhCYlxPnoZ7pABTFz5nAhqmZn+/yvm0jVF9s+d8c1E7IprWdhdbYHxY71SPGdrqVEDyPfvY4ClgqzBoVQAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WT4V9Yv/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WBCivIfN2g7oIFmJ3fiyXnRpmfKZyfnczu75apQz47wG4eYsn1RScpt4ixSNRcbMRBQ2q0e6hXRryuK8lPwdYVl2A1fHzaZ25PNxqzY9nwJr98DKEZUYFQUik1gZJEi3G1ryZEnchnrLlvlKZ5xGaEuCHbvY9+eFgnKBzNq4j78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7wn5TzJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WT4V9Yv/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EADCD1F000E9;
-	Mon, 17 Aug 2026 14:12:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7wn5TzJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42411F000E9;
+	Mon, 17 Aug 2026 14:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975959;
-	bh=cuk8/0HAbpAhESziEwdGnDWCDymzz93ADgSnMMS48L4=;
+	s=korg; t=1786975962;
+	bh=0FLCMBe3CFM8kJxICMw1j7TMQytkU3H4yzlh2JWxJXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WT4V9Yv/J607ODJ/80FdV0Wh9e0WLc7QLh0MH1rUmK9K9MjQEy3+Sp2jiEWUdJLMk
-	 RMo05OGq8oO+Oe1Rn5MZcU7Y5Is5mZuvetnBiTnmCE6Tjc+xhR3SIbgTX1H1Bjboku
-	 gd7wgCWaQmqpVMI8neNG9zBzZIorGip1aumpQS2w=
+	b=G7wn5TzJdipmPqQardAv65r1iKiXU3mCgS10QpkF2CPa1XCSgrcOzUzaosaZqwUZO
+	 bDMgBvgMduf/DQS5BYF+XWTz9WgtLhUItMqg38Wf8Z35CMT2nEQYO6DW2CWKbmChJW
+	 WFS9PAl9uCmoJuTLfwFMkVRIhIC1uWIcZhJ7rbYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 209/389] assoc_array: trim the final shortcut word using the current chunk end
-Date: Mon, 17 Aug 2026 15:30:48 +0200
-Message-ID: <20260817132547.380139183@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Talha Berk Arslan <talha.anything.info@gmail.com>
+Subject: [PATCH 5.10 210/389] netfilter: xt_hashlimit: validate hashtable supports XT_HASHLIMIT_RATE_MATCH
+Date: Mon, 17 Aug 2026 15:30:49 +0200
+Message-ID: <20260817132547.419109214@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,64 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit a82c8a05e86f3f84e09698f65b4515b5d04633f6 ]
+[ Upstream commit 305b63e1402267459fdabb183af4527f6799eebf ]
 
-assoc_array_walk() masks off the bits past shortcut->skip_to_level in the
-word that contains skip_to_level, gated on
-round_up(sc_level, ASSOC_ARRAY_KEY_CHUNK_SIZE) > skip_to_level.
+The XT_HASHLIMIT_RATE_MATCH flag mode changes the semantics of the
+dsthash_ent structure which represents an entry in the hashtable.  There
+is a union area which uses a different layout to express the rate match
+mode.
 
-That guard is wrong in two opposite ways:
+Update .checkentry path to validate the XT_HASHLIMIT_RATE_MATCH mode
+flag is requested by two or more different rules that refer to the same
+hashtable. Otherwise, uninitialized access to the burst field in the
+union is possible.
 
- - When sc_level is word-aligned (every word after the first) round_up()
-   is a no-op, so the guard is sc_level > skip_to_level and never fires for
-   the word that holds skip_to_level.  A shortcut that spans more than one
-   word and ends in the middle of its last word leaves that word untrimmed,
-   and its stale high bits leak into the dissimilarity word and can steer
-   the walk down the wrong descendant.
+Reject the use of the XT_HASHLIMIT_RATE_MATCH mode flag if set on by
+revision less than 3 too.
 
- - When sc_level is unaligned (the first word) and skip_to_level sits on
-   the next chunk boundary, sc_level + CHUNK would exceed skip_to_level and
-   fire the trim with shift = skip_to_level & CHUNK_MASK == 0, which clears
-   the whole dissimilarity word and makes a differing shortcut compare
-   equal.
-
-Use the end of the chunk that contains sc_level instead:
-
-	skip_to_level < round_down(sc_level, CHUNK) + CHUNK
-
-For an aligned sc_level whose word holds skip_to_level this now fires (the
-first bug); for an unaligned sc_level with skip_to_level on the following
-boundary it does not, so shift is never 0 when the branch runs and the trim
-never clears the whole word.
-
-Fixes: 3cb989501c26 ("Add a generic associative array implementation.")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20260719161505.2423935-4-michael.bommarito@gmail.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: bea74641e378 ("netfilter: xt_hashlimit: add rate match mode")
+Reported-and-tested-by: Talha Berk Arslan <talha.anything.info@gmail.com>
+Link: https://patch.msgid.link/20260721074629.668-1-talha.anything.info@gmail.com/
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/assoc_array.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/xt_hashlimit.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/lib/assoc_array.c b/lib/assoc_array.c
-index b537a83678e11..f700986830190 100644
---- a/lib/assoc_array.c
-+++ b/lib/assoc_array.c
-@@ -255,7 +255,8 @@ assoc_array_walk(const struct assoc_array *array,
- 		sc_segments = shortcut->index_key[sc_level >> ASSOC_ARRAY_KEY_CHUNK_SHIFT];
- 		dissimilarity = segments ^ sc_segments;
+diff --git a/net/netfilter/xt_hashlimit.c b/net/netfilter/xt_hashlimit.c
+index 9c5cfd74a0ee4..26918fa575afe 100644
+--- a/net/netfilter/xt_hashlimit.c
++++ b/net/netfilter/xt_hashlimit.c
+@@ -118,6 +118,7 @@ struct xt_hashlimit_htable {
+ 	refcount_t use;
+ 	u_int8_t family;
+ 	bool rnd_initialized;
++	bool ratematch;
  
--		if (round_up(sc_level, ASSOC_ARRAY_KEY_CHUNK_SIZE) > shortcut->skip_to_level) {
-+		if (shortcut->skip_to_level < round_down(sc_level,
-+				ASSOC_ARRAY_KEY_CHUNK_SIZE) + ASSOC_ARRAY_KEY_CHUNK_SIZE) {
- 			/* Trim segments that are beyond the shortcut */
- 			int shift = shortcut->skip_to_level & ASSOC_ARRAY_KEY_CHUNK_MASK;
- 			dissimilarity &= ~(ULONG_MAX << shift);
+ 	struct hashlimit_cfg3 cfg;	/* config */
+ 
+@@ -325,6 +326,7 @@ static int htable_create(struct net *net, struct hashlimit_cfg3 *cfg,
+ 		vfree(hinfo);
+ 		return -ENOMEM;
+ 	}
++	hinfo->ratematch = !!(cfg->mode & XT_HASHLIMIT_RATE_MATCH);
+ 	spin_lock_init(&hinfo->lock);
+ 
+ 	switch (revision) {
+@@ -868,7 +870,10 @@ static int hashlimit_mt_check_common(const struct xt_mtchk_param *par,
+ 	}
+ 
+ 	/* Check for overflow. */
+-	if (revision >= 3 && cfg->mode & XT_HASHLIMIT_RATE_MATCH) {
++	if (cfg->mode & XT_HASHLIMIT_RATE_MATCH) {
++		if (revision < 3)
++			return -EINVAL;
++
+ 		if (cfg->avg == 0 || cfg->avg > U32_MAX) {
+ 			pr_info_ratelimited("invalid rate\n");
+ 			return -ERANGE;
+@@ -901,6 +906,15 @@ static int hashlimit_mt_check_common(const struct xt_mtchk_param *par,
+ 			mutex_unlock(&hashlimit_mutex);
+ 			return ret;
+ 		}
++	} else {
++		if ((cfg->mode & XT_HASHLIMIT_RATE_MATCH &&
++		     !(*hinfo)->ratematch) ||
++		    (!(cfg->mode & XT_HASHLIMIT_RATE_MATCH) &&
++		      (*hinfo)->ratematch)) {
++			mutex_unlock(&hashlimit_mutex);
++			htable_put(*hinfo);
++			return -EINVAL;
++		}
+ 	}
+ 	mutex_unlock(&hashlimit_mutex);
+ 
 -- 
 2.53.0
 
