@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D7341D4F3;
-	Mon, 17 Aug 2026 14:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430A043B3E3;
+	Mon, 17 Aug 2026 14:29:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976958; cv=none; b=Av9z0eaq3zE/WI54Z0letySA1fMSWFATDQFX/KPRAcll8FpQjlHgYUabEm7HIoQ2hzNsvxKsEuE/g3gxaolsEPlnFtVMb06ugEKC7sS2ayR4JxA5JeMoC+ZrDnR1PJWKx0/rq9SkLDK03uJNsSeLfvJT10Cnb/PrHvIqT80eS1w=
+	t=1786976961; cv=none; b=EEcIr76j0DRKmwy3Rvl9KlJSTMMMgESoK0aSfyOc4/P2xRs8qywF49/zpYzgSFO17ophyufp6S/DGLJKEc9sFS6W8UZwAl25poX+wufPkpohP4axoU1R1iUBHj5tdKxKWQh0R2HehvU/6XdHrubJbaO69TkpwtxrSfw0FH+A9j8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976958; c=relaxed/simple;
-	bh=qvQA6AoOR9k+GHoqhpjuv1zhypY0P6W7Ou6T9a6tD80=;
+	s=arc-20240116; t=1786976961; c=relaxed/simple;
+	bh=O4Z1Dc4/8h48VoGW1FHlzVumGTsJ9wfBqEsL1/JThNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FAu6apY2lMVqSF/yP4WTBHrag2S1SjhNTU2IuuI4OCsdoUD74QCepggLNrl/jwy30nZMB0yORUlHl2OI6uiTB7GoLR3j9y9kQFwoSaHaJy9QfuKrCaavWAwF/pvqETa3J3fyDIEnPl67vlGo80xhGlxIxtvO3HQ+TW1IgxeWQSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PojpKjCF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cV2s0QlEIOtpXdL6tBTBKY6hstwlMLMwi7tez2czkzgY4QYqdqEkJ6yCXbFN0MbYWaPhU/W+uFbNHbgylGV8DcSzmN0ZoTsCyxGUyNu/5SpQ4dnHxoyoXcGM0H7EIKneJOXEGfwJe5u1nNZzjt3X5Ug0Zc1YbzXiXpIUwzeruss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lwZTLqoP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PojpKjCF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E811F000E9;
-	Mon, 17 Aug 2026 14:29:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lwZTLqoP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ACE11F000E9;
+	Mon, 17 Aug 2026 14:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976957;
-	bh=PN421sNUXrSK+749GkLeGRVMYG+arWD8j+VhAIsmKHE=;
+	s=korg; t=1786976960;
+	bh=p7siyOJ9GyJy9vOkDZHQn7ryGrgXozVNPaHiA4NQsTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PojpKjCFtldNMSEMkMyizyysnRkvZ2ZwPI17R9F32lyrtt0KQv7fhwrRvsV6Rh1I2
-	 JDMwYEy13Zwg9Ur6m/kvGNl5Mv5w8ieEoGMIwa4cMZ2qMPzyKylNvvCrzf4WtJB8EN
-	 /eR3/7sCH/E2A2klw282QzhVrVr4Y/FXZBQHtTb8=
+	b=lwZTLqoPEvsgn9SOVxwMg6olu7bZGRwQudxd8aCN05NsnXhyw+KV0ZY1BXde4G09Z
+	 qM0Z9bXUn8uD/QpBqKiIJ+T9E+vO9RRc47RWCjvLXgoZIDrjTE+6fdVckXIuuiJ2AP
+	 bzxQmAH2uPJDdXR2akL6NTjcEDrNX4Nc5z9YCuMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valery Borovsky <vebohr@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 163/456] media: msi2500: Return queued buffers on start_streaming() failure
-Date: Mon, 17 Aug 2026 15:29:13 +0200
-Message-ID: <20260817132546.462286235@linuxfoundation.org>
+Subject: [PATCH 5.15 164/456] media: pci: dm1105: Free allocated workqueue
+Date: Mon, 17 Aug 2026 15:29:14 +0200
+Message-ID: <20260817132546.501150418@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,128 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valery Borovsky <vebohr@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-commit 7201c17786a498497bca57752883b90914d405ac upstream.
+commit 1a65db225b25bb8c8febf16974c060e0cc242eb9 upstream.
 
-The vb2 framework hands buffers to the driver via buf_queue() before
-calling start_streaming().  If start_streaming() returns an error
-without first returning those buffers via vb2_buffer_done(),
-vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
-buffers leak.
+Destroy allocated workqueue in remove() callback to free its resources,
+thus fixing memory leak.
 
-msi2500_start_streaming() had five error paths that all hit this trap
-and were further tangled by ret-overwriting between calls:
-
-  - -ENODEV when the USB device was already disconnected
-  - -ERESTARTSYS when mutex_lock_interruptible() was interrupted
-  - msi2500_set_usb_adc() failure: ret was silently overwritten by
-    the next call (msi2500_isoc_init), so the error was lost entirely
-  - msi2500_isoc_init() failure: cleanup_queued_bufs was called, but
-    the function then fell through to msi2500_ctrl_msg() and again
-    masked the original error by overwriting ret
-  - msi2500_ctrl_msg(CMD_START_STREAMING) failure: no cleanup at all,
-    leaving isoc URBs submitted with no way for the driver to consume
-    them
-
-Consolidate the error paths into a small goto chain.  Every failure
-now stops the function, drains the queued-buffer list, and returns
-the real error code.  The ctrl_msg failure path also rolls back the
-preceding msi2500_isoc_init() via msi2500_isoc_cleanup() before
-unlocking and draining.
-
-The cleanup helper takes a vb2_buffer_state argument so that the
-start_streaming error paths can pass VB2_BUF_STATE_QUEUED (as
-expected by userspace on start_streaming failure) while stop_streaming
-keeps its existing VB2_BUF_STATE_ERROR semantics.
-
-This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
-Return queued buffers on start_streaming() failure").
-
-Fixes: 977e444f59ad ("[media] Mirics MSi3101 SDR Dongle driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Fixes: 519a4bdcf822 ("V4L/DVB (11984): Add support for yet another SDMC DM1105 based DVB-S card.")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/msi2500/msi2500.c |   32 ++++++++++++++++++++++++--------
- 1 file changed, 24 insertions(+), 8 deletions(-)
+ drivers/media/pci/dm1105/dm1105.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/usb/msi2500/msi2500.c
-+++ b/drivers/media/usb/msi2500/msi2500.c
-@@ -541,7 +541,8 @@ static int msi2500_isoc_init(struct msi2
- }
+--- a/drivers/media/pci/dm1105/dm1105.c
++++ b/drivers/media/pci/dm1105/dm1105.c
+@@ -1193,6 +1193,7 @@ static void dm1105_remove(struct pci_dev
  
- /* Must be called with vb_queue_lock hold */
--static void msi2500_cleanup_queued_bufs(struct msi2500_dev *dev)
-+static void msi2500_cleanup_queued_bufs(struct msi2500_dev *dev,
-+					enum vb2_buffer_state state)
- {
- 	unsigned long flags;
- 
-@@ -554,7 +555,7 @@ static void msi2500_cleanup_queued_bufs(
- 		buf = list_entry(dev->queued_bufs.next,
- 				 struct msi2500_frame_buf, list);
- 		list_del(&buf->list);
--		vb2_buffer_done(&buf->vb.vb2_buf, VB2_BUF_STATE_ERROR);
-+		vb2_buffer_done(&buf->vb.vb2_buf, state);
- 	}
- 	spin_unlock_irqrestore(&dev->queued_bufs_lock, flags);
- }
-@@ -830,25 +831,40 @@ static int msi2500_start_streaming(struc
- 
- 	dev_dbg(dev->dev, "\n");
- 
--	if (!dev->udev)
--		return -ENODEV;
-+	if (!dev->udev) {
-+		ret = -ENODEV;
-+		goto err_cleanup;
-+	}
- 
--	if (mutex_lock_interruptible(&dev->v4l2_lock))
--		return -ERESTARTSYS;
-+	if (mutex_lock_interruptible(&dev->v4l2_lock)) {
-+		ret = -ERESTARTSYS;
-+		goto err_cleanup;
-+	}
- 
- 	/* wake-up tuner */
- 	v4l2_subdev_call(dev->v4l2_subdev, core, s_power, 1);
- 
- 	ret = msi2500_set_usb_adc(dev);
-+	if (ret)
-+		goto err_unlock_cleanup;
- 
- 	ret = msi2500_isoc_init(dev);
- 	if (ret)
--		msi2500_cleanup_queued_bufs(dev);
-+		goto err_unlock_cleanup;
- 
- 	ret = msi2500_ctrl_msg(dev, CMD_START_STREAMING, 0);
-+	if (ret)
-+		goto err_isoc_cleanup;
- 
- 	mutex_unlock(&dev->v4l2_lock);
-+	return 0;
- 
-+err_isoc_cleanup:
-+	msi2500_isoc_cleanup(dev);
-+err_unlock_cleanup:
-+	mutex_unlock(&dev->v4l2_lock);
-+err_cleanup:
-+	msi2500_cleanup_queued_bufs(dev, VB2_BUF_STATE_QUEUED);
- 	return ret;
- }
- 
-@@ -863,7 +879,7 @@ static void msi2500_stop_streaming(struc
- 	if (dev->udev)
- 		msi2500_isoc_cleanup(dev);
- 
--	msi2500_cleanup_queued_bufs(dev);
-+	msi2500_cleanup_queued_bufs(dev, VB2_BUF_STATE_ERROR);
- 
- 	/* according to tests, at least 700us delay is required  */
- 	msleep(20);
+ 	dm1105_hw_exit(dev);
+ 	free_irq(pdev->irq, dev);
++	destroy_workqueue(dev->wq);
+ 	pci_iounmap(pdev, dev->io_mem);
+ 	pci_release_regions(pdev);
+ 	pci_disable_device(pdev);
 
 
