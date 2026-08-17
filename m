@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43431408617;
-	Mon, 17 Aug 2026 14:19:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D402408617;
+	Mon, 17 Aug 2026 14:19:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976349; cv=none; b=D1+PFnx5VIV/Hh7dTevYY5l0OfUa/i3IqJB7zE/rNYGkM03r77owsNNMJtBJZi/R+AHWJU6JGbo2+I063s0mBH8NNFWBl53pF+eK57R+fb7QE1j304IcJMX/owuJXu22rnX7m8IppklzGJbFEaV3Tmzq24CLA9tbw89moj68fe4=
+	t=1786976352; cv=none; b=GonG+jsS4RgC8Ags3mncRw0Uq3ACSzzqLCE2qV44HFh+EYyg0GKsksUnapF23iqhUsEmqa5VBCGiILSEh99K5VP6ZyYV0Qeu9bxC1WGKkIu77Dszt0XPxsFAPuk0j0nmG5YNUxTbvALOObuToeeJvTpxrd7SLIP4+tES2WNxaGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976349; c=relaxed/simple;
-	bh=Rojw/S9QvyAW+5oAWtZ8Z0ec4OS/wT5tnchaFzY8K8o=;
+	s=arc-20240116; t=1786976352; c=relaxed/simple;
+	bh=HlE2NRO7Lr2WUepWjnRtnoVZIQPMvQlWvQXw8JjigoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=meT6kZf0gkVhzqSN45kLEm7IHoTf/LXCm+FM9cEp9AGAk1QrgdX1qwLaE64vaMx08XM56qUUhN6PTXJECG6K8EmtfKhG/dq//kEgOumgqTuE/H3sCqkb0oCnPdXTfE3lHx51DLjoX88cH6x6KpoHB9ApGagHx+NSjzCr9KAV5n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNj44Juj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EDPj/+iZBk6G4iqGSl9AY1nT3oyO20V2KoZkECpFRuQHM1fnC4o84C7AAafnbPpdyNdhalFCdBxqJ7W3e5PVNTIxMRpJhXrex7YGVIlGPMq6dGQO7aZ5W4NuBYVQ6QscNji8X8219RdbV51dSd65Ex3v+C08h+S6eG1Rbc2KJ+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fcbXi9fE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNj44Juj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C8351F000E9;
-	Mon, 17 Aug 2026 14:19:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fcbXi9fE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77B241F000E9;
+	Mon, 17 Aug 2026 14:19:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976348;
-	bh=yGFPbvRsB2FFezqGpQTxecB8P/ziM8MeXlOfchyqqS4=;
+	s=korg; t=1786976351;
+	bh=kl3SQHa0mcFQandxIOQSyAxa9qi22/SPJV44ozXz3B0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dNj44JujsMa5hw64c03wimNTaFn/ZqQnMUdRgWez6qPxygetdwj82zcdzOlxyWbOQ
-	 N7RsPIeYK314wbWpNqoHwkvJiWsgFLbwoWk+rtJrhnpibejfn/t7LatueZcyepaxAK
-	 HOhK/57yYP3qWTj7yxRDknd8uVVGC95TizQb+Odo=
+	b=fcbXi9fEUtIE0cNMgkZnp9oZBaq3joQFFi4RzdkIXiR8FJeAyQ0YDcKBSVwS6E0b5
+	 jbdQ17Jx5pNdSc2w4yCe5FLFFF5NY5dH+N+ncdFp/uuNbYuj5lptbIqM9cxesjh5sn
+	 /tjsZMN5/UjVXQsbVM6jBj+Ny/lLt4+PupzhRiy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	=?UTF-8?q?=E7=8E=8BYP?= <pzqqt88198@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 342/389] ALSA: usb-audio: Evaluate packsize caps at the right place
-Date: Mon, 17 Aug 2026 15:33:01 +0200
-Message-ID: <20260817132552.172730799@linuxfoundation.org>
+	"Wagenaar, C.C.J. (Chris)" <c.c.j.wagenaar@vu.nl>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 343/389] Input: evdev - sanitize event type index when fetching event masks
+Date: Mon, 17 Aug 2026 15:33:02 +0200
+Message-ID: <20260817132552.204235787@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -45,75 +44,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 52521e8398839105ef8eb22b3f0993f9b0d11a57 ]
+commit 3abd29c61d2ef37c4102cf755b18be53bb9dbea6 upstream.
 
-We introduced the upper bound checks of the packet sizes by the
-ep->maxframesize for avoiding the URB submission errors.  However, the
-check was applied at an incorrect place in the function
-snd_usb_endpoint_set_params() where ep->maxframesize isn't defined
-yet; the value is defined at a bit later position.  So this ended up
-with a failure at the first run while the second run works.
+The user-supplied event type index passed to EVIOCGMASK / EVIOCSMASK
+ioctls is used to index the static counts array in evdev_get_mask_cnt()
+and client evmasks array in evdev_get_mask().
 
-For fixing it, move the check at the correct place, right after the
-calculation of ep->maxframesize in the same function.
+While the event type is architecturally bounded by EV_CNT, speculative
+execution may mispredict bounds checks and perform out-of-bounds loads.
 
-Fixes: 7fe8dec3f628 ("ALSA: usb-audio: Cap the packet size pre-calculations")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221292
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260410143220.1676344-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[王YP: Move the check to `snd_usb_pcm_prepare()`. For linux-5.10.y,
-       ep->maxframesize is calculated in `snd_usb_pcm_prepare()`.]
-Signed-off-by: 王YP <pzqqt88198@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Sanitize the event type index in evdev_get_mask_cnt() branchlessly using
+array_index_mask_nospec(). This clamps the index to 0 for safe array
+access and forces the returned count to 0 speculatively when the index
+is out of bounds.
+
+We do not need additional array_index_nospec() calls in evdev_get_mask()
+because evdev_get_mask_cnt() speculatively forces the count (and
+resulting xfer_size) to 0 for out-of-bounds types, preventing any
+speculative memory access to client evmasks array.
+
+Reported-by: "Wagenaar, C.C.J. (Chris)" <c.c.j.wagenaar@vu.nl>
+Cc: stable@vger.kernel.org
+Assisted-by: Antigravity:gemini-3.6-flash
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/anFCAfvxwXB5eJF1@google.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/endpoint.c | 3 ---
- sound/usb/pcm.c      | 7 +++++++
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ drivers/input/evdev.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
-index 3ac4251f9cde6..730744104df61 100644
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -1101,9 +1101,6 @@ int snd_usb_endpoint_set_params(struct snd_usb_endpoint *ep,
- 		return -EINVAL;
- 	}
+--- a/drivers/input/evdev.c
++++ b/drivers/input/evdev.c
+@@ -21,6 +21,7 @@
+ #include <linux/init.h>
+ #include <linux/input/mt.h>
+ #include <linux/major.h>
++#include <linux/nospec.h>
+ #include <linux/device.h>
+ #include <linux/cdev.h>
+ #include "input-compat.h"
+@@ -67,8 +68,10 @@ static size_t evdev_get_mask_cnt(unsigne
+ 		[EV_SND]	= SND_CNT,
+ 		[EV_FF]		= FF_CNT,
+ 	};
++	unsigned long mask = array_index_mask_nospec(type, EV_CNT);
  
--	ep->packsize[0] = min(ep->packsize[0], ep->maxframesize);
--	ep->packsize[1] = min(ep->packsize[1], ep->maxframesize);
--
- 	/* calculate the frequency in 16.16 format */
- 	ep->freqm = ep->freqn;
- 	ep->freqshift = INT_MIN;
-diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
-index f4494d0549172..802ed1dbd23b0 100644
---- a/sound/usb/pcm.c
-+++ b/sound/usb/pcm.c
-@@ -953,6 +953,13 @@ static int snd_usb_pcm_prepare(struct snd_pcm_substream *substream)
- 	subs->data_endpoint->curframesize =
- 		bytes_to_frames(runtime, subs->data_endpoint->curpacksize);
+-	return (type < EV_CNT) ? counts[type] : 0;
++	/* Returns 0 for out-of-bounds types, including speculatively */
++	return counts[type & mask] & mask;
+ }
  
-+	subs->data_endpoint->packsize[0] = min(
-+		subs->data_endpoint->packsize[0],
-+		subs->data_endpoint->maxframesize);
-+	subs->data_endpoint->packsize[1] = min(
-+		subs->data_endpoint->packsize[1],
-+		subs->data_endpoint->maxframesize);
-+
- 	/* reset the pointer */
- 	subs->hwptr_done = 0;
- 	subs->transfer_done = 0;
--- 
-2.53.0
-
+ /* requires the buffer lock to be held */
 
 
