@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391E63D8911;
-	Mon, 17 Aug 2026 14:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4593EAC68;
+	Mon, 17 Aug 2026 14:20:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976404; cv=none; b=WMgjgtOy6EDdBDLzN1KDY3qphZPRGelo8qbK3vz7GgX04sh8fnYirJ2gP+jMY7wBJFL7Lf+MgybfoT0sWWWNREclQ2ud2XUVyhfkp3+/Jio6wxCmlD01PBMvm9BA1c8IBFc06+63971wFS+uc3EgJTT7SmIGxQK0OoH+Ri1AZHU=
+	t=1786976407; cv=none; b=MoHYn5Wr6DkTW3FZ/LNtXblKBIztPlxGNOWv/jGRBBm95H60cWP5O2/D29IYBks756OjV3VGjyc0WRF3hOxu6GoDzWyVtYZ/FssV7VT60Xr4Q+tdbCrScVzKohF7INT8d90DH58yxdLMkZd0xatXBGrSdQxei9FM14EGJlo9HNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976404; c=relaxed/simple;
-	bh=0HsZikgRos6sxw8KGmeXmQrNiJMKVATiFZ/XTz/R9E0=;
+	s=arc-20240116; t=1786976407; c=relaxed/simple;
+	bh=6FkV8d065g0cd2Hu4rg4OOmYZCcdKU/2x/WKS3iRg+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IKyzgNFXwgDEHMw2M9LuAIFMmtyfwz1f+a1+NjCrvhOsUAadImZu+uTNxJsk1Sf243W6bcVPRWbZ4Z08ynQ4FsBRJttnV4afZ6Lexam904fdR+k4ciIVP94MGbenC1ja1ED/QT7TM7g4GErG/OPvEWwsp7RueSb+D6GiWoqwTY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M63lzVDi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b3aDtiLaHJKPPr5jKmuqJQqw5HLb+T62dupjg3elZayPkrc8KDwInsZj4dUa29llYSwOg2i0GQBpOSfaQb/0trHEdasreiqzv7nd9aoDwZNJO1xQHRfj2xk5pvMRHxdwDWPvAJwq0pU6PFjbBwcv4RA5YJOgz16Rbppiu58ig5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15V8xVTr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M63lzVDi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 586891F000E9;
-	Mon, 17 Aug 2026 14:20:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15V8xVTr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464FF1F000E9;
+	Mon, 17 Aug 2026 14:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976402;
-	bh=vhJ9uet7Aff4CCn7qd4nhd1M7DaI4MIl71AR7jTTWts=;
+	s=korg; t=1786976405;
+	bh=QyeuP6L2JfOCuGjbiWkgqJ1sJ93+SzntFphLGiaaQH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M63lzVDijN4K6Tt/cDwpUTQXibYh1kO9SJf8y9SS3CtkA/lG2bgK/TLFNsap2Bsgz
-	 vn3H02BTUOO+ZYA1uSc+oDvIFyjTbOdBSbnsg0WXG9KvvqBWmo1NBgd0ETKalOENO/
-	 TtrtSx+lSB1ZFLM5kAaHPdOyALQIwO4vdTxuWDt8=
+	b=15V8xVTrhWOL6+OJepaAWB3su4H3HVpVxkGemkniRNgoJFMelDFpdqMMNlEi4/E4K
+	 WDtqONvWfIyKdRqbaigNhFI9rq+qnt5Z+Q1uZ+WXRKzb2EdC4C3V4RETn7z7/b+BH2
+	 2ubY0FAXShMjXLCdyjlSoQmGgr7F+pFYr5TYmMjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lincoln Wallace <locnnil0@gmail.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Keno Fischer <keno@juliahub.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 359/389] ima: fix out-of-bounds read in xattr_verify()
-Date: Mon, 17 Aug 2026 15:33:18 +0200
-Message-ID: <20260817132552.752532850@linuxfoundation.org>
+Subject: [PATCH 5.10 360/389] futex: Prevent robust futex exit race some more
+Date: Mon, 17 Aug 2026 15:33:19 +0200
+Message-ID: <20260817132552.783414559@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,63 +52,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lincoln Wallace <locnnil0@gmail.com>
+From: Keno Fischer <keno@juliacomputing.com>
 
-[ Upstream commit 5ff232d31106f45ac87c3b64e1d35a0667777797 ]
+commit 6d4514ca9cdf61fec4ec634cf50386f6f7e69748 upstream.
 
-The digest-length check in xattr_verify() mixes int and size_t:
+A robust futex unlock stores 0 over the whole futex value - wiping
+FUTEX_WAITERS - and wakes a single waiter. That wakeup is a one-shot
+notification: the protocol relies on its recipient to either acquire the
+futex (and eventually unlock while aware of the remaining contention) or
+re-arm FUTEX_WAITERS before sleeping again.  If the woken waiter is killed
+before it can do either, the kernel must jump in and wake the next task
+down the line.
 
-	if (xattr_len - sizeof(xattr_value->type) - hash_start >=
-			iint->ima_hash->length)
+This is a known complication of the futex protocol with a previous
+partial fix in commit ca16d5bee598 ("futex: Prevent robust futex exit
+race"). Unfortunately, that fix is insufficient.
 
-sizeof() yields size_t, so the usual arithmetic conversions promote
-the whole left-hand side to unsigned 64-bit before the subtraction
-runs. For a truncated xattr this underflows instead of going negative:
-a 1-byte IMA_XATTR_DIGEST_NG xattr (xattr_len == 1, hash_start == 1)
-turns "1 - 1 - 1" into SIZE_MAX, which is trivially >= ima_hash->length.
-The check then passes and the following memcmp() reads
-iint->ima_hash->length bytes starting past the end of the buffer
-vfs_getxattr_alloc() allocated for it.
+If a third task re-acquired the futex through the uncontended fast
+path in the meantime, the notification is lost: robust exit processing
+sees that it is owned by another task and does nothing, while the new
+owner sees no FUTEX_WAITERS when it unlocks and wakes nobody.
+The remaining waiters sleep forever behind a free futex:
 
-Nothing upstream clamps xattr_len back into a safe range first:
-ima_get_hash_algo() only special-cases xattr_len < 2 to pick a default
-algorithm, and evm_verifyxattr() returns INTEGRITY_UNKNOWN rather than
-failing when no HMAC key is loaded, so a truncated security.ima value
-reaches the length check as-is.
+  A owns the futex, B and C sleep in FUTEX_WAIT
+                                        uval == A | FUTEX_WAITERS
+  A robust unlock: store 0, FUTEX_WAKE(1) wakes B
+                                        uval == 0
+  D fast path acquire: cmpxchg(0 -> D)
+                                        uval == D, no FUTEX_WAITERS
+  B killed before acting on the wakeup
+  B exit walk, pending op: owner D != B -> no action
+  D unlock: no FUTEX_WAITERS -> no wake
+                                        C sleeps forever
 
-Rewrite the comparison so every operand stays a signed int and no
-implicit conversion to size_t can occur.
+This is clearly a shortcoming in the implementation, which fails to keep
+the FUTEX_WAITERS bit consistent.
 
-Fixes: 3ea7a56067e6 ("ima: provide hash algo info in the xattr")
+Work around this by augmenting the robust list exit processing to also
+perform the extra wakeup if the futex word is owned by another thread but
+FUTEX_WAITERS is not set.
+
+This does not fix the problem of a non-contended take over/release and free
+sequence, which has been discussed for years and has been addressed by
+commit 3ca9595d9fb6 ("futex: Add support for unlocking robust futexes") and
+subsequent changes, but failed to take the problem described above into
+account.
+
+A more complete solution which is based on the in kernel unlock of
+contended robust futexes has been discussed in the context of this change
+and should show up in mainline sooner than later.
+
+[ tglx: Amend change log slightly and fixup coding style ]
+
+Fixes: ca16d5bee598 ("futex: Prevent robust futex exit race")
+Signed-off-by: Keno Fischer <keno@juliahub.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Assisted-by: ClaudeCode:claude-fable-5 tla+
 Cc: stable@vger.kernel.org
-Signed-off-by: Lincoln Wallace <locnnil0@gmail.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
-Signed-off-by: Lincoln Wallace <locnnil0@gmail.com>
+Link: https://patch.msgid.link/20260730194705.38981-1-keno@juliacomputing.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/ima_appraise.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ kernel/futex/core.c | 82 +++++++++++++++++++++++++++++++--------------
+ 1 file changed, 56 insertions(+), 26 deletions(-)
 
-diff --git a/security/integrity/ima/ima_appraise.c b/security/integrity/ima/ima_appraise.c
-index 7122a359a268e..615a20b9eb52b 100644
---- a/security/integrity/ima/ima_appraise.c
-+++ b/security/integrity/ima/ima_appraise.c
-@@ -242,8 +242,13 @@ static int xattr_verify(enum ima_hooks func, struct integrity_iint_cache *iint,
- 			break;
- 		}
- 		clear_bit(IMA_DIGSIG, &iint->atomic_flags);
--		if (xattr_len - sizeof(xattr_value->type) - hash_start >=
--				iint->ima_hash->length)
-+		/*
-+		 * Use addition, not subtraction: sizeof() forces unsigned
-+		 * math and a short xattr_len would wrap around, bypassing
-+		 * this bounds check.
-+		 */
-+		if (xattr_len >= (int)sizeof(xattr_value->type) + hash_start +
-+				(int)iint->ima_hash->length)
- 			/*
- 			 * xattr length may be longer. md5 hash in previous
- 			 * version occupied 20 bytes in xattr, instead of 16
+diff --git a/kernel/futex/core.c b/kernel/futex/core.c
+index df86c0e494184..d772b8ab29817 100644
+--- a/kernel/futex/core.c
++++ b/kernel/futex/core.c
+@@ -3428,8 +3428,11 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
+ 		return -1;
+ 
+ 	/*
+-	 * Special case for regular (non PI) futexes. The unlock path in
+-	 * user space has two race scenarios:
++	 * Special case for regular (non PI) futexes. Ordinarily, we do
++	 * not perform any processing here unless the current thread was
++	 * the owner of the futex (by the TID check below).
++	 *
++	 * However, the unlock path has three race scenarios:
+ 	 *
+ 	 * 1. The unlock path releases the user space futex value and
+ 	 *    before it can execute the futex() syscall to wake up
+@@ -3438,41 +3441,68 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
+ 	 * 2. A woken up waiter is killed before it can acquire the
+ 	 *    futex in user space.
+ 	 *
+-	 * In the second case, the wake up notification could be generated
+-	 * by the unlock path in user space after setting the futex value
+-	 * to zero or by the kernel after setting the OWNER_DIED bit below.
++	 * 3. A woken up waiter is killed in user space after another
++	 *    thread has acquired the futex, but before it can set
++	 *    FUTEX_WAITERS.
++	 *
++	 * Note that, if userspace uses the FUTEX_ROBUST_UNLOCK flag, we
++	 * will not see case 1 here.
++	 *
++	 * In the second and third case, the wake up notification could
++	 * be generated from any of:
++	 *
++	 *    i.   An ordinary futex wakeup after unlock (with or
++	 *         without FUTEX_ROBUST_UNLOCK)
++	 *    ii.  A robust wakeup from another thread's death
++	 *    iii. A previous round through this special case
++	 *
++	 * As a result, the futex world will be in one of four states:
+ 	 *
+-	 * In both cases the TID validation below prevents a wakeup of
+-	 * potential waiters which can cause these waiters to block
+-	 * forever.
++	 *    A. The futex word is 0 (unlocked)
++	 *    B. The futex word is owned by another thread
++	 *       (FUTEX_WAITERS is not set)
++	 *    C. The futex word is owned by another thread
++	 *       (FUTEX_WAITERS set)
++	 *    D. The futex's owner died and OWNER_DIED is set
++	 *       (the owner part of the word is 0)
+ 	 *
+-	 * In both cases the following conditions are met:
++	 * The key issue is that the kernel usually (at least from
++	 * sources ii. and iii. or when so requested by userspace from
++	 * source i.) only ever wakes *one* waiter at a time. If this
++	 * waiter dies before acquiring the futex (or setting the
++	 * FUTEX_WAITERS bit), the kernel *must* still wake the next
++	 * waiter down the line to uphold the futex invariants and
++	 * avoid lost wakeups. Note we do not need to handle state C,
++	 * as it does not matter to us whether *we* successfully set
++	 * the bit or a third thread did so in the meantime.
+ 	 *
+-	 *	1) task->robust_list->list_op_pending != NULL
+-	 *	   @pending_op == true
+-	 *	2) The owner part of user space futex value == 0
++	 * Therefore, in these cases we must issue an additional
++	 * futex_wake(). Note however that we *must not* set OWNER_DIED
++	 * here. Our thread is *not* the owner of the futex.
++	 *
++	 * Thus to summarize, the conditions for needing the additional
++	 * futex_wake() are:
++	 *
++	 *	1) @pending_op == true (the thread has not finished the
++	 *	   mutex operation)
++	 *	2) The futex word is in one of the states A, B or D
+ 	 *	3) Regular futex: @pi == false
+ 	 *
+-	 * If these conditions are met, it is safe to attempt waking up a
+-	 * potential waiter without touching the user space futex value and
+-	 * trying to set the OWNER_DIED bit. If the futex value is zero,
+-	 * the rest of the user space mutex state is consistent, so a woken
+-	 * waiter will just take over the uncontended futex. Setting the
+-	 * OWNER_DIED bit would create inconsistent state and malfunction
+-	 * of the user space owner died handling. Otherwise, the OWNER_DIED
+-	 * bit is already set, and the woken waiter is expected to deal with
+-	 * this.
++	 * Note in particular that in all of the states A-D the owner
++	 * portion of the futex word differs from our thread's TID
++	 * (unless the actual owner has the same TID in another PID
++	 * namespace, but we cannot currently distinguish that
++	 * scenario), so this can be a special-case wakeup in the bail
++	 * path of the ordinary TID check.
+ 	 */
+ 	owner = uval & FUTEX_TID_MASK;
+ 
+-	if (pending_op && !pi && !owner) {
+-		futex_wake(uaddr, 1, 1, FUTEX_BITSET_MATCH_ANY);
++	if (owner != task_pid_vnr(curr)) {
++		if (pending_op && !pi && (!owner || !(uval & FUTEX_WAITERS)))
++			futex_wake(uaddr, 1, 1, FUTEX_BITSET_MATCH_ANY);
+ 		return 0;
+ 	}
+ 
+-	if (owner != task_pid_vnr(curr))
+-		return 0;
+-
+ 	/*
+ 	 * Ok, this dying thread is truly holding a futex
+ 	 * of interest. Set the OWNER_DIED bit atomically
 -- 
 2.53.0
 
