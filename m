@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76FA44238B;
-	Mon, 17 Aug 2026 14:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD96F3F3265;
+	Mon, 17 Aug 2026 14:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977189; cv=none; b=Se3MHngXWDgwaXLbzIIv5NHxYEIo4voqC3VLRuAl170DVML4BXd1r2KxzXJ3Kl1NHVo/1Nev50w3g4xds/RBHYryqfZDmaD72FvBlqIlZCU8Iq50srgbItPmXtkaH8DXKeeh6jOFVQkzeTYhiY0N2n6JXlFoSG1uRCwF4VnWMgw=
+	t=1786977192; cv=none; b=pPhjb8n2VA/aA5WE8QHIUSbD4m5XsT4g9+T0MAwxHzKko/3q+IxR5dBOv8OD4E/M8HNtAsDoYG1vXKrS2/21nrr3T9BeGBVO141l9q7THyf9z9JwPEzgeN6V6hJqqEDEI+FNID/Vmr65XNP6jKrQrZpP+VUSw4vf/6vSe9zI+OU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977189; c=relaxed/simple;
-	bh=V2kJW3cWeTQML50NDCEZOInuabUes1Dptwmf7FSzwYY=;
+	s=arc-20240116; t=1786977192; c=relaxed/simple;
+	bh=5T8JOK4yE4yvzrtnPL/3Oa3fUxR+9pU/T6Ab+xBu7Os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JBvvws1BC9QD6I122qMp4sSto575cMDmnpiJ5NG3agP3etPb9FHYrTA02itOf5symzrc2bjvYPPvfJi+l0lFHAdd5yU4u53y1XeO+YmNwb5wGIwzqiV46pjnlm44goQTRKiQH2EmKLXqzLBEJrB5Op4no2vGvGJUyaoU4vMdfCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a4Gevz5y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FB60/d4t5SSN/INQ1UMOh+MDMjJdzpOrF1rCB9aGChBHD8XLEJIm/NcEDzOafui99Q35rB5ju+sxkg0L++07iajXzGmGU02bfwqFZqyNzune6Mac+vJ5D2gwjPoznf6BbGqqp+0SeSus0Z4yOhI6x4adk60mfPDHX0twk5T6NDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2ggxCKz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a4Gevz5y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B68E1F000E9;
-	Mon, 17 Aug 2026 14:33:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2ggxCKz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6D61F000E9;
+	Mon, 17 Aug 2026 14:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977188;
-	bh=ug+JvxljT3mfACeR4RKEHJC8zQ5x/LmslnhVKxCWWPs=;
+	s=korg; t=1786977191;
+	bh=0L1A20SVU+33DACMU1LIn5uFh5j8tb5NoPIwcr5jWq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a4Gevz5y73ZXM11OP3wV85f8Gnq0ZahZCs8D7NhuWpLqaTNCbZwBANVB1A4eWacF1
-	 kyPrRjvx1bWyb+52oobRiU+X1sUoshZajiUxWW3Ezewqx+64DIkaCLsvTatQ6R4ozg
-	 XPgVHJPBIgz+2UJZ2IAQKjQlHqEzbM6/NWMSdjx8=
+	b=M2ggxCKzEw8j8TnIx12KvHq6gEJFSBJNxh1YIENWt3FaGNlg54xBPGIGOwOjq+NW3
+	 J0b5gf0p19QnN0OZtQ3uGX5xT29orWERe8EDlSkH4oRRpMgSgmuCx6eIli0CgejEbJ
+	 kgEsKSdJah/SoBfb9bliEo7EU5qTtGXQfNtBiHzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Wengang Wang <wen.gang.wang@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 244/456] net: qrtr: ns: Raise node count limit to 512
-Date: Mon, 17 Aug 2026 15:30:34 +0200
-Message-ID: <20260817132549.628244551@linuxfoundation.org>
+Subject: [PATCH 5.15 245/456] tls: separate no-async decryption request handling from async
+Date: Mon, 17 Aug 2026 15:30:35 +0200
+Message-ID: <20260817132549.665551573@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,54 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit ff194cffd586cbd4cc49eccb002c65f2a902a277 ]
+commit 41532b785e9d79636b3815a64ddf6a096647d011 upstream.
 
-The current node limit of 64 breaks the functionality for a number of AI200
-deployments that have up to 384 nodes. Raise the limit to 512.
+If we're not doing async, the handling is much simpler. There's no
+reference counting, we just need to wait for the completion to wake us
+up and return its result.
 
-Also, the backport of commit 27d5e84e810b ("net: qrtr: ns: Limit the total
-number of nodes") to 5.10, 5.15 and 6.1 dropped the node_count-- hunk in
-ctrl_cmd_bye(). Add it back.
+We should preferably also use a separate crypto_wait. I'm not seeing a
+UAF as I did in the past, I think aec7961916f3 ("tls: fix race between
+async notify and socket close") took care of it.
 
-Fixes: 27d5e84e810b ("net: qrtr: ns: Limit the total number of nodes")
-Cc: stable@vger.kernel.org
-Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260713145901.212396-1-youssef.abdulrahman@oss.qualcomm.com
+This will make the next fix easier.
+
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://lore.kernel.org/r/47bde5f649707610eaef9f0d679519966fc31061.1709132643.git.sd@queasysnail.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+Signed-off-by: Wengang Wang <wen.gang.wang@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/ns.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/tls/tls_sw.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
-index 91e43b0fd5669..5220529a4c62d 100644
---- a/net/qrtr/ns.c
-+++ b/net/qrtr/ns.c
-@@ -75,11 +75,11 @@ struct qrtr_node {
-  * requirements. If the requirement changes in the future, these values can be
-  * increased.
-  */
--#define QRTR_NS_MAX_NODES   64
-+#define QRTR_NS_MAX_NODES   512
- #define QRTR_NS_MAX_SERVERS 256
- #define QRTR_NS_MAX_LOOKUPS 64
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 389597bd7ae52..0cdc9131aff22 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -278,9 +278,15 @@ static int tls_do_decryption(struct sock *sk,
+ 		BUILD_BUG_ON_INVALID(atomic_read(&ctx->decrypt_pending) < 1);
+ 		atomic_inc(&ctx->decrypt_pending);
+ 	} else {
++		DECLARE_CRYPTO_WAIT(wait);
++
+ 		aead_request_set_callback(aead_req,
+ 					  CRYPTO_TFM_REQ_MAY_BACKLOG,
+-					  crypto_req_done, &ctx->async_wait);
++					  crypto_req_done, &wait);
++		ret = crypto_aead_decrypt(aead_req);
++		if (ret == -EINPROGRESS || ret == -EBUSY)
++			ret = crypto_wait_req(ret, &wait);
++		return ret;
+ 	}
  
--static u8 node_count;
-+static u16 node_count;
- 
- static struct qrtr_node *node_get(unsigned int node_id)
- {
-@@ -412,6 +412,7 @@ static int ctrl_cmd_bye(struct sockaddr_qrtr *from)
- delete_node:
- 	xa_erase(&nodes, from->sq_node);
- 	kfree(node);
-+	node_count--;
- 
- 	return ret;
- }
+ 	ret = crypto_aead_decrypt(aead_req);
+@@ -289,10 +295,7 @@ static int tls_do_decryption(struct sock *sk,
+ 		ret = ret ?: -EINPROGRESS;
+ 	}
+ 	if (ret == -EINPROGRESS) {
+-		if (darg->async)
+-			return 0;
+-
+-		ret = crypto_wait_req(ret, &ctx->async_wait);
++		return 0;
+ 	} else if (darg->async) {
+ 		atomic_dec(&ctx->decrypt_pending);
+ 	}
 -- 
 2.53.0
 
