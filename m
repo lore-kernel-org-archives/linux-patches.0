@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FDBF3DC857;
-	Mon, 17 Aug 2026 14:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BAC41F7EE;
+	Mon, 17 Aug 2026 14:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975792; cv=none; b=uIS43+9MvRWqGUpmch1cVhsLPm+RZX6p23v7Njc5pFEmYsIzV69Rc6y9AvDws76mjF3te15C8g9HuIVuucXO8vEx747uzfKnIlINnlZOJ1d9KVw1bxV1SNC53thhZXu2OAot0PdRLvQpe2fDSvX4WSKdqesH3WUoKHCeci8sUbQ=
+	t=1786975795; cv=none; b=JZv/+NwkR0dRxnWcK3qCTUVOz6O0IdwLeYmJiFJqFQnt7EDG7Zzn3r+1Zviz22KQ82zX7I+wfIjDykkVhazw8TIOHbhjpaN4PTceTl1vVn+znveYz+6AMOXxRY7JrMaEm8yE1IaPqIZBNOMU1l5BvQoRwBY31Z/3PqJWBmHCulU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975792; c=relaxed/simple;
-	bh=OeAvRhFASImTlw2sV0uT3DEu+XXWroth0Qur9zjpJVw=;
+	s=arc-20240116; t=1786975795; c=relaxed/simple;
+	bh=8qdIThhg6hv511KOOv4kFl6/tOVtSUR4kUljf/Kj/i8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B53j5+M2HTDfIvnvgw7a8wFY2k3wjWFUWo6aj1I0QfyTyqSzEQQmUtwIsvoYAN/l5pXQQhxhyOZyvR5WKo2gMNzIgGwU+cHJP3MXucHrDnWsI8/7tRB++r8xHQXhzYOcTNcMX/EmvpDlG0V3PCXFH85TsjQygVYy89SNNBVh6l0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTALFNda; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sHyzowwcl3hmXQkINDbhM6thUbTxT4S4bRWv0M1OF6GrKyqoroJguGcG9hWd2BldVi4QlhrqdXL0bUTawpszH7uZfGuCqKcghzELcMu9ejSaJjfGR3/WVDy8gSTFUV9J5ChnDyeDKk5Rmi332tguyxR5dM73S9qyVpWQ4yoZ1Cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJ0ZEJc4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTALFNda"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54211F00A3A;
-	Mon, 17 Aug 2026 14:09:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJ0ZEJc4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4801F000E9;
+	Mon, 17 Aug 2026 14:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975791;
-	bh=l88977laILEh8c9wjnYhcFOsnJH01bCzyIV8ZN1Eo/c=;
+	s=korg; t=1786975794;
+	bh=B5ziypFoWgbta838PQMjBPTffs19f80AThOCQJkvkeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kTALFNdaAyo03Hy3cIpSKMBR81SdKv+Ltbr32dF7HpN+X+2ubyMzSTyeBk8RiO7Pa
-	 oRbRPI6JLe/VY0lGQlZDCASonJSUJA4Uvq3L64QKNqnjWK4eIm9iSLR74btH6YL0eN
-	 VE5cIPUj56lFVmWHU5/xi4/NfV3Oh47sOooGK0iE=
+	b=TJ0ZEJc4Bdl4Q9wLT5yHIx9DgVpsXbpPKQBepjXcPNrwDlV7XRFAuM2EhMuICA7+h
+	 zkHeUxztHynwv8t1z+utiQ7yOJImRUGvMYu1Gi4J6SJnYgWsDtoFE5+ilNcu+fTUh4
+	 x89bShA9IFmIJGr9b+KKd34YESPEYzQC/esN0qqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 5.10 148/389] binfmt_misc: set have_execfd only once the interpreter is opened
-Date: Mon, 17 Aug 2026 15:29:47 +0200
-Message-ID: <20260817132544.945521860@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 112/389] can: bcm: add missing device refcount for CAN filter removal
+Date: Mon, 17 Aug 2026 15:29:11 +0200
+Message-ID: <20260817132543.551176252@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -49,72 +53,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit bbf5f639918dc011aaf60aab8480218758ee68c5 upstream.
+commit d59948293ea34b6337ce2b5febab8510de70048c upstream.
 
-load_misc_binary() raises bprm->have_execfd as soon as it sees the 'O'
-(or 'C') flag. This happens well before it opens the interpreter. If
-that open fails the flag stays set on the bprm. binfmt_misc is at the
-head of the format list so an interpreter open failure that returns
--ENOEXEC lets the search fall through to a later format. This means it
-runs the matched binary directly having never staged an interpreter. So
-bprm->executable is NULL while have_execfd falsely claims a descriptor
-is present.
+sashiko-bot remarked a problem with a concurrent device unregistration
+in isotp.c which also is present in the bcm.c code. A former fix for raw.c
+commit c275a176e4b6 ("can: raw: add missing refcount for memory leak fix")
+introduced a netdevice_tracker which solves the issue for bcm.c too.
 
-Consequently, begin_new_exec() dereferences the missing executable:
+bcm_release(), bcm_delete_rx_op() and bcm_notifier() relied on
+dev_get_by_index(ifindex) to re-find the device for an rx_op before
+unregistering its filter. If a concurrent NETDEV_UNREGISTER has already
+unlisted the device from the ifindex table, that lookup fails and
+can_rx_unregister() is silently skipped, leaving a stale CAN filter
+pointing at the soon-to-be-freed bcm_op/socket.
 
-  would_dump(bprm, bprm->executable);
+Hold a netdev_hold()/netdev_put() tracked reference on op->rx_reg_dev
+from the moment the rx filter is registered in bcm_rx_setup() until it
+is unregistered in bcm_rx_unreg(), and use that reference directly in
+bcm_release() and bcm_delete_rx_op() instead of re-looking the device
+up by ifindex.
 
-and NULL derefs. Had it not, the hand-off later in the same function
-would have failed anyway. FD_ADD(0, bprm->executable) rejects a NULL
-file with -ENOMEM. Both sites are past the point of no return so the
-exec cannot be unwound either way.
-
-This can be reached by unprivileged users as binfmt_misc can be mounted
-in user namespaces. So a user can register an 'O' entry whose
-interpreter lives on a FUSE mount, have the FUSE server fail the open
-with -ENOEXEC and execute a native ELF file that matches the entry.
-
-have_execfd only means anything alongside the executable it describes
-which is not set until the interpreter has been opened and staged.
-So lets raise it there, next to execfd_creds, which is already set at
-that point. An open failure now leaves it clear, so the fallback format
-derives credentials from the binary and emits no AT_EXECFD, as it would
-for any native exec. The argv rewrite load_misc_binary() performs before
-the open is still not undone. This means the binary sees the interpreter
-path in argv[0] and its own path in argv[1] but that predates this
-change and only became observable once the exec stopped faulting.
-
-Link: https://patch.msgid.link/20260720-beglichen-kognitiv-organismus-5e1e55326c56@brauner
-Fixes: bc2bf338d54b ("exec: Remove recursion from search_binary_handler")
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: sashiko-bot@kernel.org
+Closes: https://sashiko.dev/#/patchset/20260707094716.63578-1-socketcan@hartkopp.net
+Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260714-bcm_fixes-v15-8-562f7e3e42da@hartkopp.net
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/binfmt_misc.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/can/bcm.c | 44 ++++++++++++++++++++++++--------------------
+ 1 file changed, 24 insertions(+), 20 deletions(-)
 
---- a/fs/binfmt_misc.c
-+++ b/fs/binfmt_misc.c
-@@ -199,9 +199,6 @@ static int load_misc_binary(struct linux
- 			goto ret;
- 	}
+diff --git a/net/can/bcm.c b/net/can/bcm.c
+index d74c5d1e29358f..59fc7cee12f41f 100644
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -884,6 +884,7 @@ static void bcm_rx_unreg(struct net_device *dev, struct bcm_op *op)
  
--	if (fmt->flags & MISC_FMT_OPEN_BINARY)
--		bprm->have_execfd = 1;
+ 		/* mark as removed subscription */
+ 		op->rx_reg_dev = NULL;
++		dev_put(dev);
+ 	} else
+ 		printk(KERN_ERR "can-bcm: bcm_rx_unreg: registered device "
+ 		       "mismatch %p %p\n", op->rx_reg_dev, dev);
+@@ -914,17 +915,14 @@ static int bcm_delete_rx_op(struct list_head *ops, struct bcm_msg_head *mh,
+ 				 * Only remove subscriptions that had not
+ 				 * been removed due to NETDEV_UNREGISTER
+ 				 * in bcm_notifier()
++				 *
++				 * op->rx_reg_dev is a tracked reference taken
++				 * when the subscription was registered, so it
++				 * stays valid here even if a concurrent
++				 * NETDEV_UNREGISTER already unlisted the dev.
+ 				 */
+-				if (op->rx_reg_dev) {
+-					struct net_device *dev;
 -
- 	/* make argv[1] be the path to the binary */
- 	retval = copy_string_kernel(bprm->interp, bprm);
- 	if (retval < 0)
-@@ -231,6 +228,8 @@ static int load_misc_binary(struct linux
- 		goto ret;
+-					dev = dev_get_by_index(sock_net(op->sk),
+-							       op->ifindex);
+-					if (dev) {
+-						bcm_rx_unreg(dev, op);
+-						dev_put(dev);
+-					}
+-				}
++				if (op->rx_reg_dev)
++					bcm_rx_unreg(op->rx_reg_dev, op);
+ 			} else
+ 				can_rx_unregister(sock_net(op->sk), NULL,
+ 						  op->can_id,
+@@ -1447,7 +1445,15 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 						      bcm_rx_handler, op,
+ 						      "bcm", sk);
  
- 	bprm->interpreter = interp_file;
-+	if (fmt->flags & MISC_FMT_OPEN_BINARY)
-+		bprm->have_execfd = 1;
- 	if (fmt->flags & MISC_FMT_CREDENTIALS)
- 		bprm->execfd_creds = 1;
- 
+-				op->rx_reg_dev = dev;
++				/* keep a reference so that a later
++				 * unregister can safely reach the device even
++				 * if a concurrent NETDEV_UNREGISTER has
++				 * already unlisted it by ifindex
++				 */
++				if (!err) {
++					op->rx_reg_dev = dev;
++					dev_hold(dev);
++				}
+ 				dev_put(dev);
+ 			} else {
+ 				/* the requested device is gone - do not
+@@ -1820,16 +1826,14 @@ static int bcm_release(struct socket *sock)
+ 			 * Only remove subscriptions that had not
+ 			 * been removed due to NETDEV_UNREGISTER
+ 			 * in bcm_notifier()
++			 *
++			 * op->rx_reg_dev is a tracked reference taken
++			 * when the subscription was registered, so it
++			 * stays valid here even if a concurrent
++			 * NETDEV_UNREGISTER already unlisted the device.
+ 			 */
+-			if (op->rx_reg_dev) {
+-				struct net_device *dev;
+-
+-				dev = dev_get_by_index(net, op->ifindex);
+-				if (dev) {
+-					bcm_rx_unreg(dev, op);
+-					dev_put(dev);
+-				}
+-			}
++			if (op->rx_reg_dev)
++				bcm_rx_unreg(op->rx_reg_dev, op);
+ 		} else
+ 			can_rx_unregister(net, NULL, op->can_id,
+ 					  REGMASK(op->can_id),
+-- 
+2.53.0
+
 
 
