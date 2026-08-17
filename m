@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882752EEE85;
-	Mon, 17 Aug 2026 15:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685582E8DEC;
+	Mon, 17 Aug 2026 15:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979142; cv=none; b=DpHyBVHsLRMDoFWaACWLdecNdcSjRr1slciqq7v5F3MjmN4P9U0EixdhSLAWT+CY87pj+MMyG9wJeZDuNvmeS6GD8Aq3amGo1/DXa2GVDDRcwP3KO/Yaekn0TTN1SegKOHkLLNysk5p5V3e6JySONG+z3DkJ0JTtorLW/xf4jOM=
+	t=1786979145; cv=none; b=oiHuioLyXB4s+v+1Pl5nWV8ppH/yGwLbJ1s7kah9E1GUsMdeqlsWr5qqL1aK5NyXfAmh7LfOWEBrwUZCzQ7jLLuEPlegZDYd5htO3/ZwDFWJ4z+grpX4oPhqrSW9qL1G2gU1S+Besj5IdpY8qZGltKb3uZdHTD7o9c6/2vASMjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979142; c=relaxed/simple;
-	bh=LsaNZy58mH6ofXcS08qvYLgUE2zJLFN8i+CPmix3XA0=;
+	s=arc-20240116; t=1786979145; c=relaxed/simple;
+	bh=TA29+p55cinzTiL6ys7hSXrEMadmBMFviPQ3O/CV6T8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XZ2SBIAVdfe71H+zV781L6w5jDoMBrDlz3alqZoWjXqhDuQw3L7oGCeuTYhwamQEkRhS/XZhlBdhfcK/n9cJAyQyVY5Ibx0scSE0BmPxE8ywJE8DLC9ko3Oibp5tn2LW3zMuuwfbLHggypA2e6sNBrBuMFgMWJLDEqsfZglcmmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kdaieigj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z5/WGpYurqWv49shFroqyOz0LEtnG8+Vi6V6l1zqn+BglxMcP6fmhMiIqxqlVaczsqw5MkvODpvUDY9C4hQFNCb8wq7HeWUpT8ivhUB7joVHfctC+Hdf2DbWefu6esYCf7ClTG1EJh1hk2iCwoh86tZ8AD69WTj60imBL5q5o1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hpEFcXrj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kdaieigj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D441F000E9;
-	Mon, 17 Aug 2026 15:05:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hpEFcXrj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C12051F000E9;
+	Mon, 17 Aug 2026 15:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979141;
-	bh=RL6z6s7pGSr47qb+V+bSO51KXciCy2oyHLryepv7t18=;
+	s=korg; t=1786979144;
+	bh=PK81IMuB2DVEgyQxb54w4ByvEN0Tn7tR9nBZgaDWvF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KdaieigjNiJ32ill+lmEk4N5qd9DTKbwVSpdxnw93oBs3RVL+fayoPLlHzEzb0Xgg
-	 i/i5ChtMRAZMHJO/RLLclheoYJaJmpCZ/m7iSS0OUWeSzvEkkOtVhr/xNZjDPMkTT0
-	 aO0UvTAzmAupPj5lBHEI/z2XdmHuuQNzFm8P7IV8=
+	b=hpEFcXrjQV9ZDszdSREs9rdYcCR7y+e81Rau/5iMT4BL9JdVFLn1EnOAzJsj/nPwc
+	 x01ZOvf3SqgdjG5FjEi7nJGE0nSqC+kObMjKSxQ/CZ8zSvnVVMi4LKDkgdNyjk6p0N
+	 Otq51p0dGZaH2uchctBkV6EEyy4/u+DT4ALkWQ/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Allison Henderson <achender@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 124/609] rds: drop incoming messages that cross network namespace boundaries
-Date: Mon, 17 Aug 2026 15:27:00 +0200
-Message-ID: <20260817132547.998856663@linuxfoundation.org>
+Subject: [PATCH 6.1 125/609] dpaa2-switch: put MAC endpoint device on disconnect
+Date: Mon, 17 Aug 2026 15:27:01 +0200
+Message-ID: <20260817132548.035550244@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,75 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 5521ae71e32a8069ed4ca6e792179dc57bc43ab2 ]
+[ Upstream commit 4c1eabbef7a1707635652e956e39db1269c3af2b ]
 
-rds_find_bound() looks up the destination socket using a global
-rhashtable keyed solely on (addr, port, scope_id).  Network namespaces
-are not part of the key, so a sender in netns A can deliver an incoming
-message (inc) to a socket that lives in a different netns B.
+fsl_mc_get_endpoint() returns the MAC endpoint device with a reference
+taken through device_find_child(). The switch port connect path stores
+that device in mac->mc_dev and keeps it for the lifetime of the connected
+MAC object.
 
-When this happens, inc->i_conn points to an rds_connection whose c_net
-is netns A, but the receiving rs lives in netns B.  Once the child
-process that created netns A exits, cleanup_net() calls
-rds_loop_exit_net() -> rds_loop_kill_conns() -> rds_conn_destroy(),
-freeing that connection.  If the survivor socket in netns B still holds
-the inc, any subsequent dereference of inc->i_conn is a use-after-free.
+However, the disconnect path only closes the MAC and frees the dpaa2_mac
+object. It does not drop the endpoint device reference stored in
+mac->mc_dev, so every successful connect leaks that device reference when
+the MAC is later disconnected.
 
-There are two dangerous sites in rds_clear_recv_queue():
-  1. inc->i_conn->c_lcong (offset 88 of freed rds_connection, size 200)
-     read via rds_recv_rcvbuf_delta() -- confirmed by KASAN.
-  2. inc->i_conn->c_trans->inc_free(inc) (function pointer at offset 80)
-     called via rds_inc_put() when the inc refcount reaches zero -- same
-     race window, potential call-through-freed-object primitive.
+Drop the endpoint device reference before freeing the dpaa2_mac object.
 
-The bug is reachable from unprivileged user namespaces
-(CLONE_NEWUSER + CLONE_NEWNET), available since Linux 3.8.
-
-Fix this by rejecting the delivery in rds_recv_incoming() when the
-socket returned by rds_find_bound() belongs to a different network
-namespace than the connection that carried the message.  Use the
-existing rds_conn_net() / sock_net() helpers and net_eq() for the
-comparison.
-
-Fixes: c809195f5523 ("rds: clean up loopback rds_connections on netns deletion")
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Tested-by: Allison Henderson <achender@kernel.org>
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260708024314.601139-1-achender@kernel.org
+Fixes: 84cba72956fd ("dpaa2-switch: integrate the MAC endpoint support")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260708111025.749311-1-lgs201920130244@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/recv.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/rds/recv.c b/net/rds/recv.c
-index a316180d3c32ec..7fd77e1b4fe71c 100644
---- a/net/rds/recv.c
-+++ b/net/rds/recv.c
-@@ -365,6 +365,21 @@ void rds_recv_incoming(struct rds_connection *conn, struct in6_addr *saddr,
- 		goto out;
- 	}
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+index c8478fdcb3aa5f..8f7c3466f52c45 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+@@ -1514,6 +1514,7 @@ static void dpaa2_switch_port_disconnect_mac(struct ethsw_port_priv *port_priv)
+ 		dpaa2_mac_disconnect(mac);
  
-+	/*
-+	 * rds_find_bound() uses a global (netns-agnostic) hash table.
-+	 * An RDS connection created in netns A can match a socket bound
-+	 * in the init netns, delivering inc cross-netns with inc->i_conn
-+	 * pointing into netns A.  When cleanup_net() then frees that conn,
-+	 * any subsequent dereference of inc->i_conn is a use-after-free.
-+	 * Drop the inc if the receiving socket lives in a different netns.
-+	 */
-+	if (!net_eq(sock_net(rds_rs_to_sk(rs)), rds_conn_net(conn))) {
-+		rds_stats_inc(s_recv_drop_no_sock);
-+		rds_sock_put(rs);
-+		rs = NULL;
-+		goto out;
-+	}
-+
- 	/* Process extension headers */
- 	rds_recv_incoming_exthdrs(inc, rs);
+ 	dpaa2_mac_close(mac);
++	put_device(&mac->mc_dev->dev);
+ 	kfree(mac);
+ }
  
 -- 
 2.53.0
