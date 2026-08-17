@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD11F3EC807;
-	Mon, 17 Aug 2026 13:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B461A3E4C94;
+	Mon, 17 Aug 2026 13:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786973927; cv=none; b=Qj4w1/bp+Z7vl622g6EQr3q/io/2KT7N0sJ6H9xs/Tf2K/yHatHoQtWUDsr5kqzMd/A5YDT119/AzzXUjVB2dk+AIvmqsu5W+2hw4bcTaoB8EK0/fEiLYxvSzAOB09C7uQ+oj50epY1o449qaQ0uAYVGktKuQM9arO7tqXRzKJs=
+	t=1786973930; cv=none; b=DMP2LEqlPGEr+m8ShjYXEvcdZ2dwDvYeJKL5S+V3L2+wq9aScAIK8WhFgqWzMQ6I+4sF4zWZNF+WxQDZPN/Iu4EpXd+3pHetTMRYHoOKP252G6l8ezQ7EjfRqVLPlPzdJsRpYtVp8HI8jWTIMZjw1jqdj1jtEwVX5ihYt43QduQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786973927; c=relaxed/simple;
-	bh=lgskpGptr34PgaXXo2i+wOMiI7YdDLfSWBFZn+iPKFY=;
+	s=arc-20240116; t=1786973930; c=relaxed/simple;
+	bh=RRrjqbVPrNg98dNTIzEv2nPfyQx/dOYypdAQQzPUPDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZqNkGTlIV9G+8KQ7d794sbJRFQOrAMeWWDqsqOiWmhNg5xRvO4scb1rgpq/SY8Ggu7a0b0u6ggoBR+0s2QbcgxFX6NT8P+6HYaGHCj98lXMiQOtDyFJ6Z1F2okLp+izkooZp1MxS5gUKlVdF0j4rsDlfdkpEGRvLaGSskQ1ewJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DI6xnWuv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cGBy51JOtaxRPn4MtSascFKAj9D2e+rLYHLpGR3WWA94s4FIvWgQup0P1wC75wgxpoXXGTynNpKfXsaRJ77xm3Utyan5Jnmewu7YXslqiW92ucr6sgArcUaMhOCFZnAnXV9Ac5XgCdKa/aZrJwCiHj7mwOL2ALIvJuTb7pUN9pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hrT4M9XP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DI6xnWuv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F641F00A3F;
-	Mon, 17 Aug 2026 13:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hrT4M9XP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60DC1F000E9;
+	Mon, 17 Aug 2026 13:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786973926;
-	bh=BE7B1dlWitUSD8aPFDEmlKw61j1hOPyJ27m51hfNRms=;
+	s=korg; t=1786973929;
+	bh=ilRckA51Ur2FK4x7MrTUebVQ9PULa5ZliS4p+ZDkI5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DI6xnWuvYs17/T6N648XrIFjZwH3XexigjHEDBFzALLKJtpDZB7fYpxarwLKixPay
-	 L3+fwHQxUoGSebLwGSpU2JTipgxDsEZ/GK9P32exBKoEBCYXiExpR1oO42CoEFhvr9
-	 n9eniv5l5l8LT3xd1p2rMxLmXvpttoxhGaBmUReM=
+	b=hrT4M9XP4Mk6JeiTzv+WlMYx79hI3qFfB825xPK5BZASdJsBAhBeovG7DaKLyqIWs
+	 2FcBsnTMfbdN84C8r1RYzJRzn4rhEKusOc4C1cvJofKkcThCanXOkuRGHCESQNFmIK
+	 DavRB+RfjsutrOE9qHzLZ2+b54lLlYpg1x00KHGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonio Quartulli <antonio@openvpn.net>,
+	Mykyta Yatsenko <yatsenko@meta.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re=20 ?=" <ricardo@marliere.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 029/271] ovpn: ensure socket is owned by ovpn before deref sk_user_data
-Date: Mon, 17 Aug 2026 15:29:14 +0200
-Message-ID: <20260817132537.948518540@linuxfoundation.org>
+Subject: [PATCH 7.1 003/271] selftests/bpf: Add tests for sleepable tracepoint programs
+Date: Mon, 17 Aug 2026 15:28:48 +0200
+Message-ID: <20260817132536.896421533@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -44,51 +46,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antonio Quartulli <antonio@openvpn.net>
+From: Mykyta Yatsenko <yatsenko@meta.com>
 
-[ Upstream commit 59aed1eb60d70678a53acccb0cb337a26ce6680e ]
+[ Upstream commit 8a20655749c625dcc4debdfdeeaa0cf8bb85c203 ]
 
-Some subsystems, like BPF SOCKMAP, set sk_user_data without
-actually setting the encap_type.
+Cover all three sleepable tracepoint types (tp_btf.s, raw_tp.s, tp.s)
+and sys_exit (via bpf_task_pt_regs) with functional tests using
+bpf_copy_from_user() on getcwd. Verify alias and bare SEC variants,
+bpf_prog_test_run_raw_tp() with BPF_F_TEST_RUN_ON_CPU rejection,
+attach-time rejection on non-faultable tracepoints, and load-time
+rejection for sleepable tp_btf on non-faultable tracepoints.
 
-For this reason, we must make sure that the type is the
-one ovpn expects before dereferencing sk_user_data.
+[ rbm: Removed hunks from (new) files:
+        tools/testing/selftests/bpf/prog_tests/sleepable_tracepoints.c
+        tools/testing/selftests/bpf/progs/test_sleepable_tracepoints.c
+        tools/testing/selftests/bpf/progs/test_sleepable_tracepoints_fail.c
+       These rely on libbpf's ".s" tracepoint section handlers
+       (0cd420a6f40c7) and on kernel-side sleepable tracepoint runtime
+       support (439ebd5b5708, 12628ffaf98b, 57918341dd19), none of which
+       are backported here; kept only the verifier/sleepable.c hunk, which
+       is correct and needed on its own. ]
 
-Failing to do so may lead to out-of-bounds reads.
-
-Fixes: f6226ae7a0cd ("ovpn: introduce the ovpn_socket object")
-Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
+Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
+Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/bpf/20260422-sleepable_tracepoints-v13-6-99005dff21ef@meta.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Ricardo B. Marlière (SUSE) <ricardo@marliere.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/socket.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ .../testing/selftests/bpf/verifier/sleepable.c  | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ovpn/socket.c b/drivers/net/ovpn/socket.c
-index 517caa64a4fef..6cbeb2caaeeca 100644
---- a/drivers/net/ovpn/socket.c
-+++ b/drivers/net/ovpn/socket.c
-@@ -162,6 +162,15 @@ struct ovpn_socket *ovpn_socket_new(struct socket *sock, struct ovpn_peer *peer)
- 		rcu_read_lock();
- 		ovpn_sock = rcu_dereference_sk_user_data(sk);
- 		if (ovpn_sock) {
-+			/* something else filled the sk_user_data without
-+			 * setting the encap_type. Reject the socket.
-+			 */
-+			if (!type) {
-+				ovpn_sock = ERR_PTR(-EBUSY);
-+				rcu_read_unlock();
-+				goto sock_release;
-+			}
-+
- 			/* socket owned by another ovpn instance, we can't use it */
- 			if (ovpn_sock->ovpn != peer->ovpn) {
- 				ovpn_sock = ERR_PTR(-EBUSY);
+diff --git a/tools/testing/selftests/bpf/verifier/sleepable.c b/tools/testing/selftests/bpf/verifier/sleepable.c
+index c2b7f5ebf168c..6dabc55229455 100644
+--- a/tools/testing/selftests/bpf/verifier/sleepable.c
++++ b/tools/testing/selftests/bpf/verifier/sleepable.c
+@@ -76,7 +76,20 @@
+ 	.runs = -1,
+ },
+ {
+-	"sleepable raw tracepoint reject",
++	"sleepable raw tracepoint accept",
++	.insns = {
++	BPF_MOV64_IMM(BPF_REG_0, 0),
++	BPF_EXIT_INSN(),
++	},
++	.prog_type = BPF_PROG_TYPE_TRACING,
++	.expected_attach_type = BPF_TRACE_RAW_TP,
++	.kfunc = "sys_enter",
++	.result = ACCEPT,
++	.flags = BPF_F_SLEEPABLE,
++	.runs = -1,
++},
++{
++	"sleepable raw tracepoint reject non-faultable",
+ 	.insns = {
+ 	BPF_MOV64_IMM(BPF_REG_0, 0),
+ 	BPF_EXIT_INSN(),
+@@ -85,7 +98,7 @@
+ 	.expected_attach_type = BPF_TRACE_RAW_TP,
+ 	.kfunc = "sched_switch",
+ 	.result = REJECT,
+-	.errstr = "Only fentry/fexit/fsession/fmod_ret, lsm, iter, uprobe, and struct_ops programs can be sleepable",
++	.errstr = "Sleepable program cannot attach to non-faultable tracepoint",
+ 	.flags = BPF_F_SLEEPABLE,
+ 	.runs = -1,
+ },
 -- 
 2.53.0
 
