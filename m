@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7128E3EC831;
-	Mon, 17 Aug 2026 13:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3E03C3C08;
+	Mon, 17 Aug 2026 13:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974856; cv=none; b=CxG7Uo8gBlNcJlbj77qTICdmwds//U1iz074pimtpBeNYPNwLK5KozFMJvmk7p2YALE0C2eKVlWgTltGEzB1UiChZrq2jxEbbm5VN7CeboT7ICp0n2DvqPV4TWQ5Q+qM0XRKrNfWOX8qGqpr0Qwd3hC7eUC8UXrEPRlY7dEKa0A=
+	t=1786974858; cv=none; b=HU34X8cs+sjV8k3NvhlBtDHDFF6X72QwxWixapcKzJftv2vJo6cOQmpZPA7uGZUnklKyPbz1AkWUPU9nJf7GyOfFCUpujHFdolexcs0OsXekh9BRcSUXNnTaagtRcuTrahmuxrf+zN1x+PyqR/tEkPITCnNKc9bUEjQTiePR7uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974856; c=relaxed/simple;
-	bh=aGoN+DayLwLNMlQ0Z0ToaqIos6rhAjxfn6SW0cXSUpw=;
+	s=arc-20240116; t=1786974858; c=relaxed/simple;
+	bh=xWoTB1WOpisyabuzrNdtM6YgXKPV5P/kfAQC0OunYz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZvBWQc3ZWvMgHZJfeex7Uiut2a2eeg2ylI31rD8bfh4jnhhzh7bP4HelALJGCZThHkp04dZXmqeTOW1fk/oNkJZ+ujeaxfryb/DA2CYTCtaW4aS3Ph+AxvRxwcZGrJ+tg3WhRUy3zRApqYb5GSIA5u7+vowPpDi2koVqJKMkyH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8qpLfuC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LPW+zbfy/LTcxkpnvZapLj6zCdLPd6p8+OyVTNjFqrwPR5RD9ee0NFFxzEU03MdpJSk1qSxALw31rrkMqGFZZPlnXVjjKOSrJZyWH9gUxDhkbtiOybdlZJ/ZVz+z1+ooCNiax0ZuYORjeJZnsbSy41YkBCIojSeuDcIciYaMOx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8SuGnln; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8qpLfuC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34B41F000E9;
-	Mon, 17 Aug 2026 13:54:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8SuGnln"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7E7D1F00A3A;
+	Mon, 17 Aug 2026 13:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974850;
-	bh=mNrHfGPMxdz0n7e+cq8EFOVi7SqTV5qDY4+Wj0C/D0c=;
+	s=korg; t=1786974853;
+	bh=Sre032Jd+Am6c+T8cMW5LGfyWDNpPiY8vTEEvi3ZGzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n8qpLfuCJr2CkGgJZzgLlTm80GzfC4gcg457Y1CoX35Acn9H6/f6rdS+FX5kS9ils
-	 y48y938jpCuQ1msVWYL49POzInZ9J9C5/vmu5wYvd9OcjE/ntVTwN60efmr3e0KGt2
-	 axiUvDPf15oFCioh+nN+waRFOxfJnhgFdfEwJqYg=
+	b=y8SuGnlnA62RBRCYiwb1/lch662NdXxBLTsmLc7+khK++bj0OycIG4zIslehW6qwx
+	 9cdaUCsr/YGaviIHpxuLg19xksffysmwGdcXlzkHme8hlqr7gLzdNYatYwXLQhoDRu
+	 hIvpGSXk2v3UFHTmC4fwlF8GSeswJ62/XRQgqxMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonio Quartulli <antonio@openvpn.net>,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 026/250] ovpn: hash floated peer by transport identity only
-Date: Mon, 17 Aug 2026 15:29:47 +0200
-Message-ID: <20260817132537.526075027@linuxfoundation.org>
+Subject: [PATCH 6.18 070/250] xsk: validate metadata when processing requests
+Date: Mon, 17 Aug 2026 15:30:31 +0200
+Message-ID: <20260817132539.312643359@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -50,92 +52,222 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antonio Quartulli <antonio@openvpn.net>
+From: Stanislav Fomichev <sdf.kernel@gmail.com>
 
-[ Upstream commit b47a52dcd598a50207a33df304acdf45348a690f ]
+[ Upstream commit 849b1664dbda1cf6c63e0fd4f9dec23782b8c851 ]
 
-The by_transp_addr table is keyed on the peer's remote transport
-address, but the float rehash hashed bind->remote directly, while the
-two other sites that touch the table build a clean key first:
-ovpn_peer_add_mp() and the lookup in ovpn_peer_get_by_transp_addr()
-both hash a sockaddr holding only family/address/port.
+The zero-copy path validates TX metadata while obtaining the descriptor
+context, then reads it again later when preparing the hardware request.
+User space can change the metadata between those operations and bypass the
+original validation.
 
-For a link-local IPv6 peer, bind->remote carries sin6_scope_id (set
-from ipv6_iface_scope_id() when the endpoint is learned), and that
-field is folded into the jhash() over sizeof(struct sockaddr_in6).
-The lookup never sets sin6_scope_id, so after such a peer floats it is
-rehashed into a scope_id-dependent bucket that lookups (scope_id 0)
-never visit, making the peer unreachable through the by_transp_addr
-fallback. ovpn_peer_transp_match() only compares address and port, so
-the hash was keying on a field the match ignores.
+Validate the metadata in xsk_tx_metadata_request() and use the resulting
+flags snapshot for every feature check. Read request fields once so all
+zero-copy drivers process only values observed after successful
+validation.
 
-sin6_scope_id must stay in bind->remote because the TX path uses it as
-flowi6_oif, so it cannot just be cleared there. Instead build the hash
-key from family/address/port only, exactly like ovpn_peer_add_mp() and
-the lookup, so all three sites agree on the bucket.
-
-Fixes: f0281c1d3732 ("ovpn: add support for updating local or remote UDP endpoint")
-Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
+Fixes: ca4419f15abd ("xsk: Add launch time hardware offload support to XDP Tx metadata")
+Cc: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20260727161959.885642-7-sdf@fomichev.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/peer.c | 25 +++++++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_main.c     |  2 +-
+ .../net/ethernet/mellanox/mlx5/core/en/xdp.c  |  5 +-
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c |  4 +-
+ include/net/libeth/xsk.h                      |  2 +-
+ include/net/xdp_sock_drv.h                    | 51 ++++++++++---------
+ net/xdp/xsk_buff_pool.c                       |  6 +--
+ 6 files changed, 37 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/net/ovpn/peer.c b/drivers/net/ovpn/peer.c
-index 3824ee1c2e40a..9b647a327c468 100644
---- a/drivers/net/ovpn/peer.c
-+++ b/drivers/net/ovpn/peer.c
-@@ -899,7 +899,10 @@ bool ovpn_peer_check_by_src(struct ovpn_priv *ovpn, struct sk_buff *skb,
- static void __ovpn_peer_hash_transp_addr(struct ovpn_peer *peer,
- 					 const struct ovpn_bind *bind)
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index f69523e35ac10..99a414440bcaa 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -3082,7 +3082,7 @@ static void igc_xdp_xmit_zc(struct igc_ring *ring)
+ 		meta_req.tx_buffer = bi;
+ 		meta_req.meta = meta;
+ 		meta_req.used_desc = 0;
+-		xsk_tx_metadata_request(&meta, &igc_xsk_tx_metadata_ops,
++		xsk_tx_metadata_request(pool, &meta, &igc_xsk_tx_metadata_ops,
+ 					&meta_req);
+ 
+ 		/* xsk_tx_metadata_request() may have updated next_to_use */
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
+index e467a7b067c7a..2f52e04b28de2 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
+@@ -504,7 +504,7 @@ mlx5e_xmit_xdp_frame_mpwqe(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptx
+ 		 */
+ 		mlx5e_xdp_mpwqe_session_start(sq);
+ 		if (meta)
+-			xsk_tx_metadata_request(meta,
++			xsk_tx_metadata_request(sq->xsk_pool, meta,
+ 						&mlx5e_xsk_tx_metadata_ops,
+ 						&session->wqe->eth);
+ 	}
+@@ -652,7 +652,8 @@ mlx5e_xmit_xdp_frame(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptxd,
+ 	sq->pc += num_wqebbs;
+ 
+ 	if (meta)
+-		xsk_tx_metadata_request(meta, &mlx5e_xsk_tx_metadata_ops, eseg);
++		xsk_tx_metadata_request(sq->xsk_pool, meta,
++					&mlx5e_xsk_tx_metadata_ops, eseg);
+ 
+ 	sq->doorbell_cseg = cseg;
+ 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 3380ce960de24..bca81ed28e073 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -2574,8 +2574,8 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
+ 		meta_req.set_ic = &set_ic;
+ 		meta_req.tbs = tx_q->tbs;
+ 		meta_req.edesc = &tx_q->dma_entx[entry];
+-		xsk_tx_metadata_request(&meta, &stmmac_xsk_tx_metadata_ops,
+-					&meta_req);
++		xsk_tx_metadata_request(pool, &meta,
++					&stmmac_xsk_tx_metadata_ops, &meta_req);
+ 		if (set_ic) {
+ 			tx_q->tx_count_frames = 0;
+ 			stmmac_set_tx_ic(priv, tx_desc);
+diff --git a/include/net/libeth/xsk.h b/include/net/libeth/xsk.h
+index 1a55daa32cf16..23eb240d5ba72 100644
+--- a/include/net/libeth/xsk.h
++++ b/include/net/libeth/xsk.h
+@@ -205,7 +205,7 @@ __libeth_xsk_xmit_fill_buf_md(const struct xdp_desc *xdesc,
+ 	BUILD_BUG_ON(!__builtin_constant_p(tmo == libeth_xsktmo));
+ 	tmo = tmo == libeth_xsktmo ? &__libeth_xsktmo : tmo;
+ 
+-	xsk_tx_metadata_request(&ctx.meta, tmo, &desc);
++	xsk_tx_metadata_request(sq->pool, &ctx.meta, tmo, &desc);
+ 
+ 	return desc;
+ }
+diff --git a/include/net/xdp_sock_drv.h b/include/net/xdp_sock_drv.h
+index 6d4f65b0ed53a..d74ca548d4d6a 100644
+--- a/include/net/xdp_sock_drv.h
++++ b/include/net/xdp_sock_drv.h
+@@ -241,7 +241,7 @@ static inline void *xsk_buff_raw_get_data(struct xsk_buff_pool *pool, u64 addr)
+  * details.
+  *
+  * Return: new &xdp_desc_ctx struct containing desc's DMA address and metadata
+- * pointer, if it is present and valid (initialized to %NULL otherwise).
++ * pointer, if it is present (initialized to %NULL otherwise).
+  */
+ static inline struct xdp_desc_ctx
+ xsk_buff_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr)
+@@ -270,54 +270,56 @@ xsk_buff_valid_tx_metadata(const struct xsk_buff_pool *pool,
+ /**
+  *  xsk_tx_metadata_request - Evaluate AF_XDP TX metadata at submission
+  *  and call appropriate xsk_tx_metadata_ops operation.
++ *  @pool: pointer to AF_XDP buffer pool, used to validate the metadata
+  *  @pmeta: pointer to pointer to AF_XDP metadata area
+  *  @ops: pointer to struct xsk_tx_metadata_ops
+- *  @priv: pointer to driver-private aread
++ *  @priv: pointer to driver-private area
+  *
+  *  This function should be called by the networking device when
+  *  it prepares AF_XDP egress packet.
+  */
+-static inline void xsk_tx_metadata_request(struct xsk_tx_metadata **pmeta,
+-					   const struct xsk_tx_metadata_ops *ops,
+-					   void *priv)
++static inline void
++xsk_tx_metadata_request(const struct xsk_buff_pool *pool,
++			struct xsk_tx_metadata **pmeta,
++			const struct xsk_tx_metadata_ops *ops, void *priv)
  {
-+	struct sockaddr_storage sa = {};
- 	struct hlist_nulls_head *nhead;
-+	struct sockaddr_in6 *sa6;
-+	struct sockaddr_in *sa4;
- 	size_t salen;
+ 	const struct xsk_tx_metadata *meta = *pmeta;
++	u64 flags;
  
- 	lockdep_assert_held(&peer->ovpn->lock);
-@@ -915,12 +918,26 @@ static void __ovpn_peer_hash_transp_addr(struct ovpn_peer *peer,
- 	if (unlikely(hlist_unhashed(&peer->hash_entry_id)))
+ 	if (!meta)
  		return;
  
-+	/* Build the hash key from the transport identity only
-+	 * (family/address/port), matching ovpn_peer_add_mp() and the lookup
-+	 * in ovpn_peer_get_by_transp_addr(). Hashing bind->remote directly
-+	 * would fold in sin6_scope_id (set on the float path but never by the
-+	 * lookup), scattering the peer into a bucket lookups cannot reach.
-+	 */
- 	switch (bind->remote.in4.sin_family) {
- 	case AF_INET:
--		salen = sizeof(struct sockaddr_in);
-+		sa4 = (struct sockaddr_in *)&sa;
-+		sa4->sin_family = AF_INET;
-+		sa4->sin_addr.s_addr = bind->remote.in4.sin_addr.s_addr;
-+		sa4->sin_port = bind->remote.in4.sin_port;
-+		salen = sizeof(*sa4);
- 		break;
- 	case AF_INET6:
--		salen = sizeof(struct sockaddr_in6);
-+		sa6 = (struct sockaddr_in6 *)&sa;
-+		sa6->sin6_family = AF_INET6;
-+		sa6->sin6_addr = bind->remote.in6.sin6_addr;
-+		sa6->sin6_port = bind->remote.in6.sin6_port;
-+		salen = sizeof(*sa6);
- 		break;
- 	default:
- 		return;
-@@ -929,8 +946,8 @@ static void __ovpn_peer_hash_transp_addr(struct ovpn_peer *peer,
- 	/* remove old hashing (no-op if entry is not currently linked) */
- 	hlist_nulls_del_init_rcu(&peer->hash_entry_transp_addr);
- 	/* re-add with current transport address */
--	nhead = ovpn_get_hash_head(peer->ovpn->peers->by_transp_addr,
--				   &bind->remote, salen);
-+	nhead = ovpn_get_hash_head(peer->ovpn->peers->by_transp_addr, &sa,
-+				   salen);
- 	hlist_nulls_add_head_rcu(&peer->hash_entry_transp_addr, nhead);
++	if (unlikely(!xsk_buff_valid_tx_metadata(pool, meta, &flags))) {
++		*pmeta = NULL;
++		return; /* no way to signal the error to the user */
++	}
++
+ 	if (ops->tmo_request_launch_time)
+-		if (meta->flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
+-			ops->tmo_request_launch_time(meta->request.launch_time,
+-						     priv);
++		if (flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
++			ops->tmo_request_launch_time(
++				READ_ONCE(meta->request.launch_time), priv);
+ 
+ 	if (ops->tmo_request_timestamp)
+-		if (meta->flags & XDP_TXMD_FLAGS_TIMESTAMP)
++		if (flags & XDP_TXMD_FLAGS_TIMESTAMP)
+ 			ops->tmo_request_timestamp(priv);
+ 
+ 	if (ops->tmo_request_checksum)
+-		if (meta->flags & XDP_TXMD_FLAGS_CHECKSUM)
+-			ops->tmo_request_checksum(meta->request.csum_start,
+-						  meta->request.csum_offset, priv);
++		if (flags & XDP_TXMD_FLAGS_CHECKSUM)
++			ops->tmo_request_checksum(
++				READ_ONCE(meta->request.csum_start),
++				READ_ONCE(meta->request.csum_offset), priv);
+ 
+-	if (!(meta->flags & XDP_TXMD_FLAGS_TIMESTAMP))
++	if (!(flags & XDP_TXMD_FLAGS_TIMESTAMP))
+ 		*pmeta = NULL;
  }
  
+ static inline struct xsk_tx_metadata *
+ __xsk_buff_get_metadata(const struct xsk_buff_pool *pool, void *data)
+ {
+-	struct xsk_tx_metadata *meta;
+-	u64 flags;
+-
+ 	if (!pool->tx_metadata_len)
+ 		return NULL;
+ 
+-	meta = data - pool->tx_metadata_len;
+-	if (unlikely(!xsk_buff_valid_tx_metadata(pool, meta, &flags)))
+-		return NULL; /* no way to signal the error to the user */
+-
+-	return meta;
++	return data - pool->tx_metadata_len;
+ }
+ 
+ static inline struct xsk_tx_metadata *
+@@ -516,9 +518,10 @@ xsk_buff_valid_tx_metadata(const struct xsk_buff_pool *pool,
+ 	return false;
+ }
+ 
+-static inline void xsk_tx_metadata_request(struct xsk_tx_metadata **pmeta,
+-					   const struct xsk_tx_metadata_ops *ops,
+-					   void *priv)
++static inline void
++xsk_tx_metadata_request(const struct xsk_buff_pool *pool,
++			struct xsk_tx_metadata **pmeta,
++			const struct xsk_tx_metadata_ops *ops, void *priv)
+ {
+ }
+ 
+diff --git a/net/xdp/xsk_buff_pool.c b/net/xdp/xsk_buff_pool.c
+index c9688735b643c..772fe1838cfb3 100644
+--- a/net/xdp/xsk_buff_pool.c
++++ b/net/xdp/xsk_buff_pool.c
+@@ -769,11 +769,11 @@ EXPORT_SYMBOL(xp_raw_get_dma);
+  * @addr: desc address (from userspace)
+  *
+  * Helper for getting desc's DMA address and metadata pointer, if present.
+- * Saves one call on hotpath, double calculation of the actual address,
+- * and inline checks for metadata presence and sanity.
++ * Saves one call on hotpath and double calculation of the actual address.
++ * Metadata is validated later by xsk_tx_metadata_request().
+  *
+  * Return: new &xdp_desc_ctx struct containing desc's DMA address and metadata
+- * pointer, if it is present and valid (initialized to %NULL otherwise).
++ * pointer, if it is present (initialized to %NULL otherwise).
+  */
+ struct xdp_desc_ctx xp_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr)
+ {
 -- 
 2.53.0
 
