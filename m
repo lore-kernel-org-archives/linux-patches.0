@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2192F32ED40;
-	Mon, 17 Aug 2026 13:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4065F3C8C65;
+	Mon, 17 Aug 2026 13:39:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786973978; cv=none; b=jwH2BYVTsGpfzM/+PlG9eERik8c7fFN0zNY2vDqz0Fo43VU19mDOCQXPsXaGd9Y+Ufa/qDb6tjKnxE5wPHEsmvQY1EXDA4OBZ/dmO0ctPOtaQeHHPQlgiSUdpbGSdYUGm6bkbQGkMWnx4+7iHOeZpdGPqTqfwCP7dRbzRNiYH9Y=
+	t=1786973981; cv=none; b=mHXXwJiq43qBqKvEDYBOBo9F7tT+Zbvgv9nPwvz2RzWf2kIL4lUndxc0dge5pHUrTHUqfy63/64AhdiyrvK6aaik8evAurYTHWtkJy7p4bPIlWnj/lM7XdScVxYCD3gcyFrneHY9LKaOrhtWYgC+S7rXFLWPrJ2wrkBSCwwtYZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786973978; c=relaxed/simple;
-	bh=//4zCm/6MK/OJrxBdzgfTsiAg5X293DJMbwyBsza7/0=;
+	s=arc-20240116; t=1786973981; c=relaxed/simple;
+	bh=geMVRQAnI+DRy+RVmazoT3u0rQfPX8dcIfybUjYpy94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJvgYy1K08uCX0rZE/8gu6jiyXyP73+GcjjS3L1+JxqnzDlSwPDZTG0LacnWkCA34qrGEdJVEeXj0c3MMyH+7uiyjacc/K47deyX6Bs9v99cDWK/QvrJ5NqIPkC1TXi8yKsu7mflMSYD35nsMqBtBx+g2q6h/NEmfeTsmHVUm1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrOcxMD/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BgKoEXSCpBr9js9zPaS6GEQu2SCdmJnp01nk6hdUxA8ySngevOwo1P7q+0vYdc6zoAGIPDOR5cBTnfxVyKmZETeWeWqGSbfc+BHF7zrikcE4rhvNEaCaYdPu8JG86q84Kfv6nvAYbq9qPzODS7IX7OVQ+vaTqgOZyLYl4hZcRuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J520tHtZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrOcxMD/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B02C1F000E9;
-	Mon, 17 Aug 2026 13:39:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J520tHtZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 543891F000E9;
+	Mon, 17 Aug 2026 13:39:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786973977;
-	bh=XZZju3Fl8B8eVcJ3khpQk1D95pz2gV4Dk4u8Z09bB/M=;
+	s=korg; t=1786973979;
+	bh=/+WzQ1I3YaKRTzuq8rwstx20d2o5xZhgEe+XFoiNSmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zrOcxMD/r0tze7pAh4btF9IQY+KsnYQZCahqn5t3bn47ofWEe1ufFhULT/PXz0Buj
-	 fj5wGsjfW+QrCsEPHUsgFPWDINczMGOz2R2HG7/w0QWXKeCQv6hiWAa6T59Qjx1hKX
-	 x3xb0WdTLMMaIQd2qzGKEkLPvaEYsgOO4Rl37dPI=
+	b=J520tHtZDgBxEatYQ0VZdSG+dykFW2EAQ1EYOJtwO5Nh+WGszrqQcwbpL1xib05RG
+	 OqRgekD7NvpzXd2JLTBtK3Hn2EapW7R1wnB9ZHHrsvZl2a2YVCpQOfECHbY7ms/00W
+	 48oOyyAQzih3NN/toGE69LwsvXLxUlG1+1Abl+YY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	David Lee <david.lee@trailofbits.com>,
 	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 047/271] btrfs: lzo: add error message for invalid headers
-Date: Mon, 17 Aug 2026 15:29:32 +0200
-Message-ID: <20260817132538.667346239@linuxfoundation.org>
+Subject: [PATCH 7.1 048/271] btrfs: lzo: reject inline extents without valid headers
+Date: Mon, 17 Aug 2026 15:29:33 +0200
+Message-ID: <20260817132538.707766150@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -51,62 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: David Lee <david.lee@trailofbits.com>
 
-[ Upstream commit 1cb15b153c636096740519f62040ec6dc3e50aef ]
+[ Upstream commit 0fa78ef637deb5dbe341582f88553a4bce496de0 ]
 
-Inside btrfs we always pair -EUCLEAN error with an error message to
-indicate which data is corrupted.
+[BUG]
+For a crafted btrfs image, the following KASAN can be triggered when
+reading an inline lzo compressed file extent:
 
-However there are 3 cases inside lzo decompression where there is no
-error message for corrupted headers.
+  BUG: KASAN: slab-out-of-bounds in lzo_decompress+0x57d/0x700
+  Read of size 4 at addr ffff888006f2e644 by task btrfs_lzo_inlin/77
 
-Add those missing error messages to show exactly where the corruption
-is.
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x5b/0x70
+   print_report+0xd1/0x610
+   kasan_report+0xe0/0x110
+   __asan_report_load_n_noabort+0x13/0x20
+   lzo_decompress+0x57d/0x700
+   btrfs_decompress+0x140/0x1c0
+   uncompress_inline+0x147/0x1b0
+   btrfs_get_extent+0xb23/0x10a0
+   btrfs_do_readpage.constprop.0+0x538/0x1ac0
+   btrfs_readahead+0x32f/0x5f0
+   read_pages+0x16f/0x850
+   page_cache_ra_unbounded+0x296/0x490
+   do_page_cache_ra+0xd9/0x130
+   page_cache_sync_ra+0x3ee/0x6f0
+   filemap_get_pages+0x306/0x15c0
+   filemap_read+0x329/0xd00
+   btrfs_file_read_iter+0x1f8/0x2b0
+   vfs_read+0x4ef/0x720
+   ksys_read+0xf8/0x1d0
+   __x64_sys_read+0x71/0xb0
+   x64_sys_call+0x1ab0/0x1b70
+   do_syscall_64+0x61/0x470
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   </TASK>
 
+[CAUSE]
+For an inline lzo compressed file extent, there should always be one lzo
+header, recording the total length of the compressed data, followed by
+one segment header, recording the compressed lzo payload.
+
+But if a crafted inline lzo compressed file extent contains only an lzo
+header, without the segment header or payload, lzo_decompress() will
+still try to read the segment header, causing a read beyond the item
+boundary.
+
+Furthermore if the inline lzo compressed file extent is the first item
+of the leaf, it will be at the extent buffer boundary. The above
+out-of-boundary read will go beyond the extent buffer boundary,
+triggering the above KASAN report.
+
+[FIX]
+Validate the total length of the inlined lzo compressed file extent, to
+make sure there is at least one LZO header and one segment header, and a
+non-zero payload.
+
+Fixes: a6fa6fae40ec ("btrfs: Add lzo compression support")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+[ Rework the commit message to remove slop ]
 Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 0fa78ef637de ("btrfs: lzo: reject inline extents without valid headers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/lzo.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ fs/btrfs/lzo.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/fs/btrfs/lzo.c b/fs/btrfs/lzo.c
-index 6e4aa22853aba..1531adb117d15 100644
+index 1531adb117d15..2f0996692da05 100644
 --- a/fs/btrfs/lzo.c
 +++ b/fs/btrfs/lzo.c
-@@ -552,17 +552,26 @@ int lzo_decompress(struct list_head *ws, const u8 *data_in,
+@@ -552,9 +552,10 @@ int lzo_decompress(struct list_head *ws, const u8 *data_in,
  	size_t max_segment_len = workspace_buf_length(fs_info);
  	int ret;
  
--	if (unlikely(srclen < LZO_LEN || srclen > max_segment_len + LZO_LEN * 2))
-+	if (unlikely(srclen < LZO_LEN || srclen > max_segment_len + LZO_LEN * 2)) {
-+		btrfs_err(fs_info, "invalid lzo header length, has %zu expect (%u, %zu)",
-+			  srclen, LZO_LEN, max_segment_len + LZO_LEN * 2);
+-	if (unlikely(srclen < LZO_LEN || srclen > max_segment_len + LZO_LEN * 2)) {
++	if (unlikely(srclen <= LZO_LEN * 2 ||
++		     srclen > max_segment_len + LZO_LEN * 2)) {
+ 		btrfs_err(fs_info, "invalid lzo header length, has %zu expect (%u, %zu)",
+-			  srclen, LZO_LEN, max_segment_len + LZO_LEN * 2);
++			  srclen, LZO_LEN * 2, max_segment_len + LZO_LEN * 2);
  		return -EUCLEAN;
-+	}
+ 	}
  
- 	in_len = get_unaligned_le32(data_in);
--	if (unlikely(in_len != srclen))
-+	if (unlikely(in_len != srclen)) {
-+		btrfs_err(fs_info, "invalid lzo header length, has %zu expect %zu",
-+			  in_len, srclen);
- 		return -EUCLEAN;
-+	}
- 	data_in += LZO_LEN;
- 
- 	in_len = get_unaligned_le32(data_in);
--	if (unlikely(in_len != srclen - LZO_LEN * 2))
-+	if (unlikely(in_len != srclen - LZO_LEN * 2)) {
-+		btrfs_err(fs_info, "invalid lzo segment length, has %zu expect %zu",
-+			  in_len, srclen - LZO_LEN * 2);
- 		return -EUCLEAN;
-+	}
- 	data_in += LZO_LEN;
- 
- 	out_len = sectorsize;
 -- 
 2.53.0
 
