@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136C22E738B;
-	Mon, 17 Aug 2026 14:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0553C4266AA;
+	Mon, 17 Aug 2026 14:40:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977621; cv=none; b=nrw+9mDJh83dez7uoB7gT12ev8QoV4+TOKKuC5xMz3ICRxLE/ZK+DXcbi7WOxiQ94qdfiXidOhterVt9xyZrVSmbYsGwxitZ2zE7rhN4j1+lvsz47pONW1qdSD2QCmjyW7gyrrLsjaj1u25r21LTW+7ai6RdnOcKkSQ0mqzzOMg=
+	t=1786977624; cv=none; b=V2TM3YkrR/J4iBCKvzQU3Q2NexLA9GJ1x2hyeROjgUW3ZS5cmN0JvTo2KvMyrd7JrOWgiI43HTjDXeON2Xt6yLGlbaKxOs5wW7eY9WUF2djrfJEzhAnSD1CTikLR4JC7wFpV+g5EQ/OD6HYSnk3bHrFhYeP4mpEKAe/V8U1/dV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977621; c=relaxed/simple;
-	bh=MvlWUFI71uKYdR0GNlEEwjqbwcK2tEj0msj/izD0hto=;
+	s=arc-20240116; t=1786977624; c=relaxed/simple;
+	bh=ztUmJNlLToC1KrHP80JxybzLu/wZ1PKSk6iaJUWc+DU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ha4mlr3G2/yxvZqOyJsBNqhvczbC3wvvwH9kpJdxPLasi5J4MBwDLeQtusY6p/Z39U0XEDKqjBSw5I3xfJuqbvOpA4ukjOdPG2u9V237Q/Z8/ltjJaxUseixoahW/L0EeDmKFOgSYMLH+JZ4YH7i2GX/pedxPDMEaSkGjEiQqNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FMFJjj18; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LMCXUE4GZYFi52g4rpzCwpkuV5lVpLtoMMQc/M9NcXCvS/8mMz6AoYAOZ7P8cYOxqIPqqxncxBcU3pSB5/44BxLHMWx4jj4ojM4AmCzXjN7fwOtMud8esu4bE0qUFCn7kNXavWbVct5hfQ61P7NVl4mnnKZyPVG3FroWprnns/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fb0nD3Q7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FMFJjj18"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0B11F000E9;
-	Mon, 17 Aug 2026 14:40:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fb0nD3Q7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CBBC1F000E9;
+	Mon, 17 Aug 2026 14:40:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977620;
-	bh=fV2pBH6rDwXaAEYDoD9uLv0iJrc1HgsSw+YdZy11a7c=;
+	s=korg; t=1786977622;
+	bh=Jsclu06YHrPVIR6X9TFZYexYs9Zmdo3yIkb4JNxQnR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FMFJjj18iqrQ5SYU90OBvu8rSMZAW6SUBdwtfnh+oftfEfk6ffN9g9dVo+98HOc3H
-	 cxC62ZZM4Q1FtWdrwjwr0olxYNO2s4nnQtMmJQpVFJWPronrI/3/Tgy+gG2BgBZlqL
-	 VjsFSHMaarRzqWgGwNbVOGYkFIPVqcvp/71HOnGY=
+	b=Fb0nD3Q75uhKMwqm3r9jLvdYCquGlHLcRPb18AtvIll6yygv8MotdvxDzXfUcwLI2
+	 s5u/BgykXtqWomNoBQ8R6OzeduGFyVbttroFGi0PfT8rGNV0qWnD3BTd9K5NAoefLv
+	 1zEP2H7VHPDDWVN1nOkx9n3rG1zBh3AZrowoF8Jg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+22c3218a6fa219e47321@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 391/456] net: remove WARN_ON_ONCE() from sk_mc_loop()
-Date: Mon, 17 Aug 2026 15:33:01 +0200
-Message-ID: <20260817132554.708619580@linuxfoundation.org>
+	Iago Toral Quiroga <itoral@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
+Subject: [PATCH 5.15 356/456] drm/vc4: Zero the tile state data array before each BIN job
+Date: Mon, 17 Aug 2026 15:32:26 +0200
+Message-ID: <20260817132553.460356589@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -46,51 +44,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit b8a39a09ae4eaae04309e1e38ed6a1101d967496 ]
+commit 48a570c964d8e37d353381e4195106277e17f5cb upstream.
 
-sk_mc_loop() can be called for sockets that are neither AF_INET
-nor AF_INET6 (e.g. AF_PACKET sockets when sending packets via raw/packet
-socket over virtual devices such as VRF or ipvlan).
+The binner BO is a single 16MB buffer split into 512KB slots that are
+handed out to jobs at submission time and recycled as jobs complete,
+without ever being cleared. Each slot holds the job's Tile State Data
+Array (TSDA) at its start, followed by the tile allocation pool.
 
-In such cases, sk_family is not AF_INET/AF_INET6 and sk_mc_loop() falls
-through the switch statement and triggers WARN_ON_ONCE(1).
+While the tile allocation pool is only walked by the render thread
+through branches the binner generated during the current job, the
+TSDA is the PTB's own per-tile bookkeeping and is consumed by the
+hardware itself. Although the kernel sets the "Auto-initialise Tile
+State Data Array" flag in the tile binning mode configuration, the
+PTB demonstrably still acts on stale tile state left by the slot's
+previous user: the binner ends up creating invalid command streams
+with invalid primitive streams and branches, which can cause GPU hangs
+as observed in [1][2].
 
-Non-INET sockets do not support IP_MULTICAST_LOOP or IPV6_MULTICAST_LOOP
-options, so loopback should default to true without generating a warning.
+Zero the TSDA when the job's binning slot is configured. This clears
+48 bytes per tile (~24KB for a 1080p frame) in the submission path, and
+guarantees the PTB never sees another job's tile state.
 
-Fixes: f60e5990d9c1 ("ipv6: protect skb->sk accesses from recursive dereference inside the stack")
-Reported-by: syzbot+22c3218a6fa219e47321@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a72024c.13623e66.bdc14.0019.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260804152048.2134341-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The tile count is only checked for being non-zero today, so the 8-bit
+fields it comes from can describe a tile state array almost six times
+larger than the slot it has to live in. Bound it before the slot is
+handed out, since such size decides how much of the slot is left for
+the tile alloc pool.
+
+Link: https://github.com/raspberrypi/linux/issues/3221 [1]
+Link: https://github.com/raspberrypi/linux/issues/5780 [2]
+Fixes: 553c942f8b2c ("drm/vc4: Allow using more than 256MB of CMA memory.")
+Cc: stable@vger.kernel.org
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patch.msgid.link/20260727-vc4-bin-oom-fixes-v2-2-0d8a5eddc7c9@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/sock.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/vc4/vc4_validate.c |   29 +++++++++++++++++++++++------
+ 1 file changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index bf2bec10d5d6a..e5f8916aa85b8 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -724,7 +724,6 @@ bool sk_mc_loop(struct sock *sk)
- 		return inet6_sk(sk)->mc_loop;
- #endif
+--- a/drivers/gpu/drm/vc4/vc4_validate.c
++++ b/drivers/gpu/drm/vc4/vc4_validate.c
+@@ -379,6 +379,23 @@ validate_tile_binning_config(VALIDATE_AR
+ 		return -EINVAL;
  	}
--	WARN_ON_ONCE(1);
- 	return true;
- }
- EXPORT_SYMBOL(sk_mc_loop);
--- 
-2.53.0
-
+ 
++	/* The tile state data array is 48 bytes per tile, and we put it at
++	 * the start of a BO containing both it and the tile alloc.
++	 */
++	tile_state_size = 48 * tile_count;
++
++	/* Since the tile alloc array will follow us, align. */
++	tile_state_size = roundup(tile_state_size, 4096);
++
++	/* Reject configurations whose tile state would leave no room for
++	 * the tile alloc pool that follows it in the slot.
++	 */
++	if (tile_state_size >= vc4->bin_alloc_size) {
++		DRM_DEBUG("Tile binning config of %dx%d too large\n",
++			  exec->bin_tiles_x, exec->bin_tiles_y);
++		return -EINVAL;
++	}
++
+ 	bin_slot = vc4_v3d_get_bin_slot(vc4);
+ 	if (bin_slot < 0) {
+ 		if (bin_slot != -EINTR && bin_slot != -ERESTARTSYS) {
+@@ -394,13 +411,13 @@ validate_tile_binning_config(VALIDATE_AR
+ 	exec->bin_slots |= BIT(bin_slot);
+ 	bin_addr = vc4->bin_bo->base.paddr + bin_slot * vc4->bin_alloc_size;
+ 
+-	/* The tile state data array is 48 bytes per tile, and we put it at
+-	 * the start of a BO containing both it and the tile alloc.
+-	 */
+-	tile_state_size = 48 * tile_count;
++	exec->tile_alloc_offset = bin_addr + tile_state_size;
+ 
+-	/* Since the tile alloc array will follow us, align. */
+-	exec->tile_alloc_offset = bin_addr + roundup(tile_state_size, 4096);
++	/* The TSDA area must be zeroed out before use, otherwise the PTB might
++	 * consume a stale tile state.
++	 */
++	memset(vc4->bin_bo->base.vaddr + bin_slot * vc4->bin_alloc_size, 0,
++	       tile_state_size);
+ 
+ 	*(uint8_t *)(validated + 14) =
+ 		((flags & ~(VC4_BIN_CONFIG_ALLOC_INIT_BLOCK_SIZE_MASK |
 
 
