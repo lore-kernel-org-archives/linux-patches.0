@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ABE53DB324;
-	Mon, 17 Aug 2026 15:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E0B70836;
+	Mon, 17 Aug 2026 15:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980123; cv=none; b=DarNNIXYWK+BnWfO5xicA4HlXLFQQU9Q+XxKBYy5HsX+7RikKnKi5IlOcfzu0uFet66Y9WUMMk7h4Ch7OHFqBe0Wzl2XOeZiwdcKCvje3moENP8iIjuqbsJ+pVbpq1d9dv0i92aZI0EYa0UQq6EdgpNoaVJaCR+GY/1T26WTiWA=
+	t=1786980125; cv=none; b=EPK3tQWy2TvTU/LK8Fj2a/7a7nYYMa+NFD2odJI5WRlm9m6vYxplnSfSAcuIAoBCXUoMBoFlMN2bGtafgfv480KydcdW8uz9xIswUDxfp8VN/u/6deFpBEJrcj75Ieidz5zZSqk5jrWdVwLVBYgLuFUnrNNJWVq0FjQJVFrgBbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980123; c=relaxed/simple;
-	bh=dG/C6zBKF4Wczk3Rz3D8d21Wo7y15GDyZai2EuYx77c=;
+	s=arc-20240116; t=1786980125; c=relaxed/simple;
+	bh=oImgZNceK2IGjQ96LSrVOTQ1qAncRXfghke7ErtEkfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VyEjGV1eKkIPQYHE7UB30tg79Mxma3DFWxrojPcgTYFQCp3sWCj9TQgzlazT2s0FLMaGA1nVp0qmWCa4Xs0zi8R09CEAZSFHebZqFzfPbnbaS3STmPL5Ym9FVTHrAKlf+4WGKe1XAkmgOLHyBaWdxkn/9/9ugWzEXAQGziORUXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NeDVyrvi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dwEDa3yjKaSzbodP7o1w23+1USw/Ce5MvIQ3sXfIPogMBHP0ahOhidrXAtAPed96Yn/mBgAOZ8UpQ2n4ddtsWU8rsPsPzq+sjue8oX5bA9q9d/nWy38aQnszxlJ56OG4uIeQQ/mP2JR05IYCOEYvEOA0HWiqU5oEZbZV38YPryE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YW8QBGiQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NeDVyrvi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E457B1F000E9;
-	Mon, 17 Aug 2026 15:22:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YW8QBGiQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C151F000E9;
+	Mon, 17 Aug 2026 15:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980121;
-	bh=6T0nWc22FTGt2LcNwslC0wGaS3jwauqB3xXCXvjqbRA=;
+	s=korg; t=1786980124;
+	bh=3TDe7ExWdbyTkjV7TLxTXePgTIV5rIslL+DpBBkm3Rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NeDVyrviQzWMl9l9cs1QuKhWgh8Eyttu6OyljD1jbd2G6esrfLFfZFNVoiZ9v55vG
-	 0uzgiFZxIGJUG5lm67rULMca0Iu7QTlgk88g42Z/b2KnHb/q8aYts4JN26Rq7m+mG8
-	 eM4piv2grqdX2pZgFHcGYVViVDwq88cqQfczirSA=
+	b=YW8QBGiQ1q9o6qrMrB28h58P5G5x7eaAa+btC45udeqhVMzksHvcd5BTJFhqF9PKW
+	 joA6yxl/FHQ9scLx6HjdtnMS0lcghJd/KE70F/CtylVfdI4csf40z3oJd+/JCgbeOh
+	 CcpftHs9KB0gbk3KYiQgx0InZmEsQbcsjbgKnELM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Avi Weiss <thnkslprpt@gmail.com>,
-	Pavel Pisa <pisa@fel.cvut.cz>,
 	stable@kernel.org,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.1 463/609] can: ctucanfd: handle bus error interrupts
-Date: Mon, 17 Aug 2026 15:32:39 +0200
-Message-ID: <20260817132559.496686188@linuxfoundation.org>
+Subject: [PATCH 6.1 464/609] can: ctucanfd: mark error-active controller status valid
+Date: Mon, 17 Aug 2026 15:32:40 +0200
+Message-ID: <20260817132559.528056924@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -54,42 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Avi Weiss <thnkslprpt@gmail.com>
 
-commit e74bae899529f49c0f375307983d12e8ecad7d4b upstream.
+commit 4e735cbe3affe88001428fdd9cae8e685ce92f21 upstream.
 
-Include REG_INT_STAT_BEI in the top-level error interrupt condition.
+In the CAN_STATE_ERROR_ACTIVE case, cf->data[1] is set to
+CAN_ERR_CRTL_ACTIVE, but cf->can_id is not set with CAN_ERR_CRTL in
+that path.
 
-BEI is enabled when CAN_CTRLMODE_BERR_REPORTING is requested and
-ctucan_err_interrupt() already handles it. Without checking and
-clearing BEI in the top-level handler, bus error interrupts are not
-handled or acknowledged.
+Set CAN_ERR_CRTL so consumers know the controller-status information
+in cf->data[1] is valid.
 
-Fixes: 2dcb8e8782d8 ("can: ctucanfd: add support for CTU CAN FD open-source IP core - bus independent part.")
+Fixes: 9bd24927e3ee ("can: ctucanfd: handle skb allocation failure")
 Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
-Acked-by: Pavel Pisa <pisa@fel.cvut.cz>
-Link: https://patch.msgid.link/20260723074403.131575-1-thnkslprpt@gmail.com
+Link: https://patch.msgid.link/20260723155543.318414-1-thnkslprpt@gmail.com
 Cc: stable@kernel.org
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/ctucanfd/ctucanfd_base.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/can/ctucanfd/ctucanfd_base.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/net/can/ctucanfd/ctucanfd_base.c
 +++ b/drivers/net/can/ctucanfd/ctucanfd_base.c
-@@ -1135,8 +1135,12 @@ static irqreturn_t ctucan_interrupt(int
- 		/* Error interrupts */
- 		if (FIELD_GET(REG_INT_STAT_EWLI, isr) ||
- 		    FIELD_GET(REG_INT_STAT_FCSI, isr) ||
--		    FIELD_GET(REG_INT_STAT_ALI, isr)) {
--			icr = isr & (REG_INT_STAT_EWLI | REG_INT_STAT_FCSI | REG_INT_STAT_ALI);
-+		    FIELD_GET(REG_INT_STAT_ALI, isr) ||
-+		    FIELD_GET(REG_INT_STAT_BEI, isr)) {
-+			icr = isr & (REG_INT_STAT_EWLI |
-+				     REG_INT_STAT_FCSI |
-+				     REG_INT_STAT_ALI |
-+				     REG_INT_STAT_BEI);
- 
- 			ctucan_netdev_dbg(ndev, "some ERR interrupt: clearing 0x%08x\n", icr);
- 			ctucan_write32(priv, CTUCANFD_INT_STAT, icr);
+@@ -868,7 +868,7 @@ static void ctucan_err_interrupt(struct
+ 			break;
+ 		case CAN_STATE_ERROR_ACTIVE:
+ 			if (skb) {
+-				cf->can_id |= CAN_ERR_CNT;
++				cf->can_id |= CAN_ERR_CRTL | CAN_ERR_CNT;
+ 				cf->data[1] = CAN_ERR_CRTL_ACTIVE;
+ 				cf->data[6] = bec.txerr;
+ 				cf->data[7] = bec.rxerr;
 
 
