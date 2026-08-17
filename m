@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279662D5A01;
-	Mon, 17 Aug 2026 14:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36843B811F;
+	Mon, 17 Aug 2026 14:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975683; cv=none; b=ZsWGLKVrBol2LDgTsXS8aMZWUP9/DgN3ZCmyLMDWVcbACzvvsntZz0KDyHulkjW0ANorgV5oBQ1BnpJKdAvkg62GqekUqvpiSDb3jwUkdFZu03dQXoXJgQGLL8U2oyWURwSjlbrZ+9PbWkI6M8LbR43zi8cbDXLmdWbxufZ0Opk=
+	t=1786975686; cv=none; b=uFiCWfqfSeKw8GXKL+Xo/PPClzF1MzyGpWP8V8ltTvLrSV04nBBUw3CrwOByGYNHOv4dTFAHVw03wYIFrNbondUXWBoij8mE20o2aquZ6zTMR2EOtpafjN2wOug1sv9ScvJjvmWh8AmQtuSaTrWnKrsKtAdWy1UNvEY8hzri7C0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975683; c=relaxed/simple;
-	bh=GjMN1DSVwI4tesGtLs96k3e8VzVCoqUnwa0osO5VZkY=;
+	s=arc-20240116; t=1786975686; c=relaxed/simple;
+	bh=omEJPkNYbVzaAKnVQ7yg2ni+j7HgDN0pkooawRo0+rU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OLer9R78JVMIAprXsopSPPv56d92vAPXFT8mp0FLRap9T6+hDka0i5OwkZ+mPnIaon75qsVTvpm9yuwlzYYBsqxIS+YR2l8Pi+drfT4fWluR8tJh4GSbt9jhB6OKX+cw+Sj14zicnJ/Z5Ta/4/QeWxiKZEfWZAYT1RkhiYbqsyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N30tB5gI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tS2FZCHUTDVJPt/u34uajAM+cIxTiLW9eocCCZLhXuYCwCWyhAspl3aZcRzlcpbIPHfQo9XJP1h1mW8oKgd2ULPIfLqcAXPJUV/J5xqensdXNGi41Aj60CTJZPYHXFXFIpWhx7TO3NLRecNUjoltcGd1p70r/jg8a01eJK57SmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NWmruvEh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N30tB5gI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A268D1F000E9;
-	Mon, 17 Aug 2026 14:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NWmruvEh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 576C31F000E9;
+	Mon, 17 Aug 2026 14:08:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975682;
-	bh=ZA2G8DV4Z0+NYb3095/xRVKWQ05ejtIEcL5n4yiobY0=;
+	s=korg; t=1786975684;
+	bh=gLQIykG7v+6ZZ455F3n1n9qT5ZrStdPzK5+QZdqtbR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N30tB5gIF0h8SzgS2QqY6NsAdn5q6RAoNuBXawVDLw+RKtyoymPsRxB8VBJFnWDyB
-	 rEHlGmweTzPBZ0Kf68IcFw0dmIBIfXTG6EahboH70JVm8XuBCxH2HhoeZx0Wcu5QIm
-	 PIXq6zW1YQO5c09/pKh2qQppECqpSsgowbCTrv38=
+	b=NWmruvEhlvFhp8D0puvIJraC65ExLXGzbSCf7VVwX0fzAs/lgmfKfotw9yir4pLxH
+	 aLjRDn3OsFWfQT4mfyfY6vLVYIZdASB0pbLt8eba8c7OTKdGMFadajcvqXMnWd7nzv
+	 S0eeXRPjM4L3drK9hD6v+Z2gar3SvUhffQYPza2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e62a973f8322b3bbe3ac@syzkaller.appspotmail.com,
-	Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
+	David Lee <david.lee@trailofbits.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 073/389] usb: atm: ueagle-atm: reject descriptors that confuse probe and disconnect
-Date: Mon, 17 Aug 2026 15:28:32 +0200
-Message-ID: <20260817132541.951465675@linuxfoundation.org>
+Subject: [PATCH 5.10 074/389] net/packet: avoid fanout hook re-registration after unregister
+Date: Mon, 17 Aug 2026 15:28:33 +0200
+Message-ID: <20260817132541.988463857@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,90 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
+From: David Lee <david.lee@trailofbits.com>
 
-[ Upstream commit 71132cedd1ecbc4032d76e9928c18a10f7e39b80 ]
+[ Upstream commit 50aff80475abd3533eef4320477037e6fcc6b56e ]
 
-uea_probe() distinguishes a pre-firmware device from a post-firmware one
-using the USB id (UEA_IS_PREFIRM()), and stores a different object as the
-interface data in each case: a 'struct completion' for a pre-firmware
-device (to be waited on in .disconnect()), or a 'struct usbatm_data' for a
-post-firmware one.
+packet_set_ring() temporarily detaches a socket from packet delivery while
+reconfiguring its ring. It records the previous running state, clears
+po->num, unregisters the protocol hook when needed, drops po->bind_lock,
+and later restores po->num and re-registers the hook from the saved
+was_running value.
 
-uea_disconnect() instead tells the two apart by the number of interfaces
-of the active configuration (a pre-firmware device exposes a single
-interface, ADI930 has 2 and eagle has 3), and casts the interface data
-accordingly.
+That unlocked window can race with NETDEV_UNREGISTER. The notifier can
+observe the socket as not running, skip __unregister_prot_hook(), and
+invalidate the per-socket binding by setting po->ifindex to -1 and clearing
+po->prot_hook.dev. A one-member fanout group can still retain its shared
+fanout hook device pointer. When packet_set_ring() resumes, re-registering
+solely from the stale was_running state can re-add the fanout hook after
+the device has been unregistered.
 
-Because the two handlers use different criteria, a crafted device that
-advertises a pre-firmware id together with a multi-interface descriptor
-(or a post-firmware id with a single interface) makes them disagree: the
-small 'struct completion' stored by uea_probe() is then passed to
-usbatm_usb_disconnect(), which casts it to 'struct usbatm_data' and takes
-instance->serialize, reading past the end of the allocation:
+Treat po->ifindex == -1 as an invalidated binding after reacquiring
+po->bind_lock. This is distinct from ifindex 0, the normal
+unbound/wildcard state: ifindex -1 marks an existing device binding that
+was invalidated when the device was unregistered. Restore po->num as
+before, but do not re-register the hook if device unregister already
+detached the socket.
 
-  BUG: KASAN: slab-out-of-bounds in __mutex_lock+0x152a/0x1b80
-  Read of size 8 at addr ffff8880470e2c60 by task kworker/1:2/982
-  ...
-   __mutex_lock+0x152a/0x1b80
-   usbatm_usb_disconnect+0x70/0x820
-   uea_disconnect+0x133/0x2c0
-   usb_unbind_interface+0x1dd/0x9e0
-  ...
-  which belongs to the cache kmalloc-96 of size 96
-  The buggy address is located 0 bytes to the right of
-   allocated 96-byte region [ffff8880470e2c00, ffff8880470e2c60)
-
-Reject such inconsistent descriptors in uea_probe() so that both handlers
-always make the same pre/post-firmware decision.
-
-Reported-by: syzbot+e62a973f8322b3bbe3ac@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e62a973f8322b3bbe3ac
-Fixes: e2674dfbed8a ("usb: atm: ueagle-atm: wait for pre-firmware load in .disconnect()")
-Signed-off-by: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
-Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Link: https://patch.msgid.link/20260717080704.1264-1-diegomancera.dev@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: dc99f600698d ("packet: Add fanout support.")
+Link: https://lore.kernel.org/netdev/20260701113947.23180-1-david.lee@trailofbits.com/
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260707104440.833129-1-david.lee@trailofbits.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/atm/ueagle-atm.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ net/packet/af_packet.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/atm/ueagle-atm.c b/drivers/usb/atm/ueagle-atm.c
-index 661820041ca70d..6a282400027d68 100644
---- a/drivers/usb/atm/ueagle-atm.c
-+++ b/drivers/usb/atm/ueagle-atm.c
-@@ -2591,6 +2591,7 @@ static struct usbatm_driver uea_usbatm_driver = {
- static int uea_probe(struct usb_interface *intf, const struct usb_device_id *id)
- {
- 	struct usb_device *usb = interface_to_usbdev(intf);
-+	bool single_iface = usb->config->desc.bNumInterfaces == 1;
- 	int ret;
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 793720e506799c..b09d1bbddde937 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -4551,7 +4551,11 @@ static int packet_set_ring(struct sock *sk, union tpacket_req_u *req_u,
  
- 	uea_enters(usb);
-@@ -2600,6 +2601,22 @@ static int uea_probe(struct usb_interface *intf, const struct usb_device_id *id)
- 		le16_to_cpu(usb->descriptor.bcdDevice),
- 		chip_name[UEA_CHIP_VERSION(id)]);
- 
+ 	spin_lock(&po->bind_lock);
+ 	WRITE_ONCE(po->num, num);
+-	if (was_running)
 +	/*
-+	 * uea_probe() decides between the pre-firmware and post-firmware case
-+	 * from the USB id and stores a different object as interface data in
-+	 * each case: a struct completion for a pre-firmware device, a struct
-+	 * usbatm_data for a post-firmware one. uea_disconnect() instead tells
-+	 * the two apart by the number of interfaces (a pre-firmware device
-+	 * exposes a single interface, ADI930 has 2 and eagle has 3). A crafted
-+	 * device advertising a pre-firmware id together with a multi-interface
-+	 * descriptor (or the other way around) makes the two disagree, so that
-+	 * usbatm_usb_disconnect() treats the small completion object as a
-+	 * struct usbatm_data and reads out of bounds. Reject such inconsistent
-+	 * descriptors so both paths make the same decision.
++	 * NETDEV_UNREGISTER may have invalidated the binding while bind_lock
++	 * was dropped above.  Do not re-add a fanout hook to a dead device.
 +	 */
-+	if (UEA_IS_PREFIRM(id) != single_iface)
-+		return -ENODEV;
-+
- 	usb_reset_device(usb);
++	if (was_running && READ_ONCE(po->ifindex) != -1)
+ 		register_prot_hook(sk);
  
- 	if (UEA_IS_PREFIRM(id)) {
+ 	spin_unlock(&po->bind_lock);
 -- 
 2.53.0
 
