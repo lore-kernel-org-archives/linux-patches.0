@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336B513C9C4;
-	Mon, 17 Aug 2026 14:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13136175A99;
+	Mon, 17 Aug 2026 14:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976443; cv=none; b=stDj+++3oTQhOvDc91kSjRQw25ql39IeIdkXl80GEwzAU44jf1WmZFvPNmMdtdl56t/kM+KOGf7XKD2S+9MJIUFZQki9zkaTWMe9xKxynyoKr/89TlGWUTBYq7s51a0/FRG21ttFX3JgiU6Dp2vq0cEbKE2hAODWQ49XCAqGI4g=
+	t=1786976446; cv=none; b=SZjGCwpM3aJv5FsSAmwxlzDuTuDBCSTNCr+dkqpezcG/Oubvk3rPPJEaPK0NbvA83AzKBEaOycexl8x/K6mThB7pUfhaQEjJckxj4/bz+uKsvaVPj5BzTC5pr7q22OYYKkS+XqQXxHi9X2JXti5eIszQCUEcQ1hKPGeRIIpQn54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976443; c=relaxed/simple;
-	bh=TQH7x6e/i24WcleP7cjSjhCcnEOaARtj9nO170yXR9Q=;
+	s=arc-20240116; t=1786976446; c=relaxed/simple;
+	bh=ncBikIjoXFdIRPfxqGkLZwtvNSkWkJ8C9xOnmU/U89M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t59Gvhen6z5OkrzpfvAnQ8329mXsJGim1n7zSM/fFJK6oPnZo55ZaPTu0+COfBDHZODP4izrExxhDAVA4aqGTUK0IX/GrKdWiB2ojhyqEsLnPNqNJeNDbM7K8FMKutUKZJ6HcjLUyYRso+Ta+uaXVgVJ4+6LJL4nSOg1ftn8n6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1wonqRVC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C2hUT59U2u5d1iDN7aQXlUrLWpMErptuHmb6Ahy9R/M2Xjsip9sxHhcb9hqsijMKmgKrrnPGQ+BLZMQibb/E8CthIz2ctmSqpGlHlOcihDX2YNgkm1Hpjmed+CdIk7RnfPUA0lMRkwBvFxZrFkxwFtuvoRtE3JIx64iZt/9rf4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J4XEliLK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1wonqRVC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81DD21F000E9;
-	Mon, 17 Aug 2026 14:20:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J4XEliLK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 636A41F000E9;
+	Mon, 17 Aug 2026 14:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976442;
-	bh=PM1C84PdSO7wtE3Rhv+WgmMbft+z/aTqxq6HypSgK+o=;
+	s=korg; t=1786976444;
+	bh=zcl1oDUU+SX8XWE+oyzQ6CAK9Lx/uai6XU59y+rb8vQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1wonqRVC01SDpyKBBHom6WoA5EVe6iIFwXhc0c6An6gGxVsWN09dAbLCF2B6s51P5
-	 PgtVOC0AvqtInX6mrNZDawfXc6ixxNAEgrdDNUnwAU1Ra1twR7FsPCILLhzzlfB6k4
-	 Pj5D4p/JWO/YeU76rKoPCoubWclY4YlVW9nEPKH0=
+	b=J4XEliLKlPHmwVnR4jijta8AyDqnBEaKfUpZBPZY4xp9csSdmDXeUk+9zU7bx/0lw
+	 W0p4hAGmBLIrskuaxpD7+N0v+HHXIiN8OrwMm0QdgFzEsJGO+x8G3TA/WoXYGGJWM7
+	 QvJOTiMfMTwPaXfdcdmqzIZ4II+ed0zHWprWkIvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Bobby Eshleman <bobbyeshleman@meta.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 375/389] vsock/virtio: avoid refilling the RX queue after teardown
-Date: Mon, 17 Aug 2026 15:33:34 +0200
-Message-ID: <20260817132553.323196790@linuxfoundation.org>
+	Jun Yang <junvyyang@tencent.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 5.10 376/389] vhost: reset the vring metadata cache on vring reconfiguration
+Date: Mon, 17 Aug 2026 15:33:35 +0200
+Message-ID: <20260817132553.361241625@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -53,75 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Jun Yang <junvyyang@tencent.com>
 
-commit a31e0ad444698d8aa7534a0f89fda543730f97a5 upstream.
+commit de845981da67a6b049080c87e605130b0c30adc5 upstream.
 
-Commit b917507e5ad9 ("vsock/virtio: stop workers during the .remove()")
-made the RX worker jump to its common exit when rx_run is clear.  That
-exit still refills the RX queue when the buffer count is low, so work
-queued across virtio_vsock_vqs_del() can add buffers after the virtqueues
-have been deleted.
+vq->meta_iotlb[] caches the vhost_iotlb_map that backs each vring
+metadata region, and iotlb_access_ok() returns early on a cache hit,
+taking the hit as proof that the region has already been validated:
 
-BUG: KASAN: slab-use-after-free in virtqueue_add_sgs
-Read of size 4 by task kworker/0:1
-Workqueue: virtio_vsock virtio_transport_rx_work
-Call Trace:
- virtqueue_add_sgs (drivers/virtio/virtio_ring.c:2796)
- virtio_vsock_rx_fill (net/vmw_vsock/virtio_transport.c:332)
- virtio_transport_rx_work (net/vmw_vsock/virtio_transport.c:701)
- process_one_work (kernel/workqueue.c:3314)
- worker_thread (kernel/workqueue.c:3478)
- kthread (kernel/kthread.c:436)
- ret_from_fork (arch/x86/kernel/process.c:158)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-...
-Freed by task 141:
- kfree (mm/slub.c:6566)
- vp_del_vq (drivers/virtio/virtio_pci_common.c:259)
- vp_del_vqs (drivers/virtio/virtio_pci_common.c:285)
- virtio_vsock_freeze (net/vmw_vsock/virtio_transport.c:912)
- virtio_device_freeze (drivers/virtio/virtio.c:658)
- virtio_pci_freeze (drivers/virtio/virtio_pci_common.c:601)
- pci_pm_freeze (drivers/pci/pci-driver.c:1098)
- device_suspend (drivers/base/power/main.c:1968)
-Kernel panic - not syncing: KASAN: panic_on_warn set ...
+	if (vhost_vq_meta_fetch(vq, addr, len, type))
+		return true;
 
-Jump to a no-refill exit when rx_run is clear, leaving the normal exit
-to replenish a running queue.
+The cache is reset on VHOST_IOTLB_UPDATE and VHOST_IOTLB_INVALIDATE, on
+device IOTLB (re)initialisation and on vq reset, but not when
+VHOST_SET_VRING_ADDR replaces vq->desc, vq->avail and vq->used, nor when
+VHOST_SET_VRING_NUM changes the region sizes.
 
-Fixes: b917507e5ad9 ("vsock/virtio: stop workers during the .remove()")
+With a device IOTLB attached both ioctls are accepted while the vq is
+live, and neither validates the addresses at ioctl time: vq_access_ok()
+and vq_log_used_access_ok() return true early because the addresses are
+GIOVAs, deferring validation to prefetch time.  Once the cache has been
+populated that deferred validation no longer runs -- vq_meta_prefetch()
+hits the stale entry and returns true -- and vhost_vq_meta_fetch() keeps
+translating through the old mapping as
+
+	map->addr + addr - map->start
+
+for an address the mapping no longer covers.  vhost_copy_to_user() and
+vhost_copy_from_user() consume the result with __copy_to_user() and
+__copy_from_user(), which do not check it either, so a subsequent used
+ring update or descriptor fetch accesses memory outside the region the
+IOTLB actually maps.
+
+Reset the metadata cache whenever the vring is reconfigured, so the new
+addresses are pushed back through iotlb_access_ok()'s slow path.
+
+Fixes: f88949138058 ("vhost: introduce O(1) vq metadata cache")
 Cc: stable@vger.kernel.org
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Link: https://lore.kernel.org/r/20260727035804.1860862-1-bestswngs@gmail.com
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Link: https://patch.msgid.link/f9c8c1d64cad9d262f305d02ffe164c2f900fadf.1785352330.git.bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: tencentos-corvus-ai:kimi-k3
+Signed-off-by: Jun Yang <junvyyang@tencent.com>
+Message-ID: <20260803014823.68623-1-juny24602@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/vhost/vhost.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/net/vmw_vsock/virtio_transport.c
-+++ b/net/vmw_vsock/virtio_transport.c
-@@ -501,7 +501,7 @@ static void virtio_transport_rx_work(str
- 	mutex_lock(&vsock->rx_lock);
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -1577,6 +1577,14 @@ static long vhost_vring_set_num_addr(str
+ 		BUG();
+ 	}
  
- 	if (!vsock->rx_run)
--		goto out;
-+		goto out_nofill;
++	/*
++	 * The metadata cache holds the IOTLB mapping that backed the previous
++	 * desc/avail/used addresses and vring size, both of which are being
++	 * replaced here.  iotlb_access_ok() takes a cache hit as proof that the
++	 * region was validated, so the stale entries have to go.
++	 */
++	__vhost_vq_meta_reset(vq);
++
+ 	mutex_unlock(&vq->mutex);
  
- 	do {
- 		virtqueue_disable_cb(vq);
-@@ -540,6 +540,7 @@ static void virtio_transport_rx_work(str
- out:
- 	if (vsock->rx_buf_nr < vsock->rx_buf_max_nr / 2)
- 		virtio_vsock_rx_fill(vsock);
-+out_nofill:
- 	mutex_unlock(&vsock->rx_lock);
- }
- 
+ 	return r;
 
 
