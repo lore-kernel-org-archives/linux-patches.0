@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433A62F5A36;
-	Mon, 17 Aug 2026 15:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212B43B995E;
+	Mon, 17 Aug 2026 15:07:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979273; cv=none; b=JfTUtQ55mAqsqfGmQSiExSxdMbjpc65G2/JDSqmJUt7ERB7oZxg2oUJcZZYUT1zREmuDuoErP3pRc+P/HrC2gmq82BShN6KbcbxX/XPzE87D+XPoOOml4vprZS6mZJUzuNBlNPN0zYU3ETsLz7oClsBcicrME8M5Y0MLo5LbbNQ=
+	t=1786979276; cv=none; b=mE1lvJwC72/IY9cdkptIgM/tlwXhBPWAj5HhFMWCt5WRJ7fQFV4UHyB5ilTRvhxQnVQ/dgTvqmrs5SOqILmM3VwA2jMQKPcZKEI8oQnEI+nni1e1cQ8ZmNgV/sT3oIPrsXR3q2FpNnrBNASgugDxgNXPMjDPYIxVc+Okvc31vys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979273; c=relaxed/simple;
-	bh=zKnp02zMqlMlySkvcxhAPjays3axRdhuInrGhEqGvVM=;
+	s=arc-20240116; t=1786979276; c=relaxed/simple;
+	bh=1XorJxQJ90GNGzSPSGwpITFoieCZYtDNZDPh9rmO+Js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iBVLCSyVXZZFHqrWod2HgeW3UkLivzNvRSRlfFzhbdqCPx2texkT7DXxefp36Kg1G+EnSbPcS9xq89CuS6p8EugfzOiBUYI885X0+g+gCurE8JBoOZJxcaMB943rkxeXlldNjIWJ+tcMLd7wrAqj7YxIsTWORbw7BC43OT2QiCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W1gT7ipC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YZpD70WythCqkmq36Eewc1/tcjo/NfhmuvlIQDRVl7LBFHSqkMCcbuJERfomfUXRSBVVBjGzTr6qMyio7duTyhNk6XMF3iIjMv63wCJFVEGuMpt7meseIqT8mMDYBTbU6Ldly1jAz6NUJ9e2nc5nE4vblqJsvvHcafnzUgs5siI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVzvCmed; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W1gT7ipC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A311F000E9;
-	Mon, 17 Aug 2026 15:07:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVzvCmed"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B83D1F000E9;
+	Mon, 17 Aug 2026 15:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979272;
-	bh=NI1zrtHrjbQPQ80ipgCxt83SGvGr2gA90CD0C96o+qA=;
+	s=korg; t=1786979275;
+	bh=lKQetaz8W5H6XgzEvJpFVV6kLigEDZUS3M3Z1+MyKSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W1gT7ipCwMKgvPYUkBxOpR5VcNOIqrP4sP6iup9w+fc+vvJuzFdZaabhFgcQ48/tR
-	 41B411z7B7/TanY2wWwO1v140EYsOIzdh3F/Zu1uRMaA+FkXw+RZph7d2MUBAOO6zJ
-	 h8aaGMNtZ+quzIKo5m7960GxxD4NPGlQ4+37GyUw=
+	b=yVzvCmed3Aak/Wv2T57lbix8u0GQTQtcsJEZLDUe2XiodZ3vOY82m9QlD+MGv3dqb
+	 uK8eF6oYO8cpA0uN1TRpEWcJWidc1dFsD/V7QdHwu5b+bTb8bNKmlN+zfwBCkUPY9d
+	 fKwDdpW+KyGKD5wsjpWgBjWRfVs274Bq7Uw0Xw2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshaka Narayana <harshaka.narayana@broadcom.com>,
-	Ronak Doshi <ronak.doshi@broadcom.com>,
-	Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 151/609] vmxnet3: fix BUG_ON in vmxnet3_get_hdr_len() for Geneve packets
-Date: Mon, 17 Aug 2026 15:27:27 +0200
-Message-ID: <20260817132549.065770764@linuxfoundation.org>
+	Ashutosh Desai <ashutoshdesai993@gmail.com>,
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 6.1 169/609] drm/dp/mst: fix OOB reads in remote DPCD/I2C sideband reply parsers
+Date: Mon, 17 Aug 2026 15:27:45 +0200
+Message-ID: <20260817132549.690425222@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -54,84 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshaka Narayana <harshaka.narayana@broadcom.com>
+From: Ashutosh Desai <ashutoshdesai993@gmail.com>
 
-[ Upstream commit 34a71f5361fc3adb5b7138da78750b0d535a8252 ]
+commit 1a8f537f5a1eeac941f262fe73078d6b08ba83c0 upstream.
 
-vmxnet3_get_hdr_len() assumes gdesc->rcd.v4/v6/tcp always describe the
-outer header, but for a Geneve-encapsulated packet the device can set
-them based on the inner header instead, signalled by the
-VMXNET3_RCD_HDR_INNER_SHIFT bit in the completion descriptor. Since the
-function never skips the outer encapsulation, this mismatch triggers:
+drm_dp_sideband_parse_remote_dpcd_read() reads num_bytes from the raw
+message and then unconditionally does:
 
-- BUG_ON(hdr.ipv4->protocol != IPPROTO_TCP), because the outer
-  protocol is UDP (Geneve), not TCP.
-- BUG_ON(hdr.eth->h_proto != ...), when the tunnel's outer and inner
-  IP versions differ (e.g. outer IPv6/inner IPv4 or vice versa).
+  memcpy(bytes, &raw->msg[idx], num_bytes);
 
-Check VMXNET3_RCD_HDR_INNER_SHIFT up front and bail out, since the
-function cannot locate the inner header it would need to parse. Also
-convert the remaining BUG_ON()s in this function to return 0
-defensively.
+without checking that idx + num_bytes <= raw->curlen. raw->msg[] is
+256 bytes; if a malicious or misbehaving MST hub sets num_bytes larger
+than the remaining payload, the memcpy reads past the received data
+into whatever follows in raw->msg[].
 
-Fixes: 45dac1d6ea04 ("vmxnet3: Changes for vmxnet3 adapter version 2 (fwd)")
-Signed-off-by: Harshaka Narayana <harshaka.narayana@broadcom.com>
-Reviewed-by: Ronak Doshi <ronak.doshi@broadcom.com>
-Reviewed-by: Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260713140915.3381715-1-harshaka.narayana@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+drm_dp_sideband_parse_remote_i2c_read_ack() has the same flaw (noted
+with a /* TODO check */ comment since the code was introduced).
+
+Fix both functions by using a single combined check
+(idx + num_bytes > curlen) before each memcpy. Since num_bytes is u8,
+it is always >= 0, so this strictly subsumes the simpler idx > curlen
+form and no separate step is needed.
+
+Fixes: ad7f8a1f9ced ("drm/helper: add Displayport multi-stream helper (v0.6)")
+Cc: <stable@vger.kernel.org> # v3.17+
+Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+[added missing fixes tag]
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20260510201733.2882224-1-ashutoshdesai993@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vmxnet3/vmxnet3_drv.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/display/drm_dp_mst_topology.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/vmxnet3/vmxnet3_drv.c b/drivers/net/vmxnet3/vmxnet3_drv.c
-index 86b913d5ac5b7c..e6fb6c0ce27f5a 100644
---- a/drivers/net/vmxnet3/vmxnet3_drv.c
-+++ b/drivers/net/vmxnet3/vmxnet3_drv.c
-@@ -1365,7 +1365,11 @@ vmxnet3_get_hdr_len(struct vmxnet3_adapter *adapter, struct sk_buff *skb,
- 		struct ipv6hdr *ipv6;
- 		struct tcphdr *tcp;
- 	} hdr;
--	BUG_ON(gdesc->rcd.tcp == 0);
-+
-+	/* v4/v6/tcp then describe the inner header, which we can't locate. */
-+	if ((le32_to_cpu(gdesc->dword[0]) & (1UL << VMXNET3_RCD_HDR_INNER_SHIFT)) ||
-+	    gdesc->rcd.tcp == 0)
-+		return 0;
+--- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+@@ -861,7 +861,7 @@ static bool drm_dp_sideband_parse_remote
+ 		goto fail_len;
+ 	repmsg->u.remote_dpcd_read_ack.num_bytes = raw->msg[idx];
+ 	idx++;
+-	if (idx > raw->curlen)
++	if (idx + repmsg->u.remote_dpcd_read_ack.num_bytes > raw->curlen)
+ 		goto fail_len;
  
- 	maplen = skb_headlen(skb);
- 	if (unlikely(sizeof(struct iphdr) + sizeof(struct tcphdr) > maplen))
-@@ -1379,15 +1383,21 @@ vmxnet3_get_hdr_len(struct vmxnet3_adapter *adapter, struct sk_buff *skb,
- 
- 	hdr.eth = eth_hdr(skb);
- 	if (gdesc->rcd.v4) {
--		BUG_ON(hdr.eth->h_proto != htons(ETH_P_IP) &&
--		       hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IP));
-+		if (hdr.eth->h_proto != htons(ETH_P_IP) &&
-+		    hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IP))
-+			return 0;
+ 	memcpy(repmsg->u.remote_dpcd_read_ack.bytes, &raw->msg[idx], repmsg->u.remote_dpcd_read_ack.num_bytes);
+@@ -897,7 +897,9 @@ static bool drm_dp_sideband_parse_remote
+ 		goto fail_len;
+ 	repmsg->u.remote_i2c_read_ack.num_bytes = raw->msg[idx];
+ 	idx++;
+-	/* TODO check */
++	if (idx + repmsg->u.remote_i2c_read_ack.num_bytes > raw->curlen)
++		goto fail_len;
 +
- 		hdr.ptr += hlen;
--		BUG_ON(hdr.ipv4->protocol != IPPROTO_TCP);
-+		if (hdr.ipv4->protocol != IPPROTO_TCP)
-+			return 0;
-+
- 		hlen = hdr.ipv4->ihl << 2;
- 		hdr.ptr += hdr.ipv4->ihl << 2;
- 	} else if (gdesc->rcd.v6) {
--		BUG_ON(hdr.eth->h_proto != htons(ETH_P_IPV6) &&
--		       hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IPV6));
-+		if (hdr.eth->h_proto != htons(ETH_P_IPV6) &&
-+		    hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IPV6))
-+			return 0;
-+
- 		hdr.ptr += hlen;
- 		/* Use an estimated value, since we also need to handle
- 		 * TSO case.
--- 
-2.53.0
-
+ 	memcpy(repmsg->u.remote_i2c_read_ack.bytes, &raw->msg[idx], repmsg->u.remote_i2c_read_ack.num_bytes);
+ 	return true;
+ fail_len:
 
 
