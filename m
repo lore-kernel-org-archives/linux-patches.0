@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3812E442B12;
-	Mon, 17 Aug 2026 15:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0168442B17;
+	Mon, 17 Aug 2026 15:16:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979810; cv=none; b=YfY/TEngwOp51c1B8SVbbn003wHRCxVpiM0iNXK0v9Faj/ehACCH3oFq0YyR/QLcqtARlRZJcriwU4AKsFoQ5re4k5xVDGNtGVvpvFO/PL8eW/CgcA7P4JYNomojdZhou5mnyuwUzef41B1Tg3uM7Fhe72l5DBlY0zwZl2H3zqw=
+	t=1786979812; cv=none; b=JjLHYUFWywjasGaOabDnN9tmX+x0sDYGoo3WYXBKN2chEyZrj54I4Qumx7wIYBBaSo6ynXvq80pUTVdlDUl3O4y9164bGg1//GHzrXneEiAC63JOyl8jtWzbQhFT5P52fxxH6Yht+9Psw8A9hFAMV3RCNE7xYtfv1BB4J3e5jpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979810; c=relaxed/simple;
-	bh=G/dypWxojIWlM05cihsz4kAnUZVOWIuhQyQV30RKX68=;
+	s=arc-20240116; t=1786979812; c=relaxed/simple;
+	bh=MvHE7/fmI7Obdz5DcIyqTEwZcyGG770mdjvJNjNrIOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QHaW5O8v7+D/tVcdP4xAJaUVU+vz4kM4RCivq/h7t7R1H/sdh5Pvzc9D4EQglTeKHPwjxLi3VLcvO28SBWoAtCrXmfiBPk+h9cI2zg/uknTAe4zbyRGfCTmVju6a6ogoa446/xATH3DZU84VBS3nIqtLN4jqDS1SZMAVNPpEhBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jCB+PyDJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m2nz9QtU1csLBz2bnV136ATjJva7H4S1leek2TpAA6qBrG0y134ZcKi8Im/6mR70Kky/WRz34QsPeML3A1l62up1XcjJVKKXPY0HcaekPzV4F/c1jBA5+z+7tvTpVHR8OF29cf1XKJHl92p/AzBz+4XEWJjMPE09C48vpJAy7AM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NqTyQ/Eq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jCB+PyDJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90A31F00A3A;
-	Mon, 17 Aug 2026 15:16:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NqTyQ/Eq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE451F000E9;
+	Mon, 17 Aug 2026 15:16:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979807;
-	bh=BvCp7qdCQTa38x1JSIqSJUhfTvaUmSw0/u974ksAiQk=;
+	s=korg; t=1786979810;
+	bh=Q1saYMPItZLav7/u1IGTVNpQnDMzDhucU/uONYZv2pM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jCB+PyDJZ9gH0hJTqLAkUmETNKhkOrho3Hw4tWgaOfpVSNzpcWNb8pB2BUwR081VJ
-	 UJcTGIz8PwloAIT3R60IpS3uJD99F9aI0zg8AMtqGFapsgI8immPAyJXFvkkZGhpMa
-	 dRUmltAx2ICeyI0F1atDbWGodJPUphAtkino3c1s=
+	b=NqTyQ/EqHtQUmxsFTnfixPWbJhND/vHVpS4RcAv3TpLqdquZcVwmUKXHjBpjcmxZY
+	 ZHi4EbAiapmd8Ymvfz8jIJkhq4vtIZPFZAod+4Lb/FlRrQnc7bTMB1j7UXt9vqMso3
+	 D7FHwdkWt+MsNFRU+iTKqLzBfFo2SdMRPZRJmitk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	sashiko-bot@kernel.org,
+	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 353/609] forcedeth: fix UAF of txrx_stats in nv_remove
-Date: Mon, 17 Aug 2026 15:30:49 +0200
-Message-ID: <20260817132556.086144325@linuxfoundation.org>
+Subject: [PATCH 6.1 354/609] hwmon: (adt7470) Fix fans stuck in manual mode on I2C errors
+Date: Mon, 17 Aug 2026 15:30:50 +0200
+Message-ID: <20260817132556.120333889@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,45 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
 
-[ Upstream commit 22666ba1420164753d7b0f5a841986b25ace5435 ]
+[ Upstream commit 625a2c02a1c04571232a746fe188b4d9a8d63edd ]
 
-nv_remove() frees the per-CPU txrx_stats before unregister_netdev().
-Until unregister completes, ndo_get_stats64, the NAPI/xmit data path,
-and nv_close()/drain may still access txrx_stats, leading to a
-use-after-free.
+During adt7470_read_temperatures(), the driver temporarily switches
+the PWM channels to manual mode, performs the temperature collection,
+and then restores the original configuration registers.
 
-Free the stats only after unregister_netdev().
+However, if an I2C transaction fails at any point after entering manual
+mode, the function aborts and returns immediately. This leaves the
+configuration registers un-restored, permanently trapping the fans in
+manual mode.
 
-Fixes: f4b633b911fd ("forcedeth: use per cpu to collect xmit/recv statistics")
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://patch.msgid.link/20260723092637.2135095-1-chenguang.zhao@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Introduce a recovery path to ensure that the original PWM configuration
+registers are always restored, even when intermediate I2C operations
+fail.
+
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/r/20260716213252.EACA71F000E9@smtp.kernel.org
+Fixes: ef67959c4253 ("hwmon: (adt7470) Convert to use regmap")
+Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-1-598e38a46ba6@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/nvidia/forcedeth.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hwmon/adt7470.c | 40 +++++++++++++++++++++++++++++-----------
+ 1 file changed, 29 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/nvidia/forcedeth.c b/drivers/net/ethernet/nvidia/forcedeth.c
-index 486cbc8ab2242..866267df1f2c9 100644
---- a/drivers/net/ethernet/nvidia/forcedeth.c
-+++ b/drivers/net/ethernet/nvidia/forcedeth.c
-@@ -6199,10 +6199,10 @@ static void nv_remove(struct pci_dev *pci_dev)
- 	struct net_device *dev = pci_get_drvdata(pci_dev);
- 	struct fe_priv *np = netdev_priv(dev);
+diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
+index 927f8df05b7c9..81d7c4ec06b0d 100644
+--- a/drivers/hwmon/adt7470.c
++++ b/drivers/hwmon/adt7470.c
+@@ -205,11 +205,12 @@ static inline int adt7470_write_word_data(struct adt7470_data *data, unsigned in
+ /* Probe for temperature sensors.  Assumes lock is held */
+ static int adt7470_read_temperatures(struct adt7470_data *data)
+ {
+-	unsigned long res;
++	struct device *dev = regmap_get_device(data->regmap);
++	u8 pwm[ADT7470_FAN_COUNT];
+ 	unsigned int pwm_cfg[2];
+-	int err;
++	unsigned long res;
++	int err, err2;
+ 	int i;
+-	u8 pwm[ADT7470_FAN_COUNT];
  
--	free_percpu(np->txrx_stats);
--
- 	unregister_netdev(dev);
+ 	/* save pwm[1-4] config register */
+ 	err = regmap_read(data->regmap, ADT7470_REG_PWM_CFG(0), &pwm_cfg[0]);
+@@ -233,19 +234,19 @@ static int adt7470_read_temperatures(struct adt7470_data *data)
+ 	err = regmap_update_bits(data->regmap, ADT7470_REG_PWM_CFG(2),
+ 				 ADT7470_PWM_AUTO_MASK, 0);
+ 	if (err < 0)
+-		return err;
++		goto out_restore;
  
-+	free_percpu(np->txrx_stats);
+ 	/* write pwm control to whatever it was */
+ 	err = regmap_bulk_write(data->regmap, ADT7470_REG_PWM(0), &pwm[0],
+ 				ADT7470_PWM_COUNT);
+ 	if (err < 0)
+-		return err;
++		goto out_restore;
+ 
+ 	/* start reading temperature sensors */
+ 	err = regmap_update_bits(data->regmap, ADT7470_REG_CFG,
+ 				 ADT7470_T05_STB_MASK, ADT7470_T05_STB_MASK);
+ 	if (err < 0)
+-		return err;
++		goto out_restore;
+ 
+ 	/* Delay is 200ms * number of temp sensors. */
+ 	res = msleep_interruptible((data->num_temp_sensors >= 0 ?
+@@ -256,13 +257,30 @@ static int adt7470_read_temperatures(struct adt7470_data *data)
+ 	err = regmap_update_bits(data->regmap, ADT7470_REG_CFG,
+ 				 ADT7470_T05_STB_MASK, 0);
+ 	if (err < 0)
+-		return err;
++		goto out_restore;
+ 
++out_restore:
+ 	/* restore pwm[1-4] config registers */
+-	err = regmap_write(data->regmap, ADT7470_REG_PWM_CFG(0), pwm_cfg[0]);
+-	if (err < 0)
+-		return err;
+-	err = regmap_write(data->regmap, ADT7470_REG_PWM_CFG(2), pwm_cfg[1]);
++	err2 = regmap_write(data->regmap, ADT7470_REG_PWM_CFG(0), pwm_cfg[0]);
++	if (err2 < 0) {
++		dev_warn_ratelimited(dev,
++				     "failed to restore PWM{1,2} config (%d)\n",
++				     err2);
 +
- 	nv_restore_mac_addr(pci_dev);
++		if (!err)
++			err = err2;
++	}
++
++	err2 = regmap_write(data->regmap, ADT7470_REG_PWM_CFG(2), pwm_cfg[1]);
++	if (err2 < 0) {
++		dev_warn_ratelimited(dev,
++				     "failed to restore PWM{3,4} config (%d)\n",
++				     err2);
++
++		if (!err)
++			err = err2;
++	}
++
+ 	if (err < 0)
+ 		return err;
  
- 	/* restore any phy related changes */
 -- 
 2.53.0
 
