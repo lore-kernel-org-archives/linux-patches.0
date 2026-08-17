@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B60743B498;
-	Mon, 17 Aug 2026 15:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DABB421259;
+	Mon, 17 Aug 2026 15:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980229; cv=none; b=Mh9nfjF5UnrLzZz8CWLTBsPxlqLRtxTrxR6Jw7nc3Rh8jblq5jGfwuAJxHavoiyTpHE6JkzE+WWgQAY8WpQ3aTRI8DAG5Mc9C0/itBdQzlbVVaT0cfoqNzpgcSPErboqwy1mHEiRzh048qZYprFUmoJ7vUnLFhno9IcgWkMFF5Q=
+	t=1786980232; cv=none; b=aPVZcDETAVmd0lRE+6fUEpxsweHlAvo3VUecrIdql2BtheqqVv0u9Dn3D72bdbHckGGwefzV+LdKbZpb/O+h2IuZe9+6hYxLxv+0kVn2GyK2Cq1BEguDaC0BycFpI/yeGWaAcF63KgocoeC4sdNXO4VkjwnpvxhmR3lXNZF6De0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980229; c=relaxed/simple;
-	bh=eiGt4+/jKp2HQAz+gA2NBeVWIUTKKA1uAQ9z0liAmS4=;
+	s=arc-20240116; t=1786980232; c=relaxed/simple;
+	bh=5VpCAKderRgd29aVC8aQkbbmwW1UF1ho0KyDS7CjKoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NedOuIVh6nHLjrVNIa0WQuUT7vxtKhk5aiJ5RCWg9mut2n2mvm4LurDsTIHaX0HeOjk+EmZYMHJS1jFoGo4OZueBi7i2/R3NokVSlMaa3ldzTAKYOjf04kDzzHBSbatIWa/UDJ5QRl0zbgXAHjOQp+BwAr33SqD3ljr0wB2aVnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IX9Z4JPH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KX5vWwUl5pzh/iGLv4+0XY73erlTqHnFg87s3scTGXN9hUXd+Ejk0J7ZdCTz5XT13sST2KaaPr+5TY+SZCBLV61pQZ9wMzFN6Poai6U5PIKLWQxTXu1xJuseUQe+fcSogWpJa1/vg2l6gumNGALmFS6PggtbdJuoa9qLoZeL3uY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oodPmxPL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IX9Z4JPH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E21C51F00A3A;
-	Mon, 17 Aug 2026 15:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oodPmxPL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F2A1F000E9;
+	Mon, 17 Aug 2026 15:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980228;
-	bh=fOJX9xDvlsAPmnhR+gX/9oQfmPxb+mhjFAoslLLSPC0=;
+	s=korg; t=1786980231;
+	bh=Y4PPAuw2IzSAIQKyb5zd0o9vwazC0oM+T4SOQXBaF4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IX9Z4JPH5/H5dCUjW2r3Fgnmw7yQo4JTYWdtJxAZUUHhvfT+kkieEGXoxp7evYRrk
-	 j8Rh/wehp670jG49yeCawQIq458twgpWQahXLmrpOiEjlGLrk2LaLzDY1lWXhOh5bG
-	 6uy2tmsIvu3xHd8diRHVKtp5wAfRCH3VxD5RPbik=
+	b=oodPmxPLAA8gWCkCM4LNtYvs24Eo37Pu1siZI//KUGdqgnn67yED8b70U+S6811ab
+	 bFxKj2NG54Wjvp3ff1BO2r4bqkxx5FM7WUX26HW71KtdwZiHWBJu3vkoOMYACtBuTr
+	 nV99zpj7V2SIMj9sa25//P2dezNmf/4fnGT6gc2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Babanpreet Singh <bbnpreetsingh@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	William Breathitt Gray <wbg@kernel.org>,
+	Jian Wen <wenjian1@xiaomi.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 501/609] counter: microchip-tcb-capture: Fix DT channel validation
-Date: Mon, 17 Aug 2026 15:33:17 +0200
-Message-ID: <20260817132600.649483111@linuxfoundation.org>
+Subject: [PATCH 6.1 502/609] tcp: add a scheduling point in established_get_first()
+Date: Mon, 17 Aug 2026 15:33:18 +0200
+Message-ID: <20260817132600.680896186@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,68 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Babanpreet Singh <bbnpreetsingh@gmail.com>
+From: Jian Wen <wenjianhn@gmail.com>
 
-[ Upstream commit f1a3a9946aab611dd2200c01ff122f64b033dad2 ]
+[ Upstream commit 9f4a7c930284bf2b5b84d3636a8e88857149328f ]
 
-mchp_tc_probe() reads the devicetree "reg" cell - a u32, per the API
-contract of of_property_read_u32_index() - into a signed int, so the
-bounds check "channel > 2" fails to reject cell values at or above
-0x80000000: reinterpreted as a negative int, they compare below 2 and
-pass validation.
+Kubernetes[1] is going to stick with /proc/net/tcp for a while.
 
-A malformed devicetree can therefore drive a negative channel into the
-ATMEL_TC_REG() offset arithmetic, making the driver access syscon
-regmap offsets outside the TC block's register window, and into the
-"t%d_clk" clock-name formatting, where it truncates clk_name (sized
-for "t0_clk".."t2_clk").
+This commit reduces the scheduling latency introduced by
+established_get_first(), similar to commit acffb584cda7 ("net: diag:
+add a scheduling point in inet_diag_dump_icsk()").
 
-Declare channel as u32, matching the API contract; the unsigned
-comparison then rejects everything except channels 0..2. Adjust the
-format specifier to %u accordingly, which also resolves the W=1
-warning that exposed the gap:
+In our environment, the scheduling latency affects the performance of
+latency-sensitive services like Redis.
 
-  microchip-tcb-capture.c:520:56: warning: '%d' directive output may
-    be truncated writing between 1 and 11 bytes into a region of size
-    6 [-Wformat-truncation=]
-  note: directive argument in the range [-2147483648, 2]
+Changes in V2 :
+ - call cond_resched() before checking if a bucket is empty as
+   suggested by Eric Dumazet
+ - removed the delay of synchronize_net() from the commit message
 
-No behavior change for well-formed devicetrees: channels 0..2 take
-identical paths before and after.
+[1] https://github.com/google/cadvisor/blob/v0.47.2/container/libcontainer/handler.go#L130
 
-Fixes: 106b104137fd ("counter: Add microchip TCB capture counter")
-Assisted-by: Claude:claude-fable-5 [gcc W=1]
-Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Link: https://lore.kernel.org/r/20260714042910.7-1-bbnpreetsingh@gmail.com
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
+Signed-off-by: Jian Wen <wenjian1@xiaomi.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230711032405.3253025-1-wenjian1@xiaomi.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e5fd3f514e27 ("bpf: tcp: Fix use-after-free in bpf_iter_tcp_established_batch()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/counter/microchip-tcb-capture.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_ipv4.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/counter/microchip-tcb-capture.c b/drivers/counter/microchip-tcb-capture.c
-index 2f631729a870b..f2cd7b599e44e 100644
---- a/drivers/counter/microchip-tcb-capture.c
-+++ b/drivers/counter/microchip-tcb-capture.c
-@@ -310,7 +310,7 @@ static int mchp_tc_probe(struct platform_device *pdev)
- 	char clk_name[7];
- 	struct regmap *regmap;
- 	struct clk *clk[3];
--	int channel;
-+	u32 channel;
- 	int ret, i;
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index 00348cb9a211b..89200b4314018 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -57,6 +57,7 @@
+ #include <linux/init.h>
+ #include <linux/times.h>
+ #include <linux/slab.h>
++#include <linux/sched.h>
  
- 	counter = devm_counter_alloc(&pdev->dev, sizeof(*priv));
-@@ -344,7 +344,7 @@ static int mchp_tc_probe(struct platform_device *pdev)
+ #include <net/net_namespace.h>
+ #include <net/icmp.h>
+@@ -2412,6 +2413,8 @@ static void *established_get_first(struct seq_file *seq)
+ 		struct hlist_nulls_node *node;
+ 		spinlock_t *lock = inet_ehash_lockp(hinfo, st->bucket);
  
- 		priv->channel[i] = channel;
- 
--		snprintf(clk_name, sizeof(clk_name), "t%d_clk", channel);
-+		snprintf(clk_name, sizeof(clk_name), "t%u_clk", channel);
- 
- 		clk[i] = of_clk_get_by_name(np->parent, clk_name);
- 		if (IS_ERR(clk[i])) {
++		cond_resched();
++
+ 		/* Lockless fast path for the common case of empty buckets */
+ 		if (empty_bucket(hinfo, st))
+ 			continue;
 -- 
 2.53.0
 
