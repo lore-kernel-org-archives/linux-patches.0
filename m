@@ -1,47 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F80E30B517;
-	Mon, 17 Aug 2026 14:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1720F3DB636;
+	Mon, 17 Aug 2026 14:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976131; cv=none; b=cby8S2+HZkqV7FCiT1/cm9Q0sGwTrEcu7cVC9Qf5vDXAqdMrjdXSBmK1MI0+cdE+OXJACyGSkwG6csCzlN0pTRPJ8wUrHtUFrOsrojAS+54jK7S9SWpiFkbYw6NKLyekCp6HYG06wlzUxu2TMT/3HMxWVW7KwmE7FAj7XDCSwSA=
+	t=1786976134; cv=none; b=oBPK3fgu5myj7iPDIph0hMerw5HfO5/NTkkzIjyJh9Q4aIKJLx23wHza627y/h1u1fILlgKAsiiErisqgQi6zKRTPdTLKJn8cFVVKHghN3RDYN8iyKq5u4mIDeHJaqfzFrOyrhq11yiQXJIcbr2g5Nmd5JTdL+vXLgTACQaHSD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976131; c=relaxed/simple;
-	bh=KahwTAlPHUxm+pG1xhPYCYVHW/hCkYTXap2/uaVGQnI=;
+	s=arc-20240116; t=1786976134; c=relaxed/simple;
+	bh=rNbVqVQUEIsVm26kFTJy4hb4rIlC6Z7BK0b7nMrM8S8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X0+X6ias58vSyfkDfe+IF2gghZ2/ZfgtUD/l1opVdDz3P8567UQaM+kUUIaXSEb67Xy7x7C0lSdWV3wcdL1jXu3cbbDmwKMjESdyWbChmudjIt7wLwkdvFYS3uuGk9upf1+KffMenF8kXjSlUUWEFKW7hrb+8ndCGYXQb386Tec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LRoKyjF8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gEc2u4gCzV0KhEyIt/j1iSLi8bLgRW7EltxL90/CECiV/wQxEfQbGF34wD6h2C+gzSwl0WC3ruUTVZ7AVRztXpJPhDEcJsmMqsjOb5VaPDgxulWWTroZt4TQMC1NCcHKEazn93+im2LkWwIbyhIlKXHbI8ULxTdqdw7moJ3cDXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qLMAC+xB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LRoKyjF8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 912B11F000E9;
-	Mon, 17 Aug 2026 14:15:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qLMAC+xB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB731F00A3A;
+	Mon, 17 Aug 2026 14:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976130;
-	bh=f7MDjRzV5nCllNbhqy2S2sMe9i6TjLMQFE5K6P44JUo=;
+	s=korg; t=1786976133;
+	bh=92ySkxhgtS405fuLDpKukuLl6TxK2zaQie08X+Enmr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LRoKyjF8fZeUTmyafc0lSDhW/Plw3ylha3QdtcX0ShvUw17chSUzRFLniE5ID+pzs
-	 orHhEyqPgSNB2kvpAYZ9z30xOYaWIhgNLPgrlVYnAO5Ply8Yw4b6ttpj0wM7DRAIC5
-	 m+1gxQ/s/sqQWfktJfEEXUWL3XodPO3ofC48fKfU=
+	b=qLMAC+xBf4iAkw6cGimqdq7s94S0Qunt2JX7bd2HUEHEwVynPNNVXnxqZHcp89FPG
+	 NWxwobsaThVOOMDj+w4KwiHmJwnC9dEfMXfGyPaVgycvv4u9gJEt5vQ4Oo7Pyi+J8t
+	 GtsSHuXMzaVhAVk8+T9Dfx5VkcXtAeqY4NykwDWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Link Lin <linkl@google.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	David Rientjes <rientjes@google.com>,
-	Alexander Duyck <alexander.duyck@gmail.com>,
-	Greg Thelen <gthelen@google.com>,
-	James Houghton <jthoughton@google.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Jiaqi Yan <jiaqiyan@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 266/389] mm/page_reporting: use system_freezable_wq to fix UAF during suspend
-Date: Mon, 17 Aug 2026 15:31:45 +0200
-Message-ID: <20260817132549.542929193@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 267/389] net: bridge: stop fast-leave after deleting a port group
+Date: Mon, 17 Aug 2026 15:31:46 +0200
+Message-ID: <20260817132549.584841473@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -54,102 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Link Lin <linkl@google.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 0b45f6927a14914ff685fe0e6f9d11232a1e03df upstream.
+commit a39789f211b8a4125f0c70e05b30cf715f4f187d upstream.
 
-During PM freeze (e.g.  S3 suspend or S4 hibernation), device drivers like
-virtio_balloon reset their underlying virtio devices and delete their
-virtqueues via vdev->config->del_vqs().
+br_multicast_leave_group() iterates mp->ports with pp = &p->next in
+its fast-leave path. After br_multicast_del_pg() removes p,
+continuing the loop advances pp through the deleted entry.
 
-However, page reporting work (page_reporting_process) was scheduled on the
-global system_wq.  Because system_wq lacks the WQ_FREEZABLE flag, the PM
-freezer skips it, leaving page_reporting_process active during suspend.
+If multicast-to-unicast was enabled, the bridge can hold multiple port
+groups for the same port and group with different source MAC
+addresses. Once multicast-to-unicast is disabled,
+br_port_group_equal() matches those entries by port only. A fast leave
+can then delete one entry and continue from its stale next pointer,
+leaving mp->ports pointing at a deleted port group.
 
-If pages are freed into the buddy allocator while suspending (for example,
-when core MM invokes the balloon shrinker during S4 hibernation image
-saving), page reporting triggers virtballoon_free_page_report() on deleted
-virtqueues, resulting in a Use-After-Free / General Protection Fault:
+Fast leave only needs to remove one matching port group. Break after
+br_multicast_del_pg() so the loop stops before dereferencing the
+removed entry.
 
-    [  196.795226] general protection fault, probably for non-canonical address 0xaa1436fe70dae6df: 0000 [#1] SMP NOPTI
-    [  196.825967] Workqueue: events page_reporting_process
-    [  196.831038] RIP: 0010:virtqueue_add_split+0x233/0x4c0 [virtio_ring]
-    [  196.927073] virtballoon_free_page_report+0x3a/0xe0 [virtio_balloon]
-    [  196.946943] page_reporting_process+0x370/0x4f0
-
-Fix this by switching page reporting work to system_freezable_wq.  This
-ensures that the PM freezer pauses page_reporting_process before device
-drivers destroy their reporting virtqueues.  Because the reporting worker
-is frozen, memory reclamation/freeing (e.g.  via shrinker execution) can
-safely return pages to MM during freeze without triggering unfrozen
-reporting work on deleted virtqueues.
-
-This aligns with the driver's existing design. The comment in
-virtballoon_freeze() states:
-    /*
-     * The workqueue is already frozen by the PM core before this
-     * function is called.
-     */
-
-Testing:
-I have verified these fixes using Google’s virtualization infrastructure
-by running continuous suspend/resume iterations (40+ cycles) while
-churning memory using stress-ng (`stress-ng --vm 4 --vm-bytes 60%
---timeout 1`) to constantly create free pages for the buddy allocator.  We
-also set the `page_reporting_order` parameter to 0 to make the page
-reporting worker highly sensitive, forcing it to pick up any 4K free
-pages.  This confirmed that the UAF crashes are no longer reproducible.
-
-Link: https://lore.kernel.org/20260721005603.1710551-1-linkl@google.com
-Fixes: 36e66c554b5c ("mm: introduce Reported pages")
-Signed-off-by: Link Lin <linkl@google.com>
-Suggested-by: David Hildenbrand (Arm) <david@kernel.org>
-Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: David Rientjes <rientjes@google.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Cc: Alexander Duyck <alexander.duyck@gmail.com>
-Cc: Greg Thelen <gthelen@google.com>
-Cc: James Houghton <jthoughton@google.com>
-Cc: Jason Wang <jasowang@redhat.com>
-Cc: Jiaqi Yan <jiaqiyan@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 6db6f0eae605 ("bridge: multicast to unicast")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/1cf0898872ef7c72d5f4c0304414a192c6dac591.1784707712.git.zhilinz@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_reporting.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/bridge/br_multicast.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/mm/page_reporting.c
-+++ b/mm/page_reporting.c
-@@ -43,7 +43,8 @@ __page_reporting_request(struct page_rep
- 	 * now we are limiting this to running no more than once every
- 	 * couple of seconds.
- 	 */
--	schedule_delayed_work(&prdev->work, PAGE_REPORTING_DELAY);
-+	queue_delayed_work(system_freezable_wq, &prdev->work,
-+			   PAGE_REPORTING_DELAY);
- }
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -2838,6 +2838,7 @@ br_multicast_leave_group(struct net_brid
  
- /* notify prdev of free page reporting request */
-@@ -306,7 +307,8 @@ err_out:
- 	 */
- 	state = atomic_cmpxchg(&prdev->state, state, PAGE_REPORTING_IDLE);
- 	if (state == PAGE_REPORTING_REQUESTED)
--		schedule_delayed_work(&prdev->work, PAGE_REPORTING_DELAY);
-+		queue_delayed_work(system_freezable_wq, &prdev->work,
-+				   PAGE_REPORTING_DELAY);
- }
- 
- static DEFINE_MUTEX(page_reporting_mutex);
+ 			p->flags |= MDB_PG_FLAGS_FAST_LEAVE;
+ 			br_multicast_del_pg(mp, p, pp);
++			break;
+ 		}
+ 		goto out;
+ 	}
 
 
