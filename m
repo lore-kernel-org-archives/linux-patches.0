@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BFC64B0481;
-	Mon, 17 Aug 2026 14:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30D9424641;
+	Mon, 17 Aug 2026 14:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977726; cv=none; b=b1Se9XNmJdAz1Tbdtw64FafdS7SbS96m3kd4pWh59i0jBIdikIUfpr0tKmSzGnTIhKgcuzIzFkthqjSccAAUr2481qYgdYNhC8ACVIq+wmCfcc3VR2JAR+0oD3Ehk8GFHwkKvRZS/yY/X9UIX0WcWTqQXKHmjKNrm0SZMTlH4rk=
+	t=1786977729; cv=none; b=IEdXrGZ1/fxFeEcnJW/i1pg2V0/hnBx96GT05iS9s0auBACKWyHRMQ4ObxF/llbPgNdNCTYRcV7SvHc7ihH289tFOStQB99OgxcgGaiqRFUMgbgcUUJOnuQF/Eo0tcwgHJKzt1RqDPXzPKSwm5lYIPN7hXbzSLgU82OX2ihdazs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977726; c=relaxed/simple;
-	bh=2KunC6Lx58RnWPjhvUhVoDGKHGVz6KMJmKzewV0L9qg=;
+	s=arc-20240116; t=1786977729; c=relaxed/simple;
+	bh=7w9RDDkEkgb1rwwa7uIotjwxiUIXQfeaXyVaCB5e0NE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tx2laQCdDA1sj2rMFu2Ef5TIaNVnO8Lnb+sgvU7xdCvWOLF2qXYKetb2lh1/JktApOgEAtwx8Pa9PX8WkmA+oI1Gh0P5unMuzV8Yev8Yx1ve1zVcLdPgfQ4lz/ehiVe5nLofL/6r/4aBLdd2DR6Of70++OuuhfbE5KG4wfWjgLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmmJfRKU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I9Rq5ZhSXeKtjXaBZLncjGPKwmubdMeyrRg9wDfM7B/DDR2UKd1TBf/e661vS5bOfP7sRSGzsz0MdNtwbUuNClk9/Jw42pY/YCudbPFyvDpR9yuu3MgJv+IvK5ffo0a+XC2N3JgyImvga/y1aPCDKKuztEAlyPWYE4YHgqicQ0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ve6B+Txa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmmJfRKU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 463F41F000E9;
-	Mon, 17 Aug 2026 14:42:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ve6B+Txa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234BE1F000E9;
+	Mon, 17 Aug 2026 14:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977724;
-	bh=iPLzVg+1jlGJs+NUJZHNB/Ubnx6/Of7c0wIGj0TXAZc=;
+	s=korg; t=1786977727;
+	bh=LCi3rZ+FRPBlsbUGhdxqjFEYPyq5/wQFC5yBAXEuZHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hmmJfRKUaidELTc+LGXBnc+PWIK2JeI9pdALiu5kHTOG4rNqTdpjIczyR/zaT0v6x
-	 cYPYQYZVhHeYwxrV4EzTRP16Rx7upZ7SDv3bZzxsLb0OhiYNG5+izEQrK05nN8qTHa
-	 hNoBtngKBRrkoXAjSOiDCzJlcw0FLNktf1P7NLhE=
+	b=Ve6B+TxamovudgxZDOBgm0nUAf8zOH3fx4CYqeIAQJhagAeBbcznCKB1PjjnoBU8X
+	 G5e2ARwmfxFV7HpuKVD/4TjY0NIEj3ETnnXevwOO+xZvlt5rskakoDq1NwzBKNiLj8
+	 hYp7q7BGVZIlNZgNgcFBH+Kn8yYY86W4Y5NNWydk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Cunhao Lu <1579567540@qq.com>
-Subject: [PATCH 5.15 427/456] serial: 8250_dma: Clear stale RX state on shutdown
-Date: Mon, 17 Aug 2026 15:33:37 +0200
-Message-ID: <20260817132555.866373832@linuxfoundation.org>
+	Muhammad Bilal <meatuni001@gmail.com>
+Subject: [PATCH 5.15 428/456] staging: rtl8723bs: fix OOB read in rtw_get_wpa_ie()
+Date: Mon, 17 Aug 2026 15:33:38 +0200
+Message-ID: <20260817132555.899560364@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,64 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cunhao Lu <1579567540@qq.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit e2fe6a0efecbef00e3ecc2db64dd5afa8c212b41 upstream.
+commit 1c3e23e78862493e8cf1adad02b10ffcb8b9921c upstream.
 
-serial8250_release_dma() terminates RX DMA and releases the channel, but
-leaves rx_running set.  If the port is closed while an RX transfer is
-active, the stale state remains while rxchan is NULL until the channel is
-requested again on the next open.
+rtw_get_wpa_ie() reads bytes at fixed offsets into a vendor-specific
+information element without checking that the element is long enough,
+causing an out-of-bounds read for a short trailing IE.
 
-The DesignWare BUSY workaround added by commit a7b9ce39fbe4
-("serial: 8250_dw: Ensure BUSY is deasserted") calls
-serial8250_rx_dma_flush() from the LCR write path during startup.  This
-happens before serial8250_request_dma() obtains a new RX channel.  On
-reopen, the stale rx_running state therefore makes the flush path pass a
-NULL channel to dmaengine_pause(), causing a kernel Oops.
+The function locates a vendor-specific IE (EID 221) with rtw_get_ie()
+and then compares a 4-byte OUI+type at pbuf + 2 and reads a 2-byte
+version word at pbuf + 6. Those accesses require the IE body to be at
+least 6 bytes, but rtw_get_ie() only guarantees that the element fits
+within the buffer; it does not enforce a minimum body length. A
+vendor-specific IE whose length byte is 0 to 5, placed at the end of
+the buffer, therefore makes these reads run past the end of the IE and
+past the end of the buffer itself.
 
-Clear rx_running after terminating RX DMA, matching the TX cleanup.  Also
-make the flush helper return if the DMA object or RX channel is not
-available so startup and teardown paths cannot pass a NULL channel to the
-DMAengine API.
+The buffer holds information elements taken from received management
+frames and from the IE blob passed to rtw_cfg80211_set_wpa_ie(), which
+is kmemdup'd to its exact length, so the read can run off the end of
+the allocation.
 
-Fixes: 0fcb7901f9d6 ("tty: serial: 8250_dma: keep own book keeping about RX transfers")
+The sibling helpers rtw_get_sec_ie(), rtw_get_wapi_ie() and
+rtw_get_wps_ie() in this file already reject too-short vendor-specific
+IEs before their OUI memcmp(); rtw_get_wpa_ie() was never brought in
+line with them, and needs a minimum of 6 rather than 4 bytes because
+of the version word. Add the missing length check.
+
+Fixes: 554c0a3abf216 ("staging: Add rtl8723bs sdio wifi driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Cunhao Lu <1579567540@qq.com>
-Link: https://patch.msgid.link/tencent_9EE2945F4C933B4D810C73C2D7485E000F06@qq.com
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://patch.msgid.link/20260719030631.88254-1-meatuni001@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_dma.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_ieee80211.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/tty/serial/8250/8250_dma.c
-+++ b/drivers/tty/serial/8250/8250_dma.c
-@@ -199,11 +199,12 @@ void serial8250_rx_dma_flush(struct uart
- {
- 	struct uart_8250_dma *dma = p->dma;
+--- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
++++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
+@@ -370,6 +370,9 @@ unsigned char *rtw_get_wpa_ie(unsigned c
+ 		pbuf = rtw_get_ie(pbuf, WLAN_EID_VENDOR_SPECIFIC, &len, limit_new);
  
--	if (dma->rx_running) {
--		dmaengine_pause(dma->rxchan);
--		__dma_rx_complete(p);
--		dmaengine_terminate_async(dma->rxchan);
--	}
-+	if (!dma || !dma->rxchan || !dma->rx_running)
-+		return;
+ 		if (pbuf) {
++			if (len < 6)
++				goto check_next_ie;
 +
-+	dmaengine_pause(dma->rxchan);
-+	__dma_rx_complete(p);
-+	dmaengine_terminate_async(dma->rxchan);
- }
- EXPORT_SYMBOL_GPL(serial8250_rx_dma_flush);
- 
-@@ -312,6 +313,7 @@ void serial8250_release_dma(struct uart_
- 
- 	/* Release RX resources */
- 	dmaengine_terminate_sync(dma->rxchan);
-+	dma->rx_running = 0;
- 	dma_free_coherent(dma->rxchan->device->dev, dma->rx_size, dma->rx_buf,
- 			  dma->rx_addr);
- 	dma_release_channel(dma->rxchan);
+ 			/* check if oui matches... */
+ 			if (memcmp((pbuf + 2), wpa_oui_type, sizeof(wpa_oui_type)))
+ 				goto check_next_ie;
 
 
