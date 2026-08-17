@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A078D3D7D8D;
-	Mon, 17 Aug 2026 14:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B713ACEFE;
+	Mon, 17 Aug 2026 14:47:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978074; cv=none; b=E56JgK7nmPNa4vV7eQz2MNThs0Ilp1Y3iojHJPZ2aINVfdkL06dniLoYufInrfqGob2xI42xK6f55yCX0xFLalcbzIHHgWRW2bf0IyG7U96zgiDwJpnFws6jt6iQ6fCvqPKJ3s+dQMqZj5ftWBsIoYt6I9Z6LD4ifCLV6dAKqdw=
+	t=1786978077; cv=none; b=E/E+ZfnfZw6nfUQxF0z1sP/xuTB469RlNRlA6U7Uq9ehqnbrCHFvt5ZmONNEuWKCHh2MuDLC3Pu7QDtl3M6blRN8sqCIxBkjbiEsCygYGrWHRWyZDwjeShP3iWpBQIahYa+sKf691zonppwQQA+EJWvqKzr8DBcDg7brmixGte4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978074; c=relaxed/simple;
-	bh=lcJ3pYTCjRs9LIfWKHegXANyZ6jYGRSL6lzLCmtMKGk=;
+	s=arc-20240116; t=1786978077; c=relaxed/simple;
+	bh=lrTSFhpkLnJwvzAIJvzPMDRTji2BFLdj1SqYl6OtXbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UH5dhCnUCxiSg5C+BeckIwYUaotnfml9V6ZRztY6axHvifSyVxCaj7xR1b02UUaz8Lhqu1H5TNTx4H81X5LZut41Ixu17fD35t5zoAIbZLZTnDvjliGiZBnQQCIJbVatXuvD3Oo+GTPkQEjcTRyj/M1SR3sHboz+fIeI4O2/fBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r9GKsS7u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ANFg3CDGHIzfUzQ71Lmg/HJFhtUu6EXyBLa7+v5J4Ikcg0RrtecUxmW3+HtME8HMEBNzEkuF/9ya4keZOg24ZJkVufv5COmz5q3T7RJH98VluHQieLVncGALBzM4/ChM0WzK1/6ivIB3SE/QJ+Sd4oGZ4/Dnw3kWzaDdzH8eE0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uc2xvfIe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r9GKsS7u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0601D1F000E9;
-	Mon, 17 Aug 2026 14:47:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uc2xvfIe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2811F000E9;
+	Mon, 17 Aug 2026 14:47:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978073;
-	bh=Sfz9zxJ14isqGewHMbqKUEOrq9kdu+dqgLUasIaBEhs=;
+	s=korg; t=1786978076;
+	bh=HY6iHbNWJgcwF3Nlw5RWXFPBmheJS9PlLW7Ca5mguWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r9GKsS7uPJ32fxdy45VQVIKmX0NlItDtwuTpQrZzNQdZcyp66endCPNBRV6trNpoA
-	 UJ39N2RbchuxSpxBVlv6KCqOPMMFNvOcJPO83NpAHnLUkZjpuSZQzLQpZTDaKJ766R
-	 R+KUXbh01HiTpB4TY8A/DM5vG4CTkh7Gbu6+jtFQ=
+	b=Uc2xvfIeX6pQ0n/h0Ca1Z60lpVxRrVlX5/swLRjw2ijahQiIlaLpF9s8SCSYsf13O
+	 bYI1zANA9oqBQ3xmU/3w5fSpM8GxMAVS8vF/IdHJ0kvov3kE5Fs6BE1iiBmQtIHpMg
+	 8TxA2Av54bxsemQN4NBpeBI0AgoGufQfBnEn610A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 093/181] packet: synchronize pressure clearing with ring reconfiguration
-Date: Mon, 17 Aug 2026 15:33:07 +0200
-Message-ID: <20260817132539.107840472@linuxfoundation.org>
+	Mohsin Bashir <hmohsin@meta.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Sun Jian <sun.jian.kdev@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 094/181] net: fix skb length accounting after generic XDP frag adjustment
+Date: Mon, 17 Aug 2026 15:33:08 +0200
+Message-ID: <20260817132539.152006661@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -51,97 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Sun Jian <sun.jian.kdev@gmail.com>
 
-commit 1a35da325cac4d5bcad76a2aa943408a6f1d9000 upstream.
+commit 33f2b2eb33d666ecac68031e0f31424fb70528db upstream.
 
-packet_set_ring() updates the RX ring state under sk_receive_queue.lock,
-but used to publish the tpacket receive mode through po->prot_hook.func
-after releasing that lock. packet_poll() and packet_recvmsg() can then
-run the pressure clearing path after the ring has been cleared while
-still seeing tpacket_rcv, causing __packet_rcv_has_room() to dereference
-stale or NULL ring storage.
+Generic XDP exposes non-linear skb fragments through an xdp_buff. If an
+XDP program adjusts the fragment area, bpf_prog_run_generic_xdp() copies
+xdp_frags_size back to skb->data_len but leaves skb->len containing the
+old fragment contribution.
 
-Move the existing receive hook assignment into the same
-sk_receive_queue.lock section as the ring state update. Keep the
-assignment otherwise unchanged, including on TX ring reconfiguration, to
-avoid adding behavior changes that are not required for the fix.
+After a fragment shrink, this makes skb_headlen() larger than the actual
+linear area. In the reproduced UDP receive path, __skb_datagram_iter()
+copied 1024 bytes past the actual linear tail to userspace, starting at
+struct skb_shared_info. The copied bytes included the affected skb's
+nr_frags, xdp_frags_size and a kernel pointer from
+skb_shinfo(skb)->frags[0]. Real packet data was displaced by the same
+amount and truncated at the end.
 
-Serialize packet_recvmsg() pressure clearing with the same queue lock
-only after PACKET_SOCK_PRESSURE has been observed. If the flag is clear
-and the socket has moved away from tpacket_rcv, packet_set_ring() has
-already detached the socket and waited for synchronize_net(), so no new
-packet input can set the flag again.
+Subtract the old data_len before replacing it and add the new data_len
+afterwards, keeping skb->len and skb->data_len synchronized.
 
-packet_poll() already holds sk_receive_queue.lock, so it uses the new
-unlocked helper directly.
+A 60000-byte UDP datagram on a veth pair with MTU 64000 was shortened by
+1024 bytes from its fragment area. Before the fix, all 10 runs produced
+corrupted payloads. After the fix, all 10 runs matched the expected
+payload exactly.
 
-Fixes: 2ccdbaa6d55b ("packet: rollover lock contention avoidance")
+Fixes: e6d5dbdd20aa ("xdp: add multi-buff support for xdp running in generic mode")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Link: https://patch.msgid.link/f90b5688311fa278d1361ea8c6be0bf25967d591.1785247446.git.zihanx@nebusec.ai
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/bpf/al9T9Eto%2FhRIzP5W@boxer/
+Reviewed-by: Mohsin Bashir <hmohsin@meta.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
+Link: https://patch.msgid.link/20260804054040.613675-2-sun.jian.kdev@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ net/core/dev.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -1367,13 +1367,25 @@ static int packet_rcv_has_room(struct pa
- 	return ret;
- }
- 
--static void packet_rcv_try_clear_pressure(struct packet_sock *po)
-+static void __packet_rcv_try_clear_pressure(struct packet_sock *po)
- {
- 	if (packet_sock_flag(po, PACKET_SOCK_PRESSURE) &&
- 	    __packet_rcv_has_room(po, NULL) == ROOM_NORMAL)
- 		packet_sock_flag_set(po, PACKET_SOCK_PRESSURE, false);
- }
- 
-+static void packet_rcv_try_clear_pressure(struct packet_sock *po)
-+{
-+	struct sock *sk = &po->sk;
-+
-+	if (!packet_sock_flag(po, PACKET_SOCK_PRESSURE))
-+		return;
-+
-+	spin_lock_bh(&sk->sk_receive_queue.lock);
-+	__packet_rcv_try_clear_pressure(po);
-+	spin_unlock_bh(&sk->sk_receive_queue.lock);
-+}
-+
- static void packet_sock_destruct(struct sock *sk)
- {
- 	skb_queue_purge(&sk->sk_error_queue);
-@@ -4357,7 +4369,7 @@ static __poll_t packet_poll(struct file
- 			TP_STATUS_KERNEL))
- 			mask |= EPOLLIN | EPOLLRDNORM;
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -5116,12 +5116,16 @@ u32 bpf_prog_run_generic_xdp(struct sk_b
  	}
--	packet_rcv_try_clear_pressure(po);
-+	__packet_rcv_try_clear_pressure(po);
- 	spin_unlock_bh(&sk->sk_receive_queue.lock);
- 	spin_lock_bh(&sk->sk_write_queue.lock);
- 	if (po->tx_ring.pg_vec) {
-@@ -4597,14 +4609,14 @@ static int packet_set_ring(struct sock *
- 		rb->frame_max = (req->tp_frame_nr - 1);
- 		rb->head = 0;
- 		rb->frame_size = req->tp_frame_size;
-+		po->prot_hook.func = (po->rx_ring.pg_vec) ?
-+						tpacket_rcv : packet_rcv;
- 		spin_unlock_bh(&rb_queue->lock);
  
- 		swap(rb->pg_vec_order, order);
- 		swap(rb->pg_vec_len, req->tp_block_nr);
+ 	/* XDP frag metadata (e.g. nr_frags) are updated in eBPF helpers
+-	 * (e.g. bpf_xdp_adjust_tail), we need to update data_len here.
++	 * (e.g. bpf_xdp_adjust_tail). Remove the old fragment contribution
++	 * from skb->len before updating data_len, then add the new one back.
+ 	 */
+-	if (xdp_buff_has_frags(xdp))
++	skb->len -= skb->data_len;
++	if (xdp_buff_has_frags(xdp)) {
+ 		skb->data_len = skb_shinfo(skb)->xdp_frags_size;
+-	else
++		skb->len += skb->data_len;
++	} else {
+ 		skb->data_len = 0;
++	}
  
- 		rb->pg_vec_pages = req->tp_block_size/PAGE_SIZE;
--		po->prot_hook.func = (po->rx_ring.pg_vec) ?
--						tpacket_rcv : packet_rcv;
- 		skb_queue_purge(rb_queue);
- 		if (atomic_long_read(&po->mapped))
- 			pr_err("packet_mmap: vma is busy: %ld\n",
+ 	/* check if XDP changed eth hdr such SKB needs update */
+ 	eth = (struct ethhdr *)xdp->data;
 
 
