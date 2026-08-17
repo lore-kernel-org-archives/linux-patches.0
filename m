@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77ED841F5EA;
-	Mon, 17 Aug 2026 14:40:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA142E738B;
+	Mon, 17 Aug 2026 14:40:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977612; cv=none; b=BRQyQf2wA0FXaW1OAwoQSJlJ+Hiq/51Rn2XUSEEVxVzzgCMrTYguFqOK3/cYYkHtNjxe/egHO/ZMzFrgf0K4H9qrJE+bhXyTDwIX5iSAvTRhjIAHpmzc0K+KN0mMifED1kU0wnfaDfJNz7Qx9YLd/PUbP3MuApTmKJeadHvKTug=
+	t=1786977615; cv=none; b=EmPOd1hvpI4Wh97GtKArls167aGX/EnlMELSWEH2+HATKG6PrjXlYmpkGALMwlyYZhYrFEvr2q3Znx9J0cuUVLXsqmiToPhq2GWEOA5HPOxZkbHtAWd6D2IFhr1dbN0f8/Wc2dbvUOqMZooWYqIQP/jK0YO372XJEWY1Cz0R8PM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977612; c=relaxed/simple;
-	bh=CQCpdcjDNmEtDsbI6mQQKL55KhrUQU9eOYLj3xpZinI=;
+	s=arc-20240116; t=1786977615; c=relaxed/simple;
+	bh=1z/++L9rOxRLQXZryxCZwBR0iEryxqEIBRaIC21rf7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gczsxpjfdJqXVUekFF1D/5CVDGHoeINPhit/vsxwY6426ICEOGKzHOEmUGrpvIC/cvDuhOwEMB9QB2LS0Tqkjdi7B8wKS8P0XqRbFpsjVQzggcG5/Xi5TyY4rN5Bl6STalgFHvgyQthIWRE3/s/zq43n0Ds2WPKI39K37qhXZ4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpTSiCAQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V0kotwNWn3Zgs47rIVl+BccRC3+cllVUZPwU9CmXVmYJewwHdzLdvw7zl9r4EBwME7kKrCiADTW8fJxdgRicgjp9RNHbu6Gk4Rohfd67+XBCmTXurBdvOBdeBPPJvvDyC3r+YYcTFN3ldxqZvOFDiL1307ChAA4X/gt3FO+9Yis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGCo2PWl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpTSiCAQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37BD1F000E9;
-	Mon, 17 Aug 2026 14:40:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGCo2PWl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A47551F00A3D;
+	Mon, 17 Aug 2026 14:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977611;
-	bh=yfdErj62B6gnwX8p0EMZ6307HPJjg8yygKmCNez1zcM=;
+	s=korg; t=1786977614;
+	bh=LstB/ZJUL+m1fXmZ1ceQKcw95lEyUo0tII6i0J8NhKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rpTSiCAQZUoEwMxRREuXZumfouiCRA5h6OwTuv89lvDbOfv88rnAvYVjxG/1t14sk
-	 7MWwI4XCJxzfaADw1oqvbK1HAcTUuMIdao6T5MOa/Klb4mwKKUOAilnIaJPazNQRva
-	 34q4aWjDTDuOV2AcK2KuJJTmSMLb40CF20ePJmwc=
+	b=MGCo2PWlZPgVVQjT4xLRiPb2aGZZl0q9bzCnwBUGVIlVXItpiYKWx6fHBmep43KqK
+	 gJZi/V8YBN3arRt+Hklem1h11bKYfbdJ90ualtJh/pzmh4Ra0bOzMigV0dWMChV9Ma
+	 B2XQbdVxd8PWzXBsGb6yuvV5o5LXrr0lTF+IrSPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 388/456] tcp: fix TFO max_qlen accounting across reuseport migration
-Date: Mon, 17 Aug 2026 15:32:58 +0200
-Message-ID: <20260817132554.611018036@linuxfoundation.org>
+Subject: [PATCH 5.15 389/456] net/ncsi: fix heap OOB read in NCSI_CMD_SEND_CMD payload length
+Date: Mon, 17 Aug 2026 15:32:59 +0200
+Message-ID: <20260817132554.640368873@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -53,70 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit a0ab2ba83e35159d81cec830a92e885ecf8139be ]
+[ Upstream commit afa58b7384913c8773d837acdb07b035690ec5d2 ]
 
-A listener's TCP_FASTOPEN max_qlen stops being accurate and lets through
-far more pending Fast Open requests than it was configured for.
+ncsi_send_cmd_nl() takes the number of bytes to copy from the
+attacker-controlled ncsi_pkt_hdr.length field of the in-band packet
+header, while the source buffer is the NCSI_ATTR_DATA netlink
+attribute whose readable size is nla_len() - sizeof(ncsi_pkt_hdr).
+The two length sources are never cross-checked: only
+nla_len() >= sizeof(struct ncsi_pkt_hdr) is enforced.
 
-This only shows up with SO_REUSEPORT listener migration, where closing a
-listener hands its still-pending TFO children over to a surviving one.
+With hdr->length set larger than the attribute payload (up to 65535
+against at most 2032 readable bytes), ncsi_cmd_handler_oem() copies
+past the end of the netlink attribute buffer with unsafe_memcpy(),
+leaking up to ~64KB of kernel heap memory into the transmitted NCSI
+command packet. The destination skb is sized by the declared payload,
+so the write side does not overflow - this is a pure OOB read /
+information leak, reachable with CAP_NET_ADMIN on systems with a
+registered NCSI device (e.g. OpenBMC on Aspeed BMC SoCs, where
+NET_NCSI=y is standard).
 
-fastopenq.qlen is charged in tcp_fastopen_create_child() when the child
-is created and uncharged in reqsk_fastopen_remove() when the handshake
-completes.  The uncharge follows rsk_listener of the request the child
-points at, and inet_reqsk_clone() has repointed the child at a new
-request owned by the new listener, so the ++ and the -- land on two
-different sockets.  The new listener's qlen drifts negative and its
-limit no longer binds.
+Reject commands whose declared payload extends past the end of the
+data attribute.
 
-Charge the new listener during migration, like reqsk_queue_migrated()
-already does for queue->young and queue->qlen.
+The issue was found by the autokbug dynamic kernel fuzzer at Tencent
+Yunding Lab.
 
-Fixes: 54b92e841937 ("tcp: Migrate TCP_ESTABLISHED/TCP_SYN_RECV sockets in accept queues.")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260803061739.134737-1-jiayuan.chen@linux.dev
+Fixes: 9771b8ccdfa6 ("net/ncsi: Extend NC-SI Netlink interface to allow user space to send NC-SI command")
+Reported-by: Henry Martin <bsdhenrymartin@gmail.com>
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Link: https://patch.msgid.link/20260803043618.3210301-1-bsdhenrymartin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_connection_sock.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ net/ncsi/ncsi-netlink.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index d99fed07b024f..042982aaf9704 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -750,11 +750,23 @@ static struct request_sock *inet_reqsk_clone(struct request_sock *req,
- 
- 	nreq->rsk_listener = sk;
- 
--	/* We need not acquire fastopenq->lock
--	 * because the child socket is locked in inet_csk_listen_stop().
--	 */
--	if (sk->sk_protocol == IPPROTO_TCP && tcp_rsk(nreq)->tfo_listener)
-+	if (sk->sk_protocol == IPPROTO_TCP && tcp_rsk(nreq)->tfo_listener) {
-+		struct fastopen_queue *fastopenq;
-+
-+		/* reqsk_fastopen_remove() will uncharge nreq->rsk_listener,
-+		 * that is @sk, so charge it here.  Unlike the listener
-+		 * being closed, @sk is live and needs its lock.
-+		 */
-+		fastopenq = &inet_csk(sk)->icsk_accept_queue.fastopenq;
-+		spin_lock_bh(&fastopenq->lock);
-+		fastopenq->qlen++;
-+		spin_unlock_bh(&fastopenq->lock);
-+
-+		/* We need not acquire fastopenq->lock
-+		 * because the child socket is locked in inet_csk_listen_stop().
-+		 */
- 		rcu_assign_pointer(tcp_sk(nreq->sk)->fastopen_rsk, nreq);
+diff --git a/net/ncsi/ncsi-netlink.c b/net/ncsi/ncsi-netlink.c
+index db350b8f5d88b..82b22368a540a 100644
+--- a/net/ncsi/ncsi-netlink.c
++++ b/net/ncsi/ncsi-netlink.c
+@@ -461,6 +461,10 @@ static int ncsi_send_cmd_nl(struct sk_buff *msg, struct genl_info *info)
+ 	nca.req_flags = NCSI_REQ_FLAG_NETLINK_DRIVEN;
+ 	nca.info = info;
+ 	nca.payload = ntohs(hdr->length);
++	if (nca.payload > len - sizeof(*hdr)) {
++		ret = -EINVAL;
++		goto out_netlink;
 +	}
+ 	nca.data = data + sizeof(*hdr);
  
- 	return nreq;
- }
+ 	ret = ncsi_xmit_cmd(&nca);
 -- 
 2.53.0
 
