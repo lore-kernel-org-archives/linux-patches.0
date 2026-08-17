@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9633443B3C9;
-	Mon, 17 Aug 2026 13:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7574D43BDA4;
+	Mon, 17 Aug 2026 13:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974222; cv=none; b=GjzhdXvbi/epRR98768MpvpO43OwmB1yc/hrbdNWFA91aX0DKUT4jeIDd1i4ky6aEARvvoYz1dGQU/oaf2VINzIfOysceLWEFOEGl2Q744dQ6zbjUDeO0JYuS4KjaSPmZ3jyVQsfHapoDQ5qS/cAE9v9UB/e6K/f7dupPoif3Js=
+	t=1786974226; cv=none; b=c1lFAWHaP7ciibmhjjIEYSNhckZfmSE1btULgNDiIliBQmM0qfNM9NmecxrXFSF3LepS3R8p1k3PrYsIysqE5eFM3SbN7ENyFSdgm9xBXmIgrxoQk5j/Xe1JLK62EVvN7rMMA5AuG5BQA2Dma/d6W4RKoQyJZ9xkAUlfMQCrMRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974222; c=relaxed/simple;
-	bh=boHcDekFr92QrMXgsNxCV6GC1tgNoQBgh7Ee3RUT6Lg=;
+	s=arc-20240116; t=1786974226; c=relaxed/simple;
+	bh=lvBJMlf8jF3mCdFuFe67SFkVwlaTZ4JHTDfFYS7i6eE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BqjkiHgEfY7ecgtcSnAJrp2qzQWBD7yMRVfGzhIP0wgFHGg9PVnHuKlkPX+Je3MapyYjAWuYuvVq+d+qWI2ir1HFBEmLuYS/aHIZ6yxSKabmEgvKaKHaPC3U+svYUZl0JMU+gp1dtpweJYBgQY1oHwkhu934x3gAKQn2s6XYne8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dnzt/jaK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n0PqKnlnS/tNmodzMrzrbN6bOhwQm3lcNtSSooXGlJtcCOjEn55HAN1HLrWMApVJZVx+oY+Rm/n/DRRdSxQPW6JOhDJ+eb/HgbGj6hX8ClIgmBFAW9YeZLWm0sFiykLhpE6PM0Ohrm+yLai1iylxyOLm1c5aukvU+cCPMCQXhTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpFXsMI8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dnzt/jaK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA7411F000E9;
-	Mon, 17 Aug 2026 13:43:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpFXsMI8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8EA1F00A3A;
+	Mon, 17 Aug 2026 13:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974221;
-	bh=9a2GM+mKo/l2gUdv7aNT5ILG60HuGXXZsq4ZXFg4Jm4=;
+	s=korg; t=1786974224;
+	bh=mQbgmC14ieDvbWx/T/GZQuca97WLt/lCffVbiVJtfuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dnzt/jaKatdntm1Z5gUYoN+oydndphFPI5zCs9MjhUAjnp2SytsEyk9k4OHyS6IQO
-	 xprOZ+y8YwcxkanHL6XlMuLuQ+2o2v4HncI/i+pb1U5kEiJf+DgIQz3c5bSIdh8O3j
-	 SGxV5rXvyjn27VFZ+jBO1Do3aG5QanJojxeXgkas=
+	b=XpFXsMI8Y7DjlIllzewLEGYR4Ov3boax1WAJCncXlFrAX+CcPk0tZ0Bn/3Z9Xk8fI
+	 ODwDLK0ODa6TIp8me12OGOH72CLGnZAsyiybkIVRcWQGeh0sFvRhpsQXDIxiCITJZM
+	 USixVF9dwS/iGuFsqMu99MBL/8ISzrTSGCBCW4Y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 7.1 132/271] thunderbolt: icm: Preserve USB4 proxy data-valid bit
-Date: Mon, 17 Aug 2026 15:30:57 +0200
-Message-ID: <20260817132542.284331355@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	stable <stable@kernel.org>,
+	Pawel Laszczak <pawell@cadence.com>
+Subject: [PATCH 7.1 133/271] usb: cdnsp: fix incorrect endian conversions for APB timeout register
+Date: Mon, 17 Aug 2026 15:30:58 +0200
+Message-ID: <20260817132542.325566034@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -50,50 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Pawel Laszczak <pawell@cadence.com>
 
-commit e48844ece5e3ed1d1eb865f6da2b16f62cd9f86d upstream.
+commit 50b303f3d0f7de543ee90d50879970783d06da33 upstream.
 
-The ICM USB4 switch operation request encodes two values in
-request.data_len_valid: bit 4 marks the data payload valid, while bits
-3:0 hold the payload length in dwords.  A zero length with the valid bit
-set represents the full 16-dword data array.
+readl() already returns a CPU-endian value. Passing its return value to
+le32_to_cpu() is therefore redundant and causes an incorrect double byte
+swap on big-endian systems.
 
-icm_usb4_switch_op() sets the valid bit when a transmit payload is
-present.  For payloads shorter than the full 16 dwords, it then assigns
-the length to the whole field and clears the valid bit that was just set.
-The payload is still copied into the request, but the descriptor sent to
-firmware marks that data as invalid.
+Similarly, writel() expects a CPU-endian value, so passing the result of
+cpu_to_le32() is incorrect.
 
-This affects USB4 router operations that send short payloads through the
-firmware connection manager.  In particular, USB4 NVM writes can send a
-short final block when the image size is not aligned to the 64-byte proxy
-payload size.  Firmware may then ignore or reject that final block, while
-full 16-dword blocks are unaffected because they are encoded as length 0
-with the valid bit set.
+Remove the unnecessary conversions and operate on the MMIO register value
+as a CPU-endian u32.
 
-OR the short payload length into data_len_valid so the valid bit is
-preserved.
-
-Fixes: 9039387e166e ("thunderbolt: Add USB4 router operation proxy for firmware connection manager")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Fixes: 241e2ce88e5a ("usb: cdnsp: Fix issue with resuming from L1")
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260720-endian-fix-v1-v1-1-b5681fa1ea9f@cadence.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/icm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/cdns3/cdnsp-gadget.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/thunderbolt/icm.c
-+++ b/drivers/thunderbolt/icm.c
-@@ -2325,7 +2325,7 @@ static int icm_usb4_switch_op(struct tb_
- 	if (tx_data_len) {
- 		request.data_len_valid |= ICM_USB4_SWITCH_DATA_VALID;
- 		if (tx_data_len < ARRAY_SIZE(request.data))
--			request.data_len_valid =
-+			request.data_len_valid |=
- 				tx_data_len & ICM_USB4_SWITCH_DATA_LEN_MASK;
- 		memcpy(request.data, tx_data, tx_data_len * sizeof(u32));
- 	}
+--- a/drivers/usb/cdns3/cdnsp-gadget.c
++++ b/drivers/usb/cdns3/cdnsp-gadget.c
+@@ -155,9 +155,9 @@ static void cdnsp_set_apb_timeout_value(
+ 	offset = cdnsp_find_next_ext_cap(base, offset, D_XEC_PRE_REGS_CAP);
+ 	reg = base + offset + REG_CHICKEN_BITS_3_OFFSET;
+ 
+-	val  = le32_to_cpu(readl(reg));
++	val  = readl(reg);
+ 	val = CHICKEN_APB_TIMEOUT_SET(val, cdns->override_apb_timeout);
+-	writel(cpu_to_le32(val), reg);
++	writel(val, reg);
+ }
+ 
+ static void cdnsp_set_chicken_bits_2(struct cdnsp_device *pdev, u32 bit)
 
 
