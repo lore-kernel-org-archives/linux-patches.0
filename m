@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48BF132ED40;
-	Mon, 17 Aug 2026 13:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E12E4B0492;
+	Mon, 17 Aug 2026 13:40:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974024; cv=none; b=S+tDeQh4qJa6dds/fyVJy+gnTfLrR+bWDZOMMRqmpYflcFd68p8Bfzwl3uH3UHTDiFUcuSVnsyr5VZ3yyoeeducfbSKmQh797uGtAgpWpXBJDFPl/Z/lxDTVKDLE+67gRmojl+2slJhaYqnlk28SRE446lwf1IatlQS/onPy0sw=
+	t=1786974029; cv=none; b=rXK6DHcV1/Yy+EuWv7EmW+sAfK2frYZ1fDkvkf4i1QvfHW6qJx7pWYEcpZoJ6CIslyOPKjVyLaWgDG8z7EDYlVQlW8vcYrf++eBXHnZCpXMgPRHSWD+iK5qII3grIStASuMaw2CMVvx26YFptiwf4t+vApVNLZGPx8jW0PfUIOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974024; c=relaxed/simple;
-	bh=5MrgP6yYTi/ncgD5lwfUSMaxlvKGu8rxnN4AqsvFW/M=;
+	s=arc-20240116; t=1786974029; c=relaxed/simple;
+	bh=n4KlxFT2KrfkqpFY2ePd1MeJdbPj2C56QBDq+RLX0+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gJ9ZSs+ndEv5AyjtIV4+jl8JwQtVhr/+9nA9LM+WY2xM3iVsV17/ZOpV6prMNTx0GdvXcUVCYf2EB7EjaToBihQRcgrq0K51KkqX53O0ur0/SHJz+CrSySBDTord8njoUxsaIesjwD5WWKmmZ78VdDIncvDqOEpd0eI1UEJq1L8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRdZR0np; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UHrKr9mwmoPnnmHSNi8L8MekptY7O7AltV/zLMvF+CNYnB6M0/SJjYcJuSYZq7cntSdzaIO9OpzmySbX/Niz4jhNvnV2tXGnbwVMXJiiaflcZjWC6JPIcThs6vHmrvXJOs+eXS9+oD7WI+3dqmt302FptSnHn2W1IODP7FvTYC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8xOKUcb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRdZR0np"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692CC1F000E9;
-	Mon, 17 Aug 2026 13:40:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8xOKUcb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EFE61F000E9;
+	Mon, 17 Aug 2026 13:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974023;
-	bh=wpQgRrMdq68Y81PmFJgO13huVk+01QyCIHdAAiJThxQ=;
+	s=korg; t=1786974025;
+	bh=Ke0vCsKIw7XNBrbySq7N9sg7C22Zn/j8AQNoIx+skaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iRdZR0npWti8gOAO7m6QrcCDJStY6s51zkEB/eUyUJYxEZl/0h3LBEHWZhs3tkv8y
-	 a+BvDywaq+Nh/9IqMLevp1sA5LZ8R7d3It4WDSlkDbzcE7/wAdku/e6bPKnIsYQ9nQ
-	 qh+GrzSJfl11CvGPgh8KH83KueyfF5vEGvIQlqjI=
+	b=u8xOKUcbOGtRzU3souExzBCeWssKAsJ3y/Kr8G2I2LYiubd7J+3QoV80N0ziXfG/q
+	 O9F5qDtATKobNwl+cZkCsRuYMeKHPLbfUi0PkFsZ33vCvIeUUFJpcyaOHBUR1XiyrH
+	 FXou4CA++A3IYFhknEw6UVIctMd8s0qGsm2EnFus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Rong Zhang <i@rong.moe>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 062/271] bpf: tcp: Fix use-after-free in bpf_iter_tcp_established_batch()
-Date: Mon, 17 Aug 2026 15:29:47 +0200
-Message-ID: <20260817132539.297364267@linuxfoundation.org>
+Subject: [PATCH 7.1 063/271] ALSA: usb-audio: Add QUIRK_FLAG_MIXER_GET_CUR_BROKEN
+Date: Mon, 17 Aug 2026 15:29:48 +0200
+Message-ID: <20260817132539.336926289@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -52,168 +51,262 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+From: Rong Zhang <i@rong.moe>
 
-[ Upstream commit e5fd3f514e27db1f05fbd72ba615d74941e23c51 ]
+[ Upstream commit ad2c7d2c42af943a3e711bdc1e4fd55b76fcbe55 ]
 
-reqsk_queue_hash_req() publishes a TCP_NEW_SYN_RECV request_sock onto
-the ehash chain, drops the bucket lock, and only afterwards sets
-rsk_refcnt to 3.
+Since commit 86aa1ea1f15c ("ALSA: usb-audio: Do not expose sticky
+mixers"), the UAC mixer core utilizes volume SET_CUR and GET_CUR to
+identify devices with sticky mixers. Unfortunately, even though most
+devices with sticky GET_CUR also have corresponding sticky SET_CUR,
+which I actually met more since the commit had been merged, there is
+also a rare case that some devices may have volume mixers that responds
+to SET_CUR properly but with its GET_CUR stubbed. This cause the sticky
+check to consider the mixer to be sticky and unnecessarily disable it.
 
-Lockless readers such as __inet_lookup_established() handle this with
-refcount_inc_not_zero(), but bpf_iter_tcp_established_batch() uses plain
-sock_hold() while holding the bucket lock, on the assumption that the
-lock guarantees sk_refcnt > 0. That assumption does not hold for
-request_sock:
+As the sticky check can't distinguish between sticky mixers and working
+SET_CUR but broken GET_CUR, add QUIRK_FLAG_MIXER_GET_CUR_BROKEN to tell
+that the device should fall into the second category when GET_CUR
+returns a constant value. In this case, the sticky check becomes
+non-fatal and only disables GET_CUR instead of the whole mixer. The
+current volume will then be provided by the internal cache that stores
+the last set volume.
 
-  CPU 0                                CPU 1
-  -----                                -----
-  tcp_conn_request()
-   reqsk_queue_hash_req()
-    inet_ehash_insert(req)
-     spin_lock(bucket)
-     __sk_nulls_add_node_rcu(req)      // rsk_refcnt == 0
-     spin_unlock(bucket)
-                                       bpf_iter_tcp_established_batch()
-                                        spin_lock(bucket)
-                                        sock_hold(req)   <-- addition on 0
-                                        spin_unlock(bucket)
-    refcount_set(&req->rsk_refcnt, 3)  // clobbers saturated value
+An info message prompting users to check MIXER_GET_CUR_BROKEN for
+potential sticky mixers is also added, so that users can learn how to do
+some experiments to determine what's going on. If the mixer surprisingly
+turns out to be non-sticky, they can submit a patch for a new quirk
+table entry.
 
-which surfaces as:
-
-  refcount_t: addition on 0; use-after-free.
-  WARNING: lib/refcount.c:25 at refcount_warn_saturate+0x48/0x90, CPU#1
-  Call Trace:
-   bpf_iter_tcp_established_batch+0x14e/0x170
-   bpf_iter_tcp_batch+0x53/0x200
-   bpf_iter_tcp_seq_next+0x27/0x70
-   bpf_seq_read+0x107/0x410
-   vfs_read+0xb9/0x380
-
-The iterator's stolen reference is lost when the publishing CPU's
-refcount_set() overwrites the count, leaving the socket one reference
-short. When the last legitimate owner drops its reference the reqsk is
-freed while still reachable, leading to use-after-free.
-
-This reproduces in seconds with tcp_syncookies=0, a handful of threads
-doing connect()/close() to a local listener while others read an
-iter/tcp link in a tight loop.
-
-Use refcount_inc_not_zero() and skip the socket on failure. A skipped
-socket is still part of the bucket, so keep counting it in expected.
-The reallocations are sized from expected, and a request sock whose
-refcount gets published while the lock is held across the last realloc
-must already have room.
-
-A skipped socket is counted in expected but never batched, so end_sk
-can be short of expected on a batch that is actually complete. Decide
-completeness by whether the walk left any socket behind instead. The
-WARN after the locked realloc checks the same, replacing an
-end_sk == expected check that could not hold on that path since
-commit cdec67a489d4 ("bpf: tcp: Make sure iter->batch always
-contains a full bucket snapshot").
-
-If every matching socket in a bucket is mid-init (refcount 0), end_sk
-stays 0. Advance to the next bucket rather than returning a batch entry
-that was never filled this round.
-
-Fixes: 04c7820b776f ("bpf: tcp: Bpf iter batching and lock_sock")
-Assisted-by: Claude:unspecified
-Signed-off-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://lore.kernel.org/bpf/20260730-bpf-iter-tcp-refcnt-v3-1-754b9c8a6717@linux.dev
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Rong Zhang <i@rong.moe>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260531-uac-quirk-get-cur-vol-v4-1-ede643dca151@rong.moe
+Stable-dep-of: c973e61895db ("ALSA: usb-audio: Add QUIRK_FLAG_MIXER_GET_CUR_BROKEN for Logitech PRO X 2 LIGHTSPEED")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 43 ++++++++++++++++++++++++-------------------
- 1 file changed, 24 insertions(+), 19 deletions(-)
+ Documentation/sound/alsa-configuration.rst | 12 +++++
+ sound/usb/mixer.c                          | 60 ++++++++++++++++++----
+ sound/usb/mixer.h                          |  1 +
+ sound/usb/quirks.c                         |  1 +
+ sound/usb/usbaudio.h                       | 13 +++++
+ 5 files changed, 77 insertions(+), 10 deletions(-)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index ce572025eeeba..4b59d258c2667 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -3079,24 +3079,24 @@ static unsigned int bpf_iter_tcp_established_batch(struct seq_file *seq,
- {
- 	struct bpf_tcp_iter_state *iter = seq->private;
- 	struct hlist_nulls_node *node;
--	unsigned int expected = 1;
--	struct sock *sk;
--
--	sock_hold(*start_sk);
--	iter->batch[iter->end_sk++].sk = *start_sk;
-+	struct sock *sk = *start_sk;
-+	unsigned int expected = 0;
+diff --git a/Documentation/sound/alsa-configuration.rst b/Documentation/sound/alsa-configuration.rst
+index 4b30cd63c5a5a..78fb484e8b04f 100644
+--- a/Documentation/sound/alsa-configuration.rst
++++ b/Documentation/sound/alsa-configuration.rst
+@@ -2389,6 +2389,18 @@ quirk_flags
+           from snd_usb_handle_sync_urb. Instead fall through and enqueue a
+           packet_info containing only size-0 packets, so the OUT ring keeps
+           moving (emits silence). Needed by Behringer Flow 8 (1397:050c).
++        * bit 30: ``mixer_get_cur_broken``
++          Some mixers are sticky, which means that setting their current volume
++          is a no-op, and reading the current volume returns a constant value.
++          The sticky check disables these mixers to prevent confusing userspace.
++          However, some devices do have a tunable volume despite the reported
++          current volume being constant. As the sticky check can't distinguish
++          between the two categories, setting this flag tells that the device
++          should fall into the second category when GET_CUR returns a constant
++          value, resulting in the sticky check being non-fatal and only
++          disabling GET_CUR instead of the whole mixer. The current volume will
++          then be provided by the internal cache that stores the last set
++          volume
  
--	sk = sk_nulls_next(*start_sk);
- 	*start_sk = NULL;
- 	sk_nulls_for_each_from(sk, node) {
--		if (seq_sk_match(seq, sk)) {
--			if (iter->end_sk < iter->max_sk) {
--				sock_hold(sk);
--				iter->batch[iter->end_sk++].sk = sk;
--			} else if (!*start_sk) {
--				/* Remember where we left off. */
--				*start_sk = sk;
--			}
--			expected++;
-+		if (!seq_sk_match(seq, sk))
-+			continue;
-+		expected++;
-+		if (iter->end_sk < iter->max_sk) {
-+			/* reqsk_queue_hash_req() inserts with sk_refcnt == 0
-+			 * and refcount_set()s it after the bucket lock drops.
-+			 */
-+			if (unlikely(!refcount_inc_not_zero(&sk->sk_refcnt)))
-+				continue;
-+			iter->batch[iter->end_sk++].sk = sk;
-+		} else if (!*start_sk) {
-+			/* Remember where we left off. */
-+			*start_sk = sk;
- 		}
+ This module supports multiple devices, autoprobe and hotplugging.
+ 
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index dbcefcaf7c361..142f5ca7a72d2 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -434,6 +434,11 @@ int snd_usb_get_cur_mix_value(struct usb_mixer_elem_info *cval,
+ 		*value = cval->cache_val[index];
+ 		return 0;
+ 	}
++
++	/* The current value is always provided by the cache after initialization. */
++	if (cval->get_cur_broken)
++		return -ENXIO;
++
+ 	err = get_cur_mix_raw(cval, channel, value);
+ 	if (err < 0) {
+ 		if (!cval->head.mixer->ignore_ctl_error)
+@@ -1234,7 +1239,7 @@ static void init_cur_mix_raw(struct usb_mixer_elem_info *cval, int ch, int idx)
+ 	err = snd_usb_get_cur_mix_value(cval, ch, idx, &val);
+ 	if (!err)
+ 		return;
+-	if (!cval->head.mixer->ignore_ctl_error)
++	if (!cval->head.mixer->ignore_ctl_error && !cval->get_cur_broken)
+ 		usb_audio_warn(cval->head.mixer->chip,
+ 			       "%d:%d: failed to get current value for ch %d (%d)\n",
+ 			       cval->head.id, mixer_ctrl_intf(cval->head.mixer),
+@@ -1248,8 +1253,16 @@ static void init_cur_mix_raw(struct usb_mixer_elem_info *cval, int ch, int idx)
+  * Some devices' volume control mixers are sticky, which accept SET_CUR but
+  * do absolutely nothing.
+  *
+- * Prevent sticky mixers from being registered, otherwise they confuses
+- * userspace and results in ineffective volume control.
++ * Check the return values of GET_CUR with different SET_CUR values. Consider
++ * the mixer as sticky if GET_CUR always returns a constant value.
++ *
++ * Some devices have effective SET_CUR despite GET_CUR being constant. Do not
++ * consider the mixer as sticky if a quirk flag indicates that.
++ *
++ * Gate the registration of sticky mixers to prevent confusing userspace, so
++ * that they won't cause ineffective volume control. However, for mixers with
++ * effective SET_CUR but broken GET_CUR, the registration can continue normally
++ * but further GET_CUR requests will be gated.
+  */
+ static int check_sticky_volume_control(struct usb_mixer_elem_info *cval,
+ 				       int channel, int saved)
+@@ -1269,10 +1282,22 @@ static int check_sticky_volume_control(struct usb_mixer_elem_info *cval,
+ 			return 0;
  	}
  
-@@ -3134,12 +3134,13 @@ static struct sock *bpf_iter_tcp_batch(struct seq_file *seq)
- 	struct sock *sk;
- 	int err;
- 
-+again:
- 	sk = bpf_iter_tcp_resume(seq);
- 	if (!sk)
- 		return NULL; /* Done */
- 
- 	expected = bpf_iter_fill_batch(seq, &sk);
--	if (likely(iter->end_sk == expected))
-+	if (likely(!sk))
- 		goto done;
- 
- 	/* Batch size was too small. */
-@@ -3158,7 +3159,7 @@ static struct sock *bpf_iter_tcp_batch(struct seq_file *seq)
- 		return NULL; /* Done */
- 
- 	expected = bpf_iter_fill_batch(seq, &sk);
--	if (likely(iter->end_sk == expected))
-+	if (likely(!sk))
- 		goto done;
- 
- 	/* Batch size was still too small. Hold onto the lock while we try
-@@ -3171,10 +3172,14 @@ static struct sock *bpf_iter_tcp_batch(struct seq_file *seq)
- 		return ERR_PTR(err);
- 	}
- 
--	expected = bpf_iter_fill_batch(seq, &sk);
--	WARN_ON_ONCE(iter->end_sk != expected);
-+	bpf_iter_fill_batch(seq, &sk);
-+	WARN_ON_ONCE(sk);
- done:
- 	bpf_iter_tcp_unlock_bucket(seq);
-+	if (unlikely(!iter->end_sk)) {
-+		++iter->state.bucket;
-+		goto again;
++	if (cval->head.mixer->chip->quirk_flags & QUIRK_FLAG_MIXER_GET_CUR_BROKEN) {
++		usb_audio_info(cval->head.mixer->chip,
++			       "%d:%d: broken mixer GET_CUR (%d/%d/%d => %d)\n",
++			       cval->head.id, mixer_ctrl_intf(cval->head.mixer),
++			       cval->min, cval->max, cval->res, saved);
++
++		cval->get_cur_broken = 1;
++		return -ENXIO;
 +	}
- 	return iter->batch[0].sk;
- }
++
+ 	usb_audio_err(cval->head.mixer->chip,
+ 		      "%d:%d: sticky mixer values (%d/%d/%d => %d), disabling\n",
+ 		      cval->head.id, mixer_ctrl_intf(cval->head.mixer),
+ 		      cval->min, cval->max, cval->res, saved);
++	usb_audio_info(cval->head.mixer->chip,
++		       "check MIXER_GET_CUR_BROKEN if you believe the mixer is non-sticky");
  
+ 	return -ENODEV;
+ }
+@@ -1315,7 +1340,7 @@ static void check_volume_control_res(struct usb_mixer_elem_info *cval,
+ static int get_min_max_with_quirks(struct usb_mixer_elem_info *cval,
+ 				   int default_min, struct snd_kcontrol *kctl)
+ {
+-	int i, idx, ret;
++	int i, idx, ret = 0;
+ 
+ 	/* for failsafe */
+ 	cval->min = default_min;
+@@ -1371,8 +1396,10 @@ static int get_min_max_with_quirks(struct usb_mixer_elem_info *cval,
+ 				goto no_checks;
+ 
+ 			ret = check_sticky_volume_control(cval, minchn, saved);
+-			if (ret < 0)
++			if (ret == -ENODEV)
+ 				goto sticky;
++			if (ret)
++				goto no_checks;
+ 
+ 			if (cval->min + cval->res < cval->max)
+ 				check_volume_control_res(cval, minchn, saved);
+@@ -1381,6 +1408,16 @@ static int get_min_max_with_quirks(struct usb_mixer_elem_info *cval,
+ 		}
+ 
+ no_checks:
++		/*
++		 * Got a non-fatal failure during sanity checks.
++		 *
++		 * Do not propagate mixer values written by sanity checks.
++		 * Instead, rely on init_cur_mix_raw() to initialize the mixer
++		 * properly.
++		 */
++		if (ret)
++			cval->cached = 0;
++
+ 		cval->initialized = 1;
+ 	}
+ 
+@@ -3538,7 +3575,8 @@ void snd_usb_mixer_notify_id(struct usb_mixer_interface *mixer, int unitid)
+ 			continue;
+ 		info = mixer_elem_list_to_info(list);
+ 		/* invalidate cache, so the value is read from the device */
+-		info->cached = 0;
++		if (!info->get_cur_broken)
++			info->cached = 0;
+ 		snd_ctl_notify(mixer->chip->card, SNDRV_CTL_EVENT_MASK_VALUE,
+ 			       &list->kctl->id);
+ 	}
+@@ -3635,10 +3673,12 @@ static void snd_usb_mixer_interrupt_v2(struct usb_mixer_interface *mixer,
+ 		switch (attribute) {
+ 		case UAC2_CS_CUR:
+ 			/* invalidate cache, so the value is read from the device */
+-			if (channel)
+-				info->cached &= ~BIT(channel);
+-			else /* master channel */
+-				info->cached = 0;
++			if (!info->get_cur_broken) {
++				if (channel)
++					info->cached &= ~BIT(channel);
++				else /* master channel */
++					info->cached = 0;
++			}
+ 
+ 			snd_ctl_notify(mixer->chip->card, SNDRV_CTL_EVENT_MASK_VALUE,
+ 				       &info->head.kctl->id);
+diff --git a/sound/usb/mixer.h b/sound/usb/mixer.h
+index afbb3dd9f177b..3fa1bd96f8588 100644
+--- a/sound/usb/mixer.h
++++ b/sound/usb/mixer.h
+@@ -94,6 +94,7 @@ struct usb_mixer_elem_info {
+ 	int cache_val[MAX_CHANNELS];
+ 	u8 initialized;
+ 	u8 min_mute;
++	u8 get_cur_broken;
+ 	void *private_data;
+ };
+ 
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 33eb8be48af87..688993bfa8fd1 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2611,6 +2611,7 @@ static const char *const snd_usb_audio_quirk_flag_names[] = {
+ 	QUIRK_STRING_ENTRY(MIXER_PLAYBACK_LINEAR_VOL),
+ 	QUIRK_STRING_ENTRY(MIXER_CAPTURE_LINEAR_VOL),
+ 	QUIRK_STRING_ENTRY(IFB_SILENCE_ON_EMPTY),
++	QUIRK_STRING_ENTRY(MIXER_GET_CUR_BROKEN),
+ 	NULL
+ };
+ 
+diff --git a/sound/usb/usbaudio.h b/sound/usb/usbaudio.h
+index 9afcad8f143a0..e472aef6eb879 100644
+--- a/sound/usb/usbaudio.h
++++ b/sound/usb/usbaudio.h
+@@ -242,6 +242,17 @@ extern bool snd_usb_skip_validation;
+  *  from snd_usb_handle_sync_urb. Instead fall through and enqueue a
+  *  packet_info containing only size-0 packets, so the OUT ring keeps
+  *  moving (emits silence). Needed by Behringer Flow 8 (1397:050c).
++ * QUIRK_FLAG_MIXER_GET_CUR_BROKEN
++ *  Some mixers are sticky, which means that setting their current volume is a
++ *  no-op, and reading the current volume returns a constant value. The sticky
++ *  check disables these mixers to prevent confusing userspace. However, some
++ *  devices do have a tunable volume despite the reported current volume being
++ *  constant. As the sticky check can't distinguish between the two categories,
++ *  setting this flag tells that the device should fall into the second
++ *  category when GET_CUR returns a constant value, resulting in the sticky
++ *  check being non-fatal and only disabling GET_CUR instead of the whole mixer.
++ *  The current volume will then be provided by the internal cache that stores
++ *  the last set volume
+  */
+ 
+ enum {
+@@ -275,6 +286,7 @@ enum {
+ 	QUIRK_TYPE_MIXER_PLAYBACK_LINEAR_VOL	= 27,
+ 	QUIRK_TYPE_MIXER_CAPTURE_LINEAR_VOL	= 28,
+ 	QUIRK_TYPE_IFB_SILENCE_ON_EMPTY		= 29,
++	QUIRK_TYPE_MIXER_GET_CUR_BROKEN		= 30,
+ /* Please also edit snd_usb_audio_quirk_flag_names */
+ };
+ 
+@@ -310,5 +322,6 @@ enum {
+ #define QUIRK_FLAG_MIXER_PLAYBACK_LINEAR_VOL	QUIRK_FLAG(MIXER_PLAYBACK_LINEAR_VOL)
+ #define QUIRK_FLAG_MIXER_CAPTURE_LINEAR_VOL	QUIRK_FLAG(MIXER_CAPTURE_LINEAR_VOL)
+ #define QUIRK_FLAG_IFB_SILENCE_ON_EMPTY		QUIRK_FLAG(IFB_SILENCE_ON_EMPTY)
++#define QUIRK_FLAG_MIXER_GET_CUR_BROKEN		QUIRK_FLAG(MIXER_GET_CUR_BROKEN)
+ 
+ #endif /* __USBAUDIO_H */
 -- 
 2.53.0
 
