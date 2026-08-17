@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9EC43CE79;
-	Mon, 17 Aug 2026 13:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD45439F7F;
+	Mon, 17 Aug 2026 13:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974696; cv=none; b=MfIuCnxFf8+QyRBc8+IMHobr3wro1mDZrMKBRYLHZ2SPCR45eIl5nql/i/GThfpYpGeVN2guYscqd8VcAx6BDtbFZ1zacfecu2m8AjKSBLyNKsCGA27sGGXaZs+RmbQkOEq5gaTIFN8Zb/lKbu4UtYEpBNx9EF7upMXLi/1WgOc=
+	t=1786974704; cv=none; b=JYLS/+H15rG+0KwmufmaAIVEVYXkj+sC/zZu8W1+I8s+jK0Zb9HjWhDL0UqCuWr6Sz4O3TZjFwI4lcKtO/+bUwkhW+HwjJmcRVH8jbCBQZgNOb73cGTib8/FLDEsHu9VK0CMkRLvnsQ5WnJLAwZjf5b+KjGhHMXcw09ooYARpI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974696; c=relaxed/simple;
-	bh=CJV7FyGEUv8yU/cAjSbofp/IrDWzpA/883fFDVIT+s0=;
+	s=arc-20240116; t=1786974704; c=relaxed/simple;
+	bh=bv+2ufAMCwRLeb28qnwRx1R1LT37zFALtKEZKf4Hiao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t8JY3q+RuK0TQBDfHnLIoKezsqwM2w5tA7fvVGGkkIBgpZWCWTrSAAuucKFBpcxylbsmP7km26jhmg2Xzwg3BCE2WVQ+SJAPqkVVM8Vlve1gs8QZIZ5zUgvZNeU+Se+oj56HVc+3bsjbcArl7FZKec0aIvNOFU3xHxStRk4gffc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gz86cqkE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aVJlf8t/U7DFVOx4sZ01+8ltKqUVMY+msFwzEdCUhoa5h5NHbl8AxIPMXpIA8Uhy50NR3QgJDPO3uOpdxfCd4uabFZ+mNC20latPzWSumqAYHpsz5D1zTPasmwkaGCeWZqxMgPA10PGHFMR3DLE6FpzUAYIb+/GLZxBY8/iUEx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fbk9qxx/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gz86cqkE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B6381F000E9;
-	Mon, 17 Aug 2026 13:51:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fbk9qxx/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2FB11F00A3D;
+	Mon, 17 Aug 2026 13:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974689;
-	bh=E+/oHnheto/DXktJ6nRjfe0Y7t1cSlZwK8SzxnV0YwY=;
+	s=korg; t=1786974695;
+	bh=KSJEe7zKczHveDgR7/dzq7TNqtG+AzF9Dhd0sdIcIxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gz86cqkEWke556+KkROTdSXKUN0O9obQu99GzcIyGsfN+PHOkHKyTIJhWDXlYvYXn
-	 bdq/tliFbGHz7NBidk9MGq5BSswrLjM2hSn8iCGoRGpJZDC+NzG7g8gBOyOTCxulR5
-	 KW1Ye9heFnMXzObsYsoHAY+oyOADpnCkU+3KWcqY=
+	b=fbk9qxx/j/rawmBArFnSIPMuJ1pUaqaJPK5y5hDyImXJBoR5lQfyEHDqtfMSSfw33
+	 qbSWWLYiYo41zjDoRsleOy+JN+OjCf7E4NIsVZCfq0WX/yukUFK/HvEo7z+G2yXtLZ
+	 oMK6wU5BqAdj+5aojrj0fDM2jwSwmgb2JUFqXqTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralf Lici <ralf@mandelbit.com>,
 	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 020/250] ovpn: add missing rtnl_link_ops->get_size callback
-Date: Mon, 17 Aug 2026 15:29:41 +0200
-Message-ID: <20260817132537.280655491@linuxfoundation.org>
+Subject: [PATCH 6.18 022/250] ovpn: skip rehash for peers already removed from by_id
+Date: Mon, 17 Aug 2026 15:29:43 +0200
+Message-ID: <20260817132537.365010897@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,54 +50,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralf Lici <ralf@mandelbit.com>
+From: Antonio Quartulli <antonio@openvpn.net>
 
-[ Upstream commit 6e9f539e4f01153651dd77609b5ccadd44b74df8 ]
+[ Upstream commit 33ec10567fe14456063daf549fdf1a4f53448e4c ]
 
-ovpn_fill_info emits IFLA_OVPN_MODE inside IFLA_INFO_DATA, but
-ovpn_link_ops does not provide a get_size callback. Consequently,
-rtnetlink's size estimate for ovpn link messages does not include the
-nested mode attribute.
+ovpn_nl_peer_set_doit() resolves the target peer via
+ovpn_peer_get_by_id() before taking ovpn->lock. In the window between
+the lookup (which only takes a refcount) and the subsequent
+spin_lock_bh(&ovpn->lock), a concurrent OVPN_CMD_PEER_DEL, keepalive
+expiry, or socket teardown can take ovpn->lock first, run
+ovpn_peer_remove() to unhash the peer from all four tables (by_id,
+by_vpn_addr4/6, by_transp_addr) and release the lock. set_doit then
+acquires ovpn->lock and calls ovpn_peer_hash_vpn_ip(), which
+re-inserts the now-removed peer back into the rehashing tables.
 
-Available skb tailroom may hide this mismatch. When the remaining space
-is insufficient, however, ovpn_fill_info returns -EMSGSIZE and message
-construction fails.
+The same race affects the float path: ovpn_peer_endpoints_update()
+holds only a refcount and acquires ovpn->lock very late (after async
+AEAD decrypt and a netlink notification), then rehashes the peer
+in the by_transp_addr table.
 
-Add the callback and account for IFLA_OVPN_MODE.
+The resurrected peer becomes reachable again from the RX lookup
+(ovpn_peer_get_by_transp_addr) and the TX VPN-IP lookup, even though
+userspace believes it is gone. Once the data-path refcount drops the
+peer is freed via call_rcu while the hash entries embedded in it
+remain linked, opening a UAF window.
 
-Fixes: c2d950c4672a ("ovpn: add basic interface creation/destruction/management routines")
-Signed-off-by: Ralf Lici <ralf@mandelbit.com>
+Bail out of the rehash when hash_entry_id is unhashed, mirroring
+the sentinel already used by ovpn_peer_remove() to detect the
+already-removed state. The check is safe under ovpn->lock, which
+serializes every mutation of hash_entry_id, and is a no-op for the
+add path because ovpn_peer_add_mp() inserts hash_entry_id before
+calling ovpn_peer_hash_vpn_ip().
+
+Fixes: 1d36a36f6d53 ("ovpn: implement peer add/get/dump/delete via netlink")
 Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/main.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ovpn/peer.c | 73 ++++++++++++++++++++++++-----------------
+ 1 file changed, 43 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/net/ovpn/main.c b/drivers/net/ovpn/main.c
-index 3f76b1b0e5f60..47859e1e3ef12 100644
---- a/drivers/net/ovpn/main.c
-+++ b/drivers/net/ovpn/main.c
-@@ -210,6 +210,12 @@ static int ovpn_newlink(struct net_device *dev,
- 	return register_netdevice(dev);
- }
+diff --git a/drivers/net/ovpn/peer.c b/drivers/net/ovpn/peer.c
+index 85fa9bd475f45..6b7e368f63f3a 100644
+--- a/drivers/net/ovpn/peer.c
++++ b/drivers/net/ovpn/peer.c
+@@ -291,40 +291,46 @@ void ovpn_peer_endpoints_update(struct ovpn_peer *peer, struct sk_buff *skb)
+ 	/* rehashing is required only in MP mode as P2P has one peer
+ 	 * only and thus there is no hashtable
+ 	 */
+-	if (peer->ovpn->mode == OVPN_MODE_MP) {
+-		spin_lock_bh(&peer->ovpn->lock);
+-		spin_lock_bh(&peer->lock);
+-		bind = rcu_dereference_protected(peer->bind,
+-						 lockdep_is_held(&peer->lock));
+-		if (unlikely(!bind)) {
+-			spin_unlock_bh(&peer->lock);
+-			spin_unlock_bh(&peer->ovpn->lock);
+-			return;
+-		}
++	if (peer->ovpn->mode != OVPN_MODE_MP)
++		return;
  
-+static size_t ovpn_get_size(const struct net_device *dev)
-+{
-+	/* IFLA_OVPN_MODE */
-+	return nla_total_size(sizeof(u8));
-+}
+-		/* This function may be invoked concurrently, therefore another
+-		 * float may have happened in parallel: perform rehashing
+-		 * using the peer->bind->remote directly as key
+-		 */
++	spin_lock_bh(&peer->ovpn->lock);
++	spin_lock_bh(&peer->lock);
++	bind = rcu_dereference_protected(peer->bind,
++					 lockdep_is_held(&peer->lock));
++	if (unlikely(!bind))
++		goto unlock2;
+ 
+-		switch (bind->remote.in4.sin_family) {
+-		case AF_INET:
+-			salen = sizeof(*sa);
+-			break;
+-		case AF_INET6:
+-			salen = sizeof(*sa6);
+-			break;
+-		}
++	/* peer may have been concurrently removed between the caller's
++	 * initial lookup and our acquisition of ovpn->lock; skip the
++	 * rehash so we don't re-insert a removed peer
++	 */
++	if (unlikely(hlist_unhashed(&peer->hash_entry_id)))
++		goto unlock2;
+ 
+-		/* remove old hashing */
+-		hlist_nulls_del_init_rcu(&peer->hash_entry_transp_addr);
+-		/* re-add with new transport address */
+-		nhead = ovpn_get_hash_head(peer->ovpn->peers->by_transp_addr,
+-					   &bind->remote, salen);
+-		hlist_nulls_add_head_rcu(&peer->hash_entry_transp_addr, nhead);
+-		spin_unlock_bh(&peer->lock);
+-		spin_unlock_bh(&peer->ovpn->lock);
++	/* This function may be invoked concurrently, therefore another
++	 * float may have happened in parallel: perform rehashing
++	 * using the peer->bind->remote directly as key
++	 */
 +
- static int ovpn_fill_info(struct sk_buff *skb, const struct net_device *dev)
- {
- 	struct ovpn_priv *ovpn = netdev_priv(dev);
-@@ -228,6 +234,7 @@ static struct rtnl_link_ops ovpn_link_ops = {
- 	.policy = ovpn_policy,
- 	.maxtype = IFLA_OVPN_MAX,
- 	.newlink = ovpn_newlink,
-+	.get_size = ovpn_get_size,
- 	.fill_info = ovpn_fill_info,
- };
++	switch (bind->remote.in4.sin_family) {
++	case AF_INET:
++		salen = sizeof(*sa);
++		break;
++	case AF_INET6:
++		salen = sizeof(*sa6);
++		break;
+ 	}
++
++	/* remove old hashing */
++	hlist_nulls_del_init_rcu(&peer->hash_entry_transp_addr);
++	/* re-add with new transport address */
++	nhead = ovpn_get_hash_head(peer->ovpn->peers->by_transp_addr,
++				   &bind->remote, salen);
++	hlist_nulls_add_head_rcu(&peer->hash_entry_transp_addr, nhead);
++unlock2:
++	spin_unlock_bh(&peer->lock);
++	spin_unlock_bh(&peer->ovpn->lock);
+ 	return;
+ unlock:
+ 	spin_unlock_bh(&peer->lock);
+@@ -901,6 +907,13 @@ void ovpn_peer_hash_vpn_ip(struct ovpn_peer *peer)
+ 	if (peer->ovpn->mode != OVPN_MODE_MP)
+ 		return;
  
++	/* peer may have been concurrently removed between the caller's
++	 * initial lookup and our acquisition of ovpn->lock; skip the
++	 * rehash so we don't re-insert a removed peer
++	 */
++	if (hlist_unhashed(&peer->hash_entry_id))
++		return;
++
+ 	if (peer->vpn_addrs.ipv4.s_addr != htonl(INADDR_ANY)) {
+ 		/* remove potential old hashing */
+ 		hlist_nulls_del_init_rcu(&peer->hash_entry_addr4);
 -- 
 2.53.0
 
