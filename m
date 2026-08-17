@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD19023AB9D;
-	Mon, 17 Aug 2026 15:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F60C23AB9D;
+	Mon, 17 Aug 2026 15:07:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979222; cv=none; b=fI1/4MWW5Oy+tmOrfVYbZH8Ucc1SumdND5MZyH0X8ONHrg+bt2ZLm/TOt9t1nI2jm/KDhyfdlQFvqyUYlvU8EghpCyxcZUrPj2UXNHto4OJAY25s9xWk3JBoVc+GTVfAN6EuySidsCe36F18Qeb/v67uV6uPJMLAwwRoMgwbPl4=
+	t=1786979225; cv=none; b=WHqzCXzo5+wudb98vjKR4Aals0TM/5EzsZJouUmvMB4ljJyQUUUuh85YYuyah0cA9363MGe04jXodr3VOnLZbYvDDWbULB7DNMdjJfkV6WXFXmOilyU7QLMSw2jt4K/NsF4zZ4F30q0giAG04XF4OIKIcETrMYBbVpebZ7YLdX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979222; c=relaxed/simple;
-	bh=hucz6Fzh3FkgQrKrE3s6x3dAP/UbPyvikVvVUybuodo=;
+	s=arc-20240116; t=1786979225; c=relaxed/simple;
+	bh=hhR5lv6DGK/DIenfYoLdHLTwfIqxeMEixfTgCeLP4lI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BZkCssAURqvDmIqsZc/4Fu5AJuib+16eichCOr3FtmvcN/QVI8Hg29sqcchLNsXmVI9ndyxFwDUkdz2NSq9xOlKDy9kCNbLV/JkyQcPiwrywQCZBX3+LUtmfbRfzhKpsNR/wZTUrcls4Q5W93WDsyVMcuDRVB4avOCKycq8q5DI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yEWiPr4n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KTVSX4XmxmihQyZlTlmTWE1+WVDOHYm2N1VItCWcJsYhqMLkRRiQ7UHnuZAxOcbumzIIFHLDa2LsPMCbfKmSAu3Wtmx9qbYHLmHf0KTGSvWHrw8+vl3ExyF/oqO5FEfLJpH2Cnbw86nj1LAd4F0om2FvyPkDPglwyA07+xTnyI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e0ztuUFz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yEWiPr4n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8131F000E9;
-	Mon, 17 Aug 2026 15:06:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e0ztuUFz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E62F1F000E9;
+	Mon, 17 Aug 2026 15:07:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979220;
-	bh=bTM8blrifxnaXXw1eXuk1bQO5/xPHtis7NOLyvnORXo=;
+	s=korg; t=1786979223;
+	bh=0i49c/91d3m77ZQtzsDLWR9fJJ3Qe2Gmz1fZMbq6y9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yEWiPr4nmboNS5rY2E00yIvMgFQHpfwzlFkqfsMgj4i29b3X4wJXrU8WyU6WKj+iW
-	 Q526fNYH3+DWCpGeqEE012FBYcSf5sLXuy7imsei71JLL+S89aPuqjFNqBQ541tHEM
-	 BX2yYk8EvXPR1kg481TLkBFDgfN7Q84koGgtxHqE=
+	b=e0ztuUFzpSWUneL9BxE070GIRD3OLnDWOZOsXCkeXsWcmv3hXe1il8O4aa1iSgbRl
+	 AUwXcB7mGFcegqI0NHOCoboKMobEbaztUn8ONSCyyRhS2hYjrdC01S2id3fi8y13bL
+	 RW7v89oo+UUKnaUoR9wiTb2+d3nqvxyr6tV3lgHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	You-Kai Zheng <ykzheng@synology.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 148/609] net: bridge: vlan: fix vlan range dumps starting with pvid
-Date: Mon, 17 Aug 2026 15:27:24 +0200
-Message-ID: <20260817132548.959182202@linuxfoundation.org>
+Subject: [PATCH 6.1 112/609] btrfs: declare btrfs_ioctl_search_args_v2::buf as __u8
+Date: Mon, 17 Aug 2026 15:26:48 +0200
+Message-ID: <20260817132547.497694217@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,147 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: You-Kai Zheng <ykzheng@synology.com>
 
-[ Upstream commit 43171c97e4714bf601b468401b37732244639c21 ]
+[ Upstream commit b95181f3929ff98949fa9460ca93eccebbf2d7fc ]
 
-There is a bug in all range dumps that rely on br_vlan_can_enter_range()
-when the PVID is a range starting VLAN, all following VLANs that match
-its flags can enter the range, but when the range is filled in only the
-PVID VLAN is dumped and the rest of the range is discarded because
-br_vlan_fill_vids() checks for the PVID flag. Since the PVID VLAN can
-be only one, we need to break ranges around it, the best way to do that
-consistently for all is to alter br_vlan_can_enter_range() to take into
-account the PVID and return false to break the range when it's matched.
+The variable-sized buffer buf in struct btrfs_ioctl_search_args_v2 is
+declared as __u64[], but it holds a packed byte stream of search results,
+where all offsets into the buffer are in bytes.
 
-Before the fix:
-$ ip l add br0 type bridge vlan_filtering 1
-$ ip l add dumdum type dummy
-$ ip l set dumdum master br0
-$ ip l set br0 up
-$ ip l set dumdum up
-$ bridge vlan add dev dumdum vid 1 pvid untagged master
-$ bridge vlan add dev dumdum vid 2 untagged master
-$ bridge vlan show dev dumdum # use legacy dump to show all vlans
-port              vlan-id
-dumdum            1 PVID Egress Untagged
-                  2 Egress Untagged
+Declaring buf as __u64[] makes it easy for user space to write incorrect
+pointer arithmetic: adding a byte offset directly to a __u64 pointer
+scales the offset by 8, landing at byte position offset*8 instead of
+offset.
 
-$ bridge -d vlan show dev dumdum # use the new dump (RTM_GETVLAN)
-port              vlan-id
-dumdum            1 PVID Egress Untagged
-                    state forwarding mcast_router 1
+This recently caused an infinite loop in btrfs-progs: the accessor read
+all-zero data from misaddressed items, which fed zeroed search keys back
+into the ioctl loop and spun forever. The issue was worked around at the
+time by disabling TREE_SEARCH_V2 entirely in btrfs-progs (d73e69824854:
+"btrfs-progs: temporarily disable usage of v2 of search tree ioctl").
 
-VLAN 2 is missing, and if there are more matching VLANs afterwards
-they'd be missing too.
+The kernel side already treats buf as a byte buffer, so change the
+declaration to __u8[] to match the actual semantics and prevent similar
+misuse in user space. The change is ABI compatible: both the structure size
+and alignment are unchanged.
 
-After the fix:
-[ same setup steps ]
-$ bridge vlan show dev dumdum
-port              vlan-id
-dumdum            1 PVID Egress Untagged
-                  2 Egress Untagged
-$ bridge -d vlan show dev dumdum # use the new dump (RTM_GETVLAN)
-port              vlan-id
-dumdum            1 PVID Egress Untagged
-                    state forwarding mcast_router 1
-                  2 Egress Untagged
-                    state forwarding mcast_router 1
-
-Fixes: 0ab558795184 ("net: bridge: vlan: add rtm range support")
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260721140922.682265-2-razor@blackwall.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: cc68a8a5a433 ("btrfs: new ioctl TREE_SEARCH_V2")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: You-Kai Zheng <ykzheng@synology.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_netlink_tunnel.c |  3 ++-
- net/bridge/br_private.h        |  6 ++++--
- net/bridge/br_vlan.c           | 10 ++++++----
- net/bridge/br_vlan_options.c   |  3 +--
- 4 files changed, 13 insertions(+), 9 deletions(-)
+ include/uapi/linux/btrfs.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bridge/br_netlink_tunnel.c b/net/bridge/br_netlink_tunnel.c
-index 8914290c75d480..e4aab077527011 100644
---- a/net/bridge/br_netlink_tunnel.c
-+++ b/net/bridge/br_netlink_tunnel.c
-@@ -268,7 +268,8 @@ static void __vlan_tunnel_handle_range(const struct net_bridge_port *p,
- 	if (!*v_start)
- 		goto out_init;
+diff --git a/include/uapi/linux/btrfs.h b/include/uapi/linux/btrfs.h
+index 24b54635bae90f..7b9e199de89286 100644
+--- a/include/uapi/linux/btrfs.h
++++ b/include/uapi/linux/btrfs.h
+@@ -568,7 +568,7 @@ struct btrfs_ioctl_search_args_v2 {
+ 	__u64 buf_size;		   /* in - size of buffer
+ 					    * out - on EOVERFLOW: needed size
+ 					    *       to store item */
+-	__u64 buf[];                       /* out - found items */
++	__u8 buf[];                        /* out - found items */
+ };
  
--	if (v && curr_change && br_vlan_can_enter_range(v, *v_end)) {
-+	if (v && curr_change &&
-+	    br_vlan_can_enter_range(v, *v_end, br_get_pvid(vg))) {
- 		*v_end = v;
- 		return;
- 	}
-diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
-index 7d2491c187d4ad..617e636a8a4c2b 100644
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -1487,7 +1487,8 @@ void br_vlan_notify(const struct net_bridge *br,
- 		    u16 vid, u16 vid_range,
- 		    int cmd);
- bool br_vlan_can_enter_range(const struct net_bridge_vlan *v_curr,
--			     const struct net_bridge_vlan *range_end);
-+			     const struct net_bridge_vlan *range_end,
-+			     u16 pvid);
- 
- void br_vlan_fill_forward_path_pvid(struct net_bridge *br,
- 				    struct net_device_path_ctx *ctx,
-@@ -1727,7 +1728,8 @@ static inline void br_vlan_notify(const struct net_bridge *br,
- }
- 
- static inline bool br_vlan_can_enter_range(const struct net_bridge_vlan *v_curr,
--					   const struct net_bridge_vlan *range_end)
-+					   const struct net_bridge_vlan *range_end,
-+					   u16 pvid)
- {
- 	return true;
- }
-diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
-index 54b0f24eb08ff2..c442ed83c01f48 100644
---- a/net/bridge/br_vlan.c
-+++ b/net/bridge/br_vlan.c
-@@ -1942,9 +1942,11 @@ void br_vlan_notify(const struct net_bridge *br,
- 
- /* check if v_curr can enter a range ending in range_end */
- bool br_vlan_can_enter_range(const struct net_bridge_vlan *v_curr,
--			     const struct net_bridge_vlan *range_end)
-+			     const struct net_bridge_vlan *range_end,
-+			     u16 pvid)
- {
--	return v_curr->vid - range_end->vid == 1 &&
-+	return v_curr->vid != pvid && range_end->vid != pvid &&
-+	       v_curr->vid - range_end->vid == 1 &&
- 	       range_end->flags == v_curr->flags &&
- 	       br_vlan_opts_eq_range(v_curr, range_end);
- }
-@@ -2026,8 +2028,8 @@ static int br_vlan_dump_dev(const struct net_device *dev,
- 			idx += range_end->vid - range_start->vid + 1;
- 
- 			range_start = v;
--		} else if (dump_stats || v->vid == pvid ||
--			   !br_vlan_can_enter_range(v, range_end)) {
-+		} else if (dump_stats ||
-+			   !br_vlan_can_enter_range(v, range_end, pvid)) {
- 			u16 vlan_flags = br_vlan_flags(range_start, pvid);
- 
- 			if (!br_vlan_fill_vids(skb, range_start->vid,
-diff --git a/net/bridge/br_vlan_options.c b/net/bridge/br_vlan_options.c
-index a2724d03278c3b..166b96cc600312 100644
---- a/net/bridge/br_vlan_options.c
-+++ b/net/bridge/br_vlan_options.c
-@@ -267,8 +267,7 @@ int br_vlan_process_options(const struct net_bridge *br,
- 				continue;
- 			}
- 
--			if (v->vid == pvid ||
--			    !br_vlan_can_enter_range(v, curr_end)) {
-+			if (!br_vlan_can_enter_range(v, curr_end, pvid)) {
- 				br_vlan_notify(br, p, curr_start->vid,
- 					       curr_end->vid, RTM_NEWVLAN);
- 				curr_start = v;
+ struct btrfs_ioctl_clone_range_args {
 -- 
 2.53.0
 
