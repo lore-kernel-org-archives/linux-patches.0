@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACB843E9D5;
-	Mon, 17 Aug 2026 13:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CFA43CE46;
+	Mon, 17 Aug 2026 13:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974284; cv=none; b=o8Fk+mPxvOlXCx0IJaUwk9JpNtkEeLFHNhNvhVcNcnXaLgrkxvueRV2UQtW7y/P8UCGaHFBgG2ZGk8fo0nuVSIL2a5/RJkSSt9wgO9p3qwZZUQDCiR1ARzVX1AasPe6yIS/A42PmM1Ahm6onugtv7p2eURcqj/zHFfMvRC4KAK8=
+	t=1786974288; cv=none; b=dLnATsY3mm78WSeeR1cmdc1DmvhZwrlHU2rLC9hEVn2A0nfyR8ofvZxu+PI3F0/juGXRCT3UCp9OuSpvFAs5fUdw2zYI1AuJi/PM6EmhXYqGshezbIZ2esGWuPA7EH3WYdDgQ7+gBHORwsqp76e50ZEQ+68DR6TlciT7yLmz9mg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974284; c=relaxed/simple;
-	bh=xre9Xdn9yOeRL4IEcJzsCSCPJFdC3OvlXaMZLm9tzIY=;
+	s=arc-20240116; t=1786974288; c=relaxed/simple;
+	bh=4nLgLV62J2RIOnjnsKttXEV1e9kq4F2jhEP8MHI5Ouc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kh79ewSEWQAg+nq8WhxE5FWhXO6y1aHbu/wVt9xCUFUcNk7FDNP0YBteM7EOxF1h4jm5OP9S+jM1jBU8s7IOTu5Nhr4hwcuTAXl7EN0yLlEbKsNnjbfiqXCQqnC8LAtIVrzg+N3M7fMguAuSRqXoDKnhyClLqYudA0vidBQ5aN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=giFRapg1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ljVLJJoaomWC53WImj6DlW+hI0BEgncEGv3uQ4mRyhA334uvhfz640j6rqfAqTgEGRu1ylkEbDS/S08VbIjSLDb27nSjVIkoewLZGnoa2mgecxcG7cXyGUL0zzmbtW1SwkJiR/KoCm/dzFqD6soHWvC51lblgFZYr4efIl2wU54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUUO1gtL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="giFRapg1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5381F00A3A;
-	Mon, 17 Aug 2026 13:44:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUUO1gtL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40F71F000E9;
+	Mon, 17 Aug 2026 13:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974277;
-	bh=lRL1TuP6t99Qd+P7zGbBlInp19HrLUYw5pjXRZEOQ68=;
+	s=korg; t=1786974280;
+	bh=+5C2ME6jc4RTfsLawT222BLcGFgeQLGibThLz+sLQjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=giFRapg1z+2ow4OPapg7JxFIOnUpfAA8vOE0rZY3+qAauwzgaRCYgI0uJRfXNiLzz
-	 5pEiIQnRbEGJK9hQdw0r+bdfSaJZR25KYM9KdbYYdwXN0d+QJQugJbHVx8l6vpfect
-	 X5+WjFm8ji2H+HVYUVhjwpmye78o3Y87eP25iU+w=
+	b=wUUO1gtLcQiFwvDV0TQ03/886M/62oPUy3BLYsd/kI2DhKYLBo4Zk3aAkAeF28XrY
+	 IPCH/xY8noBQLT9TkS+WWJ1nzhmSEcRZOV6/dKIBAYAiNvj+Xo7ZrN7isXWrG1ttPe
+	 s6G0BAbPr474TWD+ucUjD0Ms9JAcArs2Kv3zQfTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qihang Tang <q.h.hack.winter@gmail.com>,
+	Dongli Zhang <dongli.zhang@oracle.com>,
 	Willem de Bruijn <willemb@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 150/271] packet: use consistent hard_header_len in TX_RING send path
-Date: Mon, 17 Aug 2026 15:31:15 +0200
-Message-ID: <20260817132543.061300358@linuxfoundation.org>
+Subject: [PATCH 7.1 124/271] net: tap: set skb->dev before parsing virtio net header in tap_get_user_xdp()
+Date: Mon, 17 Aug 2026 15:30:49 +0200
+Message-ID: <20260817132541.964455050@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -51,106 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qihang Tang <q.h.hack.winter@gmail.com>
+From: Dongli Zhang <dongli.zhang@oracle.com>
 
-commit 21b5953e7494c16a42e6cd8cf110e18d13ae4a6b upstream.
+commit 3874892dd27d5387aa9a06f58d9060f18f351d24 upstream.
 
-tpacket_snd() reads dev->hard_header_len independently for skb
-allocation and header construction in tpacket_fill_skb(). Concurrent
-netdevice reconfiguration can therefore make the reserved headroom
-smaller than the amount later pushed, or make copylen - hard_header_len
-negative.
+The commit 4f61f133f354 ("net: tap: NULL pointer derefence in
+dev_parse_header_protocol when skb->dev is null") fixed a crash in
+tap_get_user() by assigning skb->dev before calling tun_vnet_hdr_to_skb().
+This is required because virtio_net_hdr_to_skb() may invoke
+dev_parse_header_protocol(), which dereferences skb->dev. Without the
+assignment, a NULL pointer dereference can occur.
 
-Snapshot hard_header_len once before processing ring frames and use it
-for the frame limit, headroom allocation, copy length, and skb
-construction. Pass the snapshot to tpacket_fill_skb().
+However, tap_get_user_xdp() still parses the virtio-net header before
+assigning skb->dev. When the vhost TX path passes an XDP buffer containing
+a GSO virtio-net header but the protocol is set to zero on purpose,
+tun_vnet_hdr_to_skb() can reach dev_parse_header_protocol() while skb->dev
+is still NULL, resulting in a crash.
 
-The separate SOCK_DGRAM consistency problem between hard_header_len and
-header_ops->create is not addressed here.
+Fix this by looking up the tap device and assigning skb->dev before calling
+tun_vnet_hdr_to_skb(), matching the ordering already used in
+tap_get_user(). Preserve the existing RCU read-side critical section across
+dev_queue_xmit().
 
-Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
+Fixes: 924a9bc362a5 ("net: check if protocol extracted by virtio_net_hdr_set_proto is correct")
 Cc: stable@vger.kernel.org
-Signed-off-by: Qihang Tang <q.h.hack.winter@gmail.com>
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260805125729.19220-4-q.h.hack.winter@gmail.com
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://patch.msgid.link/20260802224612.264563-1-dongli.zhang@oracle.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ drivers/net/tap.c |   24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2574,6 +2574,7 @@ static int packet_snd_vnet_parse(struct
- static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
- 		void *frame, struct net_device *dev, void *data, int tp_len,
- 		__be16 proto, unsigned char *addr, int hlen, int copylen,
-+		int hard_header_len,
- 		const struct sockcm_cookie *sockc)
- {
- 	union tpacket_uhdr ph;
-@@ -2605,8 +2606,8 @@ static int tpacket_fill_skb(struct packe
- 	} else if (copylen) {
- 		int hdrlen = min_t(int, copylen, tp_len);
+--- a/drivers/net/tap.c
++++ b/drivers/net/tap.c
+@@ -1074,10 +1074,21 @@ static int tap_get_user_xdp(struct tap_q
+ 	skb_reset_mac_header(skb);
+ 	skb->protocol = eth_hdr(skb)->h_proto;
  
--		skb_push(skb, dev->hard_header_len);
--		skb_put(skb, copylen - dev->hard_header_len);
-+		skb_push(skb, hard_header_len);
-+		skb_put(skb, copylen - hard_header_len);
- 		err = skb_store_bits(skb, 0, data, hdrlen);
- 		if (unlikely(err))
- 			return err;
-@@ -2737,7 +2738,7 @@ static int tpacket_snd(struct packet_soc
- 	void *data;
- 	int len_sum = 0;
- 	int status = TP_STATUS_AVAILABLE;
--	int hlen, tlen, copylen = 0;
-+	int hard_header_len, hlen, tlen, copylen = 0;
- 	long timeo;
- 
- 	mutex_lock(&po->pg_vec_lock);
-@@ -2784,8 +2785,9 @@ static int tpacket_snd(struct packet_soc
- 			goto out_put;
++	rcu_read_lock();
++	tap = rcu_dereference(q->tap);
++	if (!tap) {
++		kfree_skb(skb);
++		rcu_read_unlock();
++		return 0;
++	}
++	skb->dev = tap->dev;
++
+ 	if (vnet_hdr_len) {
+ 		err = tun_vnet_hdr_to_skb(q->flags, skb, gso);
+-		if (err)
++		if (err) {
++			rcu_read_unlock();
+ 			goto err_kfree;
++		}
  	}
  
-+	hard_header_len = READ_ONCE(dev->hard_header_len);
- 	if (po->sk.sk_socket->type == SOCK_RAW)
--		reserve = dev->hard_header_len;
-+		reserve = hard_header_len;
- 	size_max = po->tx_ring.frame_size
- 		- (po->tp_hdrlen - sizeof(struct sockaddr_ll));
+ 	/* Move network header to the right position for VLAN tagged packets */
+@@ -1085,15 +1096,8 @@ static int tap_get_user_xdp(struct tap_q
+ 	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
+ 		skb_set_network_header(skb, depth);
  
-@@ -2822,7 +2824,7 @@ static int tpacket_snd(struct packet_soc
- 			goto tpacket_error;
+-	rcu_read_lock();
+-	tap = rcu_dereference(q->tap);
+-	if (tap) {
+-		skb->dev = tap->dev;
+-		skb_probe_transport_header(skb);
+-		dev_queue_xmit(skb);
+-	} else {
+-		kfree_skb(skb);
+-	}
++	skb_probe_transport_header(skb);
++	dev_queue_xmit(skb);
+ 	rcu_read_unlock();
  
- 		status = TP_STATUS_SEND_REQUEST;
--		hlen = LL_RESERVED_SPACE(dev);
-+		hlen = LL_RESERVED_SPACE_EX(dev, hard_header_len);
- 		tlen = dev->needed_tailroom;
- 		if (vnet_hdr_sz) {
- 			data += vnet_hdr_sz;
-@@ -2840,10 +2842,10 @@ static int tpacket_snd(struct packet_soc
- 						    vnet_hdr.hdr_len);
- 			has_vnet_hdr = true;
- 		}
--		copylen = max_t(int, copylen, dev->hard_header_len);
-+		copylen = max_t(int, copylen, hard_header_len);
- 		skb = sock_alloc_send_skb(&po->sk,
- 				hlen + tlen + sizeof(struct sockaddr_ll) +
--				(copylen - dev->hard_header_len),
-+				(copylen - hard_header_len),
- 				!need_wait, &err);
- 
- 		if (unlikely(skb == NULL)) {
-@@ -2853,7 +2855,8 @@ static int tpacket_snd(struct packet_soc
- 			goto out_status;
- 		}
- 		tp_len = tpacket_fill_skb(po, skb, ph, dev, data, tp_len, proto,
--					  addr, hlen, copylen, &sockc);
-+					  addr, hlen, copylen, hard_header_len,
-+					  &sockc);
- 		if (likely(tp_len >= 0) &&
- 		    tp_len > dev->mtu + reserve &&
- 		    !vnet_hdr_sz &&
+ 	return 0;
 
 
