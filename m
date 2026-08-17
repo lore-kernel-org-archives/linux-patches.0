@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD514446F7;
-	Mon, 17 Aug 2026 15:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2EFD441636;
+	Mon, 17 Aug 2026 15:26:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980364; cv=none; b=A3txyqZ1VbiXglwkzuLec2qbyi6crUdpQ1iB/movufmBYnTh0wjuEFKnneeLy+G0LTA8FJho1DW5vlKihNmjUuH3ZSDtb6BeW1LstaGNNjqGzCDdnMELUrsn93pmdMBg3x968GL0Db+yl/qglUVkVEt5FM3illGyF7QqNDD4QvI=
+	t=1786980367; cv=none; b=QkrAZXVtsrdt3UIJ+9m9+egk1X366fMw/8W3wNoAMZQOyutMjP20OR7WEm2IUxl375GtVJMeJPTO0yRpbKvxR2BInoNYYOPHq1mQW/1N7svTbN0ZRD4VeeFy+pT7T7ln7v7hhTpBRwIgw0Ymeg9WAcMmBvd1vaundzZYdj5aVGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980364; c=relaxed/simple;
-	bh=uOwvhQXoLIlfm9mXrXS8aXCGF7r1PFRcj7WfX4Dc18Y=;
+	s=arc-20240116; t=1786980367; c=relaxed/simple;
+	bh=OOmdvpEIK8Kh0vZ7jiQj5DXfay3soKof0S8XW52sZGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q6zbUIDWyNpheGAid2iBP4KKVsaeRJrYX2HP4sd3MABr0gRU0MaWnN5m24pdQyzrmpfqbcMs/J7ca47RBHLAHjxJK2RDaJ4pBvo0KDj+t71MABggm+W3MFR3v2Wx3SGZCikcT51hDUEBzFben77mzCvxAZpN9I7Nohq51AFO/SM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OYClLGnh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YuIHfMU5s2/Wbv8PqSX7gdZeIZNwf2m/OttsLQu+E5pNJ5BqWSsvdHAN9h+zniNcOqZGF43ov6skpHNMtjpok8/thMLE8kYnduUthPLqgVUPKy0VISmLWzFr4eKtcMvrlogct5jmyieKXiE+Xq/4yZzypvE68Sba6kNPMbMtcio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DUqVblgs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYClLGnh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522741F000E9;
-	Mon, 17 Aug 2026 15:26:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DUqVblgs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36C991F000E9;
+	Mon, 17 Aug 2026 15:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980362;
-	bh=n3O5mzFb3+TOPEX2Vp4xOXn0yPnSrbzVTX9dJ07FBWQ=;
+	s=korg; t=1786980365;
+	bh=TmLQV0LQCKqlEuZ6n7ZcgepF6XA3YK8gWbDVmvly28E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OYClLGnhlxkjdHP1d5ADJ5h7gisilJ0SUe6DyGh2BoKg36/s2jrm4QH1MN326Tayu
-	 Q8/a3PK+WUzLl2Cxnhbck2ok4QbsPru/DX5c4d0nSPoTVLX4yO9WL5GglAkD7PScwl
-	 yXUafn+H75FK3Z8NMuQB4Fhdpl0entTU08idKE4k=
+	b=DUqVblgsnUn1WJqF5wUP4d/FlL4MskJYP8VJMWdrPxZivD32KMRki7Xo+UyM1l50j
+	 l7TsIFhE7sKSQN86rDq9XijF028kbvSz9KfJ/Dc11G5j5M9+bZQ5p8Kp/RvGQVNw8p
+	 TfADb9uF5+NZiJRkZ4FzmZ4BE6+NnXIsDa+OxhhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 547/609] Input: evdev - fix information leak in evdev_pass_values()
-Date: Mon, 17 Aug 2026 15:34:03 +0200
-Message-ID: <20260817132602.060452141@linuxfoundation.org>
+	Lincoln Wallace <locnnil0@gmail.com>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 6.1 548/609] ima: fix out-of-bounds read in xattr_verify()
+Date: Mon, 17 Aug 2026 15:34:04 +0200
+Message-ID: <20260817132602.091852743@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,88 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Lincoln Wallace <locnnil0@gmail.com>
 
-commit 90f305f2c7a30257c683e13f4bf7c798eea992a0 upstream.
+commit 5ff232d31106f45ac87c3b64e1d35a0667777797 upstream.
 
-In evdev_pass_values(), the input_event structure is allocated on the
-kernel stack and populated field-by-field. However, it is never fully
-initialized. On architectures where struct input_event contains explicit
-or implicit padding (such as the 32-bit __pad field on SPARC64), these
-padding bytes are left uninitialized.
+The digest-length check in xattr_verify() mixes int and size_t:
 
-When this event structure is subsequently passed to the client buffer
-and later copied to userspace, the uninitialized padding bytes leak
-kernel stack memory, potentially exposing sensitive information.
+	if (xattr_len - sizeof(xattr_value->type) - hash_start >=
+			iint->ima_hash->length)
 
-Similar issues exist in __evdev_queue_syn_dropped and __pass_event.
+sizeof() yields size_t, so the usual arithmetic conversions promote
+the whole left-hand side to unsigned 64-bit before the subtraction
+runs. For a truncated xattr this underflows instead of going negative:
+a 1-byte IMA_XATTR_DIGEST_NG xattr (xattr_len == 1, hash_start == 1)
+turns "1 - 1 - 1" into SIZE_MAX, which is trivially >= ima_hash->length.
+The check then passes and the following memcmp() reads
+iint->ima_hash->length bytes starting past the end of the buffer
+vfs_getxattr_alloc() allocated for it.
 
-Fix this by explicitly zeroing the entire event structure with memset()
-before populating its fields. This ensures all padding bytes are cleared
-before the data crosses the security boundary.
+Nothing upstream clamps xattr_len back into a safe range first:
+ima_get_hash_algo() only special-cases xattr_len < 2 to pick a default
+algorithm, and evm_verifyxattr() returns INTEGRITY_UNKNOWN rather than
+failing when no HMAC key is loaded, so a truncated security.ima value
+reaches the length check as-is.
 
-Reported-by: sashiko-bot@kernel.org
+Rewrite the comparison so every operand stays a signed int and no
+implicit conversion to size_t can occur.
+
+Fixes: 3ea7a56067e6 ("ima: provide hash algo info in the xattr")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/ampGGKo4UMKru6f5@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Lincoln Wallace <locnnil0@gmail.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/evdev.c |   22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ security/integrity/ima/ima_appraise.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/input/evdev.c
-+++ b/drivers/input/evdev.c
-@@ -149,11 +149,11 @@ static void __evdev_queue_syn_dropped(st
- 	struct timespec64 ts = ktime_to_timespec64(ev_time[client->clk_type]);
- 	struct input_event ev;
- 
-+	memset(&ev, 0, sizeof(ev));
- 	ev.input_event_sec = ts.tv_sec;
- 	ev.input_event_usec = ts.tv_nsec / NSEC_PER_USEC;
- 	ev.type = EV_SYN;
- 	ev.code = SYN_DROPPED;
--	ev.value = 0;
- 
- 	client->buffer[client->head++] = ev;
- 	client->head &= client->bufsize - 1;
-@@ -221,20 +221,20 @@ static void __pass_event(struct evdev_cl
- 	client->head &= client->bufsize - 1;
- 
- 	if (unlikely(client->head == client->tail)) {
-+		struct input_event ev;
-+
-+		memset(&ev, 0, sizeof(ev));
-+		ev.input_event_sec = event->input_event_sec;
-+		ev.input_event_usec = event->input_event_usec;
-+		ev.type = EV_SYN;
-+		ev.code = SYN_DROPPED;
-+
- 		/*
- 		 * This effectively "drops" all unconsumed events, leaving
- 		 * EV_SYN/SYN_DROPPED plus the newest event in the queue.
- 		 */
- 		client->tail = (client->head - 2) & (client->bufsize - 1);
--
--		client->buffer[client->tail] = (struct input_event) {
--			.input_event_sec = event->input_event_sec,
--			.input_event_usec = event->input_event_usec,
--			.type = EV_SYN,
--			.code = SYN_DROPPED,
--			.value = 0,
--		};
--
-+		client->buffer[client->tail] = ev;
- 		client->packet_head = client->tail;
- 	}
- 
-@@ -256,6 +256,8 @@ static void evdev_pass_values(struct evd
- 	if (client->revoked)
- 		return;
- 
-+	memset(&event, 0, sizeof(event));
-+
- 	ts = ktime_to_timespec64(ev_time[client->clk_type]);
- 	event.input_event_sec = ts.tv_sec;
- 	event.input_event_usec = ts.tv_nsec / NSEC_PER_USEC;
+--- a/security/integrity/ima/ima_appraise.c
++++ b/security/integrity/ima/ima_appraise.c
+@@ -301,8 +301,13 @@ static int xattr_verify(enum ima_hooks f
+ 		} else {
+ 			set_bit(IMA_DIGSIG, &iint->atomic_flags);
+ 		}
+-		if (xattr_len - sizeof(xattr_value->type) - hash_start >=
+-				iint->ima_hash->length)
++		/*
++		 * Use addition, not subtraction: sizeof() forces unsigned
++		 * math and a short xattr_len would wrap around, bypassing
++		 * this bounds check.
++		 */
++		if (xattr_len >= (int)sizeof(xattr_value->type) + hash_start +
++				(int)iint->ima_hash->length)
+ 			/*
+ 			 * xattr length may be longer. md5 hash in previous
+ 			 * version occupied 20 bytes in xattr, instead of 16
 
 
