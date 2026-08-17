@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32BDE424D75;
-	Mon, 17 Aug 2026 13:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BFC3DB310;
+	Mon, 17 Aug 2026 13:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974686; cv=none; b=gySExd5MlrgtasQ0Ytap3HXOZXdZvybtE2XMRXl/RZXlAAt0C7er/23n8KfGRiRS+WdgrrqdXGoGgGxRYDYwkxE7l0Aj7CVDLPkyJkCuiPWWfITvKERPh+mPMBhrXa+DjeCkynbz7RALRsaBJksPz6bVTb7Anr+Mm1qqpCpon4U=
+	t=1786974689; cv=none; b=omYqtxd96BjHHF7M6N0qsFDjZdr44Hx0h64svBrDFnz3C5pCohJizx6YiPKpglDGYO+ZbIfXYXg2dF89umXkkCKUZlgpJ24G686yRAQGJXFKKO1btPdCV6XlQRUHzB5wCaQyDxRwFgZrjffS+1W4hutJtzxecRlTHUboi1IP1r4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974686; c=relaxed/simple;
-	bh=2rZIfAQxcpbJYLPN+RM888iHWjVprCoiudznxkwDkLs=;
+	s=arc-20240116; t=1786974689; c=relaxed/simple;
+	bh=PukP4mB/5QM4xX7eU6TpDAsxE/A/JyWtmPvaPuenAxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NEOpBS/vPMZbmhnHsQcusDQqPzmlEYFq07yzc8MMF8BgVVPyvmcGJld6FbGQ/OkRfUjXexkWcdE7Ihpf9E8NZG1wisjP2WdO15rQgKHV6LLkwfORKqFgs1KZMV4UTaz3JxiAJ94UOHLbUJLOb9tQ7XdsRxMApc5KbA5Qx7nglMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osvHYOBr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tSDDnQpqIe+LPc6hcTYmEzKnncpJbeV3p3Nh2EKViupOZqjNixF+Y6ygVhSEkhWeA6b4syIuDc+ulX27KRf0wKWXsZs69/u2lpHe7QTetWeypOSxzvJ+TFXW8OSUJoP4ut7JymOPou36snWrFco/s5vkCERiDmt9Fpel2MT2SzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RsenwiOA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osvHYOBr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A46D91F000E9;
-	Mon, 17 Aug 2026 13:51:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RsenwiOA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89FCC1F00A3D;
+	Mon, 17 Aug 2026 13:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974675;
-	bh=MPmgOUZ6bWQYvLhfJEsgN/jXVSi6csMRT+0aPgF8nm0=;
+	s=korg; t=1786974678;
+	bh=DKAgX9vLQfbv21p/o2U7e14MI9qkjby15FgY49rCAQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=osvHYOBr0O0BGOJ1nPWsRwWvCjGUZEgH38qtBqXOMbVhjG8Z1Hzb1yNht5glLXnNw
-	 y5o4GI0cfNKKJRF9mHI9Q1C3dpiphQpBVL5OVIFTwNejgX0TRX+q0/dddho8gfybGk
-	 1qp14SUuXsZnM2fNvHgS0c6CVu6Ml/4hvQUIAuHg=
+	b=RsenwiOABWSpqQtEEKtNxPORoeHmVA/2++j011w2JBgEqE00B5TAWYspjqCp1Rg/h
+	 TX2WdCTGIDSJTqMDcxjElQo2azRuaoaBwiVy37J9EGtqMsoj3xA3R4LKi9iXiSGEOR
+	 XTBUc4Lzj0kJJutl3ZyYzAlb7E56+DhpU+0/lWHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Avi Fishman <avifishman70@gmail.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Kuba Piecuch <jpiecuch@google.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 016/250] ARM: npcm: Fix OF node refcount leaks in SMP setup
-Date: Mon, 17 Aug 2026 15:29:37 +0200
-Message-ID: <20260817132537.114222611@linuxfoundation.org>
+Subject: [PATCH 6.18 017/250] selftests/sched_ext: Handle sleeping task affinity changes in numa test
+Date: Mon, 17 Aug 2026 15:29:38 +0200
+Message-ID: <20260817132537.153572304@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,48 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Kuba Piecuch <jpiecuch@google.com>
 
-[ Upstream commit 8eb052f48331474c2789d07b7f11165c323bd2f9 ]
+[ Upstream commit d4a00d61a5c2c24973175ace5368d1f6acf9bb0a ]
 
-npcm7xx_smp_boot_secondary() and npcm7xx_smp_prepare_cpus() look up
-the GCR and SCU nodes with of_find_compatible_node(). The returned
-nodes are used for of_iomap(), but the node references are never
-released.
+When a sleeping task's affinity is changed, task_cpu(p) can be outside
+of p->cpus_ptr until after select_task_rq() selects a new runqueue for
+the task during wakeup.
 
-of_iomap() does not consume the device node reference, and iounmap()
-only releases the MMIO mapping. Drop each node reference after the
-corresponding mapping attempt.
+Thus, the task's NUMA node determined by numa_select_cpu() can be
+completely outside of the task's cpumask, leading to
+scx_pick_{idle,any}_cpu_node() failing to find an eligible CPU and
+returning -EBUSY. This leads to the numa.bpf.c scheduler abnormally
+exiting with the following message in dmesg:
 
-Fixes: 7bffa14c9aed ("arm: npcm: add basic support for Nuvoton BMCs")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Avi Fishman <avifishman70@gmail.com>
-Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+sched_ext: numa: invalid CPU -16
+   scx_bpf_cpu_node+0x120/0x190
+   bpf_prog_0a34b8e0f515771f_numa_select_cpu+0x108/0x14e
+   bpf__sched_ext_ops_select_cpu+0x4f/0xb4
+   select_task_rq_scx+0xb0/0x210
+   select_task_rq+0xa0/0xd0
+   __try_to_wake_up+0x196/0x650
+   complete_all+0x76/0x100
+   migration_cpu_stop+0x22b/0x300
+   cpu_stopper_thread+0xc1/0x180
+   smpboot_thread_fn+0x16b/0x230
+   kthread+0x2d7/0x350
+   ret_from_fork+0x1c2/0x350
+   ret_from_fork_asm+0x1a/0x30
+
+Make numa_select_cpu() robust against this case by returning @prev_cpu
+if no CPU could be found in the selected NUMA node _and_ we have reason
+to believe that the task's affinity was changed while it was sleeping.
+
+Fixes: 5ae5161820e5 ("selftests/sched_ext: Add NUMA-aware scheduler test")
+Signed-off-by: Kuba Piecuch <jpiecuch@google.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-npcm/platsmp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/testing/selftests/sched_ext/numa.bpf.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-npcm/platsmp.c b/arch/arm/mach-npcm/platsmp.c
-index 41891d3aa1247..4c1fc9983746c 100644
---- a/arch/arm/mach-npcm/platsmp.c
-+++ b/arch/arm/mach-npcm/platsmp.c
-@@ -32,6 +32,7 @@ static int npcm7xx_smp_boot_secondary(unsigned int cpu,
- 		goto out;
- 	}
- 	gcr_base = of_iomap(gcr_np, 0);
-+	of_node_put(gcr_np);
- 	if (!gcr_base) {
- 		pr_err("could not iomap gcr");
- 		ret = -ENOMEM;
-@@ -60,6 +61,7 @@ static void __init npcm7xx_smp_prepare_cpus(unsigned int max_cpus)
- 		return;
- 	}
- 	scu_base = of_iomap(scu_np, 0);
-+	of_node_put(scu_np);
- 	if (!scu_base) {
- 		pr_err("could not iomap scu");
- 		return;
+diff --git a/tools/testing/selftests/sched_ext/numa.bpf.c b/tools/testing/selftests/sched_ext/numa.bpf.c
+index a79d86ed54a1b..0ebb6170331bf 100644
+--- a/tools/testing/selftests/sched_ext/numa.bpf.c
++++ b/tools/testing/selftests/sched_ext/numa.bpf.c
+@@ -34,7 +34,8 @@ static bool is_cpu_idle(s32 cpu, int node)
+ s32 BPF_STRUCT_OPS(numa_select_cpu,
+ 		   struct task_struct *p, s32 prev_cpu, u64 wake_flags)
+ {
+-	int node = __COMPAT_scx_bpf_cpu_node(scx_bpf_task_cpu(p));
++	s32 task_cpu = scx_bpf_task_cpu(p);
++	int node = __COMPAT_scx_bpf_cpu_node(task_cpu);
+ 	s32 cpu;
+ 
+ 	/*
+@@ -48,6 +49,16 @@ s32 BPF_STRUCT_OPS(numa_select_cpu,
+ 		cpu = __COMPAT_scx_bpf_pick_any_cpu_node(p->cpus_ptr, node,
+ 						__COMPAT_SCX_PICK_IDLE_IN_NODE);
+ 
++	/*
++	 * @task_cpu may be outside of p->cpus_ptr if @p's affinity
++	 * changed while it was sleeping. This means it's possible for
++	 * p->cpus_ptr to not include any CPUs from @node.
++	 * If we failed to find a cpu in @node, check if @task_cpu
++	 * is outside of p->cpus_ptr and just return @prev_cpu if it is.
++	 */
++	if (cpu < 0 && !bpf_cpumask_test_cpu(task_cpu, p->cpus_ptr))
++		return prev_cpu;
++
+ 	if (is_cpu_idle(cpu, node))
+ 		scx_bpf_error("CPU %d should be marked as busy", cpu);
+ 
 -- 
 2.53.0
 
