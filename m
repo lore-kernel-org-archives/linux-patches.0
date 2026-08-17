@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7E6434407;
-	Mon, 17 Aug 2026 14:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45072C1594;
+	Mon, 17 Aug 2026 14:01:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975286; cv=none; b=tjisy22XV7Apl3Wa/82vUXR6QjbZR17qNG2YX7r2moVkfx3QgDGdlaGnqEz2hRGcDwC6E1I2qS3mF/mauNW5BqjLE8CJFz4ehCgHC3bZWB2gUCLP732hxUtZUG1kafZm19MZL2+Yv5w3zfBYL3BVHmxLLCKFnYEOXutej2MRMog=
+	t=1786975289; cv=none; b=hdKhqpgK+vhhNYKLeH5HBrqulNrqxr1BMQWdmb0Mjkb+169Dm3W49ouOkqe+XUSVGnzFYVmBTZFw9YXMXTbgtRtIzHthx/L9uUQXjL1qdqHBavnjwjb58+6FydzOz09ADoYtmqepnwtosa/ohViKopK2YuKz7jAwYS5sUWEfb7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975286; c=relaxed/simple;
-	bh=tRcfc0yJ5V0OMP5SVbl1Ejj3Kg6Zzw3f1Yl4cff9wN8=;
+	s=arc-20240116; t=1786975289; c=relaxed/simple;
+	bh=V1E5MwEGRizLIdbX4qBwnuoBY7Q+a6PMsBeSvddCfqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TotCepwk+gTW0vq1g0s56Id7QTuKLw35gVieEhZ0m3TKSsfTzDlDOdgHNc0kqdCfZvhEfPEhYnb0Brt8PM934+xaOWd4JSNjpSbEL9QMldtkbNYImdAh0tTEjy+APPKb6ovJUH8djxffNvxSG0btXqNVOX09wV24UFeENu7nc4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHsxmz9L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ncui+YikutrRq0A3nuDV5UTtJbBUbC7lrG5OrYno88Z5HpmCErCJx4fLp3IE5RE7DmmP+zt0lF7tWF3HVClHARrca3oaZRrcRZwxj5KY47PrISoIaI5bZnmwWG5K4vW9amfWLt2EOw9emfsWyup75R83Mn7qsZHtAaK3okI8TVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqVblJPh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHsxmz9L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 696351F000E9;
-	Mon, 17 Aug 2026 14:01:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqVblJPh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 482FE1F000E9;
+	Mon, 17 Aug 2026 14:01:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975284;
-	bh=aR91Gqm21+Gp4BGgS2P4O4bGcV7Sjt3lvDr71v946Fc=;
+	s=korg; t=1786975287;
+	bh=faEdjReJvKQbjoko70VuCEgdTEJ2xHLpZsqPzip2iUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jHsxmz9LKC1NXPUxWvgIYrFzy1X1J/w4ydXqLV8xmSCd1LSFmwFi5XJCzFsatj7F+
-	 DptBsXNEOg7A9BGMyEOgaPoqD7/T5wq6W4OjL1CCIBrLbBEXuVqkCWq0Jgba172Rih
-	 X9nLYMPO3pS0h5y+KZjHHfbn0GuUj3KSrjQxMiwE=
+	b=vqVblJPhDH/8OppcTgW+tVN33QH3XTHvd848fHlrAejKdSJQargn6fDdpoY5NNfzN
+	 /Cb0p8B+6LzP0Xn8uhMFy1hSG7SAdL/tjzZAouQ8/Avqh10q6abeVcelbmQWsiow/R
+	 uRu2uZRX6e9vjGAG3bFoKhbS1dzBcMNM6NHHm+qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.18 226/250] eventfs: Fix use-after-free in eventfs_remove_rec()
-Date: Mon, 17 Aug 2026 15:33:07 +0200
-Message-ID: <20260817132545.750996756@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Mina Almasry <almasrymina@google.com>,
+	Bobby Eshleman <bobbyeshleman@meta.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 200/250] net: devmem: prevent net-iov / page mixing
+Date: Mon, 17 Aug 2026 15:32:41 +0200
+Message-ID: <20260817132544.726154444@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,52 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit fd73b691702170d37d66f4b0278530cea8ed419a upstream.
+commit 53a43508ee332d8bffe40590c3d189c92a551f9f upstream.
 
-eventfs_remove_rec() recursively removes the child at the current loop
-position. After the recursive call returns, list_for_each_entry() advances
-by reading list.next from the removed child.
+We should either have net_iov or page backed frags in a single skb,
+otherwise it blows up down the stack. Don't allow mixing in
+zerocopy_fill_skb_from_devmem().
 
-If free_ei() drops the final reference, release_ei() reuses the list/rcu
-union to queue an SRCU callback. The child may be freed before that read.
-The eventfs_mutex serializes list updates, but it does not keep the removed
-child alive or prevent the SRCU callback from running.
-
-Use list_for_each_entry_safe() to save the next sibling before recursively
-removing the current child.
-
+Fixes: bd61848900bff ("net: devmem: Implement TX path")
 Cc: stable@vger.kernel.org
-Fixes: 43aa6f97c2d0 ("eventfs: Get rid of dentry pointers without refcounts")
-Link: https://patch.msgid.link/20260806022719.375354-1-shuangpeng.kernel@gmail.com
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
+Link: https://patch.msgid.link/e3199788c4732545627a4721097ebb71ad737bab.1785150502.git.asml.silence@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/event_inode.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/core/datagram.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/tracefs/event_inode.c
-+++ b/fs/tracefs/event_inode.c
-@@ -849,7 +849,7 @@ struct eventfs_inode *eventfs_create_eve
-  */
- static void eventfs_remove_rec(struct eventfs_inode *ei, int level)
- {
--	struct eventfs_inode *ei_child;
-+	struct eventfs_inode *ei_child, *tmp;
+diff --git a/net/core/datagram.c b/net/core/datagram.c
+index c285c6465923..173b5d97bd40 100644
+--- a/net/core/datagram.c
++++ b/net/core/datagram.c
+@@ -712,6 +712,9 @@ zerocopy_fill_skb_from_devmem(struct sk_buff *skb, struct iov_iter *from,
+ 	size_t virt_addr, size, off;
+ 	struct net_iov *niov;
  
- 	/*
- 	 * Check recursion depth. It should never be greater than 3:
-@@ -862,7 +862,7 @@ static void eventfs_remove_rec(struct ev
- 		return;
- 
- 	/* search for nested folders or files */
--	list_for_each_entry(ei_child, &ei->children, list)
-+	list_for_each_entry_safe(ei_child, tmp, &ei->children, list)
- 		eventfs_remove_rec(ei_child, level + 1);
- 
- 	list_del_rcu(&ei->list);
++	if (i && skb_frags_readable(skb))
++		return -EFAULT;
++
+ 	/* Devmem filling works by taking an IOVEC from the user where the
+ 	 * iov_addrs are interpreted as an offset in bytes into the dma-buf to
+ 	 * send from. We do not support other iter types.
+-- 
+2.55.0
+
 
 
