@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F60A42D75B;
-	Mon, 17 Aug 2026 14:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6886843B3FF;
+	Mon, 17 Aug 2026 14:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977066; cv=none; b=H3u5bg6D8lkaLv/Ip8AdtUg5Y1kOQIbPoOnko03ZDZrY2w/GqH8OruV0tR/gd2iMV/w7R8jx48Nf48MYA/oupl3ZRWgBMm2tZeNJ+IqhGMp4Rn7SrcT9Zqys5I26ohu8kjMO2lttJfSthw3JBmScHJQbVTI/pWDAoCjBorODSKk=
+	t=1786977069; cv=none; b=Q/rOOGeJHkNDlD+rMUHDsm5/CJMI4PgZbRd6mzJrxbaynSRUnWnl7p1sC2lTMT51wmA8iMp43txC17Kk/RXYMPKMkDWXtOtwGErbXYQz9867XDHYWZywRVnO2JLkbtvKoyHazxPPr8B//MqsDUJd61UlNlJjcs06C+ZtqzRis14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977066; c=relaxed/simple;
-	bh=3OwuUSXvPPPiNQBnZL4Xdggr7ePgoqdboAc4GzS+sjA=;
+	s=arc-20240116; t=1786977069; c=relaxed/simple;
+	bh=X9wsmesSbXW014GpNJ7D0nMVLIaudGF+aYSFUr7Em50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iGtkQedGy2NS3hO+JhhU4h6QRR8ffaZ1xjusDLhVIAuPyUFPCqkiAoGnCyPdYyT17DLaD/xnjIPDAQZo4NZFF53NDNGf5IqGHGOzuauBBgcjew7ScCxVjP4svkDU5aWdxfEY5uzYSNyNJLLFJH2EKpjV7VeQ5E6Xx9bLwqossM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxUlBDVs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u8TfJhlw26XdXjKrDfUNl13DggzYp4jR8SK+LrAy3l4aZKAXMikQweNsQf0/ZNTVW5xnrgK7TD5R0YsDRd4/cnLVkvNls1Y9A5IsAMZmGMBubz1u72884EGC+yKjPtKBbG1lObu7mqSOWqwYCvE/jevaRnW24diT8qfyhl/qgro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=euP7Vp2g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxUlBDVs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E830B1F000E9;
-	Mon, 17 Aug 2026 14:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="euP7Vp2g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95CD1F000E9;
+	Mon, 17 Aug 2026 14:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977065;
-	bh=ZGGns4xkrI9CnUBsktejzhhMhS0JvDKqaXNsrm28TgU=;
+	s=korg; t=1786977068;
+	bh=zcm9XOvQQxVaEYooKumL0HYzcrW6NuFqEl3eq4353Ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KxUlBDVsGSEUi4QkkZGxi+fjsxrPiBNHDF2VH8cUWNnhWK5zNMniFuMP3qBoAFoEc
-	 PQMLrcmH4QJKrdaRYd11rv6+pI1q4hJzFb+NeBiG4CuCWEkRpbnfxQfxr1S54PdzY8
-	 19GYtz7KlGM5IqQwM6i1YpkcO7Nwk7EszbSp9GBE=
+	b=euP7Vp2g5bjrFi/ePPxcMAHn3KsrEBDJ4c8jNcMCM2oPFUez032QGtgNXHADVAL4Q
+	 16BS6b5HCT4DCJ0DZ5Hj/1C4M5gnMZ6yKVT42Sn9PDxaf09zU7pnfHt4jgqAsHr2cB
+	 7OszSSYDEC74Tgswsq1i+lrUGlsm5Yg9UopUB9yc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Douya Le <ldy3087146292@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.15 201/456] ceph: fix pre-auth out-of-bounds read on snaptrace in ceph_handle_caps()
-Date: Mon, 17 Aug 2026 15:29:51 +0200
-Message-ID: <20260817132547.992546707@linuxfoundation.org>
+Subject: [PATCH 5.15 202/456] libceph: bound get_version reply decode to front len
+Date: Mon, 17 Aug 2026 15:29:52 +0200
+Message-ID: <20260817132548.039422087@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,72 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Douya Le <ldy3087146292@gmail.com>
 
-commit 4dbc71bcaf9a30abf3920a4e2cc4ed33bba78c02 upstream.
+commit d3c32939fa0e3ee9b883b9a0fd1972c5c444e3d0 upstream.
 
-ceph_handle_caps() reads snap_trace_len from the wire-format
-ceph_mds_caps header and uses it unconditionally to build a fake
-end pointer (snaptrace + snaptrace_len) that is later handed to
-ceph_update_snap_trace() in the CEPH_CAP_OP_IMPORT case:
+handle_get_version_reply() uses msg->front_alloc_len as the decode
+boundary for MON_GET_VERSION_REPLY.  That is the size of the reused
+reply buffer, not the number of bytes actually received.
 
-    snaptrace     = h + 1;
-    snaptrace_len = le32_to_cpu(h->snap_trace_len);
-    p             = snaptrace + snaptrace_len;
-    ...
-    case CEPH_CAP_OP_IMPORT:
-        if (snaptrace_len) {
-            ...
-            if (ceph_update_snap_trace(mdsc, snaptrace,
-                                       snaptrace + snaptrace_len,
-                                       false, &realm)) { ... }
+A truncated reply can therefore pass ceph_decode_need() and decode the
+second u64 from stale tail bytes left in the buffer by an earlier
+message, causing an uninitialized memory read.
 
-ceph_update_snap_trace() then decodes a struct ceph_mds_snap_realm
-from snaptrace using ceph_decode_need(&p, e, sizeof(*ri), bad)
-with the attacker-supplied fake end e == snaptrace + snaptrace_len.
-With snaptrace_len == 0xFFFFFFFF the bound check is trivially
-satisfied, ri = p reads sizeof(struct ceph_mds_snap_realm) past
-the legitimate msg->front buffer, and ri->num_snaps /
-ri->num_prior_parent_snaps then drive further out-of-bounds
-reads of the encoded snap arrays.
-
-The eleven msg_version >= 2 .. msg_version >= 12 decoder blocks
-above the op switch each catch this OOB through their
-ceph_decode_*_safe() / ceph_decode_need() helpers, but they sit
-behind a hdr.version-gated if, so a malicious or compromised
-MDS that sets msg->hdr.version = 1 reaches the IMPORT path with
-no version-gated decoder having validated snap_trace_len. The
-shape has been present since ceph_handle_caps() was introduced.
-
-Validate snap_trace_len against the message front buffer before
-consuming it, using the canonical ceph_decode_need() / ceph_has_room()
-helper.  The helper bounds the length with subtraction (n <= end - p,
-guarded by end >= p) rather than pointer addition, so it is wrap-safe
-for the attacker-controlled u32 length on 32-bit builds where
-p + snap_trace_len could overflow the address space.  This matches the
-rest of the ceph decode path (e.g. the pool_ns_len check a few lines
-below), and the existing goto bad cleanup already covers this exit
-path.
+Use msg->front.iov_len as the receive-side decode boundary, matching
+other libceph reply handlers and limiting decoding to the bytes that
+were actually read from the wire.
 
 Cc: stable@vger.kernel.org
-Fixes: a8599bd821d0 ("ceph: capability management")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Fixes: 513a8243d67f ("libceph: mon_get_version request infrastructure")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Douya Le <ldy3087146292@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/caps.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/ceph/mon_client.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -4067,6 +4067,7 @@ void ceph_handle_caps(struct ceph_mds_se
+--- a/net/ceph/mon_client.c
++++ b/net/ceph/mon_client.c
+@@ -821,7 +821,7 @@ static void handle_get_version_reply(str
+ 	struct ceph_mon_generic_request *req;
+ 	u64 tid = le64_to_cpu(msg->hdr.tid);
+ 	void *p = msg->front.iov_base;
+-	void *end = p + msg->front_alloc_len;
++	void *const end = p + msg->front.iov_len;
+ 	u64 handle;
  
- 	snaptrace = h + 1;
- 	snaptrace_len = le32_to_cpu(h->snap_trace_len);
-+	ceph_decode_need(&snaptrace, end, snaptrace_len, bad);
- 	p = snaptrace + snaptrace_len;
- 
- 	if (msg_version >= 2) {
+ 	dout("%s msg %p tid %llu\n", __func__, msg, tid);
 
 
