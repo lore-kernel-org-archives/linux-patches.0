@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6603E5EC0;
-	Mon, 17 Aug 2026 14:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80474431E6D;
+	Mon, 17 Aug 2026 14:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978031; cv=none; b=jOdnJJySnthSdJskcImQ4nNsYHHxoOez1R6s1NEiFYM9L/6i4FE9uupYW1IWG1QkK53EwCDYbSwhMJFBbpIA1Ef6MAe1CJW/W/1VgdFBM6AB4i/hLLQ26AVeoi/PmFbBXeOICVAA1xvTtWWOy1psZVh4PtrDlHmoMAXftlL9dDY=
+	t=1786978034; cv=none; b=rjyvqmikYSqVllj4DPV4lvRU1kVqIfLGSvqfMvMsmnOJdu45omQ/+431rG1F3R8ravohlkPMqNM59ApeI6g4wK9G/D8dAjM6FlrF+nAuQFs9aqvBP51iOi1P4bAvFqPXHvFOsiGj/2AHqCL/Y25JRrr9htyJlzEb0azX7J8WhdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978031; c=relaxed/simple;
-	bh=rNv3nDCTPuIbUV1c0ZtElBJQJjCyPzd4vDKdRyDD73U=;
+	s=arc-20240116; t=1786978034; c=relaxed/simple;
+	bh=LtAvtdkJH2kOBeuS8uekj+d+2Cf7klZGuyd8u+duhtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h0ncjLXbh3C/nFllI6GQO7Ppvbr44phgGAIC+dPUlzYS7g3MBkQ7NTWFmc0HYy3Qb3ilorE+9DMyAedD7yBk1GjLch9XVn5V9X37mIWeCKCzqeiwxnqFxPJGdJBiLrhYQiewolB5VJU2+EKrSwWqSbS+6Ql+hkAav6+0h/TLxx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JSD1pee9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IGJlaQgbi2LK8Rdxji8qArjgvniHbltOVg9uXs2y25P/nKnjz3PGy6oKxhnCr/1lfX6VEs6vu1QApv0fVB7DZu/Cq2viiYAEOj5FdiB+d9uvYtaxKIpDyIqUQz5/sQyTVS3/09fwRcqQBzes4lDG6uY9xpXDMpO7gY6va3lVDRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lj9+WXGW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSD1pee9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F9E1F00A3A;
-	Mon, 17 Aug 2026 14:47:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lj9+WXGW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1C91F000E9;
+	Mon, 17 Aug 2026 14:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978030;
-	bh=PoVOGWCtbBv+E/lr07UGZ0AwS8dAKOjb/8HqhAQQIp8=;
+	s=korg; t=1786978033;
+	bh=XQCKOuX35lEOSidtIWZ01Y8tO+dsossUV+XfRGU7gEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JSD1pee9TpD9t7xgqn+f9o+dMiDELoPhbjzgSS8oBsMFWlbyH4H7bLd6DvMp8Cio3
-	 Q9PIUL1MUlpkbW5U3Qv6785vwCihEw7O/4gvI5sviGNmYWatamZoJLStXxYEPkx4nS
-	 zhG3xQm/mhp40X+e8TtM56esIDhSh9XpRhpQfPmc=
+	b=lj9+WXGWRc916EYFoMJ3VA1u3YGfNS4YrzEx31oGxZzufWBUgKhDB2vpR2wlEEtzh
+	 3Cfk4LpTxherZWZ0FrDHPogkzU0k5yL/jiOXfPp8Sh7wnAMZ6ptKavd4iAeLDNN8ZD
+	 IODfDy7xREtvDZmg86+dcegqLNCS+A5dkjNhAIJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 075/181] ALSA: usb-audio: fix OOB write on Type II inbound URBs
-Date: Mon, 17 Aug 2026 15:32:49 +0200
-Message-ID: <20260817132538.400596221@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	syzbot+c9dff578c3a41775176a@syzkaller.appspotmail.com,
+	Aleksandr Nogikh <nogikh@google.com>
+Subject: [PATCH 6.12 076/181] usb: atm: cxacru: properly kill rcv_urb on error in cxacru_cm()
+Date: Mon, 17 Aug 2026 15:32:50 +0200
+Message-ID: <20260817132538.437482754@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -51,109 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Aleksandr Nogikh <nogikh@google.com>
 
-commit 69ee44e1a23be62318189dc4b37fa4ad94053269 upstream.
+commit c2f811314be351d86b6ab41e9297ae80d8da6f86 upstream.
 
-data_ep_set_params() sizes each URB transfer buffer before it adds the
-Format Type II transfer delimiter:
+If cxacru_cm() encounters an error while submitting or waiting for snd_urb,
+it aborts and returns the error without killing the already submitted
+rcv_urb. This leaves the rcv_urb active.
 
-	u->packets = urb_packs;
-	u->buffer_size = maxsize * u->packets;
+When this happens during initialization (e.g., in cxacru_atm_start()), the
+driver may ignore the error and proceed to call cxacru_poll_status(), which
+invokes cxacru_cm() again. Attempting to submit the still-active rcv_urb
+triggers a warning in usb_submit_urb():
 
-	if (fmt->fmt_type == UAC_FORMAT_TYPE_II)
-		u->packets++; /* for transfer delimiter */
-	u->urb = usb_alloc_urb(u->packets, GFP_KERNEL);
+cxacru 1-1:1.0: send of cm 0x84 failed (-104)
+ATM dev 0: cxacru_atm_start: CHIP_ADSL_LINE_START returned -104
+------------[ cut here ]------------
+URB ffff88812658d200 submitted while active
+WARNING: drivers/usb/core/urb.c:379 at usb_submit_urb+0x79/0x18b0
+drivers/usb/core/urb.c:379
+...
+Call Trace:
+ <TASK>
+ cxacru_cm+0x21a/0xf10 drivers/usb/atm/cxacru.c:631
+ cxacru_cm_get_array drivers/usb/atm/cxacru.c:722 [inline]
+ cxacru_poll_status+0x178/0x1110 drivers/usb/atm/cxacru.c:828
+ cxacru_atm_start+0x185/0x360 drivers/usb/atm/cxacru.c:814
+ usbatm_atm_init+0x144/0x3a0 drivers/usb/atm/usbatm.c:927
+ usbatm_usb_probe+0x15cb/0x1db0 drivers/usb/atm/usbatm.c:1178
+ cxacru_usb_probe+0x17f/0x220 drivers/usb/atm/cxacru.c:1370
+...
 
-buffer_size is computed from the pre-increment packet count and never
-recomputed, so for a Type II endpoint the buffer is one packet short of
-the packet count the URB is built with.
+To fix this, ensure that rcv_urb is properly killed if cxacru_cm() aborts
+early. We can safely call usb_kill_urb() on rcv_urb in the error path, as
+it is safe to call even if the URB is not active (e.g., if it failed to
+submit in the first place, or if it already completed).
 
-prepare_inbound_urb() then lays out one iso frame per packet and never
-consults buffer_size:
-
-	offs = 0;
-	for (i = 0; i < urb_ctx->packets; i++) {
-		urb->iso_frame_desc[i].offset = offs;
-		urb->iso_frame_desc[i].length = ep->curpacksize;
-		offs += ep->curpacksize;
-	}
-
-	urb->transfer_buffer_length = offs;
-	urb->number_of_packets = urb_ctx->packets;
-
-The last descriptor therefore points one packet past the end of the
-transfer buffer, where the host controller writes device data on every
-inbound transfer.  prepare_silent_urb() and prepare_playback_urb() bound
-their fill loops by ctx->buffer_size, so only capture is affected.
-
-fmt_type comes from the device's audio streaming descriptors, so any
-device advertising a Type II capture format hits this once userspace sets
-hw_params on the stream.
-
-KASAN on 7.2.0-rc5 (arm64) with a dummy_hcd/raw-gadget device, one report
-per inbound transfer:
-
-  BUG: KASAN: slab-out-of-bounds in dummy_timer
-  Write of size 64 at addr ffff0000186171c0 by task cons02/166
-   __asan_memcpy
-   dummy_timer
-   hrtimer_run_softirq
-  Allocated by task 166:
-   usb_alloc_coherent
-   snd_usb_endpoint_set_params
-  The buggy address is located 0 bytes to the right of
-   allocated 64-byte region [ffff000018617180, ffff0000186171c0)
-
-Compute buffer_size after the delimiter packet has been accounted for,
-and bound the fill loop by buffer_size, as prepare_silent_urb() already
-does on the outbound side.  This grows every Type II URB allocation by
-one maxsize packet.
-
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: 8fdff6a319e7 ("ALSA: snd-usb: implement new endpoint streaming model")
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260805013441.38245-1-baul.lee@xbow.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 1b0e61465234 ("[PATCH] USB ATM: driver for the Conexant AccessRunner chipset cxacru")
+Cc: stable <stable@kernel.org>
+Assisted-by: Gemini:gemini-3.5-flash Gemini:gemini-3.1-pro-preview syzbot
+Reported-by: syzbot+c9dff578c3a41775176a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c9dff578c3a41775176a
+Link: https://syzkaller.appspot.com/ai_job?id=75fec6f2-c8a6-43b1-b184-4d26baba86cc
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Link: https://patch.msgid.link/91edfa4c-a63d-400c-9f00-31f3e1f98c00@mail.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/endpoint.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/atm/cxacru.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -388,13 +388,15 @@ static int prepare_inbound_urb(struct sn
- 	case SND_USB_ENDPOINT_TYPE_DATA:
- 		offs = 0;
- 		for (i = 0; i < urb_ctx->packets; i++) {
-+			if (offs + ep->curpacksize > urb_ctx->buffer_size)
-+				break;
- 			urb->iso_frame_desc[i].offset = offs;
- 			urb->iso_frame_desc[i].length = ep->curpacksize;
- 			offs += ep->curpacksize;
- 		}
- 
- 		urb->transfer_buffer_length = offs;
--		urb->number_of_packets = urb_ctx->packets;
-+		urb->number_of_packets = i;
- 		break;
- 
- 	case SND_USB_ENDPOINT_TYPE_SYNC:
-@@ -1263,10 +1265,10 @@ static int data_ep_set_params(struct snd
- 		u->index = i;
- 		u->ep = ep;
- 		u->packets = urb_packs;
--		u->buffer_size = maxsize * u->packets;
- 
- 		if (fmt->fmt_type == UAC_FORMAT_TYPE_II)
- 			u->packets++; /* for transfer delimiter */
-+		u->buffer_size = maxsize * u->packets;
- 		u->urb = usb_alloc_urb(u->packets, GFP_KERNEL);
- 		if (!u->urb)
- 			goto out_of_memory;
+--- a/drivers/usb/atm/cxacru.c
++++ b/drivers/usb/atm/cxacru.c
+@@ -700,6 +700,8 @@ static int cxacru_cm(struct cxacru_data
+ 	ret = offd;
+ 	usb_dbg(instance->usbatm, "cm %#x\n", cm);
+ fail:
++	if (ret < 0)
++		usb_kill_urb(instance->rcv_urb);
+ 	mutex_unlock(&instance->cm_serialize);
+ err:
+ 	return ret;
 
 
