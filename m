@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6014843F0AF;
-	Mon, 17 Aug 2026 13:49:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089CF4266AA;
+	Mon, 17 Aug 2026 13:49:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974586; cv=none; b=cuiptM7vwkp56zXslfb/KNrU9frRYrTgWD51cGdEWV5zHEWL3rzxaH8oNJfdTgcmQokwsTZcA+MA/xxHDRFeD8vOa9lX0TPWY+RXQgDYrxGEMTa4LZLjNYPGR17Adwe+chsqpIs+AqIoSGqOevDanSiZkyj20A83npozXQSkR9w=
+	t=1786974590; cv=none; b=jWmDNICPuNzlTH8InywvoTdFmtBQ+pDDYibeJLJfe7rZaqOyYYJxVE3dO7g9oTbPZxws1seeTXD0/mv5l3SHHdvPt7dmzKIXNSXagol63fgUPe4aS5L93Dq145XhQh75B57V83707Z5cISft/6hFWioD7gwzLyOuYt0i08gZ3TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974586; c=relaxed/simple;
-	bh=htWCE/a7BDfJGAwgUtopwG1uUo4fxtiVfNvfR0khLKQ=;
+	s=arc-20240116; t=1786974590; c=relaxed/simple;
+	bh=cHwkDHnJ9QfQy57rYAp23diQ7SyiegcTL3YrV+0DSNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L5gWyWhhlaFUD2geUnCaqnxuv6CumeNIHi/c4O/M2TF8k4TOEiCpjQ9DjzTupRsHb2DnqY9s5vhZBOt2PyuDYCeDWAcdeNO+Bqjt/3w0KR9D21UYRYib1T6zyDBNZ6DnsYNMYtLfaCN6ZWwZWkfVB4fFnwHXAWHBTz13wlXpAG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdvv00dE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KVaMvyqxeXd6RSuxVwyQVM65jaWeE12fU68/gtzJbGMN9ASoXKJthGNwu6mXSDqMxWVjlxvVpJzzgk4Bc1ndPuV07cfseIbRBHXYjMq8WabTGznmt/mM2Qn6kc5QaiCRBkBO/16RxYkcdUGVuyszoRrNLQZL1atzpNNqc0taa/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SOpdjTlQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdvv00dE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684A51F00A3A;
-	Mon, 17 Aug 2026 13:49:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SOpdjTlQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5716B1F000E9;
+	Mon, 17 Aug 2026 13:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974579;
-	bh=WPpSU5PkstXKsMhOp5sA1JlURmk8yTkKoCeAK0eXPr4=;
+	s=korg; t=1786974582;
+	bh=Bt1M9VMOcErR0T1M5kGCdPBgOJH6ZkVtfWrWKCaykHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mdvv00dEXdUzJcM3+ryouR1YizbEaH3UWU1RiXPtpEDGq3zsLYdoBIyNlEyYBEm2P
-	 coA3hAiCG4a4veT5xeFLiA2IEakbvy1vuNakfLgMCX255KdXsagK+sNnaKaxR0gtZM
-	 28aeN5QCKGzSZRtvR9RvEfZuhV4R1ct/Uu4RHZW4=
+	b=SOpdjTlQrmgeY41Z6ZHrT5PNkiBEfnan3kVKMGJ4ZyqfMET8E0XDeEe4vBCvkFxWb
+	 xofV/WwoyDc0ka6ma6SkZOQ7INgMdIOXMYax3h0bWBeBucTXz72mBgzJQvoe1nIaGy
+	 /82ashW1HjiKQyUO0zCY9dNU+Nxlw6iETIiM0m7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baul Lee <baul.lee@xbow.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 215/271] net/x25: fix use-after-free of the socket by its timers
-Date: Mon, 17 Aug 2026 15:32:20 +0200
-Message-ID: <20260817132545.630036755@linuxfoundation.org>
+	syzbot+61b1db46218109869c14@syzkaller.appspotmail.com,
+	Rik van Riel <riel@surriel.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 7.1 206/271] fbdev: bitblit: bound-check glyph index in bit_cursor()
+Date: Mon, 17 Aug 2026 15:32:11 +0200
+Message-ID: <20260817132545.289897030@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -44,160 +45,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Rik van Riel <riel@surriel.com>
 
-commit 2195424c3da2ef1829a63b807e3a900a90e57d85 upstream.
+commit e033cbf3975a8465f879ebd5989dc35b04423a4d upstream.
 
-The x25 timers are armed with mod_timer() and cancelled with
-timer_delete(), so a pending timer holds no reference on the socket and a
-cancel does not wait for a callback already running on another CPU.
+bit_cursor() fetches the glyph under the cursor with
 
-x25_heartbeat_expiry() also rearms unconditionally, so it can reinstall
-sk->sk_timer after __x25_destroy_socket() has passed its cancel point.
-The following __sock_put() frees the socket while the timer is still
-queued, and the next expiry uses freed memory.  KASAN reports a
-slab-use-after-free on the kmalloc-2k object freed by close().
+	c = scr_readw(vc_pos);
+	src = vc_font.data + ((c & charmask) * w * height);
 
-timer_delete_sync() cannot be used here: x25_heartbeat_expiry() and
-x25_timer_expiry() both reach the cancels from inside the timer they
-would wait on, through __x25_destroy_socket() and x25_disconnect().
+where charmask is 0x1ff when vc_hi_font_mask is set. The screen buffer
+value comes directly from scr_readw() and may be larger than the current
+font's glyph count.
 
-Arm the timers with sk_reset_timer() and cancel them with sk_stop_timer()
-so that an armed timer owns a reference, and release it in both expiry
-handlers.  Rearm the heartbeat only while sk_hashed(sk) is still true,
-since __x25_destroy_socket() unlinks the socket before dropping it.  Arm
-the deferred destroy timer the same way and drop its reference in
-x25_destroy_timer().
+Syzkaller triggers this via vcs_write(). The Call Trace shows
+vcs_write() in vc_screen.c writing an arbitrary 16-bit value with
+writev() to /dev/vcsa, which vcs_write_buf() in vc_screen.c stores via
+vcs_scr_writew() without checking charcount. The stored value is later
+read in bit_cursor() in bitblit.c.
 
-Reproduced on net with KASAN, with the heartbeat period shortened so the
-window recurs.  With this patch the reproducer no longer triggers a
-report and /proc/net/x25 drains.
+When the font is changed from a font with 512 glyphs to a font with
+256 glyphs, the screen buffer can retain characters with the high
+bit set from the previous mode, which could also produce the same
+out-of-bounds access.
 
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+  BUG: KASAN: global-out-of-bounds in soft_cursor+0x378/0x6bc drivers/video/fbdev/core/softcursor.c:70
+  Read of size 16 at addr ffff800086c57970
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+  Call Trace:
+   soft_cursor+0x378/0x6bc drivers/video/fbdev/core/softcursor.c:70
+   bit_cursor+0xa90/0x1108 drivers/video/fbdev/core/bitblit.c:365
+   fbcon_cursor+0x344/0x498 drivers/video/fbdev/core/fbcon.c:1427
+   hide_cursor+0xdc/0x2d0 drivers/tty/vt/vt.c:883
+   update_region+0x100/0x18c drivers/tty/vt/vt.c:669
+   vcs_write+0x8ec/0xaf0 drivers/tty/vt/vc_screen.c:685
+
+bit_putcs_aligned() and bit_putcs_unaligned() already clamp the glyph
+index to vc_font.charcount. Apply the same clamp in bit_cursor() after
+extracting the attribute and masking, before indexing fontdata.
+
+The fix completes the bounds checking started in commit 18c4ef4e765a
+("fbdev: bitblit: bound-check glyph index in bit_putcs*"), which missed
+the cursor path.
+
+This change should be safe because the clamp reuses the existing
+contract from fbcon: charcount is maintained under console_lock in
+con_font_set() and fbcon_font_set(), and hi_font_mask is cleared when
+switching from 512 to 256 glyphs. When stale screen data with high bits
+remains after a font switch, or when vcs_write() stores an arbitrary
+value, clamping the index to 0 prevents the out-of-bounds read without
+changing cursor semantics — the same fallback bit_putcs uses.
+
+Reported-by: syzbot+61b1db46218109869c14@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=61b1db46218109869c14
+Link: https://lore.kernel.org/all/6a75205c.01d0871a.3a0d52.0032.GAE@google.com/
+Fixes: 18c4ef4e765a ("fbdev: bitblit: bound-check glyph index in bit_putcs*")
 Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260726220342.47245-1-baul.lee@xbow.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Hermes:muse-spark-1.2 syzkaller
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/x25/af_x25.c    |    4 ++--
- net/x25/x25_timer.c |   25 ++++++++++++++++---------
- 2 files changed, 18 insertions(+), 11 deletions(-)
+ drivers/video/fbdev/core/bitblit.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/net/x25/af_x25.c
-+++ b/net/x25/af_x25.c
-@@ -362,6 +362,7 @@ static void x25_destroy_timer(struct tim
- 	struct sock *sk = timer_container_of(sk, t, sk_timer);
+--- a/drivers/video/fbdev/core/bitblit.c
++++ b/drivers/video/fbdev/core/bitblit.c
+@@ -273,9 +273,14 @@ static void bit_cursor(struct vc_data *v
+ 	if (!vc->vc_font.data)
+ 		return;
  
- 	x25_destroy_socket_from_timer(sk);
-+	sock_put(sk);
- }
+- 	c = scr_readw((u16 *) vc->vc_pos);
++	c = scr_readw((u16 *) vc->vc_pos);
+ 	attribute = get_attribute(info, c);
+-	src = vc->vc_font.data + ((c & charmask) * (w * vc->vc_font.height));
++	c &= charmask;
++
++	/* Clamp to font size, same as bit_putcs_aligned() */
++	if (c >= vc->vc_font.charcount)
++		c = 0;
++	src = vc->vc_font.data + (c * (w * vc->vc_font.height));
  
- /*
-@@ -397,9 +398,8 @@ static void __x25_destroy_socket(struct
- 
- 	if (sk_has_allocations(sk)) {
- 		/* Defer: outstanding buffers */
--		sk->sk_timer.expires  = jiffies + 10 * HZ;
- 		sk->sk_timer.function = x25_destroy_timer;
--		add_timer(&sk->sk_timer);
-+		sk_reset_timer(sk, &sk->sk_timer, jiffies + 10 * HZ);
- 	} else {
- 		/* drop last reference so sock_put will free */
- 		__sock_put(sk);
---- a/net/x25/x25_timer.c
-+++ b/net/x25/x25_timer.c
-@@ -36,45 +36,45 @@ void x25_init_timers(struct sock *sk)
- 
- void x25_start_heartbeat(struct sock *sk)
- {
--	mod_timer(&sk->sk_timer, jiffies + 5 * HZ);
-+	sk_reset_timer(sk, &sk->sk_timer, jiffies + 5 * HZ);
- }
- 
- void x25_stop_heartbeat(struct sock *sk)
- {
--	timer_delete(&sk->sk_timer);
-+	sk_stop_timer(sk, &sk->sk_timer);
- }
- 
- void x25_start_t2timer(struct sock *sk)
- {
- 	struct x25_sock *x25 = x25_sk(sk);
- 
--	mod_timer(&x25->timer, jiffies + x25->t2);
-+	sk_reset_timer(sk, &x25->timer, jiffies + x25->t2);
- }
- 
- void x25_start_t21timer(struct sock *sk)
- {
- 	struct x25_sock *x25 = x25_sk(sk);
- 
--	mod_timer(&x25->timer, jiffies + x25->t21);
-+	sk_reset_timer(sk, &x25->timer, jiffies + x25->t21);
- }
- 
- void x25_start_t22timer(struct sock *sk)
- {
- 	struct x25_sock *x25 = x25_sk(sk);
- 
--	mod_timer(&x25->timer, jiffies + x25->t22);
-+	sk_reset_timer(sk, &x25->timer, jiffies + x25->t22);
- }
- 
- void x25_start_t23timer(struct sock *sk)
- {
- 	struct x25_sock *x25 = x25_sk(sk);
- 
--	mod_timer(&x25->timer, jiffies + x25->t23);
-+	sk_reset_timer(sk, &x25->timer, jiffies + x25->t23);
- }
- 
- void x25_stop_timer(struct sock *sk)
- {
--	timer_delete(&x25_sk(sk)->timer);
-+	sk_stop_timer(sk, &x25_sk(sk)->timer);
- }
- 
- unsigned long x25_display_timer(struct sock *sk)
-@@ -108,7 +108,7 @@ static void x25_heartbeat_expiry(struct
- 			     sock_flag(sk, SOCK_DEAD))) {
- 				bh_unlock_sock(sk);
- 				x25_destroy_socket_from_timer(sk);
--				return;
-+				goto out;
- 			}
- 			break;
- 
-@@ -120,8 +120,14 @@ static void x25_heartbeat_expiry(struct
- 			break;
- 	}
- restart_heartbeat:
--	x25_start_heartbeat(sk);
-+	/* Do not rearm once __x25_destroy_socket() has unlinked the socket:
-+	 * it is past its cancel point and owns the teardown from there on.
-+	 */
-+	if (sk_hashed(sk))
-+		x25_start_heartbeat(sk);
- 	bh_unlock_sock(sk);
-+out:
-+	sock_put(sk);
- }
- 
- /*
-@@ -166,4 +172,5 @@ static void x25_timer_expiry(struct time
- 	} else
- 		x25_do_timer_expiry(sk);
- 	bh_unlock_sock(sk);
-+	sock_put(sk);
- }
+ 	if (par->cursor_state.image.data != (const char *)src ||
+ 	    par->cursor_reset) {
 
 
