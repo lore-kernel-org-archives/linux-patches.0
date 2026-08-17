@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125C643C7B4;
-	Mon, 17 Aug 2026 14:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52DC2D5A01;
+	Mon, 17 Aug 2026 14:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975223; cv=none; b=IW3rCVQvrhlkaXvKygSbxNYxwPxUzqMNnyyuX54Eic2LLHfENwhFn5UlExoUmlUlmfpmiUE57GH3kTbUOSen7pbgU/Y3SojkGpusmnQrd1AlFQwVSRTEIpXAbrxiCm1Ogocg4616iYjTAVoerPL1PzeVqz2fsrDAzkUUfUmGMJ4=
+	t=1786975225; cv=none; b=A8zx0kSexXrnxn1bXxF9+AmK0rkw7ipmo9oglv9SMIk8B4zz7wkAXcJ/xlKQqDveTadd9mfiMf+Dj9F5Rlp4gnjTg6fC8fqBuXQ1mIgTqeuEJUYWiV97pXzV8yZF6HWFDnB8vgiLLGzugQ6AOgvxTiH9mBa5a2LHjf6qPeEHjBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975223; c=relaxed/simple;
-	bh=E5GR4WBkw2SDncTe4w/11Ws8GJFbLkuBGa9qNiOGXBQ=;
+	s=arc-20240116; t=1786975225; c=relaxed/simple;
+	bh=/linO9qX7BCihi4rmV/0Jz/8++SYxOkN0ihMnxUUizM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q45+UW6hXUP969cpx3EWfOTZ0YXvyCAoAV3f39QlbYsvvD3dugJ0VnBBPfZ/IbYVGyG5rEu2IKdIsIjIkUe4oxEqQCR5mvTLD+qGQD8N2Bpxgl17HerBTh6Lungn5r2xD++ycJ2l7OrSLgQAqYoDAmHp1KB/cmIghs+hOIktX48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8FyUg33; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QKnLiTTiO5O0BKYC0KA14rCkZcQj6sSjqGYcn9B0+OOmSobV46P5CWEmlDjQZpJEfKpMZ9zip9FUMuoiUdfqdjzG28K+02winD15GrCaJhArJPyRSIpyDdVAtaW2iND0gtdsnVmmgpfzX0ft2VCODAiWaT9PXzzEpM6kSYdjF8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKs4LgMg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8FyUg33"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B4541F000E9;
-	Mon, 17 Aug 2026 14:00:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKs4LgMg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9F11F000E9;
+	Mon, 17 Aug 2026 14:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975221;
-	bh=ZQ6eGZZEcS4oQL2ylVyGOwdSm6lL1mMoC8QtlhAAuFQ=;
+	s=korg; t=1786975224;
+	bh=D44P225S1vIe8QA7RIXhKRoaHs+B/+I7h2Arer2DCRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U8FyUg33aB7eubGpRyH7D4UHbSQdWdA+xYcEDS2o/7mkV3U1z4A95TDHSM0o/GrpR
-	 n+9fOUNJu3IofqyuU96K891CHYSAi6WuGNyhZOTAbKgK/bYsLLJATqqoc85O96VZLH
-	 2FZD4dkCBh6IrUecs6bkrQXmxtY/7+eUBe3neL2k=
+	b=RKs4LgMg36tDS05nonFAF1LuNVqBFQMbhhTO1hyUdfAYYRSn/+/WOQWfcbCWGA7Dm
+	 s+s8q587sAK5VVjmcvQzsbVa2mGN1+irFVw3acv3w8VLMijLdL3RL8fynz+KGK7HMS
+	 4ncr/CLRc1OaSMBhT9Z6KIWXG9EBM/y0hFhu6BSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexej Sidorenko <alexej@sidorenko.cz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 154/250] Bluetooth: btrtl: fix RTL8761B/BU broken LE extended scan
-Date: Mon, 17 Aug 2026 15:31:55 +0200
-Message-ID: <20260817132542.850180052@linuxfoundation.org>
+	Hidayath Khan <hidayath@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 198/250] net/dibs: Correct freeing of dmb_clientid_arr
+Date: Mon, 17 Aug 2026 15:32:39 +0200
+Message-ID: <20260817132544.644444210@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,55 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexej Sidorenko <alexej@sidorenko.cz>
+From: Alexandra Winter <wintera@linux.ibm.com>
 
-[ Upstream commit 5ead2063611ae56809b1b113ac44cef9547c81d7 ]
+commit 9e6869be49064915edb6c8776b27c376cfdb0df5 upstream.
 
-RTL8761B and RTL8761BU devices report HCI version 5.1 but do not
-support the LE Extended Scan commands. This causes repeated failures
-with Opcode 0x2042 (LE Set Extended Scan Parameters) returning -EBUSY
-when BlueZ attempts extended scanning while a connection is active.
+A dibs device interrupt handler can be active after dibs_dev_del() and
+may still access dmb_clientid_arr. (UAF)
 
-Set HCI_QUIRK_BROKEN_EXT_SCAN for CHIP_ID_8761B to make BlueZ fall
-back to legacy LE scan commands which the firmware supports correctly.
+In case of a failure in dibs_dev_add() being called by dibs_lo_dev_probe()
+dmb_clientid_arr is freed twice (double free).
 
-Tested with RTL8761BU (USB ID 0bda:a728) where the issue manifested
-as continuous 'Opcode 0x2042 failed: -16' errors in dmesg whenever
-a BLE connection was active.
+Free dmb_clientid_arr in dibs_dev_release() after last reference is gone.
+Note that allocating in dibs_dev_add() instead of dibs_dev_alloc() is ok
+for now, because no dmbs can be registered before dibs_dev_add().
 
-Signed-off-by: Alexej Sidorenko <alexej@sidorenko.cz>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: cc21191b584c ("dibs: Move data path to dibs layer")
+Cc: stable@vger.kernel.org
+Co-developed-by: Hidayath Khan <hidayath@linux.ibm.com>
+Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Link: https://patch.msgid.link/20260810111432.2334900-1-wintera@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btrtl.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/dibs/dibs_loopback.c |    1 -
+ drivers/dibs/dibs_main.c     |   14 ++++----------
+ 2 files changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
-index a62eae7276d64..cb1c321910e2a 100644
---- a/drivers/bluetooth/btrtl.c
-+++ b/drivers/bluetooth/btrtl.c
-@@ -1331,6 +1331,19 @@ void btrtl_set_quirks(struct hci_dev *hdev, struct btrtl_device_info *btrtl_dev)
- 	if (!btrtl_dev->ic_info)
- 		return;
+--- a/drivers/dibs/dibs_loopback.c
++++ b/drivers/dibs/dibs_loopback.c
+@@ -335,7 +335,6 @@ static int dibs_lo_dev_probe(void)
+ 	return 0;
  
-+	switch (btrtl_dev->project_id) {
-+	case CHIP_ID_8761B:
-+		/* RTL8761B/BU reports HCI version 5.1 but does not support
-+		 * the LE Extended Scan commands (Opcode 0x2042), causing
-+		 * repeated -EBUSY failures when BlueZ attempts extended
-+		 * scanning while a connection is active.
-+		 */
-+		hci_set_quirk(hdev, HCI_QUIRK_BROKEN_EXT_SCAN);
-+		break;
-+	default:
-+		break;
-+	}
-+
- 	switch (btrtl_dev->ic_info->lmp_subver) {
- 	case RTL_ROM_LMP_8703B:
- 		/* 8723CS reports two pages for local ext features,
--- 
-2.53.0
-
+ err_reg:
+-	kfree(dibs->dmb_clientid_arr);
+ 	/* pairs with dibs_dev_alloc() */
+ 	put_device(&dibs->dev);
+ 	kfree(ldev);
+--- a/drivers/dibs/dibs_main.c
++++ b/drivers/dibs/dibs_main.c
+@@ -127,6 +127,7 @@ static void dibs_dev_release(struct devi
+ 
+ 	dibs = container_of(dev, struct dibs_dev, dev);
+ 
++	kfree(dibs->dmb_clientid_arr);
+ 	kfree(dibs);
+ }
+ 
+@@ -193,12 +194,13 @@ int dibs_dev_add(struct dibs_dev *dibs)
+ 
+ 	ret = device_add(&dibs->dev);
+ 	if (ret)
+-		goto free_client_arr;
++		return ret;
+ 
+ 	ret = sysfs_create_group(&dibs->dev.kobj, &dibs_dev_attr_group);
+ 	if (ret) {
+ 		dev_err(&dibs->dev, "sysfs_create_group failed for dibs_dev\n");
+-		goto err_device_del;
++		device_del(&dibs->dev);
++		return ret;
+ 	}
+ 	mutex_lock(&dibs_dev_list.mutex);
+ 	mutex_lock(&clients_lock);
+@@ -213,13 +215,6 @@ int dibs_dev_add(struct dibs_dev *dibs)
+ 	mutex_unlock(&dibs_dev_list.mutex);
+ 
+ 	return 0;
+-
+-err_device_del:
+-	device_del(&dibs->dev);
+-free_client_arr:
+-	kfree(dibs->dmb_clientid_arr);
+-	return ret;
+-
+ }
+ EXPORT_SYMBOL_GPL(dibs_dev_add);
+ 
+@@ -246,7 +241,6 @@ void dibs_dev_del(struct dibs_dev *dibs)
+ 	mutex_unlock(&dibs_dev_list.mutex);
+ 
+ 	device_del(&dibs->dev);
+-	kfree(dibs->dmb_clientid_arr);
+ }
+ EXPORT_SYMBOL_GPL(dibs_dev_del);
+ 
 
 
