@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB547429027;
-	Mon, 17 Aug 2026 14:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7517E43231F;
+	Mon, 17 Aug 2026 14:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977507; cv=none; b=pkhjxIImST/YrrYjTgqoFXthfv1nLafeoLAT8mk/0cS17+fkzn5MWGPCccGeoTdcXCaHSBZlAbJoc9/C8jhxymz7eblbzjwd9Qe3l4MIf88sgiyqD60aQCzBurMtxWsca4DkYwPUI9eBdbdmrEKYVOwT6zlA0Cfqe+FGPKFBfMI=
+	t=1786977510; cv=none; b=V9UKLcebFYW0EuTRnzcJJrr+aCuFeuKE1jXu15x6DxtriEzgu4vlYtugf3uS9VE/QdjmYci8jruA8g9rdurzqbTekGvJH7MMbURzU23tTVMSPNGsiwadvl1MPtVwKO2nyNnQtPQTM67m0RgY9x5uz2Kw2896G5ww0NAg1Ig9Zr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977507; c=relaxed/simple;
-	bh=b0chBb1LvLg2c4Ngt/c7SCoWVFWwvSFVxUu1xUMnwyA=;
+	s=arc-20240116; t=1786977510; c=relaxed/simple;
+	bh=1AvkX/9hXkYtFaJwJyO76F4W3vKPrzK4zMAfxXQIjQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AK7WKkcjtD4oRS6xXSV8gTBmuisz9xZFjQhLAe8xRi90zBCGv1jxKa3jN3CGIcDpWMNEytHXUq9V9GJrs+FFcahtz2PiJj+VLyqLSnekAwCv9HT4Pqxst63HmUS9Hs02KX05FCTC3ACfe0a13joRAiFwtDUMwV3flua8uKMNRCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xEKMIG8X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RKTlH6JaP59CwU/8rsUOj7V8EeVOI2xMVbYYnMH5M+w8hysxZXLTMV2JMt3OK2Yw8RCND4rvXVQ/8XsKeuQPPMWsQ+J/dSPoezuhas8ABLTuL7re99JyEzKKzNLeyNqN0o4/AuAcrHO1LyWImpbRZo+2yFX0g6yN6m47JySvNL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TaQgEkDL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xEKMIG8X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E80921F000E9;
-	Mon, 17 Aug 2026 14:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TaQgEkDL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD0E61F000E9;
+	Mon, 17 Aug 2026 14:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977506;
-	bh=llTSuNhuFfR2j6HJEzcNbzqq+cQXti7wBPMPSY3C9S8=;
+	s=korg; t=1786977509;
+	bh=xLa1ArupbNAqqNN2Vlt3V/ehiYv8Urrn/X1dnq2PZGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xEKMIG8XPgFmzypiKSPPJ2LHFtaGpUYu/1K8FJY8AohvoQGKBMe7HWxzZh4JT30eV
-	 XvW7Bf7RH0eMY04A+vAzMt3YK/IcNubJSzqTYKppxiZ8H2HHTZpdxvPZ+QiFr4HAhS
-	 zY+QJZjSV4Molef5okwA39XfyTzxHk6O2QjA6Toc=
+	b=TaQgEkDLv1ZQKNejiL6326LlFUWYdlIFi7TrAcKuB4z+qLa+ELiqVZ6S4/jnHNOGu
+	 c2ntp2HxHZgDlesjM79ijmsmdaNAqXAh4X9CG2QQKuh7Qw/VMtTwc6u5ak+1zNfvRi
+	 wrz4pGl9vUaqutnB5RY9og3734sFOZOPoSZnp56U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.15 351/456] can: kvaser_usb_leaf: kvaser_usb_leaf_wait_cmd(): validate received command extents
-Date: Mon, 17 Aug 2026 15:32:21 +0200
-Message-ID: <20260817132553.276371333@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 315/456] tipc: avoid use-after-free in poll trace queue dumps
+Date: Mon, 17 Aug 2026 15:31:45 +0200
+Message-ID: <20260817132552.043549858@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,63 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit 0293dd153f9dbc1ddf5dacdccc76b363bce4a8ee upstream.
+commit b4f1719dfea023220e0e6bd892b087d76b2a6a49 upstream.
 
-The wait and bulk receive paths walk variable-length commands from a
-USB buffer. A nonzero command shorter than CMD_HEADER_LEN can still be
-dispatched, and the wait path copies a matching command into a fixed
-caller-owned struct kvaser_cmd using the device-provided length.
+TIPC socket tracepoints dump queue state through tipc_sk_dump(). Most
+queue-dump callsites already serialize that walk under the socket lock or
+sk->sk_lock.slock, but tipc_poll() calls trace_tipc_sk_poll(...,
+TIPC_DUMP_ALL, ...) without holding either lock.
 
-Reject nonzero commands that do not contain the fixed header or that
-extend beyond the current USB buffer item. In the wait path, also reject
-a matching command that exceeds the destination before copying it.
+That lets the poll trace path reach tipc_list_dump() and backlog head/tail
+dumping while another context dequeues and frees an skb, leaving the trace
+helper dereferencing a stale queue entry.
 
-Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260722042221.44066-1-pengpeng@iscas.ac.cn
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Stop the unlocked poll trace site from requesting queue dumps. Other queue
+dump trace callsites keep their existing output under the locking they
+already provide, while poll still emits the event itself without walking
+live queue members from an unlocked context.
+
+Fixes: b4b9771bcbbd ("tipc: enable tracepoints in tipc")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/f8119abd5e5ecc400597de667ae9d39656de56d0.1784794294.git.zihanx@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ net/tipc/socket.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-@@ -616,13 +616,22 @@ static int kvaser_usb_leaf_wait_cmd(cons
- 				continue;
- 			}
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -797,7 +797,7 @@ static __poll_t tipc_poll(struct file *f
+ 	__poll_t revents = 0;
  
--			if (pos + tmp->len > actual_len) {
-+			if (tmp->len < CMD_HEADER_LEN ||
-+			    tmp->len > actual_len - pos) {
- 				dev_err_ratelimited(&dev->intf->dev,
- 						    "Format error\n");
- 				break;
- 			}
+ 	sock_poll_wait(file, sock, wait);
+-	trace_tipc_sk_poll(sk, NULL, TIPC_DUMP_ALL, " ");
++	trace_tipc_sk_poll(sk, NULL, TIPC_DUMP_NONE, " ");
  
- 			if (tmp->id == id) {
-+				if (tmp->len > sizeof(*cmd)) {
-+					dev_err_ratelimited(&dev->intf->dev,
-+							    "Received command %u too large (%u)\n",
-+							    tmp->id, tmp->len);
-+					err = -EIO;
-+					goto end;
-+				}
-+
- 				memcpy(cmd, tmp, tmp->len);
- 				goto end;
- 			}
-@@ -1573,7 +1582,7 @@ static void kvaser_usb_leaf_read_bulk_ca
- 			continue;
- 		}
- 
--		if (pos + cmd->len > len) {
-+		if (cmd->len < CMD_HEADER_LEN || cmd->len > len - pos) {
- 			dev_err_ratelimited(&dev->intf->dev, "Format error\n");
- 			break;
- 		}
+ 	if (sk->sk_shutdown & RCV_SHUTDOWN)
+ 		revents |= EPOLLRDHUP | EPOLLIN | EPOLLRDNORM;
 
 
