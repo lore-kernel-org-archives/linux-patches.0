@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3912B175A6B;
-	Mon, 17 Aug 2026 14:43:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A6E3EC699;
+	Mon, 17 Aug 2026 14:43:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977803; cv=none; b=Wyo5rs5QiN+ab57aOBNNcBQOx2KeTdXjTvQo4eJmGjl7io3CzdHIyMZkvVGiKMe+64/7ceOD96MipaNJWl1KHybUeFI3CAj9hFWlXydVjBgFNNmZN6JTGbwPI9cy1enqEIW5NXbz6zeVBCzc9gqAfBjt5BNA73q/ZnTO6z4Cb28=
+	t=1786977806; cv=none; b=CqTnl56xRY+mauJwkaNic1O34pIo1jlscLbEOPtJidMbLhPK7u83nZH9X6vft7+93Q56qp9gDNSwd0PxmynVuD9npPb1DBuVX4/l3/voB5RMKbpQXAkeHU8YBz7b6nyqguznz2qEc6w2X2ww7phhzQVTQFdmhC99kecR4cOo5OA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977803; c=relaxed/simple;
-	bh=wGAxuS/vBGaVzOU11gfCzf4PnPoxnOIwZrcfR11ENy0=;
+	s=arc-20240116; t=1786977806; c=relaxed/simple;
+	bh=/7aRTVdgEbbaPGhbD/K/9+JSmGZJFUQoi9djuSnw6hE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dcjbVGNpXlDh+Zk45+biandb1u1iIuu7RrZzx9yi0W+oDrqd2CiTly5gwadjFaoirVsxj/z3fWkmE0RCKOS2U0Ok7sSUcb5MoB5tF33rd8sBoakp97+5Eevbq7fpCxaMMfyfsuHijSntX9uzVQ/ZOtKVALwWMIi10WuBIqfoA/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qDIsj8IO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bPZrNU99SSNyJR3AcNnAEkgzwEJNeTH2rQE6PtDcrVUlJT7JOxO8M3KAWNUePXya9iYCnayY2PBskicdXZHpfZMLNLZbMRmmmQZMH/7pN2RDCJpHG3S7PsfvhovaDFlTpD8368jk3Zz5Rv/qMcaJElXkLVt6j5LMduQiqRR288Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpGoZOVC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDIsj8IO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91ADE1F000E9;
-	Mon, 17 Aug 2026 14:43:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpGoZOVC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712931F000E9;
+	Mon, 17 Aug 2026 14:43:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977802;
-	bh=Fz8eegzEF0H6YSM+6xDt41FXyqO18FzUGFFgD/pJmGA=;
+	s=korg; t=1786977805;
+	bh=FS2fkO9/N7WDAA3vVtzEQaaSIXKROQsFoxNtp350ucc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qDIsj8IOF8JFdh1j/L/78Jd3mpblOfz/xmbX+jL3VJBwLn0H41Y3Fj7b+g8QC3Fnm
-	 nyGcxFp9JaPA6R/Lmr3j8ivdb8TJ2Bs2qg3CrJmANBwgncugxEyUWYUo4FBcpmeehf
-	 yHg5kfQRdthmdJspDO4ErE/THEPKWnYVSXwwsIms=
+	b=LpGoZOVCylZbf91oa3w+NeeKlNUF/XpK9r1yc8d6Rvf3Ab03Ap37dc+Kpp9WKYU3p
+	 F2mSUzbSA6RUIHxtPhh+a3B+6a1WzUTIG3U8zdHOgKKBux0r+wvApaioMghTG1UgPA
+	 AIVc3QMZBujpTJy7EXD/HPzZJgfOJ0DY/Og5JFgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 5.15 456/456] thunderbolt: Bound the DROM dual link port number before indexing sw->ports
-Date: Mon, 17 Aug 2026 15:34:06 +0200
-Message-ID: <20260817132556.828820530@linuxfoundation.org>
+	Sukhdeep Singh <sukhdeeps@marvell.com>,
+	Yangyu Chen <cyy@cyyself.name>,
+	Mina Almasry <almasrymina@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 439/456] net: atlantic: free RX pages of consumed but not refilled buffers
+Date: Mon, 17 Aug 2026 15:33:49 +0200
+Message-ID: <20260817132556.274446207@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,49 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Yangyu Chen <cyy@cyyself.name>
 
-commit d6764992f17b23d91ff93ce905ab53c2aa7191f0 upstream.
+commit e8e7471ef686b6c002218fee9671cc61992ae01a upstream.
 
-tb_drom_parse_entry_port() validates the device-supplied header->index
-against sw->config.max_port_number before indexing sw->ports[], but the
-sibling field entry->dual_link_port_nr -- a 6-bit value also read from
-the DROM -- indexes the same array with no such check. A malicious or
-malformed Thunderbolt device can set dual_link_port_nr beyond the
-allocated sw->ports[] (max_port_number + 1 entries), producing an
-out-of-bounds tb_port pointer that is stored and later dereferenced.
+aq_ring_rx_deinit() only walks [sw_head, sw_tail), the region posted to
+hardware. Since the page reuse strategy was added, a cleaned RX buffer
+keeps its page (and its DMA mapping) in the ring for reuse, and refill
+is batched: aq_ring_rx_fill() returns early until AQ_CFG_RX_REFILL_THRES
+slots are free. Slots that were consumed but not yet reposted therefore
+sit in the complementary [sw_tail, sw_head) gap with a live page, and
+the deinit walk never visits them: up to a refill batch worth of pages
+and DMA mappings leak on every interface down.
 
-Reject a port entry whose dual_link_port_nr exceeds max_port_number,
-the same bound already applied to header->index.
+Walk the whole ring instead and release whatever is still there. Also
+bail out if the buffer ring is already gone: a partial
+aq_ptp_ring_alloc() failure frees the ring but leaves aq_nic set, so
+aq_ptp_ring_deinit() still gets here on the unwind path.
 
-Fixes: cd22e73bdf5e ("thunderbolt: Read port configuration from eeprom.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Cc: stable@vger.kernel.org # v5.2+
+Fixes: 46f4c29d9de6 ("net: aquantia: optimize rx performance by page reuse strategy")
+Reviewed-by: Sukhdeep Singh <sukhdeeps@marvell.com>
+Signed-off-by: Yangyu Chen <cyy@cyyself.name>
+Acked-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/tencent_607CBA8237DA438E36B844318B21538DE008@qq.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/eeprom.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/aquantia/atlantic/aq_ring.c |   22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
---- a/drivers/thunderbolt/eeprom.c
-+++ b/drivers/thunderbolt/eeprom.c
-@@ -392,9 +392,16 @@ static int tb_drom_parse_entry_port(stru
- 			return -EIO;
- 		}
- 		port->link_nr = entry->link_nr;
--		if (entry->has_dual_link_port)
-+		if (entry->has_dual_link_port) {
-+			if (entry->dual_link_port_nr > sw->config.max_port_number) {
-+				tb_sw_warn(sw,
-+					"port entry has invalid dual link port number %u\n",
-+					entry->dual_link_port_nr);
-+				return -EIO;
-+			}
- 			port->dual_link_port =
- 				&port->sw->ports[entry->dual_link_port_nr];
-+		}
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
+@@ -565,15 +565,29 @@ err_exit:
+ 
+ void aq_ring_rx_deinit(struct aq_ring_s *self)
+ {
+-	if (!self)
++	unsigned int i;
++
++	if (!self || !self->buff_ring)
+ 		return;
+ 
+-	for (; self->sw_head != self->sw_tail;
+-		self->sw_head = aq_ring_next_dx(self, self->sw_head)) {
+-		struct aq_ring_buff_s *buff = &self->buff_ring[self->sw_head];
++	/* Release every page still owned by the ring.
++	 *
++	 * Walking [sw_head, sw_tail) is not enough: refill is batched
++	 * (aq_ring_rx_fill() waits for AQ_CFG_RX_REFILL_THRES free slots),
++	 * so slots that were cleaned but not yet reposted accumulate in the
++	 * [sw_tail, sw_head) gap, and they keep their page for reuse. Walk
++	 * the whole ring and release whatever is left.
++	 */
++	for (i = 0; i < self->size; i++) {
++		struct aq_ring_buff_s *buff = &self->buff_ring[i];
++
++		if (!buff->rxdata.page)
++			continue;
+ 
+ 		aq_free_rxpage(&buff->rxdata, aq_nic_get_dev(self->aq_nic));
  	}
- 	return 0;
++
++	self->sw_head = self->sw_tail;
  }
+ 
+ void aq_ring_free(struct aq_ring_s *self)
 
 
