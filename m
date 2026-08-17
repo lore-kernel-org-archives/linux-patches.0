@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C9E43D50C;
-	Mon, 17 Aug 2026 14:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FC043CEC7;
+	Mon, 17 Aug 2026 14:12:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975966; cv=none; b=lBQUiEx20fWTnlklqu/DLJZvASVQ12T8gzOt3KHEBVfMQOu2dLuNk7qvNyFIqogEHnsRewx68FTMMD0lvbTTgSNSH++BDESIQ7U5h353uLU14iWscl0fR58cUr7e/ZSkM38YHkUDx2O7v+AKBb5KOrp8igMI6uigKV1TEmPu2sE=
+	t=1786975970; cv=none; b=At6VZN9U1DtQzWlAqNHTA4rt6DAaUZxnnM5EAEaaDml7evmCQo0FHYlfe9tGuFUC6toH/6QNACqwoqGffPKVD0niypwl+k2l5zIVU4LoxZD4NP1pOdXM86bAWDNhL5K6Gwi7SLOPAEyq6n3crKEMXygbbFuuwrbuhfq2m53sZL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975966; c=relaxed/simple;
-	bh=3pwzWMAcOeVHmA4Wshn3p8D4KsP740CpVHH+kqO+tXc=;
+	s=arc-20240116; t=1786975970; c=relaxed/simple;
+	bh=2S+o863TCRYtw6wJvuxE7TTKk9dFqNHlM0/c62LUg+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zox9lR9dM7Uw2oiqb+RF/pvb2+kLA4YPEUfyEVVTPH52/7U7kF4lAtbD0NQop6qN1PPW6Cr5VO8hsdcx31HkyJwJX0ucP4I7Cw8NLGZpDf17I/W5hN/8pEPv0e9kFiwk25rz48sriTClek59OT61I5tC6Y61QvuGAeOv+lX9G5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cy9gFvTQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fqdG4cmDFio7uvMtkuqbRnNVB9NloEuPRxDw8AVem2/KuYL051yYfvFAjLN1ZhFIHrUhhSHUZNM7bT9pvGEmxsgoyyx4k8NcaoTV0rcEeFMU2flGTeoWPrjx7sCKPexOEKl/patgf6OwKocrimneXW53gZcL/GDqg6FdSb6pIWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xcELPADn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cy9gFvTQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A88D01F000E9;
-	Mon, 17 Aug 2026 14:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xcELPADn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBFB1F000E9;
+	Mon, 17 Aug 2026 14:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975965;
-	bh=OyRjW1/tT+zVltxGbNAY54kmNCSOGTWyUNgf8afZgTU=;
+	s=korg; t=1786975968;
+	bh=nv4EqtiXx5rNBQWTUNCLP8xZkwgkBqWTSAVBAgnIV4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cy9gFvTQUrCp4++8qz5nL+k5PzQIEJ2FCgNbNWrO78kPrkO6hKlg1otvJ95sBfF7T
-	 A7oRZY7FzsIhrHxWCOuMk2C0bqumYYgJ80DIP7REbTSKJfAk98NAZo+IBxriY3ffIu
-	 ZftOaIk6BAOj7kXek8XiQpRHkTkpZowl7TvBhCUc=
+	b=xcELPADnRZmhmRd1w34qKmtA4wd6StJtjwmf4c0VdTII7U4AFgK/AKwBHvMn0FpgS
+	 FLc2zoUKwkodTiFntXZoS5ie4aEkFJahQKG1abck9hT251tN470lsYAZESZWvKtIM+
+	 J21HcLKYYNRamybm1Rs12scoJLFhVAttPaBZHBd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 211/389] netfilter: nft_payload: fix mask build for partial field offload
-Date: Mon, 17 Aug 2026 15:30:50 +0200
-Message-ID: <20260817132547.452021372@linuxfoundation.org>
+Subject: [PATCH 5.10 194/389] net: mpls: initialize rtm_tos in mpls_getroute()
+Date: Mon, 17 Aug 2026 15:30:33 +0200
+Message-ID: <20260817132546.776124623@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,67 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-[ Upstream commit 39e88f28fb32bf02bd4b525c24c842c9cff5663d ]
+[ Upstream commit 295dd295e2137e10e9a5b1891d97e0f08de76f03 ]
 
-nft_payload_offload_mask() builds the offload match mask for a payload
-expression that covers only part of a header field.  For a partial IPv6
-address match (field_len = 16, priv_len = 1) that shift is 1 << 120, which
-is undefined on the 32-bit int operand.  It also trims only one word, so
-the remaining words stay 0xffffffff (and when priv_len is a multiple of 4
-the trim is skipped entirely), leaving the mask covering more bytes than
-the rule matches.
+mpls_getroute() builds the RTM_NEWROUTE reply to an RTM_GETROUTE
+request by filling a struct rtmsg allocated from an skb whose data
+area is not zeroed (alloc_skb(NLMSG_GOODSIZE, ...)). It sets every
+field of the header except rtm_tos:
 
-  UBSAN: shift-out-of-bounds in net/netfilter/nft_payload.c:278:20
-  shift exponent 120 is too large for 32-bit type 'int'
-  ...
+	r = nlmsg_data(nlh);
+	r->rtm_family	 = AF_MPLS;
+	r->rtm_dst_len	= 20;
+	r->rtm_src_len	= 0;
+	r->rtm_table	= RT_TABLE_MAIN;
+	r->rtm_type	= RTN_UNICAST;
+	r->rtm_scope	= RT_SCOPE_UNIVERSE;
+	r->rtm_protocol = rt->rt_protocol;
+	r->rtm_flags	= 0;
 
-The match is byte-granular and struct nft_data is zero-initialised, so the
-correct mask is simply the first priv_len bytes set to 0xff. Set those
-bytes directly and drop the word/shift trimming; this removes the undefined
-shift and no longer over-masks the trailing bytes.
+struct rtmsg has no padding, so the one uninitialised byte rtm_tos
+(offset 3) is copied straight to user space on recvmsg(), leaking a
+byte of uninitialised heap memory. This is in contrast to
+mpls_dump_route(), which fills the very same header and does set
+rtm_tos = 0.
 
-Fixes: a5d45bc0dc50 ("netfilter: nftables_offload: build mask based from the matching bytes")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Initialize rtm_tos to 0, matching mpls_dump_route().
+
+Reproduced with KMSAN by adding an MPLS route and issuing a
+non-RTM_F_FIB_MATCH RTM_GETROUTE for its label:
+
+  BUG: KMSAN: kernel-infoleak in _copy_to_iter+0x36c/0x33f0
+   _copy_to_iter+0x36c/0x33f0
+   __skb_datagram_iter+0x196/0x12c0
+   skb_copy_datagram_iter+0x5b/0x210
+   netlink_recvmsg+0x37b/0xef0
+   ...
+  Uninit was created at:
+   __alloc_skb+0x8ca/0x10e0
+   mpls_getroute+0x1280/0x3a40
+   rtnetlink_rcv_msg+0x1138/0x15a0
+   ...
+  Byte 19 of 64 is uninitialized
+
+(byte 19 = nlmsghdr(16) + rtmsg offset 3 = rtm_tos)
+
+Fixes: 397fc9e5cefe ("mpls: route get support")
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Link: https://patch.msgid.link/20260723010830.289917-1-yhlee@isslab.korea.ac.kr
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_payload.c | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+ net/mpls/af_mpls.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/netfilter/nft_payload.c b/net/netfilter/nft_payload.c
-index ae0c4cd2dd1c5..df296551ba6f2 100644
---- a/net/netfilter/nft_payload.c
-+++ b/net/netfilter/nft_payload.c
-@@ -159,9 +159,7 @@ static int nft_payload_dump(struct sk_buff *skb, const struct nft_expr *expr)
- static bool nft_payload_offload_mask(struct nft_offload_reg *reg,
- 				     u32 priv_len, u32 field_len)
- {
--	unsigned int remainder, delta, k;
- 	struct nft_data mask = {};
--	__be32 remainder_mask;
- 
- 	if (priv_len == field_len) {
- 		memset(&reg->mask, 0xff, priv_len);
-@@ -170,15 +168,7 @@ static bool nft_payload_offload_mask(struct nft_offload_reg *reg,
- 		return false;
- 	}
- 
--	memset(&mask, 0xff, field_len);
--	remainder = priv_len % sizeof(u32);
--	if (remainder) {
--		k = priv_len / sizeof(u32);
--		delta = field_len - priv_len;
--		remainder_mask = htonl(~((1 << (delta * BITS_PER_BYTE)) - 1));
--		mask.data[k] = (__force u32)remainder_mask;
--	}
--
-+	memset(&mask, 0xff, priv_len);
- 	memcpy(&reg->mask, &mask, field_len);
- 
- 	return true;
+diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
+index 66f498667ed8..5c80fb93bb7a 100644
+--- a/net/mpls/af_mpls.c
++++ b/net/mpls/af_mpls.c
+@@ -2492,6 +2492,7 @@ static int mpls_getroute(struct sk_buff *in_skb, struct nlmsghdr *in_nlh,
+ 	r->rtm_family	 = AF_MPLS;
+ 	r->rtm_dst_len	= 20;
+ 	r->rtm_src_len	= 0;
++	r->rtm_tos	= 0;
+ 	r->rtm_table	= RT_TABLE_MAIN;
+ 	r->rtm_type	= RTN_UNICAST;
+ 	r->rtm_scope	= RT_SCOPE_UNIVERSE;
 -- 
 2.53.0
 
