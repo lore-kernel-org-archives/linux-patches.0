@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DADE3E025C;
-	Mon, 17 Aug 2026 14:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B645D3EAC68;
+	Mon, 17 Aug 2026 14:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976200; cv=none; b=H3ZrZmMzgV+tDVEMWYl3rVZFexjJ673xRU6H418b6hzvc5Q2c1K9N/gthEioSaxL9gyzFdIvsc0tpqP6lD8OQHefNL8merwdidHV0AsVYa+mGP9XLEztUrF8EB4FYCi2qrdqyulZkswYDvS/JvIYzilJACxVXKk8b4OopoQv8Ig=
+	t=1786976202; cv=none; b=K5ldnX3+wJndFZC3MyaiW4mYzAzyX6aVCSDtCU35LZtlIagWTneXZVQeico5fZ/MKK79rpCtURrQgQwZIqZOepNeqVCuZ9bKnF2aeGsuEERrV78M+DlR7z93RDo+ABumyZtBCL8MghQBadw27zcW3VPRuW3JVdxyZFajLQA0+hQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976200; c=relaxed/simple;
-	bh=Vqs/iaRk/l8okTsD9Cx0CHmAi4ekteoG877uROH5QLI=;
+	s=arc-20240116; t=1786976202; c=relaxed/simple;
+	bh=bBIoVp1t2YVKrE9xgKtfRnb0wtkpzIu6CSKca6PlTgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZznjOS6po0ni8jq0mfEPPPvaZWxgNhCvSMoGjBEW0Q4RjiRodlPCIBKk8NouITcfF27v/LGwvKVdrxFBkDWKnvBZKEEjccQG7kkGIj1mOwoXxd7DoVrPNG5q8HndyKFtIoNMSQWVHYIwTnfo4A482Z7OI7bz2lKbuNBF0X5obvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSgrJmTx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rrxeFkdzDqZ0z161m2M//xxnd36WcpyNAuWhUS+XUj2RCtIMKd5WnzXxxaP4F241eTc4aivzaIDhlIlaTtholMWx339Vrwv4afSb6koz8+Y7v7Xgf1kecMtpkSTWD+ybgy4ChaGjcaK4YB9w0vPQUgPVifCKSHLZTvF/a6nW8CY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LxanUPgK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSgrJmTx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E6A11F000E9;
-	Mon, 17 Aug 2026 14:16:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LxanUPgK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5C11F000E9;
+	Mon, 17 Aug 2026 14:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976198;
-	bh=4Z2Jh8cKwxz3IO904KfIe+3lQk99ElDH09S2BqIDZJc=;
+	s=korg; t=1786976201;
+	bh=OuT9DeyJCN4ms5/0AazHCx3Ylc77IWRk9W+9ohv7uHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rSgrJmTxw7Gbh/nc748Kmmd2wKP/mT1AVpwvoOZ9rTxKUuA0QkK1+5QzR3iZODyxo
-	 2ZmBXbdPGGc32/wyms+bIQm7Ny35ogXtT6XzzQ26o/LM15ZseZojKnNepOiKy5ksbd
-	 t7EKUFddMLUk1KrBBO6pbCG1x+BsLNsrPTqzNUEc=
+	b=LxanUPgKUyloIzeS07zhk+CrPMPjHlRY0077rIlg+NL2U704Q2Xk6ZbAmGrKyN8ry
+	 u6e/11ZqQWvPiTRrF/u5iQQTBtBy2WB3VQlZNQ2H0I9l9/jgu53bOdSKJLLTKVTqfB
+	 KZjbgHi0Pc3sWwRTLMktiCKVX5Rowe5go4RHKJ9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	stable@kernel.org,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 292/389] can: kvaser_usb: kvaser_usb_hydra_get_busparams(): fix memory leak in kvaser_usb_hydra_get_busparams()
-Date: Mon, 17 Aug 2026 15:32:11 +0200
-Message-ID: <20260817132550.472160375@linuxfoundation.org>
+Subject: [PATCH 5.10 293/389] can: kvaser_usb_leaf: kvaser_usb_leaf_wait_cmd(): validate received command extents
+Date: Mon, 17 Aug 2026 15:32:12 +0200
+Message-ID: <20260817132550.506646345@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -50,33 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 941eaf9a6d3b33dea49f2c0a1da7546a03b6ff71 upstream.
+commit 0293dd153f9dbc1ddf5dacdccc76b363bce4a8ee upstream.
 
-The memory allocated for cmd is not freed after the call to
-kvaser_usb_send_cmd() in both the normal and error paths.
-Fix that by adding a kfree() immediately after the call.
+The wait and bulk receive paths walk variable-length commands from a
+USB buffer. A nonzero command shorter than CMD_HEADER_LEN can still be
+dispatched, and the wait path copies a matching command into a fixed
+caller-owned struct kvaser_cmd using the device-provided length.
 
-Fixes: 39d3df6b0ea8 ("can: kvaser_usb: Compare requested bittiming parameters with actual parameters in do_set_{,data}_bittiming")
-Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Link: https://patch.msgid.link/20260722103906.108571-1-nihaal@cse.iitm.ac.in
+Reject nonzero commands that do not contain the fixed header or that
+extend beyond the current USB buffer item. In the wait path, also reject
+a matching command that exceeds the destination before copying it.
+
+Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260722042221.44066-1-pengpeng@iscas.ac.cn
+Cc: stable@kernel.org
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
-@@ -1582,6 +1582,7 @@ static int kvaser_usb_hydra_get_busparam
- 	reinit_completion(&priv->get_busparams_comp);
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+@@ -615,13 +615,22 @@ static int kvaser_usb_leaf_wait_cmd(cons
+ 				continue;
+ 			}
  
- 	err = kvaser_usb_send_cmd(dev, cmd, cmd_len);
-+	kfree(cmd);
- 	if (err)
- 		return err;
+-			if (pos + tmp->len > actual_len) {
++			if (tmp->len < CMD_HEADER_LEN ||
++			    tmp->len > actual_len - pos) {
+ 				dev_err_ratelimited(&dev->intf->dev,
+ 						    "Format error\n");
+ 				break;
+ 			}
  
+ 			if (tmp->id == id) {
++				if (tmp->len > sizeof(*cmd)) {
++					dev_err_ratelimited(&dev->intf->dev,
++							    "Received command %u too large (%u)\n",
++							    tmp->id, tmp->len);
++					err = -EIO;
++					goto end;
++				}
++
+ 				memcpy(cmd, tmp, tmp->len);
+ 				goto end;
+ 			}
+@@ -1576,7 +1585,7 @@ static void kvaser_usb_leaf_read_bulk_ca
+ 			continue;
+ 		}
+ 
+-		if (pos + cmd->len > len) {
++		if (cmd->len < CMD_HEADER_LEN || cmd->len > len - pos) {
+ 			dev_err_ratelimited(&dev->intf->dev, "Format error\n");
+ 			break;
+ 		}
 
 
