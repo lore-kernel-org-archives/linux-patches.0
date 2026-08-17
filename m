@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD603ACA74;
-	Mon, 17 Aug 2026 13:47:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41B8429CEE;
+	Mon, 17 Aug 2026 13:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974469; cv=none; b=P+pKLU+k6zJXqUYHw7h73HCoc7tahCvRMe0K5E1jHG5xp8DTVjHcKJ9dfclzpWg9DWdC7luCZSBpS8zdo7AdVFMH23fq+Xvqzh6Ulx4ytbkDJ7VljvUS9jj696WkuxhglG+u/oXAbiWqWQ6gsUsd77JVW/eqMPSv4wQhkcd0/+o=
+	t=1786974469; cv=none; b=OAhwpM9g33rhFsdeQUL0DFURndakvr2zWM4qJ80hk0V0636PtmuqlOig9vtNpIHI5MCAD+CFux14HleS/cD8rJHi9LnWdPm3DXWrmPhfcUNd7EtxiDnoouvJmTkM6K52xMRKxi9boU7sRXrZ/+ciFGKjGmOEX2322vGXzSKJSVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1786974469; c=relaxed/simple;
-	bh=PPvhjNUT8eGeO0isSovpBn6Bm/cQgqJun0aReUtYoJ0=;
+	bh=pZjZjF5DSbvBbrZRBs+VYMpTHoPvvX/56phcai7SvWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AFYBZUYuKh9omAcRBwD9jXYWWSg7n4Rr2wjE1Bphbopbcq8eMZesDXzOMuPRRuFTge8KCXl642zduo9OZ1XUFMHK8aIVAce6Jem9Wb7/CIMRb5lJ3ZqzTQ5Pep6P9kDxW5WWrqAhTbgb3yjpXuUcLjZMpUWJsTivOeHyrTxrf4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rX4UVO/K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kqJLuJFdSXaEDgxZzW32uUlfR6VMzZPTpGAiNcN+959pn5RbkYldaC58mtk22BvepDqWX4WmhH77h6DlMsQrS3Xk9p6kyFQHpRO4OYs9ikXh5ZgYokZEDHfiJ8VNHOeJ0ImLqm+/kkAl0bnh9QWcm+vJafJ0296ESbRW6TPkyfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dRNaZUGJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rX4UVO/K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB6791F00A3D;
-	Mon, 17 Aug 2026 13:47:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dRNaZUGJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F69A1F00A3A;
+	Mon, 17 Aug 2026 13:47:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974463;
-	bh=nZo/SwCqqVM1a32CYjZ0nv/AsEd2tiSez/aPSYsfESs=;
+	s=korg; t=1786974466;
+	bh=7ROx+2JSHkC3wEpjpF8cvmNnkBpIhAQTHmauKMFYWDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rX4UVO/KV/TDE4NbQmgOzZnAK6JY/7xqmwukObIsnWf62eOJQIIzJKngKVm9yFKkn
-	 Xl+OBE/t3g3nH1TlDc0JrYVA5pf9Afgaw23dL0YokGdsk4vVLSxIa4Lb7QWNvcsxmo
-	 x6Yt83QTw4QNJuDQsQ9ldezY6fZu3CAbYRmc8K1Q=
+	b=dRNaZUGJUMQCVkKvdiHlnz1V3F5LHNsb1tgXaSTtXEdZJ6dkfv/kR9A+RuZPEzCBQ
+	 sHOlmumiqiymlVmDP331AqkDXPtiQQZs6l77E56WkrgyCO0ohTaPI7FWNFgGW6A2Cv
+	 mi06xyjkFZuOyaxjSv8jSlA7/HUWt0Yq5rz0m2dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e0cc44465d6bae735679@syzkaller.appspotmail.com,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.1 207/271] ring-buffer: Prevent subbuf order change when resizing is disabled
-Date: Mon, 17 Aug 2026 15:32:12 +0200
-Message-ID: <20260817132545.327549620@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Mina Almasry <almasrymina@google.com>,
+	Bobby Eshleman <bobbyeshleman@meta.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 216/271] net: devmem: prevent net-iov / page mixing
+Date: Mon, 17 Aug 2026 15:32:21 +0200
+Message-ID: <20260817132545.666648553@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -51,38 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit bf98d7b0d5a99991e47e66cee4eb1d3fa514be97 upstream.
+commit 53a43508ee332d8bffe40590c3d189c92a551f9f upstream.
 
-Because ring_buffer_subbuf_order_set() frees buffer pages, we can't
-allow it when resizing is disabled. A non-consuming reader is at risk of
-use-after-free (rb_advance_iter()).
+We should either have net_iov or page backed frags in a single skb,
+otherwise it blows up down the stack. Don't allow mixing in
+zerocopy_fill_skb_from_devmem().
 
-Return -EBUSY on resize_disabled, matching ring_buffer_resize()
-behaviour.
-
+Fixes: bd61848900bff ("net: devmem: Implement TX path")
 Cc: stable@vger.kernel.org
-Fixes: f9b94daa542a ("ring-buffer: Set new size of the ring buffer sub page")
-Link: https://patch.msgid.link/20260806211306.3704194-3-vdonnefort@google.com
-Reported-by: syzbot+e0cc44465d6bae735679@syzkaller.appspotmail.com
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
+Link: https://patch.msgid.link/e3199788c4732545627a4721097ebb71ad737bab.1785150502.git.asml.silence@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/datagram.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -7168,7 +7168,7 @@ int ring_buffer_subbuf_order_set(struct
+--- a/net/core/datagram.c
++++ b/net/core/datagram.c
+@@ -712,6 +712,9 @@ zerocopy_fill_skb_from_devmem(struct sk_
+ 	size_t virt_addr, size, off;
+ 	struct net_iov *niov;
  
- 		cpu_buffer = buffer->buffers[cpu];
- 
--		if (cpu_buffer->mapped) {
-+		if (atomic_read(&cpu_buffer->resize_disabled)) {
- 			err = -EBUSY;
- 			goto error;
- 		}
++	if (i && skb_frags_readable(skb))
++		return -EFAULT;
++
+ 	/* Devmem filling works by taking an IOVEC from the user where the
+ 	 * iov_addrs are interpreted as an offset in bytes into the dma-buf to
+ 	 * send from. We do not support other iter types.
 
 
