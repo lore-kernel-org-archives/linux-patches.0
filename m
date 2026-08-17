@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A5E3CCFC3;
-	Mon, 17 Aug 2026 15:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63E93DD851;
+	Mon, 17 Aug 2026 15:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979301; cv=none; b=uuemwDAR+4+KXzNUuVbWpOKwiIFcWWbCUjXBKcSGJN4Do+CrMb9m3uixOT0782uddEXIVRNc12ti2WZVF8uelxBvWRxqhlNSwZlNsWq6F5Gr4S97tu1mob0JZDdBrvhagplMgsET6K17JPjZjCU0b6rVgihi4hjiOUQeZMzI4K0=
+	t=1786979305; cv=none; b=VQHxm0VNhbMqGlxv4y0iE6ysRT+n1m4AMS1NwSQZbtzqKXfidunkoqk3NJSjmfbOl4QFSHylIkCQL838UsLkCl7hkNjTSyLm9jmJXfFi9jYuF/VFk3id57xsxQBbAJHoK9Hd9l7qXXTII2e6c47acUAZv4k8lLCt+mWvzKgNWB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979301; c=relaxed/simple;
-	bh=n66Q9bOkEGo1WpHGQZJjfrmkLwFCCheHFySMK2Rqhck=;
+	s=arc-20240116; t=1786979305; c=relaxed/simple;
+	bh=5vZMmJOITbk+M+qFeA7f5W2ASgHwdSlu4EEsHolNpRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XcpCG1nrPhSUzmC3F9SRPj6lXhT+8UF/wBj/PyxME3+KX3OwZ4CuYO0jTZ8c0wcA3A9G/KFJT7sH7A4PF7CZ+vHiSRMoFgldLe7atitJVnnb9oop/KQ1y+9t9iujFjV93pmXxr3YrPHv+A1LHMHr4HL9ZwiYv2gSusEOpxi8PRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AHu/35BJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k2AMGQ+Xl5ytiwTMMTF9aGudyhWrIZsLpKeqm/iVxoP38KcSK5N+bwW2hxummra7lsKce/MF9EdBKZAk60+YnOk1Fm7AMxxGJsX/joVT9TAn5OH1NFgt2P6GZ+q1JtEyv5W7Hw9N0e4LUYfcb1zVQpvhsFX6byYM7w35dDLuumU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VxcWgvBP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AHu/35BJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6461F00A3D;
-	Mon, 17 Aug 2026 15:08:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxcWgvBP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE4451F000E9;
+	Mon, 17 Aug 2026 15:08:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979300;
-	bh=vN6VoH+gQpjG9DZwGTbWJr4gF6QaNg4/CgRJ2TyNYvQ=;
+	s=korg; t=1786979303;
+	bh=CAK4kDDkzzJiQc9yXTa1i3mqnqwO7iQ+8Z6XkSk4bks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AHu/35BJHXVgU6EsJZMTP6OJFS7O+ixzjso06PvecCHRFKhf02dP++zv+wqmMaFlV
-	 azAhfz3mQuxljHjps8fWgmbYaaYJo52DQe2rma7vBBgGsQg0vV1To0X9aKeP3ngN4D
-	 cVCDYFCxjEhdADkljqGYssl3mjlVmXq7UxKnWBsM=
+	b=VxcWgvBPsufX0OjoXuKb7KvU5wqs8TevSsEllDWzGBCreCQoiL95kyyO0VMOb2xgl
+	 +t1IaDvMzi+iTIt2m7UJlyCIktqylXuu1/k0puzUC4b232Hehvt5Y1ME4Y9nAObR1f
+	 NdK3dFZ5lPt9cKiru8YSJENO3B6agYmNPMyOJGPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 178/609] drm/amdgpu/sdma6.0: replace BUG_ON() with WARN_ON()
-Date: Mon, 17 Aug 2026 15:27:54 +0200
-Message-ID: <20260817132550.028672947@linuxfoundation.org>
+	AutonomousCodeSecurity@microsoft.com,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 152/609] tipc: fix u16 MTU truncation in media and bearer MTU validation
+Date: Mon, 17 Aug 2026 15:27:28 +0200
+Message-ID: <20260817132549.097005035@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,40 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 
-commit ec42c96c322e5cc48099ab5e67b5cbe236cb1949 upstream.
+[ Upstream commit 9f29cd8a8e7901a2617c8064ce9f50fc67b97cb8 ]
 
-There's no need to crash the kernel for these cases.
+Both TIPC_NL_MEDIA_SET and TIPC_NL_BEARER_SET accept user-supplied
+MTU values but only enforce a minimum bound, not a maximum. When a user
+sets the MTU to a value exceeding U16_MAX (65535), it passes validation
+but is silently truncated when assigned to u16 fields l->mtu and
+l->advertised_mtu in tipc_link_create(). Values like 65536 (0x10000)
+truncate to 0, causing a division by zero in tipc_link_set_queue_limits()
+which computes TIPC_MAX_PUBL / (l->mtu / ITEM_SIZE). Other overflowing
+values (e.g. 65537-131071) produce small incorrect MTU values, resulting
+in link malfunction behaviors.
 
-Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c17a508a7d652da3728f8bbc481bfffe96d65a87)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Crash stack (triggered as unprivileged user via user namespace):
+
+  tipc_link_set_queue_limits  net/tipc/link.c:2531
+  tipc_link_create            net/tipc/link.c:520
+  tipc_node_check_dest        net/tipc/node.c:1279
+  tipc_disc_rcv               net/tipc/discover.c:252
+  tipc_rcv                    net/tipc/node.c:2129
+  tipc_udp_recv               net/tipc/udp_media.c:392
+
+Two independent paths lack the upper bound check:
+1. tipc_udp_mtu_bad() -- called from __tipc_nl_media_set() (MEDIA_SET)
+2. inline check in __tipc_nl_bearer_set() at bearer.c:1160 (BEARER_SET)
+
+Fix both by rejecting MTU values above U16_MAX.
+
+Fixes: 901271e0403a ("tipc: implement configuration of UDP media MTU")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Closes: https://lore.kernel.org/all/CAB8m9WgETt0AjmFwE=F-CKjGXsK6_WDv0=kbYRcC8-noo+amnA@mail.gmail.com
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260714041541.307702-1-blbllhy@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/tipc/netlink.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c
-@@ -363,7 +363,7 @@ static void sdma_v6_0_ring_emit_fence(st
- 	amdgpu_ring_write(ring, SDMA_PKT_COPY_LINEAR_HEADER_OP(SDMA_OP_FENCE) |
- 			  SDMA_PKT_FENCE_HEADER_MTYPE(0x3)); /* Ucached(UC) */
- 	/* zero in first two bits */
--	BUG_ON(addr & 0x3);
-+	WARN_ON(addr & 0x3);
- 	amdgpu_ring_write(ring, lower_32_bits(addr));
- 	amdgpu_ring_write(ring, upper_32_bits(addr));
- 	amdgpu_ring_write(ring, lower_32_bits(seq));
-@@ -374,7 +374,7 @@ static void sdma_v6_0_ring_emit_fence(st
- 		amdgpu_ring_write(ring, SDMA_PKT_COPY_LINEAR_HEADER_OP(SDMA_OP_FENCE) |
- 				  SDMA_PKT_FENCE_HEADER_MTYPE(0x3));
- 		/* zero in first two bits */
--		BUG_ON(addr & 0x3);
-+		WARN_ON(addr & 0x3);
- 		amdgpu_ring_write(ring, lower_32_bits(addr));
- 		amdgpu_ring_write(ring, upper_32_bits(addr));
- 		amdgpu_ring_write(ring, upper_32_bits(seq));
+--- a/net/tipc/netlink.c
++++ b/net/tipc/netlink.c
+@@ -113,12 +113,16 @@ const struct nla_policy tipc_nl_node_pol
+ };
+ 
+ /* Properties valid for media, bearer and link */
++static struct netlink_range_validation tipc_nl_mtu_range = {
++	.max = U16_MAX,
++};
++
+ const struct nla_policy tipc_nl_prop_policy[TIPC_NLA_PROP_MAX + 1] = {
+ 	[TIPC_NLA_PROP_UNSPEC]		= { .type = NLA_UNSPEC },
+ 	[TIPC_NLA_PROP_PRIO]		= { .type = NLA_U32 },
+ 	[TIPC_NLA_PROP_TOL]		= { .type = NLA_U32 },
+ 	[TIPC_NLA_PROP_WIN]		= { .type = NLA_U32 },
+-	[TIPC_NLA_PROP_MTU]		= { .type = NLA_U32 },
++	[TIPC_NLA_PROP_MTU]		= NLA_POLICY_FULL_RANGE(NLA_U32, &tipc_nl_mtu_range),
+ 	[TIPC_NLA_PROP_BROADCAST]	= { .type = NLA_U32 },
+ 	[TIPC_NLA_PROP_BROADCAST_RATIO]	= { .type = NLA_U32 }
+ };
 
 
