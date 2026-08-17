@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7880042EEDD;
-	Mon, 17 Aug 2026 14:56:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2312342EEDD;
+	Mon, 17 Aug 2026 14:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978597; cv=none; b=X+jX8Fmfc1zwBSGD4kduYk0JM5bZef1z2PhsV8JxvN+9uj/dbZWO1iKWmHBi/wzNZXHYMZfjsMmWPRM0q08+s0JKokdmBvvplrsm9IolPVzU9CshDSuihdwMewYv8Q5AfZi+RrOklsWXl0hJhi8cXwjVVtYtdqL/H6dfToOj6jU=
+	t=1786978600; cv=none; b=GbWLLU6nxr9+cmJvaZrJEm2jYqOhtTYzzcia2wz5G5voenzme8oZ+e81Cv2EjKWnqr2/5nWFpHNXFAQ2YJA2kh43Q+Wz1PzCM5RLeuAZroOiKMD74sTptJ5MpvQkZGmfMdiVwj9OCBCzPOEK/RdkHjfc6wrJo1ptxxDF6tuLW4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978597; c=relaxed/simple;
-	bh=n3ZkxvuVeN+JSwZ/fZHC/GDACNkKhAI1V3Ck8ko4E5U=;
+	s=arc-20240116; t=1786978600; c=relaxed/simple;
+	bh=x49rD71/3viuVCxLhRA7ZbBYigZJeo+4h8gl6/FLQ+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fwVrFmIYCdUYqN9Znw7WO+/JqhDKcDrFxqs0HnnS8L1/+0DHnjX9hSzs2qNgSGKZ4uDjlmpeHFqjmeTp4quA64GKX0d965yLDOFX8icD5cPeg3KPBOt4MsCOBK8uXpAkkKVkRi/RDFcaDILERPCabHqJjiup089Jlif0tEbXHoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Za/l2V9K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BhHW/Y6w186OYGVRo6X4Jacs4y/yF5nHzJWo6EC24EL5UJnCnXOaug7QZXEQsjlKQeSkfSI/JDLPVfOSc2ocvnDrWAxszyUepJQ00BWKoY9NRW1kOtB4gD23Hz827lDHa0tvNEtCsRKr9NWLR2VKBUj+WhU+7iAgiVnyfOaHzPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mdxri8W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Za/l2V9K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80BEF1F000E9;
-	Mon, 17 Aug 2026 14:56:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mdxri8W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D7EA1F000E9;
+	Mon, 17 Aug 2026 14:56:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978596;
-	bh=VRRJ+l4jqR1tLyrvcXCF2Behn8XE4O1DgB13OhZtvw4=;
+	s=korg; t=1786978598;
+	bh=9S1/VHeFcDMw+Nh5juW/IOuHxEosRc7J5Jfpcpyob0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Za/l2V9KfbjBrGSftZxfl4NiRnRUN/hjWHgo3iR1L19sx/0Pic9DF1SGfbQvcv9Dh
-	 xRv2V3uKSY+Nfg/kr5AUXE7TzQgHUdBICB2XSGPEnw8eIWfdGXWIydOS0Z6/li7k3/
-	 KMe3ZU55kSbzTUQG2kfWteALctmFglPPSYzUb04w=
+	b=1mdxri8W/4mMb5ygAT1vTij0LQkr2aS+G0pUq8qkzslMgzOUVAabXjwtSKPnRjWhB
+	 d34folWWBoXqfwsG7b4bcE39RtC5jLCw0AtACITdnZBOSKlDwYjNDoxHb8Q2vvu9NL
+	 Mn65OPFNBAjIBlSszDxKBejmq0mbIUp9hDnUyzd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
 	Christian Borntraeger <borntraeger@linux.ibm.com>,
 	Farhan Ali <alifm@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 092/156] KVM: s390: pci: Fix resource leak on IRQ registration failure
-Date: Mon, 17 Aug 2026 15:33:46 +0200
-Message-ID: <20260817132538.221367649@linuxfoundation.org>
+Subject: [PATCH 6.6 093/156] KVM: s390: pci: Fix aisb calculation
+Date: Mon, 17 Aug 2026 15:33:47 +0200
+Message-ID: <20260817132538.259775045@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -52,80 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Farhan Ali <alifm@linux.ibm.com>
+From: Matthew Rosato <mjrosato@linux.ibm.com>
 
-[ Upstream commit 5580c9858f1e00f60191eb09c3add359836d60b6 ]
+[ Upstream commit 0cfe660559e857d7c00ab86c73e4510ce069086f ]
 
-Currently if kvm_zpci_set_airq() fails, kvm_s390_pci_aif_enable() returns
-the error code but doesn't do any resource cleanup thus leaking resources.
-Fix this by cleaning up all the resources such as the GAITE, AIBV, AISB and
-unpinning any pinned pages. While at it, remove dead code that stored FIB
-values that were never referenced.
+The current implementation of aisb calculation will erroneously index
+via an unsigned long * as well as multiply by 8B for every 64-bits in
+the offset; only one or the other is required.  This throws off aisb
+calculations once the number of devices exceeds 64, and can result
+in out-of-bounds access as well as failure to indicate summary bits
+associated with those devices in guests.
 
-As part of the cleanup, we are also holding the aift_lock a bit longer, as
-we hold the lock while executing the MPCIFC instruction. Though this is not
-strictly necessary, it means we don't have to drop and re-acquire in the
-error case.
+Fix this by converting to a physical address before applying the
+offset, as is already done in arch/s390/pci/pci_irq.c.
 
 Fixes: 3c5a1b6f0a18 ("KVM: s390: pci: provide routines for enabling/disabling interrupt forwarding")
-Cc: stable@vger.kernel.org
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
 Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 [alifm@linux.ibm.com: Resolved merge conflict]
 Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kvm/pci.c | 29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+ arch/s390/kvm/pci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/s390/kvm/pci.c b/arch/s390/kvm/pci.c
-index a20fa27fa0301..61489016e4252 100644
+index 61489016e4252..d9fcbf41025e0 100644
 --- a/arch/s390/kvm/pci.c
 +++ b/arch/s390/kvm/pci.c
-@@ -359,19 +359,32 @@ static int kvm_s390_pci_aif_enable(struct zpci_dev *zdev, struct zpci_fib *fib,
- 	aift->kzdev[zdev->aisb] = zdev->kzdev;
- 	spin_unlock_irq(&aift->gait_lock);
+@@ -167,7 +167,7 @@ static int kvm_zpci_set_airq(struct zpci_dev *zdev)
+ 	fib.fmt0.noi = airq_iv_end(zdev->aibv);
+ 	fib.fmt0.aibv = virt_to_phys(zdev->aibv->vector);
+ 	fib.fmt0.aibvo = 0;
+-	fib.fmt0.aisb = virt_to_phys(aift->sbv->vector + (zdev->aisb / 64) * 8);
++	fib.fmt0.aisb = virt_to_phys(aift->sbv->vector) + (zdev->aisb / 64) * 8;
+ 	fib.fmt0.aisbo = zdev->aisb & 63;
+ 	fib.gd = zdev->gisa;
  
--	/* Update guest FIB for re-issue */
--	fib->fmt0.aisbo = zdev->aisb & 63;
--	fib->fmt0.aisb = virt_to_phys(aift->sbv->vector + (zdev->aisb / 64) * 8);
--	fib->fmt0.isc = gisc;
--
- 	/* Save some guest fib values in the host for later use */
--	zdev->kzdev->fib.fmt0.isc = fib->fmt0.isc;
-+	zdev->kzdev->fib.fmt0.isc = gisc;
- 	zdev->kzdev->fib.fmt0.aibv = fib->fmt0.aibv;
--	mutex_unlock(&aift->aift_lock);
- 
- 	/* Issue the clp to setup the irq now */
- 	rc = kvm_zpci_set_airq(zdev);
--	return rc;
-+	if (!rc) {
-+		mutex_unlock(&aift->aift_lock);
-+		return rc;
-+	}
-+
-+	/* Start cleanup */
-+	zdev->kzdev->fib.fmt0.isc = 0;
-+	zdev->kzdev->fib.fmt0.aibv = 0;
-+
-+	spin_lock_irq(&aift->gait_lock);
-+	gaite->count--;
-+	gaite->aisb = 0;
-+	gaite->gisc = 0;
-+	gaite->aisbo = 0;
-+	gaite->gisa = 0;
-+	aift->kzdev[zdev->aisb] = NULL;
-+	spin_unlock_irq(&aift->gait_lock);
-+
-+	airq_iv_release(zdev->aibv);
-+	zdev->aibv = NULL;
- 
- free_aisb:
- 	airq_iv_free_bit(aift->sbv, zdev->aisb);
 -- 
 2.53.0
 
