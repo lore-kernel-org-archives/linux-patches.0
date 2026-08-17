@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D1D317144;
-	Mon, 17 Aug 2026 14:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8161D435F;
+	Mon, 17 Aug 2026 14:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975350; cv=none; b=q7yHJ6pFxkRTFIqri2Aazcl93roBkkPrsaZDsP9R7iiKgxvCbq9ZfgwIflNnSDC/c/rlAAX+85uilk/V+Wojlg5keogzhh1MA1DqQ6YO6ZxkW54gtxjP+sVBPCSjZbR6d1csx/uQ/ytSKftkDtF4IzXnqllmk2VDMgqjE9eeP1c=
+	t=1786975352; cv=none; b=E2aEEcuQkR5bJ/xh/sBTASaL/kSrmvN9x4yUtqVzTUDvF9Q2Q3Y9yNw4+KYRUNR7f9JSP+F1m1EA2nQVHDqBxH7n6LeLxhZSmH9A8UOppih/kV5ELIiM2pGOyp9yZ3Mki62m7ArAE/JUerMQ5ANfnIoHbr5wiBDWCYodpRkMIfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975350; c=relaxed/simple;
-	bh=KHKEC9lkeg1+Uv6/yzpesiXVHtqbrekjmJ9mftePcJM=;
+	s=arc-20240116; t=1786975352; c=relaxed/simple;
+	bh=004zfmmMqupHm2dUrZnhxNFyTda+gDYVdHXUcq0FLcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mDIn5mnEX7japKaaa+HGNA6eNX0kE7AtQOZPg8D/SnXXWjIi1n7/l78JPW7S8fsKCwfiaaDRZJmz30VnHPdkGYcMPVSj0xtVD/AwK2kD2GSqmGR1vt8OoXCfx04FJkeiNeeoAkK1fo5KM6PN9e/5jjlTrVyfY63HZoHroVGBWKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SwT4hdcm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DeoEUYXh5LGQsV9qkgvZyMdBhr8YKwvTgpmH9eKvSEyJUv5lZnMZYX4rjODwwliWTAeJtaue3f6BU7WQk0N7V/Z2I3aP1f+8362NtcUQL/N+i0kbSElhWhYVNrL6dCKEA5H8ev2gN1WQPvnYX3EJNPoOJt918HS0VPKIY4vNY4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ePhOGiFL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SwT4hdcm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0F11F000E9;
-	Mon, 17 Aug 2026 14:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ePhOGiFL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36FE61F000E9;
+	Mon, 17 Aug 2026 14:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975348;
-	bh=TM+Fk6RBZEDEtiePZa/aNbSU5w++Hb3xjLqVgmH2ndM=;
+	s=korg; t=1786975351;
+	bh=eGe4VnbMSg6gnDW6sF3quMkBmUUphRwyVDYzhAdR2kY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SwT4hdcmyWLHlMBBuQIg6X6a2nc0xJstxMM2s2SBcZOhivDW7QT5iKBh7ekQ8QkWr
-	 cXXLUahDD52XzYsnf1ENsOlFlz+ZvxapL3WQ41FPmjy+LjMrTtdhHvGG6XIKZZxxuT
-	 bOZ90Mab2ORPmF21C8sh1Ufu37fNOf5lN1ng4GLg=
+	b=ePhOGiFLpb6xBXDXnvmhe16Y8RekgvMXuWmTkCop9ujuAtteQoiS0hx87rMgAghS2
+	 Vd+6Gli/jA84TGnrmcBUWAW4inu6+4xr5VQulSWi+hwlHCW++YGzNmM9a96B1INiVR
+	 YR2KNlLh1bcwKEm7VjDs7ID24SNS71HNCPgotdOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 6.18 249/250] netfilter: always set route tuple out ifindex
-Date: Mon, 17 Aug 2026 15:33:30 +0200
-Message-ID: <20260817132546.659522197@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.18 250/250] netfilter: flowtable: ensure sufficient headroom in xmit path
+Date: Mon, 17 Aug 2026 15:33:31 +0200
+Message-ID: <20260817132546.699182613@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -50,83 +49,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 2bdc536c9da7fa08baf0fafe9d91243b83cb9c8b upstream.
+commit ef4f741e8627512cb8c82f59a1fc7aacd854aadf upstream.
 
-Always set nf_flow_route tuple out ifindex even if the indev is not one
-of the flowtable configured devices since otherwise the outdev lookup in
-nf_flow_offload_ip_hook() or nf_flow_offload_ipv6_hook() for
-FLOW_OFFLOAD_XMIT_NEIGH flowtable entries will fail.
-The above issue occurs in the following configuration since IP6IP6
-tunnel does not support flowtable acceleration yet:
-
-$ip addr show
-5: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
-    link/ether 00:11:22:33:22:55 brd ff:ff:ff:ff:ff:ff link-netns ns1
-    inet6 2001:db8:1::2/64 scope global nodad
-       valid_lft forever preferred_lft forever
-    inet6 fe80::211:22ff:fe33:2255/64 scope link tentative proto kernel_ll
-       valid_lft forever preferred_lft forever
-6: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
-    link/ether 00:22:22:33:22:55 brd ff:ff:ff:ff:ff:ff link-netns ns3
-    inet6 2001:db8:2::1/64 scope global nodad
-       valid_lft forever preferred_lft forever
-    inet6 fe80::222:22ff:fe33:2255/64 scope link tentative proto kernel_ll
-       valid_lft forever preferred_lft forever
-7: tun0@NONE: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 1452 qdisc noqueue state UNKNOWN group default qlen 1000
-    link/tunnel6 2001:db8:2::1 peer 2001:db8:2::2 permaddr a85:e732:2c37::
-    inet6 2002:db8:1::1/64 scope global nodad
-       valid_lft forever preferred_lft forever
-    inet6 fe80::885:e7ff:fe32:2c37/64 scope link proto kernel_ll
-       valid_lft forever preferred_lft forever
-
-$ip -6 route show
-2001:db8:1::/64 dev eth0 proto kernel metric 256 pref medium
-2001:db8:2::/64 dev eth1 proto kernel metric 256 pref medium
-2002:db8:1::/64 dev tun0 proto kernel metric 256 pref medium
-default via 2002:db8:1::2 dev tun0 metric 1024 pref medium
-
-$nft list ruleset
-table inet filter {
-        flowtable ft {
-                hook ingress priority filter
-                devices = { eth0, eth1 }
-        }
-
-        chain forward {
-                type filter hook forward priority filter; policy accept;
-                meta l4proto { tcp, udp } flow add @ft
-        }
-}
+Check for headroom and call skb_expand_head() like in the IP output
+path to ensure there is sufficient headroom for the mac header when
+forwarding this packet as suggested by sashiko.
 
 Fixes: b5964aac51e0 ("netfilter: flowtable: consolidate xmit path")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_flow_table_path.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/netfilter/nf_flow_table_ip.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/net/netfilter/nf_flow_table_path.c
-+++ b/net/netfilter/nf_flow_table_path.c
-@@ -203,6 +203,9 @@ static void nft_dev_forward_path(struct
- 	if (nft_dev_fill_forward_path(route, dst, ct, dir, ha, &stack) >= 0)
- 		nft_dev_path_info(&stack, &info, ha, &ft->data);
- 
-+	if (info.outdev)
-+		route->tuple[dir].out.ifindex = info.outdev->ifindex;
+--- a/net/netfilter/nf_flow_table_ip.c
++++ b/net/netfilter/nf_flow_table_ip.c
+@@ -343,8 +343,17 @@ struct nf_flow_xmit {
+ static unsigned int nf_flow_queue_xmit(struct net *net, struct sk_buff *skb,
+ 				       struct nf_flow_xmit *xmit)
+ {
+-	skb->dev = xmit->outdev;
+-	dev_hard_header(skb, skb->dev, ntohs(skb->protocol),
++	struct net_device *dev = xmit->outdev;
++	unsigned int hh_len = LL_RESERVED_SPACE(dev);
 +
- 	if (!info.indev || !nft_flowtable_find_dev(info.indev, ft))
- 		return;
++	if (unlikely(skb_headroom(skb) < hh_len && dev->header_ops)) {
++		skb = skb_expand_head(skb, hh_len);
++		if (!skb)
++			return NF_STOLEN;
++	}
++
++	skb->dev = dev;
++	dev_hard_header(skb, dev, ntohs(skb->protocol),
+ 			xmit->dest, xmit->source, skb->len);
+ 	dev_queue_xmit(skb);
  
-@@ -213,7 +216,6 @@ static void nft_dev_forward_path(struct
- 	}
- 	route->tuple[!dir].in.num_encaps = info.num_encaps;
- 	route->tuple[!dir].in.ingress_vlans = info.ingress_vlans;
--	route->tuple[dir].out.ifindex = info.outdev->ifindex;
- 
- 	if (info.xmit_type == FLOW_OFFLOAD_XMIT_DIRECT) {
- 		memcpy(route->tuple[dir].out.h_source, info.h_source, ETH_ALEN);
 
 
