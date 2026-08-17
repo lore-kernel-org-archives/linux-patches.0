@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A58343E071;
-	Mon, 17 Aug 2026 14:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B32043B498;
+	Mon, 17 Aug 2026 14:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978176; cv=none; b=DP2x2pzUfNF+W5Yjxr2VAkp7YdFswjJmwBNL4glejXpPC73D07uB0EQ8Mw1++FblaiRwzTHh9m3huCzbp+5cZphOlri7JK4wHXP9B9dnKh0/B9iOCjsgwadlIx/K2467ux+2qaZ0E8Z8DBOB5del8YPsiJwRUbbwCvXlz57eKyQ=
+	t=1786978180; cv=none; b=fUGSd1mymp2TmyT+Jq5nHNLWzE5w2VpElUAvfK7ajPFg2BqhDXOd1rnc/U92g3jv7JE3hAWb08Y+W5Zz6ON8CYo6JhvRPiKRyXewluz912/KQ99XrixA6Ab6+kGfQd2w5jKTDad/620s9tvBFTToDd3NWyNf1PGmOLRPFG75ZtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978176; c=relaxed/simple;
-	bh=7cjPmZWcGdlZoYlbCkyjLMdK3FnFK6Tdl4Th3e/LGOg=;
+	s=arc-20240116; t=1786978180; c=relaxed/simple;
+	bh=gc7Cm72dTZnxyth4fECh5STxLtp41Rae2jBZpauh6r0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eV72VNuhRHe8h6+KvB+snmBdaXiLOcHX8KHpe83HcDFALkUWhHKbmzTI1CqHN0nlexKEiMQZff4RFOwNU8SP/Yl2Fg/9XL/FeozMDQUnwmZ+9ziGHuATjX6f6UY7Pu6RBfELtYcYPsMlaOeGgPiYjoGJVqqXHCXxab8N9SY9qsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iijqo9C6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dXBAS1gFN5nXIxpJYTtzGG3oRXQHmSsgKKIszmjxtjUOzrKJwIQHlmIitKvFrEALLbnL28BVDTDnP0EhUWkm7T7Qekv35GqqQxbIJ7b9BeJO3NRKfwnhSWVJB6g7WETUyk1noIgYzpGdq0HJpJ2D/h/qmuOJ4yxaLbAxdZxs8WY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VuO6GjUK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iijqo9C6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A831F000E9;
-	Mon, 17 Aug 2026 14:49:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VuO6GjUK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777CA1F00A3A;
+	Mon, 17 Aug 2026 14:49:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978174;
-	bh=l+jcDgxzRfRIYiwHq2X84kpVEKJuUBmx8MgEdi4bzAs=;
+	s=korg; t=1786978177;
+	bh=2jD+gLA0xJRQCtY/tvdD2Z0B6jj/L5Ms09GyHoZqAKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iijqo9C6BnrPSuuCYLSMaUOIOqvUa2+DDclPGKtnAoR+NztZpwmGe/T8YfOxcQD86
-	 7pvbWP99flI0ytWBHJJtOaErq924oll/BalUqDe2IopXEs491qp4OLyAYLPV/F/yYG
-	 Y6AHXsqsetfrPpXjvYzv4EMvizE1m57z4nmrBvqQ=
+	b=VuO6GjUKFbHXlXZPUAk0wieM8rc1N3DdkYie/PRPFRLF/2iRg3mZ7kAXBx6pM4KwP
+	 RHv8313SedctWzyZZcED04qENY7kxQkHR7Ryt39onxx5filDUtKBe5yLWUc1slPrVd
+	 nhazibCIEFheNCyt4hwPX2+Q7Q3sTaVZKLV5W1Eg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 120/181] ipv4: Fix fib_nlmsg_size() for RTA_VIA nexthops
-Date: Mon, 17 Aug 2026 15:33:34 +0200
-Message-ID: <20260817132540.282612347@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Mariano Baragiola <mbaragiola@linux.com>
+Subject: [PATCH 6.12 129/181] staging: rtl8723bs: validate monitor transmit frame lengths
+Date: Mon, 17 Aug 2026 15:33:43 +0200
+Message-ID: <20260817132540.669895895@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -52,126 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Mariano Baragiola <mbaragiola@linux.com>
 
-commit 4ff9548d84945d2cbf9e4c207288063a200ea397 upstream.
+commit 6829665d050983907b560173e49dcc6c11cb2730 upstream.
 
-fib_nlmsg_size() still estimates nexthop space as if every gateway is
-encoded as an IPv4 RTA_GATEWAY attribute. IPv4 routes can also carry an
-IPv6 gateway, which fib_nexthop_info() dumps as RTA_VIA.
+rtw_cfg80211_monitor_if_xmit_entry() removes the radiotap header and
+then reads the 802.11 frame control field without checking that a base
+802.11 header remains.
 
-As a result, route notifications can allocate an skb that is too small.
-fib_dump_info() then fails with -EMSGSIZE and rtmsg_fib() hits the
-WARN_ON() that marks such failures as a fib_nlmsg_size() bug. With
-panic_on_warn set, this becomes a kernel panic.
+The data path also pulls the calculated 802.11, QoS and SNAP header
+span before confirming that the skb contains it. A truncated frame can
+therefore cause out-of-bounds reads or leave insufficient data for the
+Ethernet address writes.
 
-Mirror the actual nexthop dump layout in fib_nlmsg_size(): account for
-IPv6 nexthop gateways dumped as RTA_VIA, for the no-header rtnexthop
-layout used inside RTA_MULTIPATH, and for RTA_FLOW only when it is
-actually present.
+Reject frames that do not contain the base 802.11 header and data
+frames that do not contain their complete calculated header span.
 
-Fixes: d15662682db2 ("ipv4: Allow ipv6 gateway with ipv4 routes")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/6f53fa797fcaeb26966432ed7ae9bb87c4961f37.1785411220.git.zihanx@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Mariano Baragiola <mbaragiola@linux.com>
+Link: https://patch.msgid.link/20260727160859.1917096-1-mbaragiola@linux.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/fib_semantics.c |   67 ++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 49 insertions(+), 18 deletions(-)
+ drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/ipv4/fib_semantics.c
-+++ b/net/ipv4/fib_semantics.c
-@@ -462,6 +462,34 @@ int ip_fib_check_default(__be32 gw, stru
- 	return -1;
- }
+--- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
++++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
+@@ -2041,6 +2041,8 @@ static netdev_tx_t rtw_cfg80211_monitor_
  
-+static size_t fib_nexthop_nlmsg_size(const struct fib_nh_common *nhc,
-+				     bool skip_oif)
-+{
-+	size_t nhsize = 0;
-+
-+	switch (nhc->nhc_gw_family) {
-+	case AF_INET:
-+		nhsize += nla_total_size(4); /* RTA_GATEWAY */
-+		break;
-+	case AF_INET6:
-+		nhsize += nla_total_size(sizeof(struct rtvia) +
-+					 sizeof(struct in6_addr));
-+		break;
-+	}
-+
-+	if (!skip_oif && nhc->nhc_dev)
-+		nhsize += nla_total_size(4); /* RTA_OIF */
-+
-+	if (nhc->nhc_lwtstate) {
-+		/* RTA_ENCAP */
-+		nhsize += lwtunnel_get_encap_size(nhc->nhc_lwtstate);
-+		/* RTA_ENCAP_TYPE */
-+		nhsize += nla_total_size(2);
-+	}
-+
-+	return nhsize;
-+}
-+
- size_t fib_nlmsg_size(struct fib_info *fi)
- {
- 	size_t payload = NLMSG_ALIGN(sizeof(struct rtmsg))
-@@ -479,32 +507,35 @@ size_t fib_nlmsg_size(struct fib_info *f
- 		payload += nla_total_size(4); /* RTA_NH_ID */
+ 	/* Skip the ratio tap header */
+ 	skb_pull(skb, rtap_len);
++	if (skb->len < dot11_hdr_len)
++		goto fail;
  
- 	if (nhs) {
--		size_t nh_encapsize = 0;
--		/* Also handles the special case nhs == 1 */
--
--		/* each nexthop is packed in an attribute */
--		size_t nhsize = nla_total_size(sizeof(struct rtnexthop));
-+		size_t mpsize = 0;
- 		unsigned int i;
+ 	dot11_hdr = (struct ieee80211_hdr *)skb->data;
+ 	frame_control = le16_to_cpu(dot11_hdr->frame_control);
+@@ -2053,6 +2055,8 @@ static netdev_tx_t rtw_cfg80211_monitor_
+ 			qos_len = 2;
+ 		if ((frame_control & 0x0300) == 0x0300)
+ 			dot11_hdr_len += 6;
++		if (skb->len < dot11_hdr_len + qos_len + snap_len)
++			goto fail;
  
--		/* may contain flow and gateway attribute */
--		nhsize += 2 * nla_total_size(4);
--
--		/* grab encap info */
- 		for (i = 0; i < fib_info_num_path(fi); i++) {
- 			struct fib_nh_common *nhc = fib_info_nhc(fi, i);
-+			size_t nhsize;
-+
-+			nhsize = fib_nexthop_nlmsg_size(nhc, nhs != 1);
- 
--			if (nhc->nhc_lwtstate) {
--				/* RTA_ENCAP_TYPE */
--				nh_encapsize += lwtunnel_get_encap_size(
--						nhc->nhc_lwtstate);
--				/* RTA_ENCAP */
--				nh_encapsize +=  nla_total_size(2);
-+			if (nhs != 1)
-+				nhsize += NLA_ALIGN(sizeof(struct rtnexthop));
-+
-+#ifdef CONFIG_IP_ROUTE_CLASSID
-+			if (nhc->nhc_family == AF_INET) {
-+				struct fib_nh *nh;
-+
-+				nh = container_of(nhc, struct fib_nh, nh_common);
-+				if (nh->nh_tclassid)
-+					nhsize += nla_total_size(4);
- 			}
-+#endif
-+			if (nhs == 1)
-+				payload += nhsize;
-+			else
-+				mpsize += nhsize;
- 		}
- 
--		/* all nexthops are packed in a nested attribute */
--		payload += nla_total_size((nhs * nhsize) + nh_encapsize);
--
-+		if (nhs != 1)
-+			payload += nla_total_size(mpsize);
- 	}
- 
- 	return payload;
+ 		memcpy(dst_mac_addr, dot11_hdr->addr1, sizeof(dst_mac_addr));
+ 		memcpy(src_mac_addr, dot11_hdr->addr2, sizeof(src_mac_addr));
 
 
