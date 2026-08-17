@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459FD4457BD;
-	Mon, 17 Aug 2026 14:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D826A447814;
+	Mon, 17 Aug 2026 14:11:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975909; cv=none; b=tJV0+fEfuc0VK8litA09PCPDUt84bRZ1kyvlB6bK3DMDyGKw9EDUnznwFGiLJRfTemvVeNRZDjnAYCKDH1ta+kf0MHKBiBFPpC7Tvpi4efNL9XgIbN+jcTOGj6xoeii6qdaxUFIEyAsiniiPBxcVzDxhoJ4tthXbAiPtJo810Yg=
+	t=1786975912; cv=none; b=LF0fD7dR93IqWhc2djyS3AHpnLj/DyFPGNogWix6CSiThC4wRlE7Dx215xGlqH+tEXeejL/oHGnQZbIkfrHxPeZ5PZILPtMAzoNUMnPS3Q0K4DJVxryfj34SfJm1rAEtj7c3sRtIrvyNBDAv1X8C/9FtnB3KnPu0BAE8n+wA5jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975909; c=relaxed/simple;
-	bh=cQXfAV8fuy1sgqBYXqWtw6TtrCN7oaQRfa4MfAyFxJA=;
+	s=arc-20240116; t=1786975912; c=relaxed/simple;
+	bh=9vdcFd3vcAnHLBFsqkl7BPgo0ybMRvXAl4NwM1D7WGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g4K9d13bcXBxQPqxb8tyDp93anAMtoAoAR7xouVMnsUaUsA35StWC1ymLrgkQofbkG++H8f8fwSG/5aECEjE+cPPcOtS+afrDu4aJ6diQYOsktDxdtFGNj1QMb40SOPV99iaJb07Wk6CEHCVzwGQqjLNQo4Ov23ZlN4qXH/OHxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CFheSY5R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K2XGIBGvuMsqp01XKerPqrYH1zusdhx1aS1+9vCgFMS7mmWK4XdXiecYYlc0W35spmZcQ9bz9f2FV7tclsasjCWysTD5yrWsjSkdHs9s7ujQwFBapcyaHmxKfczQYL+69lMmVse3HLjbjoYIpqcVhwL9+xqG2HqRcoTFFKRnoso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vg81R98b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CFheSY5R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5752B1F000E9;
-	Mon, 17 Aug 2026 14:11:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vg81R98b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3505A1F00A3A;
+	Mon, 17 Aug 2026 14:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975907;
-	bh=OWnh6KIoFQry5nb/5DAGuS13E7Hj7iylxLt49/h3QEg=;
+	s=korg; t=1786975910;
+	bh=/TCn/HQhsXod3iaTmAF1Cl9wbhHr7MEzeN6F80AR7IE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CFheSY5RepXqcTRa+wnkDiaMVwNotgoVISkZCIWPqsSjt78TKZKqBBO+DDkgPo0g8
-	 /n0ei5uUruhxi8iPUMto76SjSKocLT64HTWBvMH/bnA/nS4D0JOyX/JDUMM0qwFfWC
-	 aLw7yGyUdYWGertSiZVmM1GD1IpK4jTEgHnNfT5k=
+	b=vg81R98bcl6v9gcvkZynejaU+VONzvD0OExJAnRwf2/5qzxmSdn31GYfxjHNSPYLb
+	 HMcwATHBIfjuoDQOA0pKll5TUbgffAow0Lwl5cYUDWKKJByxX8EdPTnXl7ou3uzmIX
+	 X0dSWHwhV6yK+UzB+z19RjA/2/+lJA6kVw4jfJ7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	deepakraog <gaikwad.dcg@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 5.10 153/389] tracing: Fix resource leak on mmiotrace trace_pipe close
-Date: Mon, 17 Aug 2026 15:29:52 +0200
-Message-ID: <20260817132545.156182324@linuxfoundation.org>
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Felix Fietkau <nbd@nbd.name>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 189/389] wifi: mt76: mt7615: drop TXRX_NOTIFY on non-mmio buses
+Date: Mon, 17 Aug 2026 15:30:28 +0200
+Message-ID: <20260817132546.585799776@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -50,62 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: deepakraog <gaikwad.dcg@gmail.com>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-commit c1d87e724ae55e781b7cc7ccafb34d9e668582b2 upstream.
+commit 39afc46c0243d10b7795e6e6cf4ae91f41732120 upstream.
 
-The mmiotrace tracer was added May 12th 2008. At that time, resources
-created in pipe_open() could not be freed because there was not
-pipe_close function pointer of the tracer. The pipe_close function pointer
-was added in December 7th, 2009, but the mmiotrace tracer was not updated.
+PKT_TYPE_TXRX_NOTIFY is an mmio-only event, but mt7615_rx_check() and
+mt7615_queue_rx_skb() dispatch it to mt7615_mac_tx_free() on every bus.
+mt7615_mac_tx_free() cleans the DMA tx queues with
+mt76_queue_tx_cleanup(), which calls queue_ops->tx_cleanup(). Only the
+mmio queue ops implement that callback; on the mt7663 USB and SDIO
+buses it is NULL, so a TXRX_NOTIFY there calls a NULL pointer in the RX
+worker. Same defect as the mt7921 and mt7925 patches in this series.
 
-mmio_pipe_open() allocates a header_iter and takes a pci_dev reference
-when trace_pipe is opened. mmio_close() frees them, but it was only
-wired to the tracer's .close callback.
+Drop the event on non-mmio buses via mt76_is_mmio(), as in
+commit 5683e1488aa9 ("wifi: mt76: connac: do not check WED status for
+non-mmio devices").
 
-tracing_release_pipe() invokes .pipe_close, not .close, when the
-trace_pipe file is released. As a result, closing trace_pipe with the
-mmiotrace tracer active leaked the header_iter allocation and left a
-stale pci_dev reference.
-
-Set .pipe_close to mmio_close, matching how function_graph wires both
-callbacks to the same handler.
-
-Note, if the trace_pipe is read to completion, it will clean up the
-resources, but if one were to run:
-
-  # head -n 1 /sys/kernel/tracing/trace_pipe
- VERSION 20070824
-
-Over and over again, it would trigger a massive leak.
-
+Fixes: eb99cc95c3b6 ("mt76: mt7615: introduce mt7663u support")
 Cc: stable@vger.kernel.org
-Fixes: c521efd1700a8 ("tracing: Add pipe_close interface)
-Link: https://patch.msgid.link/20260715143604.14481-1-gaikwad.dcg@gmail.com
-Signed-off-by: deepakraog <gaikwad.dcg@gmail.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260627191336.20223-4-lucid_duck@justthetip.ca
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+[ No mt7615_rx_check() on this tree, so only the mt7615_queue_rx_skb()
+  hunk applies, and mt7615_mac_tx_free() takes the skb rather than
+  (data, len), so the guard frees it here. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_mmiotrace.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7615/mac.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/kernel/trace/trace_mmiotrace.c
-+++ b/kernel/trace/trace_mmiotrace.c
-@@ -111,7 +111,6 @@ static void mmio_pipe_open(struct trace_
- 	iter->private = hiter;
- }
- 
--/* XXX: This is not called when the pipe is closed! */
- static void mmio_close(struct trace_iterator *iter)
- {
- 	struct header_iter *hiter = iter->private;
-@@ -281,6 +280,7 @@ static struct tracer mmio_tracer __read_
- 	.start		= mmio_trace_start,
- 	.pipe_open	= mmio_pipe_open,
- 	.close		= mmio_close,
-+	.pipe_close	= mmio_close,
- 	.read		= mmio_read,
- 	.print_line	= mmio_print_line,
- 	.noboot		= true,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
+index 4364f73b501da8..0c9201e073b271 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
+@@ -1492,6 +1492,10 @@ void mt7615_queue_rx_skb(struct mt76_dev *mdev, enum mt76_rxq_id q,
+ 		dev_kfree_skb(skb);
+ 		break;
+ 	case PKT_TYPE_TXRX_NOTIFY:
++		if (!mt76_is_mmio(mdev)) {
++			dev_kfree_skb(skb);
++			break;
++		}
+ 		mt7615_mac_tx_free(dev, skb);
+ 		break;
+ 	case PKT_TYPE_RX_EVENT:
+-- 
+2.53.0
+
 
 
