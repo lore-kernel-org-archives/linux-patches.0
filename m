@@ -1,39 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD45B43A7F9;
-	Mon, 17 Aug 2026 13:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE091439F73;
+	Mon, 17 Aug 2026 13:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974526; cv=none; b=WcjjDP0qc6VBQ/ifiZR2Fcm7sgxjiUzNyOK1itHZZXqwKqfQ0QUxbRexnEeEehqrtuns64r1NmtQ1HfjraXNO40q4gIfn4z0CVhNqh4Hda5xXG+PnjMCDKsDE6nc5ojC4fEu5/oIW6NxoU+6jXDHifTi90+uDiQfvJfgaVtOU1s=
+	t=1786974529; cv=none; b=o4Nj3xkyHD7Bha6g/3lJW1XMHNNSyyEzGzpY34AK6/Uw0SdtvT7qYJT85g5nyI5sG4mZr2IVdp4N0RKgJ87HZgcGreMy93/YutTWczKbURYrJeokTNs3UfRuBQTzrTA2cpBO49M+I5pTWGB4r6ClIjsyvKdV0nmG2+EWrXtaCBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974526; c=relaxed/simple;
-	bh=S6YiTsug2AV9ZXz5L1jeBs2bNAPb3fsz09AHxHcRon4=;
+	s=arc-20240116; t=1786974529; c=relaxed/simple;
+	bh=bgHMUZ4GHGdnqw0IUlA+jancH4eq/+aA5Fkkk58u8nA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BSGhUiCXweupFxWLYgn41wdA/9frMZ7jX244Lq1bkiGncQiPlB4HmGVzjuNqyrwxvCmLMlxqf4h4/nXFXW7Ik6r+t3R5oFuwvGWxBonKCZ/7/VxBeWUqGwt4EV0dKnT7hfRZ0kFVf9NBiUfmJoA7yW0dgFrrtJF44E4h/+C/MYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6dQvtqe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r1FFyIlVX1FaIseGDRRwni4ZKLIH8xpMo4jL5DLaAjJkIe4yTlYlDcnE9N49ckGMSt81pbctNKd/XG+dFKe3hVi88pTa7eGXF3RgwmNMBqELn4y1L/+Fd8XCf51z4iTdeHLRoq6NW0W/mx059XPl8xymMe6sb9tGGC6USl594xE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1q13ZVL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6dQvtqe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3F71F000E9;
-	Mon, 17 Aug 2026 13:48:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1q13ZVL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0D21F00A3A;
+	Mon, 17 Aug 2026 13:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974523;
-	bh=s9/Z8aCv0EXiUha4koLzRIWVMw0U4MzYfn8M585yMyc=;
+	s=korg; t=1786974526;
+	bh=3hZ4sT7Xmt1GEiLUpncAJ5dK0XZLaxHkwliSfuNGm3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k6dQvtqeDXKUYQcIf3hdUWjZzVUFWH+/JGplvCb45EgwpHijVhHdTZ7EuGEIAaW9w
-	 aEJjX1ORd4PdfXsbnUlrE0VIf2GuKx13t6TcPMh3w5bYO+a15A/+p946vZbggJp+kb
-	 yo8ub4IOGaftW0t+CPNJ1Ho3GLUvyh2mp73PXZAI=
+	b=Z1q13ZVLOQiUM4leTCxPsL3B6KG8LQCLdUVLMi2joD2vm7+arBFxn+bTthsvb57Nc
+	 Ddgs8UPBsmOnESrX2KjUEvrYlQWleeLqBG/TuZSkbmXoBkXawtLPaK1wF/TnuqfTdj
+	 bbq90hHbWF8IlSP1eqAG3QreWRj+saLjmNaklUMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohsin Bashir <mohsin.bashr@gmail.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Sun Jian <sun.jian.kdev@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 235/271] veth: fix skb length accounting after XDP frag adjustment
-Date: Mon, 17 Aug 2026 15:32:40 +0200
-Message-ID: <20260817132546.439285761@linuxfoundation.org>
+	Matt Fleming <mfleming@cloudflare.com>,
+	syzbot+c5b060ce82921a2fd500@syzkaller.appspotmail.com,
+	Zi Yan <ziy@nvidia.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Dave Chinner <david@fromorbit.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Kairui Song <ryncsn@gmail.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Liam Howlett <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Nico Pache <npache@redhat.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.1 209/271] mm/huge_memory: initialise workingset state before folio split
+Date: Mon, 17 Aug 2026 15:32:14 +0200
+Message-ID: <20260817132545.405809222@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -52,89 +67,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sun Jian <sun.jian.kdev@gmail.com>
+From: Matt Fleming <mfleming@cloudflare.com>
 
-commit cb6379feaaff11c4e1e79c26c745ffa23182768a upstream.
+commit aca1f2d5de17e138bc6c4859126b77e516b82541 upstream.
 
-veth exposes non-linear skb fragments through an xdp_buff. If an XDP
-program adjusts the fragment area, veth_xdp_rcv_skb() copies
-xdp_frags_size back to skb->data_len but leaves skb->len containing the
-old fragment contribution.
+xas_try_split() adds __GFP_ACCOUNT for page-cache xa_nodes, but
+__folio_split() leaves the xa_state's xa_lru unset.  That lets a live,
+memcg-charged xa_node exist without being linked into the mapping's
+shadow_nodes list_lru; when reclaim later walks the list_lru it trips
+VM_WARN_ON(!css_is_dying()).
 
-After a fragment shrink, this makes skb_headlen() larger than the actual
-linear area. In the reproduced UDP receive path, __skb_datagram_iter()
-copied 1024 bytes past the actual linear tail to userspace, starting at
-struct skb_shared_info. The copied bytes included the affected skb's
-nr_frags, xdp_frags_size, and a kernel pointer from
-skb_shinfo(skb)->frags[0]. Real packet data was displaced by the same
-amount and truncated at the end.
+Use mapping_set_update() to install both the workingset update callback
+and the shadow_nodes list_lru on the xa_state.
 
-Subtract the old data_len before replacing it and add the new data_len
-afterwards, keeping skb->len and skb->data_len synchronized.
-
-Additionally, bpf_xdp_pull_data() can advance data_end while leaving
-frags present. The skb is then still non-linear, so the old
-__skb_put(skb, off) triggers SKB_LINEAR_ASSERT().
-
-Use skb_set_tail_pointer() and update skb->len explicitly instead,
-following bpf_prog_run_generic_xdp(). Unlike __skb_put(),
-skb_set_tail_pointer() does not require a linear skb.
-
-A 60000-byte UDP datagram on a veth pair with MTU 64000 was shortened by
-1024 bytes from its fragment area. Before the fix, all 10 runs produced
-corrupted payloads. After the fix, all 10 runs matched the expected
-payload exactly. A forced-tailroom reproducer also exercises
-bpf_xdp_pull_data() with frags still present; the old code triggers
-SKB_LINEAR_ASSERT(), while this fix passes 10/10 runs.
-
-Fixes: 718a18a0c8a6 ("veth: Rework veth_xdp_rcv_skb in order to accept non-linear skb")
-Cc: stable@vger.kernel.org
-Reported-by: Mohsin Bashir <mohsin.bashr@gmail.com>
-Link: https://lore.kernel.org/bpf/80687d9c-9c27-494c-b3f2-efd0230b1895@gmail.com/
-Suggested-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
-Link: https://patch.msgid.link/20260804054040.613675-3-sun.jian.kdev@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/20260725101419.3938406-1-matt@readmodwrite.com
+Fixes: 58729c04cf10 ("mm/huge_memory: add buddy allocator like (non-uniform) folio_split()")
+Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
+Reported-by: syzbot+c5b060ce82921a2fd500@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c5b060ce82921a2fd500
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Kairui Song <ryncsn@gmail.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Liam Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/veth.c |   22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ mm/huge_memory.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -865,18 +865,24 @@ static struct sk_buff *veth_xdp_rcv_skb(
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -4108,7 +4108,7 @@ static int __folio_split(struct folio *f
+ 		gfp_t gfp;
  
- 	skb_reset_mac_header(skb);
+ 		mapping = folio->mapping;
+-		min_order = mapping_min_folio_order(folio->mapping);
++		min_order = mapping_min_folio_order(mapping);
+ 		if (new_order < min_order) {
+ 			ret = -EINVAL;
+ 			goto out;
+@@ -4122,6 +4122,8 @@ static int __folio_split(struct folio *f
+ 			goto out;
+ 		}
  
--	/* check if bpf_xdp_adjust_tail was used */
--	off = xdp->data_end - orig_data_end;
--	if (off != 0)
--		__skb_put(skb, off); /* positive on grow, negative on shrink */
--
- 	/* XDP frag metadata (e.g. nr_frags) are updated in eBPF helpers
--	 * (e.g. bpf_xdp_adjust_tail), we need to update data_len here.
-+	 * (e.g. bpf_xdp_adjust_tail). Remove the old fragment contribution
-+	 * from skb->len before updating data_len, then add the new one back.
- 	 */
--	if (xdp_buff_has_frags(xdp))
-+	skb->len -= skb->data_len;
-+	if (xdp_buff_has_frags(xdp)) {
- 		skb->data_len = skb_shinfo(skb)->xdp_frags_size;
--	else
-+		skb->len += skb->data_len;
-+	} else {
- 		skb->data_len = 0;
-+	}
++		mapping_set_update(&xas, mapping);
 +
-+	/* Synchronize the skb tail with XDP's updated linear area. */
-+	off = xdp->data_end - orig_data_end;
-+	if (off != 0) {
-+		skb_set_tail_pointer(skb, xdp->data_end - xdp->data);
-+		skb->len += off; /* positive on grow, negative on shrink */
-+	}
- 
- 	skb->protocol = eth_type_trans(skb, rq->dev);
- 
+ 		if (split_type == SPLIT_TYPE_UNIFORM) {
+ 			xas_set_order(&xas, folio->index, new_order);
+ 			xas_split_alloc(&xas, folio, old_order, gfp);
 
 
