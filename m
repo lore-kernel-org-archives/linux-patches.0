@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B0643B3E3;
-	Mon, 17 Aug 2026 13:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7828C4399C4;
+	Mon, 17 Aug 2026 13:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974555; cv=none; b=VSqll3CglTX018LRtuASlYPKSTIfVn9+Namwy31Eiy8LPAQuu+ubQfy3nXFYBjOcMKCeYvSmYlXwF39XEqKdFPWHe0nTmCRUDLDiMsIfe0Y3IRznVp4nb4WNYPUd8aZFHTY6N2WWoznukT+gppmq4ES3GpGVzA78V2MjxOS/Xsk=
+	t=1786974558; cv=none; b=J5RvFIhm5IvCBIDXZqvKpmy+IqzXQ2Y34YhHtCEIwT6yuwvXkkgpeNBr8WLluoMD4FA42MoGeuUPZyAMM1DD/PhCMwKKuerMChkA5gTGGfqyXcn56z203DtBl8NJKIYPpKcjk/xj/cGfOiKbmWxAFe5C8kY+OIIED6/gikZy3jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974555; c=relaxed/simple;
-	bh=fIplixac5d/UpnQIfbqvmkddzLT03vGR6XHhjxcGjZ4=;
+	s=arc-20240116; t=1786974558; c=relaxed/simple;
+	bh=wsCuJ5MX6TTe5DSf67QSoOFP854AskKULbFgqwWw57M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=enwAwvOeYEvCkadc9NGxiU0ZTTO9vKwLfexmkeTGKM4r/TZ9kojEG3n25dxkWnLGfy8RYtU0MmoSrCMyZUKDQL7EnVS2vr/RcEQjVAsVou+JtLUHgIEYC7N9PcXbyOQtg8tjqrP0YpHrISFQmkn7neW8xJwoZTSH95MfSfdocOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HjAtSPlY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=auXLdsjJRMwgSJvDRaqzZJ4OZWDRPNpzvadZidXWFwQNhCMMCCv2bmno0sTxiTaLttThJSWpYrCgIE8ZcgKcO2MmRbtZeOJvJgoejRi3TgHJ9RYIZNo3uULf/bYeXnvZ5IXR2ZYAXOv3OgSPAgSzPeCAoRCJHCjck8lFeIoMae4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+97q1Ed; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HjAtSPlY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFBCF1F000E9;
-	Mon, 17 Aug 2026 13:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+97q1Ed"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC711F00A3D;
+	Mon, 17 Aug 2026 13:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974549;
-	bh=vKBHmlE02F0FMKeYLCcf9dKAIRHNVL9bDqGUYWcYbbE=;
+	s=korg; t=1786974555;
+	bh=1PTtydbF1G719oCtcAVf1FABlwMABfIIuOuPB4E4TWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HjAtSPlYVr4MBgqnfyVpAryyB5ClLnwVyBj+JnmoAwKh+WO6bAhimo5Ex0dPKvbxM
-	 zTJALHpp3o6Vo/TYuSwmrSxIF6hVZtYeK4ELdDTuejVfX30o0gI/54LqPOg3YwpOt3
-	 xR8Ni0yqZimJoeMgKqNbSr1Dd98liREsNZXQmeng=
+	b=b+97q1EdnWXuwtm7T4whsgfQ28bWQjKaEzSWBUpZ/m8wZ13xpZm4FctRQvLxvbutW
+	 ZR1AmBTqDlPJe9BNbHcWCf3grQm/xKNwlXlYSeIncKLx+yo6Tu4zfT8o0tvT+KdcFx
+	 fvllkKM+ueact9cNd4eKwNecY2m3+czmsidRBQlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 7.1 243/271] KVM: x86/mmu: WARN and clear role.invalid when creating a child shadow page
-Date: Mon, 17 Aug 2026 15:32:48 +0200
-Message-ID: <20260817132546.746617312@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 7.1 245/271] eventfs: Use children field for rcu head and add memory barriers
+Date: Mon, 17 Aug 2026 15:32:50 +0200
+Message-ID: <20260817132546.821248538@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -51,92 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 5ec42d57655c690234c14aece6dd3f209778c1d8 upstream.
+commit f0ece16ffca7384787b692431961ce202907acf5 upstream.
 
-Explicitly clear role.invalid when deriving a child shadow page's role from
-its parent to harden against bugs elsewhere in KVM, as violating KVM's
-invariant that invalid pages are NOT on the list of active MMU pages leads
-to use-after-free due to __kvm_mmu_prepare_zap_page() using list_add()
-instead of list_move() when processing an invalid shadow page, i.e. makes a
-bad situation far worse.
+When an eventfs inode is freed, it sets ei->is_freed and then uses its
+ei->list to add it to the srcu link list as the list field is a union with
+the rcu list head. As the ei->list is used to iterate over an SRCU
+protected list without taking the eventfs_mutex, there's nothing stopping
+the iteration over that list to see the ei->rcu instead of the ei->list
+and it will read a corrupt target.
 
-Yell loudly if the parent is invalid, as it means KVM has missed a validity
-check, i.e. KVM is attempting to map memory using an invalid/obsolete root,
-but continue on as the child is otherwise still a valid shadow page.
+To fix this, change the union of the rcu list head with the children list.
+On freeing the eventfs inode, set the is_free and execute a smp_wmb()
+before adding the eventfs inode to the SRCU list.
 
-  ==================================================================
-  BUG: KASAN: slab-use-after-free in __kvm_mmu_get_shadow_page+0x1817/0x1860 [kvm]
-  Write of size 8 at addr ff11000153dd1368 by task repro/853
+On iteration of the ei->children list, at the start, execute a smp_rmb()
+and then read the is_freed of the ei to see if the children list is still
+valid. If is_freed is set, then the ei_child read is not valid and the
+loop should exit immediately.
 
-  CPU: 1 UID: 1000 PID: 853 Comm: repro Not tainted 7.2.0-rc2-3aec122bdcaf-next-vm #5 PREEMPT
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x4b/0x70
-   print_report+0x153/0x49c
-   kasan_report+0xbc/0xf0
-   __kvm_mmu_get_shadow_page+0x1817/0x1860 [kvm]
-   mmu_alloc_root+0x141/0x320 [kvm]
-   kvm_mmu_load+0x612/0x20f0 [kvm]
-   kvm_arch_vcpu_ioctl_run+0x3dd5/0x6150 [kvm]
-   kvm_vcpu_ioctl+0x5e4/0x10d0 [kvm]
-   __x64_sys_ioctl+0x131/0x1b0
-   do_syscall_64+0x67/0x5f0
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-   </TASK>
-
-  Allocated by task 853:
-   kasan_save_stack+0x20/0x40
-   kasan_save_track+0x14/0x30
-   __kasan_slab_alloc+0x5f/0x70
-   kmem_cache_alloc_noprof+0xfe/0x2e0
-   __kvm_mmu_topup_memory_cache+0x135/0x530 [kvm]
-   paging64_page_fault+0x318/0x1e30 [kvm]
-   kvm_mmu_do_page_fault+0x21d/0x630 [kvm]
-   kvm_mmu_page_fault+0x18c/0x17b0 [kvm]
-   kvm_arch_vcpu_ioctl_run+0x1f35/0x6150 [kvm]
-   kvm_vcpu_ioctl+0x5e4/0x10d0 [kvm]
-   __x64_sys_ioctl+0x131/0x1b0
-   do_syscall_64+0x67/0x5f0
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-  Freed by task 853:
-   kasan_save_stack+0x20/0x40
-   kasan_save_track+0x14/0x30
-   kasan_save_free_info+0x3b/0x60
-   __kasan_slab_free+0x43/0x70
-   kmem_cache_free+0xe2/0x400
-   kvm_mmu_commit_zap_page.part.0+0x1e2/0x310 [kvm]
-   kvm_mmu_free_roots+0x283/0x560 [kvm]
-   kvm_arch_vcpu_ioctl_run+0x33c8/0x6150 [kvm]
-   kvm_vcpu_ioctl+0x5e4/0x10d0 [kvm]
-   __x64_sys_ioctl+0x131/0x1b0
-   do_syscall_64+0x67/0x5f0
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Fixes: a770f6f28b1a ("KVM: MMU: Inherit a shadow page's guest level count from vcpu setup")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://patch.msgid.link/20260808094215.4252430d@robin
+Fixes: 704f960dbee2f ("eventfs: Read ei->entries before ei->children in eventfs_iterate()")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260806022719.375354-1-shuangpeng.kernel%40gmail.com
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/tracefs/event_inode.c |   24 ++++++++++++++++++++++++
+ fs/tracefs/internal.h    |    4 ++--
+ 2 files changed, 26 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -2415,6 +2415,9 @@ static union kvm_mmu_page_role kvm_mmu_c
- 	role.direct = direct;
- 	role.passthrough = 0;
+--- a/fs/tracefs/event_inode.c
++++ b/fs/tracefs/event_inode.c
+@@ -124,7 +124,17 @@ static inline void put_ei(struct eventfs
+ static inline void free_ei(struct eventfs_inode *ei)
+ {
+ 	if (ei) {
++		/* The ei should have no children if it is being freed. */
++		WARN_ON_ONCE(!list_empty(&ei->children));
+ 		ei->is_freed = 1;
++		/*
++		 * The SRCU iteration has a smp_rmb() to make sure it
++		 * sees a child (that may have already been freed)
++		 * before it reads is_free. If is_free is set, it must
++		 * not use the child it acquired from ei->children, as
++		 * the list may be used for SRCU.
++		 */
++		smp_wmb();
+ 		put_ei(ei);
+ 	}
+ }
+@@ -629,6 +639,20 @@ static int eventfs_iterate(struct file *
+ 	list_for_each_entry_srcu(ei_child, &ei->children, list,
+ 				 srcu_read_lock_held(&eventfs_srcu)) {
  
-+	WARN_ON_ONCE(role.invalid);
-+	role.invalid = 0;
++		/*
++		 * If the ei is being freed, then the ei->children may be
++		 * being used as the rcu list, which means the next element
++		 * may be garbage. The ei->is_free is set before switching
++		 * the ei->children over to ei->rcu. The read memory barrier
++		 * here makes sure the ei_child is read before is_free is
++		 * updated.
++		 *
++		 * Matches the smp_wmb() in free_ei()
++		 */
++		smp_rmb();
++		if (ei->is_freed)
++			return -EINVAL;
 +
- 	/*
- 	 * If the guest has 4-byte PTEs then that means it's using 32-bit,
- 	 * 2-level, non-PAE paging. KVM shadows such guests with PAE paging
+ 		if (c > 0) {
+ 			c--;
+ 			continue;
+--- a/fs/tracefs/internal.h
++++ b/fs/tracefs/internal.h
+@@ -46,11 +46,11 @@ struct eventfs_attr {
+  * @ino:	The saved inode number
+  */
+ struct eventfs_inode {
++	struct list_head	list;
+ 	union {
+-		struct list_head	list;
++		struct list_head	children;
+ 		struct rcu_head		rcu;
+ 	};
+-	struct list_head		children;
+ 	const struct eventfs_entry	*entries;
+ 	const char			*name;
+ 	struct eventfs_attr		*entry_attrs;
 
 
