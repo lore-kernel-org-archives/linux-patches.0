@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194AE3E025C;
-	Mon, 17 Aug 2026 14:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308A83B8409;
+	Mon, 17 Aug 2026 14:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976835; cv=none; b=uY48iogmRRzHe4G5KVL6qbzLFnWPVGAxirfWC8D7nploQFLfcxGCY1q9kTNYUWcMp0rJxxpuMv3fYePM47STfC34E8NKRT8dpMDlwaGpf74Epq7WvfHPMiWWDnLSS+/vBBLP2hYJGhTiir2vEPGt6xxgCLzPb/9zbnAjexT89UY=
+	t=1786976838; cv=none; b=pBJyd7XJL/ervKcTlYDi3B5jaU4PuHY+6LRdECK4I6S0hxd5jPTMvCtRE+h/LKD1ReUSYned1/7Quj9Krmke8AH5e8d+tYp32MfoD4Sr298W4sKy3pE112ryqMzq49DNX4WCtbnYFCvMWP+TSNY1NzWA7UfsDrSiGEZfdNSj3M8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976835; c=relaxed/simple;
-	bh=1gsV3nxdUK6zWILDsm2oZp9Z5dDvUsvxxrtb1znvxkQ=;
+	s=arc-20240116; t=1786976838; c=relaxed/simple;
+	bh=bBAo2mfCiZpuw7te70p7ce+PqWs+TiiAc8zw2qLCMqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bHFw167CUr02WO5yfH4kj6eJjuhtxUUgezUYD4ZNorl2v0jnM4naH9cj612C+lZ9BV5ad5MzIKL4E6mT/h2gqgqrwpWf4Pr1IhCyFN5vJKfJB3KfQGDIMYDs4da/r/xNJoWrn5x9P3HqCJ/I7qjOrXBM7WHa9T5C87/14nY9LRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=esJQUBgc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G1PL+TkqMvb3IgZmuufPBBQAt0K8IMoE/SPIscRJJeDsYDaHXwBfpUmzjwEN/jfiQBYsm3DGwzn4odJiw+PvjJRNXCQR+Mw1k+6D8zJSKV7bVjytLo/iQMd5QL6ptSsqlEu4WA/N/fyZUCdZZW//8LpR/tN2OioI5XhyV5/+684=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPXjdCHw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="esJQUBgc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788C91F000E9;
-	Mon, 17 Aug 2026 14:27:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPXjdCHw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C141F000E9;
+	Mon, 17 Aug 2026 14:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976834;
-	bh=HpVdQbr0/+osI7/9CxGQxj32CZ6M+R/uyGsNYilrawU=;
+	s=korg; t=1786976836;
+	bh=PhQPfFE9/AgX0Oqa5uP2ZanT2f0T1RBmtLAh+VBMNxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=esJQUBgc3LMJfs7E6eLz3iRtehtXBwvJhRJicm1jTTQEvcwMdplhNNdLWgWFwBToT
-	 MbYJbY74UtdDYocE8ZWGmmXvEb1XXQa7tq1xLiAAsfOaOBxJxK5qLxDeh3/Qlx0rVC
-	 xzVN4xA7SKxT9JCVCNykzMzFxoPnw4DRLegZpiZQ=
+	b=lPXjdCHwOWaqEI6kkWLy3ok7UvfwS0RMLDu0X23jRvQ7NhQH1kQp2ryymL8vEj6Xu
+	 n4UYX/AixtAmzYwCmeDs7Te9UmvdcD1zzWKR5+8H4pBVvB3WserfEwU7yDU4RVNjXl
+	 1yUL/nQKOAeB9B0iUUMUTkYIfyYsp94R7TBrDzPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ong Boon Leong <boon.leong.ong@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 120/456] tipc: fix u16 MTU truncation in media and bearer MTU validation
-Date: Mon, 17 Aug 2026 15:28:30 +0200
-Message-ID: <20260817132544.785540773@linuxfoundation.org>
+Subject: [PATCH 5.15 121/456] net: stmmac: add tc flower filter for EtherType matching
+Date: Mon, 17 Aug 2026 15:28:31 +0200
+Message-ID: <20260817132544.823976452@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -54,67 +51,236 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Ong Boon Leong <boon.leong.ong@intel.com>
 
-[ Upstream commit 9f29cd8a8e7901a2617c8064ce9f50fc67b97cb8 ]
+[ Upstream commit e48cb313fde3e6f9434bb41c858d5c791d83f2d0 ]
 
-Both TIPC_NL_MEDIA_SET and TIPC_NL_BEARER_SET accept user-supplied
-MTU values but only enforce a minimum bound, not a maximum. When a user
-sets the MTU to a value exceeding U16_MAX (65535), it passes validation
-but is silently truncated when assigned to u16 fields l->mtu and
-l->advertised_mtu in tipc_link_create(). Values like 65536 (0x10000)
-truncate to 0, causing a division by zero in tipc_link_set_queue_limits()
-which computes TIPC_MAX_PUBL / (l->mtu / ITEM_SIZE). Other overflowing
-values (e.g. 65537-131071) produce small incorrect MTU values, resulting
-in link malfunction behaviors.
+This patch adds basic support for EtherType RX frame steering for
+LLDP and PTP using the hardware offload capabilities.
 
-Crash stack (triggered as unprivileged user via user namespace):
+Example steps for setting up RX frame steering for LLDP and PTP:
+$ IFDEVNAME=eth0
+$ tc qdisc add dev $IFDEVNAME ingress
+$ tc qdisc add dev $IFDEVNAME root mqprio num_tc 8 \
+     map 0 1 2 3 4 5 6 7 0 0 0 0 0 0 0 0 \
+     queues 1@0 1@1 1@2 1@3 1@4 1@5 1@6 1@7 hw 0
 
-  tipc_link_set_queue_limits  net/tipc/link.c:2531
-  tipc_link_create            net/tipc/link.c:520
-  tipc_node_check_dest        net/tipc/node.c:1279
-  tipc_disc_rcv               net/tipc/discover.c:252
-  tipc_rcv                    net/tipc/node.c:2129
-  tipc_udp_recv               net/tipc/udp_media.c:392
+For LLDP
+$ tc filter add dev $IFDEVNAME parent ffff: protocol 0x88cc \
+     flower hw_tc 5
+OR
+$ tc filter add dev $IFDEVNAME parent ffff: protocol LLDP \
+     flower hw_tc 5
 
-Two independent paths lack the upper bound check:
-1. tipc_udp_mtu_bad() -- called from __tipc_nl_media_set() (MEDIA_SET)
-2. inline check in __tipc_nl_bearer_set() at bearer.c:1160 (BEARER_SET)
+For PTP
+$ tc filter add dev $IFDEVNAME parent ffff: protocol 0x88f7 \
+     flower hw_tc 6
 
-Fix both by rejecting MTU values above U16_MAX.
+Show tc ingress filter
+$ tc filter show dev $IFDEVNAME ingress
 
-Fixes: 901271e0403a ("tipc: implement configuration of UDP media MTU")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Closes: https://lore.kernel.org/all/CAB8m9WgETt0AjmFwE=F-CKjGXsK6_WDv0=kbYRcC8-noo+amnA@mail.gmail.com
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260714041541.307702-1-blbllhy@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+v1->v2:
+ Thanks to Kurt's and Sebastian's suggestion.
+ - change from __be16 to u16 etype
+ - change ETHER_TYPE_FULL_MASK to use cpu_to_be16() macro
+
+Signed-off-by: Ong Boon Leong <boon.leong.ong@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 5536d7c84363 ("net: stmmac: fix l3l4 filter rejecting unsupported offload requests")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/netlink.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac.h  |   3 +
+ .../net/ethernet/stmicro/stmmac/stmmac_tc.c   | 121 ++++++++++++++++++
+ 2 files changed, 124 insertions(+)
 
---- a/net/tipc/netlink.c
-+++ b/net/tipc/netlink.c
-@@ -113,12 +113,16 @@ const struct nla_policy tipc_nl_node_pol
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+index 1a74437787c030..5946e1decd9cc8 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+@@ -175,11 +175,14 @@ struct stmmac_flow_entry {
+ /* Rx Frame Steering */
+ enum stmmac_rfs_type {
+ 	STMMAC_RFS_T_VLAN,
++	STMMAC_RFS_T_LLDP,
++	STMMAC_RFS_T_1588,
+ 	STMMAC_RFS_T_MAX,
  };
  
- /* Properties valid for media, bearer and link */
-+static struct netlink_range_validation tipc_nl_mtu_range = {
-+	.max = U16_MAX,
-+};
+ struct stmmac_rfs_entry {
+ 	unsigned long cookie;
++	u16 etype;
+ 	int in_use;
+ 	int type;
+ 	int tc;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+index 5520f5a5391cff..62aef01b48f1e0 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+@@ -237,6 +237,8 @@ static int tc_rfs_init(struct stmmac_priv *priv)
+ 	int i;
+ 
+ 	priv->rfs_entries_max[STMMAC_RFS_T_VLAN] = 8;
++	priv->rfs_entries_max[STMMAC_RFS_T_LLDP] = 1;
++	priv->rfs_entries_max[STMMAC_RFS_T_1588] = 1;
+ 
+ 	for (i = 0; i < STMMAC_RFS_T_MAX; i++)
+ 		priv->rfs_entries_total += priv->rfs_entries_max[i];
+@@ -453,6 +455,8 @@ static int tc_parse_flow_actions(struct stmmac_priv *priv,
+ 	return 0;
+ }
+ 
++#define ETHER_TYPE_FULL_MASK	cpu_to_be16(~0)
 +
- const struct nla_policy tipc_nl_prop_policy[TIPC_NLA_PROP_MAX + 1] = {
- 	[TIPC_NLA_PROP_UNSPEC]		= { .type = NLA_UNSPEC },
- 	[TIPC_NLA_PROP_PRIO]		= { .type = NLA_U32 },
- 	[TIPC_NLA_PROP_TOL]		= { .type = NLA_U32 },
- 	[TIPC_NLA_PROP_WIN]		= { .type = NLA_U32 },
--	[TIPC_NLA_PROP_MTU]		= { .type = NLA_U32 },
-+	[TIPC_NLA_PROP_MTU]		= NLA_POLICY_FULL_RANGE(NLA_U32, &tipc_nl_mtu_range),
- 	[TIPC_NLA_PROP_BROADCAST]	= { .type = NLA_U32 },
- 	[TIPC_NLA_PROP_BROADCAST_RATIO]	= { .type = NLA_U32 }
- };
+ static int tc_add_basic_flow(struct stmmac_priv *priv,
+ 			     struct flow_cls_offload *cls,
+ 			     struct stmmac_flow_entry *entry)
+@@ -466,6 +470,7 @@ static int tc_add_basic_flow(struct stmmac_priv *priv,
+ 		return -EINVAL;
+ 
+ 	flow_rule_match_basic(rule, &match);
++
+ 	entry->ip_proto = match.key->ip_proto;
+ 	return 0;
+ }
+@@ -726,6 +731,114 @@ static int tc_del_vlan_flow(struct stmmac_priv *priv,
+ 	return 0;
+ }
+ 
++static int tc_add_ethtype_flow(struct stmmac_priv *priv,
++			       struct flow_cls_offload *cls)
++{
++	struct stmmac_rfs_entry *entry = tc_find_rfs(priv, cls, false);
++	struct flow_rule *rule = flow_cls_offload_flow_rule(cls);
++	struct flow_dissector *dissector = rule->match.dissector;
++	int tc = tc_classid_to_hwtc(priv->dev, cls->classid);
++	struct flow_match_basic match;
++
++	if (!entry) {
++		entry = tc_find_rfs(priv, cls, true);
++		if (!entry)
++			return -ENOENT;
++	}
++
++	/* Nothing to do here */
++	if (!dissector_uses_key(dissector, FLOW_DISSECTOR_KEY_BASIC))
++		return -EINVAL;
++
++	if (tc < 0) {
++		netdev_err(priv->dev, "Invalid traffic class\n");
++		return -EINVAL;
++	}
++
++	flow_rule_match_basic(rule, &match);
++
++	if (match.mask->n_proto) {
++		u16 etype = ntohs(match.key->n_proto);
++
++		if (match.mask->n_proto != ETHER_TYPE_FULL_MASK) {
++			netdev_err(priv->dev, "Only full mask is supported for EthType filter");
++			return -EINVAL;
++		}
++		switch (etype) {
++		case ETH_P_LLDP:
++			if (priv->rfs_entries_cnt[STMMAC_RFS_T_LLDP] >=
++			    priv->rfs_entries_max[STMMAC_RFS_T_LLDP])
++				return -ENOENT;
++
++			entry->type = STMMAC_RFS_T_LLDP;
++			priv->rfs_entries_cnt[STMMAC_RFS_T_LLDP]++;
++
++			stmmac_rx_queue_routing(priv, priv->hw,
++						PACKET_DCBCPQ, tc);
++			break;
++		case ETH_P_1588:
++			if (priv->rfs_entries_cnt[STMMAC_RFS_T_1588] >=
++			    priv->rfs_entries_max[STMMAC_RFS_T_1588])
++				return -ENOENT;
++
++			entry->type = STMMAC_RFS_T_1588;
++			priv->rfs_entries_cnt[STMMAC_RFS_T_1588]++;
++
++			stmmac_rx_queue_routing(priv, priv->hw,
++						PACKET_PTPQ, tc);
++			break;
++		default:
++			netdev_err(priv->dev, "EthType(0x%x) is not supported", etype);
++			return -EINVAL;
++		}
++
++		entry->in_use = true;
++		entry->cookie = cls->cookie;
++		entry->tc = tc;
++		entry->etype = etype;
++
++		return 0;
++	}
++
++	return -EINVAL;
++}
++
++static int tc_del_ethtype_flow(struct stmmac_priv *priv,
++			       struct flow_cls_offload *cls)
++{
++	struct stmmac_rfs_entry *entry = tc_find_rfs(priv, cls, false);
++
++	if (!entry || !entry->in_use ||
++	    entry->type < STMMAC_RFS_T_LLDP ||
++	    entry->type > STMMAC_RFS_T_1588)
++		return -ENOENT;
++
++	switch (entry->etype) {
++	case ETH_P_LLDP:
++		stmmac_rx_queue_routing(priv, priv->hw,
++					PACKET_DCBCPQ, 0);
++		priv->rfs_entries_cnt[STMMAC_RFS_T_LLDP]--;
++		break;
++	case ETH_P_1588:
++		stmmac_rx_queue_routing(priv, priv->hw,
++					PACKET_PTPQ, 0);
++		priv->rfs_entries_cnt[STMMAC_RFS_T_1588]--;
++		break;
++	default:
++		netdev_err(priv->dev, "EthType(0x%x) is not supported",
++			   entry->etype);
++		return -EINVAL;
++	}
++
++	entry->in_use = false;
++	entry->cookie = 0;
++	entry->tc = 0;
++	entry->etype = 0;
++	entry->type = 0;
++
++	return 0;
++}
++
+ static int tc_add_flow_cls(struct stmmac_priv *priv,
+ 			   struct flow_cls_offload *cls)
+ {
+@@ -735,6 +848,10 @@ static int tc_add_flow_cls(struct stmmac_priv *priv,
+ 	if (!ret)
+ 		return ret;
+ 
++	ret = tc_add_ethtype_flow(priv, cls);
++	if (!ret)
++		return ret;
++
+ 	return tc_add_vlan_flow(priv, cls);
+ }
+ 
+@@ -747,6 +864,10 @@ static int tc_del_flow_cls(struct stmmac_priv *priv,
+ 	if (!ret)
+ 		return ret;
+ 
++	ret = tc_del_ethtype_flow(priv, cls);
++	if (!ret)
++		return ret;
++
+ 	return tc_del_vlan_flow(priv, cls);
+ }
+ 
+-- 
+2.53.0
+
 
 
