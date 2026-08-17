@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765474457A4;
-	Mon, 17 Aug 2026 15:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593A8442B32;
+	Mon, 17 Aug 2026 15:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980428; cv=none; b=pJzHPqc71WBR5zO9RLTYtTXh5SMIWqzsxr44YGkqYRDnk5Zcz0Qs/EsUW4VIwc7l2MUQxiKEmmmMfDda9onNa+VdFyz/uyoggi+eta7HolphXjsTQYWxuI92YWvHAVksYgshTUqf+I4VrlAVSu2ysqpOpR58hAPOahkxRYefwks=
+	t=1786980431; cv=none; b=M0lVvavD4D3n+4lYR0e881KWMoQA9xDlsI+yy0A7Ohz3HRO4fgXV6CtHBzhllGq4CAcE3EXrDUITX6O6mpKt2qaMHUHOqFjgchMaOyepwCBK5L07Fpf/xP8cWuwDVvXL/72/29s6OMDlKKeu3Wo/L0zhUyjGfLIXssZXTOXTmIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980428; c=relaxed/simple;
-	bh=gazGCMTeinjy0552rGRCmi9xlYeqjgnoCl/w4yxlpok=;
+	s=arc-20240116; t=1786980431; c=relaxed/simple;
+	bh=r/dJIEYH2NGQ0wpLxy9zsbep4I/bTnVdO2PAtbuEhQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hSgIjo1rrJlhR7gDTFk/nJF48S5j3T/sKcssTjP7yEm0ou//Nk2R0agSC+2gMuyjoV4j1HzQ+T6j072acSvxCujgMp6ZfumbCu0unifDco/aRrPKUkHY9MMLJx2kr2RyobFTHmbeA7CxspY0G5EEJcW3TSy3MycWdexaL3l8qN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLXjvZxh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JZv07cBbE5xwzvSRG5EO6Cdot4Id9ykv1E4o9CuPOdhoCIAnzEz3IHyXOtGYAFX8iUgfbsrg7rXhCTbKNfuG+QaTe/0pKQG5itwpCpWvxYrZDxwaNK2rhofllqzq7S7BvpKpYGyC4kAMNI3YNruYoadjL5bEhcgSUgF0GlvUgKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ccEQSZ09; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLXjvZxh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDCD81F000E9;
-	Mon, 17 Aug 2026 15:27:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccEQSZ09"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B113F1F00A3D;
+	Mon, 17 Aug 2026 15:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980427;
-	bh=8bkfu9+PZzOl7ReXkCefpMt5bDyhEn8sWCixHLBPtoY=;
+	s=korg; t=1786980430;
+	bh=oXlnSZisRFtlkW29iFZ5FgWtklhv4DbEI00JtlfHAAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jLXjvZxhpEnL3mXcVG5WUrnxahXS/aCjQYQKGSndL6wVekeu5jbTHNbLzL4tT3rdw
-	 5qRtdPwuRzKzV+tQE7T73cTEJa/2CAgB3havY9fBlMywrkoxi8MyT6tfD5Q7dzyKSl
-	 vH6TSdsfSeebI9tAD86LjAOlRZKZKINuHiTo5S80=
+	b=ccEQSZ09N2oJfJpm04JheFIFz3sgew0YAwW6NduaJOT52Mb6jrmjFU6Jd3TZxgVEp
+	 Fh/4lytJ7P/MVgT9ZnfdYlAZFnXW/co/OybmypsGKi02BTseedzzfRd8cR0Q8dPuC9
+	 CN29evon34bYhvukLMjfNiZashoGexn7QVJnbYP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <zihanx@nebusec.ai>,
 	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 567/609] ipv4: Fix fib_nlmsg_size() for RTA_VIA nexthops
-Date: Mon, 17 Aug 2026 15:34:23 +0200
-Message-ID: <20260817132602.680413494@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 568/609] ipv4: fix use-after-free in fib_nhc_update_mtu()
+Date: Mon, 17 Aug 2026 15:34:24 +0200
+Message-ID: <20260817132602.718320271@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,126 +51,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 4ff9548d84945d2cbf9e4c207288063a200ea397 upstream.
+commit bc5bde9ce3cc36502839dfe98e068f7303a50982 upstream.
 
-fib_nlmsg_size() still estimates nexthop space as if every gateway is
-encoded as an IPv4 RTA_GATEWAY attribute. IPv4 routes can also carry an
-IPv6 gateway, which fib_nexthop_info() dumps as RTA_VIA.
+fib_nhc_update_mtu() walks the nexthop exception table under RTNL, but
+RTNL does not serialize this walk with PMTU exception updates. The walk
+uses rcu_dereference_protected() with a constant true condition without
+holding fnhe_lock.
 
-As a result, route notifications can allocate an skb that is too small.
-fib_dump_info() then fails with -EMSGSIZE and rtmsg_fib() hits the
-WARN_ON() that marks such failures as a fib_nlmsg_size() bug. With
-panic_on_warn set, this becomes a kernel panic.
+The following interleaving can therefore occur:
 
-Mirror the actual nexthop dump layout in fib_nlmsg_size(): account for
-IPv6 nexthop gateways dumped as RTA_VIA, for the no-header rtnexthop
-layout used inside RTA_MULTIPATH, and for RTA_FLOW only when it is
-actually present.
+  CPU 0                              CPU 1
+  fib_nhc_update_mtu()               update_or_create_fnhe()
+    load fnhe                          spin_lock_bh(&fnhe_lock)
+                                       fnhe_remove_oldest()
+                                         unlink fnhe
+                                         kfree_rcu(fnhe, rcu)
+    <quiescent state>
+    access fnhe after grace period
 
-Fixes: d15662682db2 ("ipv4: Allow ipv6 gateway with ipv4 routes")
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in fib_nhc_update_mtu+0x3df/0x410
+  Read of size 8 at addr ffff888107d49000 by task poc/90
+  Call Trace:
+   fib_nhc_update_mtu+0x3df/0x410
+   fib_sync_mtu+0x7a/0xd0
+   fib_netdev_event+0x229/0x3f0
+   netif_set_mtu_ext+0x33a/0x570
+   dev_set_mtu+0x88/0x120
+
+The same walk updates fnhe_pmtu and fnhe_mtu_locked. These fields form a
+pair and other writers serialize them with fnhe_lock. RCU alone prevents
+reclamation, but would still allow concurrent writers to leave a mixed
+pair.
+
+Walk the table under RCU and acquire fnhe_lock only while updating each
+exception. RCU keeps the current entry alive while the short critical
+section serializes its paired PMTU fields. This avoids holding the global
+lock while scanning all 2048 buckets for every nexthop.
+
+Fixes: af7d6cce5369 ("net: ipv4: update fnhe_pmtu when first hop's MTU changes")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/6f53fa797fcaeb26966432ed7ae9bb87c4961f37.1785411220.git.zihanx@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260807181710.1178747-1-nicoyip.dev@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/fib_semantics.c |   67 ++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 49 insertions(+), 18 deletions(-)
+ include/net/route.h      |    2 ++
+ net/ipv4/fib_semantics.c |   34 +++++++++++-----------------------
+ net/ipv4/route.c         |   29 +++++++++++++++++++++++++++++
+ 3 files changed, 42 insertions(+), 23 deletions(-)
 
+--- a/include/net/route.h
++++ b/include/net/route.h
+@@ -247,6 +247,8 @@ int fib_dump_info_fnhe(struct sk_buff *s
+ 		       u32 table_id, struct fib_info *fi,
+ 		       int *fa_index, int fa_start, unsigned int flags);
+ 
++void fnhe_update_pmtu(struct fib_nh_exception *fnhe, u32 new, u32 orig);
++
+ static inline void ip_rt_put(struct rtable *rt)
+ {
+ 	/* dst_release() accepts a NULL parameter.
 --- a/net/ipv4/fib_semantics.c
 +++ b/net/ipv4/fib_semantics.c
-@@ -462,6 +462,34 @@ int ip_fib_check_default(__be32 gw, stru
- 	return -1;
+@@ -1958,42 +1958,30 @@ static int call_fib_nh_notifiers(struct
+ 	return NOTIFY_DONE;
  }
  
-+static size_t fib_nexthop_nlmsg_size(const struct fib_nh_common *nhc,
-+				     bool skip_oif)
+-/* Update the PMTU of exceptions when:
+- * - the new MTU of the first hop becomes smaller than the PMTU
+- * - the old MTU was the same as the PMTU, and it limited discovery of
+- *   larger MTUs on the path. With that limit raised, we can now
+- *   discover larger MTUs
+- * A special case is locked exceptions, for which the PMTU is smaller
+- * than the minimal accepted PMTU:
+- * - if the new MTU is greater than the PMTU, don't make any change
+- * - otherwise, unlock and set PMTU
++/* Walk the exceptions of a nexthop after its first hop MTU changed. The
++ * chain is RCU protected here, while fnhe_update_pmtu() takes fnhe_lock
++ * for the update of each entry.
+  */
+ void fib_nhc_update_mtu(struct fib_nh_common *nhc, u32 new, u32 orig)
+ {
+ 	struct fnhe_hash_bucket *bucket;
+ 	int i;
+ 
+-	bucket = rcu_dereference_protected(nhc->nhc_exceptions, 1);
++	rcu_read_lock();
++	bucket = rcu_dereference(nhc->nhc_exceptions);
+ 	if (!bucket)
+-		return;
++		goto out;
+ 
+ 	for (i = 0; i < FNHE_HASH_SIZE; i++) {
+ 		struct fib_nh_exception *fnhe;
+ 
+-		for (fnhe = rcu_dereference_protected(bucket[i].chain, 1);
++		for (fnhe = rcu_dereference(bucket[i].chain);
+ 		     fnhe;
+-		     fnhe = rcu_dereference_protected(fnhe->fnhe_next, 1)) {
+-			if (fnhe->fnhe_mtu_locked) {
+-				if (new <= fnhe->fnhe_pmtu) {
+-					fnhe->fnhe_pmtu = new;
+-					fnhe->fnhe_mtu_locked = false;
+-				}
+-			} else if (new < fnhe->fnhe_pmtu ||
+-				   orig == fnhe->fnhe_pmtu) {
+-				fnhe->fnhe_pmtu = new;
+-			}
+-		}
++		     fnhe = rcu_dereference(fnhe->fnhe_next))
++			fnhe_update_pmtu(fnhe, new, orig);
+ 	}
++out:
++	rcu_read_unlock();
+ }
+ 
+ void fib_sync_mtu(struct net_device *dev, u32 orig_mtu)
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -751,6 +751,35 @@ out_unlock:
+ 	spin_unlock_bh(&fnhe_lock);
+ }
+ 
++/* Update the PMTU of an exception when:
++ * - the new MTU of the first hop becomes smaller than the PMTU
++ * - the old MTU was the same as the PMTU, and it limited discovery of
++ *   larger MTUs on the path. With that limit raised, we can now
++ *   discover larger MTUs
++ * A special case is locked exceptions, for which the PMTU is smaller
++ * than the minimal accepted PMTU:
++ * - if the new MTU is greater than the PMTU, don't make any change
++ * - otherwise, unlock and set PMTU
++ *
++ * fnhe_lock keeps fnhe_pmtu and fnhe_mtu_locked consistent against
++ * update_or_create_fnhe(), which sets both under the same lock.
++ */
++void fnhe_update_pmtu(struct fib_nh_exception *fnhe, u32 new, u32 orig)
 +{
-+	size_t nhsize = 0;
++	spin_lock_bh(&fnhe_lock);
 +
-+	switch (nhc->nhc_gw_family) {
-+	case AF_INET:
-+		nhsize += nla_total_size(4); /* RTA_GATEWAY */
-+		break;
-+	case AF_INET6:
-+		nhsize += nla_total_size(sizeof(struct rtvia) +
-+					 sizeof(struct in6_addr));
-+		break;
++	if (fnhe->fnhe_mtu_locked) {
++		if (new <= fnhe->fnhe_pmtu) {
++			fnhe->fnhe_pmtu = new;
++			fnhe->fnhe_mtu_locked = false;
++		}
++	} else if (new < fnhe->fnhe_pmtu || orig == fnhe->fnhe_pmtu) {
++		fnhe->fnhe_pmtu = new;
 +	}
 +
-+	if (!skip_oif && nhc->nhc_dev)
-+		nhsize += nla_total_size(4); /* RTA_OIF */
-+
-+	if (nhc->nhc_lwtstate) {
-+		/* RTA_ENCAP */
-+		nhsize += lwtunnel_get_encap_size(nhc->nhc_lwtstate);
-+		/* RTA_ENCAP_TYPE */
-+		nhsize += nla_total_size(2);
-+	}
-+
-+	return nhsize;
++	spin_unlock_bh(&fnhe_lock);
 +}
 +
- size_t fib_nlmsg_size(struct fib_info *fi)
+ static void __ip_do_redirect(struct rtable *rt, struct sk_buff *skb, struct flowi4 *fl4,
+ 			     bool kill_route)
  {
- 	size_t payload = NLMSG_ALIGN(sizeof(struct rtmsg))
-@@ -479,32 +507,35 @@ size_t fib_nlmsg_size(struct fib_info *f
- 		payload += nla_total_size(4); /* RTA_NH_ID */
- 
- 	if (nhs) {
--		size_t nh_encapsize = 0;
--		/* Also handles the special case nhs == 1 */
--
--		/* each nexthop is packed in an attribute */
--		size_t nhsize = nla_total_size(sizeof(struct rtnexthop));
-+		size_t mpsize = 0;
- 		unsigned int i;
- 
--		/* may contain flow and gateway attribute */
--		nhsize += 2 * nla_total_size(4);
--
--		/* grab encap info */
- 		for (i = 0; i < fib_info_num_path(fi); i++) {
- 			struct fib_nh_common *nhc = fib_info_nhc(fi, i);
-+			size_t nhsize;
-+
-+			nhsize = fib_nexthop_nlmsg_size(nhc, nhs != 1);
- 
--			if (nhc->nhc_lwtstate) {
--				/* RTA_ENCAP_TYPE */
--				nh_encapsize += lwtunnel_get_encap_size(
--						nhc->nhc_lwtstate);
--				/* RTA_ENCAP */
--				nh_encapsize +=  nla_total_size(2);
-+			if (nhs != 1)
-+				nhsize += NLA_ALIGN(sizeof(struct rtnexthop));
-+
-+#ifdef CONFIG_IP_ROUTE_CLASSID
-+			if (nhc->nhc_family == AF_INET) {
-+				struct fib_nh *nh;
-+
-+				nh = container_of(nhc, struct fib_nh, nh_common);
-+				if (nh->nh_tclassid)
-+					nhsize += nla_total_size(4);
- 			}
-+#endif
-+			if (nhs == 1)
-+				payload += nhsize;
-+			else
-+				mpsize += nhsize;
- 		}
- 
--		/* all nexthops are packed in a nested attribute */
--		payload += nla_total_size((nhs * nhsize) + nh_encapsize);
--
-+		if (nhs != 1)
-+			payload += nla_total_size(mpsize);
- 	}
- 
- 	return payload;
 
 
