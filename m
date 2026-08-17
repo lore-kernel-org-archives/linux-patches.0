@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69E9439F71;
-	Mon, 17 Aug 2026 14:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B4641F34C;
+	Mon, 17 Aug 2026 14:46:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978005; cv=none; b=WPwiPjTTEK48JAZ+LxFn7nhRFI02f7DVP/B/wxZYu74fif22wZkxmOvqsgnXSvBSW/eQgCMcdm7Dor4R7fiCOH0RdtVCELHRSYlpLpxlvS0mqaPWcYqT3CKKZIGBMe5kdCOMxbIEG4ECBFaqP/f5LyTJqsgWYEr0TKJ0rad3Bgo=
+	t=1786978008; cv=none; b=tfXKoRPqgtxS6RwncK1cjCcRMGTFxUJux+FVhyW+wjHH6UNjW3l6tWiI69/61MkZyd5qNM8+Sou5ynX4tR1yMHmqPshD54O5xfS1Ddgvyu55w16U2uD61Q9fyV6KuYg3IcdaNWTt8v47tVwa5NdszzY06/95/zjJcV4wFJCDuek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978005; c=relaxed/simple;
-	bh=z4wi7hkX1V1zQCQmrouZFYkHsgE8F60EebsGD4yn3ps=;
+	s=arc-20240116; t=1786978008; c=relaxed/simple;
+	bh=w3BvrrXxmdG4BKi5hrvEzm5fUNNpD+ZzLFYpYmVB268=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pcRYtdKxcelUJFKRo2l1vWPMMUu9446wCkm6qXnL8X4WFPcmiSsYeWbZCvp4lWW2HCe1Pk/CTLaCqymuDFzQtqWcv7kY9xAkok9BEzFA4c6m1p/4C/kvVVeFOrdeSokf4BwXoozyudvbU4zjvGEJIOGep9YXxX1MqMIYyrjUhho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r0w6QDFi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jOF7QhQ+7e9wI7B46pGKaP37iMrQUTTEHG5gvjo0/PAARDURFOM2/Nhh8DnJPq+v7uP5g0FDEd+Qh5/3u8Lxh467PNDrDxKajDAfPhIVLoMsCPn9/OJPtooxjTtxiuTMHm26wfb6Ncu3Ubc6540V+CMgd93XY+Yz+uPHmEjhqpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUU+iwds; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r0w6QDFi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1152D1F00A3A;
-	Mon, 17 Aug 2026 14:46:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUU+iwds"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A4E1F000E9;
+	Mon, 17 Aug 2026 14:46:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978004;
-	bh=Ib1gVILS4W3JE6Fi+IwCYzVfgZKVvwcSO722XqCXt1o=;
+	s=korg; t=1786978007;
+	bh=QUawUCKQF9Di5yNPtidnng8a6ViuKeDUKN+ZXwZHJFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r0w6QDFiUQYoqZD9/lA1uX3++5rngyO+W4z1nx0rAWo9izWe0cm8Yhfe5ldp3y7Wr
-	 pGTpXes0kTiO2mEaXKNEUO8IzO7miq4BFlu2V6etnNLH7467bJnK2OPgMK4FUbY/ld
-	 MdFjvhoIMcK00X6z5ip0VG6Xh6sMRjR/r+qusTjs=
+	b=XUU+iwdsavjw4ENKoCT5qyhmf7c/xfFtz9h/GhNhXo+IRsUCgcA5d9yLzibFfKjdr
+	 vyIKoxeioOuYfyNB2H1+moNgug2j0hpDKnDx/4B0S0BR1OceNd1u5dvc7hhOam5PU3
+	 KH7aD/9/7igmPg2ETnPazfS+o9g63Ri1t3yyuH6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Xu <weixugc@google.com>,
-	Zeng Jingxiang <linuszeng@tencent.com>,
-	Kairui Song <kasong@tencent.com>,
-	Chris Li <chrisl@kernel.org>,
-	"T.J. Mercier" <tjmercier@google.com>,
-	Yu Zhao <yuzhao@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Mehmet Fide <mehmet.fide@screeningeagle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 067/181] mm/vmscan: wake up flushers conditionally to avoid cgroup OOM
-Date: Mon, 17 Aug 2026 15:32:41 +0200
-Message-ID: <20260817132538.071265582@linuxfoundation.org>
+Subject: [PATCH 6.12 068/181] net: fec: do not release NULL pages when RX buffer allocation fails
+Date: Mon, 17 Aug 2026 15:32:42 +0200
+Message-ID: <20260817132538.112644783@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -56,175 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zeng Jingxiang <linuszeng@tencent.com>
+From: Mehmet Fide <mehmet.fide@screeningeagle.com>
 
-[ Upstream commit 1bc542c6a0d1444559ab75823a89a94d244bf933 ]
+fec_enet_alloc_rxq_buffers() leaves the loop as soon as
+page_pool_dev_alloc_pages() returns NULL and jumps to err_alloc, which
+calls fec_enet_free_buffers(). That helper walks the whole ring and
+hands every rx_skb_info[i].page to page_pool_put_full_page(), including
+the entries the allocation loop never reached. Those are still NULL,
+because the queue was allocated with kzalloc(), and
+page_pool_put_full_page() dereferences the page, so an open that runs
+out of memory oopses instead of returning -ENOMEM:
 
-Commit 14aa8b2d5c2e ("mm/mglru: don't sync disk for each aging cycle")
-removed the opportunity to wake up flushers during the MGLRU page
-reclamation process can lead to an increased likelihood of triggering OOM
-when encountering many dirty pages during reclamation on MGLRU.
+  Unable to handle kernel NULL pointer dereference at virtual address 00000014 when read
+  Internal error: Oops: 5 [#1] SMP ARM
+  CPU: 0 PID: 384 Comm: connmand Not tainted 6.18.43 #1
+  Hardware name: Freescale Vybrid VF5xx/VF6xx (Device Tree)
+  PC is at fec_enet_free_buffers+0xb0/0x2a8
+  Call trace:
+   fec_enet_free_buffers from fec_enet_open+0x1e0/0x504
+   fec_enet_open from __dev_open+0x114/0x238
+   __dev_open from __dev_change_flags+0x190/0x208
+   __dev_change_flags from netif_change_flags+0x1c/0x58
+   netif_change_flags from dev_change_flags+0x44/0x74
+   dev_change_flags from devinet_ioctl+0x3a4/0x768
 
-This leads to premature OOM if there are too many dirty pages in cgroup:
-Killed
+Seen on a Colibri VF50, 128 MiB of RAM, on the first ifup after boot.
 
-dd invoked oom-killer: gfp_mask=0x101cca(GFP_HIGHUSER_MOVABLE|__GFP_WRITE),
-order=0, oom_score_adj=0
+Skip the entries that hold no page, and clear the ones that do after
+releasing them, so that a later failed open cannot release the same page
+a second time.
 
-Call Trace:
-  <TASK>
-  dump_stack_lvl+0x5f/0x80
-  dump_stack+0x14/0x20
-  dump_header+0x46/0x1b0
-  oom_kill_process+0x104/0x220
-  out_of_memory+0x112/0x5a0
-  mem_cgroup_out_of_memory+0x13b/0x150
-  try_charge_memcg+0x44f/0x5c0
-  charge_memcg+0x34/0x50
-  __mem_cgroup_charge+0x31/0x90
-  filemap_add_folio+0x4b/0xf0
-  __filemap_get_folio+0x1a4/0x5b0
-  ? srso_return_thunk+0x5/0x5f
-  ? __block_commit_write+0x82/0xb0
-  ext4_da_write_begin+0xe5/0x270
-  generic_perform_write+0x134/0x2b0
-  ext4_buffered_write_iter+0x57/0xd0
-  ext4_file_write_iter+0x76/0x7d0
-  ? selinux_file_permission+0x119/0x150
-  ? srso_return_thunk+0x5/0x5f
-  ? srso_return_thunk+0x5/0x5f
-  vfs_write+0x30c/0x440
-  ksys_write+0x65/0xe0
-  __x64_sys_write+0x1e/0x30
-  x64_sys_call+0x11c2/0x1d50
-  do_syscall_64+0x47/0x110
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Mainline is not affected. Commit a2ae70c0efe4 ("net: fec: add
+fec_alloc_rxq_buffers_pp() to allocate buffers from page pool") replaced
+this loop with fec_free_rxq_buffers(), which skips and clears the empty
+entries. That commit is part of the XDP zero copy series and is not a
+stable candidate, so this is the equivalent minimal fix for 6.18.y.
 
- memory: usage 308224kB, limit 308224kB, failcnt 2589
- swap: usage 0kB, limit 9007199254740988kB, failcnt 0
-
-  ...
-  file_dirty 303247360
-  file_writeback 0
-  ...
-
-oom-kill:constraint=CONSTRAINT_MEMCG,nodemask=(null),cpuset=test,
-mems_allowed=0,oom_memcg=/test,task_memcg=/test,task=dd,pid=4404,uid=0
-Memory cgroup out of memory: Killed process 4404 (dd) total-vm:10512kB,
-anon-rss:1152kB, file-rss:1824kB, shmem-rss:0kB, UID:0 pgtables:76kB
-oom_score_adj:0
-
-The flusher wake up was removed to decrease SSD wearing, but if we are
-seeing all dirty folios at the tail of an LRU, not waking up the flusher
-could lead to thrashing easily.  So wake it up when a memcg is about to
-OOM due to dirty caches.
-
-I did run the build kernel test[1] on V6, with -j16 1G memcg on my local
-branch:
-
-Without the patch(10 times):
-user 1449.394
-system 368.78 372.58 363.03 362.31 360.84 372.70 368.72 364.94 373.51
-366.58 (avg 367.399)
-real 164.883
-
-With the V6 patch(10 times):
-user 1447.525
-system 360.87 360.63 372.39 364.09 368.49 365.15 359.93 362.04 359.72
-354.60 (avg 362.79)
-real 164.514
-
-Test results show that this patch has about 1% performance improvement,
-which should be caused by noise.
-
-Link: https://lkml.kernel.org/r/20241026115714.1437435-1-jingxiangzeng.cas@gmail.com
-Link: https://lore.kernel.org/all/CACePvbV4L-gRN9UKKuUnksfVJjOTq_5Sti2-e=pb_w51kucLKQ@mail.gmail.com/ [1]
-Fixes: 14aa8b2d5c2e ("mm/mglru: don't sync disk for each aging cycle")
-Suggested-by: Wei Xu <weixugc@google.com>
-Signed-off-by: Zeng Jingxiang <linuszeng@tencent.com>
-Signed-off-by: Kairui Song <kasong@tencent.com>
-Reviewed-by: Wei Xu <weixugc@google.com>
-Tested-by: Chris Li <chrisl@kernel.org>
-Cc: T.J. Mercier <tjmercier@google.com>
-Cc: Yu Zhao <yuzhao@google.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 95698ff6177b ("net: fec: using page pool to manage RX buffers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vmscan.c | 25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/freescale/fec_main.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index deeb4310fd54c..20f4cb33d8e8a 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -4313,6 +4313,7 @@ static bool sort_folio(struct lruvec *lruvec, struct folio *folio, struct scan_c
- 		       int tier_idx)
- {
- 	bool success;
-+	bool dirty, writeback;
- 	int gen = folio_lru_gen(folio);
- 	int type = folio_is_file_lru(folio);
- 	int zone = folio_zonenum(folio);
-@@ -4358,9 +4359,17 @@ static bool sort_folio(struct lruvec *lruvec, struct folio *folio, struct scan_c
- 		return true;
- 	}
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index d8189c433847c..22cd47d19ce24 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -3323,8 +3323,15 @@ static void fec_enet_free_buffers(struct net_device *ndev)
  
-+	dirty = folio_test_dirty(folio);
-+	writeback = folio_test_writeback(folio);
-+	if (type == LRU_GEN_FILE && dirty) {
-+		sc->nr.file_taken += delta;
-+		if (!writeback)
-+			sc->nr.unqueued_dirty += delta;
-+	}
+ 	for (q = 0; q < fep->num_rx_queues; q++) {
+ 		rxq = fep->rx_queue[q];
+-		for (i = 0; i < rxq->bd.ring_size; i++)
+-			page_pool_put_full_page(rxq->page_pool, rxq->rx_skb_info[i].page, false);
++		for (i = 0; i < rxq->bd.ring_size; i++) {
++			struct page *page = rxq->rx_skb_info[i].page;
 +
- 	/* waiting for writeback */
--	if (folio_test_locked(folio) || folio_test_writeback(folio) ||
--	    (type == LRU_GEN_FILE && folio_test_dirty(folio))) {
-+	if (folio_test_locked(folio) || writeback ||
-+	    (type == LRU_GEN_FILE && dirty)) {
- 		gen = folio_inc_gen(lruvec, folio, true);
- 		list_move(&folio->lru, &lrugen->folios[gen][type][zone]);
- 		return true;
-@@ -4476,7 +4485,8 @@ static int scan_folios(struct lruvec *lruvec, struct scan_control *sc,
- 	trace_mm_vmscan_lru_isolate(sc->reclaim_idx, sc->order, MAX_LRU_BATCH,
- 				scanned, skipped, isolated,
- 				type ? LRU_INACTIVE_FILE : LRU_INACTIVE_ANON);
--
-+	if (type == LRU_GEN_FILE)
-+		sc->nr.file_taken += isolated;
- 	/*
- 	 * There might not be eligible folios due to reclaim_idx. Check the
- 	 * remaining to prevent livelock if it's not making progress.
-@@ -4610,6 +4620,7 @@ static int evict_folios(struct lruvec *lruvec, struct scan_control *sc, int swap
- 		return scanned;
- retry:
- 	reclaimed = shrink_folio_list(&list, pgdat, sc, &stat, false);
-+	sc->nr.unqueued_dirty += stat.nr_unqueued_dirty;
- 	sc->nr_reclaimed += reclaimed;
- 	trace_mm_vmscan_lru_shrink_inactive(pgdat->node_id,
- 			scanned, reclaimed, &stat, sc->priority,
-@@ -4821,6 +4832,13 @@ static bool try_to_shrink_lruvec(struct lruvec *lruvec, struct scan_control *sc)
- 		cond_resched();
- 	}
- 
-+	/*
-+	 * If too many file cache in the coldest generation can't be evicted
-+	 * due to being dirty, wake up the flusher.
-+	 */
-+	if (sc->nr.unqueued_dirty && sc->nr.unqueued_dirty == sc->nr.file_taken)
-+		wakeup_flusher_threads(WB_REASON_VMSCAN);
++			if (!page)
++				continue;
 +
- 	/* whether this lruvec should be rotated */
- 	return nr_to_scan < 0;
- }
-@@ -5966,6 +5984,7 @@ static void shrink_node(pg_data_t *pgdat, struct scan_control *sc)
- 	bool reclaimable = false;
++			page_pool_put_full_page(rxq->page_pool, page, false);
++			rxq->rx_skb_info[i].page = NULL;
++		}
  
- 	if (lru_gen_enabled() && root_reclaim(sc)) {
-+		memset(&sc->nr, 0, sizeof(sc->nr));
- 		lru_gen_shrink_node(pgdat, sc);
- 		return;
- 	}
+ 		for (i = 0; i < XDP_STATS_TOTAL; i++)
+ 			rxq->stats[i] = 0;
 -- 
 2.53.0
 
