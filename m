@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509FE175A6B;
-	Mon, 17 Aug 2026 14:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC07E175A6B;
+	Mon, 17 Aug 2026 14:39:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977595; cv=none; b=JmhAGAeAXBHKhS4cMQuHd8DMpIpxw9tS8h2yE9395HypXs1yJl57afPElMZC6ZFcTob/p5e6lKtdsrmtbDq36y84Hwp2hAjTNhcpFyMBnlI5G5DFo7/yZvRnJBGWLxWMBXIhmD4sdY3ni+bau3I8tVXDO4hdv6hF572Zf4Bz4oE=
+	t=1786977598; cv=none; b=mmkzjaiQtpF4XlrkFRwfihNN1ea1iD5yeBsL+yI+Gfhvfgk+SPQdmua6VLUa4ylGqEvNN4GfdyQCAhJ7RkNs9ivRA7KMUhnnpVFs8he0ZCvLikVBFTiZRkLhRLbm3tPqjec77mDD8CS3CITmNdAD3uH1MhCGDKbJJ7A/4VOL74M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977595; c=relaxed/simple;
-	bh=rWGHwyEyFSSxdgnPBeS2N/Zj2FkdMtJSYSsMltNKPX8=;
+	s=arc-20240116; t=1786977598; c=relaxed/simple;
+	bh=zdAmITL9SymKnxFF1PgIwh1vg0/lZ3Z6qhut4x72xpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kTihgObfap2lxXeBZ4Pi+eTgCaJACw6gaBYTvrh7GaipSRHFUF49qFKf5zRpon6RQJP9QriIsOQlWz0NK2frvsXQxTB3wSMurKB6JlEcctE4jxuJWMnrtVUxCUVYHglGbWtZGrkaFhFMlq7eEzGntFM5bNQB7CAlJaYvJdjTUKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqz7I52r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V3j4UPInNkhwW4yqiRH25pt92MSQgA21dRjvOKFEOWJ90KRffUmX4QqTePRkFoSyf/MlhWi/CaMgEGIfjJ9SsCwXEdPw4LiEp9eEKqVBnodBm7jpBsxTNlwxOxxUuhQSykqNhztv5WApJu9ladz0kfnRS10wKLK6WRf5VganQpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hB75wLm/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqz7I52r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F101F000E9;
-	Mon, 17 Aug 2026 14:39:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hB75wLm/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D901F000E9;
+	Mon, 17 Aug 2026 14:39:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977593;
-	bh=KiUeQCshx1EBhk7YDFpzlMSyJUC8U1HExLmDp2nprjA=;
+	s=korg; t=1786977596;
+	bh=nMFO8NHZbxG+UHMBayfSAqIwGKPwicCo9QdsJBL0NNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gqz7I52raTz8442IXhtyArpusA9arp2KTT2TMH7UTG7O4NaWBGPp9vQhrbxBeNerr
-	 CpK2cO813bajceETGtCK12z2VLr78c83PQ7ZLER0a9eCKf4tSgDM4nw8HsrvLmMBAt
-	 wSmkCasUsgPG5Y429ILzLRD+mQ/67Wpw5gFAA+y0=
+	b=hB75wLm/ympEsPqYa4vaxPRMK9s9+SR7SXhFxHvA9r4UzTrMWWA5ifxrG/b8LRWch
+	 aKJmKnL1YgExHW38UBZfAhb8KSWJF2jTj/7ukKdrFSrVPAvBtzrsMdO+ysRIZmxbz3
+	 +aJ+Ywp5pyWoLbUaDddyl+2bGSLUNwIvZD1LHaGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <oliver.sang@intel.com>,
+	Martin Kaiser <martin@kaiser.cx>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Tom Zanussi <zanussi@kernel.org>,
-	Linyu Yuan <quic_linyyuan@quicinc.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 382/456] selftests/ftrace: Add test case for GRP/ only input
-Date: Mon, 17 Aug 2026 15:32:52 +0200
-Message-ID: <20260817132554.404897048@linuxfoundation.org>
+Subject: [PATCH 5.15 383/456] selftests/ftrace: refactor eprobes test to fix argument checks
+Date: Mon, 17 Aug 2026 15:32:53 +0200
+Message-ID: <20260817132554.450110471@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -53,66 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linyu Yuan <quic_linyyuan@quicinc.com>
+From: Martin Kaiser <martin@kaiser.cx>
 
-[ Upstream commit 5db19792f0660ad1ece247829bddd24bb2f8db25 ]
+[ Upstream commit 6e3abef2a27e7402a94111c9eff85d887e64a309 ]
 
-Add kprobe and eprobe event test for new GRP/ only format.
+The add/remove eprobe test installs an eprobe for the openat syscall and
+runs ls. It checks the filenames that were opened by ls against a
+whitelist and a blacklist.
 
-Link: https://lore.kernel.org/all/1656296348-16111-5-git-send-email-quic_linyyuan@quicinc.com/
+Commit 206b25c09080 ("tracing: eprobe: read the complete FILTER_PTR_STRING
+pointer") fixed access to some string fields in eprobes. This triggers
+test failures as the blacklist does not allow relative paths for the
+openat parameters.
 
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Tom Zanussi <zanussi@kernel.org>
-Signed-off-by: Linyu Yuan <quic_linyyuan@quicinc.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Stable-dep-of: 6e3abef2a27e ("selftests/ftrace: refactor eprobes test to fix argument checks")
+What makes this test unstable is the fact that the openat calls vary a
+lot between different systems.
+
+Refactor the test to make it more robust. "cd <directory>" will issue a
+chdir syscall with the target directory as parameter. Set an eprobe on
+the sys_enter_chdir event and filter for the exact directory name. Allow
+(fault) as fallback.
+
+Link: https://lore.kernel.org/all/20260804194705.760893-1-martin@kaiser.cx/
+
+Fixes: 206b25c09080 ("tracing: eprobe: read the complete FILTER_PTR_STRING pointer")
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202607151010.b68428e1-lkp@intel.com
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ftrace/test.d/dynevent/add_remove_eprobe.tc          | 9 ++++++++-
- .../ftrace/test.d/dynevent/add_remove_kprobe.tc          | 7 +++++++
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ .../ftrace/test.d/dynevent/add_remove_eprobe.tc  | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
 diff --git a/tools/testing/selftests/ftrace/test.d/dynevent/add_remove_eprobe.tc b/tools/testing/selftests/ftrace/test.d/dynevent/add_remove_eprobe.tc
-index 60c02b482be83..c300eb0202620 100644
+index c300eb0202620..e2322693d0c32 100644
 --- a/tools/testing/selftests/ftrace/test.d/dynevent/add_remove_eprobe.tc
 +++ b/tools/testing/selftests/ftrace/test.d/dynevent/add_remove_eprobe.tc
-@@ -1,7 +1,7 @@
+@@ -1,16 +1,16 @@
  #!/bin/sh
  # SPDX-License-Identifier: GPL-2.0
  # description: Generic dynamic event - add/remove eprobe events
--# requires: dynamic_events events/syscalls/sys_enter_openat "e[:[<group>/]<event>] <attached-group>.<attached-event> [<args>]":README
-+# requires: dynamic_events events/syscalls/sys_enter_openat "<attached-group>.<attached-event> [<args>]":README
+-# requires: dynamic_events events/syscalls/sys_enter_openat "<attached-group>.<attached-event> [<args>]":README
++# requires: dynamic_events events/syscalls/sys_enter_chdir "<attached-group>.<attached-event> [<args>]":README
  
  echo 0 > events/enable
  
-@@ -87,4 +87,11 @@ echo "-:eprobes/$EPROBE $SYSTEM/$EVENT $OPTIONS" >> dynamic_events
+ clear_dynamic_events
+ 
+ SYSTEM="syscalls"
+-EVENT="sys_enter_openat"
++EVENT="sys_enter_chdir"
+ FIELD="filename"
+-EPROBE="eprobe_open"
++EPROBE="eprobe_chdir"
+ OPTIONS="file=+0(\$filename):ustring"
+ echo "e:$EPROBE $SYSTEM/$EVENT $OPTIONS" >> dynamic_events
+ 
+@@ -18,20 +18,14 @@ grep -q "$EPROBE" dynamic_events
+ test -d events/eprobes/$EPROBE
+ 
+ echo 1 > events/eprobes/$EPROBE/enable
+-ls
++cd /sys/kernel/tracing
+ echo 0 > events/eprobes/$EPROBE/enable
+ 
+-content=`grep '^ *ls-' trace | grep 'file='`
+-nocontent=`grep '^ *ls-' trace | grep 'file=' | grep -v -e '"/' -e '"."' -e '(fault)' ` || true
+-
++content=`grep -e 'file="/sys/kernel/tracing"\|(fault)' trace`
+ if [ -z "$content" ]; then
+ 	exit_fail
+ fi
+ 
+-if [ ! -z "$nocontent" ]; then
+-	exit_fail
+-fi
+-
+ echo "-:$EPROBE" >> dynamic_events
+ 
  ! grep -q "$EPROBE" dynamic_events
- ! test -d events/eprobes/$EPROBE
- 
-+if grep -q "e\[:\[<group>/]\[<event>]]" README; then
-+	echo "e:mygroup/ $SYSTEM/$EVENT $OPTIONS" >> dynamic_events
-+	test -d events/mygroup
-+	echo "-:mygroup/" >> dynamic_events
-+	! test -d events/mygroup
-+fi
-+
- clear_trace
-diff --git a/tools/testing/selftests/ftrace/test.d/dynevent/add_remove_kprobe.tc b/tools/testing/selftests/ftrace/test.d/dynevent/add_remove_kprobe.tc
-index b4da41d126d58..13d43f40a6fc6 100644
---- a/tools/testing/selftests/ftrace/test.d/dynevent/add_remove_kprobe.tc
-+++ b/tools/testing/selftests/ftrace/test.d/dynevent/add_remove_kprobe.tc
-@@ -23,4 +23,11 @@ grep -q myevent1 dynamic_events
- 
- echo > dynamic_events
- 
-+if grep -q "p\[:\[<group>/]\[<event>]]" README; then
-+	echo "p:mygroup/ $PLACE" >> dynamic_events
-+	test -d events/mygroup
-+	echo "-:mygroup/" >> dynamic_events
-+	! test -d events/mygroup
-+fi
-+
- clear_trace
 -- 
 2.53.0
 
