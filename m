@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989683D301E;
-	Mon, 17 Aug 2026 14:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6EE3D301E;
+	Mon, 17 Aug 2026 14:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977560; cv=none; b=S2U1Uo+UqxhX9cTxv6wqmMb+qi/ETSLoO2oOJ4ZG3g37+SZtjKt1hbXSgcK7b5WjeP9FgPy5gXrI7ip6lDjplQ9ljAZqaF4RxBsJnoG7Im9/eKBi0DQfHSOsjWCAMV6Oor22oNVmy5Nrn46x78o6m6wzZx7BVn7E3j1ToA90YMw=
+	t=1786977563; cv=none; b=tLnY6dkmxvkAjH3Du/024UG6YXFGpZ0CsBAa0Hr+c+ntJLcZrt9YZczlQN5KoMMXw3p3L+a8eqIzLNI1Hr2Ch3XHUo2UfDIgsQUR+jVCGPR/AqsE8vwYSOSeDFV2GDn8YEN0xJVEE1EbWuVN5zC2Tq1p2Gmw3EjQFSMmZ7O4dlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977560; c=relaxed/simple;
-	bh=63UD/NzpmaswhI2kFaW4Ajb7M6TYhBYfArfWmsohRSw=;
+	s=arc-20240116; t=1786977563; c=relaxed/simple;
+	bh=v4Wfnzck0IKHJT7g5+d+Gnx46uDWarrppcwhri1YeCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u0NrKSUYBhrI2/B+s1WHtDgB3/pRkD3F5USnAkj9RJLQ0tb+T2KxWLYAA9jrh3xSNQZDmu/QNrYXsBHaDG7IGps+lx+3XAbwcRYpq6fzM7JC8Plu4ksDGc5WKx1ZeGHFRsANFqb3hO/qTY4VVIduvESQo2KqDqr1U+X2qMCn1+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0QizVQm8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EmuaChHHzjqUj2WS1PV08JJ5/dJVTvBV0FrkguEWaWWo9V6JLLSSeMf3+wimK+zCrhiFgcZQcn62VuAByaVKWO9a0+oKiEyOv8Avf2dvSFPgaqiGJEFbfwJ3FVOESck0JrMHj7RfoqECTtJHM86KhfV5tFkUOAtXd/43mHKCdzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQDpPwAa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0QizVQm8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F191E1F000E9;
-	Mon, 17 Aug 2026 14:39:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQDpPwAa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C151F000E9;
+	Mon, 17 Aug 2026 14:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977559;
-	bh=FrUmirbzqxE5PzeuN9DDFqnPbyVcwIdv3xzqaEhB88E=;
+	s=korg; t=1786977562;
+	bh=QIXG7qHZ37ArV0UO0Ofca/O2gRqdMCz9Fd9EvbKs1hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0QizVQm8nDJ6/f5zHinSCB6MQjpDTko2xP5cF//zE0NfdoefMb8k8g+0EAUDI1aiD
-	 qlhifIfeUjcYiGT/kKvlRldlo/Zy4d5sboRsx6m/Z78OTp2SfnC0YxMoFDLsvgyIJV
-	 X9MiZz+hs9l7vRNXImUVANaYPLM1ibQus34cGjPM=
+	b=dQDpPwAafU0cTAxNR93BGgzrC1GcIB4fVZvmTT9tUJLkh5b2dtL1SkV9xLs8U9fdG
+	 1fLCVrUmUOgdYD+wFiMdCqVcINAzQ1h/LzJFrpUxl8PdNdykqdVyTau9qQMygQUWEe
+	 IVL6uauhWlp7y+ZGZnUA/jZXVpJa8oao430rtqUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Vincent Mailhol <mailhol@kernel.org>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.15 354/456] can: peak_usb: peak_usb_start(): fix double free of transfer buffer on URB submit error
-Date: Mon, 17 Aug 2026 15:32:24 +0200
-Message-ID: <20260817132553.384107338@linuxfoundation.org>
+	Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>,
+	Daniel Wade <danjwade95@gmail.com>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 372/456] bpf: Preserve pointer state for commuted arithmetic
+Date: Mon, 17 Aug 2026 15:32:42 +0200
+Message-ID: <20260817132554.044665534@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,51 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
 
-commit 9b3d5a6d952c38bbcf07f903cbeadefdb56b9bc9 upstream.
+[ Upstream commit a4c6f804b44c5c790269b25e0e61cf4e9f117c86 ]
 
-In peak_usb_start(), each RX URB transfer buffer is allocated with kmalloc()
-and the URB is flagged URB_FREE_BUFFER so that the final usb_free_urb() also
-frees the transfer buffer.
+When scalar += pointer is handled in adjust_ptr_min_max_vals(), the
+destination register inherits the pointer state from the source pointer.
+Copying only selected fields is fragile because pointer provenance is
+tracked by several bpf_reg_state fields.
 
-If usb_submit_urb() fails, the error path frees the buffer explicitly with
-kfree(buf) and then calls usb_free_urb(urb). Because URB_FREE_BUFFER is set,
-usb_free_urb() -> urb_destroy() frees the same buffer a second time, a double
-free of the transfer buffer.
+Use the caller's temporary offset register to preserve the scalar operand
+while replacing the destination with the full pointer state. This preserves
+the frame number for PTR_TO_STACK registers and keeps parent identity
+fields consistent.
 
-  BUG: KASAN: double-free in usb_free_urb.part.0+0x91/0xb0
-  Free of addr ffff8881069ccb80 by task trigger.sh/285
-
-  Call Trace:
-   kfree+0x113/0x3c0
-   usb_free_urb.part.0+0x91/0xb0
-
-Drop the redundant kfree(buf); usb_free_urb() already releases the transfer
-buffer. This mirrors commit 03819abbeb11 ("net: usb: lan78xx: Fix double free
-issue with interrupt buffer allocation").
-
-Fixes: bb4785551f64 ("can: usb: PEAK-System Technik USB adapters driver core")
-Closes: https://lore.kernel.org/linux-can/178159320216.2154888.16953451793788581739@maoyixie.com/T/#u
-Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
-Link: https://patch.msgid.link/178163373110.2507866.216458825145756798@maoyixie.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f4d7e40a5b71 ("bpf: introduce function calls (verification)")
+Signed-off-by: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
+Tested-by: Daniel Wade <danjwade95@gmail.com>
+Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Link: https://patch.msgid.link/20260729-c3-035-public-bpf-v4-v4-2-8ee297e2346b@mails.tsinghua.edu.cn
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/peak_usb/pcan_usb_core.c |    1 -
- 1 file changed, 1 deletion(-)
+ kernel/bpf/verifier.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
---- a/drivers/net/can/usb/peak_usb/pcan_usb_core.c
-+++ b/drivers/net/can/usb/peak_usb/pcan_usb_core.c
-@@ -463,7 +463,6 @@ static int peak_usb_start(struct peak_us
- 				netif_device_detach(dev->netdev);
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 5e71d58e4a300..a0163090309a4 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -7388,11 +7388,12 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
+ 		break;
+ 	}
  
- 			usb_unanchor_urb(urb);
--			kfree(buf);
- 			usb_free_urb(urb);
- 			break;
+-	/* In case of 'scalar += pointer', dst_reg inherits pointer type and id.
+-	 * The id may be overwritten later if we create a new variable offset.
++	/* For 'scalar += pointer', dst_reg inherits the complete pointer
++	 * register state. Individual fields may be adjusted later by pointer
++	 * arithmetic. Callers guarantee that below does not overwrite off_reg.
+ 	 */
+-	dst_reg->type = ptr_reg->type;
+-	dst_reg->id = ptr_reg->id;
++	if (dst_reg != ptr_reg)
++		*dst_reg = *ptr_reg;
+ 
+ 	if (!check_reg_sane_offset(env, off_reg, ptr_reg->type) ||
+ 	    !check_reg_sane_offset(env, ptr_reg, ptr_reg->type))
+@@ -7460,7 +7461,7 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
  		}
+ 		break;
+ 	case BPF_SUB:
+-		if (dst_reg == off_reg) {
++		if (dst_reg != ptr_reg) {
+ 			/* scalar -= pointer.  Creates an unknown scalar */
+ 			verbose(env, "R%d tried to subtract pointer from scalar\n",
+ 				dst);
+@@ -8319,8 +8320,8 @@ static int adjust_reg_min_max_vals(struct bpf_verifier_env *env,
+ 				err = mark_chain_precision(env, insn->dst_reg);
+ 				if (err)
+ 					return err;
+-				return adjust_ptr_min_max_vals(env, insn,
+-							       src_reg, dst_reg);
++				off_reg = *dst_reg;
++				return adjust_ptr_min_max_vals(env, insn, src_reg, &off_reg);
+ 			}
+ 		} else if (ptr_reg) {
+ 			/* pointer += scalar */
+-- 
+2.53.0
+
 
 
