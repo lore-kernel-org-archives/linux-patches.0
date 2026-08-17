@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587773B811F;
-	Mon, 17 Aug 2026 14:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279662D5A01;
+	Mon, 17 Aug 2026 14:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975680; cv=none; b=R+SCBwp38afh8sq99rNoCdG8ZkycyQ0fAPyarrlKQkn2EUN6qUmqVzDXa2G8UmfluUq5MUXJyDmreRyBUEM91VkwJ7Tq8qu9ykLRWGqlchjhrZpUboohadcY04ObTqhfWakjUc5gRFU1UTiRRkx71OjV6mW1Pd8+LNTQCsppzF8=
+	t=1786975683; cv=none; b=ZsWGLKVrBol2LDgTsXS8aMZWUP9/DgN3ZCmyLMDWVcbACzvvsntZz0KDyHulkjW0ANorgV5oBQ1BnpJKdAvkg62GqekUqvpiSDb3jwUkdFZu03dQXoXJgQGLL8U2oyWURwSjlbrZ+9PbWkI6M8LbR43zi8cbDXLmdWbxufZ0Opk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975680; c=relaxed/simple;
-	bh=mhXtmMilWuy+vY5+VQtiiBINZ0D30HkzhgHTxyH3Zmc=;
+	s=arc-20240116; t=1786975683; c=relaxed/simple;
+	bh=GjMN1DSVwI4tesGtLs96k3e8VzVCoqUnwa0osO5VZkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qOfgVE/ObWHNYUuiC1uT2vsNkZCcbrCKh/LynWThfnX6Oi4LHPme/Qudj2OFklg/HWRmw4PFrmhokC6CxfngymEHEmNFhq0fhiGehQON75DxJmMKPymyC/Skm67/e1ZsLXbO/svOvnl9aTZd5HhymV2xIgbf5semEVasPw/mYJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G0Y4hw1W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OLer9R78JVMIAprXsopSPPv56d92vAPXFT8mp0FLRap9T6+hDka0i5OwkZ+mPnIaon75qsVTvpm9yuwlzYYBsqxIS+YR2l8Pi+drfT4fWluR8tJh4GSbt9jhB6OKX+cw+Sj14zicnJ/Z5Ta/4/QeWxiKZEfWZAYT1RkhiYbqsyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N30tB5gI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G0Y4hw1W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADCCC1F000E9;
-	Mon, 17 Aug 2026 14:07:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N30tB5gI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A268D1F000E9;
+	Mon, 17 Aug 2026 14:08:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975679;
-	bh=6cOA3h916lNTolpbXImkRe0bKnRStJOonrkkqXsJ6R8=;
+	s=korg; t=1786975682;
+	bh=ZA2G8DV4Z0+NYb3095/xRVKWQ05ejtIEcL5n4yiobY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G0Y4hw1Wrd5h597NCpfNT4heNIwK+zfvcQCSe/0SMAvXRhELzHzeOLeJvKSgxDssI
-	 W+11qNdowHjBUt7xwN1Cpz1Kjl2ZLbriRdOe1FrdDI8/w+JKt/WV+3TqfMC+z9r0rU
-	 emJUim2yNUQLtqw1pwvSXGNvutu/tHNvxXm2W5Xs=
+	b=N30tB5gIF0h8SzgS2QqY6NsAdn5q6RAoNuBXawVDLw+RKtyoymPsRxB8VBJFnWDyB
+	 rEHlGmweTzPBZ0Kf68IcFw0dmIBIfXTG6EahboH70JVm8XuBCxH2HhoeZx0Wcu5QIm
+	 PIXq6zW1YQO5c09/pKh2qQppECqpSsgowbCTrv38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+e62a973f8322b3bbe3ac@syzkaller.appspotmail.com,
+	Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 072/389] ASoC: bt-sco: fix duplicate DAPM widget names for wideband DAI
-Date: Mon, 17 Aug 2026 15:28:31 +0200
-Message-ID: <20260817132541.909715618@linuxfoundation.org>
+Subject: [PATCH 5.10 073/389] usb: atm: ueagle-atm: reject descriptors that confuse probe and disconnect
+Date: Mon, 17 Aug 2026 15:28:32 +0200
+Message-ID: <20260817132541.951465675@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,70 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
 
-[ Upstream commit 0b604e886ece11b71c4daaeccc512c784b89b014 ]
+[ Upstream commit 71132cedd1ecbc4032d76e9928c18a10f7e39b80 ]
 
-The bt-sco-pcm-wb DAI uses the same stream_name strings as bt-sco-pcm
-("Playback" and "Capture"). This causes duplicate DAPM AIF widget
-names within the same component, leading to debugfs warnings:
+uea_probe() distinguishes a pre-firmware device from a post-firmware one
+using the USB id (UEA_IS_PREFIRM()), and stores a different object as the
+interface data in each case: a 'struct completion' for a pre-firmware
+device (to be waited on in .disconnect()), or a 'struct usbatm_data' for a
+post-firmware one.
 
-  debugfs: 'Playback' already exists in 'dapm'
-  debugfs: 'Capture' already exists in 'dapm'
+uea_disconnect() instead tells the two apart by the number of interfaces
+of the active configuration (a pre-firmware device exposes a single
+interface, ADI930 has 2 and eagle has 3), and casts the interface data
+accordingly.
 
-Give the wideband DAI distinct stream names ("WB Playback" and
-"WB Capture") and add corresponding DAPM AIF widgets and routes for
-them.
+Because the two handlers use different criteria, a crafted device that
+advertises a pre-firmware id together with a multi-interface descriptor
+(or a post-firmware id with a single interface) makes them disagree: the
+small 'struct completion' stored by uea_probe() is then passed to
+usbatm_usb_disconnect(), which casts it to 'struct usbatm_data' and takes
+instance->serialize, reading past the end of the allocation:
 
-Fixes: 5947e1b4992e ("ASoC: bt-sco: extend rate and add a general compatible string")
-Assisted-by: VeroCoder:claude-sonnet-4-5
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20260715100620.1387159-1-shengjiu.wang@oss.nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  BUG: KASAN: slab-out-of-bounds in __mutex_lock+0x152a/0x1b80
+  Read of size 8 at addr ffff8880470e2c60 by task kworker/1:2/982
+  ...
+   __mutex_lock+0x152a/0x1b80
+   usbatm_usb_disconnect+0x70/0x820
+   uea_disconnect+0x133/0x2c0
+   usb_unbind_interface+0x1dd/0x9e0
+  ...
+  which belongs to the cache kmalloc-96 of size 96
+  The buggy address is located 0 bytes to the right of
+   allocated 96-byte region [ffff8880470e2c00, ffff8880470e2c60)
+
+Reject such inconsistent descriptors in uea_probe() so that both handlers
+always make the same pre/post-firmware decision.
+
+Reported-by: syzbot+e62a973f8322b3bbe3ac@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e62a973f8322b3bbe3ac
+Fixes: e2674dfbed8a ("usb: atm: ueagle-atm: wait for pre-firmware load in .disconnect()")
+Signed-off-by: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Link: https://patch.msgid.link/20260717080704.1264-1-diegomancera.dev@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/bt-sco.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/usb/atm/ueagle-atm.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/sound/soc/codecs/bt-sco.c b/sound/soc/codecs/bt-sco.c
-index cf17b9741bd832..7c42fcdee27bb7 100644
---- a/sound/soc/codecs/bt-sco.c
-+++ b/sound/soc/codecs/bt-sco.c
-@@ -17,11 +17,17 @@ static const struct snd_soc_dapm_widget bt_sco_widgets[] = {
- 			    SND_SOC_NOPM, 0, 0),
- 	SND_SOC_DAPM_AIF_OUT("BT_SCO_TX", "Capture", 0,
- 			     SND_SOC_NOPM, 0, 0),
-+	SND_SOC_DAPM_AIF_IN("BT_SCO_RX_WB", "WB Playback", 0,
-+			    SND_SOC_NOPM, 0, 0),
-+	SND_SOC_DAPM_AIF_OUT("BT_SCO_TX_WB", "WB Capture", 0,
-+			     SND_SOC_NOPM, 0, 0),
- };
+diff --git a/drivers/usb/atm/ueagle-atm.c b/drivers/usb/atm/ueagle-atm.c
+index 661820041ca70d..6a282400027d68 100644
+--- a/drivers/usb/atm/ueagle-atm.c
++++ b/drivers/usb/atm/ueagle-atm.c
+@@ -2591,6 +2591,7 @@ static struct usbatm_driver uea_usbatm_driver = {
+ static int uea_probe(struct usb_interface *intf, const struct usb_device_id *id)
+ {
+ 	struct usb_device *usb = interface_to_usbdev(intf);
++	bool single_iface = usb->config->desc.bNumInterfaces == 1;
+ 	int ret;
  
- static const struct snd_soc_dapm_route bt_sco_routes[] = {
- 	{ "BT_SCO_TX", NULL, "RX" },
- 	{ "TX", NULL, "BT_SCO_RX" },
-+	{ "BT_SCO_TX_WB", NULL, "RX" },
-+	{ "TX", NULL, "BT_SCO_RX_WB" },
- };
+ 	uea_enters(usb);
+@@ -2600,6 +2601,22 @@ static int uea_probe(struct usb_interface *intf, const struct usb_device_id *id)
+ 		le16_to_cpu(usb->descriptor.bcdDevice),
+ 		chip_name[UEA_CHIP_VERSION(id)]);
  
- static struct snd_soc_dai_driver bt_sco_dai[] = {
-@@ -45,14 +51,14 @@ static struct snd_soc_dai_driver bt_sco_dai[] = {
- 	{
- 		.name = "bt-sco-pcm-wb",
- 		.playback = {
--			.stream_name = "Playback",
-+			.stream_name = "WB Playback",
- 			.channels_min = 1,
- 			.channels_max = 1,
- 			.rates = SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_16000,
- 			.formats = SNDRV_PCM_FMTBIT_S16_LE,
- 		},
- 		.capture = {
--			 .stream_name = "Capture",
-+			 .stream_name = "WB Capture",
- 			.channels_min = 1,
- 			.channels_max = 1,
- 			.rates = SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_16000,
++	/*
++	 * uea_probe() decides between the pre-firmware and post-firmware case
++	 * from the USB id and stores a different object as interface data in
++	 * each case: a struct completion for a pre-firmware device, a struct
++	 * usbatm_data for a post-firmware one. uea_disconnect() instead tells
++	 * the two apart by the number of interfaces (a pre-firmware device
++	 * exposes a single interface, ADI930 has 2 and eagle has 3). A crafted
++	 * device advertising a pre-firmware id together with a multi-interface
++	 * descriptor (or the other way around) makes the two disagree, so that
++	 * usbatm_usb_disconnect() treats the small completion object as a
++	 * struct usbatm_data and reads out of bounds. Reject such inconsistent
++	 * descriptors so both paths make the same decision.
++	 */
++	if (UEA_IS_PREFIRM(id) != single_iface)
++		return -ENODEV;
++
+ 	usb_reset_device(usb);
+ 
+ 	if (UEA_IS_PREFIRM(id)) {
 -- 
 2.53.0
 
