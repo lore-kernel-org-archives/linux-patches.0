@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AEDB2DA759;
-	Mon, 17 Aug 2026 15:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13A93D7D70;
+	Mon, 17 Aug 2026 15:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980238; cv=none; b=t4u0AUqsINo7c9/uYtJpqae77Z7vB4B89QP789dJQBlGpbcvpEPG/UlkSkgTYvnUF2zWVhy710Jy/fu8ryPBIlVhfNZIlGGtX7xM8aekgpN6yjVhznGy3EGTGqH/3YUVCq/T//zKL2oTDuWw8WGnX1clvdSTrylgLiNDp8IiGRw=
+	t=1786980241; cv=none; b=N13t/XFvQ/GVJsH0eJxiJCIdQdZIRSy70Dpl5V8Q18NCeyNGXBAdWUWeMNU01MBD0ZTQttvMQK5F2b2beatv4NMu6gyhDeVPlSI+YVJPIOTs8jgDbn0rCuYt8yOflknEsbn5stHp5KL3WSZe4n5zVm6lK0ldPQSB27aiHI+b210=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980238; c=relaxed/simple;
-	bh=S4+43y9Yra4Zc7XrWVTHVPXMlOh5cFKO5Xpl3CLkva0=;
+	s=arc-20240116; t=1786980241; c=relaxed/simple;
+	bh=LGEczetX10woJpvVbG1vSk0XmF44qf074zA8/f1+Uco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eBFKjFJKiepLIQP3xZE1HF4Et8v08heaHjYTgVKrsO17ac8RyfsN+23hKjtEpD8ymHRTMgF/rQYJEZdId1wAEh1rlYZIQilNyxCqdObj6X4cpMxgiPUhHTAkiD4ap/VCmXTRNYIXfTZ2CMmLpwlZDfMtEhoe+OiNth+tm+4AXjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=04xFhlNs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ShiMLMwUfBFOw2ZHiFX35mMi9CIJP95AHeUalmtfMKadB7jvzPCL0KL6RvXSDwpHlEqOsfKQRZWj/mk/SC2QOxBmB/lm5u4fTQ+GN7ZlrIPlcvueST8NOul3CPIH/ZzYOOmIAbH+sbEJViaWysOF0rsySeve3xI0TZ+Ztux4VK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vCfprSZP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04xFhlNs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F2D1F000E9;
-	Mon, 17 Aug 2026 15:23:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vCfprSZP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AB3F1F000E9;
+	Mon, 17 Aug 2026 15:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980237;
-	bh=j0iUZYEQ33s/lCYrB1fltNfyi0u2OS1rXEPj1SezKxk=;
+	s=korg; t=1786980239;
+	bh=avHXAgPRebRkImNcwcrWlf1D2qJyds1+6KdhrcnpTvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=04xFhlNs8TNuzLtg6e4PjkFpy1G1IR2TN9rJNx41FFjpOm/aKeNHNPi+8p7sRgdox
-	 alqIIrCxPszm4agB4okUyuCBCexyvik26VvFJEtX2VDKW7wUOnHDTlYqLWUukvU8Tm
-	 C4cvmdCu/zHT7IkEF3g6s126t5npAIVamKB4niZ8=
+	b=vCfprSZPSwchkNN1/P7u+a/B2enqaonQnJTLdJW0wuHfzG801vXUoFrsjSvDSGEeM
+	 //tQjtPtFI+2u52p0VPE/0svgCUBc9Vxn7sCUpSUyP11vn57LYjoWKKI1JpabHFIva
+	 aDO9VPuTU9tU7CIDafqGk8N1qFDs+w19PRioBhyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Jordan Rife <jordan@jrife.io>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 486/609] mount: honour SB_NOUSER in the new mount API
-Date: Mon, 17 Aug 2026 15:33:02 +0200
-Message-ID: <20260817132600.188718123@linuxfoundation.org>
+Subject: [PATCH 6.1 504/609] bpf: tcp: Make sure iter->batch always contains a full bucket snapshot
+Date: Mon, 17 Aug 2026 15:33:20 +0200
+Message-ID: <20260817132600.737386052@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,40 +53,254 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Jordan Rife <jordan@jrife.io>
 
-[ Upstream commit 6dd3c6884cd9defb511284b566cef5ac8f657dbf ]
+[ Upstream commit cdec67a489d4fdae3e83e04fca0419136a83c4c2 ]
 
-One should *not* be allowed to mount one of those, new API or not.
+Require that iter->batch always contains a full bucket snapshot. This
+invariant is important to avoid skipping or repeating sockets during
+iteration when combined with the next few patches. Before, there were
+two cases where a call to bpf_iter_tcp_batch may only capture part of a
+bucket:
 
-Reported-by: Denis Arefev <arefev@swemel.ru>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Link: https://patch.msgid.link/20260602020444.GP2636677@ZenIV
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[Denis: rename new_mnt -> newmount.mnt]
-[Denis: use goto err_unlock instead of direct return]
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
+1. When bpf_iter_tcp_realloc_batch() returns -ENOMEM.
+2. When more sockets are added to the bucket while calling
+   bpf_iter_tcp_realloc_batch(), making the updated batch size
+   insufficient.
+
+In cases where the batch size only covers part of a bucket, it is
+possible to forget which sockets were already visited, especially if we
+have to process a bucket in more than two batches. This forces us to
+choose between repeating or skipping sockets, so don't allow this:
+
+1. Stop iteration and propagate -ENOMEM up to userspace if reallocation
+   fails instead of continuing with a partial batch.
+2. Try bpf_iter_tcp_realloc_batch() with GFP_USER just as before, but if
+   we still aren't able to capture the full bucket, call
+   bpf_iter_tcp_realloc_batch() again while holding the bucket lock to
+   guarantee the bucket does not change. On the second attempt use
+   GFP_NOWAIT since we hold onto the spin lock.
+
+I did some manual testing to exercise the code paths where GFP_NOWAIT is
+used and where ERR_PTR(err) is returned. I used the realloc test cases
+included later in this series to trigger a scenario where a realloc
+happens inside bpf_iter_tcp_batch and made a small code tweak to force
+the first realloc attempt to allocate a too-small batch, thus requiring
+another attempt with GFP_NOWAIT. Some printks showed both reallocs with
+the tests passing:
+
+Jun 27 00:00:53 crow kernel: again GFP_USER
+Jun 27 00:00:53 crow kernel: again GFP_NOWAIT
+Jun 27 00:00:53 crow kernel: again GFP_USER
+Jun 27 00:00:53 crow kernel: again GFP_NOWAIT
+
+With this setup, I also forced each of the bpf_iter_tcp_realloc_batch
+calls to return -ENOMEM to ensure that iteration ends and that the
+read() in userspace fails.
+
+Signed-off-by: Jordan Rife <jordan@jrife.io>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Stable-dep-of: e5fd3f514e27 ("bpf: tcp: Fix use-after-free in bpf_iter_tcp_established_batch()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/ipv4/tcp_ipv4.c | 109 +++++++++++++++++++++++++++++++-------------
+ 1 file changed, 77 insertions(+), 32 deletions(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index f22f76d9c22f9..ed5e9e7251e34 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -3744,6 +3744,11 @@ SYSCALL_DEFINE3(fsmount, int, fs_fd, unsigned int, flags,
- 		ret = PTR_ERR(newmount.mnt);
- 		goto err_unlock;
- 	}
-+	if (newmount.mnt->mnt_sb->s_flags & SB_NOUSER) {
-+		mntput(newmount.mnt);
-+		ret = -EINVAL;
-+		goto err_unlock;
-+	}
- 	newmount.dentry = dget(fc->root);
- 	newmount.mnt->mnt_flags = mnt_flags;
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index 7823e55bc9e73..70c15160d2491 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -2768,7 +2768,7 @@ static int bpf_iter_tcp_realloc_batch(struct bpf_tcp_iter_state *iter,
+ 	if (!new_batch)
+ 		return -ENOMEM;
  
+-	bpf_iter_tcp_put_batch(iter);
++	memcpy(new_batch, iter->batch, sizeof(*iter->batch) * iter->end_sk);
+ 	kvfree(iter->batch);
+ 	iter->batch = new_batch;
+ 	iter->max_sk = new_batch_sz;
+@@ -2777,69 +2777,95 @@ static int bpf_iter_tcp_realloc_batch(struct bpf_tcp_iter_state *iter,
+ }
+ 
+ static unsigned int bpf_iter_tcp_listening_batch(struct seq_file *seq,
+-						 struct sock *start_sk)
++						 struct sock **start_sk)
+ {
+-	struct inet_hashinfo *hinfo = seq_file_net(seq)->ipv4.tcp_death_row.hashinfo;
+ 	struct bpf_tcp_iter_state *iter = seq->private;
+-	struct tcp_iter_state *st = &iter->state;
+ 	struct hlist_nulls_node *node;
+ 	unsigned int expected = 1;
+ 	struct sock *sk;
+ 
+-	sock_hold(start_sk);
+-	iter->batch[iter->end_sk++] = start_sk;
++	sock_hold(*start_sk);
++	iter->batch[iter->end_sk++] = *start_sk;
+ 
+-	sk = sk_nulls_next(start_sk);
++	sk = sk_nulls_next(*start_sk);
++	*start_sk = NULL;
+ 	sk_nulls_for_each_from(sk, node) {
+ 		if (seq_sk_match(seq, sk)) {
+ 			if (iter->end_sk < iter->max_sk) {
+ 				sock_hold(sk);
+ 				iter->batch[iter->end_sk++] = sk;
++			} else if (!*start_sk) {
++				/* Remember where we left off. */
++				*start_sk = sk;
+ 			}
+ 			expected++;
+ 		}
+ 	}
+-	spin_unlock(&hinfo->lhash2[st->bucket].lock);
+ 
+ 	return expected;
+ }
+ 
+ static unsigned int bpf_iter_tcp_established_batch(struct seq_file *seq,
+-						   struct sock *start_sk)
++						   struct sock **start_sk)
+ {
+-	struct inet_hashinfo *hinfo = seq_file_net(seq)->ipv4.tcp_death_row.hashinfo;
+ 	struct bpf_tcp_iter_state *iter = seq->private;
+-	struct tcp_iter_state *st = &iter->state;
+ 	struct hlist_nulls_node *node;
+ 	unsigned int expected = 1;
+ 	struct sock *sk;
+ 
+-	sock_hold(start_sk);
+-	iter->batch[iter->end_sk++] = start_sk;
++	sock_hold(*start_sk);
++	iter->batch[iter->end_sk++] = *start_sk;
+ 
+-	sk = sk_nulls_next(start_sk);
++	sk = sk_nulls_next(*start_sk);
++	*start_sk = NULL;
+ 	sk_nulls_for_each_from(sk, node) {
+ 		if (seq_sk_match(seq, sk)) {
+ 			if (iter->end_sk < iter->max_sk) {
+ 				sock_hold(sk);
+ 				iter->batch[iter->end_sk++] = sk;
++			} else if (!*start_sk) {
++				/* Remember where we left off. */
++				*start_sk = sk;
+ 			}
+ 			expected++;
+ 		}
+ 	}
+-	spin_unlock_bh(inet_ehash_lockp(hinfo, st->bucket));
+ 
+ 	return expected;
+ }
+ 
++static unsigned int bpf_iter_fill_batch(struct seq_file *seq,
++					struct sock **start_sk)
++{
++	struct bpf_tcp_iter_state *iter = seq->private;
++	struct tcp_iter_state *st = &iter->state;
++
++	if (st->state == TCP_SEQ_STATE_LISTENING)
++		return bpf_iter_tcp_listening_batch(seq, start_sk);
++	else
++		return bpf_iter_tcp_established_batch(seq, start_sk);
++}
++
++static void bpf_iter_tcp_unlock_bucket(struct seq_file *seq)
++{
++	struct inet_hashinfo *hinfo = seq_file_net(seq)->ipv4.tcp_death_row.hashinfo;
++	struct bpf_tcp_iter_state *iter = seq->private;
++	struct tcp_iter_state *st = &iter->state;
++
++	if (st->state == TCP_SEQ_STATE_LISTENING)
++		spin_unlock(&hinfo->lhash2[st->bucket].lock);
++	else
++		spin_unlock_bh(inet_ehash_lockp(hinfo, st->bucket));
++}
++
+ static struct sock *bpf_iter_tcp_batch(struct seq_file *seq)
+ {
+ 	struct inet_hashinfo *hinfo = seq_file_net(seq)->ipv4.tcp_death_row.hashinfo;
+ 	struct bpf_tcp_iter_state *iter = seq->private;
+ 	struct tcp_iter_state *st = &iter->state;
+ 	unsigned int expected;
+-	bool resized = false;
+ 	struct sock *sk;
++	int err;
+ 
+ 	/* The st->bucket is done.  Directly advance to the next
+ 	 * bucket instead of having the tcp_seek_last_pos() to skip
+@@ -2856,33 +2882,52 @@ static struct sock *bpf_iter_tcp_batch(struct seq_file *seq)
+ 		}
+ 	}
+ 
+-again:
+-	/* Get a new batch */
+ 	iter->cur_sk = 0;
+ 	iter->end_sk = 0;
+-	iter->st_bucket_done = false;
++	iter->st_bucket_done = true;
+ 
+ 	sk = tcp_seek_last_pos(seq);
+ 	if (!sk)
+ 		return NULL; /* Done */
+ 
+-	if (st->state == TCP_SEQ_STATE_LISTENING)
+-		expected = bpf_iter_tcp_listening_batch(seq, sk);
+-	else
+-		expected = bpf_iter_tcp_established_batch(seq, sk);
++	expected = bpf_iter_fill_batch(seq, &sk);
++	if (likely(iter->end_sk == expected))
++		goto done;
+ 
+-	if (iter->end_sk == expected) {
+-		iter->st_bucket_done = true;
+-		return sk;
+-	}
++	/* Batch size was too small. */
++	bpf_iter_tcp_unlock_bucket(seq);
++	bpf_iter_tcp_put_batch(iter);
++	err = bpf_iter_tcp_realloc_batch(iter, expected * 3 / 2,
++					 GFP_USER);
++	if (err)
++		return ERR_PTR(err);
++
++	iter->cur_sk = 0;
++	iter->end_sk = 0;
++
++	sk = tcp_seek_last_pos(seq);
++	if (!sk)
++		return NULL; /* Done */
++
++	expected = bpf_iter_fill_batch(seq, &sk);
++	if (likely(iter->end_sk == expected))
++		goto done;
+ 
+-	if (!resized && !bpf_iter_tcp_realloc_batch(iter, expected * 3 / 2,
+-						    GFP_USER)) {
+-		resized = true;
+-		goto again;
++	/* Batch size was still too small. Hold onto the lock while we try
++	 * again with a larger batch to make sure the current bucket's size
++	 * does not change in the meantime.
++	 */
++	err = bpf_iter_tcp_realloc_batch(iter, expected, GFP_NOWAIT);
++	if (err) {
++		bpf_iter_tcp_unlock_bucket(seq);
++		return ERR_PTR(err);
+ 	}
+ 
+-	return sk;
++	expected = bpf_iter_fill_batch(seq, &sk);
++	WARN_ON_ONCE(iter->end_sk != expected);
++done:
++	bpf_iter_tcp_unlock_bucket(seq);
++	return iter->batch[0];
+ }
+ 
+ static void *bpf_iter_tcp_seq_start(struct seq_file *seq, loff_t *pos)
 -- 
 2.53.0
 
