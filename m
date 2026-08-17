@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F222854781;
-	Mon, 17 Aug 2026 14:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8956033B6F4;
+	Mon, 17 Aug 2026 14:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976587; cv=none; b=H1w+CShB509suSKosBEiojZH5TT4ZFn7p9PPISOSNpc5IOsrvb9JNOCWuWbis4xV2cu8WK2YtlIENw2UJAJlLD8HhaHjWGs5jr/SILXoFVQXLj2W5Rp6myn21uQHvjkBNNRGV9s6ui0c67Np4LySJPTgAwGOoZZBiAj92KiMh1k=
+	t=1786976589; cv=none; b=bLIC/0/SRoKsui23U6LW/eicI4HRKR1DWRtGEMmKIWNujE8EjqEp1plYThNEEg8B2S75ASs8LxcQGc0LTn3HFTaKGsKL0PsMQ8PFBjAQ3gxM2+eVNK7LZtV3jQ4h7xZXYL3vuuvwmQcky1gq6N4ujgXq6KpVJt6OnATcf+3s6kM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976587; c=relaxed/simple;
-	bh=dijKwbzxefpNP4PdL5edZhPKmeBb9CkLBKSmYoEKBIE=;
+	s=arc-20240116; t=1786976589; c=relaxed/simple;
+	bh=3Shcw8MZFQ7M0OxqSs4yzDhRozdsL1gOvjx/BMGod1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bWB4ScwtjwvRs4JJiHH3d1s/15TVY3OgoU6S15ylJYyQd4zDQ3f4VKLI/9gNnweGh70EFr0bXiDfiawdRZ+erFRW9Re7YCUyLsCWrSYDue5Kifa9y4BPLy0adJfpuSmlsf+a4yE322dHI80x27UyNBpo1nuYTng1wGwJPyY5d3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xc3Pa5dz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XlgVU5yfEoV+uheVCHP7P4mPScemmyd/3xTAajgYYwZYAIgbQQ+37njjCVSaV6m69pKH6pguiSJV4/yxVBV1cuVYzLZHCTAQLMs2Finuyql4inWyofGNufih2KwnYaQd6VBRuUukFhOHRR5MF9X50dw98WS7BYmQXlDV7PShTTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vPKLDp5y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xc3Pa5dz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03B101F000E9;
-	Mon, 17 Aug 2026 14:23:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vPKLDp5y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4851F000E9;
+	Mon, 17 Aug 2026 14:23:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976585;
-	bh=f5dqx7l4w1ULDOxtUMRe8tNQ4IjOPu5m7xlLsBJp8oo=;
+	s=korg; t=1786976588;
+	bh=h0gnuaFats96UCD4Crrkfd7B1O+J5mPf0oVEcQGIDVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xc3Pa5dzx5ExZX38GLj4ZnJDsl72nzeUd7EWbt+U0ZJfbZnaMtHMMOy4LTDgd5YUy
-	 YiymZFhRiQ0JiCsOE3yrp0PSqG/2JV0JSyANHfauuhrCKANQhNNArlGmCJhvmwARcm
-	 9BWScijM0YNw3OUjw1nP81jIz32DUkby/mh4T1xM=
+	b=vPKLDp5yxzoG3AAzpbvrsuxR2bxWfNL6u7BCzdtDkV3RZc1H482eLHE598jQ4k88Z
+	 jIH7n4Lz2BVz3qsaOfZ9PdSoaXvGtwIZMx8LCW9T8aTyfQw9wI8EkpPPnXjGX6rj9S
+	 7feu2SyMZkVd25+tqBccaY2z8OUfwIe0+v1d3wJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Uday Khare <udaykhare77@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 017/456] firmware: arm_ffa: Fix NULL dereference in ffa_partition_info_get()
-Date: Mon, 17 Aug 2026 15:26:47 +0200
-Message-ID: <20260817132540.585268348@linuxfoundation.org>
+Subject: [PATCH 5.15 035/456] ASoC: tas2562: fix deprecated shut-down GPIO always cleared after lookup
+Date: Mon, 17 Aug 2026 15:27:05 +0200
+Message-ID: <20260817132541.398047164@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,46 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
+From: Uday Khare <udaykhare77@gmail.com>
 
-[ Upstream commit 8ae5f8e4836667fcaffdf2e3c6068b0a8b364dd8 ]
+[ Upstream commit 3238c634725afbb2a137fdda762208510828f71d ]
 
-ffa_partition_info_get() passes uuid_str directly to uuid_parse()
-without a NULL check. When a caller passes NULL, uuid_parse() ->
-__uuid_parse() -> uuid_is_valid() dereferences the pointer, causing
-a kernel panic:
+In tas2562_parse_dt(), the fallback lookup for the deprecated
+"shut-down" GPIO property is broken due to a missing pair of braces.
 
-  |  Unable to handle kernel NULL pointer dereference at virtual address
-  |  0000000000000040
-  |  pc : uuid_parse+0x40/0xac
-  |  lr : ffa_partition_info_get+0x1c/0x94 [arm_ffa]
+The code intends to reset sdz_gpio to NULL only when the lookup
+returns an error that is not -EPROBE_DEFER (so the driver gracefully
+continues without a GPIO). However, without braces the statement:
 
-Add a NULL guard before uuid_parse() so a NULL argument returns
--ENODEV instead of crashing. Callers are expected to always supply
-a valid partition UUID, so NULL is not a supported input.
+    tas2562->sdz_gpio = NULL;
 
-Fixes: d0c0bce83122 ("firmware: arm_ffa: Setup in-kernel users of FFA partitions")
-Signed-off-by: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260617-ffa_partition_nullptr_fix-v2-1-bc801b4ce34c@oss.qualcomm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+falls outside the IS_ERR() check and is executed unconditionally
+for every path through the if block, including a successful GPIO
+lookup.
+
+This means any device using the deprecated 'shut-down' DT property
+will always have sdz_gpio == NULL after probe, making the GPIO
+completely non-functional.
+
+Fix this by adding the missing braces to scope the NULL assignment
+inside the IS_ERR() branch, matching the pattern already used for
+the primary 'shutdown' GPIO lookup above.
+
+Fixes: f78a97003b8b ("ASoC: tas2562: Update shutdown GPIO property")
+Signed-off-by: Uday Khare <udaykhare77@gmail.com>
+Link: https://patch.msgid.link/20260706153109.10953-1-udaykhare77@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/tas2562.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index 34351f8c4d6f36..2f8c95d9362f44 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -558,7 +558,7 @@ static int ffa_partition_info_get(const char *uuid_str,
- 	uuid_t uuid;
- 	struct ffa_partition_info *pbuf;
+diff --git a/sound/soc/codecs/tas2562.c b/sound/soc/codecs/tas2562.c
+index 10302552195e17..8ee40e584c0501 100644
+--- a/sound/soc/codecs/tas2562.c
++++ b/sound/soc/codecs/tas2562.c
+@@ -719,11 +719,12 @@ static int tas2562_parse_dt(struct tas2562_data *tas2562)
+ 	if (tas2562->sdz_gpio == NULL) {
+ 		tas2562->sdz_gpio = devm_gpiod_get_optional(dev, "shut-down",
+ 							      GPIOD_OUT_HIGH);
+-		if (IS_ERR(tas2562->sdz_gpio))
++		if (IS_ERR(tas2562->sdz_gpio)) {
+ 			if (PTR_ERR(tas2562->sdz_gpio) == -EPROBE_DEFER)
+ 				return -EPROBE_DEFER;
  
--	if (uuid_parse(uuid_str, &uuid)) {
-+	if (!uuid_str || uuid_parse(uuid_str, &uuid)) {
- 		pr_err("invalid uuid (%s)\n", uuid_str);
- 		return -ENODEV;
+-		tas2562->sdz_gpio = NULL;
++			tas2562->sdz_gpio = NULL;
++		}
  	}
+ 
+ 	if (tas2562->model_id == TAS2110)
 -- 
 2.53.0
 
