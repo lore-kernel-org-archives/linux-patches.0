@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0B4242925;
-	Mon, 17 Aug 2026 15:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE8325C804;
+	Mon, 17 Aug 2026 15:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978976; cv=none; b=O+vhBaUYrFXnjYG3wG+FcwTH2vgnkOppA+EmPAOAfo1yWG3N+CKw8qQ6E4W3qmSoL5JJXEwFKxivQU9qIYXU+rgJlpM69R7OAuWRJrHwd/+Jhjd2rYU4/QAPhqmqSZ63cZDITWiq5XAGXQ4I3MyPs3RJCCGq/nTZGix1HHgzYK0=
+	t=1786978979; cv=none; b=TWuyvIG4io/Yy14eN+0uu4m45CQDCsqAY8zA5P7Iig6yqWVDNPvmx735yEur7BipILVvVP2GwC7K+aFkshSfJaqEJC4AoKkSMZFQhF9GTjef1trgZwhwOzlpdYK9Z73ohmrEAxwSu/+R+DmBGKsJND5cX3f9aKk58NgQgWaKV3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978976; c=relaxed/simple;
-	bh=2uLGwcv+95ZIZsvTVuJwUP4JWRt5kNDXtrvHqyteDIY=;
+	s=arc-20240116; t=1786978979; c=relaxed/simple;
+	bh=ip49lI1uI7hi5RwhAelzMQg5fw553XwIdYQc1b/Buz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K8TG+dN3dJYW6BWmJ3J1lj7TEqpk4akPsN7FLbFJcCJQu6RNglgZLMpikT/fJJo/i27Vrt67uh4nE1IX6PcqpQwiz2wslTDDj2wQk83aOfftxdTObdmaojFCnmR/ZXqeOvDdPYKdVCdZJQmmDnVVQWxlq5qPb8VNpr7JiqWXGdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VsezHR5N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AA+PMqqVfEzPiH03YO9fImSBScybsoJYPNWHGIVmTE21luFW0Ns1nOhzEXc7DzSzUw6yRrgVILfVezkuC7x0G4+Tu+NvSkE6qp4rw8EhpDrq7WpE/EDLLLv6618p/1uKjV8Z0QDbdXMPlNz6uU+IsZyZoSeet0d1M5JJU2lObfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOnOM9vn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VsezHR5N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD3E31F000E9;
-	Mon, 17 Aug 2026 15:02:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOnOM9vn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857B71F000E9;
+	Mon, 17 Aug 2026 15:02:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978975;
-	bh=VHIChL9GLtdlnrZM0Kqq/uoMUGsIublWQUpxkGKhYJg=;
+	s=korg; t=1786978978;
+	bh=hr4vD0Dh1FeX/gWbBWWDoOWiErr6Lebnj4rRrS9Ib7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VsezHR5NBu73m/O/oagSzeLhH2L8Pd942sqwCQsIzQWu4bkX/qRGfytjFDW5kH+Rd
-	 Sg1rG9/csjX12wFCP3gEG8dBrT1EqGTBgg1Dr97AaDyHZUl1qwC8K/NeLg+t/ef+2T
-	 dj+QZH8zqlirm8mM//Wa8N2N4hbMIG2R0bzBeOfY=
+	b=vOnOM9vne2e0ETCDQw1vq815GSukMJRtRFgJwj/8jLvWP9T+ggiJYTXXZGcO8EGTg
+	 LyXp6vPMU72QRgZX5Zh0UwhoKq2PQHg9qTNMW7cyhyAFJFinztDQcj4yQbg5B2t7fk
+	 eapTk1ghTyx/BH6qoXQ44/71t8ho1g1PDlHfjwFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Johan Hovold <johan@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Huiwen He <hehuiwen@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/609] Bluetooth: qca: fix NVM tag length underflow in TLV parser
-Date: Mon, 17 Aug 2026 15:25:59 +0200
-Message-ID: <20260817132545.581246613@linuxfoundation.org>
+Subject: [PATCH 6.1 064/609] smb/client: handle overlapping allocated ranges in fallocate
+Date: Mon, 17 Aug 2026 15:26:00 +0200
+Message-ID: <20260817132545.618489404@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -54,66 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit c90164ca0f7036942ba088eb7ea8d3f6c2352020 ]
+[ Upstream commit b09ae45d85dc816987a71db9eebc54b0ae288e94 ]
 
-In the TLV_TYPE_NVM branch of qca_tlv_check_data() the tag loop bound is
-"while (idx < length - sizeof(struct tlv_type_nvm))". "length" is a signed
-int from the firmware TLV header and sizeof(struct tlv_type_nvm) is a
-size_t (12), so "length" is converted to size_t and any firmware-supplied
-"length" < 12 makes the subtraction wrap to a huge value. The loop body
-then reads a 12-byte struct tlv_type_nvm past the end of the short
-vmalloc'd firmware buffer (and the EDL_TAG_ID_* handlers can write past it).
+smb3_simple_fallocate_range() can skip holes when an allocated range
+returned by the server starts before the current fallocate offset. The
+skipped hole is not zero-filled, but fallocate still returns success. A
+later write to that hole may therefore fail with ENOSPC.
 
-Rewrite the bound as "idx + sizeof(struct tlv_type_nvm) <= length"; both
-operands are non-negative, so it no longer underflows and a "length" too
-small for one record correctly skips the loop.
+The function queries allocated ranges so that it can preserve existing
+contents and write zeroes only into holes. However, the server may return
+a range that starts before the current fallocate offset.
 
-  BUG: KASAN: vmalloc-out-of-bounds in qca_download_firmware.isra.0 (drivers/bluetooth/btqca.c:421)
-  Read of size 2 at addr ffffc900000e5004 by task kworker/u9:0/52
-  Workqueue: hci0 hci_power_on
-  Call Trace:
-   ...
-   kasan_report (mm/kasan/report.c:595)
-   qca_download_firmware.isra.0 (drivers/bluetooth/btqca.c:421 drivers/bluetooth/btqca.c:617)
-   qca_uart_setup (drivers/bluetooth/btqca.c:948)
-   qca_setup (drivers/bluetooth/hci_qca.c:2029)
-   hci_uart_setup (drivers/bluetooth/hci_ldisc.c:438)
-   hci_dev_open_sync (net/bluetooth/hci_sync.c:5227)
-   hci_power_on (net/bluetooth/hci_core.c:920)
-   process_one_work (kernel/workqueue.c:3322)
-   worker_thread (kernel/workqueue.c:3486)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+For example, assume the fallocate request is [100, 400) and the only
+allocated range returned by the server is [0, 200):
 
-Fixes: 2e4edfa1e2bd ("Bluetooth: qca: add missing firmware sanity checks")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+        Request:      [100, 400)
+        Server range: [  0, 200)  allocated
+
+        Correct:
+        [100, 200)    allocated data, skip
+        [200, 400)    hole, zero-fill
+
+        Current:
+        [100, 300)    skipped
+        [300, 400)    zero-filled afterwards
+
+The current code adds the full server range length, 200, to the current
+offset 100 and moves to 300. As a result, the hole in [200, 300) is
+skipped without being zero-filled.
+
+Fix this by advancing only over the part of the allocated range that
+overlaps the current fallocate offset.  Ignore ranges that end before the
+current offset and reject ranges whose end offset overflows.
+
+This also prevents a malformed range length from causing an out-of-bounds
+zero-buffer read.
+
+Fixes: 966a3cb7c7db ("cifs: improve fallocate emulation")
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/smb2ops.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 5b34da23adce7c..09ef7df5c231bf 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -430,7 +430,7 @@ static int qca_tlv_check_data(struct hci_dev *hdev,
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index a80c5f07fc718c..05b7b02a6b0352 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3655,6 +3655,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 	struct file_allocated_range_buffer in_data, *out_data = NULL, *tmp_data;
+ 	u32 out_data_len;
+ 	char *buf = NULL;
++	u64 range_start, range_len, range_end;
+ 	loff_t l;
+ 	int rc;
  
- 		idx = 0;
- 		data = tlv->data;
--		while (idx < length - sizeof(struct tlv_type_nvm)) {
-+		while (idx + sizeof(struct tlv_type_nvm) <= length) {
- 			tlv_nvm = (struct tlv_type_nvm *)(data + idx);
+@@ -3691,13 +3692,21 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 			goto out;
+ 		}
  
- 			tag_id = le16_to_cpu(tlv_nvm->tag_id);
+-		if (off < le64_to_cpu(tmp_data->file_offset)) {
++		range_start = le64_to_cpu(tmp_data->file_offset);
++		range_len = le64_to_cpu(tmp_data->length);
++		if (check_add_overflow(range_start, range_len, &range_end) ||
++		    range_end > S64_MAX) {
++			rc = -EINVAL;
++			goto out;
++		}
++
++		if (off < range_start) {
+ 			/*
+ 			 * We are at a hole. Write until the end of the region
+ 			 * or until the next allocated data,
+ 			 * whichever comes next.
+ 			 */
+-			l = le64_to_cpu(tmp_data->file_offset) - off;
++			l = range_start - off;
+ 			if (len < l)
+ 				l = len;
+ 			rc = smb3_simple_fallocate_write_range(xid, tcon,
+@@ -3714,11 +3723,13 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 		 * until the end of the data or the end of the region
+ 		 * we are supposed to fallocate, whichever comes first.
+ 		 */
+-		l = le64_to_cpu(tmp_data->length);
+-		if (len < l)
+-			l = len;
+-		off += l;
+-		len -= l;
++		if (off < range_end) {
++			l = range_end - off;
++			if (len < l)
++				l = len;
++			off += l;
++			len -= l;
++		}
+ 
+ 		tmp_data = &tmp_data[1];
+ 		out_data_len -= sizeof(struct file_allocated_range_buffer);
 -- 
 2.53.0
 
