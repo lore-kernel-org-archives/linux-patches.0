@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB0A3EEAE2;
-	Mon, 17 Aug 2026 13:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26C03F9F26;
+	Mon, 17 Aug 2026 13:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974429; cv=none; b=r+ivUYPVyMooaur2HCqANu3gEvxFQcLeYXMTi7yxxnpK9vBUUPftE6SAekRbYT47MfDpu4ZPMZ3CqqjjKDg4B1mZymVQHoPjq4TG2jV0+CfAhR4Vmg+xO4fZXHXmaowZNoTOP1bktv9JjgjXt1FYhkWzmhdk8aFQOSyvLLQ7XM4=
+	t=1786974435; cv=none; b=rZ1uSYbNT1tt4vmvUteLoR6I37oNydXDnPGJOykm/Ny5HBj/DN0omDtPONNZxlLzrnldkegEpHl8w88GR6nGmfn75WdHqhJjfS+ZFEmf6ToEjB3qOdnjceIwFrih126LXzr7sDkKyTlt0y1F6T3OtQQS26KKXHLvFT0oOWBlgq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974429; c=relaxed/simple;
-	bh=uiOoie9nGIV4qQd/7XKxgEOM3nqHbb5lvfncvE1i130=;
+	s=arc-20240116; t=1786974435; c=relaxed/simple;
+	bh=DoIFfxb09H3s5Tf+TlLp+p7lRZJl0EkPT/9zFVen+qQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vh21EugZj3EoEiIqZxFbQx+5T9XPBTo0Kr5J1CQ1ek5LO8fMMr8PAeQl26FenZjXOHWx0xrZYTqVMEOqto5Rvykqx/lO4nO/zEc0XjDs9bvemZUpNHQEWlKzIWD/qIB2jEiqWAiN3MlKFLwbhbcqj5dnhQ7G3RNQPpt3AovQwpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q2JNlLOU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K4+pOrcdBpy5q0qto6vKvxVIrNJnFWLt4S7HVCYHN+Bwhvm7ZPJtdnPFPcH6CVfPJU/X/vIxqx9cuu5fNl5Ax9eCWSxTrKTATf8EC6nECFt+Kgv3hTtn+IaFgkPix4n1R7q+fqVSbIuif/WFGWvXl71ZNyt6UmwLf1HUOlh7Iak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HgiTottW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q2JNlLOU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C8791F00A3A;
-	Mon, 17 Aug 2026 13:47:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HgiTottW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A75C1F000E9;
+	Mon, 17 Aug 2026 13:47:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974425;
-	bh=sJ0gpz/xbwOtR+LbZnEh5sDXuph0YOwEl6lpDdvLoq0=;
+	s=korg; t=1786974428;
+	bh=4E/JEImELwTvAHcbvcTQ6Ri31p3HH29A4wnqXdwVtQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q2JNlLOUGtAZSeCRMJD9t/VC/9OfDXYA+txUKT1TZcXjAInVKCR7SdzieAA0dQ2om
-	 iPkxmnF9fgsAcX0rVF9tvS/guO8NnP0Uz1UsAkeaEPynFFqkl1oe7RqzXLvQycYu6B
-	 aPl//E0ADicq7wdN6JLonsYfg2FmIieBtXRkJSM0=
+	b=HgiTottWLEDJvrVmTt241RqqOcBYfOxWH+4v56bLcQn7Z3E/BAONiD6ej0b+InFXK
+	 SvD+w0sCLSD1ujLp9c4cs3DiwgaNxX2jK6NvEKzcJUfJ6TiL08a4BL6WXP4sACm43c
+	 iTvLgGED9Md/7mF97H5eKULTI7z81cpg6Gfxh+Gs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>,
+	Xu Rao <raoxu@uniontech.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.1 200/271] ALSA: FCP: fix OOB write in fcp_meter_ctl_get()
-Date: Mon, 17 Aug 2026 15:32:05 +0200
-Message-ID: <20260817132545.052622493@linuxfoundation.org>
+Subject: [PATCH 7.1 201/271] ALSA: hda/tas2781: fix ACPI reference handling
+Date: Mon, 17 Aug 2026 15:32:06 +0200
+Message-ID: <20260817132545.095815716@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -51,116 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 620f1e52a46f604635efd0fb78138afd6a513b5d upstream.
+commit 8bec01c80e798eca1ae7863cf29bc6befd759db7 upstream.
 
-fcp_ioctl_set_meter_map() bounds the user-supplied Level Meter map size
-by the driver's own limit of 255
+tas2781_read_acpi() gets a reference to the matching ACPI device and then
+looks up its first physical device node. After taking a reference to the
+physical device, it immediately drops the ACPI device reference.
 
-	if (map.map_size < 1 || map.map_size > 255 ||
-	    map.meter_slots < 1 || map.meter_slots > 255)
-		return -EINVAL;
+However, every later failure jumps to an error path that drops the ACPI
+device reference a second time. This unbalances the reference count and
+may prematurely release the ACPI device.
 
-and passes it to fcp_add_new_ctl() as the control's channel count, where
-it is stored as elem->channels.
+In addition, acpi_get_first_physical_node() may return NULL. Without a
+check, the driver passes the NULL physical device to the property helper
+calls and may dereference it.
 
-Every control read writes into struct snd_ctl_elem_value, whose integer
-array is declared long value[128], so the limit is 128, not 255.
-fcp_meter_ctl_get() stores one 64-bit word per channel into that array
-with no bound of its own:
+Return -ENODEV when no physical device is associated with the ACPI node,
+and remove the duplicate acpi_dev_put() from the common error path.
 
-	for (i = 0; i < elem->channels; i++) {
-		int idx = private->meter_level_map[i];
-		int value = idx < 0 ? 0 : le32_to_cpu(resp[idx]);
-
-		ucontrol->value.integer.value[i] = value;
-	}
-
-snd_ctl_elem_read_user() serves that object from
-memdup_user(_control, sizeof(*control)), 1224 bytes on LP64 out of
-kmalloc-2048.  offsetof(struct snd_ctl_elem_value, value) is 72, so
-element i is written at byte 72 + 8 * i and element 144 already lands
-past the allocation.  At map_size 255 the last store ends at byte 2112,
-888 bytes past the object and 64 bytes into the adjacent slab object.
-The stored words come from the device and meter_level_map[] selects
-which word lands in which slot, so extent and contents are both
-controlled.
-
-The core does not catch this.  snd_ctl_check_elem_info() is reached only
-from __snd_ctl_elem_info(), which snd_ctl_elem_read() calls under
-CONFIG_SND_CTL_DEBUG; without that option snd_ctl_skip_validation() is a
-compile-time true.  __snd_ctl_add_replace() validates kcontrol->count and
-never inspects elem->channels.
-
-Installing an oversized map needs CAP_SYS_RAWIO, but the control outlives
-the hwdep descriptor that created it, so the out-of-bounds stores are
-issued by any process able to read controls on /dev/snd/controlC0.
-
-KASAN on 7.2.0-rc5 (arm64), triggered by an unprivileged control read:
-
-  BUG: KASAN: slab-out-of-bounds in fcp_meter_ctl_get
-  Write of size 8 at addr ffff000017af04c8 by task fcp_trigger/185
-   __asan_store8
-   fcp_meter_ctl_get
-   snd_ctl_elem_read
-   snd_ctl_ioctl
-  Allocated by task 185:
-   memdup_user
-   snd_ctl_ioctl
-  The buggy address is located 0 bytes to the right of
-   allocated 1224-byte region [ffff000017af0000, ffff000017af04c8)
-
-Bound the map size by the ABI limit rather than by 255, and bound the
-store loop at the sink so it cannot run past the value array whatever
-elem->channels holds.
-
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: 46757a3e7d50 ("ALSA: FCP: Add Focusrite Control Protocol driver")
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
+Fixes: bb5f86ea50ff ("ALSA: hda/tas2781: Add tas2781 hda SPI driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260804123611.91715-1-baul.lee@xbow.com
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/97EA8F29DA0D9AF7+20260731033554.949564-1-raoxu@uniontech.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/fcp.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ sound/hda/codecs/side-codecs/tas2781_hda_spi.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/sound/usb/fcp.c
-+++ b/sound/usb/fcp.c
-@@ -129,6 +129,10 @@ struct fcp_data {
+--- a/sound/hda/codecs/side-codecs/tas2781_hda_spi.c
++++ b/sound/hda/codecs/side-codecs/tas2781_hda_spi.c
+@@ -344,6 +344,8 @@ static int tas2781_read_acpi(struct tas2
+ 	strscpy(p->dev_name, hid, sizeof(p->dev_name));
+ 	physdev = get_device(acpi_get_first_physical_node(adev));
+ 	acpi_dev_put(adev);
++	if (!physdev)
++		return -ENODEV;
  
- #define FCP_SEGMENT_APP_GOLD 0
+ 	property = "ti,dev-index";
+ 	ret = device_property_count_u32(physdev, property);
+@@ -386,7 +388,6 @@ static int tas2781_read_acpi(struct tas2
+ err:
+ 	dev_err(p->dev, "read acpi error, ret: %d\n", ret);
+ 	put_device(physdev);
+-	acpi_dev_put(adev);
  
-+#define FCP_MAX_METER_MAP_SIZE \
-+	(sizeof_field(struct snd_ctl_elem_value, value.integer.value) / \
-+	 sizeof(long))
-+
- /* Forward declarations */
- static int fcp_init(struct usb_mixer_interface *mixer,
- 		    void *step0_resp, void *step2_resp);
-@@ -410,6 +414,9 @@ static int fcp_meter_ctl_get(struct snd_
- 	if (err < 0)
- 		return err;
- 
-+	if (WARN_ON_ONCE(elem->channels > FCP_MAX_METER_MAP_SIZE))
-+		return -EINVAL;
-+
- 	/* copy & translate from resp[] using meter_level_map[] */
- 	for (i = 0; i < elem->channels; i++) {
- 		int idx = private->meter_level_map[i];
-@@ -636,7 +643,8 @@ static int fcp_ioctl_set_meter_map(struc
- 	}
- 
- 	/* Validate the map size */
--	if (map.map_size < 1 || map.map_size > 255 ||
-+	if (map.map_size < 1 ||
-+	    map.map_size > FCP_MAX_METER_MAP_SIZE ||
- 	    map.meter_slots < 1 || map.meter_slots > 255)
- 		return -EINVAL;
- 
+ 	return ret;
+ }
 
 
