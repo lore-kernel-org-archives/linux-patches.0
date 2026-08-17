@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC35643636A;
-	Mon, 17 Aug 2026 14:46:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18BD43802D;
+	Mon, 17 Aug 2026 14:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977980; cv=none; b=mZcODKqTuvJVyhZllskFOWTJKxRmNmVNrrarxorvseDMIMxjC+jY3KOFkuHgsGqJvg7D3V8YRLgj5qe6UVA7XWu/T4SsVNoNHN5KaldEdv8XT+5lUE/MoIKEMuoJhGDIR0jynUuhwYuyDToEikdSjrfd7Eszum8KpS+qqX6O4mI=
+	t=1786977982; cv=none; b=E1vSIjjcRuNgkT+/ZL2XlnFi0m+MpK4sXPqlwhlTCVbZaxrLJnBWA8eA8QA+lry7Kk12TZMR43ZuSEXAn6ItUyXdrAaAyP7bE09laLf32uLZC/xgrhnb/tPCJcRJlD4JWlWaJAR6fTuFoP9hxPUuJGWWVzjjvqDCNJBdcqMgId8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977980; c=relaxed/simple;
-	bh=YkdGpv7xf+LegsDi10JlJkuQeTAB7d81+Mk1FLbySOQ=;
+	s=arc-20240116; t=1786977982; c=relaxed/simple;
+	bh=JaguDEymoFtCK7UWqV1KlqwN3YHdCmUhvDWltBlDCIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KaIewG4B4F99Vj/iKRDUBTeHMnemMO0W8hUwz8t6N0PRPblFQdH/eZi3/NPqmnmpeU5ZxbRwJFOnhFawZ9X+FtHIUu/GY1CVjDiUJbo1rhIEOsz8qR9kQFg+f4X7ILJDOd8LtKOy/olxw11QuhEd1/obIevRIVmjraIsF6BHEX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfXwpcox; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jYUuOdbXnKw4sKqyxCd5ue1Si1kh7vd1Fwxe8aD2hqKtFZ65dfsbkCcjjbxnKgGwmRPM8O2t/mTO4fb7UoASKPd0p1/fxiw0/He0panuI7owJBx4f+1GnKooefBme75kqBWdHttsSMxAYk4nkVZjcDofwE3896EhFCiWzirBW6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4FUleKV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfXwpcox"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF821F000E9;
-	Mon, 17 Aug 2026 14:46:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4FUleKV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059811F00A3A;
+	Mon, 17 Aug 2026 14:46:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977978;
-	bh=TD+bEJ53sggn6A3i3icjE2VPz8zrnqEglWWBDgc5Vd0=;
+	s=korg; t=1786977981;
+	bh=32ZywOErqoZ8o40YnF3htcwVuB0PZGoe6RfEGbfNTDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NfXwpcoxebbqBSANqts/JSGPbGHisYKsYeYIEjMr8yGyVnMUGeIwD6DjMkAIaZr4a
-	 J0IVOwYHbiU+wDU0E4o0x3ZoYHqTteXHC2faz+Y8Xi3g0MLomASJ/CzgPNgQJOEsJz
-	 V11120ufRwCn/3Q0EEe3nPvWS6J6jbutMHahziQc=
+	b=z4FUleKVoiQnDcDpEvkrYSyKzorehUl4jGJC+ArNinZsUpHh1kXKfgsAtt7Ri7iDm
+	 /fwpeXvLFwUI8ximRNWaonmbYnHWbwoJjSgYixeGAdCJCnBHMAapI7c/Wtlj2D7uP8
+	 yW52AjSbUIDbCRBV+sMjVix8/S8/pJiZIcAd7Ugk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+53ecc09fb81df10ef4de@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
+	Daniele Linguaglossa <danielelinguaglossa@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 059/181] net/atm: fix slab-out-of-bounds read in vcc_setsockopt()
-Date: Mon, 17 Aug 2026 15:32:33 +0200
-Message-ID: <20260817132537.740845891@linuxfoundation.org>
+Subject: [PATCH 6.12 060/181] sctp: clear control chunk transport if it is being removed
+Date: Mon, 17 Aug 2026 15:32:34 +0200
+Message-ID: <20260817132537.782607208@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -52,79 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit d0c80dbb970439bd2eeb0e5effff8c16a5f4e1e3 ]
+[ Upstream commit c9158ceaf27780ef64534ad72f44ffde3f8ccc49 ]
 
-vcc_setsockopt() contained an ineffective optlen check:
-  if (__SO_LEVEL_MATCH(optname, level) && optlen != __SO_SIZE(optname))
-      return -EINVAL;
+sctp_make_heartbeat_ack() caches the destination transport in
+chunk->transport without taking a reference. When src_out_of_asoc_ok is
+enabled, the HEARTBEAT ACK may remain queued on control_chunk_list instead
+of being transmitted immediately.
 
-If __SO_LEVEL_MATCH(optname, level) evaluated to false (e.g. if the caller
-passed a mismatched level), the length check optlen != __SO_SIZE(optname)
-was short-circuited and bypassed. Execution then fell through to switch(optname),
-calling copy_from_sockptr() assuming optval contained sufficient space.
+If the peer transport is removed while the chunk is still queued,
+sctp_assoc_rm_peer() drops the transport and schedules it for RCU freeing,
+but only clears cached transport pointers in out_chunk_list.  The queued
+control chunk therefore retains a dangling transport pointer.
 
-Furthermore, even if level matched, a cgroup BPF setsockopt filter could shrink
-optlen after entry. Because copy_from_sockptr() on kernel pointers uses memcpy(),
-this leads to a KASAN slab-out-of-bounds read when optlen is smaller than the
-expected structure size.
+Once an ASCONF_ACK clears the suppression and the queued control chunk is
+transmitted, SCTP dereferences the stale transport pointer, leading to a
+use-after-free.
 
-Fix this by using copy_safe_from_sockptr(), which unconditionally validates
-that optlen is at least the expected size before copying. Also change the local
-'value' variable type from 'unsigned long' to 'int' so that SO_SETCLP matches
-its sizeof(int) ABI encoding on 64-bit systems.
+Fix this by also clearing chunk->transport for queued control chunks in
+control_chunk_list when removing the transport.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+53ecc09fb81df10ef4de@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=53ecc09fb81df10ef4de
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260805131508.3227331-1-edumazet@google.com
+Fixes: 8a07eb0a50ae ("sctp: Add ASCONF operation on the single-homed host")
+Reported-by: Daniele Linguaglossa <danielelinguaglossa@gmail.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/7e1168cb722132152a29d47e5eafaeac4a3bf6f3.1785943120.git.lucien.xin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/common.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ net/sctp/associola.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/atm/common.c b/net/atm/common.c
-index 196c36269b34f..413863861bcaa 100644
---- a/net/atm/common.c
-+++ b/net/atm/common.c
-@@ -760,7 +760,7 @@ int vcc_setsockopt(struct socket *sock, int level, int optname,
- 		   sockptr_t optval, unsigned int optlen)
- {
- 	struct atm_vcc *vcc;
--	unsigned long value;
-+	int value;
- 	int error;
+diff --git a/net/sctp/associola.c b/net/sctp/associola.c
+index 44f06c5f1f256..ebdc48be47813 100644
+--- a/net/sctp/associola.c
++++ b/net/sctp/associola.c
+@@ -573,6 +573,10 @@ void sctp_assoc_rm_peer(struct sctp_association *asoc,
+ 		if (ch->transport == peer)
+ 			ch->transport = NULL;
  
- 	if (__SO_LEVEL_MATCH(optname, level) && optlen != __SO_SIZE(optname))
-@@ -772,8 +772,10 @@ int vcc_setsockopt(struct socket *sock, int level, int optname,
- 	{
- 		struct atm_qos qos;
++	list_for_each_entry(ch, &asoc->outqueue.control_chunk_list, list)
++		if (ch->transport == peer)
++			ch->transport = NULL;
++
+ 	asoc->peer.transport_count--;
  
--		if (copy_from_sockptr(&qos, optval, sizeof(qos)))
--			return -EFAULT;
-+		error = copy_safe_from_sockptr(&qos, sizeof(qos), optval,
-+					       optlen);
-+		if (error)
-+			return error;
- 		error = check_qos(&qos);
- 		if (error)
- 			return error;
-@@ -786,8 +788,10 @@ int vcc_setsockopt(struct socket *sock, int level, int optname,
- 		return 0;
- 	}
- 	case SO_SETCLP:
--		if (copy_from_sockptr(&value, optval, sizeof(value)))
--			return -EFAULT;
-+		error = copy_safe_from_sockptr(&value, sizeof(value), optval,
-+					       optlen);
-+		if (error)
-+			return error;
- 		if (value)
- 			vcc->atm_options |= ATM_ATMOPT_CLP;
- 		else
+ 	sctp_ulpevent_notify_peer_addr_change(peer, SCTP_ADDR_REMOVED, 0);
 -- 
 2.53.0
 
