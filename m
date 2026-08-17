@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532AE426D03;
-	Mon, 17 Aug 2026 14:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B9543C07E;
+	Mon, 17 Aug 2026 14:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978354; cv=none; b=JTgiES1bhH80pf21JRaNh7QV4k7mEOOhE4BXtmbzcjl/d2XEEg99u0gZbMASvT5WMPe8A0/a6jFgXw6ndKWMVIkPADj62T3sgdikjrbx2wNlCaQsMdV80clBrNk/R6HUstnX45kL9jH085ogZxnAhCcptBqNGFLa2T4l+jZyMr4=
+	t=1786978357; cv=none; b=uGTzGd2X/uxmenh7j+5krFd5nVcmTLQMBuHLzSSO+VoD+oajsr0GcWgTS9FlA1RVn8Yq0GMX0OvNJkrVfenFMsGtVzgmpMaHtKrkuRAN9t5g7ldIgerdvJ8Z6CptTTJTzzNwowPVUvGkYxvQlhOmIp0oX8XDFbBQd4Awmy+EOLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978354; c=relaxed/simple;
-	bh=4MAJjXBPvLXARTEhIOigEY66CeWGSnx8BWOG4jmZ4kg=;
+	s=arc-20240116; t=1786978357; c=relaxed/simple;
+	bh=hcLua6M4aRThZW3eQMyZG8tSlDhrQGvFM6WiVPdCZsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kku1hQFLkkqDCUmTkTMZhwqH3mdclkxp4WbfGRfSuFkkQw95IdAh+fSENc401aAMQ1m9Dsa3cwgztmxLihL5kXZZZkvSva99lC0IT5yj9JCMNoL71ehJBxYOxbYAmgHASo5A8IrWN/Ox//z9FBtWu1SXx/9c7ckQyKOa4EuJM+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eUjm4zvC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ruwKbWdM0YC2TaNZFfz/WCJ0jUuuKIyxHIgAV58afiEh4Lr548F56TaILnMPtFXhrBVf8z4Mq5GvHFn0W010OE/nO5BQ2y+b2MbKdLg0d2Md7JrLlTafrsf9KZNIHEIU1kL4sTgacf506fPvJhqECHWh+ap4XIx1Zq+d+37o2HQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKKStWrG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eUjm4zvC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB3C41F000E9;
-	Mon, 17 Aug 2026 14:52:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKKStWrG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D0F1F000E9;
+	Mon, 17 Aug 2026 14:52:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978353;
-	bh=pW8e19XIXEs6HAjOqzM8otaK1T3a24hcb8W1K6KdRGI=;
+	s=korg; t=1786978356;
+	bh=neptSaTty6idcQNS8RiDE9WQhunqYRYuE5Vhtm2ZLVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eUjm4zvCAFpLRfH9IALga1Ehk9UWiE6Xc3jMsBb8kMWMzxcgSYQqz1n4DuQ7tqCSN
-	 Xa4PaVvNu1QNqDtebKQf74VZCIVOOyFu7pE00zwRaVzvQI3ry03TNTUYF+CanIMj7U
-	 jF4uCB0Cab/HZZzh5gb/zo7qvX8dzgA78ryjYg2k=
+	b=SKKStWrGeN2JHB8gNcI/FQh+0sObrmsj1NClEFrOETP47egtZv2Kcx+Q8+vHV2Hcn
+	 Kc+ZuV5YyjQ2FF9msWf0xAh0YuiKOBdyEtAB6ND6b7cWZ8xMJvXFVxHTNRTGT79CRH
+	 WXuyl6Q4pApK11vxnnrYN6bZsaciNOSvjN2DppRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.12 162/181] eventfs: Fix use-after-free in eventfs_remove_rec()
-Date: Mon, 17 Aug 2026 15:34:16 +0200
-Message-ID: <20260817132542.060261077@linuxfoundation.org>
+	Denis Arefev <arefev@swemel.ru>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 001/156] mount: honour SB_NOUSER in the new mount API
+Date: Mon, 17 Aug 2026 15:32:15 +0200
+Message-ID: <20260817132534.723868338@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
-References: <20260817132535.394764707@linuxfoundation.org>
+In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
+References: <20260817132534.666299318@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,56 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit fd73b691702170d37d66f4b0278530cea8ed419a upstream.
+[ Upstream commit 6dd3c6884cd9defb511284b566cef5ac8f657dbf ]
 
-eventfs_remove_rec() recursively removes the child at the current loop
-position. After the recursive call returns, list_for_each_entry() advances
-by reading list.next from the removed child.
+One should *not* be allowed to mount one of those, new API or not.
 
-If free_ei() drops the final reference, release_ei() reuses the list/rcu
-union to queue an SRCU callback. The child may be freed before that read.
-The eventfs_mutex serializes list updates, but it does not keep the removed
-child alive or prevent the SRCU callback from running.
-
-Use list_for_each_entry_safe() to save the next sibling before recursively
-removing the current child.
-
-Cc: stable@vger.kernel.org
-Fixes: 43aa6f97c2d0 ("eventfs: Get rid of dentry pointers without refcounts")
-Link: https://patch.msgid.link/20260806022719.375354-1-shuangpeng.kernel@gmail.com
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Denis Arefev <arefev@swemel.ru>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Link: https://patch.msgid.link/20260602020444.GP2636677@ZenIV
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[Denis: rename new_mnt -> newmount.mnt]
+[Denis: use goto err_unlock instead of direct return]
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/tracefs/event_inode.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/namespace.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/tracefs/event_inode.c
-+++ b/fs/tracefs/event_inode.c
-@@ -849,7 +849,7 @@ struct eventfs_inode *eventfs_create_eve
-  */
- static void eventfs_remove_rec(struct eventfs_inode *ei, int level)
- {
--	struct eventfs_inode *ei_child;
-+	struct eventfs_inode *ei_child, *tmp;
+diff --git a/fs/namespace.c b/fs/namespace.c
+index 646d9e7d41ee8..f185de5f5df4a 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -4050,6 +4050,11 @@ SYSCALL_DEFINE3(fsmount, int, fs_fd, unsigned int, flags,
+ 		ret = PTR_ERR(newmount.mnt);
+ 		goto err_unlock;
+ 	}
++	if (newmount.mnt->mnt_sb->s_flags & SB_NOUSER) {
++		mntput(newmount.mnt);
++		ret = -EINVAL;
++		goto err_unlock;
++	}
+ 	newmount.dentry = dget(fc->root);
+ 	newmount.mnt->mnt_flags = mnt_flags;
  
- 	/*
- 	 * Check recursion depth. It should never be greater than 3:
-@@ -862,7 +862,7 @@ static void eventfs_remove_rec(struct ev
- 		return;
- 
- 	/* search for nested folders or files */
--	list_for_each_entry(ei_child, &ei->children, list)
-+	list_for_each_entry_safe(ei_child, tmp, &ei->children, list)
- 		eventfs_remove_rec(ei_child, level + 1);
- 
- 	list_del_rcu(&ei->list);
+-- 
+2.53.0
+
 
 
