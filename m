@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3FCA442FAE;
-	Mon, 17 Aug 2026 13:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85B7442366;
+	Mon, 17 Aug 2026 13:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975063; cv=none; b=WRCWpWxovXZOIWQNklGQR6Zl9SqMH9nVJqiKaIlAjJS5iZMP9HfLu6ATxlZuubHDAgITA0gM66enkhZUUBs4h+vfa1UTRTk21Zq5CcQ+/NtKsgH53ONooGbKgS0kP0qKVf2PisKORaOti59eTslZW772667ypgoXPhQQ+gnBrKo=
+	t=1786975065; cv=none; b=k4ASgR18S68iUMaF6phV57/2+GLBph+KXXZkDEP0A+7UwFPKwllP8FdGR5xxT+aVfSf4rkEqY0hw27/sAI2aJSPYmTB6q9P76tJkDSVs/D3qlqwQdK5PUPboBrOb+3rHKB4Ik+4dTfM8TO2+cxZi7jh0hGIZZ3iTv2ggpFlZ+Q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975063; c=relaxed/simple;
-	bh=RMHiL7B8BbxfKDmdRUE6FDMXSNhzB+feQve/eqFDHiE=;
+	s=arc-20240116; t=1786975065; c=relaxed/simple;
+	bh=bZWBsx1i+Dc/ZAmsdnH+qkGEA6Z4TG1rcoi7V4zSnVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ol/uZ8CRFSBGGd9XOa1vo41VDgHmgWjaX8XLZPhj60AG4vyzekXyjTXBZE5HIkIDYRpPKhZH3TC+HZ/Utml9Or9K0MLpmlC/UwQnUH4bS3KjC6BQeF48u67ZO9uQ4oXkD3MY3WwnMGNjerxlWId5vQkleWJj+QndJgSS+QpfPIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t01gtPwz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ng3oJfy4LdP+T8CbnLoSeERqyMRvEGuZnOZlRlrrRDiZLiZfR4vf/bZ5vB4HRDdC9nVXbeqimoWKBbm/lnL0O4zn5CEVIiuXUGG3rTjVwXfVpo77Pb/hxq2ZH6ODEHy3v7sBGtpd0BRFR/6wYoAlBa8tXzwvqRK0vnmstYtjRQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1aE3oOAl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t01gtPwz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F2801F000E9;
-	Mon, 17 Aug 2026 13:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1aE3oOAl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378E91F000E9;
+	Mon, 17 Aug 2026 13:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975061;
-	bh=eIhzfpZpYTPah1ei16W9eu3b0N6Gq5l1nDblJ5o1YCQ=;
+	s=korg; t=1786975064;
+	bh=QdxujJClhkaBH0gkL6Nz4fbQaAzOKsZidjZO9e3Nk6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t01gtPwzBnYAYpJ+8W7Nt6BFygdMlh2nj7xXJ/2KJSmY9wXVbiA8Zq7eugxgZBE89
-	 6znDPRlqOHV7z559qb3i57ZMQviRRVvVd9kPXGIRgmtDlNQi6sEZako+C6k10nesFK
-	 oZ/1HR+QfYkVm3RU3STjUGw0k6t5+BTtOO3I2eBU=
+	b=1aE3oOAlAAdY4LXaHmLMyf1XoHGT43luXuYFjtXXbbqrOXlRgKWS4V9WAXq+kywp7
+	 oTCNLqclvGqDUUTedn1fMd5thdLWXEFv6ySfANmighS79E3bmCtsv5vm5jqQZk2N0b
+	 t1H5yF0d0JGACXgNYfmZ+qESgrVL06uNyZI4ot+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <tom.leiming@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Simon Liebold <simonlie@amazon.de>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Farhan Ali <alifm@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 148/250] blk-mq: reinsert cached request to the list
-Date: Mon, 17 Aug 2026 15:31:49 +0200
-Message-ID: <20260817132542.594873339@linuxfoundation.org>
+Subject: [PATCH 6.18 149/250] KVM: s390: pci: Fix aisb calculation
+Date: Mon, 17 Aug 2026 15:31:50 +0200
+Message-ID: <20260817132542.637753004@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -55,43 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Matthew Rosato <mjrosato@linux.ibm.com>
 
-[ Upstream commit b051bb6bf0a231117036aa607cadf55be8e63910 ]
+[ Upstream commit 0cfe660559e857d7c00ab86c73e4510ce069086f ]
 
-A previous commit removed an optimization out of caution for a scenario
-that turns out not to be real: all the "queue_exit" goto's are safe to
-reinsert the request into the cached_rq's plug list as they are either
-from a non-blocking path, or a successful merge that already holds the
-queue reference. This optimization is most needed for small sequential
-workloads that successfully merge into larger requests.
+The current implementation of aisb calculation will erroneously index
+via an unsigned long * as well as multiply by 8B for every 64-bits in
+the offset; only one or the other is required.  This throws off aisb
+calculations once the number of devices exceeds 64, and can result
+in out-of-bounds access as well as failure to indicate summary bits
+associated with those devices in guests.
 
-Fixes: dc278e9bf2b9 ("blk-mq: pop cached request if it is usable")
-Suggested-by: Ming Lei <tom.leiming@gmail.com>
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Link: https://patch.msgid.link/20260526153531.2365935-1-kbusch@meta.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Simon Liebold <simonlie@amazon.de>
+Fix this by converting to a physical address before applying the
+offset, as is already done in arch/s390/pci/pci_irq.c.
+
+Fixes: 3c5a1b6f0a18 ("KVM: s390: pci: provide routines for enabling/disabling interrupt forwarding")
+Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+[alifm@linux.ibm.com: Resolved merge conflict]
+Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 2 +-
+ arch/s390/kvm/pci.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 711d295d36db9..56158b70d0c72 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -3224,7 +3224,7 @@ void blk_mq_submit_bio(struct bio *bio)
- 	if (!rq)
- 		blk_queue_exit(q);
- 	else
--		blk_mq_free_request(rq);
-+		rq_list_add_head(&plug->cached_rqs, rq);
- }
+diff --git a/arch/s390/kvm/pci.c b/arch/s390/kvm/pci.c
+index b729457d30167..2ac7e13640931 100644
+--- a/arch/s390/kvm/pci.c
++++ b/arch/s390/kvm/pci.c
+@@ -167,7 +167,7 @@ static int kvm_zpci_set_airq(struct zpci_dev *zdev)
+ 	fib.fmt0.noi = airq_iv_end(zdev->aibv);
+ 	fib.fmt0.aibv = virt_to_phys(zdev->aibv->vector);
+ 	fib.fmt0.aibvo = 0;
+-	fib.fmt0.aisb = virt_to_phys(aift->sbv->vector + (zdev->aisb / 64) * 8);
++	fib.fmt0.aisb = virt_to_phys(aift->sbv->vector) + (zdev->aisb / 64) * 8;
+ 	fib.fmt0.aisbo = zdev->aisb & 63;
+ 	fib.gd = zdev->gisa;
  
- #ifdef CONFIG_BLK_MQ_STACKING
 -- 
 2.53.0
 
