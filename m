@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316A62E7BD6;
-	Mon, 17 Aug 2026 15:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB252E7BD6;
+	Mon, 17 Aug 2026 15:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980148; cv=none; b=u6ZMlDuI6qIJONokNSOcPGkvCFnmypF7TJmjXU11sHivmPzsjBQQG19oZaiB9eTIheT1Wvo9tub+XOD8lqJXVNoLcXWbi0wk9dmYTI9aYq/qNZkCFCTgxh0gWODJBUEoFXNEmHltHLHoAHxGRabkBYlSfCVikF9EG23YRYLwUy4=
+	t=1786980151; cv=none; b=o0JRys7OMb5K5KZ47dt/LQoTX6jEdQWPHHDmVqw0lR6dl1UocbbbO7o/ia8rpJ2XgnZaQS8m0tbfbYybwM6iqH8A7H43OnuACytRjpB+q+jYuBrtEYMvnfCKvFyCcausWXrosn3tq14keDaD4TXseEtS+2x0+6Xmod2/itHFdig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980148; c=relaxed/simple;
-	bh=B9e8viNFhnF4+Oo7vLZjQ7PwHdIEu2YcwwQtUWL+zUM=;
+	s=arc-20240116; t=1786980151; c=relaxed/simple;
+	bh=IZpQSFstF4XyRQ3FEAg/BtmUBfI49PlQ6BcEIL9iAX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aVXuASHRhMwIlZAm99+Xb4f87KwzrINDTjtj/1l0vGSNqbFbngLBkMVfvldB+NzgmDGvrz5KdPE/ReM+g66J1iPHdb1SuCjN+S+WI4LODXUYAB5nPe9aD2Bv9xLKlstvqAvZBOGz2Z5WrGrcdRLUw6NJrr/C+9QMeuh/mBj12Gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxC8b6dW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NWN/GtdrwygC2y/EsSUu6YbUx8iSAZRev69aiIS7qWSkaSJ8THvBjd9wpCB7X2sDnTfR2ApI0R18s3XUzH2SZkOg/DMoG+01VJRXda2QmqNf1D/9vrxyA/dki3OOSphLcb1F8Kq22YBCLn0cpS3jeptiNfAYwRDZCU8/lMzSKMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c6BZSDyg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxC8b6dW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940171F000E9;
-	Mon, 17 Aug 2026 15:22:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6BZSDyg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657411F000E9;
+	Mon, 17 Aug 2026 15:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980147;
-	bh=hVlPJO33r6YNPWI5B6nI++UrdAOReTvtiOE+6uQbGlg=;
+	s=korg; t=1786980149;
+	bh=pBaI2rxh0q+QCyMqH7DO5vGzAzSi5cAPsQb5aRIwBNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qxC8b6dWJmlS8AUDsJDlLGy114NPdcC3HPxyXA9vsjg2Hqp6I/bgvYujEn+NcZ4vx
-	 gFihohJ4wmA25D5v/l76s75iC7iQN+D5h1Bc05X+XAMl0ttJmrY2MH3brfsGXddXbg
-	 RGRSBb92qTcyLrgZFCM3l5gS0WyiD6Ocmle8pFoE=
+	b=c6BZSDygtiYyJhWTWXnOg6+C/aD3xCXsDPigLWgsO9Sj+KUGVD28f/YkHjAWJNQAE
+	 Qq51jZkQyr8AlNKkdQl8J7Ia5C53snK0viUw2sudy4q5cOJxe758jYKAZKnBxnW7gj
+	 t+B947kCw4Ka7PIk6XD0lDL1c31Lk+VvrUsRWE9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <kohei@enjuk.jp>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Aaron Ma <aaron.ma@canonical.com>,
-	Alexander Nowlin <alexander.nowlin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.1 445/609] ice: wait for reset completion in ice_resume()
-Date: Mon, 17 Aug 2026 15:32:21 +0200
-Message-ID: <20260817132558.967384727@linuxfoundation.org>
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Ian Forbes <ian.forbes@broadcom.com>
+Subject: [PATCH 6.1 472/609] drm/vmwgfx: drop dma_buf reference on foreign-fd prime import
+Date: Mon, 17 Aug 2026 15:32:48 +0200
+Message-ID: <20260817132559.766074835@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -54,65 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Ma <aaron.ma@canonical.com>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-commit c2816d613f388814d27bc9fd6dbd931a88056e19 upstream.
+commit f739416dc555fa205a785e5135d73fa39b26f35d upstream.
 
-ice_resume() schedules an asynchronous PF reset and returns
-immediately. The reset runs later in ice_service_task(). If
-userspace tries to bring up the net device before the reset
-finishes, ice_open() fails with -EBUSY:
+ttm_prime_fd_to_handle() returns -ENOSYS when the imported fd's
+dma_buf->ops do not match the ttm_object_device's ops, but does so
+without releasing the reference acquired by dma_buf_get().  Any
+unprivileged renderD client passing a non-vmwgfx prime fd through the
+DRM_VMW_GB_SURFACE_REF{,_EXT} path leaks one dma_buf reference per
+call and indefinitely pins the foreign exporter's GEM resources.
 
-  ice_resume()
-    ice_schedule_reset()          # sets ICE_PFR_REQ, returns
-  ...
-  ice_open()
-    ice_is_reset_in_progress()    # ICE_PFR_REQ still set, -EBUSY
-  ...
-  ice_service_task()
-    ice_do_reset()
-      ice_rebuild()               # clears ICE_PFR_REQ, too late
+Funnel the error path through the existing dma_buf_put() so the
+reference is always dropped.
 
-Reproduced on E800 series NICs during suspend/resume with irdma
-enabled, where the aux device probe widens the race window.
-
-  ice 0000:81:00.0: can't open net device while reset is in progress
-
-Add a best-effort wait (10s timeout, matching ice_devlink_info_get())
-for the reset to complete before returning from ice_resume(). In
-practice the reset completes in ~300ms.
-
-Fixes: 769c500dcc1e ("ice: Add advanced power mgmt for WoL")
+Fixes: 65981f7681ab ("drm/ttm: Add a minimal prime implementation for ttm base objects")
 Cc: stable@vger.kernel.org
-Reviewed-by: Kohei Enju <kohei@enjuk.jp>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
-Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Assisted-by: Claude:claude-opus-4.7
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
+Link: https://patch.msgid.link/20260505222728.519626-6-zack.rusin@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/vmwgfx/ttm_object.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -5369,6 +5369,16 @@ static int __maybe_unused ice_resume(str
- 	/* Restart the service task */
- 	mod_timer(&pf->serv_tmr, round_jiffies(jiffies + pf->serv_tmr_period));
+--- a/drivers/gpu/drm/vmwgfx/ttm_object.c
++++ b/drivers/gpu/drm/vmwgfx/ttm_object.c
+@@ -551,14 +551,17 @@ int ttm_prime_fd_to_handle(struct ttm_ob
+ 	if (IS_ERR(dma_buf))
+ 		return PTR_ERR(dma_buf);
  
-+	/* Best-effort wait for the scheduled reset to finish so that the
-+	 * device is operational before returning. Without this, userspace
-+	 * (e.g. NetworkManager) may try to open the net device while the
-+	 * asynchronous reset is still in progress, hitting -EBUSY.
-+	 */
-+	ret = ice_wait_for_reset(pf, secs_to_jiffies(10));
-+	if (ret)
-+		dev_err(dev, "Wait for reset timed out (10s) during resume: %d\n",
-+			ret);
-+
- 	return 0;
- }
- #endif /* CONFIG_PM */
+-	if (dma_buf->ops != &tdev->ops)
+-		return -ENOSYS;
++	if (dma_buf->ops != &tdev->ops) {
++		ret = -ENOSYS;
++		goto out;
++	}
+ 
+ 	prime = (struct ttm_prime_object *) dma_buf->priv;
+ 	base = &prime->base;
+ 	*handle = base->handle;
+ 	ret = ttm_ref_object_add(tfile, base, NULL, false);
+ 
++out:
+ 	dma_buf_put(dma_buf);
+ 
+ 	return ret;
 
 
