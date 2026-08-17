@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA4A1D435F;
-	Mon, 17 Aug 2026 14:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C900C1D435F;
+	Mon, 17 Aug 2026 14:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975318; cv=none; b=jI0BqsJElcT+pI0bjTvC8tlOEHv8ncGK4ZUmFgpg0Xi3KrykxjkJ67n7mPD3nLJJgTBK9l2i7mhAOypFhNM7bMWZYTIwjiSWzxknUsdgvgoLRCdQxkoaj2AptHZEYsWoAg2jCcizgOOpPJYFUhXingts1sW7xq71S0R+EYGD+/0=
+	t=1786975320; cv=none; b=JVWKLoW+uS+plDe5VWyqA7FGALSkKSKESG7GsH5ajB1JtzV5l1Q1ExOYza58mT3fHz+oKHQs2DHd3gClufEdw136n6roVLzkd9I67gImdV5D+BLJ9vyEp61VAFqu5eYo3qjGxOOdSrIX45+69drUJ5aQJ8tQF9GslmCJWwL5bG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975318; c=relaxed/simple;
-	bh=ll9sPoKxq0sOJC2MjedQOi0j3mK8Z1YwXvnB0flaIqI=;
+	s=arc-20240116; t=1786975320; c=relaxed/simple;
+	bh=c31QdEctwAO3qEbuWhRfjeRbb7Nnax6h94VeJS9E+D4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Upt520CKlbsceHioWEoMJ+7qwXgMeygsnU6Rri3vpaB4W/CbzbvoIcrKQKsaNAy1POyQ0vDE99IO0INAKORvbrd9iTuNGCDyn/Vq0bguwdHNkNAb2FvUxRl38OHZM46Q0Gmk0zJlFdvGYiLKLP1RiScHr2gOACXeylyZZmV2rbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DgOxgciw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QhbEqgGp1LEULdhmvn2pd43uCWdVpoKnZEJPkPIc+I1Ry0/SA/Go7RBnT47XxBRSDpuQIiNmNz43KWF4MyGr94BDK36ta9DJkR2Ac8ECB9txSAcEEupRQ5TWnRXeb4MkkDeEQLROAko2++D1A0gjf8GBCWf6f9nTBSLqFf2MXEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rUQPp2eD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgOxgciw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E0EE1F000E9;
-	Mon, 17 Aug 2026 14:01:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rUQPp2eD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C8651F000E9;
+	Mon, 17 Aug 2026 14:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975316;
-	bh=H1+Ho+UKdSlAAVDi5z/mFCQXv4Fs+n+GvlRbdJ5yqhA=;
+	s=korg; t=1786975319;
+	bh=va2r/6kWXSbiU5UE/tTgm+Ct9nIIacH0B1dh7q3/ccU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DgOxgciwF4v5cw9eI8x0boB5XpPA1qFW+YFC6mbEskH53rd54tU0hdUT1Ua4vjkTX
-	 v8/CfieIzpJw8fNGxm2MR8SBF0VmRHUq+NHXsb/ya1gmN3m8z+WX3jULZ0wR1/rGaa
-	 QnKpo/PUq27ECo+c3UAeDL4lzgqn5HoDfiKLDV+M=
+	b=rUQPp2eDJumbmYIIyo/JzmMMGphBPIbU7w3yky5WVb8pol/Xay2rpg9mN/IwVjhz3
+	 8PMiD86IUKoIbSF/QGgKNiy3uQPFbJTWVD/u5U7Mhf4WmY9WR/FRfUj9xcq2PWnQiT
+	 9JLh0J8y9iTD3F4eXg9M9XoYCkPHYi+ZXCZJX06Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI <sashiko-bot@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Matt Fleming <mfleming@cloudflare.com>,
-	Suren Baghdasaryan <surenb@google.com>
-Subject: [PATCH 6.18 236/250] sched/psi: Shut down rtpoll_timer in psi_cgroup_free()
-Date: Mon, 17 Aug 2026 15:33:17 +0200
-Message-ID: <20260817132546.129944859@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.18 201/250] netfilter: bridge: release template ct on non-IP path
+Date: Mon, 17 Aug 2026 15:32:42 +0200
+Message-ID: <20260817132544.761154999@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -53,70 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 5457025fa8ca3c0d2732109513de839e3e797190 upstream.
+commit d45cc8020d7c0a9f01dee42ff5c40bc14c9af72f upstream.
 
-psi_schedule_rtpoll_work() is called locklessly from the scheduler hotpath
-and can race psi_trigger_destroy() taking down the last rtpoll trigger under
-rtpoll_trigger_lock:
+A bridge nftables ct zone set rule can attach a conntrack template to
+an skb before nf_ct_bridge_pre() sees it. For non-IPv4 and non-IPv6
+EtherTypes, nf_ct_bridge_pre() currently overwrites skb->_nfct with
+IP_CT_UNTRACKED without releasing the existing template reference.
 
-  psi_schedule_rtpoll_work()        psi_trigger_destroy()
+That makes the per-cpu template, and any temporary templates allocated
+for concurrent use, unreachable and leaks memory until the host runs out
+of slab.
 
-  rcu_read_lock();
-  task = rcu_dereference(rtpoll_task);
-                                    rcu_assign_pointer(rtpoll_task, NULL);
-                                    timer_delete(&rtpoll_timer);
-  mod_timer(&rtpoll_timer, ...);
-  rcu_read_unlock();
-                                    synchronize_rcu();
-                                    kthread_stop(task_to_destroy);
+Reset the skb conntrack state before marking the frame untracked so the
+existing template reference is dropped on the non-IP path.
 
-The group can then be freed with the re-armed timer still pending, and
-poll_timer_fn() runs on freed memory.
-
-461daba06bdc ("psi: eliminate kthread_worker from psi trigger scheduling
-mechanism") deleted the timer synchronously after the synchronize_rcu(),
-which prevented this but raced trigger creation instead: the deletion could
-cancel the timer that a new trigger set armed during the grace period and,
-as creation also reinitialized the timer at the time, corrupt it.
-8f91efd870ea ("psi: Fix race between psi_trigger_create/destroy") moved the
-initialization into group_init() and the deletion into the locked section,
-trading the creation races for the window above.
-
-Neither placement in the destruction path works. A pending timer firing
-while the group is alive is harmless though. poll_timer_fn() just wakes the
-rtpoll waitqueue and doesn't re-arm itself. Bind the timer to the group's
-lifetime instead and shut it down in psi_cgroup_free(). Nothing can arm it
-by then. timer_shutdown_sync() because the timer is never armed again.
-
-Fixes: 8f91efd870ea ("psi: Fix race between psi_trigger_create/destroy")
-Cc: stable@vger.kernel.org # v5.10+
-Reported-by: Sashiko AI <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260711000434.36C4A1F000E9@smtp.kernel.org/
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Tested-by: Matt Fleming <mfleming@cloudflare.com>
-Acked-by: Suren Baghdasaryan <surenb@google.com>
+Fixes: 3c171f496ef5 ("netfilter: bridge: add connection tracking system")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/psi.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/bridge/netfilter/nf_conntrack_bridge.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/sched/psi.c
-+++ b/kernel/sched/psi.c
-@@ -1134,6 +1134,12 @@ void psi_cgroup_free(struct cgroup *cgro
- 		return;
- 
- 	cancel_delayed_work_sync(&cgroup->psi->avgs_work);
-+	/*
-+	 * A psi_schedule_rtpoll_work() call racing the last trigger's
-+	 * destruction may have re-armed the timer after psi_trigger_destroy()
-+	 * deleted it. Spurious firing while the group is alive is harmless.
-+	 */
-+	timer_shutdown_sync(&cgroup->psi->rtpoll_timer);
- 	free_percpu(cgroup->psi->pcpu);
- 	/* All triggers must be removed by now */
- 	WARN_ONCE(cgroup->psi->rtpoll_states, "psi: trigger leak\n");
+--- a/net/bridge/netfilter/nf_conntrack_bridge.c
++++ b/net/bridge/netfilter/nf_conntrack_bridge.c
+@@ -281,6 +281,7 @@ static unsigned int nf_ct_bridge_pre(voi
+ 		ret = nf_ct_br_defrag6(skb, &bridge_state);
+ 		break;
+ 	default:
++		nf_reset_ct(skb);
+ 		nf_ct_set(skb, NULL, IP_CT_UNTRACKED);
+ 		return NF_ACCEPT;
+ 	}
 
 
