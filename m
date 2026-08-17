@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6F343DA4E;
-	Mon, 17 Aug 2026 14:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30AF3DD851;
+	Mon, 17 Aug 2026 14:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978784; cv=none; b=bdwG2I8jTkqFKbA7w4JS1efqhIZG1+eENJxPsiRd1t/oEXveffDyho8I6cjlC8VrM1fjjhwYInCRtKW6OKiiGUlwh7iAzwTJUoEboUaGZOdJpe7R5eVs1K+Tq9Y2B0kQXO5rdbYRLtsJGG41WjP104hfu5xioYQ5nknpsqRIxko=
+	t=1786978787; cv=none; b=SLqM2VvqVsMe/0+n9TkjXfAiPEJ14a01aOMnVIdbKwPPPpD4D8U78yvjb1faGiFrnMUYpinjEuhOrXZccCk7Zlf2Fs9ieoZ8IRGTqsIjZS2r4fJ5tkVySvFUh4EgUAsP0ybVSHgU8tUj4W6xaxuODBw7B3FbYU39H+r8ARo0rW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978784; c=relaxed/simple;
-	bh=eg9pSVC7E95cBqlZN4anwjtdJcIbjh6UsvkPw9Kg3lY=;
+	s=arc-20240116; t=1786978787; c=relaxed/simple;
+	bh=WUQJZGofza3XjwaBXroOfz+nxbx6eojex/ChmHCzboQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hfxqivVhUbsdH9Tj5b7XH1JsEd1ysOPpeIphweXOkzuUPIe7ruXfx/g3Z3jMjihLASIoH0OlNXHKHKogkXjbFhNg1iGSEH+C0U7KqvsK6Zr53GPSxc1VNf6RdKPh4kHGyh1UYDL1F3TZQgZ8fY9GvL2tOxmCvYQT44fqGfbTvEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHlOAmtV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oprG8ryg/6s0XjNHlziNutWQo4lOaTT5YSQcF3ZjeO2c6ZLasjtMqBap5suGmI/X7Kk5AMezR0jzn4sWH7plC/8IhkWyRyva1swr8dg0nBF6K3vm58c/o2uo/yaUkEARJ3Gxo9uJu1F6gEZ6f7JSiVi8+mXA96sLSltYb7mtTKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nACpB7EJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHlOAmtV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF92E1F000E9;
-	Mon, 17 Aug 2026 14:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nACpB7EJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CACE21F000E9;
+	Mon, 17 Aug 2026 14:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978783;
-	bh=YESNHYVQlWzum0Jj9sQQEImPd1Zaw2mRi1TWuKLdMSA=;
+	s=korg; t=1786978786;
+	bh=nF99bIGS7QMPjRgVL2do/yUWLL2rlR9FEOcd2C0XqbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FHlOAmtVzuiGlupHiqYNxdXu7jX6jnOJa6Tp32aJB+0jNJ3gIgmjtvJv3Gv9AXhlW
-	 8PnL/AIjZ3lCYB/yKcKJRTtUAYc4PGp4hiX9DrTNAWQteSpfi/HsWf7ByR3b9cGhpu
-	 wIu5+HNF9HAJOFpIo69g+PveoWZprxJHtD0HR+Ow=
+	b=nACpB7EJmTzEvVbQ/e9T3sLn1xuLSdtHzhTXA8f68xb5sMQrqtZEjrjPeoz86p+o7
+	 4KCovJg1iWXupv95Hs6MoOGta1CMNottPJVxBug/EipGc6TvGSPVatd+s6QvT5xmSD
+	 nkrGAnU+2ATX/npRBfEQJd8UngCZBFPt9Mmyhs1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Dmitry Safonov <dima@arista.com>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	syzbot <syzkaller@googlegroups.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 155/156] net/tcp_sigpool: Use kref_get_unless_zero()
-Date: Mon, 17 Aug 2026 15:34:49 +0200
-Message-ID: <20260817132540.831006492@linuxfoundation.org>
+	David Lechner <dlechner@baylibre.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 156/156] regulator: devres: fix devm_regulator_get_enable_read_voltage() return
+Date: Mon, 17 Aug 2026 15:34:50 +0200
+Message-ID: <20260817132540.877381143@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -53,41 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Safonov <dima@arista.com>
+From: David Lechner <dlechner@baylibre.com>
 
-commit b901a4e276943f61e11ddb597a0abc1e7dfadf0f upstream.
+commit 257b2335eebf51e318db1f3b2d023512da46fa66 upstream.
 
-The freeing and re-allocation of algorithm are protected by cpool_mutex,
-so it doesn't fix an actual use-after-free, but avoids a deserved
-refcount_warn_saturate() warning.
+The devm_regulator_get_enable_read_voltage() function is supposed to
+return the voltage that the regulator is currently set to. However, it
+currently returns 0.
 
-A trivial fix for the racy behavior.
-
-Fixes: 8c73b26315aa ("net/tcp: Prepare tcp_md5sig_pool for TCP-AO")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Dmitry Safonov <dima@arista.com>
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: b250c20b6429 ("regulator: devres: add API for reference voltage supplies")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Link: https://lore.kernel.org/r/20240506-regulator-devm_regulator_get_enable_read_voltage-fixes-v1-1-356cdd152067@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_sigpool.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/regulator/devres.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv4/tcp_sigpool.c
-+++ b/net/ipv4/tcp_sigpool.c
-@@ -162,9 +162,8 @@ int tcp_sigpool_alloc_ahash(const char *
- 		if (strcmp(cpool[i].alg, alg))
- 			continue;
+--- a/drivers/regulator/devres.c
++++ b/drivers/regulator/devres.c
+@@ -193,7 +193,7 @@ int devm_regulator_get_enable_read_volta
+ 	if (ret < 0)
+ 		goto err_release_action;
  
--		if (kref_read(&cpool[i].kref) > 0)
--			kref_get(&cpool[i].kref);
--		else
-+		/* pairs with tcp_sigpool_release() */
-+		if (!kref_get_unless_zero(&cpool[i].kref))
- 			kref_init(&cpool[i].kref);
- 		ret = i;
- 		goto out;
+-	return 0;
++	return ret;
+ 
+ err_release_action:
+ 	devm_release_action(dev, regulator_action_disable, r);
 
 
