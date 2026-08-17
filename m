@@ -1,43 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D96442381;
-	Mon, 17 Aug 2026 15:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FC143B495;
+	Mon, 17 Aug 2026 15:11:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979479; cv=none; b=dKE9PR3RXZyE1FQ/luOnxvmJ4aMz/J1gigfpu0U7piAbRfPH1BXMLHy1K4GS0QUC5zA4crGrxNwoXxiKleREL5CeGOslfX/oCBAurdbI4xoZT/+KsKqhkgUMcrJYqtQMjeAELMObUTfzXe5/r5B2h+Hf33aYhgIVknkasyXlES4=
+	t=1786979482; cv=none; b=hu454S5WxSr+R4/sJXrZw7KCO2YLgaiU9zvonCfvlarxgN+t3d36usOPzxQ1gbo3aziInlp4knaOHlfwG+oRwrhojXNHOTjGM1qUKfG3WiWHIYj5TJamKy8frC5qM6J5g0nm/5DYtzlZhiES8HRkPlyktr9s9gxpr/dyjOsA/TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979479; c=relaxed/simple;
-	bh=xT51SFAB/J+aDLssN2ATwUCLA7sHrj6v3V2dS6T8yjI=;
+	s=arc-20240116; t=1786979482; c=relaxed/simple;
+	bh=w+Gu4FxogkPqtdJLI9j5kVHZCBDbbrr0EPZoOij5M9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DcJJuX+O8roQCf/Mg5Pf48DMPM7WHkuI6JxceqJ6GAK9ZHVJ0XCB9RzqS34NjVSJg3hfDt1OE51Ank7tH1SUdV3t0q/XSvRDC37b2JatvZT2l1JQbeplrYypfutlSK7RNsyyDAU/KgWTlep613F+MouikfdLEMJV3kYcRHAO6Ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ICCSOnfc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KzNs2XFBSckATCINshAiq6Lph1MJpOhxpDIqODnjowoNi6eKddLX3xhxhHGWmyrxyigNvVRL+adO1wTUK9rhQptk/pq+k36farC3sqDQ4BKUUU0VsN5FHaYb6II2C0FWOefNb421I+VtWz/vYt523hf6urwVDxAmUV7tWrZ2HGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p3JJ6xai; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ICCSOnfc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A032B1F000E9;
-	Mon, 17 Aug 2026 15:11:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p3JJ6xai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4A61F000E9;
+	Mon, 17 Aug 2026 15:11:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979478;
-	bh=AZjx//WRbGyNsM41q8IBSS1d7xVbACfftCwjuewO7pY=;
+	s=korg; t=1786979481;
+	bh=Nwxbf+wGt9LKyI+7VfqmrAjom7fO2etCtCEmVUU4Cw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ICCSOnfckmZbPGzofAGHjPDIopOihBvwnyTO0Eggn/wC/p/QT3BQ1XIS7rzCs7WAi
-	 DLNly1qRWwPIaoZeSInrT/C8GPuhAcDrIq0cWrWln63NtNodsZDGjoqTXw1fE+QmVZ
-	 omQ1YOWdx5/GnRxSfl0tQECgIWM0Z6lK9kLjY1W8=
+	b=p3JJ6xaiy73N+eHWykTP5fwK2HFd6JtjobuVw+C9ksiwiU/eMWLPFJyWBnYzM0aPk
+	 bDxwMGBKPhjOV9cmIcqa375bmqgI74HmfJ3l4ERK/o48pmCkuvvGXylW73b1dHcH4E
+	 BLQI4Q0XbpfcsZl6LidZhQPma4i8LBIMcyEgI5Ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH 6.1 233/609] x86/boot/compressed: Disable jump tables
-Date: Mon, 17 Aug 2026 15:28:49 +0200
-Message-ID: <20260817132551.885688366@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.1 242/609] tracing/probes: Fix potential underflow in LEN_OR_ZERO macro
+Date: Mon, 17 Aug 2026 15:28:58 +0200
+Message-ID: <20260817132552.175931463@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -56,63 +49,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 4a9ec5ec9555ad62dc5b81a37ac946025c2ea002 upstream.
+commit 8ce20bfba48902e1382187cd1a852f7cf3a1e739 upstream.
 
-After a recent upstream LLVM change to start generating jump and lookup
-tables in switch statements in more instances [1], linking the
-compressed x86 boot image when CONFIG_KERNEL_ZSTD is enabled fails with:
+In __set_print_fmt(), LEN_OR_ZERO is defined as (len ? len - pos : 0).
+If len is non-zero but smaller than pos, len - pos evaluates to a negative
+integer. When passed as a size argument to snprintf(), this negative value
+is cast to a large unsigned size_t, bypassing buffer size limits.
 
-  ld.lld: error: Unexpected run-time relocations (.rela) detected!
+Ensure len > pos before subtracting to avoid integer underflow.
 
-Dumping the relocations in misc.o, which is the only file influenced by
-CONFIG_KERNEL_ZSTD in the decompressor, shows dynamic relocations to
-some string constants, which correspond to the string literals in the
-switch statement in handle_zstd_error():
+Link: https://lore.kernel.org/all/178454234934.290363.15247317871499514139.stgit@devnote2/
 
-  Relocation section '.rela.data.rel.ro' at offset 0x277b0 contains 31 entries:
-      Offset             Info             Type               Symbol's Value  Symbol's Name + Addend
-  0000000000000000  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 73a
-  0000000000000008  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 78e
-  0000000000000010  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 78e
-  0000000000000018  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 78e
-  ...
-
-This optimization is problematic for the decompressor environment, as it
-is built as -fPIE without any explicit absolute references (as described
-at the top of misc.c) while not applying any dynamic relocations, hence
-the linker assertion. To opt out of this optimization, which is of
-little value in this special early boot code, and to mirror the other
-x86 startup code in arch/x86/boot/startup, disable jump tables in the
-decompressor.
-
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
+Fixes: 5bf652aaf46c ("tracing/probes: Integrate duplicate set_print_fmt()")
 Cc: stable@vger.kernel.org
-Link: https://github.com/llvm/llvm-project/commit/fa02a6ed66b1700c996b49c96c6bc0eb014c9518 [1]
-Link: https://patch.msgid.link/20260722-x86-boot-compressed-disable-jt-clang-v2-1-7373d38482fb@kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2165
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/compressed/Makefile |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/trace_probe.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/boot/compressed/Makefile
-+++ b/arch/x86/boot/compressed/Makefile
-@@ -36,6 +36,7 @@ targets := vmlinux vmlinux.bin vmlinux.b
- KBUILD_CFLAGS := -m$(BITS) -O2 $(CLANG_FLAGS)
- KBUILD_CFLAGS += -std=gnu11
- KBUILD_CFLAGS += -fno-strict-aliasing -fPIE
-+KBUILD_CFLAGS += -fno-jump-tables
- KBUILD_CFLAGS += -Wundef
- KBUILD_CFLAGS += -DDISABLE_BRANCH_PROFILING
- cflags-$(CONFIG_X86_32) := -march=i386
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -900,7 +900,7 @@ int traceprobe_update_arg(struct probe_a
+ }
+ 
+ /* When len=0, we just calculate the needed length */
+-#define LEN_OR_ZERO (len ? len - pos : 0)
++#define LEN_OR_ZERO (len > pos ? len - pos : 0)
+ static int __set_print_fmt(struct trace_probe *tp, char *buf, int len,
+ 			   enum probe_print_type ptype)
+ {
 
 
