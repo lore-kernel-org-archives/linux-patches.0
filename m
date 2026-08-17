@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFED8175A6B;
-	Mon, 17 Aug 2026 15:01:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DA725C804;
+	Mon, 17 Aug 2026 15:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978881; cv=none; b=hlEl6T5zyaznoP0DWnP50dTgrPYqgr60oPvT2123wfLR1L/xQNA75rcCXJFhxRTnFiLgY+GRlMnpM7PJxCVjZnkfttGd1CJOhoM61ijGpNicmHDmn0pdVva1OPaG/QnER59Iw9PvlxJsK8pmBYrzqcPhNGdz47X/uL3cnVIrANI=
+	t=1786978884; cv=none; b=ZwnD7Qrr0LCquvfLHye3BvGTL/ohgTXWRQqfO6Voo3JLmgwNrCUmC8llyyjO8AN54mmXDG4bewcksiwMOwhSI+nOHXr+lt4HcUzUKjrs0wyo5FlAvJ4yFp3NaAiQwR6trZJp1Z23/+hSHH0gHbdJPv8XHyE+hjXMnZ6hic2b89g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978881; c=relaxed/simple;
-	bh=2b5ncVmKNAZ+cdkpLlK9CLDf06dhRb6hR6jNae7UHA0=;
+	s=arc-20240116; t=1786978884; c=relaxed/simple;
+	bh=Y98jY7BRs5y2lj4QLPz0t7Zsy4oeJE1cKHpyG31tMmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KUfUZ7gHRm24+fsXdBjYyjOJulrDv1eRas10XHjAYZupHcwCFX69/94zBoZVRslToggk3ipv/pdnJhHJV32Hj/2Y/X9CJ5NGZ8THGRAMJ4T35dgWcRVzQT5ZHxOdcOymtMFESRU3JOuvd8pB961Kizt/nk1qxUyxUH+Hm5Z7sOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ke+8T3Xq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kOdXWnQqyHMmd1w9iRFkWzcYJRJ0JB+ZN6dYnbCtFzEDOEUFY+ujt7QzuxohBBCE6kdaYfjlYjxpNksbwmN983hE0c/4Moqxa38GE6RAz9zA8ziwMTRrEIvovCwmvQ78FAMhBzARxDqO9wKXAuhGbphbNsVDDwrX8h/Kp4SG/6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/LxR/li; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ke+8T3Xq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD561F00ADB;
-	Mon, 17 Aug 2026 15:01:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/LxR/li"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 092791F000E9;
+	Mon, 17 Aug 2026 15:01:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978880;
-	bh=gbL8CHv86PxZfSgDtmOxf9h9woCBRisvkANAyfCJg+0=;
+	s=korg; t=1786978883;
+	bh=z3lRVzBM0yry1yzdsfRpVB69GysmMaAA0vRVNWCuLk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ke+8T3Xq4LbSLdFWwPvgyVrxUXq6aGR++uWuTKC667mkqR7VFV5S2mIWR3D7T8tPO
-	 Hyp8R+h0U2Vj3ZpGxkR5uKrD71+PRNPzt84C0ikvMuC3VldlKE+kwZewcWlaT11a2R
-	 4YU3tc+OwC/foobkt2UEJnKJYfxeMxnKncnrtQok=
+	b=W/LxR/liVUcYfHIXLv3s7BYK+/z57APltcu7oaQZDQQGW7vrdU+KqSK06xnIJkcDL
+	 NBYAytDsvorn85Jab7JXCocIXj12UcBlbuzn8tzIjlwm1seqw+KFMbbeNeQ0abvvMB
+	 j5crOsT3Wvhfg92Tajc9bb03EyHNaB5dF6hCjTVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danila Chernetsov <listdansp@mail.ru>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Bernard Metzler <bmt@zurich.ibm.com>,
+	Guoqing Jiang <guoqing.jiang@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/609] RDMA/hns: Fix potential integer overflow in mhop hem cleanup
-Date: Mon, 17 Aug 2026 15:25:29 +0200
-Message-ID: <20260817132544.374518304@linuxfoundation.org>
+Subject: [PATCH 6.1 034/609] RDMA/siw: Only check attrs->cap.max_send_wr in siw_create_qp
+Date: Mon, 17 Aug 2026 15:25:30 +0200
+Message-ID: <20260817132544.411767247@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,50 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danila Chernetsov <listdansp@mail.ru>
+From: Guoqing Jiang <guoqing.jiang@linux.dev>
 
-[ Upstream commit 9f0f2d2121f16d420199a82ac5bbc242269133b3 ]
+[ Upstream commit 788bbf4c2fc6e0c35bae9ed5068f484272539d3e ]
 
-In hns_roce_cleanup_mhop_hem_table(), the expression:
+We can just check max_send_wr here given both max_send_wr and
+max_recv_wr are defined as u32 type, and we also need to ensure
+num_sqe (derived from max_send_wr) shouldn't be zero.
 
-    obj = i * buf_chunk_size / table->obj_size;
-
-is evaluated using 32-bit unsigned arithmetic because
-'buf_chunk_size' is u32 and the usual arithmetic conversions convert
-'i' to unsigned int. The result is assigned to a u64 variable, but the
-multiplication may overflow before the assignment.
-
-For sufficiently large HEM tables, this produces an incorrect object
-index passed to hns_roce_table_mhop_put().
-
-Cast 'i' to u64 before the multiplication so that the intermediate
-calculation is performed with 64-bit arithmetic.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: a25d13cbe816 ("RDMA/hns: Add the interfaces to support multi hop addressing for the contexts in hip08")
-Link: https://patch.msgid.link/r/20260627095951.51378-1-listdansp@mail.ru
-Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
-Reviewed-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Acked-by: Bernard Metzler <bmt@zurich.ibm.com>
+Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
+Link: https://lore.kernel.org/r/20231113115726.12762-16-guoqing.jiang@linux.dev
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: bb27fcc67c42 ("RDMA/siw: publish QP after initialization")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/sw/siw/siw_verbs.c | 18 +++++-------------
+ 1 file changed, 5 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
-index 862acdf59867a9..ce115dbba13020 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hem.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
-@@ -907,7 +907,7 @@ static void hns_roce_cleanup_mhop_hem_table(struct hns_roce_dev *hr_dev,
- 					mhop.bt_chunk_size;
- 
- 	for (i = 0; i < table->num_hem; ++i) {
--		obj = i * buf_chunk_size / table->obj_size;
-+		obj = (u64)i * buf_chunk_size / table->obj_size;
- 		if (table->hem[i])
- 			hns_roce_table_mhop_put(hr_dev, table, obj, 0);
+diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
+index dce86f5aee1f76..336702bcbfa9f8 100644
+--- a/drivers/infiniband/sw/siw/siw_verbs.c
++++ b/drivers/infiniband/sw/siw/siw_verbs.c
+@@ -336,11 +336,10 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 		goto err_atomic;
  	}
+ 	/*
+-	 * NOTE: we allow for zero element SQ and RQ WQE's SGL's
+-	 * but not for a QP unable to hold any WQE (SQ + RQ)
++	 * NOTE: we don't allow for a QP unable to hold any SQ WQE
+ 	 */
+-	if (attrs->cap.max_send_wr + attrs->cap.max_recv_wr == 0) {
+-		siw_dbg(base_dev, "QP must have send or receive queue\n");
++	if (attrs->cap.max_send_wr == 0) {
++		siw_dbg(base_dev, "QP must have send queue\n");
+ 		rv = -EINVAL;
+ 		goto err_atomic;
+ 	}
+@@ -360,21 +359,14 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	if (rv)
+ 		goto err_atomic;
+ 
+-	num_sqe = attrs->cap.max_send_wr;
+-	num_rqe = attrs->cap.max_recv_wr;
+ 
+ 	/* All queue indices are derived from modulo operations
+ 	 * on a free running 'get' (consumer) and 'put' (producer)
+ 	 * unsigned counter. Having queue sizes at power of two
+ 	 * avoids handling counter wrap around.
+ 	 */
+-	if (num_sqe)
+-		num_sqe = roundup_pow_of_two(num_sqe);
+-	else {
+-		/* Zero sized SQ is not supported */
+-		rv = -EINVAL;
+-		goto err_out_xa;
+-	}
++	num_sqe = roundup_pow_of_two(attrs->cap.max_send_wr);
++	num_rqe = attrs->cap.max_recv_wr;
+ 	if (num_rqe)
+ 		num_rqe = roundup_pow_of_two(num_rqe);
+ 
 -- 
 2.53.0
 
