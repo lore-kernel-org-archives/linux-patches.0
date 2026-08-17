@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308A83B8409;
-	Mon, 17 Aug 2026 14:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3D73DAAC5;
+	Mon, 17 Aug 2026 14:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976838; cv=none; b=pBJyd7XJL/ervKcTlYDi3B5jaU4PuHY+6LRdECK4I6S0hxd5jPTMvCtRE+h/LKD1ReUSYned1/7Quj9Krmke8AH5e8d+tYp32MfoD4Sr298W4sKy3pE112ryqMzq49DNX4WCtbnYFCvMWP+TSNY1NzWA7UfsDrSiGEZfdNSj3M8=
+	t=1786976840; cv=none; b=nt5/E9PbyJCaxJKUtTyT2ODGfOBC1o2iLSUWXzSY57WNoPCu+iTstP0Wc1TccIWLpbe32SYxHzDFj/MT7UZPlPkG8S3ZHuP4Y3aMNnZO9q28pJpbVqpthL3bECREgxnicxotPd94gDcTt3r9nVKHT74RXAXQmfQvR36mw/qRk0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976838; c=relaxed/simple;
-	bh=bBAo2mfCiZpuw7te70p7ce+PqWs+TiiAc8zw2qLCMqY=;
+	s=arc-20240116; t=1786976840; c=relaxed/simple;
+	bh=sUwgcX3x4hhIL4Q/p2ToJoZYACFfGzT+WggcGmAVLLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G1PL+TkqMvb3IgZmuufPBBQAt0K8IMoE/SPIscRJJeDsYDaHXwBfpUmzjwEN/jfiQBYsm3DGwzn4odJiw+PvjJRNXCQR+Mw1k+6D8zJSKV7bVjytLo/iQMd5QL6ptSsqlEu4WA/N/fyZUCdZZW//8LpR/tN2OioI5XhyV5/+684=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPXjdCHw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BihcA1h69Mj3EfS68KlQXPlbEolSpNjMfeVcpxbDrFAGbQ6X0BrmkTyA1hpl1g4ZQ4+XROzTcplgFpevwH/Vi74eUeKemAqETTWfnU91yLzE4w+Uf9dq6Ner1txrSGQxWNaDeu/p6t/Z/+YwI4MSbiLiT2hFcMoYAz0tgO+ij7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VS7yH+1v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPXjdCHw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C141F000E9;
-	Mon, 17 Aug 2026 14:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VS7yH+1v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 294261F000E9;
+	Mon, 17 Aug 2026 14:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976836;
-	bh=PhQPfFE9/AgX0Oqa5uP2ZanT2f0T1RBmtLAh+VBMNxc=;
+	s=korg; t=1786976839;
+	bh=51UW1wYt44uSXyZFpVkDkWvzxFjjCOYxuXSTvzTiw2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lPXjdCHwOWaqEI6kkWLy3ok7UvfwS0RMLDu0X23jRvQ7NhQH1kQp2ryymL8vEj6Xu
-	 n4UYX/AixtAmzYwCmeDs7Te9UmvdcD1zzWKR5+8H4pBVvB3WserfEwU7yDU4RVNjXl
-	 1yUL/nQKOAeB9B0iUUMUTkYIfyYsp94R7TBrDzPw=
+	b=VS7yH+1vn3Yo+tOV8eEi68sdC20E3Y5fCO6bIrGg3lcOZF0ZEzDY+GaPRlVHYQbdg
+	 gwNcQzP3l55RHvqkU/O1hNUWWbvzHEpfGSHv7QoBYKX7WNDiBPcCzLi32JZaeWDCjp
+	 AUZVlDLxxXJHfp0MgYfLPClNjg+GwY98N93J9KDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ong Boon Leong <boon.leong.ong@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Rohan G Thomas <rohan.g.thomas@altera.com>,
+	Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jakub Raczynski <j.raczynski@samsung.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 121/456] net: stmmac: add tc flower filter for EtherType matching
-Date: Mon, 17 Aug 2026 15:28:31 +0200
-Message-ID: <20260817132544.823976452@linuxfoundation.org>
+Subject: [PATCH 5.15 122/456] net: stmmac: fix l3l4 filter rejecting unsupported offload requests
+Date: Mon, 17 Aug 2026 15:28:32 +0200
+Message-ID: <20260817132544.864680125@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,234 +54,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ong Boon Leong <boon.leong.ong@intel.com>
+From: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
 
-[ Upstream commit e48cb313fde3e6f9434bb41c858d5c791d83f2d0 ]
+[ Upstream commit 5536d7c843637e9430279b94935fcf7df98babb3 ]
 
-This patch adds basic support for EtherType RX frame steering for
-LLDP and PTP using the hardware offload capabilities.
+The basic flow parser in tc_add_basic_flow() does not validate match
+keys before proceeding. Unsupported offload configurations such as
+partial protocol masks, non-IPv4 network proto, or non-TCP/UDP transport
+proto are silently accepted instead of returning -EOPNOTSUPP.
 
-Example steps for setting up RX frame steering for LLDP and PTP:
-$ IFDEVNAME=eth0
-$ tc qdisc add dev $IFDEVNAME ingress
-$ tc qdisc add dev $IFDEVNAME root mqprio num_tc 8 \
-     map 0 1 2 3 4 5 6 7 0 0 0 0 0 0 0 0 \
-     queues 1@0 1@1 1@2 1@3 1@4 1@5 1@6 1@7 hw 0
+Add validation to return -EOPNOTSUPP early for:
+- No network or transport proto present in the key
+- Partial protocol mask (only full mask supported)
+- Network proto is not IPv4
+- Transport proto is not TCP or UDP
 
-For LLDP
-$ tc filter add dev $IFDEVNAME parent ffff: protocol 0x88cc \
-     flower hw_tc 5
-OR
-$ tc filter add dev $IFDEVNAME parent ffff: protocol LLDP \
-     flower hw_tc 5
+Each rejection includes an extack message so the user knows which part
+of the match is unsupported.
 
-For PTP
-$ tc filter add dev $IFDEVNAME parent ffff: protocol 0x88f7 \
-     flower hw_tc 6
+Also propagate -EOPNOTSUPP from tc_add_basic_flow() in tc_add_flow()
+by returning it directly rather than using break. The break was silently
+discarding the error for FLOW_CLS_REPLACE operations where entry->in_use
+is already true, causing tc_add_flow() to return 0 (success) for
+unsupported replace requests.
 
-Show tc ingress filter
-$ tc filter show dev $IFDEVNAME ingress
-
-v1->v2:
- Thanks to Kurt's and Sebastian's suggestion.
- - change from __be16 to u16 etype
- - change ETHER_TYPE_FULL_MASK to use cpu_to_be16() macro
-
-Signed-off-by: Ong Boon Leong <boon.leong.ong@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 5536d7c84363 ("net: stmmac: fix l3l4 filter rejecting unsupported offload requests")
+Fixes: 425eabddaf0f ("net: stmmac: Implement L3/L4 Filters using TC Flower")
+Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
+Signed-off-by: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260714023716.29865-4-muhammad.nazim.amirul.nazle.asmade@altera.com
+Reviewed-by: Jakub Raczynski <j.raczynski@samsung.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac.h  |   3 +
- .../net/ethernet/stmicro/stmmac/stmmac_tc.c   | 121 ++++++++++++++++++
- 2 files changed, 124 insertions(+)
+ .../net/ethernet/stmicro/stmmac/stmmac_tc.c   | 34 +++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-index 1a74437787c030..5946e1decd9cc8 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-@@ -175,11 +175,14 @@ struct stmmac_flow_entry {
- /* Rx Frame Steering */
- enum stmmac_rfs_type {
- 	STMMAC_RFS_T_VLAN,
-+	STMMAC_RFS_T_LLDP,
-+	STMMAC_RFS_T_1588,
- 	STMMAC_RFS_T_MAX,
- };
- 
- struct stmmac_rfs_entry {
- 	unsigned long cookie;
-+	u16 etype;
- 	int in_use;
- 	int type;
- 	int tc;
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-index 5520f5a5391cff..62aef01b48f1e0 100644
+index 62aef01b48f1e0..6d971a5db00bda 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-@@ -237,6 +237,8 @@ static int tc_rfs_init(struct stmmac_priv *priv)
- 	int i;
- 
- 	priv->rfs_entries_max[STMMAC_RFS_T_VLAN] = 8;
-+	priv->rfs_entries_max[STMMAC_RFS_T_LLDP] = 1;
-+	priv->rfs_entries_max[STMMAC_RFS_T_1588] = 1;
- 
- 	for (i = 0; i < STMMAC_RFS_T_MAX; i++)
- 		priv->rfs_entries_total += priv->rfs_entries_max[i];
-@@ -453,6 +455,8 @@ static int tc_parse_flow_actions(struct stmmac_priv *priv,
- 	return 0;
+@@ -456,6 +456,7 @@ static int tc_parse_flow_actions(struct stmmac_priv *priv,
  }
  
-+#define ETHER_TYPE_FULL_MASK	cpu_to_be16(~0)
-+
+ #define ETHER_TYPE_FULL_MASK	cpu_to_be16(~0)
++#define IP_PROTO_FULL_MASK	0xFF
+ 
  static int tc_add_basic_flow(struct stmmac_priv *priv,
  			     struct flow_cls_offload *cls,
- 			     struct stmmac_flow_entry *entry)
-@@ -466,6 +470,7 @@ static int tc_add_basic_flow(struct stmmac_priv *priv,
- 		return -EINVAL;
+@@ -471,6 +472,37 @@ static int tc_add_basic_flow(struct stmmac_priv *priv,
  
  	flow_rule_match_basic(rule, &match);
+ 
++	/* Both network proto and transport proto not present in the key */
++	if (!match.mask || !(match.mask->n_proto || match.mask->ip_proto)) {
++		NL_SET_ERR_MSG_MOD(cls->common.extack,
++				   "filter must specify network or transport protocol");
++		return -EOPNOTSUPP;
++	}
++
++	/* If the proto is present in the key and is not full mask */
++	if ((match.mask->n_proto && match.mask->n_proto != ETHER_TYPE_FULL_MASK) ||
++	    (match.mask->ip_proto && match.mask->ip_proto != IP_PROTO_FULL_MASK)) {
++		NL_SET_ERR_MSG_MOD(cls->common.extack,
++				   "only full protocol mask is supported");
++		return -EOPNOTSUPP;
++	}
++
++	/* Network proto is present in the key and is not IPv4 */
++	if (match.mask->n_proto && match.key->n_proto != cpu_to_be16(ETH_P_IP)) {
++		NL_SET_ERR_MSG_MOD(cls->common.extack,
++				   "only IPv4 network protocol is supported");
++		return -EOPNOTSUPP;
++	}
++
++	/* Transport proto is present in the key and is not TCP or UDP */
++	if (match.mask->ip_proto &&
++	    match.key->ip_proto != IPPROTO_TCP &&
++	    match.key->ip_proto != IPPROTO_UDP) {
++		NL_SET_ERR_MSG_MOD(cls->common.extack,
++				   "only TCP and UDP transport protocols are supported");
++		return -EOPNOTSUPP;
++	}
 +
  	entry->ip_proto = match.key->ip_proto;
  	return 0;
  }
-@@ -726,6 +731,114 @@ static int tc_del_vlan_flow(struct stmmac_priv *priv,
- 	return 0;
- }
+@@ -608,6 +640,8 @@ static int tc_add_flow(struct stmmac_priv *priv,
+ 		ret = tc_flow_parsers[i].fn(priv, cls, entry);
+ 		if (!ret)
+ 			entry->in_use = true;
++		else if (ret == -EOPNOTSUPP)
++			return ret;
+ 	}
  
-+static int tc_add_ethtype_flow(struct stmmac_priv *priv,
-+			       struct flow_cls_offload *cls)
-+{
-+	struct stmmac_rfs_entry *entry = tc_find_rfs(priv, cls, false);
-+	struct flow_rule *rule = flow_cls_offload_flow_rule(cls);
-+	struct flow_dissector *dissector = rule->match.dissector;
-+	int tc = tc_classid_to_hwtc(priv->dev, cls->classid);
-+	struct flow_match_basic match;
-+
-+	if (!entry) {
-+		entry = tc_find_rfs(priv, cls, true);
-+		if (!entry)
-+			return -ENOENT;
-+	}
-+
-+	/* Nothing to do here */
-+	if (!dissector_uses_key(dissector, FLOW_DISSECTOR_KEY_BASIC))
-+		return -EINVAL;
-+
-+	if (tc < 0) {
-+		netdev_err(priv->dev, "Invalid traffic class\n");
-+		return -EINVAL;
-+	}
-+
-+	flow_rule_match_basic(rule, &match);
-+
-+	if (match.mask->n_proto) {
-+		u16 etype = ntohs(match.key->n_proto);
-+
-+		if (match.mask->n_proto != ETHER_TYPE_FULL_MASK) {
-+			netdev_err(priv->dev, "Only full mask is supported for EthType filter");
-+			return -EINVAL;
-+		}
-+		switch (etype) {
-+		case ETH_P_LLDP:
-+			if (priv->rfs_entries_cnt[STMMAC_RFS_T_LLDP] >=
-+			    priv->rfs_entries_max[STMMAC_RFS_T_LLDP])
-+				return -ENOENT;
-+
-+			entry->type = STMMAC_RFS_T_LLDP;
-+			priv->rfs_entries_cnt[STMMAC_RFS_T_LLDP]++;
-+
-+			stmmac_rx_queue_routing(priv, priv->hw,
-+						PACKET_DCBCPQ, tc);
-+			break;
-+		case ETH_P_1588:
-+			if (priv->rfs_entries_cnt[STMMAC_RFS_T_1588] >=
-+			    priv->rfs_entries_max[STMMAC_RFS_T_1588])
-+				return -ENOENT;
-+
-+			entry->type = STMMAC_RFS_T_1588;
-+			priv->rfs_entries_cnt[STMMAC_RFS_T_1588]++;
-+
-+			stmmac_rx_queue_routing(priv, priv->hw,
-+						PACKET_PTPQ, tc);
-+			break;
-+		default:
-+			netdev_err(priv->dev, "EthType(0x%x) is not supported", etype);
-+			return -EINVAL;
-+		}
-+
-+		entry->in_use = true;
-+		entry->cookie = cls->cookie;
-+		entry->tc = tc;
-+		entry->etype = etype;
-+
-+		return 0;
-+	}
-+
-+	return -EINVAL;
-+}
-+
-+static int tc_del_ethtype_flow(struct stmmac_priv *priv,
-+			       struct flow_cls_offload *cls)
-+{
-+	struct stmmac_rfs_entry *entry = tc_find_rfs(priv, cls, false);
-+
-+	if (!entry || !entry->in_use ||
-+	    entry->type < STMMAC_RFS_T_LLDP ||
-+	    entry->type > STMMAC_RFS_T_1588)
-+		return -ENOENT;
-+
-+	switch (entry->etype) {
-+	case ETH_P_LLDP:
-+		stmmac_rx_queue_routing(priv, priv->hw,
-+					PACKET_DCBCPQ, 0);
-+		priv->rfs_entries_cnt[STMMAC_RFS_T_LLDP]--;
-+		break;
-+	case ETH_P_1588:
-+		stmmac_rx_queue_routing(priv, priv->hw,
-+					PACKET_PTPQ, 0);
-+		priv->rfs_entries_cnt[STMMAC_RFS_T_1588]--;
-+		break;
-+	default:
-+		netdev_err(priv->dev, "EthType(0x%x) is not supported",
-+			   entry->etype);
-+		return -EINVAL;
-+	}
-+
-+	entry->in_use = false;
-+	entry->cookie = 0;
-+	entry->tc = 0;
-+	entry->etype = 0;
-+	entry->type = 0;
-+
-+	return 0;
-+}
-+
- static int tc_add_flow_cls(struct stmmac_priv *priv,
- 			   struct flow_cls_offload *cls)
- {
-@@ -735,6 +848,10 @@ static int tc_add_flow_cls(struct stmmac_priv *priv,
- 	if (!ret)
- 		return ret;
- 
-+	ret = tc_add_ethtype_flow(priv, cls);
-+	if (!ret)
-+		return ret;
-+
- 	return tc_add_vlan_flow(priv, cls);
- }
- 
-@@ -747,6 +864,10 @@ static int tc_del_flow_cls(struct stmmac_priv *priv,
- 	if (!ret)
- 		return ret;
- 
-+	ret = tc_del_ethtype_flow(priv, cls);
-+	if (!ret)
-+		return ret;
-+
- 	return tc_del_vlan_flow(priv, cls);
- }
- 
+ 	if (!entry->in_use)
 -- 
 2.53.0
 
