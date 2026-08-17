@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E59941F5CD;
-	Mon, 17 Aug 2026 15:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E17E3D9545;
+	Mon, 17 Aug 2026 15:28:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980511; cv=none; b=Elm16Yb94B1VKNAdFjr+5YYiy8KzayLzj7tfbrJ7tcERXQLi/oL9lfiMZdPYIp1eoX1WMYnkmCrvK5zxMMHTplm1B3Ejnd4LAmQOIA9qeqoJIS2tQ7bcUZ/OQxhxpK9Hucm8ovrcbtc4tJ7OxGYB5LIpJKM7fxrP1nmrZgQsHhw=
+	t=1786980514; cv=none; b=JWWevo3K0P7n50o9V+Ynlt+Ct0/gpxeoNNl6RvTwG//y6y4geXUDWLJUs6gN2c9+tbiPKV9bDSTG134nMsbtmelsuQdasLDmorvGE+vhRQXmWrC7of4zpJZpMf9V1hM8iEjaTtBtN6c4Pn9oAj8To8PeyeJ2yKWymdyXeKpdnt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980511; c=relaxed/simple;
-	bh=9QkETuLNOm+VXwggJjV05ZLMU9UNfoJy98KOmLxUED8=;
+	s=arc-20240116; t=1786980514; c=relaxed/simple;
+	bh=VO9fOErUrCQtppaKUdc4lfhx4pgDmKNOjt9U2S8L0Xo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rhRCtxUvG6IUhjo94nEffBDXRbgjAnKMlSEGYGnk5NKteMK8MOoE9HiuB8r115oWNkWAS5xnVx1v9JRJKFSzdKLYDGHa9E5X1Spt6hixpZPdSbS0jCpxVgb5UErT7fC/HI4f1u4nsY4dh+c1LD/HMEf1STiZHC9Aq8u4mD8JDOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TepfKYa/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aRqjl8jqI9N7VTp1x+FdEC3RP8Pq0lcf5tp0QIKQv8XTzrxkAKC/EcBiMZCw230MAfS7zVaVgQ+VxWUUXBQEfFjyVEiCtvaCcuMWel4PayYon2mYRJo7W6grFWw3xU525wgZxYMFv1R2oQwXH3NgM2wjDCQCQX+fSm3DX+eLgfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yRofbQKD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TepfKYa/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85AE1F000E9;
-	Mon, 17 Aug 2026 15:28:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yRofbQKD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8758F1F000E9;
+	Mon, 17 Aug 2026 15:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980510;
-	bh=kSlmc97NVyr0o8780laCOfCQw14nXQEXEKoax+BRKeQ=;
+	s=korg; t=1786980513;
+	bh=gOn35pySkN61MIskug1L0JVd4em4Z554QJbtjqHzWpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TepfKYa/efOMtN+IfTM8locC8HUn+kmVqQDa99rkDeXwdSyvHFXNgTV9rxjOsplWM
-	 yiBBzxjgCknJjMNL2rnGVRyzZ/Lw8miQej0HNJq/80fqIe8lnpggIsXIbe96Y8Rzv/
-	 DoOH81y03C+E+WH4Ixh6xGcSyk4AAhYi39Udfs2s=
+	b=yRofbQKDykk7tm1T6wFNel6yzbBaVxTJtMehsv2wNEVq6OWvZzmTfZclqM8stTtxU
+	 2oN/PP+O7zGSx6pUEF+aWd6TP/wO0LGi/xwYMS2H8c+UfoAT4r2MzSwiHWXu2SuLV/
+	 G/lho/D3sLSJdSc4ZRTsZcMgP/Dhivltxf7ITN80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 598/609] ip6_tunnel: clear skb2->cb[] in ip6ip6_err()
-Date: Mon, 17 Aug 2026 15:34:54 +0200
-Message-ID: <20260817132603.650354581@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
+Subject: [PATCH 6.1 572/609] staging: rtl8723bs: fix missing shared-key auth challenge length check
+Date: Mon, 17 Aug 2026 15:34:28 +0200
+Message-ID: <20260817132602.858743482@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,47 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
 
-commit f803c086399da277b5d0ff36a107d0f162751800 upstream.
+commit 2c56ef658ac8c6bca36bc5574715e8f717207c6c upstream.
 
-ip6ip6_err() clones an outer IPv6 ICMP error skb, pulls it to the
-quoted inner IPv6 packet, and then passes the clone to icmpv6_send().
-The clone still carries the outer packet's inet6_skb_parm in skb->cb.
+The WEP shared-key authentication handler uses the challenge-text
+element's attacker-controlled length without checking it against the
+fixed 128-byte chg_txt buffer.
 
-If the outer packet had a Home Address Option, IP6CB(skb2)->dsthao
-remains non-zero after skb_pull(). icmpv6_send() later calls
-mip6_addr_swap(), which uses that stale dsthao offset against the quoted
-inner packet. A malformed inner destination-options header can then make
-the HAO lookup and address swap run past the end of the quoted packet
-and corrupt skb_shared_info.
+In OnAuthClient() the length from rtw_get_ie() - up to 255 - is used
+to perform memcpy() into the 128-byte pmlmeinfo->chg_txt, so a
+malicious AP sending a malformed WLAN_EID_CHALLENGE element can
+overflow/underfill chg_txt by up to 127 bytes. It is reachable over the
+air, before association, during shared-key authentication. In the case
+of an overflow, the driver can write out of bounds. In the case of an
+underfill, the driver can echo stale buffer memory.
 
-Clear skb2->cb[] before pulling the quoted inner IPv6 packet so the
-reply path does not reuse metadata left by the outer IPv6 stack.
+The challenge text is defined to be exactly 128 octets, which is
+already provided as the WLAN_AUTH_CHALLENGE_LEN define; require the
+element to be exactly that length before use.
 
-Fixes: e490d1d85cf5 ("[IPV6] IP6TUNNEL: Split out generic routine in ip6ip6_err().")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/fe1a5e765fbca88d69391887f0ed26a19e3e4d39.1785736562.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
+Link: https://patch.msgid.link/20260720082409.168379-1-npetrakopoulos2003@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_tunnel.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/staging/rtl8723bs/core/rtw_mlme_ext.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -675,6 +675,9 @@ ip6ip6_err(struct sk_buff *skb, struct i
- 		if (!skb2)
- 			return 0;
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
+@@ -907,7 +907,7 @@ unsigned int OnAuthClient(struct adapter
+ 			p = rtw_get_ie(pframe + WLAN_HDR_A3_LEN + _AUTH_IE_OFFSET_, WLAN_EID_CHALLENGE, (int *)&len,
+ 				pkt_len - WLAN_HDR_A3_LEN - _AUTH_IE_OFFSET_);
  
-+		/* Remove debris left by outer IPv6 stack. */
-+		memset(IP6CB(skb2), 0, sizeof(*IP6CB(skb2)));
-+
- 		skb_dst_drop(skb2);
- 		skb_pull(skb2, offset);
- 		skb_reset_network_header(skb2);
+-			if (!p)
++			if (!p || len != WLAN_AUTH_CHALLENGE_LEN)
+ 				goto authclnt_fail;
+ 
+ 			memcpy((void *)(pmlmeinfo->chg_txt), (void *)(p + 2), len);
 
 
