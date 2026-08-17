@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D44C2E762C;
-	Mon, 17 Aug 2026 15:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A678F443E52;
+	Mon, 17 Aug 2026 15:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979755; cv=none; b=HoSYCz9MNIf7q7fVlw4z1el2DYVNVQyPw/Z1iLzNGTr41Sl7yMNIurKnU3hQbRrNiVPpye2zOLaiOkATRE0bcfwihIhSK3joC9vjOPgmSeaz4MBdHhzh237dZcQQJHrGI3gQmc/BGElQeYpZQD0fur5OpSMZOaZDnkpNxjNu09Q=
+	t=1786979760; cv=none; b=D1JbhQ7cofMGgTOk2Qjh7lHlLj5ujbrFo7Gr7Omwubon5Z8uIjB2DdTdURu8gmGV1EL6EiViucxVB+4e5LF/c92HGMsAL9S/6Dm/WUWH55i6eOE8VMwBrRRn9cbtqtBUoort3OsRuHBoYc1L39FMaDSZ+SqeFl218wB47d8VJ88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979755; c=relaxed/simple;
-	bh=372I+YrNlSF7LEsBevOwi/p5NjOdzVQRsDEuj9HuxUo=;
+	s=arc-20240116; t=1786979760; c=relaxed/simple;
+	bh=AGFYRsoQ+X0XUxhisxQW3WE5rUMfKT1Bvcw1BVYEZZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MQuUvwiO+PvTTIvkYnW0IB1lgwErAExkF9M+nvFn2eQ5PqSrs3EuKDDieGmy+fo3LmLH0bvsUnQnqgaKfxhmYxiVcE+ZEqpqdSEi1D34om+HUntk37ofqJZKsnCDbYJbZEWqH9X2DElserLhoArrQLZRm8B2gTxtGh5V51BHtOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJyB3VtN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CsEFF5VozXyZOUf6X13eA+OpIFNqRyTEYBnDrblZtuPTbj8ZoRfyw1gcoGG0H3HnVNgDbMKQZsOUoXZvm8EQevfHpJk/ttQbwrzsJPQk1nrJQ3kX8DtGlIOIYEer26NDVmg2yGIpoHT0DUjVZOt9yPacvkUGgxsmpooby36EYoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pgc4MYUG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJyB3VtN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77171F00A3E;
-	Mon, 17 Aug 2026 15:15:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pgc4MYUG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829F81F000E9;
+	Mon, 17 Aug 2026 15:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979754;
-	bh=f11J1OBqUFvvfzlKAzdwj0YDFUJ0G8TqBx/qyeHgFdo=;
+	s=korg; t=1786979757;
+	bh=li0cs6TJoj4nfCTYOsYkrPtRivkvgA3C2J+g1YR/6YM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aJyB3VtNKGw2cyp6z538EvdPpq2H3hAGkcVQ0xb4xRGkVZ4dTsdLFibrf0nhr7IsY
-	 AL1zYq1cjUxdgw1zten/6dMw2WbSzn10e4H0k3OFHAWYTm+zhwoFF+fjoJnhYVf1of
-	 EmzUoMo4kR6kBxcaJzkhDq6yQOF6nwXzbqj87LQE=
+	b=pgc4MYUGoRvRWVjmB9+zJZ0pcQX4T9YIOQ3ydOJ+05mBzNW5J4tmE+DDiaNndbcsp
+	 vVZSTVcRCg4wtUXzEry1qe5Qu0ZmTJfTJgI6MVP/uU8echwVve/vPi7Ju4+X6WXoXH
+	 Z8ZzVPzhDnBEiFic5v5kTF/3/RMMkq8U+u3YyawY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Leech <cleech@redhat.com>,
-	HyeongJun An <sammiee5311@gmail.com>,
+	Xingui Yang <yangxingui@huawei.com>,
+	John Garry <john.g.garry@oracle.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Hannes Reinecke <hare@suse.com>,
+	Jason Yan <yanaijie@huawei.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 336/609] scsi: libiscsi_tcp: Bound SCSI Response data segment to the connection buffer
-Date: Mon, 17 Aug 2026 15:30:32 +0200
-Message-ID: <20260817132555.470768002@linuxfoundation.org>
+Subject: [PATCH 6.1 337/609] scsi: libsas: Abort all in-flight requests when device is gone
+Date: Mon, 17 Aug 2026 15:30:33 +0200
+Message-ID: <20260817132555.508947090@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,68 +55,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Jason Yan <yanaijie@huawei.com>
 
-[ Upstream commit c1dea15f819cded9b3faf58f8bec72323568b6e6 ]
+[ Upstream commit 0e4b1791d9b192ac263a03707d876132eb0f8dab ]
 
-iscsi_tcp_hdr_dissect() receives the data segment of several PDU types
-into the fixed-size conn->data buffer, which is allocated for
-ISCSI_DEF_MAX_RECV_SEG_LEN (8192) bytes.  For the LOGIN_RSP, TEXT_RSP,
-REJECT and ASYNC_EVENT opcodes the dissect path already rejects a PDU
-whose DataSegmentLength exceeds that buffer.
+When a disk is removed with in-flight I/O, the application needs to wait
+for 30 seconds (depending on the timeout configuration) to hear back from
+the kernel. Xingui tried to fix this issue by aborting the ATA link for
+SATA devices[1], however this approach left the SAS devices unresolved.
 
-The SCSI Command Response (ISCSI_OP_SCSI_CMD_RSP) path also copies its
-data segment (sense/response data) into conn->data via
-iscsi_tcp_data_recv_prep(), but it does so without the same check.  The
-only upstream bound on in.datalen is conn->max_recv_dlength, the
-initiator's advertised MaxRecvDataSegmentLength, which is commonly
-negotiated well above 8192 (open-iscsi defaults to 262144).  A target
-that returns a SCSI Response with a DataSegmentLength between 8193 and
-max_recv_dlength therefore overflows the 8192-byte conn->data buffer.
+Try to fix this issue by aborting all in-flight requests when the device is
+gone. This is implemented by iterating over the tagset.
 
-Once the same bound applies, ISCSI_OP_SCSI_CMD_RSP is handled exactly
-like those responses: bound the data segment, receive it into conn->data
-when present, and otherwise complete the PDU with no data.  Fold the
-opcode into that case group rather than duplicating the check.
+[1] https://lore.kernel.org/lkml/234e04db-7539-07e4-a6b8-c6b05f78193d@opensource.wdc.com/T/
 
-Fixes: a081c13e39b5 ("[SCSI] iscsi_tcp: split module into lib and lld")
-Suggested-by: Chris Leech <cleech@redhat.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Acked-by: Chris Leech <cleech@redhat.com>
-Link: https://patch.msgid.link/20260716065848.1653431-1-sammiee5311@gmail.com
+Cc: Xingui Yang <yangxingui@huawei.com>
+Cc: John Garry <john.g.garry@oracle.com>
+Cc: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Cc: Hannes Reinecke <hare@suse.com>
+Signed-off-by: Jason Yan <yanaijie@huawei.com>
+Link: https://lore.kernel.org/r/20230330110930.175539-1-yanaijie@huawei.com
+Reviewed-by: John Garry <john.g.garry@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 3dbbbf656b85 ("scsi: libsas: Fix HA resume deadlock and hisi_sas disk-wake race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/libiscsi_tcp.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/scsi/libsas/sas_discover.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/drivers/scsi/libiscsi_tcp.c b/drivers/scsi/libiscsi_tcp.c
-index c182aa83f2c93..4d23205129432 100644
---- a/drivers/scsi/libiscsi_tcp.c
-+++ b/drivers/scsi/libiscsi_tcp.c
-@@ -763,13 +763,6 @@ iscsi_tcp_hdr_dissect(struct iscsi_conn *conn, struct iscsi_hdr *hdr)
- 		rc = __iscsi_complete_pdu(conn, hdr, NULL, 0);
- 		spin_unlock(&conn->session->back_lock);
- 		break;
--	case ISCSI_OP_SCSI_CMD_RSP:
--		if (tcp_conn->in.datalen) {
--			iscsi_tcp_data_recv_prep(tcp_conn);
--			return 0;
--		}
--		rc = iscsi_complete_pdu(conn, hdr, NULL, 0);
--		break;
- 	case ISCSI_OP_R2T:
- 		if (ahslen) {
- 			rc = ISCSI_ERR_AHSLEN;
-@@ -777,6 +770,7 @@ iscsi_tcp_hdr_dissect(struct iscsi_conn *conn, struct iscsi_hdr *hdr)
- 		}
- 		rc = iscsi_tcp_r2t_rsp(conn, hdr);
- 		break;
-+	case ISCSI_OP_SCSI_CMD_RSP:
- 	case ISCSI_OP_LOGIN_RSP:
- 	case ISCSI_OP_TEXT_RSP:
- 	case ISCSI_OP_REJECT:
+diff --git a/drivers/scsi/libsas/sas_discover.c b/drivers/scsi/libsas/sas_discover.c
+index d5bc1314c3415..49dea3c597778 100644
+--- a/drivers/scsi/libsas/sas_discover.c
++++ b/drivers/scsi/libsas/sas_discover.c
+@@ -360,6 +360,33 @@ static void sas_destruct_ports(struct asd_sas_port *port)
+ 	}
+ }
+ 
++static bool sas_abort_cmd(struct request *req, void *data)
++{
++	struct scsi_cmnd *cmd = blk_mq_rq_to_pdu(req);
++	struct domain_device *dev = data;
++
++	if (dev == cmd_to_domain_dev(cmd))
++		blk_abort_request(req);
++	return true;
++}
++
++static void sas_abort_device_scsi_cmds(struct domain_device *dev)
++{
++	struct sas_ha_struct *sas_ha = dev->port->ha;
++	struct Scsi_Host *shost = sas_ha->core.shost;
++
++	if (dev_is_expander(dev->dev_type))
++		return;
++
++	/*
++	 * For removed device with active IOs, the user space applications have
++	 * to spend very long time waiting for the timeout. This is not
++	 * necessary because a removed device will not return the IOs.
++	 * Abort the inflight IOs here so that EH can be quickly kicked in.
++	 */
++	blk_mq_tagset_busy_iter(&shost->tag_set, sas_abort_cmd, dev);
++}
++
+ void sas_unregister_dev(struct asd_sas_port *port, struct domain_device *dev)
+ {
+ 	if (!test_bit(SAS_DEV_DESTROY, &dev->state) &&
+@@ -372,6 +399,8 @@ void sas_unregister_dev(struct asd_sas_port *port, struct domain_device *dev)
+ 	}
+ 
+ 	if (!test_and_set_bit(SAS_DEV_DESTROY, &dev->state)) {
++		if (test_bit(SAS_DEV_GONE, &dev->state))
++			sas_abort_device_scsi_cmds(dev);
+ 		sas_rphy_unlink(dev->rphy);
+ 		list_move_tail(&dev->disco_list_node, &port->destroy_list);
+ 	}
 -- 
 2.53.0
 
