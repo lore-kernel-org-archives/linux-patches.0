@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E32175A6B;
-	Mon, 17 Aug 2026 14:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5D2428470;
+	Mon, 17 Aug 2026 14:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977135; cv=none; b=Xm//DCRCSDvVAzD4N0u3mBwJ5kMHL/Mi5P+SNHotEA/XJlSachKOvvKVugKwSECs84U7zh4NA+6QclD2Ni/vw0eyD/d0jJnK1Okej1vLt1o1eIiwIlzuBsmy1tnfZaUhVX0+tXdZSEJ5XVU1kJtK/LYXGOgPBRhgFmqxWZOK4B8=
+	t=1786977138; cv=none; b=at2QVLrBy5KyJ8pL+CZcCiBuqUx/OHcsEW/rx4r+wjw9GMUc6U96sPyvqTs5er11c8qXSqbJydpDS0EF2KNPCG+NdQcvQIAwwDgVBoZSCbJvgmRYCCbt8wnFCw/AwMdNEc+avYFZVKOsK+pKT6aZ3MI0s4JDPlEhrY8nfISQZAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977135; c=relaxed/simple;
-	bh=T+BicJp4pXHvcB/Kx09JdWr4FExCNX94GLrB3fGckhg=;
+	s=arc-20240116; t=1786977138; c=relaxed/simple;
+	bh=7Onw9tdrRgPDuZQ9yqJriGjterUjVWGyHQRMINOlwN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PmwrPHve1eqyz8Dec4csJvt/NKcaPqEm2LQfQUJ4kldy+qaAZcnDfFxH3qInaTyQdmbd3H+/kff7PZDY+LP2NJSQhmPyAPHq4J9kBGBo8b21b8p+anRFxVMlgXRc6ZPIBG/PWCySlnnb0r4LIAwQz9SF+YA/AaAdEJ8QQG+DALc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NIzRwAiK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AOJqAg+S2hEeg+bu8P3pdUVpMCpE86gWYqTycBgPiEp6UFKl1/5VNgQzuzUgdG8p4/43jiyLU5SeDaCRGT60//BF8uUXW37aneYGVjYaPbDgkI9d7dnVqEkiP9QDBWhP8yYAT/2n3jSINYZoC8pGEZwnUDmy+FEuk3Tp/c/dI6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EhK/OBEB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NIzRwAiK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C091F000E9;
-	Mon, 17 Aug 2026 14:32:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EhK/OBEB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C1641F00A3A;
+	Mon, 17 Aug 2026 14:32:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977134;
-	bh=wKNI7WL4Ke0ICvEFCWlGq2Ov+Nh49siSBR4+m5LbfQk=;
+	s=korg; t=1786977137;
+	bh=BZRsUqDaeS+v0giVK+oKU/cJBSQx+STFNglsLart67Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NIzRwAiKlDwZ7iwecIXsilAp3Ds8Iv7P46Q5vvKn0IaFyv7dTunsRAcLHPdiDN2Ix
-	 EjRwhPW80zMBVvmvULyxMxjUDwCeqc+5+DyZyeCt/oxyod7D7CxMpYXqrJyfRsZY5U
-	 RVx6NkzE2v6JDp0nVjXYYdbTyigrZxAwoT61UEq0=
+	b=EhK/OBEBb/5lSBnSCsPCMAFfiYT77cNpdHoRZpzyqPLeoO9JKn745NuMItQLgl5nC
+	 VBZfXXIH15BnhBXqABW2yNBlfhFH33DC2TLRIy7P9hcCUkIDOH6aBtO+LdTXYE9ydQ
+	 YW2f98wELjoAyupN/6LDcEupI3jfInkwgPurXPp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 223/456] mac802154: llsec: reject frames shorter than the authentication tag
-Date: Mon, 17 Aug 2026 15:30:13 +0200
-Message-ID: <20260817132548.884383412@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 5.15 188/456] x86/boot/compressed: Disable jump tables
+Date: Mon, 17 Aug 2026 15:29:38 +0200
+Message-ID: <20260817132547.474975600@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,55 +56,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit fd3a3f28ed60c6af4b2a39933b151d6b27842c3b upstream.
+commit 4a9ec5ec9555ad62dc5b81a37ac946025c2ea002 upstream.
 
-llsec_do_decrypt_auth() computes the associated-data length for the
-AEAD request as
+After a recent upstream LLVM change to start generating jump and lookup
+tables in switch statements in more instances [1], linking the
+compressed x86 boot image when CONFIG_KERNEL_ZSTD is enabled fails with:
 
-	assoclen += datalen - authlen;
+  ld.lld: error: Unexpected run-time relocations (.rela) detected!
 
-where datalen is the number of bytes after the MAC header and authlen
-(4, 8 or 16) is the length of the authentication tag. Nothing verifies
-that the frame actually carries at least authlen payload bytes. A
-secured frame whose payload is shorter than the tag makes
-datalen - authlen negative; assoclen is then passed to
-aead_request_set_ad() as an unsigned value close to 4 GiB, so
-crypto_aead_decrypt() walks far off the end of the scatterlist that
-only spans the real frame.
+Dumping the relocations in misc.o, which is the only file influenced by
+CONFIG_KERNEL_ZSTD in the decompressor, shows dynamic relocations to
+some string constants, which correspond to the string literals in the
+switch statement in handle_zstd_error():
 
-The frame is fully attacker-controlled and reaches this path from any
-IEEE 802.15.4 peer in radio range. Reject frames whose payload is
-shorter than the authentication tag before the subtraction.
+  Relocation section '.rela.data.rel.ro' at offset 0x277b0 contains 31 entries:
+      Offset             Info             Type               Symbol's Value  Symbol's Name + Addend
+  0000000000000000  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 73a
+  0000000000000008  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 78e
+  0000000000000010  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 78e
+  0000000000000018  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 78e
+  ...
 
-Dynamically reproduced on a KASAN kernel as a general-protection-fault
-in the AEAD scatterwalk, and the fix confirmed.
+This optimization is problematic for the decompressor environment, as it
+is built as -fPIE without any explicit absolute references (as described
+at the top of misc.c) while not applying any dynamic relocations, hence
+the linker assertion. To opt out of this optimization, which is of
+little value in this special early boot code, and to mirror the other
+x86 startup code in arch/x86/boot/startup, disable jump tables in the
+decompressor.
 
-Fixes: 4c14a2fb5d14 ("mac802154: add llsec decryption method")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Link: https://patch.msgid.link/20260716193423.32498-1-doruk@0sec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://github.com/llvm/llvm-project/commit/fa02a6ed66b1700c996b49c96c6bc0eb014c9518 [1]
+Link: https://patch.msgid.link/20260722-x86-boot-compressed-disable-jt-clang-v2-1-7373d38482fb@kernel.org
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2165
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac802154/llsec.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/x86/boot/compressed/Makefile |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/mac802154/llsec.c
-+++ b/net/mac802154/llsec.c
-@@ -888,6 +888,11 @@ llsec_do_decrypt_auth(struct sk_buff *sk
- 	data = skb_mac_header(skb) + skb->mac_len;
- 	datalen = skb_tail_pointer(skb) - data;
- 
-+	if (datalen < authlen) {
-+		kfree_sensitive(req);
-+		return -EBADMSG;
-+	}
-+
- 	sg_init_one(&sg, skb_mac_header(skb), assoclen + datalen);
- 
- 	if (!(hdr->sec.level & IEEE802154_SCF_SECLEVEL_ENC)) {
+--- a/arch/x86/boot/compressed/Makefile
++++ b/arch/x86/boot/compressed/Makefile
+@@ -35,6 +35,7 @@ targets := vmlinux vmlinux.bin vmlinux.b
+ KBUILD_CFLAGS := -m$(BITS) -O2 $(CLANG_FLAGS)
+ KBUILD_CFLAGS += -std=gnu89
+ KBUILD_CFLAGS += -fno-strict-aliasing -fPIE
++KBUILD_CFLAGS += -fno-jump-tables
+ KBUILD_CFLAGS += -Wundef
+ KBUILD_CFLAGS += -DDISABLE_BRANCH_PROFILING
+ cflags-$(CONFIG_X86_32) := -march=i386
 
 
