@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5757317144;
-	Mon, 17 Aug 2026 13:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D663E6DFA;
+	Mon, 17 Aug 2026 13:57:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975040; cv=none; b=Vbs9csbfAWv2Q+boqI61u093RN7VI/98rbWXy5RqXF0CNGQxQUXN7WkrAJ5psfIxPn38lTHtJZjG/mmgOadgAmIeu1M2KMoo6Tufmz3EQheCAsB5CN6H08S6c+LalKBVkGlYv+GKz9jlS14KEFtm6qnFjJsbzlYKGs2NY/+fDAU=
+	t=1786975042; cv=none; b=m530ucL2+mlOpwFI/PXXeF0OKeBb6sek8vueVaGM39ea0N6/aYRJP0fG07v4rMXmTsjYqfW2GxP7JMdm+EmhWk9U2UHqL9I4PrZ7FmeiNlrFBVULYrS7OXbk1ryN6Kpl4wl69HfUz5HTZYYAAh56ss653bsbUzxpH4UnOHqTr1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975040; c=relaxed/simple;
-	bh=QMxPbOLSL8xqsfJ+6lGANtHNIHFjaGAAGqrJC59C/AI=;
+	s=arc-20240116; t=1786975042; c=relaxed/simple;
+	bh=Y1qBdYsPMsldDr/KwJuLFTkmz+ipXv6WQHpnmJD1VRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M6o1rpfDDWnlBguloiFR+Ex59wquRM6u12GcTEvO/MUO1HfIMRIZyn76aT4oM0Q4jmeVz/nvuQMVjYrvEOCKJGo9PSOdKyfpyDbtn4w12gMNddo+NIqDd/4qMseiLgod2NZ1T0dhdGq8zjjTv6ULVfsL9APBGh2i8IML3VrFGWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UuzEcTGE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hc80jjniTB7tEJ1+q/VagewKNzhw+GVAYRgU4Pud+vrB1GDb/FK18O7n4QEq3DfRvrJS0xz+Xfjb8XGHJxE5mh0vV7jBgo3HFkcsQsT8u5MM5Gw9OVIcyxSBaEnC99Ukb3jTy7PIaFVMKWSMXNF91LL5ILz9InbUw1oAVcbMCqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8oetwbt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UuzEcTGE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38B8C1F000E9;
-	Mon, 17 Aug 2026 13:57:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8oetwbt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1912A1F000E9;
+	Mon, 17 Aug 2026 13:57:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975038;
-	bh=ntFHGtHZrmZF51rH7WkMgOaontbUrWamXj33pv4uunI=;
+	s=korg; t=1786975041;
+	bh=cl8ZefIHHztSrI88kvXn/ALQJCkH+JdrHsRrJnN1jkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UuzEcTGE2Fy8E3H6zFqp3Jt4X20Ig01nw0PUKnk9ePieOPnTVtfpXHrnxCNij4UpX
-	 ZbfHl7GtaUQlfAG82aisohjDkwro5QWetICcMKbxnyYKKo4vFtBEC6C8m1WrZZ4E49
-	 HdvUvSP+GPo025gWGbngPdK/Z/1nIZW4k66GSX0w=
+	b=Y8oetwbtitsYEh2hsKqGoTuE2GogXosEQCPFUkrlmOeq8ZKL+OOUElr50jFR7YhyF
+	 4rcnuzhCtEFP2JOc2mj8qzACwA++DkoJt3RqDwz3zOoRYIta/f2hBLVSwfGIQ+A/tB
+	 L0Tt/d+4KgAM0bod44L7aweBPjaTo6EJN1l3p2kY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Michal Pecio <michal.pecio@gmail.com>,
-	stable <stable@kernel.org>,
-	Nikhil Solanke <nikhilsolanke5@gmail.com>
-Subject: [PATCH 6.18 114/250] usb: core: Add quirk for 255-bytes initial config read
-Date: Mon, 17 Aug 2026 15:31:15 +0200
-Message-ID: <20260817132541.224245211@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 141/250] inet: frags: publish queues before arming timer
+Date: Mon, 17 Aug 2026 15:31:42 +0200
+Message-ID: <20260817132542.318634582@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,179 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil Solanke <nikhilsolanke5@gmail.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 152f174a13618bec1f842d2deb69245cb2ace51f upstream.
+commit 653d7ddf6cba867777a3d14c4f83ace008c5ad13 upstream.
 
-Certain third-party USB game controllers exposing (or spoofing) an Xbox
-360-compatible interface (VID:PID 045e:028e) fail to enumerate under Linux.
-The device disconnects from the bus without responding to the initial
-GET_DESCRIPTOR(CONFIGURATION) request, and the kernel logs 'unable to read
-config index 0 descriptor/start: -71'.
+inet_frag_create() arms the fragment queue timer before inserting the
+queue into the fqdir rhashtable. If the namespace fragment timeout is
+zero or negative, the timer can run before the queue is published.
 
-The device then falls back to a secondary Android HID mode (with a
-different VID:PID), losing XInput functionality including rumble support.
-The failure reproduces across multiple machines, host controller types, and
-kernel versions including current mainline and LTS. The device enumerates
-correctly and remains in XInput mode under Windows. Notably, the device
-enumerates correctly in Android mode when the same 9-byte request
-is issued for that mode's configuration descriptor, confirming the firmware
-bug is specific to the XInput mode.
+The timer callback then marks the queue complete, tries to remove a node
+that is not in the hash table yet, and drops the anticipated hash
+reference. Creation can subsequently publish the completed queue without
+restoring that reference, leaving a stale hash node after the caller drops
+the remaining reference.
 
-usbmon traces from Linux and Wireshark/USBPcap traces from Windows are
-identical up to the point of failure, with no visible protocol-level
-difference explaining the divergence. The root cause was identified when
-Michal Pecio discovered via a QEMU bus-level capture that Windows does not
-use wLength=9 for the initial config descriptor request; it uses
-wLength=255. Alan Stern subsequently confirmed this with a bus
-analyzer on a different USB 2.0 device, and Michal verified the behavior
-goes back to Windows 95 OSR2.1.
+Publish the queue first and arm the timer while holding the queue lock.
+This makes timer expiry wait until the queue is visible in the hash table,
+so inet_frag_kill() can remove the node and balance the hash reference.
 
-So, add a new quirk flag USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE which causes
-usb_get_configuration() to issue a 255 byte sized configuration request
-instead of USB_DT_CONFIG_SIZE (9) for the initial
-GET_DESCRIPTOR(CONFIGURATION) request, mimicking long-standing Windows
-behavior.
-
-This patch intentionally does not add any new VID:PID entries using this
-quirk. Some affected Xbox 360-compatible controllers spoof Microsoft's
-VID:PID, while genuine Microsoft controllers already enumerate correctly
-and do not require this quirk. Other affected clone devices use their own
-VID:PID pairs and can be added individually as they are identified.
-
-Suggested-by: Alan Stern <stern@rowland.harvard.edu>
-Suggested-by: Michal Pecio <michal.pecio@gmail.com>
-Closes: https://lore.kernel.org/linux-usb/CAFgddh+JWdT4LLwMc5qjM8q_pBu-fRo2qADR5ovAKoGHWMQrRw@mail.gmail.com/
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable <stable@kernel.org>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Nikhil Solanke <nikhilsolanke5@gmail.com>
-Link: https://patch.msgid.link/20260728195158.65162-2-nikhilsolanke5@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 648700f76b03 ("inet: frags: use rhashtables for reassembly units")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Link: https://patch.msgid.link/bf66785e7c0c139d7a1900e2f01faeeab344b960.1784948849.git.zhilinz@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt |    5 +++
- drivers/usb/core/config.c                       |   32 ++++++++++++++++++------
- drivers/usb/core/quirks.c                       |    4 +++
- include/linux/usb/quirks.h                      |    3 ++
- 4 files changed, 36 insertions(+), 8 deletions(-)
+ net/ipv4/inet_fragment.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -7928,6 +7928,11 @@
- 				q = USB_QUIRK_FORCE_ONE_CONFIG (Device
- 					claims zero configurations,
- 					forcing to 1);
-+				r = USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE (Device
-+					fails during initialization when asked for
-+					9-bytes configuration descriptor request.
-+					Ask for 255-bytes request instead to mirror
-+					Windows' behavior);
- 			Example: quirks=0781:5580:bk,0a5c:5834:gij
+--- a/net/ipv4/inet_fragment.c
++++ b/net/ipv4/inet_fragment.c
+@@ -395,8 +395,8 @@ static struct inet_frag_queue *inet_frag
+ 		*prev = ERR_PTR(-ENOMEM);
+ 		return NULL;
+ 	}
+-	mod_timer(&q->timer, jiffies + fqdir->timeout);
  
- 	usbhid.mousepoll=
---- a/drivers/usb/core/config.c
-+++ b/drivers/usb/core/config.c
-@@ -927,6 +927,18 @@ int usb_get_configuration(struct usb_dev
- 	unsigned char *bigbuffer;
- 	struct usb_config_descriptor *desc;
- 	int result;
-+	size_t usb_config_req_size;
-+
-+	/*
-+	 * We usually start by grabbing the first 9-bytes descriptor so we know
-+	 * how long the whole configuration is. Some devices with quirky
-+	 * firmware will fail enumeration, so if the quirk is set, use 255 instead,
-+	 * mirroring the behavior of Windows.
-+	 */
-+	if (dev->quirks & USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE)
-+		usb_config_req_size = 255;
-+	else
-+		usb_config_req_size = USB_DT_CONFIG_SIZE;
++	spin_lock_bh(&q->lock);
+ 	*prev = rhashtable_lookup_get_insert_key(&fqdir->rhashtable, &q->key,
+ 						 &q->node, f->rhash_params);
+ 	if (*prev) {
+@@ -404,13 +404,13 @@ static struct inet_frag_queue *inet_frag
+ 		 * we need to cancel what inet_frag_alloc()
+ 		 * anticipated.
+ 		 */
+-		int refs = 1;
+-
+ 		q->flags |= INET_FRAG_COMPLETE;
+-		inet_frag_kill(q, &refs);
+-		inet_frag_putn(q, refs);
++		spin_unlock_bh(&q->lock);
++		inet_frag_putn(q, 2);
+ 		return NULL;
+ 	}
++	mod_timer(&q->timer, jiffies + fqdir->timeout);
++	spin_unlock_bh(&q->lock);
+ 	return q;
+ }
  
- 	if (ncfg > USB_MAXCONFIG) {
- 		dev_notice(ddev, "too many configurations: %d, "
-@@ -953,15 +965,13 @@ int usb_get_configuration(struct usb_dev
- 	if (!dev->rawdescriptors)
- 		return -ENOMEM;
- 
--	desc = kmalloc(USB_DT_CONFIG_SIZE, GFP_KERNEL);
-+	desc = kmalloc(usb_config_req_size, GFP_KERNEL);
- 	if (!desc)
- 		return -ENOMEM;
- 
- 	for (cfgno = 0; cfgno < ncfg; cfgno++) {
--		/* We grab just the first descriptor so we know how long
--		 * the whole configuration is */
- 		result = usb_get_descriptor(dev, USB_DT_CONFIG, cfgno,
--		    desc, USB_DT_CONFIG_SIZE);
-+		    desc, usb_config_req_size);
- 		if (result < 0) {
- 			dev_err(ddev, "unable to read config index %d "
- 			    "descriptor/%s: %d\n", cfgno, "start", result);
-@@ -971,16 +981,14 @@ int usb_get_configuration(struct usb_dev
- 			dev->descriptor.bNumConfigurations = cfgno;
- 			break;
- 		} else if (result < 4) {
--			dev_err(ddev, "config index %d descriptor too short "
--			    "(expected %i, got %i)\n", cfgno,
--			    USB_DT_CONFIG_SIZE, result);
-+			dev_err(ddev, "config index %d descriptor too short (asked for %zu, got %i)\n",
-+			    cfgno, usb_config_req_size, result);
- 			result = -EINVAL;
- 			goto err;
- 		}
- 		length = max_t(int, le16_to_cpu(desc->wTotalLength),
- 		    USB_DT_CONFIG_SIZE);
- 
--		/* Now that we know the length, get the whole thing */
- 		bigbuffer = kmalloc(length, GFP_KERNEL);
- 		if (!bigbuffer) {
- 			result = -ENOMEM;
-@@ -990,6 +998,13 @@ int usb_get_configuration(struct usb_dev
- 		if (dev->quirks & USB_QUIRK_DELAY_INIT)
- 			msleep(200);
- 
-+		/* Skip the second read if we already got everything */
-+		if (result >= length) {
-+			memcpy(bigbuffer, desc, length);
-+			goto store_and_parse;
-+		}
-+
-+		/* Get the whole thing */
- 		result = usb_get_descriptor(dev, USB_DT_CONFIG, cfgno,
- 		    bigbuffer, length);
- 		if (result < 0) {
-@@ -1004,6 +1019,7 @@ int usb_get_configuration(struct usb_dev
- 			length = result;
- 		}
- 
-+store_and_parse:
- 		dev->rawdescriptors[cfgno] = bigbuffer;
- 
- 		result = usb_parse_configuration(dev, cfgno,
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -143,6 +143,10 @@ static int quirks_param_set(const char *
- 				break;
- 			case 'q':
- 				flags |= USB_QUIRK_FORCE_ONE_CONFIG;
-+				break;
-+			case 'r':
-+				flags |= USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE;
-+				break;
- 			/* Ignore unrecognized flag characters */
- 			}
- 		}
---- a/include/linux/usb/quirks.h
-+++ b/include/linux/usb/quirks.h
-@@ -81,4 +81,7 @@
- /* Device claims zero configurations, forcing to 1 */
- #define USB_QUIRK_FORCE_ONE_CONFIG		BIT(18)
- 
-+/* Use a 255 bytes config descriptor request mirroring windows behavior */
-+#define USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE	BIT(19)
-+
- #endif /* __LINUX_USB_QUIRKS_H */
 
 
