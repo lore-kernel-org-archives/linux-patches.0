@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B93439F71;
-	Mon, 17 Aug 2026 14:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300F830DD10;
+	Mon, 17 Aug 2026 14:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976191; cv=none; b=YDKF7Q38K7cAk+8f+FIFAtBbm92i7YU1zQ6ERh5ulgpU3lVzukWEdP9D/TAqLLpM6PnpFIJ2RXb5tG7TQNmfnC1CXNngUVV8AG4MbY7ljprsQA02jiwt6zZdLpHF/RjZLYnL10OyOaUD2jEQBw+XVKGlaqgU0eyw97ZOJZgZkIk=
+	t=1786976194; cv=none; b=gYf8vlXv3XVk95mGgPOojIMqXp35/OQtRRmo82TahBwFT8RLOIHXXY07NllQuTwecVz71RjUNb+BkvHJMTtPbXpbu7o7nOf6CTQW4JmQn00epJVYvAiXshhsBR0r912ZAH/g3Oxvzr2xq9AhXJQqszSnsealfGZLH91yZcJwzJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976191; c=relaxed/simple;
-	bh=9+f2wjSePQzvCiHQEv1r8yWjjYKwrqzoNi4gcuvE/+g=;
+	s=arc-20240116; t=1786976194; c=relaxed/simple;
+	bh=135RB2pHN0eJTmbieggeiYMDIqnWluVwF3C77RUEhL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GNkXGkN1SXYy3+8YPyN6HyB42mvRKDYeIM2oNrPEscjVeCH7/ivTOAYJh/207CXvXVaK0yPJcZz6jdv2NXoa/u03wGAvIM3I1gi/pi9/Njv8lVLZbS3CG1J+lMQq2CAsnjSGVXZAs+qEE7/GSnaUYXOHEYK22Rc3j5OcI2ltjck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DOPHvBJe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PtaJk2pWZEq5dKEzVzJCL2MSkAskwu++Syrd0DpPjzUrJvdVLtKoYWoAvO2IbrzoS7XDZdqPpChadW3m3TP8mS/WLG1lKZQe2bzCZekqEO12Nwpf9eqZxAZvwvnCz/D2avOHukit47LYRCmuP58TNZyAIDkPLEdOKKQEXBiLBgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9qW+3w/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DOPHvBJe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA69F1F00A3D;
-	Mon, 17 Aug 2026 14:16:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9qW+3w/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ABA21F000E9;
+	Mon, 17 Aug 2026 14:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976190;
-	bh=j1c2/xuAC1/in6iMHuJ1zeBIN+mHXXJEsXWFzLgWN9o=;
+	s=korg; t=1786976193;
+	bh=49HJ169fYbBj3whsuA0JIfZiUdt55kPjpJSaqkm8WCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DOPHvBJeySkOl/GQob8ur/grsyFdwrd8TGctumngaivWw4JbxN5EAuaDTG4WKCZmy
-	 jw62mdhTXdZHP1T7KoB+PgUqx5+/lItdRF3l2ueBLC74/bV5t23HwkZHSXyLZ9KhCk
-	 CERieRS74nRqEXAqFdYpcgzdxFgG8ZFQYC5JRNYw=
+	b=c9qW+3w/tkfr/Pbr00yOTSHBNlZOUhB6Lf8G2hFZOAIeR/AP6hwosVoU4Ii4DUQNu
+	 MjWwuP/GvAt9vvzYqUgRAGrsUq79V+prpdolTylwbem7cFYI1u+PkX61fUK4BN48Ev
+	 LQUGG2lL87Zc9ftB1gFJ3MsCNbONLrLZHBN5flQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 289/389] net: openvswitch: fix skb leak on flow key update failure during ct
-Date: Mon, 17 Aug 2026 15:32:08 +0200
-Message-ID: <20260817132550.365594656@linuxfoundation.org>
+	"H. Nikolaus Schaller" <hns@goldelico.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 5.10 290/389] i2c: jz4780: Cache host clock rate at probe to prevent CCF prepare_lock deadlock
+Date: Mon, 17 Aug 2026 15:32:09 +0200
+Message-ID: <20260817132550.397103241@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,44 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: H. Nikolaus Schaller <hns@goldelico.com>
 
-commit bc62e843bc48f933da765ce47079fd992e535794 upstream.
+commit d99607c888f26e8a4e9fe9772860cef4aff86bb4 upstream.
 
-ovs_ct_execute() always steals or frees the skb on failure while
-ovs_flow_key_update() does not.  So, if it fails and we return right
-away, the skb ends up leaked.
+Fix a severe AB/BA deadlock between the Common Clock Framework (CCF)
+and the I2C adapter lock, which triggers when an I2C-controlled clock
+generator client (like the Si5351) is registered or modified under the CCF.
 
-Fix that by breaking instead and letting the common error handling
-code at the bottom of the loop to free the skb properly.
+During an i2c client clock (generator) frequency change, the CCF acquires its global
+'prepare_lock' mutex and the driver calls i2c_transfer() to update the client's
+chip registers, stalling for the adapter's I2C bus lock.
 
-This is a very unlikely scenario as it requires the packet to become
-unparseable by applying a set of actions on a previously parseable skb,
-but should be fixed nevertheless.
+Concurrently, an independent, parallel transfer on the same bus (e.g., a GPIO
+expander handling LEDs) can hold the I2C adapter lock. Inside this parallel
+transfer path, jz4780_i2c_set_speed() calls clk_get_rate() on the host
+controller's input clock to calculate bus timings. This call attempts to acquire
+the blocked CCF 'prepare_lock', creating a circular dependency that freezes
+the system.
 
-Reported by Sashiko.
+The jz4780 host controller clock itself is static and never changes at runtime.
 
-Fixes: ec0d043d05e6 ("openvswitch: Ensure flow is valid before executing ct")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20260727181851.306076-3-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+However, calling clk_get_rate() inside the active transfer path introduces
+an unnecessary dependency on the CCF internal locks.
+
+Eliminate this synchronous clk_get_rate() call from the active transfer
+path by caching the static host peripheral clock rate once - inside the private
+jz4780_i2c structure during jz4780_i2c_probe(). Update jz4780_i2c_set_speed()
+to use this cached value, safely decoupling active I2C transactions from the
+CCF internal locks without any risk of stale timings.
+
+Assisted-by web based Google AI (pinpointing the bug and writing the message).
+
+Fixes: ba92222ed63a12 ("i2c: jz4780: Add i2c bus controller driver for Ingenic JZ4780")
+Signed-off-by: H. Nikolaus Schaller <hns@goldelico.com>
+Cc: <stable@vger.kernel.org> # v4.1+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/2db6fd233aceb7238474e4833f4d25ca681c3ffb.1784492382.git.hns@goldelico.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/actions.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-jz4780.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -1316,7 +1316,7 @@ static int do_execute_actions(struct dat
- 			if (!is_flow_key_valid(key)) {
- 				err = ovs_flow_key_update(skb, key);
- 				if (err)
--					return err;
-+					break;
- 			}
+--- a/drivers/i2c/busses/i2c-jz4780.c
++++ b/drivers/i2c/busses/i2c-jz4780.c
+@@ -141,6 +141,7 @@ struct jz4780_i2c {
+ 	void __iomem		*iomem;
+ 	int			 irq;
+ 	struct clk		*clk;
++	unsigned long		 clk_rate_khz;
+ 	struct i2c_adapter	 adap;
+ 	const struct ingenic_i2c_config *cdata;
  
- 			err = ovs_ct_execute(ovs_dp_get_net(dp), skb, key,
+@@ -246,7 +247,7 @@ static int jz4780_i2c_set_target(struct
+ 
+ static int jz4780_i2c_set_speed(struct jz4780_i2c *i2c)
+ {
+-	int dev_clk_khz = clk_get_rate(i2c->clk) / 1000;
++	int dev_clk_khz = i2c->clk_rate_khz;
+ 	int cnt_high = 0;	/* HIGH period count of the SCL clock */
+ 	int cnt_low = 0;	/* LOW period count of the SCL clock */
+ 	int cnt_period = 0;	/* period count of the SCL clock */
+@@ -801,6 +802,8 @@ static int jz4780_i2c_probe(struct platf
+ 	if (ret)
+ 		return ret;
+ 
++	i2c->clk_rate_khz = clk_get_rate(i2c->clk) / 1000;
++
+ 	ret = of_property_read_u32(pdev->dev.of_node, "clock-frequency",
+ 				   &clk_freq);
+ 	if (ret) {
 
 
