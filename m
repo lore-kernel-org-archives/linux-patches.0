@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066D9285061;
-	Mon, 17 Aug 2026 14:04:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058123033E7;
+	Mon, 17 Aug 2026 14:04:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975446; cv=none; b=F66l9/qAqu5venmrQuSB5Sezst30WaOigHdUql7hd22iP677tAPDQrUDNKU+Ob40d6igx0nfgZITSp/dW9TGWsGmzEeEjg3wRa3ZnB+FpM48e36nvigzr1DyAWHeD79h3/u5G0JzMpGeibBLh82OCNY11gxAUfgie61I1NONiQA=
+	t=1786975449; cv=none; b=iJPy4KZ0prD0OdnqpprTPoP34p3uIQjhUXacNNKHcZQAYknqxEu/tcdt8yMC3+b7vzVGZ4lP1syKhQUlEstx4B79r600OcfecGG69tu/5bXotLJpLE/kJFw+8KZujhlvw2eKoo/JEBj0yslGbvANgUl9zrtWrs8cc34mN7YzeM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975446; c=relaxed/simple;
-	bh=auIb/MfhmqbjRuENXh29ob5fZCCmmUzOdOmi59TJMy0=;
+	s=arc-20240116; t=1786975449; c=relaxed/simple;
+	bh=QVJgYvS8hkdWnJbFCebHD/P0t5Iw8UG+vGo1rp9bLAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PnrjOrgWGeM3Bs2fStIv/eu+jQRF4GT8vbX+zbT/oLH0HwlUiZYSVzZH/eDQEHwuOBxz2riQmSM7QKeB+u8twrhc4UH/9NLwBhnfYV4S5HXIHfvi80zIeTsi0sqgpqlSesX48eHCIUMghoxU2K1BsdI536OevQQt3ypg+obWBdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjAfbwNH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PtcWOntIsWcRDDX44Xi8+nK4fAJk7WarPKXywvKV/8JZoh+YEynbD5LzzyAHlMXXqZNwsgd1MLwcUHRSB6I2pEXlDkaZiHO+kqFJFWMYbOZ4iRqd52GRYZ8c0zmXEgxZL4f0+zYDt/NJW84tHlArXpini8NrKTuT/djg0KuYO14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mW58YSvs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjAfbwNH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A391F00A3A;
-	Mon, 17 Aug 2026 14:04:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mW58YSvs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1274F1F000E9;
+	Mon, 17 Aug 2026 14:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975444;
-	bh=3jxDSAMxUXLtw4Q9ZqTjCg9wzCrByx9gxP7BgaqiKbw=;
+	s=korg; t=1786975447;
+	bh=DOi+4AntHHdOfadnmt8Gbl9fMKUW+zHONgWsdJVwvLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KjAfbwNHFrxSlqonh+3CasmRvmQWxe66C5LWV8jTdRiTJyGq6kv76RSoun5AA7cpG
-	 QARCRbWMpIYfhGEYgSqmtwD9erUDDV8xRBp6RAcUuqUPBGlqHgpvbXKDKOOAlvX7n3
-	 1VcGiU3ZmT36+N6C/J6wiNkkH71UwTx9GzrTG5rc=
+	b=mW58YSvsnlhHYvZgJGKfK2QxiF+FDdVQDbt9N0poH2YvOwn1fdFEXV/890S+5ESOO
+	 bODyMX78zOMvtHKjr1GXJbAAplidJmAn5JMwKjsfLZdMgXgL/2NJPLHkAWtRj6+IMJ
+	 Dc395pEIgAnwjMzb3w2fa7f/aqii3iLzzExhl3rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 023/389] wifi: cfg80211: validate PMSR measurement type data
-Date: Mon, 17 Aug 2026 15:27:42 +0200
-Message-ID: <20260817132539.809557165@linuxfoundation.org>
+Subject: [PATCH 5.10 032/389] ipv4: fib: free fib_alias with kfree_rcu() on insert error path
+Date: Mon, 17 Aug 2026 15:27:51 +0200
+Message-ID: <20260817132540.211235456@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,74 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 41aa973eb05922848dded26875c55ef982ac1c49 ]
+[ Upstream commit f2f152e94a67bc746afaf05a1b2702c195553112 ]
 
-PMSR request parsing accepts missing or duplicated measurement type
-entries in NL80211_PMSR_REQ_ATTR_DATA.
+fib_table_insert() publishes new_fa into the leaf's fa_list with
+fib_insert_alias() before calling the fib entry notifiers. When a
+notifier fails, the error path removes new_fa with fib_remove_alias()
+(hlist_del_rcu) and frees it right away with kmem_cache_free().
 
-Track whether one measurement type was already provided, reject a
-second one immediately, and return an error if the request data block
-contains no measurement type at all.
+fib_table_lookup() walks that list under rcu_read_lock() only, so a
+concurrent lookup that already reached new_fa keeps reading it after the
+free:
 
-Fixes: 9bb7e0f24e7e7 ("cfg80211: add peer measurement with FTM initiator API")
-Assisted-by: Codex:gpt-5.5
-Assisted-by: Claude:claude-opus-4.8
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260612133656.92900-2-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+ BUG: KASAN: slab-use-after-free in fib_table_lookup (net/ipv4/fib_trie.c:1601)
+ Read of size 1 at addr ffff88810676d4eb by task exploit/297
+ Call Trace:
+  fib_table_lookup (net/ipv4/fib_trie.c:1601)
+  ip_route_output_key_hash_rcu (net/ipv4/route.c:2814)
+  ip_route_output_key_hash (net/ipv4/route.c:2705)
+  __ip4_datagram_connect (net/ipv4/datagram.c:49)
+  udp_connect (net/ipv4/udp.c:2144)
+  __sys_connect (net/socket.c:2167)
+  __x64_sys_connect (net/socket.c:2173)
+  do_syscall_64
+  entry_SYSCALL_64_after_hwframe
+ which belongs to the cache ip_fib_alias of size 56
+
+Triggering the error path needs CAP_NET_ADMIN and a registered fib
+notifier that can reject a route; a netdevsim device whose IPv4 FIB
+resource is exhausted is enough.
+
+Free new_fa with alias_free_mem_rcu(), as fib_table_delete() already
+does for a fib_alias removed from the trie.
+
+Fixes: a6c76c17df02 ("ipv4: Notify route after insertion to the routing table")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260704171421.1786806-1-bestswngs@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/pmsr.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ net/ipv4/fib_trie.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/pmsr.c b/net/wireless/pmsr.c
-index 7503c7dd71ab5e..4e636a07c1e1b4 100644
---- a/net/wireless/pmsr.c
-+++ b/net/wireless/pmsr.c
-@@ -168,6 +168,7 @@ static int pmsr_parse_peer(struct cfg80211_registered_device *rdev,
- {
- 	struct nlattr *tb[NL80211_PMSR_PEER_ATTR_MAX + 1];
- 	struct nlattr *req[NL80211_PMSR_REQ_ATTR_MAX + 1];
-+	bool have_measurement_type = false;
- 	struct nlattr *treq;
- 	int err, rem;
- 
-@@ -220,6 +221,14 @@ static int pmsr_parse_peer(struct cfg80211_registered_device *rdev,
- 	}
- 
- 	nla_for_each_nested(treq, req[NL80211_PMSR_REQ_ATTR_DATA], rem) {
-+		if (have_measurement_type) {
-+			NL_SET_ERR_MSG_ATTR(info->extack, treq,
-+					    "multiple measurement types in request data");
-+			return -EINVAL;
-+		}
-+
-+		have_measurement_type = true;
-+
- 		switch (nla_type(treq)) {
- 		case NL80211_PMSR_TYPE_FTM:
- 			err = pmsr_parse_ftm(rdev, treq, out, info);
-@@ -229,10 +238,16 @@ static int pmsr_parse_peer(struct cfg80211_registered_device *rdev,
- 					    "unsupported measurement type");
- 			err = -EINVAL;
- 		}
-+		if (err)
-+			return err;
- 	}
- 
--	if (err)
--		return err;
-+	if (!have_measurement_type) {
-+		NL_SET_ERR_MSG_ATTR(info->extack,
-+				    req[NL80211_PMSR_REQ_ATTR_DATA],
-+				    "missing measurement type in request data");
-+		return -EINVAL;
-+	}
- 
- 	return 0;
- }
+diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
+index 5c75591bcce003..5c061dffc3795f 100644
+--- a/net/ipv4/fib_trie.c
++++ b/net/ipv4/fib_trie.c
+@@ -1340,7 +1340,7 @@ int fib_table_insert(struct net *net, struct fib_table *tb,
+ out_remove_new_fa:
+ 	fib_remove_alias(t, tp, l, new_fa);
+ out_free_new_fa:
+-	kmem_cache_free(fn_alias_kmem, new_fa);
++	alias_free_mem_rcu(new_fa);
+ out:
+ 	fib_release_info(fi);
+ err:
 -- 
 2.53.0
 
