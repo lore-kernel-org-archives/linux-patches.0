@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8D443B3FF;
-	Mon, 17 Aug 2026 14:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7E54322E5;
+	Mon, 17 Aug 2026 14:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978201; cv=none; b=q8iQuH6Sot8KYwpjjNocONnEDjKq0jwOhY7raIsITD7KvT1xIenrHrCwMLejGJiju5S/2PLZvxWuwFApkVZGaeACv0KceVe3YOuTv9G0R94RmS/GsXOR5dz3d3QOpEZ10VFBYMBhwnB30VHEGQYCgdVFzyDIQaiu9bm1wfQ5Wsc=
+	t=1786978203; cv=none; b=SCopTvgOmcH1+lcl8wOz06vdEf2VL2/4mx28f9wgHeckBEOMQ1QgeRPEhjGpqYpvyKGbynU31gx9wLVDL1wejeSO3PjFkRENjRlKUSqfyCzduIHvGIzTKSVY+kEfeQtA9S9gDoF1Vhix5GKoOSIFFE5m/ht4sDRbQz84vgbxFhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978201; c=relaxed/simple;
-	bh=6GhRnDtDRjBrQ09r1pHHQkCt+d50Nb9Z4l2FD9i5hx0=;
+	s=arc-20240116; t=1786978203; c=relaxed/simple;
+	bh=f2oqUCA3aKs6blWdYlweqxscDiRxhAAnWUQLDsuDZ+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HRRdhHFY9pf8dnl9ZWyFQX+RUMhq+jMhLPtQOHQz8FNgF2I//aAdSPig9nKmLvDfDB902xrQ9UL8MupyMZELck9+f5oCMGgJhsuG4TeFRjo5XHASaEoce8cH9wLwLRpqIYzRwxHiQUTgrr3VzoRxXZDmaHEAN/PiZUY4HXWQqS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rioRRB3t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GzHZqSA/6dEpik7TOo03Um8UksguzID7Od1f/lSCi0DjkOkkQfiEDzWZnI/TiClFsfb9I2PJp3M3R84uDceIfnMPp8E5MSJw8h5kPkM3mHkcXx2HF/4FNibVppx2UGjiEhtMyWpIGw+U1M4jNBCxMy3PPcgHKphr5HumuZBUJTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYoby4th; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rioRRB3t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 498BF1F000E9;
-	Mon, 17 Aug 2026 14:49:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYoby4th"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE111F000E9;
+	Mon, 17 Aug 2026 14:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978199;
-	bh=VoyTMoIUlAb9X2QszdQ20AJamWl6OLg6ZksN7A7DBp0=;
+	s=korg; t=1786978202;
+	bh=4mkRkPdSTtGMOwm3d7X0sKleDjpPvqYA+8nD6d6xC2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rioRRB3t3C2tm+7KmOcwvCpYOfwC/5mmvGKwlGjfBnwGofqqQCdU/BZGv41wqtFhY
-	 yIXDM8gny+NmgxMTJCW0KjedtfYGnrPI3qE03lM26c3OnWvq60/W9pnNPspNY1iDQ9
-	 nkvlCU53hOBCp/+GDos6SWlHUKTUE3HZyLVMW3ck=
+	b=AYoby4thBvDXBRUCHllkJh9z0gLubBtNJwh4KVNU9VwZpB4PlqNR30u32wCXOTqUy
+	 uKhcOf936znJ+7YKKZcW4R4WXviaYfvyQOL4pULzMZl+WWNb1JQaaca19KhBEySt+V
+	 e76EAZfZOcYb3hPIAjgex5/SwFCRXsF7fgPg4j0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Wu <michael@allwinnertech.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.12 137/181] tracing: Fix race between update_event_fields and, event_define_fields
-Date: Mon, 17 Aug 2026 15:33:51 +0200
-Message-ID: <20260817132541.031443928@linuxfoundation.org>
+	syzbot+61b1db46218109869c14@syzkaller.appspotmail.com,
+	Rik van Riel <riel@surriel.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.12 138/181] fbdev: bitblit: bound-check glyph index in bit_cursor()
+Date: Mon, 17 Aug 2026 15:33:52 +0200
+Message-ID: <20260817132541.067711661@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -44,78 +45,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Wu <michael@allwinnertech.com>
+From: Rik van Riel <riel@surriel.com>
 
-commit c3730b8373bb5059d735509b9e6a00d7eb337d7c upstream.
+commit e033cbf3975a8465f879ebd5989dc35b04423a4d upstream.
 
-The following sequence may leads race between event_define_fields()
-and update_event_fields():
+bit_cursor() fetches the glyph under the cursor with
 
- CPU0 (loads module A)                      CPU1 (loads module B)
- ===============================            ===============================
- load_module(A)                             load_module(B)
-   notifier_call_chain                        notifier_call_chain
-     trace_module_notify                        trace_module_notify
-       mutex_lock(&event_mutex)                   trace_event_update_all()
-         trace_module_add_events(A)                 down_write(&trace_event_sem)
-            __register_event(call_A)
-              __add_event_to_tracers(call_A)
-                event_define_fields(call_A)
-                  for each f:                         list_for_each_entry(field,
-                    list_add(&f->link,                                    &class->fields, link)
-                             &class->fields)            field = class->fields->next;
+	c = scr_readw(vc_pos);
+	src = vc_font.data + ((c & charmask) * w * height);
 
-Where access to the class->fields is not protected by the event_mutex in
-trace_event_update_all().
+where charmask is 0x1ff when vc_hi_font_mask is set. The screen buffer
+value comes directly from scr_readw() and may be larger than the current
+font's glyph count.
 
-This produces the following panic:
-   Unable to handle kernel access ... at virtual address 0000000000000018
-   pc : update_event_fields+0xf8/0x368
-   Call trace:
-    update_event_fields+0xf8/0x368
-    trace_event_update_all+0x7c/0x2b4
-    trace_module_notify+0x4c/0x1dc
-    notifier_call_chain+0x84/0x168
-    blocking_notifier_call_chain_robust+0x64/0xd4
-    load_module+0x10c8/0x123c
-    __arm64_sys_finit_module+0x230/0x31c
+Syzkaller triggers this via vcs_write(). The Call Trace shows
+vcs_write() in vc_screen.c writing an arbitrary 16-bit value with
+writev() to /dev/vcsa, which vcs_write_buf() in vc_screen.c stores via
+vcs_scr_writew() without checking charcount. The stored value is later
+read in bit_cursor() in bitblit.c.
 
-Fix by taking event_mutex in trace_event_update_all() before
-trace_event_sem.
+When the font is changed from a font with 512 glyphs to a font with
+256 glyphs, the screen buffer can retain characters with the high
+bit set from the previous mode, which could also produce the same
+out-of-bounds access.
 
+  BUG: KASAN: global-out-of-bounds in soft_cursor+0x378/0x6bc drivers/video/fbdev/core/softcursor.c:70
+  Read of size 16 at addr ffff800086c57970
+
+  Call Trace:
+   soft_cursor+0x378/0x6bc drivers/video/fbdev/core/softcursor.c:70
+   bit_cursor+0xa90/0x1108 drivers/video/fbdev/core/bitblit.c:365
+   fbcon_cursor+0x344/0x498 drivers/video/fbdev/core/fbcon.c:1427
+   hide_cursor+0xdc/0x2d0 drivers/tty/vt/vt.c:883
+   update_region+0x100/0x18c drivers/tty/vt/vt.c:669
+   vcs_write+0x8ec/0xaf0 drivers/tty/vt/vc_screen.c:685
+
+bit_putcs_aligned() and bit_putcs_unaligned() already clamp the glyph
+index to vc_font.charcount. Apply the same clamp in bit_cursor() after
+extracting the attribute and masking, before indexing fontdata.
+
+The fix completes the bounds checking started in commit 18c4ef4e765a
+("fbdev: bitblit: bound-check glyph index in bit_putcs*"), which missed
+the cursor path.
+
+This change should be safe because the clamp reuses the existing
+contract from fbcon: charcount is maintained under console_lock in
+con_font_set() and fbcon_font_set(), and hi_font_mask is cleared when
+switching from 512 to 256 glyphs. When stale screen data with high bits
+remains after a font switch, or when vcs_write() stores an arbitrary
+value, clamping the index to 0 prevents the out-of-bounds read without
+changing cursor semantics — the same fallback bit_putcs uses.
+
+Reported-by: syzbot+61b1db46218109869c14@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=61b1db46218109869c14
+Link: https://lore.kernel.org/all/6a75205c.01d0871a.3a0d52.0032.GAE@google.com/
+Fixes: 18c4ef4e765a ("fbdev: bitblit: bound-check glyph index in bit_putcs*")
 Cc: stable@vger.kernel.org
-Fixes: b3bc8547d3be ("tracing: Have TRACE_DEFINE_ENUM affect trace event types as well")
-Link: https://patch.msgid.link/2e5730d2-c631-da41-3a3a-ae35bb4895f3@allwinnertech.com
-Signed-off-by: Michael Wu <michael@allwinnertech.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Assisted-by: Hermes:muse-spark-1.2 syzkaller
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/video/fbdev/core/bitblit.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -3072,6 +3072,7 @@ void trace_event_eval_update(struct trac
- 	int last_i;
- 	int i;
+--- a/drivers/video/fbdev/core/bitblit.c
++++ b/drivers/video/fbdev/core/bitblit.c
+@@ -274,9 +274,14 @@ static void bit_cursor(struct vc_data *v
+ 	if (!vc->vc_font.data)
+ 		return;
  
-+	mutex_lock(&event_mutex);
- 	down_write(&trace_event_sem);
- 	list_for_each_entry_safe(call, p, &ftrace_events, list) {
- 		/* events are usually grouped together with systems */
-@@ -3105,6 +3106,7 @@ void trace_event_eval_update(struct trac
- 		cond_resched();
- 	}
- 	up_write(&trace_event_sem);
-+	mutex_unlock(&event_mutex);
- }
+- 	c = scr_readw((u16 *) vc->vc_pos);
++	c = scr_readw((u16 *) vc->vc_pos);
+ 	attribute = get_attribute(info, c);
+-	src = vc->vc_font.data + ((c & charmask) * (w * vc->vc_font.height));
++	c &= charmask;
++
++	/* Clamp to font size, same as bit_putcs_aligned() */
++	if (c >= vc->vc_font.charcount)
++		c = 0;
++	src = vc->vc_font.data + (c * (w * vc->vc_font.height));
  
- static bool event_in_systems(struct trace_event_call *call,
+ 	if (par->cursor_state.image.data != src ||
+ 	    par->cursor_reset) {
 
 
