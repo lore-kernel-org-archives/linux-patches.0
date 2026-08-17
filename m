@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDA53DC4BD;
-	Mon, 17 Aug 2026 13:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30BF43991C;
+	Mon, 17 Aug 2026 13:47:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974451; cv=none; b=Cz0T+0zUw534pxAbh0BtKugnka20Ob5Jzo+Sgmo6ceYGe8X1Q3CxEJ/Dgsqgl87I4Yt2CWSIwFjYcP0xLLbeqhDgJO7mACSjKNZoY+cn29vglBfdgbs3ZX0Ufl86bLaAvXWEYn1Kydh6a7dCzlEl8ugnnrcVMKgmXM3sdQvc3s8=
+	t=1786974452; cv=none; b=DSjTEqCnZov4/99yROmuwDtilK4l5LcEqblf+oMYg4WJtKbIxrHYYORbZlfdInpx+DlxD5lJd+QNWkQkoLnfuHRmmQcjpqtnteUZ37bKOOWPl9CFCR1fyY0VjaKe4WcHIkdii7O/+7XEUDTrwqse6AkO0t8UTShQQaCC6ZTQo3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974451; c=relaxed/simple;
-	bh=9KMABDQnDN0fZG9deN4f+mgoJektVysT2Usg+zFF3po=;
+	s=arc-20240116; t=1786974452; c=relaxed/simple;
+	bh=Sw3Euk467/dh/er4iQdxVNa2FCAAs8xajsyKxH+kHkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bwg6Scb1OW4+bd1aUSm4ZLS45WNMz/DW9aEnYBcJASsKzdeXthJAACD4qtK4NgAkFZI9mW30nGfuyQIw/EKzy6LUIfcE7JWgEW046jbtVZu20AQprrkcdOFzpZUpfvti6DjQRvTFCWPJg9UZt0KfCkPpAGaG5TK1EG3cZ6Uslb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYzrA0wg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lSx+AJhdxt+zWPeQJd4g1bjOEB1yAvst7nwXhtOc7X6B9QAyHVe4Imh/n2XbLlxDFwYqXdPMd6i7vjeJdUSuOUii+zjsoxuiNWkZNF4ZXSsDooN5jk42oh5r0enQ98+1Fk1jNkmmAywukUlolCVmCFW+cUhW0HmBy0QC6FUz7zU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zY0zMtNP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYzrA0wg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DAA51F00A3F;
-	Mon, 17 Aug 2026 13:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zY0zMtNP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D1E1F000E9;
+	Mon, 17 Aug 2026 13:47:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974443;
-	bh=szAuBwBfYRDh/miBHXZUlrdpGuV0s3rxk2nKdJin6LE=;
+	s=korg; t=1786974448;
+	bh=i+jfcJ5/7wLArcTKn+pXHrgdrqKvqkw1rso46KAfvLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JYzrA0wgbw/m6NZ++/Fg/DggPo6IATSivkf7VCgpYmVvG7HDxpnSTi/bcNZYn931L
-	 YYbeCLr60m+E2VQqFgFuvYpJz/vokLkKYOG2eRunt19t4eSqaWXNKQYgHYQ64UESJc
-	 tUHfErgrxIBfJT6bkGV+PJ37PvZLmgvRhfmHcSrk=
+	b=zY0zMtNPBQjYY49oU7AuXI2CuvlW7LNHaNyEqsvcJx6VzWFIdGoyiH9d+AnwlFg8F
+	 pGuWUCTv23C+fqfECNPDb6w6KOFoR9TKNqrrEpqJB3Mw4gXUjBtAjT4JGHE2t2569g
+	 HxTpm+DcROM6r3oWcIrSXdbxyGEQ/JN/qPcbDNUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Wu <michael@allwinnertech.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.1 205/271] tracing: Fix race between update_event_fields and, event_define_fields
-Date: Mon, 17 Aug 2026 15:32:10 +0200
-Message-ID: <20260817132545.252796025@linuxfoundation.org>
+	Michal Luczaj <mhal@rbox.co>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re=20 ?=" <ricardo@marliere.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 170/271] selftests/bpf: Adapt sockmap update error handling
+Date: Mon, 17 Aug 2026 15:31:35 +0200
+Message-ID: <20260817132543.861770365@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -44,78 +48,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Wu <michael@allwinnertech.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-commit c3730b8373bb5059d735509b9e6a00d7eb337d7c upstream.
+[ Upstream commit 30581eda4a07ff15db623612cac578e81869e96f ]
 
-The following sequence may leads race between event_define_fields()
-and update_event_fields():
+Update sockmap_listen to accommodate the recent change in sockmap that
+rejects unbound UDP sockets.
 
- CPU0 (loads module A)                      CPU1 (loads module B)
- ===============================            ===============================
- load_module(A)                             load_module(B)
-   notifier_call_chain                        notifier_call_chain
-     trace_module_notify                        trace_module_notify
-       mutex_lock(&event_mutex)                   trace_event_update_all()
-         trace_module_add_events(A)                 down_write(&trace_event_sem)
-            __register_event(call_A)
-              __add_event_to_tracers(call_A)
-                event_define_fields(call_A)
-                  for each f:                         list_for_each_entry(field,
-                    list_add(&f->link,                                    &class->fields, link)
-                             &class->fields)            field = class->fields->next;
+TCP: Reject unbound and bound (unless established or listening).
+UDP: Accept only bound sockets.
 
-Where access to the class->fields is not protected by the event_mutex in
-trace_event_update_all().
+While at it, migrate to ASSERT_* and enforce reverse xmas tree.
 
-This produces the following panic:
-   Unable to handle kernel access ... at virtual address 0000000000000018
-   pc : update_event_fields+0xf8/0x368
-   Call trace:
-    update_event_fields+0xf8/0x368
-    trace_event_update_all+0x7c/0x2b4
-    trace_module_notify+0x4c/0x1dc
-    notifier_call_chain+0x84/0x168
-    blocking_notifier_call_chain_robust+0x64/0xd4
-    load_module+0x10c8/0x123c
-    __arm64_sys_finit_module+0x230/0x31c
-
-Fix by taking event_mutex in trace_event_update_all() before
-trace_event_sem.
-
-Cc: stable@vger.kernel.org
-Fixes: b3bc8547d3be ("tracing: Have TRACE_DEFINE_ENUM affect trace event types as well")
-Link: https://patch.msgid.link/2e5730d2-c631-da41-3a3a-ae35bb4895f3@allwinnertech.com
-Signed-off-by: Michael Wu <michael@allwinnertech.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/bpf/20260707-sockmap-lookup-udp-leak-v4-3-f878346f27ab@rbox.co
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Ricardo B. Marlière (SUSE) <ricardo@marliere.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events.c |    2 ++
- 1 file changed, 2 insertions(+)
+ .../selftests/bpf/prog_tests/sockmap_listen.c | 21 ++++++++++---------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -3566,6 +3566,7 @@ void trace_event_update_all(struct trace
- 	int last_i;
- 	int i;
+diff --git a/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c b/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
+index cc0c68bab9079..1c96a3cf4b979 100644
+--- a/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
++++ b/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
+@@ -53,8 +53,8 @@ static void test_insert_opened(struct test_sockmap_listen *skel __always_unused,
+ 			       int family, int sotype, int mapfd)
+ {
+ 	u32 key = 0;
+-	u64 value;
+ 	int err, s;
++	u64 value;
  
-+	mutex_lock(&event_mutex);
- 	down_write(&trace_event_sem);
- 	list_for_each_entry_safe(call, p, &ftrace_events, list) {
- 		/* events are usually grouped together with systems */
-@@ -3604,6 +3605,7 @@ void trace_event_update_all(struct trace
- 		cond_resched();
- 	}
- 	up_write(&trace_event_sem);
-+	mutex_unlock(&event_mutex);
+ 	s = xsocket(family, sotype, 0);
+ 	if (s == -1)
+@@ -63,11 +63,8 @@ static void test_insert_opened(struct test_sockmap_listen *skel __always_unused,
+ 	errno = 0;
+ 	value = s;
+ 	err = bpf_map_update_elem(mapfd, &key, &value, BPF_NOEXIST);
+-	if (sotype == SOCK_STREAM) {
+-		if (!err || errno != EOPNOTSUPP)
+-			FAIL_ERRNO("map_update: expected EOPNOTSUPP");
+-	} else if (err)
+-		FAIL_ERRNO("map_update: expected success");
++	ASSERT_ERR(err, "map_update");
++	ASSERT_EQ(errno, EOPNOTSUPP, "errno");
+ 	xclose(s);
  }
  
- static bool event_in_systems(struct trace_event_call *call,
+@@ -77,8 +74,8 @@ static void test_insert_bound(struct test_sockmap_listen *skel __always_unused,
+ 	struct sockaddr_storage addr;
+ 	socklen_t len = 0;
+ 	u32 key = 0;
+-	u64 value;
+ 	int err, s;
++	u64 value;
+ 
+ 	init_addr_loopback(family, &addr, &len);
+ 
+@@ -93,8 +90,12 @@ static void test_insert_bound(struct test_sockmap_listen *skel __always_unused,
+ 	errno = 0;
+ 	value = s;
+ 	err = bpf_map_update_elem(mapfd, &key, &value, BPF_NOEXIST);
+-	if (!err || errno != EOPNOTSUPP)
+-		FAIL_ERRNO("map_update: expected EOPNOTSUPP");
++	if (sotype == SOCK_STREAM) {
++		ASSERT_ERR(err, "map_update");
++		ASSERT_EQ(errno, EOPNOTSUPP, "errno");
++	} else {
++		ASSERT_OK(err, "map_update");
++	}
+ close:
+ 	xclose(s);
+ }
+@@ -1289,7 +1290,7 @@ static void test_ops(struct test_sockmap_listen *skel, struct bpf_map *map,
+ 		/* insert */
+ 		TEST(test_insert_invalid),
+ 		TEST(test_insert_opened),
+-		TEST(test_insert_bound, SOCK_STREAM),
++		TEST(test_insert_bound),
+ 		TEST(test_insert),
+ 		/* delete */
+ 		TEST(test_delete_after_insert),
+-- 
+2.53.0
+
 
 
