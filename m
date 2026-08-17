@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360064398EB;
-	Mon, 17 Aug 2026 14:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02B02C237E;
+	Mon, 17 Aug 2026 14:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977450; cv=none; b=riRsCiPsIijQlMiG+7uwbQzQ3eXzPu8+6eq92je86vLdlZbySexW2cQeCm79fBmWRAn7tEYMA/vbeRv6bK+AZmdUVUlfIIB4GTX4ENTNgBA+y5vHIyz81trzQexoBmHKvOELkrEEu+HSuzCyqp0Lt/1uFpf4ESO2Qef6mnW3/1o=
+	t=1786977454; cv=none; b=rIa9QDxNLucgkLmkg1ps/prlgp97xvnqOAk3H6Kh/7MwIPGWD3CmExg5cwmCAwhur9D9MUkpFkySN+vsP7Y4TsCRhhrUTVdo6dvlYKi0ZJoB7eqXiK5GLLvK0zULKwe9/ocCfqk/QoodhVGELvmJ5rnMCkHv1cmXZU0diM5B5Gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977450; c=relaxed/simple;
-	bh=d5g5doUDrYRwZjGbyuzD+QoW40S6C3qDlL5Dy0WfyiM=;
+	s=arc-20240116; t=1786977454; c=relaxed/simple;
+	bh=t+dBf7ssPSQSCCGH0k3nxqgt//lGg1KXEB8LuIV88kk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qcF9P1WijH83ivCjjbI7avrRYu85NzwLxiP8VrBwY8302STOo8F005G3TqdUojZNu4hgE+TaY828CfpcwQk714biyzBZG7PmndyNN+Aad6gbGs9VLBTLe2SJIyv7Z7all1mglg4Oh/W/gfTfh9wYcaRHGqAowoFsBiTMhMipijM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QaaSN0pA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dyOM820B41IdY3qIJ3CTZDKJyaBD9km3fXCZmCd+fGrALuv5JklELbYwoVtO4wjGyYwgAlRDB+eqnzJmTGAtmfOUBKvEEV1bAFHb/o0voGnySXjmitUrrWiunaJcx9ss/xuqddlGj3Scrg26y5GF3qsbrw8eG8jejYwlx08mMYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvoWLzCi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QaaSN0pA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1B01F000E9;
-	Mon, 17 Aug 2026 14:37:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvoWLzCi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A27D1F000E9;
+	Mon, 17 Aug 2026 14:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977449;
-	bh=fV1Y43W/+GG/XmuJkcx8jcSpPr//LiOwEW+gPp6GQXA=;
+	s=korg; t=1786977451;
+	bh=vKP2qkHSi7DDzmwNPu/ZmNOzbCqr/02LiZ02wLBiVLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QaaSN0pAwElF1LBZfQZJsAUt3jKlWlB2nvdRNE3aVb/gYn69sdYbPmd41V/881Bnc
-	 5oBTvXmElz5AY6dMY2jswD9rAjv0eC+a70LIoN+ggApavleMoTvqgvqeMAhJKHT81P
-	 abn1zZMyQHZJ6Kdf32JYpGi1/fbRo26xztckvveU=
+	b=WvoWLzCiZ79TYewY9hoTWCvDkiPzn0V6r7/orjZqNC283SjOtymm2Vkr+iLxcj7+T
+	 C/uHGGLZWX3zl1VE3KAB0G40tEpFQ7lmS87lDEqsAGsZnjQbNLBsUN3GWLrDWTPFU9
+	 cfd0vBtvNtoNLPI45azfE3AwXv5Haovj3KcWbsnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 5.15 333/456] i2c: amd-mp2: Unregister callback on adapter add failure
-Date: Mon, 17 Aug 2026 15:32:03 +0200
-Message-ID: <20260817132552.650899163@linuxfoundation.org>
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.15 334/456] cpufreq: powernow-k8: Fix possible memory leak in powernowk8_cpu_init()
+Date: Mon, 17 Aug 2026 15:32:04 +0200
+Message-ID: <20260817132552.687908616@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,43 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit 82048795242f04275a3f49ffc66ad851b6120954 upstream.
+commit d5f8e5f6040d052d44fcbf4f31dd35145c0c8d7d upstream.
 
-amd_mp2_register_cb() stores the platform I2C context in the MP2 PCI
-driver's callback table before the adapter is registered. If
-i2c_add_adapter() fails, probe returns and devres frees the context,
-but the PCI driver can still dereference the stale pointer from its IRQ
-and system-sleep callbacks.
+The memory allocated for data->powernow_table inside
+powernow_k8_cpu_init_acpi() or find_psb_table() is not freed in one of
+the error paths in powernowk8_cpu_init(). Fix that by adding a kfree().
 
-Unregister the callback before returning the adapter registration error.
-
-Fixes: 529766e0a011 ("i2c: Add drivers for the AMD PCIe MP2 I2C controller")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Cc: <stable@vger.kernel.org> # v5.2+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260721144147.31150-1-mhun512@gmail.com
+Fixes: 1ff6e97f1d99 ("[CPUFREQ] cpumask: avoid playing with cpus_allowed in powernow-k8.c")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260727093553.98246-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-amd-mp2-plat.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/cpufreq/powernow-k8.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/i2c/busses/i2c-amd-mp2-plat.c
-+++ b/drivers/i2c/busses/i2c-amd-mp2-plat.c
-@@ -326,8 +326,10 @@ static int i2c_amd_probe(struct platform
+--- a/drivers/cpufreq/powernow-k8.c
++++ b/drivers/cpufreq/powernow-k8.c
+@@ -1083,6 +1083,7 @@ static int powernowk8_cpu_init(struct cp
  
- 	amd_mp2_pm_runtime_put(mp2_dev);
+ err_out_exit_acpi:
+ 	powernow_k8_cpu_exit_acpi(data);
++	kfree(data->powernow_table);
  
--	if (ret < 0)
-+	if (ret < 0) {
- 		dev_err(&pdev->dev, "i2c add adapter failed = %d\n", ret);
-+		amd_mp2_unregister_cb(&i2c_dev->common);
-+	}
- 
- 	return ret;
- }
+ err_out:
+ 	kfree(data);
 
 
