@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087F943BDB5;
-	Mon, 17 Aug 2026 13:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4601043B4AA;
+	Mon, 17 Aug 2026 13:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974515; cv=none; b=jI1ndlSL9x0lA5OutN4f4+TYRHBzMpJMx0cuR0QrMA3ZH5UpJxWjQFdDR9EQw7ny2Y6kI9Cjjd/qV3lGeTKN2aQXSwvQgsC3z+fxzQZVLEOsOiGVAo33/MSGyK6Uf0QHXvDAEMCsj/Fto2P3HRcX5QiIwWIrII2Drf+c6zWlOTc=
+	t=1786974518; cv=none; b=X9QOYCvml0OwSRvstGPFDIezYAW5AWUzTE+UzqksEkLg7nsfAVRss5ubA2wCpn9XnRX2IdqYtB/ItT4gQY6Ya8W8JKnBCExTRAB3eJjIkPF067/Xj14RjntICTlgqS+wr2ceVLO3Eb1ubDGxL6giI9kt2Df7TWuqTdO/TA7LFFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974515; c=relaxed/simple;
-	bh=9XoWULJ5V2iO4qsw8xqlVIPyi6zDqG/8CCIwLmlBW4M=;
+	s=arc-20240116; t=1786974518; c=relaxed/simple;
+	bh=okECKwuS7EcBQwlULs9T0Dz41+p0Ic0njqk4mdL2YAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IF3h3pcYWBF1KtAOGCMFdrConIS6OCnfOXLcaRbevnVWMHuQik8J17DQxNcrEpRuzQdHIhic5Z7xU54nwTP3zc3xItg2EApe+7nU1kL3UjV0Q9rtJeyQCxj+THRQbeurwRkIQNigdR3w58/kRMPdsU64VEo7XxGkBT7PjS7pG2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J4+skgYa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QN3U3nKsVJ3zr5URgyp7P+pRLZZQqJMAbaY+c4/Y96jVrWCmoLVRsmhuXydj/yVvfeXK9Z7wID1eFs1r4vO3f0vakOBdT2DvyEMd9arFCIEFvBZWwJ78cuKwJ6CIBAlEkuAOZvIyooHJbZKFaax2gVzhrEEmJURpv2veUufigjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phUmB6wb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J4+skgYa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E381F00A3A;
-	Mon, 17 Aug 2026 13:48:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phUmB6wb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A741F00A3E;
+	Mon, 17 Aug 2026 13:48:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974509;
-	bh=KMx52U8c+d56Q5/0+LNyj2cgeg1SFVgckauf4yyBFr8=;
+	s=korg; t=1786974515;
+	bh=JHYFRJotAnnDbHXwh4KXoc4PmhpLCKD84x3kcQNUMoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J4+skgYa70IfbCSC9iBazHKajG85xnwC0YuWu8ZxTwJSNpPBC5XK0g7+DHQ7Z6BG/
-	 AAwtriwkefO1gz/T4dFN5D1Tw6AM8yb0CZP4Wx1NXvtxY7U4mjhZQS/jjImsTkgMm6
-	 CTgZ67QNc6gPFcK4m9zWnFt8nP75KimFz1irmSao=
+	b=phUmB6wbpOlnzLpRlw56Go671Qe3jRDbZeg9+8ewrJ8iyB9jKiog0i8tLWIK09Zd9
+	 ra6uf9EoKC7ucaiT9W5HDYuAwrEh8tOFDL76v8DXLkurhZjVqqs2AgwF/1pgOYwV5c
+	 u/71PPmrkMoXeJqikBFbe698uLuIxHHouAwpO9SQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 7.1 230/271] x86/mce: Set up the polling timer before CMCI discovery
-Date: Mon, 17 Aug 2026 15:32:35 +0200
-Message-ID: <20260817132546.230106936@linuxfoundation.org>
+	Baul Lee <baul.lee@xbow.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.1 232/271] vxlan: do not arm the ageing timer on a device that is down
+Date: Mon, 17 Aug 2026 15:32:37 +0200
+Message-ID: <20260817132546.304947955@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -50,67 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit a213dfaa2596c1c0dc4dae91c14fbfa499c03223 upstream.
+commit b37971686ec59fb027fa4910ba16805e68fddb97 upstream.
 
-I hit the following on one of my machines:
+vxlan_changelink() arms vxlan->age_timer whenever the requested ageing
+interval differs from the configured one:
 
-  mce: CPU0 BANK15 CMCI inherited storm
-  ------------[ cut here ]------------
-  ODEBUG: assert_init not available (active state 0) object: (____ptrval____) object type: timer_list hint: 0x0
-  WARNING: lib/debugobjects.c:632 at debug_object_assert_init+0x178/0x230, CPU#0: swapper/0/0
-  CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 7.2.0-rc5 #3 PREEMPTLAZY
-  RIP: 0010:debug_object_assert_init+0x18f/0x230
-  Call Trace:
-   <TASK>
-   __mod_timer
-   mce_timer_kick
-   cmci_discover
-   intel_init_cmci
-   mce_intel_feature_init
-   mcheck_cpu_init
-   identify_cpu
-   identify_boot_cpu
-   arch_cpu_finalize_init
-   start_kernel
+	if (conf.age_interval != vxlan->cfg.age_interval)
+		mod_timer(&vxlan->age_timer, jiffies);
 
-A second splat follows right after, from timer_setup() finding that same
-timer already queued:
+There is no netif_running() test, so the timer is armed even on a device
+that was never brought up.  The only synchronous cancel in the driver is
+the timer_delete_sync() in vxlan_stop(), which is .ndo_stop.
+netif_close_many() drops devices without IFF_UP before
+__dev_close_many() runs, so that cancel is skipped for such a device.
 
-  ODEBUG: init active (active state 0) object: (____ptrval____) object type: timer_list hint: stub_timer+0x0/0x10
+vxlan_setup() sets dev->needs_free_netdev = true and age_timer is a
+member of struct vxlan_dev, so free_netdev() releases the allocation the
+timer lives in while it is still queued on a timer_base.
+expire_timers() unlinks the entry before it loads timer->function, so
+the timer core writes through the freed object's list pointers:
 
-This is happening because CMCI storm detection is trying to modify the timer
-before latter was properly set up.
+  BUG: KASAN: slab-use-after-free in __run_timers+0x208/0x654
+  Write of size 8 at addr ffff00001adace68 by task true/192
+   __asan_store8+0x84/0xac
+   __run_timers+0x208/0x654
+   run_timer_softirq+0x154/0x18c
+  Allocated by task 189:
+   alloc_netdev_mqs+0x64/0x720
+   rtnl_create_link+0x4ac/0x520
+   rtnl_newlink+0x758/0xd00
+  Freed by task 191:
+   netdev_release+0x40/0x58
+   netdev_run_todo+0x4a4/0x8c0
+   rtnl_dellink+0x200/0x4e8
 
-Set up the timer first. __mcheck_cpu_setup_timer() only calls timer_setup(),
-and depends on neither the generic nor the vendor init.
+The rtnl operations involved are netns-scoped, so an unprivileged user
+can perform them in a new user and network namespace.
 
-  [ bp: Massage commit message. ]
+Arming the timer on a down device never had an effect: vxlan_cleanup()
+returns early on !netif_running(), and vxlan_open() arms the timer for
+any non-zero interval once the device is brought up.  Add the missing
+test.
 
-Fixes: 1f68ce2a0272 ("x86/mce: Handle Intel threshold interrupt storms")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 40051c4dcad5 ("vxlan: Allow changing ageing time")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260803-mce_timer_init-v1-1-9539db424330@debian.org
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260809111829.78834-1-baul.lee@xbow.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/mce/core.c |    2 +-
+ drivers/net/vxlan/vxlan_core.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/cpu/mce/core.c
-+++ b/arch/x86/kernel/cpu/mce/core.c
-@@ -2269,10 +2269,10 @@ void mcheck_cpu_init(struct cpuinfo_x86
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -4501,7 +4501,7 @@ static int vxlan_changelink(struct net_d
+ 	if (change_igmp && vxlan_addr_multicast(&dst->remote_ip))
+ 		err = vxlan_multicast_leave(vxlan);
  
- 	mca_cfg.initialized = 1;
+-	if (conf.age_interval != vxlan->cfg.age_interval)
++	if (netif_running(dev) && conf.age_interval != vxlan->cfg.age_interval)
+ 		mod_timer(&vxlan->age_timer, jiffies);
  
-+	__mcheck_cpu_setup_timer();
- 	__mcheck_cpu_init_generic();
- 	__mcheck_cpu_init_vendor(c);
- 	__mcheck_cpu_init_prepare_banks();
--	__mcheck_cpu_setup_timer();
- 	cr4_set_bits(X86_CR4_MCE);
- }
- 
+ 	netdev_adjacent_change_commit(dst->remote_dev, lowerdev, dev);
 
 
