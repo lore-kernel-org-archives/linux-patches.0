@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FDE2DC783;
-	Mon, 17 Aug 2026 14:42:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D5C2DC783;
+	Mon, 17 Aug 2026 14:42:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977760; cv=none; b=dCgstEQ/ZbGW8lch/uDhjrHxaY9jQBFPHlbDg7DJLQuv7sRLyX+ybn2lw1cebGAEFHd/HwC9vX/SRpPRdBJiPZ3W02SBt4Yq4UViMKLQet7ACrxQojUFpTR5jxQTQVe4Idk8DZ/ir8CSqkTq3TJR0aG1T5ME8u9VXRkbYCeXzoo=
+	t=1786977764; cv=none; b=KiSpN8w6VSQPSwPUzfK+pL1ODuPlIQtP6ppArchc6OzSH8RERhZy2LhH+TmzTU4D8KhO3PUxNmfTGjkwMTjwig/9iXkhr8sTelpHk+iEJlapceDMH8ZiOf5DxNFg6Re8g9SY2LMAQ23LWBebMtze4vOo/ElG0Ehg2oqeZn/Z3Uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977760; c=relaxed/simple;
-	bh=EDlEL8QXuVd5pkL9ypqWw0dmz8MyPqIFX9dAs9etxKQ=;
+	s=arc-20240116; t=1786977764; c=relaxed/simple;
+	bh=HsHWbGXwbj/J2gyFknqrG8teWhHZwNzh/18vxP1wAjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z4XleC0LL6aFh51osGzbZB3ievW/av5doP00zBIbs1kJIYJVyo0nPpLiz/uPUW+hAqJw9KP3jXdynUZ6m7gnLldBE8AbTrRfFU2c6286iuJxK9GuLSZXLopez0u2n8F+zeIQUvwS1zjUZ6/SXKOkFYqkhXZ4MXt2o8Akic5GtAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qYZCF4Gq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fe/h9trFsCydXouhC0BcDZ/vPZfAll0n1kKZrHHEnA90s5jm1NBQJ1PTXUKyJc5X2tFkc8rU16PT6/hSsiPfS82A3l6LwyOXVQlBTycZTtW8mw6mkpBWSh0gBClApTKNgxD8FRvd3dlCvIIICmFqzc5dq4ffyOOU/iBMBtGR3G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHWz9/ZZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qYZCF4Gq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7C01F000E9;
-	Mon, 17 Aug 2026 14:42:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHWz9/ZZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C431F000E9;
+	Mon, 17 Aug 2026 14:42:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977759;
-	bh=l+eDUMKqwNIfwy+hRKszxxcNnmzetWb3jVWUK13E1JE=;
+	s=korg; t=1786977762;
+	bh=39vCbSMHRyohZNMLyNfCjYkUlCj3Q8THOhERnzI2DpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qYZCF4Gq+gNTf54OnTp4q2i+dcOS91NULwFU2sKMW6F3YKhQXt57rA8HQnUxxS6FA
-	 C2/H2NLe1u/syTKDIcn7RnA9h24j2cDsVPK1Ly4Lfb1nieEZrctGx3u0t87PrwJLBK
-	 oMPvrm+lcD79Eq+7GCtNe2ImfTqaZXMDnOh+eg88=
+	b=EHWz9/ZZTAA8Zf51gmNwxKEfS8OivMEaf7/x2G7oV+9T5PrQTeZ2C5G9aQacMZMmf
+	 lM9DvLke1AFwIxAepUxBABU4TRx1VPOHDaUeyZ6d6kggvw2ru/2qy/d1nVh1EoRXBO
+	 RYXvz+XkFErB+rFFTDkKeSivMKuq85q2cYq04PNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Wagenaar, C.C.J. (Chris)" <c.c.j.wagenaar@vu.nl>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 400/456] Input: evdev - sanitize event type index when fetching event masks
-Date: Mon, 17 Aug 2026 15:33:10 +0200
-Message-ID: <20260817132554.980305958@linuxfoundation.org>
+	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
+	Baul Lee <baul.lee@xbow.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 401/456] ALSA: usb-audio: fix OOB write on Type II inbound URBs
+Date: Mon, 17 Aug 2026 15:33:11 +0200
+Message-ID: <20260817132555.009189258@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,59 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit 3abd29c61d2ef37c4102cf755b18be53bb9dbea6 upstream.
+commit 69ee44e1a23be62318189dc4b37fa4ad94053269 upstream.
 
-The user-supplied event type index passed to EVIOCGMASK / EVIOCSMASK
-ioctls is used to index the static counts array in evdev_get_mask_cnt()
-and client evmasks array in evdev_get_mask().
+data_ep_set_params() sizes each URB transfer buffer before it adds the
+Format Type II transfer delimiter:
 
-While the event type is architecturally bounded by EV_CNT, speculative
-execution may mispredict bounds checks and perform out-of-bounds loads.
+	u->packets = urb_packs;
+	u->buffer_size = maxsize * u->packets;
 
-Sanitize the event type index in evdev_get_mask_cnt() branchlessly using
-array_index_mask_nospec(). This clamps the index to 0 for safe array
-access and forces the returned count to 0 speculatively when the index
-is out of bounds.
+	if (fmt->fmt_type == UAC_FORMAT_TYPE_II)
+		u->packets++; /* for transfer delimiter */
+	u->urb = usb_alloc_urb(u->packets, GFP_KERNEL);
 
-We do not need additional array_index_nospec() calls in evdev_get_mask()
-because evdev_get_mask_cnt() speculatively forces the count (and
-resulting xfer_size) to 0 for out-of-bounds types, preventing any
-speculative memory access to client evmasks array.
+buffer_size is computed from the pre-increment packet count and never
+recomputed, so for a Type II endpoint the buffer is one packet short of
+the packet count the URB is built with.
 
-Reported-by: "Wagenaar, C.C.J. (Chris)" <c.c.j.wagenaar@vu.nl>
+prepare_inbound_urb() then lays out one iso frame per packet and never
+consults buffer_size:
+
+	offs = 0;
+	for (i = 0; i < urb_ctx->packets; i++) {
+		urb->iso_frame_desc[i].offset = offs;
+		urb->iso_frame_desc[i].length = ep->curpacksize;
+		offs += ep->curpacksize;
+	}
+
+	urb->transfer_buffer_length = offs;
+	urb->number_of_packets = urb_ctx->packets;
+
+The last descriptor therefore points one packet past the end of the
+transfer buffer, where the host controller writes device data on every
+inbound transfer.  prepare_silent_urb() and prepare_playback_urb() bound
+their fill loops by ctx->buffer_size, so only capture is affected.
+
+fmt_type comes from the device's audio streaming descriptors, so any
+device advertising a Type II capture format hits this once userspace sets
+hw_params on the stream.
+
+KASAN on 7.2.0-rc5 (arm64) with a dummy_hcd/raw-gadget device, one report
+per inbound transfer:
+
+  BUG: KASAN: slab-out-of-bounds in dummy_timer
+  Write of size 64 at addr ffff0000186171c0 by task cons02/166
+   __asan_memcpy
+   dummy_timer
+   hrtimer_run_softirq
+  Allocated by task 166:
+   usb_alloc_coherent
+   snd_usb_endpoint_set_params
+  The buggy address is located 0 bytes to the right of
+   allocated 64-byte region [ffff000018617180, ffff0000186171c0)
+
+Compute buffer_size after the delimiter packet has been accounted for,
+and bound the fill loop by buffer_size, as prepare_silent_urb() already
+does on the outbound side.  This grows every Type II URB allocation by
+one maxsize packet.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 8fdff6a319e7 ("ALSA: snd-usb: implement new endpoint streaming model")
+Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
+Reported-by: Baul Lee <baul.lee@xbow.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Antigravity:gemini-3.6-flash
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/anFCAfvxwXB5eJF1@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260805013441.38245-1-baul.lee@xbow.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/evdev.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/usb/endpoint.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/input/evdev.c
-+++ b/drivers/input/evdev.c
-@@ -21,6 +21,7 @@
- #include <linux/init.h>
- #include <linux/input/mt.h>
- #include <linux/major.h>
-+#include <linux/nospec.h>
- #include <linux/device.h>
- #include <linux/cdev.h>
- #include "input-compat.h"
-@@ -67,8 +68,10 @@ static size_t evdev_get_mask_cnt(unsigne
- 		[EV_SND]	= SND_CNT,
- 		[EV_FF]		= FF_CNT,
- 	};
-+	unsigned long mask = array_index_mask_nospec(type, EV_CNT);
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -387,13 +387,15 @@ static int prepare_inbound_urb(struct sn
+ 	case SND_USB_ENDPOINT_TYPE_DATA:
+ 		offs = 0;
+ 		for (i = 0; i < urb_ctx->packets; i++) {
++			if (offs + ep->curpacksize > urb_ctx->buffer_size)
++				break;
+ 			urb->iso_frame_desc[i].offset = offs;
+ 			urb->iso_frame_desc[i].length = ep->curpacksize;
+ 			offs += ep->curpacksize;
+ 		}
  
--	return (type < EV_CNT) ? counts[type] : 0;
-+	/* Returns 0 for out-of-bounds types, including speculatively */
-+	return counts[type & mask] & mask;
- }
+ 		urb->transfer_buffer_length = offs;
+-		urb->number_of_packets = urb_ctx->packets;
++		urb->number_of_packets = i;
+ 		break;
  
- /* requires the buffer lock to be held */
+ 	case SND_USB_ENDPOINT_TYPE_SYNC:
+@@ -1251,10 +1253,10 @@ static int data_ep_set_params(struct snd
+ 		u->index = i;
+ 		u->ep = ep;
+ 		u->packets = urb_packs;
+-		u->buffer_size = maxsize * u->packets;
+ 
+ 		if (fmt->fmt_type == UAC_FORMAT_TYPE_II)
+ 			u->packets++; /* for transfer delimiter */
++		u->buffer_size = maxsize * u->packets;
+ 		u->urb = usb_alloc_urb(u->packets, GFP_KERNEL);
+ 		if (!u->urb)
+ 			goto out_of_memory;
 
 
