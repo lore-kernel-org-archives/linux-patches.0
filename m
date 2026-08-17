@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276104418E4;
-	Mon, 17 Aug 2026 15:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F93843F085;
+	Mon, 17 Aug 2026 15:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979816; cv=none; b=UPO58uRfusonlOJ+QkmBUVyI2NYmjseILJ2xlW3ZQwApTSRckWi0Vv5Tiamexzdu9y6t8xcEVO3iXCX++RzHArWqwfrCX2LtGcUG+j9F1UyQeTLStdBMAREls+LNor6QeVhyZxeGXskax+v0tA4SZ18JSYlI7WSiPIhd/6XzRtk=
+	t=1786979818; cv=none; b=k8Fqaj8qtVSFkifzTQhRBW3P6BYxjlZZFhT/Gf7iVJOsRHjcfhRrmoYweckTLS0kTmJzGKfg11/rtVwPW93oSWBDeMDYZdaosbhDNCHecywf/QdHSHDmzFc4ItJsuR9+qozg6V7ZZIlcjZm935Sso7PQuDA764NatJixNC1WZik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979816; c=relaxed/simple;
-	bh=OrkZ8Ku3SsE+OJXiYW5sEuQoz4r6BZe1e4A5pQ3VMTw=;
+	s=arc-20240116; t=1786979818; c=relaxed/simple;
+	bh=JDksjossKXzJcj7EtfU+1zEIY69RYhpeZ5zpmYt617o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aXANnucMuiIcNaVc2/Og0MJ/8HwzuaVwmMHIb+JBOu7lDJn6CXp8wX62gq+1R9VWGLBzr7iVm5+zvMd9x6ChS9RmZISkN6YUs81e/4qVcZnWiv7RcT82vnCrKkAODnBmMDICPWBk4hbV6w/35ylUczmjOC4FhJuEE3vrHYM93WU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7ZJQiM6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rtx5GZ8WZGK36KT4NlpMdnfjrbqNt8Yv4vvXHSyWokpYtrJdhDhlBJHrRyM7Km8XN5Pa92UoLLtULLYsNyfl14i5L6BbPSRMhlhDHQGSJHMliFGQND0JgasbPG0Py+SVlyoKl9Hi69lLJttEv9aAvYe9ZkwMu13O2OqqICx7rYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IyaAlpQu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7ZJQiM6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A6001F00A3A;
-	Mon, 17 Aug 2026 15:16:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IyaAlpQu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AA681F000E9;
+	Mon, 17 Aug 2026 15:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979813;
-	bh=M5MGgbAsRz4+nX9qdUJ1rcdAiaaW1hNTLaV7NeqoyFk=;
+	s=korg; t=1786979816;
+	bh=4BG3VDIGR3BvUx8hD4ICTqd6ePrnYfFhHRQmw5gVYWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m7ZJQiM6Ip8gn/o0VtnU0HU63xbaDMGSdwKAHt1e7+EKXBBOHulND95/CP+lvuw16
-	 0xYI2j6UOmkx/n6zBks9+ZAdQNWlnXfdkuj+0T7PXOCgAZXUInzpDuPiE1rAjjsu/k
-	 19Q0lHQnKJm2Ne41teiaKdM7OKrwYt7hMJzrSJhg=
+	b=IyaAlpQuUQMNqRepLO5j++onIFwPjd7bZpuzx8Zkd/Uz9vmp82YxaHvjGhbw3JGyN
+	 tr08wQkO/IsehV62A1BtRcwFr3RwRTW4reHE5TtgHpgDhnyuHNCpyeqgBQfn5xzPoq
+	 jYdC/jo3NrIjuWmaii1selCixk/HrQCAHpcC1yhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 355/609] hwmon: (adt7470) Fix cache updated before hardware write on I2C error
-Date: Mon, 17 Aug 2026 15:30:51 +0200
-Message-ID: <20260817132556.159200245@linuxfoundation.org>
+Subject: [PATCH 6.1 320/609] phy: zynqmp: fix runtime PM leak on probe allocation failure
+Date: Mon, 17 Aug 2026 15:30:16 +0200
+Message-ID: <20260817132554.943856976@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,81 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-[ Upstream commit 05270bd38d9bf88a2f4c212246a8fa29f4032078 ]
+[ Upstream commit f3506e15cf72e94f62d5f2d173e5b7008f644cde ]
 
-adt7470_temp_write() and adt7470_pwm_write() update the driver's
-cached values (temp_min, temp_max, pwm_input, pwm_enable) before issuing
-the corresponding regmap_write(), and never check whether the write
-succeeded before committing that update. If the I2C transaction fails,
-the function correctly propagates the error to the caller, but the cache
-silently keeps the new value, which was never actually applied to the
-hardware. Subsequent reads then report a value that does not match the
-device state.
+Allocate saved_regs before pm_runtime_resume_and_get() so a
+devm_kmalloc() failure does not leave an unreleased runtime PM usage
+counter.
 
-Reorder both write paths to update the cache only after a successful
-regmap_write(), so the cache always reflects what was actually
-written to the hardware.
-
-Fixes: ef67959c4253 ("hwmon: (adt7470) Convert to use regmap")
-Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-2-598e38a46ba6@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 5af9b304bc60 ("phy: xilinx: phy-zynqmp: Fix SGMII linkup failure on resume")
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Reviewed-by: Michal Simek <michal.simek@amd.com>
+Link: https://patch.msgid.link/20260720153832.1130006-3-radhey.shyam.pandey@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/adt7470.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/phy/xilinx/phy-zynqmp.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
-index 81d7c4ec06b0d..1e837760c55db 100644
---- a/drivers/hwmon/adt7470.c
-+++ b/drivers/hwmon/adt7470.c
-@@ -589,14 +589,16 @@ static int adt7470_temp_write(struct device *dev, u32 attr, int channel, long va
- 	switch (attr) {
- 	case hwmon_temp_min:
- 		mutex_lock(&data->lock);
--		data->temp_min[channel] = val;
- 		err = regmap_write(data->regmap, ADT7470_TEMP_MIN_REG(channel), val);
-+		if (!err)
-+			data->temp_min[channel] = val;
- 		mutex_unlock(&data->lock);
- 		break;
- 	case hwmon_temp_max:
- 		mutex_lock(&data->lock);
--		data->temp_max[channel] = val;
- 		err = regmap_write(data->regmap, ADT7470_TEMP_MAX_REG(channel), val);
-+		if (!err)
-+			data->temp_max[channel] = val;
- 		mutex_unlock(&data->lock);
- 		break;
- 	default:
-@@ -839,9 +841,10 @@ static int adt7470_pwm_write(struct device *dev, u32 attr, int channel, long val
- 	case hwmon_pwm_input:
- 		val = clamp_val(val, 0, 255);
- 		mutex_lock(&data->lock);
--		data->pwm[channel] = val;
- 		err = regmap_write(data->regmap, ADT7470_REG_PWM(channel),
--				   data->pwm[channel]);
-+				   val);
-+		if (!err)
-+			data->pwm[channel] = val;
- 		mutex_unlock(&data->lock);
- 		break;
- 	case hwmon_pwm_enable:
-@@ -855,10 +858,11 @@ static int adt7470_pwm_write(struct device *dev, u32 attr, int channel, long val
- 		val--;
+diff --git a/drivers/phy/xilinx/phy-zynqmp.c b/drivers/phy/xilinx/phy-zynqmp.c
+index 517855fea8920..f1c2006dda602 100644
+--- a/drivers/phy/xilinx/phy-zynqmp.c
++++ b/drivers/phy/xilinx/phy-zynqmp.c
+@@ -1046,6 +1046,12 @@ static int xpsgtr_probe(struct platform_device *pdev)
+ 		return PTR_ERR(provider);
+ 	}
  
- 		mutex_lock(&data->lock);
--		data->pwm_automatic[channel] = val;
- 		err = regmap_update_bits(data->regmap, ADT7470_REG_PWM_CFG(channel),
- 					 pwm_auto_reg_mask,
- 					 val ? pwm_auto_reg_mask : 0);
-+		if (!err)
-+			data->pwm_automatic[channel] = val;
- 		mutex_unlock(&data->lock);
- 		break;
- 	case hwmon_pwm_freq:
++	gtr_dev->saved_regs = devm_kmalloc(gtr_dev->dev,
++					   sizeof(save_reg_address),
++					   GFP_KERNEL);
++	if (!gtr_dev->saved_regs)
++		return -ENOMEM;
++
+ 	pm_runtime_set_active(gtr_dev->dev);
+ 	pm_runtime_enable(gtr_dev->dev);
+ 
+@@ -1055,12 +1061,6 @@ static int xpsgtr_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
+-	gtr_dev->saved_regs = devm_kmalloc(gtr_dev->dev,
+-					   sizeof(save_reg_address),
+-					   GFP_KERNEL);
+-	if (!gtr_dev->saved_regs)
+-		return -ENOMEM;
+-
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
