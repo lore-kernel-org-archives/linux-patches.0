@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F8F1EFF93;
-	Mon, 17 Aug 2026 15:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D957440A13;
+	Mon, 17 Aug 2026 15:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979465; cv=none; b=XbpLDBfELigXUl6YYrSyaXiS49WxMoe4cD4OMWuvTliln+UuNSF+2N1lnh46OEEI6Da0uCE7mPKckQtoXjjBYeBbZphaFey41rGw79HG83LHtzkha+1F2Dd4OTt+qU8vwm5n+ppjxUGg08dKaYPDKfGHN1BhUlpPcJwPLbXXLos=
+	t=1786979468; cv=none; b=cAidDxXpxtfnRbdRoogpoOj3FVwyE8h/OonPTe5g2pHLmLCfVg+T+ReHXa8twLH6lCRivi3qYJSBvfmcOtH9WzUHxKA7ynd/Tljq6cH5mNibHNWVag1i+oAO+Ynfu+kpwf5qUujm8FsU83oX9meRKlnIQlF2aR9ZHra+IHaYv7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979465; c=relaxed/simple;
-	bh=IUQ/fbSzEvXTD6eSqkJ6gZ4pj4c85jeSjiJslqWrmB8=;
+	s=arc-20240116; t=1786979468; c=relaxed/simple;
+	bh=QuDbqg6ULuWI9z5J9ryoOp+g4Izfen0qcEPvkaXh92A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GU3kiA2Vj6AmgxV6yeTCGogtkBfLF+pqipbPgtEPpJ++vIvbAbTgVsVm6CVx6a8gOcVtu5ug1Nfq1rAVurs35cd3qE7e5A8/biqFskEwaa0kmARe3cJaBDJWJ4YTddptUxSmUKPQ/6ECHa4gOAFxQTRNO8TNd58431dwUqumPlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qlg2dTxc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WxaAYcxLSNFBCrpdzGBt+O2U2XkrM9oQFNY9dktrt1F0KE7hWu0nyL9Qb+FnLwdGMdwt+FM5blfchZf3kCVV0FX014WdDj2y6XEoq3LstaUvXO2vq9DINNrxkWNrh+MnkjZxfltxBwDNAuiVM5v3+l3dGhG0O22qP52/Kjhw41w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/uZSGqG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qlg2dTxc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5001A1F000E9;
-	Mon, 17 Aug 2026 15:11:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/uZSGqG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3693A1F000E9;
+	Mon, 17 Aug 2026 15:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979463;
-	bh=vlVAO2DT5KrJxjhhj4Qy/pfIhy8kfBqlfmYbN8GwXLw=;
+	s=korg; t=1786979466;
+	bh=kkBBfShp44DZ4O27WU7xjxxi4kiVovCidOZIQt82E3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qlg2dTxc6GLJF7jhCmeRZfN+6JmXbMhzQSckKqqA7XLZVv5e7pq1enu8h61radYfi
-	 fpUHd7qy66AUaabbnTh2S3kCxbtnGnpKfOhoul3QrSa04sBdkjaa1qRq9mlJL4r5Yx
-	 AkexrszWdnd346hbWFa9C1o8eGbRxJ2JQ29s5jBg=
+	b=c/uZSGqGoXBks5ACY+ObKPKlgHcY5ToZKpIRLt8TzeHuU1zPDN124sLuSsGiod/YW
+	 faToQ/5TM85NJE/rG0ChNKFzFL1aa1yzU8RH6nacxN3jqdNJonenZZ5aaql+4oaL7k
+	 FIs3yV7vJEOUQH6lNVSAXogIocUhAGcrpgO1ZZIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Anand Moon <linux.amoon@gmail.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 196/609] media: marvell-cam: fix missing pci_disable_device() on remove
-Date: Mon, 17 Aug 2026 15:28:12 +0200
-Message-ID: <20260817132550.656462445@linuxfoundation.org>
+Subject: [PATCH 6.1 197/609] media: meson: vdec: Fix memory leak in error path of vdec_open
+Date: Mon, 17 Aug 2026 15:28:13 +0200
+Message-ID: <20260817132550.691809309@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,38 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Anand Moon <linux.amoon@gmail.com>
 
-commit 033ff0420e4c9c240ae5523fff39770298efa964 upstream.
+commit 940f161f734b25f175a95d2684c2021f6323693a upstream.
 
-During manual code audit, we found that cafe_pci_probe() enables the
-PCI device with pci_enable_device(), and its probe error path properly
-calls pci_disable_device() on failure.
+The vdec_open() function previously jumped directly to
+err_m2m_release when vdec_init_ctrls() failed, skipping
+release of the m2m context. This caused a resource leak.
 
-However, cafe_pci_remove() tears down the controller and frees the
-driver data without disabling the PCI device, leaving the remove path
-inconsistent with probe cleanup.
+Fix it by introducing a proper err_m2m_ctx_release label
+that calls v4l2_m2m_ctx_release(sess->m2m_ctx) before
+releasing the m2m device.
 
-Add the missing pci_disable_device() call to cafe_pci_remove().
+This was identified via kmemleak:
+unreferenced object 0xffff0000205d6878 (size 8):
+  comm "v4l_id", pid 5289, jiffies 4294938580
+  hex dump (first 8 bytes):
+    40 d2 49 18 00 00 ff ff                          @.I.....
+  backtrace (crc d3204599):
+    kmemleak_alloc+0xc8/0xf0
+    __kvmalloc_node_noprof+0x60c/0x850
+    v4l2_ctrl_handler_init_class+0x1b4/0x2e8 [videodev]
+    vdec_open+0x1f4/0x788 [meson_vdec]
+    v4l2_open+0x144/0x460 [videodev]
+    chrdev_open+0x1ac/0x500
+    do_dentry_open+0x3f0/0xfe8
+    vfs_open+0x68/0x320
+    do_open+0x2d8/0x9a8
+    path_openat+0x1d0/0x4f0
+    do_filp_open+0x190/0x380
+    do_sys_openat2+0xf8/0x1b0
+    __arm64_sys_openat+0x13c/0x1e8
+    invoke_syscall+0xdc/0x268
+    el0_svc_common.constprop.0+0x178/0x258
+    do_el0_svc+0x4c/0x70
 
-Fixes: abfa3df36c01 ("[media] marvell-cam: Separate out the Marvell camera core")
+Fixes: 3e7f51bd9607 ("media: meson: add v4l2 m2m video decoder driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Anand Moon <linux.amoon@gmail.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/marvell/cafe-driver.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/staging/media/meson/vdec/vdec.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/marvell/cafe-driver.c
-+++ b/drivers/media/platform/marvell/cafe-driver.c
-@@ -601,6 +601,7 @@ static void cafe_pci_remove(struct pci_d
- 		return;
- 	}
- 	cafe_shutdown(cam);
-+	pci_disable_device(pdev);
- 	kfree(cam);
- }
+--- a/drivers/staging/media/meson/vdec/vdec.c
++++ b/drivers/staging/media/meson/vdec/vdec.c
+@@ -897,7 +897,7 @@ static int vdec_open(struct file *file)
  
+ 	ret = vdec_init_ctrls(sess);
+ 	if (ret)
+-		goto err_m2m_release;
++		goto err_m2m_ctx_release;
+ 
+ 	sess->pixfmt_cap = formats[0].pixfmts_cap[0];
+ 	sess->fmt_out = &formats[0];
+@@ -922,6 +922,8 @@ static int vdec_open(struct file *file)
+ 
+ 	return 0;
+ 
++err_m2m_ctx_release:
++	v4l2_m2m_ctx_release(sess->m2m_ctx);
+ err_m2m_release:
+ 	v4l2_m2m_release(sess->m2m_dev);
+ err_free_sess:
 
 
