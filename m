@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFCC03ABD99;
-	Mon, 17 Aug 2026 14:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF5B285061;
+	Mon, 17 Aug 2026 14:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975489; cv=none; b=NcNwqz2hMrKxs98od115oSGjc6gjxXbZfS0kPSi+6Ya6HwmfQjgcPoXu1RMk6hvX+0pECJ+/XoNDI/1aWkhPUlvhwIWZ7forwYDvP9uJhwaiGBA4awQXEzZ2Hf/LY5PkJ8DIshOTzii79wo24W0NyU5X+7y9GjBIl7ZEzKjUWp4=
+	t=1786975492; cv=none; b=nASgYSYzvwZNHvsVtL1cKIIvmCgzRfQa0L+Tp5dvDDjrmbRbfiP9TacDxcZx4BvHoMECTEkZWip8Vrt57tK+u4q0WBtvGaBZfwuShp4cpykTTAjJSbEG4IdLEeyv+1Rc1yODVcU8jirnl1F8s6dRg4tiH7Z5oBW92szGGPMFnb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975489; c=relaxed/simple;
-	bh=Pi2ngAyfZaFA6XpSKaItqsuQfG9nJdU5OKCEOvY+2nA=;
+	s=arc-20240116; t=1786975492; c=relaxed/simple;
+	bh=yOp5J6RSpQH4gO8sQykqG/j+EVXiH7JZKZFrLTJ3Dtk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xb+ry0ByCARMpwDi7xS5o4yA2Wgv2YU+IxJfCJ/FoeO8gFDtftSk2GdutIcOmjsJHgxzsPCoKbt7ae1GQHwSSWJgxLdMRXXFu46ALayGsVIxbdY324Tla0SHHtSSUkVnTir82x6KUeuBX9fjyrag9wpYP7tjelTunsDUzZ5XbFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxmv0JHO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OBGImmGIMXOht9Tja7Yfk+PJ8lKTMlGpkaR5YnFC2JbZeO+UwwJgT+Cs2myTIIvEMeYFwrtcRMDbVB1SLqj9UY1TOi8IBCPuZj0Wsn9KX0vuzB2plMthsk2QJviTcV/yqP2EQ8kUzA0qmB8efm8vb129hssWFOhglnQjayFbtfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iueewkHI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxmv0JHO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A0F1F000E9;
-	Mon, 17 Aug 2026 14:04:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iueewkHI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D3E71F000E9;
+	Mon, 17 Aug 2026 14:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975487;
-	bh=KuU26ImwyBsKVt23t6bndBYxCbXzzH/wZvjrbMD7Rbk=;
+	s=korg; t=1786975490;
+	bh=YT6e/J9pyQajfLUqiN2AryZcGlxDsONGufKM7xfc9x0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lxmv0JHOBG6pAHZAIOBtkYzLNs86/8l7tZx2uKz7YeTsKSYwZExyepMyzFDdgyEs5
-	 hJVIfJUlvSqXW/ehRlMrxxnKYUnXBvhPaLBXATZ4Mjo1KibEwVY81xvplWSX5SoB/y
-	 KkoBES95wJpAXhfK35VRdd74MInToHN+MuzP6pI4=
+	b=iueewkHIuAqyTMAqG1PqQo0d8H7VS6rrFwKnokxPaCzbmyWcffBWM9mczwSQJuxRT
+	 Ij7Bfu0g+SnwgBvlnlYEXZUqbCIMAOSlBwgGtoLLPg8AaS68XraDqnxDhZDIVcbdRD
+	 EGAWHl3/ruyBq/bo5lRhV8r9j+5+yc3hZctkk1DE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huihui Huang <hhhuang@smu.edu.sg>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.10 045/389] wifi: at76c50x-usb: avoid length underflow in at76_guess_freq()
-Date: Mon, 17 Aug 2026 15:28:04 +0200
-Message-ID: <20260817132540.764238436@linuxfoundation.org>
+	Ai Chao <aichao@kylinos.cn>,
+	stable <stable@kernel.org>,
+	Huang Wei <huangwei@kylinos.cn>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.10 046/389] USB: storage: add NO_ATA_1X quirk for Longmai USB Key
+Date: Mon, 17 Aug 2026 15:28:05 +0200
+Message-ID: <20260817132540.803367486@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -50,59 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huihui Huang <hhhuang@smu.edu.sg>
+From: Huang Wei <huangwei@kylinos.cn>
 
-commit 61a799ffd1e5a4fd3702d547828b7ff3d161468e upstream.
+commit 3b4ca2e01c1dd8c00b675b794732945f460a471b upstream.
 
-at76_guess_freq() checks only that the received frame is at least a bare
-802.11 header (24 bytes) before subtracting the fixed management-body
-offset:
+The Longmai Technologies USB Key (0x04b4:0xb708) advertises itself as a
+SCSI/Bulk-only mass storage device but does not correctly handle ATA
+pass-through commands. When such a command (ATA_12 or ATA_16) is sent to
+the device it fails to respond and the transfer eventually times out,
+leaving the device unusable.
 
-	len -= el_off;
+Add an unusual_devs entry for this device that sets the US_FL_NO_ATA_1X
+flag, so usb-storage short-circuits ATA pass-through commands and returns
+INVALID COMMAND OPERATION CODE (0x20 0x05 0x24 0x00) instead of forwarding
+them to the device.
 
-For both beacon and probe response frames, el_off is 36. If the frame is
-shorter than el_off, subtracting it causes the calculated IE length to
-wrap. The length is eventually passed to cfg80211_find_elem_match() as a
-very large unsigned value, so the element walk runs beyond the RX skb.
+Information about the device in /sys/kernel/debug/usb/devices:
 
-This path is reached from at76_rx_tasklet() while scanning. If the device
-delivers a truncated beacon or probe response, the oversized IE length
-causes an out-of-bounds read during scanning.
+T:  Bus=02 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 12 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=06 Prot=50 MxPS=64 #Cfgs=  1
+P:  Vendor=04b4 ProdID=b708 Rev= 1.00
+S:  Manufacturer=Longmai Technologies
+S:  Product=USB Key
+C:* #Ifs= 1 Cfg#= 1 Atr=80 MxPwr=100mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=08(stor.) Sub=06 Prot=50 Driver=usb-storage
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Skip the IE lookup if the frame does not reach the variable elements,
-before subtracting el_off.
-
-Fixes: 1264b951463a ("at76c50x-usb: add driver")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Huihui Huang <hhhuang@smu.edu.sg>
-Link: https://patch.msgid.link/20260715140815.1242033-1-hhhuang@smu.edu.sg
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reported-by: Ai Chao <aichao@kylinos.cn>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Huang Wei <huangwei@kylinos.cn>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260716033341.2830872-1-huangwei@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/atmel/at76c50x-usb.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/usb/storage/unusual_devs.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/net/wireless/atmel/at76c50x-usb.c
-+++ b/drivers/net/wireless/atmel/at76c50x-usb.c
-@@ -1527,13 +1527,16 @@ static inline int at76_guess_freq(struct
+--- a/drivers/usb/storage/unusual_devs.h
++++ b/drivers/usb/storage/unusual_devs.h
+@@ -395,6 +395,13 @@ UNUSUAL_DEV(  0x04b3, 0x4001, 0x0110, 0x
+ 		USB_SC_DEVICE, USB_PR_CB, NULL,
+ 		US_FL_MAX_SECTORS_MIN),
  
- 	if (ieee80211_is_probe_resp(hdr->frame_control)) {
- 		el_off = offsetof(struct ieee80211_mgmt, u.probe_resp.variable);
--		el = ((struct ieee80211_mgmt *)hdr)->u.probe_resp.variable;
- 	} else if (ieee80211_is_beacon(hdr->frame_control)) {
- 		el_off = offsetof(struct ieee80211_mgmt, u.beacon.variable);
--		el = ((struct ieee80211_mgmt *)hdr)->u.beacon.variable;
- 	} else {
- 		goto exit;
- 	}
++/* Reported by Ai Chao <aichao@kylinos.cn> */
++UNUSUAL_DEV(  0x04b4, 0xb708, 0x0000, 0xffff,
++		"Longmai Technologies",
++		"USB Key",
++		USB_SC_SCSI, USB_PR_BULK, NULL,
++		US_FL_NO_ATA_1X),
 +
-+	if (len < el_off)
-+		goto exit;
-+
-+	el = priv->rx_skb->data + el_off;
- 	len -= el_off;
- 
- 	el = cfg80211_find_ie(WLAN_EID_DS_PARAMS, el, len);
+ /*
+  * Reported by Simon Levitt <simon@whattf.com>
+  * This entry needs Sub and Proto fields
 
 
