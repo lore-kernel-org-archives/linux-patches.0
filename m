@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E5C43CED7;
-	Mon, 17 Aug 2026 14:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468753E5EC0;
+	Mon, 17 Aug 2026 14:58:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978709; cv=none; b=s3vAUwl1u2K3ouxmAf0Wfs4/waorxLml90M/aCAYvtIDpYX6nW6dzsCcAhgqxAaEoVynRvhXOqnsAfL3Np7m6GBrPYWo4SWj9rDhrCt0W6sO91dEfGSYV6jY/LYMgZTgokd2ZAF++DsXD0YKozhGdzF+CIzUyg5iUymIYl8rDHY=
+	t=1786978712; cv=none; b=l90ZdVTDwA/2SmUqCa4VmeAoxXF1skXJMd8Kb6dRzXbcVPlPefMNIngOZ0mKm0owyaCY7Ds2lYmv/ANgpOEYfoR5wMT6jin/9UbOFHEpyVv6dW6ZhHwLFwcVGbOOJJOPlalGzLxe3ejp4a2EsEjUaSWC9FyEYP9HdQVmPMAgSTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978709; c=relaxed/simple;
-	bh=UZGwQ/1GFwp4dj7WcTwTyWCUMgyzpjh3MDFS4kLReCA=;
+	s=arc-20240116; t=1786978712; c=relaxed/simple;
+	bh=7TP1UNcgRXGyt29G46wf877hU/BuvFtRdy3CFUiPbCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qmf2F/yP95sOc7lTLZplp4gmUr6lBf/h8X0/ea5CJzp5j7qIQeL5vWUsz/CZMo6A6DeIpoaanz3csJZWX7LKvmTuAUnmU8bRbjj7cZ94f1sqNZyrCbeUIM6JRBuohCfrw7TqKnDXsarRB0bsp8MtDlGu8zPywirTVUHCFXO6cHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDR6QMIK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n9aXEhERh8kMlObX9z2dUZCfbp7IHMXkCR4YkAn1lxFmUFpYNGCKr7RE3acEVsRMdF4xEZFfnDywH+w0dq/1rSOiapRXXIwOIRrfz+1gAOvgVwIvEr1SsbSDMwmpCmNxym6u/7n1HWqqSwXyUac7DwhUTdJx+i8F/P8XAQOOEWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGAfrgBf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDR6QMIK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E671F000E9;
-	Mon, 17 Aug 2026 14:58:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGAfrgBf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B3B1F000E9;
+	Mon, 17 Aug 2026 14:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978708;
-	bh=3/4suiquazl486hrKOmCqET6pjx5A8uwith5AvXPoXA=;
+	s=korg; t=1786978711;
+	bh=Q8Tfubn1t3RCjDAEnV4/gdgDAtJai3+TWDTiwZZePxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sDR6QMIK9x34rJjIi4XkDtzyVroJg9Nh/ITN3dBhJaHDJYxLWgcZqaIv/1uR1kgjs
-	 qHfYSgMK1oefOq+JX30cJzMsf9lJynE9Xv8HrF9tD7M0ZH5t5yRLZ0xexpD6t1RCv4
-	 cRPTe81uK9Y2tyExt1CiBdH7C1WrA+P+bJwPGBPY=
+	b=dGAfrgBfuleFeDiBQ2Fzuohg1IzP+l6bf6daUhdXFNmXK8eWG1kMop/fKKc34wcPL
+	 W6SFuJtn3vcNBUtW51dS0Xk2Vdvr3PiWdo+Qw66XCklq1oiaPCU/vqt5fcNbq6Xxes
+	 +2D2ExZfXRnMzDjGuVOKZs6U3HXohzDemAqPvwZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Bobby Eshleman <bobbyeshleman@meta.com>,
+	Mohsin Bashir <mohsin.bashr@gmail.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Sun Jian <sun.jian.kdev@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 131/156] vsock/virtio: avoid refilling the RX queue after teardown
-Date: Mon, 17 Aug 2026 15:34:25 +0200
-Message-ID: <20260817132539.811976253@linuxfoundation.org>
+Subject: [PATCH 6.6 132/156] veth: fix skb length accounting after XDP frag adjustment
+Date: Mon, 17 Aug 2026 15:34:26 +0200
+Message-ID: <20260817132539.852750869@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -53,75 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Sun Jian <sun.jian.kdev@gmail.com>
 
-commit a31e0ad444698d8aa7534a0f89fda543730f97a5 upstream.
+commit cb6379feaaff11c4e1e79c26c745ffa23182768a upstream.
 
-Commit b917507e5ad9 ("vsock/virtio: stop workers during the .remove()")
-made the RX worker jump to its common exit when rx_run is clear.  That
-exit still refills the RX queue when the buffer count is low, so work
-queued across virtio_vsock_vqs_del() can add buffers after the virtqueues
-have been deleted.
+veth exposes non-linear skb fragments through an xdp_buff. If an XDP
+program adjusts the fragment area, veth_xdp_rcv_skb() copies
+xdp_frags_size back to skb->data_len but leaves skb->len containing the
+old fragment contribution.
 
-BUG: KASAN: slab-use-after-free in virtqueue_add_sgs
-Read of size 4 by task kworker/0:1
-Workqueue: virtio_vsock virtio_transport_rx_work
-Call Trace:
- virtqueue_add_sgs (drivers/virtio/virtio_ring.c:2796)
- virtio_vsock_rx_fill (net/vmw_vsock/virtio_transport.c:332)
- virtio_transport_rx_work (net/vmw_vsock/virtio_transport.c:701)
- process_one_work (kernel/workqueue.c:3314)
- worker_thread (kernel/workqueue.c:3478)
- kthread (kernel/kthread.c:436)
- ret_from_fork (arch/x86/kernel/process.c:158)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-...
-Freed by task 141:
- kfree (mm/slub.c:6566)
- vp_del_vq (drivers/virtio/virtio_pci_common.c:259)
- vp_del_vqs (drivers/virtio/virtio_pci_common.c:285)
- virtio_vsock_freeze (net/vmw_vsock/virtio_transport.c:912)
- virtio_device_freeze (drivers/virtio/virtio.c:658)
- virtio_pci_freeze (drivers/virtio/virtio_pci_common.c:601)
- pci_pm_freeze (drivers/pci/pci-driver.c:1098)
- device_suspend (drivers/base/power/main.c:1968)
-Kernel panic - not syncing: KASAN: panic_on_warn set ...
+After a fragment shrink, this makes skb_headlen() larger than the actual
+linear area. In the reproduced UDP receive path, __skb_datagram_iter()
+copied 1024 bytes past the actual linear tail to userspace, starting at
+struct skb_shared_info. The copied bytes included the affected skb's
+nr_frags, xdp_frags_size, and a kernel pointer from
+skb_shinfo(skb)->frags[0]. Real packet data was displaced by the same
+amount and truncated at the end.
 
-Jump to a no-refill exit when rx_run is clear, leaving the normal exit
-to replenish a running queue.
+Subtract the old data_len before replacing it and add the new data_len
+afterwards, keeping skb->len and skb->data_len synchronized.
 
-Fixes: b917507e5ad9 ("vsock/virtio: stop workers during the .remove()")
+Additionally, bpf_xdp_pull_data() can advance data_end while leaving
+frags present. The skb is then still non-linear, so the old
+__skb_put(skb, off) triggers SKB_LINEAR_ASSERT().
+
+Use skb_set_tail_pointer() and update skb->len explicitly instead,
+following bpf_prog_run_generic_xdp(). Unlike __skb_put(),
+skb_set_tail_pointer() does not require a linear skb.
+
+A 60000-byte UDP datagram on a veth pair with MTU 64000 was shortened by
+1024 bytes from its fragment area. Before the fix, all 10 runs produced
+corrupted payloads. After the fix, all 10 runs matched the expected
+payload exactly. A forced-tailroom reproducer also exercises
+bpf_xdp_pull_data() with frags still present; the old code triggers
+SKB_LINEAR_ASSERT(), while this fix passes 10/10 runs.
+
+Fixes: 718a18a0c8a6 ("veth: Rework veth_xdp_rcv_skb in order to accept non-linear skb")
 Cc: stable@vger.kernel.org
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Link: https://lore.kernel.org/r/20260727035804.1860862-1-bestswngs@gmail.com
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Link: https://patch.msgid.link/f9c8c1d64cad9d262f305d02ffe164c2f900fadf.1785352330.git.bestswngs@gmail.com
+Reported-by: Mohsin Bashir <mohsin.bashr@gmail.com>
+Link: https://lore.kernel.org/bpf/80687d9c-9c27-494c-b3f2-efd0230b1895@gmail.com/
+Suggested-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
+Link: https://patch.msgid.link/20260804054040.613675-3-sun.jian.kdev@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/veth.c |   22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
---- a/net/vmw_vsock/virtio_transport.c
-+++ b/net/vmw_vsock/virtio_transport.c
-@@ -491,7 +491,7 @@ static void virtio_transport_rx_work(str
- 	mutex_lock(&vsock->rx_lock);
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -902,18 +902,24 @@ static struct sk_buff *veth_xdp_rcv_skb(
  
- 	if (!vsock->rx_run)
--		goto out;
-+		goto out_nofill;
+ 	skb_reset_mac_header(skb);
  
- 	vq = vsock->vqs[VSOCK_VQ_RX];
+-	/* check if bpf_xdp_adjust_tail was used */
+-	off = xdp->data_end - orig_data_end;
+-	if (off != 0)
+-		__skb_put(skb, off); /* positive on grow, negative on shrink */
+-
+ 	/* XDP frag metadata (e.g. nr_frags) are updated in eBPF helpers
+-	 * (e.g. bpf_xdp_adjust_tail), we need to update data_len here.
++	 * (e.g. bpf_xdp_adjust_tail). Remove the old fragment contribution
++	 * from skb->len before updating data_len, then add the new one back.
+ 	 */
+-	if (xdp_buff_has_frags(xdp))
++	skb->len -= skb->data_len;
++	if (xdp_buff_has_frags(xdp)) {
+ 		skb->data_len = skb_shinfo(skb)->xdp_frags_size;
+-	else
++		skb->len += skb->data_len;
++	} else {
+ 		skb->data_len = 0;
++	}
++
++	/* Synchronize the skb tail with XDP's updated linear area. */
++	off = xdp->data_end - orig_data_end;
++	if (off != 0) {
++		skb_set_tail_pointer(skb, xdp->data_end - xdp->data);
++		skb->len += off; /* positive on grow, negative on shrink */
++	}
  
-@@ -539,6 +539,7 @@ static void virtio_transport_rx_work(str
- out:
- 	if (vsock->rx_buf_nr < vsock->rx_buf_max_nr / 2)
- 		virtio_vsock_rx_fill(vsock);
-+out_nofill:
- 	mutex_unlock(&vsock->rx_lock);
- }
+ 	skb->protocol = eth_type_trans(skb, rq->dev);
  
 
 
