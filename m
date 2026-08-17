@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9FE73AAF76;
-	Mon, 17 Aug 2026 14:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80523ABD99;
+	Mon, 17 Aug 2026 14:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975602; cv=none; b=UEBWr6cTMcnRCLvjWKwSQXR2P0ZDAZVCyQ6j3t1YVj5jbll4M5uOUK/0CHWqglFSxq/OGKZW8rq/XicBimqya/fWrLuvZRySU5umfB+e/nX3LmPMVMJbazrMBZNqRAG+0FSFXMYEqRtDj2XogyIkMz5ogw2bZVp6SNKQeW3b+ac=
+	t=1786975605; cv=none; b=MTPtjkJPST5jzeCAeZfLah5j4EyiY1+qZVrMbg8VI4LqI2D7hq9U7uQCoHBsnXH9ZDWyM95YLZ1LKgyz0YibiI/AAgGGRGY/PftFPFdw8yfLpbZGzFBAGIJBC0rNCVWUUjI0rV6cS/pvF+BTUMa0dDn59Iw1ywGkYkrRqNkhATs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975602; c=relaxed/simple;
-	bh=G0+tW8mwFqiWTUYDadmcM5NLoN9zxbM7TveMWKjWrP4=;
+	s=arc-20240116; t=1786975605; c=relaxed/simple;
+	bh=FeTfTUx88oz7PrNYQ+hqRZnMj+zhfCL6/F+UVbtJOvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VsVZ/bfkmWvHTnWbALfCBLjOMzEuR+GUSCnHB6j2qAiOHf2vFRoe/sRqZ03P5jjSSCE8M5VvHlAT/Blu5UdnkrUUqpPbvzP8oF0djqKyRPLATX/8U8uqkTYwdi/D6aEHArinTvqyVUSqONGnFzYgR/MR9O6jqizmT1swUMKaSvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nsh2LB1T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=AIMaUnHGaMVnbWY/7oiFZ7qQrfHfq0Q1bJZiMGQrHE+chMqIo0S5RnB5+0oSeH00J+Y1fs8IhojZly/wWdF8tGgqSisU4NeGvTX7eLCQJUga+X3fSsUjUQX+IRJfde+DKBz7ZnZ9PIT8L6Jh+w6iSACxGmVIk/N+JG41BppGLVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JsOxg0tY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nsh2LB1T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF791F000E9;
-	Mon, 17 Aug 2026 14:06:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JsOxg0tY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3951F000E9;
+	Mon, 17 Aug 2026 14:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975601;
-	bh=C7Lt9JhmIYAx5u8j9PxHpx8y02zhiTat9xGJlaVHmyE=;
+	s=korg; t=1786975604;
+	bh=3dLq0DVGF7QZ8oE6a81fqpzO9xyyiTx9CyjBfK3+apw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nsh2LB1T6ofe0u+1PwzQ6xjN+Ks+7d08E1j1gDqUnu8NCICiKX95wwDU+7SfvKz/s
-	 E0qsQm2Txd+Xf2jRerC6PSEP1qhGCsDGPZJeXFnV15gJzKHJepmyusR+3GMtDD0zvd
-	 R80MemQ+lnr8pctdBBVui/lk/KBwV/9sAA03c7DE=
+	b=JsOxg0tYvQSQRBGz5ngAp8NNGqX5aMqIOeKgC+xMP8C2npimzfDs32yRNzE2Z8fch
+	 rhdBhXPIjiOIghWCa3tDrFnlwP0GhI4ilyh8ZUTggmd3ox/8F0gLM4w43ljnXbu5Ie
+	 Zxs6dZ/qw0zA5t97rHwb2/cmLf2jxv2TyKlFIiEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Shelley Yang <shelley.yang@infineon.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 067/389] wifi: ath6kl: fix OOB read from firmware IE lengths in connect event
-Date: Mon, 17 Aug 2026 15:28:26 +0200
-Message-ID: <20260817132541.709615685@linuxfoundation.org>
+Subject: [PATCH 5.10 085/389] wifi: brcmfmac: fix 802.1X-SHA256 call trace warning
+Date: Mon, 17 Aug 2026 15:28:44 +0200
+Message-ID: <20260817132542.420066120@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -46,53 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Shelley Yang <shelley.yang@infineon.com>
 
-[ Upstream commit 6b47b29730de3232b919d8362749f6814c5f2a33 ]
+[ Upstream commit 7cb34f6c4fe8a68af621d870abe63bfca2275dd6 ]
 
-The firmware-controlled beacon_ie_len, assoc_req_len, and assoc_resp_len
-fields in ath6kl_wmi_connect_event_rx() are not validated against the
-buffer length. Their sum (up to 765) can exceed the actual WMI event
-data, causing out-of-bounds reads during IE parsing and state corruption
-of wmi->is_wmm_enabled.
+Based on wpa_auth as 1x_256 mode, need to set up
+"use_fwsup" with BRCMF_PROFILE_FWSUP_1X.
+Or it will happen trace warning when call brcmf_cfg80211_set_pmk().
 
-Add a check that the total IE length fits within the buffer.
+[ 4481.831101] ------------[ cut here ]------------
+[ 4481.831102] WARNING: CPU: 1 PID: 2997 at
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c:7242 brcmf_cfg80211_set_pmk+0x77/0xd0 [brcmfmac]
+[...]
+[ 4481.831202] Call Trace:
+[ 4481.831204]  <TASK>
+[ 4481.831205]  nl80211_set_pmk+0x183/0x250 [cfg80211]
+[ 4481.831233]  genl_family_rcv_msg_doit+0xea/0x150
+[ 4481.831237]  genl_rcv_msg+0x104/0x240
+[ 4481.831239]  ? cfg80211_probe_status+0x2c0/0x2c0 [cfg80211]
+[ 4481.831257]  ? genl_family_rcv_msg_doit+0x150/0x150
+[ 4481.831259]  netlink_rcv_skb+0x4e/0x100
+[ 4481.831261]  genl_rcv+0x24/0x40
+[ 4481.831262]  netlink_unicast+0x236/0x380
+[ 4481.831264]  netlink_sendmsg+0x250/0x4b0
+[ 4481.831266]  sock_sendmsg+0x5c/0x70
+[ 4481.831269]  ____sys_sendmsg+0x236/0x2b0
+[ 4481.831271]  ? copy_msghdr_from_user+0x6d/0xa0
+[ 4481.831272]  ___sys_sendmsg+0x86/0xd0
+[ 4481.831274]  ? avc_has_perm+0x8c/0x1a0
+[ 4481.831276]  ? preempt_count_add+0x6a/0xa0
+[ 4481.831279]  ? sock_has_perm+0x82/0xa0
+[ 4481.831280]  __sys_sendmsg+0x57/0xa0
+[ 4481.831282]  do_syscall_64+0x38/0x90
+[ 4481.831284]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[ 4481.831286] RIP: 0033:0x7fd270d369b4
 
-Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260421135009.348084-3-tristmd@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 2526ff21aa77 ("brcmfmac: support 4-way handshake offloading for 802.1X")
+Signed-off-by: Shelley Yang <shelley.yang@infineon.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260525083859.581246-1-shelley.yang@infineon.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath6kl/wmi.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath6kl/wmi.c b/drivers/net/wireless/ath/ath6kl/wmi.c
-index b64e0034d69f01..7aa4de770f6637 100644
---- a/drivers/net/wireless/ath/ath6kl/wmi.c
-+++ b/drivers/net/wireless/ath/ath6kl/wmi.c
-@@ -874,6 +874,14 @@ static int ath6kl_wmi_connect_event_rx(struct wmi *wmi, u8 *datap, int len,
- 
- 	ev = (struct wmi_connect_event *) datap;
- 
-+	if (len < sizeof(*ev) + ev->beacon_ie_len +
-+	    ev->assoc_req_len + ev->assoc_resp_len) {
-+		ath6kl_dbg(ATH6KL_DBG_WMI,
-+			   "connect event: IE lengths %u+%u+%u exceed buffer %d\n",
-+			   ev->beacon_ie_len, ev->assoc_req_len,
-+			   ev->assoc_resp_len, len);
-+		return -EINVAL;
-+	}
- 	if (vif->nw_type == AP_NETWORK) {
- 		/* AP mode start/STA connected event */
- 		struct net_device *dev = vif->ndev;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 4434e9a7eba055..3f6d4299965b26 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -1790,7 +1790,7 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
+ 				 sme->crypto.cipher_group);
+ 			return -EINVAL;
+ 		}
+-	} else if (val & (WPA2_AUTH_PSK | WPA2_AUTH_UNSPECIFIED)) {
++	} else if (val & (WPA2_AUTH_PSK | WPA2_AUTH_UNSPECIFIED | WPA2_AUTH_1X_SHA256)) {
+ 		switch (sme->crypto.akm_suites[0]) {
+ 		case WLAN_AKM_SUITE_8021X:
+ 			val = WPA2_AUTH_UNSPECIFIED;
 -- 
 2.53.0
 
