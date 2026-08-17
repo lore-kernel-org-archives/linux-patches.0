@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A732E8DEC;
-	Mon, 17 Aug 2026 15:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465DE304BB3;
+	Mon, 17 Aug 2026 15:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979327; cv=none; b=XB6bL3Q72RT/fgzTfiunjgxfg+p8u7EdFiuX3vZJ3AoV1oE3qBCD1N3ptgKQzYWB4YtACSGMO9+v5OTLi/1/3EtxKqBc7e6T+1VzFDMmcuQwfHZqZBpmmareF3UIqRTlCygrWkk9Q48flXwZe6w/C7wNzfqERrdql7Oke9iWoxg=
+	t=1786979330; cv=none; b=D2Sz2wDlUQrAgKQ1I2ISTPP93UOzoH7qRrvNvqV5T/6fFtF40/laOhYo9N9TwfqSgcIcim28nN6fqVAxmxL2dIqPRxcRZz8D4YgBIfYZbWU0UTw6Hpr5Um1Wy+x0yEt2Lo9ewV0FqQo3qGG2/qeHugw/XZB2KZnHrGTpJXMNges=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979327; c=relaxed/simple;
-	bh=A5bktafwIAXghd2y/ZGS6ziRkB5u9HlluKQMX0g4NRU=;
+	s=arc-20240116; t=1786979330; c=relaxed/simple;
+	bh=UmpReeMhFxBXOAbW40f2LxcP2m8npryV2iUj7MnMN9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qzTIhVRN4bvLnUm8HgEL9zzF58BaLZRp8bwnZnnWhq42ReKOMGSJC1uv727cKCFInQxanXCnGlNeVI2SYrkyOmwi4K1dx6wMaSf1pvsn9+d8RwYADdh/L+VAGIgAwAx1ncGyUOXhxaXrI+i79afvd2p39gfcptiNnojGbPYvY6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QAxd1L7q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q3ciMvZy6fnxXctA+3NtPHUcEdqwa9dWXCN3DgzeJvusiX5Z9dn9ZLLX4iYpzIV16Y7xZ2ipdOZugH0NBOcLVapFc9tnBkcm7o44DMY1MDv1EZee5iGoRGinYPx7SzOQ/YZtBcZ2bqUOmMh4DQoZK1SM4seqLegp2UEjQ2Qm218=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7HCaBXQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QAxd1L7q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0FA81F000E9;
-	Mon, 17 Aug 2026 15:08:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7HCaBXQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA751F000E9;
+	Mon, 17 Aug 2026 15:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979326;
-	bh=IUDuEb/GkvISJ69QvfPtj3YqE4lntqvkM16oTUd3Gs0=;
+	s=korg; t=1786979329;
+	bh=VBCXBohnLBW4zzmSazQxG8wbNI5yjI7UuXA80j1F/vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QAxd1L7q6KRGV/gayQFFrZjpjrYkCCJMZig/EgOSZQjpXD3nHguKjwwQhM7VbuipZ
-	 cGqYlsXI3RJqD7N4VzYRr07KDjrySTUbjEKFLiKQQVhJwNuKTDILHvA/SrLSKhrmSw
-	 W/rX6743oMLRT9HJWz9gucMT3nkFQXTzLxUUTqhQ=
+	b=n7HCaBXQyUJGb1ha39ZjyrJ8TopLsLG08wA61bmoMt5SUkiQp1ij+LkN9GbVenKWD
+	 s6aEmIJ205Ttrk39MFCPH2u9N3yYWj3t/+yuiYNU0+aOyOeH9GijSJqMEeJMahOlSR
+	 GhskeCWa04UTcqf/wLLolITrYJGjxX4qtlejikog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Lingshan <lingshan.zhu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
-Subject: [PATCH 6.1 186/609] drm/amdgpu: fix bo->pin leaking in amdgpu_bo_create_reserved
-Date: Mon, 17 Aug 2026 15:28:02 +0200
-Message-ID: <20260817132550.308722062@linuxfoundation.org>
+	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
+	Ian Forbes <ian.forbes@broadcom.com>,
+	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
+	Zack Rusin <zack.rusin@broadcom.com>
+Subject: [PATCH 6.1 187/609] drm/vmwgfx: Validate vmw_surface_metadata::array_size
+Date: Mon, 17 Aug 2026 15:28:03 +0200
+Message-ID: <20260817132550.340365049@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -45,74 +46,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhu Lingshan <lingshan.zhu@amd.com>
+From: Ian Forbes <ian.forbes@broadcom.com>
 
-commit a2f895f3c852063258d62e9f74b081de07ca95df upstream.
+commit a4f55260f7f7d4dc4d0ee55063dfb0c457b77991 upstream.
 
-amdgpu_bo_create_reserved() only allocates a new BO when
-*bo_ptr (struct amdgpu_bo **bo_ptr as input parameter) is
-NULL, it simply skips creation when *bo_ptr is non-NULL.
-But it unconditionally reserves, pins, gart allocates
-and maps the BO afterwards.
+This field comes from userspace and should be validated against specific
+limits depending on which Shader Model (SM) is available.
 
-When the same non-NULL BO pointer is passed in again,
-for example firmware buffers that live in adev and are
-re-loaded on every resume / cp_resume / start
-under AMDGPU_FW_LOAD_DIRECT, amdgpu_bo_pin() just increases
-pin_count unconditionally, however the matching teardown only unpins
-once, so pin_count never drops to zero, so TTM is not able
-to move, swap or evict a BO, causing BO leaks.
-
-This commit fixes this issue by only pinning the bo
-once at creation, and repeated calls no longer
-take additional pin references.
-
-Signed-off-by: Zhu Lingshan <lingshan.zhu@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 3ddc0ae76202c447b6aec61e907b852bc94671cf)
+Fixes: 504901dbb0b5 ("drm/vmwgfx: Refactor surface_define to use vmw_surface_metadata")
+Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
 Cc: stable@vger.kernel.org
+Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
+Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Link: https://patch.msgid.link/20260623193314.506257-1-ian.forbes@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_object.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_surface.c |   22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-@@ -267,10 +267,12 @@ int amdgpu_bo_create_reserved(struct amd
- 		goto error_free;
- 	}
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
+@@ -98,7 +98,7 @@ static int vmw_gb_surface_unbind(struct
+ static int vmw_gb_surface_destroy(struct vmw_resource *res);
+ static int
+ vmw_gb_surface_define_internal(struct drm_device *dev,
+-			       struct drm_vmw_gb_surface_create_ext_req *req,
++			       const  struct drm_vmw_gb_surface_create_ext_req *req,
+ 			       struct drm_vmw_gb_surface_create_rep *rep,
+ 			       struct drm_file *file_priv);
+ static int
+@@ -1406,7 +1406,7 @@ int vmw_gb_surface_reference_ext_ioctl(s
+  */
+ static int
+ vmw_gb_surface_define_internal(struct drm_device *dev,
+-			       struct drm_vmw_gb_surface_create_ext_req *req,
++			       const  struct drm_vmw_gb_surface_create_ext_req *req,
+ 			       struct drm_vmw_gb_surface_create_rep *rep,
+ 			       struct drm_file *file_priv)
+ {
+@@ -1424,9 +1424,21 @@ vmw_gb_surface_define_internal(struct dr
+ 				req->base.svga3d_flags);
  
--	r = amdgpu_bo_pin(*bo_ptr, domain);
--	if (r) {
--		dev_err(adev->dev, "(%d) kernel bo pin failed\n", r);
--		goto error_unreserve;
-+	if (free) {
-+		r = amdgpu_bo_pin(*bo_ptr, domain);
-+		if (r) {
-+			dev_err(adev->dev, "(%d) kernel bo pin failed\n", r);
-+			goto error_unreserve;
+ 	/* array_size must be null for non-GL3 host. */
+-	if (req->base.array_size > 0 && !has_sm4_context(dev_priv)) {
+-		VMW_DEBUG_USER("SM4 surface not supported.\n");
+-		return -EINVAL;
++	if (req->base.array_size > 0) {
++		if (has_sm5_context(dev_priv)) {
++			if (req->base.array_size > SVGA3D_SM5_MAX_SURFACE_ARRAYSIZE) {
++				VMW_DEBUG_USER("Invalid Surface Array Size.\n");
++				return -EINVAL;
++			}
++		} else if (has_sm4_context(dev_priv)) {
++			if (req->base.array_size > SVGA3D_SM4_MAX_SURFACE_ARRAYSIZE) {
++				VMW_DEBUG_USER("Invalid Surface Array Size.\n");
++				return -EINVAL;
++			}
++		} else {
++			VMW_DEBUG_USER("SM4+ surface not supported.\n");
++			return -EINVAL;
 +		}
  	}
  
- 	r = amdgpu_ttm_alloc_gart(&(*bo_ptr)->tbo);
-@@ -293,7 +295,8 @@ int amdgpu_bo_create_reserved(struct amd
- 	return 0;
- 
- error_unpin:
--	amdgpu_bo_unpin(*bo_ptr);
-+	if (free)
-+		amdgpu_bo_unpin(*bo_ptr);
- error_unreserve:
- 	amdgpu_bo_unreserve(*bo_ptr);
- 
+ 	if (!has_sm4_1_context(dev_priv)) {
 
 
