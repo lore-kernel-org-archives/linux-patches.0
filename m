@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DBB3F6C22;
-	Mon, 17 Aug 2026 15:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5117429CE8;
+	Mon, 17 Aug 2026 15:13:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979618; cv=none; b=Z+kars19jfA5qdFlmLANf1Xc5rIHL/ESmRnz+IB0G7Nek98fkzZI4jHoYuBSHHumsyj1gY5hhcRHHqdieHRiV3kPrtHRkPBB5Fxc3WAQZxA/A6pPGOaNhzdvGOKtoucZraIVOLxAMzSVk28SvVmhEcHngO/keam60OH8zDhxPnQ=
+	t=1786979621; cv=none; b=mPegQexxnZDmxQyRjNToeM+PuYs9/z+8SEjd6c8AGvD/lyr8XwrRbD0K1+4iwoOaAeRPmvWyuJ4bzJ2auFVmGktwyqAaPogEG3iKoZeuLuUjGt+pHyRpelnbZOwSTgXfvfCygMJO3M+ZooVue1D4UH/i8Zx8DAaVCQFGTablgFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979618; c=relaxed/simple;
-	bh=7MVWlrapBp48dteUQLeMbnps4FnMdWeF6UfmFYglC8E=;
+	s=arc-20240116; t=1786979621; c=relaxed/simple;
+	bh=yRUYRfRL2+kw+PunshOrtSrlst14ZwurPMFqckKQl3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TWyLo+JiaR70jPwtoyLrRhiuX578tW92XvJdNe0s9cVvLPDTi2Jt7bIIatx3K/jIMpfZWUdB8pKD2kjykJgxjlVHj9MqbQOFuTLUGBY+mBb2YsoQ6sdo/nWLstRZqn2giv0nqm4OQKLF9yKHvVPc5vcJEOkJXWz5cKNYa2KPqDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGbE39SJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LZ6MKa+ondexLDeIb1oxnKke5TM6XQyjhBdjqtMhsN1KkZ6NB0dCAEbEj2r81mumhoeDcbgJ+PQBLpA80/EKIUh+jYnM7TOiQoHne91aPLJKnUvaWhAnSqxu2GmUu6IOv4ImWbDbk/D+G1P4FRUzFhON5CN/C8mf8KwwPWD2GSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L3VWRKfI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGbE39SJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE8F1F000E9;
-	Mon, 17 Aug 2026 15:13:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3VWRKfI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059071F000E9;
+	Mon, 17 Aug 2026 15:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979616;
-	bh=D7AofoE/LhglXE7oRCkCFojApS1t8obZQjpETqUJElE=;
+	s=korg; t=1786979619;
+	bh=auI3JBvoC3y/pssVdZQ/vc8/HubjcvzRO6vHEeXmWks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eGbE39SJ8JvGZbc/Lp1e2U5OputXdTLcEC4PlYnYvImDVtS4NllZCBN8baJ38h6Ss
-	 3ip078XYEGJp2NgD3rhMqKuObjveg/LbbkUATGwX8bSY+g9vyVJzggl3emq1CK/2qU
-	 wL1Za1Xa7gAjyXnV4cUiYrEXnZQ8pk9zwnhku7/A=
+	b=L3VWRKfIZPiljvEEUFZEOPnanwsPq+c2DwNtRZUwba/abKwYTwJ24JIpEBlNgL0lx
+	 rZyqvoB9E9dmqqRoKnsIL1w0LEKY9tTBnqTmq/8ojPWUhjNtuiAQHxdQZiv5PmXqV3
+	 dVR79j/lY+hNCl4LY1/YtdtwvVJpl9v9q+0awMcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Alexander Martyniuk <alexevgmart@gmail.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 289/609] tipc: fix use-after-free of the discoverer in tipc_disc_rcv()
-Date: Mon, 17 Aug 2026 15:29:45 +0200
-Message-ID: <20260817132553.877262835@linuxfoundation.org>
+Subject: [PATCH 6.1 290/609] openvswitch: fix GSO userspace truncation underflow
+Date: Mon, 17 Aug 2026 15:29:46 +0200
+Message-ID: <20260817132553.906950183@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -54,122 +53,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit 1579342d71133da7f00daa02c75cebec7372097b upstream.
+[ Upstream commit 4032f8ed10fcb84d41c508dfb04be96589f78dfe ]
 
-bearer_disable() frees b->disc with tipc_disc_delete()'s plain kfree(),
-but tipc_disc_rcv() still dereferences b->disc in RX softirq under
-rcu_read_lock() (tipc_udp_recv -> tipc_rcv -> tipc_disc_rcv).
+OVS_ACTION_ATTR_TRUNC currently stores a delta from the original skb
+length in OVS_CB(skb)->cutlen. When a later userspace action segments a
+GSO skb, queue_gso_packets() reuses that delta for each smaller segment.
+A segment can then reach queue_userspace_packet() with cutlen greater
+than skb->len, underflowing the length passed to skb_zerocopy().
 
-L2 bearers are safe thanks to the synchronize_net() in
-tipc_disable_l2_media(), but the UDP bearer defers that call to the
-cleanup_bearer() workqueue, so the discoverer is freed with no grace
-period:
+Store the maximum preserved length instead and bound each consumer
+against the current skb length. Use U32_MAX as the no-truncation
+sentinel so the value remains valid if skb geometry changes before a
+consumer handles it.
 
- BUG: KASAN: slab-use-after-free in tipc_disc_rcv (net/tipc/discover.c:149)
- Read of size 8 at addr ffff88802348b728 by task poc_tipc/184
- <IRQ>
-  tipc_disc_rcv (net/tipc/discover.c:149)
-  tipc_rcv (net/tipc/node.c:2126)
-  tipc_udp_recv (net/tipc/udp_media.c:391)
-  udp_rcv (net/ipv4/udp.c:2643)
-  ip_local_deliver_finish (net/ipv4/ip_input.c:241)
- </IRQ>
- Freed by task 181:
-  kfree (mm/slub.c:6565)
-  bearer_disable (net/tipc/bearer.c:418)
-  tipc_nl_bearer_disable (net/tipc/bearer.c:1001)
-
-The bearer is freed with kfree_rcu(); free the discoverer the same way.
-Add an rcu_head to struct tipc_discoverer and free it and its skb from an
-RCU callback.
-
-Because the RCU callback (tipc_disc_free_rcu) lives in module text, a
-call_rcu() that is still pending when the tipc module is unloaded would
-invoke a freed function. Add an rcu_barrier() to tipc_exit() after the
-bearer subsystem has been torn down, so all pending discoverer callbacks
-have run before the module text goes away.
-
-Reachable from an unprivileged user namespace: the TIPCv2 genl family is
-netnsok and its bearer commands have no GENL_ADMIN_PERM. Needs CONFIG_TIPC
-and CONFIG_TIPC_MEDIA_UDP.
-
-Fixes: 25b0b9c4e835 ("tipc: handle collisions of 32-bit node address hash values")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260617135744.3383175-3-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
+Fixes: f2a4d086ed4c ("openvswitch: Add packet truncation support.")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20260707221635.27489-1-kylebot@openai.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[6.1.y supports neither OVS_ACTION_ATTR_PSAMPLE nor OVS drop reasons]
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/core.c     |  5 +++++
- net/tipc/discover.c | 14 ++++++++++++--
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ net/openvswitch/actions.c  | 15 +++++----------
+ net/openvswitch/datapath.c | 25 ++++++++++++++-----------
+ net/openvswitch/datapath.h |  2 +-
+ net/openvswitch/vport.c    |  2 +-
+ 4 files changed, 21 insertions(+), 23 deletions(-)
 
-diff --git a/net/tipc/core.c b/net/tipc/core.c
-index 434e70eabe0812..1ddecea1df6e91 100644
---- a/net/tipc/core.c
-+++ b/net/tipc/core.c
-@@ -218,6 +218,11 @@ static void __exit tipc_exit(void)
- 	unregister_pernet_device(&tipc_net_ops);
- 	tipc_unregister_sysctl();
+diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
+index f7cc87e67d3c8c..18e419affb5727 100644
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -856,12 +856,8 @@ static void do_output(struct datapath *dp, struct sk_buff *skb, int out_port,
+ 		u16 mru = OVS_CB(skb)->mru;
+ 		u32 cutlen = OVS_CB(skb)->cutlen;
  
-+	/* TODO: Wait for all timers that called call_rcu() to finish before
-+	 * calling rcu_barrier().
-+	 */
-+	rcu_barrier();
-+
- 	pr_info("Deactivated\n");
- }
+-		if (unlikely(cutlen > 0)) {
+-			if (skb->len - cutlen > ovs_mac_header_len(key))
+-				pskb_trim(skb, skb->len - cutlen);
+-			else
+-				pskb_trim(skb, ovs_mac_header_len(key));
+-		}
++		if (unlikely(cutlen < skb->len))
++			pskb_trim(skb, max(cutlen, ovs_mac_header_len(key)));
  
-diff --git a/net/tipc/discover.c b/net/tipc/discover.c
-index e8dcdf267c0c3f..835ff27f8ea88c 100644
---- a/net/tipc/discover.c
-+++ b/net/tipc/discover.c
-@@ -58,6 +58,7 @@
-  * @skb: request message to be (repeatedly) sent
-  * @timer: timer governing period between requests
-  * @timer_intv: current interval between requests (in ms)
-+ * @rcu: RCU head for deferred freeing
+ 		if (likely(!mru ||
+ 		           (skb->len <= mru + vport->dev->hard_header_len))) {
+@@ -1242,22 +1238,21 @@ static int do_execute_actions(struct datapath *dp, struct sk_buff *skb,
+ 			clone = skb_clone(skb, GFP_ATOMIC);
+ 			if (clone)
+ 				do_output(dp, clone, port, key);
+-			OVS_CB(skb)->cutlen = 0;
++			OVS_CB(skb)->cutlen = U32_MAX;
+ 			break;
+ 		}
+ 
+ 		case OVS_ACTION_ATTR_TRUNC: {
+ 			struct ovs_action_trunc *trunc = nla_data(a);
+ 
+-			if (skb->len > trunc->max_len)
+-				OVS_CB(skb)->cutlen = skb->len - trunc->max_len;
++			OVS_CB(skb)->cutlen = trunc->max_len;
+ 			break;
+ 		}
+ 
+ 		case OVS_ACTION_ATTR_USERSPACE:
+ 			output_userspace(dp, skb, key, a, attr,
+ 						     len, OVS_CB(skb)->cutlen);
+-			OVS_CB(skb)->cutlen = 0;
++			OVS_CB(skb)->cutlen = U32_MAX;
+ 			break;
+ 
+ 		case OVS_ACTION_ATTR_HASH:
+diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
+index 0c0d89470145a1..1181807f2b5020 100644
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -251,7 +251,7 @@ void ovs_dp_process_packet(struct sk_buff *skb, struct sw_flow_key *key)
+ 			upcall.portid = ovs_vport_find_upcall_portid(p, skb);
+ 
+ 		upcall.mru = OVS_CB(skb)->mru;
+-		error = ovs_dp_upcall(dp, skb, key, &upcall, 0);
++		error = ovs_dp_upcall(dp, skb, key, &upcall, U32_MAX);
+ 		switch (error) {
+ 		case 0:
+ 		case -EAGAIN:
+@@ -414,7 +414,8 @@ static int queue_userspace_packet(struct datapath *dp, struct sk_buff *skb,
+ 	struct sk_buff *nskb = NULL;
+ 	struct sk_buff *user_skb = NULL; /* to be queued to userspace */
+ 	struct nlattr *nla;
+-	size_t len;
++	size_t msg_size;
++	size_t skb_len;
+ 	unsigned int hlen;
+ 	int err, dp_ifindex;
+ 	u64 hash;
+@@ -435,7 +436,8 @@ static int queue_userspace_packet(struct datapath *dp, struct sk_buff *skb,
+ 		skb = nskb;
+ 	}
+ 
+-	if (nla_attr_size(skb->len) > USHRT_MAX) {
++	skb_len = min(skb->len, cutlen);
++	if (nla_attr_size(skb_len) > USHRT_MAX) {
+ 		err = -EFBIG;
+ 		goto out;
+ 	}
+@@ -450,13 +452,13 @@ static int queue_userspace_packet(struct datapath *dp, struct sk_buff *skb,
+ 	 * padding logic. Only perform zerocopy if padding is not required.
+ 	 */
+ 	if (dp->user_features & OVS_DP_F_UNALIGNED)
+-		hlen = skb_zerocopy_headlen(skb);
++		hlen = min(skb_zerocopy_headlen(skb), cutlen);
+ 	else
+-		hlen = skb->len;
++		hlen = skb_len;
+ 
+-	len = upcall_msg_size(upcall_info, hlen - cutlen,
+-			      OVS_CB(skb)->acts_origlen);
+-	user_skb = genlmsg_new(len, GFP_ATOMIC);
++	msg_size = upcall_msg_size(upcall_info, hlen,
++				   OVS_CB(skb)->acts_origlen);
++	user_skb = genlmsg_new(msg_size, GFP_ATOMIC);
+ 	if (!user_skb) {
+ 		err = -ENOMEM;
+ 		goto out;
+@@ -517,7 +519,7 @@ static int queue_userspace_packet(struct datapath *dp, struct sk_buff *skb,
+ 	}
+ 
+ 	/* Add OVS_PACKET_ATTR_LEN when packet is truncated */
+-	if (cutlen > 0 &&
++	if (skb_len < skb->len &&
+ 	    nla_put_u32(user_skb, OVS_PACKET_ATTR_LEN, skb->len)) {
+ 		err = -ENOBUFS;
+ 		goto out;
+@@ -542,9 +544,9 @@ static int queue_userspace_packet(struct datapath *dp, struct sk_buff *skb,
+ 		err = -ENOBUFS;
+ 		goto out;
+ 	}
+-	nla->nla_len = nla_attr_size(skb->len - cutlen);
++	nla->nla_len = nla_attr_size(skb_len);
+ 
+-	err = skb_zerocopy(user_skb, skb, skb->len - cutlen, hlen);
++	err = skb_zerocopy(user_skb, skb, skb_len, hlen);
+ 	if (err)
+ 		goto out;
+ 
+@@ -601,6 +603,7 @@ static int ovs_packet_cmd_execute(struct sk_buff *skb, struct genl_info *info)
+ 		packet->ignore_df = 1;
+ 	}
+ 	OVS_CB(packet)->mru = mru;
++	OVS_CB(packet)->cutlen = U32_MAX;
+ 
+ 	if (a[OVS_PACKET_ATTR_HASH]) {
+ 		hash = nla_get_u64(a[OVS_PACKET_ATTR_HASH]);
+diff --git a/net/openvswitch/datapath.h b/net/openvswitch/datapath.h
+index 0cd29971a907ca..88156a677f22c5 100644
+--- a/net/openvswitch/datapath.h
++++ b/net/openvswitch/datapath.h
+@@ -114,7 +114,7 @@ struct datapath {
+  * @mru: The maximum received fragement size; 0 if the packet is not
+  * fragmented.
+  * @acts_origlen: The netlink size of the flow actions applied to this skb.
+- * @cutlen: The number of bytes from the packet end to be removed.
++ * @cutlen: The number of bytes in the packet to preserve on output.
   */
- struct tipc_discoverer {
- 	u32 bearer_id;
-@@ -69,6 +70,7 @@ struct tipc_discoverer {
- 	struct sk_buff *skb;
- 	struct timer_list timer;
- 	unsigned long timer_intv;
-+	struct rcu_head rcu;
- };
+ struct ovs_skb_cb {
+ 	struct vport		*input_vport;
+diff --git a/net/openvswitch/vport.c b/net/openvswitch/vport.c
+index 5d7af559a20bed..e83aa6417ffde0 100644
+--- a/net/openvswitch/vport.c
++++ b/net/openvswitch/vport.c
+@@ -438,7 +438,7 @@ int ovs_vport_receive(struct vport *vport, struct sk_buff *skb,
  
- /**
-@@ -382,6 +384,15 @@ int tipc_disc_create(struct net *net, struct tipc_bearer *b,
- 	return 0;
- }
+ 	OVS_CB(skb)->input_vport = vport;
+ 	OVS_CB(skb)->mru = 0;
+-	OVS_CB(skb)->cutlen = 0;
++	OVS_CB(skb)->cutlen = U32_MAX;
+ 	if (unlikely(dev_net(skb->dev) != ovs_dp_get_net(vport->dp))) {
+ 		u32 mark;
  
-+static void tipc_disc_free_rcu(struct rcu_head *rp)
-+{
-+	struct tipc_discoverer *d = container_of(rp, struct tipc_discoverer,
-+						 rcu);
-+
-+	kfree_skb(d->skb);
-+	kfree(d);
-+}
-+
- /**
-  * tipc_disc_delete - destroy object sending periodic link setup requests
-  * @d: ptr to link dest structure
-@@ -389,8 +400,7 @@ int tipc_disc_create(struct net *net, struct tipc_bearer *b,
- void tipc_disc_delete(struct tipc_discoverer *d)
- {
- 	del_timer_sync(&d->timer);
--	kfree_skb(d->skb);
--	kfree(d);
-+	call_rcu(&d->rcu, tipc_disc_free_rcu);
- }
- 
- /**
 -- 
 2.53.0
 
