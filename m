@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CA4435EC8;
-	Mon, 17 Aug 2026 15:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F1CB3E63B0;
+	Mon, 17 Aug 2026 15:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980549; cv=none; b=jnG4r8sWF/kumfU8vVlJVM7plFtyK1akA9vPTKt+DN2HTFSOQTV7gz43Hw7zLAiLu987vF2xyMps0D1FuFda+0ncpyOnwyTDK3gsuYk3a3bixc6T9V0gDUruKPajUd4DlFfEIkHrLpcjDMBO4AfDgAeEZ8WKkOsJcNFQlTSl/HQ=
+	t=1786980551; cv=none; b=JDkgUKnU7DdaBzv7rudcOxJMujQGnfT5vyuETjBM5vxsC+azHfvtarhCwnT6LNZLGOYPBoGuLr3NPaBZz0dc5831Sgve9hLalZUaKkbQG3qtdlfzM8zECzkRMgEzNX8BLuG5bOA6tyaYq9Lh+tvZAtnN0xCsCnVGqaRGPfQ+Gcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980549; c=relaxed/simple;
-	bh=hXKpGanbPNroxCXscRTj1ECvKVjR7rj4RHrZ70WpBSw=;
+	s=arc-20240116; t=1786980551; c=relaxed/simple;
+	bh=NCGeiGXH137Crf4QHGR510V1phjnzL/V7feS0ZnwkHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IyhO3HjMubtbAg5ydigbKIQ17R40ofUi3BRtXgt3AUxUcl3vWp4VFn8L9cccuDk8lFTlDByDHQj/0kCFK5JEBFA7moGdMo7WNQecJ9hnHO4WR7QGERETfhAphNHKruiBXSxiTsJHS8avTkoK1yMY5JXhvsZbQ0iCeOvz0cI7HWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNpp85zC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=twYC3sYn2EFAGA1yz0x0Ixm2IlNEk0/tMvP/81XDhEgc2nvz56VH2bl1MyStOX/BmCBH2T5owQ2OSMIHBeYNVi+JlimJc8mMOlldQzsNkRk1FcsHoNP6IcVoLgxDhooH0BazJbZcAdjkAjyEYoQ+d3BxuGvjwcmrzJEE5RQmAP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uIuk7ffy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNpp85zC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8F711F000E9;
-	Mon, 17 Aug 2026 15:29:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uIuk7ffy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAAFB1F00A3A;
+	Mon, 17 Aug 2026 15:29:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980547;
-	bh=zWySJcztoce8Pd/ZyhgbNsEQjy7B68R4MIttrQd1WUI=;
+	s=korg; t=1786980550;
+	bh=0AyZeKmpMsRNXR3l6aFwfSYoPSv9o/aqn2HA8ht63t4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NNpp85zC8egY6INE6e2po3tK3QoT8ah1O2Nc9DGAvyxGBRg3cgIb2leNoIb9qXkYY
-	 4HIyKZzpV4x75pZSurOmKL2j6aZDhnP3uIbfdzjNA1UjMmrejm/SbRwvfC/J7t6HSM
-	 9A5EaOP9Nr5XFlZmNWCxAVBmJykeagx0oBfInt3I=
+	b=uIuk7ffywC5oOBh0Tx0TEnU0w9WZ9179hJI0wUxq2nZKN6FDz0YJRLRFjKXPsnrS6
+	 fgDQ/asW1tsbOdNSfx2bPSNqYAQDGYMui6LwSWmj0Fq7miB8V2ACZDf2um23gtKkwF
+	 IAGaW1DVsouVR+wNnuvIOMBodB9kBFHW0EsBLAUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Smythies <dsmythies@telus.net>,
-	Ahmad Khalifa <ahmad@khalifa.ws>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.1 609/609] hwmon: (nct6775) Fix non-existent ALARM warning
-Date: Mon, 17 Aug 2026 15:35:05 +0200
-Message-ID: <20260817132604.003670041@linuxfoundation.org>
+	stable@kernel.org,
+	Anandu Krishnan E <anandu.e@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: [PATCH 6.1 574/609] misc: fastrpc: fix channel ctx ref leak when session alloc fails
+Date: Mon, 17 Aug 2026 15:34:30 +0200
+Message-ID: <20260817132602.928276153@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,36 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmad Khalifa <ahmad@khalifa.ws>
+From: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
 
-commit 2dd1d862817b850787f4755c05d55e5aeb76dd08 upstream.
+commit 310f7868399668c6d99d88acc9c4cf3462e69d5b upstream.
 
-Skip non-existent ALARM attribute to avoid a shift-out-of-bounds
-dmesg warning.
+fastrpc_channel_ctx_get() is called in fastrpc_device_open() before
+fastrpc_session_alloc(). If session alloc fails, the error path
+returns -EBUSY without calling fastrpc_channel_ctx_put(), leaking
+the reference. Fix by adding the missing put.
 
-Reported-by: Doug Smythies <dsmythies@telus.net>
-Closes: https://lore.kernel.org/linux-hwmon/ZQVzdlHgWdFhOVyQ@debian.me/T/#mc69b690660eb50734a6b07506d74a119e0266f1b
-Fixes: b7f1f7b2523a ("hwmon: (nct6775) Additional TEMP registers for nct6799")
-Signed-off-by: Ahmad Khalifa <ahmad@khalifa.ws>
-Link: https://lore.kernel.org/r/20230918184722.2033225-1-ahmad@khalifa.ws
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 278d56f970ae ("misc: fastrpc: Reference count channel context")
+Cc: stable@kernel.org
+Signed-off-by: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20260724223342.629168-5-srini@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/nct6775-core.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/misc/fastrpc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hwmon/nct6775-core.c
-+++ b/drivers/hwmon/nct6775-core.c
-@@ -1911,6 +1911,10 @@ static umode_t nct6775_in_is_visible(str
- 	struct device *dev = kobj_to_dev(kobj);
- 	struct nct6775_data *data = dev_get_drvdata(dev);
- 	int in = index / 5;	/* voltage index */
-+	int nr = index % 5;	/* attribute index */
-+
-+	if (nr == 1 && data->ALARM_BITS[in] == -1)
-+		return 0;
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1448,7 +1448,7 @@ static int fastrpc_device_open(struct in
+ 		dev_err(&cctx->rpdev->dev, "No session available\n");
+ 		mutex_destroy(&fl->mutex);
+ 		kfree(fl);
+-
++		fastrpc_channel_ctx_put(cctx);
+ 		return -EBUSY;
+ 	}
  
- 	if (!(data->have_in & BIT(in)))
- 		return 0;
 
 
