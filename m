@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0583C2C11DE;
-	Mon, 17 Aug 2026 15:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFB82D249B;
+	Mon, 17 Aug 2026 15:00:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978851; cv=none; b=dQnFTe831sA19kUqXsXq/iRmJwMkITSRWh/hiJgZEPdN9VPx4F0vhqOdfCl7SMzWeWUIrJVZvFK6VAcc06LAtfhUn6tnCKKR8Y8FJAzcHC4g2myoO8vSeuj6t6Ivc1nOGLgWrA6StPdYywmAkfNWYfgXLz1sfgWMcGFGs3P+k88=
+	t=1786978854; cv=none; b=jvZqmMuQ26AUoj272xHBRFZxwPEFiPgmMzDPDkKiyQpxMU0tUBJCjZn231ukppX/XndPaQFRFNEoo9OWfrtCLwL9qNeEkgiG2GofJynb3bXYHaKaEsZfZeGYy4qAuqcq2VKOJvBWLmAU98B9/hxIVBkONu5HUHK0Kd0kKQX/ykQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978851; c=relaxed/simple;
-	bh=Q68uIARghk5Zhz4riuOqfxQxksKLmKYAD+ZWkAgEc0w=;
+	s=arc-20240116; t=1786978854; c=relaxed/simple;
+	bh=FnZnObrqCBvPti+Nx20qPiF2db6FW15SL/+eMVihbg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nBqmwogFVlYighcyGhSJtg4sjvPorXBn+bZePbp+2NRz49CPKz6QOj1+Hi/6pQVsYIS4IRChCqsLr6ql8j4vfde29U8xyYHpUsSD3RES4GFiLe2XkmE6k6DsuRg4aKSJMiQe9ZSIwWsaB7cepulc8oHQ+ON1A5aRZ+/Hxfw+NEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYax4sGP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YBQ6+iFCvIqZErm0NOOOdrLIKVSQ2iH8ctMMOKACuh1LqlkzsF+zkBn9xUO1p+wRogPxjFL0UefFjv2h+UNLXQ5/pgQOMXo1nnYUw38axPu6Q8AGJAmxAFFQW/mIi+0PZ3cZuXGTUQ7FB7HWFrMqQMSvPUHsd9I8RD8McX2fN+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fq6uvWJc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYax4sGP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63BE51F000E9;
-	Mon, 17 Aug 2026 15:00:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fq6uvWJc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A731F000E9;
+	Mon, 17 Aug 2026 15:00:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978849;
-	bh=jVR73dpTm6pkPZwWh1cFUufnrpht6jbAgxjGOK7caeM=;
+	s=korg; t=1786978852;
+	bh=+k0sY1wprCNA6V1C7F//5IbDK6PIcjn2aAPHoJnuzK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AYax4sGPB9cyiViJD20mjYlrjO+57C+rilhPxUFjHe8rURgirnoOBtbdlz+lE8MaH
-	 gR9nXnCDRrTHdQ7Ta4wx4b5hs73AcqjFO+RsZi3W12cVWcbAJXNx2xWmyHBBHGoegG
-	 2vcm+BnSN9NdxgqldNpv4M2IPw9Uam5kesn19lt0=
+	b=Fq6uvWJcdNImGgHFYlQy02ISD8/AqmgoJkNwPs11PCHLDC13JuBYQIRaW0JjLY5A4
+	 7o7ZsAY6nCYAY4C7iyG2sx1XxEEkiERcKwwCzs/XO710huaszU7FEuk5WzafSCi90R
+	 JSiu6SLrQxq22ehv/VLqHbzpaLSwmDSSEHFavHjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sandipan Das <sandipan.das@amd.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Stephane Eranian <eranian@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 003/609] perf/x86/amd/brs: Fix kernel address leakage
-Date: Mon, 17 Aug 2026 15:24:59 +0200
-Message-ID: <20260817132543.216412653@linuxfoundation.org>
+	Oleg Nesterov <oleg@redhat.com>
+Subject: [PATCH 6.1 004/609] seqlock: Cure some more scoped_seqlock() optimization fails
+Date: Mon, 17 Aug 2026 15:25:00 +0200
+Message-ID: <20260817132543.267232011@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -54,92 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit 47915e855fb38b42133e31ba917d99565f862154 upstream.
+commit 90dfeef1cd38dff19f8b3a752d13bfd79f0f7694 upstream.
 
-A user-only branch stack can contain branches that originate from
-the kernel. As a result, kernel addresses are exposed to user space
-even when PERF_SAMPLE_BRANCH_USER is requested. On AMD processors
-supporting X86_FEATURE_BRS (Zen 3 only), perf can still report entries
-such as SYSRET/interrupt returns for which the branch-from addresses
-are in the kernel.
+Arnd reported an x86 randconfig using gcc-15 tripped over
+__scoped_seqlock_bug(). Turns out GCC chose not to inline the
+scoped_seqlock helper functions and as such was not able to optimize
+properly.
 
-E.g.
+[ mingo: Clang fails the build too in some circumstances. ]
 
-  $ perf record -j any,u -c 4000 -e branch-brs -o - -- \
-        perf bench syscall basic --loop 1000 | \
-        perf script -i - -F brstack|tr ' ' '\n'| \
-        grep -E '0x[89a-f][0-9a-f]{15}'
-
-  ...
-  0xffffffff810001c4/0x72e2e32955eb/-/-/-/0//-
-  0xffffffff810001c4/0x72e2d94a9821/-/-/-/0//-
-  0xffffffff810001c4/0x72e2d94ffa1b/-/-/-/0//-
-  ...
-
-BRS provides no hardware branch filtering, so privilege level
-filtering is performed entirely in software. However, amd_brs_match_plm()
-only validates the branch-to address against the requested privilege
-levels. For branches from the kernel to user space, the branch-from
-address is left unchecked and is leaked. Extend the software filter to
-also validate the branch-from address, so that any branch record whose
-branch-from address is in the kernel is dropped when
-PERF_SAMPLE_BRANCH_USER is requested.
-
-Fixes: 8910075d61a3 ("perf/x86/amd: Enable branch sampling priv level filtering")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Tested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: stable@vger.kernel.org
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Stephane Eranian <eranian@google.com>
-Link: https://patch.msgid.link/f05931c4f89a146c364bd5dc6b8170b1ac611c65.1783701239.git.sandipan.das@amd.com
-Closes: https://lore.kernel.org/all/20260710110235.F3FD81F000E9@smtp.kernel.org/
-[sandipan: backport to linux-6.1.y]
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Link: https://patch.msgid.link/20251204104332.GG2528459@noisy.programming.kicks-ass.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/amd/brs.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/linux/seqlock.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/events/amd/brs.c b/arch/x86/events/amd/brs.c
-index f1bff153d94578..fd46e73cb8e716 100644
---- a/arch/x86/events/amd/brs.c
-+++ b/arch/x86/events/amd/brs.c
-@@ -262,13 +262,13 @@ void amd_brs_disable_all(void)
- 		amd_brs_disable();
- }
+--- a/include/linux/seqlock.h
++++ b/include/linux/seqlock.h
+@@ -1281,7 +1281,7 @@ struct ss_tmp {
+ 	spinlock_t	*lock_irqsave;
+ };
  
--static bool amd_brs_match_plm(struct perf_event *event, u64 to)
-+static bool amd_brs_match_plm(struct perf_event *event, u64 from, u64 to)
+-static inline void __scoped_seqlock_cleanup(struct ss_tmp *sst)
++static __always_inline void __scoped_seqlock_cleanup(struct ss_tmp *sst)
  {
- 	int type = event->attr.branch_sample_type;
- 	int plm_k = PERF_SAMPLE_BRANCH_KERNEL | PERF_SAMPLE_BRANCH_HV;
- 	int plm_u = PERF_SAMPLE_BRANCH_USER;
+ 	if (sst->lock)
+ 		spin_unlock(sst->lock);
+@@ -1306,7 +1306,7 @@ static inline void __scoped_seqlock_bug(
+ extern void __scoped_seqlock_bug(void);
+ #endif
  
--	if (!(type & plm_k) && kernel_ip(to))
-+	if (!(type & plm_k) && (kernel_ip(to) || kernel_ip(from)))
- 		return 0;
- 
- 	if (!(type & plm_u) && !kernel_ip(to))
-@@ -341,11 +341,11 @@ void amd_brs_drain(void)
- 		 */
- 		to = (u64)(((s64)to << shift) >> shift);
- 
--		if (!amd_brs_match_plm(event, to))
--			continue;
--
- 		rdmsrl(brs_from(brs_idx), from);
- 
-+		if (!amd_brs_match_plm(event, from, to))
-+			continue;
-+
- 		perf_clear_branch_entry_bitfields(br+nr);
- 
- 		br[nr].from = from;
--- 
-2.53.0
-
+-static inline void
++static __always_inline void
+ __scoped_seqlock_next(struct ss_tmp *sst, seqlock_t *lock, enum ss_state target)
+ {
+ 	switch (sst->state) {
 
 
