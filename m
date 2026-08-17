@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5837175A99;
-	Mon, 17 Aug 2026 14:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5AF21CC5C;
+	Mon, 17 Aug 2026 14:55:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978521; cv=none; b=KQrA8jd3SrDpiRz7PPtIqUG4Q9s2KCSNAZu7IbDPBpTBbUxusWXr+Taa3beanrCXlzS9y3yrecRPP+fL/vBXDx28j2Ik2LjTguh6escdQzZTMSMRC0L15+A9y3thddOkg96oH1Y17wIh2wnmOM3tOLVZ04oNLFwILgAy9Z6p+yo=
+	t=1786978524; cv=none; b=GG55pRJSAvHdt05VhfjxVRZIbxAdZTans6tIIDtwSgosq9AzRrIhcbjPdmyjKQVSI861QksaGwj6FbU6ms+l49g4C+ak7I1osreTVlnDV+F3eYRZrlpH8eltcfZ325CGUs7rR2pH9NrH0AS5/d+mAQR+PogTwYGIK/jyEjl6rAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978521; c=relaxed/simple;
-	bh=dHHcfQeb759e3SfBFOlm9r7geIS/oOrFBxyUwbYGJYY=;
+	s=arc-20240116; t=1786978524; c=relaxed/simple;
+	bh=R5CK7IWUnEf1pIPCr+WptQmm0Wc8s+pLkLbU7iNUpcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=deHpUuPKeMENfWG1U5hVmRZvtysKGsLTIx/oKJp06FNu2eaBSYCwcF29bVChwtfQ6lP57qv092+slhc0ppxoQuVIldL2reAvVkEBa/T619Gwu9rmjeWDktQ0q7xQWm8CwML47KFfReG8m7BUI2u3KKNAmDh9QmbJ/oA5EV3DOfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GkwbwOJk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ESUvajP1io618jCKweU1i4DRBDYpgg5Wn0V7CD/2BjS3J80hvYcZOf9jerONdb8Rh7gtjJqknRsuh2mIaKBMIKbNZjwsQH96PBrXlj516YuVNoaFBPLs2L6GPuW+2YO9Anp7P1tMzKFMJ6nGcz1kMw6Pa2cMmrRfcOGw+uGNu5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T1DVjukX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GkwbwOJk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8431F000E9;
-	Mon, 17 Aug 2026 14:55:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T1DVjukX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6B21F000E9;
+	Mon, 17 Aug 2026 14:55:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978519;
-	bh=GOyQ4Ccg1FFkGNu1cEKKTPi3UP3fIaRvvl6eaPez/YI=;
+	s=korg; t=1786978522;
+	bh=l8rxk63/Nu038+/0TOE62cxChx845R4fJIBqhF652do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GkwbwOJkaUXPgewWNhXKCSp6PPWCX7Ne9vx0HsKnx0fQhJXvdfXqOCaCceqqW5zhG
-	 gyy7CxZ+L0OfWTbktbBljoW/z9VpjQAq0iGUHNbVXydt3p9v6BeUkMOkTnFzfmkBPB
-	 KqE5oEYOqHBx2MIjEjNVMQg34id8w0Qxf3B1Mxg8=
+	b=T1DVjukXqKfDjx592W67vqWG7zNOnuCx4DXx/ojHNKKzn+SPyaijcoCmXjtJiEFbE
+	 3+KRKG/EAxgR4EddBO1fmAhoS0COtTAiyuhiniT1jZNV8k86VJSEP1u+HoUcCf+kAh
+	 sbM9nglJfmhtkna/2Nn3SkNlhWC/sSXcsWEX1kRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Xue <feng.xue@outlook.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 038/156] net/sched: cls_api: Always acquire rtnl_lock when destroying locked classifiers
-Date: Mon, 17 Aug 2026 15:32:52 +0200
-Message-ID: <20260817132536.106399785@linuxfoundation.org>
+	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
+	Baul Lee <baul.lee@xbow.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 065/156] ALSA: usb-audio: fix OOB write on Type II inbound URBs
+Date: Mon, 17 Aug 2026 15:33:19 +0200
+Message-ID: <20260817132537.133495473@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -53,115 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-[ Upstream commit a347304b2ca1a5377d5bd2d8a72e4b4f12afe648 ]
+commit 69ee44e1a23be62318189dc4b37fa4ad94053269 upstream.
 
-Another challenge with unlocked filters.
-There is a short window in tc_new_tfilter where a tcf_proto can be found
-and briefly referenced by a totally unrelated, unlocked classifier's request
-and cause a race.
+data_ep_set_params() sizes each URB transfer buffer before it adds the
+Format Type II transfer delimiter:
 
-Feng created a poc which created this race with two threads, one creating a
-u32 filter and other a flower filter in the same chain/prio:
+	u->packets = urb_packs;
+	u->buffer_size = maxsize * u->packets;
 
-1. Both threads enter tc_new_tfilter, both find the chain empty, both
-   drop filter_chain_lock
-2. u32 finishes tcf_proto_create("u32") first, calls
-   tcf_chain_tp_insert_unique() -> inserts u32_tp into the chain
-3. flower finishes tcf_proto_create("flower") later, calls
-   tcf_chain_tp_insert_unique() -> tcf_chain_tp_find() now sees u32_tp
-   already there, takes a reference on it, destroys flower's own tp_new
-   and returns u32_tp to the caller.
+	if (fmt->fmt_type == UAC_FORMAT_TYPE_II)
+		u->packets++; /* for transfer delimiter */
+	u->urb = usb_alloc_urb(u->packets, GFP_KERNEL);
 
-Flower then hits the kind mismatch check (because it requested for kind
-"flower" but tp->ops->kind is "u32") and goes through the errout path
-which calls tcf_proto_put() on u32_tp. If the u32 thread has already
-gone through its own errout (its change() call failed on the PoC's empty
-options) and dropped its create and insert refs, flower's put is the
-last one and drops u32_tp's refcnt to zero.
+buffer_size is computed from the pre-increment packet count and never
+recomputed, so for a Type II endpoint the buffer is one packet short of
+the packet count the URB is built with.
 
-At this point tp->ops->destroy() runs in a context that never took
-rtnl_lock. When that happens, it might cause a UAF like the following
-(illustrated by the PoC):
+prepare_inbound_urb() then lays out one iso frame per packet and never
+consults buffer_size:
 
-[  +0.000710] BUG: KASAN: slab-use-after-free in u32_init (net/sched/cls_u32.c:393)
-[  +0.000281] Read of size 8 at addr ffff888120022f00 by task poc_feng_xue/524
+	offs = 0;
+	for (i = 0; i < urb_ctx->packets; i++) {
+		urb->iso_frame_desc[i].offset = offs;
+		urb->iso_frame_desc[i].length = ep->curpacksize;
+		offs += ep->curpacksize;
+	}
 
-  Call Trace:
-   u32_init (net/sched/cls_u32.c:393)
-   tc_new_tfilter (net/sched/cls_api.c:2378)
+	urb->transfer_buffer_length = offs;
+	urb->number_of_packets = urb_ctx->packets;
 
-  Allocated by task 526:
-   u32_init (net/sched/cls_u32.c:378)
-   tc_new_tfilter (net/sched/cls_api.c:2378)
+The last descriptor therefore points one packet past the end of the
+transfer buffer, where the host controller writes device data on every
+inbound transfer.  prepare_silent_urb() and prepare_playback_urb() bound
+their fill loops by ctx->buffer_size, so only capture is affected.
 
-  Freed by task 522:
-   kfree
-   u32_destroy (net/sched/cls_u32.c:662)
-   tcf_proto_destroy (net/sched/cls_api.c:446)
-   tcf_proto_put (net/sched/cls_api.c:459)
-   tc_new_tfilter (net/sched/cls_api.c:2459)
+fmt_type comes from the device's audio streaming descriptors, so any
+device advertising a Type II capture format hits this once userspace sets
+hw_params on the stream.
 
-Fix this by having tcf_proto_destroy() take rtnl_lock around
-tp->ops->destroy() for locked classifiers whenever rtnl is not held.
+KASAN on 7.2.0-rc5 (arm64) with a dummy_hcd/raw-gadget device, one report
+per inbound transfer:
 
-To explain why I used a temp variable "not_lockless" I'd like to point to a
-semi-related note on rtnl_held vs TCF_PROTO_OPS_DOIT_UNLOCKED (adding here
-for future cleanup if deemed necessary):
-The rtnl_held parameter and the TCF_PROTO_OPS_DOIT_UNLOCKED flag are
-redundant sources of truth for whether rtnl_lock is held. Among the nine
-classifier destroy(..rtnl_held..) callbacks, only flower consults the
-rtnl_held parameter which it propagates to tc_setup_cb_destroy()
-and tc_setup_cb_call(). The other eight (u32, flow, bpf, cgroup, route, basic,
-fw, mall) ignore it entirely;-> those that call tc_setup_cb_destroy()
-(u32, bpf, mall) hardcode true always instead of forwarding the parameter.
+  BUG: KASAN: slab-out-of-bounds in dummy_timer
+  Write of size 64 at addr ffff0000186171c0 by task cons02/166
+   __asan_memcpy
+   dummy_timer
+   hrtimer_run_softirq
+  Allocated by task 166:
+   usb_alloc_coherent
+   snd_usb_endpoint_set_params
+  The buggy address is located 0 bytes to the right of
+   allocated 64-byte region [ffff000018617180, ffff0000186171c0)
 
-A future cleanup should remove the rtnl_held parameter from the destroy callback
-signature entirely and have callers rely solely on their knowledge whether
-they are running in an unlocked context.
+Compute buffer_size after the delimiter packet has been accounted for,
+and bound the fill loop by buffer_size, as prepare_silent_urb() already
+does on the outbound side.  This grows every Type II URB allocation by
+one maxsize packet.
 
-Fixes: 12db03b65c2b ("net: sched: extend proto ops to support unlocked classifiers")
-Reported-by: Feng Xue <feng.xue@outlook.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260801125632.360365-1-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 8fdff6a319e7 ("ALSA: snd-usb: implement new endpoint streaming model")
+Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
+Reported-by: Baul Lee <baul.lee@xbow.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260805013441.38245-1-baul.lee@xbow.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/cls_api.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ sound/usb/endpoint.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index f107afdd36bbd..ff6af03cb855d 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -443,7 +443,22 @@ static void tcf_chain_put(struct tcf_chain *chain);
- static void tcf_proto_destroy(struct tcf_proto *tp, bool rtnl_held,
- 			      bool sig_destroy, struct netlink_ext_ack *extack)
- {
--	tp->ops->destroy(tp, rtnl_held, extack);
-+	/* A locked classifier's destroy callback (e.g. u32_destroy) uses
-+	 * rtnl_dereference() and mutates shared structures (e.g. the
-+	 * tc_u_common hash list) that are only safe under rtnl_lock. When an
-+	 * unlocked classifier's request (e.g. flower on ingress) loses the
-+	 * tcf_chain_tp_insert_unique() race and ends up dropping the last
-+	 * reference on a locked classifier's proto, destroy() would run
-+	 * without rtnl held. Take it here in that case.
-+	 */
-+	bool not_lockless = !rtnl_held &&
-+		!(tp->ops->flags & TCF_PROTO_OPS_DOIT_UNLOCKED);
-+
-+	if (not_lockless)
-+		rtnl_lock();
-+	tp->ops->destroy(tp, rtnl_held || not_lockless, extack);
-+	if (not_lockless)
-+		rtnl_unlock();
- 	tcf_proto_count_usesw(tp, false);
- 	if (sig_destroy)
- 		tcf_proto_signal_destroyed(tp->chain, tp);
--- 
-2.53.0
-
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -388,13 +388,15 @@ static int prepare_inbound_urb(struct sn
+ 	case SND_USB_ENDPOINT_TYPE_DATA:
+ 		offs = 0;
+ 		for (i = 0; i < urb_ctx->packets; i++) {
++			if (offs + ep->curpacksize > urb_ctx->buffer_size)
++				break;
+ 			urb->iso_frame_desc[i].offset = offs;
+ 			urb->iso_frame_desc[i].length = ep->curpacksize;
+ 			offs += ep->curpacksize;
+ 		}
+ 
+ 		urb->transfer_buffer_length = offs;
+-		urb->number_of_packets = urb_ctx->packets;
++		urb->number_of_packets = i;
+ 		break;
+ 
+ 	case SND_USB_ENDPOINT_TYPE_SYNC:
+@@ -1260,10 +1262,10 @@ static int data_ep_set_params(struct snd
+ 		u->index = i;
+ 		u->ep = ep;
+ 		u->packets = urb_packs;
+-		u->buffer_size = maxsize * u->packets;
+ 
+ 		if (fmt->fmt_type == UAC_FORMAT_TYPE_II)
+ 			u->packets++; /* for transfer delimiter */
++		u->buffer_size = maxsize * u->packets;
+ 		u->urb = usb_alloc_urb(u->packets, GFP_KERNEL);
+ 		if (!u->urb)
+ 			goto out_of_memory;
 
 
