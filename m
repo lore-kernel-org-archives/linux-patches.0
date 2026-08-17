@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E24543BDA9;
-	Mon, 17 Aug 2026 13:38:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F3C3F9A0B;
+	Mon, 17 Aug 2026 13:38:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786973936; cv=none; b=cYL4RbCbARPTRWPW7k4pTD0Kd+cYqKcw20oBFvp6h6m2qulHny4votABAb6h2o2DpqsNqw3aFSsA0Mz52F3A2umFQBwR/qLmPF5KLkHDHWdN9V5SRXaMuxOse3sZmGNAkO91/e7Sa03QAG2Ydzjv8z3RYKM2p8WUN/2tkapmkyg=
+	t=1786973939; cv=none; b=Wff7efw/jPudtozPM8zd8M8nn4/duj1pbhq19o7FMuWpDBJyaxhmaKc3n3mK1ebmz9K+ClKm23zwkSTvT24qduIKKMEHI9nvdB/rBwEZ+3Ry4atFSUbQAJXGLnMZpLiUh5PDkPGf9LrN1nxNIV+2WlM0Ql6lhnyG/ObZUBzo1uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786973936; c=relaxed/simple;
-	bh=4A/Ecez+wfuZtBETnyPrcKsURLijMgWeiv6DJEs+mh0=;
+	s=arc-20240116; t=1786973939; c=relaxed/simple;
+	bh=6KaTBJxuyuEpx84z/AlArqt1d1+KTDq/JC1wYcE2TYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nVAKJnm9jeP2RdTGcm1+Aj0IYswB2VU8NjO2uRNvx5oOJak0NegDGXomVvR6B6w7/nQMmlEZoLIJxx5lf5rmFKwmhilO/zfXUAfR2jPdXgWqJmv4KdmKugmUAXV+t3byvnOD2ZDJ5jvTaA2qjwNFdoKMkudYbVD3NK61kqSneL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QgJJ/1jI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f22h70ikuTHHUwDykgkfHLMr1fwrLqbY/bm7jidAbi1E2r2DKpRiHRoBnGP1TURwqAphFkiWDneeEaPbVUoQFWSps3D5EeHgb2F7k/UhpIeWK3Cx8iZLvI4zQ2tckIUfARunb0L13hm/tC4ZnEj+6rpibJc6LkRuFkCNOGGOOs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAFD9s6S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QgJJ/1jI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 698601F000E9;
-	Mon, 17 Aug 2026 13:38:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAFD9s6S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9631F000E9;
+	Mon, 17 Aug 2026 13:38:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786973935;
-	bh=DDB23CMybwwu4wmWojy3wGQX7aOJ1Aipp5qjQyBJAHs=;
+	s=korg; t=1786973937;
+	bh=Il3fppaXU+NDOPl2OMVgncSj0EAkAtcGdUlCuJ3Ktw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QgJJ/1jINTtoLpLGBH2hRjwxYrR8BluOovVC+2Z8akEvwsgc4YeiWf/OjpvO1H+5G
-	 wDkPVQDabPpNtrY1i41VR0HFnV7DwOgwOAQ6TOWU8ll7d8nMP27nmYMZje8FaMKOUy
-	 iqa+l8umhca4m9Gc0heqmeJBZi3e5OP9RiMgJqm8=
+	b=fAFD9s6SYFMpbF5sFuXnueFduqLka3m6uhuBjQvcXEAx+sxJOg4ZXAfA1dT7ARIp6
+	 R4/WMSS0ShCiwyJv1/wHjYIm6ixsWOHxKPW1dWz29Sa5GETUt8JBP1C+osos0qV+Ig
+	 lM7VC6Z9ctkbw+R7R+MN1zkSaL1qE49sw+qy44/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 031/271] ovpn: hash floated peer by transport identity only
-Date: Mon, 17 Aug 2026 15:29:16 +0200
-Message-ID: <20260817132538.028799513@linuxfoundation.org>
+Subject: [PATCH 7.1 032/271] ovpn: disable IPv4 redirects on MP interfaces
+Date: Mon, 17 Aug 2026 15:29:17 +0200
+Message-ID: <20260817132538.071415123@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -52,90 +52,126 @@ Content-Transfer-Encoding: 8bit
 
 From: Antonio Quartulli <antonio@openvpn.net>
 
-[ Upstream commit b47a52dcd598a50207a33df304acdf45348a690f ]
+[ Upstream commit 0301aa324941698bec3dd455df1c5abc7afb10db ]
 
-The by_transp_addr table is keyed on the peer's remote transport
-address, but the float rehash hashed bind->remote directly, while the
-two other sites that touch the table build a clean key first:
-ovpn_peer_add_mp() and the lookup in ovpn_peer_get_by_transp_addr()
-both hash a sockaddr holding only family/address/port.
+ovpn_mp_alloc() tried to disable SEND_REDIRECTS on a multipeer
+interface, but it runs from ovpn_net_init() (->ndo_init), which
+register_netdevice() invokes before the NETDEV_REGISTER notifier
+chain. The IPv4 in_device is only created when that notifier reaches
+inetdev_event() -> inetdev_init(), so __in_dev_get_rtnl() always
+returned NULL at ndo_init time and the whole redirect-disabling block
+(both the per-device and the per-netns IPV4_DEVCONF_ALL write) was
+dead. MP interfaces therefore kept emitting ICMP redirects.
 
-For a link-local IPv6 peer, bind->remote carries sin6_scope_id (set
-from ipv6_iface_scope_id() when the endpoint is learned), and that
-field is folded into the jhash() over sizeof(struct sockaddr_in6).
-The lookup never sets sin6_scope_id, so after such a peer floats it is
-rehashed into a scope_id-dependent bucket that lookups (scope_id 0)
-never visit, making the peer unreachable through the by_transp_addr
-fallback. ovpn_peer_transp_match() only compares address and port, so
-the hash was keying on a field the match ignores.
+Disabling redirects only once is not enough either: the IPv4
+in_device is destroyed and recreated when the interface is moved to a
+different network namespace (NETDEV_UNREGISTER/NETDEV_REGISTER), and
+the newly created in_device inherits the destination namespace
+defaults, silently re-enabling SEND_REDIRECTS.
 
-sin6_scope_id must stay in bind->remote because the TX path uses it as
-flowi6_oif, so it cannot just be cleared there. Instead build the hash
-key from family/address/port only, exactly like ovpn_peer_add_mp() and
-the lookup, so all three sites agree on the bucket.
+Disable redirects from ovpn_net_open() (->ndo_open) instead: it runs
+every time the interface is brought up, including after the in_device
+has been recreated, so the setting is always re-applied. This mirrors
+what wireguard does in wg_open(). RTNL is held on the ndo_open() path,
+so __in_dev_get_rtnl() is safe.
 
-Fixes: f0281c1d3732 ("ovpn: add support for updating local or remote UDP endpoint")
+Fixes: 05003b408c20 ("ovpn: implement multi-peer support")
 Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/peer.c | 25 +++++++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
+ drivers/net/ovpn/main.c | 50 ++++++++++++++++++++++++++++-------------
+ 1 file changed, 35 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/ovpn/peer.c b/drivers/net/ovpn/peer.c
-index 33fb0a75e6006..eada414a9d922 100644
---- a/drivers/net/ovpn/peer.c
-+++ b/drivers/net/ovpn/peer.c
-@@ -904,7 +904,10 @@ bool ovpn_peer_check_by_src(struct ovpn_priv *ovpn, struct sk_buff *skb,
- static void __ovpn_peer_hash_transp_addr(struct ovpn_peer *peer,
- 					 const struct ovpn_bind *bind)
+diff --git a/drivers/net/ovpn/main.c b/drivers/net/ovpn/main.c
+index 9d9a0ff690d66..3a04757d5c31e 100644
+--- a/drivers/net/ovpn/main.c
++++ b/drivers/net/ovpn/main.c
+@@ -35,25 +35,11 @@ static void ovpn_priv_free(struct net_device *net)
+ 
+ static int ovpn_mp_alloc(struct ovpn_priv *ovpn)
  {
-+	struct sockaddr_storage sa = {};
- 	struct hlist_nulls_head *nhead;
-+	struct sockaddr_in6 *sa6;
-+	struct sockaddr_in *sa4;
- 	size_t salen;
+-	struct in_device *dev_v4;
+ 	int i;
  
- 	lockdep_assert_held(&peer->ovpn->lock);
-@@ -920,12 +923,26 @@ static void __ovpn_peer_hash_transp_addr(struct ovpn_peer *peer,
- 	if (unlikely(hlist_unhashed(&peer->hash_entry_id)))
- 		return;
+ 	if (ovpn->mode != OVPN_MODE_MP)
+ 		return 0;
  
-+	/* Build the hash key from the transport identity only
-+	 * (family/address/port), matching ovpn_peer_add_mp() and the lookup
-+	 * in ovpn_peer_get_by_transp_addr(). Hashing bind->remote directly
-+	 * would fold in sin6_scope_id (set on the float path but never by the
-+	 * lookup), scattering the peer into a bucket lookups cannot reach.
-+	 */
- 	switch (bind->remote.in4.sin_family) {
- 	case AF_INET:
--		salen = sizeof(struct sockaddr_in);
-+		sa4 = (struct sockaddr_in *)&sa;
-+		sa4->sin_family = AF_INET;
-+		sa4->sin_addr.s_addr = bind->remote.in4.sin_addr.s_addr;
-+		sa4->sin_port = bind->remote.in4.sin_port;
-+		salen = sizeof(*sa4);
- 		break;
- 	case AF_INET6:
--		salen = sizeof(struct sockaddr_in6);
-+		sa6 = (struct sockaddr_in6 *)&sa;
-+		sa6->sin6_family = AF_INET6;
-+		sa6->sin6_addr = bind->remote.in6.sin6_addr;
-+		sa6->sin6_port = bind->remote.in6.sin6_port;
-+		salen = sizeof(*sa6);
- 		break;
- 	default:
- 		return;
-@@ -934,8 +951,8 @@ static void __ovpn_peer_hash_transp_addr(struct ovpn_peer *peer,
- 	/* remove old hashing (no-op if entry is not currently linked) */
- 	hlist_nulls_del_init_rcu(&peer->hash_entry_transp_addr);
- 	/* re-add with current transport address */
--	nhead = ovpn_get_hash_head(peer->ovpn->peers->by_transp_addr,
--				   &bind->remote, salen);
-+	nhead = ovpn_get_hash_head(peer->ovpn->peers->by_transp_addr, &sa,
-+				   salen);
- 	hlist_nulls_add_head_rcu(&peer->hash_entry_transp_addr, nhead);
+-	dev_v4 = __in_dev_get_rtnl(ovpn->dev);
+-	if (dev_v4) {
+-		/* disable redirects as Linux gets confused by ovpn
+-		 * handling same-LAN routing.
+-		 * This happens because a multipeer interface is used as
+-		 * relay point between hosts in the same subnet, while
+-		 * in a classic LAN this would not be needed because the
+-		 * two hosts would be able to talk directly.
+-		 */
+-		IN_DEV_CONF_SET(dev_v4, SEND_REDIRECTS, false);
+-		IPV4_DEVCONF_ALL(dev_net(ovpn->dev), SEND_REDIRECTS) = false;
+-	}
+-
+ 	/* the peer container is fairly large, therefore we allocate it only in
+ 	 * MP mode
+ 	 */
+@@ -97,9 +83,38 @@ static void ovpn_net_uninit(struct net_device *dev)
+ 	gro_cells_destroy(&ovpn->gro_cells);
  }
  
++static int ovpn_net_open(struct net_device *dev)
++{
++	struct ovpn_priv *ovpn = netdev_priv(dev);
++	struct in_device *dev_v4;
++
++	/* the IPv4 in_device (and thus its config) is recreated whenever the
++	 * interface is moved to a new netns, so redirects must be disabled on
++	 * every bring-up rather than once at creation time, otherwise the
++	 * setting is silently lost after such a move
++	 */
++	if (ovpn->mode == OVPN_MODE_MP) {
++		dev_v4 = __in_dev_get_rtnl(dev);
++		if (dev_v4) {
++			/* disable redirects as Linux gets confused by ovpn
++			 * handling same-LAN routing.
++			 * This happens because a multipeer interface is used as
++			 * relay point between hosts in the same subnet, while
++			 * in a classic LAN this would not be needed because the
++			 * two hosts would be able to talk directly.
++			 */
++			IN_DEV_CONF_SET(dev_v4, SEND_REDIRECTS, false);
++			IPV4_DEVCONF_ALL(dev_net(dev), SEND_REDIRECTS) = false;
++		}
++	}
++
++	return 0;
++}
++
+ static const struct net_device_ops ovpn_netdev_ops = {
+ 	.ndo_init		= ovpn_net_init,
+ 	.ndo_uninit		= ovpn_net_uninit,
++	.ndo_open		= ovpn_net_open,
+ 	.ndo_start_xmit		= ovpn_net_xmit,
+ };
+ 
+@@ -183,6 +198,7 @@ static int ovpn_newlink(struct net_device *dev,
+ 	struct ovpn_priv *ovpn = netdev_priv(dev);
+ 	struct nlattr **data = params->data;
+ 	enum ovpn_mode mode = OVPN_MODE_P2P;
++	int ret;
+ 
+ 	if (data && data[IFLA_OVPN_MODE]) {
+ 		mode = nla_get_u8(data[IFLA_OVPN_MODE]);
+@@ -207,7 +223,11 @@ static int ovpn_newlink(struct net_device *dev,
+ 	else
+ 		netif_carrier_off(dev);
+ 
+-	return register_netdevice(dev);
++	ret = register_netdevice(dev);
++	if (ret < 0)
++		return ret;
++
++	return 0;
+ }
+ 
+ static size_t ovpn_get_size(const struct net_device *dev)
 -- 
 2.53.0
 
