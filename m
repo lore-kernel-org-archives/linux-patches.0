@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5767C42EEDD;
-	Mon, 17 Aug 2026 14:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8564D41D111;
+	Mon, 17 Aug 2026 14:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978666; cv=none; b=ofGr5Oxp5R8J5vtSO8G8CmSxHqHpNeUovLEKd4oKNE/eEd707tfacye3MSl6n2n/JziHwk2uFEoEV8lAi+LeBNmEZhQWg2sW4jNCQtrJXjrSbFk6LvZQfnNSOQdLr6lqk82l/23Zd2d2YG2Hy/JehUakkJG3BIZCO5SH+Ceg/SQ=
+	t=1786978669; cv=none; b=iktJl9Jgsc4s6QLcgkqE2k8Cq2Ly++ss4AtfBqqeCi69HGO+m/yalSsBEAmvXnqfvUq4z1lkVhIO9Tgj3KnHzpWOvVvXkWxYwD00JUhA3CB8YSb1IV7kBw2jr9j8qvE6Vm8j5OrexmLJ+obTLaM0lUHIO9EEL8AlDR3ZKBKb1do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978666; c=relaxed/simple;
-	bh=EQfQqqJteCZ/J6kdzn8Bhfz/43BJkcGCJOgfcC0OT6A=;
+	s=arc-20240116; t=1786978669; c=relaxed/simple;
+	bh=0Wd/c+Crve7yyYLg/iy1/b+m8TKBqo8FE50ZgX/lZCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ANbsvRqzmoLq0iQ4MWVrp5uhyUN4OeGB8Dby+mWS0NMYkx1bPoTo1HRRvr/Zxd5VAw4Oknc8qmZDcKx7QJnuKUsscixDAGXiTQHaVuNfRqVHqNKq5eOL9INAj9RxDbtxh74e66vuz2Mds84T1H+3SVOXBxOY8a12Cj2HfjnznLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mZgOwlcV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qB3qEVCWeTX3gtsnbL4/JYcB30SkNYZ4bjk9xTxAfDOl2tZbVTg21T10NEqCfBxVAyjNW0R20NR8n4xkWKXHuBYfu1jTTPRQWK6gaKpnD9ZApJYScZAoon24yzt6d1Vx/O26BBolkmHTATWNGSyEkT4Z+89qE5ZpXxzVkPkTX50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oeFBOA/c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mZgOwlcV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3551F000E9;
-	Mon, 17 Aug 2026 14:57:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oeFBOA/c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943961F000E9;
+	Mon, 17 Aug 2026 14:57:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978665;
-	bh=Upakjp+85oAsiY897aPBc2ixrOrJBqtT0bVTzIZAWzk=;
+	s=korg; t=1786978668;
+	bh=jCoyAG5EFhJX/ywdt4JlbKKjIYOUhUe0ZuYRV/JSwSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mZgOwlcVEOeVXOJZNUQreQ9Y2D9IcKao5Y3F+nmbiOAJkkqpVhBPmxNC/zy6MZTwe
-	 4X+3pI+6mSIXpgou4tQV/Kkfieo0K3+ZQo+w19gkt0Kkt2r6ze0M1z1k19nbko4/ED
-	 k1Ny63IQsSh/lx9+0vHGO0J8ofYQBe/42c/8FNF4=
+	b=oeFBOA/cl1DxuXAffDPqIoKB4gPZOJwHQf4PSq8rVDoLTQn+dJYaLLViTGnmnDO9c
+	 j67K9SJAfOQdz5ypKZVTRycQ3J1ZidpNGBxzjeLkF+XZ7h1s5Um+845LFjQ+xcEdsg
+	 79Utkhrzr68uBKvB2BHgdGnjoaNVG3sgpJB3lr0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+565b1138cfbe549d4422@syzkaller.appspotmail.com,
+	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
+	Baul Lee <baul.lee@xbow.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 114/156] ALSA: usb: Fix UAF at delayed release of MIDI2 EPs
-Date: Mon, 17 Aug 2026 15:34:08 +0200
-Message-ID: <20260817132539.091426803@linuxfoundation.org>
+Subject: [PATCH 6.6 115/156] ALSA: usx2y: bound the hwdep mmap fault offset
+Date: Mon, 17 Aug 2026 15:34:09 +0200
+Message-ID: <20260817132539.131716109@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -50,53 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit f8a80cfb68613fb7e6452b66447dbc63f435d140 upstream.
+commit 2ca1eea3cd17930daffe9e429a7c89232036ec24 upstream.
 
-The recent fix for UAF in ump_to_endpoint() caused another UAF because
-it tries to dereference the UMP endpoint object, but this might be
-executed at a delayed context where the endpoint has been already
-released.
+snd_us428ctls_vm_fault() turns the faulting page offset into a kernel
+address with no bound of any kind:
 
-Add private_free to clear the associated data for avoiding the further
-dereference for delayed releases.
+	offset = vmf->pgoff << PAGE_SHIFT;
+	vaddr = (char *)(...)->us428ctls_sharedmem + offset;
+	page = virt_to_page(vaddr);
+	get_page(page);
+	vmf->page = page;
 
-Fixes: 4a05b2d1b464 ("ALSA: usb-audio: fix use-after-free in ump_to_endpoint()")
-Reported-by: syzbot+565b1138cfbe549d4422@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=565b1138cfbe549d4422
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260808152009.1947835-1-tiwai@suse.de
+	return 0;
+
+snd_us428ctls_mmap() checks only the length of the mapping, never the
+offset, and us428ctls_sharedmem is a single page from
+alloc_pages_exact().  For a character device file_mmap_size_max()
+returns ULONG_MAX, so the mm layer imposes no ceiling either.  Every page
+offset above zero resolves to a struct page outside the object, and the
+handler installs it into the caller's address space read-write; the vma
+is not marked read-only.
+
+The caller picks the page frame with a single mmap() argument and gets
+read-write access to a page of kernel memory it does not own; an offset
+that lands in an unpopulated vmemmap region oopses instead.
+
+A process that can open the hwdep node of an attached US-X2Y reaches
+this after loading the FPGA image through the same node; no capability
+check is involved.
+
+On 7.2.0-rc5 (arm64), mmap() with a large offset:
+
+  Unable to handle kernel paging request at virtual address fffffdffc45d5ac8
+  pc : snd_us428ctls_vm_fault+0x68/0x140 [snd_usb_usx2y]
+  Call trace:
+   snd_us428ctls_vm_fault+0x68/0x140 [snd_usb_usx2y]
+   __do_fault
+   __handle_mm_fault
+   handle_mm_fault
+   el0_da
+
+Reject any offset outside the shared region.  The pcm hwdep handler in
+usx2yhwdeppcm.c computes its address the same way and needs the same
+bound.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
+Reported-by: Baul Lee <baul.lee@xbow.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260805013445.38283-1-baul.lee@xbow.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/midi2.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/usb/usx2y/usX2Yhwdep.c    |    2 ++
+ sound/usb/usx2y/usx2yhwdeppcm.c |    2 ++
+ 2 files changed, 4 insertions(+)
 
---- a/sound/usb/midi2.c
-+++ b/sound/usb/midi2.c
-@@ -695,6 +695,14 @@ static int parse_midi_2_0_endpoints(stru
- 	return 0;
- }
+--- a/sound/usb/usx2y/usX2Yhwdep.c
++++ b/sound/usb/usx2y/usX2Yhwdep.c
+@@ -29,6 +29,8 @@ static vm_fault_t snd_us428ctls_vm_fault
+ 		   vmf->pgoff);
  
-+static void free_ump_private_data(struct snd_ump_endpoint *ump)
-+{
-+	struct snd_usb_midi2_ump *rmidi = ump->private_data;
-+
-+	if (rmidi)
-+		rmidi->ump = NULL;
-+}
-+
- static void free_all_midi2_umps(struct snd_usb_midi2_interface *umidi)
- {
- 	struct snd_usb_midi2_ump *rmidi;
-@@ -745,6 +753,7 @@ static int create_midi2_ump(struct snd_u
+ 	offset = vmf->pgoff << PAGE_SHIFT;
++	if (offset >= US428_SHAREDMEM_PAGES)
++		return VM_FAULT_SIGBUS;
+ 	vaddr = (char *)((struct usx2ydev *)vmf->vma->vm_private_data)->us428ctls_sharedmem + offset;
+ 	page = virt_to_page(vaddr);
+ 	get_page(page);
+--- a/sound/usb/usx2y/usx2yhwdeppcm.c
++++ b/sound/usb/usx2y/usx2yhwdeppcm.c
+@@ -676,6 +676,8 @@ static vm_fault_t snd_usx2y_hwdep_pcm_vm
+ 	void *vaddr;
  
- 	ump->private_data = rmidi;
- 	ump->ops = &snd_usb_midi_v2_ump_ops;
-+	ump->private_free = free_ump_private_data;
- 
- 	rmidi->eps[STR_IN] = ep_in;
- 	rmidi->eps[STR_OUT] = ep_out;
+ 	offset = vmf->pgoff << PAGE_SHIFT;
++	if (offset >= USX2Y_HWDEP_PCM_PAGES)
++		return VM_FAULT_SIGBUS;
+ 	vaddr = (char *)((struct usx2ydev *)vmf->vma->vm_private_data)->hwdep_pcm_shm + offset;
+ 	vmf->page = virt_to_page(vaddr);
+ 	get_page(vmf->page);
 
 
