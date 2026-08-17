@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F13CB2E762C;
-	Mon, 17 Aug 2026 15:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28784442B06;
+	Mon, 17 Aug 2026 15:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979784; cv=none; b=m8+mYBlVjZOA+GyskIyIvK16MZvxwMFm0TLcua3B4T8bbiLUYIFstym2Fag2AZIFoep8YE5uUymOxP1trAfj4x3hmIjr3c4hOKdEgikO9dNptveylhednBEz63ML9N5DbYCs0yc6hlPaYILieRqGS/YArtbIwa3eYjMBcmowo1Q=
+	t=1786979788; cv=none; b=hDUSQBuEoyTAhu5UkdRoRDXRb6YbpcDPugiCckdPmLdga29jLoBUxVmPyxMx4s0ge0sCyfOBtmAiqMq3Wjo55O3LXWnnU0UqnnQC/ak1HlwkEqgEU6UuTg/fYwiHk2euW7xRdBQgCpVGVNkeQkMCOwfUVwQFnv3ARLb6m+c3qfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979784; c=relaxed/simple;
-	bh=4KQGDkWLR3PjmQ6fKlj/qaewd5k/scCTJYlS/YqUvb0=;
+	s=arc-20240116; t=1786979788; c=relaxed/simple;
+	bh=DNMUZqx4uQ1Qyff9u0ZTgGf602Slhad3LKy5+IecaFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fPxd9cg6d0ITALvVPQmadg4b+iV3rKSjO6ADD9V48+Q2SYiOpVl9HcXO0fwmCvACRPdageZMS7hJxKP9PMWurMZaKdrh37nn99IYq7CF1u4Z352+1LJniqEzP1V1d2EHzlTOJyi8HNLn9OlKnHPXbWZQFZtiTicFYcYLWOFEHSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DAteXOLN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A6Am+vOhRKZEJU0N2hJFN/jiTfk8jTo481XsiNAiWUg8xUmCMKZ2am/bcZ8r2CMiGiFLXPeqDXmEDUrePqFZbXTafRkuwIlfKKapvnCBAf1X9zc5+GZe7s6oRLAjGpBtyY3c7OrtPcTyUukaWDU/CseKxH1LS5j1j+vjR7vv1/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qhRi7wux; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DAteXOLN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51D6A1F00A3D;
-	Mon, 17 Aug 2026 15:16:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qhRi7wux"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E001F000E9;
+	Mon, 17 Aug 2026 15:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979782;
-	bh=67GFxPlZt9bR7setpLBH7vstJ9UQY8W0K3PvFU7TTts=;
+	s=korg; t=1786979785;
+	bh=/UFYe3fkoH+DFJFKv5WaUvcF0ekVqhdoYZx606IYess=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DAteXOLN6B8YUG2vNoEfrx2AaXlyg7ppFWKJkEnzUFe2LcUscm1sSMxm2UegFfkC9
-	 dCQWDtTCDdmSaPQtL3feDoX21q2FFcAe/figEXuA2gbjqupneXbE4IfyKD4XLATs7v
-	 QsFpmkq8uydoVZpY8lcfLXCaF8g5C9K7CnmA3t7U=
+	b=qhRi7wuxgHUN5EPtMmPCMv8oh8jZ2f4p8+sFX4u7l2PpUlsp+k9MAgBrB+0aoNfq+
+	 bPIGwOZpJNBmmLPpjg/nmxqkVLe88Jz5j1IThz1opU3BHyLzlzy5jZiLcRdm7iEuRS
+	 gg413yAuU5ItdxJSHKKsl+aZryUb2/ZPHf9wFhCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Erhard Furtner <erhard_f@mailbox.org>,
+	Ahmad Khalifa <ahmad@khalifa.ws>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 319/609] phy: zynqmp: fix clock error handling in xpsgtr_phy_init()
-Date: Mon, 17 Aug 2026 15:30:15 +0200
-Message-ID: <20260817132554.910097549@linuxfoundation.org>
+Subject: [PATCH 6.1 346/609] hwmon: (nct6775) Fix access to temperature configuration registers
+Date: Mon, 17 Aug 2026 15:30:42 +0200
+Message-ID: <20260817132555.845393557@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,74 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit e4779e2a16d600892aaf743438f6ce8cc4eb3c4c ]
+[ Upstream commit d56e460e19ea8382f813eb489730248ec8d7eb73 ]
 
-Propagate clk_prepare_enable() failures to the caller instead of
-returning success, and disable the reference clock on initialization
-error paths to avoid leaking clock references when phy_exit() is not
-called.
+The number of temperature configuration registers does
+not always match the total number of temperature registers.
+This can result in access errors reported if KASAN is enabled.
 
-Fixes: 25d700833513 ("phy: xilinx: phy-zynqmp: dynamic clock support for power-save")
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Reviewed-by: Michal Simek <michal.simek@amd.com>
-Link: https://patch.msgid.link/20260720153832.1130006-2-radhey.shyam.pandey@amd.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+BUG: KASAN: global-out-of-bounds in nct6775_probe+0x5654/0x6fe9 nct6775_core
+
+Reported-by: Erhard Furtner <erhard_f@mailbox.org>
+Closes: https://lore.kernel.org/linux-hwmon/d51181d1-d26b-42b2-b002-3f5a4037721f@roeck-us.net/
+Fixes: b7f1f7b2523a ("hwmon: (nct6775) Additional TEMP registers for nct6799")
+Cc: Ahmad Khalifa <ahmad@khalifa.ws>
+Tested-by: Ahmad Khalifa <ahmad@khalifa.ws>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: b0e8adb2ccb4 ("hwmon: (nct6775-core) Fix number of temperature registers for NCT6116")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/xilinx/phy-zynqmp.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/hwmon/nct6775-core.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/xilinx/phy-zynqmp.c b/drivers/phy/xilinx/phy-zynqmp.c
-index 61dc831f778dd..517855fea8920 100644
---- a/drivers/phy/xilinx/phy-zynqmp.c
-+++ b/drivers/phy/xilinx/phy-zynqmp.c
-@@ -644,12 +644,13 @@ static int xpsgtr_phy_init(struct phy *phy)
- {
- 	struct xpsgtr_phy *gtr_phy = phy_get_drvdata(phy);
- 	struct xpsgtr_dev *gtr_dev = gtr_phy->dev;
--	int ret = 0;
-+	int ret;
+diff --git a/drivers/hwmon/nct6775-core.c b/drivers/hwmon/nct6775-core.c
+index acb0fbb0eabca..c7b3961e189ce 100644
+--- a/drivers/hwmon/nct6775-core.c
++++ b/drivers/hwmon/nct6775-core.c
+@@ -3506,6 +3506,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 	const u16 *reg_temp_mon, *reg_temp_alternate, *reg_temp_crit;
+ 	const u16 *reg_temp_crit_l = NULL, *reg_temp_crit_h = NULL;
+ 	int num_reg_temp, num_reg_temp_mon, num_reg_tsi_temp;
++	int num_reg_temp_config;
+ 	struct device *hwmon_dev;
+ 	struct sensor_template_group tsi_temp_tg;
  
- 	mutex_lock(&gtr_dev->gtr_mutex);
+@@ -3588,6 +3589,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 		reg_temp_over = NCT6106_REG_TEMP_OVER;
+ 		reg_temp_hyst = NCT6106_REG_TEMP_HYST;
+ 		reg_temp_config = NCT6106_REG_TEMP_CONFIG;
++		num_reg_temp_config = ARRAY_SIZE(NCT6106_REG_TEMP_CONFIG);
+ 		reg_temp_alternate = NCT6106_REG_TEMP_ALTERNATE;
+ 		reg_temp_crit = NCT6106_REG_TEMP_CRIT;
+ 		reg_temp_crit_l = NCT6106_REG_TEMP_CRIT_L;
+@@ -3663,6 +3665,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 		reg_temp_over = NCT6106_REG_TEMP_OVER;
+ 		reg_temp_hyst = NCT6106_REG_TEMP_HYST;
+ 		reg_temp_config = NCT6106_REG_TEMP_CONFIG;
++		num_reg_temp_config = ARRAY_SIZE(NCT6106_REG_TEMP_CONFIG);
+ 		reg_temp_alternate = NCT6106_REG_TEMP_ALTERNATE;
+ 		reg_temp_crit = NCT6106_REG_TEMP_CRIT;
+ 		reg_temp_crit_l = NCT6106_REG_TEMP_CRIT_L;
+@@ -3740,6 +3743,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 		reg_temp_over = NCT6775_REG_TEMP_OVER;
+ 		reg_temp_hyst = NCT6775_REG_TEMP_HYST;
+ 		reg_temp_config = NCT6775_REG_TEMP_CONFIG;
++		num_reg_temp_config = ARRAY_SIZE(NCT6775_REG_TEMP_CONFIG);
+ 		reg_temp_alternate = NCT6775_REG_TEMP_ALTERNATE;
+ 		reg_temp_crit = NCT6775_REG_TEMP_CRIT;
  
- 	/* Configure and enable the clock when peripheral phy_init call */
--	if (clk_prepare_enable(gtr_dev->clk[gtr_phy->refclk]))
-+	ret = clk_prepare_enable(gtr_dev->clk[gtr_phy->refclk]);
-+	if (ret)
- 		goto out;
+@@ -3815,6 +3819,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 		reg_temp_over = NCT6775_REG_TEMP_OVER;
+ 		reg_temp_hyst = NCT6775_REG_TEMP_HYST;
+ 		reg_temp_config = NCT6776_REG_TEMP_CONFIG;
++		num_reg_temp_config = ARRAY_SIZE(NCT6776_REG_TEMP_CONFIG);
+ 		reg_temp_alternate = NCT6776_REG_TEMP_ALTERNATE;
+ 		reg_temp_crit = NCT6776_REG_TEMP_CRIT;
  
- 	/* Skip initialization if not required. */
-@@ -659,7 +660,7 @@ static int xpsgtr_phy_init(struct phy *phy)
- 	if (gtr_dev->tx_term_fix) {
- 		ret = xpsgtr_phy_tx_term_fix(gtr_phy);
- 		if (ret < 0)
--			goto out;
-+			goto out_disable_clk;
+@@ -3894,6 +3899,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 		reg_temp_over = NCT6779_REG_TEMP_OVER;
+ 		reg_temp_hyst = NCT6779_REG_TEMP_HYST;
+ 		reg_temp_config = NCT6779_REG_TEMP_CONFIG;
++		num_reg_temp_config = ARRAY_SIZE(NCT6779_REG_TEMP_CONFIG);
+ 		reg_temp_alternate = NCT6779_REG_TEMP_ALTERNATE;
+ 		reg_temp_crit = NCT6779_REG_TEMP_CRIT;
  
- 		gtr_dev->tx_term_fix = false;
- 	}
-@@ -673,7 +674,7 @@ static int xpsgtr_phy_init(struct phy *phy)
- 	 */
- 	ret = xpsgtr_configure_pll(gtr_phy);
- 	if (ret)
--		goto out;
-+		goto out_disable_clk;
+@@ -4028,6 +4034,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 		reg_temp_over = NCT6779_REG_TEMP_OVER;
+ 		reg_temp_hyst = NCT6779_REG_TEMP_HYST;
+ 		reg_temp_config = NCT6779_REG_TEMP_CONFIG;
++		num_reg_temp_config = ARRAY_SIZE(NCT6779_REG_TEMP_CONFIG);
+ 		reg_temp_alternate = NCT6779_REG_TEMP_ALTERNATE;
+ 		reg_temp_crit = NCT6779_REG_TEMP_CRIT;
  
- 	xpsgtr_lane_set_protocol(gtr_phy);
+@@ -4117,6 +4124,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 		reg_temp_over = NCT6798_REG_TEMP_OVER;
+ 		reg_temp_hyst = NCT6798_REG_TEMP_HYST;
+ 		reg_temp_config = NCT6779_REG_TEMP_CONFIG;
++		num_reg_temp_config = ARRAY_SIZE(NCT6779_REG_TEMP_CONFIG);
+ 		reg_temp_alternate = NCT6798_REG_TEMP_ALTERNATE;
+ 		reg_temp_crit = NCT6798_REG_TEMP_CRIT;
  
-@@ -691,6 +692,10 @@ static int xpsgtr_phy_init(struct phy *phy)
- 		break;
- 	}
- 
-+	goto out;
-+
-+out_disable_clk:
-+	clk_disable_unprepare(gtr_dev->clk[gtr_phy->refclk]);
- out:
- 	mutex_unlock(&gtr_dev->gtr_mutex);
- 	return ret;
+@@ -4198,7 +4206,8 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 				  = reg_temp_crit[src - 1];
+ 			if (reg_temp_crit_l && reg_temp_crit_l[i])
+ 				data->reg_temp[4][src - 1] = reg_temp_crit_l[i];
+-			data->reg_temp_config[src - 1] = reg_temp_config[i];
++			if (i < num_reg_temp_config)
++				data->reg_temp_config[src - 1] = reg_temp_config[i];
+ 			data->temp_src[src - 1] = src;
+ 			continue;
+ 		}
+@@ -4211,7 +4220,8 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 		data->reg_temp[0][s] = reg_temp[i];
+ 		data->reg_temp[1][s] = reg_temp_over[i];
+ 		data->reg_temp[2][s] = reg_temp_hyst[i];
+-		data->reg_temp_config[s] = reg_temp_config[i];
++		if (i < num_reg_temp_config)
++			data->reg_temp_config[s] = reg_temp_config[i];
+ 		if (reg_temp_crit_h && reg_temp_crit_h[i])
+ 			data->reg_temp[3][s] = reg_temp_crit_h[i];
+ 		else if (reg_temp_crit[src - 1])
 -- 
 2.53.0
 
