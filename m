@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09B93B42DC;
-	Mon, 17 Aug 2026 14:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FD73E025C;
+	Mon, 17 Aug 2026 14:24:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976658; cv=none; b=AEUYRAzcdygVSu2SPy68jWUb/g/9tpOwpmH5s4K316i6TxiiaUpfVObaWgg9HwW7JrOcq85AnqF5ImshdFuL4ZGDW2eKgt+LjxR83Gyq6mJp6uexk9Ek3xT64UN1wE9U3Euoxcc2LQxKueWQ0xVxTBErcEUd4dPn51q3zqCJZX8=
+	t=1786976661; cv=none; b=O1b6555ww8D8nfXfXzmRBuFpLnA49wJGS4AB5cwx9wsydVUo0qMHDG1qxF/ar64FPyKk2Zp+fhWirHFaUMa6b87R2NMp5DzsHv13IUQSDKA0kMlf+7pI3rRTSRGiJu0WtiMlrbE7yuYyCroyI+EF4bD0/wMxXr8fUkzijp3VeXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976658; c=relaxed/simple;
-	bh=feyvgL9hFytniQg42z6OCQbyqxLjvs175m55YVm87qk=;
+	s=arc-20240116; t=1786976661; c=relaxed/simple;
+	bh=T08QUI/LxczwOnzBg+s96GdDSHG42y0sSfWVHalzNLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Itw4LyiAVprOqXRZOHf8yaLFLBignFBy4TpuunzZWUT2XSbLiZnSe5xGeigbzOEiG+tOYMA+xdD/31ptDWhOed9aH1uERnrxO+IAG1GG3AVEavluwhZxMdk3vwXTPkxZ8sjN3Gsl5l+VW8Goc5cACeFSyYd7jiN6SSFHHx/uNL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F0xc0Tcg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tx0GYMJSIxEqkCj3+DsUTqnRfTSyT7cM3D4ZhUWh1N3CGZnSu0Rcfx4EKIAcq0VIzKGCntJQVDPe9qsH2Mn/67jH7sI0031GLqAp4eIeZWXL2H6U/DsPgMMJgTHqPD0B/MD/SJlKXeVNQKAwkBjwPCzBT5NrfKRZgRVQxNvcn+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3I7y5Se; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F0xc0Tcg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48B41F00A3D;
-	Mon, 17 Aug 2026 14:24:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3I7y5Se"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A02C21F00A3A;
+	Mon, 17 Aug 2026 14:24:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976654;
-	bh=4YZwBuZa+rrfuSVYwCfezz9cBr7vpIFpFX5De6zp7Fw=;
+	s=korg; t=1786976657;
+	bh=tolt50Q+bnAmCScaz8janas2E4UFdEDkCX21U/nXuv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F0xc0Tcgi7veBT04xFxaXcwLaLkfy4ZEQ6r8sSi/o8xdSz3YN+K/RnsBx91Cqe5Ue
-	 ak5boqFI+z7EY/WbozZN+IK6ZczoOMFX5unJ/BSlrNkvnLldIZ1ZYQh2nJe8vzQAsF
-	 7uN/EQkj96yq9CY5U1tEXV68WCxbws61NrAX6UDc=
+	b=s3I7y5Se+qFSRBMln+Ih6p7ti7BD494N8RdW3uHrEf8hO//lPl7aXViX3tTqIa0zJ
+	 CxvYkEhzoCZ/1+oSaBGfduG2ZA4n8pz9vk1AF0nxf7UT/xDrcVadnviVW9yFLdwRNF
+	 QCvOrEvFtDKKirMANTjKqeF6INRznHAhESmiih0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zdi-disclosures@trendmicro.com,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Davide Caratti <dcaratti@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/456] net/sched: act_tunnel_key: Defer dst_release to RCU callback
-Date: Mon, 17 Aug 2026 15:27:26 +0200
-Message-ID: <20260817132542.235362267@linuxfoundation.org>
+Subject: [PATCH 5.15 020/456] RDMA/siw: publish QP after initialization
+Date: Mon, 17 Aug 2026 15:26:50 +0200
+Message-ID: <20260817132540.726169616@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -54,174 +52,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit f1f5c8a3955f8fda3f84ed883ac8daa1847e724c ]
+[ Upstream commit bb27fcc67c429d97f785c92c35a6c5adebb05d7f ]
 
-Fix a race-condition use-after-free in tunnel_key_release_params().
+siw_create_qp() currently calls siw_qp_add() before the queues, CQ
+pointers, state, completion, and device list entry are ready. A QPN
+lookup can therefore reach a QP that is still being constructed.
 
-The function releases the metadata_dst of the old params synchronously
-via dst_release() while deferring the params struct free with
-kfree_rcu(). A concurrent tunnel_key_act() reader on the datapath may
-still hold the old params pointer (under rcu_read_lock_bh) and proceed
-to call dst_clone(&params->tcft_enc_metadata->dst) after the writer's
-dst_release has already pushed the dst's rcuref to RCUREF_DEAD.
+Move siw_qp_add() to the end of siw_create_qp(), after QP
+initialization and before adding the QP to the siw device list.
 
-zdi-disclosures@trendmicro.com produced a poc which i (and Victor) verified
-that KASAN reports:
-
-==================================================================
-BUG: KASAN: slab-use-after-free in instrument_atomic_read_write include/linux/instrumented.h:112
-BUG: KASAN: slab-use-after-free in atomic_sub_return_release include/linux/atomic/atomic-instrumented.h:326
-BUG: KASAN: slab-use-after-free in __rcuref_put include/linux/rcuref.h:109
-BUG: KASAN: slab-use-after-free in rcuref_put include/linux/rcuref.h:173
-BUG: KASAN: slab-use-after-free in dst_release+0x5b/0x370 net/core/dst.c:168
-Write of size 4 at addr ffff88806158de40 by task poc/9388
-
-CPU: 0 UID: 0 PID: 9388 Comm: poc Tainted: G        W           7.1.0-rc7 #7 PREEMPT(lazy)
-Tainted: [W]=WARN
-Hardware name: QEMU Ubuntu 25.10 PC v2 (i440FX + PIIX, + 10.1 machine, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94
- dump_stack_lvl+0x100/0x190 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378
- print_report+0x139/0x4ad mm/kasan/report.c:482
- kasan_report+0xe4/0x1d0 mm/kasan/report.c:595
- check_region_inline mm/kasan/generic.c:186
- kasan_check_range+0x125/0x200 mm/kasan/generic.c:200
- instrument_atomic_read_write include/linux/instrumented.h:112
- atomic_sub_return_release include/linux/atomic/atomic-instrumented.h:326
- __rcuref_put include/linux/rcuref.h:109
- rcuref_put include/linux/rcuref.h:173
- dst_release+0x5b/0x370 net/core/dst.c:168
- refdst_drop include/net/dst.h:272
- skb_dst_drop include/net/dst.h:284
- skb_release_head_state+0x293/0x400 net/core/skbuff.c:1163
- skb_release_all net/core/skbuff.c:1187
-[..]
-Allocated by task 9391:
- kasan_save_stack+0x30/0x50 mm/kasan/common.c:57
- kasan_save_track+0x14/0x30 mm/kasan/common.c:78
- poison_kmalloc_redzone mm/kasan/common.c:398
- __kasan_kmalloc+0x9a/0xb0 mm/kasan/common.c:415
- kasan_kmalloc include/linux/kasan.h:263
- __do_kmalloc_node mm/slub.c:5296
- __kmalloc_noprof+0x2f1/0x830 mm/slub.c:5308
- kmalloc_noprof include/linux/slab.h:954
- kzalloc_noprof include/linux/slab.h:1188
- offload_action_alloc+0x2f/0x130 net/core/flow_offload.c:35
- tcf_action_offload_add_ex+0x1ba/0x880 net/sched/act_api.c:258
- tcf_action_offload_add net/sched/act_api.c:293
- tcf_action_init+0x66e/0xa20 net/sched/act_api.c:1547
- tcf_action_add+0xf6/0x5d0 net/sched/act_api.c:2101
-[..]
-Freed by task 9391:
- kasan_save_stack+0x30/0x50 mm/kasan/common.c:57
- kasan_save_track+0x14/0x30 mm/kasan/common.c:78
- kasan_save_free_info+0x3b/0x70 mm/kasan/generic.c:584
- poison_slab_object mm/kasan/common.c:253
- __kasan_slab_free+0x6b/0x90 mm/kasan/common.c:285
- kasan_slab_free include/linux/kasan.h:235
- slab_free_hook mm/slub.c:2689
- slab_free mm/slub.c:6251
- kfree+0x21f/0x6b0 mm/slub.c:6566
- tcf_action_offload_add_ex+0x4ad/0x880 net/sched/act_api.c:284
- tcf_action_offload_add net/sched/act_api.c:293
- tcf_action_init+0x66e/0xa20 net/sched/act_api.c:1547
- tcf_action_add+0xf6/0x5d0 net/sched/act_api.c:2101
-
-The buggy address belongs to the object at ffff88806158de00
- which belongs to the cache kmalloc-256 of size 256
-The buggy address is located 64 bytes inside of
- freed 256-byte region [ffff88806158de00, ffff88806158df00)
-
-The buggy address belongs to the physical page:
-page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff88806158d600 pfn:0x6158c
-head: order:1 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-flags: 0x4fff00000000240(workingset|head|node=1|zone=1|lastcpupid=0x7ff)
-page_type: f5(slab)
-raw: 04fff00000000240 ffff88801c841b40 ffffea0001856290 ffffea0001856190
-raw: ffff88806158d600 0000000800100009 00000000f5000000 0000000000000000
-head: 04fff00000000240 ffff88801c841b40 ffffea0001856290 ffffea0001856190
-head: ffff88806158d600 0000000800100009 00000000f5000000 0000000000000000
-head: 04fff00000000001 ffffffffffffff81 00000000ffffffff 00000000ffffffff
-head: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000002
-page dumped because: kasan: bad access detected
-page_owner tracks the page as allocated
-page last allocated via order 1, migratetype Unmovable, gfp_mask 0xd2820(GFP_ATOMIC|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC), pid 9391, tgid 9378 (poc), ts 123227323196, free_ts 0
- set_page_owner include/linux/page_owner.h:32
- post_alloc_hook+0xfe/0x140 mm/page_alloc.c:1853
- prep_new_page mm/page_alloc.c:1861
- get_page_from_freelist+0x110c/0x2fc0 mm/page_alloc.c:3941
- __alloc_frozen_pages_noprof+0x263/0x2bc0 mm/page_alloc.c:5221
- alloc_slab_page mm/slub.c:3278
- allocate_slab mm/slub.c:3467
- new_slab+0xa6/0x690 mm/slub.c:3525
- refill_objects+0x271/0x420 mm/slub.c:7272
- refill_sheaf mm/slub.c:2816
- __pcs_replace_empty_main+0x373/0x630 mm/slub.c:4652
- alloc_from_pcs mm/slub.c:4750
- slab_alloc_node mm/slub.c:4884
- __do_kmalloc_node mm/slub.c:5295
- __kmalloc_noprof+0x66d/0x830 mm/slub.c:5308
- kmalloc_noprof include/linux/slab.h:954
- metadata_dst_alloc+0x26/0x90 net/core/dst.c:298
- tun_rx_dst include/net/dst_metadata.h:144
- __ip_tun_set_dst include/net/dst_metadata.h:208
- tunnel_key_init+0xb01/0x1b90 net/sched/act_tunnel_key.c:451
- tcf_action_init_1+0x46b/0x6c0 net/sched/act_api.c:1428
- tcf_action_init+0x448/0xa20 net/sched/act_api.c:1503
- tcf_action_add+0xf6/0x5d0 net/sched/act_api.c:2101
-[..]
-==================================================================
-
-Fix by moving dst_release() into a custom RCU callback that runs
-after the grace period, matching the lifetime of the containing
-params struct.  Readers in the datapath therefore always find a live
-rcuref when calling dst_clone().
-
-Fixes: 9174c3df1cd18 ("net/sched: act_tunnel_key: fix memory leak in case of action replace")
-Reported-by: zdi-disclosures@trendmicro.com
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Davide Caratti <dcaratti@redhat.com>
-Link: https://patch.msgid.link/20260711150537.7946-1-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f29dd55b0236 ("rdma/siw: queue pair methods")
+Link: https://patch.msgid.link/r/20260630060040.966461-1-ruoyuw560@gmail.com
+Suggested-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_tunnel_key.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/infiniband/sw/siw/siw_verbs.c | 44 +++++++++++++++------------
+ 1 file changed, 24 insertions(+), 20 deletions(-)
 
-diff --git a/net/sched/act_tunnel_key.c b/net/sched/act_tunnel_key.c
-index c79f23367dfb3e..0be95240b939e3 100644
---- a/net/sched/act_tunnel_key.c
-+++ b/net/sched/act_tunnel_key.c
-@@ -342,14 +342,20 @@ static const struct nla_policy tunnel_key_policy[TCA_TUNNEL_KEY_MAX + 1] = {
- 	[TCA_TUNNEL_KEY_ENC_TTL]      = { .type = NLA_U8 },
- };
+diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
+index 55a1357a636dcd..817970e3943132 100644
+--- a/drivers/infiniband/sw/siw/siw_verbs.c
++++ b/drivers/infiniband/sw/siw/siw_verbs.c
+@@ -300,6 +300,7 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	struct siw_ucontext *uctx =
+ 		rdma_udata_to_drv_context(udata, struct siw_ucontext,
+ 					  base_ucontext);
++	struct siw_uresp_create_qp uresp = {};
+ 	unsigned long flags;
+ 	int num_sqe, num_rqe, rv = 0;
+ 	size_t length;
+@@ -353,11 +354,6 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	spin_lock_init(&qp->rq_lock);
+ 	spin_lock_init(&qp->orq_lock);
  
--static void tunnel_key_release_params(struct tcf_tunnel_key_params *p)
-+static void tunnel_key_release_params_rcu(struct rcu_head *head)
- {
--	if (!p)
--		return;
-+	struct tcf_tunnel_key_params *p = container_of(head, typeof(*p), rcu);
+-	rv = siw_qp_add(sdev, qp);
+-	if (rv)
+-		goto err_atomic;
+-
+-
+ 	/* All queue indices are derived from modulo operations
+ 	 * on a free running 'get' (consumer) and 'put' (producer)
+ 	 * unsigned counter. Having queue sizes at power of two
+@@ -375,14 +371,14 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 
+ 	if (qp->sendq == NULL) {
+ 		rv = -ENOMEM;
+-		goto err_out_xa;
++		goto err_out;
+ 	}
+ 	if (attrs->sq_sig_type != IB_SIGNAL_REQ_WR) {
+ 		if (attrs->sq_sig_type == IB_SIGNAL_ALL_WR)
+ 			qp->attrs.flags |= SIW_SIGNAL_ALL_WR;
+ 		else {
+ 			rv = -EINVAL;
+-			goto err_out_xa;
++			goto err_out;
+ 		}
+ 	}
+ 	qp->pd = pd;
+@@ -408,7 +404,7 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 
+ 		if (qp->recvq == NULL) {
+ 			rv = -ENOMEM;
+-			goto err_out_xa;
++			goto err_out;
+ 		}
+ 		qp->attrs.rq_size = num_rqe;
+ 	}
+@@ -423,11 +419,8 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	qp->attrs.state = SIW_QP_STATE_IDLE;
+ 
+ 	if (udata) {
+-		struct siw_uresp_create_qp uresp = {};
+-
+ 		uresp.num_sqe = num_sqe;
+ 		uresp.num_rqe = num_rqe;
+-		uresp.qp_id = qp_id(qp);
+ 
+ 		if (qp->sendq) {
+ 			length = num_sqe * sizeof(struct siw_sqe);
+@@ -436,7 +429,7 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 						      length, &uresp.sq_key);
+ 			if (!qp->sq_entry) {
+ 				rv = -ENOMEM;
+-				goto err_out_xa;
++				goto err_out;
+ 			}
+ 		}
+ 
+@@ -448,9 +441,23 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 			if (!qp->rq_entry) {
+ 				uresp.sq_key = SIW_INVAL_UOBJ_KEY;
+ 				rv = -ENOMEM;
+-				goto err_out_xa;
++				goto err_out;
+ 			}
+ 		}
++	}
++	qp->tx_cpu = siw_get_tx_cpu(sdev);
++	if (qp->tx_cpu < 0) {
++		rv = -EINVAL;
++		goto err_out;
++	}
++	init_completion(&qp->qp_free);
 +
- 	if (p->tcft_action == TCA_TUNNEL_KEY_ACT_SET)
- 		dst_release(&p->tcft_enc_metadata->dst);
-+	kfree(p);
-+}
++	rv = siw_qp_add(sdev, qp);
++	if (rv)
++		goto err_out_tx;
++
++	if (udata) {
++		uresp.qp_id = qp_id(qp);
  
--	kfree_rcu(p, rcu);
-+static void tunnel_key_release_params(struct tcf_tunnel_key_params *p)
-+{
-+	if (!p)
-+		return;
-+	call_rcu(&p->rcu, tunnel_key_release_params_rcu);
- }
+ 		if (udata->outlen < sizeof(uresp)) {
+ 			rv = -EINVAL;
+@@ -460,22 +467,19 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 		if (rv)
+ 			goto err_out_xa;
+ 	}
+-	qp->tx_cpu = siw_get_tx_cpu(sdev);
+-	if (qp->tx_cpu < 0) {
+-		rv = -EINVAL;
+-		goto err_out_xa;
+-	}
++
+ 	INIT_LIST_HEAD(&qp->devq);
+ 	spin_lock_irqsave(&sdev->lock, flags);
+ 	list_add_tail(&qp->devq, &sdev->qp_list);
+ 	spin_unlock_irqrestore(&sdev->lock, flags);
  
- static int tunnel_key_init(struct net *net, struct nlattr *nla,
+-	init_completion(&qp->qp_free);
+-
+ 	return 0;
+ 
+ err_out_xa:
+ 	xa_erase(&sdev->qp_xa, qp_id(qp));
++err_out_tx:
++	siw_put_tx_cpu(qp->tx_cpu);
++err_out:
+ 	if (uctx) {
+ 		rdma_user_mmap_entry_remove(qp->sq_entry);
+ 		rdma_user_mmap_entry_remove(qp->rq_entry);
 -- 
 2.53.0
 
