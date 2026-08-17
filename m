@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870C7442B06;
-	Mon, 17 Aug 2026 15:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F13CB2E762C;
+	Mon, 17 Aug 2026 15:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979784; cv=none; b=dj17s8MB6+49DkiK3FBH6FgraMjh8sDXU7Cenn0bXLlmyonnEwGZh3lDv1tdajhrXMjuUuCOcWs7UhsZ+Q6+NTzuTO7/dMNxGJ6ZRtdRm+mekZHxs4t64qaBHsxZyu4/TVfy6/uYizw5OV/7aHw/OfWHKcK96/5DyeZZlWm58ag=
+	t=1786979784; cv=none; b=m8+mYBlVjZOA+GyskIyIvK16MZvxwMFm0TLcua3B4T8bbiLUYIFstym2Fag2AZIFoep8YE5uUymOxP1trAfj4x3hmIjr3c4hOKdEgikO9dNptveylhednBEz63ML9N5DbYCs0yc6hlPaYILieRqGS/YArtbIwa3eYjMBcmowo1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1786979784; c=relaxed/simple;
-	bh=2FDSuNNdY2RwC+8aWF2ZZTmnAA5s6Elm3Pq/QfIgWUc=;
+	bh=4KQGDkWLR3PjmQ6fKlj/qaewd5k/scCTJYlS/YqUvb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=as3a+DT9fEeFkTRvvN02/Gp5VdLsLM4AgMPLqTc/etF5E4UvaTQHchsgUS0PcKKrlBPSlB7ovmAKOUyc+eCW5N40YfyowIGi0ecBUOr02+TO2cqnvoJjk9WDbAQ0J+RdzCrO8CdqZnnwLAyVl3VEzqFVYhK1JvR4BaoayIeBWRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLtExVaS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fPxd9cg6d0ITALvVPQmadg4b+iV3rKSjO6ADD9V48+Q2SYiOpVl9HcXO0fwmCvACRPdageZMS7hJxKP9PMWurMZaKdrh37nn99IYq7CF1u4Z352+1LJniqEzP1V1d2EHzlTOJyi8HNLn9OlKnHPXbWZQFZtiTicFYcYLWOFEHSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DAteXOLN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLtExVaS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77B6E1F000E9;
-	Mon, 17 Aug 2026 15:16:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DAteXOLN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51D6A1F00A3D;
+	Mon, 17 Aug 2026 15:16:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979780;
-	bh=u+pXrmLcuaOdiDiPyNB6/ZX7Kh/PHLMJB86ZaQsTzTU=;
+	s=korg; t=1786979782;
+	bh=67GFxPlZt9bR7setpLBH7vstJ9UQY8W0K3PvFU7TTts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TLtExVaS6jy/afdDtl9fjX2GvN2lgs5JZ436EmvWrOiJyUL4/BIJ8fCP3kyErX8ca
-	 PinmHyzTkXG1OP77AujxU78DW1B66Vq790aluDNr/LVv4EBgFQtd9S+CTB2XcBsHTd
-	 Hkz592WxVsbOOMVxfu/Ywk0Jh7miFLQHN6TfmQWY=
+	b=DAteXOLN6B8YUG2vNoEfrx2AaXlyg7ppFWKJkEnzUFe2LcUscm1sSMxm2UegFfkC9
+	 dCQWDtTCDdmSaPQtL3feDoX21q2FFcAe/figEXuA2gbjqupneXbE4IfyKD4XLATs7v
+	 QsFpmkq8uydoVZpY8lcfLXCaF8g5C9K7CnmA3t7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmad Khalifa <ahmad@khalifa.ws>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 345/609] hwmon: (nct6775) Additional TEMP registers for nct6799
-Date: Mon, 17 Aug 2026 15:30:41 +0200
-Message-ID: <20260817132555.809124342@linuxfoundation.org>
+Subject: [PATCH 6.1 319/609] phy: zynqmp: fix clock error handling in xpsgtr_phy_init()
+Date: Mon, 17 Aug 2026 15:30:15 +0200
+Message-ID: <20260817132554.910097549@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,274 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmad Khalifa <ahmad@khalifa.ws>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-[ Upstream commit b7f1f7b2523a6a4382f12fe953380b847b80e09d ]
+[ Upstream commit e4779e2a16d600892aaf743438f6ce8cc4eb3c4c ]
 
-Additional TEMP registers for nct6798d, nct6799d-r and nct6796d-s
-This allows the max/max_hyst/crit attributes to be shown/stored
+Propagate clk_prepare_enable() failures to the caller instead of
+returning success, and disable the reference clock on initialization
+error paths to avoid leaking clock references when phy_exit() is not
+called.
 
-* Increase NUM_TEMP from 10 to 12
-* Separate TEMP/MON_TEMP/OVER/HYST/CRIT registers
-* Rename "PECI Calibration" to include "TSI" too
-* Update ALARM/BEEP bits for temps for 6799
-* For 6799, keep temp_fixed_num at 6, but increase
-  num_temp_alarms/num_temp_beeps to 7/8
-
-Tested with NCT6799D-R showing additional sysfs attributes:
-* temp3-temp8: max/max_hyst/beep/alarm
-* temp3-temp6: crit/offset
-
-Signed-off-by: Ahmad Khalifa <ahmad@khalifa.ws>
-Link: https://lore.kernel.org/r/20230802185820.3642399-1-ahmad@khalifa.ws
-[groeck: Addressed cosmetic checkpatch complaints]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: b0e8adb2ccb4 ("hwmon: (nct6775-core) Fix number of temperature registers for NCT6116")
+Fixes: 25d700833513 ("phy: xilinx: phy-zynqmp: dynamic clock support for power-save")
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Reviewed-by: Michal Simek <michal.simek@amd.com>
+Link: https://patch.msgid.link/20260720153832.1130006-2-radhey.shyam.pandey@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nct6775-core.c | 150 ++++++++++++++++++++++++++++-------
- drivers/hwmon/nct6775.h      |   2 +-
- 2 files changed, 121 insertions(+), 31 deletions(-)
+ drivers/phy/xilinx/phy-zynqmp.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/nct6775-core.c b/drivers/hwmon/nct6775-core.c
-index c2deff486ef3c..acb0fbb0eabca 100644
---- a/drivers/hwmon/nct6775-core.c
-+++ b/drivers/hwmon/nct6775-core.c
-@@ -616,6 +616,28 @@ static const char *const nct6796_temp_label[] = {
+diff --git a/drivers/phy/xilinx/phy-zynqmp.c b/drivers/phy/xilinx/phy-zynqmp.c
+index 61dc831f778dd..517855fea8920 100644
+--- a/drivers/phy/xilinx/phy-zynqmp.c
++++ b/drivers/phy/xilinx/phy-zynqmp.c
+@@ -644,12 +644,13 @@ static int xpsgtr_phy_init(struct phy *phy)
+ {
+ 	struct xpsgtr_phy *gtr_phy = phy_get_drvdata(phy);
+ 	struct xpsgtr_dev *gtr_dev = gtr_phy->dev;
+-	int ret = 0;
++	int ret;
  
- static const u16 NCT6796_REG_TSI_TEMP[] = { 0x409, 0x40b };
+ 	mutex_lock(&gtr_dev->gtr_mutex);
  
-+static const u16 NCT6798_REG_TEMP[] = {
-+	0x27, 0x150, 0x670, 0x672, 0x674, 0x676, 0x678, 0x67a};
-+
-+static const u16 NCT6798_REG_TEMP_SOURCE[] = {
-+	0x621, 0x622, 0xc26, 0xc27, 0xc28, 0xc29, 0xc2a, 0xc2b };
-+
-+static const u16 NCT6798_REG_TEMP_MON[] = {
-+	0x73, 0x75, 0x77, 0x79, 0x7b, 0x7d, 0x4a0 };
-+static const u16 NCT6798_REG_TEMP_OVER[] = {
-+	0x39, 0x155, 0xc1a, 0xc1b, 0xc1c, 0xc1d, 0xc1e, 0xc1f };
-+static const u16 NCT6798_REG_TEMP_HYST[] = {
-+	0x3a, 0x153, 0xc20, 0xc21, 0xc22, 0xc23, 0xc24, 0xc25 };
-+
-+static const u16 NCT6798_REG_TEMP_CRIT[32] = {
-+	0x135, 0x235, 0x335, 0x835, 0x935, 0xa35, 0xb35, 0 };
-+
-+static const u16 NCT6798_REG_TEMP_ALTERNATE[32] = {
-+	0x490, 0x491, 0x492, 0x493, 0x494, 0x495, 0x496, 0,
-+	0, 0, 0, 0, 0x4a2, 0, 0, 0,
-+	0, 0x400, 0x401, 0x402, 0x404, 0x405, 0x406, 0x407,
-+	0x408, 0x419, 0x41a, 0x4f4, 0x4f5 };
-+
- static const char *const nct6798_temp_label[] = {
- 	"",
- 	"SYSTIN",
-@@ -654,11 +676,14 @@ static const char *const nct6798_temp_label[] = {
- #define NCT6798_TEMP_MASK	0xbfff0ffe
- #define NCT6798_VIRT_TEMP_MASK	0x80000c00
+ 	/* Configure and enable the clock when peripheral phy_init call */
+-	if (clk_prepare_enable(gtr_dev->clk[gtr_phy->refclk]))
++	ret = clk_prepare_enable(gtr_dev->clk[gtr_phy->refclk]);
++	if (ret)
+ 		goto out;
  
-+static const u16 NCT6799_REG_ALARM[NUM_REG_ALARM] = {
-+	0x459, 0x45A, 0x45B, 0x568, 0x45D, 0xc01 };
-+
- static const s8 NCT6799_ALARM_BITS[NUM_ALARM_BITS] = {
- 	 0,  1,  2,  3,  8, -1, 20, 16, 17, 24, 25, 26,	  /* in0-in11     */
- 	27, 28, 29, 30, 31, -1, -1, -1, -1, -1, -1, -1,	  /* in12-in23    */
- 	 6,  7, 11, 10, 23, 33, -1, -1, -1, -1, -1, -1,	  /* fan1-fan12   */
--	 4,  5, 13, -1, -1, -1, -1, -1, -1, -1, -1, -1,	  /* temp1-temp12 */
-+	 4,  5, 40, 41, 42, 43, 44, -1, -1, -1, -1, -1,	  /* temp1-temp12 */
- 	12,  9,						  /* intr0-intr1  */
- };
+ 	/* Skip initialization if not required. */
+@@ -659,7 +660,7 @@ static int xpsgtr_phy_init(struct phy *phy)
+ 	if (gtr_dev->tx_term_fix) {
+ 		ret = xpsgtr_phy_tx_term_fix(gtr_phy);
+ 		if (ret < 0)
+-			goto out;
++			goto out_disable_clk;
  
-@@ -666,10 +691,11 @@ static const s8 NCT6799_BEEP_BITS[NUM_BEEP_BITS] = {
- 	 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11,	  /* in0-in11     */
- 	12, 13, 14, 15, 34, 35, -1, -1, -1, -1, -1, -1,	  /* in12-in23    */
- 	25, 26, 27, 28, 29, -1, -1, -1, -1, -1, -1, -1,	  /* fan1-fan12   */
--	16, 17, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,	  /* temp1-temp12 */
-+	16, 17, 18, 19, 20, 21, 22, 23, -1, -1, -1, -1,	  /* temp1-temp12 */
- 	30, 31, 24					  /* intr0-intr1, beep_en */
- };
+ 		gtr_dev->tx_term_fix = false;
+ 	}
+@@ -673,7 +674,7 @@ static int xpsgtr_phy_init(struct phy *phy)
+ 	 */
+ 	ret = xpsgtr_configure_pll(gtr_phy);
+ 	if (ret)
+-		goto out;
++		goto out_disable_clk;
  
-+/* PECI Calibration only for NCT6799D, not NCT6796D-S */
- static const char *const nct6799_temp_label[] = {
- 	"",
- 	"SYSTIN",
-@@ -699,8 +725,8 @@ static const char *const nct6799_temp_label[] = {
- 	"Agent1 Dimm1",
- 	"BYTE_TEMP0",
- 	"BYTE_TEMP1",
--	"PECI Agent 0 Calibration",	/* undocumented */
--	"PECI Agent 1 Calibration",	/* undocumented */
-+	"PECI/TSI Agent 0 Calibration",
-+	"PECI/TSI Agent 1 Calibration",
- 	"",
- 	"Virtual_TEMP"
- };
-@@ -3878,13 +3904,9 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 	case nct6795:
- 	case nct6796:
- 	case nct6797:
--	case nct6798:
--	case nct6799:
- 		data->in_num = 15;
- 		data->pwm_num = (data->kind == nct6796 ||
--				 data->kind == nct6797 ||
--				 data->kind == nct6798 ||
--				 data->kind == nct6799) ? 7 : 6;
-+				 data->kind == nct6797) ? 7 : 6;
- 		data->auto_pwm_num = 4;
- 		data->has_fan_div = false;
- 		data->temp_fixed_num = 6;
-@@ -3928,16 +3950,6 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 			data->temp_mask = NCT6796_TEMP_MASK;
- 			data->virt_temp_mask = NCT6796_VIRT_TEMP_MASK;
- 			break;
--		case nct6798:
--			data->temp_label = nct6798_temp_label;
--			data->temp_mask = NCT6798_TEMP_MASK;
--			data->virt_temp_mask = NCT6798_VIRT_TEMP_MASK;
--			break;
--		case nct6799:
--			data->temp_label = nct6799_temp_label;
--			data->temp_mask = NCT6799_TEMP_MASK;
--			data->virt_temp_mask = NCT6799_VIRT_TEMP_MASK;
--			break;
- 		}
+ 	xpsgtr_lane_set_protocol(gtr_phy);
  
- 		data->REG_CONFIG = NCT6775_REG_CONFIG;
-@@ -3996,14 +4008,6 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 		case nct6795:
- 		case nct6796:
- 		case nct6797:
--		case nct6798:
--			data->REG_TSI_TEMP = NCT6796_REG_TSI_TEMP;
--			num_reg_tsi_temp = ARRAY_SIZE(NCT6796_REG_TSI_TEMP);
--			break;
--		case nct6799:
--			data->in_num = 18;
--			data->ALARM_BITS = NCT6799_ALARM_BITS;
--			data->BEEP_BITS = NCT6799_BEEP_BITS;
- 			data->REG_TSI_TEMP = NCT6796_REG_TSI_TEMP;
- 			num_reg_tsi_temp = ARRAY_SIZE(NCT6796_REG_TSI_TEMP);
- 			break;
-@@ -4012,9 +4016,6 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 			break;
- 		}
- 
--		if (data->kind == nct6798 || data->kind == nct6799)
--			data->scale_in = scale_in_6798;
--
- 		reg_temp = NCT6779_REG_TEMP;
- 		num_reg_temp = ARRAY_SIZE(NCT6779_REG_TEMP);
- 		if (data->kind == nct6791) {
-@@ -4030,6 +4031,95 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 		reg_temp_alternate = NCT6779_REG_TEMP_ALTERNATE;
- 		reg_temp_crit = NCT6779_REG_TEMP_CRIT;
- 
-+		break;
-+	case nct6798:
-+	case nct6799:
-+		data->in_num = data->kind == nct6799 ? 18 : 15;
-+		data->scale_in = scale_in_6798;
-+		data->pwm_num = 7;
-+		data->auto_pwm_num = 4;
-+		data->has_fan_div = false;
-+		data->temp_fixed_num = 6;
-+		data->num_temp_alarms = 7;
-+		data->num_temp_beeps = 8;
-+
-+		data->ALARM_BITS = NCT6799_ALARM_BITS;
-+		data->BEEP_BITS = NCT6799_BEEP_BITS;
-+
-+		data->fan_from_reg = fan_from_reg_rpm;
-+		data->fan_from_reg_min = fan_from_reg13;
-+		data->target_temp_mask = 0xff;
-+		data->tolerance_mask = 0x07;
-+		data->speed_tolerance_limit = 63;
-+
-+		switch (data->kind) {
-+		default:
-+		case nct6798:
-+			data->temp_label = nct6798_temp_label;
-+			data->temp_mask = NCT6798_TEMP_MASK;
-+			data->virt_temp_mask = NCT6798_VIRT_TEMP_MASK;
-+			break;
-+		case nct6799:
-+			data->temp_label = nct6799_temp_label;
-+			data->temp_mask = NCT6799_TEMP_MASK;
-+			data->virt_temp_mask = NCT6799_VIRT_TEMP_MASK;
-+			break;
-+		}
-+
-+		data->REG_CONFIG = NCT6775_REG_CONFIG;
-+		data->REG_VBAT = NCT6775_REG_VBAT;
-+		data->REG_DIODE = NCT6775_REG_DIODE;
-+		data->DIODE_MASK = NCT6775_DIODE_MASK;
-+		data->REG_VIN = NCT6779_REG_IN;
-+		data->REG_IN_MINMAX[0] = NCT6775_REG_IN_MIN;
-+		data->REG_IN_MINMAX[1] = NCT6775_REG_IN_MAX;
-+		data->REG_TARGET = NCT6775_REG_TARGET;
-+		data->REG_FAN = NCT6779_REG_FAN;
-+		data->REG_FAN_MODE = NCT6775_REG_FAN_MODE;
-+		data->REG_FAN_MIN = NCT6776_REG_FAN_MIN;
-+		data->REG_FAN_PULSES = NCT6779_REG_FAN_PULSES;
-+		data->FAN_PULSE_SHIFT = NCT6775_FAN_PULSE_SHIFT;
-+		data->REG_FAN_TIME[0] = NCT6775_REG_FAN_STOP_TIME;
-+		data->REG_FAN_TIME[1] = NCT6776_REG_FAN_STEP_UP_TIME;
-+		data->REG_FAN_TIME[2] = NCT6776_REG_FAN_STEP_DOWN_TIME;
-+		data->REG_TOLERANCE_H = NCT6776_REG_TOLERANCE_H;
-+		data->REG_PWM[0] = NCT6775_REG_PWM;
-+		data->REG_PWM[1] = NCT6775_REG_FAN_START_OUTPUT;
-+		data->REG_PWM[2] = NCT6775_REG_FAN_STOP_OUTPUT;
-+		data->REG_PWM[5] = NCT6791_REG_WEIGHT_DUTY_STEP;
-+		data->REG_PWM[6] = NCT6791_REG_WEIGHT_DUTY_BASE;
-+		data->REG_PWM_READ = NCT6775_REG_PWM_READ;
-+		data->REG_PWM_MODE = NCT6776_REG_PWM_MODE;
-+		data->PWM_MODE_MASK = NCT6776_PWM_MODE_MASK;
-+		data->REG_AUTO_TEMP = NCT6775_REG_AUTO_TEMP;
-+		data->REG_AUTO_PWM = NCT6775_REG_AUTO_PWM;
-+		data->REG_CRITICAL_TEMP = NCT6775_REG_CRITICAL_TEMP;
-+		data->REG_CRITICAL_TEMP_TOLERANCE = NCT6775_REG_CRITICAL_TEMP_TOLERANCE;
-+		data->REG_CRITICAL_PWM_ENABLE = NCT6779_REG_CRITICAL_PWM_ENABLE;
-+		data->CRITICAL_PWM_ENABLE_MASK = NCT6779_CRITICAL_PWM_ENABLE_MASK;
-+		data->REG_CRITICAL_PWM = NCT6779_REG_CRITICAL_PWM;
-+		data->REG_TEMP_OFFSET = NCT6779_REG_TEMP_OFFSET;
-+		data->REG_TEMP_SOURCE = NCT6798_REG_TEMP_SOURCE;
-+		data->REG_TEMP_SEL = NCT6775_REG_TEMP_SEL;
-+		data->REG_WEIGHT_TEMP_SEL = NCT6791_REG_WEIGHT_TEMP_SEL;
-+		data->REG_WEIGHT_TEMP[0] = NCT6791_REG_WEIGHT_TEMP_STEP;
-+		data->REG_WEIGHT_TEMP[1] = NCT6791_REG_WEIGHT_TEMP_STEP_TOL;
-+		data->REG_WEIGHT_TEMP[2] = NCT6791_REG_WEIGHT_TEMP_BASE;
-+		data->REG_ALARM = NCT6799_REG_ALARM;
-+		data->REG_BEEP = NCT6792_REG_BEEP;
-+		data->REG_TSI_TEMP = NCT6796_REG_TSI_TEMP;
-+		num_reg_tsi_temp = ARRAY_SIZE(NCT6796_REG_TSI_TEMP);
-+
-+		reg_temp = NCT6798_REG_TEMP;
-+		num_reg_temp = ARRAY_SIZE(NCT6798_REG_TEMP);
-+		reg_temp_mon = NCT6798_REG_TEMP_MON;
-+		num_reg_temp_mon = ARRAY_SIZE(NCT6798_REG_TEMP_MON);
-+		reg_temp_over = NCT6798_REG_TEMP_OVER;
-+		reg_temp_hyst = NCT6798_REG_TEMP_HYST;
-+		reg_temp_config = NCT6779_REG_TEMP_CONFIG;
-+		reg_temp_alternate = NCT6798_REG_TEMP_ALTERNATE;
-+		reg_temp_crit = NCT6798_REG_TEMP_CRIT;
-+
+@@ -691,6 +692,10 @@ static int xpsgtr_phy_init(struct phy *phy)
  		break;
- 	default:
- 		return -ENODEV;
-diff --git a/drivers/hwmon/nct6775.h b/drivers/hwmon/nct6775.h
-index edcde39c47915..296eff99d0038 100644
---- a/drivers/hwmon/nct6775.h
-+++ b/drivers/hwmon/nct6775.h
-@@ -8,7 +8,7 @@ enum kinds { nct6106, nct6116, nct6775, nct6776, nct6779, nct6791, nct6792,
- 	     nct6793, nct6795, nct6796, nct6797, nct6798, nct6799 };
- enum pwm_enable { off, manual, thermal_cruise, speed_cruise, sf3, sf4 };
+ 	}
  
--#define NUM_TEMP	10	/* Max number of temp attribute sets w/ limits*/
-+#define NUM_TEMP	12	/* Max number of temp attribute sets w/ limits*/
- #define NUM_TEMP_FIXED	6	/* Max number of fixed temp attribute sets */
- #define NUM_TSI_TEMP	8	/* Max number of TSI temp register pairs */
- 
++	goto out;
++
++out_disable_clk:
++	clk_disable_unprepare(gtr_dev->clk[gtr_phy->refclk]);
+ out:
+ 	mutex_unlock(&gtr_dev->gtr_mutex);
+ 	return ret;
 -- 
 2.53.0
 
