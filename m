@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782403DC857;
-	Mon, 17 Aug 2026 14:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D233033E7;
+	Mon, 17 Aug 2026 14:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975766; cv=none; b=W85rub8/Myo5QmGzbLfISubeddU1dA9kzQ0RQ3FGJZuwlmN5sW2IUkvkPoCAvKm5DyxloedUsi1u30AelE/mnMxK0VCaJ+aTsVvtJGwqNWQh/Cxh/Y6NXArusetYkA37gs0bKOzzGod0TwBT9jjFEyuppVCWHRQgd5iicwD1IBQ=
+	t=1786975769; cv=none; b=txEROe6gpCKmw5FsoADbfxgieZNeQLlB/bd63365UgCVrDH7TXRQN5Bf5pzEamYNzizNqMctwkIz+q1Kls/0GEwf5prqeVldws/YywvIg3PSK6D8KiHoS1kQRb8IE7Oxa9Fcr+acz4gW/wLgJlYZH2MH/q+zNLbnRwiUEywRClA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975766; c=relaxed/simple;
-	bh=xOc2Xx9uM1HQ4M3iVxMN390a9MAbxauZtqFq1a98ris=;
+	s=arc-20240116; t=1786975769; c=relaxed/simple;
+	bh=Y0kJ8H+7TjxTt6RcIihQspaWFOz6Wu7OjLZHZ1LKKv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U/h+ZDemFXv1Ii0ciBEqUJ2vMsHi+SgEy0mFLdD+XAdSCUaD88aLorXa9ZMhAJ1igAE9iB/3PEE1eQ+yyLzV4gsjahCQl/9mM141++9jRFXkq8s/4FVyMQAtPRaiSJI9LF1k5d+F8dqHtqG6tN9Le1WwMXnl6rO0YFVYwt+r95c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rivLoPru; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ORjDHhZWBfL7RWhazf29rLkq6y7xx+KNzqnx3m/jq20LcUToSl3gk63FgWlPi8AXhi+JndNEnxZOSI9KhGn1MoLInPv9x8pDYZ+33VkvRB5jklml1tsG3H/vTK5MLGr1r8i9pu5g+vbTSPhmi28aN/iqp2hitIcdvdLNDvJs1XU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ggl6+H3c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rivLoPru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0551F000E9;
-	Mon, 17 Aug 2026 14:09:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ggl6+H3c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9701F000E9;
+	Mon, 17 Aug 2026 14:09:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975765;
-	bh=17CglJfLNUOPCLgTU9VpAhcTrqBue3Eb+67kHDhpo/o=;
+	s=korg; t=1786975768;
+	bh=u70RZxH9LDYEkBgNCxx52GWRtEKYq7q/NS2m9Ob59hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rivLoPruvKXEInZqbq+c7XG5BNBgbope1fZjILlPWvwu6LfgHXJ+/z/7WDCgVWCjm
-	 ajnbL1U/QCT0gcfOta/hmbqZZyvRVpJSpnyeFPYnhuWiiwM4zA8SOBBbceA2ks/RP3
-	 DKfeaH3cxUSKws+l/8m+IfV7nvP1VZtNBEBc0IDg=
+	b=ggl6+H3cAQ17JdgaJ979P/j3T40PHmXK9oiqGVTsoCAkmRve5bNH5ET01daJlGRUb
+	 9TZH2fKn15EFgZxOWfrVz/hjLGXh/wTOzsdEeMf+fVXddriV7mAafAym6UTFwFFTl1
+	 qdfNyPWDs4NFNJf+IuwSF19qYut64XnSR3Ik5a1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	syzbot+dac8f5eaa46837e97b89@syzkaller.appspotmail.com,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.10 140/389] media: vimc: fix reference leak on failed device registration
-Date: Mon, 17 Aug 2026 15:29:39 +0200
-Message-ID: <20260817132544.617991538@linuxfoundation.org>
+Subject: [PATCH 5.10 141/389] media: vivid: check for vb2_is_busy() when toggling caps
+Date: Mon, 17 Aug 2026 15:29:40 +0200
+Message-ID: <20260817132544.657959632@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -50,45 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
 
-commit 33e2b833c66b890a0d71c4fa82d4c97143f7f75f upstream.
+commit c2d1a2130c93f6d758af58590b86b2254c7a1dec upstream.
 
-When platform_device_register() fails in vimc_init(), the embedded
-struct device in vimc_pdev has already been initialized by
-device_initialize(), but the failure path returns the error without
-dropping the device reference for the current platform device:
+The vivid_update_format_cap/out() functions must only be called if the
+capture/output queue are not busy. But for the controls that select
+the CROP/COMPOSE/SCALE capability that is not checked.
 
-  vimc_init()
-    -> platform_device_register(&vimc_pdev)
-       -> device_initialize(&vimc_pdev.dev)
-       -> setup_pdev_dma_masks(&vimc_pdev)
-       -> platform_device_add(&vimc_pdev)
+Only when streaming starts will they be set to 'grabbed' and it is
+impossible to change the control, but between REQBUFS and STREAMON you
+are still allowed to set these controls. Since vivid_update_format_cap/out
+will change the format, this can cause unexpected results.
 
-This leads to a reference leak when platform_device_register() fails.
-Fix this by calling platform_device_put() before returning the error.
+Besides adding these checks, also add a WARN_ON in
+vivid_update_format_cap/out() if the queue is busy.
 
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
+I'm 90% certain that this is the cause of this syzbot bug:
 
-Fixes: 4babf057c143f ("media: vimc: allocate vimc_device dynamically")
+https://syzkaller.appspot.com/bug?extid=dac8f5eaa46837e97b89
+
+But since we never have reproducers, it is hard to be certain. In any case,
+these checks are needed regardless.
+
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Fixes: 73c3f48230cd ("[media] vivid: add the control handling code")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reported-by: syzbot+dac8f5eaa46837e97b89@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=dac8f5eaa46837e97b89
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vimc/vimc-core.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/test-drivers/vivid/vivid-ctrls.c   |   12 ++++++++++++
+ drivers/media/test-drivers/vivid/vivid-vid-cap.c |    6 ++++++
+ drivers/media/test-drivers/vivid/vivid-vid-out.c |    6 ++++++
+ 3 files changed, 24 insertions(+)
 
---- a/drivers/media/test-drivers/vimc/vimc-core.c
-+++ b/drivers/media/test-drivers/vimc/vimc-core.c
-@@ -350,6 +350,7 @@ static int __init vimc_init(void)
- 	if (ret) {
- 		dev_err(&vimc_pdev.dev,
- 			"platform device registration failed (err=%d)\n", ret);
-+		platform_device_put(&vimc_pdev);
- 		return ret;
- 	}
+--- a/drivers/media/test-drivers/vivid/vivid-ctrls.c
++++ b/drivers/media/test-drivers/vivid/vivid-ctrls.c
+@@ -464,14 +464,20 @@ static int vivid_vid_cap_s_ctrl(struct v
+ 		vivid_update_format_cap(dev, true);
+ 		break;
+ 	case VIVID_CID_HAS_CROP_CAP:
++		if (vb2_is_busy(&dev->vb_vid_cap_q))
++			return -EBUSY;
+ 		dev->has_crop_cap = ctrl->val;
+ 		vivid_update_format_cap(dev, true);
+ 		break;
+ 	case VIVID_CID_HAS_COMPOSE_CAP:
++		if (vb2_is_busy(&dev->vb_vid_cap_q))
++			return -EBUSY;
+ 		dev->has_compose_cap = ctrl->val;
+ 		vivid_update_format_cap(dev, true);
+ 		break;
+ 	case VIVID_CID_HAS_SCALER_CAP:
++		if (vb2_is_busy(&dev->vb_vid_cap_q))
++			return -EBUSY;
+ 		dev->has_scaler_cap = ctrl->val;
+ 		vivid_update_format_cap(dev, true);
+ 		break;
+@@ -947,14 +953,20 @@ static int vivid_vid_out_s_ctrl(struct v
  
+ 	switch (ctrl->id) {
+ 	case VIVID_CID_HAS_CROP_OUT:
++		if (vb2_is_busy(&dev->vb_vid_out_q))
++			return -EBUSY;
+ 		dev->has_crop_out = ctrl->val;
+ 		vivid_update_format_out(dev);
+ 		break;
+ 	case VIVID_CID_HAS_COMPOSE_OUT:
++		if (vb2_is_busy(&dev->vb_vid_out_q))
++			return -EBUSY;
+ 		dev->has_compose_out = ctrl->val;
+ 		vivid_update_format_out(dev);
+ 		break;
+ 	case VIVID_CID_HAS_SCALER_OUT:
++		if (vb2_is_busy(&dev->vb_vid_out_q))
++			return -EBUSY;
+ 		dev->has_scaler_out = ctrl->val;
+ 		vivid_update_format_out(dev);
+ 		break;
+--- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
++++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+@@ -385,6 +385,12 @@ void vivid_update_format_cap(struct vivi
+ 	unsigned size;
+ 	u64 pixelclock;
+ 
++	/*
++	 * This resets the format, so must never be called while vb2_is_busy().
++	 */
++	if (WARN_ON(vb2_is_busy(&dev->vb_vid_cap_q)))
++		return;
++
+ 	switch (dev->input_type[dev->input]) {
+ 	case WEBCAM:
+ 	default:
+--- a/drivers/media/test-drivers/vivid/vivid-vid-out.c
++++ b/drivers/media/test-drivers/vivid/vivid-vid-out.c
+@@ -222,6 +222,12 @@ void vivid_update_format_out(struct vivi
+ 	unsigned size, p;
+ 	u64 pixelclock;
+ 
++	/*
++	 * This resets the format, so must never be called while vb2_is_busy().
++	 */
++	if (WARN_ON(vb2_is_busy(&dev->vb_vid_out_q)))
++		return;
++
+ 	switch (dev->output_type[dev->output]) {
+ 	case SVID:
+ 	default:
 
 
