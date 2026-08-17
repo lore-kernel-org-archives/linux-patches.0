@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8161D435F;
-	Mon, 17 Aug 2026 14:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3763E8C46;
+	Mon, 17 Aug 2026 14:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975352; cv=none; b=E2aEEcuQkR5bJ/xh/sBTASaL/kSrmvN9x4yUtqVzTUDvF9Q2Q3Y9yNw4+KYRUNR7f9JSP+F1m1EA2nQVHDqBxH7n6LeLxhZSmH9A8UOppih/kV5ELIiM2pGOyp9yZ3Mki62m7ArAE/JUerMQ5ANfnIoHbr5wiBDWCYodpRkMIfE=
+	t=1786975356; cv=none; b=bcpKO2E9D10nk+1ww8y0HiKE+8z8xUiLb/CCJv83996GW4hstFZEcQu1RAqgwnPB/0czgnTgfftRBdX5A9cTvlGEBUUdvY1yw5jOBMS5Uv75iHcef9ButYqPBFUl1rfAOdUx8g/EymaVjYCUsn53Q5YPzG0yhRNnNRsUdHzvaKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975352; c=relaxed/simple;
-	bh=004zfmmMqupHm2dUrZnhxNFyTda+gDYVdHXUcq0FLcg=;
+	s=arc-20240116; t=1786975356; c=relaxed/simple;
+	bh=JYntlPeloHdcvwZ+fy0T3+8qcHqL47Pz5B4swgwHmsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DeoEUYXh5LGQsV9qkgvZyMdBhr8YKwvTgpmH9eKvSEyJUv5lZnMZYX4rjODwwliWTAeJtaue3f6BU7WQk0N7V/Z2I3aP1f+8362NtcUQL/N+i0kbSElhWhYVNrL6dCKEA5H8ev2gN1WQPvnYX3EJNPoOJt918HS0VPKIY4vNY4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ePhOGiFL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HeiAap/K7MLhELLAwlXM9fo7cZOfNkLaFbVCMEDoYrPx4UnP3aoflWUlNce6zNV6yQk8xBW2f2AYBQrIeUh9fJZ9NJ3ZD1KTA949R+sEYviXb6H+S6dE9DOQZy+oOCbeNFjI58JE6LzNtrvFyhS99NqFEW4y2oxaIFwU4OxYLFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h40K79pG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ePhOGiFL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36FE61F000E9;
-	Mon, 17 Aug 2026 14:02:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h40K79pG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEE91F000E9;
+	Mon, 17 Aug 2026 14:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975351;
-	bh=eGe4VnbMSg6gnDW6sF3quMkBmUUphRwyVDYzhAdR2kY=;
+	s=korg; t=1786975354;
+	bh=OKUIjlIubDq7nS0V5icUod4hyQNdjmXIp1b7Ltqknh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ePhOGiFLpb6xBXDXnvmhe16Y8RekgvMXuWmTkCop9ujuAtteQoiS0hx87rMgAghS2
-	 Vd+6Gli/jA84TGnrmcBUWAW4inu6+4xr5VQulSWi+hwlHCW++YGzNmM9a96B1INiVR
-	 YR2KNlLh1bcwKEm7VjDs7ID24SNS71HNCPgotdOY=
+	b=h40K79pGlkD9sDMrKpflo6Od9EEuyEmgsSrgPUjKVvF9Mf3K6hGs8BxSJs2MQJ6S+
+	 IBE1MdzInuaOtJB/Z9b2rh4tyVttXVYp/Y1OklshuYJ7fkaAAKsTvCJzsEPCpMOdkJ
+	 xpL6V5sFcBChIldjaEGj2ECF5WcJ66eeeqkOW1Vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.18 250/250] netfilter: flowtable: ensure sufficient headroom in xmit path
-Date: Mon, 17 Aug 2026 15:33:31 +0200
-Message-ID: <20260817132546.699182613@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Song Liu <song@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Subject: [PATCH 6.18 241/250] fsverity: Fix silent truncation in bpf_get_fsverity_digest()
+Date: Mon, 17 Aug 2026 15:33:22 +0200
+Message-ID: <20260817132546.336853334@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -49,42 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit ef4f741e8627512cb8c82f59a1fc7aacd854aadf upstream.
+commit 7c68ed5c5ad4c185ea9654f5d8ee36560277b7dd upstream.
 
-Check for headroom and call skb_expand_head() like in the IP output
-path to ensure there is sufficient headroom for the mac header when
-forwarding this packet as suggested by sashiko.
+bpf_get_fsverity_digest() silently truncates the digest if the provided
+buffer is too small.  This is a footgun, and it doesn't match the
+semantics of the equivalent UAPI (FS_IOC_MEASURE_VERITY).
 
-Fixes: b5964aac51e0 ("netfilter: flowtable: consolidate xmit path")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Change it to return -EOVERFLOW instead, matching FS_IOC_MEASURE_VERITY.
+
+Fixes: 67814c00de31 ("bpf, fsverity: Add kfunc bpf_get_fsverity_digest")
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Acked-by: Song Liu <song@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/bpf/20260803181232.14743-3-ebiggers@kernel.org
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_flow_table_ip.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ fs/verity/measure.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/net/netfilter/nf_flow_table_ip.c
-+++ b/net/netfilter/nf_flow_table_ip.c
-@@ -343,8 +343,17 @@ struct nf_flow_xmit {
- static unsigned int nf_flow_queue_xmit(struct net *net, struct sk_buff *skb,
- 				       struct nf_flow_xmit *xmit)
- {
--	skb->dev = xmit->outdev;
--	dev_hard_header(skb, skb->dev, ntohs(skb->protocol),
-+	struct net_device *dev = xmit->outdev;
-+	unsigned int hh_len = LL_RESERVED_SPACE(dev);
-+
-+	if (unlikely(skb_headroom(skb) < hh_len && dev->header_ops)) {
-+		skb = skb_expand_head(skb, hh_len);
-+		if (!skb)
-+			return NF_STOLEN;
-+	}
-+
-+	skb->dev = dev;
-+	dev_hard_header(skb, dev, ntohs(skb->protocol),
- 			xmit->dest, xmit->source, skb->len);
- 	dev_queue_xmit(skb);
+--- a/fs/verity/measure.c
++++ b/fs/verity/measure.c
+@@ -144,14 +144,15 @@ __bpf_kfunc int bpf_get_fsverity_digest(
  
+ 	hash_alg = vi->tree_params.hash_alg;
+ 
++	out_digest_sz = dynptr_sz - sizeof(struct fsverity_digest);
++	if (out_digest_sz < hash_alg->digest_size)
++		return -EOVERFLOW;
++
+ 	arg->digest_algorithm = hash_alg - fsverity_hash_algs;
+ 	arg->digest_size = hash_alg->digest_size;
+ 
+-	out_digest_sz = dynptr_sz - sizeof(struct fsverity_digest);
+-
+ 	/* copy digest */
+-	memcpy(arg->digest, vi->file_digest,
+-	       min(hash_alg->digest_size, out_digest_sz));
++	memcpy(arg->digest, vi->file_digest, hash_alg->digest_size);
+ 
+ 	/* fill the extra buffer with zeros */
+ 	if (out_digest_sz > hash_alg->digest_size)
 
 
