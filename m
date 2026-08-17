@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08C53AAF6D;
-	Mon, 17 Aug 2026 15:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8912226B2D3;
+	Mon, 17 Aug 2026 15:12:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979566; cv=none; b=oM/sTrE/QCJOBgHYq5+ZNyUkneb+bnLnFS64XILS2bivRvDLluhAifftonzI5ZFMSNEpXAEiAUisWQ0ZjRMT/F566q+8FooMVvMNxLPGsxUXi+1725VGBYCzd3VkxbWTlkAgf3O/koXhYW//NVDE1n7p1mYduwcfRlafJhyKHuE=
+	t=1786979569; cv=none; b=XQZsfMV4vli488Jk0JLtLVfbn3cKD6HsTFABIQApXTWC4hybQszZq4rAgIpBCMKoscp8xtpo564bpgzNWgsJ9lbPNWXSRJsEBfkk3uQmIq/z/jKtQt5JaGuMRUS1SeULehIvHHzy4QuJlk7Y5capywnMSD2ahBAPbwlH1AEo9sY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979566; c=relaxed/simple;
-	bh=rTWN9RntF2spNWweKetMMCwXaZa3dQjWo4E4KabMTxM=;
+	s=arc-20240116; t=1786979569; c=relaxed/simple;
+	bh=QR2iazUfxS7X170d2nW9kH1LophByUwmcwkSdsZHyzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e0mbYzLLFswwGp0ADAvGP75mWTRUqyEl88tYIy48iFf05djMAuds0NoRUVWSdaFTjnMt5+hFkbr4VAQQtYOkf3aXGJ3dOeLPlpYoPCNPLarEl58X5c5UMmgKQ/tl6mNZZObYHNc1jAj303quYjOTtZWDfVaulV7QLaT6eYP73Yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dj4qQGz+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rWhonZlrsyFvMYbiKY/xxoyasGie/1BRwRGsE+LJUwtaoWFLzcPikEZWASDNwk98cb0Znc3U2hWdtNhygrdEeC8E32stDQtNor4vnhn/uPo/FHJiH2VjzF0J0z/sIWptlMthl64FgAxyX619SAeqIM0w3t6xvg/1aJ0SVWfT9ag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l52XYQN4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dj4qQGz+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA7C1F000E9;
-	Mon, 17 Aug 2026 15:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l52XYQN4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D31B21F000E9;
+	Mon, 17 Aug 2026 15:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979565;
-	bh=hNu8Kv6MlbUMZFGV4IrK4qS3LjSFJxa6ZzIUifZvaps=;
+	s=korg; t=1786979568;
+	bh=0WKi+BrhdNHoGeu5gtIDq1fNVXbUcVYnwB3XbUjXRes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dj4qQGz+pwHrdbGtk9mnKpSHjXaDBc0yH2HtFpjSuYogNeqz/x+svTiR7BYfOC6Ho
-	 TCI+t1bVcHaw/gDoMf7b/h97nHX7IuhyljhDBDMRmJVPTQy9MB/G4aa09eaMdpb5G3
-	 ElD/oHSsamqNhoEKHFKjzbEeZfB/hsE3xnSKI2Gs=
+	b=l52XYQN4YgfPZysRgeQuaeBtkJkwGDsDaogSeIZ0XPfWC9h3ujiS52dUpMPT4KIBG
+	 3A2LM5F4F4aRzlW3mNib7Wl2xfTPjUIIyDxa/BHtoQgh8Lrg9OBTEoTn8jIv9eR0fk
+	 B4jj7aWinRgGMz6xYOmopnxbcB4bNiuuQfkBk2Eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Magnus Lindholm <linmag7@gmail.com>,
-	Jann Horn <jannh@google.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.1 269/609] proc: Fix broken error paths for namespace links
-Date: Mon, 17 Aug 2026 15:29:25 +0200
-Message-ID: <20260817132553.114117963@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.1 270/609] rbd: Reset positive result codes to zero in object map update path
+Date: Mon, 17 Aug 2026 15:29:26 +0200
+Message-ID: <20260817132553.157330162@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,52 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 425224c2d700391729be7fe6929a88ef4e2d7a4e upstream.
+commit a6c4250b81bd30beae94e1b7a4b26fa1193ad2e4 upstream.
 
-Don't return the return value of down_read_killable() (0) when a ptrace
-access check fails, return -EACCES as intended.
+In a reply message to an RBD request, a positive result code indicates
+a data payload, which is not allowed for writes. While
+rbd_osd_req_callback() already resets a positive result code for writes
+to zero, rbd_object_map_callback() does not. This allows a corrupted
+reply to an object map update to trigger the rbd_assert(*result < 0) in
+__rbd_obj_handle_request(). This happens, because
+rbd_object_map_callback() calls rbd_obj_handle_request() ->
+__rbd_obj_handle_request() and passes this positive result code. From
+__rbd_obj_handle_request(), rbd_obj_advance_write() is called, which
+leaves the positive result code unchanged and returns true. Therefore,
+the if(done && *result) branch is executed in __rbd_obj_handle_request()
+and the assertion triggers.
 
-Reported-by: Magnus Lindholm <linmag7@gmail.com>
-Closes: https://lore.kernel.org/r/20260706170735.2941493-1-linmag7@gmail.com
-Fixes: 6650527444da ("proc: protect ptrace_may_access() with exec_update_lock (part 1)")
+This patch fixes the issue by adjusting the logic in the
+rbd_object_map_callback() path. A positive result code for an object map
+update is now reset to zero (similar to rbd_osd_req_callback()), and the
+message is subsequently handled the same way as if the result code was
+zero from the beginning. Additionally, a WARN_ON_ONCE() is added for
+this case.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://patch.msgid.link/20260706-procfs-ns-eacces-fix-v1-1-a69ab14c02e6@google.com
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 22e8bd51bb04 ("rbd: support for object-map and fast-diff")
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/namespaces.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/block/rbd.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/proc/namespaces.c
-+++ b/fs/proc/namespaces.c
-@@ -46,7 +46,7 @@ static const char *proc_ns_get_link(stru
- 	const struct proc_ns_operations *ns_ops = PROC_I(inode)->ns_ops;
- 	struct task_struct *task;
- 	struct path ns_path;
--	int error = -EACCES;
-+	int error;
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -1957,10 +1957,15 @@ static int rbd_object_map_update_finish(
+ 	bool has_current_state;
+ 	void *p;
  
- 	if (!dentry)
- 		return ERR_PTR(-ECHILD);
-@@ -59,6 +59,7 @@ static const char *proc_ns_get_link(stru
- 	if (error)
- 		goto out_put_task;
+-	if (osd_req->r_result)
++	if (osd_req->r_result < 0)
+ 		return osd_req->r_result;
  
-+	error = -EACCES;
- 	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS))
- 		goto out;
- 
-@@ -90,6 +91,7 @@ static int proc_ns_readlink(struct dentr
- 	if (res)
- 		goto out_put_task;
- 
-+	res = -EACCES;
- 	if (ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS)) {
- 		res = ns_get_name(name, sizeof(name), task, ns_ops);
- 		if (res >= 0)
+ 	/*
++	 * Writes aren't allowed to return a data payload.
++	 */
++	WARN_ON_ONCE(osd_req->r_result > 0);
++
++	/*
+ 	 * Nothing to do for a snapshot object map.
+ 	 */
+ 	if (osd_req->r_num_ops == 1)
 
 
