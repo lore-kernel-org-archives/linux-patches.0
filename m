@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D16343D50E;
-	Mon, 17 Aug 2026 14:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7FE43F089;
+	Mon, 17 Aug 2026 14:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978532; cv=none; b=ZrGCoyjhrcIm3dect2JxPDvnfPsn4vvEbxV4KhlJrqwfF8FfZwwTrHbORmEMoCXggHs/VH2wLfb1hfD+GPFjW4aSmACqHdXJyww9pJ8/9wMet19RqoiCauiRa8aIgekwZecrhP4xM4uOQGeuuiB+h8YKjt1UVQESN72fqOdC21I=
+	t=1786978535; cv=none; b=JiXt7BWt32nD2sEcMHPzerJcD0y4nqFgcmcIYd2aP7H59jcZBFGG3AyjhZTDjiROopZPtVGYqH0wB8Ag/vL+5U4q+cnwsd4sFry2RHZyIElY2NkpXLOjyT5HUGTE5ohn+MnO4SkEnXVZDW2FE6ysw7Qep4+wkX1ModpL6yIjuiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978532; c=relaxed/simple;
-	bh=eFj7LaOh68Vjf/CX/8EmgLWXtoT1zcmMH7PkpQD8ArM=;
+	s=arc-20240116; t=1786978535; c=relaxed/simple;
+	bh=5ZUA8TQn5cfakSmgWbAN7I5+Gg30niwVRXTUqAus7ns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NUpk3t7KTUQVTjGtAq8VbpYyeowdLINvl4zZ5NriRxUE63e+nbATDk3FGD7kt5OXTIK/h9Lb+78p/KcdZZbhykRF4gN74tRp6q/63UMRIpup68q7UdVxrhUjNKcQ88PnqreMix/OUkhTLWynxh4IjOY5zJb9rWNkBtDSQSB/+B8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TlH7NPxL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q2GiZduo532k2LvYD20viOsKgYOL3TffCGMnvzk/2RZCtXPv55UGSbqByKIIgKS/yRE/nBnYasPp3ZLRrT7S2Up65zBXg068wQRaZgztaFOUMElf4EZYd4W037hBZxTxcpDNc8RXRmvYhxuVhCmDlMEpcYMVeyi/nO1MTZi+HVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=edTVWjEG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlH7NPxL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E001F00A3D;
-	Mon, 17 Aug 2026 14:55:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="edTVWjEG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DCEB1F00A3A;
+	Mon, 17 Aug 2026 14:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978531;
-	bh=dz9W8D+eQMo/zAFf0Q27Z29an7P5JWxMc7CY3oDWDo4=;
+	s=korg; t=1786978534;
+	bh=xr+n0kVc8VIrbznWPat3qygqUuNyLxNknK8BPvSEiRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TlH7NPxLx6QdA8bMVs06LOdTufABbn6tt0ISnaJw4cTnCay7s5xBhRcwJHEHQEmgB
-	 P4l2FkLbwebIYIKkvV3cZA7UGUx8lVBXF5krEzvmRyycixLE6NNrRSK3CUgaacIPpP
-	 4nieaTRtZE6pvcvq9/qc9QDzXHlEB023NA9ZXEuk=
+	b=edTVWjEGoRVFb7bnHOm6IZ+pCnHQOv3RWOWq/qPBTJ5Kvg3iT40aP91uQt1r1j9he
+	 QHJ47CawWXjNTbO0LCGASQ8XVTUzfMGKO5tlhMxWJAPZADyTDfCC8kHtdLKUDljUXN
+	 QkjAHAce5Acz2JfR44VXRuzUWRONIOWc5OXv+/OY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
 	stable <stable@kernel.org>,
-	Pawel Laszczak <pawell@cadence.com>
-Subject: [PATCH 6.6 068/156] usb: cdnsp: fix incorrect endian conversions for APB timeout register
-Date: Mon, 17 Aug 2026 15:33:22 +0200
-Message-ID: <20260817132537.250720788@linuxfoundation.org>
+	Sonali Pradhan <sonalipradhan@google.com>
+Subject: [PATCH 6.6 069/156] usb: gadget: f_ncm: Use unsigned int for ndp_index
+Date: Mon, 17 Aug 2026 15:33:23 +0200
+Message-ID: <20260817132537.289255723@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -51,45 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Sonali Pradhan <sonalipradhan@google.com>
 
-commit 50b303f3d0f7de543ee90d50879970783d06da33 upstream.
+commit 6b1c8a9403a26cb0fed7a648916c74dc236da591 upstream.
 
-readl() already returns a CPU-endian value. Passing its return value to
-le32_to_cpu() is therefore redundant and causes an incorrect double byte
-swap on big-endian systems.
+The variable ndp_index is declared as a signed integer, but it stores
+the return value of get_ncm(), which is unsigned.
 
-Similarly, writel() expects a CPU-endian value, so passing the result of
-cpu_to_le32() is incorrect.
+A malicious host can supply a large offset that overflows the signed
+ndp_index, making it negative. Because ndp_index is compared against
+unsigned bounds, this negative value bypasses sanity checks and leads
+to an out-of-bounds read when calculating the address of the NDP
+block (ntb_ptr + ndp_index).
 
-Remove the unnecessary conversions and operate on the MMIO register value
-as a CPU-endian u32.
+Fix this by changing ndp_index to unsigned int to ensure consistent
+unsigned comparisons throughout the function.
 
-Fixes: 241e2ce88e5a ("usb: cdnsp: Fix issue with resuming from L1")
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 370af734dfaf ("usb: gadget: NCM: RX function support multiple NDPs")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20260720-endian-fix-v1-v1-1-b5681fa1ea9f@cadence.com
+Signed-off-by: Sonali Pradhan <sonalipradhan@google.com>
+Link: https://patch.msgid.link/20260720165654.2224591-1-sonalipradhan@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdnsp-gadget.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/f_ncm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/cdns3/cdnsp-gadget.c
-+++ b/drivers/usb/cdns3/cdnsp-gadget.c
-@@ -154,9 +154,9 @@ static void cdnsp_set_apb_timeout_value(
- 	offset = cdnsp_find_next_ext_cap(base, offset, D_XEC_PRE_REGS_CAP);
- 	reg = base + offset + REG_CHICKEN_BITS_3_OFFSET;
- 
--	val  = le32_to_cpu(readl(reg));
-+	val  = readl(reg);
- 	val = CHICKEN_APB_TIMEOUT_SET(val, cdns->override_apb_timeout);
--	writel(cpu_to_le32(val), reg);
-+	writel(val, reg);
- }
- 
- static void cdnsp_set_chicken_bits_2(struct cdnsp_device *pdev, u32 bit)
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -1161,7 +1161,7 @@ static int ncm_unwrap_ntb(struct gether
+ 	unsigned char	*ntb_ptr = skb->data;
+ 	__le16		*tmp;
+ 	unsigned	index, index2;
+-	int		ndp_index;
++	unsigned int	ndp_index;
+ 	unsigned	dg_len, dg_len2;
+ 	unsigned	ndp_len;
+ 	unsigned	block_len;
 
 
