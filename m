@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB0A41F5EA;
-	Mon, 17 Aug 2026 14:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0562426693;
+	Mon, 17 Aug 2026 14:51:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978297; cv=none; b=W3LcLWZUROMk5FqHFp4TvLUGBNq08vyPF7+xg1C+g/Im37OydF1Kd5gOyStyZMr2phomwrdKmjZbERZhjGZuh3VRkbFqTYPdmIlFPiT25nfIPzJy/TdMF3A1rRS9sWVt/pEJ1iDZMpWd/fnPoYpnO0m/V00P/cdLcc3K7B4LUJA=
+	t=1786978300; cv=none; b=R544jT70lxf24Nu9DP4Z6SG2HMHUoIAT4cSiRAhl86SspBd227Q7DY7w8yL+ZMIpADow+zhCWixBFYBRRRg7mB6Zi9pXwSfxrpr3r1vOapGWg3ewjOfKpDKJr9EgxQ8wjNIE5c60qI1VPHAMQtmp6CMT7+6+W/Ovj2fZXPAoMEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978297; c=relaxed/simple;
-	bh=D0xz4M8oeDf6aat3XUgU8XB1yGKhlkpiqHQEpVnm8Nc=;
+	s=arc-20240116; t=1786978300; c=relaxed/simple;
+	bh=SBbaaK76rW1qE+k6cQixCIB6GPia0RK6eUc9rgPMZfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OwdsamWUHtrGdXd5QK64pcn0WI8PWlAyOc5H5W03UkkfB2hCID/+h0SLkxBD52KiVYz//K+fOdoblDGXJ9psk2NZIbz0tBtpyQTkoDtY2yEU7o1/r9ot/VsoQKKDy5s1NFHW7H4pbXPKDX9vPkNtgOyaic2uwK+1F+xAKVsQ/3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k3nnIVCU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YTJsxxBbh4IWIgu9fkZ+oT7GBDhjn6+Cp9DKKb3LxOYRJAVHPWN/UZLULMbaYVIFCrhyVw3N3pev2xrWCm2DAEFYFvCNU9JZxqge+MYtvNeNhwaX9A3NL8nrbOeleMugmW74egK4LCCuLPsz046Kg2+ECOkrGILwQjSaN827+iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NAy7OFiz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k3nnIVCU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A1541F000E9;
-	Mon, 17 Aug 2026 14:51:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NAy7OFiz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9681F000E9;
+	Mon, 17 Aug 2026 14:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978295;
-	bh=IO6AtazBRSZlgX9O0uHnW9uddloTsP+geG/r1P9eH8I=;
+	s=korg; t=1786978298;
+	bh=j1Tu0/Y4FrtcFHnjU/7ifdZivmPNWgwpQtnvM80WgcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k3nnIVCULV5Wivs4zf2EqyQKNMQcOXWxaGteVBIq1JBGeXz8FalAM61aYiUObdq+z
-	 oJY6yYh2Kj6N/YVHwMWNm1ooyWOFRW7Gt3FZuezifzS16m0aOQcABi+fo0Y64bDrx4
-	 nuJI/xfUi/sAY4cKSFySgavTUVEs3xe0ZD65Emf0=
+	b=NAy7OFizVsBYeMAePvqV5AVQT3ZU06moTEc1rI6mELr1ZraBy51VhyXymmNn4SDgQ
+	 1aoOMzauvtIP/PvVKbntjGFuq2u+SIywtFf0EAYeznFDtAwtLELEUgLN3rOhbY3gfC
+	 8KLf+M1OPoeRi8BGn0995whSnb17BSY/6G/0bK5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 119/181] selftests/bpf: Adapt sockmap update error handling
-Date: Mon, 17 Aug 2026 15:33:33 +0200
-Message-ID: <20260817132540.236931658@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.12 163/181] eventfs: Use children field for rcu head and add memory barriers
+Date: Mon, 17 Aug 2026 15:34:17 +0200
+Message-ID: <20260817132542.099906154@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -53,92 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 30581eda4a07ff15db623612cac578e81869e96f ]
+commit f0ece16ffca7384787b692431961ce202907acf5 upstream.
 
-Update sockmap_listen to accommodate the recent change in sockmap that
-rejects unbound UDP sockets.
+When an eventfs inode is freed, it sets ei->is_freed and then uses its
+ei->list to add it to the srcu link list as the list field is a union with
+the rcu list head. As the ei->list is used to iterate over an SRCU
+protected list without taking the eventfs_mutex, there's nothing stopping
+the iteration over that list to see the ei->rcu instead of the ei->list
+and it will read a corrupt target.
 
-TCP: Reject unbound and bound (unless established or listening).
-UDP: Accept only bound sockets.
+To fix this, change the union of the rcu list head with the children list.
+On freeing the eventfs inode, set the is_free and execute a smp_wmb()
+before adding the eventfs inode to the SRCU list.
 
-While at it, migrate to ASSERT_* and enforce reverse xmas tree.
+On iteration of the ei->children list, at the start, execute a smp_rmb()
+and then read the is_freed of the ei to see if the children list is still
+valid. If is_freed is set, then the ei_child read is not valid and the
+loop should exit immediately.
 
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/20260707-sockmap-lookup-udp-leak-v4-3-f878346f27ab@rbox.co
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260808094215.4252430d@robin
+Fixes: 704f960dbee2f ("eventfs: Read ei->entries before ei->children in eventfs_iterate()")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260806022719.375354-1-shuangpeng.kernel%40gmail.com
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../selftests/bpf/prog_tests/sockmap_listen.c | 21 ++++++++++---------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ fs/tracefs/event_inode.c |   24 ++++++++++++++++++++++++
+ fs/tracefs/internal.h    |    4 ++--
+ 2 files changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c b/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
-index 1cfed83156b03..b04b8188b1514 100644
---- a/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
-+++ b/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
-@@ -53,8 +53,8 @@ static void test_insert_opened(struct test_sockmap_listen *skel __always_unused,
- 			       int family, int sotype, int mapfd)
+--- a/fs/tracefs/event_inode.c
++++ b/fs/tracefs/event_inode.c
+@@ -124,7 +124,17 @@ static inline void put_ei(struct eventfs
+ static inline void free_ei(struct eventfs_inode *ei)
  {
- 	u32 key = 0;
--	u64 value;
- 	int err, s;
-+	u64 value;
- 
- 	s = xsocket(family, sotype, 0);
- 	if (s == -1)
-@@ -63,11 +63,8 @@ static void test_insert_opened(struct test_sockmap_listen *skel __always_unused,
- 	errno = 0;
- 	value = s;
- 	err = bpf_map_update_elem(mapfd, &key, &value, BPF_NOEXIST);
--	if (sotype == SOCK_STREAM) {
--		if (!err || errno != EOPNOTSUPP)
--			FAIL_ERRNO("map_update: expected EOPNOTSUPP");
--	} else if (err)
--		FAIL_ERRNO("map_update: expected success");
-+	ASSERT_ERR(err, "map_update");
-+	ASSERT_EQ(errno, EOPNOTSUPP, "errno");
- 	xclose(s);
+ 	if (ei) {
++		/* The ei should have no children if it is being freed. */
++		WARN_ON_ONCE(!list_empty(&ei->children));
+ 		ei->is_freed = 1;
++		/*
++		 * The SRCU iteration has a smp_rmb() to make sure it
++		 * sees a child (that may have already been freed)
++		 * before it reads is_free. If is_free is set, it must
++		 * not use the child it acquired from ei->children, as
++		 * the list may be used for SRCU.
++		 */
++		smp_wmb();
+ 		put_ei(ei);
+ 	}
  }
+@@ -647,6 +657,20 @@ static int eventfs_iterate(struct file *
+ 	list_for_each_entry_srcu(ei_child, &ei->children, list,
+ 				 srcu_read_lock_held(&eventfs_srcu)) {
  
-@@ -77,8 +74,8 @@ static void test_insert_bound(struct test_sockmap_listen *skel __always_unused,
- 	struct sockaddr_storage addr;
- 	socklen_t len = 0;
- 	u32 key = 0;
--	u64 value;
- 	int err, s;
-+	u64 value;
- 
- 	init_addr_loopback(family, &addr, &len);
- 
-@@ -93,8 +90,12 @@ static void test_insert_bound(struct test_sockmap_listen *skel __always_unused,
- 	errno = 0;
- 	value = s;
- 	err = bpf_map_update_elem(mapfd, &key, &value, BPF_NOEXIST);
--	if (!err || errno != EOPNOTSUPP)
--		FAIL_ERRNO("map_update: expected EOPNOTSUPP");
-+	if (sotype == SOCK_STREAM) {
-+		ASSERT_ERR(err, "map_update");
-+		ASSERT_EQ(errno, EOPNOTSUPP, "errno");
-+	} else {
-+		ASSERT_OK(err, "map_update");
-+	}
- close:
- 	xclose(s);
- }
-@@ -1289,7 +1290,7 @@ static void test_ops(struct test_sockmap_listen *skel, struct bpf_map *map,
- 		/* insert */
- 		TEST(test_insert_invalid),
- 		TEST(test_insert_opened),
--		TEST(test_insert_bound, SOCK_STREAM),
-+		TEST(test_insert_bound),
- 		TEST(test_insert),
- 		/* delete */
- 		TEST(test_delete_after_insert),
--- 
-2.53.0
-
++		/*
++		 * If the ei is being freed, then the ei->children may be
++		 * being used as the rcu list, which means the next element
++		 * may be garbage. The ei->is_free is set before switching
++		 * the ei->children over to ei->rcu. The read memory barrier
++		 * here makes sure the ei_child is read before is_free is
++		 * updated.
++		 *
++		 * Matches the smp_wmb() in free_ei()
++		 */
++		smp_rmb();
++		if (ei->is_freed)
++			return -EINVAL;
++
+ 		if (c > 0) {
+ 			c--;
+ 			continue;
+--- a/fs/tracefs/internal.h
++++ b/fs/tracefs/internal.h
+@@ -46,11 +46,11 @@ struct eventfs_attr {
+  * @ino:	The saved inode number
+  */
+ struct eventfs_inode {
++	struct list_head	list;
+ 	union {
+-		struct list_head	list;
++		struct list_head	children;
+ 		struct rcu_head		rcu;
+ 	};
+-	struct list_head		children;
+ 	const struct eventfs_entry	*entries;
+ 	const char			*name;
+ 	struct eventfs_attr		*entry_attrs;
 
 
