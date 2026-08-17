@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9106843CED7;
-	Mon, 17 Aug 2026 14:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E334322E5;
+	Mon, 17 Aug 2026 14:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978686; cv=none; b=YWAJdsTsEX0U2RCuQq3kGo3UXve27tk7D4JnZE++rbyHV3v0e/cclEuHyeHR+4C1EwME4l5G+1qHfrBE+xRgbxemYEXAUzqulSmXX24tR4Cyux0OWDu5gpEXaQBYHG4M8IM5KhLsZd1r8NSF5qEEs3QnmLpmNSI6BQTT+n0JyGE=
+	t=1786978689; cv=none; b=VD9usJx++zEXJyH067v4xuf4CzuJzQ1ucysUWUZGqBNkTtF6N7BtZebEaqIBrY3D3DN1mqNZ7SDiTadl9htgpcTxD1F9tlLrYE51HSK/9vH2I11lg3VC1T3RHUBsAZrQ4D+0vTNdThSPRGLCFzy9P+FDBehoo48v4bnaawxPdBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978686; c=relaxed/simple;
-	bh=HNVEjrae2K/mffnVgxQ5eV02LFrGJI6YZBpMBiD4vx8=;
+	s=arc-20240116; t=1786978689; c=relaxed/simple;
+	bh=kFXVbymRKpTH7PAHa82F9d70Yy0In9jCfuVReFlHPFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A90oZF1aeh3zYMJIhBEDq4KLjLRdX//kGuYP/xpfunXsY7T7dRUl76wjOG/EMEZjQ79gPW5VI3ZdoJmxEtAkgq1ZIbu+zFcX9Ez54x8aRRVQUDIzbj2OBS2ckZI3KITQ1KepUKTdf/CJcp4CXpYKFrPs+ihZKBXA+yuM/WbT8vA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdGl0dCc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OE9mvNqovAtmq+OOEbQxlqmgiLHdTHcM5CWuNIPWRTY72AWSPoXx/0yAMhvSWpwxaZMn6LdkaJjnXrtkggos8ghJrlDoOCj707zEyXP9GKK0LYGTBDvQrgvSxAbLD15NPrFdVe5UFAjPM+vBk/M/ngidnFpb3Nz30zVjAS/qAz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ihqk9+dn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdGl0dCc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44281F000E9;
-	Mon, 17 Aug 2026 14:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihqk9+dn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C68FF1F000E9;
+	Mon, 17 Aug 2026 14:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978685;
-	bh=EuFVHy0n8103GOzWUiiSXe6Lzl25lcN+tOjKDdFml9w=;
+	s=korg; t=1786978688;
+	bh=q7VBTPG0Ilmx/wgjXWuIOEfiFRNPvOk2d4xMvSHqcFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pdGl0dCcOi0qHcuRIVbi84VpClNl4RmMHLShnzleNla2nClaWal0eXdrSVTGZKpto
-	 I7O38NQpMUDoCjjpChKR4nTr2PE4f6YfqlsEQ9p8bQ9w/oXgAw5xcvUtcoxiy6dJDx
-	 3FJ57EtY/TttzHHbcZqj313CVCxDxyA9x5ST16cI=
+	b=ihqk9+dnQGYfJq7utQBRA0zky6BNIy9GpIM1DFPnMItq5WJZuLm2iteQIgGDi8g9Y
+	 E80nyRnsdGiaiFryjs/CZBh4xNqmdmF3/pFgBOggTXRI+6B/VsWaS4OwRgyhv23Eh9
+	 mcQv1CriQWJnDFO0o3ZwAoKfgCra5tjxOUKr1f5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 083/156] net: openvswitch: reallocate update replies for mismatched IDs
-Date: Mon, 17 Aug 2026 15:33:37 +0200
-Message-ID: <20260817132537.855963041@linuxfoundation.org>
+	Zijie Huang <milkory@outlook.com>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 084/156] net/sched: reject overly deep qdisc hierarchies
+Date: Mon, 17 Aug 2026 15:33:38 +0200
+Message-ID: <20260817132537.893053667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -52,87 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Zijie Huang <milkory@outlook.com>
 
-commit 5d1c224dd914579524a183a514c12b95095d12ce upstream.
+commit dedd34b0f2310e28c5f6d4875cfbf4b7ed821c01 upstream.
 
-ovs_flow_cmd_new() preallocates the optional reply skb before it takes
-ovs_mutex and before it knows which existing flow will be updated.
+Deep qdisc hierarchies can lead to excessive recursion in qdisc tree
+walkers and exhaust the kernel stack. The existing loop check does not
+cover the create-and-graft path, so a hierarchy can still be extended by
+creating a new child qdisc below an already deep parent.
 
-That is normally fine because the skb is sized from the request flow
-identifier.  That identifier also becomes the inserted flow's identifier.
-For updates, however, a request with a UFID may miss the UFID lookup and
-then fall back to the flow key lookup.  That lookup can legitimately find
-an existing key-identified flow.  UFIDs are optional and the flow key is
-the primary identifier.
+Store the hierarchy depth in struct Qdisc and update it when qdiscs are
+grafted. Reject new child qdiscs once the parent is already at the maximum
+allowed depth.
 
-For echoed replies, ovs_flow_cmd_fill_info() writes the matched flow's
-identifier, not the request identifier used for the preallocation.  A short
-request UFID can therefore leave too little room for the key identifier.
-The fill can then fail with -EMSGSIZE and hit the BUG_ON(error < 0) in the
-update path.
-
-Once the update target has been resolved, reallocate the reply skb if the
-matched flow needs a larger reply than the request identifier allowed.  Do
-this before replacing the actions so the request can still fail cleanly if
-the rare extra allocation fails.
-
-Fixes: 74ed7ab9264c ("openvswitch: Add support for unique flow IDs.")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
+Suggested-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/f7bbd3c30ce81a39156e226b3872d73abed21d2f.1785644623.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Zijie Huang <milkory@outlook.com>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/1e9ab39597423fd5d13cfaaf52279b8ee3d9fc3c.1785434373.git.milkory@outlook.com
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/datapath.c |   29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ include/net/sch_generic.h |    1 +
+ net/sched/sch_api.c       |    9 +++++++++
+ 2 files changed, 10 insertions(+)
 
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -1084,9 +1084,8 @@ static int ovs_flow_cmd_new(struct sk_bu
- 			error = -EEXIST;
- 			goto err_unlock_ovs;
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -100,6 +100,7 @@ struct Qdisc {
+ 	struct hlist_node       hash;
+ 	u32			handle;
+ 	u32			parent;
++	int			depth;
+ 
+ 	struct netdev_queue	*dev_queue;
+ 
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -1066,6 +1066,9 @@ static int qdisc_graft(struct net_device
+ 		unsigned int i, num_q, ingress;
+ 		struct netdev_queue *dev_queue;
+ 
++		if (new)
++			new->depth = 0;
++
+ 		ingress = 0;
+ 		num_q = dev->num_tx_queues;
+ 		if ((q && q->flags & TCQ_F_INGRESS) ||
+@@ -1163,9 +1166,15 @@ skip:
+ 			NL_SET_ERR_MSG(extack, "STAB not supported on a non root");
+ 			return -EINVAL;
  		}
--		/* The flow identifier has to be the same for flow updates.
--		 * Look for any overlapping flow.
--		 */
-+
-+		/* Look for any overlapping flow. */
- 		if (unlikely(!ovs_flow_cmp(flow, &match))) {
- 			if (ovs_identifier_is_key(&flow->id))
- 				flow = ovs_flow_tbl_lookup_exact(&dp->table,
-@@ -1098,6 +1097,30 @@ static int ovs_flow_cmd_new(struct sk_bu
- 				goto err_unlock_ovs;
- 			}
- 		}
-+
-+		if (unlikely(reply)) {
-+			size_t cur, req;
-+
-+			cur = ovs_flow_cmd_msg_size(acts, &new_flow->id,
-+						    ufid_flags);
-+			req = ovs_flow_cmd_msg_size(acts, &flow->id,
-+						    ufid_flags);
-+			if (cur < req) {
-+				struct sk_buff *resized;
-+
-+				resized = ovs_flow_cmd_alloc_info(acts,
-+								  &flow->id,
-+								  info, false,
-+								  ufid_flags);
-+				if (IS_ERR(resized)) {
-+					error = PTR_ERR(resized);
-+					goto err_unlock_ovs;
-+				}
-+				kfree_skb(reply);
-+				reply = resized;
-+			}
++		if (new && parent->depth >= 7) {
++			NL_SET_ERR_MSG(extack, "Qdisc hierarchy is too deep");
++			return -E2BIG;
 +		}
-+
- 		/* Update actions. */
- 		old_acts = ovsl_dereference(flow->sf_acts);
- 		rcu_assign_pointer(flow->sf_acts, acts);
+ 		err = cops->graft(parent, cl, new, &old, extack);
+ 		if (err)
+ 			return err;
++		if (new)
++			new->depth = parent->depth + 1;
+ 		notify_and_destroy(net, skb, n, classid, old, new, extack);
+ 	}
+ 	return 0;
 
 
