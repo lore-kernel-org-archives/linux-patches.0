@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFD43DBD49;
-	Mon, 17 Aug 2026 13:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4116D44236E;
+	Mon, 17 Aug 2026 13:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975054; cv=none; b=s5VMJpEyCCdzVgPg3qzc372IB7JLCWhoiY2kjR4PCtg5oojDMtsVKv6JgPvRTW58HuaJWj1Wn6giga7tkOnN+NMFkffpIhMcNuZ+XYhIVgpoxONNsaE+PxwIbjQiJM/4SpnYG2KOcKDgbEJC3zOFhhXEYfauczgVAk/pApTXcRY=
+	t=1786975058; cv=none; b=LRdUkQ5dY9QRoJn2PHBA7mc/Ve2+PdyuBkVgHomF77swzYzh1dfUjVkqb40gbxmdBxH8738bUgDvc+a+v6VvmwSHSBq2jsmuaccbWjCbp3rJOExpAcI3vkiismDd3MDXtC1+cwC6Qs/LyFg+NsbY5RosE0BIckBjoYvRzNrNLoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975054; c=relaxed/simple;
-	bh=WjhEHSBBWgr6z91kKtNjFEBRJQiCqSXaJkundC9jsq4=;
+	s=arc-20240116; t=1786975058; c=relaxed/simple;
+	bh=S1X2v0Gv6PKDvbIbUlHCKlpk+z43PrWOQQsqZAhkOXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HkLpqJ1oOnB9KXe7+g0HCuppe2VYVny0zcSRkMCrVtuMCfICGlOEwHpcoUzyd1D+RJRwAT/Eh59cxS1lYJ77HeFy+RexW5DpxQ2iv8bpNsRMSVxgABOcDioJt7N/+AX1PNCPzU2x835bnaovf8JMrK+BKFauEr0mXuhi8944sbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0h/w3GSU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=po7RuFNWX5QGpjp8f6UY9qqS/kM78HWK6kDvQCTCQnVgE5cGKT9E+TLNR/I47TntyetgQEFMa5B/d6mgm1pl/J4c3HOd5BAZzK3REm8Ms9qkiKSz2lXuhRyVp5HlnNxUWGgP8hQXn6zBZZemuP/4tsYD6pcvg8Jd2srQZZPmOQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9ynaEFT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0h/w3GSU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D931F000E9;
-	Mon, 17 Aug 2026 13:57:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9ynaEFT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BDA51F000E9;
+	Mon, 17 Aug 2026 13:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975053;
-	bh=QZ4LSSLTilW/Wdwg2j6OeRn2OhaGFZShyLDqRcq71r8=;
+	s=korg; t=1786975056;
+	bh=4WgW1Pbie6ej6DN/hgZFE6anjGEXf2YAdpc3Ov3rguI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0h/w3GSUakekEbspYsqXxzBCB5ngSQLOeFwkudfu1dEudO0KuHZPEoZATQ/Gn+05z
-	 wyOHAqTDMvzWss51Bj/ziicANmDU1hrXGGKhvFUKJeh/zWjCFpO4yPWt+irJFw/buS
-	 tQBW5fpTj9YJTQ3U7xqbAm+O/wt1rpISl+GbRwp0=
+	b=W9ynaEFTCcc9mw2zv7jCPVEH/4qWFpAzJwGMjny5P+44a0/hKfnZB//D86WKh2+Pt
+	 fB4BSgGydHvo9OINXVulBiagtvjJTBRIAiaGlZ7OY1w8mIB2Q06GcZ2u7fWrdE2ezd
+	 WyQxubv8y5umIpGNkLUAirsmNr4YZqvs7RrWBY8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Baul Lee <baul.lee@xbow.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 145/250] net: bridge: mrp: fix uninitialised bytes on the wire
-Date: Mon, 17 Aug 2026 15:31:46 +0200
-Message-ID: <20260817132542.476827044@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Thorsten Leemhuis <regressions@leemhuis.info>,
+	Sergio Callegari <sergio.callegari@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 146/250] Revert "drm/amd/display: Fix backlight max_brightness to match exported range"
+Date: Mon, 17 Aug 2026 15:31:47 +0200
+Message-ID: <20260817132542.519104730@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,53 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 63488dba65ef91373ef616575b32eb0eb21459f4 upstream.
+This reverts commit 490ceacd2162de919a142bcb4eff363bb493b1de.
 
-br_mrp_alloc_test_skb() builds MRP test frames on an skb from
-dev_alloc_skb(), which does not clear the linear data area.  On the MRA
-ring-role branch the sub-option TLV header is appended with
+This patch is apparently missing a dependency from 7.2 as users have not
+reported any regressions with 7.2-rc, but there are regressions on 6.18.
 
-	sub_tlv = skb_put(skb, sizeof(*sub_tlv));
-	sub_tlv->type = BR_MRP_SUB_TLV_HEADER_TEST_AUTO_MGR;
+The regression manifests as inconsistent lower brightness at the top end
+(e.g., around 98%).
 
-so sub_tlv->length is never written, and the two trailing alignment bytes
-are appended with a bare skb_put() that does not clear them either.  The
-neighbouring oui and sub_opt regions are explicitly zeroed, so three
-uninitialised bytes are left in every MRA MRP_Test frame that goes out.
-
-Put the sub-option TLV header and the alignment padding in a single
-skb_put_zero(), which clears both.  The AUTO_MGR sub-TLV carries no
-payload, so the zeroed length field is already the value it should have.
-
-Fixes: f7458934b079 ("net: bridge: mrp: Update the Test frames for MRA")
-Suggested-by: Nikolay Aleksandrov <razor@blackwall.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260729131941.10254-1-baul.lee@xbow.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5562
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Thorsten Leemhuis <regressions@leemhuis.info>
+Cc: Sergio Callegari <sergio.callegari@gmail.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_mrp.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/bridge/br_mrp.c
-+++ b/net/bridge/br_mrp.c
-@@ -224,11 +224,9 @@ static struct sk_buff *br_mrp_alloc_test
- 		sub_opt = skb_put(skb, sizeof(*sub_opt));
- 		memset(sub_opt, 0x0, sizeof(*sub_opt));
- 
--		sub_tlv = skb_put(skb, sizeof(*sub_tlv));
--		sub_tlv->type = BR_MRP_SUB_TLV_HEADER_TEST_AUTO_MGR;
--
- 		/* 32 bit alligment shall be ensured therefore add 2 bytes */
--		skb_put(skb, MRP_OPT_PADDING);
-+		sub_tlv = skb_put_zero(skb, sizeof(*sub_tlv) + MRP_OPT_PADDING);
-+		sub_tlv->type = BR_MRP_SUB_TLV_HEADER_TEST_AUTO_MGR;
- 	}
- 
- 	br_mrp_skb_tlv(skb, BR_MRP_TLV_HEADER_END, 0x0);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 4f53297786623..fd5a6c6532a1e 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -5222,11 +5222,11 @@ amdgpu_dm_register_backlight_device(struct amdgpu_dm_connector *aconnector)
+ 	caps = &dm->backlight_caps[aconnector->bl_idx];
+ 	if (get_brightness_range(caps, &min, &max)) {
+ 		if (power_supply_is_system_supplied() > 0)
+-			props.brightness = DIV_ROUND_CLOSEST(max * caps->ac_level, 100);
++			props.brightness = DIV_ROUND_CLOSEST((max - min) * caps->ac_level, 100);
+ 		else
+-			props.brightness = DIV_ROUND_CLOSEST(max * caps->dc_level, 100);
++			props.brightness = DIV_ROUND_CLOSEST((max - min) * caps->dc_level, 100);
+ 		/* min is zero, so max needs to be adjusted */
+-		props.max_brightness = max;
++		props.max_brightness = max - min;
+ 		drm_dbg(drm, "Backlight caps: min: %d, max: %d, ac %d, dc %d\n", min, max,
+ 			caps->ac_level, caps->dc_level);
+ 	} else
+-- 
+2.53.0
+
 
 
