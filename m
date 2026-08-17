@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F620175A6B;
-	Mon, 17 Aug 2026 15:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA100282F29;
+	Mon, 17 Aug 2026 15:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978875; cv=none; b=ejx0+y8oDrI7DZDByVlyFlo6oAJbAgM/qeZsJbf3+ts/QYL1YXlS1JmRaIv7/cAPtPiKwMlzYCLiz1OmIitQLk3+t+QqjFFzalFJqpmlGPR+J8vKCJVaAm8/EEwIC4MlzBMY2sSIVsIFsv6+ELEswxMGp1l5Es/I3jv5gWoQivY=
+	t=1786978879; cv=none; b=AHUXfa2I9YsYEQQJ+40NKsSWkh1KBF3J7PYGPgfsJRDQaf/ODy8byRojt4EoK0Pwq2IFokAaPfWgkRuqYFyxzwHvSFIb93rFsahwZ2sg8T+cEbQDS4xD27Z/Zb7hZiXnLG0UJ3j2pQddOqGkJc+pNuHNNyiX0gpk0S2HoXbRpmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978875; c=relaxed/simple;
-	bh=G4LnH1a3gHkhhebqpSRG/0XxTLD1zwBKp6pqrl8KBOc=;
+	s=arc-20240116; t=1786978879; c=relaxed/simple;
+	bh=VnNFugAtdsKtkeb7pSejBnIFPOwsqgP1fNXN4KIO5VY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IOycGZj1RjzhIQrcrLeCB6rwzHUbgUa4GisdOeiT1iQ5gDkHjDkPYocdQq4YartGxFJrkKpWouO244k05YoQ8yJ0pEJnNalwtkCkY9FZP+jehgBVVAciz5HpM7d2MJn2Du4Lw02GR5QUjwBgCbd5tNvXh0VlvvusQYupBVItAb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqVBsdji; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dv0U+7zFzOGabRUWG0h95ZkYs/dw2TJbIkUl40oSBwR5A4nfM2Re9VZMRyLSXNV1Srs3ps+OrCgzDU7pxOgqiY+QSDoeqDSQR6Vt/RR75w+fy0v+LtY44PBME13aIDZbig07KMp8YBAKjiC+5147qlVwbaDT65sHeUPNbz5ScIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=llMtKzP/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqVBsdji"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 589451F00A3A;
-	Mon, 17 Aug 2026 15:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="llMtKzP/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 304BA1F000E9;
+	Mon, 17 Aug 2026 15:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978874;
-	bh=hWrfTgIgv1w0DYbs6eIkfGMBYu7QINOqg2jhzPaTDUI=;
+	s=korg; t=1786978877;
+	bh=JnFSbHNs23stLVvTocXhXyGAEznKEdJ6yUiDq2iDSNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tqVBsdjiGPb8PYb1xknOqBqmznBocx2spS+McUBgmNLS5FZDj8V1Aa2j584B2+QPy
-	 cHBSOTaNrjhhCNKZQvicHjeoR7Zse0Kn0zCQpL/TmRAMXDUCLEC8kyslRX1Z6pgNpQ
-	 WsIptyGpLxaoOZGNFVoIqvnPdIlwZuGDaeBLpW9s=
+	b=llMtKzP/lcLsbFh6pjkbB6jBimCAKABPWz2U4TAGggxfRa8YDTkKGz82XPLz0l4LJ
+	 IF7pvbd9FIxwc065vdI2k0YdoQd/QHxkAcf6+6321RySUz/owkNVNh3qWNl8s8cNvR
+	 KV/1Q8cOK9/yXJESExD9FGh9YWoQwZpjZCHSL5XI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko bot <sashiko-bot@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Cheng Xu <chengyou@linux.alibaba.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/609] Input: ims-pcu - fix logic error in packet reset
-Date: Mon, 17 Aug 2026 15:25:19 +0200
-Message-ID: <20260817132543.997371490@linuxfoundation.org>
+Subject: [PATCH 6.1 032/609] RDMA/erdma: initialize ret for empty receive WR lists
+Date: Mon, 17 Aug 2026 15:25:28 +0200
+Message-ID: <20260817132544.336496451@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,40 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 2c9b85a14abb4811e8d4773ccd13559e59792efb ]
+[ Upstream commit 2815a277c53e9a84784d6410cd55a9da5b33068d ]
 
-ims_pcu_reset_packet() incorrectly sets have_stx to true, which implies
-that the start-of-packet delimiter has already been received. This
-causes the protocol parser to skip waiting for the next STX byte and
-potentially process garbage data.
+erdma_post_recv() returns ret after walking the receive work request list.
+If the caller passes an empty list, the loop is skipped and ret is not
+assigned.
 
-Correctly set have_stx to false when resetting the packet state.
+Initialize ret to 0 so an empty receive work request list returns success
+instead of stack data.
 
-Fixes: 875115b82c29 ("Input: ims-pcu - fix heap-buffer-overflow in ims_pcu_process_data()")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko bot <sashiko-bot@kernel.org>
-Assisted-by: Gemini:gemini-3.1-pro
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 155055771704 ("RDMA/erdma: Add verbs implementation")
+Link: https://patch.msgid.link/r/20260618041752.481193-1-ruoyuw560@gmail.com
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Cheng Xu <chengyou@linux.alibaba.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/ims-pcu.c | 2 +-
+ drivers/infiniband/hw/erdma/erdma_qp.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/input/misc/ims-pcu.c b/drivers/input/misc/ims-pcu.c
-index af1dfc08b10b25..6b2aeaa50812f2 100644
---- a/drivers/input/misc/ims-pcu.c
-+++ b/drivers/input/misc/ims-pcu.c
-@@ -450,7 +450,7 @@ static void ims_pcu_handle_response(struct ims_pcu *pcu)
+diff --git a/drivers/infiniband/hw/erdma/erdma_qp.c b/drivers/infiniband/hw/erdma/erdma_qp.c
+index e3b0baa703e681..74cb47ab827e14 100644
+--- a/drivers/infiniband/hw/erdma/erdma_qp.c
++++ b/drivers/infiniband/hw/erdma/erdma_qp.c
+@@ -537,7 +537,7 @@ int erdma_post_recv(struct ib_qp *ibqp, const struct ib_recv_wr *recv_wr,
+ 	const struct ib_recv_wr *wr = recv_wr;
+ 	struct erdma_qp *qp = to_eqp(ibqp);
+ 	unsigned long flags;
+-	int ret;
++	int ret = 0;
  
- static void ims_pcu_reset_packet(struct ims_pcu *pcu)
- {
--	pcu->have_stx = true;
-+	pcu->have_stx = false;
- 	pcu->have_dle = false;
- 	pcu->read_pos = 0;
- 	pcu->check_sum = 0;
+ 	spin_lock_irqsave(&qp->lock, flags);
+ 
 -- 
 2.53.0
 
