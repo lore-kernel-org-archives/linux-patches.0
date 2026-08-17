@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40C843F4DB;
-	Mon, 17 Aug 2026 13:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6014843F0AF;
+	Mon, 17 Aug 2026 13:49:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974582; cv=none; b=IINcG9AQLsDQIlvH4VsXpt6ztrL3qOoeJk0hPlHQqDQkZeeerO7sQ+e8mXmy7X9jMRhdOgDO6B63O8do9Szyd7zzWQuHrrF+immMex/fnFgMrQpimuRDMgIK0hYTbd3GNlwcLMpA8RlwtjQvZ9kpirPYZMP1mjRYpg4WTzwk1mc=
+	t=1786974586; cv=none; b=cuiptM7vwkp56zXslfb/KNrU9frRYrTgWD51cGdEWV5zHEWL3rzxaH8oNJfdTgcmQokwsTZcA+MA/xxHDRFeD8vOa9lX0TPWY+RXQgDYrxGEMTa4LZLjNYPGR17Adwe+chsqpIs+AqIoSGqOevDanSiZkyj20A83npozXQSkR9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974582; c=relaxed/simple;
-	bh=B5nzRf1x6H+3u+ZdzLs1S4aI1ZOiNbKXVEDRImfNt6Y=;
+	s=arc-20240116; t=1786974586; c=relaxed/simple;
+	bh=htWCE/a7BDfJGAwgUtopwG1uUo4fxtiVfNvfR0khLKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=onRyLWuLIK66FiIdFOJCnMMTXC8NUZCiH79JME0UqSyE30pxx3GQd8+VC+CJwtXzPsEJRypifOFZe6E8t5Ixt7gzG8Vz6qCJ4K7+DXicJ0vv5vCJRwQncAAaZGhv6eJob6RMXER+zI86vspNtt/GAcw39nmmFtYEkH9MpnDveso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lb3m41ci; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L5gWyWhhlaFUD2geUnCaqnxuv6CumeNIHi/c4O/M2TF8k4TOEiCpjQ9DjzTupRsHb2DnqY9s5vhZBOt2PyuDYCeDWAcdeNO+Bqjt/3w0KR9D21UYRYib1T6zyDBNZ6DnsYNMYtLfaCN6ZWwZWkfVB4fFnwHXAWHBTz13wlXpAG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdvv00dE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lb3m41ci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2761F000E9;
-	Mon, 17 Aug 2026 13:49:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdvv00dE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684A51F00A3A;
+	Mon, 17 Aug 2026 13:49:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974575;
-	bh=tvoMAflkSGC0Cl+lCAH3y/ZUia/HZrdapKVkJpcsPtc=;
+	s=korg; t=1786974579;
+	bh=WPpSU5PkstXKsMhOp5sA1JlURmk8yTkKoCeAK0eXPr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lb3m41cijMj2gDVttCV08onXzvmjZEJo4cRl5hiM51prrgjOF9kc/YqObv6lqVfvR
-	 BZX/6GahEOGhaRe97LCNU06wFvXeP48Fm6yF5qdK6dchWAOwAL5keUN4RM1ZVeF62e
-	 Z2EbJHAD8fp0Bl3Nj/48map0hGPYPgbl3eEXeBMo=
+	b=mdvv00dEXdUzJcM3+ryouR1YizbEaH3UWU1RiXPtpEDGq3zsLYdoBIyNlEyYBEm2P
+	 coA3hAiCG4a4veT5xeFLiA2IEakbvy1vuNakfLgMCX255KdXsagK+sNnaKaxR0gtZM
+	 28aeN5QCKGzSZRtvR9RvEfZuhV4R1ct/Uu4RHZW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
+	Baul Lee <baul.lee@xbow.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 214/271] net/dibs: Correct freeing of dmb_clientid_arr
-Date: Mon, 17 Aug 2026 15:32:19 +0200
-Message-ID: <20260817132545.595488078@linuxfoundation.org>
+Subject: [PATCH 7.1 215/271] net/x25: fix use-after-free of the socket by its timers
+Date: Mon, 17 Aug 2026 15:32:20 +0200
+Message-ID: <20260817132545.630036755@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -52,91 +50,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit 9e6869be49064915edb6c8776b27c376cfdb0df5 upstream.
+commit 2195424c3da2ef1829a63b807e3a900a90e57d85 upstream.
 
-A dibs device interrupt handler can be active after dibs_dev_del() and
-may still access dmb_clientid_arr. (UAF)
+The x25 timers are armed with mod_timer() and cancelled with
+timer_delete(), so a pending timer holds no reference on the socket and a
+cancel does not wait for a callback already running on another CPU.
 
-In case of a failure in dibs_dev_add() being called by dibs_lo_dev_probe()
-dmb_clientid_arr is freed twice (double free).
+x25_heartbeat_expiry() also rearms unconditionally, so it can reinstall
+sk->sk_timer after __x25_destroy_socket() has passed its cancel point.
+The following __sock_put() frees the socket while the timer is still
+queued, and the next expiry uses freed memory.  KASAN reports a
+slab-use-after-free on the kmalloc-2k object freed by close().
 
-Free dmb_clientid_arr in dibs_dev_release() after last reference is gone.
-Note that allocating in dibs_dev_add() instead of dibs_dev_alloc() is ok
-for now, because no dmbs can be registered before dibs_dev_add().
+timer_delete_sync() cannot be used here: x25_heartbeat_expiry() and
+x25_timer_expiry() both reach the cancels from inside the timer they
+would wait on, through __x25_destroy_socket() and x25_disconnect().
 
-Fixes: cc21191b584c ("dibs: Move data path to dibs layer")
+Arm the timers with sk_reset_timer() and cancel them with sk_stop_timer()
+so that an armed timer owns a reference, and release it in both expiry
+handlers.  Rearm the heartbeat only while sk_hashed(sk) is still true,
+since __x25_destroy_socket() unlinks the socket before dropping it.  Arm
+the deferred destroy timer the same way and drop its reference in
+x25_destroy_timer().
+
+Reproduced on net with KASAN, with the heartbeat period shortened so the
+window recurs.  With this patch the reproducer no longer triggers a
+report and /proc/net/x25 drains.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Co-developed-by: Hidayath Khan <hidayath@linux.ibm.com>
-Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Link: https://patch.msgid.link/20260810111432.2334900-1-wintera@linux.ibm.com
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260726220342.47245-1-baul.lee@xbow.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dibs/dibs_loopback.c |    1 -
- drivers/dibs/dibs_main.c     |   14 ++++----------
- 2 files changed, 4 insertions(+), 11 deletions(-)
+ net/x25/af_x25.c    |    4 ++--
+ net/x25/x25_timer.c |   25 ++++++++++++++++---------
+ 2 files changed, 18 insertions(+), 11 deletions(-)
 
---- a/drivers/dibs/dibs_loopback.c
-+++ b/drivers/dibs/dibs_loopback.c
-@@ -335,7 +335,6 @@ static int dibs_lo_dev_probe(void)
- 	return 0;
+--- a/net/x25/af_x25.c
++++ b/net/x25/af_x25.c
+@@ -362,6 +362,7 @@ static void x25_destroy_timer(struct tim
+ 	struct sock *sk = timer_container_of(sk, t, sk_timer);
  
- err_reg:
--	kfree(dibs->dmb_clientid_arr);
- 	/* pairs with dibs_dev_alloc() */
- 	put_device(&dibs->dev);
- 	kfree(ldev);
---- a/drivers/dibs/dibs_main.c
-+++ b/drivers/dibs/dibs_main.c
-@@ -128,6 +128,7 @@ static void dibs_dev_release(struct devi
- 
- 	dibs = container_of(dev, struct dibs_dev, dev);
- 
-+	kfree(dibs->dmb_clientid_arr);
- 	kfree(dibs);
+ 	x25_destroy_socket_from_timer(sk);
++	sock_put(sk);
  }
  
-@@ -194,12 +195,13 @@ int dibs_dev_add(struct dibs_dev *dibs)
+ /*
+@@ -397,9 +398,8 @@ static void __x25_destroy_socket(struct
  
- 	ret = device_add(&dibs->dev);
- 	if (ret)
--		goto free_client_arr;
-+		return ret;
+ 	if (sk_has_allocations(sk)) {
+ 		/* Defer: outstanding buffers */
+-		sk->sk_timer.expires  = jiffies + 10 * HZ;
+ 		sk->sk_timer.function = x25_destroy_timer;
+-		add_timer(&sk->sk_timer);
++		sk_reset_timer(sk, &sk->sk_timer, jiffies + 10 * HZ);
+ 	} else {
+ 		/* drop last reference so sock_put will free */
+ 		__sock_put(sk);
+--- a/net/x25/x25_timer.c
++++ b/net/x25/x25_timer.c
+@@ -36,45 +36,45 @@ void x25_init_timers(struct sock *sk)
  
- 	ret = sysfs_create_group(&dibs->dev.kobj, &dibs_dev_attr_group);
- 	if (ret) {
- 		dev_err(&dibs->dev, "sysfs_create_group failed for dibs_dev\n");
--		goto err_device_del;
-+		device_del(&dibs->dev);
-+		return ret;
+ void x25_start_heartbeat(struct sock *sk)
+ {
+-	mod_timer(&sk->sk_timer, jiffies + 5 * HZ);
++	sk_reset_timer(sk, &sk->sk_timer, jiffies + 5 * HZ);
+ }
+ 
+ void x25_stop_heartbeat(struct sock *sk)
+ {
+-	timer_delete(&sk->sk_timer);
++	sk_stop_timer(sk, &sk->sk_timer);
+ }
+ 
+ void x25_start_t2timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t2);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t2);
+ }
+ 
+ void x25_start_t21timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t21);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t21);
+ }
+ 
+ void x25_start_t22timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t22);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t22);
+ }
+ 
+ void x25_start_t23timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t23);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t23);
+ }
+ 
+ void x25_stop_timer(struct sock *sk)
+ {
+-	timer_delete(&x25_sk(sk)->timer);
++	sk_stop_timer(sk, &x25_sk(sk)->timer);
+ }
+ 
+ unsigned long x25_display_timer(struct sock *sk)
+@@ -108,7 +108,7 @@ static void x25_heartbeat_expiry(struct
+ 			     sock_flag(sk, SOCK_DEAD))) {
+ 				bh_unlock_sock(sk);
+ 				x25_destroy_socket_from_timer(sk);
+-				return;
++				goto out;
+ 			}
+ 			break;
+ 
+@@ -120,8 +120,14 @@ static void x25_heartbeat_expiry(struct
+ 			break;
  	}
- 	mutex_lock(&dibs_dev_list.mutex);
- 	mutex_lock(&clients_lock);
-@@ -214,13 +216,6 @@ int dibs_dev_add(struct dibs_dev *dibs)
- 	mutex_unlock(&dibs_dev_list.mutex);
- 
- 	return 0;
--
--err_device_del:
--	device_del(&dibs->dev);
--free_client_arr:
--	kfree(dibs->dmb_clientid_arr);
--	return ret;
--
+ restart_heartbeat:
+-	x25_start_heartbeat(sk);
++	/* Do not rearm once __x25_destroy_socket() has unlinked the socket:
++	 * it is past its cancel point and owns the teardown from there on.
++	 */
++	if (sk_hashed(sk))
++		x25_start_heartbeat(sk);
+ 	bh_unlock_sock(sk);
++out:
++	sock_put(sk);
  }
- EXPORT_SYMBOL_GPL(dibs_dev_add);
  
-@@ -247,7 +242,6 @@ void dibs_dev_del(struct dibs_dev *dibs)
- 	mutex_unlock(&dibs_dev_list.mutex);
- 
- 	device_del(&dibs->dev);
--	kfree(dibs->dmb_clientid_arr);
+ /*
+@@ -166,4 +172,5 @@ static void x25_timer_expiry(struct time
+ 	} else
+ 		x25_do_timer_expiry(sk);
+ 	bh_unlock_sock(sk);
++	sock_put(sk);
  }
- EXPORT_SYMBOL_GPL(dibs_dev_del);
- 
 
 
