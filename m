@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66623DB30B;
-	Mon, 17 Aug 2026 13:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1008F3EB7F8;
+	Mon, 17 Aug 2026 13:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974888; cv=none; b=HlwrZFrR5xfaZGe+8qRRFsUZ8g6/77U7mz+fZacSPws03dIyogR44jKePsW6hiYG0FsMYM0Gc3F0UKsYNSVtyG2/ip/dXobvbfQTcvb2WondqIhWZVvk9tIHpW/wd44Gt+zV6p4cjKBiAf/GoN1IbwBtnzc9dpYnNr28pb19qnA=
+	t=1786974889; cv=none; b=AJTVKw8hWgmmYwuA/yVKPB2HXAFhuUw0nXPdGN0S2iwu+PA2S5xFRbYvZ8Wq8wysJx+SUZhboh7XdmkYfhh2ERWNI/S0GHpRamU7LZvnZa3d6OyXHtGklFR57HEeFa6qNhdgijUAP1eA8F9nyrWN4ZF3426zkQMHljbIM6hU7YI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974888; c=relaxed/simple;
-	bh=QP53iv2TGlFSEQ8ehMVlEBCEsMJ+NLi1eg4bniGPEcg=;
+	s=arc-20240116; t=1786974889; c=relaxed/simple;
+	bh=kFwp5XxuZ3n+B1J98iGK5gIMqu4dNClIJmXHgtG7oEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kp0muX3qNrrOlm7jZzJA4V+lno5JL/NPZKNze0KfMuhCFm0yvjiKsih7E6ufQ6ofYXceQ0UBJ3vN9UZCSlQJeuyle8n5OE8D2iX+6JmgMoDMa5WcXrKc4gxldnAyH+JwRmeCEWvFkgaT5PXA9Kw1mOxrOP5HooIzMV5u2ilu6JI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/p2sClg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D+6QnH/dkSgzML7UXIOks8h3hC+Z2NEI6CnsHCLl2HbgxMVtQuleh4CZKH+oFdAjV2zy2VhCkhytZlhB8vXOTvreWXb8NbC6qe+TV1A+cgqwcM6uMzOoMLDaStK0q9bV5zzEGAVPY+l7V5ont3WFBM12cWEAFXy1BaLdonR1w7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e42dUVr8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/p2sClg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72ECA1F00A3A;
-	Mon, 17 Aug 2026 13:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e42dUVr8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40C71F00A3D;
+	Mon, 17 Aug 2026 13:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974882;
-	bh=oHanaXKJePWteGW3dI9poZ0RmPqmUNN38/+OKECU9ck=;
+	s=korg; t=1786974885;
+	bh=2TKcXLfbtj3xlhld36LMpJD3lOo2UpokBp3g/KQc/fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O/p2sClgrr5raeyadetLui2+ULIJgzD057ZJesVjbtgctMBq3cR/A2kYr1hVDSoZd
-	 cXb+2Sq4mOxmxqiMtj0WhGqtpIKJ2rLKlmYA0GGGiihVLMxc4DSa/5+t1W9hnOTyOk
-	 IgcUc/3fY4NO/uE+xjupgn8YIEss93glz33DKObk=
+	b=e42dUVr8XSFENkAmCTcMffTkrfE0uMvCkzG8pEIIKZ8B2rhocId8BfIsxjVLdaXhP
+	 9zzzcX5r9A7fS7XYhw5di4oyXgG2EFlKGvRSuvhdaQdwAk9y74TCbfr10qLuQtNGFP
+	 vROmV8SOnRcdeR0PBotN5YUgwPZJTf+Y2rdfmf6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Keegan Freyhof <keegan.freyhof@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Antoine Tenart <atenart@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 088/250] bnxt_en: Fix PTP PPS setting bug
-Date: Mon, 17 Aug 2026 15:30:49 +0200
-Message-ID: <20260817132540.074707132@linuxfoundation.org>
+Subject: [PATCH 6.18 071/250] udp: fix potential use-after-free in tunnel segmentation
+Date: Mon, 17 Aug 2026 15:30:32 +0200
+Message-ID: <20260817132539.350899370@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -53,52 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keegan Freyhof <keegan.freyhof@broadcom.com>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-[ Upstream commit 80eaf88efec33ac77ed7726d066c4f2f932cc329 ]
+[ Upstream commit d0f86fb36eb260abd10007b62c9dcc1028e03e61 ]
 
-The existing driver logic is always turning on PTP_CLK_REQ_PPS
-regardless of the "on" parameter passed to bnxt_ptp_enable().
-During shutdown, PTP_CLK_REQ_PPS may be turned off and this
-bug will do the opposite and may trigger a PCIe PTM request TLP.
-On some systems this can trigger a PCIe AER.
+__skb_udp_tunnel_segment() gets the UDP header before ensuring the
+tunnel header is in the skb head. If the pull reallocates skb->head,
+the saved UDP header pointer is no longer valid.
 
-Fix it by properly configuring PTP_CLK_REQ_PPS based on the "on"
-parameter.
+Get the UDP header after the pull to avoid a potential use-after-free.
 
-Fixes: 9e518f25802c ("bnxt_en: 1PPS functions to configure TSIO pins")
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: Keegan Freyhof <keegan.freyhof@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20260731190937.807270-6-michael.chan@broadcom.com
+Fixes: dbef491ebe7f ("udp: Use uh->len instead of skb->len to compute checksum in segmentation")
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Antoine Tenart <atenart@kernel.org>
+Link: https://patch.msgid.link/20260730093554.68127-1-xuanqiang.luo@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/ipv4/udp_offload.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-index 0abaa2bbe3577..44b7afe9a6f56 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-@@ -514,12 +514,15 @@ static int bnxt_ptp_enable(struct ptp_clock_info *ptp_info,
- 		return rc;
- 	case PTP_CLK_REQ_PPS:
- 		/* Configure PHC PPS IN */
--		rc = bnxt_ptp_cfg_pin(bp, 0, BNXT_PPS_PIN_PPS_IN);
-+		pin_id = 0;
-+		if (!on)
-+			break;
-+		rc = bnxt_ptp_cfg_pin(bp, pin_id, BNXT_PPS_PIN_PPS_IN);
- 		if (rc)
- 			return rc;
- 		rc = bnxt_ptp_cfg_event(bp, BNXT_PPS_EVENT_INTERNAL);
- 		if (!rc)
--			ptp->pps_info.pins[0].event = BNXT_PPS_EVENT_INTERNAL;
-+			ptp->pps_info.pins[pin_id].event = BNXT_PPS_EVENT_INTERNAL;
- 		return rc;
- 	default:
- 		netdev_err(ptp->bp->dev, "Unrecognized PIN function\n");
+diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
+index 589456bd8b5f1..4f7ae02df8d3a 100644
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -178,17 +178,19 @@ static struct sk_buff *__skb_udp_tunnel_segment(struct sk_buff *skb,
+ 	int tnl_hlen = skb_inner_mac_header(skb) - skb_transport_header(skb);
+ 	bool remcsum, need_csum, offload_csum, gso_partial;
+ 	struct sk_buff *segs = ERR_PTR(-EINVAL);
+-	struct udphdr *uh = udp_hdr(skb);
+ 	u16 mac_offset = skb->mac_header;
+ 	__be16 protocol = skb->protocol;
+ 	u16 mac_len = skb->mac_len;
+ 	int udp_offset, outer_hlen;
++	struct udphdr *uh;
+ 	__wsum partial;
+ 	bool need_ipsec;
+ 
+ 	if (unlikely(!pskb_may_pull(skb, tnl_hlen)))
+ 		goto out;
+ 
++	uh = udp_hdr(skb);
++
+ 	/* Adjust partial header checksum to negate old length.
+ 	 * We cannot rely on the value contained in uh->len as it is
+ 	 * possible that the actual value exceeds the boundaries of the
 -- 
 2.53.0
 
