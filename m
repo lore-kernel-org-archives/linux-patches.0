@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A9D426693;
-	Mon, 17 Aug 2026 14:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11EB314D05;
+	Mon, 17 Aug 2026 14:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978279; cv=none; b=TZOdnIHSi7Q0IO9k0xzYxwgDDCunYKLx/c/sjiUAQcAPXMKcmXOYQ0rFdvkdepN3JFnx+ASaoemViAYaV2V2ckRw3nR3y1hUSBK0v4iAsyDYd/inKIZAd5DwzMqU1kn733L6Tm5xxBKAkaFXa6Jp4FiHmWByU6uWnrP2bJIdf+c=
+	t=1786978282; cv=none; b=WVVLTpLVZT7jCgOUpK3tm5bs45co94nruZ1g+sBf9oukSxEBX95jhDJ7nu4GAtock8awprv/8Gn4LmcFf6qP/QQWP8cF5bmcGuWGNFlu+zQn7RtG9N9a/6QUxJzuTn3KYabZJhwQc9ovs1+sfgRUUkKLK5e3Ny+X+dIBlenmBaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978279; c=relaxed/simple;
-	bh=p5dacGHBl/xkjMyyO1u60bY5hJ7CdpzKFSIpLBJWMcE=;
+	s=arc-20240116; t=1786978282; c=relaxed/simple;
+	bh=DKDpmt6GIRyhiwHbTLxE/DtRCh2NAdT9HCzySd+CP2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=etJ2cWVMucKGAPtfkpNPKoIV63sv+qnctYAYsuBH0bM5qVlNMxPlBGcTQK17zjHdHQJ2IThkjdT431kc5GT/BK9l8HRh9Suezq95UAf1JRV/lH+NpjxmIEj6r8JLZhFGq4CNGysluBoAvoZEOiAAFu8go9pARN/lLJ7xzSZm6Rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOMDxj44; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KFFSz1Orb5sKU02ggxmCNlGBoq+TrsFyXfbNwSsztuFzc7kHb4s7qFIosScnLqwATvDHdky2IsFZJKvS+ltUnTGexU/h/4VX2MWj6mjZkC9DHL1TWAAG863P6WSJu34t2vSGDIAVLkORkmlcjU3tohq/uM/g0vF/tbi4pQUG3fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G0IFNG67; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOMDxj44"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFF21F000E9;
-	Mon, 17 Aug 2026 14:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G0IFNG67"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 048DB1F000E9;
+	Mon, 17 Aug 2026 14:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978278;
-	bh=xqOI+gyzjPx5vS3qWByHc3l2GL1M+WLDB1Ns2NarETE=;
+	s=korg; t=1786978281;
+	bh=CT+eomOrd71sX7gA7KhcBooU139uCf8Y6b12Mp/YJb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cOMDxj44kP+i2eMoi0vk6k5GPQsgkny70Ejh9Hj2121yLsNdb/iaDLgUDETgsj1eo
-	 eJrEWEzgJt7l/sTcEM6e60GRrXPyOhv6auK2irDoQT+vk1S53/Nhk+iBY8AIgk/vni
-	 VIiqN756Gp4ZCkA72/VwcAOLpchJPr7iY/euhGfQ=
+	b=G0IFNG67o5BtfntNcVTv+i9TaUDiXe6YgWyBFZa2iGh8XEMDpzoDgAu7XCcdIobhM
+	 ggdElyfpYULXRvsEE7e9/Bbgm8wSy7RR8B1nRIW4MVU+zNwXgT79ywDDKuSL8eAlv8
+	 SJf2wgb//74+BEOFEhXmxVol3KWUGB+s6ySluO1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.12 161/181] KVM: x86/mmu: WARN and clear role.invalid when creating a child shadow page
-Date: Mon, 17 Aug 2026 15:34:15 +0200
-Message-ID: <20260817132542.022864737@linuxfoundation.org>
+	=?UTF-8?q?Jan=20Sebastian=20G=C3=B6tte?= <linux@jaseg.de>,
+	stable <stable@kernel.org>,
+	Praveen Talari <praveen.talari@oss.qualcomm.com>
+Subject: [PATCH 6.12 124/181] serial: qcom-geni: fix TX DMA buffer flush
+Date: Mon, 17 Aug 2026 15:33:38 +0200
+Message-ID: <20260817132540.454560513@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -45,98 +45,138 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Jan Sebastian Götte <linux@jaseg.de>
 
-commit 5ec42d57655c690234c14aece6dd3f209778c1d8 upstream.
+commit e3c04834ae1ab5e9cfbe8ac54ec734aa4774249d upstream.
 
-Explicitly clear role.invalid when deriving a child shadow page's role from
-its parent to harden against bugs elsewhere in KVM, as violating KVM's
-invariant that invalid pages are NOT on the list of active MMU pages leads
-to use-after-free due to __kvm_mmu_prepare_zap_page() using list_add()
-instead of list_move() when processing an invalid shadow page, i.e. makes a
-bad situation far worse.
+When transmit flushing a qcom-geni UART during an ongoing TX DMA, the
+UART gets stuck infinitely repeating corrupted TX DMA frames.
 
-Yell loudly if the parent is invalid, as it means KVM has missed a validity
-check, i.e. KVM is attempting to map memory using an invalid/obsolete root,
-but continue on as the child is otherwise still a valid shadow page.
+The DMA-mode uart_ops does not provide a flush_buffer callback, so an
+in-flight transfer can complete after serial core has reset the transmit
+kfifo, underflowing its length and resubmitting page-sized transfers
+indefinitely. Add one that stops the transfer and clears tx_remaining
+and tx_queued.
 
-  ==================================================================
-  BUG: KASAN: slab-use-after-free in __kvm_mmu_get_shadow_page+0x1817/0x1860 [kvm]
-  Write of size 8 at addr ff11000153dd1368 by task repro/853
+The stop path was also broken: it unmapped the buffer while the serial
+engine could still read it, and never reset the TX DMA state machine.
+Cancel the main sequencer command first, then reset the state machine
+and wait for it before unmapping. Drop the early return so a pending
+mapping is also cleaned up when the main command is inactive.
 
-  CPU: 1 UID: 1000 PID: 853 Comm: repro Not tainted 7.2.0-rc2-3aec122bdcaf-next-vm #5 PREEMPT
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x4b/0x70
-   print_report+0x153/0x49c
-   kasan_report+0xbc/0xf0
-   __kvm_mmu_get_shadow_page+0x1817/0x1860 [kvm]
-   mmu_alloc_root+0x141/0x320 [kvm]
-   kvm_mmu_load+0x612/0x20f0 [kvm]
-   kvm_arch_vcpu_ioctl_run+0x3dd5/0x6150 [kvm]
-   kvm_vcpu_ioctl+0x5e4/0x10d0 [kvm]
-   __x64_sys_ioctl+0x131/0x1b0
-   do_syscall_64+0x67/0x5f0
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-   </TASK>
+The bug can be triggered from userspace with a large write immediately
+followed by TCOFLUSH. A following tcdrain will hang forever. The bug was
+reproduced and this fix was validated on Arduino Uno Q (QRB2210)
+using /dev/ttyHS1.
 
-  Allocated by task 853:
-   kasan_save_stack+0x20/0x40
-   kasan_save_track+0x14/0x30
-   __kasan_slab_alloc+0x5f/0x70
-   kmem_cache_alloc_noprof+0xfe/0x2e0
-   __kvm_mmu_topup_memory_cache+0x135/0x530 [kvm]
-   paging64_page_fault+0x318/0x1e30 [kvm]
-   kvm_mmu_do_page_fault+0x21d/0x630 [kvm]
-   kvm_mmu_page_fault+0x18c/0x17b0 [kvm]
-   kvm_arch_vcpu_ioctl_run+0x1f35/0x6150 [kvm]
-   kvm_vcpu_ioctl+0x5e4/0x10d0 [kvm]
-   __x64_sys_ioctl+0x131/0x1b0
-   do_syscall_64+0x67/0x5f0
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-  Freed by task 853:
-   kasan_save_stack+0x20/0x40
-   kasan_save_track+0x14/0x30
-   kasan_save_free_info+0x3b/0x60
-   __kasan_slab_free+0x43/0x70
-   kmem_cache_free+0xe2/0x400
-   kvm_mmu_commit_zap_page.part.0+0x1e2/0x310 [kvm]
-   kvm_mmu_free_roots+0x283/0x560 [kvm]
-   kvm_arch_vcpu_ioctl_run+0x33c8/0x6150 [kvm]
-   kvm_vcpu_ioctl+0x5e4/0x10d0 [kvm]
-   __x64_sys_ioctl+0x131/0x1b0
-   do_syscall_64+0x67/0x5f0
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Fixes: a770f6f28b1a ("KVM: MMU: Inherit a shadow page's guest level count from vcpu setup")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Assisted-by: Claude:claude-5-opus Codex:gpt-5
+Signed-off-by: Jan Sebastian Götte <linux@jaseg.de>
+Fixes: 2aaa43c70778 ("tty: serial: qcom-geni-serial: add support for serial engine DMA")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260729174105.21838-2-git@jaseg.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/tty/serial/qcom_geni_serial.c |   43 +++++++++++++++++-----------------
+ 1 file changed, 22 insertions(+), 21 deletions(-)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -2291,6 +2291,9 @@ static union kvm_mmu_page_role kvm_mmu_c
- 	role.direct = direct;
- 	role.passthrough = 0;
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -145,6 +145,7 @@ static const struct uart_ops qcom_geni_u
+ static struct uart_driver qcom_geni_console_driver;
+ static struct uart_driver qcom_geni_uart_driver;
  
-+	WARN_ON_ONCE(role.invalid);
-+	role.invalid = 0;
++static void qcom_geni_serial_stop_tx_dma(struct uart_port *uport);
+ static void __qcom_geni_serial_cancel_tx_cmd(struct uart_port *uport);
+ static void qcom_geni_serial_cancel_tx_cmd(struct uart_port *uport);
+ static int qcom_geni_serial_port_setup(struct uart_port *uport);
+@@ -600,35 +601,34 @@ static unsigned int qcom_geni_serial_tx_
+ 	return !readl(uport->membase + SE_GENI_TX_FIFO_STATUS);
+ }
+ 
++static void qcom_geni_serial_flush_buffer_dma(struct uart_port *uport)
++{
++	struct qcom_geni_serial_port *port = to_dev_port(uport);
 +
- 	/*
- 	 * If the guest has 4-byte PTEs then that means it's using 32-bit,
- 	 * 2-level, non-PAE paging. KVM shadows such guests with PAE paging
++	qcom_geni_serial_stop_tx_dma(uport);
++	port->tx_remaining = 0;
++	port->tx_queued = 0;
++}
++
+ static void qcom_geni_serial_stop_tx_dma(struct uart_port *uport)
+ {
+ 	struct qcom_geni_serial_port *port = to_dev_port(uport);
+-	bool done;
+ 
+-	if (!qcom_geni_serial_main_active(uport))
+-		return;
++	if (qcom_geni_serial_main_active(uport))
++		__qcom_geni_serial_cancel_tx_cmd(uport);
+ 
+ 	if (port->tx_dma_addr) {
++		writel(1, uport->membase + SE_DMA_TX_FSM_RST);
++		if (!qcom_geni_serial_poll_bit(uport, SE_DMA_TX_IRQ_STAT,
++					       TX_RESET_DONE, true))
++			dev_err_ratelimited(uport->dev, "TX DMA reset failed");
++		writel(TX_RESET_DONE | TX_DMA_DONE,
++		       uport->membase + SE_DMA_TX_IRQ_CLR);
++
+ 		geni_se_tx_dma_unprep(&port->se, port->tx_dma_addr,
+ 				      port->tx_remaining);
+ 		port->tx_dma_addr = 0;
+-		port->tx_remaining = 0;
+ 	}
+-
+-	geni_se_cancel_m_cmd(&port->se);
+-
+-	done = qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
+-					 M_CMD_CANCEL_EN, true);
+-	if (!done) {
+-		geni_se_abort_m_cmd(&port->se);
+-		done = qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
+-						 M_CMD_ABORT_EN, true);
+-		if (!done)
+-			dev_err_ratelimited(uport->dev, "M_CMD_ABORT_EN not set");
+-		writel(M_CMD_ABORT_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
+-	}
+-
+-	writel(M_CMD_CANCEL_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
+ }
+ 
+ static void qcom_geni_serial_start_tx_dma(struct uart_port *uport)
+@@ -1140,7 +1140,7 @@ static void qcom_geni_serial_shutdown(st
+ 	uart_port_unlock_irq(uport);
+ }
+ 
+-static void qcom_geni_serial_flush_buffer(struct uart_port *uport)
++static void qcom_geni_serial_flush_buffer_fifo(struct uart_port *uport)
+ {
+ 	qcom_geni_serial_cancel_tx_cmd(uport);
+ }
+@@ -1614,7 +1614,7 @@ static const struct uart_ops qcom_geni_c
+ 	.request_port = qcom_geni_serial_request_port,
+ 	.config_port = qcom_geni_serial_config_port,
+ 	.shutdown = qcom_geni_serial_shutdown,
+-	.flush_buffer = qcom_geni_serial_flush_buffer,
++	.flush_buffer = qcom_geni_serial_flush_buffer_fifo,
+ 	.type = qcom_geni_serial_get_type,
+ 	.set_mctrl = qcom_geni_serial_set_mctrl,
+ 	.get_mctrl = qcom_geni_serial_get_mctrl,
+@@ -1637,6 +1637,7 @@ static const struct uart_ops qcom_geni_u
+ 	.request_port = qcom_geni_serial_request_port,
+ 	.config_port = qcom_geni_serial_config_port,
+ 	.shutdown = qcom_geni_serial_shutdown,
++	.flush_buffer = qcom_geni_serial_flush_buffer_dma,
+ 	.type = qcom_geni_serial_get_type,
+ 	.set_mctrl = qcom_geni_serial_set_mctrl,
+ 	.get_mctrl = qcom_geni_serial_get_mctrl,
 
 
