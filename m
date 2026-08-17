@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077F92FA0C6;
-	Mon, 17 Aug 2026 14:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372BD3DC4D8;
+	Mon, 17 Aug 2026 14:17:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976220; cv=none; b=GDCcvk9P2BKXq5kUDblYgx/3w1ASdYXNc2JXQ1IgWoOWlgOmer5yKXGnbdHk0NuDpoAoLiUnV8Htc6Xd700MfnmX2sSr04k8n11066QtyIOLGbSEQmlusrt0qE0jYyRd89p850M7NCkSRq0+so2N0LTQNJD9HjHILbZ+RSWRExU=
+	t=1786976223; cv=none; b=JMt0Y04iyDVkf/kQKanpL79PyxJhdVOPYe7SJJLG8CPIctiFjyJmPd0fHNLk3pErIzung3kjA1Z0VeRfLEFNDtMdfVsQcW0T7iMthCt4C21AwdB5iLnKfyvwHsPA7ciSi1qhL54JAqgFjqcDizJbWH9rAEa1n//JfwYZvPmcC2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976220; c=relaxed/simple;
-	bh=ws08k3RKtWMXmE1tUB0hkda/cLnKv6swB7bcDT2+A3c=;
+	s=arc-20240116; t=1786976223; c=relaxed/simple;
+	bh=nDkc0/SwQX0YW3kBdrFK4F9FqtzOEIgJsFO0sbNCh00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SPn35Vjg2ZwrUdCudBfOyyObqgpvLMo6JNdH1NBaULRFYbLqkP/qoMlttK9b3RZG0sm/A15SnhdJpd5WHeJw7+R+DSMIoxuOWgjdNMNcx0725sl3Z44v0nhoLtmAikSeLwiAJh2u3uO7ORx3ibcA5QdttYHnM4ott2YnjaB36Xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WSkdm15q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xjlm91+JOQncUyfxVfjP2l43JlxlF3B3sVcVLNAEvp2tBLavt0BnpkYjEAJwS7zRqpOhWEdR4vUdYVfCUXoBOCsmD3cEED1OIkEk2tuhDTjoxUyehsS+x6lqW3d9VdhuplsSR1fstHDoBSOnQmyFFiPxmPLY3M3kRfLvf9E9mHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K6jbHvty; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WSkdm15q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DAC41F000E9;
-	Mon, 17 Aug 2026 14:16:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6jbHvty"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3641E1F000E9;
+	Mon, 17 Aug 2026 14:17:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976218;
-	bh=mglTbDay2o6r8XhR9fsWZTuxxktRAmlrm9vxgeOmuJc=;
+	s=korg; t=1786976221;
+	bh=bR9s8NMqrZ09WOlQwpP7+bX2QajoqpShKFWBCP7u+94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WSkdm15qjndKqfYrjp4VUCZmK2T4hfkw1Q2JMhB3VjUWwy29wrMdjsSSFAD212Ldp
-	 +CXM21VKQCw+IHUude9gipoI05rZpyrtRwYD4aiuAKonxNdfgxg/mxzcRazPpp6T+q
-	 P+K5bj8S5bpD8WC0VebV80YpaH+GlNmYdNiueQjM=
+	b=K6jbHvtynejJpviXfXXipJHoEgBT4Z2sr11W2ADRHTsfWC82qSiye1SkGmSnSUXrH
+	 sM8/VWwLLXL+ABMaBhn+aL98xKcgRVIlD6R5RJWWvDDLUflHkSMsRcIu+LWK3ptLYE
+	 OHumZrwlC7oY3uLYKPBgudiYi/R+Z8yTpsszH8gE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 5.10 298/389] drm/vc4: Zero the tile state data array before each BIN job
-Date: Mon, 17 Aug 2026 15:32:17 +0200
-Message-ID: <20260817132550.690738641@linuxfoundation.org>
+	Harkirat Gill <harkirat.gill@amd.com>,
+	David Francis <David.Francis@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.10 299/389] drm/amdgpu: cap GTT size to physical RAM on APUs
+Date: Mon, 17 Aug 2026 15:32:18 +0200
+Message-ID: <20260817132550.726914361@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -44,99 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Harkirat Gill <harkirat.gill@amd.com>
 
-commit 48a570c964d8e37d353381e4195106277e17f5cb upstream.
+commit 5e70f6804b4d6256058c360b10e044ee04ea4a4e upstream.
 
-The binner BO is a single 16MB buffer split into 512KB slots that are
-handed out to jobs at submission time and recycled as jobs complete,
-without ever being cleared. Each slot holds the job's Tile State Data
-Array (TSDA) at its start, followed by the tile allocation pool.
+On APUs, the GTT pool is backed by system RAM, but its size is not bound
+to the non-carveout memory that actually backs it. A user can end up
+with GTT + VRAM exceeding total physical memory through the following
+sequence:
 
-While the tile allocation pool is only walked by the render thread
-through branches the binner generated during the current job, the
-TSDA is the PTB's own per-tile bookkeeping and is consumed by the
-hardware itself. Although the kernel sets the "Auto-initialise Tile
-State Data Array" flag in the tile binning mode configuration, the
-PTB demonstrably still acts on stale tile state left by the slot's
-previous user: the binner ends up creating invalid command streams
-with invalid primitive streams and branches, which can cause GPU hangs
-as observed in [1][2].
+ - Have a large non-carveout memory space (~128GB) and accordingly set a
+   large GTT (~100GB) via the ttm module parameter.
+ - Lower the non-carveout memory space in BIOS by increasing the UMA
+   Frame Buffer Size (VRAM) to 64GB.
+ - The previously set GTT value (~100GB) persists, even though the new
+   non-carveout space (64GB) can no longer back it.
 
-Zero the TSDA when the job's binning slot is configured. This clears
-48 bytes per tile (~24KB for a 1080p frame) in the submission path, and
-guarantees the PTB never sees another job's tile state.
+This leads to a case where kernel reports GTT (100GB) + VRAM (64GB)
+despite the sum being greater than total physical memory (128GB).
 
-The tile count is only checked for being non-zero today, so the 8-bit
-fields it comes from can describe a tile state array almost six times
-larger than the slot it has to live in. Bound it before the slot is
-handed out, since such size decides how much of the slot is left for
-the tile alloc pool.
+Cap the GTT size to totalram_pages() on APUs. totalram_pages() already
+excludes the VRAM carveout, so the resulting GTT can never exceed the
+system RAM that actually backs it.
 
-Link: https://github.com/raspberrypi/linux/issues/3221 [1]
-Link: https://github.com/raspberrypi/linux/issues/5780 [2]
-Fixes: 553c942f8b2c ("drm/vc4: Allow using more than 256MB of CMA memory.")
+Signed-off-by: Harkirat Gill <harkirat.gill@amd.com>
+Reviewed-by: David Francis <David.Francis@amd.com>
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 5dafdd649280c7dc6c22c8f877da3f54fcc441e1)
 Cc: stable@vger.kernel.org
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20260727-vc4-bin-oom-fixes-v2-2-0d8a5eddc7c9@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vc4/vc4_validate.c |   29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/gpu/drm/vc4/vc4_validate.c
-+++ b/drivers/gpu/drm/vc4/vc4_validate.c
-@@ -379,6 +379,23 @@ validate_tile_binning_config(VALIDATE_AR
- 		return -EINVAL;
- 	}
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -1979,6 +1979,18 @@ int amdgpu_ttm_init(struct amdgpu_device
+ 	else
+ 		gtt_size = (uint64_t)amdgpu_gtt_size << 20;
  
-+	/* The tile state data array is 48 bytes per tile, and we put it at
-+	 * the start of a BO containing both it and the tile alloc.
-+	 */
-+	tile_state_size = 48 * tile_count;
++	/* Cap GTT so that it does not exceed total physical RAM. */
++	if (adev->flags & AMD_IS_APU) {
++		u64 phys_ram = (u64)totalram_pages() << PAGE_SHIFT;
 +
-+	/* Since the tile alloc array will follow us, align. */
-+	tile_state_size = roundup(tile_state_size, 4096);
-+
-+	/* Reject configurations whose tile state would leave no room for
-+	 * the tile alloc pool that follows it in the slot.
-+	 */
-+	if (tile_state_size >= vc4->bin_alloc_size) {
-+		DRM_DEBUG("Tile binning config of %dx%d too large\n",
-+			  exec->bin_tiles_x, exec->bin_tiles_y);
-+		return -EINVAL;
++		if (gtt_size > phys_ram) {
++			gtt_size = phys_ram;
++			dev_info(adev->dev,
++				 "Capping GTT to %uM to not exceed available system memory\n",
++				 (unsigned int)(gtt_size / (1024 * 1024)));
++		}
 +	}
 +
- 	bin_slot = vc4_v3d_get_bin_slot(vc4);
- 	if (bin_slot < 0) {
- 		if (bin_slot != -EINTR && bin_slot != -ERESTARTSYS) {
-@@ -394,13 +411,13 @@ validate_tile_binning_config(VALIDATE_AR
- 	exec->bin_slots |= BIT(bin_slot);
- 	bin_addr = vc4->bin_bo->base.paddr + bin_slot * vc4->bin_alloc_size;
- 
--	/* The tile state data array is 48 bytes per tile, and we put it at
--	 * the start of a BO containing both it and the tile alloc.
--	 */
--	tile_state_size = 48 * tile_count;
-+	exec->tile_alloc_offset = bin_addr + tile_state_size;
- 
--	/* Since the tile alloc array will follow us, align. */
--	exec->tile_alloc_offset = bin_addr + roundup(tile_state_size, 4096);
-+	/* The TSDA area must be zeroed out before use, otherwise the PTB might
-+	 * consume a stale tile state.
-+	 */
-+	memset(vc4->bin_bo->base.vaddr + bin_slot * vc4->bin_alloc_size, 0,
-+	       tile_state_size);
- 
- 	*(uint8_t *)(validated + 14) =
- 		((flags & ~(VC4_BIN_CONFIG_ALLOC_INIT_BLOCK_SIZE_MASK |
+ 	/* Initialize GTT memory pool */
+ 	r = amdgpu_gtt_mgr_init(adev, gtt_size);
+ 	if (r) {
 
 
