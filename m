@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FA53F4DEB;
-	Mon, 17 Aug 2026 15:19:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0C0445AC1;
+	Mon, 17 Aug 2026 15:19:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979951; cv=none; b=TUaV8JIYQTyO7IiSJNejMpU2MitH3nZlGTNPvHAePl4ZkSR5yk8D0aN7Kmt95aX/St22TJhV4enNoz8yGeU6CM68+EQYDzHbpJ0JK3amL3X2i5e0NTMiwJagduVGDMXMvjd3oCfrnD1koRCVqXUHP3rwBr2vHcUWRLlKZVROlfI=
+	t=1786979953; cv=none; b=bz9zFNXsze8ghMjMe6nXnVTamW7m1jM3QvtxUW5FojK0NYbuWOTVdg8AT8mQu3bAJQWSHRmjZm2ouh7eoJY9lXXL3Wwsx8t/RE1uvm0UIM0/OVMjuYGUh9ypn3KS3OnRxTxbrBechBqA4P8CXhLsTjUvfCg/e4aIv7a6s4jki9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979951; c=relaxed/simple;
-	bh=u7i7kmk9IJiCkAn0xdZ/LH4HnSdM43Zaux1SJleplmE=;
+	s=arc-20240116; t=1786979953; c=relaxed/simple;
+	bh=IMNpFByolknxHNncNx+F/JbwWZQtVCsHpB1m7IiC5js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/b2OmTq13QWKEndyuuPhILqir9X3tbKS0X1702XOOppE/ti7CK4jmSlyXDJhkWKayDxAprPocSwenRxERIVdPTfTB0idUn6BEZDbqYRA4/t2FXXvcMsuiT06Pb9HQYoX9JwgfwOkRZb8nvQ1H94e0qbiZPqJiA5EQWWn7nK8p0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=unZhuiif; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hGhf6JvOSPk7L+79b+ZXeLE/t9o0yJy/vTFyzbWl2nSRwtij/Jic8q6tO+8oxTMcsV9c9+iDGPlGZ4lPlZwMM8aA2zJOntvp0r7xHR1TlCRPvyPyOyJr7IrOVooO2oARrImCCOSWARcYR6Dsebm7us9uOloF6ih92HzKtj11G3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pvHuFc5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="unZhuiif"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA981F000E9;
-	Mon, 17 Aug 2026 15:19:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pvHuFc5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 783351F00A3A;
+	Mon, 17 Aug 2026 15:19:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979948;
-	bh=ix0m0s/OXEFvVGClbMM0PBQI49WdgpV8JuHQWkAxZYs=;
+	s=korg; t=1786979951;
+	bh=ZRSD1K4GnmT33Fta7QLRI8U1n3YitABxCpke2SvzTjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=unZhuiifYqqPyeQbTVVHt89RWqwcYZ+duSbaUbvOpzUD4z6KOFr5n4AzAGFfexfoO
-	 kVLBbC3ugc3yxqcndGqyPgrPmhPupt82FQw9oLdcpBK4PpbUD9CcA7GvdGr3ADd1oC
-	 C3s8hVCDGJT6xr8WgvHjLCnVm3y1lPubBZHHClkc=
+	b=0pvHuFc5D9WaAMk6N2KhA1zD76d+Sa/xoQrFg8pRvSgVlrVirg6G+Jim7fOucHogT
+	 Q3eG1lWzYM6p9Qyjd628X7bCJKDBLsGBuG+qAjOz0ipQBz2ylmmhDqpOXlwg90vlQv
+	 wNyyugfR32IxNuu62KCRdzvckqdIBAGH3kCaNOVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 364/609] powerpc/boot: Fix treeboot-akebono CPU node lookup check
-Date: Mon, 17 Aug 2026 15:31:00 +0200
-Message-ID: <20260817132556.463722037@linuxfoundation.org>
+Subject: [PATCH 6.1 365/609] wifi: mac80211: validate individual TWT params before driver setup
+Date: Mon, 17 Aug 2026 15:31:01 +0200
+Message-ID: <20260817132556.498642492@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,36 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit b24fc8278b70a9d27ec801a427ab4de9b769d69a ]
+[ Upstream commit 0502d5077e419427d80f4d46ba95d0067f5fb916 ]
 
-fdt_node_offset_by_prop_value() returns a negative error code on
-failure - fix the check accordingly.
+ieee80211_process_rx_twt_action() only partially validates a received
+S1G TWT setup frame before queueing it.
 
-Fixes: 2a2c74b2efcb ("IBM Akebono: Add the Akebono platform")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260702211554.56923-6-thorsten.blum@linux.dev
+An individual agreement can therefore reach ieee80211_s1g_rx_twt_setup()
+with twt->length too short for the full struct ieee80211_twt_params.
+
+The individual path passes twt to drv_add_twt_setup(). Both the tracepoint
+and the driver callback consume the complete parameters block, not merely
+req_type. Do not pass a short individual agreement to the driver.
+Broadcast agreements remain unchanged because they are rejected locally
+after accessing only req_type.
+
+Fixes: f5a4c24e689f ("mac80211: introduce individual TWT support in AP mode")
+Assisted-by: Codex:gpt-5
+Assisted-by: Claude:opus-4.8
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260723010928.76551-1-enderaoelyther@gmail.com
+[edit commit message to not overclaim lack of validation nor
+ understate driver impact]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/boot/treeboot-akebono.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/s1g.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/powerpc/boot/treeboot-akebono.c b/arch/powerpc/boot/treeboot-akebono.c
-index e3cc2599869cc..1b529037480fb 100644
---- a/arch/powerpc/boot/treeboot-akebono.c
-+++ b/arch/powerpc/boot/treeboot-akebono.c
-@@ -146,7 +146,7 @@ void platform_init(char *userdata)
+diff --git a/net/mac80211/s1g.c b/net/mac80211/s1g.c
+index c1f964e9991cd..9914390ff31ff 100644
+--- a/net/mac80211/s1g.c
++++ b/net/mac80211/s1g.c
+@@ -100,6 +100,10 @@ ieee80211_s1g_rx_twt_setup(struct ieee80211_sub_if_data *sdata,
+ 	struct ieee80211_twt_setup *twt = (void *)mgmt->u.action.u.s1g.variable;
+ 	struct ieee80211_twt_params *twt_agrt = (void *)twt->params;
  
- 	node = fdt_node_offset_by_prop_value(_dtb_start, -1, "device_type",
- 					     "cpu", sizeof("cpu"));
--	if (!node)
-+	if (node < 0)
- 		fatal("Cannot find cpu node\n");
- 	timebase = fdt_getprop(_dtb_start, node, "timebase-frequency", &size);
- 	if (timebase && (size == 4))
++	if (!(twt->control & IEEE80211_TWT_CONTROL_NEG_TYPE_BROADCAST) &&
++	    twt->length < sizeof(twt->control) + sizeof(*twt_agrt))
++		return;
++
+ 	twt_agrt->req_type &= cpu_to_le16(~IEEE80211_TWT_REQTYPE_REQUEST);
+ 
+ 	/* broadcast TWT not supported yet */
 -- 
 2.53.0
 
