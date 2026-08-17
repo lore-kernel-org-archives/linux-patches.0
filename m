@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08751D435F;
-	Mon, 17 Aug 2026 14:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025F31D435F;
+	Mon, 17 Aug 2026 14:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975266; cv=none; b=Z9njw7hGxRImDPaOpVvYKOQ0jnQIbE/ySDtMBt+JoBedUhUGPNf93ZJgKNra+czThIC5cxoW+afP0WnRHuY4OmVb/vknlcSCeHM0ipIkje9DK2+FmO4rrwwYAQAHDN+geuxmy4dNtzhJI8l/g0Q3JVbmeFLyVFsrL50pzNG30Zk=
+	t=1786975269; cv=none; b=DiK8zYdSTiwRF//vKXHmUI2TrgmYdZ3AtR7XdDrFidfdBz4GB8p0qfzODAXe1sJ8Z2Zyzpvan9iPTN2JaM9cH9xnKYyxfCKsxwNgzgdTjW60yc94+b9MPs5RlASuiNchdXKAMNl6DJw3HUPMpYwKo8mMU3lbnKZ8GtLkMwdYaYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975266; c=relaxed/simple;
-	bh=Zj7gxzffd9ErdG0s6xerFk0rKGG4tXBmD5mPL7/t9mk=;
+	s=arc-20240116; t=1786975269; c=relaxed/simple;
+	bh=sGoj/KFtyl4akf03wwraZKwSZM5+N+1hPOpGUBM6PG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DOhlqvo3HL/llG/ke7DGnBQ8aaBK4cDAxm/ZaYphaS+v2fy/aip+mprrYVIxyEyOuXHW5tCCW/eppK1PmvdGtmYXZAwNy2u5qd7T4HVw0/Y9P6Luq9YQnOWmKc0dUH0CI7HhO60HXD0OgwDYXDoAtNJUrUjKH6a0xkJ/MzRS5WQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wMfELKBy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gioA5ZtMTFCcpDYjucJozhyp0EobE7nYxWckFOCokCyu5uAg/XkDQLVTjB2GTTY4taTRdIoN7GvJrqwoMnuJx0kY9Z/dtwS2EfJIFAoiv5NW+mJ4v4+B/6NhyOtSvn7Px5g/0ARZqVoTrPOVg+t3zSFI+upAIuB6+P30ijMrKrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvmOkegm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wMfELKBy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32CB51F000E9;
-	Mon, 17 Aug 2026 14:01:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvmOkegm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BB71F000E9;
+	Mon, 17 Aug 2026 14:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975264;
-	bh=qXRLGibxfGm5CKAm5OcXb3OPuAFxNnzvX6OgoYNmOgc=;
+	s=korg; t=1786975267;
+	bh=EllgSTgbF0T+fAlvDM5rqTrcOD9YzLOVmcaUYjUgumA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wMfELKByrdlbXyFHsckeepDxHCtwvK5EDu/gYWuiYn69FFkZPm8e6a52LCEZjMhom
-	 /7ramLj12/EAyEXm/DG6sfD9gjgxp9/vKiTq7XRZzZgZTbMDxZ3qqKPr3J7IcJnWKt
-	 C3OR40+OVdVVbpZ8Y0PKCSaXhDWcLkuW01hz0Dew=
+	b=uvmOkegmSWHvAL4AzC/RSqxuQ1cyQPvxozqTXRX1FxUM3PaTkmBZHmteS+kCt+RRM
+	 PUzOp4q/SKZNqE2SQm3sNGPW/UKRje5gSr9atoV3vTi0hJjvpi99g2f4fPLQ51lU1C
+	 48zbdC9b6xcJ1IFCeSx+fd6z5U6MKPf6edkjYqsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Yang <junvyyang@tencent.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.18 219/250] vhost: reset the vring metadata cache on vring reconfiguration
-Date: Mon, 17 Aug 2026 15:33:00 +0200
-Message-ID: <20260817132545.470336414@linuxfoundation.org>
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 220/250] tls: rx: restore msg_iter before TLS 1.3 optimistic retry
+Date: Mon, 17 Aug 2026 15:33:01 +0200
+Message-ID: <20260817132545.514641273@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -44,74 +44,121 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jun Yang <junvyyang@tencent.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit de845981da67a6b049080c87e605130b0c30adc5 upstream.
+commit 1c8629651cb54f7b51db8fc0b1a9944e4a4b0f5e upstream.
 
-vq->meta_iotlb[] caches the vhost_iotlb_map that backs each vring
-metadata region, and iotlb_access_ok() returns early on a cache hit,
-taking the hit as proof that the region has already been validated:
+tls_decrypt_sg() advances msg->msg_iter when it maps user pages for
+the optimistic TLS 1.3 zero-copy path. If the decrypted record turns
+out not to be unpadded application data, tls_decrypt_sw() retries into
+a kernel skb, but leaves the iterator advanced.
 
-	if (vhost_vq_meta_fetch(vq, addr, len, type))
-		return true;
+The subsequent copy from the skb then writes decrypted bytes again at
+a later point in the caller iovecs while recvmsg() reports only the
+post-retry length. A TLS peer can trigger this after the receiver
+enables TLS_RX_EXPECT_NO_PAD.
 
-The cache is reset on VHOST_IOTLB_UPDATE and VHOST_IOTLB_INVALIDATE, on
-device IOTLB (re)initialisation and on vq reset, but not when
-VHOST_SET_VRING_ADDR replaces vq->desc, vq->avail and vq->used, nor when
-VHOST_SET_VRING_NUM changes the region sizes.
+Revert the iterator by the number of bytes consumed by the optimistic
+mapping before retrying without zero-copy.
 
-With a device IOTLB attached both ioctls are accepted while the vq is
-live, and neither validates the addresses at ioctl time: vq_access_ok()
-and vq_log_used_access_ok() return true early because the addresses are
-GIOVAs, deferring validation to prefetch time.  Once the cache has been
-populated that deferred validation no longer runs -- vq_meta_prefetch()
-hits the stale entry and returns true -- and vhost_vq_meta_fetch() keeps
-translating through the old mapping as
+Add a selftest which sends a TLS 1.3 control record with
+TLS_RX_EXPECT_NO_PAD enabled and verifies that recvmsg() does not
+overwrite later iovecs beyond the returned length.
 
-	map->addr + addr - map->start
-
-for an address the mapping no longer covers.  vhost_copy_to_user() and
-vhost_copy_from_user() consume the result with __copy_to_user() and
-__copy_from_user(), which do not check it either, so a subsequent used
-ring update or descriptor fetch accesses memory outside the region the
-IOTLB actually maps.
-
-Reset the metadata cache whenever the vring is reconfigured, so the new
-addresses are pushed back through iotlb_access_ok()'s slow path.
-
-Fixes: f88949138058 ("vhost: introduce O(1) vq metadata cache")
+Fixes: ce61327ce989 ("tls: rx: support optimistic decrypt to user buffer with TLS 1.3")
 Cc: stable@vger.kernel.org
-Assisted-by: tencentos-corvus-ai:kimi-k3
-Signed-off-by: Jun Yang <junvyyang@tencent.com>
-Message-ID: <20260803014823.68623-1-juny24602@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Link: https://patch.msgid.link/20260804125528.2139928-1-Jeremy.Jean@oss.cyber.gouv.fr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vhost/vhost.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/tls/tls_sw.c                  |    2 +
+ tools/testing/selftests/net/tls.c |   57 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+)
 
---- a/drivers/vhost/vhost.c
-+++ b/drivers/vhost/vhost.c
-@@ -2131,6 +2131,14 @@ static long vhost_vring_set_num_addr(str
- 		BUG();
- 	}
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1731,6 +1731,8 @@ tls_decrypt_sw(struct sock *sk, struct t
+ 	/* If opportunistic TLS 1.3 ZC failed retry without ZC */
+ 	if (unlikely(darg->zc && prot->version == TLS_1_3_VERSION &&
+ 		     darg->tail != TLS_RECORD_TYPE_DATA)) {
++		iov_iter_revert(&msg->msg_iter, strp_msg(darg->skb)->full_len -
++				prot->overhead_size);
+ 		darg->zc = false;
+ 		if (!darg->tail)
+ 			TLS_INC_STATS(sock_net(sk), LINUX_MIB_TLSRXNOPADVIOL);
+--- a/tools/testing/selftests/net/tls.c
++++ b/tools/testing/selftests/net/tls.c
+@@ -1759,6 +1759,63 @@ TEST_F(tls, recv_efault)
+ }
  
-+	/*
-+	 * The metadata cache holds the IOTLB mapping that backed the previous
-+	 * desc/avail/used addresses and vring size, both of which are being
-+	 * replaced here.  iotlb_access_ok() takes a cache hit as proof that the
-+	 * region was validated, so the stale entries have to go.
-+	 */
-+	__vhost_vq_meta_reset(vq);
+ #define TLS_RECORD_TYPE_HANDSHAKE      0x16
 +
- 	mutex_unlock(&vq->mutex);
- 
- 	return r;
++TEST_F(tls_basic, recvmsg_nopad_retry_iov)
++{
++	char payload[32];
++	char first_iov[sizeof(payload)];
++	char later_iov[sizeof(payload) * 2];
++	char expected_later_iov[sizeof(later_iov)];
++	char cbuf[CMSG_SPACE(sizeof(char))];
++	struct tls_crypto_info_keys tls13;
++	struct iovec iov[] = {
++		{ .iov_base = first_iov, .iov_len = sizeof(first_iov) },
++		{ .iov_base = later_iov, .iov_len = sizeof(later_iov) },
++	};
++	struct msghdr msg = {
++		.msg_iov = iov,
++		.msg_iovlen = ARRAY_SIZE(iov),
++		.msg_control = cbuf,
++		.msg_controllen = sizeof(cbuf),
++	};
++	int one = 1;
++	int ret;
++	int i;
++
++	if (self->notls)
++		SKIP(return, "no TLS support");
++
++	tls_crypto_info_init(TLS_1_3_VERSION, TLS_CIPHER_AES_GCM_128,
++			     &tls13, 0);
++
++	ret = setsockopt(self->fd, SOL_TLS, TLS_TX, &tls13, tls13.len);
++	ASSERT_EQ(ret, 0);
++
++	ret = setsockopt(self->cfd, SOL_TLS, TLS_RX, &tls13, tls13.len);
++	ASSERT_EQ(ret, 0);
++
++	ret = setsockopt(self->cfd, SOL_TLS, TLS_RX_EXPECT_NO_PAD,
++			 &one, sizeof(one));
++	ASSERT_EQ(ret, 0);
++
++	for (i = 0; i < sizeof(payload); i++)
++		payload[i] = 0x40 + i;
++	memset(first_iov, 0xa5, sizeof(first_iov));
++	memset(later_iov, 0x5a, sizeof(later_iov));
++	memset(expected_later_iov, 0x5a, sizeof(expected_later_iov));
++
++	/* A control record forces optimistic TLS 1.3 RX to retry. */
++	ret = tls_send_cmsg(self->fd, TLS_RECORD_TYPE_HANDSHAKE,
++			    payload, sizeof(payload), 0);
++	ASSERT_EQ(ret, sizeof(payload));
++
++	ret = recvmsg(self->cfd, &msg, 0);
++	ASSERT_EQ(ret, sizeof(payload));
++	EXPECT_EQ(memcmp(first_iov, payload, sizeof(payload)), 0);
++	EXPECT_EQ(memcmp(later_iov, expected_later_iov,
++			 sizeof(later_iov)), 0);
++}
++
+ /* key_update, length 1, update_not_requested */
+ static const char key_update_msg[] = "\x18\x00\x00\x01\x00";
+ static void tls_send_keyupdate(struct __test_metadata *_metadata, int fd)
 
 
