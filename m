@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1CEA175A99;
-	Mon, 17 Aug 2026 14:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5837175A99;
+	Mon, 17 Aug 2026 14:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978518; cv=none; b=fsqLZsNZl1hWoGR6voU96GTKyAtsduDCcILVKpaNttMmYQePwYYys+ULzukzIFZVrEy0XTNBYyuFRfaIrg82oYq1NTiRyv82UhuF/T4y7e3zcdBzeaBR95lW7lAfjtfoFBFV9qNSZHM8/qQMckyBnIrrM1R9P3nsOD+80CypzVY=
+	t=1786978521; cv=none; b=KQrA8jd3SrDpiRz7PPtIqUG4Q9s2KCSNAZu7IbDPBpTBbUxusWXr+Taa3beanrCXlzS9y3yrecRPP+fL/vBXDx28j2Ik2LjTguh6escdQzZTMSMRC0L15+A9y3thddOkg96oH1Y17wIh2wnmOM3tOLVZ04oNLFwILgAy9Z6p+yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978518; c=relaxed/simple;
-	bh=nXGf+N6GJLixu7xSKiWVXgYR1KUobIlMMe13rTWJGVo=;
+	s=arc-20240116; t=1786978521; c=relaxed/simple;
+	bh=dHHcfQeb759e3SfBFOlm9r7geIS/oOrFBxyUwbYGJYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JTEncazRNTiG/gGlo5MgKuhAPSu3DHw4itaWBDy4MqRJ6ZOL/M/rhpCXveT+QJ+wckKRs50K0kJ7Fz3sTe4kqfgnsPWhRO67AOCYC2oQVBC1xPakhpkfGExnVGxzbnFRtcVCAz03lR22y1HKUE0LpTyDMS33dKbmWzJ8LZX9qz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rdhDCp5h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=deHpUuPKeMENfWG1U5hVmRZvtysKGsLTIx/oKJp06FNu2eaBSYCwcF29bVChwtfQ6lP57qv092+slhc0ppxoQuVIldL2reAvVkEBa/T619Gwu9rmjeWDktQ0q7xQWm8CwML47KFfReG8m7BUI2u3KKNAmDh9QmbJ/oA5EV3DOfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GkwbwOJk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rdhDCp5h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5795A1F000E9;
-	Mon, 17 Aug 2026 14:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GkwbwOJk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8431F000E9;
+	Mon, 17 Aug 2026 14:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978516;
-	bh=0CU2sFG8KkQsHR9ozKe35sX3+iJB2wjcX0jduOwymqk=;
+	s=korg; t=1786978519;
+	bh=GOyQ4Ccg1FFkGNu1cEKKTPi3UP3fIaRvvl6eaPez/YI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rdhDCp5hoKqgQ0wtIEhG3qbb7MtWdiJBFQdEE5ZuHHaGG/OBzHlyB0q/eHfJ+tEOS
-	 KrF0NiQPd/mhlqoS5vbbS1tZoKpvo84QDwlcFOSRVU29kssFxaLE+9Z2/vrmSiUJJY
-	 dNdj24baDQt9FJdySi1lKELYktEONVdBTAtctuI8=
+	b=GkwbwOJkaUXPgewWNhXKCSp6PPWCX7Ne9vx0HsKnx0fQhJXvdfXqOCaCceqqW5zhG
+	 gyy7CxZ+L0OfWTbktbBljoW/z9VpjQAq0iGUHNbVXydt3p9v6BeUkMOkTnFzfmkBPB
+	 KqE5oEYOqHBx2MIjEjNVMQg34id8w0Qxf3B1Mxg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Wagenaar, C.C.J. (Chris)" <c.c.j.wagenaar@vu.nl>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 064/156] Input: evdev - sanitize event type index when fetching event masks
-Date: Mon, 17 Aug 2026 15:33:18 +0200
-Message-ID: <20260817132537.098831459@linuxfoundation.org>
+	Feng Xue <feng.xue@outlook.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 038/156] net/sched: cls_api: Always acquire rtnl_lock when destroying locked classifiers
+Date: Mon, 17 Aug 2026 15:32:52 +0200
+Message-ID: <20260817132536.106399785@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -50,59 +53,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-commit 3abd29c61d2ef37c4102cf755b18be53bb9dbea6 upstream.
+[ Upstream commit a347304b2ca1a5377d5bd2d8a72e4b4f12afe648 ]
 
-The user-supplied event type index passed to EVIOCGMASK / EVIOCSMASK
-ioctls is used to index the static counts array in evdev_get_mask_cnt()
-and client evmasks array in evdev_get_mask().
+Another challenge with unlocked filters.
+There is a short window in tc_new_tfilter where a tcf_proto can be found
+and briefly referenced by a totally unrelated, unlocked classifier's request
+and cause a race.
 
-While the event type is architecturally bounded by EV_CNT, speculative
-execution may mispredict bounds checks and perform out-of-bounds loads.
+Feng created a poc which created this race with two threads, one creating a
+u32 filter and other a flower filter in the same chain/prio:
 
-Sanitize the event type index in evdev_get_mask_cnt() branchlessly using
-array_index_mask_nospec(). This clamps the index to 0 for safe array
-access and forces the returned count to 0 speculatively when the index
-is out of bounds.
+1. Both threads enter tc_new_tfilter, both find the chain empty, both
+   drop filter_chain_lock
+2. u32 finishes tcf_proto_create("u32") first, calls
+   tcf_chain_tp_insert_unique() -> inserts u32_tp into the chain
+3. flower finishes tcf_proto_create("flower") later, calls
+   tcf_chain_tp_insert_unique() -> tcf_chain_tp_find() now sees u32_tp
+   already there, takes a reference on it, destroys flower's own tp_new
+   and returns u32_tp to the caller.
 
-We do not need additional array_index_nospec() calls in evdev_get_mask()
-because evdev_get_mask_cnt() speculatively forces the count (and
-resulting xfer_size) to 0 for out-of-bounds types, preventing any
-speculative memory access to client evmasks array.
+Flower then hits the kind mismatch check (because it requested for kind
+"flower" but tp->ops->kind is "u32") and goes through the errout path
+which calls tcf_proto_put() on u32_tp. If the u32 thread has already
+gone through its own errout (its change() call failed on the PoC's empty
+options) and dropped its create and insert refs, flower's put is the
+last one and drops u32_tp's refcnt to zero.
 
-Reported-by: "Wagenaar, C.C.J. (Chris)" <c.c.j.wagenaar@vu.nl>
-Cc: stable@vger.kernel.org
-Assisted-by: Antigravity:gemini-3.6-flash
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/anFCAfvxwXB5eJF1@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+At this point tp->ops->destroy() runs in a context that never took
+rtnl_lock. When that happens, it might cause a UAF like the following
+(illustrated by the PoC):
+
+[  +0.000710] BUG: KASAN: slab-use-after-free in u32_init (net/sched/cls_u32.c:393)
+[  +0.000281] Read of size 8 at addr ffff888120022f00 by task poc_feng_xue/524
+
+  Call Trace:
+   u32_init (net/sched/cls_u32.c:393)
+   tc_new_tfilter (net/sched/cls_api.c:2378)
+
+  Allocated by task 526:
+   u32_init (net/sched/cls_u32.c:378)
+   tc_new_tfilter (net/sched/cls_api.c:2378)
+
+  Freed by task 522:
+   kfree
+   u32_destroy (net/sched/cls_u32.c:662)
+   tcf_proto_destroy (net/sched/cls_api.c:446)
+   tcf_proto_put (net/sched/cls_api.c:459)
+   tc_new_tfilter (net/sched/cls_api.c:2459)
+
+Fix this by having tcf_proto_destroy() take rtnl_lock around
+tp->ops->destroy() for locked classifiers whenever rtnl is not held.
+
+To explain why I used a temp variable "not_lockless" I'd like to point to a
+semi-related note on rtnl_held vs TCF_PROTO_OPS_DOIT_UNLOCKED (adding here
+for future cleanup if deemed necessary):
+The rtnl_held parameter and the TCF_PROTO_OPS_DOIT_UNLOCKED flag are
+redundant sources of truth for whether rtnl_lock is held. Among the nine
+classifier destroy(..rtnl_held..) callbacks, only flower consults the
+rtnl_held parameter which it propagates to tc_setup_cb_destroy()
+and tc_setup_cb_call(). The other eight (u32, flow, bpf, cgroup, route, basic,
+fw, mall) ignore it entirely;-> those that call tc_setup_cb_destroy()
+(u32, bpf, mall) hardcode true always instead of forwarding the parameter.
+
+A future cleanup should remove the rtnl_held parameter from the destroy callback
+signature entirely and have callers rely solely on their knowledge whether
+they are running in an unlocked context.
+
+Fixes: 12db03b65c2b ("net: sched: extend proto ops to support unlocked classifiers")
+Reported-by: Feng Xue <feng.xue@outlook.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260801125632.360365-1-jhs@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/evdev.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/sched/cls_api.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
---- a/drivers/input/evdev.c
-+++ b/drivers/input/evdev.c
-@@ -21,6 +21,7 @@
- #include <linux/init.h>
- #include <linux/input/mt.h>
- #include <linux/major.h>
-+#include <linux/nospec.h>
- #include <linux/device.h>
- #include <linux/cdev.h>
- #include "input-compat.h"
-@@ -67,8 +68,10 @@ static size_t evdev_get_mask_cnt(unsigne
- 		[EV_SND]	= SND_CNT,
- 		[EV_FF]		= FF_CNT,
- 	};
-+	unsigned long mask = array_index_mask_nospec(type, EV_CNT);
- 
--	return (type < EV_CNT) ? counts[type] : 0;
-+	/* Returns 0 for out-of-bounds types, including speculatively */
-+	return counts[type & mask] & mask;
- }
- 
- /* requires the buffer lock to be held */
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index f107afdd36bbd..ff6af03cb855d 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -443,7 +443,22 @@ static void tcf_chain_put(struct tcf_chain *chain);
+ static void tcf_proto_destroy(struct tcf_proto *tp, bool rtnl_held,
+ 			      bool sig_destroy, struct netlink_ext_ack *extack)
+ {
+-	tp->ops->destroy(tp, rtnl_held, extack);
++	/* A locked classifier's destroy callback (e.g. u32_destroy) uses
++	 * rtnl_dereference() and mutates shared structures (e.g. the
++	 * tc_u_common hash list) that are only safe under rtnl_lock. When an
++	 * unlocked classifier's request (e.g. flower on ingress) loses the
++	 * tcf_chain_tp_insert_unique() race and ends up dropping the last
++	 * reference on a locked classifier's proto, destroy() would run
++	 * without rtnl held. Take it here in that case.
++	 */
++	bool not_lockless = !rtnl_held &&
++		!(tp->ops->flags & TCF_PROTO_OPS_DOIT_UNLOCKED);
++
++	if (not_lockless)
++		rtnl_lock();
++	tp->ops->destroy(tp, rtnl_held || not_lockless, extack);
++	if (not_lockless)
++		rtnl_unlock();
+ 	tcf_proto_count_usesw(tp, false);
+ 	if (sig_destroy)
+ 		tcf_proto_signal_destroyed(tp->chain, tp);
+-- 
+2.53.0
+
 
 
