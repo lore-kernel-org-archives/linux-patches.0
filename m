@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393AE441619;
-	Mon, 17 Aug 2026 15:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5B53CB2DC;
+	Mon, 17 Aug 2026 15:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979512; cv=none; b=gEx2TZtK3hZMk3SaRxHsS3OV19iNnEbEYBnRtL1lwL0ZSFs0YhE+mIn9YkqVfKr9cM4kQp2x0G3KQdrOQIy484ZuwYF3ajrSH3OWT3USjQnUI+jRSnblH341KyoNEvmQUHNM1Kall+sQ8f/Y+WPNj8MzM+CF9OeuJ3OFdnI1vsw=
+	t=1786979515; cv=none; b=OZKeESa6+2fYFxKWhx2BpXLNCI2VGgMLLBDVnLT50DDkdXeRGHX7gWw3NSPeSGcqMgfn7KypdlkNZfCOPQtYdyEcTd2qhE+lI/pu/LoytDh6e04pT/LVNPPGOh2rXWn+ozfP2bV3l8+PpgiGCpi79Ep6z9RR0Smn51h/cz6gUxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979512; c=relaxed/simple;
-	bh=0INPrfE5sHUATAbb5jh7XmKzG391SnrCu1pUgDcukDU=;
+	s=arc-20240116; t=1786979515; c=relaxed/simple;
+	bh=cVyNxN26bJYWAAQE6erpwoLILQ9iiXo0h40Xy6kUz3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KHzZcIV52chuVpsd+OHMYyuWtORfVfXw8mGvHnkdqW/9Di3BoZ6vQl1PoyYmO4F1OAzabBJyq7P6IzxBypUQMMzCgRXVKqjEaM6LnqscgQozYA1DXIBA3MCIaNF0EaNrFHPHVgHEPNNxZhmmXrn/TVQ878JxChomlaIuhpYVVcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j34PzWac; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ax4TZYp6enHXAcOrHC0MoPrCBqi7OGyy1OcoUyGQRQmi1u682SPmqb8RapQOZ2TQTYjrPH3ZPq3hGMb9A8JeWJ+kQIsC2Q/FE4tYHYKWLAlxTNPyKPHX9Dxq5y8Ej14BI+Xmm299YKm6mB6NEPRBasCMWaDTUE8KhaVlxU0RQAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bveNdIt7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j34PzWac"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90DDB1F000E9;
-	Mon, 17 Aug 2026 15:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bveNdIt7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 716101F000E9;
+	Mon, 17 Aug 2026 15:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979511;
-	bh=WsPmKoqCnd3WeTNIOu0NEL4QKETGkc1eCE2MP8N+NLY=;
+	s=korg; t=1786979513;
+	bh=ZFaTs/sJwvtXgmOBUcWLiZ35TwPWPfmub1NGmW+WE4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j34PzWacGgIBjB03aEALt2830QbC6tfFzRYNgeeJd04d5qAL9PCIfzyOK0baXK9F6
-	 tvP4GC/j/y9Nr8ruHm9S7XJlVBn0ljJznrXj6qgI97zs9LmpCx+VcdWw8Ybe4lgVht
-	 sjkYBDDPHOwAr5V5flw3jQJWklgG8VNWDFPH+fcQ=
+	b=bveNdIt7Mo6a74+Baq8qI7eYhVgO3kyqRDoc6oEYPcenhTwl1a5cmHEM+XcOjlN2+
+	 eXXcdFBVazcWImK3kfPxzO6nusGvUFMBzGZI0OoZgKETKq9jPyWRPSgXk8XJGuFjsb
+	 GXua2zHETKKbQIhdzh92/XMCtrUySHsE++q5UXQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f24c3d5d316011bacc70@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.1 234/609] comedi: comedi_parport: deal with premature interrupt
-Date: Mon, 17 Aug 2026 15:28:50 +0200
-Message-ID: <20260817132551.918287627@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Zhao Zhang <zzhan461@ucr.edu>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.1 252/609] libceph: guard missing CRUSH type name lookup
+Date: Mon, 17 Aug 2026 15:29:08 +0200
+Message-ID: <20260817132552.528147722@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,76 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Zhao Zhang <zzhan461@ucr.edu>
 
-commit 17221216ae8ce6a24e8a4e787382e3ebc81b88a8 upstream.
+commit bbeae12fda3384a90fbebc8a19ba9d33f85b5361 upstream.
 
-Syzbot reported a general protection fault in
-`comedi_get_is_subdevice_running()`, which was called from the interrupt
-handler `parport_interrupt()` in the "comedi_parport" driver, but it
-does not currently have a C reproducer for the problem.  It's
-probably due to a premature interrupt for one of two reasons:
+Localized read selection can walk a parent bucket whose name exists in
+the CRUSH map while its type has no matching entry in type_names.
+get_immediate_parent() then dereferences a NULL type_cn and passes an
+invalid pointer into strcmp(), causing a null-ptr-deref.
 
-1. The driver sets up the interrupt handler before the comedi subdevices
-   used by the interrupt handler have been allocated, but does not
-   disable the interrupt in the parallel port's CTRL register first.
-2. The driver uses a user-supplied I/O port base address which Syzbot
-   would have supplied, but it might not be backed by real parallel port
-   hardware.
+Skip such malformed parent buckets unless both the bucket name and type
+name metadata are present. This keeps malformed hierarchy data from
+crashing locality lookup and safely falls back to "not local".
 
-Change the initialization order in the driver's comedi "attach" handler
-(`parport_attach()`) so that the hardware registers are initialized
-before the interrupt handler is requested.  This should prevent
-premature interrupts occurring for real hardware.
+[ idryomov: add WARN_ON_ONCE ]
 
-Also add a test to the interrupt handler to ensure the comedi device is
-fully attached and return early if it isn't.
-
-Fixes: 241ab6ad7108e ("Staging: comedi: add comedi_parport driver")
-Reported-by: syzbot+f24c3d5d316011bacc70@syzkaller.appspotmail.com
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260527125104.96596-1-abbotti@mev.co.uk
+Cc: stable@vger.kernel.org
+Fixes: 117d96a04f00 ("libceph: support for balanced and localized reads")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Zhao Zhang <zzhan461@ucr.edu>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/comedi_parport.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ net/ceph/osdmap.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/comedi/drivers/comedi_parport.c
-+++ b/drivers/comedi/drivers/comedi_parport.c
-@@ -211,6 +211,13 @@ static irqreturn_t parport_interrupt(int
- 	unsigned int ctrl;
- 	unsigned short val = 0;
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -3060,8 +3060,11 @@ static int get_immediate_parent(struct c
+ 			if (b->items[j] != id)
+ 				continue;
  
-+	/*
-+	 * Check device is fully attached.  Device interrupts should have
-+	 * been disabled, but do this in case of bad hardware.
-+	 */
-+	if (!dev->attached)
-+		return IRQ_NONE;
+-			*parent_type_id = b->type;
+ 			type_cn = lookup_crush_name(&c->type_names, b->type);
++			if (WARN_ON_ONCE(!type_cn))
++				continue;
 +
- 	ctrl = inb(dev->iobase + PARPORT_CTRL_REG);
- 	if (!(ctrl & PARPORT_CTRL_IRQ_ENA))
- 		return IRQ_NONE;
-@@ -231,6 +238,9 @@ static int parport_attach(struct comedi_
- 	if (ret)
- 		return ret;
- 
-+	outb(0, dev->iobase + PARPORT_DATA_REG);
-+	outb(0, dev->iobase + PARPORT_CTRL_REG);
-+
- 	if (it->options[1]) {
- 		ret = request_irq(it->options[1], parport_interrupt, 0,
- 				  dev->board_name, dev);
-@@ -286,9 +296,6 @@ static int parport_attach(struct comedi_
- 		s->cancel	= parport_intr_cancel;
- 	}
- 
--	outb(0, dev->iobase + PARPORT_DATA_REG);
--	outb(0, dev->iobase + PARPORT_CTRL_REG);
--
- 	return 0;
- }
- 
++			*parent_type_id = b->type;
+ 			parent_loc->cl_type_name = type_cn->cn_name;
+ 			parent_loc->cl_name = cn->cn_name;
+ 			return b->id;
 
 
