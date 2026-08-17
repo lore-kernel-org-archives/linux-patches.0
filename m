@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41B8429CEE;
-	Mon, 17 Aug 2026 13:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48743E4510;
+	Mon, 17 Aug 2026 13:47:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974469; cv=none; b=OAhwpM9g33rhFsdeQUL0DFURndakvr2zWM4qJ80hk0V0636PtmuqlOig9vtNpIHI5MCAD+CFux14HleS/cD8rJHi9LnWdPm3DXWrmPhfcUNd7EtxiDnoouvJmTkM6K52xMRKxi9boU7sRXrZ/+ciFGKjGmOEX2322vGXzSKJSVc=
+	t=1786974472; cv=none; b=JNf8KkYVTRcBqbSTNnSCfZ//7hJ3LBEwR6iV1+4h3y++fL0hj92HfErH9lnL42rFyVE7cxIh9fWIyUV3ze07rdxchljsF4wTgxiJB4HXD3+NG9Nj00Dv2t0lKZbto4WC5fMWSbe3715HBHz8cXz+Ms6KpcQ2aW/EznxAdUwXQII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974469; c=relaxed/simple;
-	bh=pZjZjF5DSbvBbrZRBs+VYMpTHoPvvX/56phcai7SvWU=;
+	s=arc-20240116; t=1786974472; c=relaxed/simple;
+	bh=r/IAXfj8CqtFBcEefPeASxdeDq5YwtN16Z4B+10zQYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kqJLuJFdSXaEDgxZzW32uUlfR6VMzZPTpGAiNcN+959pn5RbkYldaC58mtk22BvepDqWX4WmhH77h6DlMsQrS3Xk9p6kyFQHpRO4OYs9ikXh5ZgYokZEDHfiJ8VNHOeJ0ImLqm+/kkAl0bnh9QWcm+vJafJ0296ESbRW6TPkyfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dRNaZUGJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=llriatuyFqyjSUeWsdsiZcIWyK+pEygGXUFPn/mYMhgvO5YV4WzPBSgEE4sTv9Uvnv44Ljgqe15HQkSlpvG+NqyjbPNl92CGwk97VigCzYwRq0D+3FbymVOnmBuwiREOrNZnfd47BBMtphXKYzW9cUR9vZS+QSmUuKraTNrwU3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oFJMqiSB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dRNaZUGJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F69A1F00A3A;
-	Mon, 17 Aug 2026 13:47:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oFJMqiSB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A2EF1F00A3F;
+	Mon, 17 Aug 2026 13:47:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974466;
-	bh=7ROx+2JSHkC3wEpjpF8cvmNnkBpIhAQTHmauKMFYWDE=;
+	s=korg; t=1786974469;
+	bh=i9YMyhVzGc11S6ZUJpwR/GUv9O33kyUfMREMDW2JVxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dRNaZUGJUMQCVkKvdiHlnz1V3F5LHNsb1tgXaSTtXEdZJ6dkfv/kR9A+RuZPEzCBQ
-	 sHOlmumiqiymlVmDP331AqkDXPtiQQZs6l77E56WkrgyCO0ohTaPI7FWNFgGW6A2Cv
-	 mi06xyjkFZuOyaxjSv8jSlA7/HUWt0Yq5rz0m2dg=
+	b=oFJMqiSB6HQIEN11LsxYrkDJnIOS8l3AWiSsO7rIVyHpI+JjLciGfScRssL4dTZQa
+	 8qBzZijq+Fn/f2b3UKSYWLMraHOCBPiLCxshnEew/9pANfP6yOIWxTQCdp7JN0OOqa
+	 CSD2OpJjKkiApBmKWQL17QBGJNkV5ey6oTQ3Iihg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Mina Almasry <almasrymina@google.com>,
-	Bobby Eshleman <bobbyeshleman@meta.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 216/271] net: devmem: prevent net-iov / page mixing
-Date: Mon, 17 Aug 2026 15:32:21 +0200
-Message-ID: <20260817132545.666648553@linuxfoundation.org>
+	Koichiro Den <den@valinux.co.jp>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.1 217/271] NTB: ntb_netdev: Preserve RX queue depth on allocation failure
+Date: Mon, 17 Aug 2026 15:32:22 +0200
+Message-ID: <20260817132545.703042742@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -53,38 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 53a43508ee332d8bffe40590c3d189c92a551f9f upstream.
+commit d2121faf133ac3bf9531b53a7e21273649a08517 upstream.
 
-We should either have net_iov or page backed frags in a single skb,
-otherwise it blows up down the stack. Don't allow mixing in
-zerocopy_fill_skb_from_devmem().
+ntb_netdev_rx_handler() hands the received skb to the network stack
+before allocating its replacement. If the allocation fails, nothing is
+reposted. Every failure therefore takes one buffer out of the RX queue
+while the interface remains up, and enough failures eventually stall
+reception.
 
-Fixes: bd61848900bff ("net: devmem: Implement TX path")
+A retry path could refill the queue later, but ntb_netdev has none.
+Allocate the replacement first instead. If that fails, drop the packet
+and repost the same skb. This keeps the queue full and lets packet
+delivery resume as soon as memory is available again.
+
+Fixes: 548c237c0a99 ("net: Add support for NTB virtual ethernet device")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Link: https://patch.msgid.link/e3199788c4732545627a4721097ebb71ad737bab.1785150502.git.asml.silence@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260806032537.3526498-1-den@valinux.co.jp
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/datagram.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ntb_netdev.c |   15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
---- a/net/core/datagram.c
-+++ b/net/core/datagram.c
-@@ -712,6 +712,9 @@ zerocopy_fill_skb_from_devmem(struct sk_
- 	size_t virt_addr, size, off;
- 	struct net_iov *niov;
+--- a/drivers/net/ntb_netdev.c
++++ b/drivers/net/ntb_netdev.c
+@@ -127,8 +127,8 @@ static void ntb_netdev_rx_handler(struct
+ {
+ 	struct ntb_netdev_queue *q = qp_data;
+ 	struct ntb_netdev *dev = q->ntdev;
++	struct sk_buff *skb, *new_skb;
+ 	struct net_device *ndev;
+-	struct sk_buff *skb;
+ 	int rc;
  
-+	if (i && skb_frags_readable(skb))
-+		return -EFAULT;
+ 	ndev = dev->ndev;
+@@ -144,6 +144,12 @@ static void ntb_netdev_rx_handler(struct
+ 		goto enqueue_again;
+ 	}
+ 
++	new_skb = netdev_alloc_skb(ndev, ndev->mtu + ETH_HLEN);
++	if (!new_skb) {
++		ndev->stats.rx_dropped++;
++		goto enqueue_again;
++	}
 +
- 	/* Devmem filling works by taking an IOVEC from the user where the
- 	 * iov_addrs are interpreted as an offset in bytes into the dma-buf to
- 	 * send from. We do not support other iter types.
+ 	skb_put(skb, len);
+ 	skb->protocol = eth_type_trans(skb, ndev);
+ 	skb->ip_summed = CHECKSUM_NONE;
+@@ -157,12 +163,7 @@ static void ntb_netdev_rx_handler(struct
+ 		ndev->stats.rx_bytes += len;
+ 	}
+ 
+-	skb = netdev_alloc_skb(ndev, ndev->mtu + ETH_HLEN);
+-	if (!skb) {
+-		ndev->stats.rx_errors++;
+-		ndev->stats.rx_frame_errors++;
+-		return;
+-	}
++	skb = new_skb;
+ 
+ enqueue_again:
+ 	rc = ntb_transport_rx_enqueue(qp, skb, skb->data, ndev->mtu + ETH_HLEN);
 
 
