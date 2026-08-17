@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906263F3265;
-	Mon, 17 Aug 2026 14:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D24843B4B5;
+	Mon, 17 Aug 2026 14:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976366; cv=none; b=Fk699co0d1IjI6slD3Jf22fZMUbx89InldQLeZ7VD4KB78np0hriS9YAqa68utmkveRh8RBawqWHXYU52cODu3N7BBpL9zb4uxdB3xJPd7eSsfsMs5nTbQ7wqonw2oPXCp7YuaRGjaWOATp/LOMmzprxKqQMHkxm+yR1mvdyV+4=
+	t=1786976369; cv=none; b=LWDs/42/prDwphsFjR6dNkP1FtDPpNLUlKdhz1htnicPqoI862gS6tlPEfELf+dQc1x36TwTEs/7BFFCgYts16A/DqV+KRq2igVVD/wUlz986RpHS9nlZeV8oMNT7whQm9DWuFP/fRFleJ2NenBTPkboMrs/ar3ErKZ0AjfE/RI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976366; c=relaxed/simple;
-	bh=5jdjXaDr9OCEBvpkMSk5EQEyp+LI2uAoD8YZPJ7s3yY=;
+	s=arc-20240116; t=1786976369; c=relaxed/simple;
+	bh=yLl5w/Bg10isvjXpqcfUuH05RXDdSaM57OGso1khPlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I5MdMx1uqDsOsV1FXQRQb2eAD+cwy5BHSqhQnFkkMfyQSCooUVrQkIKGK8ZC5vmFgKYtY5MT50rKhaOQRAaiU93Zq/W19WTAHPPCJJKCp2FTTcUN0pHZ9eAQLs+tcroUtuF7ohv/TZr8na+BZTJbS7VdHaM3j6Tx7AH9nW5DMdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iA//tBG2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HHykIprZJ08d4Pu/TPKRDYfF1z1GbPoNIz9H3tREOOPkhCLTiK+kEg+Gz5Yw6v/+8pKmhy/AVX2A09LHHnq/CfoRsKHuNMM/cvAXFi9oCIAMOk6UXAVp0AQ3ZpP/Xxb8bKF2/KlpCcjzOn0qYLM0zUQsczZsNB+BUicvGf+SlrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JdgZlRwy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iA//tBG2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA2F51F000E9;
-	Mon, 17 Aug 2026 14:19:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JdgZlRwy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5FD21F000E9;
+	Mon, 17 Aug 2026 14:19:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976365;
-	bh=fBIogSGcmAKfAD6Tunbt+PdujbDakb5O12gGqSGCnyc=;
+	s=korg; t=1786976368;
+	bh=Zfi63MV50lTtD/nucccKmg1Isn79Uy5rh2w2EcdExU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iA//tBG2gqLeJMy04l0vHe1mzJr9l129DHZRB4iOAO+FzmNVWtb/Q/OFzaV+/mQvM
-	 6dW2j4PhqlaFc8PAlnoLWi1GctoGj4ImaY2fDAaqyWoUCFN2CPPWIIqMkKInxbUlff
-	 uoJPiiShSBw8xgU3WaKzH1s/9RB8SiSH0MClQBz0=
+	b=JdgZlRwytlqLpx0rwr1M3sDG3tigHmgGqFPS8Ng9LhhvykpkABdFoAauxh5dSymyC
+	 TI2gp9kDlssCwEgzxfcakmzbjVWGMBZ6yyxf8loE4DnC6kUgCx46+pLkL4C0yiG0dh
+	 Q4zWdldLbs8K3qgyh2PBM/6/d675vfh5PHz+Ypqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.10 348/389] ipvs: properly update the overload flag on dest edit
-Date: Mon, 17 Aug 2026 15:33:07 +0200
-Message-ID: <20260817132552.371383228@linuxfoundation.org>
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Antoine Tenart <atenart@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 322/389] udp: fix potential use-after-free in tunnel segmentation
+Date: Mon, 17 Aug 2026 15:32:41 +0200
+Message-ID: <20260817132551.492072439@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,231 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-commit 8f843441c4e7eae8ea83491e8c203c2b192edcf5 upstream.
+[ Upstream commit d0f86fb36eb260abd10007b62c9dcc1028e03e61 ]
 
-The upper/lower connection thresholds for dest can be changed,
-so use ip_vs_dest_update_overload() to properly update the
-dest overload flag.
+__skb_udp_tunnel_segment() gets the UDP header before ensuring the
+tunnel header is in the skb head. If the pull reallocates skb->head,
+the saved UDP header pointer is no longer valid.
 
-The thresholds were not limited, fit them in the 0 .. INT_MAX
-range as already done in ipvsadm.
+Get the UDP header after the pull to avoid a potential use-after-free.
 
-As the thresholds are also read when connections are created
-and expired, use WRITE_ONCE/READ_ONCE to access them.
-
-As the lower threshold is optional, use (u - (u >> 2)) to
-calculate the 75% default value based on the upper threshold
-by preserving the integer rounding, as suggested by Yizhou Zhao.
-
-Trigger flag update when totalconns reaches one of the
-thresholds and use dst_lock to serialize the updating.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: dbef491ebe7f ("udp: Use uh->len instead of skb->len to compute checksum in segmentation")
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Antoine Tenart <atenart@kernel.org>
+Link: https://patch.msgid.link/20260730093554.68127-1-xuanqiang.luo@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_vs.h             |    3 +
- net/netfilter/ipvs/ip_vs_conn.c |   27 +++++-----------
- net/netfilter/ipvs/ip_vs_ctl.c  |   67 +++++++++++++++++++++++++++++++++++-----
- 3 files changed, 72 insertions(+), 25 deletions(-)
+ net/ipv4/udp_offload.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/include/net/ip_vs.h
-+++ b/include/net/ip_vs.h
-@@ -679,6 +679,7 @@ struct ip_vs_dest {
- 	atomic_t		persistconns;	/* persistent connections */
- 	__u32			u_threshold;	/* upper threshold */
- 	__u32			l_threshold;	/* lower threshold */
-+	__u32			l_threshold_val;/* used lower threshold */
+diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
+index 5d4413fe41952..4285d25d9982d 100644
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -20,17 +20,19 @@ static struct sk_buff *__skb_udp_tunnel_segment(struct sk_buff *skb,
+ 	int tnl_hlen = skb_inner_mac_header(skb) - skb_transport_header(skb);
+ 	bool remcsum, need_csum, offload_csum, gso_partial;
+ 	struct sk_buff *segs = ERR_PTR(-EINVAL);
+-	struct udphdr *uh = udp_hdr(skb);
+ 	u16 mac_offset = skb->mac_header;
+ 	__be16 protocol = skb->protocol;
+ 	u16 mac_len = skb->mac_len;
+ 	int udp_offset, outer_hlen;
++	struct udphdr *uh;
+ 	__wsum partial;
+ 	bool need_ipsec;
  
- 	/* for destination cache */
- 	spinlock_t		dst_lock;	/* lock of dst_cache */
-@@ -1457,6 +1458,8 @@ static inline void ip_vs_dest_put_and_fr
- 		kfree(dest);
- }
+ 	if (unlikely(!pskb_may_pull(skb, tnl_hlen)))
+ 		goto out;
  
-+void ip_vs_dest_update_overload(struct ip_vs_dest *dest, int mode);
++	uh = udp_hdr(skb);
 +
- /* IPVS sync daemon data and function prototypes
-  * (from ip_vs_sync.c)
-  */
---- a/net/netfilter/ipvs/ip_vs_conn.c
-+++ b/net/netfilter/ipvs/ip_vs_conn.c
-@@ -621,22 +621,22 @@ ip_vs_bind_dest(struct ip_vs_conn *cp, s
- 
- 	/* Update the connection counters */
- 	if (!(flags & IP_VS_CONN_F_TEMPLATE)) {
-+		int tc;
-+
- 		/* It is a normal connection, so modify the counters
- 		 * according to the flags, later the protocol can
- 		 * update them on state change
- 		 */
- 		if (!(flags & IP_VS_CONN_F_INACTIVE))
- 			atomic_inc(&dest->activeconns);
--		atomic_inc(&dest->totalconns);
-+		tc = atomic_inc_return(&dest->totalconns);
-+		if (tc == READ_ONCE(dest->u_threshold))
-+			ip_vs_dest_update_overload(dest, 1);
- 	} else {
- 		/* It is a persistent connection/template, so increase
- 		   the persistent connection counter */
- 		atomic_inc(&dest->persistconns);
- 	}
--
--	if (dest->u_threshold != 0 &&
--	    atomic_read(&dest->totalconns) >= dest->u_threshold)
--		dest->flags |= IP_VS_DEST_F_OVERLOAD;
- }
- 
- 
-@@ -717,27 +717,20 @@ static inline void ip_vs_unbind_dest(str
- 
- 	/* Update the connection counters */
- 	if (!(cp->flags & IP_VS_CONN_F_TEMPLATE)) {
-+		int tc;
-+
- 		/* It is a normal connection, so decrease the counters */
- 		if (!(cp->flags & IP_VS_CONN_F_INACTIVE))
- 			atomic_dec(&dest->activeconns);
--		atomic_dec(&dest->totalconns);
-+		tc = atomic_fetch_dec(&dest->totalconns);
-+		if (tc == READ_ONCE(dest->l_threshold_val))
-+			ip_vs_dest_update_overload(dest, -1);
- 	} else {
- 		/* It is a persistent connection/template, so decrease
- 		   the persistent connection counter */
- 		atomic_dec(&dest->persistconns);
- 	}
- 
--	if (dest->l_threshold != 0) {
--		if (atomic_read(&dest->totalconns) < dest->l_threshold)
--			dest->flags &= ~IP_VS_DEST_F_OVERLOAD;
--	} else if (dest->u_threshold != 0) {
--		if (atomic_read(&dest->totalconns) * 4 < dest->u_threshold * 3)
--			dest->flags &= ~IP_VS_DEST_F_OVERLOAD;
--	} else {
--		if (dest->flags & IP_VS_DEST_F_OVERLOAD)
--			dest->flags &= ~IP_VS_DEST_F_OVERLOAD;
--	}
--
- 	ip_vs_dest_put(dest);
- }
- 
---- a/net/netfilter/ipvs/ip_vs_ctl.c
-+++ b/net/netfilter/ipvs/ip_vs_ctl.c
-@@ -863,6 +863,40 @@ ip_vs_zero_stats(struct ip_vs_stats *sta
- 	spin_unlock_bh(&stats->lock);
- }
- 
-+/* Update overload flag based on number of dest conns and lower/upper
-+ * connection thresholds:
-+ * - conns reach u_threshold and exceed it: set the flag
-+ * - conns go below l_threshold (or 75% of u_threshold): clear the flag
-+ */
-+static void __ip_vs_dest_update_overload(struct ip_vs_dest *dest, int mode)
-+{
-+	int conns;
-+	u32 l, u;
-+
-+	lockdep_assert_held(&dest->dst_lock);
-+	u = READ_ONCE(dest->u_threshold);
-+	if (!u)
-+		goto unset;
-+	l = READ_ONCE(dest->l_threshold_val);
-+	conns = atomic_read(&dest->totalconns);
-+	if (conns >= (mode > 0 ? l : u)) {
-+		dest->flags |= IP_VS_DEST_F_OVERLOAD;
-+		return;
-+	}
-+	if (conns >= (mode < 0 ? u : l))
-+		return;
-+
-+unset:
-+	dest->flags &= ~IP_VS_DEST_F_OVERLOAD;
-+}
-+
-+void ip_vs_dest_update_overload(struct ip_vs_dest *dest, int mode)
-+{
-+	spin_lock_bh(&dest->dst_lock);
-+	__ip_vs_dest_update_overload(dest, mode);
-+	spin_unlock_bh(&dest->dst_lock);
-+}
-+
- /*
-  *	Update a destination in the given service
-  */
-@@ -929,10 +963,19 @@ __ip_vs_update_dest(struct ip_vs_service
- 	/* set the dest status flags */
- 	dest->flags |= IP_VS_DEST_F_AVAILABLE;
- 
--	if (udest->u_threshold == 0 || udest->u_threshold > dest->u_threshold)
--		dest->flags &= ~IP_VS_DEST_F_OVERLOAD;
--	dest->u_threshold = udest->u_threshold;
--	dest->l_threshold = udest->l_threshold;
-+	if (READ_ONCE(dest->u_threshold) != udest->u_threshold ||
-+	    READ_ONCE(dest->l_threshold) != udest->l_threshold) {
-+		spin_lock_bh(&dest->dst_lock);
-+		WRITE_ONCE(dest->u_threshold, udest->u_threshold);
-+		WRITE_ONCE(dest->l_threshold, udest->l_threshold);
-+		/* Low threshold defaults to 75% of upper threshold */
-+		WRITE_ONCE(dest->l_threshold_val,
-+			   udest->l_threshold ? :
-+			   (udest->u_threshold -
-+			    (udest->u_threshold >> 2)));
-+		__ip_vs_dest_update_overload(dest, 0);
-+		spin_unlock_bh(&dest->dst_lock);
-+	}
- 
- 	dest->af = udest->af;
- 
-@@ -1055,6 +1098,9 @@ ip_vs_add_dest(struct ip_vs_service *svc
- 		return -ERANGE;
- 	}
- 
-+	if (udest->u_threshold > INT_MAX)
-+		return -EINVAL;
-+
- 	if (udest->tun_type == IP_VS_CONN_F_TUNNEL_TYPE_GUE) {
- 		if (udest->tun_port == 0) {
- 			pr_err("%s(): tunnel port is zero\n", __func__);
-@@ -1126,6 +1172,9 @@ ip_vs_edit_dest(struct ip_vs_service *sv
- 		return -ERANGE;
- 	}
- 
-+	if (udest->u_threshold > INT_MAX)
-+		return -EINVAL;
-+
- 	if (udest->tun_type == IP_VS_CONN_F_TUNNEL_TYPE_GUE) {
- 		if (udest->tun_port == 0) {
- 			pr_err("%s(): tunnel port is zero\n", __func__);
-@@ -2712,8 +2761,8 @@ __ip_vs_get_dest_entries(struct netns_ip
- 			entry.port = dest->port;
- 			entry.conn_flags = atomic_read(&dest->conn_flags);
- 			entry.weight = atomic_read(&dest->weight);
--			entry.u_threshold = dest->u_threshold;
--			entry.l_threshold = dest->l_threshold;
-+			entry.u_threshold = READ_ONCE(dest->u_threshold);
-+			entry.l_threshold = READ_ONCE(dest->l_threshold);
- 			entry.activeconns = atomic_read(&dest->activeconns);
- 			entry.inactconns = ip_vs_dest_inactconns(dest);
- 			entry.persistconns = atomic_read(&dest->persistconns);
-@@ -3314,8 +3363,10 @@ static int ip_vs_genl_fill_dest(struct s
- 			 dest->tun_port) ||
- 	    nla_put_u16(skb, IPVS_DEST_ATTR_TUN_FLAGS,
- 			dest->tun_flags) ||
--	    nla_put_u32(skb, IPVS_DEST_ATTR_U_THRESH, dest->u_threshold) ||
--	    nla_put_u32(skb, IPVS_DEST_ATTR_L_THRESH, dest->l_threshold) ||
-+	    nla_put_u32(skb, IPVS_DEST_ATTR_U_THRESH,
-+			READ_ONCE(dest->u_threshold)) ||
-+	    nla_put_u32(skb, IPVS_DEST_ATTR_L_THRESH,
-+			READ_ONCE(dest->l_threshold)) ||
- 	    nla_put_u32(skb, IPVS_DEST_ATTR_ACTIVE_CONNS,
- 			atomic_read(&dest->activeconns)) ||
- 	    nla_put_u32(skb, IPVS_DEST_ATTR_INACT_CONNS,
+ 	/* Adjust partial header checksum to negate old length.
+ 	 * We cannot rely on the value contained in uh->len as it is
+ 	 * possible that the actual value exceeds the boundaries of the
+-- 
+2.53.0
+
 
 
