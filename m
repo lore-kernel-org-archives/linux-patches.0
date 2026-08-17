@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7513B811F;
-	Mon, 17 Aug 2026 14:01:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932C44B04A9;
+	Mon, 17 Aug 2026 14:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975295; cv=none; b=MTAJx9F4SXYMSesCq+7h5ujO5YqiDkihi1rjWPNvh7JmEVhSvb32/a2HKje68SDxb8yd1WJ+AiEYuATKSI+oVekdDerZBQSIXixiMi2vy3YxAvfZPtWNNZEyTgcSPgELVNX9LKJmvk4a4Sgs3tEy3Ooe892kJ6tpgj0gKJz7EpI=
+	t=1786975297; cv=none; b=mJQ3bwzPgPV2ktn+6vLyz3WltDUZZauBl5fCcdtA2yRCiZfxoZ89phZ648CQTwY17nt4YJJSymP/IeEj8uRGNpzMSXvcl5EffQNchPTLUCAiwnzjMhVkl9+WrSKfDI2YbiZgdHO065+Q00HH0DMY7vRH8Ew6ZI48oHzFPiOwvnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975295; c=relaxed/simple;
-	bh=B0ysJh2kSBpN2wqsd09R1Qc2TP3bCJ2GswjDMqqYpcg=;
+	s=arc-20240116; t=1786975297; c=relaxed/simple;
+	bh=Hy9NweQ/KTDTeI+cqC0HscN/1D8famk7wV71shQjfn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XGLR9/Io/8PKF788sdNXI/YU6wtCrUCXAwwbAttRC2LCTqKGZvPEimx3vVGgl/Nbgeflgec0RYEESvQeL/1ryIaeDSDEHKJTkcmOohYT32/P7dKS5s7y427N6DwKaWYJvb5pdHhwnfSW8GT16ZZMyhy1j6r7xEQoAMJTmv7yGGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ax5d+bo0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iQh+ThO0pCAgqGdTUXt6QSR7frMhu5eVx8bmJNEp2B0Cpans9Dt82okbmTYcQFBZwpx+NNLWd5QDWJKMv9R53xkPCVf0hKps16nI0OOuzX0/mQWKn2tKSx8Y2meugBoqpcefw/2J1olSI76/QevZd+5xhgMccaRVQoYwiYvV/DE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LMxiRI76; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ax5d+bo0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C04A1F00A3A;
-	Mon, 17 Aug 2026 14:01:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LMxiRI76"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5161F000E9;
+	Mon, 17 Aug 2026 14:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975293;
-	bh=FyQboKTkBjtoCM/Lf96i4x/kSrqiOT4eYzXUy7E7lEE=;
+	s=korg; t=1786975296;
+	bh=uWA5AaGCH4lTB8kOzGPK0S2kiPQy0H8j9J5+IaAxtjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ax5d+bo06JYGkWmY6IfoUecMqtlyYBYIb21enr3L8bFfLFP/E5mHYTCIjYMCiW5OD
-	 ExG/tlMtTe+QcbECimfnXqy2HhRPE+byvKa1MyE/kTNFS7yfncQf9vnvVuU8g37v/k
-	 j986ynhHUYf+nTQEm+FHYKj/DDNscTeFWlxfdq/U=
+	b=LMxiRI76Vppg8O2+FfetpJbpjFH4np55tz7g0apJhJQGA5D/vV8xxPeyBePhkmS+O
+	 Urz6GEM118pDSeMQrBfNdKR1jCUmWjyHNkXoiS8GPnnxE3sXzSjp2YLkZpHHTTrysD
+	 8p2EsX+2Lr2NsslIJObFotXiVsWdoNZYyLhDFMBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>
-Subject: [PATCH 6.18 228/250] Revert "thermal/drivers/hwmon: Cleanup coding style a bit"
-Date: Mon, 17 Aug 2026 15:33:09 +0200
-Message-ID: <20260817132545.826511098@linuxfoundation.org>
+	Ahmad Byagowi <ahmadexp@gmail.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 229/250] ptp: ocp: Fix board ID over-read
+Date: Mon, 17 Aug 2026 15:33:10 +0200
+Message-ID: <20260817132545.862127578@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -50,35 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Ahmad Byagowi <ahmadexp@gmail.com>
 
-commit ff8da20b6f47c48d46e47f93f7a59e2d56ee9107 upstream.
+commit 6b69f2ef10cdb018c0b127a7cab88e590bbddba4 upstream.
 
-Revert commit 030a48b0f6ce ("thermal/drivers/hwmon: Cleanup coding style
-a bit") that introduced a use-after-free into the error path of
-thermal_add_hwmon_sysfs() by removing a valid check from it.
+The EEPROM board ID is a fixed 13-byte field and is not guaranteed to
+contain a NUL terminator. Passing it directly to
+devlink_info_version_fixed_put() treats it as a C string and may read
+beyond the field.
 
-Link: https://lore.kernel.org/linux-hwmon/20260803183915.4ED7D1F000E9@smtp.kernel.org/
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Link: https://patch.msgid.link/5123895.31r3eYUQgx@rafael.j.wysocki
+Format at most OCP_BOARD_ID_LEN bytes into the existing local buffer
+before reporting the ID. Use a precision limit because the snprintf()
+output size alone does not bound the source string scan.
+
+Fixes: 0cfcdd1ebcfe ("ptp: ocp: add nvmem interface for accessing eeprom")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ahmad Byagowi <ahmadexp@gmail.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20260804210751.48248-1-ahmadexp@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/thermal_hwmon.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ptp/ptp_ocp.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/thermal/thermal_hwmon.c
-+++ b/drivers/thermal/thermal_hwmon.c
-@@ -212,7 +212,8 @@ int thermal_add_hwmon_sysfs(struct therm
- 	if (new_hwmon_device)
- 		hwmon_device_unregister(hwmon->device);
-  free_mem:
--	kfree(hwmon);
-+	if (new_hwmon_device)
-+		kfree(hwmon);
+--- a/drivers/ptp/ptp_ocp.c
++++ b/drivers/ptp/ptp_ocp.c
+@@ -1916,9 +1916,11 @@ ptp_ocp_devlink_info_get(struct devlink
+ 	if (err)
+ 		return err;
  
- 	return result;
- }
++	snprintf(buf, sizeof(buf), "%.*s", OCP_BOARD_ID_LEN,
++		 (const char *)bp->board_id);
+ 	err = devlink_info_version_fixed_put(req,
+ 			DEVLINK_INFO_VERSION_GENERIC_BOARD_ID,
+-			bp->board_id);
++			buf);
+ 	if (err)
+ 		return err;
+ 
 
 
