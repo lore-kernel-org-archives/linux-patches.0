@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E0A3ABD99;
-	Mon, 17 Aug 2026 14:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4562F2C1594;
+	Mon, 17 Aug 2026 14:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975588; cv=none; b=VyMG2VmsducjvtFNVhOt+FyNSLNP+NSEMeOL23a0s5g1xmOZ3DfdML/4/6h2FzEyjYaFltOE9otYXufRkR+ENwhLVl0JE1bXFQWph6FRPzOnv42hZMxE2GFD6ps+HgBPXyL5zDF1PcuPF81OFUKYQgAHF1xLYZ1DN3YVt9EQDlc=
+	t=1786975591; cv=none; b=OZNemicACRaEL7fsxIfZQHPKSmBAXT5vJdJmrlirXwSuMJz2tJI5ObXI6t6nS8f/hl/Akvb+98mZpBqnhNxVYWN2C1clwTmFwDLvrebii2lXswriH6E5fztuPSg00azZnhpREkDe1ASvraesw1hxgkhw7mqJOXF9hzt6SFtYoFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975588; c=relaxed/simple;
-	bh=GF5speeDC2mK96InvlJaIsRQw2CF6u5d6E8ytzQUbtI=;
+	s=arc-20240116; t=1786975591; c=relaxed/simple;
+	bh=ZhmCyUQRIr70rcxjtdn0kjn3YAMOgYbdo2/iOWWPiZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TKU2X3Q4yOiQV+q54l8IM8jrGC+mGuULLxVPxzXyCT0IZbT+DXwsEPFsiY0cGGIK1bNol5xRLL1CLIv7AZxb95hAE/DvEm09ptbyTwQly1OnRtbaeMm+OrUUk/YnrU2FJC/JFHvw+pg9Xdmyn25KAoVCZPdVvNhKFgCGKjyCZlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4t1r12y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KqQb+Abg29AqIdu7Mu9Enqg4EchAm86m5I1L6ZtQLIofulJmFm1f2qD6LqLnIshGiZZyaIcgSAdZjdRBou3PF0hr0orGPQqrNuKNlWeZOUPJmA26tN855ch8pT14yEzAD+xyIoJIxJ3CgxhqSDC4v0jjUQEdbq8LPzOZtGz55l4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZkqLm+rs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4t1r12y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0BC1F000E9;
-	Mon, 17 Aug 2026 14:06:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZkqLm+rs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2381F000E9;
+	Mon, 17 Aug 2026 14:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975587;
-	bh=XC9ruF6Y+xv/BPAuWt8dFClAMEFOMD3buk5SzEaEdTc=;
+	s=korg; t=1786975590;
+	bh=CBzJI41qgXKQp3WeiHXknEOvkOTytxAL5qEM7C9VDrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U4t1r12yELPc09KxOdrVpG44JoU3jlQPvuLqdWK5BI4RztSVf32sU34yROw8AS1su
-	 m6fTByC1QjVrBv8dUWlWDj1B/5LA3x587yhZx/1S/VSK/s53eyS5aGcW2/OlVhOLPW
-	 ZnIn8xnvISFTwija8QokmeH5GaaYhM4wGMtzM+c8=
+	b=ZkqLm+rs4aLNx6yhJitB319lf980mtjhWGumZAt804yb0cl5Te0TTLE9k0y9R0kmx
+	 iGT81KwpCmvKFoZ8SYIiUzqdEeXxBWcLuN9+bRzt2zfkmKbFnnTwYtHOwh+1YIRo04
+	 mVYzEXgQ/7gh0eBnqrmltnDlk5HTzrT1OKMeIiQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Pope <andrew.pope@morsemicro.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Patrick Oppenlander <patrick.oppenlander@gmail.com>,
+	Prashanth Kumar KR <PrashanthKumar.K.R@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 080/389] wifi: mac80211: recalculate TIM when a station enters power save
-Date: Mon, 17 Aug 2026 15:28:39 +0200
-Message-ID: <20260817132542.225766507@linuxfoundation.org>
+Subject: [PATCH 5.10 081/389] amd-xgbe: fix MAC_AUTO_SW handling in CL37 AN
+Date: Mon, 17 Aug 2026 15:28:40 +0200
+Message-ID: <20260817132542.262734633@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,54 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Pope <andrew.pope@morsemicro.com>
+From: Prashanth Kumar KR <PrashanthKumar.K.R@amd.com>
 
-[ Upstream commit a007a384c9eb17610f53a53e2f59944c31f1565a ]
+[ Upstream commit 4bf22afe53a1de4b44b04cf677fd5199089cbdff ]
 
-When an AP buffers frames for a station on its per-station TXQs and the
-station subsequently enters power save, sta_ps_start() records the
-buffered TIDs in txq_buffered_tids but does not update the TIM. The
-station's TIM bit is only ever set when a further frame is buffered
-while the station is already asleep
-(ieee80211_tx_h_unicast_ps_buf() -> sta_info_recalc_tim()).
+MAC_AUTO_SW (VR_MII_DIG_CTRL1 bit 9) enables automatic XPCS speed
+mode switching after CL37 auto-negotiation and is only meaningful in
+SGMII MAC mode. The original code unconditionally set this bit on
+every call to xgbe_an37_set(), including when called from
+xgbe_an37_disable() with enable=false. This left MAC_AUTO_SW=1 after
+AN was disabled, causing the XPCS to autonomously switch speed from
+stale AN state during subsequent mode changes, breaking SGMII speed
+negotiation on 1G copper SFP modules.
 
-If no further downlink frame arrives for that station the beacon
-TIM never advertises the buffered traffic. A station relying on the
-TIM then remains in doze indefinitely on top of a non-empty queue. Its
-TXQs were removed from the scheduler's active list at PS entry, nothing
-pages it, and the flow deadlocks until an unrelated event wakes the
-station.
+Patrick: This was breaking negotiation for all 1G SFP modules,
+not just copper modules.
 
-Recalculate the TIM at the end of sta_ps_start(), so traffic
-already buffered at PS entry is advertised immediately.
-sta_info_recalc_tim() already consults txq_buffered_tids, which is
-updated above, and is safe in this context (it is already called
-from equivalent paths such as the tx handlers and
-ieee80211_handle_filtered_frame()).
-
-Fixes: ba8c3d6f16a1 ("mac80211: add an intermediate software queue implementation")
-Signed-off-by: Andrew Pope <andrew.pope@morsemicro.com>
-Link: https://patch.msgid.link/20260717011751.79524-1-andrew.pope@morsemicro.com
-[add wifi: subject prefix]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 42fd432fe6d3 ("amd-xgbe: align CL37 AN sequence as per databook")
+Reported-by: Patrick Oppenlander <patrick.oppenlander@gmail.com>
+Link: https://lore.kernel.org/netdev/CAEg67GmFS0Q4oSZkz8zWdOzckSth9_vBPiOy6a7-d697C2w2Xg@mail.gmail.com
+Signed-off-by: Prashanth Kumar KR <PrashanthKumar.K.R@amd.com>
+Tested-by: Patrick Oppenlander <patrick.oppenlander@gmail.com>
+Link: https://patch.msgid.link/20260709095006.3683940-1-prashanthkumar.k.r@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/rx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index 8f497fe234edb2..8ec630a4d069e3 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -1585,6 +1585,8 @@ static void sta_ps_start(struct sta_info *sta)
- 		else
- 			clear_bit(tid, &sta->txq_buffered_tids);
- 	}
-+
-+	sta_info_recalc_tim(sta);
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+index ebb8b3e5b9a882..01c37ffc9ceb81 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+@@ -364,9 +364,14 @@ static void xgbe_an37_set(struct xgbe_prv_data *pdata, bool enable,
+ 
+ 	XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_CTRL1, reg);
+ 
+-	reg = XMDIO_READ(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL);
+-	reg |= XGBE_VEND2_MAC_AUTO_SW;
+-	XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL, reg);
++	if (pdata->an_mode == XGBE_AN_MODE_CL37_SGMII) {
++		reg = XMDIO_READ(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL);
++		if (enable)
++			reg |= XGBE_VEND2_MAC_AUTO_SW;
++		else
++			reg &= ~XGBE_VEND2_MAC_AUTO_SW;
++		XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL, reg);
++	}
  }
  
- static void sta_ps_end(struct sta_info *sta)
+ static void xgbe_an37_restart(struct xgbe_prv_data *pdata)
 -- 
 2.53.0
 
