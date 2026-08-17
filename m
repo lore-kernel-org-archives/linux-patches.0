@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65364175A6B;
-	Mon, 17 Aug 2026 14:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F96175A6B;
+	Mon, 17 Aug 2026 14:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977647; cv=none; b=tTA0bg36wyAr/Rs+QPcBZmMmF+ipeZNQjULI3GT/CI6ml7vtsALpuwhg8tc9jFT70F5Us7PIs78aN181uSAKyzLQGTLRRkJ9InQDaPhEl2KHdLbTG8CpY6yA5fXNatvCKMhvAxqmUUK/B7OZu6OF8LUChhaU5HPwHfwl/Ke1PR8=
+	t=1786977651; cv=none; b=IBM63AssM66nLND0sod3v5oNANQNRE0z83LkSN4WrdQzOwb07L3SB0L4hb3NFWhJY/P4Gkge2OJ4iNymB4XqB7x9D/ZDPpXUoTDndTf7NHjcsqgIV8pCF18yJJVs9lEDgtWE/WicseDFLEBx1CHRxRtEvqVWpC8U/ZKIuhL75Hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977647; c=relaxed/simple;
-	bh=nGfXzDWC20lQM3ixHsYESaKh9YpT0b+2E4Y5JMhyY3E=;
+	s=arc-20240116; t=1786977651; c=relaxed/simple;
+	bh=cRZKWZ3DbaAm1Xxy7Vr8GNssKJzFF8bp/bNCCo86QcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YcZD4yfwl34LHBmjmkT8gRLrGLo8fvCIFY77yV5uC1KPXKhMj6GoikqPeWE+PK8h91/QBh4T4kuj5/JolqvWlACG1APICJ2AZUNX9Z6uVc2IgqB/KthfhCuux5MdfOmGtGoxRfVayQjzcT2MdYEct8iQsQxJUVA9VE6CXMxXmVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CEs/R3f4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p0ZqcyQsV8mMHqJTUeb/NysMPrFZFocr/5WfSWxNRuIrcgrvYMA/bQck3gnl5GZMvEn6dueJVJb8iAi8sjLLIIG8SpFtsWfFoqrdNrACNcsJARuPiEukfZnzYF2wOs33CBApxhRj9z9P90vQXWkV7StS4zChrE73zN8MZot1avQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTOmVlbr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEs/R3f4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2DA21F000E9;
-	Mon, 17 Aug 2026 14:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTOmVlbr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE311F000E9;
+	Mon, 17 Aug 2026 14:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977646;
-	bh=j65XrDNEUhqaEC2pWqKX7+Nj7V4Ztfx2SbO3xFlCX/M=;
+	s=korg; t=1786977650;
+	bh=cNIZz/thK4eMXuURj7TiHV+WvO31earGHKSLUQb/fzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CEs/R3f4fFq3EWz13LTT+g5bx2luzX1hhZQovF2eLxEOr4Xwe5I3MDUVkxUVXil37
-	 ouhJ9Escd1WgDp/0t4TpNtqlZ0zF6bUgdVNUbqDsfgAYIj654DhOefxnZi1p9tHRRn
-	 9yMumdhcLilfCsQunvVbEbQDH5vwt+Nhp4j5y61Y=
+	b=mTOmVlbro+2UmH8gS2S+cBtfZ36+IR0ql9NRcB7w1wlrdSTxOvmIPR/M+7ms0l5Hu
+	 h7X3Vu65zg/gOwd4JsWubU5ESxXTGu6z/2bpsfYmHuCOdoyNdGgWUAXHP6JzderGIV
+	 HixYpVPgCcwMkQXK0uQdr1+8ASoIDlSxEfNIotaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.15 352/456] can: softing: fw_parse(): validate firmware record spans
-Date: Mon, 17 Aug 2026 15:32:22 +0200
-Message-ID: <20260817132553.314263422@linuxfoundation.org>
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 395/456] ata: pata_sl82c105: fix bridge revision use-after-free
+Date: Mon, 17 Aug 2026 15:33:05 +0200
+Message-ID: <20260817132554.828982340@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,158 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-commit 856d6cb04e5407523566b075841dcd6423757d1c upstream.
+[ Upstream commit 7700a31039cdc6715cb6cce7e7a664ee4e945f67 ]
 
-fw_parse() reads a fixed record header, a firmware-provided payload,
-and a trailing checksum without knowing the end of the firmware blob. A
-truncated record can therefore make those reads exceed the blob.
+pci_get_slot() returns a referenced PCI device. Commit 44c10138fd4b
+("PCI: Change all drivers to use pci_device->revision") replaced a
+configuration-space read with direct access to the cached revision field,
+but left that access after pci_dev_put(). The bridge may therefore be freed
+before its revision is read.
 
-The same record also supplies addresses and lengths for writes into
-DPRAM. The generic loader uses wrap-prone mixed signed arithmetic for its
-bounds check, while the application loader does not bound the staging
-copy at all.
+Read the revision before dropping the reference.
 
-Pass the firmware end to the parser and validate the full source record.
-Use a signed wide offset for generic DPRAM records and validate the
-application staging span against the mapped DPRAM before copying.
-
-Fixes: 03fd3cf5a179 ("can: add driver for Softing card")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260722044347.2708-1-pengpeng@iscas.ac.cn
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 44c10138fd4b ("PCI: Change all drivers to use pci_device->revision")
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/softing/softing_fw.c |   46 ++++++++++++++++++++++++-----------
- 1 file changed, 32 insertions(+), 14 deletions(-)
+ drivers/ata/pata_sl82c105.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/can/softing/softing_fw.c
-+++ b/drivers/net/can/softing/softing_fw.c
-@@ -91,12 +91,12 @@ int softing_bootloader_command(struct so
- 	return ret;
- }
- 
--static int fw_parse(const uint8_t **pmem, uint16_t *ptype, uint32_t *paddr,
--		uint16_t *plen, const uint8_t **pdat)
-+static int fw_parse(const u8 **pmem, const u8 *limit, u16 *ptype,
-+		    u32 *paddr, u16 *plen, const u8 **pdat)
+diff --git a/drivers/ata/pata_sl82c105.c b/drivers/ata/pata_sl82c105.c
+index 8487470e2e01e..c32f3b490bb35 100644
+--- a/drivers/ata/pata_sl82c105.c
++++ b/drivers/ata/pata_sl82c105.c
+@@ -265,6 +265,7 @@ static struct ata_port_operations sl82c105_port_ops = {
+ static int sl82c105_bridge_revision(struct pci_dev *pdev)
  {
- 	uint16_t checksum[2];
--	const uint8_t *mem;
--	const uint8_t *end;
-+	const u8 *mem;
-+	const u8 *record_end;
+ 	struct pci_dev *bridge;
++	u8 revision;
  
  	/*
- 	 * firmware records are a binary, unaligned stream composed of:
-@@ -114,14 +114,21 @@ static int fw_parse(const uint8_t **pmem
- 	 * endianness & alignment.
+ 	 * The bridge should be part of the same device, but function 0.
+@@ -286,8 +287,9 @@ static int sl82c105_bridge_revision(struct pci_dev *pdev)
+ 	/*
+ 	 * We need to find function 0's revision, not function 1
  	 */
- 	mem = *pmem;
-+	/* A record needs an 8-byte prefix and a 2-byte checksum. */
-+	if (mem > limit || limit - mem < 10)
-+		return -EINVAL;
-+
- 	*ptype = le16_to_cpup((void *)&mem[0]);
- 	*paddr = le32_to_cpup((void *)&mem[2]);
- 	*plen = le16_to_cpup((void *)&mem[6]);
-+	if (*plen > limit - mem - 10)
-+		return -EINVAL;
-+
- 	*pdat = &mem[8];
- 	/* verify checksum */
--	end = &mem[8 + *plen];
--	checksum[0] = le16_to_cpup((void *)end);
--	for (checksum[1] = 0; mem < end; ++mem)
-+	record_end = &mem[8 + *plen];
-+	checksum[0] = le16_to_cpup((void *)record_end);
-+	for (checksum[1] = 0; mem < record_end; ++mem)
- 		checksum[1] += *mem;
- 	if (checksum[0] != checksum[1])
- 		return -EINVAL;
-@@ -139,6 +146,7 @@ int softing_load_fw(const char *file, st
- 	uint16_t type, len;
- 	uint32_t addr;
- 	uint8_t *buf = NULL, *new_buf;
-+	s64 dpram_offset;
- 	int buflen = 0;
- 	int8_t type_end = 0;
++	revision = bridge->revision;
+ 	pci_dev_put(bridge);
+-	return bridge->revision;
++	return revision;
+ }
  
-@@ -153,7 +161,7 @@ int softing_load_fw(const char *file, st
- 	mem = fw->data;
- 	end = &mem[fw->size];
- 	/* look for header record */
--	ret = fw_parse(&mem, &type, &addr, &len, &dat);
-+	ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
- 	if (ret < 0)
- 		goto failed;
- 	if (type != 0xffff)
-@@ -164,7 +172,7 @@ int softing_load_fw(const char *file, st
- 	}
- 	/* ok, we had a header */
- 	while (mem < end) {
--		ret = fw_parse(&mem, &type, &addr, &len, &dat);
-+		ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
- 		if (ret < 0)
- 			goto failed;
- 		if (type == 3) {
-@@ -179,9 +187,13 @@ int softing_load_fw(const char *file, st
- 			goto failed;
- 		}
- 
--		if ((addr + len + offset) > size)
-+		dpram_offset = (s64)addr + offset;
-+		if (dpram_offset < 0 || dpram_offset > size ||
-+		    len > size - dpram_offset) {
-+			ret = -EINVAL;
- 			goto failed;
--		memcpy_toio(&dpram[addr + offset], dat, len);
-+		}
-+		memcpy_toio(&dpram[dpram_offset], dat, len);
- 		/* be sure to flush caches from IO space */
- 		mb();
- 		if (len > buflen) {
-@@ -195,7 +207,7 @@ int softing_load_fw(const char *file, st
- 			buf = new_buf;
- 		}
- 		/* verify record data */
--		memcpy_fromio(buf, &dpram[addr + offset], len);
-+		memcpy_fromio(buf, &dpram[dpram_offset], len);
- 		if (memcmp(buf, dat, len)) {
- 			/* is not ok */
- 			dev_alert(&card->pdev->dev, "DPRAM readback failed\n");
-@@ -237,7 +249,7 @@ int softing_load_app_fw(const char *file
- 	mem = fw->data;
- 	end = &mem[fw->size];
- 	/* look for header record */
--	ret = fw_parse(&mem, &type, &addr, &len, &dat);
-+	ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
- 	if (ret)
- 		goto failed;
- 	ret = -EINVAL;
-@@ -253,7 +265,7 @@ int softing_load_app_fw(const char *file
- 	}
- 	/* ok, we had a header */
- 	while (mem < end) {
--		ret = fw_parse(&mem, &type, &addr, &len, &dat);
-+		ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
- 		if (ret)
- 			goto failed;
- 
-@@ -279,6 +291,12 @@ int softing_load_app_fw(const char *file
- 		/* work in 16bit (target) */
- 		sum &= 0xffff;
- 
-+		if (card->pdat->app.offs > card->dpram_size ||
-+		    len > card->dpram_size - card->pdat->app.offs) {
-+			ret = -EINVAL;
-+			goto failed;
-+		}
-+
- 		memcpy_toio(&card->dpram[card->pdat->app.offs], dat, len);
- 		iowrite32(card->pdat->app.offs + card->pdat->app.addr,
- 				&card->dpram[DPRAM_COMMAND + 2]);
+ static void sl82c105_fixup(struct pci_dev *pdev)
+-- 
+2.53.0
+
 
 
