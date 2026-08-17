@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08FB2C1594;
-	Mon, 17 Aug 2026 14:05:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9683D349F;
+	Mon, 17 Aug 2026 14:05:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975511; cv=none; b=eeb1dPhOacSwR78Gm95OzjTeVz94+vyrFR7V/rghnmn5TDVUjLqsUyWz1DUWR046T71wDRCX30WkqLCHmeNrvTRsntJ3abtyCkSLtF6uqIbt+wlQ64gX4vRfg++v4nILK5GZwI5uMaJrVWDZltcGYd1LZrkeLrNyzp25O8Y72ww=
+	t=1786975514; cv=none; b=r04ua1ab9Ru1XQB98oDPPhFJEB02oxKJVRp7YQjuiCwPEamrGkW9q5mWZgmxauUqL2k8mcwAzu2T6KPWqH8iI1pYzo0A17yzBQER9fLIRYEpImhIQCOEIwFbe9Fos4kRp6dBtIj70p6AcrIpw1QzczYoxTNr7p3kuHppjVYEz0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975511; c=relaxed/simple;
-	bh=aFXtcZWSZ1SQC134e5HLiR4KiggmCFV6SArCRF8Jy4k=;
+	s=arc-20240116; t=1786975514; c=relaxed/simple;
+	bh=pmbI2v6x2V7AbEvp0oo985spxIQkm+SKBAUqGRK6cvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jt8fcL9Z1yCjcPzWsOpit4SL8RVo2CP2To1PUIQga2QzBXb2peEiWhDOlU/vjurNN46tO5A6qEFMj4bnrwi25E4+B7uCw9TBcJI5nM5qN0iNF+K8Bm0i+n6JSgIguajk0/0knGd1UQGMssons6+JBEGF2Cdq5bFw+AGWSpJDMNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d13MtpHd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CVGDmsdNqxHPtMVmpsRouEkqWfBX67aMEL5Zh+Zw4EPR4ZjZDr7GNMVafCmCJWkpX3SBc8dZbEYnSlENcRkDSGbY2Cgb+jZPBFtouBh6u4oOp5DVo8C3vMhalcnajVQ1ff4WRr+FF6zlkIOz2XirNb23kWaSFLll5XI9FJEUbOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jaru6+aW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d13MtpHd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258891F000E9;
-	Mon, 17 Aug 2026 14:05:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jaru6+aW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B8F1F000E9;
+	Mon, 17 Aug 2026 14:05:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975509;
-	bh=OBJVqAglu82igzHuI2cameF/I/3LhA3sEv/nCMOPp4I=;
+	s=korg; t=1786975512;
+	bh=Xpua4+EDSSZoPE63jCxxnnHjfzQShCZtyI0W3q0nhio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d13MtpHdr9PCxJ15Y44bC3o2+ZEc/PFDJlxJkNk5VlUN+NKjcCBuFB6YtI99/Z9O5
-	 JLoWUCK22FA+xzElLbHQH7/4/AsbMhDh98tD4DW00SZPdtypQHrXoIjMAZqKseHJm5
-	 UXcp9dLdDtUgHHg0FxJdR8eKwZmxL/6QkJpsb+J0=
+	b=Jaru6+aWRO2zmOshN7T7GLnKGh9ZwjdwDmPZR93Rspx78InwzbeErbNcn2al4agby
+	 BmJ0wJMq7kcZMxVZKoF6Xxbttf5jcvNQZrp0RpHugjr6uk0AeD1ZdZ1Iv8EH89solG
+	 DjY2vAVgkRxJhXA//XoPcePOo7GRhM8gwMqSWA1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 025/389] wifi: cfg80211: reject unsupported PMSR FTM location requests
-Date: Mon, 17 Aug 2026 15:27:44 +0200
-Message-ID: <20260817132539.904032966@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 052/389] USB: gadget: fsl-udc: fix device name leak on probe failure
+Date: Mon, 17 Aug 2026 15:28:11 +0200
+Message-ID: <20260817132541.084611653@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,50 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 69ef6a7ec277f16d216be8da2b3cbe872786c999 ]
+commit 6b874d00c466e73c6448a89856407fe46b2f50e4 upstream.
 
-PMSR FTM location request flags are syntactically valid, but they must
-be rejected when the device capability does not advertise support for
-them.
+The gadget device name is set by UDC core when registering the gadget
+and must not be set before to avoid leaking the name in intermediate
+error paths (e.g. on dma pool creation failure).
 
-Return an error immediately after rejecting unsupported LCI or civic
-location request bits so the request cannot reach the driver.
-
-Fixes: 9bb7e0f24e7e7 ("cfg80211: add peer measurement with FTM initiator API")
-Assisted-by: Codex:gpt-5.5
-Assisted-by: Claude:claude-opus-4.8
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260612133710.93544-2-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: eab35c4e6d95 ("usb: gadget: fsl_udc_core: let udc-core manage gadget->dev")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260702141536.90887-2-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/pmsr.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/gadget/udc/fsl_udc_core.c |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/wireless/pmsr.c b/net/wireless/pmsr.c
-index 4e636a07c1e1b4..19a1b256fc0ecf 100644
---- a/net/wireless/pmsr.c
-+++ b/net/wireless/pmsr.c
-@@ -116,6 +116,7 @@ static int pmsr_parse_ftm(struct cfg80211_registered_device *rdev,
- 		NL_SET_ERR_MSG_ATTR(info->extack,
- 				    tb[NL80211_PMSR_FTM_REQ_ATTR_REQUEST_LCI],
- 				    "FTM: LCI request not supported");
-+		return -EOPNOTSUPP;
- 	}
+--- a/drivers/usb/gadget/udc/fsl_udc_core.c
++++ b/drivers/usb/gadget/udc/fsl_udc_core.c
+@@ -2480,7 +2480,6 @@ static int fsl_udc_probe(struct platform
+ 	udc_controller->gadget.name = driver_name;
  
- 	out->ftm.request_civicloc =
-@@ -124,6 +125,7 @@ static int pmsr_parse_ftm(struct cfg80211_registered_device *rdev,
- 		NL_SET_ERR_MSG_ATTR(info->extack,
- 				    tb[NL80211_PMSR_FTM_REQ_ATTR_REQUEST_CIVICLOC],
- 			    "FTM: civic location request not supported");
-+		return -EOPNOTSUPP;
- 	}
+ 	/* Setup gadget.dev and register with kernel */
+-	dev_set_name(&udc_controller->gadget.dev, "gadget");
+ 	udc_controller->gadget.dev.of_node = pdev->dev.of_node;
  
- 	out->ftm.trigger_based =
--- 
-2.53.0
-
+ 	if (!IS_ERR_OR_NULL(udc_controller->transceiver))
 
 
