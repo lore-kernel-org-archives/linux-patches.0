@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D7B3CBE69;
-	Mon, 17 Aug 2026 14:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FDA33B6F4;
+	Mon, 17 Aug 2026 14:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977589; cv=none; b=ZesPW+xnZnpj+pMi+jLN516BGhBW7rU7UKQfdMLZTIRh/GTiNkakCPnV/g6k5kcSuqxo8vxKZQq2t3gFGHo1vmkTR6lRi+y2rZcThwaS+Sx0zd0lqIjHg+ogBxuevEaUCumwGU2tZtoYFCeg7aWUcDk+D14gdVNhmolEisZApjo=
+	t=1786977592; cv=none; b=deE6kcvqHNCJatXVbLG4qYPC/NJY55nuZRmgWtlpvy/deYdekpJl4Gq2LZ7FIwBm2Rl84E2d8/KWOsG3crXkf1crK+Xs54eRqPG2Vp+qeR65pfD2A/7y9UhAmSJG7exLrT3hoAuAaf6VhOBHhKywRoN3prlMxNIP5RKRDpH34KA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977589; c=relaxed/simple;
-	bh=ImrAwttd5y5DmwwJiWnTigdexCsw6uel6LoTn9yS+pg=;
+	s=arc-20240116; t=1786977592; c=relaxed/simple;
+	bh=rSr1fzp70s4sSJQXZ5FtXNAWiYtbetzuwqfGA3Nk8AE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=By2GqHUz1zDiaWKnAxR/Ifd75mkuJgi9kQyFug8wvv/SgF8zG/L3zl98XshHEe5vtfpOGbNBbCAUATceumnr1XsMsC5aRzhKNTzoba5HYk9G4w9gdJ3LxMVb/fetL8EWDwwpk+3y6XrdV3BoWsoXnh2LudfpAP7ss7iyQKeOf4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/R1KJbN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IkDHQxqlZ7mEfcPdvPV+8VhrIzBB3XOrlR2P48rxefGpzVSnpYG2qEWw1FAD7nxJCGbeSVSVP2zqKaQJr2ped9DXc9Stoe8zyx1BCZRx9CO06Qo3myiS4tceDyioDmOuhyANQ85RsJCYM08GhmJmZM/ZnogPfTRNXMKCyxAdOJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpkxhZmh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/R1KJbN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F2B1F000E9;
-	Mon, 17 Aug 2026 14:39:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpkxhZmh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0D71F000E9;
+	Mon, 17 Aug 2026 14:39:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977588;
-	bh=Gm/jLns+t+IVXaosn8M5fzxs25v7rAmAwBiSitYDyj0=;
+	s=korg; t=1786977591;
+	bh=wK5T5nLynVZ8x+b2/k3zLS2MyhL1SHr8s8lENbV+XBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i/R1KJbNa+QnkOauWTRphBdEn4ce3pJYiylaLho6ruyRObODhKxWzxQKsRgucyDJ2
-	 W4xXQPH4/ovKD0a6ViSIGlaIBWDc2PhMYKnhNB9KiZYs/e5yVaIwtJEa0f7iI6ImW2
-	 Yg0Z9w9TgujxE3epMsyUwjH3KhRO3qam+hhlvOps=
+	b=DpkxhZmh2U/8UVNKvucS4+d1gsuoJr1MkrX+YDoIqGwsl4zjJfSdtVAYEpqvjCM90
+	 5BBUYvtPE1D5gPBKQyKfYggTIQhK++OveOBtZRn4PgD/kMdKVsgR2YSYBcf7VOdmHR
+	 8bHHmoL6ZMXRGUOGIsbzJS3neSItfyjdc685WGRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	Eelco Chaudron <echaudro@redhat.com>,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 381/456] net/openvswitch: check Ethernet header length in key_extract()
-Date: Mon, 17 Aug 2026 15:32:51 +0200
-Message-ID: <20260817132554.369225353@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.15 355/456] can: peak_usb: validate uCAN receive record lengths
+Date: Mon, 17 Aug 2026 15:32:25 +0200
+Message-ID: <20260817132553.419516229@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -54,78 +50,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit cf6f8b29befb92173659bcef6a441d274947bfae ]
+commit 93fcab2c6968446316bbb49548848df604d6346f upstream.
 
-When a packet arrives on an ARPHRD_NONE device (e.g. TUN),
-ovs_flow_key_extract() trusts the user-provided skb->protocol field: if
-it is ETH_P_TEB, the packet is classified as MAC_PROTO_ETHERNET and
-key_extract() is called without ensuring the skb has ETH_HLEN (14) bytes
-of linear data. key_extract() unconditionally pulls 2 * ETH_ALEN bytes
-for MAC addresses and parse_ethertype() pulls 2 more, either of which
-triggers a kernel BUG in __skb_pull() when the linear area is too small.
+pcan_usb_fd_decode_buf() walks uCAN records packed in one USB
+receive buffer.
 
-  kernel BUG at include/linux/skbuff.h:2848!
-  RIP: 0010:key_extract+0xa7e/0xd90 net/openvswitch/flow.c:933
-  ovs_flow_key_extract+0x419/0xa70
-  ovs_vport_receive+0x222/0x390
-  netdev_frame_hook+0x3e0/0x630
-  tun_get_user+0x2d0c/0x38e0
+Require each record to contain the fixed header for its type, and verify
+CAN payload bytes before copying them into the skb.
 
-Fixed by calling check_header() in key_extract() before accessing the
-Ethernet header.
-
-Fixes: 217ac77a3c25 ("openvswitch: allow L3 netdev ports")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/20260730222006.118652-1-blbllhy@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260706092836.79754-1-pengpeng@iscas.ac.cn
+Fixes: 0a25e1f4f185 ("can: peak_usb: add support for PEAK new CANFD USB adapters")
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/flow.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/net/can/usb/peak_usb/pcan_usb_fd.c |   40 ++++++++++++++++++++++++++++-
+ 1 file changed, 39 insertions(+), 1 deletion(-)
 
-diff --git a/net/openvswitch/flow.c b/net/openvswitch/flow.c
-index 52ba0e7721cd6..635edddbd55ff 100644
---- a/net/openvswitch/flow.c
-+++ b/net/openvswitch/flow.c
-@@ -749,8 +749,6 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
-  * Ethernet header
-  * @key: output flow key
-  *
-- * The caller must ensure that skb->len >= ETH_HLEN.
-- *
-  * Initializes @skb header fields as follows:
-  *
-  *    - skb->mac_header: the L2 header.
-@@ -770,8 +768,6 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
-  */
- static int key_extract(struct sk_buff *skb, struct sw_flow_key *key)
- {
--	struct ethhdr *eth;
--
- 	/* Flags are always used as part of stats */
- 	key->tp.flags = 0;
+--- a/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
++++ b/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
+@@ -502,6 +502,13 @@ static int pcan_usb_fd_decode_canmsg(str
+ 				     dev->can.ctrlmode);
+ 	}
  
-@@ -786,6 +782,13 @@ static int key_extract(struct sk_buff *skb, struct sw_flow_key *key)
- 		skb_reset_network_header(skb);
- 		key->eth.type = skb->protocol;
- 	} else {
-+		struct ethhdr *eth;
-+		int err;
++	if (!(rx_msg_flags & PUCAN_MSG_RTR) &&
++	    le16_to_cpu(rx_msg->size) - offsetof(struct pucan_rx_msg, d) <
++	    cfd->len) {
++		kfree_skb(skb);
++		return -EBADMSG;
++	}
 +
-+		err = check_header(skb, ETH_HLEN);
-+		if (unlikely(err))
-+			return err;
+ 	cfd->can_id = le32_to_cpu(rm->can_id);
+ 
+ 	if (rx_msg_flags & PUCAN_MSG_EXT_ID)
+@@ -650,6 +657,24 @@ static void pcan_usb_fd_decode_ts(struct
+ 		peak_usb_set_ts_now(&usb_if->time_ref, le32_to_cpu(ts->ts_low));
+ }
+ 
++static size_t pcan_usb_fd_rx_msg_min_size(u16 rx_msg_type)
++{
++	switch (rx_msg_type) {
++	case PUCAN_MSG_CAN_RX:
++		return offsetof(struct pucan_rx_msg, d);
++	case PCAN_UFD_MSG_CALIBRATION:
++		return sizeof(struct pcan_ufd_ts_msg);
++	case PUCAN_MSG_ERROR:
++		return sizeof(struct pucan_error_msg);
++	case PUCAN_MSG_STATUS:
++		return sizeof(struct pucan_status_msg);
++	case PCAN_UFD_MSG_OVERRUN:
++		return sizeof(struct pcan_ufd_ovr_msg);
++	default:
++		return sizeof(struct pucan_msg);
++	}
++}
 +
- 		eth = eth_hdr(skb);
- 		ether_addr_copy(key->eth.src, eth->h_source);
- 		ether_addr_copy(key->eth.dst, eth->h_dest);
--- 
-2.53.0
-
+ /* callback for bulk IN urb */
+ static int pcan_usb_fd_decode_buf(struct peak_usb_device *dev, struct urb *urb)
+ {
+@@ -664,6 +689,12 @@ static int pcan_usb_fd_decode_buf(struct
+ 	msg_end = urb->transfer_buffer + urb->actual_length;
+ 	for (; msg_ptr < msg_end;) {
+ 		u16 rx_msg_type, rx_msg_size;
++		size_t rx_msg_min_size;
++
++		if (msg_end - msg_ptr < sizeof(*rx_msg)) {
++			err = -EBADMSG;
++			break;
++		}
+ 
+ 		rx_msg = (struct pucan_msg *)msg_ptr;
+ 		if (!rx_msg->size) {
+@@ -675,12 +706,19 @@ static int pcan_usb_fd_decode_buf(struct
+ 		rx_msg_type = le16_to_cpu(rx_msg->type);
+ 
+ 		/* check if the record goes out of current packet */
+-		if (msg_ptr + rx_msg_size > msg_end) {
++		if (rx_msg_size > msg_end - msg_ptr) {
+ 			netdev_err(netdev,
+ 				   "got frag rec: should inc usb rx buf sze\n");
+ 			err = -EBADMSG;
+ 			break;
+ 		}
++
++		rx_msg_min_size = pcan_usb_fd_rx_msg_min_size(rx_msg_type);
++		if (rx_msg_size < rx_msg_min_size) {
++			netdev_err(netdev, "got short rec\n");
++			err = -EBADMSG;
++			break;
++		}
+ 
+ 		switch (rx_msg_type) {
+ 		case PUCAN_MSG_CAN_RX:
 
 
