@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833873ACEFE;
-	Mon, 17 Aug 2026 14:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0EB3E025C;
+	Mon, 17 Aug 2026 14:47:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978054; cv=none; b=AT/+xOn57e5rXUm8Ypca9qBe+UmWRTBQk2tPbqBgBR+ZK5cdg+Ajuy4NGJ8ji31eO+Jmbs2mdXuNdUvaMoV854C0+qwlXdVJ7L0Clai6S/L2Ou4KQ1dOc6l215Usv4rW3C6/Sv/9d5N1bnxuT0W9wWxnRvsh6GwEfi3hu2diXis=
+	t=1786978057; cv=none; b=qm5d6cYM9EuaPmmRnWDY/TUU7wOK/O7eyqt78W405F6G3p+yCOy5IQ1QI21+V1zsJRlUqCr91xO+OfuN5SpeaYa6bVHtWgA6KZSnDgTdVsXXy0w0y2eCqzeS7B1tRsKv/VL5OPHt0eVTpqCLzmRbdstGvhqDKCVvt1iTwJ6FJh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978054; c=relaxed/simple;
-	bh=NAwN1fTT46qAXe+RfRHEvGNdfriBbgiOcUZ+pnkzj0k=;
+	s=arc-20240116; t=1786978057; c=relaxed/simple;
+	bh=1BMzkrIRnV1hqQ0Xgqv2i9CtbKu9MDbNoi0l92vCMXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OIz8Av/0hr796IzdIHIFgLydQu+IUdSL87HSNS+dGr9EcPgwZ5E0X5S/ii7H0Cm5ospfh+JvM+U0aMgT9SiOL+EXsRpSC5RDxdrypqawtpPawaey5+iP7oskGHTepemi11OPCV2imbfOa69C+uVzeCq8NjGHdm6YD7FsLVrq1g8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FbEWQsgo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KHfukrE66lWOj5yFv0SD5Zo3yJq4OYVIuUHQZINpiaUqq5AH+XhmveKeOPvIqBC0YEnh2BH1CI9VnLx2MmCSDAgMLsT73VxhxFKZAGiu3uHIw811VawHX+ChBqP0GU0rAiLTuC0SHcJGpIIEep4FNzs264Io4PzqdUnyDRn1mzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMDxOCFd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FbEWQsgo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC6F1F000E9;
-	Mon, 17 Aug 2026 14:47:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMDxOCFd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B944A1F000E9;
+	Mon, 17 Aug 2026 14:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978053;
-	bh=pz+lGSbSLJgWd8Pcki7170sfQA3PsFGRUK2OTjLKe2w=;
+	s=korg; t=1786978056;
+	bh=MCNumYxNQBUreCohqspQK4IW/89Fb2mDwMLCDvCVVV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FbEWQsgo4oo32Ch3DVAqwfBWRUF9oIjV94YwHNMVHp6ZFIvGZZVbt3Uqehj75aYzL
-	 uJD96yhQSu1xAwIDR9p371Tgg+Q1VFPXcespdFinUoo6OJEiPRIHID976WLSDkJRti
-	 2gAB2qBlU3ELnms5IImDlCGFF3y9RBuNnvuXIdus=
+	b=kMDxOCFd7wtRk9nksL5loTKxUAiDX1gFQwyiFHQcYTEAtXU44Fk4YUdVHBHG08OEZ
+	 gD8GdwB55hs2n+cWOlzEs/AL2DjqLbci1Zap3Jz7lQ2N7tpSa7wVCpz4GHia70KMQu
+	 dxVoeePQVZnN6rWcU9XRZp5XHzNrih8NUTy+VbGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	stable <stable@kernel.org>,
-	Pawel Laszczak <pawell@cadence.com>
-Subject: [PATCH 6.12 078/181] usb: cdnsp: fix incorrect endian conversions for APB timeout register
-Date: Mon, 17 Aug 2026 15:32:52 +0200
-Message-ID: <20260817132538.515614346@linuxfoundation.org>
+	Julian Anastasov <ja@ssi.bg>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.12 087/181] ipvs: add totalconns for dest
+Date: Mon, 17 Aug 2026 15:33:01 +0200
+Message-ID: <20260817132538.871671289@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -51,45 +51,246 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Julian Anastasov <ja@ssi.bg>
 
-commit 50b303f3d0f7de543ee90d50879970783d06da33 upstream.
+commit 04d2feaed8d0103c498727191ba04001d5100e67 upstream.
 
-readl() already returns a CPU-endian value. Passing its return value to
-le32_to_cpu() is therefore redundant and causes an incorrect double byte
-swap on big-endian systems.
+Replace the inactconns dest counter with totalconns, now
+inactconns can be obtained from totalconns - activeconns.
+This reduces the atomic inc/dec ops for TCP/SCTP from
+6 to 4 if the connection is established and then closed.
 
-Similarly, writel() expects a CPU-endian value, so passing the result of
-cpu_to_le32() is incorrect.
-
-Remove the unnecessary conversions and operate on the MMIO register value
-as a CPU-endian u32.
-
-Fixes: 241e2ce88e5a ("usb: cdnsp: Fix issue with resuming from L1")
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Cc: stable <stable@kernel.org>
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20260720-endian-fix-v1-v1-1-b5681fa1ea9f@cadence.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdnsp-gadget.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/ip_vs.h                   |   17 ++++++++++++-----
+ net/netfilter/ipvs/ip_vs_conn.c       |   24 +++++++-----------------
+ net/netfilter/ipvs/ip_vs_ctl.c        |   10 +++++-----
+ net/netfilter/ipvs/ip_vs_lc.c         |    4 ++--
+ net/netfilter/ipvs/ip_vs_proto_sctp.c |    2 --
+ net/netfilter/ipvs/ip_vs_proto_tcp.c  |    2 --
+ net/netfilter/ipvs/ip_vs_sync.c       |    7 ++-----
+ 7 files changed, 28 insertions(+), 38 deletions(-)
 
---- a/drivers/usb/cdns3/cdnsp-gadget.c
-+++ b/drivers/usb/cdns3/cdnsp-gadget.c
-@@ -154,9 +154,9 @@ static void cdnsp_set_apb_timeout_value(
- 	offset = cdnsp_find_next_ext_cap(base, offset, D_XEC_PRE_REGS_CAP);
- 	reg = base + offset + REG_CHICKEN_BITS_3_OFFSET;
+--- a/include/net/ip_vs.h
++++ b/include/net/ip_vs.h
+@@ -736,7 +736,7 @@ struct ip_vs_dest {
  
--	val  = le32_to_cpu(readl(reg));
-+	val  = readl(reg);
- 	val = CHICKEN_APB_TIMEOUT_SET(val, cdns->override_apb_timeout);
--	writel(cpu_to_le32(val), reg);
-+	writel(val, reg);
+ 	/* connection counters and thresholds */
+ 	atomic_t		activeconns;	/* active connections */
+-	atomic_t		inactconns;	/* inactive connections */
++	atomic_t		totalconns;	/* total connections */
+ 	atomic_t		persistconns;	/* persistent connections */
+ 	__u32			u_threshold;	/* upper threshold */
+ 	__u32			l_threshold;	/* lower threshold */
+@@ -1865,14 +1865,21 @@ void ip_vs_unregister_hooks(struct netns
+ static inline int
+ ip_vs_dest_conn_overhead(struct ip_vs_dest *dest)
+ {
+-	/* We think the overhead of processing active connections is 256
++	/* We think the overhead of processing active connections is 257
+ 	 * times higher than that of inactive connections in average. (This
+-	 * 256 times might not be accurate, we will change it later) We
++	 * 257 times might not be accurate, we will change it later) We
+ 	 * use the following formula to estimate the overhead now:
+-	 *		  dest->activeconns*256 + dest->inactconns
++	 *		  dest->activeconns*256 + dest->totalconns
+ 	 */
+ 	return (atomic_read(&dest->activeconns) << 8) +
+-		atomic_read(&dest->inactconns);
++		atomic_read(&dest->totalconns);
++}
++
++static inline int
++ip_vs_dest_inactconns(const struct ip_vs_dest *dest)
++{
++	return max(atomic_read(&dest->totalconns) -
++		   atomic_read(&dest->activeconns), 0);
  }
  
- static void cdnsp_set_chicken_bits_2(struct cdnsp_device *pdev, u32 bit)
+ #ifdef CONFIG_IP_VS_PROTO_TCP
+--- a/net/netfilter/ipvs/ip_vs_conn.c
++++ b/net/netfilter/ipvs/ip_vs_conn.c
+@@ -570,12 +570,6 @@ static inline void ip_vs_bind_xmit_v6(st
+ #endif
+ 
+ 
+-static inline int ip_vs_dest_totalconns(struct ip_vs_dest *dest)
+-{
+-	return atomic_read(&dest->activeconns)
+-		+ atomic_read(&dest->inactconns);
+-}
+-
+ /*
+  *	Bind a connection entry with a virtual service destination
+  *	Called just after a new connection entry is created.
+@@ -633,8 +627,7 @@ ip_vs_bind_dest(struct ip_vs_conn *cp, s
+ 		 */
+ 		if (!(flags & IP_VS_CONN_F_INACTIVE))
+ 			atomic_inc(&dest->activeconns);
+-		else
+-			atomic_inc(&dest->inactconns);
++		atomic_inc(&dest->totalconns);
+ 	} else {
+ 		/* It is a persistent connection/template, so increase
+ 		   the persistent connection counter */
+@@ -642,7 +635,7 @@ ip_vs_bind_dest(struct ip_vs_conn *cp, s
+ 	}
+ 
+ 	if (dest->u_threshold != 0 &&
+-	    ip_vs_dest_totalconns(dest) >= dest->u_threshold)
++	    atomic_read(&dest->totalconns) >= dest->u_threshold)
+ 		dest->flags |= IP_VS_DEST_F_OVERLOAD;
+ }
+ 
+@@ -724,13 +717,10 @@ static inline void ip_vs_unbind_dest(str
+ 
+ 	/* Update the connection counters */
+ 	if (!(cp->flags & IP_VS_CONN_F_TEMPLATE)) {
+-		/* It is a normal connection, so decrease the inactconns
+-		   or activeconns counter */
+-		if (cp->flags & IP_VS_CONN_F_INACTIVE) {
+-			atomic_dec(&dest->inactconns);
+-		} else {
++		/* It is a normal connection, so decrease the counters */
++		if (!(cp->flags & IP_VS_CONN_F_INACTIVE))
+ 			atomic_dec(&dest->activeconns);
+-		}
++		atomic_dec(&dest->totalconns);
+ 	} else {
+ 		/* It is a persistent connection/template, so decrease
+ 		   the persistent connection counter */
+@@ -738,10 +728,10 @@ static inline void ip_vs_unbind_dest(str
+ 	}
+ 
+ 	if (dest->l_threshold != 0) {
+-		if (ip_vs_dest_totalconns(dest) < dest->l_threshold)
++		if (atomic_read(&dest->totalconns) < dest->l_threshold)
+ 			dest->flags &= ~IP_VS_DEST_F_OVERLOAD;
+ 	} else if (dest->u_threshold != 0) {
+-		if (ip_vs_dest_totalconns(dest) * 4 < dest->u_threshold * 3)
++		if (atomic_read(&dest->totalconns) * 4 < dest->u_threshold * 3)
+ 			dest->flags &= ~IP_VS_DEST_F_OVERLOAD;
+ 	} else {
+ 		if (dest->flags & IP_VS_DEST_F_OVERLOAD)
+--- a/net/netfilter/ipvs/ip_vs_ctl.c
++++ b/net/netfilter/ipvs/ip_vs_ctl.c
+@@ -1101,7 +1101,7 @@ ip_vs_new_dest(struct ip_vs_service *svc
+ 	dest->port = udest->port;
+ 
+ 	atomic_set(&dest->activeconns, 0);
+-	atomic_set(&dest->inactconns, 0);
++	atomic_set(&dest->totalconns, 0);
+ 	atomic_set(&dest->persistconns, 0);
+ 	refcount_set(&dest->refcnt, 1);
+ 
+@@ -2456,7 +2456,7 @@ static int ip_vs_info_seq_show(struct se
+ 					   ip_vs_fwd_name(atomic_read(&dest->conn_flags)),
+ 					   atomic_read(&dest->weight),
+ 					   atomic_read(&dest->activeconns),
+-					   atomic_read(&dest->inactconns));
++					   ip_vs_dest_inactconns(dest));
+ 			else
+ #endif
+ 				seq_printf(seq,
+@@ -2467,7 +2467,7 @@ static int ip_vs_info_seq_show(struct se
+ 					   ip_vs_fwd_name(atomic_read(&dest->conn_flags)),
+ 					   atomic_read(&dest->weight),
+ 					   atomic_read(&dest->activeconns),
+-					   atomic_read(&dest->inactconns));
++					   ip_vs_dest_inactconns(dest));
+ 
+ 		}
+ 	}
+@@ -2953,7 +2953,7 @@ __ip_vs_get_dest_entries(struct netns_ip
+ 			entry.u_threshold = dest->u_threshold;
+ 			entry.l_threshold = dest->l_threshold;
+ 			entry.activeconns = atomic_read(&dest->activeconns);
+-			entry.inactconns = atomic_read(&dest->inactconns);
++			entry.inactconns = ip_vs_dest_inactconns(dest);
+ 			entry.persistconns = atomic_read(&dest->persistconns);
+ 			ip_vs_copy_stats(&kstats, &dest->stats);
+ 			ip_vs_export_stats_user(&entry.stats, &kstats);
+@@ -3557,7 +3557,7 @@ static int ip_vs_genl_fill_dest(struct s
+ 	    nla_put_u32(skb, IPVS_DEST_ATTR_ACTIVE_CONNS,
+ 			atomic_read(&dest->activeconns)) ||
+ 	    nla_put_u32(skb, IPVS_DEST_ATTR_INACT_CONNS,
+-			atomic_read(&dest->inactconns)) ||
++			ip_vs_dest_inactconns(dest)) ||
+ 	    nla_put_u32(skb, IPVS_DEST_ATTR_PERSIST_CONNS,
+ 			atomic_read(&dest->persistconns)) ||
+ 	    nla_put_u16(skb, IPVS_DEST_ATTR_ADDR_FAMILY, dest->af))
+--- a/net/netfilter/ipvs/ip_vs_lc.c
++++ b/net/netfilter/ipvs/ip_vs_lc.c
+@@ -31,7 +31,7 @@ ip_vs_lc_schedule(struct ip_vs_service *
+ 
+ 	/*
+ 	 * Simply select the server with the least number of
+-	 *        (activeconns<<5) + inactconns
++	 *        (activeconns*256) + totalconns
+ 	 * Except whose weight is equal to zero.
+ 	 * If the weight is equal to zero, it means that the server is
+ 	 * quiesced, the existing connections to the server still get
+@@ -57,7 +57,7 @@ ip_vs_lc_schedule(struct ip_vs_service *
+ 			      IP_VS_DBG_ADDR(least->af, &least->addr),
+ 			      ntohs(least->port),
+ 			      atomic_read(&least->activeconns),
+-			      atomic_read(&least->inactconns));
++			      ip_vs_dest_inactconns(least));
+ 
+ 	return least;
+ }
+--- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
+@@ -446,12 +446,10 @@ set_sctp_state(struct ip_vs_proto_data *
+ 			if (!(cp->flags & IP_VS_CONN_F_INACTIVE) &&
+ 				(next_state != IP_VS_SCTP_S_ESTABLISHED)) {
+ 				atomic_dec(&dest->activeconns);
+-				atomic_inc(&dest->inactconns);
+ 				cp->flags |= IP_VS_CONN_F_INACTIVE;
+ 			} else if ((cp->flags & IP_VS_CONN_F_INACTIVE) &&
+ 				   (next_state == IP_VS_SCTP_S_ESTABLISHED)) {
+ 				atomic_inc(&dest->activeconns);
+-				atomic_dec(&dest->inactconns);
+ 				cp->flags &= ~IP_VS_CONN_F_INACTIVE;
+ 			}
+ 		}
+--- a/net/netfilter/ipvs/ip_vs_proto_tcp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_tcp.c
+@@ -527,12 +527,10 @@ set_tcp_state(struct ip_vs_proto_data *p
+ 			if (!(cp->flags & IP_VS_CONN_F_INACTIVE) &&
+ 			    !tcp_state_active(new_state)) {
+ 				atomic_dec(&dest->activeconns);
+-				atomic_inc(&dest->inactconns);
+ 				cp->flags |= IP_VS_CONN_F_INACTIVE;
+ 			} else if ((cp->flags & IP_VS_CONN_F_INACTIVE) &&
+ 				   tcp_state_active(new_state)) {
+ 				atomic_inc(&dest->activeconns);
+-				atomic_dec(&dest->inactconns);
+ 				cp->flags &= ~IP_VS_CONN_F_INACTIVE;
+ 			}
+ 		}
+--- a/net/netfilter/ipvs/ip_vs_sync.c
++++ b/net/netfilter/ipvs/ip_vs_sync.c
+@@ -879,13 +879,10 @@ static void ip_vs_proc_conn(struct netns
+ 		spin_lock_bh(&cp->lock);
+ 		if ((cp->flags ^ flags) & IP_VS_CONN_F_INACTIVE &&
+ 		    !(flags & IP_VS_CONN_F_TEMPLATE) && dest) {
+-			if (flags & IP_VS_CONN_F_INACTIVE) {
++			if (flags & IP_VS_CONN_F_INACTIVE)
+ 				atomic_dec(&dest->activeconns);
+-				atomic_inc(&dest->inactconns);
+-			} else {
++			else
+ 				atomic_inc(&dest->activeconns);
+-				atomic_dec(&dest->inactconns);
+-			}
+ 		}
+ 		flags &= IP_VS_CONN_F_BACKUP_UPD_MASK;
+ 		flags |= cp->flags & ~IP_VS_CONN_F_BACKUP_UPD_MASK;
 
 
