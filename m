@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633AA4315F;
-	Mon, 17 Aug 2026 14:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BAFD15E5BB;
+	Mon, 17 Aug 2026 14:22:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976529; cv=none; b=HUGmxU8/qXA4zhZk3lPhYhqH9nk0vluuMrUiUtaudMnh6GNUWTfhtkBci447U1kAZTqsOcKgEIyllsZ6VpVujN6uHCEm75p9zY6SeD2LHP71DCnJF3+aPZpL2HTBB0ccZHtJup1vSdF5A6GFiTum3imz+qy7dVF7zk8/VGdUyys=
+	t=1786976532; cv=none; b=nwRo3GhUpZA79Uu31TmwOfQrDcDnutV+JbjcsPrZFBo9brIfWz/kFi78mebZMMHCF6ZqKA2tuPLxqxX9+spTF2HWSDjb+v76b5zD9hKTaQpsfQZgSu48KP86Tkw6TFgXXpzSK6CKiLzIOGwGsU7CMQ5jeVJVCQ4igZNzD5xpwuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976529; c=relaxed/simple;
-	bh=dXQheM6i1eGxGCf14CbNlDMIvcF9zJtnWp+N/HS+E+8=;
+	s=arc-20240116; t=1786976532; c=relaxed/simple;
+	bh=rKSeJF5BwB1NPas14zvEMDTFmOuYug6iLJc2Ue3X5Vc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nuI2fropcItaKT7BH3GakKU8RS1x4RpY7CowP4IxszIdXd1QPWKrFsdfP0syXxB1j55YUvCYTJNYhH+DcF/rvm4x62H5o1EM3uG3I12p6fGf0pbD8WpJ7O2QBwlELJoXmAKZAiWIY4GNkXB4HVypTSVD42FkHJXmu2sPmmTNtWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fWrRy7X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Elc/OpuklNFbyKBdtXgkInsLLmlaWhO/XRBqU+EtCsNYYBl4Yo58ddwtlaRsgISQkuKFXUr2kyJiVdRrVojQD87+Hr69eEKNRIHlNkEFETJycIB7EeOK5Ym/5DZYzAAto173RG+EAYbS1Q4gClQLWqec4q/I7aKSMCkvReTrpQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSgSvjPx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fWrRy7X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B02091F000E9;
-	Mon, 17 Aug 2026 14:22:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSgSvjPx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 946281F000E9;
+	Mon, 17 Aug 2026 14:22:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976528;
-	bh=DCw0HKe1cyLPVZhdxi5irbPQi0Txwt91YBPd+heTPgc=;
+	s=korg; t=1786976531;
+	bh=YavRK3A8NbRWHSr3+O4vEzWdkWdRPOGfC2/Z59G7rtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0fWrRy7X6ubyrR67oLUtvH5tSdHZaROLsSvxbmgaSEwMTGBY41PlkDr+bEETfgBcJ
-	 E8vsv0QpLhKJPRQk9Yb5Pk+pzW5jPvMRmxfXWVTjy9r3R681ketMZS/kpq1Ry8fQ4r
-	 t+QFBKK/EmIjB3DBRbcPk5GFj5gPG36QHhvRmPhM=
+	b=lSgSvjPxRalmB6u4OXN/BTrO3iOSKGQQs5ht5+ukbl32TE+vv4MpccBO8C+XekFeJ
+	 OsEpqXieEEcN29ldzCvuwP4+qlnDa95ZI7r9fD7HRRTbYwB/XlSshQNqp08kXK0Dys
+	 h/6G7jJtqxO0kuone2KWBbXEn4sBfdZKvRoCvEWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moritz Klammler <Moritz.Klammler@ferchau.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Carlos Llamas <cmllamas@google.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 002/456] futex: Prevent lockup in requeue-PI during signal/ timeout wakeup
-Date: Mon, 17 Aug 2026 15:26:32 +0200
-Message-ID: <20260817132539.907489109@linuxfoundation.org>
+Subject: [PATCH 5.15 003/456] macsec: dont read an unset MAC header in macsec_encrypt()
+Date: Mon, 17 Aug 2026 15:26:33 +0200
+Message-ID: <20260817132539.951594834@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -53,101 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit bc7304f3ae20972d11db6e0b1b541c63feda5f05 ]
+commit f5089008f90c0a7c5520dff3934e0af00adf322d upstream.
 
-During wait-requeue-pi (task A) and requeue-PI (task B) the following
-race can happen:
+macsec_encrypt() reads the Ethernet header via eth_hdr(skb)
+(skb->head + skb->mac_header) to memmove() the 12 source/destination MAC
+bytes forward and make room for the SecTAG.
 
-     Task A                             Task B
-  futex_wait_requeue_pi()
-    futex_setup_timer()
-    futex_do_wait()
-                                   futex_requeue()
-                                        CLASS(hb, hb1)(&key1);
-                                        CLASS(hb, hb2)(&key2);
-        *timeout*
-    futex_requeue_pi_wakeup_sync()
-        requeue_state = Q_REQUEUE_PI_IGNORE
+On the AF_PACKET SOCK_RAW + PACKET_QDISC_BYPASS transmit path the skb
+reaches the macsec ndo_start_xmit() with the MAC header unset, so
+eth_hdr(skb) resolves to skb->head + (u16)~0 and the read is out of
+bounds: a 12-byte heap over-read that is also emitted on the wire as the
+frame's outer source/destination MAC. KASAN reports a slab-out-of-bounds
+read in macsec_start_xmit() on 6.0; on current mainline a CONFIG_DEBUG_NET
+build flags it as an unset mac header in skb_mac_header().
 
-    *blocks on hb->lock*
+On the TX path the L2 header is at skb->data, so use skb_eth_hdr(), added
+by commit 96cc4b69581d ("macvlan: do not assume mac_header is set in
+macvlan_broadcast()") for exactly this purpose.
 
-                                        futex_proxy_trylock_atomic()
-                                          futex_requeue_pi_prepare()
-                                            Q_REQUEUE_PI_IGNORE => -EAGAIN
-                                        double_unlock_hb(hb1, hb2)
-                                         *retry*
-
-Task B acquires both hb locks and attempts to acquire the PI-lock of the
-top most waiter (task B). Task A is leaving early due to a signal/
-timeout and started removing itself from the queue. It updates its
-requeue_state but can not remove it from the list because this requires
-the hb lock which is owned by task B.
-
-Usually task A is able to swoop the lock after task B unlocked it.
-However if task B is of higher priority then task A may not be able to
-wake up in time and acquire the lock before task B gets it again.
-Especially on a UP system where A is never scheduled.
-
-As a result task A blocks on the lock and task B busy loops, trying to
-make progress but live locks the system instead. Tragic.
-
-This can be fixed by removing the top most waiter from the list in this
-case. This allows task B to grab the next top waiter (if any) in the
-next iteration and make progress.
-
-Remove the top most waiter if futex_requeue_pi_prepare() fails.
-Let the waiter conditionally remove itself from the list in
-handle_early_requeue_pi_wakeup().
-
-Fixes: 07d91ef510fb1 ("futex: Prevent requeue_pi() lock nesting issue on RT")
-Reported-by: Moritz Klammler <Moritz.Klammler@ferchau.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260428103425.dywXyPd3@linutronix.de
-Closes: https://lore.kernel.org/all/VE1PR06MB6894BE61C173D802365BE19DFF4CA@VE1PR06MB6894.eurprd06.prod.outlook.com
-[cmllamas: adapt to 5.15, apply hunk to kernel/futex/core.c prior to the
- requeue code split and use hb_waiters_dec() before the helper rename]
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20260703083634.2035145-1-4ncienth@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/futex/core.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/macsec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/futex/core.c b/kernel/futex/core.c
-index 42cd8f2b6da813..8b4af13b8d262a 100644
---- a/kernel/futex/core.c
-+++ b/kernel/futex/core.c
-@@ -2078,8 +2078,11 @@ futex_proxy_trylock_atomic(u32 __user *pifutex, struct futex_hash_bucket *hb1,
- 		return -EINVAL;
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index 9b0cb78507384b..5de940761ebf1e 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -662,7 +662,7 @@ static struct sk_buff *macsec_encrypt(struct sk_buff *skb,
+ 	}
  
- 	/* Ensure that this does not race against an early wakeup */
--	if (!futex_requeue_pi_prepare(top_waiter, NULL))
-+	if (!futex_requeue_pi_prepare(top_waiter, NULL)) {
-+		plist_del(&top_waiter->list, &hb1->chain);
-+		hb_waiters_dec(hb1);
- 		return -EAGAIN;
-+	}
- 
- 	/*
- 	 * Try to take the lock for top_waiter and set the FUTEX_WAITERS bit
-@@ -3360,10 +3363,12 @@ int handle_early_requeue_pi_wakeup(struct futex_hash_bucket *hb,
- 
- 	/*
- 	 * We were woken prior to requeue by a timeout or a signal.
--	 * Unqueue the futex_q and determine which it was.
-+	 * Conditionally unqueue the futex_q and determine which it was.
- 	 */
--	plist_del(&q->list, &hb->chain);
--	hb_waiters_dec(hb);
-+	if (!plist_node_empty(&q->list)) {
-+		plist_del(&q->list, &hb->chain);
-+		hb_waiters_dec(hb);
-+	}
- 
- 	/* Handle spurious wakeups gracefully */
- 	ret = -EWOULDBLOCK;
+ 	unprotected_len = skb->len;
+-	eth = eth_hdr(skb);
++	eth = skb_eth_hdr(skb);
+ 	sci_present = send_sci(secy);
+ 	hh = skb_push(skb, macsec_extra_len(sci_present));
+ 	memmove(hh, eth, 2 * ETH_ALEN);
 -- 
 2.53.0
 
