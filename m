@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA962AEE1;
-	Mon, 17 Aug 2026 14:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7185A2AEE1;
+	Mon, 17 Aug 2026 14:43:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977823; cv=none; b=OejHtv6eIDNo67OtZV4xBjljIna7P5m4JOtNQvI9i6+vxXJyvgQT42M7wYbIt//B5RHe++e02ODc/bQQVOy5mbo3J06mRIrcIG0ytrnjiKzfkM/J20tj3WTEuTwo2dDejvFj0CvAWcEM4FkabT7Qi6AMxPqORRyKY/tc3w4haCc=
+	t=1786977826; cv=none; b=WrMngkWReTXdWVi5jyI8jVGNhN9mzCX8Qhb1aRgi2YGdmIKbqHjg+XrdI8O4j9W3tVTSU2qnqyp/teKa39uMB25LRNXgdvB5OZN5kEHCscNqcj9cdpdb4RDoJmxHNHp5zpNXTL4/WNHyKOeD4lecvuvWDq6BVqc/2f2Aa9fY81E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977823; c=relaxed/simple;
-	bh=jqsZRe/Mo6X+y74/kTvXPwBoA1NhrezaEUOHCO7X0D0=;
+	s=arc-20240116; t=1786977826; c=relaxed/simple;
+	bh=YEm3F9J4nURu4xHS4X7xTBr4QvXQDBb3nSKE2e8rbCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mn+uK62uc2LZQG1AqlzD8havk2yoFCawptY5rbFK5H2f0TVtghfDqtl9AOiwC5SP9g1clxsyrPixlEuDXNLWVGqlux9ZtnH4KtgBOHEBGOVExI2Ci6PUDq4r9FR4L/AlGJadIbDyFoQU32qfP5MWAAL8DPwD+aGi0+qHvCbOzRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6sTcB6A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PnVLPHY3P0MWp4g3qFj5t1o4tLZKv62RvpslFSENkzg/KYZLkEOPxE/0l0zQiB2zZ8bLYe2PG6HJG6vT3Bgnta2iiefWVd79mR/zHkt9At47Ntq6WGRIufrdFRJ0UNqhe0x7aYXsG6RGatAEQbWLTq+qcNLLuOwOQn0Z0BvdloI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iXjffJfe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6sTcB6A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B64831F000E9;
-	Mon, 17 Aug 2026 14:43:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iXjffJfe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA891F000E9;
+	Mon, 17 Aug 2026 14:43:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977822;
-	bh=VDVXcnOH1zOjZF2xZmFblF3pCCTVoTXFmaAoRqUtPv0=;
+	s=korg; t=1786977825;
+	bh=NW+R9yYp9hQIOxmtKNBjXk8HytXe0iaLI4vDSEffaew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R6sTcB6AlOAXjR4F3VBj60icI9BjLueATjWOMBmI6frWR8iC2yr3o3U5sLscug0c6
-	 mp/6W3wVVgS+bxIKKPH3R3NhP5AlBCO+1hqCPes8jaGLZoeOTLG2hR2A0aqUvW7YWF
-	 3NgI/7jaRkbY/DYsAYcZwlNzbIA1w+06YjdMlzdE=
+	b=iXjffJfe59P4rG/qp81R8qU4+R0vb0HawKW0oDqI3YWIiFSpaAQgUZ2YnLfeuac59
+	 fOM7ZJRXLuhTNie19ieBo0Rb5V7zaNrxM0hId8pLYwTV30D4Ea2Uowtn4F7Yrfa8iF
+	 DJe93Vwy4wrPCeVui1Fq+GC/QEphL1m2cE03AZN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable@kernel.org,
+	TencentOS Corvus AI <corvus@tencent.com>,
 	Jun Yang <junvyyang@tencent.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 5.15 445/456] vhost: reset the vring metadata cache on vring reconfiguration
-Date: Mon, 17 Aug 2026 15:33:55 +0200
-Message-ID: <20260817132556.475513986@linuxfoundation.org>
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 446/456] tipc: read le->link under the node lock in tipc_node_link_down()
+Date: Mon, 17 Aug 2026 15:33:56 +0200
+Message-ID: <20260817132556.506414120@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,66 +55,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Jun Yang <junvyyang@tencent.com>
 
-commit de845981da67a6b049080c87e605130b0c30adc5 upstream.
+commit cba9ccb47e9fa4cc77692fb896cc5ab57a667882 upstream.
 
-vq->meta_iotlb[] caches the vhost_iotlb_map that backs each vring
-metadata region, and iotlb_access_ok() returns early on a cache hit,
-taking the hit as proof that the region has already been validated:
+tipc_node_link_down() caches the link pointer before taking n->lock:
 
-	if (vhost_vq_meta_fetch(vq, addr, len, type))
-		return true;
+	struct tipc_link *l = le->link;		/* unlocked */
 
-The cache is reset on VHOST_IOTLB_UPDATE and VHOST_IOTLB_INVALIDATE, on
-device IOTLB (re)initialisation and on vq reset, but not when
-VHOST_SET_VRING_ADDR replaces vq->desc, vq->avail and vq->used, nor when
-VHOST_SET_VRING_NUM changes the region sizes.
+	if (!l)
+		return;
+	tipc_node_write_lock(n);
+	if (!tipc_link_is_establishing(l)) {	/* deref l */
+	...
+		tipc_link_reset(l);		/* write into l */
+	if (delete) {
+		kfree(l);
+		le->link = NULL;
 
-With a device IOTLB attached both ioctls are accepted while the vq is
-live, and neither validates the addresses at ioctl time: vq_access_ok()
-and vq_log_used_access_ok() return true early because the addresses are
-GIOVAs, deferring validation to prefetch time.  Once the cache has been
-populated that deferred validation no longer runs -- vq_meta_prefetch()
-hits the stale entry and returns true -- and vhost_vq_meta_fetch() keeps
-translating through the old mapping as
+The delete=true caller frees that very object under n->lock, so the lock
+does not protect the cached pointer against it:
 
-	map->addr + addr - map->start
+ - CPU A, delete=false: tipc_rcv() on TIPC_LINK_DOWN_EVT, or the link
+   supervision timer via tipc_node_timeout(), reads l unlocked and then
+   dereferences it under n->lock;
+ - CPU B, delete=true: netlink TIPC_NL_BEARER_DISABLE -> bearer_disable()
+   -> tipc_node_delete_links() -> tipc_node_link_down(n, bearer_id, true)
+   -> kfree(l).
 
-for an address the mapping no longer covers.  vhost_copy_to_user() and
-vhost_copy_from_user() consume the result with __copy_to_user() and
-__copy_from_user(), which do not check it either, so a subsequent used
-ring update or descriptor fetch accesses memory outside the region the
-IOTLB actually maps.
+The link is freed with plain kfree(), not kfree_rcu(), and for UDP bearers
+disable_media() only schedules the asynchronous cleanup_bearer() work, so
+its synchronize_net() runs after the links are already gone.  An in-flight
+CPU A that has read l therefore dereferences freed memory once B frees it:
+a use-after-free read in tipc_link_is_establishing(), and a use-after-free
+write via tipc_link_reset() on the establishing branch.
 
-Reset the metadata cache whenever the vring is reconfigured, so the new
-addresses are pushed back through iotlb_access_ok()'s slow path.
+The following trace was captured on 7.2.0-rc5-00284-gaf39eb111ce6:
 
-Fixes: f88949138058 ("vhost: introduce O(1) vq metadata cache")
-Cc: stable@vger.kernel.org
+  BUG: KASAN: slab-use-after-free in tipc_link_is_establishing (net/tipc/link.c:285)
+  Read of size 4 at addr ffff88802e2aa068 by task swapper/2/0
+   tipc_link_is_establishing (net/tipc/link.c:285)
+   tipc_node_link_down (net/tipc/node.c:1076)
+   tipc_node_timeout (net/tipc/node.c:843)
+  Allocated by task 9549:
+   tipc_link_create (net/tipc/link.c:490)
+   tipc_node_check_dest (net/tipc/node.c:1279)
+   tipc_disc_rcv (net/tipc/discover.c:252)
+   tipc_udp_recv (net/tipc/udp_media.c:389)
+  Freed by task 9549:
+   tipc_node_link_down (net/tipc/node.c:1084)
+   tipc_node_delete_links (net/tipc/node.c:1320)
+   bearer_disable (net/tipc/bearer.c:414)
+   __tipc_nl_bearer_disable (net/tipc/bearer.c:992)
+
+Move the le->link read inside tipc_node_write_lock(), so it is serialised
+against the kfree() in the delete path.  A racing teardown now either has
+not run yet, and we see a valid link, or has already run, and we see NULL.
+
+Fixes: 73f646cec354 ("tipc: delay ESTABLISH state event when link is established")
+Cc: stable@kernel.org
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
 Assisted-by: tencentos-corvus-ai:kimi-k3
 Signed-off-by: Jun Yang <junvyyang@tencent.com>
-Message-ID: <20260803014823.68623-1-juny24602@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260810102147.48191-1-juny24602@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vhost/vhost.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/tipc/node.c |   15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
---- a/drivers/vhost/vhost.c
-+++ b/drivers/vhost/vhost.c
-@@ -1582,6 +1582,14 @@ static long vhost_vring_set_num_addr(str
- 		BUG();
- 	}
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -1063,18 +1063,23 @@ static void __tipc_node_link_down(struct
  
-+	/*
-+	 * The metadata cache holds the IOTLB mapping that backed the previous
-+	 * desc/avail/used addresses and vring size, both of which are being
-+	 * replaced here.  iotlb_access_ok() takes a cache hit as proof that the
-+	 * region was validated, so the stale entries have to go.
-+	 */
-+	__vhost_vq_meta_reset(vq);
+ static void tipc_node_link_down(struct tipc_node *n, int bearer_id, bool delete)
+ {
+-	struct tipc_link_entry *le = &n->links[bearer_id];
+ 	struct tipc_media_addr *maddr = NULL;
+-	struct tipc_link *l = le->link;
+ 	int old_bearer_id = bearer_id;
++	struct tipc_link_entry *le;
+ 	struct sk_buff_head xmitq;
+-
+-	if (!l)
+-		return;
++	struct tipc_link *l;
+ 
+ 	__skb_queue_head_init(&xmitq);
+ 
++	/* Synchronize the link lookup with bearer teardown. */
+ 	tipc_node_write_lock(n);
++	le = &n->links[bearer_id];
++	l = le->link;
++	if (!l) {
++		tipc_node_write_unlock_fast(n);
++		return;
++	}
 +
- 	mutex_unlock(&vq->mutex);
- 
- 	return r;
+ 	if (!tipc_link_is_establishing(l)) {
+ 		__tipc_node_link_down(n, &bearer_id, &xmitq, &maddr);
+ 	} else {
 
 
