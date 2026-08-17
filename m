@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871703DB324;
-	Mon, 17 Aug 2026 15:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2AE2E7BD6;
+	Mon, 17 Aug 2026 15:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980142; cv=none; b=RKTNqK2KylUkbZv9whMmLZ8qu+uDdhUjQKmOV5KgxVNXl4lkYw3OX9V9cz4MKNzBiPV67IBbER9zYCbCCRiQByGjOCr7EwSt8ly6yht1wxIKKJF5vYxiY55oRIjvp6FD0cRDsX7mVVXX6JmtLi26HVhv6vQWIezIzN5HBovVQ5o=
+	t=1786980145; cv=none; b=ojEU/Z2VgOydVJpRsbod8Yc6/KnVrkQRLnn/EOiypC8fp/GO8ITQxGuBnDmSVKoy6ouXW21T+1R6F17KKTzbNkI3vkL+UGVs+jgSr4ZDr3zADS2aYk2b36R33CZ79lHVqvN0YI7JOFIpjVLIWW/o39VeAP2YspRklb55mEX6VEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980142; c=relaxed/simple;
-	bh=kgcmvzybCls+k0G0B2GhN9Hoew9G6MxRzdyuFqT1rNs=;
+	s=arc-20240116; t=1786980145; c=relaxed/simple;
+	bh=Vpdp9psGksONiqlz+2K3barA7rd7LI0vdjEa5XyPTjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fFKEWKPu6czHu1nVVxoM5WOxgRLDyDcDoGoq5+QA1YWjeXlV0DSP/DaPNjKHzKHQ3Ihv4THWZvbL30c08sEPZVq4fZkhr8zjJ5IcJ0PUueM4GfdaviifKawq4XlbQVb8/IURUn2UrWSODeKHh2XK0YHwPj69fkzo/NvbW9IY0go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9GuWmUg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P/cNp+izItfSyOUO2vDDBI5lO4vCw2vEEynItkB++NPEs85kv6kJ+x9sCDVn+OPCvHZg176vkDLiPDGSdh+qYsIHApOJQnO+4KjRXmPGBOF8ftBuVvX7koySUKCd6goGcVi6E3TGJrjzPk24ogg2A3hpBLSj2noOxfJlxpk96Zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+ZD9nIT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9GuWmUg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59961F000E9;
-	Mon, 17 Aug 2026 15:22:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+ZD9nIT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5FC81F000E9;
+	Mon, 17 Aug 2026 15:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980141;
-	bh=29+VEYGTQOKJsKmiHHDtjRn4i8e/BRkalhAmbNrfOrI=;
+	s=korg; t=1786980144;
+	bh=F8yU+/FRwZ0yWNw5odM1nM1Mv3vvYrx4mVYHb4MUQIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o9GuWmUgZy8TiGBeh0Tmxv6A79ISZ1icq83Xz0lLkkgzsHTF4e9AWD4vTtfwLaZlO
-	 WKRZ703nQ71GJ2BSjYjpuUEBVRExy5gQ0mzqbRZ3hrJK+wBQVCn0+y5vS18Tfl+OTL
-	 dbd+3HBsW6Ex3sg9gNSicjiKjIb1PC0D6wWJXGl0=
+	b=U+ZD9nITgsDcUuMzG3pGelEHJUf0GBG3eTIpJVOld1I4H9M5xc/7qnHBoY8TWtcM5
+	 I+IIpmVMWw4dvHMMem/SDNjECxetH3IlwU24Mkof8TcgYMYONzsDuCoLycqV7U/zbh
+	 K8WU1HPPgApilp4Yyjy/WgVgzczG0Tgs4buNOjjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Francis <David.Francis@amd.com>,
-	Kent Russell <kent.russell@amd.com>,
+	William Palacek <William.Palacek@amd.com>,
+	Alysa Liu <Alysa.Liu@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 470/609] drm/amdkfd: Handle invalid event type in CRIU event restore
-Date: Mon, 17 Aug 2026 15:32:46 +0200
-Message-ID: <20260817132559.707371708@linuxfoundation.org>
+Subject: [PATCH 6.1 471/609] drm/amdkfd: hold event_mutex while checkpointing CRIU events
+Date: Mon, 17 Aug 2026 15:32:47 +0200
+Message-ID: <20260817132559.734878436@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,37 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Francis <David.Francis@amd.com>
+From: William Palacek <William.Palacek@amd.com>
 
-commit a9cdc85839e4fe2c760aa4ca6cc341c31ad1918a upstream.
+commit ff8bc5a68a9a70bdc38d61a72c7a49c56063f9d2 upstream.
 
-In kfd_criu_restore_event, there was no handling for
-the event priv data having an invalid event type. The priv
-data here is untrusted and can be invalid.
+kfd_criu_checkpoint_events() counts the entries in p->event_idr via
+kfd_get_num_events(), allocates an array sized to that count, and then
+walks the same IDR to fill it. Neither the count nor the walk holds
+p->event_mutex.
 
-In that case, fail with EINVAL.
+The CRIU checkpoint caller holds only p->mutex. Event create and destroy
+(kfd_event_create()/kfd_event_destroy()) take p->event_mutex and do not
+take p->mutex, so a second thread in the same process can insert or remove
+events between the count and the walk. If an event is inserted, the walk
+iterates more entries than were counted and writes past the end of the
+ev_privs allocation; if an event is removed, the walk dereferences an
+entry that is being freed.
 
-Signed-off-by: David Francis <David.Francis@amd.com>
-Reviewed-by: Kent Russell <kent.russell@amd.com>
+Hold p->event_mutex across the count and the walk so both observe a
+consistent view of p->event_idr. The lock is released before
+copy_to_user(), which only touches the local buffer. The caller already
+holds p->mutex and the create/destroy paths never take p->mutex, so the
+p->mutex -> p->event_mutex order is not inverted and no deadlock is
+introduced.
+
+Fixes: 40e8a766a761 ("drm/amdkfd: CRIU checkpoint and restore events")
+Signed-off-by: William Palacek <William.Palacek@amd.com>
+Reviewed-by: Alysa Liu <Alysa.Liu@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 2e8e9963cd5c41aa14fd5316bf9ec92e7a0e3097)
+(cherry picked from commit ff57e223ab105795b05d3ef3f3c35a5a441bcbaa)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_events.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_events.c |   22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
 --- a/drivers/gpu/drm/amd/amdkfd/kfd_events.c
 +++ b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-@@ -519,6 +519,9 @@ int kfd_criu_restore_event(struct file *
+@@ -543,15 +543,27 @@ int kfd_criu_checkpoint_events(struct kf
+ 	int ret =  0;
+ 	struct kfd_event *ev;
+ 	uint32_t ev_id;
++	uint32_t num_events;
  
- 		ret = create_other_event(p, ev, &ev_priv->event_id);
- 		break;
-+	default:
-+		ret = -EINVAL;
-+		break;
+-	uint32_t num_events = kfd_get_num_events(p);
+-
+-	if (!num_events)
++	/* Serialize the count and the walk below against concurrent event
++	 * create/destroy. Those paths take only p->event_mutex, not the
++	 * p->mutex held by the CRIU checkpoint caller, so without this the
++	 * event_idr can grow between kfd_get_num_events() and the loop and the
++	 * walk writes past the ev_privs allocation.
++	 */
++	mutex_lock(&p->event_mutex);
++
++	num_events = kfd_get_num_events(p);
++	if (!num_events) {
++		mutex_unlock(&p->event_mutex);
+ 		return 0;
++	}
+ 
+ 	ev_privs = kvzalloc(num_events * sizeof(*ev_privs), GFP_KERNEL);
+-	if (!ev_privs)
++	if (!ev_privs) {
++		mutex_unlock(&p->event_mutex);
+ 		return -ENOMEM;
++	}
+ 
+ 
+ 	idr_for_each_entry(&p->event_idr, ev, ev_id) {
+@@ -592,6 +604,8 @@ int kfd_criu_checkpoint_events(struct kf
+ 		i++;
  	}
- 	mutex_unlock(&p->event_mutex);
  
++	mutex_unlock(&p->event_mutex);
++
+ 	ret = copy_to_user(user_priv_data + *priv_data_offset,
+ 			   ev_privs, num_events * sizeof(*ev_privs));
+ 	if (ret) {
 
 
