@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512CF3B9943;
-	Mon, 17 Aug 2026 15:07:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3171F282F29;
+	Mon, 17 Aug 2026 15:07:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979253; cv=none; b=qpaOAMGVphRTfJLxWNOPqzxlXjGNKTBW8oNWMAUZbsK50ZNvZN+OQBQO1TbD8nSUF5xrL6gjPYDpeFMXmoYJovzFiMmGu6bnv8rqBLpkkPQZul668tOK68u4DCovPU+/tBHM3ebvFi35o7VzZktCLCJS+aAnUrFYD/N+TllJ/p4=
+	t=1786979256; cv=none; b=oCGZ6WFjWCi5yeTngeMPowTJ5Mrl2MHKAegAZqPggAy8YW2Z26vMVx+0kEETnUvbMY2IyIdjvxOYaZzZN1Zw1sn4UQFJupCuQPGY8SARFRMBfQoxs+p591olW7x0EGoLgsI0Oej0xcywwtV2paHz1sOlR97yJVtSLC2H9QXw2Qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979253; c=relaxed/simple;
-	bh=lPEhQgpLTbfN476S30Vcz8XdiJKaWOuxGSThqTR3InM=;
+	s=arc-20240116; t=1786979256; c=relaxed/simple;
+	bh=1nnOONo9PZEbKUmFtgwSTx35CTEscN2Pga/j4DMdPPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eg4X00kkHjOGkW/vmt9NK6f9/khS29VMMh/IPW1tBADMsjJk4kg8DkHDDQ1hAOvaBBjr8+hn8FEqwRpJ+T2jnfQbvU/cIGqdQAhVuhYbuzpgS25XkNXUYOZHRESySf0FbNqsMzhz/yvOkPlpq/8AGQ3aUUERZvfftVTiElYD5UY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6j2XgDF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TxFrb7a6/Ut/ifcY3hoAiY+ubvzzcMOlmhm536IkH6vQluIxg2uOIwqzoGJGUO6c9/5+pcqyCzxImAlNEKicsxYvlZqdzaGXPCBG2E1yDcKywZMgiddN/e3T87DY0dEl59UH/iW+Fn0p4GL8V2QaMzSdgVkg0uP4xaaiXDklVSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsBPfIAG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6j2XgDF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB3501F000E9;
-	Mon, 17 Aug 2026 15:07:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsBPfIAG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A9F1F000E9;
+	Mon, 17 Aug 2026 15:07:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979252;
-	bh=SceL/3xsag67vYGdCcSuKu3vMV510e9Fjg96JgzF2O4=;
+	s=korg; t=1786979255;
+	bh=iY6fCm//c9rEIWMkT9NNldwV6aHvJQpgkCCVaXeMJOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C6j2XgDF89ebYICmGZT3TDzhD7vronHyn36QS4p5mL+ymW/4YlfqGBgO1yNLRESsg
-	 k0PPIde+20nQjJY4GCjBWGezni7sIt9raGXB+8NOGNPPBkB23s+or3vJX+PVE3xZ33
-	 114aJ6GTNTmVkqDPHVghgviyuaBlow0g1Sao8YXY=
+	b=nsBPfIAG7yUgSs63w4W5Vt6eKQzo4qPZ5stMG66oN9xY6HIebgXlUYkZtNB9YpDab
+	 LpkCuAnFyqdBqaZV2VqNv89NlGVPW4nCRpmd/gxSjnHhxJSIOykGzNdZe0dv5NW5at
+	 moHt1iSeTZTsQh95Rp49vuy8wH5oBnLtfYi1UlwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	Yael Chemla <ychemla@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 162/609] net: qrtr: restrict socket creation to the initial network namespace
-Date: Mon, 17 Aug 2026 15:27:38 +0200
-Message-ID: <20260817132549.430828982@linuxfoundation.org>
+Subject: [PATCH 6.1 163/609] net/mlx5: E-Switch, fix zero num_dest in prio_tag egress vlan rule
+Date: Mon, 17 Aug 2026 15:27:39 +0200
+Message-ID: <20260817132549.473199111@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,61 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Yael Chemla <ychemla@nvidia.com>
 
-[ Upstream commit 3b536db8fb32da9e9c62f2bb45e2e319331f0426 ]
+[ Upstream commit d12956d083eb70f2c6d72711aebaf8c2ce21e170 ]
 
-QRTR keeps its entire port and node state in module-global variables
-that are not partitioned per network namespace: qrtr_local_nid is a
-single global node id (always 1) and qrtr_ports is a single global
-xarray. qrtr_port_lookup() and qrtr_local_enqueue() operate on that
-global state with no network-namespace check, and qrtr_create() places
-no restriction on the namespace a socket is created in.
+esw_egress_acl_vlan_create() hardcodes num_dest=0 in its
+mlx5_add_flow_rules() call. When invoked from the non-bond path
+fwd_dest is NULL and num_dest=0 is correct. When invoked from
+esw_acl_egress_ofld_rules_create() during a bond event, fwd_dest is
+non-NULL and flow_act.action carries MLX5_FLOW_CONTEXT_ACTION_FWD_DEST,
+but _mlx5_add_flow_rules() rejects a non-NULL dest pointer paired with
+dest_num<=0 and returns -EINVAL. The error propagates as
+"configure slave vport egress fwd, err(-22)". The passive vport's egress
+ACL table ends up with its flow groups allocated but no FTEs, so
+prio-tagged packets are not popped and bond failover is broken on
+prio_tag_required devices.
 
-As a result an unprivileged process that creates an AF_QIPCRTR socket
-in a separate network namespace, e.g. via
-unshare(CLONE_NEWUSER | CLONE_NEWNET), can send QRTR datagrams -
-including control-plane messages such as QRTR_TYPE_NEW_SERVER - to QRTR
-sockets owned by another namespace, and vice versa. The receiving
-socket sees such a message as coming from node id 1, indistinguishable
-from a legitimate local client, breaking the isolation that network
-namespaces are expected to provide.
+Fix by passing fwd_dest ? 1 : 0 as num_dest to match the actual number
+of destinations supplied.
 
-QRTR is a transport to global hardware endpoints (the modem and other
-remote processors) and has no per-namespace semantics; its in-kernel
-name service already creates its socket in init_net only. Confine the
-socket family to the initial network namespace, as other
-non-namespace-aware socket families do (see llc_ui_create() and the
-ieee802154 socket code).
-
-Fixes: bdabad3e363d ("net: Add Qualcomm IPC router")
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Link: https://patch.msgid.link/20260716154319.3297699-1-qwe.aldo@gmail.com
+Fixes: bf773dc0e6d5 ("net/mlx5: E-Switch, Introduce APIs to enable egress acl forward-to-vport rule")
+Signed-off-by: Yael Chemla <ychemla@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260717073306.1242399-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/af_qrtr.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/esw/acl/helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-index b9d249004a0eec..d13ca058fef6db 100644
---- a/net/qrtr/af_qrtr.c
-+++ b/net/qrtr/af_qrtr.c
-@@ -1257,6 +1257,14 @@ static int qrtr_create(struct net *net, struct socket *sock,
- 	if (sock->type != SOCK_DGRAM)
- 		return -EPROTOTYPE;
- 
-+	/* QRTR keeps its port and node state in module-global variables that
-+	 * are not partitioned per network namespace, and the in-kernel name
-+	 * service only operates in init_net. Confine the family to init_net so
-+	 * a socket in another namespace cannot reach the global control plane.
-+	 */
-+	if (!net_eq(net, &init_net))
-+		return -EAFNOSUPPORT;
-+
- 	sk = sk_alloc(net, AF_QIPCRTR, GFP_KERNEL, &qrtr_proto, kern);
- 	if (!sk)
- 		return -ENOMEM;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/helper.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/helper.c
+index 45b839116212df..61d299f8ca25ce 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/helper.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/helper.c
+@@ -70,7 +70,7 @@ int esw_egress_acl_vlan_create(struct mlx5_eswitch *esw,
+ 	flow_act.action = flow_action;
+ 	vport->egress.allowed_vlan =
+ 		mlx5_add_flow_rules(vport->egress.acl, spec,
+-				    &flow_act, fwd_dest, 0);
++				    &flow_act, fwd_dest, fwd_dest ? 1 : 0);
+ 	if (IS_ERR(vport->egress.allowed_vlan)) {
+ 		err = PTR_ERR(vport->egress.allowed_vlan);
+ 		esw_warn(esw->dev,
 -- 
 2.53.0
 
