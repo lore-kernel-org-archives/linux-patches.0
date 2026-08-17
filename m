@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0829442364;
-	Mon, 17 Aug 2026 14:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC484446F6;
+	Mon, 17 Aug 2026 14:33:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977207; cv=none; b=j2ZBb/KzYLdmoH3AddN4U00tsHgzCTxBSxIx3J+3iHk1OUxu0d1+EK+KdjwtmHeu4mb2Vq2WyPBRaTqigiufaBoXEfCsHX1ZysPByg9Zd1t1wSy9EloDDvYZmHOw2uCYdQuPK3G2NJ0UlrVvFIMPcWbhXCTCBwcBPX9XqeF4eII=
+	t=1786977210; cv=none; b=FqP9AOJUOBWz/NviCzX7pSdrnD+l5m8P1MBgowhDaFcjliPaW2bpYU0F6/epRX5QT4uPTz4ngiPrvZO0UWJJXBeXDFMkot7f5Hay/9A8pvqFKuU1o/lhc9UkWbunOoHo7zZtI4UNSmh6xQZFzPsAsyz5ACS1ogwGCTzz9ztDVrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977207; c=relaxed/simple;
-	bh=qrzmbtD6kINn8C8fGNVTUyBsV4pZmspgWO8TGy/NYL4=;
+	s=arc-20240116; t=1786977210; c=relaxed/simple;
+	bh=dSo8kd1GwOWksHmFgw6DAARAtkFG53+wfrXLPR7eAt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=putQMf/J4x8DdzMY515Fo+lmUgu24FwIvqKOZ2S5M+6UuLlkeMkOjaGb0dIPOg2o3ZOjcx8gkVSCdalw5zT4iG9ZBKhAMyBnlXiWlTTYuQKNreVPZ090O1iYcInFeDX+Orjr43ZVUvVj+9SVoLRVRCUbHJRoNRbiNNEBfTnyQdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=noBQnyBZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZQk66Uy9qkvCxFiolL0MRI1yf+Ue8c2KnR9BFOiZXJ+HY6Atpe4DXfYFX05aHzzAMWMeUoAzTSiw6u0lfdxLABJZ/hUrTJ+uoaC3j/iCoRsiyaczjAUFX7S7pDRFPUi5jilxzYDQYCu/TPRxwanY+3iwS2UqCzxNlq++xdvnGNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UgdBIEk9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="noBQnyBZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5713D1F000E9;
-	Mon, 17 Aug 2026 14:33:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UgdBIEk9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 304C61F00A3D;
+	Mon, 17 Aug 2026 14:33:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977205;
-	bh=dGfVf0YXxR3jpRkDUiD1XOXO2HYDBpWU4D9SvXNBLaM=;
+	s=korg; t=1786977208;
+	bh=wWwjsA1HfpUAWZlYEhxcu85tQTtBYvWFWWfLcGjNCfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=noBQnyBZeM7B4i0CuFnSyJxekzAL8LuT4oKmDpCynvbjTzIk1XOaaxZQIl9/DBRsp
-	 ABnDXfbBFy2CLi6fwl8T+cLQKTX4lCr8WTo1/Ar3j/dg/+GnEj9Ny+du+aJR7Ul0Qj
-	 zHNz1dQDp/rCs3r1eFp2XrCfWD2AsGHQ9wAO4qa4=
+	b=UgdBIEk9YxumvSyrc/68uWns6EJun5OFthkOp7+ZEL1ebQqVVBWdpfHSf+eC/yNAH
+	 ptqAK6mu7dsMz6s/QaJF4FH0BInMHURkZz6JETbVWfEXGPuCMRrwnng+33fcx6+2Gz
+	 TW2UBe6XfaLEqL0zuvE37GLsT8Ne0X9XhlqKeD7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@seco.com>,
+	Mike Looijmans <mike.looijmans@topic.nl>,
+	Michal Simek <michal.simek@amd.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 249/456] phy: zynqmp: Allow variation in refclk rate
-Date: Mon, 17 Aug 2026 15:30:39 +0200
-Message-ID: <20260817132549.816748503@linuxfoundation.org>
+Subject: [PATCH 5.15 250/456] phy-zynqmp: Postpone getting clock rate until actually needed
+Date: Mon, 17 Aug 2026 15:30:40 +0200
+Message-ID: <20260817132549.853093881@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,39 +52,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@seco.com>
+From: Mike Looijmans <mike.looijmans@topic.nl>
 
-[ Upstream commit 76009ee76e05e30e29aade02e788aebe9ce9ffd2 ]
+[ Upstream commit 065d5885f6180c534b7b176847b3e008f4e11850 ]
 
-Due to limited available frequency ratios, the reference clock rate may
-not be exactly the same as the required rate. Allow a small (100 ppm)
-deviation.
+At probe time the driver would display the following error and abort:
+  xilinx-psgtr fd400000.phy: Invalid rate 0 for reference clock 0
 
-Signed-off-by: Sean Anderson <sean.anderson@seco.com>
-Link: https://lore.kernel.org/r/20230711194542.898230-1-sean.anderson@seco.com
+At probe time, the associated GTR driver (e.g. SATA or PCIe) hasn't
+initialized the clock yet, so clk_get_rate() likely returns 0 if the clock
+is programmable. So this driver only works if the clock is fixed.
+
+The PHY driver doesn't need to know the clock frequency at probe yet, so
+wait until the associated driver initializes the lane before requesting the
+clock rate setting.
+
+In addition to allowing the driver to be used with programmable clocks,
+this also reduces the driver's runtime memory footprint by removing an
+array of pointers from struct xpsgtr_phy.
+
+Signed-off-by: Mike Looijmans <mike.looijmans@topic.nl>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Link: https://lore.kernel.org/r/20250428063648.22034-1-mike.looijmans@topic.nl
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Stable-dep-of: e4779e2a16d6 ("phy: zynqmp: fix clock error handling in xpsgtr_phy_init()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/xilinx/phy-zynqmp.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/phy/xilinx/phy-zynqmp.c | 70 +++++++++++++++++----------------
+ 1 file changed, 37 insertions(+), 33 deletions(-)
 
 diff --git a/drivers/phy/xilinx/phy-zynqmp.c b/drivers/phy/xilinx/phy-zynqmp.c
-index ac9a9124a36de..fb67db31e94a3 100644
+index fb67db31e94a3..a476f1343253f 100644
 --- a/drivers/phy/xilinx/phy-zynqmp.c
 +++ b/drivers/phy/xilinx/phy-zynqmp.c
-@@ -957,7 +957,10 @@ static int xpsgtr_get_ref_clocks(struct xpsgtr_dev *gtr_dev)
- 		rate = clk_get_rate(clk);
+@@ -228,7 +228,6 @@ struct xpsgtr_phy {
+  * @siou: siou base address
+  * @gtr_mutex: mutex for locking
+  * @phys: PHY lanes
+- * @refclk_sscs: spread spectrum settings for the reference clocks
+  * @clk: reference clocks
+  * @tx_term_fix: fix for GT issue
+  * @saved_icm_cfg0: stored value of ICM CFG0 register
+@@ -241,7 +240,6 @@ struct xpsgtr_dev {
+ 	void __iomem *siou;
+ 	struct mutex gtr_mutex; /* mutex for locking */
+ 	struct xpsgtr_phy phys[NUM_LANES];
+-	const struct xpsgtr_ssc *refclk_sscs[NUM_LANES];
+ 	struct clk *clk[NUM_LANES];
+ 	bool tx_term_fix;
+ 	unsigned int saved_icm_cfg0;
+@@ -384,13 +382,40 @@ static int xpsgtr_wait_pll_lock(struct phy *phy)
+ 	return ret;
+ }
  
- 		for (i = 0 ; i < ARRAY_SIZE(ssc_lookup); i++) {
--			if (rate == ssc_lookup[i].refclk_rate) {
-+			/* Allow an error of 100 ppm */
-+			unsigned long error = ssc_lookup[i].refclk_rate / 10000;
++/* Get the spread spectrum (SSC) settings for the reference clock rate */
++static const struct xpsgtr_ssc *xpsgtr_find_sscs(struct xpsgtr_phy *gtr_phy)
++{
++	unsigned long rate;
++	struct clk *clk;
++	unsigned int i;
 +
-+			if (abs(rate - ssc_lookup[i].refclk_rate) < error) {
- 				gtr_dev->refclk_sscs[refclk] = &ssc_lookup[i];
- 				break;
- 			}
++	clk = gtr_phy->dev->clk[gtr_phy->refclk];
++	rate = clk_get_rate(clk);
++
++	for (i = 0 ; i < ARRAY_SIZE(ssc_lookup); i++) {
++		/* Allow an error of 100 ppm */
++		unsigned long error = ssc_lookup[i].refclk_rate / 10000;
++
++		if (abs(rate - ssc_lookup[i].refclk_rate) < error)
++			return &ssc_lookup[i];
++	}
++
++	dev_err(gtr_phy->dev->dev, "Invalid rate %lu for reference clock %u\n",
++		rate, gtr_phy->refclk);
++
++	return NULL;
++}
++
+ /* Configure PLL and spread-sprectrum clock. */
+-static void xpsgtr_configure_pll(struct xpsgtr_phy *gtr_phy)
++static int xpsgtr_configure_pll(struct xpsgtr_phy *gtr_phy)
+ {
+ 	const struct xpsgtr_ssc *ssc;
+ 	u32 step_size;
+ 
+-	ssc = gtr_phy->dev->refclk_sscs[gtr_phy->refclk];
++	ssc = xpsgtr_find_sscs(gtr_phy);
++	if (!ssc)
++		return -EINVAL;
++
+ 	step_size = ssc->step_size;
+ 
+ 	xpsgtr_clr_set(gtr_phy->dev, PLL_REF_SEL(gtr_phy->lane),
+@@ -432,6 +457,8 @@ static void xpsgtr_configure_pll(struct xpsgtr_phy *gtr_phy)
+ 	xpsgtr_clr_set_phy(gtr_phy, L0_PLL_SS_STEP_SIZE_3_MSB,
+ 			   STEP_SIZE_3_MASK, (step_size & STEP_SIZE_3_MASK) |
+ 			   FORCE_STEP_SIZE | FORCE_STEPS);
++
++	return 0;
+ }
+ 
+ /* Configure the lane protocol. */
+@@ -644,7 +671,10 @@ static int xpsgtr_phy_init(struct phy *phy)
+ 	 * Configure the PLL, the lane protocol, and perform protocol-specific
+ 	 * initialization.
+ 	 */
+-	xpsgtr_configure_pll(gtr_phy);
++	ret = xpsgtr_configure_pll(gtr_phy);
++	if (ret)
++		goto out;
++
+ 	xpsgtr_lane_set_protocol(gtr_phy);
+ 
+ 	switch (gtr_phy->protocol) {
+@@ -854,8 +884,7 @@ static struct phy *xpsgtr_xlate(struct device *dev,
+ 	}
+ 
+ 	refclk = args->args[3];
+-	if (refclk >= ARRAY_SIZE(gtr_dev->refclk_sscs) ||
+-	    !gtr_dev->refclk_sscs[refclk]) {
++	if (refclk >= ARRAY_SIZE(gtr_dev->clk)) {
+ 		dev_err(dev, "Invalid reference clock number %u\n", refclk);
+ 		return ERR_PTR(-EINVAL);
+ 	}
+@@ -931,9 +960,7 @@ static int xpsgtr_get_ref_clocks(struct xpsgtr_dev *gtr_dev)
+ {
+ 	unsigned int refclk;
+ 
+-	for (refclk = 0; refclk < ARRAY_SIZE(gtr_dev->refclk_sscs); ++refclk) {
+-		unsigned long rate;
+-		unsigned int i;
++	for (refclk = 0; refclk < ARRAY_SIZE(gtr_dev->clk); ++refclk) {
+ 		struct clk *clk;
+ 		char name[8];
+ 
+@@ -949,29 +976,6 @@ static int xpsgtr_get_ref_clocks(struct xpsgtr_dev *gtr_dev)
+ 			continue;
+ 
+ 		gtr_dev->clk[refclk] = clk;
+-
+-		/*
+-		 * Get the spread spectrum (SSC) settings for the reference
+-		 * clock rate.
+-		 */
+-		rate = clk_get_rate(clk);
+-
+-		for (i = 0 ; i < ARRAY_SIZE(ssc_lookup); i++) {
+-			/* Allow an error of 100 ppm */
+-			unsigned long error = ssc_lookup[i].refclk_rate / 10000;
+-
+-			if (abs(rate - ssc_lookup[i].refclk_rate) < error) {
+-				gtr_dev->refclk_sscs[refclk] = &ssc_lookup[i];
+-				break;
+-			}
+-		}
+-
+-		if (i == ARRAY_SIZE(ssc_lookup)) {
+-			dev_err(gtr_dev->dev,
+-				"Invalid rate %lu for reference clock %u\n",
+-				rate, refclk);
+-			return -EINVAL;
+-		}
+ 	}
+ 
+ 	return 0;
 -- 
 2.53.0
 
