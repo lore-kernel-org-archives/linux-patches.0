@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 789702773EC;
-	Mon, 17 Aug 2026 15:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E08525C804;
+	Mon, 17 Aug 2026 15:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978930; cv=none; b=iiW4AoNtEbhOdrBLdIaBGkxkQ+voXmpxsOOXY2/GSHGSgsN3QZNP13emg0T0a721OhtzSzDqCwkVTksn8uSpx6tje5ybEVNy+Po4c8N7nvekRE7QjLEEn9zoaouB/O1NIlWKeBhjaVXzMr/tIK1EwsCh15FEOcnGxMsUalo09Zk=
+	t=1786978933; cv=none; b=aSPptEdke8UVSrHTzILnQJEjqaReYLtSZJq+Zx7Fq5j8S6Gn+bED33c+1s6dNy5+42dK0QtU6BSLH1UB0hgs3imEeDcitcCDFQFYvGOOnMzrIX9Mn+7pH/TLhQTuRJuhb2e7Ki53rG9PkgmtLMjhTkR+NBEjY3i7SYfHUC/m3l4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978930; c=relaxed/simple;
-	bh=WKUNQKqRbM13/2nvQ6N187zMQlOBwgWLlIp9R8ClncY=;
+	s=arc-20240116; t=1786978933; c=relaxed/simple;
+	bh=RAvT/xZO8SjXFPhk5gXagavWrwfUx3L6tF8KUf1y44o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JkjHL/ajrUHaQbOzTB75QpQPMFJEnL/0t9+MSyv3cyfYFWMzUpyshmaPXAsUMu6+vtgQMMTfExPHfERF9LjDrEyB6UEiaf7GCUo99bz4tWrcd7KqVOgJXYMA6M6I0fE0x7yfLI7NBxRx1vTc0EF1kGU+GNksCuO7fMPTFM0xbxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLXPHcT1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bkW2+RpFJPfsA3KuZCsgXKOX3rK2aIpHvmFa5Idt+r9xWpJUEGOKxCTOy1/JaB7pvSbYTsyidc56HikeRjZ1YYjlxG3Hjr27+i6rHypvNZ3EtRh7zKTnMHyPFzGTjxO1EE5+4aMhIalHhUVoVdG6Gr5PRM2/X2/qThq7Ad/ATtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TeNm75Vl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLXPHcT1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D087A1F00A3F;
-	Mon, 17 Aug 2026 15:02:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TeNm75Vl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E7F1F000E9;
+	Mon, 17 Aug 2026 15:02:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978929;
-	bh=EWILBlbV2kPB8Ohx625uOOQzBIm83sV/CHbXmjPeCcw=;
+	s=korg; t=1786978932;
+	bh=MTS+Y6x9BXi2emWtXwjGq47d2qz+8VWk/+6b+8PHHVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rLXPHcT1R8ucYbycy8QYCRyZ5u8+M612/dJiDxJcY3bdKAPrKXNEwPUMdB7Sbf530
-	 MmQCwuZ/LLoL0pBeovOkA/nDb3xf5MVvCeeOakPSq3E9o1+kDnFCUR9OQbcMZHx7/f
-	 DeK+4xH5KowzMV2xOYssRUyF0Dg9S3eCF++/3sEE=
+	b=TeNm75VlaCfgH9DXg567dplZwrnT/fUKWCMV5CZ2Qh+Q4k7V8x6/MB7KQiFGBMDWz
+	 j6qUbAgDTGHJUSXbnwzCP0lf9x6CONrVVLYKW7l4EoaTq6kq6GvlDJtv/wv7BJwiAz
+	 +G2IefG79TCVAHLeooD/ClepJJ58itdIv/bh3+VU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 049/609] wifi: cfg80211: reject unsupported PMSR FTM location requests
-Date: Mon, 17 Aug 2026 15:25:45 +0200
-Message-ID: <20260817132545.016589852@linuxfoundation.org>
+Subject: [PATCH 6.1 050/609] wifi: mac80211: free AP_VLAN bc_buf SKBs outside IRQ lock
+Date: Mon, 17 Aug 2026 15:25:46 +0200
+Message-ID: <20260817132545.066213187@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,48 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 69ef6a7ec277f16d216be8da2b3cbe872786c999 ]
+[ Upstream commit f3858d5b1432098c1936e03d6e03dd0e33facf60 ]
 
-PMSR FTM location request flags are syntactically valid, but they must
-be rejected when the device capability does not advertise support for
-them.
+ieee80211_do_stop() removes AP_VLAN packets from the parent AP
+ps->bc_buf while holding ps->bc_buf.lock with IRQs disabled. It then
+calls ieee80211_free_txskb() before dropping the lock.
 
-Return an error immediately after rejecting unsupported LCI or civic
-location request bits so the request cannot reach the driver.
+ieee80211_free_txskb() is not just a passive SKB release. For SKBs with
+TX status state it can report a dropped frame through cfg80211/nl80211,
+and that path can reach netlink tap transmit. This is the same reason
+the pending queue cleanup in ieee80211_do_stop() already unlinks SKBs
+under the queue lock and frees them after IRQ state is restored.
 
-Fixes: 9bb7e0f24e7e7 ("cfg80211: add peer measurement with FTM initiator API")
+The buggy scenario involves two paths, with each column showing the
+order within that path:
+
+AP_VLAN management TX:             AP_VLAN stop:
+1. attach ACK-status state         1. clear the running state
+2. queue a multicast SKB on        2. take ps->bc_buf.lock with IRQs
+   parent ps->bc_buf                  disabled
+                                   3. unlink the AP_VLAN SKB
+                                   4. call ieee80211_free_txskb()
+
+Unlink matching AP_VLAN SKBs from ps->bc_buf under the existing lock,
+but move them to a local free queue. Drop the lock and restore IRQ state
+before calling ieee80211_free_txskb().
+
+WARNING: kernel/softirq.c:430 at __local_bh_enable_ip
+
+Fixes: 397a7a24ef8c ("mac80211: free ps->bc_buf skbs on vlan device stop")
 Assisted-by: Codex:gpt-5.5
-Assisted-by: Claude:claude-opus-4.8
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260612133710.93544-2-enderaoelyther@gmail.com
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/20260706140841.581566-1-zzzccc427@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/pmsr.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/iface.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/pmsr.c b/net/wireless/pmsr.c
-index 647ca369caf994..e3987ba2d40a07 100644
---- a/net/wireless/pmsr.c
-+++ b/net/wireless/pmsr.c
-@@ -114,6 +114,7 @@ static int pmsr_parse_ftm(struct cfg80211_registered_device *rdev,
- 		NL_SET_ERR_MSG_ATTR(info->extack,
- 				    tb[NL80211_PMSR_FTM_REQ_ATTR_REQUEST_LCI],
- 				    "FTM: LCI request not supported");
-+		return -EOPNOTSUPP;
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index 6818c9d852e8e5..4224a7c244a3d0 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -593,6 +593,7 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
+ 		WARN_ON(!list_empty(&sdata->u.ap.vlans));
+ 	} else if (sdata->vif.type == NL80211_IFTYPE_AP_VLAN) {
+ 		/* remove all packets in parent bc_buf pointing to this dev */
++		__skb_queue_head_init(&freeq);
+ 		ps = &sdata->bss->ps;
+ 
+ 		spin_lock_irqsave(&ps->bc_buf.lock, flags);
+@@ -600,10 +601,15 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
+ 			if (skb->dev == sdata->dev) {
+ 				__skb_unlink(skb, &ps->bc_buf);
+ 				local->total_ps_buffered--;
+-				ieee80211_free_txskb(&local->hw, skb);
++				__skb_queue_tail(&freeq, skb);
+ 			}
+ 		}
+ 		spin_unlock_irqrestore(&ps->bc_buf.lock, flags);
++
++		skb_queue_walk_safe(&freeq, skb, tmp) {
++			__skb_unlink(skb, &freeq);
++			ieee80211_free_txskb(&local->hw, skb);
++		}
  	}
  
- 	out->ftm.request_civicloc =
-@@ -122,6 +123,7 @@ static int pmsr_parse_ftm(struct cfg80211_registered_device *rdev,
- 		NL_SET_ERR_MSG_ATTR(info->extack,
- 				    tb[NL80211_PMSR_FTM_REQ_ATTR_REQUEST_CIVICLOC],
- 			    "FTM: civic location request not supported");
-+		return -EOPNOTSUPP;
- 	}
- 
- 	out->ftm.trigger_based =
+ 	if (going_down)
 -- 
 2.53.0
 
