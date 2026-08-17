@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FED270545;
-	Mon, 17 Aug 2026 13:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8D63D349F;
+	Mon, 17 Aug 2026 13:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974440; cv=none; b=sVP6Fz9yVKIvIeBzVdqV3M4LS4T9OYCVDkF4QlzWL7ST92eVM4fjXp2/cQXtTt/iccA0VGSuEm/zGKuExyUSAUTUbIcAjYeLXV18CW5IRNE6wpMgxun9D+8ALHUBl0el2DJQ5KZYVaw04neHugb58+0JSSOBZBoii9Y4mUnoIKM=
+	t=1786974441; cv=none; b=of2HgnrsXf+6UaA6bmJgDV4QRyV36Oxb9vuDFf2jIPi/PZwOVJ7f3x71crUj8Eqc+Gt9rSDjEzcjQcNrL80Y67yTEA2vaNkDRDO9jL+8BWM7V/LT94wYhsm5iBWHBag+yuoDsiHbeIFC8paIHVqE2Ab+Q8z02XMdVGWI8bE4Bvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974440; c=relaxed/simple;
-	bh=dyttsqbR00Kpq181Uwb7A3/1ulnWp5dY0l6ye4iuGvE=;
+	s=arc-20240116; t=1786974441; c=relaxed/simple;
+	bh=eX1Wxz2OxSNlB5eVSYTv0mvcVyUBBd1Mb5AgaUov01I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NGyC6n1NUwJGeJdA/LWIJvI7urQEaVyk6qZLIxrx7AiS6UZOww0b0nGiDw1Oc20D5D4O1nMejbX5CXKrMGken3PEMm6PfUbSsL7mlJ/TJlX1Cd5CV9qoVxR+o3jt0nr1z1HNDs99gSuHVGxCOkK8ofC/ggG0dtmIEWIjL9P8bRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGywfkSl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TC4DYVtqTkVfC452nFBe0voBpkxtSk+iRREHVQhJ08BD20AuuoLiaF5QBpedwF0dUv4AGqgR2Jz63/aLBVUHbVBMj9PvnIuTBw1hYjIsQ7ekKTM9wuozJnfSBK28j7AR5o5HpK6t17u2HlYQS+ojYj3zcGnUZjOxa/u2N5LaKGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rkox7LvW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGywfkSl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A8C1F00A3D;
-	Mon, 17 Aug 2026 13:47:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rkox7LvW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4BA51F00ACF;
+	Mon, 17 Aug 2026 13:47:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974434;
-	bh=wwBbNuyzGrowgcWx15lwTmfI+QSoXSiD6x/TN+OoPcE=;
+	s=korg; t=1786974437;
+	bh=hzUON0PFiuyI58rk80AgdwLEI9Hgzh6mLKGbffVJnNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EGywfkSltI0pENGwJMKqzCloJSil6k4GFfw1KVvAZj3cduKLD2vpP6JnJyNv6MjLW
-	 AR9KOSOT95ydX5aE8uDGPLR/b948392OXkmFeXIFfkBHJVF2ZnDNw3JJGAC3PjV5p7
-	 3jQa4cMFqwkf4j79X7yED+Ah7docZldZkcJR+DNw=
+	b=Rkox7LvWKSaawXcWowK6KvVdGL3BhdE/oMtg11YaWSx2WJzufEGNHe0jtpr6rPf0j
+	 5Jf19NbHRtHsAq1dmUfzpHzHdsYynUs8PXuDebVSklVfGIJ7xdx/FP4N+mWOmmUhCV
+	 YLwShNhV4go6etzflxkG6Dxkn4IMs+PRcMQthu7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 7.1 203/271] drm/v3d: Serialize the scheduler timeout handlers
-Date: Mon, 17 Aug 2026 15:32:08 +0200
-Message-ID: <20260817132545.175307840@linuxfoundation.org>
+	Nils Helmig <nils.helmig@web.de>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 168/271] Bluetooth: btusb: Add TP-Link UB600 for Realtek 8761BUV
+Date: Mon, 17 Aug 2026 15:31:33 +0200
+Message-ID: <20260817132543.789243307@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -44,119 +46,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Nils Helmig <nils.helmig@web.de>
 
-commit 4da94744707b27a3ae1197bdd7127da4505dc5b1 upstream.
+[ Upstream commit bc597f0cc44f0b173c50ee986a047219cd559ee9 ]
 
-V3D exposes several independent hardware queues (BIN, RENDER, TFU and
-CSD) but has only a single, global reset. A timeout on any one queue
-therefore has to stop, reset and restart the schedulers of every other
-queue as well. That makes concurrent timeout handlers unsafe.
+Add the vendor/product ID (0x37ad, 0x0600) to usb_device_id table
+for Realtek 8761BUV.
 
-`reset_lock` was never able to make them safe, as a driver-side lock can
-only cover the driver's &drm_sched_backend_ops.timedout_job callback.
-The scheduler handles the timed out job and its pending list around that
-callback, outside of the driver's control, so a global reset triggered
-by one queue can still interfere with another queue that is in the
-middle of handling a timeout of its own.
+The device info from /sys/kernel/debug/usb/devices as below.
 
-Consequently, if a reset happens in the CSD queue while a CL-intensive
-application is running, the global reset stops and restarts the CL
-queue's scheduler while that queue is handling a timeout of its own. As
-drm_sched_stop() and drm_sched_start() subtract and add the credits of
-every job sitting on the pending list of the scheduler they are called
-on, and as the CL queue's handler concurrently takes its job off that
-same list and puts it back, the stop and the start no longer see the
-same set of jobs. The CL queue is left with more credits in flight than
-its limit:
+T:  Bus=03 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  4 Spd=12   MxCh= 0
+D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=37ad ProdID=0600 Rev= 2.00
+S:  Manufacturer=
+S:  Product=TP-Link Bluetooth USB Adapter
+S:  SerialNumber=ACA7F14FD2A5
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
 
-[  327.302739] ------------[ cut here ]------------
-[  327.302744] WARNING: CPU: 2 PID: 43 at drivers/gpu/drm/scheduler/sched_main.c:102 drm_sched_run_job_work+0x238/0x4d0 [gpu_sched]
-[  327.302884] CPU: 2 UID: 0 PID: 43 Comm: kworker/u16:1 Not tainted 6.18.39-v8-16k+ #3 PREEMPT
-[  327.302889] Hardware name: Raspberry Pi 5 Model B Rev 1.0 (DT)
-[  327.302893] Workqueue: v3d_bin drm_sched_run_job_work [gpu_sched]
-[  327.302984] Call trace:
-[  327.302987]  drm_sched_run_job_work+0x238/0x4d0 [gpu_sched] (P)
-[  327.302997]  process_scheduled_works+0x180/0x3d0
-[  327.303010]  worker_thread+0x268/0x3e8
-[  327.303016]  kthread+0x140/0x250
-[  327.303022]  ret_from_fork+0x10/0x20
-[  327.303031] ---[ end trace 0000000000000000 ]---
-
->From that point on, the credit count of the CL queue is broken, causing
-a complete GPU hang and UI freeze.
-
-The DRM scheduler already provides a mechanism to serialize the timeout
-handlers of different schedulers: an ordered workqueue passed as
-drm_sched_init()'s @timeout_wq parameter. By default, each scheduler
-queues its timeout work on the system workqueue, which runs the handlers
-concurrently. Give all of the queues a shared ordered workqueue instead,
-as recommended by the DRM scheduler documentation for hardware that has
-distinct queues but resets globally.
-
-Cc: stable@vger.kernel.org # 6.15
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20260728-v3d-order-global-reset-v1-1-e47be838158d@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Nils Helmig <nils.helmig@web.de>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/v3d/v3d_drv.h   |    6 ++++++
- drivers/gpu/drm/v3d/v3d_sched.c |    9 ++++++++-
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/v3d/v3d_drv.h
-+++ b/drivers/gpu/drm/v3d/v3d_drv.h
-@@ -181,6 +181,12 @@ struct v3d_dev {
- 	 */
- 	struct mutex reset_lock;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index a072e6f57f31b..4a356f720e1fe 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -832,6 +832,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x2b89, 0x6275), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x37ad, 0x0600), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
  
-+	/* Ordered workqueue shared by every queue's scheduler timeout work.
-+	 * V3D reset is global to all queues, so the timeout handlers must not
-+	 * run concurrently.
-+	 */
-+	struct workqueue_struct *reset_wq;
-+
- 	/* Lock taken when creating and pushing the GPU scheduler
- 	 * jobs, to keep the sched-fence seqnos in order.
- 	 */
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -838,6 +838,7 @@ v3d_queue_sched_init(struct v3d_dev *v3d
- 		.num_rqs = DRM_SCHED_PRIORITY_COUNT,
- 		.credit_limit = 1,
- 		.timeout = msecs_to_jiffies(500),
-+		.timeout_wq = v3d->reset_wq,
- 		.dev = v3d->drm.dev,
- 	};
- 
-@@ -852,9 +853,13 @@ v3d_sched_init(struct v3d_dev *v3d)
- {
- 	int ret;
- 
-+	v3d->reset_wq = alloc_ordered_workqueue("v3d_reset", 0);
-+	if (!v3d->reset_wq)
-+		return -ENOMEM;
-+
- 	ret = v3d_queue_sched_init(v3d, &v3d_bin_sched_ops, V3D_BIN, "v3d_bin");
- 	if (ret)
--		return ret;
-+		goto fail;
- 
- 	ret = v3d_queue_sched_init(v3d, &v3d_render_sched_ops, V3D_RENDER,
- 				   "v3d_render");
-@@ -897,4 +902,6 @@ v3d_sched_fini(struct v3d_dev *v3d)
- 		if (v3d->queue[q].sched.ready)
- 			drm_sched_fini(&v3d->queue[q].sched);
- 	}
-+
-+	destroy_workqueue(v3d->reset_wq);
- }
+ 	/* Additional Realtek 8821AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0b05, 0x17dc), .driver_info = BTUSB_REALTEK },
+-- 
+2.53.0
+
 
 
