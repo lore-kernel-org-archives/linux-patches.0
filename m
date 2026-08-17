@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4838442B03;
-	Mon, 17 Aug 2026 14:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCCC3E0090;
+	Mon, 17 Aug 2026 14:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976952; cv=none; b=otFSRId0K08BJUjBZ1/IQCA897xChQK947OrBhfUVS6l+DgSZw/y3S5JNMuNKLh0Rc/2h3p/8kMKl5lEKLT8OPjxo7pCA23RSqfML0jBnb/g65wQdfa6Nfw4ql6EZVH42rtN9EYycrNdZoiltzbToPdu8OrLZRcO9RrR5SmwbtM=
+	t=1786976955; cv=none; b=KWxbrBFbe5yeDzkzu2wchu/847py6isxoAXf53XBsO5gFKpDuFqskdDfEJ1HZxigqs6cQgsHORyl/k1f6sb1gXZIXjPA+uODSn7H2rvqKHMMNOx5PjNmRSv3Z3XV8VUaGobFnBlJGXKS3nnuHf72JWRoQhyV3pcCJGaUdvqJI+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976952; c=relaxed/simple;
-	bh=pxPS8WQ80GmGOwJVzona9UjMNRU5qDUErX2poo1Gn8M=;
+	s=arc-20240116; t=1786976955; c=relaxed/simple;
+	bh=QUrrNfRBZ9iAilp+Q+8RRPSfbFv5gnuiUEmT5oiiUyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZxeA1HXCLteR3Pd/nxRbqeCSbcNOmLGiEQwkNrUpbJXUwdDasGBIrOBQ9hhGsY5g8KeYq6Ocmq0o87lEGNmieL3h9h0mdref4I5wwJklpTbKclPqWm1kNX0dEw7fePjzGxHrYs8kZBjH9HbFH5GTn66s3hajfLZQfr1D1jxFRnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dnX2ZfGS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MScZNOn2IE43xP4FGVUyCSuIl1BickaymWBgpDd7qAbZ3NyJwoDvHDgrg3bjN5iOPcEScqydqoLO7UkFz3Bum0uQbPx9hWE+kZx2IPQjsWwWa4C/knhuWQDLUeEEgYISHF74o01LunD2ZKyzodFnO/OB9r0ByGOwIUqsKTExs1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lOHDKvE/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnX2ZfGS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0971F00A3D;
-	Mon, 17 Aug 2026 14:29:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lOHDKvE/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC64E1F000E9;
+	Mon, 17 Aug 2026 14:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976951;
-	bh=K/ryzXL+Ef0yK3tavZg/7zCdi2W4NTYKGgTx0LubHPk=;
+	s=korg; t=1786976954;
+	bh=kKzhEWx06/Gnva1Mub1pNJhh9PLYbN1ASWHuZ+6cuwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dnX2ZfGSZo8xhVgLvXDxthoEw58U/QZWYGmu0k3zDE0XVgUBR56BtnPbkth5ifJ66
-	 AVVTFLtK7bzfh5mmLNMCFXCrjW6bJ5ay5+QtTo2NkAEl7AM7WGGO0tMDZ32sHa5zLo
-	 HSoe8S0OuSgUBvdY7lSYt741UHUq3ARKyQNjsFII=
+	b=lOHDKvE/Qm9e6+gNksDCzrIy5medx83/xGMRblgb8KWDG51AdDGPKfiOCxRgOpOw4
+	 Mo3nXYOQ+lxjQ+TLh3iG0aBMlOT8orzc+purmyWm9L3oATcVo+2i4soD8XyniwCKBh
+	 ekFLGRk25evrD0CxoyMPx54xPrjB9LdUwMXXVAg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Jun <1742789905@qq.com>,
+	Anand Moon <linux.amoon@gmail.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 161/456] media: cx23885: add ioremap return check and cleanup
-Date: Mon, 17 Aug 2026 15:29:11 +0200
-Message-ID: <20260817132546.380887445@linuxfoundation.org>
+Subject: [PATCH 5.15 162/456] media: meson: vdec: Fix memory leak in error path of vdec_open
+Date: Mon, 17 Aug 2026 15:29:12 +0200
+Message-ID: <20260817132546.422102046@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,58 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Jun <1742789905@qq.com>
+From: Anand Moon <linux.amoon@gmail.com>
 
-commit a0701e387b46e2481c05b47f1235b954bfc2af3e upstream.
+commit 940f161f734b25f175a95d2684c2021f6323693a upstream.
 
-Add a check for the return value of pci_ioremap_bar()
-in cx23885_dev_setup().
-If ioremap for BAR0 fails, release the already allocated
-PCI memory region,
-decrement the device count, and return -ENODEV.
+The vdec_open() function previously jumped directly to
+err_m2m_release when vdec_init_ctrls() failed, skipping
+release of the m2m context. This caused a resource leak.
 
-This prevents a potential null pointer dereference and
-ensures proper cleanup
-on memory mapping failure.
+Fix it by introducing a proper err_m2m_ctx_release label
+that calls v4l2_m2m_ctx_release(sess->m2m_ctx) before
+releasing the m2m device.
 
-Fixes: d19770e5178a ("V4L/DVB (6150): Add CX23885/CX23887 PCIe bridge driver")
+This was identified via kmemleak:
+unreferenced object 0xffff0000205d6878 (size 8):
+  comm "v4l_id", pid 5289, jiffies 4294938580
+  hex dump (first 8 bytes):
+    40 d2 49 18 00 00 ff ff                          @.I.....
+  backtrace (crc d3204599):
+    kmemleak_alloc+0xc8/0xf0
+    __kvmalloc_node_noprof+0x60c/0x850
+    v4l2_ctrl_handler_init_class+0x1b4/0x2e8 [videodev]
+    vdec_open+0x1f4/0x788 [meson_vdec]
+    v4l2_open+0x144/0x460 [videodev]
+    chrdev_open+0x1ac/0x500
+    do_dentry_open+0x3f0/0xfe8
+    vfs_open+0x68/0x320
+    do_open+0x2d8/0x9a8
+    path_openat+0x1d0/0x4f0
+    do_filp_open+0x190/0x380
+    do_sys_openat2+0xf8/0x1b0
+    __arm64_sys_openat+0x13c/0x1e8
+    invoke_syscall+0xdc/0x268
+    el0_svc_common.constprop.0+0x178/0x258
+    do_el0_svc+0x4c/0x70
+
+Fixes: 3e7f51bd9607 ("media: meson: add v4l2 m2m video decoder driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wang Jun <1742789905@qq.com>
+Signed-off-by: Anand Moon <linux.amoon@gmail.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/cx23885/cx23885-core.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/staging/media/meson/vdec/vdec.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/media/pci/cx23885/cx23885-core.c
-+++ b/drivers/media/pci/cx23885/cx23885-core.c
-@@ -990,8 +990,12 @@ static int cx23885_dev_setup(struct cx23
- 	}
+--- a/drivers/staging/media/meson/vdec/vdec.c
++++ b/drivers/staging/media/meson/vdec/vdec.c
+@@ -897,7 +897,7 @@ static int vdec_open(struct file *file)
  
- 	/* PCIe stuff */
--	dev->lmmio = ioremap(pci_resource_start(dev->pci, 0),
--			     pci_resource_len(dev->pci, 0));
-+	dev->lmmio = pci_ioremap_bar(dev->pci, 0);
-+	if (!dev->lmmio) {
-+		dev_err(&dev->pci->dev, "CORE %s: can't ioremap MMIO memory\n",
-+			dev->name);
-+		goto err_release_region;
-+	}
+ 	ret = vdec_init_ctrls(sess);
+ 	if (ret)
+-		goto err_m2m_release;
++		goto err_m2m_ctx_release;
  
- 	dev->bmmio = (u8 __iomem *)dev->lmmio;
- 
-@@ -1096,6 +1100,12 @@ static int cx23885_dev_setup(struct cx23
- 	}
+ 	sess->pixfmt_cap = formats[0].pixfmts_cap[0];
+ 	sess->fmt_out = &formats[0];
+@@ -922,6 +922,8 @@ static int vdec_open(struct file *file)
  
  	return 0;
-+
-+err_release_region:
-+	release_mem_region(pci_resource_start(dev->pci, 0),
-+			   pci_resource_len(dev->pci, 0));
-+	cx23885_devcount--;
-+	return -ENODEV;
- }
  
- static void cx23885_dev_unregister(struct cx23885_dev *dev)
++err_m2m_ctx_release:
++	v4l2_m2m_ctx_release(sess->m2m_ctx);
+ err_m2m_release:
+ 	v4l2_m2m_release(sess->m2m_dev);
+ err_free_sess:
 
 
