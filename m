@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C5623B811F;
-	Mon, 17 Aug 2026 14:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BBC443E21;
+	Mon, 17 Aug 2026 14:13:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976021; cv=none; b=CoYkrz3JC61cMAaFQwtgHW0Ys38oSnF6X8BATinS0nQmf1hau/qLKlZDQCJQe6XU70RxEtr4c8fylK4+6K8VdD0J70vSrWNwkW0aP9Oz5eOj7WXrFL69IxhTTUzTx1iILT4GI0ERFbznMtZJuavW6N39ex0vn7IDN3IgwVwdd8I=
+	t=1786976024; cv=none; b=kc1YJk0KeaQpu1JKLdi6ftiujmZSpwF/XPNGSkuvmTUZ3433a3U9HWO649oc4GwsFx7MLFRI6ZgeRVWBHnJdy8fVeU9CdKV3am3xRPMKNziRuAX4wciscEk7wHNoPGL/XSqM3wLub3FHO7WTHIQA+JX2uZa7Sh1aXbv4mIegxxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976021; c=relaxed/simple;
-	bh=a6KuGadbUzGtGXd543FfsAE/k35igWImPicN5aDOuxg=;
+	s=arc-20240116; t=1786976024; c=relaxed/simple;
+	bh=ct0Z7UCaQtmckAo112UtIn03lIYGquSWiferGBhhMsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mx5SZwGUJO/z4fVZcKQMfq64CLT+q03c6JKjGCgIjLc3isEBDsi/cNnN/fz70xjUU2RdeE0ojgz6O1VMLq0uudW+BoaOXGluq8uvY+zCCoqnpXipaqkw2rYIjzbwdO5x43E0gIbedCz5tr7fJ59OLf0SFRhRBpYOIlGDjepaZvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t4kbE2YX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eunFlUiU1pBoaRaxvDUXTiMP2claoG/MgdkNa7k6qhj8D7eP5eSd29VL+n6YZux6A/Q6qIicUah52YmFWrTBAm90g5jdqM3yzO/NwumoFo0IwrchzbLnOc048DsyNqSOePiLzkfML+qcFVItH9zO02DNK/bsIsvG/hkgVMZCuPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yLJYcXcr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t4kbE2YX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7576F1F000E9;
-	Mon, 17 Aug 2026 14:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yLJYcXcr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B1E1F00ACA;
+	Mon, 17 Aug 2026 14:13:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976020;
-	bh=kqVoZ5hB2f2VuwEuVj1PVdq1XIywKVVC9UYy0C6Eb0Y=;
+	s=korg; t=1786976022;
+	bh=W2tXhB6jsnw6UKakiL88gs1aiBXE9C8Y5U4N+p9to1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t4kbE2YXCrMPNN/ofKALsEfaoWiIJG4yBHVd5GMHRI6lJfcqXVsbSkrWRIAKVjBzA
-	 6MOtkTSrDKViLUNYqQwuQURJJ0OyTGpxiAZ3jYu+SCYPoKQ+jeYhI3Nu4BnbAneKtU
-	 2E5dwestq+2qmwTIG/M67juqS5rvTaSq5n3p/YAI=
+	b=yLJYcXcr10VLNsBchZkbZ1Vmcs6/dJqm9VQM4x07AiBH99I+rq9MWpl+GI+doulWv
+	 Tvs7cJ3OXQmlvn16+mOuyOZMq1ZYlzo1vZAjWaB6C6DTjly5YC0/nWRL28w+KRp4wj
+	 g/FytmpoQthRuM4/FLgwlV6Dq4340yWf+1bmqYQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
+	Jiale Yao <yaojiale02@163.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 228/389] hwmon: (pmbus) Fix return value from pmbus_update_byte_data()
-Date: Mon, 17 Aug 2026 15:31:07 +0200
-Message-ID: <20260817132548.128679379@linuxfoundation.org>
+Subject: [PATCH 5.10 229/389] Bluetooth: L2CAP: fix UAF in l2cap_le_connect_rsp
+Date: Mon, 17 Aug 2026 15:31:08 +0200
+Message-ID: <20260817132548.162916562@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -50,37 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit a19038a200f18d9e74ac30081797917d0886e16b ]
+[ Upstream commit c4740e7f23ff9a8210198d8b4703259e21b9f69d ]
 
-pmbus_update_byte_data() is supposed to return a negative error code or 0.
-However, if no change is made to the register, it actually returns the
-register value. This can result in problems if the calling code explicitly
-expects to see an error code or 0.
+l2cap_le_connect_rsp() obtains a channel via
+__l2cap_get_chan_by_ident() but neither holds a reference nor uses
+l2cap_chan_hold_unless_zero() before locking and operating on it.
+A concurrent l2cap_chan_del() triggered by a remote disconnect can
+free the channel between the lookup and l2cap_chan_lock(), causing
+a use-after-free.
 
-Fix it to return 0 on success or the error code as expected.
+The BR/EDR counterpart l2cap_connect_rsp() and the sibling handler
+l2cap_le_command_rej() already use l2cap_chan_hold_unless_zero()
+to safely hold a reference, but l2cap_le_connect_rsp() was left
+unprotected.
 
-Fixes: 11c119986f270 ("hwmon: (pmbus) add helpers for byte write and read modify write")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fix by adding l2cap_chan_hold_unless_zero() after the ident lookup
+and l2cap_chan_put() on the exit path, consistent with other L2CAP
+response handlers.
+
+Fixes: f1496dee9cbd ("Bluetooth: Add initial code for LE L2CAP Connect Request")
+Assisted-by: Claude:deepseek-v4-pro
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/pmbus_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index e90ab980b836f..ddd8399a7feea 100644
---- a/drivers/hwmon/pmbus/pmbus_core.c
-+++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -408,7 +408,7 @@ int pmbus_update_byte_data(struct i2c_client *client, int page, u8 reg,
- 	if (tmp != rv)
- 		rv = _pmbus_write_byte_data(client, page, reg, tmp);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 6649532712f4a..c9c3bef3ae895 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -5744,6 +5744,10 @@ static int l2cap_le_connect_rsp(struct l2cap_conn *conn,
+ 		goto unlock;
+ 	}
  
--	return rv;
-+	return rv < 0 ? rv : 0;
- }
- EXPORT_SYMBOL_GPL(pmbus_update_byte_data);
++	chan = l2cap_chan_hold_unless_zero(chan);
++	if (!chan)
++		return -EBADSLT;
++
+ 	err = 0;
  
+ 	l2cap_chan_lock(chan);
+@@ -5789,6 +5793,7 @@ static int l2cap_le_connect_rsp(struct l2cap_conn *conn,
+ 	}
+ 
+ 	l2cap_chan_unlock(chan);
++	l2cap_chan_put(chan);
+ 
+ unlock:
+ 	mutex_unlock(&conn->chan_lock);
 -- 
 2.53.0
 
