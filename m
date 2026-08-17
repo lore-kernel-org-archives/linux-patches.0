@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4380A3F7882;
-	Mon, 17 Aug 2026 13:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5944399D6;
+	Mon, 17 Aug 2026 13:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974205; cv=none; b=mGxM0Ae8EtRRPCJhLmTbB6WT/5/6tmHuU14sbQx3q19ngos8j+xn8J1dgKtxXKszMg17zz5fs99HXiZsgRRWLKdhd4+L4EJKYqsGGSX9ilarInSvWscdbNsVn/hPSNw/34LrR2wSRV9MTdjRh6JAanwwjX/Elt3EolDuSI2WtTM=
+	t=1786974208; cv=none; b=fc1XDjwNjNDFj4IXO6qjRlaDxeiKr60td/LBbxLSkQqmlz7C00Zzb5g3drNIu2c4uVU/XCZKiDE8EW5LgevCvCJmoPhJHOepenvv+pCB73HIqSHMVOL9SDGZ0Vij42prWkcuj0zNOrKqO+qSNx92rTVC+ZL7Yreduj9KaSsUEoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974205; c=relaxed/simple;
-	bh=GStyQQG2XZcG9ZBpl1GJ0u+kaiWRqWBiCbtnN4cIg6o=;
+	s=arc-20240116; t=1786974208; c=relaxed/simple;
+	bh=O4/9dtZ82R87kiV0JYC/ejm0skT8suIRXHlfjTZaV84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YLUHTV7L1xwvytmBQ+GpWlqJQ3cRKTQGDbk+Y3DKRrqwdrAs777XIX92WLGyXJFzePfWcHac7AwLbDwE5tZC5REc97oxztL1yU09ShLsoBTpL9Yq5eT2EnwTe7Gw9JUr33rOUW+HS5uT+mUnxsKg/t/JUrpEkzMocuul7opFO8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QmuaAScq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mVvOCftdh481Ybxw1IYrzquj1pi3Z9Ss/9n/RDyTKgmSI+6Hx1Cks0umBidjsv8D0XlzB7+cMJPcVHX/pR0klqujcM9GaZLLQpptx20iU9GPb8cVsgAkKUQOQraiV2akjq1vn/szm0xyakCQiKY3A0xqb/v2ydmWW0ZOY/PInp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nussIDN8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QmuaAScq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FCC71F000E9;
-	Mon, 17 Aug 2026 13:43:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nussIDN8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1D41F000E9;
+	Mon, 17 Aug 2026 13:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974204;
-	bh=6t7H+SBR5PtlMgiTwhbQZV2qFx/x5rNRYJmAPpenx9U=;
+	s=korg; t=1786974207;
+	bh=sHicGSYARo1Efi181+MNAFTCPBXZE6xdA7c0f9Ac/NM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QmuaAScqMcxlIKoraz36IH9LARK82ebVjRySMdNg4UpjEcft73f30VBNNt3tiCTDF
-	 z2gkG+Bz/77YheDFnjBK4UXhg+ypF6fY+6YcydFeN/x1/KcbZDhzcLqXUphW8vAbx/
-	 GF+wg7lchM9wRhb3CDDxHUe5x19VSEf8nMbXO+nY=
+	b=nussIDN8Twb+3oG1jwT9g8Ob+x0g/7w139VznwK0+P9cKw6bTnWeQ1vsWpv7KHVXU
+	 5Ri1AMk5CGk8UzxCMqTvwEf+AfZZSQezsbfxkvmEk4OM5lpBuLuCudcxYA39ifQjJ5
+	 hsHvkf9NrrCclBzPIMtTRloBUxybjUzlIHn9pbRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Marcin Bernatowicz <marcin.bernatowicz@linux.intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Qingshuang Fu <fuqingshuang@kylinos.cn>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 086/271] drm/xe/uc: Apply RCS/CCS yield policy to SR-IOV VFs
-Date: Mon, 17 Aug 2026 15:30:11 +0200
-Message-ID: <20260817132540.287588852@linuxfoundation.org>
+Subject: [PATCH 7.1 087/271] hwmon: (nzxt-smart2) Check return value of init_device() in probe
+Date: Mon, 17 Aug 2026 15:30:12 +0200
+Message-ID: <20260817132540.326912326@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -48,65 +45,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marcin Bernatowicz <marcin.bernatowicz@linux.intel.com>
+From: Qingshuang Fu <fuqingshuang@kylinos.cn>
 
-[ Upstream commit d1643db3b037b57f2af7f85c3821d6fe69c492f6 ]
+[ Upstream commit d533882ce1060866a590257f2c77ee23eabef5b8 ]
 
-VFs were missing the call to apply the global scheduling policy.
-Call xe_guc_submit_enable() during vf_uc_load_hw() to ensure VFs
-get the same policy enforcement as PF.
+The init_device() call in nzxt_smart2_hid_probe() can fail because it
+sends HID output reports to the hardware to detect fans and set the
+update interval.  If the hardware is not responding or the HID reports
+fail, init_device() returns a negative error code.
 
-Fixes: 26caeae9fb48 ("drm/xe/guc: Set RCS/CCS yield policy")
-Suggested-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Signed-off-by: Marcin Bernatowicz <marcin.bernatowicz@linux.intel.com>
-Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Link: https://patch.msgid.link/20260709075945.1337660-1-marcin.bernatowicz@linux.intel.com
-Signed-off-by: Michał Winiarski <michal.winiarski@intel.com>
-(cherry picked from commit f09360e857130f7ab7f069e2421e6b4a6e502531)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+However, the return value was ignored, causing the probe to continue
+and register an hwmon device even though the device was never properly
+initialized.  This leads to an inconsistent state where the driver
+reports stale data or blocks on wait queues that will never be woken.
+
+The same function's return value is already checked in the
+reset_resume() handler, confirming the author's intent that errors
+should be propagated.
+
+Note that this fix was not possible before commit 59d104b54b0b
+("hwmon: (nzxt-smart2) Stop device IO before calling hid_hw_stop")
+because the out_hw_close error path was missing hid_device_io_stop(),
+which would have opened a use-after-free risk window.
+
+Fixes: 53e68c20aeb1 ("hwmon: add driver for NZXT RGB&Fan Controller/Smart Device v2.")
+Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
+Link: https://lore.kernel.org/r/20260804074842.505923-1-fffsqian@163.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_uc.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/hwmon/nzxt-smart2.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_uc.c b/drivers/gpu/drm/xe/xe_uc.c
-index 75091bde0d50c..65f59f06177fd 100644
---- a/drivers/gpu/drm/xe/xe_uc.c
-+++ b/drivers/gpu/drm/xe/xe_uc.c
-@@ -15,6 +15,7 @@
- #include "xe_guc_pc.h"
- #include "xe_guc_rc.h"
- #include "xe_guc_engine_activity.h"
-+#include "xe_guc_submit.h"
- #include "xe_huc.h"
- #include "xe_sriov.h"
- #include "xe_wopcm.h"
-@@ -159,12 +160,14 @@ static int vf_uc_load_hw(struct xe_uc *uc)
- 	if (err)
- 		return err;
+diff --git a/drivers/hwmon/nzxt-smart2.c b/drivers/hwmon/nzxt-smart2.c
+index ff0c0bee0e839..efc78a8f58c88 100644
+--- a/drivers/hwmon/nzxt-smart2.c
++++ b/drivers/hwmon/nzxt-smart2.c
+@@ -754,7 +754,11 @@ static int nzxt_smart2_hid_probe(struct hid_device *hdev,
  
--	uc->guc.submission_state.enabled = true;
--
- 	err = xe_guc_opt_in_features_enable(&uc->guc);
- 	if (err)
- 		return err;
+ 	hid_device_io_start(hdev);
  
-+	err = xe_guc_submit_enable(&uc->guc);
-+	if (err)
-+		return err;
-+
- 	err = xe_gt_record_default_lrcs(uc_to_gt(uc));
- 	if (err)
- 		return err;
+-	init_device(drvdata, UPDATE_INTERVAL_DEFAULT_MS);
++	ret = init_device(drvdata, UPDATE_INTERVAL_DEFAULT_MS);
++	if (ret) {
++		dev_err(&hdev->dev, "init_device failed: %d\n", ret);
++		goto out_hw_close;
++	}
+ 
+ 	drvdata->hwmon =
+ 		hwmon_device_register_with_info(&hdev->dev, "nzxtsmart2", drvdata,
 -- 
 2.53.0
 
