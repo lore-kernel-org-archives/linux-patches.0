@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F89C3E025C;
-	Mon, 17 Aug 2026 14:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E3C3E716F;
+	Mon, 17 Aug 2026 14:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976875; cv=none; b=ZG7sNxPGrgwGJTolrSta6k8wgzyPnpngio+BgMTxHA6FLb49PaZeqjRIvTfevaC+36KCQr2B3fWdb9ZWSF0Q7ufLeUDLz53cdUpkIy6vGBA+Dm8i5igYKN6PHfb4+jFomg4WPdzNu1niFhYo5gDd/LaKCBXM/Y+HxHgZyLYeOb0=
+	t=1786976879; cv=none; b=T98Sokg4+7St2tb+Hl+F97mFcPjDdNqAHMFY1lEq75VMHJvnBz2fo7/5sNyKL+KjNkPfdxvFvycjPNxPx1f5ceNH/a2lFmNzWvKwhE+I/l4TCFqtUOYoyjLuEOL7J2WPgZ7ANxAi4AfvuIfo7DBZMtz128BPXa+/AOBdB43P1O4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976875; c=relaxed/simple;
-	bh=SS0LHo2PDgRyxZ7d9uEgcku0B5iQHiGOnopXVEQ+y/U=;
+	s=arc-20240116; t=1786976879; c=relaxed/simple;
+	bh=UnZ5Bp735RAcmf6wJ1MFjBXPDXb8g9wNb/MyI6RC7Oc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LRNbg5ophhd7R8Wu8PYXYnwYrEf7SJcTNQ5aO90r36boc9cqPd2okpSPfgRkIn7PGwOJGBo7+xW1an6Y/ruVYSqR8tfoiYxqpJomB10NgOo/8vWLAbQn1iXm4sFdh1E9ajXARnErE2irE4iRjrySGICed3cTFJEcdOk+TWmwxDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQEK8Lw8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tuzVIERODJlGxXknhHNfDihsKIDiMRqSd8jDsEVRxcgteryjhwyw8Gw/qEfgYVnn8e7BGoFWe/+TUnrmL6rN59u1csPBAPC6OCzv//yZcAsVrdoYvdtm+TDjOXVgxHR0nGkuvD/m/W929/24U4JXQv57x4IY3H1Ax2ljl5uG8/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qOKaQsk6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQEK8Lw8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 696C01F000E9;
-	Mon, 17 Aug 2026 14:27:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qOKaQsk6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4523D1F000E9;
+	Mon, 17 Aug 2026 14:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976874;
-	bh=H2OUSvcQ0jmTm4kaO9WCnq/AbQhYpvK41FbhxYZ5Wpw=;
+	s=korg; t=1786976876;
+	bh=bf2VrXsROdvqxGqApRFlbMKjnkeFIlJDJzH7mqpH1vU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RQEK8Lw89MJbgUNmeMYl+wAo6s5RIqE1k6P0CJvoDz8lFujCpDAzpEnTtelTkJMjb
-	 G01fUhfX+W1j/P38yGfiGfPxOHuTf6KbQhNGd85KLxheaOvwsZA5ze0QZdV+9UcpFU
-	 Ky01MJIcI3NIaNd5PUx60YzpUZHEMsX0OK688GPk=
+	b=qOKaQsk6RRDMSX7iWQNndWCyhNDGFHepsKRCvLPWicixveRiGg0r87eUm+6rL0cnP
+	 /efNAWXresH/brqxvuIII0lPPqp5NIB4h9cgzHpN4DSigfwP3BebeBC00rPSZBdhE0
+	 ZFszSHRYxkfhZW8CxHSvENqe6HoEcqntu+MiK1p0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Feng Xue <feng.xue@outlook.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Lee Jones <lee@kernel.org>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 133/456] bpf, sockmap: Fix cork use-after-free in tcp_bpf_sendmsg()
-Date: Mon, 17 Aug 2026 15:28:43 +0200
-Message-ID: <20260817132545.304855359@linuxfoundation.org>
+Subject: [PATCH 5.15 134/456] can: bcm: defer rx_op deallocation to workqueue to fix thrtimer UAF
+Date: Mon, 17 Aug 2026 15:28:44 +0200
+Message-ID: <20260817132545.341278674@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -53,77 +54,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 2d66a033864e27ab8d5e44cb36f31d9d2413bee4 ]
+commit 68973f9db76144825e4f35dfdc80fb8279eb2d57 upstream.
 
-tcp_bpf_sendmsg() keeps msg_tx across sk_stream_wait_memory(), which
-drops and reacquires the socket lock.  Its error path tries to decide
-whether msg_tx names the local temporary message by comparing it with
-the current value of psock->cork.
+Commit f1b4e32aca08 ("can: bcm: use call_rcu() instead of costly
+synchronize_rcu()") replaced synchronize_rcu() in bcm_delete_rx_op()
+with call_rcu() and introduced the RX_NO_AUTOTIMER flag.
 
-This comparison is unsafe when two threads send on the same socket:
+However, this flag check was omitted for thrtimer in the packet rx
+fast-path. During BCM RX operation teardown, a concurrent RCU reader
+(bcm_rx_handler) can race and re-arm thrtimer via
+bcm_rx_update_and_send() after call_rcu() has been scheduled.  Once
+the RCU grace period elapses, bcm_op is freed.  The subsequently
+firing thrtimer then dereferences the deallocated op, causing a UAF.
 
-  Thread A                         Thread B
-  msg_tx = psock->cork
-  sk_msg_alloc() fails
-  sk_stream_wait_memory()
-    releases the socket lock      acquires the socket lock
-                                  completes the cork
-                                  psock->cork = NULL
-                                  frees the cork
-    reacquires the socket lock
-  msg_tx != psock->cork
-  sk_msg_free(msg_tx)
+Adding flag checks to the rx fast-path (bcm_rx_update_and_send) does not
+fully close the TOCTOU race and introduces latency for every CAN frame.
+Conversely, calling hrtimer_cancel() directly inside the RCU callback
+(softirq context) is fatal as hrtimer_cancel() can sleep, triggering
+a "scheduling while atomic" panic.
 
-The stale cork is therefore mistaken for the local temporary message
-and freed again.  KASAN reported:
+Resolve this by deferring the timer cancellation and memory free to a
+dedicated unbound workqueue (bcm_wq).  The RCU callback now queues a
+work item to bcm_wq, which safely cancels both timers and deallocates
+memory in sleepable process context.  A dedicated workqueue is used to
+prevent system-wide WQ saturation and is cleanly flushed/destroyed
+on module unload to avoid rmmod page faults.
 
-  BUG: KASAN: slab-use-after-free in sk_msg_free+0x49/0x50
-  Read of size 4 at addr ffff88810c908800 by task poc/90
-  Call Trace:
-   sk_msg_free+0x49/0x50
-   tcp_bpf_sendmsg+0x14f5/0x1cc0
-   __sys_sendto+0x32c/0x3a0
-   __x64_sys_sendto+0xdb/0x1b0
-  Allocated by task 89:
-   __kasan_kmalloc+0x8f/0xa0
-   tcp_bpf_sendmsg+0x16b3/0x1cc0
-  Freed by task 91:
-   __kasan_slab_free+0x43/0x70
-   kfree+0x131/0x3c0
-   tcp_bpf_sendmsg+0xec3/0x1cc0
+Since the deferred work can now outlive the calling context by an
+unbounded amount, also take a reference on op->sk when it is assigned
+and drop it only once the deferred work has cancelled both timers, so a
+socket can no longer be freed out from under a still-armed timer whose
+callback (bcm_send_to_user()) dereferences op->sk.
 
-msg_tx can only name the stack-local tmp or the shared cork. Check for
-tmp directly so a changed psock->cork cannot turn a shared message into
-an apparent local one.
-
-Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/87fr18lmzo.fsf%40cloudflare.com/
-Link: https://lore.kernel.org/netdev/20260719161630.2901208-1-nicoyip.dev%40gmail.com/ [v1]
-Link: https://patch.msgid.link/20260724103856.3399001-1-nicoyip.dev@gmail.com
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Fixes: f1b4e32aca08 ("can: bcm: use call_rcu() instead of costly synchronize_rcu()")
+Tested-by: Feng Xue <feng.xue@outlook.com>
+Tested-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260714-bcm_fixes-v15-1-562f7e3e42da@hartkopp.net
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_bpf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/can/bcm.c | 34 ++++++++++++++++++++++++++++++++--
+ 1 file changed, 32 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index 11cb3a353cc6dd..f94b8d4ba23a36 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -525,7 +525,7 @@ static int tcp_bpf_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
- wait_for_memory:
- 		err = sk_stream_wait_memory(sk, &timeo);
- 		if (err) {
--			if (msg_tx && msg_tx != psock->cork)
-+			if (msg_tx == &tmp)
- 				sk_msg_free(sk, msg_tx);
- 			goto out_err;
- 		}
+diff --git a/net/can/bcm.c b/net/can/bcm.c
+index 317cd4c415ba28..ca0f5d0c4e9ba3 100644
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -58,6 +58,7 @@
+ #include <linux/can/skb.h>
+ #include <linux/can/bcm.h>
+ #include <linux/slab.h>
++#include <linux/workqueue.h>
+ #include <linux/spinlock.h>
+ #include <net/sock.h>
+ #include <net/net_namespace.h>
+@@ -89,6 +90,8 @@ MODULE_ALIAS("can-proto-2");
+ 
+ #define BCM_MIN_NAMELEN CAN_REQUIRED_SIZE(struct sockaddr_can, can_ifindex)
+ 
++static struct workqueue_struct *bcm_wq;
++
+ /*
+  * easy access to the first 64 bit of can(fd)_frame payload. cp->data is
+  * 64 bit aligned so the offset has to be multiples of 8 which is ensured
+@@ -102,6 +105,7 @@ static inline u64 get_u64(const struct canfd_frame *cp, int offset)
+ struct bcm_op {
+ 	struct list_head list;
+ 	struct rcu_head rcu;
++	struct work_struct work;
+ 	int ifindex;
+ 	canid_t can_id;
+ 	u32 flags;
+@@ -740,9 +744,12 @@ static struct bcm_op *bcm_find_op(struct list_head *ops,
+ 	return NULL;
+ }
+ 
+-static void bcm_free_op_rcu(struct rcu_head *rcu_head)
++static void bcm_free_op_work(struct work_struct *work)
+ {
+-	struct bcm_op *op = container_of(rcu_head, struct bcm_op, rcu);
++	struct bcm_op *op = container_of(work, struct bcm_op, work);
++
++	hrtimer_cancel(&op->timer);
++	hrtimer_cancel(&op->thrtimer);
+ 
+ 	if ((op->frames) && (op->frames != &op->sframe))
+ 		kfree(op->frames);
+@@ -750,9 +757,23 @@ static void bcm_free_op_rcu(struct rcu_head *rcu_head)
+ 	if ((op->last_frames) && (op->last_frames != &op->last_sframe))
+ 		kfree(op->last_frames);
+ 
++	/* the last possible access to op->timer/op->thrtimer has now
++	 * happened above via hrtimer_cancel() - op->sk is no longer
++	 * needed by any pending timer callback, so drop our reference
++	 */
++	sock_put(op->sk);
++
+ 	kfree(op);
+ }
+ 
++static void bcm_free_op_rcu(struct rcu_head *rcu_head)
++{
++	struct bcm_op *op = container_of(rcu_head, struct bcm_op, rcu);
++
++	INIT_WORK(&op->work, bcm_free_op_work);
++	queue_work(bcm_wq, &op->work);
++}
++
+ static void bcm_remove_op(struct bcm_op *op)
+ {
+ 	hrtimer_cancel(&op->timer);
+@@ -1008,6 +1029,7 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 
+ 		/* bcm_can_tx / bcm_tx_timeout_handler needs this */
+ 		op->sk = sk;
++		sock_hold(sk);
+ 		op->ifindex = ifindex;
+ 
+ 		/* initialize uninitialized (kzalloc) structure */
+@@ -1173,6 +1195,7 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 
+ 		/* bcm_can_tx / bcm_tx_timeout_handler needs this */
+ 		op->sk = sk;
++		sock_hold(sk);
+ 		op->ifindex = ifindex;
+ 
+ 		/* ifindex for timeout events w/o previous frame reception */
+@@ -1830,11 +1853,16 @@ static int __init bcm_module_init(void)
+ {
+ 	int err;
+ 
++	bcm_wq = alloc_workqueue("can-bcm-wq", WQ_UNBOUND, 0);
++	if (!bcm_wq)
++		return -ENOMEM;
++
+ 	pr_info("can: broadcast manager protocol\n");
+ 
+ 	err = can_proto_register(&bcm_can_proto);
+ 	if (err < 0) {
+ 		printk(KERN_ERR "can: registration of bcm protocol failed\n");
++		destroy_workqueue(bcm_wq);
+ 		return err;
+ 	}
+ 
+@@ -1848,6 +1876,8 @@ static void __exit bcm_module_exit(void)
+ 	can_proto_unregister(&bcm_can_proto);
+ 	unregister_netdevice_notifier(&canbcm_notifier);
+ 	unregister_pernet_subsys(&canbcm_pernet_ops);
++	rcu_barrier();
++	destroy_workqueue(bcm_wq);
+ }
+ 
+ module_init(bcm_module_init);
 -- 
 2.53.0
 
