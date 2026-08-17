@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21B315E5BB;
-	Mon, 17 Aug 2026 14:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FDD13790B;
+	Mon, 17 Aug 2026 14:24:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976647; cv=none; b=jW7h/7tT/wdPEfet/Pm621T1rSUebzaWRZdAa462RHFqTqBI1TjesPyn+UaJzMa9v3TL95lgvb58EYlTVsb0P3f8+yoFnPo97VTqbs7dEmUH80i+jA0WJND3ADO1+6F38S300pQGZtVQbWBfhcD9bHAJEUX+r90QvKQWJkqFyDU=
+	t=1786976650; cv=none; b=ZI0S71aTgzJQGAzzHdv4/iS+H+ITARUQlS0SgCWnzCptiZ/AMrRH1kyhEpwMwoHAgKEl473cUVn05RU6r53ZmkPKgnOXIXgXypnEePLoNo0WPybkvHSGptAB/hkKXGDtm68bfpUANIbVHAoq+g8Ay/6b8+oNOg9CiJZF15yvuXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976647; c=relaxed/simple;
-	bh=xnRvbvOkyG7MXFMzW94iVyoDMzPCi9vqWqftibUMFSw=;
+	s=arc-20240116; t=1786976650; c=relaxed/simple;
+	bh=+fPtFalQvYcAd2DsdUrzTjnO1UOyl1jarHydkvgOh0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TV6I0oc732wFIFE6FIZOqHcXV9na3G+Pt4dEqlrnC7tcdQ9Feq8lVgj/1eAacS9B89TCaKz6u/iR/Ot/o99wGKNgGvJRlGxCR9g399MVDm42EOtMbNM76Mo6FjkWd+FM7kFS4yc8ROmIyvEf3tl1qqa178eOwW4VnJMHl03ohSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0aGoUau1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n9b2sZvZFadIKJeuzeU3+wkTrb2mA0NhgCG5SihKY1ZvCpl5GLUTKYA88oVQkDBS1nC2cKoRp+ElizQrgfbk9zgZDDaPgvN6nm9Ip169ljQ5XQeNWsiT17FALbh0cSCCoIXXH889M1AgMB56F3ZvkxHoPAcub3wUnijA/y/Vcoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gpry+rk0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0aGoUau1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CDA21F000E9;
-	Mon, 17 Aug 2026 14:24:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gpry+rk0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187551F000E9;
+	Mon, 17 Aug 2026 14:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976645;
-	bh=Bm4/OxmJwqQRFrgrRcHLPMa4B0oYbTrRTXzlsltF44Y=;
+	s=korg; t=1786976648;
+	bh=KDq1cwvXq23Ffky+dscKbBaNyoPMmnEFAobSW/7l7rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0aGoUau1X2Jx0etjCCwbLEye+TQUq9dEA0xwACYEIIZbdSELZXgldoLPnrsECHBsu
-	 XGaq6rR/BtMHtosyfFJ5qi60kHOHtUVfbT1KIHdUi24GJBIgMIOWf4Ju6ntbtFFoVK
-	 nC660yXlO6bZoNVeX2TRL78Y4qrYcLhi3FwqaBhs=
+	b=gpry+rk0ECBcZn8NFWTc2i1Oqpxbp/vvZFJ4wJRZfWLe1hCXmIshgu8/QymQ1qA6y
+	 g1pULBagVTAMuoNjINUt4HIncMLQvcaxEHopr6Qz411yl+tlqWFqCj9L4TDH+mJBvp
+	 4CbuvW+g8PgD6r2dW8m9F8bIuBUPH4IJ9pzGxWEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Bernard Metzler <bmt@zurich.ibm.com>,
+	Guoqing Jiang <guoqing.jiang@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 054/456] ksmbd: validate compound request size before reading StructureSize2
-Date: Mon, 17 Aug 2026 15:27:24 +0200
-Message-ID: <20260817132542.158323014@linuxfoundation.org>
+Subject: [PATCH 5.15 019/456] RDMA/siw: Only check attrs->cap.max_send_wr in siw_create_qp
+Date: Mon, 17 Aug 2026 15:26:49 +0200
+Message-ID: <20260817132540.680613129@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -53,67 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Guoqing Jiang <guoqing.jiang@linux.dev>
 
-[ Upstream commit 15b38176fd1530372905c602fde51fe89ec8c877 ]
+[ Upstream commit 788bbf4c2fc6e0c35bae9ed5068f484272539d3e ]
 
-When ksmbd validates a compound (chained) SMB2 request,
-ksmbd_smb2_check_message() reads pdu->StructureSize2 without first
-checking that the compound element is large enough to contain it.
-StructureSize2 is a 2-byte field at offset 64
-(__SMB2_HEADER_STRUCTURE_SIZE) from the start of each element.
+We can just check max_send_wr here given both max_send_wr and
+max_recv_wr are defined as u32 type, and we also need to ensure
+num_sqe (derived from max_send_wr) shouldn't be zero.
 
-The compound-walking logic only guarantees that a full 64-byte SMB2
-header is present for the trailing element: when NextCommand is 0, len is
-reduced to the number of bytes remaining after next_smb2_rcv_hdr_off. A
-remote client can craft a compound request whose last element has exactly
-64 bytes, so the 2-byte StructureSize2 read at offset 64 extends one byte
-past the receive buffer, producing a slab-out-of-bounds read.
-
-  BUG: KASAN: slab-out-of-bounds in ksmbd_smb2_check_message (fs/smb/server/smb2misc.c:402)
-  Read of size 2 at addr ffff888012ae31ac by task kworker/0:1/14
-  The buggy address is located 172 bytes inside of allocated 173-byte region
-  Workqueue: ksmbd-io handle_ksmbd_work
-  Call Trace:
-   ...
-   kasan_report (mm/kasan/report.c:595)
-   ksmbd_smb2_check_message (fs/smb/server/smb2misc.c:402)
-   handle_ksmbd_work (fs/smb/server/server.c:119)
-   process_one_work (kernel/workqueue.c:3314)
-   worker_thread (kernel/workqueue.c:3397)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-
-Reject any compound element that is too small to hold StructureSize2
-before dereferencing it.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Acked-by: Bernard Metzler <bmt@zurich.ibm.com>
+Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
+Link: https://lore.kernel.org/r/20231113115726.12762-16-guoqing.jiang@linux.dev
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: bb27fcc67c42 ("RDMA/siw: publish QP after initialization")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/smb2misc.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/infiniband/sw/siw/siw_verbs.c | 18 +++++-------------
+ 1 file changed, 5 insertions(+), 13 deletions(-)
 
-diff --git a/fs/ksmbd/smb2misc.c b/fs/ksmbd/smb2misc.c
-index 9e54ecc9d4adac..8d7368ccda85dc 100644
---- a/fs/ksmbd/smb2misc.c
-+++ b/fs/ksmbd/smb2misc.c
-@@ -399,6 +399,11 @@ int ksmbd_smb2_check_message(struct ksmbd_work *work)
- 		return 1;
+diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
+index c83701d04c9558..55a1357a636dcd 100644
+--- a/drivers/infiniband/sw/siw/siw_verbs.c
++++ b/drivers/infiniband/sw/siw/siw_verbs.c
+@@ -334,11 +334,10 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 		goto err_atomic;
  	}
+ 	/*
+-	 * NOTE: we allow for zero element SQ and RQ WQE's SGL's
+-	 * but not for a QP unable to hold any WQE (SQ + RQ)
++	 * NOTE: we don't allow for a QP unable to hold any SQ WQE
+ 	 */
+-	if (attrs->cap.max_send_wr + attrs->cap.max_recv_wr == 0) {
+-		siw_dbg(base_dev, "QP must have send or receive queue\n");
++	if (attrs->cap.max_send_wr == 0) {
++		siw_dbg(base_dev, "QP must have send queue\n");
+ 		rv = -EINVAL;
+ 		goto err_atomic;
+ 	}
+@@ -358,21 +357,14 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	if (rv)
+ 		goto err_atomic;
  
-+	if (len < __SMB2_HEADER_STRUCTURE_SIZE + sizeof(__le16)) {
-+		ksmbd_debug(SMB, "Message is too small for StructureSize2\n");
-+		return 1;
-+	}
-+
- 	if (smb2_req_struct_sizes[command] != pdu->StructureSize2) {
- 		if (!(command == SMB2_OPLOCK_BREAK_HE &&
- 		    (le16_to_cpu(pdu->StructureSize2) == OP_BREAK_STRUCT_SIZE_20 ||
+-	num_sqe = attrs->cap.max_send_wr;
+-	num_rqe = attrs->cap.max_recv_wr;
+ 
+ 	/* All queue indices are derived from modulo operations
+ 	 * on a free running 'get' (consumer) and 'put' (producer)
+ 	 * unsigned counter. Having queue sizes at power of two
+ 	 * avoids handling counter wrap around.
+ 	 */
+-	if (num_sqe)
+-		num_sqe = roundup_pow_of_two(num_sqe);
+-	else {
+-		/* Zero sized SQ is not supported */
+-		rv = -EINVAL;
+-		goto err_out_xa;
+-	}
++	num_sqe = roundup_pow_of_two(attrs->cap.max_send_wr);
++	num_rqe = attrs->cap.max_recv_wr;
+ 	if (num_rqe)
+ 		num_rqe = roundup_pow_of_two(num_rqe);
+ 
 -- 
 2.53.0
 
