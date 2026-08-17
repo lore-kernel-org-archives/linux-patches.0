@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21DE23B8409;
-	Mon, 17 Aug 2026 14:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04930377550;
+	Mon, 17 Aug 2026 14:33:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977224; cv=none; b=u5hGRYAs6bH0PmGnOCzDhBOuVUkigJcdr5RoqejbktZ2Y7k/lKXdwA3shFo++1ZRF2iF2iU2V6ls1ndXEICqQIK6+0GFEJNRa64ce/XwpetqQPrE5txnPuZyub+cMc7kRQb/Q2+irIHieNwH3sQIdaRrXJ39SwjIi/PLCLPBOTk=
+	t=1786977228; cv=none; b=D2KD+rpkhYLYho/9toqsPooCyWs/dCz1x4BPp2vK3EXn+uvagLSm1AbwqKuI8fxULCHxZT1k5zxN2SLcwQiStVJw6HsGleT62sbBvHe5JmprvY8bNgKVKLKLnNIhS4uVKvDbGG3pbBjTuatIlY3OwRTIgQzOSJEb6I0iZhz1Nek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977224; c=relaxed/simple;
-	bh=a9Hs7qkk8+VRUYslO+QhPPG122VWWtg9Msup5z8OrGc=;
+	s=arc-20240116; t=1786977228; c=relaxed/simple;
+	bh=4z5cBdr6f/YhdkK+ZnTa9PBBfE4zGQzFzHcnd1Mrpuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DRaZgtUMtwqf0y5A0gZj7K8TsDZ5etjn8XSccNJ/E4Z1UD6h7yibbk4lxrrTUq5KwsymFivQpeqCGwHPAIY4gHO5FS78H7u0FcHcJFTMOSn4gI7Sp4LbRWY8s/MJcT/Zdt6hlreo2uPt2uobHOBd4voE1pB5ioYvppD4dvOpfVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tL4e3bZu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TSHGNYG6Y8Zpay/VVAI5C1L5UeRIbKrKCHlKKmi7CQydg3lMeKWzuhcP0NLYtoHm1z86xaBown9lRlSvZT2SOls48IfHLSn7kdJq3tAZpi19VIdJ5N4V4kgJMW7YkjnM00crl/VXZwPW5AyHDc6Z6qbTd+GCfVz+Q3r1HbocAJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IoP8gBZ9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tL4e3bZu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B9761F000E9;
-	Mon, 17 Aug 2026 14:33:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IoP8gBZ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C6711F000E9;
+	Mon, 17 Aug 2026 14:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977223;
-	bh=NI0kIgyH6HS26PsUaQ+VFt6xB2/dQxf+a5wvlGIYW7I=;
+	s=korg; t=1786977225;
+	bh=MlBeemTUZc1Rh4GVf9ZzoFP5bn7c98SjEZvFnuNCvog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tL4e3bZuU3D9Y/lUZIxnslykSp14ao5CEL9pSdcU3FOTSam0oJlrmHp2wwg1jmYOt
-	 9CPhWBM0GavXY4tPR4DQKWTP/uhPKFz/5UL/+rc986vo9Vckt7+cPiZDmV4aZHYVyn
-	 clI9YDeJBwvBmj2bhT4SKcf6tfoSby/IZC5KqAb4=
+	b=IoP8gBZ9mxS8GpHESDN5/ONzmje/QJh2ycU9kZWOCNcEd3lOqFl6ot8Yqi77gOA9k
+	 rkVlJbc5o9NH/E6Q0LJy4lMM6d+8U6g381tJxKiR1O22B6rEfQHLiqxh4HuvmcoGnH
+	 ghVL7K9ERTORkLfakkSP1gdeP0ElXmnOMxzYdLwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 255/456] keys: fix out-of-bounds read in keyring_get_key_chunk()
-Date: Mon, 17 Aug 2026 15:30:45 +0200
-Message-ID: <20260817132550.018328814@linuxfoundation.org>
+	Boyuan Zhang <boyuan.zhang@amd.com>,
+	Leo Liu <leo.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 229/456] drm/amdgpu: fix division by zero with invalid uvd dimensions
+Date: Mon, 17 Aug 2026 15:30:19 +0200
+Message-ID: <20260817132549.085883212@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,64 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Boyuan Zhang <boyuan.zhang@amd.com>
 
-[ Upstream commit 63918731f9ae25b5deb022f118e941e6dddfcef4 ]
+commit 0c01c811be47e6b146552dd59bfedbea8f09b8f4 upstream.
 
-For description-level chunks keyring_get_key_chunk() advances the read
-pointer by level * sizeof(long) past the inline prefix but only
-bounds-checks the prefix, so a long enough key description is read past
-its kmemdup(desc, desc_len + 1) allocation.  Compute the full byte
-offset and bounds-check the description against it before reading.
+When width or height is less than 16, width_in_mb or height_in_mb
+becomes 0, leading to fs_in_mb being 0. This causes a division by
+zero when calculating num_dpb_buffer in H264 and H264 Perf decode
+paths.
 
-The walk only reaches a description-level chunk when two keys collide
-through the hash, x, type and domain_tag chunks, so this is reached from
-an unprivileged add_key(2) with a crafted pair of same-type keys whose
-index hashes collide; KASAN reports a slab-out-of-bounds read.
+Add validation to reject frames with width < 16 or height < 16
+before performing any calculations that depend on these values.
 
-Fixes: f771fde82051 ("keys: Simplify key description management")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20260719161505.2423935-2-michael.bommarito@gmail.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+V2: Format change - move up all vaiable definitions.
+V3: Use warn_once to avoid spam.
+
+Signed-off-by: Boyuan Zhang <boyuan.zhang@amd.com>
+Reviewed-by: Leo Liu <leo.liu@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 3e41d26c70b0a459d041cc19482a226c4b7423cb)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/keyring.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/security/keys/keyring.c b/security/keys/keyring.c
-index 08aaa9429ab36..85791380ca724 100644
---- a/security/keys/keyring.c
-+++ b/security/keys/keyring.c
-@@ -271,6 +271,7 @@ static unsigned long keyring_get_key_chunk(const void *data, int level)
- 	unsigned long chunk = 0;
- 	const u8 *d;
- 	int desc_len = index_key->desc_len, n = sizeof(chunk);
-+	unsigned int offset;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
+@@ -578,6 +578,14 @@ static int amdgpu_uvd_cs_msg_decode(stru
+ 	unsigned image_size, tmp, min_dpb_size, num_dpb_buffer;
+ 	unsigned min_ctx_size = ~0;
  
- 	level /= ASSOC_ARRAY_KEY_CHUNK_SIZE;
- 	switch (level) {
-@@ -284,12 +285,12 @@ static unsigned long keyring_get_key_chunk(const void *data, int level)
- 		return (unsigned long)index_key->domain_tag;
- 	default:
- 		level -= 4;
--		if (desc_len <= sizeof(index_key->desc))
-+		offset = sizeof(index_key->desc) + level * sizeof(long);
-+		if (desc_len <= offset)
- 			return 0;
- 
--		d = index_key->description + sizeof(index_key->desc);
--		d += level * sizeof(long);
--		desc_len -= sizeof(index_key->desc);
-+		d = index_key->description + offset;
-+		desc_len -= offset;
- 		if (desc_len > n)
- 			desc_len = n;
- 		do {
--- 
-2.53.0
-
++	/* Reject invalid dimensions to prevent division by zero */
++	if (width < 16 || height < 16) {
++		dev_WARN_ONCE(adev->dev, 1,
++			      "Invalid UVD decoding dimensions (%dx%d)!\n",
++			      width, height);
++		return -EINVAL;
++	}
++
+ 	image_size = width * height;
+ 	image_size += image_size / 2;
+ 	image_size = ALIGN(image_size, 1024);
 
 
