@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4242BE7A7;
-	Mon, 17 Aug 2026 13:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94873F3281;
+	Mon, 17 Aug 2026 13:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974865; cv=none; b=OmzZHu1brDHu6OZBK5HrJx2BEuiCwY+heYWCDXKzjpnIJPS4xvos3gW+7XLzAmD1oEZGtByW3igqB9KJ39aux4gUuuv8Dejs09OAlC8L/a4OTSYowB3u9QI6WCdGc91ElGTHowoETp1IgKlQIyW8ZA0oxJjr75XO4l+vD6BRPx0=
+	t=1786974869; cv=none; b=F3YjLz/9HGDYKbc0nH1PdBEH779gLksuFzbN1aIdQEl+xb7Ho1F37n5xJExzHfuUHLyC2VfFL8u9NBYty4DziKtLgRpTeWxYqXlpMVEjYqVhr78BbWzBomXG5MR/bL8YVzs1/gS+vHR4tjZUHbEXPkqqxEeR4jdc1bAXmH3XaGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974865; c=relaxed/simple;
-	bh=+Ll1kIgkGdBbesHY/Sqjicbft92p+pyBvI/ZRks1D5M=;
+	s=arc-20240116; t=1786974869; c=relaxed/simple;
+	bh=A63c9FJrimhdu7SOaFMsVTV3d9Mi8MqxzQ05JYTluOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uk2itApCgVxDmbmt2fUf+nceXXU9tYvxIqsVLdsMBM+nDUvSDe3GLApro+gIYn8s04iPjfDc3Dytt2eRlLEm1pqXK24VBm6Ni2wSC91xOgViE56uRotz+AZX8O7n1TepMWb7ULKgOu+Cx2o8h9zSHHBjzNOUVdzfYxfld0H3EmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3kYkX+7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QfYnJXt1X8IMrokXrGTB0reOzcvIef4bsXM6OsP9+36quXkjPx3a6LwJfDfaNohX3ix6uZ26kdD0urS61I66YMzs7lYBGM/jbN/CY7M7Kh3qVaGRkHzxKYQNu24YB+XXfz1jPomcleLlxU15lKRZkzxyeqTdC3DNSTObmCChka4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wO7GSR8S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3kYkX+7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 772D61F00A3E;
-	Mon, 17 Aug 2026 13:54:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wO7GSR8S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6221C1F000E9;
+	Mon, 17 Aug 2026 13:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974862;
-	bh=7W0MDk8AvaGGoMHKF7Lc8jThIzCyta++emhOq5NTGcs=;
+	s=korg; t=1786974864;
+	bh=/o5SiRDZAurF4V/uh3VNR+E8cMED7tBi4IxCB5H9/2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O3kYkX+7RR58L6j66d1d+l34/racirYLWhsdpnIJ/DWKoS2dq+kF55hYUxAa9s6MB
-	 YZRnlGAtOzBzqfUtVtBewA4fx9l7pYrBp+uzzLxof4UUV6Ze+8maOtRd6hRc7E72I/
-	 ptkYh6xQuWrj4BgbfAMOhESHPOTQNzHAaJU3EDXU=
+	b=wO7GSR8SGXm7mAxKGOFEKjkJQ3oIrXmwkHPsAcgxxQeA4ZBW5f2wyV/MBWTf8VMCl
+	 oC1nyM6sb/NOs7xiMbHgyUK9M6DL3Ehx47uhu0nLMOhXM/pu95d46ECSh8mvcPHhxu
+	 R7D0BsohuXi0599OjxjdcZnB+OUoYhev0JT0MxLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Stefan Agner <stefan@agner.ch>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Bhargava Marreddy <bhargava.marreddy@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 081/250] net: stmmac: resume PHY before hardware setup when opening the interface
-Date: Mon, 17 Aug 2026 15:30:42 +0200
-Message-ID: <20260817132539.753123154@linuxfoundation.org>
+Subject: [PATCH 6.18 082/250] bnge: use int for bnge_fix_rings_count() return value
+Date: Mon, 17 Aug 2026 15:30:43 +0200
+Message-ID: <20260817132539.796092177@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -53,76 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Agner <stefan@agner.ch>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 06232cb44bc8e81adc2f1d40a01bed830b607ea2 ]
+[ Upstream commit 2cbd8a4e5e09aa232a1f8d56ce3d070b18ab2b10 ]
 
-Since the referenced commit, changing the MTU on a running interface no
-longer disconnects and reconnects the PHY; __stmmac_release() merely
-stops phylink, which also suspends the PHY (BMCR power-down) when WoL
-is not enabled. __stmmac_open() then performs the DMA software reset in
-stmmac_hw_setup() before phylink_start() resumes the PHY again.
+bnge_fix_rings_count() returns 0 on success or a negative errno on failure
+However, bnge_adjust_rings() stores its return value in a u16 variable,
+causing negative error codes such as -ENOMEM to be converted to a large
+positive value.
 
-IEEE 802.3 22.2.4.1.5 allows a PHY to stop its receive clock while
-powered down, and stmmac requires a running receive clock for the DMA
-software reset to complete (the phylink config sets mac_requires_rxc).
-On such setups, e.g. the RK3566-based Home Assistant Green with an
-RTL8211F-VD PHY in RGMII mode, any runtime MTU change now times out and
-leaves the interface dead:
+Use an int for the return code variable so that error values are
+preserved and propagated correctly.
 
-  rk_gmac-dwmac fe010000.ethernet end0: Failed to reset the dma
-  rk_gmac-dwmac fe010000.ethernet end0: stmmac_hw_setup: DMA engine initialization failed
-  rk_gmac-dwmac fe010000.ethernet end0: __stmmac_open: Hw setup failed
-  rk_gmac-dwmac fe010000.ethernet end0: failed reopening the interface after MTU change
-
-In the field this is triggered by NetworkManager applying an MTU while
-activating the connection, breaking networking entirely. The same
-regression has also been reported on i.MX8MP and reproduced on SoCFPGA
-based systems.
-
-Resume the PHY in __stmmac_open() before the hardware setup, making it
-the counterpart of the phylink_stop() in __stmmac_release(), like
-stmmac_resume() already does for the same reason. phylink_start() also
-resumes the PHY, but only after stmmac_hw_setup(), and it cannot be
-moved before the hardware setup since it may bring the link up
-immediately from a workqueue, racing with the initialization (see the
-comment in stmmac_resume()). For the regular ndo_open path the PHY has
-just been attached and is not suspended, in which case
-phylink_prepare_resume() does nothing.
-
-Fixes: db299a0c09e9 ("net: stmmac: move PHY handling out of __stmmac_open()/release()")
-Link: https://github.com/home-assistant/operating-system/issues/4858
-Tested-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Stefan Agner <stefan@agner.ch>
-Tested-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260803095156.132827-1-stefan@agner.ch
+Fixes: 627c67f038d2 ("bng_en: Add resource management support")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Bhargava Marreddy <bhargava.marreddy@broadcom.com>
+Link: https://patch.msgid.link/20260801100923.1498570-1-alok.a.tiwari@oracle.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/ethernet/broadcom/bnge/bnge_resc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index bca81ed28e073..bf2fa56b861be 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -3893,6 +3893,15 @@ static int __stmmac_open(struct net_device *dev,
- 			dma_conf->tx_queue[i].tbs = priv->dma_conf.tx_queue[i].tbs;
- 	memcpy(&priv->dma_conf, dma_conf, sizeof(*dma_conf));
+diff --git a/drivers/net/ethernet/broadcom/bnge/bnge_resc.c b/drivers/net/ethernet/broadcom/bnge/bnge_resc.c
+index 62ebe03a0dcf3..39cc392bd8c4b 100644
+--- a/drivers/net/ethernet/broadcom/bnge/bnge_resc.c
++++ b/drivers/net/ethernet/broadcom/bnge/bnge_resc.c
+@@ -151,7 +151,8 @@ static int bnge_adjust_rings(struct bnge_dev *bd, u16 *rx,
+ 	u16 tx_chunks = bnge_num_tx_to_cp(bd, *tx);
  
-+	/* The PHY is suspended when the interface is reopened without
-+	 * disconnecting the PHY, e.g. on MTU change. IEEE 802.3 allows PHYs
-+	 * to stop their receive clock while powered down, but the DMA
-+	 * software reset in stmmac_hw_setup() requires a running receive
-+	 * clock, and phylink_start() below resumes the PHY only after the
-+	 * hardware setup. Resume a suspended PHY here first.
-+	 */
-+	phylink_prepare_resume(priv->phylink);
-+
- 	stmmac_reset_queues_param(priv);
+ 	if (tx_chunks != *tx) {
+-		u16 tx_saved = tx_chunks, rc;
++		u16 tx_saved = tx_chunks;
++		int rc;
  
- 	if (!(priv->plat->flags & STMMAC_FLAG_SERDES_UP_AFTER_PHY_LINKUP) &&
+ 		rc = bnge_fix_rings_count(rx, &tx_chunks, max_nq, sh);
+ 		if (rc)
 -- 
 2.53.0
 
