@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C7B3E95AB;
-	Mon, 17 Aug 2026 14:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E410744237F;
+	Mon, 17 Aug 2026 14:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975978; cv=none; b=SxzFpPJ/QJM/pRPay/XPdtXWR46Cz7S48d0jIr5Cxpxt2z+OIDA7nSEhi3T4NID/9RUmNlVjkBLvGjBs1OwhUz3xPvuJgRud8O+t+n6LCgxtlkZZ3sm6rdB7cWC9cWk0JKboLvOE4I9PiFOwaaBx6G6vz74qzUb0uWWd+7ssApM=
+	t=1786975981; cv=none; b=YoqBVRybK/v1EdzD/xVI6WTlUNLnVlStdfDgYP5kxK+gp0OyJkEk8bOZhs+5C2UjwBsH4yNxrxRw5NnKuq0xbdQYinLvfTzao9w2iMUTjvpvjzXnMm0vRPKD/uKk43yLy2L9nU083CQtIuCORJQEMSZ1cC9Ts/Z5g17Ka7tyFn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975978; c=relaxed/simple;
-	bh=0VJZuEHLYD17u7Un7Yfyq3J59vJ0hWRsKUC9q8W+6sk=;
+	s=arc-20240116; t=1786975981; c=relaxed/simple;
+	bh=zkbOjaQO3miz7MK0St4iuO9ikuRC5p9Im/fma+BwggM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pcsECvwhYZhLetAVR0qNqg/fQ9e5X5dnP1VRlnvH9nq2ogPG4jRjdoyd1MsDEu6kohr8drCRklPY29jTzHL0FRGqx+BO9HI4BiCIRcuHbsKBso72DhYJgFRmWYOrf2caTWEWpFMr2SroaQsaBp/zYqDvFgJkeCaMjnwGrpq3QYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PqrArPKs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bza1bgS9kJdG5SWJdmzqDis3UcO41kgtPPMyTQch9GSCvnSsnviWYURXfttOzIT1npoXYbOn55Tnuqv+AFWcqV/xxfvz4XC/BfJuO+aXt/V2bAYBRa2uI8O7gNmDPQcrerx+JPEqh27QKLFxB03dRx7rztDP2Ut5ab4WGhhVNHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0P7fkKQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PqrArPKs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 338D51F000E9;
-	Mon, 17 Aug 2026 14:12:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0P7fkKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1824E1F00ADB;
+	Mon, 17 Aug 2026 14:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975976;
-	bh=r4l+HMs6jCpRf4gJ64tkvWJwtIT6p42vBPhrMez4m0Q=;
+	s=korg; t=1786975979;
+	bh=7I3d7LJKVdduBHVIfLZ6Ca8n4t7UiCqaTiwYx3yk9s0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PqrArPKs/kusFetmRdlZXi7ZpvjbxVR+NshzWvNejeEYtyl3k3vvuTh4ye4EaOVOn
-	 kKpee1Edm49iMuI1JSzRggJUj9JcgUyq7qWqozNIr9A4syC4tnOTuv7Mu212E1fyuz
-	 FsMa1p+KqSF7d94pJCAHgQRmEOAMYb18j8joOjHs=
+	b=V0P7fkKQ6lJPiaRlSvLeQvsxJg7YkKymDpKZ4XHmQE8twAwtSk8aaz2hU5wqrN8xT
+	 TSMsGd9yOomAGNzybaf8cxc2qlGnvb59elAkJX51tkoi0d3xMupfJzs027DLl4q0V7
+	 jPP5+gu8XZqvBRUB118B1I60vANMgnsfJC/59kAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI <sashiko-bot@kernel.org>,
-	HyeongJun An <sammiee5311@gmail.com>,
 	Chris Leech <cleech@redhat.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 214/389] scsi: libiscsi: Fix stale-data leak into the SCSI sense buffer
-Date: Mon, 17 Aug 2026 15:30:53 +0200
-Message-ID: <20260817132547.561742711@linuxfoundation.org>
+Subject: [PATCH 5.10 215/389] scsi: libiscsi_tcp: Bound SCSI Response data segment to the connection buffer
+Date: Mon, 17 Aug 2026 15:30:54 +0200
+Message-ID: <20260817132547.597168624@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -55,52 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 98b87885de4b7f605533a2860685f5689fce8e82 ]
+[ Upstream commit c1dea15f819cded9b3faf58f8bec72323568b6e6 ]
 
-iscsi_scsi_cmd_rsp() copies the sense data of a SCSI Response from the
-target-supplied data segment.  The segment carries a 2-byte sense length
-followed by the sense bytes, so it must hold 2 + senselen bytes, but the
-bounds check only requires datalen >= senselen:
+iscsi_tcp_hdr_dissect() receives the data segment of several PDU types
+into the fixed-size conn->data buffer, which is allocated for
+ISCSI_DEF_MAX_RECV_SEG_LEN (8192) bytes.  For the LOGIN_RSP, TEXT_RSP,
+REJECT and ASYNC_EVENT opcodes the dissect path already rejects a PDU
+whose DataSegmentLength exceeds that buffer.
 
-	senselen = get_unaligned_be16(data);
-	if (datalen < senselen)
-		goto invalid_datalen;
-	memcpy(sc->sense_buffer, data + 2,
-	       min_t(uint16_t, senselen, SCSI_SENSE_BUFFERSIZE));
+The SCSI Command Response (ISCSI_OP_SCSI_CMD_RSP) path also copies its
+data segment (sense/response data) into conn->data via
+iscsi_tcp_data_recv_prep(), but it does so without the same check.  The
+only upstream bound on in.datalen is conn->max_recv_dlength, the
+initiator's advertised MaxRecvDataSegmentLength, which is commonly
+negotiated well above 8192 (open-iscsi defaults to 262144).  A target
+that returns a SCSI Response with a DataSegmentLength between 8193 and
+max_recv_dlength therefore overflows the 8192-byte conn->data buffer.
 
-A target that returns a SCSI Response whose datalen equals senselen
-(with senselen <= SCSI_SENSE_BUFFERSIZE) makes the memcpy() from data +
-2 read up to two bytes past the received data.  Those bytes are stale
-conn->data contents and end up in the command's sense buffer, which is
-returned to userspace.
+Once the same bound applies, ISCSI_OP_SCSI_CMD_RSP is handled exactly
+like those responses: bound the data segment, receive it into conn->data
+when present, and otherwise complete the PDU with no data.  Fold the
+opcode into that case group rather than duplicating the check.
 
-Account for the 2-byte sense length prefix in the check.
-
-Fixes: 7996a778ff8c ("[SCSI] iscsi: add libiscsi")
-Suggested-by: Sashiko AI <sashiko-bot@kernel.org>
+Fixes: a081c13e39b5 ("[SCSI] iscsi_tcp: split module into lib and lld")
+Suggested-by: Chris Leech <cleech@redhat.com>
 Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
 Acked-by: Chris Leech <cleech@redhat.com>
-Link: https://patch.msgid.link/20260714104934.1404423-1-sammiee5311@gmail.com
+Link: https://patch.msgid.link/20260716065848.1653431-1-sammiee5311@gmail.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/libiscsi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/libiscsi_tcp.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/scsi/libiscsi.c b/drivers/scsi/libiscsi.c
-index 7e82ddce5031e..8cd20cc9809f1 100644
---- a/drivers/scsi/libiscsi.c
-+++ b/drivers/scsi/libiscsi.c
-@@ -840,7 +840,7 @@ static void iscsi_scsi_cmd_rsp(struct iscsi_conn *conn, struct iscsi_hdr *hdr,
- 		}
- 
- 		senselen = get_unaligned_be16(data);
--		if (datalen < senselen)
-+		if (datalen < senselen + 2)
- 			goto invalid_datalen;
- 
- 		memcpy(sc->sense_buffer, data + 2,
+diff --git a/drivers/scsi/libiscsi_tcp.c b/drivers/scsi/libiscsi_tcp.c
+index 83f14b2c8804b..0aa883ab6ff02 100644
+--- a/drivers/scsi/libiscsi_tcp.c
++++ b/drivers/scsi/libiscsi_tcp.c
+@@ -722,13 +722,6 @@ iscsi_tcp_hdr_dissect(struct iscsi_conn *conn, struct iscsi_hdr *hdr)
+ 		rc = __iscsi_complete_pdu(conn, hdr, NULL, 0);
+ 		spin_unlock(&conn->session->back_lock);
+ 		break;
+-	case ISCSI_OP_SCSI_CMD_RSP:
+-		if (tcp_conn->in.datalen) {
+-			iscsi_tcp_data_recv_prep(tcp_conn);
+-			return 0;
+-		}
+-		rc = iscsi_complete_pdu(conn, hdr, NULL, 0);
+-		break;
+ 	case ISCSI_OP_R2T:
+ 		spin_lock(&conn->session->back_lock);
+ 		task = iscsi_itt_to_ctask(conn, hdr->itt);
+@@ -745,6 +738,7 @@ iscsi_tcp_hdr_dissect(struct iscsi_conn *conn, struct iscsi_hdr *hdr)
+ 		} else
+ 			rc = ISCSI_ERR_PROTO;
+ 		break;
++	case ISCSI_OP_SCSI_CMD_RSP:
+ 	case ISCSI_OP_LOGIN_RSP:
+ 	case ISCSI_OP_TEXT_RSP:
+ 	case ISCSI_OP_REJECT:
 -- 
 2.53.0
 
