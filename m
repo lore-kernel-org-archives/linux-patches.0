@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 740C23B42DC;
-	Mon, 17 Aug 2026 14:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53EE941D227;
+	Mon, 17 Aug 2026 14:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976909; cv=none; b=qt8c72cRUhR8chwLaI6esN3P9Z5L1yHbDgNrTCgU7loK4cKLGrNKXr9mE/DlWnyJ84ajnISuv13yceEOX0M3142ePoYJSQQitU4isOn1eFKy5i++hQmzjrXxquSwU6BXQOa+RwbOYXebyTMYlSY0g8TE88HhpqtSWD8H/+nMRtI=
+	t=1786976912; cv=none; b=Os7cjPXsbCWS1Z+BaHM/V9qldmD1UUnPMyuguj07isMTCZgZZDbTT/rj8N4qOQEsnjGa0ue0eO6kDpgUnIu/xzqvy+rUWPhsffyt15wMejJavCGRpfyro12u+rqVdDQeIgQVbZ/PL4pd48h3fcTfaXUNsLw5EZDi3ElMJck+Z5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976909; c=relaxed/simple;
-	bh=B0GD8jiESdg/TZrdgd/hnoNSUc2cbCd9WyhIlot9rOU=;
+	s=arc-20240116; t=1786976912; c=relaxed/simple;
+	bh=nzBSHSmd3or91MMe9tlCA7dF3XIii57RKMNOrCATtI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fILHRTaoeS22ONGr9/jV/yoKHIv8PRdV5AGXb24ZF8sLin5F3W75GwHlHZ9Pl7K7R8gldV4Z4qGl6FciqAucGyxYN5o7BxCQUWedWixx7jfb4skyc7RtkS3JP9SlrFI560sJE5RY+RrzlfbhS/s4+6S49pg1ria61lJXhebXoxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LOsy/8oA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q9w0JZh0esyRrwAWEg1kXALcKzwkpPEaC1aamldT+eURpRVVA7LEu0rC0YLmJV92659VcMe8eBEHnYOS3trZ28uFF3qzsuUsq4+9NmslZy+qdoecEGOn5RiU2exPRPAL4Gpuf31SEZZyw6XM+r1otw5Rwscd5DtWAGJoK6D1L/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJAUU/ms; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LOsy/8oA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4F41F000E9;
-	Mon, 17 Aug 2026 14:28:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJAUU/ms"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC48C1F00A3D;
+	Mon, 17 Aug 2026 14:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976908;
-	bh=6T/vIHczgDNO7oj6sAglOrobQRYkDYEMoQqwFm4G6aQ=;
+	s=korg; t=1786976911;
+	bh=CM1IceG+etn2nPRwlMaplcmZhabHxntRecGhQ+X1ECM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LOsy/8oAt2la623Q9T2E+qUKhztoVJ/o0cZkwUGNTJvV1Ox4eg/s/RoWCPUXewj0z
-	 GeUwYdFxTZFGCbBo9nn3rNfSi2kg1AssDYs+MPrJYBrlfEPP5iIX+28f5Q731PJY9B
-	 +S7EaMybZR3YrXn19ewXu/1zDbkBSscenHLnNQaQ=
+	b=hJAUU/ms6YVXlbSk1Fcp0Tjnaw56TTuArqbiejhfQ3FNHcnOdMujuTvMxJRMZW80i
+	 54M4smWYQIut1xb89gzIYYAGwg45DYb/dhOQG1zlezQFbzNqQ/beWQM4g3k9b8F6wT
+	 BanDahU9FbEWfWElchR7wwtSAjLWfnmI/pLMmmEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Will Deacon <will@kernel.org>,
+	Andrew Pope <andrew.pope@morsemicro.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 107/456] iommu/intel: Fix out-of-bounds memset in dmar_latency_disable()
-Date: Mon, 17 Aug 2026 15:28:17 +0200
-Message-ID: <20260817132544.281307726@linuxfoundation.org>
+Subject: [PATCH 5.15 108/456] wifi: mac80211: recalculate TIM when a station enters power save
+Date: Mon, 17 Aug 2026 15:28:18 +0200
+Message-ID: <20260817132544.319856498@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,41 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Andrew Pope <andrew.pope@morsemicro.com>
 
-[ Upstream commit 754f8efe45f87e3a9c6871b645b2f9d46d1b407b ]
+[ Upstream commit a007a384c9eb17610f53a53e2f59944c31f1565a ]
 
-dmar_latency_disable() intends to zero out only the single
-latency_statistic entry for the given type, but the memset size was
-computed as sizeof(*lstat) * DMAR_LATENCY_NUM, which clears the entire
-array starting from &lstat[type].
+When an AP buffers frames for a station on its per-station TXQs and the
+station subsequently enters power save, sta_ps_start() records the
+buffered TIDs in txq_buffered_tids but does not update the TIM. The
+station's TIM bit is only ever set when a further frame is buffered
+while the station is already asleep
+(ieee80211_tx_h_unicast_ps_buf() -> sta_info_recalc_tim()).
 
-When type > 0, this writes beyond the end of the allocated array,
-corrupting adjacent memory.
+If no further downlink frame arrives for that station the beacon
+TIM never advertises the buffered traffic. A station relying on the
+TIM then remains in doze indefinitely on top of a non-empty queue. Its
+TXQs were removed from the scheduler's active list at PS entry, nothing
+pages it, and the flow deadlocks until an unrelated event wakes the
+station.
 
-Fix by using sizeof(*lstat) to clear only the target entry.
+Recalculate the TIM at the end of sta_ps_start(), so traffic
+already buffered at PS entry is advertised immediately.
+sta_info_recalc_tim() already consults txq_buffered_tids, which is
+updated above, and is safe in this context (it is already called
+from equivalent paths such as the tx handlers and
+ieee80211_handle_filtered_frame()).
 
-Fixes: 55ee5e67a59a ("iommu/vt-d: Add common code for dmar latency performance monitors")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: ba8c3d6f16a1 ("mac80211: add an intermediate software queue implementation")
+Signed-off-by: Andrew Pope <andrew.pope@morsemicro.com>
+Link: https://patch.msgid.link/20260717011751.79524-1-andrew.pope@morsemicro.com
+[add wifi: subject prefix]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/perf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/rx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/iommu/intel/perf.c b/drivers/iommu/intel/perf.c
-index 700eeb07bda0a0..d7b2818649b818 100644
---- a/drivers/iommu/intel/perf.c
-+++ b/drivers/iommu/intel/perf.c
-@@ -63,7 +63,7 @@ void dmar_latency_disable(struct intel_iommu *iommu, enum latency_type type)
- 		return;
- 
- 	spin_lock_irqsave(&latency_lock, flags);
--	memset(&lstat[type], 0, sizeof(*lstat) * DMAR_LATENCY_NUM);
-+	memset(&lstat[type], 0, sizeof(*lstat));
- 	spin_unlock_irqrestore(&latency_lock, flags);
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index 15933e9abc9b9e..dda1ee11f8a8cb 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -1591,6 +1591,8 @@ static void sta_ps_start(struct sta_info *sta)
+ 		else
+ 			clear_bit(tid, &sta->txq_buffered_tids);
+ 	}
++
++	sta_info_recalc_tim(sta);
  }
  
+ static void sta_ps_end(struct sta_info *sta)
 -- 
 2.53.0
 
