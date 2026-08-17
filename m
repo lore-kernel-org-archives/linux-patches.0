@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63AAF41F5EA;
-	Mon, 17 Aug 2026 14:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A2A426693;
+	Mon, 17 Aug 2026 14:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977932; cv=none; b=gXjDTIkNL4RSlxaIE7A8SygRrcCOs7oUvH/Ht5rIMzezvMBNTOYhEorOUsvCByZ8+hu8+XFVsvD4szxo6RJufpdLj9SpORZxr9S4m8/+v67fwK5LXhfz3WkFkUpdSH7LkYmBC4wNGcnf4GYBQEJMXiM57VdG2A2hZMCu7SfxBwU=
+	t=1786977935; cv=none; b=bLKtMivnkbkqg0NE0t4rzO+u4qzwO5+scFVL/yv/RTby2o7ZbuEPWUAOWMcVwi2QXj9N13uQ1LR+ysjPH52Cq2IiOudnmeo6nrkmFy7lRl9eaDjhjhrrBHjCzmhApGMzkWjIncjkPbOCYL3fQeiH19/o44E1zfnaQr65SSlQQcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977932; c=relaxed/simple;
-	bh=a+fNBYg/uIWYzCWlupalK5CR+d1EizPn+0aRORLRzPQ=;
+	s=arc-20240116; t=1786977935; c=relaxed/simple;
+	bh=v2u30gdr5bi+aXHDCAnSJWX3Yr8SQfeSC4BDXhDKcq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CXPpFIeWN3UaY4LfDmkGwdvb4OlYAAf3Rqut8i6svaxD7WFvKw9Af4WUqVctX5wpiI5WfRsn9xr19qYdhDKvvztptR79e0+mqNjAgh3P304trkRywLKAayOzWqvZhTUlrCcAhbdndQMfnVqHr0thWMsrYabjpo+YKr3mp80i/RA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trnmEnZq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yx4YE5uLkl79leUNcxEHTLb98/m7LuBe8K51Ko4LJHqcuZv5zza9KLzrzMbCG6InCErYYPM5lyPAPDKjIp4CPdzzZpTEm69DA+7YRcniA0t4SF0PxYvJLjCY6s9h/a9DlrDvhDFQUhsc+/fpYGaZr3OmNb6cnSzv/7GaUy6YWWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BnhKZnz8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trnmEnZq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD8811F00A3A;
-	Mon, 17 Aug 2026 14:45:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BnhKZnz8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BCF31F000E9;
+	Mon, 17 Aug 2026 14:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977931;
-	bh=AWCrZfNwiZG3QJPr+FAXD+AkJkaOmRqhvTsX3UVG78s=;
+	s=korg; t=1786977934;
+	bh=4rvY9+1bo3zx7lv6LPhNeRiv8lBaUYl8Y8L9KngJDI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=trnmEnZqYbXAG8yBI7E6hfaH+KlHkuLYQ/Gq4z/L44UcfDkt6BIdkwTglQ1OY/Tz7
-	 l34aWsUAuhLIBWvI35BgQG4KXvkBUR1ALpD6VcLcM1Q4OToJDUNh6X9od1mw/kKmnh
-	 1sSfIuH1jA5JJjUZWjXmfsgczsTI7p7qox4JW9WY=
+	b=BnhKZnz8cML+pI1gcOTsjTPMzOHIy+yu+qh8m9x+IvPfEoGdmw8OKrZpbALDEo1Bf
+	 z1ZMgm4Tk6SId2+zY7TFdNlONAipFZnLH0MyoHlkUbp3Pj3dGjogMzAHrn5ZgWfXy1
+	 G0SioE8wsuzFsA8ne8KoVgPzN6xVQte+14F69ZuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 036/181] vhost/vdpa: reject overflowing PA map page counts on 32-bit
-Date: Mon, 17 Aug 2026 15:32:10 +0200
-Message-ID: <20260817132536.796680435@linuxfoundation.org>
+Subject: [PATCH 6.12 045/181] hwmon: (pmbus/lm25066) Fix PMBus coefficient calculations
+Date: Mon, 17 Aug 2026 15:32:19 +0200
+Message-ID: <20260817132537.170245010@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -51,54 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 0619aaa34c0c2a2dcb07f0e9c8a34e7efb8c4cdf ]
+[ Upstream commit 0dabe8a56f772f0ece46d2597799f412c277d874 ]
 
-vhost_vdpa_pa_map() adds the IOVA page offset to the user-controlled map
-size before computing the number of pages to pin. On 32-bit systems,
-where unsigned long is narrower than u64, that addition can overflow and
-the code can pin and map fewer pages than the requested IOTLB range.
+In lm25066_probe(), the PMBus coefficients for current and power are
+scaled based on the shunt resistor value. The calculation evaluates the
+multiplication using 32-bit arithmetic because info->m is an int and
+shunt is a u32:
 
-Reject sizes that overflow the unsigned long page-count calculation.
+static int lm25066_probe(struct i2c_client *client) {
+    ...
+    info->m[PSC_CURRENT_IN] = info->m[PSC_CURRENT_IN] * shunt / 1000;
+    info->m[PSC_POWER] = info->m[PSC_POWER] * shunt / 1000;
+    ...
+}
 
-Fixes: 22af48cf91aa ("vdpa: factor out vhost_vdpa_pa_map() and vhost_vdpa_pa_unmap()")
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <CAMuQ4bX-iDvcUOPPY+NLz95tkRJYwWqvzAr=U48uNaub_HZLGw@mail.gmail.com>
+For large coefficients like 26882 (LM25056) or 15076 (LM5066i), a device
+tree shunt-resistor-micro-ohms value exceeding approximately 159,000
+(159 mOhm, which is physically valid for low-current applications) causes
+the intermediate product to exceed UINT_MAX (4,294,967,295). This results
+in a silent wraparound before the division by 1000.
+
+Furthermore, if the wrapped value has the most significant bit set,
+converting it back to the signed int info->m results in negative
+coefficients. This logic error leads to drastically corrupted current and
+power readings, which can cause erratic thermal or power management
+behavior in the system.
+
+Fix the problem by using 64-bit operations for the multiply/divide
+operations. This can still overflow, but only for unreasonably large
+shunt resistor values.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 94ee5fcc240fe ("hwmon: (pmbus/lm25066) Support configurable sense resistor values")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vdpa.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/hwmon/pmbus/lm25066.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-index 2464c9de67712..a47fdcb61bf36 100644
---- a/drivers/vhost/vdpa.c
-+++ b/drivers/vhost/vdpa.c
-@@ -1102,6 +1102,7 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
- 	unsigned int gup_flags = FOLL_LONGTERM;
- 	unsigned long npages, cur_base, map_pfn, last_pfn = 0;
- 	unsigned long lock_limit, sz2pin, nchunks, i;
-+	unsigned long page_offset;
- 	u64 start = iova;
- 	long pinned;
- 	int ret = 0;
-@@ -1114,7 +1115,13 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
- 	if (perm & VHOST_ACCESS_WO)
- 		gup_flags |= FOLL_WRITE;
+diff --git a/drivers/hwmon/pmbus/lm25066.c b/drivers/hwmon/pmbus/lm25066.c
+index c36c124d1a2d8..f0bf3b1533313 100644
+--- a/drivers/hwmon/pmbus/lm25066.c
++++ b/drivers/hwmon/pmbus/lm25066.c
+@@ -14,6 +14,7 @@
+ #include <linux/slab.h>
+ #include <linux/i2c.h>
+ #include <linux/log2.h>
++#include <linux/math.h>
+ #include <linux/of.h>
+ #include "pmbus.h"
  
--	npages = PFN_UP(size + (iova & ~PAGE_MASK));
-+	page_offset = iova & ~PAGE_MASK;
-+	if (size > ULONG_MAX - page_offset) {
-+		ret = -EINVAL;
-+		goto free;
-+	}
-+
-+	npages = PFN_UP(size + page_offset);
- 	if (!npages) {
- 		ret = -EINVAL;
- 		goto free;
+@@ -540,8 +541,8 @@ static int lm25066_probe(struct i2c_client *client)
+ 	if (of_property_read_u32(client->dev.of_node, "shunt-resistor-micro-ohms", &shunt))
+ 		shunt = 1000;
+ 
+-	info->m[PSC_CURRENT_IN] = info->m[PSC_CURRENT_IN] * shunt / 1000;
+-	info->m[PSC_POWER] = info->m[PSC_POWER] * shunt / 1000;
++	info->m[PSC_CURRENT_IN] = DIV_ROUND_CLOSEST_ULL((u64)info->m[PSC_CURRENT_IN] * shunt, 1000);
++	info->m[PSC_POWER] = DIV_ROUND_CLOSEST_ULL((u64)info->m[PSC_POWER] * shunt, 1000);
+ 
+ #if IS_ENABLED(CONFIG_SENSORS_LM25066_REGULATOR)
+ 	/* LM25056 doesn't support OPERATION */
 -- 
 2.53.0
 
