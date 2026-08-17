@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DE1442FCB;
-	Mon, 17 Aug 2026 14:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5323C442B32;
+	Mon, 17 Aug 2026 14:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977484; cv=none; b=bMwIBapb2liiaFI3BW9+3qe57W7M/XyXFGPRIWGQVybjPAaeBasootwPkSG8UTmiToQCT3C14gDNyuyAJ40diTlWHWtioAWBLp4sRPsK5g8AvJHb0PTIHbMY+Ns2c0mkCpXGTQkKcW/F6D4Z53Hmr4cYE+wBllyXuLqCpGWc/7k=
+	t=1786977487; cv=none; b=aaSP7nYdk8OIaLn5/nhs/0njGV8XTjFw1wm+6qnnQjTvHZJ3h1J4atPN84Kcv7wkeatOSkEL+bxs7aLA82BwUgRGg8LJwPelofjB+Z1oAxMu0yPzq7VvqXxVM1symWCjNuqWT1vkrGy/6cejD+q1KCxWLhbIDoSUAK3VFjgunwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977484; c=relaxed/simple;
-	bh=Mm7MCAXRUmyByBJaTUEklYjZFsdAyI8f0dyVruo2fdI=;
+	s=arc-20240116; t=1786977487; c=relaxed/simple;
+	bh=1rjgbPRFxQ10RhlgfSegG0hQNSlj0MeCnrihDaKX6Q0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KudQ6WHnJfe8tjN9TM0O1Jd3hoQ+V6LAtbFv3+IEfpg/y0ADthIHq+i1CQ0TDDf4uK/+vk2fLdv7X8qc5xFExmq/P1Se+hBrCv+mlDOMCySDUH2g9gMGqHU+hTQXqs8uCJPG/ragc/CfKMIAZsznX44k1Yf1kav5tknI/LNbzWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfLE0tfI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RCBjSIp2mG/7k1okmHZiAnv/GbH9+XbxXsSm5qJa8Kxo2hGac9v7qqndgQ7BTttTTyGhir9BeT8xGPJI35HS7AGrU7XiBgl5j23cxxRL0On6KZqK5eQiFWXkFThwXhj/QJGG5mwO7U58nfZyZuPwDropteW7kfKfqOwO+FaTPFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IIqkriCG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfLE0tfI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9791F000E9;
-	Mon, 17 Aug 2026 14:38:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IIqkriCG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A26E81F00A3A;
+	Mon, 17 Aug 2026 14:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977483;
-	bh=QMT4q8cAMktUtKbUxdCqILPOeV81fGid/i0r4BttjTc=;
+	s=korg; t=1786977486;
+	bh=lmxK0o+F5Dm9Px4DWDt9TgfmBv2OLDcAMArWr74AaT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WfLE0tfIMwYhrJXQBzssQgQvuc9oBCvMrwyl+JRgyrsgsBJgMSDbBb69mL7hsuA9p
-	 +rDaQmPRz90TUeSFBhFhh0Njbe+tpWDiHKvF1DDr+neOUUy488/7ZuOtVn9wdBFmnV
-	 7U0qLCgaG9r0ONb35Kx53uW0pgbNtchNYpnR/Oyc=
+	b=IIqkriCGLMLlI1F8VtkhsjggE42yW4I/Z4tjOYG1IVxgprWyXnO/cZqB/6se+5csA
+	 BFXXo37jJDxiAoWuSzKIxxE07AFO9z9xj53RB64HqXR+tS2hdeI5vmwl6+Iw9Z+yaD
+	 DyfkQpvxsSRdQ1G5r27WV+TPmJnvHmVd591IYFqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"H. Nikolaus Schaller" <hns@goldelico.com>,
+	Liem <liem16213@gmail.com>,
+	Carlos Song <carlos.song@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 5.15 344/456] i2c: jz4780: Cache host clock rate at probe to prevent CCF prepare_lock deadlock
-Date: Mon, 17 Aug 2026 15:32:14 +0200
-Message-ID: <20260817132553.030800524@linuxfoundation.org>
+Subject: [PATCH 5.15 345/456] i2c: imx: Cancel hrtimer before clearing slave pointer
+Date: Mon, 17 Aug 2026 15:32:15 +0200
+Message-ID: <20260817132553.065094263@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,75 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: H. Nikolaus Schaller <hns@goldelico.com>
+From: Liem <liem16213@gmail.com>
 
-commit d99607c888f26e8a4e9fe9772860cef4aff86bb4 upstream.
+commit 6ac7702b6cc2b94aaed9ef2d95bfbefcdc90061f upstream.
 
-Fix a severe AB/BA deadlock between the Common Clock Framework (CCF)
-and the I2C adapter lock, which triggers when an I2C-controlled clock
-generator client (like the Si5351) is registered or modified under the CCF.
+In i2c_imx_unreg_slave(), the slave pointer is set to NULL after
+disabling interrupts.  However, a pending interrupt might already
+have started the hrtimer (i2c_imx_slave_timeout) before the pointer
+was cleared.  If the hrtimer fires after i2c_imx->slave is set to
+NULL, the timer callback i2c_imx_slave_finish_op() will call
+i2c_imx_slave_event() with a NULL slave pointer, which results in a
+use-after-free / NULL pointer dereference.
 
-During an i2c client clock (generator) frequency change, the CCF acquires its global
-'prepare_lock' mutex and the driver calls i2c_transfer() to update the client's
-chip registers, stalling for the adapter's I2C bus lock.
+Fix by canceling the hrtimer and waiting for it to complete after
+disabling interrupts, before clearing the slave pointer.
 
-Concurrently, an independent, parallel transfer on the same bus (e.g., a GPIO
-expander handling LEDs) can hold the I2C adapter lock. Inside this parallel
-transfer path, jz4780_i2c_set_speed() calls clk_get_rate() on the host
-controller's input clock to calculate bus timings. This call attempts to acquire
-the blocked CCF 'prepare_lock', creating a circular dependency that freezes
-the system.
-
-The jz4780 host controller clock itself is static and never changes at runtime.
-
-However, calling clk_get_rate() inside the active transfer path introduces
-an unnecessary dependency on the CCF internal locks.
-
-Eliminate this synchronous clk_get_rate() call from the active transfer
-path by caching the static host peripheral clock rate once - inside the private
-jz4780_i2c structure during jz4780_i2c_probe(). Update jz4780_i2c_set_speed()
-to use this cached value, safely decoupling active I2C transactions from the
-CCF internal locks without any risk of stale timings.
-
-Assisted-by web based Google AI (pinpointing the bug and writing the message).
-
-Fixes: ba92222ed63a12 ("i2c: jz4780: Add i2c bus controller driver for Ingenic JZ4780")
-Signed-off-by: H. Nikolaus Schaller <hns@goldelico.com>
-Cc: <stable@vger.kernel.org> # v4.1+
+Fixes: f7414cd6923f ("i2c: imx: support slave mode for imx I2C driver")
+Signed-off-by: Liem <liem16213@gmail.com>
+Cc: <stable@vger.kernel.org> # v5.11+
+Acked-by: Carlos Song <carlos.song@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/2db6fd233aceb7238474e4833f4d25ca681c3ffb.1784492382.git.hns@goldelico.com
+Link: https://lore.kernel.org/r/20260629023829.152651-3-liem16213@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-jz4780.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-imx.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/i2c/busses/i2c-jz4780.c
-+++ b/drivers/i2c/busses/i2c-jz4780.c
-@@ -141,6 +141,7 @@ struct jz4780_i2c {
- 	void __iomem		*iomem;
- 	int			 irq;
- 	struct clk		*clk;
-+	unsigned long		 clk_rate_khz;
- 	struct i2c_adapter	 adap;
- 	const struct ingenic_i2c_config *cdata;
+--- a/drivers/i2c/busses/i2c-imx.c
++++ b/drivers/i2c/busses/i2c-imx.c
+@@ -865,6 +865,7 @@ static int i2c_imx_unreg_slave(struct i2
  
-@@ -246,7 +247,7 @@ static int jz4780_i2c_set_target(struct
+ 	i2c_imx_reset_regs(i2c_imx);
  
- static int jz4780_i2c_set_speed(struct jz4780_i2c *i2c)
- {
--	int dev_clk_khz = clk_get_rate(i2c->clk) / 1000;
-+	int dev_clk_khz = i2c->clk_rate_khz;
- 	int cnt_high = 0;	/* HIGH period count of the SCL clock */
- 	int cnt_low = 0;	/* LOW period count of the SCL clock */
- 	int cnt_period = 0;	/* period count of the SCL clock */
-@@ -800,6 +801,8 @@ static int jz4780_i2c_probe(struct platf
- 	if (ret)
- 		return ret;
++	hrtimer_cancel(&i2c_imx->slave_timer);
+ 	i2c_imx->slave = NULL;
  
-+	i2c->clk_rate_khz = clk_get_rate(i2c->clk) / 1000;
-+
- 	ret = of_property_read_u32(pdev->dev.of_node, "clock-frequency",
- 				   &clk_freq);
- 	if (ret) {
+ 	/* Suspend */
 
 
