@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F147D43E9C4;
-	Mon, 17 Aug 2026 15:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D0C3DB323;
+	Mon, 17 Aug 2026 15:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980064; cv=none; b=G4wAcNDcmydfWdc2vlykGWwlTxgVmA0oz8dp+3oOMAWzrx+Ic46HGtYIXwVpNJEaXyUgRoGv48RHaAGR4DwpSVFF+SkwDkV2l2keDwhJFS7EUfyH/SFlpDvuvm4AAyLfa3zCdsyHInnnhZU87fS2CbVOfm7SRY+Zv4iLWFobkGk=
+	t=1786980067; cv=none; b=sMxpYzpdbp7gcJKIoi/XNZa4+3H+tHckDtkW7yf7n+QzTpLjF4jVqO/kQ1xkMrASonqm5Sm8CsCkHUZRbZVT5u4XNLAWts54Q1cYUGtCWtgwgWUL6hk//iT4FUNQL0zJzxPOFJYyBOgmLhvHBBWxJDlLkx6Gbro9w315hhIwybM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980064; c=relaxed/simple;
-	bh=svl92ASHKdFsyCF1FaWOx9MrgjkhnfAqHiHq1uVhgK8=;
+	s=arc-20240116; t=1786980067; c=relaxed/simple;
+	bh=83XNilwVDW+xn3cZQcqtEcCRMsPT2fvlxjnAazvvYz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1AsXNxY9Pt4l9/IP7n3H0AAdQcAoegJm0EVBW2HJ0eiNbPL50erbInRSf4nMRL5hCaIlDgKrTS8oyuhatBnJXgI+Kq9MuoEuBYs9V3cwM5ce3Wg9Eu3ci/GPvYa9gwpb+KD0zd/Rea8zA6f6qIsLYMAaEjdkvAUx935pfMjHkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jbz+Ve/j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZZmWXQVQPDvcKQ8YR6Hbw/9lAHhXxw0Z4b3nV6EaXQje3j9KAS7lIp+ShLGqwVDja+GD1g/ILBGKJS0Kbc+bNDkQVblxhvKxaldl49efamXfJz8wIYkW5qkbMi9tscDxibEaSmqd+3DTVMfX5mOJaPH7cAl9y3SYR95gjdWKbyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2mWyhzso; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jbz+Ve/j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AAB01F00A3E;
-	Mon, 17 Aug 2026 15:21:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2mWyhzso"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D101F000E9;
+	Mon, 17 Aug 2026 15:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980062;
-	bh=ii5HBH/VsBpSxZMmmdsko51JaiSls1TbtHREu9xGm78=;
+	s=korg; t=1786980065;
+	bh=SH8Xmr0WN45OagASMB3raYfmw13s+BgE5f9+CwYy00g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jbz+Ve/j1LUyovJYyOZDhh8mtkAqy8hd6obN8FSeZOgfCrDgEYN1H0z2pGglD0qG+
-	 m0hgCpZtNmSLOEJ3LEKQlhLtX8NLkDhgnpH0S7TKIN8Ycrr0J1hqJzc2xtSSSIWq/6
-	 f1AvSoIqw0iCa8LDCsSPOvaUk2zJ5f6Il7vTsTJU=
+	b=2mWyhzsotdXCk7M5Ylo0QBIrf2VuMgVGjjToQ0ElH4HMIzDoV/foLEY9zxq8b0GoT
+	 P7m+3m5z33W0vlD7YAq8OgoClcJSm4NcJ5n0wpvfNqbUhosqKqd20iaUQNyg0Vr8Ou
+	 NFBZlagKGqBx6pSQoZYei0Cbc1gIPnETdk0awhQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nava kishore Manne <nava.kishore.manne@amd.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Lakshmi Sowjanya D <lakshmi.d@oss.qualcomm.com>,
+	Md Sadre Alam <md.alam@oss.qualcomm.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 441/609] phy: zynqmp: use read-modify-write for SERDES scrambler bypass
-Date: Mon, 17 Aug 2026 15:32:17 +0200
-Message-ID: <20260817132558.852546239@linuxfoundation.org>
+Subject: [PATCH 6.1 405/609] dmaengine: qcom: bam_dma: Fix command element mask field for BAM v1.6.0+
+Date: Mon, 17 Aug 2026 15:31:41 +0200
+Message-ID: <20260817132557.734441603@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,45 +54,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nava kishore Manne <nava.kishore.manne@amd.com>
+From: Md Sadre Alam <md.alam@oss.qualcomm.com>
 
-commit 21e0749f931702765b9d52d05740092bc87fcd8d upstream.
+commit 867621ba203027338b525af6729719c544135336 upstream.
 
-xpsgtr_bypass_scrambler_8b10b() used xpsgtr_write_phy() which performs
-a full register write, silently clearing any bits beyond the intended
-bypass control fields.
+BAM version 1.6.0 and later changed the behavior of the mask field in
+command elements for read operations.
 
-Switch to xpsgtr_clr_set_phy() with clr=mask, set=mask to set only
-the bypass bits while preserving the remaining bits in each register.
+In older BAM versions, or prior implementation assumptions, the mask
+field was effectively ignored for read commands. However, starting from
+BAM v1.6.0, the mask field for read commands is repurposed to carry the
+upper 4 bits of the destination address, enabling support for 36-bit
+addressing. For write commands, the mask field continues to function as
+a traditional write mask.
 
-Fixes: 4a33bea00314 ("phy: zynqmp: Add PHY driver for the Xilinx ZynqMP Gigabit Transceiver")
+The current driver sets mask = 0xffffffff for all command elements.
+While this works for write operations, it breaks read operations on
+BAM v1.6.0+ hardware. In such cases, the hardware interprets the upper
+address bits as 0xf, resulting in an invalid destination address
+(0xf_xxxxxxxx instead of 0x0_xxxxxxxx).
+
+This leads to failures such as NAND enumeration issues observed on
+platforms like IPQ5424.
+
+Fix this by assigning the mask field based on command type:
+  - For read commands: set mask = 0 (upper address bits = 0)
+  - For write commands: retain mask = 0xffffffff
+
+Also update the bam_cmd_element structure documentation to reflect the
+dual purpose of the mask field across BAM versions.
+
+This ensures correct behavior on BAM v1.6.0+ while maintaining backward
+compatibility with older hardware.
+
+Fixes: dfebb055f73a2 ("dmaengine: qcom: bam_dma: wrapper functions for command descriptor")
+Tested-by: Lakshmi Sowjanya D <lakshmi.d@oss.qualcomm.com>
+Signed-off-by: Md Sadre Alam <md.alam@oss.qualcomm.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Nava kishore Manne <nava.kishore.manne@amd.com>
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Link: https://patch.msgid.link/20260627155229.2791113-3-radhey.shyam.pandey@amd.com
+Signed-off-by: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260615060908.1263171-1-varadarajan.narayanan@oss.qualcomm.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/xilinx/phy-zynqmp.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/linux/dma/qcom_bam_dma.h |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
---- a/drivers/phy/xilinx/phy-zynqmp.c
-+++ b/drivers/phy/xilinx/phy-zynqmp.c
-@@ -491,8 +491,12 @@ static void xpsgtr_lane_set_protocol(str
- /* Bypass (de)scrambler and 8b/10b decoder and encoder. */
- static void xpsgtr_bypass_scrambler_8b10b(struct xpsgtr_phy *gtr_phy)
- {
--	xpsgtr_write_phy(gtr_phy, L0_TM_DIG_6, L0_TM_DIS_DESCRAMBLE_DECODER);
--	xpsgtr_write_phy(gtr_phy, L0_TX_DIG_61, L0_TM_DISABLE_SCRAMBLE_ENCODER);
-+	xpsgtr_clr_set_phy(gtr_phy, L0_TM_DIG_6,
-+			   L0_TM_DIS_DESCRAMBLE_DECODER,
-+			   L0_TM_DIS_DESCRAMBLE_DECODER);
-+	xpsgtr_clr_set_phy(gtr_phy, L0_TX_DIG_61,
-+			   L0_TM_DISABLE_SCRAMBLE_ENCODER,
-+			   L0_TM_DISABLE_SCRAMBLE_ENCODER);
+--- a/include/linux/dma/qcom_bam_dma.h
++++ b/include/linux/dma/qcom_bam_dma.h
+@@ -13,9 +13,12 @@
+  * supported by BAM DMA Engine.
+  *
+  * @cmd_and_addr - upper 8 bits command and lower 24 bits register address.
+- * @data - for write command: content to be written into peripheral register.
+- *	   for read command: dest addr to write peripheral register value.
+- * @mask - register mask.
++ * @data - For write command: content to be written into peripheral register.
++ *	   For read command: lower 32 bits of destination address.
++ * @mask - For write command: register write mask.
++ *	   For read command on BAM v1.6.0+: upper 4 bits of destination address.
++ *	   For read command on BAM < v1.6.0: ignored by hardware.
++ *	   Setting to 0 ensures 32-bit addressing compatibility.
+  * @reserved - for future usage.
+  *
+  */
+@@ -42,6 +45,10 @@ enum bam_command_type {
+  * @addr: target address
+  * @cmd: BAM command
+  * @data: actual data for write and dest addr for read in le32
++ *
++ * For BAM v1.6.0+, the mask field behavior depends on command type:
++ * - Write commands: mask = write mask (typically 0xffffffff)
++ * - Read commands: mask = upper 4 bits of destination address (0 for 32-bit)
+  */
+ static inline void
+ bam_prep_ce_le32(struct bam_cmd_element *bam_ce, u32 addr,
+@@ -50,7 +57,11 @@ bam_prep_ce_le32(struct bam_cmd_element
+ 	bam_ce->cmd_and_addr =
+ 		cpu_to_le32((addr & 0xffffff) | ((cmd & 0xff) << 24));
+ 	bam_ce->data = data;
+-	bam_ce->mask = cpu_to_le32(0xffffffff);
++	if (cmd == BAM_READ_COMMAND)
++		bam_ce->mask = cpu_to_le32(0x0); /* 32-bit addressing */
++	else
++		bam_ce->mask = cpu_to_le32(0xffffffff); /* Write mask */
++	bam_ce->reserved = 0;
  }
  
- /* DP-specific initialization. */
+ /*
+@@ -60,7 +71,7 @@ bam_prep_ce_le32(struct bam_cmd_element
+  * @bam_ce: BAM command element
+  * @addr: target address
+  * @cmd: BAM command
+- * @data: actual data for write and dest addr for read
++ * @data: actual data for write and destination address for read
+  */
+ static inline void
+ bam_prep_ce(struct bam_cmd_element *bam_ce, u32 addr,
 
 
