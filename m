@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC10D1EFF93;
-	Mon, 17 Aug 2026 15:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812743F12C6;
+	Mon, 17 Aug 2026 15:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979450; cv=none; b=B4Ql7d61zOSSN8wLHywwEeBNIPTDEEKts7Yc5WzRxBiLwXaDuJFQH0/hMFm9tslLviJGer7CWTk9lQ/EGJbRMGp08S/RYfrG4yhzk8IC5+tYsPjkdTClc4f4xNlrINdwQ2c/08y7IafQ7/aTvANOymYxrtuC91GPMlva/q/9Z/8=
+	t=1786979453; cv=none; b=s6TufnoT9hJraLDA6TLILnxtCNMqbtvSy6gLDAIQ2ZH88Ky56nXvzly88qqNLQrcMEpqVBKooKSkVlyUCpj0jxc8qok1C6LwQMzU6POURzeGp/L3mAdvsYY5DzJypKTLx/wDBLid3LBkjl2PYZ+rgw+H+4cXW9Vsk8KwfIm/kRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979450; c=relaxed/simple;
-	bh=YYVvdn0/Rd51QJfn1iIvHLzlP5N68TNJqVtGLRcoSlw=;
+	s=arc-20240116; t=1786979453; c=relaxed/simple;
+	bh=CSSSyTT2Y2ChrhZjlnHT7acNfZw1ODOWCUq5jk8IodM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4fkz/UPRpn236N4E0QtcI3bPwrQtUHv8CnRzv2Wjgwiw/MqcF9/jh93oqEE+nsjc3jEHY89OuygEHSR7z9RQIkNDFGjVCtYTbaTLRCe9afcDhMFCztoB076pbalzt+TKe6rDFg/hTvO6Wwp1i4ee5FjCHre8Sxfxi+Yhmpn/Kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UDJ1Hc52; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FUNuC3ZP0JmPCarifi+7sJzV5QXWip7T9VRTuKA5KKZdqy8cV9ioyPt3yVTd1WckXxMPhRISqYNHuXzuD8uqnwhkWaSRXdi4Fb4z9aRoPtgHKO1GplXbIAIy8YlIvik3AJIjzNzAze4jWdVqiyPSGVQaqwj6edUadyosp51GpvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DkKoYck3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UDJ1Hc52"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6A31F000E9;
-	Mon, 17 Aug 2026 15:10:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DkKoYck3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB08E1F000E9;
+	Mon, 17 Aug 2026 15:10:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979449;
-	bh=9dAsDff205NSP0ZdBDYRGMEkQCG0kkbsXkCHpPymmiM=;
+	s=korg; t=1786979452;
+	bh=CnHmBYZxIAMo3Zr/aDFo+tUkJspxMRR6DI5Up0/GmPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UDJ1Hc52zmjNi6FIdTl9JQfTbsmqu6k3JNzdhYztZiBB0gvPnH2OuHdiS3REqUvga
-	 3AaR92OcQlaSwZBoDKtMenxMB7scpwnl85qjkf7PBv5dNfbE52gCwIKCv94WZe4VQI
-	 KaDHMvTezlVV+L0e8nzahiDVZ2963Uzs7r5T4NLI=
+	b=DkKoYck3L6rBE61rY0ZsVWHl2h2OZ+EJ8ZfgxOVa2LpK9JxzGRNwDMiTRLKBZy5W0
+	 XAqFGrvsSm+jovcNbIWVWub9alDsjI3tvQaJVjkYFDYT2D5/97xJmcydi6LKbS9XmY
+	 vSUNvqPbpM4YHQxQns4T3c78GQFuRBZcZB6RtNwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.1 229/609] exec: fix unsigned loop counter wrap in transfer_args_to_stack()
-Date: Mon, 17 Aug 2026 15:28:45 +0200
-Message-ID: <20260817132551.753086357@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.1 194/609] media: cx231xx: fix devres lifetime
+Date: Mon, 17 Aug 2026 15:28:10 +0200
+Message-ID: <20260817132550.577250366@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,79 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Johan Hovold <johan@kernel.org>
 
-commit 16cc4f5c1c4b9e45eca7f7deefa5410a292db599 upstream.
+commit 7d6358ab02866e5b7ed8d3a00805297617bbb0ec upstream.
 
-The stop value is derived from bprm->p >> PAGE_SHIFT. The index variable
-is an unsigned long. If bprm->p drops below PAGE_SIZE and stop becomes
-zero the loop condition index >= stop is always true.
+USB drivers bind to USB interfaces and any device managed resources
+should have their lifetime tied to the interface rather than parent USB
+device. This avoids issues like memory leaks when drivers are unbound
+without their devices being physically disconnected (e.g. on probe
+deferral or configuration changes).
 
-After the index == 0 iteration the decrement wraps to ULONG_MAX and
-bprm->page[ULONG_MAX] reads sizeof(void *) bytes in front of the array.
-The pointer has wrapped to -1. That garbage pointer is then passed to
-kmap_local_page() and PAGE_SIZE bytes are copied from wherever that
-lands into the stack of the process being created. And the loop doesn't
-terminate either...
+Fix the driver state lifetime so that it is released on driver unbind.
 
-Getting there only requires bprm->p < PAGE_SIZE. On !MMU
-bprm_set_stack_limit() and bprm_hit_stack_limit() are empty. So the only
-constraint on how far bprm->p is pushed down is valid_arg_len(), i.e.
-that each individual string still fits in what is left.
-
-bprm->p starts at PAGE_SIZE * MAX_ARG_PAGES - sizeof(void *) so a
-single argument or environment string of a little over 31 pages leaves
-it in the first page:
-
-  Oops - load access fault [#1]
-  CPU: 0 UID: 0 PID: 1 Comm: victim Not tainted 7.2.0-rc4 #1
-  epc : __memcpy+0xd4/0xf8
-   ra : transfer_args_to_stack+0xaa/0xae
-   s4 : ffffffffffffffff   s2 : 0000000000000000
-   a1 : ffffffdc98000000   a2 : 0000000000001000
-  status: 0000000a00001880 badaddr: ffffffdc98000000 cause: 0000000000000005
-  [<801a5324>] __memcpy+0xd4/0xf8
-  [<800d5f6a>] load_flat_binary+0x43a/0x65e
-  [<800a2de4>] bprm_execve+0x1d4/0x316
-  [<800a351a>] do_execveat_common+0x12e/0x138
-  [<800a3d44>] __riscv_sys_execve+0x38/0x4e
-  Kernel panic - not syncing: Fatal exception in interrupt
-
-This is an arcane bug but we should still fix it.
-
-Count down from MAX_ARG_PAGES so the loop ends when index reaches stop,
-stop == 0 included. The iterations performed are unchanged for every
-other value of stop.
-
-Only CONFIG_MMU=n builds are affected, transfer_args_to_stack() is used
-by binfmt_flat and binfmt_elf_fdpic on nommu only.
-
-The loop predates git history. commit 7e7ec6a93434
-("elf_fdpic_transfer_args_to_stack(): make it generic") only moved it
-from binfmt_elf_fdpic.c into fs/exec.c and narrowed the copy to the used
-part of the first page. The condition and the decrement are unchanged
-from 2.6.12-rc2.
-
-Link: https://patch.msgid.link/20260721-hochachtung-staumauer-pigmente-15d71f7d7d04@brauner
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 184a82784d50 ("[media] cx231xx: use devm_ functions to allocate memory")
+Cc: stable@vger.kernel.org	# 3.17
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exec.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/cx231xx/cx231xx-cards.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -884,7 +884,7 @@ int transfer_args_to_stack(struct linux_
- 	stop = bprm->p >> PAGE_SHIFT;
- 	sp = *sp_location;
+--- a/drivers/media/usb/cx231xx/cx231xx-cards.c
++++ b/drivers/media/usb/cx231xx/cx231xx-cards.c
+@@ -1577,7 +1577,8 @@ static int cx231xx_init_v4l2(struct cx23
+ 		 dev->video_mode.end_point_addr,
+ 		 dev->video_mode.num_alt);
  
--	for (index = MAX_ARG_PAGES - 1; index >= stop; index--) {
-+	for (index = MAX_ARG_PAGES; index-- > stop; ) {
- 		unsigned int offset = index == stop ? bprm->p & ~PAGE_MASK : 0;
- 		char *src = kmap_local_page(bprm->page[index]) + offset;
- 		sp -= PAGE_SIZE - offset;
+-	dev->video_mode.alt_max_pkt_size = devm_kmalloc_array(&udev->dev, 32, dev->video_mode.num_alt, GFP_KERNEL);
++	dev->video_mode.alt_max_pkt_size = devm_kmalloc_array(&interface->dev, 32,
++							      dev->video_mode.num_alt, GFP_KERNEL);
+ 	if (dev->video_mode.alt_max_pkt_size == NULL)
+ 		return -ENOMEM;
+ 
+@@ -1618,7 +1619,8 @@ static int cx231xx_init_v4l2(struct cx23
+ 		 dev->vbi_mode.num_alt);
+ 
+ 	/* compute alternate max packet sizes for vbi */
+-	dev->vbi_mode.alt_max_pkt_size = devm_kmalloc_array(&udev->dev, 32, dev->vbi_mode.num_alt, GFP_KERNEL);
++	dev->vbi_mode.alt_max_pkt_size = devm_kmalloc_array(&interface->dev, 32,
++							    dev->vbi_mode.num_alt, GFP_KERNEL);
+ 	if (dev->vbi_mode.alt_max_pkt_size == NULL)
+ 		return -ENOMEM;
+ 
+@@ -1660,7 +1662,9 @@ static int cx231xx_init_v4l2(struct cx23
+ 		 "sliced CC EndPoint Addr 0x%x, Alternate settings: %i\n",
+ 		 dev->sliced_cc_mode.end_point_addr,
+ 		 dev->sliced_cc_mode.num_alt);
+-	dev->sliced_cc_mode.alt_max_pkt_size = devm_kmalloc_array(&udev->dev, 32, dev->sliced_cc_mode.num_alt, GFP_KERNEL);
++	dev->sliced_cc_mode.alt_max_pkt_size = devm_kmalloc_array(&interface->dev, 32,
++								  dev->sliced_cc_mode.num_alt,
++								  GFP_KERNEL);
+ 	if (dev->sliced_cc_mode.alt_max_pkt_size == NULL)
+ 		return -ENOMEM;
+ 
+@@ -1724,7 +1728,7 @@ static int cx231xx_usb_probe(struct usb_
+ 	udev = usb_get_dev(interface_to_usbdev(interface));
+ 
+ 	/* allocate memory for our device state and initialize it */
+-	dev = devm_kzalloc(&udev->dev, sizeof(*dev), GFP_KERNEL);
++	dev = devm_kzalloc(&interface->dev, sizeof(*dev), GFP_KERNEL);
+ 	if (dev == NULL) {
+ 		retval = -ENOMEM;
+ 		goto err_if;
+@@ -1854,7 +1858,9 @@ static int cx231xx_usb_probe(struct usb_
+ 			 dev->ts1_mode.end_point_addr,
+ 			 dev->ts1_mode.num_alt);
+ 
+-		dev->ts1_mode.alt_max_pkt_size = devm_kmalloc_array(&udev->dev, 32, dev->ts1_mode.num_alt, GFP_KERNEL);
++		dev->ts1_mode.alt_max_pkt_size = devm_kmalloc_array(&interface->dev, 32,
++								    dev->ts1_mode.num_alt,
++								    GFP_KERNEL);
+ 		if (dev->ts1_mode.alt_max_pkt_size == NULL) {
+ 			retval = -ENOMEM;
+ 			goto err_video_alt;
 
 
