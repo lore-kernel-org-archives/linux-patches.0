@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB04282F29;
-	Mon, 17 Aug 2026 15:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD6D2DC331;
+	Mon, 17 Aug 2026 15:05:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979100; cv=none; b=BssOjOmq7YUKdZ+aZlESrEmWpznYmWzGFRFtPLgBvL8flZztQebn42xS3jo9+GTu8hy6NCGs/nJ9ppAUqfotm/luXiRnju8GCqYSMep8tpHcRPWKGWCB7dVloCrqpXk+IcX0LYqvsSIoKLNiAhv4b1SH+wBSClUUXKULLXLryIY=
+	t=1786979103; cv=none; b=H96sLCZcjHvvW40eOVKlDDCVhl3YVRq6OcVoyUWwcA6wPBRp0GAwEZWfqahxFSO6l0ccU1g6WpOm4uMGK+elF+s3pl7OGDguo0fS5RXs5e4iBsqqUUv5gDixkeJPgTOT4aXNZXDHu9mUID3s4DbN5RnEuEJwnZN7zs5SC6kJJ0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979100; c=relaxed/simple;
-	bh=pje+v756liE4YnLt7now2xJN+u77RmS17FWgPH51EuM=;
+	s=arc-20240116; t=1786979103; c=relaxed/simple;
+	bh=TJiTXQ4pno5H5A8Sy0gx2ZRtqW9n7MYM6nmLtTzAkTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f6OayxotWGOEP3rQk7IHhO2xBMjYcqRfZrUsSsqLds7mqellW1q92r4lXqSejp2Ef3WmuA1J9/v1WQMIRUDaUlDBrIP4TFUbLwI024teUhnxff9A7s7Y7UP+PkTyrqxiCpqsAoHFVRgk1D/1zegAdbDYBIjTpiDqLlJ57f3dSS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9i4b5ZL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rio+J5JBl1fLnFXLvPYzBXgJIr5WZPlAxR1G9AfEEUAcWAemRFzbe5aVJD25K1mtHq7v2dtAXxRa/brV9HtpOOUt4lZiW5gWVKOo4bK9my6bZmPilAenO0Kepkf/haKhQId5Qpn7qTK9FgUiacDZD5aPu2pMHO6qfDRO9Iq+3Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bpZtdfCO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9i4b5ZL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281731F000E9;
-	Mon, 17 Aug 2026 15:04:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bpZtdfCO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02C4C1F000E9;
+	Mon, 17 Aug 2026 15:05:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979098;
-	bh=SEmfyDji+Z7RJ+ciB9JjYFcPYQt8c8U+GWY0Pnw4XD0=;
+	s=korg; t=1786979101;
+	bh=Inyr2KtILzRtR2rR9npVSnDA/sP9dFgT5W3Hdr26h4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q9i4b5ZLry6RU8LX+KhwACYMmEOiF9WxIHyJZZFVzP0H8BhJp9DH+fYHexycVtaQx
-	 /MeDeipGgT5dYY17Cpo1fKHm9vh0EX2W4bB4/3hJ+2B+C4ojAcz4GTcVqYtlRQn15q
-	 XhhVDJdT5n1OdzLsgt8MStVtJgKb1c1ABoGMxpFE=
+	b=bpZtdfCOJ6/qfxoARfioNuYXmm9/5ugMYRrXvLUsWaHfgLWFfP10N/TUGD0a3pb1i
+	 hFJlPFAvGPi35qJ5Sj04sgWj6P3oCVRhHTREvz5+Tbm+3V81i93fMoG+TWElIJGMZO
+	 Ndh+3QQ3lFlT+x+A7KvIiqHlqxjjXTVM96KIAlZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	zdi-disclosures@trendmicro.com,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/609] firewire: net: Fix fragmented datagram reassembly
-Date: Mon, 17 Aug 2026 15:26:42 +0200
-Message-ID: <20260817132547.280362559@linuxfoundation.org>
+Subject: [PATCH 6.1 070/609] net/sched: act_tunnel_key: Defer dst_release to RCU callback
+Date: Mon, 17 Aug 2026 15:26:06 +0200
+Message-ID: <20260817132545.844342747@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,97 +54,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit d52a13adbb8ccbab99cd3bad36804e87d8b5c052 ]
+[ Upstream commit f1f5c8a3955f8fda3f84ed883ac8daa1847e724c ]
 
-fwnet_frag_new() keeps a sorted list of received fragments for a partial
-datagram. When a new fragment is adjacent to an existing fragment, the
-code checks whether the new fragment also closes the gap to the next or
-previous list entry.
+Fix a race-condition use-after-free in tunnel_key_release_params().
 
-Those neighbor lookups currently assume that the current fragment always
-has a real next or previous fragment. At a list edge, the next or
-previous entry is the list head, not a struct fwnet_fragment_info.
+The function releases the metadata_dst of the old params synchronously
+via dst_release() while deferring the params struct free with
+kfree_rcu(). A concurrent tunnel_key_act() reader on the datapath may
+still hold the old params pointer (under rcu_read_lock_bh) and proceed
+to call dst_clone(&params->tcft_enc_metadata->dst) after the writer's
+dst_release has already pushed the dst's rcuref to RCUREF_DEAD.
 
-The gap checks also compare against the old edge of the current fragment
-instead of the edge after adding the new fragment. As a result, a
-fragment that bridges two existing ranges may leave two adjacent ranges
-unmerged, so fwnet_pd_is_complete() can miss a complete datagram.
+zdi-disclosures@trendmicro.com produced a poc which i (and Victor) verified
+that KASAN reports:
 
-Check for the list head before looking up the neighboring fragment, and
-compare the neighbor against the new fragment's far edge when deciding
-whether to merge all three ranges.
+==================================================================
+BUG: KASAN: slab-use-after-free in instrument_atomic_read_write include/linux/instrumented.h:112
+BUG: KASAN: slab-use-after-free in atomic_sub_return_release include/linux/atomic/atomic-instrumented.h:326
+BUG: KASAN: slab-use-after-free in __rcuref_put include/linux/rcuref.h:109
+BUG: KASAN: slab-use-after-free in rcuref_put include/linux/rcuref.h:173
+BUG: KASAN: slab-use-after-free in dst_release+0x5b/0x370 net/core/dst.c:168
+Write of size 4 at addr ffff88806158de40 by task poc/9388
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
+CPU: 0 UID: 0 PID: 9388 Comm: poc Tainted: G        W           7.1.0-rc7 #7 PREEMPT(lazy)
+Tainted: [W]=WARN
+Hardware name: QEMU Ubuntu 25.10 PC v2 (i440FX + PIIX, + 10.1 machine, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94
+ dump_stack_lvl+0x100/0x190 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378
+ print_report+0x139/0x4ad mm/kasan/report.c:482
+ kasan_report+0xe4/0x1d0 mm/kasan/report.c:595
+ check_region_inline mm/kasan/generic.c:186
+ kasan_check_range+0x125/0x200 mm/kasan/generic.c:200
+ instrument_atomic_read_write include/linux/instrumented.h:112
+ atomic_sub_return_release include/linux/atomic/atomic-instrumented.h:326
+ __rcuref_put include/linux/rcuref.h:109
+ rcuref_put include/linux/rcuref.h:173
+ dst_release+0x5b/0x370 net/core/dst.c:168
+ refdst_drop include/net/dst.h:272
+ skb_dst_drop include/net/dst.h:284
+ skb_release_head_state+0x293/0x400 net/core/skbuff.c:1163
+ skb_release_all net/core/skbuff.c:1187
+[..]
+Allocated by task 9391:
+ kasan_save_stack+0x30/0x50 mm/kasan/common.c:57
+ kasan_save_track+0x14/0x30 mm/kasan/common.c:78
+ poison_kmalloc_redzone mm/kasan/common.c:398
+ __kasan_kmalloc+0x9a/0xb0 mm/kasan/common.c:415
+ kasan_kmalloc include/linux/kasan.h:263
+ __do_kmalloc_node mm/slub.c:5296
+ __kmalloc_noprof+0x2f1/0x830 mm/slub.c:5308
+ kmalloc_noprof include/linux/slab.h:954
+ kzalloc_noprof include/linux/slab.h:1188
+ offload_action_alloc+0x2f/0x130 net/core/flow_offload.c:35
+ tcf_action_offload_add_ex+0x1ba/0x880 net/sched/act_api.c:258
+ tcf_action_offload_add net/sched/act_api.c:293
+ tcf_action_init+0x66e/0xa20 net/sched/act_api.c:1547
+ tcf_action_add+0xf6/0x5d0 net/sched/act_api.c:2101
+[..]
+Freed by task 9391:
+ kasan_save_stack+0x30/0x50 mm/kasan/common.c:57
+ kasan_save_track+0x14/0x30 mm/kasan/common.c:78
+ kasan_save_free_info+0x3b/0x70 mm/kasan/generic.c:584
+ poison_slab_object mm/kasan/common.c:253
+ __kasan_slab_free+0x6b/0x90 mm/kasan/common.c:285
+ kasan_slab_free include/linux/kasan.h:235
+ slab_free_hook mm/slub.c:2689
+ slab_free mm/slub.c:6251
+ kfree+0x21f/0x6b0 mm/slub.c:6566
+ tcf_action_offload_add_ex+0x4ad/0x880 net/sched/act_api.c:284
+ tcf_action_offload_add net/sched/act_api.c:293
+ tcf_action_init+0x66e/0xa20 net/sched/act_api.c:1547
+ tcf_action_add+0xf6/0x5d0 net/sched/act_api.c:2101
 
-Fixes: c76acec6d551 ("firewire: add IPv4 support")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Link: https://lore.kernel.org/r/20260707150454.2265951-1-ruoyuw560@gmail.com
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+The buggy address belongs to the object at ffff88806158de00
+ which belongs to the cache kmalloc-256 of size 256
+The buggy address is located 64 bytes inside of
+ freed 256-byte region [ffff88806158de00, ffff88806158df00)
+
+The buggy address belongs to the physical page:
+page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff88806158d600 pfn:0x6158c
+head: order:1 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+flags: 0x4fff00000000240(workingset|head|node=1|zone=1|lastcpupid=0x7ff)
+page_type: f5(slab)
+raw: 04fff00000000240 ffff88801c841b40 ffffea0001856290 ffffea0001856190
+raw: ffff88806158d600 0000000800100009 00000000f5000000 0000000000000000
+head: 04fff00000000240 ffff88801c841b40 ffffea0001856290 ffffea0001856190
+head: ffff88806158d600 0000000800100009 00000000f5000000 0000000000000000
+head: 04fff00000000001 ffffffffffffff81 00000000ffffffff 00000000ffffffff
+head: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000002
+page dumped because: kasan: bad access detected
+page_owner tracks the page as allocated
+page last allocated via order 1, migratetype Unmovable, gfp_mask 0xd2820(GFP_ATOMIC|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC), pid 9391, tgid 9378 (poc), ts 123227323196, free_ts 0
+ set_page_owner include/linux/page_owner.h:32
+ post_alloc_hook+0xfe/0x140 mm/page_alloc.c:1853
+ prep_new_page mm/page_alloc.c:1861
+ get_page_from_freelist+0x110c/0x2fc0 mm/page_alloc.c:3941
+ __alloc_frozen_pages_noprof+0x263/0x2bc0 mm/page_alloc.c:5221
+ alloc_slab_page mm/slub.c:3278
+ allocate_slab mm/slub.c:3467
+ new_slab+0xa6/0x690 mm/slub.c:3525
+ refill_objects+0x271/0x420 mm/slub.c:7272
+ refill_sheaf mm/slub.c:2816
+ __pcs_replace_empty_main+0x373/0x630 mm/slub.c:4652
+ alloc_from_pcs mm/slub.c:4750
+ slab_alloc_node mm/slub.c:4884
+ __do_kmalloc_node mm/slub.c:5295
+ __kmalloc_noprof+0x66d/0x830 mm/slub.c:5308
+ kmalloc_noprof include/linux/slab.h:954
+ metadata_dst_alloc+0x26/0x90 net/core/dst.c:298
+ tun_rx_dst include/net/dst_metadata.h:144
+ __ip_tun_set_dst include/net/dst_metadata.h:208
+ tunnel_key_init+0xb01/0x1b90 net/sched/act_tunnel_key.c:451
+ tcf_action_init_1+0x46b/0x6c0 net/sched/act_api.c:1428
+ tcf_action_init+0x448/0xa20 net/sched/act_api.c:1503
+ tcf_action_add+0xf6/0x5d0 net/sched/act_api.c:2101
+[..]
+==================================================================
+
+Fix by moving dst_release() into a custom RCU callback that runs
+after the grace period, matching the lifetime of the containing
+params struct.  Readers in the datapath therefore always find a live
+rcuref when calling dst_clone().
+
+Fixes: 9174c3df1cd18 ("net/sched: act_tunnel_key: fix memory leak in case of action replace")
+Reported-by: zdi-disclosures@trendmicro.com
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Davide Caratti <dcaratti@redhat.com>
+Link: https://patch.msgid.link/20260711150537.7946-1-jhs@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/net.c | 39 +++++++++++++++++++++------------------
- 1 file changed, 21 insertions(+), 18 deletions(-)
+ net/sched/act_tunnel_key.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/firewire/net.c b/drivers/firewire/net.c
-index a53eacebca3391..75fdda6171dfab 100644
---- a/drivers/firewire/net.c
-+++ b/drivers/firewire/net.c
-@@ -297,31 +297,34 @@ static struct fwnet_fragment_info *fwnet_frag_new(
- 		if (fi->offset + fi->len == offset) {
- 			/* The new fragment can be tacked on to the end */
- 			/* Did the new fragment plug a hole? */
--			fi2 = list_entry(fi->fi_link.next,
--					 struct fwnet_fragment_info, fi_link);
--			if (fi->offset + fi->len == fi2->offset) {
--				/* glue fragments together */
--				fi->len += len + fi2->len;
--				list_del(&fi2->fi_link);
--				kfree(fi2);
--			} else {
--				fi->len += len;
-+			if (!list_is_last(&fi->fi_link, &pd->fi_list)) {
-+				fi2 = list_next_entry(fi, fi_link);
-+				if (offset + len == fi2->offset) {
-+					/* glue fragments together */
-+					fi->len += len + fi2->len;
-+					list_del(&fi2->fi_link);
-+					kfree(fi2);
-+
-+					return fi;
-+				}
- 			}
-+			fi->len += len;
+diff --git a/net/sched/act_tunnel_key.c b/net/sched/act_tunnel_key.c
+index 55a9dff1cc1e6d..ca4c3776f0f045 100644
+--- a/net/sched/act_tunnel_key.c
++++ b/net/sched/act_tunnel_key.c
+@@ -342,14 +342,20 @@ static const struct nla_policy tunnel_key_policy[TCA_TUNNEL_KEY_MAX + 1] = {
+ 	[TCA_TUNNEL_KEY_ENC_TTL]      = { .type = NLA_U8 },
+ };
  
- 			return fi;
- 		}
- 		if (offset + len == fi->offset) {
- 			/* The new fragment can be tacked on to the beginning */
- 			/* Did the new fragment plug a hole? */
--			fi2 = list_entry(fi->fi_link.prev,
--					 struct fwnet_fragment_info, fi_link);
--			if (fi2->offset + fi2->len == fi->offset) {
--				/* glue fragments together */
--				fi2->len += fi->len + len;
--				list_del(&fi->fi_link);
--				kfree(fi);
--
--				return fi2;
-+			if (!list_is_first(&fi->fi_link, &pd->fi_list)) {
-+				fi2 = list_prev_entry(fi, fi_link);
-+				if (fi2->offset + fi2->len == offset) {
-+					/* glue fragments together */
-+					fi2->len += fi->len + len;
-+					list_del(&fi->fi_link);
-+					kfree(fi);
+-static void tunnel_key_release_params(struct tcf_tunnel_key_params *p)
++static void tunnel_key_release_params_rcu(struct rcu_head *head)
+ {
+-	if (!p)
+-		return;
++	struct tcf_tunnel_key_params *p = container_of(head, typeof(*p), rcu);
 +
-+					return fi2;
-+				}
- 			}
- 			fi->offset = offset;
- 			fi->len += len;
+ 	if (p->tcft_action == TCA_TUNNEL_KEY_ACT_SET)
+ 		dst_release(&p->tcft_enc_metadata->dst);
++	kfree(p);
++}
+ 
+-	kfree_rcu(p, rcu);
++static void tunnel_key_release_params(struct tcf_tunnel_key_params *p)
++{
++	if (!p)
++		return;
++	call_rcu(&p->rcu, tunnel_key_release_params_rcu);
+ }
+ 
+ static int tunnel_key_init(struct net *net, struct nlattr *nla,
 -- 
 2.53.0
 
