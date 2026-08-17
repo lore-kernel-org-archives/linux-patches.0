@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6971841D111;
-	Mon, 17 Aug 2026 14:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49DC041D111;
+	Mon, 17 Aug 2026 14:58:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978735; cv=none; b=AFA5t95uW0JOb/zRfp6sIFGjK28fAWhDTZ0oc1cRsy2ZfSme4BCh33sEcJsFZvTY6A0IQ/MU+tyv+L2o+PeZB0GNMMdJAIHYIbqkKgeIWkxSyAeq5qPw7wT35R2lK4edGi9L1TV+VRGLMaUuyu7C8fdP2Ff7zTkMHO8bSBpugls=
+	t=1786978738; cv=none; b=hmOWN47ygBC3PzAQy8xcKNyMD+Sx487+ZwvJ210co2dtMJuRRldYVzMOVxyx+kpo3K2dBlxVWzIJzGNMzl0l7oPFl30NIY8dy/QEAMSj7i5siytYe42GqBGSDQC5IGmjoj1s+oFTG2cbOEUXwjDfharW9BdoxRpcCLnqTydk8Vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978735; c=relaxed/simple;
-	bh=wotgXHn+XcpmS359N2vEPNpgxKLCHZpI/l9usSTlS9A=;
+	s=arc-20240116; t=1786978738; c=relaxed/simple;
+	bh=qJzAYzNdFSyjgSCj+82KxUFwa/u/riMvcZzPykqHTvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZrzrqOmgC11yZnNSqJR9lBqkx8bqrGgoBYNhS9iQk8Dn+9sAeg3UeXH8VMF93jsEvdn0ev1DeosSI4MK/D/EhhPoDsyCFy9wEU7lS/wfRrunHmczx22idkdCp5/KFpL4wAvZzEI3W0TbMg3UosjSTlRXGpRJRKVMBiq5C/DaLIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYpIb5Wz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hy3elPYg+mrL44qCn9Gfv/2i9Y3TttOMgmCQlr+fezroOpX/DGlaTlqKl0btV+ok6/ApCJh+tn4iPOt7X2ilYO82920h/mgN5Wic6x559VilRj9GMf99mbQCR86EA0hKhcN60sUI+FBTHf6PcaysyNYftSqC5EpdSFEmYRGMiWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UHmuMyU7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYpIb5Wz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37A91F000E9;
-	Mon, 17 Aug 2026 14:58:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UHmuMyU7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FFF1F000E9;
+	Mon, 17 Aug 2026 14:58:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978734;
-	bh=qBZaVz8YtQv7DFd5D5vIsUYEgsBUnkXejZ5flblm2/Q=;
+	s=korg; t=1786978737;
+	bh=QWqaMv5EbC2mcLAAOuPiLKySB+BkBaLOZk8e6K629ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JYpIb5WzYDmSXKvPbq8Ly/fsx2xPs5pnpoHfsxVkuFGbsM9lDbNH+iqque2uEW5pu
-	 w/yhTPorN+Nv2lsVmkIHKpd2Xqljam20ACknjoqE4+hT6jTlzbxFMuR0r4GPfF/P+z
-	 1CzJC7ufcU4N07l+vEOmRTT6cn8I+3FupM4tORPA=
+	b=UHmuMyU77CDncwxhCUzw+u8IGiw7FyY/bH5uhmBTCzgZJCkhoAhxv8bry3Ln+evsQ
+	 Y/LW2FWm3xM7uFuSH05nlXRVWdxawc4OCbGesQ5kaIW/UzW8yQ/kCpVZIg3687f0sj
+	 /8+rYofscBnXDFtig3Y+og9+7dP+PGOppPbnwWXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.6 139/156] eventfs: Use children field for rcu head and add memory barriers
-Date: Mon, 17 Aug 2026 15:34:33 +0200
-Message-ID: <20260817132540.144509189@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>
+Subject: [PATCH 6.6 140/156] Revert "thermal/drivers/hwmon: Cleanup coding style a bit"
+Date: Mon, 17 Aug 2026 15:34:34 +0200
+Message-ID: <20260817132540.181625112@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -51,95 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit f0ece16ffca7384787b692431961ce202907acf5 upstream.
+commit ff8da20b6f47c48d46e47f93f7a59e2d56ee9107 upstream.
 
-When an eventfs inode is freed, it sets ei->is_freed and then uses its
-ei->list to add it to the srcu link list as the list field is a union with
-the rcu list head. As the ei->list is used to iterate over an SRCU
-protected list without taking the eventfs_mutex, there's nothing stopping
-the iteration over that list to see the ei->rcu instead of the ei->list
-and it will read a corrupt target.
+Revert commit 030a48b0f6ce ("thermal/drivers/hwmon: Cleanup coding style
+a bit") that introduced a use-after-free into the error path of
+thermal_add_hwmon_sysfs() by removing a valid check from it.
 
-To fix this, change the union of the rcu list head with the children list.
-On freeing the eventfs inode, set the is_free and execute a smp_wmb()
-before adding the eventfs inode to the SRCU list.
-
-On iteration of the ei->children list, at the start, execute a smp_rmb()
-and then read the is_freed of the ei to see if the children list is still
-valid. If is_freed is set, then the ei_child read is not valid and the
-loop should exit immediately.
-
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260808094215.4252430d@robin
-Fixes: 704f960dbee2f ("eventfs: Read ei->entries before ei->children in eventfs_iterate()")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260806022719.375354-1-shuangpeng.kernel%40gmail.com
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Link: https://lore.kernel.org/linux-hwmon/20260803183915.4ED7D1F000E9@smtp.kernel.org/
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Link: https://patch.msgid.link/5123895.31r3eYUQgx@rafael.j.wysocki
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/event_inode.c |   24 ++++++++++++++++++++++++
- fs/tracefs/internal.h    |    4 ++--
- 2 files changed, 26 insertions(+), 2 deletions(-)
+ drivers/thermal/thermal_hwmon.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/tracefs/event_inode.c
-+++ b/fs/tracefs/event_inode.c
-@@ -125,7 +125,17 @@ static inline void put_ei(struct eventfs
- static inline void free_ei(struct eventfs_inode *ei)
- {
- 	if (ei) {
-+		/* The ei should have no children if it is being freed. */
-+		WARN_ON_ONCE(!list_empty(&ei->children));
- 		ei->is_freed = 1;
-+		/*
-+		 * The SRCU iteration has a smp_rmb() to make sure it
-+		 * sees a child (that may have already been freed)
-+		 * before it reads is_free. If is_free is set, it must
-+		 * not use the child it acquired from ei->children, as
-+		 * the list may be used for SRCU.
-+		 */
-+		smp_wmb();
- 		put_ei(ei);
- 	}
- }
-@@ -717,6 +727,20 @@ static int eventfs_iterate(struct file *
- 	list_for_each_entry_srcu(ei_child, &ei->children, list,
- 				 srcu_read_lock_held(&eventfs_srcu)) {
+--- a/drivers/thermal/thermal_hwmon.c
++++ b/drivers/thermal/thermal_hwmon.c
+@@ -218,7 +218,8 @@ int thermal_add_hwmon_sysfs(struct therm
+ 	if (new_hwmon_device)
+ 		hwmon_device_unregister(hwmon->device);
+  free_mem:
+-	kfree(hwmon);
++	if (new_hwmon_device)
++		kfree(hwmon);
  
-+		/*
-+		 * If the ei is being freed, then the ei->children may be
-+		 * being used as the rcu list, which means the next element
-+		 * may be garbage. The ei->is_free is set before switching
-+		 * the ei->children over to ei->rcu. The read memory barrier
-+		 * here makes sure the ei_child is read before is_free is
-+		 * updated.
-+		 *
-+		 * Matches the smp_wmb() in free_ei()
-+		 */
-+		smp_rmb();
-+		if (ei->is_freed)
-+			return -EINVAL;
-+
- 		if (c > 0) {
- 			c--;
- 			continue;
---- a/fs/tracefs/internal.h
-+++ b/fs/tracefs/internal.h
-@@ -46,11 +46,11 @@ struct eventfs_attr {
-  * @ino:	The saved inode number
-  */
- struct eventfs_inode {
-+	struct list_head	list;
- 	union {
--		struct list_head	list;
-+		struct list_head	children;
- 		struct rcu_head		rcu;
- 	};
--	struct list_head		children;
- 	const struct eventfs_entry	*entries;
- 	const char			*name;
- 	struct eventfs_attr		*entry_attrs;
+ 	return result;
+ }
 
 
