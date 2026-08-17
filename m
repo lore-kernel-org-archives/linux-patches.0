@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1187423788;
-	Mon, 17 Aug 2026 13:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BBE2D9EFF;
+	Mon, 17 Aug 2026 13:55:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974935; cv=none; b=Z1IKVRnBpfBaq390wSdcsmSOW/555ub4WQxnGkf0Wq/8JBQ6W2gttDsgv33Xl2eJ5hqKUR8gZmXNgbqzegUZ/IXKVJ0KZznLJlYUoajtLtURtiNSZKgdHe5W5iBmNQ9XTW1sS5GCxfQpD/xHEdNuE7Uft8z0Nhwit/upm9dyfzQ=
+	t=1786974934; cv=none; b=p9EGs/RtHh4NpiLI+ICFTZQXFeJZilw6nhX94perN3XyQqakjsBOqgV4Yiv/+V8XvGC7CQmPc6O4r2t5thC7DVQ4hfP7bUIOPbFsJ3C0wCSZ0CpBCk4KmtmWEanYUSgBEDEksF3b0W1VTATV8JP0efDG36hcEBbpHgO0YTMuflI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974935; c=relaxed/simple;
-	bh=aGsmA6lJ99TgEa/9f9VPQSRkujyqbh/Mk6e7WM3zf+8=;
+	s=arc-20240116; t=1786974934; c=relaxed/simple;
+	bh=kzTPB7dQZHvz3A22hIYHySyxltIfXLe2QCigaPPcnC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LzZdpDM+UNLr219vnAFDe4q43QJOylBzyCA/pOX8M6RBcl8KHp7Exds5FiTs3NiE2J9hcdKHjT/Ys5uflDgNUZaFXs6OGLLpHvxMGhS4MbFP8cbPm4DxU2lwHfMRJlVgqQBH0WpTkPVHyUlOrkTnABAKd+mfsgYvZnsVkbYW/1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=REVUOZyX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UWBGHTaZSbCRsu+3iJMj3A5ZS9v0mLUivvkQi6DRaC7HaByf9AwSOJ/qOVE90yh9dzwFw0ptYf2gIkhbZliijYUU9O/8GoEC9Zy8Ywg6tMY9nnBUAaYhxk9JDM5bTumTPjNDT9beREZa+HPJuKqbd/k3/E/Aom8dfCrik2oHleU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xy5xPj5/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REVUOZyX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A011F00A3E;
-	Mon, 17 Aug 2026 13:55:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xy5xPj5/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42BC01F00A3D;
+	Mon, 17 Aug 2026 13:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974929;
-	bh=JfBdoARGaSvY4zdEmCVPeIMUfg4ycHelK/je3LHhFVU=;
+	s=korg; t=1786974923;
+	bh=AeeDJ8jN2u7Uig8+x6SwL9c3qQoxAo5+PDVBBFk1eu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=REVUOZyXWyV8OQHpvUQpRADA8OWUZLCAzKXItZZt4WBq3dKToHS/u5j9dzF6lXfvV
-	 SDtRSoKxt0aBubdYTE+lb5BI9SP2y5esnPQGXP+y74VTITMwBAhBhKiqQy5WKrClEJ
-	 Eb/XsOdxjN+7iCzjhPpjHT4nAiLt1VjCOdBJftDc=
+	b=Xy5xPj5/U2SGDG1vG2CV6jU7M2xuAfDwiOcUvhGMF7Lk/WA90Xsn2QR/4LS0R5vVz
+	 HAA815ytwM7ubcfVEbOEOpy+Wf0gEt3f8LUSpb5L98TE1mkpjLHAzOt+FEg6fvHJk9
+	 7zoB/pnPgcI1Zzr4TD/fPJKdeFWFGq1VlI/y7BHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Linguaglossa <danielelinguaglossa@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 102/250] sctp: clear control chunk transport if it is being removed
-Date: Mon, 17 Aug 2026 15:31:03 +0200
-Message-ID: <20260817132540.697335016@linuxfoundation.org>
+Subject: [PATCH 6.18 100/250] s390/ism: Fix UAF of sba and ieq during ism_dev_exit()
+Date: Mon, 17 Aug 2026 15:31:01 +0200
+Message-ID: <20260817132540.611851133@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,52 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Alexandra Winter <wintera@linux.ibm.com>
 
-[ Upstream commit c9158ceaf27780ef64534ad72f44ffde3f8ccc49 ]
+[ Upstream commit b1896543ce59c4258625a35cf41e23a9a1f80ea2 ]
 
-sctp_make_heartbeat_ack() caches the destination transport in
-chunk->transport without taking a reference. When src_out_of_asoc_ok is
-enabled, the HEARTBEAT ACK may remain queued on control_chunk_list instead
-of being transmitted immediately.
+A ism interrupt handler can be active in parallel with ism_dev_exit(),
+accessing freed data structures.
 
-If the peer transport is removed while the chunk is still queued,
-sctp_assoc_rm_peer() drops the transport and schedules it for RCU freeing,
-but only clears cached transport pointers in out_chunk_list.  The queued
-control chunk therefore retains a dangling transport pointer.
+No new interrupts will be generated after unregister_ieq(). Drain ongoing
+interrupt handlers by free_irq(), before freeing ism data structures.
 
-Once an ASCONF_ACK clears the suppression and the queued control chunk is
-transmitted, SCTP dereferences the stale transport pointer, leading to a
-use-after-free.
-
-Fix this by also clearing chunk->transport for queued control chunks in
-control_chunk_list when removing the transport.
-
-Fixes: 8a07eb0a50ae ("sctp: Add ASCONF operation on the single-homed host")
-Reported-by: Daniele Linguaglossa <danielelinguaglossa@gmail.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/7e1168cb722132152a29d47e5eafaeac4a3bf6f3.1785943120.git.lucien.xin@gmail.com
+Fixes: 684b89bc39ce ("s390/ism: add device driver for internal shared memory")
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Link: https://patch.msgid.link/20260805131043.954639-1-wintera@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/associola.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/s390/net/ism_drv.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/net/sctp/associola.c b/net/sctp/associola.c
-index e560f7ee4adb3..9fff11115b417 100644
---- a/net/sctp/associola.c
-+++ b/net/sctp/associola.c
-@@ -573,6 +573,10 @@ void sctp_assoc_rm_peer(struct sctp_association *asoc,
- 		if (ch->transport == peer)
- 			ch->transport = NULL;
+diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
+index f84aa2e676e9b..b842410cf41cc 100644
+--- a/drivers/s390/net/ism_drv.c
++++ b/drivers/s390/net/ism_drv.c
+@@ -149,13 +149,16 @@ static int unregister_sba(struct ism_dev *ism)
+ 	if (ret && ret != ISM_ERROR)
+ 		return -EIO;
  
-+	list_for_each_entry(ch, &asoc->outqueue.control_chunk_list, list)
-+		if (ch->transport == peer)
-+			ch->transport = NULL;
++	return 0;
++}
 +
- 	asoc->peer.transport_count--;
++static void ism_free_sba(struct ism_dev *ism)
++{
+ 	dma_free_coherent(&ism->pdev->dev, PAGE_SIZE,
+ 			  ism->sba, ism->sba_dma_addr);
  
- 	sctp_ulpevent_notify_peer_addr_change(peer, SCTP_ADDR_REMOVED, 0);
+ 	ism->sba = NULL;
+ 	ism->sba_dma_addr = 0;
+-
+-	return 0;
+ }
+ 
+ static int unregister_ieq(struct ism_dev *ism)
+@@ -169,13 +172,16 @@ static int unregister_ieq(struct ism_dev *ism)
+ 	if (ret && ret != ISM_ERROR)
+ 		return -EIO;
+ 
++	return 0;
++}
++
++static void ism_free_ieq(struct ism_dev *ism)
++{
+ 	dma_free_coherent(&ism->pdev->dev, PAGE_SIZE,
+ 			  ism->ieq, ism->ieq_dma_addr);
+ 
+ 	ism->ieq = NULL;
+ 	ism->ieq_dma_addr = 0;
+-
+-	return 0;
+ }
+ 
+ static int ism_read_local_gid(struct dibs_dev *dibs)
+@@ -574,6 +580,7 @@ static int ism_dev_init(struct ism_dev *ism)
+ 
+ unreg_sba:
+ 	unregister_sba(ism);
++	ism_free_sba(ism);
+ free_irq:
+ 	free_irq(pci_irq_vector(pdev, 0), ism);
+ free_vectors:
+@@ -586,9 +593,13 @@ static void ism_dev_exit(struct ism_dev *ism)
+ {
+ 	struct pci_dev *pdev = ism->pdev;
+ 
++	/* ism will only generate new IRQs while ieq & sba are registered */
+ 	unregister_ieq(ism);
+ 	unregister_sba(ism);
++	/* drain ongoing irpt handlers */
+ 	free_irq(pci_irq_vector(pdev, 0), ism);
++	ism_free_ieq(ism);
++	ism_free_sba(ism);
+ 	pci_free_irq_vectors(pdev);
+ }
+ 
 -- 
 2.53.0
 
