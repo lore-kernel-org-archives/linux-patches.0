@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86AFE43E080;
-	Mon, 17 Aug 2026 13:44:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B784343E079;
+	Mon, 17 Aug 2026 13:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974287; cv=none; b=mc5LSdtfSMquomB0fgUSdNUUjtj8txmbO5hhMx0XqDaG8wTCrrNARuxHK1eJJ4o6pAs1OHtkIUamZ5l1xmyhpeq3O6/8w+eSj9P16CZ1rBwX4M6eNRzRqWbbovciqs0PIwRnSiqymcyjp34/ea1cF73SdUtSd8HdVzq5IX0CPf4=
+	t=1786974294; cv=none; b=MjoE790eLYOruLEsFfOYB+flN4x/41l6HJw4rl7BcA9RFPRlGhQuyiyM25aXIPhOtjWkmWJpjL//TaD/GWkQGqC6ThWBYyGNMzuWsXpCi68p+uQw8WvgT16jlCtMgmJtM/l5FWRWWVs4iB/r+3+gDUjszDOgaXWltEvAieA/Grc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974287; c=relaxed/simple;
-	bh=6L6P6uhXIXFXLOA8/YAaGRX0cxcN0jPZrXT97DDZQe4=;
+	s=arc-20240116; t=1786974294; c=relaxed/simple;
+	bh=uth7SqRxqzfktQgsKDBCe3AmSmssrOrzeyeMBlGo/k8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qvCBs4HF+GtXENrBWi2SLszBb4hPvs+C3Gk96ktpe9TtiYmiYOW0IkGO7LbN/J2+c6ZgnBLcF7fW3IQdpzyriN35479dUShi+F4V6sqw2Pq/GcfLPUZJDOQXha0CPmEKSKweH0BxHnBbmOcth8Dm15CYrtNzvyuKJdER188XFms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ag8AaAvo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EufJtXkXODHvSFIx9ijcSeMQQvED41Bz+W4XhIGXhdFq7AIyKxa19IlJrQCrl2fgBgZwx0Z7uiVGd7Woom/tl34g6/z+z3Xl3Y1YhLkHWh08Ep+T9fEa7w8jV1GstmfgMvfHc7ZWY0wFkm70lMVcIh5GtnBRlnYwzdqjLVO/mD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AgydWYJG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ag8AaAvo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C021F00A3E;
-	Mon, 17 Aug 2026 13:44:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgydWYJG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B98241F00A3A;
+	Mon, 17 Aug 2026 13:44:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974283;
-	bh=/B0/defsZoaJqkLgA1ZaeaIPTnCYTBkU2dv9SrVwLQk=;
+	s=korg; t=1786974286;
+	bh=sxVcst4ItUTKrjh9iP3yrUueoiPRJkKdQA7DZ+utUOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ag8AaAvoHjsvxbcUK2gJq/Esx3thuGk7V+E0c/Wtwx0/iqr6W10IGt74KtnXmCXD4
-	 ZYN05gQdsbbwZ0BmxBiPkOhF9zW+eGmaaqqg4wvTMbcBJWsc6H/IrtXEvhLeZi+BP/
-	 snEYhVuvIj1+10H+mvvS8dy3V+WuzbMLVI2RjK4o=
+	b=AgydWYJGgHjoPn6lTJP6ze4i08KPjdy3IO1p5mW8RPhgsuSZSvEd6NfbdF23IBz+A
+	 zSmQR4bM1LPTojYupEJEbBJQSJoDaY7d15nhKmDGWzQ9ghtDQ5IpfVtYfowzhl5JUp
+	 1EWOIdM1FHGmR3/C9pzCYkoZ420aHRlff7ihdNtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 151/271] net/packet: reset the MAC header on the packet-socket transmit path
-Date: Mon, 17 Aug 2026 15:31:16 +0200
-Message-ID: <20260817132543.106964506@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.1 152/271] packet: synchronize pressure clearing with ring reconfiguration
+Date: Mon, 17 Aug 2026 15:31:17 +0200
+Message-ID: <20260817132543.158747041@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -51,63 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit c2707480cfbf19c7619acc9c089d17f20869821f upstream.
+commit 1a35da325cac4d5bcad76a2aa943408a6f1d9000 upstream.
 
-packet_parse_headers() resets the MAC header only for a SOCK_RAW frame
-whose socket did not bind a protocol. A protocol-bound SOCK_RAW socket,
-any SOCK_DGRAM frame, and the legacy SOCK_PACKET path therefore leave
-skb->mac_header unset here.
+packet_set_ring() updates the RX ring state under sk_receive_queue.lock,
+but used to publish the tpacket receive mode through po->prot_hook.func
+after releasing that lock. packet_poll() and packet_recvmsg() can then
+run the pressure clearing path after the ring has been cleared while
+still seeing tpacket_rcv, causing __packet_rcv_has_room() to dereference
+stale or NULL ring storage.
 
-For frames sent via __dev_queue_xmit() this is harmless: it resets the
-MAC header unconditionally. But the packet-socket PACKET_QDISC_BYPASS
-path uses dev_direct_xmit(), which does not, so the frame reaches
-ndo_start_xmit() with the MAC header unset. A driver that reads
-eth_hdr(skb) on transmit then dereferences skb->head + (u16)~0, an
-out-of-bounds access ~64 KiB past the head -- the same class fixed for
-one consumer in commit f5089008f90c ("macsec: do not read an unset MAC
-header in macsec_encrypt()").
+Move the existing receive hook assignment into the same
+sk_receive_queue.lock section as the ring state update. Keep the
+assignment otherwise unchanged, including on TX ring reconfiguration, to
+avoid adding behavior changes that are not required for the fix.
 
-packet_parse_headers() runs only on the transmit path, where skb->data
-points at the start of the L2 header for every packet-socket type
-regardless of its length: SOCK_RAW and SOCK_PACKET carry a user-supplied
-header and SOCK_DGRAM has one built by dev_hard_header(). Reset the MAC
-header unconditionally, mirroring __dev_queue_xmit(), so the frame is
-anchored on the bypass path too.
+Serialize packet_recvmsg() pressure clearing with the same queue lock
+only after PACKET_SOCK_PRESSURE has been observed. If the flag is clear
+and the socket has moved away from tpacket_rcv, packet_set_ring() has
+already detached the socket and waited for synchronize_net(), so no new
+packet input can set the flag again.
 
-Found by 0sec (https://0sec.ai) using automated source analysis;
-verified against source and matched to the macsec KASAN report in
-f5089008f90c. Compile-tested.
+packet_poll() already holds sk_receive_queue.lock, so it uses the new
+unlocked helper directly.
 
-Fixes: 75c65772c3d1 ("net/packet: Ask driver for protocol if not provided by user")
+Fixes: 2ccdbaa6d55b ("packet: rollover lock contention avoidance")
 Cc: stable@vger.kernel.org
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260724144015.63219-1-doruk@0sec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Link: https://patch.msgid.link/f90b5688311fa278d1361ea8c6be0bf25967d591.1785247446.git.zihanx@nebusec.ai
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/packet/af_packet.c |   20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
 --- a/net/packet/af_packet.c
 +++ b/net/packet/af_packet.c
-@@ -1924,11 +1924,12 @@ static void packet_parse_headers(struct
+@@ -1315,13 +1315,25 @@ static int packet_rcv_has_room(struct pa
+ 	return ret;
+ }
+ 
+-static void packet_rcv_try_clear_pressure(struct packet_sock *po)
++static void __packet_rcv_try_clear_pressure(struct packet_sock *po)
  {
- 	int depth;
+ 	if (packet_sock_flag(po, PACKET_SOCK_PRESSURE) &&
+ 	    __packet_rcv_has_room(po, NULL) == ROOM_NORMAL)
+ 		packet_sock_flag_set(po, PACKET_SOCK_PRESSURE, false);
+ }
  
-+	/* On TX skb->data is the L2 header; anchor it for all socket types. */
-+	skb_reset_mac_header(skb);
++static void packet_rcv_try_clear_pressure(struct packet_sock *po)
++{
++	struct sock *sk = &po->sk;
 +
- 	if ((!skb->protocol || skb->protocol == htons(ETH_P_ALL)) &&
--	    sock->type == SOCK_RAW) {
--		skb_reset_mac_header(skb);
-+	    sock->type == SOCK_RAW)
- 		skb->protocol = dev_parse_header_protocol(skb);
--	}
++	if (!packet_sock_flag(po, PACKET_SOCK_PRESSURE))
++		return;
++
++	spin_lock_bh(&sk->sk_receive_queue.lock);
++	__packet_rcv_try_clear_pressure(po);
++	spin_unlock_bh(&sk->sk_receive_queue.lock);
++}
++
+ static void packet_sock_destruct(struct sock *sk)
+ {
+ 	skb_queue_purge(&sk->sk_error_queue);
+@@ -4314,7 +4326,7 @@ static __poll_t packet_poll(struct file
+ 			TP_STATUS_KERNEL))
+ 			mask |= EPOLLIN | EPOLLRDNORM;
+ 	}
+-	packet_rcv_try_clear_pressure(po);
++	__packet_rcv_try_clear_pressure(po);
+ 	spin_unlock_bh(&sk->sk_receive_queue.lock);
+ 	spin_lock_bh(&sk->sk_write_queue.lock);
+ 	if (po->tx_ring.pg_vec) {
+@@ -4554,14 +4566,14 @@ static int packet_set_ring(struct sock *
+ 		rb->frame_max = (req->tp_frame_nr - 1);
+ 		rb->head = 0;
+ 		rb->frame_size = req->tp_frame_size;
++		po->prot_hook.func = (po->rx_ring.pg_vec) ?
++						tpacket_rcv : packet_rcv;
+ 		spin_unlock_bh(&rb_queue->lock);
  
- 	/* Move network header to the right position for VLAN tagged packets */
- 	if (likely(skb->dev->type == ARPHRD_ETHER) &&
+ 		swap(rb->pg_vec_order, order);
+ 		swap(rb->pg_vec_len, req->tp_block_nr);
+ 
+ 		rb->pg_vec_pages = req->tp_block_size/PAGE_SIZE;
+-		po->prot_hook.func = (po->rx_ring.pg_vec) ?
+-						tpacket_rcv : packet_rcv;
+ 		skb_queue_purge(rb_queue);
+ 		if (atomic_long_read(&po->mapped))
+ 			pr_err("packet_mmap: vma is busy: %ld\n",
 
 
