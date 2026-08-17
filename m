@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59FD3F1ABE;
-	Mon, 17 Aug 2026 14:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A5C3AFD16;
+	Mon, 17 Aug 2026 14:26:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976801; cv=none; b=ZECiacgeh0R/lCzwYbiDmKdIlz0YgJXz8VEZgb1BpOV7AgxHzKoVf7HLjtl1P8PVRhixlCDiUlwFH9gB+4otzrADcawGjzk9pnYvAxnA4NQ/InRYeW3ycUqqVdvdVlveXKJq8dwO5jdop2TL8/AjF3g9XMkHBjHRBQN5srA2wUI=
+	t=1786976803; cv=none; b=ou//0qYy/6Wpv5PbYLNa7acmWRt/asCxQXRfeZYM3dqDIG6+g/QWQvktRG6oITRJKQ6Ra8aSuoLZZvZGeK0RR3B5QhFGmR/MXqc9IPwBOu3Zdoe+/+e6GpTIKdx6N4S77RAFx//jYu7JV/DS9A9GYWqMbWGdWLVy9wWeZCBfWoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976801; c=relaxed/simple;
-	bh=9ALhicD3vO97VKd2hMZFlTGaNTztLDAA9qYt8iq0JXo=;
+	s=arc-20240116; t=1786976803; c=relaxed/simple;
+	bh=W1dLcaF/G+xvu3cJN6y7Jrox4OJHTd7OPGR1fBqUhe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sue2mg8oOzG/Pg8+g4rZJbVmIbzF73UXnli2k7LvMd5YV/HfEcVcRBvjTATX2FeMqadgZqw1zTbrYXrUPInbKs2Xipq5KtdxubtRfprwp8c8fgPN6yTLrt86vJKylKhotzaExbhybsLs8gtblhH2P0Baudp98XRoRyyCh3/JjBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hL0TMW4n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l2guhot9ssRkrPl/xFi6tbia+s6Ie0txi/LxJtacfeLNYvHS7De/m8NwMW+L+PUQCM3bZloEcHKy212DU0OigPOHXf7afCnzBxC1o71ta4P8KTHOSIDmAlh7eM4vDMTkCAB8bHlhp9FtVG8tRlIIaBncxWszDjF4ha3yE2noum8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LRRQdNdz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hL0TMW4n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E52BB1F000E9;
-	Mon, 17 Aug 2026 14:26:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LRRQdNdz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51961F000E9;
+	Mon, 17 Aug 2026 14:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976799;
-	bh=b3bF6jR1niKwNI0INst46wugZf1CDYFLfJJCV0D3jv4=;
+	s=korg; t=1786976802;
+	bh=rhXBgDxss20MOlMw5W9KKJCUdvCtBJyWkE84+wuxwaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hL0TMW4nEsGXriev1mvDrwMODZFbirO6249hmNQXAD0w/lkvGWezIwzQ1m6cPcpnN
-	 llnWvBjHuCt1c0dRtACOBgATAO4cNowEp1D+X05A9HBWIMvVNHjhMvjMVAyI3dBgix
-	 i8z6xHqvS0DW/OWCmB+TiK4EdOBv/Qwv7vKIgAyA=
+	b=LRRQdNdzvVf1+jqK3Y64rxsTa3oGsNvsJ3hj8IMdatQktmOufeS7b12gVc18Bpa4H
+	 WnOhYESEBUXXXSsTiQWR2B8NTxtA1xDXrtHGFa8PP2wBzyR91yqxiK7t63gKttBnvA
+	 4gqiziv5SMXvrH8OBznTTS2PZRGNoe2xp2VrGeow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrick Oppenlander <patrick.oppenlander@gmail.com>,
-	Prashanth Kumar KR <PrashanthKumar.K.R@amd.com>,
+	HanQuan <eilaimemedsnaimel@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 109/456] amd-xgbe: fix MAC_AUTO_SW handling in CL37 AN
-Date: Mon, 17 Aug 2026 15:28:19 +0200
-Message-ID: <20260817132544.354533776@linuxfoundation.org>
+Subject: [PATCH 5.15 110/456] sctp: fix auth_chunk_list capacity check in sctp_auth_ep_add_chunkid
+Date: Mon, 17 Aug 2026 15:28:20 +0200
+Message-ID: <20260817132544.390943715@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,56 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prashanth Kumar KR <PrashanthKumar.K.R@amd.com>
+From: HanQuan <eilaimemedsnaimel@gmail.com>
 
-[ Upstream commit 4bf22afe53a1de4b44b04cf677fd5199089cbdff ]
+[ Upstream commit ff04b26794a16a8a879eb4fd2c02c2d6b03850e9 ]
 
-MAC_AUTO_SW (VR_MII_DIG_CTRL1 bit 9) enables automatic XPCS speed
-mode switching after CL37 auto-negotiation and is only meaningful in
-SGMII MAC mode. The original code unconditionally set this bit on
-every call to xgbe_an37_set(), including when called from
-xgbe_an37_disable() with enable=false. This left MAC_AUTO_SW=1 after
-AN was disabled, causing the XPCS to autonomously switch speed from
-stale AN state during subsequent mode changes, breaking SGMII speed
-negotiation on 1G copper SFP modules.
+sctp_auth_ep_add_chunkid() uses SCTP_NUM_CHUNK_TYPES (20) as the
+capacity limit for ep->auth_chunk_list, allowing it to hold up to
+20 chunk entries (param_hdr.length up to 24). However, the copy
+destination asoc->c.auth_chunks in struct sctp_cookie is only
+SCTP_AUTH_MAX_CHUNKS (16) entries (20 bytes). When more than 16
+chunks are added, sctp_association_init() memcpy overflows the
+destination by up to 4 bytes.
 
-Patrick: This was breaking negotiation for all 1G SFP modules,
-not just copper modules.
+Fix by using SCTP_AUTH_MAX_CHUNKS as the capacity limit, matching
+the destination capacity.
 
-Fixes: 42fd432fe6d3 ("amd-xgbe: align CL37 AN sequence as per databook")
-Reported-by: Patrick Oppenlander <patrick.oppenlander@gmail.com>
-Link: https://lore.kernel.org/netdev/CAEg67GmFS0Q4oSZkz8zWdOzckSth9_vBPiOy6a7-d697C2w2Xg@mail.gmail.com
-Signed-off-by: Prashanth Kumar KR <PrashanthKumar.K.R@amd.com>
-Tested-by: Patrick Oppenlander <patrick.oppenlander@gmail.com>
-Link: https://patch.msgid.link/20260709095006.3683940-1-prashanthkumar.k.r@amd.com
+Fixes: 1f485649f529 ("[SCTP]: Implement SCTP-AUTH internals")
+Signed-off-by: HanQuan <eilaimemedsnaimel@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260713032021.3491702-1-zhoujian.zja@antgroup.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/sctp/auth.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-index ebb8b3e5b9a882..01c37ffc9ceb81 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-@@ -364,9 +364,14 @@ static void xgbe_an37_set(struct xgbe_prv_data *pdata, bool enable,
+diff --git a/net/sctp/auth.c b/net/sctp/auth.c
+index 34964145514e6d..a983f96bb0c395 100644
+--- a/net/sctp/auth.c
++++ b/net/sctp/auth.c
+@@ -766,7 +766,7 @@ int sctp_auth_ep_add_chunkid(struct sctp_endpoint *ep, __u8 chunk_id)
+ 	/* Check if we can add this chunk to the array */
+ 	param_len = ntohs(p->param_hdr.length);
+ 	nchunks = param_len - sizeof(struct sctp_paramhdr);
+-	if (nchunks == SCTP_NUM_CHUNK_TYPES)
++	if (nchunks == SCTP_AUTH_MAX_CHUNKS)
+ 		return -EINVAL;
  
- 	XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_CTRL1, reg);
- 
--	reg = XMDIO_READ(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL);
--	reg |= XGBE_VEND2_MAC_AUTO_SW;
--	XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL, reg);
-+	if (pdata->an_mode == XGBE_AN_MODE_CL37_SGMII) {
-+		reg = XMDIO_READ(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL);
-+		if (enable)
-+			reg |= XGBE_VEND2_MAC_AUTO_SW;
-+		else
-+			reg &= ~XGBE_VEND2_MAC_AUTO_SW;
-+		XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL, reg);
-+	}
- }
- 
- static void xgbe_an37_restart(struct xgbe_prv_data *pdata)
+ 	p->chunks[nchunks] = chunk_id;
 -- 
 2.53.0
 
