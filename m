@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D8421B192;
-	Mon, 17 Aug 2026 13:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE0143CE46;
+	Mon, 17 Aug 2026 13:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975071; cv=none; b=U6blLzK8ho+S193auJsXUoKv+oz/RGHh5fVliWFxvOaKLVLH26sxgAGCSEFqIIcFb2LzqNB6AKEqn5OhZUOUBwRJtEz5levh71WNINvep9uhRtiJpCqpfNsUnBxOOReewFGzQnaBc45GlZk9yP9VIgsiQoo1oT5Khaj4bR7GPtY=
+	t=1786975075; cv=none; b=J7s5CSWIiggM0p+moeap4wsXPzzZ+bAXwNcisGzCJtjWtOx7780dWeabuRzpwDraPbbxI1wfpMG6K3NVAOTmlw9jbYUo7mPw4UJ9oSsZt0HzrJTsbLM5BlcSeaeucsl7iYaJvnEIprEV8zuotHx7pcPIzBwLWa93NNtt2G9B4X4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975071; c=relaxed/simple;
-	bh=0ke0eKBSGaWqLqcTGKt0BMAwSm5GoGJqFLI0Rmb+1fA=;
+	s=arc-20240116; t=1786975075; c=relaxed/simple;
+	bh=Q5tQyFeKjw1+W4IrSl9dWSTTnlKateiUMAY2XKnGPWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nfeXV/W8qnJbXO/pxXo+t/ikcKxrxlSP0LFrr6T0t884+y2eKuICIPordmcg/ZqvqeTMPCx+lv66UKU++AnCMfADeyWOcYigMHBfNq9tWv5AwoJ2fbr5bqegtaX834b2+aDHeJwv93tJgIch1Nabn7XLu0tn+ok5DNfBn5nS+j8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8+LADJu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n8/DZcs6xuq4XgjheglYeFdwSmjXAZfiggkn+tuUjl1+3WjqLgr80o6O0iGsHFKQr+VjDuMm0RazLGDqwswI1yXrbcSo70OENoej7pjvVQ7DAR+Q5v0paKkm8GUqO76fkyd7berhB8rMEPmWNuqzS1AhJu+bqpA9p6KlT64roDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTlw3nC9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8+LADJu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2EAA1F000E9;
-	Mon, 17 Aug 2026 13:57:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTlw3nC9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4B91F000E9;
+	Mon, 17 Aug 2026 13:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975070;
-	bh=9VNupJAAzavtnCCgnNiBivQRMws42HoRHVtMYPleKaw=;
+	s=korg; t=1786975073;
+	bh=ap1NftourXMY/kAmisuebk7B+kLwLAUjUXZiUd1fChE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r8+LADJuv8uYVBMcbiOj2hmkBffDaQ6Qph8iSG/DR+6NAYXKL/L0+JRd+FeV93X3q
-	 RcP4nkUbNXnKI7akmq7NIXcosu0mVbG2L3QsvE3aDHEBTWUeW7ApVh6LosmzqMoPCE
-	 /jTWsfQsMFrnTIzRb1VyMxvF9reKsx9SQxx/OQY8=
+	b=eTlw3nC9A9fovDKxAKBeIdkeYdy0spg74b/QechjOAIPyGwh4yKUhYcN/U1RpGzCI
+	 UtpZVyc9brh8L9JbrzNJ9MxV7XigcjcOJ9E+lJFDxaes/hvLWXoscgIIylJhNtZHTV
+	 RSdYppx09qL2BTIsgMCbecizxCkmnB6k8ZJhwzPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ishaan Dandekar <ishaan.dandekar@gmail.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.18 115/250] usb: quirks: Add ShanWan gamepad to quirk list
-Date: Mon, 17 Aug 2026 15:31:16 +0200
-Message-ID: <20260817132541.269581886@linuxfoundation.org>
+	Mohammed Almaroof <moh@anthropic.com>,
+	Ben Cressey <ben@cressey.dev>,
+	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 151/250] iommu/vt-d: Gather the unmapped range before freeing its page tables
+Date: Mon, 17 Aug 2026 15:31:52 +0200
+Message-ID: <20260817132542.719183023@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -50,35 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ishaan Dandekar <ishaan.dandekar@gmail.com>
+From: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
 
-commit f3988e68fc089f6a5883f4f807955a3825bb7d45 upstream.
+In the 6.12 and 6.18 stable trees, when an unmapped range covers a
+whole page table, intel_iommu_unmap() can free that table before the
+range has been invalidated. The freed table goes on gather->freelist
+before the range is added to the gather. If
+iommu_iotlb_gather_add_page() syncs before adding it, that sync
+flushes only the earlier ranges but frees the whole freelist, that
+table included. The range itself is flushed later with an empty
+freelist, which means the flush is sent with the invalidation hint set
+and the IOMMU may keep its paging-structure cache entry for the freed
+table. DMA to the next mapping at that IOVA is then translated through
+whatever the freed page holds by then, which is usually a silent wrong
+translation and sometimes a DMAR fault.
 
-The ShanWan Wireless Gamepad (dongle ID 2563:0575) crashes with a -71
-EPROTO error during standard enumeration because it expects a 255-byte
-initial configuration request. Add this device to the quirk list to
-use the USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE flag.
+Under a userspace driver that maps and unmaps DMA buffers through VFIO
+type1 continuously, this shows up as wrong data in device reads and
+writes. An occasional DMAR fault on a mapped IOVA is the only thing in
+the logs. With an Intel DSA engine assigned through vfio-pci, remapping
+a 16 MiB buffer at a fixed IOVA and reading it through the device
+returned data from the wrong pages in 280 of 400 iterations. With a
+fresh IOVA per iteration it never did.
 
-Signed-off-by: Ishaan Dandekar <ishaan.dandekar@gmail.com>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260802120128.38302-1-ishaan.dandekar@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add the range to the gather first and splice the freed tables into
+gather->freelist afterwards, so that they are only freed by a sync that
+also invalidates their range.
+
+Mainline removed this code in v6.19 with commit d373449d8e97
+("iommu/vt-d: Use the generic iommu page table") and is not affected.
+
+Fixes: 2a2b8eaa5b25 ("iommu: Handle freelists when using deferred flushing in iommu drivers")
+Cc: stable@vger.kernel.org # 6.12.y, 6.18.y
+Reported-by: Mohammed Almaroof <moh@anthropic.com>
+Reviewed-by: Ben Cressey <ben@cressey.dev>
+Assisted-by: Claude:unspecified
+Signed-off-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/quirks.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iommu/intel/iommu.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -594,6 +594,9 @@ static const struct usb_device_id usb_qu
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index cee1851b69245..8b38c65f403b2 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -3620,6 +3620,7 @@ static size_t intel_iommu_unmap(struct iommu_domain *domain,
+ 				unsigned long iova, size_t size,
+ 				struct iommu_iotlb_gather *gather)
+ {
++	struct iommu_pages_list freelist = IOMMU_PAGES_LIST_INIT(freelist);
+ 	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
+ 	unsigned long start_pfn, last_pfn;
+ 	int level = 0;
+@@ -3636,7 +3637,7 @@ static size_t intel_iommu_unmap(struct iommu_domain *domain,
+ 	start_pfn = iova >> VTD_PAGE_SHIFT;
+ 	last_pfn = (iova + size - 1) >> VTD_PAGE_SHIFT;
  
- 	{ USB_DEVICE(0x2386, 0x350e), .driver_info = USB_QUIRK_NO_LPM },
+-	domain_unmap(dmar_domain, start_pfn, last_pfn, &gather->freelist);
++	domain_unmap(dmar_domain, start_pfn, last_pfn, &freelist);
  
-+	/* ShanWan Wireless Gamepad */
-+	{ USB_DEVICE(0x2563, 0x0575), .driver_info = USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE },
+ 	if (dmar_domain->max_addr == iova + size)
+ 		dmar_domain->max_addr = iova;
+@@ -3648,6 +3649,14 @@ static size_t intel_iommu_unmap(struct iommu_domain *domain,
+ 	if (!iommu_iotlb_gather_queued(gather))
+ 		iommu_iotlb_gather_add_page(domain, gather, iova, size);
+ 
++	/*
++	 * iommu_iotlb_gather_add_page() may have synced, which frees
++	 * gather->freelist. Hand this range's page tables over only after
++	 * that call. A queued gather frees them from the flush queue
++	 * instead.
++	 */
++	iommu_pages_list_splice(&freelist, &gather->freelist);
 +
- 	/* UGREEN 35871 - BOS descriptor fetch hangs at SuperSpeed Plus */
- 	{ USB_DEVICE(0x2b89, 0x5871), .driver_info = USB_QUIRK_NO_BOS },
+ 	return size;
+ }
  
+-- 
+2.53.0
+
 
 
