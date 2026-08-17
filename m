@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732DD43A7F7;
-	Mon, 17 Aug 2026 13:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB114399C4;
+	Mon, 17 Aug 2026 13:49:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974541; cv=none; b=lbqwUXhwgIUGVdH35RepFLVKyMyuCh940meUDl7FcaNYlmTsbuecNyWx3kRGazalRteSLamG86Sa1IeGK+/fqYrOiJ6jSk5VF88hc3Pn+RKxuoJLZ83y2oR093vxU0mJDyqSG/eWOAzX/lM5tNFctUU6EF1lk5b2MWlmw8zpXqw=
+	t=1786974544; cv=none; b=A8viIGfJDdng847V2FykqVXHaDE+MzuZ+piKeqLiBfRAgVWs6Y5lWr6/C+T++cXGvSk6CYetPVVx9Og6N+eJ06vOIy6xPXJUBNVhOBUloOJnowRuRhdyI2qvHlFs9CX4Eko6e8Wxj1+AUaPYAN/Fxq5rU1tYQu0EnLXkaQnsFgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974541; c=relaxed/simple;
-	bh=OVZjz1KY5kaGJKeHbQg3r6xjFUkutAxmJqKbJd5adlU=;
+	s=arc-20240116; t=1786974544; c=relaxed/simple;
+	bh=jITwxRl+gUWZLdmb4cLNO0sZS6POgtTXxWo1rmmMEok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jFYntRMEuebtm2JZUA6zgTLWdjDonutKTPlVwVx/ZAK0NA5V/aKTik5TcN6YSTUMTXMTpGihIelHsqUEEis6sRR3C/tK+98Y5sUj5q2SNjVzrbgzF1prGLuSElUFpROFGQS14o7zElay5MG1sK/ZeUd2XZH/ZzTGbekzCr0gG3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2DfF6xBB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AfS12DXO4JfvODNLKImrNqJzjIuWnZdcunfdgfQR0w9HQDV1P0JClIDsxa8IfjTdKNqT1ao7fm21ZA4jHvXCgoxDzsxL0WmvKVMma9k1wuSg/bCoZkIRs44fi3wbtIDe8uNo9+AmpeKqoAEMOqyY9vtO9gZUX5ROFJxaezuHB9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMiq9go/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2DfF6xBB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 690841F00A3D;
-	Mon, 17 Aug 2026 13:48:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMiq9go/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A4F1F00A3F;
+	Mon, 17 Aug 2026 13:49:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974538;
-	bh=o9dxisBA3EiCLnRpZg5hZ2vZD9qn50qfACZqzH0wMtQ=;
+	s=korg; t=1786974540;
+	bh=N9sGIop8drwGznJ1pqdBB+2AFVTnq5GfP61ztVsqm6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2DfF6xBB8cF/mZJ74hBaB0a95m2TaRRf2E5yJwmInNW7xkPBtuFRN3G6IqDEpykzR
-	 eDeP35jiwlRm5P8yL+CaHIr7KPTHsPT0VGAnYh4Ow6t71eTl7upjyr51z0Y5mNcF56
-	 jBqRo+z7KZnBZvxT36kvkuBWC4wvgxiOtZGX445c=
+	b=jMiq9go/G/g1v7EBjen1cn94+IpcoLMoIx6JaBiWXPVGPbxoX4+bBGtXc/UhSx5z6
+	 jOS8K0DoI6yf20CPTi8g9mTa1gRIAgQ4tGtx/uaCtYpJUOZH/rmGv2T3UD6TGpt/x7
+	 8epEEKPq5WDGGfgrl2K4FihYwdd0DvvzQJr0+3ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Jun Yang <junvyyang@tencent.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.1 239/271] tipc: read le->link under the node lock in tipc_node_link_down()
-Date: Mon, 17 Aug 2026 15:32:44 +0200
-Message-ID: <20260817132546.595960255@linuxfoundation.org>
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 7.1 240/271] smb: client: Fix use-after-free in cifs_try_adding_channels()
+Date: Mon, 17 Aug 2026 15:32:45 +0200
+Message-ID: <20260817132546.634051989@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -53,106 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Yang <junvyyang@tencent.com>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-commit cba9ccb47e9fa4cc77692fb896cc5ab57a667882 upstream.
+commit 4986410316b1ae0e63c6ce418e4eb196723626e7 upstream.
 
-tipc_node_link_down() caches the link pointer before taking n->lock:
+cifs_try_adding_channels() takes a temporary reference to an interface
+before dropping iface_lock. If cifs_ses_add_channel() fails, it drops
+that reference and then increments iface->weight_fulfilled.
 
-	struct tipc_link *l = le->link;		/* unlocked */
+A concurrent interface list refresh can remove the list reference while
+channel creation is in progress. In that case, the failure-path
+kref_put() releases the last reference and frees iface. Updating
+weight_fulfilled afterward then accesses freed memory.
 
-	if (!l)
-		return;
-	tipc_node_write_lock(n);
-	if (!tipc_link_is_establishing(l)) {	/* deref l */
-	...
-		tipc_link_reset(l);		/* write into l */
-	if (delete) {
-		kfree(l);
-		le->link = NULL;
+Increment weight_fulfilled before dropping the temporary reference,
+keeping iface alive for the final access.
 
-The delete=true caller frees that very object under n->lock, so the lock
-does not protect the cached pointer against it:
-
- - CPU A, delete=false: tipc_rcv() on TIPC_LINK_DOWN_EVT, or the link
-   supervision timer via tipc_node_timeout(), reads l unlocked and then
-   dereferences it under n->lock;
- - CPU B, delete=true: netlink TIPC_NL_BEARER_DISABLE -> bearer_disable()
-   -> tipc_node_delete_links() -> tipc_node_link_down(n, bearer_id, true)
-   -> kfree(l).
-
-The link is freed with plain kfree(), not kfree_rcu(), and for UDP bearers
-disable_media() only schedules the asynchronous cleanup_bearer() work, so
-its synchronize_net() runs after the links are already gone.  An in-flight
-CPU A that has read l therefore dereferences freed memory once B frees it:
-a use-after-free read in tipc_link_is_establishing(), and a use-after-free
-write via tipc_link_reset() on the establishing branch.
-
-The following trace was captured on 7.2.0-rc5-00284-gaf39eb111ce6:
-
-  BUG: KASAN: slab-use-after-free in tipc_link_is_establishing (net/tipc/link.c:285)
-  Read of size 4 at addr ffff88802e2aa068 by task swapper/2/0
-   tipc_link_is_establishing (net/tipc/link.c:285)
-   tipc_node_link_down (net/tipc/node.c:1076)
-   tipc_node_timeout (net/tipc/node.c:843)
-  Allocated by task 9549:
-   tipc_link_create (net/tipc/link.c:490)
-   tipc_node_check_dest (net/tipc/node.c:1279)
-   tipc_disc_rcv (net/tipc/discover.c:252)
-   tipc_udp_recv (net/tipc/udp_media.c:389)
-  Freed by task 9549:
-   tipc_node_link_down (net/tipc/node.c:1084)
-   tipc_node_delete_links (net/tipc/node.c:1320)
-   bearer_disable (net/tipc/bearer.c:414)
-   __tipc_nl_bearer_disable (net/tipc/bearer.c:992)
-
-Move the le->link read inside tipc_node_write_lock(), so it is serialised
-against the kfree() in the delete path.  A racing teardown now either has
-not run yet, and we see a valid link, or has already run, and we see NULL.
-
-Fixes: 73f646cec354 ("tipc: delay ESTABLISH state event when link is established")
-Cc: stable@kernel.org
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Assisted-by: tencentos-corvus-ai:kimi-k3
-Signed-off-by: Jun Yang <junvyyang@tencent.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260810102147.48191-1-juny24602@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 6aac002bcfd5 ("cifs: failure to add channel on iface should bump up weight")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/node.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ fs/smb/client/sess.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/tipc/node.c
-+++ b/net/tipc/node.c
-@@ -1061,18 +1061,23 @@ static void __tipc_node_link_down(struct
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -233,9 +233,9 @@ int cifs_try_adding_channels(struct cifs
+ 				cifs_dbg(VFS, "failed to open extra channel on iface:%pIS rc=%d\n",
+ 					 &iface->sockaddr,
+ 					 rc);
+-				kref_put(&iface->refcount, release_iface);
+ 				/* failure to add chan should increase weight */
+ 				iface->weight_fulfilled++;
++				kref_put(&iface->refcount, release_iface);
+ 				continue;
+ 			}
  
- static void tipc_node_link_down(struct tipc_node *n, int bearer_id, bool delete)
- {
--	struct tipc_link_entry *le = &n->links[bearer_id];
- 	struct tipc_media_addr *maddr = NULL;
--	struct tipc_link *l = le->link;
- 	int old_bearer_id = bearer_id;
-+	struct tipc_link_entry *le;
- 	struct sk_buff_head xmitq;
--
--	if (!l)
--		return;
-+	struct tipc_link *l;
- 
- 	__skb_queue_head_init(&xmitq);
- 
-+	/* Synchronize the link lookup with bearer teardown. */
- 	tipc_node_write_lock(n);
-+	le = &n->links[bearer_id];
-+	l = le->link;
-+	if (!l) {
-+		tipc_node_write_unlock_fast(n);
-+		return;
-+	}
-+
- 	if (!tipc_link_is_establishing(l)) {
- 		__tipc_node_link_down(n, &bearer_id, &xmitq, &maddr);
- 	} else {
 
 
