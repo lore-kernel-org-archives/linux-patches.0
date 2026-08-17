@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD48426D03;
-	Mon, 17 Aug 2026 14:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8D8426D03;
+	Mon, 17 Aug 2026 14:52:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978325; cv=none; b=is5nhduRZ5O3L3SMqeR5DaTCcp5EwVrZeXnF+YFNTCIZxm+XoFdI0lmrwhBdHknnwZpYs2fePLafIOAr/RwIHo0O32o6w0EJlwaZutoLJ7WbLyqjhTP11fAxI+TkA7yToHzURMozLbnPDyt3VzDhbliXfoOOy8e5UqtsHg0oz1k=
+	t=1786978328; cv=none; b=DzT/cwKRRy6lBWhCm3vzAqfr6+AgfhQv0IB1IwjgSrZ8Zy8mKKTEdz8AKr6HPGqPnRnYLieL2rfed3Tdcx5ondzF2Z2yjpw81Kv8thNTb54lULufDRDTgP2k8STxFhbAob9Uz3Lc1P49a9BZm2J9opQqF3cHEZHPFaNwIc/hZXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978325; c=relaxed/simple;
-	bh=NSjXLg4Vm4KyxTo958HAB/8ebVldaTqzD36HBNGMhao=;
+	s=arc-20240116; t=1786978328; c=relaxed/simple;
+	bh=l9IvkLMwweyOQEzg9L0970hTwEp514nS8Q7tqFEmyys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ceC+iL/DoIM6rMMrbZSa4BLw2iTAuTXzuQIqWp4TVJ9d5JIM5CjR4TtvMONVJ1JMkWZK0s+Mr7gxOkr/aKOJTeku7ccjj+x1ORC8TRnmWjcqJORf0N5QzewnCo2UE6Uk+U8W82wuYo87xc4zF4wnFiksFGiu98lLoSRmKy0fNtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJW/wmDy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c1m1Etu0iKlrXFdaav4t20UNlX81kJWjjS/ivhX7zXo1KEEfbkSWNaw/hVkvaPM92GFufXZuvvuFfLB03+fHmw642Ryk1rSb75XMxhq7GyF7eP+fQFjAww5VW8A+V+M+96HkytqqfaT6ke4hv43w4Yk83E35cb6yghbG3tfvHmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+piLXAQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJW/wmDy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F111F000E9;
-	Mon, 17 Aug 2026 14:52:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+piLXAQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29DF1F000E9;
+	Mon, 17 Aug 2026 14:52:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978324;
-	bh=+QlhKZU0/hpuwnXOKUU2gkWdLNg48UrvOB4o2FaxI+k=;
+	s=korg; t=1786978327;
+	bh=lbVPJkJSnqXwURaZ8P2fK5xsrgP4yaX62tfJAsdA7ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MJW/wmDyBhFzDouJAvRVIqxDAZGcJKUkpsOhMtH0uKfZD8YxgokFAp4xjWpBi3JMn
-	 RK5pb8atpTt/vWIYwJzR968WXA8C05YUvNg67s/hW6ATAQa6xP98+qJ4fB+TzybxEx
-	 VHetCa5/DzpUrTBTg6Vi9MuVqUwsrG0hFK/oDka4=
+	b=Y+piLXAQxfn2KufdYOHbd5q53wYFhoIEUoAcmdSMaOoccMYUvfYZGxMk1Oiw26T87
+	 5vD7/CG3OvsGzRYKkMJz5Q2Hs/rtP6rE5RG2PshVdf08HQ9Dyeg4EG/bJ/+wV7u7jJ
+	 Re7IsEftfgEpQx5vjGjZ2g1jjE0dT+vZIlNg7Iyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.12 180/181] thunderbolt: Fix bandwidth group reservation indexing
-Date: Mon, 17 Aug 2026 15:34:34 +0200
-Message-ID: <20260817132542.786160672@linuxfoundation.org>
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	Eric Dumazet <edumazet@google.com>,
+	Jordan Rife <jordan@jrife.io>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 181/181] bpf: tcp: fix double sock release on batch realloc
+Date: Mon, 17 Aug 2026 15:34:35 +0200
+Message-ID: <20260817132542.832437409@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -50,41 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-commit d2ee4d47aacbd2ba456092eeec670dba35fde291 upstream.
+commit 980a813452754f8001704744e92f7aa697c53dd3 upstream.
 
-Valid bandwidth group IDs range from 1 through MAX_GROUPS, while Group
-ID 0 is reserved. tb_consumed_dp_bandwidth() uses the Group ID directly
-to index its local group_reserved[] array.
+bpf_iter_tcp_batch() releases the current batch via
+bpf_iter_tcp_put_batch(), which drops the socket refs and rewrites
+each slot with the socket cookie, then grows the batch. cur_sk/end_sk
+are kept for bpf_iter_tcp_resume(), but on realloc failure the function
+returns ERR_PTR() before resume runs, leaving cur_sk < end_sk over
+slots that now hold cookies rather than sock pointers.
+bpf_iter_tcp_seq_stop() then calls bpf_iter_tcp_put_batch() again and
+dereferences a cookie as a struct sock.
 
-The array currently has MAX_GROUPS entries, so its valid indices are 0
-through MAX_GROUPS - 1. Group ID MAX_GROUPS therefore accesses one
-element past the end, and the final group's reserved bandwidth is not
-included when the array is summed.
+Empty the batch on the failure path so stop() does not release it
+again. The sockets were already freed by the first
+bpf_iter_tcp_put_batch(), so nothing leaks, and a later read() rescans
+the bucket from the start instead of skipping it. The sibling
+GFP_NOWAIT failure path still holds real socket references and is left
+for stop() to release.
 
-Give group_reserved[] MAX_GROUPS + 1 entries so direct Group ID
-indexing covers the reserved ID 0 and valid IDs 1 through MAX_GROUPS.
+  BUG: KASAN: null-ptr-deref in __sock_gen_cookie
+  Read of size 8 at addr 0000000000000059 by task exploit
+   ...
+   __sock_gen_cookie (net/core/sock_diag.c:28)
+   bpf_iter_tcp_put_batch (net/ipv4/tcp_ipv4.c:2918)
+   bpf_iter_tcp_seq_stop (net/ipv4/tcp_ipv4.c:3270)
+   bpf_seq_read (kernel/bpf/bpf_iter.c:205)
+   vfs_read (fs/read_write.c:572)
+   ksys_read (fs/read_write.c:716)
+   do_syscall_64
+   entry_SYSCALL_64_after_hwframe
+  Kernel panic - not syncing: Fatal exception
 
-Fixes: 52a4490e89d7 ("thunderbolt: Reserve released DisplayPort bandwidth for a group for 10 seconds")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Fixes: cdec67a489d4 ("bpf: tcp: Make sure iter->batch always contains a full bucket snapshot")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jordan Rife <jordan@jrife.io>
+Link: https://patch.msgid.link/20260713233230.3553593-1-xmei5@asu.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/tb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_ipv4.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -597,7 +597,7 @@ static int tb_consumed_dp_bandwidth(stru
- 				    int *consumed_up,
- 				    int *consumed_down)
- {
--	int group_reserved[MAX_GROUPS] = {};
-+	int group_reserved[MAX_GROUPS + 1] = {};
- 	struct tb_cm *tcm = tb_priv(tb);
- 	struct tb_tunnel *tunnel;
- 	bool downstream;
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -3268,8 +3268,11 @@ again:
+ 	bpf_iter_tcp_put_batch(iter);
+ 	err = bpf_iter_tcp_realloc_batch(iter, expected * 3 / 2,
+ 					 GFP_USER);
+-	if (err)
++	if (err) {
++		iter->cur_sk = 0;
++		iter->end_sk = 0;
+ 		return ERR_PTR(err);
++	}
+ 
+ 	sk = bpf_iter_tcp_resume(seq);
+ 	if (!sk)
 
 
