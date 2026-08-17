@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E290D4322E5;
-	Mon, 17 Aug 2026 14:52:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89D04322E5;
+	Mon, 17 Aug 2026 14:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978346; cv=none; b=FSU/8RqclH7FNBfF66qDEIM7fEL7+NtoTYG8WNMm9/eUuhZo3GwD4ga5Xr7qD/nRF8BM9Gbdo+zPZsf+WilFY1klhoI6vMX71clNxCD+xleqr9mIUfkLwAjf9rlGDhaYGdWHg68tx+kTw0TqA5VVt6w7wSvLzcG5xmkmd31OU8U=
+	t=1786978349; cv=none; b=r/g3dDn8bjryAOTNG4iJXm7MRPXVPPDKMVpeeRiAGtPNxhDPvQUOISJfUx7NbXquxeItZGbuUjjSkBBaYLNAgHnOa3lsUD+pDt7DTgL2Q/dIFSBc+4G4tWiSqIOd2ciDublFQyGco772Zf+uUjOanmMQWUDDfYrnff13hZvgR04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978346; c=relaxed/simple;
-	bh=rJQsGxNQK0fEo1S8T1/vAhYP4NZLgGc90hQeNZHNaWo=;
+	s=arc-20240116; t=1786978349; c=relaxed/simple;
+	bh=95whq3g+FSAdjMEhF9Jj7NE0Z9ctim4EXXCN8vX9VV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q8UxrslMWQcFc4opHay9I+0i5E9Oy7RBicxs3SFQaC3WPYQNIJ5J5dsZzFPq9N3AfFfOs2skQCMycdVOm/jLJJ9pXuyWD9LVilQC2DVHYrCDyX63ZEyzECFVfMeTuw4rzeDxqmXW6dtJ7d1yFMu1NGFSy6qHf1nFOwvCQr0+RbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fsbHOjvi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BoXO4U0sCrfaVMCb/JsKZrnE9sDea/1r1B3cWLrNVBEJYiRDSkly8Q+5iiyEEAq7DBKYIBpcr7OTXUDKd43+wNe4PSm+cwTVkNJw1MyJ0TGNKmrtTnmhKPgFGafAX/sYdPVxA8oKfh2hFMQguga5g5enMrnjiv0rPlK+oxPn0IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S6iz34VL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fsbHOjvi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 121961F000E9;
-	Mon, 17 Aug 2026 14:52:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S6iz34VL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82121F00A3A;
+	Mon, 17 Aug 2026 14:52:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978344;
-	bh=TbaiYdGmdfbmP822qoBGr5g+sK+m63q4ctT+qThCDw0=;
+	s=korg; t=1786978347;
+	bh=jieccRNFcEPeEDx5KU9JGpVrUY4JYdoq/Eq/DjL9Fcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fsbHOjviEkmUoimicJfZR8rBSMqV8Bb3/7YICGdTDeGwJSBub40Lx0U/tp2sijTX2
-	 Ol7cS7Z+KZno4nn/zD0JzfA2hXVWErZRhrzUkGrlEEqitd1/O2yBRvzOhvcTecrVFL
-	 q5PGZ7qj8hIpFPT5RLTu97gS7WA/kVPx3jSG21y4=
+	b=S6iz34VLDy5O/Lx/O/L3MIE5H6wDLW6vCd1EYjh6IfazFQrH9Thf+HYnbjQX+YOm2
+	 JEc6a8A9+vcyOONlHGdh0bIViseodwssfOBvtFOqr+SBmd+Z50BkbTp0UB2jSTfj1L
+	 0yFVnNrIrFIvmuatr0BVoEreYxSUlvZWTamZEP4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.12 169/181] fscrypt: use the mount idmap for the owner check in fscrypt_ioctl_set_policy()
-Date: Mon, 17 Aug 2026 15:34:23 +0200
-Message-ID: <20260817132542.333762199@linuxfoundation.org>
+	Sashiko AI <sashiko-bot@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Matt Fleming <mfleming@cloudflare.com>,
+	Suren Baghdasaryan <surenb@google.com>
+Subject: [PATCH 6.12 170/181] sched/psi: Shut down rtpoll_timer in psi_cgroup_free()
+Date: Mon, 17 Aug 2026 15:34:24 +0200
+Message-ID: <20260817132542.372528347@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -50,40 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng@xiaomi.com>
+From: Tejun Heo <tj@kernel.org>
 
-commit cf6c993c0feca7984797e634deba3c80342e199a upstream.
+commit 5457025fa8ca3c0d2732109513de839e3e797190 upstream.
 
-fscrypt_ioctl_set_policy() calls inode_owner_or_capable() with
-&nop_mnt_idmap before allowing an encryption policy to be set, instead
-of the idmap of the mount the ioctl was issued on.
+psi_schedule_rtpoll_work() is called locklessly from the scheduler hotpath
+and can race psi_trigger_destroy() taking down the last rtpoll trigger under
+rtpoll_trigger_lock:
 
-fscrypt is used by filesystems that support idmapped mounts (e.g. ext4,
-f2fs), so on such a mount this compares the caller's fsuid against the
-unmapped on-disk owner rather than the mapped owner: the actual owner
-can be wrongly denied with -EACCES and an unrelated caller wrongly
-allowed.  Use file_mnt_idmap(filp) instead.
+  psi_schedule_rtpoll_work()        psi_trigger_destroy()
 
-Fixes: 14f3db5542e6 ("ext4: support idmapped mounts")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Link: https://patch.msgid.link/20260725080004.929328-1-zhanxusheng1024@gmail.com
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+  rcu_read_lock();
+  task = rcu_dereference(rtpoll_task);
+                                    rcu_assign_pointer(rtpoll_task, NULL);
+                                    timer_delete(&rtpoll_timer);
+  mod_timer(&rtpoll_timer, ...);
+  rcu_read_unlock();
+                                    synchronize_rcu();
+                                    kthread_stop(task_to_destroy);
+
+The group can then be freed with the re-armed timer still pending, and
+poll_timer_fn() runs on freed memory.
+
+461daba06bdc ("psi: eliminate kthread_worker from psi trigger scheduling
+mechanism") deleted the timer synchronously after the synchronize_rcu(),
+which prevented this but raced trigger creation instead: the deletion could
+cancel the timer that a new trigger set armed during the grace period and,
+as creation also reinitialized the timer at the time, corrupt it.
+8f91efd870ea ("psi: Fix race between psi_trigger_create/destroy") moved the
+initialization into group_init() and the deletion into the locked section,
+trading the creation races for the window above.
+
+Neither placement in the destruction path works. A pending timer firing
+while the group is alive is harmless though. poll_timer_fn() just wakes the
+rtpoll waitqueue and doesn't re-arm itself. Bind the timer to the group's
+lifetime instead and shut it down in psi_cgroup_free(). Nothing can arm it
+by then. timer_shutdown_sync() because the timer is never armed again.
+
+Fixes: 8f91efd870ea ("psi: Fix race between psi_trigger_create/destroy")
+Cc: stable@vger.kernel.org # v5.10+
+Reported-by: Sashiko AI <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260711000434.36C4A1F000E9@smtp.kernel.org/
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Tested-by: Matt Fleming <mfleming@cloudflare.com>
+Acked-by: Suren Baghdasaryan <surenb@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/crypto/policy.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/psi.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/crypto/policy.c
-+++ b/fs/crypto/policy.c
-@@ -532,7 +532,7 @@ int fscrypt_ioctl_set_policy(struct file
- 		return -EFAULT;
- 	policy.version = version;
+--- a/kernel/sched/psi.c
++++ b/kernel/sched/psi.c
+@@ -1130,6 +1130,12 @@ void psi_cgroup_free(struct cgroup *cgro
+ 		return;
  
--	if (!inode_owner_or_capable(&nop_mnt_idmap, inode))
-+	if (!inode_owner_or_capable(file_mnt_idmap(filp), inode))
- 		return -EACCES;
- 
- 	ret = mnt_want_write_file(filp);
+ 	cancel_delayed_work_sync(&cgroup->psi->avgs_work);
++	/*
++	 * A psi_schedule_rtpoll_work() call racing the last trigger's
++	 * destruction may have re-armed the timer after psi_trigger_destroy()
++	 * deleted it. Spurious firing while the group is alive is harmless.
++	 */
++	timer_shutdown_sync(&cgroup->psi->rtpoll_timer);
+ 	free_percpu(cgroup->psi->pcpu);
+ 	/* All triggers must be removed by now */
+ 	WARN_ONCE(cgroup->psi->rtpoll_states, "psi: trigger leak\n");
 
 
