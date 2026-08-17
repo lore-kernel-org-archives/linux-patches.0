@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80523ABD99;
-	Mon, 17 Aug 2026 14:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D7E3DC857;
+	Mon, 17 Aug 2026 14:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975605; cv=none; b=MTPtjkJPST5jzeCAeZfLah5j4EyiY1+qZVrMbg8VI4LqI2D7hq9U7uQCoHBsnXH9ZDWyM95YLZ1LKgyz0YibiI/AAgGGRGY/PftFPFdw8yfLpbZGzFBAGIJBC0rNCVWUUjI0rV6cS/pvF+BTUMa0dDn59Iw1ywGkYkrRqNkhATs=
+	t=1786975608; cv=none; b=VgkEIjvGIuR1ZrIeflOaYYwa/hgNQj/Ti4rybzfGZecB4cd2KGAjSnllSLv8u1gAZQEZEDleek1szziA4qcKZdFc1qA+ATOWEPNOd7iZ64mqwThfE2xB6Su7ADkz7fD0gOOAC/3R3ZDiHCANjCqIRfDvHzaoB/nyJ9GvpHaILDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975605; c=relaxed/simple;
-	bh=FeTfTUx88oz7PrNYQ+hqRZnMj+zhfCL6/F+UVbtJOvo=;
+	s=arc-20240116; t=1786975608; c=relaxed/simple;
+	bh=Fze8bCPoB6CyDwFog285Or78pZ0tWBWPAEjqVK/c158=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AIMaUnHGaMVnbWY/7oiFZ7qQrfHfq0Q1bJZiMGQrHE+chMqIo0S5RnB5+0oSeH00J+Y1fs8IhojZly/wWdF8tGgqSisU4NeGvTX7eLCQJUga+X3fSsUjUQX+IRJfde+DKBz7ZnZ9PIT8L6Jh+w6iSACxGmVIk/N+JG41BppGLVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JsOxg0tY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aBTiBERco0YGt+B/pSCk48ddcxA6AmA8R1u8fIS3VYenpYZkZzhy36l8KAnVQWiUXDel0gU/xXVBNe9u/WMqcrJG75TvUk0k0w26jszrSHsCIPNW7+qn+DzOxNdyO1C9K/q3u03YsyUMvRoqDqtOxoM6XeYbbzNy+1wIICXY/B8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aoQSiC/s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JsOxg0tY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3951F000E9;
-	Mon, 17 Aug 2026 14:06:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aoQSiC/s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E288D1F000E9;
+	Mon, 17 Aug 2026 14:06:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975604;
-	bh=3dLq0DVGF7QZ8oE6a81fqpzO9xyyiTx9CyjBfK3+apw=;
+	s=korg; t=1786975607;
+	bh=TuEga0J0e5ZwjESBBaDAC7DtfVheQcdoithdagOkfE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JsOxg0tYvQSQRBGz5ngAp8NNGqX5aMqIOeKgC+xMP8C2npimzfDs32yRNzE2Z8fch
-	 rhdBhXPIjiOIghWCa3tDrFnlwP0GhI4ilyh8ZUTggmd3ox/8F0gLM4w43ljnXbu5Ie
-	 Zxs6dZ/qw0zA5t97rHwb2/cmLf2jxv2TyKlFIiEs=
+	b=aoQSiC/sUZWRqr5HvT6v83IN+QlIHAElgUeoPW2EqGnwG81eOQAdpuEoeAMgzjAld
+	 lrtu5L4yUx2Gq8i+iKKAu4nD+asB4vkTn+W5vTQCKnjJNkHYXEkyJMj2D39uh9Z30K
+	 eOewxsa9qapH/Cm/VhCnL/BvhLDRCel4KcYM3P8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shelley Yang <shelley.yang@infineon.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Nikolay Aleksandrov <nikolay@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 085/389] wifi: brcmfmac: fix 802.1X-SHA256 call trace warning
-Date: Mon, 17 Aug 2026 15:28:44 +0200
-Message-ID: <20260817132542.420066120@linuxfoundation.org>
+Subject: [PATCH 5.10 086/389] net: bridge: vlan: add support for global options
+Date: Mon, 17 Aug 2026 15:28:45 +0200
+Message-ID: <20260817132542.462565492@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -46,71 +45,213 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shelley Yang <shelley.yang@infineon.com>
+From: Nikolay Aleksandrov <nikolay@nvidia.com>
 
-[ Upstream commit 7cb34f6c4fe8a68af621d870abe63bfca2275dd6 ]
+[ Upstream commit 47ecd2dbd8ec43125ea75d7d2e73c888cda8663f ]
 
-Based on wpa_auth as 1x_256 mode, need to set up
-"use_fwsup" with BRCMF_PROFILE_FWSUP_1X.
-Or it will happen trace warning when call brcmf_cfg80211_set_pmk().
+We can have two types of vlan options depending on context:
+ - per-device vlan options (split in per-bridge and per-port)
+ - global vlan options
 
-[ 4481.831101] ------------[ cut here ]------------
-[ 4481.831102] WARNING: CPU: 1 PID: 2997 at
-drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c:7242 brcmf_cfg80211_set_pmk+0x77/0xd0 [brcmfmac]
-[...]
-[ 4481.831202] Call Trace:
-[ 4481.831204]  <TASK>
-[ 4481.831205]  nl80211_set_pmk+0x183/0x250 [cfg80211]
-[ 4481.831233]  genl_family_rcv_msg_doit+0xea/0x150
-[ 4481.831237]  genl_rcv_msg+0x104/0x240
-[ 4481.831239]  ? cfg80211_probe_status+0x2c0/0x2c0 [cfg80211]
-[ 4481.831257]  ? genl_family_rcv_msg_doit+0x150/0x150
-[ 4481.831259]  netlink_rcv_skb+0x4e/0x100
-[ 4481.831261]  genl_rcv+0x24/0x40
-[ 4481.831262]  netlink_unicast+0x236/0x380
-[ 4481.831264]  netlink_sendmsg+0x250/0x4b0
-[ 4481.831266]  sock_sendmsg+0x5c/0x70
-[ 4481.831269]  ____sys_sendmsg+0x236/0x2b0
-[ 4481.831271]  ? copy_msghdr_from_user+0x6d/0xa0
-[ 4481.831272]  ___sys_sendmsg+0x86/0xd0
-[ 4481.831274]  ? avc_has_perm+0x8c/0x1a0
-[ 4481.831276]  ? preempt_count_add+0x6a/0xa0
-[ 4481.831279]  ? sock_has_perm+0x82/0xa0
-[ 4481.831280]  __sys_sendmsg+0x57/0xa0
-[ 4481.831282]  do_syscall_64+0x38/0x90
-[ 4481.831284]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-[ 4481.831286] RIP: 0033:0x7fd270d369b4
+The second type wasn't supported in the bridge until now, but we need
+them for per-vlan multicast support, per-vlan STP support and other
+options which require global vlan context. They are contained in the global
+bridge vlan context even if the vlan is not configured on the bridge device
+itself. This patch adds initial netlink attributes and support for setting
+these global vlan options, they can only be set (RTM_NEWVLAN) and the
+operation must use the bridge device. Since there are no such options yet
+it shouldn't have any functional effect.
 
-Fixes: 2526ff21aa77 ("brcmfmac: support 4-way handshake offloading for 802.1X")
-Signed-off-by: Shelley Yang <shelley.yang@infineon.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260525083859.581246-1-shelley.yang@infineon.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Nikolay Aleksandrov <nikolay@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 43171c97e471 ("net: bridge: vlan: fix vlan range dumps starting with pvid")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/uapi/linux/if_bridge.h | 13 ++++++
+ net/bridge/br_private.h        |  4 ++
+ net/bridge/br_vlan.c           | 16 +++++--
+ net/bridge/br_vlan_options.c   | 85 ++++++++++++++++++++++++++++++++++
+ 4 files changed, 115 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 4434e9a7eba055..3f6d4299965b26 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -1790,7 +1790,7 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
- 				 sme->crypto.cipher_group);
- 			return -EINVAL;
- 		}
--	} else if (val & (WPA2_AUTH_PSK | WPA2_AUTH_UNSPECIFIED)) {
-+	} else if (val & (WPA2_AUTH_PSK | WPA2_AUTH_UNSPECIFIED | WPA2_AUTH_1X_SHA256)) {
- 		switch (sme->crypto.akm_suites[0]) {
- 		case WLAN_AKM_SUITE_8021X:
- 			val = WPA2_AUTH_UNSPECIFIED;
+diff --git a/include/uapi/linux/if_bridge.h b/include/uapi/linux/if_bridge.h
+index 4c687686aa8f73..f56e9114558299 100644
+--- a/include/uapi/linux/if_bridge.h
++++ b/include/uapi/linux/if_bridge.h
+@@ -360,10 +360,15 @@ enum {
+  *     [BRIDGE_VLANDB_ENTRY_INFO]
+  *     ...
+  * }
++ * [BRIDGE_VLANDB_GLOBAL_OPTIONS] = {
++ *     [BRIDGE_VLANDB_GOPTS_ID]
++ *     ...
++ * }
+  */
+ enum {
+ 	BRIDGE_VLANDB_UNSPEC,
+ 	BRIDGE_VLANDB_ENTRY,
++	BRIDGE_VLANDB_GLOBAL_OPTIONS,
+ 	__BRIDGE_VLANDB_MAX,
+ };
+ #define BRIDGE_VLANDB_MAX (__BRIDGE_VLANDB_MAX - 1)
+@@ -413,6 +418,14 @@ enum {
+ };
+ #define BRIDGE_VLANDB_STATS_MAX (__BRIDGE_VLANDB_STATS_MAX - 1)
+ 
++enum {
++	BRIDGE_VLANDB_GOPTS_UNSPEC,
++	BRIDGE_VLANDB_GOPTS_ID,
++	BRIDGE_VLANDB_GOPTS_RANGE,
++	__BRIDGE_VLANDB_GOPTS_MAX
++};
++#define BRIDGE_VLANDB_GOPTS_MAX (__BRIDGE_VLANDB_GOPTS_MAX - 1)
++
+ /* Bridge multicast database attributes
+  * [MDBA_MDB] = {
+  *     [MDBA_MDB_ENTRY] = {
+diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
+index 19d77a8721fafb..bd68d049c5fd93 100644
+--- a/net/bridge/br_private.h
++++ b/net/bridge/br_private.h
+@@ -1327,6 +1327,10 @@ int br_vlan_process_options(const struct net_bridge *br,
+ 			    struct net_bridge_vlan *range_end,
+ 			    struct nlattr **tb,
+ 			    struct netlink_ext_ack *extack);
++int br_vlan_rtm_process_global_options(struct net_device *dev,
++				       const struct nlattr *attr,
++				       int cmd,
++				       struct netlink_ext_ack *extack);
+ 
+ /* vlan state manipulation helpers using *_ONCE to annotate lock-free access */
+ static inline u8 br_vlan_get_state(const struct net_bridge_vlan *v)
+diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
+index 1dc5db07650c9a..0bd5a168943fd1 100644
+--- a/net/bridge/br_vlan.c
++++ b/net/bridge/br_vlan.c
+@@ -2062,12 +2062,22 @@ static int br_vlan_rtm_process(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	}
+ 
+ 	nlmsg_for_each_attr(attr, nlh, sizeof(*bvm), rem) {
+-		if (nla_type(attr) != BRIDGE_VLANDB_ENTRY)
++		switch (nla_type(attr)) {
++		case BRIDGE_VLANDB_ENTRY:
++			err = br_vlan_rtm_process_one(dev, attr,
++						      nlh->nlmsg_type,
++						      extack);
++			break;
++		case BRIDGE_VLANDB_GLOBAL_OPTIONS:
++			err = br_vlan_rtm_process_global_options(dev, attr,
++								 nlh->nlmsg_type,
++								 extack);
++			break;
++		default:
+ 			continue;
++		}
+ 
+ 		vlans++;
+-		err = br_vlan_rtm_process_one(dev, attr, nlh->nlmsg_type,
+-					      extack);
+ 		if (err)
+ 			break;
+ 	}
+diff --git a/net/bridge/br_vlan_options.c b/net/bridge/br_vlan_options.c
+index b4add9ea8964a9..a7d5a233420732 100644
+--- a/net/bridge/br_vlan_options.c
++++ b/net/bridge/br_vlan_options.c
+@@ -258,3 +258,88 @@ int br_vlan_process_options(const struct net_bridge *br,
+ 
+ 	return err;
+ }
++
++static int br_vlan_process_global_one_opts(const struct net_bridge *br,
++					   struct net_bridge_vlan_group *vg,
++					   struct net_bridge_vlan *v,
++					   struct nlattr **tb,
++					   bool *changed,
++					   struct netlink_ext_ack *extack)
++{
++	*changed = false;
++	return 0;
++}
++
++static const struct nla_policy br_vlan_db_gpol[BRIDGE_VLANDB_GOPTS_MAX + 1] = {
++	[BRIDGE_VLANDB_GOPTS_ID]	= { .type = NLA_U16 },
++	[BRIDGE_VLANDB_GOPTS_RANGE]	= { .type = NLA_U16 },
++};
++
++int br_vlan_rtm_process_global_options(struct net_device *dev,
++				       const struct nlattr *attr,
++				       int cmd,
++				       struct netlink_ext_ack *extack)
++{
++	struct nlattr *tb[BRIDGE_VLANDB_GOPTS_MAX + 1];
++	struct net_bridge_vlan_group *vg;
++	struct net_bridge_vlan *v;
++	u16 vid, vid_range = 0;
++	struct net_bridge *br;
++	int err = 0;
++
++	if (cmd != RTM_NEWVLAN) {
++		NL_SET_ERR_MSG_MOD(extack, "Global vlan options support only set operation");
++		return -EINVAL;
++	}
++	if (!netif_is_bridge_master(dev)) {
++		NL_SET_ERR_MSG_MOD(extack, "Global vlan options can only be set on bridge device");
++		return -EINVAL;
++	}
++	br = netdev_priv(dev);
++	vg = br_vlan_group(br);
++	if (WARN_ON(!vg))
++		return -ENODEV;
++
++	err = nla_parse_nested(tb, BRIDGE_VLANDB_GOPTS_MAX, attr,
++			       br_vlan_db_gpol, extack);
++	if (err)
++		return err;
++
++	if (!tb[BRIDGE_VLANDB_GOPTS_ID]) {
++		NL_SET_ERR_MSG_MOD(extack, "Missing vlan entry id");
++		return -EINVAL;
++	}
++	vid = nla_get_u16(tb[BRIDGE_VLANDB_GOPTS_ID]);
++	if (!br_vlan_valid_id(vid, extack))
++		return -EINVAL;
++
++	if (tb[BRIDGE_VLANDB_GOPTS_RANGE]) {
++		vid_range = nla_get_u16(tb[BRIDGE_VLANDB_GOPTS_RANGE]);
++		if (!br_vlan_valid_id(vid_range, extack))
++			return -EINVAL;
++		if (vid >= vid_range) {
++			NL_SET_ERR_MSG_MOD(extack, "End vlan id is less than or equal to start vlan id");
++			return -EINVAL;
++		}
++	} else {
++		vid_range = vid;
++	}
++
++	for (; vid <= vid_range; vid++) {
++		bool changed = false;
++
++		v = br_vlan_find(vg, vid);
++		if (!v) {
++			NL_SET_ERR_MSG_MOD(extack, "Vlan in range doesn't exist, can't process global options");
++			err = -ENOENT;
++			break;
++		}
++
++		err = br_vlan_process_global_one_opts(br, vg, v, tb, &changed,
++						      extack);
++		if (err)
++			break;
++	}
++
++	return err;
++}
 -- 
 2.53.0
 
