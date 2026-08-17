@@ -1,59 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397D52F8EA2;
-	Mon, 17 Aug 2026 14:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD783B4417;
+	Mon, 17 Aug 2026 14:01:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975306; cv=none; b=Yp3IntBzE4feS5mkrfZ0rsjimfbXpTtNBcuvgi4ZDsoHetX+efcTIgZ4F6ZqJ5IPnj7AGRIaamro+F9TvpGfzuOgy9A5aetXdL1oomGBepQ+PwW8/CLSFXZ23UFhsIM9T5YByXRQKcETt2odksK1FJNNZMaZ1Byk2BnZCnkjXTo=
+	t=1786975309; cv=none; b=FIuLgds6CwPGx4nv4NXo6sfu1zSArTBDJYeyp6IGMSQWQ2viVuSRVxYR7IRrjpv437fcqXQ38rqO/50SRZjOoDanCyt9lzNdpPHzIsDj8HRv6SMKtts/PrZpzsP5U3rrwZDBVxFyr78qfV3eLJgOVwJ1fEufqWgnvPuiSjw4Hw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975306; c=relaxed/simple;
-	bh=Vv5SQlMrEttfmM9UeVoTlDChESNBg/cBR2vy5XZ30b4=;
+	s=arc-20240116; t=1786975309; c=relaxed/simple;
+	bh=WWjbPw8R8Plqpb2jUVLsW93hWx3ecYn/sbfbObTsslU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FMVLAwyT0eXXfPjfUlJckrfCu5TZ8BdKu+h37svD7eE8mfbyxCgOzVDXRMzmtYexUyzQrVrGpaT9s/uiarfOHucnnFNNqyz7NVQvE1KDASZk2N7e28n8oLgtoeljRHwLi7Ij/qi67+qmglqBCDQ/cES56MMMy/AciZK1buMLmCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8Fj0Euw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qqmcwpy+Y5gGz2x9v+Qunnz6ytkVlX2feXPfPBR3e5APNJyeCCL2/iVBXnluZIYRHGuCrVwbjaVyHot4GQH0IrV5VeQMFR7D7tImd3tYLDbq2RF1fTF2r1i+zX5vD6btv/he8xkgygZ6ACbAMTFRhZ809vou74nI9qzoZA9ZULw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BoI9/kyG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8Fj0Euw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4C01F00A3A;
-	Mon, 17 Aug 2026 14:01:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BoI9/kyG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E2FF1F000E9;
+	Mon, 17 Aug 2026 14:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975305;
-	bh=VxppmD4qpgcKesv0cLmdjHLGgeR6JGL5J7D+OyD0wtc=;
+	s=korg; t=1786975308;
+	bh=yZ4g8OGDunQq0GIZwXbbRQWA6+8UYUhbZBDmBD63GoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J8Fj0Euwzi7h01+Lfmjqd0dOt9gZF/LwM9YeKHsWw1Qx7s1KvWUlxUhXlubBKpmSr
-	 Yf+4regLD/5MJ7zB2a7OzR/ThsslYwSpTG3NNTLO/8Y58aDW+33bgafObkf7Jz+Wqg
-	 PjQqAqJnZi1EeAYKTtb9gjMoXwOFLKGzcr0sZa+Y=
+	b=BoI9/kyGWoFIG8OPBK448654FKneCmXfXhFEE8KWPLhMLtrmk5bLd4GjTgltV/CkX
+	 Me9AEO+NV+yXfXG47eDtXMU66K93CAXxtj4RWvjhiqa3ywu8UcZqW6x0954JHRF22k
+	 hALFoFYP1OoTQ0ApeAdF+DiUjnH/vXj4aTk28rDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Andy Lutomirski <luto@kernel.org>,
-	"Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	David Carlier <devnexen@gmail.com>,
-	Dev Jain <dev.jain@arm.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Toshi Kani <toshi.kani@hpe.com>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 232/250] mm/ptdump: always stabilise against page table freeing using init_mm
-Date: Mon, 17 Aug 2026 15:33:13 +0200
-Message-ID: <20260817132545.970868979@linuxfoundation.org>
+	Yuejie Shi <syjcnss@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 233/250] ipv6: fix Route Information option length validation
+Date: Mon, 17 Aug 2026 15:33:14 +0200
+Message-ID: <20260817132546.012242489@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -72,115 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Yuejie Shi <syjcnss@gmail.com>
 
-commit 27c32e5538344b13c1505a08861e04620c125d47 upstream.
+commit d1ad8fb2ac6a1afb71dc22d9ae8efb4dda96c824 upstream.
 
-Previous commits have established the invariant that kernel page table
-freeing is performed while an mmap read lock on init_mm is held, which
-fixes races between ptdump and kernel page table freeing over init_mm.
+rt6_route_rcv() validates the Route Information option (RFC 4191) length
+against the prefix length, but both checks are off by one.
 
-However, x86 and arm64 can perform a ptdump over an mm other than init_mm
-via ptdump_walk_pgd() and since kernel memory ranges are shared across
-non-kernel mm's, this means that the race still exists for these cases.
+rinfo->length is the ND option length in units of 8 octets and it
+*includes* the 8-byte option header, so an option carrying N bytes of
+prefix has length == 1 + N/8.  RFC 4191 section 2.3 requires length 3
+when Prefix Length is greater than 64, and 2 or 3 when it is greater
+than 0.  The code accepts length >= 2 and length >= 1 respectively.
 
-Fix this by acquiring a nested mmap write lock for init_mm in
-ptdump_walk_pgd().
+ipv6_addr_prefix() then copies prefix_len/8 bytes out of rinfo->prefix,
+so a Router Advertisement with (prefix_len=128, length=2) or
+(prefix_len=64, length=1) makes the kernel read up to 8 bytes past the
+end of the option.  Those bytes end up in the prefix of the route that
+gets installed, so they are visible to userspace:
 
-This is safe as we take this after mmap write locking the mm, and nothing
-acquires the init_mm lock first before locking an arbitrary mm, so no
-deadlock is possible.
+  # RA with a Route Information option (prefix_len=128, length=2)
+  # followed by a source link-layer address option, 01 01 de ad be ef ca fe
+  $ ip -6 route show
+  2001:db8:dead:beef:101:dead:beef:cafe via fe80::1234 dev veth0 proto ra
+                     ^^^^^^^^^^^^^^^^^^ the next option, read out of bounds
 
-Also update walk_page_range_debug() to assert that init_mm is write
-locked, add a comment explaining why and remove some redundant code, and
-eliminate the unnecessary and confusing invocation of
-walk_kernel_page_table_range().
+When the Route Information option is the last one in the packet, those
+eight bytes come from the skb tail room instead.
 
-We can safely remove the non-NULL check for walk.mm, as the mmap lock
-asserts would NULL pointer deref if it was (and of course no callers do
-this).
+Reject the option lengths RFC 4191 does not allow.
 
-The first point at which ptdump can race kernel page table freeing is
-commit b6bdb7517c3d ("mm/vmalloc: add interfaces to free unmapped page
-table"), so we target this in the Fixes tag.
-
-Link: https://lore.kernel.org/20260723-series-vmap-race-fix-v6-4-8cc77dcc0018@kernel.org
-Fixes: b6bdb7517c3d ("mm/vmalloc: add interfaces to free unmapped page table")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Kiryl Shutsemau <kas@kernel.org>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: "Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>
-Cc: "Borislav Petkov (AMD)" <bp@alien8.de>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: David Carlier <devnexen@gmail.com>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Toshi Kani <toshi.kani@hpe.com>
-Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 70ceb4f53929 ("[IPV6]: ROUTE: Add experimental support for Route Information Option in RA (RFC4191).")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yuejie Shi <syjcnss@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260730035310.74584-1-syjcnss@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/pagewalk.c |   14 +++++++++-----
- mm/ptdump.c   |    7 +++++++
- 2 files changed, 16 insertions(+), 5 deletions(-)
+ net/ipv6/route.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/mm/pagewalk.c
-+++ b/mm/pagewalk.c
-@@ -702,12 +702,16 @@ int walk_page_range_debug(struct mm_stru
- 	 * to account for page table freeing on vmap huge page mapping.
- 	 */
- 	mmap_assert_write_locked(mm);
-+	/*
-+	 * x86, arm64 ptdump allow walks of efi mm's and x86 ptdump allows walks
-+	 * of arbitrary mm's.
-+	 *
-+	 * However, they both must also hold the init_mm lock to account for
-+	 * concurrent kernel page table freeing.
-+	 */
-+	mmap_assert_write_locked(&init_mm);
- 
--	/* For convenience, we allow traversal of kernel mappings. */
--	if (mm == &init_mm)
--		return walk_kernel_page_table_range(start, end, ops,
--						    pgd, private);
--	if (start >= end || !walk.mm)
-+	if (start >= end)
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -987,13 +987,13 @@ int rt6_route_rcv(struct net_device *dev
+ 	} else if (rinfo->prefix_len > 128) {
  		return -EINVAL;
- 	if (!check_ops_valid(ops))
- 		return -EINVAL;
---- a/mm/ptdump.c
-+++ b/mm/ptdump.c
-@@ -178,11 +178,18 @@ void ptdump_walk_pgd(struct ptdump_state
- 
- 	get_online_mems();
- 	mmap_write_lock(mm);
-+	/* To stabilise kernel page tables we must hold the init_mm lock too. */
-+	if (mm != &init_mm)
-+		mmap_write_lock_nested(&init_mm, SINGLE_DEPTH_NESTING);
-+
- 	while (range->start != range->end) {
- 		walk_page_range_debug(mm, range->start, range->end,
- 				      &ptdump_ops, pgd, st);
- 		range++;
+ 	} else if (rinfo->prefix_len > 64) {
+-		if (rinfo->length < 2) {
++		/* RFC 4191: Length MUST be 3 when Prefix Length > 64 */
++		if (rinfo->length < 3)
+ 			return -EINVAL;
+-		}
+ 	} else if (rinfo->prefix_len > 0) {
+-		if (rinfo->length < 1) {
++		/* RFC 4191: Length MUST be 2 or 3 when Prefix Length > 0 */
++		if (rinfo->length < 2)
+ 			return -EINVAL;
+-		}
  	}
-+
-+	if (mm != &init_mm)
-+		mmap_write_unlock(&init_mm);
- 	mmap_write_unlock(mm);
- 	put_online_mems();
  
+ 	pref = rinfo->route_pref;
 
 
