@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E2A2E7BD6;
-	Mon, 17 Aug 2026 15:04:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F94F2EC54A;
+	Mon, 17 Aug 2026 15:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979068; cv=none; b=pU0XxIPwo6SgPVHT1PA7+4f5cwiIkmfispuFsfU4VRbe/SWFp397EDVZaw9dasBGSq7T2kDFP6U0wNLsUkpxR+TutBEoxUy0JbOB9ad4rb1A24Y82gYnAfEeiFmkxOJND9daLsqtCvk8aJ4IsXL8cQEClUmUC7f9NulEG5Or0q4=
+	t=1786979072; cv=none; b=S6P7FlbnwxIaFJw/dWwWbzaqvoZPN0op7VjQMfU39KQ0ihdwFOQnIlS6c3RBLGfj5Zg145jisOr5kKepMRfuz0nAEDYmX3+JPluIJ9nkc18iJxHoW+uQK62oUNzWE7nSTbMXh7SdEWEaYGsWdjjGU/CB1I9Kww+ohXTw5jR57/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979068; c=relaxed/simple;
-	bh=G+ON3sO7K/3wwVU2Ga1d1UqHs5xzZkNSSFE7pQhfz7s=;
+	s=arc-20240116; t=1786979072; c=relaxed/simple;
+	bh=bC6Q9Ck16o6q01cavtg1jF52fNoXQKN3bd0i9Csl6FM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=caZR0hlWssGQko2PJfkdFQMixTHAiclf/8WhxRaEG3z2YF6f2k/r9zaGPBLxCVGoD4+Fh0J0S4fCeys4LttUeNULxXhEE4KjGv/7EYDA/+mLQYc2OF1FsDOLE614dGcdyxIlS5wZauHCFS97VGG6IDbilOLim6WRbmebiub72r4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WytAQBTc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qKYLmmsYNys8LQ5O/2aXSkLM1bEdyFj8LMxGxJvaefU/Uk3mAq273Y6R6DYszQVPit6ASPuzuK2wYNpJrnZlvVx7gUcX2x4SR1MgYPdKDwZqNkKyiwGtsFAZg2ik1ogv3aTcEupFAHX+Ymaet+DntkL76jnSIGX+cjfUC61AIm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iH0zMJ2B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WytAQBTc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10B31F000E9;
-	Mon, 17 Aug 2026 15:04:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iH0zMJ2B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A4321F000E9;
+	Mon, 17 Aug 2026 15:04:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979067;
-	bh=ks5HQa2cV+5I8yGqOp6p4Pyteu9R9k8wbXum+5luf5s=;
+	s=korg; t=1786979070;
+	bh=ItcdgeyjqBiiFEtqX9cCSD2tgdrhFjllUpPpiu3qr84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WytAQBTcWWHdUMQbxODY42iZW3+daMZf7jgRFeZnDUTew1K06TA5gJ8/RrCmknWNX
-	 oBA1WVj3XuIhvtsM8huNLP3A2qDsxXycZyg0+B4EKwZRuhtretTnEnYYg0zddsa55h
-	 JI4OO8kQvHJAXq8Ykhn7EOrihwkBZ7VXQqDXWTXE=
+	b=iH0zMJ2BNjGK+bZjPJ1oaJ5knYhD/7DjjTXnrFlRqJALkCWJOPAWoYuUWICoPzdpR
+	 Rwo/do09R4/2beTFGuUzC8kdIB12J8TTqd2EbjNyeiNqHn3gaTBkiBkkF781BBZ7Um
+	 zHE82OPR/sN+0YOBHUhw+ndfbmmQrHcpobTTLEMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	STAR Labs SG <info@starlabs.sg>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Philo Lu <lulie@linux.alibaba.com>,
+	stable@kernel.org,
+	Xincheng Zhang <zhangxincheng@ultrarisc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 096/609] bpf: Fix ld_{abs,ind} failure path analysis in subprogs
-Date: Mon, 17 Aug 2026 15:26:32 +0200
-Message-ID: <20260817132546.880457735@linuxfoundation.org>
+Subject: [PATCH 6.1 097/609] usb: xhci-pci: Limit VIA VL805 DMA addressing to 36 bits
+Date: Mon, 17 Aug 2026 15:26:33 +0200
+Message-ID: <20260817132546.921383775@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,69 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Xincheng Zhang <zhangxincheng@ultrarisc.com>
 
-commit ee861486e377edc55361c08dcbceab3f6b6577bd upstream.
+commit 1fc50f1ecde39feb4fccdaf4bc71aa6c0eb25c49 upstream.
 
-Usage of ld_{abs,ind} instructions got extended into subprogs some time
-ago via commit 09b28d76eac4 ("bpf: Add abnormal return checks."). These
-are only allowed in subprograms when the latter are BTF annotated and
-have scalar return types.
+The VIA VL805/806 xHCI controller advertises AC64, but fails to handle
+DMA addresses at or above 0x1000000000. On systems with large amounts of
+RAM, this can cause USB device failures when the controller is given DMA
+addresses beyond its usable address width.
 
-The code generator in bpf_gen_ld_abs() has an abnormal exit path (r0=0 +
-exit) from legacy cBPF times. While the enforcement is on scalar return
-types, the verifier must also simulate the path of abnormal exit if the
-packet data load via ld_{abs,ind} failed.
+Do not use XHCI_NO_64BIT_SUPPORT for this controller. That quirk clears
+the cached AC64 capability and limits DMA to 32 bits, causing unnecessary
+bouncing for addresses between 4GiB and 64GiB and hiding the controller's
+real AC64 capability from code that may need to distinguish register
+access width from usable DMA address width.
 
-This is currently not the case. Fix it by having the verifier simulate
-both success and failure paths, and extend it in similar ways as we do
-for tail calls. The success path (r0=unknown, continue to next insn) is
-pushed onto stack for later validation and the r0=0 and return to the
-caller is done on the fall-through side.
+Track the usable DMA address width separately from the AC64 capability.
+Initialize the generic xhci->dma_mask_bits field to 64 and let PCI quirks
+reduce it for controllers with narrower DMA support. Set VIA VL805/806 to
+36 bits so the DMA API only hands it addresses in the range it can handle
+while keeping HCCPARAMS1.AC64 visible.
 
-Fixes: 09b28d76eac4 ("bpf: Add abnormal return checks.")
-Reported-by: STAR Labs SG <info@starlabs.sg>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260408191242.526279-2-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-[ Dropped visit_abnormal_return_insn changes: depends on 7.0 symbols from
- e40f5a6bf88a ("bpf: correct stack liveness for tail calls");
- Hunk1: adapted IS_ERR/PTR_ERR to !branch/-EFAULT to match push_stack()
- NULL-on-failure convention. ]
-Signed-off-by: Philo Lu <lulie@linux.alibaba.com>
+Cc: stable@kernel.org
+Signed-off-by: Xincheng Zhang <zhangxincheng@ultrarisc.com>
+Link: https://patch.msgid.link/20260630-xhci-via-dma-fix-v3-1-690dcb8cf75a@ultrarisc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/usb/host/xhci-pci.c |  1 +
+ drivers/usb/host/xhci.c     | 15 ++++++++++-----
+ drivers/usb/host/xhci.h     |  1 +
+ 3 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 4380082f321c7a..4ff1d5007a23e2 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -10751,6 +10751,23 @@ static int check_ld_abs(struct bpf_verifier_env *env, struct bpf_insn *insn)
- 	mark_reg_unknown(env, regs, BPF_REG_0);
- 	/* ld_abs load up to 32-bit skb data. */
- 	regs[BPF_REG_0].subreg_def = env->insn_idx + 1;
-+	/*
-+	 * See bpf_gen_ld_abs() which emits a hidden BPF_EXIT with r0=0
-+	 * which must be explored by the verifier when in a subprog.
-+	 */
-+	if (env->cur_state->curframe) {
-+		struct bpf_verifier_state *branch;
-+
-+		mark_reg_scratched(env, BPF_REG_0);
-+		branch = push_stack(env, env->insn_idx + 1, env->insn_idx, false);
-+		if (!branch)
-+			return -EFAULT;
-+		mark_reg_known_zero(env, regs, BPF_REG_0);
-+		err = prepare_func_exit(env, &env->insn_idx);
-+		if (err)
-+			return err;
-+		env->insn_idx--;
-+	}
- 	return 0;
- }
+diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
+index 7ad6d13d65ee94..8fffc84d014779 100644
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -337,6 +337,7 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
+ 	if (pdev->vendor == PCI_VENDOR_ID_VIA && pdev->device == PCI_DEVICE_ID_VIA_VL805) {
+ 		xhci->quirks |= XHCI_LPM_SUPPORT;
+ 		xhci->quirks |= XHCI_TRB_OVERFETCH;
++		xhci->dma_mask_bits = 36;
+ 	}
  
+ 	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA &&
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index e00baa3b7324cb..37fb2491d88f22 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -5394,6 +5394,7 @@ int xhci_gen_setup(struct usb_hcd *hcd, xhci_get_quirks_t get_quirks)
+ 	if (xhci->hci_version > 0x100)
+ 		xhci->hcc_params2 = readl(&xhci->cap_regs->hcc_params2);
+ 
++	xhci->dma_mask_bits = 64;
+ 	/* xhci-plat or xhci-pci might have set max_interrupters already */
+ 	if ((!xhci->max_interrupters) ||
+ 	    xhci->max_interrupters > HCS_MAX_INTRS(xhci->hcs_params1))
+@@ -5434,12 +5435,16 @@ int xhci_gen_setup(struct usb_hcd *hcd, xhci_get_quirks_t get_quirks)
+ 	if (xhci->quirks & XHCI_NO_64BIT_SUPPORT)
+ 		xhci->hcc_params &= ~BIT(0);
+ 
+-	/* Set dma_mask and coherent_dma_mask to 64-bits,
+-	 * if xHC supports 64-bit addressing */
++	/*
++	 * Set dma_mask and coherent_dma_mask to 64-bits if xHC supports
++	 * 64-bit addressing, unless a controller-specific quirk callback
++	 * limits the usable address width.
++	 */
+ 	if (HCC_64BIT_ADDR(xhci->hcc_params) &&
+-			!dma_set_mask(dev, DMA_BIT_MASK(64))) {
+-		xhci_dbg(xhci, "Enabling 64-bit DMA addresses.\n");
+-		dma_set_coherent_mask(dev, DMA_BIT_MASK(64));
++	    !dma_set_mask(dev, DMA_BIT_MASK(xhci->dma_mask_bits))) {
++		xhci_dbg(xhci, "Enabling %u-bit DMA addresses.\n",
++			 xhci->dma_mask_bits);
++		dma_set_coherent_mask(dev, DMA_BIT_MASK(xhci->dma_mask_bits));
+ 	} else {
+ 		/*
+ 		 * This is to avoid error in cases where a 32-bit USB
+diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
+index b43e88102200e5..b446fa9eb8370b 100644
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1543,6 +1543,7 @@ struct xhci_hcd {
+ 	int		event_ring_max;
+ 	/* 4KB min, 128MB max */
+ 	int		page_size;
++	unsigned int	dma_mask_bits;
+ 	/* Valid values are 12 to 20, inclusive */
+ 	int		page_shift;
+ 	/* msi-x vectors */
 -- 
 2.53.0
 
