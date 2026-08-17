@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2B8175A99;
-	Mon, 17 Aug 2026 14:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6294B24EA90;
+	Mon, 17 Aug 2026 14:25:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976698; cv=none; b=osP0OkFSYICphoCKCh7VnjCzeBJxONDRaArqBpI+YD7Q1Jgm3vhEPTOsKQS5r1zWKsPVweyMYQt/5BGpYwFQGDlmBru8y1zWuTrV7cVFunWBTmLS0EGtx8xvwHxjniLlJOA7e1i5yLnMYZtJezeqyKw9fmj+QbmZZFuY1ifFJjE=
+	t=1786976701; cv=none; b=QAAJPAMluRRlG8M5YXa7P4vOLSD1ERjZeb7jbls97zSJQAnPyr/xviwHtpo98Gj765IfFEjBjT6WXV4oEj2IqHGRRCOyA2rxng2BLWwoAEfVKAq8NpNsCEvX/CfJb2OTKsStB9grXoV8PxEZQeDj00FeXE8SmrHaFsboS1ayyh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976698; c=relaxed/simple;
-	bh=aTKzIIQbteofn8S0qXH2/hot99QMLOr6E0efx8ukHjk=;
+	s=arc-20240116; t=1786976701; c=relaxed/simple;
+	bh=sHG0g2j54yrdh925m8pzFiJCqfkHXv7Y6qC8VSyeFvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZvNG9dMW7hgdMaxXIorsSCVARglH1G5scWNj9Ans5yDkfRbYwCHFf3a47QhgXu5xyyMk2gZz0bb5jZIbpiwdDwjvhfUuxFCgSukdYE8gyCbXWin9hEKAD4Bc606ac5gwPrPMWqBir9YS3FAq7Htzufi9zGCsShgrxu3UYaYZfTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LbF3rExn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sjLrS1KbrdEwVGsEZlGphdaBG29ivw0KJ9WsTsIPRZyERCaw9oyR9a54HQlmH31fQz6MN2cb7WZRKNHmpq45ExOZ0maLdrHe4SP4Kgj2fNqw+eAY8FPCgNTWSfa9WAU6S/kJKVqZq51Od5W4tkzuwYFhVs9hBkMwcZXETc4i9wM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G2iSVx0q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LbF3rExn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C971F000E9;
-	Mon, 17 Aug 2026 14:24:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G2iSVx0q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C2D1F00A3A;
+	Mon, 17 Aug 2026 14:24:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976697;
-	bh=YYDsEInoDQ3ruKEyb4ITCahXD+k7GLBa9UvvH2N+F3g=;
+	s=korg; t=1786976700;
+	bh=r5FBBkcT/7f4vd+AfS0xQn/dXcqi+KU31iNYBvaItAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LbF3rExnmDtk5dx2ElKabOsTexJqepJfR85eyqjiCSNhpTQ5ARYzehE37PhdnSFlm
-	 X89VJfhmw0nMfH4/ikx9Yj88PxG5MSjIY52eWx5Q8tPVbhLxd+JkY/4P1t3vjm+kiz
-	 Z9hTvlsjpLgRkB4Dj2c2wTZpSkp98VvBpIiyPhLU=
+	b=G2iSVx0qr28PydCSX75l/MLr+/XOGLdgHdLJ9kaUJLoJpGXlKVagjwbTKYlf9K+au
+	 8mffoleaBt7nhJfC3rs6otac730pwIT0yPj46OlZB1Klv4qVpIt5Z/pUP5GyuF0cY0
+	 gvJ++kz/UnY5Sn2dA5aR3ldEk8Qv8DjQ2g7NAJyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Lukas Wunner <lukas@wunner.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 074/456] crypto: rsa-pkcs1pad: Dont WARN on an empty digest
-Date: Mon, 17 Aug 2026 15:27:44 +0200
-Message-ID: <20260817132542.976130614@linuxfoundation.org>
+Subject: [PATCH 5.15 075/456] Revert "drm/amd/display: Add missing kdoc for ALLM parameters"
+Date: Mon, 17 Aug 2026 15:27:45 +0200
+Message-ID: <20260817132543.009705554@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,53 +49,26 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+This reverts commit 904eed5c1044b52db948e0322a5f74ccaccd0b8e.
 
-KEYCTL_PKEY_VERIFY lets an unprivileged caller supply a zero-length
-digest (in_len == 0).  keyctl_pkey_params_get_2() accepts the zero
-length and the request reaches pkcs1pad_verify(), where the empty
-digest is rejected but only after being passed through
-WARN_ON(!req->dst_len).  The warning is therefore directly
-user-triggerable, and on kernels built with panic_on_warn=1 an
-unprivileged process can panic the machine -- a local denial of
-service.  Reproduced as UID 65534 in a setuid sandbox.
-
-Keep rejecting the invalid request with -EINVAL, but do not emit a
-warning for the user-controlled length.
-
-This is the 5.10.y/5.15.y form of the fix, where the length is read
-directly from req->dst_len rather than cached in a digest_size local.
-Mainline does not contain this code path; commit 1e562deacecc
-("crypto: rsassa-pkcs1 - Migrate to sig_alg backend") removed
-pkcs1pad_verify() in v6.13-rc1.  This is a minimal fix for the
-affected stable branches.  The 6.1.y/6.6.y/6.12.y form
-(WARN_ON(!digest_size)) is sent as a separate patch.
-
-Found by 0sec automated security-research tooling (https://0sec.ai).
-
-Fixes: c7381b012872 ("crypto: akcipher - new verify API for public key algorithms")
-Cc: stable@vger.kernel.org
-Assisted-by: 0sec:multi-model
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/rsa-pkcs1pad.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/crypto/rsa-pkcs1pad.c b/crypto/rsa-pkcs1pad.c
-index e2f4ccbd71dd87..d10076bb6ec237 100644
---- a/crypto/rsa-pkcs1pad.c
-+++ b/crypto/rsa-pkcs1pad.c
-@@ -535,7 +535,7 @@ static int pkcs1pad_verify(struct akcipher_request *req)
- 	int err;
- 
- 	if (WARN_ON(req->dst) ||
--	    WARN_ON(!req->dst_len) ||
-+	    !req->dst_len ||
- 	    !ctx->key_size || req->src_len != ctx->key_size)
- 		return -EINVAL;
- 
+diff --git a/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c b/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
+index c09e86523e291e..4e075b01d48bb4 100644
+--- a/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
++++ b/drivers/gpu/drm/amd/display/modules/info_packet/info_packet.c
+@@ -415,8 +415,6 @@ void mod_build_vsc_infopacket(const struct dc_stream_state *stream,
+  *
+  *  @stream:      contains data we may need to construct VSIF (i.e. timing_3d_format, etc.)
+  *  @info_packet: output structure where to store VSIF
+- *  @ALLMEnabled: indicates whether ALLM HF-VSIF should be generated
+- *  @ALLMValue:   ALLM bit value to advertise in HF-VSIF
+  */
+ void mod_build_hf_vsif_infopacket(const struct dc_stream_state *stream,
+ 		struct dc_info_packet *info_packet)
 -- 
 2.53.0
 
