@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FD04322E5;
-	Mon, 17 Aug 2026 14:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C9A4322E5;
+	Mon, 17 Aug 2026 14:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978747; cv=none; b=Dleegh6mrV+XQqyWT4LGiOS7zY7npR/YALCh9pNvdJySA4NTbo//QHmGwppoYwk4I3jWm0lG9OGE3QScgcJXKr1DGJpRhPgRJFFQpoMYGgvRMg0Jr7T0XDaYRhCTHXLf0on/hJBySzQKCnZGpChudVHQTwvO5TxHRHOSlTvIzLQ=
+	t=1786978750; cv=none; b=oxm6rFq4ioJFPPUMu7+0YbDLD9csVrQ84ZEghOrZBI5wAiP5EQZZfKAMciMB0IZMxVznqcbbFpyVm8u1+jQ38qTMAOjNhE1KMz+YUYCLibH9omlPH4FkBaTHkFqtJaNfx7DMWuejSaRNMInkL/ZlC59mowZEfSoj5bv4a67swJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978747; c=relaxed/simple;
-	bh=HeTwlJiClFwCH268f+P5Lz6PNHCXaKZ0ElTP0WJNWXs=;
+	s=arc-20240116; t=1786978750; c=relaxed/simple;
+	bh=DJyxQkITpL/t/1+uIUbQtMPGTox25D2SuDoaKz71OlU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jo12s7oIcJaCztCCjccZEs3Ufo040GQ3HPWpC4Vk+XvwEHpiCMamEhv9ope7dSBSGaPQr1Vlm4mJts11l2f2p2dUfM5txX0T0Czmb/rZTtnliBvyMldm/vEeCRjVl4dIBMW2ebzUceIp8uIrKXom4GW30O43nJbG5i2sLZW+fts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V43Tz9rB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s+eQqYVfFj5Y6Ae1Y2/39RstqpS0BiaxjaAlrK4g7wMXSO4HoYZgf/9uebWNt1HjSs23vMqIYvySUitua1h8RnZnBOzMEXyh4U1e0cj3Q0etkyH39N+6IMl4U5JWTv6UC3li4GNFj0Qls9ownLwEieFvGM2boWBQw2CVe1+f9Mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UTOlNYvH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V43Tz9rB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508751F000E9;
-	Mon, 17 Aug 2026 14:59:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UTOlNYvH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E8A1F000E9;
+	Mon, 17 Aug 2026 14:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978745;
-	bh=NYmn3ygZoMO9BYQVytGphtapEAFCGOyOdzmu+6oyy0Q=;
+	s=korg; t=1786978748;
+	bh=h/CSV+KCkZPpAA+W62GwzWFjGZ3zdzwNOkmEC5hZ4wY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V43Tz9rBG9vcQ75B60AP3WXmyDC7PzhX12cOlwERB4siZ5qcXMkfesGkBEX/p+M8G
-	 0KHvAJ7psow/bYGKjRQiA05WCIY6UvK9lTrOJKCOn5S4HzR8SD0pacvpcCWSx+QFSf
-	 h1AKyEZwuYFggc/1Ee5Q+WijJiN4GmHPOalSzlqo=
+	b=UTOlNYvHnQ4H2q8kGi8p2uN+sZKxXWhcsYeFKEH9tLq7g3i77hBctenzP2A/bRc5r
+	 /wTtaUe/bef2FnBiB/N+kWX8dc2i1IAjpu1JMySdJkg9OSyk1I1Q694yd7nDDFS84y
+	 NP9zhOiJpja6HKIcvXZXcREkR/kdn49JC3doCPs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuejie Shi <syjcnss@gmail.com>,
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
 	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 143/156] ipv6: fix Route Information option length validation
-Date: Mon, 17 Aug 2026 15:34:37 +0200
-Message-ID: <20260817132540.316019173@linuxfoundation.org>
+Subject: [PATCH 6.6 144/156] ip6_tunnel: clear skb2->cb[] in ip6ip6_err()
+Date: Mon, 17 Aug 2026 15:34:38 +0200
+Message-ID: <20260817132540.357419583@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -51,66 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuejie Shi <syjcnss@gmail.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit d1ad8fb2ac6a1afb71dc22d9ae8efb4dda96c824 upstream.
+commit f803c086399da277b5d0ff36a107d0f162751800 upstream.
 
-rt6_route_rcv() validates the Route Information option (RFC 4191) length
-against the prefix length, but both checks are off by one.
+ip6ip6_err() clones an outer IPv6 ICMP error skb, pulls it to the
+quoted inner IPv6 packet, and then passes the clone to icmpv6_send().
+The clone still carries the outer packet's inet6_skb_parm in skb->cb.
 
-rinfo->length is the ND option length in units of 8 octets and it
-*includes* the 8-byte option header, so an option carrying N bytes of
-prefix has length == 1 + N/8.  RFC 4191 section 2.3 requires length 3
-when Prefix Length is greater than 64, and 2 or 3 when it is greater
-than 0.  The code accepts length >= 2 and length >= 1 respectively.
+If the outer packet had a Home Address Option, IP6CB(skb2)->dsthao
+remains non-zero after skb_pull(). icmpv6_send() later calls
+mip6_addr_swap(), which uses that stale dsthao offset against the quoted
+inner packet. A malformed inner destination-options header can then make
+the HAO lookup and address swap run past the end of the quoted packet
+and corrupt skb_shared_info.
 
-ipv6_addr_prefix() then copies prefix_len/8 bytes out of rinfo->prefix,
-so a Router Advertisement with (prefix_len=128, length=2) or
-(prefix_len=64, length=1) makes the kernel read up to 8 bytes past the
-end of the option.  Those bytes end up in the prefix of the route that
-gets installed, so they are visible to userspace:
+Clear skb2->cb[] before pulling the quoted inner IPv6 packet so the
+reply path does not reuse metadata left by the outer IPv6 stack.
 
-  # RA with a Route Information option (prefix_len=128, length=2)
-  # followed by a source link-layer address option, 01 01 de ad be ef ca fe
-  $ ip -6 route show
-  2001:db8:dead:beef:101:dead:beef:cafe via fe80::1234 dev veth0 proto ra
-                     ^^^^^^^^^^^^^^^^^^ the next option, read out of bounds
-
-When the Route Information option is the last one in the packet, those
-eight bytes come from the skb tail room instead.
-
-Reject the option lengths RFC 4191 does not allow.
-
-Fixes: 70ceb4f53929 ("[IPV6]: ROUTE: Add experimental support for Route Information Option in RA (RFC4191).")
+Fixes: e490d1d85cf5 ("[IPV6] IP6TUNNEL: Split out generic routine in ip6ip6_err().")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuejie Shi <syjcnss@gmail.com>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260730035310.74584-1-syjcnss@gmail.com
+Link: https://patch.msgid.link/fe1a5e765fbca88d69391887f0ed26a19e3e4d39.1785736562.git.zhilinz@nebusec.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/route.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/ipv6/ip6_tunnel.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -989,13 +989,13 @@ int rt6_route_rcv(struct net_device *dev
- 	} else if (rinfo->prefix_len > 128) {
- 		return -EINVAL;
- 	} else if (rinfo->prefix_len > 64) {
--		if (rinfo->length < 2) {
-+		/* RFC 4191: Length MUST be 3 when Prefix Length > 64 */
-+		if (rinfo->length < 3)
- 			return -EINVAL;
--		}
- 	} else if (rinfo->prefix_len > 0) {
--		if (rinfo->length < 1) {
-+		/* RFC 4191: Length MUST be 2 or 3 when Prefix Length > 0 */
-+		if (rinfo->length < 2)
- 			return -EINVAL;
--		}
- 	}
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -675,6 +675,9 @@ ip6ip6_err(struct sk_buff *skb, struct i
+ 		if (!skb2)
+ 			return 0;
  
- 	pref = rinfo->route_pref;
++		/* Remove debris left by outer IPv6 stack. */
++		memset(IP6CB(skb2), 0, sizeof(*IP6CB(skb2)));
++
+ 		skb_dst_drop(skb2);
+ 		skb_pull(skb2, offset);
+ 		skb_reset_network_header(skb2);
 
 
