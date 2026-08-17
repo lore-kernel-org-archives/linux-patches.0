@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5433043E9FB;
-	Mon, 17 Aug 2026 13:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F353943E4A1;
+	Mon, 17 Aug 2026 13:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974305; cv=none; b=kSZBoDeQ1uIeuCT6Xt+aKL4OWWaBNZ3GkzPqPYyHRBs/9sjHaSKx38vxL8I6w4sNoRLQLYNNmYM6HMZcRKkPtlC/tsYStR9vX9oWZzVfO8ZvC0roROJcddV2WfM991agQkjWzKS9trmYLI2+dOxPr4y62dB9r0mjqatmiL2MgQM=
+	t=1786974306; cv=none; b=aiJUrBxRgtSK1eNuzXibeQH/OdMZz+RgXjSbgPQCqct2l1mAtqRz8ABLPmVipGvLsB5Cp6CKiJnuTH05Eog9wJf0oJT7GAPw68zauoj9LBERao9Yw2IG2bn76W3kTGOnG8nNgs//DqoqRXyjJ0ZvUAH3q0zKPCiOXFWcnFiVTmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974305; c=relaxed/simple;
-	bh=szPX8B0ajqS7Kp+KD0VtkiGy+mTiKOci7wu+jBY18zo=;
+	s=arc-20240116; t=1786974306; c=relaxed/simple;
+	bh=iN/QJrMIS/5186du9HoB06ElkcTGv4XRmMVL99B+hCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GBVDWhDJZN10253qWAFE1h6YwYtJ9NFoEU91aZMqhftlW7qhVkO9x/8U7V9ttzrh2UjMVcLOiARPQ47nuAYxM9RV8CT1poaf0jeBrqDT6hFbM4CeoG9SpODdenTu3MgFI2VSl3vQyi6ZSplBPfwn/0OFij9/sDJeWdjHbEqyBMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmrfVVME; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HZzMuYAhElkK8ldfmXWQhtFdTYUow3qGFclNXKJ/nELhCzUio26pbpiPw+cExr1k67jbw/2mo1OgdMMKFDm300gASAhK4F573wpr9QUFxJpdFUgykNc5rZBjCEbH02oHFpe5e/vC2IftxXu53r2L+OAaL9FKFvYfuFbMtNoVr7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8Qes07T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmrfVVME"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 873011F00A3D;
-	Mon, 17 Aug 2026 13:44:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8Qes07T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423EB1F00A3A;
+	Mon, 17 Aug 2026 13:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974292;
-	bh=0Idxh/X/CYIZb0iZoiRwQ0+YDvSJv6e0Bek6chwslpI=;
+	s=korg; t=1786974297;
+	bh=s735x1fc4gMelYyQIXrYFaarYpC1EfWQp13J2W7wVwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nmrfVVME1CByExIFHayusMPRntFfbBaApUKuEZCdrWBuwG7bJaugkauKY7lzeKcZN
-	 15mcmiJaAVuTrJPSiynPNqIYxBySCY3zrRuPuXuWkZR9FK49/k3WFzso9tUPWwOwji
-	 BAcGtBIvriPPA3BiQYvYVm4c5Fs3egZMw/ZUg6zM=
+	b=J8Qes07TVa4utAC6OywKmXp3T1a352QAzq1AP1Qqh+Tb6B4XtRwMD/o4OfOSpd6Xw
+	 t31RTgwcsYrHeTTpZFhGC+Rai4cRCSUSsH6AjSNbV6wTcPkv8wZyaUdAbB8kDU8M/O
+	 Sw+/9ASKbO1ZrE2Z5Y1aRtHC26yX4szD3NEmnT2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 154/271] net: openvswitch: reallocate update replies for mismatched IDs
-Date: Mon, 17 Aug 2026 15:31:19 +0200
-Message-ID: <20260817132543.255080186@linuxfoundation.org>
+	"Sergey V. Frolov" <Sergey.V.Frolov@kaspersky.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Sunil Goutham <sgoutham@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.1 156/271] net: octeontx2-pf: Fix UB in shift operation
+Date: Mon, 17 Aug 2026 15:31:21 +0200
+Message-ID: <20260817132543.326018895@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -52,87 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Sergey V. Frolov <Sergey.V.Frolov@kaspersky.com>
 
-commit 5d1c224dd914579524a183a514c12b95095d12ce upstream.
+commit 7e2d693af0d4c05bddccb3541a0aabd69f4cb244 upstream.
 
-ovs_flow_cmd_new() preallocates the optional reply skb before it takes
-ovs_mutex and before it knows which existing flow will be updated.
+In function otx2_get_egress_burst_cfg, when the parameter `burst` is
+255 and the max mantissa is 255 (0xFFULL), `burst_exp` is set to
+`ilog2(255) - 1`, which equals 6.
 
-That is normally fine because the skb is sized from the request flow
-identifier.  That identifier also becomes the inserted flow's identifier.
-For updates, however, a request with a UFID may miss the UFID lookup and
-then fall back to the flow key lookup.  That lookup can legitimately find
-an existing key-identified flow.  UFIDs are optional and the flow key is
-the primary identifier.
+This results in an unsigned wrap-around when calculating
+`(1ULL << (*burst_exp - 7))`, since `*burst_exp - 7` becomes -1,
+which makes the shift operand 0xFFFFFFFF. This value is greater than
+the width of the left operand.
 
-For echoed replies, ovs_flow_cmd_fill_info() writes the matched flow's
-identifier, not the request identifier used for the preallocation.  A short
-request UFID can therefore leave too little room for the key identifier.
-The fill can then fail with -EMSGSIZE and hit the BUG_ON(error < 0) in the
-update path.
+According to standard 6.5.7 p.3:
+"The type of the result is that of the promoted left operand.
+If the value of the right operand is negative or is greater than
+or equal to the width of the promoted left operand, the behavior
+is undefined."
 
-Once the update target has been resolved, reallocate the reply skb if the
-matched flow needs a larger reply than the request identifier allowed.  Do
-this before replacing the actions so the request can still fail cleanly if
-the rare extra allocation fails.
+Fix the off-by-one boundary condition.
 
-Fixes: 74ed7ab9264c ("openvswitch: Add support for unique flow IDs.")
+Add a WARN_ON(*burst_exp < 7) before the else branch as an
+explicit safeguard. This ensures that if max_mantissa ever changes
+in a way that reintroduces this condition, it will be immediately
+caught at runtime rather than silently triggering UB.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: e638a83f167e ("octeontx2-pf: TC_MATCHALL egress ratelimiting offload")
+Signed-off-by: Sergey V. Frolov <Sergey.V.Frolov@kaspersky.com>
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/f7bbd3c30ce81a39156e226b3872d73abed21d2f.1785644623.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Sunil Goutham <sgoutham@marvell.com>
+Link: https://patch.msgid.link/20260804120446.1955448-1-Sergey.V.Frolov@kaspersky.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/datapath.c |   29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -1113,9 +1113,8 @@ static int ovs_flow_cmd_new(struct sk_bu
- 			error = -EEXIST;
- 			goto err_unlock_ovs;
- 		}
--		/* The flow identifier has to be the same for flow updates.
--		 * Look for any overlapping flow.
--		 */
-+
-+		/* Look for any overlapping flow. */
- 		if (unlikely(!ovs_flow_cmp(flow, &match))) {
- 			if (ovs_identifier_is_key(&flow->id))
- 				flow = ovs_flow_tbl_lookup_exact(&dp->table,
-@@ -1127,6 +1126,30 @@ static int ovs_flow_cmd_new(struct sk_bu
- 				goto err_unlock_ovs;
- 			}
- 		}
-+
-+		if (unlikely(reply)) {
-+			size_t cur, req;
-+
-+			cur = ovs_flow_cmd_msg_size(acts, &new_flow->id,
-+						    ufid_flags);
-+			req = ovs_flow_cmd_msg_size(acts, &flow->id,
-+						    ufid_flags);
-+			if (cur < req) {
-+				struct sk_buff *resized;
-+
-+				resized = ovs_flow_cmd_alloc_info(acts,
-+								  &flow->id,
-+								  info, false,
-+								  ufid_flags);
-+				if (IS_ERR(resized)) {
-+					error = PTR_ERR(resized);
-+					goto err_unlock_ovs;
-+				}
-+				kfree_skb(reply);
-+				reply = resized;
-+			}
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
+@@ -54,10 +54,12 @@ static void otx2_get_egress_burst_cfg(st
+ 	if (burst) {
+ 		*burst_exp = ilog2(burst) ? ilog2(burst) - 1 : 0;
+ 		tmp = burst - rounddown_pow_of_two(burst);
+-		if (burst < max_mantissa)
++		if (burst <= max_mantissa) {
+ 			*burst_mantissa = tmp * 2;
+-		else
++		} else {
++			WARN_ON(*burst_exp < 7);
+ 			*burst_mantissa = tmp / (1ULL << (*burst_exp - 7));
 +		}
-+
- 		/* Update actions. */
- 		old_acts = ovsl_dereference(flow->sf_acts);
- 		rcu_assign_pointer(flow->sf_acts, acts);
+ 	} else {
+ 		*burst_exp = MAX_BURST_EXPONENT;
+ 		*burst_mantissa = max_mantissa;
 
 
