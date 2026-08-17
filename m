@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E7A43CEC0;
-	Mon, 17 Aug 2026 14:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAA23C661A;
+	Mon, 17 Aug 2026 14:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976991; cv=none; b=gbUCGMk7sEBB+Ir3QwfGZtDjPykH8TLXCpUIrjLzi6v4SgxhuXNxMAOjQyAXPZ6S8Eke10kOVmNpZOMRj483xBUiw+Vvd/2SiB+Z3yXXSm12IX6C3UE79GH4ceCB3p5x7/HcSTa6SdHY5gGJXmFK9qgPAoagRiIR4NET1y4AB3I=
+	t=1786976993; cv=none; b=p5b9mova+/VHOdT7/Xln6qBbVb9BKKuqwP1hUAfgyTvCOyCGH2x87bJwcXNMC8CMq5wOu7dktbxpEbtWZ04p5vLGMjZdOXENnwdDwsKpoI70xwnH4eqDR6kT/XEjluNlW4QpCeWGgkm6Uib3omCrMmNNnVctlWuqM+N9IjnGOQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976991; c=relaxed/simple;
-	bh=XqQkKcNemxZlOOT0NvnbxTHzQea/wSCResBNM46XUrk=;
+	s=arc-20240116; t=1786976993; c=relaxed/simple;
+	bh=uMWVJCBlchH5MCy7d/1tDUqzzwV8MT0/HeQ4onjSm+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HFRD7pJv/A5UDbd0cQopY8crpkr7rUulktfGD617ER3mFsLggTQ3QrBDM11zsYR8Oc52h22k/LI203IB8AGTrJzDfcE/RXes0lAxGXrErwEgXdiJ5tMXHTKZZ+0rJ3T7eLrrO5GJndQaEUYfQbObOjXG18PBZJezALjmRa8e5z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=seVYUg08; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=myzmBgXZ8wVu5pyegxSjbuJUc5HEzydOVATiIVsWF/VlX/xOs9+s+9MlgtuGBkmW/ShIK7btsZKCMqAJxH0dNk2152rq1tWmlSPE5AXC4C6CrDcUJGTpYl+p4UukXnY9xfqeBe84URXmqAKawUVkFZyADWEXlgXRcO3p8clpbAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RWOHXKqO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="seVYUg08"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F44A1F00A3E;
-	Mon, 17 Aug 2026 14:29:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RWOHXKqO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09AC71F000E9;
+	Mon, 17 Aug 2026 14:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976988;
-	bh=Si7KDbj2Ww+mrcYxd+ckZbfFh37bxBOof3RzSz8hSY0=;
+	s=korg; t=1786976991;
+	bh=SfjSdsNTaNsITR99d/AVTH7RjBhMi8fV/s+sL0lx97A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=seVYUg08LYqzFRrvMAdnPxzBqcCMz99zy62YorZl/vXIIrsOYMxJL5NcbnYuFCNUp
-	 nFs8GMccEu8Idz79FtyuOk5WCKqwtHuJgmZ091fV9AQeoBC2g0SGW98+VqWBdakdH1
-	 wh1vE1opJn7qu9LYAMdAjd3KcKjwAcY7jeLQbPRI=
+	b=RWOHXKqOPfjdoUi+aoNd0vAGafnUGqcTCyMc5z7IzTsqZYY816ymQnpeOpHQt/z2u
+	 EgHh6ibH+paO6XMDrwuSyu6oAfEwMmr9mzkpbiVdg60qoSdFm0D9fUC/i4hmFU7TC2
+	 ODrEX7Dc2RYk4CF9Tk53Pibf6mT+DlDfdfPDBE7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@auroraos.dev>,
+	Zile Xiong <xiongzile99@gmail.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 173/456] media: v4l2-ctrls-request: add NULL check in v4l2_ctrl_request_complete()
-Date: Mon, 17 Aug 2026 15:29:23 +0200
-Message-ID: <20260817132546.889535944@linuxfoundation.org>
+Subject: [PATCH 5.15 174/456] media: vb2: use ssize_t for vb2_read/vb2_write
+Date: Mon, 17 Aug 2026 15:29:24 +0200
+Message-ID: <20260817132546.925377867@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,60 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@auroraos.dev>
+From: Zile Xiong <xiongzile99@gmail.com>
 
-commit caced3578bf9f104a4aaad8f46c4c719e705d9a6 upstream.
+commit a562d6dc86bdfdd299e1b4734977a8d63e803583 upstream.
 
-If CONFIG_MEDIA_CONTROLLER is undefined, media_request_object_find() will
-always return NULL, so its 2nd call in v4l2_ctrl_request_complete() would
-fail as well as the 1st one and thus cause hdl to have a wrong value (at
-the top of memory) and list_for_each_entry() to iterate over the garbage
-data located there. Add NULL check for the 2nd call and place the error
-cleanup at the end of v4l2_ctrl_request_complete()...
+vb2_read() and vb2_write() return size_t, but propagate
+negative errno values from __vb2_perform_fileio().
 
-Found by Linux Verification Center (linuxtesting.org) with the Svace static
-analysis tool.
+This relies on implicit signed/unsigned conversions in callers
+(e.g. vb2_fop_read()) to recover error codes:
 
-Fixes: c3bf5129f339 ("media: v4l2-ctrls: always copy the controls on completion")
+    __vb2_perform_fileio() -> -EINVAL
+    vb2_read()             -> (size_t)-EINVAL
+    vb2_fop_read()         -> -EINVAL
+
+This relies on implicit conversions that are not obvious.
+
+These helpers are exported (EXPORT_SYMBOL_GPL) and part of the
+vb2 API, so changing their return type may affect existing users.
+
+However, they conceptually follow read/write semantics, where
+ssize_t is typically used to return either a byte count or a
+negative error code.
+
+Switch vb2_read() and vb2_write() to ssize_t, and update
+__vb2_perform_fileio() accordingly.
+
+Signed-off-by: Zile Xiong <xiongzile99@gmail.com>
+Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Fixes: b25748fe6126 ("[media] v4l: videobuf2: add read() and write() emulator")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sergey Shtylyov <s.shtylyov@auroraos.dev>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-ctrls-request.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/media/common/videobuf2/videobuf2-core.c |   12 ++++++------
+ include/media/videobuf2-core.h                  |    8 ++++----
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
---- a/drivers/media/v4l2-core/v4l2-ctrls-request.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls-request.c
-@@ -348,13 +348,12 @@ void v4l2_ctrl_request_complete(struct m
- 		ret = v4l2_ctrl_handler_init(hdl, (main_hdl->nr_of_buckets - 1) * 8);
- 		if (!ret)
- 			ret = v4l2_ctrl_request_bind(req, hdl, main_hdl);
--		if (ret) {
--			v4l2_ctrl_handler_free(hdl);
--			kfree(hdl);
--			return;
--		}
-+		if (ret)
-+			goto error;
- 		hdl->request_is_queued = true;
- 		obj = media_request_object_find(req, &req_ops, main_hdl);
-+		if (!obj)
-+			goto error;
- 	}
- 	hdl = container_of(obj, struct v4l2_ctrl_handler, req_obj);
- 
-@@ -389,6 +388,11 @@ void v4l2_ctrl_request_complete(struct m
- 	mutex_unlock(main_hdl->lock);
- 	media_request_object_complete(obj);
- 	media_request_object_put(obj);
-+	return;
-+
-+error:
-+	v4l2_ctrl_handler_free(hdl);
-+	kfree(hdl);
+--- a/drivers/media/common/videobuf2/videobuf2-core.c
++++ b/drivers/media/common/videobuf2/videobuf2-core.c
+@@ -2719,8 +2719,8 @@ static int __vb2_cleanup_fileio(struct v
+  * @nonblock:	mode selector (1 means blocking calls, 0 means nonblocking)
+  * @read:	access mode selector (1 means read, 0 means write)
+  */
+-static size_t __vb2_perform_fileio(struct vb2_queue *q, char __user *data, size_t count,
+-		loff_t *ppos, int nonblock, int read)
++static ssize_t __vb2_perform_fileio(struct vb2_queue *q, char __user *data, size_t count,
++				    loff_t *ppos, int nonblock, int read)
+ {
+ 	struct vb2_fileio_data *fileio;
+ 	struct vb2_fileio_buf *buf;
+@@ -2880,15 +2880,15 @@ static size_t __vb2_perform_fileio(struc
+ 	return ret;
  }
- EXPORT_SYMBOL(v4l2_ctrl_request_complete);
  
+-size_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
+-		loff_t *ppos, int nonblocking)
++ssize_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
++		 loff_t *ppos, int nonblocking)
+ {
+ 	return __vb2_perform_fileio(q, data, count, ppos, nonblocking, 1);
+ }
+ EXPORT_SYMBOL_GPL(vb2_read);
+ 
+-size_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
+-		loff_t *ppos, int nonblocking)
++ssize_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
++		  loff_t *ppos, int nonblocking)
+ {
+ 	return __vb2_perform_fileio(q, (char __user *) data, count,
+ 							ppos, nonblocking, 0);
+--- a/include/media/videobuf2-core.h
++++ b/include/media/videobuf2-core.h
+@@ -1044,8 +1044,8 @@ __poll_t vb2_core_poll(struct vb2_queue
+  * @ppos:	file handle position tracking pointer
+  * @nonblock:	mode selector (1 means blocking calls, 0 means nonblocking)
+  */
+-size_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
+-		loff_t *ppos, int nonblock);
++ssize_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
++		 loff_t *ppos, int nonblock);
+ /**
+  * vb2_write() - implements write() syscall logic.
+  * @q:		pointer to &struct vb2_queue with videobuf2 queue.
+@@ -1054,8 +1054,8 @@ size_t vb2_read(struct vb2_queue *q, cha
+  * @ppos:	file handle position tracking pointer
+  * @nonblock:	mode selector (1 means blocking calls, 0 means nonblocking)
+  */
+-size_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
+-		loff_t *ppos, int nonblock);
++ssize_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
++		  loff_t *ppos, int nonblock);
+ 
+ /**
+  * typedef vb2_thread_fnc - callback function for use with vb2_thread.
 
 
