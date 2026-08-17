@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7751743B6F2;
-	Mon, 17 Aug 2026 14:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383163F0A8C;
+	Mon, 17 Aug 2026 14:10:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975807; cv=none; b=IkWdVdgCW8ElMOw+iC4be7n5xhKxxKNF+Fsbc6z7FefhrIv7H8/qgYkEdzhwxlyIY+bzSc6RgNBF1+LdwPynJfam/7wBJaGg3X9s9+3oN9a/fhKT1A7Ocvj3unMAq9mjPJkADlFeE38Z5z0NLCYAxzvOfOB5UspjVN4YACQaoMQ=
+	t=1786975811; cv=none; b=i/F1EacfpQQKMVnZp4w4l1NZMICgctb6smlDNkipq0ahyiscxAyLc4YNmgrPF9P6UL/viizAkVohHuBGTd/1DRoKIoSNrubS84cG1C5vXlwys4hEi4+MjbM5YtIxiFCh4It7xy04U9hX8xX0q3+suqPZgkUTyiKCcI01hgyQz+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975807; c=relaxed/simple;
-	bh=PDikinULYxNBjsWj9aD10Gu3bMPbKK8AqOrdzAWGmoY=;
+	s=arc-20240116; t=1786975811; c=relaxed/simple;
+	bh=LhYWE+0dqJIV9K1ipcB/NofnwFcCr/brdPNx73UCcJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j/t8p+lEA8KQKoBDKPT+W5gFpzsaqMrkeHZ5vA2U/fyEa2VQ1ZKWwbunJyKjvqpwlRYIEjda+UpaHUUysLG4ou0xq+z2u28cjVq47PK5AU1+CjHTgeKWntYUkStGazMSNie5sfzGhVhnN9VNcUjh0Vb3TJWgHh3eMSbmyc4ZBa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3bzVkPK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UCuewmWih4wX9iykrLbbAGw8BhErzvMjY4NmFA/F4nc1QJc7b+I/JBRt0NXdfLondrNueHmIySrFVW30QLmnWf42LPkpsi/r2LqsTwxXe7m4v2IWjT8jTOw3QrsEdVyOl3BARdTlmC7SRjV/+Dm3ZiSRi1guartKXxAMJI5UQ8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fHWgJHqA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3bzVkPK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98ADB1F000E9;
-	Mon, 17 Aug 2026 14:10:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fHWgJHqA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E57F1F000E9;
+	Mon, 17 Aug 2026 14:10:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975806;
-	bh=h/LXegX3GcInC7HYrqHlDRTwUmgf+FJ3bbdAiiozE3E=;
+	s=korg; t=1786975810;
+	bh=YaPv3/tlnJNTx1YZdmt1IK6N3gmMipVhZtAnAlb7rSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h3bzVkPKAuqKRIAnAFPdPWOgSmJuALRKQyxbeiDFnGULnEXI10vJ17CZ2QDQt0MOC
-	 k/4ywynXmatsBJ+sEucfBlGcT+l+RBQQWp0m1z6O39q2a+C8rZ82HcweyXf9T5JMY4
-	 HHdfJ6a0yq26ps2A3hWhZD996xymzWRftsmPnjP4=
+	b=fHWgJHqAi8XuCnp+MSm/HWNDz0OKZBEzv/wH/IiMNiG5Dg9zAsr+eJX0B6KxusZC4
+	 GTKIz31OCThLTWM4oCjxvi7bEqYKYP4npqI2VAzAef9MIbNClgNPR4idqebVTxjwaX
+	 U07YuZLOXveJ2C9WmTdHiDE7LMM1VkiuShcYrB0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oz Tiram <oz@shift-computing.de>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 5.10 116/389] drm/amdgpu: Fix VFCT bus number matching with soft filter
-Date: Mon, 17 Aug 2026 15:29:15 +0200
-Message-ID: <20260817132543.698084748@linuxfoundation.org>
+	Feng Xue <feng.xue@outlook.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Lee Jones <lee@kernel.org>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 107/389] can: bcm: defer rx_op deallocation to workqueue to fix thrtimer UAF
+Date: Mon, 17 Aug 2026 15:29:06 +0200
+Message-ID: <20260817132543.343212618@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,95 +54,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Lee Jones <lee@kernel.org>
 
-commit db7e8108809a2245f0a17ba323f027cac0941ffb upstream.
+commit 68973f9db76144825e4f35dfdc80fb8279eb2d57 upstream.
 
-On systems where PCI bus renumbering occurs (e.g. pci=realloc,
-resource conflicts), the runtime bus number may differ from the
-BIOS POST bus number recorded in the VFCT table. This causes
-amdgpu_acpi_vfct_bios() to fail finding the VBIOS even though
-the correct device entry exists.
+Commit f1b4e32aca08 ("can: bcm: use call_rcu() instead of costly
+synchronize_rcu()") replaced synchronize_rcu() in bcm_delete_rx_op()
+with call_rcu() and introduced the RX_NO_AUTOTIMER flag.
 
-Introduce amdgpu_acpi_vfct_match() which treats the bus number
-as a soft filter: vendor/device/function identity is the hard
-requirement, while exact bus match is the preferred path. When
-bus numbers disagree but device identity matches, accept the
-VFCT entry and log a dev_notice for diagnostics.
+However, this flag check was omitted for thrtimer in the packet rx
+fast-path. During BCM RX operation teardown, a concurrent RCU reader
+(bcm_rx_handler) can race and re-arm thrtimer via
+bcm_rx_update_and_send() after call_rcu() has been scheduled.  Once
+the RCU grace period elapses, bcm_op is freed.  The subsequently
+firing thrtimer then dereferences the deallocated op, causing a UAF.
 
-Reported-by: Oz Tiram <oz@shift-computing.de>
-Closes: https://lore.kernel.org/amd-gfx/20260621173211.28443-1-oz@shift-computing.de/
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Link: https://patch.msgid.link/20260708193518.702584-2-mario.limonciello@amd.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 11c141672045ffc0187aa604f2c0f597bc334fb2)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Adding flag checks to the rx fast-path (bcm_rx_update_and_send) does not
+fully close the TOCTOU race and introduces latency for every CAN frame.
+Conversely, calling hrtimer_cancel() directly inside the RCU callback
+(softirq context) is fatal as hrtimer_cancel() can sleep, triggering
+a "scheduling while atomic" panic.
+
+Resolve this by deferring the timer cancellation and memory free to a
+dedicated unbound workqueue (bcm_wq).  The RCU callback now queues a
+work item to bcm_wq, which safely cancels both timers and deallocates
+memory in sleepable process context.  A dedicated workqueue is used to
+prevent system-wide WQ saturation and is cleanly flushed/destroyed
+on module unload to avoid rmmod page faults.
+
+Since the deferred work can now outlive the calling context by an
+unbounded amount, also take a reference on op->sk when it is assigned
+and drop it only once the deferred work has cancelled both timers, so a
+socket can no longer be freed out from under a still-armed timer whose
+callback (bcm_send_to_user()) dereferences op->sk.
+
+Fixes: f1b4e32aca08 ("can: bcm: use call_rcu() instead of costly synchronize_rcu()")
+Tested-by: Feng Xue <feng.xue@outlook.com>
+Tested-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260714-bcm_fixes-v15-1-562f7e3e42da@hartkopp.net
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c |   45 +++++++++++++++++++++++++++----
- 1 file changed, 40 insertions(+), 5 deletions(-)
+ net/can/bcm.c | 34 ++++++++++++++++++++++++++++++++--
+ 1 file changed, 32 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
-@@ -358,6 +358,45 @@ static bool amdgpu_read_disabled_bios(st
+diff --git a/net/can/bcm.c b/net/can/bcm.c
+index 06ee3bfe87c99d..ee2b14e56b17b6 100644
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -58,6 +58,7 @@
+ #include <linux/can/skb.h>
+ #include <linux/can/bcm.h>
+ #include <linux/slab.h>
++#include <linux/workqueue.h>
+ #include <linux/spinlock.h>
+ #include <net/sock.h>
+ #include <net/net_namespace.h>
+@@ -89,6 +90,8 @@ MODULE_ALIAS("can-proto-2");
+ 
+ #define BCM_MIN_NAMELEN CAN_REQUIRED_SIZE(struct sockaddr_can, can_ifindex)
+ 
++static struct workqueue_struct *bcm_wq;
++
+ /*
+  * easy access to the first 64 bit of can(fd)_frame payload. cp->data is
+  * 64 bit aligned so the offset has to be multiples of 8 which is ensured
+@@ -102,6 +105,7 @@ static inline u64 get_u64(const struct canfd_frame *cp, int offset)
+ struct bcm_op {
+ 	struct list_head list;
+ 	struct rcu_head rcu;
++	struct work_struct work;
+ 	int ifindex;
+ 	canid_t can_id;
+ 	u32 flags;
+@@ -740,9 +744,12 @@ static struct bcm_op *bcm_find_op(struct list_head *ops,
+ 	return NULL;
  }
  
- #ifdef CONFIG_ACPI
-+/**
-+ * amdgpu_acpi_vfct_match() - Check if a VFCT entry matches the device
-+ * @adev: AMDGPU device
-+ * @vhdr: VFCT image header to check
-+ *
-+ * VFCT entries contain the PCI bus number as recorded during BIOS POST.
-+ * On systems where the kernel renumbers PCI buses (e.g. pci=realloc or
-+ * resource conflicts), the runtime bus number may differ from the POST
-+ * value.  Match by device identity (vendor + device + function) and use
-+ * the bus number as a preference: exact bus match is preferred, but when
-+ * the bus numbers disagree we accept the entry if the device identity
-+ * matches.
-+ *
-+ * Returns: 0 on match, -ENODEV on no match
-+ */
-+static int amdgpu_acpi_vfct_match(struct amdgpu_device *adev,
-+				  VFCT_IMAGE_HEADER *vhdr)
+-static void bcm_free_op_rcu(struct rcu_head *rcu_head)
++static void bcm_free_op_work(struct work_struct *work)
+ {
+-	struct bcm_op *op = container_of(rcu_head, struct bcm_op, rcu);
++	struct bcm_op *op = container_of(work, struct bcm_op, work);
++
++	hrtimer_cancel(&op->timer);
++	hrtimer_cancel(&op->thrtimer);
+ 
+ 	if ((op->frames) && (op->frames != &op->sframe))
+ 		kfree(op->frames);
+@@ -750,9 +757,23 @@ static void bcm_free_op_rcu(struct rcu_head *rcu_head)
+ 	if ((op->last_frames) && (op->last_frames != &op->last_sframe))
+ 		kfree(op->last_frames);
+ 
++	/* the last possible access to op->timer/op->thrtimer has now
++	 * happened above via hrtimer_cancel() - op->sk is no longer
++	 * needed by any pending timer callback, so drop our reference
++	 */
++	sock_put(op->sk);
++
+ 	kfree(op);
+ }
+ 
++static void bcm_free_op_rcu(struct rcu_head *rcu_head)
 +{
-+	/* Vendor and device IDs must always match */
-+	if (vhdr->VendorID != adev->pdev->vendor ||
-+	    vhdr->DeviceID != adev->pdev->device)
-+		return -ENODEV;
++	struct bcm_op *op = container_of(rcu_head, struct bcm_op, rcu);
 +
-+	if (vhdr->PCIDevice != PCI_SLOT(adev->pdev->devfn) ||
-+	    vhdr->PCIFunction != PCI_FUNC(adev->pdev->devfn))
-+		return -ENODEV;
-+
-+	/* Exact bus number match - preferred */
-+	if (vhdr->PCIBus == adev->pdev->bus->number)
-+		return 0;
-+
-+	/* Bus mismatch but device identity matches (PCI renumbering case) */
-+	dev_notice(adev->dev,
-+		   "VFCT bus number mismatch: table %u != runtime %u, matching by device identity (vendor 0x%04x device 0x%04x)\n",
-+		   vhdr->PCIBus, adev->pdev->bus->number,
-+		   adev->pdev->vendor, adev->pdev->device);
-+	return 0;
++	INIT_WORK(&op->work, bcm_free_op_work);
++	queue_work(bcm_wq, &op->work);
 +}
 +
- static bool amdgpu_acpi_vfct_bios(struct amdgpu_device *adev)
+ static void bcm_remove_op(struct bcm_op *op)
  {
- 	struct acpi_table_header *hdr;
-@@ -393,11 +432,7 @@ static bool amdgpu_acpi_vfct_bios(struct
- 		}
+ 	hrtimer_cancel(&op->timer);
+@@ -1008,6 +1029,7 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
  
- 		if (vhdr->ImageLength &&
--		    vhdr->PCIBus == adev->pdev->bus->number &&
--		    vhdr->PCIDevice == PCI_SLOT(adev->pdev->devfn) &&
--		    vhdr->PCIFunction == PCI_FUNC(adev->pdev->devfn) &&
--		    vhdr->VendorID == adev->pdev->vendor &&
--		    vhdr->DeviceID == adev->pdev->device) {
-+		    !amdgpu_acpi_vfct_match(adev, vhdr)) {
- 			adev->bios = kmemdup(&vbios->VbiosContent,
- 					     vhdr->ImageLength,
- 					     GFP_KERNEL);
+ 		/* bcm_can_tx / bcm_tx_timeout_handler needs this */
+ 		op->sk = sk;
++		sock_hold(sk);
+ 		op->ifindex = ifindex;
+ 
+ 		/* initialize uninitialized (kzalloc) structure */
+@@ -1173,6 +1195,7 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 
+ 		/* bcm_can_tx / bcm_tx_timeout_handler needs this */
+ 		op->sk = sk;
++		sock_hold(sk);
+ 		op->ifindex = ifindex;
+ 
+ 		/* ifindex for timeout events w/o previous frame reception */
+@@ -1830,11 +1853,16 @@ static int __init bcm_module_init(void)
+ {
+ 	int err;
+ 
++	bcm_wq = alloc_workqueue("can-bcm-wq", WQ_UNBOUND, 0);
++	if (!bcm_wq)
++		return -ENOMEM;
++
+ 	pr_info("can: broadcast manager protocol\n");
+ 
+ 	err = can_proto_register(&bcm_can_proto);
+ 	if (err < 0) {
+ 		printk(KERN_ERR "can: registration of bcm protocol failed\n");
++		destroy_workqueue(bcm_wq);
+ 		return err;
+ 	}
+ 
+@@ -1848,6 +1876,8 @@ static void __exit bcm_module_exit(void)
+ 	can_proto_unregister(&bcm_can_proto);
+ 	unregister_netdevice_notifier(&canbcm_notifier);
+ 	unregister_pernet_subsys(&canbcm_pernet_ops);
++	rcu_barrier();
++	destroy_workqueue(bcm_wq);
+ }
+ 
+ module_init(bcm_module_init);
+-- 
+2.53.0
+
 
 
