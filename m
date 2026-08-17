@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FAE025C804;
-	Mon, 17 Aug 2026 15:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1408125C804;
+	Mon, 17 Aug 2026 15:02:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978936; cv=none; b=QzhNCFIfc2LrpAzckIk941XV5/eqq8cPowfkg7aiMo6xmIHlZJ4FL1WhW3OlVbDFW3WxMmc2qnBUhMX92NODLzQU9ZA7VhvKzfvcbFTQDzcr2psl85qd8WPIBSqdEohTDfi/Efps4xc9EtBpbfDv85T/pyFkIxjczqbDzICTbO4=
+	t=1786978939; cv=none; b=ByeLhclr/E/2s21d+/l79bzQRkZm2BFcQTtbTHZDvMVCy2jGVqebpNXUB8JwLKbPjuY8UZqD4yQ9XGy/nmyy4wyn/eCBlz3r0ma89tnII53PuosB5ed0TI07Im1zH8Ol+cmqdhWBSxqGUpnh+9xTut1Azvbpxo8/9m3Co8sE/bU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978936; c=relaxed/simple;
-	bh=VkEiw9GfqTpJsl2oRCnVX5mw9c/auVAjGJfOXTHGJpI=;
+	s=arc-20240116; t=1786978939; c=relaxed/simple;
+	bh=tHB0G6ti4wlG9qpryGaskpPRbm90N9LuOc2hJM+Ul1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ozwnAN5JxV0Z08Piie2sXl3Fs11ezLp6r1gr6Ae87NdIorStOscU/WBCWmxMs738IHjWIfR4QA3TubpM56mBZ0KZtpTGf4h/5tmhi7u8nb3ePb6c4LRl7Sd9+HDuLe7y2xfG8k/aLymF+ZJ30YpH1wHncNBkdDP0ax1158nrXlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xnjpM+QM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Miqbh2fjaYxbkL97mOWAxs8TciWK4TXa9YGGhLP9FnmQPVkUSE10aA5tjVI06ohY6DJqYSAwUR8AVTzCcncMitlI0c7m5aA3bSDs1CcN0BfKO2D0Ozhh+c+5/H6p5Lj2aafVttWWMzzvLdQjrh5/QdEWQgf99iV8K5B9gb9vQ28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2iSTFas; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xnjpM+QM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9485F1F000E9;
-	Mon, 17 Aug 2026 15:02:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2iSTFas"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2431F000E9;
+	Mon, 17 Aug 2026 15:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978935;
-	bh=z9Hd5k9qbuIxYoJTOSRFlTjtMvDmb8BlmDypiPRIg98=;
+	s=korg; t=1786978938;
+	bh=Vkv8hZeqLeqEHMDPptzxoKT8hX/xHFaPu6CpzdMi0Jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xnjpM+QMR2TYie3JVyfaQf7Sm8XV8+Lpm6+oos4wpVZZZSmxKQc9YgjfMre17YyDd
-	 /gFxsmtt72dOTcG2z/jAB12QvWkrsJdt4lEwtE+xltuSzk6/443V2i3U4SeJCXAJMY
-	 +aVCehpZV3mdW+Wpk8wDAfqGPfg8bf7kp3FCo9vU=
+	b=M2iSTFas20oEZor0U0+qrUqRLpayZ8puC9mmFxyOO7sJoR9lv8fFxIk1pwp3poLgL
+	 NS9bUHepsI6Um2nVd7iEHecGOeH96cxkEa59WeL5ofAAF5eATUsWNS4PeQ4oJdY7Rq
+	 MjkP2yUFisax4loQZXMULDMnvt+VJdOHNpEkgawM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 051/609] wifi: brcmfmac: initialize SDIO data work before cleanup
-Date: Mon, 17 Aug 2026 15:25:47 +0200
-Message-ID: <20260817132545.110016314@linuxfoundation.org>
+Subject: [PATCH 6.1 025/609] IB/mad: Drop unmatched RMPP responses before reassembly
+Date: Mon, 17 Aug 2026 15:25:21 +0200
+Message-ID: <20260817132544.073495075@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,59 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 2a665946e0407a05a3f81bd56a08553c446498e0 ]
+[ Upstream commit d2e52d610b9b09694261632340b801a421e0b0c5 ]
 
-brcmf_sdio_probe() stores the newly allocated bus in sdiodev->bus before
-allocating the ordered workqueue. If that allocation fails, the function
-jumps to fail and calls brcmf_sdio_remove().
+Kernel-handled RMPP receive processing starts reassembly for active
+DATA responses before the response is matched to an outstanding send.
+The normal match happens later, after ib_process_rmpp_recv_wc() has
+either assembled a complete message or consumed the segment.
 
-brcmf_sdio_remove() unconditionally cancels bus->datawork. Initialize the
-work item before the first failure path that can reach brcmf_sdio_remove(),
-so the cleanup path always observes a valid work object.
+That ordering lets an unsolicited response that routes to a kernel
+RMPP agent by the high TID bits allocate or extend RMPP receive state
+before the full TID and source address are checked against a real
+request. A reordered burst can therefore reach the receive-side
+insertion path even though the response would not match any send.
 
-This issue was found by our static analysis tool and then confirmed by
-manual review of the probe error path and the remove-time work drain. The
-problem pattern is an early setup failure that reaches a cleanup helper
-which cancels an embedded work item before its initializer has run.
+For kernel-handled RMPP DATA responses, require the existing
+ib_find_send_mad() match before entering RMPP reassembly. The matcher
+already checks the full TID, management class and source address/GID
+against the agent wait, backlog and in-flight send lists. If there is
+no match, drop the response without creating RMPP state.
 
-A QEMU PoC forced alloc_ordered_workqueue() to fail at the same point in
-brcmf_sdio_probe(), before INIT_WORK(&bus->datawork) is reached. The
-resulting fail path calls brcmf_sdio_remove(), and DEBUG_OBJECTS reports
-the invalid work drain with brcmf_sdio_probe() and brcmf_sdio_remove() in
-the stack.
+This leaves the RMPP window behavior unchanged and only rejects
+responses that have no corresponding request.
 
-Fixes: 9982464379e8 ("brcmfmac: make sdio suspend wait for threads to freeze")
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260619064401.1048976-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: fa619a77046b ("[PATCH] IB: Add RMPP implementation")
+Assisted-by: Codex:gpt-5-5-xhigh
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/3170ff3bc389a930bb1641f2caa394a0b2241579.1780774907.git.michael.bommarito@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/core/mad.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-index 5f6c0afe22d49c..fb09d76ea053cb 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -4451,6 +4451,7 @@ struct brcmf_sdio *brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
- 	bus->sdiodev = sdiodev;
- 	sdiodev->bus = bus;
- 	skb_queue_head_init(&bus->glom);
-+	INIT_WORK(&bus->datawork, brcmf_sdio_dataworker);
- 	bus->txbound = BRCMF_TXBOUND;
- 	bus->rxbound = BRCMF_RXBOUND;
- 	bus->txminmax = BRCMF_TXMINMAX;
-@@ -4464,7 +4465,6 @@ struct brcmf_sdio *brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
- 		goto fail;
- 	}
- 	brcmf_sdiod_freezer_count(sdiodev);
--	INIT_WORK(&bus->datawork, brcmf_sdio_dataworker);
- 	bus->brcmf_wq = wq;
+diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
+index 242434c09e8d8f..bddb1c607aff62 100644
+--- a/drivers/infiniband/core/mad.c
++++ b/drivers/infiniband/core/mad.c
+@@ -1778,6 +1778,24 @@ void ib_mark_mad_done(struct ib_mad_send_wr_private *mad_send_wr)
+ 			      &mad_send_wr->mad_agent_priv->done_list);
+ }
  
- 	/* attempt to attach to the dongle */
++static bool is_kernel_rmpp_data_response(struct ib_mad_agent_private *agent,
++					 struct ib_mad_recv_wc *mad_recv_wc)
++{
++	const struct ib_mad_hdr *mad_hdr = &mad_recv_wc->recv_buf.mad->mad_hdr;
++	struct ib_rmpp_mad *rmpp_mad;
++
++	if (!ib_mad_kernel_rmpp_agent(&agent->agent) ||
++	    !ib_response_mad(mad_hdr) ||
++	    !ib_is_mad_class_rmpp(mad_hdr->mgmt_class))
++		return false;
++
++	rmpp_mad = (struct ib_rmpp_mad *)mad_recv_wc->recv_buf.mad;
++
++	return (ib_get_rmpp_flags(&rmpp_mad->rmpp_hdr) &
++		IB_MGMT_RMPP_FLAG_ACTIVE) &&
++	       rmpp_mad->rmpp_hdr.rmpp_type == IB_MGMT_RMPP_TYPE_DATA;
++}
++
+ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
+ 				 struct ib_mad_recv_wc *mad_recv_wc)
+ {
+@@ -1796,6 +1814,18 @@ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
+ 	}
+ 
+ 	list_add(&mad_recv_wc->recv_buf.list, &mad_recv_wc->rmpp_list);
++	if (is_kernel_rmpp_data_response(mad_agent_priv, mad_recv_wc)) {
++		spin_lock_irqsave(&mad_agent_priv->lock, flags);
++		mad_send_wr = ib_find_send_mad(mad_agent_priv, mad_recv_wc);
++		spin_unlock_irqrestore(&mad_agent_priv->lock, flags);
++
++		if (!mad_send_wr) {
++			ib_free_recv_mad(mad_recv_wc);
++			deref_mad_agent(mad_agent_priv);
++			return;
++		}
++	}
++
+ 	if (ib_mad_kernel_rmpp_agent(&mad_agent_priv->agent)) {
+ 		mad_recv_wc = ib_process_rmpp_recv_wc(mad_agent_priv,
+ 						      mad_recv_wc);
 -- 
 2.53.0
 
