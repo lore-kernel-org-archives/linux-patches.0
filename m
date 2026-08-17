@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C3E43E071;
-	Mon, 17 Aug 2026 14:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4977743B6E7;
+	Mon, 17 Aug 2026 14:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978171; cv=none; b=t1bPv7ktA8UFGiRn1CUFPVFrqcguu/MXP7n65ijqgRftAQTZIJabmam1GOnbqYqGbyHE4Q0wKnkDVj6DoAFNKiIDzL9zIUxs0+njk9agFxfNh61LHETbPB64RLH/DstvOrgyWUeaOTxl9WBL3FVY1vjixc/OLRCCq9we1ncLYks=
+	t=1786978174; cv=none; b=NuGHfF708DmLuHvg5I7BZCuARSvIEP++eo/3lE08u6aHxcmYpGRuyhFpif6jflzUSQwG2tBwFacuu1mzoGFQBH07+Is32G6RBZnwtb8oqjWfrM85fmuBPn1EAxq0sl28mQO/TCnW3OmXc0EpOeH2Ix1RVYWYkUbi5ofhQWZEkHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978171; c=relaxed/simple;
-	bh=t4+SZdZFqWYw3GDRQQa6shOwhLp0XX4bTGCOceoEEjI=;
+	s=arc-20240116; t=1786978174; c=relaxed/simple;
+	bh=hmXPTqNO/B6mZYjh752XM52CK79/S+6mXbhUemfmw7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lJSTETk9hsWVuQC+uKDk7mv7pCC4T4taWQ3JgM8Ca0T7ZPXFdhHKEbTKgPMLjg8Rf9CQXExDEr/5IqKMrMhioNcF3nKD2TJvPa24VgHWKMY3WiFnieL/ZffXrKGua8ovhl2l413/cP5ptsSVyiB25HiGNCBpszQD/Qjh10eQuQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpY5cpf9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i/il9tmN1PtsUwknPPXyxggqvFI0OAa0IZSYNU5pATiq33RunbZGcCqwwdz0FlyJ4aqrTsBVxmnJzmO6X1OVTfmAIA/EsnlystfsBQ3O25QoKU4hxP36KwRCz+glO0hJBnREALwCH/EbhBeV4gCmWkl0/QeTK5frdksuzEwtUps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shXflcO1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpY5cpf9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370011F000E9;
-	Mon, 17 Aug 2026 14:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shXflcO1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E93A21F00A3D;
+	Mon, 17 Aug 2026 14:49:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978159;
-	bh=hR0fqtvKpASZ0SeUxA6VWI1jhyg2K1npQ+F7On8GN1w=;
+	s=korg; t=1786978165;
+	bh=/CfJBX6T8D97pZ9Q7VoByexHroIIVG94BlU9qo6ojZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mpY5cpf930blsXskpU4Dgd0wE3KyONBzaio9FN4Nhg3d8OAf7KCbHxLTbaYa0AZO9
-	 anJYa1SdkPhIKs43kj9hc/xrNuCMagdXdPIpePZwQwpdGhNRm6b/rHPryhhR9SFZbm
-	 3MMJO7IO8ySTWhF5XUu8TGmjWsm6MFzy28iNDt5E=
+	b=shXflcO1IqI9gJnuzboyUKJ76XnubtDXHXpiV07GzyuIDnKZQWgxOUmumv2ynUFkM
+	 xO977ujlWD2MJUpKwQPl8Qn4U/46eXJj/tp5CDnGltSgdQSNHIEKh0QeY70aiP0AzG
+	 fGEhQIHhAH0WoSOlSBFSvClYlI/Hf4X1p2EaSEPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Rogers <linux@joshua.hu>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.12 083/181] vt: stabilize tty reference in kbd_keycode with tty_port_tty_get
-Date: Mon, 17 Aug 2026 15:32:57 +0200
-Message-ID: <20260817132538.705889811@linuxfoundation.org>
+	Lincoln Wallace <locnnil0@gmail.com>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 6.12 085/181] ima: fix out-of-bounds read in xattr_verify()
+Date: Mon, 17 Aug 2026 15:32:59 +0200
+Message-ID: <20260817132538.789181021@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -50,48 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Rogers <linux@joshua.hu>
+From: Lincoln Wallace <locnnil0@gmail.com>
 
-commit e25d47a526939ad44b75f778b8a7500562b84fc1 upstream.
+commit 5ff232d31106f45ac87c3b64e1d35a0667777797 upstream.
 
-kbd_keycode() reads vc->port.tty without acquiring a tty reference,
-racing against con_shutdown() which clears port.tty under a different
-lock. Use tty_port_tty_get()/tty_kref_put() to hold a proper reference
-for the duration the tty pointer is needed.
+The digest-length check in xattr_verify() mixes int and size_t:
 
-Assisted-by: AISLE:Snapshot
-Signed-off-by: Joshua Rogers <linux@joshua.hu>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260731-tty-vt-stuff-v1-1-be99b9da8e30@linuxfoundation.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	if (xattr_len - sizeof(xattr_value->type) - hash_start >=
+			iint->ima_hash->length)
+
+sizeof() yields size_t, so the usual arithmetic conversions promote
+the whole left-hand side to unsigned 64-bit before the subtraction
+runs. For a truncated xattr this underflows instead of going negative:
+a 1-byte IMA_XATTR_DIGEST_NG xattr (xattr_len == 1, hash_start == 1)
+turns "1 - 1 - 1" into SIZE_MAX, which is trivially >= ima_hash->length.
+The check then passes and the following memcmp() reads
+iint->ima_hash->length bytes starting past the end of the buffer
+vfs_getxattr_alloc() allocated for it.
+
+Nothing upstream clamps xattr_len back into a safe range first:
+ima_get_hash_algo() only special-cases xattr_len < 2 to pick a default
+algorithm, and evm_verifyxattr() returns INTEGRITY_UNKNOWN rather than
+failing when no HMAC key is loaded, so a truncated security.ima value
+reaches the length check as-is.
+
+Rewrite the comparison so every operand stays a signed int and no
+implicit conversion to size_t can occur.
+
+Fixes: 3ea7a56067e6 ("ima: provide hash algo info in the xattr")
+Cc: stable@vger.kernel.org
+Signed-off-by: Lincoln Wallace <locnnil0@gmail.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/keyboard.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ security/integrity/ima/ima_appraise.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/vt/keyboard.c
-+++ b/drivers/tty/vt/keyboard.c
-@@ -1403,7 +1403,7 @@ static void kbd_keycode(unsigned int key
- 	struct keyboard_notifier_param param = { .vc = vc, .value = keycode, .down = down };
- 	int rc;
- 
--	tty = vc->port.tty;
-+	tty = tty_port_tty_get(&vc->port);
- 
- 	if (tty && (!tty->driver_data)) {
- 		/* No driver data? Strange. Okay we fix it then. */
-@@ -1463,9 +1463,12 @@ static void kbd_keycode(unsigned int key
- 		 * characters get aren't echoed locally. This makes key repeat
- 		 * usable with slow applications and under heavy loads.
- 		 */
-+		tty_kref_put(tty);
- 		return;
- 	}
- 
-+	tty_kref_put(tty);
-+
- 	param.shift = shift_final = (shift_state | kbd->slockstate) ^ kbd->lockstate;
- 	param.ledstate = kbd->ledflagstate;
- 	key_map = key_maps[shift_final];
+--- a/security/integrity/ima/ima_appraise.c
++++ b/security/integrity/ima/ima_appraise.c
+@@ -302,8 +302,13 @@ static int xattr_verify(enum ima_hooks f
+ 		} else {
+ 			set_bit(IMA_DIGSIG, &iint->atomic_flags);
+ 		}
+-		if (xattr_len - sizeof(xattr_value->type) - hash_start >=
+-				iint->ima_hash->length)
++		/*
++		 * Use addition, not subtraction: sizeof() forces unsigned
++		 * math and a short xattr_len would wrap around, bypassing
++		 * this bounds check.
++		 */
++		if (xattr_len >= (int)sizeof(xattr_value->type) + hash_start +
++				(int)iint->ima_hash->length)
+ 			/*
+ 			 * xattr length may be longer. md5 hash in previous
+ 			 * version occupied 20 bytes in xattr, instead of 16
 
 
