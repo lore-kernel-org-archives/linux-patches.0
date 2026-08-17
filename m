@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8B83E025C;
-	Mon, 17 Aug 2026 14:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7A63B6C0C;
+	Mon, 17 Aug 2026 14:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976707; cv=none; b=fG1k4nGnlpvEdvcY1qOOLH6H+cnuEA+TNa+fmoPW4y5Oe+/95LosvVHrzGrgK4FtMnhMOhGX7jCo7JlTxVxIEWNk8REhJLu8gc19dTyIxlbWm6PGNUcVNObPdnk8akgSnVQbqeMvxhjRIvBKounb9RBf8MOsQhkInWxTuuSpFis=
+	t=1786976710; cv=none; b=o9cmYeSBmp+L4IiZOACY2B/F97C/kog/oHU79DNB6duaDsWwXaQNh9swaUP+xe8FdMHa5GoJj8w1Jtu+ddohlEUgHMh0PTHAlzyNlIyKOQXQ5l6C9mq1M8qW89eobSME3H7KuYOhCsABEvKvLqQMigHq2md53WhHTVeX8EWhMlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976707; c=relaxed/simple;
-	bh=ne6N5thVeIz5yXDQBksXN3QVZjMcbJsgS6q+gCJmi9E=;
+	s=arc-20240116; t=1786976710; c=relaxed/simple;
+	bh=BC/YGrnGAfcEaUQK5MIERzyNK4zFdHJCt/ptIWBkf4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W2q4VGquYvioR6FxBoBVwFefQtJcFXMku1Gi+ck00lhea06A+XibqfHyyJajHu5VPBI6FrR2IBXV7zTJ1r7UvfH9kmDbfJrr2bi6SFFO7iH0JvnQIkB/J6tRo68X5N6tTLzRjKBieMOStYkn260NvVPRLbaU6eX6fKtv7DX9jrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVkp88ZK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fft3pOEga06lqK11ieQ2h/TPpXAQSA6guhnc7mi8rWXg9Ixx0iMobJRprAPIJIxhhMGtzCjNUj2neulFmdgp/ZZN+w7APtE5PnCk4rU0i0HlPIxN6ORrsLZIZ6V/h+QQ7aTC+e/ZldWBWc+YEGwnI3DNojh0xEVwOi1cofQlBp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szlHXFWI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVkp88ZK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 625221F000E9;
-	Mon, 17 Aug 2026 14:25:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szlHXFWI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37BFB1F000E9;
+	Mon, 17 Aug 2026 14:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976705;
-	bh=IDg1yIuNez+vp6PJNe+bSfOH+cX9hcUWyBonvo0c7Rs=;
+	s=korg; t=1786976708;
+	bh=V0SSz/nvO9wLgAPsdYgcguduMaZASi55eCQkwZtZQXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mVkp88ZKglSQ4rbhSG1Pd9vTWpHw3Kk/C0MAwJmY3Ad2v7j74n6flTl0FSra97Uvl
-	 Tb0G2jVOn47C7Jn0AZ0VMw1xH/aKc49nO4/OjHOL9fouqFpgMjsqmJMJ15d+zQp3bw
-	 yq0ncwSu1A+vSzcoupgTKoeNp6AEE6+9jJK4TPX4=
+	b=szlHXFWILldpxO2aLKmj4fsViNrt8QbZXqVYCd7RAm8YWC2Tksykszsu2FX9KHU/Z
+	 rLDCDjWlr/LswlGH26lIx5a6mM6Pu3pgbS+rz54j8JQpWViINN+7qIkTSYRDRtJoNT
+	 lX9bltJdWEgYgnDdiAGJs9S7mu8gS+5BZo4/8cV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huihui Huang <hhhuang@smu.edu.sg>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 059/456] wifi: at76c50x-usb: avoid length underflow in at76_guess_freq()
-Date: Mon, 17 Aug 2026 15:27:29 +0200
-Message-ID: <20260817132542.353372865@linuxfoundation.org>
+	stable@kernel.org,
+	Xincheng Zhang <zhangxincheng@ultrarisc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 077/456] usb: xhci-pci: Limit VIA VL805 DMA addressing to 36 bits
+Date: Mon, 17 Aug 2026 15:27:47 +0200
+Message-ID: <20260817132543.090451420@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,59 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huihui Huang <hhhuang@smu.edu.sg>
+From: Xincheng Zhang <zhangxincheng@ultrarisc.com>
 
-commit 61a799ffd1e5a4fd3702d547828b7ff3d161468e upstream.
+commit 1fc50f1ecde39feb4fccdaf4bc71aa6c0eb25c49 upstream.
 
-at76_guess_freq() checks only that the received frame is at least a bare
-802.11 header (24 bytes) before subtracting the fixed management-body
-offset:
+The VIA VL805/806 xHCI controller advertises AC64, but fails to handle
+DMA addresses at or above 0x1000000000. On systems with large amounts of
+RAM, this can cause USB device failures when the controller is given DMA
+addresses beyond its usable address width.
 
-	len -= el_off;
+Do not use XHCI_NO_64BIT_SUPPORT for this controller. That quirk clears
+the cached AC64 capability and limits DMA to 32 bits, causing unnecessary
+bouncing for addresses between 4GiB and 64GiB and hiding the controller's
+real AC64 capability from code that may need to distinguish register
+access width from usable DMA address width.
 
-For both beacon and probe response frames, el_off is 36. If the frame is
-shorter than el_off, subtracting it causes the calculated IE length to
-wrap. The length is eventually passed to cfg80211_find_elem_match() as a
-very large unsigned value, so the element walk runs beyond the RX skb.
+Track the usable DMA address width separately from the AC64 capability.
+Initialize the generic xhci->dma_mask_bits field to 64 and let PCI quirks
+reduce it for controllers with narrower DMA support. Set VIA VL805/806 to
+36 bits so the DMA API only hands it addresses in the range it can handle
+while keeping HCCPARAMS1.AC64 visible.
 
-This path is reached from at76_rx_tasklet() while scanning. If the device
-delivers a truncated beacon or probe response, the oversized IE length
-causes an out-of-bounds read during scanning.
-
-Skip the IE lookup if the frame does not reach the variable elements,
-before subtracting el_off.
-
-Fixes: 1264b951463a ("at76c50x-usb: add driver")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Huihui Huang <hhhuang@smu.edu.sg>
-Link: https://patch.msgid.link/20260715140815.1242033-1-hhhuang@smu.edu.sg
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Cc: stable@kernel.org
+Signed-off-by: Xincheng Zhang <zhangxincheng@ultrarisc.com>
+Link: https://patch.msgid.link/20260630-xhci-via-dma-fix-v3-1-690dcb8cf75a@ultrarisc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/atmel/at76c50x-usb.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/usb/host/xhci-pci.c |  1 +
+ drivers/usb/host/xhci.c     | 15 ++++++++++-----
+ drivers/usb/host/xhci.h     |  1 +
+ 3 files changed, 12 insertions(+), 5 deletions(-)
 
---- a/drivers/net/wireless/atmel/at76c50x-usb.c
-+++ b/drivers/net/wireless/atmel/at76c50x-usb.c
-@@ -1527,13 +1527,16 @@ static inline int at76_guess_freq(struct
- 
- 	if (ieee80211_is_probe_resp(hdr->frame_control)) {
- 		el_off = offsetof(struct ieee80211_mgmt, u.probe_resp.variable);
--		el = ((struct ieee80211_mgmt *)hdr)->u.probe_resp.variable;
- 	} else if (ieee80211_is_beacon(hdr->frame_control)) {
- 		el_off = offsetof(struct ieee80211_mgmt, u.beacon.variable);
--		el = ((struct ieee80211_mgmt *)hdr)->u.beacon.variable;
- 	} else {
- 		goto exit;
+diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
+index 9c7491ac28f2f3..f8988f110dcff5 100644
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -338,6 +338,7 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
+ 	if (pdev->vendor == PCI_VENDOR_ID_VIA && pdev->device == PCI_DEVICE_ID_VIA_VL805) {
+ 		xhci->quirks |= XHCI_LPM_SUPPORT;
+ 		xhci->quirks |= XHCI_TRB_OVERFETCH;
++		xhci->dma_mask_bits = 36;
  	}
-+
-+	if (len < el_off)
-+		goto exit;
-+
-+	el = priv->rx_skb->data + el_off;
- 	len -= el_off;
  
- 	el = cfg80211_find_ie(WLAN_EID_DS_PARAMS, el, len);
+ 	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA &&
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index 0ac438392545dd..823fe397bfb105 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -5398,6 +5398,7 @@ int xhci_gen_setup(struct usb_hcd *hcd, xhci_get_quirks_t get_quirks)
+ 	if (xhci->hci_version > 0x100)
+ 		xhci->hcc_params2 = readl(&xhci->cap_regs->hcc_params2);
+ 
++	xhci->dma_mask_bits = 64;
+ 	/* xhci-plat or xhci-pci might have set max_interrupters already */
+ 	if ((!xhci->max_interrupters) ||
+ 	    xhci->max_interrupters > HCS_MAX_INTRS(xhci->hcs_params1))
+@@ -5438,12 +5439,16 @@ int xhci_gen_setup(struct usb_hcd *hcd, xhci_get_quirks_t get_quirks)
+ 	if (xhci->quirks & XHCI_NO_64BIT_SUPPORT)
+ 		xhci->hcc_params &= ~BIT(0);
+ 
+-	/* Set dma_mask and coherent_dma_mask to 64-bits,
+-	 * if xHC supports 64-bit addressing */
++	/*
++	 * Set dma_mask and coherent_dma_mask to 64-bits if xHC supports
++	 * 64-bit addressing, unless a controller-specific quirk callback
++	 * limits the usable address width.
++	 */
+ 	if (HCC_64BIT_ADDR(xhci->hcc_params) &&
+-			!dma_set_mask(dev, DMA_BIT_MASK(64))) {
+-		xhci_dbg(xhci, "Enabling 64-bit DMA addresses.\n");
+-		dma_set_coherent_mask(dev, DMA_BIT_MASK(64));
++	    !dma_set_mask(dev, DMA_BIT_MASK(xhci->dma_mask_bits))) {
++		xhci_dbg(xhci, "Enabling %u-bit DMA addresses.\n",
++			 xhci->dma_mask_bits);
++		dma_set_coherent_mask(dev, DMA_BIT_MASK(xhci->dma_mask_bits));
+ 	} else {
+ 		/*
+ 		 * This is to avoid error in cases where a 32-bit USB
+diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
+index ac33baa2b0f82d..96519c446778d1 100644
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1544,6 +1544,7 @@ struct xhci_hcd {
+ 	int		event_ring_max;
+ 	/* 4KB min, 128MB max */
+ 	int		page_size;
++	unsigned int	dma_mask_bits;
+ 	/* Valid values are 12 to 20, inclusive */
+ 	int		page_shift;
+ 	/* msi-x vectors */
+-- 
+2.53.0
+
 
 
