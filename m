@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB4D3CDBC3;
-	Mon, 17 Aug 2026 14:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66CF2F7F02;
+	Mon, 17 Aug 2026 14:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977683; cv=none; b=X+peBrLePm8rY7IE2iuAv8TT1K+I3/FJdwDSzY6v7NeDefw1+/m4ihFtfeECtSSYK+Qiatd5KYd8A8/4f7IlSxYowSYYPvqPPIumwWkN2aAuzdoM+ZeQRAa8JIH5skZPF+fPOLMp3cwez9sRjuxteH8ZozCmb1gmVeWZAhTJyp8=
+	t=1786977685; cv=none; b=OdBOc8WJrq+Tjf8stASMn8MKNyI0CrjseO4jpsTjE0MMkxxoMBOKxThnn+MoNKaV7CZIYmneRovuiGFeGAMvneEsFRW2memaobtBYZC1+6aBfSzxk2yoxWAL3ZiwQyg7sPomasGe11r0FPo9Qh57NaVT0uaAz4D71mDtp6o2Mqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977683; c=relaxed/simple;
-	bh=quGqYSMjwSACtan2Z2C5vONDGE4IMG14wLWdLIeA960=;
+	s=arc-20240116; t=1786977685; c=relaxed/simple;
+	bh=KrhOP8lCukV3zcp7nuj5UNcnQL8nNT0eWVfTJMM61gw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AinMAVfkpj+SvAWYMXVjSb9cJOzlzG202/37LwgitoekOXrQfTfd5wVvVLo2NRR5EQ17/7w74FFTfPKG+wkbgar7Jot0s43XGRjf1d7oSp8v69HlfttbXtQ0OE1u9gklsTuc1YZnEPppsNqH3WVmiRXbHR5WUZOjf2Kt/68Wq8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KO3jl24O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ym1+QbZwAznjcJFYdd0mvIL35QllcmZzOvXxMmYVijIERQdYAUmvXItcA/9MOXY5qpqzbzEoWENQDnvQgGofbngto9PGgQgGPqWCvxw9T1UEXMfw+dn4b4JysMkFqNNv03Oxnv6/Bn44CM+c1L4cZqXz+Dby3Do9OyVkm1vSr0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3leNoG1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KO3jl24O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EF361F000E9;
-	Mon, 17 Aug 2026 14:41:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3leNoG1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C47E1F000E9;
+	Mon, 17 Aug 2026 14:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977681;
-	bh=LI5EhFkla7JBRfAczueZTDxVXjbyUqG5ORJ4VC24CCA=;
+	s=korg; t=1786977684;
+	bh=W83lRjf5VtM6hzFzdNsKQAax4LR1sjEyYJM+yb1s4JM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KO3jl24OqrRKNuWeriwN9JBLV8EJuq944SEqXSS7f1Da3Byv6eFj6CiEYONMAGCv2
-	 WERz5AEfs59tcx7OINW1u7CEGN2B3v/hMYM9udapEtU1nAwy6QA9wLBhRsYv8k8coO
-	 nl1bArpdz8EHCiPCZ9EYCzDxDerJ2ePeIlEHzdR4=
+	b=C3leNoG1aqNd3x1M53Y4v0fVw2+KWCC0bAfLEpU6AFCeD9JUb/RzEWCWoRTiTF5Wa
+	 fdpzHZ7D8zOxLPeFWLmV38o7InRinrX2wsdLOo5L6KHe3sW2C2pcB+3y0WvGY4bpoY
+	 i+7DsSQ8Odr5LFeLgFE01ToPU2pRHy9Z089ABH2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Linguaglossa <danielelinguaglossa@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 396/456] sctp: clear control chunk transport if it is being removed
-Date: Mon, 17 Aug 2026 15:33:06 +0200
-Message-ID: <20260817132554.860673127@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.15 414/456] netfilter: ebt_nflog: pin the NFLOG backend
+Date: Mon, 17 Aug 2026 15:33:24 +0200
+Message-ID: <20260817132555.431061800@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,54 +50,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit c9158ceaf27780ef64534ad72f44ffde3f8ccc49 ]
+commit 30825970339c107bacaf7f61af90fcdb1f597ca1 upstream.
 
-sctp_make_heartbeat_ack() caches the destination transport in
-chunk->transport without taking a reference. When src_out_of_asoc_ok is
-enabled, the HEARTBEAT ACK may remain queued on control_chunk_list instead
-of being transmitted immediately.
+nf_log_unregister() runs after the per-net teardown so its final RCU
+grace period also drains readers that obtained the logger from a per-net
+binding.  However, ebt_nflog passes an explicit ULOG log type to
+nf_log_packet() without holding a reference on the selected logger module,
+unlike the xt_NFLOG and nft_log frontends.
 
-If the peer transport is removed while the chunk is still queued,
-sctp_assoc_rm_peer() drops the transport and schedules it for RCU freeing,
-but only clears cached transport pointers in out_chunk_list.  The queued
-control chunk therefore retains a dangling transport pointer.
+An ebtables nflog rule can therefore remain callable while nfnetlink_log
+is unloaded.  The resulting interleaving is:
 
-Once an ASCONF_ACK clears the suppression and the queued control chunk is
-transmitted, SCTP dereferences the stale transport pointer, leading to a
-use-after-free.
+  CPU 0                               CPU 1
+  nfnetlink_log_fini()
+    unregister_pernet_subsys()
+      kfree(nfnl_log_pernet(net))
+                                      ebt_nflog_tg()
+                                        nf_log_packet()
+                                          nfulnl_log_packet()
+                                            instance_lookup_get_rcu()
 
-Fix this by also clearing chunk->transport for queued control chunks in
-control_chunk_list when removing the transport.
+The global ULOG logger is still registered at this point, so CPU 1
+dereferences the per-net state after CPU 0 has freed it.  KASAN reported:
 
-Fixes: 8a07eb0a50ae ("sctp: Add ASCONF operation on the single-homed host")
-Reported-by: Daniele Linguaglossa <danielelinguaglossa@gmail.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/7e1168cb722132152a29d47e5eafaeac4a3bf6f3.1785943120.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  BUG: KASAN: slab-use-after-free in instance_lookup_get_rcu
+  Read of size 8 at addr ff110001052e6210 by task poc/92
+  Call Trace:
+   instance_lookup_get_rcu+0x1ce/0x1f0 [nfnetlink_log]
+   nfulnl_log_packet+0x248/0x2fb0 [nfnetlink_log]
+   nf_log_packet+0x204/0x300
+   ebt_nflog_tg+0x351/0x550
+   ebt_do_table+0xedf/0x22b0
+  Allocated by task 90:
+   __kmalloc_noprof+0x186/0x470
+   ops_init+0x6d/0x420
+   register_pernet_operations+0x2f6/0x670
+   register_pernet_subsys+0x23/0x40
+  Freed by task 93:
+   kfree+0x131/0x3c0
+   ops_undo_list+0x3e3/0x700
+   unregister_pernet_operations+0x232/0x490
+   unregister_pernet_subsys+0x1c/0x30
+   nfnetlink_log_fini+0x34/0x450 [nfnetlink_log]
+
+Acquire the ULOG logger module reference when an ebt_nflog rule is
+validated and release it when the rule is destroyed.  Request the NFLOG
+backend for legacy callers when needed, matching xt_NFLOG.  This prevents
+module teardown until all ebt_nflog rules have stopped using the logger.
+
+Fixes: c83fa19603bd ("netfilter: nf_log: don't call synchronize_rcu in nf_log_unset")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/associola.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/bridge/netfilter/ebt_nflog.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/net/sctp/associola.c b/net/sctp/associola.c
-index 4dd36c8375507..4a79e855c85cd 100644
---- a/net/sctp/associola.c
-+++ b/net/sctp/associola.c
-@@ -575,6 +575,10 @@ void sctp_assoc_rm_peer(struct sctp_association *asoc,
- 		if (ch->transport == peer)
- 			ch->transport = NULL;
+--- a/net/bridge/netfilter/ebt_nflog.c
++++ b/net/bridge/netfilter/ebt_nflog.c
+@@ -41,11 +41,25 @@ ebt_nflog_tg(struct sk_buff *skb, const
+ static int ebt_nflog_tg_check(const struct xt_tgchk_param *par)
+ {
+ 	struct ebt_nflog_info *info = par->targinfo;
++	int ret;
  
-+	list_for_each_entry(ch, &asoc->outqueue.control_chunk_list, list)
-+		if (ch->transport == peer)
-+			ch->transport = NULL;
+ 	if (info->flags & ~EBT_NFLOG_MASK)
+ 		return -EINVAL;
+ 	info->prefix[EBT_NFLOG_PREFIX_SIZE - 1] = '\0';
+-	return 0;
 +
- 	asoc->peer.transport_count--;
++	ret = nf_logger_find_get(par->family, NF_LOG_TYPE_ULOG);
++	if (ret != 0 && !par->nft_compat) {
++		request_module("%s", "nfnetlink_log");
++
++		ret = nf_logger_find_get(par->family, NF_LOG_TYPE_ULOG);
++	}
++
++	return ret;
++}
++
++static void ebt_nflog_tg_destroy(const struct xt_tgdtor_param *par)
++{
++	nf_logger_put(par->family, NF_LOG_TYPE_ULOG);
+ }
  
- 	sctp_ulpevent_notify_peer_addr_change(peer, SCTP_ADDR_REMOVED, 0);
--- 
-2.53.0
-
+ static struct xt_target ebt_nflog_tg_reg __read_mostly = {
+@@ -54,6 +68,7 @@ static struct xt_target ebt_nflog_tg_reg
+ 	.family     = NFPROTO_BRIDGE,
+ 	.target     = ebt_nflog_tg,
+ 	.checkentry = ebt_nflog_tg_check,
++	.destroy    = ebt_nflog_tg_destroy,
+ 	.targetsize = sizeof(struct ebt_nflog_info),
+ 	.me         = THIS_MODULE,
+ };
 
 
