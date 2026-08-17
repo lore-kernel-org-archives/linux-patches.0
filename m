@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9290C442B32;
-	Mon, 17 Aug 2026 15:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765474457A4;
+	Mon, 17 Aug 2026 15:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980425; cv=none; b=B4pVZT1DAUIgAAgwQVgCqb93IQ4tiy0ochDIKHgS5y95+t7rGrHgGf1WXGeNsniYt1wjSzlqKteYblBbdCo1auQ5+wv9d5v3C5ZyWY4I98g8X5k1yL7Ce3S3b8YjEIfo6GSUzS+2IjHYDnEMSykLQI5MD0MRmkZRJHtsgF/axRc=
+	t=1786980428; cv=none; b=pJzHPqc71WBR5zO9RLTYtTXh5SMIWqzsxr44YGkqYRDnk5Zcz0Qs/EsUW4VIwc7l2MUQxiKEmmmMfDda9onNa+VdFyz/uyoggi+eta7HolphXjsTQYWxuI92YWvHAVksYgshTUqf+I4VrlAVSu2ysqpOpR58hAPOahkxRYefwks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980425; c=relaxed/simple;
-	bh=JdHjdKiwHJAdIMFW1QNchlqNYCxjmLw3sluZq7itwiA=;
+	s=arc-20240116; t=1786980428; c=relaxed/simple;
+	bh=gazGCMTeinjy0552rGRCmi9xlYeqjgnoCl/w4yxlpok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=clMfAlx8r1kgHAREQgS4zEW9oaFmBYlZDVCEtTjmH7OmIthdPe4ar2x+S6R1/1pVIdiK8674X4Qt898x1gOX6DaWrEIgvYNZ2npRVFEwUc9FIvoxNDdxI7vIX5/VRbZbOJ+MqBdSaRNoCRYnOiTSAuUq9dodaI2Sb//Csiy2acg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uxp5qG/V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hSgIjo1rrJlhR7gDTFk/nJF48S5j3T/sKcssTjP7yEm0ou//Nk2R0agSC+2gMuyjoV4j1HzQ+T6j072acSvxCujgMp6ZfumbCu0unifDco/aRrPKUkHY9MMLJx2kr2RyobFTHmbeA7CxspY0G5EEJcW3TSy3MycWdexaL3l8qN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLXjvZxh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uxp5qG/V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F02BE1F000E9;
-	Mon, 17 Aug 2026 15:27:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLXjvZxh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDCD81F000E9;
+	Mon, 17 Aug 2026 15:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980424;
-	bh=IKVM+RlLmRxMyzQj79HRZmswY71vLeKfSmIQIhs6xA8=;
+	s=korg; t=1786980427;
+	bh=8bkfu9+PZzOl7ReXkCefpMt5bDyhEn8sWCixHLBPtoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uxp5qG/VLMLJBaEZ6b33A2TcYiiOPaI00yLy4hP0ZveUkksTKOtlt1PtrUttZ4BKy
-	 fugQEjo38BrNFwMq6rrRzub1bqHHhbsQDiTQ4TKGml+DRlktiXyd0y7jgN4gcgwb7D
-	 8hcQ109NH1qXDixFep2XIYbz/K3TPgN9H2oN8vyo=
+	b=jLXjvZxhpEnL3mXcVG5WUrnxahXS/aCjQYQKGSndL6wVekeu5jbTHNbLzL4tT3rdw
+	 5qRtdPwuRzKzV+tQE7T73cTEJa/2CAgB3havY9fBlMywrkoxi8MyT6tfD5Q7dzyKSl
+	 vH6TSdsfSeebI9tAD86LjAOlRZKZKINuHiTo5S80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 566/609] selftests/bpf: Fail unbound UDP on sockmap update
-Date: Mon, 17 Aug 2026 15:34:22 +0200
-Message-ID: <20260817132602.651419857@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 567/609] ipv4: Fix fib_nlmsg_size() for RTA_VIA nexthops
+Date: Mon, 17 Aug 2026 15:34:23 +0200
+Message-ID: <20260817132602.680413494@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,55 +52,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-[ Upstream commit 203b06932777b9ad5085319389dea566f5c2ca63 ]
+commit 4ff9548d84945d2cbf9e4c207288063a200ea397 upstream.
 
-sockmap now rejects unbound UDP sockets. Adjust test_maps. While at it,
-check socket()'s return value.
+fib_nlmsg_size() still estimates nexthop space as if every gateway is
+encoded as an IPv4 RTA_GATEWAY attribute. IPv4 routes can also carry an
+IPv6 gateway, which fib_nexthop_info() dumps as RTA_VIA.
 
-This effectively reverts commit c39aa2159974 ("bpf, selftests: Fix
-test_maps now that sockmap supports UDP").
+As a result, route notifications can allocate an skb that is too small.
+fib_dump_info() then fails with -EMSGSIZE and rtmsg_fib() hits the
+WARN_ON() that marks such failures as a fib_nlmsg_size() bug. With
+panic_on_warn set, this becomes a kernel panic.
 
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/20260707-sockmap-lookup-udp-leak-v4-4-f878346f27ab@rbox.co
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Mirror the actual nexthop dump layout in fib_nlmsg_size(): account for
+IPv6 nexthop gateways dumped as RTA_VIA, for the no-header rtnexthop
+layout used inside RTA_MULTIPATH, and for RTA_FLOW only when it is
+actually present.
+
+Fixes: d15662682db2 ("ipv4: Allow ipv6 gateway with ipv4 routes")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/6f53fa797fcaeb26966432ed7ae9bb87c4961f37.1785411220.git.zihanx@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/test_maps.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ net/ipv4/fib_semantics.c |   67 ++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 49 insertions(+), 18 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/test_maps.c b/tools/testing/selftests/bpf/test_maps.c
-index 81cd48cc80c23..73878ec8ec7d0 100644
---- a/tools/testing/selftests/bpf/test_maps.c
-+++ b/tools/testing/selftests/bpf/test_maps.c
-@@ -752,16 +752,15 @@ static void test_sockmap(unsigned int tasks, void *data)
- 		goto out_sockmap;
+--- a/net/ipv4/fib_semantics.c
++++ b/net/ipv4/fib_semantics.c
+@@ -462,6 +462,34 @@ int ip_fib_check_default(__be32 gw, stru
+ 	return -1;
+ }
+ 
++static size_t fib_nexthop_nlmsg_size(const struct fib_nh_common *nhc,
++				     bool skip_oif)
++{
++	size_t nhsize = 0;
++
++	switch (nhc->nhc_gw_family) {
++	case AF_INET:
++		nhsize += nla_total_size(4); /* RTA_GATEWAY */
++		break;
++	case AF_INET6:
++		nhsize += nla_total_size(sizeof(struct rtvia) +
++					 sizeof(struct in6_addr));
++		break;
++	}
++
++	if (!skip_oif && nhc->nhc_dev)
++		nhsize += nla_total_size(4); /* RTA_OIF */
++
++	if (nhc->nhc_lwtstate) {
++		/* RTA_ENCAP */
++		nhsize += lwtunnel_get_encap_size(nhc->nhc_lwtstate);
++		/* RTA_ENCAP_TYPE */
++		nhsize += nla_total_size(2);
++	}
++
++	return nhsize;
++}
++
+ size_t fib_nlmsg_size(struct fib_info *fi)
+ {
+ 	size_t payload = NLMSG_ALIGN(sizeof(struct rtmsg))
+@@ -479,32 +507,35 @@ size_t fib_nlmsg_size(struct fib_info *f
+ 		payload += nla_total_size(4); /* RTA_NH_ID */
+ 
+ 	if (nhs) {
+-		size_t nh_encapsize = 0;
+-		/* Also handles the special case nhs == 1 */
+-
+-		/* each nexthop is packed in an attribute */
+-		size_t nhsize = nla_total_size(sizeof(struct rtnexthop));
++		size_t mpsize = 0;
+ 		unsigned int i;
+ 
+-		/* may contain flow and gateway attribute */
+-		nhsize += 2 * nla_total_size(4);
+-
+-		/* grab encap info */
+ 		for (i = 0; i < fib_info_num_path(fi); i++) {
+ 			struct fib_nh_common *nhc = fib_info_nhc(fi, i);
++			size_t nhsize;
++
++			nhsize = fib_nexthop_nlmsg_size(nhc, nhs != 1);
+ 
+-			if (nhc->nhc_lwtstate) {
+-				/* RTA_ENCAP_TYPE */
+-				nh_encapsize += lwtunnel_get_encap_size(
+-						nhc->nhc_lwtstate);
+-				/* RTA_ENCAP */
+-				nh_encapsize +=  nla_total_size(2);
++			if (nhs != 1)
++				nhsize += NLA_ALIGN(sizeof(struct rtnexthop));
++
++#ifdef CONFIG_IP_ROUTE_CLASSID
++			if (nhc->nhc_family == AF_INET) {
++				struct fib_nh *nh;
++
++				nh = container_of(nhc, struct fib_nh, nh_common);
++				if (nh->nh_tclassid)
++					nhsize += nla_total_size(4);
+ 			}
++#endif
++			if (nhs == 1)
++				payload += nhsize;
++			else
++				mpsize += nhsize;
+ 		}
+ 
+-		/* all nexthops are packed in a nested attribute */
+-		payload += nla_total_size((nhs * nhsize) + nh_encapsize);
+-
++		if (nhs != 1)
++			payload += nla_total_size(mpsize);
  	}
  
--	/* Test update with unsupported UDP socket */
-+	/* Test update with unsupported unbound UDP socket */
- 	udp = socket(AF_INET, SOCK_DGRAM, 0);
--	i = 0;
--	err = bpf_map_update_elem(fd, &i, &udp, BPF_ANY);
--	if (err) {
--		printf("Failed socket update SOCK_DGRAM '%i:%i'\n",
--		       i, udp);
-+	CHECK(udp < 0, "socket(AF_INET, SOCK_DGRAM)", "errno:%d\n", errno);
-+	err = bpf_map_update_elem(fd, &(int){0}, &udp, BPF_ANY);
-+	close(udp);
-+	if (!err) {
-+		printf("Unexpectedly succeeded unbound UDP update '0:%i'\n", udp);
- 		goto out_sockmap;
- 	}
--	close(udp);
- 
- 	/* Test update without programs */
- 	for (i = 0; i < 6; i++) {
--- 
-2.53.0
-
+ 	return payload;
 
 
