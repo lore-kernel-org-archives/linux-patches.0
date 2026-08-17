@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA142E738B;
-	Mon, 17 Aug 2026 14:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F2293911DC;
+	Mon, 17 Aug 2026 14:40:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977615; cv=none; b=EmPOd1hvpI4Wh97GtKArls167aGX/EnlMELSWEH2+HATKG6PrjXlYmpkGALMwlyYZhYrFEvr2q3Znx9J0cuUVLXsqmiToPhq2GWEOA5HPOxZkbHtAWd6D2IFhr1dbN0f8/Wc2dbvUOqMZooWYqIQP/jK0YO372XJEWY1Cz0R8PM=
+	t=1786977618; cv=none; b=h5H6lod/9B+VjwExAGSt+ioA2lrf579My4oQH6R38gNl2qKKyfyQxmMVQn0Wy/z2gP9MU9XficuHQHc3qv0YjAnQX3GQKNVeXWmVcP5+0XdMtcJ0RdNUppYB95mr2DPQ3/8TbS5XH1CzPSQnufkonS+PozZqfYq94476InfYpEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977615; c=relaxed/simple;
-	bh=1z/++L9rOxRLQXZryxCZwBR0iEryxqEIBRaIC21rf7g=;
+	s=arc-20240116; t=1786977618; c=relaxed/simple;
+	bh=I5CBs4sWSHL9sIgpO+y2n2kr1+KFVnOk76GLf583H1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V0kotwNWn3Zgs47rIVl+BccRC3+cllVUZPwU9CmXVmYJewwHdzLdvw7zl9r4EBwME7kKrCiADTW8fJxdgRicgjp9RNHbu6Gk4Rohfd67+XBCmTXurBdvOBdeBPPJvvDyC3r+YYcTFN3ldxqZvOFDiL1307ChAA4X/gt3FO+9Yis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGCo2PWl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J0E8ebEnwmOMNhR8fQ8bLq8uiS9eP4actqhebmpcRPuXPX6He7Y/THnFsbCzLAf9nq869LgIRoMcWwDwepQgYwExnDhchAZGwsp4SjTpMhZqGkO6s+NsfzPlRbiZqdsB2KbWa2Dvnb9HiaOyNoCuQ+5MfU9wx6YMZOCUVxdwSRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MYweqSDy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGCo2PWl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A47551F00A3D;
-	Mon, 17 Aug 2026 14:40:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MYweqSDy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8786E1F000E9;
+	Mon, 17 Aug 2026 14:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977614;
-	bh=LstB/ZJUL+m1fXmZ1ceQKcw95lEyUo0tII6i0J8NhKM=;
+	s=korg; t=1786977617;
+	bh=dphsu5ypyw6MwxE9UJvgbcEfXiwyv10jTeWugkcoDbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MGCo2PWlZPgVVQjT4xLRiPb2aGZZl0q9bzCnwBUGVIlVXItpiYKWx6fHBmep43KqK
-	 gJZi/V8YBN3arRt+Hklem1h11bKYfbdJ90ualtJh/pzmh4Ra0bOzMigV0dWMChV9Ma
-	 B2XQbdVxd8PWzXBsGb6yuvV5o5LXrr0lTF+IrSPs=
+	b=MYweqSDy1raU+TTzrnHNgFnJPLJqNHtt47OJz9Y1vzXA5RO1zl8rro16JL+t9OI3m
+	 58TrzXec4Wa9rfMCbnoA+fcmYrDItdH8uIwBa0oWtFzMh95RpcmidyTQBqXha5pw7M
+	 3ZExHrdyTUOUwJjfgcNQfAHFPwPnOmrXdj8q6XOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Elad Nachman <enachman@marvell.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 389/456] net/ncsi: fix heap OOB read in NCSI_CMD_SEND_CMD payload length
-Date: Mon, 17 Aug 2026 15:32:59 +0200
-Message-ID: <20260817132554.640368873@linuxfoundation.org>
+Subject: [PATCH 5.15 390/456] net: prestera: validate firmware header length
+Date: Mon, 17 Aug 2026 15:33:00 +0200
+Message-ID: <20260817132554.672393666@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,58 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit afa58b7384913c8773d837acdb07b035690ec5d2 ]
+[ Upstream commit 8ae344eb540af3f457179b52bc6061416752485c ]
 
-ncsi_send_cmd_nl() takes the number of bytes to copy from the
-attacker-controlled ncsi_pkt_hdr.length field of the in-band packet
-header, while the source buffer is the NCSI_ATTR_DATA netlink
-attribute whose readable size is nla_len() - sizeof(ncsi_pkt_hdr).
-The two length sources are never cross-checked: only
-nla_len() >= sizeof(struct ncsi_pkt_hdr) is enforced.
+prestera_fw_hdr_parse() reads the firmware header before checking
+that the firmware image contains that header.
 
-With hdr->length set larger than the attribute payload (up to 65535
-against at most 2032 readable bytes), ncsi_cmd_handler_oem() copies
-past the end of the netlink attribute buffer with unsafe_memcpy(),
-leaking up to ~64KB of kernel heap memory into the transmitted NCSI
-command packet. The destination skb is sized by the declared payload,
-so the write side does not overflow - this is a pure OOB read /
-information leak, reachable with CAP_NET_ADMIN on systems with a
-registered NCSI device (e.g. OpenBMC on Aspeed BMC SoCs, where
-NET_NCSI=y is standard).
+Reject images shorter than struct prestera_fw_header before decoding the
+magic and version fields.
 
-Reject commands whose declared payload extends past the end of the
-data attribute.
-
-The issue was found by the autokbug dynamic kernel fuzzer at Tencent
-Yunding Lab.
-
-Fixes: 9771b8ccdfa6 ("net/ncsi: Extend NC-SI Netlink interface to allow user space to send NC-SI command")
-Reported-by: Henry Martin <bsdhenrymartin@gmail.com>
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Link: https://patch.msgid.link/20260803043618.3210301-1-bsdhenrymartin@gmail.com
+Fixes: 4c2703dfd7fabb ("net: marvell: prestera: Add PCI interface support")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Acked-by: Elad Nachman <enachman@marvell.com>
+Link: https://patch.msgid.link/20260731141500.1-prestera-v2-pengpeng@iscas.ac.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/ncsi-netlink.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/marvell/prestera/prestera_pci.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ncsi/ncsi-netlink.c b/net/ncsi/ncsi-netlink.c
-index db350b8f5d88b..82b22368a540a 100644
---- a/net/ncsi/ncsi-netlink.c
-+++ b/net/ncsi/ncsi-netlink.c
-@@ -461,6 +461,10 @@ static int ncsi_send_cmd_nl(struct sk_buff *msg, struct genl_info *info)
- 	nca.req_flags = NCSI_REQ_FLAG_NETLINK_DRIVEN;
- 	nca.info = info;
- 	nca.payload = ntohs(hdr->length);
-+	if (nca.payload > len - sizeof(*hdr)) {
-+		ret = -EINVAL;
-+		goto out_netlink;
-+	}
- 	nca.data = data + sizeof(*hdr);
+diff --git a/drivers/net/ethernet/marvell/prestera/prestera_pci.c b/drivers/net/ethernet/marvell/prestera/prestera_pci.c
+index 6bef633aa6330..94bcae9020eb7 100644
+--- a/drivers/net/ethernet/marvell/prestera/prestera_pci.c
++++ b/drivers/net/ethernet/marvell/prestera/prestera_pci.c
+@@ -616,6 +616,9 @@ static int prestera_fw_hdr_parse(struct prestera_fw *fw)
+ 	struct prestera_fw_header *hdr;
+ 	u32 magic;
  
- 	ret = ncsi_xmit_cmd(&nca);
++	if (fw->bin->size < sizeof(*hdr))
++		return -EINVAL;
++
+ 	hdr = (struct prestera_fw_header *)fw->bin->data;
+ 
+ 	magic = be32_to_cpu(hdr->magic_number);
 -- 
 2.53.0
 
