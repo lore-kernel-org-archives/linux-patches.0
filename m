@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6EE1D435F;
-	Mon, 17 Aug 2026 14:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DE63A961E;
+	Mon, 17 Aug 2026 14:01:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975312; cv=none; b=oedOCTQz6wTr/StYVXJLph5TpdQlGOoT1bzFbWIRQdjrxzMwDLlT7M+Zcizt+YKCKF4up4bWaaCRWFGo4TjGvig4mmzWD4oRBgbFjcYD7FY871Svpu0l4BEdz2O3BEypjP8+NrjWl4a00DPA0mG2O1DbTOc6BDHdMQa2/YmM640=
+	t=1786975315; cv=none; b=I5X/RWJBes5skUCI2P1zr5moZgm9ZAB4ZOLdinjWhZr5agcDkMzVmVDyVPZVSEjUWNUCrLcBi6qVt65bA1NwuU47kAsql5xvGIxI/SjY85HCrldkcFE92IIDrWsfiryPXQWt4g2dFduCTLSsINUEd8+WN1Ar5bNq8N5YIqy3Cvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975312; c=relaxed/simple;
-	bh=IRcIkwcx/+Ui+W3SRZZ3vokr9WzViyGH6zklRfY3KDo=;
+	s=arc-20240116; t=1786975315; c=relaxed/simple;
+	bh=W+y/vMqcmG1Fh4Ippqi1fAag0oeze4KlnhJv512h/co=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QZRTKBNlu9jdwd2FDJTwY5SEr1anjd970l8aNTvOyOPgzY8BhyXFo88o8FoODBMFYwwjKABVcjkEciJSRz4AMI+GQCdEsVrpvS6w2bOF5sCtj0jWkwPYz3L22tZEDB5edivG4Y37npJQgxepyBpwQ6oRowiQocypugDRMU99Aa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdqTqyKu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AqvYt7nWRan4tKjEY8kyhRSv49j/ANX+1tAcmvmYiglw7KfV0rBvORBMBbBC3pOB9eD8fgWuc3XJ4Ogohhyam9+0lCf+7VbroDNzsHhoneJ0p+msd4bzgEB3tNahM4vHit27S2yajdqvTidGsD3lE2hy4UBRKUNQ6+mQVorhyv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MnJwe3bS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdqTqyKu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A0E01F000E9;
-	Mon, 17 Aug 2026 14:01:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MnJwe3bS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DBC01F000E9;
+	Mon, 17 Aug 2026 14:01:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975311;
-	bh=nicPoSGrYhzWOPla6r8MiqFllEAOwCOrEA2sKMx6REw=;
+	s=korg; t=1786975313;
+	bh=1zuObJKdMS4guABSTbS8dukmDiO5B0+d07A/n1Kyq/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MdqTqyKuvxEqYa/Bo4ymUmL+yS1onKh+C/s3BKaO9uwNVNldwFet6IVJ4NrnEMfi0
-	 wC7sPnSGgP1faQbi9iD4oKwFdcF3FSymZA3grS/0xr54e/knWvAN+aPdid6xE11ejS
-	 l3cxVzPsnIA4NZPW/pIJyrGWCKEGven0dsv/6dTM=
+	b=MnJwe3bSnrF10KTx638Iv1VS6daTKB68R9E/Jrr/TdXteOOA5qiXD61PGcQEHKY2B
+	 6M2u2++YhFnIJfERkRrD1ZRfn0SbdthDOkj88uWgJ0/VytCPqkT0xhx0Hu1baArC7o
+	 vmBfzAKio9Fvpzjr4Or/sU+ew1UZUxsRpx1A3IiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 234/250] ip6_tunnel: clear skb2->cb[] in ip6ip6_err()
-Date: Mon, 17 Aug 2026 15:33:15 +0200
-Message-ID: <20260817132546.050342849@linuxfoundation.org>
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.18 235/250] fscrypt: use the mount idmap for the owner check in fscrypt_ioctl_set_policy()
+Date: Mon, 17 Aug 2026 15:33:16 +0200
+Message-ID: <20260817132546.089870767@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,47 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Zhan Xusheng <zhanxusheng@xiaomi.com>
 
-commit f803c086399da277b5d0ff36a107d0f162751800 upstream.
+commit cf6c993c0feca7984797e634deba3c80342e199a upstream.
 
-ip6ip6_err() clones an outer IPv6 ICMP error skb, pulls it to the
-quoted inner IPv6 packet, and then passes the clone to icmpv6_send().
-The clone still carries the outer packet's inet6_skb_parm in skb->cb.
+fscrypt_ioctl_set_policy() calls inode_owner_or_capable() with
+&nop_mnt_idmap before allowing an encryption policy to be set, instead
+of the idmap of the mount the ioctl was issued on.
 
-If the outer packet had a Home Address Option, IP6CB(skb2)->dsthao
-remains non-zero after skb_pull(). icmpv6_send() later calls
-mip6_addr_swap(), which uses that stale dsthao offset against the quoted
-inner packet. A malformed inner destination-options header can then make
-the HAO lookup and address swap run past the end of the quoted packet
-and corrupt skb_shared_info.
+fscrypt is used by filesystems that support idmapped mounts (e.g. ext4,
+f2fs), so on such a mount this compares the caller's fsuid against the
+unmapped on-disk owner rather than the mapped owner: the actual owner
+can be wrongly denied with -EACCES and an unrelated caller wrongly
+allowed.  Use file_mnt_idmap(filp) instead.
 
-Clear skb2->cb[] before pulling the quoted inner IPv6 packet so the
-reply path does not reuse metadata left by the outer IPv6 stack.
-
-Fixes: e490d1d85cf5 ("[IPV6] IP6TUNNEL: Split out generic routine in ip6ip6_err().")
+Fixes: 14f3db5542e6 ("ext4: support idmapped mounts")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/fe1a5e765fbca88d69391887f0ed26a19e3e4d39.1785736562.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Link: https://patch.msgid.link/20260725080004.929328-1-zhanxusheng1024@gmail.com
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_tunnel.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/crypto/policy.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -677,6 +677,9 @@ ip6ip6_err(struct sk_buff *skb, struct i
- 		if (!skb2)
- 			return 0;
+--- a/fs/crypto/policy.c
++++ b/fs/crypto/policy.c
+@@ -534,7 +534,7 @@ int fscrypt_ioctl_set_policy(struct file
+ 		return -EFAULT;
+ 	policy.version = version;
  
-+		/* Remove debris left by outer IPv6 stack. */
-+		memset(IP6CB(skb2), 0, sizeof(*IP6CB(skb2)));
-+
- 		skb_dst_drop(skb2);
- 		skb_pull(skb2, offset);
- 		skb_reset_network_header(skb2);
+-	if (!inode_owner_or_capable(&nop_mnt_idmap, inode))
++	if (!inode_owner_or_capable(file_mnt_idmap(filp), inode))
+ 		return -EACCES;
+ 
+ 	ret = mnt_want_write_file(filp);
 
 
