@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68EB943BDDE;
-	Mon, 17 Aug 2026 14:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8A7444719;
+	Mon, 17 Aug 2026 14:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977407; cv=none; b=rg8ukzECgVAcMPto4+3rP8JbaLTb+1QURiJ+pcPOKWfSMtFc6XvG7fH5S8jMEL7dnn1OF1ual+xnMFD1pG3JeCuHwGguyNfxh73Bi/0gGoZxgzUhhw6CE94kAd9ZqoJ7Krv/U2+UM1TCLY7qjNibxAFEPT2DW8BEQFD5GxWn4o0=
+	t=1786977410; cv=none; b=qz/w8YrlMJYfhuEr54cHxpMmbnwmJ6n3lP9v2A6tnvndePmDuv01poyYJwi15gmFXA9ziERJ1/Kzn24T07i5bl2A49yxzLyMAXkGWUMKdCBKt47Z5t6VLzcfCK4bvSv8brcVB87bgfzyiafC0aZn+5te0guYxrL0/w/YDH2sE+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977407; c=relaxed/simple;
-	bh=RkA9twTGk8XX14phoTNLBowt9PVs8uDgvM6WWFPnyDc=;
+	s=arc-20240116; t=1786977410; c=relaxed/simple;
+	bh=miqpY5if3TVaeaszdcHJASTHxJkHujbmAa4k2TRY3LE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HpMvbe4uFcuN3Whgl2u9medVQm02qXQu8fs/sszR4QU23TE/31nmZCLriEmocB9LE9jNzhE9nQIuvsICZ8YE2sSwBMsGi2PHi0dPDDWSc5nNa/yLx7eJScd90aSIkCWiC8Rq4CN9RDNnF6ueIICWiPC2DYhVY18bh2FDscMTOTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTYJKul9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FSQU6rzQjz1dXK60kcAzx87F7DlGmppeD53l8HOGsirnViHmnKHuSd7fpgTrjRoyma8FAIIwYrI2ohK6G1AIWBPc4a2BzFHzG+mC6o3GgPr/AyNEJfwOzEIB5XHWtKk5oM82kFHUhRrKWn5lQhHyZDSVBwdV89X2rSO3f/gXVto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dazAzP3I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTYJKul9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A88E31F000E9;
-	Mon, 17 Aug 2026 14:36:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dazAzP3I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83E201F000E9;
+	Mon, 17 Aug 2026 14:36:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977406;
-	bh=eOxLYK1cH4yD1iHXvmGmCcEGzik9rJV7UoH21NaTc9E=;
+	s=korg; t=1786977409;
+	bh=xf/KUYv/pltMddYyWm1t7B2KJSUL5wtNnnjsw/Fikmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kTYJKul9HvGoiB/nhTaSaelI8F52F1ydxKc+03AQVtVHvxxiNPCj/MSfPsvQeY5NL
-	 XxVGW4FOlhe5H88+99q5LR4EB00I5hkYm4mSh4WehNJ4b259dE0FgAF0ndFX0JdRhP
-	 acEWJQT+XXj6rSgqgls8v30DwJ2CPvr0WPDru3hc=
+	b=dazAzP3InKOUXeX1xlSfBiCqFXSUtfJIw/DuLWCk8VIqhrMDZXuQ0pzdBIpMPJA0S
+	 66ABs7O4PTVsuCQkvVM0xJEbYVZCRX863oAL+Qimu/ZGHlNBx3ku88N4vlP5DgmhzH
+	 u53WQ09VQh0VXDiZY/edx+r9vPriqZ1IPp8D3MgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Vollrath <tactii@gmail.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 5.15 311/456] igbvf: Fix leak in TX DMA error cleanup
-Date: Mon, 17 Aug 2026 15:31:41 +0200
-Message-ID: <20260817132551.917499819@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 320/456] net: ipv6: clear suppressed fib6 rule result
+Date: Mon, 17 Aug 2026 15:31:50 +0200
+Message-ID: <20260817132552.214281642@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,42 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Vollrath <tactii@gmail.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 0565052b7e2f436b7f1541f4849da96dc0aa7a0e upstream.
+commit 6aea62e433fe1b586202a5fee8b5807ce635e1d7 upstream.
 
-If an error is encountered while mapping TX buffers, the driver should
-unmap any buffers already mapped for that skb.
+fib6_rule_suppress() drops a suppressed route with ip6_rt_put_flags(),
+but leaves res->rt6 pointing at the released rt6_info.
 
-Because count is incremented before each frag mapping, it will always
-match the correct number of unmappings needed when dma_error is reached.
-Decrementing count before the while loop in dma_error causes an
-off-by-one error. If any mapping was successful before an unsuccessful
-mapping, exactly one DMA mapping (the head) would leak.
+If no later rule supplies a replacement, fib6_rule_lookup() still sees
+res.rt6 and returns that stale dst to its caller. A suppressing rule can
+therefore leak a released route back to rt6_lookup(), and the next put
+hits rcuref_put_slowpath() from dst_release().
 
-This bug was introduced by a 2010 fix for an endless loop in dma_error.
-All other affected drivers have already been fixed.
+Clear res->rt6 when suppressing the route so suppressed lookups fall
+through to the null dst instead of reusing the released one.
 
-Fixes: c1fa347f20f1 ("e1000/e1000e/igb/igbvf/ixgb/ixgbe: Fix tests of unsigned in *_tx_map()")
+Fixes: cdef485217d3 ("ipv6: fix memory leak in fib6_rule_suppress")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-4-7-opus
-Signed-off-by: Matt Vollrath <tactii@gmail.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/4b8acb7787d54e440155585dd32ebdf0bef7d122.1784710966.git.zhilinz@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igbvf/netdev.c |    2 --
- 1 file changed, 2 deletions(-)
+ net/ipv6/fib6_rules.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/ethernet/intel/igbvf/netdev.c
-+++ b/drivers/net/ethernet/intel/igbvf/netdev.c
-@@ -2203,8 +2203,6 @@ dma_error:
- 	buffer_info->time_stamp = 0;
- 	buffer_info->length = 0;
- 	buffer_info->mapped_as_page = false;
--	if (count)
--		count--;
+--- a/net/ipv6/fib6_rules.c
++++ b/net/ipv6/fib6_rules.c
+@@ -300,6 +300,7 @@ INDIRECT_CALLABLE_SCOPE bool fib6_rule_s
  
- 	/* clear timestamp and dma mappings for remaining portion of packet */
- 	while (count--) {
+ suppress_route:
+ 	ip6_rt_put_flags(rt, flags);
++	res->rt6 = NULL;
+ 	return true;
+ }
+ 
 
 
