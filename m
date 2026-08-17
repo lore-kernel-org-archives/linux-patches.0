@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A08113790B;
-	Mon, 17 Aug 2026 14:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6A4175A99;
+	Mon, 17 Aug 2026 14:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976489; cv=none; b=f0lAkUdqhwqhNw1DD1r1bClWyV88a98kPJNjlJvp1Wqn3zsXw1Pf0QPBDotFp/bNURrtECC4IY9gBEf/DeZ45q8KmtYtGn8MtlOOqP5ZtaqiImHkVEhfEB4tclIc7zFfiFIsCPEgf0NEtYJrJqzYJBGdrJYXdH/JTRkzkh05/i8=
+	t=1786976492; cv=none; b=YNMZrVcerUuh8Tzry7NPXgMwYu9LNiFhlQrHg0PDBtNlfsNxDd9xZNKzHKijiYYk6lD5qGWjWz6/LTqhtezOqO/cuV3WnoxPEUkc3vzJAybylhUNfOrSjr2zY/yTijC1n560vuORDmX70S6yiyHPGgp0ODY6k0SR0LU1nXoGU8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976489; c=relaxed/simple;
-	bh=VtKvkH9F6pJJK+JxQmTd7UwtRno89MI7+nz31u4nuMM=;
+	s=arc-20240116; t=1786976492; c=relaxed/simple;
+	bh=C/jPCQwR9jOgLJIYhSvLq6rxxxqCZzqNJJIIK4KlE+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n2otqnjF37aYSvWIrm3zIES4N+JejsxhtgBGB5E7rRBBE2hU679FOkR8wt3Vq6Lr0g6ubmttCjVKnkcTxH7xvFIe97ldHRHZx3QeCI5Ei8VtTaJQFhNicJfmNd/EhNuX7RZqUX85PNvr370NgOSyr2qS18o7suvyaxdw7YugTcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYn1fysE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cov7efgNseiF+PNPSSavG2dg5qwFqrEKfj8YxJ/RwgmLMsLzVTks84Os4PgN0U+0lgxLAyADbtwMUvtX2Db0bpR1TG2tJuz2frX03xHT+Zd9PvXYziB1/tvdoKug6c3oOA+YPZEDhs73Ka5o2kqizb7qDayzEK5j7gNHmRAF42Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUdQkDCQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYn1fysE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874021F000E9;
-	Mon, 17 Aug 2026 14:21:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUdQkDCQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 675371F000E9;
+	Mon, 17 Aug 2026 14:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976488;
-	bh=R2CsgFEFuWhcZAnanirWRdz22AoqQXAaoDdtKYso+og=;
+	s=korg; t=1786976491;
+	bh=D5dgpZ03fGsH4uSLhFEha2m/6P8JT503kgjNXa2IoJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gYn1fysElUts4ELod/I+riQkyUkbT3MVF45MtHHLDyUO8jk/NxPOEzZSfsgs4Io05
-	 aOt8xCsQXVDQ00gFvB1WdozJ+lkf31GDMAKdtnyMqHrjL3mwyiuuq4T7vXHWhJ65AU
-	 coDt0cpIT14nJn0c7d9LoP6xEz+HfTnsVO9dICFQ=
+	b=hUdQkDCQDzGRP6xrt9jpn+1XIPHDXz0TakcWk1RlTE58li7NjXYYLrlRqIfxsIvoF
+	 MoGB2xKM58IgdjFAWhVa6HO4pafGY+GNYibMEKv0mn80e407UcCM38UDKozi7kHsxk
+	 mBGGfti9Y2YfGubmC0NIKaHyu+dfeB3iW8Ff4pEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 364/389] ipv4: fix use-after-free in fib_nhc_update_mtu()
-Date: Mon, 17 Aug 2026 15:33:23 +0200
-Message-ID: <20260817132552.926402641@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Cunhao Lu <1579567540@qq.com>
+Subject: [PATCH 5.10 365/389] serial: 8250_dma: Clear stale RX state on shutdown
+Date: Mon, 17 Aug 2026 15:33:24 +0200
+Message-ID: <20260817132552.959533329@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,165 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Cunhao Lu <1579567540@qq.com>
 
-commit bc5bde9ce3cc36502839dfe98e068f7303a50982 upstream.
+commit e2fe6a0efecbef00e3ecc2db64dd5afa8c212b41 upstream.
 
-fib_nhc_update_mtu() walks the nexthop exception table under RTNL, but
-RTNL does not serialize this walk with PMTU exception updates. The walk
-uses rcu_dereference_protected() with a constant true condition without
-holding fnhe_lock.
+serial8250_release_dma() terminates RX DMA and releases the channel, but
+leaves rx_running set.  If the port is closed while an RX transfer is
+active, the stale state remains while rxchan is NULL until the channel is
+requested again on the next open.
 
-The following interleaving can therefore occur:
+The DesignWare BUSY workaround added by commit a7b9ce39fbe4
+("serial: 8250_dw: Ensure BUSY is deasserted") calls
+serial8250_rx_dma_flush() from the LCR write path during startup.  This
+happens before serial8250_request_dma() obtains a new RX channel.  On
+reopen, the stale rx_running state therefore makes the flush path pass a
+NULL channel to dmaengine_pause(), causing a kernel Oops.
 
-  CPU 0                              CPU 1
-  fib_nhc_update_mtu()               update_or_create_fnhe()
-    load fnhe                          spin_lock_bh(&fnhe_lock)
-                                       fnhe_remove_oldest()
-                                         unlink fnhe
-                                         kfree_rcu(fnhe, rcu)
-    <quiescent state>
-    access fnhe after grace period
+Clear rx_running after terminating RX DMA, matching the TX cleanup.  Also
+make the flush helper return if the DMA object or RX channel is not
+available so startup and teardown paths cannot pass a NULL channel to the
+DMAengine API.
 
-KASAN reported:
-
-  BUG: KASAN: slab-use-after-free in fib_nhc_update_mtu+0x3df/0x410
-  Read of size 8 at addr ffff888107d49000 by task poc/90
-  Call Trace:
-   fib_nhc_update_mtu+0x3df/0x410
-   fib_sync_mtu+0x7a/0xd0
-   fib_netdev_event+0x229/0x3f0
-   netif_set_mtu_ext+0x33a/0x570
-   dev_set_mtu+0x88/0x120
-
-The same walk updates fnhe_pmtu and fnhe_mtu_locked. These fields form a
-pair and other writers serialize them with fnhe_lock. RCU alone prevents
-reclamation, but would still allow concurrent writers to leave a mixed
-pair.
-
-Walk the table under RCU and acquire fnhe_lock only while updating each
-exception. RCU keeps the current entry alive while the short critical
-section serializes its paired PMTU fields. This avoids holding the global
-lock while scanning all 2048 buckets for every nexthop.
-
-Fixes: af7d6cce5369 ("net: ipv4: update fnhe_pmtu when first hop's MTU changes")
-Cc: stable@vger.kernel.org
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260807181710.1178747-1-nicoyip.dev@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 0fcb7901f9d6 ("tty: serial: 8250_dma: keep own book keeping about RX transfers")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Cunhao Lu <1579567540@qq.com>
+Link: https://patch.msgid.link/tencent_9EE2945F4C933B4D810C73C2D7485E000F06@qq.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/route.h      |    2 ++
- net/ipv4/fib_semantics.c |   34 +++++++++++-----------------------
- net/ipv4/route.c         |   29 +++++++++++++++++++++++++++++
- 3 files changed, 42 insertions(+), 23 deletions(-)
+ drivers/tty/serial/8250/8250_dma.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/include/net/route.h
-+++ b/include/net/route.h
-@@ -240,6 +240,8 @@ int fib_dump_info_fnhe(struct sk_buff *s
- 		       u32 table_id, struct fib_info *fi,
- 		       int *fa_index, int fa_start, unsigned int flags);
- 
-+void fnhe_update_pmtu(struct fib_nh_exception *fnhe, u32 new, u32 orig);
-+
- static inline void ip_rt_put(struct rtable *rt)
+--- a/drivers/tty/serial/8250/8250_dma.c
++++ b/drivers/tty/serial/8250/8250_dma.c
+@@ -195,11 +195,12 @@ void serial8250_rx_dma_flush(struct uart
  {
- 	/* dst_release() accepts a NULL parameter.
---- a/net/ipv4/fib_semantics.c
-+++ b/net/ipv4/fib_semantics.c
-@@ -1943,42 +1943,30 @@ static int call_fib_nh_notifiers(struct
- 	return NOTIFY_DONE;
- }
+ 	struct uart_8250_dma *dma = p->dma;
  
--/* Update the PMTU of exceptions when:
-- * - the new MTU of the first hop becomes smaller than the PMTU
-- * - the old MTU was the same as the PMTU, and it limited discovery of
-- *   larger MTUs on the path. With that limit raised, we can now
-- *   discover larger MTUs
-- * A special case is locked exceptions, for which the PMTU is smaller
-- * than the minimal accepted PMTU:
-- * - if the new MTU is greater than the PMTU, don't make any change
-- * - otherwise, unlock and set PMTU
-+/* Walk the exceptions of a nexthop after its first hop MTU changed. The
-+ * chain is RCU protected here, while fnhe_update_pmtu() takes fnhe_lock
-+ * for the update of each entry.
-  */
- void fib_nhc_update_mtu(struct fib_nh_common *nhc, u32 new, u32 orig)
- {
- 	struct fnhe_hash_bucket *bucket;
- 	int i;
- 
--	bucket = rcu_dereference_protected(nhc->nhc_exceptions, 1);
-+	rcu_read_lock();
-+	bucket = rcu_dereference(nhc->nhc_exceptions);
- 	if (!bucket)
--		return;
-+		goto out;
- 
- 	for (i = 0; i < FNHE_HASH_SIZE; i++) {
- 		struct fib_nh_exception *fnhe;
- 
--		for (fnhe = rcu_dereference_protected(bucket[i].chain, 1);
-+		for (fnhe = rcu_dereference(bucket[i].chain);
- 		     fnhe;
--		     fnhe = rcu_dereference_protected(fnhe->fnhe_next, 1)) {
--			if (fnhe->fnhe_mtu_locked) {
--				if (new <= fnhe->fnhe_pmtu) {
--					fnhe->fnhe_pmtu = new;
--					fnhe->fnhe_mtu_locked = false;
--				}
--			} else if (new < fnhe->fnhe_pmtu ||
--				   orig == fnhe->fnhe_pmtu) {
--				fnhe->fnhe_pmtu = new;
--			}
--		}
-+		     fnhe = rcu_dereference(fnhe->fnhe_next))
-+			fnhe_update_pmtu(fnhe, new, orig);
- 	}
-+out:
-+	rcu_read_unlock();
- }
- 
- void fib_sync_mtu(struct net_device *dev, u32 orig_mtu)
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -779,6 +779,35 @@ out_unlock:
- 	spin_unlock_bh(&fnhe_lock);
- }
- 
-+/* Update the PMTU of an exception when:
-+ * - the new MTU of the first hop becomes smaller than the PMTU
-+ * - the old MTU was the same as the PMTU, and it limited discovery of
-+ *   larger MTUs on the path. With that limit raised, we can now
-+ *   discover larger MTUs
-+ * A special case is locked exceptions, for which the PMTU is smaller
-+ * than the minimal accepted PMTU:
-+ * - if the new MTU is greater than the PMTU, don't make any change
-+ * - otherwise, unlock and set PMTU
-+ *
-+ * fnhe_lock keeps fnhe_pmtu and fnhe_mtu_locked consistent against
-+ * update_or_create_fnhe(), which sets both under the same lock.
-+ */
-+void fnhe_update_pmtu(struct fib_nh_exception *fnhe, u32 new, u32 orig)
-+{
-+	spin_lock_bh(&fnhe_lock);
+-	if (dma->rx_running) {
+-		dmaengine_pause(dma->rxchan);
+-		__dma_rx_complete(p);
+-		dmaengine_terminate_async(dma->rxchan);
+-	}
++	if (!dma || !dma->rxchan || !dma->rx_running)
++		return;
 +
-+	if (fnhe->fnhe_mtu_locked) {
-+		if (new <= fnhe->fnhe_pmtu) {
-+			fnhe->fnhe_pmtu = new;
-+			fnhe->fnhe_mtu_locked = false;
-+		}
-+	} else if (new < fnhe->fnhe_pmtu || orig == fnhe->fnhe_pmtu) {
-+		fnhe->fnhe_pmtu = new;
-+	}
-+
-+	spin_unlock_bh(&fnhe_lock);
-+}
-+
- static void __ip_do_redirect(struct rtable *rt, struct sk_buff *skb, struct flowi4 *fl4,
- 			     bool kill_route)
- {
++	dmaengine_pause(dma->rxchan);
++	__dma_rx_complete(p);
++	dmaengine_terminate_async(dma->rxchan);
+ }
+ EXPORT_SYMBOL_GPL(serial8250_rx_dma_flush);
+ 
+@@ -308,6 +309,7 @@ void serial8250_release_dma(struct uart_
+ 
+ 	/* Release RX resources */
+ 	dmaengine_terminate_sync(dma->rxchan);
++	dma->rx_running = 0;
+ 	dma_free_coherent(dma->rxchan->device->dev, dma->rx_size, dma->rx_buf,
+ 			  dma->rx_addr);
+ 	dma_release_channel(dma->rxchan);
 
 
