@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267BB429CE8;
-	Mon, 17 Aug 2026 15:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0942C26B2D3;
+	Mon, 17 Aug 2026 15:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979632; cv=none; b=ujjN3pjsME8jzmlXnIEmyBoVSBtkglhYqQrOS2vKcp5w3QZk5NFnF/O/6QE5M4QiYNDjeAgRW/Z8XEm+Cjnhey7CBBmfNnqt2YyLys1CvsCMXvINBOY8mXQD+5E/MxOiOkLH8Y0d1PAoqtkVP2tysykWCT+7rCRZ4nuB1DwB6Wg=
+	t=1786979635; cv=none; b=kQz3hbCenIl97aqm+WklwXs8qLcjlPw5KvtX5zOqwBuEPq2CdWI1v+w/c5LqRTeTt1lcQFpVnT/w+yGLKBM3iFe6WKzYSy17+yLKETNkIJoABO03lh8Hx2lBlLjcveodwY+gUXFwP+kAMs5ScbUt+xpONYm/GTv5AuRfcn80wk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979632; c=relaxed/simple;
-	bh=k0nMqeEYi+CRtxzy/zJLg4kAtLzmWDtOm/bmlfRlZZA=;
+	s=arc-20240116; t=1786979635; c=relaxed/simple;
+	bh=9gbMq3tRZGi1IoqfoYzdaFQi05nBBoxVpY3wbvJnep4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Eh1ntnJJlNmL9UyOOTQCtJ/FXUTKaWjE/8OD62RmhMIWC6ghPyqgTrGx5wGqGfRawwNcyeMaVgolB7VyozD5+TCN9/hvi4UqQporvwhXEIlGa5lghLfmDgZIBifN9kLAVA5sh/v+I8QZ+oD/oaUBnJwvDxyXDQ1s/hnRf8hRiZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PilXs3TC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m78I0bRGiTy5b0cMzLQdgA6JuyDTAOXK5pt6TDC7up7XxvRGUUMI7awrH5vFt5walu6bc7jcCW0bWYLtj3aiA8WmExZs6sBgGu9Eh7GeEmcN92C+Yyswp5vVOmOriYUbZn1kQJyKWR/GjxL77kb1chqBk2o/Bk96I8QsH2xTKNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hkM8MqnO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PilXs3TC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87DCE1F000E9;
-	Mon, 17 Aug 2026 15:13:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hkM8MqnO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 639E11F000E9;
+	Mon, 17 Aug 2026 15:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979631;
-	bh=NF/t8GoypdkemiyZrPrSmzSKw62sGmteduwc0rjna7A=;
+	s=korg; t=1786979633;
+	bh=XBPU099NRVpaqNe5A6sHBHkqz9Axu56hJ5eTY2R0wAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PilXs3TC4m0Ypcn6vVkw1JjMKgf3zzjKrpN3r1zrlUj+lQSG5VC/3VKzTpUkABDBt
-	 gSxNvYA0LkUqY+WQJ/BNWXOe3SRJXqsEozSCebdlNuzDuAhS3rvMYm00X1a0SsB19+
-	 y0PxzDFSvQ6FIF7Mo3IwTVx1Gk03oEhgGqdOHMys=
+	b=hkM8MqnOiab9PisTVlVUkTQzVd+4HkPK+jk+Uu4GSsXusDcXEhbEHSNhqGi1V/NdH
+	 /FED2AuXqd45l95zkcakqvfLa9Ipkbec5iXuxz+0rhFOQ7Si+5H4LwwBt3215zfFPB
+	 yPdoIR8gGjQQp6Vy8H2XUZlMROJqX0dsr4Rv7dJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Silveru <Chandrakanth.Silveru@amd.com>,
-	Srikanth Aithal <Srikanth.Aithal@amd.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Nikunj A Dadhania <nikunj@amd.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.1 294/609] KVM: SVM: Bump asid_generation on CPU online to avoid ASID collision after hotplug
-Date: Mon, 17 Aug 2026 15:29:50 +0200
-Message-ID: <20260817132554.048638426@linuxfoundation.org>
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Breno Leitao <leitao@debian.org>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 277/609] tipc: clear sock->sk on the failed-insert path in tipc_sk_create()
+Date: Mon, 17 Aug 2026 15:29:33 +0200
+Message-ID: <20260817132553.423012107@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -48,93 +47,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikunj A Dadhania <nikunj@amd.com>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-commit 25f744ffa0c8e799e06250ce2e618367b166b0d4 upstream.
+commit ba0533fc163f905fe817cfabdf8ed4058da44800 upstream.
 
-If a vCPU stays scheduled out (or blocked) while the last pCPU it ran
-on goes through a hotplug cycle (online->offline->online), and the vCPU
-then resumes execution on the same pCPU, then it is possible for it to
-run with an ASID that has now been assigned to a different vCPU,
-resulting in stale TLB translations being used.
+When tipc_sk_create() fails to insert the new socket (tipc_sk_insert()
+returns non-zero), its error path frees the sk with sk_free() but leaves
+sock->sk pointing at the freed object:
 
-svm_enable_virtualization_cpu() resets asid_generation to 1 and sets
-next_asid to max_asid + 1 on every CPU online event, including hotplug
-cycles.  Because next_asid starts beyond the pool boundary, the first
-call to new_asid() after an online event always wraps the pool,
-incrementing asid_generation to 2 and assigning ASIDs starting from
-min_asid.
+	if (tipc_sk_insert(tsk)) {
+		sk_free(sk);
+		pr_warn("Socket create failed; port number exhausted\n");
+		return -EINVAL;
+	}
 
-Consider two vCPUs from different VMs, vCPU-A pinned to CPU-X holding
-asid_generation=2 and ASID=N from before the hotplug event:
+This is harmless for plain socket(): the syscall layer clears sock->ops
+before releasing, so tipc_release() is never called. It is not harmless
+on the accept() path. tipc_accept() creates the pre-allocated child
+socket with tipc_sk_create(net, new_sock, 0, kern); on failure it leaves
+new_sock->sk dangling and new_sock->ops non-NULL, and do_accept() then
+fput()s the new file, so __sock_release() -> tipc_release() runs
+lock_sock(new_sock->sk) on the freed sk -- a use-after-free write of the
+sk_lock spinlock.
 
-  1. CPU-X goes offline and back online: asid_generation resets to 1,
-     next_asid = max_asid + 1.
+tipc_release() already guards this exact "failed accept() releases a
+pre-allocated child" case with "if (sk == NULL) return 0;", but the
+guard is bypassed because tipc_sk_create() left sock->sk non-NULL
+(dangling) rather than NULL.
 
-  2. One or more vCPUs migrate to CPU-X and call new_asid(), wrapping
-     the pool and consuming ASIDs starting from min_asid.  Eventually
-     vCPU-B from a different VM is assigned asid_generation=2, ASID=N
-     — the same ASID that vCPU-A held before the hotplug.
+Clear sock->sk on the failed-insert path so the existing tipc_release()
+NULL check fires and the use-after-free is avoided.
 
-  3. vCPU-A enters pre_svm_run() on CPU-X: current_vmcb->cpu is
-     unchanged so the migration branch is skipped.  Its saved
-     asid_generation=2 matches sd->asid_generation=2, so the generation
-     check silently passes and vCPU-A continues running with ASID=N —
-     the same ASID just freshly assigned to vCPU-B.
+The tipc_sk_insert() failure is reached when the per-netns socket
+rhashtable hits its max_size (tsk_rht_params.max_size = 1048576, ~2M
+elements) -- i.e. once a netns holds ~2M TIPC sockets every insert
+returns -E2BIG.
 
-Both vCPUs from different VMs now run on CPU-X with the same ASID,
-causing them to share NPT TLB entries and producing stale translations.
+  BUG: KASAN: slab-use-after-free in lock_sock_nested (net/core/sock.c:3839)
+  Write of size 8 at addr ffff8880047cdc38 by task init/1
+   lock_sock_nested (net/core/sock.c:3839)
+   tipc_release (net/tipc/socket.c:638)
+   __sock_release (net/socket.c:710)
+   sock_close (net/socket.c:1501)
+   __fput (fs/file_table.c:512)
+  Allocated by task 1:
+   sk_alloc (net/core/sock.c:2308)
+   tipc_sk_create (net/tipc/socket.c:487)
+   tipc_accept (net/tipc/socket.c:2744)
+   do_accept (net/socket.c:2034)
+  Freed by task 1:
+   __sk_destruct (net/core/sock.c:2391)
+   tipc_sk_create (net/tipc/socket.c:504)
+   tipc_accept (net/tipc/socket.c:2744)
+   do_accept (net/socket.c:2034)
 
-The collision manifests as a KVM internal error (Suberror: 1, emulation
-failure).  The NPT page fault reports a faulting GPA far outside the
-VM's physical memory range — a sign of stale TLB translations being
-used.  KVM falls back to instruction emulation, which fails on
-FPU/XSave instructions (XRSTOR, STMXCSR) that the emulator does not
-implement.
-
-Fix this by incrementing asid_generation instead of resetting it to 1
-in svm_enable_virtualization_cpu().  On module load, asid_generation
-starts at 0 (memset) and the increment produces 1, identical to the
-old behaviour.  On subsequent hotplug cycles the generation advances
-beyond any value a vCPU previously observed on this CPU, so the
-generation check in pre_svm_run() reliably forces new_asid() on every
-vCPU after every hotplug cycle.
-
-Fixes: 774c47f1d78e ("[PATCH] KVM: cpu hotplug support")
-Reported-by: Chandrakanth Silveru <Chandrakanth.Silveru@amd.com>
-Tested-by: Srikanth Aithal <Srikanth.Aithal@amd.com>
-Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
-Message-ID: <20260715063506.672432-1-nikunj@amd.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: 00aff3590fc0 ("net: tipc: fix possible refcount leak in tipc_sk_create()")
+Cc: stable@vger.kernel.org
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260714131939.1255974-1-4ncienth@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/tipc/socket.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -589,7 +589,12 @@ static int svm_hardware_enable(void)
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -503,6 +503,7 @@ static int tipc_sk_create(struct net *ne
+ 	tipc_set_sk_state(sk, TIPC_OPEN);
+ 	if (tipc_sk_insert(tsk)) {
+ 		sk_free(sk);
++		sock->sk = NULL;
+ 		pr_warn("Socket create failed; port number exhausted\n");
  		return -EINVAL;
  	}
- 	sd = per_cpu_ptr(&svm_data, me);
--	sd->asid_generation = 1;
-+	/*
-+	 * Bump the current asid_generation value to ensure any vCPU that
-+	 * previously ran on this CPU sees a stale generation and is forced
-+	 * to acquire a new ASID, preventing a latent ASID collision.
-+	 */
-+	sd->asid_generation++;
- 	sd->max_asid = cpuid_ebx(SVM_CPUID_FUNC) - 1;
- 	sd->next_asid = sd->max_asid + 1;
- 	sd->min_asid = max_sev_asid + 1;
 
 
