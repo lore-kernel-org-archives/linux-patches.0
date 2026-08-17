@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BBC443E21;
-	Mon, 17 Aug 2026 14:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50B54457BB;
+	Mon, 17 Aug 2026 14:13:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976024; cv=none; b=kc1YJk0KeaQpu1JKLdi6ftiujmZSpwF/XPNGSkuvmTUZ3433a3U9HWO649oc4GwsFx7MLFRI6ZgeRVWBHnJdy8fVeU9CdKV3am3xRPMKNziRuAX4wciscEk7wHNoPGL/XSqM3wLub3FHO7WTHIQA+JX2uZa7Sh1aXbv4mIegxxA=
+	t=1786976027; cv=none; b=XobP6HF8ybpb8Lvza2jJGzX3EfbOip+VOgXnCS/6zLIemFKAgNxlVep0jQY2TYkcbPa5DNi0OsPr9OWKb0+qcoZT16eKWuEsXV4fJEUcqoT3NdLIS0mfnzaJSRwkfnZ4W3TfkwGKzxijoTeg5v+4XkpKOa5d3sCIuO2Vs9puDRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976024; c=relaxed/simple;
-	bh=ct0Z7UCaQtmckAo112UtIn03lIYGquSWiferGBhhMsM=;
+	s=arc-20240116; t=1786976027; c=relaxed/simple;
+	bh=BBRM3LHGxHwm9rmc9w1B9NN5i4Oz+ubM/YqUt2vEdTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eunFlUiU1pBoaRaxvDUXTiMP2claoG/MgdkNa7k6qhj8D7eP5eSd29VL+n6YZux6A/Q6qIicUah52YmFWrTBAm90g5jdqM3yzO/NwumoFo0IwrchzbLnOc048DsyNqSOePiLzkfML+qcFVItH9zO02DNK/bsIsvG/hkgVMZCuPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yLJYcXcr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PRcQpYZlxrRwpgs1BMF98fDLeFvpe45/h3FyZ1333sn5O5gGEVP1YNPGqQNk0UmRBDEhtccyIGgZlfAR9sdAzcml4xogD2WbwryTopBW7S8D3aChASSSBTEB+f8PefiBcfQo1UFyz5DmKP1EHJdrZSzlhIf0tG78J68GdLrCDgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S4ryI405; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yLJYcXcr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B1E1F00ACA;
-	Mon, 17 Aug 2026 14:13:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S4ryI405"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE861F00A3A;
+	Mon, 17 Aug 2026 14:13:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976022;
-	bh=W2tXhB6jsnw6UKakiL88gs1aiBXE9C8Y5U4N+p9to1Q=;
+	s=korg; t=1786976025;
+	bh=j92XjIF+VCDXyIhFb5NUAI6aG2DVJgxWA0gqlqlKhPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yLJYcXcr10VLNsBchZkbZ1Vmcs6/dJqm9VQM4x07AiBH99I+rq9MWpl+GI+doulWv
-	 Tvs7cJ3OXQmlvn16+mOuyOZMq1ZYlzo1vZAjWaB6C6DTjly5YC0/nWRL28w+KRp4wj
-	 g/FytmpoQthRuM4/FLgwlV6Dq4340yWf+1bmqYQ4=
+	b=S4ryI4059UGZTP2hw69mdf2lGmPHzJnXwXtn0zUXexgmgb14bMK9o01xu7f+M8UYO
+	 ayC7ZUgHUz8e7tusJg3FWKp7h/KFi2NqAtP7rBMweUWh1+zmA1skAdfDevVZNch62D
+	 vfG4KC00XXG+KrjjZLlrsbjMGfwKXs0ontdr6KiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 229/389] Bluetooth: L2CAP: fix UAF in l2cap_le_connect_rsp
-Date: Mon, 17 Aug 2026 15:31:08 +0200
-Message-ID: <20260817132548.162916562@linuxfoundation.org>
+Subject: [PATCH 5.10 230/389] net: phylink: put link_gpio if phylink_create fails
+Date: Mon, 17 Aug 2026 15:31:09 +0200
+Message-ID: <20260817132548.202743240@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,58 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit c4740e7f23ff9a8210198d8b4703259e21b9f69d ]
+[ Upstream commit 0fe1e3e8f3380d7862296a73b528d164e96c76b8 ]
 
-l2cap_le_connect_rsp() obtains a channel via
-__l2cap_get_chan_by_ident() but neither holds a reference nor uses
-l2cap_chan_hold_unless_zero() before locking and operating on it.
-A concurrent l2cap_chan_del() triggered by a remote disconnect can
-free the channel between the lookup and l2cap_chan_lock(), causing
-a use-after-free.
+In phylink_create() if phylink_register_sfp() returns an error, link_gpio
+obtained by phylink_parse_fixedlink() is never released. While this is a
+very unlikely scenario, it's worth to fix/handle this.
 
-The BR/EDR counterpart l2cap_connect_rsp() and the sibling handler
-l2cap_le_command_rej() already use l2cap_chan_hold_unless_zero()
-to safely hold a reference, but l2cap_le_connect_rsp() was left
-unprotected.
+This was present from the very first implementation of phylink but got
+relevant only with the introduction of ce0aa27ff3f6 ("sfp: add sfp-bus to
+bridge between network devices and sfp cages") where additional function
+were added after phylink_parse_fixedlink() making the release of link_gpio
+needed if such additional function errored out.
 
-Fix by adding l2cap_chan_hold_unless_zero() after the ident lookup
-and l2cap_chan_put() on the exit path, consistent with other L2CAP
-response handlers.
+While at it, restructure the exit condition of phylink_create() with the
+goto pattern to reduce code duplication on handling error conditions.
 
-Fixes: f1496dee9cbd ("Bluetooth: Add initial code for LE L2CAP Connect Request")
-Assisted-by: Claude:deepseek-v4-pro
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: ce0aa27ff3f6 ("sfp: add sfp-bus to bridge between network devices and sfp cages")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260726150806.2437-1-ansuelsmth@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/phy/phylink.c | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 6649532712f4a..c9c3bef3ae895 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -5744,6 +5744,10 @@ static int l2cap_le_connect_rsp(struct l2cap_conn *conn,
- 		goto unlock;
+diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
+index cbdd01f311625..012c750d49874 100644
+--- a/drivers/net/phy/phylink.c
++++ b/drivers/net/phy/phylink.c
+@@ -842,8 +842,8 @@ struct phylink *phylink_create(struct phylink_config *config,
+ 	} else if (config->type == PHYLINK_DEV) {
+ 		pl->dev = config->dev;
+ 	} else {
+-		kfree(pl);
+-		return ERR_PTR(-EINVAL);
++		ret = -EINVAL;
++		goto free_pl;
  	}
  
-+	chan = l2cap_chan_hold_unless_zero(chan);
-+	if (!chan)
-+		return -EBADSLT;
+ 	pl->phy_state.interface = iface;
+@@ -866,28 +866,29 @@ struct phylink *phylink_create(struct phylink_config *config,
+ 	phylink_validate(pl, pl->supported, &pl->link_config);
+ 
+ 	ret = phylink_parse_mode(pl, fwnode);
+-	if (ret < 0) {
+-		kfree(pl);
+-		return ERR_PTR(ret);
+-	}
++	if (ret < 0)
++		goto free_pl;
+ 
+ 	if (pl->cfg_link_an_mode == MLO_AN_FIXED) {
+ 		ret = phylink_parse_fixedlink(pl, fwnode);
+-		if (ret < 0) {
+-			kfree(pl);
+-			return ERR_PTR(ret);
+-		}
++		if (ret < 0)
++			goto release_link_gpio;
+ 	}
+ 
+ 	pl->cur_link_an_mode = pl->cfg_link_an_mode;
+ 
+ 	ret = phylink_register_sfp(pl, fwnode);
+-	if (ret < 0) {
+-		kfree(pl);
+-		return ERR_PTR(ret);
+-	}
++	if (ret < 0)
++		goto release_link_gpio;
+ 
+ 	return pl;
 +
- 	err = 0;
++release_link_gpio:
++	if (pl->link_gpio)
++		gpiod_put(pl->link_gpio);
++free_pl:
++	kfree(pl);
++	return ERR_PTR(ret);
+ }
+ EXPORT_SYMBOL_GPL(phylink_create);
  
- 	l2cap_chan_lock(chan);
-@@ -5789,6 +5793,7 @@ static int l2cap_le_connect_rsp(struct l2cap_conn *conn,
- 	}
- 
- 	l2cap_chan_unlock(chan);
-+	l2cap_chan_put(chan);
- 
- unlock:
- 	mutex_unlock(&conn->chan_lock);
 -- 
 2.53.0
 
