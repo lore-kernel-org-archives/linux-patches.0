@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA8A1D435F;
-	Mon, 17 Aug 2026 13:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B9F3BBFA1;
+	Mon, 17 Aug 2026 13:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974156; cv=none; b=JIi+l+LmYAbCco890FaM0NaPhyiszfalfw/oaENDFyEPLfjgohi/jvWNEBmN+RAeLZvvrtuRBsBKMb9FGzSpwsFl+cOfhdK4QhXCu3gXx8oLHPVWqWxWJ4OF84Q0ZIwRYRIVNvGEvIuJ3PatnEmB4XTqQcD8xYP8+T8wfEBvIqA=
+	t=1786974159; cv=none; b=Ep/ALezaSe/9KGIj/72c6cdcNJfz+oWTZTS4dO5ieFaNt7vSJBG8K1BjgsV0UHCeFTZfros8XxPd0el8tJ5OSkQhbXqQaIP2h7cNq7r1UZHh5EvMSZyUfJrLBmL3EPA4UVHy1iZtOpvMzpzJcuVWuhk+4BCBuOdMPyoL2336VwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974156; c=relaxed/simple;
-	bh=tEy2NFenHsb1P4RO+5Ru+oDikDiCZ4oJXq2MYx1+NrQ=;
+	s=arc-20240116; t=1786974159; c=relaxed/simple;
+	bh=sNsL4KhY1ixd91+CORqKxM80xobpizJAt2W7cQqNRJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H7ec8/PDqvp9IA1pV6tVV3lE5YpUXXBYHTWi6cj/nIPatXKMPGrrxnPqNys1oR9AZ/QK0LT7hhvOI6fU911dEm+hOqprt5+erIN1yiVT889vxXNyUUO6lm4KELwWyBIfiHMnmHZXCShlUUFiU5MikfG1Y9VDX1R+iu3n1Hac+k0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nuFT01Sc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dUn9vtZ9uZ5yY3TU1bWVveyoRpsRPULQUQvYLFIttunk6F6WW0Op9O/THL078CUJZC9yigz0wP0BIP8l318oU8l8tJJMqq+SHZ3X/deLDo0QcnuufPYG6LQaN0FJXT+H3IFEVqhRN1rWZBzr2XPJ+3DWzLfAH9/3GWIo+2LkzNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fnMQ4oZy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nuFT01Sc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E271F000E9;
-	Mon, 17 Aug 2026 13:42:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnMQ4oZy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651691F000E9;
+	Mon, 17 Aug 2026 13:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974155;
-	bh=3n3Rie4zrPeHrV0gDhVIhV9TNJyYsrugg+/tSbO+ew4=;
+	s=korg; t=1786974157;
+	bh=GcimCa3EhSZhuboewzY/mul6OJwJfq6YDs4zqexigVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nuFT01ScINxaXnCi6Qd/y0MZ3C4731+7MlCB2otApEiaXhGY//atlsJGF1IkC/zGp
-	 5CLNEjZfDmJxJKke+4HH+tcyrgiAmjYveJtdodtqeckdQSomUs7NYhmKpguYRFd6Jq
-	 lgscjHrHPaVlZPqPlf6eE7fs0scTbO0FBljW3TJw=
+	b=fnMQ4oZy7aniET1Z6At2+3oFIfe6ySAGuubewfuzgtg1Y7OuHgx1SjF0G3RL9VoyE
+	 g85t5bSjMVK819bqszjyZkGEHG/oJ+Vc/pVo+KujieVEPOCJ2Ua5ucB1ebV+CJMIM+
+	 69Z/cHVxy/GZqme7GNtzh0baARJ25K5j/Q9hccfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyan Xu <getshell@seu.edu.cn>,
-	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Jia Jia <physicalmtea@gmail.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 108/271] ata: pata_sl82c105: fix bridge revision use-after-free
-Date: Mon, 17 Aug 2026 15:30:33 +0200
-Message-ID: <20260817132541.311693790@linuxfoundation.org>
+Subject: [PATCH 7.1 082/271] vhost-scsi: reject feature changes after endpoint
+Date: Mon, 17 Aug 2026 15:30:07 +0200
+Message-ID: <20260817132540.118678405@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -52,50 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyan Xu <getshell@seu.edu.cn>
+From: Jia Jia <physicalmtea@gmail.com>
 
-[ Upstream commit 7700a31039cdc6715cb6cce7e7a664ee4e945f67 ]
+[ Upstream commit 42bc45df5905e2b7dccb72adaf7730f66cfbe03f ]
 
-pci_get_slot() returns a referenced PCI device. Commit 44c10138fd4b
-("PCI: Change all drivers to use pci_device->revision") replaced a
-configuration-space read with direct access to the cached revision field,
-but left that access after pci_dev_put(). The bridge may therefore be freed
-before its revision is read.
+vhost_scsi_setup_vq_cmds() runs from VHOST_SCSI_SET_ENDPOINT and allocates
+each command's protection scatterlist array (prot_sgl) according to the
+acknowledged VIRTIO_SCSI_F_T10_PI bit.  The command pools are not rebuilt
+when VHOST_SET_FEATURES changes that bit later.
 
-Read the revision before dropping the reference.
+Although virtio feature bits must not change after feature negotiation,
+vhost_scsi_set_features() currently accepts such a request after the
+endpoint is active and updates acked_features.  Enabling T10-PI after
+endpoint setup therefore leaves prot_sgl NULL while the I/O path follows
+the new feature bit.
 
-Fixes: 44c10138fd4b ("PCI: Change all drivers to use pci_device->revision")
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+For a 129-page protection payload, vhost_scsi_mapal() passes the missing
+first chunk to sg_alloc_table_chained():
+
+  sg_alloc_table_chained(table, 129, first_chunk=NULL,
+                         nents_first_chunk=inline_sg_cnt)
+
+sg_pool_index() then hits:
+
+  BUG_ON(nents > SG_CHUNK_SIZE);   /* 129 > 128 */
+
+The kernel reported the following call trace and register state:
+
+  Call Trace:
+   <TASK>
+   ? __sg_alloc_table+0x1d8/0x250
+   ? __pfx_vhost_run_work_list+0x10/0x10 [vhost]
+   sg_alloc_table_chained+0x59/0xf0
+   ? __pfx_sg_pool_alloc+0x10/0x10
+   ? vhost_scsi_calc_sgls.constprop.0+0x43/0x60 [vhost_scsi]
+   vhost_scsi_handle_vq+0xf02/0x1700 [vhost_scsi]
+   ? __pfx_vhost_scsi_handle_vq+0x10/0x10 [vhost_scsi]
+   vhost_scsi_handle_kick+0x37/0x50 [vhost_scsi]
+   vhost_run_work_list+0x8e/0xd0 [vhost]
+   vhost_task_fn+0xe1/0x210
+   ret_from_fork+0x348/0x540
+   </TASK>
+
+  RIP: 0010:0x4
+  CR2 = 0x4
+  RSP: 0018:ffffc90000dbf940 EFLAGS: 00010202
+  RAX: ffffffff82396810 RBX: ffff88811dc28b80 RCX: 0000000000000000
+  RDX: 0000000000000000 RSI: 0000000000000820 RDI: 0000000000000081
+
+VHOST_F_LOG_ALL is a vhost-specific runtime feature and remains the only
+exception.
+
+Reject changes to any feature other than VHOST_F_LOG_ALL while the
+endpoint is active.  This preserves the existing runtime log toggle while
+preventing feature-dependent command resources and data-path state from
+becoming inconsistent.  Userspace must clear the endpoint before changing
+any other negotiated feature and set the endpoint up again afterward.
+
+Fixes: bf2d650391be ("vhost-scsi: Allocate T10 PI structs only when enabled")
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260726144314.1652934-1-physicalmtea@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_sl82c105.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/vhost/scsi.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/ata/pata_sl82c105.c b/drivers/ata/pata_sl82c105.c
-index 2d24c6b3e9d9f..25bce3fe2a101 100644
---- a/drivers/ata/pata_sl82c105.c
-+++ b/drivers/ata/pata_sl82c105.c
-@@ -264,6 +264,7 @@ static struct ata_port_operations sl82c105_port_ops = {
- static int sl82c105_bridge_revision(struct pci_dev *pdev)
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index c79197edb1637..904bd842cdd84 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -2227,6 +2227,7 @@ static int vhost_scsi_set_features(struct vhost_scsi *vs, u64 features)
  {
- 	struct pci_dev *bridge;
-+	u8 revision;
+ 	struct vhost_virtqueue *vq;
+ 	bool is_log, was_log;
++	u64 old_features;
+ 	int i;
  
- 	/*
- 	 * The bridge should be part of the same device, but function 0.
-@@ -285,8 +286,9 @@ static int sl82c105_bridge_revision(struct pci_dev *pdev)
- 	/*
- 	 * We need to find function 0's revision, not function 1
- 	 */
-+	revision = bridge->revision;
- 	pci_dev_put(bridge);
--	return bridge->revision;
-+	return revision;
- }
+ 	if (features & ~VHOST_SCSI_FEATURES)
+@@ -2242,6 +2243,14 @@ static int vhost_scsi_set_features(struct vhost_scsi *vs, u64 features)
+ 	if (!vs->dev.nvqs)
+ 		goto out;
  
- static void sl82c105_fixup(struct pci_dev *pdev)
++	old_features = vs->vqs[0].vq.acked_features;
++	if (vs->vs_tpg &&
++	    ((features ^ old_features) &
++	     ~(1ULL << VHOST_F_LOG_ALL))) {
++		mutex_unlock(&vs->dev.mutex);
++		return -EBUSY;
++	}
++
+ 	is_log = features & (1 << VHOST_F_LOG_ALL);
+ 	/*
+ 	 * All VQs should have same feature.
 -- 
 2.53.0
 
