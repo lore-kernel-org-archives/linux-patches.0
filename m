@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7B543F09A;
-	Mon, 17 Aug 2026 15:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A402742376F;
+	Mon, 17 Aug 2026 15:00:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978804; cv=none; b=iLxT/Um9HvSIsHHetPylVb6NgK7ObxVSTn6oNqx63woc3qFiusOTnWZnu7KWkomPGGFjhdSxNCjxHSV+Ia2VFNufwsTdR4KasMFoEBuFEDliSPXcYOtXqtkc/JHGZ7f2gnhTddZWjyX3hppm1fHbz0TPm7+BY8Su0ggDDrV01zU=
+	t=1786978808; cv=none; b=E0F3dsIw9P10fekdExp22sKiFvyEkBXrSWOUv9ruwO+F9n2PNl5Px0C7Gd5W1J1RZ6PnfnzGFhF+4AoiAoRvbv0I/Ff2OU6MALVuHscoNnW1XsLTAMWXuB4GIE5NFAIh5mPwafo8RrLprP1V/+TeQWCVgijcQF9anMZ/iDFBm8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978804; c=relaxed/simple;
-	bh=fiHfghn+0BzlzfRjyupMxe6EN8GljyoCV5eXUZGmJf8=;
+	s=arc-20240116; t=1786978808; c=relaxed/simple;
+	bh=lofkRKTkO3TjbafRyrsWgOo2q/As5cXZu/E8FqnhyDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YPDEGNclt+P3nPu6jSw0b+IT+YlCpM/If8rFKE+O99lpHdlsY86n2t75zh4uX1ZWXnn/jYe/6WUc5TJl2geDpN6O1dCgXpWGtivVLXVQdpGIZzQT9Mu8GqsPGIpYJwjdt/KR1wkN5+ckDPM9k/FUcineqeW0cf4aDkgq1SGCsoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KWXma/NS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XP0Vtu/919ifhs4xXIgQHHl2ZipGW0FLkJkU34OQqoX4LOkLDoizgBUmEtWz38k+HW7kpf0SIb6XlF0JhqWuPIkrMxSUwMziLAnkt6L99qftkAH0ubj9uCcer4gJNj5+GT6iS326+lVIgZGCFGifIqW533TsUjaYpJLy543xDrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+J1+MEE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KWXma/NS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF461F000E9;
-	Mon, 17 Aug 2026 15:00:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+J1+MEE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06CF81F000E9;
+	Mon, 17 Aug 2026 15:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978803;
-	bh=3OOz/MSTxkOAyJkZDydLOl7RKeUI9IWNcR9yJFo5VUs=;
+	s=korg; t=1786978806;
+	bh=8a1XsqkTuI/h7jU1FaHb9JkKpKdpjwevnr+JQ5NMAak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KWXma/NSPUmP7fJSFqp7+QiyGC1M4Iaxs0ZHxQx1kNMClYQxe/JQzKd0LhhXarUpT
-	 J8UmA3KKwnhFJ/7ksRIRtC2CHbM/Lwu0M8IAEF5mBt8qVK6l2389Ut/PwQ2j/txIHU
-	 pWVLOkq3A9xvXw8mkomEPDW3ui2LDNWZarDEWTZ4=
+	b=K+J1+MEEf885XcZVdJqUzhzH6Zp4YO7g1cVU7jRU2HpFgwXrShBApJp0hgwIP+Kpc
+	 Z9wN+E6iwT4AMSC6RYrpRccIxWH2WxYBHZM6qSrE48I8Q4tWvrbtOQewrRtd+Pn7mJ
+	 1Op5Gl6iDO1ji5+5kmWMmj+yEpclzSRtJVS0EWjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
+	Kyle Zeng <kylebot@openai.com>,
+	David Lee <david.lee@trailofbits.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 128/156] xdp: reject clones that overrun skb_shared_info tailroom
-Date: Mon, 17 Aug 2026 15:34:22 +0200
-Message-ID: <20260817132539.686741554@linuxfoundation.org>
+Subject: [PATCH 6.6 119/156] ipv6: prevent in6_dev_get() from resurrecting inet6_dev
+Date: Mon, 17 Aug 2026 15:34:13 +0200
+Message-ID: <20260817132539.303733735@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -51,47 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit e48e8edbef2eb824201495daa5234560f632b23c upstream.
+commit 0e243671bc7b8eaf00f83dd2f4367436dc0cff98 upstream.
 
-xdpf_clone() clones broadcast copies into a single page and sets
-frame_sz to PAGE_SIZE. __xdp_build_skb_from_frame() later treats that
-page like a normal XDP frame and expects the usual skb_shared_info
-tailroom at the end of the buffer.
+in6_dev_get() reads dev->ip6_ptr under RCU and then unconditionally
+increments its refcount. Device teardown can clear the pointer and drop
+the last reference between these operations. The increment then
+resurrects an object whose RCU free has already been queued, so callers
+can use it after it is freed.
 
-The current check only rejects frames whose linear xdp_frame header,
-headroom, and packet data exceed PAGE_SIZE. A source frame backed by a
-larger allocation can still satisfy that check while extending into the
-clone's required shared-info area. When such a clone is converted back
-into an skb, build_skb_around() places skb_shared_info over live packet
-bytes and later writes can corrupt XDP return metadata.
+Use refcount_inc_not_zero() and return NULL when the object has already
+reached zero. RCU keeps the memory accessible through the attempted
+reference acquisition, and a successful increment pins the object for
+the caller.
 
-Reject clones unless their linear area fits inside
-SKB_WITH_OVERHEAD(PAGE_SIZE), matching the tailroom requirement already
-enforced by the XDP-to-skb conversion path.
+An independent run on the exact unpatched 6f5156d7a31a (v7.2-rc3)
+kernel reproduced the invalid reference acquisition as UID 1000:
 
-Fixes: e624d4ed4aa8 ("xdp: Extend xdp_redirect_map with broadcast support")
+  refcount_t: addition on 0; use-after-free.
+  ip6_mc_source+0xef4/0x17e0
+
+It was followed by the corresponding reference underflow in
+ip6_mc_source(). The supplied trace from the same unpatched revision
+additionally shows the access after the RCU read-side section ends:
+
+  BUG: KASAN: slab-use-after-free in mutex_lock+0x76/0xe0
+  Write of size 8 at addr ffff888015b50240 by task poc/1219
+
+Bug found and triaged by OpenAI Security Research and
+validated by Trail of Bits.
+
+Fixes: 8814c4b53381 ("[IPV6] ADDRCONF: Convert addrconf_lock to RCU.")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Link: https://patch.msgid.link/6b2afef5d1738763c6965e8e466eb16e43e4f956.1785757386.git.zhilinz@nebusec.ai
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Co-developed-by: David Lee <david.lee@trailofbits.com>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260803122758.666112-1-david.lee@trailofbits.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/xdp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/addrconf.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/core/xdp.c
-+++ b/net/core/xdp.c
-@@ -674,7 +674,7 @@ struct xdp_frame *xdpf_clone(struct xdp_
- 	headroom = xdpf->headroom + sizeof(*xdpf);
- 	totalsize = headroom + xdpf->len;
+--- a/include/net/addrconf.h
++++ b/include/net/addrconf.h
+@@ -370,8 +370,8 @@ static inline struct inet6_dev *in6_dev_
  
--	if (unlikely(totalsize > PAGE_SIZE))
-+	if (unlikely(totalsize > SKB_WITH_OVERHEAD(PAGE_SIZE)))
- 		return NULL;
- 	page = dev_alloc_page();
- 	if (!page)
+ 	rcu_read_lock();
+ 	idev = rcu_dereference(dev->ip6_ptr);
+-	if (idev)
+-		refcount_inc(&idev->refcnt);
++	if (idev && !refcount_inc_not_zero(&idev->refcnt))
++		idev = NULL;
+ 	rcu_read_unlock();
+ 	return idev;
+ }
 
 
