@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9A83F1AD5;
-	Mon, 17 Aug 2026 14:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BF73DC857;
+	Mon, 17 Aug 2026 14:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975652; cv=none; b=TT7yfsuOrGjL+4uW5kCm/kv/vjzJ5frZfeBQ1NIgj1n8rOWq6BmTHOUiGZ2gKfIlajsVEbBDYjc0iRIB5Dz+/swcmdTTnKygpb3vZZgkCEYAK4FFFLzM8+Gcu+8qQb5aJui4cOE+33DySx5obJ/D+R6YrnCOtNMW3x5vB4RcScc=
+	t=1786975654; cv=none; b=DEldnE3JzhDG0pR8lTIFb9gpva9kmxvZ64Ux8wbxSMUkMWpZtdvtz3c5rmgP3IFALTxNI1VouPWdBRzqav1L4AFv9m1SIs3VfOCKlbmkX/7VlYfqKyhaHfRIW5ahD01O+b68fLyeGz8YjkFMFW9L2KGGa+h0t3ZlDCJdZIYWPUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975652; c=relaxed/simple;
-	bh=hbVqAquUjC343y5HdbbiU28kFReVZnnl9Io3EhDtefs=;
+	s=arc-20240116; t=1786975654; c=relaxed/simple;
+	bh=x45il6zdJoaya3MHjvbucfkG5sIz0TnLYPOOmcV/NCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Flsh5HiVmw2h++1Z2Z22uXHRj91KqqtxaTSGEXmJw0va65+wmajCGpA+cfSpBMfF5Wxvbx9+xCN1IZuw2vXPYtmvZqWiP9LeWut4tKoHXFBGLtjD1Xn4m8X98dZIOKeaTqr/6w1BYMIVTBTGsxu0O9ob15cs6uC9SnRhHwLAT38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCSlwqHd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ks2H07h+xYmE+HG6+jBAaydFsSnzRCp/tg1uH5gOzFE1N5Vb1OYDjjeoDilZjVADL011G0duSIqopJXKRhZ0K5AEdQgTz5NMwVkbJ924fIE9hlJhboy75dd872mQPZtVRy+4130FOvkY9kzHd/EWudmEmdcQPbQB3lHfandOLU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ee3L9yIm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCSlwqHd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9D21F000E9;
-	Mon, 17 Aug 2026 14:07:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ee3L9yIm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15B41F000E9;
+	Mon, 17 Aug 2026 14:07:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975650;
-	bh=o3oITmJAGVmtIhM8wq6hNbX+C4biDUu/Ybcvh+ncI2o=;
+	s=korg; t=1786975653;
+	bh=zzwPAEVRMnHc91kLrX9BQBP+yNDCf0Eal/PnREjL9SM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eCSlwqHd7FVnFv/22GEzBeE/5sn3UBHpAqUAyiTdCIWhjLZxF5A6mCYViDRAFqWim
-	 AeQygJGV0kg3MLZyBdT/iLivUa06on1MhEo50oS1VZLdYwYEyglvZhU5S8WdAmlEW7
-	 3IrNEnJ2tANbyAEgHBBj99IzV8cBrtYV/Q80f+Go=
+	b=ee3L9yImp23uTAk5HvVK4yiBZ660oj3Bp0kbmFdOazr4UZajaAVmeVsUGuFzQGZH1
+	 01G8VECk+QU4T9p9hvI/rNog8k36xglXLhDH45riM9eBtBsmXUphS7V3s8W3L+uoO6
+	 bWJ1VZcpk8LCkL2bdrurDrqpvLuGi7Rc6ohobRKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@auroraos.dev>,
-	Chaoyi Chen <chaoyi.chen@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 5.10 100/389] drm/rockchip: cdn-dp: add missing check in cdn_dp_config_video()
-Date: Mon, 17 Aug 2026 15:28:59 +0200
-Message-ID: <20260817132543.027354351@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 5.10 101/389] drm/nouveau/acr: fix missing nvkm_done() in error path of nvkm_acr_oneinit()
+Date: Mon, 17 Aug 2026 15:29:00 +0200
+Message-ID: <20260817132543.077475460@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,38 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@auroraos.dev>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 46c31e1604d121221167cb09380de8c7d53290b9 upstream.
+commit c3027973f692077a1b66a9fb26d6a7c46c0dc72c upstream.
 
-The result of cdn_dp_reg_write() is checked everywhere (with the error
-being logged by the callers) except one place in cdn_dp_config_video().
-Add the missing result check, bailing out early on error...
+In nvkm_acr_oneinit(), nvkm_kmap(acr->wpr) is invoked unconditionally
+at line 309 to obtain a mapping reference. Additionally, when both
+acr->wpr_fw and acr->wpr_comp are present, a second nvkm_kmap() is
+called inside the conditional block. Both mappings are expected to be
+released by nvkm_done(acr->wpr) at line 320 before the function returns
+successfully.
 
-Found by Linux Verification Center (linuxtesting.org) with the Svace static
-analysis tool.
+However, when a mismatch is detected during the loop within the
+conditional block, the function returns -EINVAL at line 318 without
+calling nvkm_done(). This results in a leak of the kmap reference(s)
+acquired earlier.
 
-Fixes: 1a0f7ed3abe2 ("drm/rockchip: cdn-dp: add cdn DP support for rk3399")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@auroraos.dev>
+Fix the issue by invoking nvkm_done(acr->wpr) prior to the early return
+to ensure proper release of the mapping references.
+
+Fixes: 22dcda45a3d1 ("drm/nouveau/acr: implement new subdev to replace "secure boot"")
 Cc: stable@vger.kernel.org
-Reviewed-by: Chaoyi Chen <chaoyi.chen@rock-chips.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patch.msgid.link/adf6b313-f7db-4d8f-9000-8c65446ba041@auroraos.dev
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260606155606.77593-1-vulab@iscas.ac.cn
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/rockchip/cdn-dp-reg.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/rockchip/cdn-dp-reg.c
-+++ b/drivers/gpu/drm/rockchip/cdn-dp-reg.c
-@@ -683,6 +683,8 @@ int cdn_dp_config_video(struct cdn_dp_de
- 	val = div_u64(8 * (symbol + 1), bit_per_pix) - val;
- 	val += 2;
- 	ret = cdn_dp_reg_write(dp, DP_VC_TABLE(15), val);
-+	if (ret)
-+		goto err_config_video;
- 
- 	switch (video->color_depth) {
- 	case 6:
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c
+@@ -314,6 +314,7 @@ nvkm_acr_oneinit(struct nvkm_subdev *sub
+ 					  i, us, fw);
+ 			}
+ 		}
++		nvkm_done(acr->wpr);
+ 		return -EINVAL;
+ 	}
+ 	nvkm_done(acr->wpr);
 
 
