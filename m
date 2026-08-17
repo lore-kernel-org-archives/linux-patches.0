@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C05F43E9C6;
-	Mon, 17 Aug 2026 13:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8288D43F4B5;
+	Mon, 17 Aug 2026 13:49:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974574; cv=none; b=tDX/Oq+NrpFMRKZbeJw2GXBYHxwVOAOvDT8AEAcJBbOPo5yPjQums0pjDnaqvStx6G3514jZCIiQ9npgTQJ6CmCRcX8LWQtXJy0mACQCpZwNOcs5eKQV/TzTkJuuWKpHNzEbaMai3JBdT/hQqCrqZqS92NYM0PQ0tDTWY0d86Fo=
+	t=1786974576; cv=none; b=Lmfc3M9clyuVmSaQzqDsOGjlLft2dr3PimIvwufy7kAYBxPs5iRDzFXmcZtSmqag6r8k30SnWl7bjl5LKzaf+6NlgqaKgYwUxVYASFwlFQ4n6jHE1ZttrVWf2SOkEwfum75YBGLZyu6igutIeNQwdmRBW3FSYhJuYSHsOYDKOYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974574; c=relaxed/simple;
-	bh=g449n2U3e3pyO43ykrRCCxxrz8xM7vmcI5VVhWQa7LY=;
+	s=arc-20240116; t=1786974576; c=relaxed/simple;
+	bh=Y7zdezjl7s2Xv8OSjQ1eOK1CeRWUU2hlF//T+aXhfFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KuZnghheBVs4iZQRVz3yA4S0WgH7zTH99Pi4XZeDkBvjJ4moVs1AAuPbfHj/vQPvt8iTys+fev55Rl0/t9HAITqhaD3bqshwWQ13XqeamgapWkYeDGmhKuAiQ1dkRMqEjyxskBanwacAMlOpTeehi5/qvY4vIpXJjfyjZPEwC+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bSYJjCa8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BeZcEyA22K/20ICKx6YylPy1UH6oMhiv6mFUFzUfWR6TzmeVeP6TGI0OeUKGyp7sVa3h4dWxPALnzkwD7rf1p+D53qlLELloE0c20CXSO4PJlbX2CN/02xbr6mOD5Usll+IUlNpSq4E+951xgKl6Ys45g+1/3XDKjd5M+SxKxI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKb0v9Dh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bSYJjCa8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A31B1F000E9;
-	Mon, 17 Aug 2026 13:49:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKb0v9Dh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC831F00A3A;
+	Mon, 17 Aug 2026 13:49:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974569;
-	bh=Hb+xjwDM7AA/TaYN5Thqnwr/xoMCv0hf+V0J3EbXC9Y=;
+	s=korg; t=1786974572;
+	bh=rQ/uuN0w2l3ZAYT1QFCOdYlZ5hgeMLITMsXQEk5NF9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bSYJjCa8XeRWirS0PQMwcit+8r9A6GPQu8ACUdE5CiN780bg8/27EzRAsiZispixd
-	 8lI5XUnONRNkkvCDYdRQNgtXu3DI9nA/f7ZAY+HxEBEfTfW2lTH3R8/Fwe4D5oQ92q
-	 HqAZQ5i96ewPQQuLmdDI2G+lNiziUAyQHOAdRC9I=
+	b=WKb0v9DhYQAbb7o+52/gNel+ysxQPlelHNq62er4QzNvbektQ0xTuEVLffwFj+w1e
+	 Sh3lcxkpWa/FfWAcONfLf96h/+y0/O1znBffb0eUHiader7LOYrOiMe5Sc/KGNpm5N
+	 77ch3K1oUZuyg+1uN7xCHHJNzVwQXdvrPB5nxGWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Xiao Liu <lx24@stu.ynu.edu.cn>,
-	Daming Li <d4n.for.sec@gmail.com>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	David Lee <david.lee@trailofbits.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 212/271] net: smc: fix splice entry lifetime imbalance in smc_rx_splice
-Date: Mon, 17 Aug 2026 15:32:17 +0200
-Message-ID: <20260817132545.524253033@linuxfoundation.org>
+Subject: [PATCH 7.1 213/271] ipv6: prevent in6_dev_get() from resurrecting inet6_dev
+Date: Mon, 17 Aug 2026 15:32:18 +0200
+Message-ID: <20260817132545.558868606@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -55,85 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daming Li <d4n.for.sec@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit 5d9686af2976741bbd79b150d1c9e60b81e7f12e upstream.
+commit 0e243671bc7b8eaf00f83dd2f4367436dc0cff98 upstream.
 
-smc_rx_splice() passes pages to splice_to_pipe() before taking the
-references that cover the lifetime of each splice entry. In the
-VM-backed RMB path, splice_to_pipe() may drop unqueued entries through
-smc_rx_spd_release(), while queued entries are released later via the
-pipe buffer callback.
+in6_dev_get() reads dev->ip6_ptr under RCU and then unconditionally
+increments its refcount. Device teardown can clear the pointer and drop
+the last reference between these operations. The increment then
+resurrects an object whose RCU free has already been queued, so callers
+can use it after it is freed.
 
-The old post-splice accounting also derives the number of queued VM pages
-from an offset mutated while building the descriptor, and a multi-page
-splice pairs one sock_hold() with multiple sock_put() calls.
+Use refcount_inc_not_zero() and return NULL when the object has already
+reached zero. RCU keeps the memory accessible through the attempted
+reference acquisition, and a successful increment pins the object for
+the caller.
 
-Take the page and socket references for every candidate entry before
-splice_to_pipe(), and drop the matching private state, page reference,
-and socket reference from smc_rx_spd_release() for entries that never
-get queued. This fixes a refcount imbalance that can underflow page
-refcounts and trigger a use-after-free.
+An independent run on the exact unpatched 6f5156d7a31a (v7.2-rc3)
+kernel reproduced the invalid reference acquisition as UID 1000:
 
-Fixes: 9014db202cb7 ("smc: add support for splice()")
+  refcount_t: addition on 0; use-after-free.
+  ip6_mc_source+0xef4/0x17e0
+
+It was followed by the corresponding reference underflow in
+ip6_mc_source(). The supplied trace from the same unpatched revision
+additionally shows the access after the RCU read-side section ends:
+
+  BUG: KASAN: slab-use-after-free in mutex_lock+0x76/0xe0
+  Write of size 8 at addr ffff888015b50240 by task poc/1219
+
+Bug found and triaged by OpenAI Security Research and
+validated by Trail of Bits.
+
+Fixes: 8814c4b53381 ("[IPV6] ADDRCONF: Convert addrconf_lock to RCU.")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Co-developed-by: Xiao Liu <lx24@stu.ynu.edu.cn>
-Signed-off-by: Xiao Liu <lx24@stu.ynu.edu.cn>
-Signed-off-by: Daming Li <d4n.for.sec@gmail.com>
-Signed-off-by: Ren Wei <enjou1224z@gmail.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
-Link: https://patch.msgid.link/20260730145552.360287-2-enjou1224z@gmail.com
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Co-developed-by: David Lee <david.lee@trailofbits.com>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260803122758.666112-1-david.lee@trailofbits.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/smc_rx.c |   19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ include/net/addrconf.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/smc/smc_rx.c
-+++ b/net/smc/smc_rx.c
-@@ -150,7 +150,12 @@ static const struct pipe_buf_operations
- static void smc_rx_spd_release(struct splice_pipe_desc *spd,
- 			       unsigned int i)
- {
-+	struct smc_spd_priv *priv = (struct smc_spd_priv *)spd->partial[i].private;
-+	struct sock *sk = &priv->smc->sk;
-+
-+	kfree(priv);
- 	put_page(spd->pages[i]);
-+	sock_put(sk);
+--- a/include/net/addrconf.h
++++ b/include/net/addrconf.h
+@@ -405,8 +405,8 @@ static inline struct inet6_dev *in6_dev_
+ 
+ 	rcu_read_lock();
+ 	idev = rcu_dereference(dev->ip6_ptr);
+-	if (idev)
+-		refcount_inc(&idev->refcnt);
++	if (idev && !refcount_inc_not_zero(&idev->refcnt))
++		idev = NULL;
+ 	rcu_read_unlock();
+ 	return idev;
  }
- 
- static int smc_rx_splice(struct pipe_inode_info *pipe, char *src, size_t len,
-@@ -209,6 +214,10 @@ static int smc_rx_splice(struct pipe_ino
- 			offset = 0;
- 		}
- 	}
-+	for (i = 0; i < nr_pages; i++) {
-+		get_page(pages[i]);
-+		sock_hold(&smc->sk);
-+	}
- 	spd.nr_pages_max = nr_pages;
- 	spd.nr_pages = nr_pages;
- 	spd.pages = pages;
-@@ -217,16 +226,8 @@ static int smc_rx_splice(struct pipe_ino
- 	spd.spd_release = smc_rx_spd_release;
- 
- 	bytes = splice_to_pipe(pipe, &spd);
--	if (bytes > 0) {
--		sock_hold(&smc->sk);
--		if (!lgr->is_smcd && smc->conn.rmb_desc->is_vm) {
--			for (i = 0; i < PAGE_ALIGN(bytes + offset) / PAGE_SIZE; i++)
--				get_page(pages[i]);
--		} else {
--			get_page(smc->conn.rmb_desc->pages);
--		}
-+	if (bytes > 0)
- 		atomic_add(bytes, &smc->conn.splice_pending);
--	}
- 	kfree(priv);
- 	kfree(partial);
- 	kfree(pages);
 
 
