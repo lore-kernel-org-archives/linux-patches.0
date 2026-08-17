@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4538B3E025C;
-	Mon, 17 Aug 2026 14:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B927F175A99;
+	Mon, 17 Aug 2026 14:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976728; cv=none; b=Yzn1oosBO0I63G0uHQE0EjfwnalIaLN2ZmaB7JTcG7HYGfJkcFNZKgc8Iq6FJqVnNr7SeOz8/UHL6A2u+DlBpBzAI2R4he7cblBInupOzHTU0nIWjzjTRSZM7PrenefHbkiPzfViBSwEwhEV8W8nWCU27dhUdwvYnEW5Ca89Ld4=
+	t=1786976731; cv=none; b=HmOYkLUuozX2zUlQTDwSqWDBBngpxIc2Zk+yq0bKot4D651ScGai6lRba/CqX7G77+7euIwa7c5jI+SmF84xa3qRFMCqlwV/nlnvrfNjwf7o6i/b/bi7eflSeGMFCe7TPlCjdNk4zb6lxlS4uAJJ9+FbWUkr+sQ9vikbvz5Q5Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976728; c=relaxed/simple;
-	bh=pubk7+Oxk/qpDkj4RyeuN/c8iErLczqH2Syjqjm38bQ=;
+	s=arc-20240116; t=1786976731; c=relaxed/simple;
+	bh=Yitopl22jIBL2LB1y6D3TIJ+0dP1ugn2B63P/g/0w2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=foLSreMFt3knG6rvYbOfaIJ9IraQ0nkj6dmXYGsJ6aGew9A7ue4pmb1U0b0TC5yNha/XTE5chhwk6/ywI3/AaBh45UR3YAk5QK4fHuupjuMIhZqtKofyMFn1JvfXrLMT82hY7+EgigIgU0ZP2qfonkbvARENTMcOYriD4h+dgY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEvMeJP8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e/U0BOmTwNzD2qYOQd+1AGP1TBBk3gq83nJViBPnZD82/CLNe4DDHpyUHW5wMeL0OppAnCV3AQ8acoJ31yN21hkkvXiVM/LZvdtrTFtBaPJHgeBgSUAGwfSFbVnzpL9IFWZTi5o02CcXNAKkaVtV5ulYhtE/uljtm7YqZmGqhDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+s/gmxZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEvMeJP8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1191F000E9;
-	Mon, 17 Aug 2026 14:25:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+s/gmxZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7061F000E9;
+	Mon, 17 Aug 2026 14:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976726;
-	bh=xaxwhim77TID27AtgZeE7Oju1EDny+S0Wix5X3N3TWA=;
+	s=korg; t=1786976730;
+	bh=KXUhWhD1gzGpPucjASehNxQds3EzNPjIkaTesEf8hhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kEvMeJP8+BOsueQ/S2ksCL2dN08l1FRQoZz4JD5DVUeCdAzHRcDbnMyS2kaDoRuCJ
-	 ae06FMX57cUFnqajkxycq5/4gMSQKgMmW3fNdLG+tM4jwIiS1+5w1Uyerxkm4jEsZL
-	 BHO98YAUZ39G/hca66xSjfl7Cg6QJqWVrzwM/j6w=
+	b=P+s/gmxZpqZAvi3WUBslk2keI4F31N+58ySn/OEqZzQjJciT2/M1XvNftrJ5FZCFW
+	 pheUlzDf3+n9qX8x5/eyaPwAaHlDT239IQHjSYzbSjPTfP3rNxe79rghJAnHNNPEnH
+	 DTco0HeS/76/2mj4u4qRN8gxT7zLjKg6JdyYxTDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 083/456] firewire: net: Fix fragmented datagram reassembly
-Date: Mon, 17 Aug 2026 15:27:53 +0200
-Message-ID: <20260817132543.360561381@linuxfoundation.org>
+Subject: [PATCH 5.15 084/456] wifi: ath6kl: fix OOB read from firmware num_msg in TX complete handler
+Date: Mon, 17 Aug 2026 15:27:54 +0200
+Message-ID: <20260817132543.396579405@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,97 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit d52a13adbb8ccbab99cd3bad36804e87d8b5c052 ]
+[ Upstream commit 3a21c89215cc18f1a97c5e5bfd1da6d4f3d44495 ]
 
-fwnet_frag_new() keeps a sorted list of received fragments for a partial
-datagram. When a new fragment is adjacent to an existing fragment, the
-code checks whether the new fragment also closes the gap to the next or
-previous list entry.
+The firmware-controlled num_msg field (u8, 0-255) drives the loop in
+ath6kl_wmi_tx_complete_event_rx() without validation against the buffer
+length. This allows out-of-bounds reads of up to 1020 bytes past the
+WMI event buffer when the firmware sends an inflated num_msg.
 
-Those neighbor lookups currently assume that the current fragment always
-has a real next or previous fragment. At a list edge, the next or
-previous entry is the list head, not a struct fwnet_fragment_info.
+Add a check that the buffer is large enough to hold the fixed struct
+and the num_msg variable-length entries.
 
-The gap checks also compare against the old edge of the current fragment
-instead of the edge after adding the new fragment. As a result, a
-fragment that bridges two existing ranges may leave two adjacent ranges
-unmerged, so fwnet_pd_is_complete() can miss a complete datagram.
-
-Check for the list head before looking up the neighboring fragment, and
-compare the neighbor against the new fragment's far edge when deciding
-whether to merge all three ranges.
-
-This issue was found by a static analysis checker and confirmed by
-manual source review.
-
-Fixes: c76acec6d551 ("firewire: add IPv4 support")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Link: https://lore.kernel.org/r/20260707150454.2265951-1-ruoyuw560@gmail.com
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Link: https://patch.msgid.link/20260625232907.3620746-1-tristmd@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/net.c | 39 +++++++++++++++++++++------------------
- 1 file changed, 21 insertions(+), 18 deletions(-)
+ drivers/net/wireless/ath/ath6kl/wmi.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/firewire/net.c b/drivers/firewire/net.c
-index beba0a56bb9aea..b9bbfd308dc51d 100644
---- a/drivers/firewire/net.c
-+++ b/drivers/firewire/net.c
-@@ -306,31 +306,34 @@ static struct fwnet_fragment_info *fwnet_frag_new(
- 		if (fi->offset + fi->len == offset) {
- 			/* The new fragment can be tacked on to the end */
- 			/* Did the new fragment plug a hole? */
--			fi2 = list_entry(fi->fi_link.next,
--					 struct fwnet_fragment_info, fi_link);
--			if (fi->offset + fi->len == fi2->offset) {
--				/* glue fragments together */
--				fi->len += len + fi2->len;
--				list_del(&fi2->fi_link);
--				kfree(fi2);
--			} else {
--				fi->len += len;
-+			if (!list_is_last(&fi->fi_link, &pd->fi_list)) {
-+				fi2 = list_next_entry(fi, fi_link);
-+				if (offset + len == fi2->offset) {
-+					/* glue fragments together */
-+					fi->len += len + fi2->len;
-+					list_del(&fi2->fi_link);
-+					kfree(fi2);
-+
-+					return fi;
-+				}
- 			}
-+			fi->len += len;
+diff --git a/drivers/net/wireless/ath/ath6kl/wmi.c b/drivers/net/wireless/ath/ath6kl/wmi.c
+index bd1ef633499780..55607e3adacb24 100644
+--- a/drivers/net/wireless/ath/ath6kl/wmi.c
++++ b/drivers/net/wireless/ath/ath6kl/wmi.c
+@@ -484,6 +484,18 @@ static int ath6kl_wmi_tx_complete_event_rx(u8 *datap, int len)
  
- 			return fi;
- 		}
- 		if (offset + len == fi->offset) {
- 			/* The new fragment can be tacked on to the beginning */
- 			/* Did the new fragment plug a hole? */
--			fi2 = list_entry(fi->fi_link.prev,
--					 struct fwnet_fragment_info, fi_link);
--			if (fi2->offset + fi2->len == fi->offset) {
--				/* glue fragments together */
--				fi2->len += fi->len + len;
--				list_del(&fi->fi_link);
--				kfree(fi);
--
--				return fi2;
-+			if (!list_is_first(&fi->fi_link, &pd->fi_list)) {
-+				fi2 = list_prev_entry(fi, fi_link);
-+				if (fi2->offset + fi2->len == offset) {
-+					/* glue fragments together */
-+					fi2->len += fi->len + len;
-+					list_del(&fi->fi_link);
-+					kfree(fi);
+ 	evt = (struct wmi_tx_complete_event *) datap;
+ 
++	if (len < sizeof(*evt)) {
++		ath6kl_dbg(ATH6KL_DBG_WMI, "tx complete: invalid len %d\n",
++			   len);
++		return -EINVAL;
++	}
 +
-+					return fi2;
-+				}
- 			}
- 			fi->offset = offset;
- 			fi->len += len;
++	if (len < sizeof(*evt) + evt->num_msg * sizeof(struct tx_complete_msg_v1)) {
++		ath6kl_dbg(ATH6KL_DBG_WMI, "tx complete: invalid len %d for %u msgs\n",
++			   len, evt->num_msg);
++		return -EINVAL;
++	}
++
+ 	ath6kl_dbg(ATH6KL_DBG_WMI, "comp: %d %d %d\n",
+ 		   evt->num_msg, evt->msg_len, evt->msg_type);
+ 
 -- 
 2.53.0
 
