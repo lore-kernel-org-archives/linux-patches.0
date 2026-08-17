@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DB543E066;
-	Mon, 17 Aug 2026 14:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5EDC43C7C1;
+	Mon, 17 Aug 2026 14:58:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978700; cv=none; b=QLaIh4SVU2z+wRP+LFEfXQcfDPJ9rXqN3PBuNmzwEiG4Q81RAeSiA3zk0cVIjU48lmXQkRytJWqNxoaCmGAjD6pxkt9r6Lh5bRdlgmsL9GXz1r0My/bBGqHK4Vlnsu5BOAuN9j9JQcmErIyEHHLH2YlIPHkcGEnFjsK53AF6agM=
+	t=1786978703; cv=none; b=t3RLbpBFAy11zCFr/IaMLe04H0CChJDsxkfNyJRjeQXZwtS10ql0waJJaRKe4aOPAT98itiOF9VIB2rYMaGJp3peoShqPIbW6aaofiWkReyJXylw4mO53u42s+pqAceLZ2YBYQbLrtmleHoRfYanLQFZIEszi590tTEbOEA8Tyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978700; c=relaxed/simple;
-	bh=9E5O1zDdGknFc9rSx5KXcCN7BeDMK/QET+vGMuy4hEY=;
+	s=arc-20240116; t=1786978703; c=relaxed/simple;
+	bh=9n539aPouRDRS5v1YrI5VPu/T5m+kz+2t10Am1XWwFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hGiLylq4v3MRHrI4WtsREpDTc/XbCtC/V6EUH9BYe9cCAyr8iYijdMs2+pkPzMJKBTQypS3vJ9+DI70w72/h8wqXu6xdnzWTg7ds2p/7fF1AvdVRUkAowjVR6VorUmcgmBos3VMOcKnTCf17qJnrw+4k0wTehPMgjELH7J9IE5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wcciKH77; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RgpWLDWDHswUtDYto4PQRSJuXvuWL9PRFIwBSECuyHs5H/t9IG/FDWHQh0AEaVaLxcmm53EPE/74xBgmjz/M9z4rFTXjPcb7Jo0R/OgFtQeR7LPiTYfZiVIJC+RmDNFvXt4fBZkWzivv+LWniGm6jQJr+DoVvOdUh6RZpFk0u8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C9mqamfz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wcciKH77"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281291F000E9;
-	Mon, 17 Aug 2026 14:58:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9mqamfz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BAB1F000E9;
+	Mon, 17 Aug 2026 14:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978699;
-	bh=QcCwPD3tnAqKgct0yJ40l/3YcHpu3WG1bAS3gEFxZlI=;
+	s=korg; t=1786978702;
+	bh=3GhriLhYiZKRKrMQE9JI9EbfWYajvpmdndLZH7MN+00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wcciKH77d/8FHFo/AoYCGLBsu9FSwKSIakpsgPjQ0VPdDV2k/WZQlU67U1zFlpmzU
-	 hcjSNWW9PUL4Bfy2Wd0EQSFtS19O4QOE/bmCw85o0Jrq4BePJi4gjdv9O2SGBniWgS
-	 e+fmTdvhe3k6mTS/yUxQ01l0jwtbAxgdMZAP/19Y=
+	b=C9mqamfzVAQOQsnBvEiJDBs9c4vDDu6qgOepDYqdL9Od43VbSS0T0wAC06BkWDrtI
+	 Sp1v1EcXpj+O2zWdeBpMt6ov/uyfg/Fbd3lva/ITJKCXyz2rQMy6qIqyF8mYwuLLeE
+	 kl4r74puGxc9c7KgW5YHtmQJad87vAtjNutyIoiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.6 120/156] netfilter: bridge: release template ct on non-IP path
-Date: Mon, 17 Aug 2026 15:34:14 +0200
-Message-ID: <20260817132539.343580752@linuxfoundation.org>
+	Baul Lee <baul.lee@xbow.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 129/156] vxlan: do not arm the ageing timer on a device that is down
+Date: Mon, 17 Aug 2026 15:34:23 +0200
+Message-ID: <20260817132539.729839147@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -51,41 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit d45cc8020d7c0a9f01dee42ff5c40bc14c9af72f upstream.
+commit b37971686ec59fb027fa4910ba16805e68fddb97 upstream.
 
-A bridge nftables ct zone set rule can attach a conntrack template to
-an skb before nf_ct_bridge_pre() sees it. For non-IPv4 and non-IPv6
-EtherTypes, nf_ct_bridge_pre() currently overwrites skb->_nfct with
-IP_CT_UNTRACKED without releasing the existing template reference.
+vxlan_changelink() arms vxlan->age_timer whenever the requested ageing
+interval differs from the configured one:
 
-That makes the per-cpu template, and any temporary templates allocated
-for concurrent use, unreachable and leaks memory until the host runs out
-of slab.
+	if (conf.age_interval != vxlan->cfg.age_interval)
+		mod_timer(&vxlan->age_timer, jiffies);
 
-Reset the skb conntrack state before marking the frame untracked so the
-existing template reference is dropped on the non-IP path.
+There is no netif_running() test, so the timer is armed even on a device
+that was never brought up.  The only synchronous cancel in the driver is
+the timer_delete_sync() in vxlan_stop(), which is .ndo_stop.
+netif_close_many() drops devices without IFF_UP before
+__dev_close_many() runs, so that cancel is skipped for such a device.
 
-Fixes: 3c171f496ef5 ("netfilter: bridge: add connection tracking system")
+vxlan_setup() sets dev->needs_free_netdev = true and age_timer is a
+member of struct vxlan_dev, so free_netdev() releases the allocation the
+timer lives in while it is still queued on a timer_base.
+expire_timers() unlinks the entry before it loads timer->function, so
+the timer core writes through the freed object's list pointers:
+
+  BUG: KASAN: slab-use-after-free in __run_timers+0x208/0x654
+  Write of size 8 at addr ffff00001adace68 by task true/192
+   __asan_store8+0x84/0xac
+   __run_timers+0x208/0x654
+   run_timer_softirq+0x154/0x18c
+  Allocated by task 189:
+   alloc_netdev_mqs+0x64/0x720
+   rtnl_create_link+0x4ac/0x520
+   rtnl_newlink+0x758/0xd00
+  Freed by task 191:
+   netdev_release+0x40/0x58
+   netdev_run_todo+0x4a4/0x8c0
+   rtnl_dellink+0x200/0x4e8
+
+The rtnl operations involved are netns-scoped, so an unprivileged user
+can perform them in a new user and network namespace.
+
+Arming the timer on a down device never had an effect: vxlan_cleanup()
+returns early on !netif_running(), and vxlan_open() arms the timer for
+any non-zero interval once the device is brought up.  Add the missing
+test.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 40051c4dcad5 ("vxlan: Allow changing ageing time")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260809111829.78834-1-baul.lee@xbow.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/netfilter/nf_conntrack_bridge.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/vxlan/vxlan_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bridge/netfilter/nf_conntrack_bridge.c
-+++ b/net/bridge/netfilter/nf_conntrack_bridge.c
-@@ -281,6 +281,7 @@ static unsigned int nf_ct_bridge_pre(voi
- 		ret = nf_ct_br_defrag6(skb, &bridge_state);
- 		break;
- 	default:
-+		nf_reset_ct(skb);
- 		nf_ct_set(skb, NULL, IP_CT_UNTRACKED);
- 		return NF_ACCEPT;
- 	}
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -4338,7 +4338,7 @@ static int vxlan_changelink(struct net_d
+ 	if (change_igmp && vxlan_addr_multicast(&dst->remote_ip))
+ 		err = vxlan_multicast_leave(vxlan);
+ 
+-	if (conf.age_interval != vxlan->cfg.age_interval)
++	if (netif_running(dev) && conf.age_interval != vxlan->cfg.age_interval)
+ 		mod_timer(&vxlan->age_timer, jiffies);
+ 
+ 	netdev_adjacent_change_commit(dst->remote_dev, lowerdev, dev);
 
 
