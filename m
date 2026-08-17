@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02B02C237E;
-	Mon, 17 Aug 2026 14:37:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA56142AF87;
+	Mon, 17 Aug 2026 14:37:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977454; cv=none; b=rIa9QDxNLucgkLmkg1ps/prlgp97xvnqOAk3H6Kh/7MwIPGWD3CmExg5cwmCAwhur9D9MUkpFkySN+vsP7Y4TsCRhhrUTVdo6dvlYKi0ZJoB7eqXiK5GLLvK0zULKwe9/ocCfqk/QoodhVGELvmJ5rnMCkHv1cmXZU0diM5B5Gw=
+	t=1786977456; cv=none; b=X5jWREdmBjn1lm09/3tzWfxS6UrcQuJrsTTJUT+IhBQCse+CA/99tr6w9hLc/Sw24Xj4WJsdkljh2/bvSOjQSvDzAvZoKn1pivd7O4Y5xn+ePjyzhxsW5xp0hUgoAFXtCbx7Y0bMb+DrUxjDDvD64jw6riLnj66UMcnzlv8BgGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977454; c=relaxed/simple;
-	bh=t+dBf7ssPSQSCCGH0k3nxqgt//lGg1KXEB8LuIV88kk=;
+	s=arc-20240116; t=1786977456; c=relaxed/simple;
+	bh=yN0BLMwhz9/Phr2vjunSnpW0D/bkB8E3QfteTMJstxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dyOM820B41IdY3qIJ3CTZDKJyaBD9km3fXCZmCd+fGrALuv5JklELbYwoVtO4wjGyYwgAlRDB+eqnzJmTGAtmfOUBKvEEV1bAFHb/o0voGnySXjmitUrrWiunaJcx9ss/xuqddlGj3Scrg26y5GF3qsbrw8eG8jejYwlx08mMYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvoWLzCi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dcwcJrc/ez1KKG70FQMpItQgwV5/QFlpwLl68LbjXb15rjCPmkR79FAEyq0WD9opDhNi3va+YmOjKsd/WZXLMZZkx+annZVIkkzzi+brB4l7rjoMEYIAWAFOFzcgppkxTNENymv9/sQCQdXK7sA5oU+H4CqOanJi1jQSR4Jmx4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N420a/OB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvoWLzCi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A27D1F000E9;
-	Mon, 17 Aug 2026 14:37:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N420a/OB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC9A1F00ACA;
+	Mon, 17 Aug 2026 14:37:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977451;
-	bh=vKP2qkHSi7DDzmwNPu/ZmNOzbCqr/02LiZ02wLBiVLQ=;
+	s=korg; t=1786977454;
+	bh=C2LDrsO9qf56tyMMbbj59nry/G30KMxETpvsgSIfhAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WvoWLzCiZ79TYewY9hoTWCvDkiPzn0V6r7/orjZqNC283SjOtymm2Vkr+iLxcj7+T
-	 C/uHGGLZWX3zl1VE3KAB0G40tEpFQ7lmS87lDEqsAGsZnjQbNLBsUN3GWLrDWTPFU9
-	 cfd0vBtvNtoNLPI45azfE3AwXv5Haovj3KcWbsnk=
+	b=N420a/OBRJxnan+032cGG/bnjaTXPmZLHK697TUSQ0p0A0Ryy2GGXE28u7ahd6Ghi
+	 qjnbHCjt2T7/BoRMupz2OnaYwHsdoXZP/p+qq6GTDDpwIFXGudvlzsvGGxK15JjfjX
+	 XsIbdN2baARFQYtIcFt65BjSJ38JQaAoBykVb5KE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.15 334/456] cpufreq: powernow-k8: Fix possible memory leak in powernowk8_cpu_init()
-Date: Mon, 17 Aug 2026 15:32:04 +0200
-Message-ID: <20260817132552.687908616@linuxfoundation.org>
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Aswin Karuvally <aswin@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 335/456] s390/qeth: Check CAP_NET_ADMIN for private ioctls
+Date: Mon, 17 Aug 2026 15:32:05 +0200
+Message-ID: <20260817132552.721432712@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,35 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Aswin Karuvally <aswin@linux.ibm.com>
 
-commit d5f8e5f6040d052d44fcbf4f31dd35145c0c8d7d upstream.
+commit d211028bac1bd0fff0026bfa2a8328e5b78cd0e6 upstream.
 
-The memory allocated for data->powernow_table inside
-powernow_k8_cpu_init_acpi() or find_psb_table() is not freed in one of
-the error paths in powernowk8_cpu_init(). Fix that by adding a kfree().
+Gate the SIOCDEVPRIVATE ioctl commands SIOC_QETH_ADP_SET_SNMP_CONTROL,
+SIOC_QETH_GET_CARD_TYPE and SIOC_QETH_QUERY_OAT with CAP_NET_ADMIN
+capable check to ensure unprivileged users cannot invoke them.
 
-Fixes: 1ff6e97f1d99 ("[CPUFREQ] cpumask: avoid playing with cpus_allowed in powernow-k8.c")
+Fixes: 18787eeebd71 ("qeth: use ndo_siocdevprivate")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260727093553.98246-1-nihaal@cse.iitm.ac.in
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Suggested-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Signed-off-by: Aswin Karuvally <aswin@linux.ibm.com>
+Link: https://patch.msgid.link/20260723140050.762991-1-aswin@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/powernow-k8.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/s390/net/qeth_core_main.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/cpufreq/powernow-k8.c
-+++ b/drivers/cpufreq/powernow-k8.c
-@@ -1083,6 +1083,7 @@ static int powernowk8_cpu_init(struct cp
+--- a/drivers/s390/net/qeth_core_main.c
++++ b/drivers/s390/net/qeth_core_main.c
+@@ -6609,6 +6609,9 @@ int qeth_siocdevprivate(struct net_devic
+ 	struct qeth_card *card = dev->ml_priv;
+ 	int rc = 0;
  
- err_out_exit_acpi:
- 	powernow_k8_cpu_exit_acpi(data);
-+	kfree(data->powernow_table);
- 
- err_out:
- 	kfree(data);
++	if (!capable(CAP_NET_ADMIN))
++		return -EPERM;
++
+ 	switch (cmd) {
+ 	case SIOC_QETH_ADP_SET_SNMP_CONTROL:
+ 		rc = qeth_snmp_command(card, data);
 
 
