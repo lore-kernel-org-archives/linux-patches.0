@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F162B32ED40;
-	Mon, 17 Aug 2026 13:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51E14B0492;
+	Mon, 17 Aug 2026 13:39:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786973987; cv=none; b=atBi8qlq67RHKd2Fq56Z/hw5/XvrtiJIaRuL1NSt/Flr7V98Vvg2vAgBpcwS9pkDwzRNUq06mf+Xb5kvaSFWWuYclhbz/HB2mtzVsqAY38pWiRpYfpEpgbLzVDVM2Nw3TRCIrqXf7hURa45dTyOHRQ4estgSCpV76Fm2wTRu/mg=
+	t=1786973990; cv=none; b=o5OO5G4dq4g0Gnsr3FF9HWmGj+w6fGzmHpZcb1huJGvqV6IgClztO2m+dmeog5jlIPaFT7hWTOUZ4P6iUMFOV1YaprlF8rz+AB5ER2ybwaMdPeijLmDZ51wws3qKlhVawogLpUi/6eeQTetuJNLeWQaaPFCE9ay9BJM7YFPiLig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786973987; c=relaxed/simple;
-	bh=cN4IKV6Yj/UPGURqPFVWyhdyZWAgQdXq04uArvLSKXk=;
+	s=arc-20240116; t=1786973990; c=relaxed/simple;
+	bh=KWoQTIQcWzqpPTP/vV0Vz6xQthSXx2bn4PF74p3tCQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L432N6h0w4YFQ5Sgg6v5b+tKJgd1FC5Lq5IvyqGrzJmWfUqvQ/pgGrZrAfNbcLydOF5UYEPoeJJqR0lOmS1r/zWxDDrrvK74G6837W9hZMRIPWhiYr8rN7wDQ4TvJ5Y9H1jc3HyosJ2PhXobWu4ZLPh7zwmZmW+sNCt+hDU4n0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6TtyYmo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PFyBX3yrBT6judPdpgI0pc4lwIVx0NtyuOWdr10Xoj85Z9MRxHWbdXoKAmYgos18RDQb8U2sBteGS9ycUr3dC7sdFuWih15YTCAfPucODQYXdGBHjSzHIEOtXoqySUnx0+7yT1Eps+WJZXPwtcb/coTq9joqQ2bfIFOhElpoq7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkTKLNM5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6TtyYmo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D08F1F000E9;
-	Mon, 17 Aug 2026 13:39:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkTKLNM5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75C81F000E9;
+	Mon, 17 Aug 2026 13:39:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786973985;
-	bh=pVwlrZBUcaE7gWl7+Nn5qCdgLG1zUjtrIFsn8D5roeE=;
+	s=korg; t=1786973988;
+	bh=fau163k163BwZjktE4fIJdOl0e1vFAJ5412ZQIZOifs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r6TtyYmoGJW/WpCAj8jcRNAiuFWgM5RABzrnz4fDrPGSvvF6/Z/I9OY9SgvaA+jaW
-	 KK24+6B8mtrvzGH/BjWBGmQss+x8zXtOFaNJsWH2HqTYMVRz26NkYG2UelBsKWzRp9
-	 XnhCyl4DJzm8cSzAZ/MMMUn2s+Kv+DNIexrmv26s=
+	b=mkTKLNM5aVEPsicFD493Zua/C0UhlF0XoXGY68WG4YV+3x967LZThjnxgS1m9Iyps
+	 6yhzB7fvoLn3gvy2Acu/1qd+p/LOVCYieJoaIPo5nOj8GWduWQadxsVh2L/U7eeUfy
+	 CA5l4UPxMp0LCkyGvTXeeZ3Bcg6WGmgAKWIKTg/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Max Zhen <max.zhen@amd.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 050/271] btrfs: initialize inode mapping flags for cached inodes
-Date: Mon, 17 Aug 2026 15:29:35 +0200
-Message-ID: <20260817132538.795333332@linuxfoundation.org>
+Subject: [PATCH 7.1 051/271] accel/amxdna: Fix page-insertion errors in amdxdna_insert_pages()
+Date: Mon, 17 Aug 2026 15:29:36 +0200
+Message-ID: <20260817132538.837294384@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -46,131 +45,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 0ef349734a93227b45f65fc50a3311d1cc5f03e9 ]
+[ Upstream commit 8d51e0fd3e698919d2adeff71936377f0c0d4aa0 ]
 
-[BUG]
-When running generic/795 with 8K block size, 4K page size, the test
-always fails, triggering some ASSERT()s related to folio size:
+Two error paths in amdxdna_insert_pages() called vma->vm_ops->close(vma)
+before returning an error code to the caller.  This is incorrect:
+amdxdna_gem_obj_mmap() registers an HMM interval notifier before calling
+amdxdna_insert_pages(), and on a hard error it jumps to hmm_unreg to undo
+that registration.  Calling vm_ops->close() manually — which drops the
+shmem pages_pin_count and the GEM object reference that backs the VMA —
+before the mmap syscall has even returned causes those resources to be
+released while the VMA is still alive.  The kernel VMA teardown will call
+vm_ops->close() a second time when the process later unmaps the range,
+producing a reference count underflow.
 
-  795 (241074): drop_caches: 3
-  assertion failed: IS_ALIGNED(start, blocksize) && IS_ALIGNED(end + 1, blocksize), in extent_io.c:1404 (blocksize=8192 root=262 ino=258 start=16826368 end=16830463 mapping min order=0)
-  ------------[ cut here ]------------
-  kernel BUG at extent_io.c:1404!
-  Oops: invalid opcode: 0000 [#1] SMP
-  CPU: 8 UID: 0 PID: 241105 Comm: fsstress Tainted: G           OE       7.2.0-rc5-custom+ #442 PREEMPT(full)  f4bfb352566f3949f29c233ce6f735050a03b245
-  Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
-  RIP: 0010:assert_folio_range.cold+0x3d/0x3f [btrfs]
-  Call Trace:
-   <TASK>
-   btrfs_read_folio+0x9e/0x170 [btrfs 4cd1dd93b341b8ef766643f9512f4a86259567a3]
-   prepare_one_folio.constprop.0+0x104/0x2a0 [btrfs 4cd1dd93b341b8ef766643f9512f4a86259567a3]
-   btrfs_buffered_write+0x285/0xa50 [btrfs 4cd1dd93b341b8ef766643f9512f4a86259567a3]
-   btrfs_do_write_iter+0x1aa/0x210 [btrfs 4cd1dd93b341b8ef766643f9512f4a86259567a3]
-   iter_file_splice_write+0x31a/0x540
-   direct_splice_actor+0x53/0x170
-   splice_direct_to_actor+0xe9/0x240
-   do_splice_direct+0x76/0xb0
-   vfs_copy_file_range+0x1fd/0x630
-   __x64_sys_copy_file_range+0xf9/0x220
-   do_syscall_64+0xe1/0x790
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
+Replace both hard-error returns with a deferred-fault approach that keeps
+the VMA alive and retries page insertion through the HMM range-fault path.
 
-The ASSERT() itself is added by a later patch.
-The crash is triggered with that new debug patch, and without this fix.
-
-[CAUSE]
-In the above case, the start 16826368 is properly 8K aligned, but the
-end (16830463 + 1) is not 8K aligned.
-Furthermore the mapping's minimal folio order is 0, not the expected 1
-for 8K block size with 4K page size.
-
-So this means some inodes do not have btrfs_set_inode_mapping_order()
-called on it.
-
-The missing btrfs_set_inode_mapping_order() call happens for cached
-inodes, through the following events:
-
-- btrfs_create_new_inode() called for inode X
-  Which properly sets minimal folio order for the VFS inode.
-
-- btrfs_update_inode() called for inode X
-  Which calls btrfs_delayed_update_inode() to create a delayed_node
-  into root->delayed_nodes xarray.
-
-- Drop cache/memory pressure, evicting in-memory inode X
-  Which evicted the inode X, but delayed_node is still in
-  root->delayed_nodes for future reuse.
-
-- btrfs_iget() for inode X called again
-
-  btrfs_iget()
-  |- btrfs_iget_locked()
-  |  |- iget5_locked_rcu()
-  |     Which creates a new vfs_inode for btrfs, whose mapping still
-  |     has the minimal order as 0.
-  |
-  |- btrfs_read_locked_inode()
-     |- btrfs_fill_inode()
-     |  |- btrfs_get_delayed_node()
-     |     Which found out the previous node, and use that delayed
-     |     node to initialize the new inode.
-     |
-     |- filled = true;
-     |- if (filled) goto cache_index;
-        Which skips the btrfs_update_inode_mapping_flags() and
-	btrfs_set_inode_mapping_order() calls.
-	So the inode still has minimal folio order set as 0, not
-	the required 1.
-
-Thus later page cache read will get a folio whose size is smaller than
-block size, as the mapping has its minimal folio order set as 0 not 1,
-then trigger the ASSERT().
-
-[FIX]
-Move the btrfs_update_inode_mapping_flags() and
-btrfs_set_inode_mapping_order() calls under cache_index label,
-so that the mapping flags and minimal folio order is always set
-no matter if we have a cached inode.
-
-Assisted-by: LLM (analysis)
-Fixes: ecde48a1a6b3 ("btrfs: expose per-inode stable writes flag")
-Fixes: cc38d178ff33 ("btrfs: enable large data folio support under CONFIG_BTRFS_EXPERIMENTAL")
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
+Reviewed-by: Max Zhen <max.zhen@amd.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260723074256.2435143-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/accel/amdxdna/amdxdna_gem.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index a953d47eb2dd5..1271be0fbfcfa 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -4167,10 +4167,11 @@ static int btrfs_read_locked_inode(struct btrfs_inode *inode, struct btrfs_path
+diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
+index cdf113dadc4db..41fb39d095749 100644
+--- a/drivers/accel/amdxdna/amdxdna_gem.c
++++ b/drivers/accel/amdxdna/amdxdna_gem.c
+@@ -371,6 +371,23 @@ static void amdxdna_gem_dev_obj_free(struct drm_gem_object *gobj)
+ 	amdxdna_gem_destroy_obj(abo);
+ }
  
- 	btrfs_inode_split_flags(btrfs_inode_flags(leaf, inode_item),
- 				&inode->flags, &inode->ro_flags);
++static void amdxdna_mark_mapp_invalid(struct amdxdna_gem_obj *abo,
++				      struct vm_area_struct *vma)
++{
++	struct amdxdna_dev *xdna = to_xdna_dev(to_gobj(abo)->dev);
++	struct amdxdna_umap *mapp;
 +
-+cache_index:
- 	btrfs_update_inode_mapping_flags(inode);
- 	btrfs_set_inode_mapping_order(inode);
++	down_write(&xdna->notifier_lock);
++	abo->mem.map_invalid = true;
++	list_for_each_entry(mapp, &abo->mem.umap_list, node) {
++		if (compare_range(mapp, vma->vm_mm, vma->vm_start, vma->vm_end)) {
++			mapp->invalid = true;
++			break;
++		}
++	}
++	up_write(&xdna->notifier_lock);
++}
++
+ static int amdxdna_insert_pages(struct amdxdna_gem_obj *abo,
+ 				struct vm_area_struct *vma)
+ {
+@@ -392,8 +409,7 @@ static int amdxdna_insert_pages(struct amdxdna_gem_obj *abo,
+ 				      &num_pages);
+ 		if (ret) {
+ 			XDNA_ERR(xdna, "Failed insert pages %d", ret);
+-			vma->vm_ops->close(vma);
+-			return ret;
++			amdxdna_mark_mapp_invalid(abo, vma);
+ 		}
  
--cache_index:
- 	/*
- 	 * If we were modified in the current generation and evicted from memory
- 	 * and then re-read we need to do a full sync since we don't have any
+ 		return 0;
+@@ -413,9 +429,9 @@ static int amdxdna_insert_pages(struct amdxdna_gem_obj *abo,
+ 		fault_ret = handle_mm_fault(vma, vma->vm_start + offset,
+ 					    FAULT_FLAG_WRITE, NULL);
+ 		if (fault_ret & VM_FAULT_ERROR) {
+-			vma->vm_ops->close(vma);
+ 			XDNA_ERR(xdna, "Fault in page failed");
+-			return -EFAULT;
++			amdxdna_mark_mapp_invalid(abo, vma);
++			break;
+ 		}
+ 
+ 		offset += PAGE_SIZE;
 -- 
 2.53.0
 
