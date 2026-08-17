@@ -1,59 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8727C43A7F7;
-	Mon, 17 Aug 2026 13:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD363D6479;
+	Mon, 17 Aug 2026 13:48:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974509; cv=none; b=oMJwZ6LQJ5eQ1bk270Z0q+v4o+jxFF3Eu1esJZSWO8ttqVKH4ckNEsKBX0QgHQatUbT8zgQeNeqCzm8tVS41jy/RnnEoNW/FwvURuptAJMFmJQAuB24BYBYbDwavmW5eK0ho4LJr/7eJrDz0S94e9TiNDOVFxmYb1W/2ncQCtSs=
+	t=1786974512; cv=none; b=JJby5L72gb4CTSmqqsparT1OsmuP2VQLHmQiNxvvAallrz2hnBE5oZDRYhpGxwEwi4qkBdzAN2sElYfPR5XX67c4nS2amsK1e9bW4rbkhJLiHu67QE0QzaAL2QyRsfTr8ZuLgdzHPsxnOU57gHE2jr2BPmM8+Jf/as3kiKTIB9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974509; c=relaxed/simple;
-	bh=Sw9ocK2+o37f9VPHOgCmsi+PyvSblxMljE+B2khpe20=;
+	s=arc-20240116; t=1786974512; c=relaxed/simple;
+	bh=5jBdPkp0Zj2Jvg8FQSXQhBeOrHmlL5/0ztXEJjssGtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Za9twwvnYK5Mx5BZWgHP3/wfsGozLXBcar/yE2LevoRKIFpNTXgzLFOjUBLjC0ftdJrQF0nefcWGF5Q20PIqd49M9jijvP5vcfjCa8YdGZcQ1EInEt/zoCBdNHncmvNnC6KBNQnr6v5PS7bsGEu4SHTaiThwvl5+UOoXgXbZFaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l7ECJ9Ei; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nP8Q9YVHovSbEI/65RT57c94Fo3qCkFy+yNwdhUq70wEy3YPVO75TIt7HOzdzI9TXCFJnEAkQBixnhM8VGF1s7XLt4a5kkqqoQuBiYKDAE64LjoVXELWTQY8G9VJyZUw/EXhe6iM/JjwYx/2kOPonLWSj+MBWVeRkaa5X2tfrmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2OUxZCAj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7ECJ9Ei"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60CB1F00A3E;
-	Mon, 17 Aug 2026 13:48:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2OUxZCAj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E111F000E9;
+	Mon, 17 Aug 2026 13:48:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974503;
-	bh=PgASWLFziRcLczxAUynXs/5OPNG4O9EtbYFv9yJFfeE=;
+	s=korg; t=1786974506;
+	bh=MoQNP3835Iq5VrEi9d4KZzTJ/qHa6mCYBbOqB/HfmZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l7ECJ9EiKeNczHeCVph4pXKK1x3O4zi9NTZKtNdP7lrzhsf9EcFuSXQ7gdjHzs2la
-	 ZTTW5o2jUpVAsTohsgW8AwDtMHC8SxRVC3+FjdvPPla5/KUQT0s7XuEh4ioN2tEyxg
-	 3ZYotlW6jAvmc42vUxCDyzTD5P9CcD8OhtCTtC2s=
+	b=2OUxZCAjorfnONi58eI/xhrHF15HCQNYEVLivOnsiEgteCWUxMUS6ASsIHPCeSOkp
+	 GMyuLO1A1LCS/ezJbvUgcFYMhE8ZWPtDYNpMLzIa2HHk/u3EODwwetM0H4gYe/X3Sy
+	 uI5splrEjd1tkQwmcUJWoewBGDL6vaNiI0U8CoQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Andy Lutomirski <luto@kernel.org>,
-	"Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	David Carlier <devnexen@gmail.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Toshi Kani <toshi.kani@hpe.com>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 228/271] arm64: remove redundant concurrent ptdump UAF mitigation
-Date: Mon, 17 Aug 2026 15:32:33 +0200
-Message-ID: <20260817132546.149591082@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>,
+	Rik van Riel <riel@surriel.com>,
+	stable@kernel.org
+Subject: [PATCH 7.1 229/271] x86/CPU: Add a tlbi= cmdline switch
+Date: Mon, 17 Aug 2026 15:32:34 +0200
+Message-ID: <20260817132546.187602445@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -72,225 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Rik van Riel <riel@surriel.com>
 
-commit 9d3277b2c07ccc9508d648098b3bbb46c61b7f3c upstream.
+commit abe7c8b09bd72a9c726016257c6281f129b4c02d upstream.
 
-This partially reverts commit fa93b45fd397 ("arm64: Enable vmalloc-huge
-with ptdump"), retaining vmalloc-huge support but eliminating the now
-redundant mitigation against a race between huge vmap page table freeing
-and ptdump, as this issue has now been fixed at core.
+With the recently found INVLPGB / TLBSYNC issue, there has been some
+interest in disabling INVLPGB-based TLB flushing, in order to rule out
+that CPU issue as a cause of userspace crashes.
 
-We also simultaneously remove the arm64 if-deffery when acquiring the mmap
-read lock upon vmap huge page table promotion as it is no longer required.
+Add a kernel command line option to control the TLB flushing behavior.
 
-Note that this patch relies on the preceding vmalloc patch, and should not
-be backported alone.
+If the need arises, we will add a "tlbi=broadcast" for the case when TLB
+invalidation broadcasts need to be explicitly selected, but this is not
+needed now yet.
 
-Link: https://lore.kernel.org/20260723-series-vmap-race-fix-v6-5-8cc77dcc0018@kernel.org
-Fixes: fa93b45fd397 ("arm64: Enable vmalloc-huge with ptdump")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Acked-by: Will Deacon <will@kernel.org>
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: "Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>
-Cc: "Borislav Petkov (AMD)" <bp@alien8.de>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: David Carlier <devnexen@gmail.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Toshi Kani <toshi.kani@hpe.com>
-Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+  [ bp: Rewrite commit message, move to cpu/common.c, add documentation. ]
+
+Fixes: 767ae437a32d ("x86/mm: Add INVLPGB feature and Kconfig entry")
+Suggested-by: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/20260729204341.3eb0b5ea@fangorn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/ptdump.h |    2 -
- arch/arm64/mm/mmu.c             |   43 +++-------------------------------------
- arch/arm64/mm/ptdump.c          |   11 +---------
- mm/vmalloc.c                    |   15 ++-----------
- 4 files changed, 9 insertions(+), 62 deletions(-)
+ Documentation/admin-guide/kernel-parameters.txt |    4 ++++
+ arch/x86/kernel/cpu/common.c                    |   10 ++++++++++
+ 2 files changed, 14 insertions(+)
 
---- a/arch/arm64/include/asm/ptdump.h
-+++ b/arch/arm64/include/asm/ptdump.h
-@@ -7,8 +7,6 @@
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -7573,6 +7573,10 @@ Kernel parameters
+ 			See Documentation/admin-guide/mm/transhuge.rst for more
+ 			details.
  
- #include <linux/ptdump.h>
- 
--DECLARE_STATIC_KEY_FALSE(arm64_ptdump_lock_key);
--
- #ifdef CONFIG_PTDUMP
- 
- #include <linux/mm_types.h>
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -49,8 +49,6 @@
- #define NO_CONT_MAPPINGS	BIT(1)
- #define NO_EXEC_MAPPINGS	BIT(2)	/* assumes FEAT_HPDS is not used */
- 
--DEFINE_STATIC_KEY_FALSE(arm64_ptdump_lock_key);
--
- u64 kimage_voffset __ro_after_init;
- EXPORT_SYMBOL(kimage_voffset);
- 
-@@ -1872,8 +1870,7 @@ int pmd_clear_huge(pmd_t *pmdp)
- 	return 1;
- }
- 
--static int __pmd_free_pte_page(pmd_t *pmdp, unsigned long addr,
--			       bool acquire_mmap_lock)
-+int pmd_free_pte_page(pmd_t *pmdp, unsigned long addr)
- {
- 	pte_t *table;
- 	pmd_t pmd;
-@@ -1885,25 +1882,13 @@ static int __pmd_free_pte_page(pmd_t *pm
- 		return 1;
- 	}
- 
--	/* See comment in pud_free_pmd_page for static key logic */
- 	table = pte_offset_kernel(pmdp, addr);
- 	pmd_clear(pmdp);
- 	__flush_tlb_kernel_pgtable(addr);
--	if (static_branch_unlikely(&arm64_ptdump_lock_key) && acquire_mmap_lock) {
--		mmap_read_lock(&init_mm);
--		mmap_read_unlock(&init_mm);
--	}
--
- 	pte_free_kernel(NULL, table);
- 	return 1;
- }
- 
--int pmd_free_pte_page(pmd_t *pmdp, unsigned long addr)
--{
--	/* If ptdump is walking the pagetables, acquire init_mm.mmap_lock */
--	return __pmd_free_pte_page(pmdp, addr, /* acquire_mmap_lock = */ true);
--}
--
- int pud_free_pmd_page(pud_t *pudp, unsigned long addr)
- {
- 	pmd_t *table;
-@@ -1919,36 +1904,16 @@ int pud_free_pmd_page(pud_t *pudp, unsig
- 	}
- 
- 	table = pmd_offset(pudp, addr);
--
--	/*
--	 * Our objective is to prevent ptdump from reading a PMD table which has
--	 * been freed. In this race, if pud_free_pmd_page observes the key on
--	 * (which got flipped by ptdump) then the mmap lock sequence here will,
--	 * as a result of the mmap write lock/unlock sequence in ptdump, give
--	 * us the correct synchronization. If not, this means that ptdump has
--	 * yet not started walking the pagetables - the sequence of barriers
--	 * issued by __flush_tlb_kernel_pgtable() guarantees that ptdump will
--	 * observe an empty PUD.
--	 */
--	pud_clear(pudp);
--	__flush_tlb_kernel_pgtable(addr);
--	if (static_branch_unlikely(&arm64_ptdump_lock_key)) {
--		mmap_read_lock(&init_mm);
--		mmap_read_unlock(&init_mm);
--	}
--
- 	pmdp = table;
- 	next = addr;
- 	end = addr + PUD_SIZE;
- 	do {
- 		if (pmd_present(pmdp_get(pmdp)))
--			/*
--			 * PMD has been isolated, so ptdump won't see it. No
--			 * need to acquire init_mm.mmap_lock.
--			 */
--			__pmd_free_pte_page(pmdp, next, /* acquire_mmap_lock = */ false);
-+			pmd_free_pte_page(pmdp, next);
- 	} while (pmdp++, next += PMD_SIZE, next != end);
- 
-+	pud_clear(pudp);
-+	__flush_tlb_kernel_pgtable(addr);
- 	pmd_free(NULL, table);
- 	return 1;
- }
---- a/arch/arm64/mm/ptdump.c
-+++ b/arch/arm64/mm/ptdump.c
-@@ -283,13 +283,6 @@ void note_page_flush(struct ptdump_state
- 	note_page(pt_st, 0, -1, pte_val(pte_zero));
- }
- 
--static void arm64_ptdump_walk_pgd(struct ptdump_state *st, struct mm_struct *mm)
--{
--	static_branch_inc(&arm64_ptdump_lock_key);
--	ptdump_walk_pgd(st, mm, NULL);
--	static_branch_dec(&arm64_ptdump_lock_key);
--}
--
- void ptdump_walk(struct seq_file *s, struct ptdump_info *info)
- {
- 	unsigned long end = ~0UL;
-@@ -318,7 +311,7 @@ void ptdump_walk(struct seq_file *s, str
- 		}
- 	};
- 
--	arm64_ptdump_walk_pgd(&st.ptdump, info->mm);
-+	ptdump_walk_pgd(&st.ptdump, info->mm, NULL);
- }
- 
- static void __init ptdump_initialize(void)
-@@ -360,7 +353,7 @@ bool ptdump_check_wx(void)
- 		}
- 	};
- 
--	arm64_ptdump_walk_pgd(&st.ptdump, &init_mm);
-+	ptdump_walk_pgd(&st.ptdump, &init_mm, NULL);
- 
- 	if (st.wx_pages || st.uxn_pages) {
- 		pr_warn("Checked W+X mappings: FAILED, %lu W+X pages found, %lu non-UXN pages found\n",
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -169,10 +169,7 @@ static int vmap_try_huge_pmd(pmd_t *pmd,
- 	 * Concurrent read lock holders are safe: each exclusively owns
- 	 * the range it operates on and cannot reach this page table.
++	tlbi=		[X86-64]
++			Format: {ipi}
++			ipi: switch to IPI-based TLB flushing
++
+ 	topology=	[S390,EARLY]
+ 			Format: {off | on}
+ 			Specify if the kernel should make use of the cpu
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -2668,3 +2668,13 @@ void __init arch_cpu_finalize_init(void)
  	 */
--#ifndef CONFIG_ARM64
--	scoped_cond_guard(mmap_read_lock_try, return 0, &init_mm)
--#endif
--	{
-+	scoped_cond_guard(mmap_read_lock_try, return 0, &init_mm) {
- 		if (!pmd_free_pte_page(pmd, addr))
- 			return 0;
- 		return pmd_set_huge(pmd, phys_addr, prot);
-@@ -229,10 +226,7 @@ static int vmap_try_huge_pud(pud_t *pud,
- 		return pud_set_huge(pud, phys_addr, prot);
- 
- 	/* See comment in vmap_try_huge_pmd(). */
--#ifndef CONFIG_ARM64
--	scoped_cond_guard(mmap_read_lock_try, return 0, &init_mm)
--#endif
--	{
-+	scoped_cond_guard(mmap_read_lock_try, return 0, &init_mm) {
- 		if (!pud_free_pmd_page(pud, addr))
- 			return 0;
- 		return pud_set_huge(pud, phys_addr, prot);
-@@ -289,10 +283,7 @@ static int vmap_try_huge_p4d(p4d_t *p4d,
- 		return p4d_set_huge(p4d, phys_addr, prot);
- 
- 	/* See comment in vmap_try_huge_pmd(). */
--#ifndef CONFIG_ARM64
--	scoped_cond_guard(mmap_read_lock_try, return 0, &init_mm)
--#endif
--	{
-+	scoped_cond_guard(mmap_read_lock_try, return 0, &init_mm) {
- 		if (!p4d_free_pud_page(p4d, addr))
- 			return 0;
- 		return p4d_set_huge(p4d, phys_addr, prot);
+ 	mem_encrypt_init();
+ }
++
++/* Control TLB flushing methods */
++static int __init tlbi_setup(char *str)
++{
++	if (!strcmp(str, "ipi"))
++		setup_clear_cpu_cap(X86_FEATURE_INVLPGB);
++
++	return 1;
++}
++__setup("tlbi=", tlbi_setup);
 
 
