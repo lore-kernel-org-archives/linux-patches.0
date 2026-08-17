@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA93E439009;
-	Mon, 17 Aug 2026 14:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9649E4334B5;
+	Mon, 17 Aug 2026 14:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978091; cv=none; b=OmJgJ3jBgw2qyvdJ8igZpQFUjMXnSgbPRFTlE4vlfrZC+ZNQgFYtrB+thdSwxA/y3SkFJW2jdueWKVjQgrB7NioTWO8I/KSGjN5xIQMY+G64FCxT4WvyB7+X8qQddeka6gwceHXy09m00+z6Zo6AEd5rs0paobr5Rt50hTBAo0Y=
+	t=1786978093; cv=none; b=Ba/M+mN2T5RTUM4MW1vgdI9BC0TuIZ5vLLJU2G9Yjn7REuMwhrjhPFpJLo2OCgKwhmVz+bC8Sn5mH1V2A0SOy8qiLSP4worpOqKCwMFqBy+cGX0UBYpmDS9cv0ab+hmmqDBG10irpxFYcBjsOd7SxG/cecW+IE1+BD3CZvRRK/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978091; c=relaxed/simple;
-	bh=Fc4rjnM4118RX4vv4wq8lbBY0CADhAlY8oBARHS9jkA=;
+	s=arc-20240116; t=1786978093; c=relaxed/simple;
+	bh=ZBJNPsqAUsmyVLOK+1e/rbkmfkB6TlATRehPuQt76pY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KY1cRrXILPgol2Jp6sSBBHTKIdDZAcdGtbmLIRYpDrQM5Sk75L+vHDtw4Es2/MKdeCUl5oofzIt/b0BEmKSTTAUBPRX7QW7xlNd5nisjD7/xHAas31rECLsTZY2J6PxpQ9lVgI168Ud782lJZFQwIHU3ZeKEn9EiphhBxxAj1bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eh+phN7n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OLf/B3kdwKWTtUPajAUcW+8FkVsl638Q3m5pTetQB8coMgrpS4n0VQwS3mYaE2CVoJd20AQzaJGt6lZTzcBRXWiP7eFZbdqC7jaSrgz6Uki8BJUvYw2UE+JvhjY87M4fA8ayY29JDr6pu7S3oLI2MNv1cvwCClNaOO36mYJ+VF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SDLnjJez; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eh+phN7n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F961F000E9;
-	Mon, 17 Aug 2026 14:48:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SDLnjJez"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4A11F00A3A;
+	Mon, 17 Aug 2026 14:48:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978088;
-	bh=wra2bMxBeKknolsQxFW5bxKLK4zO5pXpjIhAsL8/kb8=;
+	s=korg; t=1786978090;
+	bh=Z2fWpuEIMZkBjyn6ubPNOCV5G6n4dzOtkOyZLUpUaIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eh+phN7nph/1CwqtPBzH8y44WsfMdyygc5QFD7nzSINHWOkNpjlJGgykKivcZVlxg
-	 yIpD9gFYkoCmJ16XuZs6xSHbKNpqY8/zVB1BiCcfDcAktup/bhJ3uOsVr6mqRoOuNv
-	 zd8ey72utJ+9BILDcmU2R5/S8yCJMnrr6RKlj9DY=
+	b=SDLnjJezf/iEFqCediCP1dz2fGTIjxAu6cR+0HTrJ4WBnJitulq6U4dQZaQl3MJsm
+	 yH+DNg5xBGq93TYqgeQUZhtYynlemxChykIAa9GQgwnZR5t2TlfTq3+a5gI5rUYReO
+	 Kpg+fRPFKHFjrBSNlOEBt3f2XVqSCPQCCxphZFOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sergey V. Frolov" <Sergey.V.Frolov@kaspersky.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 097/181] net: octeontx2-pf: Fix UB in shift operation
-Date: Mon, 17 Aug 2026 15:33:11 +0200
-Message-ID: <20260817132539.274311745@linuxfoundation.org>
+	Willem de Bruijn <willemb@google.com>,
+	Qihang Tang <q.h.hack.winter@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 098/181] net: remove CAP_SYS_RAWIO zero-padding in dev_validate_header
+Date: Mon, 17 Aug 2026 15:33:12 +0200
+Message-ID: <20260817132539.318513650@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -52,62 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey V. Frolov <Sergey.V.Frolov@kaspersky.com>
+From: Qihang Tang <q.h.hack.winter@gmail.com>
 
-commit 7e2d693af0d4c05bddccb3541a0aabd69f4cb244 upstream.
+commit 3b9a324e646d3657a8d9806dfbfe4f3e4066e882 upstream.
 
-In function otx2_get_egress_burst_cfg, when the parameter `burst` is
-255 and the max mantissa is 255 (0xFFULL), `burst_exp` is set to
-`ilog2(255) - 1`, which equals 6.
+dev_validate_header() reads dev->hard_header_len directly when
+zero-padding short link layer headers for CAP_SYS_RAWIO holders:
 
-This results in an unsigned wrap-around when calculating
-`(1ULL << (*burst_exp - 7))`, since `*burst_exp - 7` becomes -1,
-which makes the shift operand 0xFFFFFFFF. This value is greater than
-the width of the left operand.
+    if (capable(CAP_SYS_RAWIO)) {
+        memset(ll_header + len, 0, dev->hard_header_len - len);
+        return true;
+    }
 
-According to standard 6.5.7 p.3:
-"The type of the result is that of the promoted left operand.
-If the value of the right operand is negative or is greater than
-or equal to the width of the promoted left operand, the behavior
-is undefined."
+Packet send paths call dev_validate_header() on skbs whose headroom was
+allocated from an earlier hard_header_len read. If the device is
+reconfigured so that dev->hard_header_len increases before validation,
+the memset writes past the reserved buffer, an out-of-bounds write.
 
-Fix the off-by-one boundary condition.
+This out-of-bounds write is masked in some SOCK_RAW paths today because
+the same concurrent increase can first make skb_push() exceed the
+reserved headroom and trigger skb_under_panic(). Remove the zero-padding
+branch before making those hard_header_len reads consistent, so the
+snapshot fixes do not turn a loud panic into a silent overwrite.
 
-Add a WARN_ON(*burst_exp < 7) before the else branch as an
-explicit safeguard. This ensures that if max_mantissa ever changes
-in a way that reintroduces this condition, it will be immediately
-caught at runtime rather than silently triggering UB.
+This path is only reached for variable length L2 protocols, where
+len < hard_header_len but len >= min_header_len. No remaining in-tree
+variable length L2 protocol implements header_ops->validate, and the
+CAP_SYS_RAWIO bypass that zero-pads and accepts short headers has no
+real value beyond allowing testing of intentionally malformed input.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Drop the CAP_SYS_RAWIO branch. The remaining reads of
+dev->hard_header_len in dev_validate_header() are comparisons only and
+have no memory safety impact.
 
-Fixes: e638a83f167e ("octeontx2-pf: TC_MATCHALL egress ratelimiting offload")
-Signed-off-by: Sergey V. Frolov <Sergey.V.Frolov@kaspersky.com>
+Suggested-by: Willem de Bruijn <willemb@google.com>
+Fixes: 2793a23aacbd ("net: validate variable length ll headers")
 Cc: stable@vger.kernel.org
-Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Reviewed-by: Sunil Goutham <sgoutham@marvell.com>
-Link: https://patch.msgid.link/20260804120446.1955448-1-Sergey.V.Frolov@kaspersky.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Qihang Tang <q.h.hack.winter@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260805125729.19220-2-q.h.hack.winter@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/linux/netdevice.h |    5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-@@ -78,10 +78,12 @@ static void otx2_get_egress_burst_cfg(st
- 	if (burst) {
- 		*burst_exp = ilog2(burst) ? ilog2(burst) - 1 : 0;
- 		tmp = burst - rounddown_pow_of_two(burst);
--		if (burst < max_mantissa)
-+		if (burst <= max_mantissa) {
- 			*burst_mantissa = tmp * 2;
--		else
-+		} else {
-+			WARN_ON(*burst_exp < 7);
- 			*burst_mantissa = tmp / (1ULL << (*burst_exp - 7));
-+		}
- 	} else {
- 		*burst_exp = MAX_BURST_EXPONENT;
- 		*burst_mantissa = max_mantissa;
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -3191,11 +3191,6 @@ static inline bool dev_validate_header(c
+ 	if (len < dev->min_header_len)
+ 		return false;
+ 
+-	if (capable(CAP_SYS_RAWIO)) {
+-		memset(ll_header + len, 0, dev->hard_header_len - len);
+-		return true;
+-	}
+-
+ 	if (dev->header_ops && dev->header_ops->validate)
+ 		return dev->header_ops->validate(ll_header, len);
+ 
 
 
