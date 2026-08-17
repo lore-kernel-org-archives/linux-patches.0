@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9EA441041;
-	Mon, 17 Aug 2026 15:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC8C3EC2CD;
+	Mon, 17 Aug 2026 15:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979835; cv=none; b=pny61rdVnPVWOYiHnqtaEj5Kxzf4Kqv+LFmnIpv0N1P4Z2t8yg5JFR6HPuofqrTMgwSDhmo6X+HOoXXHYB04dzEBW6+4O/Wxa6RGAQCqRXMMLd0AE1KmL8QA90qrmdhgQcFw+tl8s4gvqK85UfOTZjGOCdDk3CtdJNpdg3nN5o4=
+	t=1786979838; cv=none; b=Z3kABWFvK9qy4V8nlBDBsAJSgjoujkzuy+T9tu2riJd4Wze8EGoKTW6cjzBvU9Iv+QeyyubuSIV7F38j1YKKxNjaDtvyRPbx5HNVaWuafYRicnixnaWm2CDh1Svz7KNf8e1ex14i8jJ7CabUwJwtZaeZlbOjVVam902K3MJpzMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979835; c=relaxed/simple;
-	bh=2AkKCsFKZAJYx4E4VaVScoNy4vwhlq2767vAVO8YwnE=;
+	s=arc-20240116; t=1786979838; c=relaxed/simple;
+	bh=y2zd9qlKTFX7DT5nzH/VewVed7KzzC+Phod91Bzznwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KTQRlF2q8zR/jC4xMQ3Sq8flYb/E4gmq/2WRJ8hYBaXOEc9onfkSWnHIh5FrY6Rl2DSeq1/OamIqyUSoP1ohdsh0XHFVqCimVu5W3yD4Xk9UH846+Af/5Whtpp8IRrp163Pzx+hHy/VR7sg7clFBSLAJpWNJw+2A5zzX6u20Nfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zn9iWa4S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IYnxSyjL0NBczZKmCseaHg51lhJwh38RChEXrJTQU5x5vRDU1a117ijaHS6dsxhK+JpkI0us3WvxQNoHB/gitNvxPscfLTfbmoVSgye8chiPPY3KBrzyKSXCAGKw5M+jmq0abNWWhsal1e4OWoqH0aat4exUsQg6UyjBxlVIqsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNRgSrpn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zn9iWa4S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE651F00A3A;
-	Mon, 17 Aug 2026 15:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNRgSrpn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6291F000E9;
+	Mon, 17 Aug 2026 15:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979833;
-	bh=s2/sTp2tiRa+sKm645WyHk0bcsRDVd9wrqQFwiiPCkk=;
+	s=korg; t=1786979836;
+	bh=57jv6CZkW/y92aT2lxHtgYTa/doULrPx/mWclXZWiGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zn9iWa4SxAD8fRnGMTuQswKCjBZtYmsr24QzPZi1LmwDbTyfOzlUFMWJTnQSxDKNH
-	 068OeKgUiSxI+EAfNrcd9LNA+TOq88p7ARBpm/yUSVF8RWqQ1SL/RNAtwDM7UdfC0s
-	 PrAOPhwxYIKQ39EOolp5ITVzQhNtCi62W0KQur58=
+	b=qNRgSrpnEFihYLNkOJMnrWXgVUcauStOSYMvmPTLh2onGHH1E/hAhAD4uLPQp7WzN
+	 g1yGnmnTABDC6sCHPCyE64OmfZkGCYeWacrsM6533xVHR/bN7UAnFxNyyWiwNmN7wP
+	 ohG0LVCfd8tOxVWC2TtU+busr010P4k/WaHV2KPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 324/609] keys: make keyring key-chunk byte order agree with keyring_diff_objects()
-Date: Mon, 17 Aug 2026 15:30:20 +0200
-Message-ID: <20260817132555.076920751@linuxfoundation.org>
+Subject: [PATCH 6.1 325/609] assoc_array: trim the final shortcut word using the current chunk end
+Date: Mon, 17 Aug 2026 15:30:21 +0200
+Message-ID: <20260817132555.111057486@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,58 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 58565eef0f8d861aae92abfb7658458d661cee17 ]
+[ Upstream commit a82c8a05e86f3f84e09698f65b4515b5d04633f6 ]
 
-keyring_get_key_chunk() loads description bytes into the index chunk low
-address first, while keyring_diff_objects() numbers the first differing
-bit from the low end and folds the absolute byte index into the level
-without removing the inline-prefix offset the level already carries.
-The two disagree on byte order and bit position, so the array can be
-told two keys first differ at a bit that does not differ in the chunk
-the walker uses, letting crafted descriptions collide into one node.
+assoc_array_walk() masks off the bits past shortcut->skip_to_level in the
+word that contains skip_to_level, gated on
+round_up(sc_level, ASSOC_ARRAY_KEY_CHUNK_SIZE) > skip_to_level.
 
-Load the chunk in the order keyring_diff_objects() assumes and drop the
-inline-prefix length when folding the byte index into the level.  This
-only changes the in-memory ordering used to place keys within a keyring;
-add, search and read of non-colliding keys are unaffected.
+That guard is wrong in two opposite ways:
 
-Fixes: f771fde82051 ("keys: Simplify key description management")
+ - When sc_level is word-aligned (every word after the first) round_up()
+   is a no-op, so the guard is sc_level > skip_to_level and never fires for
+   the word that holds skip_to_level.  A shortcut that spans more than one
+   word and ends in the middle of its last word leaves that word untrimmed,
+   and its stale high bits leak into the dissimilarity word and can steer
+   the walk down the wrong descendant.
+
+ - When sc_level is unaligned (the first word) and skip_to_level sits on
+   the next chunk boundary, sc_level + CHUNK would exceed skip_to_level and
+   fire the trim with shift = skip_to_level & CHUNK_MASK == 0, which clears
+   the whole dissimilarity word and makes a differing shortcut compare
+   equal.
+
+Use the end of the chunk that contains sc_level instead:
+
+	skip_to_level < round_down(sc_level, CHUNK) + CHUNK
+
+For an aligned sc_level whose word holds skip_to_level this now fires (the
+first bug); for an unaligned sc_level with skip_to_level on the following
+boundary it does not, so shift is never 0 when the branch runs and the trim
+never clears the whole word.
+
+Fixes: 3cb989501c26 ("Add a generic associative array implementation.")
 Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
 Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20260719161505.2423935-3-michael.bommarito@gmail.com
+Link: https://lore.kernel.org/r/20260719161505.2423935-4-michael.bommarito@gmail.com
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/keyring.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ lib/assoc_array.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/security/keys/keyring.c b/security/keys/keyring.c
-index b9ca9dc9b0c3f..fd95a0eb7a466 100644
---- a/security/keys/keyring.c
-+++ b/security/keys/keyring.c
-@@ -293,9 +293,10 @@ static unsigned long keyring_get_key_chunk(const void *data, int level)
- 		desc_len -= offset;
- 		if (desc_len > n)
- 			desc_len = n;
-+		d += desc_len;
- 		do {
- 			chunk <<= 8;
--			chunk |= *d++;
-+			chunk |= *--d;
- 		} while (--desc_len > 0);
- 		return chunk;
- 	}
-@@ -376,7 +377,7 @@ static int keyring_diff_objects(const void *object, const void *data)
- 	return -1;
+diff --git a/lib/assoc_array.c b/lib/assoc_array.c
+index ca0b4f360c1a0..65409f0d2e0e5 100644
+--- a/lib/assoc_array.c
++++ b/lib/assoc_array.c
+@@ -255,7 +255,8 @@ assoc_array_walk(const struct assoc_array *array,
+ 		sc_segments = shortcut->index_key[sc_level >> ASSOC_ARRAY_KEY_CHUNK_SHIFT];
+ 		dissimilarity = segments ^ sc_segments;
  
- differ_plus_i:
--	level += i;
-+	level += i - (int)sizeof(a->desc);
- differ:
- 	i = level * 8 + __ffs(seg_a ^ seg_b);
- 	return i;
+-		if (round_up(sc_level, ASSOC_ARRAY_KEY_CHUNK_SIZE) > shortcut->skip_to_level) {
++		if (shortcut->skip_to_level < round_down(sc_level,
++				ASSOC_ARRAY_KEY_CHUNK_SIZE) + ASSOC_ARRAY_KEY_CHUNK_SIZE) {
+ 			/* Trim segments that are beyond the shortcut */
+ 			int shift = shortcut->skip_to_level & ASSOC_ARRAY_KEY_CHUNK_MASK;
+ 			dissimilarity &= ~(ULONG_MAX << shift);
 -- 
 2.53.0
 
