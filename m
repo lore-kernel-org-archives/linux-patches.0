@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD671A238F;
-	Mon, 17 Aug 2026 13:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB89F315D5D;
+	Mon, 17 Aug 2026 13:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974150; cv=none; b=e1tiE8IXPUlE2pHNUv6jBmJCxBXAetRju1kko0rFJ+oPJ52Aq2390MmbZFbo1NXTTZQG+93FNsUL1Q0AfrqJ2co3PlsHzgc19exuBtKsw9BCmCCblO5dCpmncXtqEppTTytSuoqMxfNMFpNoZfBUcgCS+hnNbSl77qQNcOThkjU=
+	t=1786974154; cv=none; b=MMRd6C1gZpl2sUUsjGiZF6u3yay7gMS4lCfcFUT+IxrtebBekMdJwydRJNNX2BAS1RXksFzWuVsB5WwNIe+xoOIxfQS8ixY6Nkuu+6gHPpvUCwYIIZ4hagltR1FVVX669HzUm0w4/uKWSuTnFDNqJyBg21fuvSCv5jBMB6gt+R0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974150; c=relaxed/simple;
-	bh=seYRbwWFdkm/L8CAvWLABLc3ubVMqs1rN6Xm5LW12i0=;
+	s=arc-20240116; t=1786974154; c=relaxed/simple;
+	bh=hgj9Pf01nQLpGvn97sZ+2puJL9aWn0d1kNVh8l6sSYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DGBFOcdVYkLDVyRgj0SpMIozNcuDEGe0u/dNt2EyRrwCI4hBxCgdAseWJ/tRCvtOhMOOI5ZdDe2K28IKc2CY+BLBO1Gx5xLc8qtArv9qNjBwtpjLgSB5fqm5CSpHjysvaPVz2PfpQKfwozdgKRbADrlgX3AtQHQYr/Sd6dgcsiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmO96Qzp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YDIWUHpreOhswsL2m7w49wh21wJfYKCHuU/COHHPXqNDF6cpCepVMyUjnQDBacTi8grpwFxzIKFguqOpodrCcGiOU1+f69tEfDgaZEsMCzNQLQSaXkjAjKnbfyI3b6BaKydnQG7WiH2a3KDTHlj2MBO1sSqNZPJAEwgl0jw5v2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WuvxVDIA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmO96Qzp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F281F000E9;
-	Mon, 17 Aug 2026 13:42:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WuvxVDIA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB86A1F000E9;
+	Mon, 17 Aug 2026 13:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974149;
-	bh=ArOQW3InMMWO+o1aT2xq87qG73dSG7bcq0oKsrN2HxY=;
+	s=korg; t=1786974152;
+	bh=LK3W3sOWDqWsMwrqFjMOpgnj4bpg9oR7kmC9fcvBuPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mmO96Qzp0ffJ0vy6f8j/zRBIvf0Gw9yuHS2aFbSnq06iC6P83h3MUlSet7+NnPSjD
-	 AFX2P1VzGmByt2Aoc9czgygnV9fAB8h7QHAcvuE/Ir7Cy51tHAIPgv5wX2inZDa7U9
-	 APd9+O+yoEXmGB6pEn8Je6m79Yr8erbmtlUtNFes=
+	b=WuvxVDIApjFfivkVj1hg6GhE8wb7NjE7uKQ/mXUDbQDFKXZO8SxSQhnRbQJVw/MwS
+	 VuIYyp6kfpEmBACTxHex2RodHzW+C75TZp+byBFUAhykT8XB5dYNDht6/wstydjkxI
+	 /AlYkX447JRJlCK2tHRSyoFXOZEdtrq5mwEteolQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C5=81ukasz=20Patron?= <priv.luk@gmail.com>,
+	Fan XinRan <shinjiangjiang@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 106/271] net: qrtr: ns: Raise lookup limit to 128
-Date: Mon, 17 Aug 2026 15:30:31 +0200
-Message-ID: <20260817132541.203899536@linuxfoundation.org>
+Subject: [PATCH 7.1 107/271] net: thunderbolt: Tear down DMA paths before stopping the rings
+Date: Mon, 17 Aug 2026 15:30:32 +0200
+Message-ID: <20260817132541.266654725@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -45,53 +46,121 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Łukasz Patron <priv.luk@gmail.com>
+From: Fan XinRan <shinjiangjiang@gmail.com>
 
-[ Upstream commit 7fc1c937b6b37c77df4ba374c37435ab06a2e945 ]
+[ Upstream commit 68bf02b6b4ad3f748c6db71fd77b6c0402d252f4 ]
 
-Current limit of 64 is not enough for Sony Xperia 10 VII (SM6475).
+tbnet_tear_down() stops both rings and frees their frame buffers before
+calling tb_xdomain_disable_paths().  tb_ring_stop() zeroes the ring's
+descriptor base and tbnet_free_buffers() unmaps and frees the pages the
+frames sit in, so by the time __tb_path_deactivate_hop() polls the hop's
+'pending' bit, anything still in flight has nowhere to drain to.
 
-After merging v6.6.142 into a downstream AOSP device, it's stuck on
-boot animation and following log spam can be observed in dmesg:
+The teardown sequence has been in this order since the driver was added.
+The setup path has not: commit ff7cd07f3064 ("net: thunderbolt: Enable
+DMA paths only after rings are enabled") moved the path enable to the end
+of tbnet_connected_work() and documented why:
 
-E qrtr    : ctrl_cmd_new_lookup(): QRTR client node exceeds max lookup limit!
-E qrtr    : qrtr_ns_worker(): failed while handling packet from 1:16600
+	/* Both logins successful so enable the rings, high-speed DMA
+	 * paths and start the network device queue.
+	 *
+	 * Note we enable the DMA paths last to make sure we have primed
+	 * the Rx ring before any incoming packets are allowed to
+	 * arrive.
+	 */
 
-No idea why it needs more than 64 client lookups, but it appears to
-work fine with 128 as it did when there were no limits.
+Teardown was never updated to match, so the rings and the paths now come
+down in the same order they go up instead of in reverse.
 
-I don't really have a good way to investigate what it needs all
-these lookups for as most of the userspace is closed source.
+On an ASMedia ASM4242 host router the 'pending' bit then never clears:
+every teardown burns the full 500 ms timeout and
+__tb_path_deactivate_hop() returns -ETIMEDOUT.  Raising the timeout to
+5 s does not help, so the hop is not slow to drain, it never drains
+at all.
 
-Fixes: 5640227d9a21 ("net: qrtr: ns: Limit the maximum number of lookups")
-Signed-off-by: Łukasz Patron <priv.luk@gmail.com>
-Link: https://patch.msgid.link/20260804201919.1148015-1-priv.luk@gmail.com
+The failure is invisible above the thunderbolt core.
+__tb_path_deactivate_hops() is void and only calls tb_port_warn();
+tb_path_deactivate(), tb_tunnel_deactivate() and
+__tb_disconnect_xdomain_paths() are void as well, and
+tb_disconnect_xdomain_paths() ends in an unconditional "return 0".  So
+tb_xdomain_disable_paths() reports success and the netdev_warn() below
+it never fires.  Repeated teardowns eventually take the XDomain control
+channel down, after which the peer node is gone and only a power cycle
+brings the controller back.
+
+Deactivating the paths first fixes it.  Measured with kretprobes on a
+stock v6.17 tree with no other patches applied, on a link that was up
+and had just carried traffic:
+
+  before: __tb_path_deactivate_hop() returns 0 for the first hop, then
+          -ETIMEDOUT for the second 500335 us later
+  after:  0 for both, 525 us apart
+
+Alternating the two orderings ABBA over three load levels, four
+teardowns per arm: every teardown failed before the change (21 of 21
+that ran), none failed after (0 of 24).  The before arms ran short
+because the link died partway through.  The same split shows up when
+the interface is enslaved to a bond instead of just brought down, which
+is how I ran into this in the first place.  Throughput and latency after
+the change are unchanged.
+
+Hosts whose routers drain the hop despite the stale descriptor base see
+no functional difference, since the paths end up deactivated either way.
+
+Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
+Signed-off-by: Fan XinRan <shinjiangjiang@gmail.com>
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://patch.msgid.link/20260803-b4-tbnet-teardown-v2-1-27de6a13ca2d@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/ns.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/thunderbolt/main.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
-index e5b2adb161d92..c5e7e01db2498 100644
---- a/net/qrtr/ns.c
-+++ b/net/qrtr/ns.c
-@@ -78,7 +78,7 @@ struct qrtr_node {
-  */
- #define QRTR_NS_MAX_NODES   512
- #define QRTR_NS_MAX_SERVERS 256
--#define QRTR_NS_MAX_LOOKUPS 64
-+#define QRTR_NS_MAX_LOOKUPS 128
+diff --git a/drivers/net/thunderbolt/main.c b/drivers/net/thunderbolt/main.c
+index 0cd98496d135d..fb569c0abf8e6 100644
+--- a/drivers/net/thunderbolt/main.c
++++ b/drivers/net/thunderbolt/main.c
+@@ -390,11 +390,16 @@ static void tbnet_tear_down(struct tbnet *net, bool send_logout)
+ 				break;
+ 		}
  
- static u16 node_count;
+-		tb_ring_stop(net->rx_ring.ring);
+-		tb_ring_stop(net->tx_ring.ring);
+-		tbnet_free_buffers(&net->rx_ring);
+-		tbnet_free_buffers(&net->tx_ring);
+-
++		/* Tear the paths down before stopping the rings.  This mirrors
++		 * tbnet_connected_work(), which enables the paths last so the
++		 * Rx ring is primed before packets can arrive.  Stopping a
++		 * ring zeroes its descriptor base and tbnet_free_buffers()
++		 * unmaps and frees the frame buffers, leaving anything still
++		 * in flight with nowhere to drain to;
++		 * __tb_path_deactivate_hop() then waits for the hop's
++		 * 'pending' bit, which on some host routers never clears in
++		 * that state.
++		 */
+ 		ret = tb_xdomain_disable_paths(net->xd,
+ 					       net->local_transmit_path,
+ 					       net->tx_ring.ring->hop,
+@@ -403,6 +408,11 @@ static void tbnet_tear_down(struct tbnet *net, bool send_logout)
+ 		if (ret)
+ 			netdev_warn(net->dev, "failed to disable DMA paths\n");
  
++		tb_ring_stop(net->rx_ring.ring);
++		tb_ring_stop(net->tx_ring.ring);
++		tbnet_free_buffers(&net->rx_ring);
++		tbnet_free_buffers(&net->tx_ring);
++
+ 		tb_xdomain_release_in_hopid(net->xd, net->remote_transmit_path);
+ 		net->remote_transmit_path = 0;
+ 	}
 -- 
 2.53.0
 
