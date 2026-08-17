@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6862F3FA5CC;
-	Mon, 17 Aug 2026 14:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8AC3FA5CC;
+	Mon, 17 Aug 2026 14:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977270; cv=none; b=daa+ehBO1IZbhlR0Rch0g2cpXjQ8mbb9PtMP5h/zz/KjUxFEb443UMckJAZI82FVxiRaxDcW0IJVtm2PUwsg6vQxIA08NesmdLt/8qe5KRCayRqE8irbDVapW7otFF9kE3+/TplPm4YuXlgy5BejyV8zuCxWkIoqMvO6J70WWME=
+	t=1786977273; cv=none; b=nEdxo6CbFjxOIZ30BYyvhqL8Lzf9eOd0rBkQa8SNVHWOY8uztCrjfkG9j+223Y50rcnp8h1XsAA2wWVb6w2d2VabJknH9rwtTSQaXqV2T/ykd4uZdtFtaKhZ3dH2F7H1ccQkCuECCEgIdSNh3Pfh8luSmDG9xiCOZ0nQnJI/ZYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977270; c=relaxed/simple;
-	bh=DAwpmwUQokAffFtP9Nd4LZifpqX6yRH3yBeMbD21jWU=;
+	s=arc-20240116; t=1786977273; c=relaxed/simple;
+	bh=VUBAwWbmdDOYY4Hpjy3hqZd5u5NrDcqOvAXBCxlYCKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wi0bPyYco4ChyW4dQfRoO9KCoqqN8prIKd/e8LtMlX5EjJ0uMQJhBGqXuD+lorbIHdTsguLOQ79Z/TYWz2oUO+cvsCVzYNoh29n17VtegrMqufVNoUOUavrGdj8UxYTqnIZCqXF9XNICTdA8mdnWOpnuYhhVCT6BSGPiLfuG56M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KABDrYCM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dDFH3hZ4w7iJctdO2Ia7YhGxwc+afwZCrUBzaeWMiQ3ClGye2bBz2qfQCcG/wIH14FVogNJhNHdzHSEcrrEYMuoxNmAn4bhOyiiMu9VXmrzlfNKIKP1+lT2VXfixm9G1JHXQxkVLCx7TgV1JzoHi3LIsplGF5+RsA7ZgwpHCa7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKrufES1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KABDrYCM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BEDE1F000E9;
-	Mon, 17 Aug 2026 14:34:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKrufES1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5067F1F000E9;
+	Mon, 17 Aug 2026 14:34:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977269;
-	bh=z2ANWbJ9lCZoo++ZgvhgKQvAsvqWKYAD0LnuY5XXkNs=;
+	s=korg; t=1786977271;
+	bh=N9MbHR7BN1CFlZw82mXO9fN5YiB9FP0ricmcqycbgvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KABDrYCM4lqUVUMx+ddVgmm1MIAf2YI7WWqfqYiNmtxFSilszvAu2quUd43MQXKLK
-	 pV68ypKfFh41hLuspdjkuJoNwo40BFYdIJ0iyf88v7/Rooy/713i7FKiplionUmzzr
-	 lsL3uKl/DgHRtnOaV0dz1Y82RhRCoZ4SFDgO4BEw=
+	b=OKrufES1fqcmOEeFxmGiZbE9qF5gF/ZEuWzl4Xyglbolvzo8KtK8VQfQN4Pg9CIhO
+	 KXritPadv2/km3ZRmk7FwiZZEPb03Adb9BUOwnGdj6gStQUqsKRGHDO5HONDdi7jtZ
+	 yvL2q2L/fNUL1VXQiuimgUHQOWlMVCDwD0RvZTUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 233/456] openvswitch: fix GSO userspace truncation underflow
-Date: Mon, 17 Aug 2026 15:30:23 +0200
-Message-ID: <20260817132549.222591313@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jonathan Lemon <jonathan.lemon@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 234/456] raw: remove unused variables from raw6_icmp_error()
+Date: Mon, 17 Aug 2026 15:30:24 +0200
+Message-ID: <20260817132549.252893825@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -53,182 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4032f8ed10fcb84d41c508dfb04be96589f78dfe ]
+commit c4fceb46add65481ef0dfb79cad24c3c269b4cad upstream.
 
-OVS_ACTION_ATTR_TRUNC currently stores a delta from the original skb
-length in OVS_CB(skb)->cutlen. When a later userspace action segments a
-GSO skb, queue_gso_packets() reuses that delta for each smaller segment.
-A segment can then reach queue_userspace_packet() with cutlen greater
-than skb->len, underflowing the length passed to skb_zerocopy().
+saddr and daddr are set but not used.
 
-Store the maximum preserved length instead and bound each consumer
-against the current skb length. Use U32_MAX as the no-truncation
-sentinel so the value remains valid if skb geometry changes before a
-consumer handles it.
-
-Fixes: f2a4d086ed4c ("openvswitch: Add packet truncation support.")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20260707221635.27489-1-kylebot@openai.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[5.15.y supports neither OVS_ACTION_ATTR_PSAMPLE nor OVS drop reasons]
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ba44f8182ec2 ("raw: use more conventional iterators")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Jonathan Lemon <jonathan.lemon@gmail.com>
+Link: https://lore.kernel.org/r/20220622032303.159394-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/actions.c  |   15 +++++----------
- net/openvswitch/datapath.c |   25 ++++++++++++++-----------
- net/openvswitch/datapath.h |    2 +-
- net/openvswitch/vport.c    |    2 +-
- 4 files changed, 21 insertions(+), 23 deletions(-)
+ net/ipv6/raw.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -856,12 +856,8 @@ static void do_output(struct datapath *d
- 		u16 mru = OVS_CB(skb)->mru;
- 		u32 cutlen = OVS_CB(skb)->cutlen;
+--- a/net/ipv6/raw.c
++++ b/net/ipv6/raw.c
+@@ -335,7 +335,6 @@ static void rawv6_err(struct sock *sk, s
+ void raw6_icmp_error(struct sk_buff *skb, int nexthdr,
+ 		u8 type, u8 code, int inner_offset, __be32 info)
+ {
+-	const struct in6_addr *saddr, *daddr;
+ 	struct net *net = dev_net(skb->dev);
+ 	struct hlist_head *head;
+ 	struct sock *sk;
+@@ -347,8 +346,6 @@ void raw6_icmp_error(struct sk_buff *skb
+ 	sk_for_each(sk, head) {
+ 		/* Note: ipv6_hdr(skb) != skb->data */
+ 		const struct ipv6hdr *ip6h = (const struct ipv6hdr *)skb->data;
+-		saddr = &ip6h->saddr;
+-		daddr = &ip6h->daddr;
  
--		if (unlikely(cutlen > 0)) {
--			if (skb->len - cutlen > ovs_mac_header_len(key))
--				pskb_trim(skb, skb->len - cutlen);
--			else
--				pskb_trim(skb, ovs_mac_header_len(key));
--		}
-+		if (unlikely(cutlen < skb->len))
-+			pskb_trim(skb, max(cutlen, ovs_mac_header_len(key)));
- 
- 		if (likely(!mru ||
- 		           (skb->len <= mru + vport->dev->hard_header_len))) {
-@@ -1242,22 +1238,21 @@ static int do_execute_actions(struct dat
- 			clone = skb_clone(skb, GFP_ATOMIC);
- 			if (clone)
- 				do_output(dp, clone, port, key);
--			OVS_CB(skb)->cutlen = 0;
-+			OVS_CB(skb)->cutlen = U32_MAX;
- 			break;
- 		}
- 
- 		case OVS_ACTION_ATTR_TRUNC: {
- 			struct ovs_action_trunc *trunc = nla_data(a);
- 
--			if (skb->len > trunc->max_len)
--				OVS_CB(skb)->cutlen = skb->len - trunc->max_len;
-+			OVS_CB(skb)->cutlen = trunc->max_len;
- 			break;
- 		}
- 
- 		case OVS_ACTION_ATTR_USERSPACE:
- 			output_userspace(dp, skb, key, a, attr,
- 						     len, OVS_CB(skb)->cutlen);
--			OVS_CB(skb)->cutlen = 0;
-+			OVS_CB(skb)->cutlen = U32_MAX;
- 			break;
- 
- 		case OVS_ACTION_ATTR_HASH:
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -250,7 +250,7 @@ void ovs_dp_process_packet(struct sk_buf
- 			upcall.portid = ovs_vport_find_upcall_portid(p, skb);
- 
- 		upcall.mru = OVS_CB(skb)->mru;
--		error = ovs_dp_upcall(dp, skb, key, &upcall, 0);
-+		error = ovs_dp_upcall(dp, skb, key, &upcall, U32_MAX);
- 		switch (error) {
- 		case 0:
- 		case -EAGAIN:
-@@ -413,7 +413,8 @@ static int queue_userspace_packet(struct
- 	struct sk_buff *nskb = NULL;
- 	struct sk_buff *user_skb = NULL; /* to be queued to userspace */
- 	struct nlattr *nla;
--	size_t len;
-+	size_t msg_size;
-+	size_t skb_len;
- 	unsigned int hlen;
- 	int err, dp_ifindex;
- 	u64 hash;
-@@ -434,7 +435,8 @@ static int queue_userspace_packet(struct
- 		skb = nskb;
- 	}
- 
--	if (nla_attr_size(skb->len) > USHRT_MAX) {
-+	skb_len = min(skb->len, cutlen);
-+	if (nla_attr_size(skb_len) > USHRT_MAX) {
- 		err = -EFBIG;
- 		goto out;
- 	}
-@@ -449,13 +451,13 @@ static int queue_userspace_packet(struct
- 	 * padding logic. Only perform zerocopy if padding is not required.
- 	 */
- 	if (dp->user_features & OVS_DP_F_UNALIGNED)
--		hlen = skb_zerocopy_headlen(skb);
-+		hlen = min(skb_zerocopy_headlen(skb), cutlen);
- 	else
--		hlen = skb->len;
-+		hlen = skb_len;
- 
--	len = upcall_msg_size(upcall_info, hlen - cutlen,
--			      OVS_CB(skb)->acts_origlen);
--	user_skb = genlmsg_new(len, GFP_ATOMIC);
-+	msg_size = upcall_msg_size(upcall_info, hlen,
-+				   OVS_CB(skb)->acts_origlen);
-+	user_skb = genlmsg_new(msg_size, GFP_ATOMIC);
- 	if (!user_skb) {
- 		err = -ENOMEM;
- 		goto out;
-@@ -516,7 +518,7 @@ static int queue_userspace_packet(struct
- 	}
- 
- 	/* Add OVS_PACKET_ATTR_LEN when packet is truncated */
--	if (cutlen > 0 &&
-+	if (skb_len < skb->len &&
- 	    nla_put_u32(user_skb, OVS_PACKET_ATTR_LEN, skb->len)) {
- 		err = -ENOBUFS;
- 		goto out;
-@@ -541,9 +543,9 @@ static int queue_userspace_packet(struct
- 		err = -ENOBUFS;
- 		goto out;
- 	}
--	nla->nla_len = nla_attr_size(skb->len - cutlen);
-+	nla->nla_len = nla_attr_size(skb_len);
- 
--	err = skb_zerocopy(user_skb, skb, skb->len - cutlen, hlen);
-+	err = skb_zerocopy(user_skb, skb, skb_len, hlen);
- 	if (err)
- 		goto out;
- 
-@@ -600,6 +602,7 @@ static int ovs_packet_cmd_execute(struct
- 		packet->ignore_df = 1;
- 	}
- 	OVS_CB(packet)->mru = mru;
-+	OVS_CB(packet)->cutlen = U32_MAX;
- 
- 	if (a[OVS_PACKET_ATTR_HASH]) {
- 		hash = nla_get_u64(a[OVS_PACKET_ATTR_HASH]);
---- a/net/openvswitch/datapath.h
-+++ b/net/openvswitch/datapath.h
-@@ -114,7 +114,7 @@ struct datapath {
-  * @mru: The maximum received fragement size; 0 if the packet is not
-  * fragmented.
-  * @acts_origlen: The netlink size of the flow actions applied to this skb.
-- * @cutlen: The number of bytes from the packet end to be removed.
-+ * @cutlen: The number of bytes in the packet to preserve on output.
-  */
- struct ovs_skb_cb {
- 	struct vport		*input_vport;
---- a/net/openvswitch/vport.c
-+++ b/net/openvswitch/vport.c
-@@ -438,7 +438,7 @@ int ovs_vport_receive(struct vport *vpor
- 
- 	OVS_CB(skb)->input_vport = vport;
- 	OVS_CB(skb)->mru = 0;
--	OVS_CB(skb)->cutlen = 0;
-+	OVS_CB(skb)->cutlen = U32_MAX;
- 	if (unlikely(dev_net(skb->dev) != ovs_dp_get_net(vport->dp))) {
- 		u32 mark;
- 
+ 		if (!raw_v6_match(net, sk, nexthdr, &ip6h->saddr, &ip6h->daddr,
+ 				  inet6_iif(skb), inet6_sdif(skb)))
 
 
