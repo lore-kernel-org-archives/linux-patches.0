@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF6530B517;
-	Mon, 17 Aug 2026 14:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B49638D415;
+	Mon, 17 Aug 2026 14:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976431; cv=none; b=czUBP9hlUx9EZfwEaMaC0LHstV5dtrZx3v6jeMZ4iSct+9rfOgEJgEUfhNuE5EO+X7ZLDKgVmQrLXYXdqRZcawdvPg+aweoo2QyVdobTtT/op86K+b1v+JkqHL/T44eLQcoRdcMJ/1Ey3y9zTA29QWeCtPUOSN4O1G2dV3h+WP0=
+	t=1786976434; cv=none; b=Xk8DhVntWcrJ9rrt4zZT+32bqm9rIBR1KEqRbDwKV4t3H4nzH3haDb/sRdZQxK23XSTsm5XDVMGV68AXuYSG61GG0YYUXzjgdgyy4tN1WnjnmWSzWvBxQ46Q+YWD6t100tELIBKhQ86D5woCZg+Jljm7c3rD3zZq5eA4DJE1LIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976431; c=relaxed/simple;
-	bh=Mb7e1a+ToRGKGQJP97Vb0NYNJoKTvtrirjqxHJlnIjg=;
+	s=arc-20240116; t=1786976434; c=relaxed/simple;
+	bh=s7cPKZz6MPrbLwQ/HbpHK55UQwvjYDGm0GndJZ3TqA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V/hWJGqhy5WE0MPGyLnyxJeTMgTe2Iva0MQ/Ai7QeId30k3oflxD+Vvl3ItZ6/nIFm0d1AnF80F/lSfpU8SX62O9sbQ92XkJkAuWEcuCOeFC0jZcAXfIVdrcdERnuI6ZX6s1R1D5Zq5+aUZTNnJ2AaJ0j1EN31iHmSHsjA1lIp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wNLuAlrc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qPYskaG2FyD1SLFT1sFybjO0ePnr50Tbj4hSiuu5oPaK6Ww5ugPSiMOEigrws4JUEQEv6u9OFFjYrkiKPHjvjL2McVgBCfJFo87maf3Y2vZNyzlEE4WWAPpHiCNGXs+t9Xqj4Q99mms915U5Zzu78A0nr1hXB5LZ7tRKErm303o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XGmLK5eo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wNLuAlrc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10BF11F000E9;
-	Mon, 17 Aug 2026 14:20:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XGmLK5eo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2AB71F000E9;
+	Mon, 17 Aug 2026 14:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976430;
-	bh=rQ24wclRuf/ieVZWV1KeI691NajfGH9SxbECpwEtCrA=;
+	s=korg; t=1786976433;
+	bh=+MryMcHXYoXACys+OFI97iw5qDnmR/OqzIN7a9jMH1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wNLuAlrcekD75rbPi/TVGSyj/LIqqq0rfJ/uFSIun9EwwOGZiQyBgWabrNPhmw0qk
-	 6JDNEzfUX35q8VVDxeImallqtknAdnVfjAHnoDcw4QO/9LA4ZdOYgG6G23MMtCzZDI
-	 TDSmG8kxn84t2TNYQRglMOh+xU9ziy4aicOGRZGw=
+	b=XGmLK5eoj4N3s0Fs37HhqAR0Uxzen6/EPIrN4E1e1iPyFb/UgCWUMhn6viRdr02cL
+	 LuWF5C2e5OSc8RX+l2sWbiwjaxH08ZLofx4VDZOGuwnqLp+JD4qH7rf7L8Yb7OKHYy
+	 TMTdmGJpoYQvF+K4ZqC+i5znfQdKlW/i1L735MgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	David Lee <david.lee@trailofbits.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 371/389] ipv6: prevent in6_dev_get() from resurrecting inet6_dev
-Date: Mon, 17 Aug 2026 15:33:30 +0200
-Message-ID: <20260817132553.169161295@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.10 372/389] netfilter: bridge: release template ct on non-IP path
+Date: Mon, 17 Aug 2026 15:33:31 +0200
+Message-ID: <20260817132553.200793592@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,62 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 0e243671bc7b8eaf00f83dd2f4367436dc0cff98 upstream.
+commit d45cc8020d7c0a9f01dee42ff5c40bc14c9af72f upstream.
 
-in6_dev_get() reads dev->ip6_ptr under RCU and then unconditionally
-increments its refcount. Device teardown can clear the pointer and drop
-the last reference between these operations. The increment then
-resurrects an object whose RCU free has already been queued, so callers
-can use it after it is freed.
+A bridge nftables ct zone set rule can attach a conntrack template to
+an skb before nf_ct_bridge_pre() sees it. For non-IPv4 and non-IPv6
+EtherTypes, nf_ct_bridge_pre() currently overwrites skb->_nfct with
+IP_CT_UNTRACKED without releasing the existing template reference.
 
-Use refcount_inc_not_zero() and return NULL when the object has already
-reached zero. RCU keeps the memory accessible through the attempted
-reference acquisition, and a successful increment pins the object for
-the caller.
+That makes the per-cpu template, and any temporary templates allocated
+for concurrent use, unreachable and leaks memory until the host runs out
+of slab.
 
-An independent run on the exact unpatched 6f5156d7a31a (v7.2-rc3)
-kernel reproduced the invalid reference acquisition as UID 1000:
+Reset the skb conntrack state before marking the frame untracked so the
+existing template reference is dropped on the non-IP path.
 
-  refcount_t: addition on 0; use-after-free.
-  ip6_mc_source+0xef4/0x17e0
-
-It was followed by the corresponding reference underflow in
-ip6_mc_source(). The supplied trace from the same unpatched revision
-additionally shows the access after the RCU read-side section ends:
-
-  BUG: KASAN: slab-use-after-free in mutex_lock+0x76/0xe0
-  Write of size 8 at addr ffff888015b50240 by task poc/1219
-
-Bug found and triaged by OpenAI Security Research and
-validated by Trail of Bits.
-
-Fixes: 8814c4b53381 ("[IPV6] ADDRCONF: Convert addrconf_lock to RCU.")
+Fixes: 3c171f496ef5 ("netfilter: bridge: add connection tracking system")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Co-developed-by: David Lee <david.lee@trailofbits.com>
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260803122758.666112-1-david.lee@trailofbits.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/addrconf.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bridge/netfilter/nf_conntrack_bridge.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/net/addrconf.h
-+++ b/include/net/addrconf.h
-@@ -368,8 +368,8 @@ static inline struct inet6_dev *in6_dev_
- 
- 	rcu_read_lock();
- 	idev = rcu_dereference(dev->ip6_ptr);
--	if (idev)
--		refcount_inc(&idev->refcnt);
-+	if (idev && !refcount_inc_not_zero(&idev->refcnt))
-+		idev = NULL;
- 	rcu_read_unlock();
- 	return idev;
- }
+--- a/net/bridge/netfilter/nf_conntrack_bridge.c
++++ b/net/bridge/netfilter/nf_conntrack_bridge.c
+@@ -280,6 +280,7 @@ static unsigned int nf_ct_bridge_pre(voi
+ 		ret = nf_ct_br_defrag6(skb, &bridge_state);
+ 		break;
+ 	default:
++		nf_reset_ct(skb);
+ 		nf_ct_set(skb, NULL, IP_CT_UNTRACKED);
+ 		return NF_ACCEPT;
+ 	}
 
 
