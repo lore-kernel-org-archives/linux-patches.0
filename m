@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F395175A6B;
-	Mon, 17 Aug 2026 15:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EBD62D249B;
+	Mon, 17 Aug 2026 15:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978993; cv=none; b=jVzZPPy03o//BvkoX5VrDWg3eSyIPP2h1PYo5vyR2ynmZMLGMth8vjogP6DMu0FH7T18wu16s4N9FRYNv3ef9YTeV56aD7SZIAK2tIxS239uz4X/Q6JT2tH3e7ba7vboTU9/OODrMFzyUHkvKpA98T2R2jjuYMfg3HZRwnaH4Nc=
+	t=1786978996; cv=none; b=MLr9z/m5+5lQQhYvRmusoogzI/za24H3NPr7D2feyyOWL5uD+oYCy//KBp5HaMAtH6gyKS6NLqnIJXRIhhOpTlfEJOiDgAR9dZQinouZmf2P8nPmp69dM0DoisPW1q1qsd5f5/8IwzqgzkBkFet/qWivsn5tmgZDX9/1qC8e9F0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978993; c=relaxed/simple;
-	bh=MY5Vp7BDiLwcw5rW10RuzBvzlzhpf++Lc/ud9t0gYic=;
+	s=arc-20240116; t=1786978996; c=relaxed/simple;
+	bh=M+/4Q5kOJyDJ/x3A7NwGSRWR9IlNDKz90JZf33AqSqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mrebCzeI0LpqUj/bTm0vydMJ8TqBb5fC7KovQA4cPlvF8kYZFH7Ws3acJIehKDFXTfAwaTwJYM9v5tmxJGKlUbenbDrky+mmv/pJ5JiUun3HuvcHqWLu6yq+d+B4mq1Og2tOiynak98R6B6SmU2SOFCDx42YkSN0jSsfBO01L8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9PyGBbO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XQZ66xoN7lZrPJoKcT7Gxeub0YJpjLswECjOYDHi71/1tDQm+SFqSMTp+EXhd819lSPTdcR7NFRylu5vMIVkl5HM8/5gV8v1KrSYgNIm+JrT6fvv44aG0GBPOJxnBwj5xIk/ec72GCOs/jhgfCoSePGZ6lXfjqaljWJRloIZh/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7SKtUhL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9PyGBbO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5DAA1F000E9;
-	Mon, 17 Aug 2026 15:03:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7SKtUhL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C640D1F000E9;
+	Mon, 17 Aug 2026 15:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978992;
-	bh=RRFCXYYTixELW3btpSobJ9joxJNwg5N7RFyEZtkEdww=;
+	s=korg; t=1786978995;
+	bh=5dnFUKdIyV8fj76L1Q9t3OkryBvRokoSwDpMtC8fplQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i9PyGBbOZm8te0pe5nbHw5sNF0taJ8RwWF3aM/HJCBsUWbM3B+tUrMwsfhdXyhyOc
-	 CzPbgX8owS1EGLshv+ngk4YbF+6PTGou8F4jq8Lm4OjymAMuhx/I6fXSMSWVU7hf4N
-	 2pcGd+Qtp2Ts0HXyWFQ8cV+OUP83N7pJBk+59SxI=
+	b=M7SKtUhLxdZElSi/RybicUHAgAu3t5UowMvZvIY88w5IYxe2bxYg9eYqERU48c437
+	 G/E0RgB9AeQWBhivFNhENWJtei8q3K7jBQ3Elw9nLGkMhd6gEao1Jk1/NUVgeAiFCJ
+	 oBkij5qm8/LU5/c55q2CA9+r6uHjzLgZpj8v7dxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Or Gerlitz <ogerlitz@ddn.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Sanghoon Choi <csh0052@gmail.com>,
+	Seungjin Bae <eeodqql09@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 031/609] RDMA/cma: Fix hardware address comparison length in netevent callback
-Date: Mon, 17 Aug 2026 15:25:27 +0200
-Message-ID: <20260817132544.295784693@linuxfoundation.org>
+Subject: [PATCH 6.1 022/609] Input: ims-pcu - fix heap-buffer-overflow in ims_pcu_process_data()
+Date: Mon, 17 Aug 2026 15:25:18 +0200
+Message-ID: <20260817132543.961691460@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,41 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Or Gerlitz <ogerlitz@ddn.com>
+From: Seungjin Bae <eeodqql09@gmail.com>
 
-[ Upstream commit 18313833e2c6de222a4f6c072da759d0d5888528 ]
+[ Upstream commit 875115b82c295277b81b6dfee7debc725f44e854 ]
 
-The cited commit hardcoded the hardware address comparison len to ETH_ALEN.
+The `ims_pcu_process_data()` processes incoming URB data byte by byte.
+However, it fails to check if the `read_pos` index exceeds
+IMS_PCU_BUF_SIZE.
 
-This breaks IPoIB, which uses 20-byte addresses. By truncating the
-memcmp, the CMA may incorrectly assume the target address is
-unchanged and fails to abort the stalled connection.
+If a malicious USB device sends a packet larger than IMS_PCU_BUF_SIZE,
+`read_pos` will increment indefinitely. Moreover, since `read_pos` is
+located immediately after `read_buf`, the attacker can overwrite
+`read_pos` itself to arbitrarily control the index.
 
-Fix this by replacing ETH_ALEN with the dynamic neigh->dev->addr_len
-to correctly evaluate the full address regardless of the link layer.
+This manipulated `read_pos` is subsequently used in
+`ims_pcu_handle_response()` to copy data into `cmd_buf`, leading to a
+heap buffer overflow.
 
-Fixes: 925d046e7e52 ("RDMA/core: Add a netevent notifier to cma")
-Signed-off-by: Or Gerlitz <ogerlitz@ddn.com>
-Link: https://patch.msgid.link/20260617-fix-cma-ipoib-v1-1-03f869344304@ddn.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Specifically, an attacker can overwrite the `cmd_done.wait.head` located
+at offset 136 relative to `cmd_buf` in the `ims_pcu_handle_response()`.
+Consequently, when the driver calls `complete(&pcu->cmd_done)`, it
+triggers a control flow hijack by using the manipulated pointer.
+
+Fix this by adding a bounds check for `read_pos` before writing to
+`read_buf`. If the packet is too long, discard it, log a warning,
+and reset the parser state.
+
+Fixes: 628329d524743 ("Input: add IMS Passenger Control Unit driver")
+Co-developed-by: Sanghoon Choi <csh0052@gmail.com>
+Signed-off-by: Sanghoon Choi <csh0052@gmail.com>
+Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
+Link: https://patch.msgid.link/20251221211442.841549-2-eeodqql09@gmail.com
+[dtor: factor out resetting packet state, reset checksum as well]
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/misc/ims-pcu.c | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/core/cma.c b/drivers/infiniband/core/cma.c
-index b5924919e7f06f..e7827352409026 100644
---- a/drivers/infiniband/core/cma.c
-+++ b/drivers/infiniband/core/cma.c
-@@ -5190,7 +5190,7 @@ static int cma_netevent_callback(struct notifier_block *self,
+diff --git a/drivers/input/misc/ims-pcu.c b/drivers/input/misc/ims-pcu.c
+index 2bac9d9c7b0c9c..af1dfc08b10b25 100644
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -448,6 +448,14 @@ static void ims_pcu_handle_response(struct ims_pcu *pcu)
+ 	}
+ }
  
- 	list_for_each_entry(current_id, &ips_node->id_list, id_list_entry) {
- 		if (!memcmp(current_id->id.route.addr.dev_addr.dst_dev_addr,
--			   neigh->ha, ETH_ALEN))
-+			   neigh->ha, neigh->dev->addr_len))
++static void ims_pcu_reset_packet(struct ims_pcu *pcu)
++{
++	pcu->have_stx = true;
++	pcu->have_dle = false;
++	pcu->read_pos = 0;
++	pcu->check_sum = 0;
++}
++
+ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
+ {
+ 	int i;
+@@ -460,6 +468,14 @@ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
  			continue;
- 		cma_id_get(current_id);
- 		if (!queue_work(cma_wq, &current_id->id.net_work))
+ 
+ 		if (pcu->have_dle) {
++			if (pcu->read_pos >= IMS_PCU_BUF_SIZE) {
++				dev_warn(pcu->dev,
++					 "Packet too long (%d bytes), discarding\n",
++					 pcu->read_pos);
++				ims_pcu_reset_packet(pcu);
++				continue;
++			}
++
+ 			pcu->have_dle = false;
+ 			pcu->read_buf[pcu->read_pos++] = data;
+ 			pcu->check_sum += data;
+@@ -472,10 +488,8 @@ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
+ 				dev_warn(pcu->dev,
+ 					 "Unexpected STX at byte %d, discarding old data\n",
+ 					 pcu->read_pos);
++			ims_pcu_reset_packet(pcu);
+ 			pcu->have_stx = true;
+-			pcu->have_dle = false;
+-			pcu->read_pos = 0;
+-			pcu->check_sum = 0;
+ 			break;
+ 
+ 		case IMS_PCU_PROTOCOL_DLE:
+@@ -495,12 +509,18 @@ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
+ 				ims_pcu_handle_response(pcu);
+ 			}
+ 
+-			pcu->have_stx = false;
+-			pcu->have_dle = false;
+-			pcu->read_pos = 0;
++			ims_pcu_reset_packet(pcu);
+ 			break;
+ 
+ 		default:
++			if (pcu->read_pos >= IMS_PCU_BUF_SIZE) {
++				dev_warn(pcu->dev,
++					 "Packet too long (%d bytes), discarding\n",
++					 pcu->read_pos);
++				ims_pcu_reset_packet(pcu);
++				continue;
++			}
++
+ 			pcu->read_buf[pcu->read_pos++] = data;
+ 			pcu->check_sum += data;
+ 			break;
 -- 
 2.53.0
 
