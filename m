@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C276A3EEAE2;
-	Mon, 17 Aug 2026 13:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB903E4510;
+	Mon, 17 Aug 2026 13:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974378; cv=none; b=qBUyJAyp2Uj8tGq06Xv8mkibRdYJtXN3LGdxRh9pqqyJxstYR9R83d267LoMr5rXujnhaX6f7/ATSOHLjoLEQQuaYniS0FAeFYMEOUxuEk2A3w2qqOCRcnUcgzqx50dGMCRSN7/nqlJM4vineHEDMEMGtrpkzmpmdsxZiA/pk0c=
+	t=1786974379; cv=none; b=BM/lNPVIN2KzzklDCQ1+o6JA6lD50dXuX/S2gWQbUIMOkJXYE4VXWQKMVF7c3IvlvfF5ktSpE7wa23HMcGM0gQiYm1PSAEIPppd7DCTPtuXPsI+13RsinG7tdlKMSBi3nMf0a4hGU7ycdH76UeLgbBokPK591Z/LS7O0p6yTgtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974378; c=relaxed/simple;
-	bh=35mnFRVyTfaPYHNffOp4VqjSFg0ESNlszN39yXPhbQE=;
+	s=arc-20240116; t=1786974379; c=relaxed/simple;
+	bh=w03RYCZm3BYqaKNEatxRvDuHhajNosA6rIeJjJWn7Vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uUuSXd3FmnoN1EgpyNzBGZmTONubIdu19usCykUM8qmR+Go/T2GhFQL4LxmgcG4liuUNGXbvJGnCbWyJTuAagM1AMgklDlo9FdJ8wiy3mq3TUHnpChV7S0f+8doMJaCagrobWiMqOjxCyg6w9tb0QNda/87CYuIiCGdWUKsH6sE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/p9Z7h0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mhXL2KK/c/oejRAOAhnXf58l4O9aRPHyexYvisclNgtDYexVpMcqPLNbSnVshNMMVIGZ3GTDVh0m8nhjoZ2+zNj9wLMHXir7U/rSU330xqZHSAmmmwvWZ2Ye80ObzCwJEbXDBils98VXM70AftUq++QvzIhcuC1hUlnmdBM/ux0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=og5d/DA2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/p9Z7h0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA851F000E9;
-	Mon, 17 Aug 2026 13:46:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="og5d/DA2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73C031F00A3E;
+	Mon, 17 Aug 2026 13:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974373;
-	bh=egj4d/NRg1Mvj22J+83o+7BbxfKZU9ELmVDVlfcReRM=;
+	s=korg; t=1786974371;
+	bh=okoUyu6pMvo4NRonOEUmKJ6sbp5uw5Y2c+vqYBeTJpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P/p9Z7h0OilLt+ehxPScCbZUUHeRW2ohXNsd8zyLG9x8YIAOkfnBKImFuzVLepGON
-	 5KcgSUAIL0T8khPMnO/bcig9UD8Um9nNYQwpffXdyEcDP5wfkdOCjSVmBXtLPckLUK
-	 5xaj5wVb6UWdOyGm9x1w1/uQOM1Es99FoVukwrgc=
+	b=og5d/DA2h2/5vJz723U2DwkSEa4rmnxAnH9w2Hh4USsjACV8DYCEZUy4hVyxn0Fos
+	 3t8+ddM3JPpEM19Pj9rEWxB4e/c5r9e0RAX+TGoHlc6j7BqEdPacTMRv3bwdFBGJw2
+	 zOcLS1y8Ly0+TpUagPwR5wFUUgfSCahKaBlFx3yc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kernelxing@tencent.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re=20 ?=" <ricardo@marliere.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 166/271] selftests/xsk: account reclaimed invalid Tx descriptors
-Date: Mon, 17 Aug 2026 15:31:31 +0200
-Message-ID: <20260817132543.718701261@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Fan Wu <fanwu01@zju.edu.cn>
+Subject: [PATCH 7.1 183/271] serial: amba-pl011: synchronize DMA teardown
+Date: Mon, 17 Aug 2026 15:31:48 +0200
+Message-ID: <20260817132544.356510775@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -48,137 +44,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit f49d99eaee7c32badc7ddfaecbb01ce4d037d695 ]
+commit 440915499231e9db1c361aa45bb702e8fd3b4a32 upstream.
 
-Invalid Tx descriptors are now returned through the completion ring,
-regardless of whether they form a standalone packet or belong to an
-invalid multi-buffer packet.
+dmaengine_terminate_all() does not wait for a running callback, so the TX
+callback can still touch the TX buffer after it is freed. The RX poll
+timer reads the RX buffers without the port lock.
 
-The selftests previously counted only descriptors belonging to valid
-packets, with a special exception for some invalid multi-buffer packets
-in verbatim streams. This undercounts completion entries when a
-standalone invalid descriptor or another invalid packet is reclaimed by
-the kernel.
+Switch to dmaengine_terminate_sync() and delete the RX timer before
+freeing the buffers.
 
-Keep valid_pkts as the number of packets expected on the Rx side, but
-count every descriptor submitted to the Tx ring in valid_frags, as every
-such descriptor is now expected to be returned through the completion
-ring.
-
-Make fragment counting in verbatim mode follow the packet boundary
-instead of stopping at the first invalid fragment. Update custom stream
-generation so an invalid middle fragment terminates the generated Rx
-packet while Tx completion accounting still covers the complete invalid
-packet.
-
-Also add explicit end fragments after invalid middle descriptors. This
-exercises the kernel drain logic and verifies that subsequent valid
-packets are not interpreted as continuations of the invalid packet.
-
-[ rbm: in testapp_invalid_desc_mb() hunk, use umem_size instead of umem_sz
-]
-
-Reviewed-by: Jason Xing <kernelxing@tencent.com>
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260719135609.147823-7-maciej.fijalkowski@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Ricardo B. Marlière (SUSE) <ricardo@marliere.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ead76f329f77 ("ARM: 6763/1: pl011: add optional RX DMA to PL011 v2")
+Cc: stable <stable@kernel.org>
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260731085915.326775-4-fanwu01@zju.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../selftests/bpf/prog_tests/test_xsk.c       | 26 ++++++++++---------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ drivers/tty/serial/amba-pl011.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/test_xsk.c b/tools/testing/selftests/bpf/prog_tests/test_xsk.c
-index 1c48a3b5ee736..31bf8a3fcd666 100644
---- a/tools/testing/selftests/bpf/prog_tests/test_xsk.c
-+++ b/tools/testing/selftests/bpf/prog_tests/test_xsk.c
-@@ -414,14 +414,14 @@ static u32 pkt_nb_frags(u32 frame_size, struct pkt_stream *pkt_stream, struct pk
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -1215,7 +1215,7 @@ static void pl011_dma_shutdown(struct ua
+ 
+ 	if (uap->using_tx_dma) {
+ 		/* In theory, this should already be done by pl011_dma_flush_buffer */
+-		dmaengine_terminate_all(uap->dmatx.chan);
++		dmaengine_terminate_sync(uap->dmatx.chan);
+ 		if (uap->dmatx.queued) {
+ 			dma_unmap_single(uap->dmatx.chan->device->dev,
+ 					 uap->dmatx.dma, uap->dmatx.len,
+@@ -1228,12 +1228,12 @@ static void pl011_dma_shutdown(struct ua
  	}
  
- 	/* Search for the end of the packet in verbatim mode */
--	if (!pkt_continues(pkt->options) || !pkt->valid)
-+	if (!pkt_continues(pkt->options))
- 		return nb_frags;
- 
- 	next_frag = pkt_stream->current_pkt_nb;
- 	pkt++;
- 	while (next_frag++ < pkt_stream->nb_pkts) {
- 		nb_frags++;
--		if (!pkt_continues(pkt->options) || !pkt->valid)
-+		if (!pkt_continues(pkt->options))
- 			break;
- 		pkt++;
+ 	if (uap->using_rx_dma) {
+-		dmaengine_terminate_all(uap->dmarx.chan);
++		if (uap->dmarx.poll_rate)
++			timer_delete_sync(&uap->dmarx.timer);
++		dmaengine_terminate_sync(uap->dmarx.chan);
+ 		/* Clean up the RX DMA */
+ 		pl011_dmabuf_free(uap->dmarx.chan, &uap->dmarx.dbuf_a, DMA_FROM_DEVICE);
+ 		pl011_dmabuf_free(uap->dmarx.chan, &uap->dmarx.dbuf_b, DMA_FROM_DEVICE);
+-		if (uap->dmarx.poll_rate)
+-			timer_delete_sync(&uap->dmarx.timer);
+ 		uap->using_rx_dma = false;
  	}
-@@ -652,11 +652,11 @@ static struct pkt_stream *__pkt_stream_generate_custom(struct ifobject *ifobj, s
- 			if (!frame->valid || !pkt_continues(frame->options))
- 				payload++;
- 		} else {
--			if (frame->valid)
-+			if (frame->valid) {
- 				len += frame->len;
--			if (frame->valid && pkt_continues(frame->options))
--				continue;
--
-+				if (pkt_continues(frame->options))
-+					continue;
-+			}
- 			pkt->pkt_nb = pkt_nb;
- 			pkt->len = len;
- 			pkt->valid = frame->valid;
-@@ -1236,10 +1236,9 @@ static int __send_pkts(struct ifobject *ifobject, struct xsk_socket_info *xsk, b
- 			}
- 		}
- 
--		if (pkt && pkt->valid) {
-+		if (pkt && pkt->valid)
- 			valid_pkts++;
--			valid_frags += nb_frags;
--		}
-+		valid_frags += nb_frags;
- 	}
- 
- 	pthread_mutex_lock(&pacing_mutex);
-@@ -2075,13 +2074,16 @@ int testapp_invalid_desc_mb(struct test_spec *test)
- 		{0, 0, 0, false, 0},
- 		/* Invalid address in the second frame */
- 		{0, XSK_UMEM__LARGE_FRAME_SIZE, 0, false, XDP_PKT_CONTD},
--		{umem_size, XSK_UMEM__LARGE_FRAME_SIZE, 0, false, XDP_PKT_CONTD},
-+		{umem_size * 2, XSK_UMEM__LARGE_FRAME_SIZE, 0, false, XDP_PKT_CONTD},
-+		{0, MIN_PKT_SIZE, 0, false, 0},
- 		/* Invalid len in the middle */
- 		{0, XSK_UMEM__LARGE_FRAME_SIZE, 0, false, XDP_PKT_CONTD},
- 		{0, XSK_UMEM__INVALID_FRAME_SIZE, 0, false, XDP_PKT_CONTD},
-+		{0, MIN_PKT_SIZE, 0, false, 0},
- 		/* Invalid options in the middle */
- 		{0, XSK_UMEM__LARGE_FRAME_SIZE, 0, false, XDP_PKT_CONTD},
- 		{0, XSK_UMEM__LARGE_FRAME_SIZE, 0, false, XSK_DESC__INVALID_OPTION},
-+		{0, MIN_PKT_SIZE, 0, false, 0},
- 		/* Transmit 2 frags, receive 3 */
- 		{0, XSK_UMEM__MAX_FRAME_SIZE, 0, true, XDP_PKT_CONTD},
- 		{0, XSK_UMEM__MAX_FRAME_SIZE, 0, true, 0},
-@@ -2093,8 +2095,8 @@ int testapp_invalid_desc_mb(struct test_spec *test)
- 
- 	if (umem->unaligned_mode) {
- 		/* Crossing a chunk boundary allowed */
--		pkts[12].valid = true;
--		pkts[13].valid = true;
-+		pkts[15].valid = true;
-+		pkts[16].valid = true;
- 	}
- 
- 	test->mtu = MAX_ETH_JUMBO_SIZE;
--- 
-2.53.0
-
+ }
 
 
