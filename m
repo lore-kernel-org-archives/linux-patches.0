@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA60441616;
-	Mon, 17 Aug 2026 15:10:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794CE442370;
+	Mon, 17 Aug 2026 15:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979416; cv=none; b=aweiXA4BZYtDDr+B1SDSTD4gCxQr5SqdtlhgyUIElmagCQLB9ho1xnP+4tOxy1GW566uolryogq2OZ+IOfCorGv/dM1f8f3MLWRhrpAXgEYsIfR+h9LtPtJZlzRCCDvav7QrbwklQ6dqM8oeKyPXIT0MKVyh99apIZ6Pomq7Hl8=
+	t=1786979419; cv=none; b=GBXhF+7KOY4Vpu6PBumRV+eiAoz+tup9IXceJLaVn8TkYb7Xr4CG3pYAhZWKFT3xUovbGRIdEEwK/jQZJZqc47ynQ1vyY4QUnODi8BwBJB/1VXhuihuXEBdhMU/8dx3+SOAVoVN2ZOeSDm3H3kKQcIA5ML16m2xvfbRV/mPabMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979416; c=relaxed/simple;
-	bh=862nzO+8rPBFCBBup4+YLTtVXWZcsgrDiCrHZt04U4c=;
+	s=arc-20240116; t=1786979419; c=relaxed/simple;
+	bh=24h8/A3aH5Sv6kqcDpNUSlVKY2fg6HerSfyJb4UeIAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sk6AN23+q6owPZtZnzKZOXVtZDeXISKUhke0MCty3zhejTe4/SeiDv93xzLen9kJdh78BZIgZvyG5U70FmzR3YDQOkhG9xi5CvHzMN4hIF2cLjqJyuHBzTk0wbv4xBCP/ThKpusjY+YvqgzNzgQ1MOXQSmF23vfOmnvvhpcpmls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3GltFNb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FRtZRbP+UBNRWXILaNuqexFLSLp/Q19eTZQys8nm9oXfaGYsVje1ZtPcyDScYoQSSHbsV/l/ZPnna1wV9i/CLndJLTFZ0gt1ld4MA2T3FzD2wgk2FfyuCT7Fdm4yKfGN/8IUAIUqbm4SEq+indlegkiaHIN3rp9Gmrdt5DfFAOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EELTGrsw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3GltFNb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14241F000E9;
-	Mon, 17 Aug 2026 15:10:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EELTGrsw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC5A1F000E9;
+	Mon, 17 Aug 2026 15:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979415;
-	bh=wg9JsZUmfljEnMv4qBH+b38jyAYFvcubYQD09cneW1g=;
+	s=korg; t=1786979418;
+	bh=JC5zFO97zWdcGWtpBA7MsBCmGIQRNt2qABGrpcQWOt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B3GltFNbcjQo/qK3E+XsJF2aK8WLA21gh/fdpPQ9+x5iM5LBfrIENV4aUnYkNj8OP
-	 hPDgajjNZaHiUUEZXAGy4T8l8Lr1ZJ3OEuMNIdn04K4iAT7uk27VwtjkVbCnsb8y2v
-	 h2nxWrmqN1nro45j7w45nrRJZ+fY3OojRe9AwkVk=
+	b=EELTGrswSPLFVU2k/c+O0oMqjt7fDgI4LU5NusaHYJoAAC6x10sTUs23nfJkrdXTO
+	 jyavMpDKFxMcJFewbW6xNJB9ghRptN5SUeedts7p255effcChIro2cbjCU3IoY2Q6I
+	 YDqDULuVuhWM2FBqYjlDqh4OuFxUrUAvZKFTOhgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 218/609] ALSA: seq: close a re-opened queue timer in the destructor
-Date: Mon, 17 Aug 2026 15:28:34 +0200
-Message-ID: <20260817132551.387266170@linuxfoundation.org>
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.1 219/609] wifi: ath6kl: fix OOB access from firmware ADDBA window size
+Date: Mon, 17 Aug 2026 15:28:35 +0200
+Message-ID: <20260817132551.422530480@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,74 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit 2c4dc0ed50b05cd847a4b34b8cebf0775f19aeb9 upstream.
+commit 44126b6994eeb28f2103b638e698f40a1244f327 upstream.
 
-queue_delete() closes the queue timer, then frees it. snd_seq_timer_close()
-clears q->timer->timeri. snd_use_lock_sync() then drains borrowers, and
-snd_seq_timer_delete() frees q->timer.
+aggr_recv_addba_req_evt() logs a debug message when the firmware-supplied
+win_sz is outside [AGGR_WIN_SZ_MIN, AGGR_WIN_SZ_MAX] but does not
+return. The out-of-range win_sz is then used in TID_WINDOW_SZ() to
+compute a kzalloc size and stored in rxtid->hold_q_sz, leading to
+zero-size or overflowed allocations and subsequent out-of-bounds access.
 
-A borrower can re-open the timer inside that window. A SET_QUEUE_CLIENT
-that took a queueptr() use_lock reference before the queue was unlinked
-runs snd_seq_timer_open() after the close. Open refuses re-open only while
-timeri is set, and the close just cleared it, so it re-opens timeri.
+Clean up any previously active aggregation session for the TID first,
+then return early when win_sz is out of the valid range, instead of
+proceeding with a broken allocation size.
 
-snd_seq_timer_delete() does not close that instance. Its snd_seq_timer_stop()
-is a no-op, because running was cleared first. So it frees q->timer with the
-instance still live. The queue is freed next.
-
-The instance stays on the global timer with callback_data pointing at the
-freed queue. A non-owner START on the unlocked queue arms it. The next tick
-derefs the freed queue in snd_seq_timer_interrupt().
-
-Reachable by an unprivileged user with access to /dev/snd/seq. No CAP and
-no queue ownership required.
-
-Close any lingering instance in the destructor. There, ->timeri can no
-longer change: the queue is unlinked and all use_lock borrowers have
-drained, so no snd_seq_queue_use() can re-open it. Close it before clearing
-q->timer. snd_timer_close() waits for any in-flight snd_seq_timer_interrupt()
-to finish, and that callback still reads q->timer (via snd_seq_check_queue()),
-so q->timer must stay valid until it drains.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Link: https://patch.msgid.link/422FDB81-2A68-47C7-A22D-2D3301E2E86D@doyensec.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Link: https://patch.msgid.link/20260702005020.708717-1-tristmd@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/seq/seq_timer.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath6kl/txrx.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/sound/core/seq/seq_timer.c
-+++ b/sound/core/seq/seq_timer.c
-@@ -58,12 +58,23 @@ struct snd_seq_timer *snd_seq_timer_new(
- void snd_seq_timer_delete(struct snd_seq_timer **tmr)
- {
- 	struct snd_seq_timer *t = *tmr;
--	*tmr = NULL;
-+	struct snd_timer_instance *ti;
+--- a/drivers/net/wireless/ath/ath6kl/txrx.c
++++ b/drivers/net/wireless/ath/ath6kl/txrx.c
+@@ -1722,13 +1722,15 @@ void aggr_recv_addba_req_evt(struct ath6
  
- 	if (t == NULL) {
- 		pr_debug("ALSA: seq: snd_seq_timer_delete() called with NULL timer\n");
- 		return;
- 	}
-+
-+	scoped_guard(spinlock_irq, &t->lock) {
-+		ti = t->timeri;
-+		t->timeri = NULL;
-+	}
-+	if (ti) {
-+		snd_timer_close(ti);
-+		snd_timer_instance_free(ti);
+ 	rxtid = &aggr_conn->rx_tid[tid];
+ 
+-	if (win_sz < AGGR_WIN_SZ_MIN || win_sz > AGGR_WIN_SZ_MAX)
+-		ath6kl_dbg(ATH6KL_DBG_WLAN_RX, "%s: win_sz %d, tid %d\n",
+-			   __func__, win_sz, tid);
+-
+ 	if (rxtid->aggr)
+ 		aggr_delete_tid_state(aggr_conn, tid);
+ 
++	if (win_sz < AGGR_WIN_SZ_MIN || win_sz > AGGR_WIN_SZ_MAX) {
++		ath6kl_dbg(ATH6KL_DBG_WLAN_RX, "%s: win_sz %d, tid %d\n",
++			   __func__, win_sz, tid);
++		return;
 +	}
 +
-+	*tmr = NULL;
- 	t->running = 0;
- 
- 	/* reset time */
+ 	rxtid->seq_next = seq_no;
+ 	hold_q_size = TID_WINDOW_SZ(win_sz) * sizeof(struct skb_hold_q);
+ 	rxtid->hold_q = kzalloc(hold_q_size, GFP_KERNEL);
 
 
