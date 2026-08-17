@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C6D43BDA7;
-	Mon, 17 Aug 2026 13:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D453F7882;
+	Mon, 17 Aug 2026 13:43:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974235; cv=none; b=AtHYsepoUcEDN8Uh6ar4QfQ+jEkYABab5iKXq8UkPNJQjqHUL1SJnNnXY77Ms7xxCKoY7+e55CKNQh1+b+jEvm0FNOUjvpJL47TgQZrjxYY/WgNOP3KdlVYm8EC6+P9cMoqrwE7FdojRHAP2vRoN9wxdcBfjvitmrOcTS9kIPGU=
+	t=1786974237; cv=none; b=g5iV94azHAGrFLfvieijT9j1o7W3gCPmeNMwJ1pkcujj1QxRP5XNT4GKZ5lhpQPhJdlHKXItb57xGlB4KQi8dkShe1K/bFP9Dj0icTQJXyBlMH/UMoyuhzWW2URfXkOBgLCVWw8I6EXRFgnt1bqjqUZ5DhJZ+AGHt4pqT4qFK4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974235; c=relaxed/simple;
-	bh=DVY3QkJhhJCkxd9x5s0YPEcXbuvnhk1Nq3oopIVW8PA=;
+	s=arc-20240116; t=1786974237; c=relaxed/simple;
+	bh=NfY2olrZgkNwgRgDMKB2akgClbkRX2eyZOgaSJgBzhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lrtvAoQQebdXOSKDiMQCcm2ukVOVnrYVeFR4Tq9btDGn4z9XwUNmxV4erf4pfpSnzTy209lQNV40Y19htvY6uq08d4zv66wsSTQbXGh+zz9WGdpaxCuH/yhvIxGQ1pUaNMi/wC8yNYgGLzW1WS+fYA53mZdsbG79KUlEMhRhm+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LbSTLTJ7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OZXvZBExVwHMelbOLgIej0xSwAVSpUaTWryrTS/JeR+vfUNYX+DNClxjX6HlBYOi00WCDCF4rIvsCIHM9mKHS+2lDIX40EfpAH4myuUYuhksv0gYBXxi3LDLrMlKkQlhUyYs28cYtozV7GAtW8sH9g3Nfs7W791ZOX1MWzvjpQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXT3/FiO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LbSTLTJ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 580881F000E9;
-	Mon, 17 Aug 2026 13:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXT3/FiO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F021F00A3D;
+	Mon, 17 Aug 2026 13:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974232;
-	bh=OQ9vtNgJOjMAcAxwYMUseZF2SDHj+OB5pP3Kj0yGYco=;
+	s=korg; t=1786974235;
+	bh=IoISFnfwMOlsnrzeEcxtTXkUlN+Y+NI8bx3t0nMuSYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LbSTLTJ7icNoZUHm+Dw6A1UYFIzqc9dWrN2nBPWPkvM0Qb8x3xpcX4nC4yESgAtC9
-	 bbiBaWnpikF0fhNgz14CdmW1ShDhPiz+zxR/vz+BVTGQmJR0lSlu5y754N1/eDNcFK
-	 o20dudjxDc793/T1+wQA0rp5kAEA/0bMDNJz4sQI=
+	b=QXT3/FiOvwlUoJ+Lgi5T+wF3sXPF2fR7oFjaub8s6wGih+ttRHY2sgJC/enTZ73PI
+	 1uN4LxIVjijx7RKdiAmjhQA56zeRiin2AyHGKWWRKg7TPFGWC8FKocVH2JaC2YDGsP
+	 ZfkrQINM6GWosgrsF/1KTKMK4hdQUv5Ua1mBGqwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
+	jarod@redhat.com,
+	Laurent Vivier <lvivier@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 136/271] net: usb: ipheth: fix carrier_work UAF on disconnect
-Date: Mon, 17 Aug 2026 15:31:01 +0200
-Message-ID: <20260817132542.448153217@linuxfoundation.org>
+Subject: [PATCH 7.1 137/271] usbnet: cap max_mtu for drivers without bind callback
+Date: Mon, 17 Aug 2026 15:31:02 +0200
+Message-ID: <20260817132542.487543657@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -50,104 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Laurent Vivier <lvivier@redhat.com>
 
-commit fde39b8a521780391fb4e5bda2c0aa4928947f12 upstream.
+commit 1505b2cb6ae1c7e8ac0c6e4590a204ffc3ab2b24 upstream.
 
-ipheth_sndbulk_callback() re-arms the carrier-check work on any
-non-zero URB status:
+usbnet_probe() initializes max_mtu to ETH_MAX_MTU and only caps it
+inside the if (info->bind) block. Drivers without a bind callback
+never enter this block, so max_mtu stays at ETH_MAX_MTU.
 
-	else
-		schedule_delayed_work(&dev->carrier_work, 0);
+QEMU's usb-net device (0x0525/0xa4a2) is claimed by the cdc_subset
+driver which has no bind callback. The guest accepts any MTU from DHCP
+(e.g. 65520 from passt), leading to TCP segments that exceed the
+device's 2048-byte receive buffer and are silently dropped.
 
-Nothing ties that to the interface being up, so the work can be armed
-again after ipheth_close() has already drained it, and stay armed
-until the netdev whose private area embeds it is freed.
+Initialize max_mtu to net->mtu at probe time and update it inside
+the bind block.
 
-On unplug with a TX URB in flight, ipheth_disconnect() drains the work
-through unregister_netdev() -> ipheth_close() ->
-cancel_delayed_work_sync() and only then calls ipheth_kill_urbs().
-usb_kill_urb() completes the in-flight TX URB with -ENOENT, so
-ipheth_sndbulk_callback() runs after the drain and re-arms
-carrier_work.
-
-The same completion also re-arms the work if the interface is only
-brought down while a TX URB is in flight, and
-ipheth_carrier_check_work() then keeps re-queueing itself once a
-second. unregister_netdev() does not call ipheth_close() for an
-already-down interface, so nothing drains it on the later unplug
-either.
-
-In both cases free_netdev() frees the netdev while carrier_work is
-still pending, and ipheth_carrier_check_work() dereferences freed
-memory.
-
-Tie the work to the interface state instead of chasing the completion:
-disable it in ipheth_close() and enable it in ipheth_open(), so a
-schedule_delayed_work() from the URB completion is a no-op whenever
-the interface is not up. disable_delayed_work_sync() also waits for a
-running instance, so it fully replaces the cancel_delayed_work_sync()
-it takes the place of. The work starts out disabled in ipheth_probe()
-so the enable/disable counts balance from the first open.
-
-Reproduced under KASAN on linux-next (next-20260731) with dummy_hcd and
-raw-gadget standing in for the device, driving the second path above (the
-interface is already down, so unregister_netdev() does not call
-ipheth_close()): 15 of 15 unpatched boots report a slab-use-after-free in
-__run_timers(), freed by ipheth_disconnect() and re-armed from
-ipheth_sndbulk_callback() via queue_delayed_work_on(). The
-same trigger on a kernel differing only by this patch reports 0 of 15,
-and the carrier check still functions across open/close cycles.
-
-The reproducer needs an attached USB device that stops draining bulk OUT,
-plus a link down and unplug, driven as root. It is not a privilege
-boundary crossing and no exploit primitive was developed.
-
-Found by 0sec (https://0sec.ai).
-
-Fixes: bb1b40c7cb86 ("usbnet: ipheth: prevent TX queue timeouts when device not ready")
+Fixes: f77f0aee4da4 ("net: use core MTU range checking in USB NIC drivers")
+Cc: jarod@redhat.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Link: https://patch.msgid.link/20260802120602.42595-1-doruk@0sec.ai
+Link: https://gitlab.com/qemu-project/qemu/-/issues/3268
+Link: https://bugs.passt.top/show_bug.cgi?id=189
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Link: https://patch.msgid.link/20260731092711.857684-1-lvivier@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/ipheth.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/net/usb/usbnet.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/usb/ipheth.c
-+++ b/drivers/net/usb/ipheth.c
-@@ -490,6 +490,7 @@ static int ipheth_open(struct net_device
- 	if (retval)
- 		return retval;
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -1798,7 +1798,7 @@ usbnet_probe(struct usb_interface *udev,
+ 	 */
+ 	dev->hard_mtu = net->mtu + net->hard_header_len;
+ 	net->min_mtu = 0;
+-	net->max_mtu = ETH_MAX_MTU;
++	net->max_mtu = net->mtu;
  
-+	enable_delayed_work(&dev->carrier_work);
- 	schedule_delayed_work(&dev->carrier_work, IPHETH_CARRIER_CHECK_TIMEOUT);
- 	return retval;
- }
-@@ -499,7 +500,11 @@ static int ipheth_close(struct net_devic
- 	struct ipheth_device *dev = netdev_priv(net);
- 
- 	netif_stop_queue(net);
--	cancel_delayed_work_sync(&dev->carrier_work);
-+	/* A TX URB can still complete with an error after this point and
-+	 * try to re-arm the carrier work. Disable it instead of cancelling
-+	 * it, so that such a schedule_delayed_work() is a no-op.
-+	 */
-+	disable_delayed_work_sync(&dev->carrier_work);
- 	return 0;
- }
- 
-@@ -629,6 +634,10 @@ static int ipheth_probe(struct usb_inter
- 	}
- 
- 	INIT_DELAYED_WORK(&dev->carrier_work, ipheth_carrier_check_work);
-+	/* Armed only between ipheth_open() and ipheth_close(). Start out
-+	 * disabled so the enable/disable counts balance from the first open.
-+	 */
-+	disable_delayed_work(&dev->carrier_work);
- 
- 	retval = ipheth_alloc_urbs(dev);
- 	if (retval) {
+ 	net->netdev_ops = &usbnet_netdev_ops;
+ 	net->watchdog_timeo = TX_TIMEOUT_JIFFIES;
+@@ -1808,6 +1808,7 @@ usbnet_probe(struct usb_interface *udev,
+ 	// allow device-specific bind/init procedures
+ 	// NOTE net->name still not usable ...
+ 	if (info->bind) {
++		net->max_mtu = ETH_MAX_MTU;
+ 		status = info->bind(dev, udev);
+ 		if (status < 0)
+ 			goto out1;
 
 
