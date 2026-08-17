@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654233AAF76;
-	Mon, 17 Aug 2026 13:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272E6317144;
+	Mon, 17 Aug 2026 13:58:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975126; cv=none; b=c9kWO8p6fGgwtpBl7pmDmM1lBVLWSzt8Cp8+70Vq2pvNaa/oHHVobUWjdEDX7jrf0KEktTdI1V4lc89Db2oXsMGi3+wMuUkMW9jQXSrfXKlDHR3FrnAe1+vsK2GI3l20h3qZ+zpDPLeZr1uWRMCjECDcrGN/xxjKgRYLEiypejY=
+	t=1786975129; cv=none; b=NqZnoQPQT8yhuNb13qf6ga9VBpoTYg3he3mibKXkmcmA6lw8jBDRu/1gTKLDC9OPrR60QnoN88ez0EaV9wBgMLpJBE5K5O8hUkhu8IJCrMGC0dx1qKQCsezcNQvKb+NnvwB2eQqU5LzL+zFXe+ctb3szO2oIlif3LreVi3r6Ywo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975126; c=relaxed/simple;
-	bh=nj7QygZIK79FVl+N4oWytrAIMPkcrfv+5vDHjFUMm4I=;
+	s=arc-20240116; t=1786975129; c=relaxed/simple;
+	bh=I89NKeHYiKpD23/Md4k4FaqPZxNOQ+w1VCCnvruyED0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cell9EMZwIrmkWA5QCgNlTTzFf3SQbUYCEV1tcGOcDMkcaJ0Nja4HOR9vOsfJtfZwA0IIJe0P3Y3oEJK2YXmFjRk0UTq/Myzgl7GStqPLyyV27eRBEAdtQVr1eqxeZ6qo7hDLEpoQgvysYomKJjfpJAA4JGntv7btzEPquSwqTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsH5qfTR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WqAoJFqjuPntEEnluyHkqxDIH5kABR3gbh1YvlJZG+JkRR+PM3QGK4yC7fNUK8oX1lYYooeDU7bwTmEFm92CxGoMVsjii48eKEmflYBP6DVwMsSOWxhfPGveJsBPUFytablcFlckmWPMpAYDIVKa4C5UNRy/AJh71xBPdTHStlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8JvGjuV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsH5qfTR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28081F000E9;
-	Mon, 17 Aug 2026 13:58:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8JvGjuV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8001C1F000E9;
+	Mon, 17 Aug 2026 13:58:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975125;
-	bh=fCRQAwpuKjAsQtODs41hU2bYb7jNAFhg8Zk9RtWZTAs=;
+	s=korg; t=1786975128;
+	bh=DZb/tR/QTbsGvAzEXpG8LG6rxK1lo3W1fbS6k/8UqvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YsH5qfTRf6ZmHjtcRL9MOLm6tW6mhK/kAoofFg5ZxaZ56g3x7SB3sWgWSeosTopXT
-	 LDHS4h0ynF3lhoMcIYdpbML8di851qIymGyvgmlZ8nsmqV0vZ8RxWJUuHTvRDKTKP+
-	 Fa4QpbxyS1F0RHkAY2OoKxHj/aMYd1g6aNNw9UWA=
+	b=z8JvGjuV03LVoh2wWxBId1Ske3Sg/1HkHwGDNxnhnCprNBoGW/h4T+AERc/SQFeCH
+	 oV9zbISDBJj4QNfR49azMrMGaVUsLRM56GNIsLNNxV2y1uldobOFj50/9T6W4nXnjI
+	 fR1TRkyuy3KqVysOFzI0mshEH6ciyrcSwmwszhhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
-Subject: [PATCH 6.18 172/250] staging: rtl8723bs: fix missing shared-key auth challenge length check
-Date: Mon, 17 Aug 2026 15:32:13 +0200
-Message-ID: <20260817132543.647258867@linuxfoundation.org>
+	Mariano Baragiola <mbaragiola@linux.com>
+Subject: [PATCH 6.18 173/250] staging: rtl8723bs: validate monitor transmit frame lengths
+Date: Mon, 17 Aug 2026 15:32:14 +0200
+Message-ID: <20260817132543.688125546@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -50,46 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
+From: Mariano Baragiola <mbaragiola@linux.com>
 
-commit 2c56ef658ac8c6bca36bc5574715e8f717207c6c upstream.
+commit 6829665d050983907b560173e49dcc6c11cb2730 upstream.
 
-The WEP shared-key authentication handler uses the challenge-text
-element's attacker-controlled length without checking it against the
-fixed 128-byte chg_txt buffer.
+rtw_cfg80211_monitor_if_xmit_entry() removes the radiotap header and
+then reads the 802.11 frame control field without checking that a base
+802.11 header remains.
 
-In OnAuthClient() the length from rtw_get_ie() - up to 255 - is used
-to perform memcpy() into the 128-byte pmlmeinfo->chg_txt, so a
-malicious AP sending a malformed WLAN_EID_CHALLENGE element can
-overflow/underfill chg_txt by up to 127 bytes. It is reachable over the
-air, before association, during shared-key authentication. In the case
-of an overflow, the driver can write out of bounds. In the case of an
-underfill, the driver can echo stale buffer memory.
+The data path also pulls the calculated 802.11, QoS and SNAP header
+span before confirming that the skb contains it. A truncated frame can
+therefore cause out-of-bounds reads or leave insufficient data for the
+Ethernet address writes.
 
-The challenge text is defined to be exactly 128 octets, which is
-already provided as the WLAN_AUTH_CHALLENGE_LEN define; require the
-element to be exactly that length before use.
+Reject frames that do not contain the base 802.11 header and data
+frames that do not contain their complete calculated header span.
 
 Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
-Link: https://patch.msgid.link/20260720082409.168379-1-npetrakopoulos2003@gmail.com
+Signed-off-by: Mariano Baragiola <mbaragiola@linux.com>
+Link: https://patch.msgid.link/20260727160859.1917096-1-mbaragiola@linux.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme_ext.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-@@ -913,7 +913,7 @@ unsigned int OnAuthClient(struct adapter
- 			p = rtw_get_ie(pframe + WLAN_HDR_A3_LEN + _AUTH_IE_OFFSET_, WLAN_EID_CHALLENGE, (int *)&len,
- 				pkt_len - WLAN_HDR_A3_LEN - _AUTH_IE_OFFSET_);
+--- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
++++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
+@@ -2034,6 +2034,8 @@ static netdev_tx_t rtw_cfg80211_monitor_
  
--			if (!p)
-+			if (!p || len != WLAN_AUTH_CHALLENGE_LEN)
- 				goto authclnt_fail;
+ 	/* Skip the ratio tap header */
+ 	skb_pull(skb, rtap_len);
++	if (skb->len < dot11_hdr_len)
++		goto fail;
  
- 			memcpy((void *)(pmlmeinfo->chg_txt), (void *)(p + 2), len);
+ 	dot11_hdr = (struct ieee80211_hdr *)skb->data;
+ 	frame_control = le16_to_cpu(dot11_hdr->frame_control);
+@@ -2046,6 +2048,8 @@ static netdev_tx_t rtw_cfg80211_monitor_
+ 			qos_len = 2;
+ 		if ((frame_control & 0x0300) == 0x0300)
+ 			dot11_hdr_len += 6;
++		if (skb->len < dot11_hdr_len + qos_len + snap_len)
++			goto fail;
+ 
+ 		memcpy(dst_mac_addr, dot11_hdr->addr1, sizeof(dst_mac_addr));
+ 		memcpy(src_mac_addr, dot11_hdr->addr2, sizeof(src_mac_addr));
 
 
