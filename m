@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9624743C7A8;
-	Mon, 17 Aug 2026 13:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71883E6DFA;
+	Mon, 17 Aug 2026 13:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975045; cv=none; b=FizCKEaGFjt9PlHSYc9CZRPlWodk2wEeaP/CTKHMlTP1uOPSLyY03S9Xm2Z9l7PF8jO8hBT5YZUyyB4A11YVHN67ArXo9PmaiIm4YeZNN2mdTT/yFvwnsjROsAmfPm8csJUCnwSf438WySpfLFqcRhBHrEwTYcAmikhL/1Bgy3w=
+	t=1786975048; cv=none; b=PvJueQyVXBz9wKQmUTTlxs8DuHxjGcn3ZN9CcseR/ySiLiPNkQdMKgW55hkCBrBvIQNiKHnZ9TsLz/jkvAlOe9Bw98h3NQKX2OWKGKavSU1AyfwUk1A6FrrPyJmL95EmQ2d+iXqqMsgvSfVdYFL9hHanBYIRj5egWelsFMfkMQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975045; c=relaxed/simple;
-	bh=hrCzbBB35Fksc1QEQyQRv+mgkg69xTkTUNz3VrcEoLE=;
+	s=arc-20240116; t=1786975048; c=relaxed/simple;
+	bh=Ghs9LcnfwxSxiDHxevxXoyEjvoXvMFZU1WyWtkM09eY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cOTwT1/CJ2ygyxRmvpwzyG+MXWw0FpYF4TafGpQnSQavk8+wO5zPtMhR2Inj0wGfkK9QTh1oql29o/y/XvqfuwbVEzS6f2AcGBr+q3bG1O77YQQuVwTAbhuXykSR8iyEC/2ustQph7wMz85vUMjVZadL+EU8qtTHzMEBLt2q6ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKxz6E7S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QpGaHIwPSgbwteP5RgmFo0xsnf32fEBmYsEWt7wQirKSqq8HG7JDGz3b68pJ/aE8en3L3DLLMLZHTBGGJlg69gzPDU/MmQFqQfFlxmTq7Xd9xuBI2uibd0e1bBWRhf5Fm2mA4w88/RKS54r3V99i6UPZosNho4ta+ouNs20dxKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyCBDjAe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKxz6E7S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF32F1F000E9;
-	Mon, 17 Aug 2026 13:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyCBDjAe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C441F000E9;
+	Mon, 17 Aug 2026 13:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975044;
-	bh=9PAodvtdYpfb7RX3vHldXFug5jVVOcAx3jf62Gao/0Y=;
+	s=korg; t=1786975047;
+	bh=Viuq08NO/jJid+EERjkQszAcCL3MT+cRTx3cVF6nulk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zKxz6E7SRV996E8QdlVdds3YR5Fnvdw0jj0gGVE6H8HQWtPQ3s7Gb1AyECEsvF16B
-	 H210/qFo+/Y0YFgPURZdMXosamTjzci+pV3eN+ake1WaSEfmm5Uu+deocRrDsuoZ61
-	 7mOIT9ODf/oRzPq2bsPDrrKDea7ba+fNFDQ8Avgc=
+	b=WyCBDjAeoUL20OlGMiNS1ojJKmX9kv735PLV482tnEe6aXYmEAK2tlGj+aCWMqzOr
+	 U60Yzsb2HYCxOBCzR/87QlJs1VNONgek+73H0KxjeCQ0y9DhbgLRbteSgo5Vuz0vij
+	 bAmpgeLumJSxcWIJv8CzKyQ/3uVdh9Ct4ERJWw0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Philipp David <pd-lkml@3b.pm>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Dima Ruinskiy <dima.ruinskiy@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 142/250] mac802154: fix netdev use-after-free in beacon worker
-Date: Mon, 17 Aug 2026 15:31:43 +0200
-Message-ID: <20260817132542.354940957@linuxfoundation.org>
+Subject: [PATCH 6.18 143/250] igc: fix netdev not re-attached after resume if interface is down
+Date: Mon, 17 Aug 2026 15:31:44 +0200
+Message-ID: <20260817132542.393064770@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,68 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Philipp David <pd-lkml@3b.pm>
 
-commit 5f26a690e8efa54315e4922368daf54e0b8f5515 upstream.
+commit b0ce5fd9fabe7c79463cf4602217d4dfeff5b1fd upstream.
 
-mac802154_beacon_worker() reads local->beacon_req under RCU and derives
-the sub-interface from the request, but then drops the RCU read lock and
-continues to use both sdata and the embedded wpan_dev.
+__igc_resume() calls netif_device_attach() only inside the
+netif_running() branch, so an interface that was down during suspend
+is never re-attached on resume. It then stays in the not-present state
+that __igc_shutdown() set via netif_device_detach(): ethtool reports
+ENODEV and every attempt to bring the interface up fails the
+netif_device_present() check in __dev_open() with -ENODEV, silently,
+since __igc_resume() returns 0. Only reloading the driver recovers the
+device.
 
-mac802154_stop_beacons_locked() cancels only pending beacon work, clears
-local->beacon_req and frees the request.  A beacon worker that is already
-running can therefore continue after interface teardown and dereference
-the freed netdev private area.
+This is easy to hit in practice because NetworkManager brings managed
+interfaces down before sleep unless Wake-on-LAN is configured, making
+the adapter unusable after every suspend/resume cycle with WoL
+disabled.
 
-The scan worker already pins the netdev before leaving RCU.  Apply the
-same lifetime rule to the beacon worker: take a netdev reference while
-the request is still protected by RCU, and release it on all paths that
-continue after the reference is acquired.
+Re-attach the netdev on every successful resume, as igb and e1000e do.
 
-Fixes: 3accf4762734 ("mac802154: Handle basic beaconing")
+Fixes: 6f31d6b643a3 ("igc: Refactor runtime power management flow")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://patch.msgid.link/e9a3909c7a6281967961773ca841e860b8ecf40e.1785596603.git.zihanx@nebusec.ai
+Signed-off-by: Philipp David <pd-lkml@3b.pm>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Dima Ruinskiy <dima.ruinskiy@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260804222205.1580328-11-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac802154/scan.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/intel/igc/igc_main.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/net/mac802154/scan.c
-+++ b/net/mac802154/scan.c
-@@ -415,6 +415,7 @@ void mac802154_beacon_worker(struct work
- 		container_of(work, struct ieee802154_local, beacon_work.work);
- 	struct cfg802154_beacon_request *beacon_req;
- 	struct ieee802154_sub_if_data *sdata;
-+	netdevice_tracker dev_tracker;
- 	struct wpan_dev *wpan_dev;
- 	u8 interval;
- 	int ret;
-@@ -427,12 +428,14 @@ void mac802154_beacon_worker(struct work
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -7573,11 +7573,13 @@ static int __igc_resume(struct device *d
+ 		err = __igc_open(netdev, true);
+ 		if (!rpm)
+ 			rtnl_unlock();
+-		if (!err)
+-			netif_device_attach(netdev);
++		if (err)
++			return err;
  	}
  
- 	sdata = IEEE802154_WPAN_DEV_TO_SUB_IF(beacon_req->wpan_dev);
-+	netdev_hold(sdata->dev, &dev_tracker, GFP_ATOMIC);
- 
- 	/* Wait an arbitrary amount of time in case we cannot use the device */
- 	if (local->suspended || !ieee802154_sdata_running(sdata)) {
- 		rcu_read_unlock();
- 		queue_delayed_work(local->mac_wq, &local->beacon_work,
- 				   msecs_to_jiffies(1000));
-+		netdev_put(sdata->dev, &dev_tracker);
- 		return;
- 	}
- 
-@@ -450,6 +453,7 @@ void mac802154_beacon_worker(struct work
- 	if (interval < IEEE802154_ACTIVE_SCAN_DURATION)
- 		queue_delayed_work(local->mac_wq, &local->beacon_work,
- 				   local->beacon_interval);
-+	netdev_put(sdata->dev, &dev_tracker);
+-	return err;
++	netif_device_attach(netdev);
++
++	return 0;
  }
  
- int mac802154_stop_beacons_locked(struct ieee802154_local *local,
+ static int igc_resume(struct device *dev)
 
 
