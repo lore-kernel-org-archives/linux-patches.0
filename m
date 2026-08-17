@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1478A3DA5A7;
-	Mon, 17 Aug 2026 14:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321C03ACEFE;
+	Mon, 17 Aug 2026 14:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978126; cv=none; b=g8JpsDCvRkxUsAMWiNVxueIZEvFDtmOHJcAu0PPucjQRqnnnQdFFzqK2ICkYS0TQTxOyIf4FBLxdgzC5vzPzKiLeMdGj5r8yTFGceB4YW5DCUpP0YFajvMUsPFm+smxcMEZGxRCPFcF9AcLXUk5mi/mL4RE2EtFkOhPbS9LTkRg=
+	t=1786978129; cv=none; b=XJefWQP88N3Kz8Pr8ArMFO2w3lj3EC7QS6FQnO7MP0bchXiTnGvKKuBZO73vO5EvnHdjB5DJnDc2/9PMapNzzmClx+DtrCOpVbFM49Bl86kwkwdu3/0qs71E/xeCdYnZJHI86kKf6QHWv84pPb2PbX1aDVndRHESFwQclAItqY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978126; c=relaxed/simple;
-	bh=BrbSvNVDDXvHxjAI4sxrihnzOyoXB3j2hIjGwN0c06o=;
+	s=arc-20240116; t=1786978129; c=relaxed/simple;
+	bh=6yhceNrFKVnRkfxYD5XrxcuCPVzTDq0EaHoy5VFZom8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WHbue+DyJqnkp7DftiH26CNW52mgf1P8w1Nlgn4aQDsm8vPwdalQOQFYVFZdwTT3yywsp4JMlaaQ1cNIi8nZcG4DhOXniwWOMIfcAQtHRyyG+4PcJTFfM0h/sboQJPXw35HG16n5oeCQwUP/IhhqO/q5DYyhrNu/MJWK5W/kWEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1tHvMHN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f3QlczVJNktC2jfKftK3lcR1MMEF+uGw/XiSq5rDCrys7Mryg2mexkM34Ih1jrNYvTxVR/fOOJE6RmUQrB35NC3oPIv8mNgYgxtbHPaZbN9/iE/Fvq1aIV6cFGH/QbwyKxe4xanTUGxGhtf0FDmGxDPL+9jee4ENnz45T3yoGqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mITska1b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1tHvMHN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7921F00A3D;
-	Mon, 17 Aug 2026 14:48:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mITska1b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 548BB1F000E9;
+	Mon, 17 Aug 2026 14:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978125;
-	bh=Llq0/cekY2rLzNkjLtjnc1ZLhGCYT5LZ248uPV1RUcE=;
+	s=korg; t=1786978127;
+	bh=cR5Rs0upEBn3F1rANpMbch4sfKyWYdbMEqjJ02p/Xds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O1tHvMHNpZ++4uUjYtFoIFJMWsOo1yLLDOfqwdUvDx9J9l1BW3YcSeI55aHnTK/Il
-	 68kOla8wSxxtDh3YleZaofYqC2+mHgHqyEhgHp8sSI8u2A54IE333w9yrsk71TV03M
-	 0nlPdpWVyxOPTlMOKLeUjqfXWkGHnKyenpZ7a3a4=
+	b=mITska1bDoNp87Di1IB8NUHDyPQQS8q8TOwqtXLsa/WOVrW4D/TbiEzRjoTBzmTrV
+	 7PtMIQkDJcrTWAPw5B6tJo8lpoaL0+CmcMiiQt5H1sUOJbUeBwOc8elT6R1uBlRNUl
+	 t7rg9pmAk1eC5hNjOlp+D7k1WZG0SsjYoGTVgvy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Harshal Dev <harshal.dev@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Dionna Glaze <dionnaglaze@google.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Jack Wang <jinpu.wang@cloud.ionos.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 109/181] dt-bindings: crypto: qcom,ice: Fix missing power-domain and iface clk
-Date: Mon, 17 Aug 2026 15:33:23 +0200
-Message-ID: <20260817132539.796415293@linuxfoundation.org>
+Subject: [PATCH 6.12 110/181] crypto: ccp - Add new SEV/SNP platform shutdown API
+Date: Mon, 17 Aug 2026 15:33:24 +0200
+Message-ID: <20260817132539.838327203@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -53,67 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshal Dev <harshal.dev@oss.qualcomm.com>
+From: Ashish Kalra <ashish.kalra@amd.com>
 
-[ Upstream commit e27264daac7d9ce892a2a5b4a864d6d9a3c9276a ]
+commit f7b86e0e75bc234751cb7a82d888083a57ef28b2 upstream.
 
-The DT bindings for inline-crypto engine do not specify the UFS_PHY_GDSC
-power-domain and iface clock. Without enabling the iface clock and the
-associated power-domain the ICE hardware cannot function correctly and
-leads to unclocked hardware accesses being observed during probe.
+Add new API interface to do SEV/SNP platform shutdown when KVM module
+is unloaded.
 
-Extend and fix the DT bindings for inline-crypto engine by allowing
-description of the iface clock and UFS_PHY_GDSC power-domain.
-
-This patch has been adapted from the mentioned upstream commit to drop
-references to Eliza and Milos Qualcomm platforms which do not exist
-on the stable tree. Thus, patch now fixes the original commit which
-introduced the DT binding for Qualcomm inline-crypto engine.
-
-Fixes: f6ff91a47ac5 ("dt-bindings: crypto: Add Qualcomm Inline Crypto Engine")
-Reviewed-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260416-qcom_ice_power_and_clk_vote-v5-1-5ccf5d7e2846@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Reviewed-by: Dionna Glaze <dionnaglaze@google.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Jack Wang <jinpu.wang@cloud.ionos.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../crypto/qcom,inline-crypto-engine.yaml        | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/crypto/ccp/sev-dev.c | 9 +++++++++
+ include/linux/psp-sev.h      | 3 +++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
-index 0304f074cf085..2793afc7f85c4 100644
---- a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
-+++ b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
-@@ -25,6 +25,16 @@ properties:
-     maxItems: 1
+diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
+index d668f9318c286..7c05cae7e5778 100644
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -2444,6 +2444,15 @@ static void sev_firmware_shutdown(struct sev_device *sev)
+ 	mutex_unlock(&sev_cmd_mutex);
+ }
  
-   clocks:
-+    minItems: 1
-+    maxItems: 2
++void sev_platform_shutdown(void)
++{
++	if (!psp_master || !psp_master->sev_data)
++		return;
 +
-+  clock-names:
-+    minItems: 1
-+    items:
-+      - const: core
-+      - const: iface
++	sev_firmware_shutdown(psp_master->sev_data);
++}
++EXPORT_SYMBOL_GPL(sev_platform_shutdown);
 +
-+  power-domains:
-     maxItems: 1
+ void sev_dev_destroy(struct psp_device *psp)
+ {
+ 	struct sev_device *sev = psp->sev_data;
+diff --git a/include/linux/psp-sev.h b/include/linux/psp-sev.h
+index 613a8209bed27..6a4435cfa977e 100644
+--- a/include/linux/psp-sev.h
++++ b/include/linux/psp-sev.h
+@@ -947,6 +947,7 @@ int sev_do_cmd(int cmd, void *data, int *psp_ret);
+ void *psp_copy_user_blob(u64 uaddr, u32 len);
+ void *snp_alloc_firmware_page(gfp_t mask);
+ void snp_free_firmware_page(void *addr);
++void sev_platform_shutdown(void);
  
- required:
-@@ -42,6 +52,10 @@ examples:
-       compatible = "qcom,sm8550-inline-crypto-engine",
-                    "qcom,inline-crypto-engine";
-       reg = <0x01d88000 0x8000>;
--      clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-+      clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>,
-+               <&gcc GCC_UFS_PHY_AHB_CLK>;
-+      clock-names = "core",
-+                    "iface";
-+      power-domains = <&gcc UFS_PHY_GDSC>;
-     };
- ...
+ #else	/* !CONFIG_CRYPTO_DEV_SP_PSP */
+ 
+@@ -981,6 +982,8 @@ static inline void *snp_alloc_firmware_page(gfp_t mask)
+ 
+ static inline void snp_free_firmware_page(void *addr) { }
+ 
++static inline void sev_platform_shutdown(void) { }
++
+ #endif	/* CONFIG_CRYPTO_DEV_SP_PSP */
+ 
+ #endif	/* __PSP_SEV_H__ */
 -- 
 2.53.0
 
