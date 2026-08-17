@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96D52D8DDF;
-	Mon, 17 Aug 2026 14:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA992EC0B0;
+	Mon, 17 Aug 2026 14:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975381; cv=none; b=LC/Qo2JWMBjYsRM8q970G2IJB174UfNtzYynN9lx5YGChzr+9glLoxmVClSurkNMuD2dsb3bj2LkFrzkmCDCI/GtykgLa/sIplXfyTVrfbksRElNZ+LA/1Ba/Dv4dzWUC+dgTBU616ragfv4QhAKnHTCSbIxb5v/3qGQZreOW2w=
+	t=1786975384; cv=none; b=Otl4xB2t1ebyY7+N/4UNWTdOWMvPsjxbj+LNzZYfj/KlVL32P0D9LNZ7ok4RuDuFsYH3xrnRnDuVhP+Q6z3pmnpTEuQhH1lKznvzPWrbZWcgNxPbOkr9QUwLZFmMadoAjg1aF+AoaFGwarQE9CZLzOI/MjfodFEkgYELVYq6u6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975381; c=relaxed/simple;
-	bh=hnOAQsX3noLf7xOj3BUTbNnDkL7kmIQoN1iHdm1BBBs=;
+	s=arc-20240116; t=1786975384; c=relaxed/simple;
+	bh=Jd8zqbCRfcZ6L2LNa5g1MEyxUS0sVdJYGuN41TONfU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hwfi8W9VeLO3NaaxEhELkOYdA2jTcnVi8RUDSEnx220FRBhf21YMwSsG6B7lngT3Z/r1fENbENhldlllLJZ0brduC5oDE1h72DzwWH4tA7JOdmdR0SPHLzvQouKalGM7C94ZQeVETV9vVMpwwQ5/20iMFP7xNZNYIsp2ygrYqXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHMmsbo/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D4lX+d9TOiTMUoxv5Mb6q3gSsy48NtYRRwFdFvD84PaOaBuXNmt7Y+YIYaCGkyWThSBXB2gF8Z20x20mYiy5fHsHbb45hF1T42b3EtAUfOi1i7oOwEeZNhh8JPyiprXi0Ns9gtkfPd/TazROWZHBf85ds2jHBo6fWbjL1CTWF/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q11Fi/WS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHMmsbo/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2F21F000E9;
-	Mon, 17 Aug 2026 14:02:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q11Fi/WS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B6B1F000E9;
+	Mon, 17 Aug 2026 14:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975380;
-	bh=86Is0yd5y4b6YRaH+yHJaXsAyF2SDnc4q/P1flDEsSY=;
+	s=korg; t=1786975383;
+	bh=0AUi/1Bs4L3qEMB2ONX07ZLX9BmHLjZSXieOGKTPDwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NHMmsbo/BtP0z6dXqEN0n6rM9WD+xwar5Wn42cNVIImfRoCmYI/vA0mcPoEUSzGxk
-	 6yJEKEI74KXpkqCeQmjoaIHWkhbtHIhRX2nFdvcGi8Kn6hwjLk2TKgf1sRDK9W5Y7H
-	 vd778hqksuzKHnJnyY0hGcd0ypAOW6nhhHOSYdk0=
+	b=Q11Fi/WSNat9ZyhFuH54j80xcJrzur0ICLHtksLVwgi728lzqHDHBUTg6KjqupNhp
+	 Of4cm9g7AZlbN2R5CddDSFsy9RWWtsW1iZIDYO3bTMBsiEFKNZYQzmRmCJbxImDLcZ
+	 rZhbY9aqyqa/z7cyC8aRLn2bRhw35HwILju4+0zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shivam Kumar <kumar.shivam43666@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Uros Bizjak <ubizjak@gmail.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Vivian Wang <dramforever@live.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 001/389] nvmet-tcp: Fix potential UAF when ddgst mismatch
-Date: Mon, 17 Aug 2026 15:27:20 +0200
-Message-ID: <20260817132538.864521477@linuxfoundation.org>
+Subject: [PATCH 5.10 010/389] KVM: VMX: Make vmread_error_trampoline() uncallable from C code
+Date: Mon, 17 Aug 2026 15:27:29 +0200
+Message-ID: <20260817132539.244504792@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -53,51 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Sean Christopherson <seanjc@google.com>
 
-commit dbbd07d0a7020b80f6a7028e561908f7b83b3d5a upstream.
+[ Upstream commit 0b5e7a16a0a79a3742f0df9e45bca46f01b40e6a ]
 
-Shivam Kumar found via vulnerability testing:
-When data digest is enabled on an NVMe/TCP connection and a digest
-mismatch occurs on a non-final H2C_DATA PDU during an R2T-based
-data transfer, the digest error handler in nvmet_tcp_try_recv_ddgst()
-calls nvmet_req_uninit() - which performs percpu_ref_put() on the
-submission queue - but does NOT mark the command as completed. It
-does not set cqe->status, does not modify rbytes_done, and does not
-clear any flag. When the subsequent fatal error triggers queue
-teardown, nvmet_tcp_uninit_data_in_cmds() iterates all commands,
-checks nvmet_tcp_need_data_in() for each one, and finds that the
-already-uninited command still appears to need data (because
-rbytes_done < transfer_len and cqe->status == 0). It therefore calls
-nvmet_req_uninit() a second time on the same command - a double
-percpu_ref_put against a single percpu_ref_get.
+Declare vmread_error_trampoline() as an opaque symbol so that it cannot
+be called from C code, at least not without some serious fudging.  The
+trampoline always passes parameters on the stack so that the inline
+VMREAD sequence doesn't need to clobber registers.  regparm(0) was
+originally added to document the stack behavior, but it ended up being
+confusing because regparm(0) is a nop for 64-bit targets.
 
-Reported-by: Shivam Kumar <kumar.shivam43666@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Shivam Kumar <kumar.shivam43666@gmail.com>
+Opportunustically wrap the trampoline and its declaration in #ifdeffery
+to make it even harder to invoke incorrectly, to document why it exists,
+and so that it's not left behind if/when CONFIG_CC_HAS_ASM_GOTO_OUTPUT
+is true for all supported toolchains.
+
+No functional change intended.
+
+Cc: Uros Bizjak <ubizjak@gmail.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/r/20220928232015.745948-1-seanjc@google.com
+[ Vivian: Adjust context. Remove check for CONFIG_CC_HAS_ASM_GOTO_OUTPUT
+  which does not apply for old kernel. ]
+Signed-off-by: Vivian Wang <dramforever@live.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/kvm/vmx/vmx_ops.h | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index 3d9a830950ef26..27d001fd882168 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -1227,8 +1227,10 @@ static int nvmet_tcp_try_recv_ddgst(struct nvmet_tcp_queue *queue)
- 			queue->idx, cmd->req.cmd->common.command_id,
- 			queue->pdu.cmd.hdr.type, le32_to_cpu(cmd->recv_ddgst),
- 			le32_to_cpu(cmd->exp_ddgst));
--		if (!(cmd->flags & NVMET_TCP_F_INIT_FAILED))
-+		if (!(cmd->flags & NVMET_TCP_F_INIT_FAILED)) {
-+			cmd->req.cqe->status = NVME_SC_CMD_SEQ_ERROR;
- 			nvmet_req_uninit(&cmd->req);
-+		}
- 		nvmet_tcp_free_cmd_buffers(cmd);
- 		nvmet_tcp_fatal_error(queue);
- 		ret = -EPROTO;
+diff --git a/arch/x86/kvm/vmx/vmx_ops.h b/arch/x86/kvm/vmx/vmx_ops.h
+index 692b0c31c9c82d..b80902686c1e41 100644
+--- a/arch/x86/kvm/vmx/vmx_ops.h
++++ b/arch/x86/kvm/vmx/vmx_ops.h
+@@ -13,14 +13,26 @@
+ #define __ex(x) __kvm_handle_fault_on_reboot(x)
+ 
+ asmlinkage void vmread_error(unsigned long field, bool fault);
+-__attribute__((regparm(0))) void vmread_error_trampoline(unsigned long field,
+-							 bool fault);
+ void vmwrite_error(unsigned long field, unsigned long value);
+ void vmclear_error(struct vmcs *vmcs, u64 phys_addr);
+ void vmptrld_error(struct vmcs *vmcs, u64 phys_addr);
+ void invvpid_error(unsigned long ext, u16 vpid, gva_t gva);
+ void invept_error(unsigned long ext, u64 eptp, gpa_t gpa);
+ 
++/*
++ * The VMREAD error trampoline _always_ uses the stack to pass parameters, even
++ * for 64-bit targets.  Preserving all registers allows the VMREAD inline asm
++ * blob to avoid clobbering GPRs, which in turn allows the compiler to better
++ * optimize sequences of VMREADs.
++ *
++ * Declare the trampoline as an opaque label as it's not safe to call from C
++ * code; there is no way to tell the compiler to pass params on the stack for
++ * 64-bit targets.
++ *
++ * void vmread_error_trampoline(unsigned long field, bool fault);
++ */
++extern unsigned long vmread_error_trampoline;
++
+ static __always_inline void vmcs_check16(unsigned long field)
+ {
+ 	BUILD_BUG_ON_MSG(__builtin_constant_p(field) && ((field) & 0x6001) == 0x2000,
 -- 
 2.53.0
 
