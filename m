@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A933DFC6B;
-	Mon, 17 Aug 2026 13:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88203F0749;
+	Mon, 17 Aug 2026 13:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974804; cv=none; b=nhBzEpNyzh0gBGN2irr/xGeQnQlaNHMtpMShijfTiFA5zqhpMOeyPBEumxQ2SCeAf7OnJVP1fF/6MJ48mvushbfCt9HE6BoFKDIt9YwZnrdEKdj7M4ssiLkxs4Lqa3YmbWzcSysHH5C03vOW2pciaSa8660TNOS5SifLhCjsyJ4=
+	t=1786974805; cv=none; b=KK6hpcTo2Lzi1ON84b0Bss8mYjLeSXGqWoskdGgEka05Fb4XH+DQytYOLU4vYoHwtvbItajCp1Tt8Ho1vyfsbsGqaJd5eBtdUUYyNXBrwuqwr4YbGQR7mNK0tbYhjw9oukKapkXr69oULMdKnM/ZcIAZm+w9idPVZcIHTKE90U8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974804; c=relaxed/simple;
-	bh=6Iv5vQAnWQ3BXROrZLU5ROs083kcce6vjCdoSSxoyKk=;
+	s=arc-20240116; t=1786974805; c=relaxed/simple;
+	bh=sZHGtSEoaF4L+pZN4gxoPHepbBGCpN+127VIgVVey1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OneF5vxsY5fALEWjErtVZ7A4HdT2z1NUi5SWrJiO3RFjggsWgnGEIo1yQJ04Pod/qD63TC1jP1p9QIzc1lHcOrEx9FWeogT7Cec3gEnwpw/cC4JDcgF5NztReLNHCyHi3Og3pGMRm2xm/aX/4MGYYYr+uupdU5tWkUzlM3rE97U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLr/bS++; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fAPZ2xYFZ79aRGPB+D/WzIrcYfuI8ME8hLnvHB4WQP2+sViLhGxNga/n/rkBOx7eqtOR30/Mkbmye4tEQTWIcAHIE1Dno3a1xVUeyXnfrKdFU2x73Ocg2USonZj7VH/sdKdTyJUYmIa8UMTpmhOhv7GA79H13FFOvcX54BwQniU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmMi5bx6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLr/bS++"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C8591F00A3A;
-	Mon, 17 Aug 2026 13:53:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmMi5bx6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 584C21F000E9;
+	Mon, 17 Aug 2026 13:53:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974798;
-	bh=g2gK1DHMLmkZBEz1mEnSETProKlCnzKp6QxGGRIz23s=;
+	s=korg; t=1786974795;
+	bh=u3OZPp+WKDt8L1wU2LLMBeizducoM+cbsAnTg+ziG1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pLr/bS++UylPTrcYcacccBvrv++3DzXYnffunlRNZiWk9S9xZaguHVSlvHPhFYiQy
-	 Svx9X8dwforeC0K/vuhWv5JqSzpTe3pyCIW0/gbiGXSbdvBPPynVDZu3+QWUK+GEtY
-	 3Sc5TSvwnwUoU2DoJodAiGah4Il3cBqzOSdMApl8=
+	b=nmMi5bx6V1goUwp42IAQ4CGtvBldIDugOjB7AcqYNILmf6G+agGw+f0c4ka2lFidn
+	 p2iw/4ocGOEDthknRBj7rOBy+CH6RPHQifY47Go6YIeHhShhfenakCLrOfGu1B1ep4
+	 kL29eMO5IU7jyS03izLrVRxfsBNR73DZFUdxNSoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Gao <zcgao@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vincent Jardin <vjardin@free.fr>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 057/250] tcp: do not change rcv_ssthresh in tcp_measure_rcv_mss()
-Date: Mon, 17 Aug 2026 15:30:18 +0200
-Message-ID: <20260817132538.768439173@linuxfoundation.org>
+Subject: [PATCH 6.18 056/250] hwmon: (pmbus) Fix type confusion in notification logic
+Date: Mon, 17 Aug 2026 15:30:17 +0200
+Message-ID: <20260817132538.726974282@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,59 +51,232 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Gao <zcgao@amazon.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 0e125ecfe20c077625cf0be8d750d5c3abc0dce9 ]
+[ Upstream commit 59bd68ab05a8f9c9a60b6ec44682084184803ff4 ]
 
-Commit f5da7c45188e ("tcp: adjust rcvq_space after updating scaling
-ratio") replaced the direct window_clamp update in tcp_measure_rcv_mss()
-with a call to tcp_set_window_clamp(), a helper that implements the
-TCP_WINDOW_CLAMP setsockopt. As a side effect, the helper also shrinks
-rcv_ssthresh via __tcp_adjust_rcv_ssthresh().
+Sashiko reports:
 
-As a result, each scaling_ratio decrease detected by
-tcp_measure_rcv_mss() also cuts rcv_ssthresh. Elsewhere in TCP,
-rcv_ssthresh is usually cut under memory pressure and grows via
-tcp_grow_window().
+At the start of the loop in pmbus_notify(), the code unconditionally casts
+every attribute to a struct sensor_device_attribute:
 
-Flows whose segment sizes vary keep scaling_ratio oscillating, which
-leads to an unstable rcv_ssthresh: a dip of rcv_ssthresh only recovers
-via tcp_grow_window(), keeping the advertised window at a relatively
-low level even after the ratio itself has recovered, and can even stall
-the sender.
+drivers/hwmon/pmbus/pmbus_core.c:pmbus_notify() {
+    for (i = 0; i < data->num_attributes; i++) {
+        struct device_attribute *da = to_dev_attr(data->group.attrs[i]);
+        struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
+        int index = attr->index;
+...
+}
 
-Observed on a customer's proxy gateway after upgrading from kernel 6.1
-to 6.12: in the worst case, rcv_ssthresh was cut in half by a
-scaling_ratio dip. P99 latency jumped from <10ms on 6.1 to ~100ms on
-6.12, and almost returned to the 6.1 level with this patch applied.
+However, data->group.attrs can contain other types like struct
+pmbus_samples_reg or struct pmbus_sensor, which only embed a base
+struct device_attribute.
 
-Restore the plain WRITE_ONCE() update of window_clamp, as introduced
-in commit a2cbb1603943 ("tcp: Update window clamping condition"), and
-keep the rcvq_space.space adjustment. Now rcv_ssthresh is decoupled from
-scaling_ratio changes in tcp_measure_rcv_mss().
+If da is a struct pmbus_samples_reg, dev_attr is the last member. Casting
+it to struct sensor_device_attribute and reading the index field appears
+to access memory past the end of the allocation, which might trigger a
+slab-out-of-bounds read.
 
-Fixes: f5da7c45188e ("tcp: adjust rcvq_space after updating scaling ratio")
-Signed-off-by: Nathan Gao <zcgao@amazon.com>
-Link: https://patch.msgid.link/20260725030806.28135-1-zcgao@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Additionally, if da is a struct pmbus_sensor, casting it causes the index
+field to overlap with the page, phase, and reg fields. Could this produce
+a garbage mask on little-endian systems that spuriously matches the target
+reg, page, and flags during an alert?
+
+Fix the problem by using struct sensor_device_attr in struct pmbus_sensor
+and struct pmbus_label. Since those attributes never trigger a
+notification, set the value of attr->index to -1 for them. Use this value
+to distinguish from boolean attributes which _can_ trigger a notification
+and use the index field to encode mask, page, and register values.
+
+Fixes: f469bde9afd1 ("hwmon: (pmbus/core) Notify hwmon events")
+Cc: Vincent Jardin <vjardin@free.fr>
+Tested-by: Vincent Jardin <vjardin@free.fr>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/pmbus/pmbus_core.c | 61 +++++++++++++++++++-------------
+ 1 file changed, 37 insertions(+), 24 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 8c74fbeb771d5..c1769031a9e93 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -252,7 +252,7 @@ static void tcp_measure_rcv_mss(struct sock *sk, const struct sk_buff *skb)
- 				struct tcp_sock *tp = tcp_sk(sk);
+diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+index a95ffd563018d..20a26db668940 100644
+--- a/drivers/hwmon/pmbus/pmbus_core.c
++++ b/drivers/hwmon/pmbus/pmbus_core.c
+@@ -46,7 +46,7 @@ module_param(wp, int, 0444);
+ struct pmbus_sensor {
+ 	struct pmbus_sensor *next;
+ 	char name[PMBUS_NAME_SIZE];	/* sysfs sensor name */
+-	struct device_attribute attribute;
++	struct sensor_device_attribute attribute;
+ 	u8 page;		/* page number */
+ 	u8 phase;		/* phase number, 0xff for all phases */
+ 	u16 reg;		/* register */
+@@ -69,7 +69,7 @@ struct pmbus_boolean {
  
- 				val = tcp_win_from_space(sk, sk->sk_rcvbuf);
--				tcp_set_window_clamp(sk, val);
-+				WRITE_ONCE(tp->window_clamp, val);
+ struct pmbus_label {
+ 	char name[PMBUS_NAME_SIZE];	/* sysfs label name */
+-	struct device_attribute attribute;
++	struct sensor_device_attribute attribute;
+ 	char label[PMBUS_NAME_SIZE];	/* label */
+ };
+ #define to_pmbus_label(_attr) \
+@@ -1218,7 +1218,8 @@ static ssize_t pmbus_show_sensor(struct device *dev,
+ 				 struct device_attribute *devattr, char *buf)
+ {
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
+-	struct pmbus_sensor *sensor = to_pmbus_sensor(devattr);
++	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
++	struct pmbus_sensor *sensor = to_pmbus_sensor(attr);
+ 	struct pmbus_data *data = i2c_get_clientdata(client);
+ 	s64 val;
  
- 				if (tp->window_clamp < tp->rcvq_space.space)
- 					tp->rcvq_space.space = tp->window_clamp;
+@@ -1238,7 +1239,8 @@ static ssize_t pmbus_set_sensor(struct device *dev,
+ {
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
+ 	struct pmbus_data *data = i2c_get_clientdata(client);
+-	struct pmbus_sensor *sensor = to_pmbus_sensor(devattr);
++	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
++	struct pmbus_sensor *sensor = to_pmbus_sensor(attr);
+ 	s64 val;
+ 	int ret;
+ 	u16 regval;
+@@ -1260,7 +1262,8 @@ static ssize_t pmbus_set_sensor(struct device *dev,
+ static ssize_t pmbus_show_label(struct device *dev,
+ 				struct device_attribute *da, char *buf)
+ {
+-	struct pmbus_label *label = to_pmbus_label(da);
++	struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
++	struct pmbus_label *label = to_pmbus_label(attr);
+ 
+ 	return sysfs_emit(buf, "%s\n", label->label);
+ }
+@@ -1413,8 +1416,8 @@ static struct pmbus_sensor *pmbus_add_sensor(struct pmbus_data *data,
+ 					     bool update, bool readonly,
+ 					     bool writeonly, bool convert)
+ {
++	struct sensor_device_attribute *a;
+ 	struct pmbus_sensor *sensor;
+-	struct device_attribute *a;
+ 
+ 	sensor = devm_kzalloc(data->dev, sizeof(*sensor), GFP_KERNEL);
+ 	if (!sensor)
+@@ -1438,12 +1441,11 @@ static struct pmbus_sensor *pmbus_add_sensor(struct pmbus_data *data,
+ 	sensor->update = update;
+ 	sensor->convert = convert;
+ 	sensor->data = -ENODATA;
+-	pmbus_dev_attr_init(a, sensor->name,
+-			    readonly ? 0444 : 0644,
+-			    writeonly ? pmbus_show_zero : pmbus_show_sensor,
+-			    pmbus_set_sensor);
++	pmbus_attr_init(a, sensor->name, readonly ? 0444 : 0644,
++			writeonly ? pmbus_show_zero : pmbus_show_sensor,
++			pmbus_set_sensor, -1);
+ 
+-	if (pmbus_add_attribute(data, &a->attr))
++	if (pmbus_add_attribute(data, &a->dev_attr.attr))
+ 		return NULL;
+ 
+ 	sensor->next = data->sensors;
+@@ -1460,8 +1462,8 @@ static int pmbus_add_label(struct pmbus_data *data,
+ 			   const char *name, int seq,
+ 			   const char *lstring, int index, int phase)
+ {
++	struct sensor_device_attribute *a;
+ 	struct pmbus_label *label;
+-	struct device_attribute *a;
+ 
+ 	label = devm_kzalloc(data->dev, sizeof(*label), GFP_KERNEL);
+ 	if (!label)
+@@ -1485,8 +1487,8 @@ static int pmbus_add_label(struct pmbus_data *data,
+ 				 lstring, index, phase);
+ 	}
+ 
+-	pmbus_dev_attr_init(a, label->name, 0444, pmbus_show_label, NULL);
+-	return pmbus_add_attribute(data, &a->attr);
++	pmbus_attr_init(a, label->name, 0444, pmbus_show_label, NULL, -1);
++	return pmbus_add_attribute(data, &a->dev_attr.attr);
+ }
+ 
+ /*
+@@ -2374,7 +2376,7 @@ struct pmbus_samples_attr {
+ struct pmbus_samples_reg {
+ 	int page;
+ 	struct pmbus_samples_attr *attr;
+-	struct device_attribute dev_attr;
++	struct sensor_device_attribute attribute;
+ };
+ 
+ static struct pmbus_samples_attr pmbus_samples_registers[] = {
+@@ -2396,14 +2398,15 @@ static struct pmbus_samples_attr pmbus_samples_registers[] = {
+ 	}
+ };
+ 
+-#define to_samples_reg(x) container_of(x, struct pmbus_samples_reg, dev_attr)
++#define to_samples_reg(x) container_of(x, struct pmbus_samples_reg, attribute)
+ 
+ static ssize_t pmbus_show_samples(struct device *dev,
+ 				  struct device_attribute *devattr, char *buf)
+ {
+ 	int val;
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
+-	struct pmbus_samples_reg *reg = to_samples_reg(devattr);
++	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
++	struct pmbus_samples_reg *reg = to_samples_reg(attr);
+ 
+ 	scoped_guard(pmbus_lock, client) {
+ 		val = _pmbus_read_word_data(client, reg->page, 0xff, reg->attr->reg);
+@@ -2421,7 +2424,8 @@ static ssize_t pmbus_set_samples(struct device *dev,
+ 	int ret;
+ 	long val;
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
+-	struct pmbus_samples_reg *reg = to_samples_reg(devattr);
++	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
++	struct pmbus_samples_reg *reg = to_samples_reg(attr);
+ 
+ 	if (kstrtol(buf, 0, &val) < 0)
+ 		return -EINVAL;
+@@ -2436,6 +2440,7 @@ static ssize_t pmbus_set_samples(struct device *dev,
+ static int pmbus_add_samples_attr(struct pmbus_data *data, int page,
+ 				  struct pmbus_samples_attr *attr)
+ {
++	struct sensor_device_attribute *a;
+ 	struct pmbus_samples_reg *reg;
+ 
+ 	reg = devm_kzalloc(data->dev, sizeof(*reg), GFP_KERNEL);
+@@ -2445,10 +2450,12 @@ static int pmbus_add_samples_attr(struct pmbus_data *data, int page,
+ 	reg->attr = attr;
+ 	reg->page = page;
+ 
+-	pmbus_dev_attr_init(&reg->dev_attr, attr->name, 0644,
+-			    pmbus_show_samples, pmbus_set_samples);
++	a = &reg->attribute;
++
++	pmbus_attr_init(a, attr->name, 0644,
++			pmbus_show_samples, pmbus_set_samples, -1);
+ 
+-	return pmbus_add_attribute(data, &reg->dev_attr.attr);
++	return pmbus_add_attribute(data, &a->dev_attr.attr);
+ }
+ 
+ static int pmbus_add_samples_attributes(struct i2c_client *client,
+@@ -2956,9 +2963,15 @@ static void pmbus_notify(struct pmbus_data *data, int page, int reg, int flags)
+ 		struct device_attribute *da = to_dev_attr(data->group.attrs[i]);
+ 		struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
+ 		int index = attr->index;
+-		u16 smask = pb_index_to_mask(index);
+-		u8 spage = pb_index_to_page(index);
+-		u16 sreg = pb_index_to_reg(index);
++		u16 smask, sreg;
++		u8 spage;
++
++		if (index == -1)
++			continue;
++
++		smask = pb_index_to_mask(index);
++		spage = pb_index_to_page(index);
++		sreg = pb_index_to_reg(index);
+ 
+ 		if (reg == sreg && page == spage && (smask & flags)) {
+ 			dev_dbg(data->dev, "sysfs notify: %s", da->attr.name);
 -- 
 2.53.0
 
