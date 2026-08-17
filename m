@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9649E4334B5;
-	Mon, 17 Aug 2026 14:48:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214214322E5;
+	Mon, 17 Aug 2026 14:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978093; cv=none; b=Ba/M+mN2T5RTUM4MW1vgdI9BC0TuIZ5vLLJU2G9Yjn7REuMwhrjhPFpJLo2OCgKwhmVz+bC8Sn5mH1V2A0SOy8qiLSP4worpOqKCwMFqBy+cGX0UBYpmDS9cv0ab+hmmqDBG10irpxFYcBjsOd7SxG/cecW+IE1+BD3CZvRRK/A=
+	t=1786978095; cv=none; b=HiUIIfN0AhrMuyEFfYas7kkvlz31BjPGjyNCuQ9xMxx1zu5gRsajTeYgqG7wb6jpJBEKajUa3EgKVEQXLP24DyJkzSRMwhjQcd3wshnjBGDThWW4FeLWQXXYxGxukmMlLNf4Nlq8pWKpXMKWXuI/MFleTI1EA2VAyOIkzlClIN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978093; c=relaxed/simple;
-	bh=ZBJNPsqAUsmyVLOK+1e/rbkmfkB6TlATRehPuQt76pY=;
+	s=arc-20240116; t=1786978095; c=relaxed/simple;
+	bh=oJEYY13lI5FT+JLE5AmvQZ2Mg0swiC5oNBqccjoql9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OLf/B3kdwKWTtUPajAUcW+8FkVsl638Q3m5pTetQB8coMgrpS4n0VQwS3mYaE2CVoJd20AQzaJGt6lZTzcBRXWiP7eFZbdqC7jaSrgz6Uki8BJUvYw2UE+JvhjY87M4fA8ayY29JDr6pu7S3oLI2MNv1cvwCClNaOO36mYJ+VF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SDLnjJez; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jbzpFCOEduT+kilBuDZmIHWESwFZ7h7X2+WUQu59c3fjCLB2m05YmFChq2p5ZRr0iFc6qnqEuy+fCcYa0dmmxqwXMAKN55zTCXvlE9PHY0lOJ9ACCJvAguXA5Jg+bLIvBC8z6GUab78Mz3X/uPK/OQJpIwuUTkqMS28wC1zK/sY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AyQxQDdy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SDLnjJez"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4A11F00A3A;
-	Mon, 17 Aug 2026 14:48:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AyQxQDdy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334471F000E9;
+	Mon, 17 Aug 2026 14:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978090;
-	bh=Z2fWpuEIMZkBjyn6ubPNOCV5G6n4dzOtkOyZLUpUaIY=;
+	s=korg; t=1786978093;
+	bh=dCxW7EDO/TzuGfNBT6FOEjiZ0/YmgdGL00jTJ5e+zuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SDLnjJezf/iEFqCediCP1dz2fGTIjxAu6cR+0HTrJ4WBnJitulq6U4dQZaQl3MJsm
-	 yH+DNg5xBGq93TYqgeQUZhtYynlemxChykIAa9GQgwnZR5t2TlfTq3+a5gI5rUYReO
-	 Kpg+fRPFKHFjrBSNlOEBt3f2XVqSCPQCCxphZFOc=
+	b=AyQxQDdyoML8e4jq8HQQaJtqzeRWgz8P9cMHwDOc6pfPqHn1Ztyx2HQsHZ3BoOSWL
+	 zLFTmQnA0L/GvdP60QJq2qGmETCtKKs+9RezgaoaCnpN57edQ/p7sOhoGF50qkY6VG
+	 ZdhZb0CTQmCsM/poX+qCXoDXiV8pGYJ8ljeAK9cQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Qihang Tang <q.h.hack.winter@gmail.com>,
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 098/181] net: remove CAP_SYS_RAWIO zero-padding in dev_validate_header
-Date: Mon, 17 Aug 2026 15:33:12 +0200
-Message-ID: <20260817132539.318513650@linuxfoundation.org>
+Subject: [PATCH 6.12 099/181] mac802154: fix netdev use-after-free in beacon worker
+Date: Mon, 17 Aug 2026 15:33:13 +0200
+Message-ID: <20260817132539.358032962@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -51,64 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qihang Tang <q.h.hack.winter@gmail.com>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit 3b9a324e646d3657a8d9806dfbfe4f3e4066e882 upstream.
+commit 5f26a690e8efa54315e4922368daf54e0b8f5515 upstream.
 
-dev_validate_header() reads dev->hard_header_len directly when
-zero-padding short link layer headers for CAP_SYS_RAWIO holders:
+mac802154_beacon_worker() reads local->beacon_req under RCU and derives
+the sub-interface from the request, but then drops the RCU read lock and
+continues to use both sdata and the embedded wpan_dev.
 
-    if (capable(CAP_SYS_RAWIO)) {
-        memset(ll_header + len, 0, dev->hard_header_len - len);
-        return true;
-    }
+mac802154_stop_beacons_locked() cancels only pending beacon work, clears
+local->beacon_req and frees the request.  A beacon worker that is already
+running can therefore continue after interface teardown and dereference
+the freed netdev private area.
 
-Packet send paths call dev_validate_header() on skbs whose headroom was
-allocated from an earlier hard_header_len read. If the device is
-reconfigured so that dev->hard_header_len increases before validation,
-the memset writes past the reserved buffer, an out-of-bounds write.
+The scan worker already pins the netdev before leaving RCU.  Apply the
+same lifetime rule to the beacon worker: take a netdev reference while
+the request is still protected by RCU, and release it on all paths that
+continue after the reference is acquired.
 
-This out-of-bounds write is masked in some SOCK_RAW paths today because
-the same concurrent increase can first make skb_push() exceed the
-reserved headroom and trigger skb_under_panic(). Remove the zero-padding
-branch before making those hard_header_len reads consistent, so the
-snapshot fixes do not turn a loud panic into a silent overwrite.
-
-This path is only reached for variable length L2 protocols, where
-len < hard_header_len but len >= min_header_len. No remaining in-tree
-variable length L2 protocol implements header_ops->validate, and the
-CAP_SYS_RAWIO bypass that zero-pads and accepts short headers has no
-real value beyond allowing testing of intentionally malformed input.
-
-Drop the CAP_SYS_RAWIO branch. The remaining reads of
-dev->hard_header_len in dev_validate_header() are comparisons only and
-have no memory safety impact.
-
-Suggested-by: Willem de Bruijn <willemb@google.com>
-Fixes: 2793a23aacbd ("net: validate variable length ll headers")
+Fixes: 3accf4762734 ("mac802154: Handle basic beaconing")
 Cc: stable@vger.kernel.org
-Signed-off-by: Qihang Tang <q.h.hack.winter@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260805125729.19220-2-q.h.hack.winter@gmail.com
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://patch.msgid.link/e9a3909c7a6281967961773ca841e860b8ecf40e.1785596603.git.zihanx@nebusec.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/netdevice.h |    5 -----
- 1 file changed, 5 deletions(-)
+ net/mac802154/scan.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -3191,11 +3191,6 @@ static inline bool dev_validate_header(c
- 	if (len < dev->min_header_len)
- 		return false;
+--- a/net/mac802154/scan.c
++++ b/net/mac802154/scan.c
+@@ -415,6 +415,7 @@ void mac802154_beacon_worker(struct work
+ 		container_of(work, struct ieee802154_local, beacon_work.work);
+ 	struct cfg802154_beacon_request *beacon_req;
+ 	struct ieee802154_sub_if_data *sdata;
++	netdevice_tracker dev_tracker;
+ 	struct wpan_dev *wpan_dev;
+ 	u8 interval;
+ 	int ret;
+@@ -427,12 +428,14 @@ void mac802154_beacon_worker(struct work
+ 	}
  
--	if (capable(CAP_SYS_RAWIO)) {
--		memset(ll_header + len, 0, dev->hard_header_len - len);
--		return true;
--	}
--
- 	if (dev->header_ops && dev->header_ops->validate)
- 		return dev->header_ops->validate(ll_header, len);
+ 	sdata = IEEE802154_WPAN_DEV_TO_SUB_IF(beacon_req->wpan_dev);
++	netdev_hold(sdata->dev, &dev_tracker, GFP_ATOMIC);
  
+ 	/* Wait an arbitrary amount of time in case we cannot use the device */
+ 	if (local->suspended || !ieee802154_sdata_running(sdata)) {
+ 		rcu_read_unlock();
+ 		queue_delayed_work(local->mac_wq, &local->beacon_work,
+ 				   msecs_to_jiffies(1000));
++		netdev_put(sdata->dev, &dev_tracker);
+ 		return;
+ 	}
+ 
+@@ -450,6 +453,7 @@ void mac802154_beacon_worker(struct work
+ 	if (interval < IEEE802154_ACTIVE_SCAN_DURATION)
+ 		queue_delayed_work(local->mac_wq, &local->beacon_work,
+ 				   local->beacon_interval);
++	netdev_put(sdata->dev, &dev_tracker);
+ }
+ 
+ int mac802154_stop_beacons_locked(struct ieee802154_local *local,
 
 
