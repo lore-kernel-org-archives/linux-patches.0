@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCBEB42903B;
-	Mon, 17 Aug 2026 14:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7751743B6F2;
+	Mon, 17 Aug 2026 14:10:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975804; cv=none; b=ShGRWG/1Egx/Ot4KLgJUnXFzzixg0qMrIG33A9IknJljtXm2OYcqejK/TzdNPXlHSnLQ3/vzcm3MyQKxW9wIhC1XBEg+6Ln4PB56W8Ust6bPTIU0UGbIab2UWJys7ccXh3h+igPK9bxSumHj4+Y8uyyypIsbOWSq5G4O1Ccnc+c=
+	t=1786975807; cv=none; b=IkWdVdgCW8ElMOw+iC4be7n5xhKxxKNF+Fsbc6z7FefhrIv7H8/qgYkEdzhwxlyIY+bzSc6RgNBF1+LdwPynJfam/7wBJaGg3X9s9+3oN9a/fhKT1A7Ocvj3unMAq9mjPJkADlFeE38Z5z0NLCYAxzvOfOB5UspjVN4YACQaoMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975804; c=relaxed/simple;
-	bh=LioFLZ3F85cSskftIsq6B7o1lPqoBlQJD8v4rbLYSlo=;
+	s=arc-20240116; t=1786975807; c=relaxed/simple;
+	bh=PDikinULYxNBjsWj9aD10Gu3bMPbKK8AqOrdzAWGmoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QVtgj2jbnL5vtrJb+OUsv6SWlVE9LKiObQgie+u+Iw5f/hfWyAvggwbQ7XwrX9OwT9yBJ7/rXDimX3mS7J9HM9IZlVKXZHzTqdmCnQ2HI8EcbMPmHQfEc6D2ECQEKaZlbIUcctSC2lBvc+6qV2jcR1byecbLI6zn8cbrJunU8JY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ff2QaChy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j/t8p+lEA8KQKoBDKPT+W5gFpzsaqMrkeHZ5vA2U/fyEa2VQ1ZKWwbunJyKjvqpwlRYIEjda+UpaHUUysLG4ou0xq+z2u28cjVq47PK5AU1+CjHTgeKWntYUkStGazMSNie5sfzGhVhnN9VNcUjh0Vb3TJWgHh3eMSbmyc4ZBa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3bzVkPK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ff2QaChy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C36C1F000E9;
-	Mon, 17 Aug 2026 14:10:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3bzVkPK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98ADB1F000E9;
+	Mon, 17 Aug 2026 14:10:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975802;
-	bh=WkbwSaihUEozAsWD91CJCltGEegUuEGdEEuUyA9sQTU=;
+	s=korg; t=1786975806;
+	bh=h/LXegX3GcInC7HYrqHlDRTwUmgf+FJ3bbdAiiozE3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ff2QaChyZt3kEB6Y7TPoYN7W2PMqhdV+AzLuG1HnEhjzvz50Wt/UfNaur3iilctWa
-	 RNmS7Z543FrviMarM/LN/MiXZQRtNQW6Ruy8MOvioj45orkm4Gq77a0+zZihSx8SEJ
-	 9V7HD+7SGMwC2BCU71xIbozG3hx/H1Oc6WE3Rm0Q=
+	b=h3bzVkPKAuqKRIAnAFPdPWOgSmJuALRKQyxbeiDFnGULnEXI10vJ17CZ2QDQt0MOC
+	 k/4ywynXmatsBJ+sEucfBlGcT+l+RBQQWp0m1z6O39q2a+C8rZ82HcweyXf9T5JMY4
+	 HHdfJ6a0yq26ps2A3hWhZD996xymzWRftsmPnjP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 115/389] can: bcm: track a single source interface for ANYDEV timeout/throttle ops
-Date: Mon, 17 Aug 2026 15:29:14 +0200
-Message-ID: <20260817132543.660634157@linuxfoundation.org>
+	Oz Tiram <oz@shift-computing.de>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 5.10 116/389] drm/amdgpu: Fix VFCT bus number matching with soft filter
+Date: Mon, 17 Aug 2026 15:29:15 +0200
+Message-ID: <20260817132543.698084748@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -53,142 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 2f5976f54a04e9f18b25283036ac3136be453b17 upstream.
+commit db7e8108809a2245f0a17ba323f027cac0941ffb upstream.
 
-An ANYDEV rx op (ifindex == 0) with an active RX timeout and/or
-throttle timer has no defined semantics when matching frames arrive
-from several interfaces: bcm_rx_handler() can run concurrently for
-the same op on different CPUs, racing hrtimer_cancel()/
-bcm_rx_starttimer() against bcm_rx_timeout_handler() and causing
-spurious RX_TIMEOUT notifications and last_frames corruption. The
-same concurrency lets throttled multiplex frames from different
-interfaces clobber the single rx_ifindex/rx_stamp fields shared by
-the op.
+On systems where PCI bus renumbering occurs (e.g. pci=realloc,
+resource conflicts), the runtime bus number may differ from the
+BIOS POST bus number recorded in the VFCT table. This causes
+amdgpu_acpi_vfct_bios() to fail finding the VBIOS even though
+the correct device entry exists.
 
-Add op->if_detected to track the first interface that delivers a
-matching frame while a timeout/throttle timer is configured, and
-reject frames from any other interface for that op. The claim is
-decided in bcm_rx_handler() before hrtimer_cancel() touches
-op->timer, so a rejected frame can never disturb the claimed
-interface's watchdog. RTR-mode ops are excluded via RX_RTR_FRAME,
-independent of kt_ival1/kt_ival2, since those may briefly hold a
-stale value from an earlier non-RTR configuration.
+Introduce amdgpu_acpi_vfct_match() which treats the bus number
+as a soft filter: vendor/device/function identity is the hard
+requirement, while exact bus match is the preferred path. When
+bus numbers disagree but device identity matches, accept the
+VFCT entry and log a dev_notice for diagnostics.
 
-The claim is released in bcm_notify() on NETDEV_UNREGISTER and in
-bcm_rx_setup() when SETTIMER reconfigures the timer values.
-
-A (re-)claim is only possible on CAN devices in NETREG_REGISTERED
-dev->reg_state to cover the release in bcm_notify() where reg_state
-becomes NETREG_UNREGISTERING until synchronize_net().
-
-Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/linux-can/20260709105031.1A39C1F000E9@smtp.kernel.org/
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260714-bcm_fixes-v15-11-562f7e3e42da@hartkopp.net
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Oz Tiram <oz@shift-computing.de>
+Closes: https://lore.kernel.org/amd-gfx/20260621173211.28443-1-oz@shift-computing.de/
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://patch.msgid.link/20260708193518.702584-2-mario.limonciello@amd.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 11c141672045ffc0187aa604f2c0f597bc334fb2)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/bcm.c | 49 ++++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 44 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c |   45 +++++++++++++++++++++++++++----
+ 1 file changed, 40 insertions(+), 5 deletions(-)
 
-diff --git a/net/can/bcm.c b/net/can/bcm.c
-index 93572cb59cf7a9..f655764aae83ef 100644
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -114,6 +114,7 @@ struct bcm_op {
- 	struct hrtimer timer, thrtimer;
- 	ktime_t rx_stamp, kt_ival1, kt_ival2, kt_lastmsg;
- 	int rx_ifindex;
-+	int if_detected; /* first received ifindex in ANYDEV rx_op mode */
- 	int cfsiz;
- 	u32 count;
- 	u32 nframes;
-@@ -753,6 +754,33 @@ static void bcm_rx_handler(struct sk_buff *skb, void *data)
- 	if (skb->len != op->cfsiz)
- 		return;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
+@@ -358,6 +358,45 @@ static bool amdgpu_read_disabled_bios(st
+ }
  
-+	/* An ANYDEV op with an active RX timeout and/or throttle timer
-+	 * tracks a single source interface: claim the first interface that
-+	 * delivers a matching frame and reject frames from any other one,
-+	 * before hrtimer_cancel() below can touch op->timer - this avoids
-+	 * racing bcm_rx_timeout_handler() across concurrent interfaces.
-+	 * RX_RTR_FRAME ops are excluded, as kt_ival1/kt_ival2 may briefly
-+	 * hold a stale value from an earlier non-RTR configuration.
-+	 */
-+	if (!op->ifindex) {
-+		spin_lock_bh(&op->bcm_rx_update_lock);
+ #ifdef CONFIG_ACPI
++/**
++ * amdgpu_acpi_vfct_match() - Check if a VFCT entry matches the device
++ * @adev: AMDGPU device
++ * @vhdr: VFCT image header to check
++ *
++ * VFCT entries contain the PCI bus number as recorded during BIOS POST.
++ * On systems where the kernel renumbers PCI buses (e.g. pci=realloc or
++ * resource conflicts), the runtime bus number may differ from the POST
++ * value.  Match by device identity (vendor + device + function) and use
++ * the bus number as a preference: exact bus match is preferred, but when
++ * the bus numbers disagree we accept the entry if the device identity
++ * matches.
++ *
++ * Returns: 0 on match, -ENODEV on no match
++ */
++static int amdgpu_acpi_vfct_match(struct amdgpu_device *adev,
++				  VFCT_IMAGE_HEADER *vhdr)
++{
++	/* Vendor and device IDs must always match */
++	if (vhdr->VendorID != adev->pdev->vendor ||
++	    vhdr->DeviceID != adev->pdev->device)
++		return -ENODEV;
 +
-+		if (!(op->flags & RX_RTR_FRAME) &&
-+		    (op->kt_ival1 || op->kt_ival2)) {
-+			/* don't claim to vanishing interface */
-+			if (!op->if_detected &&
-+			    skb->dev->reg_state == NETREG_REGISTERED)
-+				op->if_detected = skb->dev->ifindex;
++	if (vhdr->PCIDevice != PCI_SLOT(adev->pdev->devfn) ||
++	    vhdr->PCIFunction != PCI_FUNC(adev->pdev->devfn))
++		return -ENODEV;
 +
-+			if (op->if_detected != skb->dev->ifindex) {
-+				spin_unlock_bh(&op->bcm_rx_update_lock);
-+				return;
-+			}
-+		}
++	/* Exact bus number match - preferred */
++	if (vhdr->PCIBus == adev->pdev->bus->number)
++		return 0;
 +
-+		spin_unlock_bh(&op->bcm_rx_update_lock);
-+	}
++	/* Bus mismatch but device identity matches (PCI renumbering case) */
++	dev_notice(adev->dev,
++		   "VFCT bus number mismatch: table %u != runtime %u, matching by device identity (vendor 0x%04x device 0x%04x)\n",
++		   vhdr->PCIBus, adev->pdev->bus->number,
++		   adev->pdev->vendor, adev->pdev->device);
++	return 0;
++}
 +
- 	/* disable timeout */
- 	hrtimer_cancel(&op->timer);
- 
-@@ -779,10 +807,9 @@ static void bcm_rx_handler(struct sk_buff *skb, void *data)
- 	 */
- 	bcm_update_rx_stats(op);
- 
--	/* save rx timestamp and originator for recvfrom() under lock.
--	 * For an op subscribed on all interfaces (ifindex == 0)
--	 * bcm_rx_handler() can run concurrently on different CPUs so
--	 * the CAN content and the meta data must be bundled correctly.
-+	/* save rx timestamp and originator for recvfrom() under lock: an
-+	 * ANYDEV op without an active timer can still run concurrently on
-+	 * different CPUs, so content and meta data must be bundled here.
- 	 */
- 	op->rx_stamp = skb->tstamp;
- 	op->rx_ifindex = skb->dev->ifindex;
-@@ -1316,6 +1343,7 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 			op->kt_ival1 = bcm_timeval_to_ktime(msg_head->ival1);
- 			op->kt_ival2 = bcm_timeval_to_ktime(msg_head->ival2);
- 			op->kt_lastmsg = 0;
-+			op->if_detected = 0; /* reclaim ifindex in ANYDEV mode */
+ static bool amdgpu_acpi_vfct_bios(struct amdgpu_device *adev)
+ {
+ 	struct acpi_table_header *hdr;
+@@ -393,11 +432,7 @@ static bool amdgpu_acpi_vfct_bios(struct
  		}
- 		spin_unlock_bh(&op->bcm_rx_update_lock);
  
-@@ -1719,10 +1747,21 @@ static void bcm_notify(struct bcm_sock *bo, unsigned long msg,
- 		lock_sock(sk);
- 
- 		/* rx_ops: remove device specific receive entries */
--		list_for_each_entry(op, &bo->rx_ops, list)
-+		list_for_each_entry(op, &bo->rx_ops, list) {
- 			if (op->rx_reg_dev == dev)
- 				bcm_rx_unreg(dev, op);
- 
-+			/* release an ANYDEV op's claim (see bcm_rx_handler())
-+			 * on this now confirmed-gone interface.
-+			 */
-+			if (!op->ifindex) {
-+				spin_lock_bh(&op->bcm_rx_update_lock);
-+				if (op->if_detected == dev->ifindex)
-+					op->if_detected = 0;
-+				spin_unlock_bh(&op->bcm_rx_update_lock);
-+			}
-+		}
-+
- 		/* tx_ops: stop device specific cyclic transmissions on the
- 		 * vanishing ifindex. Cancelling the timer is enough to stop
- 		 * cyclic bcm_can_tx() calls as there is no re-arming.
--- 
-2.53.0
-
+ 		if (vhdr->ImageLength &&
+-		    vhdr->PCIBus == adev->pdev->bus->number &&
+-		    vhdr->PCIDevice == PCI_SLOT(adev->pdev->devfn) &&
+-		    vhdr->PCIFunction == PCI_FUNC(adev->pdev->devfn) &&
+-		    vhdr->VendorID == adev->pdev->vendor &&
+-		    vhdr->DeviceID == adev->pdev->device) {
++		    !amdgpu_acpi_vfct_match(adev, vhdr)) {
+ 			adev->bios = kmemdup(&vbios->VbiosContent,
+ 					     vhdr->ImageLength,
+ 					     GFP_KERNEL);
 
 
