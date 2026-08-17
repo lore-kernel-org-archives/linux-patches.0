@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B0E3B8D78;
-	Mon, 17 Aug 2026 14:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450AA13790B;
+	Mon, 17 Aug 2026 14:23:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976615; cv=none; b=uGUgeP1+cGNRRi4eUSROckOcIt+xF0Oh4ZNppMsjDCjpQvU2SSOhCcQ5vm4JG9MQ105+4euzJfPD2qaFBJK7F0SXu7z5IEz180b2wRiCUHchQACw/7+EcwKNQkIOvqtgU9MVoyL3KebSgPt7UHRY83Q1yPE5H19sT+z1fjaGa18=
+	t=1786976618; cv=none; b=DuKkbePOtzaQc22zqNdHBYRmiZteeQBUm75XYNs4eSiKEzhUV3Mj/xHDwVBh3byw/DyrxVhqsAbTyMq8bW05ps+jgyCfhb+rJ6rdJlsAf1cbFiNF7Gg6UMzMaztplW3yy4xOFdPFce7/mB0Hov7bqb4oW7oVzvIbziPs0x4D6SQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976615; c=relaxed/simple;
-	bh=n6hxcGMvGP8PTes70Zb/xO6j475nz14VwMlTXhN3EAI=;
+	s=arc-20240116; t=1786976618; c=relaxed/simple;
+	bh=LxlfnCj+xT13IM8cWn/Dft7flNMfKds+FB1PPeS8Kv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CKgMqHp5oLnq6akxJMTId7NIRiQ4vX9OY1s6Zq6Z6BjGR3kSxF/eun9QNFpRbf599qvCRSpycD4gXSCclTg+D3PrH3OHXCjpxxSCs/Zu8F1knSsA4qYJ07fVX9mkr4V749KeXl30m/ynGkJk5o//cDZJhhWKNkCc55gkEDMBcvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBsrTr6O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tr/lHh/yWnXg/jSFGuCSUju6IR9NCQbgbotje+4Iz8iBoiBAhhOTExbaFAnN3q1Z1xUEj8GuVV6/Mqmd2okUvNntr3CgXVyf8TBl1ch00QPJf5AH8cttc8O/2G7RsEJuar8i7FVU77Gh7W21X6HtwFfeiacZ0J/aVsjams20sQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18dn7eF1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBsrTr6O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79E61F000E9;
-	Mon, 17 Aug 2026 14:23:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18dn7eF1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCE11F000E9;
+	Mon, 17 Aug 2026 14:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976614;
-	bh=o/lfgpli0qrL1Q6H5LuWmbpA3tpnqyrLSO4VhqERzh8=;
+	s=korg; t=1786976617;
+	bh=GztGsHzDHHXdEUHnvfW+c7/mWX/dLSdmxe8doPy/G1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wBsrTr6OTxQrRDH+CfRFsk3FD5Mf/X+ordF5rQLOFkpXM7BXryDz0rohW2sEHo5uc
-	 Vrw5GP4hqhN78s8tZ1XYfCG2JsPJUGgFZOC3M4BqzkkNr+agGyadD4Tk3ePcy9N1lh
-	 B/Ezl5AXzp8Usi3ayVCm2Xq2xms3l0XEQvcUabD8=
+	b=18dn7eF1UAdjvbHu0T9QHFluuqf5SeXhhjvfEkCa7T+GsO70k94x4Sgq/RnUGgnqA
+	 s7bgNJv8XUokGjruRrmNbeshEBwRfPxQnu2T10Dt27jimuLQpD12+o1GlzQHR0EAyw
+	 PvzCapYZvOiBJALM5UFEmamD596QMXQuvUTXDHm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salvador Blaya <tiniebla6@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Danila Chernetsov <listdansp@mail.ru>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 044/456] ALSA: usb-audio: Skip DSD quirk for Musical Fidelity M6s DAC
-Date: Mon, 17 Aug 2026 15:27:14 +0200
-Message-ID: <20260817132541.765978402@linuxfoundation.org>
+Subject: [PATCH 5.15 018/456] RDMA/hns: Fix potential integer overflow in mhop hem cleanup
+Date: Mon, 17 Aug 2026 15:26:48 +0200
+Message-ID: <20260817132540.633246307@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,45 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Danila Chernetsov <listdansp@mail.ru>
 
-[ Upstream commit 93b47e66cc6d6c6382d44b44f5e7f6fc3a7b38c3 ]
+[ Upstream commit 9f0f2d2121f16d420199a82ac5bbc242269133b3 ]
 
-Salvador reported that the recent fix for applying the DSD quirk to
-Musical Fidelity devices broke for his M6s DAC model (2772:0502).
+In hns_roce_cleanup_mhop_hem_table(), the expression:
 
-Although this is basically a firmware bug, the model in question is
-fairly old, and no further firmware update can be expected, so it'd be
-better to address in the driver side.
+    obj = i * buf_chunk_size / table->obj_size;
 
-As an ad hoc workaround, skip the DSD quirk for this device by adding
-an empty quirk entry of 2772:0502; this essentially skips the later
-DSD quirk entry by the match with the vendor 2772.
+is evaluated using 32-bit unsigned arithmetic because
+'buf_chunk_size' is u32 and the usual arithmetic conversions convert
+'i' to unsigned int. The result is assigned to a u64 variable, but the
+multiplication may overflow before the assignment.
 
-Fixes: da3a7efff64e ("ALSA: usb-audio: Update for native DSD support quirks")
-Reported-by: Salvador Blaya <tiniebla6@gmail.com>
-Closes: https://lore.kernel.org/CAOdyq+qFaqCh=tK_wNnA64hv5pQuA1Y09ANxQ=xK8yR-t4mf9Q@mail.gmail.com
-Tested-by: Salvador Blaya <tiniebla6@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260709095614.1418838-1-tiwai@suse.de
+For sufficiently large HEM tables, this produces an incorrect object
+index passed to hns_roce_table_mhop_put().
+
+Cast 'i' to u64 before the multiplication so that the intermediate
+calculation is performed with 64-bit arithmetic.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: a25d13cbe816 ("RDMA/hns: Add the interfaces to support multi hop addressing for the contexts in hip08")
+Link: https://patch.msgid.link/r/20260627095951.51378-1-listdansp@mail.ru
+Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
+Reviewed-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/hw/hns/hns_roce_hem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index acfad876362772..9cb0e24004db60 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -1947,6 +1947,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_DSD_RAW),
- 	DEVICE_FLG(0x2708, 0x0002, /* Audient iD14 */
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
-+	DEVICE_FLG(0x2772, 0x0502, /* Musical Fidelity M6s DAC */
-+		   0), /* for avoiding QUIRK_FLAG_DSD_RAW with vendor match */
- 	DEVICE_FLG(0x2912, 0x30c8, /* Audioengine D1 */
- 		   QUIRK_FLAG_GET_SAMPLE_RATE),
- 	DEVICE_FLG(0x2b53, 0x0023, /* Fiero SC-01 (firmware v1.0.0 @ 48 kHz) */
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
+index 61ae49219e6baa..9649abeadbbf6f 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hem.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
+@@ -902,7 +902,7 @@ static void hns_roce_cleanup_mhop_hem_table(struct hns_roce_dev *hr_dev,
+ 					mhop.bt_chunk_size;
+ 
+ 	for (i = 0; i < table->num_hem; ++i) {
+-		obj = i * buf_chunk_size / table->obj_size;
++		obj = (u64)i * buf_chunk_size / table->obj_size;
+ 		if (table->hem[i])
+ 			hns_roce_table_mhop_put(hr_dev, table, obj, 0);
+ 	}
 -- 
 2.53.0
 
