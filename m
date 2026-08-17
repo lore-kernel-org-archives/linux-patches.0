@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AEE644239E;
-	Mon, 17 Aug 2026 14:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055B744239E;
+	Mon, 17 Aug 2026 14:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977470; cv=none; b=KDLgqhdI0CyYJ6ily14n3HAqjbw55I/8rGbEKd1IJMTk4NmRyUjHjHH6N2D6UTjxmagsZzZy7rSjmvNY9zIZ3wenA4flY0NdJfhR1D1KckZ8LV4r2gHpPsu72FaKodcou+AN91y5k68ibNg6GFXy/ovqyf89kGZO3jw5Z9XeSEI=
+	t=1786977473; cv=none; b=IshClaiaPdUf3mcOAPrtICWqDBrD1Leo7DpYMUb+lYW8Q6KdLfJOuhHGua7e9tsIu+2SH3M9pyVFumhmzDeJtqNAqArVwjtT/ajU8HZ0PPEUMcAVotet4oVzzA9umgGkd5ARKzMkdlSso+yv/RFx39qLLhr+68RrZl0MzEUFqwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977470; c=relaxed/simple;
-	bh=NkYIXEQSdVwFhkkgowYKGI3iy7x87JJzd0PVlRtjM+M=;
+	s=arc-20240116; t=1786977473; c=relaxed/simple;
+	bh=AarjFawMtI/iRrySTWRgQA856igxRUIRZbLGWzcdcIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fYaZemAdEfjSNafHupMo4O/uezvwxqUcYGYS/J8uqWz8Nkjx6Z+91i94yVptzf1ywMsujFDC+OjE02asieMO7D1wjDdpLhqt6XJt0gZGrQHFpt7YDgKT6HcMU4vw89D/dXDmre0j5GbC+qhKo9uCU3l8dLLyiN5X+TauS/YutMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0uslSVYy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N4ly1DK4j18HJ/c8RdNWiBWrrygkG4LuThmLougor76iuaHm70PAk4XlC2MauhFHVMNwYY8q3BPIP5Ev/6YriBc+GYLZX2DW0TerYJ4KueJvHuX1FnHD/5Jx6Mh5rhIPOC+gKBgKWQnuV3SG8iRclRJ+sSUX0HdzhmSdDaXuSxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UW5DzfcJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0uslSVYy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 773241F00A3A;
-	Mon, 17 Aug 2026 14:37:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UW5DzfcJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4BA1F00A3D;
+	Mon, 17 Aug 2026 14:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977469;
-	bh=B8eEVffnpY6s56Ew4RbO2wzqDk923qv4+dLcRWSoCA4=;
+	s=korg; t=1786977471;
+	bh=TnyN7MZ2lYo9b7tfwLIc/XCrndijCVSwFwSv3j8qZac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0uslSVYyCm6aa3XZrOgnSrqhuJe3uhGwObTQTx4/SGjpyAArYtv9bsNNj/KVDhkNM
-	 P8tNtePMynNyzhEa3ibMf26Kwm14RN8IeoI3D/uaV11QT7OUTBO/I8PW/OIQsNopey
-	 pRt3K0l4CySgbrT83kJw5nLB0H7C/J7QfAzzMfDM=
+	b=UW5DzfcJsJ70wE6PUnNjkeCZQpT1zvlztYAfSFPk3qtvUI3Hnn1SVXVNkJ18cEzIs
+	 IRk9/l8vvU029uExbQL+08+9bJpdjpq08JhigmlFRlhbay+1TR+tttwtexOWsJmALR
+	 THHLwcdyWHR135ECGxVvt/267j2PneJbYWIzlwpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 313/456] net/smc: fix socket use-after-free during link group termination
-Date: Mon, 17 Aug 2026 15:31:43 +0200
-Message-ID: <20260817132551.980273762@linuxfoundation.org>
+	Nava kishore Manne <nava.kishore.manne@amd.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.15 340/456] phy: zynqmp: use read-modify-write for SERDES scrambler bypass
+Date: Mon, 17 Aug 2026 15:32:10 +0200
+Message-ID: <20260817132552.896291127@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,60 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Nava kishore Manne <nava.kishore.manne@amd.com>
 
-commit f621d6ebeebb6374342571e4ddf45fdbc420f6cd upstream.
+commit 21e0749f931702765b9d52d05740092bc87fcd8d upstream.
 
-__smc_lgr_terminate() drops conns_lock after finding a connection in
-lgr->conns_all, but before taking a reference on its socket. The connection
-is embedded in the socket, and its registration reference protects it only
-while the connection remains in the tree.
+xpsgtr_bypass_scrambler_8b10b() used xpsgtr_write_phy() which performs
+a full register write, silently clearing any bits beyond the intended
+bypass control fields.
 
-A concurrent close can unregister the connection and drop that reference,
-freeing the socket before the termination worker reaches sock_hold().
+Switch to xpsgtr_clr_set_phy() with clr=mask, set=mask to set only
+the bypass bits while preserving the remaining bits in each register.
 
-The race is reachable when close overlaps link group termination.
-Local stress testing reproduced the use-after-free and KASAN reported:
-
-  BUG: KASAN: slab-use-after-free in __smc_lgr_terminate.part.0 [smc]
-  Write of size 4 by task kworker/3:3
-  Workqueue: events smc_lgr_terminate_work [smc]
-  __smc_lgr_terminate.part.0 [smc]
-
-The socket was allocated by smc_create(), freed through
-slab_free_after_rcu_debug(), and was followed by:
-
-  refcount_t: addition on 0; use-after-free.
-  __smc_lgr_terminate.part.0 [smc]
-
-Take the socket reference while conns_lock still protects the tree entry.
-The unregister path then cannot drop the last reference until termination
-has finished using the socket.
-
-Fixes: 69318b5215f2 ("net/smc: improve abnormal termination locking")
+Fixes: 4a33bea00314 ("phy: zynqmp: Add PHY driver for the Xilinx ZynqMP Gigabit Transceiver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Link: https://patch.msgid.link/20260723105454.87016-1-xuanqiang.luo@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Nava kishore Manne <nava.kishore.manne@amd.com>
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Link: https://patch.msgid.link/20260627155229.2791113-3-radhey.shyam.pandey@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/smc_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/xilinx/phy-zynqmp.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/net/smc/smc_core.c
-+++ b/net/smc/smc_core.c
-@@ -1304,10 +1304,10 @@ static void __smc_lgr_terminate(struct s
- 	read_lock_bh(&lgr->conns_lock);
- 	node = rb_first(&lgr->conns_all);
- 	while (node) {
--		read_unlock_bh(&lgr->conns_lock);
- 		conn = rb_entry(node, struct smc_connection, alert_node);
- 		smc = container_of(conn, struct smc_sock, conn);
- 		sock_hold(&smc->sk); /* sock_put below */
-+		read_unlock_bh(&lgr->conns_lock);
- 		lock_sock(&smc->sk);
- 		smc_conn_kill(conn, soft);
- 		release_sock(&smc->sk);
+--- a/drivers/phy/xilinx/phy-zynqmp.c
++++ b/drivers/phy/xilinx/phy-zynqmp.c
+@@ -491,8 +491,12 @@ static void xpsgtr_lane_set_protocol(str
+ /* Bypass (de)scrambler and 8b/10b decoder and encoder. */
+ static void xpsgtr_bypass_scrambler_8b10b(struct xpsgtr_phy *gtr_phy)
+ {
+-	xpsgtr_write_phy(gtr_phy, L0_TM_DIG_6, L0_TM_DIS_DESCRAMBLE_DECODER);
+-	xpsgtr_write_phy(gtr_phy, L0_TX_DIG_61, L0_TM_DISABLE_SCRAMBLE_ENCODER);
++	xpsgtr_clr_set_phy(gtr_phy, L0_TM_DIG_6,
++			   L0_TM_DIS_DESCRAMBLE_DECODER,
++			   L0_TM_DIS_DESCRAMBLE_DECODER);
++	xpsgtr_clr_set_phy(gtr_phy, L0_TX_DIG_61,
++			   L0_TM_DISABLE_SCRAMBLE_ENCODER,
++			   L0_TM_DISABLE_SCRAMBLE_ENCODER);
+ }
+ 
+ /* DP-specific initialization. */
 
 
