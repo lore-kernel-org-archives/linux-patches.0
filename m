@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA772EEE73;
-	Mon, 17 Aug 2026 15:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CA4435EC8;
+	Mon, 17 Aug 2026 15:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980545; cv=none; b=FTGpD7D0R2YqeY/F5aOMupt1pTBQ1pQLJP0AXrCIukEgffGAsqVRBSQOxN/EyNaPEJbT4Im/Es7hLQxUGcubhQw7ZAGPdNLrc3DFr/q3geT9BlZtS7fM94gJuOwhMRUjC6SY1ypKOdTm5AO0sr0e74ysCwryrbO+XCf3tNJfMo8=
+	t=1786980549; cv=none; b=jnG4r8sWF/kumfU8vVlJVM7plFtyK1akA9vPTKt+DN2HTFSOQTV7gz43Hw7zLAiLu987vF2xyMps0D1FuFda+0ncpyOnwyTDK3gsuYk3a3bixc6T9V0gDUruKPajUd4DlFfEIkHrLpcjDMBO4AfDgAeEZ8WKkOsJcNFQlTSl/HQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980545; c=relaxed/simple;
-	bh=ufQMn4eU40oh+hF+781OslDUPtyqYegsYGQ6HB+XGSI=;
+	s=arc-20240116; t=1786980549; c=relaxed/simple;
+	bh=hXKpGanbPNroxCXscRTj1ECvKVjR7rj4RHrZ70WpBSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eYPi3/orFP+128ViDt+iDb25uj8gk7wDd7KT2nNq5/jvS05BBgEkySx91pv1n76KVLIXbqPHdeIxBe6CD43BCmDuVzZPGZA/8SR/r0fdZc5ohccQrsC21Vn+6bxErp1MVGFlc2qhr8MddCbQxbQqAgl/hCYtcC5TGa2IpEQ/rdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFxSd0mI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IyhO3HjMubtbAg5ydigbKIQ17R40ofUi3BRtXgt3AUxUcl3vWp4VFn8L9cccuDk8lFTlDByDHQj/0kCFK5JEBFA7moGdMo7WNQecJ9hnHO4WR7QGERETfhAphNHKruiBXSxiTsJHS8avTkoK1yMY5JXhvsZbQ0iCeOvz0cI7HWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNpp85zC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFxSd0mI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 104C71F000E9;
-	Mon, 17 Aug 2026 15:29:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNpp85zC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8F711F000E9;
+	Mon, 17 Aug 2026 15:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980544;
-	bh=h1IAEn6uekmhSlvJlPoDLsC+FFPGx+zqMvzyFdTdaRI=;
+	s=korg; t=1786980547;
+	bh=zWySJcztoce8Pd/ZyhgbNsEQjy7B68R4MIttrQd1WUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OFxSd0mIv85LNoUB9mwiiwmcAmxEN7Gzlq3Xq5kGT4KZoNYeG0QuiEY9bLOvxMfcY
-	 bquWqVJz+MBXYDBazA3+AtDuiKi+Panso6ptB9u/3SIp6afXy8mMnm7cYNRWv7jG7z
-	 tG7h2yl6kVCYRAAWuww34VV83Ap1CxXN4mPA/MGM=
+	b=NNpp85zC8egY6INE6e2po3tK3QoT8ah1O2Nc9DGAvyxGBRg3cgIb2leNoIb9qXkYY
+	 4HIyKZzpV4x75pZSurOmKL2j6aZDhnP3uIbfdzjNA1UjMmrejm/SbRwvfC/J7t6HSM
+	 9A5EaOP9Nr5XFlZmNWCxAVBmJykeagx0oBfInt3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Mariano Baragiola <mbaragiola@linux.com>
-Subject: [PATCH 6.1 573/609] staging: rtl8723bs: validate monitor transmit frame lengths
-Date: Mon, 17 Aug 2026 15:34:29 +0200
-Message-ID: <20260817132602.898697969@linuxfoundation.org>
+	Doug Smythies <dsmythies@telus.net>,
+	Ahmad Khalifa <ahmad@khalifa.ws>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.1 609/609] hwmon: (nct6775) Fix non-existent ALARM warning
+Date: Mon, 17 Aug 2026 15:35:05 +0200
+Message-ID: <20260817132604.003670041@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,51 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mariano Baragiola <mbaragiola@linux.com>
+From: Ahmad Khalifa <ahmad@khalifa.ws>
 
-commit 6829665d050983907b560173e49dcc6c11cb2730 upstream.
+commit 2dd1d862817b850787f4755c05d55e5aeb76dd08 upstream.
 
-rtw_cfg80211_monitor_if_xmit_entry() removes the radiotap header and
-then reads the 802.11 frame control field without checking that a base
-802.11 header remains.
+Skip non-existent ALARM attribute to avoid a shift-out-of-bounds
+dmesg warning.
 
-The data path also pulls the calculated 802.11, QoS and SNAP header
-span before confirming that the skb contains it. A truncated frame can
-therefore cause out-of-bounds reads or leave insufficient data for the
-Ethernet address writes.
-
-Reject frames that do not contain the base 802.11 header and data
-frames that do not contain their complete calculated header span.
-
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Mariano Baragiola <mbaragiola@linux.com>
-Link: https://patch.msgid.link/20260727160859.1917096-1-mbaragiola@linux.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Doug Smythies <dsmythies@telus.net>
+Closes: https://lore.kernel.org/linux-hwmon/ZQVzdlHgWdFhOVyQ@debian.me/T/#mc69b690660eb50734a6b07506d74a119e0266f1b
+Fixes: b7f1f7b2523a ("hwmon: (nct6775) Additional TEMP registers for nct6799")
+Signed-off-by: Ahmad Khalifa <ahmad@khalifa.ws>
+Link: https://lore.kernel.org/r/20230918184722.2033225-1-ahmad@khalifa.ws
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c |    4 ++++
+ drivers/hwmon/nct6775-core.c |    4 ++++
  1 file changed, 4 insertions(+)
 
---- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-+++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-@@ -2075,6 +2075,8 @@ static netdev_tx_t rtw_cfg80211_monitor_
+--- a/drivers/hwmon/nct6775-core.c
++++ b/drivers/hwmon/nct6775-core.c
+@@ -1911,6 +1911,10 @@ static umode_t nct6775_in_is_visible(str
+ 	struct device *dev = kobj_to_dev(kobj);
+ 	struct nct6775_data *data = dev_get_drvdata(dev);
+ 	int in = index / 5;	/* voltage index */
++	int nr = index % 5;	/* attribute index */
++
++	if (nr == 1 && data->ALARM_BITS[in] == -1)
++		return 0;
  
- 	/* Skip the ratio tap header */
- 	skb_pull(skb, rtap_len);
-+	if (skb->len < dot11_hdr_len)
-+		goto fail;
- 
- 	dot11_hdr = (struct ieee80211_hdr *)skb->data;
- 	frame_control = le16_to_cpu(dot11_hdr->frame_control);
-@@ -2087,6 +2089,8 @@ static netdev_tx_t rtw_cfg80211_monitor_
- 			qos_len = 2;
- 		if ((frame_control & 0x0300) == 0x0300)
- 			dot11_hdr_len += 6;
-+		if (skb->len < dot11_hdr_len + qos_len + snap_len)
-+			goto fail;
- 
- 		memcpy(dst_mac_addr, dot11_hdr->addr1, sizeof(dst_mac_addr));
- 		memcpy(src_mac_addr, dot11_hdr->addr2, sizeof(src_mac_addr));
+ 	if (!(data->have_in & BIT(in)))
+ 		return 0;
 
 
