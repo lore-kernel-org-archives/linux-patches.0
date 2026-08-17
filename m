@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E896441037;
-	Mon, 17 Aug 2026 14:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BA243D50C;
+	Mon, 17 Aug 2026 14:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975949; cv=none; b=kFBudcH8NR8rG/3JCLAbgc6guu+Vd8dxBda+HX/nHV+4D2+FKnDOF9KXS/oeW5m57xXVgh6odf5So8RjNU415zpYzdKYd5EmXGAOVUQH78XbxwlNntfc7psbnaRAipWHdVk9tkDo5YqxUPenG51xkSoCRxV0891gHq5RQVnaXFo=
+	t=1786975952; cv=none; b=I+iQWSHxzv8XNyY5yiBWS7OuIjIifdZsYI/K/NTIlx/LG+pvBi6oZgfDqqKU0cClyypDl7YGikN2X9yxlyymj/XAXu0X8atCGBMFu91DEmHBcQqhDkrAVJSKoIzRvDFLKsiNs6ZUQr7PDH6ixsFkmS7ziR9OdGdAqu3BKoaxcxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975949; c=relaxed/simple;
-	bh=esinDqGPUzArO6Zwpy/a12UOmlkNorRSSjk6I9WmWzc=;
+	s=arc-20240116; t=1786975952; c=relaxed/simple;
+	bh=PwB4OpLPVSdJe/dcQE8uCvYBLxE8JJ2v/kDcX8tfIvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UTzQw/b0IMnwCjwneREScKldEwCsYQUw5qDUZNHKqdKVSxajCq3oIeLJK02wCm0iqtjxPMMbiDuK7pcVTIyz1sVG10guqFKvnth9J8tUBfAFuzHtY4rpSDYak2f9NhUXQzH2b+GgRH+z+4g3JYZWzS50M/kysW9lWWghEpjefbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YfdQWS81; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lXeaOKfZPh33o9C13B6+gR5rkQo1ljQU2aVNjpRm+HG3Nk4CaxZ0tjVKaA+aLvrYjn1S44WnOcBFHGUYkYz4Vrl6PAND33HHXSRycJem+zh83I7BqBLFUUsEwXQRG6DWEAb0abnSjaSsNI/hT+pZBeVYJbs2ZIqCt3xYp6/bHsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z5HYUx4p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YfdQWS81"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 959801F000E9;
-	Mon, 17 Aug 2026 14:12:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z5HYUx4p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE5A1F000E9;
+	Mon, 17 Aug 2026 14:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975948;
-	bh=ltK76Oor8U4vbaa7UIWfcgAyT/MeKkLbnACbydIPuJk=;
+	s=korg; t=1786975951;
+	bh=g16fUDua0lOYts9cP4sUoIkQdbIWN8/VZhERdXBv6QY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YfdQWS81/y5bt4vOOi1WhzRf58UrIAOacFRGf0A1ARjbNrJASbndzaT/3oEDtjqvZ
-	 Ephu/bxvdpgzLTueJqWgMxCXGPe+tuqjcu6p3el5rpYmB1NQYtDoYb8mebmTono79O
-	 vvy8+rbbtA2N8gnjFAlXCjvnU/46kJmYWRsody2I=
+	b=z5HYUx4peZlWMmpeItR5kl5fowOTppsOdhBgnSaSNHfZbeayo+C+K0CsJCu8geW5s
+	 Ht9Xu2uEZdQO/RDeevLkWip9sea7qjJ6qcW9W2qUjTOymZxJYhFVrzBXCPXv/Zplwg
+	 v4/w9lA+HaFWmrqoGF2L27R8ilnAsYOUfgKd1Na0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uday Khare <udaykhare77@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 205/389] ASoC: max98090: fix missing IS_ERR() before PTR_ERR() on mclk lookup
-Date: Mon, 17 Aug 2026 15:30:44 +0200
-Message-ID: <20260817132547.224081675@linuxfoundation.org>
+Subject: [PATCH 5.10 206/389] netfilter: nf_conntrack_sip: widen NAT rewrite delta to s32 in sip_help_tcp()
+Date: Mon, 17 Aug 2026 15:30:45 +0200
+Message-ID: <20260817132547.261067464@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,59 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uday Khare <udaykhare77@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit a792ce0fad61a70793ec565743f11d6ca534de59 ]
+[ Upstream commit db3d0e0e5d4bc5ab4fe445b9f413d1b486508ca5 ]
 
-In max98090_probe(), the -EPROBE_DEFER check after devm_clk_get() is
-broken due to a missing IS_ERR() guard.
+sip_help_tcp() stores the size change of each NAT-rewritten SIP message
+in s16 diff and accumulates it in s16 tdiff, but a single message can
+grow by more than S16_MAX while the packet stays under the 65535
+enlarge_skb() limit: nf_nat_sip() rewrites every matching URI, and a long
+Contact list expands the message by tens of kilobytes. diff then wraps,
+and "datalen = datalen + diff - msglen" yields a huge unsigned datalen,
+so the next iteration's ct_sip_get_header() reads past the linearized skb
+tail.
 
-The code intends to return -EPROBE_DEFER only when the clock lookup
-fails with that specific error.  However, without IS_ERR() the check:
+Widen diff, tdiff and the seq_adjust hook to s32. Both are bounded by the
+65535 byte packet limit, and the seqadj core is already s32
+(nf_ct_seqadj_set() takes s32), so no previously accepted input is
+rejected.
 
-    if (PTR_ERR(max98090->mclk) == -EPROBE_DEFER)
+  BUG: KASAN: use-after-free in ct_sip_get_header (net/netfilter/nf_conntrack_sip.c:464)
+  Read of size 1 at addr ffff888010800000 by task ksoftirqd/1/25
+   ct_sip_get_header (net/netfilter/nf_conntrack_sip.c:464)
+   sip_help_tcp (net/netfilter/nf_conntrack_sip.c:1694)
+   nf_confirm (net/netfilter/nf_conntrack_proto.c:183)
+   nf_hook_slow (net/netfilter/core.c:619)
+   ip6_output (net/ipv6/ip6_output.c:246)
+   ip6_forward (net/ipv6/ip6_output.c:690)
+   ipv6_rcv (net/ipv6/ip6_input.c:351)
+   __netif_receive_skb_one_core (net/core/dev.c:6212)
+   process_backlog (net/core/dev.c:6676)
+   __napi_poll (net/core/dev.c:7735)
+   net_rx_action (net/core/dev.c:7955)
+   handle_softirqs (kernel/softirq.c:622)
+   run_ksoftirqd (kernel/softirq.c:1076)
+   ...
 
-is called unconditionally, including when devm_clk_get() succeeds and
-returns a valid pointer.  Calling PTR_ERR() on a valid pointer
-reinterprets its address as a signed long; the result is arbitrary
-and is almost never equal to -EPROBE_DEFER, so the check silently
-does nothing in the success case.  When devm_clk_get() fails with
-any error other than -EPROBE_DEFER the check is also skipped, leaving
-max98090->mclk holding an error pointer with no indication to the caller.
-
-This means a deferred probe will never actually be triggered for this
-device, and any non-EPROBE_DEFER clock error is silently swallowed with
-the error pointer left in the mclk field.
-
-Fix this by adding the missing IS_ERR() guard around the PTR_ERR() call,
-matching the pattern already used in the sibling max98088 and wm8960
-drivers.
-
-Fixes: b10ab7b838bd ("ASoC: max98090: Add master clock handling")
-Signed-off-by: Uday Khare <udaykhare77@gmail.com>
-Link: https://patch.msgid.link/20260720104254.14948-1-udaykhare77@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f5b321bd37fb ("netfilter: nf_conntrack_sip: add TCP support")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/netfilter-devel/20260712234201.3213635-1-xmei5@asu.edu
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/max98090.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/linux/netfilter/nf_conntrack_sip.h | 2 +-
+ net/netfilter/nf_conntrack_sip.c           | 2 +-
+ net/netfilter/nf_nat_sip.c                 | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/max98090.c b/sound/soc/codecs/max98090.c
-index c7df685be4ea5..531cd172cb5cb 100644
---- a/sound/soc/codecs/max98090.c
-+++ b/sound/soc/codecs/max98090.c
-@@ -2393,8 +2393,9 @@ static int max98090_probe(struct snd_soc_component *component)
- 	dev_dbg(component->dev, "max98090_probe\n");
+diff --git a/include/linux/netfilter/nf_conntrack_sip.h b/include/linux/netfilter/nf_conntrack_sip.h
+index c620521c42bc6..dfb9708f53404 100644
+--- a/include/linux/netfilter/nf_conntrack_sip.h
++++ b/include/linux/netfilter/nf_conntrack_sip.h
+@@ -115,7 +115,7 @@ struct nf_nat_sip_hooks {
+ 			    unsigned int *datalen);
  
- 	max98090->mclk = devm_clk_get(component->dev, "mclk");
--	if (PTR_ERR(max98090->mclk) == -EPROBE_DEFER)
--		return -EPROBE_DEFER;
-+	if (IS_ERR(max98090->mclk))
-+		if (PTR_ERR(max98090->mclk) == -EPROBE_DEFER)
-+			return -EPROBE_DEFER;
+ 	void (*seq_adjust)(struct sk_buff *skb,
+-			   unsigned int protoff, s16 off);
++			   unsigned int protoff, s32 off);
  
- 	max98090->component = component;
+ 	unsigned int (*expect)(struct sk_buff *skb,
+ 			       unsigned int protoff,
+diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
+index 4326d5ea0400d..0f6147ea9e67b 100644
+--- a/net/netfilter/nf_conntrack_sip.c
++++ b/net/netfilter/nf_conntrack_sip.c
+@@ -1622,7 +1622,7 @@ static int sip_help_tcp(struct sk_buff *skb, unsigned int protoff,
+ 	unsigned int matchoff, matchlen;
+ 	unsigned int msglen, origlen;
+ 	const char *dptr, *end;
+-	s16 diff, tdiff = 0;
++	s32 diff, tdiff = 0;
+ 	int ret = NF_ACCEPT;
+ 	unsigned long clen;
+ 	bool term;
+diff --git a/net/netfilter/nf_nat_sip.c b/net/netfilter/nf_nat_sip.c
+index 76a8bbb44951c..7687d3d15df22 100644
+--- a/net/netfilter/nf_nat_sip.c
++++ b/net/netfilter/nf_nat_sip.c
+@@ -313,7 +313,7 @@ static unsigned int nf_nat_sip(struct sk_buff *skb, unsigned int protoff,
+ }
  
+ static void nf_nat_sip_seq_adjust(struct sk_buff *skb, unsigned int protoff,
+-				  s16 off)
++				  s32 off)
+ {
+ 	enum ip_conntrack_info ctinfo;
+ 	struct nf_conn *ct = nf_ct_get(skb, &ctinfo);
 -- 
 2.53.0
 
