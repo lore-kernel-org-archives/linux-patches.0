@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379B93DA5A7;
-	Mon, 17 Aug 2026 14:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1478A3DA5A7;
+	Mon, 17 Aug 2026 14:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978123; cv=none; b=vFvPaQgTculwty8YUwkT1KIzHScPmBMaQh8CUhDhTl/TRCRtlaqh0RUSaXd3KLoDfAGx6NKF4BVQlbK2WdjpoVbwaicEhHk+Boz13o2EsG1qqySMzYKmRsSqDYXTd/KNa2stqD0alvrnRf6D/NFY+QMHar//N11ZNZ8+Jvsvv/Y=
+	t=1786978126; cv=none; b=g8JpsDCvRkxUsAMWiNVxueIZEvFDtmOHJcAu0PPucjQRqnnnQdFFzqK2ICkYS0TQTxOyIf4FBLxdgzC5vzPzKiLeMdGj5r8yTFGceB4YW5DCUpP0YFajvMUsPFm+smxcMEZGxRCPFcF9AcLXUk5mi/mL4RE2EtFkOhPbS9LTkRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978123; c=relaxed/simple;
-	bh=NLuOINWggMYDMTLTQUxIbozwBg7dG2D4chysXbSs1L4=;
+	s=arc-20240116; t=1786978126; c=relaxed/simple;
+	bh=BrbSvNVDDXvHxjAI4sxrihnzOyoXB3j2hIjGwN0c06o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tDn+/aIVT3XZr6tnbkS2DN2O0jsShUilm3dplQAHxPtw87u2HGhf1+PUt5Aphqr91jhJ9LCIM5hRuahoE6SAayemgr7F6oBzs55DVqIv6NO9goB12MAbES7uNZzO0CO1zwCty5Otn2S4Ak7ViCTVfs5J+DrYvwtv4sKvd/hGEr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yL718bKq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WHbue+DyJqnkp7DftiH26CNW52mgf1P8w1Nlgn4aQDsm8vPwdalQOQFYVFZdwTT3yywsp4JMlaaQ1cNIi8nZcG4DhOXniwWOMIfcAQtHRyyG+4PcJTFfM0h/sboQJPXw35HG16n5oeCQwUP/IhhqO/q5DYyhrNu/MJWK5W/kWEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1tHvMHN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yL718bKq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B6741F000E9;
-	Mon, 17 Aug 2026 14:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1tHvMHN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7921F00A3D;
+	Mon, 17 Aug 2026 14:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978122;
-	bh=Z93Mwkgut2D/Tk2C1OL9p457R21fYU2dEkplfoHIXk0=;
+	s=korg; t=1786978125;
+	bh=Llq0/cekY2rLzNkjLtjnc1ZLhGCYT5LZ248uPV1RUcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yL718bKqGngLv5UpU0ZbLZIuQVhf6vKOzMEzbR6meZmsWt1puizHfFZsNbJy/6oAY
-	 Wi0meTKgQTsJzYZh/PmM8KtaWuJUUX8KyyNQ0tQjxxkUBnLLYgYG5cWBdLROXdyUBo
-	 04MA9atQEYWI5k2wGdrtR97Q1kLytw1retzm8c2c=
+	b=O1tHvMHNpZ++4uUjYtFoIFJMWsOo1yLLDOfqwdUvDx9J9l1BW3YcSeI55aHnTK/Il
+	 68kOla8wSxxtDh3YleZaofYqC2+mHgHqyEhgHp8sSI8u2A54IE333w9yrsk71TV03M
+	 0nlPdpWVyxOPTlMOKLeUjqfXWkGHnKyenpZ7a3a4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <tom.leiming@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Simon Liebold <simonlie@amazon.de>,
+	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Harshal Dev <harshal.dev@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 108/181] blk-mq: reinsert cached request to the list
-Date: Mon, 17 Aug 2026 15:33:22 +0200
-Message-ID: <20260817132539.755427407@linuxfoundation.org>
+Subject: [PATCH 6.12 109/181] dt-bindings: crypto: qcom,ice: Fix missing power-domain and iface clk
+Date: Mon, 17 Aug 2026 15:33:23 +0200
+Message-ID: <20260817132539.796415293@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -55,43 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Harshal Dev <harshal.dev@oss.qualcomm.com>
 
-[ Upstream commit b051bb6bf0a231117036aa607cadf55be8e63910 ]
+[ Upstream commit e27264daac7d9ce892a2a5b4a864d6d9a3c9276a ]
 
-A previous commit removed an optimization out of caution for a scenario
-that turns out not to be real: all the "queue_exit" goto's are safe to
-reinsert the request into the cached_rq's plug list as they are either
-from a non-blocking path, or a successful merge that already holds the
-queue reference. This optimization is most needed for small sequential
-workloads that successfully merge into larger requests.
+The DT bindings for inline-crypto engine do not specify the UFS_PHY_GDSC
+power-domain and iface clock. Without enabling the iface clock and the
+associated power-domain the ICE hardware cannot function correctly and
+leads to unclocked hardware accesses being observed during probe.
 
-Fixes: dc278e9bf2b9 ("blk-mq: pop cached request if it is usable")
-Suggested-by: Ming Lei <tom.leiming@gmail.com>
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Link: https://patch.msgid.link/20260526153531.2365935-1-kbusch@meta.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Simon Liebold <simonlie@amazon.de>
+Extend and fix the DT bindings for inline-crypto engine by allowing
+description of the iface clock and UFS_PHY_GDSC power-domain.
+
+This patch has been adapted from the mentioned upstream commit to drop
+references to Eliza and Milos Qualcomm platforms which do not exist
+on the stable tree. Thus, patch now fixes the original commit which
+introduced the DT binding for Qualcomm inline-crypto engine.
+
+Fixes: f6ff91a47ac5 ("dt-bindings: crypto: Add Qualcomm Inline Crypto Engine")
+Reviewed-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260416-qcom_ice_power_and_clk_vote-v5-1-5ccf5d7e2846@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../crypto/qcom,inline-crypto-engine.yaml        | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index fd21976375ed4..6af42682af7d6 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -3154,7 +3154,7 @@ void blk_mq_submit_bio(struct bio *bio)
- 	if (!rq)
- 		blk_queue_exit(q);
- 	else
--		blk_mq_free_request(rq);
-+		rq_list_add_head(&plug->cached_rqs, rq);
- }
+diff --git a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
+index 0304f074cf085..2793afc7f85c4 100644
+--- a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
++++ b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
+@@ -25,6 +25,16 @@ properties:
+     maxItems: 1
  
- #ifdef CONFIG_BLK_MQ_STACKING
+   clocks:
++    minItems: 1
++    maxItems: 2
++
++  clock-names:
++    minItems: 1
++    items:
++      - const: core
++      - const: iface
++
++  power-domains:
+     maxItems: 1
+ 
+ required:
+@@ -42,6 +52,10 @@ examples:
+       compatible = "qcom,sm8550-inline-crypto-engine",
+                    "qcom,inline-crypto-engine";
+       reg = <0x01d88000 0x8000>;
+-      clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
++      clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>,
++               <&gcc GCC_UFS_PHY_AHB_CLK>;
++      clock-names = "core",
++                    "iface";
++      power-domains = <&gcc UFS_PHY_GDSC>;
+     };
+ ...
 -- 
 2.53.0
 
