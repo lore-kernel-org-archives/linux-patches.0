@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CA23EC2CD;
-	Mon, 17 Aug 2026 15:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871703DB324;
+	Mon, 17 Aug 2026 15:22:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980139; cv=none; b=V+//IqH/HETUZnuFSr7C5zN94RgyJxQJ9cs/jFC5gBGgMBSxUqxCKulqw4TaHjvTbLrYL357e07+EA764E1fC9hv7uR1yr9Oo0gQE2Z7kxIaPOm0JealF2WzTJ9lK+ao9oLPV+ThwO5FaABunUM3/NbEMUBh9syyZCoidtTksgY=
+	t=1786980142; cv=none; b=RKTNqK2KylUkbZv9whMmLZ8qu+uDdhUjQKmOV5KgxVNXl4lkYw3OX9V9cz4MKNzBiPV67IBbER9zYCbCCRiQByGjOCr7EwSt8ly6yht1wxIKKJF5vYxiY55oRIjvp6FD0cRDsX7mVVXX6JmtLi26HVhv6vQWIezIzN5HBovVQ5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980139; c=relaxed/simple;
-	bh=USoelgSeQrDveVcJjbJk9cYhylOKs0UTHmoB4FnRpzg=;
+	s=arc-20240116; t=1786980142; c=relaxed/simple;
+	bh=kgcmvzybCls+k0G0B2GhN9Hoew9G6MxRzdyuFqT1rNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t+IgCT4vM9J6ueciaGWViimnhY4ujw/O+R56ZWcMnyb2C/umtgFaPOGT8YNHn7z/UXrCrNxa09MYburmrmPkFBQLVXvU/NztvLdF9JFSQb5FTLT60sNfsrYbAioLFeuS4Nx7J2g5Y0NzNJdIBE4X01afOpHrmdQ7YDn46gIwREo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zmh4tHpf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fFKEWKPu6czHu1nVVxoM5WOxgRLDyDcDoGoq5+QA1YWjeXlV0DSP/DaPNjKHzKHQ3Ihv4THWZvbL30c08sEPZVq4fZkhr8zjJ5IcJ0PUueM4GfdaviifKawq4XlbQVb8/IURUn2UrWSODeKHh2XK0YHwPj69fkzo/NvbW9IY0go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9GuWmUg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zmh4tHpf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055AD1F000E9;
-	Mon, 17 Aug 2026 15:22:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9GuWmUg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59961F000E9;
+	Mon, 17 Aug 2026 15:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980138;
-	bh=GRLW6DzmQW9Hr25UcQmSPRpgBK/gUfiROylKFJn6MU8=;
+	s=korg; t=1786980141;
+	bh=29+VEYGTQOKJsKmiHHDtjRn4i8e/BRkalhAmbNrfOrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zmh4tHpf7Z6lg1m/cGzwW6khED0pXIjnPINexGko99O0AI1vxfFe1CPf9oSawb/7Z
-	 MQ5PzY0E168OXvxTFq2Qql54aa37xDnNgU/0MxmUDSPGBn17+PNwqiguiuXp74Oryq
-	 0Znazd873hN0MCdV9y3o2UIEn6SLB0E9WOjDiW0k=
+	b=o9GuWmUgZy8TiGBeh0Tmxv6A79ISZ1icq83Xz0lLkkgzsHTF4e9AWD4vTtfwLaZlO
+	 WKRZ703nQ71GJ2BSjYjpuUEBVRExy5gQ0mzqbRZ3hrJK+wBQVCn0+y5vS18Tfl+OTL
+	 dbd+3HBsW6Ex3sg9gNSicjiKjIb1PC0D6wWJXGl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harkirat Gill <harkirat.gill@amd.com>,
 	David Francis <David.Francis@amd.com>,
+	Kent Russell <kent.russell@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 469/609] drm/amdgpu: cap GTT size to physical RAM on APUs
-Date: Mon, 17 Aug 2026 15:32:45 +0200
-Message-ID: <20260817132559.678990470@linuxfoundation.org>
+Subject: [PATCH 6.1 470/609] drm/amdkfd: Handle invalid event type in CRIU event restore
+Date: Mon, 17 Aug 2026 15:32:46 +0200
+Message-ID: <20260817132559.707371708@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,60 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harkirat Gill <harkirat.gill@amd.com>
+From: David Francis <David.Francis@amd.com>
 
-commit 5e70f6804b4d6256058c360b10e044ee04ea4a4e upstream.
+commit a9cdc85839e4fe2c760aa4ca6cc341c31ad1918a upstream.
 
-On APUs, the GTT pool is backed by system RAM, but its size is not bound
-to the non-carveout memory that actually backs it. A user can end up
-with GTT + VRAM exceeding total physical memory through the following
-sequence:
+In kfd_criu_restore_event, there was no handling for
+the event priv data having an invalid event type. The priv
+data here is untrusted and can be invalid.
 
- - Have a large non-carveout memory space (~128GB) and accordingly set a
-   large GTT (~100GB) via the ttm module parameter.
- - Lower the non-carveout memory space in BIOS by increasing the UMA
-   Frame Buffer Size (VRAM) to 64GB.
- - The previously set GTT value (~100GB) persists, even though the new
-   non-carveout space (64GB) can no longer back it.
+In that case, fail with EINVAL.
 
-This leads to a case where kernel reports GTT (100GB) + VRAM (64GB)
-despite the sum being greater than total physical memory (128GB).
-
-Cap the GTT size to totalram_pages() on APUs. totalram_pages() already
-excludes the VRAM carveout, so the resulting GTT can never exceed the
-system RAM that actually backs it.
-
-Signed-off-by: Harkirat Gill <harkirat.gill@amd.com>
-Reviewed-by: David Francis <David.Francis@amd.com>
-Assisted-by: Claude:claude-opus-4
+Signed-off-by: David Francis <David.Francis@amd.com>
+Reviewed-by: Kent Russell <kent.russell@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5dafdd649280c7dc6c22c8f877da3f54fcc441e1)
+(cherry picked from commit 2e8e9963cd5c41aa14fd5316bf9ec92e7a0e3097)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_events.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -1862,6 +1862,18 @@ int amdgpu_ttm_init(struct amdgpu_device
- 		gtt_size = (uint64_t)amdgpu_gtt_size << 20;
- 	}
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_events.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
+@@ -519,6 +519,9 @@ int kfd_criu_restore_event(struct file *
  
-+	/* Cap GTT so that it does not exceed total physical RAM. */
-+	if (adev->flags & AMD_IS_APU) {
-+		u64 phys_ram = (u64)totalram_pages() << PAGE_SHIFT;
-+
-+		if (gtt_size > phys_ram) {
-+			gtt_size = phys_ram;
-+			dev_info(adev->dev,
-+				 "Capping GTT to %uM to not exceed available system memory\n",
-+				 (unsigned int)(gtt_size / (1024 * 1024)));
-+		}
-+	}
-+
- 	/* Initialize GTT memory pool */
- 	r = amdgpu_gtt_mgr_init(adev, gtt_size);
- 	if (r) {
+ 		ret = create_other_event(p, ev, &ev_priv->event_id);
+ 		break;
++	default:
++		ret = -EINVAL;
++		break;
+ 	}
+ 	mutex_unlock(&p->event_mutex);
+ 
 
 
