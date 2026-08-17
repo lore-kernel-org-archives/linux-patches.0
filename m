@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8DC3D7D70;
-	Mon, 17 Aug 2026 15:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA772EEE73;
+	Mon, 17 Aug 2026 15:29:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980543; cv=none; b=BEfKj7snwDW5+IKCVzBBv0LVFngS3/kfSWfVpspKATWj7g7AjUeTk3EQXLDd9O9YB0f0T/cPysD1Pskxzq1IyXtCAlpkyhESUr74BOuMLAfhSkR9SCS+Bs7TFRuxDeejH4Wzn6B4rlY9AvBQRECQSlvHl8t7+9RJ0nSHptPZVhk=
+	t=1786980545; cv=none; b=FTGpD7D0R2YqeY/F5aOMupt1pTBQ1pQLJP0AXrCIukEgffGAsqVRBSQOxN/EyNaPEJbT4Im/Es7hLQxUGcubhQw7ZAGPdNLrc3DFr/q3geT9BlZtS7fM94gJuOwhMRUjC6SY1ypKOdTm5AO0sr0e74ysCwryrbO+XCf3tNJfMo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980543; c=relaxed/simple;
-	bh=8nqnkgQ/4BvP/xQuQWktymzQHfi3bRe0VDnhr2lOXvw=;
+	s=arc-20240116; t=1786980545; c=relaxed/simple;
+	bh=ufQMn4eU40oh+hF+781OslDUPtyqYegsYGQ6HB+XGSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sw3UzW3XJSEXpcEfYcY0XZtdeCDswXJ4217O47ePSSuR0QDo1xIoTL3vjTooGciEs7jDOIpZwCexG8YTMityK/GjQWZrBwlDaK1dSg7I7tEr87GXONL53zK4RHqFLekxTKL15PBzyYAGqLTRH6hRggBSpDKbHxkSgxQqCAzBPJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgHZv5ov; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eYPi3/orFP+128ViDt+iDb25uj8gk7wDd7KT2nNq5/jvS05BBgEkySx91pv1n76KVLIXbqPHdeIxBe6CD43BCmDuVzZPGZA/8SR/r0fdZc5ohccQrsC21Vn+6bxErp1MVGFlc2qhr8MddCbQxbQqAgl/hCYtcC5TGa2IpEQ/rdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFxSd0mI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgHZv5ov"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330031F000E9;
-	Mon, 17 Aug 2026 15:29:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFxSd0mI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 104C71F000E9;
+	Mon, 17 Aug 2026 15:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980541;
-	bh=wdpXyXnCcO8Q4c9D/WrzC7ZBCakKdEuStkooN6+KXOc=;
+	s=korg; t=1786980544;
+	bh=h1IAEn6uekmhSlvJlPoDLsC+FFPGx+zqMvzyFdTdaRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KgHZv5ov/8qmb6gHL5+PUEHZVmqNk+tWJCdAurLqPaZR0YqYh0hS3papz1EFUW31L
-	 vkszj8x4pmz/YXyK44wJ7EqRXSBtR+UPW/fNWUICyUUbPBZvlMrm9NJlh1Ez3KCoaL
-	 JFTVysMlcrvGnXwZ0POi/K+y6YlD7SvXOhn4pa3k=
+	b=OFxSd0mIv85LNoUB9mwiiwmcAmxEN7Gzlq3Xq5kGT4KZoNYeG0QuiEY9bLOvxMfcY
+	 bquWqVJz+MBXYDBazA3+AtDuiKi+Panso6ptB9u/3SIp6afXy8mMnm7cYNRWv7jG7z
+	 tG7h2yl6kVCYRAAWuww34VV83Ap1CxXN4mPA/MGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmad Khalifa <ahmad@khalifa.ws>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.1 608/609] hwmon: (nct6775) Fix register for nct6799
-Date: Mon, 17 Aug 2026 15:35:04 +0200
-Message-ID: <20260817132603.972189098@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Mariano Baragiola <mbaragiola@linux.com>
+Subject: [PATCH 6.1 573/609] staging: rtl8723bs: validate monitor transmit frame lengths
+Date: Mon, 17 Aug 2026 15:34:29 +0200
+Message-ID: <20260817132602.898697969@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,31 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmad Khalifa <ahmad@khalifa.ws>
+From: Mariano Baragiola <mbaragiola@linux.com>
 
-commit 368da76be8df60e9228a41b7d46e7836a67158fd upstream.
+commit 6829665d050983907b560173e49dcc6c11cb2730 upstream.
 
-Datasheet and variable name point to 0xe6
+rtw_cfg80211_monitor_if_xmit_entry() removes the radiotap header and
+then reads the 802.11 frame control field without checking that a base
+802.11 header remains.
 
-Fixes: aee395bb1905 ("hwmon: (nct6755) Add support for NCT6799D")
-Signed-off-by: Ahmad Khalifa <ahmad@khalifa.ws>
-Link: https://lore.kernel.org/r/20230715145831.1304633-1-ahmad@khalifa.ws
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+The data path also pulls the calculated 802.11, QoS and SNAP header
+span before confirming that the skb contains it. A truncated frame can
+therefore cause out-of-bounds reads or leave insufficient data for the
+Ethernet address writes.
+
+Reject frames that do not contain the base 802.11 header and data
+frames that do not contain their complete calculated header span.
+
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Mariano Baragiola <mbaragiola@linux.com>
+Link: https://patch.msgid.link/20260727160859.1917096-1-mbaragiola@linux.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/nct6775-platform.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/hwmon/nct6775-platform.c
-+++ b/drivers/hwmon/nct6775-platform.c
-@@ -586,7 +586,7 @@ nct6775_check_fan_inputs(struct nct6775_
- 		int creb;
- 		int cred;
+--- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
++++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
+@@ -2075,6 +2075,8 @@ static netdev_tx_t rtw_cfg80211_monitor_
  
--		cre6 = sio_data->sio_inb(sio_data, 0xe0);
-+		cre6 = sio_data->sio_inb(sio_data, 0xe6);
+ 	/* Skip the ratio tap header */
+ 	skb_pull(skb, rtap_len);
++	if (skb->len < dot11_hdr_len)
++		goto fail;
  
- 		sio_data->sio_select(sio_data, NCT6775_LD_12);
- 		cre0 = sio_data->sio_inb(sio_data, 0xe0);
+ 	dot11_hdr = (struct ieee80211_hdr *)skb->data;
+ 	frame_control = le16_to_cpu(dot11_hdr->frame_control);
+@@ -2087,6 +2089,8 @@ static netdev_tx_t rtw_cfg80211_monitor_
+ 			qos_len = 2;
+ 		if ((frame_control & 0x0300) == 0x0300)
+ 			dot11_hdr_len += 6;
++		if (skb->len < dot11_hdr_len + qos_len + snap_len)
++			goto fail;
+ 
+ 		memcpy(dst_mac_addr, dot11_hdr->addr1, sizeof(dst_mac_addr));
+ 		memcpy(src_mac_addr, dot11_hdr->addr2, sizeof(src_mac_addr));
 
 
