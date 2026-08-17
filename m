@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F1D2D2495;
-	Mon, 17 Aug 2026 15:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5202B2E8DEA;
+	Mon, 17 Aug 2026 15:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978910; cv=none; b=kc+LIr1TxC2CPzIcxornNjKsQvavWrH3VVGanS/dsPMp3WoW8CFAN26qiVyYaxliVw3eUt4IwSzKhxdqFOv36BqWSMTTpS9GVGxzJrf9lZ+WaRLwZnW+U6xz3YGyuhGhbGYha/gpWA4mdyZ8S0LxEWVt98DAB178/SLz5h+OhkY=
+	t=1786978913; cv=none; b=jU8Qm3OkFZf33rCypU0BNYyPzvqUv9yRw3KOMYcnR/Nk92Mul6+zG7ol60JCUglsybmnGuC/gFBlP4HjWSUyuR8n+n4IsmxyE776oXgRv4MDm0iXfDncmIQGLxt2DsZ7LBowRV1JLr/CihNLIqLW2JZiIVQyVQUzJLD2pZzoLYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978910; c=relaxed/simple;
-	bh=UVBL86edsPvlK5dojKiWcBC0io7iL5jWj5YnFUyhtBs=;
+	s=arc-20240116; t=1786978913; c=relaxed/simple;
+	bh=lzcXI3K1s27Tne5z7fy85vvH7lKbeeupIUVu5+Z6Vao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RZ1G6Grw1GtrWZvWSq9XBXpJgGxkfRh9+dbp8i8zeXNmjbjTyqQpbGDKUkAvFWCSkJMvw/aaZe/dwwxpkp5EGv8bgvGo3ebz+QlrNBE60SYRyCzkf31e0Titj/kG4JtEuqP3nmA7ArYgojBtwA3tqmWk+oCN3VcqXDcqnz30P5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWh7UQ1b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tI8RU5xs29i00j3vsByOiPLy6v7+tcCMXFbQkoZShmW3YZA5FOqCMTCk7m2vaCaL9JF/AfQNE7Cy3y1PBb9E6C14xWBG2qnOiAeZUNHxXTvciAUHL/PD1Q5Onc2WzTsr+QYL44f/ULq3HK0JxUmGetfB90u7l9t3+JvLBmPhdp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=raLBT7p/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWh7UQ1b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22C21F000E9;
-	Mon, 17 Aug 2026 15:01:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="raLBT7p/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A19461F000E9;
+	Mon, 17 Aug 2026 15:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978909;
-	bh=gzj6ix9qEEqPT8HDiTwBAFWZ101WmrxIDfeQwOOg1CI=;
+	s=korg; t=1786978912;
+	bh=y3X6z+Gv4F1O6Cg+dE0gUpAnop2cfNfEZykgG/xcY2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WWh7UQ1b7KJILtwxpTmqnHbpPMno6jQbedisg3UuJtoyoq4CPjoauBdd+WE43JqR7
-	 8aC0kk3wPsaeGrbGOscNZaJL+H9m6qcB2vUFSXBkS6R39NnyQXClBJrYAa6tm5Wd+K
-	 HHPVf0cWbcMu1JJlX0TOUlWwvVooLr5rdPw3GnW4=
+	b=raLBT7p/6c0lgPwlXZSOi6Uw8ex9DJ0YyUllK4aWqYbetHR8TX48kn82FIzJEaAcq
+	 DbWV2l1msNGV7slDcVQ+ssw3cfI5mzV23pWUZs5YRJknNU1+JpgUPEb25rDMl3muEs
+	 kogEONvBQ/AMVSUn+PtkQyf2nhzrL2i3f2DnEQFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 042/609] wifi: mac80211_hwsim: clamp virtio RX length before skb_put
-Date: Mon, 17 Aug 2026 15:25:38 +0200
-Message-ID: <20260817132544.719503107@linuxfoundation.org>
+Subject: [PATCH 6.1 043/609] wifi: libertas: fix memory leak in helper_firmware_cb()
+Date: Mon, 17 Aug 2026 15:25:39 +0200
+Message-ID: <20260817132544.762440550@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,43 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-[ Upstream commit 10a2b430f8f06ae14b9590b6f6faa6b588ef0654 ]
+[ Upstream commit 63c2391deefb31e1b801b7f32bd502ca4808639b ]
 
-hwsim_virtio_rx_work() passes the virtqueue used-ring length reported by
-the device straight to skb_put() on a fixed-size receive skb. A backend
-reporting a length larger than the skb tailroom drives skb_put() past the
-buffer end and hits skb_over_panic() -- a host-triggerable guest panic
-(denial of service).
+helper_firmware_cb() neglects to free the single-stage firmware image
+after a successful async load, leading to a memory leak in the USB
+firmware-download path.
 
-Clamp the length to the skb's available room before skb_put(). A
-conforming device never reports more than the posted buffer size, so valid
-frames are unaffected; a truncated over-report then fails the
-length/header checks in hwsim_virtio_handle_cmd() and is dropped, so
-truncating rather than dropping here cannot be turned into a parsing
-problem.
+Fix this memory leak by calling release_firmware() immediately after
+lbs_fw_loaded() returns.
 
-Fixes: 5d44fe7c9808 ("mac80211_hwsim: add frame transmission support over virtio")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260620-b4-disp-474bee37-v1-1-1a4d37f3e2d4@proton.me
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still present in
+the current wireless tree.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have
+compatible Libertas USB hardware for exercising this firmware-download
+path, no runtime testing was able to be performed.
+
+Fixes: 1dfba3060fe7 ("libertas: move firmware lifetime handling to firmware.c")
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Link: https://patch.msgid.link/20260624085343.575508-1-dawei.feng@seu.edu.cn
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mac80211_hwsim.c | 1 +
+ drivers/net/wireless/marvell/libertas/firmware.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/mac80211_hwsim.c b/drivers/net/wireless/mac80211_hwsim.c
-index 316b5f56b6e53f..bb9dabbf1f22c6 100644
---- a/drivers/net/wireless/mac80211_hwsim.c
-+++ b/drivers/net/wireless/mac80211_hwsim.c
-@@ -5564,6 +5564,7 @@ static void hwsim_virtio_rx_work(struct work_struct *work)
- 
- 	skb->data = skb->head;
- 	skb_reset_tail_pointer(skb);
-+	len = min(len, skb_end_offset(skb));
- 	skb_put(skb, len);
- 	hwsim_virtio_handle_cmd(skb);
+diff --git a/drivers/net/wireless/marvell/libertas/firmware.c b/drivers/net/wireless/marvell/libertas/firmware.c
+index f124110944b7e9..9bf7d4c207b9ed 100644
+--- a/drivers/net/wireless/marvell/libertas/firmware.c
++++ b/drivers/net/wireless/marvell/libertas/firmware.c
+@@ -78,6 +78,7 @@ static void helper_firmware_cb(const struct firmware *firmware, void *context)
+ 	} else {
+ 		/* No main firmware needed for this helper --> success! */
+ 		lbs_fw_loaded(priv, 0, firmware, NULL);
++		release_firmware(firmware);
+ 	}
+ }
  
 -- 
 2.53.0
