@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8324F3AAF6D;
-	Mon, 17 Aug 2026 15:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAC03F0A86;
+	Mon, 17 Aug 2026 15:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979609; cv=none; b=qf4PougTLsV2n/2wNpme+Vomc8SDcijam2BEo4nkqULk5eUmKZjImfrB3Fqca+EMUZ9qhcNT8iGngDJvQh0A2qoACQaJkKwqnSUTUVRud146j9xr2o82HvG2Jc8w16E5zujnTbx08uF8LcGJA1tbaY751OEX3D5iD6q5T1mj+CA=
+	t=1786979615; cv=none; b=JEYUGyJvymVCSnwocqC3fikZMf1yOxjx2EeZ3koysABgU+qzGrlb+bDIybZNTlynxZUm6AqKyIoUlQseA1rlCCGT3Ho4CjpocKejMNLEWZMis547jzrhC/ys85CdyxrSW8Lr2ZBEnn220tgR6bfIQHPUPPk5CqCogZKZPXJbo2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979609; c=relaxed/simple;
-	bh=vri2e3H8srvjU8vXClKR8nNjPsyW6GjVyae4uj7OvZ0=;
+	s=arc-20240116; t=1786979615; c=relaxed/simple;
+	bh=/aSR/K4Jq3pHaSayRGgrWvN8z4GANCErL8EWh6XxCfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RflO+8qna0I/fJm7Bo60hna+rOycb1Xzhlz4+ZHuochFrmz/V7SnW+N9uqpz9Xr/h098T+DB/w+GXhO4hXIMu1aUiQTKh67mgF6D1UQuBRrFMp3HhdJrMGofem4EIhlHVaH/9ZNGhbk+ap6J/nfM308TA4Vf3pmVp9y6x34/+o0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/1gTDGg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IxLh2qSn6pJ2NKvj6z4KsI0jVnW/Ut902SK7vbC85v+pHsmJlDL0nL/JMnVTO/fe3EwrKlkHlOvwpan4uLGh8D9oBD3HQcLZY4nm5i/P/htgCqjqeW2YETHJmwMOF1NRnxNVkBh1JfkO+kjVbZXVGfBYOFe+q4PXO2j9BPVtowI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eI0C34A8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/1gTDGg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAECF1F000E9;
-	Mon, 17 Aug 2026 15:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eI0C34A8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871E51F000E9;
+	Mon, 17 Aug 2026 15:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979608;
-	bh=vYQGcUGBIbUj0qI//KRpFoAeti9rRya8PeJuLfZgmIg=;
+	s=korg; t=1786979611;
+	bh=neK2KtUrC7JA6gKsHusqO+PZPuX4Gkaw2lnxTIXevFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D/1gTDGgkr2ZebEImovtg8Eiq1nTTFZBtzchzsdHvaQ776gfOAB7rKsNr3LPeL7se
-	 YQWTnp+UdojjzrpszIpn3cO99r93n/sMczv3EgTiPjhI17VszSkOdZBpJwiju2N+fQ
-	 ZVv5uv+Ye3rat5Fk8x/eOSeuGDIgnkLsDamW/8D0=
+	b=eI0C34A89fzD1pcgFWsfGhLCwTbpWml55gmH+c4rRZdvZK7szW2BDxVkfmDeP3uYQ
+	 Nj1bZWuR4q2fH9G73IM6xnKPlyWZjLWeLl7KJtvPPDX1dOGV0lDK76b7dwVXQEn76/
+	 OnxtQyC2AxsergvTbL1MTVTmOWfahWwoVEKfGfos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xie Bo <xb@ultrarisc.com>,
-	Anup Patel <anup@brainfault.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 286/609] RISC-V: KVM: Serialize virtual interrupt pending state updates
-Date: Mon, 17 Aug 2026 15:29:42 +0200
-Message-ID: <20260817132553.759575774@linuxfoundation.org>
+	Kunwu Chan <chentao@kylinos.cn>,
+	Wang Haoran <haoranwangsec@gmail.com>,
+	Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Kunwu Chan <kunwu.chan@linux.dev>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jay Wang <wanjay@amazon.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.1 287/609] i40e: remove read access to debugfs files
+Date: Mon, 17 Aug 2026 15:29:43 +0200
+Message-ID: <20260817132553.801835135@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,285 +60,286 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xie Bo <xb@ultrarisc.com>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-commit d024a0a7879e6f37c0152aacf6d8e37b214a1738 upstream.
+[ Upstream commit 9fcdb1c3c4ba134434694c001dbff343f1ffa319 ]
 
-KVM RISC-V tracks guest local interrupt state with two bitmaps:
+The 'command' and 'netdev_ops' debugfs files are a legacy debugging
+interface supported by the i40e driver since its early days by commit
+02e9c290814c ("i40e: debugfs interface").
 
-  - irqs_pending: interrupts that should be visible to the guest
-  - irqs_pending_mask: interrupts whose pending state changed
+Both of these debugfs files provide a read handler which is mostly useless,
+and which is implemented with questionable logic. They both use a static
+256 byte buffer which is initialized to the empty string. In the case of
+the 'command' file this buffer is literally never used and simply wastes
+space. In the case of the 'netdev_ops' file, the last command written is
+saved here.
 
-The current code updates those bitmaps with independent atomic bitops
-and assumes a multiple-producer, single-consumer protocol. That model
-does not actually hold.
+On read, the files contents are presented as the name of the device
+followed by a colon and then the contents of their respective static
+buffer. For 'command' this will always be "<device>: ". For 'netdev_ops',
+this will be "<device>: <last command written>". But note the buffer is
+shared between all devices operated by this module. At best, it is mostly
+meaningless information, and at worse it could be accessed simultaneously
+as there doesn't appear to be any locking mechanism.
 
-kvm_riscv_vcpu_sync_interrupts() is not a pure consumer. When the guest
-changes guest-visible HVIP state, sync_interrupts() writes both
-irqs_pending and irqs_pending_mask to reflect the new guest state back
-into KVM state. As a result, irqs_pending and irqs_pending_mask form a
-single logical state transition, but they are not updated atomically as
-a pair.
+We have also recently received multiple reports for both read functions
+about their use of snprintf and potential overflow that could result in
+reading arbitrary kernel memory. For the 'command' file, this is
+definitely impossible, since the static buffer is always zero and never
+written to. For the 'netdev_ops' file, it does appear to be possible, if
+the user carefully crafts the command input, it will be copied into the
+buffer, which could be large enough to cause snprintf to truncate, which
+then causes the copy_to_user to read beyond the length of the buffer
+allocated by kzalloc.
 
-This allows a race where a newly injected interrupt is lost. For
-example:
+A minimal fix would be to replace snprintf() with scnprintf() which would
+cap the return to the number of bytes written, preventing an overflow. A
+more involved fix would be to drop the mostly useless static buffers,
+saving 512 bytes and modifying the read functions to stop needing those as
+input.
 
-  CPU0                              CPU1
-  ----                              ----
-  kvm_riscv_vcpu_set_interrupt(VS_SOFT)
-    set_bit(VS_SOFT, irqs_pending)
-                                    kvm_riscv_vcpu_sync_interrupts()
-                                      sees guest-cleared HVIP.VSSIP
-                                      sets irqs_pending_mask
-                                      clear_bit(IRQ_VS_SOFT, irqs_pending)
-    set_bit(VS_SOFT, irqs_pending_mask)
-    kvm_vcpu_kick()
+Instead, lets just completely drop the read access to these files. These
+are debug interfaces exposed as part of debugfs, and I don't believe that
+dropping read access will break any script, as the provided output is
+pretty useless. You can find the netdev name through other more standard
+interfaces, and the 'netdev_ops' interface can easily result in garbage if
+you issue simultaneous writes to multiple devices at once.
 
-After that interleaving, a later flush can update HVIP without VSSIP
-even though a new virtual interrupt was injected. In practice, the
-guest can remain blocked in WFI with work pending.
+In order to properly remove the i40e_dbg_netdev_ops_buf, we need to
+refactor its write function to avoid using the static buffer. Instead, use
+the same logic as the i40e_dbg_command_write, with an allocated buffer.
+Update the code to use this instead of the static buffer, and ensure we
+free the buffer on exit. This fixes simultaneous writes to 'netdev_ops' on
+multiple devices, and allows us to remove the now unused static buffer
+along with removing the read access.
 
-The same pending/mask protocol is shared by VS soft interrupts, PMU
-overflow delivery, and AIA high interrupt synchronization, so the race
-is not limited to one interrupt source.
-
-Fix this by serializing all updates to irqs_pending and irqs_pending_mask
-with a per-vCPU raw spinlock. This keeps the pending bit and the dirty
-mask as one state transition across:
-
-  - set/unset interrupt
-  - guest HVIP sync
-  - interrupt flush to guest CSR state
-  - vCPU reset
-  - AIA CSR writes that clear dirty state
-
-Use non-atomic bitmap operations while holding the lock. Hold the lock
-across the AIA sync, flush, and pending checks as well, so both bitmap
-words share the same serialization domain.
-
-This intentionally replaces the existing lockless protocol instead of
-trying to repair it with additional barriers. The problem is not memory
-ordering on a single field; it is that two separate bitmaps encode one
-shared state machine while both producers and sync paths can modify
-them. A per-vCPU raw spinlock keeps the fix small, local, and suitable
-for backporting.
-
-Fixes: cce69aff689e ("RISC-V: KVM: Implement VCPU interrupts and requests handling")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xie Bo <xb@ultrarisc.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260715020359.1521354-2-xb@ultrarisc.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
-
-[ bo: Adapt to the scalar interrupt state in 6.1.y and its CSR one-reg
-  helpers in vcpu.c. Drop AIA and PMU overflow handling, which are not
-  present in this tree. ]
-
+Fixes: 02e9c290814c ("i40e: debugfs interface")
+Reported-by: Kunwu Chan <chentao@kylinos.cn>
+Closes: https://lore.kernel.org/intel-wired-lan/20231208031950.47410-1-chentao@kylinos.cn/
+Reported-by: Wang Haoran <haoranwangsec@gmail.com>
+Closes: https://lore.kernel.org/all/CANZ3JQRRiOdtfQJoP9QM=6LS1Jto8PGBGw6y7-TL=BcnzHQn1Q@mail.gmail.com/
+Reported-by: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
+Closes: https://lore.kernel.org/all/20250722115017.206969-1-a.jahangirzad@gmail.com/
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Kunwu Chan <kunwu.chan@linux.dev>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+[Adapted to 6.1: context conflict due to 6.1 using pf->vsi[pf->lan_vsi]
+ vs i40e_pf_get_main_vsi(pf) in the removed read functions; resolution
+ is simply to delete the 6.1 version of those functions.]
+Signed-off-by: Jay Wang <wanjay@amazon.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/kvm_host.h | 10 ++--
- arch/riscv/kvm/vcpu.c             | 78 ++++++++++++++++++++++---------
- 2 files changed, 60 insertions(+), 28 deletions(-)
+ .../net/ethernet/intel/i40e/i40e_debugfs.c    | 121 +++---------------
+ 1 file changed, 19 insertions(+), 102 deletions(-)
 
-diff --git a/arch/riscv/include/asm/kvm_host.h b/arch/riscv/include/asm/kvm_host.h
-index dbbf43d5262348..dc5e553e136992 100644
---- a/arch/riscv/include/asm/kvm_host.h
-+++ b/arch/riscv/include/asm/kvm_host.h
-@@ -192,12 +192,12 @@ struct kvm_vcpu_arch {
- 	/*
- 	 * VCPU interrupts
- 	 *
--	 * We have a lockless approach for tracking pending VCPU interrupts
--	 * implemented using atomic bitops. The irqs_pending bitmap represent
--	 * pending interrupts whereas irqs_pending_mask represent bits changed
--	 * in irqs_pending. Our approach is modeled around multiple producer
--	 * and single consumer problem where the consumer is the VCPU itself.
-+	 * The irqs_pending field represents pending interrupts whereas
-+	 * irqs_pending_mask represents bits changed in irqs_pending. Updates
-+	 * to these fields are serialized so vcpu interrupt sync/flush cannot
-+	 * drop a newly injected interrupt while syncing guest-visible HVIP.
- 	 */
-+	raw_spinlock_t irqs_pending_lock;
- 	unsigned long irqs_pending;
- 	unsigned long irqs_pending_mask;
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_debugfs.c b/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
+index b438cf846c41b2..5b59db6a5439cd 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
+@@ -57,47 +57,6 @@ static struct i40e_veb *i40e_dbg_find_veb(struct i40e_pf *pf, int seid)
+  * setup, adding or removing filters, or other things.  Many of
+  * these will be useful for some forms of unit testing.
+  **************************************************************/
+-static char i40e_dbg_command_buf[256] = "";
+-
+-/**
+- * i40e_dbg_command_read - read for command datum
+- * @filp: the opened file
+- * @buffer: where to write the data for the user to read
+- * @count: the size of the user's buffer
+- * @ppos: file position offset
+- **/
+-static ssize_t i40e_dbg_command_read(struct file *filp, char __user *buffer,
+-				     size_t count, loff_t *ppos)
+-{
+-	struct i40e_pf *pf = filp->private_data;
+-	int bytes_not_copied;
+-	int buf_size = 256;
+-	char *buf;
+-	int len;
+-
+-	/* don't allow partial reads */
+-	if (*ppos != 0)
+-		return 0;
+-	if (count < buf_size)
+-		return -ENOSPC;
+-
+-	buf = kzalloc(buf_size, GFP_KERNEL);
+-	if (!buf)
+-		return -ENOSPC;
+-
+-	len = snprintf(buf, buf_size, "%s: %s\n",
+-		       pf->vsi[pf->lan_vsi]->netdev->name,
+-		       i40e_dbg_command_buf);
+-
+-	bytes_not_copied = copy_to_user(buffer, buf, len);
+-	kfree(buf);
+-
+-	if (bytes_not_copied)
+-		return -EFAULT;
+-
+-	*ppos = len;
+-	return len;
+-}
  
-diff --git a/arch/riscv/kvm/vcpu.c b/arch/riscv/kvm/vcpu.c
-index 5174ef54ad1d9e..c6afbf0a9916fb 100644
---- a/arch/riscv/kvm/vcpu.c
-+++ b/arch/riscv/kvm/vcpu.c
-@@ -112,6 +112,7 @@ static void kvm_riscv_reset_vcpu(struct kvm_vcpu *vcpu)
- 	struct kvm_vcpu_csr *reset_csr = &vcpu->arch.guest_reset_csr;
- 	struct kvm_cpu_context *cntx = &vcpu->arch.guest_context;
- 	struct kvm_cpu_context *reset_cntx = &vcpu->arch.guest_reset_context;
-+	unsigned long flags;
- 	bool loaded;
+ static char *i40e_filter_state_string[] = {
+ 	"INVALID",
+@@ -1636,7 +1595,6 @@ static ssize_t i40e_dbg_command_write(struct file *filp,
+ static const struct file_operations i40e_dbg_command_fops = {
+ 	.owner = THIS_MODULE,
+ 	.open =  simple_open,
+-	.read =  i40e_dbg_command_read,
+ 	.write = i40e_dbg_command_write,
+ };
  
- 	/**
-@@ -134,8 +135,10 @@ static void kvm_riscv_reset_vcpu(struct kvm_vcpu *vcpu)
+@@ -1645,47 +1603,6 @@ static const struct file_operations i40e_dbg_command_fops = {
+  * The netdev_ops entry in debugfs is for giving the driver commands
+  * to be executed from the netdev operations.
+  **************************************************************/
+-static char i40e_dbg_netdev_ops_buf[256] = "";
+-
+-/**
+- * i40e_dbg_netdev_ops_read - read for netdev_ops datum
+- * @filp: the opened file
+- * @buffer: where to write the data for the user to read
+- * @count: the size of the user's buffer
+- * @ppos: file position offset
+- **/
+-static ssize_t i40e_dbg_netdev_ops_read(struct file *filp, char __user *buffer,
+-					size_t count, loff_t *ppos)
+-{
+-	struct i40e_pf *pf = filp->private_data;
+-	int bytes_not_copied;
+-	int buf_size = 256;
+-	char *buf;
+-	int len;
+-
+-	/* don't allow partal reads */
+-	if (*ppos != 0)
+-		return 0;
+-	if (count < buf_size)
+-		return -ENOSPC;
+-
+-	buf = kzalloc(buf_size, GFP_KERNEL);
+-	if (!buf)
+-		return -ENOSPC;
+-
+-	len = snprintf(buf, buf_size, "%s: %s\n",
+-		       pf->vsi[pf->lan_vsi]->netdev->name,
+-		       i40e_dbg_netdev_ops_buf);
+-
+-	bytes_not_copied = copy_to_user(buffer, buf, len);
+-	kfree(buf);
+-
+-	if (bytes_not_copied)
+-		return -EFAULT;
+-
+-	*ppos = len;
+-	return len;
+-}
  
- 	kvm_riscv_vcpu_timer_reset(vcpu);
+ /**
+  * i40e_dbg_netdev_ops_write - write into netdev_ops datum
+@@ -1699,35 +1616,36 @@ static ssize_t i40e_dbg_netdev_ops_write(struct file *filp,
+ 					 size_t count, loff_t *ppos)
+ {
+ 	struct i40e_pf *pf = filp->private_data;
++	char *cmd_buf, *buf_tmp;
+ 	int bytes_not_copied;
+ 	struct i40e_vsi *vsi;
+-	char *buf_tmp;
+ 	int vsi_seid;
+ 	int i, cnt;
  
--	WRITE_ONCE(vcpu->arch.irqs_pending, 0);
--	WRITE_ONCE(vcpu->arch.irqs_pending_mask, 0);
-+	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
-+	vcpu->arch.irqs_pending = 0;
-+	vcpu->arch.irqs_pending_mask = 0;
-+	raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
+ 	/* don't allow partial writes */
+ 	if (*ppos != 0)
+ 		return 0;
+-	if (count >= sizeof(i40e_dbg_netdev_ops_buf))
+-		return -ENOSPC;
  
- 	vcpu->arch.hfence_head = 0;
- 	vcpu->arch.hfence_tail = 0;
-@@ -173,6 +176,7 @@ int kvm_arch_vcpu_create(struct kvm_vcpu *vcpu)
- 
- 	/* Setup VCPU hfence queue */
- 	spin_lock_init(&vcpu->arch.hfence_lock);
-+	raw_spin_lock_init(&vcpu->arch.irqs_pending_lock);
- 
- 	/* Setup reset state of shadow SSTATUS and HSTATUS CSRs */
- 	cntx = &vcpu->arch.guest_reset_context;
-@@ -444,7 +448,7 @@ static int kvm_riscv_vcpu_set_reg_csr(struct kvm_vcpu *vcpu,
- 	unsigned long reg_num = reg->id & ~(KVM_REG_ARCH_MASK |
- 					    KVM_REG_SIZE_MASK |
- 					    KVM_REG_RISCV_CSR);
--	unsigned long reg_val;
-+	unsigned long flags, reg_val;
- 
- 	if (KVM_REG_SIZE(reg->id) != sizeof(unsigned long))
- 		return -EINVAL;
-@@ -461,8 +465,11 @@ static int kvm_riscv_vcpu_set_reg_csr(struct kvm_vcpu *vcpu,
- 
- 	((unsigned long *)csr)[reg_num] = reg_val;
- 
--	if (reg_num == KVM_REG_RISCV_CSR_REG(sip))
--		WRITE_ONCE(vcpu->arch.irqs_pending_mask, 0);
-+	if (reg_num == KVM_REG_RISCV_CSR_REG(sip)) {
-+		raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
-+		vcpu->arch.irqs_pending_mask = 0;
-+		raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
+-	memset(i40e_dbg_netdev_ops_buf, 0, sizeof(i40e_dbg_netdev_ops_buf));
+-	bytes_not_copied = copy_from_user(i40e_dbg_netdev_ops_buf,
+-					  buffer, count);
+-	if (bytes_not_copied)
++	cmd_buf = kzalloc(count + 1, GFP_KERNEL);
++	if (!cmd_buf)
++		return count;
++	bytes_not_copied = copy_from_user(cmd_buf, buffer, count);
++	if (bytes_not_copied) {
++		kfree(cmd_buf);
+ 		return -EFAULT;
+-	i40e_dbg_netdev_ops_buf[count] = '\0';
 +	}
++	cmd_buf[count] = '\0';
  
- 	return 0;
- }
-@@ -679,19 +686,26 @@ void kvm_riscv_vcpu_flush_interrupts(struct kvm_vcpu *vcpu)
- {
- 	struct kvm_vcpu_csr *csr = &vcpu->arch.guest_csr;
- 	unsigned long mask, val;
-+	unsigned long flags;
- 
--	if (READ_ONCE(vcpu->arch.irqs_pending_mask)) {
--		mask = xchg_acquire(&vcpu->arch.irqs_pending_mask, 0);
--		val = READ_ONCE(vcpu->arch.irqs_pending) & mask;
-+	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
-+
-+	mask = vcpu->arch.irqs_pending_mask;
-+	if (mask) {
-+		vcpu->arch.irqs_pending_mask = 0;
-+		val = vcpu->arch.irqs_pending & mask;
- 
- 		csr->hvip &= ~mask;
- 		csr->hvip |= val;
+-	buf_tmp = strchr(i40e_dbg_netdev_ops_buf, '\n');
++	buf_tmp = strchr(cmd_buf, '\n');
+ 	if (buf_tmp) {
+ 		*buf_tmp = '\0';
+-		count = buf_tmp - i40e_dbg_netdev_ops_buf + 1;
++		count = buf_tmp - cmd_buf + 1;
  	}
-+
-+	raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
- }
  
- void kvm_riscv_vcpu_sync_interrupts(struct kvm_vcpu *vcpu)
- {
- 	unsigned long hvip;
-+	unsigned long flags;
- 	struct kvm_vcpu_arch *v = &vcpu->arch;
- 	struct kvm_vcpu_csr *csr = &vcpu->arch.guest_csr;
+-	if (strncmp(i40e_dbg_netdev_ops_buf, "change_mtu", 10) == 0) {
++	if (strncmp(cmd_buf, "change_mtu", 10) == 0) {
+ 		int mtu;
  
-@@ -700,32 +714,40 @@ void kvm_riscv_vcpu_sync_interrupts(struct kvm_vcpu *vcpu)
- 
- 	/* Sync-up HVIP.VSSIP bit changes does by Guest */
- 	hvip = csr_read(CSR_HVIP);
-+
-+	raw_spin_lock_irqsave(&v->irqs_pending_lock, flags);
-+
- 	if ((csr->hvip ^ hvip) & (1UL << IRQ_VS_SOFT)) {
- 		if (hvip & (1UL << IRQ_VS_SOFT)) {
--			if (!test_and_set_bit(IRQ_VS_SOFT,
--					      &v->irqs_pending_mask))
--				set_bit(IRQ_VS_SOFT, &v->irqs_pending);
-+			if (!__test_and_set_bit(IRQ_VS_SOFT,
-+						&v->irqs_pending_mask))
-+				__set_bit(IRQ_VS_SOFT, &v->irqs_pending);
- 		} else {
--			if (!test_and_set_bit(IRQ_VS_SOFT,
--					      &v->irqs_pending_mask))
--				clear_bit(IRQ_VS_SOFT, &v->irqs_pending);
-+			if (!__test_and_set_bit(IRQ_VS_SOFT,
-+						&v->irqs_pending_mask))
-+				__clear_bit(IRQ_VS_SOFT, &v->irqs_pending);
+-		cnt = sscanf(&i40e_dbg_netdev_ops_buf[11], "%i %i",
++		cnt = sscanf(&cmd_buf[11], "%i %i",
+ 			     &vsi_seid, &mtu);
+ 		if (cnt != 2) {
+ 			dev_info(&pf->pdev->dev, "change_mtu <vsi_seid> <mtu>\n");
+@@ -1749,8 +1667,8 @@ static ssize_t i40e_dbg_netdev_ops_write(struct file *filp,
+ 			dev_info(&pf->pdev->dev, "Could not acquire RTNL - please try again\n");
  		}
+ 
+-	} else if (strncmp(i40e_dbg_netdev_ops_buf, "set_rx_mode", 11) == 0) {
+-		cnt = sscanf(&i40e_dbg_netdev_ops_buf[11], "%i", &vsi_seid);
++	} else if (strncmp(cmd_buf, "set_rx_mode", 11) == 0) {
++		cnt = sscanf(&cmd_buf[11], "%i", &vsi_seid);
+ 		if (cnt != 1) {
+ 			dev_info(&pf->pdev->dev, "set_rx_mode <vsi_seid>\n");
+ 			goto netdev_ops_write_done;
+@@ -1770,8 +1688,8 @@ static ssize_t i40e_dbg_netdev_ops_write(struct file *filp,
+ 			dev_info(&pf->pdev->dev, "Could not acquire RTNL - please try again\n");
+ 		}
+ 
+-	} else if (strncmp(i40e_dbg_netdev_ops_buf, "napi", 4) == 0) {
+-		cnt = sscanf(&i40e_dbg_netdev_ops_buf[4], "%i", &vsi_seid);
++	} else if (strncmp(cmd_buf, "napi", 4) == 0) {
++		cnt = sscanf(&cmd_buf[4], "%i", &vsi_seid);
+ 		if (cnt != 1) {
+ 			dev_info(&pf->pdev->dev, "napi <vsi_seid>\n");
+ 			goto netdev_ops_write_done;
+@@ -1789,21 +1707,20 @@ static ssize_t i40e_dbg_netdev_ops_write(struct file *filp,
+ 			dev_info(&pf->pdev->dev, "napi called\n");
+ 		}
+ 	} else {
+-		dev_info(&pf->pdev->dev, "unknown command '%s'\n",
+-			 i40e_dbg_netdev_ops_buf);
++		dev_info(&pf->pdev->dev, "unknown command '%s'\n", cmd_buf);
+ 		dev_info(&pf->pdev->dev, "available commands\n");
+ 		dev_info(&pf->pdev->dev, "  change_mtu <vsi_seid> <mtu>\n");
+ 		dev_info(&pf->pdev->dev, "  set_rx_mode <vsi_seid>\n");
+ 		dev_info(&pf->pdev->dev, "  napi <vsi_seid>\n");
  	}
- 
-+	raw_spin_unlock_irqrestore(&v->irqs_pending_lock, flags);
-+
- 	/* Sync-up timer CSRs */
- 	kvm_riscv_vcpu_timer_sync(vcpu);
+ netdev_ops_write_done:
++	kfree(cmd_buf);
+ 	return count;
  }
  
- int kvm_riscv_vcpu_set_interrupt(struct kvm_vcpu *vcpu, unsigned int irq)
- {
-+	unsigned long flags;
-+
- 	if (irq != IRQ_VS_SOFT &&
- 	    irq != IRQ_VS_TIMER &&
- 	    irq != IRQ_VS_EXT)
- 		return -EINVAL;
+ static const struct file_operations i40e_dbg_netdev_ops_fops = {
+ 	.owner = THIS_MODULE,
+ 	.open = simple_open,
+-	.read = i40e_dbg_netdev_ops_read,
+ 	.write = i40e_dbg_netdev_ops_write,
+ };
  
--	set_bit(irq, &vcpu->arch.irqs_pending);
--	smp_mb__before_atomic();
--	set_bit(irq, &vcpu->arch.irqs_pending_mask);
-+	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
-+	__set_bit(irq, &vcpu->arch.irqs_pending);
-+	__set_bit(irq, &vcpu->arch.irqs_pending_mask);
-+	raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
- 
- 	kvm_vcpu_kick(vcpu);
- 
-@@ -734,24 +756,34 @@ int kvm_riscv_vcpu_set_interrupt(struct kvm_vcpu *vcpu, unsigned int irq)
- 
- int kvm_riscv_vcpu_unset_interrupt(struct kvm_vcpu *vcpu, unsigned int irq)
- {
-+	unsigned long flags;
-+
- 	if (irq != IRQ_VS_SOFT &&
- 	    irq != IRQ_VS_TIMER &&
- 	    irq != IRQ_VS_EXT)
- 		return -EINVAL;
- 
--	clear_bit(irq, &vcpu->arch.irqs_pending);
--	smp_mb__before_atomic();
--	set_bit(irq, &vcpu->arch.irqs_pending_mask);
-+	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
-+	__clear_bit(irq, &vcpu->arch.irqs_pending);
-+	__set_bit(irq, &vcpu->arch.irqs_pending_mask);
-+	raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
- 
- 	return 0;
- }
- 
- bool kvm_riscv_vcpu_has_interrupts(struct kvm_vcpu *vcpu, unsigned long mask)
- {
--	unsigned long ie = ((vcpu->arch.guest_csr.vsie & VSIP_VALID_MASK)
--			    << VSIP_TO_HVIP_SHIFT) & mask;
-+	unsigned long flags;
-+	unsigned long ie;
-+	bool ret;
-+
-+	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
-+	ie = ((vcpu->arch.guest_csr.vsie & VSIP_VALID_MASK)
-+	      << VSIP_TO_HVIP_SHIFT) & mask;
-+	ret = vcpu->arch.irqs_pending & ie;
-+	raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
- 
--	return (READ_ONCE(vcpu->arch.irqs_pending) & ie) ? true : false;
-+	return ret;
- }
- 
- void kvm_riscv_vcpu_power_off(struct kvm_vcpu *vcpu)
 -- 
 2.53.0
 
