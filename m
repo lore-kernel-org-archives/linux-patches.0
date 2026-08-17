@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA223C661A;
-	Mon, 17 Aug 2026 14:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC81B3B8D78;
+	Mon, 17 Aug 2026 14:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976335; cv=none; b=b96O593CQRvCvnFC9CUeJ8MFK7T9zORaVp/cMj/HACDHHnuGUxq1iVk4JPciJ1OxA8TpGIE8qDSp28Tk1oUXA7kZZrtQt7QhTev/x9JG8IXmaxJ9HB7dpwTMJXqfQKBbhrJ0EX+5U0Oy7pHvgOM5C/jXisl1qaA/RCbZ9oV6geE=
+	t=1786976339; cv=none; b=cbxexWvu8tHK7qLpB/PJUEDU8aNx+i0wAWPoDu/wIbLJa/muorFJw/Gjg3ESGCghB6/kf8TEEUbZKan3x04XXl+yr6Z2ZwBnudEefVtG64qqnE+gO8yjQM+qGnY8Uz+wcUdlOvuW0f4N3z5AbIJWrWzblnJxYGN3aoLXLcRIEt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976335; c=relaxed/simple;
-	bh=517fLg3qXUEd1kr6Hn99vJvwKJQ3KYta0WhNTQaFqus=;
+	s=arc-20240116; t=1786976339; c=relaxed/simple;
+	bh=OfgCB2ywDHeuHeRLNorMr1VuEb8ZBxOoRgRSbwKDIUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NAz1ThsIzla5lgmc3+tSyRNmhCtml+i7Un+W+mp6rOJjAqq1Rv79AFA8ET53mQHsE8rWPpiceKaEohsxyoFX76Zswd+5UZSwMZREDyc2EC5dsRx1uR+O/OS3SBT24aQIjBDkwgaINszZRg/N5RILYVRjI974jaWZXnKwgCYs79g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WK3gN70Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=poDWkiHlpOfTe1ERRUJgYxjjWFhV58Hd5pSztAeFnWTkPBaExh8SQIeVNyMwuZIgodfMVLasDJ03Oolk0OBkhGS1f/OZoEYr6gB23auv9czclCY5o8rHPEM/0rSbFO5iHYecQb8GZLR+I8BriUFucPJd4x0LWbQGP3FmzS/pgVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WhWafgol; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WK3gN70Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330451F000E9;
-	Mon, 17 Aug 2026 14:18:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WhWafgol"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E471F000E9;
+	Mon, 17 Aug 2026 14:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976333;
-	bh=fpwxZH0+EiXaBH1CADzzgmyT7BqSgrAjp0Dat6DWZG0=;
+	s=korg; t=1786976336;
+	bh=nnL2rLzkYp95+6jFA+1EgjOb/9FBIlEJeEgY6ZvVlFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WK3gN70Q5Na5Bk7ZRMgK+VqJKLCQFoUSGNyoxF3e5e3oG73aUTLQmso3z/UGQHZ1b
-	 MfwaN4XYKSGoyVqvjhYDU9smOi1FgJO/CwQEuCmr2lUwfSVzxIDQY8WGj1XLyz5MEH
-	 +eGFG+4Y3k9TnWrcqEk6CRCWygcqZbSmyktJ5IOM=
+	b=WhWafgolSGiEchASs8IjfahKsObDZ8oqlABWuLqnbVQZLbWljYPe0zzwRUxqgww2p
+	 oZh/vhh0Z46kMo6JkpZgFwMKzBvb+gFGTmJLISTQUBcRQs0npDi/Oy+aloJ+TM9xLm
+	 qriPGLHNdASPxM21M2DvFoH21C/SPTZgrTuAfirA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Babanpreet Singh <bbnpreetsingh@gmail.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	William Breathitt Gray <wbg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 338/389] sctp: extract sctp_v6_err_handle function from sctp_v6_err
-Date: Mon, 17 Aug 2026 15:32:57 +0200
-Message-ID: <20260817132552.031191034@linuxfoundation.org>
+Subject: [PATCH 5.10 321/389] counter: microchip-tcb-capture: Fix DT channel validation
+Date: Mon, 17 Aug 2026 15:32:40 +0200
+Message-ID: <20260817132551.461879512@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,135 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Babanpreet Singh <bbnpreetsingh@gmail.com>
 
-[ Upstream commit f6549bd37b927655c6fecad88428a731cd8a4a34 ]
+[ Upstream commit f1a3a9946aab611dd2200c01ff122f64b033dad2 ]
 
-This patch is to extract sctp_v6_err_handle() from sctp_v6_err() to
-only handle the icmp err after the sock lookup, and it also makes
-the code clearer.
+mchp_tc_probe() reads the devicetree "reg" cell - a u32, per the API
+contract of of_property_read_u32_index() - into a signed int, so the
+bounds check "channel > 2" fails to reject cell values at or above
+0x80000000: reinterpreted as a negative int, they compare below 2 and
+pass validation.
 
-sctp_v6_err_handle() will be used in sctp over udp's err handling
-in the following patch.
+A malformed devicetree can therefore drive a negative channel into the
+ATMEL_TC_REG() offset arithmetic, making the driver access syscon
+regmap offsets outside the TC block's register window, and into the
+"t%d_clk" clock-name formatting, where it truncates clk_name (sized
+for "t0_clk".."t2_clk").
 
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: af0e5cdd031f ("tls: don't abort the connection on signal-interrupted sends")
+Declare channel as u32, matching the API contract; the unsigned
+comparison then rejects everything except channels 0..2. Adjust the
+format specifier to %u accordingly, which also resolves the W=1
+warning that exposed the gap:
+
+  microchip-tcb-capture.c:520:56: warning: '%d' directive output may
+    be truncated writing between 1 and 11 bytes into a region of size
+    6 [-Wformat-truncation=]
+  note: directive argument in the range [-2147483648, 2]
+
+No behavior change for well-formed devicetrees: channels 0..2 take
+identical paths before and after.
+
+Fixes: 106b104137fd ("counter: Add microchip TCB capture counter")
+Assisted-by: Claude:claude-fable-5 [gcc W=1]
+Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Link: https://lore.kernel.org/r/20260714042910.7-1-bbnpreetsingh@gmail.com
+Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/ipv6.c | 76 ++++++++++++++++++++++++++-----------------------
- 1 file changed, 40 insertions(+), 36 deletions(-)
+ drivers/counter/microchip-tcb-capture.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sctp/ipv6.c b/net/sctp/ipv6.c
-index 984ec00ad6384..48bd3b52d56d0 100644
---- a/net/sctp/ipv6.c
-+++ b/net/sctp/ipv6.c
-@@ -121,50 +121,28 @@ static struct notifier_block sctp_inet6addr_notifier = {
- 	.notifier_call = sctp_inet6addr_event,
- };
+diff --git a/drivers/counter/microchip-tcb-capture.c b/drivers/counter/microchip-tcb-capture.c
+index 40d02df8acf75..822c072ffa20e 100644
+--- a/drivers/counter/microchip-tcb-capture.c
++++ b/drivers/counter/microchip-tcb-capture.c
+@@ -317,7 +317,7 @@ static int mchp_tc_probe(struct platform_device *pdev)
+ 	char clk_name[7];
+ 	struct regmap *regmap;
+ 	struct clk *clk[3];
+-	int channel;
++	u32 channel;
+ 	int ret, i;
  
--/* ICMP error handler. */
--static int sctp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
--			u8 type, u8 code, int offset, __be32 info)
-+static void sctp_v6_err_handle(struct sctp_transport *t, struct sk_buff *skb,
-+			       __u8 type, __u8 code, __u32 info)
- {
--	struct sock *sk;
--	struct sctp_association *asoc;
--	struct sctp_transport *transport;
-+	struct sctp_association *asoc = t->asoc;
-+	struct sock *sk = asoc->base.sk;
- 	struct ipv6_pinfo *np;
--	__u16 saveip, savesctp;
--	int err, ret = 0;
--	struct net *net = dev_net(skb->dev);
--
--	/* Fix up skb to look at the embedded net header. */
--	saveip	 = skb->network_header;
--	savesctp = skb->transport_header;
--	skb_reset_network_header(skb);
--	skb_set_transport_header(skb, offset);
--	sk = sctp_err_lookup(net, AF_INET6, skb, sctp_hdr(skb), &asoc, &transport);
--	/* Put back, the original pointers. */
--	skb->network_header   = saveip;
--	skb->transport_header = savesctp;
--	if (!sk) {
--		__ICMP6_INC_STATS(net, __in6_dev_get(skb->dev), ICMP6_MIB_INERRORS);
--		return -ENOENT;
--	}
--
--	/* Warning:  The sock lock is held.  Remember to call
--	 * sctp_err_finish!
--	 */
-+	int err = 0;
+ 	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
+@@ -352,7 +352,7 @@ static int mchp_tc_probe(struct platform_device *pdev)
  
- 	switch (type) {
- 	case ICMPV6_PKT_TOOBIG:
- 		if (ip6_sk_accept_pmtu(sk))
--			sctp_icmp_frag_needed(sk, asoc, transport, ntohl(info));
--		goto out_unlock;
-+			sctp_icmp_frag_needed(sk, asoc, t, info);
-+		return;
- 	case ICMPV6_PARAMPROB:
- 		if (ICMPV6_UNK_NEXTHDR == code) {
--			sctp_icmp_proto_unreachable(sk, asoc, transport);
--			goto out_unlock;
-+			sctp_icmp_proto_unreachable(sk, asoc, t);
-+			return;
- 		}
- 		break;
- 	case NDISC_REDIRECT:
--		sctp_icmp_redirect(sk, transport, skb);
--		goto out_unlock;
-+		sctp_icmp_redirect(sk, t, skb);
-+		return;
- 	default:
- 		break;
- 	}
-@@ -174,13 +152,39 @@ static int sctp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
- 	if (!sock_owned_by_user(sk) && np->recverr) {
- 		sk->sk_err = err;
- 		sk->sk_error_report(sk);
--	} else {  /* Only an error on timeout */
-+	} else {
- 		sk->sk_err_soft = err;
- 	}
-+}
-+
-+/* ICMP error handler. */
-+static int sctp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
-+		       u8 type, u8 code, int offset, __be32 info)
-+{
-+	struct net *net = dev_net(skb->dev);
-+	struct sctp_transport *transport;
-+	struct sctp_association *asoc;
-+	__u16 saveip, savesctp;
-+	struct sock *sk;
-+
-+	/* Fix up skb to look at the embedded net header. */
-+	saveip	 = skb->network_header;
-+	savesctp = skb->transport_header;
-+	skb_reset_network_header(skb);
-+	skb_set_transport_header(skb, offset);
-+	sk = sctp_err_lookup(net, AF_INET6, skb, sctp_hdr(skb), &asoc, &transport);
-+	/* Put back, the original pointers. */
-+	skb->network_header   = saveip;
-+	skb->transport_header = savesctp;
-+	if (!sk) {
-+		__ICMP6_INC_STATS(net, __in6_dev_get(skb->dev), ICMP6_MIB_INERRORS);
-+		return -ENOENT;
-+	}
+ 		priv->channel[i] = channel;
  
--out_unlock:
-+	sctp_v6_err_handle(transport, skb, type, code, ntohl(info));
- 	sctp_err_finish(sk, transport);
--	return ret;
-+
-+	return 0;
- }
+-		snprintf(clk_name, sizeof(clk_name), "t%d_clk", channel);
++		snprintf(clk_name, sizeof(clk_name), "t%u_clk", channel);
  
- static int sctp_v6_xmit(struct sk_buff *skb, struct sctp_transport *transport)
+ 		clk[i] = of_clk_get_by_name(np->parent, clk_name);
+ 		if (IS_ERR(clk[i])) {
 -- 
 2.53.0
 
