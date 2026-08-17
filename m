@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C4D3F1ABB;
-	Mon, 17 Aug 2026 15:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3665170836;
+	Mon, 17 Aug 2026 15:18:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979935; cv=none; b=USw6IQVnZNnPmxD9JXdIBWdDchigGk5ZZ6IHRR13W2DidEEF+5PW1R5pdIMVFwqdTNCmTWkyNABta2oODGijdvqVVwHYX4LmJjuX7Jh/EyUzl6+YgTskxDYRpUQ8jsPDQN8zEkse3c7kr+uBueHhMTJfZLgk5Gaa2b0gKJiKqss=
+	t=1786979938; cv=none; b=YNMoHYE0cp3y7/WlbhwmhFw3jlIkBA8KuZrL0D5auSMcfP0ZYckRPV6B+qL2Wbc8Hw+WaHDqy6CeAa7K27b6txRB09XlTHSXRgUdA93IwtZXv53PxCQMYIEiY171Gq2nziZ8/kNZ6XM0AA5tqwXu8yualdKIy/P1X2ho1i1/yac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979935; c=relaxed/simple;
-	bh=dYf084edICvJvarZNlWHKxvJ80zldAkbDYsYmpOHYvU=;
+	s=arc-20240116; t=1786979938; c=relaxed/simple;
+	bh=TvGfIZluvw+W1ru4PxhCH+TldvR6+OtpcT8qQfXD/x0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GIZKRRGxinfFivL1EFJjNOxcUbaD8RlPlwyj0GA6IHzTtLs7Vlp2zL6h/hsQ+aJhIc7CiZ2DdEX0eSEh0TeLQTmNYP1pujUjn3sk+923HtKTmqc1EJyUJOHtTGyCUIAouM8qxzOh3c5m9gm8mA16wAOQruHOa8PubdGYhbGl3l8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gng2Ei+6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DgVTapKvjAE4eBAX6RNNUODKMjvW1lpuIrVNCwnBJVdQPCmmBBl/d+ogVVAFWMuFW71ROEoAeYrxGm+haV1VZ5CdST8YO6qp3a9Bxh3qdJJXH1FM6E+NaoWiR+HQ+/m8Ewl74Q1rscU0YI/Y39i9YE9wuoY5mRtmA8+P+DqSSp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cm7Dj+Mk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gng2Ei+6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A5A41F000E9;
-	Mon, 17 Aug 2026 15:18:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cm7Dj+Mk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2103F1F000E9;
+	Mon, 17 Aug 2026 15:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979933;
-	bh=3X8nC6kO5feXrMm5FvogwrG6A930ZJiXRx0Dch4XRXw=;
+	s=korg; t=1786979936;
+	bh=D9p3w/aL3RdnAHjLQKTdPlx9hNO7HbLHzWHCdXgtu0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gng2Ei+6BV6TLnwzm8TDPAuxg/Kv0sECbv9qo8DEv39zdXtyyvJuDUr6Ekmxs95Aa
-	 bE9zMued94S1AnJSZWxBugW9rtVsoAxCCBwc69fb/b/07cJq3TvL0sbpcxx4604PHU
-	 i0nRAwSYlD03t1erE6IQO0jtIJxhVs4KpuLyKSAk=
+	b=Cm7Dj+MkPjEOdM2IP7eBjgeyG/IBxxPw9rkKarsBGPdnLfDqD62M6yByuppnL2aSq
+	 zVwQemMTCV63rtVBO8AiEdt6Xi1U526JukfsrMJM6QXPCbgQY1T+kLb5HFr2hQNemt
+	 Qn/fb4N44o179R7BOYty8WA8NsFLV18XyHyhtoI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Subject: [PATCH 6.1 397/609] ALSA: 6fire: Fix UAF at error handling during probe
-Date: Mon, 17 Aug 2026 15:31:33 +0200
-Message-ID: <20260817132557.503694380@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 362/609] powerpc/boot: Fix simpleboot CPU node lookup check
+Date: Mon, 17 Aug 2026 15:30:58 +0200
+Message-ID: <20260817132556.396430529@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,39 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit a54bf16965f896415c3337bc4fbb40fb11941d99 upstream.
+[ Upstream commit c824ab65685bb119c6c6a3a200b3428c72862d5a ]
 
-Although 6fire driver had a few fixes for dealing with the early error
-handling during the probe phase, it forgot a pending URB before
-freeing the resources, which may lead to a UAF.
+fdt_node_offset_by_prop_value() returns a negative error code on
+failure - fix the check accordingly.
 
-This patch addresses it by doing the almost same cleanup procedure
-like the normal disconnect phase at the error path.
-
-Reported-and-tested-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Closes: https://lore.kernel.org/20260724030900.1984491-1-shuangpeng.kernel@gmail.com
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260726074821.2288158-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d2477b5cc8ca ("[POWERPC] bootwrapper: Add a firmware-independent simpleboot target.")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260702211554.56923-4-thorsten.blum@linux.dev
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/6fire/chip.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/powerpc/boot/simpleboot.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/usb/6fire/chip.c
-+++ b/sound/usb/6fire/chip.c
-@@ -158,6 +158,10 @@ static int usb6fire_chip_probe(struct us
- 	return 0;
- 
- destroy_chip:
-+	chip->shutdown = true;
-+	if (card)
-+		snd_card_disconnect(card);
-+	usb6fire_chip_abort(chip);
- 	snd_card_free(card);
- 	return ret;
- }
+diff --git a/arch/powerpc/boot/simpleboot.c b/arch/powerpc/boot/simpleboot.c
+index c80691d83880b..27591df41e9e8 100644
+--- a/arch/powerpc/boot/simpleboot.c
++++ b/arch/powerpc/boot/simpleboot.c
+@@ -68,7 +68,7 @@ void platform_init(unsigned long r3, unsigned long r4, unsigned long r5,
+ 	/* finally, setup the timebase */
+ 	node = fdt_node_offset_by_prop_value(_dtb_start, -1, "device_type",
+ 					     "cpu", sizeof("cpu"));
+-	if (!node)
++	if (node < 0)
+ 		fatal("Cannot find cpu node\n");
+ 	timebase = fdt_getprop(_dtb_start, node, "timebase-frequency", &size);
+ 	if (timebase && (size == 4))
+-- 
+2.53.0
+
 
 
