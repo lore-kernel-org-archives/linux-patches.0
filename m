@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26BA3A8734;
-	Mon, 17 Aug 2026 14:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF7F175A99;
+	Mon, 17 Aug 2026 14:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976675; cv=none; b=dYbCU9ISJ2iVzWQkGKG3GWZDA1+3lrd0tbJ6LZxRkq/I08XCCHGFsvwYuJ8wEthVQyzEf1HRU5ZRE8vTZPQmVoTy+ZBaeMzgmQMDmjuZuNEXL/E3JKvmvkrKecHrgvR8n+66D1UgaLPluHEu8HV90RAj3nk7VIVUbR7pgha9ISo=
+	t=1786976677; cv=none; b=cerYLgU5MURMHZ5KwCh1lO01NkogB7wVT3hO3YTaqs05LAfm+LICtyezZDZa95rNIIQC3vK6Wo93PulQzIHls/mqHFn8682+j8UKuPlsql/ugaWPXzKJCzFX//P4Sx6OEycMMB/GCSsKHXYFzOn3hjabOWT6LfCTRZd4Yu37ZsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976675; c=relaxed/simple;
-	bh=9K4CBQyy2E3lMShSnahc80O0QkcXzjqDDjuljdJ9S7E=;
+	s=arc-20240116; t=1786976677; c=relaxed/simple;
+	bh=E2Bmv5pG7WiH/kZGiGu3mtMP+AbaHitmgkIyM+fYwrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lneMTM6pBmc+Nd0l2BBbNOglF5J2SM9ggXELJ4lMT8Bj6+1EmEeck0NKe34ZLn1D84gFV0afgvi4mpCA/2SuHs6d9a8geMEj4TTwGeoBV36u8Yg/bFA64p7rAJ0LYG3fAecVLTdPzImGVZ0KcC8JezF1Lt4YEHRuJ0Gx2E50Nm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kpuvICQK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pIqf416akK8FYB7tusURjwPd/wspfbfKnr9AACN0HKfnOMaAoq4L6MVUDXQBFaihjrE79TJD6iqO8LoRvqTHxnLEEaaZ8MDxo/V3AHHcrh6z4jj2PxhTCDaesbHemz/tzdLKNyZMNre3bnbTIwHjXUSYIWJZM0BQ6oIZo8FV2bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MCqDOQid; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kpuvICQK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F1401F00A3D;
-	Mon, 17 Aug 2026 14:24:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MCqDOQid"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F811F00A3A;
+	Mon, 17 Aug 2026 14:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976671;
-	bh=LLPQZSXoXTApYcKxgHTdqsCefq52To4McF5WK8wLKAY=;
+	s=korg; t=1786976674;
+	bh=iLrbWmd23RmzfG1g5IU+fQiAMMiLgVWrvYWZbI67Ws8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kpuvICQK4PwJLebl9nlD/8y7qWWieWTvygsJKHtD78Gs/h99TreqmMKZmIQVEbf/h
-	 ldUS85J130TOSPOk0AtMfWnNqjXGIu4wsZs4ClOz4PoVVdeE4hrZMlbBVxlZQ9lhBB
-	 FPcmyEleUFkAnDMC1SQFKHdQL5kMyeBMFAu4w4a0=
+	b=MCqDOQidv2G1B3Dn+HIpgoohw17qxWXHR+UsJ7O+Q4rXNHYz8eAVtJLSOzn+5gbv7
+	 YQZ+tIlo8eQ6RNnKMYjxpkn2zD5j7Bl1LQoWd8fhXJdzT7yXFidcZgFYamjmuRPv3j
+	 dYk7b/bLV1D4A+fU6/9B8lQBaOFRjAVyLpmt2qTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Qu Wenruo <wqu@suse.com>,
 	Xiang Mei <xmei5@asu.edu>,
-	David Sterba <dsterba@suse.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 015/456] btrfs: reject free space cache with more entries than pages
-Date: Mon, 17 Aug 2026 15:26:45 +0200
-Message-ID: <20260817132540.500053790@linuxfoundation.org>
+Subject: [PATCH 5.15 058/456] mpls: fix NULL deref in mpls_valid_fib_dump_req() on CONFIG_INET=n
+Date: Mon, 17 Aug 2026 15:27:28 +0200
+Message-ID: <20260817132542.315853915@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -53,86 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit a2d8d5647ed854e38f941741aea45b9eb15a6350 ]
+[ Upstream commit 56d96fededd61192cd7cc8d2b0f36adfd59036c3 ]
 
-When loading a v1 free space cache, __load_free_space_cache() takes
-num_entries and num_bitmaps straight from the on-disk
-btrfs_free_space_header. That header is stored in the tree_root under a key
-with type 0, which the tree-checker has no case for, so neither count is
-validated before the load trusts it.
+On CONFIG_INET=n builds, mpls_valid_fib_dump_req() walks the parsed
+attribute table itself instead of calling ip_valid_fib_dump_req(). The
+RTA_OIF arm passes tb[RTA_OIF] to nla_get_u32() without checking it is
+present, so an RTM_GETROUTE dump for AF_MPLS with strict checking and no
+RTA_OIF hits a NULL dereference.
 
-The load loops num_entries times and maps the next page whenever the current
-one runs out, going through io_ctl_check_crc() -> io_ctl_map_page(), which
-does io_ctl->pages[io_ctl->index++]. But pages[] is allocated in
-io_ctl_init() from the cache inode's i_size, not from num_entries:
+RTM_GETROUTE is RTNL_KIND_GET, which rtnetlink_rcv_msg() permits without
+CAP_NET_ADMIN, so an unprivileged user can trigger it.
 
-	num_pages = DIV_ROUND_UP(i_size_read(inode), PAGE_SIZE);
-	io_ctl->pages = kcalloc(num_pages, sizeof(struct page *), GFP_NOFS);
+  Oops: general protection fault, probably for non-canonical address
+        0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
+  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+  RIP: 0010:mpls_valid_fib_dump_req (net/mpls/af_mpls.c:2189)
+  Call Trace:
+   mpls_dump_routes (net/mpls/af_mpls.c:2236)
+   netlink_dump (net/netlink/af_netlink.c:2331)
+   __netlink_dump_start (net/netlink/af_netlink.c:2446)
+   rtnetlink_rcv_msg (net/core/rtnetlink.c:7033)
+   netlink_rcv_skb (net/netlink/af_netlink.c:2556)
+   netlink_unicast (net/netlink/af_netlink.c:1345)
+   netlink_sendmsg (net/netlink/af_netlink.c:1900)
+   __sock_sendmsg (net/socket.c:790)
+   ____sys_sendmsg (net/socket.c:2684)
+   ___sys_sendmsg (net/socket.c:2738)
+   __sys_sendmsg (net/socket.c:2770)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
 
-So if num_entries claims more records than the pages can hold, io_ctl->index
-runs off the end of pages[]. The write side never hits this because
-io_ctl_add_entry() and io_ctl_add_bitmap() both stop once
-io_ctl->index >= io_ctl->num_pages; the read side just never had the same
-check.
+Skip unset attributes, as ip_valid_fib_dump_req() does.
 
-To trigger it, take a clean cache (num_entries = <N> here), set num_entries
-in the header to 0x10000, and fix up the leaf checksum so it still passes
-the tree-checker. The cache inode has i_size = 65536, so num_pages is 16 and
-pages[] is a 16-pointer (kmalloc-128) array. The load now tries to read
-65536 entries, io_ctl->index walks up to 16, and pages[16] is read past the
-array:
-
-  BUG: KASAN: slab-out-of-bounds in io_ctl_check_crc (fs/btrfs/free-space-cache.c:420 fs/btrfs/free-space-cache.c:565)
-  Read of size 8 at addr ffff88800c833a80 by task kworker/u8:3/58
-   io_ctl_check_crc (fs/btrfs/free-space-cache.c:420 fs/btrfs/free-space-cache.c:565)
-   __load_free_space_cache (fs/btrfs/free-space-cache.c:655 fs/btrfs/free-space-cache.c:820)
-   load_free_space_cache (fs/btrfs/free-space-cache.c:1017)
-   caching_thread (fs/btrfs/block-group.c:880)
-   btrfs_work_helper (fs/btrfs/async-thread.c:312)
-   process_one_work
-   worker_thread
-   kthread
-   ret_from_fork
-
-free-space-cache.c:420 is io_ctl_map_page(), inlined into io_ctl_check_crc()
-at line 565, which is why that is the frame KASAN names. The out-of-bounds
-slot is then treated as a struct page and handed to crc32c(), so the bad
-read turns into a GP fault.
-
-Add the missing check to io_ctl_check_crc(), which is where both the entry
-loop and the bitmap loop end up. When num_entries is too large the load now
-fails like any corrupt cache: __load_free_space_cache() drops it and rebuilds
-the free space from the extent tree, so a valid cache is never rejected.
-
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Fixes: 5b0e95bf607d ("Btrfs: inline checksums into the disk free space cache")
-Link: https://lore.kernel.org/linux-btrfs/CAPpSM+RMPByMCKXvM5QFKToxsyNccfuFLWMdD0mfd0wh2Ja62w@mail.gmail.com/
+Fixes: 196cfebf8972 ("net/mpls: Handle kernel side filtering of route dumps")
 Assisted-by: Claude:claude-opus-4-8
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260711114958.1009619-3-bestswngs@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/free-space-cache.c | 3 +++
+ net/mpls/af_mpls.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/fs/btrfs/free-space-cache.c b/fs/btrfs/free-space-cache.c
-index ed8729c990883b..3ffcb6217b530f 100644
---- a/fs/btrfs/free-space-cache.c
-+++ b/fs/btrfs/free-space-cache.c
-@@ -528,6 +528,9 @@ static int io_ctl_check_crc(struct btrfs_io_ctl *io_ctl, int index)
- 	u32 crc = ~(u32)0;
- 	unsigned offset = 0;
+diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
+index b111778bcc3547..bd84c9ddb006d6 100644
+--- a/net/mpls/af_mpls.c
++++ b/net/mpls/af_mpls.c
+@@ -2145,6 +2145,9 @@ static int mpls_valid_fib_dump_req(struct net *net, const struct nlmsghdr *nlh,
+ 		int ifindex;
  
-+	if (index >= io_ctl->num_pages)
-+		return -EIO;
+ 		if (i == RTA_OIF) {
++			if (!tb[i])
++				continue;
 +
- 	if (index == 0)
- 		offset = sizeof(u32) * io_ctl->num_pages;
- 
+ 			ifindex = nla_get_u32(tb[i]);
+ 			filter->dev = __dev_get_by_index(net, ifindex);
+ 			if (!filter->dev)
 -- 
 2.53.0
 
