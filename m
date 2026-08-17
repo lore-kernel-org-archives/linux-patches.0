@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D662E8DEC;
-	Mon, 17 Aug 2026 15:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2B82EEE85;
+	Mon, 17 Aug 2026 15:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979165; cv=none; b=Sy1gaJfLzV9ClLmkQPIP55SRfei2V5oP2TgWdC82/0Zciee6Bv/udQntXYvwCw6mzJ0W03vfONpUxNjRUdH/BBIBvqBlVMGjZsB8xt+OCvubqCoyjbN7/yQS2WcuSdbk/firkGXfXnSEQN0nChA8paIDzX42CVc4hjxLKNQaqkY=
+	t=1786979168; cv=none; b=Y+5dLKAlgTyZ6n+vAA0cY3uUs5fuVXWURZzupZA+79XpeQScPKV+/DP3b9aYmEcjHzykwG4MWnmHzBtRFvGvfENJ1lFNcXTgHK8OXD2z4K4FauD8lEF21lWMVobZBMVtUnsZSXw1+peXPdqZqpDz5huWmhmwhR8yAelfVf+spKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979165; c=relaxed/simple;
-	bh=L+i6PjBwStRZ1Uf3uDobhMox9F1PDoKzGpT10h7/2oY=;
+	s=arc-20240116; t=1786979168; c=relaxed/simple;
+	bh=p79x/5uAGnbAEvpQ/sTod6iW964Mnk1smrXDmq0rk+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OltIWXPtb+pzpY2DZmLx/JcuVwm1xaljnT/N5KKQvEdYv6rmi6FjFlBNfdAocjUTPeXCCkx90V+hEGJvPndsVqD0WCJxa1JqVEpypzEReaYxXNG7+PtoE1nZWQT6O27fjGv4YdUD7cQ9fCJGOaWIPMpk5+Xh+nYVNkDiHZodqk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bSTRuX+r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dassLcQTTL3WpFZfZV5j74tuI56eEfFvsxJDFBZr4mwGwWoMbMGNERoNl9J3eXiAV/R0rA+qGgEl3e8MKV+epfgUxb/JEZrv7b333B0W5bCvBIwlaAfaax/lJTqQ08Np39bJ6qZ34uwqZ6u2fQ70n5mvjJoWSLTJCFdG4MAi08U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhCWwtsC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bSTRuX+r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A9B1F00A3A;
-	Mon, 17 Aug 2026 15:06:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhCWwtsC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43EA1F000E9;
+	Mon, 17 Aug 2026 15:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979164;
-	bh=hoWnwXRJIgzm8kxxB17akjgpxQDg2zwNLQ7N2KsN/CM=;
+	s=korg; t=1786979167;
+	bh=WQVARaIEiBvkkc9xNDlp3b3oe0L9Qg7Vuxd/oze+h9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bSTRuX+rRt8CocvxzKZWcwPxjdBRkUb93SQR+8iP4X1cE41VD5mx2Qh3Zxoy4f4Xz
-	 DszbSGjbRv1wTjrP2CMHxCSs8gZ+8CKjtw+V0ANu8Z5EBg4As+AEkvTbPwdhjwM0Jr
-	 B4XlU6fegvIsH29ZfnQiemlimfraPugKKWBmpeMY=
+	b=bhCWwtsCW+IZ+hnvv/7xTkDLXV6stU3nF6rHitosHeb0xPYWcL8CyV14gK87tV2VD
+	 r+DFTBkMBCqjBqktXPg/TDI2BhDnk2Suf12RDwRoQZ2hKshfvHKF0IpDYeM8OOSLFr
+	 xl3wu0QxJ2q0y/FaQ70xWlGT3l8ZAwwnNkprnHYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Ankit Soni <Ankit.Soni@amd.com>,
+	Li RongQing <lirongqing@baidu.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 131/609] iommu/amd: Bound the early ACPI HID map
-Date: Mon, 17 Aug 2026 15:27:07 +0200
-Message-ID: <20260817132548.262619047@linuxfoundation.org>
+Subject: [PATCH 6.1 132/609] iommu/intel: Fix out-of-bounds memset in dmar_latency_disable()
+Date: Mon, 17 Aug 2026 15:27:08 +0200
+Message-ID: <20260817132548.331597629@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,43 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit fb80117fddb5b477218dc99bb53911b72c3847f8 ]
+[ Upstream commit 754f8efe45f87e3a9c6871b645b2f9d46d1b407b ]
 
-The ivrs_acpihid command-line parser appends entries to a fixed
-four-element early_acpihid_map array. Unlike the sibling IOAPIC and HPET
-parsers, it does not reject a fifth entry before incrementing the map size.
+dmar_latency_disable() intends to zero out only the single
+latency_statistic entry for the given type, but the memset size was
+computed as sizeof(*lstat) * DMAR_LATENCY_NUM, which clears the entire
+array starting from &lstat[type].
 
-Check the capacity at the common found label before parsing the HID and
-UID or writing the entry.
+When type > 0, this writes beyond the end of the allocated array,
+corrupting adjacent memory.
 
-Fixes: ca3bf5d47cec ("iommu/amd: Introduces ivrs_acpihid kernel parameter")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Ankit Soni <Ankit.Soni@amd.com>
+Fix by using sizeof(*lstat) to clear only the target entry.
+
+Fixes: 55ee5e67a59a ("iommu/vt-d: Add common code for dmar latency performance monitors")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/iommu/intel/perf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 9cb53e384247e9..a0342682c01d24 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -3603,6 +3603,12 @@ static int __init parse_ivrs_acpihid(char *str)
- 	return 1;
+diff --git a/drivers/iommu/intel/perf.c b/drivers/iommu/intel/perf.c
+index ae64e1123f2571..08ffebdbd09cec 100644
+--- a/drivers/iommu/intel/perf.c
++++ b/drivers/iommu/intel/perf.c
+@@ -63,7 +63,7 @@ void dmar_latency_disable(struct intel_iommu *iommu, enum latency_type type)
+ 		return;
  
- found:
-+	if (early_acpihid_map_size == EARLY_MAP_SIZE) {
-+		pr_err("Early ACPI HID map overflow - ignoring ivrs_acpihid%s\n",
-+		       str);
-+		return 1;
-+	}
-+
- 	p = acpiid;
- 	hid = strsep(&p, ":");
- 	uid = p;
+ 	spin_lock_irqsave(&latency_lock, flags);
+-	memset(&lstat[type], 0, sizeof(*lstat) * DMAR_LATENCY_NUM);
++	memset(&lstat[type], 0, sizeof(*lstat));
+ 	spin_unlock_irqrestore(&latency_lock, flags);
+ }
+ 
 -- 
 2.53.0
 
