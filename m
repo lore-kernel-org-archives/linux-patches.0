@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7782A3AFD16;
-	Mon, 17 Aug 2026 14:27:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964B7175A99;
+	Mon, 17 Aug 2026 14:27:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976826; cv=none; b=td1qYBDAKP3GihUg4i9vVRczKvisyptNr6krRXq3OvC4y/i7BddluW5v2UjlImKqH41Mp3wc26CRG9cuZA0uajPWrCRb/m2wZ2P5HmGs7vgUJfifYaJEU0R1/Of4yQVaVZdiPnuYaMFKhmsNMMEiOuvWqQZK4cDAioX5owzUIVY=
+	t=1786976829; cv=none; b=SVYFXblfnckk3yPUhZYx7McR64LQSkGjRO9zXCccTnFtVkaIkMBFLmFCKjIMjecRwcmY3uV4zIwyNbHLNkhfPSfEc7D00I9YME/4770bXl5iBcLI7ZlERsb0p9VNzD0VAHWax4G9ygc8rXIxBShZMQtmN0iq41jSJT79MmBquRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976826; c=relaxed/simple;
-	bh=qRF/Q3iV0PcCfZe0E6ulA3KhcF4xP8OT3zeKD5k/JG8=;
+	s=arc-20240116; t=1786976829; c=relaxed/simple;
+	bh=vHwjiiBNzi88SZQZbTnRNMOgCFNiEHL2VpvsHIi9I7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YlkDNPTT/BiTHPk1OEc7nAVQeZQ804q2bXVMsmVcSL50TuIwZ24QNgnVjhoZbHXs5544r/SmAt8VrdM+88u/02baULtoYn+ZYHELr55XR2x1Y6kPL9KNcQxg3CQ8oUi3vU2ly0Ho9gUSA173j+IxkrbaA9aAFFndRojluHsMHdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vD++Tjoc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aeKEQOGhkUlE8sqXHynDxLuBKIuYyf5Augtg0+yRNvHFCRmkDs74u4VFRSMkQy4jUQqcxBhuDft+/QHqzZTFr1mO9reX6v563Fo7GVH+thkKqtoTrSm3osCBBRa1ICl+vY1ATjT/6tuBY2yl6ISnY7T4g2CXJaYFfYDQVfOS79I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15fmewnV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vD++Tjoc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFEDB1F000E9;
-	Mon, 17 Aug 2026 14:27:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15fmewnV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21931F000E9;
+	Mon, 17 Aug 2026 14:27:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976825;
-	bh=O0LhHmZbYuc6455NnsGzGBUTVutgu4BVDIgUBJShyVI=;
+	s=korg; t=1786976828;
+	bh=ZCugLSmDDEasZGasKK9VamMR1XVbC+h7+tUTFR8+Kas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vD++Tjocf03p3+kdPzpxoXKuk7HOw7EHNphnEggAX63Ih15iWn4LwQgTH2Kmkf3ge
-	 LgWN86c0n6jITY6mwDmg+GIwi/HKYlXdoWudd+H4ICqVaBp5HkQ+8Tc725qSyJ9Rcf
-	 lVgiQfm/C43ZynfpfsH/NN3sq9SjdrYauTiP3ryA=
+	b=15fmewnVXvVTRIhlENKgFxejJuH5TrQwd7565TeybkXNCcQtuIHEp+c0ZfsLioQJf
+	 FdozNgpLB3LE7LC6epNG0TIPnMS6XRQFvIZ3WcY3U68fPAu1VsZA4vob8XEOdw4+Wx
+	 HpU2EUcsKwLgZZr5UmuSMc7yTilz2nOihu0Jodz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Luo <luoqing@kylinos.cn>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 118/456] sctp: auth: verify auth requirement when auth_chunk is NULL
-Date: Mon, 17 Aug 2026 15:28:28 +0200
-Message-ID: <20260817132544.705401826@linuxfoundation.org>
+Subject: [PATCH 5.15 101/456] net: dpaa2-eth: assign priv->mac after dpaa2_mac_connect() call
+Date: Mon, 17 Aug 2026 15:28:11 +0200
+Message-ID: <20260817132544.045840920@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,49 +52,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Luo <luoqing@kylinos.cn>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 8e04823c120b376ef7dab14b60ebf6823aa16c14 ]
+[ Upstream commit 02d61948e8daf3844d0af41ba5d563ef03cc7c4f ]
 
-sctp_auth_chunk_verify() returns true unconditionally when
-chunk->auth_chunk is NULL, silently skipping authentication.
-This is incorrect when:
+There are 2 requirements for correct code:
 
-1. skb_clone() failed in the BH receive path, leaving auth_chunk
-   NULL. In sctp_endpoint_bh_rcv() asoc is NULL for new
-   connections, so the early sctp_auth_recv_cid() check cannot
-   catch this.
+- Any time the driver accesses the priv->mac pointer at runtime, it
+  either holds NULL to indicate a DPNI-DPNI connection (or unconnected
+  DPNI), or a struct dpaa2_mac whose phylink instance was fully
+  initialized (created and connected to the PHY). No changes are made to
+  priv->mac while it is being used. Currently, rtnl_lock() watches over
+  the call to dpaa2_eth_connect_mac(), so it serves the purpose of
+  serializing this with all readers of priv->mac.
 
-2. No AUTH chunk precedes COOKIE-ECHO, so skb_clone() is never
-   called and auth_chunk remains NULL.
+- dpaa2_mac_connect() should run unlocked, because inside it are 2
+  phylink calls with incompatible locking requirements: phylink_create()
+  requires that the rtnl_mutex isn't held, and phylink_fwnode_phy_connect()
+  requires that the rtnl_mutex is held. The only way to solve those
+  contradictory requirements is to let dpaa2_mac_connect() take
+  rtnl_lock() when it needs to.
 
-Fix by checking sctp_auth_recv_cid() when auth_chunk is NULL:
-if authentication is required, return false to drop the chunk;
-otherwise continue normally.
+To solve both requirements, we need to identify the writer side of the
+priv->mac pointer, which can be wrapped in a mutex private to the driver
+in a future patch. The dpaa2_mac_connect() cannot be part of the writer
+side critical section, because of an AB/BA deadlock with rtnl_lock().
 
-Fixes: bbd0d59809f9 ("[SCTP]: Implement the receive and verification of AUTH chunk")
-Signed-off-by: Qing Luo <luoqing@kylinos.cn>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260721015532.120157-2-l1138897701@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+So the strategy needs to be that where we prepare the DPMAC by calling
+dpaa2_mac_connect(), and only make priv->mac point to it once it's fully
+prepared. This ensures that the writer side critical section has the
+absolute minimum surface it can.
+
+The reverse strategy is adopted in the dpaa2_eth_disconnect_mac() code
+path. This makes sure that priv->mac is NULL when we start tearing down
+the DPMAC that we disconnected from, and concurrent code will simply not
+see it.
+
+No locking changes in this patch (concurrent code is still blocked by
+the rtnl_mutex).
+
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Tested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: b4b201cc93ff ("dpaa2-eth: put MAC endpoint device on disconnect")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/ethernet/freescale/dpaa2/dpaa2-eth.c  | 21 +++++++++++--------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index 572055ee129f86..d57ec436775059 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -639,7 +639,7 @@ static bool sctp_auth_chunk_verify(struct net *net, struct sctp_chunk *chunk,
- 	struct sctp_chunk auth;
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+index 0439bf465fa5bd..c6f20ceadede31 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+@@ -4248,9 +4248,8 @@ static int dpaa2_eth_connect_mac(struct dpaa2_eth_priv *priv)
+ 	err = dpaa2_mac_open(mac);
+ 	if (err)
+ 		goto err_free_mac;
+-	priv->mac = mac;
  
- 	if (!chunk->auth_chunk)
--		return true;
-+		return !sctp_auth_recv_cid(chunk->chunk_hdr->type, asoc);
+-	if (dpaa2_eth_is_type_phy(priv)) {
++	if (dpaa2_mac_is_type_phy(mac)) {
+ 		err = dpaa2_mac_connect(mac);
+ 		if (err && err != -EPROBE_DEFER)
+ 			netdev_err(priv->net_dev, "Error connecting to the MAC endpoint: %pe",
+@@ -4259,11 +4258,12 @@ static int dpaa2_eth_connect_mac(struct dpaa2_eth_priv *priv)
+ 			goto err_close_mac;
+ 	}
  
- 	/* SCTP-AUTH:  auth_chunk pointer is only set when the cookie-echo
- 	 * is supposed to be authenticated and we have to do delayed
++	priv->mac = mac;
++
+ 	return 0;
+ 
+ err_close_mac:
+ 	dpaa2_mac_close(mac);
+-	priv->mac = NULL;
+ err_free_mac:
+ 	kfree(mac);
+ out_put_device:
+@@ -4273,15 +4273,18 @@ static int dpaa2_eth_connect_mac(struct dpaa2_eth_priv *priv)
+ 
+ static void dpaa2_eth_disconnect_mac(struct dpaa2_eth_priv *priv)
+ {
+-	if (dpaa2_eth_is_type_phy(priv))
+-		dpaa2_mac_disconnect(priv->mac);
++	struct dpaa2_mac *mac = priv->mac;
+ 
+-	if (!dpaa2_eth_has_mac(priv))
++	priv->mac = NULL;
++
++	if (!mac)
+ 		return;
+ 
+-	dpaa2_mac_close(priv->mac);
+-	kfree(priv->mac);
+-	priv->mac = NULL;
++	if (dpaa2_mac_is_type_phy(mac))
++		dpaa2_mac_disconnect(mac);
++
++	dpaa2_mac_close(mac);
++	kfree(mac);
+ }
+ 
+ static irqreturn_t dpni_irq0_handler_thread(int irq_num, void *arg)
 -- 
 2.53.0
 
