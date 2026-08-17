@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8CF4B04A7;
-	Mon, 17 Aug 2026 14:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927AA15FA81;
+	Mon, 17 Aug 2026 14:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976629; cv=none; b=H7FcoYzvgxaslG39IbuSdvhN0yIz5E9LFQmsv3mBIEib6uSCrHhA6i7EhdONdKL5D3bjz2/H9m8qk+0uvAGCIoqQR7lm0gtAKPh+QL4Mpgz5rk0P8O7NKYuumPU06Aapp9gNOG4ZIqRjkCqmjP1H8BKAJGRolqvrtrx8ilgpb/U=
+	t=1786976632; cv=none; b=VdxFYayAOlhKY1sWKC97JirwHYUuhikFtw8UAMKwfvpemLDlclpFW7uPaP8/9m/XZI7Otip+ocm719DuG0rk1bOszXJV0YVYo2nLZProCt5qCEs1I3bYmIDeJtvaA5XMsSM9VSWVlSaL9Ji1yPBXyxIty6WJqIdmE+9F30OqHGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976629; c=relaxed/simple;
-	bh=CatIdd72j8/LlHPWPxqJq44TfU/Iq6vi1KgHhqbKW4w=;
+	s=arc-20240116; t=1786976632; c=relaxed/simple;
+	bh=rOhQd7+yR3DILSXda0tWCON9Yu1zz/sZhF706ux3kTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rZgvw3mPcGFshM20e199ApNKKf1N7jeAhkU/bcrwxY3rUqFL2TQO8lM6Gwuk1zbRzhEKhYJPPvVpr52Q1hqmqPzyfulgxPVrA7PZM4xwNj3KYd2zTUGJWhkGu73JxQa+v85lkpzbvGLfd5epwZmqjM2mUxsYzHYdLFujzxKO6xQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=alU/BmkQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K4Epg91ZOXQfsgAsjbuziYlo5q7yOv98CBs3d4ha5f/VOXf4GFOsvi85vmynGZs/7Ku99/I+KRSUUebkOerfG34+NcM/E1dt5LHTY/71FBNtdUiI/rSK7yhJfLK5Jbgy0zUIvDeVp9K5Bw677LmGN475ULNaPeqRaGMY90IVyLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzAJ+GhZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="alU/BmkQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8151F000E9;
-	Mon, 17 Aug 2026 14:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzAJ+GhZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F4F1F000E9;
+	Mon, 17 Aug 2026 14:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976628;
-	bh=D9a5jCGjFSgTDd9a1GQ5oN6Gris2ojQnLtg+1CVWvq4=;
+	s=korg; t=1786976631;
+	bh=Mg1J18VfjSZlsNGuXnnva36QoSxc2q7CHgU8OsMg9YM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=alU/BmkQVSgWiVmNw3dXZJvTQYgtsmy7stSEnKMBnZS4bQgx9h35VD8qGVtxsujW1
-	 NPh3Eu9O/c0hQmUdtHHdU4yZtbMVJ8fyd5SSFIGwUNX87Y2r8/DG3AaLiczfK4wOax
-	 +NVFz8mJhaZxbJwVEv+SuNMYKPzWiRFHd6NlhdnI=
+	b=mzAJ+GhZj1KkBm1FvBiEdIE6dZtn1UhdG98i++X3YhcafZXaIsNruuNomCbNxCGmg
+	 xT0EC+M+MIOGpyXyNTc03skyLyBIQmziOYR2D3YNwpPGQ7zcFGTCdy3QqpEpb/qc/6
+	 OVsjH6bGLstFnDG7Z+z/JLaQP4YAQk1WDlQXNAWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hulk Robot <hulkci@huawei.com>,
-	He Ying <heying24@huawei.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 048/456] powerpc/time: Fix sparse warnings
-Date: Mon, 17 Aug 2026 15:27:18 +0200
-Message-ID: <20260817132541.919327218@linuxfoundation.org>
+Subject: [PATCH 5.15 049/456] powerpc: remove the last remnants of cputime_t
+Date: Mon, 17 Aug 2026 15:27:19 +0200
+Message-ID: <20260817132541.954412101@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -54,99 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: He Ying <heying24@huawei.com>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-[ Upstream commit ce0091a0e06045e70c526c8735f8b866a85e0a45 ]
+[ Upstream commit f985adaf2ff934ec869b32ca1f7f97e2825e3a49 ]
 
-We found these warnings in arch/powerpc/kernel/time.c as follows:
-  warning: symbol 'decrementer_max' was not declared. Should it be static?
-  warning: symbol 'rtc_lock' was not declared. Should it be static?
-  warning: symbol 'dtl_consumer' was not declared. Should it be static?
+cputime_t was a core kernel type, removed by commits
+ed5c8c854f2b..b672592f0221. As explained in commit b672592f0221
+("sched/cputime: Remove generic asm headers"), the final cleanup
+is for the arch to provide cputime_to_nsec[s](). Commit ade7667a981b
+("powerpc: Add cputime_to_nsecs()") did that, but justdidn't remove
+the then-unused cputime_to_usecs(), cputime_t type, and associated
+remnants.
 
-Declare 'decrementer_max' in powerpc asm/time.h.
-
-Include linux/mc146818rtc.h in powerpc kernel/time.c where 'rtc_lock' is
-declared. And remove duplicated declaration of 'rtc_lock' in powerpc
-platforms/chrp/time.c because it has included linux/mc146818rtc.h.
-
-Move 'dtl_consumer' definition after "include <asm/dtl.h>" because it is
-declared there.
-
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: He Ying <heying24@huawei.com>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20210324090939.143477-1-heying24@huawei.com
+Link: https://lore.kernel.org/r/20221006105653.115829-1-npiggin@gmail.com
 Stable-dep-of: c1c1ffa490fc ("powerpc/vtime: Initialize starttime at boot for native accounting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/time.h    | 1 +
- arch/powerpc/kernel/time.c         | 9 ++++-----
- arch/powerpc/platforms/chrp/time.c | 2 --
- 3 files changed, 5 insertions(+), 7 deletions(-)
+ arch/powerpc/include/asm/cputime.h | 17 +----------------
+ arch/powerpc/kernel/time.c         | 23 ++---------------------
+ 2 files changed, 3 insertions(+), 37 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/time.h b/arch/powerpc/include/asm/time.h
-index 8c2c3dd4ddbac3..d7212a334f7242 100644
---- a/arch/powerpc/include/asm/time.h
-+++ b/arch/powerpc/include/asm/time.h
-@@ -22,6 +22,7 @@ extern unsigned long tb_ticks_per_jiffy;
- extern unsigned long tb_ticks_per_usec;
- extern unsigned long tb_ticks_per_sec;
- extern struct clock_event_device decrementer_clockevent;
-+extern u64 decrementer_max;
+diff --git a/arch/powerpc/include/asm/cputime.h b/arch/powerpc/include/asm/cputime.h
+index 504f7fe6711a32..a23356c05af193 100644
+--- a/arch/powerpc/include/asm/cputime.h
++++ b/arch/powerpc/include/asm/cputime.h
+@@ -20,23 +20,8 @@
+ #include <asm/time.h>
+ #include <asm/param.h>
  
+-typedef u64 __nocast cputime_t;
+-typedef u64 __nocast cputime64_t;
+-
+-#define cmpxchg_cputime(ptr, old, new) cmpxchg(ptr, old, new)
+-
+ #ifdef __KERNEL__
+-/*
+- * Convert cputime <-> microseconds
+- */
+-extern u64 __cputime_usec_factor;
+-
+-static inline unsigned long cputime_to_usecs(const cputime_t ct)
+-{
+-	return mulhdu((__force u64) ct, __cputime_usec_factor);
+-}
+-
+-#define cputime_to_nsecs(cputime) tb_to_ns((__force u64)cputime)
++#define cputime_to_nsecs(cputime) tb_to_ns(cputime)
  
- extern void generic_calibrate_decr(void);
+ /*
+  * PPC64 uses PACA which is task independent for storing accounting data while
 diff --git a/arch/powerpc/kernel/time.c b/arch/powerpc/kernel/time.c
-index 4406d7a89558bb..d3f579f9880173 100644
+index d3f579f9880173..d0e59f427fd6f1 100644
 --- a/arch/powerpc/kernel/time.c
 +++ b/arch/powerpc/kernel/time.c
-@@ -54,8 +54,9 @@
- #include <linux/of_clk.h>
- #include <linux/suspend.h>
- #include <linux/processor.h>
--#include <asm/trace.h>
-+#include <linux/mc146818rtc.h>
+@@ -123,7 +123,7 @@ unsigned long tb_ticks_per_jiffy;
+ unsigned long tb_ticks_per_usec = 100; /* sane default */
+ EXPORT_SYMBOL(tb_ticks_per_usec);
+ unsigned long tb_ticks_per_sec;
+-EXPORT_SYMBOL(tb_ticks_per_sec);	/* for cputime_t conversions */
++EXPORT_SYMBOL(tb_ticks_per_sec);	/* for cputime conversions */
  
-+#include <asm/trace.h>
- #include <asm/interrupt.h>
- #include <asm/io.h>
- #include <asm/nvram.h>
-@@ -149,10 +150,6 @@ bool tb_invalid;
- u64 __cputime_usec_factor;
- EXPORT_SYMBOL(__cputime_usec_factor);
+ DEFINE_SPINLOCK(rtc_lock);
+ EXPORT_SYMBOL_GPL(rtc_lock);
+@@ -143,21 +143,6 @@ EXPORT_SYMBOL_GPL(ppc_tb_freq);
+ bool tb_invalid;
  
--#ifdef CONFIG_PPC_SPLPAR
--void (*dtl_consumer)(struct dtl_entry *, u64);
--#endif
+ #ifdef CONFIG_VIRT_CPU_ACCOUNTING_NATIVE
+-/*
+- * Factor for converting from cputime_t (timebase ticks) to
+- * microseconds. This is stored as 0.64 fixed-point binary fraction.
+- */
+-u64 __cputime_usec_factor;
+-EXPORT_SYMBOL(__cputime_usec_factor);
 -
- static void calc_cputime_factors(void)
- {
- 	struct div_result res;
-@@ -178,6 +175,8 @@ static inline unsigned long read_spurr(unsigned long tb)
- 
- #include <asm/dtl.h>
- 
-+void (*dtl_consumer)(struct dtl_entry *, u64);
-+
+-static void calc_cputime_factors(void)
+-{
+-	struct div_result res;
+-
+-	div128_by_32(1000000, 0, tb_ticks_per_sec, &res);
+-	__cputime_usec_factor = res.result_low;
+-}
+-
  /*
-  * Scan the dispatch trace log and count up the stolen time.
-  * Should be called with interrupts disabled.
-diff --git a/arch/powerpc/platforms/chrp/time.c b/arch/powerpc/platforms/chrp/time.c
-index acde7bbe07164e..b94dfd5090d80f 100644
---- a/arch/powerpc/platforms/chrp/time.c
-+++ b/arch/powerpc/platforms/chrp/time.c
-@@ -30,8 +30,6 @@
- 
- #include <platforms/chrp/chrp.h>
- 
--extern spinlock_t rtc_lock;
+  * Read the SPURR on systems that have it, otherwise the PURR,
+  * or if that doesn't exist return the timebase value passed in.
+@@ -444,10 +429,7 @@ void vtime_flush(struct task_struct *tsk)
+ 	acct->hardirq_time = 0;
+ 	acct->softirq_time = 0;
+ }
 -
- #define NVRAM_AS0  0x74
- #define NVRAM_AS1  0x75
- #define NVRAM_DATA 0x77
+-#else /* ! CONFIG_VIRT_CPU_ACCOUNTING_NATIVE */
+-#define calc_cputime_factors()
+-#endif
++#endif /* CONFIG_VIRT_CPU_ACCOUNTING_NATIVE */
+ 
+ void __no_kcsan __delay(unsigned long loops)
+ {
+@@ -962,7 +944,6 @@ void __init time_init(void)
+ 	tb_ticks_per_jiffy = ppc_tb_freq / HZ;
+ 	tb_ticks_per_sec = ppc_tb_freq;
+ 	tb_ticks_per_usec = ppc_tb_freq / 1000000;
+-	calc_cputime_factors();
+ 
+ 	/*
+ 	 * Compute scale factor for sched_clock.
 -- 
 2.53.0
 
