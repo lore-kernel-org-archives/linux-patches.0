@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82923F5BEF;
-	Mon, 17 Aug 2026 15:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD78B2E8DEA;
+	Mon, 17 Aug 2026 15:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979031; cv=none; b=GzLehpxRoX2OQ4t9vVxeNpP6a6E4y8GEyjPSQo3RDPwCC4kBfQdo5B9wXgROEKYdwdidaiCgqG7uTEIilZ622/5AcsvN7CyYWPljyR9KYSzlW+JjxWF7D9rYiQwgxmazLf55+C70nKG94vRHMrIi3crdqdfNoAhfUPzKNg2H+mQ=
+	t=1786979033; cv=none; b=gsK95Gr5C2wGAjxAgPKBXQNToN3MbJroXpo2Xcdn11jD/y2cP6dlKTtjITZ+JNgQiAc4mwtkc6167TIDaxEoQ2/f9AvxI43c/Je5N2JGgkacs81XAk8ORjJAsEXrBgsb8xhfblI6e8Dg3RxpRfZvpNq4uhpt63vwPztcm3tZLGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979031; c=relaxed/simple;
-	bh=uWIG2nJSDGZNTkTztyueNQ5F06PBFUOEUmlFHeADbg4=;
+	s=arc-20240116; t=1786979033; c=relaxed/simple;
+	bh=Al6bYZFXXumS9Sy7Yw0K/pVx9ZYnk9lgQ/eZ7OIkw2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uKggKQiHT6kiDonQc115oQHSGWiadhThVC7j1+xqi6Lwhln7QDybYT8IgkTFp8fZJpkiB45pYT3Gn8xtvzyRN5vPK+yTJs5zbZTydDu8TUimiywj9qrjEKgvMAzgS+Mjdfjd3WrhofztXmO57xf64qz6uZsk4Jrm2UKne7l8SAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSu9QwrX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=luh2tqlJQT7VzP4rv4/hrwUXZKuypjgV5ql7eJgxNngcMgoiaPNdV4GgjbKBd3kurGLrf/N5RgxL8pETJuRpNurb8P6jv8/ccpPht21I46235RR5lEsSZGryaBx/eLYrg+ZsRjJlQ9HlOOW9P7lTJvVNcWLMzxjtd4AI34YJGQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDGy+ynP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSu9QwrX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7CA1F000E9;
-	Mon, 17 Aug 2026 15:03:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDGy+ynP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 303841F000E9;
+	Mon, 17 Aug 2026 15:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979029;
-	bh=dSNZLLnnsM5iiiMYPteyO+e/atFKoPKAPz48s/vJUrg=;
+	s=korg; t=1786979032;
+	bh=egjanfjFQS28LJzwYZOxoDoujMmPQORwXWpJ9wI3cEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CSu9QwrXvxW8xQ81SN0o1xIaMXh/m2rih1qPa1fy4KyLnnDQBO94zB7Zd33RnJXI9
-	 PNCsgcES3l+S3h565YZyvXUtbO8pXDqArSdVq/zulhf2DZu0oPwKxspmLniSwyFmB8
-	 qIt1aW8hWoQk26D2ij77AUiZSvYVR37zbxmGz1C8=
+	b=PDGy+ynPIPJmFkwxbemW1nhewEj7x7KlsSUpDQJYTycOPXoUTXO5J2VYiQnpHOyKm
+	 NAGHpjvM8QOYyX2ajcl5DyIcd++sSUGtm55+KAselDsF21SoxDcR/LvjXJNj87W0JS
+	 wJSHLHSGKMK4umy/+DJ9o2eMn4mlAAmOgiYPV5N8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuhao Fu <sfual@cse.ust.hk>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 067/609] can: j1939: fix lockless local-destination check
-Date: Mon, 17 Aug 2026 15:26:03 +0200
-Message-ID: <20260817132545.730301425@linuxfoundation.org>
+	Sunho Park <shpark061104@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 085/609] USB: serial: io_edgeport: cap received transmit credits
+Date: Mon, 17 Aug 2026 15:26:21 +0200
+Message-ID: <20260817132546.439248040@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,81 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuhao Fu <sfual@cse.ust.hk>
+From: Sunho Park <shpark061104@gmail.com>
 
-[ Upstream commit e4e8af62adab2fdcca230006f829407a953070cd ]
+commit faaddd811c5099f11a5f52e68a6b31a5898cda4f upstream.
 
-j1939_priv.ents[].nusers is documented as protected by priv->lock, and
-its updates already happen under that lock. j1939_can_recv() also reads
-it under read_lock_bh(). However, j1939_session_skb_queue() and
-j1939_tp_send() still read priv->ents[da].nusers without taking the
-lock.
+The interrupt-status packet reports transmit credits returned by the
+device. edge_interrupt_callback() adds the 16-bit value to txCredits
+without checking maxTxCredits.
 
-Those transport-side checks decide whether to set J1939_ECU_LOCAL_DST, so
-they can race with j1939_local_ecu_get() and j1939_local_ecu_put() while
-userspace is binding or releasing sockets concurrently with TP traffic.
-This can misclassify TP/ETP sessions as local or remote and take the wrong
-transport path.
+edge_write() uses txCredits minus the software FIFO count as the amount
+of data that fits. Since the FIFO is allocated with maxTxCredits bytes,
+txCredits exceeding maxTxCredits can cause OOB write in ring buffer.
 
-Fix both transport paths by routing the destination-locality check through
-a helper that reads ents[].nusers under read_lock_bh(&priv->lock).
+Cap accumulated credits at maxTxCredits. Conforming devices should never
+hit the cap.
 
-Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
-Signed-off-by: Shuhao Fu <sfual@cse.ust.hk>
-Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20260419140614.GA4041240@chcpu16
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:GPT-5
+Signed-off-by: Sunho Park <shpark061104@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/j1939/transport.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/usb/serial/io_edgeport.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c
-index e17a166a73c422..57d7b14c3949e6 100644
---- a/net/can/j1939/transport.c
-+++ b/net/can/j1939/transport.c
-@@ -350,6 +350,18 @@ static void j1939_session_skb_drop_old(struct j1939_session *session)
- 	}
- }
- 
-+static bool j1939_address_is_local(struct j1939_priv *priv, u8 addr)
-+{
-+	bool local = false;
-+
-+	read_lock_bh(&priv->lock);
-+	if (j1939_address_is_unicast(addr) && priv->ents[addr].nusers)
-+		local = true;
-+	read_unlock_bh(&priv->lock);
-+
-+	return local;
-+}
-+
- void j1939_session_skb_queue(struct j1939_session *session,
- 			     struct sk_buff *skb)
- {
-@@ -358,8 +370,7 @@ void j1939_session_skb_queue(struct j1939_session *session,
- 
- 	j1939_ac_fixup(priv, skb);
- 
--	if (j1939_address_is_unicast(skcb->addr.da) &&
--	    priv->ents[skcb->addr.da].nusers)
-+	if (j1939_address_is_local(priv, skcb->addr.da))
- 		skcb->flags |= J1939_ECU_LOCAL_DST;
- 
- 	skcb->flags |= J1939_ECU_LOCAL_SRC;
-@@ -2021,8 +2032,7 @@ struct j1939_session *j1939_tp_send(struct j1939_priv *priv,
- 		return ERR_PTR(ret);
- 
- 	/* fix DST flags, it may be used there soon */
--	if (j1939_address_is_unicast(skcb->addr.da) &&
--	    priv->ents[skcb->addr.da].nusers)
-+	if (j1939_address_is_local(priv, skcb->addr.da))
- 		skcb->flags |= J1939_ECU_LOCAL_DST;
- 
- 	/* src is always local, I'm sending ... */
--- 
-2.53.0
-
+--- a/drivers/usb/serial/io_edgeport.c
++++ b/drivers/usb/serial/io_edgeport.c
+@@ -646,7 +646,8 @@ static void edge_interrupt_callback(stru
+ 				if (edge_port && edge_port->open) {
+ 					spin_lock_irqsave(&edge_port->ep_lock,
+ 							  flags);
+-					edge_port->txCredits += txCredits;
++					edge_port->txCredits = min(edge_port->txCredits + txCredits,
++								   edge_port->maxTxCredits);
+ 					spin_unlock_irqrestore(&edge_port->ep_lock,
+ 							       flags);
+ 					dev_dbg(dev, "%s - txcredits for port%d = %d\n",
 
 
