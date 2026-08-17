@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26EB42D763;
-	Mon, 17 Aug 2026 13:53:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0259A3C3C08;
+	Mon, 17 Aug 2026 13:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974805; cv=none; b=ln5o+h/mOKKneD9CTAtVo/J9tzmYywuVV7YfOAZeq2g54FdVPhRt8NO5/Mp953Xg8yvfxACXQ+J9pY+8TkYqE/mnu0cyNg7Sj2gGPB7inmE5xTYIvqM0QfvmoMfCxvdoOj8yxkalk/DHjh1BcbD3S1Oo+jjhlfobVik7x7KuEls=
+	t=1786974808; cv=none; b=e9H8j3Ja409DdkYNNg3JXtLKfbc0TfE3hSNM6YIfiud+8xK85GefbpRtVPk4BzMhbPFwc1ipRTf4fQjgCZQ8QEf722XKfkXBRo2D5zNMBjRv3w0xq7+PdwyTNDbcbQmUfRbdFiW8OJ1vctwv8BC/q4ogoINVeyC1Kw/HxDbRK+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974805; c=relaxed/simple;
-	bh=lYr9G7psHtT3NSSQdmrMeSAiJDAvvrazYJf4vbAIX8s=;
+	s=arc-20240116; t=1786974808; c=relaxed/simple;
+	bh=UlmI66MzkrgdhkEDjwAIArKjjy+gUJO+8pIKhpRtg/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a4KbkuOIvpNf2YDNVzH96XWctuzxU3BZbEMt7bimEvC0rZJqxF4VtPgw8lIWHEpxBWGAkArj+xzO7En/qQLuEfxE2Cb41ch4Z/mVReqqMg+M9QfYfz9QRhWAxmULeoDJ0RhwGfDCBBa6BvJkTwPoI6Qry6ZC5he8I/3DE9UqrBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X8kKRoMl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KSIwt3WmSZAy6wyfiFd5dnJvpAOaPNZKizHf3e3Cg0oYYkimjDTzEWmbz0SX20IMjbRsuBkT6fSx7bg7RhJuvEEuSEYc/8bm+drOe+a/lfVKkMxmmCANlr8Ia5Oe77SnxTPbDx+bAo5VdqozxQP7AIEoY6P9i5AOgFHAYuqTDV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5q4EEGk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X8kKRoMl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C891F00A3E;
-	Mon, 17 Aug 2026 13:53:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5q4EEGk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDFC51F00A3D;
+	Mon, 17 Aug 2026 13:53:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974801;
-	bh=1bRrGOSnBZ5wvfnxSGl2YQ985uXAgikOBmhDgV8zaKo=;
+	s=korg; t=1786974804;
+	bh=1mm0btalo7SYSS7Vrt7W0q1pQaBfXuckevc+E2IPsQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X8kKRoMlw/HaXiB7Dtb28gKreT4CVL82ubcPWz/4B9/arc91SVn9W+/1m3I2gLIKL
-	 kF8LZU3Y1MhI/PVihNthlsUuN8B2Iv/wMOK5RWhR+pkG3ONEIrlaPB4WQGVK6A3Zq2
-	 dZx3Ixx3iCHip95nITmmt+o7vsOkhpW/xsllAiHg=
+	b=p5q4EEGkh8a8V62iUkhcpDapJZbMhpzpn+uLUNWKexCgH7hQ+UwkKSvHbf9XWFGwg
+	 klQPwtQwR4X2lw5jmJ5aSyQpnszMh8CyOEED4dll0FRTNtLpjoFQDzkbcnHsfB8oFq
+	 MvfYlnSeC2y5fa6dZKwepSq4NCAjpH3VpFPemqLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Mina Almasry <almasrymina@google.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 058/250] bnxt_en: Do not set EOP on RX AGG BDs on 5760X chips
-Date: Mon, 17 Aug 2026 15:30:19 +0200
-Message-ID: <20260817132538.808454124@linuxfoundation.org>
+Subject: [PATCH 6.18 059/250] net: reduce indent of struct netdev_queue_mgmt_ops members
+Date: Mon, 17 Aug 2026 15:30:20 +0200
+Message-ID: <20260817132538.853005315@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -53,64 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 30f253f8d9a01d532fdb7ec6c8a9d4c15fe29241 ]
+[ Upstream commit 92d76cf96dcbc3c58daa84dbbf71a3ca8d9de53d ]
 
-With End-of-Packet padding (EOP) set, the chip will disable Relaxed
-Ordering (RO) of TPA data packets.  A TPA segment with EOP set will be
-padded to the next cache boundary and can potentially overwrite the
-beginning bytes of the next TPA segment when RO is enabled on 5760X.
-To prevent that, the chip disables RO for TPA when EOP is set.
+Trivial change, reduce the indent. I think the original is copied
+from real NDOs. It's unnecessarily deep, makes passing struct args
+problematic.
 
-To take advantge of RO and higher performance, do not set EOP on
-5760X chips when TPA is enabled.  Define a proper RX_BD_FLAGS_AGG_EOP
-constant to make it clear that we are setting EOP.
-
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20251126215648.1885936-6-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
 Stable-dep-of: d1000fd7995e ("bnxt: fix memory leak in bnxt_queue_mem_alloc error cases")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 9 ++++++++-
- drivers/net/ethernet/broadcom/bnxt/bnxt.h | 1 +
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ include/net/netdev_queues.h | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 98a911eae8eac..1efd1f8776abe 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -4495,7 +4495,14 @@ static void bnxt_init_one_rx_agg_ring_rxbd(struct bnxt *bp,
- 	ring->fw_ring_id = INVALID_HW_RING_ID;
- 	if ((bp->flags & BNXT_FLAG_AGG_RINGS)) {
- 		type = ((u32)BNXT_RX_PAGE_SIZE << RX_BD_LEN_SHIFT) |
--			RX_BD_TYPE_RX_AGG_BD | RX_BD_FLAGS_SOP;
-+			RX_BD_TYPE_RX_AGG_BD;
-+
-+		/* On P7, setting EOP will cause the chip to disable
-+		 * Relaxed Ordering (RO) for TPA data.  Disable EOP for
-+		 * potentially higher performance with RO.
-+		 */
-+		if (BNXT_CHIP_P5_AND_MINUS(bp) || !(bp->flags & BNXT_FLAG_TPA))
-+			type |= RX_BD_FLAGS_AGG_EOP;
+diff --git a/include/net/netdev_queues.h b/include/net/netdev_queues.h
+index cd00e0406cf46..541e7d9853b1b 100644
+--- a/include/net/netdev_queues.h
++++ b/include/net/netdev_queues.h
+@@ -135,20 +135,20 @@ void netdev_stat_queue_sum(struct net_device *netdev,
+  * be called for an interface which is open.
+  */
+ struct netdev_queue_mgmt_ops {
+-	size_t			ndo_queue_mem_size;
+-	int			(*ndo_queue_mem_alloc)(struct net_device *dev,
+-						       void *per_queue_mem,
+-						       int idx);
+-	void			(*ndo_queue_mem_free)(struct net_device *dev,
+-						      void *per_queue_mem);
+-	int			(*ndo_queue_start)(struct net_device *dev,
+-						   void *per_queue_mem,
+-						   int idx);
+-	int			(*ndo_queue_stop)(struct net_device *dev,
+-						  void *per_queue_mem,
+-						  int idx);
+-	struct device *		(*ndo_queue_get_dma_dev)(struct net_device *dev,
+-							 int idx);
++	size_t	ndo_queue_mem_size;
++	int	(*ndo_queue_mem_alloc)(struct net_device *dev,
++				       void *per_queue_mem,
++				       int idx);
++	void	(*ndo_queue_mem_free)(struct net_device *dev,
++				      void *per_queue_mem);
++	int	(*ndo_queue_start)(struct net_device *dev,
++				   void *per_queue_mem,
++				   int idx);
++	int	(*ndo_queue_stop)(struct net_device *dev,
++				  void *per_queue_mem,
++				  int idx);
++	struct device *	(*ndo_queue_get_dma_dev)(struct net_device *dev,
++						 int idx);
+ };
  
- 		bnxt_init_rxbd_pages(ring, type);
- 	}
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index d55987e24ad6e..b140799f07d69 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -131,6 +131,7 @@ struct rx_bd {
- 	 #define RX_BD_TYPE_48B_BD_SIZE				 (2 << 4)
- 	 #define RX_BD_TYPE_64B_BD_SIZE				 (3 << 4)
- 	#define RX_BD_FLAGS_SOP					(1 << 6)
-+	#define RX_BD_FLAGS_AGG_EOP				(1 << 6)
- 	#define RX_BD_FLAGS_EOP					(1 << 7)
- 	#define RX_BD_FLAGS_BUFFERS				(3 << 8)
- 	 #define RX_BD_FLAGS_1_BUFFER_PACKET			 (0 << 8)
+ bool netif_rxq_has_unreadable_mp(struct net_device *dev, int idx);
 -- 
 2.53.0
 
