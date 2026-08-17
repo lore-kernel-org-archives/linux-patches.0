@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F56D424D6D;
-	Mon, 17 Aug 2026 15:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267BB429CE8;
+	Mon, 17 Aug 2026 15:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979629; cv=none; b=kaaWMkCyC7buY7YRyaBtawyXqr8pYNSmxVkrFFAJQ8ywrfSTNEG3bnWeTp1FUg9jVHSPdQGXOOLIt/hBMP6NRzdHDKj97CHj0xiAvp4T917Dwwv8Lj5F5HLBynJYTEttpN1o90+4cSoZKyEtO5NBzn+wio0zAT0/n+qC2y/JclY=
+	t=1786979632; cv=none; b=ujjN3pjsME8jzmlXnIEmyBoVSBtkglhYqQrOS2vKcp5w3QZk5NFnF/O/6QE5M4QiYNDjeAgRW/Z8XEm+Cjnhey7CBBmfNnqt2YyLys1CvsCMXvINBOY8mXQD+5E/MxOiOkLH8Y0d1PAoqtkVP2tysykWCT+7rCRZ4nuB1DwB6Wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979629; c=relaxed/simple;
-	bh=pCilB45EwWEgPlEzNuyKrRcG6qjPyKKwwz7cFp5o85s=;
+	s=arc-20240116; t=1786979632; c=relaxed/simple;
+	bh=k0nMqeEYi+CRtxzy/zJLg4kAtLzmWDtOm/bmlfRlZZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=neCaMAtbqyux8kUoI85naj1eAiFIwp5dZt4P5bYxP6vOaG5MXE41Vydv5j3SroRYyHERcpTetHgFQybdv6LtNFjhiJUQ2z6Fs9g+Wbh/Luo7U/8joMuOwiBC01gg2PIUPrf0m9cYFaMxNmY21PQMm8PYaBXbjLCR06C8Rxysfjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VeaicsrP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Eh1ntnJJlNmL9UyOOTQCtJ/FXUTKaWjE/8OD62RmhMIWC6ghPyqgTrGx5wGqGfRawwNcyeMaVgolB7VyozD5+TCN9/hvi4UqQporvwhXEIlGa5lghLfmDgZIBifN9kLAVA5sh/v+I8QZ+oD/oaUBnJwvDxyXDQ1s/hnRf8hRiZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PilXs3TC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VeaicsrP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A082B1F00A3A;
-	Mon, 17 Aug 2026 15:13:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PilXs3TC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87DCE1F000E9;
+	Mon, 17 Aug 2026 15:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979628;
-	bh=ubnRKyGlPnwcojNazrFZYyqTBFgPATW/tul6yg2xW7Q=;
+	s=korg; t=1786979631;
+	bh=NF/t8GoypdkemiyZrPrSmzSKw62sGmteduwc0rjna7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VeaicsrPAAWJ46esDj0lhaylO7NipVNIzO2qduxdsn459F/4an5czozJ3n3JMv6tv
-	 /j8LGWZRnfyZ4apwKOcOUQBqB4WNiTciyhm+wMJq4LDUSxad2kf8MnzY7t7r26JHeI
-	 BOSK8hHuzQaE9PzR/AUHYkeerY7T65j1Af6aBBxA=
+	b=PilXs3TC4m0Ypcn6vVkw1JjMKgf3zzjKrpN3r1zrlUj+lQSG5VC/3VKzTpUkABDBt
+	 gSxNvYA0LkUqY+WQJ/BNWXOe3SRJXqsEozSCebdlNuzDuAhS3rvMYm00X1a0SsB19+
+	 y0PxzDFSvQ6FIF7Mo3IwTVx1Gk03oEhgGqdOHMys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 293/609] bpf: drop bpf_lsm_getselfattr from hook list
-Date: Mon, 17 Aug 2026 15:29:49 +0200
-Message-ID: <20260817132554.014420840@linuxfoundation.org>
+	Chandrakanth Silveru <Chandrakanth.Silveru@amd.com>,
+	Srikanth Aithal <Srikanth.Aithal@amd.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Nikunj A Dadhania <nikunj@amd.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.1 294/609] KVM: SVM: Bump asid_generation on CPU online to avoid ASID collision after hotplug
+Date: Mon, 17 Aug 2026 15:29:50 +0200
+Message-ID: <20260817132554.048638426@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -44,45 +48,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Guan <guanwentao@uniontech.com>
+From: Nikunj A Dadhania <nikunj@amd.com>
 
-Backport ("bpf, lsm: Add disabled BPF LSM hook list") for v6.1.y bring the
-warning "WARN: resolve_btfids: unresolved symbol bpf_lsm_getselfattr".
+commit 25f744ffa0c8e799e06250ce2e618367b166b0d4 upstream.
 
-The lsm_getselfattr from commit a04a1198088a
-("LSM: syscalls for current process attributes"), no need to backport
-the huge patch, simply drop the entry to fix the noise.
+If a vCPU stays scheduled out (or blocked) while the last pCPU it ran
+on goes through a hotplug cycle (online->offline->online), and the vCPU
+then resumes execution on the same pCPU, then it is possible for it to
+run with an ASID that has now been assigned to a different vCPU,
+resulting in stale TLB translations being used.
 
-This is a fix for stable v6.1.178 backport commit, so no upstream commit.
+svm_enable_virtualization_cpu() resets asid_generation to 1 and sets
+next_asid to max_asid + 1 on every CPU online event, including hotplug
+cycles.  Because next_asid starts beyond the pool boundary, the first
+call to new_asid() after an online event always wraps the pool,
+incrementing asid_generation to 2 and assigning ASIDs starting from
+min_asid.
 
-Fixes: 0562ae02a6c4 ("bpf, lsm: Add disabled BPF LSM hook list")
-Link: https://lore.kernel.org/stable/20260728225520.stable-0003@kernel.org/
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Consider two vCPUs from different VMs, vCPU-A pinned to CPU-X holding
+asid_generation=2 and ASID=N from before the hotplug event:
+
+  1. CPU-X goes offline and back online: asid_generation resets to 1,
+     next_asid = max_asid + 1.
+
+  2. One or more vCPUs migrate to CPU-X and call new_asid(), wrapping
+     the pool and consuming ASIDs starting from min_asid.  Eventually
+     vCPU-B from a different VM is assigned asid_generation=2, ASID=N
+     — the same ASID that vCPU-A held before the hotplug.
+
+  3. vCPU-A enters pre_svm_run() on CPU-X: current_vmcb->cpu is
+     unchanged so the migration branch is skipped.  Its saved
+     asid_generation=2 matches sd->asid_generation=2, so the generation
+     check silently passes and vCPU-A continues running with ASID=N —
+     the same ASID just freshly assigned to vCPU-B.
+
+Both vCPUs from different VMs now run on CPU-X with the same ASID,
+causing them to share NPT TLB entries and producing stale translations.
+
+The collision manifests as a KVM internal error (Suberror: 1, emulation
+failure).  The NPT page fault reports a faulting GPA far outside the
+VM's physical memory range — a sign of stale TLB translations being
+used.  KVM falls back to instruction emulation, which fails on
+FPU/XSave instructions (XRSTOR, STMXCSR) that the emulator does not
+implement.
+
+Fix this by incrementing asid_generation instead of resetting it to 1
+in svm_enable_virtualization_cpu().  On module load, asid_generation
+starts at 0 (memset) and the increment produces 1, identical to the
+old behaviour.  On subsequent hotplug cycles the generation advances
+beyond any value a vCPU previously observed on this CPU, so the
+generation check in pre_svm_run() reliably forces new_asid() on every
+vCPU after every hotplug cycle.
+
+Fixes: 774c47f1d78e ("[PATCH] KVM: cpu hotplug support")
+Reported-by: Chandrakanth Silveru <Chandrakanth.Silveru@amd.com>
+Tested-by: Srikanth Aithal <Srikanth.Aithal@amd.com>
+Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
+Message-ID: <20260715063506.672432-1-nikunj@amd.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/bpf_lsm.c | 1 -
- 1 file changed, 1 deletion(-)
+ arch/x86/kvm/svm/svm.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
-index 4bb8c363c0bfde..61e93253b6b5e7 100644
---- a/kernel/bpf/bpf_lsm.c
-+++ b/kernel/bpf/bpf_lsm.c
-@@ -42,7 +42,6 @@ BTF_ID(func, bpf_lsm_inode_need_killpriv)
- BTF_ID(func, bpf_lsm_inode_getsecurity)
- BTF_ID(func, bpf_lsm_inode_listsecurity)
- BTF_ID(func, bpf_lsm_inode_copy_up_xattr)
--BTF_ID(func, bpf_lsm_getselfattr)
- BTF_ID(func, bpf_lsm_getprocattr)
- BTF_ID(func, bpf_lsm_setprocattr)
- #ifdef CONFIG_KEYS
--- 
-2.53.0
-
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -589,7 +589,12 @@ static int svm_hardware_enable(void)
+ 		return -EINVAL;
+ 	}
+ 	sd = per_cpu_ptr(&svm_data, me);
+-	sd->asid_generation = 1;
++	/*
++	 * Bump the current asid_generation value to ensure any vCPU that
++	 * previously ran on this CPU sees a stale generation and is forced
++	 * to acquire a new ASID, preventing a latent ASID collision.
++	 */
++	sd->asid_generation++;
+ 	sd->max_asid = cpuid_ebx(SVM_CPUID_FUNC) - 1;
+ 	sd->next_asid = sd->max_asid + 1;
+ 	sd->min_asid = max_sev_asid + 1;
 
 
