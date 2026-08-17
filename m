@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B44D43D4F7;
-	Mon, 17 Aug 2026 13:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D40B43C7C7;
+	Mon, 17 Aug 2026 13:44:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974253; cv=none; b=J1QFpX2pijTT6HgspDY/0y8Qr95YHQmz3j1+mKIbDl/FbJSqhsHW8tTcLa1HMhD4TnmFICIxVrdWeRP+miSg8UOdSNKqiL07YMYll49CSiJXQuSN5QD/qs5ZTpkpjfen3Pp2p8ddyw1L5FFr8kvaO///qJ/H9gYb/2es15qXoOY=
+	t=1786974254; cv=none; b=HyItAnqZqmHScdunhdOMNBGamTGWPJL9n8m7p4NSzuxktlPskl0BuM9sUALnKnCtN7n4RLsvGOK8Q8c7TjY4Z3kTwPY/peEdlZOYyv6vVnbUZNhqh2q5yA+75EMOwThYAOwrO2q4kOyNQe84yL0RoXhVCK6NOmd2UfZT99COyl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974253; c=relaxed/simple;
-	bh=0A6yMandknU1fXDrDlM8hLiCuZiwqMITcHwXe9ZSMPo=;
+	s=arc-20240116; t=1786974254; c=relaxed/simple;
+	bh=kjsCseMVv2GhwiBl8t3O+qdeExuYXoJa4GrQM2clMgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UK5XJ1P3Pw5az6FbfENV83OHhYw8dJbt5GTRnECPk3rb/iH/4Ls7bu5+msgJnjyWFJc3h7NaoAEAHm7Cvle3MX2mZe7MhnSiXRjk9ljCoiDnMB01NAkTlAxQTPjTbri+mf3T7dtxR9Jz6zmCq6rT0WFNAclO7pnKK/bx84JaWQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fInAtjVg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GYcV6ozXJq96N8OysI7rP4w8gAHgNQhnkIg/RlA6y68MU5hPvWt5rmfdIrybVBaH8LKPsjfENiBrMbr2haOt3+WBrKrfw2dLjBvJadZP7vjdkK1UYR+2tQRjMQlldAa0m6qA0Q5wLiXyX/8AydUlvq3IVu48MmW3dZdD4VoCp6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c0jw8UKq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fInAtjVg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CFD81F000E9;
-	Mon, 17 Aug 2026 13:44:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c0jw8UKq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 808941F00A3A;
+	Mon, 17 Aug 2026 13:44:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974247;
-	bh=OnUbsZ8HX+imIh4hNT2uy968nnwelnkV25cD7iU94zQ=;
+	s=korg; t=1786974250;
+	bh=9DS9dUpKe3hHdQdjFJs9uPNTHDQQXqVr6vIEjmhfm/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fInAtjVgNb/unFIsXAEVr9mBfEqsQgGKnqX+8myXf7wpJb7mwAFGJco8NioVPVpCe
-	 21pbGqpzwd3qFehVEjFG8GRsfE0H9DdP6oS0Gk8UD+I51s/GUXAWQxguWVNTte+tXL
-	 W4IYg2RdhumjHjykeiTuMSvo8apywXvEqnjbU+4U=
+	b=c0jw8UKqaagkQjLoUbvIpsVuS439yMptTiOS6jsUsjanVWshhGkJiNQer3H5y/hOF
+	 eJpJe+1rMgLF7+hbSnl9pO0Fck36iB14zotkNvo4iP3YLpCOtPK/hTOXJKX9HA2qbN
+	 52xRH9GAITZbSBy04tse/QwyiniqGxVWGGqjg6M0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 123/271] ALSA: usb-audio: Fix sticky mixer regressions on M-Audio Fast Track Ultra
-Date: Mon, 17 Aug 2026 15:30:48 +0200
-Message-ID: <20260817132541.920509306@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 7.1 141/271] Input: evdev - fix information leak in evdev_pass_values()
+Date: Mon, 17 Aug 2026 15:31:06 +0200
+Message-ID: <20260817132542.649120528@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -50,47 +50,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit a8934c2c6dfd72901cf3cc0de28e85eb902a61a4 ]
+commit 90f305f2c7a30257c683e13f4bf7c798eea992a0 upstream.
 
-The recent fix for sticky mixer volumes caused regressions of M-audio
-Fast Track Ultra device, where the mixer state is kept to the default
-value.
+In evdev_pass_values(), the input_event structure is allocated on the
+kernel stack and populated field-by-field. However, it is never fully
+initialized. On architectures where struct input_event contains explicit
+or implicit padding (such as the 32-bit __pad field on SPARC64), these
+padding bytes are left uninitialized.
 
-Add the quirk entries to tolerate the broken mixer behavior.  As the
-device is known to work in the implicit feedback mode, explicitly
-enable the implicit feedback mode, too.
+When this event structure is subsequently passed to the client buffer
+and later copied to userspace, the uninitialized padding bytes leak
+kernel stack memory, potentially exposing sensitive information.
 
-Since there are two FTU models that are almost identical, both entries
-are added in this patch (0763:2080 and 0763:2081).
+Similar issues exist in __evdev_queue_syn_dropped and __pass_event.
 
-Fixes: 86aa1ea1f15c ("ALSA: usb-audio: Do not expose sticky mixers")
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1273166
-Link: https://patch.msgid.link/20260807083418.1712585-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by explicitly zeroing the entire event structure with memset()
+before populating its fields. This ensures all padding bytes are cleared
+before the data crosses the security boundary.
+
+Reported-by: sashiko-bot@kernel.org
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/ampGGKo4UMKru6f5@google.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/input/evdev.c |   22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index e97038cf5271e..354866a806056 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2320,6 +2320,10 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
- 	DEVICE_FLG(0x0763, 0x2031, /* M-Audio Fast Track C600 */
- 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
-+	DEVICE_FLG(0x0763, 0x2080, /* M-Audio Fast Track Ultra */
-+		   QUIRK_FLAG_MIXER_GET_CUR_BROKEN | QUIRK_FLAG_GENERIC_IMPLICIT_FB),
-+	DEVICE_FLG(0x0763, 0x2081, /* M-Audio Fast Track Ultra */
-+		   QUIRK_FLAG_MIXER_GET_CUR_BROKEN | QUIRK_FLAG_GENERIC_IMPLICIT_FB),
- 	DEVICE_FLG(0x07fd, 0x000b, /* MOTU M Series 2nd hardware revision */
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
- 	DEVICE_FLG(0x08bb, 0x2702, /* LineX FM Transmitter */
--- 
-2.53.0
-
+--- a/drivers/input/evdev.c
++++ b/drivers/input/evdev.c
+@@ -149,11 +149,11 @@ static void __evdev_queue_syn_dropped(st
+ 	struct timespec64 ts = ktime_to_timespec64(ev_time[client->clk_type]);
+ 	struct input_event ev;
+ 
++	memset(&ev, 0, sizeof(ev));
+ 	ev.input_event_sec = ts.tv_sec;
+ 	ev.input_event_usec = ts.tv_nsec / NSEC_PER_USEC;
+ 	ev.type = EV_SYN;
+ 	ev.code = SYN_DROPPED;
+-	ev.value = 0;
+ 
+ 	client->buffer[client->head++] = ev;
+ 	client->head &= client->bufsize - 1;
+@@ -221,20 +221,20 @@ static void __pass_event(struct evdev_cl
+ 	client->head &= client->bufsize - 1;
+ 
+ 	if (unlikely(client->head == client->tail)) {
++		struct input_event ev;
++
++		memset(&ev, 0, sizeof(ev));
++		ev.input_event_sec = event->input_event_sec;
++		ev.input_event_usec = event->input_event_usec;
++		ev.type = EV_SYN;
++		ev.code = SYN_DROPPED;
++
+ 		/*
+ 		 * This effectively "drops" all unconsumed events, leaving
+ 		 * EV_SYN/SYN_DROPPED plus the newest event in the queue.
+ 		 */
+ 		client->tail = (client->head - 2) & (client->bufsize - 1);
+-
+-		client->buffer[client->tail] = (struct input_event) {
+-			.input_event_sec = event->input_event_sec,
+-			.input_event_usec = event->input_event_usec,
+-			.type = EV_SYN,
+-			.code = SYN_DROPPED,
+-			.value = 0,
+-		};
+-
++		client->buffer[client->tail] = ev;
+ 		client->packet_head = client->tail;
+ 	}
+ 
+@@ -256,6 +256,8 @@ static void evdev_pass_values(struct evd
+ 	if (client->revoked)
+ 		return;
+ 
++	memset(&event, 0, sizeof(event));
++
+ 	ts = ktime_to_timespec64(ev_time[client->clk_type]);
+ 	event.input_event_sec = ts.tv_sec;
+ 	event.input_event_usec = ts.tv_nsec / NSEC_PER_USEC;
 
 
