@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA56142AF87;
-	Mon, 17 Aug 2026 14:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9DB6442110;
+	Mon, 17 Aug 2026 14:37:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977456; cv=none; b=X5jWREdmBjn1lm09/3tzWfxS6UrcQuJrsTTJUT+IhBQCse+CA/99tr6w9hLc/Sw24Xj4WJsdkljh2/bvSOjQSvDzAvZoKn1pivd7O4Y5xn+ePjyzhxsW5xp0hUgoAFXtCbx7Y0bMb+DrUxjDDvD64jw6riLnj66UMcnzlv8BgGI=
+	t=1786977459; cv=none; b=Zgmngjgk32mMX0fueVt2feTg/IhYDyNFzHYpzLNBdEkp/d1efrob0N+Dtp2OWWASq5TngpN8vX0xnU/WJLnXZqMHkTcPx+mVa8e24qMQN5HlFjwnH+FRvCc/Ovpysp8YK577pVBopMYsoUvRnzfOznNiPhwGpbnkKdLgLOHsBAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977456; c=relaxed/simple;
-	bh=yN0BLMwhz9/Phr2vjunSnpW0D/bkB8E3QfteTMJstxM=;
+	s=arc-20240116; t=1786977459; c=relaxed/simple;
+	bh=KLJ4Pxw+0o0UMKbuOpmvyALmHBm68Glop5XC5Wif7oQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dcwcJrc/ez1KKG70FQMpItQgwV5/QFlpwLl68LbjXb15rjCPmkR79FAEyq0WD9opDhNi3va+YmOjKsd/WZXLMZZkx+annZVIkkzzi+brB4l7rjoMEYIAWAFOFzcgppkxTNENymv9/sQCQdXK7sA5oU+H4CqOanJi1jQSR4Jmx4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N420a/OB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=r8MrNWZNxyeJ0jFF5WDCKOJVz7wRDHFZHgxB3O0XkWB9bEfEbymG7nRaQNKpAeBwdke5CuYKcHDBcBiBDFND6iJ1IXf4jv3ADQW4yMV0+OsTFvx43le4mc93KcU2xQ6a0hbv/x2NtGoWonUTxBG1u/jR69ujVPYN0FwTz3C2pJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NdUPF55c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N420a/OB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC9A1F00ACA;
-	Mon, 17 Aug 2026 14:37:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NdUPF55c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CBA21F000E9;
+	Mon, 17 Aug 2026 14:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977454;
-	bh=C2LDrsO9qf56tyMMbbj59nry/G30KMxETpvsgSIfhAM=;
+	s=korg; t=1786977457;
+	bh=tUlCeGFdPKFJEaeDCTqiplohFc3FYeJBL/yZnstq00c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N420a/OBRJxnan+032cGG/bnjaTXPmZLHK697TUSQ0p0A0Ryy2GGXE28u7ahd6Ghi
-	 qjnbHCjt2T7/BoRMupz2OnaYwHsdoXZP/p+qq6GTDDpwIFXGudvlzsvGGxK15JjfjX
-	 XsIbdN2baARFQYtIcFt65BjSJ38JQaAoBykVb5KE=
+	b=NdUPF55cL+gZoedRqvd48T0oeVuZApKcycQJYkfJlvM+xLWKznfPbq83i4XM4R76V
+	 bndKmvOt/rnwDao0mdHYU9kdwXOIB4P051oUMmhwfltM0qZnYL8FmOfFMnCHkqeJHW
+	 kGz0UJBIr13ZtW2bXqek500m62svA5q0j707sXn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Aswin Karuvally <aswin@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 335/456] s390/qeth: Check CAP_NET_ADMIN for private ioctls
-Date: Mon, 17 Aug 2026 15:32:05 +0200
-Message-ID: <20260817132552.721432712@linuxfoundation.org>
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Eduard Shishkin <edward6@linux.ibm.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	=?UTF-8?q?Jan=20H=C3=B6ppner?= <hoeppner@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 336/456] s390/dasd: Fix potential NULL pointer dereference
+Date: Mon, 17 Aug 2026 15:32:06 +0200
+Message-ID: <20260817132552.756247478@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -46,44 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aswin Karuvally <aswin@linux.ibm.com>
+From: Jan Höppner <hoeppner@linux.ibm.com>
 
-commit d211028bac1bd0fff0026bfa2a8328e5b78cd0e6 upstream.
+commit 9973026f572db6b67570cadc30942f3014e41079 upstream.
 
-Gate the SIOCDEVPRIVATE ioctl commands SIOC_QETH_ADP_SET_SNMP_CONTROL,
-SIOC_QETH_GET_CARD_TYPE and SIOC_QETH_QUERY_OAT with CAP_NET_ADMIN
-capable check to ensure unprivileged users cannot invoke them.
+dasd_release_space() checks the implementation of the is_ese()
+discipline function before calling it to determine if a given device is
+an ESE DASD.
 
-Fixes: 18787eeebd71 ("qeth: use ndo_siocdevprivate")
-Cc: stable@vger.kernel.org
-Suggested-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Signed-off-by: Aswin Karuvally <aswin@linux.ibm.com>
-Link: https://patch.msgid.link/20260723140050.762991-1-aswin@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The current usage of the logical AND operator will lead to a NULL
+pointer dereference as the function is called even if the function
+pointer is NULL.
+
+Fix this by using the logical OR operator.
+
+Fixes: 91dc4a197569 ("s390/dasd: Add new ioctl to release space")
+Cc: stable@vger.kernel.org # v5.3+
+Reported-by: Vasily Gorbik <gor@linux.ibm.com>
+Acked-by: Eduard Shishkin <edward6@linux.ibm.com>
+Reviewed-by: Stefan Haberland <sth@linux.ibm.com>
+Signed-off-by: Jan Höppner <hoeppner@linux.ibm.com>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Link: https://patch.msgid.link/20260727142840.567286-3-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/net/qeth_core_main.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/s390/block/dasd_ioctl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/s390/net/qeth_core_main.c
-+++ b/drivers/s390/net/qeth_core_main.c
-@@ -6609,6 +6609,9 @@ int qeth_siocdevprivate(struct net_devic
- 	struct qeth_card *card = dev->ml_priv;
- 	int rc = 0;
- 
-+	if (!capable(CAP_NET_ADMIN))
-+		return -EPERM;
-+
- 	switch (cmd) {
- 	case SIOC_QETH_ADP_SET_SNMP_CONTROL:
- 		rc = qeth_snmp_command(card, data);
+--- a/drivers/s390/block/dasd_ioctl.c
++++ b/drivers/s390/block/dasd_ioctl.c
+@@ -330,7 +330,7 @@ out_err:
+ static int dasd_release_space(struct dasd_device *device,
+ 			      struct format_data_t *rdata)
+ {
+-	if (!device->discipline->is_ese && !device->discipline->is_ese(device))
++	if (!device->discipline->is_ese || !device->discipline->is_ese(device))
+ 		return -ENOTSUPP;
+ 	if (!device->discipline->release_space)
+ 		return -ENOTSUPP;
 
 
