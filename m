@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8935926B2D3;
-	Mon, 17 Aug 2026 15:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DABB2E8DEC;
+	Mon, 17 Aug 2026 15:13:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979586; cv=none; b=eiKnzAFvwak+oQyzv0QZQXqmDvchYRYc/MQ0vkmQyJjSqIlCZxxVBvJu1ypIgShhI1KD8WZykdV0jM8p09Pu1Fdkm1LNPILRffmniSx4y798mjgYfzzkPW+wcWUisu6R3H0bdudPoWKTqT8eShv8VLj3jVUAcWuKt/SGJ73Ong0=
+	t=1786979589; cv=none; b=qj6y66QToC4+8dkCa8YdeGSxDtRcphQliaoDfvECF8bf1aRomAXedpcwIRRZQb4EwH4XHoDg9a0uGxfTSFIr4120DX1IAnmzLeH6++Zsdag6GufKSs34FVPArIyDJCP3oo45ZBO3QNHrK/5QkloCSohy70czp/GXEg16lPImliU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979586; c=relaxed/simple;
-	bh=4egyFpiGnPP88p6DOTwrVr8bAkXvZb73b07EhmHkObc=;
+	s=arc-20240116; t=1786979589; c=relaxed/simple;
+	bh=LJ7O/z6TyAo1CVI6FuXqI5UfNq7Y8XWhqHzcaNvD6VQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TJWKheEGJevHKmAh8Q+gobN/FBQzEADu9qIgR61JqZ/DS7lrSWM+06Hi4OmB2SXBz+sLBv+SdmXNtU864mB1+7HFAuEs0GcF3SMxvpElr04d3TXuJPiNDUqGBdprnKc4uFShlFoGuqkMTTol9MN05rR4icFpBV8a3Suip9s6k0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1U8R87K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uwzWX1L2VZpYxIdiXd5GVKSxZEbipm3hA3o0gNJydDqTUPZEDyKtE2rTd2hOg9o/X6fNsVjEyajesxf/mlqyYOaIx60QSOXORNxxDWpwv00a+A78t86PJE+zO31NCar81sPZ0P2yPbBI+5nQ3+nHhndZylcc8pWa2S0W9eD5qYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OoihXDKI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1U8R87K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A051F000E9;
-	Mon, 17 Aug 2026 15:13:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OoihXDKI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52071F000E9;
+	Mon, 17 Aug 2026 15:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979585;
-	bh=0sekzrswNGLKndoLKR7YaDH8eWQHo9nHsHBVHpG6ols=;
+	s=korg; t=1786979588;
+	bh=8lpbOj+7Zf+7GhYrFv25NMciys19MbQh/LVoQj0KOTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S1U8R87Kxy4d4y7GfM+hENTFPn6bMjUbdvvUkORVmqp21WCTC1zDoxnXy1rMx51m5
-	 R/SRhfdmSIa0MZyfpxYXbRcpFmxD0ourUuXprsLJWMaEtN1l93WiOg6g8l5ZX21BXv
-	 q6ST85RgsbcP1R9Rs6HWqTY3h2QMbOgY3z1P0gh0=
+	b=OoihXDKIpio3d3oaW2zcfrNiDfg6nPWGOZYsTrGrp5wxXtHMUZeVS5ecqoEM/1jA2
+	 r9iZOMSiIx27PMz+r8vHLr6KevBeXOtMDjPUHvtvfWAsR8lb1TGdRJ6a6CO1jh1o3C
+	 rwXzWeRtrqcppHcZm8QYOcYPesL0Dpqi8LclOVT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 237/609] intel_th: fix MSC output device reference leak
-Date: Mon, 17 Aug 2026 15:28:53 +0200
-Message-ID: <20260817132552.010638501@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.1 238/609] tracing: Fix mmiotrace possible NULL dereferencing of hiter->dev
+Date: Mon, 17 Aug 2026 15:28:54 +0200
+Message-ID: <20260817132552.040590446@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,74 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 761b785a0cfbce43761227bc42a7f984f31f8921 upstream.
+commit 144f29e85702234b23d2a62abf723e6a17eb5427 upstream.
 
-intel_th_output_open() looks up the output device with
-bus_find_device_by_devt(), which returns the device with a reference that
-must be dropped after use.
+If the mmio_pipe_open() fails to find a PCI device, the hiter->dev
+will be assigned to NULL. The mmiotrace read() function dereferences the
+hiter->dev if hiter exists.
 
-commit 95fc36a234da ("intel_th: fix device leak on output open()")
-attempted to drop the reference from intel_th_output_release(). However,
-a successful open replaces file->f_op with the output driver file
-operations before returning, so close runs the output driver release
-callback instead.
+Change the test of the read to not only check hiter being NULL, but also
+the hiter->dev before dereferencing it.
 
-For MSC outputs, close runs intel_th_msc_release(), which only removes
-the per-file iterator and does not drop the device reference taken by
-intel_th_output_open(). Consequently, every successful MSC output open
-leaks one device reference.
-
-Drop the device reference from intel_th_msc_release(), which is the
-release path actually used for MSC output files. Remove the now-unused
-intel_th_output_release() callback from intel_th_output_fops.
-
-Fixes: 95fc36a234da ("intel_th: fix device leak on output open()")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260715070851.2077965-1-lgs201920130244@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260721211143.36dbd559@gandalf.local.home
+Fixes: f984b51e0779 ("ftrace: add mmiotrace plugin")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260715143604.14481-1-gaikwad.dcg%40gmail.com
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/intel_th/core.c |   10 ----------
- drivers/hwtracing/intel_th/msu.c  |    2 ++
- 2 files changed, 2 insertions(+), 10 deletions(-)
+ kernel/trace/trace_mmiotrace.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hwtracing/intel_th/core.c
-+++ b/drivers/hwtracing/intel_th/core.c
-@@ -843,18 +843,8 @@ out_put_device:
- 	return err;
- }
+--- a/kernel/trace/trace_mmiotrace.c
++++ b/kernel/trace/trace_mmiotrace.c
+@@ -146,7 +146,7 @@ static ssize_t mmio_read(struct trace_it
+ 		goto print_out;
+ 	}
  
--static int intel_th_output_release(struct inode *inode, struct file *file)
--{
--	struct intel_th_device *thdev = file->private_data;
--
--	put_device(&thdev->dev);
--
--	return 0;
--}
--
- static const struct file_operations intel_th_output_fops = {
- 	.open	= intel_th_output_open,
--	.release = intel_th_output_release,
- 	.llseek	= noop_llseek,
- };
+-	if (!hiter)
++	if (!hiter || !hiter->dev)
+ 		return 0;
  
---- a/drivers/hwtracing/intel_th/msu.c
-+++ b/drivers/hwtracing/intel_th/msu.c
-@@ -1477,8 +1477,10 @@ static int intel_th_msc_release(struct i
- {
- 	struct msc_iter *iter = file->private_data;
- 	struct msc *msc = iter->msc;
-+	struct intel_th_device *thdev = msc->thdev;
- 
- 	msc_iter_remove(iter, msc);
-+	put_device(&thdev->dev);
- 
- 	return 0;
- }
+ 	mmio_print_pcidev(s, hiter->dev);
 
 
