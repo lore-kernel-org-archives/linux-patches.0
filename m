@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6640B418344;
-	Mon, 17 Aug 2026 14:48:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA93E439009;
+	Mon, 17 Aug 2026 14:48:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978087; cv=none; b=mOOdtk7DdkDmBtcWtZBzO1cWvjGKOvlJJqbxSNGXoWljUr6On4vMoMblnOGsGjkJP97t29JSPR0KdZNUNfD3xpF7JcPObi29ZYq6/TYL+u8XQNl/ZeeOsgVkEZub1faFLgJd/8yGWQnl3inmD3RWWiMtbQZayoo0xKb5oJ/K1Rw=
+	t=1786978091; cv=none; b=OmJgJ3jBgw2qyvdJ8igZpQFUjMXnSgbPRFTlE4vlfrZC+ZNQgFYtrB+thdSwxA/y3SkFJW2jdueWKVjQgrB7NioTWO8I/KSGjN5xIQMY+G64FCxT4WvyB7+X8qQddeka6gwceHXy09m00+z6Zo6AEd5rs0paobr5Rt50hTBAo0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978087; c=relaxed/simple;
-	bh=0KwaqOfNghZqtAN9JIE/akhRpKGQkZTalHi3S/4EOgg=;
+	s=arc-20240116; t=1786978091; c=relaxed/simple;
+	bh=Fc4rjnM4118RX4vv4wq8lbBY0CADhAlY8oBARHS9jkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UTED8MxjX26vE6FH7wo3MX0KonY2MWx8DgmUXnCORHqw8dmAmlgQp9dPW+Vd9vt97D6RZY46QoraC9CnpQ4TLBX7igT4QIaVJXPmXtv3Zk022m4W2aoOXhpK2lBMpLRN5/La60Nbqy5FCYa/q47fDZ+clRlRvsZ97TSOCGsubjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYeBWxYn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KY1cRrXILPgol2Jp6sSBBHTKIdDZAcdGtbmLIRYpDrQM5Sk75L+vHDtw4Es2/MKdeCUl5oofzIt/b0BEmKSTTAUBPRX7QW7xlNd5nisjD7/xHAas31rECLsTZY2J6PxpQ9lVgI168Ud782lJZFQwIHU3ZeKEn9EiphhBxxAj1bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eh+phN7n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYeBWxYn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3C81F00A3A;
-	Mon, 17 Aug 2026 14:48:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eh+phN7n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F961F000E9;
+	Mon, 17 Aug 2026 14:48:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978085;
-	bh=KzcPSeg1TMz910JrW+BgsvPsNcmGbvcvVPuGarpX1SM=;
+	s=korg; t=1786978088;
+	bh=wra2bMxBeKknolsQxFW5bxKLK4zO5pXpjIhAsL8/kb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LYeBWxYnBnHyQxqrsEDMq/RGcCMMGXKtHhU8pNSGCvowupoPMTKu8309LyYN4OOa5
-	 PV8ErjC+0Jsq6Y6OlCA2JPZ0Xs7Gr8kv6QM63odTwgZcG7BywCHF2phoyGKZYDDIbU
-	 CX1gWj72AvDF1Y3LHGmFpMFdh6Dd325kBW3o01vo=
+	b=eh+phN7nph/1CwqtPBzH8y44WsfMdyygc5QFD7nzSINHWOkNpjlJGgykKivcZVlxg
+	 yIpD9gFYkoCmJ16XuZs6xSHbKNpqY8/zVB1BiCcfDcAktup/bhJ3uOsVr6mqRoOuNv
+	 zd8ey72utJ+9BILDcmU2R5/S8yCJMnrr6RKlj9DY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sonali Pradhan <sonalipradhan@google.com>
-Subject: [PATCH 6.12 079/181] usb: gadget: f_ncm: Use unsigned int for ndp_index
-Date: Mon, 17 Aug 2026 15:32:53 +0200
-Message-ID: <20260817132538.552286376@linuxfoundation.org>
+	"Sergey V. Frolov" <Sergey.V.Frolov@kaspersky.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Sunil Goutham <sgoutham@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 097/181] net: octeontx2-pf: Fix UB in shift operation
+Date: Mon, 17 Aug 2026 15:33:11 +0200
+Message-ID: <20260817132539.274311745@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -50,42 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sonali Pradhan <sonalipradhan@google.com>
+From: Sergey V. Frolov <Sergey.V.Frolov@kaspersky.com>
 
-commit 6b1c8a9403a26cb0fed7a648916c74dc236da591 upstream.
+commit 7e2d693af0d4c05bddccb3541a0aabd69f4cb244 upstream.
 
-The variable ndp_index is declared as a signed integer, but it stores
-the return value of get_ncm(), which is unsigned.
+In function otx2_get_egress_burst_cfg, when the parameter `burst` is
+255 and the max mantissa is 255 (0xFFULL), `burst_exp` is set to
+`ilog2(255) - 1`, which equals 6.
 
-A malicious host can supply a large offset that overflows the signed
-ndp_index, making it negative. Because ndp_index is compared against
-unsigned bounds, this negative value bypasses sanity checks and leads
-to an out-of-bounds read when calculating the address of the NDP
-block (ntb_ptr + ndp_index).
+This results in an unsigned wrap-around when calculating
+`(1ULL << (*burst_exp - 7))`, since `*burst_exp - 7` becomes -1,
+which makes the shift operand 0xFFFFFFFF. This value is greater than
+the width of the left operand.
 
-Fix this by changing ndp_index to unsigned int to ensure consistent
-unsigned comparisons throughout the function.
+According to standard 6.5.7 p.3:
+"The type of the result is that of the promoted left operand.
+If the value of the right operand is negative or is greater than
+or equal to the width of the promoted left operand, the behavior
+is undefined."
 
-Fixes: 370af734dfaf ("usb: gadget: NCM: RX function support multiple NDPs")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Sonali Pradhan <sonalipradhan@google.com>
-Link: https://patch.msgid.link/20260720165654.2224591-1-sonalipradhan@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix the off-by-one boundary condition.
+
+Add a WARN_ON(*burst_exp < 7) before the else branch as an
+explicit safeguard. This ensures that if max_mantissa ever changes
+in a way that reintroduces this condition, it will be immediately
+caught at runtime rather than silently triggering UB.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: e638a83f167e ("octeontx2-pf: TC_MATCHALL egress ratelimiting offload")
+Signed-off-by: Sergey V. Frolov <Sergey.V.Frolov@kaspersky.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Sunil Goutham <sgoutham@marvell.com>
+Link: https://patch.msgid.link/20260804120446.1955448-1-Sergey.V.Frolov@kaspersky.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -1171,7 +1171,7 @@ static int ncm_unwrap_ntb(struct gether
- 	unsigned char	*ntb_ptr = skb->data;
- 	__le16		*tmp;
- 	unsigned	index, index2;
--	int		ndp_index;
-+	unsigned int	ndp_index;
- 	unsigned	dg_len, dg_len2;
- 	unsigned	ndp_len;
- 	unsigned	block_len;
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
+@@ -78,10 +78,12 @@ static void otx2_get_egress_burst_cfg(st
+ 	if (burst) {
+ 		*burst_exp = ilog2(burst) ? ilog2(burst) - 1 : 0;
+ 		tmp = burst - rounddown_pow_of_two(burst);
+-		if (burst < max_mantissa)
++		if (burst <= max_mantissa) {
+ 			*burst_mantissa = tmp * 2;
+-		else
++		} else {
++			WARN_ON(*burst_exp < 7);
+ 			*burst_mantissa = tmp / (1ULL << (*burst_exp - 7));
++		}
+ 	} else {
+ 		*burst_exp = MAX_BURST_EXPONENT;
+ 		*burst_mantissa = max_mantissa;
 
 
