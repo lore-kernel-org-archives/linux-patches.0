@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18DA4457C5;
-	Mon, 17 Aug 2026 15:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF2F2F1FDF;
+	Mon, 17 Aug 2026 15:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980324; cv=none; b=iKM9yRZl5vYzYvfUmB9Pzt258VQfv99vJ2Og/cClVENBYAxWueAsjD/WqcuUk+FZr4R1T47EpYalut3AMKXUSuhmDbctc/hNDqfPpwyIhqngesUyT6Z9DMy+sHordCTSLpmg3fxdIkn6IVy6wv1vjB1Ks8pulu7mr1geHBdASpc=
+	t=1786980327; cv=none; b=gcf8CQEfcgVXKaGk2K6nH50J6icWt0fYI7icRxeWTBwTlwiDAr1z8QtYYrHE2AAGmBHpBq/7ingkkWEuyBAYPl2XJHtFYOwXYobaEj4HxnXQSvFit8NEeOL79prKCvzs9MfeOX7IMw0Tly8COOALYKbQGD8MB3Dx9Ewo3VcKm4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980324; c=relaxed/simple;
-	bh=Zn4627DGg2Mk0+Ywmfznaves0rPcQzJQNSnZKmpZf54=;
+	s=arc-20240116; t=1786980327; c=relaxed/simple;
+	bh=bwgq5Alvbsc/1b1YpmyHf82FWdK/C8ei8YNihQmFG4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CuPV2TMOETYdPcLSKSSVfR8VGt6YSerXlDjFoAbnS0aD2yxxkub7q6f1L6/Z45Ja7pqICN910PBE1fza4ELmpRNN8kLf/esret8cdpvd4Mpib4samHoSZnITNlxwblmN7/hYLiGfJIyQB/QYuFFBWI601zIViP4ePdD3RwxSb6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eUSVPlz8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dzi5EWgl5SlRU7OAnTKUnHpBtHoW5wfsdFO38lPvd9Vgi9nXqxNsjuLQMexU35vguSxCzPTy5Eokm6ZAFnaSZsVh03NrDPrxQtL+1oFgddBRvCpGx9j+7+f4az2uw/Y08VkXtJjvwENAlHAdl3KTyIVNlbZhS/gzEhRvkxYDkzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGhr/vGi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eUSVPlz8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42DB51F000E9;
-	Mon, 17 Aug 2026 15:25:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGhr/vGi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252F41F000E9;
+	Mon, 17 Aug 2026 15:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980322;
-	bh=y8DQhgfMp9A1W8NzhLvmOFHLLmZ/T1iFuxaFTLUfajA=;
+	s=korg; t=1786980325;
+	bh=LKuXaetHBlRbJpqWV8Xz4WUFpbp4Wv66+bYdZjeRpdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eUSVPlz80to5HriCIxExPp2UfH/ZZzsJSGRoD7+mwE+pUzGYOvIVUHrVR80P3bdD8
-	 fxpo94qdZayCRKSEI/qP0UK3VwU+9NIB2xTtmHjFt+vw4SQr5dTDxHsZ/ZWZ2uC7mJ
-	 +RfP6uSryzIHCIv/CReKAI8ACAiS13Se+1EYcdBc=
+	b=lGhr/vGi7t7kVLu5oadBS7+j+CqwAYH6jVZmw5FrDTNb0QO+SNUOeH4e9C/9yQgOK
+	 /At6rTzDTp6iZbB0ZjfJ0Eqm3woDdeDJPYB8i+z1OUefXSe4qXMdJPJfLMEF0Y4jDh
+	 x1X8HE33pZZDKnG0c3agHGe5swEmLBwPaTQPYb00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Fan XinRan <shinjiangjiang@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 484/609] Bluetooth: 6lowpan: Fix using chan->conn as indication to no remote netdev
-Date: Mon, 17 Aug 2026 15:33:00 +0200
-Message-ID: <20260817132600.126038296@linuxfoundation.org>
+Subject: [PATCH 6.1 527/609] net: thunderbolt: Tear down DMA paths before stopping the rings
+Date: Mon, 17 Aug 2026 15:33:43 +0200
+Message-ID: <20260817132601.436968571@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,64 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Fan XinRan <shinjiangjiang@gmail.com>
 
-[ Upstream commit d38eaf611839b85ade3dd3db309dbc8aaaaf0095 ]
+[ Upstream commit 68bf02b6b4ad3f748c6db71fd77b6c0402d252f4 ]
 
-b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding
-conn ref") don't reset the chan->conn to NULL anymore making the bt#
-netdev not be remove once the last l2cap_chan_del is removed.
+tbnet_tear_down() stops both rings and frees their frame buffers before
+calling tb_xdomain_disable_paths().  tb_ring_stop() zeroes the ring's
+descriptor base and tbnet_free_buffers() unmaps and frees the pages the
+frames sit in, so by the time __tb_path_deactivate_hop() polls the hop's
+'pending' bit, anything still in flight has nowhere to drain to.
 
-Instead of restoring the original behavior this remove the logic of
-keeping the interface after the last channel is removed because it
-never worked as intended and the l2cap_chan_del always detach its
-l2cap_conn which results in always removing the channel anyway.
+The teardown sequence has been in this order since the driver was added.
+The setup path has not: commit ff7cd07f3064 ("net: thunderbolt: Enable
+DMA paths only after rings are enabled") moved the path enable to the end
+of tbnet_connected_work() and documented why:
 
-Fixes: b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+	/* Both logins successful so enable the rings, high-speed DMA
+	 * paths and start the network device queue.
+	 *
+	 * Note we enable the DMA paths last to make sure we have primed
+	 * the Rx ring before any incoming packets are allowed to
+	 * arrive.
+	 */
+
+Teardown was never updated to match, so the rings and the paths now come
+down in the same order they go up instead of in reverse.
+
+On an ASMedia ASM4242 host router the 'pending' bit then never clears:
+every teardown burns the full 500 ms timeout and
+__tb_path_deactivate_hop() returns -ETIMEDOUT.  Raising the timeout to
+5 s does not help, so the hop is not slow to drain, it never drains
+at all.
+
+The failure is invisible above the thunderbolt core.
+__tb_path_deactivate_hops() is void and only calls tb_port_warn();
+tb_path_deactivate(), tb_tunnel_deactivate() and
+__tb_disconnect_xdomain_paths() are void as well, and
+tb_disconnect_xdomain_paths() ends in an unconditional "return 0".  So
+tb_xdomain_disable_paths() reports success and the netdev_warn() below
+it never fires.  Repeated teardowns eventually take the XDomain control
+channel down, after which the peer node is gone and only a power cycle
+brings the controller back.
+
+Deactivating the paths first fixes it.  Measured with kretprobes on a
+stock v6.17 tree with no other patches applied, on a link that was up
+and had just carried traffic:
+
+  before: __tb_path_deactivate_hop() returns 0 for the first hop, then
+          -ETIMEDOUT for the second 500335 us later
+  after:  0 for both, 525 us apart
+
+Alternating the two orderings ABBA over three load levels, four
+teardowns per arm: every teardown failed before the change (21 of 21
+that ran), none failed after (0 of 24).  The before arms ran short
+because the link died partway through.  The same split shows up when
+the interface is enslaved to a bond instead of just brought down, which
+is how I ran into this in the first place.  Throughput and latency after
+the change are unchanged.
+
+Hosts whose routers drain the hop despite the stale descriptor base see
+no functional difference, since the paths end up deactivated either way.
+
+Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
+Signed-off-by: Fan XinRan <shinjiangjiang@gmail.com>
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://patch.msgid.link/20260803-b4-tbnet-teardown-v2-1-27de6a13ca2d@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/6lowpan.c | 18 +++---------------
- 1 file changed, 3 insertions(+), 15 deletions(-)
+ drivers/net/thunderbolt.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index e2196cf4f6f70..723ead2c04f16 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -781,20 +781,10 @@ static void chan_close_cb(struct l2cap_chan *chan)
- 	struct lowpan_btle_dev *dev = NULL;
- 	struct lowpan_peer *peer;
- 	int err = -ENOENT;
--	bool last = false, remove = true;
-+	bool last = false;
+diff --git a/drivers/net/thunderbolt.c b/drivers/net/thunderbolt.c
+index 6f01089e6f47d..a14655b795cca 100644
+--- a/drivers/net/thunderbolt.c
++++ b/drivers/net/thunderbolt.c
+@@ -379,11 +379,16 @@ static void tbnet_tear_down(struct tbnet *net, bool send_logout)
+ 				break;
+ 		}
  
- 	BT_DBG("chan %p conn %p", chan, chan->conn);
- 
--	if (chan->conn && chan->conn->hcon) {
--		if (!is_bt_6lowpan(chan->conn->hcon))
--			return;
+-		tb_ring_stop(net->rx_ring.ring);
+-		tb_ring_stop(net->tx_ring.ring);
+-		tbnet_free_buffers(&net->rx_ring);
+-		tbnet_free_buffers(&net->tx_ring);
 -
--		/* If conn is set, then the netdev is also there and we should
--		 * not remove it.
--		 */
--		remove = false;
--	}
--
- 	spin_lock(&devices_lock);
++		/* Tear the paths down before stopping the rings.  This mirrors
++		 * tbnet_connected_work(), which enables the paths last so the
++		 * Rx ring is primed before packets can arrive.  Stopping a
++		 * ring zeroes its descriptor base and tbnet_free_buffers()
++		 * unmaps and frees the frame buffers, leaving anything still
++		 * in flight with nowhere to drain to;
++		 * __tb_path_deactivate_hop() then waits for the hop's
++		 * 'pending' bit, which on some host routers never clears in
++		 * that state.
++		 */
+ 		ret = tb_xdomain_disable_paths(net->xd,
+ 					       net->local_transmit_path,
+ 					       net->tx_ring.ring->hop,
+@@ -392,6 +397,11 @@ static void tbnet_tear_down(struct tbnet *net, bool send_logout)
+ 		if (ret)
+ 			netdev_warn(net->dev, "failed to disable DMA paths\n");
  
- 	list_for_each_entry_rcu(entry, &bt_6lowpan_devices, list) {
-@@ -821,10 +811,8 @@ static void chan_close_cb(struct l2cap_chan *chan)
- 
- 		ifdown(dev->netdev);
- 
--		if (remove) {
--			INIT_WORK(&entry->delete_netdev, delete_netdev);
--			schedule_work(&entry->delete_netdev);
--		}
-+		INIT_WORK(&entry->delete_netdev, delete_netdev);
-+		schedule_work(&entry->delete_netdev);
- 	} else {
- 		spin_unlock(&devices_lock);
++		tb_ring_stop(net->rx_ring.ring);
++		tb_ring_stop(net->tx_ring.ring);
++		tbnet_free_buffers(&net->rx_ring);
++		tbnet_free_buffers(&net->tx_ring);
++
+ 		tb_xdomain_release_in_hopid(net->xd, net->remote_transmit_path);
+ 		net->remote_transmit_path = 0;
  	}
 -- 
 2.53.0
