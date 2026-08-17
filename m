@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B26D43B3CA;
-	Mon, 17 Aug 2026 13:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFCC439F77;
+	Mon, 17 Aug 2026 13:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974948; cv=none; b=B8ruuLLejE1qRzDDLYlos7Pr4+LOMnTFoQWjTsFwWT71oOE6bR0oftot3uje+RflGChXXlFSybX21mBDiW/PbSk5VZYWP6YlvwvURGuj7jySG84rV8OzWGUHAGFnCCapqXwjQORTn3z7I0GiAM9LV1yAmUlKvIUNSMoL/dLv86I=
+	t=1786974949; cv=none; b=bVciagZoQftwyYhw4GdgpfAKKt1NkjBcr/zhtT6pXDQ3eKEotJgtWJ5p3696zVn87OO5bKtzKKRmL4EM+GAUe+FTUXqGsHZdm1sPn4gwhfNdPitHb2M3JWbxvKZJurmxR4cB25T8KE8/boAGTSW/6GSsfWdZ1+Fef9N4zJI3xKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974948; c=relaxed/simple;
-	bh=NF8iMrWw30LQlqjJubrIm/DziuGTiMEjd2GVni0iROM=;
+	s=arc-20240116; t=1786974949; c=relaxed/simple;
+	bh=yKmtvri3TRgJf71qfoaxFfKE/P56x3PZvfOsTMzlO4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JP7fUDo0RSskeNB6O5h/MBFxNHz2nDfunxgR1BJREuLzhwVc4V9JdZ8oNn0c0gW3llryZOYBoADYmvr/zboLXkE2jfrHQoS+jssBkpRQ/JKARfDZKFk1Px6aLiggiAXetfbplWLmpuj90et31eT/TkPTtRJd3ZqglRBj0tuIDdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IphzuKt5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ajYQhb7SP15uNDmgBhg6Btrrp3BG7lKKJQaQKCvCU4o486EUHZjsu9hh2cwiTTk6uqgEBto2ecB+9NqtSmw4Q/gKb9q7nOMVGenQzdR2ZcASlvfM+DzbV7rq9Z1P0OuI4Kg1W8EdSvmSoEaaqCYQdLp9vAj9aApB51kgCADFNUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUr8ei+s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IphzuKt5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FAAF1F00A3E;
-	Mon, 17 Aug 2026 13:55:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUr8ei+s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC241F00A3D;
+	Mon, 17 Aug 2026 13:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974941;
-	bh=u4wyKDZlABibMj5oP1K+J21d8oH9xzMAaYxSRmPbL1w=;
+	s=korg; t=1786974938;
+	bh=WA3cwTE0jSwoetOfm6RQNd7sSc8JLgq5t1lSrdytnw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IphzuKt5wD3Gd7MhBd5fcznel74YNZoQwifJjAaZKhQ2F2EIZwvIh3heYhHHNxIO7
-	 Vv7olhJ19VkvvKayAwKMc7um8YPEyl6VYsqH24Xat9detT9mD9uZi1+ZTwngB4pEuz
-	 qANOLcGyhw8c70cGkoS+3RaYWPGvkpWqjjUJP7zk=
+	b=wUr8ei+s5xe+glA7vTPY2t3xPysQT5GMJqj5xokV0nMcrnyJ6tnaLe8ARiTg4hM9K
+	 CxzMEWM1fTXLP4W67mfkGE0F/zfsjVZhEK0BFMs5PX8KDF1EvwpMafC0ScALsfHdlD
+	 Hppx3rs/Nth3ZZRC+eyJ+CSSEju7lI5LFPZCFglY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingshuang Fu <fuqingshuang@kylinos.cn>,
+	Wilken Gottwalt <wilken.gottwalt@posteo.net>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 106/250] hwmon: (ads7828) Fix external VREF regulator handling
-Date: Mon, 17 Aug 2026 15:31:07 +0200
-Message-ID: <20260817132540.870345715@linuxfoundation.org>
+Subject: [PATCH 6.18 105/250] hwmon: (corsair-psu) fix possible out-of-bounds access on missing string termination
+Date: Mon, 17 Aug 2026 15:31:06 +0200
+Message-ID: <20260817132540.825852323@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,69 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingshuang Fu <fuqingshuang@kylinos.cn>
+From: Wilken Gottwalt <wilken.gottwalt@posteo.net>
 
-[ Upstream commit fddb5ceaf901b050ed2a1a7deeecbf97e003435a ]
+[ Upstream commit 36c4d73ce05d1d8896c2669eb0730d35a02a2ec1 ]
 
-The driver currently has two issues with the external VREF regulator
-handling in ads7828_probe():
+In theory it could be possible that the REPLY_SIZE sized buffers for
+holding the vendor and product strings could be end up missing the null
+termination (for example by malicious hardware built on purpose)
+required by the seq_printf() call. That limits the debugfs printf calls
+to a maximum string length of REPLY_SIZE.
 
-1. All errors from devm_regulator_get_optional() are ignored, causing the
-   driver to incorrectly fall back to internal VREF even for transient
-   errors like -EPROBE_DEFER or genuine failures like -ENOMEM.
-
-2. The external regulator is never enabled. The driver calls
-   regulator_get_voltage() without first calling regulator_enable(),
-   so the VREF pin may remain unpowered if the regulator is not
-   configured as always-on.
-
-Fix both issues by switching to devm_regulator_get_enable_read_voltage(),
-which handles regulator get, enable, and voltage read in one call.
-Only -ENODEV (no regulator specified in device tree) should trigger the
-fallback to internal VREF. All other errors are propagated to the caller.
-
-Fixes: a8ddfea09566 ("hwmon: (ads7828) Accept optional parameters from device tree")
-Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
-Link: https://lore.kernel.org/r/20260805061645.1331652-1-fffsqian@163.com
+Fixes: d115b51e0e567 ("hwmon: add Corsair PSU HID controller driver")
+Signed-off-by: Wilken Gottwalt <wilken.gottwalt@posteo.net>
+Link: https://lore.kernel.org/r/anLj9gPWRoRDbQBV@monster.localdomain
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ads7828.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/hwmon/corsair-psu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/ads7828.c b/drivers/hwmon/ads7828.c
-index 436637264056c..20ef4992f5bb8 100644
---- a/drivers/hwmon/ads7828.c
-+++ b/drivers/hwmon/ads7828.c
-@@ -106,12 +106,11 @@ static int ads7828_probe(struct i2c_client *client)
- 	struct ads7828_data *data;
- 	struct device *hwmon_dev;
- 	unsigned int vref_mv = ADS7828_INT_VREF_MV;
--	unsigned int vref_uv;
-+	int vref_uv;
- 	bool diff_input = false;
- 	bool ext_vref = false;
- 	unsigned int regval;
- 	enum ads7828_chips chip;
--	struct regulator *reg;
+diff --git a/drivers/hwmon/corsair-psu.c b/drivers/hwmon/corsair-psu.c
+index 4681af6843596..679fb30983465 100644
+--- a/drivers/hwmon/corsair-psu.c
++++ b/drivers/hwmon/corsair-psu.c
+@@ -709,7 +709,7 @@ static int vendor_show(struct seq_file *seqf, void *unused)
+ {
+ 	struct corsairpsu_data *priv = seqf->private;
  
- 	data = devm_kzalloc(dev, sizeof(struct ads7828_data), GFP_KERNEL);
- 	if (!data)
-@@ -125,9 +124,11 @@ static int ads7828_probe(struct i2c_client *client)
- 	} else if (dev->of_node) {
- 		diff_input = of_property_read_bool(dev->of_node,
- 						   "ti,differential-input");
--		reg = devm_regulator_get_optional(dev, "vref");
--		if (!IS_ERR(reg)) {
--			vref_uv = regulator_get_voltage(reg);
-+		vref_uv = devm_regulator_get_enable_read_voltage(dev, "vref");
-+		if (vref_uv < 0) {
-+			if (vref_uv != -ENODEV)
-+				return vref_uv;
-+		} else {
- 			vref_mv = DIV_ROUND_CLOSEST(vref_uv, 1000);
- 			if (vref_mv < ADS7828_EXT_VREF_MV_MIN ||
- 			    vref_mv > ADS7828_EXT_VREF_MV_MAX)
+-	seq_printf(seqf, "%s\n", priv->vendor);
++	seq_printf(seqf, "%.*s\n", REPLY_SIZE, priv->vendor);
+ 
+ 	return 0;
+ }
+@@ -719,7 +719,7 @@ static int product_show(struct seq_file *seqf, void *unused)
+ {
+ 	struct corsairpsu_data *priv = seqf->private;
+ 
+-	seq_printf(seqf, "%s\n", priv->product);
++	seq_printf(seqf, "%.*s\n", REPLY_SIZE, priv->product);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
