@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CD544236F;
-	Mon, 17 Aug 2026 14:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4838442B03;
+	Mon, 17 Aug 2026 14:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976950; cv=none; b=glZDBe6Uoqa3oofWPiKDGBiaRKjoJDqeeYMyBxXKeR9kl2xwsS7fi/WoJKiYKxSJTGbikIIz5nm/hUzjV3YsThQ3FmGsMYjJEeDUGu1xxASfSsw2lfDLbH1806GShOI3P4tAbnCZ2E7N/Lo6UKpS74/pAJ9V3N00qGyFgYeasUU=
+	t=1786976952; cv=none; b=otFSRId0K08BJUjBZ1/IQCA897xChQK947OrBhfUVS6l+DgSZw/y3S5JNMuNKLh0Rc/2h3p/8kMKl5lEKLT8OPjxo7pCA23RSqfML0jBnb/g65wQdfa6Nfw4ql6EZVH42rtN9EYycrNdZoiltzbToPdu8OrLZRcO9RrR5SmwbtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976950; c=relaxed/simple;
-	bh=aibMQse8/5FbSsLuMJF9FnCHNDaidCTMagaZ9OFCZD8=;
+	s=arc-20240116; t=1786976952; c=relaxed/simple;
+	bh=pxPS8WQ80GmGOwJVzona9UjMNRU5qDUErX2poo1Gn8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OzgdSNHdGV3CPammnPbiQ3ivvczyFIY6I7ZZ3vyYboQgN5NnRodlJ8rla8+gmsn6RQVF83fQyu3WHS2HA4GtdhX8ik0DCAVscs7JNAZpMKdnFJCx0ldz8oMqpsfJdMUzNh57AV/Qli+S11ge1ysdIlecMM1QX6Mzg/uEQ+CjoUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wVYtqP1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZxeA1HXCLteR3Pd/nxRbqeCSbcNOmLGiEQwkNrUpbJXUwdDasGBIrOBQ9hhGsY5g8KeYq6Ocmq0o87lEGNmieL3h9h0mdref4I5wwJklpTbKclPqWm1kNX0dEw7fePjzGxHrYs8kZBjH9HbFH5GTn66s3hajfLZQfr1D1jxFRnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dnX2ZfGS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wVYtqP1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163501F000E9;
-	Mon, 17 Aug 2026 14:29:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnX2ZfGS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0971F00A3D;
+	Mon, 17 Aug 2026 14:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976948;
-	bh=vcMF3/eylqBleBsm8bMmnQweGK3D0SHufMDScdCBRm8=;
+	s=korg; t=1786976951;
+	bh=K/ryzXL+Ef0yK3tavZg/7zCdi2W4NTYKGgTx0LubHPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0wVYtqP1/5kiYQdxI1sjQCCnYZQz5lAjFIm0tJDsBW9hT6figO96gwVMO3ugt4T1S
-	 QhJzQ3j4s3uQ7S7og/Hx/1wm/k9AxxZgPnu7+qmDiUxqMyn7EVttEIN2GnfjWTNupX
-	 a/UwlSgxZyVLGeehPBYosugLlhDEEHhxyDSZ9fXQ=
+	b=dnX2ZfGSZo8xhVgLvXDxthoEw58U/QZWYGmu0k3zDE0XVgUBR56BtnPbkth5ifJ66
+	 AVVTFLtK7bzfh5mmLNMCFXCrjW6bJ5ay5+QtTo2NkAEl7AM7WGGO0tMDZ32sHa5zLo
+	 HSoe8S0OuSgUBvdY7lSYt741UHUq3ARKyQNjsFII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@auroraos.dev>,
-	Chaoyi Chen <chaoyi.chen@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 5.15 143/456] drm/rockchip: cdn-dp: add missing check in cdn_dp_config_video()
-Date: Mon, 17 Aug 2026 15:28:53 +0200
-Message-ID: <20260817132545.676537493@linuxfoundation.org>
+	Wang Jun <1742789905@qq.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.15 161/456] media: cx23885: add ioremap return check and cleanup
+Date: Mon, 17 Aug 2026 15:29:11 +0200
+Message-ID: <20260817132546.380887445@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,38 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@auroraos.dev>
+From: Wang Jun <1742789905@qq.com>
 
-commit 46c31e1604d121221167cb09380de8c7d53290b9 upstream.
+commit a0701e387b46e2481c05b47f1235b954bfc2af3e upstream.
 
-The result of cdn_dp_reg_write() is checked everywhere (with the error
-being logged by the callers) except one place in cdn_dp_config_video().
-Add the missing result check, bailing out early on error...
+Add a check for the return value of pci_ioremap_bar()
+in cx23885_dev_setup().
+If ioremap for BAR0 fails, release the already allocated
+PCI memory region,
+decrement the device count, and return -ENODEV.
 
-Found by Linux Verification Center (linuxtesting.org) with the Svace static
-analysis tool.
+This prevents a potential null pointer dereference and
+ensures proper cleanup
+on memory mapping failure.
 
-Fixes: 1a0f7ed3abe2 ("drm/rockchip: cdn-dp: add cdn DP support for rk3399")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@auroraos.dev>
+Fixes: d19770e5178a ("V4L/DVB (6150): Add CX23885/CX23887 PCIe bridge driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Chaoyi Chen <chaoyi.chen@rock-chips.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patch.msgid.link/adf6b313-f7db-4d8f-9000-8c65446ba041@auroraos.dev
+Signed-off-by: Wang Jun <1742789905@qq.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/rockchip/cdn-dp-reg.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/pci/cx23885/cx23885-core.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/rockchip/cdn-dp-reg.c
-+++ b/drivers/gpu/drm/rockchip/cdn-dp-reg.c
-@@ -683,6 +683,8 @@ int cdn_dp_config_video(struct cdn_dp_de
- 	val = div_u64(8 * (symbol + 1), bit_per_pix) - val;
- 	val += 2;
- 	ret = cdn_dp_reg_write(dp, DP_VC_TABLE(15), val);
-+	if (ret)
-+		goto err_config_video;
+--- a/drivers/media/pci/cx23885/cx23885-core.c
++++ b/drivers/media/pci/cx23885/cx23885-core.c
+@@ -990,8 +990,12 @@ static int cx23885_dev_setup(struct cx23
+ 	}
  
- 	switch (video->color_depth) {
- 	case 6:
+ 	/* PCIe stuff */
+-	dev->lmmio = ioremap(pci_resource_start(dev->pci, 0),
+-			     pci_resource_len(dev->pci, 0));
++	dev->lmmio = pci_ioremap_bar(dev->pci, 0);
++	if (!dev->lmmio) {
++		dev_err(&dev->pci->dev, "CORE %s: can't ioremap MMIO memory\n",
++			dev->name);
++		goto err_release_region;
++	}
+ 
+ 	dev->bmmio = (u8 __iomem *)dev->lmmio;
+ 
+@@ -1096,6 +1100,12 @@ static int cx23885_dev_setup(struct cx23
+ 	}
+ 
+ 	return 0;
++
++err_release_region:
++	release_mem_region(pci_resource_start(dev->pci, 0),
++			   pci_resource_len(dev->pci, 0));
++	cx23885_devcount--;
++	return -ENODEV;
+ }
+ 
+ static void cx23885_dev_unregister(struct cx23885_dev *dev)
 
 
