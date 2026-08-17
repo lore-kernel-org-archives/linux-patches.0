@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9A243991D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A11343802D;
 	Mon, 17 Aug 2026 14:49:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978175; cv=none; b=tjIabkLL6BiiY+RBLUDJO5sKk25PVcVqahFGD/yIx3lenII37GHUDgFgQeKWv8mG97AjoZHYpwC8crKfQjWVcnw/UOKhdu+FdAvGOd3e1Y01sldTEMtqE/zSborrz8eOPbmToOeYcvlCS9Sz6DpBWrjPWnbVJqSLCERwmluQfhE=
+	t=1786978175; cv=none; b=CkE43XSzIPZUn58uIQGi8I4KxLorDaI7d6b5N+GCcd6U6HukxB9swOJLCWg2O864LCc/XSnK9EPo32pfpZovt6YWRAmLLIFOYMoImXKbCVvfQ5+SNj/BieSjX/WFL+fXXMvg9ZOlku0Cnc+O1X0ip+e0lYvW4KpG2sP3iDyHD48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1786978175; c=relaxed/simple;
-	bh=l6TR8xk1O+6eu5hQGOL5BYiIzM1VDk+t46BQHZeiPGM=;
+	bh=i+j/9jQjnMXKTwaBoIxTzzY+fU0orfWG1SywA9pT2t0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bDum/VMgx6jHe0fmt7BSJzueerRY2jNlUhuR47oL22qcU2REUb2B/q/buIZZM1X6sN5jVVL7VG+eMbtVOPnG0wo2YcNeYTQ2ozCJNG5tr68dfZsbTEd1JzTZeHdkFEloFgd7oQ6JRPc0ye1Ubk9zP4TVd8vTGLGUlwwb9X523h4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPBiBnk+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XXVTT0n01m7FsO/IGfonS65E2guj0KEoVe8HtZ12n4G0SpXEdb5NxLTOMZX1+duMm9neB46MjaLN6X02fU+0zUOdBhV+jdA8+rSeuAVbNR77+vwcFCZUCy63U0DgAYwhrwzz8JW5XG5crDyk+a8HrZO0jdOp+ZVgvZzmpS35bTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XdCghEak; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPBiBnk+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89DB1F00A3E;
-	Mon, 17 Aug 2026 14:49:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XdCghEak"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25E11F00A3F;
+	Mon, 17 Aug 2026 14:49:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978168;
-	bh=aN3wJwy9Q8vYhk5j7Z7iwlbHW4vVBjlaOcsf71RfaLw=;
+	s=korg; t=1786978171;
+	bh=1E8lyyiAfLdlZ94ReIu1K9Y2kONocUBY3oQ+Z0pal2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WPBiBnk+7lt6brQaWvAU9cvpz5UJJkoc4EtlRfxQA5xOoPetqdgvsPf/NJ/OfTzOz
-	 fbMA/SbSTZwNVbXUP+HByY4gCVo/VWrL35DLrOCqP38R8TRdrrTylvOmCf4lJgGudp
-	 mm2tRawgVTrU92wl8U1iPVzGy4K/dvWaViX0HSHY=
+	b=XdCghEakAsrFL2E24gBD4Li5dUoer+HoG9TcWL31Wdd3ZQtj5b8eXAEnTIaC1VYOO
+	 YxnLg2G2i5NBL9Y6tdAZ3zDhMP4IXlcfRt1O4GCzMvL34pmbyJeKGdSK/3XqsBVMsm
+	 2kwyp2BwIX7WWRarOcioAvzp0x3DW8MwBWhcB5oY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.12 086/181] ipvs: stop estimator after disabled calc phase
-Date: Mon, 17 Aug 2026 15:33:00 +0200
-Message-ID: <20260817132538.828743434@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.12 077/181] thunderbolt: icm: Preserve USB4 proxy data-valid bit
+Date: Mon, 17 Aug 2026 15:32:51 +0200
+Message-ID: <20260817132538.478394327@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -52,82 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 558f67f1340f803a346ecd14a69c49653111c5f4 upstream.
+commit e48844ece5e3ed1d1eb865f6da2b16f62cd9f86d upstream.
 
-IPVS estimator kthread 0 starts with zeroed chain and tick limits until
-its initial calculation phase completes. If network namespace teardown
-clears ipvs->enable during that phase, ip_vs_est_calc_phase() can return
-without installing positive limits.
+The ICM USB4 switch operation request encodes two values in
+request.data_len_valid: bit 4 marks the data payload valid, while bits
+3:0 hold the payload length in dwords.  A zero length with the valid bit
+set represents the full 16-dword data array.
 
-The kthread can then continue into its main loop and drain
-est_temp_list with zero chain_max, tick_max and est_max_count values.
-Each enqueue consumes one available tick row, but est_count never
-reaches the zero est_max_count value. After all rows are consumed, the
-row lookup returns IPVS_EST_NTICKS and ip_vs_enqueue_estimator() writes
-past the ticks and tick_len arrays.
+icm_usb4_switch_op() sets the valid bit when a transmit payload is
+present.  For payloads shorter than the full 16 dwords, it then assigns
+the length to the whole field and clears the valid bit that was just set.
+The payload is still copied into the request, but the descriptor sent to
+firmware marks that data as invalid.
 
-Exit kthread 0 after the calculation phase if the kthread is stopping or
-IPVS has been disabled. That keeps temporary estimators from being
-drained after the limits failed to initialize.
+This affects USB4 router operations that send short payloads through the
+firmware connection manager.  In particular, USB4 NVM writes can send a
+short final block when the image size is not aligned to the 64-byte proxy
+payload size.  Firmware may then ignore or reject that final block, while
+full 16-dword blocks are unaffected because they are encoded as length 0
+with the valid bit set.
 
-Estimator kthreads can now self-exit before teardown or reload stops
-kd->task. Keep an extra task reference after creation and release it
-with kthread_stop_put(), so kd->task remains valid until the stop paths
-consume that reference.
+OR the short payload length into data_len_valid so the valid bit is
+preserved.
 
-Fixes: 705dd3444081 ("ipvs: use kthreads for stats estimation")
+Fixes: 9039387e166e ("thunderbolt: Add USB4 router operation proxy for firmware connection manager")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_est.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/thunderbolt/icm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/netfilter/ipvs/ip_vs_est.c
-+++ b/net/netfilter/ipvs/ip_vs_est.c
-@@ -187,8 +187,11 @@ static int ip_vs_estimation_kthread(void
- 		}
- 
- 		/* kthread 0 will handle the calc phase */
--		if (ipvs->est_calc_phase)
-+		if (ipvs->est_calc_phase) {
- 			ip_vs_est_calc_phase(ipvs);
-+			if (kthread_should_stop() || !READ_ONCE(ipvs->enable))
-+				return 0;
-+		}
+--- a/drivers/thunderbolt/icm.c
++++ b/drivers/thunderbolt/icm.c
+@@ -2291,7 +2291,7 @@ static int icm_usb4_switch_op(struct tb_
+ 	if (tx_data_len) {
+ 		request.data_len_valid |= ICM_USB4_SWITCH_DATA_VALID;
+ 		if (tx_data_len < ARRAY_SIZE(request.data))
+-			request.data_len_valid =
++			request.data_len_valid |=
+ 				tx_data_len & ICM_USB4_SWITCH_DATA_LEN_MASK;
+ 		memcpy(request.data, tx_data, tx_data_len * sizeof(u32));
  	}
- 
- 	while (1) {
-@@ -263,6 +266,7 @@ int ip_vs_est_kthread_start(struct netns
- 		kd->task = NULL;
- 		goto out;
- 	}
-+	get_task_struct(kd->task);
- 
- 	set_user_nice(kd->task, sysctl_est_nice(ipvs));
- 	set_cpus_allowed_ptr(kd->task, sysctl_est_cpulist(ipvs));
-@@ -278,7 +282,7 @@ void ip_vs_est_kthread_stop(struct ip_vs
- {
- 	if (kd->task) {
- 		pr_info("stopping estimator thread %d...\n", kd->id);
--		kthread_stop(kd->task);
-+		kthread_stop_put(kd->task);
- 		kd->task = NULL;
- 	}
- }
-@@ -510,7 +514,7 @@ static void ip_vs_est_kthread_destroy(st
- 	if (kd) {
- 		if (kd->task) {
- 			pr_info("stop unused estimator thread %d...\n", kd->id);
--			kthread_stop(kd->task);
-+			kthread_stop_put(kd->task);
- 		}
- 		ip_vs_stats_free(kd->calc_stats);
- 		kfree(kd);
 
 
