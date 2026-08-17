@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F34D304BB3;
-	Mon, 17 Aug 2026 15:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F412EEE85;
+	Mon, 17 Aug 2026 15:06:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979213; cv=none; b=q3G5BkgVs4vprCEU/LSsYK+Ao6CmyUVwfBKJspvezsDY19m/g0HseOfI+ahuvwoQX0MKoKHTAGVoUHJ0I2oevT6Gxpq7DVgbQWuC/eY6YCiSBR2gNlgDTl49Kut5NCMjgTWY+T1VLFNszOmomS6T5gVwqWYbtOSz2laOmY63EFQ=
+	t=1786979216; cv=none; b=AJMTWL8Jl3sKXtgbWkJNoCzaZ+5DcIJoCkaYXgz7Bm5Xr9Et8ozhmhR1YnqF2k6guahX1+pLUK80PPT85ZvoD1iQmZw3WBe4wXxrKt8m7UrqInvyJ7hrPdV2rRREVyL+bh9hH+hXhUK3cX15tbXXyXQR2Yvv+DFUhK7xPJinxVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979213; c=relaxed/simple;
-	bh=kKX7pBZlZy83Xiwc1wxiS/1Dc0iHrUsxlSU2STLYX7c=;
+	s=arc-20240116; t=1786979216; c=relaxed/simple;
+	bh=CqVsPpYXlLafZSfonrCx817jvhBfUefzmI7Pc7XnD6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bVq9cOXX1XYpZ/FoQYuww5O5APtQnbRMtc5tsKQkKQUi8XIow8TRRX7aUrQJ1hUdOm8TaWR9nets2akdRvtxy3agGSwtxwnJpAc7/+fPBAvkI++oU0/57Js7ZWCivGIKaXkyDasNjdZlKRics0uKKWN93xeCdYH+uR7bFzVzfdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBsL+S+9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tfI9gybSWZgTmyhFfaxLvC79aCtR6ZCrVBenFF3Q5c+e+MP5RTDXtAFKmdFTXLtgaGZurHfmePcu77ChgY+Bev6lvxzdTgKrW4LNKtOAsts0VYn7u7Y87lOYo0IOCfv1HO4lUDcPDI2RXyPv+Y6Jt76Nw62aYjDpgSxWQslKDB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HHjxRFfZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBsL+S+9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F4F1F00A3D;
-	Mon, 17 Aug 2026 15:06:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HHjxRFfZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2891F00A3A;
+	Mon, 17 Aug 2026 15:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979212;
-	bh=j1HQzW02De6Bzzar0EdYD9nQCNmuyBgF5f4hUPImlj0=;
+	s=korg; t=1786979214;
+	bh=gEPJQIBCarM0D4yfC0L7rETz/FLSDq2qOVGX1p9+X90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SBsL+S+9RGtc7Us1mX4lXnILt8kTR7S92pvfiBML2NjBw7fkq+MDBJ/BtRge+sg06
-	 37rbjNvj9WWEVACOZGiH/mdbI6NMVAnszCTYKuyVAxGi2xlpuqHFBqOgXkzkpmpt3D
-	 2881RwL091Chts/iMIiA+91fNyeh0ao1miBrjXe4=
+	b=HHjxRFfZmekz4G0WfIDdYpiOZSYVEu5mWJCypALjnpC/YIxyM5Kxday6rY1aPnHiN
+	 jCL0pMuBaimPp6JdMIkR+AF5TfrVG9a1ohTGiup4r6jq9w5ObGtkNXp7l2sq5TEEzQ
+	 rFLSozRZkJ38yPC3EftZXJ6H7jgOdAYjenVlWy4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Taehee Yoo <ap420073@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Christian Lamparter <chunkeey@gmail.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 146/609] amt: re-read skb header pointers after every pull
-Date: Mon, 17 Aug 2026 15:27:22 +0200
-Message-ID: <20260817132548.892408065@linuxfoundation.org>
+Subject: [PATCH 6.1 111/609] wifi: carl9170: fix buffer overflow in rx_stream failover path
+Date: Mon, 17 Aug 2026 15:26:47 +0200
+Message-ID: <20260817132547.461691622@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,365 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 3656a79f94c471827a08f2cacce5f94ad5e52c24 ]
+[ Upstream commit a1a21995c2e1cc2ca6b2226cfe4f5f018370182a ]
 
-Several AMT receive and transmit paths cache a pointer into the skb head
-(ip_hdr(), ipv6_hdr(), eth_hdr() or the AMT message header) and then call
-a helper that can reallocate that head before the cached pointer is used
-again.  pskb_may_pull(), ip_mc_may_pull(), ipv6_mc_may_pull(),
-iptunnel_pull_header(), ip_mc_check_igmp() and ipv6_mc_check_mld() can all
-free the old head and move the data, so a pointer taken before the call
-dangles afterwards and the later access is a use-after-free of the freed
-head.
+The failover continuation in carl9170_rx_stream() copies the full tlen
+from the second USB transfer instead of capping at rx_failover_missing
+bytes. When both transfers are near maximum size, the total exceeds the
+65535-byte failover SKB, triggering skb_over_panic.
 
-The affected sites are:
+Limit the copy size to the missing byte count.
 
-  amt_rcv() caches ip_hdr() before amt_parse_type() pulls, then reads
-  iph->saddr.
-
-  amt_dev_xmit() caches ip_hdr()/ipv6_hdr() before ip_mc_check_igmp()/
-  ipv6_mc_check_mld() and pskb_may_pull(), then reads the group address.
-
-  amt_multicast_data_handler() caches eth_hdr() before pskb_may_pull(),
-  then writes the L2 header.
-
-  amt_membership_query_handler() caches the AMT header, the outer and
-  inner eth_hdr() and ip_hdr() before iptunnel_pull_header() and several
-  pulls, then reads and writes them.
-
-  amt_igmpv3_report_handler() and amt_mldv2_report_handler() cache
-  ip_hdr()/ipv6_hdr() and the current group record and read the record
-  count from the report header inside the record loop, across the
-  *_mc_may_pull() calls.
-
-  amt_update_handler() caches ip_hdr() and the AMT membership-update
-  header before pskb_may_pull(), iptunnel_pull_header(),
-  ip_mc_check_igmp() and the report handler, then reads iph->daddr and
-  amtmu->nonce / amtmu->response_mac.
-
-Fix each site by either snapshotting the scalar that is used after the
-pull before the first pull runs, or re-deriving the header pointer from
-the skb after the last pull that can move the head.  Values that are
-stable across the pull (source and group address, the response MAC and
-nonce, the record count, the outer source MAC) are snapshotted; pointers
-that are written through or read repeatedly are re-derived.
-
-Fixes: cbc21dc1cfe9 ("amt: add data plane of amt interface")
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Taehee Yoo <ap420073@gmail.com>
-Link: https://patch.msgid.link/20260711151934.2955226-2-michael.bommarito@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a84fab3cbfdc ("carl9170: 802.11 rx/tx processing and usb backend")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Acked-by: Christian Lamparter <chunkeey@gmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=5c1ca6ccaa1215781cac
+Link: https://patch.msgid.link/20260421134929.325662-4-tristmd@gmail.com
+[Fix checkpatch CHECK:PARENTHESIS_ALIGNMENT]
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/amt.c | 79 +++++++++++++++++++++++++++++++++--------------
- 1 file changed, 55 insertions(+), 24 deletions(-)
+ drivers/net/wireless/ath/carl9170/rx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/amt.c b/drivers/net/amt.c
-index f2da0c49171f5d..64aff304c51c66 100644
---- a/drivers/net/amt.c
-+++ b/drivers/net/amt.c
-@@ -1206,7 +1206,7 @@ static netdev_tx_t amt_dev_xmit(struct sk_buff *skb, struct net_device *dev)
- 			data = true;
- 		}
- 		v6 = false;
--		group.ip4 = iph->daddr;
-+		group.ip4 = ip_hdr(skb)->daddr;
- #if IS_ENABLED(CONFIG_IPV6)
- 	} else if (iph->version == 6) {
- 		ip6h = ipv6_hdr(skb);
-@@ -1230,7 +1230,7 @@ static netdev_tx_t amt_dev_xmit(struct sk_buff *skb, struct net_device *dev)
- 			data = true;
- 		}
- 		v6 = true;
--		group.ip6 = ip6h->daddr;
-+		group.ip6 = ipv6_hdr(skb)->daddr;
- #endif
- 	} else {
- 		dev->stats.tx_errors++;
-@@ -1273,12 +1273,12 @@ static netdev_tx_t amt_dev_xmit(struct sk_buff *skb, struct net_device *dev)
- 			hlist_for_each_entry_rcu(gnode, &tunnel->groups[hash],
- 						 node) {
- 				if (!v6) {
--					if (gnode->group_addr.ip4 == iph->daddr)
-+					if (gnode->group_addr.ip4 == group.ip4)
- 						goto found;
- #if IS_ENABLED(CONFIG_IPV6)
- 				} else {
- 					if (ipv6_addr_equal(&gnode->group_addr.ip6,
--							    &ip6h->daddr))
-+							    &group.ip6))
- 						goto found;
- #endif
+diff --git a/drivers/net/wireless/ath/carl9170/rx.c b/drivers/net/wireless/ath/carl9170/rx.c
+index 9a25c2a540b95f..bda30b1f940459 100644
+--- a/drivers/net/wireless/ath/carl9170/rx.c
++++ b/drivers/net/wireless/ath/carl9170/rx.c
+@@ -918,7 +918,9 @@ static void carl9170_rx_stream(struct ar9170 *ar, void *buf, unsigned int len)
  				}
-@@ -1995,14 +1995,18 @@ static void amt_igmpv3_report_handler(struct amt_dev *amt, struct sk_buff *skb,
- 	struct igmpv3_report *ihrv3 = igmpv3_report_hdr(skb);
- 	int len = skb_transport_offset(skb) + sizeof(*ihrv3);
- 	void *zero_grec = (void *)&igmpv3_zero_grec;
--	struct iphdr *iph = ip_hdr(skb);
- 	struct amt_group_node *gnode;
- 	union amt_addr group, host;
- 	struct igmpv3_grec *grec;
-+	__be32 saddr;
- 	u16 nsrcs;
-+	u16 ngrec;
- 	int i;
- 
--	for (i = 0; i < ntohs(ihrv3->ngrec); i++) {
-+	saddr = ip_hdr(skb)->saddr;
-+	ngrec = ntohs(ihrv3->ngrec);
-+
-+	for (i = 0; i < ngrec; i++) {
- 		len += sizeof(*grec);
- 		if (!ip_mc_may_pull(skb, len))
- 			break;
-@@ -2014,10 +2018,13 @@ static void amt_igmpv3_report_handler(struct amt_dev *amt, struct sk_buff *skb,
- 		if (!ip_mc_may_pull(skb, len))
- 			break;
- 
-+		grec = (void *)(skb->data + len - sizeof(*grec) -
-+				nsrcs * sizeof(__be32));
-+
- 		memset(&group, 0, sizeof(union amt_addr));
- 		group.ip4 = grec->grec_mca;
- 		memset(&host, 0, sizeof(union amt_addr));
--		host.ip4 = iph->saddr;
-+		host.ip4 = saddr;
- 		gnode = amt_lookup_group(tunnel, &group, &host, false);
- 		if (!gnode) {
- 			gnode = amt_add_group(amt, tunnel, &group, &host,
-@@ -2157,14 +2164,18 @@ static void amt_mldv2_report_handler(struct amt_dev *amt, struct sk_buff *skb,
- 	struct mld2_report *mld2r = (struct mld2_report *)icmp6_hdr(skb);
- 	int len = skb_transport_offset(skb) + sizeof(*mld2r);
- 	void *zero_grec = (void *)&mldv2_zero_grec;
--	struct ipv6hdr *ip6h = ipv6_hdr(skb);
- 	struct amt_group_node *gnode;
- 	union amt_addr group, host;
- 	struct mld2_grec *grec;
-+	struct in6_addr saddr;
- 	u16 nsrcs;
-+	u16 ngrec;
- 	int i;
- 
--	for (i = 0; i < ntohs(mld2r->mld2r_ngrec); i++) {
-+	saddr = ipv6_hdr(skb)->saddr;
-+	ngrec = ntohs(mld2r->mld2r_ngrec);
-+
-+	for (i = 0; i < ngrec; i++) {
- 		len += sizeof(*grec);
- 		if (!ipv6_mc_may_pull(skb, len))
- 			break;
-@@ -2176,10 +2187,13 @@ static void amt_mldv2_report_handler(struct amt_dev *amt, struct sk_buff *skb,
- 		if (!ipv6_mc_may_pull(skb, len))
- 			break;
- 
-+		grec = (void *)(skb->data + len - sizeof(*grec) -
-+				nsrcs * sizeof(struct in6_addr));
-+
- 		memset(&group, 0, sizeof(union amt_addr));
- 		group.ip6 = grec->grec_mca;
- 		memset(&host, 0, sizeof(union amt_addr));
--		host.ip6 = ip6h->saddr;
-+		host.ip6 = saddr;
- 		gnode = amt_lookup_group(tunnel, &group, &host, true);
- 		if (!gnode) {
- 			gnode = amt_add_group(amt, tunnel, &group, &host,
-@@ -2300,7 +2314,6 @@ static bool amt_multicast_data_handler(struct amt_dev *amt, struct sk_buff *skb)
- 	skb_push(skb, sizeof(*eth));
- 	skb_reset_mac_header(skb);
- 	skb_pull(skb, sizeof(*eth));
--	eth = eth_hdr(skb);
- 
- 	if (!pskb_may_pull(skb, sizeof(*iph)))
- 		return true;
-@@ -2310,6 +2323,7 @@ static bool amt_multicast_data_handler(struct amt_dev *amt, struct sk_buff *skb)
- 		if (!ipv4_is_multicast(iph->daddr))
- 			return true;
- 		skb->protocol = htons(ETH_P_IP);
-+		eth = eth_hdr(skb);
- 		eth->h_proto = htons(ETH_P_IP);
- 		ip_eth_mc_map(iph->daddr, eth->h_dest);
- #if IS_ENABLED(CONFIG_IPV6)
-@@ -2323,6 +2337,7 @@ static bool amt_multicast_data_handler(struct amt_dev *amt, struct sk_buff *skb)
- 		if (!ipv6_addr_is_multicast(&ip6h->daddr))
- 			return true;
- 		skb->protocol = htons(ETH_P_IPV6);
-+		eth = eth_hdr(skb);
- 		eth->h_proto = htons(ETH_P_IPV6);
- 		ipv6_eth_mc_map(&ip6h->daddr, eth->h_dest);
- #endif
-@@ -2346,10 +2361,12 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
- 					 struct sk_buff *skb)
- {
- 	struct amt_header_membership_query *amtmq;
--	struct igmpv3_query *ihv3;
- 	struct ethhdr *eth, *oeth;
-+	struct igmpv3_query *ihv3;
-+	u8 h_source[ETH_ALEN];
- 	struct iphdr *iph;
- 	int hdr_size, len;
-+	u64 response_mac;
- 
- 	hdr_size = sizeof(*amtmq) + sizeof(struct udphdr);
- 	if (!pskb_may_pull(skb, hdr_size))
-@@ -2362,6 +2379,8 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
- 	if (amtmq->nonce != amt->nonce)
- 		return true;
- 
-+	response_mac = amtmq->response_mac;
-+
- 	hdr_size -= sizeof(*eth);
- 	if (iptunnel_pull_header(skb, hdr_size, htons(ETH_P_TEB), false))
- 		return true;
-@@ -2371,6 +2390,7 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
- 	skb_pull(skb, sizeof(*eth));
- 	skb_reset_network_header(skb);
- 	eth = eth_hdr(skb);
-+	ether_addr_copy(h_source, oeth->h_source);
- 	if (!pskb_may_pull(skb, sizeof(*iph)))
- 		return true;
- 
-@@ -2383,6 +2403,7 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
- 				   sizeof(*ihv3)))
- 			return true;
- 
-+		iph = ip_hdr(skb);
- 		if (!ipv4_is_multicast(iph->daddr))
- 			return true;
- 
-@@ -2390,10 +2411,11 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
- 		skb_reset_transport_header(skb);
- 		skb_push(skb, sizeof(*iph) + AMT_IPHDR_OPTS);
- 		WRITE_ONCE(amt->ready4, true);
--		amt->mac = amtmq->response_mac;
-+		amt->mac = response_mac;
- 		amt->req_cnt = 0;
- 		amt->qi = ihv3->qqic;
- 		skb->protocol = htons(ETH_P_IP);
-+		eth = eth_hdr(skb);
- 		eth->h_proto = htons(ETH_P_IP);
- 		ip_eth_mc_map(iph->daddr, eth->h_dest);
- #if IS_ENABLED(CONFIG_IPV6)
-@@ -2416,10 +2438,11 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
- 		skb_reset_transport_header(skb);
- 		skb_push(skb, sizeof(*ip6h) + AMT_IP6HDR_OPTS);
- 		WRITE_ONCE(amt->ready6, true);
--		amt->mac = amtmq->response_mac;
-+		amt->mac = response_mac;
- 		amt->req_cnt = 0;
- 		amt->qi = mld2q->mld2q_qqic;
- 		skb->protocol = htons(ETH_P_IPV6);
-+		eth = eth_hdr(skb);
- 		eth->h_proto = htons(ETH_P_IPV6);
- 		ipv6_eth_mc_map(&ip6h->daddr, eth->h_dest);
- #endif
-@@ -2427,7 +2450,7 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
- 		return true;
- 	}
- 
--	ether_addr_copy(eth->h_source, oeth->h_source);
-+	ether_addr_copy(eth->h_source, h_source);
- 	skb->pkt_type = PACKET_MULTICAST;
- 	skb->ip_summed = CHECKSUM_NONE;
- 	len = skb->len;
-@@ -2450,8 +2473,11 @@ static bool amt_update_handler(struct amt_dev *amt, struct sk_buff *skb)
- 	struct ethhdr *eth;
- 	struct iphdr *iph;
- 	int len, hdr_size;
-+	u64 response_mac;
-+	__be32 saddr;
-+	__be32 nonce;
- 
--	iph = ip_hdr(skb);
-+	saddr = ip_hdr(skb)->saddr;
- 
- 	hdr_size = sizeof(*amtmu) + sizeof(struct udphdr);
- 	if (!pskb_may_pull(skb, hdr_size))
-@@ -2461,15 +2487,18 @@ static bool amt_update_handler(struct amt_dev *amt, struct sk_buff *skb)
- 	if (amtmu->reserved || amtmu->version)
- 		return true;
- 
-+	nonce = amtmu->nonce;
-+	response_mac = amtmu->response_mac;
-+
- 	if (iptunnel_pull_header(skb, hdr_size, skb->protocol, false))
- 		return true;
- 
- 	skb_reset_network_header(skb);
- 
- 	list_for_each_entry_rcu(tunnel, &amt->tunnel_list, list) {
--		if (tunnel->ip4 == iph->saddr) {
--			if ((amtmu->nonce == tunnel->nonce &&
--			     amtmu->response_mac == tunnel->mac)) {
-+		if (tunnel->ip4 == saddr) {
-+			if ((nonce == tunnel->nonce &&
-+			     response_mac == tunnel->mac)) {
- 				mod_delayed_work(amt_wq, &tunnel->gc_wq,
- 						 msecs_to_jiffies(amt_gmi(amt))
- 								  * 3);
-@@ -2503,6 +2532,7 @@ static bool amt_update_handler(struct amt_dev *amt, struct sk_buff *skb)
- 		eth = eth_hdr(skb);
- 		skb->protocol = htons(ETH_P_IP);
- 		eth->h_proto = htons(ETH_P_IP);
-+		iph = ip_hdr(skb);
- 		ip_eth_mc_map(iph->daddr, eth->h_dest);
- #if IS_ENABLED(CONFIG_IPV6)
- 	} else if (iph->version == 6) {
-@@ -2522,6 +2552,7 @@ static bool amt_update_handler(struct amt_dev *amt, struct sk_buff *skb)
- 		eth = eth_hdr(skb);
- 		skb->protocol = htons(ETH_P_IPV6);
- 		eth->h_proto = htons(ETH_P_IPV6);
-+		ip6h = ipv6_hdr(skb);
- 		ipv6_eth_mc_map(&ip6h->daddr, eth->h_dest);
- #endif
- 	} else {
-@@ -2767,7 +2798,7 @@ static void amt_gw_rcv(struct amt_dev *amt, struct sk_buff *skb)
- static int amt_rcv(struct sock *sk, struct sk_buff *skb)
- {
- 	struct amt_dev *amt;
--	struct iphdr *iph;
-+	__be32 saddr;
- 	int type;
- 	bool err;
- 
-@@ -2780,7 +2811,7 @@ static int amt_rcv(struct sock *sk, struct sk_buff *skb)
- 	}
- 
- 	skb->dev = amt->dev;
--	iph = ip_hdr(skb);
-+	saddr = ip_hdr(skb)->saddr;
- 	type = amt_parse_type(skb);
- 	if (type == -1) {
- 		err = true;
-@@ -2790,7 +2821,7 @@ static int amt_rcv(struct sock *sk, struct sk_buff *skb)
- 	if (amt->mode == AMT_MODE_GATEWAY) {
- 		switch (type) {
- 		case AMT_MSG_ADVERTISEMENT:
--			if (iph->saddr != amt->discovery_ip) {
-+			if (saddr != amt->discovery_ip) {
- 				netdev_dbg(amt->dev, "Invalid Relay IP\n");
- 				err = true;
- 				goto drop;
-@@ -2802,7 +2833,7 @@ static int amt_rcv(struct sock *sk, struct sk_buff *skb)
  			}
- 			goto out;
- 		case AMT_MSG_MULTICAST_DATA:
--			if (iph->saddr != amt->remote_ip) {
-+			if (saddr != amt->remote_ip) {
- 				netdev_dbg(amt->dev, "Invalid Relay IP\n");
- 				err = true;
- 				goto drop;
-@@ -2813,7 +2844,7 @@ static int amt_rcv(struct sock *sk, struct sk_buff *skb)
- 			else
- 				goto out;
- 		case AMT_MSG_MEMBERSHIP_QUERY:
--			if (iph->saddr != amt->remote_ip) {
-+			if (saddr != amt->remote_ip) {
- 				netdev_dbg(amt->dev, "Invalid Relay IP\n");
- 				err = true;
- 				goto drop;
+ 
+-			skb_put_data(ar->rx_failover, tbuf, tlen);
++			skb_put_data(ar->rx_failover, tbuf,
++				     min_t(unsigned int, tlen,
++					   ar->rx_failover_missing));
+ 			ar->rx_failover_missing -= tlen;
+ 
+ 			if (ar->rx_failover_missing <= 0) {
 -- 
 2.53.0
 
