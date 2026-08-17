@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A3D3B1B4;
-	Mon, 17 Aug 2026 14:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFCA3EAC68;
+	Mon, 17 Aug 2026 14:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977156; cv=none; b=roAFnYx18HGz2Vh45xBnAF0HuhbKgh7uw/eoBGPQiNgO4obOFO3SA9gYPjBXa7TKO4L5SzKfCfSiLfFZ7H4kH2Lzo/a73gmbl86FgOEHxaGBgvjHKERktWb/uU0Py0Iqiy7RAhhtO4rDgVVAe+eOiqYMdoiuMvRPynbFMaLAqo8=
+	t=1786977158; cv=none; b=SGVuj28Fkia1F2gF58MyixBnkBvJSZuZuyfnIUTp3w28O581PYhwhBMWmABdA6NbbYBdfzEtNYIDSxZ7qUnifY168LY9fTcV3RpiK3Gy8M2PTCceeBQLojBVQtf269my2Z6T4U+vBM44K7Z1LZis/GjX5CYY1ErFOaY1ux3XGPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977156; c=relaxed/simple;
-	bh=+wgpKHppXVAiagRLGl75IRPMU3QqzewBauqsO6hrF64=;
+	s=arc-20240116; t=1786977158; c=relaxed/simple;
+	bh=Nuz1BGmAj4qb+IJeNY3SrddNncW4s4Phgd+ECSzmtNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YEihGEYfcd56bQR4SITxzUW59jNgp/9FVMSMKcbXoHZxjvh9K9W4US3sQX1N7yk10gzdI91KlVEdKfoD5lsFnXZ/BnrmpNslctHFonZCrqpNDUf45scXwJta2Mb/gNpiof+5XQAwFs9jKG3LI9G3jdS79llS8/3gwVp1IVkYqGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uAgMf89m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O4ym6tey+03R8bmnW4VVTd86IKoa+Y5PKffLOjCQoFUyfvIE3PR9NwtxNdMs086QeFeIpjO7KSLwnAscJk0eBaJM1Lm+UoeaRUXZAgQHFP8GQoyE80wW+mSZ5EgSF2OBIxw8LWEqsgCxE2DuG9BtLjuWsu4nCH6eOD3xwvm/sS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i1F3jBrx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uAgMf89m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3DC61F000E9;
-	Mon, 17 Aug 2026 14:32:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i1F3jBrx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0DF61F000E9;
+	Mon, 17 Aug 2026 14:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977154;
-	bh=sfcFC7lHrw+e6XQebXv/OlIl5zffgCLGgyEL0wAFhSc=;
+	s=korg; t=1786977157;
+	bh=8K8WiZXpXvOWgTd60rRyeWNL8e56OJzj8m1J3dN1Kk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uAgMf89mFHlrHsMMs224jQclN6dzCY8DFWNDUuvwmlXCq8jJuVa91KvjXwigbp/K7
-	 Cav775YwRmlDcE0q21H2IoF0EZsVWdP3PViB2iFw4FwYH4vEDfBv5pTEsV3uQIPdz6
-	 qZicyG7DB+pvERuWKsVFGllTjti+1NcqcaEsZ/3s=
+	b=i1F3jBrxlXOCxkZKnD2XmMKvHTahsUBxb1cE4TwHSAtFhHZ2HZBOWTp2QTczhm6Mj
+	 gc/SYWitZIJJBq8IUZCHU59I3lwa8YwTZ37VVy5i7PCg23OFBQUXRjFZFXW2LzN20k
+	 dXlhcRtF4eRREOs2t7zWEASPPixjRZuDnAJGgjy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	deepakraog <gaikwad.dcg@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 5.15 192/456] tracing: Fix resource leak on mmiotrace trace_pipe close
-Date: Mon, 17 Aug 2026 15:29:42 +0200
-Message-ID: <20260817132547.627238199@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 5.15 193/456] tracing/eprobe: Fix exact system name matching in eprobe_dyn_event_match()
+Date: Mon, 17 Aug 2026 15:29:43 +0200
+Message-ID: <20260817132547.668546166@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,62 +49,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: deepakraog <gaikwad.dcg@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit c1d87e724ae55e781b7cc7ccafb34d9e668582b2 upstream.
+commit f418d68d71fd4a0a9cef92377bc8c4c3334b5b53 upstream.
 
-The mmiotrace tracer was added May 12th 2008. At that time, resources
-created in pipe_open() could not be freed because there was not
-pipe_close function pointer of the tracer. The pipe_close function pointer
-was added in December 7th, 2009, but the mmiotrace tracer was not updated.
+eprobe_dyn_event_match() checks if the target event system in argv[0]
+matches ep->event_system using strncmp(ep->event_system, argv[0], len).
+However, if ep->event_system is longer than len (e.g. "eprobes" vs
+"ep/event"), strncmp() still returns 0 because the first len characters
+match.
 
-mmio_pipe_open() allocates a header_iter and takes a pci_dev reference
-when trace_pipe is opened. mmio_close() frees them, but it was only
-wired to the tracer's .close callback.
+Check that ep->event_system[len] is '\0' to ensure exact system name
+matching.
 
-tracing_release_pipe() invokes .pipe_close, not .close, when the
-trace_pipe file is released. As a result, closing trace_pipe with the
-mmiotrace tracer active leaked the header_iter allocation and left a
-stale pci_dev reference.
+Link: https://lore.kernel.org/all/178454235856.290363.14872590900774231133.stgit@devnote2/
 
-Set .pipe_close to mmio_close, matching how function_graph wires both
-callbacks to the same handler.
-
-Note, if the trace_pipe is read to completion, it will clean up the
-resources, but if one were to run:
-
-  # head -n 1 /sys/kernel/tracing/trace_pipe
- VERSION 20070824
-
-Over and over again, it would trigger a massive leak.
-
+Fixes: 7d5fda1c841f ("tracing: Fix event probe removal from dynamic events")
 Cc: stable@vger.kernel.org
-Fixes: c521efd1700a8 ("tracing: Add pipe_close interface)
-Link: https://patch.msgid.link/20260715143604.14481-1-gaikwad.dcg@gmail.com
-Signed-off-by: deepakraog <gaikwad.dcg@gmail.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_mmiotrace.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_eprobe.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace_mmiotrace.c
-+++ b/kernel/trace/trace_mmiotrace.c
-@@ -109,7 +109,6 @@ static void mmio_pipe_open(struct trace_
- 	iter->private = hiter;
- }
+--- a/kernel/trace/trace_eprobe.c
++++ b/kernel/trace/trace_eprobe.c
+@@ -159,7 +159,8 @@ static bool eprobe_dyn_event_match(const
+ 	if (!slash)
+ 		return false;
  
--/* XXX: This is not called when the pipe is closed! */
- static void mmio_close(struct trace_iterator *iter)
- {
- 	struct header_iter *hiter = iter->private;
-@@ -279,6 +278,7 @@ static struct tracer mmio_tracer __read_
- 	.start		= mmio_trace_start,
- 	.pipe_open	= mmio_pipe_open,
- 	.close		= mmio_close,
-+	.pipe_close	= mmio_close,
- 	.read		= mmio_read,
- 	.print_line	= mmio_print_line,
- 	.noboot		= true,
+-	if (strncmp(ep->event_system, argv[0], slash - argv[0]))
++	if (strncmp(ep->event_system, argv[0], slash - argv[0]) ||
++	    ep->event_system[slash - argv[0]] != '\0')
+ 		return false;
+ 	if (strcmp(ep->event_name, slash + 1))
+ 		return false;
 
 
