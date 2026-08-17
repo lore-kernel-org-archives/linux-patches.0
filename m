@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F948279903;
-	Mon, 17 Aug 2026 15:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070292DA759;
+	Mon, 17 Aug 2026 15:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980378; cv=none; b=fdC4EzzqiAxixvV8Vw/WqWotk96f0LV8B8VDeR09rBsMeemw8e9ReuMpLxU1RXEniIqA7j72Tmx/lzQmAHrYGSHbXrtTLu9/M0uZxIOvjwk0lSxI7rBZ52HQv3/s0rlRV0+Ahuhy8w+iyyFQrDGgj95DDIKzmeUOmUpvqBXxa3s=
+	t=1786980381; cv=none; b=roRAiZ7bjEgnp1AoYkNfhKIz40J3OTtZBc4pZQCN6PtzhPgcttft1yHJVISNpFClNsyvCAYlb4dzxoEmMJMGY4HFhXVSdk69Ip0Mh/NS7T6bJ9R1vIdYPx4kjuxaPi7VM/SHk8WSB0YtIcG6AqyIiWNC8cRlszejFuIVURgNaws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980378; c=relaxed/simple;
-	bh=umra/wRUgghD/HdPvyoWvnhQ89yJsKU+n9gysuhhwQ4=;
+	s=arc-20240116; t=1786980381; c=relaxed/simple;
+	bh=vJT9dv+orjk/7U0jZn3E4l4O2S6DKHzYt+iU2sHOpMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ae3YqEZkSb2v6g4b+HMenmiGnwIUgRXc0DpHrRJuXikvTjVHAkketP2Yl1yTvE+WlLU5YsDNlM9/oE+WpSNTIDeTdBoQLdZhmAmAYi0LVYDoLhEGGUqcTHdEI1NXOGI/6IjoSqPKOKJ7JZV/5Jq63U9JAeIosJU9mIjI2Gz89hI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2mDuZxLT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L7qeyXllFMh5nELVD+NtBlQ4V0v23tYWGe01n8M+CDZwy/FXzmznkqxK7qG1VLqF3volvufH/8o57Oq1e60IJd30VMc5Xyx98jMl7z/aDIOcd9cLPmm4hG7FyfO4I2TOgiNTDq4hywqhS6cMIy/Hue0q4TNUQ+Pm59Bg5XVJz+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EK2iXQaH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2mDuZxLT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8911C1F000E9;
-	Mon, 17 Aug 2026 15:26:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EK2iXQaH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60D031F000E9;
+	Mon, 17 Aug 2026 15:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980377;
-	bh=UtQ6eWHoXnaW6DLZ/zmTuPPQOhCrjik7NNac2iJ0pVA=;
+	s=korg; t=1786980379;
+	bh=BFFSGb9Nt398JbKpua0bKSF8s4z+Oel6z5r7DpbCnUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2mDuZxLT2fZ2hZLgcaP4XWhNXcDUwtbstw95XSxTA+0GoHAC3AmECBnikU2aEMx/s
-	 bS6aFWPXk4m+MMgd1m9TG25XBUdsvKioulCG9YNfS3VPDK0IH1rHe7jXIV8HH2Gahf
-	 D025339QIWAA7f+FuyO3VjJvmz7nqSbdGXGn4vgQ=
+	b=EK2iXQaHI3OpVgvv/v7UoYCr5Tk95UrdaqrZHUdGu9RPy2jgb/+DtVTlz07koCzZo
+	 jsY2JfwoT0KIi7zQWseiClFvzDbiL+BTMmZQWxAaLq4MhdeGjKruXQFJP4IGBlvG8v
+	 RqWqyOZiv/gkExhM7l/Pw8q+1vrrhik9KTyzbdts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Willem de Bruijn <willemb@google.com>,
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Ilya Maximets <i.maximets@ovn.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 552/609] net/packet: reset the MAC header on the packet-socket transmit path
-Date: Mon, 17 Aug 2026 15:34:08 +0200
-Message-ID: <20260817132602.222227705@linuxfoundation.org>
+Subject: [PATCH 6.1 553/609] net: openvswitch: reallocate update replies for mismatched IDs
+Date: Mon, 17 Aug 2026 15:34:09 +0200
+Message-ID: <20260817132602.249127715@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,63 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit c2707480cfbf19c7619acc9c089d17f20869821f upstream.
+commit 5d1c224dd914579524a183a514c12b95095d12ce upstream.
 
-packet_parse_headers() resets the MAC header only for a SOCK_RAW frame
-whose socket did not bind a protocol. A protocol-bound SOCK_RAW socket,
-any SOCK_DGRAM frame, and the legacy SOCK_PACKET path therefore leave
-skb->mac_header unset here.
+ovs_flow_cmd_new() preallocates the optional reply skb before it takes
+ovs_mutex and before it knows which existing flow will be updated.
 
-For frames sent via __dev_queue_xmit() this is harmless: it resets the
-MAC header unconditionally. But the packet-socket PACKET_QDISC_BYPASS
-path uses dev_direct_xmit(), which does not, so the frame reaches
-ndo_start_xmit() with the MAC header unset. A driver that reads
-eth_hdr(skb) on transmit then dereferences skb->head + (u16)~0, an
-out-of-bounds access ~64 KiB past the head -- the same class fixed for
-one consumer in commit f5089008f90c ("macsec: do not read an unset MAC
-header in macsec_encrypt()").
+That is normally fine because the skb is sized from the request flow
+identifier.  That identifier also becomes the inserted flow's identifier.
+For updates, however, a request with a UFID may miss the UFID lookup and
+then fall back to the flow key lookup.  That lookup can legitimately find
+an existing key-identified flow.  UFIDs are optional and the flow key is
+the primary identifier.
 
-packet_parse_headers() runs only on the transmit path, where skb->data
-points at the start of the L2 header for every packet-socket type
-regardless of its length: SOCK_RAW and SOCK_PACKET carry a user-supplied
-header and SOCK_DGRAM has one built by dev_hard_header(). Reset the MAC
-header unconditionally, mirroring __dev_queue_xmit(), so the frame is
-anchored on the bypass path too.
+For echoed replies, ovs_flow_cmd_fill_info() writes the matched flow's
+identifier, not the request identifier used for the preallocation.  A short
+request UFID can therefore leave too little room for the key identifier.
+The fill can then fail with -EMSGSIZE and hit the BUG_ON(error < 0) in the
+update path.
 
-Found by 0sec (https://0sec.ai) using automated source analysis;
-verified against source and matched to the macsec KASAN report in
-f5089008f90c. Compile-tested.
+Once the update target has been resolved, reallocate the reply skb if the
+matched flow needs a larger reply than the request identifier allowed.  Do
+this before replacing the actions so the request can still fail cleanly if
+the rare extra allocation fails.
 
-Fixes: 75c65772c3d1 ("net/packet: Ask driver for protocol if not provided by user")
+Fixes: 74ed7ab9264c ("openvswitch: Add support for unique flow IDs.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260724144015.63219-1-doruk@0sec.ai
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/f7bbd3c30ce81a39156e226b3872d73abed21d2f.1785644623.git.zhilinz@nebusec.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/openvswitch/datapath.c |   29 ++++++++++++++++++++++++++---
+ 1 file changed, 26 insertions(+), 3 deletions(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -1978,11 +1978,12 @@ static void packet_parse_headers(struct
- {
- 	int depth;
- 
-+	/* On TX skb->data is the L2 header; anchor it for all socket types. */
-+	skb_reset_mac_header(skb);
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -1060,9 +1060,8 @@ static int ovs_flow_cmd_new(struct sk_bu
+ 			error = -EEXIST;
+ 			goto err_unlock_ovs;
+ 		}
+-		/* The flow identifier has to be the same for flow updates.
+-		 * Look for any overlapping flow.
+-		 */
 +
- 	if ((!skb->protocol || skb->protocol == htons(ETH_P_ALL)) &&
--	    sock->type == SOCK_RAW) {
--		skb_reset_mac_header(skb);
-+	    sock->type == SOCK_RAW)
- 		skb->protocol = dev_parse_header_protocol(skb);
--	}
- 
- 	/* Move network header to the right position for VLAN tagged packets */
- 	if (likely(skb->dev->type == ARPHRD_ETHER) &&
++		/* Look for any overlapping flow. */
+ 		if (unlikely(!ovs_flow_cmp(flow, &match))) {
+ 			if (ovs_identifier_is_key(&flow->id))
+ 				flow = ovs_flow_tbl_lookup_exact(&dp->table,
+@@ -1074,6 +1073,30 @@ static int ovs_flow_cmd_new(struct sk_bu
+ 				goto err_unlock_ovs;
+ 			}
+ 		}
++
++		if (unlikely(reply)) {
++			size_t cur, req;
++
++			cur = ovs_flow_cmd_msg_size(acts, &new_flow->id,
++						    ufid_flags);
++			req = ovs_flow_cmd_msg_size(acts, &flow->id,
++						    ufid_flags);
++			if (cur < req) {
++				struct sk_buff *resized;
++
++				resized = ovs_flow_cmd_alloc_info(acts,
++								  &flow->id,
++								  info, false,
++								  ufid_flags);
++				if (IS_ERR(resized)) {
++					error = PTR_ERR(resized);
++					goto err_unlock_ovs;
++				}
++				kfree_skb(reply);
++				reply = resized;
++			}
++		}
++
+ 		/* Update actions. */
+ 		old_acts = ovsl_dereference(flow->sf_acts);
+ 		rcu_assign_pointer(flow->sf_acts, acts);
 
 
