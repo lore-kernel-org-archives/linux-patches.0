@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20F143C07E;
-	Mon, 17 Aug 2026 15:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E997743C07E;
+	Mon, 17 Aug 2026 15:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979894; cv=none; b=pEJ9LQV6Q1R9c0nFFqzdA/DiWSBioxtZPCCkJSuKpgzIbMBVDJCR+PdYUq8eWmZOk4//ZkagQSdxkijof/cIlRzI4tSxQzJfzdC+8nBzcC+fPvLR44OHV24N6/OaHZniKusc3c3NqzmfqM5kfXxG0Iv9ENr99SlaK/o54brX71g=
+	t=1786979898; cv=none; b=ZfAMMfGlL43I/jHgpE5KZx1rNv0nLT3zgruTDkcI3qpzpA+seN6n9abQHjk4HghIJtQUjWRGBedb0WYUx2/sU5hlot9IylxHeNR2VmFRJHMuc/VwQiNSUst4UH5LFic/nil+ciaFIpT6KQxf86C4knFA0+gIGKMnqitnjVoCToU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979894; c=relaxed/simple;
-	bh=DelwW3LL/ooF82udR8QR2beCDlqrUDNRabCubsIijPQ=;
+	s=arc-20240116; t=1786979898; c=relaxed/simple;
+	bh=n+PJRADiOUvsRTziYVvSf35/AlsVaT8pYVaINNZZ9qE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q4dPI6AbTPJx57oth1vmun7Z8fPxhIkxVIcA+7ZS1F85ershFC6jkjEVHQzkLPcPSUylVPqmHRnIgXYO2YpxYjPBcIPqj2QOkAnbnsjCFn9KAcpN+NwAwQBDfbtJUh1tk6h9ephnybem14REn6udNzqU9KmM+PegIjr/FU4Otzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rrm+b1vz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yf38YGjcLPlwUADo9LZSPbvT0Z4gaJJMUoHRYuocTMriuzfAIhq/YgUN6ZKO3klq/cpHV+JOaw3999XfDnY2nvYuezF9Po6BvKZJsujuOMK5zsGJLNxUzeMg9E14QmIHBRusAHUPmOD/ODPv15E/GxoZkmUut1HCqqdxytsPSig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfHcnb1B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rrm+b1vz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D681F000E9;
-	Mon, 17 Aug 2026 15:18:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfHcnb1B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13AE61F000E9;
+	Mon, 17 Aug 2026 15:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979893;
-	bh=NcTBJtnIFXT3Ax2SvxIbhTTB3i1u1Fre8REjveprymU=;
+	s=korg; t=1786979896;
+	bh=/hRwGtRcWspbedneKRvjxwyflrMWDgoFe1pOf0bhaOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rrm+b1vzn13x+iKkSLUHkAID2BCzKuPsCA1MSnfB4oc+nkoLDGh1zmWGFDsqgp4YK
-	 6LAgimK2oW9px/IxDNR17I5LhCnRuM1IdULGTWyIX4kD2ATmZ8ciaUbDfQ+c6NxFAv
-	 HfwCMul/j963Girvu74kD1/FzHTPDvnevp/fBBPE=
+	b=gfHcnb1B+eo10QIyjpKzZBrWOt7PH7PZR8eLZY6hWFiglTymR7BEQF3jCFnPU4Txx
+	 DJSa2wf7Pe+rWkkuo747XSmAqhlaE8ansKQGO4ZpsJH9xXJbbL3rk4gg3PAT4IO9FR
+	 nRMXn51nsCgylCk6ieC4UQMBGaeXQu5MEO8mIiRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Boortz <bennib@mailbox.org>,
-	Linus Walleij <linusw@kernel.org>
-Subject: [PATCH 6.1 384/609] pinctrl: bm1880: add missing select GENERIC_PINCONF
-Date: Mon, 17 Aug 2026 15:31:20 +0200
-Message-ID: <20260817132557.103785328@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Dennis Zhou <dennis@kernel.org>,
+	Christoph Lameter <cl@linux.com>,
+	Tejun Heo <tj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 385/609] mm/percpu-km: fix bitmap overflow and accounting in pcpu_create_chunk()
+Date: Mon, 17 Aug 2026 15:31:21 +0200
+Message-ID: <20260817132557.133417523@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,40 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Boortz <bennib@mailbox.org>
+From: Zi Yan <ziy@nvidia.com>
 
-commit dad6e107b3cd9d20514e7799b7ad8674f81e3f30 upstream.
+commit 89b1b79c308818a715e75f28744b70d8940a07c9 upstream.
 
-drivers/pinctrl/pinctrl-bm1880.c initialises its pinconf_ops with
-.is_generic = true, but that field is only present when
-CONFIG_GENERIC_PINCONF is enabled (guarded by #ifdef in pinconf.h).
-The Kconfig entry for PINCTRL_BM1880 never selects GENERIC_PINCONF,
-so any config that enables CONFIG_PINCTRL_BM1880=y without
-CONFIG_GENERIC_PINCONF=y fails to compile:
+In pcpu_create_chunk(), nr_pages is the total contiguous backing
+allocation, i.e., nr_units * pcpu_unit_pages, but pcpu_chunk_populated()
+uses it to set chunk->populated, whose size is pcpu_unit_pages, bitmap.
+Since bit N in chunk->populated means page offset N inside every unit is
+backed.  When nr_units > 1, the function writes beyond chunk->populated.
+Fix it by using chunk->nr_pages.
 
-  drivers/pinctrl/pinctrl-bm1880.c:1288:10: error: 'const struct pinconf_ops' has no member named 'is_generic'
+It also fixes the global pcpu_nr_empty_pop_pages accounting, since
+pcpu_balance_free() only iterates up to chunk->nr_pages.
 
-Found by randconfig testing on arm64; tinyconfig reproducer below.
-Add the missing select to fix the build.
+Commit a63d4ac4ab609 ("percpu: make percpu-km set chunk->populated bitmap
+properly") introduced the bitmap overflow issue.  Later, commit
+b539b87fed37f ("percpu: implmeent pcpu_nr_empty_pop_pages and
+chunk->nr_populated") added pcpu_nr_empty_pop_pages and caused the
+accounting issue.
 
-Fixes: 49bd61ebce5f ("pinctrl: Add pinconf support for BM1880 SoC")
-Cc: stable@vger.kernel.org
-Signed-off-by: Benjamin Boortz <bennib@mailbox.org>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://lore.kernel.org/20260709-fix-pcpu_create_chunk-in-percpu-km-v1-1-1f64745a84cc@nvidia.com
+Fixes: a63d4ac4ab609 ("percpu: make percpu-km set chunk->populated bitmap properly")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260703-keep-subpage-private-zero-at-free-v2-0-2970fe777dd6%40nvidia.com?part=1
+Assisted-by: Codex:GPT-5
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Acked-by: Dennis Zhou <dennis@kernel.org>
+Cc: Christoph Lameter <cl@linux.com>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ mm/percpu-km.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pinctrl/Kconfig
-+++ b/drivers/pinctrl/Kconfig
-@@ -132,6 +132,7 @@ config PINCTRL_BM1880
- 	depends on OF && (ARCH_BITMAIN || COMPILE_TEST)
- 	default ARCH_BITMAIN
- 	select PINMUX
-+	select GENERIC_PINCONF
- 	help
- 	  Pinctrl driver for Bitmain BM1880 SoC.
+--- a/mm/percpu-km.c
++++ b/mm/percpu-km.c
+@@ -75,7 +75,7 @@ static struct pcpu_chunk *pcpu_create_ch
+ 	chunk->base_addr = page_address(pages);
  
+ 	spin_lock_irqsave(&pcpu_lock, flags);
+-	pcpu_chunk_populated(chunk, 0, nr_pages);
++	pcpu_chunk_populated(chunk, 0, chunk->nr_pages);
+ 	spin_unlock_irqrestore(&pcpu_lock, flags);
+ 
+ 	pcpu_stats_chunk_alloc();
 
 
