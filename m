@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB40282F29;
-	Mon, 17 Aug 2026 15:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A842E7BD6;
+	Mon, 17 Aug 2026 15:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979116; cv=none; b=pHaqpDRmGp030WUeEkteoip56xbHnUtFvRHzB1aSi6K9p237E83gAwoJXKf//CFj2nQ2Neb07g5LJzdBgl74Nj4xY91STO5/ilGoadWk7v2DmLiQrvnNftPsAQI2nUPFBPSFja3fGLGMfn8+wPvnD6JTfEaixKq0BwQnckKSfKk=
+	t=1786979119; cv=none; b=c6SN+5cDg6mjGebuoC3s0KjPHRYJP96q2lKdc2VIYERr2XkEOKpfIdl4c8LO0Q52uxR8yU32B2ZWmucNGwn34/oiSgOb2v+s4GmDQ0osuZ8EsvkJfEwwKOuiu00M4YQ/lBQFAR6Xv/QoX/0XcXpoSymOius3QC7ETj3Y9bzBWg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979116; c=relaxed/simple;
-	bh=D80E0upoOYcCLXVt6k+mQJcZSJfLJbuvYCuUsIsKbHc=;
+	s=arc-20240116; t=1786979119; c=relaxed/simple;
+	bh=NqtsN2r04lxh0lA3q09QnRa0V0Lj0YU9DSmT894pWO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vq+/YlI1VcIHzWo7Ay2bqUVkD/jjDgEQkwfhUmTCiB7f4gLo0KZeoC32azygSDFuiEEZjzskJSAcJk1jesvvrGwwfJ71s8fSP1vUB/eFWzA5YedR53neCvXWgv8LiS2wdt004dSINZ05q39r7cmDrQZTBFh4LKq9ng+QkzCvDHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F66yS7WM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qGdNNHFIuszJs7wGC8MJIJHm7jH/WHoNIXvcUXfnqoTb5YyPo0F1fs5adKFKsEE7MRCeS/ECnjdy+9kVpgAxZxEwQIJ5JqefzPFEALmxQPAERrfjAnWz/d1aWM/4esfh5V5NeVUZyqflESavH3R9ZJIZb/13QC6KKI9aig0miTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0eJDtg58; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F66yS7WM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D6C1F00A3A;
-	Mon, 17 Aug 2026 15:05:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0eJDtg58"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1478E1F000E9;
+	Mon, 17 Aug 2026 15:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979115;
-	bh=Koeqtz17AhX/NpDoUV2qjNNR0RGU4CiJH06N3aEZJbc=;
+	s=korg; t=1786979118;
+	bh=cq+2gzLKzD6vsbLZDTwrU0Y+xjZBgz1PHyL28U+qIls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F66yS7WMayk+60eXDxp2gVZMMyXbZhTIKmRaOKMrggYScLv3d1bWmAccr6qwJj+Ju
-	 /PXkBP4oaFFipirxBs3sjK/McQ3RJktAbB29fAv4mSWbhrhDYJPwVFT43/TA+xFrIF
-	 /h5j1D8YwbKb/dlyv/x9SZegTGbAzoAZhfWF4imI=
+	b=0eJDtg58ewqWYNL7qcGrsMhg43FBTvDYZhnUla1D253IsukTHIiVx/7DxI/c1qaJN
+	 FT1+jxvcy/sBxGkAkUzSGN1HBud8nQRmozWHwQ37uqcw02hDJIAvsQD/cRXPEww/eF
+	 MWlVPJMBtBv++q4z2Dlvrbr4PhMWIK9ofRlxyQ50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 065/609] drm/i915/gt: use correct selftest config symbol
-Date: Mon, 17 Aug 2026 15:26:01 +0200
-Message-ID: <20260817132545.657803581@linuxfoundation.org>
+Subject: [PATCH 6.1 108/609] wifi: ath6kl: fix OOB read from firmware IE lengths in connect event
+Date: Mon, 17 Aug 2026 15:26:44 +0200
+Message-ID: <20260817132547.352918301@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,48 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit a82f1bb8191aec98a971a2196136016ef70c0880 ]
+[ Upstream commit 6b47b29730de3232b919d8362749f6814c5f2a33 ]
 
-intel_engine_user.c checks CONFIG_DRM_I915_SELFTESTS before running
-the engine UABI isolation check. Kconfig defines DRM_I915_SELFTEST,
-without the trailing "S", and the rest of i915 uses
-CONFIG_DRM_I915_SELFTEST.
+The firmware-controlled beacon_ie_len, assoc_req_len, and assoc_resp_len
+fields in ath6kl_wmi_connect_event_rx() are not validated against the
+buffer length. Their sum (up to 765) can exceed the actual WMI event
+data, causing out-of-bounds reads during IE parsing and state corruption
+of wmi->is_wmm_enabled.
 
-Because CONFIG_DRM_I915_SELFTESTS is not backed by any Kconfig symbol,
-the IS_ENABLED() test is always false. Use the existing selftest symbol
-so the debug/selftest guarded path can be reached when selftests are
-enabled.
+Add a check that the total IE length fits within the buffer.
 
-This is a source-level fix. It does not claim dynamic hardware
-reproduction; the evidence is the Kconfig definition and the inconsistent
-guard in intel_engine_user.c.
-
-Fixes: 750e76b4f9f6 ("drm/i915/gt: Move the [class][inst] lookup for engines onto the GT")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
-Link: https://lore.kernel.org/r/20260705080225.436-1-pengpeng@iscas.ac.cn
-(cherry picked from commit 14a2012a490258f3f93857bc4f1b203405964be7)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260421135009.348084-3-tristmd@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_engine_user.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath6kl/wmi.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_engine_user.c b/drivers/gpu/drm/i915/gt/intel_engine_user.c
-index 46a174f8aa0076..9a4309c30f0ea8 100644
---- a/drivers/gpu/drm/i915/gt/intel_engine_user.c
-+++ b/drivers/gpu/drm/i915/gt/intel_engine_user.c
-@@ -239,7 +239,7 @@ void intel_engines_driver_register(struct drm_i915_private *i915)
- 		p = &prev->rb_right;
- 	}
+diff --git a/drivers/net/wireless/ath/ath6kl/wmi.c b/drivers/net/wireless/ath/ath6kl/wmi.c
+index a572952dd4b903..447896b871c3e2 100644
+--- a/drivers/net/wireless/ath/ath6kl/wmi.c
++++ b/drivers/net/wireless/ath/ath6kl/wmi.c
+@@ -874,6 +874,14 @@ static int ath6kl_wmi_connect_event_rx(struct wmi *wmi, u8 *datap, int len,
  
--	if (IS_ENABLED(CONFIG_DRM_I915_SELFTESTS) &&
-+	if (IS_ENABLED(CONFIG_DRM_I915_SELFTEST) &&
- 	    IS_ENABLED(CONFIG_DRM_I915_DEBUG_GEM)) {
- 		struct intel_engine_cs *engine;
- 		unsigned int isolation;
+ 	ev = (struct wmi_connect_event *) datap;
+ 
++	if (len < sizeof(*ev) + ev->beacon_ie_len +
++	    ev->assoc_req_len + ev->assoc_resp_len) {
++		ath6kl_dbg(ATH6KL_DBG_WMI,
++			   "connect event: IE lengths %u+%u+%u exceed buffer %d\n",
++			   ev->beacon_ie_len, ev->assoc_req_len,
++			   ev->assoc_resp_len, len);
++		return -EINVAL;
++	}
+ 	if (vif->nw_type == AP_NETWORK) {
+ 		/* AP mode start/STA connected event */
+ 		struct net_device *dev = vif->ndev;
 -- 
 2.53.0
 
