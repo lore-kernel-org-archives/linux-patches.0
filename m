@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3974E3BF689;
-	Mon, 17 Aug 2026 14:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629E539EF05;
+	Mon, 17 Aug 2026 14:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976743; cv=none; b=VHJrU9aBA/c8OlwZut+symKkepAnjuX7H9wTOXe9o5W7S+lvFHeDEyqLBSgY7HkmbAN0VbALpTb2YcabMtHqra7cjAj7xNl0z9ZhaQPOMSuBe/m2ZNWbC1cqhLx/Dv7qLYmHNc2PAHxt/Hf0uHlpZ4wNRTjEeU7FtGQ4UKGonts=
+	t=1786976746; cv=none; b=VrExD2DOa6eUWWD13gOt4ce36VNlrX+eczS52606vL3/m7POM+7v07K1L5JSnF1JSmB3uRx+sQC+xy9YkS2ekAhvGYcn2DyvM6BtWfG3e1/5GMB3EQRHr3kO1IecWb7rr8/KXGsca72JV61pOpVF1OGoSaMKubhk3LfwKTbj93w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976743; c=relaxed/simple;
-	bh=SVUukVs4SCisCeEU5uweleM9D7sI9gKP4EFdXPZVHjI=;
+	s=arc-20240116; t=1786976746; c=relaxed/simple;
+	bh=yBLNVe5WgOCK/7nZGCkEvOee4CrUSB2l0mm8e+H6XnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EmnTI7ma1xHgOxywDPpF1KRMTXYe3hpy7vhwDeHYPyWddb9wQYrkhbbW9Fhu7Y7PvyUuvVHqh/d/gxjCd2eYSqvctAlbzES4niXV0f1Tlzd7tuJojbsfu4HMVyB+lOoHUrNRVkx8bQFolPZKMXWw1AJdvF1/RPIC1cB+0ybT0Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Ck0yUer; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DTmSc7Bz1ERSp/sy4zsJ/0U0+EaROce+vPHzq0hyS35rPWmKJuMQuUqVPcgEio/toGaIByHOVvCrN7F4067dCf0Pk37WQsNf2hl8GlqSRrIO5oAeO5dKTqRsTLeIdeIBFTD1FmHrVafT+T+H1ceve+bd6aNIwTMZ8ycKoHJbRgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZmyd0WO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Ck0yUer"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931A21F000E9;
-	Mon, 17 Aug 2026 14:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZmyd0WO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C3F1F000E9;
+	Mon, 17 Aug 2026 14:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976742;
-	bh=scxIOm/ycEd/0JH0oRlcfrFnRSYiSn/HBXXYQeMPZCk=;
+	s=korg; t=1786976745;
+	bh=IScu+TSAfQls3c9kZqQwS97xF34hwXYqyUA+URHWz3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Ck0yUerQTm7Z47rEZRqNyQ62MtmIkS40GEUvhM4MULkNiu7rye7lJXK9nufB4Q9W
-	 G1ao7vLa5YcHki0USHfb/61xt6Tc9Gw9KIfIGOpUaN8I7F0lgJTzy5BKz+IGLnJ4pd
-	 6U8oanfE2/lhHfI/rlDy3ZYwhnMiLWmsDi4HAE34=
+	b=cZmyd0WOOBQTB81IOGBf2LJkyxhb5LVqfHQWLslFy0LC/WgZgOKvCvuWycum5aPY2
+	 vO2LGOGgYGhEYJzh4edrOeihT4j9VaBsKHZSmINGKuql2R82hkvG+Wrr3C1UpMhsgB
+	 3vnbu4klR8u6u4+ZfXu70O4/Nkp9ppug+r2JpDaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christian Lamparter <chunkeey@gmail.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 087/456] wifi: carl9170: fix OOB read from off-by-two in TX status handler
-Date: Mon, 17 Aug 2026 15:27:57 +0200
-Message-ID: <20260817132543.521468426@linuxfoundation.org>
+Subject: [PATCH 5.15 088/456] wifi: carl9170: fix buffer overflow in rx_stream failover path
+Date: Mon, 17 Aug 2026 15:27:58 +0200
+Message-ID: <20260817132543.560705868@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -54,38 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit a3f42f1049ad80c65560d2b078ad426c3134f78d ]
+[ Upstream commit a1a21995c2e1cc2ca6b2226cfe4f5f018370182a ]
 
-The bounds check in carl9170_tx_process_status() uses
-`i > ((cmd->hdr.len / 2) + 1)` which is off by two, allowing
-2 extra iterations past valid _tx_status entries when the firmware-
-controlled hdr.ext exceeds hdr.len/2. Fix by using the correct
-comparison `i >= (cmd->hdr.len / 2)`.
+The failover continuation in carl9170_rx_stream() copies the full tlen
+from the second USB transfer instead of capping at rx_failover_missing
+bytes. When both transfers are near maximum size, the total exceeds the
+65535-byte failover SKB, triggering skb_over_panic.
+
+Limit the copy size to the missing byte count.
 
 Fixes: a84fab3cbfdc ("carl9170: 802.11 rx/tx processing and usb backend")
 Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
 Acked-by: Christian Lamparter <chunkeey@gmail.com>
 Closes: https://syzkaller.appspot.com/bug?extid=5c1ca6ccaa1215781cac
-Link: https://patch.msgid.link/20260421134929.325662-3-tristmd@gmail.com
+Link: https://patch.msgid.link/20260421134929.325662-4-tristmd@gmail.com
+[Fix checkpatch CHECK:PARENTHESIS_ALIGNMENT]
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/carl9170/tx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/carl9170/rx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/carl9170/tx.c b/drivers/net/wireless/ath/carl9170/tx.c
-index f9e1306ac74fe3..db49f334e52e2d 100644
---- a/drivers/net/wireless/ath/carl9170/tx.c
-+++ b/drivers/net/wireless/ath/carl9170/tx.c
-@@ -692,7 +692,7 @@ void carl9170_tx_process_status(struct ar9170 *ar,
- 	unsigned int i;
+diff --git a/drivers/net/wireless/ath/carl9170/rx.c b/drivers/net/wireless/ath/carl9170/rx.c
+index 9a25c2a540b95f..bda30b1f940459 100644
+--- a/drivers/net/wireless/ath/carl9170/rx.c
++++ b/drivers/net/wireless/ath/carl9170/rx.c
+@@ -918,7 +918,9 @@ static void carl9170_rx_stream(struct ar9170 *ar, void *buf, unsigned int len)
+ 				}
+ 			}
  
- 	for (i = 0;  i < cmd->hdr.ext; i++) {
--		if (WARN_ON(i > ((cmd->hdr.len / 2) + 1))) {
-+		if (WARN_ON(i >= (cmd->hdr.len / 2))) {
- 			print_hex_dump_bytes("UU:", DUMP_PREFIX_NONE,
- 					     (void *) cmd, cmd->hdr.len + 4);
- 			break;
+-			skb_put_data(ar->rx_failover, tbuf, tlen);
++			skb_put_data(ar->rx_failover, tbuf,
++				     min_t(unsigned int, tlen,
++					   ar->rx_failover_missing));
+ 			ar->rx_failover_missing -= tlen;
+ 
+ 			if (ar->rx_failover_missing <= 0) {
 -- 
 2.53.0
 
