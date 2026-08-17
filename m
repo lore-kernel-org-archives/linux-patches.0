@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF0215FA81;
-	Mon, 17 Aug 2026 14:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077F92FA0C6;
+	Mon, 17 Aug 2026 14:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976217; cv=none; b=Hv9Pb8DJL/bhD4BiYAa318EYXQhUFPI9Rev6zKQXGP1BbMpnix2Z6eGuwK8NiE1BMqkRPXpRm0uNxH7MQw9x58wQpHeHEcHUTejDJzYmKZ8KnKxykUH11p5SvjU4FNgcQIDg0oKY0ZCU2caFCzOHPeQDcjtb3CSQ+Z9jtOxuxsY=
+	t=1786976220; cv=none; b=GDCcvk9P2BKXq5kUDblYgx/3w1ASdYXNc2JXQ1IgWoOWlgOmer5yKXGnbdHk0NuDpoAoLiUnV8Htc6Xd700MfnmX2sSr04k8n11066QtyIOLGbSEQmlusrt0qE0jYyRd89p850M7NCkSRq0+so2N0LTQNJD9HjHILbZ+RSWRExU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976217; c=relaxed/simple;
-	bh=J3+VotPSzcuGRlUXEbjZySiLJwJ33xEcKmqzoDr/CeY=;
+	s=arc-20240116; t=1786976220; c=relaxed/simple;
+	bh=ws08k3RKtWMXmE1tUB0hkda/cLnKv6swB7bcDT2+A3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HPtO5oLUNKY8grHLF3epLvI4y2LPQD+mB/7qT0CXicoEzlQ2VKrgYx5ItZAE8dco4ERhZ3OhcKF8WHZfe6chXO72zBdZYdIu+isypo8dx1fjXXSB24xvgpISdZwES8XzmFHbgtgUOJaLvglR0Cc9eCcxAGty/3JuY1JgdLAge4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGTnEkgR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=SPn35Vjg2ZwrUdCudBfOyyObqgpvLMo6JNdH1NBaULRFYbLqkP/qoMlttK9b3RZG0sm/A15SnhdJpd5WHeJw7+R+DSMIoxuOWgjdNMNcx0725sl3Z44v0nhoLtmAikSeLwiAJh2u3uO7ORx3ibcA5QdttYHnM4ott2YnjaB36Xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WSkdm15q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGTnEkgR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7531F1F000E9;
-	Mon, 17 Aug 2026 14:16:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WSkdm15q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DAC41F000E9;
+	Mon, 17 Aug 2026 14:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976216;
-	bh=mNQB+l+GUJ89PfoZE4k1Th1B99bFeNQewz8xpGIWbe4=;
+	s=korg; t=1786976218;
+	bh=mglTbDay2o6r8XhR9fsWZTuxxktRAmlrm9vxgeOmuJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hGTnEkgR9Hm6szT7AyA6P0OwtPDEH5z1FvAN8bVAYcUXVOTgOynf/6RZpXZh6E/rw
-	 Ld8oC4ohXrW4EdS2WCjoQu3AWIoysytR/VbcTrg6CGfxb0wtytzjy+alKTWnYKK2Dd
-	 eRm5+i/KBYeDNaouLeHZz6GW5/8X0zLdcO8wqIP0=
+	b=WSkdm15qjndKqfYrjp4VUCZmK2T4hfkw1Q2JMhB3VjUWwy29wrMdjsSSFAD212Ldp
+	 +CXM21VKQCw+IHUude9gipoI05rZpyrtRwYD4aiuAKonxNdfgxg/mxzcRazPpp6T+q
+	 P+K5bj8S5bpD8WC0VebV80YpaH+GlNmYdNiueQjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 297/389] can: peak_usb: validate uCAN receive record lengths
-Date: Mon, 17 Aug 2026 15:32:16 +0200
-Message-ID: <20260817132550.659376120@linuxfoundation.org>
+	Iago Toral Quiroga <itoral@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
+Subject: [PATCH 5.10 298/389] drm/vc4: Zero the tile state data array before each BIN job
+Date: Mon, 17 Aug 2026 15:32:17 +0200
+Message-ID: <20260817132550.690738641@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -44,106 +44,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Maíra Canal <mcanal@igalia.com>
 
-commit 93fcab2c6968446316bbb49548848df604d6346f upstream.
+commit 48a570c964d8e37d353381e4195106277e17f5cb upstream.
 
-pcan_usb_fd_decode_buf() walks uCAN records packed in one USB
-receive buffer.
+The binner BO is a single 16MB buffer split into 512KB slots that are
+handed out to jobs at submission time and recycled as jobs complete,
+without ever being cleared. Each slot holds the job's Tile State Data
+Array (TSDA) at its start, followed by the tile allocation pool.
 
-Require each record to contain the fixed header for its type, and verify
-CAN payload bytes before copying them into the skb.
+While the tile allocation pool is only walked by the render thread
+through branches the binner generated during the current job, the
+TSDA is the PTB's own per-tile bookkeeping and is consumed by the
+hardware itself. Although the kernel sets the "Auto-initialise Tile
+State Data Array" flag in the tile binning mode configuration, the
+PTB demonstrably still acts on stale tile state left by the slot's
+previous user: the binner ends up creating invalid command streams
+with invalid primitive streams and branches, which can cause GPU hangs
+as observed in [1][2].
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260706092836.79754-1-pengpeng@iscas.ac.cn
-Fixes: 0a25e1f4f185 ("can: peak_usb: add support for PEAK new CANFD USB adapters")
+Zero the TSDA when the job's binning slot is configured. This clears
+48 bytes per tile (~24KB for a 1080p frame) in the submission path, and
+guarantees the PTB never sees another job's tile state.
+
+The tile count is only checked for being non-zero today, so the 8-bit
+fields it comes from can describe a tile state array almost six times
+larger than the slot it has to live in. Bound it before the slot is
+handed out, since such size decides how much of the slot is left for
+the tile alloc pool.
+
+Link: https://github.com/raspberrypi/linux/issues/3221 [1]
+Link: https://github.com/raspberrypi/linux/issues/5780 [2]
+Fixes: 553c942f8b2c ("drm/vc4: Allow using more than 256MB of CMA memory.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patch.msgid.link/20260727-vc4-bin-oom-fixes-v2-2-0d8a5eddc7c9@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/peak_usb/pcan_usb_fd.c |   40 ++++++++++++++++++++++++++++-
- 1 file changed, 39 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vc4/vc4_validate.c |   29 +++++++++++++++++++++++------
+ 1 file changed, 23 insertions(+), 6 deletions(-)
 
---- a/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
-+++ b/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
-@@ -502,6 +502,13 @@ static int pcan_usb_fd_decode_canmsg(str
- 		cfd->len = get_can_dlc(pucan_msg_get_dlc(rm));
+--- a/drivers/gpu/drm/vc4/vc4_validate.c
++++ b/drivers/gpu/drm/vc4/vc4_validate.c
+@@ -379,6 +379,23 @@ validate_tile_binning_config(VALIDATE_AR
+ 		return -EINVAL;
  	}
  
-+	if (!(rx_msg_flags & PUCAN_MSG_RTR) &&
-+	    le16_to_cpu(rx_msg->size) - offsetof(struct pucan_rx_msg, d) <
-+	    cfd->len) {
-+		kfree_skb(skb);
-+		return -EBADMSG;
++	/* The tile state data array is 48 bytes per tile, and we put it at
++	 * the start of a BO containing both it and the tile alloc.
++	 */
++	tile_state_size = 48 * tile_count;
++
++	/* Since the tile alloc array will follow us, align. */
++	tile_state_size = roundup(tile_state_size, 4096);
++
++	/* Reject configurations whose tile state would leave no room for
++	 * the tile alloc pool that follows it in the slot.
++	 */
++	if (tile_state_size >= vc4->bin_alloc_size) {
++		DRM_DEBUG("Tile binning config of %dx%d too large\n",
++			  exec->bin_tiles_x, exec->bin_tiles_y);
++		return -EINVAL;
 +	}
 +
- 	cfd->can_id = le32_to_cpu(rm->can_id);
+ 	bin_slot = vc4_v3d_get_bin_slot(vc4);
+ 	if (bin_slot < 0) {
+ 		if (bin_slot != -EINTR && bin_slot != -ERESTARTSYS) {
+@@ -394,13 +411,13 @@ validate_tile_binning_config(VALIDATE_AR
+ 	exec->bin_slots |= BIT(bin_slot);
+ 	bin_addr = vc4->bin_bo->base.paddr + bin_slot * vc4->bin_alloc_size;
  
- 	if (rx_msg_flags & PUCAN_MSG_EXT_ID)
-@@ -651,6 +658,24 @@ static void pcan_usb_fd_decode_ts(struct
- 		peak_usb_set_ts_now(&usb_if->time_ref, le32_to_cpu(ts->ts_low));
- }
+-	/* The tile state data array is 48 bytes per tile, and we put it at
+-	 * the start of a BO containing both it and the tile alloc.
+-	 */
+-	tile_state_size = 48 * tile_count;
++	exec->tile_alloc_offset = bin_addr + tile_state_size;
  
-+static size_t pcan_usb_fd_rx_msg_min_size(u16 rx_msg_type)
-+{
-+	switch (rx_msg_type) {
-+	case PUCAN_MSG_CAN_RX:
-+		return offsetof(struct pucan_rx_msg, d);
-+	case PCAN_UFD_MSG_CALIBRATION:
-+		return sizeof(struct pcan_ufd_ts_msg);
-+	case PUCAN_MSG_ERROR:
-+		return sizeof(struct pucan_error_msg);
-+	case PUCAN_MSG_STATUS:
-+		return sizeof(struct pucan_status_msg);
-+	case PCAN_UFD_MSG_OVERRUN:
-+		return sizeof(struct pcan_ufd_ovr_msg);
-+	default:
-+		return sizeof(struct pucan_msg);
-+	}
-+}
-+
- /* callback for bulk IN urb */
- static int pcan_usb_fd_decode_buf(struct peak_usb_device *dev, struct urb *urb)
- {
-@@ -665,6 +690,12 @@ static int pcan_usb_fd_decode_buf(struct
- 	msg_end = urb->transfer_buffer + urb->actual_length;
- 	for (; msg_ptr < msg_end;) {
- 		u16 rx_msg_type, rx_msg_size;
-+		size_t rx_msg_min_size;
-+
-+		if (msg_end - msg_ptr < sizeof(*rx_msg)) {
-+			err = -EBADMSG;
-+			break;
-+		}
+-	/* Since the tile alloc array will follow us, align. */
+-	exec->tile_alloc_offset = bin_addr + roundup(tile_state_size, 4096);
++	/* The TSDA area must be zeroed out before use, otherwise the PTB might
++	 * consume a stale tile state.
++	 */
++	memset(vc4->bin_bo->base.vaddr + bin_slot * vc4->bin_alloc_size, 0,
++	       tile_state_size);
  
- 		rx_msg = (struct pucan_msg *)msg_ptr;
- 		if (!rx_msg->size) {
-@@ -676,12 +707,19 @@ static int pcan_usb_fd_decode_buf(struct
- 		rx_msg_type = le16_to_cpu(rx_msg->type);
- 
- 		/* check if the record goes out of current packet */
--		if (msg_ptr + rx_msg_size > msg_end) {
-+		if (rx_msg_size > msg_end - msg_ptr) {
- 			netdev_err(netdev,
- 				   "got frag rec: should inc usb rx buf sze\n");
- 			err = -EBADMSG;
- 			break;
- 		}
-+
-+		rx_msg_min_size = pcan_usb_fd_rx_msg_min_size(rx_msg_type);
-+		if (rx_msg_size < rx_msg_min_size) {
-+			netdev_err(netdev, "got short rec\n");
-+			err = -EBADMSG;
-+			break;
-+		}
- 
- 		switch (rx_msg_type) {
- 		case PUCAN_MSG_CAN_RX:
+ 	*(uint8_t *)(validated + 14) =
+ 		((flags & ~(VC4_BIN_CONFIG_ALLOC_INIT_BLOCK_SIZE_MASK |
 
 
