@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378142E738B;
-	Mon, 17 Aug 2026 14:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4183F075D;
+	Mon, 17 Aug 2026 14:38:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977533; cv=none; b=BTcKPXeC6xpBe6UstwPHGBzENo+d0iiqSrzWi70wodRBPFDCgi63s9yircO8pkYSqmQ92OQXShnnDmSfcDHtu37z4VuIgCnokKB3uz8pQ28TvsXzYWM7zm8iIRaR8oNFgSAE9Gqyi+MhGylEtPqRNoe3Zj7MUzWjVXa8AcRevwE=
+	t=1786977541; cv=none; b=DDcp6lA7/qchYp65SqaCMx+G6xp6mt7KtbmOVqQr1ts4Gjg/d0cutS4aqbnQdO+iG9dvx+d1954WwNPypzZANUF12OUm9kOp7b2owZQwaL31DvoN63YwtfAtW2ZkNiM/sX/YeffeUCz7SF5Jgq7OFQGxfEs19UPSUg7TmDH32WU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977533; c=relaxed/simple;
-	bh=8Bl/hqbeSk0yrcB8DUC+KZd2MWxRN/txtSDWDwFBlRw=;
+	s=arc-20240116; t=1786977541; c=relaxed/simple;
+	bh=hydXDOzjxDAmIO0Pj5FbQU1FZQenMaLjo0F8sRaalVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYqsmbGRxFATi9p4XILMyj2LCTo56xZyTsPbEwHh6++o0JRaFx8ub915Tj3a1fk7z1aaieZ+rRR9vZpKe5FlnQZ30gv1j0Rz30zs1lnL8Um0UYn4yBxg5RF7dSGMB3DwyBWcwTW+oxtmywKzGo6i4psMtOAoped32fk2sphFRJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVwopCsf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l9S6PN2prC+nTgsgfe8v29GugwROeFTndTkLjV5XzX3feiyB1+Zj60gppwicWuvWdWlePT9SLA3HWy6SRs/GcBYaTaAifEkIaktFHXlc9+ZowtYTE9q6K/k82K7m07MH2l0FBBS0WdVFC6cFf8bk4UEXqCIldF+qB/Lepe4kENU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v+JYf7dC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVwopCsf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7E31F000E9;
-	Mon, 17 Aug 2026 14:38:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+JYf7dC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F24E51F000E9;
+	Mon, 17 Aug 2026 14:38:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977532;
-	bh=NKZz9oZBkTP4e2vKPkamqPoimtI7A5SBdL/+s7l7DJw=;
+	s=korg; t=1786977539;
+	bh=eBVVf05AiBgX0OB4tUnYJRJjlJupLSQs9gLgbQb5QjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yVwopCsfbNV0oxCe3GL/cCQCbGBvtOoChAmbxaN76ObuH3yYg77ikiN7c4O77YzG/
-	 8TaEkIWP1JHrEY8Q4YTi3PIxaRJfdhJazyHPJ3n1DauYVMeIMgAoA83AcIsZpjz2z/
-	 JLoPdi4A+rcqpOPY9FvN4EZGd953DLo6/R5C7T4I=
+	b=v+JYf7dCdf+ajQf5a/s9R07XdABPUmppUXmPwtJ2hXdeAf0beuj55avgf/yz/K/9T
+	 g1OyLEvAPxUdeu0j2gceCPQ0UgdruFlc9iSzPdGxWlXMl2GFu+s/PGj6FN5y8JfBAd
+	 x+drBHwzpvTgi8Hnr1pNOvNNDLO9XaP65wAjzVk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Junjie Cao <junjie.cao@intel.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 363/456] net: openvswitch: fix skb leak on flow key update failure during recirculation
-Date: Mon, 17 Aug 2026 15:32:33 +0200
-Message-ID: <20260817132553.704514698@linuxfoundation.org>
+Subject: [PATCH 5.15 365/456] gpio: pch: use raw_spinlock_t for the register lock
+Date: Mon, 17 Aug 2026 15:32:35 +0200
+Message-ID: <20260817132553.774843614@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,62 +52,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Junjie Cao <junjie.cao@intel.com>
 
-[ Upstream commit e1cf066244dad576221b7123a0e5005967f25a20 ]
+[ Upstream commit a02b8950d619123da64f69b70fe1dadef217dfe4 ]
 
-do_execute_actions() returns right away when execute_recirc() fails on
-the last action as it assumes this function always takes ownership of
-the skb when 'last' is true.  But when the flow key update fails, the
-function doesn't free the skb and it ends up leaked.
+pch_irq_type() is registered as the irq_chip .irq_set_type callback and
+takes chip->spinlock with spin_lock_irqsave().  This callback is reached
+from __setup_irq() -> __irq_set_trigger() -> chip->irq_set_type() while
+the caller holds desc->lock, a raw_spinlock_t, with hardirqs disabled.
+That context is not sleepable, but on PREEMPT_RT a regular spinlock_t is
+an rtmutex-backed sleeping lock, so acquiring it there is invalid.
 
-This is a very unlikely scenario as it requires the packet to become
-unparseable by applying a set of actions on a previously parseable skb,
-but should be fixed nevertheless.
+This was confirmed on a PREEMPT_RT kernel with lockdep
+(PROVE_RAW_LOCK_NESTING and DEBUG_ATOMIC_SLEEP).  A grounded PoC mirrored
+pch_irq_type()'s locking and drove it through the real genirq carrier
+irq_set_irq_type() -> __irq_set_trigger() -> chip->irq_set_type(), i.e.
+the same __irq_set_trigger() edge that __setup_irq() takes for a
+requested IRQ.  With the original spin_lock_irqsave() edge lockdep
+reported an invalid wait context, immediately followed by:
 
-Reported by Sashiko.
+  BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
+  in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 95, name: insmod
+  hardirqs last disabled at (3784): _raw_spin_lock_irqsave+0x4f/0x60
+   rt_spin_lock+0x3a/0x1c0
+   repro_irq_set_type+0x64/0xa0 [pch_repro]
+   __irq_set_trigger+0x69/0x140
+   irq_set_irq_type+0x78/0xd0
 
-Fixes: 971427f353f3 ("openvswitch: Add recirc and hash action.")
+Switching the mirrored lock to raw_spinlock_t made both splats go away.
+
+Convert the register lock to raw_spinlock_t.  The same lock also
+serializes the GPIO direction/value callbacks and the suspend/resume
+register save/restore, but all of those critical sections only perform
+MMIO register accesses (ioread32()/iowrite32()) and
+irq_set_handler_locked(); none of them contain sleepable operations.
+Keeping this register lock non-sleeping is therefore appropriate for the
+irqchip callbacks and does not change the GPIO-side locking contract.
+
+This is the same class of issue and fix as recently addressed for other
+GPIO controllers, e.g. commit 286533cb14a3 ("gpio: sch: use raw_spinlock_t
+in the irq startup path") and commit 90f0109019e6 ("gpio: eic-sprd: use
+raw_spinlock_t in the irq startup path").
+
+Fixes: 38eb18a6f92d ("gpio-pch: Support interrupt function")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20260727181851.306076-2-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[OVS drop reasons are not available in 5.15, hence plain kfree_skb()]
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260723014129.1129730-1-junjie.cao@intel.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+(cherry picked from commit a02b8950d619123da64f69b70fe1dadef217dfe4)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/actions.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-pch.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
-index 3a69ed9d21926..6fd22d3632ba3 100644
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -1107,6 +1107,10 @@ static int execute_masked_set_action(struct sk_buff *skb,
- 	return err;
+diff --git a/drivers/gpio/gpio-pch.c b/drivers/gpio/gpio-pch.c
+index a552df298a974..af4b3b7f3033d 100644
+--- a/drivers/gpio/gpio-pch.c
++++ b/drivers/gpio/gpio-pch.c
+@@ -92,7 +92,7 @@ struct pch_gpio {
+ 	struct pch_gpio_reg_data pch_gpio_reg;
+ 	int irq_base;
+ 	enum pch_type_t ioh;
+-	spinlock_t spinlock;
++	raw_spinlock_t spinlock;
+ };
+ 
+ static void pch_gpio_set(struct gpio_chip *gpio, unsigned int nr, int val)
+@@ -101,7 +101,7 @@ static void pch_gpio_set(struct gpio_chip *gpio, unsigned int nr, int val)
+ 	struct pch_gpio *chip =	gpiochip_get_data(gpio);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	reg_val = ioread32(&chip->reg->po);
+ 	if (val)
+ 		reg_val |= BIT(nr);
+@@ -109,7 +109,7 @@ static void pch_gpio_set(struct gpio_chip *gpio, unsigned int nr, int val)
+ 		reg_val &= ~BIT(nr);
+ 
+ 	iowrite32(reg_val, &chip->reg->po);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
  }
  
-+/* When 'last' is true, recirc() should always consume the 'skb'.
-+ * Otherwise, recirc() should keep 'skb' intact regardless what
-+ * actions are executed on recirculation.
-+ */
- static int execute_recirc(struct datapath *dp, struct sk_buff *skb,
- 			  struct sw_flow_key *key,
- 			  const struct nlattr *a, bool last)
-@@ -1117,8 +1121,11 @@ static int execute_recirc(struct datapath *dp, struct sk_buff *skb,
- 		int err;
+ static int pch_gpio_get(struct gpio_chip *gpio, unsigned int nr)
+@@ -127,7 +127,7 @@ static int pch_gpio_direction_output(struct gpio_chip *gpio, unsigned int nr,
+ 	u32 reg_val;
+ 	unsigned long flags;
  
- 		err = ovs_flow_key_update(skb, key);
--		if (err)
-+		if (err) {
-+			if (last)
-+				kfree_skb(skb);
- 			return err;
-+		}
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 
+ 	reg_val = ioread32(&chip->reg->po);
+ 	if (val)
+@@ -141,7 +141,7 @@ static int pch_gpio_direction_output(struct gpio_chip *gpio, unsigned int nr,
+ 	pm |= BIT(nr);
+ 	iowrite32(pm, &chip->reg->pm);
+ 
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -152,12 +152,12 @@ static int pch_gpio_direction_input(struct gpio_chip *gpio, unsigned int nr)
+ 	u32 pm;
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	pm = ioread32(&chip->reg->pm);
+ 	pm &= BIT(gpio_pins[chip->ioh]) - 1;
+ 	pm &= ~BIT(nr);
+ 	iowrite32(pm, &chip->reg->pm);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -259,7 +259,7 @@ static int pch_irq_type(struct irq_data *d, unsigned int type)
+ 		return 0;
  	}
- 	BUG_ON(!is_flow_key_valid(key));
  
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 
+ 	/* Set interrupt mode */
+ 	im = ioread32(im_reg) & ~(PCH_IM_MASK << (im_pos * 4));
+@@ -271,7 +271,7 @@ static int pch_irq_type(struct irq_data *d, unsigned int type)
+ 	else if (type & IRQ_TYPE_EDGE_BOTH)
+ 		irq_set_handler_locked(d, handle_edge_irq);
+ 
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 	return 0;
+ }
+ 
+@@ -378,7 +378,7 @@ static int pch_gpio_probe(struct pci_dev *pdev,
+ 
+ 	chip->reg = chip->base;
+ 	pci_set_drvdata(pdev, chip);
+-	spin_lock_init(&chip->spinlock);
++	raw_spin_lock_init(&chip->spinlock);
+ 	pch_gpio_setup(chip);
+ 
+ 	ret = devm_gpiochip_add_data(&pdev->dev, &chip->gpio, chip);
+@@ -415,9 +415,9 @@ static int __maybe_unused pch_gpio_suspend(struct device *dev)
+ 	struct pch_gpio *chip = dev_get_drvdata(dev);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	pch_gpio_save_reg_conf(chip);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
+@@ -427,11 +427,11 @@ static int __maybe_unused pch_gpio_resume(struct device *dev)
+ 	struct pch_gpio *chip = dev_get_drvdata(dev);
+ 	unsigned long flags;
+ 
+-	spin_lock_irqsave(&chip->spinlock, flags);
++	raw_spin_lock_irqsave(&chip->spinlock, flags);
+ 	iowrite32(0x01, &chip->reg->reset);
+ 	iowrite32(0x00, &chip->reg->reset);
+ 	pch_gpio_restore_reg_conf(chip);
+-	spin_unlock_irqrestore(&chip->spinlock, flags);
++	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
