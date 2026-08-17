@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986B543E06D;
-	Mon, 17 Aug 2026 14:14:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848C243E06D;
+	Mon, 17 Aug 2026 14:14:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976089; cv=none; b=ec8EpkoAMSn3gTaHKiWOZgkzGJWrL4OPIONCZAwYpzNMwlBsjYg7NoKvKv4XCoBJp9+pX9UMudwLpYWO49TUcib+UhmGLIJb/WpgDNokaMNR9A7govNHPQ7nn+eeStWifTPrrDtkSpBSHahu+Lx25v/LYfk2JOBQEWXqNyKl3dg=
+	t=1786976092; cv=none; b=Wi0FKC0QDJih5VTYl7O0inrKOACViOZjR1RTretxsLJpAnGNGjjTrPO0VjL9H2Q+oIePfDbaEGjEpXr/JN/T0CaiQdfLhVpmucIdsPJ7XM/aAzhQpv8ddFQnsmACX4XKXNgpBxLnSo90JV+oPP/V6AftaZJBbk1M/qfiwlnGpHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976089; c=relaxed/simple;
-	bh=kA1q2kzHF/CGb1TamodsqKPiwoz3F+yPJsZRSAQWNmY=;
+	s=arc-20240116; t=1786976092; c=relaxed/simple;
+	bh=qTJozFeEvxij3BVe9L22/04Wre+ZMjOiHbjescHkRLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i6i1Lsc7wEJoMpz/Tm7V04uGf1XjrUBk/loZcprnpWlwjc49corIIyWlRJcugsc2rcZg1tMiXc9fNqdrA010y8uzpM7UHgKeu9s7oyi8yaJILaHs1jyNhWQaqow5wG3YQd38B1bQQK+0vUqMohQKr7M0RhB79i5fQOTbJwT97Do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P8gAXzOE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EOV3dM+as/9L3H4Lr1GP5VaXCL+il7pBRfC7MaNB02gk8cs0B9e2+Ed76C6BcU9yGi+p2NIv9+3T1ZwjlqimYZweqTzPSkVGdcnDu9kS77I/lIMbJgz4nXLoCXScsTV9KBQXWPUH1bCZLfg6LOMY4BsyDldKkxUlXVBZyeO1dng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=puH4qyhQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8gAXzOE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D371F000E9;
-	Mon, 17 Aug 2026 14:14:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="puH4qyhQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D977E1F00A3A;
+	Mon, 17 Aug 2026 14:14:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976088;
-	bh=C5L57XmZ8XXWSMJ6QElbEGQEV/hwCVBIz0QEYPQUXS0=;
+	s=korg; t=1786976091;
+	bh=6tRlR34Qi/oHzycRGmNTxAbYTdcdTzkFxd196mZPhCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P8gAXzOEUkmXM907yKYyvas8CHEmvQDSsoYJhhN6UZiyn8o30DcOnkHdOjokOk5pJ
-	 QbpHTwuShYypFOJaeUCxO0NE0k8DQYDWPDJFtMgutJOh0H4XI+nQWJw20im63zEZVo
-	 jb47ai3J5vkvi/xnkEgw2WWx93DYqzJoMGp/frO4=
+	b=puH4qyhQ+LjgElHsafS1FS472JHy54bW9yrr/u+msEQ7ryA44QMKeobOGmV8hfRrt
+	 y9gbXFGcVDPKorbiJeuoQ6i0S8mDIOsuKq+Pj8mIzvoHbCOoOK7lwUBwihY/iSiRin
+	 OhlD8bBwjVJSPQ4SgNLAOgZiDDtaZCDUfQfsAkK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Ghosh <sumang@marvell.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 236/389] octeontx2-pf: Set correct sequence for carrier off and tx queue stop
-Date: Mon, 17 Aug 2026 15:31:15 +0200
-Message-ID: <20260817132548.482928841@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
+	Baul Lee <baul.lee@xbow.com>
+Subject: [PATCH 5.10 254/389] ALSA: usb-audio: fix OOB write in snd_usbmidi_akai_output()
+Date: Mon, 17 Aug 2026 15:31:33 +0200
+Message-ID: <20260817132549.133690971@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -53,42 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suman Ghosh <sumang@marvell.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-[ Upstream commit 16809472409d998afcda402e32b8229b389337c4 ]
+commit 0970274613fb463d376211450cab066d34ebfe6a upstream.
 
-During link down event, we were doing netif_tx_stop_all_queues() first
-and then netif_carrier_off(). This can cause a potential race since
-carrier is still on during down event. This patch reverse the calling
-order to fix the issue.
+snd_usbmidi_akai_output() computes its fill-loop bound
 
-Fixes: 50fe6c02e5ad ("octeontx2-pf: Register and handle link notifications")
-Signed-off-by: Suman Ghosh <sumang@marvell.com>
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260724072831.2415281-1-rkannoth@marvell.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+	buf_end = ep->max_transfer - MAX_AKAI_SYSEX_LEN - 1;
+
+as a signed int, so a small device-advertised bulk-OUT max_transfer
+makes buf_end negative.  The loop guard then compares the u32
+urb->transfer_buffer_length against that negative int: the usual
+arithmetic conversion turns buf_end into a large unsigned value, so the
+guard stays true and each iteration keeps appending SysEx framing and
+payload bytes past the end of the URB transfer buffer, which is only
+max_transfer bytes long.
+
+A USB device that advertises a tiny bulk-OUT endpoint can therefore
+trigger an attacker-length- and content-controlled heap out-of-bounds
+write when a process writes to the created /dev/snd/midiC*D* node.
+
+Return early when there is no room for even one SysEx, so the loop is
+never entered with a bound that would wrap.  The loop is the last
+statement of the function, so bailing out is equivalent to it not
+running.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 4434ade8c933 ("ALSA: usb-audio: add support for Akai MPD16")
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
+Reported-by: Baul Lee <baul.lee@xbow.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260726074500.50145-1-baul.lee@xbow.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/midi.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-index 50a36639e0ced..ca2b8ae98bd26 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -840,8 +840,8 @@ static void otx2_handle_link_event(struct otx2_nic *pf)
- 		netif_carrier_on(netdev);
- 		netif_tx_start_all_queues(netdev);
- 	} else {
--		netif_tx_stop_all_queues(netdev);
- 		netif_carrier_off(netdev);
-+		netif_tx_stop_all_queues(netdev);
- 	}
- }
+--- a/sound/usb/midi.c
++++ b/sound/usb/midi.c
+@@ -816,6 +816,8 @@ static void snd_usbmidi_akai_output(stru
  
--- 
-2.53.0
-
+ 	msg = urb->transfer_buffer + urb->transfer_buffer_length;
+ 	buf_end = ep->max_transfer - MAX_AKAI_SYSEX_LEN - 1;
++	if (buf_end <= 0)
++		return;
+ 
+ 	/* only try adding more data when there's space for at least 1 SysEx */
+ 	while (urb->transfer_buffer_length < buf_end) {
 
 
