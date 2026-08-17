@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510AE3033E7;
-	Mon, 17 Aug 2026 14:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0004F39733E;
+	Mon, 17 Aug 2026 14:04:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975463; cv=none; b=BTl6hq1RD+4eEX+qRDQ22dpYg32otmHn7SK80TlvLqUbtcmG27z1sXwLCLbF7Yi74/Pi0oEQ7WeTGL5/+RLUQrJ2HHOEx6YFJsZgcKlAOLlSXCMTV8dEcKqX8YivfFt7mst4+Ys45lRuuQs6KX1+XZ89MNLyokn5WDnDWZgVAlA=
+	t=1786975466; cv=none; b=TQx6y1ItgbJ+31KbIe37DoV/9LtasvM63z3WY3dUYQJ5UKFogTRoXzVD6yUttvFaPoK0yD59y71I3fFxGLR5HW37ZMk0qMfeuoiTNfYraCVWdY20iUEfC4v3M4Jn3U6GBl7G8hF4gG8sWmuHDPEf6BdMbP4e9Xk0TgYwXE0TdmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975463; c=relaxed/simple;
-	bh=6vgehgVJsOU4t9hTfRy5Hwwu+glUFYM4Da/96M5A3PE=;
+	s=arc-20240116; t=1786975466; c=relaxed/simple;
+	bh=+SSa38Lw1Zg4wZdm9GoTfDLrBN5pFAUVE/zUPMvN5zY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k2arDHGLdySbqTlHMmTdkdKe64c0s+xstfGjhhWReaXWKclSgJ4CnU6ToNsENXOA2wSu/46CUqGIKrYbR4wLbk4DhappyKVN6aoUPOZN3KLKTxqJp7B6dUqRdnqL9s2fpPXzt57gNBWmhaPPG2OZ+pbjjsHtF6r4dnEgbexxmQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTlpkoxA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dMTy2k7mDFFpy17AFi/GRPBpDWjuhBTGCeKJ0AHAvEu502078jY6Ze5/+iY60MPBxEYqrfl1QkpkVw6aMfoKVRhWjBSx6cT56VHgKl7is0dHnP5YS77agPDYbElLog7h0G+vd2J/rjGwWI0Oa4gj9LojsXQxkRLtYZoMDIBBVuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3VpUoL7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTlpkoxA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67A131F000E9;
-	Mon, 17 Aug 2026 14:04:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3VpUoL7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53BBC1F000E9;
+	Mon, 17 Aug 2026 14:04:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975462;
-	bh=oO1GEwRXOyJaII58hT0YgZeoWStLMnfAtgz2v+8JUls=;
+	s=korg; t=1786975464;
+	bh=HKsGqb42RITUOHv6/YRe89pHmYzqSwi/mjErNpU2V6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hTlpkoxAMmv1h6xlfXfuPbr79B1h5ZzRM21xtv3CYJ27Rh07TpS68q5x6Ppo9LRfz
-	 w1+iH3dbx7NHt4oV5BXxfLPsZLinMBOc5Px8ztMOGwR2nTVrylLjAJBFe6PEF/SuHM
-	 VfWClL+sUaJSV73kV7qDAtS40vYgET6PQY9Wg7tU=
+	b=K3VpUoL70SiJz3s6RHBhSkmYJQkIvS3rTan9EMqdc5xsnUhxa8BI0pjnae50ZjhLn
+	 fvTIA7fF/e6ob5u+kMJE+bU4WUOrPxiaB9StsAlVBO/ziqfo9U4kgrOXuf71wNkmaM
+	 z1/0+lBUCm6JyuxtbVmaMqoXkoynpkZ15Ef3xWAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Huiwen He <hehuiwen@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 037/389] ata: sata_dwc_460ex: fix infinite loop in NCQ tag completion bit-scanning
-Date: Mon, 17 Aug 2026 15:27:56 +0200
-Message-ID: <20260817132540.422484934@linuxfoundation.org>
+Subject: [PATCH 5.10 038/389] smb/client: handle overlapping allocated ranges in fallocate
+Date: Mon, 17 Aug 2026 15:27:57 +0200
+Message-ID: <20260817132540.466009379@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,51 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit c2130f6553f4a5cbdc259de069600117a995f197 ]
+[ Upstream commit b09ae45d85dc816987a71db9eebc54b0ae288e94 ]
 
-The hand-rolled bit-scanning loop in the NCQ completion path has an
-infinite loop bug.  When tag_mask has only high bits set (e.g.
-0x80000000), the inner while loop left-shifts tag_mask until it
-overflows to 0.  At that point !(0 & 1) is always true and 0 <<= 1
-stays 0, causing an infinite loop in hardirq context with a spinlock
-held.
+smb3_simple_fallocate_range() can skip holes when an allocated range
+returned by the server starts before the current fallocate offset. The
+skipped hole is not zero-filled, but fallocate still returns success. A
+later write to that hole may therefore fail with ENOSPC.
 
-Replace the open-coded bit-scanning with __ffs() which correctly
-finds the least significant set bit and is bounded by the width of
-the argument.
+The function queries allocated ranges so that it can preserve existing
+contents and write zeroes only into holes. However, the server may return
+a range that starts before the current fallocate offset.
 
-Fixes: 62936009f35a ("[libata] Add 460EX on-chip SATA driver, sata_dwc_460ex")
-Assisted-by: opencode:big-pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+For example, assume the fallocate request is [100, 400) and the only
+allocated range returned by the server is [0, 200):
+
+        Request:      [100, 400)
+        Server range: [  0, 200)  allocated
+
+        Correct:
+        [100, 200)    allocated data, skip
+        [200, 400)    hole, zero-fill
+
+        Current:
+        [100, 300)    skipped
+        [300, 400)    zero-filled afterwards
+
+The current code adds the full server range length, 200, to the current
+offset 100 and moves to 300. As a result, the hole in [200, 300) is
+skipped without being zero-filled.
+
+Fix this by advancing only over the part of the allocated range that
+overlaps the current fallocate offset.  Ignore ranges that end before the
+current offset and reject ranges whose end offset overflows.
+
+This also prevents a malformed range length from causing an out-of-bounds
+zero-buffer read.
+
+Fixes: 966a3cb7c7db ("cifs: improve fallocate emulation")
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/sata_dwc_460ex.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ fs/cifs/smb2ops.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/ata/sata_dwc_460ex.c b/drivers/ata/sata_dwc_460ex.c
-index 399d0766fd6d4c..26c3b287ac1f6f 100644
---- a/drivers/ata/sata_dwc_460ex.c
-+++ b/drivers/ata/sata_dwc_460ex.c
-@@ -650,14 +650,9 @@ static irqreturn_t sata_dwc_isr(int irq, void *dev_instance)
- 	status = ap->ops->sff_check_status(ap);
- 	dev_dbg(ap->dev, "%s ATA status register=0x%x\n", __func__, status);
+diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
+index bd4ea48e057613..51f8ea0c890658 100644
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -3553,6 +3553,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 	struct file_allocated_range_buffer in_data, *out_data = NULL, *tmp_data;
+ 	u32 out_data_len;
+ 	char *buf = NULL;
++	u64 range_start, range_len, range_end;
+ 	loff_t l;
+ 	int rc;
  
--	tag = 0;
- 	while (tag_mask) {
--		while (!(tag_mask & 0x00000001)) {
--			tag++;
--			tag_mask <<= 1;
--		}
--
--		tag_mask &= (~0x00000001);
-+		tag = __ffs(tag_mask);
-+		tag_mask &= ~(1U << tag);
- 		qc = ata_qc_from_tag(ap, tag);
+@@ -3589,13 +3590,21 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 			goto out;
+ 		}
  
- 		/* To be picked up by completion functions */
+-		if (off < le64_to_cpu(tmp_data->file_offset)) {
++		range_start = le64_to_cpu(tmp_data->file_offset);
++		range_len = le64_to_cpu(tmp_data->length);
++		if (check_add_overflow(range_start, range_len, &range_end) ||
++		    range_end > S64_MAX) {
++			rc = -EINVAL;
++			goto out;
++		}
++
++		if (off < range_start) {
+ 			/*
+ 			 * We are at a hole. Write until the end of the region
+ 			 * or until the next allocated data,
+ 			 * whichever comes next.
+ 			 */
+-			l = le64_to_cpu(tmp_data->file_offset) - off;
++			l = range_start - off;
+ 			if (len < l)
+ 				l = len;
+ 			rc = smb3_simple_fallocate_write_range(xid, tcon,
+@@ -3612,11 +3621,13 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 		 * until the end of the data or the end of the region
+ 		 * we are supposed to fallocate, whichever comes first.
+ 		 */
+-		l = le64_to_cpu(tmp_data->length);
+-		if (len < l)
+-			l = len;
+-		off += l;
+-		len -= l;
++		if (off < range_end) {
++			l = range_end - off;
++			if (len < l)
++				l = len;
++			off += l;
++			len -= l;
++		}
+ 
+ 		tmp_data = &tmp_data[1];
+ 		out_data_len -= sizeof(struct file_allocated_range_buffer);
 -- 
 2.53.0
 
