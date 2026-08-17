@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBD83EDAB8;
-	Mon, 17 Aug 2026 13:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3B73DB324;
+	Mon, 17 Aug 2026 13:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974001; cv=none; b=frrXeiyXbvWTeJ/JmjyClOWBf/FqoRam2eNcFyZ3G3/riqGc0YJs4ls2MZfG8c/ls7aIhJRN007+BnZ+nmR+HXbrMgkeRKcaUWZhxqNAQiMCNwPIyd+Q364/F9NZN84HN3BKbBP6iCsma64IqHti82gGo08u3Y99/a0bOI5WjLo=
+	t=1786974004; cv=none; b=R1VBYVARLWJdNGulRohtLJ0xqNuXv8iARyD2nV7ymmCY+NV/JENOOKq4MZtBMun0U0lR3srztSm6Evg/W5/LIZi6XyFpAZhnbfGnL2vKf/i2ppVOIxRGwb5eASVW3ldtuEFI5l6uUYXhegwDmxOiicLuA/FjDUthH/7MccsAZkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974001; c=relaxed/simple;
-	bh=LSrVfRnG17gsUgl32GbwGUUgdAA5MnQiTW4mPy7T6BM=;
+	s=arc-20240116; t=1786974004; c=relaxed/simple;
+	bh=F4BUbpfxPg26eRParZbnTZktUr27IUseOf8RD9pgJ4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DJJsw6hkpijy2EDZ1QT/hb/OhsKkVn5hxVZcYpxHqyQSoa1PrgRzqxs6K0vsug2MhXB2Qpcuz8C1ILsLsdhFTvUFci2nraeZm6rN/c1pKbBtaGBiDrb24P1hYUpknSz3TzjLEFEZaZUh/sprYP7S+TvXoDC/qllyd2U3h4WpM8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xMpkd1xS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MZIviMtthPRSqaGf3bcOwlW40BtVGmJjw4KR36rqTiyqPOlccMvS8DMcIgZ3LFypZjDxzVldYo4ban9b8yZGXqVtPSYz2vDb6+yMVm4POc2TRGPTSLeUiIJSwM1MPhoEnhjOYtie/AwBEx/ut34JiKm7vXKOuLg/pr/knBXQiUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ObJO2UR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMpkd1xS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C8C1F000E9;
-	Mon, 17 Aug 2026 13:39:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ObJO2UR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F7E1F000E9;
+	Mon, 17 Aug 2026 13:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786973999;
-	bh=BrXSrNnSP+NzRWyo8xr/4JksKhkNTdsEBBU12VpZf+M=;
+	s=korg; t=1786974002;
+	bh=NH4sHmR9WI5mErdkigQCcao5eOEjsVzey252ASflNpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xMpkd1xSMu2hWQWytER2ZM9p55dyz4d2EI5mwhMWbz5TAwvvoj+O6yhknoWIvRBx7
-	 XUpKaxNUTM1t3yoyYss7jU+05NNRB+PUxo+5UjgE+QMbq8nsBQsgA+5CymhRyyfYKo
-	 iyUYq28XiX242GM+vk5J/5P+QHVvOMl1p3ClhCEQ=
+	b=1ObJO2URqlJKU6aBe0UZY5kafk72MeJdNUw0uxeTuf+QL/zJ8zKVph95CNNvZDBYd
+	 7qndXCqZCfWKMrp7uDxUxutwW3C8AsMfmCdwbh1uvE8mFK4OJFPTvPF4mlZ0LC+h+w
+	 IhQjEJw4JEmN6161r0tLG+8e7OX0LTvBDrQauBtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zdi-disclosures@trendmicro.com,
-	Santosh Kalluri <santosh.kalluri129@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jay Vosburgh <jv@jvosburgh.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 055/271] net/sched: cls_route: fix fastmap use-after-free on filter
-Date: Mon, 17 Aug 2026 15:29:40 +0200
-Message-ID: <20260817132539.007220466@linuxfoundation.org>
+Subject: [PATCH 7.1 038/271] bonding: alb: re-check primary_is_promisc under RTNL in bond_alb_monitor
+Date: Mon, 17 Aug 2026 15:29:23 +0200
+Message-ID: <20260817132538.315666738@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -55,140 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-[ Upstream commit 47d7f7051253bdc02b1d245d87e38f16d31a74df ]
+[ Upstream commit 683c6ba6e58e6ed1037831ea97dd58d9c0e76b8d ]
 
-The route4 classifier maintains a 16-slot fastmap cache that stores raw
-struct route4_filter pointers indexed by (id, iif). The reader
-(route4_classify) populates this cache via route4_set_fastmap() for every
-classified packet that hits a filter. The writer (route4_delete,
-route4_change) clears the cache via route4_reset_fastmap() before
-RCU-deferred kfree of the filter.
+bond_alb_monitor() reads primary_is_promisc under RCU, then drops RCU and
+takes RTNL via rtnl_trylock() before undoing the promiscuity it set on the
+active slave. In that window the active slave can change under RTNL
+(RTM_DELLINK -> __bond_release_one() -> bond_alb_handle_active_change()),
+which already drops the promiscuity and clears primary_is_promisc. The
+monitor still acts on the stale decision: if the slave was removed with no
+failover, curr_active_slave is now NULL and the deref faults; if it failed
+over, the stale dev_set_promiscuity(-1) underflows the new slave's
+promiscuity counter and pins it in IFF_PROMISC.
 
-This creates a UAF race:
- 1. Reader walks the RCU-protected bucket chain, finds filter f
- 2. Writer unlinks f, calls route4_reset_fastmap(), then tcf_queue_work()
- 3. Reader calls route4_set_fastmap() and writes f into the cache
-    *after* the writer's reset, caching a pointer about to be freed
- 4. After the RCU grace period, kfree(f) executes
- 5. Next classified packet on the same (id, iif) tuple hits the stale
-    fastmap entry and reads f->res from freed memory
+  Oops: general protection fault, probably for non-canonical address ...
+  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+  Workqueue: b42 bond_alb_monitor
+  RIP: 0010:bond_alb_monitor (drivers/net/bonding/bond_alb.c:1600)
+   process_one_work (kernel/workqueue.c:3322)
+   worker_thread (kernel/workqueue.c:3486)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+  Kernel panic - not syncing: Fatal exception
 
-Reproduced with an mdelay(100) accelerator in route4_set_fastmap() and a
-concurrent add/delete stress test (provided by both zdi and Santosh).
-Both triggered KASAN slab-use-after-free reports in the route4 fastmap
-paths.
+Re-check primary_is_promisc (and curr_active_slave) after taking RTNL so
+the monitor only undoes an increment it still owns. The other bonding
+monitors already re-read state under RTNL in their commit phase
+(bond_miimon_commit/bond_ab_arp_commit); bond_alb_monitor() was the only
+one acting on the pre-trylock decision.
 
-Fix:
-Introduce a per-filter boolean dying flag to suppress stale fastmap
-republishing by in-flight readers.
-
-Fixes: 1109c00547fc ("net: sched: RCU cls_route")
-Reported-by: zdi-disclosures@trendmicro.com
-Reported-by: Santosh Kalluri <santosh.kalluri129@gmail.com>
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Tested-by: Santosh Kalluri <santosh.kalluri129@gmail.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260729094411.46257-1-jhs@mojatatu.com
+Fixes: d0e81b7e2246 ("bonding: Acquire correct locks in alb for promisc change")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Link: https://patch.msgid.link/20260725233930.2957317-1-xmei5@asu.edu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_route.c | 35 ++++++++++++++++++++++++++---------
- 1 file changed, 26 insertions(+), 9 deletions(-)
+ drivers/net/bonding/bond_alb.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
-index bd6f945bd3883..eded7aacd3f70 100644
---- a/net/sched/cls_route.c
-+++ b/net/sched/cls_route.c
-@@ -52,6 +52,7 @@ struct route4_filter {
- 	struct tcf_result	res;
- 	struct tcf_exts		exts;
- 	u32			handle;
-+	bool			dying;
- 	struct route4_bucket	*bkt;
- 	struct tcf_proto	*tp;
- 	struct rcu_work		rwork;
-@@ -66,9 +67,11 @@ static inline int route4_fastmap_hash(u32 id, int iif)
+diff --git a/drivers/net/bonding/bond_alb.c b/drivers/net/bonding/bond_alb.c
+index 2d37b07c8215c..839f7482dc182 100644
+--- a/drivers/net/bonding/bond_alb.c
++++ b/drivers/net/bonding/bond_alb.c
+@@ -1534,8 +1534,8 @@ void bond_alb_monitor(struct work_struct *work)
+ 	struct bonding *bond = container_of(work, struct bonding,
+ 					    alb_work.work);
+ 	struct alb_bond_info *bond_info = &(BOND_ALB_INFO(bond));
++	struct slave *slave, *curr;
+ 	struct list_head *iter;
+-	struct slave *slave;
  
- static DEFINE_SPINLOCK(fastmap_lock);
- static void
--route4_reset_fastmap(struct route4_head *head)
-+route4_reset_fastmap(struct route4_head *head, struct route4_filter *f)
- {
- 	spin_lock_bh(&fastmap_lock);
-+	if (f)
-+		f->dying = true;
- 	memset(head->fastmap, 0, sizeof(head->fastmap));
- 	spin_unlock_bh(&fastmap_lock);
- }
-@@ -81,9 +84,11 @@ route4_set_fastmap(struct route4_head *head, u32 id, int iif,
- 
- 	/* fastmap updates must look atomic to aling id, iff, filter */
- 	spin_lock_bh(&fastmap_lock);
--	head->fastmap[h].id = id;
--	head->fastmap[h].iif = iif;
--	head->fastmap[h].filter = f;
-+	if (f == ROUTE4_FAILURE || !f->dying) {
-+		head->fastmap[h].id = id;
-+		head->fastmap[h].iif = iif;
-+		head->fastmap[h].filter = f;
-+	}
- 	spin_unlock_bh(&fastmap_lock);
- }
- 
-@@ -297,6 +302,13 @@ static void route4_destroy(struct tcf_proto *tp, bool rtnl_held,
- 					next = rtnl_dereference(f->next);
- 					RCU_INIT_POINTER(b->ht[h2], next);
- 					tcf_unbind_filter(tp, &f->res);
-+					/* Mark the filter dying under fastmap_lock so
-+					 * any in-flight reader that still holds it
-+					 * will skip the republish in route4_set_fastmap().
-+					 */
-+					spin_lock_bh(&fastmap_lock);
-+					f->dying = true;
-+					spin_unlock_bh(&fastmap_lock);
- 					if (tcf_exts_get_net(&f->exts))
- 						route4_queue_work(f);
- 					else
-@@ -307,6 +319,11 @@ static void route4_destroy(struct tcf_proto *tp, bool rtnl_held,
- 			kfree_rcu(b, rcu);
- 		}
- 	}
-+
-+	/* All filters are unlinked and marked dying, so no in-flight
-+	 * reader can republish a stale entry after this reset.
-+	 */
-+	route4_reset_fastmap(head, NULL);
- 	kfree_rcu(head, rcu);
- }
- 
-@@ -334,11 +351,11 @@ static int route4_delete(struct tcf_proto *tp, void *arg, bool *last,
- 			/* unlink it */
- 			RCU_INIT_POINTER(*fp, rtnl_dereference(f->next));
- 
--			/* Remove any fastmap lookups that might ref filter
--			 * notice we unlink'd the filter so we can't get it
--			 * back in the fastmap.
-+			/* Clear any fastmap entries that may ref this filter and
-+			 * mark it dying so in-flight readers can't republish it
-+			 * after the reset.
+ 	if (!bond_has_slaves(bond)) {
+ 		atomic_set(&bond_info->tx_rebalance_counter, 0);
+@@ -1597,9 +1597,11 @@ void bond_alb_monitor(struct work_struct *work)
+ 			 * because a slave was disabled then
+ 			 * it can now leave promiscuous mode.
  			 */
--			route4_reset_fastmap(head);
-+			route4_reset_fastmap(head, f);
+-			dev_set_promiscuity(rtnl_dereference(bond->curr_active_slave)->dev,
+-					    -1);
+-			bond_info->primary_is_promisc = 0;
++			curr = rtnl_dereference(bond->curr_active_slave);
++			if (bond_info->primary_is_promisc && curr) {
++				dev_set_promiscuity(curr->dev, -1);
++				bond_info->primary_is_promisc = 0;
++			}
  
- 			/* Delete it */
- 			tcf_unbind_filter(tp, &f->res);
-@@ -558,7 +575,7 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
- 		}
- 	}
- 
--	route4_reset_fastmap(head);
-+	route4_reset_fastmap(head, fold);
- 	*arg = f;
- 	if (fold) {
- 		tcf_unbind_filter(tp, &fold->res);
+ 			rtnl_unlock();
+ 			rcu_read_lock();
 -- 
 2.53.0
 
