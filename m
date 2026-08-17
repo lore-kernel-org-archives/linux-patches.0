@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5554303C97;
-	Mon, 17 Aug 2026 14:09:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99CB3B811F;
+	Mon, 17 Aug 2026 14:09:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975784; cv=none; b=pp52hUBajGU0K5eNSbjC67mG7/Ai3YdV8zeLRak403ZKuCLPmyJEaC+fOTN7TCOvZOGH4vjMVHTyHaGZD8ftMIvkDsoDiCJz+vq6KVQCiLyVObXVnDJVwxCAmIe3r0YKfb6me+Zpq/7jWpzSicYdOLmgqz9UU21pAVvoHAhAVQ4=
+	t=1786975787; cv=none; b=DjHgxekfcyz/l5pgpRSQtmCbOqEMPf81epRlx+JJa+M7zp/IpSnEn62PUiHpivK5qixj/dnqGlBHS5C1HEEhoKROK3XahPD/RyouBqKBpcOwDzCtiRWNrrOvQPMDimLTH1s1cWKASGVJ610T5Jww/SU5YoaOswfoXHyHoCYlRQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975784; c=relaxed/simple;
-	bh=vu8qDqggcTy4kPnn7/rCgCGkYKlF+A22j7GE7OrtuEs=;
+	s=arc-20240116; t=1786975787; c=relaxed/simple;
+	bh=AcOFBbCOWnpe9rC20XP7UA94PpdXDKdGl/ZZToerbE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tcS5SO4dKpWFVjpfNXePfeZ98IRIJPiySYk7OKqBB411aFQt9JyL2bjpTSb7glmzsh6uQYG2ERbicofHEl0oV3OtXS6J6umVvPBJh1PBjmtY/1OO+9EscBwhpDVHQtegoEYrOPVEmpIXgH0Uw/G9BeOvMH3yE2ifIIuLnaEM9wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EX+XzbxF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mQw/Fue2o+WjWFiau0wTmN98EIRHn9VJ8y4NAmFHg3aJpbcQSX+4gvW+zxdGatzP8NFLoh+Xvw5VE6D0U/A5vhGym0KinLkAkCxVv/FnFFt90uvraKwWEbDEcJy6oue3VFEtJyJSSTSXiuMk5zvFSwjBtDEfuWhNBqztjGIGnTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o13PylKA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EX+XzbxF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26DBD1F000E9;
-	Mon, 17 Aug 2026 14:09:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o13PylKA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0943B1F000E9;
+	Mon, 17 Aug 2026 14:09:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975782;
-	bh=DpJToKsjNX7kVM3a8NXV6613j273mpPC5xdOCMpkDww=;
+	s=korg; t=1786975785;
+	bh=jYEqeLfL1Y1MlLLC0GMjlczV3T7Jm2UnAT6ZI4rBoy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EX+XzbxF2cZGAcFjgqoKDeJRMz4MWNVDuIspz7MwHW3wEhoRlZNZSRxOzUC5YwfJ/
-	 rclyN2kK1u2FI67dt5RivPEh+oJvl3zLgSNYyM5H5c0AXIwMtmsR7NrfBYCZ9WMtqF
-	 r957PtQBXcQZP23Zpy1ptkcLz4MqKFl85AdSk7e0=
+	b=o13PylKAqfR+oaMz5PwP8KhGnQ1v2HDdnFKCgrOiME9vSXaEbe9Zi/RZdSIsgf8pp
+	 qvPQEO3iiMFPosdgGbsafFdEMfguMOMSpuFuZW3YcoXHxM75jWEIxalt+guxo4JE5D
+	 mcKyrjWkuGTeGzC7Nm/z3/P6VgmuPb7Uou3V7nKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.10 146/389] Bluetooth: RFCOMM: Fix session UAF in set_termios
-Date: Mon, 17 Aug 2026 15:29:45 +0200
-Message-ID: <20260817132544.859226335@linuxfoundation.org>
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 111/389] can: bcm: validate frame length in bcm_rx_setup() for RTR replies
+Date: Mon, 17 Aug 2026 15:29:10 +0200
+Message-ID: <20260817132543.512977238@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -50,128 +52,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit c783399efc22d035443f1dfbf2a09bf9562aaa5e upstream.
+commit 62ec41f364648be79d54d94d0d240ee326948afd upstream.
 
-rfcomm_tty_set_termios() tests dlc->session without rfcomm_mutex and
-later passes the pointer to rfcomm_send_rpn(). The latter dereferences
-both session->initiator and session->sock. Meanwhile, krfcommd can
-unlink the DLC and free the session while holding rfcomm_mutex.
+bcm_tx_setup() validates cf->len against the CAN/CAN FD DLC limits
+before installing frames for TX_SETUP, but bcm_rx_setup() never did
+the same for the RTR-reply frame configured via RX_SETUP with
+RX_RTR_FRAME.
 
-The race can proceed as follows:
-
-  TTY ioctl task                 krfcommd
-  --------------                 --------
-  load dlc->session
-  enter rfcomm_send_rpn()
-                                 lock rfcomm_mutex
-                                 clear dlc->session
-                                 free session
-                                 unlock rfcomm_mutex
-  read session->initiator
-
-KASAN reported:
-
-  BUG: KASAN: slab-use-after-free in rfcomm_send_rpn+0x297/0x2a0
-  Read of size 4 at addr ffff88810012a850 by task poc/92
-
-  Call Trace:
-   rfcomm_send_rpn+0x297/0x2a0
-   rfcomm_tty_set_termios+0x50d/0x850
-   tty_set_termios+0x596/0x950
-   set_termios+0x46a/0x6e0
-   tty_mode_ioctl+0x152/0xbd0
-   tty_ioctl+0x915/0x1240
-   __x64_sys_ioctl+0x134/0x1c0
-
-  Allocated by task 92:
-   rfcomm_session_add+0x9e/0x2e0
-   rfcomm_dlc_open+0x8b1/0xe00
-   rfcomm_dev_activate+0x85/0x1a0
-   rfcomm_tty_open+0x90/0x280
-
-  Freed by task 68:
-   kfree+0x131/0x3c0
-   rfcomm_session_del+0x119/0x180
-   rfcomm_run+0x737/0x4710
-
-Add rfcomm_dlc_send_rpn(), which holds rfcomm_mutex while it verifies
-that the DLC is still attached and sends the RPN frame. Have the TTY
-path use the helper and drop its unlocked session check. This keeps the
-session valid through both the frame construction and socket send.
-
-Fixes: 3a5e903c09ae ("[Bluetooth]: Implement RFCOMM remote port negotiation")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260714-bcm_fixes-v15-7-562f7e3e42da@hartkopp.net
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/rfcomm.h |    3 +++
- net/bluetooth/rfcomm/core.c    |   17 +++++++++++++++++
- net/bluetooth/rfcomm/tty.c     |    7 +++----
- 3 files changed, 23 insertions(+), 4 deletions(-)
+ net/can/bcm.c | 59 +++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 41 insertions(+), 18 deletions(-)
 
---- a/include/net/bluetooth/rfcomm.h
-+++ b/include/net/bluetooth/rfcomm.h
-@@ -229,6 +229,9 @@ int rfcomm_send_rpn(struct rfcomm_sessio
- 			u8 bit_rate, u8 data_bits, u8 stop_bits,
- 			u8 parity, u8 flow_ctrl_settings,
- 			u8 xon_char, u8 xoff_char, u16 param_mask);
-+int rfcomm_dlc_send_rpn(struct rfcomm_dlc *d, u8 bit_rate, u8 data_bits,
-+			u8 stop_bits, u8 parity, u8 flow_ctrl_settings,
-+			u8 xon_char, u8 xoff_char, u16 param_mask);
- 
- /* ---- RFCOMM DLCs (channels) ---- */
- struct rfcomm_dlc *rfcomm_dlc_alloc(gfp_t prio);
---- a/net/bluetooth/rfcomm/core.c
-+++ b/net/bluetooth/rfcomm/core.c
-@@ -1027,6 +1027,23 @@ int rfcomm_send_rpn(struct rfcomm_sessio
- 	return rfcomm_send_frame(s, buf, ptr - buf);
+diff --git a/net/can/bcm.c b/net/can/bcm.c
+index 93552b65c00ee4..d74c5d1e29358f 100644
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -1194,22 +1194,37 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 	return err;
  }
  
-+int rfcomm_dlc_send_rpn(struct rfcomm_dlc *d, u8 bit_rate, u8 data_bits,
-+			u8 stop_bits, u8 parity, u8 flow_ctrl_settings,
-+			u8 xon_char, u8 xoff_char, u16 param_mask)
-+{
-+	int err = -ENOTCONN;
-+
-+	rfcomm_lock();
-+	if (d->session)
-+		err = rfcomm_send_rpn(d->session, 1, d->dlci, bit_rate,
-+				      data_bits, stop_bits, parity,
-+				      flow_ctrl_settings, xon_char, xoff_char,
-+				      param_mask);
-+	rfcomm_unlock();
-+
-+	return err;
-+}
-+
- static int rfcomm_send_rls(struct rfcomm_session *s, int cr, u8 dlci, u8 status)
+-static void bcm_rx_setup_rtr_check(struct bcm_msg_head *msg_head,
+-				   struct bcm_op *op, void *new_frames)
++static int bcm_rx_setup_rtr_check(struct bcm_msg_head *msg_head,
++				  struct bcm_op *op, void *new_frames)
  {
- 	struct rfcomm_hdr *hdr;
---- a/net/bluetooth/rfcomm/tty.c
-+++ b/net/bluetooth/rfcomm/tty.c
-@@ -866,7 +866,7 @@ static void rfcomm_tty_set_termios(struc
++	struct canfd_frame *frame0 = new_frames;
++
++	if (!(msg_head->flags & RX_RTR_FRAME))
++		return 0;
++
++	/* this frame is sent out as-is by bcm_can_tx() whenever a matching
++	 * remote request is received, so validate its length the same way
++	 * bcm_tx_setup() validates TX_SETUP frames before installing it
++	 */
++	if (msg_head->flags & CAN_FD_FRAME) {
++		if (frame0->len > 64)
++			return -EINVAL;
++	} else {
++		if (frame0->len > 8)
++			return -EINVAL;
++	}
++
+ 	/* funny feature in RX(!)_SETUP only for RTR-mode:
+ 	 * copy can_id into frame BUT without RTR-flag to
+ 	 * prevent a full-load-loopback-test ... ;-]
+ 	 * normalize this on the staged buffer, before it is
+ 	 * ever installed into op->frames.
+ 	 */
+-	if (msg_head->flags & RX_RTR_FRAME) {
+-		struct canfd_frame *frame0 = new_frames;
++	if ((msg_head->flags & TX_CP_CAN_ID) ||
++	    frame0->can_id == op->can_id)
++		frame0->can_id = op->can_id & ~CAN_RTR_FLAG;
  
- 	BT_DBG("tty %p termios %p", tty, old);
+-		if ((msg_head->flags & TX_CP_CAN_ID) ||
+-		    frame0->can_id == op->can_id)
+-			frame0->can_id = op->can_id & ~CAN_RTR_FLAG;
+-	}
++	return 0;
+ }
  
--	if (!dev || !dev->dlc || !dev->dlc->session)
-+	if (!dev || !dev->dlc)
- 		return;
+ /*
+@@ -1272,7 +1287,11 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 				return err;
+ 			}
  
- 	/* Handle turning off CRTSCTS */
-@@ -987,9 +987,8 @@ static void rfcomm_tty_set_termios(struc
+-			bcm_rx_setup_rtr_check(msg_head, op, new_frames);
++			err = bcm_rx_setup_rtr_check(msg_head, op, new_frames);
++			if (err < 0) {
++				kfree(new_frames);
++				return err;
++			}
+ 		}
+ 
+ 		spin_lock_bh(&op->bcm_rx_update_lock);
+@@ -1345,16 +1364,12 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 		if (msg_head->nframes) {
+ 			err = memcpy_from_msg(op->frames, msg,
+ 					      msg_head->nframes * op->cfsiz);
+-			if (err < 0) {
+-				if (op->frames != &op->sframe)
+-					kfree(op->frames);
+-				if (op->last_frames != &op->last_sframe)
+-					kfree(op->last_frames);
+-				kfree(op);
+-				return err;
+-			}
++			if (err < 0)
++				goto free_op;
+ 
+-			bcm_rx_setup_rtr_check(msg_head, op, op->frames);
++			err = bcm_rx_setup_rtr_check(msg_head, op, op->frames);
++			if (err < 0)
++				goto free_op;
+ 		}
+ 
+ 		/* bcm_can_tx / bcm_tx_timeout_handler needs this */
+@@ -1456,6 +1471,14 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
  	}
  
- 	if (changes)
--		rfcomm_send_rpn(dev->dlc->session, 1, dev->dlc->dlci, baud,
--				data_bits, stop_bits, parity,
--				RFCOMM_RPN_FLOW_NONE, x_on, x_off, changes);
-+		rfcomm_dlc_send_rpn(dev->dlc, baud, data_bits, stop_bits, parity,
-+				    RFCOMM_RPN_FLOW_NONE, x_on, x_off, changes);
+ 	return msg_head->nframes * op->cfsiz + MHSIZ;
++
++free_op:
++	if (op->frames != &op->sframe)
++		kfree(op->frames);
++	if (op->last_frames != &op->last_sframe)
++		kfree(op->last_frames);
++	kfree(op);
++	return err;
  }
  
- static void rfcomm_tty_throttle(struct tty_struct *tty)
+ /*
+-- 
+2.53.0
+
 
 
