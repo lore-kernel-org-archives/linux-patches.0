@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4E8439F71;
-	Mon, 17 Aug 2026 14:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B340F42EEDD;
+	Mon, 17 Aug 2026 14:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978603; cv=none; b=nEBhk/uXfIC5kHImeW8Gbp46weTUcIMu0hZ3ML/nZH56IKpQUwdVta7FANK1TEUbQTP1QiS/c93ydqSR9LqeDMKQMkAiYoARraoGrT7rVUvabccp5AoJ3Mv2aDClAobZyAIMXYvIANUTZwXILtILBy8sPPwE7beJn75BkTFfcp8=
+	t=1786978606; cv=none; b=OcYq6Ybb1aLmGOC/IPFBHqHgtk7+rHUqmPN16j9htJyLZywp0+YdGEXSHr58ip0wiDDe1uVDPmm4ffFHmgLOI1xoOOLLzGVHKaGVdisacgqdTNnkDTgMF1Xwje5aB1ptKF3ppQZ4BxHfGHc4G9NauxqMxP6QQ9dA/6+10iAGY3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978603; c=relaxed/simple;
-	bh=XZsYzUlMkpeAdCpQj9VqR/AWgKwiQMBXi98raS5d2O4=;
+	s=arc-20240116; t=1786978606; c=relaxed/simple;
+	bh=NihzJJ98bd1BCMvO0f6ot60n0OWHUiAZBEo7E/YSr10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aQmejolqkoTfA0LJ6jgAQsDNpQqrhOSGtDRirgnaF6jID23HvRkttpqoPHbodP10KLrLT/uNJnRpJKRcsMp2rM0NZ8moOxU7hoZ0n4N/GR81FvTVq7V/7usJ+f3s6bAa/WesiCyNS+uvUWYJIs9LYYyUY3PofpxKH4ElC3pgIWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wf32PADQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dpaR1xDWp2xaVFI3NmRVO3xXM6XcxEcoFydKXMFhXowE5EBjQ3p+L4g1u/9vJW3Kux2KXlanNWbv01Lw00m3AZzgn65OQ7ODZZQPpfPtpXA0BtTzf+9q1AQC1zH7Xf+QBWtmOuTXYS4VYad7dc/P3uOdy9c5/nMK3qey0a1Z87A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rq5GSB6w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wf32PADQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF0C1F000E9;
-	Mon, 17 Aug 2026 14:56:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rq5GSB6w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197291F000E9;
+	Mon, 17 Aug 2026 14:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978601;
-	bh=2/W0dcxvb1JyhXF5laFKkYJSGVnYLqt3iDuQB1XW5vY=;
+	s=korg; t=1786978604;
+	bh=Z5gut4cW77GXBKmPxM2P4ABbFXoE4MR2fA0ji5MLABo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wf32PADQ+J4wY0nYIEuzSJyVdSFTdlkOdlR9vDEr/J9FedeAoank7p3AdVm2T9X9N
-	 h3NePy3elhVs+/tZZQhZ56REPFUIYK/mjl/EdYiMOc1FORellcPQzEKKlVHqnnKQvd
-	 8QjXk5lN9d0Yx7/zPeiv89IXhKIdNXBg6lyyP6OQ=
+	b=Rq5GSB6wO2KRl+h6HUy4n0XOJzU2719ja1aV3OqofgMkHQTihj2QKhOizVnycFw5b
+	 lb9nAhiR9iWFEByNeWZA0cc7X3jwS2ZBEEhbxyjDUUF3CF3Xet3Iyle8QamT1RkuqU
+	 QCtGheomakRGakaxwxkBqONBSSbKZ1J/RLrzHLOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Harshal Dev <harshal.dev@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Keno Fischer <keno@juliahub.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 094/156] dt-bindings: crypto: qcom,ice: Fix missing power-domain and iface clk
-Date: Mon, 17 Aug 2026 15:33:48 +0200
-Message-ID: <20260817132538.296283688@linuxfoundation.org>
+Subject: [PATCH 6.6 095/156] futex: Prevent robust futex exit race some more
+Date: Mon, 17 Aug 2026 15:33:49 +0200
+Message-ID: <20260817132538.335201852@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -53,67 +52,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshal Dev <harshal.dev@oss.qualcomm.com>
+From: Keno Fischer <keno@juliacomputing.com>
 
-[ Upstream commit e27264daac7d9ce892a2a5b4a864d6d9a3c9276a ]
+commit 6d4514ca9cdf61fec4ec634cf50386f6f7e69748 upstream.
 
-The DT bindings for inline-crypto engine do not specify the UFS_PHY_GDSC
-power-domain and iface clock. Without enabling the iface clock and the
-associated power-domain the ICE hardware cannot function correctly and
-leads to unclocked hardware accesses being observed during probe.
+A robust futex unlock stores 0 over the whole futex value - wiping
+FUTEX_WAITERS - and wakes a single waiter. That wakeup is a one-shot
+notification: the protocol relies on its recipient to either acquire the
+futex (and eventually unlock while aware of the remaining contention) or
+re-arm FUTEX_WAITERS before sleeping again.  If the woken waiter is killed
+before it can do either, the kernel must jump in and wake the next task
+down the line.
 
-Extend and fix the DT bindings for inline-crypto engine by allowing
-description of the iface clock and UFS_PHY_GDSC power-domain.
+This is a known complication of the futex protocol with a previous
+partial fix in commit ca16d5bee598 ("futex: Prevent robust futex exit
+race"). Unfortunately, that fix is insufficient.
 
-This patch has been adapted from the mentioned upstream commit to drop
-references to Eliza and Milos Qualcomm platforms which do not exist
-on the stable tree. Thus, patch now fixes the original commit which
-introduced the DT binding for Qualcomm inline-crypto engine.
+If a third task re-acquired the futex through the uncontended fast
+path in the meantime, the notification is lost: robust exit processing
+sees that it is owned by another task and does nothing, while the new
+owner sees no FUTEX_WAITERS when it unlocks and wakes nobody.
+The remaining waiters sleep forever behind a free futex:
 
-Fixes: f6ff91a47ac5 ("dt-bindings: crypto: Add Qualcomm Inline Crypto Engine")
-Reviewed-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260416-qcom_ice_power_and_clk_vote-v5-1-5ccf5d7e2846@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+  A owns the futex, B and C sleep in FUTEX_WAIT
+                                        uval == A | FUTEX_WAITERS
+  A robust unlock: store 0, FUTEX_WAKE(1) wakes B
+                                        uval == 0
+  D fast path acquire: cmpxchg(0 -> D)
+                                        uval == D, no FUTEX_WAITERS
+  B killed before acting on the wakeup
+  B exit walk, pending op: owner D != B -> no action
+  D unlock: no FUTEX_WAITERS -> no wake
+                                        C sleeps forever
+
+This is clearly a shortcoming in the implementation, which fails to keep
+the FUTEX_WAITERS bit consistent.
+
+Work around this by augmenting the robust list exit processing to also
+perform the extra wakeup if the futex word is owned by another thread but
+FUTEX_WAITERS is not set.
+
+This does not fix the problem of a non-contended take over/release and free
+sequence, which has been discussed for years and has been addressed by
+commit 3ca9595d9fb6 ("futex: Add support for unlocking robust futexes") and
+subsequent changes, but failed to take the problem described above into
+account.
+
+A more complete solution which is based on the in kernel unlock of
+contended robust futexes has been discussed in the context of this change
+and should show up in mainline sooner than later.
+
+[ tglx: Amend change log slightly and fixup coding style ]
+
+Fixes: ca16d5bee598 ("futex: Prevent robust futex exit race")
+Signed-off-by: Keno Fischer <keno@juliahub.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Assisted-by: ClaudeCode:claude-fable-5 tla+
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260730194705.38981-1-keno@juliacomputing.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../crypto/qcom,inline-crypto-engine.yaml        | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ kernel/futex/core.c | 82 +++++++++++++++++++++++++++++++--------------
+ 1 file changed, 56 insertions(+), 26 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
-index 7da9aa82d8374..69731ff62c653 100644
---- a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
-+++ b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
-@@ -21,6 +21,16 @@ properties:
-     maxItems: 1
+diff --git a/kernel/futex/core.c b/kernel/futex/core.c
+index f30a93e50f65e..660d7061740b8 100644
+--- a/kernel/futex/core.c
++++ b/kernel/futex/core.c
+@@ -660,8 +660,11 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
+ 		return -1;
  
-   clocks:
-+    minItems: 1
-+    maxItems: 2
-+
-+  clock-names:
-+    minItems: 1
-+    items:
-+      - const: core
-+      - const: iface
-+
-+  power-domains:
-     maxItems: 1
+ 	/*
+-	 * Special case for regular (non PI) futexes. The unlock path in
+-	 * user space has two race scenarios:
++	 * Special case for regular (non PI) futexes. Ordinarily, we do
++	 * not perform any processing here unless the current thread was
++	 * the owner of the futex (by the TID check below).
++	 *
++	 * However, the unlock path has three race scenarios:
+ 	 *
+ 	 * 1. The unlock path releases the user space futex value and
+ 	 *    before it can execute the futex() syscall to wake up
+@@ -670,41 +673,68 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
+ 	 * 2. A woken up waiter is killed before it can acquire the
+ 	 *    futex in user space.
+ 	 *
+-	 * In the second case, the wake up notification could be generated
+-	 * by the unlock path in user space after setting the futex value
+-	 * to zero or by the kernel after setting the OWNER_DIED bit below.
++	 * 3. A woken up waiter is killed in user space after another
++	 *    thread has acquired the futex, but before it can set
++	 *    FUTEX_WAITERS.
++	 *
++	 * Note that, if userspace uses the FUTEX_ROBUST_UNLOCK flag, we
++	 * will not see case 1 here.
++	 *
++	 * In the second and third case, the wake up notification could
++	 * be generated from any of:
++	 *
++	 *    i.   An ordinary futex wakeup after unlock (with or
++	 *         without FUTEX_ROBUST_UNLOCK)
++	 *    ii.  A robust wakeup from another thread's death
++	 *    iii. A previous round through this special case
++	 *
++	 * As a result, the futex world will be in one of four states:
+ 	 *
+-	 * In both cases the TID validation below prevents a wakeup of
+-	 * potential waiters which can cause these waiters to block
+-	 * forever.
++	 *    A. The futex word is 0 (unlocked)
++	 *    B. The futex word is owned by another thread
++	 *       (FUTEX_WAITERS is not set)
++	 *    C. The futex word is owned by another thread
++	 *       (FUTEX_WAITERS set)
++	 *    D. The futex's owner died and OWNER_DIED is set
++	 *       (the owner part of the word is 0)
+ 	 *
+-	 * In both cases the following conditions are met:
++	 * The key issue is that the kernel usually (at least from
++	 * sources ii. and iii. or when so requested by userspace from
++	 * source i.) only ever wakes *one* waiter at a time. If this
++	 * waiter dies before acquiring the futex (or setting the
++	 * FUTEX_WAITERS bit), the kernel *must* still wake the next
++	 * waiter down the line to uphold the futex invariants and
++	 * avoid lost wakeups. Note we do not need to handle state C,
++	 * as it does not matter to us whether *we* successfully set
++	 * the bit or a third thread did so in the meantime.
+ 	 *
+-	 *	1) task->robust_list->list_op_pending != NULL
+-	 *	   @pending_op == true
+-	 *	2) The owner part of user space futex value == 0
++	 * Therefore, in these cases we must issue an additional
++	 * futex_wake(). Note however that we *must not* set OWNER_DIED
++	 * here. Our thread is *not* the owner of the futex.
++	 *
++	 * Thus to summarize, the conditions for needing the additional
++	 * futex_wake() are:
++	 *
++	 *	1) @pending_op == true (the thread has not finished the
++	 *	   mutex operation)
++	 *	2) The futex word is in one of the states A, B or D
+ 	 *	3) Regular futex: @pi == false
+ 	 *
+-	 * If these conditions are met, it is safe to attempt waking up a
+-	 * potential waiter without touching the user space futex value and
+-	 * trying to set the OWNER_DIED bit. If the futex value is zero,
+-	 * the rest of the user space mutex state is consistent, so a woken
+-	 * waiter will just take over the uncontended futex. Setting the
+-	 * OWNER_DIED bit would create inconsistent state and malfunction
+-	 * of the user space owner died handling. Otherwise, the OWNER_DIED
+-	 * bit is already set, and the woken waiter is expected to deal with
+-	 * this.
++	 * Note in particular that in all of the states A-D the owner
++	 * portion of the futex word differs from our thread's TID
++	 * (unless the actual owner has the same TID in another PID
++	 * namespace, but we cannot currently distinguish that
++	 * scenario), so this can be a special-case wakeup in the bail
++	 * path of the ordinary TID check.
+ 	 */
+ 	owner = uval & FUTEX_TID_MASK;
  
- required:
-@@ -38,6 +48,10 @@ examples:
-       compatible = "qcom,sm8550-inline-crypto-engine",
-                    "qcom,inline-crypto-engine";
-       reg = <0x01d88000 0x8000>;
--      clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-+      clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>,
-+               <&gcc GCC_UFS_PHY_AHB_CLK>;
-+      clock-names = "core",
-+                    "iface";
-+      power-domains = <&gcc UFS_PHY_GDSC>;
-     };
- ...
+-	if (pending_op && !pi && !owner) {
+-		futex_wake(uaddr, 1, 1, FUTEX_BITSET_MATCH_ANY);
++	if (owner != task_pid_vnr(curr)) {
++		if (pending_op && !pi && (!owner || !(uval & FUTEX_WAITERS)))
++			futex_wake(uaddr, 1, 1, FUTEX_BITSET_MATCH_ANY);
+ 		return 0;
+ 	}
+ 
+-	if (owner != task_pid_vnr(curr))
+-		return 0;
+-
+ 	/*
+ 	 * Ok, this dying thread is truly holding a futex
+ 	 * of interest. Set the OWNER_DIED bit atomically
 -- 
 2.53.0
 
