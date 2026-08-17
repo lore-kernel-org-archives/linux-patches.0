@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BDAD4418FF;
-	Mon, 17 Aug 2026 15:18:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C262442B17;
+	Mon, 17 Aug 2026 15:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979906; cv=none; b=DJG8Ut3vV3Wfeq3Cof4CnzaScR3Bf+8F0X7WLCS2wmJDjzpWGuPvrNkAuI/I1UVnwR5Fs2ezlcJQlIkv3pZnXJwAqNJLqfLJdY8xsAbcUpzzJixOf1SrpfzLHqTawRUL9Ijpqqj2qPI15nqol/lXe/torgi/5hu3GBkI+eU90Rk=
+	t=1786979909; cv=none; b=eB6mbbpaxggLH8/zbRh5ZQ0T77NjBEiJvH8pUoI21qsLiVor9wonF4hXsyYZnARF9fXI6VgYxh0it/QL5/9I3KBv9F7BKVYIuU3a+V7Rr9lHWG7CKUd3DzpnA0sfi5TW6IfmIfH5b1uLWxsHnh1QzqGXsYZjzABsd6gIWed8Eao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979906; c=relaxed/simple;
-	bh=2pRskpz9ZFHqktziPOIDln5+4KGHNCG5TrEV4C0GzfQ=;
+	s=arc-20240116; t=1786979909; c=relaxed/simple;
+	bh=cPExOP8ltOLY32naILBXvtQjrn3FDSE8XrKdNEdm9jM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K2hniKpKSNXB8gefLA5jAZCFMcYjtp2H6apd1ysdtCISxCAMC9Mv5MUku6qOPMDafehm+Hda1tPjlNB7YS4d0reZpl5KTljLZB6BesO/F+qq7DX0fnXu25kjGzIZMp4gV7zeJ4fCbUbiir2KcGezANQ5IG+LcbxwPuyPDXo70Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udVEUUQl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oQTEhCT9nlKRX2lxGza317BvkmHCrdyeSafCnF43Hh9Srv6R+sN02C/uG3CM1V5ueh5CW8n6Iy8Wog+l2cdUp23YE3GBWPSBINNqi08cwyr1XVBhWc6u1EEdeaQzV5NGB1kGh+Kvyz64AK7rJ8+VENhOsGlAeq7rNm+8b2g8d6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R15pY1q5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udVEUUQl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973621F00A3A;
-	Mon, 17 Aug 2026 15:18:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R15pY1q5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D1321F000E9;
+	Mon, 17 Aug 2026 15:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979905;
-	bh=gVrqLhIJjkavSM/MU/8vnnPx17xiguPtvE4OJA9Vxfg=;
+	s=korg; t=1786979908;
+	bh=SYz22I/IfTEt18UiJCbWkf2hPvEAk1/Y07aY0riM768=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=udVEUUQlUHfHdSD8A6y9gTQSA2eO4TBCJ0fA4r4SkFTN0YejJY0OjlyFmjT5/oVPl
-	 zWa5798XXkqpfrE8YwPkhjEBraNpmNs55jeiJ7oXev1FCgkqS+bvVHYtWETrs1HBRG
-	 apzYFnfHfhEk+5yT8QNUImuvzO3GuIavqV5ykZlA=
+	b=R15pY1q5baEX2qolJ+AQTWZDjeF96jcXelZIS71qWvoc6PORo54EsyutMsC+Lnoan
+	 zniSnEhAEdApBRoKur0IEL1KNmTr5O/I+3sO3rMc395TBJM/sWl6yLzOJz7dDr+jYG
+	 dChrIiwrcE+7OhL5fUjooDBUpOoYkYYg5zANS7yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 361/609] hwmon: (adt7470) Fix PWM auto temp state array and bounds check
-Date: Mon, 17 Aug 2026 15:30:57 +0200
-Message-ID: <20260817132556.365610316@linuxfoundation.org>
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Farhan Ali <alifm@linux.ibm.com>
+Subject: [PATCH 6.1 388/609] KVM: s390: pci: Reject adapter interrupt forwarding if already enabled
+Date: Mon, 17 Aug 2026 15:31:24 +0200
+Message-ID: <20260817132557.233101694@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,57 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+From: Farhan Ali <alifm@linux.ibm.com>
 
-[ Upstream commit 92413f439d1ec5e55b73ede8d66a7b971cbd1ced ]
+commit 8fa01be5a6149404adb82c0979a78f6347edd3ef upstream.
 
-In pwm_auto_temp_store(), the parsed user input was missing bounds
-checks, allowing values > 0xF to overflow into the adjacent channel's
-bits. Furthermore, the value was being incorrectly written to the
-pwm_automatic state array instead of pwm_auto_temp.
+The MPCIFC instruction doesn't allow registering adapter interrupts without
+first unregistering. So reject any request to enable interrupt forwarding
+if its already enabled for the zPCI device. This also fixes overwriting and
+thus leaking resources when the ioctl is called multiple times for the same
+device.
 
-Fix this by rejecting values > 0xF with -EINVAL, and assigning the
-value to the correct array only after a successful I2C write.
-
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260727034932.0B7C41F000E9@smtp.kernel.org/#t
-Fixes: 6f9703d0be16 ("hwmon: add support for adt7470")
-Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-8-598e38a46ba6@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3c5a1b6f0a18 ("KVM: s390: pci: provide routines for enabling/disabling interrupt forwarding")
+Cc: stable@vger.kernel.org
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/adt7470.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/s390/kvm/pci.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
-index 8010ed6f86a18..9783593a1de76 100644
---- a/drivers/hwmon/adt7470.c
-+++ b/drivers/hwmon/adt7470.c
-@@ -1057,8 +1057,10 @@ static ssize_t pwm_auto_temp_store(struct device *dev,
- 	if (temp < 0)
- 		return temp;
+--- a/arch/s390/kvm/pci.c
++++ b/arch/s390/kvm/pci.c
+@@ -239,6 +239,10 @@ static int kvm_s390_pci_aif_enable(struc
+ 	if (zdev->gisa == 0)
+ 		return -EINVAL;
  
-+	if (temp > 0xF)
++	/* AIF already enabled for the device */
++	if (zdev->kzdev->fib.fmt0.aibv != 0)
 +		return -EINVAL;
 +
- 	mutex_lock(&data->lock);
--	data->pwm_automatic[attr->index] = temp;
+ 	kvm = zdev->kzdev->kvm;
+ 	msi_vecs = min_t(unsigned int, fib->fmt0.noi, zdev->max_msi);
  
- 	if (!(attr->index % 2)) {
- 		mask = 0xF0;
-@@ -1069,6 +1071,9 @@ static ssize_t pwm_auto_temp_store(struct device *dev,
- 	}
- 
- 	err = regmap_update_bits(data->regmap, pwm_auto_reg, mask, val);
-+	if (!err)
-+		data->pwm_auto_temp[attr->index] = temp;
-+
- 	mutex_unlock(&data->lock);
- 
- 	return err < 0 ? err : count;
--- 
-2.53.0
-
 
 
