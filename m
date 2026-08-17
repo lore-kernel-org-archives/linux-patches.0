@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA15317144;
-	Mon, 17 Aug 2026 13:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39ABD2C237E;
+	Mon, 17 Aug 2026 13:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975149; cv=none; b=piEpejuojOWfZr/RqbSzN/AbKcdqM7HnE5KvoRzvtzRsKZ3Ce/6swk6icoecsKtzevjTO2rDUi7p+pXSjEKugJZq+Tgd16Ogn2Ev7lvXOpo8Znq7NjoRU+fwzzvZWIH45baH4sP6SHgziZi6nH520T315PriAXzNRVrBGlLTuDY=
+	t=1786975152; cv=none; b=s9wcx6t/Y5YSkVO/xosJJFI/EpX27tuziBTEQiaBuBrYGgzv5tfyH80Mq2WSFdBNH2rrO7+PPZV4lboOlnZoE800/9CPV9PS6Shrb7ltXfUYcZW2O/kN9OOGWq8lRBtM03vpUzw+hkE0kEiMzuwPQxqeVtMOKLTH4sVNllbR1mg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975149; c=relaxed/simple;
-	bh=D5tBrHKucJayY8CLbriicWQgknsL+37Ywp1LQn19JZ8=;
+	s=arc-20240116; t=1786975152; c=relaxed/simple;
+	bh=r0y0xEGWf2zLiAwZ8p4OW+dCpybpBcfM1YSRiJaUguU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cz+LWMXSLw3OMsmt6SX8/YM0eiogLrMwREyZ2NeM9gj88VaBAZn8/zlYdm9lalp5k1rlWrXpU67Shr8VEDJ3V5LaQfIbswywgwqbkZ2jm6+lopzNYkV9YrMUG+s2U6L04JrFNUfT11oNr1CvNEIMJZvVGfFTabpZFfr2urYxZHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OuogYsbn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r2DqwOmBuJM49Zq+7nzpIIzw1/S1QjJYw18E7FX+2pt2ezdBTYL5jOFN38cOI2fNw0JYtQOgdqzJZFFXnqiGQrB4db5GDFCug+QEjRWGnPwDYiATSELbGcKpiDq+UXT2LYRrv9r3Bumvr4KRtQI3Wyi0dXvapZKY+Y0iRr6oLzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcn/GVCL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OuogYsbn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4CD1F000E9;
-	Mon, 17 Aug 2026 13:59:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcn/GVCL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9023B1F000E9;
+	Mon, 17 Aug 2026 13:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975148;
-	bh=bcJEPo5yO9TAzXbjsIeYLtwY559bW4HfJiMT9ThuWag=;
+	s=korg; t=1786975151;
+	bh=vbZ7JJuyO/OBl9v/4sPqTffuiJTVxdREs2Xne1At0KQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OuogYsbnk0NLVC7zewIUVI21ol6JzzHYQs4jdyixNRyYL9ohUWpRfKj9yXzKPeLbk
-	 qKtSNLi0mfUQio3idxM6OLXIjVnXsW5PmMyovapfrpWxrfBroKxX5sXvpd+AeFid3R
-	 XCZ1ykJX1t7ey+ZruCbuynkgIr26itpWhNLxcTEY=
+	b=hcn/GVCLYv2jO9J+Cn1C8IYgf3m5L9uuEOhqbR8e++xdfP5n8gqE+39a/1rjmzUav
+	 hynN2r97lS53Z9bC3qMbxQAhMDYw7DdA9GxNHVuMNoh166zyYXC2YwMBJRbt91HzIk
+	 Rhv5EatDsnc6gm+LSrmD1XoLPXgArQ+qzAefQ3lM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.18 179/250] ring-buffer: Fix crash passing ERR_PTR to kthread_stop()
-Date: Mon, 17 Aug 2026 15:32:20 +0200
-Message-ID: <20260817132543.908830151@linuxfoundation.org>
+	SJ Park <sj@kernel.org>,
+	liyouhong <liyouhong@kylinos.cn>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 180/250] mm/damon/ops-common: putback folios on invalid migrate nid
+Date: Mon, 17 Aug 2026 15:32:21 +0200
+Message-ID: <20260817132543.946925031@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,61 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: liyouhong <liyouhong@kylinos.cn>
 
-commit 91542863abade2fd4f2b361991f5386ad9d19c8c upstream.
+commit 5deb65c34e682e7c5f5df417a70e223e8fcc5f5a upstream.
 
-In test_ringbuffer()'s out_free cleanup loop, the check
-`!rb_threads[cpu]` only catches NULL entries and misses entries that
-hold an ERR_PTR.
+damon_pa_migrate() and damos_va_migrate() isolate folios into a local list
+and then call damon_migrate_pages().  When target_nid is invalid
+(including the scheme default NUMA_NO_NODE / -1), damon_migrate_pages()
+returns early without putting the folios back to the LRU.
 
-rb_threads[] is static, so unassigned slots are NULL. But when
-kthread_run_on_cpu() fails for a cpu, it stores ERR_PTR(-ENOMEM) (or
--EINTR) in rb_threads[cpu] before the creation loop jumps to out_free.
-That entry is non-NULL, so the old `!ptr` check does not break, and the
-cleanup proceeds to call kthread_stop() on the ERR_PTR. kthread_stop()
-then dereferences the bogus pointer, crashing the kernel during the
-late_initcall self-test.
+Callers then discard the list head while those folios remain isolated with
+an extra reference taken by folio_isolate_lru().  The pages stay off the
+LRU for as long as the mapping exists (anon active+inactive counts drop
+while RSS does not), and the leftover references can pin the pages after
+the mapping is gone.
 
-crash logs:
-  BUG: kernel NULL pointer dereference, address: 000000000000001c
-  Oops: 0002 [#1] SMP NOPTI
-  CPU: 1 PID: 1 Comm: swapper/0 Not tainted 7.2.0-rc6-dirty #7 PREEMPT(lazy)
-  RIP: 0010:kthread_stop+0x2e/0x220
-  RBX: fffffffffffffff4
-  CR2: 000000000000001c
-  Call Trace:
-   <TASK>
-   test_ringbuffer+0x1ec/0x650
-   do_one_initcall+0x6c/0x2c0
-   kernel_init_freeable+0x21d/0x420
-   kernel_init+0x15/0x1c0
-   ret_from_fork+0x21b/0x320
-   </TASK>
-  Kernel panic - not syncing: Fatal exception
+Put the folios back on the invalid-nid path so ignored migration requests
+still return them to the LRU.
 
-Cc: stable@vger.kernel.org
-Fixes: 64ed3a049e3e ("ring-buffer: make use of the helper function kthread_run_on_cpu()")
-Link: https://patch.msgid.link/20260807154145.2846521-2-sh_def@163.com
-Signed-off-by: Hui Su <sh_def@163.com>
-Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Link: https://lore.kernel.org/20260726014815.1280757-1-dayou5941@163.com
+Fixes: 7e6c3130690a ("mm/damon/ops-common: ignore migration request to invalid nodes")
+Assisted-by: Cursor:grok-4.5
+Reviewed-by: SJ Park <sj@kernel.org>
+Signed-off-by: liyouhong <liyouhong@kylinos.cn>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/damon/ops-common.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -7727,7 +7727,7 @@ static __init int test_ringbuffer(void)
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -385,8 +385,15 @@ unsigned long damon_migrate_pages(struct
+ 		return nr_migrated;
  
-  out_free:
- 	for_each_online_cpu(cpu) {
--		if (!rb_threads[cpu])
-+		if (IS_ERR_OR_NULL(rb_threads[cpu]))
- 			break;
- 		kthread_stop(rb_threads[cpu]);
- 	}
+ 	if (target_nid < 0 || target_nid >= MAX_NUMNODES ||
+-			!node_state(target_nid, N_MEMORY))
++			!node_state(target_nid, N_MEMORY)) {
++		while (!list_empty(folio_list)) {
++			struct folio *folio = lru_to_folio(folio_list);
++
++			list_del(&folio->lru);
++			folio_putback_lru(folio);
++		}
+ 		return nr_migrated;
++	}
+ 
+ 	noreclaim_flag = memalloc_noreclaim_save();
+ 
 
 
