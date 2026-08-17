@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D6B43B4B5;
-	Mon, 17 Aug 2026 14:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3413EC82D;
+	Mon, 17 Aug 2026 14:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975700; cv=none; b=DgCB5ksoMj8K0zxdLAWAfepsAMD1bvLUbLyWzWUoscXHaJdN/YuUMN60sCNHXJXWlc/E5RlliOkl8c3pExERKzQ2UBXsqgue7Em0uQ4JO5rcMiqr2BZrgjxOOS2yL9geyhTjddPVYT27FpghcMM25nJrqzM79UNA55bX4wXWb7Y=
+	t=1786975703; cv=none; b=SP1k3KosZ4u322i6WojqP4ow7q92hHRirOZWOhQNPGH1oaCxUIo5vMhh8dabzFZZYwHUOcyArIBP7vqVOSzfCWkGuturucUUJVgy5WMjcgcZzU3C9LFJ23q8m4M6Ko62jqYd+f2L7BFUHhfe6LTpPNsmlxAMfnrMngTon6fpIMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975700; c=relaxed/simple;
-	bh=vwESDpOxrroykYKGf6Lw6gmPHQ0KT1Yl0yqB/N/0AAg=;
+	s=arc-20240116; t=1786975703; c=relaxed/simple;
+	bh=KWqDUeV6AQZV1jMejlgs0JCvc/MATpXJr0CLZgAuE7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oP3STaVGQl2lHcOjOCbZQNiLPO7XNtYaXR/rDQ4ZOjPJE+i0aHuHlFggdgB3yCtSXtHarT0jyEJ63Uw5FyyDBhr74vsCOnZBTRdqjyeCusq1Owf2LwLNIkuCaNq2+Huu7DP+/UQbRHLi4CF7n015y17bNTfRnU8woRpsK87+fs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=McWxYN/b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tswQuOn+AFGlXOuBnLyFUASm5L0zwXwO/Gg9sjsHLIeG6OH5u8lsyGRPzkLhH990WDwPScXiMwJ8KpF4b4zXtUWaT6ORBxwChi7Ekkr05r61EiV0Zp94b3B4Wi0AxrF0RquHfoHHx6L9UZV66Cg0koQ7OOmwO93KHECRbpfeCgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQKMdibY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="McWxYN/b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE2161F000E9;
-	Mon, 17 Aug 2026 14:08:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQKMdibY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF401F000E9;
+	Mon, 17 Aug 2026 14:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975699;
-	bh=lxyWNKrqYYq/CwWaAOzaszQzejHXosnUSdRYxh7DK3s=;
+	s=korg; t=1786975702;
+	bh=B8xrl2XksBr+5pt4DeOjxXPop1SgILaGPW/fOKIDBN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=McWxYN/bC3hHbWmLhikgNCAXWICNU07giJxqL1+Qh49wZqzECUL1qjW0SU370Spf7
-	 tgCr5GECpXOzKkmqhOXls1+SdH3PmNOuH8sPOHnOpbNywPjpeAEkUewHLKPc3VP5uP
-	 TD5dmc1auoCB4ETjlvF3sRIXfFvIs3b6zT2egLIo=
+	b=SQKMdibY6BwCNWYpoj03D4X7t5sffvVMz8OdcP9M9VYxin/JxSlKVi+j6lHKROxlM
+	 acIFX7zYuIBYDJMWtk0Kzm6MYcJhqeIvh4Pue06Ec2HQe5bx4y+v0jWGpQ7lhzdkDh
+	 I74Nc96d2QHWQ1ajtaoCFBAry0WTdm28EVd1bFTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>
-Subject: [PATCH 5.10 119/389] drm/vmwgfx: Validate vmw_surface_metadata::array_size
-Date: Mon, 17 Aug 2026 15:29:18 +0200
-Message-ID: <20260817132543.805808340@linuxfoundation.org>
+	Valery Borovsky <vebohr@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.10 120/389] media: airspy: Return queued buffers on start_streaming() failure
+Date: Mon, 17 Aug 2026 15:29:19 +0200
+Message-ID: <20260817132543.844769123@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,69 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Valery Borovsky <vebohr@gmail.com>
 
-commit a4f55260f7f7d4dc4d0ee55063dfb0c457b77991 upstream.
+commit 04344d0b4929caa94c0df72f767752aa0935ef5d upstream.
 
-This field comes from userspace and should be validated against specific
-limits depending on which Shader Model (SM) is available.
+The vb2 framework hands buffers to the driver via buf_queue() before
+calling start_streaming().  If start_streaming() returns an error
+without first returning those buffers via vb2_buffer_done(),
+vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
+buffers leak.
 
-Fixes: 504901dbb0b5 ("drm/vmwgfx: Refactor surface_define to use vmw_surface_metadata")
-Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
+airspy_start_streaming() returned -ENODEV early when the USB device had
+been disconnected (s->udev == NULL) without returning any buffers that
+buf_queue() had already accepted.  Take v4l2_lock first and jump to the
+existing err_clear_bit label, which already drains s->queued_bufs via
+vb2_buffer_done(..., VB2_BUF_STATE_QUEUED) before unlocking.
+
+This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
+Return queued buffers on start_streaming() failure").
+
+Fixes: 634fe5033951 ("[media] airspy: AirSpy SDR driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patch.msgid.link/20260623193314.506257-1-ian.forbes@broadcom.com
+Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_surface.c |   22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ drivers/media/usb/airspy/airspy.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
-@@ -101,7 +101,7 @@ static int vmw_gb_surface_unbind(struct
- static int vmw_gb_surface_destroy(struct vmw_resource *res);
- static int
- vmw_gb_surface_define_internal(struct drm_device *dev,
--			       struct drm_vmw_gb_surface_create_ext_req *req,
-+			       const  struct drm_vmw_gb_surface_create_ext_req *req,
- 			       struct drm_vmw_gb_surface_create_rep *rep,
- 			       struct drm_file *file_priv);
- static int
-@@ -1450,7 +1450,7 @@ int vmw_gb_surface_reference_ext_ioctl(s
-  */
- static int
- vmw_gb_surface_define_internal(struct drm_device *dev,
--			       struct drm_vmw_gb_surface_create_ext_req *req,
-+			       const  struct drm_vmw_gb_surface_create_ext_req *req,
- 			       struct drm_vmw_gb_surface_create_rep *rep,
- 			       struct drm_file *file_priv)
- {
-@@ -1469,9 +1469,21 @@ vmw_gb_surface_define_internal(struct dr
- 				req->base.svga3d_flags);
+--- a/drivers/media/usb/airspy/airspy.c
++++ b/drivers/media/usb/airspy/airspy.c
+@@ -518,11 +518,13 @@ static int airspy_start_streaming(struct
  
- 	/* array_size must be null for non-GL3 host. */
--	if (req->base.array_size > 0 && !has_sm4_context(dev_priv)) {
--		VMW_DEBUG_USER("SM4 surface not supported.\n");
--		return -EINVAL;
-+	if (req->base.array_size > 0) {
-+		if (has_sm5_context(dev_priv)) {
-+			if (req->base.array_size > SVGA3D_SM5_MAX_SURFACE_ARRAYSIZE) {
-+				VMW_DEBUG_USER("Invalid Surface Array Size.\n");
-+				return -EINVAL;
-+			}
-+		} else if (has_sm4_context(dev_priv)) {
-+			if (req->base.array_size > SVGA3D_SM4_MAX_SURFACE_ARRAYSIZE) {
-+				VMW_DEBUG_USER("Invalid Surface Array Size.\n");
-+				return -EINVAL;
-+			}
-+		} else {
-+			VMW_DEBUG_USER("SM4+ surface not supported.\n");
-+			return -EINVAL;
-+		}
- 	}
+ 	dev_dbg(s->dev, "\n");
  
- 	if (!has_sm4_1_context(dev_priv)) {
+-	if (!s->udev)
+-		return -ENODEV;
+-
+ 	mutex_lock(&s->v4l2_lock);
+ 
++	if (!s->udev) {
++		ret = -ENODEV;
++		goto err_clear_bit;
++	}
++
+ 	s->sequence = 0;
+ 
+ 	set_bit(POWER_ON, &s->flags);
 
 
