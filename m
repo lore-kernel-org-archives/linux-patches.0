@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B46424D72;
-	Mon, 17 Aug 2026 14:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6871641F5EA;
+	Mon, 17 Aug 2026 14:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978207; cv=none; b=hYNc4WDBCzIfimHXRdxi1QWKNA1L4KpyaC7frlTfgssnyXb58aVdBvI7NIT9q45iTOc+1YlOvta2IiYu2yBY2TkLYz/uXGkpr2Eo2G3opmHE5oMrh1x99h5vvEs90fBqIiwW9sSI5syXsm5Rqhunicj+dQHn0wKJhHwkUpm4Fhg=
+	t=1786978209; cv=none; b=Y0kZ6X55sWIcB5D3WQAQvr/ODkxl5mbByQpOQ6vvqDfJmMC3dcLYTJ74QxOjynGcWj/wR6drC02TXsDkbK6sbZEPFJlnK5F67OeJkYLVsdRxkofaE8ZTcyNKWnMgMHTldd4MwbUU66rC7y7EqkxueIbAq15jj/MA1n14ASdbHs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978207; c=relaxed/simple;
-	bh=9VCXx9bG6N9pqpCJ38sMRUnh6P41ONmrUZFR9XbDstw=;
+	s=arc-20240116; t=1786978209; c=relaxed/simple;
+	bh=tAmc7LGApxqI8+sx2rWHjcaxiS0ckF+UvUL5eG+VqaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UQfrEEDxuUgL4Ru5wpSAwn0WTpTeOLGiuOr+GzZj5caEaNgF+S5Lm3r6BXkjIX7AOLgwK56BrYronPV1uqaHMdt0Rmb3N6V5EuKnAUOoDPkTwkyIng+KAkN+6XTNv1TKkjhCKwVWIJzjxm3TT+GVo6kPToZob7jZqBpb3wSjaOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gkOjvFC7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MMAoPePPTVqZRvv+omhePfRZHx0zqeOuwVdDK5ZpmwshAu7jJpjvwjqRnE/MbyZGfWfGHaB5mHGK/BZVgOK5ZYCT0nNzSTWHm8Jb0CKqDTQHSuO7bhqjGgfJlfYPIbj61HvvwTY5dOXNRmSONKILjgx6U2qzpXl4yhCe/Awt4pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BIyy3gyL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gkOjvFC7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59321F000E9;
-	Mon, 17 Aug 2026 14:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BIyy3gyL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36871F000E9;
+	Mon, 17 Aug 2026 14:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978205;
-	bh=Lvc/sgCmBXmD9rT7oddhf7HkfucDx3xzoOL/eqoGZ+k=;
+	s=korg; t=1786978208;
+	bh=nz6b/TFjmHigvcqFP+k/yUcsv35Kj3/D1QB2Hpy67Ik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gkOjvFC7VXhIHrGxNf+hSnX2I8lY/JJQsHw9KixLxbNT+GAqFpIciNnw33DaE6EF7
-	 pTlmZRTcjeVobMb7wj/JOCmjLZPvy5hZYnkf4hodK9BCgSq2OjkuUXwlZuqRI4I035
-	 t/yCwDFxkQn6KCgQaFohGU8XutY7E3mYo14s1iKQ=
+	b=BIyy3gyL7ovUxoKvn3OAZ4OGqD9RoTsHa0zkMojxTGKZkOazr/7shIqgP75OmJu2l
+	 CoX+a74ushCAJdpZMod51tgv+I8p3B6cp1YCR5mU0CMvFs+6ioTPH/u43/JbztwRDv
+	 SRS0G7IF5P+4dzofc6f9qzfCzzQ3wZLMrUlkiqe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 121/181] ipv4: fix use-after-free in fib_nhc_update_mtu()
-Date: Mon, 17 Aug 2026 15:33:35 +0200
-Message-ID: <20260817132540.319001196@linuxfoundation.org>
+	syzbot+e0cc44465d6bae735679@syzkaller.appspotmail.com,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.12 139/181] ring-buffer: Prevent subbuf order change when resizing is disabled
+Date: Mon, 17 Aug 2026 15:33:53 +0200
+Message-ID: <20260817132541.114416491@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -51,165 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Vincent Donnefort <vdonnefort@google.com>
 
-commit bc5bde9ce3cc36502839dfe98e068f7303a50982 upstream.
+commit bf98d7b0d5a99991e47e66cee4eb1d3fa514be97 upstream.
 
-fib_nhc_update_mtu() walks the nexthop exception table under RTNL, but
-RTNL does not serialize this walk with PMTU exception updates. The walk
-uses rcu_dereference_protected() with a constant true condition without
-holding fnhe_lock.
+Because ring_buffer_subbuf_order_set() frees buffer pages, we can't
+allow it when resizing is disabled. A non-consuming reader is at risk of
+use-after-free (rb_advance_iter()).
 
-The following interleaving can therefore occur:
+Return -EBUSY on resize_disabled, matching ring_buffer_resize()
+behaviour.
 
-  CPU 0                              CPU 1
-  fib_nhc_update_mtu()               update_or_create_fnhe()
-    load fnhe                          spin_lock_bh(&fnhe_lock)
-                                       fnhe_remove_oldest()
-                                         unlink fnhe
-                                         kfree_rcu(fnhe, rcu)
-    <quiescent state>
-    access fnhe after grace period
-
-KASAN reported:
-
-  BUG: KASAN: slab-use-after-free in fib_nhc_update_mtu+0x3df/0x410
-  Read of size 8 at addr ffff888107d49000 by task poc/90
-  Call Trace:
-   fib_nhc_update_mtu+0x3df/0x410
-   fib_sync_mtu+0x7a/0xd0
-   fib_netdev_event+0x229/0x3f0
-   netif_set_mtu_ext+0x33a/0x570
-   dev_set_mtu+0x88/0x120
-
-The same walk updates fnhe_pmtu and fnhe_mtu_locked. These fields form a
-pair and other writers serialize them with fnhe_lock. RCU alone prevents
-reclamation, but would still allow concurrent writers to leave a mixed
-pair.
-
-Walk the table under RCU and acquire fnhe_lock only while updating each
-exception. RCU keeps the current entry alive while the short critical
-section serializes its paired PMTU fields. This avoids holding the global
-lock while scanning all 2048 buckets for every nexthop.
-
-Fixes: af7d6cce5369 ("net: ipv4: update fnhe_pmtu when first hop's MTU changes")
 Cc: stable@vger.kernel.org
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260807181710.1178747-1-nicoyip.dev@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f9b94daa542a ("ring-buffer: Set new size of the ring buffer sub page")
+Link: https://patch.msgid.link/20260806211306.3704194-3-vdonnefort@google.com
+Reported-by: syzbot+e0cc44465d6bae735679@syzkaller.appspotmail.com
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/route.h      |    2 ++
- net/ipv4/fib_semantics.c |   34 +++++++++++-----------------------
- net/ipv4/route.c         |   29 +++++++++++++++++++++++++++++
- 3 files changed, 42 insertions(+), 23 deletions(-)
+ kernel/trace/ring_buffer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/net/route.h
-+++ b/include/net/route.h
-@@ -258,6 +258,8 @@ int fib_dump_info_fnhe(struct sk_buff *s
- 		       u32 table_id, struct fib_info *fi,
- 		       int *fa_index, int fa_start, unsigned int flags);
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -6756,7 +6756,7 @@ int ring_buffer_subbuf_order_set(struct
  
-+void fnhe_update_pmtu(struct fib_nh_exception *fnhe, u32 new, u32 orig);
-+
- static inline void ip_rt_put(struct rtable *rt)
- {
- 	/* dst_release() accepts a NULL parameter.
---- a/net/ipv4/fib_semantics.c
-+++ b/net/ipv4/fib_semantics.c
-@@ -1956,42 +1956,30 @@ static int call_fib_nh_notifiers(struct
- 	return NOTIFY_DONE;
- }
+ 		cpu_buffer = buffer->buffers[cpu];
  
--/* Update the PMTU of exceptions when:
-- * - the new MTU of the first hop becomes smaller than the PMTU
-- * - the old MTU was the same as the PMTU, and it limited discovery of
-- *   larger MTUs on the path. With that limit raised, we can now
-- *   discover larger MTUs
-- * A special case is locked exceptions, for which the PMTU is smaller
-- * than the minimal accepted PMTU:
-- * - if the new MTU is greater than the PMTU, don't make any change
-- * - otherwise, unlock and set PMTU
-+/* Walk the exceptions of a nexthop after its first hop MTU changed. The
-+ * chain is RCU protected here, while fnhe_update_pmtu() takes fnhe_lock
-+ * for the update of each entry.
-  */
- void fib_nhc_update_mtu(struct fib_nh_common *nhc, u32 new, u32 orig)
- {
- 	struct fnhe_hash_bucket *bucket;
- 	int i;
- 
--	bucket = rcu_dereference_protected(nhc->nhc_exceptions, 1);
-+	rcu_read_lock();
-+	bucket = rcu_dereference(nhc->nhc_exceptions);
- 	if (!bucket)
--		return;
-+		goto out;
- 
- 	for (i = 0; i < FNHE_HASH_SIZE; i++) {
- 		struct fib_nh_exception *fnhe;
- 
--		for (fnhe = rcu_dereference_protected(bucket[i].chain, 1);
-+		for (fnhe = rcu_dereference(bucket[i].chain);
- 		     fnhe;
--		     fnhe = rcu_dereference_protected(fnhe->fnhe_next, 1)) {
--			if (fnhe->fnhe_mtu_locked) {
--				if (new <= fnhe->fnhe_pmtu) {
--					fnhe->fnhe_pmtu = new;
--					fnhe->fnhe_mtu_locked = false;
--				}
--			} else if (new < fnhe->fnhe_pmtu ||
--				   orig == fnhe->fnhe_pmtu) {
--				fnhe->fnhe_pmtu = new;
--			}
--		}
-+		     fnhe = rcu_dereference(fnhe->fnhe_next))
-+			fnhe_update_pmtu(fnhe, new, orig);
- 	}
-+out:
-+	rcu_read_unlock();
- }
- 
- void fib_sync_mtu(struct net_device *dev, u32 orig_mtu)
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -739,6 +739,35 @@ out_unlock:
- 	spin_unlock_bh(&fnhe_lock);
- }
- 
-+/* Update the PMTU of an exception when:
-+ * - the new MTU of the first hop becomes smaller than the PMTU
-+ * - the old MTU was the same as the PMTU, and it limited discovery of
-+ *   larger MTUs on the path. With that limit raised, we can now
-+ *   discover larger MTUs
-+ * A special case is locked exceptions, for which the PMTU is smaller
-+ * than the minimal accepted PMTU:
-+ * - if the new MTU is greater than the PMTU, don't make any change
-+ * - otherwise, unlock and set PMTU
-+ *
-+ * fnhe_lock keeps fnhe_pmtu and fnhe_mtu_locked consistent against
-+ * update_or_create_fnhe(), which sets both under the same lock.
-+ */
-+void fnhe_update_pmtu(struct fib_nh_exception *fnhe, u32 new, u32 orig)
-+{
-+	spin_lock_bh(&fnhe_lock);
-+
-+	if (fnhe->fnhe_mtu_locked) {
-+		if (new <= fnhe->fnhe_pmtu) {
-+			fnhe->fnhe_pmtu = new;
-+			fnhe->fnhe_mtu_locked = false;
-+		}
-+	} else if (new < fnhe->fnhe_pmtu || orig == fnhe->fnhe_pmtu) {
-+		fnhe->fnhe_pmtu = new;
-+	}
-+
-+	spin_unlock_bh(&fnhe_lock);
-+}
-+
- static void __ip_do_redirect(struct rtable *rt, struct sk_buff *skb, struct flowi4 *fl4,
- 			     bool kill_route)
- {
+-		if (cpu_buffer->mapped) {
++		if (atomic_read(&cpu_buffer->resize_disabled)) {
+ 			err = -EBUSY;
+ 			goto error;
+ 		}
 
 
