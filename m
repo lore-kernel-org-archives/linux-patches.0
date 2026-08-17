@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFFC21CC5C;
-	Mon, 17 Aug 2026 14:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F8943C7C1;
+	Mon, 17 Aug 2026 14:58:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978723; cv=none; b=jG8/OGFXD2rvXkZzzrdRi0Xh8YOeH5zz157NAe27Kk+KiZ6ofS/TVlvvP3zaEklRFU+NXiESrTGfwbs+ReGgD8+ElX68ihyZZ1x/VXmv95YvOK625o7QxkJl9edwQFc4sdDTvvXa/eYVCh4hH97L6alKhXIgO8JZNwfu4/q2mQw=
+	t=1786978727; cv=none; b=X+VkVxNDrf2ZPQL6opyRgnB4iUD90J3R0x6bxLX5Spspv0I62pFRQVGUwMYRSF1E18n7K1BaUS3RFmJcZS5bTesDnJRSVaK6CRm4fQajFWlbRRKz6cMaf58kI08ikzxCaYNQMzWODMSLnj0YxdiqsSCUz9bgYHJvbIV29Ipn0Gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978723; c=relaxed/simple;
-	bh=73E48skjH3vntjiuRsqusZEIOfP4UgtjlJ/7emKShlk=;
+	s=arc-20240116; t=1786978727; c=relaxed/simple;
+	bh=P4TawuzcOdYb3LeYh+gCyDLPrfKGJolAxJpPygJFwQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fS48n18vuEhpM+zaKEpXzVgHCVMEi1x9PqzyOZbCn4tV7nSHH7mtISb3lITrkiem1SEtLISfBSgmtoITTOpV0lpchFtILTBr28GJpSBKgj7qBJSVVRObbx8WUytPPyzsNnEwEJf7V3YinUMbAAvWwL+CigRG3Hw1WjkUc7cvSCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZS57ncs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Con46IU0dZbI+qLhJwRVdHrDhuoMNmEcyPGUOw5qCvWLusuHAXju6PF7ruaBTb0rer/ise5hIoX7fyygk3RRm9TPZW2uRbQeuj/fOZ3uZZvxhtoHGCdAp1XFTTVrJh84jZZABcqXrQzqsDMif8YGhKqPAt6K9jEAqQ7eWRNhEDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ti+WNpX3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZS57ncs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 412361F000E9;
-	Mon, 17 Aug 2026 14:58:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ti+WNpX3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B171F000E9;
+	Mon, 17 Aug 2026 14:58:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978722;
-	bh=+dgHNtFT8WlT9tsF4yRqHOoxUiZNUHteJkU2mJARG48=;
+	s=korg; t=1786978725;
+	bh=1g8rwghWO8jfSgiNFhYvqeU8gYL0gFSeuD20HgmjpDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XZS57ncssj9VRguEyPsVg7I75dGZLsnDTdUPMbVE1CPNsLic/VEnMujogFE1vNFJG
-	 tvUf0zj3G9xurHJz0D9Hm3E6Kq/cciSemtXEEtYKqhNGa4pyOfkuI/34GR14iv7rGH
-	 g44HkSjxAvAtMRjggN3GbTU/P9O8fzjxgLyFyiHg=
+	b=ti+WNpX3z0SbH9y8gm6sSyI+WzNWePl6ENaIyqoOTfTIpVPStak/+qDj/QDWSPrzu
+	 rlM8xBymc1HMq2X+JdpBI0s4/egT4WiOjewDQVOvIfaIGHbQE3Mg0sh042NTxKQiOT
+	 kTMuPKREJn57Aov0X3OH4zZUHNgi+IdrwOjMzZF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 136/156] smb: client: Fix use-after-free in cifs_try_adding_channels()
-Date: Mon, 17 Aug 2026 15:34:30 +0200
-Message-ID: <20260817132540.019564724@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.6 137/156] KVM: x86/mmu: WARN and clear role.invalid when creating a child shadow page
+Date: Mon, 17 Aug 2026 15:34:31 +0200
+Message-ID: <20260817132540.061631925@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -50,43 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 4986410316b1ae0e63c6ce418e4eb196723626e7 upstream.
+commit 5ec42d57655c690234c14aece6dd3f209778c1d8 upstream.
 
-cifs_try_adding_channels() takes a temporary reference to an interface
-before dropping iface_lock. If cifs_ses_add_channel() fails, it drops
-that reference and then increments iface->weight_fulfilled.
+Explicitly clear role.invalid when deriving a child shadow page's role from
+its parent to harden against bugs elsewhere in KVM, as violating KVM's
+invariant that invalid pages are NOT on the list of active MMU pages leads
+to use-after-free due to __kvm_mmu_prepare_zap_page() using list_add()
+instead of list_move() when processing an invalid shadow page, i.e. makes a
+bad situation far worse.
 
-A concurrent interface list refresh can remove the list reference while
-channel creation is in progress. In that case, the failure-path
-kref_put() releases the last reference and frees iface. Updating
-weight_fulfilled afterward then accesses freed memory.
+Yell loudly if the parent is invalid, as it means KVM has missed a validity
+check, i.e. KVM is attempting to map memory using an invalid/obsolete root,
+but continue on as the child is otherwise still a valid shadow page.
 
-Increment weight_fulfilled before dropping the temporary reference,
-keeping iface alive for the final access.
+  ==================================================================
+  BUG: KASAN: slab-use-after-free in __kvm_mmu_get_shadow_page+0x1817/0x1860 [kvm]
+  Write of size 8 at addr ff11000153dd1368 by task repro/853
 
-Fixes: 6aac002bcfd5 ("cifs: failure to add channel on iface should bump up weight")
+  CPU: 1 UID: 1000 PID: 853 Comm: repro Not tainted 7.2.0-rc2-3aec122bdcaf-next-vm #5 PREEMPT
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x4b/0x70
+   print_report+0x153/0x49c
+   kasan_report+0xbc/0xf0
+   __kvm_mmu_get_shadow_page+0x1817/0x1860 [kvm]
+   mmu_alloc_root+0x141/0x320 [kvm]
+   kvm_mmu_load+0x612/0x20f0 [kvm]
+   kvm_arch_vcpu_ioctl_run+0x3dd5/0x6150 [kvm]
+   kvm_vcpu_ioctl+0x5e4/0x10d0 [kvm]
+   __x64_sys_ioctl+0x131/0x1b0
+   do_syscall_64+0x67/0x5f0
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   </TASK>
+
+  Allocated by task 853:
+   kasan_save_stack+0x20/0x40
+   kasan_save_track+0x14/0x30
+   __kasan_slab_alloc+0x5f/0x70
+   kmem_cache_alloc_noprof+0xfe/0x2e0
+   __kvm_mmu_topup_memory_cache+0x135/0x530 [kvm]
+   paging64_page_fault+0x318/0x1e30 [kvm]
+   kvm_mmu_do_page_fault+0x21d/0x630 [kvm]
+   kvm_mmu_page_fault+0x18c/0x17b0 [kvm]
+   kvm_arch_vcpu_ioctl_run+0x1f35/0x6150 [kvm]
+   kvm_vcpu_ioctl+0x5e4/0x10d0 [kvm]
+   __x64_sys_ioctl+0x131/0x1b0
+   do_syscall_64+0x67/0x5f0
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+  Freed by task 853:
+   kasan_save_stack+0x20/0x40
+   kasan_save_track+0x14/0x30
+   kasan_save_free_info+0x3b/0x60
+   __kasan_slab_free+0x43/0x70
+   kmem_cache_free+0xe2/0x400
+   kvm_mmu_commit_zap_page.part.0+0x1e2/0x310 [kvm]
+   kvm_mmu_free_roots+0x283/0x560 [kvm]
+   kvm_arch_vcpu_ioctl_run+0x33c8/0x6150 [kvm]
+   kvm_vcpu_ioctl+0x5e4/0x10d0 [kvm]
+   __x64_sys_ioctl+0x131/0x1b0
+   do_syscall_64+0x67/0x5f0
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Fixes: a770f6f28b1a ("KVM: MMU: Inherit a shadow page's guest level count from vcpu setup")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/sess.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/mmu/mmu.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/smb/client/sess.c
-+++ b/fs/smb/client/sess.c
-@@ -271,9 +271,9 @@ int cifs_try_adding_channels(struct cifs
- 				cifs_dbg(VFS, "failed to open extra channel on iface:%pIS rc=%d\n",
- 					 &iface->sockaddr,
- 					 rc);
--				kref_put(&iface->refcount, release_iface);
- 				/* failure to add chan should increase weight */
- 				iface->weight_fulfilled++;
-+				kref_put(&iface->refcount, release_iface);
- 				continue;
- 			}
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -2299,6 +2299,9 @@ static union kvm_mmu_page_role kvm_mmu_c
+ 	role.direct = direct;
+ 	role.passthrough = 0;
  
++	WARN_ON_ONCE(role.invalid);
++	role.invalid = 0;
++
+ 	/*
+ 	 * If the guest has 4-byte PTEs then that means it's using 32-bit,
+ 	 * 2-level, non-PAE paging. KVM shadows such guests with PAE paging
 
 
