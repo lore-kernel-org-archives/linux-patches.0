@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D0F3EC807;
-	Mon, 17 Aug 2026 13:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7740A3EC807;
+	Mon, 17 Aug 2026 13:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786973886; cv=none; b=FXiNgbbqVPQxh+kv/0AuilON/NiQqL5mU9iKCDZ/BOBACjAnUayuTVMtz00j35GYKGXSa/BEEKc4tSS9DzDqu6zKxAj5N44YVw0mrQuHwBz2FYE25Otfp3En5AeYKtlUANgXK2PDTLjfC700fZ3b2DgMOtjYa3QWXBuAbr/IoZA=
+	t=1786973887; cv=none; b=OKaIYBlGtYk+ZD9n0NZGOKWjs93xAaODvW5vRrY3Ge1q2u+O7VzY8R2n3ijXwafrhcFVyqaIt83yooShrPFjolb0ygMLcOD1ExIX7HWovXzm4pXwUpYn+VL5JpiIj2PRIzYVEtKjV8SBngw0l+VT1KV75lrcekT0iRrLIYvvclU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786973886; c=relaxed/simple;
-	bh=5VFXzqE+9XyJ0Z+NPJAq6bqdgP7VolW/jR6GYctA7e0=;
+	s=arc-20240116; t=1786973887; c=relaxed/simple;
+	bh=kO481/a+QCjcjGtmdV+UYaRuniunwXdMdA/9ywzpbqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wre8v8iuraJ8gKQt/FwqYDW8iEobeiBwfXlQTbomV30mdzMZ1quNMUOhIQPtjtwn75tEUgOM4CfJGDeDG6tCtPGyLaGxo0lcFctRxUB7dFGzSxT9yOe16VCda1mTlzEfnpcA0+cqDgGA1FOJltZAL1AsRJfw+HNpJuJZxKTyWYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/CUhaf5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N4MtkrvosTuKQ5VZgY9+s7JEU9OIPN9vVdOJokafy3jcmSpCmnpL8989lOT5OTis4iYb9Zz2hti3omJa0Od2qbI5/aS7FhWcH/IaRiPXPjuZT6NEAIl3Lh5B6v0w+QPEs2zvytfo6GuNNA8MwibxHBxm/99EbTp4SUB7eNWVSuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zwKKysOp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/CUhaf5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE2EB1F00AC4;
-	Mon, 17 Aug 2026 13:38:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwKKysOp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB241F00A3E;
+	Mon, 17 Aug 2026 13:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786973883;
-	bh=DZvL9+ZQ8xuQe4jGWabrccU7kyJTQWjN74nLTSWrHrY=;
+	s=korg; t=1786973886;
+	bh=l7zTgpd2S/UWu69TVsejChr/96O/HyS65g4IoEUfe9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d/CUhaf52skaMYQBkoZEcd/HS3wAYd15tEz2XG0cJaSen22IhSPBjLwoiAR4uw5rZ
-	 cRHAgRijh3JKy3enSoUJbvqZ4Lxe4hewbc979CG1ECbOniYPePaSMJw9z/pAyMjc+b
-	 g6C42DkwFQxg8nRusvnG8UArCj3ec0995YqSCN1c=
+	b=zwKKysOpvbzN9RBfvZfVFFy7hRWP6LgKdz+af0585GBYaSRb/FsMwlp7CNwGahH39
+	 xDaU8h20znXvg/Zt/rKWrBmHOQnsWQs2IZQL7sJPl/U8e7csebrN7spJKFrdV6Mzt8
+	 Gd6/Tq8AQQusYDldKbPhvip5tKCni/xvkB7zwUKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>,
+	Dan Aloni <dan.aloni@vastdata.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 015/271] sched_ext: Dont enable non-ext tasks in the sub-sched task loops
-Date: Mon, 17 Aug 2026 15:29:00 +0200
-Message-ID: <20260817132537.401150740@linuxfoundation.org>
+Subject: [PATCH 7.1 016/271] NFS: Pin the struct nfs_server during a FREE_STATEID call
+Date: Mon, 17 Aug 2026 15:29:01 +0200
+Message-ID: <20260817132537.444806280@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -51,76 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Anna Schumaker <anna.schumaker@hammerspace.com>
 
-[ Upstream commit 5cdc928598095b2c7d5f265e5f21eadd1634bfbe ]
+[ Upstream commit cf616096a0f3a2b60f7d68b6b39674a6867ded9c ]
 
-Root enable and scx_post_fork() enable a task only if it's on the ext class.
-Tasks on other classes, possible under an SCX_OPS_SWITCH_PARTIAL root, are
-left READY and enabled by switching_to_scx() when they switch over. The sub
-enable-commit pass and the sub-disable re-home loop enable unconditionally,
-so a fair-class READY task in the subtree becomes ENABLED while not on
-sched_ext. A later switch to SCHED_EXT then trips the task state validation
-WARN (ENABLED with the previous state not READY) and calls ops.enable() a
-second time.
+Dan Aloni reports that he was able to hit a use-after-free bug if a
+FREE_STATEID operation gets delayed for whatever reason. Fix this by
+bumping the refcount of the 'struct nfs_server' object for the duration
+of the FREE_STATEID so it doesn't get cleaned up from underneath us
+while operations are still in flight.
 
-Gate scx_enable_task() on the task's class in both loops.
-
-Fixes: 337ec00b1d9c ("sched_ext: Implement cgroup sub-sched enabling and disabling")
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Reported-by: Dan Aloni <dan.aloni@vastdata.com>
+Fixes: 7c1d5fae4a87 ("NFSv4: Convert nfs41_free_stateid to use an asynchronous RPC call")
+Tested-by: Dan Aloni <dan.aloni@vastdata.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ fs/nfs/nfs4proc.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index a8c4f665d173c..40df1be44a6d5 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -5874,15 +5874,22 @@ static void scx_sub_disable(struct scx_sched *sch)
- 			/*
- 			 * $p is initialized for $parent and still attached to
- 			 * @sch. Disable and exit for @sch, switch over to
--			 * $parent, override the state to READY to account for
--			 * $p having already been initialized, and then enable.
-+			 * $parent and override the state to READY to account
-+			 * for $p having already been initialized.
- 			 */
- 			scx_disable_and_exit_task(sch, p);
- 			scx_set_task_state(p, SCX_TASK_INIT_BEGIN);
- 			scx_set_task_state(p, SCX_TASK_INIT);
- 			scx_set_task_sched(p, parent);
- 			scx_set_task_state(p, SCX_TASK_READY);
--			scx_enable_task(parent, p);
-+
-+			/*
-+			 * A task on a non-ext class, possible under an
-+			 * %SCX_OPS_SWITCH_PARTIAL root, stays READY and is
-+			 * enabled by switching_to_scx() if it switches over.
-+			 */
-+			if (p->sched_class == &ext_sched_class)
-+				scx_enable_task(parent, p);
- 		}
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 4db27f4eb01e9..bea00343f09b1 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -10330,6 +10330,7 @@ static void nfs41_free_stateid_release(void *calldata)
+ 	struct nfs_free_stateid_data *data = calldata;
+ 	struct nfs_client *clp = data->server->nfs_client;
  
- 		task_rq_unlock(rq, p, &rf);
-@@ -7377,10 +7384,14 @@ static void scx_sub_enable_workfn(struct kthread_work *work)
++	nfs_sb_deactive(data->server->super);
+ 	nfs_put_client(clp);
+ 	kfree(calldata);
+ }
+@@ -10371,6 +10372,10 @@ static int nfs41_free_stateid(struct nfs_server *server,
  
- 			/*
- 			 * $p is now only initialized for @sch and READY, which
--			 * is what we want. Assign it to @sch and enable.
-+			 * is what we want. Assign it to @sch and, if it's on
-+			 * the ext class, enable. A non-ext task, possible under
-+			 * an %SCX_OPS_SWITCH_PARTIAL root, stays READY and is
-+			 * enabled by switching_to_scx() if it switches over.
- 			 */
- 			scx_set_task_sched(p, sch);
--			scx_enable_task(sch, p);
-+			if (p->sched_class == &ext_sched_class)
-+				scx_enable_task(sch, p);
+ 	if (!refcount_inc_not_zero(&clp->cl_count))
+ 		return -EIO;
++	if (!nfs_sb_active(server->super)) {
++		nfs_put_client(clp);
++		return -EIO;
++	}
  
- 			p->scx.flags &= ~SCX_TASK_SUB_INIT;
- 		}
+ 	nfs4_state_protect(clp, NFS_SP4_MACH_CRED_STATEID,
+ 		&task_setup.rpc_client, &msg);
 -- 
 2.53.0
 
