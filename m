@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320D313790B;
-	Mon, 17 Aug 2026 14:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09B93B42DC;
+	Mon, 17 Aug 2026 14:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976654; cv=none; b=m1QXQrscviksqVNN1w8/26OFY5dUdqFx6Yj33QkGROvZ2qb3H+9Leix81+3M7BFWZwlW5o0oQu3wqY/uzeSnnC3amTTB+wzYKrGFMqr7PwN5rKTqz84h93odU0fiZVNRyfzEwY48Jw7SdAnzGY03bes2LIRZ3Jf+/TJ6jMk2V/E=
+	t=1786976658; cv=none; b=AEUYRAzcdygVSu2SPy68jWUb/g/9tpOwpmH5s4K316i6TxiiaUpfVObaWgg9HwW7JrOcq85AnqF5ImshdFuL4ZGDW2eKgt+LjxR83Gyq6mJp6uexk9Ek3xT64UN1wE9U3Euoxcc2LQxKueWQ0xVxTBErcEUd4dPn51q3zqCJZX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976654; c=relaxed/simple;
-	bh=Efr/TXteRGHkh6d+RQjQ49XstxReXdUERs9NtpR/ntA=;
+	s=arc-20240116; t=1786976658; c=relaxed/simple;
+	bh=feyvgL9hFytniQg42z6OCQbyqxLjvs175m55YVm87qk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OqIsYZ94pljKRfBbl2A5m2D8ooQ9XjTpz1prV5T7ATUAirZ+StMF09j0S8/4OMpzh5pAGVnZdU2vPrktBGw1IX5ORp9hSDY23mPZQOPQN8Y3MLfZOtCsrtUrqCkqlq+3YTmhZJjkAwyidzHKT4apmZdwSACfFUZqarqM/eJzUi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqYWIz67; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Itw4LyiAVprOqXRZOHf8yaLFLBignFBy4TpuunzZWUT2XSbLiZnSe5xGeigbzOEiG+tOYMA+xdD/31ptDWhOed9aH1uERnrxO+IAG1GG3AVEavluwhZxMdk3vwXTPkxZ8sjN3Gsl5l+VW8Goc5cACeFSyYd7jiN6SSFHHx/uNL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F0xc0Tcg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqYWIz67"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10A61F000E9;
-	Mon, 17 Aug 2026 14:24:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F0xc0Tcg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48B41F00A3D;
+	Mon, 17 Aug 2026 14:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976651;
-	bh=s+N73hka3qPcJ5V4CsGtzWhvhTLrizSMrBBiH7BRO8I=;
+	s=korg; t=1786976654;
+	bh=4YZwBuZa+rrfuSVYwCfezz9cBr7vpIFpFX5De6zp7Fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QqYWIz67EjQJQGui/VNqPBAvg+u9JzfdrIpSkP1n+n0Wkt7AXoBmrEdGtFE9erZj8
-	 giZZRcC6NYQnutkayVcEXTWLLSX6pqFiGOWSf1nabHnnh//xBAr9BDoMBVvyfUQD/d
-	 FFkC+/3bUjUm0RJhdXbJ7/wO13M7b17QtnOgL6NU=
+	b=F0xc0Tcgi7veBT04xFxaXcwLaLkfy4ZEQ6r8sSi/o8xdSz3YN+K/RnsBx91Cqe5Ue
+	 ak5boqFI+z7EY/WbozZN+IK6ZczoOMFX5unJ/BSlrNkvnLldIZ1ZYQh2nJe8vzQAsF
+	 7uN/EQkj96yq9CY5U1tEXV68WCxbws61NrAX6UDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emre Cecanpunar <emreleno@gmail.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	zdi-disclosures@trendmicro.com,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 055/456] drm/i915/selftests: Fix GT PM sort comparators
-Date: Mon, 17 Aug 2026 15:27:25 +0200
-Message-ID: <20260817132542.198780225@linuxfoundation.org>
+Subject: [PATCH 5.15 056/456] net/sched: act_tunnel_key: Defer dst_release to RCU callback
+Date: Mon, 17 Aug 2026 15:27:26 +0200
+Message-ID: <20260817132542.235362267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,53 +54,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emre Cecanpunar <emreleno@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 612978b83f45bf7018815209db5395d759db6f26 ]
+[ Upstream commit f1f5c8a3955f8fda3f84ed883ac8daa1847e724c ]
 
-Compare the sampled clock values instead of their addresses. Comparing
-addresses leaves the samples unsorted, preventing the code from discarding
-the minimum and maximum samples.
+Fix a race-condition use-after-free in tunnel_key_release_params().
 
-Fixes: 1a5392479207 ("drm/i915/selftests: Measure CS_TIMESTAMP")
-Signed-off-by: Emre Cecanpunar <emreleno@gmail.com>
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
-Link: https://lore.kernel.org/r/20260714220430.238433-1-emreleno@gmail.com
-(cherry picked from commit 682ea2d28d18bb06f9fc663cb5ab7e80dc0e606a)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+The function releases the metadata_dst of the old params synchronously
+via dst_release() while deferring the params struct free with
+kfree_rcu(). A concurrent tunnel_key_act() reader on the datapath may
+still hold the old params pointer (under rcu_read_lock_bh) and proceed
+to call dst_clone(&params->tcft_enc_metadata->dst) after the writer's
+dst_release has already pushed the dst's rcuref to RCUREF_DEAD.
+
+zdi-disclosures@trendmicro.com produced a poc which i (and Victor) verified
+that KASAN reports:
+
+==================================================================
+BUG: KASAN: slab-use-after-free in instrument_atomic_read_write include/linux/instrumented.h:112
+BUG: KASAN: slab-use-after-free in atomic_sub_return_release include/linux/atomic/atomic-instrumented.h:326
+BUG: KASAN: slab-use-after-free in __rcuref_put include/linux/rcuref.h:109
+BUG: KASAN: slab-use-after-free in rcuref_put include/linux/rcuref.h:173
+BUG: KASAN: slab-use-after-free in dst_release+0x5b/0x370 net/core/dst.c:168
+Write of size 4 at addr ffff88806158de40 by task poc/9388
+
+CPU: 0 UID: 0 PID: 9388 Comm: poc Tainted: G        W           7.1.0-rc7 #7 PREEMPT(lazy)
+Tainted: [W]=WARN
+Hardware name: QEMU Ubuntu 25.10 PC v2 (i440FX + PIIX, + 10.1 machine, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94
+ dump_stack_lvl+0x100/0x190 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378
+ print_report+0x139/0x4ad mm/kasan/report.c:482
+ kasan_report+0xe4/0x1d0 mm/kasan/report.c:595
+ check_region_inline mm/kasan/generic.c:186
+ kasan_check_range+0x125/0x200 mm/kasan/generic.c:200
+ instrument_atomic_read_write include/linux/instrumented.h:112
+ atomic_sub_return_release include/linux/atomic/atomic-instrumented.h:326
+ __rcuref_put include/linux/rcuref.h:109
+ rcuref_put include/linux/rcuref.h:173
+ dst_release+0x5b/0x370 net/core/dst.c:168
+ refdst_drop include/net/dst.h:272
+ skb_dst_drop include/net/dst.h:284
+ skb_release_head_state+0x293/0x400 net/core/skbuff.c:1163
+ skb_release_all net/core/skbuff.c:1187
+[..]
+Allocated by task 9391:
+ kasan_save_stack+0x30/0x50 mm/kasan/common.c:57
+ kasan_save_track+0x14/0x30 mm/kasan/common.c:78
+ poison_kmalloc_redzone mm/kasan/common.c:398
+ __kasan_kmalloc+0x9a/0xb0 mm/kasan/common.c:415
+ kasan_kmalloc include/linux/kasan.h:263
+ __do_kmalloc_node mm/slub.c:5296
+ __kmalloc_noprof+0x2f1/0x830 mm/slub.c:5308
+ kmalloc_noprof include/linux/slab.h:954
+ kzalloc_noprof include/linux/slab.h:1188
+ offload_action_alloc+0x2f/0x130 net/core/flow_offload.c:35
+ tcf_action_offload_add_ex+0x1ba/0x880 net/sched/act_api.c:258
+ tcf_action_offload_add net/sched/act_api.c:293
+ tcf_action_init+0x66e/0xa20 net/sched/act_api.c:1547
+ tcf_action_add+0xf6/0x5d0 net/sched/act_api.c:2101
+[..]
+Freed by task 9391:
+ kasan_save_stack+0x30/0x50 mm/kasan/common.c:57
+ kasan_save_track+0x14/0x30 mm/kasan/common.c:78
+ kasan_save_free_info+0x3b/0x70 mm/kasan/generic.c:584
+ poison_slab_object mm/kasan/common.c:253
+ __kasan_slab_free+0x6b/0x90 mm/kasan/common.c:285
+ kasan_slab_free include/linux/kasan.h:235
+ slab_free_hook mm/slub.c:2689
+ slab_free mm/slub.c:6251
+ kfree+0x21f/0x6b0 mm/slub.c:6566
+ tcf_action_offload_add_ex+0x4ad/0x880 net/sched/act_api.c:284
+ tcf_action_offload_add net/sched/act_api.c:293
+ tcf_action_init+0x66e/0xa20 net/sched/act_api.c:1547
+ tcf_action_add+0xf6/0x5d0 net/sched/act_api.c:2101
+
+The buggy address belongs to the object at ffff88806158de00
+ which belongs to the cache kmalloc-256 of size 256
+The buggy address is located 64 bytes inside of
+ freed 256-byte region [ffff88806158de00, ffff88806158df00)
+
+The buggy address belongs to the physical page:
+page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff88806158d600 pfn:0x6158c
+head: order:1 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+flags: 0x4fff00000000240(workingset|head|node=1|zone=1|lastcpupid=0x7ff)
+page_type: f5(slab)
+raw: 04fff00000000240 ffff88801c841b40 ffffea0001856290 ffffea0001856190
+raw: ffff88806158d600 0000000800100009 00000000f5000000 0000000000000000
+head: 04fff00000000240 ffff88801c841b40 ffffea0001856290 ffffea0001856190
+head: ffff88806158d600 0000000800100009 00000000f5000000 0000000000000000
+head: 04fff00000000001 ffffffffffffff81 00000000ffffffff 00000000ffffffff
+head: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000002
+page dumped because: kasan: bad access detected
+page_owner tracks the page as allocated
+page last allocated via order 1, migratetype Unmovable, gfp_mask 0xd2820(GFP_ATOMIC|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC), pid 9391, tgid 9378 (poc), ts 123227323196, free_ts 0
+ set_page_owner include/linux/page_owner.h:32
+ post_alloc_hook+0xfe/0x140 mm/page_alloc.c:1853
+ prep_new_page mm/page_alloc.c:1861
+ get_page_from_freelist+0x110c/0x2fc0 mm/page_alloc.c:3941
+ __alloc_frozen_pages_noprof+0x263/0x2bc0 mm/page_alloc.c:5221
+ alloc_slab_page mm/slub.c:3278
+ allocate_slab mm/slub.c:3467
+ new_slab+0xa6/0x690 mm/slub.c:3525
+ refill_objects+0x271/0x420 mm/slub.c:7272
+ refill_sheaf mm/slub.c:2816
+ __pcs_replace_empty_main+0x373/0x630 mm/slub.c:4652
+ alloc_from_pcs mm/slub.c:4750
+ slab_alloc_node mm/slub.c:4884
+ __do_kmalloc_node mm/slub.c:5295
+ __kmalloc_noprof+0x66d/0x830 mm/slub.c:5308
+ kmalloc_noprof include/linux/slab.h:954
+ metadata_dst_alloc+0x26/0x90 net/core/dst.c:298
+ tun_rx_dst include/net/dst_metadata.h:144
+ __ip_tun_set_dst include/net/dst_metadata.h:208
+ tunnel_key_init+0xb01/0x1b90 net/sched/act_tunnel_key.c:451
+ tcf_action_init_1+0x46b/0x6c0 net/sched/act_api.c:1428
+ tcf_action_init+0x448/0xa20 net/sched/act_api.c:1503
+ tcf_action_add+0xf6/0x5d0 net/sched/act_api.c:2101
+[..]
+==================================================================
+
+Fix by moving dst_release() into a custom RCU callback that runs
+after the grace period, matching the lifetime of the containing
+params struct.  Readers in the datapath therefore always find a live
+rcuref when calling dst_clone().
+
+Fixes: 9174c3df1cd18 ("net/sched: act_tunnel_key: fix memory leak in case of action replace")
+Reported-by: zdi-disclosures@trendmicro.com
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Davide Caratti <dcaratti@redhat.com>
+Link: https://patch.msgid.link/20260711150537.7946-1-jhs@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/selftest_gt_pm.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/sched/act_tunnel_key.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/selftest_gt_pm.c b/drivers/gpu/drm/i915/gt/selftest_gt_pm.c
-index b9441217ca3d4d..f8f66beca5340b 100644
---- a/drivers/gpu/drm/i915/gt/selftest_gt_pm.c
-+++ b/drivers/gpu/drm/i915/gt/selftest_gt_pm.c
-@@ -15,9 +15,9 @@ static int cmp_u64(const void *A, const void *B)
- {
- 	const u64 *a = A, *b = B;
+diff --git a/net/sched/act_tunnel_key.c b/net/sched/act_tunnel_key.c
+index c79f23367dfb3e..0be95240b939e3 100644
+--- a/net/sched/act_tunnel_key.c
++++ b/net/sched/act_tunnel_key.c
+@@ -342,14 +342,20 @@ static const struct nla_policy tunnel_key_policy[TCA_TUNNEL_KEY_MAX + 1] = {
+ 	[TCA_TUNNEL_KEY_ENC_TTL]      = { .type = NLA_U8 },
+ };
  
--	if (a < b)
-+	if (*a < *b)
- 		return -1;
--	else if (a > b)
-+	else if (*a > *b)
- 		return 1;
- 	else
- 		return 0;
-@@ -27,9 +27,9 @@ static int cmp_u32(const void *A, const void *B)
+-static void tunnel_key_release_params(struct tcf_tunnel_key_params *p)
++static void tunnel_key_release_params_rcu(struct rcu_head *head)
  {
- 	const u32 *a = A, *b = B;
+-	if (!p)
+-		return;
++	struct tcf_tunnel_key_params *p = container_of(head, typeof(*p), rcu);
++
+ 	if (p->tcft_action == TCA_TUNNEL_KEY_ACT_SET)
+ 		dst_release(&p->tcft_enc_metadata->dst);
++	kfree(p);
++}
  
--	if (a < b)
-+	if (*a < *b)
- 		return -1;
--	else if (a > b)
-+	else if (*a > *b)
- 		return 1;
- 	else
- 		return 0;
+-	kfree_rcu(p, rcu);
++static void tunnel_key_release_params(struct tcf_tunnel_key_params *p)
++{
++	if (!p)
++		return;
++	call_rcu(&p->rcu, tunnel_key_release_params_rcu);
+ }
+ 
+ static int tunnel_key_init(struct net *net, struct nlattr *nla,
 -- 
 2.53.0
 
