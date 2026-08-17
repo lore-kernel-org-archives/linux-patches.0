@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F4D442390;
-	Mon, 17 Aug 2026 14:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D00044238F;
+	Mon, 17 Aug 2026 14:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976174; cv=none; b=Ha8l7KeoT6lOhbrFCoJkt2vwX8cDp/7jZ4jt/plyVgTVdTQ63eo/6AJN8NK2g1HMEOwJHHTDWBD+6F90DPSuRD1teVy2mh3q4N6/2NalJ5BUyr74GJ0DaN8pOiEsAZ5wzYlMKJwgD30Q9hDzV1+Xrlqxv1/H2N05MS1FmK/x0hI=
+	t=1786976177; cv=none; b=GAcG0Cy1wjj7zXojqeS8v/Q9DMtgvNbrB7Nm3Jsn+NiPih/xquOmZCW49KL8mgaKHWzDpr2d1WB1s60uMbwR3eVF13Cu16KCeRD52txs6cvaHSeXcEqOWQ2kmHiDJTcKZpvOwxpo79N1qJASbGrsM3JJ8hFu/YPJJQJPV43vTbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976174; c=relaxed/simple;
-	bh=+bOQvvRYL54iLs+JH+/JFvXh8B3pcn1/BKe1lFEbpkY=;
+	s=arc-20240116; t=1786976177; c=relaxed/simple;
+	bh=2bYKyDzKFeUpZA7zaJ4468UBRtVRl2r6g5jxV6DP6OE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RnwTWyVJv3gbMwQPzEpt5jkJUbT2/kY6iVxEFb6Hu7b8fNT/jCzeb7btOlyEcT2f2ATRa4BMe6s8Ce1/LpybD4d6CPaKNaRUJ2JP17cwjkNJrDKCYdMn6vSfpMgcaAv5vHoICcg2V1KVBrxVPQuthkFPiEBVk9Cq0T1Secpjl0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agBW+3Ya; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l5nkUtq4Rw+uE114NQgkhP6AMcs8MdH3pOwZ1My9HRUzHLyEqNNgNIPgWAlS5lJrPs+6UWOhb+KOFQKglK3x+9mlSXPG4WX6DLhq6k4cblJY9IbkvnIbUBdsYKt9EPds2+llrSVWdhRgOY8BLn9j5jrE6g4eVNzICXrusXeNKhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tCqIt3Jg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agBW+3Ya"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999D71F000E9;
-	Mon, 17 Aug 2026 14:16:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCqIt3Jg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F301F00A3A;
+	Mon, 17 Aug 2026 14:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976173;
-	bh=76UEaVw13QNGW0qWQH+udo2g3c2y0qKpC8wtrVxUDDY=;
+	s=korg; t=1786976176;
+	bh=0BSvWpboMOy0Bhc7yeVDxYU+uhLzGZldp7n2JjsQNDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=agBW+3YaAJtREnS7eHmgmrMRUydFkEeeWZg1XNAJNQ5+hgoTREwli3Cj5vGV3h5F1
-	 DvN8TVEdVWu0ePCevmpobfKM4YsMc5TPhdd1Afp164kRLOxsgDIfLVZ6LJBSyvJzhH
-	 X/P8ll0w5jOJVCQlfdXY3hAPkYHpWRIkMhRVQYlY=
+	b=tCqIt3JgIXjgholG7lbIwNixzQu7ihogslF8AV9SIzWLXQLKR6U/LwWMydg+5moeT
+	 EN8LplHRwPlJElYgm3AxOYvFG1DazcJ759H5ua9QYIB02Uw0GJQdbO6x47b4+n4CRt
+	 yxuS0BQWJEq4GZ6gRm5ZKzzjFCJNJpdfqKzDGBH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiangfeng Cai <caixiangfeng@bytedance.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Baoquan He <baoquan.he@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	Shuah Khan <shuah@kernel.org>,
-	Wei Yang <richard.weiyang@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 243/389] mm/hugetlb: fix list corruption in allocate_file_region_entries()
-Date: Mon, 17 Aug 2026 15:31:22 +0200
-Message-ID: <20260817132548.768826788@linuxfoundation.org>
+	Minhong He <heminhong@kylinos.cn>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 234/389] can: isotp: check register_netdevice_notifier() error in module init
+Date: Mon, 17 Aug 2026 15:31:13 +0200
+Message-ID: <20260817132548.391609040@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -56,77 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiangfeng Cai <caixiangfeng@bytedance.com>
+From: Minhong He <heminhong@kylinos.cn>
 
-commit dd9623f58ec702a07b2d67179d6fcea79c52231a upstream.
+[ Upstream commit ef09a13c5afac41a3c4b5f22b8572820d9e7518c ]
 
-allocate_file_region_entries() tops up resv->region_cache with freshly
-allocated file_region descriptors.  The allocation uses GFP_KERNEL, so
-resv->lock is dropped around it: the new entries are gathered on a
-stack-local list head, allocated_regions, and spliced into
-resv->region_cache once the lock is re-acquired.
+Register the netdevice notifier before can_proto_register() and check the
+return value. If protocol registration fails, unregister the notifier
+before returning the error.
 
-The splice used list_splice(), which moves the entries but does not
-re-initialize the source head, so allocated_regions is left pointing at an
-entry that now lives on resv->region_cache.  The top-up runs in a while
-loop that re-checks the cache deficit after re-acquiring the lock.  For a
-shared mapping the resv_map is shared by every mapper of the hugetlbfs
-inode, so a concurrent region_chg()/region_add()/region_del() on the same
-resv_map can consume cache entries during the unlocked window and force a
-second iteration.  That iteration calls list_add() on the stale head and
-corrupts the list; with CONFIG_DEBUG_LIST the __list_add_valid() check
-trips:
+Align isotp_module_init() with the reordering already done for raw.c
+(commit c28b3bffe49e ("can: raw: process optimization in raw_init()")) and
+bcm.c (commit edd1a7e42f1d ("can: bcm: registration process optimization
+in bcm_module_init()")).
 
-  list_add corruption. next->prev should be prev (ffffc900011ff7f8),
-  but was ffff88814c281460. (next=ffff88814c545640).
-  kernel BUG at lib/list_debug.c:31!
-   allocate_file_region_entries+0x191/0x420
-   region_chg+0x267/0x300
-   hugetlb_reserve_pages+0x387/0xc80
-   hugetlbfs_file_mmap+0x2ce/0x3f0
-   mmap_region+0x1348/0x1a80
-   do_mmap+0x85e/0xb90
-   vm_mmap_pgoff+0x18c/0x330
-   ksys_mmap_pgoff+0x2a1/0x3e0
-   do_syscall_64+0xd7/0x420
-
-Without CONFIG_DEBUG_LIST the bad list_add() silently links a kernel-stack
-address into resv->region_cache, leading to later use-after-free.
-
-This was observed as a real host panic on a dense KVM host where a QEMU
-guest-RAM hugetlbfs file was mapped MAP_SHARED by both QEMU and a separate
-SPDK/DPDK vhost-user target, generating concurrent region_* traffic on one
-shared resv_map.
-
-Use list_splice_init() so the source head is re-initialized empty after
-each splice, making the retry loop safe.
-
-Link: https://lore.kernel.org/20260713171456.300518-2-caixiangfeng@bytedance.com
-Fixes: d3ec7b6e09e5 ("mm/hugetlb: use list_splice to merge two list at once")
-Signed-off-by: Xiangfeng Cai <caixiangfeng@bytedance.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: Baoquan He <baoquan.he@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Wei Yang <richard.weiyang@linux.alibaba.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8d0caedb7596 ("can: bcm/raw/isotp: use per module netdevice notifier")
+Signed-off-by: Minhong He <heminhong@kylinos.cn>
+Link: https://patch.msgid.link/20260729085656.134523-1-heminhong@kylinos.cn
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/can/isotp.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -482,7 +482,7 @@ static int allocate_file_region_entries(
+diff --git a/net/can/isotp.c b/net/can/isotp.c
+index d493b66ae8d29..f23862b465ca6 100644
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -1827,13 +1827,18 @@ static __init int isotp_module_init(void)
  
- 		spin_lock(&resv->lock);
+ 	pr_info("can: isotp protocol\n");
  
--		list_splice(&allocated_regions, &resv->region_cache);
-+		list_splice_init(&allocated_regions, &resv->region_cache);
- 		resv->region_cache_count += to_allocate;
- 	}
++	err = register_netdevice_notifier(&canisotp_notifier);
++	if (err)
++		return err;
++
+ 	err = can_proto_register(&isotp_can_proto);
+-	if (err < 0)
++	if (err < 0) {
+ 		pr_err("can: registration of isotp protocol failed %pe\n", ERR_PTR(err));
+-	else
+-		register_netdevice_notifier(&canisotp_notifier);
++		unregister_netdevice_notifier(&canisotp_notifier);
++		return err;
++	}
  
+-	return err;
++	return 0;
+ }
+ 
+ static __exit void isotp_module_exit(void)
+-- 
+2.53.0
+
 
 
