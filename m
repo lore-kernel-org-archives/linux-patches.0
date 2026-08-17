@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D422EEE85;
-	Mon, 17 Aug 2026 15:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63B423AB9D;
+	Mon, 17 Aug 2026 15:07:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979259; cv=none; b=mt2/1WUtcJ7KZok4S4U7K87O7wBAVp2I7X0HWvW/wrATHjV2XU3fH/3doMvJbhu8VWTxkM2Ow39+mtBZbGMaHQWehpF8PF6KM5qMsucO9q0fzp+FnFTvvnEaRy5FuGWGCKUfSmIxGFRFrIyB1cVhswzPZs8wLcX3ImQuIdPsrKk=
+	t=1786979261; cv=none; b=VGkNf8VtytLMht54r19fT0q0Umkx/UehFyndAcGuU64jzsvrjyvcnaUfjEbK3NbJFPO7R955A1mJR9hTPYwinh53atpsTmitCHnYtuGyekgnmch+JEAH+G68TXqjo4E+UryJv2oTTqSowxGnnkYyS5xsnaOCBq0OakZ9PkPmvIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979259; c=relaxed/simple;
-	bh=LMX/r/iKmp+92tkms+i+vevFdQBMaWxRWXodmIs7n7U=;
+	s=arc-20240116; t=1786979261; c=relaxed/simple;
+	bh=l0szuyyGf3FQTXM+HHkHR4KJwJiIIhoglLu9rCSK3Nw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n78hSj04Fu5Da9KjuxmBQQ4sIWAJzUoxq8u7MxITpu51kGjCC3QWnTVtLTEuSGNqLrLrXkHBZzj0IUGHhccIzZfRY3tZqrHNhaYkdxf2J7txKRuOyQexeVsqTaZJxYUhVKQZO5KsLawQ1dSnTYY1yxuVkJ6lEb0ejmH2SWDBa3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AoiRrs9n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G1YUN4z4VsAPFn1f80cAvPU6QGKlHl1LYJAWbe+feBcALiZFJBTi71KxW58CEwlgPs/7101DsSyOP2rXFjsFhfnrfK3neSEVMRlrhyTlPl0ymk90CyrcwUxN/fOjcUYViShGKtNG7TT2gfFttkX34I2K46XTviShROLm8+KHGr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cz2AzJtu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AoiRrs9n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 603D21F000E9;
-	Mon, 17 Aug 2026 15:07:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cz2AzJtu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF461F000E9;
+	Mon, 17 Aug 2026 15:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979257;
-	bh=C2zlgYtny7P3C22qissqZyP+R6DUnozaMUbwqXNoIEA=;
+	s=korg; t=1786979260;
+	bh=sQ/MLcRgmte/xWF2V1hvJ8i2vzVQBka7/g2rD6aJcYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AoiRrs9nKLEMajj/kbeKoNTszDGUG/mIBASQyGuUmMl1gJh3RPiSYoZr1LNshxnkx
-	 l9zKIertD8tZZmiX3dBAboRYSw/eiXP7C/wiF0eItTkZRRIKxDDFiA2iJMZ2n16f4b
-	 2KU1AAI/lVdBuRE6SsUz3Z1gBoRpaNDoFG9oh8Y8=
+	b=Cz2AzJtuUNf4dhvRCLmdnXHFuHXGYOeFcGhofOHEca6SujXPd4oLOfXeC96tAHBHP
+	 5HP26996j4q63OHn6k913As0A6rVTYWp7djaCjL4NWfBWGHfZqI4n5IR6PnJUDInh1
+	 3THa/Nnaz6exlX2Ttdv75AfGkt58weRaaFIZ11mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pavan Chebbi <pavan.chebbi@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 164/609] net/mlx5e: Report zero bandwidth for non-ETS traffic classes
-Date: Mon, 17 Aug 2026 15:27:40 +0200
-Message-ID: <20260817132549.503013258@linuxfoundation.org>
+Subject: [PATCH 6.1 165/609] net/mlx5e: Reject unsupported CB Shaper TSA in ETS validation
+Date: Mon, 17 Aug 2026 15:27:41 +0200
+Message-ID: <20260817132549.538753971@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -56,49 +56,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexei Lazar <alazar@nvidia.com>
 
-[ Upstream commit ffb1873b2df11945b8c395e859169248675c91c5 ]
+[ Upstream commit 9173e1d3c7c7d49a71eee813091f9e834ec7cee5 ]
 
-The IEEE 802.1Qaz standard defines that bandwidth allocation percentages
-only apply to Enhanced Transmission Selection (ETS) traffic classes.
-For STRICT and VENDOR transmission selection algorithms, bandwidth
-percentage values are not applicable.
+Credit Based (CB) TSA is not supported by the mlx5 driver, so reject
+any configurations that specify it.
 
-Currently for non-ETS 100 bandwidth is being reported for all traffic
-classes in the get operation due to hardware limitation, regardless of
-their TSA type.
-
-Fix this by reporting 0 for non-ETS traffic classes.
-
-Fixes: 820c2c5e773d ("net/mlx5e: Read ETS settings directly from firmware")
+Fixes: 08fb1dacdd76 ("net/mlx5e: Support DCBNL IEEE ETS")
 Signed-off-by: Alexei Lazar <alazar@nvidia.com>
 Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://patch.msgid.link/20260717075125.1244877-2-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260717075125.1244877-3-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-index e29a8ed7e7ac13..0bc3ae071e8324 100644
+index 0bc3ae071e8324..1a73fa436a1368 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-@@ -158,6 +158,13 @@ static int mlx5e_dcbnl_ieee_getets(struct net_device *netdev,
+@@ -309,6 +309,14 @@ static int mlx5e_dbcnl_validate_ets(struct net_device *netdev,
+ 		}
  	}
- 	memcpy(ets->tc_tsa, priv->dcbx.tc_tsa, sizeof(ets->tc_tsa));
  
-+	/* Report 0 for non ETS TSA */
-+	for (i = 0; i < ets->ets_cap; i++) {
-+		if (ets->tc_tx_bw[i] == MLX5E_MAX_BW_ALLOC &&
-+		    priv->dcbx.tc_tsa[i] != IEEE_8021QAZ_TSA_ETS)
-+			ets->tc_tx_bw[i] = 0;
++	for (i = 0; i < IEEE_8021QAZ_MAX_TCS; i++) {
++		if (ets->tc_tsa[i] == IEEE_8021QAZ_TSA_CB_SHAPER) {
++			netdev_err(netdev,
++				   "Failed to validate ETS: CB Shaper is not supported\n");
++			return -EOPNOTSUPP;
++		}
 +	}
 +
- 	return err;
- }
- 
+ 	/* Validate Bandwidth Sum */
+ 	for (i = 0; i < IEEE_8021QAZ_MAX_TCS; i++) {
+ 		if (ets->tc_tsa[i] == IEEE_8021QAZ_TSA_ETS) {
 -- 
 2.53.0
 
