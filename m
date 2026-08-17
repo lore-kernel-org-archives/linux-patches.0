@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393353E0C5F;
-	Mon, 17 Aug 2026 14:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44D03DDB0D;
+	Mon, 17 Aug 2026 14:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976137; cv=none; b=QkD/iOQ0U4WIiaCwQjjy/gvYBAshoSRacD9E2LNHK2ymUsrzNpMLLOpcbTr/THa/udgB8iU6Lqi0iQ2j5Zu0pRPABc2X569G5kHCadcOJqU5V+R3aAQYJe2QmNnj29Jr605STTF/9h8+9IJjiZRyce8Q+/i+g45iG4mb96keS6g=
+	t=1786976140; cv=none; b=EZ5vjClmMyKtR7U6c0UUauU4rGxJxQk+DzKN0uwzs/EbhBPKL/rpzl/3uk2EftSoxMnRolp4Xk+Ho0eXaw5QD4zjlE9OBJAVsU34v9v/HfdZwagLjcpDV0TSfwDI0R4Zgj6s5dum6TSFClCEBCcmQagKiNKpBpJHJH0sse0LVM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976137; c=relaxed/simple;
-	bh=8It+jVi00QthE1/qvK8xSL3pQjueQejAd4CoubkTdro=;
+	s=arc-20240116; t=1786976140; c=relaxed/simple;
+	bh=0yOs8wtKa2omkEi658/mQc3LtUGBYqmhmZiLas/IfBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mSt3Z34V0ekSW8e4w+jRsqMUSC4yEgEuo1jzjsBIhmMmpmIo7s1cj4nhamd53xlnD5HPZE/tEDhUEHGmFMmYE3B5AHkHaJ8fYzmIbgk/SfwhSKX81WIzIQmogvzkb1CDWrpnPMyK0O+RJUPGoRG4gSAJFFydk1037WKgpEwIy24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KMKsP0KI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qV2reTpMZThPGtOzMJ8ByjhJbpZvvPqWYYwGa5zskKxs8U32J9BYOI9eKj0G+KH/tlZ0O23MVojrKFzJ0dOGip9q94tg/tRuu6Dm+X5LqtlVLeZoYsDcAHdqbB/LEBTyCSPPhFAa6iicxWjey76IQhQ6frv8V/xWbLruXGpoGPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PX/ZkjLM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KMKsP0KI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 546A21F00A3A;
-	Mon, 17 Aug 2026 14:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PX/ZkjLM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38ED71F000E9;
+	Mon, 17 Aug 2026 14:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976135;
-	bh=orjA8sBKI5vOV/ZJJvLx3auj7e7jU5IakrwdVMQ1SK0=;
+	s=korg; t=1786976138;
+	bh=pKJwBgYCqfF69Gb8LgJY6UWbfe40MEPTY0bVeQOL87k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KMKsP0KII4z5y4No/0Fjqb2zyqD+cNI6UJ6EukQuhnpxt7Ns3HFvhRsG7Na0FetV9
-	 SD/LAbtAJATZL6iN85yHAiqw/aYD+fr9bE0DKNHdu7WTakULbb6J+ZchpWNESmrDuN
-	 NtXq68HDuf78nz/+3I0LZY6NtFNdyuJFAMRV7dcs=
+	b=PX/ZkjLM4uZw1iOq7uugQ7yW4SzN89mDA9IPw92ZMMpSLX38g2cMQcz2UQ3JlxBOB
+	 iuoBBis68D5RS77BmbBYU8mTIEKZmkE7BmZig3I4Rl0x+XE83PNwIcaJE/d/lUNKPV
+	 lURCBxbWr4bWRt8tD4Tm8HbknhS9Oqkj1pp85hiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 268/389] net: ipv6: clear suppressed fib6 rule result
-Date: Mon, 17 Aug 2026 15:31:47 +0200
-Message-ID: <20260817132549.622796081@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 5.10 269/389] powerpc/ps3: Fix map failure path in dma_ioc0_map_pages()
+Date: Mon, 17 Aug 2026 15:31:48 +0200
+Message-ID: <20260817132549.664894230@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -53,43 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 6aea62e433fe1b586202a5fee8b5807ce635e1d7 upstream.
+commit 0bb024f11d120abff3e8db9144a585b9d7fb8459 upstream.
 
-fib6_rule_suppress() drops a suppressed route with ip6_rt_put_flags(),
-but leaves res->rt6 pointing at the released rt6_info.
+If lv1_put_iopte() fails in dma_ioc0_map_pages(), the error path
+decrements iopage but keeps using the failed mapping's offset. As a
+result, it repeatedly tries to invalidate the failed IOPTE slot and
+leaves the already installed IOPTEs valid.
 
-If no later rule supplies a replacement, fib6_rule_lookup() still sees
-res.rt6 and returns that stale dst to its caller. A suppressing rule can
-therefore leak a released route back to rt6_lookup(), and the next put
-hits rcuref_put_slowpath() from dst_release().
+Recompute offset and invalidate the installed IOPTEs instead.
 
-Clear res->rt6 when suppressing the route so suppressed lookups fall
-through to the null dst instead of reusing the released one.
-
-Fixes: cdef485217d3 ("ipv6: fix memory leak in fib6_rule_suppress")
+Fixes: 6bb5cf102541 ("[POWERPC] PS3: System-bus rework")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Ren Wei <enjou1224z@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/4b8acb7787d54e440155585dd32ebdf0bef7d122.1784710966.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260711130931.740719-3-thorsten.blum@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/fib6_rules.c |    1 +
+ arch/powerpc/platforms/ps3/mm.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/net/ipv6/fib6_rules.c
-+++ b/net/ipv6/fib6_rules.c
-@@ -300,6 +300,7 @@ INDIRECT_CALLABLE_SCOPE bool fib6_rule_s
+--- a/arch/powerpc/platforms/ps3/mm.c
++++ b/arch/powerpc/platforms/ps3/mm.c
+@@ -614,6 +614,7 @@ static int dma_ioc0_map_pages(struct ps3
  
- suppress_route:
- 	ip6_rt_put_flags(rt, flags);
-+	res->rt6 = NULL;
- 	return true;
- }
- 
+ fail_map:
+ 	for (iopage--; 0 <= iopage; iopage--) {
++		offset = (1 << r->page_size) * iopage;
+ 		lv1_put_iopte(0,
+ 			      c->bus_addr + offset,
+ 			      c->lpar_addr + offset,
 
 
