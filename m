@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C449A3EC82D;
-	Mon, 17 Aug 2026 14:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0FD303C97;
+	Mon, 17 Aug 2026 14:10:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975840; cv=none; b=tfeaXSNAHuz79mSm/mqNxqID54ma/9fDv4/L2ipAEcGtH+p4wBKUAOg6aK+DQJVs98Elu0dn1ogxbrcJdrJEE19qMf4UgCX3kaOxahtZuD4xL4OnTwdi2QMUUmE/IV1ZuDikEOvB60+Z7S3Ye/m3mRpes4j81DHNsC8S6EU2ed4=
+	t=1786975842; cv=none; b=LlhbQZ/z4pAR3LrKzXySG4s1WVWuXXVty7ISlV+aJ8iTWDtaBDFkHsariIcMNUK7F70GEfRHNpn8Kf8LMqftNp+CM61IDE6s+uHWRNhe5LLFLsbZQC9liNZXvpmA+nBGsKf37SbbMkVd+r5TkxEnJPhdrO6ZCTa4rsEA4gSJunI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975840; c=relaxed/simple;
-	bh=rfeKh57d1yS9/nNeg+rK/PM3IMnhA7qgT86vTcPWTlc=;
+	s=arc-20240116; t=1786975842; c=relaxed/simple;
+	bh=v+HYmy72dAZTfPVrW4iaVRnMswS9Y2RchKrD9nBuUtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u6AKqnbLX7ichR5C7dfuCgRMccPek6Oln9IE8H/QGudmJTTtUjW4QPJ8nJ/b4lUHdO2xfLPKVUbbt30v6kYdDx5VFvWhCWw/PErre5OOqbM28d01in5Hc0n+UY1aq+fBeoYe1jh/LwazZjjRVX/Q6c6ZJh3iwNWM+BBAaoZnF8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DL3cYpaX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kjuxGZY2qbSYjW/cE5rZXOb7TWt1aH+phZqjEyjosZA5yx/Yir2CQutpnp/aBnQm8k/EU3omoPDwMWxZyNb6TxdSJuEYSMo1I//FmWHACGtPX7Jq6YjldDUTOQy0s5oaXTmVoqx7IQZbiKlnQv2TluE0OO4vOlm0G3ey6aon3OU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tb+P6uPO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DL3cYpaX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28E681F000E9;
-	Mon, 17 Aug 2026 14:10:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tb+P6uPO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8441F000E9;
+	Mon, 17 Aug 2026 14:10:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975838;
-	bh=8lzEgq5IoMwzowb9z+f19ZY2A2ISv61boyxlzywloCc=;
+	s=korg; t=1786975841;
+	bh=9Gh1FxyKjL6boUND48mPp7q4LAXh5QAOSzn2wBHnxT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DL3cYpaXBddAzxLrWtUpF219uKFpxJUyZiGs/6DlWkmVpZmxJVC/CVfj953z5NSxo
-	 lWoBIUa01vGQyv+5WSqR1nineNXrj2IqpRV8vLahqwu3qOa1RlIwQVO6+h3o/z6Tqk
-	 3WZKBSKM5/NjaN/of5AEcXu3c5o7Ow+TZd/D4lF0=
+	b=tb+P6uPOfHDVmhbCLD+/6xY3/hSJarRlfJXF1t55g8ZZKMemORrGn3lQL823EIZcR
+	 y3bSsb82bT+rdaVOns0lpEL353h24cU1LcwQ4egIV3e7HKDo8vwkWpswsMGzdO7E1Q
+	 c9iwyeGWD8zN76MCaLpy7lEn999P/DE5kLHxAsQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jori Koolstra <jkoolstra@xs4all.nl>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 5.10 167/389] binfmt_elf_fdpic: only honour the first PT_INTERP
-Date: Mon, 17 Aug 2026 15:30:06 +0200
-Message-ID: <20260817132545.693860257@linuxfoundation.org>
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 5.10 168/389] iommu/vt-d: Disallow SVA if page walk is not coherent
+Date: Mon, 17 Aug 2026 15:30:07 +0200
+Message-ID: <20260817132545.732121650@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -50,47 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-commit 3349ef6a366a61d631f6a263d12cea240957719d upstream.
+commit 780dfed688622ea01be3c9c2c55eec2207f05e04 upstream.
 
-The program header scan handles PT_INTERP from a switch nested in the
-scan loop, so its break leaves the switch and not the loop. A binary
-carrying more than one PT_INTERP runs the case again and overwrites both
-interpreter_name and interpreter. The previous name allocation leaks and
-so does the previous interpreter reference, along with the write denial
-open_exec() took on it. The denial is never released, so the file stays
-unwritable for as long as the system runs.
+Hardware implementations report Scalable-Mode Page-walk Coherency Support
+via the SMPWCS field in the extended capability register. If the hardware
+does not support page-walk coherency, a clflush is required every time
+the page table entries (which are walked by the IOMMU hardware) are
+updated.
 
-An unprivileged caller reaches this with a crafted binary and repeats it
-at will. binfmt_elf stops at the first PT_INTERP. Do the same here.
+In the SVA case, page tables are managed by the CPU mm core, not by the
+IOMMU driver. Because the IOMMU driver has no way of knowing whether the
+CPU page table management code has ensured coherency via clflush, the
+driver must deny SVA if the hardware does not support coherent paging.
 
-The flaw dates back to the driver's introduction in the pre-git history
-tree introduced in v2.6.11 by 91808d6ebe39 ("[PATCH] FRV: Add FDPIC ELF
-binary format driver").
-
-Link: https://patch.msgid.link/20260721-gezittert-medium-kreide-b41fc1f0277e@brauner
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: ff3dc6521f78 ("iommu/vt-d: Fix CPU and IOMMU SVM feature matching checks")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jori Koolstra <jkoolstra@xs4all.nl>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_elf_fdpic.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/iommu/intel/svm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/binfmt_elf_fdpic.c
-+++ b/fs/binfmt_elf_fdpic.c
-@@ -231,6 +231,10 @@ static int load_elf_fdpic_binary(struct
- 	for (i = 0; i < exec_params.hdr.e_phnum; i++, phdr++) {
- 		switch (phdr->p_type) {
- 		case PT_INTERP:
-+			/* elf ABI allows only one interpreter */
-+			if (interpreter_name)
-+				continue;
-+
- 			retval = -ENOMEM;
- 			if (phdr->p_filesz > PATH_MAX)
- 				goto error;
+--- a/drivers/iommu/intel/svm.c
++++ b/drivers/iommu/intel/svm.c
+@@ -98,7 +98,7 @@ static inline bool intel_svm_capable(str
+ 
+ void intel_svm_check(struct intel_iommu *iommu)
+ {
+-	if (!pasid_supported(iommu))
++	if (!pasid_supported(iommu) || !ecap_smpwc(iommu->ecap))
+ 		return;
+ 
+ 	if (cpu_feature_enabled(X86_FEATURE_GBPAGES) &&
 
 
