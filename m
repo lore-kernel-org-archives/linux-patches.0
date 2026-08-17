@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1673540F8DF;
-	Mon, 17 Aug 2026 14:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47AE43BDCD;
+	Mon, 17 Aug 2026 14:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975889; cv=none; b=B3sh+IxbeYwteV7rVvBSj6sKdyLZt0Zt3zfWGlP533pxl/hi65zjGw5de7r51ZVlgyMEKcblKMQQXsPXV1Lwkvro/sojiYye3iqWhRQfkYwGNW8RAuLaebk1+UYFiDtmMip9kabMS6dRbGfOh9v3GcNPAaoi8hZ8Z4YZVmk+1+Y=
+	t=1786975891; cv=none; b=UiPEeD7UZX+A5D9usNw03fBT5O1sw+oFUrQXrOVQc8QbBTQ4vciOUvk0NT15bkSV8lSk9IKA+1BzMW79lQMVT76HC/QGaOd9gNt4qktWNw/EO5xsChAmGqhd9xOvxN2m+8KWAgscuh8qbr0zqpSYP07LcNXOeQikqEub/NnsS/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975889; c=relaxed/simple;
-	bh=6Yb75j4qxwjuKOhN4aARQ1id+1Z+9lEIwaQlR/nGfos=;
+	s=arc-20240116; t=1786975891; c=relaxed/simple;
+	bh=ZBdHRwVn/LRkpdYVZhZ/CHav1UHpveXiW01KzpTGbyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HXxa5YHYqR5D3aWiVkqBpcP0gZ6Y9VRPhqZUJyHCbmfgM6QaMwdURiwbpYK0Lrf8E6QTtl7+EU1pK3RBSXJatfsbRCH7wlbM5OhqLQCVGq+rqhycSVHfvOeXJ5JGKOigOVYCzk+kzqbgknMiwbSB1ZZ4psxC4Fjwesc5WhJdd6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBwRfyTn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mxU0GceZp5gs+uFwAZn/tjOnWrR3N3RxJEvizGJjl5p/rQiM7lmPbmK+0X9Iz8NNv69PrHKkxMzTIFaa6oVznCrFAvQzzZhkT1Lzk53zDy4Ckcztk0AXgnTyr3XseSujgEGawlpRAeQ1f34WA+bMblVxvyzB0Wx41m9Sogac/4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogif0Z0z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBwRfyTn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 301671F000E9;
-	Mon, 17 Aug 2026 14:11:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogif0Z0z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D141F000E9;
+	Mon, 17 Aug 2026 14:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975887;
-	bh=TgjyRIgD3N5pP8SG0D6Vo0HadboHrYptSGv3YfyXGYM=;
+	s=korg; t=1786975890;
+	bh=Lp5aY4Dc7jIw5z01g3CI3RcFUcxYVgexpLO5FZcun80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hBwRfyTnOcwdtzur3UWf3upEJd17tO/056BT3bfxeDw+HD9KXQR37lAsbrO7eMlOH
-	 DfuhCoGmzfWyTiBXsA5CH16LoDsFmRCyE48Y1+pKW19mGzVlxO9fZ6xjv9x8g+ZGMd
-	 WfRil6a1izYWjAan7ILOdzmVdSUPOngqrKnBC+qI=
+	b=ogif0Z0zrJgqx9sjXvNZthNilnE7I+0LT1rlZUMk1EkA2XmDofR4Tk2/sGuWxYZ7s
+	 VDoFuG6SHdDu8pRA5VaUfajZvSOKWgQjd+W9/kxEZgvDT0+Kq6Xbr6nKe+72BCpUox
+	 FBDLS/dWRI1cpZYOCKeaoozinhO+6sZqeDglK8gA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Breno Leitao <leitao@debian.org>,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 182/389] tipc: clear sock->sk on the failed-insert path in tipc_sk_create()
-Date: Mon, 17 Aug 2026 15:30:21 +0200
-Message-ID: <20260817132546.284470423@linuxfoundation.org>
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.10 183/389] drm/amdgpu/gfx10: replace BUG_ON() with WARN_ON()
+Date: Mon, 17 Aug 2026 15:30:22 +0200
+Message-ID: <20260817132546.325177873@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -53,82 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit ba0533fc163f905fe817cfabdf8ed4058da44800 upstream.
+commit d06c4173a7c38c7a39e98859f839ce714c7af2c9 upstream.
 
-When tipc_sk_create() fails to insert the new socket (tipc_sk_insert()
-returns non-zero), its error path frees the sk with sk_free() but leaves
-sock->sk pointing at the freed object:
+There's no need to crash the kernel for these cases.
 
-	if (tipc_sk_insert(tsk)) {
-		sk_free(sk);
-		pr_warn("Socket create failed; port number exhausted\n");
-		return -EINVAL;
-	}
-
-This is harmless for plain socket(): the syscall layer clears sock->ops
-before releasing, so tipc_release() is never called. It is not harmless
-on the accept() path. tipc_accept() creates the pre-allocated child
-socket with tipc_sk_create(net, new_sock, 0, kern); on failure it leaves
-new_sock->sk dangling and new_sock->ops non-NULL, and do_accept() then
-fput()s the new file, so __sock_release() -> tipc_release() runs
-lock_sock(new_sock->sk) on the freed sk -- a use-after-free write of the
-sk_lock spinlock.
-
-tipc_release() already guards this exact "failed accept() releases a
-pre-allocated child" case with "if (sk == NULL) return 0;", but the
-guard is bypassed because tipc_sk_create() left sock->sk non-NULL
-(dangling) rather than NULL.
-
-Clear sock->sk on the failed-insert path so the existing tipc_release()
-NULL check fires and the use-after-free is avoided.
-
-The tipc_sk_insert() failure is reached when the per-netns socket
-rhashtable hits its max_size (tsk_rht_params.max_size = 1048576, ~2M
-elements) -- i.e. once a netns holds ~2M TIPC sockets every insert
-returns -E2BIG.
-
-  BUG: KASAN: slab-use-after-free in lock_sock_nested (net/core/sock.c:3839)
-  Write of size 8 at addr ffff8880047cdc38 by task init/1
-   lock_sock_nested (net/core/sock.c:3839)
-   tipc_release (net/tipc/socket.c:638)
-   __sock_release (net/socket.c:710)
-   sock_close (net/socket.c:1501)
-   __fput (fs/file_table.c:512)
-  Allocated by task 1:
-   sk_alloc (net/core/sock.c:2308)
-   tipc_sk_create (net/tipc/socket.c:487)
-   tipc_accept (net/tipc/socket.c:2744)
-   do_accept (net/socket.c:2034)
-  Freed by task 1:
-   __sk_destruct (net/core/sock.c:2391)
-   tipc_sk_create (net/tipc/socket.c:504)
-   tipc_accept (net/tipc/socket.c:2744)
-   do_accept (net/socket.c:2034)
-
-Fixes: 00aff3590fc0 ("net: tipc: fix possible refcount leak in tipc_sk_create()")
+Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit ac6f00beb658239bced4aaed9efbb04a35348d48)
 Cc: stable@vger.kernel.org
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260714131939.1255974-1-4ncienth@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/socket.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c |   13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
---- a/net/tipc/socket.c
-+++ b/net/tipc/socket.c
-@@ -490,6 +490,7 @@ static int tipc_sk_create(struct net *ne
- 	tipc_set_sk_state(sk, TIPC_OPEN);
- 	if (tipc_sk_insert(tsk)) {
- 		sk_free(sk);
-+		sock->sk = NULL;
- 		pr_warn("Socket create failed; port number exhausted\n");
- 		return -EINVAL;
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
+@@ -3437,7 +3437,7 @@ static void gfx_v10_0_wait_reg_mem(struc
+ 			   WAIT_REG_MEM_ENGINE(eng_sel)));
+ 
+ 	if (mem_space)
+-		BUG_ON(addr0 & 0x3); /* Dword align */
++		WARN_ON(addr0 & 0x3); /* Dword align */
+ 	amdgpu_ring_write(ring, addr0);
+ 	amdgpu_ring_write(ring, addr1);
+ 	amdgpu_ring_write(ring, ref);
+@@ -7811,7 +7811,7 @@ static void gfx_v10_0_ring_emit_ib_gfx(s
  	}
+ 
+ 	amdgpu_ring_write(ring, header);
+-	BUG_ON(ib->gpu_addr & 0x3); /* Dword align */
++	WARN_ON(ib->gpu_addr & 0x3); /* Dword align */
+ 	amdgpu_ring_write(ring,
+ #ifdef __BIG_ENDIAN
+ 		(2 << 0) |
+@@ -7846,7 +7846,7 @@ static void gfx_v10_0_ring_emit_ib_compu
+ 	}
+ 
+ 	amdgpu_ring_write(ring, PACKET3(PACKET3_INDIRECT_BUFFER, 2));
+-	BUG_ON(ib->gpu_addr & 0x3); /* Dword align */
++	WARN_ON(ib->gpu_addr & 0x3); /* Dword align */
+ 	amdgpu_ring_write(ring,
+ #ifdef __BIG_ENDIAN
+ 				(2 << 0) |
+@@ -7879,9 +7879,9 @@ static void gfx_v10_0_ring_emit_fence(st
+ 	 * aligned if only send 32bit data low (discard data high)
+ 	 */
+ 	if (write64bit)
+-		BUG_ON(addr & 0x7);
++		WARN_ON(addr & 0x7);
+ 	else
+-		BUG_ON(addr & 0x3);
++		WARN_ON(addr & 0x3);
+ 	amdgpu_ring_write(ring, lower_32_bits(addr));
+ 	amdgpu_ring_write(ring, upper_32_bits(addr));
+ 	amdgpu_ring_write(ring, lower_32_bits(seq));
+@@ -7917,9 +7917,6 @@ static void gfx_v10_0_ring_emit_fence_ki
+ {
+ 	struct amdgpu_device *adev = ring->adev;
+ 
+-	/* we only allocate 32bit for each seq wb address */
+-	BUG_ON(flags & AMDGPU_FENCE_FLAG_64BIT);
+-
+ 	/* write fence seq to the "addr" */
+ 	amdgpu_ring_write(ring, PACKET3(PACKET3_WRITE_DATA, 3));
+ 	amdgpu_ring_write(ring, (WRITE_DATA_ENGINE_SEL(0) |
 
 
