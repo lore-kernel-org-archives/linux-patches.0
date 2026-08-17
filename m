@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9703F8EBE;
-	Mon, 17 Aug 2026 15:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D613D7D70;
+	Mon, 17 Aug 2026 15:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980502; cv=none; b=q3p7EIYHMxI7b8sZOscTcaBpOSajQx/RVng/bk7aLeyWEdca8CM6xIsWD7AWLt3fvCRIoMcU6h5lvpXgsxmkoy1riv3NmkV/rNw41BiK+8KpLcF1iDyesp7pRlDvitQmFuyZl6R8VOng6VYyS8yXU/6V7Vc4mBIK3T/H5EsL9Xo=
+	t=1786980505; cv=none; b=rwwsjvEB3+e1lg/WdjFEZi+zCl59kyfeKJDOGzJeskxuf8rmzF9HbHzmzP5S70bBizYHS/ueOS5MMBz0SEo4jc+yvQ+2HKq0lOgf+k3PKin5gFF8VU/UnM/0fCzUPgrO6TOMfqSS1Y2K8t8eNk07OCl3pRsHwuV+X83pE0x3mUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980502; c=relaxed/simple;
-	bh=E6hALF1fv+qzd4sJGG0blqvbMkeItLzIo179450i57c=;
+	s=arc-20240116; t=1786980505; c=relaxed/simple;
+	bh=fFpksEoAW+eu3Sf/ct+NRRZ8cTztaYHZMoNpW81wbgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SbHmWQRqKXjLK3vnlAgcMac9xBNo5CfADF02s1QBy/SMlJd9Inwuvu8fgj+kG/BegbqAY9ml6tzQ/lBAF5DHDjgX4wkkEuyVRMRQSLjd6PpjLBCCKg/brEYSnBp9kGCIk2Ttg8hwHWU3YSKFMQgnfY3sNX/xkJBAdFcqdKws4V0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GtTgIFKe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aXw43xJyeHzaMW2YRSzj2r93Vr/IeAZ2l80uzgn8v1Wx8Um5N9wdRv+UdmSgZP70uuqo8PVo7gXM8jxpugUjwgueWF2XL1NEgqXrzQ8AMCRcuhporK3yKpqgblUh1xkJA0FwGSmGDFR2owpjziBSyCMYbY55Ysw8DRHZ5xlg444=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+cw3lYj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GtTgIFKe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21C111F000E9;
-	Mon, 17 Aug 2026 15:28:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+cw3lYj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0090B1F000E9;
+	Mon, 17 Aug 2026 15:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980501;
-	bh=vMw24xb56vubzMoXXd/ypu5ccSWkFBWh2MU85+xyHiU=;
+	s=korg; t=1786980504;
+	bh=we084uJr+yMIHrtjmfJLXV4rygoQ6VVmTOH1aZK1bN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GtTgIFKebZ9V9vZqFE8IJfqm1gK6h8okW9DU+KtLKsK2Jbsinb+fnfpPVokTnizOW
-	 LibB5yS0fvKcVqp7Abpkqr2BgNUF8qFV+tUbjxbqfqPJsemBU4TV7Wb72ls3+yRNeq
-	 aw87oUADsZPa0S94YbAVQbNToc0/8L+Dao7JeglM=
+	b=p+cw3lYj9udWIBZm28eW1pWDMnp5lYI+P3Iu02LDUt5CWyIYAjXmjdr8r/Mu9oT/g
+	 NVYdFUWxCW9lu9zog4NU3OYETbKu+AqtAZiazB1h3+kpnYfs7GqUQyCFSjuj6RYkv+
+	 rZRwyVmFrBXNmmta/EH8lVQdYx8zws4WsMl6DMuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmad Byagowi <ahmadexp@gmail.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 595/609] ptp: ocp: Fix board ID over-read
-Date: Mon, 17 Aug 2026 15:34:51 +0200
-Message-ID: <20260817132603.558797515@linuxfoundation.org>
+	Tengda Wu <wutengda@huaweicloud.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.1 596/609] ring-buffer: Use current_context for safe per-CPU buffer swap
+Date: Mon, 17 Aug 2026 15:34:52 +0200
+Message-ID: <20260817132603.587305501@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,44 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmad Byagowi <ahmadexp@gmail.com>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-commit 6b69f2ef10cdb018c0b127a7cab88e590bbddba4 upstream.
+commit f27bdc43077e4fcb5557dfc315ee8d91e741f483 upstream.
 
-The EEPROM board ID is a fixed 13-byte field and is not guaranteed to
-contain a NUL terminator. Passing it directly to
-devlink_info_version_fixed_put() treats it as a C string and may read
-beyond the field.
+The ring_buffer_swap_cpu() function currently checks the per-CPU
+committing counter to determine if a buffer is actively being written to
+before performing the swap. However, there exists a race window where
+this check can be bypassed:
 
-Format at most OCP_BOARD_ID_LEN bytes into the existing local buffer
-before reporting the ID. Use a precision limit because the snprintf()
-output size alone does not bound the source string scan.
+    ring_buffer_lock_reserve
+        cpu_buffer = buffer->buffers[cpu];       // cpu_buffer_a
+        rb_reserve_next_event
+            rb_start_commit // inc committing
+            if (unlikely(READ_ONCE(cpu_buffer->buffer) != buffer)) {...}
+            __rb_reserve_next
+                rb_move_tail
+                    rb_end_commit(cpu_buffer);   // dec committing => 0
+                    /* interrupt hits here, successfully swaps! */
+                    local_inc(&cpu_buffer->committing);
 
-Fixes: 0cfcdd1ebcfe ("ptp: ocp: add nvmem interface for accessing eeprom")
+    ring_buffer_unlock_commit
+        cpu_buffer = buffer->buffers[cpu];      // cpu_buffer_b
+        rb_commit
+            rb_end_commit
+            RB_WARN_ON(cpu_buffer, !local_read(&cpu_buffer->committing))
+                                                // triggers warning
+
+The committing counter can temporarily drop to 0 during a single write
+operation (within rb_move_tail), creating a window where swap can
+succeed even though the write is still in progress. This leads to
+inconsistent buffer state and triggers the RB_WARN_ON in rb_commit().
+
+Replace the committing counter check with current_context checks, which
+are set at the entry of ring_buffer_lock_reserve() and remain valid
+throughout the entire write operation, providing a reliable indicator of
+buffer busy state during swap.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Ahmad Byagowi <ahmadexp@gmail.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20260804210751.48248-1-ahmadexp@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4239c38fe0b3 ("ring-buffer: Process commits whenever moving to a new page.")
+Link: https://patch.msgid.link/20260803005640.2445666-2-wutengda@huaweicloud.com
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ptp/ptp_ocp.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/ptp/ptp_ocp.c
-+++ b/drivers/ptp/ptp_ocp.c
-@@ -1483,9 +1483,11 @@ ptp_ocp_devlink_info_get(struct devlink
- 	if (err)
- 		return err;
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -5457,7 +5457,7 @@ int ring_buffer_swap_cpu(struct trace_bu
+ {
+ 	struct ring_buffer_per_cpu *cpu_buffer_a;
+ 	struct ring_buffer_per_cpu *cpu_buffer_b;
+-	int ret = -EINVAL;
++	int ret = -EBUSY;
  
-+	snprintf(buf, sizeof(buf), "%.*s", OCP_BOARD_ID_LEN,
-+		 (const char *)bp->board_id);
- 	err = devlink_info_version_fixed_put(req,
- 			DEVLINK_INFO_VERSION_GENERIC_BOARD_ID,
--			bp->board_id);
-+			buf);
- 	if (err)
- 		return err;
+ 	if (!cpumask_test_cpu(cpu, buffer_a->cpumask) ||
+ 	    !cpumask_test_cpu(cpu, buffer_b->cpumask))
+@@ -5493,10 +5493,10 @@ int ring_buffer_swap_cpu(struct trace_bu
+ 	atomic_inc(&cpu_buffer_a->record_disabled);
+ 	atomic_inc(&cpu_buffer_b->record_disabled);
  
+-	ret = -EBUSY;
+-	if (local_read(&cpu_buffer_a->committing))
++	/* Do not swap if either buffer is in the process of writing */
++	if (cpu_buffer_a->current_context)
+ 		goto out_dec;
+-	if (local_read(&cpu_buffer_b->committing))
++	if (cpu_buffer_b->current_context)
+ 		goto out_dec;
+ 
+ 	/*
 
 
