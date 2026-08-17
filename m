@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7828C4399C4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4078943B3E5;
 	Mon, 17 Aug 2026 13:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974558; cv=none; b=J5RvFIhm5IvCBIDXZqvKpmy+IqzXQ2Y34YhHtCEIwT6yuwvXkkgpeNBr8WLluoMD4FA42MoGeuUPZyAMM1DD/PhCMwKKuerMChkA5gTGGfqyXcn56z203DtBl8NJKIYPpKcjk/xj/cGfOiKbmWxAFe5C8kY+OIIED6/gikZy3jg=
+	t=1786974559; cv=none; b=WP21OsKX6ihCySMUQWGNedCl76sQAs8NqO1VDGEnI2TnKJ5q3rgb3SRq0SjhMvGxNhYBt2m8CHw2Cp5OC7s3Bvh19KJNdbHH8epdsK+ksYhttQWEqrAXBAwJdeB5l34XaQmWdoDTEhZ2T6OmuxxUPg0gsLwYmn7h2qXh+5Q8GRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974558; c=relaxed/simple;
-	bh=wsCuJ5MX6TTe5DSf67QSoOFP854AskKULbFgqwWw57M=;
+	s=arc-20240116; t=1786974559; c=relaxed/simple;
+	bh=Zvf9hQqHDC/dWXiOOqH9YtRxLopo85BFw/ZFl2C6P/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=auXLdsjJRMwgSJvDRaqzZJ4OZWDRPNpzvadZidXWFwQNhCMMCCv2bmno0sTxiTaLttThJSWpYrCgIE8ZcgKcO2MmRbtZeOJvJgoejRi3TgHJ9RYIZNo3uULf/bYeXnvZ5IXR2ZYAXOv3OgSPAgSzPeCAoRCJHCjck8lFeIoMae4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+97q1Ed; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NUwyb1lz5Fz7XHgnMBMOMPJ8fnD/PSHmMzpmHGe/jjAS2/+09qWluk3za5a/bcA+/KLvoScqyLUjJpqtQuQTHTBPXBVIhNO7ij0C5s/6Gg38PHB5z1RNjRlqX/vUbH6i9nRG4lKcynsTSBWlOxNSCrJPTd6dDj1shQu3/E7cTsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkX69pkX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+97q1Ed"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC711F00A3D;
-	Mon, 17 Aug 2026 13:49:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkX69pkX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E068D1F00A3A;
+	Mon, 17 Aug 2026 13:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974555;
-	bh=1PTtydbF1G719oCtcAVf1FABlwMABfIIuOuPB4E4TWc=;
+	s=korg; t=1786974552;
+	bh=TIuohM5ZE1hnNTc/SDQRVUK0rqE2fOAec/QGhKjYzMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b+97q1EdnWXuwtm7T4whsgfQ28bWQjKaEzSWBUpZ/m8wZ13xpZm4FctRQvLxvbutW
-	 ZR1AmBTqDlPJe9BNbHcWCf3grQm/xKNwlXlYSeIncKLx+yo6Tu4zfT8o0tvT+KdcFx
-	 fvllkKM+ueact9cNd4eKwNecY2m3+czmsidRBQlQ=
+	b=pkX69pkXUzUC9+frBlLFeJSel/sb3R69lYXQRPdq23VLy8anleqODpSankSEvFjgj
+	 +5mUnZelMh0qvq0Y/P79hmdncCyee3dD21BhtReqkz9ROAbd512mIvuNBxLkBYkDUc
+	 +Fl2WNeGb49gk3pJIlpGgW+0/vPqty7Kra3iVXyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.1 245/271] eventfs: Use children field for rcu head and add memory barriers
-Date: Mon, 17 Aug 2026 15:32:50 +0200
-Message-ID: <20260817132546.821248538@linuxfoundation.org>
+Subject: [PATCH 7.1 244/271] eventfs: Fix use-after-free in eventfs_remove_rec()
+Date: Mon, 17 Aug 2026 15:32:49 +0200
+Message-ID: <20260817132546.783242205@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -51,95 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-commit f0ece16ffca7384787b692431961ce202907acf5 upstream.
+commit fd73b691702170d37d66f4b0278530cea8ed419a upstream.
 
-When an eventfs inode is freed, it sets ei->is_freed and then uses its
-ei->list to add it to the srcu link list as the list field is a union with
-the rcu list head. As the ei->list is used to iterate over an SRCU
-protected list without taking the eventfs_mutex, there's nothing stopping
-the iteration over that list to see the ei->rcu instead of the ei->list
-and it will read a corrupt target.
+eventfs_remove_rec() recursively removes the child at the current loop
+position. After the recursive call returns, list_for_each_entry() advances
+by reading list.next from the removed child.
 
-To fix this, change the union of the rcu list head with the children list.
-On freeing the eventfs inode, set the is_free and execute a smp_wmb()
-before adding the eventfs inode to the SRCU list.
+If free_ei() drops the final reference, release_ei() reuses the list/rcu
+union to queue an SRCU callback. The child may be freed before that read.
+The eventfs_mutex serializes list updates, but it does not keep the removed
+child alive or prevent the SRCU callback from running.
 
-On iteration of the ei->children list, at the start, execute a smp_rmb()
-and then read the is_freed of the ei to see if the children list is still
-valid. If is_freed is set, then the ei_child read is not valid and the
-loop should exit immediately.
+Use list_for_each_entry_safe() to save the next sibling before recursively
+removing the current child.
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260808094215.4252430d@robin
-Fixes: 704f960dbee2f ("eventfs: Read ei->entries before ei->children in eventfs_iterate()")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260806022719.375354-1-shuangpeng.kernel%40gmail.com
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: 43aa6f97c2d0 ("eventfs: Get rid of dentry pointers without refcounts")
+Link: https://patch.msgid.link/20260806022719.375354-1-shuangpeng.kernel@gmail.com
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/event_inode.c |   24 ++++++++++++++++++++++++
- fs/tracefs/internal.h    |    4 ++--
- 2 files changed, 26 insertions(+), 2 deletions(-)
+ fs/tracefs/event_inode.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/fs/tracefs/event_inode.c
 +++ b/fs/tracefs/event_inode.c
-@@ -124,7 +124,17 @@ static inline void put_ei(struct eventfs
- static inline void free_ei(struct eventfs_inode *ei)
- {
- 	if (ei) {
-+		/* The ei should have no children if it is being freed. */
-+		WARN_ON_ONCE(!list_empty(&ei->children));
- 		ei->is_freed = 1;
-+		/*
-+		 * The SRCU iteration has a smp_rmb() to make sure it
-+		 * sees a child (that may have already been freed)
-+		 * before it reads is_free. If is_free is set, it must
-+		 * not use the child it acquired from ei->children, as
-+		 * the list may be used for SRCU.
-+		 */
-+		smp_wmb();
- 		put_ei(ei);
- 	}
- }
-@@ -629,6 +639,20 @@ static int eventfs_iterate(struct file *
- 	list_for_each_entry_srcu(ei_child, &ei->children, list,
- 				 srcu_read_lock_held(&eventfs_srcu)) {
- 
-+		/*
-+		 * If the ei is being freed, then the ei->children may be
-+		 * being used as the rcu list, which means the next element
-+		 * may be garbage. The ei->is_free is set before switching
-+		 * the ei->children over to ei->rcu. The read memory barrier
-+		 * here makes sure the ei_child is read before is_free is
-+		 * updated.
-+		 *
-+		 * Matches the smp_wmb() in free_ei()
-+		 */
-+		smp_rmb();
-+		if (ei->is_freed)
-+			return -EINVAL;
-+
- 		if (c > 0) {
- 			c--;
- 			continue;
---- a/fs/tracefs/internal.h
-+++ b/fs/tracefs/internal.h
-@@ -46,11 +46,11 @@ struct eventfs_attr {
-  * @ino:	The saved inode number
+@@ -824,7 +824,7 @@ struct eventfs_inode *eventfs_create_eve
   */
- struct eventfs_inode {
-+	struct list_head	list;
- 	union {
--		struct list_head	list;
-+		struct list_head	children;
- 		struct rcu_head		rcu;
- 	};
--	struct list_head		children;
- 	const struct eventfs_entry	*entries;
- 	const char			*name;
- 	struct eventfs_attr		*entry_attrs;
+ static void eventfs_remove_rec(struct eventfs_inode *ei, int level)
+ {
+-	struct eventfs_inode *ei_child;
++	struct eventfs_inode *ei_child, *tmp;
+ 
+ 	/*
+ 	 * Check recursion depth. It should never be greater than 3:
+@@ -837,7 +837,7 @@ static void eventfs_remove_rec(struct ev
+ 		return;
+ 
+ 	/* search for nested folders or files */
+-	list_for_each_entry(ei_child, &ei->children, list)
++	list_for_each_entry_safe(ei_child, tmp, &ei->children, list)
+ 		eventfs_remove_rec(ei_child, level + 1);
+ 
+ 	list_del_rcu(&ei->list);
 
 
