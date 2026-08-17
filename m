@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705E11A238F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E913A432306;
 	Mon, 17 Aug 2026 13:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974069; cv=none; b=tnBoWalj3R/YvsUNtdUF4mcOagpuVm5ovqwB6vnf1XoQdRiSTCL4VYKBiwMIvQZBKzpJAOwam/XUD1fqikLeffJheGEzNRNyJpWVywciI5Wd8RX2aImu8Gclg0PhOM7KjYutukAWPbmvUILNcYVa7HwK35ULTK3MW0DzdbP99fA=
+	t=1786974070; cv=none; b=tzB9cEnRL4JpKlXyraCN++eEUU6J21ecL5oR1c6XmoSpE7ZxqfExVEquAiIu+3OTbb7K20rmpp/uAJjYZX1nnMoIel/dueP4y6nCnXUSQyAjnWt4zeLGAa3/GoTJqs+kw/ow2EQmkWonpa5lKwJiG6/Qf/F+RWaRZ/ofONaDNUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974069; c=relaxed/simple;
-	bh=9VZjK4FvYMiVfR1vMKfBtpu3hujeXP+JOxogqbNzBdA=;
+	s=arc-20240116; t=1786974070; c=relaxed/simple;
+	bh=AQrWol4x92gRW4GPtwaPqlLS4Ln1VpwH3EH4un5AVTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QjrtTfTdLcaK4ZOCjynAUtBbK6A/MIr1tMfnxxBBncWOp0bSSLtDCjdj5khKV8tr/m2Co27qnlOQOGQh+afD+ceYha0qVa1UrGxleitHQoqJem6rTL88DGDZUNc5C4lEkmGbngnBmFslmvPlsXCn46PnG98dZsV9nMZSTzi+uqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMginkX0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fhc78pCZmRz1rTW0EzDHn+j5JX7DXXW9OLdOqIjWQH04OUjRvYcxxBal0dXWjUsFWmsmQNDzpynIfHqUzz7Vy2lpkdDuM9L8939gTl52QqOZwnUBe2/K8nHFgPXTq4WtZzL5VYB8GyWR1heMzGuB0aNIFdJs8TeclYVyf2LJFjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=spsaNszn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMginkX0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5C81F00A3D;
-	Mon, 17 Aug 2026 13:41:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="spsaNszn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16A41F00A3A;
+	Mon, 17 Aug 2026 13:41:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974066;
-	bh=8n5J7O1F5cNkxXCOaY1eOpE9B6PldZOkemb264RgJCc=;
+	s=korg; t=1786974063;
+	bh=hDbH8Y8TT6w+eastRMAZxfLaLzll7hdEb8AlHwk2qdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pMginkX063ANXj22Bl9cJ0IAOs2QmGg7o9arHOgjykRV+FIcGUM4PpFwu1JLn/ioX
-	 jkquZa67q2F+gW6G3Utf3IVje0RWKgmMltR+Qa1XGBwnwXVHJgTdwfNORTnhJhPuXj
-	 9rMPbGrSEWXpDFUIOFnoF/robBrB3PLfn6NcD9Z4=
+	b=spsaNsznSU2kWON1TP03ogxA8U8T1D5mYJop1UIqmgJ9adxWVS32d+CcGP293BU+r
+	 TTVpyKlJ7+hTy7owHkPSLQc5kmwmLwjaXh2l+fDUSOAdEfr6XAp/IAAUI4XAO5Szn0
+	 XTS8Hm/ssZxT2qkMG2ce33yNBna2rYy8p1jOqR5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 040/271] net/mlx5e: TC, Check if flow is PEER before acquiring devcom lock
-Date: Mon, 17 Aug 2026 15:29:25 +0200
-Message-ID: <20260817132538.387817771@linuxfoundation.org>
+Subject: [PATCH 7.1 075/271] xsk: validate launch-time metadata size
+Date: Mon, 17 Aug 2026 15:30:00 +0200
+Message-ID: <20260817132539.828637306@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -53,98 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Stanislav Fomichev <sdf.kernel@gmail.com>
 
-[ Upstream commit 6ddfba2ea98db21b001e0e5c472499156224650c ]
+[ Upstream commit 439ce2dddf3d22129b9113a7881637256a35e936 ]
 
-In case __mlx5e_add_fdb_flow() fails in lower levels, the flow is
-deleted via mlx5e_tc_del_flow(), and mlx5e_tc_del_flow() is acquiring
-ESW devcom lock without condition. In addition, in case of peer_flow,
-__mlx5e_add_fdb_flow() is called while holding ESW devcom comp lock.
-This results in an AA deadlock.
+Launch-time metadata extends beyond the first 16 bytes of struct
+xsk_tx_metadata. Reject the request when the registered metadata area does
+not contain the complete field.
 
-To fix this, introduce a new PEER flag that is set on flows created as
-peer flows (the duplicate flows on peer devices), and check it in
-mlx5e_tc_del_flow() before acquiring ESW devcom lock.
+Snapshot the validated flags for the generic transmit path and use that
+snapshot for request and completion processing, avoiding inconsistent
+decisions if user space changes the flags concurrently.
 
-Lockdep splat:
-============================================
-WARNING: possible recursive locking detected
-============================================
- Possible unsafe locking scenario:
-       CPU0
-       ----
-  lock(&comp->lock_key#2);
-  lock(&comp->lock_key#2);
- *** DEADLOCK ***
-Call Trace:
- <TASK>
- dump_stack_lvl+0x69/0xa0
- print_deadlock_bug.cold+0xbd/0xca
- __lock_acquire+0x1671/0x2ec0
- lock_acquire+0x10e/0x2e0
- down_read+0x95/0x430
- mlx5_devcom_for_each_peer_begin+0x4e/0xe0 [mlx5_core]
- mlx5e_tc_del_flow+0x11d/0xa70 [mlx5_core]
- mlx5e_flow_put+0x99/0x100 [mlx5_core]
- __mlx5e_add_fdb_flow+0x409/0xf00 [mlx5_core]
- mlx5e_configure_flower+0x2a86/0x4100 [mlx5_core]
- mlx5e_rep_setup_tc_cls_flower+0x12f/0x1b0 [mlx5_core]
- mlx5e_rep_setup_tc_cb+0x153/0x750 [mlx5_core]
- tc_setup_cb_add+0x1dc/0x470
- fl_change+0x2f4d/0x626d [cls_flower]
- tc_new_tfilter+0x79b/0x2310
- rtnetlink_rcv_msg+0x778/0xad0
- do_syscall_64+0x70/0x960
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
- </TASK>
+Note that only xsk_skb_metadata is properly using the flags,
+__xsk_buff_get_metadata ignores them. Next commits address that.
 
-Fixes: 04de7dda7394 ("net/mlx5e: Infrastructure for duplicated offloading of TC flows")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260728044338.2271143-1-tariqt@nvidia.com
+Fixes: ca4419f15abd ("xsk: Add launch time hardware offload support to XDP Tx metadata")
+Cc: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20260727161959.885642-5-sdf@fomichev.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/tc_priv.h | 1 +
- drivers/net/ethernet/mellanox/mlx5/core/en_tc.c      | 4 +++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ include/net/xdp_sock_drv.h | 17 +++++++++++++----
+ net/xdp/xsk.c              | 11 ++++++-----
+ 2 files changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_priv.h b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_priv.h
-index efb34de4cb7ad..692ac2f21d94e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_priv.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_priv.h
-@@ -30,6 +30,7 @@ enum {
- 	MLX5E_TC_FLOW_FLAG_FAILED                = MLX5E_TC_FLOW_BASE + 9,
- 	MLX5E_TC_FLOW_FLAG_SAMPLE                = MLX5E_TC_FLOW_BASE + 10,
- 	MLX5E_TC_FLOW_FLAG_USE_ACT_STATS         = MLX5E_TC_FLOW_BASE + 11,
-+	MLX5E_TC_FLOW_FLAG_PEER                  = MLX5E_TC_FLOW_BASE + 12,
- };
+diff --git a/include/net/xdp_sock_drv.h b/include/net/xdp_sock_drv.h
+index 46797645a0c24..68a7876013572 100644
+--- a/include/net/xdp_sock_drv.h
++++ b/include/net/xdp_sock_drv.h
+@@ -260,21 +260,28 @@ xsk_buff_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr)
+ 	0)
  
- struct mlx5e_tc_flow_parse_attr {
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-index 8b5a421a22a37..f3d4586e09e37 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-@@ -2165,7 +2165,8 @@ static void mlx5e_tc_del_flow(struct mlx5e_priv *priv,
- 	if (mlx5e_is_eswitch_flow(flow)) {
- 		struct mlx5_devcom_comp_dev *devcom = flow->priv->mdev->priv.eswitch->devcom;
+ static inline bool
+-xsk_buff_valid_tx_metadata(const struct xsk_tx_metadata *meta)
++xsk_buff_valid_tx_metadata(const struct xsk_buff_pool *pool,
++			   const struct xsk_tx_metadata *meta, u64 *flags)
+ {
+-	return !(meta->flags & ~XDP_TXMD_FLAGS_VALID);
++	*flags = READ_ONCE(meta->flags);
++	if (*flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
++		if (pool->tx_metadata_len <
++		    offsetofend(struct xsk_tx_metadata, request.launch_time))
++			return false;
++	return !(*flags & ~XDP_TXMD_FLAGS_VALID);
+ }
  
--		if (!mlx5_devcom_for_each_peer_begin(devcom)) {
-+		if (flow_flag_test(flow, PEER) ||
-+		    !mlx5_devcom_for_each_peer_begin(devcom)) {
- 			mlx5e_tc_del_fdb_flow(priv, flow);
- 			return;
+ static inline struct xsk_tx_metadata *
+ __xsk_buff_get_metadata(const struct xsk_buff_pool *pool, void *data)
+ {
+ 	struct xsk_tx_metadata *meta;
++	u64 flags;
+ 
+ 	if (!pool->tx_metadata_len)
+ 		return NULL;
+ 
+ 	meta = data - pool->tx_metadata_len;
+-	if (unlikely(!xsk_buff_valid_tx_metadata(meta)))
++	if (unlikely(!xsk_buff_valid_tx_metadata(pool, meta, &flags)))
+ 		return NULL; /* no way to signal the error to the user */
+ 
+ 	return meta;
+@@ -469,7 +476,9 @@ xsk_buff_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr)
+ 	return (struct xdp_desc_ctx){ };
+ }
+ 
+-static inline bool xsk_buff_valid_tx_metadata(struct xsk_tx_metadata *meta)
++static inline bool
++xsk_buff_valid_tx_metadata(const struct xsk_buff_pool *pool,
++			   const struct xsk_tx_metadata *meta, u64 *flags)
+ {
+ 	return false;
+ }
+diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+index 8d84afb3ad629..95a9ff3d0bdb4 100644
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -966,15 +966,16 @@ static int xsk_skb_metadata(struct sk_buff *skb, void *buffer,
+ {
+ 	struct xsk_tx_metadata *meta = NULL;
+ 	u16 csum_start, csum_offset;
++	u64 flags;
+ 
+ 	if (unlikely(pool->tx_metadata_len == 0))
+ 		return -EINVAL;
+ 
+ 	meta = buffer - pool->tx_metadata_len;
+-	if (unlikely(!xsk_buff_valid_tx_metadata(meta)))
++	if (unlikely(!xsk_buff_valid_tx_metadata(pool, meta, &flags)))
+ 		return -EINVAL;
+ 
+-	if (meta->flags & XDP_TXMD_FLAGS_CHECKSUM) {
++	if (flags & XDP_TXMD_FLAGS_CHECKSUM) {
+ 		csum_start = READ_ONCE(meta->request.csum_start);
+ 		csum_offset = READ_ONCE(meta->request.csum_offset);
+ 
+@@ -995,9 +996,9 @@ static int xsk_skb_metadata(struct sk_buff *skb, void *buffer,
  		}
-@@ -4605,6 +4606,7 @@ static int mlx5e_tc_add_fdb_peer_flow(struct flow_cls_offload *f,
- 	else
- 		in_mdev = priv->mdev;
+ 	}
  
-+	flow_flags |= BIT(MLX5E_TC_FLOW_FLAG_PEER);
- 	parse_attr = flow->attr->parse_attr;
- 	peer_flow = __mlx5e_add_fdb_flow(peer_priv, f, flow_flags,
- 					 parse_attr->filter_dev,
+-	if (meta->flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
+-		skb->skb_mstamp_ns = meta->request.launch_time;
+-	if (!(meta->flags & XDP_TXMD_FLAGS_TIMESTAMP))
++	if (flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
++		skb->skb_mstamp_ns = READ_ONCE(meta->request.launch_time);
++	if (!(flags & XDP_TXMD_FLAGS_TIMESTAMP))
+ 		meta = NULL;
+ 	xsk_tx_metadata_to_compl(meta, &skb_shinfo(skb)->xsk_meta);
+ 
 -- 
 2.53.0
 
