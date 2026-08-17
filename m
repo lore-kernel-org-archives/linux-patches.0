@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBA943DA3A;
-	Mon, 17 Aug 2026 14:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7235543CE52;
+	Mon, 17 Aug 2026 14:34:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977281; cv=none; b=ieQS3md6dyZB4SCL/dqR7b4VxCEbDJ4CZRBIfqtdx1OPpyB/FhDCjo120/zXCpYUz8XAEKwG58AQX5daVK7qiCRAF4BTYUO1/BHotbC6Wsdk2T+71A/HrzgUWPQ5SEktpCxw9tqKGc1VBt6g9q/4qkLDh3G3eKFp0DO0f6AkZZs=
+	t=1786977284; cv=none; b=N+lrlGUM2unWM6VxVWrktm+XGOVsxJNBAjEyh1eoOt4O0gENmrHa9s3sYsmF9HXJ3SyA4fWTbh/o7ChYWZVuW0Zn80vAtxqbu+4V43YZ6htOWKsY2mcAp39PlIZYt6ivUpIJpFVejn1PBSbHL5OrXzP2wKvd3s9B8KGyz+52/j0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977281; c=relaxed/simple;
-	bh=BkFIcqnZQImbkb0DRvZ3pcALgG18WFSyB1RLdmAYJc4=;
+	s=arc-20240116; t=1786977284; c=relaxed/simple;
+	bh=NIOP3NsK+dCt8b88Y8A1BH3MADo6FRjk1dBHmTfW9lY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MESuaYmKcipQo6jocNC/emrDN3UUUwx5fyhm1JGRoJ9N9xy6K1NMdwIH5IqslIa0XaBw+ZZJr0jCIPT1JLRrHM6QndB0g3L3FLF9TXwboTdtxtAN5FB6TFHbe4tdZ5LT85JxPXIuGoEAACZ6MzdADeQaHQMOW2NZBJBMSkPQQ00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TzJvZDqw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sRPXTasWeLXNxlhnZqZQkRQcQPeVrsWGWUWmYH56sEEi4hr7gkIXXD5avWtnvE2vbo5Urf3lXpNA5zz08M3UoZZjXvYKYoU/jBdfxAjituypBkYrNV5a9VZI5oOuLp0RnoJlHLSlbpfZaUDZzYgUxV94s51syJs6fLHeWbim+Es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEmObVWD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TzJvZDqw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4BEC1F000E9;
-	Mon, 17 Aug 2026 14:34:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEmObVWD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF731F000E9;
+	Mon, 17 Aug 2026 14:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977280;
-	bh=nVT5LdIhmp0m+sEy7IJqK06tQMHDKzr7Ck+g7MDJfFI=;
+	s=korg; t=1786977283;
+	bh=clx5yY9Qt8ER+FKyoZC8cA6Vko1ddohrQSdynXPLayY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TzJvZDqwxFjc+gQ7lM5FOIytwG89Z9M4o1riA2uirW3w9wyCCRP20EavEE5RS95jz
-	 A0NFbk+Styb4Smpt28TjODjoDnN7t17EXIq2mSaZwq3jrb34CgSIRyoVnJS4Ps91XC
-	 P7HKk05PtCP5PqQXBolXd0P78LuB7/rLSSwmfb6Q=
+	b=wEmObVWDfXY1sWf0tILcvRRi6KVRtl+NQ2j8p5AMhZfCm0t8ZKeTmrLdS/KSd7XW6
+	 p6E+sK6d9nf5Sri9FX+J52xsh9SMMwBYo5Rk2Ljst5UFieB9p5Y2wN6vZu1msjcAwy
+	 XT4osnWIzNqNHtJKgVSNFJnSkTUgsIn3KbYDfxGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 268/456] hwmon: (adt7470) Fix fans stuck in manual mode on I2C errors
-Date: Mon, 17 Aug 2026 15:30:58 +0200
-Message-ID: <20260817132550.475065635@linuxfoundation.org>
+Subject: [PATCH 5.15 277/456] powerpc/boot: Fix treeboot-currituck CPU node lookup check
+Date: Mon, 17 Aug 2026 15:31:07 +0200
+Message-ID: <20260817132550.793300470@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,113 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 625a2c02a1c04571232a746fe188b4d9a8d63edd ]
+[ Upstream commit 43863f6575d2211e8c5157fefb83ad0ad046aab4 ]
 
-During adt7470_read_temperatures(), the driver temporarily switches
-the PWM channels to manual mode, performs the temperature collection,
-and then restores the original configuration registers.
+fdt_node_offset_by_prop_value() returns a negative error code on
+failure - fix the check accordingly.
 
-However, if an I2C transaction fails at any point after entering manual
-mode, the function aborts and returns immediately. This leaves the
-configuration registers un-restored, permanently trapping the fans in
-manual mode.
-
-Introduce a recovery path to ensure that the original PWM configuration
-registers are always restored, even when intermediate I2C operations
-fail.
-
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/r/20260716213252.EACA71F000E9@smtp.kernel.org
-Fixes: ef67959c4253 ("hwmon: (adt7470) Convert to use regmap")
-Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-1-598e38a46ba6@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 228d55053397 ("powerpc/47x: Add support for the new IBM currituck platform")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260702211554.56923-5-thorsten.blum@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/adt7470.c | 40 +++++++++++++++++++++++++++++-----------
- 1 file changed, 29 insertions(+), 11 deletions(-)
+ arch/powerpc/boot/treeboot-currituck.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
-index c67cd037a93fd..57c78e82a5f27 100644
---- a/drivers/hwmon/adt7470.c
-+++ b/drivers/hwmon/adt7470.c
-@@ -205,11 +205,12 @@ static inline int adt7470_write_word_data(struct adt7470_data *data, unsigned in
- /* Probe for temperature sensors.  Assumes lock is held */
- static int adt7470_read_temperatures(struct adt7470_data *data)
- {
--	unsigned long res;
-+	struct device *dev = regmap_get_device(data->regmap);
-+	u8 pwm[ADT7470_FAN_COUNT];
- 	unsigned int pwm_cfg[2];
--	int err;
-+	unsigned long res;
-+	int err, err2;
- 	int i;
--	u8 pwm[ADT7470_FAN_COUNT];
+diff --git a/arch/powerpc/boot/treeboot-currituck.c b/arch/powerpc/boot/treeboot-currituck.c
+index d53e8a592f816..5b5363b74f9f3 100644
+--- a/arch/powerpc/boot/treeboot-currituck.c
++++ b/arch/powerpc/boot/treeboot-currituck.c
+@@ -102,7 +102,7 @@ void platform_init(void)
  
- 	/* save pwm[1-4] config register */
- 	err = regmap_read(data->regmap, ADT7470_REG_PWM_CFG(0), &pwm_cfg[0]);
-@@ -233,19 +234,19 @@ static int adt7470_read_temperatures(struct adt7470_data *data)
- 	err = regmap_update_bits(data->regmap, ADT7470_REG_PWM_CFG(2),
- 				 ADT7470_PWM_AUTO_MASK, 0);
- 	if (err < 0)
--		return err;
-+		goto out_restore;
- 
- 	/* write pwm control to whatever it was */
- 	err = regmap_bulk_write(data->regmap, ADT7470_REG_PWM(0), &pwm[0],
- 				ADT7470_PWM_COUNT);
- 	if (err < 0)
--		return err;
-+		goto out_restore;
- 
- 	/* start reading temperature sensors */
- 	err = regmap_update_bits(data->regmap, ADT7470_REG_CFG,
- 				 ADT7470_T05_STB_MASK, ADT7470_T05_STB_MASK);
- 	if (err < 0)
--		return err;
-+		goto out_restore;
- 
- 	/* Delay is 200ms * number of temp sensors. */
- 	res = msleep_interruptible((data->num_temp_sensors >= 0 ?
-@@ -256,13 +257,30 @@ static int adt7470_read_temperatures(struct adt7470_data *data)
- 	err = regmap_update_bits(data->regmap, ADT7470_REG_CFG,
- 				 ADT7470_T05_STB_MASK, 0);
- 	if (err < 0)
--		return err;
-+		goto out_restore;
- 
-+out_restore:
- 	/* restore pwm[1-4] config registers */
--	err = regmap_write(data->regmap, ADT7470_REG_PWM_CFG(0), pwm_cfg[0]);
--	if (err < 0)
--		return err;
--	err = regmap_write(data->regmap, ADT7470_REG_PWM_CFG(2), pwm_cfg[1]);
-+	err2 = regmap_write(data->regmap, ADT7470_REG_PWM_CFG(0), pwm_cfg[0]);
-+	if (err2 < 0) {
-+		dev_warn_ratelimited(dev,
-+				     "failed to restore PWM{1,2} config (%d)\n",
-+				     err2);
-+
-+		if (!err)
-+			err = err2;
-+	}
-+
-+	err2 = regmap_write(data->regmap, ADT7470_REG_PWM_CFG(2), pwm_cfg[1]);
-+	if (err2 < 0) {
-+		dev_warn_ratelimited(dev,
-+				     "failed to restore PWM{3,4} config (%d)\n",
-+				     err2);
-+
-+		if (!err)
-+			err = err2;
-+	}
-+
- 	if (err < 0)
- 		return err;
- 
+ 	node = fdt_node_offset_by_prop_value(_dtb_start, -1, "device_type",
+ 	                                     "cpu", sizeof("cpu"));
+-	if (!node)
++	if (node < 0)
+ 		fatal("Cannot find cpu node\n");
+ 	timebase = fdt_getprop(_dtb_start, node, "timebase-frequency", &size);
+ 	if (timebase && (size == 4))
 -- 
 2.53.0
 
