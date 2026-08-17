@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479334B04A7;
-	Mon, 17 Aug 2026 14:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B0C40F734;
+	Mon, 17 Aug 2026 14:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975211; cv=none; b=MmPF5wyVw7E7MVJ4O37Rns52pKKpJ3cVy3jjzOcs3IanXlJbLTtvsp/raRaeqADPIkEDJtaxBfzAs7BT+Vw9CtFFMmPCZkjAIQ6oqOVr+nYwXPmRxhuRc8kJUfRPHDz8NDOfbokpkLLNQvYANEOhANeHKT3AALcuKSbXHAn3YfE=
+	t=1786975214; cv=none; b=i/T2KBXVNuDm1zUjGZIBOifwNuKbtS7wxOYJOZfeF2aNFzfQeeQsDboC2qhj32XBkkXk63xOBva2sqS3RX+KGm+DEBtLFA3cAsKfg49Olv1kRNO7x19kTEvgqzizK63sIMZSg8NaHFN/XDZJ1/GBo5DwK+kECgYyGVDfbxNek/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975211; c=relaxed/simple;
-	bh=7/xK/rWwvmeyrzXRUMk/jzmVRXCTF51yX8pj7P9/E3s=;
+	s=arc-20240116; t=1786975214; c=relaxed/simple;
+	bh=tv9xKZC2qfCX94h7un+IgvguJHP4Q7my/tRWkuQMOho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Si6sEux+TWh2z7gT8lUSgH4WKT1OXc3JxCWcx1q3gnDjz7fGEMXFzHWZ23EFC7AYxA783ylhRwiIwIctbpq5Aom/4fC9lCM80Et6C7ImwvdsqAbftOybdqETrooXbs6bioT7fs3IFgfmK2EbTk78CR1amuU27wTsxf3675/oSoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0x5QZlh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SecycSLoY2+UaiFsvYT/6NQEIc4imBKzaps2MTrCI+MS8cWJq+9rz35RSTHsdgWiqPimsDlhtazlMaPD7htpgKUxWrGXcqFD/MV5X6ZvM0/m4XdmMVMMioW5CJQqf2qm4eOsiuT1D6BPL4pbrqOxj84p57p/vQSDerxciU9xV0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZEdv/dw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0x5QZlh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FFCE1F000E9;
-	Mon, 17 Aug 2026 14:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZEdv/dw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8676A1F000E9;
+	Mon, 17 Aug 2026 14:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975210;
-	bh=O7KmBzvUpScYfzJuP/CWHUeKFsY4c/5Oe9XVZeO3B8c=;
+	s=korg; t=1786975213;
+	bh=rx7ANdMtXKsx/7hYCvNgEZqLZKPyAoOe70DoVW4MPWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b0x5QZlhB57g4LsqIl/Px7PFkiZUfYXXAVMUQJWDA8W3SKv8yMXdqDk8N9jW0BOOn
-	 os7uxocEBtmwqgWPWeXExKRxAB5RNRFOGE4CzmHkmWM/NXPEExToVRhOi2cmQEGObH
-	 9g+bKw4ZI5ueu8hWib3822Y8hASUykeGeBmiSRQI=
+	b=MZEdv/dwpf0CXrICifltvYTuS9E9xAAqzK050ynH3wM/pL8oKhIsDdz8PHfbFGWkU
+	 edSDKMQHQKZDDGP0ZX1m28x4KcDMONn90hLpGCINvn6zeSjNDHx5467/lIBH/jmUyL
+	 UX8Yp++lHsYJW6gmeAxvhSJlnjfcZR7YnL2pL3ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Menachem Adin <menachem.adin@intel.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>
-Subject: [PATCH 6.18 160/250] mei: pull kvfree out of spinlock
-Date: Mon, 17 Aug 2026 15:32:01 +0200
-Message-ID: <20260817132543.124905781@linuxfoundation.org>
+	Aelin Reidel <aelin@mainlining.org>,
+	Clayton Craft <craftyguy@postmarketos.org>,
+	Sven Peter <sven@kernel.org>,
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: [PATCH 6.18 161/250] nvmem: apple-spmi-nvmem: wrap regmap calls to satisfy CFI
+Date: Mon, 17 Aug 2026 15:32:02 +0200
+Message-ID: <20260817132543.175847018@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,96 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Aelin Reidel <aelin@mainlining.org>
 
-commit b0495bb58af06a7de4628c72d500e3d5e180d808 upstream.
+commit ff10b6db0ab75b132aed69ab144ac04f63ef9bdb upstream.
 
-The read buffer allocation was changed from kmalloc() to kvmalloc().
+The Apple SPMI NVMEM driver previously cast regmap_bulk_read/write to
+void * when assigning them to nvmem_config's reg_read/reg_write
+function pointers.
 
-This buffer is part of mei_cl_cb structure that can be queued in
-rd_complete queue protected by spinlock.
-Releasing the structure leads to errors like below when freeing buffer
-that allocated non-contiguous:
+This cast breaks the expected function signature of nvmem_reg_read_t
+and nvmem_reg_write_t. With CFI enabled, indirect calls through
+these pointers fail:
 
-BUG: sleeping function called from invalid context at mm/vmalloc.c:3448
+  CFI failure at nvmem_reg_write+0x194/0x1e4 (target: regmap_bulk_write+0x0/0x2c8; expected type: 0x83a189c3)
+  ...
+  Call trace:
+   nvmem_reg_write+0x194/0x1e4 (P)
+   __nvmem_cell_entry_write+0x298/0x2e8
+   nvmem_cell_write+0x24/0x34
+   macsmc_reboot_probe+0x1dc/0x454 [macsmc_reboot]
+  ...
 
-Separate mei_cl_cb structure dequeue and release to
-perform only dequeue under spinlock and push release out of spinlock.
+Introduce thin wrapper functions with the correct nvmem function
+pointer types to satisfy the CFI checks.
 
-Cc: stable <stable@kernel.org>
-Fixes: 4adf613e01bf ("mei: use kvmalloc for read buffer")
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/16359
-Reviewed-by: Menachem Adin <menachem.adin@intel.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://patch.msgid.link/20260719-kvfree_out_of_spinlock-v1-1-e07d6333bea7@intel.com
+Fixes: fe91c24a551c ("nvmem: Add apple-spmi-nvmem driver")
+Signed-off-by: Aelin Reidel <aelin@mainlining.org>
+Reported-by: Clayton Craft <craftyguy@postmarketos.org>
+Tested-by: Clayton Craft <craftyguy@postmarketos.org>
+Reviewed-by: Sven Peter <sven@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20260724223404.629248-2-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/client.c |   25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ drivers/nvmem/apple-spmi-nvmem.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
---- a/drivers/misc/mei/client.c
-+++ b/drivers/misc/mei/client.c
-@@ -425,18 +425,24 @@ static void mei_io_tx_list_free_cl(struc
- }
+diff --git a/drivers/nvmem/apple-spmi-nvmem.c b/drivers/nvmem/apple-spmi-nvmem.c
+index 88614005d5ce..7acb0c07d6ab 100644
+--- a/drivers/nvmem/apple-spmi-nvmem.c
++++ b/drivers/nvmem/apple-spmi-nvmem.c
+@@ -18,6 +18,22 @@ static const struct regmap_config apple_spmi_regmap_config = {
+ 	.max_register	= 0xffff,
+ };
  
- /**
-- * mei_io_list_free_fp - free cb from a list that matches file pointer
-+ * mei_io_rd_list_free_fp - free cb from a rd_completed list that matches file pointer
-  *
-- * @head: io list
-+ * @cl: host client
-  * @fp: file pointer (matching cb file object), may be NULL
-  */
--static void mei_io_list_free_fp(struct list_head *head, const struct file *fp)
-+static void mei_io_rd_list_free_fp(struct mei_cl *cl, const struct file *fp)
- {
- 	struct mei_cl_cb *cb, *next;
-+	LIST_HEAD(cmpl_list);
- 
--	list_for_each_entry_safe(cb, next, head, list)
-+	spin_lock(&cl->rd_completed_lock);
-+	list_for_each_entry_safe(cb, next, &cl->rd_completed, list)
- 		if (!fp || fp == cb->fp)
--			mei_io_cb_free(cb);
-+			list_move(&cb->list, &cmpl_list);
-+	spin_unlock(&cl->rd_completed_lock);
++static int apple_spmi_nvmem_read(void *priv, unsigned int offset, void *val,
++				 size_t bytes)
++{
++	struct regmap *map = priv;
 +
-+	list_for_each_entry_safe(cb, next, &cmpl_list, list)
-+		mei_io_cb_free(cb);
- }
- 
- /**
-@@ -565,9 +571,7 @@ int mei_cl_flush_queues(struct mei_cl *c
- 		mei_io_list_flush_cl(&cl->dev->ctrl_rd_list, cl);
- 		mei_cl_free_pending(cl);
- 	}
--	spin_lock(&cl->rd_completed_lock);
--	mei_io_list_free_fp(&cl->rd_completed, fp);
--	spin_unlock(&cl->rd_completed_lock);
-+	mei_io_rd_list_free_fp(cl, fp);
- 
- 	return 0;
- }
-@@ -1404,7 +1408,7 @@ void mei_cl_add_rd_completed(struct mei_
- }
- 
- /**
-- * mei_cl_del_rd_completed - free read completed callback with lock
-+ * mei_cl_del_rd_completed - unlink read completed callback with lock and free it
-  *
-  * @cl: host client
-  * @cb: callback block
-@@ -1413,8 +1417,9 @@ void mei_cl_add_rd_completed(struct mei_
- void mei_cl_del_rd_completed(struct mei_cl *cl, struct mei_cl_cb *cb)
++	return regmap_bulk_read(map, offset, val, bytes);
++}
++
++static int apple_spmi_nvmem_write(void *priv, unsigned int offset, void *val,
++				  size_t bytes)
++{
++	struct regmap *map = priv;
++
++	return regmap_bulk_write(map, offset, val, bytes);
++}
++
+ static int apple_spmi_nvmem_probe(struct spmi_device *sdev)
  {
- 	spin_lock(&cl->rd_completed_lock);
--	mei_io_cb_free(cb);
-+	list_del_init(&cb->list);
- 	spin_unlock(&cl->rd_completed_lock);
-+	mei_io_cb_free(cb);
- }
+ 	struct regmap *regmap;
+@@ -28,8 +44,8 @@ static int apple_spmi_nvmem_probe(struct spmi_device *sdev)
+ 		.word_size = 1,
+ 		.stride = 1,
+ 		.size = 0xffff,
+-		.reg_read = (void *)regmap_bulk_read,
+-		.reg_write = (void *)regmap_bulk_write,
++		.reg_read = apple_spmi_nvmem_read,
++		.reg_write = apple_spmi_nvmem_write,
+ 	};
  
- /**
+ 	regmap = devm_regmap_init_spmi_ext(sdev, &apple_spmi_regmap_config);
+-- 
+2.55.0
+
 
 
