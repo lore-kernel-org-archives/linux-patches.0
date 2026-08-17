@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58D73B71D9;
-	Mon, 17 Aug 2026 15:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903073F12C6;
+	Mon, 17 Aug 2026 15:14:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979663; cv=none; b=H2wtoo38ZzrNoJVxvVTr/aBt5JTcqGL7X6WNwILSMtfWpHbfTkcxmtLeMdbaobbwoSFccjCfyO3i5RE6s5NnV/4mVT0Aos7E/qJCY8Uh3ImOHmSvs//1jle8xDq4gQwawUtP5nHdKIGg/171GM5TajpJxeD2UVrUPgrN5ET8l6g=
+	t=1786979666; cv=none; b=qxdUt7B+yqy+zh5WpiSv77WfDS4KAGuMBT8q9AK6TDiEIXJsCK9klPl4Ep8d+nzTLwLMfugvKtWQ5j2NWYaJw3i1MLHE9GjgTqqEyXQ/TO+BpdeAJBoP7zkXCsIQQd7Om9oq40TDNe/bJevYBA3h6GIyXNx4MbGhZ1b0Zj/2cWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979663; c=relaxed/simple;
-	bh=UTgdFGPb0gu3HB7kdUzWq4tjbkCgSKemLmW2PIEaf4U=;
+	s=arc-20240116; t=1786979666; c=relaxed/simple;
+	bh=nsOtl8+bdExOZxJgH2dYa6aa0PGqUGhHfgQgOFS3m1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rgjnPA3sjx5n8hQEZID0jPoZWiqa/YWAX9hwB4X+RVD91sxYS8O2vaYQQZnLgVkFnMLQFy5N6ipFE90vTQHiuLFArMt7fFh7+u+mzFz3IhAOVYWnRMXI2ELP869iZ7N5ocYbdWTtSPQ2nPpNO3k8YodHyRI5rofVjIIpApOFJPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMF8TSsJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O0pgAi6OboMMwT+Yn+536/a4d+clibCeb5Q0pUOa41+9aOvQQaN57JsUMVneq2KEsNXdiinakrmRhw0/8kfksp4nOK460EY1gSPax3OsGhB8k8xHxK8LrAMyTaKU+jaxJd8I/uODaOH4JUce8vi/NHCQiw0cS5GkuUoOPwre0R8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FumqchUj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMF8TSsJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A7AE1F00A3A;
-	Mon, 17 Aug 2026 15:14:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FumqchUj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2BAE1F00A3A;
+	Mon, 17 Aug 2026 15:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979662;
-	bh=MaK76fPjD/ojHbZFgGVfYTWr+e3BZrFLBGy5Qqb4waA=;
+	s=korg; t=1786979665;
+	bh=+rYMKW+AkhXIWiVenU6j5dLtoCoXd/TqGfggAmhCBWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oMF8TSsJsU2LvN8WJmKpNrnsTWNzFtbWdjgM9ZldieUhFjfnua12bzIkFCjawNXNs
-	 4RnbQXcocI76rdxEPrCNXjwd84aiwByYuoM40lkNZd6RFK/NjEhAX3fXhztN8HHHT8
-	 bbPlQpHv9UUClMYvHI4BiE+KId+VALis7n3J85uU=
+	b=FumqchUjt/CqISJqoIR+9Hz2kyNAn7TEK6Kt8Ul5Q477FpI2jX1OXa2PkY0+CowAW
+	 zy+O7bwaDQSmBRsLwHLfCiVy9Z8NFKDVBjtfYsS57BUeeJfIfdY2LPJrUJBie4WZyU
+	 +H7xyDChG+qCtKb2k0jUBuVrXtWDpLtrqrcFeA3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 304/609] HID: logitech-dj: Standardise hid_report_enum variable nomenclature
-Date: Mon, 17 Aug 2026 15:30:00 +0200
-Message-ID: <20260817132554.412162767@linuxfoundation.org>
+	Yang Wang <kevinyang.wang@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 278/609] drm/amd/pm: make pp_features read-only when scpm is enabled
+Date: Mon, 17 Aug 2026 15:29:34 +0200
+Message-ID: <20260817132553.455110027@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,78 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit a940aee176437046598dfc786b719bd96db3c74c ]
+commit 53c78ab388bfc1a4d72e756815d0db0a842c812e upstream.
 
-Since we will need to differentiate between the two report_enum types
-soon, let's unify the naming conventions now to save confusion and/or
-unnecessary/unrelated changes in upcoming commits.
+SCPM owns power feature control when enabled.
 
-{input,output}_report_enum is used in other places to let's conform.
+Make pp_features read-only during sysfs setup by clearing its write bits
+and store callback.
 
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 6a5786e191fdce36c5db170e5209cf609e8f0087)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-logitech-dj.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/pm/amdgpu_pm.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/hid/hid-logitech-dj.c b/drivers/hid/hid-logitech-dj.c
-index be9fbf14f1371..97b679e4cdbe3 100644
---- a/drivers/hid/hid-logitech-dj.c
-+++ b/drivers/hid/hid-logitech-dj.c
-@@ -1749,7 +1749,7 @@ static int logi_dj_raw_event(struct hid_device *hdev,
- static int logi_dj_probe(struct hid_device *hdev,
- 			 const struct hid_device_id *id)
- {
--	struct hid_report_enum *rep_enum;
-+	struct hid_report_enum *input_report_enum;
- 	struct hid_report *rep;
- 	struct dj_receiver_dev *djrcv_dev;
- 	struct usb_interface *intf;
-@@ -1793,10 +1793,10 @@ static int logi_dj_probe(struct hid_device *hdev,
- 		}
- 	}
- 
--	rep_enum = &hdev->report_enum[HID_INPUT_REPORT];
-+	input_report_enum = &hdev->report_enum[HID_INPUT_REPORT];
- 
- 	/* no input reports, bail out */
--	if (list_empty(&rep_enum->report_list))
-+	if (list_empty(&input_report_enum->report_list))
- 		return -ENODEV;
- 
- 	/*
-@@ -1804,7 +1804,7 @@ static int logi_dj_probe(struct hid_device *hdev,
- 	 * Note: we should theoretically check for HID++ and DJ
- 	 * collections, but this will do.
- 	 */
--	list_for_each_entry(rep, &rep_enum->report_list, list) {
-+	list_for_each_entry(rep, &input_report_enum->report_list, list) {
- 		if (rep->application == 0xff000001)
- 			has_hidpp = true;
- 	}
-@@ -1817,7 +1817,7 @@ static int logi_dj_probe(struct hid_device *hdev,
- 		return -ENODEV;
- 
- 	/* get the current application attached to the node */
--	rep = list_first_entry(&rep_enum->report_list, struct hid_report, list);
-+	rep = list_first_entry(&input_report_enum->report_list, struct hid_report, list);
- 	djrcv_dev = dj_get_receiver_dev(hdev, id->driver_data,
- 					rep->application, has_hidpp);
- 	if (!djrcv_dev) {
-@@ -1825,7 +1825,7 @@ static int logi_dj_probe(struct hid_device *hdev,
- 		return -ENOMEM;
- 	}
- 
--	if (!rep_enum->numbered)
-+	if (!input_report_enum->numbered)
- 		djrcv_dev->unnumbered_application = rep->application;
- 
- 	/* Starts the usb device and connects to upper interfaces hiddev and
--- 
-2.53.0
-
+--- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+@@ -2004,6 +2004,11 @@ static int default_attr_update(struct am
+ 	} else if (DEVICE_ATTR_IS(pp_features)) {
+ 		if (adev->flags & AMD_IS_APU || gc_ver < IP_VERSION(9, 0, 0))
+ 			*states = ATTR_STATE_UNSUPPORTED;
++
++		if (adev->scpm_enabled) {
++			dev_attr->attr.mode &= ~S_IWUGO;
++			dev_attr->store = NULL;
++		}
+ 	} else if (DEVICE_ATTR_IS(gpu_metrics)) {
+ 		if (gc_ver < IP_VERSION(9, 1, 0))
+ 			*states = ATTR_STATE_UNSUPPORTED;
 
 
