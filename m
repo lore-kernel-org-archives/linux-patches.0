@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA992EC0B0;
-	Mon, 17 Aug 2026 14:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DD83EB7F8;
+	Mon, 17 Aug 2026 14:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975384; cv=none; b=Otl4xB2t1ebyY7+N/4UNWTdOWMvPsjxbj+LNzZYfj/KlVL32P0D9LNZ7ok4RuDuFsYH3xrnRnDuVhP+Q6z3pmnpTEuQhH1lKznvzPWrbZWcgNxPbOkr9QUwLZFmMadoAjg1aF+AoaFGwarQE9CZLzOI/MjfodFEkgYELVYq6u6s=
+	t=1786975387; cv=none; b=jxNqZL0BSyDBGDEeWhwB93+4sdg/7gKBjUM2sl1DXRRQoqQcZtjgGhAbSAr4HK12my3ZaAhSSECWEaE4xbeFCDABiXgC/vUI0c6Spl011ONNT8ktP9E5gj/x9wxSqqSuRGiI4Clwh3F1l73z+YyH4LJGldiDxEMBWa+3R5tFycE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975384; c=relaxed/simple;
-	bh=Jd8zqbCRfcZ6L2LNa5g1MEyxUS0sVdJYGuN41TONfU0=;
+	s=arc-20240116; t=1786975387; c=relaxed/simple;
+	bh=v6bOVqDvlmgmBReQbzO46HX2Z/yEZWG2yRBMgf0CZj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D4lX+d9TOiTMUoxv5Mb6q3gSsy48NtYRRwFdFvD84PaOaBuXNmt7Y+YIYaCGkyWThSBXB2gF8Z20x20mYiy5fHsHbb45hF1T42b3EtAUfOi1i7oOwEeZNhh8JPyiprXi0Ns9gtkfPd/TazROWZHBf85ds2jHBo6fWbjL1CTWF/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q11Fi/WS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=usA4lJsK1SVUZ6DKFGCYr+H5/f927W53SOKlmAqUA4k8bqJFC1aloLfGBbDARo+bFpwmW8tDQCM5B/weBUkFUpz5l9IN5BpSBYYq3mLAJDhNFFvxsJ4/eJaiJR7wQ3MiPxtSAGXKrNkQbbjhiJrmzp5ZILlvtire1pVjOcaoNFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAYo8pxA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q11Fi/WS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B6B1F000E9;
-	Mon, 17 Aug 2026 14:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAYo8pxA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC561F00A3A;
+	Mon, 17 Aug 2026 14:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975383;
-	bh=0AUi/1Bs4L3qEMB2ONX07ZLX9BmHLjZSXieOGKTPDwA=;
+	s=korg; t=1786975386;
+	bh=S7p4YduZZKgW/wFj9WX0u0fU0IqE0H0Ls5OqSAv397c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q11Fi/WSNat9ZyhFuH54j80xcJrzur0ICLHtksLVwgi728lzqHDHBUTg6KjqupNhp
-	 Of4cm9g7AZlbN2R5CddDSFsy9RWWtsW1iZIDYO3bTMBsiEFKNZYQzmRmCJbxImDLcZ
-	 rZhbY9aqyqa/z7cyC8aRLn2bRhw35HwILju4+0zo=
+	b=zAYo8pxAqxs7GYxpkJ0sHPz6ch0i+l3Oa+Vnb5QkfDkmYrdEoduUdahUdITN1zxND
+	 9rOC+RG1pHlqoydIX6pYgGzeNizHxvXjHHVKJMEkmkvXap3q/BEdE5o6Vyy77bNjK5
+	 cmsnp08fd9wpw0aLmjsGRX6XJh+817ZgBzRQbH9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uros Bizjak <ubizjak@gmail.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Vivian Wang <dramforever@live.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 010/389] KVM: VMX: Make vmread_error_trampoline() uncallable from C code
-Date: Mon, 17 Aug 2026 15:27:29 +0200
-Message-ID: <20260817132539.244504792@linuxfoundation.org>
+Subject: [PATCH 5.10 011/389] IB/mad: Drop unmatched RMPP responses before reassembly
+Date: Mon, 17 Aug 2026 15:27:30 +0200
+Message-ID: <20260817132539.286085380@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,68 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 0b5e7a16a0a79a3742f0df9e45bca46f01b40e6a ]
+[ Upstream commit d2e52d610b9b09694261632340b801a421e0b0c5 ]
 
-Declare vmread_error_trampoline() as an opaque symbol so that it cannot
-be called from C code, at least not without some serious fudging.  The
-trampoline always passes parameters on the stack so that the inline
-VMREAD sequence doesn't need to clobber registers.  regparm(0) was
-originally added to document the stack behavior, but it ended up being
-confusing because regparm(0) is a nop for 64-bit targets.
+Kernel-handled RMPP receive processing starts reassembly for active
+DATA responses before the response is matched to an outstanding send.
+The normal match happens later, after ib_process_rmpp_recv_wc() has
+either assembled a complete message or consumed the segment.
 
-Opportunustically wrap the trampoline and its declaration in #ifdeffery
-to make it even harder to invoke incorrectly, to document why it exists,
-and so that it's not left behind if/when CONFIG_CC_HAS_ASM_GOTO_OUTPUT
-is true for all supported toolchains.
+That ordering lets an unsolicited response that routes to a kernel
+RMPP agent by the high TID bits allocate or extend RMPP receive state
+before the full TID and source address are checked against a real
+request. A reordered burst can therefore reach the receive-side
+insertion path even though the response would not match any send.
 
-No functional change intended.
+For kernel-handled RMPP DATA responses, require the existing
+ib_find_send_mad() match before entering RMPP reassembly. The matcher
+already checks the full TID, management class and source address/GID
+against the agent wait, backlog and in-flight send lists. If there is
+no match, drop the response without creating RMPP state.
 
-Cc: Uros Bizjak <ubizjak@gmail.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Link: https://lore.kernel.org/r/20220928232015.745948-1-seanjc@google.com
-[ Vivian: Adjust context. Remove check for CONFIG_CC_HAS_ASM_GOTO_OUTPUT
-  which does not apply for old kernel. ]
-Signed-off-by: Vivian Wang <dramforever@live.com>
+This leaves the RMPP window behavior unchanged and only rejects
+responses that have no corresponding request.
+
+Fixes: fa619a77046b ("[PATCH] IB: Add RMPP implementation")
+Assisted-by: Codex:gpt-5-5-xhigh
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/3170ff3bc389a930bb1641f2caa394a0b2241579.1780774907.git.michael.bommarito@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/vmx_ops.h | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/mad.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/arch/x86/kvm/vmx/vmx_ops.h b/arch/x86/kvm/vmx/vmx_ops.h
-index 692b0c31c9c82d..b80902686c1e41 100644
---- a/arch/x86/kvm/vmx/vmx_ops.h
-+++ b/arch/x86/kvm/vmx/vmx_ops.h
-@@ -13,14 +13,26 @@
- #define __ex(x) __kvm_handle_fault_on_reboot(x)
+diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
+index e38ae4ac454f6b..10d29167b585c0 100644
+--- a/drivers/infiniband/core/mad.c
++++ b/drivers/infiniband/core/mad.c
+@@ -1783,6 +1783,24 @@ void ib_mark_mad_done(struct ib_mad_send_wr_private *mad_send_wr)
+ 			      &mad_send_wr->mad_agent_priv->done_list);
+ }
  
- asmlinkage void vmread_error(unsigned long field, bool fault);
--__attribute__((regparm(0))) void vmread_error_trampoline(unsigned long field,
--							 bool fault);
- void vmwrite_error(unsigned long field, unsigned long value);
- void vmclear_error(struct vmcs *vmcs, u64 phys_addr);
- void vmptrld_error(struct vmcs *vmcs, u64 phys_addr);
- void invvpid_error(unsigned long ext, u16 vpid, gva_t gva);
- void invept_error(unsigned long ext, u64 eptp, gpa_t gpa);
- 
-+/*
-+ * The VMREAD error trampoline _always_ uses the stack to pass parameters, even
-+ * for 64-bit targets.  Preserving all registers allows the VMREAD inline asm
-+ * blob to avoid clobbering GPRs, which in turn allows the compiler to better
-+ * optimize sequences of VMREADs.
-+ *
-+ * Declare the trampoline as an opaque label as it's not safe to call from C
-+ * code; there is no way to tell the compiler to pass params on the stack for
-+ * 64-bit targets.
-+ *
-+ * void vmread_error_trampoline(unsigned long field, bool fault);
-+ */
-+extern unsigned long vmread_error_trampoline;
++static bool is_kernel_rmpp_data_response(struct ib_mad_agent_private *agent,
++					 struct ib_mad_recv_wc *mad_recv_wc)
++{
++	const struct ib_mad_hdr *mad_hdr = &mad_recv_wc->recv_buf.mad->mad_hdr;
++	struct ib_rmpp_mad *rmpp_mad;
 +
- static __always_inline void vmcs_check16(unsigned long field)
++	if (!ib_mad_kernel_rmpp_agent(&agent->agent) ||
++	    !ib_response_mad(mad_hdr) ||
++	    !ib_is_mad_class_rmpp(mad_hdr->mgmt_class))
++		return false;
++
++	rmpp_mad = (struct ib_rmpp_mad *)mad_recv_wc->recv_buf.mad;
++
++	return (ib_get_rmpp_flags(&rmpp_mad->rmpp_hdr) &
++		IB_MGMT_RMPP_FLAG_ACTIVE) &&
++	       rmpp_mad->rmpp_hdr.rmpp_type == IB_MGMT_RMPP_TYPE_DATA;
++}
++
+ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
+ 				 struct ib_mad_recv_wc *mad_recv_wc)
  {
- 	BUILD_BUG_ON_MSG(__builtin_constant_p(field) && ((field) & 0x6001) == 0x2000,
+@@ -1801,6 +1819,18 @@ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
+ 	}
+ 
+ 	list_add(&mad_recv_wc->recv_buf.list, &mad_recv_wc->rmpp_list);
++	if (is_kernel_rmpp_data_response(mad_agent_priv, mad_recv_wc)) {
++		spin_lock_irqsave(&mad_agent_priv->lock, flags);
++		mad_send_wr = ib_find_send_mad(mad_agent_priv, mad_recv_wc);
++		spin_unlock_irqrestore(&mad_agent_priv->lock, flags);
++
++		if (!mad_send_wr) {
++			ib_free_recv_mad(mad_recv_wc);
++			deref_mad_agent(mad_agent_priv);
++			return;
++		}
++	}
++
+ 	if (ib_mad_kernel_rmpp_agent(&mad_agent_priv->agent)) {
+ 		mad_recv_wc = ib_process_rmpp_recv_wc(mad_agent_priv,
+ 						      mad_recv_wc);
 -- 
 2.53.0
 
