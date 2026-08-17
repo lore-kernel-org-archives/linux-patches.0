@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0472DC783;
-	Mon, 17 Aug 2026 14:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3F723C51D;
+	Mon, 17 Aug 2026 14:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977892; cv=none; b=OGJCXb8dKiy2g4bYf9Mt34HBtJ7LArsRnMBqGtx2Ip/uauZyGWd0i5lD3p5XwSTZZshjyr8+t5/ywY75pkfEszTWVZmqc1vOEb5NTVjYqUsLdeZG+sKqfL+wAAlYV9gfNAM/00by6TmjBNO6lFvhtKZWE4yHzK5USoxFrhgxAnY=
+	t=1786977895; cv=none; b=iZNaWayXuIfA+vN7DVLUNTpMBEjdeep/QUz78/CmGcH2C4JiwVbSYbmlz08fRkftmMhHItZ7UuKg1Gb5sbRVw2KjsWxEKCGK9FzfXxNAAUvSWqNxDDKLbdmqDofQM2WXD81YOIzHIS0JK5dDcSg22JlRoUBN4//Tvzvy3q3O658=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977892; c=relaxed/simple;
-	bh=h6dgQMEndlKDd+y+Y0tBoBKo4PGyc0iMZqpStc0UVg0=;
+	s=arc-20240116; t=1786977895; c=relaxed/simple;
+	bh=1cGLbL+eO0HxIrKdMkyx6SAktBItUbIeR35uoCD3A+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BpkvBC0lJXI6iY/MPR1xaAUG0nAMdI9FUNK7iSUv3msagsU6Wr7wkHXkBllsCR4ca0BJbxX6QuqWRM/krXGtDOQlr624qxW0xCjORchxHl6q1TgoEm1L5SrfHmtwu6kEydx4dkkiGbnIHMpaDU9DbvJa8tukXmOa9zY1Nis0yeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9mkFo2b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iD/CV2cVopbmyKQ0eFOuncOaAE74bpivxOezsvl6DGA7SM3bV6VX4TyC+rvrLMqki7LaiDwagMeJ86VfWmlFH5b9lCysMjB4AbY6pyV4IG1aphcmBzDVBTD3eizqyyeHRFrCXBjiHrJIAsuAx9XbS57ifBdIRc5j41GW7f1/T0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kFqRAOa0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9mkFo2b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65DD81F000E9;
-	Mon, 17 Aug 2026 14:44:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kFqRAOa0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F551F000E9;
+	Mon, 17 Aug 2026 14:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977890;
-	bh=dZDMt5XUrHkRQ7VjzG91I781+Yk0u+KV/L5LZxxOcwY=;
+	s=korg; t=1786977893;
+	bh=sFHh9UeMYo13AeZ9OghTyNDgYfC1qhZRx3wrxytYyG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w9mkFo2bYIrhq+SXWKuHuVnpQHC4JGNiAoeq7/o2zVP/FVd3F9kJsMUS9VPc56ZRw
-	 WKOnKjzArYDrBZGglUqMFxgzCY7ZtF28CNzF44GB16ql3WDMovirXCTL6DgPSuwRt+
-	 spLSNPfJNCN3IMyVtaEN+FrkIzYVsYbqIApXeE1s=
+	b=kFqRAOa0gtnoMq2uUNXp9DV+0IMN/QWBdebAXl4BxObvvj5NNl+LiNxKuxFy+sgkZ
+	 7O75SNYw389g0m/Cf0vIkHkOQiuA1TTRQ+KwJ/FPA0oXJriL3+3i+5tyoaX356YKSc
+	 jiwZ8/VM7G9mOippa3mck9RrzA4MORT2HxMo/Zx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Babanpreet Singh <bbnpreetsingh@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	William Breathitt Gray <wbg@kernel.org>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 029/181] counter: microchip-tcb-capture: Fix DT channel validation
-Date: Mon, 17 Aug 2026 15:32:03 +0200
-Message-ID: <20260817132536.523676987@linuxfoundation.org>
+Subject: [PATCH 6.12 003/181] drm/amd/display: Add AV mute wait frames to dce110_set_avmute
+Date: Mon, 17 Aug 2026 15:31:37 +0200
+Message-ID: <20260817132535.536371016@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -52,68 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Babanpreet Singh <bbnpreetsingh@gmail.com>
+From: Ray Wu <ray.wu@amd.com>
 
-[ Upstream commit f1a3a9946aab611dd2200c01ff122f64b033dad2 ]
+[ Upstream commit 443290d70b01e9c35830c300e3247c06581b594c ]
 
-mchp_tc_probe() reads the devicetree "reg" cell - a u32, per the API
-contract of of_property_read_u32_index() - into a signed int, so the
-bounds check "channel > 2" fails to reject cell values at or above
-0x80000000: reinterpreted as a negative int, they compare below 2 and
-pass validation.
+Port the three-frame wait logic from dcn30_set_avmute to
+dce110_set_avmute so that older DCN versions (1.0, 2.0) also
+wait for GCP packets to be sent out before proceeding.
 
-A malformed devicetree can therefore drive a negative channel into the
-ATMEL_TC_REG() offset arithmetic, making the driver access syscon
-regmap offsets outside the TC block's register window, and into the
-"t%d_clk" clock-name formatting, where it truncates clk_name (sized
-for "t0_clk".."t2_clk").
+This ensures HDMI sinks properly process the mute state,
+preventing garbled display after link re-establishment.
 
-Declare channel as u32, matching the API contract; the unsigned
-comparison then rejects everything except channels 0..2. Adjust the
-format specifier to %u accordingly, which also resolves the W=1
-warning that exposed the gap:
-
-  microchip-tcb-capture.c:520:56: warning: '%d' directive output may
-    be truncated writing between 1 and 11 bytes into a region of size
-    6 [-Wformat-truncation=]
-  note: directive argument in the range [-2147483648, 2]
-
-No behavior change for well-formed devicetrees: channels 0..2 take
-identical paths before and after.
-
-Fixes: 106b104137fd ("counter: Add microchip TCB capture counter")
-Assisted-by: Claude:claude-fable-5 [gcc W=1]
-Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Link: https://lore.kernel.org/r/20260714042910.7-1-bbnpreetsingh@gmail.com
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5167
+Reviewed-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 414da24137ace80d8c59fefd43ba3ec9f5f854ba)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/counter/microchip-tcb-capture.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../amd/display/dc/hwss/dce110/dce110_hwseq.c | 21 ++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/counter/microchip-tcb-capture.c b/drivers/counter/microchip-tcb-capture.c
-index 461f57f66631c..fbd1afe178a36 100644
---- a/drivers/counter/microchip-tcb-capture.c
-+++ b/drivers/counter/microchip-tcb-capture.c
-@@ -309,7 +309,7 @@ static int mchp_tc_probe(struct platform_device *pdev)
- 	char clk_name[7];
- 	struct regmap *regmap;
- 	struct clk *clk[3];
--	int channel;
-+	u32 channel;
- 	int ret, i;
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+index 551638d9ff613..a4f092eb0857b 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+@@ -1256,8 +1256,27 @@ void dce110_blank_stream(struct pipe_ctx *pipe_ctx)
  
- 	counter = devm_counter_alloc(&pdev->dev, sizeof(*priv));
-@@ -343,7 +343,7 @@ static int mchp_tc_probe(struct platform_device *pdev)
+ void dce110_set_avmute(struct pipe_ctx *pipe_ctx, bool enable)
+ {
+-	if (pipe_ctx != NULL && pipe_ctx->stream_res.stream_enc != NULL)
++	if (pipe_ctx == NULL || pipe_ctx->stream_res.stream_enc == NULL)
++		return;
++
++	if (dc_is_hdmi_signal(pipe_ctx->stream->signal)) {
+ 		pipe_ctx->stream_res.stream_enc->funcs->set_avmute(pipe_ctx->stream_res.stream_enc, enable);
++
++		/* Wait for three frames to make sure AV mute is sent out.
++		 * Some HDMI sinks need additional GCP packets to properly
++		 * process the mute state, especially after link re-establishment
++		 * with HDMI 2.0 scrambling enabled.
++		 */
++		if (enable && pipe_ctx->stream_res.tg->funcs->is_tg_enabled(pipe_ctx->stream_res.tg)) {
++			int i;
++
++			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
++			for (i = 0; i < 3; i++) {
++				pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VBLANK);
++				pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
++			}
++		}
++	}
+ }
  
- 		priv->channel[i] = channel;
- 
--		snprintf(clk_name, sizeof(clk_name), "t%d_clk", channel);
-+		snprintf(clk_name, sizeof(clk_name), "t%u_clk", channel);
- 
- 		clk[i] = of_clk_get_by_name(np->parent, clk_name);
- 		if (IS_ERR(clk[i])) {
+ static enum audio_dto_source translate_to_dto_source(enum controller_id crtc_id)
 -- 
 2.53.0
 
