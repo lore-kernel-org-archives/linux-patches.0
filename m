@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44889443AAD;
-	Mon, 17 Aug 2026 14:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F08043B3EC;
+	Mon, 17 Aug 2026 14:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977115; cv=none; b=kOp/uVZXgvcrFUI5ICrF8myBFN2PGM6a7/qonS0MpryqnPpHWr5w+UTx0sPdGZ4wmN4sLIAEUfUqfx4ZodWljhLv5FLsgHDHyRVNDrRWjpPlpEspTSGRZXS+oUSN6lw5syTDF5Zv/sH/zTBKsCDyrGlAh86m9Q19aojGy13Wgkk=
+	t=1786977118; cv=none; b=GNDqQRPmUdshGDx09dROEIgj9xNWLTuhhK1qmG/c8lIFXPWbCpni/OooLA2hIDGGjoZozf9nZz3VX9EprcHqohD0iul5pyS5EmwR5hn9JgtHeP1d6hUH0S3tpAPNsmk9ecB0a0ox8PM3oE0Al9igVxhXiLMGKkmVntDsjoyM7OQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977115; c=relaxed/simple;
-	bh=XEr/yoGkFusgwgVE1StH6FQAM9IU1V/QH+0AVCmD4dM=;
+	s=arc-20240116; t=1786977118; c=relaxed/simple;
+	bh=T03AWWYYkdj0ufaBUh1ABXqBNPKkuxVdrIHN1pm+DKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rtRbtkkK7ZMtGhSqsK+kz9ZX3RfTh2ffoDlt48DiL0OF5Y76sd+3t5FsuCMqu4SxTHjDvV940wOpYZuCENXYUBDpU2saPtqif88j7YXooBqAA8hk/Hs2HXgaTc1/NVumqDqOF6WYdu/+PfTpRZS4oco95QEdGmRFavQOk8aCPWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hhm/8NxC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fnlBjtx+QhpxueWfnTRiohRIGF98I9i89eFpu8+KVMPUWrYMtVz+h+pfQubmjdIz8GrjwDAshu5BcGbEhBcejkz/Q7Cr1d2ypR4U2uqJ6OUDRi2L6jYoBa5lwoVkqQPvOycDkTxcoiAFBSDDfnkYXSznrAMldJq9yNK5iuXaVLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/RsHR2W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hhm/8NxC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC311F000E9;
-	Mon, 17 Aug 2026 14:31:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/RsHR2W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A2A1F000E9;
+	Mon, 17 Aug 2026 14:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977114;
-	bh=jzFU/bGOKoIXEjuAT822T8ghjpOmuKQvbWgnT4pmTUM=;
+	s=korg; t=1786977117;
+	bh=7bchEMZtul9iDAvf1Ybz6bWYOgnEOV8qjctfKC3X7ik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hhm/8NxCr4qg2y8eebj8GZ6gE66yAz/SqXlvdAXJYXixFzcBMdrOZ8fvcz+C9/8/l
-	 q9LqWGQ5hPskhPyMLvQDePmuWwhiHF0zs+V3YgB8H2SlLEG+bhazIfzgoT2kGKYWMZ
-	 Gd5rVBa3KLC7ILhyx3MAL/LBrQdjoG56QMWOziA0=
+	b=Y/RsHR2Wg5Rv0Ih4oi2Qm2TDfEhU+4HzEVI9Gp5NyXKtq1K7/hkLY2/s6C+26WHfx
+	 IPKIEILUpkKhCawjnMiI7iXbyuQm0KzeA/cUcwditMoUuiW08VxC8gEY9k5lfL/TXE
+	 KGh6E1T/z7wGWJFZBiMimqSwTZMhOcKNJJmxfg84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
+	David Lee <david.lee@trailofbits.com>,
+	Martin Schiller <ms@dev.tdt.de>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 216/456] net/iucv: fix use-after-free of a severed iucv_path
-Date: Mon, 17 Aug 2026 15:30:06 +0200
-Message-ID: <20260817132548.633454782@linuxfoundation.org>
+Subject: [PATCH 5.15 217/456] net/x25: fix use-after-free in x25_kill_by_neigh()
+Date: Mon, 17 Aug 2026 15:30:07 +0200
+Message-ID: <20260817132548.675711348@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,61 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: David Lee <david.lee@trailofbits.com>
 
-commit be7cc4656eb1f54029610e82d1f0fdd3f9b5ec0a upstream.
+commit 5499e0602d2faafd42c580d25f615903c3fbe11b upstream.
 
-af_iucv queues not-yet-received message notifications on iucv->message_q,
-each holding a raw pointer to the connection's iucv_path.  When the peer
-severs the connection, iucv_sever_path() frees that path with
-iucv_path_free() but leaves the notifications queued.  A later recvmsg()
-drains message_q via iucv_process_message_q() and hands the stale path to
-message_receive() -- a use-after-free of the freed iucv_path.
+x25_kill_by_neigh() walks the global X.25 socket list looking for sockets
+attached to a terminating neighbour. x25_list_lock protects list membership
+while the lookup is in progress, but it does not pin a socket's lifetime
+after the lock is dropped.
 
-Drop the queued notifications when the path is severed; once the path is
-gone they can no longer be received.  This also frees the notifications
-leaked when a socket is closed with messages still queued.
+The function currently drops x25_list_lock before calling lock_sock(s). A
+concurrent close can run x25_release(), remove the same socket from
+x25_list, and drop the last socket reference in that window. The neighbour
+teardown path can then lock or inspect a freed struct sock/struct x25_sock.
 
-Fixes: f0703c80e515 ("[AF_IUCV]: postpone receival of iucv-packets")
-Closes: https://sashiko.dev/#/patchset/20260705-b4-disp-fc79c0dc-v1-1-d2cdcb57afa9@proton.me?part=1
+Take sock_hold(s) while x25_list_lock still proves that the list entry is
+live, then drop the temporary reference after the socket has been locked,
+rechecked, and released. Recheck x25_sk(s)->neighbour after lock_sock(),
+because another path may have disconnected the socket before this path
+acquired the socket lock. Restart the list walk after each disconnect
+because the list lock was dropped and the previous iterator state may no
+longer be valid.
+
+A QEMU/KASAN run against origin/master reproduced a slab-use-after-free in
+x25_kill_by_neigh().
+
+Fixes: 7781607938c8 ("net/x25: Fix null-ptr-deref caused by x25_disconnect")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260707-b4-disp-783fedbb-v1-1-463b9dbda2ea@proton.me
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Assisted-by: Codex:gpt-5.5
+Acked-by: Martin Schiller <ms@dev.tdt.de>
+Link: https://patch.msgid.link/20260713104752.241175-1-david.lee@trailofbits.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/iucv/af_iucv.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ net/x25/af_x25.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/net/iucv/af_iucv.c
-+++ b/net/iucv/af_iucv.c
-@@ -335,6 +335,7 @@ static void iucv_sever_path(struct sock
- 	unsigned char user_data[16];
- 	struct iucv_sock *iucv = iucv_sk(sk);
- 	struct iucv_path *path = iucv->path;
-+	struct sock_msg_q *p, *n;
+--- a/net/x25/af_x25.c
++++ b/net/x25/af_x25.c
+@@ -1769,15 +1769,19 @@ void x25_kill_by_neigh(struct x25_neigh
+ {
+ 	struct sock *s;
  
- 	/* Whoever resets the path pointer, must sever and free it. */
- 	if (xchg(&iucv->path, NULL)) {
-@@ -346,6 +347,19 @@ static void iucv_sever_path(struct sock
- 		} else
- 			pr_iucv->path_sever(path, NULL);
- 		iucv_path_free(path);
-+
-+		/*
-+		 * Message notifications queued on message_q still reference
-+		 * the now freed path; drop them, otherwise a later recvmsg()
-+		 * would pass the freed iucv_path to message_receive() via
-+		 * iucv_process_message_q().
-+		 */
-+		spin_lock_bh(&iucv->message_q.lock);
-+		list_for_each_entry_safe(p, n, &iucv->message_q.list, list) {
-+			list_del(&p->list);
-+			kfree(p);
-+		}
-+		spin_unlock_bh(&iucv->message_q.lock);
++again:
+ 	write_lock_bh(&x25_list_lock);
+ 
+ 	sk_for_each(s, &x25_list) {
+ 		if (x25_sk(s)->neighbour == nb) {
++			sock_hold(s);
+ 			write_unlock_bh(&x25_list_lock);
+ 			lock_sock(s);
+-			x25_disconnect(s, ENETUNREACH, 0, 0);
++			if (x25_sk(s)->neighbour == nb)
++				x25_disconnect(s, ENETUNREACH, 0, 0);
+ 			release_sock(s);
+-			write_lock_bh(&x25_list_lock);
++			sock_put(s);
++			goto again;
+ 		}
  	}
- }
- 
+ 	write_unlock_bh(&x25_list_lock);
 
 
