@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46326426693;
-	Mon, 17 Aug 2026 14:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183D943B6F2;
+	Mon, 17 Aug 2026 14:51:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978268; cv=none; b=sTzC+psodFMakI55e4joxfepwK1hhwqTqMJiIxkSD4axYte2HXsHjV3BXn/J5KIupW79yfPG6HUBEUOlvlB3kkFR/eyB1nk+z4jDVMj9CPcaFVPx++KSi9wGR0MPQO4642ljIr7zTJCnzz0USi1MIJ5lpG2wTS+UZWsq75b8yYs=
+	t=1786978272; cv=none; b=Y7AOnDSewVx/XpABUzxp9QOMnlaqTxzbfr5PsjTjyMxobHzUkr3jkJDWSpC5zO/PWpp0531TWs08pDBGhjjJrRbf+vRwhrm1JuybOlr3JduiLpr7m5MXECYaJNw8YVSlFuiyqWjmMHIJMWZKquD2uLKiLFPHsZxcdpfajTgjYp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978268; c=relaxed/simple;
-	bh=cYF2LVtRnXEGXLW6jLbZxv+AOeYqZmUP0FtgUOxNXxc=;
+	s=arc-20240116; t=1786978272; c=relaxed/simple;
+	bh=YuCf1DjTu+895cykJRdlOP/x37tFpvqaMvLgmXY24q0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q2A7w9f0sdlX02xiWSdWwX9DWmbhMIIluGbYRD54Tuiv/rag3YtCVeF9xhGcGOu5A8NfqIIoZ/M72j19GFpXGcbuNOpOeVJcz6u2OrbYJow5S4LL4/jDiR1edSM6K/t4PsZgHuNKhquVpIZekcQGi9E65CE5J65XxtV2jL+8Tvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ym7MjF1M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dH8g1WayIbGIHNbBdaVO0Evh/IuPF4+LCW6U5DTEdv99Ke4r9tHEqwNUB8vn2Qeq8rojaVl4fW+3Pu2U2t866BL0T6cjfXR1kDpuoI70wmYcmhEmDPb1swgS3LUwlWGmEQRh8htbN1lYpogzF2z4nsd/uWXJdn85AvCSj5+iniw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RB19FudR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ym7MjF1M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EEA91F000E9;
-	Mon, 17 Aug 2026 14:51:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RB19FudR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 747ED1F000E9;
+	Mon, 17 Aug 2026 14:51:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978267;
-	bh=X/24SQ/f6E+T6JbXAJcsqHQ3m0UUe1JtJdBglJiL1P0=;
+	s=korg; t=1786978270;
+	bh=mwEE7chQL8dhMYGkHM67sJfbLpdAuW8AGKscSWWecKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ym7MjF1M2RCVs27tAxdiPmYoVaJdvk9d3K2T9aDNNqdmx4WEpoG9aTJuuwLlsKoo/
-	 0gGbn6AY0Mh4zjBefWCS1y1kU/+iO0n8hClsDYqMdbuKnWJF6kd02Sw0/zSE6dU1/z
-	 chLWsOFOv+cNTJb6WmvqUjKZmTDLOrHdJXGcMQAM=
+	b=RB19FudRioD1Aq2kHsKnsC4vuQBjtLzkDGmct5nGjIUPjicvdXH3ASlZMjafAD3v2
+	 /ApclDsaHNW9ueNbhNGWj5WtloUZN1lTKvLYpVRrmnvQ4q2yd8C85pEmZdEJCoct7c
+	 QmAHvMx7SNrwRtsNTD1ZyCxsrywiONgwMQ55r59I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	chanyoung <ppoo1220@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 158/181] tls: dont leave a full plaintext sk_msg ring unpushed
-Date: Mon, 17 Aug 2026 15:34:12 +0200
-Message-ID: <20260817132541.898800273@linuxfoundation.org>
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>,
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: [PATCH 6.12 123/181] nvmem: layouts: Add fixed-layout driver
+Date: Mon, 17 Aug 2026 15:33:37 +0200
+Message-ID: <20260817132540.402954428@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -51,74 +51,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: chanyoung <ppoo1220@gmail.com>
+From: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
 
-commit 7bca91d63341274e857f4aeaad54d229405e93dc upstream.
+commit b5be879519291f139fa7b365fd0dbc84710e4919 upstream.
 
-When the copy path in tls_sw_sendmsg_locked() adds the fragment that fills
-the plaintext sk_msg ring, it does not set full_record, so the record is
-left full and unpushed.  A later splice() then adds to an already full
-ring: sk_msg_page_add() has no fullness check of its own, so sg.end wraps
-onto sg.start and the ring appears empty.  Fragments added after that
-overwrite live entries, and sg.size no longer matches what is reachable
-between sg.start and sg.end, so pushing the record runs the scatterwalk off
-the end of the scatterlist.
+Current implementation isn't working well when device tree nodes have a
+phandle on a fixed-layout nvmem node. As the fixed layout is handled in
+nvmem core, no driver is ever associated with the layout, and the device
+consumer driver probe is deferred indefinitely.
 
-An unprivileged user can trigger this on a loopback TCP socket with the
-"tls" ULP attached:
+Remove the specific handling of fixed-layout and add a layout driver.
+This makes the fixed-layout similar to all other layouts, fixing the
+whole issue.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000008
-  RIP: 0010:memcpy_from_scatterwalk+0x32/0xc0
-  Call Trace:
-   skcipher_walk_next+0x1d1/0x2c0
-   gcm_encrypt_aesni_avx+0x1e9/0x220
-   bpf_exec_tx_verdict+0x3bb/0x860
-   tls_sw_sendmsg+0xa1a/0xca0
-   __sys_sendto+0x1da/0x1f0
-
-Set full_record in the copy path when the ring becomes full, and push a
-record that is already full on entry to the sendmsg loop.
-
-Suggested-by: Sabrina Dubroca <sd@queasysnail.net>
-Fixes: fe1e81d4f73b ("tls/sw: Support MSG_SPLICE_PAGES")
+Fixes: fc29fd821d9a ("nvmem: core: Rework layouts to become regular devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: chanyoung <ppoo1220@gmail.com>
-Link: https://patch.msgid.link/20260804052837.49015-2-ppoo1220@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20260724223404.629248-3-srini@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ MAINTAINERS                          |    5 +++
+ drivers/nvmem/core.c                 |   24 +-------------
+ drivers/nvmem/internals.h            |    2 +
+ drivers/nvmem/layouts.c              |   11 ------
+ drivers/nvmem/layouts/Makefile       |    1 
+ drivers/nvmem/layouts/fixed-layout.c |   58 +++++++++++++++++++++++++++++++++++
+ include/linux/nvmem-provider.h       |    6 +++
+ 7 files changed, 74 insertions(+), 33 deletions(-)
+ create mode 100644 drivers/nvmem/layouts/fixed-layout.c
 
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1116,6 +1116,14 @@ static int tls_sw_sendmsg_locked(struct
- 		if (!sk_stream_memory_free(sk))
- 			goto wait_for_sndbuf;
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -8849,6 +8849,11 @@ F:	drivers/base/firmware_loader/
+ F:	rust/kernel/firmware.rs
+ F:	include/linux/firmware.h
  
-+		/* open record may be full if we couldn't push it in the last sendmsg call */
-+		if (sk_msg_full(msg_pl)) {
-+			full_record = true;
-+			sk_msg_trim(sk, msg_en,
-+				    msg_pl->sg.size + prot->overhead_size);
-+			goto copied;
-+		}
++FIXED-LAYOUT NVMEM LAYOUT DRIVER
++M:	Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
++S:	Maintained
++F:	drivers/nvmem/layouts/fixed-layout.c
 +
- alloc_encrypted:
- 		ret = tls_alloc_encrypted_msg(sk, required_size);
- 		if (ret) {
-@@ -1216,6 +1224,12 @@ fallback_to_reg_send:
- 						       msg_pl, try_to_copy);
- 			if (ret < 0)
- 				goto trim_sgl;
-+
-+			if (sk_msg_full(msg_pl)) {
-+				full_record = true;
-+				sk_msg_trim(sk, msg_en,
-+					    msg_pl->sg.size + prot->overhead_size);
-+			}
- 		}
+ FLEXTIMER FTM-QUADDEC DRIVER
+ M:	Patrick Havelange <patrick.havelange@essensium.com>
+ L:	linux-iio@vger.kernel.org
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -811,7 +811,7 @@ static int nvmem_validate_keepouts(struc
+ 	return 0;
+ }
  
- 		/* Open records defined only if successfully copied, otherwise
+-static int nvmem_add_cells_from_dt(struct nvmem_device *nvmem, struct device_node *np)
++int nvmem_add_cells_from_dt(struct nvmem_device *nvmem, struct device_node *np)
+ {
+ 	struct device *dev = &nvmem->dev;
+ 	struct device_node *child;
+@@ -863,29 +863,13 @@ static int nvmem_add_cells_from_dt(struc
+ 
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(nvmem_add_cells_from_dt);
+ 
+ static int nvmem_add_cells_from_legacy_of(struct nvmem_device *nvmem)
+ {
+ 	return nvmem_add_cells_from_dt(nvmem, nvmem->dev.of_node);
+ }
+ 
+-static int nvmem_add_cells_from_fixed_layout(struct nvmem_device *nvmem)
+-{
+-	struct device_node *layout_np;
+-	int err = 0;
+-
+-	layout_np = of_nvmem_layout_get_container(nvmem);
+-	if (!layout_np)
+-		return 0;
+-
+-	if (of_device_is_compatible(layout_np, "fixed-layout"))
+-		err = nvmem_add_cells_from_dt(nvmem, layout_np);
+-
+-	of_node_put(layout_np);
+-
+-	return err;
+-}
+-
+ int nvmem_layout_register(struct nvmem_layout *layout)
+ {
+ 	int ret;
+@@ -1038,10 +1022,6 @@ struct nvmem_device *nvmem_register(cons
+ 			goto err_remove_cells;
+ 	}
+ 
+-	rval = nvmem_add_cells_from_fixed_layout(nvmem);
+-	if (rval)
+-		goto err_remove_cells;
+-
+ 	dev_dbg(&nvmem->dev, "Registering nvmem device %s\n", config->name);
+ 
+ 	rval = device_add(&nvmem->dev);
+--- a/drivers/nvmem/internals.h
++++ b/drivers/nvmem/internals.h
+@@ -35,6 +35,8 @@ struct nvmem_device {
+ 	bool			sysfs_cells_populated;
+ };
+ 
++int nvmem_add_cells_from_dt(struct nvmem_device *nvmem, struct device_node *np);
++
+ #if IS_ENABLED(CONFIG_OF)
+ int nvmem_layout_bus_register(void);
+ void nvmem_layout_bus_unregister(void);
+--- a/drivers/nvmem/layouts.c
++++ b/drivers/nvmem/layouts.c
+@@ -125,11 +125,6 @@ static int nvmem_layout_create_device(st
+ 	return 0;
+ }
+ 
+-static const struct of_device_id of_nvmem_layout_skip_table[] = {
+-	{ .compatible = "fixed-layout", },
+-	{}
+-};
+-
+ static int nvmem_layout_bus_populate(struct nvmem_device *nvmem,
+ 				     struct device_node *layout_dn)
+ {
+@@ -142,12 +137,6 @@ static int nvmem_layout_bus_populate(str
+ 		return 0;
+ 	}
+ 
+-	/* Fixed layouts are parsed manually somewhere else for now */
+-	if (of_match_node(of_nvmem_layout_skip_table, layout_dn)) {
+-		pr_debug("%s() - skipping %pOF node\n", __func__, layout_dn);
+-		return 0;
+-	}
+-
+ 	if (of_node_check_flag(layout_dn, OF_POPULATED_BUS)) {
+ 		pr_debug("%s() - skipping %pOF, already populated\n",
+ 			 __func__, layout_dn);
+--- a/drivers/nvmem/layouts/Makefile
++++ b/drivers/nvmem/layouts/Makefile
+@@ -3,6 +3,7 @@
+ # Makefile for nvmem layouts.
+ #
+ 
++obj-$(CONFIG_NVMEM_LAYOUTS) += fixed-layout.o
+ obj-$(CONFIG_NVMEM_LAYOUT_SL28_VPD) += sl28vpd.o
+ obj-$(CONFIG_NVMEM_LAYOUT_ONIE_TLV) += onie-tlv.o
+ obj-$(CONFIG_NVMEM_LAYOUT_U_BOOT_ENV) += u-boot-env.o
+--- /dev/null
++++ b/drivers/nvmem/layouts/fixed-layout.c
+@@ -0,0 +1,58 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright 2026 Bootlin
++ *
++ * Authors: Mathieu Dubois-Briand <mathieu.dubois-briand@bootlin.com>
++ */
++
++#include <linux/nvmem-provider.h>
++#include <linux/of.h>
++
++#include "../internals.h"
++
++static int fixed_layout_add_cells(struct nvmem_layout *layout)
++{
++	struct device_node *np;
++	int ret;
++
++	np = of_nvmem_layout_get_container(layout->nvmem);
++	if (!np)
++		return -ENOENT;
++
++	ret = nvmem_add_cells_from_dt(layout->nvmem, np);
++	of_node_put(np);
++
++	return ret;
++}
++
++static int fixed_layout_probe(struct nvmem_layout *layout)
++{
++	layout->add_cells = fixed_layout_add_cells;
++
++	return nvmem_layout_register(layout);
++}
++
++static void fixed_layout_remove(struct nvmem_layout *layout)
++{
++	nvmem_layout_unregister(layout);
++}
++
++static const struct of_device_id fixed_layout_of_match_table[] = {
++	{ .compatible = "fixed-layout", },
++	{},
++};
++
++static struct nvmem_layout_driver fixed_layout_layout = {
++	.driver = {
++		.name = "fixed-layout",
++		.of_match_table = fixed_layout_of_match_table,
++	},
++	.probe = fixed_layout_probe,
++	.remove = fixed_layout_remove,
++};
++module_nvmem_layout_driver(fixed_layout_layout);
++
++MODULE_AUTHOR("Mathieu Dubois-Briand");
++MODULE_LICENSE("GPL");
++MODULE_DEVICE_TABLE(of, fixed_layout_of_match_table);
++MODULE_DESCRIPTION("NVMEM fixed-layout driver");
+--- a/include/linux/nvmem-provider.h
++++ b/include/linux/nvmem-provider.h
+@@ -238,6 +238,12 @@ static inline int nvmem_layout_register(
+ 
+ static inline void nvmem_layout_unregister(struct nvmem_layout *layout) {}
+ 
++static inline int nvmem_add_cells_from_dt(struct nvmem_device *nvmem,
++					  struct device_node *np)
++{
++	return -EOPNOTSUPP;
++}
++
+ #endif /* CONFIG_NVMEM */
+ 
+ #if IS_ENABLED(CONFIG_NVMEM) && IS_ENABLED(CONFIG_OF)
 
 
