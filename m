@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721AF43BDD2;
-	Mon, 17 Aug 2026 13:50:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CC03033E7;
+	Mon, 17 Aug 2026 13:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974623; cv=none; b=EUloUkEQLSmibnzvNLnNH6Q2qeZsWv/zRO4Vm3AkKdZ8d+3ZIoliUn2XG9PSePIKUaRh1QvKQMUkCZTduV1WYCsNx/4LUarQ/QcdJjkSAky0gRY7KlgqkhQayRw1mMF1YItSomxn6T9vEO2YZwWphWnEtG/rngu+lKHHOBxMlZs=
+	t=1786974627; cv=none; b=HTZin4+CrZCaFOtMIiOA9h4FM3GRzNBhoa6xFXCH9b3o+/IvDQb6OOBT5gpFJlg1riTywtbyfYc6wgG9RQ5h/PAUmVP44qmvLhH+rQMV/ewrj923sRj9ZBMYYiBqfhAzD33w8xXTItTMdVKPLPuMslSfzN2ABZjG50fO8ZdpDyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974623; c=relaxed/simple;
-	bh=HWTfLZob+P/gqJTLH147eBGNY+2I5vI9a6k6HKyn77Y=;
+	s=arc-20240116; t=1786974627; c=relaxed/simple;
+	bh=1now9qXBa50ISGPV8dV9o40+jLu9yop0YTZOLoSHiyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nDOGDk8v1v70u37ttL5oHUERNFYhVQtWIaKQimKYYmxdME9L0jq7bui3+hn/rjN3Su+W7Lp3o5CF/HYDbvw0VZ8tbUpCuMB4YJHBDmhko+oXqAFgw+BXRMXeJ0K0UcUC19Qscewva4q/S6Ilie1vU2yHYliixmKO6QFGJTlwl7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KFK8sYz7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uwc6zEOXE91I6NRoVGlnimp7ulpRDmQ/Hg0bRUitM65TFqSWWco/sro1KgwtMRp51WsYjtEeokoHSioE2Ui9vfBqPgCBubsBtd4O2C3Z+w+kfTUM7c+DjFFhRK1g2xGDq9OtVK3oOgO0Hb91htbr4uUGFXM4vz4cSu4rYoCF8k4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFkNT5Bg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KFK8sYz7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD431F00A3E;
-	Mon, 17 Aug 2026 13:50:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFkNT5Bg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBCAD1F000E9;
+	Mon, 17 Aug 2026 13:50:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974617;
-	bh=oUX4CnRCy7jZfua4dNpgsuy+6e8C1Tqn4yuaaSeiyZw=;
+	s=korg; t=1786974620;
+	bh=Tt5NCO0vwAE5nHyugEotIVAE23EzwErjr5HztomOtnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KFK8sYz7TP5KVFWpI9KrCSkLOlvDBk7BHxOyOOUtMpjyn3u6U65OLdrDXKVAKt0/y
-	 Mjx8PLCtqQOfJqXMvqZiRQT4ESim4rDeLkaB16XwUztqlbeiN3kg8tTsZDw5oKDVbG
-	 Dmj87ygCWSLz4NTd3xhTXF958n2N1HA9I5uqJzQk=
+	b=EFkNT5BgfosYTQQt5o9bBx5R1QAqwjO0x9WJPmVElIejfLl+PXSXtzugW3JZvTzvF
+	 tG88LLKENP7TFupUZ4RZsyP/M95mJAaAVdRH1R5V6jLloN2ELhXcrpk7kwb4A7rAqj
+	 NTf8GYxK6CPtxYq3lB0o8LTrIr+SB6KdCmyAJo44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.1 250/271] ring-buffer: Initialise reader page order in rb_allocate_cpu_buffer()
-Date: Mon, 17 Aug 2026 15:32:55 +0200
-Message-ID: <20260817132547.030688352@linuxfoundation.org>
+	Xin Long <lucien.xin@gmail.com>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 268/271] sctp: fix use-after-free of cached ASCONF chunk
+Date: Mon, 17 Aug 2026 15:33:13 +0200
+Message-ID: <20260817132547.733293711@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -50,34 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
 
-commit 6d014e44b68ddd43f71288d2a4dbb1a259869149 upstream.
+commit 8c283e7b56adce00193837f3311b06662466fb21 upstream.
 
-In rb_allocate_cpu_buffer(), bpage->order was omitted, leaving it as 0.
-This is an issue for a ring-buffer with subbufs bigger than PAGE_SIZE if
-when freed: free_buffer_page() relies on this value. Align the value
-with the actual allocation size (buffer::subbuf_order).
+addip_last_asconf caches the outstanding outbound ASCONF chunk. The normal
+ASCONF-ACK completion path releases the chunk and clears the pointer.
 
+However, sctp_asconf_queue_teardown() releases the cached chunk without
+clearing addip_last_asconf. During peer restart handling,
+sctp_sf_do_dupcook_a() queues SCTP_CMD_PURGE_ASCONF_QUEUE, which invokes
+sctp_asconf_queue_teardown() while the association remains alive and leaves
+the pointer dangling.
+
+A delayed authenticated ASCONF-ACK can then reach sctp_sf_do_asconf_ack(),
+which accesses the stale chunk and passes it to sctp_process_asconf_ack(),
+causing a use-after-free and a second release.
+
+Clearing the pointer exposes a race with T4 expiry. Peer restart handling
+queues the timer stop before the purge, but SCTP_CMD_TIMER_STOP uses
+timer_delete(), which does not wait for a callback already running on
+another CPU. Such a callback can reach sctp_sf_t4_timer_expire() after
+the purge and dereference NULL.
+
+Clear addip_last_asconf after releasing the cached chunk, and make
+sctp_sf_t4_timer_expire() consume a stale T4 expiry if no outstanding
+ASCONF remains.
+
+Fixes: a000c01e60e4 ("sctp: stop pending timers and purge queues when peer restart asoc")
 Cc: stable@vger.kernel.org
-Fixes: f9b94daa542a ("ring-buffer: Set new size of the ring buffer sub page")
-Link: https://patch.msgid.link/20260806211306.3704194-4-vdonnefort@google.com
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260809043806.2768302-1-yangyx22@mails.tsinghua.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/sctp/associola.c    |    4 +++-
+ net/sctp/sm_statefuns.c |    6 +++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -2400,6 +2400,7 @@ rb_allocate_cpu_buffer(struct trace_buff
- 	bpage = alloc_cpu_page(cpu);
- 	if (!bpage)
- 		return NULL;
-+	bpage->order = cpu_buffer->buffer->subbuf_order;
+--- a/net/sctp/associola.c
++++ b/net/sctp/associola.c
+@@ -1713,6 +1713,8 @@ void sctp_asconf_queue_teardown(struct s
+ 	sctp_assoc_free_asconf_queue(asoc);
  
- 	rb_check_bpage(cpu_buffer, bpage);
+ 	/* Free any cached ASCONF chunk. */
+-	if (asoc->addip_last_asconf)
++	if (asoc->addip_last_asconf) {
+ 		sctp_chunk_free(asoc->addip_last_asconf);
++		asoc->addip_last_asconf = NULL;
++	}
+ }
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -6145,8 +6145,12 @@ enum sctp_disposition sctp_sf_t4_timer_e
+ 					struct sctp_cmd_seq *commands)
+ {
+ 	struct sctp_chunk *chunk = asoc->addip_last_asconf;
+-	struct sctp_transport *transport = chunk->transport;
++	struct sctp_transport *transport;
  
++	if (!chunk)
++		return SCTP_DISPOSITION_CONSUME;
++
++	transport = chunk->transport;
+ 	SCTP_INC_STATS(net, SCTP_MIB_T4_RTO_EXPIREDS);
+ 
+ 	/* ADDIP 4.1 B1) Increment the error counters and perform path failure
 
 
