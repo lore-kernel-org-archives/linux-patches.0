@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26C03F9F26;
-	Mon, 17 Aug 2026 13:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06273E4C94;
+	Mon, 17 Aug 2026 13:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974435; cv=none; b=rZ1uSYbNT1tt4vmvUteLoR6I37oNydXDnPGJOykm/Ny5HBj/DN0omDtPONNZxlLzrnldkegEpHl8w88GR6nGmfn75WdHqhJjfS+ZFEmf6ToEjB3qOdnjceIwFrih126LXzr7sDkKyTlt0y1F6T3OtQQS26KKXHLvFT0oOWBlgq4=
+	t=1786974436; cv=none; b=BwF52yPPm4W0euDybJGmP678zlFY73RFQasz8FtdMlBwOcCA8uT6cAXfmXwzjvJdkeXs3H/2E8yJu575IR89NFzAHs2sJ4jdrIgAR+uH+2EgcKkey7gmMPkMSkCe0B/9Ypil+9GKvz2mdIbiQKuYHF1HzalEPAKbcLBeaGpdLkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974435; c=relaxed/simple;
-	bh=DoIFfxb09H3s5Tf+TlLp+p7lRZJl0EkPT/9zFVen+qQ=;
+	s=arc-20240116; t=1786974436; c=relaxed/simple;
+	bh=uLh5E+WQ/dH7Lt4H/7HzluafV1BqgHK+mGW8DST67H4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K4+pOrcdBpy5q0qto6vKvxVIrNJnFWLt4S7HVCYHN+Bwhvm7ZPJtdnPFPcH6CVfPJU/X/vIxqx9cuu5fNl5Ax9eCWSxTrKTATf8EC6nECFt+Kgv3hTtn+IaFgkPix4n1R7q+fqVSbIuif/WFGWvXl71ZNyt6UmwLf1HUOlh7Iak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HgiTottW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m6R8ERn+8wGH3wQi1taa96khQ03bJGsLNIZ4oVplADDisJDd0ePOWDjTKkKcif0ZHKB7xeIPu5F6zHWGkoQM5UINRs3ir3HIYqPDopo831JZDpi4RnpakhJzqQzd+jeStfL8duETXmTFKiff2ZImzHKABh+H4Ql3qOVlFUmPTW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3O5JkT9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HgiTottW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A75C1F000E9;
-	Mon, 17 Aug 2026 13:47:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3O5JkT9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDC61F00A3A;
+	Mon, 17 Aug 2026 13:47:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974428;
-	bh=4E/JEImELwTvAHcbvcTQ6Ri31p3HH29A4wnqXdwVtQc=;
+	s=korg; t=1786974431;
+	bh=uAfarvOaQrBygu7W/+cE3kQliL4thSeRJbF5couAqjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HgiTottWLEDJvrVmTt241RqqOcBYfOxWH+4v56bLcQn7Z3E/BAONiD6ej0b+InFXK
-	 SvD+w0sCLSD1ujLp9c4cs3DiwgaNxX2jK6NvEKzcJUfJ6TiL08a4BL6WXP4sACm43c
-	 iTvLgGED9Md/7mF97H5eKULTI7z81cpg6Gfxh+Gs=
+	b=B3O5JkT9iTewP0FHrqgbzprv+Rb7pzBgObhGt0tRclD1zltHTyIgdpVRb8fqu0oe1
+	 QMA3Nv9QDW8lGmB4AnGWrXvEVeCZ0/6rM3HTtlAkEv0zbtnQyv0Bc9vMRTlU7iUgAk
+	 NBVWiCpOmH//DeH83KhK2ebQNHTyrLt05QpFM4ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
+	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
+	Baul Lee <baul.lee@xbow.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.1 201/271] ALSA: hda/tas2781: fix ACPI reference handling
-Date: Mon, 17 Aug 2026 15:32:06 +0200
-Message-ID: <20260817132545.095815716@linuxfoundation.org>
+Subject: [PATCH 7.1 202/271] ALSA: us144mkii: re-anchor capture URBs on resubmission
+Date: Mon, 17 Aug 2026 15:32:07 +0200
+Message-ID: <20260817132545.135664876@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -50,53 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit 8bec01c80e798eca1ae7863cf29bc6befd759db7 upstream.
+commit 2615f0fb90df8cf5a96133ca4be74294ed288604 upstream.
 
-tas2781_read_acpi() gets a reference to the matching ACPI device and then
-looks up its first physical device node. After taking a reference to the
-physical device, it immediately drops the ACPI device reference.
+capture_urb_complete() resubmits each capture URB without anchoring it:
 
-However, every later failure jumps to an error path that drops the ACPI
-device reference a second time. This unbalances the reference count and
-may prematurely release the ACPI device.
+	usb_get_urb(urb);
+	ret = usb_submit_urb(urb, GFP_ATOMIC);
 
-In addition, acpi_get_first_physical_node() may return NULL. Without a
-check, the driver passes the NULL physical device to the property helper
-calls and may dereference it.
+Anchoring is a property of a submission, not of the URB.  The giveback
+path calls usb_unanchor_urb() before urb->complete(), so an URB
+resubmitted from its own completion handler is off the anchor.  The
+capture URBs are anchored once, at stream start, so from the first
+completion onward tascam->capture_anchor is empty.
 
-Return -ENODEV when no physical device is associated with the ACPI node,
-and remove the duplicate acpi_dev_put() from the common error path.
+tascam_free_urbs(), tascam_disconnect(), tascam_suspend() and the
+stop-work path all call usb_kill_anchored_urbs(&tascam->capture_anchor)
+to reap the capture URBs before anything is freed.  With the anchor empty
+those calls return immediately and the URBs stay queued on the host
+controller.
 
-Fixes: bb5f86ea50ff ("ALSA: hda/tas2781: Add tas2781 hda SPI driver")
+tascam_free_urbs() then returns the capture transfer buffers with
+usb_free_coherent(), and snd_card_free() releases the snd_card
+allocation that embeds tascam (card->private_data).  The controller
+completes the queued URBs afterwards, writing device-supplied data into
+the freed transfer buffer, and capture_urb_complete() dereferences the
+freed driver object.
+
+KASAN on 7.2.0-rc5 (arm64):
+
+  BUG: KASAN: slab-use-after-free in dummy_timer
+  Write of size 512 at addr ffff000015b62000
+   __asan_memcpy
+   dummy_timer
+   hrtimer_run_softirq
+  Allocated by task 64:
+   usb_alloc_coherent
+   tascam_alloc_urbs
+   tascam_probe
+  Freed by task 170:
+   usb_free_coherent
+   tascam_free_urbs
+   tascam_disconnect
+   usb_unbind_interface
+
+  BUG: KASAN: slab-use-after-free in capture_urb_complete
+  Read of size 4 at addr ffff0000170ee878
+  Freed by task 170:
+   release_card_device
+   snd_card_free
+   tascam_disconnect
+
+Restore the usb_anchor_urb() between the reference count bump and the
+resubmission.  That also makes the handler's usb_unanchor_urb() failure
+arm meaningful again and restores usb_kill_anchored_urbs() as a barrier
+on the disconnect, suspend and stop-work paths.
+
+The anchoring was removed on the premise that the URB is already anchored
+from the initial submission, which does not hold once the first giveback
+has run.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 5cff1529a2f9 ("ALSA: us144mkii: capture_urb_complete: redundant usb_anchor_urb corrupts anchor list on each resubmission")
+Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
+Reported-by: Baul Lee <baul.lee@xbow.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/97EA8F29DA0D9AF7+20260731033554.949564-1-raoxu@uniontech.com
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260804123625.91769-1-baul.lee@xbow.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/side-codecs/tas2781_hda_spi.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/usb/usx2y/us144mkii_capture.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/hda/codecs/side-codecs/tas2781_hda_spi.c
-+++ b/sound/hda/codecs/side-codecs/tas2781_hda_spi.c
-@@ -344,6 +344,8 @@ static int tas2781_read_acpi(struct tas2
- 	strscpy(p->dev_name, hid, sizeof(p->dev_name));
- 	physdev = get_device(acpi_get_first_physical_node(adev));
- 	acpi_dev_put(adev);
-+	if (!physdev)
-+		return -ENODEV;
+--- a/sound/usb/usx2y/us144mkii_capture.c
++++ b/sound/usb/usx2y/us144mkii_capture.c
+@@ -302,6 +302,7 @@ void capture_urb_complete(struct urb *ur
+ 	}
  
- 	property = "ti,dev-index";
- 	ret = device_property_count_u32(physdev, property);
-@@ -386,7 +388,6 @@ static int tas2781_read_acpi(struct tas2
- err:
- 	dev_err(p->dev, "read acpi error, ret: %d\n", ret);
- 	put_device(physdev);
--	acpi_dev_put(adev);
- 
- 	return ret;
- }
+ 	usb_get_urb(urb);
++	usb_anchor_urb(urb, &tascam->capture_anchor);
+ 	ret = usb_submit_urb(urb, GFP_ATOMIC);
+ 	if (ret < 0) {
+ 		dev_err_ratelimited(tascam->card->dev,
 
 
