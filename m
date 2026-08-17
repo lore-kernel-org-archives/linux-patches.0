@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BF82E738B;
-	Mon, 17 Aug 2026 14:45:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A3C41F34C;
+	Mon, 17 Aug 2026 14:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977912; cv=none; b=TUQenLctyuzjNvdxV0yOzVmtzK00HdKxYJwOeXK89pQvp/y0MKSvwG5qbBCni2Y+XH/pHjoaXsl5sowYTJlFh9rR8pZ64/1cgN9xYhrFju6Yklqem7dt98YlmBZbBcARbAIHq3VvzRlp2CP9rONb8U/YdMbnGefFet0SorceuqM=
+	t=1786977915; cv=none; b=FXHErLpUoF+WQO/eFl9uUykrbv8EleUOY8sYi+kJ8VMe/uA2i8DTUvVE3u+aGSekWs5FrflHG1rOdBrxAsp9zhMaMI8yXt5vLWsEjLx6LhFe56KPkc/ylBRAM7zrF4U+1qN6er3L12ifgD0Fy4WjhoN7VHnwQZH5lHeqO1N+E6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977912; c=relaxed/simple;
-	bh=wVirMeUIpooQuOEyxiQRodSdyNiLHzoPpsfcuGToTJA=;
+	s=arc-20240116; t=1786977915; c=relaxed/simple;
+	bh=ZDwBVczCwuehK1PJjUFU4ODoKINX5Z1pPZGJpwtYudw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YoiAKLKVUrjsPvGdHv2+1KGnlAl9LB5lcYVGnopJeHhMxm9R8n8Le7/KG6u20z10X6IFLjMinlm54eo7K1FQCE2wgXq+mPC15YLNngHNsL4mc1ySVv7d6qSY4RIL5Ii2qIDgQ8IrEJR+33SyvXwuYMnEjV0zfi1Hf0LpPH18H5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jYvvXNja; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bcl1661cmaUtEXMShnaFQZhrgSjjG3GP8Czwqb5LVs0mrLoTyiIfW48PSGuwQUv0bWfRxzS9iONC+bP97speL77hC5h0RxoaB3jsUwgqrJCi3Lj/aLgHcPVVRvglx7pBGN3w1caRL3MRu4LETjZcmyLQrDmMKqklMX049cBx4ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoA2XkPv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jYvvXNja"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E261F000E9;
-	Mon, 17 Aug 2026 14:45:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoA2XkPv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8A51F000E9;
+	Mon, 17 Aug 2026 14:45:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977911;
-	bh=sDgIru3RM8DXmRnAoeI4Ot7nVoMW0OBiaZdlny86pLA=;
+	s=korg; t=1786977914;
+	bh=HZRWHoR4nMlkTvEDBLJWtnAmhLFwRNQv1EVGinxSPSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jYvvXNjaezS13sC0o37mZCVwz97meSVO4s+wx4cC+QLusluwa1yH25Ah1HDwwjhl1
-	 6hyIM+QUOtidzIrAElhk80glGaTpLFRI8AZbyIUc1l51NyZbuurb421rTuye0iwD/N
-	 hNCZW3HOt2T9nyiQmkqVMLUWghWOdS2wxXtDbJPI=
+	b=HoA2XkPvyM1opo8+mQ0Htezr1R4Lb+uBzsNB+8ETo1Xo9QaJCu+5T5BUCtqpxkx0z
+	 jcC/Q52CYCel+3kmD5X4z40LogYXZ+22Xsk9CJ3A1L44w5lfJLzxLZV3AcwtOsWHZA
+	 xp5b/Hv5tFjaMNiXFW9t1ZYuZmLuME3rdZpLlxj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Viktor=20J=C3=A4gersk=C3=BCpper?= <viktor_jaegerskuepper@freenet.de>,
-	Ray Wu <ray.wu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 004/181] drm/amd/display: Check for tg ops in dce110_set_avmute
-Date: Mon, 17 Aug 2026 15:31:38 +0200
-Message-ID: <20260817132535.573588741@linuxfoundation.org>
+Subject: [PATCH 6.12 005/181] s390/zcrypt: Fix missing mem scrub at clear key import in cca_clr2cipherkey()
+Date: Mon, 17 Aug 2026 15:31:39 +0200
+Message-ID: <20260817132535.609152312@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -46,52 +46,116 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ray Wu <ray.wu@amd.com>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-[ Upstream commit 3141e3d61469bba2624a91c5e2407f110b33b29e ]
+[ Upstream commit 01476391aecef36a3b789ee844357b22fbc90665 ]
 
-Some older DCE timing generators do not implement is_tg_enabled in
-their ops table. Calling it unconditionally when waiting for AV mute
-frames causes a NULL pointer dereference on Southern Islands dGPUs
-when turning the display off over HDMI.
+The helper function _ip_cprb_helper() uses internal buffer memory for
+building and processing CPRBs. After use this buffer was never
+scrubbed which could lead to leaving for example clear key material in
+memory which could be exposed via tricky reuse of this same memory.
 
-Check that tg and the required ops exist before waiting for frames.
+Extend the _ip_cprb_helper() function with another parameter 'scrub'
+used to steer scrubbing of this buffer. So now the caller has the
+opportunity to decide if scrubbing is needed or not.
 
-Fixes: 414da24137ac ("drm/amd/display: Add AV mute wait frames to dce110_set_avmute")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5557
-Tested-by: Viktor Jägersküpper <viktor_jaegerskuepper@freenet.de>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 2686a0c0aaa07bec2e24131835cf27b5fd4935a5)
+Extend the clear key to secure key token import process in function
+cca_clr2cipherkey() to tell the helper function from above to scrub
+the cprb buffer when the clear key value is part of the request data.
+
+Add explicit scrubbing on return from function cca_clr2cipherkey() for
+the random EXOR buffer and the cprb buffer.
+
+Overall this cleans the internal used buffer in case of clear key
+import to prevent sensitive data to get exposed.
+
+Fixes: 4bc123b18ce6 ("s390/zcrypt: Add low level functions for CCA AES cipher keys")
 Cc: stable@vger.kernel.org
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/s390/crypto/zcrypt_ccamisc.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-index a4f092eb0857b..dcc78244dd7c3 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-@@ -1267,7 +1267,10 @@ void dce110_set_avmute(struct pipe_ctx *pipe_ctx, bool enable)
- 		 * process the mute state, especially after link re-establishment
- 		 * with HDMI 2.0 scrambling enabled.
- 		 */
--		if (enable && pipe_ctx->stream_res.tg->funcs->is_tg_enabled(pipe_ctx->stream_res.tg)) {
-+		if (enable && pipe_ctx->stream_res.tg &&
-+		    pipe_ctx->stream_res.tg->funcs->is_tg_enabled &&
-+		    pipe_ctx->stream_res.tg->funcs->wait_for_state &&
-+		    pipe_ctx->stream_res.tg->funcs->is_tg_enabled(pipe_ctx->stream_res.tg)) {
- 			int i;
+diff --git a/drivers/s390/crypto/zcrypt_ccamisc.c b/drivers/s390/crypto/zcrypt_ccamisc.c
+index 6790afd517ec6..48d36d5a87118 100644
+--- a/drivers/s390/crypto/zcrypt_ccamisc.c
++++ b/drivers/s390/crypto/zcrypt_ccamisc.c
+@@ -938,7 +938,8 @@ static int _ip_cprb_helper(u16 cardnr, u16 domain,
+ 			   const u8 *clr_key_value,
+ 			   int clr_key_bit_size,
+ 			   u8 *key_token,
+-			   int *key_token_size)
++			   int *key_token_size,
++			   bool scrub)
+ {
+ 	int rc, n;
+ 	u8 *mem, *ptr;
+@@ -1077,7 +1078,7 @@ static int _ip_cprb_helper(u16 cardnr, u16 domain,
+ 	*key_token_size = t->len;
  
- 			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
+ out:
+-	free_cprbmem(mem, PARMBSIZE, 0);
++	free_cprbmem(mem, PARMBSIZE, scrub);
+ 	return rc;
+ }
+ 
+@@ -1120,28 +1121,32 @@ int cca_clr2cipherkey(u16 card, u16 dom, u32 keybitsize, u32 keygenflags,
+ 	 * 4/4 COMPLETE the secure cipher key import
+ 	 */
+ 	rc = _ip_cprb_helper(card, dom, "AES     ", "FIRST   ", "MIN3PART",
+-			     exorbuf, keybitsize, token, &tokensize);
++			     exorbuf, keybitsize, token, &tokensize,
++			     true);
+ 	if (rc) {
+ 		ZCRYPT_DBF_ERR("%s clear key import 1/4 with CSNBKPI2 failed, rc=%d\n",
+ 			       __func__, rc);
+ 		goto out;
+ 	}
+ 	rc = _ip_cprb_helper(card, dom, "AES     ", "ADD-PART", NULL,
+-			     clrkey, keybitsize, token, &tokensize);
++			     clrkey, keybitsize, token, &tokensize,
++			     true);
+ 	if (rc) {
+ 		ZCRYPT_DBF_ERR("%s clear key import 2/4 with CSNBKPI2 failed, rc=%d\n",
+ 			       __func__, rc);
+ 		goto out;
+ 	}
+ 	rc = _ip_cprb_helper(card, dom, "AES     ", "ADD-PART", NULL,
+-			     exorbuf, keybitsize, token, &tokensize);
++			     exorbuf, keybitsize, token, &tokensize,
++			     true);
+ 	if (rc) {
+ 		ZCRYPT_DBF_ERR("%s clear key import 3/4 with CSNBKPI2 failed, rc=%d\n",
+ 			       __func__, rc);
+ 		goto out;
+ 	}
+ 	rc = _ip_cprb_helper(card, dom, "AES     ", "COMPLETE", NULL,
+-			     NULL, keybitsize, token, &tokensize);
++			     NULL, keybitsize, token, &tokensize,
++			     true);
+ 	if (rc) {
+ 		ZCRYPT_DBF_ERR("%s clear key import 4/4 with CSNBKPI2 failed, rc=%d\n",
+ 			       __func__, rc);
+@@ -1158,7 +1163,8 @@ int cca_clr2cipherkey(u16 card, u16 dom, u32 keybitsize, u32 keygenflags,
+ 	*keybufsize = tokensize;
+ 
+ out:
+-	kfree(token);
++	memzero_explicit(exorbuf, sizeof(exorbuf));
++	kfree_sensitive(token);
+ 	return rc;
+ }
+ EXPORT_SYMBOL(cca_clr2cipherkey);
 -- 
 2.53.0
 
