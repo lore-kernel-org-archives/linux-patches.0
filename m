@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D82742901B;
-	Mon, 17 Aug 2026 15:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0426C3CB2E9;
+	Mon, 17 Aug 2026 15:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980081; cv=none; b=Mu63K9BrbAshSgewsEPl3ujDp+gmGQfdUycvNlUImQbHyHLIDl3dkmxmHNiB56EfPh1D7m+bElTT1UPylLeFrQsnzShasnbPU2ZM4s9AdT2Ytet/dk8Df+OeqvqiP7s1Z424hNBN0jxl7pxZYw33zrfwsvR+Il9k6j5Riaw+22g=
+	t=1786980084; cv=none; b=mXsBb+/IYPskQCujioj6Z6ca74RlxiwMNzwyGqT7zLqU2JXu/a2Rk/49G3NUTHt4VKmZIz7OE1T+sqcR4KYkfIJPlmV/Y5LCvvZTvaGQ00wQ4G1R1fP6uC7w3AvzT8qqOvGBF+MqLLrtsj1M2w7zQyXmesLinGeohBB2t3jAFg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980081; c=relaxed/simple;
-	bh=cHeSow6f9dWZ2zJiYNXIbgKZojrb199P2iM69Pmgf84=;
+	s=arc-20240116; t=1786980084; c=relaxed/simple;
+	bh=y+Vjur3JKbcsr/cEsQOj90KMoLOOry/RsDCIO+ge1s8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tQCzo6dXSwK7Xyd9gqrvvS5Aag/X5MS3yTWax0BtpjeYXxszhjiFp3WR637GdyC+fc4k74YJAGDYdLNd93eomxj9gQqkGiuLA8ST5MeG+SNbsKNPqD/mJLZTWudhuYoOxX5VyBrbpKwsxSPfv9MdMjmZSHGotAGUqiRzmUQNZ7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=syEP5e76; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nr8mtzb6GRv3RVzNxmAJ5+ZhhZ52zlliKshZLB7v/YTQ1qN3tO3jp+YItWlpmkpGl0j4pA4tTPDnUj8t3DZu+v6lJUJsHtvYTjElX9bXj5iMLqgyIDXpbz5oFaZB61YK44mQyftvkZiLOlu10qDYCQVbFwDqSWBTbiBya8ooPwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxXNlIkI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="syEP5e76"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A501F00A3A;
-	Mon, 17 Aug 2026 15:21:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxXNlIkI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0906A1F000E9;
+	Mon, 17 Aug 2026 15:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980079;
-	bh=qQEwHc0hvmWMYboew+TNfPi59gz5xG/08WEWSwMsu8U=;
+	s=korg; t=1786980082;
+	bh=k9cY2oEM3Q28iLxynfLHkhDUNbzi1KPTaKdjjPvvqD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=syEP5e76dfrq+DYkaI9OgbM8XR30AQ8PHk84qTNWPGU6V/OEqAiKc2sN4nmZL6qz+
-	 EyTFc/CIsdqE45330QbYoWe8z2Z2Z7x67hX1U9OxgDIR7LU72M1CuK8LoRFDZaxluI
-	 7HcAUWly0Y32nNJP//LjSbWZ+u+k7mhTTbGP0iFU=
+	b=uxXNlIkI1Ar1lFluaZ4X4p5ozw/5f8qNPtx2FBTei2DUAn8adSccv7gwa24D1iplM
+	 9NkZ48ODQPGy83Zeji5Ku3tNzu6SRp1hBQ7mAeiLjbJmDQ4ovBW3Ur0+srpmuh2JOh
+	 rNSTrOU7NyFkueOIRm1yalxSi49NUdV/9Y0//mXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haidar Lee <haidar.lee@adlinktech.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 400/609] ASoC: tas2562: fix DVC coefficient write order
-Date: Mon, 17 Aug 2026 15:31:36 +0200
-Message-ID: <20260817132557.590049117@linuxfoundation.org>
+	Ilya Maximets <i.maximets@ovn.org>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 443/609] net: openvswitch: fix potential UAF on meter attach failure
+Date: Mon, 17 Aug 2026 15:32:19 +0200
+Message-ID: <20260817132558.908327706@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,78 +51,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haidar Lee <haidar.lee@adlinktech.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-commit 8e957e4907c58e9ca944f98799524f2bbb9cf68a upstream.
+commit a58a2b0ce354df531ebc71fc870058c2feb59f6b upstream.
 
-The TAS2562 applies the 32-bit digital volume coefficient to the
-playback path when the last byte, DVC_CFG4 (book 0 page 2 reg 0x0F), is
-written. tas2562_volume_control_put() wrote DVC_CFG4 first and DVC_CFG1
-(the MSB) last, so every volume change latched a value made of the
-previous coefficient's upper three bytes combined with the new LSB; the
-remaining bytes only took effect on the next volume change.
+While attaching a newly created meter attach_meter() function makes
+the new meter visible to other CPUs but can still fail afterwards.
+On failure, it detaches the meter back and returns an error.
 
-In practice the control was unusable: the first setting after power-on
-always played at roughly 0 dB no matter what value was requested (the
-chip's default upper bytes were still latched), and most subsequent
-changes muted the output entirely or produced a distorted, over-unity
-gain.
+However, this is an unexpected behavior for the ovs_meter_cmd_set()
+that uses a plain kfree(meter) on attach failure without waiting for
+RCU readers to stop using it, assuming it was never visible.
 
-Verified on a TAS2562 (ADLINK OSM-520 / MT8189 board) by tracing the
-I2C writes with ftrace and by writing the same coefficients manually in
-both byte orders: written MSB-first the register block behaves exactly
-as the driver expects, LSB-first reproduces the broken behaviour.
+This is never a problem for ovs-vswitchd as it always creates meters
+before creating any flows that use them.  But the UAF can be triggered
+with a custom application using uAPI:
 
-Write the bytes MSB first with DVC_CFG4 last so the complete new
-coefficient is latched atomically.
+ BUG: KASAN: slab-use-after-free in ovs_meter_execute (net/openvswitch/meter.c:653)
+ Read of size 8 at addr ffff88810d152650 by task meter/2508
 
-Fixes: bf726b1c86f2 ("ASoC: tas2562: Add support for digital volume control")
+ Call Trace:
+  ovs_meter_execute (net/openvswitch/meter.c:653)
+  do_execute_actions (net/openvswitch/actions.c:1407)
+  ovs_execute_actions (net/openvswitch/actions.c:1584)
+  ovs_packet_cmd_execute (net/openvswitch/datapath.c:703)
+  ...
+  netlink_sendmsg (af_netlink.c:1900)
+
+ Allocated by task 2519:
+  __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
+  ovs_meter_cmd_set (net/openvswitch/meter.c:422)
+  ...
+  netlink_sendmsg (af_netlink.c:1900)
+
+ Freed by task 2519:
+  kfree (mm/slub.c:2705 mm/slub.c:6405 mm/slub.c:6720)
+  ovs_meter_cmd_set (net/openvswitch/meter.c:479)
+  ...
+  netlink_sendmsg (af_netlink.c:1900)
+
+Fix that by making sure attach_meter() doesn't make the meter visible
+until all the checks are done and the function can't fail anymore.
+
+This also makes sure the "hash" value is calculated after the potential
+re-sizing of the table.
+
+Reported by Trend Micro's Zero Day Initiative as ZDI-CAN-31642.
+
+Fixes: c7c4c44c9a95 ("net: openvswitch: expand the meters supported number")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haidar Lee <haidar.lee@adlinktech.com>
-Link: https://patch.msgid.link/20260715-tas2562-dvc-fix-v1-1-072b13901b20@adlinktech.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
+Link: https://patch.msgid.link/20260727121022.198461-1-i.maximets@ovn.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/tas2562.c |   23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ net/openvswitch/meter.c |   33 +++++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 14 deletions(-)
 
---- a/sound/soc/codecs/tas2562.c
-+++ b/sound/soc/codecs/tas2562.c
-@@ -477,20 +477,27 @@ static int tas2562_volume_control_put(st
- 	u32 reg_val;
+--- a/net/openvswitch/meter.c
++++ b/net/openvswitch/meter.c
+@@ -135,18 +135,10 @@ static void dp_meter_instance_remove(str
  
- 	reg_val = float_vol_db_lookup[ucontrol->value.integer.value[0]/2];
--	ret = snd_soc_component_write(component, TAS2562_DVC_CFG4,
--				      (reg_val & 0xff));
--	if (ret)
--		return ret;
--	ret = snd_soc_component_write(component, TAS2562_DVC_CFG3,
--				      ((reg_val >> 8) & 0xff));
-+	/*
-+	 * The device applies the 32-bit coefficient to the playback path on
-+	 * the write to DVC_CFG4 (the LSB, book 0 page 2 reg 0x0F), so the
-+	 * bytes must be written MSB first and DVC_CFG4 last. Writing CFG4
-+	 * first latches a mix of the previous coefficient's upper bytes and
-+	 * the new LSB instead of the requested value.
+ static int attach_meter(struct dp_meter_table *tbl, struct dp_meter *meter)
+ {
+-	struct dp_meter_instance *ti = rcu_dereference_ovsl(tbl->ti);
+-	u32 hash = meter_hash(ti, meter->id);
++	struct dp_meter_instance *ti;
++	u32 hash;
+ 	int err;
+ 
+-	/* In generally, slots selected should be empty, because
+-	 * OvS uses id-pool to fetch a available id.
+-	 */
+-	if (unlikely(rcu_dereference_ovsl(ti->dp_meters[hash])))
+-		return -EBUSY;
+-
+-	dp_meter_instance_insert(ti, meter);
+-
+ 	/* That function is thread-safe. */
+ 	tbl->count++;
+ 	if (tbl->count >= tbl->max_meters_allowed) {
+@@ -154,16 +146,29 @@ static int attach_meter(struct dp_meter_
+ 		goto attach_err;
+ 	}
+ 
+-	if (tbl->count >= ti->n_meters &&
+-	    dp_meter_instance_realloc(tbl, ti->n_meters * 2)) {
+-		err = -ENOMEM;
++	ti = rcu_dereference_ovsl(tbl->ti);
++	if (tbl->count >= ti->n_meters) {
++		err = dp_meter_instance_realloc(tbl, ti->n_meters * 2);
++		if (err)
++			goto attach_err;
++
++		ti = rcu_dereference_ovsl(tbl->ti);
++	}
++
++	hash = meter_hash(ti, meter->id);
++
++	/* In general, selected slots should be empty, because
++	 * OvS uses id-pool to fetch available ids.
 +	 */
-+	ret = snd_soc_component_write(component, TAS2562_DVC_CFG1,
-+				      ((reg_val >> 24) & 0xff));
- 	if (ret)
- 		return ret;
- 	ret = snd_soc_component_write(component, TAS2562_DVC_CFG2,
- 				      ((reg_val >> 16) & 0xff));
- 	if (ret)
- 		return ret;
--	ret = snd_soc_component_write(component, TAS2562_DVC_CFG1,
--				      ((reg_val >> 24) & 0xff));
-+	ret = snd_soc_component_write(component, TAS2562_DVC_CFG3,
-+				      ((reg_val >> 8) & 0xff));
-+	if (ret)
-+		return ret;
-+	ret = snd_soc_component_write(component, TAS2562_DVC_CFG4,
-+				      (reg_val & 0xff));
- 	if (ret)
- 		return ret;
++	if (unlikely(rcu_dereference_ovsl(ti->dp_meters[hash]))) {
++		err = -EBUSY;
+ 		goto attach_err;
+ 	}
  
++	dp_meter_instance_insert(ti, meter);
+ 	return 0;
+ 
+ attach_err:
+-	dp_meter_instance_remove(ti, meter);
+ 	tbl->count--;
+ 	return err;
+ }
 
 
