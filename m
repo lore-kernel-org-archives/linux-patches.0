@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A24C3BBFA1;
-	Mon, 17 Aug 2026 13:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD671A238F;
+	Mon, 17 Aug 2026 13:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974147; cv=none; b=oXK+0tk+Ysf5fLEfh7gLcVfCTdlOO2jLXwg/sg+agyFnmTigOfHX3aOCpmS7CIHTu6m7WV3kYAc/hZFUkCb+S033ZMdrBKNqPtnHy91UVatDATEIWjlhExXcZAmNUI/wE0czC5R+BCRe3yfK2Upop6+lulQbseolQvSmFmNyvLE=
+	t=1786974150; cv=none; b=e1tiE8IXPUlE2pHNUv6jBmJCxBXAetRju1kko0rFJ+oPJ52Aq2390MmbZFbo1NXTTZQG+93FNsUL1Q0AfrqJ2co3PlsHzgc19exuBtKsw9BCmCCblO5dCpmncXtqEppTTytSuoqMxfNMFpNoZfBUcgCS+hnNbSl77qQNcOThkjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974147; c=relaxed/simple;
-	bh=zeV7MFW/JS//ESaG1yWOb1lWpfc3HT7YRXMUzyOX2Ug=;
+	s=arc-20240116; t=1786974150; c=relaxed/simple;
+	bh=seYRbwWFdkm/L8CAvWLABLc3ubVMqs1rN6Xm5LW12i0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JBFCDx3mck5lcY1YeoMDOA2Pua13/rk0CJ+s8T1HpHJRLDVwg8k5+Np3fImoQPYSbtwxWqvtaDhb0tpkEJftYnC553G8NUxq+4Lqlyz9QcDIc/M+omRtrPttRk/fnOfESVQESgkaINF1k+a+Ghrhcyaj9te59tL2Hy0//bFXrVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwb7o77Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DGBFOcdVYkLDVyRgj0SpMIozNcuDEGe0u/dNt2EyRrwCI4hBxCgdAseWJ/tRCvtOhMOOI5ZdDe2K28IKc2CY+BLBO1Gx5xLc8qtArv9qNjBwtpjLgSB5fqm5CSpHjysvaPVz2PfpQKfwozdgKRbADrlgX3AtQHQYr/Sd6dgcsiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmO96Qzp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwb7o77Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5A61F000E9;
-	Mon, 17 Aug 2026 13:42:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmO96Qzp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F281F000E9;
+	Mon, 17 Aug 2026 13:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974146;
-	bh=3gGpEW9HX0Sn3SSbXHfpFM8HmlVFH57i2it4LDlTK+I=;
+	s=korg; t=1786974149;
+	bh=ArOQW3InMMWO+o1aT2xq87qG73dSG7bcq0oKsrN2HxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rwb7o77ZJLOA7V4oSeBEKWO3T+mf3AC7c8aYWJAeRH8rudfdCKAOzovjDUg2xkhqn
-	 cpaAQVSQiNCXLNFDOew7q3LhtRLkCYe3Cx0Y4jde+NcUPb/pSR6X2/iDlNB+u+B8Tl
-	 HVvHRw19hWOdhR4WL9kRdnP0rFkX2q75VeGVK9VI=
+	b=mmO96Qzp0ffJ0vy6f8j/zRBIvf0Gw9yuHS2aFbSnq06iC6P83h3MUlSet7+NnPSjD
+	 AFX2P1VzGmByt2Aoc9czgygnV9fAB8h7QHAcvuE/Ir7Cy51tHAIPgv5wX2inZDa7U9
+	 APd9+O+yoEXmGB6pEn8Je6m79Yr8erbmtlUtNFes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Sidraya Jayagond <sidraya@linux.ibm.com>,
-	Breno Leitao <leitao@debian.org>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?=C5=81ukasz=20Patron?= <priv.luk@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 105/271] net/smc: fix TOCTOU race between smc_listen_out() and listener close
-Date: Mon, 17 Aug 2026 15:30:30 +0200
-Message-ID: <20260817132541.157053531@linuxfoundation.org>
+Subject: [PATCH 7.1 106/271] net: qrtr: ns: Raise lookup limit to 128
+Date: Mon, 17 Aug 2026 15:30:31 +0200
+Message-ID: <20260817132541.203899536@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -48,74 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sidraya Jayagond <sidraya@linux.ibm.com>
+From: Łukasz Patron <priv.luk@gmail.com>
 
-[ Upstream commit 185a4caeecabc150106deda1da170b09f2ad803f ]
+[ Upstream commit 7fc1c937b6b37c77df4ba374c37435ab06a2e945 ]
 
-smc_listen_out() reads lsmc->sk.sk_state without the listener lock,
-then acquires lock_sock_nested() only after the check passes. This
-opens a window where smc_close_active() can transition the listener
-to SMC_CLOSED, call smc_close_cleanup_listen() to drain the accept
-queue, and release the lock, all between the lockless read and the
-delayed lock acquisition:
+Current limit of 64 is not enough for Sony Xperia 10 VII (SM6475).
 
-  smc_listen_work (smc_hs_wq)          smc_close_active()
-  -------------------------------      -------------------------
-  release_sock(child)
-  if (sk_state == SMC_LISTEN) TRUE
-                                        lock_sock(listener)
-                                        sk_state = SMC_CLOSED
-                                        smc_close_cleanup_listen()
-                                        release_sock(listener)
-                                        flush_work(tcp_listen_work)
-  lock_sock_nested(listener)
-  smc_accept_enqueue(listener, child) /* child enqueued on dead listener */
+After merging v6.6.142 into a downstream AOSP device, it's stuck on
+boot animation and following log spam can be observed in dmesg:
 
-smc_close_active() flushes only tcp_listen_work. Work items already
-dispatched onto smc_hs_wq for the CLC handshake continue running
-unguarded. smc_accept_enqueue() takes a sock_hold() on the child that
-is never released, so the child smc_sock, its clcsock, and the
-reference all leak. A remote peer that opens TCP connections while the
-server calls close() can exhaust kernel memory.
+E qrtr    : ctrl_cmd_new_lookup(): QRTR client node exceeds max lookup limit!
+E qrtr    : qrtr_ns_worker(): failed while handling packet from 1:16600
 
-Move lock_sock_nested() to before the sk_state check so that the test
-and the enqueue are atomic under the listener lock.
+No idea why it needs more than 64 client lookups, but it appears to
+work fine with 128 as it did when there were no limits.
 
-Fixes: fd57770dd198 ("net/smc: wait for pending work before clcsock release_sock")
-Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Signed-off-by: Sidraya Jayagond <sidraya@linux.ibm.com>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Link: https://patch.msgid.link/20260803070701.126339-1-sidraya@linux.ibm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+I don't really have a good way to investigate what it needs all
+these lookups for as most of the userspace is closed source.
+
+Fixes: 5640227d9a21 ("net: qrtr: ns: Limit the maximum number of lookups")
+Signed-off-by: Łukasz Patron <priv.luk@gmail.com>
+Link: https://patch.msgid.link/20260804201919.1148015-1-priv.luk@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/qrtr/ns.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index b5db69073e20f..00403175b7406 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -1931,11 +1931,12 @@ static void smc_listen_out(struct smc_sock *new_smc)
- 		atomic_dec(&lsmc->queued_smc_hs);
+diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+index e5b2adb161d92..c5e7e01db2498 100644
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -78,7 +78,7 @@ struct qrtr_node {
+  */
+ #define QRTR_NS_MAX_NODES   512
+ #define QRTR_NS_MAX_SERVERS 256
+-#define QRTR_NS_MAX_LOOKUPS 64
++#define QRTR_NS_MAX_LOOKUPS 128
  
- 	release_sock(newsmcsk); /* lock in smc_listen_work() */
-+	lock_sock_nested(&lsmc->sk, SINGLE_DEPTH_NESTING);
- 	if (lsmc->sk.sk_state == SMC_LISTEN) {
--		lock_sock_nested(&lsmc->sk, SINGLE_DEPTH_NESTING);
- 		smc_accept_enqueue(&lsmc->sk, newsmcsk);
- 		release_sock(&lsmc->sk);
- 	} else { /* no longer listening */
-+		release_sock(&lsmc->sk);
- 		smc_close_non_accepted(newsmcsk);
- 	}
+ static u16 node_count;
  
 -- 
 2.53.0
