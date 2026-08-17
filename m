@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9676E3CBE84;
-	Mon, 17 Aug 2026 13:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A41829B776;
+	Mon, 17 Aug 2026 13:45:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974346; cv=none; b=qQINqwtRWSRsnEXmryWVwZI+3Yaibd2/NddMB9O2UxwHEDUJ+hM7PoxrVL3YtGcKjFCYkGjwpeCipl0+UNXjCqVkY5VoMOCym5KmtEpnh5/sAAOwYxN8i0KJi6LY12Wvm+mwVRR4KJA45Qo4FuDHCLLyz8MRQBdXEYemj0VhufY=
+	t=1786974347; cv=none; b=K1erm3f1fh2FjTH9rnOZt7+KBf+eLznatmAC9+DiFNJi8RSSoRbAKDH6MVo4UFZANBoZGLluwjP14zaX7QgR/TSwiN2+vudyZeyW/cB/YR1MeeF2waw3ohzmVCkzf2oe0deq9OSLZrC76Dnpv+1mRGznP9lwUJ5elUQRmIdsiHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974346; c=relaxed/simple;
-	bh=DPr5oIo7kTCJ+zEMVWPMuBMXUeLz+SWfZWdS7RTBv80=;
+	s=arc-20240116; t=1786974347; c=relaxed/simple;
+	bh=JJPH/8Xo+7wHyE2uHiqL1lvjgfpb4XN5e+RGEUjDd5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VezD3Fw9/Bxx7f7e97frM+MLrfJ3jrTp2wWzzySvUXwJWvhMgZpJU4RCF0wg/GET2XAxxPI2cqxyBo1o/orzLQM732CeYiL/BIwxqT7v1kGkkEu0ymjWddvKXHoNlI8LKJsBM0j2GzHLrMNcSgLoS1OFiAX3oUTrxrVsrqQOypQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bQG6CBJd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LtB2Znx5xxMC+AOoJ6uoJ9ue8YaH68mzjPMvN77zoZbGvkU3fqL1Z/DQ5c0xVAmN/GbyDnV8inRGl5kgXa0xIbtw72cthWIvEU1IytGIai8lYgeoELjJ/0XmhGC8c26nRkX1EYQhtGvBB1TS6hvjk3aSu4Q0fM9ZvvCIAU9jE2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KaK7V0Kj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQG6CBJd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87E71F00A3A;
-	Mon, 17 Aug 2026 13:45:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KaK7V0Kj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA5E1F00A3D;
+	Mon, 17 Aug 2026 13:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974338;
-	bh=jyd16mePd0tDd2eJDdK33HRmVXERZcmu8DRCHkDT3bs=;
+	s=korg; t=1786974341;
+	bh=6zyNaAklhcYNJdibFLqxRzrpPyvsHIttGJwaqDCpUdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bQG6CBJdov6V54mSMEG2trDFoVZU35rNxrvfhkZlxv0jydty3a1FJAyfWrD4mAELk
-	 XeTykRFEw7ZW+4N+a5+h0XBdTDMTRXkh2x/anRGdM6y0cauOI3Cua2mXapoHno8ztv
-	 mahYAKkBPTj2r2YabE8QaEjtTN+basdbK9whRMmA=
+	b=KaK7V0KjtYhAsMBBtsaoucdv+/VRqy8XV0G9+QNM/tzc6MMlriTTG11xCScqAoGJx
+	 Gc53ZDp5owe9jPULtP+BI2/mBZ8bQ9x03On2n4hIE+c+f6KWl2G8Ze9ub4OxpVJnYW
+	 //3qedyOBhA2vIZin13m1IlvbB4+TgwzOWjoBu5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
+	Jason Xing <kernelxing@tencent.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
+	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re=20 ?=" <ricardo@marliere.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 121/271] hwmon: Support guard() and scoped_guard for subsystem locks
-Date: Mon, 17 Aug 2026 15:30:46 +0200
-Message-ID: <20260817132541.847388954@linuxfoundation.org>
+Subject: [PATCH 7.1 165/271] selftests/xsk: fix too-many-frags multi-buffer Tx test
+Date: Mon, 17 Aug 2026 15:31:30 +0200
+Message-ID: <20260817132543.681874220@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -44,66 +48,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit d1e720c7328e046049b792d03fae093d4d3a72e4 ]
+[ Upstream commit c5b1ca6a02886f00170ed91b757e244f23259e91 ]
 
-Add support for guard() and scoped_guard() for the hwmon subsystem lock
-to simplify its use.
+The too-many-frags test describes a packet that is valid from the Tx
+ring ownership point of view, but invalid for transmission because it
+exceeds the supported number of fragments.
 
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: 2da6050809d4 ("hwmon: (corsair-psu) serialize debugfs access against hwmon")
+Keep the generated Tx descriptors valid so that __send_pkts() accounts
+them as outstanding descriptors that must be reclaimed through the CQ.
+Then mark the corresponding Rx packet invalid so the test still does
+not expect the oversized packet to appear on the receive side.
+
+Add a valid synchronization packet after the oversized packet so the
+test can verify that the Tx path drains the bad packet and resumes at
+the next packet boundary.
+
+Reviewed-by: Jason Xing <kernelxing@tencent.com>
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20260719135609.147823-6-maciej.fijalkowski@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ricardo B. Marlière (SUSE) <ricardo@marliere.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/hwmon/hwmon-kernel-api.rst | 7 ++++---
- include/linux/hwmon.h                    | 3 +++
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ .../selftests/bpf/prog_tests/test_xsk.c       | 24 ++++++++++++-------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/hwmon/hwmon-kernel-api.rst b/Documentation/hwmon/hwmon-kernel-api.rst
-index 1d7f1397a8274..9fcde32a140df 100644
---- a/Documentation/hwmon/hwmon-kernel-api.rst
-+++ b/Documentation/hwmon/hwmon-kernel-api.rst
-@@ -85,9 +85,10 @@ removal.
- When using ``[devm_]hwmon_device_register_with_info()`` to register the
- hardware monitoring device, accesses using the associated access functions
- are serialised by the hardware monitoring core. If a driver needs locking
--for other functions such as interrupt handlers or for attributes which are
--fully implemented in the driver, hwmon_lock() and hwmon_unlock() can be used
--to ensure that calls to those functions are serialized.
-+for other functions such as interrupt handlers, attributes which are fully
-+implemented in the driver, or debugfs functions, hwmon_lock() and hwmon_unlock()
-+can be used to ensure that calls to those functions are serialized. Those
-+functions also support guard() and scoped_guard() variants.
+diff --git a/tools/testing/selftests/bpf/prog_tests/test_xsk.c b/tools/testing/selftests/bpf/prog_tests/test_xsk.c
+index 7950c504ed289..1c48a3b5ee736 100644
+--- a/tools/testing/selftests/bpf/prog_tests/test_xsk.c
++++ b/tools/testing/selftests/bpf/prog_tests/test_xsk.c
+@@ -2229,7 +2229,7 @@ int testapp_too_many_frags(struct test_spec *test)
+ 		max_frags += 1;
+ 	}
  
- Using devm_hwmon_device_register_with_info()
- --------------------------------------------
-diff --git a/include/linux/hwmon.h b/include/linux/hwmon.h
-index 301a83afbd663..f5330e7ae247c 100644
---- a/include/linux/hwmon.h
-+++ b/include/linux/hwmon.h
-@@ -13,6 +13,7 @@
- #define _HWMON_H_
+-	pkts = calloc(2 * max_frags + 2, sizeof(struct pkt));
++	pkts = calloc(2 * max_frags + 3, sizeof(struct pkt));
+ 	if (!pkts)
+ 		return TEST_FAILURE;
  
- #include <linux/bitops.h>
-+#include <linux/cleanup.h>
+@@ -2247,24 +2247,30 @@ int testapp_too_many_frags(struct test_spec *test)
+ 	}
+ 	pkts[max_frags].options = 0;
  
- struct device;
- struct attribute_group;
-@@ -495,6 +496,8 @@ char *devm_hwmon_sanitize_name(struct device *dev, const char *name);
- void hwmon_lock(struct device *dev);
- void hwmon_unlock(struct device *dev);
+-	/* An invalid packet with the max amount of frags but signals packet
+-	 * continues on the last frag
+-	 */
+-	for (i = max_frags + 1; i < 2 * max_frags + 1; i++) {
++	/* An invalid packet with the max + 1 amount of frags */
++	for (i = max_frags + 1; i < 2 * max_frags + 2; i++) {
+ 		pkts[i].len = MIN_PKT_SIZE;
+ 		pkts[i].options = XDP_PKT_CONTD;
+-		pkts[i].valid = false;
++		pkts[i].valid = true;
+ 	}
++	pkts[2 * max_frags + 1].options = 0;
  
-+DEFINE_GUARD(hwmon_lock, struct device *, hwmon_lock(_T), hwmon_unlock(_T))
+ 	/* Valid packet for synch */
+-	pkts[2 * max_frags + 1].len = MIN_PKT_SIZE;
+-	pkts[2 * max_frags + 1].valid = true;
++	pkts[2 * max_frags + 2].len = MIN_PKT_SIZE;
++	pkts[2 * max_frags + 2].valid = true;
+ 
+-	if (pkt_stream_generate_custom(test, pkts, 2 * max_frags + 2)) {
++	if (pkt_stream_generate_custom(test, pkts, 2 * max_frags + 3)) {
+ 		free(pkts);
+ 		return TEST_FAILURE;
+ 	}
+ 
++	/* The generated Tx stream must keep the too-big packet valid so that
++	 * __send_pkts() accounts its descriptors in outstanding_tx. The Rx
++	 * stream, however, must not expect this packet on the wire.
++	 */
++	test->ifobj_rx->xsk->pkt_stream->pkts[2].valid = false;
++	test->ifobj_rx->xsk->pkt_stream->nb_valid_entries--;
 +
- /**
-  * hwmon_is_bad_char - Is the char invalid in a hwmon name
-  * @ch: the char to be considered
+ 	ret = testapp_validate_traffic(test);
+ 	free(pkts);
+ 	return ret;
 -- 
 2.53.0
 
