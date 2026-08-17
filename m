@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBF03FA5CC;
-	Mon, 17 Aug 2026 15:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975A143C056;
+	Mon, 17 Aug 2026 15:16:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979767; cv=none; b=PGzCG3xEd9qUmrgC0auR6yCbKSw5pOsE0sukYFkSUUkTvPS9KLgj/1lG6mo6QWlalo6VdrFg126T0LGHLvk1fVuBTaff2bOzsHIMhgPag8KmDqX9omShYG5Vf4P3TGRGem7E87OWjx9bi6pxk4dqsfxP8VqrEJ342sjEZSZEBlM=
+	t=1786979770; cv=none; b=lsfR1pOQKLfFMTkH82L+Pz6UQ/vdGGFevoX/85x0ouKbf20Pcv+oj5aYvpyu38QUWSNW2VtWZV2vqL962a61LSj1vjkMXyogym8Uwwv82C1br+DSQxRlMJZrrfZAGy9ueBWT74eFMaWyjvTF5OKTn5W3wIXJ1t2eUDD6nttA3HM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979767; c=relaxed/simple;
-	bh=JaxeJJTdSHx72r9ElaV49f/SwxaaVctIApN/yTFN/5Q=;
+	s=arc-20240116; t=1786979770; c=relaxed/simple;
+	bh=vn4DhydLXy/IBh21vA+5zOhuU6btJvnmXSnBkYlUjHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OaeL3gHeuLKeZwKV5oIfhRBs91g0ct1L1ioslxbr/tXaDOFXDA3MjXIoBz6nEC0skSFqkPybRrzIlPuQBDqIPloQ8ozr6rD38dx3JtiVQQ+eApQTrOoqssadIoVK5TuIg0YJDHBGBNI06a6Puj5LOvQU8g8W5cGmpsmim4QyO/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQ5Y9R5K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GQ0IPUX+11V5atGE7tcQ/X6XvuUDmJdPTJ5bD41gM8NeyQYBkFMgXdrR/v8wB+BgLE1Uyr4Il0odC27mU7LN+Fjkr1x1TWLb4Y3UCNHa+gh4s40OmrQBj99wmPj62yqCVSeqCwVDd4oIoDsCRwnkDgvvYJfkCoiLGxUTYmadF1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eYEQ+CKI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQ5Y9R5K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AA21F000E9;
-	Mon, 17 Aug 2026 15:16:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eYEQ+CKI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD341F000E9;
+	Mon, 17 Aug 2026 15:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979765;
-	bh=W3klAFdvW+mYKCgJwqn71pFE3vPeCcEf1ciWOgsnENM=;
+	s=korg; t=1786979768;
+	bh=H1L1qWcnTfH0ljIUGrRouXrF58mKoPM58UscS3MdUkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yQ5Y9R5Kn/pBUev9zHdCn/M2AlXzPKWYzWYIn8KNWBEp7tKEk1QOPlxSmx8ex2KVu
-	 VYNBZZq7eEaDh+JWR0uNFtNXeo1hvz3VQhKAQ/r7LGjlTVk4A9fgrFaXL4uiLnImKv
-	 ce552jqpafpBzF6tvjm4cBiA/qi8K+2ngmTOnEM0=
+	b=eYEQ+CKI2GtvBH+cuDIFV406fgPzzztCZOqoTXXfp9tttRRn8cO7nGe/2b2/qV0Ut
+	 gpRcYfsM6+S35Swpd4USOhata0c/aXE09V0Ehvz4R517bG8TN4D3rva8XC+80xgOrB
+	 788L3RQCC+rn4RdtLpTduM28NfsX//0lvj5NoLG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Steve French <stfrench@microsoft.com>,
+	Sebastian Arnhold <sebastian.arnhold@posteo.de>,
+	Ahmad Khalifa <ahmad@khalifa.ws>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Corentin Labbe <clabbe.montjoie@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 340/609] smb: client: fix buffer leaks in SMB1 read and write
-Date: Mon, 17 Aug 2026 15:30:36 +0200
-Message-ID: <20260817132555.620728302@linuxfoundation.org>
+Subject: [PATCH 6.1 341/609] hwmon: (nct6755) Add support for NCT6799D
+Date: Mon, 17 Aug 2026 15:30:37 +0200
+Message-ID: <20260817132555.662471746@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,83 +53,318 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 6a3e16d60e81a4aa3056ab15617036cfbea2e07d ]
+[ Upstream commit aee395bb190564a3fa22aa65c60812c25410e94a ]
 
-CIFSSMBRead(), CIFSSMBWrite() and CIFSSMBWrite2() allocate a request
-buffer before checking whether tcon->ses->server is NULL. If that
-defensive check ever fails, the helper returns -ECONNABORTED without
-releasing the request buffer.
+NCT6799D is mostly compatible to NCT6798D, with minor variations.
 
-Fix these leaks by releasing the allocated request buffer before
-returning from these error paths. Use cifs_small_buf_release() for the
-buffers allocated by small_smb_init() and cifs_buf_release() for the
-buffer allocated by smb_init().
+Note that NCT6798D and NCT6799D have a new means to select temperature
+sources, and to report temperatures from those sources. This is not
+currently implemented, meaning that most likely not all temperatures
+are reported.
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still
-present in v7.1.1.
-
-An x86_64 allyesconfig build showed no new warnings.
-
-Runtime validation used a temporary fault-injection hook to force
-tcon->ses->server to NULL after request-buffer initialization. On the
-unfixed kernel, the harness observed two leaked small request buffers and
-one leaked large request buffer, with directed kmemleak dumps confirming
-the CIFS buffer allocation stacks. After the fix, no CIFS request-buffer
-deltas remained.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: Sebastian Arnhold <sebastian.arnhold@posteo.de>
+Cc: Ahmad Khalifa <ahmad@khalifa.ws>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Tested-by: Sebastian Arnhold <sebastian.arnhold@posteo.de>
+Tested-by: Corentin Labbe <clabbe.montjoie@gmail.com>
+Link: https://lore.kernel.org/r/20221228135744.281752-1-linux@roeck-us.net
+Stable-dep-of: b0e8adb2ccb4 ("hwmon: (nct6775-core) Fix number of temperature registers for NCT6116")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/hwmon/nct6775-core.c     | 55 ++++++++++++++++++++++++++++++--
+ drivers/hwmon/nct6775-i2c.c      |  2 ++
+ drivers/hwmon/nct6775-platform.c | 41 ++++++++++++++++++++++--
+ drivers/hwmon/nct6775.h          |  2 +-
+ 4 files changed, 94 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index 49d7726830044..95cf7e69a411d 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -1409,8 +1409,10 @@ CIFSSMBRead(const unsigned int xid, struct cifs_io_parms *io_parms,
- 	pSMB->hdr.PidHigh = cpu_to_le16((__u16)(pid >> 16));
+diff --git a/drivers/hwmon/nct6775-core.c b/drivers/hwmon/nct6775-core.c
+index ec3ff4e9a9abd..3a61acec7a345 100644
+--- a/drivers/hwmon/nct6775-core.c
++++ b/drivers/hwmon/nct6775-core.c
+@@ -33,6 +33,7 @@
+  *                                           (0xd451)
+  * nct6798d    14      7       7       2+6    0xd428 0xc1    0x5ca3
+  *                                           (0xd429)
++ * nct6799d    14      7       7       2+6    0xd802 0xc1    0x5ca3
+  *
+  * #temp lists the number of monitored temperature sources (first value) plus
+  * the number of directly connectable temperature sensors (second value).
+@@ -73,6 +74,7 @@ static const char * const nct6775_device_names[] = {
+ 	"nct6796",
+ 	"nct6797",
+ 	"nct6798",
++	"nct6799",
+ };
  
- 	/* tcon and ses pointer are checked in smb_init */
--	if (tcon->ses->server == NULL)
-+	if (!tcon->ses->server) {
-+		cifs_small_buf_release(pSMB);
- 		return -ECONNABORTED;
-+	}
+ /* Common and NCT6775 specific data */
+@@ -381,7 +383,7 @@ static const u16 NCT6779_REG_TEMP_OVER[ARRAY_SIZE(NCT6779_REG_TEMP)] = {
+ 	0x39, 0x155 };
  
- 	pSMB->AndXCommand = 0xFF;       /* none */
- 	pSMB->Fid = netfid;
-@@ -1522,8 +1524,10 @@ CIFSSMBWrite(const unsigned int xid, struct cifs_io_parms *io_parms,
- 	pSMB->hdr.PidHigh = cpu_to_le16((__u16)(pid >> 16));
+ static const u16 NCT6779_REG_TEMP_OFFSET[] = {
+-	0x454, 0x455, 0x456, 0x44a, 0x44b, 0x44c };
++	0x454, 0x455, 0x456, 0x44a, 0x44b, 0x44c, 0x44d, 0x449 };
  
- 	/* tcon and ses pointer are checked in smb_init */
--	if (tcon->ses->server == NULL)
-+	if (!tcon->ses->server) {
-+		cifs_buf_release(pSMB);
- 		return -ECONNABORTED;
-+	}
+ static const char *const nct6779_temp_label[] = {
+ 	"",
+@@ -654,6 +656,44 @@ static const char *const nct6798_temp_label[] = {
+ #define NCT6798_TEMP_MASK	0xbfff0ffe
+ #define NCT6798_VIRT_TEMP_MASK	0x80000c00
  
- 	pSMB->AndXCommand = 0xFF;	/* none */
- 	pSMB->Fid = netfid;
-@@ -1776,8 +1780,10 @@ CIFSSMBWrite2(const unsigned int xid, struct cifs_io_parms *io_parms,
- 	pSMB->hdr.PidHigh = cpu_to_le16((__u16)(pid >> 16));
++static const char *const nct6799_temp_label[] = {
++	"",
++	"SYSTIN",
++	"CPUTIN",
++	"AUXTIN0",
++	"AUXTIN1",
++	"AUXTIN2",
++	"AUXTIN3",
++	"AUXTIN4",
++	"SMBUSMASTER 0",
++	"SMBUSMASTER 1",
++	"Virtual_TEMP",
++	"Virtual_TEMP",
++	"",
++	"AUXTIN5",
++	"",
++	"",
++	"PECI Agent 0",
++	"PECI Agent 1",
++	"PCH_CHIP_CPU_MAX_TEMP",
++	"PCH_CHIP_TEMP",
++	"PCH_CPU_TEMP",
++	"PCH_MCH_TEMP",
++	"Agent0 Dimm0",
++	"Agent0 Dimm1",
++	"Agent1 Dimm0",
++	"Agent1 Dimm1",
++	"BYTE_TEMP0",
++	"BYTE_TEMP1",
++	"PECI Agent 0 Calibration",	/* undocumented */
++	"PECI Agent 1 Calibration",	/* undocumented */
++	"",
++	"Virtual_TEMP"
++};
++
++#define NCT6799_TEMP_MASK	0xbfff2ffe
++#define NCT6799_VIRT_TEMP_MASK	0x80000c00
++
+ /* NCT6102D/NCT6106D specific data */
  
- 	/* tcon and ses pointer are checked in smb_init */
--	if (tcon->ses->server == NULL)
-+	if (!tcon->ses->server) {
-+		cifs_small_buf_release(pSMB);
- 		return -ECONNABORTED;
-+	}
+ #define NCT6106_REG_VBAT	0x318
+@@ -1109,6 +1149,7 @@ bool nct6775_reg_is_word_sized(struct nct6775_data *data, u16 reg)
+ 	case nct6796:
+ 	case nct6797:
+ 	case nct6798:
++	case nct6799:
+ 		return reg == 0x150 || reg == 0x153 || reg == 0x155 ||
+ 		  (reg & 0xfff0) == 0x4c0 ||
+ 		  reg == 0x402 ||
+@@ -1462,6 +1503,7 @@ static int nct6775_update_pwm_limits(struct device *dev)
+ 		case nct6796:
+ 		case nct6797:
+ 		case nct6798:
++		case nct6799:
+ 			err = nct6775_read_value(data, data->REG_CRITICAL_PWM_ENABLE[i], &reg);
+ 			if (err)
+ 				return err;
+@@ -3119,6 +3161,7 @@ store_auto_pwm(struct device *dev, struct device_attribute *attr,
+ 		case nct6796:
+ 		case nct6797:
+ 		case nct6798:
++		case nct6799:
+ 			err = nct6775_write_value(data, data->REG_CRITICAL_PWM[nr], val);
+ 			if (err)
+ 				break;
+@@ -3817,10 +3860,12 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 	case nct6796:
+ 	case nct6797:
+ 	case nct6798:
++	case nct6799:
+ 		data->in_num = 15;
+ 		data->pwm_num = (data->kind == nct6796 ||
+ 				 data->kind == nct6797 ||
+-				 data->kind == nct6798) ? 7 : 6;
++				 data->kind == nct6798 ||
++				 data->kind == nct6799) ? 7 : 6;
+ 		data->auto_pwm_num = 4;
+ 		data->has_fan_div = false;
+ 		data->temp_fixed_num = 6;
+@@ -3869,6 +3914,11 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 			data->temp_mask = NCT6798_TEMP_MASK;
+ 			data->virt_temp_mask = NCT6798_VIRT_TEMP_MASK;
+ 			break;
++		case nct6799:
++			data->temp_label = nct6799_temp_label;
++			data->temp_mask = NCT6799_TEMP_MASK;
++			data->virt_temp_mask = NCT6799_VIRT_TEMP_MASK;
++			break;
+ 		}
  
- 	pSMB->AndXCommand = 0xFF;	/* none */
- 	pSMB->Fid = netfid;
+ 		data->REG_CONFIG = NCT6775_REG_CONFIG;
+@@ -3928,6 +3978,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 		case nct6796:
+ 		case nct6797:
+ 		case nct6798:
++		case nct6799:
+ 			data->REG_TSI_TEMP = NCT6796_REG_TSI_TEMP;
+ 			num_reg_tsi_temp = ARRAY_SIZE(NCT6796_REG_TSI_TEMP);
+ 			break;
+diff --git a/drivers/hwmon/nct6775-i2c.c b/drivers/hwmon/nct6775-i2c.c
+index e1bcd11461913..779ce65db1a15 100644
+--- a/drivers/hwmon/nct6775-i2c.c
++++ b/drivers/hwmon/nct6775-i2c.c
+@@ -87,6 +87,7 @@ static const struct of_device_id __maybe_unused nct6775_i2c_of_match[] = {
+ 	{ .compatible = "nuvoton,nct6796", .data = (void *)nct6796, },
+ 	{ .compatible = "nuvoton,nct6797", .data = (void *)nct6797, },
+ 	{ .compatible = "nuvoton,nct6798", .data = (void *)nct6798, },
++	{ .compatible = "nuvoton,nct6799", .data = (void *)nct6799, },
+ 	{ },
+ };
+ MODULE_DEVICE_TABLE(of, nct6775_i2c_of_match);
+@@ -104,6 +105,7 @@ static const struct i2c_device_id nct6775_i2c_id[] = {
+ 	{ "nct6796", nct6796 },
+ 	{ "nct6797", nct6797 },
+ 	{ "nct6798", nct6798 },
++	{ "nct6799", nct6799 },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(i2c, nct6775_i2c_id);
+diff --git a/drivers/hwmon/nct6775-platform.c b/drivers/hwmon/nct6775-platform.c
+index 76c6b564d7fc4..5ca6f42c35747 100644
+--- a/drivers/hwmon/nct6775-platform.c
++++ b/drivers/hwmon/nct6775-platform.c
+@@ -35,6 +35,7 @@ static const char * const nct6775_sio_names[] __initconst = {
+ 	"NCT6796D",
+ 	"NCT6797D",
+ 	"NCT6798D",
++	"NCT6799D",
+ };
+ 
+ static unsigned short force_id;
+@@ -85,6 +86,7 @@ MODULE_PARM_DESC(fan_debounce, "Enable debouncing for fan RPM signal");
+ #define SIO_NCT6796_ID		0xd420
+ #define SIO_NCT6797_ID		0xd450
+ #define SIO_NCT6798_ID		0xd428
++#define SIO_NCT6799_ID		0xd800
+ #define SIO_ID_MASK		0xFFF8
+ 
+ /*
+@@ -418,7 +420,7 @@ static int nct6775_resume(struct device *dev)
+ 	if (data->kind == nct6791 || data->kind == nct6792 ||
+ 	    data->kind == nct6793 || data->kind == nct6795 ||
+ 	    data->kind == nct6796 || data->kind == nct6797 ||
+-	    data->kind == nct6798)
++	    data->kind == nct6798 || data->kind == nct6799)
+ 		nct6791_enable_io_mapping(sio_data);
+ 
+ 	sio_data->sio_exit(sio_data);
+@@ -565,7 +567,7 @@ nct6775_check_fan_inputs(struct nct6775_data *data, struct nct6775_sio_data *sio
+ 	} else {
+ 		/*
+ 		 * NCT6779D, NCT6791D, NCT6792D, NCT6793D, NCT6795D, NCT6796D,
+-		 * NCT6797D, NCT6798D
++		 * NCT6797D, NCT6798D, NCT6799D
+ 		 */
+ 		int cr1a = sio_data->sio_inb(sio_data, 0x1a);
+ 		int cr1b = sio_data->sio_inb(sio_data, 0x1b);
+@@ -575,12 +577,17 @@ nct6775_check_fan_inputs(struct nct6775_data *data, struct nct6775_sio_data *sio
+ 		int cr2b = sio_data->sio_inb(sio_data, 0x2b);
+ 		int cr2d = sio_data->sio_inb(sio_data, 0x2d);
+ 		int cr2f = sio_data->sio_inb(sio_data, 0x2f);
++		bool vsb_ctl_en = cr2f & BIT(0);
+ 		bool dsw_en = cr2f & BIT(3);
+ 		bool ddr4_en = cr2f & BIT(4);
++		bool as_seq1_en = cr2f & BIT(7);
+ 		int cre0;
++		int cre6;
+ 		int creb;
+ 		int cred;
+ 
++		cre6 = sio_data->sio_inb(sio_data, 0xe0);
++
+ 		sio_data->sio_select(sio_data, NCT6775_LD_12);
+ 		cre0 = sio_data->sio_inb(sio_data, 0xe0);
+ 		creb = sio_data->sio_inb(sio_data, 0xeb);
+@@ -683,6 +690,29 @@ nct6775_check_fan_inputs(struct nct6775_data *data, struct nct6775_sio_data *sio
+ 			pwm7pin = !(cr1d & (BIT(2) | BIT(3)));
+ 			pwm7pin |= cr2d & BIT(7);
+ 			pwm7pin |= creb & BIT(2);
++			break;
++		case nct6799:
++			fan4pin = cr1c & BIT(6);
++			fan5pin = cr1c & BIT(7);
++
++			fan6pin = !(cr1b & BIT(0)) && (cre0 & BIT(3));
++			fan6pin |= cre6 & BIT(5);
++			fan6pin |= creb & BIT(5);
++			fan6pin |= !as_seq1_en && (cr2a & BIT(4));
++
++			fan7pin = cr1b & BIT(5);
++			fan7pin |= !vsb_ctl_en && !(cr2b & BIT(2));
++			fan7pin |= creb & BIT(3);
++
++			pwm6pin = !(cr1b & BIT(0)) && (cre0 & BIT(4));
++			pwm6pin |= !as_seq1_en && !(cred & BIT(2)) && (cr2a & BIT(3));
++			pwm6pin |= (creb & BIT(4)) && !(cr2a & BIT(0));
++			pwm6pin |= cre6 & BIT(3);
++
++			pwm7pin = !vsb_ctl_en && !(cr1d & (BIT(2) | BIT(3)));
++			pwm7pin |= creb & BIT(2);
++			pwm7pin |= cr2d & BIT(7);
++
+ 			break;
+ 		default:	/* NCT6779D */
+ 			break;
+@@ -838,6 +868,7 @@ static int nct6775_platform_probe_init(struct nct6775_data *data)
+ 	case nct6796:
+ 	case nct6797:
+ 	case nct6798:
++	case nct6799:
+ 		break;
+ 	}
+ 
+@@ -876,6 +907,7 @@ static int nct6775_platform_probe_init(struct nct6775_data *data)
+ 		case nct6796:
+ 		case nct6797:
+ 		case nct6798:
++		case nct6799:
+ 			tmp |= 0x7e;
+ 			break;
+ 		}
+@@ -1005,6 +1037,9 @@ static int __init nct6775_find(int sioaddr, struct nct6775_sio_data *sio_data)
+ 	case SIO_NCT6798_ID:
+ 		sio_data->kind = nct6798;
+ 		break;
++	case SIO_NCT6799_ID:
++		sio_data->kind = nct6799;
++		break;
+ 	default:
+ 		if (val != 0xffff)
+ 			pr_debug("unsupported chip ID: 0x%04x\n", val);
+@@ -1033,7 +1068,7 @@ static int __init nct6775_find(int sioaddr, struct nct6775_sio_data *sio_data)
+ 	if (sio_data->kind == nct6791 || sio_data->kind == nct6792 ||
+ 	    sio_data->kind == nct6793 || sio_data->kind == nct6795 ||
+ 	    sio_data->kind == nct6796 || sio_data->kind == nct6797 ||
+-	    sio_data->kind == nct6798)
++	    sio_data->kind == nct6798 || sio_data->kind == nct6799)
+ 		nct6791_enable_io_mapping(sio_data);
+ 
+ 	sio_data->sio_exit(sio_data);
+diff --git a/drivers/hwmon/nct6775.h b/drivers/hwmon/nct6775.h
+index be41848c3cd29..44f79c5726a9c 100644
+--- a/drivers/hwmon/nct6775.h
++++ b/drivers/hwmon/nct6775.h
+@@ -5,7 +5,7 @@
+ #include <linux/types.h>
+ 
+ enum kinds { nct6106, nct6116, nct6775, nct6776, nct6779, nct6791, nct6792,
+-	     nct6793, nct6795, nct6796, nct6797, nct6798 };
++	     nct6793, nct6795, nct6796, nct6797, nct6798, nct6799 };
+ enum pwm_enable { off, manual, thermal_cruise, speed_cruise, sf3, sf4 };
+ 
+ #define NUM_TEMP	10	/* Max number of temp attribute sets w/ limits*/
 -- 
 2.53.0
 
