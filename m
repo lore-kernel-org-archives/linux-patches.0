@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A4D442B17;
-	Mon, 17 Aug 2026 14:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76FA44238B;
+	Mon, 17 Aug 2026 14:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977187; cv=none; b=eM+quJXk5+4Mq6E31gs0dtb3IWL5+CjNnRZggr3hhKCff81WWxsNopdUYN/5vW8XeGzo+pEPqnscj/ZFaD8LJqSC87mqGxji4rTxZFNh8okn4D6HmGt5YM9QGeCSiXfvsj3cE+XqonmALfd1Np2n1/0W3fC9y3/n0RAhkCbVAfU=
+	t=1786977189; cv=none; b=Se3MHngXWDgwaXLbzIIv5NHxYEIo4voqC3VLRuAl170DVML4BXd1r2KxzXJ3Kl1NHVo/1Nev50w3g4xds/RBHYryqfZDmaD72FvBlqIlZCU8Iq50srgbItPmXtkaH8DXKeeh6jOFVQkzeTYhiY0N2n6JXlFoSG1uRCwF4VnWMgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977187; c=relaxed/simple;
-	bh=UZwtW15M7NDiGnEqYny+tI0CGu1rlApKRtBpqU2f3hY=;
+	s=arc-20240116; t=1786977189; c=relaxed/simple;
+	bh=V2kJW3cWeTQML50NDCEZOInuabUes1Dptwmf7FSzwYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=giWeDumIRtA0RtajXKglIB21maJIAdruOzQn9ChP67f7UzkhslVHOyOddsoihFxk3dsonzMvifTkCvJEY01x/wR/r+8d9CP5ermnRCdW41XUAPBQndjUMpzCIgy4D7jBT6mKTjNZ5+rh03Xoh1Tjet7PogXnQnehOkDupncsOlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQJmux75; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JBvvws1BC9QD6I122qMp4sSto575cMDmnpiJ5NG3agP3etPb9FHYrTA02itOf5symzrc2bjvYPPvfJi+l0lFHAdd5yU4u53y1XeO+YmNwb5wGIwzqiV46pjnlm44goQTRKiQH2EmKLXqzLBEJrB5Op4no2vGvGJUyaoU4vMdfCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a4Gevz5y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQJmux75"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA861F000E9;
-	Mon, 17 Aug 2026 14:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a4Gevz5y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B68E1F000E9;
+	Mon, 17 Aug 2026 14:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977185;
-	bh=eaf3uugjsJXdjihLC04CrnRqFZ5RG+tZ4nDEwKaY2A8=;
+	s=korg; t=1786977188;
+	bh=ug+JvxljT3mfACeR4RKEHJC8zQ5x/LmslnhVKxCWWPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aQJmux75WZeESUI4At2jpUJOx2bvP6xY4RnUTwgB8+48ENVPI06J62eCD727Vp6RA
-	 ZzN65572tKWOEqljUMjnW/7KZ2ktMzqR711tiNgbShH8o70K7w+x93SNOm+JDnaf38
-	 6ynLoc8eC65N6KqwEl86kbjOAucdy5ESY5qgMJWQ=
+	b=a4Gevz5y73ZXM11OP3wV85f8Gnq0ZahZCs8D7NhuWpLqaTNCbZwBANVB1A4eWacF1
+	 kyPrRjvx1bWyb+52oobRiU+X1sUoshZajiUxWW3Ezewqx+64DIkaCLsvTatQ6R4ozg
+	 XPgVHJPBIgz+2UJZ2IAQKjQlHqEzbM6/NWMSdjx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
 	Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 243/456] net: qrtr: ns: Limit the maximum server registration per node
-Date: Mon, 17 Aug 2026 15:30:33 +0200
-Message-ID: <20260817132549.582880766@linuxfoundation.org>
+Subject: [PATCH 5.15 244/456] net: qrtr: ns: Raise node count limit to 512
+Date: Mon, 17 Aug 2026 15:30:34 +0200
+Message-ID: <20260817132549.628244551@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -54,109 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
 
-[ Upstream commit d5ee2ff98322337951c56398e79d51815acbf955 ]
+[ Upstream commit ff194cffd586cbd4cc49eccb002c65f2a902a277 ]
 
-Current code does no bound checking on the number of servers added per
-node. A malicious client can flood NEW_SERVER messages and exhaust memory.
+The current node limit of 64 breaks the functionality for a number of AI200
+deployments that have up to 384 nodes. Raise the limit to 512.
 
-Fix this issue by limiting the maximum number of server registrations to
-256 per node. If the NEW_SERVER message is received for an old port, then
-don't restrict it as it will get replaced. While at it, also rate limit
-the error messages in the failure path of qrtr_ns_worker().
+Also, the backport of commit 27d5e84e810b ("net: qrtr: ns: Limit the total
+number of nodes") to 5.10, 5.15 and 6.1 dropped the node_count-- hunk in
+ctrl_cmd_bye(). Add it back.
 
-Note that the limit of 256 is chosen based on the current platform
-requirements. If requirement changes in the future, this limit can be
-increased.
-
+Fixes: 27d5e84e810b ("net: qrtr: ns: Limit the total number of nodes")
 Cc: stable@vger.kernel.org
-Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260409-qrtr-fix-v3-1-00a8a5ff2b51@oss.qualcomm.com
+Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260713145901.212396-1-youssef.abdulrahman@oss.qualcomm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/ns.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ net/qrtr/ns.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
-index 559aad0e36215..91e43b0fd5669 100644
+index 91e43b0fd5669..5220529a4c62d 100644
 --- a/net/qrtr/ns.c
 +++ b/net/qrtr/ns.c
-@@ -68,13 +68,9 @@ struct qrtr_server {
- struct qrtr_node {
- 	unsigned int id;
- 	struct xarray servers;
-+	u32 server_count;
- };
- 
--/* Max lookup limit is chosen based on the current platform requirements. If the
-- * requirement changes in the future, this value can be increased.
-- */
--#define QRTR_NS_MAX_LOOKUPS 64
--
- /* Max nodes, server, lookup limits are chosen based on the current platform
+@@ -75,11 +75,11 @@ struct qrtr_node {
   * requirements. If the requirement changes in the future, these values can be
   * increased.
-@@ -249,6 +245,17 @@ static struct qrtr_server *server_add(unsigned int service,
- 	if (!service || !port)
- 		return NULL;
+  */
+-#define QRTR_NS_MAX_NODES   64
++#define QRTR_NS_MAX_NODES   512
+ #define QRTR_NS_MAX_SERVERS 256
+ #define QRTR_NS_MAX_LOOKUPS 64
  
-+	node = node_get(node_id);
-+	if (!node)
-+		return NULL;
-+
-+	/* Make sure the new servers per port are capped at the maximum value */
-+	old = xa_load(&node->servers, port);
-+	if (!old && node->server_count >= QRTR_NS_MAX_SERVERS) {
-+		pr_err_ratelimited("QRTR client node %u exceeds max server limit!\n", node_id);
-+		return NULL;
-+	}
-+
- 	srv = kzalloc(sizeof(*srv), GFP_KERNEL);
- 	if (!srv)
- 		return NULL;
-@@ -258,10 +265,6 @@ static struct qrtr_server *server_add(unsigned int service,
- 	srv->node = node_id;
- 	srv->port = port;
+-static u8 node_count;
++static u16 node_count;
  
--	node = node_get(node_id);
--	if (!node)
--		goto err;
--
- 	/* Delete the old server on the same port */
- 	old = xa_store(&node->servers, port, srv, GFP_KERNEL);
- 	if (old) {
-@@ -272,6 +275,8 @@ static struct qrtr_server *server_add(unsigned int service,
- 		} else {
- 			kfree(old);
- 		}
-+	} else {
-+		node->server_count++;
- 	}
+ static struct qrtr_node *node_get(unsigned int node_id)
+ {
+@@ -412,6 +412,7 @@ static int ctrl_cmd_bye(struct sockaddr_qrtr *from)
+ delete_node:
+ 	xa_erase(&nodes, from->sq_node);
+ 	kfree(node);
++	node_count--;
  
- 	trace_qrtr_ns_server_add(srv->service, srv->instance,
-@@ -312,6 +317,7 @@ static int server_del(struct qrtr_node *node, unsigned int port, bool bcast)
- 	}
- 
- 	kfree(srv);
-+	node->server_count--;
- 
- 	return 0;
+ 	return ret;
  }
-@@ -708,7 +714,7 @@ static void qrtr_ns_worker(struct work_struct *work)
- 		}
- 
- 		if (ret < 0)
--			pr_err("failed while handling packet from %d:%d",
-+			pr_err_ratelimited("failed while handling packet from %d:%d",
- 			       sq.sq_node, sq.sq_port);
- 	}
- 
 -- 
 2.53.0
 
