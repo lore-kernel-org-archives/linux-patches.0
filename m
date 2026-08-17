@@ -1,122 +1,89 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A3F4483A1;
-	Mon, 17 Aug 2026 15:49:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956964483A8
+	for <patches@lists.linux.dev>; Mon, 17 Aug 2026 15:52:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786981788; cv=none; b=BKARmLDFGPFttJReeh9/IzrSEvCCYwHkQ54QNj2xrh3AVu3rIZ8F55d0l1P7DDri2upUKKAyBxR9gYL6mT2MkJjLaWrHJl2yXvO4ygkoHwnLjNWDg6av5pGwyqpX9f5GbecdUzm4mMHDls8qtKDco3NTpUEMMwaqWWvnnR89ESA=
+	t=1786981970; cv=none; b=sNYTDLVBg7vfQfv+81KLuu2EPqCGiuxNkygksK/AL0mLjNAf2Db49RE7vD+z1AfkBq3ZDkydBrvfzH7sI+6N3OmF7/6PE8wQa2IT8pRSLCGGsHDZSm+yvTcikbe5ZVPoly1StUoUnhvXsh2q/3T36O09QREh0PvblXmPexgSwlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786981788; c=relaxed/simple;
-	bh=qfGFrf+m965QAylQ28O+0DQaW/0DMM/vFICdb1ebuDM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MPygG0doqTjNHJagpvdqjnoKuPI7iIPWhDJ3XxczboeFkC4GrUKRrVAFbrIcVfQuaR0MlUR/Iaf2snLUwB4JUc9fD3tNbRPypAItX+bcM89/+XHmlDkdCy/dpgwUBBSA4ak5FsVQ4ZaF9lhP6K67Xg9wTEhPgTTtWgLHzss9VmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OGDni2sY; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786981970; c=relaxed/simple;
+	bh=6XbzM7U2yhfRCYJq+XhwXzE9Jl2Ou01wwoUd4ztTUgo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LcQnIa/Qrm6KpqXQs5OpwVktmgkKjIPSnUGzAQUGuG6P4UEtxI0WvM3BQH46mB4oDov5Wfk5z8zMB38X1C1teVfqMI7yW+2NOZci8caA27tcF5DxV+UsTEBEtz9OcTQSNaiy1Cb7ITXJPKidj6lXsi/0t3zdLJhIi0whg5frZvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=NDBU9SVf; arc=none smtp.client-ip=178.251.229.89
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OGDni2sY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B461F000E9;
-	Mon, 17 Aug 2026 15:49:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786981783;
-	bh=rUJNzPZZcZrC6RAsNhDo79F7r0V6hGeiGDwpX05FuUE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OGDni2sYMJ5sYRJ6ZpjjvwT6M4TD7vcpyTX/wLogiMcoRhhnJenMg9Nu1l+TdIxWV
-	 z/TBlRIwhuq3D5wnpP+bFBvBLdIX+/rHXCWOKqV4FCXTljLfL9CprxUvnsAYfo+B0y
-	 AMv5gGUoVIN/gQHVwn/Dv9rnM4VgLNeXG4rLm5hM=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	stable@vger.kernel.org,
-	Tze Yee Ng <tze.yee.ng@altera.com>,
-	Dinh Nguyen <dinguyen@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 481/609] firmware: stratix10-svc: fix memory leaks and list corruption bugs
-Date: Mon, 17 Aug 2026 15:32:57 +0200
-Message-ID: <20260817132600.034616524@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
-References: <20260817132543.039278408@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="NDBU9SVf"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id DF49911C29D;
+	Mon, 17 Aug 2026 17:52:37 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
+	s=dkim; t=1786981961;
+	h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=fuObdAp1WKHkf0IoE/O3exx9E2qzD/4ccL/aHVrS10k=;
+	b=NDBU9SVfu3X8DYXdFM+8ymYV45aMMxq8d2oEC6Ne0HTjeD+d9xxmun3QopspUseCgnc8Uz
+	p0fLoQt43cT8d/P92aw2hOBjBS1Dnk5BYtsTA6aK252ekpiWDd+qgrQLGW+VdMMI40hnig
+	qU05p99W25nZKyR4Ou5oWyHlq1p18LNS5Lma9XkzNZR+vN1unl//KnD0ACQwIbJ15z9QEy
+	WJiKiH6JQKBfY4vs0nsl+BFe1n66kh8Mdn1673F7YSv7nZ22aQn8+7R4f1IuJas/JVDGgj
+	wROLAXDkBv+hywU2P5j0WWzRXgnXDqFZ0RSS8yIWQZDND0dDrD9EIIjuuq+ktw==
+Date: Mon, 17 Aug 2026 17:52:35 +0200
+From: Pavel Machek <pavel@nabladev.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 5.10 000/389] 5.10.265-rc1 review
+Message-ID: <aoMuQ8CEWcHXsGVD@duo.ucw.cz>
+References: <20260817132538.796021292@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-
-6.1-stable review patch.  If anyone has any objections, please let me know.
-
-------------------
-
-From: Tze Yee Ng <tze.yee.ng@altera.com>
-
-[ Upstream commit 9119ceb76e987c2ec2b549ea100e3268ce3a1c7c ]
-
-Fix a memory leak when gen_pool_alloc() fails by freeing pmem on the error
-path. Switch pmem allocation from devm_kzalloc() to kzalloc() with
-explicit kfree() in the free path to match its list-managed lifetime.
-Remove the erroneous list_del(&svc_data_mem) which corrupted the list head
-on failed lookups.
-
-Fixes: 7ca5ce896524 ("firmware: add Intel Stratix10 service layer driver")
-Cc: stable@vger.kernel.org#5.0+
-Signed-off-by: Tze Yee Ng <tze.yee.ng@altera.com>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
-(cherry picked from commit 9119ceb76e987c2ec2b549ea100e3268ce3a1c7c)
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/firmware/stratix10-svc.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/firmware/stratix10-svc.c b/drivers/firmware/stratix10-svc.c
-index b25d793805ce0..c4a709f2bbc7a 100644
---- a/drivers/firmware/stratix10-svc.c
-+++ b/drivers/firmware/stratix10-svc.c
-@@ -1065,14 +1065,16 @@ void *stratix10_svc_allocate_memory(struct stratix10_svc_chan *chan,
- 	struct gen_pool *genpool = chan->ctrl->genpool;
- 	size_t s = roundup(size, 1 << genpool->min_alloc_order);
- 
--	pmem = devm_kzalloc(chan->ctrl->dev, sizeof(*pmem), GFP_KERNEL);
-+	pmem = kzalloc(sizeof(*pmem), GFP_KERNEL);
- 	if (!pmem)
- 		return ERR_PTR(-ENOMEM);
- 
- 	guard(mutex)(&svc_mem_lock);
- 	va = gen_pool_alloc(genpool, s);
--	if (!va)
-+	if (!va) {
-+		kfree(pmem);
- 		return ERR_PTR(-ENOMEM);
-+	}
- 
- 	memset((void *)va, 0, s);
- 	pa = gen_pool_virt_to_phys(genpool, va);
-@@ -1098,6 +1100,7 @@ EXPORT_SYMBOL_GPL(stratix10_svc_allocate_memory);
- void stratix10_svc_free_memory(struct stratix10_svc_chan *chan, void *kaddr)
- {
- 	struct stratix10_svc_data_mem *pmem;
-+
- 	guard(mutex)(&svc_mem_lock);
- 
- 	list_for_each_entry(pmem, &svc_data_mem, node)
-@@ -1106,10 +1109,9 @@ void stratix10_svc_free_memory(struct stratix10_svc_chan *chan, void *kaddr)
- 				       (unsigned long)kaddr, pmem->size);
- 			pmem->vaddr = NULL;
- 			list_del(&pmem->node);
-+			kfree(pmem);
- 			return;
- 		}
--
--	list_del(&svc_data_mem);
- }
- EXPORT_SYMBOL_GPL(stratix10_svc_free_memory);
- 
--- 
-2.53.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="NgXJAiGw43SAS0zO"
+Content-Disposition: inline
+In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
 
+--NgXJAiGw43SAS0zO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+Hi!
+
+> This is the start of the stable review cycle for the 5.10.265 release.
+> There are 389 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+I'll likely have comments about some of the patches in near future.
+
+CIP testing did not find any problems here:
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-5.10.y
+
+Tested-by: Pavel Machek (CIP) <pavel@nabladev.com>
+
+Best regards,
+                                                                Pavel
+
+--NgXJAiGw43SAS0zO
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaoMuQwAKCRAw5/Bqldv6
+8hJtAJ905HypLxu30sdvxzOn36b1NzzkfQCfTN0XbauhtKbchhnyvsyyt1f/3Uw=
+=m86T
+-----END PGP SIGNATURE-----
+
+--NgXJAiGw43SAS0zO--
