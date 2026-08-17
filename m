@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF2B21CC5C;
-	Mon, 17 Aug 2026 14:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5767C42EEDD;
+	Mon, 17 Aug 2026 14:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978663; cv=none; b=aSqdKuRp0ixcmTr9WQHvXGGv4XRC87P6ekNx74ydjt+kaNanKW+zq6vzQBcYetoJ9JVoSa/ftGytWTvSdclPObYox672/5Yi7fG6odiBCTooFmaM6ehsjWCaXANdO6BxWc+ApFIV7NOKf0nnwq/FEYVCGFjuPtbWmVteSKN74FI=
+	t=1786978666; cv=none; b=ofGr5Oxp5R8J5vtSO8G8CmSxHqHpNeUovLEKd4oKNE/eEd707tfacye3MSl6n2n/JziHwk2uFEoEV8lAi+LeBNmEZhQWg2sW4jNCQtrJXjrSbFk6LvZQfnNSOQdLr6lqk82l/23Zd2d2YG2Hy/JehUakkJG3BIZCO5SH+Ceg/SQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978663; c=relaxed/simple;
-	bh=C5KqNCo8bDjP6Tc7ke1rJISaedQ7742HXjnlHcg8X7U=;
+	s=arc-20240116; t=1786978666; c=relaxed/simple;
+	bh=EQfQqqJteCZ/J6kdzn8Bhfz/43BJkcGCJOgfcC0OT6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RbcvJGB3sJV0NnF5r752aNWz0tB1cDeHabqlIEDPz3IdeAPZf7dx0hgnBFhGz7i/Isg60KdDhdgpOKcvawwogc4OrBMLSyArh+2MnQFlJf9E9SI8C+ofmfMVSfqjfI04RSDXfPDAHQAvVtyfB0QaLiosecE1eFSU3MPjc+4sRkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjlOeaPG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ANbsvRqzmoLq0iQ4MWVrp5uhyUN4OeGB8Dby+mWS0NMYkx1bPoTo1HRRvr/Zxd5VAw4Oknc8qmZDcKx7QJnuKUsscixDAGXiTQHaVuNfRqVHqNKq5eOL9INAj9RxDbtxh74e66vuz2Mds84T1H+3SVOXBxOY8a12Cj2HfjnznLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mZgOwlcV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjlOeaPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89E11F000E9;
-	Mon, 17 Aug 2026 14:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mZgOwlcV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3551F000E9;
+	Mon, 17 Aug 2026 14:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978662;
-	bh=TByDngDVZUw9+jyNFoC4pkkZHq7fxujjSsiz4YjP0ps=;
+	s=korg; t=1786978665;
+	bh=Upakjp+85oAsiY897aPBc2ixrOrJBqtT0bVTzIZAWzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TjlOeaPGpV3nEmOJGKnmKPhprMp4UqlkS+jdMhlpMklPH0QmgjK3rbzis65UTPhI3
-	 8OxIDvzgwVpiMDIronrtbp0HY4WDYqQ7Qoqdlam4EVwThyP35tyESwFc/3DOgNYRik
-	 AUA8L8LJDvs+dwfI2eqcidD6a2MV9xDc9m2QDl3g=
+	b=mZgOwlcVEOeVXOJZNUQreQ9Y2D9IcKao5Y3F+nmbiOAJkkqpVhBPmxNC/zy6MZTwe
+	 4X+3pI+6mSIXpgou4tQV/Kkfieo0K3+ZQo+w19gkt0Kkt2r6ze0M1z1k19nbko4/ED
+	 k1Ny63IQsSh/lx9+0vHGO0J8ofYQBe/42c/8FNF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.6 113/156] ring-buffer: Fix crash passing ERR_PTR to kthread_stop()
-Date: Mon, 17 Aug 2026 15:34:07 +0200
-Message-ID: <20260817132539.048079230@linuxfoundation.org>
+	syzbot+565b1138cfbe549d4422@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 114/156] ALSA: usb: Fix UAF at delayed release of MIDI2 EPs
+Date: Mon, 17 Aug 2026 15:34:08 +0200
+Message-ID: <20260817132539.091426803@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -52,61 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 91542863abade2fd4f2b361991f5386ad9d19c8c upstream.
+commit f8a80cfb68613fb7e6452b66447dbc63f435d140 upstream.
 
-In test_ringbuffer()'s out_free cleanup loop, the check
-`!rb_threads[cpu]` only catches NULL entries and misses entries that
-hold an ERR_PTR.
+The recent fix for UAF in ump_to_endpoint() caused another UAF because
+it tries to dereference the UMP endpoint object, but this might be
+executed at a delayed context where the endpoint has been already
+released.
 
-rb_threads[] is static, so unassigned slots are NULL. But when
-kthread_run_on_cpu() fails for a cpu, it stores ERR_PTR(-ENOMEM) (or
--EINTR) in rb_threads[cpu] before the creation loop jumps to out_free.
-That entry is non-NULL, so the old `!ptr` check does not break, and the
-cleanup proceeds to call kthread_stop() on the ERR_PTR. kthread_stop()
-then dereferences the bogus pointer, crashing the kernel during the
-late_initcall self-test.
+Add private_free to clear the associated data for avoiding the further
+dereference for delayed releases.
 
-crash logs:
-  BUG: kernel NULL pointer dereference, address: 000000000000001c
-  Oops: 0002 [#1] SMP NOPTI
-  CPU: 1 PID: 1 Comm: swapper/0 Not tainted 7.2.0-rc6-dirty #7 PREEMPT(lazy)
-  RIP: 0010:kthread_stop+0x2e/0x220
-  RBX: fffffffffffffff4
-  CR2: 000000000000001c
-  Call Trace:
-   <TASK>
-   test_ringbuffer+0x1ec/0x650
-   do_one_initcall+0x6c/0x2c0
-   kernel_init_freeable+0x21d/0x420
-   kernel_init+0x15/0x1c0
-   ret_from_fork+0x21b/0x320
-   </TASK>
-  Kernel panic - not syncing: Fatal exception
-
-Cc: stable@vger.kernel.org
-Fixes: 64ed3a049e3e ("ring-buffer: make use of the helper function kthread_run_on_cpu()")
-Link: https://patch.msgid.link/20260807154145.2846521-2-sh_def@163.com
-Signed-off-by: Hui Su <sh_def@163.com>
-Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 4a05b2d1b464 ("ALSA: usb-audio: fix use-after-free in ump_to_endpoint()")
+Reported-by: syzbot+565b1138cfbe549d4422@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=565b1138cfbe549d4422
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260808152009.1947835-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/midi2.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -6090,7 +6090,7 @@ static __init int test_ringbuffer(void)
+--- a/sound/usb/midi2.c
++++ b/sound/usb/midi2.c
+@@ -695,6 +695,14 @@ static int parse_midi_2_0_endpoints(stru
+ 	return 0;
+ }
  
-  out_free:
- 	for_each_online_cpu(cpu) {
--		if (!rb_threads[cpu])
-+		if (IS_ERR_OR_NULL(rb_threads[cpu]))
- 			break;
- 		kthread_stop(rb_threads[cpu]);
- 	}
++static void free_ump_private_data(struct snd_ump_endpoint *ump)
++{
++	struct snd_usb_midi2_ump *rmidi = ump->private_data;
++
++	if (rmidi)
++		rmidi->ump = NULL;
++}
++
+ static void free_all_midi2_umps(struct snd_usb_midi2_interface *umidi)
+ {
+ 	struct snd_usb_midi2_ump *rmidi;
+@@ -745,6 +753,7 @@ static int create_midi2_ump(struct snd_u
+ 
+ 	ump->private_data = rmidi;
+ 	ump->ops = &snd_usb_midi_v2_ump_ops;
++	ump->private_free = free_ump_private_data;
+ 
+ 	rmidi->eps[STR_IN] = ep_in;
+ 	rmidi->eps[STR_OUT] = ep_out;
 
 
