@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC484446F6;
-	Mon, 17 Aug 2026 14:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CA94457C5;
+	Mon, 17 Aug 2026 14:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977210; cv=none; b=FqP9AOJUOBWz/NviCzX7pSdrnD+l5m8P1MBgowhDaFcjliPaW2bpYU0F6/epRX5QT4uPTz4ngiPrvZO0UWJJXBeXDFMkot7f5Hay/9A8pvqFKuU1o/lhc9UkWbunOoHo7zZtI4UNSmh6xQZFzPsAsyz5ACS1ogwGCTzz9ztDVrk=
+	t=1786977212; cv=none; b=U8Jh+XTTIfdrE53oHwSAGEHXndJ5CZsxJXzBSu96yrE8QGAYAQmACdW2eKsY81OhhKi0BWGhQOOZ5+ph7orZxHde3DyjtrJyPjLvFXDTR1SEeGViiw5B4ogzO+ARSbALKGtEoCzJVT+HVEnak9hfREvShQL5Jk5MWHZYIS75S3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977210; c=relaxed/simple;
-	bh=dSo8kd1GwOWksHmFgw6DAARAtkFG53+wfrXLPR7eAt4=;
+	s=arc-20240116; t=1786977212; c=relaxed/simple;
+	bh=V+T3QBkaaBNiI013Qy787GzYtiLTloTqLKIyHF4OabA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZQk66Uy9qkvCxFiolL0MRI1yf+Ue8c2KnR9BFOiZXJ+HY6Atpe4DXfYFX05aHzzAMWMeUoAzTSiw6u0lfdxLABJZ/hUrTJ+uoaC3j/iCoRsiyaczjAUFX7S7pDRFPUi5jilxzYDQYCu/TPRxwanY+3iwS2UqCzxNlq++xdvnGNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UgdBIEk9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=imeDvLxC4+aSIDBM9mr9Sd3gs4vmkIz9mN+9WOUX/2jys2DoxuS8+VLL/aqdHgq2LKEQ3dB5eUhVSboRs72lAJXbL559u/s0QS+Q16e2s8SKofRlfyk401KR2VpiOoS9uM9DMYLR/Wz/Ub9pKc0Rr4Hqkd1JJBj6a32QY4aEQls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dnss7SFL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UgdBIEk9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 304C61F00A3D;
-	Mon, 17 Aug 2026 14:33:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dnss7SFL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D521F000E9;
+	Mon, 17 Aug 2026 14:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977208;
-	bh=wWwjsA1HfpUAWZlYEhxcu85tQTtBYvWFWWfLcGjNCfw=;
+	s=korg; t=1786977211;
+	bh=XFhtC3Af/1jnfOBlM6b9Po68dydGnkmHhoed3mSKFec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UgdBIEk9YxumvSyrc/68uWns6EJun5OFthkOp7+ZEL1ebQqVVBWdpfHSf+eC/yNAH
-	 ptqAK6mu7dsMz6s/QaJF4FH0BInMHURkZz6JETbVWfEXGPuCMRrwnng+33fcx6+2Gz
-	 TW2UBe6XfaLEqL0zuvE37GLsT8Ne0X9XhlqKeD7A=
+	b=Dnss7SFL24U/2MV4p06bSm3BAHyxM/jjItKJlYHd2zwEduW97hlrwhduJ1ZUCI1/B
+	 4nw9gROFglI7pYV+Gd7wOdxaEH/K5x2qbHOIJJjYeWPhqu5IMHg0Ul/29T3M+A2jTA
+	 0PzxxoNpwfLI13tJCgJCwgPFYk4j9Gr3B/sPFN3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Looijmans <mike.looijmans@topic.nl>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
 	Michal Simek <michal.simek@amd.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 250/456] phy-zynqmp: Postpone getting clock rate until actually needed
-Date: Mon, 17 Aug 2026 15:30:40 +0200
-Message-ID: <20260817132549.853093881@linuxfoundation.org>
+Subject: [PATCH 5.15 251/456] phy: zynqmp: fix clock error handling in xpsgtr_phy_init()
+Date: Mon, 17 Aug 2026 15:30:41 +0200
+Message-ID: <20260817132549.888057977@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,170 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Looijmans <mike.looijmans@topic.nl>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-[ Upstream commit 065d5885f6180c534b7b176847b3e008f4e11850 ]
+[ Upstream commit e4779e2a16d600892aaf743438f6ce8cc4eb3c4c ]
 
-At probe time the driver would display the following error and abort:
-  xilinx-psgtr fd400000.phy: Invalid rate 0 for reference clock 0
+Propagate clk_prepare_enable() failures to the caller instead of
+returning success, and disable the reference clock on initialization
+error paths to avoid leaking clock references when phy_exit() is not
+called.
 
-At probe time, the associated GTR driver (e.g. SATA or PCIe) hasn't
-initialized the clock yet, so clk_get_rate() likely returns 0 if the clock
-is programmable. So this driver only works if the clock is fixed.
-
-The PHY driver doesn't need to know the clock frequency at probe yet, so
-wait until the associated driver initializes the lane before requesting the
-clock rate setting.
-
-In addition to allowing the driver to be used with programmable clocks,
-this also reduces the driver's runtime memory footprint by removing an
-array of pointers from struct xpsgtr_phy.
-
-Signed-off-by: Mike Looijmans <mike.looijmans@topic.nl>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Link: https://lore.kernel.org/r/20250428063648.22034-1-mike.looijmans@topic.nl
+Fixes: 25d700833513 ("phy: xilinx: phy-zynqmp: dynamic clock support for power-save")
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Reviewed-by: Michal Simek <michal.simek@amd.com>
+Link: https://patch.msgid.link/20260720153832.1130006-2-radhey.shyam.pandey@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: e4779e2a16d6 ("phy: zynqmp: fix clock error handling in xpsgtr_phy_init()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/xilinx/phy-zynqmp.c | 70 +++++++++++++++++----------------
- 1 file changed, 37 insertions(+), 33 deletions(-)
+ drivers/phy/xilinx/phy-zynqmp.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/phy/xilinx/phy-zynqmp.c b/drivers/phy/xilinx/phy-zynqmp.c
-index fb67db31e94a3..a476f1343253f 100644
+index a476f1343253f..4048aff0798ec 100644
 --- a/drivers/phy/xilinx/phy-zynqmp.c
 +++ b/drivers/phy/xilinx/phy-zynqmp.c
-@@ -228,7 +228,6 @@ struct xpsgtr_phy {
-  * @siou: siou base address
-  * @gtr_mutex: mutex for locking
-  * @phys: PHY lanes
-- * @refclk_sscs: spread spectrum settings for the reference clocks
-  * @clk: reference clocks
-  * @tx_term_fix: fix for GT issue
-  * @saved_icm_cfg0: stored value of ICM CFG0 register
-@@ -241,7 +240,6 @@ struct xpsgtr_dev {
- 	void __iomem *siou;
- 	struct mutex gtr_mutex; /* mutex for locking */
- 	struct xpsgtr_phy phys[NUM_LANES];
--	const struct xpsgtr_ssc *refclk_sscs[NUM_LANES];
- 	struct clk *clk[NUM_LANES];
- 	bool tx_term_fix;
- 	unsigned int saved_icm_cfg0;
-@@ -384,13 +382,40 @@ static int xpsgtr_wait_pll_lock(struct phy *phy)
- 	return ret;
- }
- 
-+/* Get the spread spectrum (SSC) settings for the reference clock rate */
-+static const struct xpsgtr_ssc *xpsgtr_find_sscs(struct xpsgtr_phy *gtr_phy)
-+{
-+	unsigned long rate;
-+	struct clk *clk;
-+	unsigned int i;
-+
-+	clk = gtr_phy->dev->clk[gtr_phy->refclk];
-+	rate = clk_get_rate(clk);
-+
-+	for (i = 0 ; i < ARRAY_SIZE(ssc_lookup); i++) {
-+		/* Allow an error of 100 ppm */
-+		unsigned long error = ssc_lookup[i].refclk_rate / 10000;
-+
-+		if (abs(rate - ssc_lookup[i].refclk_rate) < error)
-+			return &ssc_lookup[i];
-+	}
-+
-+	dev_err(gtr_phy->dev->dev, "Invalid rate %lu for reference clock %u\n",
-+		rate, gtr_phy->refclk);
-+
-+	return NULL;
-+}
-+
- /* Configure PLL and spread-sprectrum clock. */
--static void xpsgtr_configure_pll(struct xpsgtr_phy *gtr_phy)
-+static int xpsgtr_configure_pll(struct xpsgtr_phy *gtr_phy)
+@@ -644,12 +644,13 @@ static int xpsgtr_phy_init(struct phy *phy)
  {
- 	const struct xpsgtr_ssc *ssc;
- 	u32 step_size;
+ 	struct xpsgtr_phy *gtr_phy = phy_get_drvdata(phy);
+ 	struct xpsgtr_dev *gtr_dev = gtr_phy->dev;
+-	int ret = 0;
++	int ret;
  
--	ssc = gtr_phy->dev->refclk_sscs[gtr_phy->refclk];
-+	ssc = xpsgtr_find_sscs(gtr_phy);
-+	if (!ssc)
-+		return -EINVAL;
-+
- 	step_size = ssc->step_size;
+ 	mutex_lock(&gtr_dev->gtr_mutex);
  
- 	xpsgtr_clr_set(gtr_phy->dev, PLL_REF_SEL(gtr_phy->lane),
-@@ -432,6 +457,8 @@ static void xpsgtr_configure_pll(struct xpsgtr_phy *gtr_phy)
- 	xpsgtr_clr_set_phy(gtr_phy, L0_PLL_SS_STEP_SIZE_3_MSB,
- 			   STEP_SIZE_3_MASK, (step_size & STEP_SIZE_3_MASK) |
- 			   FORCE_STEP_SIZE | FORCE_STEPS);
-+
-+	return 0;
- }
- 
- /* Configure the lane protocol. */
-@@ -644,7 +671,10 @@ static int xpsgtr_phy_init(struct phy *phy)
- 	 * Configure the PLL, the lane protocol, and perform protocol-specific
- 	 * initialization.
- 	 */
--	xpsgtr_configure_pll(gtr_phy);
-+	ret = xpsgtr_configure_pll(gtr_phy);
+ 	/* Configure and enable the clock when peripheral phy_init call */
+-	if (clk_prepare_enable(gtr_dev->clk[gtr_phy->refclk]))
++	ret = clk_prepare_enable(gtr_dev->clk[gtr_phy->refclk]);
 +	if (ret)
-+		goto out;
-+
+ 		goto out;
+ 
+ 	/* Skip initialization if not required. */
+@@ -659,7 +660,7 @@ static int xpsgtr_phy_init(struct phy *phy)
+ 	if (gtr_dev->tx_term_fix) {
+ 		ret = xpsgtr_phy_tx_term_fix(gtr_phy);
+ 		if (ret < 0)
+-			goto out;
++			goto out_disable_clk;
+ 
+ 		gtr_dev->tx_term_fix = false;
+ 	}
+@@ -673,7 +674,7 @@ static int xpsgtr_phy_init(struct phy *phy)
+ 	 */
+ 	ret = xpsgtr_configure_pll(gtr_phy);
+ 	if (ret)
+-		goto out;
++		goto out_disable_clk;
+ 
  	xpsgtr_lane_set_protocol(gtr_phy);
  
- 	switch (gtr_phy->protocol) {
-@@ -854,8 +884,7 @@ static struct phy *xpsgtr_xlate(struct device *dev,
+@@ -691,6 +692,10 @@ static int xpsgtr_phy_init(struct phy *phy)
+ 		break;
  	}
  
- 	refclk = args->args[3];
--	if (refclk >= ARRAY_SIZE(gtr_dev->refclk_sscs) ||
--	    !gtr_dev->refclk_sscs[refclk]) {
-+	if (refclk >= ARRAY_SIZE(gtr_dev->clk)) {
- 		dev_err(dev, "Invalid reference clock number %u\n", refclk);
- 		return ERR_PTR(-EINVAL);
- 	}
-@@ -931,9 +960,7 @@ static int xpsgtr_get_ref_clocks(struct xpsgtr_dev *gtr_dev)
- {
- 	unsigned int refclk;
- 
--	for (refclk = 0; refclk < ARRAY_SIZE(gtr_dev->refclk_sscs); ++refclk) {
--		unsigned long rate;
--		unsigned int i;
-+	for (refclk = 0; refclk < ARRAY_SIZE(gtr_dev->clk); ++refclk) {
- 		struct clk *clk;
- 		char name[8];
- 
-@@ -949,29 +976,6 @@ static int xpsgtr_get_ref_clocks(struct xpsgtr_dev *gtr_dev)
- 			continue;
- 
- 		gtr_dev->clk[refclk] = clk;
--
--		/*
--		 * Get the spread spectrum (SSC) settings for the reference
--		 * clock rate.
--		 */
--		rate = clk_get_rate(clk);
--
--		for (i = 0 ; i < ARRAY_SIZE(ssc_lookup); i++) {
--			/* Allow an error of 100 ppm */
--			unsigned long error = ssc_lookup[i].refclk_rate / 10000;
--
--			if (abs(rate - ssc_lookup[i].refclk_rate) < error) {
--				gtr_dev->refclk_sscs[refclk] = &ssc_lookup[i];
--				break;
--			}
--		}
--
--		if (i == ARRAY_SIZE(ssc_lookup)) {
--			dev_err(gtr_dev->dev,
--				"Invalid rate %lu for reference clock %u\n",
--				rate, refclk);
--			return -EINVAL;
--		}
- 	}
- 
- 	return 0;
++	goto out;
++
++out_disable_clk:
++	clk_disable_unprepare(gtr_dev->clk[gtr_phy->refclk]);
+ out:
+ 	mutex_unlock(&gtr_dev->gtr_mutex);
+ 	return ret;
 -- 
 2.53.0
 
