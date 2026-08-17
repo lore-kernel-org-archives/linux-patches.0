@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F024B3F8EDE;
-	Mon, 17 Aug 2026 13:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE8E43F4A1;
+	Mon, 17 Aug 2026 13:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974975; cv=none; b=i3XEGfKDC8vzOVvL0MesRH+LFOusiFT45mgWmYkTeL+DUcsj5Gu/yuzTAiq6i8uCh/241OCZahXgyBIWWrNuFkbHT8HNnb4asiCOE7DRl4+6y/Not+IyHSmyuOVPEfJgPYgWfdV5b6Xmna2QCUtVGLDIZPFAdW40d8tPsMjxvs4=
+	t=1786974976; cv=none; b=BG9fzjrr1bPwIurE2hTVWgjwnGq//cTAzknJvOqi1jEwOQDP8ozQA/PZEGgbDk4aGw5RmPGuPz6ZrOVDenxjZv8tmFmyRdEmoOiFXCoE/xeTckpLUULpQEyxItETCLvzhmaIs8tBlv7p3VGbkeGG8fDUY9JdO3Oh2u/MQy2KQ1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974975; c=relaxed/simple;
-	bh=ZanUWJ2NiP+jp12iE/huPArTMTpX0IYCeogRWg7Hnek=;
+	s=arc-20240116; t=1786974976; c=relaxed/simple;
+	bh=FriHCdxY5UrFTdmDRlTP5+yyeS8Q/iHFGIh3CpRRXgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OBW6fhrqG7wMSUh06fpSIGJdQUIiXwigC0KAgGA2KApmxCeR7eA8ZVoMIiwiPg6quBtoQDVO7YLiSxCjcmJ96E7HT3xP3G79RskfXe3nZe+o0vICc2d/dSkT2SZ1SQcvMFZTiw6k2bOskv+80oRAF0l7fc8HEabxoblTB3nhUc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sd0eRAgO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IwrNwr9INi1qqGH0Ss7QhzIey/iKBis5GlX5AF4zcu7h/NnO4ThSp8dO0RE1o+2zy9Hb2W7coo+vBCEi6xqS/QibD4eFeMBO8wHTmuBmczvbLXF0HSbd8Bm/zEr5rAKMQ6dFefF35XQ25HtOt8wsGHgdOpQI4beN0/Hl0wQqiHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZ0BwE6r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sd0eRAgO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC791F00A3A;
-	Mon, 17 Aug 2026 13:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZ0BwE6r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2A51F000E9;
+	Mon, 17 Aug 2026 13:56:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974969;
-	bh=PJIZtFFd0pjALlWLQ6CoR6OR8BeWiKfse/uHHVP51d8=;
+	s=korg; t=1786974972;
+	bh=9lz/V3FDcAdrLkf1t1SzTPIqtM8fYG+o/m3sqHTfuqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sd0eRAgO4zOIqIVpKJfp8C76UpZKcO9bq47nSknUn8L4ctZvXZRvQeC4IAcnZF3iW
-	 im5LVU5tOCrHJMaoTH+J5SFdXmIhg6D9Bb1vU3F2bqtkcFGuJjRHVuiT9kelHHclYm
-	 eIl7JH9wFE/NZhEgRdYWzQ0CI1lw911JghD6uZAA=
+	b=yZ0BwE6r2HjR6CiNkXrKeNUD6BKbGN0AePwgbjpM0FwD1+wsenhnHeyL+9NbCZy4I
+	 7NTIPmH0ilsNp4sfJPT1EM1wOTtXu9umh7ZLtYORpDJ/2ljWkMLPR+5kIDOaVz73vj
+	 9EGORNEHVZCWXLfDH9iHGcoVjJ/lLCt1mBmB2eXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingshuang Fu <fuqingshuang@kylinos.cn>,
-	Guenter Roeck <linux@roeck-us.net>,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 078/250] hwmon: (nzxt-smart2) Check return value of init_device() in probe
-Date: Mon, 17 Aug 2026 15:30:39 +0200
-Message-ID: <20260817132539.630079044@linuxfoundation.org>
+Subject: [PATCH 6.18 069/250] xsk: move xsk_tx_metadata_request() to xdp_sock_drv.h
+Date: Mon, 17 Aug 2026 15:30:30 +0200
+Message-ID: <20260817132539.273389454@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,55 +52,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingshuang Fu <fuqingshuang@kylinos.cn>
+From: Stanislav Fomichev <sdf.kernel@gmail.com>
 
-[ Upstream commit d533882ce1060866a590257f2c77ee23eabef5b8 ]
+[ Upstream commit ddd0d6c5bfe2fef7c7cf31f62265f29b7b9eb9ef ]
 
-The init_device() call in nzxt_smart2_hid_probe() can fail because it
-sends HID output reports to the hardware to detect fans and set the
-update interval.  If the hardware is not responding or the HID reports
-fail, init_device() returns a negative error code.
+xsk_tx_metadata_request() must validate metadata with
+xsk_buff_valid_tx_metadata(), which is defined in xdp_sock_drv.h. Move the
+helper there before adding that dependency. All callers already include
+the destination header, so this has no functional effect.
 
-However, the return value was ignored, causing the probe to continue
-and register an hwmon device even though the device was never properly
-initialized.  This leads to an inconsistent state where the driver
-reports stale data or blocks on wait queues that will never be woken.
-
-The same function's return value is already checked in the
-reset_resume() handler, confirming the author's intent that errors
-should be propagated.
-
-Note that this fix was not possible before commit 59d104b54b0b
-("hwmon: (nzxt-smart2) Stop device IO before calling hid_hw_stop")
-because the out_hw_close error path was missing hid_device_io_stop(),
-which would have opened a use-after-free risk window.
-
-Fixes: 53e68c20aeb1 ("hwmon: add driver for NZXT RGB&Fan Controller/Smart Device v2.")
-Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
-Link: https://lore.kernel.org/r/20260804074842.505923-1-fffsqian@163.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: ca4419f15abd ("xsk: Add launch time hardware offload support to XDP Tx metadata")
+Cc: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20260727161959.885642-6-sdf@fomichev.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nzxt-smart2.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/net/xdp_sock.h     | 43 --------------------------------------
+ include/net/xdp_sock_drv.h | 43 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 43 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/hwmon/nzxt-smart2.c b/drivers/hwmon/nzxt-smart2.c
-index ff0c0bee0e839..efc78a8f58c88 100644
---- a/drivers/hwmon/nzxt-smart2.c
-+++ b/drivers/hwmon/nzxt-smart2.c
-@@ -754,7 +754,11 @@ static int nzxt_smart2_hid_probe(struct hid_device *hdev,
+diff --git a/include/net/xdp_sock.h b/include/net/xdp_sock.h
+index e14e575178940..8bf17ba6c3bd7 100644
+--- a/include/net/xdp_sock.h
++++ b/include/net/xdp_sock.h
+@@ -152,43 +152,6 @@ static inline void xsk_tx_metadata_to_compl(struct xsk_tx_metadata *meta,
+ 	compl->tx_timestamp = &meta->completion.tx_timestamp;
+ }
  
- 	hid_device_io_start(hdev);
+-/**
+- *  xsk_tx_metadata_request - Evaluate AF_XDP TX metadata at submission
+- *  and call appropriate xsk_tx_metadata_ops operation.
+- *  @pmeta: pointer to pointer to AF_XDP metadata area
+- *  @ops: pointer to struct xsk_tx_metadata_ops
+- *  @priv: pointer to driver-private aread
+- *
+- *  This function should be called by the networking device when
+- *  it prepares AF_XDP egress packet.
+- */
+-static inline void xsk_tx_metadata_request(struct xsk_tx_metadata **pmeta,
+-					   const struct xsk_tx_metadata_ops *ops,
+-					   void *priv)
+-{
+-	const struct xsk_tx_metadata *meta = *pmeta;
+-
+-	if (!meta)
+-		return;
+-
+-	if (ops->tmo_request_launch_time)
+-		if (meta->flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
+-			ops->tmo_request_launch_time(meta->request.launch_time,
+-						     priv);
+-
+-	if (ops->tmo_request_timestamp)
+-		if (meta->flags & XDP_TXMD_FLAGS_TIMESTAMP)
+-			ops->tmo_request_timestamp(priv);
+-
+-	if (ops->tmo_request_checksum)
+-		if (meta->flags & XDP_TXMD_FLAGS_CHECKSUM)
+-			ops->tmo_request_checksum(meta->request.csum_start,
+-						  meta->request.csum_offset, priv);
+-
+-	if (!(meta->flags & XDP_TXMD_FLAGS_TIMESTAMP))
+-		*pmeta = NULL;
+-}
+-
+ /**
+  *  xsk_tx_metadata_complete - Evaluate AF_XDP TX metadata at completion
+  *  and call appropriate xsk_tx_metadata_ops operation.
+@@ -232,12 +195,6 @@ static inline void xsk_tx_metadata_to_compl(struct xsk_tx_metadata *meta,
+ {
+ }
  
--	init_device(drvdata, UPDATE_INTERVAL_DEFAULT_MS);
-+	ret = init_device(drvdata, UPDATE_INTERVAL_DEFAULT_MS);
-+	if (ret) {
-+		dev_err(&hdev->dev, "init_device failed: %d\n", ret);
-+		goto out_hw_close;
-+	}
+-static inline void xsk_tx_metadata_request(struct xsk_tx_metadata **pmeta,
+-					   const struct xsk_tx_metadata_ops *ops,
+-					   void *priv)
+-{
+-}
+-
+ static inline void xsk_tx_metadata_complete(struct xsk_tx_metadata_compl *compl,
+ 					    const struct xsk_tx_metadata_ops *ops,
+ 					    void *priv)
+diff --git a/include/net/xdp_sock_drv.h b/include/net/xdp_sock_drv.h
+index ce8315f049684..6d4f65b0ed53a 100644
+--- a/include/net/xdp_sock_drv.h
++++ b/include/net/xdp_sock_drv.h
+@@ -267,6 +267,43 @@ xsk_buff_valid_tx_metadata(const struct xsk_buff_pool *pool,
+ 	return !(*flags & ~XDP_TXMD_FLAGS_VALID);
+ }
  
- 	drvdata->hwmon =
- 		hwmon_device_register_with_info(&hdev->dev, "nzxtsmart2", drvdata,
++/**
++ *  xsk_tx_metadata_request - Evaluate AF_XDP TX metadata at submission
++ *  and call appropriate xsk_tx_metadata_ops operation.
++ *  @pmeta: pointer to pointer to AF_XDP metadata area
++ *  @ops: pointer to struct xsk_tx_metadata_ops
++ *  @priv: pointer to driver-private aread
++ *
++ *  This function should be called by the networking device when
++ *  it prepares AF_XDP egress packet.
++ */
++static inline void xsk_tx_metadata_request(struct xsk_tx_metadata **pmeta,
++					   const struct xsk_tx_metadata_ops *ops,
++					   void *priv)
++{
++	const struct xsk_tx_metadata *meta = *pmeta;
++
++	if (!meta)
++		return;
++
++	if (ops->tmo_request_launch_time)
++		if (meta->flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
++			ops->tmo_request_launch_time(meta->request.launch_time,
++						     priv);
++
++	if (ops->tmo_request_timestamp)
++		if (meta->flags & XDP_TXMD_FLAGS_TIMESTAMP)
++			ops->tmo_request_timestamp(priv);
++
++	if (ops->tmo_request_checksum)
++		if (meta->flags & XDP_TXMD_FLAGS_CHECKSUM)
++			ops->tmo_request_checksum(meta->request.csum_start,
++						  meta->request.csum_offset, priv);
++
++	if (!(meta->flags & XDP_TXMD_FLAGS_TIMESTAMP))
++		*pmeta = NULL;
++}
++
+ static inline struct xsk_tx_metadata *
+ __xsk_buff_get_metadata(const struct xsk_buff_pool *pool, void *data)
+ {
+@@ -479,6 +516,12 @@ xsk_buff_valid_tx_metadata(const struct xsk_buff_pool *pool,
+ 	return false;
+ }
+ 
++static inline void xsk_tx_metadata_request(struct xsk_tx_metadata **pmeta,
++					   const struct xsk_tx_metadata_ops *ops,
++					   void *priv)
++{
++}
++
+ static inline struct xsk_tx_metadata *
+ __xsk_buff_get_metadata(const struct xsk_buff_pool *pool, void *data)
+ {
 -- 
 2.53.0
 
