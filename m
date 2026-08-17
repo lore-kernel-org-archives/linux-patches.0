@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0553C4266AA;
-	Mon, 17 Aug 2026 14:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C9E4B0481;
+	Mon, 17 Aug 2026 14:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977624; cv=none; b=V2TM3YkrR/J4iBCKvzQU3Q2NexLA9GJ1x2hyeROjgUW3ZS5cmN0JvTo2KvMyrd7JrOWgiI43HTjDXeON2Xt6yLGlbaKxOs5wW7eY9WUF2djrfJEzhAnSD1CTikLR4JC7wFpV+g5EQ/OD6HYSnk3bHrFhYeP4mpEKAe/V8U1/dV0=
+	t=1786977626; cv=none; b=fLbxJ8SjrNNt2icZvz34DB4lW6QikiLkoMLUTsicm69bHs5wh50LTkjymOvBV01Y0UVUoKNS/TBda3CO6muoFXxohmCxn+9nKC/eW0FL5hEqg4GZ8O1WGyfHQzxRRT8KgXCiXJtgHi/jMmcFsltjhKz/mzLTn1T6n6lj4y5UW4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977624; c=relaxed/simple;
-	bh=ztUmJNlLToC1KrHP80JxybzLu/wZ1PKSk6iaJUWc+DU=;
+	s=arc-20240116; t=1786977626; c=relaxed/simple;
+	bh=6bQTG5oRE7182VXjJzEPJLCDe2CxwnQ0vnQQwI323bY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LMCXUE4GZYFi52g4rpzCwpkuV5lVpLtoMMQc/M9NcXCvS/8mMz6AoYAOZ7P8cYOxqIPqqxncxBcU3pSB5/44BxLHMWx4jj4ojM4AmCzXjN7fwOtMud8esu4bE0qUFCn7kNXavWbVct5hfQ61P7NVl4mnnKZyPVG3FroWprnns/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fb0nD3Q7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jH78d74Rr/birU9znxHs09dq2YnrwJYPrOUHT8Bm9wjD/D+5nVr5oBFAjxLsnzy5oxBJN9oO6y4/OEaMKjM0c/RmVnePuspCp1PpUcOISUgd4zYrgKIYEeTjWuCyTfLQBEIqDj4WO8bJt0SC/E+xGX8tfKsTzPsOlT0LajIFtT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hN2Sgqlm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fb0nD3Q7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CBBC1F000E9;
-	Mon, 17 Aug 2026 14:40:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hN2Sgqlm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BC41F000E9;
+	Mon, 17 Aug 2026 14:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977622;
-	bh=Jsclu06YHrPVIR6X9TFZYexYs9Zmdo3yIkb4JNxQnR8=;
+	s=korg; t=1786977625;
+	bh=2VxvVyq9rI2Zn5INypWjqaaTg804g3wGlU6J88JdIZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fb0nD3Q75uhKMwqm3r9jLvdYCquGlHLcRPb18AtvIll6yygv8MotdvxDzXfUcwLI2
-	 s5u/BgykXtqWomNoBQ8R6OzeduGFyVbttroFGi0PfT8rGNV0qWnD3BTd9K5NAoefLv
-	 1zEP2H7VHPDDWVN1nOkx9n3rG1zBh3AZrowoF8Jg=
+	b=hN2SgqlmVJoY2kKYxGlebfkp5EwFDsXM+/BfwEyR7fAM2G5gpt9EGIi6UA4sAHTLX
+	 r5wn4zZSl7qJMe6Bus3fNIPeNclz3XLllJNdYV8oo0HpWvWTMx+NUOo/EKuI8sxdKg
+	 rIDrk93yVCAEhe871+d3F/KVX6yKSDj73nLZSY28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 5.15 356/456] drm/vc4: Zero the tile state data array before each BIN job
-Date: Mon, 17 Aug 2026 15:32:26 +0200
-Message-ID: <20260817132553.460356589@linuxfoundation.org>
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Breno Leitao <leitao@debian.org>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 392/456] net/smc: fix TOCTOU race between smc_listen_out() and listener close
+Date: Mon, 17 Aug 2026 15:33:02 +0200
+Message-ID: <20260817132554.737141192@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -44,99 +48,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Sidraya Jayagond <sidraya@linux.ibm.com>
 
-commit 48a570c964d8e37d353381e4195106277e17f5cb upstream.
+[ Upstream commit 185a4caeecabc150106deda1da170b09f2ad803f ]
 
-The binner BO is a single 16MB buffer split into 512KB slots that are
-handed out to jobs at submission time and recycled as jobs complete,
-without ever being cleared. Each slot holds the job's Tile State Data
-Array (TSDA) at its start, followed by the tile allocation pool.
+smc_listen_out() reads lsmc->sk.sk_state without the listener lock,
+then acquires lock_sock_nested() only after the check passes. This
+opens a window where smc_close_active() can transition the listener
+to SMC_CLOSED, call smc_close_cleanup_listen() to drain the accept
+queue, and release the lock, all between the lockless read and the
+delayed lock acquisition:
 
-While the tile allocation pool is only walked by the render thread
-through branches the binner generated during the current job, the
-TSDA is the PTB's own per-tile bookkeeping and is consumed by the
-hardware itself. Although the kernel sets the "Auto-initialise Tile
-State Data Array" flag in the tile binning mode configuration, the
-PTB demonstrably still acts on stale tile state left by the slot's
-previous user: the binner ends up creating invalid command streams
-with invalid primitive streams and branches, which can cause GPU hangs
-as observed in [1][2].
+  smc_listen_work (smc_hs_wq)          smc_close_active()
+  -------------------------------      -------------------------
+  release_sock(child)
+  if (sk_state == SMC_LISTEN) TRUE
+                                        lock_sock(listener)
+                                        sk_state = SMC_CLOSED
+                                        smc_close_cleanup_listen()
+                                        release_sock(listener)
+                                        flush_work(tcp_listen_work)
+  lock_sock_nested(listener)
+  smc_accept_enqueue(listener, child) /* child enqueued on dead listener */
 
-Zero the TSDA when the job's binning slot is configured. This clears
-48 bytes per tile (~24KB for a 1080p frame) in the submission path, and
-guarantees the PTB never sees another job's tile state.
+smc_close_active() flushes only tcp_listen_work. Work items already
+dispatched onto smc_hs_wq for the CLC handshake continue running
+unguarded. smc_accept_enqueue() takes a sock_hold() on the child that
+is never released, so the child smc_sock, its clcsock, and the
+reference all leak. A remote peer that opens TCP connections while the
+server calls close() can exhaust kernel memory.
 
-The tile count is only checked for being non-zero today, so the 8-bit
-fields it comes from can describe a tile state array almost six times
-larger than the slot it has to live in. Bound it before the slot is
-handed out, since such size decides how much of the slot is left for
-the tile alloc pool.
+Move lock_sock_nested() to before the sk_state check so that the test
+and the enqueue are atomic under the listener lock.
 
-Link: https://github.com/raspberrypi/linux/issues/3221 [1]
-Link: https://github.com/raspberrypi/linux/issues/5780 [2]
-Fixes: 553c942f8b2c ("drm/vc4: Allow using more than 256MB of CMA memory.")
-Cc: stable@vger.kernel.org
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20260727-vc4-bin-oom-fixes-v2-2-0d8a5eddc7c9@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fd57770dd198 ("net/smc: wait for pending work before clcsock release_sock")
+Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Signed-off-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Link: https://patch.msgid.link/20260803070701.126339-1-sidraya@linux.ibm.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_validate.c |   29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ net/smc/af_smc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/vc4/vc4_validate.c
-+++ b/drivers/gpu/drm/vc4/vc4_validate.c
-@@ -379,6 +379,23 @@ validate_tile_binning_config(VALIDATE_AR
- 		return -EINVAL;
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index 6b60a5dd240dd..7bbb59e170a6b 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -1574,11 +1574,12 @@ static void smc_listen_out(struct smc_sock *new_smc)
+ 		atomic_dec(&lsmc->queued_smc_hs);
+ 
+ 	release_sock(newsmcsk); /* lock in smc_listen_work() */
++	lock_sock_nested(&lsmc->sk, SINGLE_DEPTH_NESTING);
+ 	if (lsmc->sk.sk_state == SMC_LISTEN) {
+-		lock_sock_nested(&lsmc->sk, SINGLE_DEPTH_NESTING);
+ 		smc_accept_enqueue(&lsmc->sk, newsmcsk);
+ 		release_sock(&lsmc->sk);
+ 	} else { /* no longer listening */
++		release_sock(&lsmc->sk);
+ 		smc_close_non_accepted(newsmcsk);
  	}
  
-+	/* The tile state data array is 48 bytes per tile, and we put it at
-+	 * the start of a BO containing both it and the tile alloc.
-+	 */
-+	tile_state_size = 48 * tile_count;
-+
-+	/* Since the tile alloc array will follow us, align. */
-+	tile_state_size = roundup(tile_state_size, 4096);
-+
-+	/* Reject configurations whose tile state would leave no room for
-+	 * the tile alloc pool that follows it in the slot.
-+	 */
-+	if (tile_state_size >= vc4->bin_alloc_size) {
-+		DRM_DEBUG("Tile binning config of %dx%d too large\n",
-+			  exec->bin_tiles_x, exec->bin_tiles_y);
-+		return -EINVAL;
-+	}
-+
- 	bin_slot = vc4_v3d_get_bin_slot(vc4);
- 	if (bin_slot < 0) {
- 		if (bin_slot != -EINTR && bin_slot != -ERESTARTSYS) {
-@@ -394,13 +411,13 @@ validate_tile_binning_config(VALIDATE_AR
- 	exec->bin_slots |= BIT(bin_slot);
- 	bin_addr = vc4->bin_bo->base.paddr + bin_slot * vc4->bin_alloc_size;
- 
--	/* The tile state data array is 48 bytes per tile, and we put it at
--	 * the start of a BO containing both it and the tile alloc.
--	 */
--	tile_state_size = 48 * tile_count;
-+	exec->tile_alloc_offset = bin_addr + tile_state_size;
- 
--	/* Since the tile alloc array will follow us, align. */
--	exec->tile_alloc_offset = bin_addr + roundup(tile_state_size, 4096);
-+	/* The TSDA area must be zeroed out before use, otherwise the PTB might
-+	 * consume a stale tile state.
-+	 */
-+	memset(vc4->bin_bo->base.vaddr + bin_slot * vc4->bin_alloc_size, 0,
-+	       tile_state_size);
- 
- 	*(uint8_t *)(validated + 14) =
- 		((flags & ~(VC4_BIN_CONFIG_ALLOC_INIT_BLOCK_SIZE_MASK |
+-- 
+2.53.0
+
 
 
