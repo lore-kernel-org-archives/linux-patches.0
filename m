@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C1C21CC5C;
-	Mon, 17 Aug 2026 14:55:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7093B42EEDD;
+	Mon, 17 Aug 2026 14:55:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978552; cv=none; b=mbXAiAKn+7Uyg6XwRog0IGBbn4jEWyczyO1oEtFh03HQG4NLEZ9S20mpTpGtR3QSzevpTRAJBD4lH3/0YcSBuxZIHnRVpUxkD9r2bsiSOzv+628pho1K/PvCPUWcK7qRJYtU7rVBxTGbjP8x1Hwtu3yInSpX6pBgxF5aTSEYuCM=
+	t=1786978555; cv=none; b=O179BFS95i3oteKMVYCRRlsDx9Kv/c0NEBOp7f9NpPItpF1huu9QpzJ4YV5FFn25tDSiZmiUkKURrDi1D0jUXV8yomUwHidFO+DqRheTCxlVf7///yek/msU9WcziizqCdIxVkUOG7m+m9I0QcYxsg5PJgNPDAwdmP/lx+KfVR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978552; c=relaxed/simple;
-	bh=sy+I6Xvl9iiQKOeIK7bHmzkFwipOUwQQ29suf5ZdiFY=;
+	s=arc-20240116; t=1786978555; c=relaxed/simple;
+	bh=nS9aW8kQtx8zYhsxMdDWhDBfZhRU27NUIXti4dhcFH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hrt13uns7WdoZ/eJLi430ERM3IFxig9MaYmNVHZjwT28ClewtW8wKQcemUj6dK8p/OD7d0b5I7bcvcoCCmHk0s2gJ5rXS5tKikcvwJdHz4skqLzjCN5urAJpcxt49mnEUAmo2IyhWQH0UOf+Q2D5MVyYcEM8dVV6yPgaI5qSLq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a7OIIsXD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NhQkjT27op2cLH61QFjCIbsMZfN7oqnnjjb/IJWcjaOETqQMH1SNRMA8lxY8vwhHahgYfeHKx+zgi3OQ8OVLeIsV7ZVNAQQ7bqjda+D2fhY2MZxg57r7haiW4EO5Z080jUmqm8eJZ+T7pTVDKpz4KQbRXvUQZiyKzhBhyuZq4SY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m8pfIGn/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a7OIIsXD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD1731F000E9;
-	Mon, 17 Aug 2026 14:55:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m8pfIGn/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9013C1F000E9;
+	Mon, 17 Aug 2026 14:55:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978551;
-	bh=8MOy/1FI/SYYByjJ3uGNKf9UEGqlyH9GLLFnDwN5UvY=;
+	s=korg; t=1786978554;
+	bh=TsOSn/2mBG4nkoVhrAxWM1ZhogY8IqzZcQFUfdQai3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a7OIIsXD8SUq7CSfchFq+yK3JrTL/1sM0bCb8EIqRZKRqtLrQBxsC3gNeYklnickV
-	 HNk3cU7hEHNUh5b2A3F2okZG7DGgoQC6eUxyJfDAEptS1/Jv/Llb474WGzvBMy/Tem
-	 aW0pbhRkqHeO8Z+arYxv5J+2wcC0i6UxlDkFtbEs=
+	b=m8pfIGn/iAKqsxwqnYdxqatk1xfSexKFnh2JSr1wLIKVpwoxdct3bNeGzfJWGyZbr
+	 ypFVJhuHAutobt2dXW+xBE6UT+g52udn/os67/A1OgnMn3Ag/OTEJELupYGXXWjPVY
+	 Qa63Y18anJZgSOu1jnhLf25ERZmxGtn60RFy8f38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingshuang Fu <fuqingshuang@kylinos.cn>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 039/156] hwmon: (nzxt-smart2) Check return value of init_device() in probe
-Date: Mon, 17 Aug 2026 15:32:53 +0200
-Message-ID: <20260817132536.144056472@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.6 075/156] ipvs: stop estimator after disabled calc phase
+Date: Mon, 17 Aug 2026 15:33:29 +0200
+Message-ID: <20260817132537.531598087@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -51,57 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingshuang Fu <fuqingshuang@kylinos.cn>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit d533882ce1060866a590257f2c77ee23eabef5b8 ]
+commit 558f67f1340f803a346ecd14a69c49653111c5f4 upstream.
 
-The init_device() call in nzxt_smart2_hid_probe() can fail because it
-sends HID output reports to the hardware to detect fans and set the
-update interval.  If the hardware is not responding or the HID reports
-fail, init_device() returns a negative error code.
+IPVS estimator kthread 0 starts with zeroed chain and tick limits until
+its initial calculation phase completes. If network namespace teardown
+clears ipvs->enable during that phase, ip_vs_est_calc_phase() can return
+without installing positive limits.
 
-However, the return value was ignored, causing the probe to continue
-and register an hwmon device even though the device was never properly
-initialized.  This leads to an inconsistent state where the driver
-reports stale data or blocks on wait queues that will never be woken.
+The kthread can then continue into its main loop and drain
+est_temp_list with zero chain_max, tick_max and est_max_count values.
+Each enqueue consumes one available tick row, but est_count never
+reaches the zero est_max_count value. After all rows are consumed, the
+row lookup returns IPVS_EST_NTICKS and ip_vs_enqueue_estimator() writes
+past the ticks and tick_len arrays.
 
-The same function's return value is already checked in the
-reset_resume() handler, confirming the author's intent that errors
-should be propagated.
+Exit kthread 0 after the calculation phase if the kthread is stopping or
+IPVS has been disabled. That keeps temporary estimators from being
+drained after the limits failed to initialize.
 
-Note that this fix was not possible before commit 59d104b54b0b
-("hwmon: (nzxt-smart2) Stop device IO before calling hid_hw_stop")
-because the out_hw_close error path was missing hid_device_io_stop(),
-which would have opened a use-after-free risk window.
+Estimator kthreads can now self-exit before teardown or reload stops
+kd->task. Keep an extra task reference after creation and release it
+with kthread_stop_put(), so kd->task remains valid until the stop paths
+consume that reference.
 
-Fixes: 53e68c20aeb1 ("hwmon: add driver for NZXT RGB&Fan Controller/Smart Device v2.")
-Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
-Link: https://lore.kernel.org/r/20260804074842.505923-1-fffsqian@163.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 705dd3444081 ("ipvs: use kthreads for stats estimation")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/nzxt-smart2.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/netfilter/ipvs/ip_vs_est.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwmon/nzxt-smart2.c b/drivers/hwmon/nzxt-smart2.c
-index 5bbe6f3f8af48..00c8d3bc3e344 100644
---- a/drivers/hwmon/nzxt-smart2.c
-+++ b/drivers/hwmon/nzxt-smart2.c
-@@ -760,7 +760,11 @@ static int nzxt_smart2_hid_probe(struct hid_device *hdev,
+--- a/net/netfilter/ipvs/ip_vs_est.c
++++ b/net/netfilter/ipvs/ip_vs_est.c
+@@ -186,8 +186,11 @@ static int ip_vs_estimation_kthread(void
+ 		}
  
- 	hid_device_io_start(hdev);
+ 		/* kthread 0 will handle the calc phase */
+-		if (ipvs->est_calc_phase)
++		if (ipvs->est_calc_phase) {
+ 			ip_vs_est_calc_phase(ipvs);
++			if (kthread_should_stop() || !READ_ONCE(ipvs->enable))
++				return 0;
++		}
+ 	}
  
--	init_device(drvdata, UPDATE_INTERVAL_DEFAULT_MS);
-+	ret = init_device(drvdata, UPDATE_INTERVAL_DEFAULT_MS);
-+	if (ret) {
-+		dev_err(&hdev->dev, "init_device failed: %d\n", ret);
-+		goto out_hw_close;
-+	}
+ 	while (1) {
+@@ -262,6 +265,7 @@ int ip_vs_est_kthread_start(struct netns
+ 		kd->task = NULL;
+ 		goto out;
+ 	}
++	get_task_struct(kd->task);
  
- 	drvdata->hwmon =
- 		hwmon_device_register_with_info(&hdev->dev, "nzxtsmart2", drvdata,
--- 
-2.53.0
-
+ 	set_user_nice(kd->task, sysctl_est_nice(ipvs));
+ 	set_cpus_allowed_ptr(kd->task, sysctl_est_cpulist(ipvs));
+@@ -277,7 +281,7 @@ void ip_vs_est_kthread_stop(struct ip_vs
+ {
+ 	if (kd->task) {
+ 		pr_info("stopping estimator thread %d...\n", kd->id);
+-		kthread_stop(kd->task);
++		kthread_stop_put(kd->task);
+ 		kd->task = NULL;
+ 	}
+ }
+@@ -509,7 +513,7 @@ static void ip_vs_est_kthread_destroy(st
+ 	if (kd) {
+ 		if (kd->task) {
+ 			pr_info("stop unused estimator thread %d...\n", kd->id);
+-			kthread_stop(kd->task);
++			kthread_stop_put(kd->task);
+ 		}
+ 		ip_vs_stats_free(kd->calc_stats);
+ 		kfree(kd);
 
 
