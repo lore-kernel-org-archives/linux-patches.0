@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1408125C804;
-	Mon, 17 Aug 2026 15:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04702773EC;
+	Mon, 17 Aug 2026 15:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978939; cv=none; b=ByeLhclr/E/2s21d+/l79bzQRkZm2BFcQTtbTHZDvMVCy2jGVqebpNXUB8JwLKbPjuY8UZqD4yQ9XGy/nmyy4wyn/eCBlz3r0ma89tnII53PuosB5ed0TI07Im1zH8Ol+cmqdhWBSxqGUpnh+9xTut1Azvbpxo8/9m3Co8sE/bU=
+	t=1786978942; cv=none; b=u07POJgmyWboqr1NtFKE67yn04jB2IEs2RA2lvFj7PUGl6oalep+VDcTC7S4Ci0m954k+cSfiwY+z7e9INu44PdbctPgh1VOFl/q9vpzuVdd6oq9UuviSLf0ayqzXWr6oSeo+Qz62xrXophr1RI1PyiFJ1pTVxqM9f5ZPbMSe2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978939; c=relaxed/simple;
-	bh=tHB0G6ti4wlG9qpryGaskpPRbm90N9LuOc2hJM+Ul1c=;
+	s=arc-20240116; t=1786978942; c=relaxed/simple;
+	bh=XrYfeKnLBUnkn4/5uXU/XFo9ztK8TgBG4IzWC2KokPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Miqbh2fjaYxbkL97mOWAxs8TciWK4TXa9YGGhLP9FnmQPVkUSE10aA5tjVI06ohY6DJqYSAwUR8AVTzCcncMitlI0c7m5aA3bSDs1CcN0BfKO2D0Ozhh+c+5/H6p5Lj2aafVttWWMzzvLdQjrh5/QdEWQgf99iV8K5B9gb9vQ28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2iSTFas; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NhOC02dPra/8WfWl9hfMgLE5k2Cg1fGxgbEIdV0QUVOWdum1u/V4o3DUUTXgMwluyXrDbJgE13Dnu+saZzYxWjQPlQLk8c/n2pMKZ/pnpUJG016W3XbazVvFmj9VI2VvWqu9fYqwWx1bCOrUCOwx3hNxRVYFrLXeG9/tOi93Xhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQ22H63w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2iSTFas"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2431F000E9;
-	Mon, 17 Aug 2026 15:02:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQ22H63w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 536E41F000E9;
+	Mon, 17 Aug 2026 15:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978938;
-	bh=Vkv8hZeqLeqEHMDPptzxoKT8hX/xHFaPu6CpzdMi0Jc=;
+	s=korg; t=1786978940;
+	bh=PFteliiihIadT5VDRZwkDugrNPUOiFL36vTzeKdIvzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M2iSTFas20oEZor0U0+qrUqRLpayZ8puC9mmFxyOO7sJoR9lv8fFxIk1pwp3poLgL
-	 NS9bUHepsI6Um2nVd7iEHecGOeH96cxkEa59WeL5ofAAF5eATUsWNS4PeQ4oJdY7Rq
-	 MjkP2yUFisax4loQZXMULDMnvt+VJdOHNpEkgawM=
+	b=LQ22H63w4jmI4FMbfu8xQ5ZHTABWUT5GWfc/TAqzDuzZvyaVQ9Q5dDab1LILeXNIy
+	 UuvVHG0/iN+S6LEuQoaQp5L9zt2ADArouO7dQnz+E6u8tc5sNn3Wrd3AGGbtni0khi
+	 bMxviGOMEnq81mJGqND7BB/jCsQWxgee4mzaRiXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	=?UTF-8?q?HE=20WEI=20 ?= <skyexpoc@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 025/609] IB/mad: Drop unmatched RMPP responses before reassembly
-Date: Mon, 17 Aug 2026 15:25:21 +0200
-Message-ID: <20260817132544.073495075@linuxfoundation.org>
+Subject: [PATCH 6.1 052/609] wifi: cfg80211: bound element ID read when checking non-inheritance
+Date: Mon, 17 Aug 2026 15:25:48 +0200
+Message-ID: <20260817132545.160602596@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -45,94 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: HE WEI (ギカク) <skyexpoc@gmail.com>
 
-[ Upstream commit d2e52d610b9b09694261632340b801a421e0b0c5 ]
+[ Upstream commit cb8afea4655ff004fa7feee825d5c79783525383 ]
 
-Kernel-handled RMPP receive processing starts reassembly for active
-DATA responses before the response is matched to an outstanding send.
-The normal match happens later, after ib_process_rmpp_recv_wc() has
-either assembled a complete message or consumed the segment.
+cfg80211_is_element_inherited() reads the first data octet of the
+candidate element (id = elem->data[0]) to look it up in an extension
+non-inheritance list. It does so after testing elem->id, but without
+verifying that the element actually has a data octet. A zero-length
+extension element (WLAN_EID_EXTENSION with length 0) therefore makes it
+read one octet past the end of the element.
 
-That ordering lets an unsolicited response that routes to a kernel
-RMPP agent by the high TID bits allocate or extend RMPP receive state
-before the full TID and source address are checked against a real
-request. A reordered burst can therefore reach the receive-side
-insertion path even though the response would not match any send.
+_ieee802_11_parse_elems_full() runs this check for every element of a
+frame once a non-inheritance context exists -- e.g. while parsing a
+per-STA profile of a Multi-Link element in a (re)association response,
+or a non-transmitted BSS profile -- so a crafted frame from an AP can
+trigger a one-octet slab-out-of-bounds read during element parsing:
 
-For kernel-handled RMPP DATA responses, require the existing
-ib_find_send_mad() match before entering RMPP reassembly. The matcher
-already checks the full TID, management class and source address/GID
-against the agent wait, backlog and in-flight send lists. If there is
-no match, drop the response without creating RMPP state.
+  BUG: KASAN: slab-out-of-bounds in cfg80211_is_element_inherited
+  Read of size 1 ... in net/wireless/scan.c
 
-This leaves the RMPP window behavior unchanged and only rejects
-responses that have no corresponding request.
+Return early (treat the element as inherited) when an extension element
+carries no data, mirroring the existing handling of empty ID lists.
 
-Fixes: fa619a77046b ("[PATCH] IB: Add RMPP implementation")
-Assisted-by: Codex:gpt-5-5-xhigh
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/3170ff3bc389a930bb1641f2caa394a0b2241579.1780774907.git.michael.bommarito@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+The bug was found by fuzzing ieee802_11_parse_elems_full() under KASAN.
+
+Fixes: f7dacfb11475 ("cfg80211: support non-inheritance element")
+Signed-off-by: HE WEI (ギカク) <skyexpoc@gmail.com>
+Link: https://patch.msgid.link/20260707094828.16465-1-skyexpoc@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/mad.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ net/wireless/scan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
-index 242434c09e8d8f..bddb1c607aff62 100644
---- a/drivers/infiniband/core/mad.c
-+++ b/drivers/infiniband/core/mad.c
-@@ -1778,6 +1778,24 @@ void ib_mark_mad_done(struct ib_mad_send_wr_private *mad_send_wr)
- 			      &mad_send_wr->mad_agent_priv->done_list);
- }
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index ae899e25581d27..1ebe2f3f6f52ac 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -240,7 +240,7 @@ bool cfg80211_is_element_inherited(const struct element *elem,
+ 		return true;
  
-+static bool is_kernel_rmpp_data_response(struct ib_mad_agent_private *agent,
-+					 struct ib_mad_recv_wc *mad_recv_wc)
-+{
-+	const struct ib_mad_hdr *mad_hdr = &mad_recv_wc->recv_buf.mad->mad_hdr;
-+	struct ib_rmpp_mad *rmpp_mad;
-+
-+	if (!ib_mad_kernel_rmpp_agent(&agent->agent) ||
-+	    !ib_response_mad(mad_hdr) ||
-+	    !ib_is_mad_class_rmpp(mad_hdr->mgmt_class))
-+		return false;
-+
-+	rmpp_mad = (struct ib_rmpp_mad *)mad_recv_wc->recv_buf.mad;
-+
-+	return (ib_get_rmpp_flags(&rmpp_mad->rmpp_hdr) &
-+		IB_MGMT_RMPP_FLAG_ACTIVE) &&
-+	       rmpp_mad->rmpp_hdr.rmpp_type == IB_MGMT_RMPP_TYPE_DATA;
-+}
-+
- static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
- 				 struct ib_mad_recv_wc *mad_recv_wc)
- {
-@@ -1796,6 +1814,18 @@ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
- 	}
- 
- 	list_add(&mad_recv_wc->recv_buf.list, &mad_recv_wc->rmpp_list);
-+	if (is_kernel_rmpp_data_response(mad_agent_priv, mad_recv_wc)) {
-+		spin_lock_irqsave(&mad_agent_priv->lock, flags);
-+		mad_send_wr = ib_find_send_mad(mad_agent_priv, mad_recv_wc);
-+		spin_unlock_irqrestore(&mad_agent_priv->lock, flags);
-+
-+		if (!mad_send_wr) {
-+			ib_free_recv_mad(mad_recv_wc);
-+			deref_mad_agent(mad_agent_priv);
-+			return;
-+		}
-+	}
-+
- 	if (ib_mad_kernel_rmpp_agent(&mad_agent_priv->agent)) {
- 		mad_recv_wc = ib_process_rmpp_recv_wc(mad_agent_priv,
- 						      mad_recv_wc);
+ 	if (elem->id == WLAN_EID_EXTENSION) {
+-		if (!ext_id_len)
++		if (!ext_id_len || !elem->datalen)
+ 			return true;
+ 		loop_len = ext_id_len;
+ 		list = &non_inherit_elem->data[3 + id_len];
 -- 
 2.53.0
 
