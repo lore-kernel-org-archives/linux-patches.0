@@ -1,54 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE091439F73;
-	Mon, 17 Aug 2026 13:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A332243B3D1;
+	Mon, 17 Aug 2026 13:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974529; cv=none; b=o4Nj3xkyHD7Bha6g/3lJW1XMHNNSyyEzGzpY34AK6/Uw0SdtvT7qYJT85g5nyI5sG4mZr2IVdp4N0RKgJ87HZgcGreMy93/YutTWczKbURYrJeokTNs3UfRuBQTzrTA2cpBO49M+I5pTWGB4r6ClIjsyvKdV0nmG2+EWrXtaCBo=
+	t=1786974533; cv=none; b=fhI3Ag40RXAzzXUsnmfH8EGSNO+efCrzapB94NaMNpykec/MWc4yWKysmIOJmI4hV4Ig/w2PeQCbaoFwPfevWXniDqoI1ReNYVQhAlJY65zB754GyC1GCG2o2Ti/NXOXFZ6IKEl8LR5W6lgn5A7aFYp0aI5U8CytULrHnG9ueyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974529; c=relaxed/simple;
-	bh=bgHMUZ4GHGdnqw0IUlA+jancH4eq/+aA5Fkkk58u8nA=;
+	s=arc-20240116; t=1786974533; c=relaxed/simple;
+	bh=9T1e1bgOrfQdSCpDFvDPcBGd+wXKbpBt1LHCwqyKLek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r1FFyIlVX1FaIseGDRRwni4ZKLIH8xpMo4jL5DLaAjJkIe4yTlYlDcnE9N49ckGMSt81pbctNKd/XG+dFKe3hVi88pTa7eGXF3RgwmNMBqELn4y1L/+Fd8XCf51z4iTdeHLRoq6NW0W/mx059XPl8xymMe6sb9tGGC6USl594xE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1q13ZVL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XZxYbTrqAKEE7Vx0TGUgirE2TIq6se70c0hrAyBGbNqCD2m5W+xCUAiJ5q6yknRuGsSma9AIaldKiTGJaTB9ZzlcZwt0HzoQ+O62JDWmJPdpKyRN2ZpjNfNjUMt+iYuziNZclhFWdBF6c20xB1HIGKEIhNpXkIweLj4/JBms4o4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gv/t1a1E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1q13ZVL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0D21F00A3A;
-	Mon, 17 Aug 2026 13:48:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gv/t1a1E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C215A1F000E9;
+	Mon, 17 Aug 2026 13:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974526;
-	bh=3hZ4sT7Xmt1GEiLUpncAJ5dK0XZLaxHkwliSfuNGm3w=;
+	s=korg; t=1786974529;
+	bh=ClgjRkOGefTuLAVLv3UDk5Wy3yQIn34voAZvHxCOAx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z1q13ZVLOQiUM4leTCxPsL3B6KG8LQCLdUVLMi2joD2vm7+arBFxn+bTthsvb57Nc
-	 Ddgs8UPBsmOnESrX2KjUEvrYlQWleeLqBG/TuZSkbmXoBkXawtLPaK1wF/TnuqfTdj
-	 bbq90hHbWF8IlSP1eqAG3QreWRj+saLjmNaklUMQ=
+	b=Gv/t1a1ELFeWxM3NLuZZCjTH7kmpGkrnUwWup5B/xpZWMNAPmRs5hI6s9JqGnV+mq
+	 dIWyxjg5tyNk2mErh9ymP4+xlW3LBdKb5d3URhO+gA1KCwIUQFQue6aaA87NxEAsQ/
+	 5jhdesGlYekFYxOunI55Wm6htJ7RowUz7TbfwiOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Fleming <mfleming@cloudflare.com>,
-	syzbot+c5b060ce82921a2fd500@syzkaller.appspotmail.com,
-	Zi Yan <ziy@nvidia.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Dave Chinner <david@fromorbit.com>,
-	Dev Jain <dev.jain@arm.com>,
-	Kairui Song <ryncsn@gmail.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Liam Howlett <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Nico Pache <npache@redhat.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 209/271] mm/huge_memory: initialise workingset state before folio split
-Date: Mon, 17 Aug 2026 15:32:14 +0200
-Message-ID: <20260817132545.405809222@linuxfoundation.org>
+	Jun Yang <junvyyang@tencent.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 7.1 236/271] vhost: reset the vring metadata cache on vring reconfiguration
+Date: Mon, 17 Aug 2026 15:32:41 +0200
+Message-ID: <20260817132546.479523520@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -67,66 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Fleming <mfleming@cloudflare.com>
+From: Jun Yang <junvyyang@tencent.com>
 
-commit aca1f2d5de17e138bc6c4859126b77e516b82541 upstream.
+commit de845981da67a6b049080c87e605130b0c30adc5 upstream.
 
-xas_try_split() adds __GFP_ACCOUNT for page-cache xa_nodes, but
-__folio_split() leaves the xa_state's xa_lru unset.  That lets a live,
-memcg-charged xa_node exist without being linked into the mapping's
-shadow_nodes list_lru; when reclaim later walks the list_lru it trips
-VM_WARN_ON(!css_is_dying()).
+vq->meta_iotlb[] caches the vhost_iotlb_map that backs each vring
+metadata region, and iotlb_access_ok() returns early on a cache hit,
+taking the hit as proof that the region has already been validated:
 
-Use mapping_set_update() to install both the workingset update callback
-and the shadow_nodes list_lru on the xa_state.
+	if (vhost_vq_meta_fetch(vq, addr, len, type))
+		return true;
 
-Link: https://lore.kernel.org/20260725101419.3938406-1-matt@readmodwrite.com
-Fixes: 58729c04cf10 ("mm/huge_memory: add buddy allocator like (non-uniform) folio_split()")
-Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
-Reported-by: syzbot+c5b060ce82921a2fd500@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c5b060ce82921a2fd500
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dave Chinner <david@fromorbit.com>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Kairui Song <ryncsn@gmail.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The cache is reset on VHOST_IOTLB_UPDATE and VHOST_IOTLB_INVALIDATE, on
+device IOTLB (re)initialisation and on vq reset, but not when
+VHOST_SET_VRING_ADDR replaces vq->desc, vq->avail and vq->used, nor when
+VHOST_SET_VRING_NUM changes the region sizes.
+
+With a device IOTLB attached both ioctls are accepted while the vq is
+live, and neither validates the addresses at ioctl time: vq_access_ok()
+and vq_log_used_access_ok() return true early because the addresses are
+GIOVAs, deferring validation to prefetch time.  Once the cache has been
+populated that deferred validation no longer runs -- vq_meta_prefetch()
+hits the stale entry and returns true -- and vhost_vq_meta_fetch() keeps
+translating through the old mapping as
+
+	map->addr + addr - map->start
+
+for an address the mapping no longer covers.  vhost_copy_to_user() and
+vhost_copy_from_user() consume the result with __copy_to_user() and
+__copy_from_user(), which do not check it either, so a subsequent used
+ring update or descriptor fetch accesses memory outside the region the
+IOTLB actually maps.
+
+Reset the metadata cache whenever the vring is reconfigured, so the new
+addresses are pushed back through iotlb_access_ok()'s slow path.
+
+Fixes: f88949138058 ("vhost: introduce O(1) vq metadata cache")
+Cc: stable@vger.kernel.org
+Assisted-by: tencentos-corvus-ai:kimi-k3
+Signed-off-by: Jun Yang <junvyyang@tencent.com>
+Message-ID: <20260803014823.68623-1-juny24602@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/vhost/vhost.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -4108,7 +4108,7 @@ static int __folio_split(struct folio *f
- 		gfp_t gfp;
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -2131,6 +2131,14 @@ static long vhost_vring_set_num_addr(str
+ 		BUG();
+ 	}
  
- 		mapping = folio->mapping;
--		min_order = mapping_min_folio_order(folio->mapping);
-+		min_order = mapping_min_folio_order(mapping);
- 		if (new_order < min_order) {
- 			ret = -EINVAL;
- 			goto out;
-@@ -4122,6 +4122,8 @@ static int __folio_split(struct folio *f
- 			goto out;
- 		}
- 
-+		mapping_set_update(&xas, mapping);
++	/*
++	 * The metadata cache holds the IOTLB mapping that backed the previous
++	 * desc/avail/used addresses and vring size, both of which are being
++	 * replaced here.  iotlb_access_ok() takes a cache hit as proof that the
++	 * region was validated, so the stale entries have to go.
++	 */
++	__vhost_vq_meta_reset(vq);
 +
- 		if (split_type == SPLIT_TYPE_UNIFORM) {
- 			xas_set_order(&xas, folio->index, new_order);
- 			xas_split_alloc(&xas, folio, old_order, gfp);
+ 	mutex_unlock(&vq->mutex);
+ 
+ 	return r;
 
 
