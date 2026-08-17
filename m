@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033FE439F71;
-	Mon, 17 Aug 2026 14:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D4143744F;
+	Mon, 17 Aug 2026 14:35:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977352; cv=none; b=t8AuANq/loaiYYl/htFV6efIDvEaVBgXFrId1MUXh/aCP40GoAZrbBR4kscZNiIbVecbrgeoWto7tKOODULSe7y33p5T7Ir11Tz/okH8S4VO854w6vekJ81yYKcEUC/k/SlbBnoAodqR9p0e9dFVszUa1EcgHUqFJwRVyIDtlyQ=
+	t=1786977354; cv=none; b=NAbrxoCnAsC/D4u7GuvuSXLFAXzMjUl/T09ucJ1KrBpUgk5h3PQGjBCH+BWRrbcAT7inqVs17gOqmEWxhgePkTEAAzQeaKUEvJo9tpkNAplCXqWvq6eWE8dCSPYBsMGvVa785gfTkZd8ej7ivk/z3Jl3Sm5I6XRIjvE8iQVX5OA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977352; c=relaxed/simple;
-	bh=5slgLJLjFxd5VjvnAAIQtuJ2cg4sKGYRIB1ReuXtSkE=;
+	s=arc-20240116; t=1786977354; c=relaxed/simple;
+	bh=RTumslFj9+P/YX52jSgd6xN5FWMyCbXOy5Bi7AfNIx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g2n0tp9EuQDlRiJ8tFnZz2cWUnQGzJutKq8oCOF0XjObz9B1MzsX9dZcJG07LZOWMX5fMy7nqB73I1IT43Qj1C7MoR2taGRBA2VuI3zTsOyROoADtzPIuSzhGp0XwrIi5on6cVIC33xRAiA192ksdpqWdY665kWHB5Pipc39TzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7+Pufyj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rkMU8rivLRL1Mvv18hpByu9gdfkxS1apYDJjZ7o5VpnBlNYGnauhxt5y28Z7dbomfKaf/MDxBepqdTl2oPpGi8K9+PW4KCS61Bf890GBeHt5fn38J8DNVasxGT3vCpvPdiYThj1nRHXWvFu9bSa1T271JtMOyzqsz3RkSyagPRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h+vgeYfG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7+Pufyj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725551F00A3D;
-	Mon, 17 Aug 2026 14:35:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h+vgeYfG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E9851F000E9;
+	Mon, 17 Aug 2026 14:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977346;
-	bh=NzxL5t4kIXNNIxPrIFLVMHIdFUtW5duOIWs57xuJUws=;
+	s=korg; t=1786977348;
+	bh=G68uDxShVMvHJ+JxOHReoo3GzWuepLXI/OuGXSbbKpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E7+PufyjSv5LbAFHjcRyzyRWpuTQokssy3VygyFRCuSsEwkK3QKaPPGoFkzNvYL1W
-	 LqzzlgyF5tB/2JxzSNE1WUVweXV4t1ZB/Vh3ZiiRn28xGmmNBgehaaMGVykGHovcZx
-	 V2GgNsnwYiJeuPFldFoSek+8eOQ/TnQ70pMDoevY=
+	b=h+vgeYfGEkC6Phf8fAlC1spX+2f6a7GSrcMgSmUNvnrdMBZB9UA4VjmSR8ObsWBf2
+	 6YcqKCz+ZRRKrmQ0rGKjlejeHrl7RFLeFVRjLKi9HNs6HTxbxu87U5Cu4QWI3dXeOl
+	 LL+qsMBaFsPvU2Sj+ciqSxm4vtOXbFXZKSc3SgCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 270/456] hwmon: (adt7470) Fix busy-loop and I2C flooding in update thread
-Date: Mon, 17 Aug 2026 15:31:00 +0200
-Message-ID: <20260817132550.545483517@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Luxiao Xu <rakukuip@gmail.com>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 5.15 297/456] audit: fix potential use-after-free in audit_del_rule()
+Date: Mon, 17 Aug 2026 15:31:27 +0200
+Message-ID: <20260817132551.456925779@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,51 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+From: Luxiao Xu <rakukuip@gmail.com>
 
-[ Upstream commit cb0b7f9c43b0abbd422a7e4c2c85e91db429207c ]
+commit 246df90b5f1a8a6e6abbd2f058b029558720adec upstream.
 
-When userspace configures 'auto_update_interval' to 0 via sysfs, the
-background kthread executes schedule_timeout_interruptible(0), which
-returns immediately.
+`audit_del_rule()` destroys `e->rule.exe` via `audit_remove_mark_rule()`
+before unlinking the rule from RCU-visible filter lists and waiting for a
+grace period. Concurrent readers in `audit_filter()` and
+`audit_filter_rules()` still dereference `e->rule.exe`, while the fsnotify
+mark can be freed on an independent lifetime path. This creates a
+use-after-free window during rule deletion.
 
-If 'num_temp_sensors' is concurrently or previously set to 0, the
-msleep_interruptible() delay inside adt7470_read_temperatures() also
-becomes 0. This combination forces the background thread into a tight,
-unbounded busy-loop, hogging the CPU and flooding the I2C bus with a
-continuous stream of transactions.
+Fix this by unlinking the rule from the RCU-visible lists and invoking
+`synchronize_rcu()` before calling `audit_remove_mark_rule()` (and other
+rule removal helpers). This ensures that all existing RCU readers have
+exited the critical section before any underlying resources are destroyed.
 
-Fix this vulnerability by raising the lower limit of the clamp_val in
-auto_update_interval_store() from 0 to 500 milliseconds. This guarantees
-a reasonable minimum sleep window between sensor updates, protecting the
-system from intentional or accidental I2C bus denial of service.
-
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/r/20260716213252.EACA71F000E9@smtp.kernel.org
-Fixes: 89fac11cb3e7 ("adt7470: make automatic fan control really work")
-Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-3-598e38a46ba6@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 34d99af52ad4 ("audit: implement audit by executable")
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/adt7470.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/auditfilter.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
-index 6aa6152e00337..0874d3684fbce 100644
---- a/drivers/hwmon/adt7470.c
-+++ b/drivers/hwmon/adt7470.c
-@@ -509,7 +509,7 @@ static ssize_t auto_update_interval_store(struct device *dev,
- 	if (kstrtol(buf, 10, &temp))
- 		return -EINVAL;
+--- a/kernel/auditfilter.c
++++ b/kernel/auditfilter.c
+@@ -1036,6 +1036,10 @@ int audit_del_rule(struct audit_entry *e
+ 		goto out;
+ 	}
  
--	temp = clamp_val(temp, 0, 60000);
-+	temp = clamp_val(temp, 500, 60000);
++	list_del_rcu(&e->list);
++	list_del(&e->rule.list);
++	synchronize_rcu();
++
+ 	if (e->rule.watch)
+ 		audit_remove_watch_rule(&e->rule);
  
- 	mutex_lock(&data->lock);
- 	data->auto_update_interval = temp;
--- 
-2.53.0
-
+@@ -1053,8 +1057,6 @@ int audit_del_rule(struct audit_entry *e
+ 		audit_signals--;
+ #endif
+ 
+-	list_del_rcu(&e->list);
+-	list_del(&e->rule.list);
+ 	call_rcu(&e->rcu, audit_free_rule_rcu);
+ 
+ out:
 
 
