@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866CA43BDBB;
-	Mon, 17 Aug 2026 13:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B933D3339;
+	Mon, 17 Aug 2026 13:48:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974490; cv=none; b=Lv9UfwI6PxNf4fXxjUr6N+LoSrZEwqnEULkkvODU4BU+JRs5kfqOkLT4HPIYrcUL+ALEpBOLEkIfrirGXqViiHPpC/YuKtJZCgwLeHyop+YIMhkBh4PseZn5FvqmWbZoyud14T8vkFayMMD42UCEVK2rFB6rZPZRD+PUf5xad+I=
+	t=1786974493; cv=none; b=EQ+fjmIGIkvJUjTXUMQ56UvIMxg9KMRURiakAI2r5PTGm5olG3DG6ghXEr57rRWiQk6g9gAf5XT8oSosin0BqoTvz9cXQmzj/AaobuRgKFbBt3OxDTMS+TK8+Y4fVS493p3kj02JF8oF9esIY8/gZDqATvvUYrMCoOb/HhRGckY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974490; c=relaxed/simple;
-	bh=TuOJLSjl3z0d9u+vEw9cTZDw8AfgVU2pZwgH5BORfIU=;
+	s=arc-20240116; t=1786974493; c=relaxed/simple;
+	bh=EpqOEKHiQSrbt+kmASwM+ZvdzTI/qCMMiqnUsDbU3DM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rbk0UIms9++tAZv7L7WLsLS6Qjpd4+oK9NpkpionRBBj15kzdmymQBHo5adz/Ohp2GU60H36QL7vrMvby6Y61mgneP4p/S+62INtaxTTDksyiWsyrzIXY3BCNZMjRH9moge+eZs4GDHDTlA7pei9abhqHvwjR9xC4vQ/RcDwmtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khyWecva; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VIpAzXWhlGqEBkTg1/mlJXZTsWmZeeTgsIM0n0jT/o5l9hB54LTQAswE7Xft/zFxA1kuwWUBElkBn/XPB8LVDg026dfyyZccA2zXf2kUBtJHVunDUCFeYW2K4HVLxVVnXXSGZNA4CMYQyBmWOu0QmII90qyoM7tdWWs3dCaHp2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4AGgvd9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khyWecva"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A387E1F000E9;
-	Mon, 17 Aug 2026 13:48:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4AGgvd9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86CB51F00ADF;
+	Mon, 17 Aug 2026 13:48:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974486;
-	bh=/A9dr72SmO5GWKRUdcCNdV+rzcn3w13MNTK53IR3qGA=;
+	s=korg; t=1786974489;
+	bh=kZwHskE7t7mOmj/FLZd51eZtQzPC14t/8KrYyF8bPSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=khyWecva5zd2V4iOWfZ2fnRBxXcVZqpSqSsaOlmgdptH5E57Jxf603Tf1ULXQvdGS
-	 XauBfFzugPo8OTBWIT3ksjLK9XHLKdudtDfwcaFFgIBcvRbxLpmcWiTwp/owv6BT6j
-	 affhKHyAx5YzmjUSeC+2lc+qgQRe7y2GtVs3UNWE=
+	b=L4AGgvd9tfqz5G59pU3Q9oLE+R7dmb5Sd66KXieKdLSVjuhV5OwhsP94cIeN9ByJg
+	 EIFpdIcFAX6Y1Vbt9KkFyetEp0B6xJXiZSlFentTaqNWr6UVc38d2Iv0u4p7PUu3vI
+	 JUYotXwE7+E0O+VCtyfwR5gOh7QVdLAjyAXVeSak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunjung Ko <hj351016@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 223/271] net/sched: act_gact, act_police: range check the fallback control action
-Date: Mon, 17 Aug 2026 15:32:28 +0200
-Message-ID: <20260817132545.932747109@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.1 224/271] ovl: dont warn when the mount is completed from another user namespace
+Date: Mon, 17 Aug 2026 15:32:29 +0200
+Message-ID: <20260817132545.975712094@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -52,124 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunjung Ko <hj351016@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 883b56ae58fe657d8497806c7059646e9ba6dbd0 upstream.
+commit 63981fc786daaa626cb14d9be1406f674d79f98f upstream.
 
-tcf_action_check_ctrlact() range checks the primary control action:
+fsopen() records the caller's user namespace in fc->user_ns and hands
+back an ordinary file descriptor. Nothing ties the task that calls
+fsconfig(FSCONFIG_CMD_CREATE) to the task that created the context. The
+fd is inherited across fork() and exec() and it can be passed over a
+unix socket.
 
-	if (!opcode)
-		ret = action > TC_ACT_VALUE_MAX ? -EINVAL : 0;
+Completing a context from another user namespace is allowed on purpose.
+vfs_cmd_create() authorizes the create with mount_capable(), which for
+FS_USERNS_MOUNT checks ns_capable(fc->user_ns, CAP_SYS_ADMIN), and that
+succeeds for a task holding CAP_SYS_ADMIN in an ancestor of fc->user_ns.
+So an unprivileged task can reach the WARN_ON() in ovl_fill_super():
+create a user and a mount namespace in a child, call fsopen("overlay")
+there, send the fscontext fd to the parent and let the parent issue
+FSCONFIG_CMD_CREATE. Both namespaces come from a plain unshare(1) and no
+capability is needed anywhere:
 
-TC_ACT_VALUE_MAX is TC_ACT_TRAP, so kernel-internal verdicts above it
-cannot be set that way. But act_gact and act_police each carry a second,
-independent control action supplied by user space that never reaches that
-helper - TCA_GACT_PROB.paction and TCA_POLICE_RESULT. Both only reject
-TC_ACT_GOTO_CHAIN, so any other value is stored verbatim and returned
-verbatim from the action.
+  WARNING: fs/overlayfs/super.c:1551 at ovl_fill_super+0x7b9/0x1e20 [overlay]
+  CPU: 3 UID: 1000 PID: 3243376 Comm: fswarn
+  Call Trace:
+   get_tree_nodev+0x71/0xa0
+   ovl_get_tree+0x15/0x20 [overlay]
+   vfs_get_tree+0x2a/0x100
+   vfs_cmd_create+0x60/0xf0
+   __do_sys_fsconfig+0x4b2/0x500
 
-In particular user space can store TC_ACT_CONSUMED, which is
-TC_ACT_VALUE_MAX + 1 and is deliberately not part of the UAPI value
-range. That verdict tells every caller the action took ownership of the
-skb, so nobody frees it: sch_handle_ingress(), sch_handle_egress() and
-tcf_qevent_handle() all deliberately skip the free for it. The result is
-one leaked sk_buff plus its data buffer per packet traversing the filter,
-unbounded, for all traffic on the chain including kernel-generated
-packets.
+The child needs the mount namespace because fsopen() itself gates on
+may_mount(), which asks for CAP_SYS_ADMIN in the user namespace owning
+the caller's mount namespace. fsconfig() doesn't repeat that check.
 
-Both are trivially deterministic. act_gact clamps tcfg_pval to >= 1, so
-with pval = 1 gact_determ() returns the fallback for every packet.
-act_police has no mandatory rate, so rate = 0 leaves tcfp_mtu = ~0 and
-tcf_police_mtu_check() always passes.
+It is a WARN_ON() and not a WARN_ON_ONCE(), so the condition can be
+raised in a loop to taint the kernel and flood the log, and it panics a
+kernel booted with panic_on_warn.
 
-TC_ACT_CONSUMED was added by commit 720f22fed81b ("net: sched: refactor
-reinsert action"), after both goto-chain guards were written:
-commit 9469f375ab09 ("net/sched: act_gact: disallow 'goto chain' on
-fallback control action") and
-commit c08f5ed5d625 ("net/sched: act_police: disallow 'goto chain' on
-fallback control action"). Neither guard was widened when the new
-verdict appeared.
+Keep refusing the mount and stop warning about it. ovl_parse_param()
+already spells a user namespace check this way for Opt_override_creds.
 
-Factor the existing range test out of tcf_action_check_ctrlact() as
-tcf_action_valid() and apply it to both fallbacks. The helper cannot call
-tcf_action_check_ctrlact() directly because that also allocates a
-goto_chain, which is exactly what these two sites must not do.
-
-Reproduced on v7.2-rc6: kmemleak reports one leaked 232-byte
-skbuff_head_cache object plus its 704-byte data buffer per packet. With
-this patch both configurations are rejected with -EINVAL and kmemleak
-reports none.
-
-Fixes: 720f22fed81b ("net: sched: refactor reinsert action")
-Cc: stable@vger.kernel.org # v5.3+
-Signed-off-by: Hyunjung Ko <hj351016@gmail.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20260806101252.809593-1-hj351016@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1784fbc2ed9c ("ovl: port to new mount api")
+Cc: stable@vger.kernel.org # v6.5+
+Link: https://patch.msgid.link/20260802-work-fill_super-warn-v1-1-4e987911a39a@kernel.org
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/act_api.h  |   19 +++++++++++++++++++
- net/sched/act_gact.c   |    5 +++++
- net/sched/act_police.c |    6 ++++++
- 3 files changed, 30 insertions(+)
+ fs/overlayfs/super.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/include/net/act_api.h
-+++ b/include/net/act_api.h
-@@ -270,6 +270,25 @@ int tcf_action_check_ctrlact(int action,
- struct tcf_chain *tcf_action_set_ctrlact(struct tc_action *a, int action,
- 					 struct tcf_chain *newchain);
+--- a/fs/overlayfs/super.c
++++ b/fs/overlayfs/super.c
+@@ -1544,7 +1544,8 @@ int ovl_fill_super(struct super_block *s
+ 	int err;
  
-+/* Range check for a control action supplied by user space.
-+ *
-+ * This is the same test tcf_action_check_ctrlact() applies to the primary
-+ * control action, factored out for the *fallback* control actions
-+ * (act_gact's TCA_GACT_PROB.paction and act_police's TCA_POLICE_RESULT),
-+ * which must not reach tcf_action_check_ctrlact() because they have no
-+ * goto_chain to allocate.  Without it, user space can store kernel-internal
-+ * verdicts such as TC_ACT_CONSUMED, which is TC_ACT_VALUE_MAX + 1 and is
-+ * deliberately not part of the UAPI value range.
-+ */
-+static inline bool tcf_action_valid(int action)
-+{
-+	int opcode = TC_ACT_EXT_OPCODE(action);
-+
-+	if (!opcode)
-+		return action <= TC_ACT_VALUE_MAX;
-+	return opcode <= TC_ACT_EXT_OPCODE_MAX || action == TC_ACT_UNSPEC;
-+}
-+
- #ifdef CONFIG_INET
- DECLARE_STATIC_KEY_FALSE(tcf_frag_xmit_count);
- #endif
---- a/net/sched/act_gact.c
-+++ b/net/sched/act_gact.c
-@@ -89,6 +89,11 @@ static int tcf_gact_init(struct net *net
- 		p_parm = nla_data(tb[TCA_GACT_PROB]);
- 		if (p_parm->ptype >= MAX_RAND)
- 			return -EINVAL;
-+		if (!tcf_action_valid(p_parm->paction)) {
-+			NL_SET_ERR_MSG(extack,
-+				       "invalid fallback control action");
-+			return -EINVAL;
-+		}
- 		if (TC_ACT_EXT_CMP(p_parm->paction, TC_ACT_GOTO_CHAIN)) {
- 			NL_SET_ERR_MSG(extack,
- 				       "goto chain not allowed on fallback");
---- a/net/sched/act_police.c
-+++ b/net/sched/act_police.c
-@@ -128,6 +128,12 @@ static int tcf_police_init(struct net *n
+ 	err = -EIO;
+-	if (WARN_ON(fc->user_ns != current_user_ns()))
++	/* The fscontext fd may have been passed to another user namespace. */
++	if (fc->user_ns != current_user_ns())
+ 		goto out_err;
  
- 	if (tb[TCA_POLICE_RESULT]) {
- 		tcfp_result = nla_get_u32(tb[TCA_POLICE_RESULT]);
-+		if (!tcf_action_valid(tcfp_result)) {
-+			NL_SET_ERR_MSG(extack,
-+				       "invalid fallback control action");
-+			err = -EINVAL;
-+			goto failure;
-+		}
- 		if (TC_ACT_EXT_CMP(tcfp_result, TC_ACT_GOTO_CHAIN)) {
- 			NL_SET_ERR_MSG(extack,
- 				       "goto chain not allowed on fallback");
+ 	ovl_set_d_op(sb);
 
 
