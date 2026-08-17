@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764F23D301E;
-	Mon, 17 Aug 2026 14:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C7C39B96A;
+	Mon, 17 Aug 2026 14:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977566; cv=none; b=Mr7Ib54KW/GjmiwfHahUg43ekbPGiX+RdDrWwXryp+nHaVK9E5IC434RwczIQGp5+rIaJVG9JoMRg+Bzh7AnS93U+/PB60VUouO/bG/552VP0V80cH6jrjSPh9MR0Dw6QkasFHmMD8uDB5EKLd+GrKwyP+7JnlbY6rHCmsrKmOk=
+	t=1786977569; cv=none; b=M7Z2MGmxxMkbLI5ZtzyY171qNhSczJy61r56mR/hyUbehLa2bdYEcJUrJSrZfxq/Ove1NQFJmhvDsFR8MpgrEm2BDKRNJCLO39aAvQqEAb/DMuXDkymNUuZNHcFyebZDO+msK4fsyNQVIUb+XQBIP2aJ7fjNW1x+cAfe72uucFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977566; c=relaxed/simple;
-	bh=tdYh15PQQ9GXMRgvDLMObYodRgSiEdb+LwUfQKzS5to=;
+	s=arc-20240116; t=1786977569; c=relaxed/simple;
+	bh=LWr9WDjkQJHwK65IrlE78AobuwzKHXpkeikWaIwEB2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LhS3hAL9qnQrRzLgEQLxYi44bt9p6vAGnS3NS3sMw5anwRh2aTDN7UrGklduTW8pZ2aoyH7ZmfwkLVJNDsKNPNLolYiPRhYOsozgRGJ3GreBJFewoOCMZSetlnloTIfdHnKz36H3gNPSZFTRwAq/A3KjFsa/MdnX3I6wgkqup/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GtiSVovw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=txImyvexIsxJiUyibwah9Rs7Ydyy0vJd77LGwiT0sMHDw5mgDzDBlgJDK/10W3z934unTqbFd6p/0viin2nMUncDpmHC/pWlq0LoPzWOuUn/cBidibcRxWsydS6qrSUf9Nt5wEthwXFLkTQqZxs3gMV7xbtJK8n2o4zd4pQIVsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HB+PYbag; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GtiSVovw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA34B1F000E9;
-	Mon, 17 Aug 2026 14:39:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HB+PYbag"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97AA11F000E9;
+	Mon, 17 Aug 2026 14:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977565;
-	bh=7icMxTyOMw9abxFHhgKs/4BJYj9x/2+6Ao1QuYXWoZw=;
+	s=korg; t=1786977568;
+	bh=soKBF7fn31EY3mqR3r+8n5thZz+D7lvPIww8eD08+WE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GtiSVovwAhd88yIKq7CPZYNidK6LV7odb1/iPsyF9wEvrUgCHN5xlMDO/XZlbLgLi
-	 zqFexFY6lzhFkfhW3bF7Qg6Kj2pKZu15pkkmMfXnP/MBSFmMfTQew6L4iaHmxqr7xl
-	 FiqcOXk9QhETjgW4laVoUW2iZ2dHVkV1A8Tvi3pM=
+	b=HB+PYbagcGxZk400T4B35J25NadlpI/FyqGDMqDfqNvg3oFG77Gxfa4fOwGd1XetY
+	 KkXwZhPrN1P+wrNCVfmjmPxHz5+ahgTWeCxHQY8K9UH6nj/XSUwUYB/kFtoXXv5LsX
+	 K8NgVAYmDectsOYtGPtnQSphUw1NW/zDKXeZTB2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Sidraya Jayagond <sidraya@linux.ibm.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
+	zdi-disclosures@trendmicro.com,
+	Santosh Kalluri <santosh.kalluri129@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 373/456] net/smc: fix qentry overwrite for CONFIRM_LINK and ADD_LINK_CONT in smc_llc_event_handler()
-Date: Mon, 17 Aug 2026 15:32:43 +0200
-Message-ID: <20260817132554.077526355@linuxfoundation.org>
+Subject: [PATCH 5.15 374/456] net/sched: cls_route: fix fastmap use-after-free on filter
+Date: Mon, 17 Aug 2026 15:32:44 +0200
+Message-ID: <20260817132554.114466008@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -54,54 +55,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahanta Jambigi <mjambigi@linux.ibm.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 976245094925bab9bc39366b2e9ab44ffcde61d0 ]
+[ Upstream commit 47d7f7051253bdc02b1d245d87e38f16d31a74df ]
 
-The SMC_LLC_CONFIRM_LINK / SMC_LLC_ADD_LINK_CONT branch in
-smc_llc_event_handler() stores an incoming qentry into the local LLC flow
-without first checking whether a qentry is already pending. If a malicious or
-buggy peer sends a second CONFIRM_LINK or ADD_LINK_CONT request while a flow is
-active and flow->qentry is already set, smc_llc_flow_qentry_set() overwrites the
-pointer without freeing the previous allocation, leaking one kmalloc-96 object
-per spurious message.
+The route4 classifier maintains a 16-slot fastmap cache that stores raw
+struct route4_filter pointers indexed by (id, iif). The reader
+(route4_classify) populates this cache via route4_set_fastmap() for every
+classified packet that hits a filter. The writer (route4_delete,
+route4_change) clears the cache via route4_reset_fastmap() before
+RCU-deferred kfree of the filter.
 
-The sibling SMC_LLC_DELETE_LINK branch already has the correct !flow->qentry
-guard. Apply the same guard to the CONFIRM_LINK/ADD_LINK_CONT branch so that a
-duplicate message when qentry is already occupied falls through to break and is
-freed by the kfree(qentry) at the out: label, rather than silently leaking the
-existing allocation.
+This creates a UAF race:
+ 1. Reader walks the RCU-protected bucket chain, finds filter f
+ 2. Writer unlinks f, calls route4_reset_fastmap(), then tcf_queue_work()
+ 3. Reader calls route4_set_fastmap() and writes f into the cache
+    *after* the writer's reset, caching a pointer about to be freed
+ 4. After the RCU grace period, kfree(f) executes
+ 5. Next classified packet on the same (id, iif) tuple hits the stale
+    fastmap entry and reads f->res from freed memory
 
-The response direction (smc_llc_rx_response()) is unaffected: it already guards
-with flow->qentry at the equivalent site and drops duplicate responses
-correctly.
+Reproduced with an mdelay(100) accelerator in route4_set_fastmap() and a
+concurrent add/delete stress test (provided by both zdi and Santosh).
+Both triggered KASAN slab-use-after-free reports in the route4 fastmap
+paths.
 
-Fixes: 0fb0b02bd6fd ("net/smc: adapt SMC client code to use the LLC flow")
-Signed-off-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Reviewed-by: Hidayath Khan <hidayath@linux.ibm.com>
-Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Link: https://patch.msgid.link/20260729130153.970800-1-mjambigi@linux.ibm.com
+Fix:
+Introduce a per-filter boolean dying flag to suppress stale fastmap
+republishing by in-flight readers.
+
+Fixes: 1109c00547fc ("net: sched: RCU cls_route")
+Reported-by: zdi-disclosures@trendmicro.com
+Reported-by: Santosh Kalluri <santosh.kalluri129@gmail.com>
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Tested-by: Santosh Kalluri <santosh.kalluri129@gmail.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260729094411.46257-1-jhs@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_llc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/cls_route.c | 35 ++++++++++++++++++++++++++---------
+ 1 file changed, 26 insertions(+), 9 deletions(-)
 
-diff --git a/net/smc/smc_llc.c b/net/smc/smc_llc.c
-index d5ee961ca72d5..572d02bfd3eda 100644
---- a/net/smc/smc_llc.c
-+++ b/net/smc/smc_llc.c
-@@ -1582,7 +1582,8 @@ static void smc_llc_event_handler(struct smc_llc_qentry *qentry)
- 		return;
- 	case SMC_LLC_CONFIRM_LINK:
- 	case SMC_LLC_ADD_LINK_CONT:
--		if (lgr->llc_flow_lcl.type != SMC_LLC_FLOW_NONE) {
-+		if (lgr->llc_flow_lcl.type != SMC_LLC_FLOW_NONE &&
-+		    !lgr->llc_flow_lcl.qentry) {
- 			/* a flow is waiting for this message */
- 			smc_llc_flow_qentry_set(&lgr->llc_flow_lcl, qentry);
- 			wake_up(&lgr->llc_msg_waiter);
+diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
+index 194468d0355a1..1ce483fd30379 100644
+--- a/net/sched/cls_route.c
++++ b/net/sched/cls_route.c
+@@ -51,6 +51,7 @@ struct route4_filter {
+ 	struct tcf_result	res;
+ 	struct tcf_exts		exts;
+ 	u32			handle;
++	bool			dying;
+ 	struct route4_bucket	*bkt;
+ 	struct tcf_proto	*tp;
+ 	struct rcu_work		rwork;
+@@ -65,9 +66,11 @@ static inline int route4_fastmap_hash(u32 id, int iif)
+ 
+ static DEFINE_SPINLOCK(fastmap_lock);
+ static void
+-route4_reset_fastmap(struct route4_head *head)
++route4_reset_fastmap(struct route4_head *head, struct route4_filter *f)
+ {
+ 	spin_lock_bh(&fastmap_lock);
++	if (f)
++		f->dying = true;
+ 	memset(head->fastmap, 0, sizeof(head->fastmap));
+ 	spin_unlock_bh(&fastmap_lock);
+ }
+@@ -80,9 +83,11 @@ route4_set_fastmap(struct route4_head *head, u32 id, int iif,
+ 
+ 	/* fastmap updates must look atomic to aling id, iff, filter */
+ 	spin_lock_bh(&fastmap_lock);
+-	head->fastmap[h].id = id;
+-	head->fastmap[h].iif = iif;
+-	head->fastmap[h].filter = f;
++	if (f == ROUTE4_FAILURE || !f->dying) {
++		head->fastmap[h].id = id;
++		head->fastmap[h].iif = iif;
++		head->fastmap[h].filter = f;
++	}
+ 	spin_unlock_bh(&fastmap_lock);
+ }
+ 
+@@ -295,6 +300,13 @@ static void route4_destroy(struct tcf_proto *tp, bool rtnl_held,
+ 					next = rtnl_dereference(f->next);
+ 					RCU_INIT_POINTER(b->ht[h2], next);
+ 					tcf_unbind_filter(tp, &f->res);
++					/* Mark the filter dying under fastmap_lock so
++					 * any in-flight reader that still holds it
++					 * will skip the republish in route4_set_fastmap().
++					 */
++					spin_lock_bh(&fastmap_lock);
++					f->dying = true;
++					spin_unlock_bh(&fastmap_lock);
+ 					if (tcf_exts_get_net(&f->exts))
+ 						route4_queue_work(f);
+ 					else
+@@ -305,6 +317,11 @@ static void route4_destroy(struct tcf_proto *tp, bool rtnl_held,
+ 			kfree_rcu(b, rcu);
+ 		}
+ 	}
++
++	/* All filters are unlinked and marked dying, so no in-flight
++	 * reader can republish a stale entry after this reset.
++	 */
++	route4_reset_fastmap(head, NULL);
+ 	kfree_rcu(head, rcu);
+ }
+ 
+@@ -332,11 +349,11 @@ static int route4_delete(struct tcf_proto *tp, void *arg, bool *last,
+ 			/* unlink it */
+ 			RCU_INIT_POINTER(*fp, rtnl_dereference(f->next));
+ 
+-			/* Remove any fastmap lookups that might ref filter
+-			 * notice we unlink'd the filter so we can't get it
+-			 * back in the fastmap.
++			/* Clear any fastmap entries that may ref this filter and
++			 * mark it dying so in-flight readers can't republish it
++			 * after the reset.
+ 			 */
+-			route4_reset_fastmap(head);
++			route4_reset_fastmap(head, f);
+ 
+ 			/* Delete it */
+ 			tcf_unbind_filter(tp, &f->res);
+@@ -551,7 +568,7 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
+ 		}
+ 	}
+ 
+-	route4_reset_fastmap(head);
++	route4_reset_fastmap(head, fold);
+ 	*arg = f;
+ 	if (fold) {
+ 		tcf_unbind_filter(tp, &fold->res);
 -- 
 2.53.0
 
