@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B143C40F734;
-	Mon, 17 Aug 2026 14:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB13C421249;
+	Mon, 17 Aug 2026 14:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977421; cv=none; b=U3IZJcUIQsZ7FYydbW9ZwgaDp472ekluy6l3z0vYOSp6gjPxDU4Vcyv73145dJL4iEkok2QpExYyumiSkIhc1bMZfKP2wey/Esv6lshO1fQE4fdrbz2xWX/Bid5NBMlPI3XgSJI2gUCudPyhodq7uzmKw/rieTROSxzeAY/8VJI=
+	t=1786977424; cv=none; b=GgsFGEfDr/6dY1sYJ4cszbTxMU+4U//tXb5q7q9caSdUnuFhE8q8Owq+amqkvBfohYEhlA1ZkfFb0vVfmWne7dP8A7p8VA5zq7CIjzLpzVY0xKCW1Alq4YTaz5ul+uoP5cid9fYALlT8xUvxf/GA+xCI4zT24JgmlHFzjTZsKmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977421; c=relaxed/simple;
-	bh=v/KraeRBu8a1NBq5VrWgLwtX2H8N86Xmy7nvory2898=;
+	s=arc-20240116; t=1786977424; c=relaxed/simple;
+	bh=IKOwVOEMr/kBmcMXgQZmzoSSJkHExIv36cQSkHUFRiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nZD2CX/XbOO19vCRFftuGRyfjtkYix11lQnfGY0WFc+8qzYNogcGYHKLaj5VBr8yAc7obwycZdGlS05du2EAsQ/1sU06gykNRPeiU7jF5xUPbdZwpXj2VF0OzQ8eRmmYm7xiUe7M4M4XL4yDcnMtawUWWwYOVbYS/FVtgBMY3jU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jjA4Eu/q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JIEebFtbQoAcRU3JzpvuXLQx8ec5ET1+kv+t13SjfODe51azqMkFz1p8c01xHYTbSfb5Lc+ork5hWGYat7rIrYyiNwm0eKBnOTt1YzaqfoyNW37Bu1uH0KrnqqBc7G3ZbTkZKZ1cy1uKORyl+DQVGkfFADAe2fJl0QfY5vD00/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=so5/NThV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jjA4Eu/q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13A541F000E9;
-	Mon, 17 Aug 2026 14:36:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="so5/NThV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F791F000E9;
+	Mon, 17 Aug 2026 14:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977420;
-	bh=kNlqk9CJYdhLbbAlg69GhxFkXaBt6NyWL/EdYiQbzT0=;
+	s=korg; t=1786977423;
+	bh=XZCT7iN5g7a680IC6lSGMRnXbe3JkvF+8ZhfglQ46PE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jjA4Eu/qz0iPL5YwtpuY/aAXkdC0sPZ0sF/X07uzal+LmtYY1Khp5u33W0WfTCCn1
-	 hg2NqIJW3k/Qh4QU9Q7jSTKMGOBx/FcXXKsEmAyT7UI/+6pD6hJPyeWQbc8Sx7Hyzq
-	 MH2yvu0MeX3YwpG9b77xNzZmK1GxVEu8Da0D7N60=
+	b=so5/NThVdT66kos9VdBWy1thNqOuDrxyawKR8pel/1trppU4g7OuFfFfceZ1BhG/P
+	 EAklMko9FQMRym0gWSa+fMdySg+NMZf243b15KCzPXvlb+10sOClIqi/7dXBTAPLjD
+	 d8DWL9gC25kLRr8KiiU8FEdYky7LwyG9P3cChTGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 324/456] vxlan: unclone skb head before modifying eth header in route_shortcircuit()
-Date: Mon, 17 Aug 2026 15:31:54 +0200
-Message-ID: <20260817132552.345222104@linuxfoundation.org>
+Subject: [PATCH 5.15 325/456] vxlan: use neigh_ha_snapshot() in route_shortcircuit()
+Date: Mon, 17 Aug 2026 15:31:55 +0200
+Message-ID: <20260817132552.379103770@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,43 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-commit 760d36e737f2b3867762f42af36c663f55babcc4 upstream.
+commit 8eca411347e1d38964f9ed2c8d3b6ab0e7e4473d upstream.
 
-When route_shortcircuit() performs L3 short-circuit routing, it modifies
-the Ethernet header of the skb in-place:
-    memcpy(eth_hdr(skb)->h_source, eth_hdr(skb)->h_dest, dev->addr_len);
-    memcpy(eth_hdr(skb)->h_dest, n->ha, dev->addr_len);
+The neighbour hardware address n->ha can be updated asynchronously by the
+neighbour subsystem, protected by n->ha_lock seqlock. Reading n->ha without
+holding the seqlock loop can lead to torn reads or reading a partially updated
+MAC address.
 
-If the incoming skb is cloned (for example by packet sockets, tcpdump, or
-dev_queue_xmit), modifying the Ethernet header without uncloning can corrupt
-the packet header for other readers holding a reference to the cloned skb.
+Use neigh_ha_snapshot() in route_shortcircuit() to safely copy n->ha under
+read_seqbegin()/read_seqretry() lock protection before using it.
 
-Ensure the skb header is writable and unshared by calling skb_cow_head(skb, 0)
-prior to updating the Ethernet header. If skb_cow_head() fails, abort short-circuiting
-and return false to allow standard packet processing fallback.
+Note that arp_reduce() and neigh_reduce() seem to have the same issue
+left for future patches.
 
 Fixes: e4f67addf158 ("add DOVE extensions for VXLAN")
 Cc: stable@vger.kernel.org
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260723144249.759100-3-edumazet@google.com
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20260723144249.759100-4-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vxlan/vxlan_core.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/vxlan/vxlan_core.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 --- a/drivers/net/vxlan/vxlan_core.c
 +++ b/drivers/net/vxlan/vxlan_core.c
-@@ -2292,6 +2292,10 @@ static bool route_shortcircuit(struct ne
+@@ -2288,9 +2288,11 @@ static bool route_shortcircuit(struct ne
+ 	}
  
- 		diff = !ether_addr_equal(eth_hdr(skb)->h_dest, n->ha);
+ 	if (n) {
++		u8 haddr[ETH_ALEN];
+ 		bool diff;
+ 
+-		diff = !ether_addr_equal(eth_hdr(skb)->h_dest, n->ha);
++		neigh_ha_snapshot(haddr, n, dev);
++		diff = !ether_addr_equal_unaligned(eth_hdr(skb)->h_dest, haddr);
  		if (diff) {
-+			if (skb_cow_head(skb, 0)) {
-+				neigh_release(n);
-+				return false;
-+			}
+ 			if (skb_cow_head(skb, 0)) {
+ 				neigh_release(n);
+@@ -2298,7 +2300,7 @@ static bool route_shortcircuit(struct ne
+ 			}
  			memcpy(eth_hdr(skb)->h_source, eth_hdr(skb)->h_dest,
  				dev->addr_len);
- 			memcpy(eth_hdr(skb)->h_dest, n->ha, dev->addr_len);
+-			memcpy(eth_hdr(skb)->h_dest, n->ha, dev->addr_len);
++			memcpy(eth_hdr(skb)->h_dest, haddr, dev->addr_len);
+ 		}
+ 		neigh_release(n);
+ 		return diff;
 
 
