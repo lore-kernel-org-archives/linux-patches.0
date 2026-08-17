@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E694477F1;
-	Mon, 17 Aug 2026 15:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18DA4457C5;
+	Mon, 17 Aug 2026 15:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980321; cv=none; b=WlvWzCsAzUlH6VKoErSK5jx6pNxzqbH3P/pUP292RiNbCAPclu6vE2uLKDBxM0o3nX9yoXhe+GMOMWNy/xF72gEhvGVh0uE3I9ojZ+AtKodbMY5D+kVgNY3MXQ686Cii6Lzo/vK/+6O7E37dis3xb2cBBL1GVCiB6L8kL6Lhw4c=
+	t=1786980324; cv=none; b=iKM9yRZl5vYzYvfUmB9Pzt258VQfv99vJ2Og/cClVENBYAxWueAsjD/WqcuUk+FZr4R1T47EpYalut3AMKXUSuhmDbctc/hNDqfPpwyIhqngesUyT6Z9DMy+sHordCTSLpmg3fxdIkn6IVy6wv1vjB1Ks8pulu7mr1geHBdASpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980321; c=relaxed/simple;
-	bh=gAYJt4XRnQBEWtc6Wi2h4ODpSpr/T+Wq3whwuVUfKaE=;
+	s=arc-20240116; t=1786980324; c=relaxed/simple;
+	bh=Zn4627DGg2Mk0+Ywmfznaves0rPcQzJQNSnZKmpZf54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sb7OcUf6Sm8dEgN1r0jtVTsro5ttJQIoiUhSrTl+YLphiH7dqeB91DVBOv+z1p5wfvToHhYfktbd4vK0xJ8XKQLMSEESYLzzhmqEUp5ojttJFuY3DbA5UVkDLDXtowcAp/M2aLj5/cjLKrfQcquKIM75OVnWSjTWqgb2xnYkKac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RzkJ/WWo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CuPV2TMOETYdPcLSKSSVfR8VGt6YSerXlDjFoAbnS0aD2yxxkub7q6f1L6/Z45Ja7pqICN910PBE1fza4ELmpRNN8kLf/esret8cdpvd4Mpib4samHoSZnITNlxwblmN7/hYLiGfJIyQB/QYuFFBWI601zIViP4ePdD3RwxSb6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eUSVPlz8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RzkJ/WWo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DB81F000E9;
-	Mon, 17 Aug 2026 15:25:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eUSVPlz8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42DB51F000E9;
+	Mon, 17 Aug 2026 15:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980319;
-	bh=7UXsuMfYD8uAuVcX9quXzZEs3931j8JCdE3fH2OjpKE=;
+	s=korg; t=1786980322;
+	bh=y8DQhgfMp9A1W8NzhLvmOFHLLmZ/T1iFuxaFTLUfajA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RzkJ/WWoYnDkCHpPiiJDv5IFjF5hVM8jDcBMdi1JtGMNiRd1BGgSMVNI5t6bn1ITa
-	 elsvsOLB3dHDwOrpaJuR9HJiuO+7nE9RVf7L6LZmwsvS+rKeIag0R0RaxHtgZ3ygl2
-	 zgLKzUNNr6U+ww+lQDOYylxFmuCmVufznIR3SZeM=
+	b=eUSVPlz80to5HriCIxExPp2UfH/ZZzsJSGRoD7+mwE+pUzGYOvIVUHrVR80P3bdD8
+	 fxpo94qdZayCRKSEI/qP0UK3VwU+9NIB2xTtmHjFt+vw4SQr5dTDxHsZ/ZWZ2uC7mJ
+	 +RfP6uSryzIHCIv/CReKAI8ACAiS13Se+1EYcdBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 493/609] ipvs: avoid out-of-bounds write in ip_vs_nat_icmp
-Date: Mon, 17 Aug 2026 15:33:09 +0200
-Message-ID: <20260817132600.406561521@linuxfoundation.org>
+Subject: [PATCH 6.1 484/609] Bluetooth: 6lowpan: Fix using chan->conn as indication to no remote netdev
+Date: Mon, 17 Aug 2026 15:33:00 +0200
+Message-ID: <20260817132600.126038296@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,257 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 646922a0379496154e8c8faca4f8e2fd9100cacc ]
+[ Upstream commit d38eaf611839b85ade3dd3db309dbc8aaaaf0095 ]
 
-Sashiko warns that local attacker can modify the packet
-while it is processed by IPVS. Some places read the
-IP ihl field multiple times which can cause out-of-bounds
-access. One such place is ip_vs_nat_icmp where we
-can write after the validated area.
+b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding
+conn ref") don't reset the chan->conn to NULL anymore making the bt#
+netdev not be remove once the last l2cap_chan_del is removed.
 
-Fix it by providing ciph argument just like it is done for
-IPv6 and use ciph->len as offset to the embedded transport
-header.
+Instead of restoring the original behavior this remove the logic of
+keeping the interface after the last channel is removed because it
+never worked as intended and the l2cap_chan_del always detach its
+l2cap_conn which results in always removing the channel anyway.
 
-Modify some IPv4 header checks by reading the ihl field
-only once.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://sashiko.dev/#/patchset/20260722101517.36313-1-ja%40ssi.bg
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: b66774b48dd9 ("Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_vs.h             |  2 +-
- net/netfilter/ipvs/ip_vs_core.c | 67 +++++++++++++++++----------------
- net/netfilter/ipvs/ip_vs_xmit.c |  2 +-
- 3 files changed, 36 insertions(+), 35 deletions(-)
+ net/bluetooth/6lowpan.c | 18 +++---------------
+ 1 file changed, 3 insertions(+), 15 deletions(-)
 
-diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
-index 344f0082d3041..876852c2d37f5 100644
---- a/include/net/ip_vs.h
-+++ b/include/net/ip_vs.h
-@@ -1577,7 +1577,7 @@ static inline char ip_vs_fwd_tag(struct ip_vs_conn *cp)
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index e2196cf4f6f70..723ead2c04f16 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -781,20 +781,10 @@ static void chan_close_cb(struct l2cap_chan *chan)
+ 	struct lowpan_btle_dev *dev = NULL;
+ 	struct lowpan_peer *peer;
+ 	int err = -ENOENT;
+-	bool last = false, remove = true;
++	bool last = false;
  
- void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 		    struct ip_vs_conn *cp, int dir, unsigned int toff,
--		    bool has_ports);
-+		    bool has_ports, struct ip_vs_iphdr *ciph);
+ 	BT_DBG("chan %p conn %p", chan, chan->conn);
  
- #ifdef CONFIG_IP_VS_IPV6
- void ip_vs_nat_icmp_v6(struct sk_buff *skb, struct ip_vs_protocol *pp,
-diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
-index 27c096b070774..7157ea5abaefa 100644
---- a/net/netfilter/ipvs/ip_vs_core.c
-+++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -747,28 +747,27 @@ static int ip_vs_route_me_harder(struct netns_ipvs *ipvs, int af,
-  */
- void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 		    struct ip_vs_conn *cp, int inout, unsigned int toff,
--		    bool has_ports)
-+		    bool has_ports, struct ip_vs_iphdr *ciph)
- {
- 	struct iphdr *iph	 = ip_hdr(skb);
- 	struct icmphdr *icmph	 = (struct icmphdr *)(skb->data + toff);
--	struct iphdr *ciph	 = (struct iphdr *)(icmph + 1);
--	unsigned int coff __maybe_unused = toff + sizeof(struct icmphdr);
-+	struct iphdr *cih	 = (struct iphdr *)(icmph + 1);
+-	if (chan->conn && chan->conn->hcon) {
+-		if (!is_bt_6lowpan(chan->conn->hcon))
+-			return;
+-
+-		/* If conn is set, then the netdev is also there and we should
+-		 * not remove it.
+-		 */
+-		remove = false;
+-	}
+-
+ 	spin_lock(&devices_lock);
  
- 	if (inout) {
- 		iph->saddr = cp->vaddr.ip;
- 		ip_send_check(iph);
--		ciph->daddr = cp->vaddr.ip;
--		ip_send_check(ciph);
-+		cih->daddr = cp->vaddr.ip;
-+		ip_send_check(cih);
+ 	list_for_each_entry_rcu(entry, &bt_6lowpan_devices, list) {
+@@ -821,10 +811,8 @@ static void chan_close_cb(struct l2cap_chan *chan)
+ 
+ 		ifdown(dev->netdev);
+ 
+-		if (remove) {
+-			INIT_WORK(&entry->delete_netdev, delete_netdev);
+-			schedule_work(&entry->delete_netdev);
+-		}
++		INIT_WORK(&entry->delete_netdev, delete_netdev);
++		schedule_work(&entry->delete_netdev);
  	} else {
- 		iph->daddr = cp->daddr.ip;
- 		ip_send_check(iph);
--		ciph->saddr = cp->daddr.ip;
--		ip_send_check(ciph);
-+		cih->saddr = cp->daddr.ip;
-+		ip_send_check(cih);
+ 		spin_unlock(&devices_lock);
  	}
- 
- 	/* the TCP/UDP/SCTP port */
- 	if (has_ports) {
--		__be16 *ports = (void *)ciph + ciph->ihl*4;
-+		__be16 *ports = (void *)(skb->data + ciph->len);
- 
- 		if (inout)
- 			ports[1] = cp->vport;
-@@ -782,10 +781,10 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 	skb->ip_summed = CHECKSUM_UNNECESSARY;
- 
- 	if (inout)
--		IP_VS_DBG_PKT(11, AF_INET, pp, skb, coff,
-+		IP_VS_DBG_PKT(11, AF_INET, pp, skb, ciph->off,
- 			      "Forwarding altered outgoing ICMP");
- 	else
--		IP_VS_DBG_PKT(11, AF_INET, pp, skb, coff,
-+		IP_VS_DBG_PKT(11, AF_INET, pp, skb, ciph->off,
- 			      "Forwarding altered incoming ICMP");
- }
- 
-@@ -878,7 +877,7 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
- 		ip_vs_nat_icmp_v6(skb, pp, cp, 1, toff, has_ports, ciph);
- 	else
- #endif
--		ip_vs_nat_icmp(skb, pp, cp, 1, toff, has_ports);
-+		ip_vs_nat_icmp(skb, pp, cp, 1, toff, has_ports, ciph);
- 
- 	if (ip_vs_route_me_harder(cp->ipvs, af, skb, hooknum))
- 		goto out;
-@@ -914,7 +913,7 @@ static int ip_vs_out_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb,
- 	struct ip_vs_iphdr ciph;
- 	struct ip_vs_conn *cp;
- 	struct ip_vs_protocol *pp;
--	unsigned int offset, ihl;
-+	unsigned int offset;
- 	union nf_inet_addr snet;
- 
- 	*related = 1;
-@@ -927,7 +926,6 @@ static int ip_vs_out_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb,
- 			return NF_ACCEPT;
- 	}
- 
--	ihl = ipvsh->len;
- 	offset = ipvsh->len;
- 	ic = skb_header_pointer(skb, offset, sizeof(_icmph), &_icmph);
- 	if (ic == NULL)
-@@ -953,11 +951,15 @@ static int ip_vs_out_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb,
- 
- 	/* Now find the contained IP header */
- 	offset += sizeof(_icmph);
-+	if (!ip_vs_fill_iph_skb_icmp(AF_INET, skb, offset, true, &ciph))
-+		return NF_ACCEPT; /* The packet looks wrong, ignore */
-+
- 	cih = skb_header_pointer(skb, offset, sizeof(_ciph), &_ciph);
--	if (!(cih && cih->version == 4 && cih->ihl >= 5))
-+	if (!(cih && cih->version == 4 &&
-+	      ciph.len - ciph.off >= sizeof(struct iphdr)))
- 		return NF_ACCEPT; /* The packet looks wrong, ignore */
- 
--	pp = ip_vs_proto_get(cih->protocol);
-+	pp = ip_vs_proto_get(ciph.protocol);
- 	if (!pp)
- 		return NF_ACCEPT;
- 
-@@ -968,8 +970,6 @@ static int ip_vs_out_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb,
- 	IP_VS_DBG_PKT(11, AF_INET, pp, skb, offset,
- 		      "Checking outgoing ICMP for");
- 
--	ip_vs_fill_iph_skb_icmp(AF_INET, skb, offset, true, &ciph);
--
- 	/* The embedded headers contain source and dest in reverse order */
- 	cp = INDIRECT_CALL_1(pp->conn_out_get, ip_vs_conn_out_get_proto,
- 			     ipvs, AF_INET, skb, &ciph);
-@@ -977,8 +977,8 @@ static int ip_vs_out_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb,
- 		return NF_ACCEPT;
- 
- 	snet.ip = ipvsh->saddr.ip;
--	return handle_response_icmp(AF_INET, skb, &snet, cp, pp, &ciph, ihl,
--				    hooknum);
-+	return handle_response_icmp(AF_INET, skb, &snet, cp, pp, &ciph,
-+				    ipvsh->len, hooknum);
- }
- 
- #ifdef CONFIG_IP_VS_IPV6
-@@ -1630,10 +1630,12 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 	/* Now find the contained IP header */
- 	offset += sizeof(_icmph);
- 	cih = skb_header_pointer(skb, offset, sizeof(_ciph), &_ciph);
--	if (!(cih && cih->version == 4 && cih->ihl >= 5))
-+	if (!cih)
- 		return NF_ACCEPT; /* The packet looks wrong, ignore */
--	raddr = (union nf_inet_addr *)&cih->daddr;
- 	hlen_ipip = cih->ihl * 4;
-+	if (!(cih->version == 4 && hlen_ipip >= sizeof(struct iphdr)))
-+		return NF_ACCEPT; /* The packet looks wrong, ignore */
-+	raddr = (union nf_inet_addr *)&cih->daddr;
- 
- 	/* Special case for errors for IPIP/UDP/GRE tunnel packets */
- 	tunnel = false;
-@@ -1650,9 +1652,6 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 		if (!dest || dest->tun_type != IP_VS_CONN_F_TUNNEL_TYPE_IPIP)
- 			return NF_ACCEPT;
- 		offset += hlen_ipip;
--		cih = skb_header_pointer(skb, offset, sizeof(_ciph), &_ciph);
--		if (!(cih && cih->version == 4 && cih->ihl >= 5))
--			return NF_ACCEPT; /* The packet looks wrong, ignore */
- 		tunnel = true;
- 	} else if ((cih->protocol == IPPROTO_UDP ||	/* Can be UDP encap */
- 		    cih->protocol == IPPROTO_GRE) &&	/* Can be GRE encap */
-@@ -1677,21 +1676,25 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 			/* Skip IP and UDP/GRE tunnel headers */
- 			offset = offset2 + ulen;
- 			/* Now we should be at the original IP header */
--			cih = skb_header_pointer(skb, offset, sizeof(_ciph),
--						 &_ciph);
--			if (cih && cih->version == 4 && cih->ihl >= 5 &&
--			    iproto == IPPROTO_IPIP)
-+			if (iproto == IPPROTO_IPIP)
- 				tunnel = true;
- 			else
- 				return NF_ACCEPT;
- 		}
- 	}
- 
--	pd = ip_vs_proto_data_get(ipvs, cih->protocol);
-+	if (!ip_vs_fill_iph_skb_icmp(AF_INET, skb, offset, !tunnel, &ciph))
-+		return NF_ACCEPT;
-+	pd = ip_vs_proto_data_get(ipvs, ciph.protocol);
- 	if (!pd)
- 		return NF_ACCEPT;
- 	pp = pd->pp;
- 
-+	cih = skb_header_pointer(skb, offset, sizeof(_ciph), &_ciph);
-+	if (!(cih && cih->version == 4 &&
-+	      ciph.len - ciph.off >= sizeof(struct iphdr)))
-+		return NF_ACCEPT; /* The packet looks wrong, ignore */
-+
- 	/* Is the embedded protocol header present? */
- 	if (unlikely(cih->frag_off & htons(IP_OFFSET) && !pp->dont_defrag))
- 		return NF_ACCEPT;
-@@ -1699,9 +1702,6 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 	IP_VS_DBG_PKT(11, AF_INET, pp, skb, offset,
- 		      "Checking incoming ICMP for");
- 
--	offset2 = offset;
--	ip_vs_fill_iph_skb_icmp(AF_INET, skb, offset, !tunnel, &ciph);
--
- 	/* The embedded headers contain source and dest in reverse order.
- 	 * For IPIP/UDP/GRE tunnel this is error for request, not for reply.
- 	 */
-@@ -1731,11 +1731,12 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 	}
- 
- 	if (tunnel) {
--		unsigned int hlen_orig = cih->ihl * 4;
-+		unsigned int hlen_orig = ciph.len - ciph.off;
- 		__be32 info = ic->un.gateway;
- 		__u8 type = ic->type;
- 		__u8 code = ic->code;
- 
-+		offset2 = offset;
- 		/* Update the MTU */
- 		if (ic->type == ICMP_DEST_UNREACH &&
- 		    ic->code == ICMP_FRAG_NEEDED) {
-diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
-index db2f090e2f8f9..63dd0a3d251f8 100644
---- a/net/netfilter/ipvs/ip_vs_xmit.c
-+++ b/net/netfilter/ipvs/ip_vs_xmit.c
-@@ -1591,7 +1591,7 @@ ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
- 	if (skb_cow(skb, rt->dst.dev->hard_header_len))
- 		goto tx_error;
- 
--	ip_vs_nat_icmp(skb, pp, cp, 0, toff, has_ports);
-+	ip_vs_nat_icmp(skb, pp, cp, 0, toff, has_ports, ciph);
- 
- 	/* Another hack: avoid icmp_send in ip_fragment */
- 	skb->ignore_df = 1;
 -- 
 2.53.0
 
