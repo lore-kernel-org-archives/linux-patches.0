@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6566643DA4E;
-	Mon, 17 Aug 2026 14:57:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420563E5EC0;
+	Mon, 17 Aug 2026 14:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978640; cv=none; b=SjBaRLJcDsCDbY7vNRZDY+rqOTu9Xhrm1TOQzNcl+QzdirAv+3wu3p8rQ3ZX5CVf1IFzc6ryLn8rO7NDNZ4ESmWx0NVytF5p732fN2rP78m+bAdyfW0m4AF93Rkx7nnk5zA/bMF02P3uByPvWhfHNIXAVCkFfOK2xwBHyyd7x7U=
+	t=1786978643; cv=none; b=SC22+xc69Hue2ISm37Cev9lojQve2NwgXl6KJVJ+zEEEV5YOGBjwUbVvqRiA3qAvOoYJprjWFtsfOZbWN77I3W4AHTHM6wJ7kPgikrDYivQbubZ7eVW+aiY9tHxkrq1lWNgwlUKVNG5Y/PIo96aHuq1FA1k8tiviEz8I89o7nYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978640; c=relaxed/simple;
-	bh=wpbJwMvIGwwcUfmkwNpMonUigdCH3G2gE46YPHf225k=;
+	s=arc-20240116; t=1786978643; c=relaxed/simple;
+	bh=u+eoO1l79iESZoasfWv/LIPwHjn/kzEeeywN4Gu2H+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eKpfOyCKQCOOyS2U1KA9tjViQGefIu3JTp8k8ny3uqsNRALJxG/5jMh70PnJdjebkSoB4dqDaWVqGs4+n3OqfQvT7fe5a8+lB5qiSdtest3DRLQKtRtl8CwU5wW599L0WdS8kk1yIyJfbiFITP6MfwqkLzjOucRE4sXnP5OROYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IttGOL+w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fULeHVl2VlyV/TBi0UF24ml2xebTdGCOOAysbXM5jP0U1+TLhdvLYuEzzjGAl9gq+GjPb86HoVcgS3lSLIBI4u3jQbkjTFWua5BMA0zv1yJkuGR5XwxeImp8Xc2XHDL4tqCKgGV1C0Cnm7ScjyVeVLHMujRv7UpcGpr/5FTh0rE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHsEvK9E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IttGOL+w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C046B1F000E9;
-	Mon, 17 Aug 2026 14:57:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHsEvK9E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A6571F000E9;
+	Mon, 17 Aug 2026 14:57:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978639;
-	bh=w5QUEBpoW2pw7n8mt+9TV3rIm97xUPZ46aTZv9MHv98=;
+	s=korg; t=1786978642;
+	bh=ayZYsYZbhR+DPT57cGYQbdE1hNWh8Gwh2H1WJFW6F+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IttGOL+wvWRK14UnDD4NwZzcMxQC6hUFMx7NdvAmcMhNF3YHOEyRMN1Hk3IReEKE6
-	 lBmCWHn9oPBGSFp+qbmNx0Ex29W9SwmQKkywX6VKInR+ADGyw/GYBQsL938ZkyENP/
-	 j+XhMi+083qZ+Ofyz2kifgKbLX5kAwmrQd6TCWx8=
+	b=EHsEvK9ECrzORe778GwNt2VycSb+rV22dmGfIlS/MT2NopivxlptznOsy8GbKRG74
+	 kP/uMefvS/xCASokuZ+8v50rQpX7YRHdYyHKp+gx3Bu0dQOpg76Ie0RtYZgCba5HSW
+	 AmicDURdbVtwVB9DF2mjxAMEZLoL2hzyMRhQwCDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>
-Subject: [PATCH 6.6 106/156] staging: rtl8723bs: fix OOB read in WMM_param_handler()
-Date: Mon, 17 Aug 2026 15:34:00 +0200
-Message-ID: <20260817132538.763924544@linuxfoundation.org>
+	Qihang Tang <q.h.hack.winter@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 080/156] packet: use consistent hard_header_len in TX_RING send path
+Date: Mon, 17 Aug 2026 15:33:34 +0200
+Message-ID: <20260817132537.729057558@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -49,53 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Qihang Tang <q.h.hack.winter@gmail.com>
 
-commit ae21407350151bddfd4fea7aa39bd0643c0ca9d3 upstream.
+commit 21b5953e7494c16a42e6cd8cf110e18d13ae4a6b upstream.
 
-WMM_param_handler() copies a fixed-size WMM parameter element out of a
-received information element without checking that the element is long
-enough, causing an out-of-bounds read for a short WMM IE.
+tpacket_snd() reads dev->hard_header_len independently for skb
+allocation and header construction in tpacket_fill_skb(). Concurrent
+netdevice reconfiguration can therefore make the reserved headroom
+smaller than the amount later pushed, or make copylen - hard_header_len
+negative.
 
-The handler reads sizeof(struct WMM_para_element) (18) bytes at
-pIE->data + 6, so it requires pIE->length to be at least 24
-(WLAN_WMM_LEN), but it never validates the length. Two of its three
-callers reach it after matching only the WMM OUI: OnAssocRsp() in
-rtw_mlme_ext.c matches a 6-byte OUI, and join_cmd_hdl() matches a
-4-byte OUI, before calling the handler. A vendor-specific IE carrying
-the WMM OUI but a length between 6 and 23, placed in an association
-response or in the IE blob handed to join_cmd_hdl(), passes the OUI
-check and then makes the memcmp() and memcpy() at pIE->data + 6 read
-past the end of the element. OnAssocRsp() parses a frame received from
-the AP, so this is reachable from a remote peer.
+Snapshot hard_header_len once before processing ring frames and use it
+for the frame limit, headroom allocation, copy length, and skb
+construction. Pass the snapshot to tpacket_fill_skb().
 
-The remaining caller in rtw_wlan_util.c already guards the handler with
-"pIE->length == WLAN_WMM_LEN". Move the equivalent check into the
-handler itself so every caller is covered; the sibling IE handlers in
-the same parsing loop (HT_caps_handler(), HT_info_handler(),
-ERP_IE_handler()) likewise bound their accesses by pIE->length.
+The separate SOCK_DGRAM consistency problem between hard_header_len and
+header_ops->create is not addressed here.
 
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260719041509.97894-1-meatuni001@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Qihang Tang <q.h.hack.winter@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260805125729.19220-4-q.h.hack.winter@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_wlan_util.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/packet/af_packet.c |   19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
---- a/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
-@@ -731,6 +731,9 @@ int WMM_param_handler(struct adapter *pa
- 		return false;
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2633,6 +2633,7 @@ static int packet_snd_vnet_parse(struct
+ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
+ 		void *frame, struct net_device *dev, void *data, int tp_len,
+ 		__be16 proto, unsigned char *addr, int hlen, int copylen,
++		int hard_header_len,
+ 		const struct sockcm_cookie *sockc)
+ {
+ 	union tpacket_uhdr ph;
+@@ -2664,8 +2665,8 @@ static int tpacket_fill_skb(struct packe
+ 	} else if (copylen) {
+ 		int hdrlen = min_t(int, copylen, tp_len);
+ 
+-		skb_push(skb, dev->hard_header_len);
+-		skb_put(skb, copylen - dev->hard_header_len);
++		skb_push(skb, hard_header_len);
++		skb_put(skb, copylen - hard_header_len);
+ 		err = skb_store_bits(skb, 0, data, hdrlen);
+ 		if (unlikely(err))
+ 			return err;
+@@ -2796,7 +2797,7 @@ static int tpacket_snd(struct packet_soc
+ 	void *data;
+ 	int len_sum = 0;
+ 	int status = TP_STATUS_AVAILABLE;
+-	int hlen, tlen, copylen = 0;
++	int hard_header_len, hlen, tlen, copylen = 0;
+ 	long timeo;
+ 
+ 	mutex_lock(&po->pg_vec_lock);
+@@ -2843,8 +2844,9 @@ static int tpacket_snd(struct packet_soc
+ 			goto out_put;
  	}
  
-+	if (pIE->length != WLAN_WMM_LEN)
-+		return false;
-+
- 	if (!memcmp(&(pmlmeinfo->WMM_param), (pIE->data + 6), sizeof(struct WMM_para_element)))
- 		return false;
- 	else
++	hard_header_len = READ_ONCE(dev->hard_header_len);
+ 	if (po->sk.sk_socket->type == SOCK_RAW)
+-		reserve = dev->hard_header_len;
++		reserve = hard_header_len;
+ 	size_max = po->tx_ring.frame_size
+ 		- (po->tp_hdrlen - sizeof(struct sockaddr_ll));
+ 
+@@ -2881,7 +2883,7 @@ static int tpacket_snd(struct packet_soc
+ 			goto tpacket_error;
+ 
+ 		status = TP_STATUS_SEND_REQUEST;
+-		hlen = LL_RESERVED_SPACE(dev);
++		hlen = LL_RESERVED_SPACE_EX(dev, hard_header_len);
+ 		tlen = dev->needed_tailroom;
+ 		if (vnet_hdr_sz) {
+ 			data += vnet_hdr_sz;
+@@ -2899,10 +2901,10 @@ static int tpacket_snd(struct packet_soc
+ 						    vnet_hdr.hdr_len);
+ 			has_vnet_hdr = true;
+ 		}
+-		copylen = max_t(int, copylen, dev->hard_header_len);
++		copylen = max_t(int, copylen, hard_header_len);
+ 		skb = sock_alloc_send_skb(&po->sk,
+ 				hlen + tlen + sizeof(struct sockaddr_ll) +
+-				(copylen - dev->hard_header_len),
++				(copylen - hard_header_len),
+ 				!need_wait, &err);
+ 
+ 		if (unlikely(skb == NULL)) {
+@@ -2912,7 +2914,8 @@ static int tpacket_snd(struct packet_soc
+ 			goto out_status;
+ 		}
+ 		tp_len = tpacket_fill_skb(po, skb, ph, dev, data, tp_len, proto,
+-					  addr, hlen, copylen, &sockc);
++					  addr, hlen, copylen, hard_header_len,
++					  &sockc);
+ 		if (likely(tp_len >= 0) &&
+ 		    tp_len > dev->mtu + reserve &&
+ 		    !vnet_hdr_sz &&
 
 
