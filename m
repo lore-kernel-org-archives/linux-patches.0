@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C03426693;
-	Mon, 17 Aug 2026 14:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3903F23B1;
+	Mon, 17 Aug 2026 14:50:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978252; cv=none; b=CfG6tjMiIXCMu53mSdBrUKTNfi5o8TxqhaqKIz9580gM7mlv/K8WZkJYJsp4ychzV96p9Sn9RI9j3i2XT7OxXpyv6kfOb6RWlUscvE3eSJJ8UJ/7KVurDLbBRCptiX5fSNUYLW7HNCN4wBWLaXDSjlT0+LKzDHW0VgYghdTGcEk=
+	t=1786978255; cv=none; b=u2WNLPRiT/VyGkpbRWtW1VO98TzG1/CFJhbq1uPZcbZcYqnAuI869U0IXt7byCcB9uE7zjes+4JinZeA2Z1XLt6HYB0zgUtnhjwSK4BzYTZvlCA7+IjZFf3JIUXZaYUh/f9gAjK3ex2xiyAbKCqyTihhraSccCaZVDQYNwJoptE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978252; c=relaxed/simple;
-	bh=28pDuMKBNJBPbNzYinUPT1J/oYNz7xrdH4f/WiLt54s=;
+	s=arc-20240116; t=1786978255; c=relaxed/simple;
+	bh=Ys8hdl+TgFTil4TD/OsE+T3H32ND5LN8bJL5teQDyPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OSesUk9ow/QzHsl/HFEh5GZrzt2edY/ze7BY9XB/fjC+0YD13EVnlw1w2OZyNuyMCpqg5x6KA/AK4U4c5GKx3zloGz4WT0310ueOQt9bPCJdxp9aVM0GCi0e3V6ZDHWMuwtwzIavvNwWMKM5+W7GOMCQjnwjWeEl8PB+NCStZT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fj843Moa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XvN25FWjNBi9DU9CF9PZD4E6yB6dn8lxYnbr1P5FRtIuH+hJ6eWjqNpuhNlngvP27KdRv7H2rKIpMAlq9NWabKQwc+EZUxp02HNHAqRDu5hTiLnk02odvNRvADWCVV+iSQXWUabkUfUQ05NMisLg81LdwhIYz+68t09PNj6/INY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r0sQa4dW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fj843Moa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9292A1F000E9;
-	Mon, 17 Aug 2026 14:50:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r0sQa4dW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6E51F000E9;
+	Mon, 17 Aug 2026 14:50:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978251;
-	bh=FueqVaNp+qMeO+PpYfGYrUVV+wF0GdNXOnfZmAq6Yts=;
+	s=korg; t=1786978254;
+	bh=tPh+3JADGZKYV5NtTwNoQmsk6/lZosYntUYA2SCpr+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fj843MoasW+06FJLvFH+dMjZzHGQYvYTD01jQqDXmUeW3FjwH9ufkvRjoUEg3bygL
-	 oyO30GI8/igiKlra7grHa4G/6DLxoVBJeL4n6flmePeriDUHsuf5Yn6fjFLxJixduP
-	 TRVBu1Y2ZYqEmqjOpArRo7DyPbe9lyx8A78tY+Es=
+	b=r0sQa4dW3N7PR1gSEgxKJwySCEMw9nQeDxU1ED6w0qJyuYL4n62zWdgVo36L0njYB
+	 o6uGNzWzbFryAGBXCX6f0yPrXidURBNY1hsF+ppLn7d1e67JmVfXRernr/334iEmYc
+	 J92h+1hxHDRTnli4o97sr0/nAKK4HPNc1/txiu1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baul Lee <baul.lee@xbow.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 153/181] vxlan: do not arm the ageing timer on a device that is down
-Date: Mon, 17 Aug 2026 15:34:07 +0200
-Message-ID: <20260817132541.716548580@linuxfoundation.org>
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Bobby Eshleman <bobbyeshleman@meta.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 154/181] vsock/virtio: read virtqueues under worker locks
+Date: Mon, 17 Aug 2026 15:34:08 +0200
+Message-ID: <20260817132541.752249058@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -51,73 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit b37971686ec59fb027fa4910ba16805e68fddb97 upstream.
+commit ebac8f6b1ef0e9278afe204b8692a7479988dace upstream.
 
-vxlan_changelink() arms vxlan->age_timer whenever the requested ageing
-interval differs from the configured one:
+Commit bd50c5dc182b ("vsock/virtio: add support for device
+suspend/resume") made the *_run flags transition from false to true when
+restore installs replacement virtqueues.  The RX, TX and event workers
+read their virtqueue before locking and checking the corresponding flag,
+so a worker delayed across freeze and restore can observe the replacement
+queue's running state while retaining a pointer to the deleted queue.
 
-	if (conf.age_interval != vxlan->cfg.age_interval)
-		mod_timer(&vxlan->age_timer, jiffies);
+Read each virtqueue under its mutex after checking the run flag, keeping
+the pointer and state in the same queue generation.
 
-There is no netif_running() test, so the timer is armed even on a device
-that was never brought up.  The only synchronous cancel in the driver is
-the timer_delete_sync() in vxlan_stop(), which is .ndo_stop.
-netif_close_many() drops devices without IFF_UP before
-__dev_close_many() runs, so that cancel is skipped for such a device.
-
-vxlan_setup() sets dev->needs_free_netdev = true and age_timer is a
-member of struct vxlan_dev, so free_netdev() releases the allocation the
-timer lives in while it is still queued on a timer_base.
-expire_timers() unlinks the entry before it loads timer->function, so
-the timer core writes through the freed object's list pointers:
-
-  BUG: KASAN: slab-use-after-free in __run_timers+0x208/0x654
-  Write of size 8 at addr ffff00001adace68 by task true/192
-   __asan_store8+0x84/0xac
-   __run_timers+0x208/0x654
-   run_timer_softirq+0x154/0x18c
-  Allocated by task 189:
-   alloc_netdev_mqs+0x64/0x720
-   rtnl_create_link+0x4ac/0x520
-   rtnl_newlink+0x758/0xd00
-  Freed by task 191:
-   netdev_release+0x40/0x58
-   netdev_run_todo+0x4a4/0x8c0
-   rtnl_dellink+0x200/0x4e8
-
-The rtnl operations involved are netns-scoped, so an unprivileged user
-can perform them in a new user and network namespace.
-
-Arming the timer on a down device never had an effect: vxlan_cleanup()
-returns early on !netif_running(), and vxlan_open() arms the timer for
-any non-zero interval once the device is brought up.  Add the missing
-test.
-
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: 40051c4dcad5 ("vxlan: Allow changing ageing time")
+Fixes: bd50c5dc182b ("vsock/virtio: add support for device suspend/resume")
 Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260809111829.78834-1-baul.lee@xbow.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Link: https://lore.kernel.org/r/20260727035804.1860862-1-bestswngs@gmail.com
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
+Link: https://patch.msgid.link/e79f68ad9284c983364fc3ac46904b6d9ef50231.1785352330.git.bestswngs@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vxlan/vxlan_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/vmw_vsock/virtio_transport.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -4462,7 +4462,7 @@ static int vxlan_changelink(struct net_d
- 	if (change_igmp && vxlan_addr_multicast(&dst->remote_ip))
- 		err = vxlan_multicast_leave(vxlan);
+--- a/net/vmw_vsock/virtio_transport.c
++++ b/net/vmw_vsock/virtio_transport.c
+@@ -343,12 +343,13 @@ static void virtio_transport_tx_work(str
+ 	struct virtqueue *vq;
+ 	bool added = false;
  
--	if (conf.age_interval != vxlan->cfg.age_interval)
-+	if (netif_running(dev) && conf.age_interval != vxlan->cfg.age_interval)
- 		mod_timer(&vxlan->age_timer, jiffies);
+-	vq = vsock->vqs[VSOCK_VQ_TX];
+ 	mutex_lock(&vsock->tx_lock);
  
- 	netdev_adjacent_change_commit(dst->remote_dev, lowerdev, dev);
+ 	if (!vsock->tx_run)
+ 		goto out;
+ 
++	vq = vsock->vqs[VSOCK_VQ_TX];
++
+ 	do {
+ 		struct sk_buff *skb;
+ 		unsigned int len;
+@@ -448,13 +449,13 @@ static void virtio_transport_event_work(
+ 		container_of(work, struct virtio_vsock, event_work);
+ 	struct virtqueue *vq;
+ 
+-	vq = vsock->vqs[VSOCK_VQ_EVENT];
+-
+ 	mutex_lock(&vsock->event_lock);
+ 
+ 	if (!vsock->event_run)
+ 		goto out;
+ 
++	vq = vsock->vqs[VSOCK_VQ_EVENT];
++
+ 	do {
+ 		struct virtio_vsock_event *event;
+ 		unsigned int len;
+@@ -614,13 +615,13 @@ static void virtio_transport_rx_work(str
+ 		container_of(work, struct virtio_vsock, rx_work);
+ 	struct virtqueue *vq;
+ 
+-	vq = vsock->vqs[VSOCK_VQ_RX];
+-
+ 	mutex_lock(&vsock->rx_lock);
+ 
+ 	if (!vsock->rx_run)
+ 		goto out;
+ 
++	vq = vsock->vqs[VSOCK_VQ_RX];
++
+ 	do {
+ 		virtqueue_disable_cb(vq);
+ 		for (;;) {
 
 
