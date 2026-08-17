@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3793C3F73;
-	Mon, 17 Aug 2026 14:24:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC0D331EB0;
+	Mon, 17 Aug 2026 14:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976693; cv=none; b=ue2FKCBE/93iBMfX7aToPNpn6GxUgaEX9HrT50pbF6NLaRcB1rD6GS90cvCwiQ3LygL77D9wOcZMaXX0kPxZLu5tv/LuCUdoroDNp5ZLkAPHjQCWY3Z1hF4ZVd7agO2tpMRFxtTZXZn4lTop1KavMeECEQK4rnqMGgbhslh0mzs=
+	t=1786976696; cv=none; b=puprF+M1Wv4kOGkco4LFwP+7EPHYRAfR9uKy/Z4jEiWu2LoDIChEn3br9hcC4ORb5z/uou9OTNoIkpsCOLhN5g6N34JpaRZQvRD0WHjBMVvGMzU1hGAai9/zJqCJkLYidp5+bw7f+q9OBQguFWSBuZz7T8Qc3m6TDhKINJ+CPY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976693; c=relaxed/simple;
-	bh=vZ7i9quISnXynSnFA2REWDL8U7Lw1gtYYHgLkUT0P9k=;
+	s=arc-20240116; t=1786976696; c=relaxed/simple;
+	bh=jCNCqU0yHVFUaMJaAhQVLI5SCw4wYdexDiio5yBMPrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fw6QcEdXr2xphiqDzPuJsFp/GgqCfM+1czoeLS1+rCsVH4m4bOJ0O1Lfp8u6lmhq3pBwSu/xatDDKP6AP47Xz8x+7EbLuuLyg8hnd95qOg1wpjhBIblIeLQUFNmOe6nSJF0CG5/QOKrJrdO/YcLyPued0jPA3ATjVzObl3U3y8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZ/VXit+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dkGbOSOqCwJp1235ctOFrR+8DB/UM7BBONupuby9ExiJ5u/WWznRqX9U47pf4pf5bDYd+zC9I1t3qkQOafXRHbhH4HKUkrKGCPMwOlH3VnmxwQB+8PCpD/85ivfacwA1ODI0tp6F2eQZsV7IqMyVBq6cwwEWgwrPoyJVBOOyegY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJv7kDR4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZ/VXit+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2155D1F000E9;
-	Mon, 17 Aug 2026 14:24:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJv7kDR4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00BF81F000E9;
+	Mon, 17 Aug 2026 14:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976691;
-	bh=URamC4OeYjRK+LwRzm4P9/WexwxS6C9vnWYeTlwahSo=;
+	s=korg; t=1786976694;
+	bh=OuBTNt/zC4EFPTPbM82kyk7eKguyIFY+dDn8QSGA2kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SZ/VXit+1LVniYrKh9KMme+qUY1j6uNr10sEOXWlm/KHL0a4lfZwZCCkhIcEwg0TX
-	 oMN7h3eYz5iMcvTuUVb+WPrtW/iGcUyYvYTb49xrELjoHuQTzmPtlC8kZfdB8poFKl
-	 3Vra5rwUR9rPdglP9V+X7O6J6XlGwOo4JRiJY0PI=
+	b=EJv7kDR47tnCptvqD8KaF7SYojOu6KtfgbaafmrK8pzQEom3LTYcIw+cuV8f9S+Kh
+	 bvB52KmuBvSzA7ojYBdqDSE9vU0D7Ne8o0Qp10eRnk9OKpCLXCV8+Iu11QpIz3rRyA
+	 27lrOcxh3733c8YZxYOXOShS8kWs9UUpTQNs+p0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chukun Pan <amadeus@jmu.edu.cn>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 072/456] USB: serial: keyspan_pda: fix data loss on receive throttling
-Date: Mon, 17 Aug 2026 15:27:42 +0200
-Message-ID: <20260817132542.884744319@linuxfoundation.org>
+Subject: [PATCH 5.15 073/456] USB: serial: option: add TDTECH MT5710-CN
+Date: Mon, 17 Aug 2026 15:27:43 +0200
+Message-ID: <20260817132542.924354000@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -49,115 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Chukun Pan <amadeus@jmu.edu.cn>
 
-commit 42a97c0480f96a2977e6d51ce512adc780f1ef5d upstream.
+commit 55645e4f3c6022ffb160ad3617d2b624eaa38501 upstream.
 
-Killing the interrupt-in urb when the line disciple requests throttling
-may lead to data loss if an ongoing transfer is cancelled.
+Add support for the TDTECH MT5710-CN (5G redcap) module based on the
+Huawei HiSilicon Balong chip.
 
-Instead set a flag to prevent the completion handler from resubmitting
-the urb until the port is unthrottled.
+T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  3 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=3466 ProdID=3301 Rev=ff.ff
+S:  Manufacturer=TD Tech Ltd.
+S:  Product=TDTECH MT571X
+S:  SerialNumber=0123456789ABCDEF
+C:* #Ifs= 6 Cfg#= 1 Atr=c0 MxPwr=  0mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0d Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0d Prot=00 Driver=cdc_ncm
+E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=06 Prot=13 Driver=option
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=06 Prot=12 Driver=option
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=06 Prot=1c Driver=option
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=06 Prot=14 Driver=option
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Interface: ECM / NCM + DIAG + AT + SERIAL + GPS
+
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/keyspan_pda.c |   44 +++++++++++++++++++++++++++++++--------
- 1 file changed, 35 insertions(+), 9 deletions(-)
+ drivers/usb/serial/option.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/serial/keyspan_pda.c
-+++ b/drivers/usb/serial/keyspan_pda.c
-@@ -35,6 +35,8 @@ struct keyspan_pda_private {
- 	struct work_struct	unthrottle_work;
- 	struct usb_serial	*serial;
- 	struct usb_serial_port	*port;
-+	bool			throttled;
-+	bool			throttle_req;
- };
- 
- static int keyspan_pda_write_start(struct usb_serial_port *port);
-@@ -159,6 +161,7 @@ static void keyspan_pda_rx_interrupt(str
- 	int retval;
- 	int status = urb->status;
- 	struct keyspan_pda_private *priv;
-+	bool throttled = false;
- 	unsigned long flags;
- 
- 	priv = usb_get_serial_port_data(port);
-@@ -220,16 +223,24 @@ static void keyspan_pda_rx_interrupt(str
- 	}
- 
- exit:
--	retval = usb_submit_urb(urb, GFP_ATOMIC);
--	if (retval)
--		dev_err(&port->dev,
--			"%s - usb_submit_urb failed with result %d\n",
--			__func__, retval);
-+	spin_lock_irqsave(&port->lock, flags);
-+	if (priv->throttle_req) {
-+		priv->throttled = true;
-+		throttled = true;
-+	}
-+	spin_unlock_irqrestore(&port->lock, flags);
-+
-+	if (!throttled) {
-+		retval = usb_submit_urb(urb, GFP_ATOMIC);
-+		if (retval)
-+			dev_err(&port->dev, "failed to resubmit in urb: %d\n", retval);
-+	}
- }
- 
- static void keyspan_pda_rx_throttle(struct tty_struct *tty)
- {
- 	struct usb_serial_port *port = tty->driver_data;
-+	struct keyspan_pda_private *priv = usb_get_serial_port_data(port);
- 
- 	/*
- 	 * Stop receiving characters. We just turn off the URB request, and
-@@ -239,16 +250,29 @@ static void keyspan_pda_rx_throttle(stru
- 	 * send an XOFF, although it might make sense to foist that off upon
- 	 * the device too.
- 	 */
--	usb_kill_urb(port->interrupt_in_urb);
-+	spin_lock_irq(&port->lock);
-+	priv->throttle_req = true;
-+	spin_unlock_irq(&port->lock);
- }
- 
- static void keyspan_pda_rx_unthrottle(struct tty_struct *tty)
- {
- 	struct usb_serial_port *port = tty->driver_data;
-+	struct keyspan_pda_private *priv = usb_get_serial_port_data(port);
-+	bool throttled;
-+	int ret;
-+
-+	spin_lock_irq(&port->lock);
-+	throttled = priv->throttled;
-+	priv->throttled = false;
-+	priv->throttle_req = false;
-+	spin_unlock_irq(&port->lock);
- 
--	/* just restart the receive interrupt URB */
--	if (usb_submit_urb(port->interrupt_in_urb, GFP_KERNEL))
--		dev_dbg(&port->dev, "usb_submit_urb(read urb) failed\n");
-+	if (throttled) {
-+		ret = usb_submit_urb(port->interrupt_in_urb, GFP_KERNEL);
-+		if (ret)
-+			dev_err(&port->dev, "failed to submit in urb: %d\n", ret);
-+	}
- }
- 
- static speed_t keyspan_pda_setbaud(struct usb_serial *serial, speed_t baud)
-@@ -585,6 +609,8 @@ static int keyspan_pda_open(struct tty_s
- 
- 	spin_lock_irq(&port->lock);
- 	priv->tx_room = rc;
-+	priv->throttled = false;
-+	priv->throttle_req = false;
- 	spin_unlock_irq(&port->lock);
- 
- 	rc = usb_submit_urb(port->interrupt_in_urb, GFP_KERNEL);
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2497,6 +2497,7 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(5) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x1003, 0xff),			/* Rolling RW135R-GL (laptop MBIM) */
+ 	  .driver_info = RSVD(5) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x3466, 0x3301, 0xff) },			/* TDTECH MT5710-CN */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for Global */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0x00, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x40) },
 
 
