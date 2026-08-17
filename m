@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFB82D249B;
-	Mon, 17 Aug 2026 15:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A21282F29;
+	Mon, 17 Aug 2026 15:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978854; cv=none; b=jvZqmMuQ26AUoj272xHBRFZxwPEFiPgmMzDPDkKiyQpxMU0tUBJCjZn231ukppX/XndPaQFRFNEoo9OWfrtCLwL9qNeEkgiG2GofJynb3bXYHaKaEsZfZeGYy4qAuqcq2VKOJvBWLmAU98B9/hxIVBkONu5HUHK0Kd0kKQX/ykQ=
+	t=1786978857; cv=none; b=VTgGWP4IIMislQqyZlULjBUe32NHslkLRk2vM2buenlpOoap8waZq4wilB1e9BG2uQFO5IZfu7rgOk00wTjE1sivjkZQfbciGx11Pq0dePEF+J0c0vU+n8iTt7Gfi+R6ZDIr9xtjhIOWGP9e3GmXhRoGzu9EkjOK4pIxpjOKYTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978854; c=relaxed/simple;
-	bh=FnZnObrqCBvPti+Nx20qPiF2db6FW15SL/+eMVihbg0=;
+	s=arc-20240116; t=1786978857; c=relaxed/simple;
+	bh=c1MWoGcqll9p/UM70j402+l+e1DprC/+0IQO1DVTD7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YBQ6+iFCvIqZErm0NOOOdrLIKVSQ2iH8ctMMOKACuh1LqlkzsF+zkBn9xUO1p+wRogPxjFL0UefFjv2h+UNLXQ5/pgQOMXo1nnYUw38axPu6Q8AGJAmxAFFQW/mIi+0PZ3cZuXGTUQ7FB7HWFrMqQMSvPUHsd9I8RD8McX2fN+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fq6uvWJc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aJnkv8obN9geoVmwmlryUwdnvjKwchSyPFihXJ0Y9MUhG75kE6xwCkmhyB3R2o1F2b1st1VJQ5IOGYSYVTW6q38qIJNbE8PbX8iiP/GhjM/3nCqJVF21CUci9qM1gYS5+MmjxQEVrAcrC6P72kV2Jr2rUBpr4hIaF2xHMMvBqJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOrEori5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fq6uvWJc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A731F000E9;
-	Mon, 17 Aug 2026 15:00:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOrEori5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6D01F000E9;
+	Mon, 17 Aug 2026 15:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978852;
-	bh=+k0sY1wprCNA6V1C7F//5IbDK6PIcjn2aAPHoJnuzK8=;
+	s=korg; t=1786978855;
+	bh=5x4FayLftZH7Z67lWiGU7tqSC3VCphQFaCqsdsJuu3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fq6uvWJcdNImGgHFYlQy02ISD8/AqmgoJkNwPs11PCHLDC13JuBYQIRaW0JjLY5A4
-	 7o7ZsAY6nCYAY4C7iyG2sx1XxEEkiERcKwwCzs/XO710huaszU7FEuk5WzafSCi90R
-	 JSiu6SLrQxq22ehv/VLqHbzpaLSwmDSSEHFavHjI=
+	b=uOrEori5HRvUuG1c4iffNTY8HEBqtnb2iSv7mkb5fGX/fjK1I9Lm6EH+Ylllo5B3Z
+	 6TAXcP+eLt2GPKrwqB+0FRHsMs6TWcfoVnC7fGK3u93tltJj7rqX4phBnHJ13wTJTN
+	 w0uUy7rL5/iNcRok/P7tLWhFEDpUcSiKkoul27qU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Oleg Nesterov <oleg@redhat.com>
-Subject: [PATCH 6.1 004/609] seqlock: Cure some more scoped_seqlock() optimization fails
-Date: Mon, 17 Aug 2026 15:25:00 +0200
-Message-ID: <20260817132543.267232011@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.1 005/609] seqlock: Allow KASAN to fail optimizing
+Date: Mon, 17 Aug 2026 15:25:01 +0200
+Message-ID: <20260817132543.304856999@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -54,45 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Zijlstra <peterz@infradead.org>
 
-commit 90dfeef1cd38dff19f8b3a752d13bfd79f0f7694 upstream.
+commit b94d45b6bbb42571ec225d3be0e7457c8765a5b4 upstream.
 
-Arnd reported an x86 randconfig using gcc-15 tripped over
-__scoped_seqlock_bug(). Turns out GCC chose not to inline the
-scoped_seqlock helper functions and as such was not able to optimize
-properly.
+Some KASAN builds are failing to properly optimize this code --
+luckily we don't care about core quality for KASAN builds, so just
+exclude it.
 
-[ mingo: Clang fails the build too in some circumstances. ]
-
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Tested-by: Arnd Bergmann <arnd@arndb.de>
+Reported-by: kernel test robot <lkp@intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Link: https://patch.msgid.link/20251204104332.GG2528459@noisy.programming.kicks-ass.net
+Closes: https://lore.kernel.org/oe-kbuild-all/202510251641.idrNXhv5-lkp@intel.com/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/seqlock.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/seqlock.h |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 --- a/include/linux/seqlock.h
 +++ b/include/linux/seqlock.h
-@@ -1281,7 +1281,7 @@ struct ss_tmp {
- 	spinlock_t	*lock_irqsave;
- };
+@@ -1291,11 +1291,14 @@ static __always_inline void __scoped_seq
  
--static inline void __scoped_seqlock_cleanup(struct ss_tmp *sst)
-+static __always_inline void __scoped_seqlock_cleanup(struct ss_tmp *sst)
- {
- 	if (sst->lock)
- 		spin_unlock(sst->lock);
-@@ -1306,7 +1306,7 @@ static inline void __scoped_seqlock_bug(
- extern void __scoped_seqlock_bug(void);
- #endif
+ extern void __scoped_seqlock_invalid_target(void);
  
--static inline void
-+static __always_inline void
- __scoped_seqlock_next(struct ss_tmp *sst, seqlock_t *lock, enum ss_state target)
- {
- 	switch (sst->state) {
+-#if defined(CONFIG_CC_IS_GCC) && CONFIG_GCC_VERSION < 90000
++#if (defined(CONFIG_CC_IS_GCC) && CONFIG_GCC_VERSION < 90000) || defined(CONFIG_KASAN)
+ /*
+  * For some reason some GCC-8 architectures (nios2, alpha) have trouble
+  * determining that the ss_done state is impossible in __scoped_seqlock_next()
+  * below.
++ *
++ * Similarly KASAN is known to confuse compilers enough to break this. But we
++ * don't care about code quality for KASAN builds anyway.
+  */
+ static inline void __scoped_seqlock_bug(void) { }
+ #else
 
 
