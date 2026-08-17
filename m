@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B34424D72;
-	Mon, 17 Aug 2026 14:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CFF429CCF;
+	Mon, 17 Aug 2026 14:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978244; cv=none; b=dxR1J8oWSfqBxO2JBR/UbWS1PVTQIVabmlZq11DiAzVUKHHzAtX4h8igg8YOPJ7F3uoHREdGv5I5q1wtCDXmoMyqz+1F2L0mH7LI5FumIuMx0VVOu0zlD8td+uCcMKvpP377EhfKXyvuswCL81hcFm2BOPdUKICdPbYtsu4LJ4c=
+	t=1786978247; cv=none; b=FQBLqX+A48VHUu7xcTRgLs58VQMiwB5/aFsySezeLpyFj5p/bK4puK1QhwAe/LNqgXLWfdMYnCSGLeCMCl1yY4Ybp+tmKzEigNMMAlHiDtmy/xdZMoZPXtKliyjHwt7QKVCT+fCzrtWUpksXlOTf3I4FkpeSUto1DmPRFuWxS3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978244; c=relaxed/simple;
-	bh=VpEkZTSA2FX9eygQD0krsO56WWOf8YG+tU/jJSn4PTo=;
+	s=arc-20240116; t=1786978247; c=relaxed/simple;
+	bh=Fr49/DkziPNjRtGWYqLYFttOoMfFthYO33ea8OnmLpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZH30j8JiW2W0Uxqc2RGPyBII6EWUmv5cK/RNaGjmvTKLEdx26nmn6JwSINpRcr5kmyDi0YyesCi4GzJFeKN42ixYE6e0Q/Ej4WH/+RIKnnUxOpt1wLSl2DePOSN9eXHkUUtPU/4rfsQYdItPG3Wvannhs6PsSLcVwdbUbqcwcFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGIt0bff; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qN3uTShYu6znDHaCv4aDSYqMKxOLVhOVbyHtA9+iKbqdLvLs0hgLzguuIiwr13Fli8434NVJKl9BWGrG6Ist7csfw06hi/g0ZAtqXHWk4PttIOH57M4UEhk9IAicfo2Pj2TUuj/i3My3BVVzomxxO8Ea0Bg10uPwB8gLoZttm30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kdVPAjJJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGIt0bff"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF371F000E9;
-	Mon, 17 Aug 2026 14:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdVPAjJJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA71C1F000E9;
+	Mon, 17 Aug 2026 14:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978242;
-	bh=UQEEXvdHNjQiWwOJzwhSSXkugd3XOStQrqW8HgsdC2Y=;
+	s=korg; t=1786978245;
+	bh=Aiurg4wI1g/qFb58ho5lEkhHj9wVwvZBD+iVx58E8H0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fGIt0bffKD+OAu17OBlNdzRn2THnmPnhe550SSp9GmrP/x1IrbMDC60QDcxGrXHne
-	 D//uktuYmtTVxbVyR3yjktnE+Tqyqr6VngTNziWoq+bLTGBcYqgKG8jXzGT8B1VR8a
-	 5IOR6IFjgOCo+IGRyG1Vg/OTOd6dPjWgtseEadkg=
+	b=kdVPAjJJV2WB6+GpcJUGn4IPH9gyNfvAIl5LvhrKP8tP2Baof2jnJ4Rf2prdDEqrU
+	 /j841kNUloVHN0hDycjWLZQX4Im5FeJca8l8Z3ImwMkd/hS6s6jqPKsxmOoquElsEu
+	 DfOYR+9lv/kw+z9ivaINNiADQJgvd8unG3BgJPUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.12 150/181] binfmt_misc: dont warn when the mount is completed from another user namespace
-Date: Mon, 17 Aug 2026 15:34:04 +0200
-Message-ID: <20260817132541.592799908@linuxfoundation.org>
+	Yuansheng Mao <yuansheng.mao@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 151/181] Revert "drm/amdgpu: fix aperture mapping leak"
+Date: Mon, 17 Aug 2026 15:34:05 +0200
+Message-ID: <20260817132541.634578478@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -50,68 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Asad Kamal <asad.kamal@amd.com>
 
-commit 79fdf39f1a31f88cb3833b6f8091fbf6acdca2c6 upstream.
+commit b96c529cd2551b78316a4afa3237b2ed96ba03c8 upstream.
 
-fsopen() records the caller's user namespace in fc->user_ns and hands
-back an ordinary file descriptor. Nothing ties the task that calls
-fsconfig(FSCONFIG_CMD_CREATE) to the task that created the context. The
-fd is inherited across fork() and exec() and it can be passed over a
-unix socket.
+devres teardown is LIFO. The aperture devres node was registered after
+the DRM device node, so devres_release_all() unmaps the aperture before
+the DRM device release callback fires amdgpu_device_fini_sw(). IP
+sw_fini callbacks (e.g. vcn_v4_0_sw_fini) write to fw_shared through a
+pointer derived from aper_base_kaddr, causing a kernel page fault on
+probe failure / rollback:
 
-Completing a context from another user namespace is allowed on purpose.
-vfs_cmd_create() authorizes the create with mount_capable(), which for
-FS_USERNS_MOUNT checks ns_capable(fc->user_ns, CAP_SYS_ADMIN), and that
-succeeds for a task holding CAP_SYS_ADMIN in an ancestor of fc->user_ns.
-So an unprivileged task can reach the WARN_ON() in bm_fill_super():
-create a user and a mount namespace in a child, call
-fsopen("binfmt_misc") there, send the fscontext fd to the parent and let
-the parent issue FSCONFIG_CMD_CREATE. Both namespaces come from a plain
-unshare(1) and no capability is needed anywhere:
-
-  WARNING: fs/binfmt_misc.c:938 at bm_fill_super+0xa2/0xc0 [binfmt_misc]
-  CPU: 15 UID: 1000 PID: 3243382 Comm: fswarn
+  BUG: unable to handle page fault ... PMD 0
+  RIP: vcn_v4_0_sw_fini+0x7b/0x170 [amdgpu]
   Call Trace:
-   get_tree_keyed+0x7d/0xb0
-   bm_get_tree+0x34/0x90 [binfmt_misc]
-   vfs_get_tree+0x2a/0x100
-   vfs_cmd_create+0x60/0xf0
-   __do_sys_fsconfig+0x4b2/0x500
+    amdgpu_device_fini_sw
+    amdgpu_driver_release_kms
+    devm_drm_dev_init_release
+    devres_release_all
 
-The child needs the mount namespace because fsopen() itself gates on
-may_mount(), which asks for CAP_SYS_ADMIN in the user namespace owning
-the caller's mount namespace. fsconfig() doesn't repeat that check.
+This reverts commit d871e99879cb5fd1fa798b006b4888887e63a17a.
 
-It is a WARN_ON() and not a WARN_ON_ONCE(), so the condition can be
-raised in a loop to taint the kernel and flood the log, and it panics a
-kernel booted with panic_on_warn.
-
-Keep refusing the mount and stop warning about it. Nothing in
-bm_fill_super() depends on the two namespaces matching, it derives
-everything from sb->s_user_ns.
-
-Fixes: 21ca59b365c0 ("binfmt_misc: enable sandboxed mounts")
-Cc: stable@vger.kernel.org # v6.7+
-Link: https://patch.msgid.link/20260802-work-fill_super-warn-v1-2-4e987911a39a@kernel.org
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: d871e99879cb ("drm/amdgpu: fix aperture mapping leak")
+Reported-by: Yuansheng Mao <yuansheng.mao@amd.com>
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 336e0cd576817ac64a4b394ca2b3680029f3e37f)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_misc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    2 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c    |   35 +++++++++++++++--------------
+ 2 files changed, 21 insertions(+), 16 deletions(-)
 
---- a/fs/binfmt_misc.c
-+++ b/fs/binfmt_misc.c
-@@ -983,7 +983,8 @@ static int bm_fill_super(struct super_bl
- 		/* last one */ {""}
- 	};
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4635,6 +4635,8 @@ static void amdgpu_device_unmap_mmio(str
  
--	if (WARN_ON(user_ns != current_user_ns()))
-+	/* The fscontext fd may have been passed to another user namespace. */
-+	if (user_ns != current_user_ns())
- 		return -EINVAL;
+ 	iounmap(adev->rmmio);
+ 	adev->rmmio = NULL;
++	if (adev->mman.aper_base_kaddr)
++		iounmap(adev->mman.aper_base_kaddr);
+ 	adev->mman.aper_base_kaddr = NULL;
  
- 	/* Never exec off this instance and never let anything stack on it. */
+ 	/* Memory manager related */
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -1909,23 +1909,17 @@ int amdgpu_ttm_init(struct amdgpu_device
+ 	/* Change the size here instead of the init above so only lpfn is affected */
+ 	amdgpu_ttm_set_buffer_funcs_status(adev, false);
+ #ifdef CONFIG_64BIT
+-	if (adev->gmc.xgmi.connected_to_cpu) {
+-		void *kaddr = devm_memremap(adev->dev, adev->gmc.aper_base,
+-					    adev->gmc.visible_vram_size,
+-					    MEMREMAP_WB);
+-		if (IS_ERR(kaddr))
+-			return PTR_ERR(kaddr);
+-		adev->mman.aper_base_kaddr = (__force void __iomem *)kaddr;
+-	} else if (adev->gmc.is_app_apu) {
++#ifdef CONFIG_X86
++	if (adev->gmc.xgmi.connected_to_cpu)
++		adev->mman.aper_base_kaddr = ioremap_cache(adev->gmc.aper_base,
++				adev->gmc.visible_vram_size);
++	else if (adev->gmc.is_app_apu)
+ 		DRM_DEBUG_DRIVER(
+ 			"No need to ioremap when real vram size is 0\n");
+-	} else {
+-		adev->mman.aper_base_kaddr = devm_ioremap_wc(adev->dev,
+-							     adev->gmc.aper_base,
+-							     adev->gmc.visible_vram_size);
+-		if (!adev->mman.aper_base_kaddr)
+-			return -ENOMEM;
+-	}
++	else
++#endif
++		adev->mman.aper_base_kaddr = ioremap_wc(adev->gmc.aper_base,
++				adev->gmc.visible_vram_size);
+ #endif
+ 
+ 	/*
+@@ -2072,6 +2066,8 @@ int amdgpu_ttm_init(struct amdgpu_device
+  */
+ void amdgpu_ttm_fini(struct amdgpu_device *adev)
+ {
++	int idx;
++
+ 	if (!adev->mman.initialized)
+ 		return;
+ 
+@@ -2094,7 +2090,14 @@ void amdgpu_ttm_fini(struct amdgpu_devic
+ 	amdgpu_ttm_fw_reserve_vram_fini(adev);
+ 	amdgpu_ttm_drv_reserve_vram_fini(adev);
+ 
+-	adev->mman.aper_base_kaddr = NULL;
++	if (drm_dev_enter(adev_to_drm(adev), &idx)) {
++
++		if (adev->mman.aper_base_kaddr)
++			iounmap(adev->mman.aper_base_kaddr);
++		adev->mman.aper_base_kaddr = NULL;
++
++		drm_dev_exit(idx);
++	}
+ 
+ 	amdgpu_vram_mgr_fini(adev);
+ 	amdgpu_gtt_mgr_fini(adev);
 
 
