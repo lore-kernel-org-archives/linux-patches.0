@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A11343802D;
-	Mon, 17 Aug 2026 14:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A58343E071;
+	Mon, 17 Aug 2026 14:49:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978175; cv=none; b=CkE43XSzIPZUn58uIQGi8I4KxLorDaI7d6b5N+GCcd6U6HukxB9swOJLCWg2O864LCc/XSnK9EPo32pfpZovt6YWRAmLLIFOYMoImXKbCVvfQ5+SNj/BieSjX/WFL+fXXMvg9ZOlku0Cnc+O1X0ip+e0lYvW4KpG2sP3iDyHD48=
+	t=1786978176; cv=none; b=DP2x2pzUfNF+W5Yjxr2VAkp7YdFswjJmwBNL4glejXpPC73D07uB0EQ8Mw1++FblaiRwzTHh9m3huCzbp+5cZphOlri7JK4wHXP9B9dnKh0/B9iOCjsgwadlIx/K2467ux+2qaZ0E8Z8DBOB5del8YPsiJwRUbbwCvXlz57eKyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978175; c=relaxed/simple;
-	bh=i+j/9jQjnMXKTwaBoIxTzzY+fU0orfWG1SywA9pT2t0=;
+	s=arc-20240116; t=1786978176; c=relaxed/simple;
+	bh=7cjPmZWcGdlZoYlbCkyjLMdK3FnFK6Tdl4Th3e/LGOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XXVTT0n01m7FsO/IGfonS65E2guj0KEoVe8HtZ12n4G0SpXEdb5NxLTOMZX1+duMm9neB46MjaLN6X02fU+0zUOdBhV+jdA8+rSeuAVbNR77+vwcFCZUCy63U0DgAYwhrwzz8JW5XG5crDyk+a8HrZO0jdOp+ZVgvZzmpS35bTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XdCghEak; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eV72VNuhRHe8h6+KvB+snmBdaXiLOcHX8KHpe83HcDFALkUWhHKbmzTI1CqHN0nlexKEiMQZff4RFOwNU8SP/Yl2Fg/9XL/FeozMDQUnwmZ+9ziGHuATjX6f6UY7Pu6RBfELtYcYPsMlaOeGgPiYjoGJVqqXHCXxab8N9SY9qsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iijqo9C6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XdCghEak"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25E11F00A3F;
-	Mon, 17 Aug 2026 14:49:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iijqo9C6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A831F000E9;
+	Mon, 17 Aug 2026 14:49:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978171;
-	bh=1E8lyyiAfLdlZ94ReIu1K9Y2kONocUBY3oQ+Z0pal2k=;
+	s=korg; t=1786978174;
+	bh=l+jcDgxzRfRIYiwHq2X84kpVEKJuUBmx8MgEdi4bzAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XdCghEakAsrFL2E24gBD4Li5dUoer+HoG9TcWL31Wdd3ZQtj5b8eXAEnTIaC1VYOO
-	 YxnLg2G2i5NBL9Y6tdAZ3zDhMP4IXlcfRt1O4GCzMvL34pmbyJeKGdSK/3XqsBVMsm
-	 2kwyp2BwIX7WWRarOcioAvzp0x3DW8MwBWhcB5oY=
+	b=iijqo9C6BnrPSuuCYLSMaUOIOqvUa2+DDclPGKtnAoR+NztZpwmGe/T8YfOxcQD86
+	 7pvbWP99flI0ytWBHJJtOaErq924oll/BalUqDe2IopXEs491qp4OLyAYLPV/F/yYG
+	 Y6AHXsqsetfrPpXjvYzv4EMvizE1m57z4nmrBvqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.12 077/181] thunderbolt: icm: Preserve USB4 proxy data-valid bit
-Date: Mon, 17 Aug 2026 15:32:51 +0200
-Message-ID: <20260817132538.478394327@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 120/181] ipv4: Fix fib_nlmsg_size() for RTA_VIA nexthops
+Date: Mon, 17 Aug 2026 15:33:34 +0200
+Message-ID: <20260817132540.282612347@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -50,50 +52,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit e48844ece5e3ed1d1eb865f6da2b16f62cd9f86d upstream.
+commit 4ff9548d84945d2cbf9e4c207288063a200ea397 upstream.
 
-The ICM USB4 switch operation request encodes two values in
-request.data_len_valid: bit 4 marks the data payload valid, while bits
-3:0 hold the payload length in dwords.  A zero length with the valid bit
-set represents the full 16-dword data array.
+fib_nlmsg_size() still estimates nexthop space as if every gateway is
+encoded as an IPv4 RTA_GATEWAY attribute. IPv4 routes can also carry an
+IPv6 gateway, which fib_nexthop_info() dumps as RTA_VIA.
 
-icm_usb4_switch_op() sets the valid bit when a transmit payload is
-present.  For payloads shorter than the full 16 dwords, it then assigns
-the length to the whole field and clears the valid bit that was just set.
-The payload is still copied into the request, but the descriptor sent to
-firmware marks that data as invalid.
+As a result, route notifications can allocate an skb that is too small.
+fib_dump_info() then fails with -EMSGSIZE and rtmsg_fib() hits the
+WARN_ON() that marks such failures as a fib_nlmsg_size() bug. With
+panic_on_warn set, this becomes a kernel panic.
 
-This affects USB4 router operations that send short payloads through the
-firmware connection manager.  In particular, USB4 NVM writes can send a
-short final block when the image size is not aligned to the 64-byte proxy
-payload size.  Firmware may then ignore or reject that final block, while
-full 16-dword blocks are unaffected because they are encoded as length 0
-with the valid bit set.
+Mirror the actual nexthop dump layout in fib_nlmsg_size(): account for
+IPv6 nexthop gateways dumped as RTA_VIA, for the no-header rtnexthop
+layout used inside RTA_MULTIPATH, and for RTA_FLOW only when it is
+actually present.
 
-OR the short payload length into data_len_valid so the valid bit is
-preserved.
-
-Fixes: 9039387e166e ("thunderbolt: Add USB4 router operation proxy for firmware connection manager")
+Fixes: d15662682db2 ("ipv4: Allow ipv6 gateway with ipv4 routes")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/6f53fa797fcaeb26966432ed7ae9bb87c4961f37.1785411220.git.zihanx@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/icm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/fib_semantics.c |   67 ++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 49 insertions(+), 18 deletions(-)
 
---- a/drivers/thunderbolt/icm.c
-+++ b/drivers/thunderbolt/icm.c
-@@ -2291,7 +2291,7 @@ static int icm_usb4_switch_op(struct tb_
- 	if (tx_data_len) {
- 		request.data_len_valid |= ICM_USB4_SWITCH_DATA_VALID;
- 		if (tx_data_len < ARRAY_SIZE(request.data))
--			request.data_len_valid =
-+			request.data_len_valid |=
- 				tx_data_len & ICM_USB4_SWITCH_DATA_LEN_MASK;
- 		memcpy(request.data, tx_data, tx_data_len * sizeof(u32));
+--- a/net/ipv4/fib_semantics.c
++++ b/net/ipv4/fib_semantics.c
+@@ -462,6 +462,34 @@ int ip_fib_check_default(__be32 gw, stru
+ 	return -1;
+ }
+ 
++static size_t fib_nexthop_nlmsg_size(const struct fib_nh_common *nhc,
++				     bool skip_oif)
++{
++	size_t nhsize = 0;
++
++	switch (nhc->nhc_gw_family) {
++	case AF_INET:
++		nhsize += nla_total_size(4); /* RTA_GATEWAY */
++		break;
++	case AF_INET6:
++		nhsize += nla_total_size(sizeof(struct rtvia) +
++					 sizeof(struct in6_addr));
++		break;
++	}
++
++	if (!skip_oif && nhc->nhc_dev)
++		nhsize += nla_total_size(4); /* RTA_OIF */
++
++	if (nhc->nhc_lwtstate) {
++		/* RTA_ENCAP */
++		nhsize += lwtunnel_get_encap_size(nhc->nhc_lwtstate);
++		/* RTA_ENCAP_TYPE */
++		nhsize += nla_total_size(2);
++	}
++
++	return nhsize;
++}
++
+ size_t fib_nlmsg_size(struct fib_info *fi)
+ {
+ 	size_t payload = NLMSG_ALIGN(sizeof(struct rtmsg))
+@@ -479,32 +507,35 @@ size_t fib_nlmsg_size(struct fib_info *f
+ 		payload += nla_total_size(4); /* RTA_NH_ID */
+ 
+ 	if (nhs) {
+-		size_t nh_encapsize = 0;
+-		/* Also handles the special case nhs == 1 */
+-
+-		/* each nexthop is packed in an attribute */
+-		size_t nhsize = nla_total_size(sizeof(struct rtnexthop));
++		size_t mpsize = 0;
+ 		unsigned int i;
+ 
+-		/* may contain flow and gateway attribute */
+-		nhsize += 2 * nla_total_size(4);
+-
+-		/* grab encap info */
+ 		for (i = 0; i < fib_info_num_path(fi); i++) {
+ 			struct fib_nh_common *nhc = fib_info_nhc(fi, i);
++			size_t nhsize;
++
++			nhsize = fib_nexthop_nlmsg_size(nhc, nhs != 1);
+ 
+-			if (nhc->nhc_lwtstate) {
+-				/* RTA_ENCAP_TYPE */
+-				nh_encapsize += lwtunnel_get_encap_size(
+-						nhc->nhc_lwtstate);
+-				/* RTA_ENCAP */
+-				nh_encapsize +=  nla_total_size(2);
++			if (nhs != 1)
++				nhsize += NLA_ALIGN(sizeof(struct rtnexthop));
++
++#ifdef CONFIG_IP_ROUTE_CLASSID
++			if (nhc->nhc_family == AF_INET) {
++				struct fib_nh *nh;
++
++				nh = container_of(nhc, struct fib_nh, nh_common);
++				if (nh->nh_tclassid)
++					nhsize += nla_total_size(4);
+ 			}
++#endif
++			if (nhs == 1)
++				payload += nhsize;
++			else
++				mpsize += nhsize;
+ 		}
+ 
+-		/* all nexthops are packed in a nested attribute */
+-		payload += nla_total_size((nhs * nhsize) + nh_encapsize);
+-
++		if (nhs != 1)
++			payload += nla_total_size(mpsize);
  	}
+ 
+ 	return payload;
 
 
