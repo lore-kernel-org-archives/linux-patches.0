@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A692E175A99;
-	Mon, 17 Aug 2026 14:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A4E41D111;
+	Mon, 17 Aug 2026 14:56:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978585; cv=none; b=vBndL4gwEk8VMFgQPFw20DVXrk79gTUBl3jGFSB0uq+4SPEoV/2dKtCEtDujypURE3cYYyvp60ueJ5SROCgcYaB/SKY/VYVCwpowy5ftTNLfSYpGk93zEAGCoNuuRqCJUF6lvdSd9MyBieGssFfFTVnKUR3iMAMScyle3OVHIMc=
+	t=1786978588; cv=none; b=pbRaRe3QH2yXtOd1bjSq8AVRk35MLCJWYECKxg/WWhvmZyVWdFX+eyF9t+Ha4lYpRS07G//tExWG2Fjw9FC2MZMryCv52v71d8ZiEq/19zcoMUBt/hizgI3cUODbcJI0obhelaYD/Bmvq5W8DNntAmN3W2npBmudb39iXBYAAQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978585; c=relaxed/simple;
-	bh=4YYszaZHBO02N9f7yj1QGHyaXK7i4Fc2hSkgdFx+nqY=;
+	s=arc-20240116; t=1786978588; c=relaxed/simple;
+	bh=NXQrTZHQN9BghomF/ODRnozpH2KBAoS3N7qvUCX1dq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bPj73LsR6Hk5knINXI7hnqLMGJei79c9ZfrL9oq50l6QsSDWB/4EQDxUd/vJ5FGf/58ITkIYoGF7dWftiBqLfIbmiUj3Wgkr1jrARHB4uOaC89GSF0l8LqFnKvngHt8hZIC/yXio/F6jgRpSxsBTQcbTrYEm+eecfXatXM6s3Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8Lq9eoY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kl71Stc+hB5ZbQRv2cXv1OnHByg4VXE7p1wTNfugQFNmsAsdVQvdyyB9ztVGtkDDp5ct+ldQjlZqZqhmp6suQd8DNv51nnAo00uDhHSt3DkzuRTwB3PG4vSojKbbVaze80ph4V1wRZpDPIS7TKU4evbnOPMLNR4Msun9HaiEWbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18TZs72e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8Lq9eoY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6441F000E9;
-	Mon, 17 Aug 2026 14:56:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18TZs72e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD171F000E9;
+	Mon, 17 Aug 2026 14:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978584;
-	bh=EwDv6wSKVcJAsAwomEy38q9GU7d57/egAXsfSo94N1k=;
+	s=korg; t=1786978587;
+	bh=UglEmyOVOM0m+j3AHaLjVhLvYs++5U7sNDKbBIb6neg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H8Lq9eoYaBezhYd1fl6mT6wv/TJhaLylHMloRzICeX8cuoK6Ik7ZyYptEwLLAP6sI
-	 JzSxgg0dChkdtdlAlB8fybbUsWXr3vr65s6m/KkmF6vX+4ED6b3WlwumKwrQvJiA7t
-	 UlJcZdMr7HbL2TjeiCzkIiVsR4Dz/qbeiOHRdZBw=
+	b=18TZs72ejr0VeV2EmV2Z1BINTGHXxeflm4X7BgFZ1BRQRoiuethfL41Gk88hmGtGg
+	 kRjgvm6njgvJH1IPAaU/zvgazUEfHgAoQwnhZeQYlYNsL1wsylTBLi5dquEAT19pBx
+	 Bu1V/sI6oVo5RrT0CwATWgpW3cWbHFEKY1bQ7LEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.6 088/156] netfilter: ebt_nflog: pin the NFLOG backend
-Date: Mon, 17 Aug 2026 15:33:42 +0200
-Message-ID: <20260817132538.056568143@linuxfoundation.org>
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Baul Lee <baul.lee@xbow.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 089/156] net: bridge: mrp: fix uninitialised bytes on the wire
+Date: Mon, 17 Aug 2026 15:33:43 +0200
+Message-ID: <20260817132538.096722816@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -50,101 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit 30825970339c107bacaf7f61af90fcdb1f597ca1 upstream.
+commit 63488dba65ef91373ef616575b32eb0eb21459f4 upstream.
 
-nf_log_unregister() runs after the per-net teardown so its final RCU
-grace period also drains readers that obtained the logger from a per-net
-binding.  However, ebt_nflog passes an explicit ULOG log type to
-nf_log_packet() without holding a reference on the selected logger module,
-unlike the xt_NFLOG and nft_log frontends.
+br_mrp_alloc_test_skb() builds MRP test frames on an skb from
+dev_alloc_skb(), which does not clear the linear data area.  On the MRA
+ring-role branch the sub-option TLV header is appended with
 
-An ebtables nflog rule can therefore remain callable while nfnetlink_log
-is unloaded.  The resulting interleaving is:
+	sub_tlv = skb_put(skb, sizeof(*sub_tlv));
+	sub_tlv->type = BR_MRP_SUB_TLV_HEADER_TEST_AUTO_MGR;
 
-  CPU 0                               CPU 1
-  nfnetlink_log_fini()
-    unregister_pernet_subsys()
-      kfree(nfnl_log_pernet(net))
-                                      ebt_nflog_tg()
-                                        nf_log_packet()
-                                          nfulnl_log_packet()
-                                            instance_lookup_get_rcu()
+so sub_tlv->length is never written, and the two trailing alignment bytes
+are appended with a bare skb_put() that does not clear them either.  The
+neighbouring oui and sub_opt regions are explicitly zeroed, so three
+uninitialised bytes are left in every MRA MRP_Test frame that goes out.
 
-The global ULOG logger is still registered at this point, so CPU 1
-dereferences the per-net state after CPU 0 has freed it.  KASAN reported:
+Put the sub-option TLV header and the alignment padding in a single
+skb_put_zero(), which clears both.  The AUTO_MGR sub-TLV carries no
+payload, so the zeroed length field is already the value it should have.
 
-  BUG: KASAN: slab-use-after-free in instance_lookup_get_rcu
-  Read of size 8 at addr ff110001052e6210 by task poc/92
-  Call Trace:
-   instance_lookup_get_rcu+0x1ce/0x1f0 [nfnetlink_log]
-   nfulnl_log_packet+0x248/0x2fb0 [nfnetlink_log]
-   nf_log_packet+0x204/0x300
-   ebt_nflog_tg+0x351/0x550
-   ebt_do_table+0xedf/0x22b0
-  Allocated by task 90:
-   __kmalloc_noprof+0x186/0x470
-   ops_init+0x6d/0x420
-   register_pernet_operations+0x2f6/0x670
-   register_pernet_subsys+0x23/0x40
-  Freed by task 93:
-   kfree+0x131/0x3c0
-   ops_undo_list+0x3e3/0x700
-   unregister_pernet_operations+0x232/0x490
-   unregister_pernet_subsys+0x1c/0x30
-   nfnetlink_log_fini+0x34/0x450 [nfnetlink_log]
-
-Acquire the ULOG logger module reference when an ebt_nflog rule is
-validated and release it when the rule is destroyed.  Request the NFLOG
-backend for legacy callers when needed, matching xt_NFLOG.  This prevents
-module teardown until all ebt_nflog rules have stopped using the logger.
-
-Fixes: c83fa19603bd ("netfilter: nf_log: don't call synchronize_rcu in nf_log_unset")
+Fixes: f7458934b079 ("net: bridge: mrp: Update the Test frames for MRA")
+Suggested-by: Nikolay Aleksandrov <razor@blackwall.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260729131941.10254-1-baul.lee@xbow.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/netfilter/ebt_nflog.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ net/bridge/br_mrp.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/net/bridge/netfilter/ebt_nflog.c
-+++ b/net/bridge/netfilter/ebt_nflog.c
-@@ -41,11 +41,25 @@ ebt_nflog_tg(struct sk_buff *skb, const
- static int ebt_nflog_tg_check(const struct xt_tgchk_param *par)
- {
- 	struct ebt_nflog_info *info = par->targinfo;
-+	int ret;
+--- a/net/bridge/br_mrp.c
++++ b/net/bridge/br_mrp.c
+@@ -224,11 +224,9 @@ static struct sk_buff *br_mrp_alloc_test
+ 		sub_opt = skb_put(skb, sizeof(*sub_opt));
+ 		memset(sub_opt, 0x0, sizeof(*sub_opt));
  
- 	if (info->flags & ~EBT_NFLOG_MASK)
- 		return -EINVAL;
- 	info->prefix[EBT_NFLOG_PREFIX_SIZE - 1] = '\0';
--	return 0;
-+
-+	ret = nf_logger_find_get(par->family, NF_LOG_TYPE_ULOG);
-+	if (ret != 0 && !par->nft_compat) {
-+		request_module("%s", "nfnetlink_log");
-+
-+		ret = nf_logger_find_get(par->family, NF_LOG_TYPE_ULOG);
-+	}
-+
-+	return ret;
-+}
-+
-+static void ebt_nflog_tg_destroy(const struct xt_tgdtor_param *par)
-+{
-+	nf_logger_put(par->family, NF_LOG_TYPE_ULOG);
- }
+-		sub_tlv = skb_put(skb, sizeof(*sub_tlv));
+-		sub_tlv->type = BR_MRP_SUB_TLV_HEADER_TEST_AUTO_MGR;
+-
+ 		/* 32 bit alligment shall be ensured therefore add 2 bytes */
+-		skb_put(skb, MRP_OPT_PADDING);
++		sub_tlv = skb_put_zero(skb, sizeof(*sub_tlv) + MRP_OPT_PADDING);
++		sub_tlv->type = BR_MRP_SUB_TLV_HEADER_TEST_AUTO_MGR;
+ 	}
  
- static struct xt_target ebt_nflog_tg_reg __read_mostly = {
-@@ -54,6 +68,7 @@ static struct xt_target ebt_nflog_tg_reg
- 	.family     = NFPROTO_BRIDGE,
- 	.target     = ebt_nflog_tg,
- 	.checkentry = ebt_nflog_tg_check,
-+	.destroy    = ebt_nflog_tg_destroy,
- 	.targetsize = sizeof(struct ebt_nflog_info),
- 	.me         = THIS_MODULE,
- };
+ 	br_mrp_skb_tlv(skb, BR_MRP_TLV_HEADER_END, 0x0);
 
 
