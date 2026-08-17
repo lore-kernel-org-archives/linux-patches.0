@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736D32EC0B0;
-	Mon, 17 Aug 2026 14:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B93439F71;
+	Mon, 17 Aug 2026 14:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976188; cv=none; b=harmHYye59k79i4tH3d+Zv4i+Zu+ODiD4a+yt6xpLANq/3Q7dbuVhbJcuYpit9BdXuOMQMsdoNYjp5FhxMJs+cKAv1ZzrKJug1orlm3bYvLCkFjOpt+rEfOavblk/iaR57F/G/sR45hfP3NH3xdVvw9uPLfpgJpJrzoWjwmC3VM=
+	t=1786976191; cv=none; b=YDKF7Q38K7cAk+8f+FIFAtBbm92i7YU1zQ6ERh5ulgpU3lVzukWEdP9D/TAqLLpM6PnpFIJ2RXb5tG7TQNmfnC1CXNngUVV8AG4MbY7ljprsQA02jiwt6zZdLpHF/RjZLYnL10OyOaUD2jEQBw+XVKGlaqgU0eyw97ZOJZgZkIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976188; c=relaxed/simple;
-	bh=qNiv7HTFVVz3yd3KtbKdoJvRJIwVj4g8DPt+HeonHdQ=;
+	s=arc-20240116; t=1786976191; c=relaxed/simple;
+	bh=9+f2wjSePQzvCiHQEv1r8yWjjYKwrqzoNi4gcuvE/+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VEKUUGHy6PvakQVzQuHow6HkZveDkwM+DcsSxT+EqgahjZkj1rNulxmRGYot3BOptAj+Pgyexat0AWsHPFgxNIw+gExsF4E4c14jw7g5y3sot6Fnuv2SQ3/d066zCFQnR5xL45Uqhr169UtBL0hy6t7S5kI8e7uP9R/sKKWZVV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lBJEN1+Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GNkXGkN1SXYy3+8YPyN6HyB42mvRKDYeIM2oNrPEscjVeCH7/ivTOAYJh/207CXvXVaK0yPJcZz6jdv2NXoa/u03wGAvIM3I1gi/pi9/Njv8lVLZbS3CG1J+lMQq2CAsnjSGVXZAs+qEE7/GSnaUYXOHEYK22Rc3j5OcI2ltjck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DOPHvBJe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lBJEN1+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3131F000E9;
-	Mon, 17 Aug 2026 14:16:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DOPHvBJe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA69F1F00A3D;
+	Mon, 17 Aug 2026 14:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976187;
-	bh=dzNQyMUtRDV0XoF8NJuD3xCFs0OqBlPgXXQyuRYHEro=;
+	s=korg; t=1786976190;
+	bh=j1c2/xuAC1/in6iMHuJ1zeBIN+mHXXJEsXWFzLgWN9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lBJEN1+Y3RwgwqvMm16n9SgkZR36M8/qmYRv0PFc3oT0JpM2n/Z3B1u0Kk1lM0M7r
-	 Y2x1no64Fm9tQ0MSoux0ctyhJaKja8O2KwfaaPUSSdtgOzf+rpDCfZeg78l23kJeeX
-	 Ap4Jkp1Szpy/36N4TtOzUi5uK5T0yOAkl4AEtM+4=
+	b=DOPHvBJeySkOl/GQob8ur/grsyFdwrd8TGctumngaivWw4JbxN5EAuaDTG4WKCZmy
+	 jw62mdhTXdZHP1T7KoB+PgUqx5+/lItdRF3l2ueBLC74/bV5t23HwkZHSXyLZ9KhCk
+	 CERieRS74nRqEXAqFdYpcgzdxFgG8ZFQYC5JRNYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ilya Maximets <i.maximets@ovn.org>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 288/389] net: openvswitch: fix potential UAF on meter attach failure
-Date: Mon, 17 Aug 2026 15:32:07 +0200
-Message-ID: <20260817132550.328828659@linuxfoundation.org>
+	Aaron Conole <aconole@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 289/389] net: openvswitch: fix skb leak on flow key update failure during ct
+Date: Mon, 17 Aug 2026 15:32:08 +0200
+Message-ID: <20260817132550.365594656@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -53,118 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilya Maximets <i.maximets@ovn.org>
 
-commit a58a2b0ce354df531ebc71fc870058c2feb59f6b upstream.
+commit bc62e843bc48f933da765ce47079fd992e535794 upstream.
 
-While attaching a newly created meter attach_meter() function makes
-the new meter visible to other CPUs but can still fail afterwards.
-On failure, it detaches the meter back and returns an error.
+ovs_ct_execute() always steals or frees the skb on failure while
+ovs_flow_key_update() does not.  So, if it fails and we return right
+away, the skb ends up leaked.
 
-However, this is an unexpected behavior for the ovs_meter_cmd_set()
-that uses a plain kfree(meter) on attach failure without waiting for
-RCU readers to stop using it, assuming it was never visible.
+Fix that by breaking instead and letting the common error handling
+code at the bottom of the loop to free the skb properly.
 
-This is never a problem for ovs-vswitchd as it always creates meters
-before creating any flows that use them.  But the UAF can be triggered
-with a custom application using uAPI:
+This is a very unlikely scenario as it requires the packet to become
+unparseable by applying a set of actions on a previously parseable skb,
+but should be fixed nevertheless.
 
- BUG: KASAN: slab-use-after-free in ovs_meter_execute (net/openvswitch/meter.c:653)
- Read of size 8 at addr ffff88810d152650 by task meter/2508
+Reported by Sashiko.
 
- Call Trace:
-  ovs_meter_execute (net/openvswitch/meter.c:653)
-  do_execute_actions (net/openvswitch/actions.c:1407)
-  ovs_execute_actions (net/openvswitch/actions.c:1584)
-  ovs_packet_cmd_execute (net/openvswitch/datapath.c:703)
-  ...
-  netlink_sendmsg (af_netlink.c:1900)
-
- Allocated by task 2519:
-  __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
-  ovs_meter_cmd_set (net/openvswitch/meter.c:422)
-  ...
-  netlink_sendmsg (af_netlink.c:1900)
-
- Freed by task 2519:
-  kfree (mm/slub.c:2705 mm/slub.c:6405 mm/slub.c:6720)
-  ovs_meter_cmd_set (net/openvswitch/meter.c:479)
-  ...
-  netlink_sendmsg (af_netlink.c:1900)
-
-Fix that by making sure attach_meter() doesn't make the meter visible
-until all the checks are done and the function can't fail anymore.
-
-This also makes sure the "hash" value is calculated after the potential
-re-sizing of the table.
-
-Reported by Trend Micro's Zero Day Initiative as ZDI-CAN-31642.
-
-Fixes: c7c4c44c9a95 ("net: openvswitch: expand the meters supported number")
+Fixes: ec0d043d05e6 ("openvswitch: Ensure flow is valid before executing ct")
 Cc: stable@vger.kernel.org
 Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
-Link: https://patch.msgid.link/20260727121022.198461-1-i.maximets@ovn.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20260727181851.306076-3-i.maximets@ovn.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/meter.c |   33 +++++++++++++++++++--------------
- 1 file changed, 19 insertions(+), 14 deletions(-)
+ net/openvswitch/actions.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/openvswitch/meter.c
-+++ b/net/openvswitch/meter.c
-@@ -136,18 +136,10 @@ static void dp_meter_instance_remove(str
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -1316,7 +1316,7 @@ static int do_execute_actions(struct dat
+ 			if (!is_flow_key_valid(key)) {
+ 				err = ovs_flow_key_update(skb, key);
+ 				if (err)
+-					return err;
++					break;
+ 			}
  
- static int attach_meter(struct dp_meter_table *tbl, struct dp_meter *meter)
- {
--	struct dp_meter_instance *ti = rcu_dereference_ovsl(tbl->ti);
--	u32 hash = meter_hash(ti, meter->id);
-+	struct dp_meter_instance *ti;
-+	u32 hash;
- 	int err;
- 
--	/* In generally, slots selected should be empty, because
--	 * OvS uses id-pool to fetch a available id.
--	 */
--	if (unlikely(rcu_dereference_ovsl(ti->dp_meters[hash])))
--		return -EBUSY;
--
--	dp_meter_instance_insert(ti, meter);
--
- 	/* That function is thread-safe. */
- 	tbl->count++;
- 	if (tbl->count >= tbl->max_meters_allowed) {
-@@ -155,16 +147,29 @@ static int attach_meter(struct dp_meter_
- 		goto attach_err;
- 	}
- 
--	if (tbl->count >= ti->n_meters &&
--	    dp_meter_instance_realloc(tbl, ti->n_meters * 2)) {
--		err = -ENOMEM;
-+	ti = rcu_dereference_ovsl(tbl->ti);
-+	if (tbl->count >= ti->n_meters) {
-+		err = dp_meter_instance_realloc(tbl, ti->n_meters * 2);
-+		if (err)
-+			goto attach_err;
-+
-+		ti = rcu_dereference_ovsl(tbl->ti);
-+	}
-+
-+	hash = meter_hash(ti, meter->id);
-+
-+	/* In general, selected slots should be empty, because
-+	 * OvS uses id-pool to fetch available ids.
-+	 */
-+	if (unlikely(rcu_dereference_ovsl(ti->dp_meters[hash]))) {
-+		err = -EBUSY;
- 		goto attach_err;
- 	}
- 
-+	dp_meter_instance_insert(ti, meter);
- 	return 0;
- 
- attach_err:
--	dp_meter_instance_remove(ti, meter);
- 	tbl->count--;
- 	return err;
- }
+ 			err = ovs_ct_execute(ovs_dp_get_net(dp), skb, key,
 
 
