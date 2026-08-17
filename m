@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34C43ABD9F;
-	Mon, 17 Aug 2026 14:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7583DAACA;
+	Mon, 17 Aug 2026 14:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977126; cv=none; b=Z0olmdJ6AJbasIHD+bpiEO63tThbefSTxt06opDiyUB6rSOx6g/0AnK9KDYlPZ+y9SlrKk9IUCHZgOmKjdMo7K8otE7G3AN54q+IgOJCl/hz6SQU4M0+K9JVJsERZEUGuCRvSim++JH5/lQnpGtHOP+z0bcZj7vpVRiPZoAY8MU=
+	t=1786977129; cv=none; b=ZellQrKGeZO1i10VFwYh/IBK4URLD9/F7vJyBIdoib8wIhHpOOkZPCKI7LHYXXRpgxxCWNMfkNoyBuPmcs7crmg5nklnr6snByATiQ+8fvk6jOgq+hLFYHdZF3aPy/d9KnCW5h0Awl9Jigxl2P5d7X2V4oDnJNM8+iPJM+wvNI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977126; c=relaxed/simple;
-	bh=5dxbOn1q4Nuf6QD50ln7/ZdTdaa/shi9rafdlfUfYmc=;
+	s=arc-20240116; t=1786977129; c=relaxed/simple;
+	bh=zkSsWYSHeRxG9D9/dGLwQipeCQD1FaqigcdRkbZqLfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ef/16HPAVj0nJE4f8DHsvXA/2YPWx2dU441XEIz2NfgY0vQTJxY5tSwjH1I9Zw2wa833FU9P5keLr9PWsiRRfkeb5Gyq26SDO3sS5Oz73QqlyQlf64R+gN3JogmDXYrIHGTISatcNdgj1DiauR6md7s/OchwgSfYraVQd/YS15Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fBsfxijr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=La4qLRWS0H+HnnRnIXz86EMzkM9UGsRd+NVY7MMtp1llhL8pqrLLecu0HSPuPNYg5NWzG+TJ6Y3bGxre4rC5DjRQVm4+Zc/FItPrpbh0jKtIv3skxhTOdrN1RJ7cQ9pFr9VReGTGP8+MvOjVHSwJ4bvomYZ732Fxg3GcQt14pbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=157WCGIh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fBsfxijr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06ED11F000E9;
-	Mon, 17 Aug 2026 14:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="157WCGIh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE1BD1F000E9;
+	Mon, 17 Aug 2026 14:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977125;
-	bh=tDC7C0RbcRnSGW7+nIySQfydcTHYHR6UC4OpckrdSUQ=;
+	s=korg; t=1786977128;
+	bh=J2eGI0bU2V8SLP8nuw9WljxKH8cjXij8TF3QDA5+Ml0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fBsfxijrDjs0BWqknDWAFOjCPd29aRWnYTs7nj1Ba8eOg9v9WGgfqzrZWxt2bExcq
-	 msIpnVjohXgPgLQeV4PYkOPX+aDtG8vH8Ppz7JI/ymqWZglybis9ADC5j3ZVAWJ2CN
-	 INHacRrt45M0tZhFDBAPtq64qg9bC+Wbrb3ZEOfA=
+	b=157WCGIh/Ot1K9v4SnDO5MHvy8lAKd9JhWT3SEieDHXgnt+JaZOdUMhNSF3a5jjF8
+	 bMF2Slwm8R3SRsMMXnBrHWUrBqDpeGen0iu8qTh4QIQnyD1Iif7I5dV6Rwrf6SHD6x
+	 YtsKXSpJgiIXapH2UGwyoqhu8LWVpZunW7mlUrjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.15 220/456] rbd: Reset positive result codes to zero in object map update path
-Date: Mon, 17 Aug 2026 15:30:10 +0200
-Message-ID: <20260817132548.787219499@linuxfoundation.org>
+	Sergey Temerkhanov <sergey.temerkhanov@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 5.15 221/456] ice: use READ_ONCE() to access cached PHC time
+Date: Mon, 17 Aug 2026 15:30:11 +0200
+Message-ID: <20260817132548.819371280@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,58 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Sergey Temerkhanov <sergey.temerkhanov@intel.com>
 
-commit a6c4250b81bd30beae94e1b7a4b26fa1193ad2e4 upstream.
+commit 2915681b89f817677ab9f1166d95b595bc144f5f upstream.
 
-In a reply message to an RBD request, a positive result code indicates
-a data payload, which is not allowed for writes. While
-rbd_osd_req_callback() already resets a positive result code for writes
-to zero, rbd_object_map_callback() does not. This allows a corrupted
-reply to an object map update to trigger the rbd_assert(*result < 0) in
-__rbd_obj_handle_request(). This happens, because
-rbd_object_map_callback() calls rbd_obj_handle_request() ->
-__rbd_obj_handle_request() and passes this positive result code. From
-__rbd_obj_handle_request(), rbd_obj_advance_write() is called, which
-leaves the positive result code unchanged and returns true. Therefore,
-the if(done && *result) branch is executed in __rbd_obj_handle_request()
-and the assertion triggers.
+ptp.cached_phc_time is a 64-bit value updated by a periodic work item
+on one CPU and read locklessly on another.  On 32-bit or non-atomic
+architectures this can result in a torn read.  Use READ_ONCE() to
+enforce a single atomic load.
 
-This patch fixes the issue by adjusting the logic in the
-rbd_object_map_callback() path. A positive result code for an object map
-update is now reset to zero (similar to rbd_osd_req_callback()), and the
-message is subsequently handled the same way as if the result code was
-zero from the beginning. Additionally, a WARN_ON_ONCE() is added for
-this case.
-
+Fixes: 77a781155a65 ("ice: enable receive hardware timestamping")
 Cc: stable@vger.kernel.org
-Fixes: 22e8bd51bb04 ("rbd: support for object-map and fast-diff")
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Sergey Temerkhanov <sergey.temerkhanov@intel.com>
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260717185340.3595286-9-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_ptp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -1958,10 +1958,15 @@ static int rbd_object_map_update_finish(
- 	bool has_current_state;
- 	void *p;
+--- a/drivers/net/ethernet/intel/ice/ice_ptp.c
++++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
+@@ -391,7 +391,7 @@ static u64 ice_ptp_extend_40b_ts(struct
+ {
+ 	const u64 mask = GENMASK_ULL(31, 0);
  
--	if (osd_req->r_result)
-+	if (osd_req->r_result < 0)
- 		return osd_req->r_result;
+-	return ice_ptp_extend_32b_ts(pf->ptp.cached_phc_time,
++	return ice_ptp_extend_32b_ts(READ_ONCE(pf->ptp.cached_phc_time),
+ 				     (in_tstamp >> 8) & mask);
+ }
  
- 	/*
-+	 * Writes aren't allowed to return a data payload.
-+	 */
-+	WARN_ON_ONCE(osd_req->r_result > 0);
-+
-+	/*
- 	 * Nothing to do for a snapshot object map.
- 	 */
- 	if (osd_req->r_num_ops == 1)
 
 
