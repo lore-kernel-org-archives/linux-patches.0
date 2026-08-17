@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E4833B6F4;
-	Mon, 17 Aug 2026 14:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E892D0C7E;
+	Mon, 17 Aug 2026 14:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977265; cv=none; b=ICRgXrvNF4/RK2ZOG5fQh4eLogQdarNOcDFYzfPil/cTHBQulDnltlkr184+9VNsKeQ84pTUuAtv8NXAY5tGUA2gPQhkON3XKDuqORjCs9b1pbgQyDrbtY2fTkSznZ8LSKQjHzDqHwLLyFTQBSgbHlDoS/KDd/XFT/KcJe94eIk=
+	t=1786977267; cv=none; b=GaabczEbmm/hj068mHTDDesFAxpghUFuHNmvcvSwZpZEjA8wb32k//im3cUVCfS3gcN3/jOQJyvXby5KHHUpE+p7rlYMfV1IWGdEgnCixp1hbvOfNAfmyIMpzp6GQxOZE/MPG69OAtdPzg/vluPpXtKZeLsF9VMO/l6w06ZQDkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977265; c=relaxed/simple;
-	bh=e6p5yN9TvX4tH9AtOjKIcjPmh8+m9YX0i+gq6XMqNdQ=;
+	s=arc-20240116; t=1786977267; c=relaxed/simple;
+	bh=V+pokWywnNMbiN9KOXDLP5UslsmKaMtfdUCLf5blHro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ahhuxW3r9Pu3zIwxobxZBj6Df9XF8gvmL9Q93MidhO+iWKG2xjZ7OVOGr2ocf1X1E/XjKgjSnkujWHXrV2W7xV7n5+lPro4Oy5e9GdQu5SBdcbjC69DiltoebZzj+XFZW+kl79+mCZhL3Pxoo8O/PTSzyCXeIo7I/PbCHrdadmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCELDuuF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V9OTupznn6xq6x+Cs/ZZYA3AGz5Xjs9LNMI1VnIdogWtINCMuUbt6EzgYchUUiIV0G+jFT9MHcwNFkyn4NsdGFHLyJUmBqeiNgPX7DbUIa30t/fDZZng2IlMQVoikH7ZfnRm7Xa4/V+TIKDe1vSW9zYk6gHPtYvoFFKl8Jt1u7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mXh1Hxuv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCELDuuF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6091F000E9;
-	Mon, 17 Aug 2026 14:34:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mXh1Hxuv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A4771F000E9;
+	Mon, 17 Aug 2026 14:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977263;
-	bh=2AfhgAmH9uTF4KeaEPRZuYRQqNLW9GGqVYUFSz38pD0=;
+	s=korg; t=1786977266;
+	bh=0Uc95s5DdkFrB7PAIRGP0MZOqBE8Ks3snQD8uPfLpQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZCELDuuFwrjf3ZHJmnTl45XEsHpWyOLEr6ddLJvwuh5+8vSQZgTDEUfm7JMXOmxZb
-	 +95d07vn20CkGtnTNcHJNfCiObjzon0polmfxoXJP9474YpT79tXEIXbl4sDBSOfEE
-	 3qhXoyZp5tVtvQiydc1DbFl2ShPCQy3XRgMC240A=
+	b=mXh1HxuvnSnY3TaoAE5lf4EY+GSSvESqawyjT9ZRkRflSFg/Q5cYU2bCwqh3A1CW3
+	 8oXU7QW3v7wvL0u0ikFCd3alSdIiaMxrmlss9ayQROVQNzVNTJefOxNEiFa18IdvuR
+	 l3AiEPPHqDgt/6M+uzpA03vmuXDItafP+IdOokgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Alexander Martyniuk <alexevgmart@gmail.com>,
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 231/456] tipc: fix use-after-free of the discoverer in tipc_disc_rcv()
-Date: Mon, 17 Aug 2026 15:30:21 +0200
-Message-ID: <20260817132549.157976577@linuxfoundation.org>
+Subject: [PATCH 5.15 232/456] wifi: mt76: mt7615: drop TXRX_NOTIFY on non-mmio buses
+Date: Mon, 17 Aug 2026 15:30:22 +0200
+Message-ID: <20260817132549.188342809@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -54,122 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-commit 1579342d71133da7f00daa02c75cebec7372097b upstream.
+commit 39afc46c0243d10b7795e6e6cf4ae91f41732120 upstream.
 
-bearer_disable() frees b->disc with tipc_disc_delete()'s plain kfree(),
-but tipc_disc_rcv() still dereferences b->disc in RX softirq under
-rcu_read_lock() (tipc_udp_recv -> tipc_rcv -> tipc_disc_rcv).
+PKT_TYPE_TXRX_NOTIFY is an mmio-only event, but mt7615_rx_check() and
+mt7615_queue_rx_skb() dispatch it to mt7615_mac_tx_free() on every bus.
+mt7615_mac_tx_free() cleans the DMA tx queues with
+mt76_queue_tx_cleanup(), which calls queue_ops->tx_cleanup(). Only the
+mmio queue ops implement that callback; on the mt7663 USB and SDIO
+buses it is NULL, so a TXRX_NOTIFY there calls a NULL pointer in the RX
+worker. Same defect as the mt7921 and mt7925 patches in this series.
 
-L2 bearers are safe thanks to the synchronize_net() in
-tipc_disable_l2_media(), but the UDP bearer defers that call to the
-cleanup_bearer() workqueue, so the discoverer is freed with no grace
-period:
+Drop the event on non-mmio buses via mt76_is_mmio(), as in
+commit 5683e1488aa9 ("wifi: mt76: connac: do not check WED status for
+non-mmio devices").
 
- BUG: KASAN: slab-use-after-free in tipc_disc_rcv (net/tipc/discover.c:149)
- Read of size 8 at addr ffff88802348b728 by task poc_tipc/184
- <IRQ>
-  tipc_disc_rcv (net/tipc/discover.c:149)
-  tipc_rcv (net/tipc/node.c:2126)
-  tipc_udp_recv (net/tipc/udp_media.c:391)
-  udp_rcv (net/ipv4/udp.c:2643)
-  ip_local_deliver_finish (net/ipv4/ip_input.c:241)
- </IRQ>
- Freed by task 181:
-  kfree (mm/slub.c:6565)
-  bearer_disable (net/tipc/bearer.c:418)
-  tipc_nl_bearer_disable (net/tipc/bearer.c:1001)
-
-The bearer is freed with kfree_rcu(); free the discoverer the same way.
-Add an rcu_head to struct tipc_discoverer and free it and its skb from an
-RCU callback.
-
-Because the RCU callback (tipc_disc_free_rcu) lives in module text, a
-call_rcu() that is still pending when the tipc module is unloaded would
-invoke a freed function. Add an rcu_barrier() to tipc_exit() after the
-bearer subsystem has been torn down, so all pending discoverer callbacks
-have run before the module text goes away.
-
-Reachable from an unprivileged user namespace: the TIPCv2 genl family is
-netnsok and its bearer commands have no GENL_ADMIN_PERM. Needs CONFIG_TIPC
-and CONFIG_TIPC_MEDIA_UDP.
-
-Fixes: 25b0b9c4e835 ("tipc: handle collisions of 32-bit node address hash values")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260617135744.3383175-3-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
+Fixes: eb99cc95c3b6 ("mt76: mt7615: introduce mt7663u support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260627191336.20223-4-lucid_duck@justthetip.ca
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+[ No mt7615_rx_check() on this tree, so only the mt7615_queue_rx_skb()
+  hunk applies, and mt7615_mac_tx_free() takes the skb rather than
+  (data, len), so the guard frees it here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/core.c     |  5 +++++
- net/tipc/discover.c | 14 ++++++++++++--
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7615/mac.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/tipc/core.c b/net/tipc/core.c
-index 434e70eabe0812..1ddecea1df6e91 100644
---- a/net/tipc/core.c
-+++ b/net/tipc/core.c
-@@ -218,6 +218,11 @@ static void __exit tipc_exit(void)
- 	unregister_pernet_device(&tipc_net_ops);
- 	tipc_unregister_sysctl();
- 
-+	/* TODO: Wait for all timers that called call_rcu() to finish before
-+	 * calling rcu_barrier().
-+	 */
-+	rcu_barrier();
-+
- 	pr_info("Deactivated\n");
- }
- 
-diff --git a/net/tipc/discover.c b/net/tipc/discover.c
-index e8dcdf267c0c3f..835ff27f8ea88c 100644
---- a/net/tipc/discover.c
-+++ b/net/tipc/discover.c
-@@ -58,6 +58,7 @@
-  * @skb: request message to be (repeatedly) sent
-  * @timer: timer governing period between requests
-  * @timer_intv: current interval between requests (in ms)
-+ * @rcu: RCU head for deferred freeing
-  */
- struct tipc_discoverer {
- 	u32 bearer_id;
-@@ -69,6 +70,7 @@ struct tipc_discoverer {
- 	struct sk_buff *skb;
- 	struct timer_list timer;
- 	unsigned long timer_intv;
-+	struct rcu_head rcu;
- };
- 
- /**
-@@ -382,6 +384,15 @@ int tipc_disc_create(struct net *net, struct tipc_bearer *b,
- 	return 0;
- }
- 
-+static void tipc_disc_free_rcu(struct rcu_head *rp)
-+{
-+	struct tipc_discoverer *d = container_of(rp, struct tipc_discoverer,
-+						 rcu);
-+
-+	kfree_skb(d->skb);
-+	kfree(d);
-+}
-+
- /**
-  * tipc_disc_delete - destroy object sending periodic link setup requests
-  * @d: ptr to link dest structure
-@@ -389,8 +400,7 @@ int tipc_disc_create(struct net *net, struct tipc_bearer *b,
- void tipc_disc_delete(struct tipc_discoverer *d)
- {
- 	del_timer_sync(&d->timer);
--	kfree_skb(d->skb);
--	kfree(d);
-+	call_rcu(&d->rcu, tipc_disc_free_rcu);
- }
- 
- /**
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
+index 2f0ba8a75d71bc..ee90ec27f09faa 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
+@@ -1601,6 +1601,10 @@ void mt7615_queue_rx_skb(struct mt76_dev *mdev, enum mt76_rxq_id q,
+ 		dev_kfree_skb(skb);
+ 		break;
+ 	case PKT_TYPE_TXRX_NOTIFY:
++		if (!mt76_is_mmio(mdev)) {
++			dev_kfree_skb(skb);
++			break;
++		}
+ 		mt7615_mac_tx_free(dev, skb);
+ 		break;
+ 	case PKT_TYPE_RX_EVENT:
 -- 
 2.53.0
 
