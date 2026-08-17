@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456253E49C7;
-	Mon, 17 Aug 2026 13:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF3542D763;
+	Mon, 17 Aug 2026 13:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974823; cv=none; b=t4O1jKidVzFItJu8tOCCMuzDlKo56DTTdcgF+c60KURjM420rrLdvafjulcMR7zIZAHaUloT6Sgwrmue1oLmIDwjuBWvLpe8OpPhiQ6HAzTs7noEVxgrQTS1lgU/NKS1OSgy/wRtbkVtE8fbJafVBTWecKBPXzW5+XlfYF5Fl5c=
+	t=1786974826; cv=none; b=Ii6u4MaWheLkdWx59+38uNO8PtKM1wcyElbX0za/AHKMecOix6H0O/bcsst8EMNpeQ8jMnSkR7VcbsQx3N0DMbjLqJxqVYoeQESjO6Uf2G/be+euaa8h3t1+UEr4mdSeZOQD7m9OXgBKjXuhNXMQtrP6iHBLqiXTDXIldGApLfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974823; c=relaxed/simple;
-	bh=EoLCrRjROqF1IuMdqH00zHp2787PWq+SbBtNPcUzw28=;
+	s=arc-20240116; t=1786974826; c=relaxed/simple;
+	bh=wJp8K4yUcN9ZysVntWcKsPhBOZxh06rX6xFynkaEELI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h3Eg9tZ9jdknjSxsSAkIRT3B61eV64wuSYVEj9DXKiSUErVIoCyIysIMNwT03b20tIRaqZ1JGc098jKFCfQm3b/6+fT4+NYyGm47tK7uXsZjCtt5YU1Y7H672VmS3yWy65OeJvxjDG4KEQng9+wCKS0EQZ+gCD39aT0ZP8y+V9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oAHWa3iK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fAAZXhN+mKWesSofTb1/wa/Sy5IJUveGw9cDl6WMJG/KYYY8nPasxq0taouXakO0Kv9zDc5ZPo47tjL2oPP+RqVoi3vvX5bpcTYwbxdiVsD14/osDbGong7hkHwB1pD4zD/INpJTYDqzeWB0oAWMds4OnLq+8v5nKY18HBbCD+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBtt/Kdm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oAHWa3iK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980C71F00A3D;
-	Mon, 17 Aug 2026 13:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBtt/Kdm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6DF1F00A3F;
+	Mon, 17 Aug 2026 13:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974813;
-	bh=z36mhHJSiFCxXjjoEka+sluTalAtuPLt8KNndrl43rg=;
+	s=korg; t=1786974821;
+	bh=PDc9u/j9XKD5T6FqpL7xmk6BW5sbn/WLm/XvytSJ+rA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oAHWa3iKitpPmc7Yao9dm/CBdudlZKoS/zmY3cYoEyl9jiz9RkdrM011kFEPOepC4
-	 sZAzLrze4TlCD602+pfBOph2Fj8thukHgoSo/aO9RcIUDsiOcD5HG1BL93SicTBw5O
-	 u93w6AeeRomUzrLtKzfMlkQ9Az0Wg3t7LO1MbwMk=
+	b=xBtt/KdmoEvnGw+dN77NZaTu/8IRQT49Ab8pUs2fv+00tskpQ89+RwWRQQA5ESLmz
+	 imP3+xfFC12Cj6uOf6woEqphEBOwA5Qwl6XbNu8sBaBGAlSvU6Z5CzSALg2hOjxvW7
+	 FHt+v3xwiBiuT8iEe8Y8FRrkniTXL8uQ/D/3dkaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Pavel Begunkov <asml.silence@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 062/250] eth: bnxt: store rx buffer size per queue
-Date: Mon, 17 Aug 2026 15:30:23 +0200
-Message-ID: <20260817132538.992669732@linuxfoundation.org>
+Subject: [PATCH 6.18 065/250] xsk: require at least 16 bytes of TX metadata
+Date: Mon, 17 Aug 2026 15:30:26 +0200
+Message-ID: <20260817132539.110440470@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,308 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Stanislav Fomichev <sdf.kernel@gmail.com>
 
-[ Upstream commit f57efb32aae1da5c0a25acf473ef4ab559894adf ]
+[ Upstream commit 1bb30b181d9f0484e141f8411e15ed906d5c6780 ]
 
-Instead of using a constant buffer length, allow configuring the size
-for each queue separately. There is no way to change the length yet, and
-it'll be passed from memory providers in a later patch.
+AF_XDP accepts a TX metadata length as small as eight bytes, but every
+supported request needs the flags plus at least one eight-byte request
+field. Such short metadata also lets the kernel read beyond the registered
+area.
 
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Stable-dep-of: d1000fd7995e ("bnxt: fix memory leak in bnxt_queue_mem_alloc error cases")
+Require 16 bytes rather than sizeof(struct xsk_tx_metadata) to preserve
+compatibility with applications that do not use launch-time metadata.
+
+Fixes: 341ac980eab9 ("xsk: Support tx_metadata_len")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Reported-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Link: https://lore.kernel.org/netdev/20260720155210.34229-1-blbllhy@gmail.com/
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20260727161959.885642-2-sdf@fomichev.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 56 +++++++++++--------
- drivers/net/ethernet/broadcom/bnxt/bnxt.h     |  1 +
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c |  6 +-
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h |  2 +-
- 4 files changed, 38 insertions(+), 27 deletions(-)
+ net/xdp/xdp_umem.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index f3fbbf188053c..fddfdf807950f 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -905,7 +905,7 @@ static void bnxt_tx_int(struct bnxt *bp, struct bnxt_napi *bnapi, int budget)
- 
- static bool bnxt_separate_head_pool(struct bnxt_rx_ring_info *rxr)
- {
--	return rxr->need_head_pool || PAGE_SIZE > BNXT_RX_PAGE_SIZE;
-+	return rxr->need_head_pool || rxr->rx_page_size < PAGE_SIZE;
- }
- 
- static struct page *__bnxt_alloc_rx_page(struct bnxt *bp, dma_addr_t *mapping,
-@@ -915,9 +915,9 @@ static struct page *__bnxt_alloc_rx_page(struct bnxt *bp, dma_addr_t *mapping,
- {
- 	struct page *page;
- 
--	if (PAGE_SIZE > BNXT_RX_PAGE_SIZE) {
-+	if (rxr->rx_page_size < PAGE_SIZE) {
- 		page = page_pool_dev_alloc_frag(rxr->page_pool, offset,
--						BNXT_RX_PAGE_SIZE);
-+						rxr->rx_page_size);
- 	} else {
- 		page = page_pool_dev_alloc_pages(rxr->page_pool);
- 		*offset = 0;
-@@ -936,8 +936,9 @@ static netmem_ref __bnxt_alloc_rx_netmem(struct bnxt *bp, dma_addr_t *mapping,
- {
- 	netmem_ref netmem;
- 
--	if (PAGE_SIZE > BNXT_RX_PAGE_SIZE) {
--		netmem = page_pool_alloc_frag_netmem(rxr->page_pool, offset, BNXT_RX_PAGE_SIZE, gfp);
-+	if (rxr->rx_page_size < PAGE_SIZE) {
-+		netmem = page_pool_alloc_frag_netmem(rxr->page_pool, offset,
-+						     rxr->rx_page_size, gfp);
- 	} else {
- 		netmem = page_pool_alloc_netmems(rxr->page_pool, gfp);
- 		*offset = 0;
-@@ -1155,9 +1156,9 @@ static struct sk_buff *bnxt_rx_multi_page_skb(struct bnxt *bp,
- 		return NULL;
+diff --git a/net/xdp/xdp_umem.c b/net/xdp/xdp_umem.c
+index 9ec7bd948acc7..81ffda5501078 100644
+--- a/net/xdp/xdp_umem.c
++++ b/net/xdp/xdp_umem.c
+@@ -209,6 +209,8 @@ static int xdp_umem_reg(struct xdp_umem *umem, struct xdp_umem_reg *mr)
+ 	if (mr->flags & XDP_UMEM_TX_METADATA_LEN) {
+ 		if (mr->tx_metadata_len >= 256 || mr->tx_metadata_len % 8)
+ 			return -EINVAL;
++		if (mr->tx_metadata_len < 16)
++			return -EINVAL;
+ 		umem->tx_metadata_len = mr->tx_metadata_len;
  	}
- 	dma_addr -= bp->rx_dma_offset;
--	dma_sync_single_for_cpu(&bp->pdev->dev, dma_addr, BNXT_RX_PAGE_SIZE,
-+	dma_sync_single_for_cpu(&bp->pdev->dev, dma_addr, rxr->rx_page_size,
- 				bp->rx_dir);
--	skb = napi_build_skb(data_ptr - bp->rx_offset, BNXT_RX_PAGE_SIZE);
-+	skb = napi_build_skb(data_ptr - bp->rx_offset, rxr->rx_page_size);
- 	if (!skb) {
- 		page_pool_recycle_direct(rxr->page_pool, page);
- 		return NULL;
-@@ -1189,7 +1190,7 @@ static struct sk_buff *bnxt_rx_page_skb(struct bnxt *bp,
- 		return NULL;
- 	}
- 	dma_addr -= bp->rx_dma_offset;
--	dma_sync_single_for_cpu(&bp->pdev->dev, dma_addr, BNXT_RX_PAGE_SIZE,
-+	dma_sync_single_for_cpu(&bp->pdev->dev, dma_addr, rxr->rx_page_size,
- 				bp->rx_dir);
  
- 	if (unlikely(!payload))
-@@ -1203,7 +1204,7 @@ static struct sk_buff *bnxt_rx_page_skb(struct bnxt *bp,
- 
- 	skb_mark_for_recycle(skb);
- 	off = (void *)data_ptr - page_address(page);
--	skb_add_rx_frag(skb, 0, page, off, len, BNXT_RX_PAGE_SIZE);
-+	skb_add_rx_frag(skb, 0, page, off, len, rxr->rx_page_size);
- 	memcpy(skb->data - NET_IP_ALIGN, data_ptr - NET_IP_ALIGN,
- 	       payload + NET_IP_ALIGN);
- 
-@@ -1288,7 +1289,7 @@ static u32 __bnxt_rx_agg_netmems(struct bnxt *bp,
- 		if (skb) {
- 			skb_add_rx_frag_netmem(skb, i, cons_rx_buf->netmem,
- 					       cons_rx_buf->offset,
--					       frag_len, BNXT_RX_PAGE_SIZE);
-+					       frag_len, rxr->rx_page_size);
- 		} else {
- 			skb_frag_t *frag = &shinfo->frags[i];
- 
-@@ -1313,7 +1314,7 @@ static u32 __bnxt_rx_agg_netmems(struct bnxt *bp,
- 			if (skb) {
- 				skb->len -= frag_len;
- 				skb->data_len -= frag_len;
--				skb->truesize -= BNXT_RX_PAGE_SIZE;
-+				skb->truesize -= rxr->rx_page_size;
- 			}
- 
- 			--shinfo->nr_frags;
-@@ -1328,7 +1329,7 @@ static u32 __bnxt_rx_agg_netmems(struct bnxt *bp,
- 		}
- 
- 		page_pool_dma_sync_netmem_for_cpu(rxr->page_pool, netmem, 0,
--						  BNXT_RX_PAGE_SIZE);
-+						  rxr->rx_page_size);
- 
- 		total_frag_len += frag_len;
- 		prod = NEXT_RX_AGG(prod);
-@@ -2295,8 +2296,7 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 			if (!skb)
- 				goto oom_next_rx;
- 		} else {
--			skb = bnxt_xdp_build_skb(bp, skb, agg_bufs,
--						 rxr->page_pool, &xdp);
-+			skb = bnxt_xdp_build_skb(bp, skb, agg_bufs, rxr, &xdp);
- 			if (!skb) {
- 				/* we should be able to free the old skb here */
- 				bnxt_xdp_buff_frags_free(rxr, &xdp);
-@@ -3844,11 +3844,13 @@ static int bnxt_alloc_rx_page_pool(struct bnxt *bp,
- 	pp.pool_size = bp->rx_agg_ring_size / agg_size_fac;
- 	if (BNXT_RX_PAGE_MODE(bp))
- 		pp.pool_size += bp->rx_ring_size / rx_size_fac;
-+
-+	pp.order = get_order(rxr->rx_page_size);
- 	pp.nid = numa_node;
- 	pp.netdev = bp->dev;
- 	pp.dev = &bp->pdev->dev;
- 	pp.dma_dir = bp->rx_dir;
--	pp.max_len = PAGE_SIZE;
-+	pp.max_len = PAGE_SIZE << pp.order;
- 	pp.flags = PP_FLAG_DMA_MAP | PP_FLAG_DMA_SYNC_DEV |
- 		   PP_FLAG_ALLOW_UNREADABLE_NETMEM;
- 	pp.queue_idx = rxr->bnapi->index;
-@@ -3859,7 +3861,10 @@ static int bnxt_alloc_rx_page_pool(struct bnxt *bp,
- 	rxr->page_pool = pool;
- 
- 	rxr->need_head_pool = page_pool_is_unreadable(pool);
-+	rxr->need_head_pool |= !!pp.order;
- 	if (bnxt_separate_head_pool(rxr)) {
-+		pp.order = 0;
-+		pp.max_len = PAGE_SIZE;
- 		pp.pool_size = min(bp->rx_ring_size / rx_size_fac, 1024);
- 		pp.flags = PP_FLAG_DMA_MAP | PP_FLAG_DMA_SYNC_DEV;
- 		pool = page_pool_create(&pp);
-@@ -4335,6 +4340,8 @@ static void bnxt_init_ring_struct(struct bnxt *bp)
- 		if (!rxr)
- 			goto skip_rx;
- 
-+		rxr->rx_page_size = BNXT_RX_PAGE_SIZE;
-+
- 		ring = &rxr->rx_ring_struct;
- 		rmem = &ring->ring_mem;
- 		rmem->nr_pages = bp->rx_nr_pages;
-@@ -4494,7 +4501,7 @@ static void bnxt_init_one_rx_agg_ring_rxbd(struct bnxt *bp,
- 	ring = &rxr->rx_agg_ring_struct;
- 	ring->fw_ring_id = INVALID_HW_RING_ID;
- 	if ((bp->flags & BNXT_FLAG_AGG_RINGS)) {
--		type = ((u32)BNXT_RX_PAGE_SIZE << RX_BD_LEN_SHIFT) |
-+		type = ((u32)rxr->rx_page_size << RX_BD_LEN_SHIFT) |
- 			RX_BD_TYPE_RX_AGG_BD;
- 
- 		/* On P7, setting EOP will cause the chip to disable
-@@ -7071,6 +7078,7 @@ static void bnxt_hwrm_ring_grp_free(struct bnxt *bp)
- 
- static void bnxt_set_rx_ring_params_p5(struct bnxt *bp, u32 ring_type,
- 				       struct hwrm_ring_alloc_input *req,
-+				       struct bnxt_rx_ring_info *rxr,
- 				       struct bnxt_ring_struct *ring)
- {
- 	struct bnxt_ring_grp_info *grp_info = &bp->grp_info[ring->grp_idx];
-@@ -7080,7 +7088,7 @@ static void bnxt_set_rx_ring_params_p5(struct bnxt *bp, u32 ring_type,
- 	if (ring_type == HWRM_RING_ALLOC_AGG) {
- 		req->ring_type = RING_ALLOC_REQ_RING_TYPE_RX_AGG;
- 		req->rx_ring_id = cpu_to_le16(grp_info->rx_fw_ring_id);
--		req->rx_buf_size = cpu_to_le16(BNXT_RX_PAGE_SIZE);
-+		req->rx_buf_size = cpu_to_le16(rxr->rx_page_size);
- 		enables |= RING_ALLOC_REQ_ENABLES_RX_RING_ID_VALID;
- 	} else {
- 		req->rx_buf_size = cpu_to_le16(bp->rx_buf_use_size);
-@@ -7094,6 +7102,7 @@ static void bnxt_set_rx_ring_params_p5(struct bnxt *bp, u32 ring_type,
- }
- 
- static int hwrm_ring_alloc_send_msg(struct bnxt *bp,
-+				    struct bnxt_rx_ring_info *rxr,
- 				    struct bnxt_ring_struct *ring,
- 				    u32 ring_type, u32 map_index)
- {
-@@ -7150,7 +7159,8 @@ static int hwrm_ring_alloc_send_msg(struct bnxt *bp,
- 			      cpu_to_le32(bp->rx_ring_mask + 1) :
- 			      cpu_to_le32(bp->rx_agg_ring_mask + 1);
- 		if (bp->flags & BNXT_FLAG_CHIP_P5_PLUS)
--			bnxt_set_rx_ring_params_p5(bp, ring_type, req, ring);
-+			bnxt_set_rx_ring_params_p5(bp, ring_type, req,
-+						   rxr, ring);
- 		break;
- 	case HWRM_RING_ALLOC_CMPL:
- 		req->ring_type = RING_ALLOC_REQ_RING_TYPE_L2_CMPL;
-@@ -7298,7 +7308,7 @@ static int bnxt_hwrm_rx_ring_alloc(struct bnxt *bp,
- 	u32 map_idx = bnapi->index;
- 	int rc;
- 
--	rc = hwrm_ring_alloc_send_msg(bp, ring, type, map_idx);
-+	rc = hwrm_ring_alloc_send_msg(bp, rxr, ring, type, map_idx);
- 	if (rc)
- 		return rc;
- 
-@@ -7318,7 +7328,7 @@ static int bnxt_hwrm_rx_agg_ring_alloc(struct bnxt *bp,
- 	int rc;
- 
- 	map_idx = grp_idx + bp->rx_nr_rings;
--	rc = hwrm_ring_alloc_send_msg(bp, ring, type, map_idx);
-+	rc = hwrm_ring_alloc_send_msg(bp, rxr, ring, type, map_idx);
- 	if (rc)
- 		return rc;
- 
-@@ -7342,7 +7352,7 @@ static int bnxt_hwrm_cp_ring_alloc_p5(struct bnxt *bp,
- 
- 	ring = &cpr->cp_ring_struct;
- 	ring->handle = BNXT_SET_NQ_HDL(cpr);
--	rc = hwrm_ring_alloc_send_msg(bp, ring, type, map_idx);
-+	rc = hwrm_ring_alloc_send_msg(bp, NULL, ring, type, map_idx);
- 	if (rc)
- 		return rc;
- 	bnxt_set_db(bp, &cpr->cp_db, type, map_idx, ring->fw_ring_id);
-@@ -7357,7 +7367,7 @@ static int bnxt_hwrm_tx_ring_alloc(struct bnxt *bp,
- 	const u32 type = HWRM_RING_ALLOC_TX;
- 	int rc;
- 
--	rc = hwrm_ring_alloc_send_msg(bp, ring, type, tx_idx);
-+	rc = hwrm_ring_alloc_send_msg(bp, NULL, ring, type, tx_idx);
- 	if (rc)
- 		return rc;
- 	bnxt_set_db(bp, &txr->tx_db, type, tx_idx, ring->fw_ring_id);
-@@ -7383,7 +7393,7 @@ static int bnxt_hwrm_ring_alloc(struct bnxt *bp)
- 
- 		vector = bp->irq_tbl[map_idx].vector;
- 		disable_irq_nosync(vector);
--		rc = hwrm_ring_alloc_send_msg(bp, ring, type, map_idx);
-+		rc = hwrm_ring_alloc_send_msg(bp, NULL, ring, type, map_idx);
- 		if (rc) {
- 			enable_irq(vector);
- 			goto err_out;
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index b140799f07d69..9a1be6b71219d 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -1105,6 +1105,7 @@ struct bnxt_rx_ring_info {
- 
- 	unsigned long		*rx_agg_bmap;
- 	u16			rx_agg_bmap_size;
-+	u32			rx_page_size;
- 	bool                    need_head_pool;
- 
- 	dma_addr_t		rx_desc_mapping[MAX_RX_PAGES];
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-index c94a391b1ba5b..85cbeb35681c2 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-@@ -183,7 +183,7 @@ void bnxt_xdp_buff_init(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
- 			u16 cons, u8 *data_ptr, unsigned int len,
- 			struct xdp_buff *xdp)
- {
--	u32 buflen = BNXT_RX_PAGE_SIZE;
-+	u32 buflen = rxr->rx_page_size;
- 	struct bnxt_sw_rx_bd *rx_buf;
- 	struct pci_dev *pdev;
- 	dma_addr_t mapping;
-@@ -460,7 +460,7 @@ int bnxt_xdp(struct net_device *dev, struct netdev_bpf *xdp)
- 
- struct sk_buff *
- bnxt_xdp_build_skb(struct bnxt *bp, struct sk_buff *skb, u8 num_frags,
--		   struct page_pool *pool, struct xdp_buff *xdp)
-+		   struct bnxt_rx_ring_info *rxr, struct xdp_buff *xdp)
- {
- 	struct skb_shared_info *sinfo = xdp_get_shared_info_from_buff(xdp);
- 
-@@ -468,7 +468,7 @@ bnxt_xdp_build_skb(struct bnxt *bp, struct sk_buff *skb, u8 num_frags,
- 		return NULL;
- 
- 	xdp_update_skb_frags_info(skb, num_frags, sinfo->xdp_frags_size,
--				  BNXT_RX_PAGE_SIZE * num_frags,
-+				  rxr->rx_page_size * num_frags,
- 				  xdp_buff_get_skb_flags(xdp));
- 	return skb;
- }
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
-index 220285e190fcd..8933a0dec09a6 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
-@@ -32,6 +32,6 @@ void bnxt_xdp_buff_init(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
- void bnxt_xdp_buff_frags_free(struct bnxt_rx_ring_info *rxr,
- 			      struct xdp_buff *xdp);
- struct sk_buff *bnxt_xdp_build_skb(struct bnxt *bp, struct sk_buff *skb,
--				   u8 num_frags, struct page_pool *pool,
-+				   u8 num_frags, struct bnxt_rx_ring_info *rxr,
- 				   struct xdp_buff *xdp);
- #endif
 -- 
 2.53.0
 
