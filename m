@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7142D5A01;
-	Mon, 17 Aug 2026 14:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B653B811F;
+	Mon, 17 Aug 2026 14:07:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975620; cv=none; b=nvs7qWCq8CxX03BUXdNfdccCFBGc/qchJhucFTPxn1LCqMrZ6pyjU6fw/Qa/gE7b514u8tgyOERPB9TwiyVx0jg5iHkjNARxluiktb+5ITRPLRYOilkbkUYJbyADTuR8F2mnpEhX+DleY+k0vK/ND/FIY0udVxP6aiRfafzgoVs=
+	t=1786975623; cv=none; b=s/GX9tlzlizz7uQa+1mGZN7FQh59Ls4djnuOOXNDJgPIfg+ZGQeoZoLssFrdP0IBz7IX4hUnvzhv//zpZ1UVtRJyStn37BVediCGcKUa4fSRnseGSE3/GZ1SPZLP7lKs9GCWs+DRe0gOMCA11hTfiBMRqTInwe2xCbiYS1nCuyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975620; c=relaxed/simple;
-	bh=SBCNSmRU37r0bfQ9yl75V6/yUCNOnegkloTV+CbnxtI=;
+	s=arc-20240116; t=1786975623; c=relaxed/simple;
+	bh=xrFcLJ0mnAjgnRi8vhgIdO4vdnrtqdIjxVvgV46sBx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HRqn9OK3vV9haDkjHjwRxWGPHg+xlqRWAFx09gd7LtErXz/eD4/bxVUucTxtbudcyCrVNDc4VEzUQ4XBlrxBgRMhPL5BmGcdMlkRQGy5TvDekSL6s07sECOYh/RN1K84hmJYm207LzYO9DlHL4GjckfDx+XIsGNJeuKl490I5R8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5D8OURU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jdYQGgLr+Mgd4hdQHBlVnYOezOoq7Bc6fwoc/rLaLixzUFFy0MoIZFPajri9k+IhXkJ4Aqg8bXAMCbCBbyW5q4UmbNQz45xz/e9j9MmV3A6/uwCYpbXNLXjuYnbAB0P93W7KyezMwBGHQEWFbNlIDtZdseRxC9ev7zSWeBz0hYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJRWBJNf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5D8OURU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569721F000E9;
-	Mon, 17 Aug 2026 14:06:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJRWBJNf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39BCD1F00A3A;
+	Mon, 17 Aug 2026 14:07:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975618;
-	bh=jIAfEkShMEIs3IgCYYp3CLXn/ZG0O2ERbDxu89bjG0Q=;
+	s=korg; t=1786975621;
+	bh=v5N6ZFZ8DSlMaaNjOGPHHDZdPFsITTKcHUmtvzxwFq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f5D8OURUrzthwauiGbmFiwWKvVz8u9y87D0YuyObH96nUqHEyZofpR4beS2eWO3g8
-	 uy4hhcHnasdCJxWcQ0dH+NHa7UL8WZTv4/Wng5s+Bz2goya9V1gvA2Fui6QG+jVA5V
-	 k6P5Hhw33OOoEMXcX6Na+RpnTe+IPMMA9MEtaiEg=
+	b=EJRWBJNfNwMYibRL2gwsToEV67JgcoKifQbuzMijaYRo1NMMxO1Nq9TpK3mNfXmkp
+	 ysX+sEuMpJek081H9jLrHMB003nEkNj6kt+urx8W+utyo3RJTMsBnxtsoCTPp5aIV7
+	 XttKmw2QVKjlrKaDSuE/YSSIeJk37hiwdwAUDPIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshaka Narayana <harshaka.narayana@broadcom.com>,
-	Ronak Doshi <ronak.doshi@broadcom.com>,
-	Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>,
+	AutonomousCodeSecurity@microsoft.com,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
 	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 090/389] vmxnet3: fix BUG_ON in vmxnet3_get_hdr_len() for Geneve packets
-Date: Mon, 17 Aug 2026 15:28:49 +0200
-Message-ID: <20260817132542.623136947@linuxfoundation.org>
+Subject: [PATCH 5.10 091/389] tipc: fix u16 MTU truncation in media and bearer MTU validation
+Date: Mon, 17 Aug 2026 15:28:50 +0200
+Message-ID: <20260817132542.657975689@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -54,84 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshaka Narayana <harshaka.narayana@broadcom.com>
+From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 
-[ Upstream commit 34a71f5361fc3adb5b7138da78750b0d535a8252 ]
+[ Upstream commit 9f29cd8a8e7901a2617c8064ce9f50fc67b97cb8 ]
 
-vmxnet3_get_hdr_len() assumes gdesc->rcd.v4/v6/tcp always describe the
-outer header, but for a Geneve-encapsulated packet the device can set
-them based on the inner header instead, signalled by the
-VMXNET3_RCD_HDR_INNER_SHIFT bit in the completion descriptor. Since the
-function never skips the outer encapsulation, this mismatch triggers:
+Both TIPC_NL_MEDIA_SET and TIPC_NL_BEARER_SET accept user-supplied
+MTU values but only enforce a minimum bound, not a maximum. When a user
+sets the MTU to a value exceeding U16_MAX (65535), it passes validation
+but is silently truncated when assigned to u16 fields l->mtu and
+l->advertised_mtu in tipc_link_create(). Values like 65536 (0x10000)
+truncate to 0, causing a division by zero in tipc_link_set_queue_limits()
+which computes TIPC_MAX_PUBL / (l->mtu / ITEM_SIZE). Other overflowing
+values (e.g. 65537-131071) produce small incorrect MTU values, resulting
+in link malfunction behaviors.
 
-- BUG_ON(hdr.ipv4->protocol != IPPROTO_TCP), because the outer
-  protocol is UDP (Geneve), not TCP.
-- BUG_ON(hdr.eth->h_proto != ...), when the tunnel's outer and inner
-  IP versions differ (e.g. outer IPv6/inner IPv4 or vice versa).
+Crash stack (triggered as unprivileged user via user namespace):
 
-Check VMXNET3_RCD_HDR_INNER_SHIFT up front and bail out, since the
-function cannot locate the inner header it would need to parse. Also
-convert the remaining BUG_ON()s in this function to return 0
-defensively.
+  tipc_link_set_queue_limits  net/tipc/link.c:2531
+  tipc_link_create            net/tipc/link.c:520
+  tipc_node_check_dest        net/tipc/node.c:1279
+  tipc_disc_rcv               net/tipc/discover.c:252
+  tipc_rcv                    net/tipc/node.c:2129
+  tipc_udp_recv               net/tipc/udp_media.c:392
 
-Fixes: 45dac1d6ea04 ("vmxnet3: Changes for vmxnet3 adapter version 2 (fwd)")
-Signed-off-by: Harshaka Narayana <harshaka.narayana@broadcom.com>
-Reviewed-by: Ronak Doshi <ronak.doshi@broadcom.com>
-Reviewed-by: Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>
+Two independent paths lack the upper bound check:
+1. tipc_udp_mtu_bad() -- called from __tipc_nl_media_set() (MEDIA_SET)
+2. inline check in __tipc_nl_bearer_set() at bearer.c:1160 (BEARER_SET)
+
+Fix both by rejecting MTU values above U16_MAX.
+
+Fixes: 901271e0403a ("tipc: implement configuration of UDP media MTU")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Closes: https://lore.kernel.org/all/CAB8m9WgETt0AjmFwE=F-CKjGXsK6_WDv0=kbYRcC8-noo+amnA@mail.gmail.com
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260713140915.3381715-1-harshaka.narayana@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260714041541.307702-1-blbllhy@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vmxnet3/vmxnet3_drv.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ net/tipc/netlink.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/vmxnet3/vmxnet3_drv.c b/drivers/net/vmxnet3/vmxnet3_drv.c
-index f3c628a64b9545..b670259d9393d3 100644
---- a/drivers/net/vmxnet3/vmxnet3_drv.c
-+++ b/drivers/net/vmxnet3/vmxnet3_drv.c
-@@ -1313,7 +1313,11 @@ vmxnet3_get_hdr_len(struct vmxnet3_adapter *adapter, struct sk_buff *skb,
- 		struct ipv6hdr *ipv6;
- 		struct tcphdr *tcp;
- 	} hdr;
--	BUG_ON(gdesc->rcd.tcp == 0);
-+
-+	/* v4/v6/tcp then describe the inner header, which we can't locate. */
-+	if ((le32_to_cpu(gdesc->dword[0]) & (1UL << VMXNET3_RCD_HDR_INNER_SHIFT)) ||
-+	    gdesc->rcd.tcp == 0)
-+		return 0;
+--- a/net/tipc/netlink.c
++++ b/net/tipc/netlink.c
+@@ -113,12 +113,16 @@ const struct nla_policy tipc_nl_node_pol
+ };
  
- 	maplen = skb_headlen(skb);
- 	if (unlikely(sizeof(struct iphdr) + sizeof(struct tcphdr) > maplen))
-@@ -1327,15 +1331,21 @@ vmxnet3_get_hdr_len(struct vmxnet3_adapter *adapter, struct sk_buff *skb,
- 
- 	hdr.eth = eth_hdr(skb);
- 	if (gdesc->rcd.v4) {
--		BUG_ON(hdr.eth->h_proto != htons(ETH_P_IP) &&
--		       hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IP));
-+		if (hdr.eth->h_proto != htons(ETH_P_IP) &&
-+		    hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IP))
-+			return 0;
+ /* Properties valid for media, bearer and link */
++static struct netlink_range_validation tipc_nl_mtu_range = {
++	.max = U16_MAX,
++};
 +
- 		hdr.ptr += hlen;
--		BUG_ON(hdr.ipv4->protocol != IPPROTO_TCP);
-+		if (hdr.ipv4->protocol != IPPROTO_TCP)
-+			return 0;
-+
- 		hlen = hdr.ipv4->ihl << 2;
- 		hdr.ptr += hdr.ipv4->ihl << 2;
- 	} else if (gdesc->rcd.v6) {
--		BUG_ON(hdr.eth->h_proto != htons(ETH_P_IPV6) &&
--		       hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IPV6));
-+		if (hdr.eth->h_proto != htons(ETH_P_IPV6) &&
-+		    hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IPV6))
-+			return 0;
-+
- 		hdr.ptr += hlen;
- 		/* Use an estimated value, since we also need to handle
- 		 * TSO case.
--- 
-2.53.0
-
+ const struct nla_policy tipc_nl_prop_policy[TIPC_NLA_PROP_MAX + 1] = {
+ 	[TIPC_NLA_PROP_UNSPEC]		= { .type = NLA_UNSPEC },
+ 	[TIPC_NLA_PROP_PRIO]		= { .type = NLA_U32 },
+ 	[TIPC_NLA_PROP_TOL]		= { .type = NLA_U32 },
+ 	[TIPC_NLA_PROP_WIN]		= { .type = NLA_U32 },
+-	[TIPC_NLA_PROP_MTU]		= { .type = NLA_U32 },
++	[TIPC_NLA_PROP_MTU]		= NLA_POLICY_FULL_RANGE(NLA_U32, &tipc_nl_mtu_range),
+ 	[TIPC_NLA_PROP_BROADCAST]	= { .type = NLA_U32 },
+ 	[TIPC_NLA_PROP_BROADCAST_RATIO]	= { .type = NLA_U32 }
+ };
 
 
