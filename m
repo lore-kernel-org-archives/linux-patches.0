@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F683E764C;
-	Mon, 17 Aug 2026 13:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB6E315D5D;
+	Mon, 17 Aug 2026 13:43:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974199; cv=none; b=M1tNhojJl7ShoQQbWaCo1zpoRcrGFFUfAuiexl0ZzXfRivyGallTr5wsbmJFE18Fl5TJyjr7yjIJlvb4voy84RluysE2WSuQ++IOVm5o8Vv0PZCTTTxH/2/hn8wewd2EtUPUAQ5lUP00qfb+S1rdlCfFgM/fhfRA5NVLGFdZvXI=
+	t=1786974202; cv=none; b=LxrurcZGieF5/y7ZfDApTg5KWQtNsYHiyVr5WviK25Tz225Izmh5Iy9/28xLg/z8lC9QLNTeD4T1zE5n/wyI0dTyqvUpmG3Oeiz5MJSKi5AxKUCpxhEpmhI3RWfuz1DAAlm1aHTJljZNtfBpj5q1MENICv0nTTHqCqK2asKpAa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974199; c=relaxed/simple;
-	bh=JWnZg1Gspy35z2vfSpM3t2z0nX8iHg3dy1Ya7pRz7G4=;
+	s=arc-20240116; t=1786974202; c=relaxed/simple;
+	bh=SV4i6LuD+CDZ7FVd82NXxnetcEAE8Rr+KgzuM+Uz2Vk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l1RUtX/ug8vgWefth0KPslpwpoXPVzdzFJhZkUF6QEfJto/0JTik1q56Uan4kNwxMsiKTwRaj28f4azr1hkJylOL5UWgLHrBmI+P16ATdq5nM+IIzFX4JM4ByPQbYXevLsyz9DpbI3vOZNWl2YSbyYlmun/R5zGBGPT1gIGdgFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QE1DWzin; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=a7/Pam2lYTP0600G6aNqm1hSPi2ZwiP8c2fACSvfF1p/FFcR3EAmH3sJANX9Q1/rwh7XtP4lLKORDzi/4dJlJuX0yIXv6HN23dpsdo7QAZzxeWYworVYelA370WWfeA+xOi7uOMT8+e9NeSsSE0y/Re8cfMbqAOFzxJ+T5ph9x8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=prlWf/J5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QE1DWzin"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA97F1F000E9;
-	Mon, 17 Aug 2026 13:43:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="prlWf/J5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9FF01F000E9;
+	Mon, 17 Aug 2026 13:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974198;
-	bh=XcgbJxr52W+29fJIeDnWg6DNi83twGCxDRpmGR5JFXM=;
+	s=korg; t=1786974201;
+	bh=H8QW7HDImFTligrdM3agl3VOg1aaMzKIMhvqubXlsAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QE1DWzino/fhktzGb2lpOG1eCkg/ddvIvXwuQ45RqBCkpXsSyQ75Gd2MN2GtZmiii
-	 bn85RERaiUEzCBQDmdi+444a+FWhWvdcQSfCSE63UsFkmgTGrBeGwoTMQaqIWqR703
-	 8c3CxBVPbbUrz/7X/Q53r/V3isqDFr9PVa29zBzM=
+	b=prlWf/J5aNOWSb4xXdx3mvHGUUoO4SLRRCwCdJqip9BQZZ+ovx7JPooESJkbf22OU
+	 vkQDwvcUtnUMumaFBy7cIFFApFVMyn/+u64sEpTh7wxeo9iTgIwgOOZ8ih0CUYrney
+	 Bw6Y7w0YhhTXMjwX3GbF+G7M4AbjscY9kEau+aF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Xue <feng.xue@outlook.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Martin Hodo <martin.hodo@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 084/271] net/sched: cls_api: Always acquire rtnl_lock when destroying locked classifiers
-Date: Mon, 17 Aug 2026 15:30:09 +0200
-Message-ID: <20260817132540.208642843@linuxfoundation.org>
+Subject: [PATCH 7.1 085/271] drm/xe: Fix memory leak in exec_queue_set_hang_replay_state()
+Date: Mon, 17 Aug 2026 15:30:10 +0200
+Message-ID: <20260817132540.249958925@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -47,119 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Michał Winiarski <michal.winiarski@intel.com>
 
-[ Upstream commit a347304b2ca1a5377d5bd2d8a72e4b4f12afe648 ]
+[ Upstream commit c5f500161709f27719701334190dff2325868ef0 ]
 
-Another challenge with unlocked filters.
-There is a short window in tc_new_tfilter where a tcf_proto can be found
-and briefly referenced by a totally unrelated, unlocked classifier's request
-and cause a race.
+The q->replay_state is blindly overwritten, which can potentially leak
+memory that was previously allocated by vmemdup_user().
+Return an error if q->replay_state is not empty.
 
-Feng created a poc which created this race with two threads, one creating a
-u32 filter and other a flower filter in the same chain/prio:
+Discovered using AI-assisted static analysis confirmed by Intel Product
+Security.
 
-1. Both threads enter tc_new_tfilter, both find the chain empty, both
-   drop filter_chain_lock
-2. u32 finishes tcf_proto_create("u32") first, calls
-   tcf_chain_tp_insert_unique() -> inserts u32_tp into the chain
-3. flower finishes tcf_proto_create("flower") later, calls
-   tcf_chain_tp_insert_unique() -> tcf_chain_tp_find() now sees u32_tp
-   already there, takes a reference on it, destroys flower's own tp_new
-   and returns u32_tp to the caller.
-
-Flower then hits the kind mismatch check (because it requested for kind
-"flower" but tp->ops->kind is "u32") and goes through the errout path
-which calls tcf_proto_put() on u32_tp. If the u32 thread has already
-gone through its own errout (its change() call failed on the PoC's empty
-options) and dropped its create and insert refs, flower's put is the
-last one and drops u32_tp's refcnt to zero.
-
-At this point tp->ops->destroy() runs in a context that never took
-rtnl_lock. When that happens, it might cause a UAF like the following
-(illustrated by the PoC):
-
-[  +0.000710] BUG: KASAN: slab-use-after-free in u32_init (net/sched/cls_u32.c:393)
-[  +0.000281] Read of size 8 at addr ffff888120022f00 by task poc_feng_xue/524
-
-  Call Trace:
-   u32_init (net/sched/cls_u32.c:393)
-   tc_new_tfilter (net/sched/cls_api.c:2378)
-
-  Allocated by task 526:
-   u32_init (net/sched/cls_u32.c:378)
-   tc_new_tfilter (net/sched/cls_api.c:2378)
-
-  Freed by task 522:
-   kfree
-   u32_destroy (net/sched/cls_u32.c:662)
-   tcf_proto_destroy (net/sched/cls_api.c:446)
-   tcf_proto_put (net/sched/cls_api.c:459)
-   tc_new_tfilter (net/sched/cls_api.c:2459)
-
-Fix this by having tcf_proto_destroy() take rtnl_lock around
-tp->ops->destroy() for locked classifiers whenever rtnl is not held.
-
-To explain why I used a temp variable "not_lockless" I'd like to point to a
-semi-related note on rtnl_held vs TCF_PROTO_OPS_DOIT_UNLOCKED (adding here
-for future cleanup if deemed necessary):
-The rtnl_held parameter and the TCF_PROTO_OPS_DOIT_UNLOCKED flag are
-redundant sources of truth for whether rtnl_lock is held. Among the nine
-classifier destroy(..rtnl_held..) callbacks, only flower consults the
-rtnl_held parameter which it propagates to tc_setup_cb_destroy()
-and tc_setup_cb_call(). The other eight (u32, flow, bpf, cgroup, route, basic,
-fw, mall) ignore it entirely;-> those that call tc_setup_cb_destroy()
-(u32, bpf, mall) hardcode true always instead of forwarding the parameter.
-
-A future cleanup should remove the rtnl_held parameter from the destroy callback
-signature entirely and have callers rely solely on their knowledge whether
-they are running in an unlocked context.
-
-Fixes: 12db03b65c2b ("net: sched: extend proto ops to support unlocked classifiers")
-Reported-by: Feng Xue <feng.xue@outlook.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260801125632.360365-1-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Martin Hodo <martin.hodo@intel.com>
+Fixes: 1026c1a73a96 ("drm/xe: Implement DRM_XE_EXEC_QUEUE_SET_HANG_REPLAY_STATE")
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260624111421.1258364-1-michal.winiarski@intel.com
+Signed-off-by: Michał Winiarski <michal.winiarski@intel.com>
+(cherry picked from commit f6b6cc1118bdbc4265fa8b3bdf8565b26f13e56e)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_api.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_exec_queue.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index fee4524adc98e..4e6a2812a4f32 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -443,7 +443,22 @@ static void tcf_chain_put(struct tcf_chain *chain);
- static void tcf_proto_destroy(struct tcf_proto *tp, bool rtnl_held,
- 			      bool sig_destroy, struct netlink_ext_ack *extack)
- {
--	tp->ops->destroy(tp, rtnl_held, extack);
-+	/* A locked classifier's destroy callback (e.g. u32_destroy) uses
-+	 * rtnl_dereference() and mutates shared structures (e.g. the
-+	 * tc_u_common hash list) that are only safe under rtnl_lock. When an
-+	 * unlocked classifier's request (e.g. flower on ingress) loses the
-+	 * tcf_chain_tp_insert_unique() race and ends up dropping the last
-+	 * reference on a locked classifier's proto, destroy() would run
-+	 * without rtnl held. Take it here in that case.
-+	 */
-+	bool not_lockless = !rtnl_held &&
-+		!(tp->ops->flags & TCF_PROTO_OPS_DOIT_UNLOCKED);
+diff --git a/drivers/gpu/drm/xe/xe_exec_queue.c b/drivers/gpu/drm/xe/xe_exec_queue.c
+index 071b8c41df43e..85778958f5803 100644
+--- a/drivers/gpu/drm/xe/xe_exec_queue.c
++++ b/drivers/gpu/drm/xe/xe_exec_queue.c
+@@ -801,6 +801,9 @@ static int exec_queue_set_hang_replay_state(struct xe_device *xe,
+ 	u64 __user *address = u64_to_user_ptr(value);
+ 	void *ptr;
+ 
++	if (q->replay_state)
++		return -EINVAL;
 +
-+	if (not_lockless)
-+		rtnl_lock();
-+	tp->ops->destroy(tp, rtnl_held || not_lockless, extack);
-+	if (not_lockless)
-+		rtnl_unlock();
- 	tcf_proto_count_usesw(tp, false);
- 	if (sig_destroy)
- 		tcf_proto_signal_destroyed(tp->chain, tp);
+ 	ptr = vmemdup_user(address, size);
+ 	if (XE_IOCTL_DBG(xe, IS_ERR(ptr)))
+ 		return PTR_ERR(ptr);
 -- 
 2.53.0
 
