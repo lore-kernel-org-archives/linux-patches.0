@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B473E172F;
-	Mon, 17 Aug 2026 13:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C276A3EEAE2;
+	Mon, 17 Aug 2026 13:46:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974372; cv=none; b=pyw3PtlS+/BDlCrRyhpS9BBwwm//WANoeLpHhpx+LXcMd5IWXPdx3yAbGf1tPy0cky5PtBL8rKV/soT9NUM3YxHaTtBbjQtd6H3dxNw+GCBWRAHpVZV5i31zgIMA0iT0qycdJvCp1GCtNPj/A4GAZdK+KdLuMpFtpx1Tev04Pnk=
+	t=1786974378; cv=none; b=qBUyJAyp2Uj8tGq06Xv8mkibRdYJtXN3LGdxRh9pqqyJxstYR9R83d267LoMr5rXujnhaX6f7/ATSOHLjoLEQQuaYniS0FAeFYMEOUxuEk2A3w2qqOCRcnUcgzqx50dGMCRSN7/nqlJM4vineHEDMEMGtrpkzmpmdsxZiA/pk0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974372; c=relaxed/simple;
-	bh=SDjIh/WLJpuwMLNd4EfzJ6Bd69M1jjnKgDqSPTsgxio=;
+	s=arc-20240116; t=1786974378; c=relaxed/simple;
+	bh=35mnFRVyTfaPYHNffOp4VqjSFg0ESNlszN39yXPhbQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OL/9sEBotf4DOBAnwM5PzARjdks4iOiWbLTxMB5unzWX7aqRmpv7Jwo2QSWgrSaJ4Bge0g0S+FDH0ZCNe4dmJK1p5XBo86VrbmbTqzaOUZRT2j6Xl3wldbxglpXZ3QBk5zc8vTtiJwffWe0TscEEneqtjC1WavREs3FaP1iI9Wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgVzwznC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uUuSXd3FmnoN1EgpyNzBGZmTONubIdu19usCykUM8qmR+Go/T2GhFQL4LxmgcG4liuUNGXbvJGnCbWyJTuAagM1AMgklDlo9FdJ8wiy3mq3TUHnpChV7S0f+8doMJaCagrobWiMqOjxCyg6w9tb0QNda/87CYuIiCGdWUKsH6sE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/p9Z7h0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgVzwznC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8524D1F00A3A;
-	Mon, 17 Aug 2026 13:46:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/p9Z7h0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA851F000E9;
+	Mon, 17 Aug 2026 13:46:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974368;
-	bh=yPd5afVWj/ajLb0ZWNNH/KoOZhOginP5E60KhJHw1RQ=;
+	s=korg; t=1786974373;
+	bh=egj4d/NRg1Mvj22J+83o+7BbxfKZU9ELmVDVlfcReRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tgVzwznCjYeOqTp10x5HhZaO+TPCNKloD5IZWmeHPIieoxMfJtPgVoEyYJxs4W/E2
-	 mYjErIU4/e5OVSwwagFWVg2PAuFMWUS14Nj0Y/+pjpaNCCgTghCE7Lxkl6Hn2eAtbm
-	 pBtaO0Asjo8D5X3gg1Pcjkujy2qDpZ4dcYJlU9Ic=
+	b=P/p9Z7h0OilLt+ehxPScCbZUUHeRW2ohXNsd8zyLG9x8YIAOkfnBKImFuzVLepGON
+	 5KcgSUAIL0T8khPMnO/bcig9UD8Um9nNYQwpffXdyEcDP5wfkdOCjSVmBXtLPckLUK
+	 5xaj5wVb6UWdOyGm9x1w1/uQOM1Es99FoVukwrgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Fan Wu <fanwu01@zju.edu.cn>
-Subject: [PATCH 7.1 182/271] serial: amba-pl011: cancel RS485 hrtimers after freeing IRQ
-Date: Mon, 17 Aug 2026 15:31:47 +0200
-Message-ID: <20260817132544.313131813@linuxfoundation.org>
+	Jason Xing <kernelxing@tencent.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
+	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re=20 ?=" <ricardo@marliere.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 166/271] selftests/xsk: account reclaimed invalid Tx descriptors
+Date: Mon, 17 Aug 2026 15:31:31 +0200
+Message-ID: <20260817132543.718701261@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -44,124 +48,137 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-commit 36672c8d7d14e9c43287528455d2c97b526ea6ad upstream.
+[ Upstream commit f49d99eaee7c32badc7ddfaecbb01ce4d037d695 ]
 
-The RS485 trigger hrtimers are embedded in the devm-managed port and can
-fire after it is freed. The IRQ handler can arm a timer, so free the IRQ
-first and then cancel both timers.
+Invalid Tx descriptors are now returned through the completion ring,
+regardless of whether they form a standalone packet or belong to an
+invalid multi-buffer packet.
 
-Complete the RS485 stop without arming a timer, and cancel the timers
-in remove() for the suspend-then-unbind path, where shutdown is not
-called.
+The selftests previously counted only descriptors belonging to valid
+packets, with a special exception for some invalid multi-buffer packets
+in verbatim streams. This undercounts completion entries when a
+standalone invalid descriptor or another invalid packet is reclaimed by
+the kernel.
 
-This issue was found by an in-house static analysis tool.
+Keep valid_pkts as the number of packets expected on the Rx side, but
+count every descriptor submitted to the Tx ring in valid_frags, as every
+such descriptor is now expected to be returned through the completion
+ring.
 
-Fixes: 2c1fd53af21b ("serial: amba-pl011: Fix RTS handling in RS485 mode")
-Cc: stable <stable@kernel.org>
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260731085915.326775-3-fanwu01@zju.edu.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Make fragment counting in verbatim mode follow the packet boundary
+instead of stopping at the first invalid fragment. Update custom stream
+generation so an invalid middle fragment terminates the generated Rx
+packet while Tx completion accounting still covers the complete invalid
+packet.
+
+Also add explicit end fragments after invalid middle descriptors. This
+exercises the kernel drain logic and verifies that subsequent valid
+packets are not interpreted as continuations of the invalid packet.
+
+[ rbm: in testapp_invalid_desc_mb() hunk, use umem_size instead of umem_sz
+]
+
+Reviewed-by: Jason Xing <kernelxing@tencent.com>
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20260719135609.147823-7-maciej.fijalkowski@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ricardo B. Marlière (SUSE) <ricardo@marliere.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/amba-pl011.c |   52 ++++++++++++++++++++++++++--------------
- 1 file changed, 35 insertions(+), 17 deletions(-)
+ .../selftests/bpf/prog_tests/test_xsk.c       | 26 ++++++++++---------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
---- a/drivers/tty/serial/amba-pl011.c
-+++ b/drivers/tty/serial/amba-pl011.c
-@@ -1302,11 +1302,30 @@ static inline bool pl011_dma_rx_running(
- #define pl011_dma_flush_buffer	NULL
- #endif
- 
--static void pl011_rs485_tx_stop(struct uart_amba_port *uap)
-+static void pl011_rs485_tx_stop_now(struct uart_amba_port *uap)
- {
- 	struct uart_port *port = &uap->port;
- 	u32 cr;
- 
-+	cr = pl011_read(uap, REG_CR);
-+
-+	if (port->rs485.flags & SER_RS485_RTS_AFTER_SEND)
-+		cr &= ~UART011_CR_RTS;
-+	else
-+		cr |= UART011_CR_RTS;
-+
-+	/* Disable the transmitter and reenable the transceiver */
-+	cr &= ~UART011_CR_TXE;
-+	cr |= UART011_CR_RXE;
-+	pl011_write(cr, uap, REG_CR);
-+
-+	uap->rs485_tx_state = OFF;
-+}
-+
-+static void pl011_rs485_tx_stop(struct uart_amba_port *uap)
-+{
-+	struct uart_port *port = &uap->port;
-+
- 	if (uap->rs485_tx_state == SEND)
- 		uap->rs485_tx_state = WAIT_AFTER_SEND;
- 
-@@ -1330,19 +1349,7 @@ static void pl011_rs485_tx_stop(struct u
- 		hrtimer_try_to_cancel(&uap->trigger_start_tx);
+diff --git a/tools/testing/selftests/bpf/prog_tests/test_xsk.c b/tools/testing/selftests/bpf/prog_tests/test_xsk.c
+index 1c48a3b5ee736..31bf8a3fcd666 100644
+--- a/tools/testing/selftests/bpf/prog_tests/test_xsk.c
++++ b/tools/testing/selftests/bpf/prog_tests/test_xsk.c
+@@ -414,14 +414,14 @@ static u32 pkt_nb_frags(u32 frame_size, struct pkt_stream *pkt_stream, struct pk
  	}
  
--	cr = pl011_read(uap, REG_CR);
+ 	/* Search for the end of the packet in verbatim mode */
+-	if (!pkt_continues(pkt->options) || !pkt->valid)
++	if (!pkt_continues(pkt->options))
+ 		return nb_frags;
+ 
+ 	next_frag = pkt_stream->current_pkt_nb;
+ 	pkt++;
+ 	while (next_frag++ < pkt_stream->nb_pkts) {
+ 		nb_frags++;
+-		if (!pkt_continues(pkt->options) || !pkt->valid)
++		if (!pkt_continues(pkt->options))
+ 			break;
+ 		pkt++;
+ 	}
+@@ -652,11 +652,11 @@ static struct pkt_stream *__pkt_stream_generate_custom(struct ifobject *ifobj, s
+ 			if (!frame->valid || !pkt_continues(frame->options))
+ 				payload++;
+ 		} else {
+-			if (frame->valid)
++			if (frame->valid) {
+ 				len += frame->len;
+-			if (frame->valid && pkt_continues(frame->options))
+-				continue;
 -
--	if (port->rs485.flags & SER_RS485_RTS_AFTER_SEND)
--		cr &= ~UART011_CR_RTS;
--	else
--		cr |= UART011_CR_RTS;
--
--	/* Disable the transmitter and reenable the transceiver */
--	cr &= ~UART011_CR_TXE;
--	cr |= UART011_CR_RXE;
--	pl011_write(cr, uap, REG_CR);
--
--	uap->rs485_tx_state = OFF;
-+	pl011_rs485_tx_stop_now(uap);
- }
++				if (pkt_continues(frame->options))
++					continue;
++			}
+ 			pkt->pkt_nb = pkt_nb;
+ 			pkt->len = len;
+ 			pkt->valid = frame->valid;
+@@ -1236,10 +1236,9 @@ static int __send_pkts(struct ifobject *ifobject, struct xsk_socket_info *xsk, b
+ 			}
+ 		}
  
- static void pl011_stop_tx(struct uart_port *port)
-@@ -2052,11 +2059,20 @@ static void pl011_shutdown(struct uart_p
+-		if (pkt && pkt->valid) {
++		if (pkt && pkt->valid)
+ 			valid_pkts++;
+-			valid_frags += nb_frags;
+-		}
++		valid_frags += nb_frags;
+ 	}
  
- 	pl011_dma_shutdown(uap);
+ 	pthread_mutex_lock(&pacing_mutex);
+@@ -2075,13 +2074,16 @@ int testapp_invalid_desc_mb(struct test_spec *test)
+ 		{0, 0, 0, false, 0},
+ 		/* Invalid address in the second frame */
+ 		{0, XSK_UMEM__LARGE_FRAME_SIZE, 0, false, XDP_PKT_CONTD},
+-		{umem_size, XSK_UMEM__LARGE_FRAME_SIZE, 0, false, XDP_PKT_CONTD},
++		{umem_size * 2, XSK_UMEM__LARGE_FRAME_SIZE, 0, false, XDP_PKT_CONTD},
++		{0, MIN_PKT_SIZE, 0, false, 0},
+ 		/* Invalid len in the middle */
+ 		{0, XSK_UMEM__LARGE_FRAME_SIZE, 0, false, XDP_PKT_CONTD},
+ 		{0, XSK_UMEM__INVALID_FRAME_SIZE, 0, false, XDP_PKT_CONTD},
++		{0, MIN_PKT_SIZE, 0, false, 0},
+ 		/* Invalid options in the middle */
+ 		{0, XSK_UMEM__LARGE_FRAME_SIZE, 0, false, XDP_PKT_CONTD},
+ 		{0, XSK_UMEM__LARGE_FRAME_SIZE, 0, false, XSK_DESC__INVALID_OPTION},
++		{0, MIN_PKT_SIZE, 0, false, 0},
+ 		/* Transmit 2 frags, receive 3 */
+ 		{0, XSK_UMEM__MAX_FRAME_SIZE, 0, true, XDP_PKT_CONTD},
+ 		{0, XSK_UMEM__MAX_FRAME_SIZE, 0, true, 0},
+@@ -2093,8 +2095,8 @@ int testapp_invalid_desc_mb(struct test_spec *test)
  
--	if ((port->rs485.flags & SER_RS485_ENABLED && uap->rs485_tx_state != OFF))
--		pl011_rs485_tx_stop(uap);
--
- 	free_irq(uap->port.irq, uap);
+ 	if (umem->unaligned_mode) {
+ 		/* Crossing a chunk boundary allowed */
+-		pkts[12].valid = true;
+-		pkts[13].valid = true;
++		pkts[15].valid = true;
++		pkts[16].valid = true;
+ 	}
  
-+	/*
-+	 * free_irq() drains the UART interrupt handler, which can arm either
-+	 * timer.  Cancel the timers afterwards to drain their callbacks too.
-+	 */
-+	hrtimer_cancel(&uap->trigger_start_tx);
-+	hrtimer_cancel(&uap->trigger_stop_tx);
-+
-+	uart_port_lock_irq(port);
-+	if (uap->rs485_tx_state != OFF)
-+		pl011_rs485_tx_stop_now(uap);
-+	uart_port_unlock_irq(port);
-+
- 	pl011_disable_uart(uap);
- 
- 	/*
-@@ -3035,6 +3051,8 @@ static void pl011_remove(struct amba_dev
- 	struct uart_amba_port *uap = amba_get_drvdata(dev);
- 
- 	uart_remove_one_port(&amba_reg, &uap->port);
-+	hrtimer_cancel(&uap->trigger_start_tx);
-+	hrtimer_cancel(&uap->trigger_stop_tx);
- 	pl011_unregister_port(uap);
- }
- 
+ 	test->mtu = MAX_ETH_JUMBO_SIZE;
+-- 
+2.53.0
+
 
 
