@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A0B175A6B;
-	Mon, 17 Aug 2026 14:38:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F793D9531;
+	Mon, 17 Aug 2026 14:38:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977521; cv=none; b=EKfQUuf8G6U6DV0PMpASZ8L9gd3j6R5giksYkDxGb+Axv355rxhnLr47olI31kKoCemLgPfHwUQw+agjeFOXSX9e43VVacGfhbQp08lp2zSXN1b6kufKHZ/FQHkE+as/5CpC/mNYkhMJQM2CSgkSDtT9aPym29mxWeHzjevyZlI=
+	t=1786977524; cv=none; b=XxpjBFaD9yJp+4w0mEtSWLRavrjtJ3mwgGVbV2Q6hDxQuBHw1i4/JlADERqZsj6xhcEN2WFg/845q7kbY/NRxa5MyHgdo7r2GcOYP9zTgVxpE1x1HKAHqQ8X1c94jS0p+fRgy8Xr5zy8goPdLxaeslBQmJ4b3KwcaqS70rf/rtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977521; c=relaxed/simple;
-	bh=cHDYD1DT6PPHVv8lw6SvVfDivPATAEm+0kHCQAXcNQw=;
+	s=arc-20240116; t=1786977524; c=relaxed/simple;
+	bh=GGMm50RrXAQuxPlZM2pPPoizkOvCEf8bIElqvJL5a6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C0cxo+X1lTQa4tb8HzOPAjQB8trW9n/JZ5iTTZFhF3RRO4s1RkWXYNcmlVpkTd4Q5L49lqf3muh6rJUoLnvMeXndva9GMP6vldv7/HW2pKpJzIZ7lt2Z+kMJhcsXbCkw4lFECMlc4VDItoNxDIPzyu+LrrbTY3Ax7vMZ/FwC3v8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kzTAlxwS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eIDTqfW/8aJNnArGuXXoiZZLYQy61kWPtp3DoYwmztlEW9au5PCUvr0WMfUiLRmK7wQF06PxSnj1E+VrpxHj46oljVIxtQVnBcau1ONF5Cu3RQyZsYkezsy7UmdMrDw0YConkWoknrllRKY9Xa2a9RP+tP2Oo8o+8ED7JVAuCeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3ihsmhp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kzTAlxwS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227F91F000E9;
-	Mon, 17 Aug 2026 14:38:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3ihsmhp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05C591F000E9;
+	Mon, 17 Aug 2026 14:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977520;
-	bh=MWxM/Ej6kIaTLWHaW9gIFtLntvR7lWumIZtGlkjGJF0=;
+	s=korg; t=1786977523;
+	bh=tcLnQS6HnGjjv0F2DZfvGJR+uBUeIXCZiycre94YXlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kzTAlxwS1MmmCt4B0E1swqsh3K3clzkGfwujbMulfI91iQw50mDqAk7VFOnwJ2oJg
-	 O9OKDgFBL/FpwmFK/gattb87j7ijRkewx7k4R07qL+X8Wg1I1wgSYwkVCOzf+UY2JI
-	 I6O7prkTHkX9QOsieJgEfW0uU06yiu+gZ3p1Iwxk=
+	b=G3ihsmhpI38alh+ga3RnjLC38TmPsA5ZH/OgXgThVS8WZzTVBoh4KU56bGgKTKhRq
+	 vtayWflY5CctciUoErOqudSUv9JMdCdkRw8mtsbcnM4MPuPmM1jcrtDBam8518pUcs
+	 j4A4KUuxx+gI2P4dEAPgdDNZMX7JyHuqFUt230Eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 319/456] net: bridge: stop fast-leave after deleting a port group
-Date: Mon, 17 Aug 2026 15:31:49 +0200
-Message-ID: <20260817132552.176069662@linuxfoundation.org>
+	Zilin Guan <zilin@seu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Dima Ruinskiy <dima.ruinskiy@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 5.15 310/456] e1000: fix memory leak in e1000_probe()
+Date: Mon, 17 Aug 2026 15:31:40 +0200
+Message-ID: <20260817132551.882863577@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -53,47 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit a39789f211b8a4125f0c70e05b30cf715f4f187d upstream.
+commit 816419dfea5c88126f35eb7a1b429a1bf546665e upstream.
 
-br_multicast_leave_group() iterates mp->ports with pp = &p->next in
-its fast-leave path. After br_multicast_del_pg() removes p,
-continuing the loop advances pp through the deleted entry.
+In the e1000_probe() path, e1000_sw_init() allocates adapter->tx_ring and
+adapter->rx_ring. If the subsequent CE4100-specific MDIO BAR mapping
+fails, the error handling jumps past the ring cleanup code, leaking both
+allocations.
 
-If multicast-to-unicast was enabled, the bridge can hold multiple port
-groups for the same port and group with different source MAC
-addresses. Once multicast-to-unicast is disabled,
-br_port_group_equal() matches those entries by port only. A fast leave
-can then delete one entry and continue from its stale next pointer,
-leaving mp->ports pointing at a deleted port group.
+Fix this leak by moving the err_mdio_ioremap label above the ring
+deallocation logic. This guarantees the proper release of these resources
+and prevents the memory leak.
 
-Fast leave only needs to remove one matching port group. Break after
-br_multicast_del_pg() so the loop stops before dereferencing the
-removed entry.
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1-rc6.
 
-Fixes: 6db6f0eae605 ("bridge: multicast to unicast")
+An x86_64 allyesconfig build showed no new warnings. As we do not have a
+CE4100 reference platform to test with, no runtime testing was able to
+be performed.
+
+Fixes: 5377a4160bb65 ("e1000: Add support for the CE4100 reference platform")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Ren Wei <enjou1224z@gmail.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/1cf0898872ef7c72d5f4c0304414a192c6dac591.1784707712.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Dima Ruinskiy <dima.ruinskiy@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_multicast.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/e1000/e1000_main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -3511,6 +3511,7 @@ br_multicast_leave_group(struct net_brid
+--- a/drivers/net/ethernet/intel/e1000/e1000_main.c
++++ b/drivers/net/ethernet/intel/e1000/e1000_main.c
+@@ -1228,11 +1228,11 @@ err_eeprom:
  
- 			p->flags |= MDB_PG_FLAGS_FAST_LEAVE;
- 			br_multicast_del_pg(mp, p, pp);
-+			break;
- 		}
- 		goto out;
- 	}
+ 	if (hw->flash_address)
+ 		iounmap(hw->flash_address);
++err_mdio_ioremap:
+ 	kfree(adapter->tx_ring);
+ 	kfree(adapter->rx_ring);
+ err_dma:
+ err_sw_init:
+-err_mdio_ioremap:
+ 	iounmap(hw->ce4100_gbe_mdio_base_virt);
+ 	iounmap(hw->hw_addr);
+ err_ioremap:
 
 
