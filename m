@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB77A442B32;
-	Mon, 17 Aug 2026 15:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8230442B3B;
+	Mon, 17 Aug 2026 15:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980420; cv=none; b=B4+JI5Rtbv1km2Wyt9vppJghDOCpOhhJ4sakZK9KXOV/I6o8C5xz4XGnWFTi9BkDgm5CDC5J8iRypn7hQUwzGq825CPLZn9H6RDRNo9c2cWr5C11q9eQ7vm67/me/S38CDxEbN8NxKbUkIh+tWRXpuKKLrO24Jfi8O3qUpTojr4=
+	t=1786980422; cv=none; b=L+/VRPwRIrSF2UwtXo3C7XOHN9e08uxjVTU1bZycqGYhsS/skLZgXXyd1PAd3xx+e90r8mpdW5uph+lWEJseds1JqVdA1HA2UuwXaW2mwWcnGsqFkCRG2l0/RLVqykt+OUbaCerUb5GnzWhOKbW3Lyn2XzDkCZFqsnbtxId3qg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980420; c=relaxed/simple;
-	bh=5XBqykOv+/LfPKB2lEwIpcN+dfvxWPGJBANTJyLRW6U=;
+	s=arc-20240116; t=1786980422; c=relaxed/simple;
+	bh=XC/ffvHTMfDrWvJmh1N6hdhQe60ydsmkB7Dm9J1FyjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lpRrxleZHArK5hRWujdlGqU3645Aiq/iYQHVzgVPiRAdFdgtRu6tgmlKAk44d9lNo+EEC2ev3tlOBCLUZBYXw1GfPShnL/W6yswUUeqIx6THMK6zsJMU13hBOM6XAgixH4Wdv8aVtuO3pbz6xvC68iMYF7WrmN37Lhr/iIQNjVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nkzJekAN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IaTiNamkFcMjQ04Mwm2s+0XJsnFx9jzpDbtkCyotbqgkllB/V3p/9fKF7XR1O530C+nq9GeWJjWBqy7RDiPmoSrkR+dtcwR6NX5Y3cwCVenfr+wIvVWDcqV7IN4HuPn70GTYCryHiCY50HbsgSo9w49DSxR4v+1t9I/kxborbgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SwyC1fqv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nkzJekAN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2331F000E9;
-	Mon, 17 Aug 2026 15:26:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SwyC1fqv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEC11F000E9;
+	Mon, 17 Aug 2026 15:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980418;
-	bh=aaVPQq2yTmk9D5313gPxqwcOeiW2K/8gzlIqFnQMyWs=;
+	s=korg; t=1786980421;
+	bh=ikFxhBFxwMP4GPNWZj0zjv1SX5o2IAC4HzRfvu7+2t4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nkzJekAN3EefLiSngEzCn7w9SpZlLG8qjxgkBhPTVvnj2NuVl8FXu2z/soX8f/j7U
-	 7xDspwhRcD+uE8oE1hJiRw2nETddW/dQ+yyDdMtFz8fIZRdEgkcpBQPhbA/ela3x52
-	 /+8+RDLK0tpngw4lRH/E6i9z5+N2b0mSPXgh1YWE=
+	b=SwyC1fqvlc+3xmjIWDbk8G4rc9yXsVlUAuKlJviHpbNoEFXVFEJNEV9mEiYh1YDxC
+	 KAlW2TJPuHUtGh2TBJRcF0eJtaGpoU2d9I3PclHhGphW2g5xjYwqf2setnzmWzgcI3
+	 nM4r9y4nk0aQxZruchTWDuCNpk8b/ziGWSzmtlFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Daniele Linguaglossa <danielelinguaglossa@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 565/609] selftests/bpf: Adapt sockmap update error handling
-Date: Mon, 17 Aug 2026 15:34:21 +0200
-Message-ID: <20260817132602.620629760@linuxfoundation.org>
+Subject: [PATCH 6.1 530/609] sctp: clear control chunk transport if it is being removed
+Date: Mon, 17 Aug 2026 15:33:46 +0200
+Message-ID: <20260817132601.525708101@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,90 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 30581eda4a07ff15db623612cac578e81869e96f ]
+[ Upstream commit c9158ceaf27780ef64534ad72f44ffde3f8ccc49 ]
 
-Update sockmap_listen to accommodate the recent change in sockmap that
-rejects unbound UDP sockets.
+sctp_make_heartbeat_ack() caches the destination transport in
+chunk->transport without taking a reference. When src_out_of_asoc_ok is
+enabled, the HEARTBEAT ACK may remain queued on control_chunk_list instead
+of being transmitted immediately.
 
-TCP: Reject unbound and bound (unless established or listening).
-UDP: Accept only bound sockets.
+If the peer transport is removed while the chunk is still queued,
+sctp_assoc_rm_peer() drops the transport and schedules it for RCU freeing,
+but only clears cached transport pointers in out_chunk_list.  The queued
+control chunk therefore retains a dangling transport pointer.
 
-While at it, migrate to ASSERT_* and enforce reverse xmas tree.
+Once an ASCONF_ACK clears the suppression and the queued control chunk is
+transmitted, SCTP dereferences the stale transport pointer, leading to a
+use-after-free.
 
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/20260707-sockmap-lookup-udp-leak-v4-3-f878346f27ab@rbox.co
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fix this by also clearing chunk->transport for queued control chunks in
+control_chunk_list when removing the transport.
+
+Fixes: 8a07eb0a50ae ("sctp: Add ASCONF operation on the single-homed host")
+Reported-by: Daniele Linguaglossa <danielelinguaglossa@gmail.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/7e1168cb722132152a29d47e5eafaeac4a3bf6f3.1785943120.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/prog_tests/sockmap_listen.c | 21 ++++++++++---------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ net/sctp/associola.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c b/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
-index cef5d35951711..2112b01a4b03a 100644
---- a/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
-+++ b/tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
-@@ -341,8 +341,8 @@ static void test_insert_invalid(int family, int sotype, int mapfd)
- static void test_insert_opened(int family, int sotype, int mapfd)
- {
- 	u32 key = 0;
--	u64 value;
- 	int err, s;
-+	u64 value;
+diff --git a/net/sctp/associola.c b/net/sctp/associola.c
+index 4dd36c8375507..4a79e855c85cd 100644
+--- a/net/sctp/associola.c
++++ b/net/sctp/associola.c
+@@ -575,6 +575,10 @@ void sctp_assoc_rm_peer(struct sctp_association *asoc,
+ 		if (ch->transport == peer)
+ 			ch->transport = NULL;
  
- 	s = xsocket(family, sotype, 0);
- 	if (s == -1)
-@@ -351,11 +351,8 @@ static void test_insert_opened(int family, int sotype, int mapfd)
- 	errno = 0;
- 	value = s;
- 	err = bpf_map_update_elem(mapfd, &key, &value, BPF_NOEXIST);
--	if (sotype == SOCK_STREAM) {
--		if (!err || errno != EOPNOTSUPP)
--			FAIL_ERRNO("map_update: expected EOPNOTSUPP");
--	} else if (err)
--		FAIL_ERRNO("map_update: expected success");
-+	ASSERT_ERR(err, "map_update");
-+	ASSERT_EQ(errno, EOPNOTSUPP, "errno");
- 	xclose(s);
- }
++	list_for_each_entry(ch, &asoc->outqueue.control_chunk_list, list)
++		if (ch->transport == peer)
++			ch->transport = NULL;
++
+ 	asoc->peer.transport_count--;
  
-@@ -364,8 +361,8 @@ static void test_insert_bound(int family, int sotype, int mapfd)
- 	struct sockaddr_storage addr;
- 	socklen_t len;
- 	u32 key = 0;
--	u64 value;
- 	int err, s;
-+	u64 value;
- 
- 	init_addr_loopback(family, &addr, &len);
- 
-@@ -380,8 +377,12 @@ static void test_insert_bound(int family, int sotype, int mapfd)
- 	errno = 0;
- 	value = s;
- 	err = bpf_map_update_elem(mapfd, &key, &value, BPF_NOEXIST);
--	if (!err || errno != EOPNOTSUPP)
--		FAIL_ERRNO("map_update: expected EOPNOTSUPP");
-+	if (sotype == SOCK_STREAM) {
-+		ASSERT_ERR(err, "map_update");
-+		ASSERT_EQ(errno, EOPNOTSUPP, "errno");
-+	} else {
-+		ASSERT_OK(err, "map_update");
-+	}
- close:
- 	xclose(s);
- }
-@@ -1480,7 +1481,7 @@ static void test_ops(struct test_sockmap_listen *skel, struct bpf_map *map,
- 		/* insert */
- 		TEST(test_insert_invalid),
- 		TEST(test_insert_opened),
--		TEST(test_insert_bound, SOCK_STREAM),
-+		TEST(test_insert_bound),
- 		TEST(test_insert),
- 		/* delete */
- 		TEST(test_delete_after_insert),
+ 	sctp_ulpevent_notify_peer_addr_change(peer, SCTP_ADDR_REMOVED, 0);
 -- 
 2.53.0
 
