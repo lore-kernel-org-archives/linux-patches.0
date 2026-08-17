@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8303643F089;
-	Mon, 17 Aug 2026 14:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020DA43F089;
+	Mon, 17 Aug 2026 14:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978481; cv=none; b=tmPjmtFiLar3KVV543e8X1WEK8Aw/ZlYwhddAKovkFCsjDnzTTRW3DuGDoKlbw+AMDDRY4tTJOcDYgXm9ECb5A8QdFQXrfBzqduc6V9FKLjSrRwTHqOZOFRTeLhGk3NR7PKEdXT5cPwIdrUOmVe4rTmkxrR89h3YXgdbxSrz9fQ=
+	t=1786978488; cv=none; b=IApCVETxLHc93otgqTPWif4Rz4fIYxF2B0OG8M+ePLLGMxgHfegMFZZN2hJEpTZX/5/KgTzUa1nUoNDst2Zmgbmd0iWk279eyDIyV0T7QVh44snouset7+V4uaBnLUPe24FoBze3aRXEkoAVogJja8f61AiVcuQGFmxLbc+w8Mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978481; c=relaxed/simple;
-	bh=NFPqUCWOm4qQyyd9SuC/KHhmiLxN+zynDEXqhkdY+fI=;
+	s=arc-20240116; t=1786978488; c=relaxed/simple;
+	bh=vI8cJcOEE/mo69g+VEbDVSFb1EepbUtUkLw5dlcqrqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fwi82gPIYw5SAJs1IE7zd9YiYGGd8u5mPM8pmvc0TKUNc36uYDIauVcvTRNySm3O7M8ftv9aQB00GHItIq0TKIT+ihCnMk6guaz2Ig198NXQL2KPiHYZKgsN9b3relJgfdUwUb/rVArQn7UPWZO+GKSCH8Dimd+NMP1PnySTm5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZsbMQpYK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G7Lj3xxfu8JNMAHAvja+JA3KpeXIK7EL8nOpWtkUjD/CGU2sbIZUDoDviCLpOkLYr2MgqIImceXGPuZd4g9x684jIfa5yYuxloTy22Lq6SZ2t8QhXFU0gIkyYNHMsb8ui5BUTIStcykN/cyKjb07er9Ts583s1ZpRZb1hhgUY3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZD3aCDea; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZsbMQpYK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4AA41F00A3D;
-	Mon, 17 Aug 2026 14:54:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZD3aCDea"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC7F1F00A3A;
+	Mon, 17 Aug 2026 14:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978476;
-	bh=CdgdFbil1zpqeWLFU8NgAlMh5rS+MyxNwqRsrqbd7i0=;
+	s=korg; t=1786978482;
+	bh=43oXkU8eBxWNZoECTomJgA39ttwUgfYS8WbuZnx7z1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZsbMQpYKb5/Ns7t/PeQGfHLh86Jx4SG8spI7hmCG5DJ/VFzZWgA/lFiZK0PvAL9yp
-	 qtfBOgNsvaXoWpWvYRZ+7ZUWsU+cvo17NhtGINd7/8BQggH7m3RmT3dhbZ4TxVQIXB
-	 Hrolgf6NdtDeanoXmHEHVaWwxOrbdNEhHLBfF/hM=
+	b=ZD3aCDeahSZXEb9Dqv1043ElkBZf9Y7CWLy7sKWKOyh/p45traF1qbJOaWXSzE2MU
+	 86IJhl9TfMiOTUQsCE84QyYgucFiSV338Zg6Ujg2H2XnGi5ajvb8Ne+yrCYwAN4bAF
+	 N8f67b04nM6pqe8Uj1jeMtwgRUjRTH7gDOrFWVLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Sidraya Jayagond <sidraya@linux.ibm.com>,
-	Breno Leitao <leitao@debian.org>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 051/156] net/smc: fix TOCTOU race between smc_listen_out() and listener close
-Date: Mon, 17 Aug 2026 15:33:05 +0200
-Message-ID: <20260817132536.589861327@linuxfoundation.org>
+Subject: [PATCH 6.6 053/156] ata: pata_sl82c105: fix bridge revision use-after-free
+Date: Mon, 17 Aug 2026 15:33:07 +0200
+Message-ID: <20260817132536.663200580@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -54,69 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sidraya Jayagond <sidraya@linux.ibm.com>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit 185a4caeecabc150106deda1da170b09f2ad803f ]
+[ Upstream commit 7700a31039cdc6715cb6cce7e7a664ee4e945f67 ]
 
-smc_listen_out() reads lsmc->sk.sk_state without the listener lock,
-then acquires lock_sock_nested() only after the check passes. This
-opens a window where smc_close_active() can transition the listener
-to SMC_CLOSED, call smc_close_cleanup_listen() to drain the accept
-queue, and release the lock, all between the lockless read and the
-delayed lock acquisition:
+pci_get_slot() returns a referenced PCI device. Commit 44c10138fd4b
+("PCI: Change all drivers to use pci_device->revision") replaced a
+configuration-space read with direct access to the cached revision field,
+but left that access after pci_dev_put(). The bridge may therefore be freed
+before its revision is read.
 
-  smc_listen_work (smc_hs_wq)          smc_close_active()
-  -------------------------------      -------------------------
-  release_sock(child)
-  if (sk_state == SMC_LISTEN) TRUE
-                                        lock_sock(listener)
-                                        sk_state = SMC_CLOSED
-                                        smc_close_cleanup_listen()
-                                        release_sock(listener)
-                                        flush_work(tcp_listen_work)
-  lock_sock_nested(listener)
-  smc_accept_enqueue(listener, child) /* child enqueued on dead listener */
+Read the revision before dropping the reference.
 
-smc_close_active() flushes only tcp_listen_work. Work items already
-dispatched onto smc_hs_wq for the CLC handshake continue running
-unguarded. smc_accept_enqueue() takes a sock_hold() on the child that
-is never released, so the child smc_sock, its clcsock, and the
-reference all leak. A remote peer that opens TCP connections while the
-server calls close() can exhaust kernel memory.
-
-Move lock_sock_nested() to before the sk_state check so that the test
-and the enqueue are atomic under the listener lock.
-
-Fixes: fd57770dd198 ("net/smc: wait for pending work before clcsock release_sock")
-Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Signed-off-by: Sidraya Jayagond <sidraya@linux.ibm.com>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Link: https://patch.msgid.link/20260803070701.126339-1-sidraya@linux.ibm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 44c10138fd4b ("PCI: Change all drivers to use pci_device->revision")
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ata/pata_sl82c105.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index e5e07160e5719..087102ff3c640 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -1921,11 +1921,12 @@ static void smc_listen_out(struct smc_sock *new_smc)
- 		atomic_dec(&lsmc->queued_smc_hs);
+diff --git a/drivers/ata/pata_sl82c105.c b/drivers/ata/pata_sl82c105.c
+index 93882e976ede4..2a5ce46af5a0a 100644
+--- a/drivers/ata/pata_sl82c105.c
++++ b/drivers/ata/pata_sl82c105.c
+@@ -264,6 +264,7 @@ static struct ata_port_operations sl82c105_port_ops = {
+ static int sl82c105_bridge_revision(struct pci_dev *pdev)
+ {
+ 	struct pci_dev *bridge;
++	u8 revision;
  
- 	release_sock(newsmcsk); /* lock in smc_listen_work() */
-+	lock_sock_nested(&lsmc->sk, SINGLE_DEPTH_NESTING);
- 	if (lsmc->sk.sk_state == SMC_LISTEN) {
--		lock_sock_nested(&lsmc->sk, SINGLE_DEPTH_NESTING);
- 		smc_accept_enqueue(&lsmc->sk, newsmcsk);
- 		release_sock(&lsmc->sk);
- 	} else { /* no longer listening */
-+		release_sock(&lsmc->sk);
- 		smc_close_non_accepted(newsmcsk);
- 	}
+ 	/*
+ 	 * The bridge should be part of the same device, but function 0.
+@@ -285,8 +286,9 @@ static int sl82c105_bridge_revision(struct pci_dev *pdev)
+ 	/*
+ 	 * We need to find function 0's revision, not function 1
+ 	 */
++	revision = bridge->revision;
+ 	pci_dev_put(bridge);
+-	return bridge->revision;
++	return revision;
+ }
  
+ static void sl82c105_fixup(struct pci_dev *pdev)
 -- 
 2.53.0
 
