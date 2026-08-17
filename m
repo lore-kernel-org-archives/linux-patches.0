@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B933D3339;
-	Mon, 17 Aug 2026 13:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0744443BDBB;
+	Mon, 17 Aug 2026 13:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974493; cv=none; b=EQ+fjmIGIkvJUjTXUMQ56UvIMxg9KMRURiakAI2r5PTGm5olG3DG6ghXEr57rRWiQk6g9gAf5XT8oSosin0BqoTvz9cXQmzj/AaobuRgKFbBt3OxDTMS+TK8+Y4fVS493p3kj02JF8oF9esIY8/gZDqATvvUYrMCoOb/HhRGckY=
+	t=1786974497; cv=none; b=pbPytpp+42prqRUaBOakq3Qc7gMRBrpxjOTmKLq1hrm98vHWrMQ3bvcxqOxT+9RxmVBKLK7PWqbDco93QFKjGT2tm8hzpetxbOlodekHspwokpxgHios/NwsHMuUCfLqNDhUr20lcquOV0sj3bVC4IxZYa0U8FxkA0p04u0S/gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974493; c=relaxed/simple;
-	bh=EpqOEKHiQSrbt+kmASwM+ZvdzTI/qCMMiqnUsDbU3DM=;
+	s=arc-20240116; t=1786974497; c=relaxed/simple;
+	bh=4hlNr3r/EIbT6lB0RwjdZOENUGifHvVgXOKQ5iUJitw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VIpAzXWhlGqEBkTg1/mlJXZTsWmZeeTgsIM0n0jT/o5l9hB54LTQAswE7Xft/zFxA1kuwWUBElkBn/XPB8LVDg026dfyyZccA2zXf2kUBtJHVunDUCFeYW2K4HVLxVVnXXSGZNA4CMYQyBmWOu0QmII90qyoM7tdWWs3dCaHp2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4AGgvd9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FLcdEvxsjtT4aZFLr6FTI2XARJf0JWoDgJ1MRQn/eHmlKKW0Ouzqn8jE2DsIngR9tc/ACfz75b3lIWyOXm26QLz0RJXDUESUjFjjFmvei5wXPcbtxUet33IqZtanCJwrqOq/0KsOS+ZhxYPsXWNvW3+hiOBVx0aR5zR7KtH3hx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCkKvJsC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4AGgvd9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86CB51F00ADF;
-	Mon, 17 Aug 2026 13:48:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCkKvJsC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF601F01564;
+	Mon, 17 Aug 2026 13:48:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974489;
-	bh=kZwHskE7t7mOmj/FLZd51eZtQzPC14t/8KrYyF8bPSg=;
+	s=korg; t=1786974492;
+	bh=ocmf/7TxMvRFsux0fTSxtLKJC0QH5m9Gm8qzVnLZ+KM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L4AGgvd9tfqz5G59pU3Q9oLE+R7dmb5Sd66KXieKdLSVjuhV5OwhsP94cIeN9ByJg
-	 EIFpdIcFAX6Y1Vbt9KkFyetEp0B6xJXiZSlFentTaqNWr6UVc38d2Iv0u4p7PUu3vI
-	 JUYotXwE7+E0O+VCtyfwR5gOh7QVdLAjyAXVeSak=
+	b=DCkKvJsCFpYagFXsPug91K5miNKRAByTO9rwPf+St49Z4+mQC4WHtNnM1C+fIPGm1
+	 fzgfCikzm2TcmNaG+msEd/uU15TFqmWgWcU5nuCoCrR+j+jxDgexNMA92muYqQjmdQ
+	 eKSuWynRDWRwDvbXSUjf96kJKOVkbkPomPngb1po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jan Kara <jack@suse.cz>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.1 224/271] ovl: dont warn when the mount is completed from another user namespace
-Date: Mon, 17 Aug 2026 15:32:29 +0200
-Message-ID: <20260817132545.975712094@linuxfoundation.org>
+Subject: [PATCH 7.1 225/271] binfmt_misc: dont warn when the mount is completed from another user namespace
+Date: Mon, 17 Aug 2026 15:32:30 +0200
+Message-ID: <20260817132546.017765990@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -52,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit 63981fc786daaa626cb14d9be1406f674d79f98f upstream.
+commit 79fdf39f1a31f88cb3833b6f8091fbf6acdca2c6 upstream.
 
 fsopen() records the caller's user namespace in fc->user_ns and hands
 back an ordinary file descriptor. Nothing ties the task that calls
@@ -64,17 +64,17 @@ Completing a context from another user namespace is allowed on purpose.
 vfs_cmd_create() authorizes the create with mount_capable(), which for
 FS_USERNS_MOUNT checks ns_capable(fc->user_ns, CAP_SYS_ADMIN), and that
 succeeds for a task holding CAP_SYS_ADMIN in an ancestor of fc->user_ns.
-So an unprivileged task can reach the WARN_ON() in ovl_fill_super():
-create a user and a mount namespace in a child, call fsopen("overlay")
-there, send the fscontext fd to the parent and let the parent issue
-FSCONFIG_CMD_CREATE. Both namespaces come from a plain unshare(1) and no
-capability is needed anywhere:
+So an unprivileged task can reach the WARN_ON() in bm_fill_super():
+create a user and a mount namespace in a child, call
+fsopen("binfmt_misc") there, send the fscontext fd to the parent and let
+the parent issue FSCONFIG_CMD_CREATE. Both namespaces come from a plain
+unshare(1) and no capability is needed anywhere:
 
-  WARNING: fs/overlayfs/super.c:1551 at ovl_fill_super+0x7b9/0x1e20 [overlay]
-  CPU: 3 UID: 1000 PID: 3243376 Comm: fswarn
+  WARNING: fs/binfmt_misc.c:938 at bm_fill_super+0xa2/0xc0 [binfmt_misc]
+  CPU: 15 UID: 1000 PID: 3243382 Comm: fswarn
   Call Trace:
-   get_tree_nodev+0x71/0xa0
-   ovl_get_tree+0x15/0x20 [overlay]
+   get_tree_keyed+0x7d/0xb0
+   bm_get_tree+0x34/0x90 [binfmt_misc]
    vfs_get_tree+0x2a/0x100
    vfs_cmd_create+0x60/0xf0
    __do_sys_fsconfig+0x4b2/0x500
@@ -87,30 +87,31 @@ It is a WARN_ON() and not a WARN_ON_ONCE(), so the condition can be
 raised in a loop to taint the kernel and flood the log, and it panics a
 kernel booted with panic_on_warn.
 
-Keep refusing the mount and stop warning about it. ovl_parse_param()
-already spells a user namespace check this way for Opt_override_creds.
+Keep refusing the mount and stop warning about it. Nothing in
+bm_fill_super() depends on the two namespaces matching, it derives
+everything from sb->s_user_ns.
 
-Fixes: 1784fbc2ed9c ("ovl: port to new mount api")
-Cc: stable@vger.kernel.org # v6.5+
-Link: https://patch.msgid.link/20260802-work-fill_super-warn-v1-1-4e987911a39a@kernel.org
+Fixes: 21ca59b365c0 ("binfmt_misc: enable sandboxed mounts")
+Cc: stable@vger.kernel.org # v6.7+
+Link: https://patch.msgid.link/20260802-work-fill_super-warn-v1-2-4e987911a39a@kernel.org
 Reviewed-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/super.c |    3 ++-
+ fs/binfmt_misc.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -1544,7 +1544,8 @@ int ovl_fill_super(struct super_block *s
- 	int err;
+--- a/fs/binfmt_misc.c
++++ b/fs/binfmt_misc.c
+@@ -937,7 +937,8 @@ static int bm_fill_super(struct super_bl
+ 		/* last one */ {""}
+ 	};
  
- 	err = -EIO;
--	if (WARN_ON(fc->user_ns != current_user_ns()))
+-	if (WARN_ON(user_ns != current_user_ns()))
 +	/* The fscontext fd may have been passed to another user namespace. */
-+	if (fc->user_ns != current_user_ns())
- 		goto out_err;
++	if (user_ns != current_user_ns())
+ 		return -EINVAL;
  
- 	ovl_set_d_op(sb);
+ 	/* Never exec off this instance and never let anything stack on it. */
 
 
