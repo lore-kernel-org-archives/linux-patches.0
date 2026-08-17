@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C873E5EC0;
-	Mon, 17 Aug 2026 14:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6603E5EC0;
+	Mon, 17 Aug 2026 14:47:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978028; cv=none; b=prvcn6oWGUsmwWhbjmRsA4um9+n31UVLIUjFNwuDXJtjQyDotkxEJcqS9JsjyJS1duvR93fz2D7yGJeO7h4ejnmpwakZ3v6KG+7FstlZCiwo/7cgiSF/W0suUkZDH7Hk14K1w0Ggf1rmkwm6UGRF31M9S8ZfEVMoi0MoPI/iYnU=
+	t=1786978031; cv=none; b=jOdnJJySnthSdJskcImQ4nNsYHHxoOez1R6s1NEiFYM9L/6i4FE9uupYW1IWG1QkK53EwCDYbSwhMJFBbpIA1Ef6MAe1CJW/W/1VgdFBM6AB4i/hLLQ26AVeoi/PmFbBXeOICVAA1xvTtWWOy1psZVh4PtrDlHmoMAXftlL9dDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978028; c=relaxed/simple;
-	bh=5LSJAbvfingZ1n8cj9ByeJtwv71Gp7jVZAAn0dybnHk=;
+	s=arc-20240116; t=1786978031; c=relaxed/simple;
+	bh=rNv3nDCTPuIbUV1c0ZtElBJQJjCyPzd4vDKdRyDD73U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IhVVo1bKV86uVMWGwI3MSP8nnqgH6L4s52MSsk37gNqGF9IjDKhjYieK7qbi/BlgP47JAnBHP+D/DvuMYNhKxAowCC5NPcBuPvVjnWYkT18rc9rALSqCNle1on+gIHguafljUk13kV3JzCGxjlmbU33teA56QWsB0eT2HWcj3yA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1h/u8Yf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h0ncjLXbh3C/nFllI6GQO7Ppvbr44phgGAIC+dPUlzYS7g3MBkQ7NTWFmc0HYy3Qb3ilorE+9DMyAedD7yBk1GjLch9XVn5V9X37mIWeCKCzqeiwxnqFxPJGdJBiLrhYQiewolB5VJU2+EKrSwWqSbS+6Ql+hkAav6+0h/TLxx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JSD1pee9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1h/u8Yf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186971F00A3D;
-	Mon, 17 Aug 2026 14:47:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSD1pee9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F9E1F00A3A;
+	Mon, 17 Aug 2026 14:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978027;
-	bh=vRbCZxhDSXKA4SeFiiohfU9nQoXq2L5bntR45mEH1Rs=;
+	s=korg; t=1786978030;
+	bh=PoVOGWCtbBv+E/lr07UGZ0AwS8dAKOjb/8HqhAQQIp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L1h/u8YfwkgYmUEATA48/F6Jc7R6rS8UQXacncJ7bBRUQDpwFihdmUxm3fQ5zaWA2
-	 1zD+UjrLc7dacOSC1ziRbtlB2OdHqAQes7KlwtV/mPpPEj9ujMnrPoj3/jxWB4Vno8
-	 5iOUAjsSrNgrEFjJe1MFjyYrpwLl58vyY9xnIk48=
+	b=JSD1pee9TpD9t7xgqn+f9o+dMiDELoPhbjzgSS8oBsMFWlbyH4H7bLd6DvMp8Cio3
+	 Q9PIUL1MUlpkbW5U3Qv6785vwCihEw7O/4gvI5sviGNmYWatamZoJLStXxYEPkx4nS
+	 zhG3xQm/mhp40X+e8TtM56esIDhSh9XpRhpQfPmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 039/181] xsk: require at least 16 bytes of TX metadata
-Date: Mon, 17 Aug 2026 15:32:13 +0200
-Message-ID: <20260817132536.913710153@linuxfoundation.org>
+	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
+	Baul Lee <baul.lee@xbow.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 075/181] ALSA: usb-audio: fix OOB write on Type II inbound URBs
+Date: Mon, 17 Aug 2026 15:32:49 +0200
+Message-ID: <20260817132538.400596221@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -53,45 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Fomichev <sdf.kernel@gmail.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-[ Upstream commit 1bb30b181d9f0484e141f8411e15ed906d5c6780 ]
+commit 69ee44e1a23be62318189dc4b37fa4ad94053269 upstream.
 
-AF_XDP accepts a TX metadata length as small as eight bytes, but every
-supported request needs the flags plus at least one eight-byte request
-field. Such short metadata also lets the kernel read beyond the registered
-area.
+data_ep_set_params() sizes each URB transfer buffer before it adds the
+Format Type II transfer delimiter:
 
-Require 16 bytes rather than sizeof(struct xsk_tx_metadata) to preserve
-compatibility with applications that do not use launch-time metadata.
+	u->packets = urb_packs;
+	u->buffer_size = maxsize * u->packets;
 
-Fixes: 341ac980eab9 ("xsk: Support tx_metadata_len")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Reported-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Link: https://lore.kernel.org/netdev/20260720155210.34229-1-blbllhy@gmail.com/
-Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260727161959.885642-2-sdf@fomichev.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+	if (fmt->fmt_type == UAC_FORMAT_TYPE_II)
+		u->packets++; /* for transfer delimiter */
+	u->urb = usb_alloc_urb(u->packets, GFP_KERNEL);
+
+buffer_size is computed from the pre-increment packet count and never
+recomputed, so for a Type II endpoint the buffer is one packet short of
+the packet count the URB is built with.
+
+prepare_inbound_urb() then lays out one iso frame per packet and never
+consults buffer_size:
+
+	offs = 0;
+	for (i = 0; i < urb_ctx->packets; i++) {
+		urb->iso_frame_desc[i].offset = offs;
+		urb->iso_frame_desc[i].length = ep->curpacksize;
+		offs += ep->curpacksize;
+	}
+
+	urb->transfer_buffer_length = offs;
+	urb->number_of_packets = urb_ctx->packets;
+
+The last descriptor therefore points one packet past the end of the
+transfer buffer, where the host controller writes device data on every
+inbound transfer.  prepare_silent_urb() and prepare_playback_urb() bound
+their fill loops by ctx->buffer_size, so only capture is affected.
+
+fmt_type comes from the device's audio streaming descriptors, so any
+device advertising a Type II capture format hits this once userspace sets
+hw_params on the stream.
+
+KASAN on 7.2.0-rc5 (arm64) with a dummy_hcd/raw-gadget device, one report
+per inbound transfer:
+
+  BUG: KASAN: slab-out-of-bounds in dummy_timer
+  Write of size 64 at addr ffff0000186171c0 by task cons02/166
+   __asan_memcpy
+   dummy_timer
+   hrtimer_run_softirq
+  Allocated by task 166:
+   usb_alloc_coherent
+   snd_usb_endpoint_set_params
+  The buggy address is located 0 bytes to the right of
+   allocated 64-byte region [ffff000018617180, ffff0000186171c0)
+
+Compute buffer_size after the delimiter packet has been accounted for,
+and bound the fill loop by buffer_size, as prepare_silent_urb() already
+does on the outbound side.  This grows every Type II URB allocation by
+one maxsize packet.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 8fdff6a319e7 ("ALSA: snd-usb: implement new endpoint streaming model")
+Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
+Reported-by: Baul Lee <baul.lee@xbow.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260805013441.38245-1-baul.lee@xbow.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xdp/xdp_umem.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/usb/endpoint.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/xdp/xdp_umem.c b/net/xdp/xdp_umem.c
-index 9ec7bd948acc7..81ffda5501078 100644
---- a/net/xdp/xdp_umem.c
-+++ b/net/xdp/xdp_umem.c
-@@ -209,6 +209,8 @@ static int xdp_umem_reg(struct xdp_umem *umem, struct xdp_umem_reg *mr)
- 	if (mr->flags & XDP_UMEM_TX_METADATA_LEN) {
- 		if (mr->tx_metadata_len >= 256 || mr->tx_metadata_len % 8)
- 			return -EINVAL;
-+		if (mr->tx_metadata_len < 16)
-+			return -EINVAL;
- 		umem->tx_metadata_len = mr->tx_metadata_len;
- 	}
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -388,13 +388,15 @@ static int prepare_inbound_urb(struct sn
+ 	case SND_USB_ENDPOINT_TYPE_DATA:
+ 		offs = 0;
+ 		for (i = 0; i < urb_ctx->packets; i++) {
++			if (offs + ep->curpacksize > urb_ctx->buffer_size)
++				break;
+ 			urb->iso_frame_desc[i].offset = offs;
+ 			urb->iso_frame_desc[i].length = ep->curpacksize;
+ 			offs += ep->curpacksize;
+ 		}
  
--- 
-2.53.0
-
+ 		urb->transfer_buffer_length = offs;
+-		urb->number_of_packets = urb_ctx->packets;
++		urb->number_of_packets = i;
+ 		break;
+ 
+ 	case SND_USB_ENDPOINT_TYPE_SYNC:
+@@ -1263,10 +1265,10 @@ static int data_ep_set_params(struct snd
+ 		u->index = i;
+ 		u->ep = ep;
+ 		u->packets = urb_packs;
+-		u->buffer_size = maxsize * u->packets;
+ 
+ 		if (fmt->fmt_type == UAC_FORMAT_TYPE_II)
+ 			u->packets++; /* for transfer delimiter */
++		u->buffer_size = maxsize * u->packets;
+ 		u->urb = usb_alloc_urb(u->packets, GFP_KERNEL);
+ 		if (!u->urb)
+ 			goto out_of_memory;
 
 
