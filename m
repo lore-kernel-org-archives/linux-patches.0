@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045E442FCA9;
-	Mon, 17 Aug 2026 15:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE42242AF87;
+	Mon, 17 Aug 2026 15:14:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979678; cv=none; b=NptNQVUw4lWbJjRQWXDcgML/p/8Xlqa/tGNlh5olF4I77tV1wgq0cJrhp4VQK//CliuE2eGhC1uv7tV+99YRS8GCtaChczS4wgIgFbB3oxlPGXS+rqM15hf7oR7/LmR1Xf9Wv3HsaXMnj1pMREeurhz13whS8lmhmjBSjPuEerY=
+	t=1786979682; cv=none; b=soxTSEgn/KtHcRL2I24qUeXN1UlWsxWTAaPiFtiKUY533fG2ODexIdAaeC5JLK+DUrcoyxdDqNGDMc9ad8yVvt5xdHS2QGHFHVLIZ2v4rcV6RGCMbrqGfZcHZVg4FCVHicsOlJDcyYkS2wGLkcVHr6l0BSZFlHeqs6Zbw+k4m9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979678; c=relaxed/simple;
-	bh=MM6l0QJYYEmtknFu16H2dNYved6lPyaooBsNWjHCw9U=;
+	s=arc-20240116; t=1786979682; c=relaxed/simple;
+	bh=8ALEpesLdx2FFg7+4tEsRX9xP1zY2D9qPCl8zMX2Bcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cY4mGDxhqXfQ3XUCvWRZokedMYoC+tEbCkhPjXurDUr08uyItorooq1vbqiuqpYWGOg8vPxLgHGkmI6iglRNa8FZLSyGwvf9jD08ZkaOTSTbAi4CMHhVB2bFT2aEpqME7OLbriOnfzCAIHxiCAx2aq/udbJXZ/LZ1dYCAl2GMx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AAFTSZRK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PvfEE3FPs9KZtdljqx3YBI71mtYVwND7L+PDC+vUhDn07EM0YJ+6r7xB8AwYbD9rUI7nNB/zpcvQoNec9+3jJ0MW7Lb7h3nmtt7t+lWaT4L77ApXArgM3LcfwRKbolWy21pJ5b0Eey+ULD2wv5vwG3cuR3vV8yVajZadYfr/9L8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nn8lP/1l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AAFTSZRK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB4D1F000E9;
-	Mon, 17 Aug 2026 15:14:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nn8lP/1l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3661D1F000E9;
+	Mon, 17 Aug 2026 15:14:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979676;
-	bh=JbTOseXBi+RUiqaLZWm5sWz5ISgCsSswUQFDqLYyEyw=;
+	s=korg; t=1786979679;
+	bh=m3eKnWZB9+UBDeOOjIk0ck915HoNuidFHjo25EIDyq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AAFTSZRK8roy0tvSq9VSDaNHp1NGwHyvvViwxrHc7PZ/BQI9KiuLX5UOk4VhI9mXO
-	 dbcNM2Ahzr7yjzHpoqJrpiCeUd33Mrhc1k3wasdkSRA8AFAnGzJijLIyvrs4tbcRHe
-	 FKsle+P1IdTgjZ+t2bMOCdZCI1KC0z7EWKixzrq8=
+	b=Nn8lP/1lPA2vpRubLejcV8n+/OkzS7CAp7mC0sXqYpykMPHnYq5qlqrBcXYhDnlbW
+	 h+cG4sqAacCPJjyKtXLEpoj+A+/fdO6fZ+/YSnpPFocQqXlui/bFN7D/z8++fP68aC
+	 e/xwlPcloAKixToaRhTKLxGnUBN6DObGVdC+F1fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 308/609] net: qrtr: ns: Raise node count limit to 512
-Date: Mon, 17 Aug 2026 15:30:04 +0200
-Message-ID: <20260817132554.558437002@linuxfoundation.org>
+Subject: [PATCH 6.1 309/609] pinctrl: qcom: sc8280xp: Add missing wakeup entries for GPIO143/151
+Date: Mon, 17 Aug 2026 15:30:05 +0200
+Message-ID: <20260817132554.591012889@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,54 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit ff194cffd586cbd4cc49eccb002c65f2a902a277 ]
+[ Upstream commit 437a8d2aa1aa442c4a176fdf4700a9b3bb0c8794 ]
 
-The current node limit of 64 breaks the functionality for a number of AI200
-deployments that have up to 384 nodes. Raise the limit to 512.
+Pins 143 and 151 were not included in the PDC wakeup map. They are
+normally used for PCIe2A and PCIe3a PERST# respectively, so they're
+unlikely to be excercised in practice, but still add them for the sake
+of completeness.
 
-Also, the backport of commit 27d5e84e810b ("net: qrtr: ns: Limit the total
-number of nodes") to 5.10, 5.15 and 6.1 dropped the node_count-- hunk in
-ctrl_cmd_bye(). Add it back.
-
-Fixes: 27d5e84e810b ("net: qrtr: ns: Limit the total number of nodes")
-Cc: stable@vger.kernel.org
-Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260713145901.212396-1-youssef.abdulrahman@oss.qualcomm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+Fixes: c0e4c71a9e7c ("pinctrl: qcom: Introduce sc8280xp TLMM driver")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260626-topic-8280_pinctrl_wakeup-v1-1-2ccb267148f5@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/ns.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-sc8280xp.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
-index 91e43b0fd5669..5220529a4c62d 100644
---- a/net/qrtr/ns.c
-+++ b/net/qrtr/ns.c
-@@ -75,11 +75,11 @@ struct qrtr_node {
-  * requirements. If the requirement changes in the future, these values can be
-  * increased.
-  */
--#define QRTR_NS_MAX_NODES   64
-+#define QRTR_NS_MAX_NODES   512
- #define QRTR_NS_MAX_SERVERS 256
- #define QRTR_NS_MAX_LOOKUPS 64
+diff --git a/drivers/pinctrl/qcom/pinctrl-sc8280xp.c b/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
+index e96c00686a25b..aeeb40f4aa3da 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
++++ b/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
+@@ -1892,16 +1892,17 @@ static const struct msm_gpio_wakeirq_map sc8280xp_pdc_map[] = {
+ 	{ 126, 200 }, { 127, 225 }, { 128, 262 }, { 129, 201 },
+ 	{ 130, 209 }, { 131, 173 }, { 132, 202 }, { 136, 210 },
+ 	{ 138, 171 }, { 139, 226 }, { 140, 227 }, { 142, 228 },
+-	{ 144, 229 }, { 145, 230 }, { 146, 231 }, { 148, 232 },
+-	{ 149, 233 }, { 150, 234 }, { 152, 235 }, { 154, 212 },
+-	{ 157, 213 }, { 161, 219 }, { 170, 236 }, { 171, 221 },
+-	{ 174, 222 }, { 175, 237 }, { 176, 223 }, { 177, 170 },
+-	{ 180, 238 }, { 181, 239 }, { 182, 240 }, { 183, 241 },
+-	{ 184, 242 }, { 185, 243 }, { 190, 178 }, { 193, 184 },
+-	{ 196, 185 }, { 198, 186 }, { 200, 174 }, { 201, 175 },
+-	{ 205, 176 }, { 206, 177 }, { 208, 187 }, { 210, 198 },
+-	{ 211, 199 }, { 212, 204 }, { 215, 205 }, { 220, 188 },
+-	{ 221, 194 }, { 223, 195 }, { 225, 196 }, { 227, 197 },
++	{ 143, 261 }, { 144, 229 }, { 145, 230 }, { 146, 231 },
++	{ 148, 232 }, { 149, 233 }, { 150, 234 }, { 151, 264 },
++	{ 152, 235 }, { 154, 212 }, { 157, 213 }, { 161, 219 },
++	{ 170, 236 }, { 171, 221 }, { 174, 222 }, { 175, 237 },
++	{ 176, 223 }, { 177, 170 }, { 180, 238 }, { 181, 239 },
++	{ 182, 240 }, { 183, 241 }, { 184, 242 }, { 185, 243 },
++	{ 190, 178 }, { 193, 184 }, { 196, 185 }, { 198, 186 },
++	{ 200, 174 }, { 201, 175 }, { 205, 176 }, { 206, 177 },
++	{ 208, 187 }, { 210, 198 }, { 211, 199 }, { 212, 204 },
++	{ 215, 205 }, { 220, 188 }, { 221, 194 }, { 223, 195 },
++	{ 225, 196 }, { 227, 197 },
+ };
  
--static u8 node_count;
-+static u16 node_count;
- 
- static struct qrtr_node *node_get(unsigned int node_id)
- {
-@@ -412,6 +412,7 @@ static int ctrl_cmd_bye(struct sockaddr_qrtr *from)
- delete_node:
- 	xa_erase(&nodes, from->sq_node);
- 	kfree(node);
-+	node_count--;
- 
- 	return ret;
- }
+ static struct msm_pinctrl_soc_data sc8280xp_pinctrl = {
 -- 
 2.53.0
 
