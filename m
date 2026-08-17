@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8D63D349F;
-	Mon, 17 Aug 2026 13:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C15833F4DEB;
+	Mon, 17 Aug 2026 13:47:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974441; cv=none; b=of2HgnrsXf+6UaA6bmJgDV4QRyV36Oxb9vuDFf2jIPi/PZwOVJ7f3x71crUj8Eqc+Gt9rSDjEzcjQcNrL80Y67yTEA2vaNkDRDO9jL+8BWM7V/LT94wYhsm5iBWHBag+yuoDsiHbeIFC8paIHVqE2Ab+Q8z02XMdVGWI8bE4Bvc=
+	t=1786974445; cv=none; b=BChDXFihotCyuAMpuSBc7n7y5NaVGeob3povVjxtvR0ACoCro1oJ6RYX0Un+0xoD/oqCvy5alOxXmSC6vWVXLWlrZCGUsS3h+29PnvClSDz7EoYPC37PaDQPnvUvDmsTm4yuD2MEvxvT0qD8g1ja7m1xsnnDTRdIDyAMNOLh4mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974441; c=relaxed/simple;
-	bh=eX1Wxz2OxSNlB5eVSYTv0mvcVyUBBd1Mb5AgaUov01I=;
+	s=arc-20240116; t=1786974445; c=relaxed/simple;
+	bh=4u8PboWoh8efrvLzRQV+kyBtWWck0kk1gkOarDZU0kA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TC4DYVtqTkVfC452nFBe0voBpkxtSk+iRREHVQhJ08BD20AuuoLiaF5QBpedwF0dUv4AGqgR2Jz63/aLBVUHbVBMj9PvnIuTBw1hYjIsQ7ekKTM9wuozJnfSBK28j7AR5o5HpK6t17u2HlYQS+ojYj3zcGnUZjOxa/u2N5LaKGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rkox7LvW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jKveRoSLHNcEdC/LJm9E/PbrV7N7Ev17Z4Lyla/cEwahXK/Kia/50mvbteDPxR6z2f4Vv+inSn/2IV7fmVFFGWlTw0ESTNtWCPyeheHs/oduAgFnKEFdwju9KKBR79WtLivHkmzwSHI5KMG0sOBKmjiqY/N0CllHJ6y4hXvL3Us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZYqjsboa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rkox7LvW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4BA51F00ACF;
-	Mon, 17 Aug 2026 13:47:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZYqjsboa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD101F000E9;
+	Mon, 17 Aug 2026 13:47:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974437;
-	bh=hzUON0PFiuyI58rk80AgdwLEI9Hgzh6mLKGbffVJnNU=;
+	s=korg; t=1786974440;
+	bh=JNSlBT7vgu25b//qR8RbwpUEgLRdodoKtAUvvFhqthE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rkox7LvWKSaawXcWowK6KvVdGL3BhdE/oMtg11YaWSx2WJzufEGNHe0jtpr6rPf0j
-	 5Jf19NbHRtHsAq1dmUfzpHzHdsYynUs8PXuDebVSklVfGIJ7xdx/FP4N+mWOmmUhCV
-	 YLwShNhV4go6etzflxkG6Dxkn4IMs+PRcMQthu7I=
+	b=ZYqjsboasYca4P/vZ53Gwq/25nq7Wo4SoZ7duTCAYvzv+bra6u/RIxqMAl8r4hvbk
+	 th8dMbCckLc7wkZHKMf0t931LPjfDuZjfc+qzBEGMSjT/zTNiQCqu4kfICtnnWKbFJ
+	 i7K0K1xhrM9VgX6xOJF+S7vqEGO2MvU+BOvvrpJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nils Helmig <nils.helmig@web.de>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 168/271] Bluetooth: btusb: Add TP-Link UB600 for Realtek 8761BUV
-Date: Mon, 17 Aug 2026 15:31:33 +0200
-Message-ID: <20260817132543.789243307@linuxfoundation.org>
+	Aditya Chillara <aditya.chillara@oss.qualcomm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>
+Subject: [PATCH 7.1 204/271] perf/core: Fix group leader use-after-free after sibling detach
+Date: Mon, 17 Aug 2026 15:32:09 +0200
+Message-ID: <20260817132545.213297923@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -52,68 +51,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nils Helmig <nils.helmig@web.de>
+From: Aditya Chillara <aditya.chillara@oss.qualcomm.com>
 
-[ Upstream commit bc597f0cc44f0b173c50ee986a047219cd559ee9 ]
+commit 42c5ca1f0a288a52878bd72a5595b08261057438 upstream.
 
-Add the vendor/product ID (0x37ad, 0x0600) to usb_device_id table
-for Realtek 8761BUV.
+perf_group_detach() handles leader and sibling detach differently. When the
+group leader is detached, all siblings are promoted to singleton events and
+their group_leader pointer is reset to themselves. When a sibling is
+detached, it is removed from the leader's sibling_list, but its
+group_leader pointer is left pointing at the old leader.
 
-The device info from /sys/kernel/debug/usb/devices as below.
+That is harmless when the sibling is being closed and freed immediately, as
+in the DETACH_DEAD path. It is not safe when the sibling is detached but
+kept alive, such as during CPU hotplug with DETACH_GROUP. In that case the
+sibling is removed from the context, while its file descriptor can still
+keep it alive.
 
-T:  Bus=03 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  4 Spd=12   MxCh= 0
-D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=37ad ProdID=0600 Rev= 2.00
-S:  Manufacturer=
-S:  Product=TP-Link Bluetooth USB Adapter
-S:  SerialNumber=ACA7F14FD2A5
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+A typical failing sequence is:
 
-Signed-off-by: Nils Helmig <nils.helmig@web.de>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  - A group contains leader L and sibling S.
+  - CPU hot-unplug detaches S with DETACH_GROUP, removing it from
+    L->sibling_list but leaving S->group_leader == L.
+  - L is later closed and freed.
+  - A PERF_IOC_FLAG_GROUP ioctl on S follows S->group_leader and
+    dereferences the freed leader.
+
+This was reproduced by running the perf event fuzzer, CPU hotplug, and a
+stress workload concurrently:
+
+  Unable to handle kernel paging request at virtual address 006b6b6b6b6b6cdb
+  CPU: 2 PID: 12489 Comm: perf_fuzzer 6.18.7 PREEMPT
+  pc : perf_ioctl+0x34c/0xc68
+  x20: ffffff89a3fa2c70 x8 : 6b6b6b6b6b6b6b6b
+  Code: 943c4a0e 340047a0 f9404a94 f9411e88 (f940b908)
+  Call trace:
+  perf_ioctl+0x34c/0xc68 (P)
+  __arm64_sys_ioctl+0xa0/0xf4
+  invoke_syscall+0x58/0xe4
+  el0_svc_common+0xa8/0xdc
+  do_el0_svc+0x1c/0x28
+  el0_svc+0x40/0xc0
+  el0t_64_sync_handler+0x68/0xdc
+  el0t_64_sync+0x1c4/0x1c8
+
+The fault happened in perf_ioctl(), where perf_event_for_each() follows
+the stale group_leader pointer and perf_event_for_each_child() then
+dereferences the freed leader's context.
+
+Fix the use-after-free by promoting the detached sibling to a singleton.
+Also fix __event_disable() cgroup accounting and event state change.
+
+Fixes: 8a49542c0554 ("perf_events: Fix races in group composition")
+Assisted-by: PatchWise:gpt-5.5
+Signed-off-by: Aditya Chillara <aditya.chillara@oss.qualcomm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260807-fix-group-leader-uaf-v3-1-b0c2310c9a0d@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/events/core.c |   67 ++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 37 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index a072e6f57f31b..4a356f720e1fe 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -832,6 +832,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x2b89, 0x6275), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x37ad, 0x0600), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -2342,6 +2342,34 @@ static inline struct list_head *get_even
+ 				    &event->pmu_ctx->flexible_active;
+ }
  
- 	/* Additional Realtek 8821AE Bluetooth devices */
- 	{ USB_DEVICE(0x0b05, 0x17dc), .driver_info = BTUSB_REALTEK },
--- 
-2.53.0
-
++/* @sibling must already be unlinked from its old leader's sibling_list. */
++static void perf_promote_sibling_to_leader(struct perf_event *sibling,
++					   struct perf_event_context *ctx,
++					   int group_caps)
++{
++	/*
++	 * Events that have PERF_EV_CAP_SIBLING require being part of
++	 * a group and cannot exist on their own, schedule them out
++	 * and move them into the ERROR state. Also see
++	 * _perf_event_enable(), it will not be able to recover this
++	 * ERROR state.
++	 */
++	if (sibling->event_caps & PERF_EV_CAP_SIBLING)
++		__event_disable(sibling, ctx, PERF_EVENT_STATE_ERROR);
++
++	sibling->group_leader = sibling;
++	sibling->group_caps = group_caps;
++
++	if (sibling->attach_state & PERF_ATTACH_CONTEXT) {
++		add_event_to_groups(sibling, ctx);
++
++		if (sibling->state == PERF_EVENT_STATE_ACTIVE)
++			list_add_tail(&sibling->active_list, get_event_list(sibling));
++	}
++
++	perf_event__header_size(sibling);
++}
++
+ static void perf_group_detach(struct perf_event *event)
+ {
+ 	struct perf_event *leader = event->group_leader;
+@@ -2365,8 +2393,9 @@ static void perf_group_detach(struct per
+ 	 */
+ 	if (leader != event) {
+ 		list_del_init(&event->sibling_list);
+-		event->group_leader->nr_siblings--;
+-		event->group_leader->group_generation++;
++		leader->nr_siblings--;
++		leader->group_generation++;
++		perf_promote_sibling_to_leader(event, ctx, event->event_caps);
+ 		goto out;
+ 	}
+ 
+@@ -2376,32 +2405,14 @@ static void perf_group_detach(struct per
+ 	 * to whatever list we are on.
+ 	 */
+ 	list_for_each_entry_safe(sibling, tmp, &event->sibling_list, sibling_list) {
+-
+-		/*
+-		 * Events that have PERF_EV_CAP_SIBLING require being part of
+-		 * a group and cannot exist on their own, schedule them out
+-		 * and move them into the ERROR state. Also see
+-		 * _perf_event_enable(), it will not be able to recover this
+-		 * ERROR state.
+-		 */
+-		if (sibling->event_caps & PERF_EV_CAP_SIBLING)
+-			__event_disable(sibling, ctx, PERF_EVENT_STATE_ERROR);
+-
+-		sibling->group_leader = sibling;
+ 		list_del_init(&sibling->sibling_list);
+ 
+ 		/* Inherit group flags from the previous leader */
+-		sibling->group_caps = event->group_caps;
+-
+-		if (sibling->attach_state & PERF_ATTACH_CONTEXT) {
+-			add_event_to_groups(sibling, event->ctx);
+-
+-			if (sibling->state == PERF_EVENT_STATE_ACTIVE)
+-				list_add_tail(&sibling->active_list, get_event_list(sibling));
+-		}
++		perf_promote_sibling_to_leader(sibling, ctx, event->group_caps);
+ 
+ 		WARN_ON_ONCE(sibling->ctx != event->ctx);
+ 	}
++	event->nr_siblings = 0;
+ 
+ out:
+ 	for_each_sibling_event(tmp, leader)
+@@ -2591,12 +2602,7 @@ __perf_remove_from_context(struct perf_e
+ 	if (flags & DETACH_DEAD)
+ 		state = PERF_EVENT_STATE_DEAD;
+ 
+-	event_sched_out(event, ctx);
+-
+-	if (event->state > PERF_EVENT_STATE_OFF)
+-		perf_cgroup_event_disable(event, ctx);
+-
+-	perf_event_set_state(event, min(event->state, state));
++	__event_disable(event, ctx, state);
+ 
+ 	if (flags & DETACH_GROUP)
+ 		perf_group_detach(event);
+@@ -2665,8 +2671,9 @@ static void __event_disable(struct perf_
+ 			    enum perf_event_state state)
+ {
+ 	event_sched_out(event, ctx);
+-	perf_cgroup_event_disable(event, ctx);
+-	perf_event_set_state(event, state);
++	if (event->state > PERF_EVENT_STATE_OFF)
++		perf_cgroup_event_disable(event, ctx);
++	perf_event_set_state(event, min(event->state, state));
+ }
+ 
+ /*
 
 
