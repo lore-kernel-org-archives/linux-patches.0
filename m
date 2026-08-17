@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1CD3F23B1;
-	Mon, 17 Aug 2026 14:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0616743B6FE;
+	Mon, 17 Aug 2026 14:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975932; cv=none; b=XOrNzzJ0ZqJxamK+RxNbD9YEheTRpwDpgwfUSkho8ydJCtY5F2PMJbC5ASg3qvLtciagwNxgaXD+wHSnbSm2GRsgyyTuWvgr9Y8PLxTJVcV4sTEAKgkUdhDaqt+ZqFmD0NKBYDecQwJ0Rq2/E+nAeSHXakio9zAWNMJjtAhXYnc=
+	t=1786975935; cv=none; b=We1bX+654XfF+6hp3wZGbSqd+Vr1ael3XE/KI/1FOt6bqdwp9ED8+cqfbpUN1Tm4Cn1njYOhWl/bLU6Wfh4eWKfFkGRnUcm9PjBK1ACgTQtErZrgmCsgPvw8vVyhdSrvUwQ+7hSjmvaaVXerKbHoBqRIISnykatX6si+thml3nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975932; c=relaxed/simple;
-	bh=HF+mjz+YUpPSCCh0mQn3RdGueyeHdogY3TgPzH16QMw=;
+	s=arc-20240116; t=1786975935; c=relaxed/simple;
+	bh=X2p4/9sC28pFsWvz1DxPaJ1Tug3+2ZVkBzC8dLJfkVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NdoX4Mgd3N4NgHQrJC9iQPysu7Z83r1fS42krF8ldcuZV+HfaiYHFGl6xs1ZpNQxY3CuNwLm4oa08MivtGGgCngbdS1D5e6pcY+lXCcGMpFM2loouPDR056UvL/zdXclvRgIhAAGrrvwa6jr74J/hckpNb/Uv19wS4pOevDkH60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T00/hrPZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mB7FmCasOL7i/WAW86U9lsBZPjNsIdQa675awdlgrEZqyfcDOHTJHUJV7loIJfsbKzNXTrkWN00RqrCDlNL300PX+vz0DHxgYnTC0eAK9jORvlI5oqm02Q2KPbFCZBXOQERy1imMS5+9n6uFZ+PdHl9GNTEQwx79ukDKwe2kwTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oIZ3CkwO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T00/hrPZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A56A1F00A3A;
-	Mon, 17 Aug 2026 14:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oIZ3CkwO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21CF11F000E9;
+	Mon, 17 Aug 2026 14:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975930;
-	bh=ai5yveL1UfzNdhCL6ZpZoXQ4RSGadi6V0L5KbJbxpZY=;
+	s=korg; t=1786975933;
+	bh=XrRJ5ZbM/A3FOHxxqB8X+HHEj8espv1jJEm0Td3ZA4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T00/hrPZMjWaCnxcvVssgROJpwFDf/4hYX1VxabgBl/WvPEGDSWMnsem2Odc79GcV
-	 bWazTm+DgZTU5/RehIAGxAuU8QqPxwc+gqIp1Rwj235fj7nunhRID1UJlm1WTgfPEv
-	 pHRg20WBNNhrwAxbhLjoR851U4W5Um9NGgOd51do=
+	b=oIZ3CkwOei0CuPhWtjpAK76YL6aEx9zDn9mZGXf208lKMl57me/ZPHOzPavhlH9Zw
+	 dJBWfd+WP/OEDFelgk4nz26XXIuv/VjcQFETUAN0xpDcUQfGH81OZZvMB7BnQ/9PBx
+	 2gNrChsvR69IwVj4YpK9Nq+S0J8gFdJk0LV6lTHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 5.10 158/389] Revert "arm64: syscall: Ensure saved x0 is kept in-sync with tracer updates"
-Date: Mon, 17 Aug 2026 15:29:57 +0200
-Message-ID: <20260817132545.340087098@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>,
+	Phillip Potter <phil@philpotter.co.uk>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 149/389] cdrom: fix stack out-of-bounds read in CDROMVOLCTRL
+Date: Mon, 17 Aug 2026 15:29:48 +0200
+Message-ID: <20260817132544.994495907@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -49,81 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 26b483d52417253d88a3a01262ac85914a7aec8e upstream.
+commit b27e195d4db8dea263050bdbeb11881b2999c9c6 upstream.
 
-This reverts commit e057b94772328221405b067c3a85fe479b915dc8.
+mmc_ioctl_cdrom_volume() first reads the audio control mode page into a
+32-byte stack buffer with cgc->buflen set to 24.  If the device reports a
+block descriptor, the function increases cgc->buflen to include that
+descriptor and reads the page again.
 
-Sashiko points out that updating 'orig_x0' after secure_computing()
-has returned is too late to handle the case where a seccomp filter is
-re-evaluated after initially returning SECCOMP_RET_TRACE. This means
-that a tracer can manipulate the first argument of the syscall behind
-seccomp's back.
+For CDROMVOLCTRL, the function then builds a MODE SELECT parameter list
+by moving cgc->buffer forward by offset - 8 bytes.  This drops the block
+descriptor from the outgoing payload and leaves a new 8-byte mode
+parameter header in front of the audio control page.  However, cgc->buflen
+is left unchanged.
 
-For now, revert the initial fix and we'll have another crack at it soon.
-Since the incorrect fix was cc'd to stable, do the same here with an
-appropriate fixes tag.
+With a standard 8-byte block descriptor, cgc->buffer points at buffer + 8
+but cgc->buflen remains 32.  cdrom_mode_select() therefore asks the low
+level packet path to write 32 bytes from that adjusted pointer, reading 8
+bytes past the end of the 32-byte stack buffer.
 
+This is not hit by CDROMVOLREAD, and CDROMVOLCTRL only triggers it on
+drives that return a non-zero block descriptor length, which helps explain
+why it has gone unnoticed.  The overread is also sent to the device as
+extra MODE SELECT payload, so it may not produce an obvious local failure.
+
+Reduce cgc->buflen by the same amount as the buffer pointer adjustment so
+the MODE SELECT transfer covers only the intended parameter list.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Fixes: e057b9477232 ("arm64: syscall: Ensure saved x0 is kept in-sync with tracer updates")
-Link: https://sashiko.dev/#/patchset/20260716120640.6590-1-will@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Phillip Potter <phil@philpotter.co.uk>
+Link: https://patch.msgid.link/20260720194421.1497-2-phil@philpotter.co.uk
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/ptrace.c |   29 -----------------------------
- 1 file changed, 29 deletions(-)
+ drivers/cdrom/cdrom.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/kernel/ptrace.c
-+++ b/arch/arm64/kernel/ptrace.c
-@@ -1797,21 +1797,6 @@ static void tracehook_report_syscall(str
- 	}
+--- a/drivers/cdrom/cdrom.c
++++ b/drivers/cdrom/cdrom.c
+@@ -3218,6 +3218,7 @@ static noinline int mmc_ioctl_cdrom_volu
+ 
+ 	/* set volume */
+ 	cgc->buffer = buffer + offset - 8;
++	cgc->buflen -= offset - 8;
+ 	memset(cgc->buffer, 0, 8);
+ 	return cdrom_mode_select(cdi, cgc);
  }
- 
--static void update_syscall_orig_x0_after_ptrace(struct pt_regs *regs)
--{
--	/*
--	 * Keep orig_x0 authoritative so that seccomp (via
--	 * syscall_get_arguments()), audit and the restart path all see the same
--	 * first argument the syscall is dispatched with, even if it has been
--	 * updated by a tracer. Skip this for NO_SYSCALL (set either by the user
--	 * or the tracer), as regs[0] holds the return value (see the comment in
--	 * el0_svc_common()) and can be unwound using syscall_rollback().
--	 * For compat tasks, orig_r0 is provided directly through GPR index 17.
--	 */
--	if (!is_compat_task() && regs->syscallno != NO_SYSCALL)
--		regs->orig_x0 = regs->regs[0];
--}
--
- int syscall_trace_enter(struct pt_regs *regs)
- {
- 	unsigned long flags = READ_ONCE(current_thread_info()->flags);
-@@ -1820,26 +1805,12 @@ int syscall_trace_enter(struct pt_regs *
- 		tracehook_report_syscall(regs, PTRACE_SYSCALL_ENTER);
- 		if (flags & _TIF_SYSCALL_EMU)
- 			return NO_SYSCALL;
--
--		/*
--		 * Ensure ptrace changes to x0 during a regular
--		 * syscall-enter-stop (PTRACE_SYSCALL) are visible to
--		 * subsequent seccomp checks, tracepoints and audit.
--		 */
--		update_syscall_orig_x0_after_ptrace(regs);
- 	}
- 
- 	/* Do the secure computing after ptrace; failures should be fast. */
- 	if (secure_computing() == -1)
- 		return NO_SYSCALL;
- 
--	/*
--	 * Ensure tracer changes to x0 during seccomp ptrace exit
--	 * processing (SECCOMP_RET_TRACE) are visible to tracepoints and
--	 * audit.
--	 */
--	update_syscall_orig_x0_after_ptrace(regs);
--
- 	if (test_thread_flag(TIF_SYSCALL_TRACEPOINT))
- 		trace_sys_enter(regs, regs->syscallno);
- 
 
 
