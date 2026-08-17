@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7E54322E5;
-	Mon, 17 Aug 2026 14:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B46424D72;
+	Mon, 17 Aug 2026 14:50:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978203; cv=none; b=SCopTvgOmcH1+lcl8wOz06vdEf2VL2/4mx28f9wgHeckBEOMQ1QgeRPEhjGpqYpvyKGbynU31gx9wLVDL1wejeSO3PjFkRENjRlKUSqfyCzduIHvGIzTKSVY+kEfeQtA9S9gDoF1Vhix5GKoOSIFFE5m/ht4sDRbQz84vgbxFhk=
+	t=1786978207; cv=none; b=hYNc4WDBCzIfimHXRdxi1QWKNA1L4KpyaC7frlTfgssnyXb58aVdBvI7NIT9q45iTOc+1YlOvta2IiYu2yBY2TkLYz/uXGkpr2Eo2G3opmHE5oMrh1x99h5vvEs90fBqIiwW9sSI5syXsm5Rqhunicj+dQHn0wKJhHwkUpm4Fhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978203; c=relaxed/simple;
-	bh=f2oqUCA3aKs6blWdYlweqxscDiRxhAAnWUQLDsuDZ+Q=;
+	s=arc-20240116; t=1786978207; c=relaxed/simple;
+	bh=9VCXx9bG6N9pqpCJ38sMRUnh6P41ONmrUZFR9XbDstw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GzHZqSA/6dEpik7TOo03Um8UksguzID7Od1f/lSCi0DjkOkkQfiEDzWZnI/TiClFsfb9I2PJp3M3R84uDceIfnMPp8E5MSJw8h5kPkM3mHkcXx2HF/4FNibVppx2UGjiEhtMyWpIGw+U1M4jNBCxMy3PPcgHKphr5HumuZBUJTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYoby4th; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UQfrEEDxuUgL4Ru5wpSAwn0WTpTeOLGiuOr+GzZj5caEaNgF+S5Lm3r6BXkjIX7AOLgwK56BrYronPV1uqaHMdt0Rmb3N6V5EuKnAUOoDPkTwkyIng+KAkN+6XTNv1TKkjhCKwVWIJzjxm3TT+GVo6kPToZob7jZqBpb3wSjaOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gkOjvFC7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYoby4th"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE111F000E9;
-	Mon, 17 Aug 2026 14:50:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gkOjvFC7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59321F000E9;
+	Mon, 17 Aug 2026 14:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978202;
-	bh=4mkRkPdSTtGMOwm3d7X0sKleDjpPvqYA+8nD6d6xC2U=;
+	s=korg; t=1786978205;
+	bh=Lvc/sgCmBXmD9rT7oddhf7HkfucDx3xzoOL/eqoGZ+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AYoby4thBvDXBRUCHllkJh9z0gLubBtNJwh4KVNU9VwZpB4PlqNR30u32wCXOTqUy
-	 uKhcOf936znJ+7YKKZcW4R4WXviaYfvyQOL4pULzMZl+WWNb1JQaaca19KhBEySt+V
-	 e76EAZfZOcYb3hPIAjgex5/SwFCRXsF7fgPg4j0Y=
+	b=gkOjvFC7VXhIHrGxNf+hSnX2I8lY/JJQsHw9KixLxbNT+GAqFpIciNnw33DaE6EF7
+	 pTlmZRTcjeVobMb7wj/JOCmjLZPvy5hZYnkf4hodK9BCgSq2OjkuUXwlZuqRI4I035
+	 t/yCwDFxkQn6KCgQaFohGU8XutY7E3mYo14s1iKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+61b1db46218109869c14@syzkaller.appspotmail.com,
-	Rik van Riel <riel@surriel.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 138/181] fbdev: bitblit: bound-check glyph index in bit_cursor()
-Date: Mon, 17 Aug 2026 15:33:52 +0200
-Message-ID: <20260817132541.067711661@linuxfoundation.org>
+	Ido Schimmel <idosch@nvidia.com>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 121/181] ipv4: fix use-after-free in fib_nhc_update_mtu()
+Date: Mon, 17 Aug 2026 15:33:35 +0200
+Message-ID: <20260817132540.319001196@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -45,95 +45,171 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit e033cbf3975a8465f879ebd5989dc35b04423a4d upstream.
+commit bc5bde9ce3cc36502839dfe98e068f7303a50982 upstream.
 
-bit_cursor() fetches the glyph under the cursor with
+fib_nhc_update_mtu() walks the nexthop exception table under RTNL, but
+RTNL does not serialize this walk with PMTU exception updates. The walk
+uses rcu_dereference_protected() with a constant true condition without
+holding fnhe_lock.
 
-	c = scr_readw(vc_pos);
-	src = vc_font.data + ((c & charmask) * w * height);
+The following interleaving can therefore occur:
 
-where charmask is 0x1ff when vc_hi_font_mask is set. The screen buffer
-value comes directly from scr_readw() and may be larger than the current
-font's glyph count.
+  CPU 0                              CPU 1
+  fib_nhc_update_mtu()               update_or_create_fnhe()
+    load fnhe                          spin_lock_bh(&fnhe_lock)
+                                       fnhe_remove_oldest()
+                                         unlink fnhe
+                                         kfree_rcu(fnhe, rcu)
+    <quiescent state>
+    access fnhe after grace period
 
-Syzkaller triggers this via vcs_write(). The Call Trace shows
-vcs_write() in vc_screen.c writing an arbitrary 16-bit value with
-writev() to /dev/vcsa, which vcs_write_buf() in vc_screen.c stores via
-vcs_scr_writew() without checking charcount. The stored value is later
-read in bit_cursor() in bitblit.c.
+KASAN reported:
 
-When the font is changed from a font with 512 glyphs to a font with
-256 glyphs, the screen buffer can retain characters with the high
-bit set from the previous mode, which could also produce the same
-out-of-bounds access.
-
-  BUG: KASAN: global-out-of-bounds in soft_cursor+0x378/0x6bc drivers/video/fbdev/core/softcursor.c:70
-  Read of size 16 at addr ffff800086c57970
-
+  BUG: KASAN: slab-use-after-free in fib_nhc_update_mtu+0x3df/0x410
+  Read of size 8 at addr ffff888107d49000 by task poc/90
   Call Trace:
-   soft_cursor+0x378/0x6bc drivers/video/fbdev/core/softcursor.c:70
-   bit_cursor+0xa90/0x1108 drivers/video/fbdev/core/bitblit.c:365
-   fbcon_cursor+0x344/0x498 drivers/video/fbdev/core/fbcon.c:1427
-   hide_cursor+0xdc/0x2d0 drivers/tty/vt/vt.c:883
-   update_region+0x100/0x18c drivers/tty/vt/vt.c:669
-   vcs_write+0x8ec/0xaf0 drivers/tty/vt/vc_screen.c:685
+   fib_nhc_update_mtu+0x3df/0x410
+   fib_sync_mtu+0x7a/0xd0
+   fib_netdev_event+0x229/0x3f0
+   netif_set_mtu_ext+0x33a/0x570
+   dev_set_mtu+0x88/0x120
 
-bit_putcs_aligned() and bit_putcs_unaligned() already clamp the glyph
-index to vc_font.charcount. Apply the same clamp in bit_cursor() after
-extracting the attribute and masking, before indexing fontdata.
+The same walk updates fnhe_pmtu and fnhe_mtu_locked. These fields form a
+pair and other writers serialize them with fnhe_lock. RCU alone prevents
+reclamation, but would still allow concurrent writers to leave a mixed
+pair.
 
-The fix completes the bounds checking started in commit 18c4ef4e765a
-("fbdev: bitblit: bound-check glyph index in bit_putcs*"), which missed
-the cursor path.
+Walk the table under RCU and acquire fnhe_lock only while updating each
+exception. RCU keeps the current entry alive while the short critical
+section serializes its paired PMTU fields. This avoids holding the global
+lock while scanning all 2048 buckets for every nexthop.
 
-This change should be safe because the clamp reuses the existing
-contract from fbcon: charcount is maintained under console_lock in
-con_font_set() and fbcon_font_set(), and hi_font_mask is cleared when
-switching from 512 to 256 glyphs. When stale screen data with high bits
-remains after a font switch, or when vcs_write() stores an arbitrary
-value, clamping the index to 0 prevents the out-of-bounds read without
-changing cursor semantics — the same fallback bit_putcs uses.
-
-Reported-by: syzbot+61b1db46218109869c14@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=61b1db46218109869c14
-Link: https://lore.kernel.org/all/6a75205c.01d0871a.3a0d52.0032.GAE@google.com/
-Fixes: 18c4ef4e765a ("fbdev: bitblit: bound-check glyph index in bit_putcs*")
+Fixes: af7d6cce5369 ("net: ipv4: update fnhe_pmtu when first hop's MTU changes")
 Cc: stable@vger.kernel.org
-Assisted-by: Hermes:muse-spark-1.2 syzkaller
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260807181710.1178747-1-nicoyip.dev@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/bitblit.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ include/net/route.h      |    2 ++
+ net/ipv4/fib_semantics.c |   34 +++++++++++-----------------------
+ net/ipv4/route.c         |   29 +++++++++++++++++++++++++++++
+ 3 files changed, 42 insertions(+), 23 deletions(-)
 
---- a/drivers/video/fbdev/core/bitblit.c
-+++ b/drivers/video/fbdev/core/bitblit.c
-@@ -274,9 +274,14 @@ static void bit_cursor(struct vc_data *v
- 	if (!vc->vc_font.data)
- 		return;
+--- a/include/net/route.h
++++ b/include/net/route.h
+@@ -258,6 +258,8 @@ int fib_dump_info_fnhe(struct sk_buff *s
+ 		       u32 table_id, struct fib_info *fi,
+ 		       int *fa_index, int fa_start, unsigned int flags);
  
-- 	c = scr_readw((u16 *) vc->vc_pos);
-+	c = scr_readw((u16 *) vc->vc_pos);
- 	attribute = get_attribute(info, c);
--	src = vc->vc_font.data + ((c & charmask) * (w * vc->vc_font.height));
-+	c &= charmask;
++void fnhe_update_pmtu(struct fib_nh_exception *fnhe, u32 new, u32 orig);
 +
-+	/* Clamp to font size, same as bit_putcs_aligned() */
-+	if (c >= vc->vc_font.charcount)
-+		c = 0;
-+	src = vc->vc_font.data + (c * (w * vc->vc_font.height));
+ static inline void ip_rt_put(struct rtable *rt)
+ {
+ 	/* dst_release() accepts a NULL parameter.
+--- a/net/ipv4/fib_semantics.c
++++ b/net/ipv4/fib_semantics.c
+@@ -1956,42 +1956,30 @@ static int call_fib_nh_notifiers(struct
+ 	return NOTIFY_DONE;
+ }
  
- 	if (par->cursor_state.image.data != src ||
- 	    par->cursor_reset) {
+-/* Update the PMTU of exceptions when:
+- * - the new MTU of the first hop becomes smaller than the PMTU
+- * - the old MTU was the same as the PMTU, and it limited discovery of
+- *   larger MTUs on the path. With that limit raised, we can now
+- *   discover larger MTUs
+- * A special case is locked exceptions, for which the PMTU is smaller
+- * than the minimal accepted PMTU:
+- * - if the new MTU is greater than the PMTU, don't make any change
+- * - otherwise, unlock and set PMTU
++/* Walk the exceptions of a nexthop after its first hop MTU changed. The
++ * chain is RCU protected here, while fnhe_update_pmtu() takes fnhe_lock
++ * for the update of each entry.
+  */
+ void fib_nhc_update_mtu(struct fib_nh_common *nhc, u32 new, u32 orig)
+ {
+ 	struct fnhe_hash_bucket *bucket;
+ 	int i;
+ 
+-	bucket = rcu_dereference_protected(nhc->nhc_exceptions, 1);
++	rcu_read_lock();
++	bucket = rcu_dereference(nhc->nhc_exceptions);
+ 	if (!bucket)
+-		return;
++		goto out;
+ 
+ 	for (i = 0; i < FNHE_HASH_SIZE; i++) {
+ 		struct fib_nh_exception *fnhe;
+ 
+-		for (fnhe = rcu_dereference_protected(bucket[i].chain, 1);
++		for (fnhe = rcu_dereference(bucket[i].chain);
+ 		     fnhe;
+-		     fnhe = rcu_dereference_protected(fnhe->fnhe_next, 1)) {
+-			if (fnhe->fnhe_mtu_locked) {
+-				if (new <= fnhe->fnhe_pmtu) {
+-					fnhe->fnhe_pmtu = new;
+-					fnhe->fnhe_mtu_locked = false;
+-				}
+-			} else if (new < fnhe->fnhe_pmtu ||
+-				   orig == fnhe->fnhe_pmtu) {
+-				fnhe->fnhe_pmtu = new;
+-			}
+-		}
++		     fnhe = rcu_dereference(fnhe->fnhe_next))
++			fnhe_update_pmtu(fnhe, new, orig);
+ 	}
++out:
++	rcu_read_unlock();
+ }
+ 
+ void fib_sync_mtu(struct net_device *dev, u32 orig_mtu)
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -739,6 +739,35 @@ out_unlock:
+ 	spin_unlock_bh(&fnhe_lock);
+ }
+ 
++/* Update the PMTU of an exception when:
++ * - the new MTU of the first hop becomes smaller than the PMTU
++ * - the old MTU was the same as the PMTU, and it limited discovery of
++ *   larger MTUs on the path. With that limit raised, we can now
++ *   discover larger MTUs
++ * A special case is locked exceptions, for which the PMTU is smaller
++ * than the minimal accepted PMTU:
++ * - if the new MTU is greater than the PMTU, don't make any change
++ * - otherwise, unlock and set PMTU
++ *
++ * fnhe_lock keeps fnhe_pmtu and fnhe_mtu_locked consistent against
++ * update_or_create_fnhe(), which sets both under the same lock.
++ */
++void fnhe_update_pmtu(struct fib_nh_exception *fnhe, u32 new, u32 orig)
++{
++	spin_lock_bh(&fnhe_lock);
++
++	if (fnhe->fnhe_mtu_locked) {
++		if (new <= fnhe->fnhe_pmtu) {
++			fnhe->fnhe_pmtu = new;
++			fnhe->fnhe_mtu_locked = false;
++		}
++	} else if (new < fnhe->fnhe_pmtu || orig == fnhe->fnhe_pmtu) {
++		fnhe->fnhe_pmtu = new;
++	}
++
++	spin_unlock_bh(&fnhe_lock);
++}
++
+ static void __ip_do_redirect(struct rtable *rt, struct sk_buff *skb, struct flowi4 *fl4,
+ 			     bool kill_route)
+ {
 
 
