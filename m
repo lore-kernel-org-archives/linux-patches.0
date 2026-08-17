@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7517E43231F;
-	Mon, 17 Aug 2026 14:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FAAA437845;
+	Mon, 17 Aug 2026 14:38:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977510; cv=none; b=V9UKLcebFYW0EuTRnzcJJrr+aCuFeuKE1jXu15x6DxtriEzgu4vlYtugf3uS9VE/QdjmYci8jruA8g9rdurzqbTekGvJH7MMbURzU23tTVMSPNGsiwadvl1MPtVwKO2nyNnQtPQTM67m0RgY9x5uz2Kw2896G5ww0NAg1Ig9Zr4=
+	t=1786977513; cv=none; b=S+y8ARjajMiZA2O5IX4m6f994d4/EmL+2dd6/W6qYLwVyWUp2lUkTjpwGNjhzQlfC0P9ATxp0K1jWstg+iXn171GkrczWDfR33GgvnXvgPkDW9+UjAkuVZtfhzuM4E2c7bto4TFwdP7R5fH7BQ5v1qzfRL+IKkhTPwfYKxAsHmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977510; c=relaxed/simple;
-	bh=1AvkX/9hXkYtFaJwJyO76F4W3vKPrzK4zMAfxXQIjQI=;
+	s=arc-20240116; t=1786977513; c=relaxed/simple;
+	bh=PXIqPZvVLViyyInvxaDV2mZpXQX9dcOTy2QsXKYU8+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RKTlH6JaP59CwU/8rsUOj7V8EeVOI2xMVbYYnMH5M+w8hysxZXLTMV2JMt3OK2Yw8RCND4rvXVQ/8XsKeuQPPMWsQ+J/dSPoezuhas8ABLTuL7re99JyEzKKzNLeyNqN0o4/AuAcrHO1LyWImpbRZo+2yFX0g6yN6m47JySvNL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TaQgEkDL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u1B3FzjFD2LV3/ccKpmOYYFpoBJHU1ZsxOkjXphkUUrHowgt7nlImFaM4bxIAZgMPAjWsa0rfr+BQtDiBqDHyLS5yl2w29NfzK7amKblm7dYMqVEqaiEKlXFGfYlMl7P5JCxjaRuUM7IwOyYZG7k/kuskYGZpZDILV643alLRns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r31gC9FW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TaQgEkDL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD0E61F000E9;
-	Mon, 17 Aug 2026 14:38:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r31gC9FW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE621F000E9;
+	Mon, 17 Aug 2026 14:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977509;
-	bh=xLa1ArupbNAqqNN2Vlt3V/ehiYv8Urrn/X1dnq2PZGY=;
+	s=korg; t=1786977512;
+	bh=5ZRuIAPORuExrksG/NqdOtfGWTYaWq7nUU2yoyg0VEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TaQgEkDLv1ZQKNejiL6326LlFUWYdlIFi7TrAcKuB4z+qLa+ELiqVZ6S4/jnHNOGu
-	 c2ntp2HxHZgDlesjM79ijmsmdaNAqXAh4X9CG2QQKuh7Qw/VMtTwc6u5ak+1zNfvRi
-	 wrz4pGl9vUaqutnB5RY9og3734sFOZOPoSZnp56U=
+	b=r31gC9FWI7hiLPnz/e49vEtfwmKZ4C57dxiEFxpmj08vCdxkgj1RnhLqY498sWgOI
+	 QPaWi4/Rt6wkBGgX2uO7SIkmW363PN9OHuZVsZGy8sQWdHiJiYwMxjGre+aEcrCz11
+	 2NkRnMxpBvEmKsLbDSlYHp4B79eBtdJxNSmcYth8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 315/456] tipc: avoid use-after-free in poll trace queue dumps
-Date: Mon, 17 Aug 2026 15:31:45 +0200
-Message-ID: <20260817132552.043549858@linuxfoundation.org>
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.15 316/456] wifi: mwifiex: use the subframe length when parsing A-MSDU TDLS frames
+Date: Mon, 17 Aug 2026 15:31:46 +0200
+Message-ID: <20260817132552.077861450@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -53,47 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit b4f1719dfea023220e0e6bd892b087d76b2a6a49 upstream.
+commit 99a948382af8a225e2d5e54a7052158cd6281cc6 upstream.
 
-TIPC socket tracepoints dump queue state through tipc_sk_dump(). Most
-queue-dump callsites already serialize that walk under the socket lock or
-sk->sk_lock.slock, but tipc_poll() calls trace_tipc_sk_poll(...,
-TIPC_DUMP_ALL, ...) without holding either lock.
+mwifiex_11n_dispatch_amsdu_pkt() splits an A-MSDU with
+ieee80211_amsdu_to_8023s() and walks the resulting subframes. For each
+subframe it passes the subframe data pointer to
+mwifiex_process_tdls_action_frame(), but pairs it with skb->len, the
+length of the A-MSDU parent, instead of rx_skb->len:
 
-That lets the poll trace path reach tipc_list_dump() and backlog head/tail
-dumping while another context dequeues and frees an skb, leaving the trace
-helper dereferencing a stale queue entry.
+	rx_skb = __skb_dequeue(&list);
+	rx_hdr = (struct rx_packet_hdr *)rx_skb->data;
+	if (ISSUPP_TDLS_ENABLED(priv->adapter->fw_cap_info) &&
+	    ntohs(rx_hdr->eth803_hdr.h_proto) == ETH_P_TDLS) {
+		mwifiex_process_tdls_action_frame(priv, (u8 *)rx_hdr,
+						  skb->len);
+	}
 
-Stop the unlocked poll trace site from requesting queue dumps. Other queue
-dump trace callsites keep their existing output under the locking they
-already provide, while poll still emits the event itself without walking
-live queue members from an unlocked context.
+The parent is not a valid description of that buffer, and may not be
+valid memory at all. ieee80211_amsdu_to_8023s() ends with
 
-Fixes: b4b9771bcbbd ("tipc: enable tracepoints in tipc")
+	if (!reuse_skb)
+		dev_kfree_skb(skb);
+
+and it only sets reuse_skb when the parent is linear, is not a
+head_frag, and is being consumed as the *last* subframe. So when the
+parent does not qualify for reuse it has already been freed, and the
+read of skb->len is a use-after-free. When it is reused, skb->len is
+the length of the last subframe, applied to every earlier subframe,
+which over-states the buffer whenever an earlier subframe is shorter.
+
+The callee cannot absorb a wrong length, because it derives its own
+ceiling from the value it is given. Each frame type computes
+
+	ies_len = len - sizeof(struct ethhdr) - TDLS_*_FIX_LEN;
+
+and the element walk is then bounded entirely against that ceiling,
+
+	for (end = pos + ies_len; pos + 1 < end; pos += 2 + pos[1]) {
+		u8 ie_len = pos[1];
+
+		if (pos + 2 + ie_len > end)
+			break;
+
+so a too-large len moves end past the end of the subframe and the walk
+reads and copies beyond it. The A-MSDU layout is chosen by the sender,
+which makes the difference between the last subframe and a shorter
+earlier one remotely selectable. Reaching this requires TDLS support in
+firmware and the TDLS ethertype on the subframe.
+
+The other caller, mwifiex_process_rx_packet(), is correct: it passes a
+pointer and a length that describe the same region of the RX buffer.
+
+Pass rx_skb->len, the length of the subframe actually being parsed.
+
+Fixes: 776f742040ca ("mwifiex: fix AMPDU not setup on TDLS link problem")
+Assisted-by: Codex:gpt-5.6-sol
+Assisted-by: Kimi:K3
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Signed-off-by: Ren Wei <enjou1224z@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/f8119abd5e5ecc400597de667ae9d39656de56d0.1784794294.git.zihanx@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260728115325.19128-1-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/socket.c |    2 +-
+ drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/tipc/socket.c
-+++ b/net/tipc/socket.c
-@@ -797,7 +797,7 @@ static __poll_t tipc_poll(struct file *f
- 	__poll_t revents = 0;
+--- a/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
++++ b/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
+@@ -56,7 +56,7 @@ static int mwifiex_11n_dispatch_amsdu_pk
+ 			    ntohs(rx_hdr->eth803_hdr.h_proto) == ETH_P_TDLS) {
+ 				mwifiex_process_tdls_action_frame(priv,
+ 								  (u8 *)rx_hdr,
+-								  skb->len);
++								  rx_skb->len);
+ 			}
  
- 	sock_poll_wait(file, sock, wait);
--	trace_tipc_sk_poll(sk, NULL, TIPC_DUMP_ALL, " ");
-+	trace_tipc_sk_poll(sk, NULL, TIPC_DUMP_NONE, " ");
- 
- 	if (sk->sk_shutdown & RCV_SHUTDOWN)
- 		revents |= EPOLLRDHUP | EPOLLIN | EPOLLRDNORM;
+ 			if (priv->bss_role == MWIFIEX_BSS_ROLE_UAP)
 
 
