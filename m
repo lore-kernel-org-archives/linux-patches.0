@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C443F8EBE;
-	Mon, 17 Aug 2026 15:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8E7440A25;
+	Mon, 17 Aug 2026 15:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980480; cv=none; b=ZT5Bp8PXZmW4snNhNtJWPfmeiEfH7ywQqRCjrdItyreG3cbDNPehs/7XcAPbunG+ish9zvaR7Lw2X4cS2tegN/6WTQYYekEvz+/W3lwPJN+C9Mb93X7IVCNfcEs6/rphv0hJBGhPSRZodxSm1ngyk+SmoAb5VFChyJPm2Rd6Mpo=
+	t=1786980482; cv=none; b=RtaR86MYCJTxT+6+JY1K6tNJBJO06GN6TsgGDVTNvEUyNo8q6UrXIVgiGo9C+gJQRpkL4KjSvpj2+gxJ2mQU93Wtkf/Td23KiwaCk0f3k57soSwH9TY/3p568MkBz83IB++hWcN5/YmSZmM493WUBo2gHlr6vALymCGCRjSsWMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980480; c=relaxed/simple;
-	bh=N6vL1/4tafIoT42ivp9uYJ7rbaIluKA41KJ6qGaeRFs=;
+	s=arc-20240116; t=1786980482; c=relaxed/simple;
+	bh=91iFFQ4Btm7I+rXRW47z4hAkF5kcGuPfDhebZD3yj5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uAENTpUd1/vw40ISof7eeCCT78s7UbROvc/V+QxWqn89zTO+HRLzc4lZGqEL7uv5ESPi8ZWsOGKl4MISd88dmMcQ2b6XUYEAXZVR8cKfnQ2hJyj+/g2p8lpUUUzpmYd+BDNz7y0Iii5f7Gamt5VR7JDYPtcysn0YVFdce2fuf5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7RaC6Pf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iE+X7jSFT0fpqzrn926FvXh1tAyYJnyhONRqksg7wFbRIbak7bBS4Km84HmtnD/nHNRFmdZX6v0dB8DbYVQNS8XbWZAPYizb0eW+o+3BxxVqj7RF/FDG1wyU/p2gxLQ2rBaJQm5YN8OLbygxZ/bMN4/nrSGbpf47KICGUQp3HN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fBNza9ts; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7RaC6Pf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CAC01F000E9;
-	Mon, 17 Aug 2026 15:27:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fBNza9ts"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226461F00A3A;
+	Mon, 17 Aug 2026 15:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980478;
-	bh=Kk+1BcWvaFlSx1ris40MG7xqnjbmb+PQicvbOEbHu6E=;
+	s=korg; t=1786980481;
+	bh=R5Bc5xzU1UM3KlPsSQsStGCwfNN1IGSQBUmUJaARI3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z7RaC6PfizYw/Wac1AKQ/GTTWzCz6IAzSJ2NW/bLXZZpRYHD7WQm+vvInzs72u76t
-	 zcMBYrgl7V62dha/4CU18/XsvoDeIV66Rl67czpENxGY4SMVWqtuf9jqzuyL9xDCt1
-	 MJ2CPqfdUKrQ4fYRnl+yRrDl6qVbnMLlBTI9D8Gs=
+	b=fBNza9tsEvDmj5c3lizQFL3nUUuxbmxJP/kYH5kQgKKT2I/br5/YmX+9c496ytiJu
+	 ZXE7nJnPSllew/2Ze91WM/C/1x+2A21q8Y4aIu8p3PC38a/n8g1LBUbF/IWWwQ03iI
+	 vkhlBMANhbgB2BlILFNZRYyd2hwfV3goOUpahBFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Bobby Eshleman <bobbyeshleman@meta.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 588/609] vsock/virtio: read virtqueues under worker locks
-Date: Mon, 17 Aug 2026 15:34:44 +0200
-Message-ID: <20260817132603.348999309@linuxfoundation.org>
+	Muhammad Bilal <meatuni001@gmail.com>
+Subject: [PATCH 6.1 571/609] staging: rtl8723bs: fix OOB read in WMM_param_handler()
+Date: Mon, 17 Aug 2026 15:34:27 +0200
+Message-ID: <20260817132602.828908897@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,81 +49,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit ebac8f6b1ef0e9278afe204b8692a7479988dace upstream.
+commit ae21407350151bddfd4fea7aa39bd0643c0ca9d3 upstream.
 
-Commit bd50c5dc182b ("vsock/virtio: add support for device
-suspend/resume") made the *_run flags transition from false to true when
-restore installs replacement virtqueues.  The RX, TX and event workers
-read their virtqueue before locking and checking the corresponding flag,
-so a worker delayed across freeze and restore can observe the replacement
-queue's running state while retaining a pointer to the deleted queue.
+WMM_param_handler() copies a fixed-size WMM parameter element out of a
+received information element without checking that the element is long
+enough, causing an out-of-bounds read for a short WMM IE.
 
-Read each virtqueue under its mutex after checking the run flag, keeping
-the pointer and state in the same queue generation.
+The handler reads sizeof(struct WMM_para_element) (18) bytes at
+pIE->data + 6, so it requires pIE->length to be at least 24
+(WLAN_WMM_LEN), but it never validates the length. Two of its three
+callers reach it after matching only the WMM OUI: OnAssocRsp() in
+rtw_mlme_ext.c matches a 6-byte OUI, and join_cmd_hdl() matches a
+4-byte OUI, before calling the handler. A vendor-specific IE carrying
+the WMM OUI but a length between 6 and 23, placed in an association
+response or in the IE blob handed to join_cmd_hdl(), passes the OUI
+check and then makes the memcmp() and memcpy() at pIE->data + 6 read
+past the end of the element. OnAssocRsp() parses a frame received from
+the AP, so this is reachable from a remote peer.
 
-Fixes: bd50c5dc182b ("vsock/virtio: add support for device suspend/resume")
+The remaining caller in rtw_wlan_util.c already guards the handler with
+"pIE->length == WLAN_WMM_LEN". Move the equivalent check into the
+handler itself so every caller is covered; the sibling IE handlers in
+the same parsing loop (HT_caps_handler(), HT_info_handler(),
+ERP_IE_handler()) likewise bound their accesses by pIE->length.
+
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
 Cc: stable@vger.kernel.org
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Link: https://lore.kernel.org/r/20260727035804.1860862-1-bestswngs@gmail.com
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Link: https://patch.msgid.link/e79f68ad9284c983364fc3ac46904b6d9ef50231.1785352330.git.bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://patch.msgid.link/20260719041509.97894-1-meatuni001@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_wlan_util.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/vmw_vsock/virtio_transport.c
-+++ b/net/vmw_vsock/virtio_transport.c
-@@ -257,12 +257,13 @@ static void virtio_transport_tx_work(str
- 	struct virtqueue *vq;
- 	bool added = false;
+--- a/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
++++ b/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
+@@ -731,6 +731,9 @@ int WMM_param_handler(struct adapter *pa
+ 		return false;
+ 	}
  
--	vq = vsock->vqs[VSOCK_VQ_TX];
- 	mutex_lock(&vsock->tx_lock);
- 
- 	if (!vsock->tx_run)
- 		goto out;
- 
-+	vq = vsock->vqs[VSOCK_VQ_TX];
++	if (pIE->length != WLAN_WMM_LEN)
++		return false;
 +
- 	do {
- 		struct sk_buff *skb;
- 		unsigned int len;
-@@ -362,13 +363,13 @@ static void virtio_transport_event_work(
- 		container_of(work, struct virtio_vsock, event_work);
- 	struct virtqueue *vq;
- 
--	vq = vsock->vqs[VSOCK_VQ_EVENT];
--
- 	mutex_lock(&vsock->event_lock);
- 
- 	if (!vsock->event_run)
- 		goto out;
- 
-+	vq = vsock->vqs[VSOCK_VQ_EVENT];
-+
- 	do {
- 		struct virtio_vsock_event *event;
- 		unsigned int len;
-@@ -484,13 +485,13 @@ static void virtio_transport_rx_work(str
- 		container_of(work, struct virtio_vsock, rx_work);
- 	struct virtqueue *vq;
- 
--	vq = vsock->vqs[VSOCK_VQ_RX];
--
- 	mutex_lock(&vsock->rx_lock);
- 
- 	if (!vsock->rx_run)
- 		goto out;
- 
-+	vq = vsock->vqs[VSOCK_VQ_RX];
-+
- 	do {
- 		virtqueue_disable_cb(vq);
- 		for (;;) {
+ 	if (!memcmp(&(pmlmeinfo->WMM_param), (pIE->data + 6), sizeof(struct WMM_para_element)))
+ 		return false;
+ 	else
 
 
