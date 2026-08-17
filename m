@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590D93F1AD5;
-	Mon, 17 Aug 2026 14:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381713F23B1;
+	Mon, 17 Aug 2026 14:08:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975723; cv=none; b=if9U5Cea6FgdWALpokP3DmJ7ZRBS+mP7KQnfh7YAK8GrbWMKZt+rbfrZfe9DKl0TgTKMtWKSHHui7EWFZJi86NDdhqsug6cQ2/jCz2P5TSxxm3DD0GKtDHmZd1l2Yfsh1Wn2SwphuXkHrTTDT13t39EGolAYY7LuXtQP79FeJ9Y=
+	t=1786975726; cv=none; b=ZnL6ms1r78sQvKHVFhe2ZlPm9KuRZRC6dGAI49DFqIPZfRYuI01e0mVoPcLRoYDWwhcJWEtzAq1Z/NlEdUuZ1rCxjBs3DxLKHGNax6bL+0GBq74Ku1r6FUcaPbDQIhqPeoLBrDSGFmuB1B717+9X8shIPbqd9Wv3jcmHeqWVas8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975723; c=relaxed/simple;
-	bh=UN08PHdrMP8Phe4YDsHjpumPdXVZzJ7cghLg9EcpSkg=;
+	s=arc-20240116; t=1786975726; c=relaxed/simple;
+	bh=I07jyzhotCwiEkQKnUM4te3Jn1XVBfi0/ScOjDQvOt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HAuRKiL2Q4XDNVtosu6NIlWu85aOSuudqn1rBUFGArVJIWVazGILAsMgqI9WsSVq6vtcRLivFjf8Afm/GGPRGyATAg6UQ7MUpcPNJycvyy5FS/q2Jb2IZY8DOqlKLzc+zrc658smuS7r1PS0jwezlcbvDvVLtdL/DhXLIc4ol5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wk6FubY0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jeKkRDbNz48ZysUabzhyAKChStFcjvJryHGmiFbNk+LcWRGAvNiiWYf/QzAk8vBi4Vt/1HxFikqYGVWEmlc9QfayDcWbrIYzGyu7zGiUZZDymdZOHNBqCQYMc+XNRE5ILPmgY2ISHFMNDDYuXxAPceWlly+sLOTaeK5NvAi77dg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsKnsE6w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wk6FubY0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EF91F000E9;
-	Mon, 17 Aug 2026 14:08:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsKnsE6w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 907101F000E9;
+	Mon, 17 Aug 2026 14:08:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975722;
-	bh=aTYohOI2zFBDPkvjRfkRgfCWeqIZ7OXR7P8GuWGBDuM=;
+	s=korg; t=1786975725;
+	bh=Ej6FRoGNXQqyDf3lMxFjt6SNk0JOWXYqkpFa97b5Jis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wk6FubY0NiU0v/Vigf3epWKSDHixSlC8gnF0swkFTPEwn4udDVUlIcu3smRMAFOk5
-	 V9cUsD7Q/PSgUgiYIaEo8RpurLwrD2yfC5HRIAg46Aem0BkWVaMvSHGjiBWOrFUqhr
-	 bs4s4a33tnb7nSrF8Fr7GKbcOvUKiA/+ByNRVC9w=
+	b=nsKnsE6wPblwdlfN6LpQcuKv393Yd+hNNXKzWsJyLlMXZKkmRoYOm4edrjH+upjIf
+	 6Yh/vOhTjjNtyY0l9zXhlevYazQeOIRhfOBKH+Stqv+ri9ygzQ4BS5AT0JUbL9qOj9
+	 HvvTSiING9lNyBGo3c5sgPPocYXG0Zd8OA1quLyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 109/389] can: bcm: fix CAN frame rx/tx statistics
-Date: Mon, 17 Aug 2026 15:29:08 +0200
-Message-ID: <20260817132543.428406047@linuxfoundation.org>
+	Anand Moon <linux.amoon@gmail.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.10 127/389] media: meson: vdec: Fix memory leak in error path of vdec_open
+Date: Mon, 17 Aug 2026 15:29:26 +0200
+Message-ID: <20260817132544.113959770@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,191 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Anand Moon <linux.amoon@gmail.com>
 
-commit e6c24ba95fc3f1b5e1dcd28b1c6e59ef61a9daa5 upstream.
+commit 940f161f734b25f175a95d2684c2021f6323693a upstream.
 
-KCSAN detected a data race within the bcm_rx_handler() when two CAN frames
-have been simultaneously received and processed in a single rx op by two
-different CPUs.
+The vdec_open() function previously jumped directly to
+err_m2m_release when vdec_init_ctrls() failed, skipping
+release of the m2m context. This caused a resource leak.
 
-Use atomic operations with (signed) long data types to access the
-statistics in the hot path to fix the KCSAN complaint.
+Fix it by introducing a proper err_m2m_ctx_release label
+that calls v4l2_m2m_ctx_release(sess->m2m_ctx) before
+releasing the m2m device.
 
-Additionally simplify the update and check of statistics overflow by
-using the atomic operations in separate bcm_update_[rx|tx]_stats()
-functions. The rx variant runs under bcm_rx_update_lock to prevent
-races when resetting the two rx counters; the tx variant runs under
-bcm_tx_lock and only needs to guard its own counter's overflow.
+This was identified via kmemleak:
+unreferenced object 0xffff0000205d6878 (size 8):
+  comm "v4l_id", pid 5289, jiffies 4294938580
+  hex dump (first 8 bytes):
+    40 d2 49 18 00 00 ff ff                          @.I.....
+  backtrace (crc d3204599):
+    kmemleak_alloc+0xc8/0xf0
+    __kvmalloc_node_noprof+0x60c/0x850
+    v4l2_ctrl_handler_init_class+0x1b4/0x2e8 [videodev]
+    vdec_open+0x1f4/0x788 [meson_vdec]
+    v4l2_open+0x144/0x460 [videodev]
+    chrdev_open+0x1ac/0x500
+    do_dentry_open+0x3f0/0xfe8
+    vfs_open+0x68/0x320
+    do_open+0x2d8/0x9a8
+    path_openat+0x1d0/0x4f0
+    do_filp_open+0x190/0x380
+    do_sys_openat2+0xf8/0x1b0
+    __arm64_sys_openat+0x13c/0x1e8
+    invoke_syscall+0xdc/0x268
+    el0_svc_common.constprop.0+0x178/0x258
+    do_el0_svc+0x4c/0x70
 
-As the rx path resets its values already at LONG_MAX / 100, there is
-no conflict between the two locking domains (bcm_rx_update_lock vs.
-bcm_tx_lock) even for ops that use both paths.
-
-The rx statistics update and the frames_filtered update in
-bcm_rx_changed() were previously performed in two separate
-bcm_rx_update_lock sections. For an rx op subscribed on all interfaces
-(ifindex == 0), bcm_rx_handler() can run concurrently on different
-CPUs, so a counter reset by one CPU between these two sections could
-leave frames_filtered larger than frames_abs on another CPU, producing
-a bogus (even negative) reduction percentage in procfs. Update the
-statistics in the same critical section as bcm_rx_changed() to close
-this gap, which also removes the now unneeded extra lock/unlock pair
-around the traffic_flags calculation.
-
-Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260714-bcm_fixes-v15-4-562f7e3e42da@hartkopp.net
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3e7f51bd9607 ("media: meson: add v4l2 m2m video decoder driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Anand Moon <linux.amoon@gmail.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/bcm.c | 67 ++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 45 insertions(+), 22 deletions(-)
+ drivers/staging/media/meson/vdec/vdec.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/can/bcm.c b/net/can/bcm.c
-index 131c7783b92d33..5d5904076d211d 100644
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -109,7 +109,7 @@ struct bcm_op {
- 	int ifindex;
- 	canid_t can_id;
- 	u32 flags;
--	unsigned long frames_abs, frames_filtered;
-+	atomic_long_t frames_abs, frames_filtered;
- 	struct bcm_timeval ival1, ival2;
- 	struct hrtimer timer, thrtimer;
- 	ktime_t rx_stamp, kt_ival1, kt_ival2, kt_lastmsg;
-@@ -216,10 +216,13 @@ static int bcm_proc_show(struct seq_file *m, void *v)
+--- a/drivers/staging/media/meson/vdec/vdec.c
++++ b/drivers/staging/media/meson/vdec/vdec.c
+@@ -897,7 +897,7 @@ static int vdec_open(struct file *file)
  
- 	list_for_each_entry_rcu(op, &bo->rx_ops, list) {
+ 	ret = vdec_init_ctrls(sess);
+ 	if (ret)
+-		goto err_m2m_release;
++		goto err_m2m_ctx_release;
  
--		unsigned long reduction;
-+		long reduction, frames_filtered, frames_abs;
-+
-+		frames_filtered = atomic_long_read(&op->frames_filtered);
-+		frames_abs = atomic_long_read(&op->frames_abs);
+ 	sess->pixfmt_cap = formats[0].pixfmts_cap[0];
+ 	sess->fmt_out = &formats[0];
+@@ -922,6 +922,8 @@ static int vdec_open(struct file *file)
  
- 		/* print only active entries & prevent division by zero */
--		if (!op->frames_abs)
-+		if (!frames_abs)
- 			continue;
+ 	return 0;
  
- 		seq_printf(m, "rx_op: %03X %-5s ", op->can_id,
-@@ -241,9 +244,9 @@ static int bcm_proc_show(struct seq_file *m, void *v)
- 				   (long long)ktime_to_us(op->kt_ival2));
- 
- 		seq_printf(m, "# recv %ld (%ld) => reduction: ",
--			   op->frames_filtered, op->frames_abs);
-+			   frames_filtered, frames_abs);
- 
--		reduction = 100 - (op->frames_filtered * 100) / op->frames_abs;
-+		reduction = 100 - (frames_filtered * 100) / frames_abs;
- 
- 		seq_printf(m, "%s%ld%%\n",
- 			   (reduction == 100) ? "near " : "", reduction);
-@@ -267,7 +270,8 @@ static int bcm_proc_show(struct seq_file *m, void *v)
- 			seq_printf(m, "t2=%lld ",
- 				   (long long)ktime_to_us(op->kt_ival2));
- 
--		seq_printf(m, "# sent %ld\n", op->frames_abs);
-+		seq_printf(m, "# sent %ld\n",
-+			   atomic_long_read(&op->frames_abs));
- 	}
- 	seq_putc(m, '\n');
- 
-@@ -277,6 +281,24 @@ static int bcm_proc_show(struct seq_file *m, void *v)
- }
- #endif /* CONFIG_PROC_FS */
- 
-+static void bcm_update_rx_stats(struct bcm_op *op)
-+{
-+	/* prevent overflow of the reduction% calculation in bcm_proc_show() */
-+	if (atomic_long_inc_return(&op->frames_abs) > LONG_MAX / 100) {
-+		atomic_long_set(&op->frames_filtered, 0);
-+		atomic_long_set(&op->frames_abs, 0);
-+	}
-+}
-+
-+static void bcm_update_tx_stats(struct bcm_op *op)
-+{
-+	/* tx_op has no reduction% calculation - use the full range and
-+	 * just keep the displayed counter non-negative on overflow
-+	 */
-+	if (atomic_long_inc_return(&op->frames_abs) == LONG_MAX)
-+		atomic_long_set(&op->frames_abs, 0);
-+}
-+
- /*
-  * bcm_can_tx - send the (next) CAN frame to the appropriate CAN interface
-  *              of the given bcm tx op
-@@ -328,7 +350,7 @@ static void bcm_can_tx(struct bcm_op *op, struct canfd_frame *cf)
- 	spin_lock_bh(&op->bcm_tx_lock);
- 
- 	if (!err)
--		op->frames_abs++;
-+		bcm_update_tx_stats(op);
- 
- 	/* only advance the cyclic sequence if nothing reset currframe while
- 	 * we were sending - a concurrent TX_RESET_MULTI_IDX means this
-@@ -473,12 +495,9 @@ static void bcm_rx_changed(struct bcm_op *op, struct canfd_frame *data)
- {
- 	struct bcm_msg_head head;
- 
--	/* update statistics */
--	op->frames_filtered++;
--
--	/* prevent statistics overflow */
--	if (op->frames_filtered > ULONG_MAX/100)
--		op->frames_filtered = op->frames_abs = 0;
-+	/* update statistics (frames_filtered <= frames_abs) */
-+	if (atomic_long_read(&op->frames_abs))
-+		atomic_long_inc(&op->frames_filtered);
- 
- 	/* this element is not throttled anymore */
- 	data->flags &= (BCM_CAN_FLAGS_MASK|RX_RECV);
-@@ -713,25 +732,29 @@ static void bcm_rx_handler(struct sk_buff *skb, void *data)
- 	op->rx_stamp = skb->tstamp;
- 	/* save originator for recvfrom() */
- 	op->rx_ifindex = skb->dev->ifindex;
--	/* update statistics */
--	op->frames_abs++;
- 
--	/* snapshot the flag under lock: op->flags/op->frames may be updated
--	 * concurrently by bcm_rx_setup().
--	 */
-+	/* op->flags/op->frames may be updated concurrently by bcm_rx_setup() */
- 	spin_lock_bh(&op->bcm_rx_update_lock);
-+
- 	rtr_frame = op->flags & RX_RTR_FRAME;
--	if (rtr_frame)
-+	if (rtr_frame) {
-+		bcm_update_rx_stats(op);
-+		/* snapshot RTR content under lock */
- 		memcpy(&rtrframe, op->frames, op->cfsiz);
--	spin_unlock_bh(&op->bcm_rx_update_lock);
-+		spin_unlock_bh(&op->bcm_rx_update_lock);
- 
--	if (rtr_frame) {
- 		/* send reply for RTR-request (placed in op->frames[0]) */
- 		bcm_can_tx(op, &rtrframe);
- 		return;
- 	}
- 
--	spin_lock_bh(&op->bcm_rx_update_lock);
-+	/* update statistics in the same critical section as bcm_rx_changed()
-+	 * below: frames_filtered must never be checked/incremented against a
-+	 * frames_abs snapshot from a concurrent bcm_rx_handler() call on
-+	 * another CPU for the same (wildcard) op, or frames_filtered can end
-+	 * up larger than frames_abs.
-+	 */
-+	bcm_update_rx_stats(op);
- 
- 	if (op->flags & RX_FILTER_ID) {
- 		/* the easiest case */
--- 
-2.53.0
-
++err_m2m_ctx_release:
++	v4l2_m2m_ctx_release(sess->m2m_ctx);
+ err_m2m_release:
+ 	v4l2_m2m_release(sess->m2m_dev);
+ err_free_sess:
 
 
