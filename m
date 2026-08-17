@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93BA3D3339;
-	Mon, 17 Aug 2026 14:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB9F303C97;
+	Mon, 17 Aug 2026 14:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975671; cv=none; b=Dp0bH1faSMQ0wx3BXNrzAQSiNuhan7UHI0lofvXJ4WWEPfOb4wLxqJpx6N5EHQdmPBkMH5Lu6EMFJuVowd43jKKvAhLPlEYU7fFwkizEePDNya+u4xdWfRMa/sG23yQRymwClAuhr0SJgYIS2W/TyN0zPlQFSKGpUYNRE+nc68Y=
+	t=1786975674; cv=none; b=OmpH3h1JWxVrn6rM/S7o5FmkMyDAhDWS+UD38AMr/ICvzmPDtbdw7eYK+OWimu6bPk84go33/cTiZFIWISS/UfubgmtePdoSDZalMmtwEPHLLtoS06X1pqrtmsjzHwhkQsqK4c0V/93jp+QmtqtgqITsdauPI4TTuf7hIwLvtG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975671; c=relaxed/simple;
-	bh=veTUyLy3a4tGzTODePCZU5Ah0OH9t55aXje4kZdHEF4=;
+	s=arc-20240116; t=1786975674; c=relaxed/simple;
+	bh=dnLkA/ejc4eyEn6U8QD/OHPgokfN0Yn755BOM41vr1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PgkvVGMDmG/JPpZddBqXWhCjm4rJ3AcTftk036aC3yOkK38etMMdXMD8Ma6kaeHIORDtk3unrxjiq7LYXiP00B5lLPtEOp1U2COiYf9nEYCsf0pCoCdaQhv334MpuDuhoWF0F0+u/dWKp0TU3uYgWnClB+Nwpo7CH3uwkM3e3dY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLZ/QcUA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h3vu/mU64t+7+sqIWRPRgCWhOhQIMDcFmINfw4kNv7qTPOVc/GocZ6lp+NgLiMs5/7Pa28qGWgWOJQ4cUmMhCO+RvZi5n+YEQrJcztHgEHp/auXRnFuVeC49JtElM5E3UAjkQMpCUTzY+bNJ9eFXe9/RtoA4tqFVD+8xBqI3OJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBk29W6X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLZ/QcUA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12FB71F000E9;
-	Mon, 17 Aug 2026 14:07:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBk29W6X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5CA1F000E9;
+	Mon, 17 Aug 2026 14:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975670;
-	bh=TDV38REtq/8U52IW5LkQIdcTAABRZZ2jAJwpfKyd+qU=;
+	s=korg; t=1786975673;
+	bh=Qew0w0K926SOtm0xUya6MqsRuhTMqQyn4jxXdFaSjHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BLZ/QcUAUQVIEykwfdTG+ra/QPjMsolv/nXayV1wsHiyqHZAlgfBmujFDflZzmoMR
-	 XPKJzZkmL9HrnzWqg0R+O4IDfPRNe1U672p6OeOgMmERYN8KA0Vnd5sfeh8eaZtcd5
-	 mv+Qagl8o6jpeqxDstBo89nkGkUFIQMKhBVhOldM=
+	b=SBk29W6XFv6VFqKgcPWgyW3iUG11pO5jnGXI6VjFGuLKadIDMR/yb2BvPwPYr58BW
+	 q+9VEk7xCMTFlEpvadlf/Y3PS9ocd4am0ONOiPl3UnFUKXH9vX98V5NuLtbSjNuIan
+	 ld8sp8FussiNgCldyB5lkRo9r2CDi39obg4EazpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Christian Lamparter <chunkeey@gmail.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 106/389] bpf, sockmap: Fix cork use-after-free in tcp_bpf_sendmsg()
-Date: Mon, 17 Aug 2026 15:29:05 +0200
-Message-ID: <20260817132543.307044432@linuxfoundation.org>
+Subject: [PATCH 5.10 070/389] wifi: carl9170: fix buffer overflow in rx_stream failover path
+Date: Mon, 17 Aug 2026 15:28:29 +0200
+Message-ID: <20260817132541.833477619@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -53,77 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 2d66a033864e27ab8d5e44cb36f31d9d2413bee4 ]
+[ Upstream commit a1a21995c2e1cc2ca6b2226cfe4f5f018370182a ]
 
-tcp_bpf_sendmsg() keeps msg_tx across sk_stream_wait_memory(), which
-drops and reacquires the socket lock.  Its error path tries to decide
-whether msg_tx names the local temporary message by comparing it with
-the current value of psock->cork.
+The failover continuation in carl9170_rx_stream() copies the full tlen
+from the second USB transfer instead of capping at rx_failover_missing
+bytes. When both transfers are near maximum size, the total exceeds the
+65535-byte failover SKB, triggering skb_over_panic.
 
-This comparison is unsafe when two threads send on the same socket:
+Limit the copy size to the missing byte count.
 
-  Thread A                         Thread B
-  msg_tx = psock->cork
-  sk_msg_alloc() fails
-  sk_stream_wait_memory()
-    releases the socket lock      acquires the socket lock
-                                  completes the cork
-                                  psock->cork = NULL
-                                  frees the cork
-    reacquires the socket lock
-  msg_tx != psock->cork
-  sk_msg_free(msg_tx)
-
-The stale cork is therefore mistaken for the local temporary message
-and freed again.  KASAN reported:
-
-  BUG: KASAN: slab-use-after-free in sk_msg_free+0x49/0x50
-  Read of size 4 at addr ffff88810c908800 by task poc/90
-  Call Trace:
-   sk_msg_free+0x49/0x50
-   tcp_bpf_sendmsg+0x14f5/0x1cc0
-   __sys_sendto+0x32c/0x3a0
-   __x64_sys_sendto+0xdb/0x1b0
-  Allocated by task 89:
-   __kasan_kmalloc+0x8f/0xa0
-   tcp_bpf_sendmsg+0x16b3/0x1cc0
-  Freed by task 91:
-   __kasan_slab_free+0x43/0x70
-   kfree+0x131/0x3c0
-   tcp_bpf_sendmsg+0xec3/0x1cc0
-
-msg_tx can only name the stack-local tmp or the shared cork. Check for
-tmp directly so a changed psock->cork cannot turn a shared message into
-an apparent local one.
-
-Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/87fr18lmzo.fsf%40cloudflare.com/
-Link: https://lore.kernel.org/netdev/20260719161630.2901208-1-nicoyip.dev%40gmail.com/ [v1]
-Link: https://patch.msgid.link/20260724103856.3399001-1-nicoyip.dev@gmail.com
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Fixes: a84fab3cbfdc ("carl9170: 802.11 rx/tx processing and usb backend")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Acked-by: Christian Lamparter <chunkeey@gmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=5c1ca6ccaa1215781cac
+Link: https://patch.msgid.link/20260421134929.325662-4-tristmd@gmail.com
+[Fix checkpatch CHECK:PARENTHESIS_ALIGNMENT]
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_bpf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/carl9170/rx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index 76cd974887774d..f9eee18ef7323b 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -504,7 +504,7 @@ static int tcp_bpf_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
- wait_for_memory:
- 		err = sk_stream_wait_memory(sk, &timeo);
- 		if (err) {
--			if (msg_tx && msg_tx != psock->cork)
-+			if (msg_tx == &tmp)
- 				sk_msg_free(sk, msg_tx);
- 			goto out_err;
- 		}
+diff --git a/drivers/net/wireless/ath/carl9170/rx.c b/drivers/net/wireless/ath/carl9170/rx.c
+index 9a25c2a540b95f..bda30b1f940459 100644
+--- a/drivers/net/wireless/ath/carl9170/rx.c
++++ b/drivers/net/wireless/ath/carl9170/rx.c
+@@ -918,7 +918,9 @@ static void carl9170_rx_stream(struct ar9170 *ar, void *buf, unsigned int len)
+ 				}
+ 			}
+ 
+-			skb_put_data(ar->rx_failover, tbuf, tlen);
++			skb_put_data(ar->rx_failover, tbuf,
++				     min_t(unsigned int, tlen,
++					   ar->rx_failover_missing));
+ 			ar->rx_failover_missing -= tlen;
+ 
+ 			if (ar->rx_failover_missing <= 0) {
 -- 
 2.53.0
 
