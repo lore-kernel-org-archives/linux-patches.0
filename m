@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C0A3ACA77;
-	Mon, 17 Aug 2026 15:13:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87EE3AAF6D;
+	Mon, 17 Aug 2026 15:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979601; cv=none; b=oIqlA5w5k5cCuCqY8I+4OlYz9rjIwTkBYlchAyUC9cyFvjuBqj2X4y1VEtsm9+TEVJHiuaJjZUHJa5Ec0kal0c2icdpJp8XsMj5QeX9kIvYsanZ5wnnDvE7/XJ9MTMvYgIfHZD12tUVUgJEuO5A1IrLtult1kkTCELiX9McaRB8=
+	t=1786979603; cv=none; b=DXBtHuC3y6sZxqvx6TEh2fHJ/vQFU2UNuyi9MACeCBlwyyjwEasTrdHiv46nIzgPfL7T8QyjYAIkop3xHIELbgk/bdllgr2uh8CnWQsr8jCf3PWZ/ROproKqTih+lCROGVM0SAsV9GH9GnvfwcPPCSf3E4aobnlTrl7rcIb/yHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979601; c=relaxed/simple;
-	bh=NKX5AXoZh5MjBgfEi/dWNhJ+Esu6XIPZieqVDSkXrHc=;
+	s=arc-20240116; t=1786979603; c=relaxed/simple;
+	bh=NXvPqJP5yPNxUB7zyJIZahwhTe3NYAP4am5XLRXGeUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f7H/VUIXrqpNjU4DmK5WbzstFtmGm4OVTiIeDr9nT/5emMvrZ4pdM+GlPwpeeKQB+ricNvD7oJk1aabD2AJnAFTL6sY6MJb8Ln9MRYovBNXwSm19uKQjo6OzthgVHAaD4N9ulMZBJo3fwK0nhDmaTnxD6E3AtlE8qbQBkCrCIdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnlgMsZF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VQFSs6UhsQBcWaLTaNyNxZD1s0e2L0xVAUGdVe3ElRw0zaY5dWrrmqI5V1UpnpkmW96K0c9yxYSwo6m6jb0RZdF9LTH8u35bugo+4qxXvuQlhCY4WTgd5kE4nN9KTW2vO5r4WWFrj3m/iAM3hQj+5/ox0OnL57c9+rIkk8Dc/fA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K4Tgxti8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnlgMsZF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB351F000E9;
-	Mon, 17 Aug 2026 15:13:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K4Tgxti8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CD691F000E9;
+	Mon, 17 Aug 2026 15:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979599;
-	bh=ckzGyUA+yi0TtqvoOdYpIlSZUnb2rr4ZGjHtC3Ku+/Y=;
+	s=korg; t=1786979602;
+	bh=wvt5H6zQLPDvucTgyqcZX6GuoCOeh35WSSM9SDSy+0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wnlgMsZFtCrNYuhxO/jLIrV7zOkvkjuaf/fv/SwLjYmgZ0fsuXVaIxEk268txkaX4
-	 et7Do2+toOmc7N7/Wd1D/hL0sEr9kkATqK6IkXxM5S2ih9QdJrcyqmFSAq/UwjLlY9
-	 /hthoNCXCO6QLr+am2nXPix/1h2xkVD/hGixx1r8=
+	b=K4Tgxti819RWKc9droxKrznTYvtf6yuuAWLi0XTntheDHHQz5KBUZLKG+uyFUYgAK
+	 21XDxrODjZMLWnPqVXxTW+k+53acGeCxru1Mwcj3UkIIyCzaHWQ2tZVhAzkMybl00O
+	 iMW+L9U4N8WXLasxLr1WW0zIr03SfDhWMuWM9w3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Phillip Potter <phil@philpotter.co.uk>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 232/609] cdrom: fix stack out-of-bounds read in CDROMVOLCTRL
-Date: Mon, 17 Aug 2026 15:28:48 +0200
-Message-ID: <20260817132551.851008322@linuxfoundation.org>
+	Asim Viladi Oglu Manizada <manizada@pm.me>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 276/609] pppoe: reload header pointer after dev_hard_header()
+Date: Mon, 17 Aug 2026 15:29:32 +0200
+Message-ID: <20260817132553.385381288@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,54 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Asim Viladi Oglu Manizada <manizada@pm.me>
 
-commit b27e195d4db8dea263050bdbeb11881b2999c9c6 upstream.
+commit e9c238f6fe42fb1b4dba3a578277de32cb487937 upstream.
 
-mmc_ioctl_cdrom_volume() first reads the audio control mode page into a
-32-byte stack buffer with cgc->buflen set to 24.  If the device reports a
-block descriptor, the function increases cgc->buflen to include that
-descriptor and reads the page again.
+pppoe_sendmsg() saves a pointer to the PPPoE header before calling
+dev_hard_header(). Device header callbacks are allowed to reallocate the
+skb head, invalidating pointers into it.
 
-For CDROMVOLCTRL, the function then builds a MODE SELECT parameter list
-by moving cgc->buffer forward by offset - 8 bytes.  This drops the block
-descriptor from the outgoing payload and leaves a new 8-byte mode
-parameter header in front of the audio control page.  However, cgc->buflen
-is left unchanged.
+This can happen when a send is blocked in copy_from_user() while the first
+non-Ethernet port is added to an empty team device. The team's delegated
+GRE header callback then expands the skb head. PPPoE subsequently writes
+six bytes through the stale pointer into the freed head.
 
-With a standard 8-byte block descriptor, cgc->buffer points at buffer + 8
-but cgc->buflen remains 32.  cdrom_mode_select() therefore asks the low
-level packet path to write 32 bytes from that adjusted pointer, reading 8
-bytes past the end of the 32-byte stack buffer.
-
-This is not hit by CDROMVOLREAD, and CDROMVOLCTRL only triggers it on
-drives that return a non-zero block descriptor length, which helps explain
-why it has gone unnoticed.  The overread is also sent to the device as
-extra MODE SELECT payload, so it may not produce an obvious local failure.
-
-Reduce cgc->buflen by the same amount as the buffer pointer adjustment so
-the MODE SELECT transfer covers only the intended parameter list.
+Reload the PPPoE header through the skb's network-header offset after
+device header creation. pskb_expand_head() updates that offset when it
+relocates the head.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Phillip Potter <phil@philpotter.co.uk>
-Link: https://patch.msgid.link/20260720194421.1497-2-phil@philpotter.co.uk
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260722093814.3017176-1-manizada@pm.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cdrom/cdrom.c |    1 +
+ drivers/net/ppp/pppoe.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/cdrom/cdrom.c
-+++ b/drivers/cdrom/cdrom.c
-@@ -3205,6 +3205,7 @@ static noinline int mmc_ioctl_cdrom_volu
+--- a/drivers/net/ppp/pppoe.c
++++ b/drivers/net/ppp/pppoe.c
+@@ -900,6 +900,7 @@ static int pppoe_sendmsg(struct socket *
+ 	dev_hard_header(skb, dev, ETH_P_PPP_SES,
+ 			po->pppoe_pa.remote, NULL, total_len);
  
- 	/* set volume */
- 	cgc->buffer = buffer + offset - 8;
-+	cgc->buflen -= offset - 8;
- 	memset(cgc->buffer, 0, 8);
- 	return cdrom_mode_select(cdi, cgc);
- }
++	ph = pppoe_hdr(skb);
+ 	memcpy(ph, &hdr, sizeof(struct pppoe_hdr));
+ 
+ 	ph->length = htons(total_len);
 
 
