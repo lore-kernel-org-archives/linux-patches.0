@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A42D3DC857;
-	Mon, 17 Aug 2026 14:05:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DEB23E0C5F;
+	Mon, 17 Aug 2026 14:05:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975545; cv=none; b=a6Id5YGnclyKrgQZNeFjgqZ5brZvxUhXXm/PRiu9AGV4ZDybL36JaIwzSdb9x+j9PO7dGwOy68BT0JwI+XqqN3F2+zSJUvTEYTljXP2I3ISNqal34Zl53DQ6xufMTZYVksCr4UjreOFjyf6NOOU/yLSsU/bmodr8AewEWqq+j4U=
+	t=1786975548; cv=none; b=hWrtnMD3u9AV0IlFn+I68VFL2ZJh6WJ4Pw1fPCK8/yhOvDSRGUgFFRtROYJ0TbPQhIcrHvq4JNHjHkj5ZxnqfErk0ov7T0rgDwyyO5yjSYGIvHLLaWSyFnJZEClitDcuqY/7p7xRLBK9n3NK+VUWlLoFb6api58VntARGcBUpng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975545; c=relaxed/simple;
-	bh=H/aZFHNINPhBock0tnQRXwerZYB6SnKA9RrLfqIZqi0=;
+	s=arc-20240116; t=1786975548; c=relaxed/simple;
+	bh=oQGrC4J7TLRLU8QcnM49OFSasfHhGqlDX8O1JHUMv68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n9Q+xqftNe2ocg05hhfP4I6Yfa+910Ifbfvq0efhaI89oosKW9unenZhhYbGwS6nGUEvY5tuiQ2fvyhiISE4r+KKeE+76wuqdD+gRDJNR8JVoKfwHxIkN/xldDdJ3uEFDmbEjl8MqZvbMB/4wkdlBhaMzmbm9bK1P2SyGIwtAAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17WgMo8Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NfREEu/ImUZbmvNJcq2klZFQCac+2b/f9vxbqj6x9bOSs4/4FMz3eFf4YTmI0BBFj1YbiUJDHY9i6ZDFen9KuXkth7jdl8v2aWc9uk+pTGMZZm0NYgHuJQF9j34U9juvoF3eCW9s4OBXVeTXSnAfK1NMAtoieUvYu/fK3aHf0aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YCytDXjA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17WgMo8Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D108B1F00A3A;
-	Mon, 17 Aug 2026 14:05:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCytDXjA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E271F000E9;
+	Mon, 17 Aug 2026 14:05:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975544;
-	bh=u7nCnuI8zpOpdwj0wcM388rQPQg0lDQZXrxHJgimNWI=;
+	s=korg; t=1786975547;
+	bh=RuHqAWG5UkO3VCnTCV+WoyhKjLTJgTRLfWdRWR89tyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=17WgMo8YDFGfq0GdRGZhO0+tTH+3u4PN/+tQD4T2JH6zHIF7xBdH6L/yiccN7glWq
-	 QKsv4uvPVVJxyTiSUNwRWGfPu8XQW+MDGv+x908kFrp8uqvG84sdK+U9eaMLW7h+S5
-	 2Zl++9+LCFxBSF26EvlFlTYBK3qLI2P895I01jDc=
+	b=YCytDXjAHFeijgG4rXOxjdPCz0l12S8rEeDHDeI+IjEaMXLsFrfCHGIT+hhicrMKH
+	 Ab8s2caiIS4Eti12T0pcZ3FVycq9jop4zIs3I6S3PPHOcKVN+lUBoBrje1y65fe0kc
+	 SXTuGNKwOZlZIJ+/JsLPXBOElV2lvT26ognhyEDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 062/389] hwmon: (corsair-cpro) Stop device IO before calling hid_hw_stop
-Date: Mon, 17 Aug 2026 15:28:21 +0200
-Message-ID: <20260817132541.509634995@linuxfoundation.org>
+Subject: [PATCH 5.10 063/389] watchdog: pretimeout: Fix UAF in watchdog_unregister_governor()
+Date: Mon, 17 Aug 2026 15:28:22 +0200
+Message-ID: <20260817132541.552005425@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,39 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit 94c87871b051d7ad758828a805215a2ec194512a ]
+[ Upstream commit 7362ba0f9c96ac3ad6a2ca3995bd9fc9a28a8661 ]
 
-Calling hid_hw_stop() does not stop the device IO.
-This results in a race condition between hid_input_report() and the point
-immediately following the execution of hid_device_io_start() within
-the driver probe function. If the probe operation fails after "io start"
-has been initiated, this race condition will result in a UAF vulnerability.
+When a watchdog governor is unregistered, it updates existing watchdog
+devices that were using this governor by falling back to `default_gov`.
 
-Fix the problem by calling hid_device_io_stop() before calling
-hid_hw_stop().
+If the governor being unregistered is currently set as `default_gov`,
+the `default_gov` is never cleared.  This leads to 2 use-after-free
+issues:
+1. New watchdog devices registered after this point will inherit the
+   dangling `default_gov`.
+2. Existing watchdog devices using the unregistered governor will have
+   their `wdd->gov` reassigned to the dangling `default_gov`.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 40c3a44542257 ("hwmon: add Corsair Commander Pro driver")
+Fix the UAF by clearing `default_gov` if it matches the governor being
+unregistered.
+
+Fixes: da0d12ff2b82 ("watchdog: pretimeout: add panic pretimeout governor")
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://lore.kernel.org/r/20260707101803.3598173-1-tzungbi@kernel.org
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/corsair-cpro.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/watchdog/watchdog_pretimeout.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
-index 074f812332e89b..f117479096ef87 100644
---- a/drivers/hwmon/corsair-cpro.c
-+++ b/drivers/hwmon/corsair-cpro.c
-@@ -557,6 +557,7 @@ static int ccp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+diff --git a/drivers/watchdog/watchdog_pretimeout.c b/drivers/watchdog/watchdog_pretimeout.c
+index 01ca84be240f6c..fe4c8ace9a4276 100644
+--- a/drivers/watchdog/watchdog_pretimeout.c
++++ b/drivers/watchdog/watchdog_pretimeout.c
+@@ -164,6 +164,8 @@ void watchdog_unregister_governor(struct watchdog_governor *gov)
+ 	}
  
- out_hw_close:
- 	hid_hw_close(hdev);
-+	hid_device_io_stop(hdev);
- out_hw_stop:
- 	hid_hw_stop(hdev);
- 	return ret;
+ 	spin_lock_irq(&pretimeout_lock);
++	if (default_gov == gov)
++		default_gov = NULL;
+ 	list_for_each_entry(p, &pretimeout_list, entry)
+ 		if (p->wdd->gov == gov)
+ 			p->wdd->gov = default_gov;
 -- 
 2.53.0
 
