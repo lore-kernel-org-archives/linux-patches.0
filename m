@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E742443E2D;
-	Mon, 17 Aug 2026 15:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478B6446BEA;
+	Mon, 17 Aug 2026 15:25:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980312; cv=none; b=awKq/LNBQcU9vJQO8bmtpLZ4EuUwOplyQZ898XCXvoVWIr3EugZUY5Z3w8xYhxpWFGtwc/lL984V38cM375QFfkXMMTc6oHZwu2DRpWvHuUHmQnFUMEdzv3A6DqU17VvnIi3/nw3z6IBMoA2C3TZwSFASWTSWzrF0eLRqXJsXgk=
+	t=1786980315; cv=none; b=MgnHrnISvUwoHlkhTXp7usw3BrjRReo5mCdoVXeZn1RS57BU5yAbQvlzQH4ICcJA6akSvXXiqooqUiDhMMKjOMBNc9b1LZ0ZTNyH49ehht90xWP9axomlrHReQHX8sd7KDkcZFCD7fVVUQDv52okhsb7kdhP6sipbTDVslbp3vQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980312; c=relaxed/simple;
-	bh=uAm4058QTkoxaMEiysfOJEBomrc/KR6POUU6ZboW7JI=;
+	s=arc-20240116; t=1786980315; c=relaxed/simple;
+	bh=wYGGdqzZWmYARQ0iJobqJXJRtTKOguWEzIJld4qYrhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vukn7M4QhysKUUjCaoQ4QP6iKas8EEE+GhkAbpLLEIbnyNgdvYUWfjfSxLAxS3O4Q6KQ4P51HJ41/WCgvDnkOkFYWLzgcvQK3drBDTPIyE08LDRBFnNa83QtPuCjCpEu8TqKC348gwuhx4sQb72uVhiBdbKeqGyoFeFY6Pq8GeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxvBoyEy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NF8YEdh/bRXiggEFfyHG1gtpmuNFrzXSC6YZltrQZi70F7sM7J18wbbZe/TkOSwVd8nJFFsXfZhtp04GNT6fn3HnoAPm+30vVOCdAAq5P936xg2Un8em4bd2vHLfz95XDy1P2fIXlY6Te7aR6FRo1pAmn7rHUilJsNMza4CLsPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxRjdwg4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxvBoyEy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7F9C1F000E9;
-	Mon, 17 Aug 2026 15:25:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxRjdwg4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A35C41F000E9;
+	Mon, 17 Aug 2026 15:25:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980311;
-	bh=8ZOsUBZNumYAmmBUqHhTAhwv8ht1WhT5T5oRM+iEkwQ=;
+	s=korg; t=1786980314;
+	bh=DC/lJEWHTI36SEwByzI4l2Q/MR3a38mq7lJW60Q1+eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fxvBoyEyGzkCMc3CR/+4vNPE0/1/cnQ7ly3cMyAsPc7ljmghNJSmZ96pDdcA/dqTB
-	 UYAK1ACVNY9w+PJh1JHDzXCTi2XBnjk+TB6NXOK8dWOc9HyTPEHNv2cqQCZVbRSi3X
-	 FZR/quiRDOgOiuwWsH5R7bsKIhAPwTSGNxqL3lHI=
+	b=gxRjdwg41nZrxvaGtMzq48Kv5CNYKfs2ztGRuZugyEdNwVd+djpJOAgbAsBVRvTRd
+	 HiEOypFRNukqYVXy0Nkb+QIWkCqt3LzBW0M6dJxMIHqhTLpa35kal+gnuu5yb5t8B7
+	 0mJshPOit9frcHSE86ABi+6z+3vrLibOGHY1KBaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhangjianrong <zhangjianrong5@huawei.com>,
-	Fan Ye <fy15309206903@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jay Vosburgh <jv@jvosburgh.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 490/609] Revert "net: thunderbolt: Enable end-to-end flow control also in transmit"
-Date: Mon, 17 Aug 2026 15:33:06 +0200
-Message-ID: <20260817132600.315798965@linuxfoundation.org>
+Subject: [PATCH 6.1 491/609] bonding: alb: re-check primary_is_promisc under RTNL in bond_alb_monitor
+Date: Mon, 17 Aug 2026 15:33:07 +0200
+Message-ID: <20260817132600.346223226@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,101 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Ye <fy15309206903@gmail.com>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-[ Upstream commit 1881f2efbf7f78dc0a79a387b29fde6ff56d3731 ]
+[ Upstream commit 683c6ba6e58e6ed1037831ea97dd58d9c0e76b8d ]
 
-This reverts commit a8065af3346ebd7c76ebc113451fb3ba94cf7769.
+bond_alb_monitor() reads primary_is_promisc under RCU, then drops RCU and
+takes RTNL via rtnl_trylock() before undoing the promiscuity it set on the
+active slave. In that window the active slave can change under RTNL
+(RTM_DELLINK -> __bond_release_one() -> bond_alb_handle_active_change()),
+which already drops the promiscuity and clears primary_is_promisc. The
+monitor still acts on the stale decision: if the slave was removed with no
+failover, curr_active_slave is now NULL and the deref faults; if it failed
+over, the stale dev_set_promiscuity(-1) underflows the new slave's
+promiscuity counter and pins it in IFF_PROMISC.
 
-Per the USB4 spec, a Transmit Descriptor Ring with E2E flow control
-disabled does not require any credits to be available before the Host
-Interface Adapter Layer transmits a tunneled packet from it. Once E2E is
-enabled on that ring the controller must first obtain end-to-end
-credits.
+  Oops: general protection fault, probably for non-canonical address ...
+  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+  Workqueue: b42 bond_alb_monitor
+  RIP: 0010:bond_alb_monitor (drivers/net/bonding/bond_alb.c:1600)
+   process_one_work (kernel/workqueue.c:3322)
+   worker_thread (kernel/workqueue.c:3486)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+  Kernel panic - not syncing: Fatal exception
 
-The ASMedia ASM4242 USB4 host router (PCI 1b21:2425) never delivers
-those credits. The controller does accept the configuration: reading the
-ring OPTIONS register back right after tb_ring_start() returns exactly
-what was written, including RING_FLAG_E2E_FLOW_CONTROL (bit 28) and the
-E2E HopID field. No credit ever arrives though, so the Tx ring's
-hardware consumer index never advances and the link carries no traffic
-at all.
+Re-check primary_is_promisc (and curr_active_slave) after taking RTNL so
+the monitor only undoes an increment it still owns. The other bonding
+monitors already re-read state under RTNL in their commit phase
+(bond_miimon_commit/bond_ab_arp_commit); bond_alb_monitor() was the only
+one acting on the pre-trylock decision.
 
-Measured on two hosts connected point to point, onboard ASM4242 on MSI
-X870E and X870, v6.17, stock drivers/net/thunderbolt/main.c with only
-this revert applied on top:
-
-  before: 100% packet loss to the peer; thunderbolt0 is up and the
-          XDomain handshake completes ("new host found"), but iperf3
-          fails with "No route to host" once the neighbour entry
-          expires
-  after:  0% packet loss, 0.28 ms RTT; iperf3 4.21 Gb/s one way and
-          5.17 Gb/s the other (5 runs each, stddev <= 0.02), 1
-          retransmit in 10 s
-
-An instrumented build additionally showed a frozen-Tx-consumer watchdog
-firing ~30k times in a 10 s window before this change.
-
-Rx-side E2E is not touched by this revert, so peers that do return
-credits keep receive-side flow control.
-
-ASMedia does not look like an isolated case. The out-of-tree
-thunderbolt-ibverbs project disables native E2E on AMD NHI by default,
-noting that "Strix Halo has reproduced TX completion wedges with
-multiple native E2E rings active" -- the same failure mode, on a
-different vendor. Since the driver has no way to tell in advance which
-host router returns the credits, going back to the previous behaviour
-looks safer than adding a quirk per affected part; Tx-side E2E can be
-reintroduced as an opt-in for controllers that are known to implement
-the credit return.
-
-Note that the reverted commit was not fixing a reported problem, it was
-derived from the spec wording alone, so this revert is not expected to
-regress a known workload. Cc'ing the original author in case there was
-one.
-
-Fixes: a8065af3346e ("net: thunderbolt: Enable end-to-end flow control also in transmit")
-Cc: zhangjianrong <zhangjianrong5@huawei.com>
-Signed-off-by: Fan Ye <fy15309206903@gmail.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://patch.msgid.link/20260727123002.25225-1-fy15309206903@gmail.com
+Fixes: d0e81b7e2246 ("bonding: Acquire correct locks in alb for promisc change")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Link: https://patch.msgid.link/20260725233930.2957317-1-xmei5@asu.edu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/thunderbolt.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/net/bonding/bond_alb.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/thunderbolt.c b/drivers/net/thunderbolt.c
-index ef13aa36e55e8..6f01089e6f47d 100644
---- a/drivers/net/thunderbolt.c
-+++ b/drivers/net/thunderbolt.c
-@@ -884,12 +884,8 @@ static int tbnet_open(struct net_device *dev)
+diff --git a/drivers/net/bonding/bond_alb.c b/drivers/net/bonding/bond_alb.c
+index 9c4c2c7d90ef5..c44a9358f8b27 100644
+--- a/drivers/net/bonding/bond_alb.c
++++ b/drivers/net/bonding/bond_alb.c
+@@ -1535,8 +1535,8 @@ void bond_alb_monitor(struct work_struct *work)
+ 	struct bonding *bond = container_of(work, struct bonding,
+ 					    alb_work.work);
+ 	struct alb_bond_info *bond_info = &(BOND_ALB_INFO(bond));
++	struct slave *slave, *curr;
+ 	struct list_head *iter;
+-	struct slave *slave;
  
- 	netif_carrier_off(dev);
+ 	if (!bond_has_slaves(bond)) {
+ 		atomic_set(&bond_info->tx_rebalance_counter, 0);
+@@ -1598,9 +1598,11 @@ void bond_alb_monitor(struct work_struct *work)
+ 			 * because a slave was disabled then
+ 			 * it can now leave promiscuous mode.
+ 			 */
+-			dev_set_promiscuity(rtnl_dereference(bond->curr_active_slave)->dev,
+-					    -1);
+-			bond_info->primary_is_promisc = 0;
++			curr = rtnl_dereference(bond->curr_active_slave);
++			if (bond_info->primary_is_promisc && curr) {
++				dev_set_promiscuity(curr->dev, -1);
++				bond_info->primary_is_promisc = 0;
++			}
  
--	flags = RING_FLAG_FRAME;
--	/* Only enable full E2E if the other end supports it too */
--	if (tbnet_e2e && net->svc->prtcstns & TBNET_E2E)
--		flags |= RING_FLAG_E2E;
--
--	ring = tb_ring_alloc_tx(xd->tb->nhi, -1, TBNET_RING_SIZE, flags);
-+	ring = tb_ring_alloc_tx(xd->tb->nhi, -1, TBNET_RING_SIZE,
-+				RING_FLAG_FRAME);
- 	if (!ring) {
- 		netdev_err(dev, "failed to allocate Tx ring\n");
- 		return -ENOMEM;
-@@ -908,6 +904,11 @@ static int tbnet_open(struct net_device *dev)
- 	sof_mask = BIT(TBIP_PDF_FRAME_START);
- 	eof_mask = BIT(TBIP_PDF_FRAME_END);
- 
-+	flags = RING_FLAG_FRAME;
-+	/* Only enable full E2E if the other end supports it too */
-+	if (tbnet_e2e && net->svc->prtcstns & TBNET_E2E)
-+		flags |= RING_FLAG_E2E;
-+
- 	ring = tb_ring_alloc_rx(xd->tb->nhi, -1, TBNET_RING_SIZE, flags,
- 				net->tx_ring.ring->hop, sof_mask,
- 				eof_mask, tbnet_start_poll, net);
+ 			rtnl_unlock();
+ 			rcu_read_lock();
 -- 
 2.53.0
 
