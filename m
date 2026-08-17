@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B013D7D9B;
-	Mon, 17 Aug 2026 13:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834C53DB964;
+	Mon, 17 Aug 2026 13:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974834; cv=none; b=A1NlDxpqNgbBeNx96LjUoK/nFWN+wk4VCslq9zMcNwyyx3uqR//+/hZ3njpTYXj5dHRKLL9Bk5FRXn44EERe8q787vZZUB7tmhNWa0K46XipamoNyvITK8ic1FozjexaJ9Cslq49dBnZTyYYhW4P6Mj2abo0uUDl/exXAt9zYd8=
+	t=1786974840; cv=none; b=h4pRTpNihlQyynj2a4XtGywq+5lvPI2tCnAdh2uGBVacTfli7Z5d5XIofSmUWoFUupWC7tr8QSdkMvdsa+QtycJvtv/BIY3BT9S1TXp7fHrwFpNq/7yg10e7Mm0GygglI6Z7eI16rnHJAR1xxAD9Tq0124oZn/6ej+7UFSJr4Jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974834; c=relaxed/simple;
-	bh=+oi4c6MqrJfXndhpRy6V2l5kp5EejyUWiskN53Ky3bc=;
+	s=arc-20240116; t=1786974840; c=relaxed/simple;
+	bh=zXKIp8edvkhtHkLu7P8mI+SHAbUqUFR+HfixJSBRLLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A/r6Or5NitW4IVuHKsO/vPp08dX3CoufHjGq2k26rIwJdd7d8J9wuB8qZtqawlicMpAiIKkW0EAQ+D+jkEETF/MeCu7R6nneu62bWDa/pjn6RWoZ8Jx6w8j/ZV6tspt0FEaF3AGWN6dCRZGFATVlfmAeJEJgNfojj04m4RCLJQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ezfSEFo3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VveXyF+kycRH4QI4zuD5+xWHFu5LjFLOi7gfO7U9LxxY2rKxUlJBHPs86bHczptthOP8f21WxZE2QVWqQrIgNiv9hkVfT3wyHMHM7hSqMEmRwsSN8pg1BKCT5ndG7i1ooA+loIgF2kE3eM4ZtyNK6MWRoUBijuiJneuEPY+PPY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=seWLunuK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ezfSEFo3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98751F00A3E;
-	Mon, 17 Aug 2026 13:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="seWLunuK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52051F000E9;
+	Mon, 17 Aug 2026 13:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974827;
-	bh=zT7Ca7VA7NN+dDOc0akLwbZ1U2ABq2GfnMPvIpY5ooQ=;
+	s=korg; t=1786974833;
+	bh=tCMpRvm9hf0+hG9gVTtXiikoZlHVM73m703WOly2uRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ezfSEFo3fxG/85Qu9t2Ml4tX8qDc8AuqJgUwq6bEcwKpZeCFK5oVjl0aDZyneoP/Y
-	 0YLF13UyMl0e00oBeri6lfTHujawcYYVcPE8WXrJl8phiwGXD4S/VVJnNPBpmVLxB5
-	 z87MFhxpqNnXG7FGWfpxmlmeAqVgvlWBmvR7DfrQ=
+	b=seWLunuKMYz5RFIJffT9yoZ2tGgfzugArRcG2FD0e1guRzI/LznS6Dsn93pGOyFWo
+	 omWS2S+cOV/7CCwyNLsr/alHaZmHlEgNvKs4NfnKZDlbJ2opTNuicnd75PyJJgS/oW
+	 d8iKueHvJFSdiY24NH6n6U0bIpdDnYjpKbc9lJeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stanislav Fomichev <sdf@fomichev.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 066/250] xsk: pass TX metadata pointer by reference
-Date: Mon, 17 Aug 2026 15:30:27 +0200
-Message-ID: <20260817132539.154790253@linuxfoundation.org>
+Subject: [PATCH 6.18 068/250] xsk: validate launch-time metadata size
+Date: Mon, 17 Aug 2026 15:30:29 +0200
+Message-ID: <20260817132539.229774781@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -54,199 +54,113 @@ Content-Transfer-Encoding: 8bit
 
 From: Stanislav Fomichev <sdf.kernel@gmail.com>
 
-[ Upstream commit 19366db6dfccac9b0867a151678cd7b89fb8fd99 ]
+[ Upstream commit 439ce2dddf3d22129b9113a7881637256a35e936 ]
 
-Completion handling needs to know whether a timestamp was requested when
-the metadata was processed. Let xsk_tx_metadata_request() update the
-caller's metadata pointer so that decision can be carried forward without
-rereading user-controlled flags.
+Launch-time metadata extends beyond the first 16 bytes of struct
+xsk_tx_metadata. Reject the request when the registered metadata area does
+not contain the complete field.
 
-This only changes the interface; behavior remains unchanged.
+Snapshot the validated flags for the generic transmit path and use that
+snapshot for request and completion processing, avoiding inconsistent
+decisions if user space changes the flags concurrently.
+
+Note that only xsk_skb_metadata is properly using the flags,
+__xsk_buff_get_metadata ignores them. Next commits address that.
 
 Fixes: ca4419f15abd ("xsk: Add launch time hardware offload support to XDP Tx metadata")
 Cc: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260727161959.885642-3-sdf@fomichev.me
+Link: https://patch.msgid.link/20260727161959.885642-5-sdf@fomichev.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c          |  2 +-
- drivers/net/ethernet/mellanox/mlx5/core/en.h       |  2 +-
- drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c   | 14 +++++++++-----
- drivers/net/ethernet/mellanox/mlx5/core/en/xdp.h   |  4 ++--
- .../net/ethernet/mellanox/mlx5/core/en/xsk/tx.c    |  2 +-
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c  |  2 +-
- include/net/libeth/xsk.h                           |  2 +-
- include/net/xdp_sock.h                             |  8 +++++---
- 8 files changed, 21 insertions(+), 15 deletions(-)
+ include/net/xdp_sock_drv.h | 17 +++++++++++++----
+ net/xdp/xsk.c              | 11 ++++++-----
+ 2 files changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 4ca242ebf3e34..f69523e35ac10 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -3082,7 +3082,7 @@ static void igc_xdp_xmit_zc(struct igc_ring *ring)
- 		meta_req.tx_buffer = bi;
- 		meta_req.meta = meta;
- 		meta_req.used_desc = 0;
--		xsk_tx_metadata_request(meta, &igc_xsk_tx_metadata_ops,
-+		xsk_tx_metadata_request(&meta, &igc_xsk_tx_metadata_ops,
- 					&meta_req);
+diff --git a/include/net/xdp_sock_drv.h b/include/net/xdp_sock_drv.h
+index dd1d3a6e1b780..ce8315f049684 100644
+--- a/include/net/xdp_sock_drv.h
++++ b/include/net/xdp_sock_drv.h
+@@ -256,21 +256,28 @@ xsk_buff_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr)
+ 	0)
  
- 		/* xsk_tx_metadata_request() may have updated next_to_use */
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en.h b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-index 3d8276a0692fc..91653b69328ee 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-@@ -477,7 +477,7 @@ typedef int (*mlx5e_fp_xmit_xdp_frame_check)(struct mlx5e_xdpsq *);
- typedef bool (*mlx5e_fp_xmit_xdp_frame)(struct mlx5e_xdpsq *,
- 					struct mlx5e_xmit_data *,
- 					int,
--					struct xsk_tx_metadata *);
-+					struct xsk_tx_metadata **);
- 
- struct mlx5e_xdpsq {
- 	/* data path */
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-index 5322964214b22..e467a7b067c7a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-@@ -451,11 +451,11 @@ INDIRECT_CALLABLE_SCOPE int mlx5e_xmit_xdp_frame_check_mpwqe(struct mlx5e_xdpsq
- 
- INDIRECT_CALLABLE_SCOPE bool
- mlx5e_xmit_xdp_frame(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptxd,
--		     int check_result, struct xsk_tx_metadata *meta);
-+		     int check_result, struct xsk_tx_metadata **meta);
- 
- INDIRECT_CALLABLE_SCOPE bool
- mlx5e_xmit_xdp_frame_mpwqe(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptxd,
--			   int check_result, struct xsk_tx_metadata *meta)
-+			   int check_result, struct xsk_tx_metadata **meta)
+ static inline bool
+-xsk_buff_valid_tx_metadata(const struct xsk_tx_metadata *meta)
++xsk_buff_valid_tx_metadata(const struct xsk_buff_pool *pool,
++			   const struct xsk_tx_metadata *meta, u64 *flags)
  {
- 	struct mlx5e_tx_mpwqe *session = &sq->mpwqe;
- 	struct mlx5e_xdpsq_stats *stats = sq->stats;
-@@ -503,7 +503,10 @@ mlx5e_xmit_xdp_frame_mpwqe(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptx
- 		 * and it's safe to complete it at any time.
- 		 */
- 		mlx5e_xdp_mpwqe_session_start(sq);
--		xsk_tx_metadata_request(meta, &mlx5e_xsk_tx_metadata_ops, &session->wqe->eth);
-+		if (meta)
-+			xsk_tx_metadata_request(meta,
-+						&mlx5e_xsk_tx_metadata_ops,
-+						&session->wqe->eth);
+-	return !(meta->flags & ~XDP_TXMD_FLAGS_VALID);
++	*flags = READ_ONCE(meta->flags);
++	if (*flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
++		if (pool->tx_metadata_len <
++		    offsetofend(struct xsk_tx_metadata, request.launch_time))
++			return false;
++	return !(*flags & ~XDP_TXMD_FLAGS_VALID);
+ }
+ 
+ static inline struct xsk_tx_metadata *
+ __xsk_buff_get_metadata(const struct xsk_buff_pool *pool, void *data)
+ {
+ 	struct xsk_tx_metadata *meta;
++	u64 flags;
+ 
+ 	if (!pool->tx_metadata_len)
+ 		return NULL;
+ 
+ 	meta = data - pool->tx_metadata_len;
+-	if (unlikely(!xsk_buff_valid_tx_metadata(meta)))
++	if (unlikely(!xsk_buff_valid_tx_metadata(pool, meta, &flags)))
+ 		return NULL; /* no way to signal the error to the user */
+ 
+ 	return meta;
+@@ -465,7 +472,9 @@ xsk_buff_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr)
+ 	return (struct xdp_desc_ctx){ };
+ }
+ 
+-static inline bool xsk_buff_valid_tx_metadata(struct xsk_tx_metadata *meta)
++static inline bool
++xsk_buff_valid_tx_metadata(const struct xsk_buff_pool *pool,
++			   const struct xsk_tx_metadata *meta, u64 *flags)
+ {
+ 	return false;
+ }
+diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+index 3b82fb850bee3..ff93fd7ac6317 100644
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -699,15 +699,16 @@ static int xsk_skb_metadata(struct sk_buff *skb, void *buffer,
+ {
+ 	struct xsk_tx_metadata *meta = NULL;
+ 	u16 csum_start, csum_offset;
++	u64 flags;
+ 
+ 	if (unlikely(pool->tx_metadata_len == 0))
+ 		return -EINVAL;
+ 
+ 	meta = buffer - pool->tx_metadata_len;
+-	if (unlikely(!xsk_buff_valid_tx_metadata(meta)))
++	if (unlikely(!xsk_buff_valid_tx_metadata(pool, meta, &flags)))
+ 		return -EINVAL;
+ 
+-	if (meta->flags & XDP_TXMD_FLAGS_CHECKSUM) {
++	if (flags & XDP_TXMD_FLAGS_CHECKSUM) {
+ 		csum_start = READ_ONCE(meta->request.csum_start);
+ 		csum_offset = READ_ONCE(meta->request.csum_offset);
+ 
+@@ -728,9 +729,9 @@ static int xsk_skb_metadata(struct sk_buff *skb, void *buffer,
+ 		}
  	}
  
- 	mlx5e_xdp_mpwqe_add_dseg(sq, p, stats);
-@@ -534,7 +537,7 @@ INDIRECT_CALLABLE_SCOPE int mlx5e_xmit_xdp_frame_check(struct mlx5e_xdpsq *sq)
+-	if (meta->flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
+-		skb->skb_mstamp_ns = meta->request.launch_time;
+-	if (!(meta->flags & XDP_TXMD_FLAGS_TIMESTAMP))
++	if (flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
++		skb->skb_mstamp_ns = READ_ONCE(meta->request.launch_time);
++	if (!(flags & XDP_TXMD_FLAGS_TIMESTAMP))
+ 		meta = NULL;
+ 	xsk_tx_metadata_to_compl(meta, &skb_shinfo(skb)->xsk_meta);
  
- INDIRECT_CALLABLE_SCOPE bool
- mlx5e_xmit_xdp_frame(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptxd,
--		     int check_result, struct xsk_tx_metadata *meta)
-+		     int check_result, struct xsk_tx_metadata **meta)
- {
- 	struct mlx5e_xmit_data_frags *xdptxdf =
- 		container_of(xdptxd, struct mlx5e_xmit_data_frags, xd);
-@@ -648,7 +651,8 @@ mlx5e_xmit_xdp_frame(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptxd,
- 
- 	sq->pc += num_wqebbs;
- 
--	xsk_tx_metadata_request(meta, &mlx5e_xsk_tx_metadata_ops, eseg);
-+	if (meta)
-+		xsk_tx_metadata_request(meta, &mlx5e_xsk_tx_metadata_ops, eseg);
- 
- 	sq->doorbell_cseg = cseg;
- 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.h b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.h
-index 46ab0a9e8cddb..1a9eb77981cc3 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.h
-@@ -113,11 +113,11 @@ extern const struct xsk_tx_metadata_ops mlx5e_xsk_tx_metadata_ops;
- INDIRECT_CALLABLE_DECLARE(bool mlx5e_xmit_xdp_frame_mpwqe(struct mlx5e_xdpsq *sq,
- 							  struct mlx5e_xmit_data *xdptxd,
- 							  int check_result,
--							  struct xsk_tx_metadata *meta));
-+							  struct xsk_tx_metadata **meta));
- INDIRECT_CALLABLE_DECLARE(bool mlx5e_xmit_xdp_frame(struct mlx5e_xdpsq *sq,
- 						    struct mlx5e_xmit_data *xdptxd,
- 						    int check_result,
--						    struct xsk_tx_metadata *meta));
-+						    struct xsk_tx_metadata **meta));
- INDIRECT_CALLABLE_DECLARE(int mlx5e_xmit_xdp_frame_check_mpwqe(struct mlx5e_xdpsq *sq));
- INDIRECT_CALLABLE_DECLARE(int mlx5e_xmit_xdp_frame_check(struct mlx5e_xdpsq *sq));
- 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/tx.c
-index a59199ed590da..827538d92ac23 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/tx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/tx.c
-@@ -103,7 +103,7 @@ bool mlx5e_xsk_tx(struct mlx5e_xdpsq *sq, unsigned int budget)
- 
- 		ret = INDIRECT_CALL_2(sq->xmit_xdp_frame, mlx5e_xmit_xdp_frame_mpwqe,
- 				      mlx5e_xmit_xdp_frame, sq, &xdptxd,
--				      check_result, meta);
-+				      check_result, &meta);
- 		if (unlikely(!ret)) {
- 			if (sq->mpwqe.wqe)
- 				mlx5e_xdp_mpwqe_complete(sq);
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 3be0b79532496..3380ce960de24 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -2574,7 +2574,7 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
- 		meta_req.set_ic = &set_ic;
- 		meta_req.tbs = tx_q->tbs;
- 		meta_req.edesc = &tx_q->dma_entx[entry];
--		xsk_tx_metadata_request(meta, &stmmac_xsk_tx_metadata_ops,
-+		xsk_tx_metadata_request(&meta, &stmmac_xsk_tx_metadata_ops,
- 					&meta_req);
- 		if (set_ic) {
- 			tx_q->tx_count_frames = 0;
-diff --git a/include/net/libeth/xsk.h b/include/net/libeth/xsk.h
-index 481a7b28e6f24..1a55daa32cf16 100644
---- a/include/net/libeth/xsk.h
-+++ b/include/net/libeth/xsk.h
-@@ -205,7 +205,7 @@ __libeth_xsk_xmit_fill_buf_md(const struct xdp_desc *xdesc,
- 	BUILD_BUG_ON(!__builtin_constant_p(tmo == libeth_xsktmo));
- 	tmo = tmo == libeth_xsktmo ? &__libeth_xsktmo : tmo;
- 
--	xsk_tx_metadata_request(ctx.meta, tmo, &desc);
-+	xsk_tx_metadata_request(&ctx.meta, tmo, &desc);
- 
- 	return desc;
- }
-diff --git a/include/net/xdp_sock.h b/include/net/xdp_sock.h
-index 8a0967af8f0c4..b93d6bd368d00 100644
---- a/include/net/xdp_sock.h
-+++ b/include/net/xdp_sock.h
-@@ -152,17 +152,19 @@ static inline void xsk_tx_metadata_to_compl(struct xsk_tx_metadata *meta,
- /**
-  *  xsk_tx_metadata_request - Evaluate AF_XDP TX metadata at submission
-  *  and call appropriate xsk_tx_metadata_ops operation.
-- *  @meta: pointer to AF_XDP metadata area
-+ *  @pmeta: pointer to pointer to AF_XDP metadata area
-  *  @ops: pointer to struct xsk_tx_metadata_ops
-  *  @priv: pointer to driver-private aread
-  *
-  *  This function should be called by the networking device when
-  *  it prepares AF_XDP egress packet.
-  */
--static inline void xsk_tx_metadata_request(const struct xsk_tx_metadata *meta,
-+static inline void xsk_tx_metadata_request(struct xsk_tx_metadata **pmeta,
- 					   const struct xsk_tx_metadata_ops *ops,
- 					   void *priv)
- {
-+	const struct xsk_tx_metadata *meta = *pmeta;
-+
- 	if (!meta)
- 		return;
- 
-@@ -224,7 +226,7 @@ static inline void xsk_tx_metadata_to_compl(struct xsk_tx_metadata *meta,
- {
- }
- 
--static inline void xsk_tx_metadata_request(struct xsk_tx_metadata *meta,
-+static inline void xsk_tx_metadata_request(struct xsk_tx_metadata **pmeta,
- 					   const struct xsk_tx_metadata_ops *ops,
- 					   void *priv)
- {
 -- 
 2.53.0
 
