@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0652842EEDD;
-	Mon, 17 Aug 2026 14:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E279E41D111;
+	Mon, 17 Aug 2026 14:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978675; cv=none; b=bu03JCd+f113Gpy5kNPUFpTqO9J7TIP4I7Vm9qPury8p6II4qgaHihSheR4o6V+egagTdVUlH+u2FAlBbQeL04bOmtKK8w1zuHgXJGNZ2CA8cBeM+OCfVHAeFgoPOMhk/Qv8J+X0l5Y/Aljuauu0Ks0D5N+FJRU16t0Yd+f/wc4=
+	t=1786978678; cv=none; b=jbkl2IbDNDP+qZf50G4vTNdh13cXRRaDJH3sRTZD+q+TXX92fgQaF1sCNVROnI3W+tHIrqGfVJgtH8Mn7a5okvUAyD9J2q6ode08oOtrzvn1XS7NTDNPFLkcXw8VjGBUHR6A1CA2BQm/1yfsDiadOB3/Zwf4erbKo8wSNvUuqGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978675; c=relaxed/simple;
-	bh=xbiXhD/IWv7sBOxX8VF+9f8E8wseHjmdzcE2dFIQjTU=;
+	s=arc-20240116; t=1786978678; c=relaxed/simple;
+	bh=ekh/QPHyMuJx+ah8NKm+KH/1UpkWnY2EK7cyS9mJm8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WcBhRP0DUsAeRkBoE83rB4WEpSXvSr/LykP00wNNWTfkBDdycWJIpUInDiRjjrwyGMq0GVC6w44eJRoKqniXuxNmx+iJv7VWkjukqabQ0/qi3M0Pl3HitCX3qN4nRj0rHLhdccprg6tz1OP/h8deP7PZ7T2f4prsaOkZAwLVjlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zUOzlaZA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tmcsljEQaQBbCFSKki7yj8ImMYbxPMEVPDKTJKb111aj0RZWFnqUP5MsHNHPxxquUvkLQvYZUxM2Cpuc4kWkqMRmhkRrXzJALnfdT2nPrnrz9FTXa7zraxnZohZ/GRU6oX51jdwnRZVjJ6v9NfPvGBSoj6mDU7zhFVHIsMcZ9B0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1JUWAF7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zUOzlaZA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602371F000E9;
-	Mon, 17 Aug 2026 14:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1JUWAF7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FB21F000E9;
+	Mon, 17 Aug 2026 14:57:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978673;
-	bh=BGZYa+g/OdKQ8jVEZ+tbg6fsiP5f67FEFrTPR15e7js=;
+	s=korg; t=1786978676;
+	bh=Ig2jtjkS6b86lZwU+NRFhsi1mma2YjiExqWZMvhX/Kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zUOzlaZAMaJaV0rMHE6CmcNgsKbLZeguRbfObRDSjCzHHbujUfAgu8byDf63kxzHW
-	 trIeCiKLbhpeOKmdBraxGYvX37WYWgPsVMgac/W5ETzyyzfPOp9lbnC6jZh7ksn1Sg
-	 wH6JBavTaHRkc5poqe68KZM3f+k51y4qkzypzwzA=
+	b=g1JUWAF7KUfddwR1qjjcpQMAyJo+4D6knqi/lxMd0yVRi5PuNMQV5WfhkqtgDSN0y
+	 NASxyVdaQCW3HLhtAyuDf0S2tmZxOrKwS3uMkWVKTxv/tfX+A+nj3tR9MaoG4WAJNz
+	 bkvx30luQdS9lqr6y7UGMMnEAfABS0E41DtUuSIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 081/156] net/packet: reset the MAC header on the packet-socket transmit path
-Date: Mon, 17 Aug 2026 15:33:35 +0200
-Message-ID: <20260817132537.770205084@linuxfoundation.org>
+	syzbot+61b1db46218109869c14@syzkaller.appspotmail.com,
+	Rik van Riel <riel@surriel.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.6 117/156] fbdev: bitblit: bound-check glyph index in bit_cursor()
+Date: Mon, 17 Aug 2026 15:34:11 +0200
+Message-ID: <20260817132539.215885347@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -45,69 +45,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Rik van Riel <riel@surriel.com>
 
-commit c2707480cfbf19c7619acc9c089d17f20869821f upstream.
+commit e033cbf3975a8465f879ebd5989dc35b04423a4d upstream.
 
-packet_parse_headers() resets the MAC header only for a SOCK_RAW frame
-whose socket did not bind a protocol. A protocol-bound SOCK_RAW socket,
-any SOCK_DGRAM frame, and the legacy SOCK_PACKET path therefore leave
-skb->mac_header unset here.
+bit_cursor() fetches the glyph under the cursor with
 
-For frames sent via __dev_queue_xmit() this is harmless: it resets the
-MAC header unconditionally. But the packet-socket PACKET_QDISC_BYPASS
-path uses dev_direct_xmit(), which does not, so the frame reaches
-ndo_start_xmit() with the MAC header unset. A driver that reads
-eth_hdr(skb) on transmit then dereferences skb->head + (u16)~0, an
-out-of-bounds access ~64 KiB past the head -- the same class fixed for
-one consumer in commit f5089008f90c ("macsec: do not read an unset MAC
-header in macsec_encrypt()").
+	c = scr_readw(vc_pos);
+	src = vc_font.data + ((c & charmask) * w * height);
 
-packet_parse_headers() runs only on the transmit path, where skb->data
-points at the start of the L2 header for every packet-socket type
-regardless of its length: SOCK_RAW and SOCK_PACKET carry a user-supplied
-header and SOCK_DGRAM has one built by dev_hard_header(). Reset the MAC
-header unconditionally, mirroring __dev_queue_xmit(), so the frame is
-anchored on the bypass path too.
+where charmask is 0x1ff when vc_hi_font_mask is set. The screen buffer
+value comes directly from scr_readw() and may be larger than the current
+font's glyph count.
 
-Found by 0sec (https://0sec.ai) using automated source analysis;
-verified against source and matched to the macsec KASAN report in
-f5089008f90c. Compile-tested.
+Syzkaller triggers this via vcs_write(). The Call Trace shows
+vcs_write() in vc_screen.c writing an arbitrary 16-bit value with
+writev() to /dev/vcsa, which vcs_write_buf() in vc_screen.c stores via
+vcs_scr_writew() without checking charcount. The stored value is later
+read in bit_cursor() in bitblit.c.
 
-Fixes: 75c65772c3d1 ("net/packet: Ask driver for protocol if not provided by user")
+When the font is changed from a font with 512 glyphs to a font with
+256 glyphs, the screen buffer can retain characters with the high
+bit set from the previous mode, which could also produce the same
+out-of-bounds access.
+
+  BUG: KASAN: global-out-of-bounds in soft_cursor+0x378/0x6bc drivers/video/fbdev/core/softcursor.c:70
+  Read of size 16 at addr ffff800086c57970
+
+  Call Trace:
+   soft_cursor+0x378/0x6bc drivers/video/fbdev/core/softcursor.c:70
+   bit_cursor+0xa90/0x1108 drivers/video/fbdev/core/bitblit.c:365
+   fbcon_cursor+0x344/0x498 drivers/video/fbdev/core/fbcon.c:1427
+   hide_cursor+0xdc/0x2d0 drivers/tty/vt/vt.c:883
+   update_region+0x100/0x18c drivers/tty/vt/vt.c:669
+   vcs_write+0x8ec/0xaf0 drivers/tty/vt/vc_screen.c:685
+
+bit_putcs_aligned() and bit_putcs_unaligned() already clamp the glyph
+index to vc_font.charcount. Apply the same clamp in bit_cursor() after
+extracting the attribute and masking, before indexing fontdata.
+
+The fix completes the bounds checking started in commit 18c4ef4e765a
+("fbdev: bitblit: bound-check glyph index in bit_putcs*"), which missed
+the cursor path.
+
+This change should be safe because the clamp reuses the existing
+contract from fbcon: charcount is maintained under console_lock in
+con_font_set() and fbcon_font_set(), and hi_font_mask is cleared when
+switching from 512 to 256 glyphs. When stale screen data with high bits
+remains after a font switch, or when vcs_write() stores an arbitrary
+value, clamping the index to 0 prevents the out-of-bounds read without
+changing cursor semantics — the same fallback bit_putcs uses.
+
+Reported-by: syzbot+61b1db46218109869c14@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=61b1db46218109869c14
+Link: https://lore.kernel.org/all/6a75205c.01d0871a.3a0d52.0032.GAE@google.com/
+Fixes: 18c4ef4e765a ("fbdev: bitblit: bound-check glyph index in bit_putcs*")
 Cc: stable@vger.kernel.org
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260724144015.63219-1-doruk@0sec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Hermes:muse-spark-1.2 syzkaller
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/core/bitblit.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -1976,11 +1976,12 @@ static void packet_parse_headers(struct
- {
- 	int depth;
+--- a/drivers/video/fbdev/core/bitblit.c
++++ b/drivers/video/fbdev/core/bitblit.c
+@@ -274,9 +274,14 @@ static void bit_cursor(struct vc_data *v
+ 	if (!vc->vc_font.data)
+ 		return;
  
-+	/* On TX skb->data is the L2 header; anchor it for all socket types. */
-+	skb_reset_mac_header(skb);
+- 	c = scr_readw((u16 *) vc->vc_pos);
++	c = scr_readw((u16 *) vc->vc_pos);
+ 	attribute = get_attribute(info, c);
+-	src = vc->vc_font.data + ((c & charmask) * (w * vc->vc_font.height));
++	c &= charmask;
 +
- 	if ((!skb->protocol || skb->protocol == htons(ETH_P_ALL)) &&
--	    sock->type == SOCK_RAW) {
--		skb_reset_mac_header(skb);
-+	    sock->type == SOCK_RAW)
- 		skb->protocol = dev_parse_header_protocol(skb);
--	}
++	/* Clamp to font size, same as bit_putcs_aligned() */
++	if (c >= vc->vc_font.charcount)
++		c = 0;
++	src = vc->vc_font.data + (c * (w * vc->vc_font.height));
  
- 	/* Move network header to the right position for VLAN tagged packets */
- 	if (likely(skb->dev->type == ARPHRD_ETHER) &&
+ 	if (par->cursor_state.image.data != src ||
+ 	    par->cursor_reset) {
 
 
