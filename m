@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F863BD65D;
-	Mon, 17 Aug 2026 13:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F502BFC85;
+	Mon, 17 Aug 2026 13:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974297; cv=none; b=Q7Xb7lMq1foig7xCRg7HOtqDC8lUOwtveVTZFMUgVdP1RYWoJgFzGap4HfoVeWp3mvhtJJSXppMZCw69CqLvtKovyKdQjJerr18b03jyT9CS5dAjdG7x5M0ohWN+9ChgEM010+Aa4oWOa1dcnNXL9sUi3dELRXk+oFw0AJzsiRM=
+	t=1786974302; cv=none; b=bUYg17nnw2nXgsXlRd4BQeJBtU3rg9AFK7XcR2AmGBLeNGqu7Tx7APW63yYiNmH9A3gR3et6gJIjedYjfXl7KjuVt2kxQUv4NibSUd/AyJczrmddSxwrlTwWvgP3/rcgcjT3vzPvJrfhkiYyCeTw68heiafJcU2SgzdnEICEHIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974297; c=relaxed/simple;
-	bh=WRsU3lcZaH1OhVPslU/xxz6iNHcDPajaZbl3i6v4nq8=;
+	s=arc-20240116; t=1786974302; c=relaxed/simple;
+	bh=ePeUqo0exRHrd4j23ppo67HFG6wTfdeNGpV2HJ9zzXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s7XgcFrxSr7RL7FvJzRmMafi8WYdUktEpMW4OD/z9nzSH0eak32LkojHRfqsHjgf9+FNfcxabbJsjR3V4YQy0bPl2lsoYQvHkDIEu8e3aW8Xy4OP98S3t1aaLh1Th4LqgypdZCB2RrBIqxJu6z43lsuhkgYJFo2v7SuwPSO6e5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iSN+dwW3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Eawj6T6Vwuoqi+8v0pTlWmaSNff+L3UpgfeTZdFzhyB7+1b8Yk7YhInL4QG+MQ8PS2TTqR/uwe16BT8L8CNWgplTls44t7LyhUDziNzkwzDHevE91sKJ9ZgQLxdtrETUTN5gl+WfFqKPuqBV5uXj0/GLzC3zScLT6TRb6J7MYYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aAQbc/5A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iSN+dwW3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CEA31F000E9;
-	Mon, 17 Aug 2026 13:44:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aAQbc/5A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E8E51F00A3E;
+	Mon, 17 Aug 2026 13:44:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974289;
-	bh=OBB7bhg6rEQmUvHI8C2dtSE3SVy8CdTyXeXhUAfmXes=;
+	s=korg; t=1786974294;
+	bh=rarZahofoYGKtO2JosCnV2B4ajNuJKgbTYVByyIEpII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iSN+dwW3X5KS6q4PLkViTsskKsssmO9B/WLA3JoOdlosMUHvH81B3WhWFtIYCY2Vq
-	 STc0uN7+JIyQBGdssg8+24RyIq+DeU9YhYvbG29XHd5rCiFBUC/X0q8vHw9aOOV+kJ
-	 mlqcCpc1+yXI/cYZhNdjp1jc8JVT12drGxW/kvD0=
+	b=aAQbc/5Aa3HWUTagoibWDPsgzPTNNvybhtxHmyA+5jYLpNmBiywsqJFNu0hXe3+rg
+	 b9iNWqnIBZL4XZHzkp0/Me212MaQWVEMS7Mn2RpbFBJt2R/z7S0fofQv533Mo7TSwv
+	 xYuWUt+LJdBENiprPpHLMb33KG/r9GJnMabdR8xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohsin Bashir <hmohsin@meta.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Sun Jian <sun.jian.kdev@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 153/271] net: fix skb length accounting after generic XDP frag adjustment
-Date: Mon, 17 Aug 2026 15:31:18 +0200
-Message-ID: <20260817132543.202154577@linuxfoundation.org>
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Vega <vega@nebusec.ai>,
+	Zijie Huang <milkory@outlook.com>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.1 155/271] net/sched: reject overly deep qdisc hierarchies
+Date: Mon, 17 Aug 2026 15:31:20 +0200
+Message-ID: <20260817132543.292880604@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -52,65 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sun Jian <sun.jian.kdev@gmail.com>
+From: Zijie Huang <milkory@outlook.com>
 
-commit 33f2b2eb33d666ecac68031e0f31424fb70528db upstream.
+commit dedd34b0f2310e28c5f6d4875cfbf4b7ed821c01 upstream.
 
-Generic XDP exposes non-linear skb fragments through an xdp_buff. If an
-XDP program adjusts the fragment area, bpf_prog_run_generic_xdp() copies
-xdp_frags_size back to skb->data_len but leaves skb->len containing the
-old fragment contribution.
+Deep qdisc hierarchies can lead to excessive recursion in qdisc tree
+walkers and exhaust the kernel stack. The existing loop check does not
+cover the create-and-graft path, so a hierarchy can still be extended by
+creating a new child qdisc below an already deep parent.
 
-After a fragment shrink, this makes skb_headlen() larger than the actual
-linear area. In the reproduced UDP receive path, __skb_datagram_iter()
-copied 1024 bytes past the actual linear tail to userspace, starting at
-struct skb_shared_info. The copied bytes included the affected skb's
-nr_frags, xdp_frags_size and a kernel pointer from
-skb_shinfo(skb)->frags[0]. Real packet data was displaced by the same
-amount and truncated at the end.
+Store the hierarchy depth in struct Qdisc and update it when qdiscs are
+grafted. Reject new child qdiscs once the parent is already at the maximum
+allowed depth.
 
-Subtract the old data_len before replacing it and add the new data_len
-afterwards, keeping skb->len and skb->data_len synchronized.
-
-A 60000-byte UDP datagram on a veth pair with MTU 64000 was shortened by
-1024 bytes from its fragment area. Before the fix, all 10 runs produced
-corrupted payloads. After the fix, all 10 runs matched the expected
-payload exactly.
-
-Fixes: e6d5dbdd20aa ("xdp: add multi-buff support for xdp running in generic mode")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/bpf/al9T9Eto%2FhRIzP5W@boxer/
-Reviewed-by: Mohsin Bashir <hmohsin@meta.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
-Link: https://patch.msgid.link/20260804054040.613675-2-sun.jian.kdev@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Suggested-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Zijie Huang <milkory@outlook.com>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/1e9ab39597423fd5d13cfaaf52279b8ee3d9fc3c.1785434373.git.milkory@outlook.com
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/dev.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ include/net/sch_generic.h |    1 +
+ net/sched/sch_api.c       |    9 +++++++++
+ 2 files changed, 10 insertions(+)
 
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -5515,12 +5515,16 @@ u32 bpf_prog_run_generic_xdp(struct sk_b
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -99,6 +99,7 @@ struct Qdisc {
+ 	struct hlist_node       hash;
+ 	u32			handle;
+ 	u32			parent;
++	int			depth;
+ 
+ 	struct netdev_queue	*dev_queue;
+ 
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -1110,6 +1110,9 @@ static int qdisc_graft(struct net_device
+ 		unsigned int i, num_q, ingress;
+ 		struct netdev_queue *dev_queue;
+ 
++		if (new)
++			new->depth = 0;
++
+ 		ingress = 0;
+ 		num_q = dev->num_tx_queues;
+ 		if ((q && q->flags & TCQ_F_INGRESS) ||
+@@ -1207,9 +1210,15 @@ skip:
+ 			NL_SET_ERR_MSG(extack, "STAB not supported on a non root");
+ 			return -EINVAL;
+ 		}
++		if (new && parent->depth >= 7) {
++			NL_SET_ERR_MSG(extack, "Qdisc hierarchy is too deep");
++			return -E2BIG;
++		}
+ 		err = cops->graft(parent, cl, new, &old, extack);
+ 		if (err)
+ 			return err;
++		if (new)
++			new->depth = parent->depth + 1;
+ 		notify_and_destroy(net, skb, n, classid, old, new, extack);
  	}
- 
- 	/* XDP frag metadata (e.g. nr_frags) are updated in eBPF helpers
--	 * (e.g. bpf_xdp_adjust_tail), we need to update data_len here.
-+	 * (e.g. bpf_xdp_adjust_tail). Remove the old fragment contribution
-+	 * from skb->len before updating data_len, then add the new one back.
- 	 */
--	if (xdp_buff_has_frags(xdp))
-+	skb->len -= skb->data_len;
-+	if (xdp_buff_has_frags(xdp)) {
- 		skb->data_len = skb_shinfo(skb)->xdp_frags_size;
--	else
-+		skb->len += skb->data_len;
-+	} else {
- 		skb->data_len = 0;
-+	}
- 
- 	/* check if XDP changed eth hdr such SKB needs update */
- 	eth = (struct ethhdr *)xdp->data;
+ 	return 0;
 
 
