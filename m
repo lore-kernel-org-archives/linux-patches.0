@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAA23C661A;
-	Mon, 17 Aug 2026 14:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3923F23D1;
+	Mon, 17 Aug 2026 14:29:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976993; cv=none; b=p5b9mova+/VHOdT7/Xln6qBbVb9BKKuqwP1hUAfgyTvCOyCGH2x87bJwcXNMC8CMq5wOu7dktbxpEbtWZ04p5vLGMjZdOXENnwdDwsKpoI70xwnH4eqDR6kT/XEjluNlW4QpCeWGgkm6Uib3omCrMmNNnVctlWuqM+N9IjnGOQo=
+	t=1786976999; cv=none; b=FeeoR588RUJ/RrLKlCuzvl+Wbj6Myk/Tap5WjPRS1apvpG+yHKfpYfvQNbq6gHOtjPUQUc1biaBtK5Z0CGARLPvmk4DATkOE7jMkMjwafdWLTyEBF07tb03gNqhyH4sCoE9Hmhv1/Bg7IoHuG2SbSy5140RwLHyeYolAiRi+y6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976993; c=relaxed/simple;
-	bh=uMWVJCBlchH5MCy7d/1tDUqzzwV8MT0/HeQ4onjSm+M=;
+	s=arc-20240116; t=1786976999; c=relaxed/simple;
+	bh=Z5H+zDoGitVa0wDVZyiVqd3i1+BXhY3qOGdiRPIF9jc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=myzmBgXZ8wVu5pyegxSjbuJUc5HEzydOVATiIVsWF/VlX/xOs9+s+9MlgtuGBkmW/ShIK7btsZKCMqAJxH0dNk2152rq1tWmlSPE5AXC4C6CrDcUJGTpYl+p4UukXnY9xfqeBe84URXmqAKawUVkFZyADWEXlgXRcO3p8clpbAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RWOHXKqO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ED0j5phSe9/hKkuAD9FJ9mdS2db0oDgYsMIs2ZVV7B34XSGqk4UawAI59jloRUxWnUsHV83bKgEmXqV+KcYwZ4bsy60jJspoLosF7tW0p2afQbbJh9Bt3rf+wQiFHQ7n1vWu2GNoxP4GhMPjBkhawiHXhsJlKxhKZzd+3GUCQ9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ExgwcrGF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RWOHXKqO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09AC71F000E9;
-	Mon, 17 Aug 2026 14:29:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ExgwcrGF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E38E41F000E9;
+	Mon, 17 Aug 2026 14:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976991;
-	bh=SfjSdsNTaNsITR99d/AVTH7RjBhMi8fV/s+sL0lx97A=;
+	s=korg; t=1786976994;
+	bh=1JmOrGIhCJQmFpe+ltYdwHe1PGtfQ+2ZYGnYr6c1ej4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RWOHXKqOPfjdoUi+aoNd0vAGafnUGqcTCyMc5z7IzTsqZYY816ymQnpeOpHQt/z2u
-	 EgHh6ibH+paO6XMDrwuSyu6oAfEwMmr9mzkpbiVdg60qoSdFm0D9fUC/i4hmFU7TC2
-	 ODrEX7Dc2RYk4CF9Tk53Pibf6mT+DlDfdfPDBE7Y=
+	b=ExgwcrGFyP5H0vGJnDI8TF746sgwfRdkhSUKprKQreUkB2HalBbcvAfko91em54ui
+	 qXQlhhRM//SefhvmRq2FygQ/9ecr5fKPK0rWqXHrkm3M+0YOXE41cEOFtmcGy2AFUK
+	 IqQsiOSFbFBUUoYOxea7bAFnri9GokCtomZwWbnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zile Xiong <xiongzile99@gmail.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 174/456] media: vb2: use ssize_t for vb2_read/vb2_write
-Date: Mon, 17 Aug 2026 15:29:24 +0200
-Message-ID: <20260817132546.925377867@linuxfoundation.org>
+Subject: [PATCH 5.15 175/456] media: vidtv: fix reference leak on failed device registration
+Date: Mon, 17 Aug 2026 15:29:25 +0200
+Message-ID: <20260817132546.965962347@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,99 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zile Xiong <xiongzile99@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit a562d6dc86bdfdd299e1b4734977a8d63e803583 upstream.
+commit 9aa21e1549db8882ff77b691e7714153df21dff0 upstream.
 
-vb2_read() and vb2_write() return size_t, but propagate
-negative errno values from __vb2_perform_fileio().
+When platform_device_register() fails in vidtv_bridge_init(), the
+embedded struct device in vidtv_bridge_dev has already been initialized
+by device_initialize(), but the failure path returns the error without
+dropping the device reference for the current platform device:
 
-This relies on implicit signed/unsigned conversions in callers
-(e.g. vb2_fop_read()) to recover error codes:
+  vidtv_bridge_init()
+    -> platform_device_register(&vidtv_bridge_dev)
+       -> device_initialize(&vidtv_bridge_dev.dev)
+       -> setup_pdev_dma_masks(&vidtv_bridge_dev)
+       -> platform_device_add(&vidtv_bridge_dev)
 
-    __vb2_perform_fileio() -> -EINVAL
-    vb2_read()             -> (size_t)-EINVAL
-    vb2_fop_read()         -> -EINVAL
+This leads to a reference leak when platform_device_register() fails.
+Fix this by calling platform_device_put() before returning the error.
 
-This relies on implicit conversions that are not obvious.
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
 
-These helpers are exported (EXPORT_SYMBOL_GPL) and part of the
-vb2 API, so changing their return type may affect existing users.
-
-However, they conceptually follow read/write semantics, where
-ssize_t is typically used to return either a byte count or a
-negative error code.
-
-Switch vb2_read() and vb2_write() to ssize_t, and update
-__vb2_perform_fileio() accordingly.
-
-Signed-off-by: Zile Xiong <xiongzile99@gmail.com>
-Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Fixes: b25748fe6126 ("[media] v4l: videobuf2: add read() and write() emulator")
+Fixes: f90cf6079bf67 ("media: vidtv: add a bridge driver")
 Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/common/videobuf2/videobuf2-core.c |   12 ++++++------
- include/media/videobuf2-core.h                  |    8 ++++----
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ drivers/media/test-drivers/vidtv/vidtv_bridge.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/media/common/videobuf2/videobuf2-core.c
-+++ b/drivers/media/common/videobuf2/videobuf2-core.c
-@@ -2719,8 +2719,8 @@ static int __vb2_cleanup_fileio(struct v
-  * @nonblock:	mode selector (1 means blocking calls, 0 means nonblocking)
-  * @read:	access mode selector (1 means read, 0 means write)
-  */
--static size_t __vb2_perform_fileio(struct vb2_queue *q, char __user *data, size_t count,
--		loff_t *ppos, int nonblock, int read)
-+static ssize_t __vb2_perform_fileio(struct vb2_queue *q, char __user *data, size_t count,
-+				    loff_t *ppos, int nonblock, int read)
- {
- 	struct vb2_fileio_data *fileio;
- 	struct vb2_fileio_buf *buf;
-@@ -2880,15 +2880,15 @@ static size_t __vb2_perform_fileio(struc
- 	return ret;
- }
+--- a/drivers/media/test-drivers/vidtv/vidtv_bridge.c
++++ b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
+@@ -596,8 +596,10 @@ static int __init vidtv_bridge_init(void
+ 	int ret;
  
--size_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
--		loff_t *ppos, int nonblocking)
-+ssize_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
-+		 loff_t *ppos, int nonblocking)
- {
- 	return __vb2_perform_fileio(q, data, count, ppos, nonblocking, 1);
- }
- EXPORT_SYMBOL_GPL(vb2_read);
+ 	ret = platform_device_register(&vidtv_bridge_dev);
+-	if (ret)
++	if (ret) {
++		platform_device_put(&vidtv_bridge_dev);
+ 		return ret;
++	}
  
--size_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
--		loff_t *ppos, int nonblocking)
-+ssize_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
-+		  loff_t *ppos, int nonblocking)
- {
- 	return __vb2_perform_fileio(q, (char __user *) data, count,
- 							ppos, nonblocking, 0);
---- a/include/media/videobuf2-core.h
-+++ b/include/media/videobuf2-core.h
-@@ -1044,8 +1044,8 @@ __poll_t vb2_core_poll(struct vb2_queue
-  * @ppos:	file handle position tracking pointer
-  * @nonblock:	mode selector (1 means blocking calls, 0 means nonblocking)
-  */
--size_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
--		loff_t *ppos, int nonblock);
-+ssize_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
-+		 loff_t *ppos, int nonblock);
- /**
-  * vb2_write() - implements write() syscall logic.
-  * @q:		pointer to &struct vb2_queue with videobuf2 queue.
-@@ -1054,8 +1054,8 @@ size_t vb2_read(struct vb2_queue *q, cha
-  * @ppos:	file handle position tracking pointer
-  * @nonblock:	mode selector (1 means blocking calls, 0 means nonblocking)
-  */
--size_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
--		loff_t *ppos, int nonblock);
-+ssize_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
-+		  loff_t *ppos, int nonblock);
- 
- /**
-  * typedef vb2_thread_fnc - callback function for use with vb2_thread.
+ 	ret = platform_driver_register(&vidtv_bridge_driver);
+ 	if (ret)
 
 
