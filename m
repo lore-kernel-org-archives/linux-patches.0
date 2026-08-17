@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0E6421225;
-	Mon, 17 Aug 2026 14:29:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692DA43C7A8;
+	Mon, 17 Aug 2026 14:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976985; cv=none; b=PNvodEGgKMa+mpv1zRr3umZFM/e+tQ5ayR+B1pyaKekuaOUTn73uabiAdj21K2BxW44cmJ85N/6VOFcmFdu3e86Vz/zbg70rb1Rz0M/ePDyn7ZzkLgJAj4FbFIE8Mqp1zXS3YXhrS4OP4ioOcjASQCWwOINrzzpxg9R7AcK0McQ=
+	t=1786976988; cv=none; b=pJx1/HGDQYn1h7xrXYOFW2CilAIREVcyfkgovTlX6Idva0Ac04bAXj0t56roi5rKYVuvgBZ29lE7O5fSJMAe+UoZ+t3U1+32r1bBYwfybkNATDpUpCZv4Z0dbnK5A/I5uaXWg55mggUUsHhpRJBPr/ibKNoY+IsOPoaSdpkVWWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976985; c=relaxed/simple;
-	bh=hQk4MaQpAAeQRHKG7UEg6SWSY7dVdKTRe2++05Q+yJ8=;
+	s=arc-20240116; t=1786976988; c=relaxed/simple;
+	bh=BqA0QdbkLDwEy03z0rQWKjSAKBC4RSjAutuj5q6D/0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gGXSOMs2C2Ncc9zqG+kpSnQrhWgiRHBih8blWfcc03tCFcvqRzSSk47JGWEYlxNUHW4nBeiBCYV84Q4SzzbsUQjsmeGDrsrabWUkURcOzBTbmZcmfcGnQEk6SYsduoN3FuImSIJUEr/lCQWqnZRjbsF0uzL+PdVvQI2FomqAxvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0i0/JZWh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nU4Ukbt1DG2AmPItb4qa2y13nuzkMFgRBqwlCDR9Q0KTDo5Nlknj1hatfo7nIKz/s0Tra8R6dkmeVMoWc1mRkgupHv81bn9LYdRHLsFEAe+KrmUrbIPJzrcD1Ir4N/P730qjcO6sPwF1Zli1iw5872enjryZD9rH5wcen8E3bxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=giG8ubm3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0i0/JZWh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E3F1F000E9;
-	Mon, 17 Aug 2026 14:29:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="giG8ubm3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491501F000E9;
+	Mon, 17 Aug 2026 14:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976983;
-	bh=Sl8kJwJBmHqJL5XKxdHu0Ubj8ONpZgl8cD2XyRx09ZQ=;
+	s=korg; t=1786976985;
+	bh=yiDwV7wtrn+k2m1PNagZ4ECF7v8MNojJz4NZZ0aYEAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0i0/JZWhlXcs1r4N2Zk42QvwPa3OE0wLHo9yx5cGi3EFhxhUEelFtENk2w95lc6sb
-	 FNx6pd+J+bBxlVaenKLzIpzcoKUmcomEISWhq673sZZDjsLh92Md/HzSRxdNsXlyGZ
-	 BpmCbvBTUdV9PQqbhiDxb0/1qA1hJn6WCUFMcOak=
+	b=giG8ubm3gu4RJycC5j2wVDRHwmX8pT/eeXrOPUeSgTwNk3vwkdRwG6XCKFbKdD0y1
+	 wiB4FAeyfhNxnL+Y7giqnsKDRDxDfDO1mq+DicSuLFjgUy0hLTwBfmVNCjYXI+W6n4
+	 gwP6mVygtfk5cUjMN9V96/kVUdl6pHxWLVFozL4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valery Borovsky <vebohr@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 171/456] media: sun4i-csi: Return queued buffers on start_streaming() failure
-Date: Mon, 17 Aug 2026 15:29:21 +0200
-Message-ID: <20260817132546.801315036@linuxfoundation.org>
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Hungyu Lin <dennylin0707@gmail.com>
+Subject: [PATCH 5.15 172/456] media: tegra-video: vi: fix invalid u32 return value in format lookup
+Date: Mon, 17 Aug 2026 15:29:22 +0200
+Message-ID: <20260817132546.854307100@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,51 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valery Borovsky <vebohr@gmail.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-commit bbba3e260a62810a717b4442a3bb96d0ec0f6309 upstream.
+commit d5b50055338e131a1a99f923ebb0361974a00f36 upstream.
 
-The vb2 framework hands buffers to the driver via buf_queue() before
-calling start_streaming().  If start_streaming() returns an error
-without first returning those buffers via vb2_buffer_done(),
-vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
-buffers leak.
+tegra_get_format_fourcc_by_idx() returns a u32 but uses -EINVAL to
+signal an out-of-bounds index. This results in a large unsigned
+value being returned, which may be interpreted as a valid fourcc.
 
-sun4i_csi_start_streaming() returned -EINVAL when no matching CSI
-format could be found, before any setup (scratch buffer allocation,
-pipeline start) had been performed.  The remaining error paths already
-converge on the err_clear_dma_queue label, which calls
-return_all_buffers(..., VB2_BUF_STATE_QUEUED) under csi->qlock.  Jump
-to that label directly: the intermediate err_disable_device /
-err_disable_pipeline / err_free_scratch_buffer labels are skipped,
-which is correct because nothing they would undo has happened yet.
+Returning 0 is not a valid fourcc either. This condition should
+never happen, so use WARN_ON_ONCE() to catch unexpected out-of-bounds
+access and return a valid fallback format instead.
 
-This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
-Return queued buffers on start_streaming() failure").
-
-Fixes: 577bbf23b758 ("media: sunxi: Add A10 CSI driver")
+Suggested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 3d8a97eabef0 ("media: tegra-video: Add Tegra210 Video input driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/sunxi/sun4i-csi/sun4i_dma.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/staging/media/tegra-video/vi.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/sunxi/sun4i-csi/sun4i_dma.c
-+++ b/drivers/media/platform/sunxi/sun4i-csi/sun4i_dma.c
-@@ -234,8 +234,10 @@ static int sun4i_csi_start_streaming(str
- 	int ret;
- 
- 	csi_fmt = sun4i_csi_find_format(&csi->fmt.pixelformat, NULL);
--	if (!csi_fmt)
+--- a/drivers/staging/media/tegra-video/vi.c
++++ b/drivers/staging/media/tegra-video/vi.c
+@@ -76,8 +76,8 @@ static int tegra_get_format_idx_by_code(
+ static u32 tegra_get_format_fourcc_by_idx(struct tegra_vi *vi,
+ 					  unsigned int index)
+ {
+-	if (index >= vi->soc->nformats)
 -		return -EINVAL;
-+	if (!csi_fmt) {
-+		ret = -EINVAL;
-+		goto err_clear_dma_queue;
-+	}
++	if (WARN_ON_ONCE(index >= vi->soc->nformats))
++		return vi->soc->video_formats[0].fourcc;
  
- 	dev_dbg(csi->dev, "Starting capture\n");
- 
+ 	return vi->soc->video_formats[index].fourcc;
+ }
 
 
