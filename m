@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33CC2EC54A;
-	Mon, 17 Aug 2026 15:04:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5971282F29;
+	Mon, 17 Aug 2026 15:04:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979063; cv=none; b=ocZZ4SHg0gPDUlTJcLZcTmZJY+bimNnr+GI6E4daVAzdmaGdL3ACN6+Je9g8YNhGszaVHUIsO+/NpFJadd44mI8PYUr6I+z8ar3KFqVtRfoDNlsb2CbNTpeKJInwP0Z7itzIau7Q2Xn4KEKN/+KO1shuRac6iJVBRUgLtOPo2x0=
+	t=1786979065; cv=none; b=lP3FuXnwKMiovmCDrDA8eMbR9oTXAbtqPjA5xPJ0t6Tfpw5e71MbTFiOzr8CyJAYXhDLkVEr3yqInrXb37klgJsm7PPsG4nV5ktEF91A1piJ+F9lvnzycrnxBJqVC2IsF2z1gZjd0CpixeJUWoL7UvfsaeY2h04rhwwHIQiMGF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979063; c=relaxed/simple;
-	bh=d9sw1ld7zhkFCln1vyC+mD02T6/mrdTNM1Ul+8zWr3M=;
+	s=arc-20240116; t=1786979065; c=relaxed/simple;
+	bh=jhUEtpf/5PXFo1DLXzA8ioDgnNwlO7iCP1jOqNLf7Vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RkDy8aZWcy2udRFmQUJ5DQfjEqsMIQx6hTi+YvCkvNS9KQEWh4f5U/uL91X+IsbwxLcgsMZlO+wnHcXyJ1zo4GHyak+0B4FSj6zAzq/CFvT9x4wR55DcsfU4FGzVov/Jem2TLNC7qX6vKp5pHqpPSD/FL8MgZ8VlZFtH7LhV9BQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jt4ZBDez; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uUzRtGPf/6mJ9jVfvWkEf1aWa2SDkykbWID7nXN0X4LX1oYkhqU8sM5uNcw0mkzU1tOadjZawybwL6/lRwSwJ0CQvtE0GrCt5o4RtUo/N1h/uk8TOfFZuXGg93Y4S54IgeJcnmrB+pSgtlc2gvTKcnEp57IhanIZ4bowcFWZYwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5Aau4xP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jt4ZBDez"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0374D1F000E9;
-	Mon, 17 Aug 2026 15:04:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5Aau4xP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA5B21F00A3D;
+	Mon, 17 Aug 2026 15:04:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979061;
-	bh=F82WdBsbqoKtj92iK9YeWpJi40VCJx4JtTXmWweRMdw=;
+	s=korg; t=1786979064;
+	bh=oY4UdJnk4Oi9Ls2hPSgdUzUUR0Fhi+I//aTTjDDTfZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jt4ZBDezpGaet0pZcaWjkkgGWGXSqneJU+tMpyFjr56vbZRcCNmH7wRZPZpn2QrD0
-	 uYkkff6e0qPxdB9Jgxe3GUtczH5UzeMb4mUUjnTofumTj7j0IxPcAlL6cPDmJQ2P/i
-	 f5yx46GbJLR5bTDxZxIqRSmRG8bSDjrudw9k0rng=
+	b=e5Aau4xPLltl/ZbQpXv6kDBpumoKIFzFD1+wVJQRnuFGkUY54MqNCSAtzGb0hcK/5
+	 jFRrDAp05PhFGbGshmBZFw3bVPT7rJc95KIRzByfKOKkrv3OoTkr9LxL6AiRyfjTVN
+	 QSyERxmJAtI0cyMbubkkbX2naD+e2h/kqd96x/Is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/609] ksmbd: validate compound request size before reading StructureSize2
-Date: Mon, 17 Aug 2026 15:26:04 +0200
-Message-ID: <20260817132545.768236435@linuxfoundation.org>
+Subject: [PATCH 6.1 095/609] bpf: Prefer dirty packs for eBPF allocations
+Date: Mon, 17 Aug 2026 15:26:31 +0200
+Message-ID: <20260817132546.835765509@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,67 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-[ Upstream commit 15b38176fd1530372905c602fde51fe89ec8c877 ]
+commit b72e29e0f7ee329d89f86db8700c8ea99b4a370a upstream.
 
-When ksmbd validates a compound (chained) SMB2 request,
-ksmbd_smb2_check_message() reads pdu->StructureSize2 without first
-checking that the compound element is large enough to contain it.
-StructureSize2 is a 2-byte field at offset 64
-(__SMB2_HEADER_STRUCTURE_SIZE) from the start of each element.
+The pack allocator only flushes predictors when reusing a dirty pack for
+cBPF, eBPF allocations never trigger a flush. Currently, eBPF picks the
+first free pack, which could be a clean pack. As an optimization, leaving
+a clean pack for cBPF can avoid flushes.
 
-The compound-walking logic only guarantees that a full 64-byte SMB2
-header is present for the trailing element: when NextCommand is 0, len is
-reduced to the number of bytes remaining after next_smb2_rcv_hdr_off. A
-remote client can craft a compound request whose last element has exactly
-64 bytes, so the 2-byte StructureSize2 read at offset 64 extends one byte
-past the receive buffer, producing a slab-out-of-bounds read.
+Prefer dirty packs for eBPF and keep clean packs free for cBPF. This
+mirrors the existing cBPF preference for clean packs: each program kind
+prefers the pack that avoids an extra flush, and falls back to the other
+kind only when no preferred pack has room. eBPF reuse of a dirty pack is
+harmless since eBPF being privileged does not flush.
 
-  BUG: KASAN: slab-out-of-bounds in ksmbd_smb2_check_message (fs/smb/server/smb2misc.c:402)
-  Read of size 2 at addr ffff888012ae31ac by task kworker/0:1/14
-  The buggy address is located 172 bytes inside of allocated 173-byte region
-  Workqueue: ksmbd-io handle_ksmbd_work
-  Call Trace:
-   ...
-   kasan_report (mm/kasan/report.c:595)
-   ksmbd_smb2_check_message (fs/smb/server/smb2misc.c:402)
-   handle_ksmbd_work (fs/smb/server/server.c:119)
-   process_one_work (kernel/workqueue.c:3314)
-   worker_thread (kernel/workqueue.c:3397)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-
-Reject any compound element that is too small to hold StructureSize2
-before dereferencing it.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2misc.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/bpf/core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/server/smb2misc.c b/fs/smb/server/smb2misc.c
-index f257e096c8e17f..6a4f1b8a0b13c9 100644
---- a/fs/smb/server/smb2misc.c
-+++ b/fs/smb/server/smb2misc.c
-@@ -400,6 +400,11 @@ int ksmbd_smb2_check_message(struct ksmbd_work *work)
- 		return 1;
- 	}
- 
-+	if (len < __SMB2_HEADER_STRUCTURE_SIZE + sizeof(__le16)) {
-+		ksmbd_debug(SMB, "Message is too small for StructureSize2\n");
-+		return 1;
-+	}
-+
- 	if (smb2_req_struct_sizes[command] != pdu->StructureSize2) {
- 		if (!(command == SMB2_OPLOCK_BREAK_HE &&
- 		    (le16_to_cpu(pdu->StructureSize2) == OP_BREAK_STRUCT_SIZE_20 ||
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 926bf11aeaf21a..4ea21434bf78e6 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -946,10 +946,10 @@ void *bpf_prog_pack_alloc(u32 size, bpf_jit_fill_hole_t bpf_fill_ill_insns, bool
+ 			goto found_free_area;
+ 		/*
+ 		 * cBPF reuse of a dirty pack triggers a flush, so prefer a
+-		 * clean pack for cBPF. eBPF never flushes, so pick the first
+-		 * free pack, dirty or clean.
++		 * clean pack for cBPF. eBPF never flushes, so steer it to a
++		 * dirty pack and keep clean packs free for cBPF.
+ 		 */
+-		if (!was_classic || !pack->arch_flush_needed)
++		if (was_classic ^ pack->arch_flush_needed)
+ 			goto found_free_area;
+ 		if (!fallback_pack) {
+ 			fallback_pack = pack;
 -- 
 2.53.0
 
