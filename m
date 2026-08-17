@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EDE43CE4B;
-	Mon, 17 Aug 2026 13:53:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DFA43F8DE;
+	Mon, 17 Aug 2026 13:53:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974797; cv=none; b=lMVcNUq3Glt0sjD4N6BEjqZww8W8R3TynPSZGPOXbMBg5jom/Evne40+x5/Zn/Za/cfFhBh73XTWD8lJWF24K3BizlVf0hWGJLB5j1RtDcWtTPa1Tn2QMtDm68RxYOFgqIMWJ3u8pnfp7mW7f7IOzOnbTanMwOL1speoitSNzBg=
+	t=1786974800; cv=none; b=jVN2vtN25adjJWfjQsAvkXcQoWqpTxlsrQHG6SCTHHjkShv/3UNEh4T7mjib+yXEDRcXv6BFvK7647/q9YLHnQzmWNV8hNZ6nIe3+hC2P/K0KpfCLF0sZBSXjoBurHP1z2t+76tgVBn4Vld0ds4G9zIOv+jDH7NKucB9nRVl7AQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974797; c=relaxed/simple;
-	bh=7h4Eb8BFyafKNLdn1OoYkxzwbAkdrdOmNHZKXoPHBAw=;
+	s=arc-20240116; t=1786974800; c=relaxed/simple;
+	bh=1hGy63Tp/kiK6Bgm0a3Bq7nkwo1Qa6rnvSVb2BdokiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r7RQghVEP5/d7zH3uQIN34IWMhkN6ewK1E/9RuP+RXq1RVhl6iKeeMu2PsOu1mjwTOH8bkD8ljJsVuvJF8izfrAISL6/CMGLxMBvfItss4Wo9wddXSwAGMinndW8AD68EM/BI5RofodHQ/SE+q6K6KiphjtEyQnhl0s3Ll7Br1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LmQNre4u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AZyIg/QZZPU5qyPAt68EO6LA85PNHWQHa/G1LRd37AG291GcCd/WzmDfF6SZsvOHyQc/YzbO7+3/KjIN14Xreaz2iIM4Va4anOw0ZICOrSQqdn/X+L30NVMmKchaBnQy+O4AAzamF5qxWZp64zJAjm7erHHj5ifHVHhjtq9Mu+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LAM6mLc5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LmQNre4u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B204A1F00A3A;
-	Mon, 17 Aug 2026 13:53:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LAM6mLc5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92FD71F00A3F;
+	Mon, 17 Aug 2026 13:53:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974787;
-	bh=mvitVeQYFjeiXoNmL62R0oU2QiroBPnnKt1mloCatTQ=;
+	s=korg; t=1786974790;
+	bh=EidolPQ6GQff4KH3Gz9z3LUU1LNk+1RXh3Zcqkxvfx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LmQNre4ua6BqfuHD8NHSAkNOP2jq/H1MaTOZx3wcPQskZ0U2bAU3+9CND+r54jopg
-	 Gqibygcxj4cIU5EXi56e5XCt+A2EK0R6XVw90XIaIQHcC1LFVMADLU0EpNur0Ss7Qg
-	 vo3D8VxNk5OphnX//KeGIVMzDp+ksruu7nrPYWOw=
+	b=LAM6mLc5jsgXfLMv5KYKzbZnR3AQoPdwhdzfLnfV8cK7M4QTT3xTsbVodh9f2phqQ
+	 0PVID3PFRiRyRNnBtVQkHz3f2ka6kWtLMtgWIWDr+nzdlDGHzzv8X6vjBU2mfEw9n1
+	 V5z/n2ZZ/W1OZ7N+rKmsQ6rAAzdX64omiuTudbjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 054/250] vdpa/mlx5: Fix buffer length in create_direct_keys()
-Date: Mon, 17 Aug 2026 15:30:15 +0200
-Message-ID: <20260817132538.648403155@linuxfoundation.org>
+Subject: [PATCH 6.18 055/250] hwmon: (pmbus_core) Use guard() for mutex protection
+Date: Mon, 17 Aug 2026 15:30:16 +0200
+Message-ID: <20260817132538.685201723@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,59 +51,556 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 727e1f569855df83579edbd73dcb4a0723543a12 ]
+[ Upstream commit bd1c178affd7d1ca86eaf97cf797e0d15e57eb0a ]
 
-We have seen in our CI the following KASAN message:
-BUG: KASAN: slab-out-of-bounds in cmd_exec+0x550/0xca0 [mlx5_core]
-Read of size 272 at addr 0000000176795020 by task qemu-system-s39/82764
-[...]
-[<000011388ab3a7a0>] cmd_exec+0x550/0xca0 [mlx5_core]
-[<000011388ab3b61c>] mlx5_cmd_exec_cb+0x25c/0x4f0 [mlx5_core]
-[<000011388b21e82e>] mlx5_vdpa_exec_async_cmds+0x22e/0x5e0 [mlx5_vdpa]
-[<000011388b21fd44>] create_direct_keys+0x954/0xef0 [mlx5_vdpa]
-[...]
-The buggy address is located 4128 bytes inside of
-allocated 4384-byte region [0000000176794000, 0000000176795120)
+Simplify the code by using guard() and scoped_guard() instead of
+mutex_lock()/mutex_unlock() sequences.
 
-So in essence we read 16 bytes beyond 4384-byte allocation.
-create_direct_keys calculates the pointer and length for in and out
-buffers.
-The size calculation for in includes the entire structure
-size (out + in + mtt[]) but the pointer passed to cmd_exec points only
-to the 'in' field, skipping the 'out' field.
+This patch changes semantics for debugfs accesses. Previously, those
+used mutex_lock_interruptible() and not mutex_lock(). This change is
+intentional and should have little if any impact since locks should not
+be held for a significant amount of time and debugfs accesses are less
+critical than sysfs accesses (which never used interruptable locks).
 
-This causes mlx5_copy_to_msg() to read beyond the allocated buffer
-by sizeof(out) bytes when copying command data.
-
-Properly calculate the input size to match the pointer and allocation size.
-
-Fixes: 0071b138d44a ("vdpa/mlx5: Create direct MKEYs in parallel")
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Tested-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260706141537.3510294-1-borntraeger@linux.ibm.com>
+Reviewed-by: Sanman Pradhan <psanman@juniper.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: 59bd68ab05a8 ("hwmon: (pmbus) Fix type confusion in notification logic")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/mlx5/core/mr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hwmon/pmbus/pmbus_core.c | 277 ++++++++++++-------------------
+ 1 file changed, 107 insertions(+), 170 deletions(-)
 
-diff --git a/drivers/vdpa/mlx5/core/mr.c b/drivers/vdpa/mlx5/core/mr.c
-index 8870a7169267e..2450440dae2e1 100644
---- a/drivers/vdpa/mlx5/core/mr.c
-+++ b/drivers/vdpa/mlx5/core/mr.c
-@@ -234,7 +234,8 @@ static int create_direct_keys(struct mlx5_vdpa_dev *mvdev, struct mlx5_vdpa_mr *
- 		cmds[i].out = cmd_mem->out;
- 		cmds[i].outlen = sizeof(cmd_mem->out);
- 		cmds[i].in = cmd_mem->in;
--		cmds[i].inlen = struct_size(cmd_mem, mtt, mttcount);
-+		cmds[i].inlen = struct_size(cmd_mem, mtt, mttcount) -
-+				offsetof(struct mlx5_create_mkey_mem, in);
+diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+index c9e3ec4552efd..a95ffd563018d 100644
+--- a/drivers/hwmon/pmbus/pmbus_core.c
++++ b/drivers/hwmon/pmbus/pmbus_core.c
+@@ -1156,12 +1156,11 @@ static int pmbus_get_boolean(struct i2c_client *client, struct pmbus_boolean *b,
+ 	int ret, status;
+ 	u16 regval;
  
- 		fill_create_direct_mr(mvdev, dmr, cmd_mem);
+-	mutex_lock(&data->update_lock);
++	guard(pmbus_lock)(client);
++
+ 	status = pmbus_get_status(client, page, reg);
+-	if (status < 0) {
+-		ret = status;
+-		goto unlock;
+-	}
++	if (status < 0)
++		return status;
  
+ 	if (s1)
+ 		pmbus_update_sensor_data(client, s1);
+@@ -1173,7 +1172,7 @@ static int pmbus_get_boolean(struct i2c_client *client, struct pmbus_boolean *b,
+ 		if (data->revision >= PMBUS_REV_12) {
+ 			ret = _pmbus_write_byte_data(client, page, reg, regval);
+ 			if (ret)
+-				goto unlock;
++				return ret;
+ 		} else {
+ 			pmbus_clear_fault_page(client, page);
+ 		}
+@@ -1181,14 +1180,10 @@ static int pmbus_get_boolean(struct i2c_client *client, struct pmbus_boolean *b,
+ 	if (s1 && s2) {
+ 		s64 v1, v2;
+ 
+-		if (s1->data < 0) {
+-			ret = s1->data;
+-			goto unlock;
+-		}
+-		if (s2->data < 0) {
+-			ret = s2->data;
+-			goto unlock;
+-		}
++		if (s1->data < 0)
++			return s1->data;
++		if (s2->data < 0)
++			return s2->data;
+ 
+ 		v1 = pmbus_reg2data(data, s1);
+ 		v2 = pmbus_reg2data(data, s2);
+@@ -1196,8 +1191,6 @@ static int pmbus_get_boolean(struct i2c_client *client, struct pmbus_boolean *b,
+ 	} else {
+ 		ret = !!regval;
+ 	}
+-unlock:
+-	mutex_unlock(&data->update_lock);
+ 	return ret;
+ }
+ 
+@@ -1227,16 +1220,16 @@ static ssize_t pmbus_show_sensor(struct device *dev,
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
+ 	struct pmbus_sensor *sensor = to_pmbus_sensor(devattr);
+ 	struct pmbus_data *data = i2c_get_clientdata(client);
+-	ssize_t ret;
++	s64 val;
+ 
+-	mutex_lock(&data->update_lock);
+-	pmbus_update_sensor_data(client, sensor);
+-	if (sensor->data < 0)
+-		ret = sensor->data;
+-	else
+-		ret = sysfs_emit(buf, "%lld\n", pmbus_reg2data(data, sensor));
+-	mutex_unlock(&data->update_lock);
+-	return ret;
++	scoped_guard(pmbus_lock, client) {
++		pmbus_update_sensor_data(client, sensor);
++		if (sensor->data < 0)
++			return sensor->data;
++		val = pmbus_reg2data(data, sensor);
++	}
++
++	return sysfs_emit(buf, "%lld\n", val);
+ }
+ 
+ static ssize_t pmbus_set_sensor(struct device *dev,
+@@ -1246,7 +1239,6 @@ static ssize_t pmbus_set_sensor(struct device *dev,
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
+ 	struct pmbus_data *data = i2c_get_clientdata(client);
+ 	struct pmbus_sensor *sensor = to_pmbus_sensor(devattr);
+-	ssize_t rv = count;
+ 	s64 val;
+ 	int ret;
+ 	u16 regval;
+@@ -1254,15 +1246,15 @@ static ssize_t pmbus_set_sensor(struct device *dev,
+ 	if (kstrtos64(buf, 10, &val) < 0)
+ 		return -EINVAL;
+ 
+-	mutex_lock(&data->update_lock);
++	guard(pmbus_lock)(client);
++
+ 	regval = pmbus_data2reg(data, sensor, val);
+ 	ret = _pmbus_write_word_data(client, sensor->page, sensor->reg, regval);
+ 	if (ret < 0)
+-		rv = ret;
+-	else
+-		sensor->data = -ENODATA;
+-	mutex_unlock(&data->update_lock);
+-	return rv;
++		return ret;
++
++	sensor->data = -ENODATA;
++	return count;
+ }
+ 
+ static ssize_t pmbus_show_label(struct device *dev,
+@@ -1364,7 +1356,7 @@ static int pmbus_thermal_get_temp(struct thermal_zone_device *tz, int *temp)
+ 	struct pmbus_data *pmbus_data = tdata->pmbus_data;
+ 	struct i2c_client *client = to_i2c_client(pmbus_data->dev);
+ 	struct device *dev = pmbus_data->hwmon_dev;
+-	int ret = 0;
++	int _temp;
+ 
+ 	if (!dev) {
+ 		/* May not even get to hwmon yet */
+@@ -1372,15 +1364,15 @@ static int pmbus_thermal_get_temp(struct thermal_zone_device *tz, int *temp)
+ 		return 0;
+ 	}
+ 
+-	mutex_lock(&pmbus_data->update_lock);
+-	pmbus_update_sensor_data(client, sensor);
+-	if (sensor->data < 0)
+-		ret = sensor->data;
+-	else
+-		*temp = (int)pmbus_reg2data(pmbus_data, sensor);
+-	mutex_unlock(&pmbus_data->update_lock);
++	scoped_guard(pmbus_lock, client) {
++		pmbus_update_sensor_data(client, sensor);
++		if (sensor->data < 0)
++			return sensor->data;
++		_temp = (int)pmbus_reg2data(pmbus_data, sensor);
++	}
+ 
+-	return ret;
++	*temp = _temp;
++	return 0;
+ }
+ 
+ static const struct thermal_zone_device_ops pmbus_thermal_ops = {
+@@ -2412,13 +2404,12 @@ static ssize_t pmbus_show_samples(struct device *dev,
+ 	int val;
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
+ 	struct pmbus_samples_reg *reg = to_samples_reg(devattr);
+-	struct pmbus_data *data = i2c_get_clientdata(client);
+ 
+-	mutex_lock(&data->update_lock);
+-	val = _pmbus_read_word_data(client, reg->page, 0xff, reg->attr->reg);
+-	mutex_unlock(&data->update_lock);
+-	if (val < 0)
+-		return val;
++	scoped_guard(pmbus_lock, client) {
++		val = _pmbus_read_word_data(client, reg->page, 0xff, reg->attr->reg);
++		if (val < 0)
++			return val;
++	}
+ 
+ 	return sysfs_emit(buf, "%d\n", val);
+ }
+@@ -2431,14 +2422,13 @@ static ssize_t pmbus_set_samples(struct device *dev,
+ 	long val;
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
+ 	struct pmbus_samples_reg *reg = to_samples_reg(devattr);
+-	struct pmbus_data *data = i2c_get_clientdata(client);
+ 
+ 	if (kstrtol(buf, 0, &val) < 0)
+ 		return -EINVAL;
+ 
+-	mutex_lock(&data->update_lock);
++	guard(pmbus_lock)(client);
++
+ 	ret = _pmbus_write_word_data(client, reg->page, reg->attr->reg, val);
+-	mutex_unlock(&data->update_lock);
+ 
+ 	return ret ? : count;
+ }
+@@ -2950,14 +2940,9 @@ static int _pmbus_is_enabled(struct i2c_client *client, u8 page)
+ 
+ static int __maybe_unused pmbus_is_enabled(struct i2c_client *client, u8 page)
+ {
+-	struct pmbus_data *data = i2c_get_clientdata(client);
+-	int ret;
++	guard(pmbus_lock)(client);
+ 
+-	mutex_lock(&data->update_lock);
+-	ret = _pmbus_is_enabled(client, page);
+-	mutex_unlock(&data->update_lock);
+-
+-	return ret;
++	return _pmbus_is_enabled(client, page);
+ }
+ 
+ #define to_dev_attr(_dev_attr) \
+@@ -2988,14 +2973,13 @@ static void pmbus_notify(struct pmbus_data *data, int page, int reg, int flags)
+ 	}
+ }
+ 
+-static int _pmbus_get_flags(struct pmbus_data *data, u8 page, unsigned int *flags,
++static int _pmbus_get_flags(struct i2c_client *client, u8 page, unsigned int *flags,
+ 			    unsigned int *event, bool notify)
+ {
++	struct pmbus_data *data = i2c_get_clientdata(client);
+ 	int i, status;
+ 	const struct pmbus_status_category *cat;
+ 	const struct pmbus_status_assoc *bit;
+-	struct device *dev = data->dev;
+-	struct i2c_client *client = to_i2c_client(dev);
+ 	int func = data->info->func[page];
+ 
+ 	*flags = 0;
+@@ -3071,16 +3055,12 @@ static int _pmbus_get_flags(struct pmbus_data *data, u8 page, unsigned int *flag
+ 	return 0;
+ }
+ 
+-static int __maybe_unused pmbus_get_flags(struct pmbus_data *data, u8 page, unsigned int *flags,
++static int __maybe_unused pmbus_get_flags(struct i2c_client *client, u8 page, unsigned int *flags,
+ 					  unsigned int *event, bool notify)
+ {
+-	int ret;
+-
+-	mutex_lock(&data->update_lock);
+-	ret = _pmbus_get_flags(data, page, flags, event, notify);
+-	mutex_unlock(&data->update_lock);
++	guard(pmbus_lock)(client);
+ 
+-	return ret;
++	return _pmbus_get_flags(client, page, flags, event, notify);
+ }
+ 
+ #if IS_ENABLED(CONFIG_REGULATOR)
+@@ -3096,17 +3076,13 @@ static int _pmbus_regulator_on_off(struct regulator_dev *rdev, bool enable)
+ {
+ 	struct device *dev = rdev_get_dev(rdev);
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
+-	struct pmbus_data *data = i2c_get_clientdata(client);
+ 	u8 page = rdev_get_id(rdev);
+-	int ret;
+ 
+-	mutex_lock(&data->update_lock);
+-	ret = pmbus_update_byte_data(client, page, PMBUS_OPERATION,
+-				     PB_OPERATION_CONTROL_ON,
+-				     enable ? PB_OPERATION_CONTROL_ON : 0);
+-	mutex_unlock(&data->update_lock);
++	guard(pmbus_lock)(client);
+ 
+-	return ret;
++	return pmbus_update_byte_data(client, page, PMBUS_OPERATION,
++				      PB_OPERATION_CONTROL_ON,
++				      enable ? PB_OPERATION_CONTROL_ON : 0);
+ }
+ 
+ static int pmbus_regulator_enable(struct regulator_dev *rdev)
+@@ -3123,54 +3099,41 @@ static int pmbus_regulator_get_error_flags(struct regulator_dev *rdev, unsigned
+ {
+ 	struct device *dev = rdev_get_dev(rdev);
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
+-	struct pmbus_data *data = i2c_get_clientdata(client);
+ 	int event;
+ 
+-	return pmbus_get_flags(data, rdev_get_id(rdev), flags, &event, false);
++	return pmbus_get_flags(client, rdev_get_id(rdev), flags, &event, false);
+ }
+ 
+ static int pmbus_regulator_get_status(struct regulator_dev *rdev)
+ {
+ 	struct device *dev = rdev_get_dev(rdev);
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
+-	struct pmbus_data *data = i2c_get_clientdata(client);
+ 	u8 page = rdev_get_id(rdev);
+ 	int status, ret;
+ 	int event;
+ 
+-	mutex_lock(&data->update_lock);
++	guard(pmbus_lock)(client);
++
+ 	status = pmbus_get_status(client, page, PMBUS_STATUS_WORD);
+-	if (status < 0) {
+-		ret = status;
+-		goto unlock;
+-	}
++	if (status < 0)
++		return status;
+ 
+-	if (status & PB_STATUS_OFF) {
+-		ret = REGULATOR_STATUS_OFF;
+-		goto unlock;
+-	}
++	if (status & PB_STATUS_OFF)
++		return REGULATOR_STATUS_OFF;
+ 
+ 	/* If regulator is ON & reports power good then return ON */
+-	if (!(status & PB_STATUS_POWER_GOOD_N)) {
+-		ret = REGULATOR_STATUS_ON;
+-		goto unlock;
+-	}
++	if (!(status & PB_STATUS_POWER_GOOD_N))
++		return REGULATOR_STATUS_ON;
+ 
+-	ret = _pmbus_get_flags(data, rdev_get_id(rdev), &status, &event, false);
++	ret = _pmbus_get_flags(client, rdev_get_id(rdev), &status, &event, false);
+ 	if (ret)
+-		goto unlock;
++		return ret;
+ 
+ 	if (status & (REGULATOR_ERROR_UNDER_VOLTAGE | REGULATOR_ERROR_OVER_CURRENT |
+-	   REGULATOR_ERROR_REGULATION_OUT | REGULATOR_ERROR_FAIL | REGULATOR_ERROR_OVER_TEMP)) {
+-		ret = REGULATOR_STATUS_ERROR;
+-		goto unlock;
+-	}
+-
+-	ret = REGULATOR_STATUS_UNDEFINED;
++	   REGULATOR_ERROR_REGULATION_OUT | REGULATOR_ERROR_FAIL | REGULATOR_ERROR_OVER_TEMP))
++		return REGULATOR_STATUS_ERROR;
+ 
+-unlock:
+-	mutex_unlock(&data->update_lock);
+-	return ret;
++	return REGULATOR_STATUS_UNDEFINED;
+ }
+ 
+ static int pmbus_regulator_get_low_margin(struct i2c_client *client, int page)
+@@ -3235,19 +3198,16 @@ static int pmbus_regulator_get_voltage(struct regulator_dev *rdev)
+ 		.class = PSC_VOLTAGE_OUT,
+ 		.convert = true,
+ 	};
+-	int ret;
++	int voltage;
+ 
+-	mutex_lock(&data->update_lock);
+-	s.data = _pmbus_read_word_data(client, s.page, 0xff, PMBUS_READ_VOUT);
+-	if (s.data < 0) {
+-		ret = s.data;
+-		goto unlock;
++	scoped_guard(pmbus_lock, client) {
++		s.data = _pmbus_read_word_data(client, s.page, 0xff, PMBUS_READ_VOUT);
++		if (s.data < 0)
++			return s.data;
++		voltage = (int)pmbus_reg2data(data, &s);
+ 	}
+ 
+-	ret = (int)pmbus_reg2data(data, &s) * 1000; /* unit is uV */
+-unlock:
+-	mutex_unlock(&data->update_lock);
+-	return ret;
++	return voltage * 1000; /* unit is uV */
+ }
+ 
+ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
+@@ -3264,22 +3224,18 @@ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
+ 	};
+ 	int val = DIV_ROUND_CLOSEST(min_uv, 1000); /* convert to mV */
+ 	int low, high;
+-	int ret;
+ 
+ 	*selector = 0;
+ 
+-	mutex_lock(&data->update_lock);
++	guard(pmbus_lock)(client);
++
+ 	low = pmbus_regulator_get_low_margin(client, s.page);
+-	if (low < 0) {
+-		ret = low;
+-		goto unlock;
+-	}
++	if (low < 0)
++		return low;
+ 
+ 	high = pmbus_regulator_get_high_margin(client, s.page);
+-	if (high < 0) {
+-		ret = high;
+-		goto unlock;
+-	}
++	if (high < 0)
++		return high;
+ 
+ 	/* Make sure we are within margins */
+ 	if (low > val)
+@@ -3289,10 +3245,7 @@ static int pmbus_regulator_set_voltage(struct regulator_dev *rdev, int min_uv,
+ 
+ 	val = pmbus_data2reg(data, &s, val);
+ 
+-	ret = _pmbus_write_word_data(client, s.page, PMBUS_VOUT_COMMAND, (u16)val);
+-unlock:
+-	mutex_unlock(&data->update_lock);
+-	return ret;
++	return _pmbus_write_word_data(client, s.page, PMBUS_VOUT_COMMAND, (u16)val);
+ }
+ 
+ static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
+@@ -3302,7 +3255,6 @@ static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
+ 	struct i2c_client *client = to_i2c_client(dev->parent);
+ 	struct pmbus_data *data = i2c_get_clientdata(client);
+ 	int val, low, high;
+-	int ret;
+ 
+ 	if (data->flags & PMBUS_VOUT_PROTECTED)
+ 		return 0;
+@@ -3315,29 +3267,20 @@ static int pmbus_regulator_list_voltage(struct regulator_dev *rdev,
+ 	val = DIV_ROUND_CLOSEST(rdev->desc->min_uV +
+ 				(rdev->desc->uV_step * selector), 1000); /* convert to mV */
+ 
+-	mutex_lock(&data->update_lock);
++	guard(pmbus_lock)(client);
+ 
+ 	low = pmbus_regulator_get_low_margin(client, rdev_get_id(rdev));
+-	if (low < 0) {
+-		ret = low;
+-		goto unlock;
+-	}
++	if (low < 0)
++		return low;
+ 
+ 	high = pmbus_regulator_get_high_margin(client, rdev_get_id(rdev));
+-	if (high < 0) {
+-		ret = high;
+-		goto unlock;
+-	}
++	if (high < 0)
++		return high;
+ 
+-	if (val >= low && val <= high) {
+-		ret = val * 1000; /* unit is uV */
+-		goto unlock;
+-	}
++	if (val >= low && val <= high)
++		return val * 1000; /* unit is uV */
+ 
+-	ret = 0;
+-unlock:
+-	mutex_unlock(&data->update_lock);
+-	return ret;
++	return 0;
+ }
+ 
+ const struct regulator_ops pmbus_regulator_ops = {
+@@ -3478,16 +3421,16 @@ static irqreturn_t pmbus_fault_handler(int irq, void *pdata)
+ 	struct i2c_client *client = to_i2c_client(data->dev);
+ 	int i, status, event;
+ 
+-	mutex_lock(&data->update_lock);
++	guard(pmbus_lock)(client);
++
+ 	for (i = 0; i < data->info->pages; i++) {
+-		_pmbus_get_flags(data, i, &status, &event, true);
++		_pmbus_get_flags(client, i, &status, &event, true);
+ 
+ 		if (event)
+ 			pmbus_regulator_notify(data, i, event);
+ 	}
+ 
+ 	pmbus_clear_faults(client);
+-	mutex_unlock(&data->update_lock);
+ 
+ 	return IRQ_HANDLED;
+ }
+@@ -3543,15 +3486,13 @@ static struct dentry *pmbus_debugfs_dir;	/* pmbus debugfs directory */
+ 
+ static int pmbus_debugfs_get(void *data, u64 *val)
+ {
+-	int rc;
+ 	struct pmbus_debugfs_entry *entry = data;
+-	struct pmbus_data *pdata = i2c_get_clientdata(entry->client);
++	struct i2c_client *client = entry->client;
++	int rc;
+ 
+-	rc = mutex_lock_interruptible(&pdata->update_lock);
+-	if (rc)
+-		return rc;
+-	rc = _pmbus_read_byte_data(entry->client, entry->page, entry->reg);
+-	mutex_unlock(&pdata->update_lock);
++	guard(pmbus_lock)(client);
++
++	rc = _pmbus_read_byte_data(client, entry->page, entry->reg);
+ 	if (rc < 0)
+ 		return rc;
+ 
+@@ -3564,15 +3505,14 @@ DEFINE_DEBUGFS_ATTRIBUTE(pmbus_debugfs_ops, pmbus_debugfs_get, NULL,
+ 
+ static int pmbus_debugfs_get_status(void *data, u64 *val)
+ {
+-	int rc;
+ 	struct pmbus_debugfs_entry *entry = data;
+-	struct pmbus_data *pdata = i2c_get_clientdata(entry->client);
++	struct i2c_client *client = entry->client;
++	struct pmbus_data *pdata = i2c_get_clientdata(client);
++	int rc;
+ 
+-	rc = mutex_lock_interruptible(&pdata->update_lock);
+-	if (rc)
+-		return rc;
+-	rc = pdata->read_status(entry->client, entry->page);
+-	mutex_unlock(&pdata->update_lock);
++	guard(pmbus_lock)(client);
++
++	rc = pdata->read_status(client, entry->page);
+ 	if (rc < 0)
+ 		return rc;
+ 
+@@ -3588,17 +3528,14 @@ static ssize_t pmbus_debugfs_block_read(struct file *file, char __user *buf,
+ {
+ 	int rc;
+ 	struct pmbus_debugfs_entry *entry = file->private_data;
+-	struct pmbus_data *pdata = i2c_get_clientdata(entry->client);
++	struct i2c_client *client = entry->client;
+ 	char data[I2C_SMBUS_BLOCK_MAX + 2] = { 0 };
+ 
+-	rc = mutex_lock_interruptible(&pdata->update_lock);
+-	if (rc)
+-		return rc;
+-	rc = pmbus_read_block_data(entry->client, entry->page, entry->reg,
+-				   data);
+-	mutex_unlock(&pdata->update_lock);
+-	if (rc < 0)
+-		return rc;
++	scoped_guard(pmbus_lock, client) {
++		rc = pmbus_read_block_data(client, entry->page, entry->reg, data);
++		if (rc < 0)
++			return rc;
++	}
+ 
+ 	/* Add newline at the end of a read data */
+ 	data[rc] = '\n';
 -- 
 2.53.0
 
