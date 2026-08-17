@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBABC315D5D;
-	Mon, 17 Aug 2026 13:43:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF210315D5D;
+	Mon, 17 Aug 2026 13:43:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974217; cv=none; b=P6ZdWpGja5hASz0kZnXj25YuKQc4jSCb0nal3QSYky5m6Agu6smI4I26wZC3O/d+6Ug8tcbYEErt/gHjoieOmIqdxlF41FsgAzhu0+LCWma3ZqHfAq4wBLzUq5zn/znfmGY6tiwII1XHGS9LZXTvDQPl3oDOtyEFXJQjoKQFdY0=
+	t=1786974220; cv=none; b=E35Dflhms9g/kGidTN6UVmNidRTjul8lxIJUEvPil48yRanquqVhb0picEewrkgmZlAUO1EtDDHPcIgTGsWGQmgQTLC1HftvjgP+qWyIht27itCEg4K1bptoJTNzxAYPDh+UjeuW33Acf7fnLEUFNmkSxJAE5ln9YXqaB0oFvGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974217; c=relaxed/simple;
-	bh=PZx/Io9XlR40SAySHF39pVNopCq6DPzkvkWygEGmcM4=;
+	s=arc-20240116; t=1786974220; c=relaxed/simple;
+	bh=Fhhl5w8NF1NjrDQw8COdTTxWx2qn0DRnkmhbGFtnSpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b/ZOgVg1jqREvVqrZ0/RAhoz4VYHtNgujvG/GZf9McaCS8WMYWybmnofjHs3+FnPqrTzVcf660Xrz0atN+NU7N3si9+Y/q7gpIC1mXHxE8rWEOWXTEqYM2/eV39QVL7JtlWTU1mcCmpfdtiwtxSbYhTEkLKVtVGbjuq7pUzicFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TOv6H1cY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kiU10N3shMJ/hiLhM/DkTg55S/XhjaohnHoaxGA1fAmCPu17gcmmw0F1V7vPGAazdMSk8JU+cMlXfzTfanNtXE4HhNRNIy8GXaNoo/C5gJ6xDb9oM88J0jRCPkTeSo8+x0qhPBKEBdIqsXlI0SnanRVaVnINP3OnlkuPAYO9Q9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snJoL87T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TOv6H1cY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307141F00A3A;
-	Mon, 17 Aug 2026 13:43:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snJoL87T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109B31F000E9;
+	Mon, 17 Aug 2026 13:43:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974215;
-	bh=SPmJ1fUGYsZehm0YPcndSFsQk1zpGtGqnS77e0Xq2H0=;
+	s=korg; t=1786974218;
+	bh=ajsBKR6VON5C9Pg8hU+WtNcbCDpCsYXvTEq10Ha+z7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TOv6H1cYJ8Zr034KI2BaGRwAocdjTmoabFAT/Qmq+nKz/XyM9Q6i97RJLRzGZbwoU
-	 yEEXDkLL5xE+1Z/2sTBdH4cm9sfo7EpfgGMryixO/N1TOC+biEzrlLRclZzEvgcj6R
-	 jFpD538KiEmNtBExvpAaMJD20NzFyfGuThKDZjvQ=
+	b=snJoL87Ta9RvfsFdAAqHTazZg7SzG4JVRFzCsQyhiMu3pc5mF8eZVCw3aGIaYNnRQ
+	 zakq1aWO8AC3vqC6nQk/2PVx4ljt/JTOI5nUSbClmNJRC83HxR9P+b9YZeFHz9IsOX
+	 5jTNzfeqN/9sQAKVtrlUv26s5y9oy70N22YCiQsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Wilken Gottwalt <wilken.gottwalt@posteo.net>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 122/271] hwmon: (corsair-psu) serialize debugfs access against hwmon
-Date: Mon, 17 Aug 2026 15:30:47 +0200
-Message-ID: <20260817132541.883689187@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Michal Pecio <michal.pecio@gmail.com>,
+	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 7.1 131/271] usb: xhci: use BIT_ULL for CRCR bits to fix incorrect 64bit mask
+Date: Mon, 17 Aug 2026 15:30:56 +0200
+Message-ID: <20260817132542.239987573@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -52,71 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Lachlan Hodges <lachlan.hodges@morsemicro.com>
 
-[ Upstream commit 2da6050809d437a805e7a3aa22398a15073b0234 ]
+commit 3d26cd1f3ff25cebd10d4b0e8188cf40dade28e9 upstream.
 
-corsairpsu_request() sends a rail select command and then the actual
-read as two separate transfers, both going through the single shared
-cmd_buffer and wait_completion in corsairpsu_usb_cmd(). The hwmon core
-serializes its own callers, but the debugfs files call
-corsairpsu_get_value() directly and never take that lock, so a debugfs
-read can land between another reader's rail select and its value read.
+xhci is unusable on some systems after driver switched to BIT() macro.
+Upper 32bits of 64bit CRCR command register are unintentionally cleared.
 
-The result is a value from the wrong rail reported as the right one,
-because corsairpsu_usb_cmd() only checks the command echo and both
-transfers echo the command it expects. It can also make a caller consume
-the reply meant for the other one, since raw_event() writes into the
-shared buffer and completes whoever happens to be waiting.
+Seen on a raspberry pi 4B compiled for arm32.
+The main symptoms were the following log message:
 
-Locking was dropped in commit 4207069edbf0 ("hwmon: (corsair-psu) Rely
-on subsystem locking") on the grounds that the subsystem serializes for
-us, which holds for sysfs but not for these files. Take
-the same lock in the debugfs paths that issue commands, using the guard
-added in commit d1e720c7328e ("hwmon: Support guard() and scoped_guard
-for subsystem locks").
+[    0.549897] raspberrypi-firmware soc:firmware: Attached to firmware from 2021-02-25T12:11:39
+[    0.626859] xhci_hcd 0000:01:00.0: xHCI Host Controller
+[    0.626889] xhci_hcd 0000:01:00.0: new USB bus registered, assigned bus number 1
+[    0.812619] xhci_hcd 0000:01:00.0: hcc params 0x002841eb hci version 0x100 quirks 0x0000200000000890
+[    0.813188] xhci_hcd 0000:01:00.0: xHCI Host Controller
+[    0.813203] xhci_hcd 0000:01:00.0: new USB bus registered, assigned bus number 2
+[    0.813219] xhci_hcd 0000:01:00.0: Host supports USB 3.0 SuperSpeed
+[    0.813602] hub 1-0:1.0: USB hub found
+[    0.814052] hub 2-0:1.0: USB hub found
+[    0.952714] xhci_hcd 0000:01:00.0: ERROR mismatched command completion event
 
-The lock cannot go into corsairpsu_request() itself: the hwmon core
-already holds it across ->read, so every sysfs read would deadlock.
-vendor_show() and product_show() only print strings cached during probe
-and issue no command, and corsairpsu_get_criticals() and
-corsairpsu_check_cmd_support() run before either interface is
-registered, so none of them need it.
+Additionally running lsusb just hangs. Running the same kernel compiled
+for aarch64 worked fine. Bisected to the commit in the Fixes line.
+Additionally a USB device plugged in to the USB3.0 (or 2.0) did not
+enumerate. Once this patch is applied the USB device enumerates properly.
 
-Fixes: 4207069edbf0 ("hwmon: (corsair-psu) Rely on subsystem locking")
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Tested-by: Wilken Gottwalt <wilken.gottwalt@posteo.net>
-Link: https://lore.kernel.org/r/20260806142139.168611-1-ali@iusegentoo.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The CRCR register is 64 bits wide - commit abe93f27cdd7
+("xhci: use BIT macro") changed the flag definitions from (1 << n),
+a signed int, to BIT(n), an unsigned long. Within
+xhci_set_cmd_ring_deq(), the following operation is performed on the
+CRCR register:
+
+...
+	crcr &= ~CMD_RING_PTR_MASK;
+	crcr |= deq_dma;
+	crcr &= ~CMD_RING_CYCLE;
+	crcr |= xhci->cmd_ring->cycle_state;
+...
+
+Previously, ~CMD_RING_CYCLE was ~(int)1, a negative signed value
+(0xFFFFFFFE with the sign bit set). Widening a negative signed int to
+u64 sign-extends it to 0xFFFFFFFFFFFFFFFE, correctly clearing only bit
+0 and preserving the 64-bit pointer written two lines above.
+
+After the change when running on 32 bit kernels, ~CMD_RING_CYCLE is
+~(unsigned long)1UL. On a 32-bit host this is an unsigned 32-bit
+value (0xFFFFFFFE, no sign bit). Widening an unsigned value to u64
+zero-extends it instead (0x00000000FFFFFFFE), so the subsequent AND
+silently clears bits 63:32 of crcr, truncating the command ring
+pointer that was just written before the value reaches hardware.
+
+To fix, similar to how CMD_RING_PTR_MASK is defined, make sure we
+use the BIT_ULL variant when defining the CRCR bits.
+
+[Mathias: use BIT_ULL() for ERST_EHB and EP_CTX_CYCLE_MASK as suggested
+by Michal Pecio, also include raspberry case in commit message]
+
+Fixes: abe93f27cdd7 ("xhci: use BIT macro")
+Cc: stable <stable@kernel.org>
+Assisted-by: Claude:claude-sonnet-5
+cc: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20260804083639.2148950-2-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/corsair-psu.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/host/xhci.h |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hwmon/corsair-psu.c b/drivers/hwmon/corsair-psu.c
-index 3c01ae3fc4af2..ebcaddf337d80 100644
---- a/drivers/hwmon/corsair-psu.c
-+++ b/drivers/hwmon/corsair-psu.c
-@@ -664,6 +664,8 @@ static void print_uptime(struct seq_file *seqf, u8 cmd)
- 	long val;
- 	int ret;
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -187,13 +187,13 @@ struct xhci_op_regs {
  
-+	guard(hwmon_lock)(priv->hwmon_dev);
-+
- 	ret = corsairpsu_get_value(priv, cmd, 0, &val);
- 	if (ret < 0) {
- 		seq_puts(seqf, "N/A\n");
-@@ -723,6 +725,8 @@ static int ocpmode_show(struct seq_file *seqf, void *unused)
- 	long val;
- 	int ret;
+ /* CRCR - Command Ring Control Register - cmd_ring bitmasks */
+ /* bit 0 - Cycle bit indicates the ownership of the command ring */
+-#define CMD_RING_CYCLE		BIT(0)
++#define CMD_RING_CYCLE		BIT_ULL(0)
+ /* stop ring operation after completion of the currently executing command */
+-#define CMD_RING_PAUSE		BIT(1)
++#define CMD_RING_PAUSE		BIT_ULL(1)
+ /* stop ring immediately - abort the currently executing command */
+-#define CMD_RING_ABORT		BIT(2)
++#define CMD_RING_ABORT		BIT_ULL(2)
+ /* true: command ring is running */
+-#define CMD_RING_RUNNING	BIT(3)
++#define CMD_RING_RUNNING	BIT_ULL(3)
+ /* bits 63:6 - Command Ring pointer */
+ #define CMD_RING_PTR_MASK	GENMASK_ULL(63, 6)
  
-+	guard(hwmon_lock)(priv->hwmon_dev);
-+
- 	/*
- 	 * The rail mode is switchable on the fly. The RAW interface can be used for this. But it
- 	 * will not be included here, because I consider it somewhat dangerous for the health of the
--- 
-2.53.0
-
+@@ -268,7 +268,7 @@ struct xhci_intr_reg {
+  * bit 3 - Event Handler Busy (EHB), whether the event ring is scheduled to be serviced by
+  * a work queue (or delayed service routine)?
+  */
+-#define ERST_EHB		BIT(3)
++#define ERST_EHB		BIT_ULL(3)
+ /* bits 63:4 - Event Ring Dequeue Pointer */
+ #define ERST_PTR_MASK		GENMASK_ULL(63, 4)
+ 
+@@ -499,7 +499,7 @@ struct xhci_ep_ctx {
+ #define CTX_TO_MAX_ESIT_PAYLOAD(p)	(((p) >> 16) & 0xffff)
+ 
+ /* deq bitmasks */
+-#define EP_CTX_CYCLE_MASK		BIT(0)
++#define EP_CTX_CYCLE_MASK		BIT_ULL(0)
+ /* bits 63:4 - TR Dequeue Pointer */
+ #define TR_DEQ_PTR_MASK			GENMASK_ULL(63, 4)
+ 
 
 
