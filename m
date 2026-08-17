@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FC93FA5E7;
-	Mon, 17 Aug 2026 14:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9A83F1AD5;
+	Mon, 17 Aug 2026 14:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975649; cv=none; b=I4J4xmgUXDSkXq6tunzQGWyAl4kXGqV1gSJRsriXSvHALbWX9lKNnq07d1NrVWGtcrIBZppogE7GxrmQmbjaPkyGj37/3TNOV1OCbVY0cWAE5fXyYfe1Otoxrn0hHEw01R1Aa7k9FOaqhLtsQI1SFXLJFlvX+bDl2bXtZ6P1ylo=
+	t=1786975652; cv=none; b=TT7yfsuOrGjL+4uW5kCm/kv/vjzJ5frZfeBQ1NIgj1n8rOWq6BmTHOUiGZ2gKfIlajsVEbBDYjc0iRIB5Dz+/swcmdTTnKygpb3vZZgkCEYAK4FFFLzM8+Gcu+8qQb5aJui4cOE+33DySx5obJ/D+R6YrnCOtNMW3x5vB4RcScc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975649; c=relaxed/simple;
-	bh=dXYLxWDev77n7/CUyoTiJZuqT0ZAcu1+mZ+VubhB/dU=;
+	s=arc-20240116; t=1786975652; c=relaxed/simple;
+	bh=hbVqAquUjC343y5HdbbiU28kFReVZnnl9Io3EhDtefs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ebQ3w9PN/wef43Fb9KGscbRkvz+7q4rSRubFhLFAur2FrGERS2+2uZ2emb0DR+r4QfvMzaxxisgdJeGJjFQ+Lyum5GSddSlgyEgGst11wDA0LGbxySPR1dbFFfuvaD3IhE9I/F51DbhpdEHSXGFBzqIEjF0ztyv3lhfumDl1pN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i2yUJgnK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Flsh5HiVmw2h++1Z2Z22uXHRj91KqqtxaTSGEXmJw0va65+wmajCGpA+cfSpBMfF5Wxvbx9+xCN1IZuw2vXPYtmvZqWiP9LeWut4tKoHXFBGLtjD1Xn4m8X98dZIOKeaTqr/6w1BYMIVTBTGsxu0O9ob15cs6uC9SnRhHwLAT38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCSlwqHd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2yUJgnK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04BDD1F000E9;
-	Mon, 17 Aug 2026 14:07:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCSlwqHd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9D21F000E9;
+	Mon, 17 Aug 2026 14:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975647;
-	bh=qJ+dnnI4DljXEhnKN6+lblHKE8pdDxDFCP4WlcTosX0=;
+	s=korg; t=1786975650;
+	bh=o3oITmJAGVmtIhM8wq6hNbX+C4biDUu/Ybcvh+ncI2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i2yUJgnKgqr/rMRBwrFzSCY5Wzj8LFPY8+JlzhkwxCXuFB0n9Q8+LRYvt+8ZLCUfq
-	 Sq4hvoN1IFFgDIPFItIW8A1HA1fMi8dCfY4uqcIOFRxyDdQgjgEkV/Ql50YuGEWUqK
-	 GMmku05j0jMrY31FiuBusFEVVXAf04cduS23RlzQ=
+	b=eCSlwqHd7FVnFv/22GEzBeE/5sn3UBHpAqUAyiTdCIWhjLZxF5A6mCYViDRAFqWim
+	 AeQygJGV0kg3MLZyBdT/iLivUa06on1MhEo50oS1VZLdYwYEyglvZhU5S8WdAmlEW7
+	 3IrNEnJ2tANbyAEgHBBj99IzV8cBrtYV/Q80f+Go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 099/389] raw: use more conventional iterators
-Date: Mon, 17 Aug 2026 15:28:58 +0200
-Message-ID: <20260817132542.986302384@linuxfoundation.org>
+	Sergey Shtylyov <s.shtylyov@auroraos.dev>,
+	Chaoyi Chen <chaoyi.chen@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 5.10 100/389] drm/rockchip: cdn-dp: add missing check in cdn_dp_config_video()
+Date: Mon, 17 Aug 2026 15:28:59 +0200
+Message-ID: <20260817132543.027354351@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,438 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Sergey Shtylyov <s.shtylyov@auroraos.dev>
 
-[ Upstream commit ba44f8182ec299c5d1c8a72fc0fde4ec127b5a6d ]
+commit 46c31e1604d121221167cb09380de8c7d53290b9 upstream.
 
-In order to prepare the following patch,
-I change raw v4 & v6 code to use more conventional
-iterators.
+The result of cdn_dp_reg_write() is checked everywhere (with the error
+being logged by the callers) except one place in cdn_dp_config_video().
+Add the missing result check, bailing out early on error...
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 440e274da4d1 ("net: ipv6: fix dif and sdif mismatch in raw6_icmp_error")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
+
+Fixes: 1a0f7ed3abe2 ("drm/rockchip: cdn-dp: add cdn DP support for rk3399")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@auroraos.dev>
+Cc: stable@vger.kernel.org
+Reviewed-by: Chaoyi Chen <chaoyi.chen@rock-chips.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/adf6b313-f7db-4d8f-9000-8c65446ba041@auroraos.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/raw.h   |    5 +-
- include/net/rawv6.h |    6 +--
- net/ipv4/raw.c      |   95 +++++++++++++++++------------------------------
- net/ipv4/raw_diag.c |   33 ++++++++--------
- net/ipv6/raw.c      |  103 ++++++++++++++++++----------------------------------
- 5 files changed, 92 insertions(+), 150 deletions(-)
+ drivers/gpu/drm/rockchip/cdn-dp-reg.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/net/raw.h
-+++ b/include/net/raw.h
-@@ -20,9 +20,8 @@
- extern struct proto raw_prot;
+--- a/drivers/gpu/drm/rockchip/cdn-dp-reg.c
++++ b/drivers/gpu/drm/rockchip/cdn-dp-reg.c
+@@ -683,6 +683,8 @@ int cdn_dp_config_video(struct cdn_dp_de
+ 	val = div_u64(8 * (symbol + 1), bit_per_pix) - val;
+ 	val += 2;
+ 	ret = cdn_dp_reg_write(dp, DP_VC_TABLE(15), val);
++	if (ret)
++		goto err_config_video;
  
- extern struct raw_hashinfo raw_v4_hashinfo;
--struct sock *__raw_v4_lookup(struct net *net, struct sock *sk,
--			     unsigned short num, __be32 raddr,
--			     __be32 laddr, int dif, int sdif);
-+bool raw_v4_match(struct net *net, struct sock *sk, unsigned short num,
-+		  __be32 raddr, __be32 laddr, int dif, int sdif);
- 
- int raw_abort(struct sock *sk, int err);
- void raw_icmp_error(struct sk_buff *, int, u32);
---- a/include/net/rawv6.h
-+++ b/include/net/rawv6.h
-@@ -5,9 +5,9 @@
- #include <net/protocol.h>
- 
- extern struct raw_hashinfo raw_v6_hashinfo;
--struct sock *__raw_v6_lookup(struct net *net, struct sock *sk,
--			     unsigned short num, const struct in6_addr *loc_addr,
--			     const struct in6_addr *rmt_addr, int dif, int sdif);
-+bool raw_v6_match(struct net *net, struct sock *sk, unsigned short num,
-+		  const struct in6_addr *loc_addr,
-+		  const struct in6_addr *rmt_addr, int dif, int sdif);
- 
- int raw_abort(struct sock *sk, int err);
- 
---- a/net/ipv4/raw.c
-+++ b/net/ipv4/raw.c
-@@ -117,24 +117,19 @@ void raw_unhash_sk(struct sock *sk)
- }
- EXPORT_SYMBOL_GPL(raw_unhash_sk);
- 
--struct sock *__raw_v4_lookup(struct net *net, struct sock *sk,
--			     unsigned short num, __be32 raddr, __be32 laddr,
--			     int dif, int sdif)
--{
--	sk_for_each_from(sk) {
--		struct inet_sock *inet = inet_sk(sk);
--
--		if (net_eq(sock_net(sk), net) && inet->inet_num == num	&&
--		    !(inet->inet_daddr && inet->inet_daddr != raddr) 	&&
--		    !(inet->inet_rcv_saddr && inet->inet_rcv_saddr != laddr) &&
--		    raw_sk_bound_dev_eq(net, sk->sk_bound_dev_if, dif, sdif))
--			goto found; /* gotcha */
--	}
--	sk = NULL;
--found:
--	return sk;
-+bool raw_v4_match(struct net *net, struct sock *sk, unsigned short num,
-+		  __be32 raddr, __be32 laddr, int dif, int sdif)
-+{
-+	struct inet_sock *inet = inet_sk(sk);
-+
-+	if (net_eq(sock_net(sk), net) && inet->inet_num == num	&&
-+	    !(inet->inet_daddr && inet->inet_daddr != raddr) 	&&
-+	    !(inet->inet_rcv_saddr && inet->inet_rcv_saddr != laddr) &&
-+	    raw_sk_bound_dev_eq(net, sk->sk_bound_dev_if, dif, sdif))
-+		return true;
-+	return false;
- }
--EXPORT_SYMBOL_GPL(__raw_v4_lookup);
-+EXPORT_SYMBOL_GPL(raw_v4_match);
- 
- /*
-  *	0 - deliver
-@@ -168,23 +163,21 @@ static int icmp_filter(const struct sock
-  */
- static int raw_v4_input(struct sk_buff *skb, const struct iphdr *iph, int hash)
- {
-+	struct net *net = dev_net(skb->dev);
- 	int sdif = inet_sdif(skb);
- 	int dif = inet_iif(skb);
--	struct sock *sk;
- 	struct hlist_head *head;
- 	int delivered = 0;
--	struct net *net;
-+	struct sock *sk;
- 
--	read_lock(&raw_v4_hashinfo.lock);
- 	head = &raw_v4_hashinfo.ht[hash];
- 	if (hlist_empty(head))
--		goto out;
--
--	net = dev_net(skb->dev);
--	sk = __raw_v4_lookup(net, __sk_head(head), iph->protocol,
--			     iph->saddr, iph->daddr, dif, sdif);
--
--	while (sk) {
-+		return 0;
-+	read_lock(&raw_v4_hashinfo.lock);
-+	sk_for_each(sk, head) {
-+		if (!raw_v4_match(net, sk, iph->protocol,
-+				  iph->saddr, iph->daddr, dif, sdif))
-+			continue;
- 		delivered = 1;
- 		if ((iph->protocol != IPPROTO_ICMP || !icmp_filter(sk, skb)) &&
- 		    ip_mc_sf_allow(sk, iph->daddr, iph->saddr,
-@@ -195,31 +188,16 @@ static int raw_v4_input(struct sk_buff *
- 			if (clone)
- 				raw_rcv(sk, clone);
- 		}
--		sk = __raw_v4_lookup(net, sk_next(sk), iph->protocol,
--				     iph->saddr, iph->daddr,
--				     dif, sdif);
- 	}
--out:
- 	read_unlock(&raw_v4_hashinfo.lock);
- 	return delivered;
- }
- 
- int raw_local_deliver(struct sk_buff *skb, int protocol)
- {
--	int hash;
--	struct sock *raw_sk;
--
--	hash = protocol & (RAW_HTABLE_SIZE - 1);
--	raw_sk = sk_head(&raw_v4_hashinfo.ht[hash]);
--
--	/* If there maybe a raw socket we must check - if not we
--	 * don't care less
--	 */
--	if (raw_sk && !raw_v4_input(skb, ip_hdr(skb), hash))
--		raw_sk = NULL;
--
--	return raw_sk != NULL;
-+	int hash = protocol & (RAW_HTABLE_SIZE - 1);
- 
-+	return raw_v4_input(skb, ip_hdr(skb), hash);
- }
- 
- static void raw_err(struct sock *sk, struct sk_buff *skb, u32 info)
-@@ -286,29 +264,24 @@ static void raw_err(struct sock *sk, str
- 
- void raw_icmp_error(struct sk_buff *skb, int protocol, u32 info)
- {
--	int hash;
--	struct sock *raw_sk;
-+	struct net *net = dev_net(skb->dev);
-+	int dif = skb->dev->ifindex;
-+	int sdif = inet_sdif(skb);
-+	struct hlist_head *head;
- 	const struct iphdr *iph;
--	struct net *net;
-+	struct sock *sk;
-+	int hash;
- 
- 	hash = protocol & (RAW_HTABLE_SIZE - 1);
-+	head = &raw_v4_hashinfo.ht[hash];
- 
- 	read_lock(&raw_v4_hashinfo.lock);
--	raw_sk = sk_head(&raw_v4_hashinfo.ht[hash]);
--	if (raw_sk) {
--		int dif = skb->dev->ifindex;
--		int sdif = inet_sdif(skb);
--
-+	sk_for_each(sk, head) {
- 		iph = (const struct iphdr *)skb->data;
--		net = dev_net(skb->dev);
--
--		while ((raw_sk = __raw_v4_lookup(net, raw_sk, protocol,
--						iph->daddr, iph->saddr,
--						dif, sdif)) != NULL) {
--			raw_err(raw_sk, skb, info);
--			raw_sk = sk_next(raw_sk);
--			iph = (const struct iphdr *)skb->data;
--		}
-+		if (!raw_v4_match(net, sk, iph->protocol,
-+				  iph->saddr, iph->daddr, dif, sdif))
-+			continue;
-+		raw_err(sk, skb, info);
- 	}
- 	read_unlock(&raw_v4_hashinfo.lock);
- }
---- a/net/ipv4/raw_diag.c
-+++ b/net/ipv4/raw_diag.c
-@@ -34,31 +34,30 @@ raw_get_hashinfo(const struct inet_diag_
-  * use helper to figure it out.
-  */
- 
--static struct sock *raw_lookup(struct net *net, struct sock *from,
--			       const struct inet_diag_req_v2 *req)
-+static bool raw_lookup(struct net *net, struct sock *sk,
-+		       const struct inet_diag_req_v2 *req)
- {
- 	struct inet_diag_req_raw *r = (void *)req;
--	struct sock *sk = NULL;
- 
- 	if (r->sdiag_family == AF_INET)
--		sk = __raw_v4_lookup(net, from, r->sdiag_raw_protocol,
--				     r->id.idiag_dst[0],
--				     r->id.idiag_src[0],
--				     r->id.idiag_if, 0);
-+		return raw_v4_match(net, sk, r->sdiag_raw_protocol,
-+				    r->id.idiag_dst[0],
-+				    r->id.idiag_src[0],
-+				    r->id.idiag_if, 0);
- #if IS_ENABLED(CONFIG_IPV6)
- 	else
--		sk = __raw_v6_lookup(net, from, r->sdiag_raw_protocol,
--				     (const struct in6_addr *)r->id.idiag_src,
--				     (const struct in6_addr *)r->id.idiag_dst,
--				     r->id.idiag_if, 0);
-+		return raw_v6_match(net, sk, r->sdiag_raw_protocol,
-+				    (const struct in6_addr *)r->id.idiag_src,
-+				    (const struct in6_addr *)r->id.idiag_dst,
-+				    r->id.idiag_if, 0);
- #endif
--	return sk;
-+	return false;
- }
- 
- static struct sock *raw_sock_get(struct net *net, const struct inet_diag_req_v2 *r)
- {
- 	struct raw_hashinfo *hashinfo = raw_get_hashinfo(r);
--	struct sock *sk = NULL, *s;
-+	struct sock *sk;
- 	int slot;
- 
- 	if (IS_ERR(hashinfo))
-@@ -66,9 +65,8 @@ static struct sock *raw_sock_get(struct
- 
- 	read_lock(&hashinfo->lock);
- 	for (slot = 0; slot < RAW_HTABLE_SIZE; slot++) {
--		sk_for_each(s, &hashinfo->ht[slot]) {
--			sk = raw_lookup(net, s, r);
--			if (sk) {
-+		sk_for_each(sk, &hashinfo->ht[slot]) {
-+			if (raw_lookup(net, sk, r)) {
- 				/*
- 				 * Grab it and keep until we fill
- 				 * diag meaage to be reported, so
-@@ -81,10 +79,11 @@ static struct sock *raw_sock_get(struct
- 			}
- 		}
- 	}
-+	sk = ERR_PTR(-ENOENT);
- out_unlock:
- 	read_unlock(&hashinfo->lock);
- 
--	return sk ? sk : ERR_PTR(-ENOENT);
-+	return sk;
- }
- 
- static int raw_diag_dump_one(struct netlink_callback *cb,
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -66,41 +66,27 @@ struct raw_hashinfo raw_v6_hashinfo = {
- };
- EXPORT_SYMBOL_GPL(raw_v6_hashinfo);
- 
--struct sock *__raw_v6_lookup(struct net *net, struct sock *sk,
--		unsigned short num, const struct in6_addr *loc_addr,
--		const struct in6_addr *rmt_addr, int dif, int sdif)
-+bool raw_v6_match(struct net *net, struct sock *sk, unsigned short num,
-+		  const struct in6_addr *loc_addr,
-+		  const struct in6_addr *rmt_addr, int dif, int sdif)
- {
--	bool is_multicast = ipv6_addr_is_multicast(loc_addr);
-+	if (inet_sk(sk)->inet_num != num ||
-+	    !net_eq(sock_net(sk), net) ||
-+	    (!ipv6_addr_any(&sk->sk_v6_daddr) &&
-+	     !ipv6_addr_equal(&sk->sk_v6_daddr, rmt_addr)) ||
-+	    !raw_sk_bound_dev_eq(net, sk->sk_bound_dev_if,
-+				 dif, sdif))
-+		return false;
-+
-+	if (ipv6_addr_any(&sk->sk_v6_rcv_saddr) ||
-+	    ipv6_addr_equal(&sk->sk_v6_rcv_saddr, loc_addr) ||
-+	    (ipv6_addr_is_multicast(loc_addr) &&
-+	     inet6_mc_check(sk, loc_addr, rmt_addr)))
-+		return true;
- 
--	sk_for_each_from(sk)
--		if (inet_sk(sk)->inet_num == num) {
--
--			if (!net_eq(sock_net(sk), net))
--				continue;
--
--			if (!ipv6_addr_any(&sk->sk_v6_daddr) &&
--			    !ipv6_addr_equal(&sk->sk_v6_daddr, rmt_addr))
--				continue;
--
--			if (!raw_sk_bound_dev_eq(net, sk->sk_bound_dev_if,
--						 dif, sdif))
--				continue;
--
--			if (!ipv6_addr_any(&sk->sk_v6_rcv_saddr)) {
--				if (ipv6_addr_equal(&sk->sk_v6_rcv_saddr, loc_addr))
--					goto found;
--				if (is_multicast &&
--				    inet6_mc_check(sk, loc_addr, rmt_addr))
--					goto found;
--				continue;
--			}
--			goto found;
--		}
--	sk = NULL;
--found:
--	return sk;
-+	return false;
- }
--EXPORT_SYMBOL_GPL(__raw_v6_lookup);
-+EXPORT_SYMBOL_GPL(raw_v6_match);
- 
- /*
-  *	0 - deliver
-@@ -156,31 +142,28 @@ EXPORT_SYMBOL(rawv6_mh_filter_unregister
-  */
- static bool ipv6_raw_deliver(struct sk_buff *skb, int nexthdr)
- {
-+	struct net *net = dev_net(skb->dev);
- 	const struct in6_addr *saddr;
- 	const struct in6_addr *daddr;
-+	struct hlist_head *head;
- 	struct sock *sk;
- 	bool delivered = false;
- 	__u8 hash;
--	struct net *net;
- 
- 	saddr = &ipv6_hdr(skb)->saddr;
- 	daddr = saddr + 1;
- 
- 	hash = nexthdr & (RAW_HTABLE_SIZE - 1);
--
-+	head = &raw_v6_hashinfo.ht[hash];
-+	if (hlist_empty(head))
-+		return false;
- 	read_lock(&raw_v6_hashinfo.lock);
--	sk = sk_head(&raw_v6_hashinfo.ht[hash]);
--
--	if (!sk)
--		goto out;
--
--	net = dev_net(skb->dev);
--	sk = __raw_v6_lookup(net, sk, nexthdr, daddr, saddr,
--			     inet6_iif(skb), inet6_sdif(skb));
--
--	while (sk) {
-+	sk_for_each(sk, head) {
- 		int filtered;
- 
-+		if (!raw_v6_match(net, sk, nexthdr, daddr, saddr,
-+				  inet6_iif(skb), inet6_sdif(skb)))
-+			continue;
- 		delivered = true;
- 		switch (nexthdr) {
- 		case IPPROTO_ICMPV6:
-@@ -219,23 +202,14 @@ static bool ipv6_raw_deliver(struct sk_b
- 				rawv6_rcv(sk, clone);
- 			}
- 		}
--		sk = __raw_v6_lookup(net, sk_next(sk), nexthdr, daddr, saddr,
--				     inet6_iif(skb), inet6_sdif(skb));
- 	}
--out:
- 	read_unlock(&raw_v6_hashinfo.lock);
- 	return delivered;
- }
- 
- bool raw6_local_deliver(struct sk_buff *skb, int nexthdr)
- {
--	struct sock *raw_sk;
--
--	raw_sk = sk_head(&raw_v6_hashinfo.ht[nexthdr & (RAW_HTABLE_SIZE - 1)]);
--	if (raw_sk && !ipv6_raw_deliver(skb, nexthdr))
--		raw_sk = NULL;
--
--	return raw_sk != NULL;
-+	return ipv6_raw_deliver(skb, nexthdr);
- }
- 
- /* This cleans up af_inet6 a bit. -DaveM */
-@@ -361,28 +335,25 @@ static void rawv6_err(struct sock *sk, s
- void raw6_icmp_error(struct sk_buff *skb, int nexthdr,
- 		u8 type, u8 code, int inner_offset, __be32 info)
- {
-+	const struct in6_addr *saddr, *daddr;
-+	struct net *net = dev_net(skb->dev);
-+	struct hlist_head *head;
- 	struct sock *sk;
- 	int hash;
--	const struct in6_addr *saddr, *daddr;
--	struct net *net;
- 
- 	hash = nexthdr & (RAW_HTABLE_SIZE - 1);
--
-+	head = &raw_v6_hashinfo.ht[hash];
- 	read_lock(&raw_v6_hashinfo.lock);
--	sk = sk_head(&raw_v6_hashinfo.ht[hash]);
--	if (sk) {
-+	sk_for_each(sk, head) {
- 		/* Note: ipv6_hdr(skb) != skb->data */
- 		const struct ipv6hdr *ip6h = (const struct ipv6hdr *)skb->data;
- 		saddr = &ip6h->saddr;
- 		daddr = &ip6h->daddr;
--		net = dev_net(skb->dev);
- 
--		while ((sk = __raw_v6_lookup(net, sk, nexthdr, saddr, daddr,
--					     inet6_iif(skb), inet6_iif(skb)))) {
--			rawv6_err(sk, skb, NULL, type, code,
--					inner_offset, info);
--			sk = sk_next(sk);
--		}
-+		if (!raw_v6_match(net, sk, nexthdr, &ip6h->saddr, &ip6h->daddr,
-+				  inet6_iif(skb), inet6_iif(skb)))
-+			continue;
-+		rawv6_err(sk, skb, NULL, type, code, inner_offset, info);
- 	}
- 	read_unlock(&raw_v6_hashinfo.lock);
- }
+ 	switch (video->color_depth) {
+ 	case 6:
 
 
