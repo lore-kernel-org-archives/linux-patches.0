@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6CB2DC783;
-	Mon, 17 Aug 2026 14:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC17282F29;
+	Mon, 17 Aug 2026 14:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977811; cv=none; b=uLcTuZHZkeEdOaB5iTx2VXZc6Qv+Sm5G8FWXFwwPpi/cUxspDCxygIyL0G/sX69w+cI4CEK96Tq4oCeu4j5pbvidPPJpC3D6VLFtthcagC48893R6mHprQKgZDABVvkYhj79/F+YDy68ovmGjFli1nJWPIMK9QAEwbdgPfDymWI=
+	t=1786977814; cv=none; b=Wvx67xqNy78W+NhSNcufqC/iy3qBVAYia5cGNJaXMK2PhZIO+0qXdUJbQnWlRBJ/u+sVwK067oHpc/g/6mjLpHdLgI7UGdUcTCD+0UnVm9sxr8/bu5B+QMXVkPNZSY8G/a64MmILNoH7myjw75/07Iqh6kQue8KHIuvmwbSv0fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977811; c=relaxed/simple;
-	bh=/WxyKaPleIIZra5BGW1oZ5XxFvBlpgt7F5FWJZm/GUE=;
+	s=arc-20240116; t=1786977814; c=relaxed/simple;
+	bh=4pe0kpnmOJhgXO4YwC4zKg27i8Cq4oBXKNvEraBoVJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S+v8Gv2ag989JzFy4VcZ9W3Jp2UQAOKEL+/Zo20Jwp6qTG30AAObiDu9IoXTTPVrM/VDjylsc2sHcmfpuseLplW3K5f0Bijbqmy60dhLihDZ3OZKALIYMnrrFQK7p9848zJ6v11h7S/toM0vakAJ9H/MqXD5dqaDTFeVkvdYrzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=knwW4x+K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h1h6fVcXMnRT8wVF42lUXLRgK+xOkP8ZL3Fv4m78x08wly8lPGP1LCpPZNlhOLdPDNfdjrO8u43JvnAKWpsEr3nrF3E4+wnlVxCbz5Wd6odBoIAX6Q5OYIjCqS40JsYxkIH2seWT3cvjKeajUc8pGAjLAy0Nllwdv4Qv0dcSCHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQyTEExx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="knwW4x+K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A161F00A3A;
-	Mon, 17 Aug 2026 14:43:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQyTEExx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B7E1F000E9;
+	Mon, 17 Aug 2026 14:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977810;
-	bh=GAYoRw9yGNyH7vUnD2ee3PPmpv1qFbyaDPOVF/1hsYg=;
+	s=korg; t=1786977813;
+	bh=8/dFfI9gfS73pr+WyIEtcsgHoS7AzWUNAPSORTj0mRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=knwW4x+KyxWveUKIDRlQkURIQa0EGgG4TiqFQ8S+77xgMJz7bH/vB+Nrx5gt7x/PV
-	 Stf+cmBYqo0fscJ2kow2zglWdN6DkdExm+RgMpcC1GaajnyiJWtgmDR+IYEMdXr9FF
-	 rU1mMBByJoOZWPZUrzZ/eqN77O83RmvBhOztNqZU=
+	b=DQyTEExx/XIFJFOBt1E5eVTaqTVmzTIzjxjT2eGPKHZOEoItUK5n2LomlE9VfLQ4U
+	 vaPB9krnZCaObbXxC54jnRhB8KtfPIgCe4w5/969qO8sYB5fNEWv63BQwAn95XW35D
+	 CtL38/V9teykDzyUDu/ois4U8+Jd0sW8FzA6lr3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 441/456] xdp: reject clones that overrun skb_shared_info tailroom
-Date: Mon, 17 Aug 2026 15:33:51 +0200
-Message-ID: <20260817132556.342482171@linuxfoundation.org>
+	Baul Lee <baul.lee@xbow.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 442/456] vxlan: do not arm the ageing timer on a device that is down
+Date: Mon, 17 Aug 2026 15:33:52 +0200
+Message-ID: <20260817132556.376041553@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,47 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit e48e8edbef2eb824201495daa5234560f632b23c upstream.
+commit b37971686ec59fb027fa4910ba16805e68fddb97 upstream.
 
-xdpf_clone() clones broadcast copies into a single page and sets
-frame_sz to PAGE_SIZE. __xdp_build_skb_from_frame() later treats that
-page like a normal XDP frame and expects the usual skb_shared_info
-tailroom at the end of the buffer.
+vxlan_changelink() arms vxlan->age_timer whenever the requested ageing
+interval differs from the configured one:
 
-The current check only rejects frames whose linear xdp_frame header,
-headroom, and packet data exceed PAGE_SIZE. A source frame backed by a
-larger allocation can still satisfy that check while extending into the
-clone's required shared-info area. When such a clone is converted back
-into an skb, build_skb_around() places skb_shared_info over live packet
-bytes and later writes can corrupt XDP return metadata.
+	if (conf.age_interval != vxlan->cfg.age_interval)
+		mod_timer(&vxlan->age_timer, jiffies);
 
-Reject clones unless their linear area fits inside
-SKB_WITH_OVERHEAD(PAGE_SIZE), matching the tailroom requirement already
-enforced by the XDP-to-skb conversion path.
+There is no netif_running() test, so the timer is armed even on a device
+that was never brought up.  The only synchronous cancel in the driver is
+the timer_delete_sync() in vxlan_stop(), which is .ndo_stop.
+netif_close_many() drops devices without IFF_UP before
+__dev_close_many() runs, so that cancel is skipped for such a device.
 
-Fixes: e624d4ed4aa8 ("xdp: Extend xdp_redirect_map with broadcast support")
+vxlan_setup() sets dev->needs_free_netdev = true and age_timer is a
+member of struct vxlan_dev, so free_netdev() releases the allocation the
+timer lives in while it is still queued on a timer_base.
+expire_timers() unlinks the entry before it loads timer->function, so
+the timer core writes through the freed object's list pointers:
+
+  BUG: KASAN: slab-use-after-free in __run_timers+0x208/0x654
+  Write of size 8 at addr ffff00001adace68 by task true/192
+   __asan_store8+0x84/0xac
+   __run_timers+0x208/0x654
+   run_timer_softirq+0x154/0x18c
+  Allocated by task 189:
+   alloc_netdev_mqs+0x64/0x720
+   rtnl_create_link+0x4ac/0x520
+   rtnl_newlink+0x758/0xd00
+  Freed by task 191:
+   netdev_release+0x40/0x58
+   netdev_run_todo+0x4a4/0x8c0
+   rtnl_dellink+0x200/0x4e8
+
+The rtnl operations involved are netns-scoped, so an unprivileged user
+can perform them in a new user and network namespace.
+
+Arming the timer on a down device never had an effect: vxlan_cleanup()
+returns early on !netif_running(), and vxlan_open() arms the timer for
+any non-zero interval once the device is brought up.  Add the missing
+test.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 40051c4dcad5 ("vxlan: Allow changing ageing time")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Link: https://patch.msgid.link/6b2afef5d1738763c6965e8e466eb16e43e4f956.1785757386.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260809111829.78834-1-baul.lee@xbow.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/xdp.c |    2 +-
+ drivers/net/vxlan/vxlan_core.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/core/xdp.c
-+++ b/net/core/xdp.c
-@@ -625,7 +625,7 @@ struct xdp_frame *xdpf_clone(struct xdp_
- 	headroom = xdpf->headroom + sizeof(*xdpf);
- 	totalsize = headroom + xdpf->len;
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -4319,7 +4319,7 @@ static int vxlan_changelink(struct net_d
+ 		spin_unlock_bh(&vxlan->hash_lock[hash_index]);
+ 	}
  
--	if (unlikely(totalsize > PAGE_SIZE))
-+	if (unlikely(totalsize > SKB_WITH_OVERHEAD(PAGE_SIZE)))
- 		return NULL;
- 	page = dev_alloc_page();
- 	if (!page)
+-	if (conf.age_interval != vxlan->cfg.age_interval)
++	if (netif_running(dev) && conf.age_interval != vxlan->cfg.age_interval)
+ 		mod_timer(&vxlan->age_timer, jiffies);
+ 
+ 	netdev_adjacent_change_commit(dst->remote_dev, lowerdev, dev);
 
 
