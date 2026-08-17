@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE99A3F9287;
-	Mon, 17 Aug 2026 13:39:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9ED632ED40;
+	Mon, 17 Aug 2026 13:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786973944; cv=none; b=j8o99eW40kHhzpXUcRCXqTHpcrel2O79I0HTFSeWAR5Drd9ryn2Jr1YFZAVOe85OZ8sjZ1aKfgCYhxgTKh8UxgR3p990uA3AABqam9wMEteo0HCholfkzOGyYn6Cf6Fs4Fk07yL4Z6mmjBkZpbJ5lw4EpUzd1DGni4lBZxTkdHY=
+	t=1786973948; cv=none; b=P89OXSGggNl9RAB760R9uYPUPHqT6jssVsCC0S3s4QtgTEc7CpgB0lyFf0ZVRrkHc8h5EPYRfPMe2Hc35tTvfyj2+hgOIaCpBygAGky3DL+x+QKdOShuj7mXVA43czvBxGL8ilU4YHu3Nz1+7DbQ06J8mlrq35znYuwBKT78wzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786973944; c=relaxed/simple;
-	bh=9YjgTl2lxYOgfo+79NVe/aOtnr7zLJnkmvI/BIfL6Vg=;
+	s=arc-20240116; t=1786973948; c=relaxed/simple;
+	bh=EYwuGChoEpJ7IFhryunjvhFhmkBpROcbJs49lZuJS/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ijwOID3rgKCbPa5tCqXfQhy4fDGCjUa4anSCetljRyPcc9Ne7IKjyN3fH154ag6KWgpU9d+pKAEpsxkjTYRtVtvZqGiTqf8aRICY1pQA2u1YhtimEB5kn67HC468YPIkUcCYLhKELM6WkzkSj4t1kshKAoJezSCmLr4R8fcIr/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IeEqTi0M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d/uGCIHr10ao1WTlp8K7mcvvQTbRegI1zWdokXN9GXBEISaXS4mE0RyBISNXJd9+W3OOyjSH+Bp5KMHdVxu4JCOmkkEZdN2NdfAQ93ohLeZFmTSMx2r2AK7snV7wyq1xs6ZoNb9qgF7rG9LqEs5bs0RuGFfWPOHDgOPAcQBH8yU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBHPZoDM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IeEqTi0M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FBD01F00A3F;
-	Mon, 17 Aug 2026 13:39:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBHPZoDM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E7E1F000E9;
+	Mon, 17 Aug 2026 13:39:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786973943;
-	bh=ZaJ4MI14cr6PRa/AybDpieQpNAtPLE55GYVCz7rcQHA=;
+	s=korg; t=1786973946;
+	bh=epeJW5eng/cqIWYCCu5+hRyrxFYPTrk5UYyEc6uiJnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IeEqTi0MUcM1OCl22X6GUbtu1MJCrd3wCpEZNb7prO1Lw9BHzD3fIEzeceiyHm6ra
-	 kuAx+9DmT0tytNF8yd4DtkG0BARtwlt/dut4N7QVfdy48izXiJmOPkUKCCCchKCq2H
-	 pbtWZHkF9ihgvSiKFrvIy83gZdsgxJ/s1/AM/qGs=
+	b=dBHPZoDMW/EUb78aki+qiL1MxkdYpmvj46ul7YMs7Om2oTVZCTzNrdZvWGW3RsdZU
+	 cNL7P7iKD9leSQRQxQzzqynByPomCjl87O4iI/8SVsDSV+Con6XrC3mlIn2FBDK4kl
+	 eYFImCY88sRuJn1ve7mi3yi4flDSKta/BD8r/Kxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Antonio Quartulli <antonio@openvpn.net>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 034/271] ovpn: fix incorrect use of rcu_access_pointer()
-Date: Mon, 17 Aug 2026 15:29:19 +0200
-Message-ID: <20260817132538.147765093@linuxfoundation.org>
+Subject: [PATCH 7.1 035/271] drm/bridge: ps8640: propagate AUX transfer register errors
+Date: Mon, 17 Aug 2026 15:29:20 +0200
+Message-ID: <20260817132538.192262091@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -51,35 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 26ba17d845193dac4921ae1ab280d28d1938052e ]
+[ Upstream commit 20697ecb299cd77b4cf8b28f655e56606b0472d8 ]
 
-rcu_access_pointer() should only be used to test the value of a pointer,
-not to dereference it. As it's in a spin_lock_bh() critical section, use
-rcu_dereference_bh() instead, avoiding an extra rcu_read_lock().
+ps8640_aux_transfer_msg() programs the AUX address registers, starts the
+AUX transfer, waits for SWAUX_SEND to clear, and reads the AUX status
+register. Several of those regmap operations have return values, but the
+function only checks a stale ret after the status read.
 
-Fixes: f6226ae7a0cd ("ovpn: introduce the ovpn_socket object")
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
+Propagate failures from the address write, transfer start, completion
+poll, and status read. This avoids returning a transfer length when the
+bridge register transaction or AUX completion wait failed.
+
+Fixes: 13afcdd7277e ("drm/bridge: parade-ps8640: Add support for AUX channel")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260723103509.2-ps8640-v2-pengpeng@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/peer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/parade-ps8640.c | 27 ++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ovpn/peer.c b/drivers/net/ovpn/peer.c
-index eada414a9d922..b0519f9840d83 100644
---- a/drivers/net/ovpn/peer.c
-+++ b/drivers/net/ovpn/peer.c
-@@ -1249,7 +1249,7 @@ static void ovpn_peer_release_p2p(struct ovpn_priv *ovpn, struct sock *sk,
+diff --git a/drivers/gpu/drm/bridge/parade-ps8640.c b/drivers/gpu/drm/bridge/parade-ps8640.c
+index 825777a5758f6..db8e5889dc7f1 100644
+--- a/drivers/gpu/drm/bridge/parade-ps8640.c
++++ b/drivers/gpu/drm/bridge/parade-ps8640.c
+@@ -257,8 +257,14 @@ static ssize_t ps8640_aux_transfer_msg(struct drm_dp_aux *aux,
+ 	addr_len[PAGE0_SWAUX_LENGTH - base] = (len == 0) ? SWAUX_NO_PAYLOAD :
+ 					      ((len - 1) & SWAUX_LENGTH_MASK);
+ 
+-	regmap_bulk_write(map, PAGE0_SWAUX_ADDR_7_0, addr_len,
+-			  ARRAY_SIZE(addr_len));
++	ret = regmap_bulk_write(map, PAGE0_SWAUX_ADDR_7_0, addr_len,
++				ARRAY_SIZE(addr_len));
++	if (ret) {
++		DRM_DEV_ERROR(dev,
++			      "failed to write AUX address %#x, len %zu: %d\n",
++			      msg->address, len, ret);
++		return ret;
++	}
+ 
+ 	if (len && (request == DP_AUX_NATIVE_WRITE ||
+ 		    request == DP_AUX_I2C_WRITE)) {
+@@ -274,13 +280,22 @@ static ssize_t ps8640_aux_transfer_msg(struct drm_dp_aux *aux,
+ 		}
  	}
  
- 	if (sk) {
--		ovpn_sock = rcu_access_pointer(peer->sock);
-+		ovpn_sock = rcu_dereference_bh(peer->sock);
- 		if (!ovpn_sock || ovpn_sock->sk != sk) {
- 			spin_unlock_bh(&ovpn->lock);
- 			return;
+-	regmap_write(map, PAGE0_SWAUX_CTRL, SWAUX_SEND);
++	ret = regmap_write(map, PAGE0_SWAUX_CTRL, SWAUX_SEND);
++	if (ret) {
++		DRM_DEV_ERROR(dev, "failed to start AUX transfer: %d\n", ret);
++		return ret;
++	}
+ 
+ 	/* Zero delay loop because i2c transactions are slow already */
+-	regmap_read_poll_timeout(map, PAGE0_SWAUX_CTRL, data,
+-				 !(data & SWAUX_SEND), 0, 50 * 1000);
++	ret = regmap_read_poll_timeout(map, PAGE0_SWAUX_CTRL, data,
++				       !(data & SWAUX_SEND), 0, 50 * 1000);
++	if (ret) {
++		DRM_DEV_ERROR(dev, "failed to complete AUX transfer: %d\n",
++			      ret);
++		return ret;
++	}
+ 
+-	regmap_read(map, PAGE0_SWAUX_STATUS, &data);
++	ret = regmap_read(map, PAGE0_SWAUX_STATUS, &data);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev, "failed to read PAGE0_SWAUX_STATUS: %d\n",
+ 			      ret);
 -- 
 2.53.0
 
