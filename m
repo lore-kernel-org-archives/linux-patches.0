@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214214322E5;
-	Mon, 17 Aug 2026 14:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A9B3911DC;
+	Mon, 17 Aug 2026 14:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978095; cv=none; b=HiUIIfN0AhrMuyEFfYas7kkvlz31BjPGjyNCuQ9xMxx1zu5gRsajTeYgqG7wb6jpJBEKajUa3EgKVEQXLP24DyJkzSRMwhjQcd3wshnjBGDThWW4FeLWQXXYxGxukmMlLNf4Nlq8pWKpXMKWXuI/MFleTI1EA2VAyOIkzlClIN0=
+	t=1786978097; cv=none; b=FzWtJ/OwQXHuRd6ZiRvWHOdiqQ9muvfVfETRxhn46Uht09abem8vx7GjI5LpxVUA6DNwZ6WHxswQ4kiHbx1WvUyacjEDHhyTxqwgq94Q8j5tywsuhcMxEOI3+48P4BSoDjbze1yB3E50YYw77PuIJY/4rtMyBMHG7lr6/7LSRd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978095; c=relaxed/simple;
-	bh=oJEYY13lI5FT+JLE5AmvQZ2Mg0swiC5oNBqccjoql9Q=;
+	s=arc-20240116; t=1786978097; c=relaxed/simple;
+	bh=3sKJjwjLfxhg9JLYXl8RMkG9x8urI0xw6KMWegsNWsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jbzpFCOEduT+kilBuDZmIHWESwFZ7h7X2+WUQu59c3fjCLB2m05YmFChq2p5ZRr0iFc6qnqEuy+fCcYa0dmmxqwXMAKN55zTCXvlE9PHY0lOJ9ACCJvAguXA5Jg+bLIvBC8z6GUab78Mz3X/uPK/OQJpIwuUTkqMS28wC1zK/sY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AyQxQDdy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F2wmxcgjZ3R3jPdEvzsqesHtkGFnxuSj4+TAHfTGzUOGKU//bY2bRgVIfyT6pwL2ZzC7KLo3XhNHIBFnfKV4eEb6vXyb1cDLVIhhlKtoxXP2K8CeHozc/b6XNVKH5LehXtZqO7wahBe2LybPYkAXzdBUOt+sikN5zGc5vzWskFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tCvZ4pbL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AyQxQDdy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334471F000E9;
-	Mon, 17 Aug 2026 14:48:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCvZ4pbL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4761F000E9;
+	Mon, 17 Aug 2026 14:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978093;
-	bh=dCxW7EDO/TzuGfNBT6FOEjiZ0/YmgdGL00jTJ5e+zuE=;
+	s=korg; t=1786978096;
+	bh=w1HqP26F2b11c2YxbVOvNRoWlLlFIynhS0XmVy7QR/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AyQxQDdyoML8e4jq8HQQaJtqzeRWgz8P9cMHwDOc6pfPqHn1Ztyx2HQsHZ3BoOSWL
-	 zLFTmQnA0L/GvdP60QJq2qGmETCtKKs+9RezgaoaCnpN57edQ/p7sOhoGF50qkY6VG
-	 ZdhZb0CTQmCsM/poX+qCXoDXiV8pGYJ8ljeAK9cQ=
+	b=tCvZ4pbLRjKvDJMyfn8P1HX8gzDTx++hxHGq8YLArHAkuSGod7MvHng5KIgoYU/li
+	 d1/RkpI9V5XgTS5YoKN0m4K70SziiwtBk5uT8k1xJe8vF/J3cNjiMAnO0UWpHEtB3F
+	 fBfs1oXxJez62FzpRbTBDs5FNYxqv/5N6JnIkrYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 099/181] mac802154: fix netdev use-after-free in beacon worker
-Date: Mon, 17 Aug 2026 15:33:13 +0200
-Message-ID: <20260817132539.358032962@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.12 100/181] netfilter: ebt_nflog: pin the NFLOG backend
+Date: Mon, 17 Aug 2026 15:33:14 +0200
+Message-ID: <20260817132539.400143604@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -52,68 +50,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 5f26a690e8efa54315e4922368daf54e0b8f5515 upstream.
+commit 30825970339c107bacaf7f61af90fcdb1f597ca1 upstream.
 
-mac802154_beacon_worker() reads local->beacon_req under RCU and derives
-the sub-interface from the request, but then drops the RCU read lock and
-continues to use both sdata and the embedded wpan_dev.
+nf_log_unregister() runs after the per-net teardown so its final RCU
+grace period also drains readers that obtained the logger from a per-net
+binding.  However, ebt_nflog passes an explicit ULOG log type to
+nf_log_packet() without holding a reference on the selected logger module,
+unlike the xt_NFLOG and nft_log frontends.
 
-mac802154_stop_beacons_locked() cancels only pending beacon work, clears
-local->beacon_req and frees the request.  A beacon worker that is already
-running can therefore continue after interface teardown and dereference
-the freed netdev private area.
+An ebtables nflog rule can therefore remain callable while nfnetlink_log
+is unloaded.  The resulting interleaving is:
 
-The scan worker already pins the netdev before leaving RCU.  Apply the
-same lifetime rule to the beacon worker: take a netdev reference while
-the request is still protected by RCU, and release it on all paths that
-continue after the reference is acquired.
+  CPU 0                               CPU 1
+  nfnetlink_log_fini()
+    unregister_pernet_subsys()
+      kfree(nfnl_log_pernet(net))
+                                      ebt_nflog_tg()
+                                        nf_log_packet()
+                                          nfulnl_log_packet()
+                                            instance_lookup_get_rcu()
 
-Fixes: 3accf4762734 ("mac802154: Handle basic beaconing")
+The global ULOG logger is still registered at this point, so CPU 1
+dereferences the per-net state after CPU 0 has freed it.  KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in instance_lookup_get_rcu
+  Read of size 8 at addr ff110001052e6210 by task poc/92
+  Call Trace:
+   instance_lookup_get_rcu+0x1ce/0x1f0 [nfnetlink_log]
+   nfulnl_log_packet+0x248/0x2fb0 [nfnetlink_log]
+   nf_log_packet+0x204/0x300
+   ebt_nflog_tg+0x351/0x550
+   ebt_do_table+0xedf/0x22b0
+  Allocated by task 90:
+   __kmalloc_noprof+0x186/0x470
+   ops_init+0x6d/0x420
+   register_pernet_operations+0x2f6/0x670
+   register_pernet_subsys+0x23/0x40
+  Freed by task 93:
+   kfree+0x131/0x3c0
+   ops_undo_list+0x3e3/0x700
+   unregister_pernet_operations+0x232/0x490
+   unregister_pernet_subsys+0x1c/0x30
+   nfnetlink_log_fini+0x34/0x450 [nfnetlink_log]
+
+Acquire the ULOG logger module reference when an ebt_nflog rule is
+validated and release it when the rule is destroyed.  Request the NFLOG
+backend for legacy callers when needed, matching xt_NFLOG.  This prevents
+module teardown until all ebt_nflog rules have stopped using the logger.
+
+Fixes: c83fa19603bd ("netfilter: nf_log: don't call synchronize_rcu in nf_log_unset")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://patch.msgid.link/e9a3909c7a6281967961773ca841e860b8ecf40e.1785596603.git.zihanx@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac802154/scan.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/bridge/netfilter/ebt_nflog.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
---- a/net/mac802154/scan.c
-+++ b/net/mac802154/scan.c
-@@ -415,6 +415,7 @@ void mac802154_beacon_worker(struct work
- 		container_of(work, struct ieee802154_local, beacon_work.work);
- 	struct cfg802154_beacon_request *beacon_req;
- 	struct ieee802154_sub_if_data *sdata;
-+	netdevice_tracker dev_tracker;
- 	struct wpan_dev *wpan_dev;
- 	u8 interval;
- 	int ret;
-@@ -427,12 +428,14 @@ void mac802154_beacon_worker(struct work
- 	}
+--- a/net/bridge/netfilter/ebt_nflog.c
++++ b/net/bridge/netfilter/ebt_nflog.c
+@@ -41,11 +41,25 @@ ebt_nflog_tg(struct sk_buff *skb, const
+ static int ebt_nflog_tg_check(const struct xt_tgchk_param *par)
+ {
+ 	struct ebt_nflog_info *info = par->targinfo;
++	int ret;
  
- 	sdata = IEEE802154_WPAN_DEV_TO_SUB_IF(beacon_req->wpan_dev);
-+	netdev_hold(sdata->dev, &dev_tracker, GFP_ATOMIC);
- 
- 	/* Wait an arbitrary amount of time in case we cannot use the device */
- 	if (local->suspended || !ieee802154_sdata_running(sdata)) {
- 		rcu_read_unlock();
- 		queue_delayed_work(local->mac_wq, &local->beacon_work,
- 				   msecs_to_jiffies(1000));
-+		netdev_put(sdata->dev, &dev_tracker);
- 		return;
- 	}
- 
-@@ -450,6 +453,7 @@ void mac802154_beacon_worker(struct work
- 	if (interval < IEEE802154_ACTIVE_SCAN_DURATION)
- 		queue_delayed_work(local->mac_wq, &local->beacon_work,
- 				   local->beacon_interval);
-+	netdev_put(sdata->dev, &dev_tracker);
+ 	if (info->flags & ~EBT_NFLOG_MASK)
+ 		return -EINVAL;
+ 	info->prefix[EBT_NFLOG_PREFIX_SIZE - 1] = '\0';
+-	return 0;
++
++	ret = nf_logger_find_get(par->family, NF_LOG_TYPE_ULOG);
++	if (ret != 0 && !par->nft_compat) {
++		request_module("%s", "nfnetlink_log");
++
++		ret = nf_logger_find_get(par->family, NF_LOG_TYPE_ULOG);
++	}
++
++	return ret;
++}
++
++static void ebt_nflog_tg_destroy(const struct xt_tgdtor_param *par)
++{
++	nf_logger_put(par->family, NF_LOG_TYPE_ULOG);
  }
  
- int mac802154_stop_beacons_locked(struct ieee802154_local *local,
+ static struct xt_target ebt_nflog_tg_reg __read_mostly = {
+@@ -54,6 +68,7 @@ static struct xt_target ebt_nflog_tg_reg
+ 	.family     = NFPROTO_BRIDGE,
+ 	.target     = ebt_nflog_tg,
+ 	.checkentry = ebt_nflog_tg_check,
++	.destroy    = ebt_nflog_tg_destroy,
+ 	.targetsize = sizeof(struct ebt_nflog_info),
+ 	.me         = THIS_MODULE,
+ };
 
 
