@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B103F4847;
-	Mon, 17 Aug 2026 14:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35B8424D74;
+	Mon, 17 Aug 2026 14:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976818; cv=none; b=JySLrXmE1FMh/Q8wRUvb35m58Vr1gyFrnQy7Fup78tGdQvtmkO0KTUXWbdYTnwFx5+bzYKgBgNgjfD/CIpebFOvQ18LVp5W6Qf+jYLJnimi9bEKx6yNbrSnrLoE5/aKu5tJEq0KoTUXJh9/g9bznIC9IOmxOxMLIbzF3B+LDwBk=
+	t=1786976821; cv=none; b=miwAz7Ln0Ty/lpy8lXB+gMAtoO/zY43EblOWtt7Abt8nK+0UCYV0mEGVcoBMDOWQ1Oq8jRY0bH+cduJO7WAVE6m5tZK/ysN/e216wcVZCk9g4y2FGQB9mQ3Wljn8gsNCOKshWxjUY6CdkKkfA+D1GTeClLIRHSk1Y5UtpquySMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976818; c=relaxed/simple;
-	bh=TXe8hb5e50iTCizTsvL6NZXvGOVYZo4+l1WWjW2vMjA=;
+	s=arc-20240116; t=1786976821; c=relaxed/simple;
+	bh=9AdZAH0ewwUKo4We/S94tBGh5jhfJP+SS2xMdaft4UU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hcHf/OzzmORwcaQ7j36DOoX11svuR4BFIt52HT/Gi8VgKdqZBdESaZsCdb0YZprJbi6QfKJBdzjtKv3eNCzn8fZTiNuJOysm4l+KFNkn3/m3tvcY+Ty9W7D1YOkFk1h2aWnYn3W2gwY34BetWgVSirMpfjKazmd5RwXYrpwPGLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hO7zwlvp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IT4M8OXpOOXOt6agM9B1PN1OvSFSsDFoYO4RSU/Y/nnqNuUI26ddiOYgAInvCxRmzFn2ILn9q4Xtyaec1FhOC5tv+TaMhvDD3uaNGmWjm3Koyo1D0zfTjhu8Wf4vZuWRrfKq8lZq5gPzVdPM5k+tWZZq9m1AcWjZDUZwlOhrkP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bji6PQez; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hO7zwlvp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374D11F00AC4;
-	Mon, 17 Aug 2026 14:26:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bji6PQez"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189661F000E9;
+	Mon, 17 Aug 2026 14:26:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976816;
-	bh=9G1naeLeN3iB4DtDHL1ToVQSk0vlaQW/4x2uw+zfsxk=;
+	s=korg; t=1786976819;
+	bh=wQC+OqKVqi+eKFja+5zkZ0m1U1VzxGcvv8wxU5uSfEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hO7zwlvp4CL6ncEkT7Rn1Xz6kwF1F6tuyvvJrsOItJnjT5z4aR5cXeD1th+KkGIXQ
-	 dVYwXc6yj52u5JYkKKZAQahl9ZnqAwPK1CyfDr3ktovGxoy9MjMh7vBv8lVd3QeseM
-	 +dkNQKTJseZwZhpfpfzlf5gRIETHAJ1Fs5j8+YrQ=
+	b=Bji6PQezczinKKo0kvRS3/UBmAMz1vp7SqybBArMK+11rkZ761u8yUgVbl7qrUA7D
+	 xB0+pLFsVxcg5UWpswet88IBnSeAL1oX5G6WeVA9LhTjWn0/Vr1+sIRzgNaHD5uTjB
+	 hQhd/6w3L/ihAyToAyvLJjTP2YQsP9XUUkNxg/Ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shelley Yang <shelley.yang@infineon.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 115/456] wifi: brcmfmac: fix 802.1X-SHA256 call trace warning
-Date: Mon, 17 Aug 2026 15:28:25 +0200
-Message-ID: <20260817132544.586093824@linuxfoundation.org>
+Subject: [PATCH 5.15 116/456] net: bridge: vlan: fix vlan range dumps starting with pvid
+Date: Mon, 17 Aug 2026 15:28:26 +0200
+Message-ID: <20260817132544.623244402@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -46,71 +46,153 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shelley Yang <shelley.yang@infineon.com>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit 7cb34f6c4fe8a68af621d870abe63bfca2275dd6 ]
+[ Upstream commit 43171c97e4714bf601b468401b37732244639c21 ]
 
-Based on wpa_auth as 1x_256 mode, need to set up
-"use_fwsup" with BRCMF_PROFILE_FWSUP_1X.
-Or it will happen trace warning when call brcmf_cfg80211_set_pmk().
+There is a bug in all range dumps that rely on br_vlan_can_enter_range()
+when the PVID is a range starting VLAN, all following VLANs that match
+its flags can enter the range, but when the range is filled in only the
+PVID VLAN is dumped and the rest of the range is discarded because
+br_vlan_fill_vids() checks for the PVID flag. Since the PVID VLAN can
+be only one, we need to break ranges around it, the best way to do that
+consistently for all is to alter br_vlan_can_enter_range() to take into
+account the PVID and return false to break the range when it's matched.
 
-[ 4481.831101] ------------[ cut here ]------------
-[ 4481.831102] WARNING: CPU: 1 PID: 2997 at
-drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c:7242 brcmf_cfg80211_set_pmk+0x77/0xd0 [brcmfmac]
-[...]
-[ 4481.831202] Call Trace:
-[ 4481.831204]  <TASK>
-[ 4481.831205]  nl80211_set_pmk+0x183/0x250 [cfg80211]
-[ 4481.831233]  genl_family_rcv_msg_doit+0xea/0x150
-[ 4481.831237]  genl_rcv_msg+0x104/0x240
-[ 4481.831239]  ? cfg80211_probe_status+0x2c0/0x2c0 [cfg80211]
-[ 4481.831257]  ? genl_family_rcv_msg_doit+0x150/0x150
-[ 4481.831259]  netlink_rcv_skb+0x4e/0x100
-[ 4481.831261]  genl_rcv+0x24/0x40
-[ 4481.831262]  netlink_unicast+0x236/0x380
-[ 4481.831264]  netlink_sendmsg+0x250/0x4b0
-[ 4481.831266]  sock_sendmsg+0x5c/0x70
-[ 4481.831269]  ____sys_sendmsg+0x236/0x2b0
-[ 4481.831271]  ? copy_msghdr_from_user+0x6d/0xa0
-[ 4481.831272]  ___sys_sendmsg+0x86/0xd0
-[ 4481.831274]  ? avc_has_perm+0x8c/0x1a0
-[ 4481.831276]  ? preempt_count_add+0x6a/0xa0
-[ 4481.831279]  ? sock_has_perm+0x82/0xa0
-[ 4481.831280]  __sys_sendmsg+0x57/0xa0
-[ 4481.831282]  do_syscall_64+0x38/0x90
-[ 4481.831284]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-[ 4481.831286] RIP: 0033:0x7fd270d369b4
+Before the fix:
+$ ip l add br0 type bridge vlan_filtering 1
+$ ip l add dumdum type dummy
+$ ip l set dumdum master br0
+$ ip l set br0 up
+$ ip l set dumdum up
+$ bridge vlan add dev dumdum vid 1 pvid untagged master
+$ bridge vlan add dev dumdum vid 2 untagged master
+$ bridge vlan show dev dumdum # use legacy dump to show all vlans
+port              vlan-id
+dumdum            1 PVID Egress Untagged
+                  2 Egress Untagged
 
-Fixes: 2526ff21aa77 ("brcmfmac: support 4-way handshake offloading for 802.1X")
-Signed-off-by: Shelley Yang <shelley.yang@infineon.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260525083859.581246-1-shelley.yang@infineon.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+$ bridge -d vlan show dev dumdum # use the new dump (RTM_GETVLAN)
+port              vlan-id
+dumdum            1 PVID Egress Untagged
+                    state forwarding mcast_router 1
+
+VLAN 2 is missing, and if there are more matching VLANs afterwards
+they'd be missing too.
+
+After the fix:
+[ same setup steps ]
+$ bridge vlan show dev dumdum
+port              vlan-id
+dumdum            1 PVID Egress Untagged
+                  2 Egress Untagged
+$ bridge -d vlan show dev dumdum # use the new dump (RTM_GETVLAN)
+port              vlan-id
+dumdum            1 PVID Egress Untagged
+                    state forwarding mcast_router 1
+                  2 Egress Untagged
+                    state forwarding mcast_router 1
+
+Fixes: 0ab558795184 ("net: bridge: vlan: add rtm range support")
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260721140922.682265-2-razor@blackwall.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bridge/br_netlink_tunnel.c |  3 ++-
+ net/bridge/br_private.h        |  6 ++++--
+ net/bridge/br_vlan.c           | 10 ++++++----
+ net/bridge/br_vlan_options.c   |  3 +--
+ 4 files changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index ff101ee5c364c3..13ea5f0c8e1e1e 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -1790,7 +1790,7 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
- 				 sme->crypto.cipher_group);
- 			return -EINVAL;
- 		}
--	} else if (val & (WPA2_AUTH_PSK | WPA2_AUTH_UNSPECIFIED)) {
-+	} else if (val & (WPA2_AUTH_PSK | WPA2_AUTH_UNSPECIFIED | WPA2_AUTH_1X_SHA256)) {
- 		switch (sme->crypto.akm_suites[0]) {
- 		case WLAN_AKM_SUITE_8021X:
- 			val = WPA2_AUTH_UNSPECIFIED;
+diff --git a/net/bridge/br_netlink_tunnel.c b/net/bridge/br_netlink_tunnel.c
+index 8914290c75d480..e4aab077527011 100644
+--- a/net/bridge/br_netlink_tunnel.c
++++ b/net/bridge/br_netlink_tunnel.c
+@@ -268,7 +268,8 @@ static void __vlan_tunnel_handle_range(const struct net_bridge_port *p,
+ 	if (!*v_start)
+ 		goto out_init;
+ 
+-	if (v && curr_change && br_vlan_can_enter_range(v, *v_end)) {
++	if (v && curr_change &&
++	    br_vlan_can_enter_range(v, *v_end, br_get_pvid(vg))) {
+ 		*v_end = v;
+ 		return;
+ 	}
+diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
+index 9a5479868489e9..62fdafbcc7e720 100644
+--- a/net/bridge/br_private.h
++++ b/net/bridge/br_private.h
+@@ -1475,7 +1475,8 @@ int br_vlan_replay(struct net_device *br_dev, struct net_device *dev,
+ 		   const void *ctx, bool adding, struct notifier_block *nb,
+ 		   struct netlink_ext_ack *extack);
+ bool br_vlan_can_enter_range(const struct net_bridge_vlan *v_curr,
+-			     const struct net_bridge_vlan *range_end);
++			     const struct net_bridge_vlan *range_end,
++			     u16 pvid);
+ 
+ void br_vlan_fill_forward_path_pvid(struct net_bridge *br,
+ 				    struct net_device_path_ctx *ctx,
+@@ -1715,7 +1716,8 @@ static inline void br_vlan_notify(const struct net_bridge *br,
+ }
+ 
+ static inline bool br_vlan_can_enter_range(const struct net_bridge_vlan *v_curr,
+-					   const struct net_bridge_vlan *range_end)
++					   const struct net_bridge_vlan *range_end,
++					   u16 pvid)
+ {
+ 	return true;
+ }
+diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
+index 055d988d280cd6..5c41c6d00942d4 100644
+--- a/net/bridge/br_vlan.c
++++ b/net/bridge/br_vlan.c
+@@ -1958,9 +1958,11 @@ int br_vlan_replay(struct net_device *br_dev, struct net_device *dev,
+ 
+ /* check if v_curr can enter a range ending in range_end */
+ bool br_vlan_can_enter_range(const struct net_bridge_vlan *v_curr,
+-			     const struct net_bridge_vlan *range_end)
++			     const struct net_bridge_vlan *range_end,
++			     u16 pvid)
+ {
+-	return v_curr->vid - range_end->vid == 1 &&
++	return v_curr->vid != pvid && range_end->vid != pvid &&
++	       v_curr->vid - range_end->vid == 1 &&
+ 	       range_end->flags == v_curr->flags &&
+ 	       br_vlan_opts_eq_range(v_curr, range_end);
+ }
+@@ -2042,8 +2044,8 @@ static int br_vlan_dump_dev(const struct net_device *dev,
+ 			idx += range_end->vid - range_start->vid + 1;
+ 
+ 			range_start = v;
+-		} else if (dump_stats || v->vid == pvid ||
+-			   !br_vlan_can_enter_range(v, range_end)) {
++		} else if (dump_stats ||
++			   !br_vlan_can_enter_range(v, range_end, pvid)) {
+ 			u16 vlan_flags = br_vlan_flags(range_start, pvid);
+ 
+ 			if (!br_vlan_fill_vids(skb, range_start->vid,
+diff --git a/net/bridge/br_vlan_options.c b/net/bridge/br_vlan_options.c
+index a6382973b3e701..87fe159efcf76e 100644
+--- a/net/bridge/br_vlan_options.c
++++ b/net/bridge/br_vlan_options.c
+@@ -262,8 +262,7 @@ int br_vlan_process_options(const struct net_bridge *br,
+ 				continue;
+ 			}
+ 
+-			if (v->vid == pvid ||
+-			    !br_vlan_can_enter_range(v, curr_end)) {
++			if (!br_vlan_can_enter_range(v, curr_end, pvid)) {
+ 				br_vlan_notify(br, p, curr_start->vid,
+ 					       curr_end->vid, RTM_NEWVLAN);
+ 				curr_start = v;
 -- 
 2.53.0
 
