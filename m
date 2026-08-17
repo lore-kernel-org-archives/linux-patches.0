@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4C643CE4B;
-	Mon, 17 Aug 2026 13:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521F73DB310;
+	Mon, 17 Aug 2026 13:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974672; cv=none; b=e4/xGia7rjLEHprjwUagfzUcaVjHQOAm4T2kSRxJYM1g9Dzvvcn7yJPZEsUDTXF2uy9x2OpVDHKi3S+jdho7XuEGgNBOJxdBlKcRtwg1aUkh5mZq56WwKV9QrY4pjoGDur8QMOuH0OEbMnfpL5GfB0U89HFQWp6L4RYIwGc6D0w=
+	t=1786974676; cv=none; b=jwVoXO461zj9eHtNEoWOscyFc0i+Y+VDNA4TXVBnP0B+diCIPER4QXd9S51xilomjF489N2FPhEvWiACCc+JL4trEaV0N0B32VC69wx+FE00Qp1LvCJ37Nu1em3YrtO3FErU2mG1uF1h5Evcevyrg2TSz82oMkfbB0Q9ppK76Q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974672; c=relaxed/simple;
-	bh=RksLVMxKDx/nW7/nzItvy3dLEr1PpdNiQf9M9WmpTAg=;
+	s=arc-20240116; t=1786974676; c=relaxed/simple;
+	bh=SqLj8b/oe07OHK4Pia5hvkFDGCi4KzwqdDwv7sY4E6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JKA9aB8r9BEm3i+zrsT+5ab/5Sd6Jh+CxL1kPo5y9Qrdsu7CfpSIIPjvUTUp29PbWq2FOGMttjOAHbC4witcSspPOb6n14PnENhM5Vv1cVkeKn6PrSer6YYURN4rUcLGfcjBd93vfs8YXdGFaa/bLauj7Yuh7VqLxdQCWTLze2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lg5v/MaZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iLqDqJfqjJzF9wwKOj6p2vQJJ/beuWy0kT75rHRQjFy4EG2kULpjCH87iJKJ4CSFDT/GCibE36RyYSyBiXQi8EIJx2uz4+BSBJaUoC11zj7IY3gS+ta8xQ3I6oC2430/286JzM1Q6YwZkgse0h/0ubACXPQSvHCb6Ln8vsO3gVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mN8R/Ul0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lg5v/MaZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 007041F000E9;
-	Mon, 17 Aug 2026 13:51:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mN8R/Ul0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2CB1F00A3D;
+	Mon, 17 Aug 2026 13:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974666;
-	bh=+cgSlbE32VK8789HL/yIOYruey0SQVDSUy/2Cq8X6Oc=;
+	s=korg; t=1786974669;
+	bh=OUxeKCKQsM+xdwdlztNQTP/lyyfL4G+J7uV1PUD5bBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lg5v/MaZiETeKXD/KDSmyWOrJLjX2x4sRHwtNe1QdqYmf9JhrsOw2AfXOhHeAL0eJ
-	 TVxH2KdoZqE1a3z4WPovn5bZirI5Jzgz2Aeu+DR0l3N77adOH89OuTFSe807A/4Qoe
-	 1ak1q9Vw2o2zO2J6V0mVijLg7YQ8UfMtVK7cTYK8=
+	b=mN8R/Ul0tdO4HaqZL79t1elo3yf5hGWuRqqnxoN5eG1XuuWwFTUKhPBo1GHe877Tc
+	 16zLODcu95LGMCw8eUhOBSH1Ng6AWI2J7F1DE+OTmQmcSjUiOOFWPsgC/bPjnev0rq
+	 aqlTDO+LpKgBmuaR7TGhvJatOH23ZSM6en0d6rWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Aloni <dan.aloni@vastdata.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Daniel Drake <dan@reactivated.net>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 013/250] NFS: Pin the struct nfs_server during a FREE_STATEID call
-Date: Mon, 17 Aug 2026 15:29:34 +0200
-Message-ID: <20260817132536.996946851@linuxfoundation.org>
+Subject: [PATCH 6.18 014/250] arm64: dts: broadcom: bcm2712: Remove non-functional EL2 virtual timer
+Date: Mon, 17 Aug 2026 15:29:35 +0200
+Message-ID: <20260817132537.041313065@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,48 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anna Schumaker <anna.schumaker@hammerspace.com>
+From: Daniel Drake <dan@reactivated.net>
 
-[ Upstream commit cf616096a0f3a2b60f7d68b6b39674a6867ded9c ]
+[ Upstream commit 75952cfc7752c52a2b692b59d34ce160d3edabb2 ]
 
-Dan Aloni reports that he was able to hit a use-after-free bug if a
-FREE_STATEID operation gets delayed for whatever reason. Fix this by
-bumping the refcount of the 'struct nfs_server' object for the duration
-of the FREE_STATEID so it doesn't get cleaned up from underneath us
-while operations are still in flight.
+Commit d87773de9efe1 ("clocksource/drivers/arm_arch_timer: Default to EL2
+virtual timer when running VHE") causes boot to hang on Raspberry Pi 5.
+The newly-selected EL2 virtual timer does not generate any interrupts,
+even though the GIC_DIST_ENABLE_SET flag has been confirmed set via
+readback.
 
-Reported-by: Dan Aloni <dan.aloni@vastdata.com>
-Fixes: 7c1d5fae4a87 ("NFSv4: Convert nfs41_free_stateid to use an asynchronous RPC call")
-Tested-by: Dan Aloni <dan.aloni@vastdata.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+It is highly unusual that this timer interrupt is non-operational because
+this is a standard GIC interrupt corresponding to a standard Cortex-A76
+CPU timer. However, Broadcom have confirmed for this SoC:
+
+> the interrupt line was never connected in the first place as this was
+> not identified as being a requirement
+
+Remove the corresponding DeviceTree entry.
+
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Closes: https://lore.kernel.org/all/ea15cce1-b393-43f6-8d58-3d6f90f0c0cd@samsung.com/
+Fixes: faa3381267d0 ("arm64: dts: broadcom: Add minimal support for Raspberry Pi 5")
+Signed-off-by: Daniel Drake <dan@reactivated.net>
+Link: https://lore.kernel.org/r/20260716-bcm2712-el2-v2-1-e708f7fb42fa@reactivated.net
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/broadcom/bcm2712.dtsi | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 403f7f8dfea2b..66b8da741a06f 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -10634,6 +10634,7 @@ static void nfs41_free_stateid_release(void *calldata)
- 	struct nfs_free_stateid_data *data = calldata;
- 	struct nfs_client *clp = data->server->nfs_client;
+diff --git a/arch/arm64/boot/dts/broadcom/bcm2712.dtsi b/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
+index d771694787b28..45a382f75b5ec 100644
+--- a/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
++++ b/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
+@@ -651,8 +651,6 @@ IRQ_TYPE_LEVEL_LOW)>,
+ 			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(4) |
+ 					  IRQ_TYPE_LEVEL_LOW)>,
+ 			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(4) |
+-					  IRQ_TYPE_LEVEL_LOW)>,
+-			     <GIC_PPI 12 (GIC_CPU_MASK_SIMPLE(4) |
+ 					  IRQ_TYPE_LEVEL_LOW)>;
+ 	};
  
-+	nfs_sb_deactive(data->server->super);
- 	nfs_put_client(clp);
- 	kfree(calldata);
- }
-@@ -10675,6 +10676,10 @@ static int nfs41_free_stateid(struct nfs_server *server,
- 
- 	if (!refcount_inc_not_zero(&clp->cl_count))
- 		return -EIO;
-+	if (!nfs_sb_active(server->super)) {
-+		nfs_put_client(clp);
-+		return -EIO;
-+	}
- 
- 	nfs4_state_protect(server->nfs_client, NFS_SP4_MACH_CRED_STATEID,
- 		&task_setup.rpc_client, &msg);
 -- 
 2.53.0
 
