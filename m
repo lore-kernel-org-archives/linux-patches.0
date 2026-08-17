@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD96F3F3265;
-	Mon, 17 Aug 2026 14:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FD1442FA1;
+	Mon, 17 Aug 2026 14:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977192; cv=none; b=pPhjb8n2VA/aA5WE8QHIUSbD4m5XsT4g9+T0MAwxHzKko/3q+IxR5dBOv8OD4E/M8HNtAsDoYG1vXKrS2/21nrr3T9BeGBVO141l9q7THyf9z9JwPEzgeN6V6hJqqEDEI+FNID/Vmr65XNP6jKrQrZpP+VUSw4vf/6vSe9zI+OU=
+	t=1786977195; cv=none; b=ef4ww1ysfV5++sJWoJe8Wd6kwibwJ9TgHeEUHxSaDRCGXJPY1O1iwZ6k5TCqC7snv28GTFTDBDTXeXr1dSuC83JvtXcfmMgleThzG20QsxQPt4XxJIHd/Wyg3Ttodwi3cigYnchlodmXKkn589bVOT43GEE2SHGCBTsd36T1AGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977192; c=relaxed/simple;
-	bh=5T8JOK4yE4yvzrtnPL/3Oa3fUxR+9pU/T6Ab+xBu7Os=;
+	s=arc-20240116; t=1786977195; c=relaxed/simple;
+	bh=HvP9lUN/Znm2PIs/g5qvvmYOskYiOpwes8/8hXe0550=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FB60/d4t5SSN/INQ1UMOh+MDMjJdzpOrF1rCB9aGChBHD8XLEJIm/NcEDzOafui99Q35rB5ju+sxkg0L++07iajXzGmGU02bfwqFZqyNzune6Mac+vJ5D2gwjPoznf6BbGqqp+0SeSus0Z4yOhI6x4adk60mfPDHX0twk5T6NDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2ggxCKz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bX84njL8KMe8qtOwMi8s5m6bBL8C6HFPpyJFngu0Nb3mOwA51zJwq6QhRQijkdsLF6D61R/8Lj707zhbk8dnR8OiY0+Tb6fdGQRu4VjHdb8rmEtrgoam4TmJiOAOhlcz9ghPRRs5Sx4tNpG71gwXqxcM8nqtv7k7aifn2gf7wRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEtOWcHh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2ggxCKz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6D61F000E9;
-	Mon, 17 Aug 2026 14:33:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEtOWcHh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFDAC1F000E9;
+	Mon, 17 Aug 2026 14:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977191;
-	bh=0L1A20SVU+33DACMU1LIn5uFh5j8tb5NoPIwcr5jWq4=;
+	s=korg; t=1786977194;
+	bh=YtzLkCIFp+dBWhjs56W552atZSCbzHdwdEfmXkLL7BU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M2ggxCKzEw8j8TnIx12KvHq6gEJFSBJNxh1YIENWt3FaGNlg54xBPGIGOwOjq+NW3
-	 J0b5gf0p19QnN0OZtQ3uGX5xT29orWERe8EDlSkH4oRRpMgSgmuCx6eIli0CgejEbJ
-	 kgEsKSdJah/SoBfb9bliEo7EU5qTtGXQfNtBiHzY=
+	b=kEtOWcHhcS6wcnuFH43fJ08P4leqikd6E+3nKm4H7P3ca20DyfRG51rkgr7BhooxY
+	 haLYcvuACtR/9+mYWA8U6CRDjy+I4zdz8o2TrBPteEEUl6c/uX95U2NRPpZT3wPyV5
+	 xSGEIw6W/YcgMibje5Lk41t8NcOA4DcY6YS0f03c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Wengang Wang <wen.gang.wang@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 245/456] tls: separate no-async decryption request handling from async
-Date: Mon, 17 Aug 2026 15:30:35 +0200
-Message-ID: <20260817132549.665551573@linuxfoundation.org>
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 228/456] drm/amdgpu/gfx9: replace BUG_ON() with WARN_ON()
+Date: Mon, 17 Aug 2026 15:30:18 +0200
+Message-ID: <20260817132549.050592031@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,64 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 41532b785e9d79636b3815a64ddf6a096647d011 upstream.
+commit 6302be10b521f5106ce01eb5a724b9e7945a5061 upstream.
 
-If we're not doing async, the handling is much simpler. There's no
-reference counting, we just need to wait for the completion to wake us
-up and return its result.
+There's no need to crash the kernel for these cases.
 
-We should preferably also use a separate crypto_wait. I'm not seeing a
-UAF as I did in the past, I think aec7961916f3 ("tls: fix race between
-async notify and socket close") took care of it.
-
-This will make the next fix easier.
-
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://lore.kernel.org/r/47bde5f649707610eaef9f0d679519966fc31061.1709132643.git.sd@queasysnail.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Wengang Wang <wen.gang.wang@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit b71604f8685b0eba07866f4e8dc30f93e1931054)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 389597bd7ae52..0cdc9131aff22 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -278,9 +278,15 @@ static int tls_do_decryption(struct sock *sk,
- 		BUILD_BUG_ON_INVALID(atomic_read(&ctx->decrypt_pending) < 1);
- 		atomic_inc(&ctx->decrypt_pending);
- 	} else {
-+		DECLARE_CRYPTO_WAIT(wait);
-+
- 		aead_request_set_callback(aead_req,
- 					  CRYPTO_TFM_REQ_MAY_BACKLOG,
--					  crypto_req_done, &ctx->async_wait);
-+					  crypto_req_done, &wait);
-+		ret = crypto_aead_decrypt(aead_req);
-+		if (ret == -EINPROGRESS || ret == -EBUSY)
-+			ret = crypto_wait_req(ret, &wait);
-+		return ret;
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -1052,7 +1052,7 @@ static void gfx_v9_0_wait_reg_mem(struct
+ 				 WAIT_REG_MEM_ENGINE(eng_sel)));
+ 
+ 	if (mem_space)
+-		BUG_ON(addr0 & 0x3); /* Dword align */
++		WARN_ON(addr0 & 0x3); /* Dword align */
+ 	amdgpu_ring_write(ring, addr0);
+ 	amdgpu_ring_write(ring, addr1);
+ 	amdgpu_ring_write(ring, ref);
+@@ -5395,7 +5395,7 @@ static void gfx_v9_0_ring_emit_ib_gfx(st
  	}
  
- 	ret = crypto_aead_decrypt(aead_req);
-@@ -289,10 +295,7 @@ static int tls_do_decryption(struct sock *sk,
- 		ret = ret ?: -EINPROGRESS;
+ 	amdgpu_ring_write(ring, header);
+-	BUG_ON(ib->gpu_addr & 0x3); /* Dword align */
++	WARN_ON(ib->gpu_addr & 0x3); /* Dword align */
+ 	amdgpu_ring_write(ring,
+ #ifdef __BIG_ENDIAN
+ 		(2 << 0) |
+@@ -5430,7 +5430,7 @@ static void gfx_v9_0_ring_emit_ib_comput
  	}
- 	if (ret == -EINPROGRESS) {
--		if (darg->async)
--			return 0;
--
--		ret = crypto_wait_req(ret, &ctx->async_wait);
-+		return 0;
- 	} else if (darg->async) {
- 		atomic_dec(&ctx->decrypt_pending);
- 	}
--- 
-2.53.0
-
+ 
+ 	amdgpu_ring_write(ring, PACKET3(PACKET3_INDIRECT_BUFFER, 2));
+-	BUG_ON(ib->gpu_addr & 0x3); /* Dword align */
++	WARN_ON(ib->gpu_addr & 0x3); /* Dword align */
+ 	amdgpu_ring_write(ring,
+ #ifdef __BIG_ENDIAN
+ 				(2 << 0) |
+@@ -5464,9 +5464,9 @@ static void gfx_v9_0_ring_emit_fence(str
+ 	 * aligned if only send 32bit data low (discard data high)
+ 	 */
+ 	if (write64bit)
+-		BUG_ON(addr & 0x7);
++		WARN_ON(addr & 0x7);
+ 	else
+-		BUG_ON(addr & 0x3);
++		WARN_ON(addr & 0x3);
+ 	amdgpu_ring_write(ring, lower_32_bits(addr));
+ 	amdgpu_ring_write(ring, upper_32_bits(addr));
+ 	amdgpu_ring_write(ring, lower_32_bits(seq));
 
 
