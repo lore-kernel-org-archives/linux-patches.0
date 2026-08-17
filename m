@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1FBA442B39;
-	Mon, 17 Aug 2026 14:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF912443AAB;
+	Mon, 17 Aug 2026 14:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976106; cv=none; b=XE2Hd5jQUw6zcouMlzUK2kkk4MGI/RJaHZi26+BpomAlheyqGO2l4+oqWko7C+Xwr1V3vO6mxpA0VQ15spF++r5YXP5pSHL9f0sg97e19x1EG+Mep2IC6Pobwqt+iCFNki96U+53AUjd/wEUZ0Eo4fKQN1OP6rcL08fvvsjbzDA=
+	t=1786976110; cv=none; b=r5mlilucjLUmBQ85ckalBaLbCI8BJcxlhRD194ngy/PM5BlGOFK0AuIy/N5jSE3AQHcJQn4KlKdP0jq40+ZzIQGhkdVf6fkFk3kid+VbjGufq4FuP4aAo5L18ub6mzW0nVb+uZd7RLF5/ZDRq0r85tlICFEfzQ0XpKwSI2Xg4OA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976106; c=relaxed/simple;
-	bh=CIdYC312AgJDsCOx8vj+gwa0aVSiuajfSPzb3FTARs4=;
+	s=arc-20240116; t=1786976110; c=relaxed/simple;
+	bh=22u9C8ts0c+VJFmDDiNf8G1CeU0BeJtbkin0yek1hoo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WdlTTL4X8j/n1NeQcA9AonsYzqJFx+WyJxPnstQI2I3qhFuGjbBTEdBbL/9SKEVia/OeDDXdsfdF08pepyyG1tKF67l63gAU/aBi5Ghx+BAjckFbNiGvY4YkmIFrYtMnYItZeF313q+PnfNdpIiO+RRWPV0wxIN0XDbhCMkFcvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzRfnZ0T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e1JdT7t6HI36lAeupncrI/ub2bmFsHdSlBMlgbKcqvdJekAy/RmIsryj9RCuIhfVl/zdCQQ6/U4Fwo36lRA9Tx7KCKKWzFCM4T6fJAxmEGq8ekjraiBAcJMricMBJeTHd8mjgIM0MpBedM/RbQkG0mlEhF2Uq6DQ0Hal6cjlAcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+zavRxa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzRfnZ0T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F941F00A3A;
-	Mon, 17 Aug 2026 14:15:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+zavRxa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BB7C1F000E9;
+	Mon, 17 Aug 2026 14:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976105;
-	bh=ljXyng6CPf9pCr3BbAA3U48A65xku0gRCy+44iv4y50=;
+	s=korg; t=1786976108;
+	bh=DXuJJGsUttN3538GuHn0uW1ee8tmTKv88mgzO38ghDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mzRfnZ0TK7xQ/5l7dTOy+rXevjrNU7ExlrucE1ovX/UIDI86QwvLUnJx5bEKEHP4B
-	 4Ejehro4M5bFIzK+u1tVcUesJmSKJhZ9AJE9e/CylSJQoPfiCw1lRnALG3Iairxzon
-	 g5P9JfXOtUXbh0JYylcx0FggBstCp9Hp4SV/lwb4=
+	b=s+zavRxadJi8Yq9+LNv9PEkdvb7dIpAwivXYBce/pNyoL05hhl7DchmYXPhONSXKE
+	 ZrhfzpumUXtnlxuXpmXctpvtgIVQFSUADH8awwxlcwgLPdN1vdj+thzcXRjai4nxXf
+	 p47Otzy5ibE2SAKqLzesXOLum+dULW5oqxGzOngg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Vollrath <tactii@gmail.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 5.10 259/389] igbvf: Fix leak in TX DMA error cleanup
-Date: Mon, 17 Aug 2026 15:31:38 +0200
-Message-ID: <20260817132549.308051793@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Julian Anastasov <ja@ssi.bg>,
+	Zhiling Zou <roxy520tt@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.10 260/389] ipvs: do not propagate one-packet flag to synced conns
+Date: Mon, 17 Aug 2026 15:31:39 +0200
+Message-ID: <20260817132549.341735908@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -50,42 +56,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Vollrath <tactii@gmail.com>
+From: Zhiling Zou <roxy520tt@gmail.com>
 
-commit 0565052b7e2f436b7f1541f4849da96dc0aa7a0e upstream.
+commit a63d2dbaeb50a85d4c976b15a36e6b0c7113db5b upstream.
 
-If an error is encountered while mapping TX buffers, the driver should
-unmap any buffers already mapped for that skb.
+Synced connections can be created before their destination exists. When
+the destination is later added, ip_vs_bind_dest() copies connection flags
+from the destination into cp->flags.
 
-Because count is incremented before each frag mapping, it will always
-match the correct number of unmappings needed when dma_error is reached.
-Decrementing count before the while loop in dma_error causes an
-off-by-one error. If any mapping was successful before an unsuccessful
-mapping, exactly one DMA mapping (the head) would leak.
+IP_VS_CONN_F_ONE_PACKET connections are not synced. If a synced
+connection inherits IP_VS_CONN_F_ONE_PACKET while it is already hashed,
+expiry can treat it as a one-packet connection and skip unlinking the
+existing conn_tab node, leaving stale hash nodes pointing at a freed
+struct ip_vs_conn.
 
-This bug was introduced by a 2010 fix for an endless loop in dma_error.
-All other affected drivers have already been fixed.
+Drop IP_VS_CONN_F_ONE_PACKET from destination flags when binding synced
+connections.
 
-Fixes: c1fa347f20f1 ("e1000/e1000e/igb/igbvf/ixgb/ixgbe: Fix tests of unsigned in *_tx_map()")
+Fixes: 26ec037f9841 ("IPVS: one-packet scheduling")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-4-7-opus
-Signed-off-by: Matt Vollrath <tactii@gmail.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Suggested-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igbvf/netdev.c |    2 --
- 1 file changed, 2 deletions(-)
+ net/netfilter/ipvs/ip_vs_conn.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/ethernet/intel/igbvf/netdev.c
-+++ b/drivers/net/ethernet/intel/igbvf/netdev.c
-@@ -2215,8 +2215,6 @@ dma_error:
- 	buffer_info->time_stamp = 0;
- 	buffer_info->length = 0;
- 	buffer_info->mapped_as_page = false;
--	if (count)
--		count--;
- 
- 	/* clear timestamp and dma mappings for remaining portion of packet */
- 	while (count--) {
+--- a/net/netfilter/ipvs/ip_vs_conn.c
++++ b/net/netfilter/ipvs/ip_vs_conn.c
+@@ -599,6 +599,9 @@ ip_vs_bind_dest(struct ip_vs_conn *cp, s
+ 	flags = cp->flags;
+ 	/* Bind with the destination and its corresponding transmitter */
+ 	if (flags & IP_VS_CONN_F_SYNC) {
++		/* Synced conns are hashed, so they can not get this flag */
++		conn_flags &= ~IP_VS_CONN_F_ONE_PACKET;
++
+ 		/* if the connection is not template and is created
+ 		 * by sync, preserve the activity flag.
+ 		 */
 
 
