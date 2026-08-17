@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EEA421220;
-	Mon, 17 Aug 2026 15:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B409D2773C3;
+	Mon, 17 Aug 2026 15:49:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980565; cv=none; b=DZsPyHy4bGlS5g+tH0rWPk7ZEbNhN2DmJAz0CcWbR6031Kiw7AowmbHg8cIRJ4lZeB8sLTsCN+8MW5/chevUGXYhI6gqEIsMiWKMH5PIqaJQamcia2aRC3ue92sGV7jzKretXs5cgi45nbpsC+mF3TlOR6GtPVz/14QnlrC0d9g=
+	t=1786981780; cv=none; b=N3cmN22KQGNo1hUaTD81p0r3WSki3tx5nza4ZjMcjQ3o3bum/G/iGmu3wFEl8ZNU5ASZ/VvZJ2W8wcMf8wc8y2Gk5c/jiXo7DW6XAl9IKMbYbKI0SsPQPYGkTteYlhybwlKWt40u38q9noVRz33nb6R0I1asnTXCXPK3oWTbp4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980565; c=relaxed/simple;
-	bh=r43UqAmh4UWafSUhX0WIbNKkrd/Q8lVD7Qgt3+BKozI=;
+	s=arc-20240116; t=1786981780; c=relaxed/simple;
+	bh=KNqtq7cZH+z+YbRIDHrssZ7GumMCLkuaX3RHUb0Lcew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s2D8d4zlDfHFY3nFbe3/wwBwtC9bO5GNRiN0D0nZbGaO+ZIJPD3zNf83q0G5zjWwmZzitL88sbeZUQnSEUYJDVoezsQWmBEcfPx/yjUof+hd8kOkRnfcesQgz+76s5K4OxX39O+LHRh12xe3S0FTmV20pksXuNew+NGvSZkm66g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PV+IUpVP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AObrczf4d5CeKYkQgqvM2PLTECjKqWP+IJl6fud/vjOHj8wMZ8oVSwpBdA5pbBkKi8gh0aRl7jijg43u9QKE8w3BtfhHV2Hz5pACuQe2fv1YPawneqQ6Dqpqdadg7LbOgbWnm3T3J21X53fAPzNwtvqxrQwI/u/rjOpxr+kEyhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10hH2T+J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PV+IUpVP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE931F000E9;
-	Mon, 17 Aug 2026 15:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10hH2T+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3DF1F000E9;
+	Mon, 17 Aug 2026 15:49:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980564;
-	bh=GsHdtbYzFzQfzWY/hNxBlEwC0GOT4MMkGpSZP6sSErQ=;
+	s=korg; t=1786981778;
+	bh=eiiXkoxCzkICIBoaYv0pHz0oOrj5p1ZL+U6ZxrizS30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PV+IUpVPSEkrgp0wZrqmCCpqfgGY/e0OauyGP6c1nEHVK82CNdTbOQjBYaKD+aYAc
-	 spSbdTyrWJi2RIgLV+7nATerSC5rs0AzFF2jaOeutUYHSdtHFv/nYUpc3Fwby/yQEz
-	 X/5fVBPmrJhrOYYJMq/B1y/f4wl3z+datjJM+i4I=
+	b=10hH2T+JD23i0m61UBGkZQ27/KHwjh6USzpIhpa4KGDZiofwlz2AXr8kCxs71C5nz
+	 Hvl/91eCNuHVPVgiebPzqsPZ+lgSmYP97Y+6p1R/sWoAO0yxlO+hwlw4uKnXxS0/Hz
+	 AjlsUqBXC54bk7Q1kpx/7iPXWhGB5xitEffT6nPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Cunhao Lu <1579567540@qq.com>
-Subject: [PATCH 6.1 569/609] serial: 8250_dma: Clear stale RX state on shutdown
-Date: Mon, 17 Aug 2026 15:34:25 +0200
-Message-ID: <20260817132602.760771663@linuxfoundation.org>
+	stable@vger.kernel.org,
+	Tze Yee Ng <tze.yee.ng@altera.com>,
+	Dinh Nguyen <dinguyen@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 307/389] firmware: stratix10-svc: fix memory leaks and list corruption bugs
+Date: Mon, 17 Aug 2026 15:32:26 +0200
+Message-ID: <20260817132550.998667043@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
-References: <20260817132543.039278408@linuxfoundation.org>
+In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
+References: <20260817132538.796021292@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,68 +48,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cunhao Lu <1579567540@qq.com>
+From: Tze Yee Ng <tze.yee.ng@altera.com>
 
-commit e2fe6a0efecbef00e3ecc2db64dd5afa8c212b41 upstream.
+[ Upstream commit 9119ceb76e987c2ec2b549ea100e3268ce3a1c7c ]
 
-serial8250_release_dma() terminates RX DMA and releases the channel, but
-leaves rx_running set.  If the port is closed while an RX transfer is
-active, the stale state remains while rxchan is NULL until the channel is
-requested again on the next open.
+Fix a memory leak when gen_pool_alloc() fails by freeing pmem on the error
+path. Switch pmem allocation from devm_kzalloc() to kzalloc() with
+explicit kfree() in the free path to match its list-managed lifetime.
+Remove the erroneous list_del(&svc_data_mem) which corrupted the list head
+on failed lookups.
 
-The DesignWare BUSY workaround added by commit a7b9ce39fbe4
-("serial: 8250_dw: Ensure BUSY is deasserted") calls
-serial8250_rx_dma_flush() from the LCR write path during startup.  This
-happens before serial8250_request_dma() obtains a new RX channel.  On
-reopen, the stale rx_running state therefore makes the flush path pass a
-NULL channel to dmaengine_pause(), causing a kernel Oops.
-
-Clear rx_running after terminating RX DMA, matching the TX cleanup.  Also
-make the flush helper return if the DMA object or RX channel is not
-available so startup and teardown paths cannot pass a NULL channel to the
-DMAengine API.
-
-Fixes: 0fcb7901f9d6 ("tty: serial: 8250_dma: keep own book keeping about RX transfers")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Cunhao Lu <1579567540@qq.com>
-Link: https://patch.msgid.link/tencent_9EE2945F4C933B4D810C73C2D7485E000F06@qq.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7ca5ce896524 ("firmware: add Intel Stratix10 service layer driver")
+Cc: stable@vger.kernel.org#5.0+
+Signed-off-by: Tze Yee Ng <tze.yee.ng@altera.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+(cherry picked from commit 9119ceb76e987c2ec2b549ea100e3268ce3a1c7c)
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_dma.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/firmware/stratix10-svc.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_dma.c
-+++ b/drivers/tty/serial/8250/8250_dma.c
-@@ -195,11 +195,12 @@ void serial8250_rx_dma_flush(struct uart
- {
- 	struct uart_8250_dma *dma = p->dma;
+diff --git a/drivers/firmware/stratix10-svc.c b/drivers/firmware/stratix10-svc.c
+index 6b6a819fcddfa..ae6d942ab2d75 100644
+--- a/drivers/firmware/stratix10-svc.c
++++ b/drivers/firmware/stratix10-svc.c
+@@ -911,13 +911,15 @@ void *stratix10_svc_allocate_memory(struct stratix10_svc_chan *chan,
+ 	struct gen_pool *genpool = chan->ctrl->genpool;
+ 	size_t s = roundup(size, 1 << genpool->min_alloc_order);
  
--	if (dma->rx_running) {
--		dmaengine_pause(dma->rxchan);
--		__dma_rx_complete(p);
--		dmaengine_terminate_async(dma->rxchan);
--	}
-+	if (!dma || !dma->rxchan || !dma->rx_running)
-+		return;
-+
-+	dmaengine_pause(dma->rxchan);
-+	__dma_rx_complete(p);
-+	dmaengine_terminate_async(dma->rxchan);
+-	pmem = devm_kzalloc(chan->ctrl->dev, sizeof(*pmem), GFP_KERNEL);
++	pmem = kzalloc(sizeof(*pmem), GFP_KERNEL);
+ 	if (!pmem)
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	va = gen_pool_alloc(genpool, s);
+-	if (!va)
++	if (!va) {
++		kfree(pmem);
+ 		return ERR_PTR(-ENOMEM);
++	}
+ 
+ 	memset((void *)va, 0, s);
+ 	pa = gen_pool_virt_to_phys(genpool, va);
+@@ -950,10 +952,9 @@ void stratix10_svc_free_memory(struct stratix10_svc_chan *chan, void *kaddr)
+ 				       (unsigned long)kaddr, pmem->size);
+ 			pmem->vaddr = NULL;
+ 			list_del(&pmem->node);
++			kfree(pmem);
+ 			return;
+ 		}
+-
+-	list_del(&svc_data_mem);
  }
- EXPORT_SYMBOL_GPL(serial8250_rx_dma_flush);
+ EXPORT_SYMBOL_GPL(stratix10_svc_free_memory);
  
-@@ -308,6 +309,7 @@ void serial8250_release_dma(struct uart_
- 
- 	/* Release RX resources */
- 	dmaengine_terminate_sync(dma->rxchan);
-+	dma->rx_running = 0;
- 	dma_free_coherent(dma->rxchan->device->dev, dma->rx_size, dma->rx_buf,
- 			  dma->rx_addr);
- 	dma_release_channel(dma->rxchan);
+-- 
+2.53.0
+
 
 
