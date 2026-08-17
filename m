@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331C12F7F02;
-	Mon, 17 Aug 2026 14:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221C62F7F02;
+	Mon, 17 Aug 2026 14:41:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977697; cv=none; b=P7DZjq1xdoEIOjSvJ1iAKoOWh3eeu+EaUdrWrTpRbGz/C73hAYGQsWX+SNhOHUEIW3G7TGxWepxNhDIUZd7p7V6/Tjv9lA9pCWuxNbaobuJxqLTjoDYU+PjlX1dTXPa0ryO/6Py1hZQE3bgtwUGhd3bXY4C2Yrk8xs5ePENAiJA=
+	t=1786977700; cv=none; b=fdO16IKNB5FkdGa9T37kDDofZw8zZqj5UabvgxpMLwl0x4tA9Z7ulcS+zx8j5VqZNxbtPq3EWTb8r7iXB/73+6hYJxq4iCS+5Fvz71HjBULeJi0DKH8k6mJj8FIDzr+eHzFv/r0ttJ1pXUqB2kMFh95W8p3+SVZ1XqDeODEEcjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977697; c=relaxed/simple;
-	bh=VGWtK5j4w6Nu3bCYAgNsPln7hw4O6o1KLjdym9eyKkc=;
+	s=arc-20240116; t=1786977700; c=relaxed/simple;
+	bh=kE4GpBymgBDQSLO5huYZQ8V+TfhGybyAb5n3/qJ8A+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KriaDA6tLiW+8ocCvNA+3Xme13uuPWOE2fYeT4QZM6eJb2bIogI3u1WCC2LDRd1wfp8zg0lSdcRz9uNms24fX6p3H6uye0HXzBmmyNI1PDK9/2cZ64jjpMtvqtQEOSTiruq/nUKZeu7Z66LKbWXDHc6AKak55UMz/GjdHYtCUrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2s3TZ6e8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SLQi5dI0bmqsBxVsZkxNUK2KiKTpMUWI77eR5LYOk+aMZ+Jczas+NN4cSYnI45IABpZlWyrzi3xlYLl6p1KThNPb2bslNl44JMoWc7Y1wFPJa+/L7r4mVg0rEB34Pc8SrGQWm/B9t2COqqoSSxZoid4+i9h/jXBzebMvcdenyRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=He2OAeSb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2s3TZ6e8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5941F000E9;
-	Mon, 17 Aug 2026 14:41:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="He2OAeSb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6A31F000E9;
+	Mon, 17 Aug 2026 14:41:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977696;
-	bh=mGbInDKXfc93yQ1KRd1SCMhZYBjPwOZMqhCcwPBvloU=;
+	s=korg; t=1786977699;
+	bh=PGCzDT1Y+y961Al63zT6fPKX6U0vLW6KKtdTQaJVibo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2s3TZ6e8xQrnjsrEjY/mmNfXLkgdOOFgc2g2pb0sHPwzVf7d5brwGIz519l9lGe5U
-	 wUfo9CcSWx1bvEGPZWGvXJuwonWBb7b4TQ/G6+vCZtwLvFnt1XAWiuIDYNViVo9/ex
-	 Z+5vhSaIF3VAJg8yWQVaBTMFn+YkpEJZRZacc4u0=
+	b=He2OAeSbbQCqzk1PMIlPAD7L4gWrBhzV9pdpdvz39xMnIbDQ0piTGxlblZfJEZkIb
+	 bZ8iv4B0qSR91JRp73qBHo0MEfGj9Ds2v7QlIzge/rlcRkoQ6Qhp4zRGtgooIaWW+x
+	 HTeLamz9JravpbA86KZnGyqXr8yqxbH8pu/p6joQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 418/456] Input: evdev - fix information leak in evdev_pass_values()
-Date: Mon, 17 Aug 2026 15:33:28 +0200
-Message-ID: <20260817132555.560896258@linuxfoundation.org>
+	Siwei Zhang <oss@fourdim.xyz>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Marco Elver <elver@google.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Todd Kjos <tkjos@google.com>
+Subject: [PATCH 5.15 419/456] Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref
+Date: Mon, 17 Aug 2026 15:33:29 +0200
+Message-ID: <20260817132555.597851940@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,88 +53,255 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Marco Elver <elver@google.com>
 
-commit 90f305f2c7a30257c683e13f4bf7c798eea992a0 upstream.
+[ Upstream commit b66774b48dd98f07254951f74ea6f513efe7ff8b ]
 
-In evdev_pass_values(), the input_event structure is allocated on the
-kernel stack and populated field-by-field. However, it is never fully
-initialized. On architectures where struct input_event contains explicit
-or implicit padding (such as the 32-bit __pad field on SPARC64), these
-padding bytes are left uninitialized.
+l2cap_chan_timeout() runs asynchronously and accesses chan->conn. If
+the connection is torn down while the timer is running or pending,
+chan->conn can be freed, leading to a use-after-free when the timer
+worker attempts to lock conn->lock:
 
-When this event structure is subsequently passed to the client buffer
-and later copied to userspace, the uninitialized padding bytes leak
-kernel stack memory, potentially exposing sensitive information.
+| BUG: KASAN: slab-use-after-free in instrument_atomic_read_write include/linux/instrumented.h:112 [inline]
+| BUG: KASAN: slab-use-after-free in atomic_long_try_cmpxchg_acquire include/linux/atomic/atomic-instrumented.h:4456 [inline]
+| BUG: KASAN: slab-use-after-free in __mutex_trylock_fast kernel/locking/mutex.c:161 [inline]
+| BUG: KASAN: slab-use-after-free in mutex_lock+0x4f/0xa0 kernel/locking/mutex.c:318
+| Write of size 8 at addr ffff8881298d9550 by task kworker/2:1/83
+|
+| CPU: 2 UID: 0 PID: 83 Comm: kworker/2:1 Not tainted 7.1.0-rc6-next-20260601-dirty #6 PREEMPT(full)
+| Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+| Workqueue: events l2cap_chan_timeout
+| Call Trace:
+|  <TASK>
+|  instrument_atomic_read_write include/linux/instrumented.h:112 [inline]
+|  atomic_long_try_cmpxchg_acquire include/linux/atomic/atomic-instrumented.h:4456 [inline]
+|  __mutex_trylock_fast kernel/locking/mutex.c:161 [inline]
+|  mutex_lock+0x4f/0xa0 kernel/locking/mutex.c:318
+|  l2cap_chan_timeout+0x5d/0x1b0 net/bluetooth/l2cap_core.c:422
+|  process_one_work kernel/workqueue.c:3326 [inline]
+|  process_scheduled_works+0x7c8/0xfb0 kernel/workqueue.c:3409
+|  worker_thread+0x8a9/0xcf0 kernel/workqueue.c:3490
+|  kthread+0x346/0x430 kernel/kthread.c:436
+|  ret_from_fork+0x1a3/0x470 arch/x86/kernel/process.c:158
+|  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+|  </TASK>
+|
+| Allocated by task 320:
+|  l2cap_conn_add+0xa7/0x820 net/bluetooth/l2cap_core.c:7075
+|  l2cap_connect_cfm+0xdb/0xd70 net/bluetooth/l2cap_core.c:7452
+|  hci_connect_cfm include/net/bluetooth/hci_core.h:2139 [inline]
+|  hci_remote_features_evt+0x52f/0x9f0 net/bluetooth/hci_event.c:3760
+|  hci_event_func net/bluetooth/hci_event.c:7796 [inline]
+|  hci_event_packet+0x561/0xa70 net/bluetooth/hci_event.c:7847
+|  hci_rx_work+0x370/0x890 net/bluetooth/hci_core.c:4040
+|  process_one_work kernel/workqueue.c:3326 [inline]
+|  process_scheduled_works+0x7c8/0xfb0 kernel/workqueue.c:3409
+|  worker_thread+0x8a9/0xcf0 kernel/workqueue.c:3490
+|  kthread+0x346/0x430 kernel/kthread.c:436
+|  ret_from_fork+0x1a3/0x470 arch/x86/kernel/process.c:158
+|  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+|
+| Freed by task 322:
+|  hci_disconn_cfm include/net/bluetooth/hci_core.h:2154 [inline]
+|  hci_conn_hash_flush+0x101/0x1f0 net/bluetooth/hci_conn.c:2736
+|  hci_dev_close_sync+0x889/0xde0 net/bluetooth/hci_sync.c:5405
+|  hci_dev_do_close net/bluetooth/hci_core.c:502 [inline]
+|  hci_unregister_dev+0x1f7/0x370 net/bluetooth/hci_core.c:2679
+|  vhci_release+0x12a/0x180 drivers/bluetooth/hci_vhci.c:690
+|  __fput+0x369/0x890 fs/file_table.c:510
+|  task_work_run+0x160/0x1d0 kernel/task_work.c:233
+|  get_signal+0xf5b/0x1120 kernel/signal.c:2810
+|  arch_do_signal_or_restart+0x4d/0x600 arch/x86/kernel/signal.c:337
+|  __exit_to_user_mode_loop kernel/entry/common.c:64 [inline]
+|  exit_to_user_mode_loop+0x85/0x510 kernel/entry/common.c:98
+|  do_syscall_64+0x263/0x3d0 arch/x86/entry/syscall_64.c:100
+|  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+|
+| The buggy address belongs to the object at ffff8881298d9400
+|  which belongs to the cache kmalloc-512 of size 512
+| The buggy address is located 336 bytes inside of
+|  freed 512-byte region [ffff8881298d9400, ffff8881298d9600)
 
-Similar issues exist in __evdev_queue_syn_dropped and __pass_event.
+Fix it by having chan->conn hold a reference to l2cap_conn (via
+l2cap_conn_get) when the channel is added to the connection, and
+releasing it in the channel destructor. This ensures the l2cap_conn
+remains alive as long as the channel exists.
 
-Fix this by explicitly zeroing the entire event structure with memset()
-before populating its fields. This ensures all padding bytes are cleared
-before the data crosses the security boundary.
+A new FLAG_DEL channel flag is introduced to indicate that the channel
+has been deleted from its connection. l2cap_chan_del() atomically sets
+this flag using test_and_set_bit() instead of setting chan->conn to
+NULL. All asynchronous workers (l2cap_chan_timeout, l2cap_ack_timeout,
+l2cap_monitor_timeout, l2cap_retrans_timeout) and l2cap_chan_send()
+check FLAG_DEL to determine whether the channel has been torn down,
+rather than testing chan->conn for NULL.
 
-Reported-by: sashiko-bot@kernel.org
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/ampGGKo4UMKru6f5@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 8c8e620467a7 ("Bluetooth: L2CAP: use chan timer to close channels in cleanup_listen()")
+Cc: <stable@vger.kernel.org>
+Cc: Siwei Zhang <oss@fourdim.xyz>
+Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Assisted-by: Gemini:gemini-3.1-pro-preview
+Reported-by: https://sashiko.dev/#/patchset/20260521021249.3258069-1-oss%40fourdim.xyz
+Change-Id: Ie9862976d25c3e6d386689cd198ebe5ab4cc5509
+Signed-off-by: Marco Elver <elver@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Todd Kjos <tkjos@google.com>
 ---
- drivers/input/evdev.c |   22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ include/net/bluetooth/l2cap.h |  1 +
+ net/bluetooth/l2cap_core.c    | 36 +++++++++++++++++++++--------------
+ 2 files changed, 23 insertions(+), 14 deletions(-)
 
---- a/drivers/input/evdev.c
-+++ b/drivers/input/evdev.c
-@@ -149,11 +149,11 @@ static void __evdev_queue_syn_dropped(st
- 	struct timespec64 ts = ktime_to_timespec64(ev_time[client->clk_type]);
- 	struct input_event ev;
+diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
+index beb690a162ff2..57315b9dc059e 100644
+--- a/include/net/bluetooth/l2cap.h
++++ b/include/net/bluetooth/l2cap.h
+@@ -776,6 +776,7 @@ enum {
+ 	FLAG_ECRED_CONN_REQ_SENT,
+ 	FLAG_PENDING_SECURITY,
+ 	FLAG_HOLD_HCI_CONN,
++	FLAG_DEL,
+ };
  
-+	memset(&ev, 0, sizeof(ev));
- 	ev.input_event_sec = ts.tv_sec;
- 	ev.input_event_usec = ts.tv_nsec / NSEC_PER_USEC;
- 	ev.type = EV_SYN;
- 	ev.code = SYN_DROPPED;
--	ev.value = 0;
+ /* Lock nesting levels for L2CAP channels. We need these because lockdep
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 913c0d04a481a..bf031426c912e 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -435,7 +435,7 @@ static void l2cap_chan_timeout(struct work_struct *work)
  
- 	client->buffer[client->head++] = ev;
- 	client->head &= client->bufsize - 1;
-@@ -221,20 +221,20 @@ static void __pass_event(struct evdev_cl
- 	client->head &= client->bufsize - 1;
+ 	BT_DBG("chan %p state %s", chan, state_to_string(chan->state));
  
- 	if (unlikely(client->head == client->tail)) {
-+		struct input_event ev;
-+
-+		memset(&ev, 0, sizeof(ev));
-+		ev.input_event_sec = event->input_event_sec;
-+		ev.input_event_usec = event->input_event_usec;
-+		ev.type = EV_SYN;
-+		ev.code = SYN_DROPPED;
-+
- 		/*
- 		 * This effectively "drops" all unconsumed events, leaving
- 		 * EV_SYN/SYN_DROPPED plus the newest event in the queue.
- 		 */
- 		client->tail = (client->head - 2) & (client->bufsize - 1);
--
--		client->buffer[client->tail] = (struct input_event) {
--			.input_event_sec = event->input_event_sec,
--			.input_event_usec = event->input_event_usec,
--			.type = EV_SYN,
--			.code = SYN_DROPPED,
--			.value = 0,
--		};
--
-+		client->buffer[client->tail] = ev;
- 		client->packet_head = client->tail;
- 	}
- 
-@@ -256,6 +256,8 @@ static void evdev_pass_values(struct evd
- 	if (client->revoked)
+-	if (!conn) {
++	if (!conn || test_bit(FLAG_DEL, &chan->flags)) {
+ 		l2cap_chan_put(chan);
  		return;
+ 	}
+@@ -446,6 +446,9 @@ static void l2cap_chan_timeout(struct work_struct *work)
+ 	 */
+ 	l2cap_chan_lock(chan);
  
-+	memset(&event, 0, sizeof(event));
++	if (test_bit(FLAG_DEL, &chan->flags))
++		goto unlock;
 +
- 	ts = ktime_to_timespec64(ev_time[client->clk_type]);
- 	event.input_event_sec = ts.tv_sec;
- 	event.input_event_usec = ts.tv_nsec / NSEC_PER_USEC;
+ 	if (chan->state == BT_CONNECTED || chan->state == BT_CONFIG)
+ 		reason = ECONNREFUSED;
+ 	else if (chan->state == BT_CONNECT &&
+@@ -458,10 +461,11 @@ static void l2cap_chan_timeout(struct work_struct *work)
+ 
+ 	chan->ops->close(chan);
+ 
++unlock:
+ 	l2cap_chan_unlock(chan);
+-	l2cap_chan_put(chan);
+ 
+ 	mutex_unlock(&conn->chan_lock);
++	l2cap_chan_put(chan);
+ }
+ 
+ struct l2cap_chan *l2cap_chan_create(void)
+@@ -511,6 +515,9 @@ static void l2cap_chan_destroy(struct kref *kref)
+ 	list_del(&chan->global_l);
+ 	write_unlock(&chan_list_lock);
+ 
++	if (chan->conn)
++		l2cap_conn_put(chan->conn);
++
+ 	kfree(chan);
+ }
+ 
+@@ -593,7 +600,7 @@ void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
+ 
+ 	conn->disc_reason = HCI_ERROR_REMOTE_USER_TERM;
+ 
+-	chan->conn = conn;
++	chan->conn = l2cap_conn_get(conn);
+ 
+ 	switch (chan->chan_type) {
+ 	case L2CAP_CHAN_CONN_ORIENTED:
+@@ -648,31 +655,28 @@ void l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
+ 
+ void l2cap_chan_del(struct l2cap_chan *chan, int err)
+ {
+-	struct l2cap_conn *conn = chan->conn;
+-
+ 	__clear_chan_timer(chan);
+ 
+-	BT_DBG("chan %p, conn %p, err %d, state %s", chan, conn, err,
++	BT_DBG("chan %p, err %d, state %s", chan, err,
+ 	       state_to_string(chan->state));
+ 
+ 	chan->ops->teardown(chan, err);
+ 
+-	if (conn) {
+-		struct amp_mgr *mgr = conn->hcon->amp_mgr;
++	if (chan->conn && !test_and_set_bit(FLAG_DEL, &chan->flags)) {
++		struct amp_mgr *mgr = chan->conn->hcon->amp_mgr;
++
+ 		/* Delete from channel list */
+ 		list_del(&chan->list);
+ 
+ 		l2cap_chan_put(chan);
+ 
+-		chan->conn = NULL;
+-
+ 		/* Reference was only held for non-fixed channels or
+ 		 * fixed channels that explicitly requested it using the
+ 		 * FLAG_HOLD_HCI_CONN flag.
+ 		 */
+ 		if (chan->chan_type != L2CAP_CHAN_FIXED ||
+ 		    test_bit(FLAG_HOLD_HCI_CONN, &chan->flags))
+-			hci_conn_drop(conn->hcon);
++			hci_conn_drop(chan->conn->hcon);
+ 
+ 		if (mgr && mgr->bredr_chan == chan)
+ 			mgr->bredr_chan = NULL;
+@@ -2044,7 +2048,7 @@ static void l2cap_monitor_timeout(struct work_struct *work)
+ 
+ 	l2cap_chan_lock(chan);
+ 
+-	if (!chan->conn) {
++	if (!chan->conn || test_bit(FLAG_DEL, &chan->flags)) {
+ 		l2cap_chan_unlock(chan);
+ 		l2cap_chan_put(chan);
+ 		return;
+@@ -2065,7 +2069,7 @@ static void l2cap_retrans_timeout(struct work_struct *work)
+ 
+ 	l2cap_chan_lock(chan);
+ 
+-	if (!chan->conn) {
++	if (!chan->conn || test_bit(FLAG_DEL, &chan->flags)) {
+ 		l2cap_chan_unlock(chan);
+ 		l2cap_chan_put(chan);
+ 		return;
+@@ -2690,7 +2694,7 @@ int l2cap_chan_send(struct l2cap_chan *chan, struct msghdr *msg, size_t len)
+ 	int err;
+ 	struct sk_buff_head seg_queue;
+ 
+-	if (!chan->conn)
++	if (!chan->conn || test_bit(FLAG_DEL, &chan->flags))
+ 		return -ENOTCONN;
+ 
+ 	/* Connectionless channel */
+@@ -3291,12 +3295,16 @@ static void l2cap_ack_timeout(struct work_struct *work)
+ 
+ 	l2cap_chan_lock(chan);
+ 
++	if (test_bit(FLAG_DEL, &chan->flags))
++		goto unlock;
++
+ 	frames_to_ack = __seq_offset(chan, chan->buffer_seq,
+ 				     chan->last_acked_seq);
+ 
+ 	if (frames_to_ack)
+ 		l2cap_send_rr_or_rnr(chan, 0);
+ 
++unlock:
+ 	l2cap_chan_unlock(chan);
+ 	l2cap_chan_put(chan);
+ }
+-- 
+2.53.0
+
 
 
