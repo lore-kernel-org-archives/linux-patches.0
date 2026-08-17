@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D8D3ABD99;
-	Mon, 17 Aug 2026 14:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A2E2C1594;
+	Mon, 17 Aug 2026 14:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975414; cv=none; b=hVKTNTzfiivIPC/GMtIHw0N5ise3hrtmwLl656bojPtfEmyJtgPjnTbRh8VxqG6HNWuxYgdnwqZyL+ZHMKNPDawZfYz7NAzUL3bUG6aBs3Uxfhqt8t2Q0ghRBS3FZ8gLSrqcjiNfH6iEWZe1n3v3OWLFu0KTaeLODgbNyifM0UE=
+	t=1786975417; cv=none; b=ewvOgPeIwIXtHSkbBPqWpSpkVTssNjzXweXe7iElZ+8Bc8lH7R20HcVwAGwkQzfUt+tRC1Ln463czM4oWB5rGodO2oJ2jtZ4tclDkKW0+EcCtd28IjheD/IUHO0mQQcUtlhfHskXgJ16SONhQfFlNhT+tmDaPUdwDeyS2v+2PsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975414; c=relaxed/simple;
-	bh=QKHbglmNlwBYNcnqdLE+4eaoQfAKxQ1F6Dl36zk5pH8=;
+	s=arc-20240116; t=1786975417; c=relaxed/simple;
+	bh=p4n9V7SfV2LPKi/MQ7D4loEOw5Vxtgmo7KIBRJd8rfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ARY5uQDbYOBBTEw5JU2lWXOMInGLhG6QNmxnfFEYkFW8uoH1ZtrESG59TCzlGkGbvt5+EFj+FFmlD6fX7p4NuP9Eiy1/CldmHvId/Jj5u6Edweydou92pv3kmnAUYgYtBfhySUoAlD3YMBn6E4AJeOtkNAtfXbyZy3YKDyOqP6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLUaTor/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MMF/S+2v3kG/JQznkkM8H1nhdR0gyHIwqDSo/Z4STsyRxy17yJRyHs/tMV+/2bF9C6UdKmi/D69lbKFh/4m+MY1VMe9yXs6ljZ9vWcF3YvBTeBoHKmWPGpWiutb4Rk/IuWOaoydnaWA6RO6gUI4QlZzQE7AHxXOS28gI1bmswuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKPnGCV8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLUaTor/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E841F000E9;
-	Mon, 17 Aug 2026 14:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKPnGCV8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3111F000E9;
+	Mon, 17 Aug 2026 14:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975413;
-	bh=+8Sl9F4IxJdBwnY3ivxE7bLqdLwKvPt4d1ZwXlFskD0=;
+	s=korg; t=1786975415;
+	bh=W6K1ZR0TdBoFmX7LPrJ6vaaJjqhm/JjXzKrYgXV8uqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GLUaTor/gNgwetEwR3lHJKMUMrwij1ag1bECoGZhGyvlpvDUxnGc1lKvz/hSx9j0l
-	 tyRrNKti74c0ccszzbuqD2PUfUIdT1mtMpEYX/owkFt+TPKSNdbzdbJdQNVClg99KM
-	 H5WAKlsQVSo2+fzGvcuqXEBUrc8aBIN2qn6keUp0=
+	b=NKPnGCV8IhPxkFJe/13MIiYPQqYf4o/O+krsfWdAa+Gg9As5dzNKBgjTl/hT5PBs1
+	 2NkP2+D8oHB5nBWsObMGeP7jSmL/yCrKet9faQC7ZsDI4JBfcAYfsBvBFa4LXXgZgL
+	 gL3U0J+3zq3BO4bV8rOWro1ZVSZk68Bh4iIe+Y/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <include@grrlz.net>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 002/389] cpu: hotplug: Bound hotplug states sysfs output
-Date: Mon, 17 Aug 2026 15:27:21 +0200
-Message-ID: <20260817132538.909140004@linuxfoundation.org>
+Subject: [PATCH 5.10 020/389] wifi: mac80211_hwsim: clamp virtio RX length before skb_put
+Date: Mon, 17 Aug 2026 15:27:39 +0200
+Message-ID: <20260817132539.672566504@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,52 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bradley Morgan <include@grrlz.net>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 86f436567f2516a0083b210bedc933544826a2c3 upstream.
+[ Upstream commit 10a2b430f8f06ae14b9590b6f6faa6b588ef0654 ]
 
-states_show() adds CPU hotplug state names into a single sysfs buffer
-using sprintf(). With enough registered states, this can write past the
-end of the PAGE_SIZE buffer.
+hwsim_virtio_rx_work() passes the virtqueue used-ring length reported by
+the device straight to skb_put() on a fixed-size receive skb. A backend
+reporting a length larger than the skb tailroom drives skb_put() past the
+buffer end and hits skb_over_panic() -- a host-triggerable guest panic
+(denial of service).
 
-Use sysfs_emit_at() so output is bounded.
+Clamp the length to the skb's available room before skb_put(). A
+conforming device never reports more than the posted buffer size, so valid
+frames are unaffected; a truncated over-report then fails the
+length/header checks in hwsim_virtio_handle_cmd() and is dropped, so
+truncating rather than dropping here cannot be turned into a parsing
+problem.
 
-Fixes: 98f8cdce1db5 ("cpu/hotplug: Add sysfs state interface")
-Signed-off-by: Bradley Morgan <include@grrlz.net>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260619163719.12103-2-include@grrlz.net
+Fixes: 5d44fe7c9808 ("mac80211_hwsim: add frame transmission support over virtio")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260620-b4-disp-474bee37-v1-1-1a4d37f3e2d4@proton.me
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cpu.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/net/wireless/mac80211_hwsim.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/cpu.c b/kernel/cpu.c
-index 08c2b2e30f23f1..69c7be3706f15b 100644
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -2319,18 +2319,15 @@ static const struct attribute_group cpuhp_cpu_attr_group = {
- static ssize_t show_cpuhp_states(struct device *dev,
- 				 struct device_attribute *attr, char *buf)
- {
--	ssize_t cur, res = 0;
-+	ssize_t res = 0;
- 	int i;
+diff --git a/drivers/net/wireless/mac80211_hwsim.c b/drivers/net/wireless/mac80211_hwsim.c
+index d8b997859de063..02c31f7fcfd13c 100644
+--- a/drivers/net/wireless/mac80211_hwsim.c
++++ b/drivers/net/wireless/mac80211_hwsim.c
+@@ -4335,6 +4335,7 @@ static void hwsim_virtio_rx_work(struct work_struct *work)
  
- 	mutex_lock(&cpuhp_state_mutex);
- 	for (i = CPUHP_OFFLINE; i <= CPUHP_ONLINE; i++) {
- 		struct cpuhp_step *sp = cpuhp_get_step(i);
+ 	skb->data = skb->head;
+ 	skb_reset_tail_pointer(skb);
++	len = min(len, skb_end_offset(skb));
+ 	skb_put(skb, len);
+ 	hwsim_virtio_handle_cmd(skb);
  
--		if (sp->name) {
--			cur = sprintf(buf, "%3d: %s\n", i, sp->name);
--			buf += cur;
--			res += cur;
--		}
-+		if (sp->name)
-+			res += sysfs_emit_at(buf, res, "%3d: %s\n", i, sp->name);
- 	}
- 	mutex_unlock(&cpuhp_state_mutex);
- 	return res;
 -- 
 2.53.0
 
