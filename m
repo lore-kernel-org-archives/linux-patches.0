@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9183839EF05;
-	Mon, 17 Aug 2026 14:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C06B3CDBC3;
+	Mon, 17 Aug 2026 14:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977668; cv=none; b=dM0LPtm+vbyWSk7VZKmkN69ApgrwcnSc0tx71IHT2685hz0sE8150HryU3WVj2lTwj2J80cDSCWw0cIoKE6w7uDFWxTA7GYKTaHuf+MJ+fUc+Fs9x4K54/YlORui6ocusecU2usGY6UJDKXZXJZ18nIYRg2kaUpxdZpwJpcuMNQ=
+	t=1786977671; cv=none; b=f0AdF3OXjamDUejDXYvJP0tkZ4xeFBYLNhVQNwbpmKr4U6QlMDV97TrN9E1m3+Yb4EnR50QE4UgqdBzkSWjxlc+sSL4+4ZgEjm4E61LSlCNcI9u9suDGt0uuzQraOjgDQBQPOZhZvTM1/eIHi6qABM5iZfw33aogmRaSvrlYgoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977668; c=relaxed/simple;
-	bh=II8tzgGY6ALd0wyMjwiHbjolo1BlzzGy1j4JaSNsvNE=;
+	s=arc-20240116; t=1786977671; c=relaxed/simple;
+	bh=IEAipcdm7yi/FU9P6BL9J59JykOuWFhBZvtuCue6uZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uOK3GHE32uLOnRQJGlwGhwrzVsCgdHI5t+U+M5g4YIDfzBm8aWbgeh6cz14WStMD9BZW6ygdh0oKQcF/HSDYUC6Of0CfuwwIXPL+K1r7hL2WBeHS/aN27u6bMsieOoT1IEOiVT6xJRg246u8O/uinlGECfrzGcNMzdlZO1NNggg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l0i8FqdL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hl7zS0TFXR7ansJmM6z3ge/+BFxtGd8Vfh8juTu2j9Jfm+jW3cTVf+N1mC36BPw1T8ky57eYQY6uKPr0moUW/jqB09tNtXY7/xIxuoBNGgRHXBR9opt9DbkXaQpWDbH+8DqqZdt/65Ebxvq5z0HFCGZnReGrPaO+kXWqAsQ6E4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BnPgtU0w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0i8FqdL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9DD1F000E9;
-	Mon, 17 Aug 2026 14:41:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BnPgtU0w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9DD61F000E9;
+	Mon, 17 Aug 2026 14:41:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977667;
-	bh=ncM4kiVpT8xeqxovPZfi8HTFVzW57f2XR5HkGxNWl+o=;
+	s=korg; t=1786977670;
+	bh=aB0hXK+eKRJEutR2Aw+P2vNRkwXIjzheECY/jWvcsyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l0i8FqdLHdmAaGw7lTFbUHxud8LOGzNbu4fKkVvQfpdsE1egm+WfOB1dKAGKDzkq/
-	 X02AYL+rZ4i2o8iqMLHopJIG4fGcnWCeD2CiW5m+P/HBFqE9UtScmJTGF4rQ5aALjZ
-	 SXpXvSwVjij5sBCKopfcOfxQHedRog30wEVIfET0=
+	b=BnPgtU0w2mW+iFRdHe2OCHvEULksW8rCEAd3sx115Fc9rFvKexQMorse7LvCurCRn
+	 ovW053P7xRfBHNPFLzgbFV0YdWUwatzAWLGDDjaiF2Vnc+oNf1BKwz2/ykSKzazy6l
+	 2EC3E/8V2gzgneLjLKW47MfiWYrbV7qzRpReRG2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	David Lee <david.lee@trailofbits.com>,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.15 409/456] ipvs: clear IPv4 options after rebasing tunnel ICMP errors
-Date: Mon, 17 Aug 2026 15:33:19 +0200
-Message-ID: <20260817132555.268402068@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 410/456] net/packet: reset the MAC header on the packet-socket transmit path
+Date: Mon, 17 Aug 2026 15:33:20 +0200
+Message-ID: <20260817132555.300603833@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,46 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit e0ba936287dfe9783426aac27e5fd76fe35b38c9 upstream.
+commit c2707480cfbf19c7619acc9c089d17f20869821f upstream.
 
-ip_vs_in_icmp() rebases an skb from the outer ICMP packet to the
-quoted original request before passing it to icmp_send(). However,
-IPCB(skb)->opt still describes the outer IPv4 header.
+packet_parse_headers() resets the MAC header only for a SOCK_RAW frame
+whose socket did not bind a protocol. A protocol-bound SOCK_RAW socket,
+any SOCK_DGRAM frame, and the legacy SOCK_PACKET path therefore leave
+skb->mac_header unset here.
 
-A timestamp option in the outer header can therefore leave an offset
-that points into the quoted transport header after the rebase.
-__ip_options_echo() treats a byte at that stale location as the option
-length and copies it into the fixed-size option storage on the
-__icmp_send() stack, causing a stack out-of-bounds write.
+For frames sent via __dev_queue_xmit() this is harmless: it resets the
+MAC header unconditionally. But the packet-socket PACKET_QDISC_BYPASS
+path uses dev_direct_xmit(), which does not, so the frame reaches
+ndo_start_xmit() with the MAC header unset. A driver that reads
+eth_hdr(skb) on transmit then dereferences skb->head + (u16)~0, an
+out-of-bounds access ~64 KiB past the head -- the same class fixed for
+one consumer in commit f5089008f90c ("macsec: do not read an unset MAC
+header in macsec_encrypt()").
 
-Clear the stale option metadata after resetting the network header.
-Keep the remaining control block fields, including the ingress
-interface used by the ICMP response path.
+packet_parse_headers() runs only on the transmit path, where skb->data
+points at the start of the L2 header for every packet-socket type
+regardless of its length: SOCK_RAW and SOCK_PACKET carry a user-supplied
+header and SOCK_DGRAM has one built by dev_hard_header(). Reset the MAC
+header unconditionally, mirroring __dev_queue_xmit(), so the frame is
+anchored on the bypass path too.
 
-Fixes: f2edb9f7706d ("ipvs: implement passive PMTUD for IPIP packets")
+Found by 0sec (https://0sec.ai) using automated source analysis;
+verified against source and matched to the macsec KASAN report in
+f5089008f90c. Compile-tested.
+
+Fixes: 75c65772c3d1 ("net/packet: Ask driver for protocol if not provided by user")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol Codex:gpt-5.5-cyber
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Co-developed-by: David Lee <david.lee@trailofbits.com>
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260724144015.63219-1-doruk@0sec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_core.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/packet/af_packet.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/net/netfilter/ipvs/ip_vs_core.c
-+++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -1825,6 +1825,7 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, s
- 		if (pskb_pull(skb, offset2) == NULL)
- 			goto ignore_tunnel;
- 		skb_reset_network_header(skb);
-+		memset(&(IPCB(skb)->opt), 0, sizeof(IPCB(skb)->opt));
- 		/* Ensure the IP header is present in headroom */
- 		if (!pskb_may_pull(skb, hlen_orig))
- 			goto ignore_tunnel;
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -1942,11 +1942,12 @@ static void packet_parse_headers(struct
+ {
+ 	int depth;
+ 
++	/* On TX skb->data is the L2 header; anchor it for all socket types. */
++	skb_reset_mac_header(skb);
++
+ 	if ((!skb->protocol || skb->protocol == htons(ETH_P_ALL)) &&
+-	    sock->type == SOCK_RAW) {
+-		skb_reset_mac_header(skb);
++	    sock->type == SOCK_RAW)
+ 		skb->protocol = dev_parse_header_protocol(skb);
+-	}
+ 
+ 	/* Move network header to the right position for VLAN tagged packets */
+ 	if (likely(skb->dev->type == ARPHRD_ETHER) &&
 
 
