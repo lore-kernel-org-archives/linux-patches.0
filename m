@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580D154781;
-	Mon, 17 Aug 2026 14:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418B64315F;
+	Mon, 17 Aug 2026 14:21:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976509; cv=none; b=bFRpL3Um5s8E0QoTJjmtuFT8L/XnRsPnJVI82c3eP5luuFz6Cl51DRmdaoFC6eEa+wFirpK6sei2RH3+jpg7Ji0m1c+TQR/Na+49C3lwxqxTpAanIrY5aNiZFQwvisBrcTIwDVr9FHnUP08yRmW2W9FhG5SnD4EES3vEhCpi39g=
+	t=1786976512; cv=none; b=HJIUSBlEQpPijYMFnByO4/YlHyMF1VxtT+bzWpbCQvwYDq0RfGHw0DxUYzU8Z/WXkW/TIivs0+4EhV4+WnooXuJexyzwuTlVPCfK2zvan6V9wlLES6UNACczTrm8+J7IdA+9rCcKBhoQMfSBMko/hAYX0X/Y12EBgl3ywkv6KdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976509; c=relaxed/simple;
-	bh=GDQTiGTQtF2jULlH16wfCh2EZarac4LwlixfYgUnOFA=;
+	s=arc-20240116; t=1786976512; c=relaxed/simple;
+	bh=fEgNO4ZsWOHcHzL1abwire5YtjaVRXO0PoxVtWMUNho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OC9JlZOym1MO05bH6fuU3rmPy6bEl8v5VRIvq9GwE2mMFz/SI76ymlzDUlB2N05GfH2vwlxVSiielL8hJ5nq8n88Oupbwdmk36loZ5NejdCrfL4Y/p5+E2R19JrtOsC/Lhn43W0jvDGp2yYnB6l/bSTgYfwAmSTOiaavMncbhTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VlLRaAZv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HrWVatMDbOkAn8IXNqnOkpUqafiDS+u3YD0QNueRRMGX9yXY8gyQ1oKWUGOo2VNeMv7vcjpTe2ZH37WqvkgjGb8ePHs9MahaxijsDgxd/LC28PfqpL72jHmZjqRek9ZJuw80DHFKlrkXiLWpyFpbLfeTMaeRBSJzDmVII9gyJXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DmgzwHvQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VlLRaAZv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6E71F000E9;
-	Mon, 17 Aug 2026 14:21:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DmgzwHvQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968CF1F000E9;
+	Mon, 17 Aug 2026 14:21:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976508;
-	bh=POSHL7n7MlJdBihNRTPmW6xRG3NwTB7/34CWYgstI/I=;
+	s=korg; t=1786976511;
+	bh=JwyD0/EoiDjEws6RGrL+RLLl2JAk86/IaD5u7sO3tEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VlLRaAZvhYvqC9nnDVobB8AzPmtNCfvnzAE9x4WtNWoY2Ldx7BI0o6XjuRi1VxGmy
-	 WvXvLEQVZFL4AwcsVTJWsgxMaTEnWKWRtZXHJujtjCqU16/lhWP+j4QhsrG6Or3Lry
-	 EVduiNuX/9PwwfU8XamdzD4Iqjtsto31P7dlu23w=
+	b=DmgzwHvQs0u8YQnGz/q+QBdeJTsrpe/c5g11JZ+AdVLhgHgl0S3zH+FTh9R71nNBY
+	 jXz+KgGGTIdh4PXVmcfyRwCcceHNMQ9JNZ987bDqPZQH7sUqaL5aK8CVNcfG6mOvDN
+	 X9D+r3PmNDi/IPRtdZfxxmg9Pc3FNQj7wjMiYHEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	nasm <n4sm@protonmail.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Shivam Kumar <kumar.shivam43666@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 361/389] RDMA/rxe: Fix a use-after-free problem in rxe_mmap
-Date: Mon, 17 Aug 2026 15:33:20 +0200
-Message-ID: <20260817132552.818087971@linuxfoundation.org>
+Subject: [PATCH 5.15 001/456] nvmet-tcp: Fix potential UAF when ddgst mismatch
+Date: Mon, 17 Aug 2026 15:26:31 +0200
+Message-ID: <20260817132539.869648797@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
-References: <20260817132538.796021292@linuxfoundation.org>
+In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
+References: <20260817132539.792407575@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,168 +47,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit 35744ab3d03c5fca8c1752f53fc8fc674e14c561 ]
+commit dbbd07d0a7020b80f6a7028e561908f7b83b3d5a upstream.
 
-rxe_mmap() removes a rxe_mmap_info struct from the pending_mmaps list
-and releases pending_lock while the struct's kref is still at 1:
+Shivam Kumar found via vulnerability testing:
+When data digest is enabled on an NVMe/TCP connection and a digest
+mismatch occurs on a non-final H2C_DATA PDU during an R2T-based
+data transfer, the digest error handler in nvmet_tcp_try_recv_ddgst()
+calls nvmet_req_uninit() - which performs percpu_ref_put() on the
+submission queue - but does NOT mark the command as completed. It
+does not set cqe->status, does not modify rbytes_done, and does not
+clear any flag. When the subsequent fatal error triggers queue
+teardown, nvmet_tcp_uninit_data_in_cmds() iterates all commands,
+checks nvmet_tcp_need_data_in() for each one, and finds that the
+already-uninited command still appears to need data (because
+rbytes_done < transfer_len and cqe->status == 0). It therefore calls
+nvmet_req_uninit() a second time on the same command - a double
+percpu_ref_put against a single percpu_ref_get.
 
-   list_del_init(&ip->pending_mmaps);
-   spin_unlock_bh(&rxe->pending_lock);   /* ref == 1, no lock held */
-   ret = remap_vmalloc_range(vma, ip->obj, 0);  /* walks PTEs */
-   [...]
-   rxe_vma_open(vma);                    /* kref_get, ref → 2 */
-   remap_vmalloc_range_partial() walks PTEs without any lock.
-
-A concurrent DESTROY_CQ ioctl on another CPU calls:
-
-    kref_put(&q->ip->ref, rxe_mmap_release)   /* ref 1→0 */
-    vfree(ip->obj)   /* clears vmalloc PTEs mid-walk */
-    kfree(ip)        /* frees rxe_mmap_info */
-
-This yields:
-
-   1. Kernel crash, vmalloc_to_page() returns NULL when vfree wins the
-   per-PTE race -> vm_insert_page(NULL) → GPF in validate_page_before_insert
-
-   2. Page UAF, vmalloc_to_page() reads a stale PTE before vfree clears
-   it. User VMA holds a PTE to a free'd page which might eventually get
-   reallocated later by vmalloc which allows the attacker to get a clean
-   page-level UAF.
-
-   It is worth noting that even though a page-level UAF is possible given
-   the strong primitive, it is statistically very difficult to achieve
-   given the very short time window (after the last insert_page and before
-   the kref_get).
-
-The call trace are as below:
-
-  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  CPU: 0 UID: 1000 PID: 413 Comm: poc Not tainted 7.0.0-rc5-dirty #28 PREEMPT(lazy)
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-  RIP: 0010:validate_page_before_insert+0x32/0x300
-  Code: e5 41 57 41 56 49 89 fe 41 55 41 54 53 48 89 f3 e8 93 b5 a3 ff 48 8d 7b 08 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 7b 02 00 00 4c 8b 63 08 31 ff 4d 89 e5 41 83 e5
-  RSP: 0018:ffff88811b15f2f0 EFLAGS: 00000202
-  RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
-  RDX: 0000000000000001 RSI: 0000000000000000 RDI: 0000000000000008
-  RBP: ffff88811b15f318 R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000000 R12: ffff8881181eee00
-  R13: 0000000000000000 R14: ffff8881181eee00 R15: ffff8881181eee20
-  FS:  00007b1e000f76c0(0000) GS:ffff8884268e0000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00007b1e00a24ac0 CR3: 0000000116eb3000 CR4: 00000000000006f0
-  Call Trace:
-   <TASK>
-   insert_page+0x8f/0x190
-   ? __pfx_insert_page+0x10/0x10
-   ? kasan_save_alloc_info+0x38/0x60
-   vm_insert_page+0x2e7/0x400
-   remap_vmalloc_range_partial+0x212/0x3e0
-   remap_vmalloc_range+0x6e/0xb0
-   ? __kasan_check_write+0x14/0x30
-   rxe_mmap+0x2e9/0x5d0
-   ib_uverbs_mmap+0x1ad/0x2c0
-   __mmap_region+0x12c2/0x2ad0
-   ? __pfx___mmap_region+0x10/0x10
-   ? __sanitizer_cov_trace_switch+0x58/0xb0
-   ? mas_prev_slot+0x360/0x39c0
-   ? __sanitizer_cov_trace_switch+0x58/0xb0
-   ? mas_next_slot+0x1e5b/0x2f40
-   ? __sanitizer_cov_trace_cmp8+0x18/0x30
-   ? unmapped_area_topdown+0x4dd/0x610
-   ? kfree+0x1b1/0x440
-   ? free_cpumask_var+0x16/0x30
-   ? __kasan_slab_free+0x7d/0xa0
-   ? __sanitizer_cov_trace_cmp8+0x18/0x30
-   mmap_region+0x2e6/0x3c0
-   do_mmap+0xa3e/0x12a0
-   ? __pfx_do_mmap+0x10/0x10
-   ? __kasan_check_write+0x14/0x30
-   ? down_write_killable+0xba/0x160
-   ? __pfx_down_write_killable+0x10/0x10
-   ? __sanitizer_cov_trace_cmp4+0x16/0x30
-   vm_mmap_pgoff+0x2d4/0x4a0
-   ? __pfx_vm_mmap_pgoff+0x10/0x10
-   ? fget+0x1bf/0x270
-   ksys_mmap_pgoff+0x40c/0x690
-   ? __sanitizer_cov_trace_const_cmp4+0x16/0x30
-   ? __pfx_ksys_mmap_pgoff+0x10/0x10
-   ? __kasan_check_write+0x14/0x30
-   ? _raw_spin_trylock+0xbb/0x130
-   ? __pfx__raw_spin_trylock+0x10/0x10
-   __x64_sys_mmap+0x135/0x1e0
-   x64_sys_call+0x1c14/0x2790
-   do_syscall_64+0xd2/0x1050
-   ? rcu_core+0x352/0x7d0
-   ? rcu_core_si+0xe/0x20
-   ? handle_softirqs+0x1aa/0x650
-   ? __sanitizer_cov_trace_cmp4+0x16/0x30
-   ? fpregs_assert_state_consistent+0xe1/0x160
-   ? irqentry_exit+0xb1/0x670
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Link: https://patch.msgid.link/r/20260515002537.6209-1-yanjun.zhu@linux.dev
-Reported-and-tested-by: nasm <n4sm@protonmail.com>
-Suggested-by: nasm <n4sm@protonmail.com>
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-(cherry picked from commit 35744ab3d03c5fca8c1752f53fc8fc674e14c561)
-[Harshit: Minor conflict resolution pr_err() vs rxe_dbg_dev() usage]
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reported-by: Shivam Kumar <kumar.shivam43666@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Shivam Kumar <kumar.shivam43666@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_mmap.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/nvme/target/tcp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mmap.c b/drivers/infiniband/sw/rxe/rxe_mmap.c
-index 035f226af1336..edd9345da295c 100644
---- a/drivers/infiniband/sw/rxe/rxe_mmap.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mmap.c
-@@ -94,18 +94,31 @@ int rxe_mmap(struct ib_ucontext *context, struct vm_area_struct *vma)
- 	goto done;
- 
- found_it:
-+	/*
-+	 * Increment refcount and check whether it is being freed atm while
-+	 * holding lock to prevent UAF
-+	 */
-+	if (!kref_get_unless_zero(&ip->ref)) {
-+		spin_unlock_bh(&rxe->pending_lock);
-+		ret = -ENXIO;
-+		goto done;
-+	}
-+
- 	list_del_init(&ip->pending_mmaps);
- 	spin_unlock_bh(&rxe->pending_lock);
- 
-+	vma->vm_ops = &rxe_vm_ops;
-+	vma->vm_private_data = ip;
-+
- 	ret = remap_vmalloc_range(vma, ip->obj, 0);
- 	if (ret) {
-+		vma->vm_private_data = NULL;
-+		vma->vm_ops = NULL;
-+		kref_put(&ip->ref, rxe_mmap_release);
- 		pr_err("err %d from remap_vmalloc_range\n", ret);
- 		goto done;
- 	}
- 
--	vma->vm_ops = &rxe_vm_ops;
--	vma->vm_private_data = ip;
--	rxe_vma_open(vma);
- done:
- 	return ret;
- }
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 95081052dce78f..8fe51218441e46 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -1239,8 +1239,10 @@ static int nvmet_tcp_try_recv_ddgst(struct nvmet_tcp_queue *queue)
+ 			queue->idx, cmd->req.cmd->common.command_id,
+ 			queue->pdu.cmd.hdr.type, le32_to_cpu(cmd->recv_ddgst),
+ 			le32_to_cpu(cmd->exp_ddgst));
+-		if (!(cmd->flags & NVMET_TCP_F_INIT_FAILED))
++		if (!(cmd->flags & NVMET_TCP_F_INIT_FAILED)) {
++			cmd->req.cqe->status = NVME_SC_CMD_SEQ_ERROR;
+ 			nvmet_req_uninit(&cmd->req);
++		}
+ 		nvmet_tcp_free_cmd_buffers(cmd);
+ 		nvmet_tcp_fatal_error(queue);
+ 		ret = -EPROTO;
 -- 
 2.53.0
 
