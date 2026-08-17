@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5787743B498;
-	Mon, 17 Aug 2026 14:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8D443B3FF;
+	Mon, 17 Aug 2026 14:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978198; cv=none; b=G3rDCYanyh2rFIb2mLiQ1BOJiv+0x3QgjWnKmUqOIeFa9+nwBu20743DW+xJhUkwtk1JMp6ckww8pzADc0cqLDR/cHMvGa2wnJMFtA5xs89EdpmqqOpKXsHNuTLdPfYkyceOOa+b6cgPcNpIWClgLUmFdgHE/b24CaEDdtvlZms=
+	t=1786978201; cv=none; b=q8iQuH6Sot8KYwpjjNocONnEDjKq0jwOhY7raIsITD7KvT1xIenrHrCwMLejGJiju5S/2PLZvxWuwFApkVZGaeACv0KceVe3YOuTv9G0R94RmS/GsXOR5dz3d3QOpEZ10VFBYMBhwnB30VHEGQYCgdVFzyDIQaiu9bm1wfQ5Wsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978198; c=relaxed/simple;
-	bh=1pGlfQcgMZUQYJ4YRF4N4mmSNLzwXsFmeIz+xeK8Wr4=;
+	s=arc-20240116; t=1786978201; c=relaxed/simple;
+	bh=6GhRnDtDRjBrQ09r1pHHQkCt+d50Nb9Z4l2FD9i5hx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NS/8Y6N646OYMUAyAcr5q4QnipNhlrNyY5zk//ZisUX5eUe6ALnc52ImK1xRTMr7khiOUzkhYs0BFUaYR1OaWsMF8aqoewqNFfaQ79pnWfpPcYOVaBPLjw+ty7Hk3sn6+6w2VXxT71pK7NIwnw9jdLCwzwyVZcxvBhf9ngQO6SY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V/iEiGK0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HRRdhHFY9pf8dnl9ZWyFQX+RUMhq+jMhLPtQOHQz8FNgF2I//aAdSPig9nKmLvDfDB902xrQ9UL8MupyMZELck9+f5oCMGgJhsuG4TeFRjo5XHASaEoce8cH9wLwLRpqIYzRwxHiQUTgrr3VzoRxXZDmaHEAN/PiZUY4HXWQqS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rioRRB3t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V/iEiGK0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755441F000E9;
-	Mon, 17 Aug 2026 14:49:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rioRRB3t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 498BF1F000E9;
+	Mon, 17 Aug 2026 14:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978197;
-	bh=9lCZ2UCezFxeoOiql0U48kNby5Jng6uxQNPmdcyOE1I=;
+	s=korg; t=1786978199;
+	bh=VoyTMoIUlAb9X2QszdQ20AJamWl6OLg6ZksN7A7DBp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V/iEiGK0AihB9fQhH7oC+A7dTmjveK+0+1Gxj/BUIRQNnZ0DWlZXH58cGvriN5S7F
-	 2QIgpFMNvhIHqEP8m414ybfelSjolDEJYGkJ99N+k8em7SjhH5nxta3n0+TBICPaWc
-	 lIIoLEZOdlfyD1WhuesLWi8AVzqLXIW9PBQCB2ps=
+	b=rioRRB3t3C2tm+7KmOcwvCpYOfwC/5mmvGKwlGjfBnwGofqqQCdU/BZGv41wqtFhY
+	 yIXDM8gny+NmgxMTJCW0KjedtfYGnrPI3qE03lM26c3OnWvq60/W9pnNPspNY1iDQ9
+	 nkvlCU53hOBCp/+GDos6SWlHUKTUE3HZyLVMW3ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 136/181] ALSA: usx2y: bound the hwdep mmap fault offset
-Date: Mon, 17 Aug 2026 15:33:50 +0200
-Message-ID: <20260817132540.985743312@linuxfoundation.org>
+	Michael Wu <michael@allwinnertech.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.12 137/181] tracing: Fix race between update_event_fields and, event_define_fields
+Date: Mon, 17 Aug 2026 15:33:51 +0200
+Message-ID: <20260817132541.031443928@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -51,88 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Michael Wu <michael@allwinnertech.com>
 
-commit 2ca1eea3cd17930daffe9e429a7c89232036ec24 upstream.
+commit c3730b8373bb5059d735509b9e6a00d7eb337d7c upstream.
 
-snd_us428ctls_vm_fault() turns the faulting page offset into a kernel
-address with no bound of any kind:
+The following sequence may leads race between event_define_fields()
+and update_event_fields():
 
-	offset = vmf->pgoff << PAGE_SHIFT;
-	vaddr = (char *)(...)->us428ctls_sharedmem + offset;
-	page = virt_to_page(vaddr);
-	get_page(page);
-	vmf->page = page;
+ CPU0 (loads module A)                      CPU1 (loads module B)
+ ===============================            ===============================
+ load_module(A)                             load_module(B)
+   notifier_call_chain                        notifier_call_chain
+     trace_module_notify                        trace_module_notify
+       mutex_lock(&event_mutex)                   trace_event_update_all()
+         trace_module_add_events(A)                 down_write(&trace_event_sem)
+            __register_event(call_A)
+              __add_event_to_tracers(call_A)
+                event_define_fields(call_A)
+                  for each f:                         list_for_each_entry(field,
+                    list_add(&f->link,                                    &class->fields, link)
+                             &class->fields)            field = class->fields->next;
 
-	return 0;
+Where access to the class->fields is not protected by the event_mutex in
+trace_event_update_all().
 
-snd_us428ctls_mmap() checks only the length of the mapping, never the
-offset, and us428ctls_sharedmem is a single page from
-alloc_pages_exact().  For a character device file_mmap_size_max()
-returns ULONG_MAX, so the mm layer imposes no ceiling either.  Every page
-offset above zero resolves to a struct page outside the object, and the
-handler installs it into the caller's address space read-write; the vma
-is not marked read-only.
+This produces the following panic:
+   Unable to handle kernel access ... at virtual address 0000000000000018
+   pc : update_event_fields+0xf8/0x368
+   Call trace:
+    update_event_fields+0xf8/0x368
+    trace_event_update_all+0x7c/0x2b4
+    trace_module_notify+0x4c/0x1dc
+    notifier_call_chain+0x84/0x168
+    blocking_notifier_call_chain_robust+0x64/0xd4
+    load_module+0x10c8/0x123c
+    __arm64_sys_finit_module+0x230/0x31c
 
-The caller picks the page frame with a single mmap() argument and gets
-read-write access to a page of kernel memory it does not own; an offset
-that lands in an unpopulated vmemmap region oopses instead.
+Fix by taking event_mutex in trace_event_update_all() before
+trace_event_sem.
 
-A process that can open the hwdep node of an attached US-X2Y reaches
-this after loading the FPGA image through the same node; no capability
-check is involved.
-
-On 7.2.0-rc5 (arm64), mmap() with a large offset:
-
-  Unable to handle kernel paging request at virtual address fffffdffc45d5ac8
-  pc : snd_us428ctls_vm_fault+0x68/0x140 [snd_usb_usx2y]
-  Call trace:
-   snd_us428ctls_vm_fault+0x68/0x140 [snd_usb_usx2y]
-   __do_fault
-   __handle_mm_fault
-   handle_mm_fault
-   el0_da
-
-Reject any offset outside the shared region.  The pcm hwdep handler in
-usx2yhwdeppcm.c computes its address the same way and needs the same
-bound.
-
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260805013445.38283-1-baul.lee@xbow.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: b3bc8547d3be ("tracing: Have TRACE_DEFINE_ENUM affect trace event types as well")
+Link: https://patch.msgid.link/2e5730d2-c631-da41-3a3a-ae35bb4895f3@allwinnertech.com
+Signed-off-by: Michael Wu <michael@allwinnertech.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/usx2y/usX2Yhwdep.c    |    2 ++
- sound/usb/usx2y/usx2yhwdeppcm.c |    2 ++
- 2 files changed, 4 insertions(+)
+ kernel/trace/trace_events.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/usb/usx2y/usX2Yhwdep.c
-+++ b/sound/usb/usx2y/usX2Yhwdep.c
-@@ -25,6 +25,8 @@ static vm_fault_t snd_us428ctls_vm_fault
- 	void *vaddr;
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -3072,6 +3072,7 @@ void trace_event_eval_update(struct trac
+ 	int last_i;
+ 	int i;
  
- 	offset = vmf->pgoff << PAGE_SHIFT;
-+	if (offset >= US428_SHAREDMEM_PAGES)
-+		return VM_FAULT_SIGBUS;
- 	vaddr = (char *)((struct usx2ydev *)vmf->vma->vm_private_data)->us428ctls_sharedmem + offset;
- 	page = virt_to_page(vaddr);
- 	get_page(page);
---- a/sound/usb/usx2y/usx2yhwdeppcm.c
-+++ b/sound/usb/usx2y/usx2yhwdeppcm.c
-@@ -681,6 +681,8 @@ static vm_fault_t snd_usx2y_hwdep_pcm_vm
- 	void *vaddr;
++	mutex_lock(&event_mutex);
+ 	down_write(&trace_event_sem);
+ 	list_for_each_entry_safe(call, p, &ftrace_events, list) {
+ 		/* events are usually grouped together with systems */
+@@ -3105,6 +3106,7 @@ void trace_event_eval_update(struct trac
+ 		cond_resched();
+ 	}
+ 	up_write(&trace_event_sem);
++	mutex_unlock(&event_mutex);
+ }
  
- 	offset = vmf->pgoff << PAGE_SHIFT;
-+	if (offset >= USX2Y_HWDEP_PCM_PAGES)
-+		return VM_FAULT_SIGBUS;
- 	vaddr = (char *)((struct usx2ydev *)vmf->vma->vm_private_data)->hwdep_pcm_shm + offset;
- 	vmf->page = virt_to_page(vaddr);
- 	get_page(vmf->page);
+ static bool event_in_systems(struct trace_event_call *call,
 
 
