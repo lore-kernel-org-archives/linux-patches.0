@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5184D43636A;
-	Mon, 17 Aug 2026 14:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE5443CE64;
+	Mon, 17 Aug 2026 14:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978414; cv=none; b=HmHOZuNbopLi5kmLA7p4+K9lnMcqQsRtNbRkEKtZOnx/4ygBykLDSo6yaVm9ci5OgA+ID1enATpAmYB8L59DNlkS9sKsUeZn0Eypnqu0GBNGhkXhZ1Ph0fP7GmDROnlCCUR9DvB0n7/xHDo+T7XZTE/NQIxpkW3GW798u11hIqo=
+	t=1786978418; cv=none; b=jimqFg4agL1tmZsUWB0Dm3CVU6PSw+252xfWr5WIR09sXbV5WaLoWMgKJUxLfieBu7ZQZ75SRpHQTEbIDDargGIZ9tSRI4xuaV9yO2hPjMAzYD3z3b2P9yMmxYCDhj1RreqgCShfPhDRXa5wDAx6R+qeqfzc5ym4rm3hY8R2XDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978414; c=relaxed/simple;
-	bh=Oqld6HJdJ1sKqhZ5vnaDMiZIjqT+ZYT1grtSL7/4N5g=;
+	s=arc-20240116; t=1786978418; c=relaxed/simple;
+	bh=8jcLbmraapeTGNQSIS0dfRCZUMyfahzjlHImapZB7Ik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YoYcTwbI1P6nNiVjyh7dN8ZY9SQ8cDcYDtN9TSo2WY05Iw2+Eet+ZESPzrFrf6GKsp25FCQVPZAGXjWCWDd1c6SxyxsQYDOdNVqjsRr4Cdowa2OuklQ/gp6hXDDO1XwJBl1F1C327WZ0soA4EWj2ol/VWiQQ23TxDuoZg2GWz1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iOyWIcTq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ml5oWLj+UJWtkpY4+jZIAurFNToj950DQdQY+bJIGNzwlY6ygiG7+RRRZMQ0a/QLQSf8EoUwPKHUdokysh6LoS5MV6satRHnyfT7mjOIws9vi7hLloIDou2ES2RvhWuHTFdLskUFEUY8X6AeFAQi2gfOnjNsfGh7O5HQzaRSuUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkMBDrta; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOyWIcTq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB14C1F000E9;
-	Mon, 17 Aug 2026 14:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkMBDrta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D071F000E9;
+	Mon, 17 Aug 2026 14:53:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978413;
-	bh=aNgRlOcNrPm7EIht9elrs1eVEt/Pt2U72PwlG/+R9Nw=;
+	s=korg; t=1786978416;
+	bh=xUIDqPsosNx2DE8+c/QEkGLKu+/+d+okIEz+4EuZZVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iOyWIcTqZmQpvr76Ee0uAuFP94btDvY5LvAhGiIB3AWLkZm2G8a9HM09KS213fn8h
-	 PED9YdnIVV6AEne+dN0Abr5lKMgnRQTw2cMq7KmFaVZ/fE58V5egttw/bI36YoG8nh
-	 +dNmt4sb6lJwcnlzrAYapSh3To+XGNeTxzdlrrUE=
+	b=HkMBDrtaRSKAdTZlk2n5GXy92jm5RGfrWAjR1o6ss1PU3wwEx9fzzxDLDHZAP8T1f
+	 xuLIpxmC8VlVHNkR+PTt19+5Tp0Z7pBAKogqF8vKcaYMDJZuMCfSstHgT3ozsiQaFp
+	 FbLSHFtygyG+nMvJI50PjrxOZ8G/Sp+7MCXmMnmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Nathan Gao <zcgao@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 028/156] vhost/vdpa: reject overflowing PA map page counts on 32-bit
-Date: Mon, 17 Aug 2026 15:32:42 +0200
-Message-ID: <20260817132535.727970645@linuxfoundation.org>
+Subject: [PATCH 6.6 029/156] tcp: do not change rcv_ssthresh in tcp_measure_rcv_mss()
+Date: Mon, 17 Aug 2026 15:32:43 +0200
+Message-ID: <20260817132535.764217508@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -51,54 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Nathan Gao <zcgao@amazon.com>
 
-[ Upstream commit 0619aaa34c0c2a2dcb07f0e9c8a34e7efb8c4cdf ]
+[ Upstream commit 0e125ecfe20c077625cf0be8d750d5c3abc0dce9 ]
 
-vhost_vdpa_pa_map() adds the IOVA page offset to the user-controlled map
-size before computing the number of pages to pin. On 32-bit systems,
-where unsigned long is narrower than u64, that addition can overflow and
-the code can pin and map fewer pages than the requested IOTLB range.
+Commit f5da7c45188e ("tcp: adjust rcvq_space after updating scaling
+ratio") replaced the direct window_clamp update in tcp_measure_rcv_mss()
+with a call to tcp_set_window_clamp(), a helper that implements the
+TCP_WINDOW_CLAMP setsockopt. As a side effect, the helper also shrinks
+rcv_ssthresh via __tcp_adjust_rcv_ssthresh().
 
-Reject sizes that overflow the unsigned long page-count calculation.
+As a result, each scaling_ratio decrease detected by
+tcp_measure_rcv_mss() also cuts rcv_ssthresh. Elsewhere in TCP,
+rcv_ssthresh is usually cut under memory pressure and grows via
+tcp_grow_window().
 
-Fixes: 22af48cf91aa ("vdpa: factor out vhost_vdpa_pa_map() and vhost_vdpa_pa_unmap()")
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <CAMuQ4bX-iDvcUOPPY+NLz95tkRJYwWqvzAr=U48uNaub_HZLGw@mail.gmail.com>
+Flows whose segment sizes vary keep scaling_ratio oscillating, which
+leads to an unstable rcv_ssthresh: a dip of rcv_ssthresh only recovers
+via tcp_grow_window(), keeping the advertised window at a relatively
+low level even after the ratio itself has recovered, and can even stall
+the sender.
+
+Observed on a customer's proxy gateway after upgrading from kernel 6.1
+to 6.12: in the worst case, rcv_ssthresh was cut in half by a
+scaling_ratio dip. P99 latency jumped from <10ms on 6.1 to ~100ms on
+6.12, and almost returned to the 6.1 level with this patch applied.
+
+Restore the plain WRITE_ONCE() update of window_clamp, as introduced
+in commit a2cbb1603943 ("tcp: Update window clamping condition"), and
+keep the rcvq_space.space adjustment. Now rcv_ssthresh is decoupled from
+scaling_ratio changes in tcp_measure_rcv_mss().
+
+Fixes: f5da7c45188e ("tcp: adjust rcvq_space after updating scaling ratio")
+Signed-off-by: Nathan Gao <zcgao@amazon.com>
+Link: https://patch.msgid.link/20260725030806.28135-1-zcgao@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vdpa.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/ipv4/tcp_input.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-index 3645d83f240d9..5e2f7f4477679 100644
---- a/drivers/vhost/vdpa.c
-+++ b/drivers/vhost/vdpa.c
-@@ -998,6 +998,7 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
- 	unsigned int gup_flags = FOLL_LONGTERM;
- 	unsigned long npages, cur_base, map_pfn, last_pfn = 0;
- 	unsigned long lock_limit, sz2pin, nchunks, i;
-+	unsigned long page_offset;
- 	u64 start = iova;
- 	long pinned;
- 	int ret = 0;
-@@ -1010,7 +1011,13 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
- 	if (perm & VHOST_ACCESS_WO)
- 		gup_flags |= FOLL_WRITE;
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index eb1bf58634741..9efb84658a82d 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -252,7 +252,7 @@ static void tcp_measure_rcv_mss(struct sock *sk, const struct sk_buff *skb)
+ 				struct tcp_sock *tp = tcp_sk(sk);
  
--	npages = PFN_UP(size + (iova & ~PAGE_MASK));
-+	page_offset = iova & ~PAGE_MASK;
-+	if (size > ULONG_MAX - page_offset) {
-+		ret = -EINVAL;
-+		goto free;
-+	}
-+
-+	npages = PFN_UP(size + page_offset);
- 	if (!npages) {
- 		ret = -EINVAL;
- 		goto free;
+ 				val = tcp_win_from_space(sk, sk->sk_rcvbuf);
+-				tcp_set_window_clamp(sk, val);
++				WRITE_ONCE(tp->window_clamp, val);
+ 
+ 				if (tp->window_clamp < tp->rcvq_space.space)
+ 					tp->rcvq_space.space = tp->window_clamp;
 -- 
 2.53.0
 
