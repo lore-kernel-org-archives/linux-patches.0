@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE0143CE46;
-	Mon, 17 Aug 2026 13:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6269D3C3442;
+	Mon, 17 Aug 2026 13:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975075; cv=none; b=J7s5CSWIiggM0p+moeap4wsXPzzZ+bAXwNcisGzCJtjWtOx7780dWeabuRzpwDraPbbxI1wfpMG6K3NVAOTmlw9jbYUo7mPw4UJ9oSsZt0HzrJTsbLM5BlcSeaeucsl7iYaJvnEIprEV8zuotHx7pcPIzBwLWa93NNtt2G9B4X4=
+	t=1786975077; cv=none; b=QrlfDqGF2OQfSrusVlBfAPvnHtiSa7qGKbdoWgUr6WpcoVMsFL+QBFGGaVvO+CL44ynQLhmpb+dFh61wfPeCuJKyCROJCEzPNTZZp6voPrsrqgvdXn+D2p1JJ8UAuw89f5xCbbE0WuAZBsSkFtkH/Q9PQ5YK6WLxTfhIqtqGZYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975075; c=relaxed/simple;
-	bh=Q5tQyFeKjw1+W4IrSl9dWSTTnlKateiUMAY2XKnGPWk=;
+	s=arc-20240116; t=1786975077; c=relaxed/simple;
+	bh=XilVGlrQX/biZtUQFuc8DW+aSgGEjSNPdB/RaQtoX4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n8/DZcs6xuq4XgjheglYeFdwSmjXAZfiggkn+tuUjl1+3WjqLgr80o6O0iGsHFKQr+VjDuMm0RazLGDqwswI1yXrbcSo70OENoej7pjvVQ7DAR+Q5v0paKkm8GUqO76fkyd7berhB8rMEPmWNuqzS1AhJu+bqpA9p6KlT64roDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTlw3nC9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W6cC8MypfKwRifXrWC83lqUNe9aixluC62wF6Q1ziW4Ci3o2e2O55JeHFWWsbUUzqFt9xRvKf7M97JxfAum+VoguOrDmTpctQFIxy1YbouNFXEYY/QfJkSDbRq00dFDSxQ+MmNYEqHz9jYBd3ZROnS+/4h1Wqsf3CMmQUI2weL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KEba8Smh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTlw3nC9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4B91F000E9;
-	Mon, 17 Aug 2026 13:57:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KEba8Smh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B875E1F00A3A;
+	Mon, 17 Aug 2026 13:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975073;
-	bh=ap1NftourXMY/kAmisuebk7B+kLwLAUjUXZiUd1fChE=;
+	s=korg; t=1786975076;
+	bh=oBKRTB8I2TM5rog9xeyMbyXOXyQmvq5O3iIuie+rbiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eTlw3nC9A9fovDKxAKBeIdkeYdy0spg74b/QechjOAIPyGwh4yKUhYcN/U1RpGzCI
-	 UtpZVyc9brh8L9JbrzNJ9MxV7XigcjcOJ9E+lJFDxaes/hvLWXoscgIIylJhNtZHTV
-	 RSdYppx09qL2BTIsgMCbecizxCkmnB6k8ZJhwzPk=
+	b=KEba8Smhsl1KHJpipQZsE+vkwAy1EKVM1S0pnPLQoD+dbgquCKLb/kyYbTrcTkz4I
+	 bSnVYplqjNUWYWHra0d6ckLNLcc7w6y1XWKeGkIE6ohVGWwW34W8GNn/HQiTaoTfFM
+	 EE16Igr1FRIrmBo/3lihct5I1Cnl8Bv0dCcc7Nt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohammed Almaroof <moh@anthropic.com>,
-	Ben Cressey <ben@cressey.dev>,
-	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
+	Keno Fischer <keno@juliahub.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 151/250] iommu/vt-d: Gather the unmapped range before freeing its page tables
-Date: Mon, 17 Aug 2026 15:31:52 +0200
-Message-ID: <20260817132542.719183023@linuxfoundation.org>
+Subject: [PATCH 6.18 152/250] futex: Prevent robust futex exit race some more
+Date: Mon, 17 Aug 2026 15:31:53 +0200
+Message-ID: <20260817132542.763986768@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,83 +52,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+From: Keno Fischer <keno@juliacomputing.com>
 
-In the 6.12 and 6.18 stable trees, when an unmapped range covers a
-whole page table, intel_iommu_unmap() can free that table before the
-range has been invalidated. The freed table goes on gather->freelist
-before the range is added to the gather. If
-iommu_iotlb_gather_add_page() syncs before adding it, that sync
-flushes only the earlier ranges but frees the whole freelist, that
-table included. The range itself is flushed later with an empty
-freelist, which means the flush is sent with the invalidation hint set
-and the IOMMU may keep its paging-structure cache entry for the freed
-table. DMA to the next mapping at that IOVA is then translated through
-whatever the freed page holds by then, which is usually a silent wrong
-translation and sometimes a DMAR fault.
+commit 6d4514ca9cdf61fec4ec634cf50386f6f7e69748 upstream.
 
-Under a userspace driver that maps and unmaps DMA buffers through VFIO
-type1 continuously, this shows up as wrong data in device reads and
-writes. An occasional DMAR fault on a mapped IOVA is the only thing in
-the logs. With an Intel DSA engine assigned through vfio-pci, remapping
-a 16 MiB buffer at a fixed IOVA and reading it through the device
-returned data from the wrong pages in 280 of 400 iterations. With a
-fresh IOVA per iteration it never did.
+A robust futex unlock stores 0 over the whole futex value - wiping
+FUTEX_WAITERS - and wakes a single waiter. That wakeup is a one-shot
+notification: the protocol relies on its recipient to either acquire the
+futex (and eventually unlock while aware of the remaining contention) or
+re-arm FUTEX_WAITERS before sleeping again.  If the woken waiter is killed
+before it can do either, the kernel must jump in and wake the next task
+down the line.
 
-Add the range to the gather first and splice the freed tables into
-gather->freelist afterwards, so that they are only freed by a sync that
-also invalidates their range.
+This is a known complication of the futex protocol with a previous
+partial fix in commit ca16d5bee598 ("futex: Prevent robust futex exit
+race"). Unfortunately, that fix is insufficient.
 
-Mainline removed this code in v6.19 with commit d373449d8e97
-("iommu/vt-d: Use the generic iommu page table") and is not affected.
+If a third task re-acquired the futex through the uncontended fast
+path in the meantime, the notification is lost: robust exit processing
+sees that it is owned by another task and does nothing, while the new
+owner sees no FUTEX_WAITERS when it unlocks and wakes nobody.
+The remaining waiters sleep forever behind a free futex:
 
-Fixes: 2a2b8eaa5b25 ("iommu: Handle freelists when using deferred flushing in iommu drivers")
-Cc: stable@vger.kernel.org # 6.12.y, 6.18.y
-Reported-by: Mohammed Almaroof <moh@anthropic.com>
-Reviewed-by: Ben Cressey <ben@cressey.dev>
-Assisted-by: Claude:unspecified
-Signed-off-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+  A owns the futex, B and C sleep in FUTEX_WAIT
+                                        uval == A | FUTEX_WAITERS
+  A robust unlock: store 0, FUTEX_WAKE(1) wakes B
+                                        uval == 0
+  D fast path acquire: cmpxchg(0 -> D)
+                                        uval == D, no FUTEX_WAITERS
+  B killed before acting on the wakeup
+  B exit walk, pending op: owner D != B -> no action
+  D unlock: no FUTEX_WAITERS -> no wake
+                                        C sleeps forever
+
+This is clearly a shortcoming in the implementation, which fails to keep
+the FUTEX_WAITERS bit consistent.
+
+Work around this by augmenting the robust list exit processing to also
+perform the extra wakeup if the futex word is owned by another thread but
+FUTEX_WAITERS is not set.
+
+This does not fix the problem of a non-contended take over/release and free
+sequence, which has been discussed for years and has been addressed by
+commit 3ca9595d9fb6 ("futex: Add support for unlocking robust futexes") and
+subsequent changes, but failed to take the problem described above into
+account.
+
+A more complete solution which is based on the in kernel unlock of
+contended robust futexes has been discussed in the context of this change
+and should show up in mainline sooner than later.
+
+[ tglx: Amend change log slightly and fixup coding style ]
+
+Fixes: ca16d5bee598 ("futex: Prevent robust futex exit race")
+Signed-off-by: Keno Fischer <keno@juliahub.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Assisted-by: ClaudeCode:claude-fable-5 tla+
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260730194705.38981-1-keno@juliacomputing.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ kernel/futex/core.c | 85 +++++++++++++++++++++++++++++++--------------
+ 1 file changed, 58 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index cee1851b69245..8b38c65f403b2 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -3620,6 +3620,7 @@ static size_t intel_iommu_unmap(struct iommu_domain *domain,
- 				unsigned long iova, size_t size,
- 				struct iommu_iotlb_gather *gather)
- {
-+	struct iommu_pages_list freelist = IOMMU_PAGES_LIST_INIT(freelist);
- 	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
- 	unsigned long start_pfn, last_pfn;
- 	int level = 0;
-@@ -3636,7 +3637,7 @@ static size_t intel_iommu_unmap(struct iommu_domain *domain,
- 	start_pfn = iova >> VTD_PAGE_SHIFT;
- 	last_pfn = (iova + size - 1) >> VTD_PAGE_SHIFT;
+diff --git a/kernel/futex/core.c b/kernel/futex/core.c
+index 9e7dea6fc0ccd..4f5d7d042f8e5 100644
+--- a/kernel/futex/core.c
++++ b/kernel/futex/core.c
+@@ -1028,8 +1028,11 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
+ 		return -1;
  
--	domain_unmap(dmar_domain, start_pfn, last_pfn, &gather->freelist);
-+	domain_unmap(dmar_domain, start_pfn, last_pfn, &freelist);
+ 	/*
+-	 * Special case for regular (non PI) futexes. The unlock path in
+-	 * user space has two race scenarios:
++	 * Special case for regular (non PI) futexes. Ordinarily, we do
++	 * not perform any processing here unless the current thread was
++	 * the owner of the futex (by the TID check below).
++	 *
++	 * However, the unlock path has three race scenarios:
+ 	 *
+ 	 * 1. The unlock path releases the user space futex value and
+ 	 *    before it can execute the futex() syscall to wake up
+@@ -1038,42 +1041,70 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
+ 	 * 2. A woken up waiter is killed before it can acquire the
+ 	 *    futex in user space.
+ 	 *
+-	 * In the second case, the wake up notification could be generated
+-	 * by the unlock path in user space after setting the futex value
+-	 * to zero or by the kernel after setting the OWNER_DIED bit below.
++	 * 3. A woken up waiter is killed in user space after another
++	 *    thread has acquired the futex, but before it can set
++	 *    FUTEX_WAITERS.
++	 *
++	 * Note that, if userspace uses the FUTEX_ROBUST_UNLOCK flag, we
++	 * will not see case 1 here.
++	 *
++	 * In the second and third case, the wake up notification could
++	 * be generated from any of:
++	 *
++	 *    i.   An ordinary futex wakeup after unlock (with or
++	 *         without FUTEX_ROBUST_UNLOCK)
++	 *    ii.  A robust wakeup from another thread's death
++	 *    iii. A previous round through this special case
++	 *
++	 * As a result, the futex world will be in one of four states:
++	 *
++	 *    A. The futex word is 0 (unlocked)
++	 *    B. The futex word is owned by another thread
++	 *       (FUTEX_WAITERS is not set)
++	 *    C. The futex word is owned by another thread
++	 *       (FUTEX_WAITERS set)
++	 *    D. The futex's owner died and OWNER_DIED is set
++	 *       (the owner part of the word is 0)
+ 	 *
+-	 * In both cases the TID validation below prevents a wakeup of
+-	 * potential waiters which can cause these waiters to block
+-	 * forever.
++	 * The key issue is that the kernel usually (at least from
++	 * sources ii. and iii. or when so requested by userspace from
++	 * source i.) only ever wakes *one* waiter at a time. If this
++	 * waiter dies before acquiring the futex (or setting the
++	 * FUTEX_WAITERS bit), the kernel *must* still wake the next
++	 * waiter down the line to uphold the futex invariants and
++	 * avoid lost wakeups. Note we do not need to handle state C,
++	 * as it does not matter to us whether *we* successfully set
++	 * the bit or a third thread did so in the meantime.
+ 	 *
+-	 * In both cases the following conditions are met:
++	 * Therefore, in these cases we must issue an additional
++	 * futex_wake(). Note however that we *must not* set OWNER_DIED
++	 * here. Our thread is *not* the owner of the futex.
+ 	 *
+-	 *	1) task->robust_list->list_op_pending != NULL
+-	 *	   @pending_op == true
+-	 *	2) The owner part of user space futex value == 0
++	 * Thus to summarize, the conditions for needing the additional
++	 * futex_wake() are:
++	 *
++	 *	1) @pending_op == true (the thread has not finished the
++	 *	   mutex operation)
++	 *	2) The futex word is in one of the states A, B or D
+ 	 *	3) Regular futex: @pi == false
+ 	 *
+-	 * If these conditions are met, it is safe to attempt waking up a
+-	 * potential waiter without touching the user space futex value and
+-	 * trying to set the OWNER_DIED bit. If the futex value is zero,
+-	 * the rest of the user space mutex state is consistent, so a woken
+-	 * waiter will just take over the uncontended futex. Setting the
+-	 * OWNER_DIED bit would create inconsistent state and malfunction
+-	 * of the user space owner died handling. Otherwise, the OWNER_DIED
+-	 * bit is already set, and the woken waiter is expected to deal with
+-	 * this.
++	 * Note in particular that in all of the states A-D the owner
++	 * portion of the futex word differs from our thread's TID
++	 * (unless the actual owner has the same TID in another PID
++	 * namespace, but we cannot currently distinguish that
++	 * scenario), so this can be a special-case wakeup in the bail
++	 * path of the ordinary TID check.
+ 	 */
+ 	owner = uval & FUTEX_TID_MASK;
  
- 	if (dmar_domain->max_addr == iova + size)
- 		dmar_domain->max_addr = iova;
-@@ -3648,6 +3649,14 @@ static size_t intel_iommu_unmap(struct iommu_domain *domain,
- 	if (!iommu_iotlb_gather_queued(gather))
- 		iommu_iotlb_gather_add_page(domain, gather, iova, size);
+-	if (pending_op && !pi && !owner) {
+-		futex_wake(uaddr, FLAGS_SIZE_32 | FLAGS_SHARED, 1,
+-			   FUTEX_BITSET_MATCH_ANY);
++	if (owner != task_pid_vnr(curr)) {
++		if (pending_op && !pi && (!owner || !(uval & FUTEX_WAITERS))) {
++			futex_wake(uaddr, FLAGS_SIZE_32 | FLAGS_SHARED, 1,
++				   FUTEX_BITSET_MATCH_ANY);
++		}
+ 		return 0;
+ 	}
  
-+	/*
-+	 * iommu_iotlb_gather_add_page() may have synced, which frees
-+	 * gather->freelist. Hand this range's page tables over only after
-+	 * that call. A queued gather frees them from the flush queue
-+	 * instead.
-+	 */
-+	iommu_pages_list_splice(&freelist, &gather->freelist);
-+
- 	return size;
- }
- 
+-	if (owner != task_pid_vnr(curr))
+-		return 0;
+-
+ 	/*
+ 	 * Ok, this dying thread is truly holding a futex
+ 	 * of interest. Set the OWNER_DIED bit atomically
 -- 
 2.53.0
 
