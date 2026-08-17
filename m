@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C80A3ABD99;
-	Mon, 17 Aug 2026 14:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C71723C51D;
+	Mon, 17 Aug 2026 14:41:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977691; cv=none; b=AkuOD3Pk8oV0YaPZZaZw4cBDje/DjVOtehcQImmemdQl4S3gq2Ct7Ia1i5zuENL8SOXsP3Z2A4YA0cgURMr0E802mMzKYe3YcQTmAxDv91iu100ViTQBHpsKPzQFQMUlJt07rRji6vk+A83jKICcwsKIQFapEY9s1X0znueB338=
+	t=1786977694; cv=none; b=Rp+tDaGoSTm02Eqp7GKsIVhBAzQEJwaFYAfzykqS6CVaqxvd0/l95rsIRr5+TBY6rx6o1bLYxHO8s51ahtjGFZiMW89+LaPB4A+vrknXQDMX0Sah6FMETe0O4sylqkOdZkNThOsTLwohwjfog8rH+Ke7YNyFDDlGTKvAym6wFak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977691; c=relaxed/simple;
-	bh=cBesYS31Z4h91Uvt2D1Lmrwbg42ChBF0zZSEy4hTiQQ=;
+	s=arc-20240116; t=1786977694; c=relaxed/simple;
+	bh=QSPitY6DC8rQHtH689EqL7tumkxJrNkIdbzUvRRCyg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F09DSSYVgiZ+UZOjaEPB36z4dclnB3l+I2JKMFgJplULh190iwjXdrsmwCM59h9ccR2h52bRLI/6hHAndrtoKwEbStdklxwNE0eZHASizPG3CWwuAr95v1br6AlvSBv9tZNxE3adaFiHjzohKFNPx0PyV12QRs84BrHd4agRxgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYrCVPjf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WozOjCMoiPYiBjmZnM0M27fijDDaKdngkouFKz41y7KxV8rvk1mom7RkgQnoztpyU7ufhV3Q8kQ7T7xzgDIcssFFNKDfG7PaRxGtIoeoR+TdBxL3eUeO/jX3G9Ttzr0E5LzhqcwfwQsC7eFbg8+CARH0gz3XIHwM7dPnfPVTekM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2V0+YHHB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYrCVPjf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E141F000E9;
-	Mon, 17 Aug 2026 14:41:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2V0+YHHB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64A61F000E9;
+	Mon, 17 Aug 2026 14:41:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977690;
-	bh=1Hmv6KarqGoq1O3ZjZwwEE/d0wertsP9ZZckfruRYbc=;
+	s=korg; t=1786977693;
+	bh=AdCeIoNdkcHXhZh2I0nQ1faTKkTQ+c7JWyHk6CMCqeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lYrCVPjfZ2ihyJgTQN0e2nFHmP125On0Klb9EPPoqiw+mjI7kzk8+Fa8LMbQ/53vs
-	 TRZJusjzscDjzeRjWhCzxmokGxYrZw8bZZDtq64F7BuNeM++zo7sq86DYJnvUbLpBE
-	 VbrrS+tAfmk23hGr9sVSBKUIrV1bMQzTsTyY1T08=
+	b=2V0+YHHBvDOqWgqQdHscLp8eEc1AbNVBFEnVhLAk7N7Vwiw2XwO2Dw9nlaPhKA1zj
+	 XvJvEQSs0e8xxRUF3Zt8+Iuu8efNF/M0vcQJTsWapZrKaBq7mAmGG4NxW1O/Ckb590
+	 Ryi0W72ZP/Q2J2LRNCglpQ+lPLH8Kz0VH64fOtPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Joshua Rogers <linux@joshua.hu>
-Subject: [PATCH 5.15 416/456] vt: add permission check for KDSKBMETA ioctl
-Date: Mon, 17 Aug 2026 15:33:26 +0200
-Message-ID: <20260817132555.498494522@linuxfoundation.org>
+	Joshua Rogers <linux@joshua.hu>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 417/456] vt: stabilize tty reference in kbd_keycode with tty_port_tty_get
+Date: Mon, 17 Aug 2026 15:33:27 +0200
+Message-ID: <20260817132555.527824871@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,32 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Joshua Rogers <linux@joshua.hu>
 
-commit a7ad0034453ba4c353f9b8f810ee2569de33d283 upstream.
+commit e25d47a526939ad44b75f778b8a7500562b84fc1 upstream.
 
-KDSKBMETA modifies keyboard meta mode but lacks the !perm check that all
-other keyboard setter ioctls in vt_k_ioctl() enforce, allowing a process
-to change meta mode on a non-controlling console without authorization.
+kbd_keycode() reads vc->port.tty without acquiring a tty reference,
+racing against con_shutdown() which clears port.tty under a different
+lock. Use tty_port_tty_get()/tty_kref_put() to hold a proper reference
+for the duration the tty pointer is needed.
 
 Assisted-by: AISLE:Snapshot
-Cc: stable <stable@kernel.org>
 Signed-off-by: Joshua Rogers <linux@joshua.hu>
-Link: https://patch.msgid.link/20260731-tty-vt-stuff-v1-2-be99b9da8e30@linuxfoundation.org
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20260731-tty-vt-stuff-v1-1-be99b9da8e30@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/vt_ioctl.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/vt/keyboard.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/vt/vt_ioctl.c
-+++ b/drivers/tty/vt/vt_ioctl.c
-@@ -408,6 +408,8 @@ static int vt_k_ioctl(struct tty_struct
- 	/* this could be folded into KDSKBMODE, but for compatibility
- 	   reasons it is not so easy to fold KDGKBMETA into KDGKBMODE */
- 	case KDSKBMETA:
-+		if (!perm)
-+			return -EPERM;
- 		return vt_do_kdskbmeta(console, arg);
+--- a/drivers/tty/vt/keyboard.c
++++ b/drivers/tty/vt/keyboard.c
+@@ -1393,7 +1393,7 @@ static void kbd_keycode(unsigned int key
+ 	struct keyboard_notifier_param param = { .vc = vc, .value = keycode, .down = down };
+ 	int rc;
  
- 	case KDGKBMETA:
+-	tty = vc->port.tty;
++	tty = tty_port_tty_get(&vc->port);
+ 
+ 	if (tty && (!tty->driver_data)) {
+ 		/* No driver data? Strange. Okay we fix it then. */
+@@ -1453,9 +1453,12 @@ static void kbd_keycode(unsigned int key
+ 		 * characters get aren't echoed locally. This makes key repeat
+ 		 * usable with slow applications and under heavy loads.
+ 		 */
++		tty_kref_put(tty);
+ 		return;
+ 	}
+ 
++	tty_kref_put(tty);
++
+ 	param.shift = shift_final = (shift_state | kbd->slockstate) ^ kbd->lockstate;
+ 	param.ledstate = kbd->ledflagstate;
+ 	key_map = key_maps[shift_final];
 
 
