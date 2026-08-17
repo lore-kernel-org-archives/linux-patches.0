@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DAC3AAF76;
-	Mon, 17 Aug 2026 14:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641E83B4417;
+	Mon, 17 Aug 2026 14:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975551; cv=none; b=NLY5l3PcmCno99WNvV7o/2fJ9Aidu+FYMrEOV17hG0sx6fr34kALTA9/fkc3++gsgmdUQ5y5my2JIS2/9x6SNi4qhVhn7rALw+8zww6FZx4AzQemlt+2yoO8qajchwW/HsPVX+ILcT8Q1k8LbA0PZihgHMMx0fzt3AShuUUkQUk=
+	t=1786975554; cv=none; b=cks/qiArtjT9rRXpn0lqiHWXKJW5JChXLB3yWMbwjAgW2RN7QyVqm/S4xNCtJxtCWLAZNmzGjuCVnB75CKXwULXW/kjLt19ufRwcUCbQ3EBufyaWS/zfuxS0qtBO0XbNMRvgJ0lQ748d/JLlJcUE//1GCdZp5vCJOgaa2QjJMI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975551; c=relaxed/simple;
-	bh=zo9ChCpoZOHxo/Qk60MlZCSXCYfZxsNN7O9TNZNF5G8=;
+	s=arc-20240116; t=1786975554; c=relaxed/simple;
+	bh=VBFSgf+E45LvaHfXjnvN1ERNYXRnkqnFrBa/6ltQyP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PEv2WSHG/NkHXTr3WndjVVAAZ7FnzDc917SWaJ4AdlyZThKF7Dcy2y5SJN5rQQ3k+8lnWVrN15j0WUhVK4Dm7VPIT68Nw4VTDbd1necNc4IQ9i86DBhMPMgPjve8X5MeOeeb+tlfBjONLaPVMLNJituvu7VZ69LC7HGiCJW+Oh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PYJhnGBR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=axhS9Ez+1jRrYQh+F6nacCaCZuuW9AJN9IzqCzIMMg4XhjU+dmuOfdY4noq+0+CYLk4U5ZfCUZnMvSrUxZvfNDf+qWOsUAhFdG5+A1Oe7nbKq7miwrxe9no/PvAmfkpBHSUGsuBCmmZwb1WcXJkc7cQ3Jfdt9tFOvTo9qX1QzWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+jwIUPk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PYJhnGBR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B59A1F000E9;
-	Mon, 17 Aug 2026 14:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+jwIUPk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A9B71F00A3A;
+	Mon, 17 Aug 2026 14:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975550;
-	bh=0g3fgRBQhLDzF/jh7ZCfOGT+yu/cqXeWvEfVLlsalWw=;
+	s=korg; t=1786975553;
+	bh=TLMDEGl5pUxh9M3nMSqQCQWLZC25INfiMRyHSmDDmbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PYJhnGBRGXDAm847+M9sqXpBLEz+mxWIoKcICkZOYTdF5N+NshOUuOXrloQm9XhKh
-	 kKZqNVwbPSszUvWLXfHpFaNyGbcfGmJ/+VAuGp2qXnmYRQKzeRWJlY6DWMqof+kzwd
-	 tfzYSOikwUuUj9QtR3pHkBBi3cJcGT2TFmRYMz00=
+	b=A+jwIUPkIcGlXVwlO+1BgqezcSBkFp1oAV94q9+ZHs3bH8uW9fJ3a7sYcdHfD7yXG
+	 zECJ7XTC8/5fOj6izb35dlfRnYbW4Ilo8c8qh6IKQ2yn96I8B/SenVNpuL0OL91LkQ
+	 YaY+TNJLecwyTkdz8BMvtEHgb7IUSkLS3wglvc0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Morgun <d.morgun@ispras.ru>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 064/389] wifi: ath11k: fix potential buffer underflow in ath11k_hal_rx_msdu_list_get()
-Date: Mon, 17 Aug 2026 15:28:23 +0200
-Message-ID: <20260817132541.596449564@linuxfoundation.org>
+Subject: [PATCH 5.10 027/389] wifi: brcmfmac: initialize SDIO data work before cleanup
+Date: Mon, 17 Aug 2026 15:27:46 +0200
+Message-ID: <20260817132540.003363733@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -53,45 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Morgun <d.morgun@ispras.ru>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 7f11e70629650ff6ea140984e5ce188b775b2683 ]
+[ Upstream commit 2a665946e0407a05a3f81bd56a08553c446498e0 ]
 
-When the first entry in msdu_details has a zero buffer address,
-the code accesses msdu_details[i - 1] with i == 0, causing a
-buffer underflow.
+brcmf_sdio_probe() stores the newly allocated bus in sdiodev->bus before
+allocating the ordered workqueue. If that allocation fails, the function
+jumps to fail and calls brcmf_sdio_remove().
 
-Fix similarly to ath12k_wifi7_hal_rx_msdu_list_get() by adding
-a separate check for i == 0 before the main condition to prevent
-the out-of-bounds access.
+brcmf_sdio_remove() unconditionally cancels bus->datawork. Initialize the
+work item before the first failure path that can reach brcmf_sdio_remove(),
+so the cleanup path always observes a valid work object.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This issue was found by our static analysis tool and then confirmed by
+manual review of the probe error path and the remove-time work drain. The
+problem pattern is an early setup failure that reaches a cleanup helper
+which cancels an embedded work item before its initializer has run.
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Dmitry Morgun <d.morgun@ispras.ru>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260530114252.42615-1-d.morgun@ispras.ru
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+A QEMU PoC forced alloc_ordered_workqueue() to fail at the same point in
+brcmf_sdio_probe(), before INIT_WORK(&bus->datawork) is reached. The
+resulting fail path calls brcmf_sdio_remove(), and DEBUG_OBJECTS reports
+the invalid work drain with brcmf_sdio_probe() and brcmf_sdio_remove() in
+the stack.
+
+Fixes: 9982464379e8 ("brcmfmac: make sdio suspend wait for threads to freeze")
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260619064401.1048976-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index 720c94806e1a18..54edf4a61c61aa 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -4441,6 +4441,9 @@ static void ath11k_hal_rx_msdu_list_get(struct ath11k *ar,
- 	msdu_details = &msdu_link->msdu_link[0];
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+index 6ac2132c306478..5338d93e5b2299 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+@@ -4438,6 +4438,7 @@ struct brcmf_sdio *brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
+ 	bus->sdiodev = sdiodev;
+ 	sdiodev->bus = bus;
+ 	skb_queue_head_init(&bus->glom);
++	INIT_WORK(&bus->datawork, brcmf_sdio_dataworker);
+ 	bus->txbound = BRCMF_TXBOUND;
+ 	bus->rxbound = BRCMF_RXBOUND;
+ 	bus->txminmax = BRCMF_TXMINMAX;
+@@ -4451,7 +4452,6 @@ struct brcmf_sdio *brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
+ 		goto fail;
+ 	}
+ 	brcmf_sdiod_freezer_count(sdiodev);
+-	INIT_WORK(&bus->datawork, brcmf_sdio_dataworker);
+ 	bus->brcmf_wq = wq;
  
- 	for (i = 0; i < HAL_RX_NUM_MSDU_DESC; i++) {
-+		if (!i && FIELD_GET(BUFFER_ADDR_INFO0_ADDR,
-+				    msdu_details[i].buf_addr_info.info0) == 0)
-+			break;
- 		if (FIELD_GET(BUFFER_ADDR_INFO0_ADDR,
- 			      msdu_details[i].buf_addr_info.info0) == 0) {
- 			msdu_desc_info = &msdu_details[i - 1].rx_msdu_info;
+ 	/* attempt to attach to the dongle */
 -- 
 2.53.0
 
