@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2894442B32;
-	Mon, 17 Aug 2026 15:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46213D9545;
+	Mon, 17 Aug 2026 15:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980406; cv=none; b=theHkzaEpkcWVgHplffQNxCi1/8vNKYTJy7vEyrJ8C1rEHzAZcsVd34Ok8PysewpgjIEwrNI+gvsTOODMA/q7pPd62Aun719Wy58hxlbw43w2p6bsV1VP0Oo/ChIRArm3g2wv0kTAggINXSIyFIy/adhEDSr1JfIZlz7ewbbrgg=
+	t=1786980411; cv=none; b=br+OAIDWEJJreD/mCbPXuVC18pIxgDMg6Q67LRNJFxlD1NWiQBL0086gvUdw+fLOTeetn6+sW587FWzY55xn3A1x08QuLBeZWhXIIFkfE3fOscpewqLYZW9m55BxhUq58+YHb2urerNauMfprREhDDg2Xv816S0W+ZQjyBAy8FU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980406; c=relaxed/simple;
-	bh=mEFUbkEDAZXQ85O86LQuxmfQSzxpGRAwAWzXPYB0oo8=;
+	s=arc-20240116; t=1786980411; c=relaxed/simple;
+	bh=8iyv+1/HiNMsC7WedV7x1uFhM5iYmkaHqE02MDsbFd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XE5jD9WIt8cvabPBNgvvJsOkMbiQSItYpQu5DrakhkAn2hJ54MGD8zzNzXrE1Kt45j9fg9/2GxXwMRy38qFU4cdXSTPDah0goUbx82yyBV2q5UzuJr+z1XRFhDZMGpw+fHfxM13wrus6TdAyATQzAzvb/6NMcGdw6ExSKUl4Dk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LeZa0DKq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tch/8JoBn6vtDbM6cM7yKABVNDSrNPWn9y3jLDPvshESxVewy+S9xSRGmfwwU2+90lUUjPuGmkWd2ugQLXNTKjF65mEu90yzF8eTIaWXSYFsxdpA+W9Seob6Y36UuE4DNlgXQJu1XyhAdXJSa+5wC4lL5Ts2fqYw//o0dZ32AQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9FeQ0AM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LeZa0DKq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17C341F000E9;
-	Mon, 17 Aug 2026 15:26:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9FeQ0AM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C447B1F000E9;
+	Mon, 17 Aug 2026 15:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980405;
-	bh=ExvH9Ca60zsln/2zArypg1FhOz7Kz3drjlMcyrQzebI=;
+	s=korg; t=1786980409;
+	bh=x/J88PW4LE/GaK+8elgO9RqMn21LFv40kSuP0Xd1RkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LeZa0DKqU+JCK1xSIuP/jomaWUI7RJRtJwdRd6R3IfXjDjbMPtcbhep70HgLLlLAf
-	 DOgj+Gh4i5Kod6SIPHJKcaY8xFmYTpZDdpFsRiCuJmL5O0ioFJp6RamO37YrD48+u0
-	 /m0SmwSUifmTHzJEMyu40dYMivnIidQGxFnU4Feg=
+	b=v9FeQ0AMYBgXLNPp+5GBJzWXPtU1WUTXlSJl/nHnfLYD5ngGcCnjsZ6E5Nb9EyxKz
+	 jPhwa+vzz3NHbQoo393mV71j7Q6fUFKpcFqG1ApaQ8Odo0xc06CRsVeqUhEiuSC7pb
+	 gxKuWJQh9fDLkgXmEmLGuQ4FBkKlLnmP6gLRPA4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <kees@kernel.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 561/609] fortify: Disable -Wstringop-overread in tests
-Date: Mon, 17 Aug 2026 15:34:17 +0200
-Message-ID: <20260817132602.497832293@linuxfoundation.org>
+Subject: [PATCH 6.1 562/609] pinctrl: renesas: rzg2l: Use -ENOTSUPP instead of -EOPNOTSUPP
+Date: Mon, 17 Aug 2026 15:34:18 +0200
+Message-ID: <20260817132602.526052670@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,59 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit c1f3e770eec26d6f96dd6d2ea30555ba7c09a244 upstream.
+commit c1492da3939c89372929e062d731f328f7693f1e upstream.
 
-clang recently added support for -Wstringop-overread [1], which is on by
-default like -Wfortify-source. This breaks the usage of -Werror in the
-fortify tests, resulting in the following false positive warnings in the
-kernel build:
+The pinctrl and GPIO core code make exceptions for the -ENOTSUPP error
+code.  One such example is gpio_set_config_with_argument_optional(),
+which returns success when gpio_set_config_with_argument() returns
+-ENOTSUPP, but reports failure for all other error codes.
 
-  warning: unsafe memcmp() usage lacked '__read_overflow2' warning in lib/test_fortify/read_overflow2-memcmp.c
-  warning: unsafe memcmp() usage lacked '__read_overflow' warning in lib/test_fortify/read_overflow-memcmp.c
-  warning: unsafe memchr() usage lacked '__read_overflow' warning in lib/test_fortify/read_overflow-memchr.c
+Returning -EOPNOTSUPP from the pinctrl driver on the unsupported pinctrl
+operation may lead to boot failures when pinctrl drivers implements
+struct gpio_chip::set_config, the system uses GPIO hogs, and the
+struct gpio_chip::set_config implementation returns -EOPNOTSUPP for the
+unsupported operations.
 
-Examining the fortify test logs shows a warning like the following in
-each of the failed logs:
+Return -ENOTSUPP for the unsupported pinctrl operation.
 
-  In file included from lib/test_fortify/read_overflow2-memcmp.c:5:
-  lib/test_fortify/test_fortify.h:34:2: error: 'memcmp' reading 17 bytes from a region of size 16 [-Werror,-Wstringop-overread]
-     34 |         TEST;
-        |         ^
-  lib/test_fortify/read_overflow2-memcmp.c:3:2: note: expanded from macro 'TEST'
-      3 |         memcmp(large, small, sizeof(small) + 1)
-        |         ^
-  1 error generated.
-
-Disable -Wstringop-overread for the fortify tests, as it defeats the
-purpose of testing the Linux specific implementation of fortify, like
--Wfortify-source.
-
+Fixes: 560c633d378a ("pinctrl: renesas: rzg2l: Drop oen_read and oen_write callbacks")
+Fixes: c4c4637eb57f ("pinctrl: renesas: Add RZ/G2L pin and gpio controller driver")
 Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2168
-Link: https://github.com/llvm/llvm-project/commit/86f2e71cb8d165b59ad31a442b2391e23826133e [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20260623-fix-test_fortify-for-clang-stringop-overread-v1-1-15ee8342a953@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260515124008.2947838-2-claudiu.beznea@kernel.org
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+[claudiu.beznea: fixed conflict by dropping the code not present in
+ v6.1 stable]
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_fortify/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pinctrl/renesas/pinctrl-rzg2l.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/lib/test_fortify/Makefile b/lib/test_fortify/Makefile
-index 7887e6126e79c..eba2ba0faeb6a 100644
---- a/lib/test_fortify/Makefile
-+++ b/lib/test_fortify/Makefile
-@@ -1,6 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0
+diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+index 1304ab0bcac1e..85bcc9bbe6770 100644
+--- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
++++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+@@ -708,7 +708,7 @@ static int rzg2l_pinctrl_pinconf_set(struct pinctrl_dev *pctldev,
+ 		}
  
- ccflags-y := $(call cc-disable-warning,fortify-source)
-+ccflags-y += $(call cc-disable-warning,stringop-overread)
+ 		default:
+-			return -EOPNOTSUPP;
++			return -ENOTSUPP;
+ 		}
+ 	}
  
- quiet_cmd_test_fortify = TEST    $@
-       cmd_test_fortify = $(CONFIG_SHELL) $(srctree)/scripts/test_fortify.sh \
+@@ -757,7 +757,7 @@ static int rzg2l_pinctrl_pinconf_group_get(struct pinctrl_dev *pctldev,
+ 
+ 		/* Check config matching between to pin  */
+ 		if (i && prev_config != *config)
+-			return -EOPNOTSUPP;
++			return -ENOTSUPP;
+ 
+ 		prev_config = *config;
+ 	}
 -- 
 2.53.0
 
