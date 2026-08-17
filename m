@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058123033E7;
-	Mon, 17 Aug 2026 14:04:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900E13033E7;
+	Mon, 17 Aug 2026 14:04:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975449; cv=none; b=iJPy4KZ0prD0OdnqpprTPoP34p3uIQjhUXacNNKHcZQAYknqxEu/tcdt8yMC3+b7vzVGZ4lP1syKhQUlEstx4B79r600OcfecGG69tu/5bXotLJpLE/kJFw+8KZujhlvw2eKoo/JEBj0yslGbvANgUl9zrtWrs8cc34mN7YzeM0=
+	t=1786975451; cv=none; b=W2G3fzdHtNUMuwUgEAZ0nKRzjTJVywwe8rtw/UXDMhlytmnWBTLfWLc+snEEr4DffgrJBcSehO5XidiZnwjPeFkGAI3PGh8qD2/W4RUK894vTSjK3D6FawFAvoTbbx3klFYRpbe23iZKTSyXG3bPihCdHxI7ol4Q6wbr8hBS5D0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975449; c=relaxed/simple;
-	bh=QVJgYvS8hkdWnJbFCebHD/P0t5Iw8UG+vGo1rp9bLAg=;
+	s=arc-20240116; t=1786975451; c=relaxed/simple;
+	bh=90QqnERAdzJBK0iP0o9bvnsF1jvmukd9jaJtF//M0Tg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PtcWOntIsWcRDDX44Xi8+nK4fAJk7WarPKXywvKV/8JZoh+YEynbD5LzzyAHlMXXqZNwsgd1MLwcUHRSB6I2pEXlDkaZiHO+kqFJFWMYbOZ4iRqd52GRYZ8c0zmXEgxZL4f0+zYDt/NJW84tHlArXpini8NrKTuT/djg0KuYO14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mW58YSvs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LcDNHpySdD6Ns01e/jpX2ukwy8QS2LFdZ6y+XFjO96cRGRBIpaKU2uOjjEV9QaGiRPCXfmZeU12pZArOgwzbJexJBgVuRW/N2qb2UQL47FV0iXepFxsoYw/JTt8vnL27BiAfG/rYjMXhmyG+52AciwMUjF6JS4+kOy/yHxBdQ0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CNV40ydY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mW58YSvs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1274F1F000E9;
-	Mon, 17 Aug 2026 14:04:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNV40ydY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8D981F000E9;
+	Mon, 17 Aug 2026 14:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975447;
-	bh=DOi+4AntHHdOfadnmt8Gbl9fMKUW+zHONgWsdJVwvLM=;
+	s=korg; t=1786975450;
+	bh=zz+ZGtxLDas92xLouHfdmhdwLoK98hpg+vGWFAR9Jys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mW58YSvsnlhHYvZgJGKfK2QxiF+FDdVQDbt9N0poH2YvOwn1fdFEXV/890S+5ESOO
-	 bODyMX78zOMvtHKjr1GXJbAAplidJmAn5JMwKjsfLZdMgXgL/2NJPLHkAWtRj6+IMJ
-	 Dc395pEIgAnwjMzb3w2fa7f/aqii3iLzzExhl3rk=
+	b=CNV40ydYStU0xqGX4VU8NXjVk7fpEHrttyb4afuS8g5fiOQi2cbh+Wz4rodI3WGJ2
+	 7OOAUQlbWfdqPHTXQ5cfiWDElyoWZ5+AexCOzBRgYcXsrqsy4iRjbM2/TjOf7yRAgG
+	 5iscrMk7QkD6CFaHdcTMvvGdBNLu9l2GEaZsqsfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Hidayath Khan <hidayath@linux.ibm.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 032/389] ipv4: fib: free fib_alias with kfree_rcu() on insert error path
-Date: Mon, 17 Aug 2026 15:27:51 +0200
-Message-ID: <20260817132540.211235456@linuxfoundation.org>
+Subject: [PATCH 5.10 033/389] net/iucv: take a reference on the socket found in afiucv_hs_rcv()
+Date: Mon, 17 Aug 2026 15:27:52 +0200
+Message-ID: <20260817132540.259516523@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -53,65 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit f2f152e94a67bc746afaf05a1b2702c195553112 ]
+[ Upstream commit 4fa349156043dc119721d067329714179f501749 ]
 
-fib_table_insert() publishes new_fa into the leaf's fa_list with
-fib_insert_alias() before calling the fib entry notifiers. When a
-notifier fails, the error path removes new_fa with fib_remove_alias()
-(hlist_del_rcu) and frees it right away with kmem_cache_free().
+afiucv_hs_rcv() looks up the destination socket under iucv_sk_list.lock,
+drops the lock, and then passes the socket to the afiucv_hs_callback_*()
+handlers without holding a reference. AF_IUCV sockets are not
+RCU-protected and are freed synchronously by iucv_sock_kill() ->
+sock_put(), so a concurrent close can free the socket in the window
+between read_unlock() and the handler, which then dereferences freed
+memory (for example sk->sk_data_ready() in afiucv_hs_callback_syn()).
 
-fib_table_lookup() walks that list under rcu_read_lock() only, so a
-concurrent lookup that already reached new_fa keeps reading it after the
-free:
+Take a reference with sock_hold() while the socket is still on the list
+and release it with sock_put() once the handler has run.
 
- BUG: KASAN: slab-use-after-free in fib_table_lookup (net/ipv4/fib_trie.c:1601)
- Read of size 1 at addr ffff88810676d4eb by task exploit/297
- Call Trace:
-  fib_table_lookup (net/ipv4/fib_trie.c:1601)
-  ip_route_output_key_hash_rcu (net/ipv4/route.c:2814)
-  ip_route_output_key_hash (net/ipv4/route.c:2705)
-  __ip4_datagram_connect (net/ipv4/datagram.c:49)
-  udp_connect (net/ipv4/udp.c:2144)
-  __sys_connect (net/socket.c:2167)
-  __x64_sys_connect (net/socket.c:2173)
-  do_syscall_64
-  entry_SYSCALL_64_after_hwframe
- which belongs to the cache ip_fib_alias of size 56
-
-Triggering the error path needs CAP_NET_ADMIN and a registered fib
-notifier that can reject a route; a netdevsim device whose IPv4 FIB
-resource is exhausted is enough.
-
-Free new_fa with alias_free_mem_rcu(), as fib_table_delete() already
-does for a fib_alias removed from the trie.
-
-Fixes: a6c76c17df02 ("ipv4: Notify route after insertion to the routing table")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260704171421.1786806-1-bestswngs@gmail.com
+Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Hidayath Khan <hidayath@linux.ibm.com>
+Link: https://patch.msgid.link/20260705-b4-disp-fc79c0dc-v1-1-d2cdcb57afa9@proton.me
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_trie.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/iucv/af_iucv.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
-index 5c75591bcce003..5c061dffc3795f 100644
---- a/net/ipv4/fib_trie.c
-+++ b/net/ipv4/fib_trie.c
-@@ -1340,7 +1340,7 @@ int fib_table_insert(struct net *net, struct fib_table *tb,
- out_remove_new_fa:
- 	fib_remove_alias(t, tp, l, new_fa);
- out_free_new_fa:
--	kmem_cache_free(fn_alias_kmem, new_fa);
-+	alias_free_mem_rcu(new_fa);
- out:
- 	fib_release_info(fi);
- err:
+diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
+index 8c08f07ce46551..3fb93840ec91bb 100644
+--- a/net/iucv/af_iucv.c
++++ b/net/iucv/af_iucv.c
+@@ -2083,6 +2083,8 @@ static int afiucv_hs_rcv(struct sk_buff *skb, struct net_device *dev,
+ 			}
+ 		}
+ 	}
++	if (sk)
++		sock_hold(sk);
+ 	read_unlock(&iucv_sk_list.lock);
+ 	if (!iucv)
+ 		sk = NULL;
+@@ -2132,6 +2134,8 @@ static int afiucv_hs_rcv(struct sk_buff *skb, struct net_device *dev,
+ 		kfree_skb(skb);
+ 	}
+ 
++	if (sk)
++		sock_put(sk);
+ 	return err;
+ }
+ 
 -- 
 2.53.0
 
