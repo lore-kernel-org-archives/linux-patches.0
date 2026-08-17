@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1164F408617;
-	Mon, 17 Aug 2026 14:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7F9408617;
+	Mon, 17 Aug 2026 14:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977743; cv=none; b=bExc7+cPiZS8aZosR3NOTXxLAdZ2c/oYelxX+UErktclY6eA2erLQaXkwII0tl3MZBgyFUfyFBKvFsl9AdlSHUIBD+C4I8y0JreY03570is4gI+Hx0hXshaGIDRIWNhN/MMH/dHNcu7JEzo3KSwPKu0JHUsbhxmXMfNBoz5vB0g=
+	t=1786977746; cv=none; b=npEQ1d/EEPZLvmruYOv9Vp7V5Rori/RrURTVqfhsdguUjwKe8VjB8R5GOf0Ofs/XiZIocnbEcyl4yNDH3exaLuZEPPognBsZK92uuJqn0vMLffYssoL6RqHPhjum8L2VNvtOJMmdAEkWUd1ogI2pty08/K4JSnSNvFjjyrXef/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977743; c=relaxed/simple;
-	bh=YPDRGIUW88UUdreKugCfekfmy0o9YYpYG766jHldn8E=;
+	s=arc-20240116; t=1786977746; c=relaxed/simple;
+	bh=98M10K1Zo5L1dDK89/9MuHVNMYr+6BxzQUzMB7hCfEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i3kad37rQVaqDmXSNdpJjzTInhXB+injDB/I4N9Hn05/QZZHAMt5GVD8PaAf5flHWuLxZkdFQBLNIPrE+dTF2hsBx2G/sWxdGP64zoXTeEg9LCu2rBaRn1F4cWMWZsrua4Xw6s5YAId62j+aU9S3eQRl7PagglTh9e8Vw8u9oe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HK0zBSbb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZQivbW8ncz/klBUI4VuRIt4qMntYgm5TY04AVGUdv2heuqICbbGCYuDUHpPi63RZ4xR2tpciqC1+OZDgbRHS/VGK8Lf42UzA1swj8FZlrcUPEz6Ftys3QN/8UN7C2MmFOxUdP28OQI1mrBwC6QkkoSqY/jLpUgpWtxUFoPf1iDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGCrcCFa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HK0zBSbb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF251F000E9;
-	Mon, 17 Aug 2026 14:42:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGCrcCFa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B7881F000E9;
+	Mon, 17 Aug 2026 14:42:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977742;
-	bh=ICKW+YnFeBGr51QKXDx6HU59XsdV0ck9CXaFaTHqqgE=;
+	s=korg; t=1786977744;
+	bh=UXo5siybn4fHXQzXroGRz79D0oDJ9WRS9wmZvp83SF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HK0zBSbb6+sI30ndap7h2F3MsVbFEQioSVZOejTvjQECD6DegxPDv0CXm1W3FD/4q
-	 k7aCQ20xWwZFO4HyLrdL3brSqck2zkX6+XElTrvN49KBAKHPd2HsSBuLqP6FIz6rdK
-	 iq5Ya486JxCtTqOixIyPKxwz9DcWwhWi91e6WuQY=
+	b=KGCrcCFaxzk6mQ/WW9FSqO0js7FmPBICkZ+PuUi4sOdm4vTbvzYGudX6WKadUVz1b
+	 B+eOCV6r/371wvSGuOzZpt4Zby9gMAXXG/1t1ZV1a2hyxMoLotGBVpHmB7SRoHD6P2
+	 ZXsvD+JfqlJxa30sgkHWRkMjG6GCVOkosfN2Fuq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eddie Lin <eddie.lin@oss.qualcomm.com>,
-	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 5.15 433/456] misc: fastrpc: fix memory leak in fastrpc_channel_ctx_free
-Date: Mon, 17 Aug 2026 15:33:43 +0200
-Message-ID: <20260817132556.067307109@linuxfoundation.org>
+	Wilken Gottwalt <wilken.gottwalt@posteo.net>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 398/456] hwmon: (corsair-psu) fix possible out-of-bounds access on missing string termination
+Date: Mon, 17 Aug 2026 15:33:08 +0200
+Message-ID: <20260817132554.923445477@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,35 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eddie Lin <eddie.lin@oss.qualcomm.com>
+From: Wilken Gottwalt <wilken.gottwalt@posteo.net>
 
-commit 2fae94ee14f7fea11d3f95e10383a87c01d21518 upstream.
+[ Upstream commit 36c4d73ce05d1d8896c2669eb0730d35a02a2ec1 ]
 
-The 'ctx_idr' is initialized but never destroyed when
-the channel context is freed, leading to a memory leak.
-Add idr_destroy() to properly clean up the IDR resources.
+In theory it could be possible that the REPLY_SIZE sized buffers for
+holding the vendor and product strings could be end up missing the null
+termination (for example by malicious hardware built on purpose)
+required by the seq_printf() call. That limits the debugfs printf calls
+to a maximum string length of REPLY_SIZE.
 
-Fixes: f6f9279f2bf0 ("misc: fastrpc: Add Qualcomm fastrpc basic driver model")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eddie Lin <eddie.lin@oss.qualcomm.com>
-Reviewed-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260724223342.629168-6-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d115b51e0e567 ("hwmon: add Corsair PSU HID controller driver")
+Signed-off-by: Wilken Gottwalt <wilken.gottwalt@posteo.net>
+Link: https://lore.kernel.org/r/anLj9gPWRoRDbQBV@monster.localdomain
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/fastrpc.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/corsair-psu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -342,6 +342,7 @@ static void fastrpc_channel_ctx_free(str
+diff --git a/drivers/hwmon/corsair-psu.c b/drivers/hwmon/corsair-psu.c
+index e9518221efc4c..f96de071e9094 100644
+--- a/drivers/hwmon/corsair-psu.c
++++ b/drivers/hwmon/corsair-psu.c
+@@ -644,7 +644,7 @@ static int vendor_show(struct seq_file *seqf, void *unused)
+ {
+ 	struct corsairpsu_data *priv = seqf->private;
  
- 	cctx = container_of(ref, struct fastrpc_channel_ctx, refcount);
+-	seq_printf(seqf, "%s\n", priv->vendor);
++	seq_printf(seqf, "%.*s\n", REPLY_SIZE, priv->vendor);
  
-+	idr_destroy(&cctx->ctx_idr);
- 	kfree(cctx);
+ 	return 0;
  }
+@@ -654,7 +654,7 @@ static int product_show(struct seq_file *seqf, void *unused)
+ {
+ 	struct corsairpsu_data *priv = seqf->private;
  
+-	seq_printf(seqf, "%s\n", priv->product);
++	seq_printf(seqf, "%.*s\n", REPLY_SIZE, priv->product);
+ 
+ 	return 0;
+ }
+-- 
+2.53.0
+
 
 
