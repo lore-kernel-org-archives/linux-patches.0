@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59669282F29;
-	Mon, 17 Aug 2026 15:06:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CBC2F5A36;
+	Mon, 17 Aug 2026 15:06:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979207; cv=none; b=E07Ug8trZyGoMl7eKOLupRgDDX3yNMuWmKnlO8rFU3HuM0GuZig56W+A3d23VspU3mgxsw4Rw/ytymVv/iLAWj8fvBIJHwAydYlIIk0eG4MraID4ycivvu+tE9Dh94C6XnyOrAI1AVPjAH13VEH5gIx8UdJPYLd8uymxyi5A+XM=
+	t=1786979210; cv=none; b=dhG0ip7cJH/wE0cXg+1h7OUBX4DzFc9FqzrXkXgjtZfy2xcM94MEnuZSBFMNmihuzTXHEfNyKX4eUBrPTgbJkFDca9xvvehtCsZiW+THr44ZGVkgzhmjHAkfHnHuEbAf6vUO8mEzzHvxGP2MLmyaCFFmJ0MdR0I3VOBJUGdY3bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979207; c=relaxed/simple;
-	bh=bvP5pkLBfNM0rcUGTDQHHDGs0XOdCjNbwU4ZkNWZ06w=;
+	s=arc-20240116; t=1786979210; c=relaxed/simple;
+	bh=JJLAP7aMXtpviIc829dZnt+zfDOi2iHYsxe1N7SrwaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KPYZc9cr2NgRmlmXqd+uhkbzwzgi/bB/DArXXzaGj0IsTvJUgoPrfZy2nK07ftzPMET7x/TT5s7lfIDcHfqXksOG6r0esbLJ3/uUCit/Qf8Z68KyxY5yHPXn41A+sQaLjsDGciGFP/svBMOQ1pJIwQCgFhEVgJWo4DuBtbH22BU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+rPyMOU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=AXNQimCTBi/Une3EDSfgpQOttS1bm8f9FBz2T2LipVkFkkU1PIhgRmLQsOV9hf+bdno27g1kzl5UsDL/W89QQ5ZLNO+xxi4IzIXdnRakBqfxxlm2FSX2yX6BhURWnFV3t32HIp24Lu9lWrV6WaN+I6L282bFrzwh/mUNP6VZAL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtZxFFC7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+rPyMOU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68F01F00A3A;
-	Mon, 17 Aug 2026 15:06:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtZxFFC7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 845161F00A3D;
+	Mon, 17 Aug 2026 15:06:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979206;
-	bh=t+oIU3/tX+TDhP0LgkisB+qBf1zYCRLUerezgcYfVdM=;
+	s=korg; t=1786979209;
+	bh=ZfdEWJa2DTUHfUs/ab2jq4KAwBbtN/n5oKVOHFy3q1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d+rPyMOUEVmeQ2+uf/xbLtmw+7PoLlGaBYmg1aYf0uKica/jI3czPub4U3adpfi8B
-	 MccMF4eXk8+LJP0MF3iz3vPyAC9Mb0ZQhdlt9BQQq/opSTLRhpGLzzCaJxPgzBaM91
-	 GyqLa+c389H7mjR2s71DrcDUkDZGvidOq4hZ8JNg=
+	b=PtZxFFC77nvXYPRtCEX0nSHLtPuOLfio13PmPwysCFhyU6CrFYBVsKdlk3PZZ1JqL
+	 9H2Ix7bhJtUYN6nr6FtGYScb6q76Sn2z8xe++DqK9SrqGtsHVxeXtKPCLc6q5OC97B
+	 yL7SDVITlsYoCqIfONsiyHBhWdaMm0u9guRznE9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Shelley Yang <shelley.yang@infineon.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 144/609] wifi: mt76: connac: fix possible NULL-pointer deref in mt76_connac_mcu_uni_bss_he_tlv()
-Date: Mon, 17 Aug 2026 15:27:20 +0200
-Message-ID: <20260817132548.829404361@linuxfoundation.org>
+Subject: [PATCH 6.1 145/609] wifi: brcmfmac: fix 802.1X-SHA256 call trace warning
+Date: Mon, 17 Aug 2026 15:27:21 +0200
+Message-ID: <20260817132548.860974371@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -45,41 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Shelley Yang <shelley.yang@infineon.com>
 
-[ Upstream commit 2c1fb2335f5e3afb34f91bc07ecb63517c328090 ]
+[ Upstream commit 7cb34f6c4fe8a68af621d870abe63bfca2275dd6 ]
 
-mt76_connac_get_he_phy_cap routine can theoretically return NULL so
-check cap pointer before dereferencing it.
+Based on wpa_auth as 1x_256 mode, need to set up
+"use_fwsup" with BRCMF_PROFILE_FWSUP_1X.
+Or it will happen trace warning when call brcmf_cfg80211_set_pmk().
 
-Fixes: d0e274af2f2e4 ("mt76: mt76_connac: create mcu library")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260621-mt76_connac_get_he_phy_cap-fix-v1-1-ed4ccf7a0363@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+[ 4481.831101] ------------[ cut here ]------------
+[ 4481.831102] WARNING: CPU: 1 PID: 2997 at
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c:7242 brcmf_cfg80211_set_pmk+0x77/0xd0 [brcmfmac]
+[...]
+[ 4481.831202] Call Trace:
+[ 4481.831204]  <TASK>
+[ 4481.831205]  nl80211_set_pmk+0x183/0x250 [cfg80211]
+[ 4481.831233]  genl_family_rcv_msg_doit+0xea/0x150
+[ 4481.831237]  genl_rcv_msg+0x104/0x240
+[ 4481.831239]  ? cfg80211_probe_status+0x2c0/0x2c0 [cfg80211]
+[ 4481.831257]  ? genl_family_rcv_msg_doit+0x150/0x150
+[ 4481.831259]  netlink_rcv_skb+0x4e/0x100
+[ 4481.831261]  genl_rcv+0x24/0x40
+[ 4481.831262]  netlink_unicast+0x236/0x380
+[ 4481.831264]  netlink_sendmsg+0x250/0x4b0
+[ 4481.831266]  sock_sendmsg+0x5c/0x70
+[ 4481.831269]  ____sys_sendmsg+0x236/0x2b0
+[ 4481.831271]  ? copy_msghdr_from_user+0x6d/0xa0
+[ 4481.831272]  ___sys_sendmsg+0x86/0xd0
+[ 4481.831274]  ? avc_has_perm+0x8c/0x1a0
+[ 4481.831276]  ? preempt_count_add+0x6a/0xa0
+[ 4481.831279]  ? sock_has_perm+0x82/0xa0
+[ 4481.831280]  __sys_sendmsg+0x57/0xa0
+[ 4481.831282]  do_syscall_64+0x38/0x90
+[ 4481.831284]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[ 4481.831286] RIP: 0033:0x7fd270d369b4
+
+Fixes: 2526ff21aa77 ("brcmfmac: support 4-way handshake offloading for 802.1X")
+Signed-off-by: Shelley Yang <shelley.yang@infineon.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260525083859.581246-1-shelley.yang@infineon.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-index 6b5bfdbec8b11d..6f4b1a784a0786 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-@@ -1298,6 +1298,8 @@ mt76_connac_mcu_uni_bss_he_tlv(struct mt76_phy *phy, struct ieee80211_vif *vif,
- 	struct bss_info_uni_he *he;
- 
- 	cap = mt76_connac_get_he_phy_cap(phy, vif);
-+	if (!cap)
-+		return;
- 
- 	he = (struct bss_info_uni_he *)tlv;
- 	he->he_pe_duration = vif->bss_conf.htc_trig_based_pkt_ext;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 6e7de5dce49eb7..66c139bf49283a 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -1791,7 +1791,7 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
+ 				 sme->crypto.akm_suites[0]);
+ 			return -EINVAL;
+ 		}
+-	} else if (val & (WPA2_AUTH_PSK | WPA2_AUTH_UNSPECIFIED)) {
++	} else if (val & (WPA2_AUTH_PSK | WPA2_AUTH_UNSPECIFIED | WPA2_AUTH_1X_SHA256)) {
+ 		switch (sme->crypto.akm_suites[0]) {
+ 		case WLAN_AKM_SUITE_8021X:
+ 			val = WPA2_AUTH_UNSPECIFIED;
 -- 
 2.53.0
 
