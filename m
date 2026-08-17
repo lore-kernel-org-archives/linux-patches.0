@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C51554781;
-	Mon, 17 Aug 2026 14:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D9E54781;
+	Mon, 17 Aug 2026 14:18:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976309; cv=none; b=sYBqV4nkQisDBFDxMtTSIUzN3qi5acbT9EjjBN7CcC/0cUsY2IXf1lwTiuPPjvHzJMMqQQoVe6spfuj3Cd10vleIq4TNLXTdfnsWtYgLIlcBIQG/to81RWZoH0gQJ14gAUQrKVZRDreaqkROrEr8HHsyRy5jROctojxgEBLEGAo=
+	t=1786976311; cv=none; b=DvhwbSGvkDi9Z56mB25RJu72NLz9QQXZ+o5PUJ2q+1PWN08kD82iwW8h5prHPNIIsYRIunipiv7SaNwuyqe3z/6hTVQUDFSyDgD8+To+XJVKb16u1KhA+bGGuZQrgEUnf9fKGTlkwjXtvkXy0g53RCJAyo2FdHu8/KaiBEHrvXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976309; c=relaxed/simple;
-	bh=0LyybQ1KlVQCjRT1ujmh7SnAjO9XBJi062ibU3ZlO4M=;
+	s=arc-20240116; t=1786976311; c=relaxed/simple;
+	bh=+4EQoFnnD+gtr4Qs/TNQ6d2V2vYo5LI1ceY4SIG87hw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uREk+QUvPmWwlUzworjWoUZdfe6agFUHTDVqA+V9s9OPEGAd1l7BtPXpVVI4Yu2/wpvOlEnAl0YrlspO/XZYGT0KrtHwKFAsHWeueo+YOZKE3htMlmM6KU5VcO2pr1tvCXJvYGpQE7/TckjDGlcAacGMVDHwrwQJImmbLNdZbbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vIqyqnlu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sEMe99QDEf+GsWPibls7+gkzIJy+ly3mDO6DDLGLJo174DdWVkjhNSIBWJ17DJuXxn1Pi6m116Wm3JMb+olKi4iADIaj36twSBOb2uWwmj37TLvdFhEWE2NPJGq08s/hhbKuh1wvmBmaIVqYQ3ui5W2SSUCzhHBbTC9Ei0lajz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRbC6JDY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vIqyqnlu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74C301F000E9;
-	Mon, 17 Aug 2026 14:18:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRbC6JDY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6203B1F000E9;
+	Mon, 17 Aug 2026 14:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976308;
-	bh=QDEdolEANYxqM1cq6L62ntj81BmkGYhL0xXWzPYyres=;
+	s=korg; t=1786976310;
+	bh=a0JXNmKQw/o3F8B76toauyj8oyI0nIb4LlNXGmcN8jQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vIqyqnluMjm+Ji9Y0V9GhfQAXzaaUV1mHkhAbyeItvJOY65Dnq5Ky4qNRPEmJRVCu
-	 Z249+0YQPwF5ZFGoRsPg4WT2t/Bg0uJMc0GgJhrU5VOBqHw9HgoHChkRXpvckd2D4c
-	 XUeeBMHUxhjt0vyk83UC5q0V3H3Ji/OuV15i8p1A=
+	b=XRbC6JDYBwzTlJ41L7ZtwERL1SC0c5mHtkSXtIhbNlgbelFYmztFNRBz7QHmjsLr9
+	 tqKJTiJxYn+zyfKtix7sv/07cvpNWoZFEwk6scRUZTPN6X3LIWJ5N9/x215vG/G1+q
+	 FYA3Kdi+ANKdDgFZw7gO0fQNzi+Ikwr4qm8bAynQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Luo <luoqing@kylinos.cn>,
-	Xin Long <lucien.xin@gmail.com>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 329/389] sctp: fix addip_serial increment on ASCONF_ACK allocation failure
-Date: Mon, 17 Aug 2026 15:32:48 +0200
-Message-ID: <20260817132551.730408918@linuxfoundation.org>
+Subject: [PATCH 5.10 330/389] net/ncsi: fix heap OOB read in NCSI_CMD_SEND_CMD payload length
+Date: Mon, 17 Aug 2026 15:32:49 +0200
+Message-ID: <20260817132551.763098498@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,55 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Luo <luoqing@kylinos.cn>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit aa2e13ae8d3cbe2c15ef4f7e971b2de0832794aa ]
+[ Upstream commit afa58b7384913c8773d837acdb07b035690ec5d2 ]
 
-In sctp_process_asconf(), when sctp_make_asconf_ack() fails to allocate
-the ASCONF_ACK chunk due to memory pressure, the code jumps to the
-done label where asoc->peer.addip_serial is unconditionally incremented.
+ncsi_send_cmd_nl() takes the number of bytes to copy from the
+attacker-controlled ncsi_pkt_hdr.length field of the in-band packet
+header, while the source buffer is the NCSI_ATTR_DATA netlink
+attribute whose readable size is nla_len() - sizeof(ncsi_pkt_hdr).
+The two length sources are never cross-checked: only
+nla_len() >= sizeof(struct ncsi_pkt_hdr) is enforced.
 
-This leaves the peer's ASCONF (serial N) unacknowledged while the local
-endpoint now expects serial N+1. When the peer retransmits serial N, it
-falls into the serial < addip_serial + 1 branch ,
-which attempts to look up a cached ACK for serial N. No cached ACK
-exists since the allocation failed, so the retransmission is silently
-discarded. The peer eventually times out and ABORTs the association.
+With hdr->length set larger than the attribute payload (up to 65535
+against at most 2032 readable bytes), ncsi_cmd_handler_oem() copies
+past the end of the netlink attribute buffer with unsafe_memcpy(),
+leaking up to ~64KB of kernel heap memory into the transmitted NCSI
+command packet. The destination skb is sized by the declared payload,
+so the write side does not overflow - this is a pure OOB read /
+information leak, reachable with CAP_NET_ADMIN on systems with a
+registered NCSI device (e.g. OpenBMC on Aspeed BMC SoCs, where
+NET_NCSI=y is standard).
 
-Move the addip_serial increment inside the if (asconf_ack) block so that
-the serial number is only advanced when the ASCONF_ACK is successfully
-created and cached. This way, on allocation failure, the serial number
-is unchanged and the peer's retransmitted ASCONF will be correctly
-re-processed.
+Reject commands whose declared payload extends past the end of the
+data attribute.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Qing Luo <luoqing@kylinos.cn>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260804025514.241767-1-l1138897701@163.com
+The issue was found by the autokbug dynamic kernel fuzzer at Tencent
+Yunding Lab.
+
+Fixes: 9771b8ccdfa6 ("net/ncsi: Extend NC-SI Netlink interface to allow user space to send NC-SI command")
+Reported-by: Henry Martin <bsdhenrymartin@gmail.com>
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Link: https://patch.msgid.link/20260803043618.3210301-1-bsdhenrymartin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_make_chunk.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/ncsi/ncsi-netlink.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
-index 651fd41996ae1..06309c1869da0 100644
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -3316,12 +3316,11 @@ struct sctp_chunk *sctp_process_asconf(struct sctp_association *asoc,
- 			goto done;
- 	}
- done:
--	asoc->peer.addip_serial++;
--
- 	/* If we are sending a new ASCONF_ACK hold a reference to it in assoc
- 	 * after freeing the reference to old asconf ack if any.
- 	 */
- 	if (asconf_ack) {
-+		asoc->peer.addip_serial++;
- 		sctp_chunk_hold(asconf_ack);
- 		list_add_tail(&asconf_ack->transmitted_list,
- 			      &asoc->asconf_ack_list);
+diff --git a/net/ncsi/ncsi-netlink.c b/net/ncsi/ncsi-netlink.c
+index db350b8f5d88b..82b22368a540a 100644
+--- a/net/ncsi/ncsi-netlink.c
++++ b/net/ncsi/ncsi-netlink.c
+@@ -461,6 +461,10 @@ static int ncsi_send_cmd_nl(struct sk_buff *msg, struct genl_info *info)
+ 	nca.req_flags = NCSI_REQ_FLAG_NETLINK_DRIVEN;
+ 	nca.info = info;
+ 	nca.payload = ntohs(hdr->length);
++	if (nca.payload > len - sizeof(*hdr)) {
++		ret = -EINVAL;
++		goto out_netlink;
++	}
+ 	nca.data = data + sizeof(*hdr);
+ 
+ 	ret = ncsi_xmit_cmd(&nca);
 -- 
 2.53.0
 
