@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0283B8D78;
-	Mon, 17 Aug 2026 14:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3974E3BF689;
+	Mon, 17 Aug 2026 14:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976740; cv=none; b=VrySmqVfMqkWDUfeh9tRPDdnEN6UKXv/c3BP2CPZQwUsJmwtHhmr0s+/EJbgkvBN573YqTHJBMYtMpq/fOyHttUm5RthvZzn1WAUNcITC4Bt0LbTNCi7KtKH9fjugTuS6CfzWSHiTC/ziT7iPIGeWXMSPsyYyCiB6SrdTQsf72Y=
+	t=1786976743; cv=none; b=VHJrU9aBA/c8OlwZut+symKkepAnjuX7H9wTOXe9o5W7S+lvFHeDEyqLBSgY7HkmbAN0VbALpTb2YcabMtHqra7cjAj7xNl0z9ZhaQPOMSuBe/m2ZNWbC1cqhLx/Dv7qLYmHNc2PAHxt/Hf0uHlpZ4wNRTjEeU7FtGQ4UKGonts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976740; c=relaxed/simple;
-	bh=qEEhLu+eS1dHUpP98DIaPgOSAO1EZlTFmwV/qAlCBmA=;
+	s=arc-20240116; t=1786976743; c=relaxed/simple;
+	bh=SVUukVs4SCisCeEU5uweleM9D7sI9gKP4EFdXPZVHjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SvSTq0Qj9FnppyZE7DXCWq/wtg42I0EjQnWcQzhXed515MrtspJbitocZD/VuvcdzDx/UI1VJXhmcWwmII9EwLanvSHDnWNJiZRoxQr+2PEXTIB+jZ54htCYYEhcTjCAkEMnU6HvSDFbJ5yJYPxLY+aVSVMb0VK/PHHRkMCjze8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sq1bGj0M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EmnTI7ma1xHgOxywDPpF1KRMTXYe3hpy7vhwDeHYPyWddb9wQYrkhbbW9Fhu7Y7PvyUuvVHqh/d/gxjCd2eYSqvctAlbzES4niXV0f1Tlzd7tuJojbsfu4HMVyB+lOoHUrNRVkx8bQFolPZKMXWw1AJdvF1/RPIC1cB+0ybT0Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Ck0yUer; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sq1bGj0M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68CA1F000E9;
-	Mon, 17 Aug 2026 14:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Ck0yUer"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931A21F000E9;
+	Mon, 17 Aug 2026 14:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976739;
-	bh=77kmuZpYNDpRODXWr5AULZoc3exvYpBmpIrDv0Ortuk=;
+	s=korg; t=1786976742;
+	bh=scxIOm/ycEd/0JH0oRlcfrFnRSYiSn/HBXXYQeMPZCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sq1bGj0MfYnQoZakbBfVjXLOx8hq9kO/JPjDQdX4yO8pSxaoHIf+4UXXfRTLNaZ/V
-	 hDu9XlQnBq1iXJUIOAuiO/PmYW76HVEv0s9k/Q0afKZrQtx96Bys1Y7Quf0quQXlBj
-	 hQ3T/bof15UMLGYdyJJKbxm87ykhOMtFYo/czZhA=
+	b=2Ck0yUerQTm7Z47rEZRqNyQ62MtmIkS40GEUvhM4MULkNiu7rye7lJXK9nufB4Q9W
+	 G1ao7vLa5YcHki0USHfb/61xt6Tc9Gw9KIfIGOpUaN8I7F0lgJTzy5BKz+IGLnJ4pd
+	 6U8oanfE2/lhHfI/rlDy3ZYwhnMiLWmsDi4HAE34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ai Chao <aichao@kylinos.cn>,
-	stable <stable@kernel.org>,
-	Huang Wei <huangwei@kylinos.cn>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.15 060/456] USB: storage: add NO_ATA_1X quirk for Longmai USB Key
-Date: Mon, 17 Aug 2026 15:27:30 +0200
-Message-ID: <20260817132542.396142333@linuxfoundation.org>
+	Tristan Madani <tristan@talencesecurity.com>,
+	Christian Lamparter <chunkeey@gmail.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 087/456] wifi: carl9170: fix OOB read from off-by-two in TX status handler
+Date: Mon, 17 Aug 2026 15:27:57 +0200
+Message-ID: <20260817132543.521468426@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,58 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huang Wei <huangwei@kylinos.cn>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit 3b4ca2e01c1dd8c00b675b794732945f460a471b upstream.
+[ Upstream commit a3f42f1049ad80c65560d2b078ad426c3134f78d ]
 
-The Longmai Technologies USB Key (0x04b4:0xb708) advertises itself as a
-SCSI/Bulk-only mass storage device but does not correctly handle ATA
-pass-through commands. When such a command (ATA_12 or ATA_16) is sent to
-the device it fails to respond and the transfer eventually times out,
-leaving the device unusable.
+The bounds check in carl9170_tx_process_status() uses
+`i > ((cmd->hdr.len / 2) + 1)` which is off by two, allowing
+2 extra iterations past valid _tx_status entries when the firmware-
+controlled hdr.ext exceeds hdr.len/2. Fix by using the correct
+comparison `i >= (cmd->hdr.len / 2)`.
 
-Add an unusual_devs entry for this device that sets the US_FL_NO_ATA_1X
-flag, so usb-storage short-circuits ATA pass-through commands and returns
-INVALID COMMAND OPERATION CODE (0x20 0x05 0x24 0x00) instead of forwarding
-them to the device.
-
-Information about the device in /sys/kernel/debug/usb/devices:
-
-T:  Bus=02 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 12 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=06 Prot=50 MxPS=64 #Cfgs=  1
-P:  Vendor=04b4 ProdID=b708 Rev= 1.00
-S:  Manufacturer=Longmai Technologies
-S:  Product=USB Key
-C:* #Ifs= 1 Cfg#= 1 Atr=80 MxPwr=100mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=08(stor.) Sub=06 Prot=50 Driver=usb-storage
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Reported-by: Ai Chao <aichao@kylinos.cn>
-Cc: stable <stable@kernel.org>
-Signed-off-by: Huang Wei <huangwei@kylinos.cn>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260716033341.2830872-1-huangwei@kylinos.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a84fab3cbfdc ("carl9170: 802.11 rx/tx processing and usb backend")
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Acked-by: Christian Lamparter <chunkeey@gmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=5c1ca6ccaa1215781cac
+Link: https://patch.msgid.link/20260421134929.325662-3-tristmd@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/storage/unusual_devs.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireless/ath/carl9170/tx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/storage/unusual_devs.h
-+++ b/drivers/usb/storage/unusual_devs.h
-@@ -395,6 +395,13 @@ UNUSUAL_DEV(  0x04b3, 0x4001, 0x0110, 0x
- 		USB_SC_DEVICE, USB_PR_CB, NULL,
- 		US_FL_MAX_SECTORS_MIN),
+diff --git a/drivers/net/wireless/ath/carl9170/tx.c b/drivers/net/wireless/ath/carl9170/tx.c
+index f9e1306ac74fe3..db49f334e52e2d 100644
+--- a/drivers/net/wireless/ath/carl9170/tx.c
++++ b/drivers/net/wireless/ath/carl9170/tx.c
+@@ -692,7 +692,7 @@ void carl9170_tx_process_status(struct ar9170 *ar,
+ 	unsigned int i;
  
-+/* Reported by Ai Chao <aichao@kylinos.cn> */
-+UNUSUAL_DEV(  0x04b4, 0xb708, 0x0000, 0xffff,
-+		"Longmai Technologies",
-+		"USB Key",
-+		USB_SC_SCSI, USB_PR_BULK, NULL,
-+		US_FL_NO_ATA_1X),
-+
- /*
-  * Reported by Simon Levitt <simon@whattf.com>
-  * This entry needs Sub and Proto fields
+ 	for (i = 0;  i < cmd->hdr.ext; i++) {
+-		if (WARN_ON(i > ((cmd->hdr.len / 2) + 1))) {
++		if (WARN_ON(i >= (cmd->hdr.len / 2))) {
+ 			print_hex_dump_bytes("UU:", DUMP_PREFIX_NONE,
+ 					     (void *) cmd, cmd->hdr.len + 4);
+ 			break;
+-- 
+2.53.0
+
 
 
