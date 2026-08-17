@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D2241D227;
-	Mon, 17 Aug 2026 14:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7782A3AFD16;
+	Mon, 17 Aug 2026 14:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976824; cv=none; b=TKkzQwP7xCSVjvKxHmgrXMk9yFGLZDB4voq75QSzd7M9NaAvnwMpEXRXjW1wJtKNPmPi3scYtoHYDVHWw1FKiZI+bRdGHBLZSrKyC5OePJw4aYpAeYyo145SWxZ4cEYzZyICsmTQc1gdSKTyyQUFnDqHW1Mwh78CE6nAAAxSEO0=
+	t=1786976826; cv=none; b=td1qYBDAKP3GihUg4i9vVRczKvisyptNr6krRXq3OvC4y/i7BddluW5v2UjlImKqH41Mp3wc26CRG9cuZA0uajPWrCRb/m2wZ2P5HmGs7vgUJfifYaJEU0R1/Of4yQVaVZdiPnuYaMFKhmsNMMEiOuvWqQZK4cDAioX5owzUIVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976824; c=relaxed/simple;
-	bh=mzlBljGJNO+hiPVqUVmyTP3x8eNp4nNxe/xURjpnR74=;
+	s=arc-20240116; t=1786976826; c=relaxed/simple;
+	bh=qRF/Q3iV0PcCfZe0E6ulA3KhcF4xP8OT3zeKD5k/JG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jpju2ARjKssgdem4fJYPttZgZbZ9DO289B+hxu1HCggJRgPnRqCTZDQxb74yzHBnmygqdXm126nMBVu9uMeMr1Q43BHd1YAJRuxqcgKQArHQIv99qjVr4h/mjQSlzlCwWbF6wu0ft+YFEP1rIcb0I5jDGvYMvc7T8zn45sAYXK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlMdKBPz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YlkDNPTT/BiTHPk1OEc7nAVQeZQ804q2bXVMsmVcSL50TuIwZ24QNgnVjhoZbHXs5544r/SmAt8VrdM+88u/02baULtoYn+ZYHELr55XR2x1Y6kPL9KNcQxg3CQ8oUi3vU2ly0Ho9gUSA173j+IxkrbaA9aAFFndRojluHsMHdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vD++Tjoc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlMdKBPz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0472E1F000E9;
-	Mon, 17 Aug 2026 14:27:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vD++Tjoc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFEDB1F000E9;
+	Mon, 17 Aug 2026 14:27:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976822;
-	bh=72JOm4OEA5ADdUWXWS2hdo0LRjz8wOrxOsr+XJ+ETug=;
+	s=korg; t=1786976825;
+	bh=O0LhHmZbYuc6455NnsGzGBUTVutgu4BVDIgUBJShyVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mlMdKBPzlezWU/OGKk10uvcS91CL8cOD5qlU2Ueptcvm1/sBQnIORWI4iVZF1uvXe
-	 nR6GCXBn8GzAseiQvPjmSU6HA9AHv4y97q4hN2zu0pXn6VwqHCx4M0b7AAAAavGWoD
-	 6/b/9VZMmcso3m+oxON1iXyPdbn0tLEXDwnCNZ78=
+	b=vD++Tjocf03p3+kdPzpxoXKuk7HOw7EHNphnEggAX63Ih15iWn4LwQgTH2Kmkf3ge
+	 LgWN86c0n6jITY6mwDmg+GIwi/HKYlXdoWudd+H4ICqVaBp5HkQ+8Tc725qSyJ9Rcf
+	 lVgiQfm/C43ZynfpfsH/NN3sq9SjdrYauTiP3ryA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+456957213f32970c0762@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Felix Maurer <fmaurer@redhat.com>,
+	Qing Luo <luoqing@kylinos.cn>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 117/456] net: hsr: fix memory leak on slave unregistration by removing synced VLANs
-Date: Mon, 17 Aug 2026 15:28:27 +0200
-Message-ID: <20260817132544.664467350@linuxfoundation.org>
+Subject: [PATCH 5.15 118/456] sctp: auth: verify auth requirement when auth_chunk is NULL
+Date: Mon, 17 Aug 2026 15:28:28 +0200
+Message-ID: <20260817132544.705401826@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -54,53 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Qing Luo <luoqing@kylinos.cn>
 
-[ Upstream commit dcf15eaf5641812f1cfc5e96537380132a7da89d ]
+[ Upstream commit 8e04823c120b376ef7dab14b60ebf6823aa16c14 ]
 
-When an HSR master device is brought UP, it auto-adds VLAN 0 via
-vlan_vid0_add(), which propagates VID 0 to its slave devices (slave A and B).
+sctp_auth_chunk_verify() returns true unconditionally when
+chunk->auth_chunk is NULL, silently skipping authentication.
+This is incorrect when:
 
-If a slave device is later unregistered while HSR is active (e.g., during
-netns cleanup or interface destruction), hsr_del_port() is called to
-detach the slave port from the HSR master. However, hsr_del_port() currently
-does not delete the VLAN IDs that were synced to the slave device by HSR.
+1. skb_clone() failed in the BH receive path, leaving auth_chunk
+   NULL. In sctp_endpoint_bh_rcv() asoc is NULL for new
+   connections, so the early sctp_auth_recv_cid() check cannot
+   catch this.
 
-As a result, the slave device retains a refcount on VID 0 (and any other
-synced VLANs). When the slave device is destroyed, its vlan_info /
-vlan_vid_info structure remains allocated, leading to a memory leak.
+2. No AUTH chunk precedes COOKIE-ECHO, so skb_clone() is never
+   called and auth_chunk remains NULL.
 
-Fix this by calling vlan_vids_del_by_dev(port->dev, master->dev) in
-hsr_del_port() before unlinking slave A or slave B ports, matching the
-propagation logic in hsr_ndo_vlan_rx_add_vid() / hsr_ndo_vlan_rx_kill_vid()
-and the cleanup behavior in bonding and team drivers.
+Fix by checking sctp_auth_recv_cid() when auth_chunk is NULL:
+if authentication is required, return false to drop the chunk;
+otherwise continue normally.
 
-Fixes: 1a8a63a5305e ("net: hsr: Add VLAN CTAG filter support")
-Reported-by: syzbot+456957213f32970c0762@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a4cb6ca.57639fcc.86d58.000b.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Felix Maurer <fmaurer@redhat.com>
-Link: https://patch.msgid.link/20260721101240.995597-1-edumazet@google.com
+Fixes: bbd0d59809f9 ("[SCTP]: Implement the receive and verification of AUTH chunk")
+Signed-off-by: Qing Luo <luoqing@kylinos.cn>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260721015532.120157-2-l1138897701@163.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_slave.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/sctp/sm_statefuns.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/hsr/hsr_slave.c b/net/hsr/hsr_slave.c
-index b8230faa567f77..58e757dc555461 100644
---- a/net/hsr/hsr_slave.c
-+++ b/net/hsr/hsr_slave.c
-@@ -228,6 +228,8 @@ void hsr_del_port(struct hsr_port *port)
- 		netdev_rx_handler_unregister(port->dev);
- 		if (!port->hsr->fwd_offloaded)
- 			dev_set_promiscuity(port->dev, -1);
-+		if (port->type == HSR_PT_SLAVE_A || port->type == HSR_PT_SLAVE_B)
-+			vlan_vids_del_by_dev(port->dev, master->dev);
- 		netdev_upper_dev_unlink(port->dev, master->dev);
- 	}
+diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
+index 572055ee129f86..d57ec436775059 100644
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -639,7 +639,7 @@ static bool sctp_auth_chunk_verify(struct net *net, struct sctp_chunk *chunk,
+ 	struct sctp_chunk auth;
  
+ 	if (!chunk->auth_chunk)
+-		return true;
++		return !sctp_auth_recv_cid(chunk->chunk_hdr->type, asoc);
+ 
+ 	/* SCTP-AUTH:  auth_chunk pointer is only set when the cookie-echo
+ 	 * is supposed to be authenticated and we have to do delayed
 -- 
 2.53.0
 
