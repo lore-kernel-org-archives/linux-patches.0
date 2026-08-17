@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB903FADF1;
-	Mon, 17 Aug 2026 15:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD30441623;
+	Mon, 17 Aug 2026 15:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978811; cv=none; b=dBklMTeYA5x0MuCdlVKUPbFXDuaj3XNH0beyvBbm4pkppMD5ELxSi/W08HXk3TNf244RyRNa36qpged4Es9AVQylQTmgkRyOPdFVQsVmO/UCsLFlgbgClNqhdIVAmUOqi1xaHwJ4j2Pi2zcGHJM6+8P4UbQ5CDQM76QndFGCh0w=
+	t=1786978815; cv=none; b=GlO7yO8CxN8h8JPmrfKVBa14MRyUuaA/HJoRb5F70KFxV4maR8Fivfyph8W+NgBArbjSo+wmaUgi3KtDeB6Wuqiwv3LdXKEsiFOyzh2asGqjwcbe4RUYGG07vJ1eB0thfpuQSJd6aM+O6uS45AIXv+NU+OFg/Cmp/LalJ65Ue2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978811; c=relaxed/simple;
-	bh=rWn4jitGP/pkrVftMqi2h0gMiq/1dEvCag9fFDEhBV4=;
+	s=arc-20240116; t=1786978815; c=relaxed/simple;
+	bh=7LRh/rcyuQU/ARqEMGnI1Y2JamNG9U9zlKeC1ui7Rqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SSTcjrs+CyJQ2S99WLhajbyadwwtSHBzals6LE8XUUZJu2yKUu4B7uGhTB9N5S3Jv/kkf4ETuUiyq5fXq8F3aGCwwStVayouwdMavQcMBJihAcTG/skkj/G4T6vKbR3aBMNLHwOM3OkLhHhrFveJ7CQJa8MAPZTO8kx8vP1UW9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiOkiqgN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pc9VgWM0FwUxgteOe9KQdOqAAL3KVZ2BudHKHCQpNSon+ekji5oZs9b9Gz4B32GgK3WcZVnipYID0X1ESoI6il0zKCN7AOC1YtKyh7CVbIpC0krNyH6eHNa82JwrWJT5jniOg8AObVjnZzNR8Ji1UsPnsPgH9bZQdtI7bcgz4QQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XQ3F4Feo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiOkiqgN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7EA1F000E9;
-	Mon, 17 Aug 2026 15:00:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XQ3F4Feo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B581F000E9;
+	Mon, 17 Aug 2026 15:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978809;
-	bh=rlXH/UcRpJ2H+bthloE+Wm3+ov/Rc5yATbm4IagN+C4=;
+	s=korg; t=1786978812;
+	bh=N7XA2ghahsTaD5BB7ftjFZZ4N4sJTXheCyic5RjVG2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UiOkiqgN9RhVJHToAWtcTtZA48FM7TnoqgHVH6Wg/ehDpk2rDNdsvKeF+XnxjK1W+
-	 cu52myraAGSBEhY41KWSRgJzebogs7Ng0LludB9+Od93gRAoxT3xtJMt1VkN8euyFl
-	 tsA2WOz1UtQYYevZL0iRIBHEvmknoL8Y4QECF4lc=
+	b=XQ3F4FeoMaSRUAIZnoX7HYZPXWMX0R3hPgVkZ+K9oL65P0wLJdV7jX6du43NY0u9j
+	 Qgh9wAqZ2KTC43eRCWUNwjxR2mBwrwt9foygAUr2TA9NjzWxxrcgYsvEm12xo2hjPH
+	 iKAR4WvU4JJJR/aHPZyW68aAEX+VQ9Rtj3X+2quE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Guixiong Wei <weiguixiong@bytedance.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 001/609] platform/x86/intel-uncore-freq: Fix current_freq_khz after CPU hotplug
-Date: Mon, 17 Aug 2026 15:24:57 +0200
-Message-ID: <20260817132543.116404464@linuxfoundation.org>
+Subject: [PATCH 6.1 010/609] can: bcm: fix CAN frame rx/tx statistics
+Date: Mon, 17 Aug 2026 15:25:06 +0200
+Message-ID: <20260817132543.514380821@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -46,68 +46,195 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guixiong Wei <weiguixiong@bytedance.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-commit 6b63520ed14b17bbe9c2103debbd2152dde1fba3 upstream.
+commit e6c24ba95fc3f1b5e1dcd28b1c6e59ef61a9daa5 upstream.
 
-When the last CPU of a legacy uncore die goes offline,
-uncore_freq_remove_die_entry() clears control_cpu. During CPU hotplug
-re-add, uncore_freq_add_entry() still populates sysfs attributes before
-assigning the new control CPU. As a result, the current frequency read
-returns -ENXIO and current_freq_khz is omitted from the recreated sysfs
-group.
+KCSAN detected a data race within the bcm_rx_handler() when two CAN frames
+have been simultaneously received and processed in a single rx op by two
+different CPUs.
 
-Assign control_cpu before the initial read paths and before
-create_attr_group() so sysfs recreation uses the new online CPU. If
-sysfs creation fails, restore control_cpu to -1 to keep the error path
-state consistent.
+Use atomic operations with (signed) long data types to access the
+statistics in the hot path to fix the KCSAN complaint.
 
-Fixes: 4d73c6772ab7 ("platform/x86: intel-uncore-freq: Conditionally create attribute for read frequency")
-Cc: stable@vger.kernel.org
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20260602020752.3126-1-weiguixiong@bytedance.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-[weiguixiong: Adapt to legacy uncore_read() and create_attr_group() flow.]
-Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+Additionally simplify the update and check of statistics overflow by
+using the atomic operations in separate bcm_update_[rx|tx]_stats()
+functions. The rx variant runs under bcm_rx_update_lock to prevent
+races when resetting the two rx counters; the tx variant runs under
+bcm_tx_lock and only needs to guard its own counter's overflow.
+
+As the rx path resets its values already at LONG_MAX / 100, there is
+no conflict between the two locking domains (bcm_rx_update_lock vs.
+bcm_tx_lock) even for ops that use both paths.
+
+The rx statistics update and the frames_filtered update in
+bcm_rx_changed() were previously performed in two separate
+bcm_rx_update_lock sections. For an rx op subscribed on all interfaces
+(ifindex == 0), bcm_rx_handler() can run concurrently on different
+CPUs, so a counter reset by one CPU between these two sections could
+leave frames_filtered larger than frames_abs on another CPU, producing
+a bogus (even negative) reduction percentage in procfs. Update the
+statistics in the same critical section as bcm_rx_changed() to close
+this gap, which also removes the now unneeded extra lock/unlock pair
+around the traffic_flags calculation.
+
+Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260714-bcm_fixes-v15-4-562f7e3e42da@hartkopp.net
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../intel/uncore-frequency/uncore-frequency-common.c  | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/can/bcm.c | 67 ++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 45 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.c b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.c
-index dd2e654daf4b17..88316ceb4c6c4d 100644
---- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.c
-+++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.c
-@@ -197,13 +197,18 @@ int uncore_freq_add_entry(struct uncore_data *data, int cpu)
+diff --git a/net/can/bcm.c b/net/can/bcm.c
+index 5673cda3df2c62..be74888c64c6f0 100644
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -109,7 +109,7 @@ struct bcm_op {
+ 	int ifindex;
+ 	canid_t can_id;
+ 	u32 flags;
+-	unsigned long frames_abs, frames_filtered;
++	atomic_long_t frames_abs, frames_filtered;
+ 	struct bcm_timeval ival1, ival2;
+ 	struct hrtimer timer, thrtimer;
+ 	ktime_t rx_stamp, kt_ival1, kt_ival2, kt_lastmsg;
+@@ -216,10 +216,13 @@ static int bcm_proc_show(struct seq_file *m, void *v)
  
- 	sprintf(data->name, "package_%02d_die_%02d", data->package_id, data->die_id);
+ 	list_for_each_entry_rcu(op, &bo->rx_ops, list) {
  
-+	/*
-+	 * Set the control CPU before any read path so entry recreation after CPU
-+	 * hotplug can populate read-only attributes from the new online CPU.
+-		unsigned long reduction;
++		long reduction, frames_filtered, frames_abs;
++
++		frames_filtered = atomic_long_read(&op->frames_filtered);
++		frames_abs = atomic_long_read(&op->frames_abs);
+ 
+ 		/* print only active entries & prevent division by zero */
+-		if (!op->frames_abs)
++		if (!frames_abs)
+ 			continue;
+ 
+ 		seq_printf(m, "rx_op: %03X %-5s ", op->can_id,
+@@ -241,9 +244,9 @@ static int bcm_proc_show(struct seq_file *m, void *v)
+ 				   (long long)ktime_to_us(op->kt_ival2));
+ 
+ 		seq_printf(m, "# recv %ld (%ld) => reduction: ",
+-			   op->frames_filtered, op->frames_abs);
++			   frames_filtered, frames_abs);
+ 
+-		reduction = 100 - (op->frames_filtered * 100) / op->frames_abs;
++		reduction = 100 - (frames_filtered * 100) / frames_abs;
+ 
+ 		seq_printf(m, "%s%ld%%\n",
+ 			   (reduction == 100) ? "near " : "", reduction);
+@@ -267,7 +270,8 @@ static int bcm_proc_show(struct seq_file *m, void *v)
+ 			seq_printf(m, "t2=%lld ",
+ 				   (long long)ktime_to_us(op->kt_ival2));
+ 
+-		seq_printf(m, "# sent %ld\n", op->frames_abs);
++		seq_printf(m, "# sent %ld\n",
++			   atomic_long_read(&op->frames_abs));
+ 	}
+ 	seq_putc(m, '\n');
+ 
+@@ -277,6 +281,24 @@ static int bcm_proc_show(struct seq_file *m, void *v)
+ }
+ #endif /* CONFIG_PROC_FS */
+ 
++static void bcm_update_rx_stats(struct bcm_op *op)
++{
++	/* prevent overflow of the reduction% calculation in bcm_proc_show() */
++	if (atomic_long_inc_return(&op->frames_abs) > LONG_MAX / 100) {
++		atomic_long_set(&op->frames_filtered, 0);
++		atomic_long_set(&op->frames_abs, 0);
++	}
++}
++
++static void bcm_update_tx_stats(struct bcm_op *op)
++{
++	/* tx_op has no reduction% calculation - use the full range and
++	 * just keep the displayed counter non-negative on overflow
 +	 */
-+	data->control_cpu = cpu;
- 	uncore_read(data, &data->initial_min_freq_khz, &data->initial_max_freq_khz);
++	if (atomic_long_inc_return(&op->frames_abs) == LONG_MAX)
++		atomic_long_set(&op->frames_abs, 0);
++}
++
+ /*
+  * bcm_can_tx - send the (next) CAN frame to the appropriate CAN interface
+  *              of the given bcm tx op
+@@ -328,7 +350,7 @@ static void bcm_can_tx(struct bcm_op *op, struct canfd_frame *cf)
+ 	spin_lock_bh(&op->bcm_tx_lock);
  
- 	ret = create_attr_group(data, data->name);
--	if (!ret) {
--		data->control_cpu = cpu;
-+	if (ret)
-+		data->control_cpu = -1;
-+	else
- 		data->valid = true;
--	}
+ 	if (!err)
+-		op->frames_abs++;
++		bcm_update_tx_stats(op);
  
- uncore_unlock:
- 	mutex_unlock(&uncore_lock);
+ 	/* only advance the cyclic sequence if nothing reset currframe while
+ 	 * we were sending - a concurrent TX_RESET_MULTI_IDX means this
+@@ -473,12 +495,9 @@ static void bcm_rx_changed(struct bcm_op *op, struct canfd_frame *data)
+ {
+ 	struct bcm_msg_head head;
+ 
+-	/* update statistics */
+-	op->frames_filtered++;
+-
+-	/* prevent statistics overflow */
+-	if (op->frames_filtered > ULONG_MAX/100)
+-		op->frames_filtered = op->frames_abs = 0;
++	/* update statistics (frames_filtered <= frames_abs) */
++	if (atomic_long_read(&op->frames_abs))
++		atomic_long_inc(&op->frames_filtered);
+ 
+ 	/* this element is not throttled anymore */
+ 	data->flags &= (BCM_CAN_FLAGS_MASK|RX_RECV);
+@@ -718,25 +737,29 @@ static void bcm_rx_handler(struct sk_buff *skb, void *data)
+ 	op->rx_stamp = skb->tstamp;
+ 	/* save originator for recvfrom() */
+ 	op->rx_ifindex = skb->dev->ifindex;
+-	/* update statistics */
+-	op->frames_abs++;
+ 
+-	/* snapshot the flag under lock: op->flags/op->frames may be updated
+-	 * concurrently by bcm_rx_setup().
+-	 */
++	/* op->flags/op->frames may be updated concurrently by bcm_rx_setup() */
+ 	spin_lock_bh(&op->bcm_rx_update_lock);
++
+ 	rtr_frame = op->flags & RX_RTR_FRAME;
+-	if (rtr_frame)
++	if (rtr_frame) {
++		bcm_update_rx_stats(op);
++		/* snapshot RTR content under lock */
+ 		memcpy(&rtrframe, op->frames, op->cfsiz);
+-	spin_unlock_bh(&op->bcm_rx_update_lock);
++		spin_unlock_bh(&op->bcm_rx_update_lock);
+ 
+-	if (rtr_frame) {
+ 		/* send reply for RTR-request (placed in op->frames[0]) */
+ 		bcm_can_tx(op, &rtrframe);
+ 		return;
+ 	}
+ 
+-	spin_lock_bh(&op->bcm_rx_update_lock);
++	/* update statistics in the same critical section as bcm_rx_changed()
++	 * below: frames_filtered must never be checked/incremented against a
++	 * frames_abs snapshot from a concurrent bcm_rx_handler() call on
++	 * another CPU for the same (wildcard) op, or frames_filtered can end
++	 * up larger than frames_abs.
++	 */
++	bcm_update_rx_stats(op);
+ 
+ 	if (op->flags & RX_FILTER_ID) {
+ 		/* the easiest case */
 -- 
 2.53.0
 
