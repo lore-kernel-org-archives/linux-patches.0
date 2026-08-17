@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76F22D8DDF;
-	Mon, 17 Aug 2026 14:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96D52D8DDF;
+	Mon, 17 Aug 2026 14:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975379; cv=none; b=RyTipWI23Koj6mxC+MKlI+tD547KTQPhlJJdsmYYQWunO54FQX2y5F7vkku28vVOxXct4T4S4O5vj+JBMdWIf6pWjXa0CVradmIT3iTJTcLWAPhAevVbGrHL1EbB5p2z20SbhAZPUMSDutGbpJXL7uoAOXEIb8O44FcI/jPCQkw=
+	t=1786975381; cv=none; b=LC/Qo2JWMBjYsRM8q970G2IJB174UfNtzYynN9lx5YGChzr+9glLoxmVClSurkNMuD2dsb3bj2LkFrzkmCDCI/GtykgLa/sIplXfyTVrfbksRElNZ+LA/1Ba/Dv4dzWUC+dgTBU616ragfv4QhAKnHTCSbIxb5v/3qGQZreOW2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975379; c=relaxed/simple;
-	bh=5aWzV10u9isWyFqCwFLyTwC6TmVe4/i7NOIwJqkex8I=;
+	s=arc-20240116; t=1786975381; c=relaxed/simple;
+	bh=hnOAQsX3noLf7xOj3BUTbNnDkL7kmIQoN1iHdm1BBBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DioVfeg4bW4Fay+YrwKrLSYS45ZUzkjoaehURyzXAA6CqKyl6JplOJCU/qDgzf/wYOYbyAGl/BkZH03rEvRplsyydOmzpLnQ+OWQ1ia1jGcmhZX8xgSlXNAPCXvrOXbuoZ3LREepYkkWnKuwkfeRUFtOtr93qmbfYdmiIIFLVGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XkQphHhN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hwfi8W9VeLO3NaaxEhELkOYdA2jTcnVi8RUDSEnx220FRBhf21YMwSsG6B7lngT3Z/r1fENbENhldlllLJZ0brduC5oDE1h72DzwWH4tA7JOdmdR0SPHLzvQouKalGM7C94ZQeVETV9vVMpwwQ5/20iMFP7xNZNYIsp2ygrYqXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHMmsbo/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XkQphHhN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5671F000E9;
-	Mon, 17 Aug 2026 14:02:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHMmsbo/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2F21F000E9;
+	Mon, 17 Aug 2026 14:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975377;
-	bh=0BpZet8IIt9bkQ8+qAoJ3zCcPmwCgjQG7HbwuNamwvk=;
+	s=korg; t=1786975380;
+	bh=86Is0yd5y4b6YRaH+yHJaXsAyF2SDnc4q/P1flDEsSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XkQphHhNahrtDMFT0DdxZfRdyEErMkrYlu7Pki2keNYk44Q0MhHDK6ILhofegGFje
-	 jMIzMpFCjQxYRAKaHCtHYt9CMl/ZiWyLs5YqEHoxSXU3GK3TXnViKz29Eg9aRzI/yn
-	 THSYaQlCUXOUhhKum4ZQ5pcSfbdny5ikD24W8wTg=
+	b=NHMmsbo/BtP0z6dXqEN0n6rM9WD+xwar5Wn42cNVIImfRoCmYI/vA0mcPoEUSzGxk
+	 6yJEKEI74KXpkqCeQmjoaIHWkhbtHIhRX2nFdvcGi8Kn6hwjLk2TKgf1sRDK9W5Y7H
+	 vd778hqksuzKHnJnyY0hGcd0ypAOW6nhhHOSYdk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugh Dickins <hughd@google.com>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Chris J Arges <carges@cloudflare.com>,
-	David Hildenbrand <david@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Kairui Song <ryncsn@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 239/250] mm/filemap: __filemap_add_folio() restore index before retrying
-Date: Mon, 17 Aug 2026 15:33:20 +0200
-Message-ID: <20260817132546.251337591@linuxfoundation.org>
+	Shivam Kumar <kumar.shivam43666@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 001/389] nvmet-tcp: Fix potential UAF when ddgst mismatch
+Date: Mon, 17 Aug 2026 15:27:20 +0200
+Message-ID: <20260817132538.864521477@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
-References: <20260817132536.466235697@linuxfoundation.org>
+In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
+References: <20260817132538.796021292@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,69 +49,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hugh Dickins <hughd@google.com>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-commit 86da3f7e1e609e1e8bfbab198af68467c5a015a5 upstream.
+commit dbbd07d0a7020b80f6a7028e561908f7b83b3d5a upstream.
 
-In __filemap_add_folio()'s split-a-conflict loop, xas_set_order() is
-applied repeatedly: each application modifies xas.xa_index, rounding it
-down according to the split_order attempted at that stage: and if all goes
-as intended, it eventually (or immediately) converges on an
-xas_try_split() to the required folio_order, with xas.xa_index now the
-same as index: then xas_store() puts the new folio into the xarray there.
+Shivam Kumar found via vulnerability testing:
+When data digest is enabled on an NVMe/TCP connection and a digest
+mismatch occurs on a non-final H2C_DATA PDU during an R2T-based
+data transfer, the digest error handler in nvmet_tcp_try_recv_ddgst()
+calls nvmet_req_uninit() - which performs percpu_ref_put() on the
+submission queue - but does NOT mark the command as completed. It
+does not set cqe->status, does not modify rbytes_done, and does not
+clear any flag. When the subsequent fatal error triggers queue
+teardown, nvmet_tcp_uninit_data_in_cmds() iterates all commands,
+checks nvmet_tcp_need_data_in() for each one, and finds that the
+already-uninited command still appears to need data (because
+rbytes_done < transfer_len and cqe->status == 0). It therefore calls
+nvmet_req_uninit() a second time on the same command - a double
+percpu_ref_put against a single percpu_ref_get.
 
-But if a new node was needed, and GFP_NOWAIT allocation did not get one,
-the lock is dropped, xas_nomem() used to allocate, and sequence retried.
-If (that part of) the xarray is unchanged when the lock is reacquired, no
-problem.  But what if the conflict was meanwhile resolved by another
-thread (perhaps even doing the same thing, inserting a folio at that same
-index)?  Isn't there a danger of now putting our folio into the xarray at
-an intermediate rounded-down index?  With !folio_contains() bug to follow,
-when CONFIG_DEBUG_VM=y is checking for that.
-
-Fix this with an xas_set_order() to restore the original xas.xa_index at
-the bottom of the loop, so the retry does a full re-evaluation after
-reacquiring the lock, and cannot reach xas_store() with the wrong index.
-
-Production was suffering from rare SIGILLs and SIGSEGVs, executable text
-found a page away from where it belonged, !folio_contains() bug hit when
-debug enabled: symptoms not seen since this patch went in.
-
-Link: https://lore.kernel.org/562fbfa6-dd6d-0b6a-2461-ed2ff1173bc8@google.com
-Fixes: 200a89c159a7 ("mm/filemap: use xas_try_split() in __filemap_add_folio()")
-Signed-off-by: Hugh Dickins <hughd@google.com>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Cc: Chris J Arges <carges@cloudflare.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Kairui Song <ryncsn@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Shivam Kumar <kumar.shivam43666@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Shivam Kumar <kumar.shivam43666@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/filemap.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/nvme/target/tcp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -944,6 +944,12 @@ unlock:
- 
- 		if (!xas_nomem(&xas, gfp))
- 			break;
-+
-+		/*
-+		 * Lock has been dropped: start again with the original index
-+		 * and order (but now with the memory reserved by xas_nomem()).
-+		 */
-+		xas_set_order(&xas, index, forder);
- 	}
- 
- 	if (xas_error(&xas))
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 3d9a830950ef26..27d001fd882168 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -1227,8 +1227,10 @@ static int nvmet_tcp_try_recv_ddgst(struct nvmet_tcp_queue *queue)
+ 			queue->idx, cmd->req.cmd->common.command_id,
+ 			queue->pdu.cmd.hdr.type, le32_to_cpu(cmd->recv_ddgst),
+ 			le32_to_cpu(cmd->exp_ddgst));
+-		if (!(cmd->flags & NVMET_TCP_F_INIT_FAILED))
++		if (!(cmd->flags & NVMET_TCP_F_INIT_FAILED)) {
++			cmd->req.cqe->status = NVME_SC_CMD_SEQ_ERROR;
+ 			nvmet_req_uninit(&cmd->req);
++		}
+ 		nvmet_tcp_free_cmd_buffers(cmd);
+ 		nvmet_tcp_fatal_error(queue);
+ 		ret = -EPROTO;
+-- 
+2.53.0
+
 
 
