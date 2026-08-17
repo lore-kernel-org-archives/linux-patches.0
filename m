@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3949D3AEF2A;
-	Mon, 17 Aug 2026 13:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32BDE424D75;
+	Mon, 17 Aug 2026 13:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974679; cv=none; b=pFlVm2ir40fI5iAlpB0PEfY49xaGO6/vJkg/6QALAiLIFmnph+R4grwOW/WJ3BS7XB9U0Z1VJ44KDoszAv8h6+HnmyxJDfz0eVRwL5cbV1/seehfYw0wsiTsfvwx69Fe1fctKOyg8hG1aLxG1GO77/JnjLZziKzXa8+rKot2xqs=
+	t=1786974686; cv=none; b=gySExd5MlrgtasQ0Ytap3HXOZXdZvybtE2XMRXl/RZXlAAt0C7er/23n8KfGRiRS+WdgrrqdXGoGgGxRYDYwkxE7l0Aj7CVDLPkyJkCuiPWWfITvKERPh+mPMBhrXa+DjeCkynbz7RALRsaBJksPz6bVTb7Anr+Mm1qqpCpon4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974679; c=relaxed/simple;
-	bh=Jb/XXMmKPL1ZGEB4RH7EMCX6qbluf2znM0zkI6WkA6U=;
+	s=arc-20240116; t=1786974686; c=relaxed/simple;
+	bh=2rZIfAQxcpbJYLPN+RM888iHWjVprCoiudznxkwDkLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dgt1OgL8gViQmRMYLJcyCYoT/3v8nmMAlfjmR6DrJfKhcKxh7MDBSjju50L4fq4777DwDa4/AM1EKncAzhIttUnI6YUwm9z7TAtuSOolhrcpn3ilSVypAJrCW5F6GYV+aQpCD92n5PpmiPZQi3MLkTcXC66NCYFp8J+KufSdadk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+fRAPX4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NEOpBS/vPMZbmhnHsQcusDQqPzmlEYFq07yzc8MMF8BgVVPyvmcGJld6FbGQ/OkRfUjXexkWcdE7Ihpf9E8NZG1wisjP2WdO15rQgKHV6LLkwfORKqFgs1KZMV4UTaz3JxiAJ94UOHLbUJLOb9tQ7XdsRxMApc5KbA5Qx7nglMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osvHYOBr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+fRAPX4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3131F00A3A;
-	Mon, 17 Aug 2026 13:51:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osvHYOBr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A46D91F000E9;
+	Mon, 17 Aug 2026 13:51:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974672;
-	bh=u6u1IBD9ydDiWGxO2Z4kNV549t6Nnnq5+ATsQcj75OA=;
+	s=korg; t=1786974675;
+	bh=MPmgOUZ6bWQYvLhfJEsgN/jXVSi6csMRT+0aPgF8nm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d+fRAPX42XGjB6S90Rxb75gbhcUfUrPaJUFvopY6YEKmsLvY378GkLgwSVY4oHgcW
-	 /CukCxAUIn01/WVk0aCWKHPXWbE74zNiWmIufEhoyO/9CkiCTOcAV9s79jBN/FX2vb
-	 t9D9u1V1/hRTmvQW+8S3LaAYzcWK89uEhS2RTHc0=
+	b=osvHYOBr0O0BGOJ1nPWsRwWvCjGUZEgH38qtBqXOMbVhjG8Z1Hzb1yNht5glLXnNw
+	 y5o4GI0cfNKKJRF9mHI9Q1C3dpiphQpBVL5OVIFTwNejgX0TRX+q0/dddho8gfybGk
+	 1qp14SUuXsZnM2fNvHgS0c6CVu6Ml/4hvQUIAuHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+94c22d92f72f5a235b7d@syzkaller.appspotmail.com,
-	Yun Zhou <yun.zhou@windriver.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Avi Fishman <avifishman70@gmail.com>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 015/250] xfs: handle NULL b_addr in xfs_buf_free
-Date: Mon, 17 Aug 2026 15:29:36 +0200
-Message-ID: <20260817132537.079003746@linuxfoundation.org>
+Subject: [PATCH 6.18 016/250] ARM: npcm: Fix OF node refcount leaks in SMP setup
+Date: Mon, 17 Aug 2026 15:29:37 +0200
+Message-ID: <20260817132537.114222611@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -53,51 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit d852729c5f4f830fbe7413df032e29459b3daf83 ]
+[ Upstream commit 8eb052f48331474c2789d07b7f11165c323bd2f9 ]
 
-When xfs_buf_alloc_backing_mem() fails, xfs_buf_free() is called with
-bp->b_addr still NULL.  The code falls through to the folio_put path
-which calls virt_to_folio(NULL), dereferencing an invalid address and
-causing a kernel crash.
+npcm7xx_smp_boot_secondary() and npcm7xx_smp_prepare_cpus() look up
+the GCR and SCU nodes with of_find_compatible_node(). The returned
+nodes are used for of_iomap(), but the node references are never
+released.
 
- Call Trace:
-  xfs_buf_free+0x25f/0x510
-  xfs_buf_alloc+0xc98/0x19b0
-  xfs_buf_find_insert+0x55/0x14d0
-  xfs_buf_get_map+0x122b/0x17c0
-  xfbtree_init_leaf_block+0x11c/0x4a0
-  xfbtree_init+0x1bb/0x460
-  xrep_rmap_setup_scan+0x100/0x1f0
-  xrep_rmapbt+0x41/0xc0
+of_iomap() does not consume the device node reference, and iounmap()
+only releases the MMIO mapping. Drop each node reference after the
+corresponding mapping attempt.
 
-Fix this by skipping folio_put() when bp->b_addr is NULL.
-
-Fixes: 5076a6040ca1 ("xfs: support in-memory buffer cache targets")
-Reported-by: syzbot+94c22d92f72f5a235b7d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=94c22d92f72f5a235b7d
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Fixes: 7bffa14c9aed ("arm: npcm: add basic support for Nuvoton BMCs")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Reviewed-by: Avi Fishman <avifishman70@gmail.com>
+Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_buf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/mach-npcm/platsmp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/xfs/xfs_buf.c b/fs/xfs/xfs_buf.c
-index 1ca95ef46a73d..441631c736c1c 100644
---- a/fs/xfs/xfs_buf.c
-+++ b/fs/xfs/xfs_buf.c
-@@ -117,7 +117,7 @@ xfs_buf_free(
- 		vfree(bp->b_addr);
- 	else if (bp->b_flags & _XBF_KMEM)
- 		kfree(bp->b_addr);
--	else
-+	else if (bp->b_addr)
- 		folio_put(virt_to_folio(bp->b_addr));
- 
- 	call_rcu(&bp->b_rcu, xfs_buf_free_callback);
+diff --git a/arch/arm/mach-npcm/platsmp.c b/arch/arm/mach-npcm/platsmp.c
+index 41891d3aa1247..4c1fc9983746c 100644
+--- a/arch/arm/mach-npcm/platsmp.c
++++ b/arch/arm/mach-npcm/platsmp.c
+@@ -32,6 +32,7 @@ static int npcm7xx_smp_boot_secondary(unsigned int cpu,
+ 		goto out;
+ 	}
+ 	gcr_base = of_iomap(gcr_np, 0);
++	of_node_put(gcr_np);
+ 	if (!gcr_base) {
+ 		pr_err("could not iomap gcr");
+ 		ret = -ENOMEM;
+@@ -60,6 +61,7 @@ static void __init npcm7xx_smp_prepare_cpus(unsigned int max_cpus)
+ 		return;
+ 	}
+ 	scu_base = of_iomap(scu_np, 0);
++	of_node_put(scu_np);
+ 	if (!scu_base) {
+ 		pr_err("could not iomap scu");
+ 		return;
 -- 
 2.53.0
 
