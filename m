@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870C73F23B1;
-	Mon, 17 Aug 2026 14:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D69E3F23B1;
+	Mon, 17 Aug 2026 14:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978305; cv=none; b=qMGbrzAT1ZMHyoRGmYmv9x0h8n5uPXHo+SYew4NwD3YDIMkrC3/jyl5o3DmCTUSDRh6uj7jarSEo+4T/RGy5sXuV6G6m8KI8l9SYpdmnzoOIJTBHj5hjtV6aNJicBncrF0WIwCgbwkDkxVS3mFTmKGczhJLF/iVZ9g7KHOaFFII=
+	t=1786978308; cv=none; b=XjVRe041SO+b8b3NNKGuk7kmxzoiZ9J5PTuMQ7NxwYSSCih7iSasJP4XFQYNLnt3jCdwsM4E02vtOuP0Omm8KrVGc8i1zZizrocFFVQTrZNafXmZxKvv0xxPeAofw1Bu51LdBCD6RmHxVb6NKBpOxvlqeuJr+n1q+M4mfOifHIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978305; c=relaxed/simple;
-	bh=VpDfjrKxFVqbt83amYezWDS5qTlDwvB5SAkDylwLpHw=;
+	s=arc-20240116; t=1786978308; c=relaxed/simple;
+	bh=iO+JlT/71XwoMLW37HHwXAsZGloO+155UfpukH0vQWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r8JiGy2AGCEiNKej8xPpzqzjC5jnmBZrzzz1Nc5Pkrb27Kus97aOhJuF+QD47H/WkquJpcrDQ7UHfFBbiodhCI8RWaH0cA4Ddex2IocprGV8WyycMWg1JB1jBluAkcgRecZHY/V4E+5OqjXY2eqWE0ehNvnN04aVqqeNKf1oRgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5lx2FCb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=huyVu6n3R0jcp9a8CfwoXcZ+oc8dnhPr6u47g0e9j8EfLByYgQYn4iEi1MjHU63Dc675TF2iec87xEtTXbtTAvPHbLZHZ1AQAuJXx8CwxWd+APgbKhulfJGcoH0J/jU6oA51GbcOyUnMeKBPIDLe8zmppfYGpa0Xdybh7dgA6OI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F9CtAQ81; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5lx2FCb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A3E1F000E9;
-	Mon, 17 Aug 2026 14:51:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F9CtAQ81"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C480F1F000E9;
+	Mon, 17 Aug 2026 14:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978304;
-	bh=hGicOVokmf+r0fVqBUm+OxL23CSU3WejRlEtwk+9h1U=;
+	s=korg; t=1786978307;
+	bh=cp3SIHtZVsf/Mu2/18SnUebRK5R8iWKkdb4UcGN1FSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H5lx2FCbgR53ZLyRLIuFVw4hCoPzUjbwaq1UsKzMdCGiZZvN3xqvYGoD++Q+DbQP7
-	 0Cd2eH1IUXbg9vGv+LLtCZO1OgUj7sq8HZ+KnIN0ImXax6B7BsLLexkxhjfIPGj+SZ
-	 5L7Iu2dLCXfwEhjMLN6GyjfEU17wdPOHIIvrTkoA=
+	b=F9CtAQ81NwXooh0oUPbDaHP6m4L2/3I+dmpijRqclaaClAWCdqvQZAXonWoDaL4op
+	 8xe4WqyIkWnbqangcYJYJ9D7DS/h9KQ07k0SLL5l6sIzXqdL1dMOhMyYJ3bIVCrTOd
+	 5qvJrPlpHYdQQw4L5C1gzCEk+UL9cqHj9t6E1kcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Song Liu <song@kernel.org>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Subject: [PATCH 6.12 173/181] fsverity: Fix silent truncation in bpf_get_fsverity_digest()
-Date: Mon, 17 Aug 2026 15:34:27 +0200
-Message-ID: <20260817132542.496557535@linuxfoundation.org>
+Subject: [PATCH 6.12 174/181] bpf, sockmap: Fix sk_redir use-after-free in send verdict
+Date: Mon, 17 Aug 2026 15:34:28 +0200
+Message-ID: <20260817132542.534974008@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -51,48 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 7c68ed5c5ad4c185ea9654f5d8ee36560277b7dd upstream.
+commit a76624733730e541e4955fdecf506af2f6b20558 upstream.
 
-bpf_get_fsverity_digest() silently truncates the digest if the provided
-buffer is too small.  This is a footgun, and it doesn't match the
-semantics of the equivalent UAPI (FS_IOC_MEASURE_VERITY).
+sk_psock_msg_verdict() takes a socket reference for psock->sk_redir.
+tcp_bpf_send_verdict() copies that pointer while holding the source socket
+lock, but does not take a reference for the local copy before dropping the
+lock around tcp_bpf_sendmsg_redir().
 
-Change it to return -EOVERFLOW instead, matching FS_IOC_MEASURE_VERITY.
+When apply_bytes keeps the cached verdict active, another sendmsg() on the
+same source socket can consume the remaining bytes and release the cached
+reference while the first thread still holds only the raw local pointer:
 
-Fixes: 67814c00de31 ("bpf, fsverity: Add kfunc bpf_get_fsverity_digest")
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Acked-by: Song Liu <song@kernel.org>
+  CPU 0                                  CPU 1
+  sk_redir = psock->sk_redir
+  apply_bytes remains nonzero
+  release_sock(sk)
+                                         lock_sock(sk)
+                                         apply_bytes reaches zero
+                                         psock->sk_redir = NULL
+                                         release_sock(sk)
+                                         tcp_bpf_sendmsg_redir(sk_redir)
+                                         sock_put(sk_redir)
+  tcp_bpf_sendmsg_redir(sk_redir)
+
+The final sock_put() can free sk_redir before CPU 0 dereferences it.
+
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in tcp_bpf_sendmsg_redir+0xf39/0x1020
+  Read of size 8 at addr ffff888108537090 by task poc/87
+  Call Trace:
+   tcp_bpf_sendmsg_redir+0xf39/0x1020
+   tcp_bpf_sendmsg+0x977/0x1a50
+   __sys_sendto+0x32c/0x3a0
+   __x64_sys_sendto+0xdb/0x1b0
+  Allocated by task 85:
+   sk_prot_alloc+0x56/0x210
+   sk_clone+0x6f/0x14b0
+   inet_csk_clone_lock+0x24/0x740
+   tcp_create_openreq_child+0x25/0x2710
+   tcp_v4_syn_recv_sock+0x10a/0xe00
+  Freed by task 0:
+   __kasan_slab_free+0x43/0x70
+   slab_free_after_rcu_debug+0xa6/0x1e0
+   rcu_core+0x50a/0x1850
+  Last potentially related work creation:
+   __sk_destruct+0x3da/0x540
+   sk_psock_destroy+0x81e/0xab0
+   process_one_work+0x63a/0x1070
+
+Take a temporary socket reference while the source socket lock still
+protects psock->sk_redir, and drop it after tcp_bpf_sendmsg_redir()
+returns.  This keeps each unlocked use independent of cached-verdict
+ownership.
+
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/bpf/20260803181232.14743-3-ebiggers@kernel.org
+Link: https://lore.kernel.org/bpf/20260719152207.2892156-1-nicoyip.dev@gmail.com
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/verity/measure.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/ipv4/tcp_bpf.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/verity/measure.c
-+++ b/fs/verity/measure.c
-@@ -143,14 +143,15 @@ __bpf_kfunc int bpf_get_fsverity_digest(
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -455,6 +455,7 @@ more_data:
+ 	case __SK_REDIRECT:
+ 		redir_ingress = psock->redir_ingress;
+ 		sk_redir = psock->sk_redir;
++		sock_hold(sk_redir);
+ 		sk_msg_apply_bytes(psock, tosend);
+ 		if (!psock->apply_bytes) {
+ 			/* Clean up before releasing the sock lock. */
+@@ -475,6 +476,7 @@ more_data:
  
- 	hash_alg = vi->tree_params.hash_alg;
+ 		if (eval == __SK_REDIRECT)
+ 			sock_put(sk_redir);
++		sock_put(sk_redir);
  
-+	out_digest_sz = dynptr_sz - sizeof(struct fsverity_digest);
-+	if (out_digest_sz < hash_alg->digest_size)
-+		return -EOVERFLOW;
-+
- 	arg->digest_algorithm = hash_alg - fsverity_hash_algs;
- 	arg->digest_size = hash_alg->digest_size;
- 
--	out_digest_sz = dynptr_sz - sizeof(struct fsverity_digest);
--
- 	/* copy digest */
--	memcpy(arg->digest, vi->file_digest,
--	       min(hash_alg->digest_size, out_digest_sz));
-+	memcpy(arg->digest, vi->file_digest, hash_alg->digest_size);
- 
- 	/* fill the extra buffer with zeros */
- 	if (out_digest_sz > hash_alg->digest_size)
+ 		lock_sock(sk);
+ 		sk_mem_uncharge(sk, sent);
 
 
