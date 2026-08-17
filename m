@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7420F443E44;
-	Mon, 17 Aug 2026 14:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68EB943BDDE;
+	Mon, 17 Aug 2026 14:36:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977404; cv=none; b=iXsf4vEppuxQdYZS3U5AyAqLMUWUfAtaBODC8zhGCgdbMa52XpXJBnFTuys/rDSlH7AG514SrPvkrLdmMC1tWOQ+tzp7stOY6KZ9gVniVx4jGMFSCP4Z1SBXXerEP4+aZbtju8z8QStGHDjRJ8Z7ZimAwFYpzmY1QLzLvXB7X+E=
+	t=1786977407; cv=none; b=rg8ukzECgVAcMPto4+3rP8JbaLTb+1QURiJ+pcPOKWfSMtFc6XvG7fH5S8jMEL7dnn1OF1ual+xnMFD1pG3JeCuHwGguyNfxh73Bi/0gGoZxgzUhhw6CE94kAd9ZqoJ7Krv/U2+UM1TCLY7qjNibxAFEPT2DW8BEQFD5GxWn4o0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977404; c=relaxed/simple;
-	bh=mpjBHEEuZO0GIRVBytYbxgRx83V8ZgKVe1JLlHqpnyk=;
+	s=arc-20240116; t=1786977407; c=relaxed/simple;
+	bh=RkA9twTGk8XX14phoTNLBowt9PVs8uDgvM6WWFPnyDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eWLt73/9vwXUU1HNfD+x2AlMydLINEYMeHkQeiqXMdbaHQtZHt1SqA8PmFJyqBmdYEEqqHGWKLG+kbFQl1XsfPWj7H6kSfpHen9L8S0QenabgPwj9GfTwU4FqKVutog5Q/mAwDCZmMLJQcYYG87SBL4S9XmtKx0NArrXRms4Tek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xi3CLD/1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HpMvbe4uFcuN3Whgl2u9medVQm02qXQu8fs/sszR4QU23TE/31nmZCLriEmocB9LE9jNzhE9nQIuvsICZ8YE2sSwBMsGi2PHi0dPDDWSc5nNa/yLx7eJScd90aSIkCWiC8Rq4CN9RDNnF6ueIICWiPC2DYhVY18bh2FDscMTOTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTYJKul9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xi3CLD/1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB9121F000E9;
-	Mon, 17 Aug 2026 14:36:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTYJKul9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A88E31F000E9;
+	Mon, 17 Aug 2026 14:36:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977403;
-	bh=95y7oIcHCvWbwNsDwrds1xfBL5Es8d8YJgvETaZX8WA=;
+	s=korg; t=1786977406;
+	bh=eOxLYK1cH4yD1iHXvmGmCcEGzik9rJV7UoH21NaTc9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xi3CLD/1R/17nqa+h2ZNOAMyjL40j7qbWyAFpcJGoSO5Qa5SdseCMzGyCJ42peYOX
-	 fRk/LUngoE/TsDdWrW+MK9Lm8+t3X2n2zj48qReOUptw6eG64WPO2eLaJa5xSlUdzx
-	 1F9y0jgaqQxJfxz0XTiOZR/SGntroqwBbG24n/YA=
+	b=kTYJKul9HvGoiB/nhTaSaelI8F52F1ydxKc+03AQVtVHvxxiNPCj/MSfPsvQeY5NL
+	 XxVGW4FOlhe5H88+99q5LR4EB00I5hkYm4mSh4WehNJ4b259dE0FgAF0ndFX0JdRhP
+	 acEWJQT+XXj6rSgqgls8v30DwJ2CPvr0WPDru3hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 267/456] forcedeth: fix UAF of txrx_stats in nv_remove
-Date: Mon, 17 Aug 2026 15:30:57 +0200
-Message-ID: <20260817132550.438144928@linuxfoundation.org>
+	Matt Vollrath <tactii@gmail.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 5.15 311/456] igbvf: Fix leak in TX DMA error cleanup
+Date: Mon, 17 Aug 2026 15:31:41 +0200
+Message-ID: <20260817132551.917499819@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -53,47 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Matt Vollrath <tactii@gmail.com>
 
-[ Upstream commit 22666ba1420164753d7b0f5a841986b25ace5435 ]
+commit 0565052b7e2f436b7f1541f4849da96dc0aa7a0e upstream.
 
-nv_remove() frees the per-CPU txrx_stats before unregister_netdev().
-Until unregister completes, ndo_get_stats64, the NAPI/xmit data path,
-and nv_close()/drain may still access txrx_stats, leading to a
-use-after-free.
+If an error is encountered while mapping TX buffers, the driver should
+unmap any buffers already mapped for that skb.
 
-Free the stats only after unregister_netdev().
+Because count is incremented before each frag mapping, it will always
+match the correct number of unmappings needed when dma_error is reached.
+Decrementing count before the while loop in dma_error causes an
+off-by-one error. If any mapping was successful before an unsuccessful
+mapping, exactly one DMA mapping (the head) would leak.
 
-Fixes: f4b633b911fd ("forcedeth: use per cpu to collect xmit/recv statistics")
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://patch.msgid.link/20260723092637.2135095-1-chenguang.zhao@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This bug was introduced by a 2010 fix for an endless loop in dma_error.
+All other affected drivers have already been fixed.
+
+Fixes: c1fa347f20f1 ("e1000/e1000e/igb/igbvf/ixgb/ixgbe: Fix tests of unsigned in *_tx_map()")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-4-7-opus
+Signed-off-by: Matt Vollrath <tactii@gmail.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/nvidia/forcedeth.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/igbvf/netdev.c |    2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/nvidia/forcedeth.c b/drivers/net/ethernet/nvidia/forcedeth.c
-index e7be0710220e5..dcde28af8a0dc 100644
---- a/drivers/net/ethernet/nvidia/forcedeth.c
-+++ b/drivers/net/ethernet/nvidia/forcedeth.c
-@@ -6190,10 +6190,10 @@ static void nv_remove(struct pci_dev *pci_dev)
- 	struct net_device *dev = pci_get_drvdata(pci_dev);
- 	struct fe_priv *np = netdev_priv(dev);
+--- a/drivers/net/ethernet/intel/igbvf/netdev.c
++++ b/drivers/net/ethernet/intel/igbvf/netdev.c
+@@ -2203,8 +2203,6 @@ dma_error:
+ 	buffer_info->time_stamp = 0;
+ 	buffer_info->length = 0;
+ 	buffer_info->mapped_as_page = false;
+-	if (count)
+-		count--;
  
--	free_percpu(np->txrx_stats);
--
- 	unregister_netdev(dev);
- 
-+	free_percpu(np->txrx_stats);
-+
- 	nv_restore_mac_addr(pci_dev);
- 
- 	/* restore any phy related changes */
--- 
-2.53.0
-
+ 	/* clear timestamp and dma mappings for remaining portion of packet */
+ 	while (count--) {
 
 
