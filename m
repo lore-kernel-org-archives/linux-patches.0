@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834C53DB964;
-	Mon, 17 Aug 2026 13:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F2E3D0903;
+	Mon, 17 Aug 2026 13:53:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974840; cv=none; b=h4pRTpNihlQyynj2a4XtGywq+5lvPI2tCnAdh2uGBVacTfli7Z5d5XIofSmUWoFUupWC7tr8QSdkMvdsa+QtycJvtv/BIY3BT9S1TXp7fHrwFpNq/7yg10e7Mm0GygglI6Z7eI16rnHJAR1xxAD9Tq0124oZn/6ej+7UFSJr4Jk=
+	t=1786974840; cv=none; b=GJp3byr6n31g0IpPFgsJInQRHIZcX/TeVRCYlUxE0ac+zEdKBhOv1k9lIZ301aj+YIhX5iWZuu9IY6Ht4qh21ckOwyHMFXY4/bmubG7olmmRUmqH6TmWh/keXiqmWQrUDurjRCN1Z6G7hhqZH2d3M8aLUp6Q+rr999v2x1nv+SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1786974840; c=relaxed/simple;
-	bh=zXKIp8edvkhtHkLu7P8mI+SHAbUqUFR+HfixJSBRLLw=;
+	bh=211O0hO0G9YBppwDQjwxJAOuguLyYrfKvmEOSZy0JHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VveXyF+kycRH4QI4zuD5+xWHFu5LjFLOi7gfO7U9LxxY2rKxUlJBHPs86bHczptthOP8f21WxZE2QVWqQrIgNiv9hkVfT3wyHMHM7hSqMEmRwsSN8pg1BKCT5ndG7i1ooA+loIgF2kE3eM4ZtyNK6MWRoUBijuiJneuEPY+PPY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=seWLunuK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b/5LB5DWjOXyORZcfbsMUaLNwE6LPbaowDDqYJueVWrAqOxHe+G3jI7kB+ohv6XEzmIEGHPqA7jXnd9eDA3saNPHX+/NdQFAUv7IiX4Mk2soOSGb35OOoa0NvA0JcZIO9xIY8CrnEFjue0uWnuDQdwJEgwOORNebZoomPfNkbic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8AVKKWm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="seWLunuK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52051F000E9;
-	Mon, 17 Aug 2026 13:53:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8AVKKWm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3D791F00A3D;
+	Mon, 17 Aug 2026 13:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974833;
-	bh=tCMpRvm9hf0+hG9gVTtXiikoZlHVM73m703WOly2uRc=;
+	s=korg; t=1786974830;
+	bh=+XM/upzEnZ1x6qw7D3IrUCYRN+Ppczu0A3kuwm++p0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=seWLunuKMYz5RFIJffT9yoZ2tGgfzugArRcG2FD0e1guRzI/LznS6Dsn93pGOyFWo
-	 omWS2S+cOV/7CCwyNLsr/alHaZmHlEgNvKs4NfnKZDlbJ2opTNuicnd75PyJJgS/oW
-	 d8iKueHvJFSdiY24NH6n6U0bIpdDnYjpKbc9lJeE=
+	b=H8AVKKWmO7Np6IFgX8cTDUE0p7OHP86LFgeN3WxM4Bb5ohqpFdUCZbu/NjGc4XwCz
+	 bKAv6EkGkn1oSCiXN/11xYQIw+214tVZmO2C/EP1YiDra6jFTssoI+48gOSKtekzlx
+	 dUKB8Pvn86VZO/24JHb2fAfOayFmxk6BHTK5nadc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stanislav Fomichev <sdf@fomichev.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 068/250] xsk: validate launch-time metadata size
-Date: Mon, 17 Aug 2026 15:30:29 +0200
-Message-ID: <20260817132539.229774781@linuxfoundation.org>
+Subject: [PATCH 6.18 067/250] xsk: clear metadata pointer when no timestamp is requested
+Date: Mon, 17 Aug 2026 15:30:28 +0200
+Message-ID: <20260817132539.189477901@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -54,113 +54,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Stanislav Fomichev <sdf.kernel@gmail.com>
 
-[ Upstream commit 439ce2dddf3d22129b9113a7881637256a35e936 ]
+[ Upstream commit 9f60a67df8d3c862503bee62bada8e7089cba438 ]
 
-Launch-time metadata extends beyond the first 16 bytes of struct
-xsk_tx_metadata. Reject the request when the registered metadata area does
-not contain the complete field.
+User space can change metadata flags after request processing. Rereading
+them during completion can therefore make the kernel write a timestamp
+that was not requested when the packet was submitted.
 
-Snapshot the validated flags for the generic transmit path and use that
-snapshot for request and completion processing, avoiding inconsistent
-decisions if user space changes the flags concurrently.
+Clear the metadata pointer during request processing unless timestamp
+completion is requested. Completion handling can then use the pointer
+itself instead of rereading the flags.
 
-Note that only xsk_skb_metadata is properly using the flags,
-__xsk_buff_get_metadata ignores them. Next commits address that.
+On the mlx5 multi-packet WQE path metadata is evaluated per batch:
+xsk_tx_metadata_request() runs only for the descriptor that starts a
+session, just like the checksum offload that is applied once through the
+shared WQE. Only that descriptor's pointer is reset, so completion
+handling can record a timestamp for the other descriptors of the session
+regardless of their own XDP_TXMD_FLAGS_TIMESTAMP bit. The write stays
+inside the metadata area; the single-WQE, other zero-copy, and generic
+paths reset the pointer per descriptor and are unaffected.
 
 Fixes: ca4419f15abd ("xsk: Add launch time hardware offload support to XDP Tx metadata")
 Cc: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260727161959.885642-5-sdf@fomichev.me
+Link: https://patch.msgid.link/20260727161959.885642-4-sdf@fomichev.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xdp_sock_drv.h | 17 +++++++++++++----
- net/xdp/xsk.c              | 11 ++++++-----
- 2 files changed, 19 insertions(+), 9 deletions(-)
+ include/net/xdp_sock.h | 14 ++++++++++----
+ net/xdp/xsk.c          |  2 ++
+ 2 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/xdp_sock_drv.h b/include/net/xdp_sock_drv.h
-index dd1d3a6e1b780..ce8315f049684 100644
---- a/include/net/xdp_sock_drv.h
-+++ b/include/net/xdp_sock_drv.h
-@@ -256,21 +256,28 @@ xsk_buff_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr)
- 	0)
- 
- static inline bool
--xsk_buff_valid_tx_metadata(const struct xsk_tx_metadata *meta)
-+xsk_buff_valid_tx_metadata(const struct xsk_buff_pool *pool,
-+			   const struct xsk_tx_metadata *meta, u64 *flags)
+diff --git a/include/net/xdp_sock.h b/include/net/xdp_sock.h
+index b93d6bd368d00..e14e575178940 100644
+--- a/include/net/xdp_sock.h
++++ b/include/net/xdp_sock.h
+@@ -140,13 +140,16 @@ void __xsk_map_flush(struct list_head *flush_list);
+ static inline void xsk_tx_metadata_to_compl(struct xsk_tx_metadata *meta,
+ 					    struct xsk_tx_metadata_compl *compl)
  {
--	return !(meta->flags & ~XDP_TXMD_FLAGS_VALID);
-+	*flags = READ_ONCE(meta->flags);
-+	if (*flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
-+		if (pool->tx_metadata_len <
-+		    offsetofend(struct xsk_tx_metadata, request.launch_time))
-+			return false;
-+	return !(*flags & ~XDP_TXMD_FLAGS_VALID);
++	compl->tx_timestamp = NULL;
++
+ 	if (!meta)
+ 		return;
+ 
+-	if (meta->flags & XDP_TXMD_FLAGS_TIMESTAMP)
+-		compl->tx_timestamp = &meta->completion.tx_timestamp;
+-	else
+-		compl->tx_timestamp = NULL;
++	/* we can only arrive here if the completion timestamp has been
++	 * requested via XDP_TXMD_FLAGS_TIMESTAMP, see xsk_tx_metadata_request
++	 */
++
++	compl->tx_timestamp = &meta->completion.tx_timestamp;
  }
  
- static inline struct xsk_tx_metadata *
- __xsk_buff_get_metadata(const struct xsk_buff_pool *pool, void *data)
- {
- 	struct xsk_tx_metadata *meta;
-+	u64 flags;
- 
- 	if (!pool->tx_metadata_len)
- 		return NULL;
- 
- 	meta = data - pool->tx_metadata_len;
--	if (unlikely(!xsk_buff_valid_tx_metadata(meta)))
-+	if (unlikely(!xsk_buff_valid_tx_metadata(pool, meta, &flags)))
- 		return NULL; /* no way to signal the error to the user */
- 
- 	return meta;
-@@ -465,7 +472,9 @@ xsk_buff_raw_get_ctx(const struct xsk_buff_pool *pool, u64 addr)
- 	return (struct xdp_desc_ctx){ };
+ /**
+@@ -181,6 +184,9 @@ static inline void xsk_tx_metadata_request(struct xsk_tx_metadata **pmeta,
+ 		if (meta->flags & XDP_TXMD_FLAGS_CHECKSUM)
+ 			ops->tmo_request_checksum(meta->request.csum_start,
+ 						  meta->request.csum_offset, priv);
++
++	if (!(meta->flags & XDP_TXMD_FLAGS_TIMESTAMP))
++		*pmeta = NULL;
  }
  
--static inline bool xsk_buff_valid_tx_metadata(struct xsk_tx_metadata *meta)
-+static inline bool
-+xsk_buff_valid_tx_metadata(const struct xsk_buff_pool *pool,
-+			   const struct xsk_tx_metadata *meta, u64 *flags)
- {
- 	return false;
- }
+ /**
 diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index 3b82fb850bee3..ff93fd7ac6317 100644
+index 70c57c5d8e1da..3b82fb850bee3 100644
 --- a/net/xdp/xsk.c
 +++ b/net/xdp/xsk.c
-@@ -699,15 +699,16 @@ static int xsk_skb_metadata(struct sk_buff *skb, void *buffer,
- {
- 	struct xsk_tx_metadata *meta = NULL;
- 	u16 csum_start, csum_offset;
-+	u64 flags;
+@@ -730,6 +730,8 @@ static int xsk_skb_metadata(struct sk_buff *skb, void *buffer,
  
- 	if (unlikely(pool->tx_metadata_len == 0))
- 		return -EINVAL;
- 
- 	meta = buffer - pool->tx_metadata_len;
--	if (unlikely(!xsk_buff_valid_tx_metadata(meta)))
-+	if (unlikely(!xsk_buff_valid_tx_metadata(pool, meta, &flags)))
- 		return -EINVAL;
- 
--	if (meta->flags & XDP_TXMD_FLAGS_CHECKSUM) {
-+	if (flags & XDP_TXMD_FLAGS_CHECKSUM) {
- 		csum_start = READ_ONCE(meta->request.csum_start);
- 		csum_offset = READ_ONCE(meta->request.csum_offset);
- 
-@@ -728,9 +729,9 @@ static int xsk_skb_metadata(struct sk_buff *skb, void *buffer,
- 		}
- 	}
- 
--	if (meta->flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
--		skb->skb_mstamp_ns = meta->request.launch_time;
--	if (!(meta->flags & XDP_TXMD_FLAGS_TIMESTAMP))
-+	if (flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
-+		skb->skb_mstamp_ns = READ_ONCE(meta->request.launch_time);
-+	if (!(flags & XDP_TXMD_FLAGS_TIMESTAMP))
- 		meta = NULL;
+ 	if (meta->flags & XDP_TXMD_FLAGS_LAUNCH_TIME)
+ 		skb->skb_mstamp_ns = meta->request.launch_time;
++	if (!(meta->flags & XDP_TXMD_FLAGS_TIMESTAMP))
++		meta = NULL;
  	xsk_tx_metadata_to_compl(meta, &skb_shinfo(skb)->xsk_meta);
  
+ 	return 0;
 -- 
 2.53.0
 
