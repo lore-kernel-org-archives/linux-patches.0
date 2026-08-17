@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602E82DC783;
-	Mon, 17 Aug 2026 14:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FDE2DC783;
+	Mon, 17 Aug 2026 14:42:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977757; cv=none; b=Sm7T1rQ7U91IsgKUUdZR8GkBd/sjtAgp/5OjHWbZ21ti3eCMkyXn+PPZBn+J4Q9tYYzJMz7tV+ONCHDhHkX0I6giY7G+izNqiJuayBRktcsYlDGjHEOtIQhKUrd0WHbIJ5CWQF1tmckKkI7noCfLuq3R5JFco8Ozr/UmmJaQqYg=
+	t=1786977760; cv=none; b=dCgstEQ/ZbGW8lch/uDhjrHxaY9jQBFPHlbDg7DJLQuv7sRLyX+ybn2lw1cebGAEFHd/HwC9vX/SRpPRdBJiPZ3W02SBt4Yq4UViMKLQet7ACrxQojUFpTR5jxQTQVe4Idk8DZ/ir8CSqkTq3TJR0aG1T5ME8u9VXRkbYCeXzoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977757; c=relaxed/simple;
-	bh=894uWa2af3q2DKHVx/TyLgcQFoBMnpYufBrt2jdWBpg=;
+	s=arc-20240116; t=1786977760; c=relaxed/simple;
+	bh=EDlEL8QXuVd5pkL9ypqWw0dmz8MyPqIFX9dAs9etxKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kByQlM5PhTRQv+eSmE/PHTkanL747GIg2w1PeaUhe4eHOPHP7HmyEOUfXWsxkOiFQmIaDKD8yQ1rIFf0t/22031M70fuBMLbgTV9O2PEzboqMCPhFIPcPnrrGcZJafamt26E82Ds5qlmuLPUoAqcthkO5vttSyPrsBLafaKt6VI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1DyAWka; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z4XleC0LL6aFh51osGzbZB3ievW/av5doP00zBIbs1kJIYJVyo0nPpLiz/uPUW+hAqJw9KP3jXdynUZ6m7gnLldBE8AbTrRfFU2c6286iuJxK9GuLSZXLopez0u2n8F+zeIQUvwS1zjUZ6/SXKOkFYqkhXZ4MXt2o8Akic5GtAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qYZCF4Gq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1DyAWka"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BF51F000E9;
-	Mon, 17 Aug 2026 14:42:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qYZCF4Gq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7C01F000E9;
+	Mon, 17 Aug 2026 14:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977756;
-	bh=3CuoRw+mlrND97WNuhcFZKR3c2w3tJLV6jLmqYJk7xw=;
+	s=korg; t=1786977759;
+	bh=l+eDUMKqwNIfwy+hRKszxxcNnmzetWb3jVWUK13E1JE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k1DyAWkal3Gl1xpX2c5cY9mtLkjbwUZo2w66WKqXTaEUFfCCWg1jPSYEhblenuAMP
-	 a/bdgeIEZ0oYi56cNYYRhZ9w/VjpzDXYNXJrKCuJCDFLPhIssJF6Z1j90oWuPR09Cj
-	 xhr5zPLYh3bDKZNePf3drhulEdjq6dwFpLYLRnq0=
+	b=qYZCF4Gq+gNTf54OnTp4q2i+dcOS91NULwFU2sKMW6F3YKhQXt57rA8HQnUxxS6FA
+	 C2/H2NLe1u/syTKDIcn7RnA9h24j2cDsVPK1Ly4Lfb1nieEZrctGx3u0t87PrwJLBK
+	 oMPvrm+lcD79Eq+7GCtNe2ImfTqaZXMDnOh+eg88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Larisa Grigore <larisa.grigore@nxp.com>,
-	James Clark <james.clark@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 399/456] spi: spi-fsl-dspi: Avoid setup_accel logic for DMA transfers
-Date: Mon, 17 Aug 2026 15:33:09 +0200
-Message-ID: <20260817132554.954253658@linuxfoundation.org>
+	"Wagenaar, C.C.J. (Chris)" <c.c.j.wagenaar@vu.nl>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.15 400/456] Input: evdev - sanitize event type index when fetching event masks
+Date: Mon, 17 Aug 2026 15:33:10 +0200
+Message-ID: <20260817132554.980305958@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,55 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larisa Grigore <larisa.grigore@nxp.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit cac7e5054115fcc41b1cb050af8e8971f7c9b22b ]
+commit 3abd29c61d2ef37c4102cf755b18be53bb9dbea6 upstream.
 
-Repacking multiple smaller words into larger ones to make use of the
-full FIFO doesn't save anything in DMA mode, so don't bother doing it.
+The user-supplied event type index passed to EVIOCGMASK / EVIOCSMASK
+ioctls is used to index the static counts array in evdev_get_mask_cnt()
+and client evmasks array in evdev_get_mask().
 
-Signed-off-by: Larisa Grigore <larisa.grigore@nxp.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Link: https://patch.msgid.link/20250522-james-nxp-spi-v2-8-bea884630cfb@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+While the event type is architecturally bounded by EV_CNT, speculative
+execution may mispredict bounds checks and perform out-of-bounds loads.
+
+Sanitize the event type index in evdev_get_mask_cnt() branchlessly using
+array_index_mask_nospec(). This clamps the index to 0 for safe array
+access and forces the returned count to 0 speculatively when the index
+is out of bounds.
+
+We do not need additional array_index_nospec() calls in evdev_get_mask()
+because evdev_get_mask_cnt() speculatively forces the count (and
+resulting xfer_size) to 0 for out-of-bounds types, preventing any
+speculative memory access to client evmasks array.
+
+Reported-by: "Wagenaar, C.C.J. (Chris)" <c.c.j.wagenaar@vu.nl>
+Cc: stable@vger.kernel.org
+Assisted-by: Antigravity:gemini-3.6-flash
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/anFCAfvxwXB5eJF1@google.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-dspi.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/input/evdev.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
-index 580fdcbcd9b6c..2bf8cc137d31e 100644
---- a/drivers/spi/spi-fsl-dspi.c
-+++ b/drivers/spi/spi-fsl-dspi.c
-@@ -751,8 +751,12 @@ static void dspi_setup_accel(struct fsl_dspi *dspi)
- 	struct spi_transfer *xfer = dspi->cur_transfer;
- 	bool odd = !!(dspi->len & 1);
+--- a/drivers/input/evdev.c
++++ b/drivers/input/evdev.c
+@@ -21,6 +21,7 @@
+ #include <linux/init.h>
+ #include <linux/input/mt.h>
+ #include <linux/major.h>
++#include <linux/nospec.h>
+ #include <linux/device.h>
+ #include <linux/cdev.h>
+ #include "input-compat.h"
+@@ -67,8 +68,10 @@ static size_t evdev_get_mask_cnt(unsigne
+ 		[EV_SND]	= SND_CNT,
+ 		[EV_FF]		= FF_CNT,
+ 	};
++	unsigned long mask = array_index_mask_nospec(type, EV_CNT);
  
--	/* No accel for frames not multiple of 8 bits at the moment */
--	if (xfer->bits_per_word % 8)
-+	/*
-+	 * No accel for DMA transfers or frames not multiples of 8 bits at the
-+	 * moment.
-+	 */
-+	if (dspi->devtype_data->trans_mode == DSPI_DMA_MODE ||
-+	    xfer->bits_per_word % 8)
- 		goto no_accel;
+-	return (type < EV_CNT) ? counts[type] : 0;
++	/* Returns 0 for out-of-bounds types, including speculatively */
++	return counts[type & mask] & mask;
+ }
  
- 	if (!odd && dspi->len <= dspi->devtype_data->fifo_size * 2) {
-@@ -761,10 +765,7 @@ static void dspi_setup_accel(struct fsl_dspi *dspi)
- 		dspi->oper_bits_per_word = 8;
- 	} else {
- 		/* Start off with maximum supported by hardware */
--		if (dspi->devtype_data->trans_mode == DSPI_XSPI_MODE)
--			dspi->oper_bits_per_word = 32;
--		else
--			dspi->oper_bits_per_word = 16;
-+		dspi->oper_bits_per_word = 32;
- 
- 		/*
- 		 * And go down only if the buffer can't be sent with
--- 
-2.53.0
-
+ /* requires the buffer lock to be held */
 
 
