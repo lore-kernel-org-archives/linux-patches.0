@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE44442391;
-	Mon, 17 Aug 2026 15:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492FA442370;
+	Mon, 17 Aug 2026 15:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979796; cv=none; b=XKJMXwmAiynhiksgrx6Ko6XSimj09OVx1MfbgXPDHN2+g2EmViiS2Y8EdeCz8zJ7hRnEikPfgAJl+lZuYw1bDPXyJSiSv08cNAyMvonX4RMvUtXqteyChd3T+O99bWCQmkvLLlOSjfhAA71kCW4IEYSXy4N20SYNbUb1T83fL1A=
+	t=1786979800; cv=none; b=Uo+2HI5QDXAnin8QbsT5by7LVA1UW4o909SOasofVJ8fgPZDKhc1Z4380ab8K+Hr6Qx8fmATuJpCTUPA38sehrhSv1yPD0PrY0x0zwKCNCom7TvNV0P7u4b05/vo6zdHwWbcVbkuPzLqdLsH21favVQoSJ2SQIBkBB7ESSCcib0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979796; c=relaxed/simple;
-	bh=Al1EuNIkc7l9WdmLYH1ICH6nh5IiKPm4aIt12kUd4es=;
+	s=arc-20240116; t=1786979800; c=relaxed/simple;
+	bh=P7NKnc3rA79cTYu0YoUekNWBuN2TObHVzWM42LloWAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D+tXzUDqMFb6WpQ1xpRDwHVsi9aQJZEOyqp7MLZ9eRW6QmXa56+IB/xWq71BDVq84UG+iTZr4Y0y4y3P0Mad7aZSQtBm3+j2lUsq5P+3Uoi3TKXQREd7y7ofo/Pka9OZ5zPZ3VI+nG04FYGRmHjmk+y2JlqVz7tGecVJLpErn5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRj4mCIL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AQiIQxvyRwh1caWC+MHAwLqpM9U9D9/QVW5qt6uEMkwARgQcVflIZ3/RQsSCSSjGYy5h/iYmSJ/MbfOaPkumBGcpRxwu0icGhpcOTDuxUW9vnwGwFtfknu2qSpwxJOipYUdAtOFQ8/OY6kqdoC8AYPbYfFD6teSP4seLxmMd7r0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWdoySJD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRj4mCIL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE591F000E9;
-	Mon, 17 Aug 2026 15:16:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWdoySJD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751831F00A3A;
+	Mon, 17 Aug 2026 15:16:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979791;
-	bh=SqzBwNQJnZKOfKaZ/e557zxFrIy9hzu/QdiQ5N6nkck=;
+	s=korg; t=1786979795;
+	bh=TtdkyhI7GsonkV6pkomUBIKj4OLFl4gdcT2wZxTRA5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tRj4mCILiXyKfsXYsTXBXEnvk8XH5+UYdBZPebbm8ujGvOs8Qy9gCWlr9R899VIjM
-	 SiD+8xS0ECGTXALPPwgsCT6cre7VGTk/omD9K2F4Nx57xPnvLNinaIaj5A0heFjmz0
-	 Mzi2rDCD2bTUW3Z7uRqgkj66qFlVIelZBc6IK6AQ=
+	b=MWdoySJDoppvH0ttEpo/flSKZoIRoJgzsD1OJUS87UYhnXIJjMomI5g66894Za8Mn
+	 Eu9xvO/CvUtyQpFXR2+eD4VGGfTdAYw4jOIkneLfkkgqDEA7+DzXNDdbYxjMD+pVZQ
+	 zBXEns2zZTT0TxUEwBIrW7xRXMAHIx6J4hQ4oNfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sashiko <sashiko-bot@kernel.org>,
+	Aleksandr Mezin <mezin.alexander@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 348/609] hwmon: (lm90) Only report alarms if driver is ready
-Date: Mon, 17 Aug 2026 15:30:44 +0200
-Message-ID: <20260817132555.916501984@linuxfoundation.org>
+Subject: [PATCH 6.1 349/609] hwmon: (nzxt-smart2) DMA-align output buffer
+Date: Mon, 17 Aug 2026 15:30:45 +0200
+Message-ID: <20260817132555.951577840@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,50 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit aa9429edf9fc0e90d6f4da19ea4b5495a54ab117 ]
+[ Upstream commit 080bbf42faf77e6489ab30d5114c5f8f6ccbb1b8 ]
 
-Userspace can read sysfs attributes before driver registration is complete,
-immediately after devm_hwmon_device_register_with_info() has been called.
-At that time, data->hwmon_dev is not yet initialized. This can trigger
-a NULL pointer access since lm90_update_device() and with it
-lm90_update_alarms_locked() will be called. This call schedules
-report_work and lm90_report_alarms(), which passes the still-NULL
-data->hwmon_dev to hwmon_notify_event() and triggers a NULL pointer
-dereference.
+Sashiko reports:
 
-Fix the problem by only scheduling the report and alert workers
-data->hwmon_dev is set.
+When send_output_report() calls hid_hw_output_report(), the underlying USB
+HID core calls usb_interrupt_msg() which maps this buffer directly for DMA.
+
+When the DMA mapping flushes or invalidates the cacheline, it will corrupt
+the adjacent variables (mutex, update_interval) that were modified
+concurrently by the CPU. This causes memory corruption due to cacheline
+sharing on non-coherent CPU architectures (such as ARM or MIPS). The DMA
+API debugging tool (CONFIG_DMA_API_DEBUG) will trigger runtime warnings
+for this violation.
+
+Any operation that triggers send_output_report() (like setting a fan speed
+or updating the interval) causes the USB DMA mapping. On systems with
+non-coherent caches, this structural bug causes immediate and deterministic
+memory corruption.
+
+Align the output buffer to ARCH_DMA_MINALIGN to fix the problem.
 
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: f6d0775119fb9 ("hwmon: (lm90) Rework alarm/status handling")
+Fixes: 53e68c20aeb1 ("hwmon: add driver for NZXT RGB&Fan Controller/Smart Device v2.")
+Cc: Aleksandr Mezin <mezin.alexander@gmail.com>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/lm90.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hwmon/nzxt-smart2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/lm90.c b/drivers/hwmon/lm90.c
-index db595f7d01f8a..7ce75e64cc3ca 100644
---- a/drivers/hwmon/lm90.c
-+++ b/drivers/hwmon/lm90.c
-@@ -1148,7 +1148,7 @@ static int lm90_update_alarms_locked(struct lm90_data *data, bool force)
- 		check_enable = (client->irq || !(data->config_orig & 0x80)) &&
- 			(data->config & 0x80);
+diff --git a/drivers/hwmon/nzxt-smart2.c b/drivers/hwmon/nzxt-smart2.c
+index 02816538d18eb..90df6a7fc88d7 100644
+--- a/drivers/hwmon/nzxt-smart2.c
++++ b/drivers/hwmon/nzxt-smart2.c
+@@ -203,7 +203,7 @@ struct drvdata {
+ 	 */
+ 	struct mutex mutex;
+ 	long update_interval;
+-	u8 output_buffer[OUTPUT_REPORT_SIZE];
++	u8 output_buffer[OUTPUT_REPORT_SIZE] __aligned(ARCH_DMA_MINALIGN);
+ };
  
--		if (force || check_enable)
-+		if (data->hwmon_dev && (force || check_enable))
- 			schedule_work(&data->report_work);
- 
- 		/*
-@@ -1156,7 +1156,7 @@ static int lm90_update_alarms_locked(struct lm90_data *data, bool force)
- 		 * alarms are all clear, and alerts are currently disabled.
- 		 * Otherwise (re)schedule worker if needed.
- 		 */
--		if (check_enable) {
-+		if (check_enable && data->hwmon_dev) {
- 			if (!(data->current_alarms & data->alert_alarms)) {
- 				dev_dbg(&client->dev, "Re-enabling ALERT#\n");
- 				lm90_update_confreg(data, data->config & ~0x80);
+ static long scale_pwm_value(long val, long orig_max, long new_max)
 -- 
 2.53.0
 
