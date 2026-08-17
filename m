@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9247C3F3281;
-	Mon, 17 Aug 2026 14:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773E5314D34;
+	Mon, 17 Aug 2026 14:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975271; cv=none; b=VRm0oQhYX1p50qEo3QygjpDjwhoOVJynckbHz3TpIwrv5kL1P4MD9G7BW02NCZSCY1vdP2UBHHAE5I6bWezlQrdLUAp2DSqEgkxkdfzomr64wqi+AjSzYlmdwjZ0Ryd0he7qlqqrJgsVYLiIPrc0gBkvfFZpMI6K5FmV6J+9MtM=
+	t=1786975274; cv=none; b=fKUy3kEKN/7ZZjsgzjRxHNthKD2JNsJh4mNc+oWfp/sUTmRmdWbZ6dflyswdvoBUTC8iUHQk3/yrjERDDbIevJdJrMdkZirjqVuAAHqf8j9ekCilJu4v/6aYdP4XqO3PBSGHUS8njBIRBJwQEEJ1HD/3Om4/CAEHWxk6yyYY+N0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975271; c=relaxed/simple;
-	bh=RghUN0oPVxLjwIuZCgiYMXmT3SPoSjkPubgJzxozXH8=;
+	s=arc-20240116; t=1786975274; c=relaxed/simple;
+	bh=jbuBtki/0jqgeb+Vop9ekbBOwSLRURn9wh3FM7CL83s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fm6qt0I95oVONdzEmiS6msNon+RsMhlwrn+QP9m5WIcw3Os8U9e9KY87vEdFS25uxMVFc1OzYWobpzkCgSfwpnuHwiKEBN65bYA7vZmgNUd30p3Y7WRbYHkm3ofSkpZlgjrzmJdyymjMqmdhUXxmATpTLYyIQXUg94ZUcv0y8ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBEbXH6P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ngt8Kf8bz9OrhwfobHIHoszbHrqZ61DokvQvn6EHYOS/9xqUcsO+dqslXy4rAslr19IzA2MnOnuXgNMXFmS5ewJd+qC6cRMs5m5QQD2t/jTaAHIQo2C0esTJDIB/pjr8jDFudRLsCjo9v7Y82tMLKqYSywU/w+MmhIWvnTyXd34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WeVrRfwm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBEbXH6P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9EC41F000E9;
-	Mon, 17 Aug 2026 14:01:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WeVrRfwm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA1B1F000E9;
+	Mon, 17 Aug 2026 14:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975270;
-	bh=VO4Ht3wGELVBTkNjlMVI1JAS4D8Y10trjSOy+FtJ6Pc=;
+	s=korg; t=1786975273;
+	bh=MPIFLfSG+R+yS4wkrNZK2YwH82ePptjvdIJApRq7ak4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NBEbXH6PFxk0/HgBH6wnwy/up/YHrYczsVh4Kt9MjFtzcFokT/rh6ThOTx8NdsT2W
-	 LTUb3WigVzqUblmYW+ggHLodCV81WNOp2x5NNpe2wc0LJmZFhJtyqOJl7wa54ytdlr
-	 1JZ8wrDKyxeQSMh7yj0IypKg+EHEAydiHUvXIHJM=
+	b=WeVrRfwmsAYJNhlQ/k9IK6Xy3T0AdZwbhqHizmDg6nrJnjUx7b1VOWnprYZqdiWJ1
+	 zeaipip1UjbXusXkkb2sZN7PmHVyCJKR+YBWndq1KC9CDnJr+PXvz9HKfOHrZ7bILd
+	 U5Un07Op8T9HZ8Hl4w6lKuZuBQxmLpNEnckqusig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	chanyoung <ppoo1220@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 221/250] tls: dont leave a full plaintext sk_msg ring unpushed
-Date: Mon, 17 Aug 2026 15:33:02 +0200
-Message-ID: <20260817132545.551200913@linuxfoundation.org>
+	stable@kernel.org,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Jun Yang <junvyyang@tencent.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 222/250] tipc: read le->link under the node lock in tipc_node_link_down()
+Date: Mon, 17 Aug 2026 15:33:03 +0200
+Message-ID: <20260817132545.591295834@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,74 +53,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: chanyoung <ppoo1220@gmail.com>
+From: Jun Yang <junvyyang@tencent.com>
 
-commit 7bca91d63341274e857f4aeaad54d229405e93dc upstream.
+commit cba9ccb47e9fa4cc77692fb896cc5ab57a667882 upstream.
 
-When the copy path in tls_sw_sendmsg_locked() adds the fragment that fills
-the plaintext sk_msg ring, it does not set full_record, so the record is
-left full and unpushed.  A later splice() then adds to an already full
-ring: sk_msg_page_add() has no fullness check of its own, so sg.end wraps
-onto sg.start and the ring appears empty.  Fragments added after that
-overwrite live entries, and sg.size no longer matches what is reachable
-between sg.start and sg.end, so pushing the record runs the scatterwalk off
-the end of the scatterlist.
+tipc_node_link_down() caches the link pointer before taking n->lock:
 
-An unprivileged user can trigger this on a loopback TCP socket with the
-"tls" ULP attached:
+	struct tipc_link *l = le->link;		/* unlocked */
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000008
-  RIP: 0010:memcpy_from_scatterwalk+0x32/0xc0
-  Call Trace:
-   skcipher_walk_next+0x1d1/0x2c0
-   gcm_encrypt_aesni_avx+0x1e9/0x220
-   bpf_exec_tx_verdict+0x3bb/0x860
-   tls_sw_sendmsg+0xa1a/0xca0
-   __sys_sendto+0x1da/0x1f0
+	if (!l)
+		return;
+	tipc_node_write_lock(n);
+	if (!tipc_link_is_establishing(l)) {	/* deref l */
+	...
+		tipc_link_reset(l);		/* write into l */
+	if (delete) {
+		kfree(l);
+		le->link = NULL;
 
-Set full_record in the copy path when the ring becomes full, and push a
-record that is already full on entry to the sendmsg loop.
+The delete=true caller frees that very object under n->lock, so the lock
+does not protect the cached pointer against it:
 
-Suggested-by: Sabrina Dubroca <sd@queasysnail.net>
-Fixes: fe1e81d4f73b ("tls/sw: Support MSG_SPLICE_PAGES")
-Cc: stable@vger.kernel.org
-Signed-off-by: chanyoung <ppoo1220@gmail.com>
-Link: https://patch.msgid.link/20260804052837.49015-2-ppoo1220@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+ - CPU A, delete=false: tipc_rcv() on TIPC_LINK_DOWN_EVT, or the link
+   supervision timer via tipc_node_timeout(), reads l unlocked and then
+   dereferences it under n->lock;
+ - CPU B, delete=true: netlink TIPC_NL_BEARER_DISABLE -> bearer_disable()
+   -> tipc_node_delete_links() -> tipc_node_link_down(n, bearer_id, true)
+   -> kfree(l).
+
+The link is freed with plain kfree(), not kfree_rcu(), and for UDP bearers
+disable_media() only schedules the asynchronous cleanup_bearer() work, so
+its synchronize_net() runs after the links are already gone.  An in-flight
+CPU A that has read l therefore dereferences freed memory once B frees it:
+a use-after-free read in tipc_link_is_establishing(), and a use-after-free
+write via tipc_link_reset() on the establishing branch.
+
+The following trace was captured on 7.2.0-rc5-00284-gaf39eb111ce6:
+
+  BUG: KASAN: slab-use-after-free in tipc_link_is_establishing (net/tipc/link.c:285)
+  Read of size 4 at addr ffff88802e2aa068 by task swapper/2/0
+   tipc_link_is_establishing (net/tipc/link.c:285)
+   tipc_node_link_down (net/tipc/node.c:1076)
+   tipc_node_timeout (net/tipc/node.c:843)
+  Allocated by task 9549:
+   tipc_link_create (net/tipc/link.c:490)
+   tipc_node_check_dest (net/tipc/node.c:1279)
+   tipc_disc_rcv (net/tipc/discover.c:252)
+   tipc_udp_recv (net/tipc/udp_media.c:389)
+  Freed by task 9549:
+   tipc_node_link_down (net/tipc/node.c:1084)
+   tipc_node_delete_links (net/tipc/node.c:1320)
+   bearer_disable (net/tipc/bearer.c:414)
+   __tipc_nl_bearer_disable (net/tipc/bearer.c:992)
+
+Move the le->link read inside tipc_node_write_lock(), so it is serialised
+against the kfree() in the delete path.  A racing teardown now either has
+not run yet, and we see a valid link, or has already run, and we see NULL.
+
+Fixes: 73f646cec354 ("tipc: delay ESTABLISH state event when link is established")
+Cc: stable@kernel.org
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Assisted-by: tencentos-corvus-ai:kimi-k3
+Signed-off-by: Jun Yang <junvyyang@tencent.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260810102147.48191-1-juny24602@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ net/tipc/node.c |   15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1116,6 +1116,14 @@ static int tls_sw_sendmsg_locked(struct
- 		if (!sk_stream_memory_free(sk))
- 			goto wait_for_sndbuf;
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -1061,18 +1061,23 @@ static void __tipc_node_link_down(struct
  
-+		/* open record may be full if we couldn't push it in the last sendmsg call */
-+		if (sk_msg_full(msg_pl)) {
-+			full_record = true;
-+			sk_msg_trim(sk, msg_en,
-+				    msg_pl->sg.size + prot->overhead_size);
-+			goto copied;
-+		}
-+
- alloc_encrypted:
- 		ret = tls_alloc_encrypted_msg(sk, required_size);
- 		if (ret) {
-@@ -1216,6 +1224,12 @@ fallback_to_reg_send:
- 						       msg_pl, try_to_copy);
- 			if (ret < 0)
- 				goto trim_sgl;
-+
-+			if (sk_msg_full(msg_pl)) {
-+				full_record = true;
-+				sk_msg_trim(sk, msg_en,
-+					    msg_pl->sg.size + prot->overhead_size);
-+			}
- 		}
+ static void tipc_node_link_down(struct tipc_node *n, int bearer_id, bool delete)
+ {
+-	struct tipc_link_entry *le = &n->links[bearer_id];
+ 	struct tipc_media_addr *maddr = NULL;
+-	struct tipc_link *l = le->link;
+ 	int old_bearer_id = bearer_id;
++	struct tipc_link_entry *le;
+ 	struct sk_buff_head xmitq;
+-
+-	if (!l)
+-		return;
++	struct tipc_link *l;
  
- 		/* Open records defined only if successfully copied, otherwise
+ 	__skb_queue_head_init(&xmitq);
+ 
++	/* Synchronize the link lookup with bearer teardown. */
+ 	tipc_node_write_lock(n);
++	le = &n->links[bearer_id];
++	l = le->link;
++	if (!l) {
++		tipc_node_write_unlock_fast(n);
++		return;
++	}
++
+ 	if (!tipc_link_is_establishing(l)) {
+ 		__tipc_node_link_down(n, &bearer_id, &xmitq, &maddr);
+ 	} else {
 
 
