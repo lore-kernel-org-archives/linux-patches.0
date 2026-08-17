@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39ABD2C237E;
-	Mon, 17 Aug 2026 13:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A44C3C81B9;
+	Mon, 17 Aug 2026 13:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975152; cv=none; b=s9wcx6t/Y5YSkVO/xosJJFI/EpX27tuziBTEQiaBuBrYGgzv5tfyH80Mq2WSFdBNH2rrO7+PPZV4lboOlnZoE800/9CPV9PS6Shrb7ltXfUYcZW2O/kN9OOGWq8lRBtM03vpUzw+hkE0kEiMzuwPQxqeVtMOKLTH4sVNllbR1mg=
+	t=1786975155; cv=none; b=VqyhPGjVcnauzwIZ/C+BPSBUV/NX7IvEMzqFfT7OWAN0lbW0oJUqHmtA1Xi4mbSlXdXe6+ZIlewjP6JmC+vhldXbW/5BZSaudxjR+op9apW8SYrh0malLCR/XzuhofI3UzvieHRGH1bfa4dWe4j4NuT1PQYCtuiftHp6T0WUMwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975152; c=relaxed/simple;
-	bh=r0y0xEGWf2zLiAwZ8p4OW+dCpybpBcfM1YSRiJaUguU=;
+	s=arc-20240116; t=1786975155; c=relaxed/simple;
+	bh=ER3vmJ/A661eIpFna95AbrpQZ6kLWjx5mAb3+dAnGbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r2DqwOmBuJM49Zq+7nzpIIzw1/S1QjJYw18E7FX+2pt2ezdBTYL5jOFN38cOI2fNw0JYtQOgdqzJZFFXnqiGQrB4db5GDFCug+QEjRWGnPwDYiATSELbGcKpiDq+UXT2LYRrv9r3Bumvr4KRtQI3Wyi0dXvapZKY+Y0iRr6oLzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcn/GVCL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TxM9Ol+MExIuo5B4hFlMb9WJpWrG96VvTYlDe/JZvCGR9mDWQfHMb4rwpTE9W/ARUZGorrF7JuGz9miNZszsDvWbZD2Yw4A3TZ0cw6WtFGw3r0nPRqOeMiEuhaxqWQj9/t+YmdNMbwYtKhXtSWy5ItoUI5ADSnrib7JpcMd6NgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hazQaeOY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcn/GVCL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9023B1F000E9;
-	Mon, 17 Aug 2026 13:59:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hazQaeOY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7541C1F000E9;
+	Mon, 17 Aug 2026 13:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975151;
-	bh=vbZ7JJuyO/OBl9v/4sPqTffuiJTVxdREs2Xne1At0KQ=;
+	s=korg; t=1786975154;
+	bh=XnM7qdzymROjkoiHFHUEmLwyzk0PdedPDz6w7nmgN1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hcn/GVCLYv2jO9J+Cn1C8IYgf3m5L9uuEOhqbR8e++xdfP5n8gqE+39a/1rjmzUav
-	 hynN2r97lS53Z9bC3qMbxQAhMDYw7DdA9GxNHVuMNoh166zyYXC2YwMBJRbt91HzIk
-	 Rhv5EatDsnc6gm+LSrmD1XoLPXgArQ+qzAefQ3lM=
+	b=hazQaeOY7W/VrBBQUSZAUvWLSnY1mjo+6G41UWH2c+w2hV8fKqg9xKd1GEJuDMT+j
+	 /ltawCN5VGfC1auTd0DeOQXYaENxCbFalDCBe7jqLHj+RAP2w+acJY9v0wUhy7DW0c
+	 T5Ktu03974yBbbIf36zbq85qrqYIZV1GLtZd7h3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	SJ Park <sj@kernel.org>,
-	liyouhong <liyouhong@kylinos.cn>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 180/250] mm/damon/ops-common: putback folios on invalid migrate nid
-Date: Mon, 17 Aug 2026 15:32:21 +0200
-Message-ID: <20260817132543.946925031@linuxfoundation.org>
+Subject: [PATCH 6.18 181/250] samples/damon/mtier: error out for zero quota goal target values
+Date: Mon, 17 Aug 2026 15:32:22 +0200
+Message-ID: <20260817132543.986526587@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,54 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: liyouhong <liyouhong@kylinos.cn>
+From: SJ Park <sj@kernel.org>
 
-commit 5deb65c34e682e7c5f5df417a70e223e8fcc5f5a upstream.
+commit a16fd3ad9d89b05475864da97327870464611736 upstream.
 
-damon_pa_migrate() and damos_va_migrate() isolate folios into a local list
-and then call damon_migrate_pages().  When target_nid is invalid
-(including the scheme default NUMA_NO_NODE / -1), damon_migrate_pages()
-returns early without putting the folios back to the LRU.
+Patch series "mm/damon: avoid division by zero from damos_quota_score()".
 
-Callers then discard the list head while those folios remain isolated with
-an extra reference taken by folio_isolate_lru().  The pages stay off the
-LRU for as long as the mapping exists (anon active+inactive counts drop
-while RSS does not), and the leftover references can pin the pages after
-the mapping is gone.
+DAMON_SAMPLE_MTIER and DAMON_LRU_SORT allow the user to trigger division
+by zero in damos_quota_score().  Avoid it by adding parameters validation
+checks.
 
-Put the folios back on the invalid-nid path so ignored migration requests
-still return them to the LRU.
 
-Link: https://lore.kernel.org/20260726014815.1280757-1-dayou5941@163.com
-Fixes: 7e6c3130690a ("mm/damon/ops-common: ignore migration request to invalid nodes")
-Assisted-by: Cursor:grok-4.5
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: liyouhong <liyouhong@kylinos.cn>
-Cc: <stable@vger.kernel.org>
+This patch (of 2):
+
+damos_quota_score() can trigger division by zero if the target_value is
+zero.  DAMON_SAMPLE_MTIER lets users set the target_value via
+node0_mem_{used,free}_bp parameters.  It doesn't guard zero value case,
+though.  As a result, users can trigger division by zero.  Fix the issue
+by returning an error when the user tries to start DAMON with zero
+node0_mem_{used,free}_bp parameter values.
+
+DAMON_SAMPLE_MTIER is just a sample module, but the consequence is quite
+bad.  Also the zero node0_mem_free_bp parameter might look like a
+reasonable setup to some users.  Hence, the issue might really happen in
+the real world.
+
+One reliable way to reproduce the issue is like below:
+
+    # cd /sys/module/damon_sample_mtier/parameters
+    # echo 4096 > node0_start_addr
+    # echo 8192 > node0_end_addr
+    # echo 8192 > node1_start_addr
+    # echo 81920 > node1_end_addr
+    # echo 0 > node0_mem_free_bp
+    # echo Y > enabled
+    # dmesg -w
+    [...]
+    [18792.235916] Oops: divide error: 0000 [#1] SMP NOPTI
+    [...]
+    [18792.242787] RIP: 0010:damos_quota_score+0x6f/0x480
+    [...]
+
+This issue was discovered [1] by Sashiko.
+
+Link: https://lore.kernel.org/20260803134034.15217-1-sj@kernel.org
+Link: https://lore.kernel.org/20260803134034.15217-2-sj@kernel.org
+Link: https://lore.kernel.org/20260801202657.117135-1-sj@kernel.org [1]
+Fixes: c5e67d40a102 ("samples/damon/mtier: add parameters for node0 memory usage")
+Signed-off-by: SJ Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 6.17.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/ops-common.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ samples/damon/mtier.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -385,8 +385,15 @@ unsigned long damon_migrate_pages(struct
- 		return nr_migrated;
- 
- 	if (target_nid < 0 || target_nid >= MAX_NUMNODES ||
--			!node_state(target_nid, N_MEMORY))
-+			!node_state(target_nid, N_MEMORY)) {
-+		while (!list_empty(folio_list)) {
-+			struct folio *folio = lru_to_folio(folio_list);
-+
-+			list_del(&folio->lru);
-+			folio_putback_lru(folio);
-+		}
- 		return nr_migrated;
-+	}
- 
- 	noreclaim_flag = memalloc_noreclaim_save();
- 
+--- a/samples/damon/mtier.c
++++ b/samples/damon/mtier.c
+@@ -153,6 +153,9 @@ static struct damon_ctx *damon_sample_mt
+ 	if (!scheme)
+ 		goto free_out;
+ 	damon_set_schemes(ctx, &scheme, 1);
++	/* zero target value causes division by zero in damos_quota_store() */
++	if (!node0_mem_used_bp || !node0_mem_free_bp)
++		goto free_out;
+ 	quota_goal = damos_new_quota_goal(
+ 			promote ? DAMOS_QUOTA_NODE_MEM_USED_BP :
+ 			DAMOS_QUOTA_NODE_MEM_FREE_BP,
 
 
