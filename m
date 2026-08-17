@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E1E83F1AD5;
-	Mon, 17 Aug 2026 14:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26BA3A8734;
+	Mon, 17 Aug 2026 14:24:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976674; cv=none; b=i/m2PXdizwFV0GmX7AiTjBoXyQ0/EYLmMeac7WWL68aMx0GMw1EsRE78mv4OOc482DkdZgdpuuwUWiNkt1OSTgTH9S3x0gGvcHOURA2FlO9ERm54LZOL2Mv9I5HVgMrIdcHecZemDSWwIMlmo8dkCcIZf441G1fzRAbaEpJPVrM=
+	t=1786976675; cv=none; b=dYbCU9ISJ2iVzWQkGKG3GWZDA1+3lrd0tbJ6LZxRkq/I08XCCHGFsvwYuJ8wEthVQyzEf1HRU5ZRE8vTZPQmVoTy+ZBaeMzgmQMDmjuZuNEXL/E3JKvmvkrKecHrgvR8n+66D1UgaLPluHEu8HV90RAj3nk7VIVUbR7pgha9ISo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976674; c=relaxed/simple;
-	bh=MkNr9O9GxcdhCnB4ruyKFzPwArYQ18ATDEWLz+WofNo=;
+	s=arc-20240116; t=1786976675; c=relaxed/simple;
+	bh=9K4CBQyy2E3lMShSnahc80O0QkcXzjqDDjuljdJ9S7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hw/534217dKhrwuNT62B9q2V4Dz5UxqEqAof2f2CjtgyuyUODlV0C2vV+7AK0meZfVeg4e4eaoL6Hy8yYzGxLLwSR/VSsvKwPtJ79Du2HQWdvrGt2D8oF0PW5fAmPATn2c6Z7oOWL3Bu+drB9yDrY9IrFjj/ErXjJYQRlk5XBxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xRoOLX0a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lneMTM6pBmc+Nd0l2BBbNOglF5J2SM9ggXELJ4lMT8Bj6+1EmEeck0NKe34ZLn1D84gFV0afgvi4mpCA/2SuHs6d9a8geMEj4TTwGeoBV36u8Yg/bFA64p7rAJ0LYG3fAecVLTdPzImGVZ0KcC8JezF1Lt4YEHRuJ0Gx2E50Nm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kpuvICQK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xRoOLX0a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7751F000E9;
-	Mon, 17 Aug 2026 14:24:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kpuvICQK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F1401F00A3D;
+	Mon, 17 Aug 2026 14:24:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976668;
-	bh=trHSyAdBih5YE3aPSMhUTNJ9HgKFJYETXcyC5hbOSw4=;
+	s=korg; t=1786976671;
+	bh=LLPQZSXoXTApYcKxgHTdqsCefq52To4McF5WK8wLKAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xRoOLX0abRPkVVv0yr0v8SCAwgP+PLrqTEh3Qq8sxrLvRgKdLeEddocTSOg97wwzS
-	 Lbd56nUoDpPEEA7LRnhtaAP0ULzDva0n/H9391rUtGMOHeJldeTRKbflbhPLZlqW/2
-	 xYGT1+ZsNBtnQZtRPL/1xljSVhNKkF3qfOm5tO0s=
+	b=kpuvICQK4PwJLebl9nlD/8y7qWWieWTvygsJKHtD78Gs/h99TreqmMKZmIQVEbf/h
+	 ldUS85J130TOSPOk0AtMfWnNqjXGIu4wsZs4ClOz4PoVVdeE4hrZMlbBVxlZQ9lhBB
+	 FPcmyEleUFkAnDMC1SQFKHdQL5kMyeBMFAu4w4a0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 024/456] wifi: ipw2100: fix potential memory leak in ipw2100_pci_init_one()
-Date: Mon, 17 Aug 2026 15:26:54 +0200
-Message-ID: <20260817132540.927006812@linuxfoundation.org>
+Subject: [PATCH 5.15 015/456] btrfs: reject free space cache with more entries than pages
+Date: Mon, 17 Aug 2026 15:26:45 +0200
+Message-ID: <20260817132540.500053790@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,58 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 0d388f62031dbabcba0f44bb91b59f10e88cac17 ]
+[ Upstream commit a2d8d5647ed854e38f941741aea45b9eb15a6350 ]
 
-The memory allocated in the ipw2100_alloc_device() function is not freed
-in some of the error paths in ipw2100_pci_init_one(). Fix that by
-converting the direct return into a goto to the error path return.
+When loading a v1 free space cache, __load_free_space_cache() takes
+num_entries and num_bitmaps straight from the on-disk
+btrfs_free_space_header. That header is stored in the tree_root under a key
+with type 0, which the tree-checker has no case for, so neither count is
+validated before the load trusts it.
 
-The error path when pci_enable_device() fails cannot jump to fail, since
-at this point priv is not set, so perform error handling inline.
+The load loops num_entries times and maps the next page whenever the current
+one runs out, going through io_ctl_check_crc() -> io_ctl_map_page(), which
+does io_ctl->pages[io_ctl->index++]. But pages[] is allocated in
+io_ctl_init() from the cache inode's i_size, not from num_entries:
 
-Fixes: 2c86c275015c ("Add ipw2100 wireless driver.")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Link: https://patch.msgid.link/20260620065242.93798-1-nihaal@cse.iitm.ac.in
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+	num_pages = DIV_ROUND_UP(i_size_read(inode), PAGE_SIZE);
+	io_ctl->pages = kcalloc(num_pages, sizeof(struct page *), GFP_NOFS);
+
+So if num_entries claims more records than the pages can hold, io_ctl->index
+runs off the end of pages[]. The write side never hits this because
+io_ctl_add_entry() and io_ctl_add_bitmap() both stop once
+io_ctl->index >= io_ctl->num_pages; the read side just never had the same
+check.
+
+To trigger it, take a clean cache (num_entries = <N> here), set num_entries
+in the header to 0x10000, and fix up the leaf checksum so it still passes
+the tree-checker. The cache inode has i_size = 65536, so num_pages is 16 and
+pages[] is a 16-pointer (kmalloc-128) array. The load now tries to read
+65536 entries, io_ctl->index walks up to 16, and pages[16] is read past the
+array:
+
+  BUG: KASAN: slab-out-of-bounds in io_ctl_check_crc (fs/btrfs/free-space-cache.c:420 fs/btrfs/free-space-cache.c:565)
+  Read of size 8 at addr ffff88800c833a80 by task kworker/u8:3/58
+   io_ctl_check_crc (fs/btrfs/free-space-cache.c:420 fs/btrfs/free-space-cache.c:565)
+   __load_free_space_cache (fs/btrfs/free-space-cache.c:655 fs/btrfs/free-space-cache.c:820)
+   load_free_space_cache (fs/btrfs/free-space-cache.c:1017)
+   caching_thread (fs/btrfs/block-group.c:880)
+   btrfs_work_helper (fs/btrfs/async-thread.c:312)
+   process_one_work
+   worker_thread
+   kthread
+   ret_from_fork
+
+free-space-cache.c:420 is io_ctl_map_page(), inlined into io_ctl_check_crc()
+at line 565, which is why that is the frame KASAN names. The out-of-bounds
+slot is then treated as a struct page and handed to crc32c(), so the bad
+read turns into a GP fault.
+
+Add the missing check to io_ctl_check_crc(), which is where both the entry
+loop and the bitmap loop end up. When num_entries is too large the load now
+fails like any corrupt cache: __load_free_space_cache() drops it and rebuilds
+the free space from the extent tree, so a valid cache is never rejected.
+
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Fixes: 5b0e95bf607d ("Btrfs: inline checksums into the disk free space cache")
+Link: https://lore.kernel.org/linux-btrfs/CAPpSM+RMPByMCKXvM5QFKToxsyNccfuFLWMdD0mfd0wh2Ja62w@mail.gmail.com/
+Assisted-by: Claude:claude-opus-4-8
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/ipw2x00/ipw2100.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/btrfs/free-space-cache.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/ipw2x00/ipw2100.c b/drivers/net/wireless/intel/ipw2x00/ipw2100.c
-index 47eb89b773cf7f..c954e6001eab17 100644
---- a/drivers/net/wireless/intel/ipw2x00/ipw2100.c
-+++ b/drivers/net/wireless/intel/ipw2x00/ipw2100.c
-@@ -6183,6 +6183,8 @@ static int ipw2100_pci_init_one(struct pci_dev *pci_dev,
- 	if (err) {
- 		printk(KERN_WARNING DRV_NAME
- 		       "Error calling pci_enable_device.\n");
-+		free_libipw(dev, 0);
-+		pci_iounmap(pci_dev, ioaddr);
- 		return err;
- 	}
+diff --git a/fs/btrfs/free-space-cache.c b/fs/btrfs/free-space-cache.c
+index ed8729c990883b..3ffcb6217b530f 100644
+--- a/fs/btrfs/free-space-cache.c
++++ b/fs/btrfs/free-space-cache.c
+@@ -528,6 +528,9 @@ static int io_ctl_check_crc(struct btrfs_io_ctl *io_ctl, int index)
+ 	u32 crc = ~(u32)0;
+ 	unsigned offset = 0;
  
-@@ -6195,16 +6197,14 @@ static int ipw2100_pci_init_one(struct pci_dev *pci_dev,
- 	if (err) {
- 		printk(KERN_WARNING DRV_NAME
- 		       "Error calling pci_set_dma_mask.\n");
--		pci_disable_device(pci_dev);
--		return err;
-+		goto fail;
- 	}
++	if (index >= io_ctl->num_pages)
++		return -EIO;
++
+ 	if (index == 0)
+ 		offset = sizeof(u32) * io_ctl->num_pages;
  
- 	err = pci_request_regions(pci_dev, DRV_NAME);
- 	if (err) {
- 		printk(KERN_WARNING DRV_NAME
- 		       "Error calling pci_request_regions.\n");
--		pci_disable_device(pci_dev);
--		return err;
-+		goto fail;
- 	}
- 
- 	/* We disable the RETRY_TIMEOUT register (0x41) to keep
 -- 
 2.53.0
 
