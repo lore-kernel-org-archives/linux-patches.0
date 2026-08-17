@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339313AAF76;
-	Mon, 17 Aug 2026 14:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7142D5A01;
+	Mon, 17 Aug 2026 14:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975617; cv=none; b=usiLmXchEnVxEVmmo3ZK6yIQ9Z2X3XbtSwomok0EYZl/23va4BVPZLVmWVg3Lop4MC+OArkvrWPeIXTAKTjh9XnGxWfSubUVCho+90ltuSBF3gP0qL5/afbaNnLHJKd1k0Dy18VPbPSMsqjK8mnRHW7aidE7QTQu4UlT0z8JJqk=
+	t=1786975620; cv=none; b=nvs7qWCq8CxX03BUXdNfdccCFBGc/qchJhucFTPxn1LCqMrZ6pyjU6fw/Qa/gE7b514u8tgyOERPB9TwiyVx0jg5iHkjNARxluiktb+5ITRPLRYOilkbkUYJbyADTuR8F2mnpEhX+DleY+k0vK/ND/FIY0udVxP6aiRfafzgoVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975617; c=relaxed/simple;
-	bh=aLEytHHqFZgKtGQFQI2yd2ZznbMiVTITvC3iyEdN6ws=;
+	s=arc-20240116; t=1786975620; c=relaxed/simple;
+	bh=SBCNSmRU37r0bfQ9yl75V6/yUCNOnegkloTV+CbnxtI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OyqefyIl8ZFQJ+NFrhBFanJcWBPKnIVNZFkvr2bWy4Los2FwqKPYqVAaOJRukvEwVkT4tRctfHb3Hq0zZ49d/i9yiOBb/se4McrpE+uVJ9PO74jQKCKE4BSpYjxytw+HLg1kZmqmRzCRcMXgfpOjQWr7ogo9uEJ0J3JgY9fAcKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F0WY99xS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HRqn9OK3vV9haDkjHjwRxWGPHg+xlqRWAFx09gd7LtErXz/eD4/bxVUucTxtbudcyCrVNDc4VEzUQ4XBlrxBgRMhPL5BmGcdMlkRQGy5TvDekSL6s07sECOYh/RN1K84hmJYm207LzYO9DlHL4GjckfDx+XIsGNJeuKl490I5R8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5D8OURU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F0WY99xS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8686B1F000E9;
-	Mon, 17 Aug 2026 14:06:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5D8OURU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569721F000E9;
+	Mon, 17 Aug 2026 14:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975616;
-	bh=bXZtLPcvnops/oLnGjRrRiBC1tu8SPDZYsnXtChXs6I=;
+	s=korg; t=1786975618;
+	bh=jIAfEkShMEIs3IgCYYp3CLXn/ZG0O2ERbDxu89bjG0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F0WY99xSNmKv8Rs5ZY36XBN2zZRiooREblGjb705eQEwVF+Virjimdw4UetiaTBqV
-	 GwNyS4AWgl9+E3AM7NEicmC7NN4I6ZCZ+D6gFAgoaxhoKJdc1jLfXP0443HH2610ih
-	 tWHPPnvv7zBcn3OOLoL6g3wjbmSSWd3rsWjVUAIM=
+	b=f5D8OURUrzthwauiGbmFiwWKvVz8u9y87D0YuyObH96nUqHEyZofpR4beS2eWO3g8
+	 uy4hhcHnasdCJxWcQ0dH+NHa7UL8WZTv4/Wng5s+Bz2goya9V1gvA2Fui6QG+jVA5V
+	 k6P5Hhw33OOoEMXcX6Na+RpnTe+IPMMA9MEtaiEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Luo <luoqing@kylinos.cn>,
-	Xin Long <lucien.xin@gmail.com>,
+	Harshaka Narayana <harshaka.narayana@broadcom.com>,
+	Ronak Doshi <ronak.doshi@broadcom.com>,
+	Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 089/389] sctp: auth: verify auth requirement when auth_chunk is NULL
-Date: Mon, 17 Aug 2026 15:28:48 +0200
-Message-ID: <20260817132542.583452646@linuxfoundation.org>
+Subject: [PATCH 5.10 090/389] vmxnet3: fix BUG_ON in vmxnet3_get_hdr_len() for Geneve packets
+Date: Mon, 17 Aug 2026 15:28:49 +0200
+Message-ID: <20260817132542.623136947@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,49 +54,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Luo <luoqing@kylinos.cn>
+From: Harshaka Narayana <harshaka.narayana@broadcom.com>
 
-[ Upstream commit 8e04823c120b376ef7dab14b60ebf6823aa16c14 ]
+[ Upstream commit 34a71f5361fc3adb5b7138da78750b0d535a8252 ]
 
-sctp_auth_chunk_verify() returns true unconditionally when
-chunk->auth_chunk is NULL, silently skipping authentication.
-This is incorrect when:
+vmxnet3_get_hdr_len() assumes gdesc->rcd.v4/v6/tcp always describe the
+outer header, but for a Geneve-encapsulated packet the device can set
+them based on the inner header instead, signalled by the
+VMXNET3_RCD_HDR_INNER_SHIFT bit in the completion descriptor. Since the
+function never skips the outer encapsulation, this mismatch triggers:
 
-1. skb_clone() failed in the BH receive path, leaving auth_chunk
-   NULL. In sctp_endpoint_bh_rcv() asoc is NULL for new
-   connections, so the early sctp_auth_recv_cid() check cannot
-   catch this.
+- BUG_ON(hdr.ipv4->protocol != IPPROTO_TCP), because the outer
+  protocol is UDP (Geneve), not TCP.
+- BUG_ON(hdr.eth->h_proto != ...), when the tunnel's outer and inner
+  IP versions differ (e.g. outer IPv6/inner IPv4 or vice versa).
 
-2. No AUTH chunk precedes COOKIE-ECHO, so skb_clone() is never
-   called and auth_chunk remains NULL.
+Check VMXNET3_RCD_HDR_INNER_SHIFT up front and bail out, since the
+function cannot locate the inner header it would need to parse. Also
+convert the remaining BUG_ON()s in this function to return 0
+defensively.
 
-Fix by checking sctp_auth_recv_cid() when auth_chunk is NULL:
-if authentication is required, return false to drop the chunk;
-otherwise continue normally.
-
-Fixes: bbd0d59809f9 ("[SCTP]: Implement the receive and verification of AUTH chunk")
-Signed-off-by: Qing Luo <luoqing@kylinos.cn>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260721015532.120157-2-l1138897701@163.com
+Fixes: 45dac1d6ea04 ("vmxnet3: Changes for vmxnet3 adapter version 2 (fwd)")
+Signed-off-by: Harshaka Narayana <harshaka.narayana@broadcom.com>
+Reviewed-by: Ronak Doshi <ronak.doshi@broadcom.com>
+Reviewed-by: Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260713140915.3381715-1-harshaka.narayana@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/vmxnet3/vmxnet3_drv.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index 17b9deb0cc758b..4ffb45aea51d7a 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -632,7 +632,7 @@ static bool sctp_auth_chunk_verify(struct net *net, struct sctp_chunk *chunk,
- 	struct sctp_chunk auth;
+diff --git a/drivers/net/vmxnet3/vmxnet3_drv.c b/drivers/net/vmxnet3/vmxnet3_drv.c
+index f3c628a64b9545..b670259d9393d3 100644
+--- a/drivers/net/vmxnet3/vmxnet3_drv.c
++++ b/drivers/net/vmxnet3/vmxnet3_drv.c
+@@ -1313,7 +1313,11 @@ vmxnet3_get_hdr_len(struct vmxnet3_adapter *adapter, struct sk_buff *skb,
+ 		struct ipv6hdr *ipv6;
+ 		struct tcphdr *tcp;
+ 	} hdr;
+-	BUG_ON(gdesc->rcd.tcp == 0);
++
++	/* v4/v6/tcp then describe the inner header, which we can't locate. */
++	if ((le32_to_cpu(gdesc->dword[0]) & (1UL << VMXNET3_RCD_HDR_INNER_SHIFT)) ||
++	    gdesc->rcd.tcp == 0)
++		return 0;
  
- 	if (!chunk->auth_chunk)
--		return true;
-+		return !sctp_auth_recv_cid(chunk->chunk_hdr->type, asoc);
+ 	maplen = skb_headlen(skb);
+ 	if (unlikely(sizeof(struct iphdr) + sizeof(struct tcphdr) > maplen))
+@@ -1327,15 +1331,21 @@ vmxnet3_get_hdr_len(struct vmxnet3_adapter *adapter, struct sk_buff *skb,
  
- 	/* SCTP-AUTH:  auth_chunk pointer is only set when the cookie-echo
- 	 * is supposed to be authenticated and we have to do delayed
+ 	hdr.eth = eth_hdr(skb);
+ 	if (gdesc->rcd.v4) {
+-		BUG_ON(hdr.eth->h_proto != htons(ETH_P_IP) &&
+-		       hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IP));
++		if (hdr.eth->h_proto != htons(ETH_P_IP) &&
++		    hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IP))
++			return 0;
++
+ 		hdr.ptr += hlen;
+-		BUG_ON(hdr.ipv4->protocol != IPPROTO_TCP);
++		if (hdr.ipv4->protocol != IPPROTO_TCP)
++			return 0;
++
+ 		hlen = hdr.ipv4->ihl << 2;
+ 		hdr.ptr += hdr.ipv4->ihl << 2;
+ 	} else if (gdesc->rcd.v6) {
+-		BUG_ON(hdr.eth->h_proto != htons(ETH_P_IPV6) &&
+-		       hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IPV6));
++		if (hdr.eth->h_proto != htons(ETH_P_IPV6) &&
++		    hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IPV6))
++			return 0;
++
+ 		hdr.ptr += hlen;
+ 		/* Use an estimated value, since we also need to handle
+ 		 * TSO case.
 -- 
 2.53.0
 
