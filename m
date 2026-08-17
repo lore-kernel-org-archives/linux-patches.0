@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF65041D111;
-	Mon, 17 Aug 2026 14:56:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B8343CE64;
+	Mon, 17 Aug 2026 14:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978564; cv=none; b=ol41rptFaLXk5iK+5djpKcFTgKCXOEc6v0f1aidgKpXuFAMzvr/cBG1TX1shsh/EoCGqLYP0X4imwW7k9sGH5K+UL1ZUKFSOTKG1zEGQF1yBv7V3kqNlMKWd/DX9EMrXkFqdk6Ku0MqsB+BUpV276rkfkOfEKzFo4ywwTy6PIfc=
+	t=1786978567; cv=none; b=TmtFL+cQbWgO3InL/IDAI7NNEXgoWlLurVe7nkLiPEbVkm++D5T4zgwBb6/XqyNLA7Vr/RcQ03Tep43K6nPdo9a3z5gb8uRV4cINVC9TPNLUA8rCOxaotgiSCiSz7iOn9zp5kB7zyAE1iZvx0d8uYDuPgrOl0EyZ3gM+3Uw8aHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978564; c=relaxed/simple;
-	bh=frm2zLbL1/ZBLjUnSkh4obvtV3H/3m6/1RfoDQrxIWo=;
+	s=arc-20240116; t=1786978567; c=relaxed/simple;
+	bh=gi9vZBuvnKFa4ika4ZxKXU8fqGKLJntxnQYNN8PXeOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sx1gXKH+/mKQ4DIxsGwI94D/5h1RmsxR+bvqLpn+1fjB4cCgcNOKFiK0CxHBsslTzDbNwI9jtprefPIBZ7bzwmCZNlTtsFDSJIoWg3xEYnSZJYhwZVPysOS+e1jw7uJGgwlz0fPrvjLyYB91Vc9aQio3XK2wPqpw2BoUJYQw/wA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bs/+MR0J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VT78RzVWVpVtncGUUFBUV9b95TPx9vzsW/Ucr2xE9Rnb9YVORbWOSJ8PUwxlPrvt1HxnWa8BXfsC5Q9gvLFe32rnQ7w55BxR1ITQurQxEPKQY6uojgTwa4BnlgdujiMPVt76UkMp+j4d/gdagtCkn4TgtosMMruXXnA33m1NfvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrZo3Aa7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bs/+MR0J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34CB21F000E9;
-	Mon, 17 Aug 2026 14:56:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrZo3Aa7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425021F000E9;
+	Mon, 17 Aug 2026 14:56:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978562;
-	bh=6P3YCHQCfBttauVXBgRz3TZHY6mCdOmKC/xJyUm4sgI=;
+	s=korg; t=1786978566;
+	bh=ne4g3YKVHcVkuh7w/hCMFu4LS+iabHBoOaKXLrIPJ5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bs/+MR0JbOCnopofGvNSVMvyNUqxfwAKMSe+ha+eFEAaktZsr0BKzEMzDqTY3MkYB
-	 kdVK4LvLULgPXhCebE+EVkpT6VMb3fcktXHgx12rKxMVxl41DqhyFc2HPeFr994+c6
-	 9QjEk0VRogL+MTSbEhMSBzHen2sLHbjcB5ql7l7s=
+	b=zrZo3Aa7yYWMkIabhpz/kkjX0kJvItEYvPDjTQlgEdpcsTfDD9CTHC0oyydExc/Br
+	 beR3yJn45BOqI+oHz60GcORFSoUbht4YDFnU6l1qXN6g1zuwSSDF5OtfNebjkkm0sf
+	 muaGf7aEVSwFxIY/QuY3DYazsu0dwGyGn/K6xoiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	kernel test robot <oliver.sang@intel.com>,
+	Martin Kaiser <martin@kaiser.cx>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 041/156] hwmon: (pmbus/lm25066) Fix PMBus coefficient calculations
-Date: Mon, 17 Aug 2026 15:32:55 +0200
-Message-ID: <20260817132536.214513448@linuxfoundation.org>
+Subject: [PATCH 6.6 042/156] selftests/ftrace: refactor eprobes test to fix argument checks
+Date: Mon, 17 Aug 2026 15:32:56 +0200
+Message-ID: <20260817132536.250267636@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -51,69 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Martin Kaiser <martin@kaiser.cx>
 
-[ Upstream commit 0dabe8a56f772f0ece46d2597799f412c277d874 ]
+[ Upstream commit 6e3abef2a27e7402a94111c9eff85d887e64a309 ]
 
-In lm25066_probe(), the PMBus coefficients for current and power are
-scaled based on the shunt resistor value. The calculation evaluates the
-multiplication using 32-bit arithmetic because info->m is an int and
-shunt is a u32:
+The add/remove eprobe test installs an eprobe for the openat syscall and
+runs ls. It checks the filenames that were opened by ls against a
+whitelist and a blacklist.
 
-static int lm25066_probe(struct i2c_client *client) {
-    ...
-    info->m[PSC_CURRENT_IN] = info->m[PSC_CURRENT_IN] * shunt / 1000;
-    info->m[PSC_POWER] = info->m[PSC_POWER] * shunt / 1000;
-    ...
-}
+Commit 206b25c09080 ("tracing: eprobe: read the complete FILTER_PTR_STRING
+pointer") fixed access to some string fields in eprobes. This triggers
+test failures as the blacklist does not allow relative paths for the
+openat parameters.
 
-For large coefficients like 26882 (LM25056) or 15076 (LM5066i), a device
-tree shunt-resistor-micro-ohms value exceeding approximately 159,000
-(159 mOhm, which is physically valid for low-current applications) causes
-the intermediate product to exceed UINT_MAX (4,294,967,295). This results
-in a silent wraparound before the division by 1000.
+What makes this test unstable is the fact that the openat calls vary a
+lot between different systems.
 
-Furthermore, if the wrapped value has the most significant bit set,
-converting it back to the signed int info->m results in negative
-coefficients. This logic error leads to drastically corrupted current and
-power readings, which can cause erratic thermal or power management
-behavior in the system.
+Refactor the test to make it more robust. "cd <directory>" will issue a
+chdir syscall with the target directory as parameter. Set an eprobe on
+the sys_enter_chdir event and filter for the exact directory name. Allow
+(fault) as fallback.
 
-Fix the problem by using 64-bit operations for the multiply/divide
-operations. This can still overflow, but only for unreasonably large
-shunt resistor values.
+Link: https://lore.kernel.org/all/20260804194705.760893-1-martin@kaiser.cx/
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 94ee5fcc240fe ("hwmon: (pmbus/lm25066) Support configurable sense resistor values")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 206b25c09080 ("tracing: eprobe: read the complete FILTER_PTR_STRING pointer")
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202607151010.b68428e1-lkp@intel.com
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/lm25066.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ .../ftrace/test.d/dynevent/add_remove_eprobe.tc  | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/lm25066.c b/drivers/hwmon/pmbus/lm25066.c
-index 3a20df5a43ec8..8a94c4cfb5d19 100644
---- a/drivers/hwmon/pmbus/lm25066.c
-+++ b/drivers/hwmon/pmbus/lm25066.c
-@@ -14,6 +14,7 @@
- #include <linux/slab.h>
- #include <linux/i2c.h>
- #include <linux/log2.h>
-+#include <linux/math.h>
- #include <linux/of.h>
- #include "pmbus.h"
+diff --git a/tools/testing/selftests/ftrace/test.d/dynevent/add_remove_eprobe.tc b/tools/testing/selftests/ftrace/test.d/dynevent/add_remove_eprobe.tc
+index c300eb0202620..e2322693d0c32 100644
+--- a/tools/testing/selftests/ftrace/test.d/dynevent/add_remove_eprobe.tc
++++ b/tools/testing/selftests/ftrace/test.d/dynevent/add_remove_eprobe.tc
+@@ -1,16 +1,16 @@
+ #!/bin/sh
+ # SPDX-License-Identifier: GPL-2.0
+ # description: Generic dynamic event - add/remove eprobe events
+-# requires: dynamic_events events/syscalls/sys_enter_openat "<attached-group>.<attached-event> [<args>]":README
++# requires: dynamic_events events/syscalls/sys_enter_chdir "<attached-group>.<attached-event> [<args>]":README
  
-@@ -540,8 +541,8 @@ static int lm25066_probe(struct i2c_client *client)
- 	if (of_property_read_u32(client->dev.of_node, "shunt-resistor-micro-ohms", &shunt))
- 		shunt = 1000;
+ echo 0 > events/enable
  
--	info->m[PSC_CURRENT_IN] = info->m[PSC_CURRENT_IN] * shunt / 1000;
--	info->m[PSC_POWER] = info->m[PSC_POWER] * shunt / 1000;
-+	info->m[PSC_CURRENT_IN] = DIV_ROUND_CLOSEST_ULL((u64)info->m[PSC_CURRENT_IN] * shunt, 1000);
-+	info->m[PSC_POWER] = DIV_ROUND_CLOSEST_ULL((u64)info->m[PSC_POWER] * shunt, 1000);
+ clear_dynamic_events
  
- #if IS_ENABLED(CONFIG_SENSORS_LM25066_REGULATOR)
- 	/* LM25056 doesn't support OPERATION */
+ SYSTEM="syscalls"
+-EVENT="sys_enter_openat"
++EVENT="sys_enter_chdir"
+ FIELD="filename"
+-EPROBE="eprobe_open"
++EPROBE="eprobe_chdir"
+ OPTIONS="file=+0(\$filename):ustring"
+ echo "e:$EPROBE $SYSTEM/$EVENT $OPTIONS" >> dynamic_events
+ 
+@@ -18,20 +18,14 @@ grep -q "$EPROBE" dynamic_events
+ test -d events/eprobes/$EPROBE
+ 
+ echo 1 > events/eprobes/$EPROBE/enable
+-ls
++cd /sys/kernel/tracing
+ echo 0 > events/eprobes/$EPROBE/enable
+ 
+-content=`grep '^ *ls-' trace | grep 'file='`
+-nocontent=`grep '^ *ls-' trace | grep 'file=' | grep -v -e '"/' -e '"."' -e '(fault)' ` || true
+-
++content=`grep -e 'file="/sys/kernel/tracing"\|(fault)' trace`
+ if [ -z "$content" ]; then
+ 	exit_fail
+ fi
+ 
+-if [ ! -z "$nocontent" ]; then
+-	exit_fail
+-fi
+-
+ echo "-:$EPROBE" >> dynamic_events
+ 
+ ! grep -q "$EPROBE" dynamic_events
 -- 
 2.53.0
 
