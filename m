@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593A8442B32;
-	Mon, 17 Aug 2026 15:27:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3874A4457C4;
+	Mon, 17 Aug 2026 15:27:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980431; cv=none; b=M0lVvavD4D3n+4lYR0e881KWMoQA9xDlsI+yy0A7Ohz3HRO4fgXV6CtHBzhllGq4CAcE3EXrDUITX6O6mpKt2qaMHUHOqFjgchMaOyepwCBK5L07Fpf/xP8cWuwDVvXL/72/29s6OMDlKKeu3Wo/L0zhUyjGfLIXssZXTOXTmIU=
+	t=1786980434; cv=none; b=hx3iGCawPvORs34VdYh53ZV2ApKSEEniA73nAJDvbYvwjy9iKWETDlTqh+1JDt8PzxhFW1lzyu9132NrPEwqdfUqcVwy02Sr0pdfylkGuESFvZhM31Jtb6qdKvtZf5DiygXNc4Mgpt436vtLTi8pfv8b2Ftm1khZjDtNnG74owg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980431; c=relaxed/simple;
-	bh=r/dJIEYH2NGQ0wpLxy9zsbep4I/bTnVdO2PAtbuEhQE=;
+	s=arc-20240116; t=1786980434; c=relaxed/simple;
+	bh=tvsc9fpyHUB0nDSwEBW1CLP8ZYbpuyzF5iQcLVJ0hAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JZv07cBbE5xwzvSRG5EO6Cdot4Id9ykv1E4o9CuPOdhoCIAnzEz3IHyXOtGYAFX8iUgfbsrg7rXhCTbKNfuG+QaTe/0pKQG5itwpCpWvxYrZDxwaNK2rhofllqzq7S7BvpKpYGyC4kAMNI3YNruYoadjL5bEhcgSUgF0GlvUgKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ccEQSZ09; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hPB/UxgLqorDQr7fPdwdyz7PKpPBfY/akXTGrHi+6j4Byr6ps0zs88qHz35NXob1KBWEHDQ4HlBT60q/I9jxioEc9cgqLuhxQ5OyL9+vpWwLzGbG6iiM351MgKAii4tZCXVAvIhjyFnVbbmxeQL7Ml93Rh9B9LcpNwprJwwh2kY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+x+nvSe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccEQSZ09"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B113F1F00A3D;
-	Mon, 17 Aug 2026 15:27:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+x+nvSe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 907881F000E9;
+	Mon, 17 Aug 2026 15:27:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980430;
-	bh=oXlnSZisRFtlkW29iFZ5FgWtklhv4DbEI00JtlfHAAA=;
+	s=korg; t=1786980433;
+	bh=zPyv0S0f3P1J+Pxv7P7q899d4WlohMDPp2dHHothgvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ccEQSZ09N2oJfJpm04JheFIFz3sgew0YAwW6NduaJOT52Mb6jrmjFU6Jd3TZxgVEp
-	 Fh/4lytJ7P/MVgT9ZnfdYlAZFnXW/co/OybmypsGKi02BTseedzzfRd8cR0Q8dPuC9
-	 CN29evon34bYhvukLMjfNiZashoGexn7QVJnbYP8=
+	b=x+x+nvSeLRtcs8QUiSzgCRqkLA2prtEUxtMFAX2Hg3hjK4Qd9La/c/cnv2mCfSuH6
+	 VpatIvQXjvap4G7l4NW0OIER2xm0RXwLyCRXIaW2ny3/eT14aOO/Su7X1LgGqZ4Lx0
+	 2pImWkdhwPxaST14hIMWZ3fltUyvyH9mhNeDZB7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 568/609] ipv4: fix use-after-free in fib_nhc_update_mtu()
-Date: Mon, 17 Aug 2026 15:34:24 +0200
-Message-ID: <20260817132602.718320271@linuxfoundation.org>
+	Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 531/609] tls: dont abort the connection on signal-interrupted sends
+Date: Mon, 17 Aug 2026 15:33:47 +0200
+Message-ID: <20260817132601.565007420@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,165 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
 
-commit bc5bde9ce3cc36502839dfe98e068f7303a50982 upstream.
+[ Upstream commit af0e5cdd031f4f4a8f6d4160bfbda4f36872b0ed ]
 
-fib_nhc_update_mtu() walks the nexthop exception table under RTNL, but
-RTNL does not serialize this walk with PMTU exception updates. The walk
-uses rcu_dereference_protected() with a constant true condition without
-holding fnhe_lock.
+When a signal interrupts a blocking send, tls_tx_records() treats the
+resulting -ERESTARTSYS as a transmission failure and marks the socket
+errored via tls_err_abort() with the raw error code. Later syscalls
+return the kernel-internal errno 512 (ERESTARTSYS) to userspace, as the
+signal it stems from is no longer pending during syscall exit and thus
+never translated.
 
-The following interleaving can therefore occur:
+An interrupted send is not a connection error: the partially sent record
+stays queued and is resent later. Interrupt error codes are therefore
+excluded from the abort in the same way as -EAGAIN.
 
-  CPU 0                              CPU 1
-  fib_nhc_update_mtu()               update_or_create_fnhe()
-    load fnhe                          spin_lock_bh(&fnhe_lock)
-                                       fnhe_remove_oldest()
-                                         unlink fnhe
-                                         kfree_rcu(fnhe, rcu)
-    <quiescent state>
-    access fnhe after grace period
-
-KASAN reported:
-
-  BUG: KASAN: slab-use-after-free in fib_nhc_update_mtu+0x3df/0x410
-  Read of size 8 at addr ffff888107d49000 by task poc/90
-  Call Trace:
-   fib_nhc_update_mtu+0x3df/0x410
-   fib_sync_mtu+0x7a/0xd0
-   fib_netdev_event+0x229/0x3f0
-   netif_set_mtu_ext+0x33a/0x570
-   dev_set_mtu+0x88/0x120
-
-The same walk updates fnhe_pmtu and fnhe_mtu_locked. These fields form a
-pair and other writers serialize them with fnhe_lock. RCU alone prevents
-reclamation, but would still allow concurrent writers to leave a mixed
-pair.
-
-Walk the table under RCU and acquire fnhe_lock only while updating each
-exception. RCU keeps the current entry alive while the short critical
-section serializes its paired PMTU fields. This avoids holding the global
-lock while scanning all 2048 buckets for every nexthop.
-
-Fixes: af7d6cce5369 ("net: ipv4: update fnhe_pmtu when first hop's MTU changes")
-Cc: stable@vger.kernel.org
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260807181710.1178747-1-nicoyip.dev@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b341ca51d267 ("tls: Fix tls_sw_sendmsg error handling")
+Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
+Link: https://patch.msgid.link/20260805063109.1772314-1-maxbr@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/route.h      |    2 ++
- net/ipv4/fib_semantics.c |   34 +++++++++++-----------------------
- net/ipv4/route.c         |   29 +++++++++++++++++++++++++++++
- 3 files changed, 42 insertions(+), 23 deletions(-)
+ net/tls/tls_sw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/net/route.h
-+++ b/include/net/route.h
-@@ -247,6 +247,8 @@ int fib_dump_info_fnhe(struct sk_buff *s
- 		       u32 table_id, struct fib_info *fi,
- 		       int *fa_index, int fa_start, unsigned int flags);
- 
-+void fnhe_update_pmtu(struct fib_nh_exception *fnhe, u32 new, u32 orig);
-+
- static inline void ip_rt_put(struct rtable *rt)
- {
- 	/* dst_release() accepts a NULL parameter.
---- a/net/ipv4/fib_semantics.c
-+++ b/net/ipv4/fib_semantics.c
-@@ -1958,42 +1958,30 @@ static int call_fib_nh_notifiers(struct
- 	return NOTIFY_DONE;
- }
- 
--/* Update the PMTU of exceptions when:
-- * - the new MTU of the first hop becomes smaller than the PMTU
-- * - the old MTU was the same as the PMTU, and it limited discovery of
-- *   larger MTUs on the path. With that limit raised, we can now
-- *   discover larger MTUs
-- * A special case is locked exceptions, for which the PMTU is smaller
-- * than the minimal accepted PMTU:
-- * - if the new MTU is greater than the PMTU, don't make any change
-- * - otherwise, unlock and set PMTU
-+/* Walk the exceptions of a nexthop after its first hop MTU changed. The
-+ * chain is RCU protected here, while fnhe_update_pmtu() takes fnhe_lock
-+ * for the update of each entry.
-  */
- void fib_nhc_update_mtu(struct fib_nh_common *nhc, u32 new, u32 orig)
- {
- 	struct fnhe_hash_bucket *bucket;
- 	int i;
- 
--	bucket = rcu_dereference_protected(nhc->nhc_exceptions, 1);
-+	rcu_read_lock();
-+	bucket = rcu_dereference(nhc->nhc_exceptions);
- 	if (!bucket)
--		return;
-+		goto out;
- 
- 	for (i = 0; i < FNHE_HASH_SIZE; i++) {
- 		struct fib_nh_exception *fnhe;
- 
--		for (fnhe = rcu_dereference_protected(bucket[i].chain, 1);
-+		for (fnhe = rcu_dereference(bucket[i].chain);
- 		     fnhe;
--		     fnhe = rcu_dereference_protected(fnhe->fnhe_next, 1)) {
--			if (fnhe->fnhe_mtu_locked) {
--				if (new <= fnhe->fnhe_pmtu) {
--					fnhe->fnhe_pmtu = new;
--					fnhe->fnhe_mtu_locked = false;
--				}
--			} else if (new < fnhe->fnhe_pmtu ||
--				   orig == fnhe->fnhe_pmtu) {
--				fnhe->fnhe_pmtu = new;
--			}
--		}
-+		     fnhe = rcu_dereference(fnhe->fnhe_next))
-+			fnhe_update_pmtu(fnhe, new, orig);
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 1b4e35dcb996b..5eec7c10acc20 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -457,7 +457,7 @@ int tls_tx_records(struct sock *sk, int flags)
  	}
-+out:
-+	rcu_read_unlock();
- }
  
- void fib_sync_mtu(struct net_device *dev, u32 orig_mtu)
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -751,6 +751,35 @@ out_unlock:
- 	spin_unlock_bh(&fnhe_lock);
- }
+ tx_err:
+-	if (rc < 0 && rc != -EAGAIN)
++	if (rc < 0 && rc != -EAGAIN && rc != -EINTR && rc != -ERESTARTSYS)
+ 		tls_err_abort(sk, rc);
  
-+/* Update the PMTU of an exception when:
-+ * - the new MTU of the first hop becomes smaller than the PMTU
-+ * - the old MTU was the same as the PMTU, and it limited discovery of
-+ *   larger MTUs on the path. With that limit raised, we can now
-+ *   discover larger MTUs
-+ * A special case is locked exceptions, for which the PMTU is smaller
-+ * than the minimal accepted PMTU:
-+ * - if the new MTU is greater than the PMTU, don't make any change
-+ * - otherwise, unlock and set PMTU
-+ *
-+ * fnhe_lock keeps fnhe_pmtu and fnhe_mtu_locked consistent against
-+ * update_or_create_fnhe(), which sets both under the same lock.
-+ */
-+void fnhe_update_pmtu(struct fib_nh_exception *fnhe, u32 new, u32 orig)
-+{
-+	spin_lock_bh(&fnhe_lock);
-+
-+	if (fnhe->fnhe_mtu_locked) {
-+		if (new <= fnhe->fnhe_pmtu) {
-+			fnhe->fnhe_pmtu = new;
-+			fnhe->fnhe_mtu_locked = false;
-+		}
-+	} else if (new < fnhe->fnhe_pmtu || orig == fnhe->fnhe_pmtu) {
-+		fnhe->fnhe_pmtu = new;
-+	}
-+
-+	spin_unlock_bh(&fnhe_lock);
-+}
-+
- static void __ip_do_redirect(struct rtable *rt, struct sk_buff *skb, struct flowi4 *fl4,
- 			     bool kill_route)
- {
+ 	return rc;
+-- 
+2.53.0
+
 
 
