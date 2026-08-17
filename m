@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36AC9280CE5;
-	Mon, 17 Aug 2026 14:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8B83E025C;
+	Mon, 17 Aug 2026 14:25:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976704; cv=none; b=E0RJj30IyQ01zDoW0IfGcLaDPsXXrEUoIoajtK+PJXHXBY4UF/dXq3TTcm36IET7gLwvjAvvCi3LCMBOcxFANKzPjOHhEuUqA76/+JtuxABwaszSJN4NyCPpnW7zEp2k6ds3BzPfsGh1Ptj6kJ41aZAHIe1ey6jeBN5C4qMPqRw=
+	t=1786976707; cv=none; b=fG1k4nGnlpvEdvcY1qOOLH6H+cnuEA+TNa+fmoPW4y5Oe+/95LosvVHrzGrgK4FtMnhMOhGX7jCo7JlTxVxIEWNk8REhJLu8gc19dTyIxlbWm6PGNUcVNObPdnk8akgSnVQbqeMvxhjRIvBKounb9RBf8MOsQhkInWxTuuSpFis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976704; c=relaxed/simple;
-	bh=bQvjpAIaphUXvNN7ZzN2kcoGjG5ah7OkFuweEtrn6hU=;
+	s=arc-20240116; t=1786976707; c=relaxed/simple;
+	bh=ne6N5thVeIz5yXDQBksXN3QVZjMcbJsgS6q+gCJmi9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mfyHetTeeKpyGaF6t5P8Yz/JKbndhKIgr+CIhKDVVcey8sfg0FCOPK+WEDnExgfau94FkYDDQlH7n14vP88fARDUqznXDYJDS7KVuSFA+1cb9CykB6LMR68D1AhPfiQbD2Yng+gscEpia9MIt6EnLO+wI9Vj8QeCYjXMSp9L0ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8K78vFK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W2q4VGquYvioR6FxBoBVwFefQtJcFXMku1Gi+ck00lhea06A+XibqfHyyJajHu5VPBI6FrR2IBXV7zTJ1r7UvfH9kmDbfJrr2bi6SFFO7iH0JvnQIkB/J6tRo68X5N6tTLzRjKBieMOStYkn260NvVPRLbaU6eX6fKtv7DX9jrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVkp88ZK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8K78vFK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922061F000E9;
-	Mon, 17 Aug 2026 14:25:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVkp88ZK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 625221F000E9;
+	Mon, 17 Aug 2026 14:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976703;
-	bh=ohEqir5qch2aJ/fUKr4C46gaJJsUNx6uQ3txGmZVXfs=;
+	s=korg; t=1786976705;
+	bh=IDg1yIuNez+vp6PJNe+bSfOH+cX9hcUWyBonvo0c7Rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D8K78vFKRaqL2CJ5zG7TMK9hhW2eLEQuDwJMF3xVSUjYOmAkcUVgBFtiJuzFlOZpw
-	 vmrJhzQ/aSKFeu004aZXqE1uOrD2zTVSNGV0YP8bjv8g4rhYs7LsxqIDnTR1cV87LL
-	 EFp70ax2HiX0aW3ijiu18JlNRLiB9sYZOnY+SzmY=
+	b=mVkp88ZKglSQ4rbhSG1Pd9vTWpHw3Kk/C0MAwJmY3Ad2v7j74n6flTl0FSra97Uvl
+	 Tb0G2jVOn47C7Jn0AZ0VMw1xH/aKc49nO4/OjHOL9fouqFpgMjsqmJMJ15d+zQp3bw
+	 yq0ncwSu1A+vSzcoupgTKoeNp6AEE6+9jJK4TPX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	STAR Labs SG <info@starlabs.sg>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Philo Lu <lulie@linux.alibaba.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 076/456] bpf: Fix ld_{abs,ind} failure path analysis in subprogs
-Date: Mon, 17 Aug 2026 15:27:46 +0200
-Message-ID: <20260817132543.048426920@linuxfoundation.org>
+	Huihui Huang <hhhuang@smu.edu.sg>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.15 059/456] wifi: at76c50x-usb: avoid length underflow in at76_guess_freq()
+Date: Mon, 17 Aug 2026 15:27:29 +0200
+Message-ID: <20260817132542.353372865@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -53,73 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Huihui Huang <hhhuang@smu.edu.sg>
 
-commit ee861486e377edc55361c08dcbceab3f6b6577bd upstream.
+commit 61a799ffd1e5a4fd3702d547828b7ff3d161468e upstream.
 
-Usage of ld_{abs,ind} instructions got extended into subprogs some time
-ago via commit 09b28d76eac4 ("bpf: Add abnormal return checks."). These
-are only allowed in subprograms when the latter are BTF annotated and
-have scalar return types.
+at76_guess_freq() checks only that the received frame is at least a bare
+802.11 header (24 bytes) before subtracting the fixed management-body
+offset:
 
-The code generator in bpf_gen_ld_abs() has an abnormal exit path (r0=0 +
-exit) from legacy cBPF times. While the enforcement is on scalar return
-types, the verifier must also simulate the path of abnormal exit if the
-packet data load via ld_{abs,ind} failed.
+	len -= el_off;
 
-This is currently not the case. Fix it by having the verifier simulate
-both success and failure paths, and extend it in similar ways as we do
-for tail calls. The success path (r0=unknown, continue to next insn) is
-pushed onto stack for later validation and the r0=0 and return to the
-caller is done on the fall-through side.
+For both beacon and probe response frames, el_off is 36. If the frame is
+shorter than el_off, subtracting it causes the calculated IE length to
+wrap. The length is eventually passed to cfg80211_find_elem_match() as a
+very large unsigned value, so the element walk runs beyond the RX skb.
 
-Fixes: 09b28d76eac4 ("bpf: Add abnormal return checks.")
-Reported-by: STAR Labs SG <info@starlabs.sg>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260408191242.526279-2-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-[ Dropped visit_abnormal_return_insn changes: depends on 7.0 symbols from
- e40f5a6bf88a ("bpf: correct stack liveness for tail calls");
- Hunk1: adapted IS_ERR/PTR_ERR to !branch/-EFAULT to match push_stack()
- NULL-on-failure convention;
- Dropped mark_reg_scratched(), which only affects log verbosity, introduced
- by 0f55f9ed21f9 ("bpf: Only print scratched registers and stack slots to
- verifier logs.").]
-Signed-off-by: Philo Lu <lulie@linux.alibaba.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This path is reached from at76_rx_tasklet() while scanning. If the device
+delivers a truncated beacon or probe response, the oversized IE length
+causes an out-of-bounds read during scanning.
+
+Skip the IE lookup if the frame does not reach the variable elements,
+before subtracting el_off.
+
+Fixes: 1264b951463a ("at76c50x-usb: add driver")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Huihui Huang <hhhuang@smu.edu.sg>
+Link: https://patch.msgid.link/20260715140815.1242033-1-hhhuang@smu.edu.sg
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/net/wireless/atmel/at76c50x-usb.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index ec447854f53450..5e71d58e4a3006 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -9644,6 +9644,22 @@ static int check_ld_abs(struct bpf_verifier_env *env, struct bpf_insn *insn)
- 	mark_reg_unknown(env, regs, BPF_REG_0);
- 	/* ld_abs load up to 32-bit skb data. */
- 	regs[BPF_REG_0].subreg_def = env->insn_idx + 1;
-+	/*
-+	 * See bpf_gen_ld_abs() which emits a hidden BPF_EXIT with r0=0
-+	 * which must be explored by the verifier when in a subprog.
-+	 */
-+	if (env->cur_state->curframe) {
-+		struct bpf_verifier_state *branch;
-+
-+		branch = push_stack(env, env->insn_idx + 1, env->insn_idx, false);
-+		if (!branch)
-+			return -EFAULT;
-+		mark_reg_known_zero(env, regs, BPF_REG_0);
-+		err = prepare_func_exit(env, &env->insn_idx);
-+		if (err)
-+			return err;
-+		env->insn_idx--;
-+	}
- 	return 0;
- }
+--- a/drivers/net/wireless/atmel/at76c50x-usb.c
++++ b/drivers/net/wireless/atmel/at76c50x-usb.c
+@@ -1527,13 +1527,16 @@ static inline int at76_guess_freq(struct
  
--- 
-2.53.0
-
+ 	if (ieee80211_is_probe_resp(hdr->frame_control)) {
+ 		el_off = offsetof(struct ieee80211_mgmt, u.probe_resp.variable);
+-		el = ((struct ieee80211_mgmt *)hdr)->u.probe_resp.variable;
+ 	} else if (ieee80211_is_beacon(hdr->frame_control)) {
+ 		el_off = offsetof(struct ieee80211_mgmt, u.beacon.variable);
+-		el = ((struct ieee80211_mgmt *)hdr)->u.beacon.variable;
+ 	} else {
+ 		goto exit;
+ 	}
++
++	if (len < el_off)
++		goto exit;
++
++	el = priv->rx_skb->data + el_off;
+ 	len -= el_off;
+ 
+ 	el = cfg80211_find_ie(WLAN_EID_DS_PARAMS, el, len);
 
 
