@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B131E42EEDD;
-	Mon, 17 Aug 2026 14:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85CAF42EEDD;
+	Mon, 17 Aug 2026 14:53:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978385; cv=none; b=qTrg1XSqGdmOGXfu5Kin98/w5BKc74NO3BL2PtOnJqvZEg5lyj0JhziWUUgxPufWvzzdCUE0OrEPU/LzeA1BV0XY2bFRPlQpynOta3+3tX6aOnKxNzhKtO/Jv4RvMwBC5+h4SF3cOr1mQQVmzw6APEkPeIzMbmu+L4JLvPyROOk=
+	t=1786978388; cv=none; b=KNVn1hTpdhL8rst82IzCnaivBQCHQ1ASoROIl8KqUyxlDyaK0LByKZInk6VcEqwd1QTgZ0J2AR/BhSceCBde/ncua7fqx7qaPqioib7kJwQD1b0DZsi50zuQLZsOdd1O5kFgFFmaJIAojdCt65luLBvodTjb9tMhowyYOBNgFw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978385; c=relaxed/simple;
-	bh=vtdYblTabYuImg1HtTRz4YpK98vybaiErNi4bBRlqHs=;
+	s=arc-20240116; t=1786978388; c=relaxed/simple;
+	bh=acoP/PCJ4Ykrki3/Z03TU5YBmAE5Ifm1jYvMa5clQGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q+7VBJYDrNO7dLXEgLJyErQ1bzR4GlBW70PJB6sWTSsejuHSB3NoDnuXZWIjlYm+Gc74R1f0Gqj77oK9MhcHBODqr/8ibi25xuU4aUmDf4mj6D68fY/epBVgq+GzIs+F9oMYjHI2+ZDV01OJ6/54S7YotTkiGSfPQH7SLIydQQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6gKvjkZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=iGJbKLnKDmiDSgDAcwz3FHPXdxIfRbYbrsRF1mSZdA1LycniH4a43qmGDsGnmHjvbyA6wTX2FZ68L2mtHUw3csGZ2d/0RpBbtN7soEAvedtS69wLxmGi9CFMZsEVQ+DSD7v9YFhyQTGcNqpYGSvnqINzOUBdXjzQ0eLaDk/zfCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kynh0ZEK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6gKvjkZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 153751F000E9;
-	Mon, 17 Aug 2026 14:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kynh0ZEK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E731F000E9;
+	Mon, 17 Aug 2026 14:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978384;
-	bh=Yd2VMRhfC0OoUR21SMzf7Kl+Dxna4yIHIkakj/CjI94=;
+	s=korg; t=1786978387;
+	bh=YK21xZUT5T1YeyDq8GFkmSBSvAmtSub7ct/n8Pd0Hbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i6gKvjkZZnHC/aGlFRdqW8yeQMeXMoHDELMR7Vf/lHENaIWWV6JaWIBa3nwL3pluU
-	 wWyRNRblgr5f0GbJuON1IYERN4B6sKT3m1h94vpHlus0SFothwnXcnxFLUKs9I0oVQ
-	 u9hJ1/Iz9UYDszuOIP7qAZwx8ZTZKMkLy16bMipk=
+	b=Kynh0ZEKin0gLnjUV8rvvb3psIXyjAMDizH2KmT+iHLGwCHN7Hi1iLWsz/Jp50jDN
+	 BzHRw5TcV2yS4qrXQs/2rwQReuF4eaB4uznjjhUnIKvgbbVczzEUqECw9g2a5Wdfpk
+	 2wtMOVU04aobsNCycVPbNjop7Sob2LFT4ftrglrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Or Har-Toov <ohartoov@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Antoine Tenart <atenart@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Michal Luczaj <mhal@rbox.co>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re=20 ?=" <ricardo@marliere.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/156] devlink: fix net namespace reference leak in reload
-Date: Mon, 17 Aug 2026 15:32:33 +0200
-Message-ID: <20260817132535.381481680@linuxfoundation.org>
+Subject: [PATCH 6.6 002/156] selftests/bpf: Fail unbound UDP on sockmap update
+Date: Mon, 17 Aug 2026 15:32:16 +0200
+Message-ID: <20260817132534.760320046@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -48,46 +48,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Or Har-Toov <ohartoov@nvidia.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit 1c4dac9bf1d2ac31da63b794bdec697777cbd0fd ]
+[ Upstream commit 203b06932777b9ad5085319389dea566f5c2ca63 ]
 
-devlink_nl_reload_doit() calls devlink_netns_get(), which returns a net
-with a held reference. When the requested namespace differs from the
-current one and the reload action is not DRIVER_REINIT, the function
-returns -EOPNOTSUPP without releasing the reference. Add the missing
-put_net() on this error path.
+sockmap now rejects unbound UDP sockets. Adjust test_maps. While at it,
+check socket()'s return value.
 
-Fixes: 2edd92570441 ("devlink: don't allow to change net namespace for FW_ACTIVATE reload action")
-Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Antoine Tenart <atenart@kernel.org>
-Link: https://patch.msgid.link/20260729080600.2427721-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This effectively reverts commit c39aa2159974 ("bpf, selftests: Fix
+test_maps now that sockmap supports UDP").
+
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/bpf/20260707-sockmap-lookup-udp-leak-v4-4-f878346f27ab@rbox.co
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Ricardo B. Marlière (SUSE) <ricardo@marliere.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/devlink/dev.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/bpf/test_maps.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/net/devlink/dev.c b/net/devlink/dev.c
-index bba4ace7d22ba..c70d4dc599b85 100644
---- a/net/devlink/dev.c
-+++ b/net/devlink/dev.c
-@@ -505,6 +505,7 @@ int devlink_nl_cmd_reload(struct sk_buff *skb, struct genl_info *info)
- 		    action != DEVLINK_RELOAD_ACTION_DRIVER_REINIT) {
- 			NL_SET_ERR_MSG_MOD(info->extack,
- 					   "Changing namespace is only supported for reinit action");
-+			put_net(dest_net);
- 			return -EOPNOTSUPP;
- 		}
+diff --git a/tools/testing/selftests/bpf/test_maps.c b/tools/testing/selftests/bpf/test_maps.c
+index e0dd101c9f2bd..f2a27143edc34 100644
+--- a/tools/testing/selftests/bpf/test_maps.c
++++ b/tools/testing/selftests/bpf/test_maps.c
+@@ -752,16 +752,15 @@ static void test_sockmap(unsigned int tasks, void *data)
+ 		goto out_sockmap;
  	}
+ 
+-	/* Test update with unsupported UDP socket */
++	/* Test update with unsupported unbound UDP socket */
+ 	udp = socket(AF_INET, SOCK_DGRAM, 0);
+-	i = 0;
+-	err = bpf_map_update_elem(fd, &i, &udp, BPF_ANY);
+-	if (err) {
+-		printf("Failed socket update SOCK_DGRAM '%i:%i'\n",
+-		       i, udp);
++	CHECK(udp < 0, "socket(AF_INET, SOCK_DGRAM)", "errno:%d\n", errno);
++	err = bpf_map_update_elem(fd, &(int){0}, &udp, BPF_ANY);
++	close(udp);
++	if (!err) {
++		printf("Unexpectedly succeeded unbound UDP update '0:%i'\n", udp);
+ 		goto out_sockmap;
+ 	}
+-	close(udp);
+ 
+ 	/* Test update without programs */
+ 	for (i = 0; i < 6; i++) {
 -- 
 2.53.0
 
