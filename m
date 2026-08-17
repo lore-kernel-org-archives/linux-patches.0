@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56073D301E;
-	Mon, 17 Aug 2026 14:39:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D194266AA;
+	Mon, 17 Aug 2026 14:39:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977554; cv=none; b=E5A0W2j2eyOy1cWHkXDsFR9Uu7liHDIOTB8J7dPS3auwoVAeQNuEYu67C4LIfhpF/axTMp6HaQZ320oZjPnFf1XB61WEgb1NUDUp+lh0wDO9ARiQ5i1/oFLmZ7Mim/4VH6hiqEfinSGgB8fP3NvCeD/9bgVsMDEG0tNBeSCWfbw=
+	t=1786977557; cv=none; b=rteBxfaMnsV906TFDKyZwlvfHe+CW7ZrYGp0bCBzEOAz5WoOC/GqYCla451hXvH3wivwNKmDaKgyit0krpkjYVlJU10GQRc3k92ucSijc3UuDYnijCpTVFn6/1+QpdJ8reYfZzwda0eULPQsolocWkwGYFRbXb6BRf7zGnvHSV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977554; c=relaxed/simple;
-	bh=rXmugMMKnC1W+SGVlZutXG0fLI9M0StZLtWwD9ivdYI=;
+	s=arc-20240116; t=1786977557; c=relaxed/simple;
+	bh=nMF0GU5Cldegy9SbfhL0Bz37ck9XUEqvZ/Dz1/4KAMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rkluEjvJW4zyYdu+MCnEP4iTBha1r/k3Xq5Bsh9nNrXaABMvd5jsPsVZ9nSv1q/Ma8m9MwFs0ZnpBVEq4gm7t1fWcU+MxDbvKXZRsxoPaIDuGGaUGiJtsnwAgBA2Fx3llCuDqGtbbC9LyCydUM8bvW8Y5ga2F9xcaYeVpBmtgG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wu204w2y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l43+bWoEiPlPJ4NsvOJvf1SoSSkIeF8SzCHLZrEvg/IUkBSn+NSJCCQb34BW0SPgWfew6eyrqOkfg583FmP8y4XHOpnPHXmW8KE0IuubfAg/4EV3F2+9se5njVzVFn6V/TIVo0eqzxk3K5LaBUv+OL9wg9gpskRmVcy7pN1sjpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rShC2p8/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wu204w2y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A5471F000E9;
-	Mon, 17 Aug 2026 14:39:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rShC2p8/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20FF31F000E9;
+	Mon, 17 Aug 2026 14:39:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977553;
-	bh=8KE52ZcfMck41e5YZingDFTbBAkiGakeXsflng3GYaA=;
+	s=korg; t=1786977556;
+	bh=+7NxWNskf28/DzOZAYpZYd9mlqE/LjOe4GJfpbL13IU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wu204w2y9Ey1xTfAAJAnMMwJwkfQDGosB8Gmdyi9CF0Xg7N4umStoktEOf3m6HCCj
-	 hKHFIh3JnSEjgmC+aPyO/omhq+lMRbH7YnmHJXhzHOsBd+8Lar8A4hv2vmvTDI0D7E
-	 Ey+a9baRRfzm4wxRDXWg9lYO9Uly7RH3zCAbVAp4=
+	b=rShC2p8/dASz20CAZrFW3CUK2wEFnnMaQek7+hmrrg+PNwpx+tbeZOhhotB56xKCf
+	 bp/UQF9T5IooiXmAZvNa0VPpd8RlwCDgzGb0ONUbZW3DBP4ENiPfPHDGbx46XynTn1
+	 UKq7e/Q0XLP8j4i2290g8xkDl2G5scp5PTjszDhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Avi Fishman <avifishman70@gmail.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 370/456] ARM: npcm: Fix OF node refcount leaks in SMP setup
-Date: Mon, 17 Aug 2026 15:32:40 +0200
-Message-ID: <20260817132553.953457193@linuxfoundation.org>
+Subject: [PATCH 5.15 371/456] bonding: alb: re-check primary_is_promisc under RTNL in bond_alb_monitor
+Date: Mon, 17 Aug 2026 15:32:41 +0200
+Message-ID: <20260817132553.996398293@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,48 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-[ Upstream commit 8eb052f48331474c2789d07b7f11165c323bd2f9 ]
+[ Upstream commit 683c6ba6e58e6ed1037831ea97dd58d9c0e76b8d ]
 
-npcm7xx_smp_boot_secondary() and npcm7xx_smp_prepare_cpus() look up
-the GCR and SCU nodes with of_find_compatible_node(). The returned
-nodes are used for of_iomap(), but the node references are never
-released.
+bond_alb_monitor() reads primary_is_promisc under RCU, then drops RCU and
+takes RTNL via rtnl_trylock() before undoing the promiscuity it set on the
+active slave. In that window the active slave can change under RTNL
+(RTM_DELLINK -> __bond_release_one() -> bond_alb_handle_active_change()),
+which already drops the promiscuity and clears primary_is_promisc. The
+monitor still acts on the stale decision: if the slave was removed with no
+failover, curr_active_slave is now NULL and the deref faults; if it failed
+over, the stale dev_set_promiscuity(-1) underflows the new slave's
+promiscuity counter and pins it in IFF_PROMISC.
 
-of_iomap() does not consume the device node reference, and iounmap()
-only releases the MMIO mapping. Drop each node reference after the
-corresponding mapping attempt.
+  Oops: general protection fault, probably for non-canonical address ...
+  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+  Workqueue: b42 bond_alb_monitor
+  RIP: 0010:bond_alb_monitor (drivers/net/bonding/bond_alb.c:1600)
+   process_one_work (kernel/workqueue.c:3322)
+   worker_thread (kernel/workqueue.c:3486)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+  Kernel panic - not syncing: Fatal exception
 
-Fixes: 7bffa14c9aed ("arm: npcm: add basic support for Nuvoton BMCs")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Avi Fishman <avifishman70@gmail.com>
-Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Re-check primary_is_promisc (and curr_active_slave) after taking RTNL so
+the monitor only undoes an increment it still owns. The other bonding
+monitors already re-read state under RTNL in their commit phase
+(bond_miimon_commit/bond_ab_arp_commit); bond_alb_monitor() was the only
+one acting on the pre-trylock decision.
+
+Fixes: d0e81b7e2246 ("bonding: Acquire correct locks in alb for promisc change")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Link: https://patch.msgid.link/20260725233930.2957317-1-xmei5@asu.edu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-npcm/platsmp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/bonding/bond_alb.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm/mach-npcm/platsmp.c b/arch/arm/mach-npcm/platsmp.c
-index 21633c70fe7fe..fe63edc9886df 100644
---- a/arch/arm/mach-npcm/platsmp.c
-+++ b/arch/arm/mach-npcm/platsmp.c
-@@ -35,6 +35,7 @@ static int npcm7xx_smp_boot_secondary(unsigned int cpu,
- 		goto out;
- 	}
- 	gcr_base = of_iomap(gcr_np, 0);
-+	of_node_put(gcr_np);
- 	if (!gcr_base) {
- 		pr_err("could not iomap gcr");
- 		ret = -ENOMEM;
-@@ -63,6 +64,7 @@ static void __init npcm7xx_smp_prepare_cpus(unsigned int max_cpus)
- 		return;
- 	}
- 	scu_base = of_iomap(scu_np, 0);
-+	of_node_put(scu_np);
- 	if (!scu_base) {
- 		pr_err("could not iomap scu");
- 		return;
+diff --git a/drivers/net/bonding/bond_alb.c b/drivers/net/bonding/bond_alb.c
+index 7091b018078b2..4be2afd98ce1d 100644
+--- a/drivers/net/bonding/bond_alb.c
++++ b/drivers/net/bonding/bond_alb.c
+@@ -1499,8 +1499,8 @@ void bond_alb_monitor(struct work_struct *work)
+ 	struct bonding *bond = container_of(work, struct bonding,
+ 					    alb_work.work);
+ 	struct alb_bond_info *bond_info = &(BOND_ALB_INFO(bond));
++	struct slave *slave, *curr;
+ 	struct list_head *iter;
+-	struct slave *slave;
+ 
+ 	if (!bond_has_slaves(bond)) {
+ 		atomic_set(&bond_info->tx_rebalance_counter, 0);
+@@ -1562,9 +1562,11 @@ void bond_alb_monitor(struct work_struct *work)
+ 			 * because a slave was disabled then
+ 			 * it can now leave promiscuous mode.
+ 			 */
+-			dev_set_promiscuity(rtnl_dereference(bond->curr_active_slave)->dev,
+-					    -1);
+-			bond_info->primary_is_promisc = 0;
++			curr = rtnl_dereference(bond->curr_active_slave);
++			if (bond_info->primary_is_promisc && curr) {
++				dev_set_promiscuity(curr->dev, -1);
++				bond_info->primary_is_promisc = 0;
++			}
+ 
+ 			rtnl_unlock();
+ 			rcu_read_lock();
 -- 
 2.53.0
 
