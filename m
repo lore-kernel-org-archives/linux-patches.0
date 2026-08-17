@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5624B314D34;
-	Mon, 17 Aug 2026 14:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F27314D34;
+	Mon, 17 Aug 2026 14:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975338; cv=none; b=m+5vFGRr4xyecxBipltMRtNE77lQHHRc8Zi6aTYN/HxR0ZnNcROXJ5OFefJdIEx+ecPvkq8kpkacvHGCCEkHNTFBUaDtarbH2YYJpOAPdYk2JsXmb7+R7xAknunaPDW2o3Vwv93f0F999dMgQQfliJsB0uf21igTeWaV1NWBH8I=
+	t=1786975341; cv=none; b=nimVKSJ65VSFTw0kws7Y2N5+sLQB+mBg3ClFIs+QgxYybmUZ5ckU80erHCNzIahg9l5vasJwL0omLRppm9dcOgaqnK2ttBP6pGwcQkEoLEBm1GxleP6XUJhdwWggbRezftAIKMZciIVaSXtE93SV31EaQTFqdgSj/lAkTK1bJ08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975338; c=relaxed/simple;
-	bh=LDkYl8RASj19L8WhRk5Op4psCIQkpi8Gmk4PvyTBqko=;
+	s=arc-20240116; t=1786975341; c=relaxed/simple;
+	bh=hkngG3DTEqmdEuu0yVpItnfl3TuXFKPIMpiyI+qCJe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UO+3NU2YRjbz7hNS5bbhQ/VmD1qdaBZy58dI3kACO4Aznlk6WFyLRy9ldbZeDG3zwZJCVxbTUCyi4m98/KBerOvahBMuD8P45QauTK2zfL8VqAtAGbL9VFCBoMEIOuAUbtE7uWoeRJEQKQNMTvST2YXUNE6YCeJ/LIWgbtrOCuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHk+I93U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cmwUo1N7258HssPBkswz+yNubQjehvXuOhN7rzOTJfqE+4a7WseAjHyt19dCxRSxvWtwiCaoW+7dF5Wwl0tJ7lSG5U/EvProV9Buw3ijL9E4EpuVH8kUuhAWetZODmOd6fCoyurhj4xV9jSuEImgrd+V7Azn9HmY3WJZioNFFmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQ3eKJ4W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHk+I93U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1971F000E9;
-	Mon, 17 Aug 2026 14:02:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQ3eKJ4W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4AA1F000E9;
+	Mon, 17 Aug 2026 14:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975337;
-	bh=QCryo9TX8GFlFeS9Bbs7Hl7Sp88sd/2NqNN3hti5gTI=;
+	s=korg; t=1786975340;
+	bh=fnAjxHc6Bt/Nwnnpu82yotiStAwHmU8QHaq5Sf7iQuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JHk+I93UgAzqAeq7hEEpaDavw4R8FWv/ZXedWriVSYzN4zBWbuJV86gbOfWc80zQw
-	 Wpo/3IOBynlb06IWiuAEMNms45K+cXyil3RBRxzhXkZnl0ckhGQGT9yZW4mrDucZLR
-	 1oDhG3f0Kuk2jzXAnl18eBnA738ztWLEcRGJBPOE=
+	b=WQ3eKJ4WJWhF6B2iMFWhTQ5fs2pxm6z1RMqSbtOKJpYcV9ZCIobFaun7GlmsxMG0a
+	 ObT6khakI0KKvWivYLO8hSF8tZ/boVsw+/VhYDalJV1TEKj8jdvV40ldI61tlDHm/B
+	 vE0sGkOqSIxs8dPKOvoZfjejN8avdkIh7K/0hjHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hyunjung Ko <hj351016@gmail.com>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 205/250] net/sched: act_ct: fix sk_buff leak when the header checks reject a packet
-Date: Mon, 17 Aug 2026 15:32:46 +0200
-Message-ID: <20260817132544.916244551@linuxfoundation.org>
+Subject: [PATCH 6.18 206/250] net/sched: act_gact, act_police: range check the fallback control action
+Date: Mon, 17 Aug 2026 15:32:47 +0200
+Message-ID: <20260817132544.953916818@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -53,125 +54,122 @@ Content-Transfer-Encoding: 8bit
 
 From: Hyunjung Ko <hj351016@gmail.com>
 
-commit 8a7ed561671aa6a911a2de99e59ef670a4d0b1df upstream.
+commit 883b56ae58fe657d8497806c7059646e9ba6dbd0 upstream.
 
-tcf_ct_handle_fragments() runs its header sanity checks before handing
-anything to the defragmentation engine:
+tcf_action_check_ctrlact() range checks the primary control action:
 
-	if (family == NFPROTO_IPV4)
-		err = tcf_ct_ipv4_is_fragment(skb, &frag);
-	else
-		err = tcf_ct_ipv6_is_fragment(skb, &frag);
-	if (err || !frag)
-		return err;
+	if (!opcode)
+		ret = action > TC_ACT_VALUE_MAX ? -EINVAL : 0;
 
-tcf_ct_ipv4_is_fragment() returns -EINVAL or -ENOMEM;
-tcf_ct_ipv6_is_fragment() adds -EPROTO when ipv6_find_hdr() fails. None of
-them frees or queues the skb, so on that path the caller still owns it.
+TC_ACT_VALUE_MAX is TC_ACT_TRAP, so kernel-internal verdicts above it
+cannot be set that way. But act_gact and act_police each carry a second,
+independent control action supplied by user space that never reaches that
+helper - TCA_GACT_PROB.paction and TCA_POLICE_RESULT. Both only reject
+TC_ACT_GOTO_CHAIN, so any other value is stored verbatim and returned
+verbatim from the action.
 
-tcf_ct_act() however funnels every non-zero return into the
-ownership-transfer exit:
+In particular user space can store TC_ACT_CONSUMED, which is
+TC_ACT_VALUE_MAX + 1 and is deliberately not part of the UAPI value
+range. That verdict tells every caller the action took ownership of the
+skb, so nobody frees it: sch_handle_ingress(), sch_handle_egress() and
+tcf_qevent_handle() all deliberately skip the free for it. The result is
+one leaked sk_buff plus its data buffer per packet traversing the filter,
+unbounded, for all traffic on the chain including kernel-generated
+packets.
 
-	err = tcf_ct_handle_fragments(net, skb, family, p->zone, &defrag);
-	if (err)
-		goto out_frag;
-	...
-out_frag:
-	if (err != -EINPROGRESS)
-		tcf_action_inc_drop_qstats(&c->common);
-	return TC_ACT_CONSUMED;
+Both are trivially deterministic. act_gact clamps tcfg_pval to >= 1, so
+with pval = 1 gact_determ() returns the fallback for every packet.
+act_police has no mandatory rate, so rate = 0 leaves tcfp_mtu = ~0 and
+tcf_police_mtu_check() always passes.
 
-TC_ACT_CONSUMED means the action took ownership of the skb, so no caller
-frees it - sch_handle_ingress(), sch_handle_egress() and
-tcf_qevent_handle() all deliberately skip the free for that verdict. The
-skb is therefore orphaned: one sk_buff plus its data buffer is leaked per
-malformed packet, unbounded. Note the drop counter is already incremented
-for these errors, so the statistics claim a drop that never happens.
+TC_ACT_CONSUMED was added by commit 720f22fed81b ("net: sched: refactor
+reinsert action"), after both goto-chain guards were written:
+commit 9469f375ab09 ("net/sched: act_gact: disallow 'goto chain' on
+fallback control action") and
+commit c08f5ed5d625 ("net/sched: act_police: disallow 'goto chain' on
+fallback control action"). Neither guard was widened when the new
+verdict appeared.
 
-Three different ownership states reach out_frag: today - the skb may be
-queued by the defrag engine (-EINPROGRESS), already freed by
-nf_ct_handle_fragments(), or still owned by us. Tell the caller which of
-those it is, and free the packet ourselves in the last case, which
-restores the TC_ACT_SHOT behaviour that predated the Fixes: commit.
+Factor the existing range test out of tcf_action_check_ctrlact() as
+tcf_action_valid() and apply it to both fallbacks. The helper cannot call
+tcf_action_check_ctrlact() directly because that also allocates a
+goto_chain, which is exactly what these two sites must not do.
 
-Reproduced on v7.2-rc6 with a 54-byte frame carrying a 40-byte IPv6
-header with nexthdr = 0 (hop-by-hop) and nothing after it, on a
-clsact ingress chain with "action ct". kmemleak reports one leaked
-232-byte skbuff_head_cache object plus its 704-byte data buffer per
-packet; with this patch it reports none.
+Reproduced on v7.2-rc6: kmemleak reports one leaked 232-byte
+skbuff_head_cache object plus its 704-byte data buffer per packet. With
+this patch both configurations are rejected with -EINVAL and kmemleak
+reports none.
 
-Fixes: 3f14b377d01d ("net/sched: act_ct: fix skb leak and crash on ooo frags")
-Cc: stable@vger.kernel.org # v6.8+
+Fixes: 720f22fed81b ("net: sched: refactor reinsert action")
+Cc: stable@vger.kernel.org # v5.3+
 Signed-off-by: Hyunjung Ko <hj351016@gmail.com>
 Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260806101235.809370-1-hj351016@gmail.com
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20260806101252.809593-1-hj351016@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_ct.c |   29 +++++++++++++++++++++++++----
- 1 file changed, 25 insertions(+), 4 deletions(-)
+ include/net/act_api.h  |   19 +++++++++++++++++++
+ net/sched/act_gact.c   |    5 +++++
+ net/sched/act_police.c |    6 ++++++
+ 3 files changed, 30 insertions(+)
 
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -838,8 +838,15 @@ static int tcf_ct_ipv6_is_fragment(struc
- 	return 0;
- }
+--- a/include/net/act_api.h
++++ b/include/net/act_api.h
+@@ -270,6 +270,25 @@ int tcf_action_check_ctrlact(int action,
+ struct tcf_chain *tcf_action_set_ctrlact(struct tc_action *a, int action,
+ 					 struct tcf_chain *newchain);
  
-+/* On error, tells the caller whether it still owns @skb and must free it
-+ * itself.  @skb is ours only when the header checks below reject the packet
-+ * before it is handed to the defragmentation engine; once nf_ct_handle_
-+ * fragments() has been called the skb is either queued (-EINPROGRESS) or has
-+ * already been freed by it.
++/* Range check for a control action supplied by user space.
++ *
++ * This is the same test tcf_action_check_ctrlact() applies to the primary
++ * control action, factored out for the *fallback* control actions
++ * (act_gact's TCA_GACT_PROB.paction and act_police's TCA_POLICE_RESULT),
++ * which must not reach tcf_action_check_ctrlact() because they have no
++ * goto_chain to allocate.  Without it, user space can store kernel-internal
++ * verdicts such as TC_ACT_CONSUMED, which is TC_ACT_VALUE_MAX + 1 and is
++ * deliberately not part of the UAPI value range.
 + */
- static int tcf_ct_handle_fragments(struct net *net, struct sk_buff *skb,
--				   u8 family, u16 zone, bool *defrag)
-+				   u8 family, u16 zone, bool *defrag,
-+				   bool *skb_is_ours)
- {
- 	enum ip_conntrack_info ctinfo;
- 	struct tc_skb_cb cb;
-@@ -857,8 +864,12 @@ static int tcf_ct_handle_fragments(struc
- 		err = tcf_ct_ipv4_is_fragment(skb, &frag);
- 	else
- 		err = tcf_ct_ipv6_is_fragment(skb, &frag);
--	if (err || !frag)
-+	if (err) {
-+		*skb_is_ours = true;
- 		return err;
-+	}
-+	if (!frag)
-+		return 0;
++static inline bool tcf_action_valid(int action)
++{
++	int opcode = TC_ACT_EXT_OPCODE(action);
++
++	if (!opcode)
++		return action <= TC_ACT_VALUE_MAX;
++	return opcode <= TC_ACT_EXT_OPCODE_MAX || action == TC_ACT_UNSPEC;
++}
++
+ #ifdef CONFIG_INET
+ DECLARE_STATIC_KEY_FALSE(tcf_frag_xmit_count);
+ #endif
+--- a/net/sched/act_gact.c
++++ b/net/sched/act_gact.c
+@@ -89,6 +89,11 @@ static int tcf_gact_init(struct net *net
+ 		p_parm = nla_data(tb[TCA_GACT_PROB]);
+ 		if (p_parm->ptype >= MAX_RAND)
+ 			return -EINVAL;
++		if (!tcf_action_valid(p_parm->paction)) {
++			NL_SET_ERR_MSG(extack,
++				       "invalid fallback control action");
++			return -EINVAL;
++		}
+ 		if (TC_ACT_EXT_CMP(p_parm->paction, TC_ACT_GOTO_CHAIN)) {
+ 			NL_SET_ERR_MSG(extack,
+ 				       "goto chain not allowed on fallback");
+--- a/net/sched/act_police.c
++++ b/net/sched/act_police.c
+@@ -128,6 +128,12 @@ static int tcf_police_init(struct net *n
  
- 	cb = *tc_skb_cb(skb);
- 	err = nf_ct_handle_fragments(net, skb, zone, family, &proto, &cb.mru);
-@@ -975,6 +986,7 @@ TC_INDIRECT_SCOPE int tcf_ct_act(struct
- 	int nh_ofs, err, retval;
- 	struct tcf_ct_params *p;
- 	bool add_helper = false;
-+	bool skb_is_ours = false;
- 	bool skip_add = false;
- 	bool defrag = false;
- 	struct nf_conn *ct;
-@@ -1010,9 +1022,18 @@ TC_INDIRECT_SCOPE int tcf_ct_act(struct
- 	 */
- 	nh_ofs = skb_network_offset(skb);
- 	skb_pull_rcsum(skb, nh_ofs);
--	err = tcf_ct_handle_fragments(net, skb, family, p->zone, &defrag);
--	if (err)
-+	err = tcf_ct_handle_fragments(net, skb, family, p->zone, &defrag,
-+				      &skb_is_ours);
-+	if (err) {
-+		/* The skb is still ours only when the header checks rejected
-+		 * it; returning TC_ACT_CONSUMED for such a packet would leak
-+		 * it, since no caller frees an skb it was told it no longer
-+		 * owns.
-+		 */
-+		if (skb_is_ours)
-+			goto drop;
- 		goto out_frag;
-+	}
- 
- 	err = nf_ct_skb_network_trim(skb, family);
- 	if (err)
+ 	if (tb[TCA_POLICE_RESULT]) {
+ 		tcfp_result = nla_get_u32(tb[TCA_POLICE_RESULT]);
++		if (!tcf_action_valid(tcfp_result)) {
++			NL_SET_ERR_MSG(extack,
++				       "invalid fallback control action");
++			err = -EINVAL;
++			goto failure;
++		}
+ 		if (TC_ACT_EXT_CMP(tcfp_result, TC_ACT_GOTO_CHAIN)) {
+ 			NL_SET_ERR_MSG(extack,
+ 				       "goto chain not allowed on fallback");
 
 
