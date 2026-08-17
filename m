@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596B943B6CF;
-	Mon, 17 Aug 2026 13:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1073B43B6CF;
+	Mon, 17 Aug 2026 13:59:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975193; cv=none; b=aqnFzkTT4tiZ99DrhSgvLtafy0UFprU3QBVihL5OaifwD2N+QZNI41aHUeJXZdFVrfl5z8BUJycesv7IqR8Ze6hAh2+srQL2m2ebcoHtSj/Kv2eWt+3/C59DG94te+tPsIMZM/Vu6ygKHMoY+fW1uNr/P2TzeoaakBOxUnntQpI=
+	t=1786975197; cv=none; b=swLfTkSMzBPVc9dLPwb/sQvgTaOkREhSjDB0/qkn7YkwSQWoYvLRE9QhP7jGEI/seXITEpHkZ1pXoxWsadd3+89qnyZgVUZ5agIQ+0SLG3cwgmAxzMdJZ2ak/SDtgeb4JDcZezCD96Z+7CtUIh+tqfmXOARWl7IWU4/EN5vmBts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975193; c=relaxed/simple;
-	bh=0vH14OiPpNRm4koyXekHTKGnUXyP5Q+3T8YKvUtyiXs=;
+	s=arc-20240116; t=1786975197; c=relaxed/simple;
+	bh=Ts5K8nvjU4IKGknHdZQ77p1Xlx0W08JU1TIzNuQiKRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GULTx8OueqdDd4ZMdTGqWV588y4Yyxj4OYIbOQZRIo2bsxsvRwI/RIMoJQ79Nau5+o9DiX//whPWmYcUWOWy/lb++TtieY6Ds1od6TlroSQ2FdCCxmOiDk0/Zup9RF6wHPA/1vEaPzd9PJ7SINb0DG9WSB0bR5xpvGNBFA9riKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oPeamjaO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NGocdTiU2PzOEsHT1Bxqff7JPYw9rc3RYfeIxha5sHS3SN7roWsIKGuh2RuAZVRIHT2FZAJabtbI33DyDN0NI9CY6S5putGafaU/cg99EYVZwVGsfQNww9Z7URa4Rv4gN6vjesvTUntF1z7V/eOz+zIiFSRU79Oq92Jon490K74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nWy78RlF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oPeamjaO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BAFA1F000E9;
-	Mon, 17 Aug 2026 13:59:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWy78RlF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40DE21F000E9;
+	Mon, 17 Aug 2026 13:59:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975192;
-	bh=UvOc7+z04hTAYi7LI+8Usyg5YuMAP8P+Ll6tYN8IuYU=;
+	s=korg; t=1786975195;
+	bh=0fUszGMKpIZ0YsKxAPqlNYLTZDMmln9P5E3IU6w+VUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oPeamjaOu2NgyvNK7zVSYFRrfmlVVP0VIWXW30EF4RBP4wdgibKXPrb/+gt0+2pGk
-	 nd+WSAipt+OXyPtwu0UTOuFXNA52fsfxJzm54IY0utb2m4Km+cbtNREuDs/g/gIyoK
-	 dXS45oTT57RSWSe+kdVcqp+lKeV51OJMwihA38uc=
+	b=nWy78RlFsL6zjqOoExkZkOWBdfy6gECWFx8hPVnzVW3HPuIl4JQva5jquSVP+bZPH
+	 rzhLItxmHFrxy2GnniZPrs3hn9itKerjsqcQc4G6w3PRrVAjs1MqpNbvHD0ooDJvvl
+	 VFxn+rrlqdmoV2qP6oOY5JDMk1IuP5AHKI0SXOTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4d3143c8e28f6266c636@syzkaller.appspotmail.com,
-	Hui Su <sh_def@163.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.18 193/250] tracing: Fix NULL pointer dereference in module event cache removal
-Date: Mon, 17 Aug 2026 15:32:34 +0200
-Message-ID: <20260817132544.445961960@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 158/250] ipv4: Fix fib_nlmsg_size() for RTA_VIA nexthops
+Date: Mon, 17 Aug 2026 15:31:59 +0200
+Message-ID: <20260817132543.030452202@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,65 +52,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit b69859204d4db3acd86c1c2dadcef0d77b451933 upstream.
+commit 4ff9548d84945d2cbf9e4c207288063a200ea397 upstream.
 
-A module-only event filter such as ":mod:foo" is cached with a NULL
-event_mod->match when foo has not been loaded. If a later write tries to
-remove a specific match from the same module, remove_cache_mod() passes
-the NULL cached match to strcmp(), causing a NULL pointer dereference.
+fib_nlmsg_size() still estimates nexthop space as if every gateway is
+encoded as an IPv4 RTA_GATEWAY attribute. IPv4 routes can also carry an
+IPv6 gateway, which fib_nexthop_info() dumps as RTA_VIA.
 
-The issue can be reproduced from userspace:
+As a result, route notifications can allocate an skb that is too small.
+fib_dump_info() then fails with -EMSGSIZE and rtmsg_fib() hits the
+WARN_ON() that marks such failures as a fib_nlmsg_size() bug. With
+panic_on_warn set, this becomes a kernel panic.
 
-  echo ':mod:trace_events_kunit_missing' > /sys/kernel/tracing/set_event
-  echo '!foo_bar:mod:trace_events_kunit_missing' >> /sys/kernel/tracing/set_event
+Mirror the actual nexthop dump layout in fib_nlmsg_size(): account for
+IPv6 nexthop gateways dumped as RTA_VIA, for the no-header rtnexthop
+layout used inside RTA_MULTIPATH, and for RTA_FLOW only when it is
+actually present.
 
-The second write must be a concatenation (">>") to not include O_TRUNC as
-that would cause ftrace_clear_events() to clear the cached modules lines.
-
-The crash was reproduced on x86_64 QEMU while KUnit workers contended on
-the event tracing path:
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  #PF: supervisor read access in kernel mode
-  RIP: 0010:strcmp+0x10/0x30
-  Call Trace:
-   __ftrace_set_clr_event_nolock+0x373/0x4a0
-   ftrace_set_clr_event+0xf0/0x180
-   ftrace_event_write+0xdf/0x110
-   vfs_write+0xf6/0x440
-   ksys_write+0x68/0xe0
-   do_syscall_64+0xf9/0x540
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Check event_mod->match before comparing it, consistent with the existing
-NULL checks for the cached system and event fields. The mismatched removal
-continues to return -EINVAL; a broad cached module filter is removed with
-"!:mod:<module>".
-
+Fixes: d15662682db2 ("ipv4: Allow ipv6 gateway with ipv4 routes")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260811173902.1927376-2-sh_def@163.com
-Fixes: b355247df104 ("tracing: Cache \":mod:\" events for modules not loaded yet")
-Reported-by: syzbot+4d3143c8e28f6266c636@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/lkml/6a7a6b7f.9c11d2ce.289b96.00f8.GAE@google.com/
-Signed-off-by: Hui Su <sh_def@163.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/6f53fa797fcaeb26966432ed7ae9bb87c4961f37.1785411220.git.zihanx@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/fib_semantics.c |   67 ++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 49 insertions(+), 18 deletions(-)
 
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -930,7 +930,7 @@ static int remove_cache_mod(struct trace
- 		if (strcmp(event_mod->module, mod) != 0)
- 			continue;
+--- a/net/ipv4/fib_semantics.c
++++ b/net/ipv4/fib_semantics.c
+@@ -492,6 +492,34 @@ int ip_fib_check_default(__be32 gw, stru
+ 	return -1;
+ }
  
--		if (match && strcmp(event_mod->match, match) != 0)
-+		if (match && (!event_mod->match || strcmp(event_mod->match, match) != 0))
- 			continue;
++static size_t fib_nexthop_nlmsg_size(const struct fib_nh_common *nhc,
++				     bool skip_oif)
++{
++	size_t nhsize = 0;
++
++	switch (nhc->nhc_gw_family) {
++	case AF_INET:
++		nhsize += nla_total_size(4); /* RTA_GATEWAY */
++		break;
++	case AF_INET6:
++		nhsize += nla_total_size(sizeof(struct rtvia) +
++					 sizeof(struct in6_addr));
++		break;
++	}
++
++	if (!skip_oif && nhc->nhc_dev)
++		nhsize += nla_total_size(4); /* RTA_OIF */
++
++	if (nhc->nhc_lwtstate) {
++		/* RTA_ENCAP */
++		nhsize += lwtunnel_get_encap_size(nhc->nhc_lwtstate);
++		/* RTA_ENCAP_TYPE */
++		nhsize += nla_total_size(2);
++	}
++
++	return nhsize;
++}
++
+ size_t fib_nlmsg_size(struct fib_info *fi)
+ {
+ 	size_t payload = NLMSG_ALIGN(sizeof(struct rtmsg))
+@@ -509,32 +537,35 @@ size_t fib_nlmsg_size(struct fib_info *f
+ 		payload += nla_total_size(4); /* RTA_NH_ID */
  
- 		if (system &&
+ 	if (nhs) {
+-		size_t nh_encapsize = 0;
+-		/* Also handles the special case nhs == 1 */
+-
+-		/* each nexthop is packed in an attribute */
+-		size_t nhsize = nla_total_size(sizeof(struct rtnexthop));
++		size_t mpsize = 0;
+ 		unsigned int i;
+ 
+-		/* may contain flow and gateway attribute */
+-		nhsize += 2 * nla_total_size(4);
+-
+-		/* grab encap info */
+ 		for (i = 0; i < fib_info_num_path(fi); i++) {
+ 			struct fib_nh_common *nhc = fib_info_nhc(fi, i);
++			size_t nhsize;
++
++			nhsize = fib_nexthop_nlmsg_size(nhc, nhs != 1);
+ 
+-			if (nhc->nhc_lwtstate) {
+-				/* RTA_ENCAP_TYPE */
+-				nh_encapsize += lwtunnel_get_encap_size(
+-						nhc->nhc_lwtstate);
+-				/* RTA_ENCAP */
+-				nh_encapsize +=  nla_total_size(2);
++			if (nhs != 1)
++				nhsize += NLA_ALIGN(sizeof(struct rtnexthop));
++
++#ifdef CONFIG_IP_ROUTE_CLASSID
++			if (nhc->nhc_family == AF_INET) {
++				struct fib_nh *nh;
++
++				nh = container_of(nhc, struct fib_nh, nh_common);
++				if (nh->nh_tclassid)
++					nhsize += nla_total_size(4);
+ 			}
++#endif
++			if (nhs == 1)
++				payload += nhsize;
++			else
++				mpsize += nhsize;
+ 		}
+ 
+-		/* all nexthops are packed in a nested attribute */
+-		payload += nla_total_size((nhs * nhsize) + nh_encapsize);
+-
++		if (nhs != 1)
++			payload += nla_total_size(mpsize);
+ 	}
+ 
+ 	return payload;
 
 
