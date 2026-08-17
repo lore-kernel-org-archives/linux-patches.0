@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794CE442370;
-	Mon, 17 Aug 2026 15:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3C6442370;
+	Mon, 17 Aug 2026 15:10:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979419; cv=none; b=GBXhF+7KOY4Vpu6PBumRV+eiAoz+tup9IXceJLaVn8TkYb7Xr4CG3pYAhZWKFT3xUovbGRIdEEwK/jQZJZqc47ynQ1vyY4QUnODi8BwBJB/1VXhuihuXEBdhMU/8dx3+SOAVoVN2ZOeSDm3H3kKQcIA5ML16m2xvfbRV/mPabMA=
+	t=1786979422; cv=none; b=aRqHeysr/Jtduww+yf2g9rU/Df0w1bZHdVTTLhqX0OTI3+E5qG+V3fGP5NyLjlj/tVlsBEx6U94N/AsZrCKqTxec1KRCvUwBWDmeMnMUc+aQ6siVnIeG1xGglCrsNaWY/2DmrGLZYT8AtxlPPgapQYMXXAX6hobANPkUqulBZ3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979419; c=relaxed/simple;
-	bh=24h8/A3aH5Sv6kqcDpNUSlVKY2fg6HerSfyJb4UeIAs=;
+	s=arc-20240116; t=1786979422; c=relaxed/simple;
+	bh=V5bGiOvzLA9rJKNEqb2VhqMKBtO3xJ7CIJeGacMn64A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FRtZRbP+UBNRWXILaNuqexFLSLp/Q19eTZQys8nm9oXfaGYsVje1ZtPcyDScYoQSSHbsV/l/ZPnna1wV9i/CLndJLTFZ0gt1ld4MA2T3FzD2wgk2FfyuCT7Fdm4yKfGN/8IUAIUqbm4SEq+indlegkiaHIN3rp9Gmrdt5DfFAOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EELTGrsw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tLlMMi8IixcnR/1bG/tTwrUkf8//Y/2UBnkKLN8I0e2OguJJ8IINovyv9s/xoqvsC/4iSPEteIxGmc9aye2MgpAL4DtoTnVUqeFho3hIUH8a4yPhldgO+4u7Lb+DkfXgoNV8t5QiIF19+ybe3UjgCfJwzUp50HhjhmGqxqtsNNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrxWQLbb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EELTGrsw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC5A1F000E9;
-	Mon, 17 Aug 2026 15:10:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrxWQLbb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A3EB1F000E9;
+	Mon, 17 Aug 2026 15:10:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979418;
-	bh=JC5zFO97zWdcGWtpBA7MsBCmGIQRNt2qABGrpcQWOt0=;
+	s=korg; t=1786979421;
+	bh=j1yo0kdVptRhuMp/k3e7Xog7UHFoyENx7UmDO+UsW1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EELTGrswSPLFVU2k/c+O0oMqjt7fDgI4LU5NusaHYJoAAC6x10sTUs23nfJkrdXTO
-	 jyavMpDKFxMcJFewbW6xNJB9ghRptN5SUeedts7p255effcChIro2cbjCU3IoY2Q6I
-	 YDqDULuVuhWM2FBqYjlDqh4OuFxUrUAvZKFTOhgk=
+	b=BrxWQLbbJOQaTtOxWM0ChDS1Z0rdpP2UqW1xEYCFEOsACPJk4utqtW+y0slpx/7BO
+	 WoDILH/G05jM40eIceqXKbeamfFCBlmePhy7kTU/mcYFSmzAaAcpQA3QACXwfzo8MW
+	 pAgCrFnuMFe20raLgLgLSmPS0qdIz4xMIebHREjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.1 219/609] wifi: ath6kl: fix OOB access from firmware ADDBA window size
-Date: Mon, 17 Aug 2026 15:28:35 +0200
-Message-ID: <20260817132551.422530480@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.1 193/609] media: cedrus: skip invalid H.264 reference list entries
+Date: Mon, 17 Aug 2026 15:28:09 +0200
+Message-ID: <20260817132550.542304113@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,52 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 44126b6994eeb28f2103b638e698f40a1244f327 upstream.
+commit 10358ea986c3c85516d1c8206486464f79d36e76 upstream.
 
-aggr_recv_addba_req_evt() logs a debug message when the firmware-supplied
-win_sz is outside [AGGR_WIN_SZ_MIN, AGGR_WIN_SZ_MAX] but does not
-return. The out-of-range win_sz is then used in TID_WINDOW_SZ() to
-compute a kzalloc size and stored in rxtid->hold_q_sz, leading to
-zero-size or overflowed allocations and subsequent out-of-bounds access.
+Cedrus consumes H.264 ref_pic_list0/ref_pic_list1 entries from the
+stateless slice control and later uses their indices to look up
+decode->dpb[] in _cedrus_write_ref_list().
 
-Clean up any previously active aggregation session for the TID first,
-then return early when win_sz is out of the valid range, instead of
-proceeding with a broken allocation size.
+Rejecting such controls in cedrus_try_ctrl() would break existing
+userspace, since stateless H.264 reference lists may legitimately carry
+out-of-range indices for missing references. Instead, guard the actual
+DPB lookup in Cedrus and skip entries whose indices do not fit the fixed
+V4L2_H264_NUM_DPB_ENTRIES array.
 
-Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
+This keeps the fix local to the driver use site and avoids out-of-bounds
+reads from malformed or unsupported reference list entries.
+
+Fixes: e000e1fa4bdbd ("media: uapi: h264: Update reference lists")
 Cc: stable@vger.kernel.org
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Link: https://patch.msgid.link/20260702005020.708717-1-tristmd@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Tested-by: Chen-Yu Tsai <wens@kernel.org>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath6kl/txrx.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/staging/media/sunxi/cedrus/cedrus_h264.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/wireless/ath/ath6kl/txrx.c
-+++ b/drivers/net/wireless/ath/ath6kl/txrx.c
-@@ -1722,13 +1722,15 @@ void aggr_recv_addba_req_evt(struct ath6
+--- a/drivers/staging/media/sunxi/cedrus/cedrus_h264.c
++++ b/drivers/staging/media/sunxi/cedrus/cedrus_h264.c
+@@ -190,6 +190,9 @@ static void _cedrus_write_ref_list(struc
+ 		u8 dpb_idx;
  
- 	rxtid = &aggr_conn->rx_tid[tid];
- 
--	if (win_sz < AGGR_WIN_SZ_MIN || win_sz > AGGR_WIN_SZ_MAX)
--		ath6kl_dbg(ATH6KL_DBG_WLAN_RX, "%s: win_sz %d, tid %d\n",
--			   __func__, win_sz, tid);
--
- 	if (rxtid->aggr)
- 		aggr_delete_tid_state(aggr_conn, tid);
- 
-+	if (win_sz < AGGR_WIN_SZ_MIN || win_sz > AGGR_WIN_SZ_MAX) {
-+		ath6kl_dbg(ATH6KL_DBG_WLAN_RX, "%s: win_sz %d, tid %d\n",
-+			   __func__, win_sz, tid);
-+		return;
-+	}
+ 		dpb_idx = ref_list[i].index;
++		if (dpb_idx >= V4L2_H264_NUM_DPB_ENTRIES)
++			continue;
 +
- 	rxtid->seq_next = seq_no;
- 	hold_q_size = TID_WINDOW_SZ(win_sz) * sizeof(struct skb_hold_q);
- 	rxtid->hold_q = kzalloc(hold_q_size, GFP_KERNEL);
+ 		dpb = &decode->dpb[dpb_idx];
+ 
+ 		if (!(dpb->flags & V4L2_H264_DPB_ENTRY_FLAG_ACTIVE))
 
 
