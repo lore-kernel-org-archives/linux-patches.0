@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787D82E7BD6;
-	Mon, 17 Aug 2026 15:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D80B4457C5;
+	Mon, 17 Aug 2026 15:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979900; cv=none; b=ja9CRZHLABQBQwvrLQD6RNyRVevEOaVOJ9hSkl80gr1kSoNHNlMhtXioPXRrlj30HXzQqd1BiOerC31h+WC4gR/M6xMBHpF6xuPr7ng/xEltVyAvvqdYcWhh8CXYXCQKy96ANVuMNOArOMQMdVm6N/aeKmC7GsofBJc/QkrqGA8=
+	t=1786979903; cv=none; b=QbzrBPy0BuGam+s/6EAqSfkPpuzsY19FJe1UPs8VTJMhDSYVufyZjN9dRuhorcsIW3vkNRGILEXxexuPz//pWyAQTuxlxIR77R3pmdVz1mtEkcbCkr1CD3Q634wMfUgFe7rjO1q1wM18MZw//meXlZZMUcG/vORSs5NouM3T/bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979900; c=relaxed/simple;
-	bh=nGikZxFdRbRZyJrBizEIZyO4CdXBxUNfXwPa1EbfQCM=;
+	s=arc-20240116; t=1786979903; c=relaxed/simple;
+	bh=ARvAq6GZduC2fgSD7gEmPFM1I6aFvgm6tx5/coJIG94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AUotnzBlXHOcOx8cKQKLkMYhlscXSE0rzb628od9IIFmn0LxTDTj7D3ntO/eOcIPdJB3KKacTtE/XWohTXhptcZrexSCl8gbkV/ujIW/DO4aJuFnZpwVZhriaNhj5403upaMUyON++LkKGwghiqpxenxx7oNHgFTvF4hlfgIjmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uK5ZqRwL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rLrvqVNJfcBsEAklj46FCLYg1aiFPROr8Z18eVrvoQpAEuLzkOLDWl+3RNEY2L4sKe+VgusSoaT3DxqwKRgAasdHRXX8500wam5Nwrp2gwjQZZ5vI/K9ZuBT0TOLsyvwHdfqH2iEVuyfFue59qhdDZ8eU8sSwx/2tem6Vk6p12Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PePo4WDl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uK5ZqRwL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D905E1F000E9;
-	Mon, 17 Aug 2026 15:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PePo4WDl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B59711F00A3A;
+	Mon, 17 Aug 2026 15:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979899;
-	bh=1vKbgWAASifnlgrZPmPI7mQa14EmyxQWjkKTplOoPBo=;
+	s=korg; t=1786979902;
+	bh=HHNtbr1xOTOO7wwZi1o/D7p3Y8NwbvAPJYrnf/lFGKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uK5ZqRwL7ObOM0As+cH2zfXQ9vuUTpFLHj5AT8WfrsiW793B2GPDrP7EQW9nejhMa
-	 Vwxc8+y9ykCQRuG7nrpJICK34603P1I/E1uorKapuCBeJEtkt0itBOVhJ+yvonuvn+
-	 SBp+ga2+k91HZ8tqQ2V2HX2VELqsdPF2qmkHtLqA=
+	b=PePo4WDl+qgNzdk3skMoNMYDBjAGCIsIpIii+z+1idXxksahOhQunhx3qNGeg7YLS
+	 CwP+itP4oQGPIY7/rakw7JAQQKUnPvskjdkMxg1DKvS5gqX32DGC21bpr9cYeYvuEL
+	 pCot6D74gT8I8xcc9lOrNNzl241y/vf40Za7/Qpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiangfeng Cai <caixiangfeng@bytedance.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Baoquan He <baoquan.he@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	Shuah Khan <shuah@kernel.org>,
-	Wei Yang <richard.weiyang@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 386/609] mm/hugetlb: fix list corruption in allocate_file_region_entries()
-Date: Mon, 17 Aug 2026 15:31:22 +0200
-Message-ID: <20260817132557.164900370@linuxfoundation.org>
+	Yosry Ahmed <yosry@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.1 387/609] KVM: SVM: Update x2APIC MSR intercepts if AVIC is inhibited while L2 is active
+Date: Mon, 17 Aug 2026 15:31:23 +0200
+Message-ID: <20260817132557.202636656@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -56,77 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiangfeng Cai <caixiangfeng@bytedance.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit dd9623f58ec702a07b2d67179d6fcea79c52231a upstream.
+commit 7d3aae206663c4e006b25a1c7a20a4029e67da76 upstream.
 
-allocate_file_region_entries() tops up resv->region_cache with freshly
-allocated file_region descriptors.  The allocation uses GFP_KERNEL, so
-resv->lock is dropped around it: the new entries are gathered on a
-stack-local list head, allocated_regions, and spliced into
-resv->region_cache once the lock is re-acquired.
+Always update x2APIC MSR intercepts for L1 when AVIC is deactivated, even
+if L2 is active and KVM is using a separate MSR bitmap to run L2.  If AVIC
+is fully enabled prior to running L2, and is then inhibited while L2 is
+active (for a VM-scoped inhibit), then KVM will run L1 with AVIC disabled,
+but with x2APIC MSR intercepts disabled, i.e. will allow L1 to read most of
+the host's APIC state, send arbitrary interrupts, change task priority, and
+ultimately trivially DoS the host.
 
-The splice used list_splice(), which moves the entries but does not
-re-initialize the source head, so allocated_regions is left pointing at an
-entry that now lives on resv->region_cache.  The top-up runs in a while
-loop that re-checks the cache deficit after re-acquiring the lock.  For a
-shared mapping the resv_map is shared by every mapper of the hugetlbfs
-inode, so a concurrent region_chg()/region_add()/region_del() on the same
-resv_map can consume cache entries during the unlocked window and force a
-second iteration.  That iteration calls list_add() on the stale head and
-corrupts the list; with CONFIG_DEBUG_LIST the __list_add_valid() check
-trips:
+E.g. sending a self-IPI in L1 on HYPERV_REENLIGHTENMENT_VECTOR, 0xee, with
+CONFIG_HYPERV=n in the host kernel as a "safe" PoC, yields:
 
-  list_add corruption. next->prev should be prev (ffffc900011ff7f8),
-  but was ffff88814c281460. (next=ffff88814c545640).
-  kernel BUG at lib/list_debug.c:31!
-   allocate_file_region_entries+0x191/0x420
-   region_chg+0x267/0x300
-   hugetlb_reserve_pages+0x387/0xc80
-   hugetlbfs_file_mmap+0x2ce/0x3f0
-   mmap_region+0x1348/0x1a80
-   do_mmap+0x85e/0xb90
-   vm_mmap_pgoff+0x18c/0x330
-   ksys_mmap_pgoff+0x2a1/0x3e0
-   do_syscall_64+0xd7/0x420
+  Spurious interrupt (vector 0xee) on CPU#425. Acked
 
-Without CONFIG_DEBUG_LIST the bad list_add() silently links a kernel-stack
-address into resv->region_cache, leading to later use-after-free.
+And hacking KVM to abuse kvm_set_posted_intr_wakeup_handler() to register a
+handler and WARN on POSTED_INTR_WAKEUP_VECTOR yields:
 
-This was observed as a real host panic on a dense KVM host where a QEMU
-guest-RAM hugetlbfs file was mapped MAP_SHARED by both QEMU and a separate
-SPDK/DPDK vhost-user target, generating concurrent region_* traffic on one
-shared resv_map.
+  ------------[ cut here ]------------
+  WARNING: arch/x86/kvm/svm/svm.c:5594 at pi_wakeup_handler+0x9/0x10 [kvm_amd], CPU#156: nested_x2apic_t/316940
+  CPU: 156 UID: 0 PID: 316940 Comm: nested_x2apic_t Tainted: G S   U
+  Tainted: [S]=CPU_OUT_OF_SPEC, [U]=USER
+  Hardware name: Google Astoria-Turin/astoria, BIOS 0.20260209.0-0 02/09/2026
+  RIP: 0010:pi_wakeup_handler+0x9/0x10 [kvm_amd]
+  Call Trace:
+   <IRQ>
+   sysvec_kvm_posted_intr_wakeup_ipi+0x64/0x80
+   </IRQ>
+   <TASK>
+   asm_sysvec_kvm_posted_intr_wakeup_ipi+0x1a/0x20
+  RIP: 0010:vcpu_run+0x1430/0x1e40 [kvm]
+   kvm_arch_vcpu_ioctl_run+0x2c1/0x600 [kvm]
+   kvm_vcpu_ioctl+0x580/0x6b0 [kvm]
+   __se_sys_ioctl+0x6d/0xb0
+   do_syscall_64+0x10a/0x480
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  RIP: 0033:0x46ff4b
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
 
-Use list_splice_init() so the source head is re-initialized empty after
-each splice, making the retry loop safe.
-
-Link: https://lore.kernel.org/20260713171456.300518-2-caixiangfeng@bytedance.com
-Fixes: d3ec7b6e09e5 ("mm/hugetlb: use list_splice to merge two list at once")
-Signed-off-by: Xiangfeng Cai <caixiangfeng@bytedance.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: Baoquan He <baoquan.he@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Wei Yang <richard.weiyang@linux.alibaba.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 091abbf578f9 ("KVM: x86: nSVM: optimize svm_set_x2apic_msr_interception")
+Cc: stable@vger.kernel.org
+Cc: Yosry Ahmed <yosry@kernel.org>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://patch.msgid.link/20260729213558.639074-1-pbonzini@redhat.com/
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/svm/avic.c |    8 --------
+ 1 file changed, 8 deletions(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -679,7 +679,7 @@ static int allocate_file_region_entries(
+--- a/arch/x86/kvm/svm/avic.c
++++ b/arch/x86/kvm/svm/avic.c
+@@ -120,14 +120,6 @@ static void avic_deactivate_vmcb(struct
+ 	if (!sev_es_guest(svm->vcpu.kvm))
+ 		svm_set_intercept(svm, INTERCEPT_CR8_WRITE);
  
- 		spin_lock(&resv->lock);
- 
--		list_splice(&allocated_regions, &resv->region_cache);
-+		list_splice_init(&allocated_regions, &resv->region_cache);
- 		resv->region_cache_count += to_allocate;
- 	}
- 
+-	/*
+-	 * If running nested and the guest uses its own MSR bitmap, there
+-	 * is no need to update L0's msr bitmap
+-	 */
+-	if (is_guest_mode(&svm->vcpu) &&
+-	    vmcb12_is_intercept(&svm->nested.ctl, INTERCEPT_MSR_PROT))
+-		return;
+-
+ 	/* Enabling MSR intercept for x2APIC registers */
+ 	svm_set_x2apic_msr_interception(svm, true);
+ }
 
 
