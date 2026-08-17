@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA43440A13;
-	Mon, 17 Aug 2026 14:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23C34399F8;
+	Mon, 17 Aug 2026 14:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978473; cv=none; b=b0+zKMhEwdtmJY9/UrGrqq3S9kCCp5ICTUn94uda23XltW+2GxtNKI7rugsocZCqfqoUMUSQrfXhdy6t53zP8lp/XampC97sCrq9i6z5yoelk1TRcJkMfh/ySqG4GOPvCDMll0CR2/XKrVPH1DOqei96nO4KVIFH+2c5Fvm7ADk=
+	t=1786978475; cv=none; b=k3o/DYMBL4brbZMHKRB7FAxx/W9xnzer86cK419UPeDronX8Pzc2tNHhdouU4pzlROlA62qVhiOKL534bvDCN9V6ZNzKdVjPRBym03W6Ad0vMsBRMf4qjE01k/uS3lPiqHkapcovSowQ8n50+fG8zPX4IUwSy+qUNiUiwGqdYKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978473; c=relaxed/simple;
-	bh=sfB3CZUsma8w26h3qpXRIhMmg50+luNPC98YOcxbm1E=;
+	s=arc-20240116; t=1786978475; c=relaxed/simple;
+	bh=ohE5EPTUERhn3NGJHwRlmnJGWsemlIzbuEL/mMd6JJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YIIbJg8Y4o/j1RNrrPAf336mCA9G/MoxH8IdSy4nGIvzscywim2/5GcjtRR03F0i6FKRO3SLP38QKE8gP2wfWIMrtRcN2g1xK/k1WT6YXs557Tnl/RS7dxFsx8t4WIsYtSo/uADS4WM+4nRO8tvz30B2kF7FoPunhosGOag3ve8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eys8LgX7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A8tt7fj+2EdwNsRiOjDBEFVC/vITh2gt/7VDkqPCAbIhkEbxRnep64KV0srrRlb8YyL7yq3JEI1iZLKCwsHMnSJW8IsETXGUNnjQKyY1NoYXAcXI5/CIJvv1sBtmDle9Oy6Ahon8uYRr7zSyiEE64/vsgF4b3a8S0a1I6Vl3Nik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrMoTeol; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eys8LgX7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253741F00A3A;
-	Mon, 17 Aug 2026 14:54:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrMoTeol"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080721F000E9;
+	Mon, 17 Aug 2026 14:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978470;
-	bh=EdFeVyembkZTq4n5ginMOlcjp2EcZDN+M7Oga3gaqtU=;
+	s=korg; t=1786978473;
+	bh=czMy6j+olyWiJ14kT2Ja37CiFr9lPm7/6+IAvRWpbsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eys8LgX7CtYjTqtmaWbZ8jCvyKBdtz66lUpb4tSuk6JTfBMBS8waSVu9dqUK8yAQW
-	 NXzinXfkCrSc2G8loZBV3bhNHSIzpGqYvWsyFqdkZrn4XixzDWYAd+MCdJLnScXJ46
-	 LoYQ9TdD8wx1bu8vIyVkEcfPzhGs8/YRHQOziMb4=
+	b=IrMoTeol/8BiNDt2D2YyJ4NEgQKuoXp71nWWgpjAmtdt/c1zdWcaClVvImAGD0D3v
+	 U5cAMSrWYoJsSps/PFBMfyxt+/DD+qTrZ1mmuoS9clfjhAJLgaPSUScmksUt6yj4yO
+	 leIOjFR5r4eiS05d0icaW4rRZrZM8+cBz4StYilI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Elad Nachman <enachman@marvell.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+22c3218a6fa219e47321@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 049/156] net: prestera: validate firmware header length
-Date: Mon, 17 Aug 2026 15:33:03 +0200
-Message-ID: <20260817132536.511246599@linuxfoundation.org>
+Subject: [PATCH 6.6 050/156] net: remove WARN_ON_ONCE() from sk_mc_loop()
+Date: Mon, 17 Aug 2026 15:33:04 +0200
+Message-ID: <20260817132536.551178595@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -52,40 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8ae344eb540af3f457179b52bc6061416752485c ]
+[ Upstream commit b8a39a09ae4eaae04309e1e38ed6a1101d967496 ]
 
-prestera_fw_hdr_parse() reads the firmware header before checking
-that the firmware image contains that header.
+sk_mc_loop() can be called for sockets that are neither AF_INET
+nor AF_INET6 (e.g. AF_PACKET sockets when sending packets via raw/packet
+socket over virtual devices such as VRF or ipvlan).
 
-Reject images shorter than struct prestera_fw_header before decoding the
-magic and version fields.
+In such cases, sk_family is not AF_INET/AF_INET6 and sk_mc_loop() falls
+through the switch statement and triggers WARN_ON_ONCE(1).
 
-Fixes: 4c2703dfd7fabb ("net: marvell: prestera: Add PCI interface support")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Acked-by: Elad Nachman <enachman@marvell.com>
-Link: https://patch.msgid.link/20260731141500.1-prestera-v2-pengpeng@iscas.ac.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Non-INET sockets do not support IP_MULTICAST_LOOP or IPV6_MULTICAST_LOOP
+options, so loopback should default to true without generating a warning.
+
+Fixes: f60e5990d9c1 ("ipv6: protect skb->sk accesses from recursive dereference inside the stack")
+Reported-by: syzbot+22c3218a6fa219e47321@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a72024c.13623e66.bdc14.0019.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260804152048.2134341-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/prestera/prestera_pci.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/core/sock.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/prestera/prestera_pci.c b/drivers/net/ethernet/marvell/prestera/prestera_pci.c
-index 35857dc19542f..5db2c9e5e077d 100644
---- a/drivers/net/ethernet/marvell/prestera/prestera_pci.c
-+++ b/drivers/net/ethernet/marvell/prestera/prestera_pci.c
-@@ -684,6 +684,9 @@ static int prestera_fw_hdr_parse(struct prestera_fw *fw)
- 	struct prestera_fw_header *hdr;
- 	u32 magic;
- 
-+	if (fw->bin->size < sizeof(*hdr))
-+		return -EINVAL;
-+
- 	hdr = (struct prestera_fw_header *)fw->bin->data;
- 
- 	magic = be32_to_cpu(hdr->magic_number);
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 87e6060c8bca7..846e95805c199 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -776,7 +776,6 @@ bool sk_mc_loop(struct sock *sk)
+ 		return inet6_sk(sk)->mc_loop;
+ #endif
+ 	}
+-	WARN_ON_ONCE(1);
+ 	return true;
+ }
+ EXPORT_SYMBOL(sk_mc_loop);
 -- 
 2.53.0
 
