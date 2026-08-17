@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2729408617;
-	Mon, 17 Aug 2026 14:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5983F0A8C;
+	Mon, 17 Aug 2026 14:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976358; cv=none; b=b1ZLIanDsPOrcB+pY22axRx3cU1vTLet2RjmDYpRuFWFj6uOFdc6HwkK/6qh3DaE5m7ByD7ws3q0aUTuzowANFeLCkkrciD5XgcKsiHErTKsRSj5IETGlbviOOXF8T3xcliZU+IwmDioO5jae01Lm9TyrGjnF4c843VCLwzX6gg=
+	t=1786976360; cv=none; b=iMGNGxyAfpy9N3eN68uvoTCjHcMoBnl1RgfT/i5s32lOMlMyeyNvf/1RgnAQF16Z0d8YkMfSsRf0+A8hVzBaHzB/eNVp621vQcQ3uGZF8zoWtrB6cBlGRk3n5gbl8AQpSfwyQBxZmnJUDhMmcINTTWKrl09WhuSCNSg9HvqLZX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976358; c=relaxed/simple;
-	bh=jRULwncd5tzNvmrTInF9vjujOgILj0KqvKOUTtByQL0=;
+	s=arc-20240116; t=1786976360; c=relaxed/simple;
+	bh=k9LHVxwDVrtkjB55ERm/UOk6hBwncl7UeFu5NTFXl5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NAL73kyDKGcEeJj4DPCnbGczOMiaVIyB06iuGdHfEB6yUBMMellErQG0WKLSDLa2QkatHVpS+NexWCJ+y1gOb0dLK6oTOMoFrFZ7S+Vv9A21GYZpI6fjOHe8H1R/OGLbDx9zD4rnm0I7CrDUGtveQwro4GCe2K3bsQ29jkE0fHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SwW+d2WM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Etv4MVEz+HJ5wDMMjIauBL9rkGr5OmeWa1uFQ43Tz42kbw3dtn27qrSGnQFqEmSst4kfwpmKDH5mkE5cZWEnWT6XZabYN5zuN+nD0KmIIUQkZEnxIykZhigk4tbsj4/Jgjh3/SPfIQ+SokAbSC03gD2S1p0stWJulnnVrFHTXIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XB3SKgBi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SwW+d2WM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481E41F000E9;
-	Mon, 17 Aug 2026 14:19:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XB3SKgBi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243721F000E9;
+	Mon, 17 Aug 2026 14:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976356;
-	bh=VmhVIeJfOqgnh6pFW/jEOww/IbULA9BhPU02C0P5rL4=;
+	s=korg; t=1786976359;
+	bh=6I1lgMu3jqfb0mOIQi865b+coRCDFRtkgqgJ1+oBnjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SwW+d2WMu2p52/Li7Hoz74D8dpk1B/KkyAMe/M0xZOnYhwdyAHLNeYIn7oRL/tF/U
-	 olmh1UFgDbq/VdZrWFMlYBgrk4/fxRkqGgRDiby4LMxA+y6j6KWCJS7s5toA1UIB8O
-	 lks0Q9vmBB+mzwNq5sG8dHEkRU62KJ9xmXfZeNTk=
+	b=XB3SKgBirRygOXt5dxsFz8YMCp1xGYH2xxbl8glMqKCLmydmjf6sXUrH9DojEdWAP
+	 tNIjn0IklEkFKN9X60a68RiX8BRyOfivQK1kutPjFf5CZyhnLUq+dicb8gOXm4lvDW
+	 cQL0Lsnw/RwVyq0vE8Og6+rPYwAK4mGyiddni4gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	syzbot+c9dff578c3a41775176a@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>
-Subject: [PATCH 5.10 345/389] usb: atm: cxacru: properly kill rcv_urb on error in cxacru_cm()
-Date: Mon, 17 Aug 2026 15:33:04 +0200
-Message-ID: <20260817132552.268472675@linuxfoundation.org>
+	Sonali Pradhan <sonalipradhan@google.com>
+Subject: [PATCH 5.10 346/389] usb: gadget: f_ncm: Use unsigned int for ndp_index
+Date: Mon, 17 Aug 2026 15:33:05 +0200
+Message-ID: <20260817132552.303981103@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,66 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Sonali Pradhan <sonalipradhan@google.com>
 
-commit c2f811314be351d86b6ab41e9297ae80d8da6f86 upstream.
+commit 6b1c8a9403a26cb0fed7a648916c74dc236da591 upstream.
 
-If cxacru_cm() encounters an error while submitting or waiting for snd_urb,
-it aborts and returns the error without killing the already submitted
-rcv_urb. This leaves the rcv_urb active.
+The variable ndp_index is declared as a signed integer, but it stores
+the return value of get_ncm(), which is unsigned.
 
-When this happens during initialization (e.g., in cxacru_atm_start()), the
-driver may ignore the error and proceed to call cxacru_poll_status(), which
-invokes cxacru_cm() again. Attempting to submit the still-active rcv_urb
-triggers a warning in usb_submit_urb():
+A malicious host can supply a large offset that overflows the signed
+ndp_index, making it negative. Because ndp_index is compared against
+unsigned bounds, this negative value bypasses sanity checks and leads
+to an out-of-bounds read when calculating the address of the NDP
+block (ntb_ptr + ndp_index).
 
-cxacru 1-1:1.0: send of cm 0x84 failed (-104)
-ATM dev 0: cxacru_atm_start: CHIP_ADSL_LINE_START returned -104
-------------[ cut here ]------------
-URB ffff88812658d200 submitted while active
-WARNING: drivers/usb/core/urb.c:379 at usb_submit_urb+0x79/0x18b0
-drivers/usb/core/urb.c:379
-...
-Call Trace:
- <TASK>
- cxacru_cm+0x21a/0xf10 drivers/usb/atm/cxacru.c:631
- cxacru_cm_get_array drivers/usb/atm/cxacru.c:722 [inline]
- cxacru_poll_status+0x178/0x1110 drivers/usb/atm/cxacru.c:828
- cxacru_atm_start+0x185/0x360 drivers/usb/atm/cxacru.c:814
- usbatm_atm_init+0x144/0x3a0 drivers/usb/atm/usbatm.c:927
- usbatm_usb_probe+0x15cb/0x1db0 drivers/usb/atm/usbatm.c:1178
- cxacru_usb_probe+0x17f/0x220 drivers/usb/atm/cxacru.c:1370
-...
+Fix this by changing ndp_index to unsigned int to ensure consistent
+unsigned comparisons throughout the function.
 
-To fix this, ensure that rcv_urb is properly killed if cxacru_cm() aborts
-early. We can safely call usb_kill_urb() on rcv_urb in the error path, as
-it is safe to call even if the URB is not active (e.g., if it failed to
-submit in the first place, or if it already completed).
-
-Fixes: 1b0e61465234 ("[PATCH] USB ATM: driver for the Conexant AccessRunner chipset cxacru")
+Fixes: 370af734dfaf ("usb: gadget: NCM: RX function support multiple NDPs")
 Cc: stable <stable@kernel.org>
-Assisted-by: Gemini:gemini-3.5-flash Gemini:gemini-3.1-pro-preview syzbot
-Reported-by: syzbot+c9dff578c3a41775176a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c9dff578c3a41775176a
-Link: https://syzkaller.appspot.com/ai_job?id=75fec6f2-c8a6-43b1-b184-4d26baba86cc
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Link: https://patch.msgid.link/91edfa4c-a63d-400c-9f00-31f3e1f98c00@mail.kernel.org
+Signed-off-by: Sonali Pradhan <sonalipradhan@google.com>
+Link: https://patch.msgid.link/20260720165654.2224591-1-sonalipradhan@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/atm/cxacru.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/gadget/function/f_ncm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/atm/cxacru.c
-+++ b/drivers/usb/atm/cxacru.c
-@@ -700,6 +700,8 @@ static int cxacru_cm(struct cxacru_data
- 	ret = offd;
- 	usb_dbg(instance->usbatm, "cm %#x\n", cm);
- fail:
-+	if (ret < 0)
-+		usb_kill_urb(instance->rcv_urb);
- 	mutex_unlock(&instance->cm_serialize);
- err:
- 	return ret;
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -1183,7 +1183,7 @@ static int ncm_unwrap_ntb(struct gether
+ 	unsigned char	*ntb_ptr = skb->data;
+ 	__le16		*tmp;
+ 	unsigned	index, index2;
+-	int		ndp_index;
++	unsigned int	ndp_index;
+ 	unsigned	dg_len, dg_len2;
+ 	unsigned	ndp_len;
+ 	unsigned	block_len;
 
 
