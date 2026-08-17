@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E97442FD6;
-	Mon, 17 Aug 2026 14:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A357442FA1;
+	Mon, 17 Aug 2026 14:33:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977198; cv=none; b=K02Ue5ooqVB8zSf1AYRJNrkjtAOla2sE4Cv0laTf86ZCryS6TdaEO2xetaTV/UO2Q7SfmuIYykSEvkAQxlwtEt+a/RAZClozt0WzYiGnsAMOXsDXsUtNKIbcXHWgCFgV7qL1yi2IFFYyOARSXfZ0KiPQ9PNmVFiUACJnXdmsVcI=
+	t=1786977201; cv=none; b=GJKQ+SRqQT4CZ6URSVV/RXJU+UYvhR792rmoLiRHSixfJOExJf5t4ugs/wdrYup/tbHG0ZoDanV4HPhVoC3TYOxsBFW99hbhZxRxkpl9kluCEivGCEVPPg8ZPNwdS9uXfTqj3U4mW1CjYc30OCiajc/+D46t8y+yJnnA3ZPwTqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977198; c=relaxed/simple;
-	bh=IqyMkFHI454QUgyVVnWjCBs10SDA4v20AN6Jv+4Hnlk=;
+	s=arc-20240116; t=1786977201; c=relaxed/simple;
+	bh=c5TQCWvSIpQO2+OhsouckrtxL2xKl7CPuLr3v3SARcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QgSx6178cTmyu5ypRb3arZSEdyeKF/YvuPaHwsxAiAo1EM/f9mYEI1tvZZ/aSlmFPhtiDQ4RLuqc60j5MUlcvO/ULaiU5jBnEmK4w0zfGya9W5BnfMKPvR/XkzLqBLP4Mi0bmAeH4zZsJzeWLquFE//38DYA8RqWgaWQ8sk7gZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXAozKl7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P5328fFZKEXM24UpZLjik6T/JE6hFOzqSB46UkjNRcb9OAYGDtGs0/PS7tTsirNY72dWbn2BngM81VVCWImBNheDBenD+o4nKTwuCT/9GGUjyl/q9AvdIS1adWoVDcGQs2ZqYewEEThn5rGEOYrB7BICBlACDOkdsfddFhVzrHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ru8ZW0d+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXAozKl7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC0FD1F000E9;
-	Mon, 17 Aug 2026 14:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ru8ZW0d+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94BE81F000E9;
+	Mon, 17 Aug 2026 14:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977197;
-	bh=/zGTym4Y74aRfn96VL7hVsNdIm2MZfaLYSwUtoVr71U=;
+	s=korg; t=1786977200;
+	bh=qQ1enwTnFuj1kGul6I8k2kKqW+37qngmugjiPayt7Ow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FXAozKl7IJQ1q/LGZfnTJl5gl3R3C8YdaoqLeEHUEKQKT5Y4Q/WmNrgFZH76XPvvn
-	 kaNl/BQtgLubZB6bBAuRcCpXjsljo+lSEwKWIzwGFoVk7ZPUHCXt+lP9ONGEuZZoVS
-	 l3ZQm/NmRoT0giPdDqYPVzgOORzdzMrY9CdXN4hM=
+	b=Ru8ZW0d+nKCdrDs87+fR73qGep8kU33OQU4BBi4itpyeRRQwRU0AWf4muvPmtz8XI
+	 W5wm2wf9ntcmKFk8FhUJ30wAKvAoG5bB/+vvKnZD9nduVsrbtFXV2QP263E0VaX2Rd
+	 KMZsuHRaywxxZX2U0az7UuRvbaLdGPpcwyl27Kj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Frank Li <Frank.li@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Uday Khare <udaykhare77@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 246/456] dmaengine: sun6i-dma: Fix reclaim descriptors while terminating DMA
-Date: Mon, 17 Aug 2026 15:30:36 +0200
-Message-ID: <20260817132549.705662294@linuxfoundation.org>
+Subject: [PATCH 5.15 247/456] ASoC: max98095: fix missing IS_ERR() before PTR_ERR() on mclk lookup
+Date: Mon, 17 Aug 2026 15:30:37 +0200
+Message-ID: <20260817132549.750778554@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -54,58 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Uday Khare <udaykhare77@gmail.com>
 
-[ Upstream commit ab1150115e68a46b687eb38c1ab92782018c9f2c ]
+[ Upstream commit 317e21532e6ffa1de026bdbce5ba98e1b70ca5c6 ]
 
-When terminating DMA transfers, active descriptors are not properly
-reclaimed. Only cyclic descriptors were handled, leaving non-cyclic
-descriptors and their LLI chains to be permanently leaked.
+In max98095_probe(), the -EPROBE_DEFER check after devm_clk_get() is
+broken due to a missing IS_ERR() guard.
 
-Fix by using vchan_terminate_vdesc() which handles both cyclic and
-non-cyclic descriptors by adding them to desc_terminated queue for
-proper cleanup.
+The code intends to return -EPROBE_DEFER only when the clock lookup
+fails with that specific error.  However, without IS_ERR() the check:
 
-Add pchan->desc != pchan->done check to prevent double-adding completed
-descriptors, which would corrupt the list.
+    if (PTR_ERR(max98095->mclk) == -EPROBE_DEFER)
 
-Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Suggested-by: Frank Li <Frank.li@oss.nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260701045733.33654-1-zenghongling@kylinos.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+is called unconditionally, including when devm_clk_get() succeeds and
+returns a valid pointer.  Calling PTR_ERR() on a valid pointer
+reinterprets its address as a signed long; the result is arbitrary
+and is almost never equal to -EPROBE_DEFER, so the check silently
+does nothing in the success case.  When devm_clk_get() fails with
+any error other than -EPROBE_DEFER the check is also skipped, leaving
+max98095->mclk holding an error pointer with no indication to the caller.
+
+This means a deferred probe will never actually be triggered for this
+device, and any non-EPROBE_DEFER clock error is silently swallowed with
+the error pointer left in the mclk field.
+
+Fix this by adding the missing IS_ERR() guard around the PTR_ERR() call,
+matching the pattern already used in the sibling max98088 and wm8960
+drivers.
+
+Fixes: e3048c3d2be5 ("ASoC: max98095: Add master clock handling")
+Signed-off-by: Uday Khare <udaykhare77@gmail.com>
+Link: https://patch.msgid.link/20260720103950.14474-1-udaykhare77@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sun6i-dma.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ sound/soc/codecs/max98095.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
-index 5cadd4d2b8246..fa216ef645d58 100644
---- a/drivers/dma/sun6i-dma.c
-+++ b/drivers/dma/sun6i-dma.c
-@@ -895,16 +895,13 @@ static int sun6i_dma_terminate_all(struct dma_chan *chan)
+diff --git a/sound/soc/codecs/max98095.c b/sound/soc/codecs/max98095.c
+index 736cd70be7255..909f2e2f18910 100644
+--- a/sound/soc/codecs/max98095.c
++++ b/sound/soc/codecs/max98095.c
+@@ -1990,8 +1990,9 @@ static int max98095_probe(struct snd_soc_component *component)
+ 	int ret = 0;
  
- 	spin_lock_irqsave(&vchan->vc.lock, flags);
+ 	max98095->mclk = devm_clk_get(component->dev, "mclk");
+-	if (PTR_ERR(max98095->mclk) == -EPROBE_DEFER)
+-		return -EPROBE_DEFER;
++	if (IS_ERR(max98095->mclk))
++		if (PTR_ERR(max98095->mclk) == -EPROBE_DEFER)
++			return -EPROBE_DEFER;
  
--	if (vchan->cyclic) {
--		vchan->cyclic = false;
--		if (pchan && pchan->desc) {
--			struct virt_dma_desc *vd = &pchan->desc->vd;
--			struct virt_dma_chan *vc = &vchan->vc;
-+	if (pchan && pchan->desc && pchan->desc != pchan->done) {
-+		struct virt_dma_desc *vd = &pchan->desc->vd;
- 
--			list_add_tail(&vd->node, &vc->desc_completed);
--		}
-+		vchan_terminate_vdesc(vd);
- 	}
- 
-+	vchan->cyclic = false;
- 	vchan_get_all_descriptors(&vchan->vc, &head);
- 
- 	if (pchan) {
+ 	/* reset the codec, the DSP core, and disable all interrupts */
+ 	max98095_reset(component);
 -- 
 2.53.0
 
