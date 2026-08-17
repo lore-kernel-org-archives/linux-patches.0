@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D091541B8EB;
-	Mon, 17 Aug 2026 15:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DEB42CB0D;
+	Mon, 17 Aug 2026 15:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979361; cv=none; b=iRKLONR018nUBKiajfgCLL7Wj3t7ymR8RZcCeBq3L6lO9GTzLUL6YaOF/4d0kDvz11w+V0nryHgxKOG90TqHULlcHUMIqYzCoK87OPWy8rf5qpvC3l10c0vs9VClcB2J8LysCe4tCjJMgNCbdTe5LIqDGsw2n9frymX+OUYh2rY=
+	t=1786979366; cv=none; b=Sj05nrULKQ0L34Pdm9y7g2+qCyclDHI4DHN2Aw7mpRdK+Cu2gqd1oS3IBpE8M/pwK70v4JTeASV7qHBJb8BBz+hg0XLGqdueq8TNe/TPWcQ2l3E33BggB/dy2Llo1a/ArghRt/KNrwXVE1tA3UX+XdmDMiZHzG1SpbIw3yPMm5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979361; c=relaxed/simple;
-	bh=RRE445nuGdm4wUpl2zMSawawWGnG9xENQuJua4RIUdA=;
+	s=arc-20240116; t=1786979366; c=relaxed/simple;
+	bh=WHdvYeIeuHU5WDDVcN55QEFDG03eg0pXSuJdpkv8UQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=edBrnYNnQJQo9fto8K4NImwvTjNU3mKWval6+dLYQBjX3H5K3CaXs2ycDYksXhXI9GDcyNSpZKSXiqoIi/p2q5fliEnpsSoprutTFgXDG8v9oArha/wFxVKsxRI9Rv+wOpNSaPgwjxhF67/sx1wL/SxoK8K2wnT/NAvROtUU/V8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GaP015fO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ox+LGa1Q+kF8Y5baFpYTLRY+L4lmpgdhtnUglypljqLqbBGmlq2B37t2oNAfZKvcnngd1T8bMc2kVrbjb/K5deO/WP/Wx7QFHRZwJaBO+zQ9IMz0muBD/9RQlSK5wAB9KfNJbll//cGmyt3scvGmvBOM+xjBDvUxrU4sbE4y/lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MTENQ3t9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GaP015fO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727C51F00A3D;
-	Mon, 17 Aug 2026 15:09:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTENQ3t9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E93D1F000E9;
+	Mon, 17 Aug 2026 15:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979358;
-	bh=jVzZ+VE/ZTGZUCRth5zO8pnxygLPw87abOjMDMrdA/Q=;
+	s=korg; t=1786979360;
+	bh=xKGoQKHd9AFnnl2dQ6HbC5IDO7yqHp4QRgqs9+Tvvl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GaP015fOvnPUiEoZOHVszIxYcP9+n7PhVvdKgtikH1R39tJ9ssdyqNDC1nAXCbM1b
-	 Dnvnyy9h//jm8L+tST7bAPMalHJ/R/5w//uDVMJKAuNa7lhGgWbo1brrGj3pAuImO7
-	 CmidpwgDE/iz6UXFiyiU3vAETCfYwiMz5FHb8xT0=
+	b=MTENQ3t9xLOXBTbqrvbnLNTkHu08AS5Z3j7QVXGmLEWojuehImmtoznXz9S95HwEQ
+	 ZXi3BBPDXcz8F5n06gmFA0pmYzypLIFSgKF7IU2UGIZCop9iYYK/FTH2hx9A0ryZfL
+	 ts8whxKqJrmFq4fU8JKnzbcQxRtP0nN19v3Si1bE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Kocialkowski <paulk@sys-base.io>,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Valery Borovsky <vebohr@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 191/609] media: cedrus: clean up media device on probe failure
-Date: Mon, 17 Aug 2026 15:28:07 +0200
-Message-ID: <20260817132550.467733922@linuxfoundation.org>
+Subject: [PATCH 6.1 200/609] media: pwc: Drain fill_buf on start_streaming() failure
+Date: Mon, 17 Aug 2026 15:28:16 +0200
+Message-ID: <20260817132550.794711607@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,51 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Valery Borovsky <vebohr@gmail.com>
 
-commit 2c869b6969f3061cbbdab587f4c0a88bd7fc3cc9 upstream.
+commit 906e410dcffbbd99fb4081abab817a830033aa28 upstream.
 
-cedrus_probe() initializes the media device before registering the video
-device, the media controller, and the media device. If any of those later
-steps fails, probe returns without calling media_device_cleanup(), so the
-media device internals initialized by media_device_init() are left behind.
+pwc_isoc_init() submits its isochronous URBs with
+usb_submit_urb(.., GFP_KERNEL) in a loop. After the first URB is
+submitted, its completion handler pwc_isoc_handler() can run on another
+CPU before the loop finishes:
 
-Add a media-device cleanup label to the probe unwind path and route video
-registration failures through it as well.
+  start_streaming()
+    pwc_isoc_init()
+      usb_submit_urb(urbs[0], GFP_KERNEL)
+                                  pwc_isoc_handler(urbs[0])
+                                    pdev->fill_buf =
+                                      pwc_get_next_fill_buf(pdev)
+      usb_submit_urb(urbs[i>0], ..)  -> fails
+      pwc_isoc_cleanup(pdev)           /* kills URBs */
+      return ret;
+    pwc_cleanup_queued_bufs(pdev, VB2_BUF_STATE_QUEUED)
 
-Fixes: 50e761516f2b8c ("media: platform: Add Cedrus VPU decoder driver")
+pwc_get_next_fill_buf() detaches a buffer from pdev->queued_bufs and
+stores it in pdev->fill_buf. The error path in start_streaming() only
+drains pdev->queued_bufs, so the buffer parked in pdev->fill_buf is
+leaked. vb2_start_streaming() then triggers
+WARN_ON(owned_by_drv_count).
+
+stop_streaming() already handles this since commit 80b0963e1698
+("[media] pwc: fix WARN_ON"), which added the fill_buf drain in the
+teardown path but not in the start_streaming() error path. Mirror that
+handling on failure so start_streaming() returns with no buffer owned
+by the driver.
+
+Issue identified by automated review of the INV-003 series at
+https://sashiko.dev/
+
+Fixes: 885fe18f5542 ("[media] pwc: Replace private buffer management code with videobuf2")
 Cc: stable@vger.kernel.org
-Reviewed-by: Paul Kocialkowski <paulk@sys-base.io>
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Valery Borovsky <vebohr@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/sunxi/cedrus/cedrus.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/media/usb/pwc/pwc-if.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/staging/media/sunxi/cedrus/cedrus.c
-+++ b/drivers/staging/media/sunxi/cedrus/cedrus.c
-@@ -503,7 +503,7 @@ static int cedrus_probe(struct platform_
- 	ret = video_register_device(vfd, VFL_TYPE_VIDEO, 0);
- 	if (ret) {
- 		v4l2_err(&dev->v4l2_dev, "Failed to register video device\n");
--		goto err_m2m;
-+		goto err_media;
+--- a/drivers/media/usb/pwc/pwc-if.c
++++ b/drivers/media/usb/pwc/pwc-if.c
+@@ -727,6 +727,11 @@ static int start_streaming(struct vb2_qu
+ 		pwc_camera_power(pdev, 0);
+ 		/* And cleanup any queued bufs!! */
+ 		pwc_cleanup_queued_bufs(pdev, VB2_BUF_STATE_QUEUED);
++		if (pdev->fill_buf) {
++			vb2_buffer_done(&pdev->fill_buf->vb.vb2_buf,
++					VB2_BUF_STATE_QUEUED);
++			pdev->fill_buf = NULL;
++		}
  	}
+ 	mutex_unlock(&pdev->v4l2_lock);
  
- 	v4l2_info(&dev->v4l2_dev,
-@@ -529,7 +529,8 @@ err_m2m_mc:
- 	v4l2_m2m_unregister_media_controller(dev->m2m_dev);
- err_video:
- 	video_unregister_device(&dev->vfd);
--err_m2m:
-+err_media:
-+	media_device_cleanup(&dev->mdev);
- 	v4l2_m2m_release(dev->m2m_dev);
- err_v4l2:
- 	v4l2_device_unregister(&dev->v4l2_dev);
 
 
