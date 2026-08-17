@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D9A43B3C2;
-	Mon, 17 Aug 2026 14:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE46C3F3265;
+	Mon, 17 Aug 2026 14:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976240; cv=none; b=XfaCBn6JBeNfmq+Uvqp7GUImp+jNSDXAXdteru9XEFhwHIk6p6LhsJxX1tfKGW9BdYqO4EJiAGmkvo81b8D09R3eqZvVUmboliM9Btj53SHXAzM3rQYbGaepPQYfIqtLvs4EoL+Hpl1bAPJ8s6I7pr5A+MYY2JhpPcJFbk4FmlU=
+	t=1786976243; cv=none; b=uqmNWgW8Q6Hh0w+fwEltv756RQ4P8vEHlhKjq8kXqF3Q8NrEAK/lnmzj5/yBFJRwQPUepwTzkwgE1m3YWWApmxjj1iu4J/++IPr1iNABHWjruccNgjkHIBN9OZRXzH+Gx36mroDKJHmdNA057vNZGtCLtstsEhU74FvZhUuPT1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976240; c=relaxed/simple;
-	bh=U0QfaTLnK73zbYWUVuhqCd9a+IgK11G56YnuXJnLqes=;
+	s=arc-20240116; t=1786976243; c=relaxed/simple;
+	bh=zpXLiNGU1at2buVwAs5GXJ1aTLLvLzJT6IC/5vUa8qA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F1SRHpNu5xsF24kB3Uvu00k+BNLeVO7k3ktYvISkCdflPquILqh74ZuSXiZ9BH0gENK9KME3RfbkdYB66g25La/PtFmOS+aNpd7tNmmXBTav2lsUb4285g0k3U9mxSFi/A4CFv2rjRpjD/THnYootGYe+hd+0sKPT0LCXkP6wfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hAGGgZMZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qt7L76wHtToawpFIZAuCQe1iRJBBk3khvMqGuKpOYkageUZ45rZ1Embp2KJgsDQZVAaSMLnCVkmrjiERC1u1GTspL3/+4fRFtXq9FR+7bpkRGnuDeXt1qOefwpHJTbPO8MZgpQcmXF/564xGyyYYXKK6bI5JrdPVP/6EGz6s1/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pu62aaM7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAGGgZMZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A9C1F000E9;
-	Mon, 17 Aug 2026 14:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pu62aaM7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52BA51F000E9;
+	Mon, 17 Aug 2026 14:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976239;
-	bh=zm8hok6wOBtXumxooVREXAQ+f6w08sKEfx8mSvKxHpg=;
+	s=korg; t=1786976241;
+	bh=wvR5tFYXh4fRrghl3+s13IPXX3DSkf5W+v4Dfv++GJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hAGGgZMZR0wd3bZEcvvt0FfIkZshoKHjsvpumMvVwhfQNz8Dys0r0HwvvpuiTHvfN
-	 65ZA+bgf+ZvxteCmKBCo0PMCjiDDwAyWtl67I/s9tDJM4fzJOn4hwoiSr4cxcoAVTZ
-	 WOcop0+08kLYKTABYSO52z1hqdrUrZImvULNfdQo=
+	b=Pu62aaM71O3Ow86cqCsBIZf+UPuT3XLmdyw6mfraje8/0HcvD0UnwtYsAad5W7e49
+	 gGUZTIR/UHvVvht9zrsg62s5LZyvZPAnLGT5EbDvOXe8u8YiFZ0/jgF56P+kaSd57I
+	 224imBomZEEtTaIaaSsTkYDG6wP2zg3fWyAfzGVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Todd Kjos <tkjos@google.com>
-Subject: [PATCH 5.10 305/389] Bluetooth: SCO: Fix use-after-free in sco_recv_frame() due to missing sock_hold
-Date: Mon, 17 Aug 2026 15:32:24 +0200
-Message-ID: <20260817132550.934267721@linuxfoundation.org>
+	Asim Viladi Oglu Manizada <manizada@pm.me>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 279/389] sctp: prevent peer transport count overflow
+Date: Mon, 17 Aug 2026 15:31:58 +0200
+Message-ID: <20260817132550.026235696@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,64 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Asim Viladi Oglu Manizada <manizada@pm.me>
 
-[ Upstream commit 598dbba9919c5e36c54fe1709b557d64120cb94b ]
+commit bd0e9289e2642f6a5c54faad304ce0f41e926d22 upstream.
 
-sco_recv_frame() reads conn->sk under sco_conn_lock() but immediately
-releases the lock without holding a reference to the socket. A concurrent
-close() can free the socket between the lock release and the subsequent
-sk->sk_state access, resulting in a use-after-free.
+sctp_assoc_add_peer() increments the association's 16-bit transport_count
+for every new unique peer. Adding the 65,536th transport wraps the count to
+zero.
 
-Other functions in the same file (sco_sock_timeout(), sco_conn_del())
-correctly use sco_sock_hold() to safely hold a reference under the lock.
+SCTP sock_diag uses transport_count to reserve the INET_DIAG_PEERS payload,
+then copies one sockaddr_storage for every entry in transport_addr_list.
+After the wrap, a diagnostic dump reserves an empty payload and writes
+8 MiB of peer addresses past the skb tail.
 
-Fix by using sco_sock_hold() to take a reference before releasing the
-lock, and adding sock_put() on all exit paths.
+Reject a new unique peer when transport_count has reached U16_MAX. Perform
+the check after the existing-peer lookup so a duplicate address continues
+to return its existing transport at the limit.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Todd Kjos <tkjos@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8f840e47f190 ("sctp: add the sctp_diag.c file")
+Cc: stable@vger.kernel.org
+Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260725032053.521705-1-manizada@pm.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/sco.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/sctp/associola.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index 2fbd9c93440ce..b49b2d6bb778e 100644
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -312,7 +312,7 @@ static void sco_recv_frame(struct sco_conn *conn, struct sk_buff *skb)
- 	struct sock *sk;
+--- a/net/sctp/associola.c
++++ b/net/sctp/associola.c
+@@ -613,6 +613,9 @@ struct sctp_transport *sctp_assoc_add_pe
+ 		return peer;
+ 	}
  
- 	sco_conn_lock(conn);
--	sk = conn->sk;
-+	sk = sco_sock_hold(conn);
- 	sco_conn_unlock(conn);
- 
- 	if (!sk)
-@@ -321,11 +321,15 @@ static void sco_recv_frame(struct sco_conn *conn, struct sk_buff *skb)
- 	BT_DBG("sk %p len %d", sk, skb->len);
- 
- 	if (sk->sk_state != BT_CONNECTED)
--		goto drop;
-+		goto drop_put;
- 
--	if (!sock_queue_rcv_skb(sk, skb))
-+	if (!sock_queue_rcv_skb(sk, skb)) {
-+		sock_put(sk);
- 		return;
-+	}
- 
-+drop_put:
-+	sock_put(sk);
- drop:
- 	kfree_skb(skb);
- }
--- 
-2.53.0
-
++	if (asoc->peer.transport_count == U16_MAX)
++		return NULL;
++
+ 	peer = sctp_transport_new(asoc->base.net, addr, gfp);
+ 	if (!peer)
+ 		return NULL;
 
 
