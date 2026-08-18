@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9665735CB8C;
-	Tue, 18 Aug 2026 16:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C04B47F78E;
+	Tue, 18 Aug 2026 16:53:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787072006; cv=none; b=LwC/Q19M9stNMdDzs6/eMQ+0B90LC+2JRnhC+aDBfnCCOjTORshT5xejxdaOD/PDRv0ZvPOGrr0UA61mpsrFpEngVvbcpG6OV9SNMU+2Bi9+wXyzDjg9Twt6A/skpdBuPSrFFkSu43Ml7k1HzjM23Cfzuv40/9gtOcq+xHlwpIE=
+	t=1787072033; cv=none; b=DeSNAfHC8ACq6DYy/KgASoPBp96DO96gErIZ7WFjLKfJ6qXP0Wy2KwAp1A+FmSIq0xwR6FcAbY5cn0t7YoJNqA3xOOYZcmlQXBFiW9uObin94gMR+DEEQlXpFpShk81GBWIoqaFXimo2K9DNcoNRlUDz45ee64ReQGCythGPmpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787072006; c=relaxed/simple;
-	bh=W1+V2QEXdt+q+D3ttwaCo0i6EWfIq0+Nxz0wigSxjW8=;
+	s=arc-20240116; t=1787072033; c=relaxed/simple;
+	bh=voIFcTekL6Q/1lic6ONVaLd1O4Q+pImQL+95ntz4u4g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MtbYvTYP71qVVH8/mB1OJl3xbYG4/6WRhDQ7QDBAsna5pk8nE9QvWdbmoreIAfWbZP5Vnq10KkOcLs3SgEO0fGrMOjhmYLuRemAFYeQ5Ue+BSaMK88nXq1iy8Le/dLOSLMJMRVZzitpUkBWxYtiX8V8sKZG90HZv24nDLoA8KrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J4fiUtaD; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=j1IvULRKmyAT75cB1ZPpKJPkHjfjLluC+fX+p1nW/R6+0erZicREXhAJKfAMLFvohpP/S2/nUwqKhsVx4n21Alm79OC+DdvNHhssyrAwgdQ5cKyTpZU9VYuJg3Iki5LBu6YB3YGhVw4YGL08+4V6G+Rixdta6ayMWhHfZkR6BHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kPjdt4az; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J4fiUtaD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D55351F00A3A;
-	Tue, 18 Aug 2026 16:53:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kPjdt4az"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6877D1F00A3A;
+	Tue, 18 Aug 2026 16:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787072005;
-	bh=Q+iwwTQocaJwzZytYWcYcqgWCK9+a6Iq1A0Vvf+WCXQ=;
+	s=k20260515; t=1787072032;
+	bh=+jfWw/gRICDjnMg38eVTNLr1gWZS6K69NEk7XN4ZhYY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=J4fiUtaDKB9hQtUjUpqMRuKmvSQJOrR+HD1sOk8XUKw1Exw1DpCEQNwFlJ2JQ0Aso
-	 y27SOnR4jCn3BYRW20afoVn5gkd1PdrklZiccleem5wyyrwmG4jjzdT2YJ+inIQXYq
-	 GJNMwtXu6nq0E8c2/CmdLha95DxGoSnPbfjWkgbg4aBF3Y5gyh1Q9Op+9Bkgeshhi4
-	 KreVvtsx79g0rT9vAp0ukTaJxnJXEMQTtINuQQKqJIqTw/P/7/EJ6SSMfKxW5CpSv2
-	 fMIoORz6Qa6BD1c78R4PryGd1yM7O9VYWImR8NeB1uqrLFp4oqYw8XhdQKKxdRPYAW
-	 YqHJitmSmgJlQ==
-Date: Tue, 18 Aug 2026 17:53:19 +0100
+	b=kPjdt4az12c2e4ZoHsA5oDmoJuiCM8trGyHs3zZgpo36nLCEsLoYrmMLU3KmHjULw
+	 bKLh22NogPZLcHk7+Ht6bmnyj8rrg4GUGKuYjcB1HZbvSgsOLEdfbuSDGQ+BbXH/qv
+	 2TfEZ+EOMTQNzJod2kmqJNI5soyCWL4umtfdaGTRYNvM5hIDnbSUIjc5X6OsLwysGj
+	 Pc1y+8X1zFx7PMeCKxdbZz7ElYzTGU6+CfikRW/c6M5kcB4YXx/LeQ5biVkDnlH/Z1
+	 Oo+1KRrI8NsN4NdQZJS0TSEDdvNlJJ7d0g6/HsC6n4y4T4r7bKeF6QchYguMC24Ks2
+	 5RxOpQLfHSqtg==
+Date: Tue, 18 Aug 2026 17:53:45 +0100
 From: Mark Brown <broonie@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -36,9 +36,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
 	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
-Subject: Re: [PATCH 5.15 000/456] 5.15.216-rc1 review
-Message-ID: <b709c5a2-f570-4420-9ece-829fce3e159f@sirena.org.uk>
-References: <20260817132539.792407575@linuxfoundation.org>
+Subject: Re: [PATCH 5.10 000/389] 5.10.265-rc1 review
+Message-ID: <13ee7fff-36ee-4395-b0b6-cfb4525a61db@sirena.org.uk>
+References: <20260817132538.796021292@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,37 +46,37 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7qmC+ie7cPqZbSUY"
+	protocol="application/pgp-signature"; boundary="zfO3mZqb+3cvbsku"
 Content-Disposition: inline
-In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
+In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 X-Cookie: Smile!  You're on Candid Camera.
 
 
---7qmC+ie7cPqZbSUY
+--zfO3mZqb+3cvbsku
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Mon, Aug 17, 2026 at 03:26:30PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.216 release.
-> There are 456 patches in this series, all will be posted as a response
+On Mon, Aug 17, 2026 at 03:27:19PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.265 release.
+> There are 389 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
 Tested-by: Mark Brown <broonie@kernel.org>
 
---7qmC+ie7cPqZbSUY
+--zfO3mZqb+3cvbsku
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmqEjf4ACgkQJNaLcl1U
-h9CB6Qf/evxqBIHY95/6nKacyxMrkb2TDmaEfU+FQVgzuv+nSAjHxP8Mcp0JnLzL
-LVI+DnimkF90AigLhsUNwPv1ag3KQjbfgQVuFdBcc745p1o1HFVm3bEx19RRhNfj
-+gwU1R3KnQ4p49nQQBAxWHg9KpK4dhjaf2LWYnEa5bnO6zPo71/ntiEiIaccSmPi
-X9abOc7k2bHqiFNEdV5EselMtyg6cjOJPZNYIGAPjg/cOqygxvPPWzVJOxSJkiwC
-+UxQLBW4TfvFVuUdOtjArpZYt/8RyQoSD/mPB8IaaLQlipIj/vVF96q5UEuB3+p6
-zfcKP6WPYfl8wX0oD9K1rf3gYKcOmQ==
-=TRqS
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmqEjhkACgkQJNaLcl1U
+h9CXrwf8DNAZB7iupC75vDXekVt8D/aFLigzsKudOWbaoi9TJ4VqH2+m6KKPoC5A
+2mtY7ghdf7BocHhsSlvB5q16GnPebt+YUauJjuRny/G99fhvhMCGz6yhEpU4BtVc
+z/3X/1kqWnRPAQvBfUMYewzyl5eR09EWcFTFrWzsHqZHcwUHEz9PcbGhVXYotYxm
+FJXI7f3VLhqX2ObtBmGK1ehOYxo+FgEihQNJlZ5MvBAOtObNTE5BFzyE5ESC0vv8
+Q5whxmtGB2Tgd0yvuV0UuVmNoFm3OIBNA78GqZlWzouHb+Yc7itJNwOAwick7w3K
+g2EaR+lBw7BaSneBXUKQB4b10ZNTCA==
+=FB4a
 -----END PGP SIGNATURE-----
 
---7qmC+ie7cPqZbSUY--
+--zfO3mZqb+3cvbsku--
