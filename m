@@ -1,46 +1,65 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF932DE6F8;
-	Wed, 19 Aug 2026 11:39:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59A1480954
+	for <patches@lists.linux.dev>; Wed, 19 Aug 2026 16:13:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787139552; cv=none; b=L21FQTvPAlH5Y6/jdxEU8f6qyV5QEBSK58IqXGnChobb72Pv0C7UMKVdB8jFH8xTpsAoYx8449K3M2uJP2l41nOWHMNWsfK/3MnDhWiNhvHo49Dn3hPLqcWaKQPlSIVqtdGKDCB3qiyrZ51iat22YtwzBCdyC24WwXRqNo0rFhA=
+	t=1787156015; cv=none; b=Glh9xauj4mCP6hLDlIPUpBHJs5R3Swu0WM64DNvKsVw2Umyeksk8J/DscGtuCtsIzYhj8iKt4u2OsmJ6H5n2x+adHX3o/OYFRqhWsde8UczgE1wZK+Au4iQ7uTHCQY3Y+KBJUALW6/CpcHHf0oqc7vg1VDCc50jtXo1rNdMYFLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787139552; c=relaxed/simple;
-	bh=UNd4nuWLBi7E1iPYuLMgZUXnFqahLooCpiLiYdLVp6E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X1hJ3O6TJWXI/rQmBPQq4VNa9zjMoQxO6rdk3p+bZRP0tRvTN1zFK84cQNddtmXDcBpa8kO/8B0xJf9yoOMloXnjeTJ7sG6d8MuPcas4Vm//jeLMBMzhI96lAthDZBfU4aDTAyjOTm8xWP+xijgRLvQd1VKvAnOa+4dHOj1EWd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S2pD8ZA9; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787156015; c=relaxed/simple;
+	bh=l4+S1C/JpJppicRbegf1+szukTLOQgWyvNn7XZkUu8U=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SlomSzvWOVXa2OL6i8iayW6fVv4OzqbFRiL/h5qjMkCKGGNLEfP1bZBBvW3uLcX6576fX/XC50oipqNNyaDSc5OC+gliNWqIlxPPHJNKO5xFn278/RZIuSju23h97AGfAQh2UmkjJqi6aPmzBH9v48Mhbv+1BTnDUCk3MI+Virw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HoGzkK1j; arc=none smtp.client-ip=198.175.65.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S2pD8ZA9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078121F00A3A;
-	Wed, 19 Aug 2026 11:39:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787139550;
-	bh=3bKUiWBHvWmcLlo+YBut45F5CupWrHT6J7Rwr67A0FU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S2pD8ZA9DHZ/H6/C2jQLBl4tp56Q1EtQqRDSJAw7TROoNy5t8UqmeHmz90f9DnG5n
-	 ZTGfvhqVflIEvWRc2FDEWKCEiAy5IvC/2Lc971TpvDoU/DkO4ATCVLHYGH3VxukWZ4
-	 UC+lgBCL2naAnTMP9McaCd4Su/EFUaAY4jb9JGiuRDO+RwCgM8v9fJ8B2Lar+Ire49
-	 tx1YMMU/n55+PVI+7ONCQX+Kl09iPr+PG4dX5SnRdm7kZ3EVOSvDM8li5lMI/He7Mo
-	 hPxY9HbR23BKwCKvaO6fcXw6c+MSX0wfFfghNzm7ogpsBStvtCLMthBraqxvmpRaW6
-	 1I9aBgiSi+yTQ==
-From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org,
-	vegard.nossum@oracle.com
-Cc: Sasha Levin <sashal@kernel.org>,
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HoGzkK1j"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1787156013; x=1818692013;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=l4+S1C/JpJppicRbegf1+szukTLOQgWyvNn7XZkUu8U=;
+  b=HoGzkK1j0vZE8jgNrzez+Ac4vErNIHNgEyzS4sWkLPMSntw/DeAT5zlc
+   0HS+6w/hAdIJRqePMhd2+aqu3nO7sQfNVuWXinRykaWPkTzlCLg6R62Ua
+   5FutH23oDNLD+csngDo/j6HYR7jNqkdL9RtJ9Vstl+M850ds/nzr4FV44
+   YnMEM6NGzZ1KA18RaOeXysjrHXfmcUmsbRbFSau4bJ3/US8IUPQ4DLHzZ
+   AMLtxFsXucnw7idLyvdfIpj+GSEeeu2Ws/sJiBlBkl88xbbpkY+KGHdkC
+   xX4D1XlBTRt3P8e/k2ovOOh8vORwcEm5g4Gm4g/Xt46AAnuEbPNXUJ1sU
+   g==;
+X-CSE-ConnectionGUID: wppKqowNQHePa/THFkAvoQ==
+X-CSE-MsgGUID: FU3VqStUR4uuOSuxxEhvRg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11880"; a="87598040"
+X-IronPort-AV: E=Sophos;i="6.25,231,1779174000"; 
+   d="scan'208";a="87598040"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Aug 2026 09:13:33 -0700
+X-CSE-ConnectionGUID: bvOe0F+KROeCwaSIXpH2yw==
+X-CSE-MsgGUID: BhO3oQV6TOa9qMA+EI6s9A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,231,1779174000"; 
+   d="scan'208";a="290391837"
+Received: from rodrigoa-mobl1.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.221.31])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Aug 2026 09:13:33 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	x86@kernel.org
+Cc: linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: Re: [PATCH 6.12 166/181] ring-buffer: Use current_context for safe per-CPU buffer swap
-Date: Wed, 19 Aug 2026 07:39:06 -0400
-Message-ID: <20260819113445.rc-ringbuffer-f27bdc43@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <70b7ca30-be03-49c0-aea9-840d734011b8@oracle.com>
-References: <20260817132535.394764707@linuxfoundation.org> <20260817132542.216680403@linuxfoundation.org> <70b7ca30-be03-49c0-aea9-840d734011b8@oracle.com>
+	Tony Luck <tony.luck@intel.com>
+Subject: [RFC PATCH 0/4] x86/resctrl: Refactor resctrl enumeration
+Date: Wed, 19 Aug 2026 09:13:18 -0700
+Message-ID: <20260819161323.11587-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,28 +68,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, Aug 19, 2026 at 01:50:50AM +0530, Harshit Mogalapalli wrote:
->This changes invalid CPU-mask, page-count, and sub-buffer-order results
->from -EINVAL to -EBUSY. I think update_max_tr_single() treats -EBUSY as
->an expected commit/resize collision.
+This series is posted as RFC to get some feedback before I incorporate
+it into the next version of my patches to fix Kconfig issues[1]. It was
+prompted by Reinette's comment[2]:
 
-Correct, thanks. Upstream only has the direct returns after f115d2b70bff
-("ring-buffer: Remove jump to out label in ring_buffer_swap_cpu()"),
-which first appeared in v6.16. There's a second bit of drift on top of
-what you spotted: the patch also removes the "ret = -EBUSY;" assignment,
-so on those trees the out_dec: paths (current_context busy, buffer
-resizing) end up returning the earlier -EAGAIN instead of -EBUSY.
+   "It looks to me that moving monitoring enumeration done in resctrl_cpu_detect()
+    into resctrl proper where the RMID range checks can be centralized on features
+    gated by rdt_cpu_has() would be simpler and accurate?"
 
->Maybe we could be retaining ret = -EINVAL at declaration and assigning
->ret = -EBUSY immediately before the new current_context checks.
+Patch 1 adds a missing test that RDT monitoring is enabled in any form.
+This test has been missing from the very start of Linux implementation.
+I added a Fixes: tag abd it could be backported to stable and long term
+kernels, but there might not be much value in doing so.
 
-Rather than hand-adapting it, I've dropped this from the affected trees: 6.12,
-6.6, 6.1, 5.15 and 5.10. 7.1 and 6.18 already carry f115d2b70bff, so the
-backport is identical to upstream there and stays queued.
+The remaining patches just relocate the enumeration from an early call on
+the BSP, to the appropriate point in the normal "late_init" initialization
+of resctrl. No functional changes intended in these patches.
 
-The race fix itself is fine on the older trees, so I'll look at requeuing it
-with f115d2b70bff as a prerequisite.
+Signed-off-by: Tony Luck <tony.luck@intel.com>
 
+Link: https://lore.kernel.org/all/20260729172752.11561-1-tony.luck@intel.com/ [1]
+Link: https://lore.kernel.org/all/f06e6b33-4d31-4174-80ab-8ebc51132fa4@intel.com/ [2]
+
+Tony Luck (4):
+  x86/resctrl: Check if monitoring features are enabled
+  x86/resctrl: Enumerate monitor features in rdt_get_l3_mon_config()
+  x86/resctrl: Apply Intel MBM quirk from rdt_get_l3_mon_config()
+  x86/resctrl: Delete resctrl_cpu_detect()
+
+ arch/x86/include/asm/processor.h       |  4 --
+ arch/x86/include/asm/resctrl.h         | 12 ++---
+ arch/x86/kernel/cpu/resctrl/internal.h |  4 +-
+ arch/x86/kernel/cpu/amd.c              |  3 --
+ arch/x86/kernel/cpu/hygon.c            |  3 --
+ arch/x86/kernel/cpu/intel.c            |  7 ---
+ arch/x86/kernel/cpu/resctrl/core.c     | 47 ++----------------
+ arch/x86/kernel/cpu/resctrl/monitor.c  | 67 +++++++++++++++++++-------
+ 8 files changed, 59 insertions(+), 88 deletions(-)
+
+
+base-commit: bd5f485f3f026225b86573e559af0b7254ef4184
 -- 
-Thanks,
-Sasha
+2.55.0
+
