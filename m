@@ -1,250 +1,143 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB756488D92
-	for <patches@lists.linux.dev>; Wed, 19 Aug 2026 16:13:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E3821CC5C
+	for <patches@lists.linux.dev>; Wed, 19 Aug 2026 16:28:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787156020; cv=none; b=Ql03QDRpDJlYFr00xTCSOd0KkVvTNX91Z61+vUT+9G7gkFOEp9Oza9hNm6fK63rJcOLXGX3ZbEwPXFqYEks06+YjnZNIV+R9Jx5GLhI2/nv54nBUR+rD3UOdAtrtYNKknmNtoLU+tWtb+BMdsCVx4jdzWaBDR86YuiZ8bvMvgRs=
+	t=1787156914; cv=none; b=lkhVPP3VJkGD17A9wynOSUyCvSCGiu/sL5aYvRyPu0wV5oaTVsSm1RdzfCaD6TJNSECxppGBpEPk1fPIDF4YAAiqvVc4aToh2jRPRhSnW8lXijRsY66l+ND8VZmK7Vsg1EFuXUiqCvpxHBFrgeh0wkbQ2JcqDRmRPKwI2Yn2Y2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787156020; c=relaxed/simple;
-	bh=jIEscGel+bFptW/MzzQctO/3HTgWIzQRSvRdBQsABbQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nRQSxHONKcwEfsY1UK0ikSTsGlHmG6HK79YDD32vgazsOq9gAzOlMQQsHeTpAMtdFQykfbHzhnOMMhDHTi5ilPfJjCv6lc3mumts0LcmU3VTll4lJMnxu5MdRWZ/A/YDfEJtBDGfs6krYxku5qUsKdqPPuXvAP0FEXf1hYa5Qpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=f4WfWjTe; arc=none smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1787156914; c=relaxed/simple;
+	bh=gzfJs5HYntu8gcGCJ6sAjebyKzMhabA2OudsbWoFFYw=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=MO+5QFIZ6IlksUJ+Cc0nN+ZDWIJfA73vbrReD/8ZAAIKLdMDqSYXTka+LN3Kh9+9oZxDrKju6upPvCZjrFe5cYf7ZUrnEufIMgq7429ME26LSqsOjBCDr/kXFkUhNvJhpny207Kk0nMHCM4wsFF/+gmo/M5Ge6FODmXgT6ysME0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=tTFJ6e4N; arc=none smtp.client-ip=209.85.215.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="f4WfWjTe"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1787156017; x=1818692017;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=jIEscGel+bFptW/MzzQctO/3HTgWIzQRSvRdBQsABbQ=;
-  b=f4WfWjTeFLQq7xuyIyhR/kqJmtIZPJ5Prkx6I5neccxoikRC//KUQvnC
-   W6sNWXbdtFdqP5Jsf2zwIqQkXV6tBWuoMrPtN/2jMM0i0NxP+2FLRtJJZ
-   Cnjuh1O7syW+GDbV6stL2UnDJZ32MpZysP0rCnBjjiMgct4uWgdzB9q+5
-   fi2qHRa6/ea1vx7fqo+Nr2RsVnk1vws/ff6UVprg9YqUjR71KyyLebWJC
-   zAHcN/EvbTmYtqHlTqcFa1EPVktSV/73VbAdr/fuGVEkNp6Yn9mkXoNOB
-   heBDuAOu58ATK64QLqaXaEWfhhJ1EyRdtKhEVU6JNdDKO4zkGsxdc9LS0
-   g==;
-X-CSE-ConnectionGUID: Rskul4NnTRaaj0pkZq0ReA==
-X-CSE-MsgGUID: aGCOD5b8RKeY48tSaIvu5w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11880"; a="87598068"
-X-IronPort-AV: E=Sophos;i="6.25,231,1779174000"; 
-   d="scan'208";a="87598068"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Aug 2026 09:13:33 -0700
-X-CSE-ConnectionGUID: sZDbsV55QJ6/9y2B4C47+g==
-X-CSE-MsgGUID: Y61bPEmASp6JVu72sFVHnQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,231,1779174000"; 
-   d="scan'208";a="290391852"
-Received: from rodrigoa-mobl1.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.221.31])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Aug 2026 09:13:33 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Fenghua Yu <fenghuay@nvidia.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>,
-	Chen Yu <yu.c.chen@intel.com>,
-	x86@kernel.org
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [RFC PATCH 4/4] x86/resctrl: Delete resctrl_cpu_detect()
-Date: Wed, 19 Aug 2026 09:13:22 -0700
-Message-ID: <20260819161323.11587-5-tony.luck@intel.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260819161323.11587-1-tony.luck@intel.com>
-References: <20260819161323.11587-1-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tTFJ6e4N"
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-c89704da8c7so1549728a12.0
+        for <patches@lists.linux.dev>; Wed, 19 Aug 2026 09:28:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1787156905; x=1787761705; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=+B8j39F6K6IPnckNY9ZHScQQlOhyC0PWjU+Co8ybQzs=;
+        b=tTFJ6e4N1sh8YeOVY1DLSFCQoTIooMSrh3g5pg4OYjmPQfEc1ZfThar/ha/LQFZcz8
+         C+NzhAei2vFbG60khPCS8jKBXpJGHj+gPIyLDwDL33VP+IUzlDhS9MwAIOTi/ohPK3Qm
+         jUii8bsNT9U8cSEdOVILsyrohMWksg/4zQX6W7uaqK2iTEK4RmRoWKioCPAaYdRnWhmu
+         7FNCnYk6YnsFFKxElCW8kJF9poM/l/qGcafIZBdnALa6uh95Zjya1/LT3vql2W25mS4Q
+         56tx027qWwbR2sNn4db9RFgzzDQTfgZeiRx4ojwJQuPKAedj8C5BVcTp2ysE2vODBNDh
+         KFqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787156905; x=1787761705;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=+B8j39F6K6IPnckNY9ZHScQQlOhyC0PWjU+Co8ybQzs=;
+        b=MOU4R1SyHJ83OfRPYVSxdHrk+cpL2+cpm2PdaD4XNo2+Dc/7E5QSr5V3UM0LeSaapx
+         NU11dtNMNr45QrP1GUut0c5u9npnwKqx5A/n4Tp+2EcWxyRGwnPuh4X8i6YWruPBO2ZD
+         eaNDMXMcLWZ9nARyVAQTrzXWQykD24/C5NyI1u/dNbIjjFO9S12gftjHa+X7S2bCX84m
+         SP3LrJlzYkNsWsfukW6eR5wNT23SBo+s5Nrl1tjkZcRllB9frOA2b2kpPbcora7kcxmf
+         yuq9uCAz/9GXXdsaxfp2EMGdsJt3sayzFnn8NQkyDYzBlds7TJ9D31ncY5pJ89wxxEoQ
+         0DdA==
+X-Forwarded-Encrypted: i=1; AHgh+RoJK8ARQubs48plVsFXsXjtGoWCH8tc5l6J9jwBxFh3LOYdwa+2T1r29TLB9CJ2IVIkivu/cFq+@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyqs5aIk+fPHkRVyy5uMXq4DEU88GH5OVbJM8pfzymC9UIkXBLO
+	uHSncZzEyRfMJCEzL+ybGrTOX5jk3OjtL7vsA7Qi5RBas76WKCQlpIviXizoSUS6cooMTca4TOA
+	fJ3N0nQ==
+X-Received: from pgar15.prod.google.com ([2002:a05:6a02:2e8f:b0:c99:aff5:707b])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a20:12c7:b0:3c3:cc3e:a9
+ with SMTP id adf61e73a8af0-3cd00dd6be8mr9394127637.4.1787156904767; Wed, 19
+ Aug 2026 09:28:24 -0700 (PDT)
+Date: Wed, 19 Aug 2026 09:28:18 -0700
+In-Reply-To: <CAMGffEmqrrFN6O2oqtAZC3iTD5UJrhVK80bmJLkof28C=uAfvQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <20260817132535.394764707@linuxfoundation.org> <20260817132539.879554007@linuxfoundation.org>
+ <521b22fa-ef09-4449-909f-0120edfc4b24@oracle.com> <CAMGffEmqrrFN6O2oqtAZC3iTD5UJrhVK80bmJLkof28C=uAfvQ@mail.gmail.com>
+Message-ID: <aoXZohqTkyXQmteX@google.com>
+Subject: Re: [PATCH 6.12 111/181] KVM: SVM: Add support to initialize SEV/SNP
+ functionality in KVM
+From: Sean Christopherson <seanjc@google.com>
+To: Jinpu Wang <jinpu.wang@cloud.ionos.com>
+Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, Tom Lendacky <thomas.lendacky@amd.com>, 
+	Ashish Kalra <ashish.kalra@amd.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
+	liam.merwick@oracle.com, Sasha Levin <sashal@kernel.org>, vegard.nossum@oracle.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-cpuinfo_x86::x86_cache_{max_rmid,occ_scale,mbm_width_offset} are no
-longer used.
+On Wed, Aug 19, 2026, Jinpu Wang wrote:
+> Hi Harshit,
+>=20
+> On Wed, Aug 19, 2026 at 9:12=E2=80=AFAM Harshit Mogalapalli
+> <harshit.m.mogalapalli@oracle.com> wrote:
 
-Delete resctrl_cpu_detect() and the fields from struct cpuinfo_x86.
+...
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- arch/x86/include/asm/processor.h   |  4 ---
- arch/x86/include/asm/resctrl.h     |  3 ---
- arch/x86/kernel/cpu/amd.c          |  3 ---
- arch/x86/kernel/cpu/hygon.c        |  3 ---
- arch/x86/kernel/cpu/intel.c        |  7 -----
- arch/x86/kernel/cpu/resctrl/core.c | 42 ------------------------------
- 6 files changed, 62 deletions(-)
+> > > diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
+> > > index 6cec696461da2..bd0344bacaf1e 100644
+> > > --- a/arch/x86/kvm/svm/sev.c
+> > > +++ b/arch/x86/kvm/svm/sev.c
+> > > @@ -2972,6 +2972,7 @@ void __init sev_set_cpu_caps(void)
+> > >   void __init sev_hardware_setup(void)
+> > >   {
+> > >       unsigned int eax, ebx, ecx, edx, sev_asid_count, sev_es_asid_co=
+unt;
+> > > +     struct sev_platform_init_args init_args =3D {0};
+> > >       bool sev_snp_supported =3D false;
+> > >       bool sev_es_supported =3D false;
+> > >       bool sev_supported =3D false;
+> > > @@ -3088,6 +3089,15 @@ void __init sev_hardware_setup(void)
+> > >       sev_supported_vmsa_features =3D 0;
+> > >       if (sev_es_debug_swap_enabled)
+> > >               sev_supported_vmsa_features |=3D SVM_SEV_FEAT_DEBUG_SWA=
+P;
+> > > +
+> > > +     if (!sev_enabled)
+> > > +             return;
+> > > +
+> > > +     /*
+> > > +      * Do both SNP and SEV initialization at KVM module load.
+> > > +      */
+> > > +     init_args.probe =3D true;
+> > > +     sev_platform_init(&init_args);
+> > >   }
 
-diff --git a/arch/x86/include/asm/processor.h b/arch/x86/include/asm/processor.h
-index ec9db0dfa0df..4deb88c61c94 100644
---- a/arch/x86/include/asm/processor.h
-+++ b/arch/x86/include/asm/processor.h
-@@ -185,10 +185,6 @@ struct cpuinfo_x86 {
- 	/* in KB - valid for CPUS which support this call: */
- 	unsigned int		x86_cache_size;
- 	int			x86_cache_alignment;	/* In bytes */
--	/* Cache QoS architectural values, valid only on the BSP: */
--	int			x86_cache_max_rmid;	/* max index */
--	int			x86_cache_occ_scale;	/* scale to bytes */
--	int			x86_cache_mbm_width_offset;
- 	int			x86_power;
- 	unsigned long		loops_per_jiffy;
- 	/* protected processor identification number */
-diff --git a/arch/x86/include/asm/resctrl.h b/arch/x86/include/asm/resctrl.h
-index 9bfa9b14002b..ab7f6ccd149e 100644
---- a/arch/x86/include/asm/resctrl.h
-+++ b/arch/x86/include/asm/resctrl.h
-@@ -193,12 +193,9 @@ static inline void resctrl_arch_mon_ctx_free(struct rdt_resource *r,
- 					     enum resctrl_event_id evtid,
- 					     void *ctx) { }
- 
--void resctrl_cpu_detect(struct cpuinfo_x86 *c);
--
- #else
- 
- static inline void resctrl_arch_sched_in(struct task_struct *tsk) {}
--static inline void resctrl_cpu_detect(struct cpuinfo_x86 *c) {}
- 
- #endif /* CONFIG_X86_CPU_RESCTRL */
- 
-diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
-index 54e14ed276b5..dd82a11084f4 100644
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -23,7 +23,6 @@
- #include <asm/pci-direct.h>
- #include <asm/delay.h>
- #include <asm/debugreg.h>
--#include <asm/resctrl.h>
- #include <asm/msr.h>
- #include <asm/sev.h>
- 
-@@ -475,8 +474,6 @@ static void bsp_init_amd(struct cpuinfo_x86 *c)
- 		}
- 	}
- 
--	resctrl_cpu_detect(c);
--
- 	/* Figure out Zen generations: */
- 	switch (c->x86) {
- 	case 0x17:
-diff --git a/arch/x86/kernel/cpu/hygon.c b/arch/x86/kernel/cpu/hygon.c
-index ec51c2b9a257..0f226335dd9a 100644
---- a/arch/x86/kernel/cpu/hygon.c
-+++ b/arch/x86/kernel/cpu/hygon.c
-@@ -17,7 +17,6 @@
- #include <asm/spec-ctrl.h>
- #include <asm/delay.h>
- #include <asm/msr.h>
--#include <asm/resctrl.h>
- 
- #include "cpu.h"
- 
-@@ -119,8 +118,6 @@ static void bsp_init_hygon(struct cpuinfo_x86 *c)
- 			x86_amd_ls_cfg_ssbd_mask = 1ULL << 10;
- 		}
- 	}
--
--	resctrl_cpu_detect(c);
- }
- 
- static void early_init_hygon(struct cpuinfo_x86 *c)
-diff --git a/arch/x86/kernel/cpu/intel.c b/arch/x86/kernel/cpu/intel.c
-index 4297ceb2cb24..2f09710e863c 100644
---- a/arch/x86/kernel/cpu/intel.c
-+++ b/arch/x86/kernel/cpu/intel.c
-@@ -22,7 +22,6 @@
- #include <asm/microcode.h>
- #include <asm/msr.h>
- #include <asm/numa.h>
--#include <asm/resctrl.h>
- #include <asm/thermal.h>
- #include <asm/uaccess.h>
- 
-@@ -371,11 +370,6 @@ static void early_init_intel(struct cpuinfo_x86 *c)
- 		detect_tme_early(c);
- }
- 
--static void bsp_init_intel(struct cpuinfo_x86 *c)
--{
--	resctrl_cpu_detect(c);
--}
--
- #ifdef CONFIG_X86_32
- /*
-  *	Early probe support logic for ppro memory erratum #50
-@@ -804,7 +798,6 @@ static const struct cpu_dev intel_cpu_dev = {
- #endif
- 	.c_detect_tlb	= intel_detect_tlb,
- 	.c_early_init   = early_init_intel,
--	.c_bsp_init	= bsp_init_intel,
- 	.c_init		= init_intel,
- 	.c_x86_vendor	= X86_VENDOR_INTEL,
- };
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index da94a12f9256..1e36630c5da7 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -1078,48 +1078,6 @@ static __init void rdt_init_res_defs(void)
- 
- static enum cpuhp_state rdt_online;
- 
--/* Runs once on the BSP during boot. */
--void resctrl_cpu_detect(struct cpuinfo_x86 *c)
--{
--	if (!cpu_has(c, X86_FEATURE_CQM_LLC) && !cpu_has(c, X86_FEATURE_ABMC)) {
--		c->x86_cache_max_rmid  = -1;
--		c->x86_cache_occ_scale = -1;
--		c->x86_cache_mbm_width_offset = -1;
--		return;
--	}
--
--	/* will be overridden if occupancy monitoring exists */
--	c->x86_cache_max_rmid = cpuid_ebx(0xf);
--
--	if (cpu_has(c, X86_FEATURE_CQM_OCCUP_LLC) ||
--	    cpu_has(c, X86_FEATURE_CQM_MBM_TOTAL) ||
--	    cpu_has(c, X86_FEATURE_CQM_MBM_LOCAL) ||
--	    cpu_has(c, X86_FEATURE_ABMC)) {
--		u32 eax, ebx, ecx, edx;
--
--		/* QoS sub-leaf, EAX=0Fh, ECX=1 */
--		cpuid_count(0xf, 1, &eax, &ebx, &ecx, &edx);
--
--		c->x86_cache_max_rmid  = ecx;
--		c->x86_cache_occ_scale = ebx;
--		c->x86_cache_mbm_width_offset = eax & 0xff;
--
--		if (!c->x86_cache_mbm_width_offset) {
--			switch (c->x86_vendor) {
--			case X86_VENDOR_AMD:
--				c->x86_cache_mbm_width_offset = MBM_CNTR_WIDTH_OFFSET_AMD;
--				break;
--			case X86_VENDOR_HYGON:
--				c->x86_cache_mbm_width_offset = MBM_CNTR_WIDTH_OFFSET_HYGON;
--				break;
--			default:
--				/* Leave c->x86_cache_mbm_width_offset as 0 */
--				break;
--			}
--		}
--	}
--}
--
- static int __init resctrl_arch_late_init(void)
- {
- 	struct rdt_resource *r;
--- 
-2.55.0
+...
 
+> That looks like the case, we only use kvm as module, didn't hit the issue=
+.
+> > The relevant upstream commits are:
+> >
+> > 435b344a7042 ("crypto: ccp: Add external API interface for PSP module
+> > initialization")
+> > 44e70718df4f ("KVM: SVM: Ensure PSP module is initialized if KVM module
+> > is built-in")
+> > 409f45387c93 ("x86/sev: Fix broken SNP support with KVM module built-in=
+")
+> >
+> >
+> > https://lore.kernel.org/stable/cover.1739226950.git.ashish.kalra@amd.co=
+m/
+> >
+> >
+> > Could the KVM maintainers confirm whether 6.12.y needs this full series=
+?
+
+Yes, we should also backport the above fixes to 6.12.y.
+
+> > Probably could be done after this cycle, but still noting it here.
+
+Yes, sadly this patch is needed to make SNP usable for *any* configuration,=
+ due
+to bb1c84647025 ("crypto: ccp - Move SEV/SNP Platform initialization to KVM=
+")
+already being in 6.12.
