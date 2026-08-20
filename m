@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF1037F72E;
-	Thu, 20 Aug 2026 15:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322A435C1A6;
+	Thu, 20 Aug 2026 15:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239007; cv=none; b=o5LEBxnjNQLG1SaELEgnIMOe6p0Cd1tyQS3qyOrpwrgNzpCL85qXv8fTJmNyaedSYl4A7p6irmf7E1pm2n8YXYhA47BPTWuMu4c9qhPa5Px2qjMVLSxrEteenZcda7YKOlGUeOAF5B/zL+5ndaxZ7Y7PGXmpdu890WIc0P5STvk=
+	t=1787239010; cv=none; b=airT3eJYzhZfNLN0BgRk6CzcPOzoPr0MAlDHwzyUdu3k6wPAnlOQeS8vrvOt6OnZHOhwiY9kxNaxb5bqSM2B49btWznLX1RBrjrEBfDMWIDE6APpiQyJ8Km0OvLFiB1Pu9DDV4gwkK8rMKr5MWid6wcORzDU1mIa+f2x2Le5v14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239007; c=relaxed/simple;
-	bh=iyTlE9wOW6xLQGh6xGFhwnHoGgo2xfWkAH8KBqzXh7E=;
+	s=arc-20240116; t=1787239010; c=relaxed/simple;
+	bh=2QIqM/dAXE+dsYTjhCM9AkrsOpmrgHINL+FyLryvoSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H+V4w4GgxPgTRzUrZukLdmqobujmFrD96xzTSatl5n7Q+Fn84rjxUKcF/mkjNwEgTydDF9VwWn940Xs6q+hMjidliKDGGosUk6xUtwIxtEJxcob5aBko8sgcrsn6Qhr100uAw8wfiWDlLCJQQzn0cI/wL91AT8vUKvDXAJmwc8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWsEqPur; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ktM+IvOErBtADYpDOTj1DRTPI677/GdSSjtHwOVL59l2EpToSbKBeENQfyP2rxAbcT7UedHdrONEWhmbA3u9aWhyfoW//e4qQmOWvi7BHPoiDH/8I+g4hoPZBTMXMKCSyiJ3illfOgycolZKtLk5qo6el+yZFMnILKm3jbC3y9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UK5jGmus; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWsEqPur"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 895611F000E9;
-	Thu, 20 Aug 2026 15:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UK5jGmus"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D6651F000E9;
+	Thu, 20 Aug 2026 15:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239006;
-	bh=ksQwXt4ihNyOr7lm8HpoCD8EkOe/HvoVB+CYLP+jWRg=;
+	s=korg; t=1787239008;
+	bh=jU9BCB+uXqrONupT9PsXF3bFrLMTE5bKxxhnMDc29Fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jWsEqPur/DNCHDYELfEes6XKFR2JpaB9kqE96eHhI5m2I0kw+nArkDGsyj0m4PB/u
-	 tzV4d52IA4VyB4ZEFLOXUarMuAgSm9ld01AmwV3b8az+vfFrGGsoT0Q2UXsrt3mElh
-	 JTiNOWNBKeySbpp0bXnfEDnrq1SWHpmd0zJPGBo0=
+	b=UK5jGmusZu3uRXOIlTi8pwptKYAhiRJ10UkynO26wC9eto9fnThxHDhdmJYBPxxfB
+	 /P6DgoM4fokd+UVgRuC6Putlza1AOLsCLlExFe+FUF7ZlHAPFt8fDViB73yY3qTimw
+	 FkXE4yQum3LMyNSYSLoeZ06s+BAtLEZf+bgMnuh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Eric Farman <farman@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.18 080/217] s390/vfio_ccw: Limit the number of channel program segments
-Date: Thu, 20 Aug 2026 16:54:08 +0200
-Message-ID: <20260820145240.034891428@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.18 116/217] xfs: load next_agino from the correct xfarray in xrep_iunlink_relink_prev
+Date: Thu, 20 Aug 2026 16:54:44 +0200
+Message-ID: <20260820145241.229421385@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -51,87 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Farman <farman@linux.ibm.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 5405c90d6a47b3014e74ee0618a162449abbbc93 upstream.
+commit 6b9cd540138a06660a843a519facc147060acbef upstream.
 
-The processing of channel programs, and the CCWs within them, is done
-recursively. As such, there is an arbitrary (but not architectural)
-limit to the number of CCWs that can exist in a single channel program.
+LOLLM notices that xrep_iunlink_relink_prev has the comment "set the
+forward pointer..." but then loads the value from the xfarray that
+stores pointers to the previous inode in the unlinked list.  That's
+wrong, so fix the variable access.
 
-The vfio-ccw logic breaks these channel programs into segments whenever
-it encounters a Transfer-In-Channel (TIC) CCW, and the combined number
-of segments count towards the global limit. Impose an equivalent limit
-to the number of segments until such logic can be made non-recursive.
-
-Fixes: 0a19e61e6d4c ("vfio: ccw: introduce channel program interfaces")
-Cc: stable@vger.kernel.org
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: stable@vger.kernel.org # v6.10
+Fixes: ab97f4b1c03075 ("xfs: repair AGI unlinked inode bucket lists")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/vfio_ccw_cp.c |    6 ++++++
- drivers/s390/cio/vfio_ccw_cp.h |    8 ++++++++
- 2 files changed, 14 insertions(+)
+ fs/xfs/scrub/agheader_repair.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/s390/cio/vfio_ccw_cp.c
-+++ b/drivers/s390/cio/vfio_ccw_cp.c
-@@ -332,6 +332,7 @@ static struct ccwchain *ccwchain_alloc(s
- 		goto out_err;
+--- a/fs/xfs/scrub/agheader_repair.c
++++ b/fs/xfs/scrub/agheader_repair.c
+@@ -1626,7 +1626,7 @@ xrep_iunlink_relink_prev(
+ 		want_rele = true;
  
- 	list_add_tail(&chain->next, &cp->ccwchain_list);
-+	cp->ccwchain_count++;
+ 		/* Set the forward pointer since this just came off disk. */
+-		error = xfarray_load(ragi->iunlink_prev, agino, &next_agino);
++		error = xfarray_load(ragi->iunlink_next, agino, &next_agino);
+ 		if (error)
+ 			goto out_rele;
  
- 	return chain;
- 
-@@ -441,6 +442,10 @@ static int ccwchain_handle_ccw(dma32_t c
- 	if (len < 0)
- 		return len;
- 
-+	/* Limit number of chains in a single channel program */
-+	if (cp->ccwchain_count >= CCWCHAIN_COUNT_MAX)
-+		return -EINVAL;
-+
- 	/* Need alloc a new chain for this one. */
- 	chain = ccwchain_alloc(cp, len);
- 	if (!chain)
-@@ -745,6 +750,7 @@ int cp_init(struct channel_program *cp,
- 			vdev->dev,
- 			"Prefetching channel program even though prefetch not specified in ORB");
- 
-+	cp->ccwchain_count = 0;
- 	INIT_LIST_HEAD(&cp->ccwchain_list);
- 	memcpy(&cp->orb, orb, sizeof(*orb));
- 
---- a/drivers/s390/cio/vfio_ccw_cp.h
-+++ b/drivers/s390/cio/vfio_ccw_cp.h
-@@ -23,11 +23,18 @@
-  */
- #define CCWCHAIN_LEN_MAX	256
- 
-+/*
-+ * Maximum number of chains
-+ */
-+#define CCWCHAIN_COUNT_MAX	16
-+
- /**
-  * struct channel_program - manage information for channel program
-  * @ccwchain_list: list head of ccwchains
-  * @orb: orb for the currently processed ssch request
-  * @initialized: whether this instance is actually initialized
-+ * @guest_cp: copy of guest channel program
-+ * @ccwchain_count: number of channel program segments (linked by TIC)
-  *
-  * @ccwchain_list is the head of a ccwchain list, that contents the
-  * translated result of the guest channel program that pointed out by
-@@ -38,6 +45,7 @@ struct channel_program {
- 	union orb orb;
- 	bool initialized;
- 	struct ccw1 *guest_cp;
-+	unsigned int ccwchain_count;
- };
- 
- int cp_init(struct channel_program *cp, union orb *orb);
 
 
