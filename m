@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60544272E53;
-	Thu, 20 Aug 2026 16:37:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E6B272E53;
+	Thu, 20 Aug 2026 16:37:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243853; cv=none; b=eri8gRNCrqlA/WH/ylXKLyHiWW8aUKOLbd8bPKb90Cv4AR1WJYFSXn+GW/CmPra9f4wB6t0+io832zmGNK63qoo20aUguYV1iWIS6PVuC3ujMgOR1xdWTr9WQSCwb+Mr/PMx9MfEz9TMEaL03tIVtXIXas+ewwaTxme/+vYtewI=
+	t=1787243856; cv=none; b=njflVbJveL7ri+DeSRjWTwRVrGt9WtI6fQLohyXh/tqsLmoNTSYPMNxTWp30PrGGL/PQMO5O47i+NsHB5O0G8GUVB+DPVsGxFhPhFtqVdsjXocbDq7fzPdhho7PYG/0TY+eIyx8uR2r7HmGGmCK58s8pfjI429AY4DHNdykyTwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243853; c=relaxed/simple;
-	bh=tJ1QqBDIjpPK33GojiHXftHcd1/LUDUC5BIn9sk2uAE=;
+	s=arc-20240116; t=1787243856; c=relaxed/simple;
+	bh=ioi4SMfaZvpPb9ez+vBb4ivHCNHKTs+MPDml2NYu3tg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ud1rS5tV/EmpoNpnvvMUEHUz5ur82h6DebkoFWU2RjRDpO8+ATUnBPfL6bSoGoaxAVaoM4foXnbByHAtrqDugRcRFFh5AAxAtI/0yYTw9/qcwV5dE9aQ4LrbGwRagqYh6VO7xF4RN4rAuI5GyMGOO7I05owdZ4vY+Ob2MTO0LJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkdINFa6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mWqvIWLosnfTcfKk3MPMFHVKNPPvDjCVPpETnasy7wVMRpibW8O0fxwoF0Ir4SUnYiTdpcebofpnwEsUKHZ/6R0DYR5Xk/NMHtUA1WT6N93N49H4dzAMs1ZPemy/tA5f66z+ONDwNtF81llmg3xilrSbFmj3DaUHLsGXlUxbVPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9JjZZyw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkdINFa6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 763191F000E9;
-	Thu, 20 Aug 2026 16:37:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9JjZZyw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 576761F000E9;
+	Thu, 20 Aug 2026 16:37:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243852;
-	bh=UbVuLzD+4nMWltVoXYxZa4RsnKJJfhIy0HHXH7+7n90=;
+	s=korg; t=1787243854;
+	bh=2B9qCwydrC8qzG3sAbLMZfuZC8RnW5GDU1c6x9yAMm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VkdINFa6iLEpNE1nSryqYCBCVLeFjkQboTNN+AWAO21bCkINXU6p3RgJs/GekwWM+
-	 GzRKrplBkwJGffoj4MYhAzxHK4YYX0KuK3mIjiEr0hmxGOV4XgOga6jEE48V+Lc5Zp
-	 ohgZj9CX8KSED4j/tXplsQ6wbohRRP1P/tVR10sA=
+	b=a9JjZZywBCIwFaFqUicSrNE/WEtq2LQxxpoKGtLmbIm0l4r0LEd2wlkebHcs1GQBj
+	 CwdWxvI0JdxBQhHqWyTVEtZbzBfpB8KJrbeSZDcFGekf9zQcYpaXkoDP7p2F144Pd6
+	 Vgs9xfNQ9IadJfQBd296k/e4hCidRMCnLNz2GUPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 201/272] serial: sc16is7xx: implement gpio get_direction() callback
-Date: Thu, 20 Aug 2026 16:56:25 +0200
-Message-ID: <20260820145237.508901706@linuxfoundation.org>
+Subject: [PATCH 5.15 237/272] fsnotify: opt-in for permission events at file open time
+Date: Thu, 20 Aug 2026 16:57:01 +0200
+Message-ID: <20260820145238.727131730@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -52,55 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit af071d9e07e57cfff239e8d09d2f3b05ebc9c667 ]
+[ Upstream commit a94204f4d48e28a711b7ed10399f749286c433e3 ]
 
-It's strongly recommended for GPIO drivers to always implement the
-.get_direction() callback - even when the direction is tracked in
-software. The GPIO core emits a warning when the callback is missing
-and a user reads the direction of a line, e.g. via
-/sys/kernel/debug/gpio.
+Legacy inotify/fanotify listeners can add watches for events on inode,
+parent or mount and expect to get events (e.g. FS_MODIFY) on files that
+were already open at the time of setting up the watches.
 
-Fixes: dfeae619d781 ("serial: sc16is7xx")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260716210813.2582826-1-hugo@hugovil.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+fanotify permission events are typically used by Anti-malware sofware,
+that is watching the entire mount and it is not common to have more that
+one Anti-malware engine installed on a system.
+
+To reduce the overhead of the fsnotify_file_perm() hooks on every file
+access, relax the semantics of the legacy FAN_ACCESS_PERM event to generate
+events only if there were *any* permission event listeners on the
+filesystem at the time that the file was opened.
+
+The new semantic is implemented by extending the FMODE_NONOTIFY bit into
+two FMODE_NONOTIFY_* bits, that are used to store a mode for which of the
+events types to report.
+
+This is going to apply to the new fanotify pre-content events in order
+to reduce the cost of the new pre-content event vfs hooks.
+
+[Thanks to Bert Karwatzki <spasswolf@web.de> for reporting a bug in this
+code with CONFIG_FANOTIFY_ACCESS_PERMISSIONS disabled]
+
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/linux-fsdevel/CAHk-=wj8L=mtcRTi=NECHMGfZQgXOp_uix1YVh04fEmrKaMnXA@mail.gmail.com/
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/5ea5f8e283d1edb55aa79c35187bfe344056af14.1731684329.git.josef@toxicpanda.com
+Stable-dep-of: db1856ea9196 ("binfmt_misc: restore write access when removing an entry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ include/linux/fs.h |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -1204,6 +1204,17 @@ static void sc16is7xx_gpio_set(struct gp
- 			      val ? BIT(offset) : 0);
- }
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -181,6 +181,12 @@ typedef int (dio_iodone_t)(struct kiocb
+ #define FMODE_BUF_RASYNC	((__force fmode_t)0x40000000)
  
-+static int sc16is7xx_gpio_get_direction(struct gpio_chip *chip, unsigned int offset)
-+{
-+	struct sc16is7xx_port *s = gpiochip_get_data(chip);
-+	struct uart_port *port = &s->p[0].port;
-+	unsigned int val;
+ /*
++ * fsnotify pre-content events do not exist in this kernel, so a file is never
++ * watched by a pre-content event listener.
++ */
++#define FMODE_FSNOTIFY_HSM(mode)	0
 +
-+	val = sc16is7xx_port_read(port, SC16IS7XX_IODIR_REG);
-+
-+	return val & BIT(offset) ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
-+}
-+
- static int sc16is7xx_gpio_direction_input(struct gpio_chip *chip,
- 					  unsigned offset)
- {
-@@ -1281,6 +1292,7 @@ static int sc16is7xx_setup_gpio_chip(str
- 	s->gpio.parent		 = dev;
- 	s->gpio.label		 = dev_name(dev);
- 	s->gpio.init_valid_mask	 = sc16is7xx_gpio_init_valid_mask;
-+	s->gpio.get_direction	 = sc16is7xx_gpio_get_direction;
- 	s->gpio.direction_input	 = sc16is7xx_gpio_direction_input;
- 	s->gpio.get		 = sc16is7xx_gpio_get;
- 	s->gpio.direction_output = sc16is7xx_gpio_direction_output;
++/*
+  * Attribute flags.  These should be or-ed together to figure out what
+  * has been changed!
+  */
 
 
