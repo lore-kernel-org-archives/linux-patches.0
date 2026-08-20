@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB01367B9F;
-	Thu, 20 Aug 2026 15:11:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5447360745;
+	Thu, 20 Aug 2026 15:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238664; cv=none; b=BmlKg2+QSQTR6FGUrfX2WMIkqC/WQaq+LXouf+bgGx996A7K1VdhbGvh0i2PZXjZ5Q5PQ+oXM7a3CCe639LMH5+bNk2rqQc9D7toIFpPX9GOhSNGiI4W2a4D2EWrwO8hAJ96JA1zfsE2bhvnNqSki1kAwWNeWjQM+xiIi2HY8pQ=
+	t=1787238666; cv=none; b=qeehPGUrCaBn+oaAJPpRKfn4tAEE2L1OEPTZUtiMtLS50gOU8NdbWD/u30bfv6OVijMHHgPNylvTvSY6F3Ks/UVgLnh011aa0yOHJkAMMVafFcsiXZGOUqsACJ/zN/RS14L6NDeANunRmZF1DupU5g437UuO1IBRmEe0jCedT4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238664; c=relaxed/simple;
-	bh=J9lBrWE3Jpv+XGwzmTuk2nTslQpqIyqfg09HTw0SalE=;
+	s=arc-20240116; t=1787238666; c=relaxed/simple;
+	bh=h+MoXEUWqS7mGzug5wIWIZFvQNgdopWBOcmfJe5nTk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QwTcNIv4TOp/a4GoTY1FhXTGCH67KXgqSrhY4ptXSb1xNV2ompfB7ME3o1dJpg7vZe5V3/JNIqa9RuJ3h7gkErp6XxrN8fkfXqzbGVeRqv1PaKrmTZa5nYRo9fvy3BoFNNPktJLXjQyjJ2/jH622h7NfZgH4NC7HgXdQTDNpqQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbE93q7i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=geo5zSXIGSUUQPeyX+BklyX9G0QSudzMi0+lmLM6N63YuTeVF8d7jqxsrq1rG+Ou9bIeW/Jq85BlnWY4RIkO2ryw2mjQ1B1umEEKp+8OoyEutxjRmlsTlHuwo7RGhjSdj0k5Ju4V1jr+8AkhGVbXY073DKI+vWS6I21nU0n4SRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GhLYHuwg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbE93q7i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E3A21F000E9;
-	Thu, 20 Aug 2026 15:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GhLYHuwg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C0FF1F000E9;
+	Thu, 20 Aug 2026 15:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238662;
-	bh=p4c/hOeOS55Ggm7wTZ1YioqVdFbJj47BoN90xv4dcFk=;
+	s=korg; t=1787238665;
+	bh=91MJ3bgIn4KBvHKrlCYeNX33vqbK0QcLUag74nBIjMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bbE93q7iFZtahOHsvAMajZU+gNDIUO33YxDeUWmoWm38O9a9/weIYiKfhacnZprCq
-	 proiL49eRBErEEZ0HYe0pkCuZ0EUjgRl26dyBhsjrf6aLwdErVTd5SBbDK+a0iDchK
-	 Hqg0kQvdH1QJNaJuDSWdHSF4zJYpSHnrdrUDscM0=
+	b=GhLYHuwgZHUbHy4Nj2xJp2TpZPZgt/aZXDAnLUgG+hfrSvm954HO9cTKmNRtcFkOC
+	 vD6d0UxaTm6xUOLdIvhMyYHysmp2jcejtA5w1eHvJpafi75cWU74pR4+8Cr4E1Hbgw
+	 fX98O7wlYIl2uHDngpgtr75r9rKklJf5TdqSXSew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shixiong Ou <oushixiong@kylinos.cn>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 224/228] drm/log: Fix division by zero when scale module parameter is 0
-Date: Thu, 20 Aug 2026 16:56:06 +0200
-Message-ID: <20260820145251.884529435@linuxfoundation.org>
+Subject: [PATCH 7.1 188/228] ipvs: revalidate ihl to prevent out-of-bounds access
+Date: Thu, 20 Aug 2026 16:55:30 +0200
+Message-ID: <20260820145250.421226856@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -51,42 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shixiong Ou <oushixiong@kylinos.cn>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit 921ac6cb066d09b5765db892d0db0ffaffa98767 ]
+[ Upstream commit d93660df4dd1d116f608ada4a29a80a5d6f0a6ed ]
 
-The scale module parameter can be set to 0 via kernel command line.
-When scale is 0, scaled_font_h and scaled_font_w become 0, causing
-a division by zero in the rows/columns calculation.
+While the outer IP header is already pulled into the skb head,
+we must be careful and revalidate the embedded headers after
+reading them from the skb frags to prevent out-of-bounds
+access.
 
-Since the scale module parameter is read-only (0444 permissions), it
-cannot be changed at runtime via sysfs. Clamp it to 1 once in
-drm_log_register().
+One such place reported by Sashiko is ip_vs_nat_icmp() where
+local process can change the ihl field and after
+skb_ensure_writable() we can see larger value which is a
+problem for the ip_send_check(cih) calls.
 
-Fixes: 8a4b913df427 ("drm/log: Add integer scaling support")
-Signed-off-by: Shixiong Ou <oushixiong@kylinos.cn>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Link: https://patch.msgid.link/20260730014440.66323-1-oushixiong1025@163.com
-Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
+Add check to drop the packet if the ihl field is changed.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://sashiko.dev/#/patchset/20260730183506.87473-1-ja%40ssi.bg
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/clients/drm_log.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/net/ip_vs.h             |  2 +-
+ net/netfilter/ipvs/ip_vs_core.c | 11 +++++++++--
+ net/netfilter/ipvs/ip_vs_xmit.c |  3 ++-
+ 3 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/clients/drm_log.c b/drivers/gpu/drm/clients/drm_log.c
-index 8d21b785bead6..a3259b8f23333 100644
---- a/drivers/gpu/drm/clients/drm_log.c
-+++ b/drivers/gpu/drm/clients/drm_log.c
-@@ -419,6 +419,9 @@ void drm_log_register(struct drm_device *dev)
- {
- 	struct drm_log *new;
+diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
+index 7f7fa4484492f..b3ac38e6cdd7a 100644
+--- a/include/net/ip_vs.h
++++ b/include/net/ip_vs.h
+@@ -2046,7 +2046,7 @@ static inline bool ip_vs_conn_use_hash2(struct ip_vs_conn *cp)
+ 	       !(cp->flags & IP_VS_CONN_F_TEMPLATE);
+ }
  
-+	if (!scale)
-+		scale = 1;
-+
- 	new = kzalloc_obj(*new);
- 	if (!new)
- 		goto err_warn;
+-void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
++bool ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		    struct ip_vs_conn *cp, int dir, unsigned int toff,
+ 		    bool has_ports, struct ip_vs_iphdr *ciph);
+ 
+diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
+index a46e7acdd8e12..eb806813292ad 100644
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -923,7 +923,7 @@ static int ip_vs_route_me_harder(struct netns_ipvs *ipvs, int af,
+  * Packet has been made sufficiently writable in caller
+  * - inout: 1=in->out, 0=out->in
+  */
+-void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
++bool ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		    struct ip_vs_conn *cp, int inout, unsigned int toff,
+ 		    bool has_ports, struct ip_vs_iphdr *ciph)
+ {
+@@ -931,6 +931,11 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 	struct icmphdr *icmph	 = (struct icmphdr *)(skb->data + toff);
+ 	struct iphdr *cih	 = (struct iphdr *)(icmph + 1);
+ 
++	/* Before now we may used ihl from skb frag, revalidate it after
++	 * copying it into skb head to prevent out-of-bounds access
++	 */
++	if (cih->ihl * 4 != ciph->len - ciph->off)
++		return false;
+ 	if (inout) {
+ 		iph->saddr = cp->vaddr.ip;
+ 		ip_send_check(iph);
+@@ -964,6 +969,7 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 	else
+ 		IP_VS_DBG_PKT(11, AF_INET, pp, skb, ciph->off,
+ 			      "Forwarding altered incoming ICMP");
++	return true;
+ }
+ 
+ #ifdef CONFIG_IP_VS_IPV6
+@@ -1055,7 +1061,8 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
+ 		ip_vs_nat_icmp_v6(skb, pp, cp, 1, toff, has_ports, ciph);
+ 	else
+ #endif
+-		ip_vs_nat_icmp(skb, pp, cp, 1, toff, has_ports, ciph);
++		if (!ip_vs_nat_icmp(skb, pp, cp, 1, toff, has_ports, ciph))
++			goto out;
+ 
+ 	if (ip_vs_route_me_harder(cp->ipvs, af, skb, hooknum))
+ 		goto out;
+diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
+index fc74031863940..04450a48f01a5 100644
+--- a/net/netfilter/ipvs/ip_vs_xmit.c
++++ b/net/netfilter/ipvs/ip_vs_xmit.c
+@@ -1580,7 +1580,8 @@ ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
+ 	if (skb_cow(skb, rt->dst.dev->hard_header_len))
+ 		goto tx_error;
+ 
+-	ip_vs_nat_icmp(skb, pp, cp, 0, toff, has_ports, ciph);
++	if (!ip_vs_nat_icmp(skb, pp, cp, 0, toff, has_ports, ciph))
++		goto tx_error;
+ 
+ 	/* Another hack: avoid icmp_send in ip_fragment */
+ 	skb->ignore_df = 1;
 -- 
 2.53.0
 
