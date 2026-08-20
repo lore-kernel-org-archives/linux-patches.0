@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D28380FE3;
-	Thu, 20 Aug 2026 15:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60583812E9;
+	Thu, 20 Aug 2026 15:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239154; cv=none; b=BfjdNoPXF9ZJkE+t+OA7RlIF/4f/VX5XdiAi0Xjhb13q7SukpIGih1BLfJc6ctgR8Dn4Ozc1ecvkcDDfM103vm2Rv7XHAwz5Y5/3PI4TKE8Py3Wqq/7Q0qWSTRVKUorVuDffETm3Q8MFQiPws/gE5jElm/4fFsjkFOl7Lncuffg=
+	t=1787239156; cv=none; b=WOvd3mjQOekMiL+vuEqF4oCWZ29cfREznD7a+0+3IqwRy4mchEwWbi82ppSjMSBDUrWJK8botMf0GNoyH/IfinTdHEb0QkG6/pTraQYBE2/hpPUiHyUnkUIW0RY1uJdQMaYECxldTREgleWKDdi/FF5rVvn8dA/0VoJ8surWavc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239154; c=relaxed/simple;
-	bh=KBa3qy9ma7meQD1I5Y/UJQfkEI3isc9832yJqosZOlg=;
+	s=arc-20240116; t=1787239156; c=relaxed/simple;
+	bh=Idn92CpA9wcBrHIQEBCsUW6/Lcx2LRZm9DotM0HX3rE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ISPR6HGbaJJX3Ho7A9wHqNV8XelVga9/gbI6KLzsc9ltnBnURiVajyIwlwpXbofT3z62HdPucfvuW9rod3CmFz/eW3LQJh9xMsFWudSrcTN2kmcZy7fzVVdhrjrE5E53YLRW3yFpjYsG/CpH8+i1aZldHsHOs7G5ed52oVLo5Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LryujYME; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R39lA3k19DaKLXvsW4TzmeQPzX+89XavRdlUooSv+zaiYoh1B8iEHqPT062NzfdwMj0e1mn9decLFl2WotA0vjChdVlbDdLbbneuPno7a6rjVr5T8SDWNE+hxIj8Yin2BPPhK1AhlU3CGUnuQ9OYTW7575kbBJTZy8WvzSPmj+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hzc/GFK+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LryujYME"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D01B1F000E9;
-	Thu, 20 Aug 2026 15:19:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hzc/GFK+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C291F000E9;
+	Thu, 20 Aug 2026 15:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239152;
-	bh=nFnm9U7Y5blz9BitjgFRNXyALvdARzdAQG0nGwjBAIA=;
+	s=korg; t=1787239155;
+	bh=1YEjdl4gZJQWu+B4wBLLskj4wZL0hWF7o9qLbrrW6+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LryujYMEaLC1QTOETm7vHIL1Oe9u9l+hHVxN/gVWjg226JFJhWDoI5R+cekocEiXl
-	 HnEPZkZcyV0H0+1RFtz9Cg3Rseq30cnOrj3idISaeu9CMjdu7mynxQkNXSXO4MIGBo
-	 1iPtzy8QIbdpZ3g2sXs8PYujX6m2navBR+R5r0UQ=
+	b=hzc/GFK+qOYIfHEU3kQWceYY6+h4YFXkg4s9B/oWy49mKLRjcer42CEIXiQ6KQN7R
+	 N4L2DzyC/YFkp5SUvLbi9FbkcxGkiUgUr85/zyxPJHmv5tOwHC0oVHUL6FBihIPCEZ
+	 fAyvu9AihAaqU2QEN+KPe7HJV8auPznZKH8ZTUTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Vincent Donnefort <vdonnefort@google.com>,
+	Seohyeon Maeng <bioloidgp@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 161/217] ring-buffer: Store bpage pointers into subbuf_ids
-Date: Thu, 20 Aug 2026 16:55:29 +0200
-Message-ID: <20260820145242.597876326@linuxfoundation.org>
+Subject: [PATCH 6.18 170/217] crypto: ccm - Set rfc4309 maxauthsize from child
+Date: Thu, 20 Aug 2026 16:55:38 +0200
+Message-ID: <20260820145242.859008947@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -51,108 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit e682207bf7ae3f81885f612ada1ac44d027158d4 ]
+[ Upstream commit 438f4896f78f69ec73d5f32d2c024193f1223569 ]
 
-The subbuf_ids field allows to point to a specific page from the
-ring-buffer based on its ID. As a preparation or the upcoming
-ring-buffer remote support, point this array to the buffer_page instead
-of the buffer_data_page.
+Set the maxauthsize of rfc4309 using that of the child algorithm.
 
-Link: https://patch.msgid.link/20260309162516.2623589-3-vdonnefort@google.com
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Stable-dep-of: 7c727dfce6be ("ring-buffer: Prevent resizing of persistent ring buffer")
+Fixes: 4a49b499dfa0 ("[CRYPTO] ccm: Added CCM mode")
+Reported-by: Seohyeon Maeng <bioloidgp@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |   19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ crypto/ccm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -557,7 +557,7 @@ struct ring_buffer_per_cpu {
- 	unsigned int			mapped;
- 	unsigned int			user_mapped;	/* user space mapping */
- 	struct mutex			mapping_lock;
--	unsigned long			*subbuf_ids;	/* ID to subbuf VA */
-+	struct buffer_page		**subbuf_ids;	/* ID to subbuf VA */
- 	struct trace_buffer_meta	*meta_page;
- 	struct ring_buffer_cpu_meta	*ring_meta;
+diff --git a/crypto/ccm.c b/crypto/ccm.c
+index 2ae929ffdef8e..916441e4f2b86 100644
+--- a/crypto/ccm.c
++++ b/crypto/ccm.c
+@@ -747,7 +747,7 @@ static int crypto_rfc4309_create(struct crypto_template *tmpl,
  
-@@ -7039,7 +7039,7 @@ static void rb_free_meta_page(struct rin
- }
+ 	inst->alg.ivsize = 8;
+ 	inst->alg.chunksize = crypto_aead_alg_chunksize(alg);
+-	inst->alg.maxauthsize = 16;
++	inst->alg.maxauthsize = crypto_aead_alg_maxauthsize(alg);
  
- static void rb_setup_ids_meta_page(struct ring_buffer_per_cpu *cpu_buffer,
--				   unsigned long *subbuf_ids)
-+				   struct buffer_page **subbuf_ids)
- {
- 	struct trace_buffer_meta *meta = cpu_buffer->meta_page;
- 	unsigned int nr_subbufs = cpu_buffer->nr_pages + 1;
-@@ -7048,7 +7048,7 @@ static void rb_setup_ids_meta_page(struc
- 	int id = 0;
+ 	inst->alg.base.cra_ctxsize = sizeof(struct crypto_rfc4309_ctx);
  
- 	id = rb_page_id(cpu_buffer, cpu_buffer->reader_page, id);
--	subbuf_ids[id++] = (unsigned long)cpu_buffer->reader_page->page;
-+	subbuf_ids[id++] = cpu_buffer->reader_page;
- 	cnt++;
- 
- 	first_subbuf = subbuf = rb_set_head_page(cpu_buffer);
-@@ -7058,7 +7058,7 @@ static void rb_setup_ids_meta_page(struc
- 		if (WARN_ON(id >= nr_subbufs))
- 			break;
- 
--		subbuf_ids[id] = (unsigned long)subbuf->page;
-+		subbuf_ids[id] = subbuf;
- 
- 		rb_inc_page(&subbuf);
- 		id++;
-@@ -7067,7 +7067,7 @@ static void rb_setup_ids_meta_page(struc
- 
- 	WARN_ON(cnt != nr_subbufs);
- 
--	/* install subbuf ID to kern VA translation */
-+	/* install subbuf ID to bpage translation */
- 	cpu_buffer->subbuf_ids = subbuf_ids;
- 
- 	meta->meta_struct_len = sizeof(*meta);
-@@ -7223,13 +7223,15 @@ static int __rb_map_vma(struct ring_buff
- 	}
- 
- 	while (p < nr_pages) {
-+		struct buffer_page *subbuf;
- 		struct page *page;
- 		int off = 0;
- 
- 		if (WARN_ON_ONCE(s >= nr_subbufs))
- 			return -EINVAL;
- 
--		page = virt_to_page((void *)cpu_buffer->subbuf_ids[s]);
-+		subbuf = cpu_buffer->subbuf_ids[s];
-+		page = virt_to_page((void *)subbuf->page);
- 
- 		for (; off < (1 << (subbuf_order)); off++, page++) {
- 			if (p >= nr_pages)
-@@ -7256,7 +7258,8 @@ int ring_buffer_map(struct trace_buffer
- 		    struct vm_area_struct *vma)
- {
- 	struct ring_buffer_per_cpu *cpu_buffer;
--	unsigned long flags, *subbuf_ids;
-+	struct buffer_page **subbuf_ids;
-+	unsigned long flags;
- 	int err;
- 
- 	if (!cpumask_test_cpu(cpu, buffer->cpumask))
-@@ -7280,7 +7283,7 @@ int ring_buffer_map(struct trace_buffer
- 	if (err)
- 		return err;
- 
--	/* subbuf_ids include the reader while nr_pages does not */
-+	/* subbuf_ids includes the reader while nr_pages does not */
- 	subbuf_ids = kcalloc(cpu_buffer->nr_pages + 1, sizeof(*subbuf_ids), GFP_KERNEL);
- 	if (!subbuf_ids) {
- 		rb_free_meta_page(cpu_buffer);
+-- 
+2.53.0
+
 
 
