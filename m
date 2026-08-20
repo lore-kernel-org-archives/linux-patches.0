@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6018C37E5CB;
-	Thu, 20 Aug 2026 15:09:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EEE437EFFE;
+	Thu, 20 Aug 2026 15:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238593; cv=none; b=gbzAmGPtxQ8xoWJyOND/x0B4v0yzFRvTU8L+USbiVh83/RflVSaAcJMr0fH8kUwAQxomfSI/NRoTLPfN0/KZlDLU8jGeO9bZ7ATjJz+caDG19J914sdgInYu695nnKX8wAPQVHVoFSmksK1zoQrAD9wic98A3nc4HykENj4xzxE=
+	t=1787238594; cv=none; b=WkOd+oJ38oa8S6KtXeyyZHt9KR4oYz5j4UViU6awmBv7eKE3/hzWftYrn7Y7Eix2M/1D/aGu7DjT5Y5NKS5FAG3WLXjC2lpZc9Gzxyy6kSwaAdyieBfCt3f8wP7ur2LbwVYMjv97ie53wjaPhmn9w3JDO9XhBqcIjs6rRw8Itek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238593; c=relaxed/simple;
-	bh=0P8njLRvOL7gyWreNFElooKC3PmbWb03EAg/ONWoZhc=;
+	s=arc-20240116; t=1787238594; c=relaxed/simple;
+	bh=3N4zDhfMaDVGGnZboboJry9+Jf0k7il/wI9wJT5cnCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ep9AEDcGrtwcgtT2kukYHlWGCcxhWTJ9r3nQcNsO2cIFeee6/q9Kg8lalTyorZu+M9S+qnHm2b3Eu31uZCPHwaenu3hW/Bg0oR5tY1cZ6BLtcj3EmeZL9d3P0CPYUGqXMV9Zxeto0UC/GidH8C7j5Et9yEL244ntIYerh4pN728=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nyrH1t/d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qaFbkG4B2fwhWvwfm1x3w+buDIVQvuD+p5bYKl3Hg6kn3t6Ic5VTWLXHIKbBDA8wZL0OHtyWXC0MV5jV7jD/0uCm37u0XAw22zjedT+xpicfO5Yl/RahSt8CMjGxBPjWEVTc8j2PKQtLSNYf/taSss+TkyXPK45Go51VVitEeJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GnLS3hXa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nyrH1t/d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C465E1F000E9;
-	Thu, 20 Aug 2026 15:09:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GnLS3hXa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F271F00A3A;
+	Thu, 20 Aug 2026 15:09:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238589;
-	bh=s6HAoA55uDLPVSEOD53tL8/9FEflmfOVnSXCgweymMI=;
+	s=korg; t=1787238592;
+	bh=hnulu9p7nvshD6wbuHl0uVtoCMCqnLujCk0GMH8H0M0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nyrH1t/dehWNnvlw4er4uyi4fha4KunLQIPGBBgr0InLRBUFKwZEeQAzqyBHPNti3
-	 84Zc3sO8e+8Hw7idSn/BHrkpLJbR0RNECW+n3VSiUQU2B3RIZWldk56FiTjznKkEJ5
-	 zYu8II+9OULP4f7uN3IdqJOKAgJ0bRICjDr/7BKE=
+	b=GnLS3hXaOCDG8N/VcMivC6gGMaVPCFhn2rpV+qW6NGol1jPJf/UYUmwSm7idaDuJw
+	 MAaSG8bRDjB+AFTDOn5jLLJu0DfgYPCQl4oYIzZ0+aG3PnPD22MYppPbiD+y85jAiw
+	 tC3pn/bUri/Y4KIC4UocPMuVa5IiUDnYT1y1HciM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wei Fang <wei.fang@nxp.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 201/228] net: phy: realtek: fix EEE advertisement write on the internal PHY MMD path
-Date: Thu, 20 Aug 2026 16:55:43 +0200
-Message-ID: <20260820145251.145692301@linuxfoundation.org>
+Subject: [PATCH 7.1 202/228] net: packet: fix wrong transport_header when sending VLAN-tagged frame
+Date: Thu, 20 Aug 2026 16:55:44 +0200
+Message-ID: <20260820145251.173600282@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -53,42 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 202fef9bbbf5784487eec27581389c6fb97c350d ]
+[ Upstream commit 01fdecc0480d916c799dbee584833a4a37e94d06 ]
 
-In rtlgen_write_mmd(), the MDIO_AN_EEE_ADV case swaps the arguments to
-rtlgen_write_vend2(): it passes the MMD register number as the OCP address
-and the OCP address constant as the value. The caller's value is discarded
-and the write lands on the wrong register, so the EEE advertisement cannot
-be configured on the affected PHYs.
+In packet_parse_headers(), when processing a VLAN-tagged frame,
+skb_set_network_header() is called to advance network_header past the
+VLAN tag to the inner protocol header. skb_probe_transport_header() is
+then called with skb->protocol still set to the outer VLAN EtherType
+(e.g. ETH_P_8021Q), while nhoff (derived from skb_network_offset())
+already points past the VLAN tag to the inner protocol header.
 
-Mirror rtlgen_read_mmd() and write the value to RTL_MDIO_AN_EEE_ADV.
+In __skb_flow_dissect(), proto is initialized to ETH_P_8021Q and nhoff
+points past the VLAN tag. When the dissector hits case ETH_P_8021Q, it
+reads a struct vlan_hdr at nhoff via __skb_header_pointer(), but that
+offset contains the inner protocol header (e.g. an IP header). The bytes
+are misinterpreted as a VLAN header, yielding a garbage encapsulated
+EtherType that matches no known protocol. The dissector returns false,
+so skb_probe_transport_header() never calls skb_set_transport_header(),
+leaving transport_header at its uninitialized sentinel value (~0U).
 
-Fixes: da681ed73fb9 ("net: phy: realtek: improve mmd register access for internal PHY's")
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20260806134716.3511821-1-o.rempel@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Move skb_probe_transport_header() to before skb_set_network_header(). At
+the time skb_probe_transport_header() is called, network_header still
+points to the VLAN header, so nhoff correctly points to the VLAN header.
+The flow dissector can then parse the VLAN header, extract the inner
+EtherType, and advance nhoff to the inner protocol header, allowing
+transport_header to be set correctly.
+
+Fixes: dfed913e8b55 ("net/af_packet: add VLAN support for AF_PACKET SOCK_RAW GSO")
+Assisted-by: WChat:claude-opus-4-8
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260807063405.688780-2-wei.fang@oss.nxp.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/realtek/realtek_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/packet/af_packet.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
-index 01bbddeb4a306..cfd81990d3677 100644
---- a/drivers/net/phy/realtek/realtek_main.c
-+++ b/drivers/net/phy/realtek/realtek_main.c
-@@ -1338,7 +1338,7 @@ static int rtlgen_write_mmd(struct phy_device *phydev, int devnum, u16 regnum,
- 	if (devnum == MDIO_MMD_VEND2)
- 		ret = rtlgen_write_vend2(phydev, regnum, val);
- 	else if (devnum == MDIO_MMD_AN && regnum == MDIO_AN_EEE_ADV)
--		ret = rtlgen_write_vend2(phydev, regnum, RTL_MDIO_AN_EEE_ADV);
-+		ret = rtlgen_write_vend2(phydev, RTL_MDIO_AN_EEE_ADV, val);
- 	else
- 		ret = -EOPNOTSUPP;
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 435756877abaa..213a8a3b7ee52 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -1943,13 +1943,13 @@ static void packet_parse_headers(struct sk_buff *skb, struct socket *sock)
+ 	    sock->type == SOCK_RAW)
+ 		skb->protocol = dev_parse_header_protocol(skb);
  
++	skb_probe_transport_header(skb);
++
+ 	/* Move network header to the right position for VLAN tagged packets */
+ 	if (likely(skb->dev->type == ARPHRD_ETHER) &&
+ 	    eth_type_vlan(skb->protocol) &&
+ 	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
+ 		skb_set_network_header(skb, depth);
+-
+-	skb_probe_transport_header(skb);
+ }
+ 
+ /*
 -- 
 2.53.0
 
