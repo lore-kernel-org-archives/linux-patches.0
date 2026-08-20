@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF5A47F2FA;
-	Thu, 20 Aug 2026 17:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38405483BD1;
+	Thu, 20 Aug 2026 17:50:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248222; cv=none; b=NxWCUn+ggcNiJRwWLo4ns1vvMkleQCny7xMdf21dHAYQ3sdFw4JC2mApIj75WJMzIeVoMIMVponXR39bbx2FZLaeQc03Q8eLiWW+1UJpLIfqlAKe2Co57ny2YLgUx9/KCGRST7DI7HfW0k9bccZjNnMRAp7B1jkrVszH0kwLFWs=
+	t=1787248225; cv=none; b=t+TXASJ+EDuexB1W58DwZ8T3UEEW5LNCpLWsenS/39mcYvTte6YhIfCPjaH/GOo2hHCBgTPW9KZLYb96KkdsDgLqUjpUZgWxUB5wCm8jInpxCqcOWkSPiiG87s6OAvivhHRhAh4yEL/2EBFHwDS1CsOVfcxOZktImSnaBCzyxpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248222; c=relaxed/simple;
-	bh=GWrxvSXjxY20fxR315LvY6tM6TPPpNNVwetQSv4Jd+8=;
+	s=arc-20240116; t=1787248225; c=relaxed/simple;
+	bh=ZFys7O/WrUhsONomEb7OLRoReyD3KLXfAOzQBqht4J0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QPke2/JwQYuAa8LYv1Y4d/TWcFV15HwpFDdi2sY9b4DVC/FBYNfeoEQphbQC+RyNwyzFjFYxNxvqhaUZc8wLDW1uQMtenGlS/weyqP0YrTA+hQdjo6BSBul9bMXNIPP+X1H/W8IkEdVXoTH4GIJrCu7AkSBhUi8EmYgjexCYtiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvj/5HzM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gi6EwNTY8x8az67Z6ZdhnLShVbx+afOmuoGJgF0u98xHiOjFb2zGslWPYjNqQnnM8qH+bp084huhn1cPRGxqtmb2Nm1tUatlJJzByDPf8+JabCOvDeWXxFBjP3Q+GZw3raOaNc08mmfmLQoiM5PRsAxfdQfdw12rkANWOj8Aka0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPQHw8bz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvj/5HzM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B80A01F000E9;
-	Thu, 20 Aug 2026 17:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPQHw8bz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 948831F000E9;
+	Thu, 20 Aug 2026 17:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248221;
-	bh=mGuUZA6E+4JN2EjecJQAGza+xWTLZJIGG1XmAqCbG44=;
+	s=korg; t=1787248224;
+	bh=dryW0PyW+D1izuepCANtUfUN76lG3iEmXOKkd7lkZrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dvj/5HzMnCT93dcFzhMXdkSJKzHh27pHVZ5jJXQwlYYBDF6vA8ek3LAYQcHKJ9qYa
-	 o2m2xpVUGNtFl4Zh52Pm9JAph/bbFeLwe88r5RG5LqqoBX89Xpc8/H+JgtY55H3C3z
-	 0sms4LxBJ7ngdeqVOPNpuyCRxI1gkqJO9s6CPGak=
+	b=zPQHw8bz01PkiEKk1q9q/+ymsMwORCqR8sEs2Yh1jC3HDiMLsQk+dLLj5aQkXS+yY
+	 Jp0DBgcyhF+uVzN4G6hdhbaTbfDL1B2uTVCqlaDb45UBf3bR4jnd974FWrVeFB1cIm
+	 vlKTzykCdpdArlA8cGzdNRYn5MbWaMIyM0CFzLmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Johan Hovold <johan@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 145/303] mmc: vub300: fix use-after-free on disconnect
-Date: Thu, 20 Aug 2026 16:54:41 +0200
-Message-ID: <20260820145257.641668420@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 154/303] gpio: mt7621: avoid corruption of shared interrupt trigger state
+Date: Thu, 20 Aug 2026 16:54:50 +0200
+Message-ID: <20260820145257.921703198@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -51,87 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
 
-The vub300 driver maintains an explicit reference count for the
-controller and its driver data and the last reference can in theory be
-dropped after the driver has been unbound.
+[ Upstream commit 1781172526d1092323af443fa03f00e6de560401 ]
 
-This specifically means that the controller allocation must not be
-device managed as that can lead to use-after-free.
+The bank-shared fields like 'rising' and 'falling' are modified using
+non-atomic read-modify-write operations. Since every gpio chip instance
+represents an entire bank of 32 pins, if 'mediatek_gpio_irq_type()' is
+called concurrently for different IRQs on the same bank a possible overwrite
+of each other's configuration is possible. Thus, protect this state with
+'gpio_generic_lock_irqsave' lock in the same way it is handled in irp_chip
+'mediatek_gpio_irq_mask()' and 'mediatek_gpio_irq_unmask()' callbacks.
 
-Note that the lifetime is currently also incorrectly tied the parent USB
-device rather than interface, which can lead to memory leaks if the
-driver is unbound without its device being physically disconnected (e.g.
-on probe deferral).
-
-Fix both issues by reverting to non-managed allocation of the controller.
-
-Fixes: dcfdd698dc52 ("mmc: vub300: Use devm_mmc_alloc_host() helper")
-Cc: stable@vger.kernel.org # 6.17+
-Cc: Binbin Zhou <zhoubinbin@loongson.cn>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-(cherry picked from commit 8f4d20a710225ec7a565f6a0459862d3b1f32330)
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 4ba9c3afda41 ("gpio: mt7621: Add a driver for MT7621")
+Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+Link: https://patch.msgid.link/20260626060112.2498324-2-sergio.paracuellos@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+[ Changed `guard(gpio_generic_lock_irqsave)(&rg->chip)` to `guard(spinlock_irqsave)(&rg->lock)` as the generic GPIO chip lock does not exist in this tree. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/vub300.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpio/gpio-mt7621.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mmc/host/vub300.c
-+++ b/drivers/mmc/host/vub300.c
-@@ -2281,7 +2281,7 @@ static int vub300_probe(struct usb_inter
- 		dev_err(&vub300->udev->dev,
- 		    "Could not find two sets of bulk-in/out endpoint pairs\n");
- 		retval = -EINVAL;
--		goto error5;
-+		goto err_free_host;
- 	}
- 	retval =
- 		usb_control_msg(vub300->udev, usb_rcvctrlpipe(vub300->udev, 0),
-@@ -2290,14 +2290,14 @@ static int vub300_probe(struct usb_inter
- 				0x0000, 0x0000, &vub300->hc_info,
- 				sizeof(vub300->hc_info), 1000);
- 	if (retval < 0)
--		goto error5;
-+		goto err_free_host;
- 	retval =
- 		usb_control_msg(vub300->udev, usb_sndctrlpipe(vub300->udev, 0),
- 				SET_ROM_WAIT_STATES,
- 				USB_DIR_OUT | USB_TYPE_VENDOR | USB_RECIP_DEVICE,
- 				firmware_rom_wait_states, 0x0000, NULL, 0, 1000);
- 	if (retval < 0)
--		goto error5;
-+		goto err_free_host;
- 	dev_info(&vub300->udev->dev,
- 		 "operating_mode = %s %s %d MHz %s %d byte USB packets\n",
- 		 (mmc->caps & MMC_CAP_SDIO_IRQ) ? "IRQs" : "POLL",
-@@ -2312,7 +2312,7 @@ static int vub300_probe(struct usb_inter
- 				0x0000, 0x0000, &vub300->system_port_status,
- 				sizeof(vub300->system_port_status), 1000);
- 	if (retval < 0) {
--		goto error5;
-+		goto err_free_host;
- 	} else if (sizeof(vub300->system_port_status) == retval) {
- 		vub300->card_present =
- 			(0x0001 & vub300->system_port_status.port_flags) ? 1 : 0;
-@@ -2320,7 +2320,7 @@ static int vub300_probe(struct usb_inter
- 			(0x0010 & vub300->system_port_status.port_flags) ? 1 : 0;
- 	} else {
- 		retval = -EINVAL;
--		goto error5;
-+		goto err_free_host;
- 	}
- 	usb_set_intfdata(interface, vub300);
- 	INIT_DELAYED_WORK(&vub300->pollwork, vub300_pollwork_thread);
-@@ -2350,7 +2350,7 @@ static int vub300_probe(struct usb_inter
- 	return 0;
- error6:
- 	del_timer_sync(&vub300->inactivity_timer);
--error5:
-+err_free_host:
- 	mmc_free_host(mmc);
- 	/*
- 	 * and hence also frees vub300
+--- a/drivers/gpio/gpio-mt7621.c
++++ b/drivers/gpio/gpio-mt7621.c
+@@ -156,6 +156,8 @@ mediatek_gpio_irq_type(struct irq_data *
+ 	int pin = d->hwirq;
+ 	u32 mask = BIT(pin);
+ 
++	guard(spinlock_irqsave)(&rg->lock);
++
+ 	if (type == IRQ_TYPE_PROBE) {
+ 		if ((rg->rising | rg->falling |
+ 		     rg->hlevel | rg->llevel) & mask)
 
 
