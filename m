@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78843377A82;
-	Thu, 20 Aug 2026 16:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1B1272E53;
+	Thu, 20 Aug 2026 16:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243995; cv=none; b=dQZdtRkwunS5/Cmh2KJMldYXmRM5xnGlJk13xrZQXMjFvGVaCDJ9xK8CKo4DBUuVlx+G3BdaVQIEE8RWOSVimsNRDJLupSl6+6O5PyY2lVq8f1wrnmM0bTrPAjYTjQrdu31quIdsGLtyXK+N2UQ6sfgaxQqwyPf7ud6T41TkLEc=
+	t=1787243998; cv=none; b=i/bM8BIjOdyS2JiFAvP/Ll1tpi8B6x7T47HL+zmhPZCMYVnfoxSBLWxFg/Jwmo3Hi9GDOWFapOirNJ/XF8AsP8uUMZK/NFCkwcR7OxmiMG5EAFuvLGXJOqvfsi0cFhOZxw/TbppxeT2Zyivj7/Ih1KVtQ6Qauh+3u2aIz1s9Jtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243995; c=relaxed/simple;
-	bh=o4Dwa+uz8350UiCsJHmLBQaaGwDIBDfFf8hhlbl8HJA=;
+	s=arc-20240116; t=1787243998; c=relaxed/simple;
+	bh=JrAGWLT8noX55/VcEAeEL30mRdhOGTSU/Vf5KtyJoN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CLCuM1IkYp2PtO1bWz9Zz3qSul80FoVsARa/scfmM/uKtxbiDKZmgE5otXFEL1nJaoUEcTKuZTTcP9IG5/gw9lwA4hYRD0yUO+jo+dMtH+3+yDDNsNA3/+9Cd4GBSo+2+M8RZxy/IWYN1N9d358S2MEBExAgBA/PqQwdecXHUmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwY5NV8m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ifJ4Vnb3qZqHKY9ygITFUPsmmDLu1j8rvCk7b/8ILMkxycVealbP3I2GPA0wVtATCHgn2TiTHIrwO61WS8YNeIXXpXly1woiKyLi80Gdc/rxRZaHX+t6+lCSJAfhHBxVeSP2WXDnZN4sdnn0n4Q8lX0H81Wgsy8MHhA14PZ5uow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3SRyPjD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwY5NV8m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47751F000E9;
-	Thu, 20 Aug 2026 16:39:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3SRyPjD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5BF21F000E9;
+	Thu, 20 Aug 2026 16:39:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243994;
-	bh=sE858LK+P8YZT7t9pItJFbPGhzavSN06bdEm0bruwdA=;
+	s=korg; t=1787243997;
+	bh=fRVWbnbMXIjapcl4HeG+kXJ+oeNMzMxk7tvLqGNYVUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iwY5NV8mZhTTi6NjLWTqH/Sv8hCVjKfFTJtd29J6zxwY0bToaUVweP0ppb2Jpm3tC
-	 NGobAxZ4j/4foEf47DA56zbvMbvm9+H00CsFUisDL2l3gu+JHq99ACNg2p2W/DpA65
-	 tbnqgljFjk4XgQJZAp6l+saxozVeOqd0vIJ6zNuc=
+	b=r3SRyPjDwoeZuOsYt6q51MsidaMHvsUU2TcP33Ls3LZqRZ8tdU3co43CqnbEvPsZ1
+	 zEacvpZVxdH0vBGteN3WuV7vNezWgv9rkROn17IFvE+J7KHLSemmefb64+ZEMvmmlK
+	 Mzw71hJdMRt4yHnOPNzCOxjBSvgU7Lhs8mtwXjw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Joe Damato <joe@dama.to>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 008/235] s390/qeth: validate user buffer length in SNMP and ARP query ioctls
-Date: Thu, 20 Aug 2026 16:54:04 +0200
-Message-ID: <20260820145216.694330912@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 009/235] ASoC: cs4265: sort the register default table
+Date: Thu, 20 Aug 2026 16:54:05 +0200
+Message-ID: <20260820145216.725278715@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -52,63 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hidayath Khan <hidayath@linux.ibm.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit d141f087b1af656f055d7c5793a3e87817ba0bbe upstream.
+commit e4fe3e046524e5de3c04c6eef3743780cbdc231c upstream.
 
-qeth_snmp_command() and qeth_l3_arp_query() allocate a buffer sized by
-a user-supplied length (udata_len) without checking a lower bound, then
-set udata_offset to a fixed non-zero value and pass both to a reply
-callback. The callback bounds-checks the copy with
+reg_defaults must be sorted by ascending register address, as
+regcache_lookup_reg() locates entries in it with bsearch().  See commit
+fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
 
-        if ((udata_len - udata_offset) < len)
+cs4265_reg_defaults[] lists CS4265_INT_MASK (0x0e),
+CS4265_STATUS_MODE_MSB (0x0f) and CS4265_STATUS_MODE_LSB (0x10) after
+CS4265_SPDIF_CTL1 (0x11) and CS4265_SPDIF_CTL2 (0x12), so the binary search
+does not find those three entries.  regcache_reg_needs_sync() then cannot
+compare them against their default and reports that a sync is needed, so
+they are written to the device on every regcache_sync() even when they were
+never touched.
 
-Both fields are u32, so a udata_len smaller than udata_offset makes the
-subtraction wrap and the check pass, and the following memcpy() writes
-past the allocation. A udata_len of 0 also yields ZERO_SIZE_PTR from
-kzalloc(), which the existing NULL check does not catch.
+Sort the table by register address.
 
-Reject buffers smaller than udata_offset before allocating, so the
-callback subtraction can no longer underflow.
-
-Fixes: 4a71df50047f ("qeth: new qeth device driver")
+Fixes: fb6f806967f6 ("ASoC: Add support for the CS4265 CODEC")
 Cc: stable@vger.kernel.org
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
-Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260730142216.218309-1-hidayath@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260805082413.26174-4-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/net/qeth_core_main.c |    3 +++
- drivers/s390/net/qeth_l3_main.c   |    5 +++++
- 2 files changed, 8 insertions(+)
+ sound/soc/codecs/cs4265.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/s390/net/qeth_core_main.c
-+++ b/drivers/s390/net/qeth_core_main.c
-@@ -4748,6 +4748,9 @@ static int qeth_snmp_command(struct qeth
- 	if (req_len > QETH_BUFSIZE)
- 		return -EINVAL;
+--- a/sound/soc/codecs/cs4265.c
++++ b/sound/soc/codecs/cs4265.c
+@@ -46,11 +46,11 @@ static const struct reg_default cs4265_r
+ 	{ CS4265_DAC_CHA_VOL, 0x00 },
+ 	{ CS4265_DAC_CHB_VOL, 0x00 },
+ 	{ CS4265_DAC_CTL2, 0xC0 },
+-	{ CS4265_SPDIF_CTL1, 0x00 },
+-	{ CS4265_SPDIF_CTL2, 0x00 },
+ 	{ CS4265_INT_MASK, 0x00 },
+ 	{ CS4265_STATUS_MODE_MSB, 0x00 },
+ 	{ CS4265_STATUS_MODE_LSB, 0x00 },
++	{ CS4265_SPDIF_CTL1, 0x00 },
++	{ CS4265_SPDIF_CTL2, 0x00 },
+ };
  
-+	if (qinfo.udata_len < sizeof(struct qeth_snmp_ureq_hdr))
-+		return -EINVAL;
-+
- 	iob = qeth_get_adapter_cmd(card, IPA_SETADP_SET_SNMP_CONTROL, req_len);
- 	if (!iob)
- 		return -ENOMEM;
---- a/drivers/s390/net/qeth_l3_main.c
-+++ b/drivers/s390/net/qeth_l3_main.c
-@@ -1435,6 +1435,11 @@ static int qeth_l3_arp_query(struct qeth
- 		rc = -EFAULT;
- 		goto out;
- 	}
-+
-+	if (qinfo.udata_len < QETH_QARP_ENTRIES_OFFSET) {
-+		rc = -EINVAL;
-+		goto out;
-+	}
- 	qinfo.udata = kzalloc(qinfo.udata_len, GFP_KERNEL);
- 	if (!qinfo.udata) {
- 		rc = -ENOMEM;
+ static bool cs4265_readable_register(struct device *dev, unsigned int reg)
 
 
