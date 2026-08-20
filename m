@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D27382371;
-	Thu, 20 Aug 2026 15:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE88380FF6;
+	Thu, 20 Aug 2026 15:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239318; cv=none; b=ksREbh4/+GhrBmrOet1dh3Uz/PNdPANsqiib+i2yfaJiBYhMsEQtvk7Tt1r1le97JEBK+euN66h70EKJjYlXrPEwdAAMKP++dLMmfclQCC99lut4sohdbrQGIgLNfiKSFWjgdUNPOVXxKVo1NDn2tBTme5VCmyrI6mUojkf5niI=
+	t=1787239321; cv=none; b=FbKaXhd+TZ89sRKLO3XjwtBKbpwgWv3q+LUhLc+e8cQy3b0R4FIqdQCxMhA/h3VzqGGU2SkJON6MiZp30P1w9AFkmYzlSWuB+J6ZKLYV6uollca3ZkYLAH1xw9IF8UcwbUNMsuWvYZvdpdiltcvUP+EXwoUeR7XIl5Kw/+eSc/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239318; c=relaxed/simple;
-	bh=ohzW86/v8Pk9oz7sh79dI8BAxnjE7OR6KK5UKBPdhvs=;
+	s=arc-20240116; t=1787239321; c=relaxed/simple;
+	bh=OvE+7/AC/R+ZGMBgcBbZm4dqZnYiSvbLO/nQL5b0EBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fduF427LHH8MDPCWg8c9MmKQ65Rv8z0E9Yeztmp8CUYHniwl+zG8cxKIa9uXYU3zAaShUOyQGWBx9Kb3DmeeMMS6hT8Rm8tfrqfN7x3XKw6LdQ3aF5q5EYPgYVCB81Z5AUMV5W7+i99oYYeJPQYKSxp9RQvZhyyTEpyPvrMyPPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEiXqguV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dRd0k8cO9s+OzIbPaouRCyh0LHlyeHbGapEYJ5Cb/jOaSEScDhnD9AW8BEC64UWIiqJSZg3p7JHbNqAUtamKrKpcCaRoPsk04B8/6agarXlc25TR3ekiTXTiLugt1rwhA+SE4ClbZ1q7uMxOIp1HBK3/ysJxoN/zgALfXR7KGEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Nr3BKng; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEiXqguV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D9101F000E9;
-	Thu, 20 Aug 2026 15:21:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Nr3BKng"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD3C1F000E9;
+	Thu, 20 Aug 2026 15:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239317;
-	bh=7/86BHe9GzwT1EFSVXZy/IY8fcNyrSEJpJvh9aUlzHs=;
+	s=korg; t=1787239319;
+	bh=mhYKs56Wb20V+JoxQEduOdrmf3pMV4o3NbqwmlvjKPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vEiXqguVF3BG8qO8Bhl59WQibRha45y/KstDzZMZ4CCXUeTOml4/yUUaPoeh2P0DK
-	 7dZCkXk0geE2h2jJEz6O+D3nBzIrS9hndbTyfg6Y/kEYH4TXRn19Rpl+c/YS6AmK8w
-	 CWMV7uQ59QArrr+AZ4jb/IO69Fq1TIm2XOWCk+kw=
+	b=2Nr3BKng66oqAgtcm4ugej9Gy5JueZyLv3+sJe/+hwTaaxSDal5TpeGkl8/bIC0ar
+	 Hvah5Vyfm86D/8/zniS0VIrzzbXVTcaCrqKYHFqdmi0oMXqaVky7Fx4UUQHoWggMlK
+	 zSAY4XCvAXE2Vr/XrkARPXLWYauILevLC4Blmkb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Zhen <max.zhen@amd.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
+	Weidong Zhu <weizhu@fiu.edu>,
+	Chao Shi <coshi036@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 202/217] accel/amdxdna: Skip unmapped range in aie2_populate_range()
-Date: Thu, 20 Aug 2026 16:56:10 +0200
-Message-ID: <20260820145243.789077329@linuxfoundation.org>
+Subject: [PATCH 6.12 001/220] block: stop the timeout timer when releasing a never added disk
+Date: Thu, 20 Aug 2026 16:53:11 +0200
+Message-ID: <20260820145223.533603968@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
-References: <20260820145237.531699751@linuxfoundation.org>
+In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
+References: <20260820145223.480031205@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,65 +49,95 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Chao Shi <coshi036@gmail.com>
 
-[ Upstream commit 6c916e301fa10de9158b922474ade7b43d726cda ]
+[ Upstream commit 26cb8ebbfaf713c82e142d08828d4d765057633b ]
 
-aie2_populate_range() incorrectly failed jobs for BOs with multiple
-mmaps: if the unmapped entry appeared first in umap_list, the loop would
-pick it up, call hmm_range_fault() on a gone VMA, and return -EFAULT
-without ever trying the remaining valid mapps.
+disk_release() undoes blk_mq_init_allocated_queue() for a disk whose
+probe failed before add_disk(), but it only calls blk_mq_exit_queue().
+Nothing there stops q->timeout, and that timer rolls forward: it stays
+pending until it next expires, not until the last request completes.
+So if the driver issued any I/O before adding the disk, the
+request_queue is freed while still linked into a timer wheel bucket.
 
-Fix it by skipping unmapped entries. After the loop, if the map list is
-empty or all maps are valid, map_invalid can be cleared normally.
+Commit 6f8191fdf41d ("block: simplify disk shutdown") dropped the
+blk_cleanup_queue() call that used to stop it.  __del_gendisk() and
+blk_mq_destroy_queue() still do; only the probe failure path lost it.
 
-Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
-Reviewed-by: Max Zhen <max.zhen@amd.com>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260812205628.810816-1-lizhi.hou@amd.com
+nvme gets there because nvme_update_ns_info() submits Report Zones or
+FDP io-mgmt-recv on ns->queue before the disk is added, so a later
+failure - a concurrent reset setting NVME_CTRL_FROZEN, or
+device_add_disk() failing - lands in put_disk() with the timer armed:
+
+  BUG: KASAN: slab-use-after-free in detach_if_pending+0x30c/0x340
+  Write of size 8 at addr ffff888004d71310 by task kworker/u8:2/37
+   __timer_delete_sync+0x156/0x240 kernel/time/timer.c:1621
+   blk_sync_queue+0x22/0x40 block/blk-core.c:222
+   nvme_sync_queues+0x100/0x150 drivers/nvme/host/core.c:5362
+   nvme_reset_work+0x138/0x930 drivers/nvme/host/pci.c:3264
+
+  Allocated by task 34:
+   __blk_mq_alloc_disk+0x33/0x100 block/blk-mq.c:4462
+   nvme_alloc_ns+0x290/0x3870 drivers/nvme/host/core.c:4146
+
+  Freed by task 0:
+   blk_free_queue_rcu+0x3a/0x50 block/blk-core.c:254
+   rcu_core+0xc10/0x1730 kernel/rcu/tree.c:2857
+
+The queue being synced there is ctrl->admin_q, only a victim sharing a
+timer wheel bucket with the freed queue's dangling entry; other runs
+tripped in enqueue_timer(), __run_timers() or blk_mq_timeout_work().
+Failing nvme_alloc_ns() with a debug patch makes it deterministic: one
+leaked timer trips KASAN within seconds, while 1987 patched releases
+produced no splat.
+
+Stop the timer and the queue work items before blk_mq_exit_queue(), like
+blk_mq_destroy_queue() does.
+
+Found by FuzzNvme.
+
+Fixes: 6f8191fdf41d ("block: simplify disk shutdown")
+Acked-by: Weidong Zhu <weizhu@fiu.edu>
+Signed-off-by: Chao Shi <coshi036@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260727201257.211635-1-coshi036@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/aie2_ctx.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ block/genhd.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
-index 612ad6302622a..9ec3d90c2d200 100644
---- a/drivers/accel/amdxdna/aie2_ctx.c
-+++ b/drivers/accel/amdxdna/aie2_ctx.c
-@@ -794,6 +794,16 @@ static int aie2_populate_range(struct amdxdna_gem_obj *abo)
- 	found = false;
- 	down_write(&xdna->notifier_lock);
- 	list_for_each_entry(mapp, &abo->mem.umap_list, node) {
-+		/*
-+		 * Skip entries that have already been unmapped.
-+		 *
-+		 * If userspace unmaps the address and later submits I/O using
-+		 * it, the IOMMU will reject the access and report a fault.
-+		 * Ignore such entries here.
-+		 */
-+		if (mapp->unmapped)
-+			continue;
-+
- 		if (mapp->invalid && kref_get_unless_zero(&mapp->refcnt)) {
- 			found = true;
- 			break;
-@@ -801,6 +811,12 @@ static int aie2_populate_range(struct amdxdna_gem_obj *abo)
- 	}
+diff --git a/block/genhd.c b/block/genhd.c
+index 31e1539e6e6a..a909817bf1c8 100644
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -1192,14 +1192,18 @@ static void disk_release(struct device *dev)
+ 	/*
+ 	 * To undo the all initialization from blk_mq_init_allocated_queue in
+ 	 * case of a probe failure where add_disk is never called we have to
+-	 * call blk_mq_exit_queue here. We can't do this for the more common
+-	 * teardown case (yet) as the tagset can be gone by the time the disk
+-	 * is released once it was added.
++	 * call blk_mq_exit_queue here, after stopping the timer and work items
++	 * that I/O issued before add_disk may have left pending.  We can't do
++	 * this for the more common teardown case (yet) as the tagset can be
++	 * gone by the time the disk is released once it was added.
+ 	 */
+ 	if (queue_is_mq(disk->queue) &&
+ 	    test_bit(GD_OWNS_QUEUE, &disk->state) &&
+-	    !test_bit(GD_ADDED, &disk->state))
++	    !test_bit(GD_ADDED, &disk->state)) {
++		blk_sync_queue(disk->queue);
++		blk_mq_cancel_work_sync(disk->queue);
+ 		blk_mq_exit_queue(disk->queue);
++	}
  
- 	if (!found) {
-+		/*
-+		 * This also covers the case where all mappings have been
-+		 * removed. There are no invalid mappings left to process.
-+		 * Any subsequent I/O using the unmapped address will be
-+		 * rejected by the IOMMU.
-+		 */
- 		abo->mem.map_invalid = false;
- 		up_write(&xdna->notifier_lock);
- 		return 0;
+ 	blkcg_exit_disk(disk);
+ 
 -- 
 2.53.0
 
