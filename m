@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F7D37A498;
-	Thu, 20 Aug 2026 15:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D4037CD47;
+	Thu, 20 Aug 2026 15:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238896; cv=none; b=DLcz6WYMqO50IMH7/bHOYXfMiGp1QgyEZiMZ6NpnGxRSsQgKFf6D68Hu1mqM7RYk9E8aOHs4NLJfu8nOe/NAhCdRk2gjtGS0vm4X6dOIVBsg3jm07goTxKnu5DwMWkFGPJ2nd4REsAgTiPn9szNyeqYYfyOAdq9SIEnyeDYrW0Q=
+	t=1787238898; cv=none; b=ml3aDSgLO9F7S9j+2134jy6vvl2fAQFPvpPqoN1Oc/PgvOrsyqE4lt+JHbMGe/egHpjADiilNpk5Whnp1SvhGJZ0Z8tsJrSM0RZSsOKn/hnCP1oG/UuiQ2TM5ovsxtDR49j6vytD/SwEECbq6ou94+jF1TKFuPcE18s716as16E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238896; c=relaxed/simple;
-	bh=xdZsTrpbF/EJQTLWfAr94s1eMhmtwiH/y+PhoE6T/Nc=;
+	s=arc-20240116; t=1787238898; c=relaxed/simple;
+	bh=hiDbVmp1aoDObZowJACTnPaOsqKKlxHuMm4vRmxsslM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BocqlPx4TvN4PsXfwUyCFxwCiSnvFHbzO+zzpJVwSlfYlFRwtCV2E+nCg+lP71d/pecJs60SV6zlsq2aATNR+LV83ps6MM1G6zEpM/GMdoLpCezjWiiLBJNgGmSF2T2vOhfu0fZilrqiC/H4CaiwsyMURXPKS2DhshJNi5UoLn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XsjaRnpK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A8FRRMKS+TAq6uXJkPwXnUQa3JnUlbi3th+IWWy2P/3gNZQCaVUiIAJf5qiP/mSaglW8SqjkBPc5+y62CLv6QM3NUhha+YlhFq72MlngaLmkhnNGDRV/GMk+XASw5JlDjln1DcFRcug3CS7Co2cOmtgzOvYIqp0K3kgH/C6eEaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OprwB3Ay; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XsjaRnpK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32AA41F000E9;
-	Thu, 20 Aug 2026 15:14:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OprwB3Ay"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E49D1F000E9;
+	Thu, 20 Aug 2026 15:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238894;
-	bh=xTfb0dnzEZhG59uLNopv5P0rz/NPT69OJx66aYA9Kfo=;
+	s=korg; t=1787238897;
+	bh=CUQZ2UJ9Zsjq/a4rpsDbePiGi7TXJtgmwpvC3xXRUzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XsjaRnpKJ6bN639Q1YlqvzD0DENUfoLpQZ9JY2JNRghFhQ3YGUCuo+f83v1a0r+CE
-	 vNlevFVuk59414k661xXB3VnRKN5zbyRYxtLZqPP7OU2eF5XzHKdqIeWLOAIwDb4/3
-	 ci2NcB3aBcQGG/mZs6Kdn/3/n7RhI9nIxujQ9ZjI=
+	b=OprwB3AyhJx8YvpwoVNLncpJXCPcAFdu1J/HXJ45dcmG49PjavASa0Tez8xhSbxmj
+	 elDyB2YDsZmGMMrJjnZk6nEEUrDK3L0cvMYDWOr25M+2DsyHW8h83obyH4K9h/z1bd
+	 uuaddE3LovOPwd14cAK+y0aYwWaQMA0xz7J7glu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Linmao Li <lilinmao@kylinos.cn>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 039/217] Input: iforce - validate input packet lengths
-Date: Thu, 20 Aug 2026 16:53:27 +0200
-Message-ID: <20260820145238.793695974@linuxfoundation.org>
+Subject: [PATCH 6.18 040/217] Input: byd - synchronize timer deletion before freeing private data
+Date: Thu, 20 Aug 2026 16:53:28 +0200
+Message-ID: <20260820145238.824934472@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -50,83 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-commit 5751c781d3c97ab6ce0e2a966156ed882152c415 upstream.
+commit c83e79c0842ed29860648bcce5022ef0ba5001c6 upstream.
 
-iforce_process_packet() reads fixed fields from joystick, wheel and
-status packets without first checking their lengths. In particular, the
-shared hats-and-buttons helper unconditionally reads data[6]. The status
-tail is a sequence of 16-bit effect addresses, but an incomplete final
-address is also consumed. A successful zero-length USB URB additionally
-reads the packet ID before the common parser is called.
+byd_disconnect() uses timer_delete() before freeing the driver's private
+data.  This does not wait for a running byd_clear_touch() callback, which
+dereferences the private data and its psmouse pointer.  A callback racing
+with disconnect can therefore access the private data after it has been
+freed.  The timer can also still be re-armed by byd_process_byte() while
+the disconnect is in progress.
 
-Reject the zero-length USB transfer, require the seven-byte joystick and
-wheel prefixes and the two-byte status prefix, and consume only complete
-status-tail addresses.
+Use timer_shutdown_sync() before freeing the private data: it waits for
+a running callback and turns any later re-arm attempt into a no-op.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260720115018.75045-1-pengpeng@iscas.ac.cn
+Fixes: 2d5f5611dd0d ("Input: byd - enable absolute mode")
 Cc: stable@vger.kernel.org
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Link: https://patch.msgid.link/20260720061259.1601281-1-lilinmao@kylinos.cn
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/iforce/iforce-packets.c |   11 ++++++++++-
- drivers/input/joystick/iforce/iforce-usb.c     |    3 +++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ drivers/input/mouse/byd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/joystick/iforce/iforce-packets.c
-+++ b/drivers/input/joystick/iforce/iforce-packets.c
-@@ -155,6 +155,9 @@ void iforce_process_packet(struct iforce
- 	switch (packet_id) {
+--- a/drivers/input/mouse/byd.c
++++ b/drivers/input/mouse/byd.c
+@@ -425,7 +425,7 @@ static void byd_disconnect(struct psmous
+ 	struct byd_data *priv = psmouse->private;
  
- 	case 0x01:	/* joystick position data */
-+		if (len < 7)
-+			break;
-+
- 		input_report_abs(dev, ABS_X,
- 				 (__s16) get_unaligned_le16(data));
- 		input_report_abs(dev, ABS_Y,
-@@ -170,6 +173,9 @@ void iforce_process_packet(struct iforce
- 		break;
- 
- 	case 0x03:	/* wheel position data */
-+		if (len < 7)
-+			break;
-+
- 		input_report_abs(dev, ABS_WHEEL,
- 				 (__s16) get_unaligned_le16(data));
- 		input_report_abs(dev, ABS_GAS,   255 - data[2]);
-@@ -181,6 +187,9 @@ void iforce_process_packet(struct iforce
- 		break;
- 
- 	case 0x02:	/* status report */
-+		if (len < 2)
-+			break;
-+
- 		input_report_key(dev, BTN_DEAD, data[0] & 0x02);
- 		input_sync(dev);
- 
-@@ -200,7 +209,7 @@ void iforce_process_packet(struct iforce
- 			}
- 		}
- 
--		for (j = 3; j < len; j += 2)
-+		for (j = 3; j + sizeof(u16) <= len; j += sizeof(u16))
- 			mark_core_as_ready(iforce, get_unaligned_le16(data + j));
- 
- 		break;
---- a/drivers/input/joystick/iforce/iforce-usb.c
-+++ b/drivers/input/joystick/iforce/iforce-usb.c
-@@ -158,6 +158,9 @@ static void iforce_usb_irq(struct urb *u
- 		goto exit;
+ 	if (priv) {
+-		timer_delete(&priv->timer);
++		timer_shutdown_sync(&priv->timer);
+ 		kfree(psmouse->private);
+ 		psmouse->private = NULL;
  	}
- 
-+	if (!urb->actual_length)
-+		goto exit;
-+
- 	iforce_process_packet(iforce, iforce_usb->data_in[0],
- 			      iforce_usb->data_in + 1, urb->actual_length - 1);
- 
 
 
