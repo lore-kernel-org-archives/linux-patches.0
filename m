@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA53F360745;
-	Thu, 20 Aug 2026 15:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9632D360745;
+	Thu, 20 Aug 2026 15:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238717; cv=none; b=BY9FKSZjmfDKH0comdKvsvya69NGEXAyRZc4zqc9qzWhtACwvw2qqKgnBNV1SrstpnxBBkNxYW22dsGa5nwjt4Qoslzaok8JZz0fps1iSt8fl80RoERYeL/runr28FyF5UmdCfgF2q2v7hO7ZnG+W6ZLnFTuBKXLsQOXi6k66Os=
+	t=1787238720; cv=none; b=O4FE+5eXr8FGRjMA5nK3su4P3JZd1sLrv2c7rwXvORiIbh2wbwilqnDK0ppgeLaL4nXStUpWiHaRVpG6yxVwB35hmmtgBLH6E1lU88kROeSxHeYnpWTvmnp7bsulVE/LV9UHaLw0+BNWzV67CGWITVNALCMaFdikwXMz+8sEkmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238717; c=relaxed/simple;
-	bh=esdX+Tj6mDWg2WBR3g7QHo0tcS8ypGjgg47m4e0IkK0=;
+	s=arc-20240116; t=1787238720; c=relaxed/simple;
+	bh=s8dFBS4fnlmhHMqX5NGKsw1vHyz20WEQWVZ8Ps3BqJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ulSGn4NVFae0U7DBh5Kkcv8YJ6rv3PYngNt68YU9jqaNms381a3oHB4FZu5gw1LEM+Ip7Z+kAVmwEt1I3/Lrrmu6LN8SDyMDGhiZyxKuaUL11dKUiAfFpQj1ftcg7ZV55zSVpldQS7/ij+gknbRQ9qzD8mWMUkW9OSPNY4qVKMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vv4cK907; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uXv/Kf6++QEZEWd3E+3WYyX7YfQgO2b9k5hNv3+8OCkgN/lIpoxECPk1Wcevvr0a1baNwiQPvdTnh9lMGcSt625fmfosZLSVrG3fh+oUuOBlpO4UxZ9WZ0Sd9qWoE2tFfvuvt5yUyGo7CbEHiLcXTYGX4kDQ2lXxUk8l3W8Rga0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fRDQMlB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vv4cK907"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205071F000E9;
-	Thu, 20 Aug 2026 15:11:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fRDQMlB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05711F000E9;
+	Thu, 20 Aug 2026 15:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238716;
-	bh=HnsMKlKrRMDEG7Zx/DqBI8sIDVBWQqi7eZ/5wbW/vhw=;
+	s=korg; t=1787238719;
+	bh=L/JxAs0iBggb9jHqZpUtZuoGzTJ7zVhBcIMIeSACzbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vv4cK907RuhlHPhAVOcoBQoSrnlAI0gEZLzhgAh/D35Ltq0czR1aH4aXAgPndtchP
-	 DsdlrKrV+E92Xb8hdhRdWuYxAsr3ixXsu1doKVVEz0RRjpFl/h3kxmCJ9sD5mpW4GW
-	 KvbRojQcMXEHuQas1/4RTUVP/+V4tloGZcgP9TMM=
+	b=0fRDQMlBzJ6UVXr1J6PVCL5BlJ2BPwDK1UAzl7D2ZX+CAppoa8qQ94iu1jtix+iyJ
+	 VJCu2lpNrH3cd6tisJ8uSrOOHkS0wM35UkiJJ2mWHn1MCt4wyYiEicdtta0rDzL4QL
+	 7EmHzyxrZIslrtlEQDaY1SdipO5eJT96sHa5uc/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Joe Damato <joe@dama.to>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 017/217] s390/qeth: validate user buffer length in SNMP and ARP query ioctls
-Date: Thu, 20 Aug 2026 16:53:05 +0200
-Message-ID: <20260820145238.145013414@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 018/217] ASoC: SOF: sof-audio: Fix error path in sof_widget_setup_unlocked()
+Date: Thu, 20 Aug 2026 16:53:06 +0200
+Message-ID: <20260820145238.172623977@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -52,63 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hidayath Khan <hidayath@linux.ibm.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit d141f087b1af656f055d7c5793a3e87817ba0bbe upstream.
+commit e780e4917d43683224812400fe3dc4816fceba75 upstream.
 
-qeth_snmp_command() and qeth_l3_arp_query() allocate a buffer sized by
-a user-supplied length (udata_len) without checking a lower bound, then
-set udata_offset to a fixed non-zero value and pass both to a reply
-callback. The callback bounds-checks the copy with
+If either tplg_ops->dai_config or widget_kcontrol_setup fail during widget
+setup we would double decrement the use_count of the widget because the
+sof_widget_free_unlocked() would be called twice, similarly the core_put
+would be invoked twice as well.
 
-        if ((udata_len - udata_offset) < len)
+Since the use_count and core_put() is handled within the widget_free
+function we need to return without falling through the pipe_widget_free
+label.
 
-Both fields are u32, so a udata_len smaller than udata_offset makes the
-subtraction wrap and the check pass, and the following memcpy() writes
-past the allocation. A udata_len of 0 also yields ZERO_SIZE_PTR from
-kzalloc(), which the existing NULL check does not catch.
+The fixes tag is picked to the last change around this part of the code
+which is adequately old enough for backporting purposes.
 
-Reject buffers smaller than udata_offset before allocating, so the
-callback subtraction can no longer underflow.
-
-Fixes: 4a71df50047f ("qeth: new qeth device driver")
+Link: https://github.com/thesofproject/sof/issues/10826
+Fixes: 31ed8da1c8e5 ("ASoC: SOF: sof-audio: Modify logic for enabling/disabling topology cores")
 Cc: stable@vger.kernel.org
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
-Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260730142216.218309-1-hidayath@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20260730085914.27546-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/net/qeth_core_main.c |    3 +++
- drivers/s390/net/qeth_l3_main.c   |    5 +++++
- 2 files changed, 8 insertions(+)
+ sound/soc/sof/sof-audio.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/s390/net/qeth_core_main.c
-+++ b/drivers/s390/net/qeth_core_main.c
-@@ -4712,6 +4712,9 @@ static int qeth_snmp_command(struct qeth
- 	if (req_len > QETH_BUFSIZE)
- 		return -EINVAL;
+--- a/sound/soc/sof/sof-audio.c
++++ b/sound/soc/sof/sof-audio.c
+@@ -136,7 +136,6 @@ static int sof_widget_setup_unlocked(str
+ {
+ 	const struct sof_ipc_tplg_ops *tplg_ops = sof_ipc_get_ops(sdev, tplg);
+ 	struct snd_sof_pipeline *spipe = swidget->spipe;
+-	bool use_count_decremented = false;
+ 	int ret;
+ 	int i;
  
-+	if (qinfo.udata_len < sizeof(struct qeth_snmp_ureq_hdr))
-+		return -EINVAL;
+@@ -215,9 +214,10 @@ static int sof_widget_setup_unlocked(str
+ 	return 0;
+ 
+ widget_free:
+-	/* widget use_count will be decremented by sof_widget_free() */
++	/* widget use_count and core_put handled by sof_widget_free() */
+ 	sof_widget_free_unlocked(sdev, swidget);
+-	use_count_decremented = true;
++	return ret;
 +
- 	iob = qeth_get_adapter_cmd(card, IPA_SETADP_SET_SNMP_CONTROL, req_len);
- 	if (!iob)
- 		return -ENOMEM;
---- a/drivers/s390/net/qeth_l3_main.c
-+++ b/drivers/s390/net/qeth_l3_main.c
-@@ -1416,6 +1416,11 @@ static int qeth_l3_arp_query(struct qeth
- 		rc = -EFAULT;
- 		goto out;
+ pipe_widget_free:
+ 	if (swidget->id != snd_soc_dapm_scheduler) {
+ 		sof_widget_free_unlocked(sdev, swidget->spipe->pipe_widget);
+@@ -232,8 +232,7 @@ pipe_widget_free:
+ 		}
  	}
-+
-+	if (qinfo.udata_len < QETH_QARP_ENTRIES_OFFSET) {
-+		rc = -EINVAL;
-+		goto out;
-+	}
- 	qinfo.udata = kzalloc(qinfo.udata_len, GFP_KERNEL);
- 	if (!qinfo.udata) {
- 		rc = -ENOMEM;
+ use_count_dec:
+-	if (!use_count_decremented)
+-		swidget->use_count--;
++	swidget->use_count--;
+ 
+ 	return ret;
+ }
 
 
