@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784DD37DEBF;
-	Thu, 20 Aug 2026 15:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B19B352019;
+	Thu, 20 Aug 2026 15:01:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238066; cv=none; b=IsnULcC0DIM3G04DetYQRypLvLGXQWhDCS1wQeQSNwlsvAVnxVkjbVSDsszkl+NGmdaDz600T655cXs9/k2bMzm+ItOpkM+zUBm43FpOUhuAn23jiV9E9MoeDu3ApVLeAOk3q73OdmRek7ho/xBMs5Q6pEDtC9M27hCjk1iH3C0=
+	t=1787238069; cv=none; b=UtXQZHncFRNtq50B2LeRJkcooLk97AjE1xq+RV6zQ5XgiN6HsgsWbK9a6jgNkLDrT6aPAWHImyVuujZBt1nzkcqmrihpdBMAunA3Jqw3qvdfK0CukDqFG1Ct561JPtk2+xHbAIpUQlFiLUT4TxgJnfGX/KAul2lsSAaexwd6Ce0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238066; c=relaxed/simple;
-	bh=vrcYBTTiJas6L4tFXLlWz+NnsyEWJoxdTWbrhKZCT+w=;
+	s=arc-20240116; t=1787238069; c=relaxed/simple;
+	bh=j6uEvCxXgLqRdW9543xaD9E/CH2auyJb6Ufrd9a9jeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eJk0vhLODzjhCLj/v8VwzHOtQL0nNhfMe6oo0sHATYis2TYjNqdeGnVqq2+0aZin8roJ5OLolnh/jFLxs0cf7WptF20d9JQC+JjTRSN9+J4H0w8Wrx4/tHlulleOB2jtNAyDG22kJsyJ61myQrQbWuFezggeltZWKs7gOm5CPqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNvNXl66; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HjRzynTJa/83A+b+DFBPIM9PBY0AchwemQCOo4xJMalDVGLE5dJSEwcH4adakzdWUFJkrN8umaY+DeDuXuKwad41FrEa22YDLlAWq+thzD0aYa/nLBZFLgDTBHUu1jq9WS9dHtSvhEQHtZifLmArX/aVVBJXSkVupHRLhZ+JWqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hozjp5Ce; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNvNXl66"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532191F00A3A;
-	Thu, 20 Aug 2026 15:01:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hozjp5Ce"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955011F000E9;
+	Thu, 20 Aug 2026 15:01:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238065;
-	bh=beK7ug05NQlSBgsSiHXHBHVjr7O989lbph9V1DYxVxk=;
+	s=korg; t=1787238068;
+	bh=HF4h+kSezYpm/I24KltwmB2VgrGZakqaRkGzMYBryD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YNvNXl668K+swyiMgyvXbkUT5iWBgY1oUM/fzTD7CgoaKYu4K4BYeS5zEfPgf8gwh
-	 Zuuzm4zg5u4tLFViGYyctllHw2CfV7EgUyezgBOXXatlia+jEqK1yVPtsxUs84O8EB
-	 1uOSJ66gCpsVGvXa3gHtSHGfzVJJVK13HrbGDMhA=
+	b=hozjp5CerXi7vR3ZmQfXhu/oOZF2KRFMJiWFIY5gYcy4xImYHzfhTuJcFCKA9Dbl6
+	 aw5eUY2bBO66Rc15TUziOOuEk+R+MC58R2DBEr+HVBdsz3hITyN//911R7c+MOAmM3
+	 IRa4t+9IHPqdMDNP7+ZX4y+vJjawk5lf1zmOs7gY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gang Yan <yangang@kylinos.cn>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 008/228] selftests: mptcp: join: mark tests with data corruption as failed
-Date: Thu, 20 Aug 2026 16:52:30 +0200
-Message-ID: <20260820145244.718794943@linuxfoundation.org>
+Subject: [PATCH 7.1 009/228] mptcp: avoid combining some incoming suboptions
+Date: Thu, 20 Aug 2026 16:52:31 +0200
+Message-ID: <20260820145244.746674931@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -51,51 +50,226 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gang Yan <yangang@kylinos.cn>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit ca318e7bbb7723f57bcd9e69a2873b5884435552 upstream.
+commit b6ee361524641f57b2e2363f7737f20e17f67827 upstream.
 
-check_transfer() compares the input and output files byte-by-byte using
-`cmp -l "$in" "$out" | while read ...`. Because the while-loop body runs
-in a subshell (the script sets neither lastpipe nor pipefail), the
-fail_test call inside it -- which sets the global ret/last_test_failed --
-and the `return 1` both act on the subshell, not on check_transfer().
+Some MPTCP suboptions are mutually exclusive according to the RFC8684,
+but also because in different places, the code doesn't expect some
+combinations to be present. That's specially true for suboptions that
+would be present twice, but with different attributes.
 
-check_transfer() thus always falls through to `return 0`, and any data
-corruption affecting only the payload (leaving the subflow/PM counters
-untouched) is silently reported as PASS.
+The new restrictions are the same as the ones applied on the output
+side, with mptcp_write_options. The same rules can be reused with a
+small fix: an MP_FASTCLOSE can be used with a DSS when the sender picks
+this option [1], which is not the case on Linux. Here are the rules:
 
-Fixes: 8117dac3e7c3 ("selftests: mptcp: add invert check in check_transfer")
+  Which options can be used together?
+
+  X: mutually exclusive
+  O: often used together
+  C: can be used together in some cases
+  P: could be used together but we prefer not to (optimisations)
+
+  | Opt: | MPC  | MPJ  | DSS  | ADD  |  RM  | PRIO | FAIL |  FC  |
+  |------|------|------|------|------|------|------|------|------|
+  | MPC  |------|------|------|------|------|------|------|------|
+  | MPJ  |  X   |------|------|------|------|------|------|------|
+  | DSS  |  X   |  X   |------|------|------|------|------|------|
+  | ADD  |  X   |  X   |  P   |------|------|------|------|------|
+  | RM   |  C   |  C   |  C   |  P   |------|------|------|------|
+  | PRIO |  X   |  C   |  C   |  C   |  C   |------|------|------|
+  | FAIL |  X   |  X   |  C   |  X   |  X   |  X   |------|------|
+  | FC   |  X   |  X   |  P   |  X   |  X   |  X   |  X   |------|
+  | RST  |  X   |  X   |  X   |  X   |  X   |  X   |  O   |  O   |
+  |------|------|------|------|------|------|------|------|------|
+
+The only difference is with the 'P': another stack could send and
+ADD_ADDR with other suboptions (DSS, RM_ADDR), and this should be
+allowed.
+
+A few points of attention:
+
+ - In theory, an MP_CAPABLE could be used with a RM_ADDR, but there is
+   no reason to add it with a SYN. Note that even with a 4th ACK, it
+   doesn't seem to be useful, except when IDs are known in advance via
+   another channel. Better not to break that.
+
+ - Now, combining both an MP_CAPABLE and an MP_JOIN will no longer
+   result to a reject of the two options, but only the second suboption
+   is ignored. That seems OK to do that for this unexpected error. At
+   least now all inconsistent combinations are handled the same way.
+   This could change later in next. This also means the explicit checks
+   for having both MPC + MPJ in subflow.c will now be unreachable.
+   That's fine, they will be removed in a follow-up patch.
+
+ - In case of conflicting combinations, the extra suboption(s) is/are
+   ignored: having such combinations either means the remote peer is
+   buggy, or is evil. The simplest action is then taken in this case:
+   stop processing the current suboption.
+
+ - In mp_opt->suboptions, there is also a bit reserved to the checksum,
+   which can be used in an MP_CAPABLE and a DSS. Each time a DSS option
+   can be used in parallel with another option, the checksum can be set,
+   so the verification is combined into a new OPTIONS_MPTCP_DSS macro.
+
+ - An MP_CAPABLE ACK can carry a Data-Level Length, and an optional
+   Checksum: they are the same as the ones found in a DSS, because a DSS
+   cannot be used in parallel to an MP_CAPABLE. Similarly, even if there
+   is room, a DSS cannot be used with an MP_JOIN.
+
+Fixes: eda7acddf808 ("mptcp: Handle MPTCP TCP options")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gang Yan <yangang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://www.rfc-editor.org/rfc/rfc8684.html#section-3.5-5.1 [1]
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-5-b8f496d71664@kernel.org
+Link: https://patch.msgid.link/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-2-b8f496d71664@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/mptcp/options.c  |   59 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ net/mptcp/protocol.h |    1 
+ 2 files changed, 59 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -566,7 +566,7 @@ check_transfer()
- 		mv "$tmpfile" "$out"
- 		tmpfile=""
- 	fi
--	cmp -l "$in" "$out" | while read -r i a b; do
-+	while read -r i a b; do
- 		local sum=$((0${a} + 0${b}))
- 		if [ $check_invert -eq 0 ] || [ $sum -ne $((0xff)) ]; then
- 			fail_test "$what does not match (in, out):"
-@@ -577,7 +577,7 @@ check_transfer()
- 		else
- 			print_info "$what has inverted byte at ${i}"
- 		fi
--	done
-+	done < <(cmp -l "$in" "$out")
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -50,6 +50,14 @@ static void mptcp_parse_option(const str
+ 			}
+ 		}
  
- 	return 0
- }
++		/* Only the MPC + ACK can be used with a RM_ADDR */
++		if (subopt == OPTION_MPTCP_MPC_ACK) {
++			if ((mp_opt->suboptions & ~OPTION_MPTCP_RM_ADDR) != 0)
++				break;
++		} else if (mp_opt->suboptions != 0) {
++			break;
++		}
++
+ 		/* Cfr RFC 8684 Section 3.3.0:
+ 		 * If a checksum is present but its use had
+ 		 * not been negotiated in the MP_CAPABLE handshake, the receiver MUST
+@@ -122,6 +130,11 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_MP_JOIN:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTION_MPTCP_RM_ADDR |
++					    OPTION_MPTCP_PRIO)) != 0)
++			break;
++
+ 		if (opsize == TCPOLEN_MPTCP_MPJ_SYN) {
+ 			mp_opt->suboptions |= OPTION_MPTCP_MPJ_SYN;
+ 			mp_opt->backup = *ptr++ & MPTCPOPT_BACKUP;
+@@ -153,6 +166,14 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_DSS:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTION_MPTCP_ADD_ADDR |
++					    OPTION_MPTCP_RM_ADDR |
++					    OPTION_MPTCP_PRIO |
++					    OPTION_MPTCP_FASTCLOSE |
++					    OPTION_MPTCP_FAIL)) != 0)
++			break;
++
+ 		pr_debug("DSS\n");
+ 		ptr++;
+ 
+@@ -234,6 +255,12 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_ADD_ADDR:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_DSS |
++					    OPTION_MPTCP_RM_ADDR |
++					    OPTION_MPTCP_PRIO)) != 0)
++			break;
++
+ 		mp_opt->echo = (*ptr++) & MPTCP_ADDR_ECHO;
+ 		if (!mp_opt->echo) {
+ 			if (opsize == TCPOLEN_MPTCP_ADD_ADDR ||
+@@ -293,6 +320,14 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_RM_ADDR:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTION_MPTCP_MPC_ACK |
++					    OPTIONS_MPTCP_MPJ |
++					    OPTIONS_MPTCP_DSS |
++					    OPTION_MPTCP_ADD_ADDR |
++					    OPTION_MPTCP_PRIO)) != 0)
++			break;
++
+ 		if (opsize < TCPOLEN_MPTCP_RM_ADDR_BASE + 1 ||
+ 		    opsize > TCPOLEN_MPTCP_RM_ADDR_BASE + MPTCP_RM_IDS_MAX)
+ 			break;
+@@ -307,6 +342,13 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_MP_PRIO:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_MPJ |
++					    OPTIONS_MPTCP_DSS |
++					    OPTION_MPTCP_ADD_ADDR |
++					    OPTION_MPTCP_RM_ADDR)) != 0)
++			break;
++
+ 		if (opsize != TCPOLEN_MPTCP_PRIO)
+ 			break;
+ 
+@@ -316,6 +358,11 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_MP_FASTCLOSE:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_DSS |
++					    OPTION_MPTCP_RST)) != 0)
++			break;
++
+ 		if (opsize != TCPOLEN_MPTCP_FASTCLOSE)
+ 			break;
+ 
+@@ -327,6 +374,11 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_RST:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTION_MPTCP_FAIL |
++					    OPTION_MPTCP_FASTCLOSE)) != 0)
++			break;
++
+ 		if (opsize != TCPOLEN_MPTCP_RST)
+ 			break;
+ 
+@@ -342,6 +394,11 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_MP_FAIL:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_DSS |
++					    OPTION_MPTCP_RST)) != 0)
++			break;
++
+ 		if (opsize != TCPOLEN_MPTCP_FAIL)
+ 			break;
+ 
+@@ -1419,7 +1476,7 @@ void mptcp_write_options(struct tcphdr *
+ 	 *  RM   |  C   |  C   |  C   |  P   |------|------|------|------|
+ 	 *  PRIO |  X   |  C   |  C   |  C   |  C   |------|------|------|
+ 	 *  FAIL |  X   |  X   |  C   |  X   |  X   |  X   |------|------|
+-	 *  FC   |  X   |  X   |  X   |  X   |  X   |  X   |  X   |------|
++	 *  FC   |  X   |  X   |  P   |  X   |  X   |  X   |  X   |------|
+ 	 *  RST  |  X   |  X   |  X   |  X   |  X   |  X   |  O   |  O   |
+ 	 * ------|------|------|------|------|------|------|------|------|
+ 	 *
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -37,6 +37,7 @@
+ 				 OPTION_MPTCP_MPC_ACK)
+ #define OPTIONS_MPTCP_MPJ	(OPTION_MPTCP_MPJ_SYN | OPTION_MPTCP_MPJ_SYNACK | \
+ 				 OPTION_MPTCP_MPJ_ACK)
++#define OPTIONS_MPTCP_DSS	(OPTION_MPTCP_DSS | OPTION_MPTCP_CSUMREQD)
+ 
+ /* MPTCP option subtypes */
+ #define MPTCPOPT_MP_CAPABLE	0
 
 
