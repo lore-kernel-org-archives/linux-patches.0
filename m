@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA55636212F;
-	Thu, 20 Aug 2026 15:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8831B36212F;
+	Thu, 20 Aug 2026 15:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238480; cv=none; b=iNy4FDX9VxdnCQd/DDrxVw+hFKD0g+C4z4G84rtn9TpDRmJlosfnkaKIFkkBSqWk62ODnMCG7fu+J9KSQeam6u9MdFy6Rr8gQgigHB3Jq7m7Ywavfgy7f7ifLy1X6caFG0ytxNaMorX15XsuGsHLBlUoI30NnBXy4c2h2fucEYU=
+	t=1787238483; cv=none; b=t43IMcg2UQqpTibK+JjLEYHM2ytvRnf6NL7bpPW1aR9+0Cm0O3dT/+nsbs1lHc64oOG7yWMCV01Kl5s7FYHpPFHYSCPL81g/WKkV7ztQIiztKj20w20h7lM94der8akzmDvj8UqTosrx/0vIUq37uFN2uACuuH1ynJD670qs2uY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238480; c=relaxed/simple;
-	bh=CdaX+moBUiJqQeLAwSqWh7dZrzJ5uzNQ1YBZnMuBgDY=;
+	s=arc-20240116; t=1787238483; c=relaxed/simple;
+	bh=jsdQJmuzYU/Ut6IoLW6Bt5DjjwYYzfqsQMduy13mPPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L3DP328HS+tzlQKXLElKQs0PLRojPnH/FCoW5ucPgfgSgIqZa7+CNBbSf2b2OkvG3+lp+27N7H55IvvSP054kAUu5eDQiZMgKbN3zlu1QE+/K+th5SQQoc/pZXJJyDtqGAN9/ThJojrAEQHJeT6A1ju3Jgm1Tdow44tp4OvKYsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1sAREnJO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J16m/gimxHmysGNHrgHOeuvxvgXkzhnX6FaZNPPMdGIEgT+bbqXRYxhzKW4pZihDCEixFhmOsDSUWpZGi+eYWZqwLVnkr69pJIaD6WaOKsDt26gw2MzwV1/Hct79RmiZCvR0uB0FEVvnFW5UMj5HFuVW0EZLPNd8RM5YD6a3k8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RGbll+wu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sAREnJO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED011F000E9;
-	Thu, 20 Aug 2026 15:07:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RGbll+wu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15401F000E9;
+	Thu, 20 Aug 2026 15:08:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238479;
-	bh=14aCo1TT+XVv/wFN+bEQEDFkSgSqUCtBCajhYUDpZsE=;
+	s=korg; t=1787238482;
+	bh=/qjuqMUk+GyaTv/xWbHqORUYRAu7vX1aY5FV23ZU4cQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1sAREnJOr/5zDog7KwgGlYV/AdR5SQJLxb7NJKkJFfG/wspUfXEuao2gJPl4dEnEB
-	 +wRXkiWx8QfGzVmniyFtrsPcZjo8sp7vstJwMDgL/hptfHIZ2mJjE7YVuHuAV0ttl/
-	 GStapvAMgO0LfDsQewRNyHWze8MHM0SjkYH6YC8Q=
+	b=RGbll+wukxRA3rtTVmjUMhX/GB1qClY1rq5kX0mQbgFjIMfi/S/9k9wiAI9hVTWEQ
+	 0OdkytwQ5Z1Ko839ohy77fNJnTYZyv3ldcUJHCk6ElDsFz4m7Jkhsxqc4FpJ2z5qds
+	 A4n48N928nOE0w8Xl7rqcOZLkKnC1xMOMf2ltuQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Mostafa Saleh <smostafa@google.com>,
+	Sebastian Ene <sebastianene@google.com>,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>,
+	Jens Wiklander <jenswi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 162/228] clk: qcom: dispcc-eliza: Fix disp_cc_mdss_mdp_clk_src RCG stall on Eliza EVK
-Date: Thu, 20 Aug 2026 16:55:04 +0200
-Message-ID: <20260820145249.600641856@linuxfoundation.org>
+Subject: [PATCH 7.1 163/228] optee: ffa: Add NULL check in optee_ffa_lend_protmem
+Date: Thu, 20 Aug 2026 16:55:05 +0200
+Message-ID: <20260820145249.631956307@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -53,53 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Mostafa Saleh <smostafa@google.com>
 
-[ Upstream commit 2ef00630c5c0b7b2c08aba7643f47594952d357e ]
+[ Upstream commit 650c88738ae8976f46ba71b24dd8aa311adc6fde ]
 
-Eliza EVK (eliza-cqs-evk.dts) does not have display enabled, however its
-Display Clock Controller is enabled and references parent clocks from
-DSI PHYs, which causes clock reparenting issues during probe (init) and
-warning on Eliza EVK:
+Sashiko (locally) reports a possible null dereference under memory
+pressure due to the lack of validation of the allocated pointer.
 
-  disp_cc_mdss_mdp_clk_src: rcg didn't update its configuration.
-  WARNING: drivers/clk/qcom/clk-rcg2.c:136 at update_config+0xd4/0xe4, CPU#1: udevd/273
-  ...
-    update_config (drivers/clk/qcom/clk-rcg2.c:136 (discriminator 2)) (P)
-    clk_rcg2_shared_disable (drivers/clk/qcom/clk-rcg2.c:1471)
-    clk_rcg2_shared_init (drivers/clk/qcom/clk-rcg2.c:1540)
-    __clk_register (drivers/clk/clk.c:3959 drivers/clk/clk.c:4368)
-    devm_clk_hw_register (drivers/clk/clk.c:4448 (discriminator 1) drivers/clk/clk.c:4672 (discriminator 1))
-    devm_clk_register_regmap (drivers/clk/qcom/clk-regmap.c:104)
-    qcom_cc_really_probe (drivers/clk/qcom/common.c:418)
-    qcom_cc_probe (drivers/clk/qcom/common.c:445)
-    disp_cc_eliza_probe (dispcc-eliza.c:?) dispcc_eliza
-    platform_probe (drivers/base/platform.c:1432)
+Fix that by adding the missing check.
 
-Fixes: 0e66f10942b5 ("clk: qcom: dispcc-eliza: Add Eliza display clock controller support")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260623115644.392477-2-krzysztof.kozlowski@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 2b78d79cdf96 ("optee: FF-A: dynamic protected memory allocation")
+Signed-off-by: Mostafa Saleh <smostafa@google.com>
+Signed-off-by: Sebastian Ene <sebastianene@google.com>
+Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+Reviewed-by: Sebastian Ene <sebastianene@google.com>
+Signed-off-by: Jens Wiklander <jenswi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-eliza.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tee/optee/ffa_abi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/clk/qcom/dispcc-eliza.c b/drivers/clk/qcom/dispcc-eliza.c
-index 479f26e0dde29..e31c241252744 100644
---- a/drivers/clk/qcom/dispcc-eliza.c
-+++ b/drivers/clk/qcom/dispcc-eliza.c
-@@ -757,7 +757,7 @@ static struct clk_rcg2 disp_cc_mdss_mdp_clk_src = {
- 		.parent_data = disp_cc_parent_data_11,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_11),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_shared_no_init_park_ops,
- 	},
- };
+diff --git a/drivers/tee/optee/ffa_abi.c b/drivers/tee/optee/ffa_abi.c
+index b4372fa268d03..633715b98625c 100644
+--- a/drivers/tee/optee/ffa_abi.c
++++ b/drivers/tee/optee/ffa_abi.c
+@@ -698,6 +698,9 @@ static int optee_ffa_lend_protmem(struct optee *optee, struct tee_shm *protmem,
+ 	int rc;
  
+ 	mem_attr = kzalloc_objs(*mem_attr, ma_count);
++	if (!mem_attr)
++		return -ENOMEM;
++
+ 	for (n = 0; n < ma_count; n++) {
+ 		mem_attr[n].receiver = mem_attrs[n] & U16_MAX;
+ 		mem_attr[n].attrs = mem_attrs[n] >> 16;
 -- 
 2.53.0
 
