@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C2C47F774;
-	Thu, 20 Aug 2026 17:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48809377A82;
+	Thu, 20 Aug 2026 17:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248510; cv=none; b=SQCTCoG09JCCxwxeVZdS666gi7qDZZFvvZL0eaniwCoXV++X91JPnoPKen4auSCOS912Uuvn9o7yv/OTqzMEEDDhpaOJDONhEMSdg+FDALqVKEYZ77yZCOYkGoK2j0NvjtRrHoufjuJ7i8UAFxGhP01XzlQ5CCDVD/Z+8h5cpmg=
+	t=1787248513; cv=none; b=VWOwlsjibXCX89AC7/Ckm2kc6UQ+Y0pIxdqzWh91NgTNppvlOSMSdVhhcf5s+oNzWbKG1ZKINnm+yGcXk885at/JDb2MhAIYWzsFA9sVIQia9A9Nl+bK/HJ/l3Y7hRCONFYVK0yalXGbND1h+08r3iKB7KOQJvu7NhFmPagPDN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248510; c=relaxed/simple;
-	bh=gPg1R6ttg/wH5aEbEQjt7LzYJTbYppsJGgPrhDgp4rg=;
+	s=arc-20240116; t=1787248513; c=relaxed/simple;
+	bh=Xk0I+bTArHvf1dn6CH+Mw87zFMqu1Bm1zF5ICeGf69M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e0dBG15Uu9aCwjkAgpOAYsBgVSSIUMVt21XTQBNNZhLmYtdF1IBprMHXyuRG0lE7lftSwRPKzXogR4mctby5aN4zaRRLJJbOSkUwr2W61kEwURHc157OPmk9qqEbPSYNJ2BoEY7+UEGsi1/hBdFDscaSvGypqCNSay7m9NvvuJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FzrYOnV4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PXWMTp6BUAMjamDRKblcUJbllPvLtfVpM1ufAotssz0Ux5hQColhZO43xnlbwo2REfrpZ0VPUuLdW7isa36BCJSX24SgYcjmyqPr66S8Qyfg4ALmrgJbKbyQXEkeNvdQNZXd4jPwrrFYmkLbFzUVygNeIesWCr5qrlbgvJ/iKio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pADI5S5i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FzrYOnV4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CABCB1F000E9;
-	Thu, 20 Aug 2026 17:55:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pADI5S5i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A561F000E9;
+	Thu, 20 Aug 2026 17:55:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248509;
-	bh=3H8zyBnHdlWFDvY/XV54ddeEc9e9LqTPDnPmAZQ7/sA=;
+	s=korg; t=1787248512;
+	bh=31KWPLS0M3X/zTQLFUHvEc5qGuV9r2zdSXn70q7r/mg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FzrYOnV4Pe+8x0fd2TP3Fm5b2yQ0yPrThUeRQYCiKMOI3u2LQCIuACpChc0z6+6Ok
-	 k9o8nsrp/iztECg25RUeIhtjJxtdo5RVhr9EDuC3McaRAlTpTAZ4Fo4ezAVAwr3wKD
-	 29g1VaYu7FxjJZgeW6c6rQzfgt2buXnPXv1az470=
+	b=pADI5S5ijKwkDVeBVI6SnieiJ9BqDSAVt2p4oyD9Ft32M3z0ofO1MMlQCytD36qCF
+	 3w91M+HFjki1v1H7H7CReYfUZ0q/X01zbnoeBPlEaaDm5/E04nxePGOjjTB79TXFeP
+	 WBsfP90CyDjn0c7GjR23bIuVRXKq7N5SL5SB10Zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Medvedkin <vladimir.medvedkin@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Patryk Holda <patryk.holda@intel.com>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 252/303] ice: fix VF interrupts cleanup
-Date: Thu, 20 Aug 2026 16:56:28 +0200
-Message-ID: <20260820145301.023040435@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.1 253/303] ice: fix memory leak in ice_lbtest_prepare_rings()
+Date: Thu, 20 Aug 2026 16:56:29 +0200
+Message-ID: <20260820145301.051210487@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -55,130 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-[ Upstream commit fb096882095e5a8d6b5159e43793d4a38a0c5b1f ]
+[ Upstream commit 3a9de5590da4ffd9e9c541c4c4d492aa2b54cf6e ]
 
-When a virtual function sends an IRQ map command, the PF will set up
-interrupts according to that request. However, because these interrupts are
-never reset, the next time Virtual Function initializes, the interrupts are
-still enabled for a given VF, which leads to performance degradation in
-certain cases due to interrupts being unexpectedly enabled and thus causing
-interrupt floods.
+ice_lbtest_prepare_rings() frees Rx rings only when
+ice_vsi_start_all_rx_rings() fails. If ice_vsi_setup_rx_rings() fails
+after allocating some descriptors, or if ice_vsi_cfg_lan() fails after
+the Rx rings were prepared, the function reaches the Tx cleanup path
+without releasing the initialized Rx resources.
 
+Fix this by adding separate unwind paths for Rx setup failure and LAN
+configuration failure. The Rx setup failure path releases the partially
+prepared Rx rings before freeing Tx rings, while later failures first
+undo the LAN Tx configuration and then release the Rx rings in reverse
+setup order.
+
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1-rc7.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have an
+Intel E800 Series adapter available to run the ethtool offline loopback
+selftest, no runtime testing was able to be performed.
+
+Fixes: 0e674aeb0b77 ("ice: Add handler for ethtool selftest")
 Cc: stable@vger.kernel.org
-Fixes: 1071a8358a28 ("ice: Implement virtchnl commands for AVF support")
-Suggested-by: Vladimir Medvedkin <vladimir.medvedkin@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Patryk Holda <patryk.holda@intel.com>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-[ changed the file path for the `ice_vf_ena_rxq_interrupt` hunk from `ice/virt/queues.c` to `ice_virtchnl.c`, which predates the upstream directory split ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_vf_lib.c         |   27 ++++++++++++++++++++
- drivers/net/ethernet/intel/ice/ice_vf_lib_private.h |    1 
- drivers/net/ethernet/intel/ice/ice_virtchnl.c       |   21 +++++++++++++++
- 3 files changed, 49 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_ethtool.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-@@ -555,6 +555,30 @@ static void ice_notify_vf_reset(struct i
- }
+--- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
++++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+@@ -489,18 +489,18 @@ static int ice_lbtest_prepare_rings(stru
  
- /**
-+ * ice_reset_interrupts - clear all queue interrupt configuration for a VSI
-+ * @vsi: the VSI whose interrupt registers should be cleared
-+ *
-+ * Zero the QINT_RQCTL and QINT_TQCTL registers for all allocated queues
-+ * in the VSI. This clears the entire register including MSIX_INDX, ITR_INDX,
-+ * CAUSE_ENA and NEXTQ fields, unlike ice_vf_dis_rxq_interrupt() which only
-+ * clears the CAUSE_ENA bit.
-+ */
-+void ice_reset_interrupts(struct ice_vsi *vsi)
-+{
-+	struct ice_pf *pf = vsi->back;
-+	struct ice_hw *hw = &pf->hw;
-+	int i;
-+
-+	ice_for_each_alloc_rxq(vsi, i)
-+		wr32(hw, QINT_RQCTL(vsi->rxq_map[i]), 0);
-+
-+	ice_for_each_alloc_txq(vsi, i)
-+		wr32(hw, QINT_TQCTL(vsi->txq_map[i]), 0);
-+
-+	ice_flush(hw);
-+}
-+
-+/**
-  * ice_reset_vf - Reset a particular VF
-  * @vf: pointer to the VF structure
-  * @flags: flags controlling behavior of the reset
-@@ -623,6 +647,9 @@ int ice_reset_vf(struct ice_vf *vf, u32
+ 	status = ice_vsi_cfg(vsi);
+ 	if (status)
+-		goto err_setup_rx_ring;
++		goto err_cfg_lan;
  
- 	ice_dis_vf_qs(vf);
+ 	status = ice_vsi_start_all_rx_rings(vsi);
+ 	if (status)
+-		goto err_start_rx_ring;
++		goto err_cfg_lan;
  
-+	/* cleanup interrupt registers */
-+	ice_reset_interrupts(vsi);
-+
- 	/* Call Disable LAN Tx queue AQ whether or not queues are
- 	 * enabled. This is needed for successful completion of VFR.
- 	 */
---- a/drivers/net/ethernet/intel/ice/ice_vf_lib_private.h
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_lib_private.h
-@@ -24,6 +24,7 @@
- #endif
+ 	return status;
  
- void ice_dis_vf_qs(struct ice_vf *vf);
-+void ice_reset_interrupts(struct ice_vsi *vsi);
- int ice_check_vf_init(struct ice_vf *vf);
- struct ice_port_info *ice_vf_get_port_info(struct ice_vf *vf);
- int ice_vsi_apply_spoofchk(struct ice_vsi *vsi, bool enable);
---- a/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-+++ b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-@@ -1210,6 +1210,24 @@ static void ice_vf_ena_rxq_interrupt(str
- }
+-err_start_rx_ring:
+-	ice_vsi_free_rx_rings(vsi);
+-err_setup_rx_ring:
++err_cfg_lan:
+ 	ice_vsi_stop_lan_tx_rings(vsi, ICE_NO_RESET, 0);
++err_setup_rx_ring:
++	ice_vsi_free_rx_rings(vsi);
+ err_setup_tx_ring:
+ 	ice_vsi_free_tx_rings(vsi);
  
- /**
-+ * ice_vf_dis_rxq_interrupt - disable Rx queue interrupt via QINT_RQCTL
-+ * @vsi: VSI of the VF to configure
-+ * @q_idx: VF queue index used to determine the queue in the PF's space
-+ */
-+static void ice_vf_dis_rxq_interrupt(struct ice_vsi *vsi, u32 q_idx)
-+{
-+	struct ice_hw *hw = &vsi->back->hw;
-+	u32 pfq = vsi->rxq_map[q_idx];
-+	u32 reg;
-+
-+	reg = rd32(hw, QINT_RQCTL(pfq));
-+	reg &= ~QINT_RQCTL_CAUSE_ENA_M;
-+	wr32(hw, QINT_RQCTL(pfq), reg);
-+
-+	ice_flush(hw);
-+}
-+
-+/**
-  * ice_vc_ena_qs_msg
-  * @vf: pointer to the VF info
-  * @msg: pointer to the msg buffer
-@@ -1402,6 +1420,8 @@ static int ice_vc_dis_qs_msg(struct ice_
- 			goto error_param;
- 		}
- 
-+		for_each_set_bit(vf_q_id, &q_map, ICE_MAX_RSS_QS_PER_VF)
-+			ice_vf_dis_rxq_interrupt(vsi, vf_q_id);
- 		bitmap_zero(vf->rxq_ena, ICE_MAX_RSS_QS_PER_VF);
- 	} else if (q_map) {
- 		for_each_set_bit(vf_q_id, &q_map, ICE_MAX_RSS_QS_PER_VF) {
-@@ -1422,6 +1442,7 @@ static int ice_vc_dis_qs_msg(struct ice_
- 				goto error_param;
- 			}
- 
-+			ice_vf_dis_rxq_interrupt(vsi, vf_q_id);
- 			/* Clear enabled queues flag */
- 			clear_bit(vf_q_id, vf->rxq_ena);
- 		}
 
 
