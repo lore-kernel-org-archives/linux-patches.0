@@ -1,39 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC8937AA7D;
-	Thu, 20 Aug 2026 17:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87639307492;
+	Thu, 20 Aug 2026 17:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247631; cv=none; b=Xm5VPoxqzGuVbRH5aWITEi2eSLIbqeOvvVbo8BAL9tjU+S7FB93y7bmypEhIi7tz2jbrS345OqxZXkZBjM/GYqEH5ViqhghAIedjOI89Zc9Bhhn0HzmgLJRAOC4vyDWOxzrFBLrBNfNahzW5qTv3w8Txo8p1BpXoV5Rd709fTP0=
+	t=1787247634; cv=none; b=DyTCUQ1ZSxtugHWuiqPayzf9y7YZx46cN4JOSJkSNSqnUh0zTAjS02QufYCcYpZG7dqFEK7zNHhOwfGbMUOSOlvEVUP4bCLMx2M/mZAijlyU8j8xTeapH1PV3lExbc2WEJAi/FFffSN5XlcOVmaL8nlHDiZckPiWNdksTZAFOok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247631; c=relaxed/simple;
-	bh=l/S0wSKvwUedHOpBSC4hmPKbjrZZ6TjO4CdvJ9Mv6jk=;
+	s=arc-20240116; t=1787247634; c=relaxed/simple;
+	bh=6LrY2XupXVCqoEXJ7+l2tYsk4s5nJ5qqXLIqJbqE7kg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YuObgIt4saRX0iyddcQT7TYU6B/HI7uin5gmHS/GwxCbeUY9C+HojfsMgEjtsxAUCDGPFthuU0HTSTjvWjKlTw18sTEBNtpG3nq0KAnGpdcNHVj1mPO79CmEaZ/DCpxyDuCv29SBkDGuHT6eXEdRdFkR/TFnkJRRQMNdLwvEWSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVrQqby1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fp1I4BUW6irtYezluxpFEzWfK93573iGj3o8RkYQc0Fjo3PPD1wMNq5dSvTnEPE5D3aT7p+qWIj/wr9SLLoWYwkv/KQvRVw39CnupxW6VagQkoGeULKMJf3h4nR1dIvu9xjRfRfEeLdUg5s5lZFLzVtYgOB1vzTxAuPtWtecjGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ArCUdZ4T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVrQqby1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC4E1F000E9;
-	Thu, 20 Aug 2026 17:40:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ArCUdZ4T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F7C1F000E9;
+	Thu, 20 Aug 2026 17:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247629;
-	bh=9hxwYvn73A2Auzn/uRJ4Ysxz3+QQZFy2K5d+m+A62vg=;
+	s=korg; t=1787247632;
+	bh=1OloWyQqSbptLORZuTh0sW02sZxUyb/LyvsLbjw2wkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XVrQqby1OfiPDbMUu34RMix0hGf48hY1ePRNppqZvvqfQr5mbGfVTDnpbqV0wLdoa
-	 jT+ISJV/YJIOpxBchwEa0wFsJis9fhdTnQkpO8wJOV8eGlDdHUGlatPhDqjnwA7dqf
-	 ETsnGLCT7tEk4+mi7VhIVtZmCVQoo+bfGKR7cPxM=
+	b=ArCUdZ4TVxddQEc4KXQIA5S0L1BIHDZaZ87xYuTSQntwA7Ns4uyyzjEMJVvRGkKpW
+	 ej6Eae8PkmLfXgGycCeYBU5lBumVy4FvrQjGPtG1B/wVyP/JrOKpAhgsbVa/3ZCRN2
+	 RuUzDdEBXj/Zm0Bl6eVrxANwpgcj54rjGqZyl8rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runa Takemoto <takemotoruna223@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	"Theodore Tso" <tytso@mit.edu>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	Richard Henderson <richard.henderson@linaro.org>,
+	Ivan Kokshaysky <ink@jurassic.park.msu.ru>,
+	Matt Turner <mattst88@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 112/166] ksmbd: reject repeated SMB2 NEGOTIATE requests
-Date: Thu, 20 Aug 2026 16:56:11 +0200
-Message-ID: <20260820145214.534869296@linuxfoundation.org>
+Subject: [PATCH 6.6 077/166] iomap: hold state_lock over call to ifs_set_range_uptodate()
+Date: Thu, 20 Aug 2026 16:55:36 +0200
+Message-ID: <20260820145213.462302350@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -52,146 +69,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 
-[ Upstream commit cb469993b3a61a72653770856d37af616d72d05f ]
+[ Upstream commit 279d5fc3227f04ef2c6125e5c440e7952173a89a ]
 
-Unauthenticated client can send multiple successful SMB2 NEGOTIATE
-requests on one connection before SESSION_SETUP. While the connection is
-in KSMBD_SESS_NEED_SETUP, smb2_handle_negotiate() accepts another
-SMB3.1.1 NEGOTIATE and overwrites conn->preauth_info with a new allocation.
-Only the final allocation is freed when the connection is released, leaking
-one object for every additional successful request.
+Patch series "Add folio_end_read", v2.
 
-A repeated SMB2 NEGOTIATE after a dialect has been selected is a protocol
-violation. MS-SMB2 section 3.3.5.4 requires the server to disconnect
-without replying in this case. Set the connection exiting when rejecting
-the request, in addition to suppressing the response.
+The core of this patchset is the new folio_end_read() call which
+filesystems can use when finishing a page cache read instead of separate
+calls to mark the folio uptodate and unlock it.  As an illustration of its
+use, I converted ext4, iomap & mpage; more can be converted.
 
-Reject SMB2 NEGOTIATE unless the connection is new or is waiting for the
-SMB2 NEGOTIATE that follows an SMB1 multi-protocol negotiate. Serialize
-both SMB1 and SMB2 negotiation paths under conn->srv_mutex, since they
-update connection-wide dialect and negotiation state.
+I think that's useful by itself, but the interesting optimisation is that
+we can implement that with a single XOR instruction that sets the uptodate
+bit, clears the lock bit, tests the waiter bit and provides a write memory
+barrier.  That removes one memory barrier and one atomic instruction from
+each page read, which seems worth doing.  That's in patch 15.
 
-Move the locking contract to ksmbd_smb_negotiate_common(), where the state
-and dialect are selected, and add ksmbd_conn_new() for consistent state
-access.
+The last two patches could be a separate series, but basically we can do
+the same thing with the writeback flag that we do with the unlock flag;
+clear it and test the waiters bit at the same time.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Cc: stable@vger.kernel.org
-Reported-by: Runa Takemoto <takemotoruna223@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+This patch (of 17):
+
+This is really preparation for the next patch, but it lets us call
+folio_mark_uptodate() in just one place instead of two.
+
+Link: https://lkml.kernel.org/r/20231004165317.1061855-1-willy@infradead.org
+Link: https://lkml.kernel.org/r/20231004165317.1061855-2-willy@infradead.org
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: "Theodore Ts'o" <tytso@mit.edu>
+Cc: Andreas Dilger <adilger.kernel@dilger.ca>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Ivan Kokshaysky <ink@jurassic.park.msu.ru>
+Cc: Matt Turner <mattst88@gmail.com>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 9c7d8f7c8994 ("iomap: fix out-of-bounds bitmap_set() with zero-length range")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/connection.h |    5 +++++
- fs/smb/server/smb2pdu.c    |   10 ++--------
- fs/smb/server/smb_common.c |   37 ++++++++++++++++++++++++++++++-------
- 3 files changed, 37 insertions(+), 15 deletions(-)
+ fs/iomap/buffered-io.c |   20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
---- a/fs/smb/server/connection.h
-+++ b/fs/smb/server/connection.h
-@@ -194,6 +194,11 @@ void ksmbd_conn_r_count_dec(struct ksmbd
-  * This is a hack. We will move status to a proper place once we land
-  * a multi-sessions support.
-  */
-+static inline bool ksmbd_conn_new(struct ksmbd_conn *conn)
-+{
-+	return READ_ONCE(conn->status) == KSMBD_SESS_NEW;
-+}
-+
- static inline bool ksmbd_conn_good(struct ksmbd_conn *conn)
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -57,30 +57,32 @@ static inline bool ifs_block_is_uptodate
+ 	return test_bit(block, ifs->state);
+ }
+ 
+-static void ifs_set_range_uptodate(struct folio *folio,
++static bool ifs_set_range_uptodate(struct folio *folio,
+ 		struct iomap_folio_state *ifs, size_t off, size_t len)
  {
- 	return READ_ONCE(conn->status) == KSMBD_SESS_GOOD;
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1095,6 +1095,8 @@ static __le32 deassemble_neg_contexts(st
-  * smb2_handle_negotiate() - handler for smb2 negotiate command
-  * @work:	smb work containing smb request buffer
-  *
-+ * The caller holds conn->srv_mutex.
-+ *
-  * Return:      0
-  */
- int smb2_handle_negotiate(struct ksmbd_work *work)
-@@ -1108,13 +1110,6 @@ int smb2_handle_negotiate(struct ksmbd_w
+ 	struct inode *inode = folio->mapping->host;
+ 	unsigned int first_blk = off >> inode->i_blkbits;
+ 	unsigned int last_blk = (off + len - 1) >> inode->i_blkbits;
+ 	unsigned int nr_blks = last_blk - first_blk + 1;
+-	unsigned long flags;
  
- 	ksmbd_debug(SMB, "Received negotiate request\n");
- 	conn->need_neg = false;
--	if (ksmbd_conn_good(conn)) {
--		pr_err("conn->tcp_status is already in CifsGood State\n");
--		work->send_no_response = 1;
--		return rc;
--	}
--
--	ksmbd_conn_lock(conn);
- 	smb2_buf_len = get_rfc1002_len(work->request_buf);
- 	smb2_neg_size = offsetof(struct smb2_negotiate_req, Dialects);
- 	if (smb2_neg_size > smb2_buf_len) {
-@@ -1265,7 +1260,6 @@ int smb2_handle_negotiate(struct ksmbd_w
- 	ksmbd_conn_set_need_setup(conn);
+-	spin_lock_irqsave(&ifs->state_lock, flags);
+ 	bitmap_set(ifs->state, first_blk, nr_blks);
+-	if (ifs_is_fully_uptodate(folio, ifs))
+-		folio_mark_uptodate(folio);
+-	spin_unlock_irqrestore(&ifs->state_lock, flags);
++	return ifs_is_fully_uptodate(folio, ifs);
+ }
  
- err_out:
--	ksmbd_conn_unlock(conn);
- 	if (rc)
- 		rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
- 
---- a/fs/smb/server/smb_common.c
-+++ b/fs/smb/server/smb_common.c
-@@ -592,23 +592,46 @@ int ksmbd_smb_negotiate_common(struct ks
- 	struct ksmbd_conn *conn = work->conn;
- 	int ret;
- 
--	conn->dialect =
--		ksmbd_negotiate_smb_dialect(work->request_buf);
--	ksmbd_debug(SMB, "conn->dialect 0x%x\n", conn->dialect);
--
- 	if (command == SMB2_NEGOTIATE_HE) {
-+		/*
-+		 * An SMB2 NEGOTIATE is valid for a new connection, or after an
-+		 * SMB1 multi-protocol negotiate has selected SMB2. Do not allow
-+		 * a second SMB2 NEGOTIATE to replace connection-wide state
-+		 * while a session setup is pending. KSMBD_SESS_NEED_RECONNECT
-+		 * is a transient session state and does not restart transport
-+		 * negotiation.
-+		 */
-+		ksmbd_conn_lock(conn);
-+		if (!ksmbd_conn_new(conn) &&
-+		    !ksmbd_conn_need_negotiate(conn)) {
-+			work->send_no_response = 1;
-+			ksmbd_conn_set_exiting(conn);
-+			ksmbd_conn_unlock(conn);
-+			return 0;
-+		}
+ static void iomap_set_range_uptodate(struct folio *folio, size_t off,
+ 		size_t len)
+ {
+ 	struct iomap_folio_state *ifs = folio->private;
++	unsigned long flags;
++	bool uptodate = true;
 +
-+		conn->dialect =
-+			ksmbd_negotiate_smb_dialect(work->request_buf);
-+		ksmbd_debug(SMB, "conn->dialect 0x%x\n", conn->dialect);
- 		ret = smb2_handle_negotiate(work);
-+		ksmbd_conn_unlock(conn);
- 		return ret;
- 	}
++	if (ifs) {
++		spin_lock_irqsave(&ifs->state_lock, flags);
++		uptodate = ifs_set_range_uptodate(folio, ifs, off, len);
++		spin_unlock_irqrestore(&ifs->state_lock, flags);
++	}
  
- 	if (command == SMB_COM_NEGOTIATE) {
-+		ksmbd_conn_lock(conn);
-+		conn->dialect =
-+			ksmbd_negotiate_smb_dialect(work->request_buf);
-+		ksmbd_debug(SMB, "conn->dialect 0x%x\n", conn->dialect);
- 		if (__smb2_negotiate(conn)) {
- 			init_smb3_11_server(conn);
--			init_smb2_neg_rsp(work);
-+			ret = init_smb2_neg_rsp(work);
- 			ksmbd_debug(SMB, "Upgrade to SMB2 negotiation\n");
--			return 0;
-+		} else {
-+			ret = smb_handle_negotiate(work);
- 		}
--		return smb_handle_negotiate(work);
-+		ksmbd_conn_unlock(conn);
-+		return ret;
- 	}
+-	if (ifs)
+-		ifs_set_range_uptodate(folio, ifs, off, len);
+-	else
++	if (uptodate)
+ 		folio_mark_uptodate(folio);
+ }
  
- 	pr_err("Unknown SMB negotiation command: %u\n", command);
 
 
