@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 915CC37CD28;
-	Thu, 20 Aug 2026 15:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A8637CD28;
+	Thu, 20 Aug 2026 15:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239018; cv=none; b=ZNZsy16uel7OTy7y1ffgweh1kTm9NOUkfV+6ZGNGZ0NS/vAfgr1vqz+r87hGkh4ErGK5ZPh206PmalXjAgxAdzukWzLyXidn08A/PfYjchWoQaVSwH1pXv8PCrWfNP7OF9lJvw8VMNpzsyg2zY53FuELYb72cyj69q63LFaV7NI=
+	t=1787239021; cv=none; b=GRN45evv9oX0HkteRx9NN8RNLzpxgatdpUb5wD5q3TEvf9j0+ZrTRGzBvbyk3SkSYNtUfZ+b9lHXThYofV8t6XFlOKyrCYiCpcafA4UwCArGO1MAVWXws0I43Ne3JqVXfj70mMW6nNvFFU+zgLWLMFvw4IkT4oHlTLjseF6a7sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239018; c=relaxed/simple;
-	bh=tetuztFUIqs/nV4Emcv+w3sxdhEoBpvb+VIGFtTtyc8=;
+	s=arc-20240116; t=1787239021; c=relaxed/simple;
+	bh=zD8IPANzlqC9zDgwH7Izp9PvUkw2aLUQP7BRHdT6lgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NVjDd9XHqjuu1/8D9Kqb1i5Rl3Ja525sOz0PzCkpBp7LABYKxIG0lmZOU/1534NVSeW3PPH5gfeA/N7yZN0nqu74otZlclEBxjxRhv1xeSzgmwHhGTS1PbJZIq8VtqJDLt5/c/l5VOvoFl/qeXJ+5Uu9GG1JtXWI/HWcRDbZ7LU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A0wWLett; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pS8lZTxQDr3p4kTTyqC8xvLAmrZ5IN3RpT9AcRotBg7Qzl2dXmbazccQ8DIqyzknMLsemSjW8UWubQD4+rU5yIDsjTyeCTzikRrfnSl8qHGTEd6gwFStKcFmswLuilcYN+R7qCT6tF20PPx3K1ni8rntk9DBJtCX1c27QPU7LpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBrK5MFJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A0wWLett"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB54C1F000E9;
-	Thu, 20 Aug 2026 15:16:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBrK5MFJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F091F000E9;
+	Thu, 20 Aug 2026 15:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239017;
-	bh=rhwuaVBY069Zfo2q1LbR6NKwADCMXI9y7/RAoYFzW9c=;
+	s=korg; t=1787239020;
+	bh=ciqliur0PlwLFB2lJvNvKs5o2YM8V/crG+nghqyL75c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A0wWLettQLUAHThxjXaEmXuLdxRAomdx5+XuQwaKir6hW9PKcs0ocOjl3UN45SAEz
-	 upw0a3MiZXNpLVeu6OxzCqodCrOznAbibnOU97+SsKZv9kbGpdYOTaSNtitF0N8FRa
-	 h4fnHVlSR596FPBuuearySYWpq8oRDAQbyXq/js4=
+	b=NBrK5MFJ7Ya3ZdqC2WKf98nLygCXd5ei1O9HxdDE5EafZGWS4nqzDo6EMEokMatDv
+	 taJP8by1Nf3g6tKPnohfiChwpPyHYTIhl7zluebZie2U9hljgEc9cy2Zx7oBwm5ObJ
+	 7QNDlZTkojgFm2zvWFFzzjZpoqILnfiOFrn0jKSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cornelia Huck <cohuck@redhat.com>,
 	Matthew Rosato <mjrosato@linux.ibm.com>,
 	Eric Farman <farman@linux.ibm.com>,
 	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.18 082/217] s390/vfio_ccw: Ensure index for read/write regions are within range
-Date: Thu, 20 Aug 2026 16:54:10 +0200
-Message-ID: <20260820145240.100923493@linuxfoundation.org>
+Subject: [PATCH 6.18 083/217] s390/vfio_ccw: Ensure first IDAW remains constant
+Date: Thu, 20 Aug 2026 16:54:11 +0200
+Message-ID: <20260820145240.129061926@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -54,145 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Farman <farman@linux.ibm.com>
 
-commit 9f5f9a78fedc45bc29d6a0a64e3a3472361afae5 upstream.
+commit 565bef268d75bf7df665bce6923a88cd0eb74592 upstream.
 
-The introduction of the capability chain rightly clamped the
-region indexes to the range of the capabilities itself, but
-neglected to do so for the existing read/write regions which
-should also be enforced.
+The first IDAW in a list does not need to be on a 2K/4K boundary
+like all others, and so is read separately to accurately calculate
+the size of the buffer needed to read the full IDAL.
 
-Fixes: db8e5d17ac03 ("vfio-ccw: add capabilities chain")
+Verify that the address found in the first IDAW is unchanged between
+reads, to ensure a consistent set of IDAWs being worked with.
+
+Fixes: 01aa26c672c0 ("s390/cio: Combine direct and indirect CCW paths")
 Cc: stable@vger.kernel.org
-Cc: Cornelia Huck <cohuck@redhat.com>
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/vfio_ccw_async.c |   16 ++++++++++++++++
- drivers/s390/cio/vfio_ccw_chp.c   |   15 +++++++++++++++
- drivers/s390/cio/vfio_ccw_ops.c   |    7 +++----
- 3 files changed, 34 insertions(+), 4 deletions(-)
+ drivers/s390/cio/vfio_ccw_cp.c |   16 ++++++++++++++++
+ drivers/s390/cio/vfio_ccw_cp.h |    2 ++
+ 2 files changed, 18 insertions(+)
 
---- a/drivers/s390/cio/vfio_ccw_async.c
-+++ b/drivers/s390/cio/vfio_ccw_async.c
-@@ -8,6 +8,7 @@
-  */
- 
- #include <linux/vfio.h>
-+#include <linux/nospec.h>
- 
- #include "vfio_ccw_private.h"
- 
-@@ -24,11 +25,20 @@ static ssize_t vfio_ccw_async_region_rea
- 		return -EINVAL;
- 
- 	mutex_lock(&private->io_mutex);
+--- a/drivers/s390/cio/vfio_ccw_cp.c
++++ b/drivers/s390/cio/vfio_ccw_cp.c
+@@ -530,6 +530,7 @@ static dma64_t *get_guest_idal(struct cc
+ 		&container_of(cp, struct vfio_ccw_private, cp)->vdev;
+ 	dma64_t *idaws;
+ 	dma32_t *idaws_f1;
++	u64 first_idaw;
+ 	int idal_len = idaw_nr * sizeof(*idaws);
+ 	int idaw_size = idal_is_2k(cp) ? PAGE_SIZE / 2 : PAGE_SIZE;
+ 	int idaw_mask = ~(idaw_size - 1);
+@@ -546,6 +547,18 @@ static dma64_t *get_guest_idal(struct cc
+ 			kfree(idaws);
+ 			return ERR_PTR(ret);
+ 		}
 +
-+	if (i >= private->num_regions) {
-+		ret = -EINVAL;
-+		goto out_unlock;
-+	}
++		idaws_f1 = (dma32_t *)idaws;
++		if (cp->orb.cmd.c64)
++			first_idaw = dma64_to_u64(idaws[0]);
++		else
++			first_idaw = dma32_to_u32(idaws_f1[0]);
 +
-+	i = array_index_nospec(i, private->num_regions);
- 	region = private->region[i].data;
- 	if (copy_to_user(buf, (void *)region + pos, count))
- 		ret = -EFAULT;
- 	else
- 		ret = count;
-+
-+out_unlock:
- 	mutex_unlock(&private->io_mutex);
- 	return ret;
- }
-@@ -48,6 +58,12 @@ static ssize_t vfio_ccw_async_region_wri
- 	if (!mutex_trylock(&private->io_mutex))
- 		return -EAGAIN;
- 
-+	if (i >= private->num_regions) {
-+		ret = -EINVAL;
-+		goto out_unlock;
-+	}
-+
-+	i = array_index_nospec(i, private->num_regions);
- 	region = private->region[i].data;
- 	if (copy_from_user((void *)region + pos, buf, count)) {
- 		ret = -EFAULT;
---- a/drivers/s390/cio/vfio_ccw_chp.c
-+++ b/drivers/s390/cio/vfio_ccw_chp.c
-@@ -9,6 +9,7 @@
-  */
- 
- #include <linux/slab.h>
-+#include <linux/nospec.h>
- #include <linux/vfio.h>
- #include "vfio_ccw_private.h"
- 
-@@ -26,6 +27,13 @@ static ssize_t vfio_ccw_schib_region_rea
- 		return -EINVAL;
- 
- 	mutex_lock(&private->io_mutex);
-+
-+	if (i >= private->num_regions) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
-+
-+	i = array_index_nospec(i, private->num_regions);
- 	region = private->region[i].data;
- 
- 	if (cio_update_schib(sch)) {
-@@ -97,6 +105,12 @@ static ssize_t vfio_ccw_crw_region_read(
- 		list_del(&crw->next);
- 
- 	mutex_lock(&private->io_mutex);
-+	if (i >= private->num_regions) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
-+
-+	i = array_index_nospec(i, private->num_regions);
- 	region = private->region[i].data;
- 
- 	if (crw)
-@@ -109,6 +123,7 @@ static ssize_t vfio_ccw_crw_region_read(
- 
- 	region->crw = 0;
- 
-+out:
- 	mutex_unlock(&private->io_mutex);
- 
- 	kfree(crw);
---- a/drivers/s390/cio/vfio_ccw_ops.c
-+++ b/drivers/s390/cio/vfio_ccw_ops.c
-@@ -259,6 +259,7 @@ static ssize_t vfio_ccw_mdev_read(struct
- 		return vfio_ccw_mdev_read_io_region(private, buf, count, ppos);
- 	default:
- 		index -= VFIO_CCW_NUM_REGIONS;
-+		index = array_index_nospec(index, private->num_regions);
- 		return private->region[index].ops->read(private, buf, count,
- 							ppos);
++		/* Unexpected mismatch from earlier read */
++		if (first_idaw != cp->guest_iova) {
++			kfree(idaws);
++			return ERR_PTR(-EINVAL);
++		}
+ 	} else {
+ 		/* Fabricate an IDAL based off CCW data address */
+ 		if (cp->orb.cmd.c64) {
+@@ -611,6 +624,9 @@ static int ccw_count_idaws(struct ccw1 *
+ 		iova = dma32_to_u32(ccw->cda);
  	}
-@@ -311,6 +312,7 @@ static ssize_t vfio_ccw_mdev_write(struc
- 		return vfio_ccw_mdev_write_io_region(private, buf, count, ppos);
- 	default:
- 		index -= VFIO_CCW_NUM_REGIONS;
-+		index = array_index_nospec(index, private->num_regions);
- 		return private->region[index].ops->write(private, buf, count,
- 							 ppos);
- 	}
-@@ -353,11 +355,8 @@ static int vfio_ccw_mdev_get_region_info
- 		    VFIO_CCW_NUM_REGIONS + private->num_regions)
- 			return -EINVAL;
  
--		info->index = array_index_nospec(info->index,
--						 VFIO_CCW_NUM_REGIONS +
--						 private->num_regions);
--
- 		i = info->index - VFIO_CCW_NUM_REGIONS;
-+		i = array_index_nospec(i, private->num_regions);
++	/* Save the read address for later */
++	cp->guest_iova = iova;
++
+ 	/* Format-1 IDAWs operate on 2K each */
+ 	if (!cp->orb.cmd.c64)
+ 		return idal_2k_nr_words((void *)iova, bytes);
+--- a/drivers/s390/cio/vfio_ccw_cp.h
++++ b/drivers/s390/cio/vfio_ccw_cp.h
+@@ -35,6 +35,7 @@
+  * @initialized: whether this instance is actually initialized
+  * @guest_cp: copy of guest channel program
+  * @ccwchain_count: number of channel program segments (linked by TIC)
++ * @guest_iova: first data address of a guest channel program
+  *
+  * @ccwchain_list is the head of a ccwchain list, that contents the
+  * translated result of the guest channel program that pointed out by
+@@ -46,6 +47,7 @@ struct channel_program {
+ 	bool initialized;
+ 	struct ccw1 *guest_cp;
+ 	unsigned int ccwchain_count;
++	u64 guest_iova;
+ };
  
- 		info->offset = VFIO_CCW_INDEX_TO_OFFSET(info->index);
- 		info->size = private->region[i].size;
+ int cp_init(struct channel_program *cp, union orb *orb);
 
 
