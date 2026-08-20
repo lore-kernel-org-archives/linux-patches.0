@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C902046D091;
-	Thu, 20 Aug 2026 16:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7AF37A83C;
+	Thu, 20 Aug 2026 16:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243859; cv=none; b=EyGpiITamuHk0iPHxsiVquDPrSv+sompXlTorPG284nK1ZAFShhuP1ZujhcS40gwgAMmI90qbd9NcAkbxKJ5UHV1vuYnA46lO7Bs/w2Ux5rv7HsdIxahBF0tMTyPoaawSH/1slR2OJLcTO3uL5diESOF7iWauVewZWI1KhrCwmE=
+	t=1787243862; cv=none; b=hdfu0hJK+5lG2Q++SU4SaOIayo0YvmytVKbEU/lbryK9UW7TbXOf41sGjaK9c/6kZeZAk/qzUfh9pZMib/0AYK7GsW/C8pLj2nBSUSG679QuGovRJLqOp+VjMDchcyHN0NF/ZkFupF/zxPimodB6PicP5BvgX2WWBEqdcbuov3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243859; c=relaxed/simple;
-	bh=CSp5pWGfnsKn/tpHddqFD8abVFewqxQ8RKJKl1OyeHw=;
+	s=arc-20240116; t=1787243862; c=relaxed/simple;
+	bh=N6XIf721874VsizxoBztviC3CzO3P+pyJXkeVc8IFtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SqbZtCuWzI769te6zVHWXetW5W56ebVbX9pJr1ILctvork6B2DmeBoMal0mH2ex/BGEnE4wLiwD+kR99TJKQr04IIfGGV03WoZhhbkHD5yTzfe6+P8u4bLci8pq5tode8JeJ2+mJ7FXb8PKGauAw9Sb4pTV/sx9po3AEkX6z+4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEZwRYyH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RDQJSUUFsMuROQZOulflP9AezUwKx6dMlG016I7Oi87jDofzEdw4qo+jA5ynCKq6G6vZF7SkHsXozpvc8ifXi2X3hfQLboIG1TZGfK//DMXpQvDSabVUzROADDtCB3dzZWvkLA2Hx8PjtLmVmyR0MRWvoQ+W7gsxFEx3tqdIYHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YcNcgwoQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEZwRYyH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25D851F000E9;
-	Thu, 20 Aug 2026 16:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YcNcgwoQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F392B1F000E9;
+	Thu, 20 Aug 2026 16:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243857;
-	bh=jNv2hBnAzH8Y8I4JG2BgcVy4d64lFXvdz43emiCxiPs=;
+	s=korg; t=1787243860;
+	bh=hUo578/KgBfbo9FXbwjtAMxLs4XPnpV4BX/YCJ2JJAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WEZwRYyHRIXG2wxkFbySqgMLw4o1dEgT0zZByfiWG5coM6GwPKH4GvSWRLwprcSsP
-	 VXgKGi57zZ6A54NA2hJ/OidzCoPtDOm1M6gjrga6Acygb6y7jlSYATaimm8bbGBTKr
-	 5bj8BpnVzObwm2U71HO/XhiduJr1bkhm6wIJopwQ=
+	b=YcNcgwoQ4dLG3twUlbN/Hf18G0E4NDE05rvNY4Dsykgd2ZmF0qe/gquYNBNXClcxc
+	 VBBR9eNqMNdkYVaetz1H1jrMVPRmjFPLBIFCWvHRDKaNJVlLeDhlo7UfuJZMRw55FR
+	 68kmNEx0xDBqyodZ+bFBzsdsTRahpPAmMMqmyibI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <mathew.j.martineau@linux.intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 238/272] fs: dont block write during exec on pre-content watched files
-Date: Thu, 20 Aug 2026 16:57:02 +0200
-Message-ID: <20260820145238.756055456@linuxfoundation.org>
+Subject: [PATCH 5.15 202/272] mptcp: cleanup MPJ subflow list handling
+Date: Thu, 20 Aug 2026 16:56:26 +0200
+Message-ID: <20260820145237.540640974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -52,187 +52,417 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 0357ef03c94ef835bd44a0658b8edb672a9dbf51 ]
+[ Upstream commit 3e5014909b5661b3da59990d72a317a45ba3b284 ]
 
-Commit 2a010c412853 ("fs: don't block i_writecount during exec") removed
-the legacy behavior of getting ETXTBSY on attempt to open and executable
-file for write while it is being executed.
+We can simplify the join list handling leveraging the
+mptcp_release_cb(): if we can acquire the msk socket
+lock at mptcp_finish_join time, move the new subflow
+directly into the conn_list, otherwise place it on join_list and
+let the release_cb process such list.
 
-This commit was reverted because an application that depends on this
-legacy behavior was broken by the change.
+Since pending MPJ connection are now always processed
+in a timely way, we can avoid flushing the join list
+every time we have to process all the current subflows.
 
-We need to allow HSM writing into executable files while executed to
-fill their content on-the-fly.
+Additionally we can now use the mptcp data lock to protect
+the join_list, removing the additional spin lock.
 
-To that end, disable the ETXTBSY legacy behavior for files that are
-watched by pre-content events.
+Finally, the MPJ handshake is now always finalized under the
+msk socket lock, we can drop the additional synchronization
+between mptcp_finish_join() and mptcp_close().
 
-This change is not expected to cause regressions with existing systems
-which do not have any pre-content event listeners.
-
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Acked-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20241128142532.465176-1-amir73il@gmail.com
-Stable-dep-of: db1856ea9196 ("binfmt_misc: restore write access when removing an entry")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: f3ca0ee2cc30 ("mptcp: decrement subflows counter on failed passive join")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_elf.c       |    4 ++--
- fs/binfmt_elf_fdpic.c |    4 ++--
- fs/exec.c             |    6 +++---
- include/linux/fs.h    |   22 ++++++++++++++++++++++
- kernel/fork.c         |   12 ++++++------
- 5 files changed, 35 insertions(+), 13 deletions(-)
+ net/mptcp/pm_netlink.c |    4 -
+ net/mptcp/protocol.c   |  120 ++++++++++++++++++++-----------------------------
+ net/mptcp/protocol.h   |   15 ------
+ net/mptcp/sockopt.c    |   24 ++-------
+ net/mptcp/subflow.c    |    5 --
+ 5 files changed, 61 insertions(+), 107 deletions(-)
 
---- a/fs/binfmt_elf.c
-+++ b/fs/binfmt_elf.c
-@@ -1243,7 +1243,7 @@ out_free_interp:
- 		}
- 		reloc_func_desc = interp_load_addr;
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -174,7 +174,6 @@ select_local_address(const struct pm_nl_
+ 	msk_owned_by_me(msk);
  
--		allow_write_access(interpreter);
-+		exe_file_allow_write_access(interpreter);
- 		fput(interpreter);
+ 	rcu_read_lock();
+-	__mptcp_flush_join_list(msk);
+ 	list_for_each_entry_rcu(entry, &pernet->local_addr_list, list) {
+ 		if (!(entry->flags & MPTCP_PM_ADDR_FLAG_SUBFLOW))
+ 			continue;
+@@ -619,7 +618,6 @@ static unsigned int fill_local_addresses
+ 	mptcp_local_address((struct sock_common *)msk, &mpc_addr);
  
- 		kfree(interp_elf_ex);
-@@ -1332,7 +1332,7 @@ out_free_dentry:
- 	kfree(interp_elf_ex);
- 	kfree(interp_elf_phdata);
- out_free_file:
--	allow_write_access(interpreter);
-+	exe_file_allow_write_access(interpreter);
- 	if (interpreter)
- 		fput(interpreter);
- out_free_ph:
---- a/fs/binfmt_elf_fdpic.c
-+++ b/fs/binfmt_elf_fdpic.c
-@@ -398,7 +398,7 @@ static int load_elf_fdpic_binary(struct
- 			goto error;
- 		}
+ 	rcu_read_lock();
+-	__mptcp_flush_join_list(msk);
+ 	list_for_each_entry_rcu(entry, &pernet->local_addr_list, list) {
+ 		if (!(entry->flags & MPTCP_PM_ADDR_FLAG_FULLMESH))
+ 			continue;
+@@ -658,7 +656,6 @@ static unsigned int fill_local_addresses
+ 		unsigned int local_addr_max = mptcp_pm_get_local_addr_max(msk);
  
--		allow_write_access(interpreter);
-+		exe_file_allow_write_access(interpreter);
- 		fput(interpreter);
- 		interpreter = NULL;
- 	}
-@@ -471,7 +471,7 @@ static int load_elf_fdpic_binary(struct
+ 		rcu_read_lock();
+-		__mptcp_flush_join_list(msk);
+ 		list_for_each_entry_rcu(entry, &pernet->local_addr_list, list) {
+ 			if (!(entry->flags & MPTCP_PM_ADDR_FLAG_SUBFLOW))
+ 				continue;
+@@ -796,7 +793,6 @@ void mptcp_pm_nl_addr_send_ack_avoid_lis
+ 	    !mptcp_pm_should_rm_signal(msk))
+ 		return;
  
- error:
- 	if (interpreter) {
--		allow_write_access(interpreter);
-+		exe_file_allow_write_access(interpreter);
- 		fput(interpreter);
- 	}
- 	kfree(interpreter_name);
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -929,7 +929,7 @@ static struct file *do_open_execat(int f
- 	    path_noexec(&file->f_path))
- 		goto exit;
- 
--	err = deny_write_access(file);
-+	err = exe_file_deny_write_access(file);
- 	if (err)
- 		goto exit;
- 
-@@ -1499,7 +1499,7 @@ static void free_bprm(struct linux_binpr
- 		abort_creds(bprm->cred);
- 	}
- 	if (bprm->file) {
--		allow_write_access(bprm->file);
-+		exe_file_allow_write_access(bprm->file);
- 		fput(bprm->file);
- 	}
- 	if (bprm->executable)
-@@ -1790,7 +1790,7 @@ static int exec_binprm(struct linux_binp
- 		bprm->file = bprm->interpreter;
- 		bprm->interpreter = NULL;
- 
--		allow_write_access(exec);
-+		exe_file_allow_write_access(exec);
- 		if (unlikely(bprm->have_execfd)) {
- 			if (bprm->executable) {
- 				fput(exec);
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -3143,6 +3143,28 @@ static inline void allow_write_access(st
- 	if (file)
- 		atomic_inc(&file_inode(file)->i_writecount);
+-	__mptcp_flush_join_list(msk);
+ 	mptcp_for_each_subflow(msk, subflow) {
+ 		if (!__mptcp_subflow_active(subflow))
+ 			continue;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -848,47 +848,38 @@ void mptcp_data_ready(struct sock *sk, s
+ 	mptcp_data_unlock(sk);
  }
-+
-+/*
-+ * Do not prevent write to executable file when watched by pre-content events.
-+ *
-+ * Note that FMODE_FSNOTIFY_HSM mode is set depending on pre-content watches at
-+ * the time of file open and remains constant for entire lifetime of the file,
-+ * so if pre-content watches are added post execution or removed before the end
-+ * of the execution, it will not cause i_writecount reference leak.
-+ */
-+static inline int exe_file_deny_write_access(struct file *exe_file)
-+{
-+	if (unlikely(FMODE_FSNOTIFY_HSM(exe_file->f_mode)))
-+		return 0;
-+	return deny_write_access(exe_file);
-+}
-+static inline void exe_file_allow_write_access(struct file *exe_file)
-+{
-+	if (unlikely(!exe_file || FMODE_FSNOTIFY_HSM(exe_file->f_mode)))
-+		return;
-+	allow_write_access(exe_file);
-+}
-+
- static inline bool inode_is_open_for_write(const struct inode *inode)
+ 
+-static bool mptcp_do_flush_join_list(struct mptcp_sock *msk)
++static bool __mptcp_finish_join(struct mptcp_sock *msk, struct sock *ssk)
  {
- 	return atomic_read(&inode->i_writecount) > 0;
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -487,8 +487,8 @@ static void dup_mm_exe_file(struct mm_st
- 	 * We depend on the oldmm having properly denied write access to the
- 	 * exe_file already.
- 	 */
--	if (exe_file && deny_write_access(exe_file))
--		pr_warn_once("deny_write_access() failed in %s\n", __func__);
-+	if (exe_file && exe_file_deny_write_access(exe_file))
-+		pr_warn_once("exe_file_deny_write_access() failed in %s\n", __func__);
+-	struct mptcp_subflow_context *subflow;
+-	bool ret = false;
++	struct sock *sk = (struct sock *)msk;
+ 
+-	if (likely(list_empty(&msk->join_list)))
++	if (sk->sk_state != TCP_ESTABLISHED)
+ 		return false;
+ 
+-	spin_lock_bh(&msk->join_list_lock);
+-	list_for_each_entry(subflow, &msk->join_list, node) {
+-		u32 sseq = READ_ONCE(subflow->setsockopt_seq);
+-
+-		mptcp_propagate_sndbuf((struct sock *)msk, mptcp_subflow_tcp_sock(subflow));
+-		if (READ_ONCE(msk->setsockopt_seq) != sseq)
+-			ret = true;
+-	}
+-	list_splice_tail_init(&msk->join_list, &msk->conn_list);
+-	spin_unlock_bh(&msk->join_list_lock);
+-
+-	return ret;
+-}
+-
+-void __mptcp_flush_join_list(struct mptcp_sock *msk)
+-{
+-	if (likely(!mptcp_do_flush_join_list(msk)))
+-		return;
++	/* attach to msk socket only after we are sure we will deal with it
++	 * at close time
++	 */
++	if (sk->sk_socket && !ssk->sk_socket)
++		mptcp_sock_graft(ssk, sk->sk_socket);
+ 
+-	if (!test_and_set_bit(MPTCP_WORK_SYNC_SETSOCKOPT, &msk->flags))
+-		mptcp_schedule_work((struct sock *)msk);
++	mptcp_propagate_sndbuf((struct sock *)msk, ssk);
++	mptcp_sockopt_sync_locked(msk, ssk);
++	return true;
  }
  
- #ifdef CONFIG_MMU
-@@ -1201,13 +1201,13 @@ int set_mm_exe_file(struct mm_struct *mm
- 		 * We expect the caller (i.e., sys_execve) to already denied
- 		 * write access, so this is unlikely to fail.
+-static void mptcp_flush_join_list(struct mptcp_sock *msk)
++static void __mptcp_flush_join_list(struct sock *sk)
+ {
+-	bool sync_needed = test_and_clear_bit(MPTCP_WORK_SYNC_SETSOCKOPT, &msk->flags);
+-
+-	might_sleep();
++	struct mptcp_subflow_context *tmp, *subflow;
++	struct mptcp_sock *msk = mptcp_sk(sk);
+ 
+-	if (!mptcp_do_flush_join_list(msk) && !sync_needed)
+-		return;
++	list_for_each_entry_safe(subflow, tmp, &msk->join_list, node) {
++		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
++		bool slow = lock_sock_fast(ssk);
+ 
+-	mptcp_sockopt_sync_all(msk);
++		list_move_tail(&subflow->node, &msk->conn_list);
++		if (!__mptcp_finish_join(msk, ssk))
++			mptcp_subflow_reset(ssk);
++		unlock_sock_fast(ssk, slow);
++	}
+ }
+ 
+ static bool mptcp_rtx_timer_pending(struct sock *sk)
+@@ -1678,7 +1669,6 @@ void __mptcp_push_pending(struct sock *s
+ 			int ret = 0;
+ 
+ 			prev_ssk = ssk;
+-			__mptcp_flush_join_list(msk);
+ 			ssk = mptcp_subflow_get_send(msk);
+ 
+ 			/* First check. If the ssk has changed since
+@@ -2086,7 +2076,6 @@ static bool __mptcp_move_skbs(struct mpt
+ 	unsigned int moved = 0;
+ 	bool ret, done;
+ 
+-	mptcp_flush_join_list(msk);
+ 	do {
+ 		struct sock *ssk = mptcp_subflow_recv_lookup(msk);
+ 		bool slowpath;
+@@ -2577,8 +2566,6 @@ static void mptcp_worker(struct work_str
+ 	if (unlikely((1 << state) & (TCPF_CLOSE | TCPF_LISTEN)))
+ 		goto unlock;
+ 
+-	mptcp_flush_join_list(msk);
+-
+ 	mptcp_check_fastclose(msk);
+ 
+ 	if (msk->pm.status)
+@@ -2617,8 +2604,6 @@ static int __mptcp_init_sock(struct sock
+ {
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
+ 
+-	spin_lock_init(&msk->join_list_lock);
+-
+ 	INIT_LIST_HEAD(&msk->conn_list);
+ 	INIT_LIST_HEAD(&msk->join_list);
+ 	INIT_LIST_HEAD(&msk->rtx_queue);
+@@ -2781,7 +2766,6 @@ static void mptcp_check_send_data_fin(st
+ 
+ 	WRITE_ONCE(msk->snd_nxt, msk->write_seq);
+ 
+-	mptcp_flush_join_list(msk);
+ 	mptcp_for_each_subflow(msk, subflow) {
+ 		struct sock *tcp_sk = mptcp_subflow_tcp_sock(subflow);
+ 
+@@ -2814,12 +2798,7 @@ static void __mptcp_destroy_sock(struct
+ 
+ 	might_sleep();
+ 
+-	/* be sure to always acquire the join list lock, to sync vs
+-	 * mptcp_finish_join().
+-	 */
+-	spin_lock_bh(&msk->join_list_lock);
+-	list_splice_tail_init(&msk->join_list, &msk->conn_list);
+-	spin_unlock_bh(&msk->join_list_lock);
++	/* join list will be eventually flushed (with rst) at sock lock release time*/
+ 	list_splice_init(&msk->conn_list, &conn_list);
+ 
+ 	sk_stop_timer(sk, &msk->sk.icsk_retransmit_timer);
+@@ -2934,8 +2913,6 @@ static int mptcp_disconnect(struct sock
+ 	if (sk->sk_wait_pending)
+ 		return -EBUSY;
+ 
+-	mptcp_do_flush_join_list(msk);
+-
+ 	mptcp_for_each_subflow(msk, subflow) {
+ 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+ 
+@@ -3182,6 +3159,8 @@ static void mptcp_release_cb(struct sock
+ 			flags |= BIT(MPTCP_PUSH_PENDING);
+ 		if (test_and_clear_bit(MPTCP_RETRANSMIT, &mptcp_sk(sk)->flags))
+ 			flags |= BIT(MPTCP_RETRANSMIT);
++		if (test_and_clear_bit(MPTCP_FLUSH_JOIN_LIST, &mptcp_sk(sk)->flags))
++			flags |= BIT(MPTCP_FLUSH_JOIN_LIST);
+ 		if (!flags)
+ 			break;
+ 
+@@ -3194,6 +3173,8 @@ static void mptcp_release_cb(struct sock
  		 */
--		if (unlikely(deny_write_access(new_exe_file)))
-+		if (unlikely(exe_file_deny_write_access(new_exe_file)))
- 			return -EACCES;
- 		get_file(new_exe_file);
+ 
+ 		spin_unlock_bh(&sk->sk_lock.slock);
++		if (flags & BIT(MPTCP_FLUSH_JOIN_LIST))
++			__mptcp_flush_join_list(sk);
+ 		if (flags & BIT(MPTCP_PUSH_PENDING))
+ 			__mptcp_push_pending(sk, 0);
+ 		if (flags & BIT(MPTCP_RETRANSMIT))
+@@ -3342,8 +3323,7 @@ bool mptcp_finish_join(struct sock *ssk)
+ 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
+ 	struct mptcp_sock *msk = mptcp_sk(subflow->conn);
+ 	struct sock *parent = (void *)msk;
+-	struct socket *parent_sock;
+-	bool ret;
++	bool ret = true;
+ 
+ 	pr_debug("msk=%p, subflow=%p\n", msk, subflow);
+ 
+@@ -3356,36 +3336,39 @@ bool mptcp_finish_join(struct sock *ssk)
+ 	if (!msk->pm.server_side)
+ 		goto out;
+ 
+-	if (!mptcp_pm_allow_new_subflow(msk)) {
+-		subflow->reset_reason = MPTCP_RST_EPROHIBIT;
+-		return false;
+-	}
++	if (!mptcp_pm_allow_new_subflow(msk))
++		goto err_prohibited;
+ 
+-	/* active connections are already on conn_list, and we can't acquire
+-	 * msk lock here.
+-	 * use the join list lock as synchronization point and double-check
+-	 * msk status to avoid racing with __mptcp_destroy_sock()
+-	 */
+-	spin_lock_bh(&msk->join_list_lock);
+-	ret = inet_sk_state_load(parent) == TCP_ESTABLISHED;
+-	if (ret && !WARN_ON_ONCE(!list_empty(&subflow->node))) {
+-		list_add_tail(&subflow->node, &msk->join_list);
++	if (WARN_ON_ONCE(!list_empty(&subflow->node)))
++		goto err_prohibited;
++
++	/* active connections are already on conn_list.
++	 * If we can't acquire msk socket lock here, let the release callback
++	 * handle it
++	 */
++	mptcp_data_lock(parent);
++	if (!sock_owned_by_user(parent)) {
++		ret = __mptcp_finish_join(msk, ssk);
++		if (ret) {
++			sock_hold(ssk);
++			list_add_tail(&subflow->node, &msk->conn_list);
++		}
++	} else {
+ 		sock_hold(ssk);
++		list_add_tail(&subflow->node, &msk->join_list);
++		set_bit(MPTCP_FLUSH_JOIN_LIST, &msk->flags);
  	}
- 	rcu_assign_pointer(mm->exe_file, new_exe_file);
- 	if (old_exe_file) {
--		allow_write_access(old_exe_file);
-+		exe_file_allow_write_access(old_exe_file);
- 		fput(old_exe_file);
- 	}
- 	return 0;
-@@ -1246,7 +1246,7 @@ int replace_mm_exe_file(struct mm_struct
+-	spin_unlock_bh(&msk->join_list_lock);
++	mptcp_data_unlock(parent);
++
+ 	if (!ret) {
++err_prohibited:
+ 		subflow->reset_reason = MPTCP_RST_EPROHIBIT;
+ 		return false;
  	}
  
- 	/* set the new file, lockless */
--	ret = deny_write_access(new_exe_file);
-+	ret = exe_file_deny_write_access(new_exe_file);
- 	if (ret)
- 		return -EACCES;
- 	get_file(new_exe_file);
-@@ -1258,7 +1258,7 @@ int replace_mm_exe_file(struct mm_struct
- 		 * write access while someone might open the file writable.
+-	/* attach to msk socket only after we are sure he will deal with us
+-	 * at close time
+-	 */
+-	parent_sock = READ_ONCE(parent->sk_socket);
+-	if (parent_sock && !ssk->sk_socket)
+-		mptcp_sock_graft(ssk, parent_sock);
+ 	subflow->map_seq = READ_ONCE(msk->ack_seq);
+ 	WRITE_ONCE(msk->allow_infinite_fallback, false);
++
+ out:
+ 	mptcp_event(MPTCP_EVENT_SUB_ESTABLISHED, msk, ssk, GFP_ATOMIC);
+ 	return true;
+@@ -3595,7 +3578,6 @@ static int mptcp_stream_accept(struct so
+ 		/* set ssk->sk_socket of accept()ed flows to mptcp socket.
+ 		 * This is needed so NOSPACE flag can be set from tcp stack.
  		 */
- 		mmap_read_lock(mm);
--		allow_write_access(old_exe_file);
-+		exe_file_allow_write_access(old_exe_file);
- 		fput(old_exe_file);
- 		mmap_read_unlock(mm);
+-		mptcp_flush_join_list(msk);
+ 		mptcp_for_each_subflow(msk, subflow) {
+ 			struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+ 
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -121,7 +121,7 @@
+ #define MPTCP_CLEAN_UNA		7
+ #define MPTCP_ERROR_REPORT	8
+ #define MPTCP_RETRANSMIT	9
+-#define MPTCP_WORK_SYNC_SETSOCKOPT 10
++#define MPTCP_FLUSH_JOIN_LIST	10
+ #define MPTCP_CONNECTED		11
+ 
+ static inline bool before64(__u64 seq1, __u64 seq2)
+@@ -252,7 +252,6 @@ struct mptcp_sock {
+ 	bool		use_64bit_ack; /* Set when we received a 64-bit DSN */
+ 	bool		csum_enabled;
+ 	bool		allow_infinite_fallback;
+-	spinlock_t	join_list_lock;
+ 	int		keepalive_cnt;
+ 	int		keepalive_idle;
+ 	int		keepalive_intvl;
+@@ -508,15 +507,6 @@ mptcp_subflow_get_mapped_dsn(const struc
+ 	return subflow->map_seq + mptcp_subflow_get_map_offset(subflow);
+ }
+ 
+-static inline void mptcp_add_pending_subflow(struct mptcp_sock *msk,
+-					     struct mptcp_subflow_context *subflow)
+-{
+-	sock_hold(mptcp_subflow_tcp_sock(subflow));
+-	spin_lock_bh(&msk->join_list_lock);
+-	list_add_tail(&subflow->node, &msk->join_list);
+-	spin_unlock_bh(&msk->join_list_lock);
+-}
+-
+ void mptcp_subflow_process_delegated(struct sock *ssk);
+ 
+ static inline void mptcp_subflow_delegate(struct mptcp_subflow_context *subflow, int action)
+@@ -684,7 +674,6 @@ void __mptcp_data_acked(struct sock *sk)
+ void __mptcp_error_report(struct sock *sk);
+ void mptcp_subflow_eof(struct sock *sk);
+ bool mptcp_update_rcv_data_fin(struct mptcp_sock *msk, u64 data_fin_seq, bool use_64bit);
+-void __mptcp_flush_join_list(struct mptcp_sock *msk);
+ static inline bool mptcp_data_fin_enabled(const struct mptcp_sock *msk)
+ {
+ 	return READ_ONCE(msk->snd_data_fin_enable) &&
+@@ -859,7 +848,7 @@ static inline bool mptcp_pm_add_addr_c_f
+ }
+ 
+ void mptcp_sockopt_sync(struct mptcp_sock *msk, struct sock *ssk);
+-void mptcp_sockopt_sync_all(struct mptcp_sock *msk);
++void mptcp_sockopt_sync_locked(struct mptcp_sock *msk, struct sock *ssk);
+ 
+ static inline struct mptcp_ext *mptcp_get_ext(const struct sk_buff *skb)
+ {
+--- a/net/mptcp/sockopt.c
++++ b/net/mptcp/sockopt.c
+@@ -904,27 +904,15 @@ void mptcp_sockopt_sync(struct mptcp_soc
  	}
+ }
+ 
+-void mptcp_sockopt_sync_all(struct mptcp_sock *msk)
++void mptcp_sockopt_sync_locked(struct mptcp_sock *msk, struct sock *ssk)
+ {
+-	struct mptcp_subflow_context *subflow;
+-	struct sock *sk = (struct sock *)msk;
+-	u32 seq;
++	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
+ 
+-	seq = sockopt_seq_reset(sk);
++	msk_owned_by_me(msk);
+ 
+-	mptcp_for_each_subflow(msk, subflow) {
+-		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+-		u32 sseq = READ_ONCE(subflow->setsockopt_seq);
++	if (READ_ONCE(subflow->setsockopt_seq) != msk->setsockopt_seq) {
++		sync_socket_options(msk, ssk);
+ 
+-		if (sseq != msk->setsockopt_seq) {
+-			__mptcp_sockopt_sync(msk, ssk);
+-			WRITE_ONCE(subflow->setsockopt_seq, seq);
+-		} else if (sseq != seq) {
+-			WRITE_ONCE(subflow->setsockopt_seq, seq);
+-		}
+-
+-		cond_resched();
++		subflow->setsockopt_seq = msk->setsockopt_seq;
+ 	}
+-
+-	msk->setsockopt_seq = seq;
+ }
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -1490,7 +1490,8 @@ int __mptcp_subflow_connect(struct sock
+ 	subflow->request_bkup = !!(flags & MPTCP_PM_ADDR_FLAG_BACKUP);
+ 	mptcp_info2sockaddr(remote, &addr, ssk->sk_family);
+ 
+-	mptcp_add_pending_subflow(msk, subflow);
++	sock_hold(ssk);
++	list_add_tail(&subflow->node, &msk->conn_list);
+ 	mptcp_sockopt_sync(msk, ssk);
+ 	err = kernel_connect(sf, (struct sockaddr *)&addr, addrlen, O_NONBLOCK);
+ 	if (err && err != -EINPROGRESS)
+@@ -1503,9 +1504,7 @@ int __mptcp_subflow_connect(struct sock
+ 	return err;
+ 
+ failed_unlink:
+-	spin_lock_bh(&msk->join_list_lock);
+ 	list_del(&subflow->node);
+-	spin_unlock_bh(&msk->join_list_lock);
+ 	sock_put(mptcp_subflow_tcp_sock(subflow));
+ 
+ failed:
 
 
