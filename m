@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D353C34F27B;
-	Thu, 20 Aug 2026 15:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B33737C925;
+	Thu, 20 Aug 2026 15:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238392; cv=none; b=BCSJVUrpiLCzgkYzISMk54klu6NRIhExh04BmHpM1tWTK5jWA1/bP09BfDb2UzpzG8tAs7kyXqD9Kwr86LXJRyjPLE/O7NcWE+8aslhMaDq96Ch1gtrKHnuSlut/sLK4maaXikZUPihxVO4qGGA3q/VC/A5dLlBfJPEB/6nVkiQ=
+	t=1787238394; cv=none; b=j3+mKJjhyCF9qTwslUPi9U2g5iC5EKrTNF3lNYuoc1WiuBMvZd0v/CzwVIzaeP1IyUmOWRVkhTMUuX4ApRWwiMl50VcNvG2jFz+SmlEnK8nEImxA6ucImcY4vHQL7T3O/DE/luWH0+aKomb5wJla6+u54aX9Gwww3juHSE1/qxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238392; c=relaxed/simple;
-	bh=gM4Cnwub3B8hI/jrDAoLqQpBtuiUzS3A35dZwZIGmm8=;
+	s=arc-20240116; t=1787238394; c=relaxed/simple;
+	bh=57nL+Jlp3LQdxqYJnnqJ89nYVf5VbKKh4dLGz2XqGpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qgKFFeRjEd9fG+6I/y8gF2D5KVTMlECuwEKSlHD9FpJeyfOPhhJ40EizpxcjvkdMH1kJldK9lPWK7pV+8cEyAHrz4gpPESNFuiJQgOvxOQP5YimYw+1z+5RIDmhsfnLNUbttxAF4GAyynyIzKxIbCQavqrBa6q2LnXFW34Zmkuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nSGfQzg0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WkDPakDJxfpPem3GKF7TajP/DLRzhqh0bQqGf6TsDbIT77VDzJtGAfPGcMzKKm24Y5FtMVQ0kM6yB7F12TYKlf3T+m94WG6wJd8eqLLMMN4ldfXuqfBCz+FoEmQC1bx4csJR/LcsiQuiDH/3fctNQwsqToI4cOFUyBkdJr+tASg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UvAiU85y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nSGfQzg0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D612D1F000E9;
-	Thu, 20 Aug 2026 15:06:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UvAiU85y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CAA1F000E9;
+	Thu, 20 Aug 2026 15:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238390;
-	bh=+N6d3jwmK4dp9xveZ29gHKu2bq1kKA8bGXD8qt2lIkA=;
+	s=korg; t=1787238393;
+	bh=oKJlnzjHFRESIgOFE9yV2VWoYEaQs3kdBCc0EcSdyEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nSGfQzg076au92iyDBEzc/+mtdmgyMbYEV3Gdriiv7Nv6XIds3DVONgKP4ICDzxdZ
-	 3VM+logPcWn3n9HQjWqpePuBPgiIDQSgci9bU0CrlRWymtaWyyCUv1crJ4SKRH60c2
-	 R8BPYrH19ycxZU4nrOrHbX1+2Po0ENK3LjkifbHc=
+	b=UvAiU85yRtC+hj50X1eO5JQoWclP7FJLOy8gGMr+uWLQOnD4v0692lROC1fa3cgwz
+	 32H5JFCx8qP6Q3eSftV5JwTQBHtmlC4JftlvpYkzf7waDh95KcmnfsUTTfE7kMN+5S
+	 ZyqzS/Fd1lNu0u1nf0wvV5ljBu3Jjg4CE03a8eKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.1 130/228] xfs: check cowextsize in xrep_inode_cowextsize
-Date: Thu, 20 Aug 2026 16:54:32 +0200
-Message-ID: <20260820145248.563459938@linuxfoundation.org>
+Subject: [PATCH 7.1 131/228] xfs: fix transaction block reservation in xrep_rtbitmap
+Date: Thu, 20 Aug 2026 16:54:33 +0200
+Message-ID: <20260820145248.593797626@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -53,32 +53,113 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 270ffcd9b0a46254fbf3079d0e3341db7d7ec0e6 upstream.
+commit 61606f8846a9da8ab7d2d36ff4617134c9d6df1b upstream.
 
-LOLLM points out that the function that corrects cowextsize should check
-i_cowextsize, not i_extsize.
+LOLLM pointed out an inconsistency in the block reservation code in
+xrep_rtbitmap.  The first is that the reservation computation is not
+consistent between the code that sets up the repair and the code that
+tries to avoid exceeding the transaction reservation once we know how
+big the rtbitmap really must be.  As a result, the logic doesn't work.
+
+In fixing that, a second problem emerges: if we do readjust, we ask for
+the entire reservation all over again.  We really only need the delta,
+so ask only for that.
+
+Fix all these problems by hoisting the computation to a trivial helper
+so that it gets used in both places.
 
 Cc: stable@vger.kernel.org # v6.14
-Fixes: a9600db96f74af ("xfs: detect and repair misaligned rtinherit directory cowextsize hints")
+Fixes: 8defee8dff2b20 ("xfs: online repair of realtime bitmaps for a realtime group")
 Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/inode_repair.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/scrub/rtbitmap_repair.c |   46 ++++++++++++++++++++++++-----------------
+ 1 file changed, 28 insertions(+), 18 deletions(-)
 
---- a/fs/xfs/scrub/inode_repair.c
-+++ b/fs/xfs/scrub/inode_repair.c
-@@ -1956,7 +1956,7 @@ xrep_inode_cowextsize(
- 	/* Fix misaligned CoW extent size hints on a directory. */
- 	if ((sc->ip->i_diflags & XFS_DIFLAG_RTINHERIT) &&
- 	    (sc->ip->i_diflags2 & XFS_DIFLAG2_COWEXTSIZE) &&
--	    sc->ip->i_extsize % sc->mp->m_sb.sb_rextsize > 0) {
-+	    xfs_extlen_to_rtxmod(sc->mp, sc->ip->i_cowextsize) > 0) {
- 		sc->ip->i_cowextsize = 0;
- 		sc->ip->i_diflags2 &= ~XFS_DIFLAG2_COWEXTSIZE;
+--- a/fs/xfs/scrub/rtbitmap_repair.c
++++ b/fs/xfs/scrub/rtbitmap_repair.c
+@@ -36,6 +36,24 @@
+ 
+ /* rt bitmap content repairs */
+ 
++/*
++ * Reserve enough blocks to write out a completely new bitmap file, plus twice
++ * as many blocks as we would need if we can only allocate one block per data
++ * fork mapping.  This should cover the preallocation of the temporary file and
++ * exchanging the extent mappings.
++ *
++ * We cannot use xfs_exchmaps_estimate because we have not yet constructed the
++ * replacement bitmap and therefore do not know how many extents it will use.
++ * By the time we do, we will have a dirty transaction (which we cannot drop
++ * because we cannot drop the rtbitmap ILOCK) and cannot ask for more
++ * reservation.
++ */
++static inline unsigned long long
++xrep_rtbitmap_calc_blocks(struct xfs_mount *mp, unsigned long long blocks)
++{
++	return blocks + (xfs_bmbt_calc_size(mp, blocks) * 2);
++}
++
+ /* Set up to repair the realtime bitmap for this group. */
+ int
+ xrep_setup_rtbitmap(
+@@ -56,20 +74,7 @@ xrep_setup_rtbitmap(
+ 	if (error)
+ 		return error;
+ 
+-	/*
+-	 * Reserve enough blocks to write out a completely new bitmap file,
+-	 * plus twice as many blocks as we would need if we can only allocate
+-	 * one block per data fork mapping.  This should cover the
+-	 * preallocation of the temporary file and exchanging the extent
+-	 * mappings.
+-	 *
+-	 * We cannot use xfs_exchmaps_estimate because we have not yet
+-	 * constructed the replacement bitmap and therefore do not know how
+-	 * many extents it will use.  By the time we do, we will have a dirty
+-	 * transaction (which we cannot drop because we cannot drop the
+-	 * rtbitmap ILOCK) and cannot ask for more reservation.
+-	 */
+-	blocks += xfs_bmbt_calc_size(mp, blocks) * 2;
++	blocks = xrep_rtbitmap_calc_blocks(mp, mp->m_sb.sb_rbmblocks);
+ 	if (blocks > UINT_MAX)
+ 		return -EOPNOTSUPP;
+ 
+@@ -512,7 +517,7 @@ xrep_rtbitmap(
+ 	struct xchk_rtbitmap	*rtb = sc->buf;
+ 	struct xfs_mount	*mp = sc->mp;
+ 	struct xfs_group	*xg = rtg_group(sc->sr.rtg);
+-	unsigned long long	blocks = 0;
++	unsigned long long	blocks;
+ 	unsigned int		busy_gen;
+ 	int			error;
+ 
+@@ -532,15 +537,20 @@ xrep_rtbitmap(
+ 	 * figure out if we need to adjust the block reservation in the
+ 	 * transaction.
+ 	 */
+-	blocks = xfs_bmbt_calc_size(mp, rtb->rbmblocks);
++	blocks = xrep_rtbitmap_calc_blocks(mp, rtb->rbmblocks);
+ 	if (blocks > UINT_MAX)
+ 		return -EOPNOTSUPP;
+ 	if (blocks > rtb->resblks) {
+-		error = xfs_trans_reserve_more(sc->tp, blocks, 0);
++		uint64_t	delta = blocks - rtb->resblks;
++
++		if (delta > UINT_MAX)
++			return -EOPNOTSUPP;
++
++		error = xfs_trans_reserve_more(sc->tp, delta, 0);
+ 		if (error)
+ 			return error;
+ 
+-		rtb->resblks += blocks;
++		rtb->resblks += delta;
  	}
+ 
+ 	/* Fix inode core and forks. */
 
 
