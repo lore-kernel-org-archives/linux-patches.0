@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272C937BE6F;
-	Thu, 20 Aug 2026 17:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050B837BE6F;
+	Thu, 20 Aug 2026 17:42:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247763; cv=none; b=RAaGZhGarCW+vWsSkzxQFmXv6XE+EKEOC7O3GNsMfuXu/jBrR9Scqm9dOlMtIR5t5GTRxFebGqeuYwSGnFFWf0MAzIIn0o50UBi5lkPSqIfjSl3YYqotBWvq4npCELXLM/uyHyhWm+IXUTCeegE16yc96exFuLeEGKEW5NkvjzY=
+	t=1787247766; cv=none; b=AZ3jGOAF0rErCkcjln2g2bnt5ePWeWqXky+3zTdlfl1rlHrHwUPhJ61wSbW/eWq1OmLodtPAnG56RRXBdOpG7V9z1VcPEDWWvEnaSJWWh/qo2738zDZYNofl2mIwf26eU7Vu/budNS2fGKTkK17EMyWaKIRywI0fiyajoA1ahNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247763; c=relaxed/simple;
-	bh=ywYK9Bi+UG5fzUnaFtnfzBqwAuwpPMEx/AsCqYLc/Fw=;
+	s=arc-20240116; t=1787247766; c=relaxed/simple;
+	bh=MVCG0IpQRPrqD9LrxStK1UcANZsR8XezDVFMxxqc4VE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=acnvTNx5EqkJHGD5VWNg63J0UQUGovex8lxEGtFc4ew1tYtp0TkDx0WB2RRvF7axlaQ2k+gqDQVxo+wEXW+0x9g2CvoQgtZyJbnA1o3GHn/UaCZXRrozEvWxA0cnRT/szDKKXy3klSttphloU4ziOx0JweNhXR9B9hVfEAELS4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbNBGfWL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RiRzXhBeR+Q1mV0n1W0w9FxCm2RfQUo++Dt3Kv8YPOHJecHxYLubP4tw8Sl/K7n5ikN0aYv2Uvt2bCX2UhTf3/tD4KNZNnlyw7Pjck7VCCG9dhfEVsYQuJf7AAfErNSlvVz0utLWZXlwWxbTV21mS3IUl7RZBDwKXIhl28YSlwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SvL9WDW0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbNBGfWL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84AD01F000E9;
-	Thu, 20 Aug 2026 17:42:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SvL9WDW0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60CA71F000E9;
+	Thu, 20 Aug 2026 17:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247762;
-	bh=lwK+4J+gUKRMOaKjgIBjgHlJ2sva4uIXeyjpfP42viA=;
+	s=korg; t=1787247764;
+	bh=3MvMGgP+2BCXvopz8dGorngeKq8l6z59sZcGpytx3po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BbNBGfWLxL/G7YLEzylGJWE7oyREjxQindkysxct/7oML+bV6AoNGEcFUB2oYtssA
-	 XoyD3QQ2gb3h89MFrbLq3XPApdT1LKnF7E1pfxuDiXWzLITAdY0Vqw0A1p3YvROLGm
-	 BX7zbF/ZRpuaCnfbZAkRiRt9IBwKAkFpKN3jrp4A=
+	b=SvL9WDW0F1v1wG7zLB0WXH1LFtCXxMEg9x4iDQYRVDLJmUJcbCuFJhLRgy3GlZfuY
+	 HLLZLo++z7A2uPaIBp/VODwoMyL0TUDbnMN2fGSdTSItL7xAhqZ5tAqSq9Z/i15BHs
+	 Wnz3sHtznMyQnc7Uk/9CrXSwaMYxKJ59tGGyWp8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Guillaume Nault <gnault@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 121/166] vrf: Make pcpu_dstats update functions available to other modules.
-Date: Thu, 20 Aug 2026 16:56:20 +0200
-Message-ID: <20260820145214.804184676@linuxfoundation.org>
+Subject: [PATCH 6.6 122/166] vxlan: Handle stats using NETDEV_PCPU_STAT_DSTATS.
+Date: Thu, 20 Aug 2026 16:56:21 +0200
+Message-ID: <20260820145214.834790297@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -53,173 +53,149 @@ Content-Transfer-Encoding: 8bit
 
 From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit 18eabadd73ae60023ab05e376246bd725fb0c113 ]
+[ Upstream commit be226352e8dc77d3313c096b2d8e7f69bf6980fc ]
 
-Currently vrf is the only module that uses NETDEV_PCPU_STAT_DSTATS.
-In order to make this kind of statistics available to other modules,
-we need to define the update functions in netdevice.h.
+VXLAN uses the TSTATS infrastructure (dev_sw_netstats_*()) for RX and
+TX packet counters. It also uses the device core stats
+(dev_core_stats_*()) for RX and TX drops.
 
-Therefore, let's define dev_dstats_*() functions for RX and TX packet
-updates (packets, bytes and drops). Use these new functions in vrf.c
-instead of vrf_rx_stats() and the other manual counter updates.
+Let's consolidate that using the DSTATS infrastructure, which can
+handle both packet counters and packet drops. Statistics that don't
+fit DSTATS are still updated atomically with DEV_STATS_INC().
 
-While there, update the type of the "len" variables to "unsigned int",
-so that there're aligned with both skb->len and the new dstats update
-functions.
+While there, convert the "len" variable of vxlan_encap_bypass() to
+unsigned int, to respect the types of skb->len and
+dev_dstats_[rt]x_add().
 
 Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Link: https://patch.msgid.link/d7a552ee382c79f4854e7fcc224cf176cd21150d.1733313925.git.gnault@redhat.com
+Link: https://patch.msgid.link/145558b184b3cda77911ca5682b6eb83c3ffed8e.1733313925.git.gnault@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: b9553558b48d ("vxlan: use pskb_network_may_pull() for transmit path header pulls")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vrf.c         |   49 +++++++++++++---------------------------------
- include/linux/netdevice.h |   40 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 54 insertions(+), 35 deletions(-)
+ drivers/net/vxlan/vxlan_core.c |   28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
---- a/drivers/net/vrf.c
-+++ b/drivers/net/vrf.c
-@@ -121,16 +121,6 @@ struct net_vrf {
- 	int			ifindex;
- };
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -1798,13 +1798,13 @@ static int vxlan_rcv(struct sock *sk, st
  
--static void vrf_rx_stats(struct net_device *dev, int len)
--{
--	struct pcpu_dstats *dstats = this_cpu_ptr(dev->dstats);
--
--	u64_stats_update_begin(&dstats->syncp);
--	u64_stats_inc(&dstats->rx_packets);
--	u64_stats_add(&dstats->rx_bytes, len);
--	u64_stats_update_end(&dstats->syncp);
--}
--
- static void vrf_tx_error(struct net_device *vrf_dev, struct sk_buff *skb)
- {
- 	vrf_dev->stats.tx_errors++;
-@@ -395,7 +385,7 @@ static bool qdisc_tx_is_default(const st
- static int vrf_local_xmit(struct sk_buff *skb, struct net_device *dev,
- 			  struct dst_entry *dst)
- {
--	int len = skb->len;
-+	unsigned int len = skb->len;
- 
- 	skb_orphan(skb);
- 
-@@ -408,15 +398,10 @@ static int vrf_local_xmit(struct sk_buff
- 
- 	skb->protocol = eth_type_trans(skb, dev);
- 
--	if (likely(__netif_rx(skb) == NET_RX_SUCCESS)) {
--		vrf_rx_stats(dev, len);
--	} else {
--		struct pcpu_dstats *dstats = this_cpu_ptr(dev->dstats);
--
--		u64_stats_update_begin(&dstats->syncp);
--		u64_stats_inc(&dstats->rx_drops);
--		u64_stats_update_end(&dstats->syncp);
--	}
-+	if (likely(__netif_rx(skb) == NET_RX_SUCCESS))
-+		dev_dstats_rx_add(dev, len);
-+	else
-+		dev_dstats_rx_dropped(dev);
- 
- 	return NETDEV_TX_OK;
- }
-@@ -604,20 +589,14 @@ static netdev_tx_t is_ip_tx_frame(struct
- 
- static netdev_tx_t vrf_xmit(struct sk_buff *skb, struct net_device *dev)
- {
--	struct pcpu_dstats *dstats = this_cpu_ptr(dev->dstats);
--
--	int len = skb->len;
--	netdev_tx_t ret = is_ip_tx_frame(skb, dev);
--
--	u64_stats_update_begin(&dstats->syncp);
--	if (likely(ret == NET_XMIT_SUCCESS || ret == NET_XMIT_CN)) {
-+	unsigned int len = skb->len;
-+	netdev_tx_t ret;
- 
--		u64_stats_inc(&dstats->tx_packets);
--		u64_stats_add(&dstats->tx_bytes, len);
--	} else {
--		u64_stats_inc(&dstats->tx_drops);
--	}
--	u64_stats_update_end(&dstats->syncp);
-+	ret = is_ip_tx_frame(skb, dev);
-+	if (likely(ret == NET_XMIT_SUCCESS || ret == NET_XMIT_CN))
-+		dev_dstats_tx_add(dev, len);
-+	else
-+		dev_dstats_tx_dropped(dev);
- 
- 	return ret;
- }
-@@ -1400,7 +1379,7 @@ static struct sk_buff *vrf_ip6_rcv(struc
- 	if (!is_ndisc) {
- 		struct net_device *orig_dev = skb->dev;
- 
--		vrf_rx_stats(vrf_dev, skb->len);
-+		dev_dstats_rx_add(vrf_dev, skb->len);
- 		skb->dev = vrf_dev;
- 		skb->skb_iif = vrf_dev->ifindex;
- 
-@@ -1456,7 +1435,7 @@ static struct sk_buff *vrf_ip_rcv(struct
- 		goto out;
+ 	if (unlikely(!(vxlan->dev->flags & IFF_UP))) {
+ 		rcu_read_unlock();
+-		dev_core_stats_rx_dropped_inc(vxlan->dev);
++		dev_dstats_rx_dropped(vxlan->dev);
+ 		vxlan_vnifilter_count(vxlan, vni, vninode,
+ 				      VXLAN_VNI_STATS_RX_DROPS, 0);
+ 		goto drop;
  	}
  
--	vrf_rx_stats(vrf_dev, skb->len);
-+	dev_dstats_rx_add(vrf_dev, skb->len);
+-	dev_sw_netstats_rx_add(vxlan->dev, skb->len);
++	dev_dstats_rx_add(vxlan->dev, skb->len);
+ 	vxlan_vnifilter_count(vxlan, vni, vninode, VXLAN_VNI_STATS_RX, skb->len);
+ 	gro_cells_receive(&vxlan->gro_cells, skb);
  
- 	if (!list_empty(&vrf_dev->ptype_all)) {
- 		int err;
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -2797,6 +2797,46 @@ static inline void dev_lstats_add(struct
- 	u64_stats_update_end(&lstats->syncp);
- }
+@@ -1858,7 +1858,7 @@ static int arp_reduce(struct net_device
+ 		goto out;
  
-+static inline void dev_dstats_rx_add(struct net_device *dev,
-+				     unsigned int len)
-+{
-+	struct pcpu_dstats *dstats = this_cpu_ptr(dev->dstats);
-+
-+	u64_stats_update_begin(&dstats->syncp);
-+	u64_stats_inc(&dstats->rx_packets);
-+	u64_stats_add(&dstats->rx_bytes, len);
-+	u64_stats_update_end(&dstats->syncp);
-+}
-+
-+static inline void dev_dstats_rx_dropped(struct net_device *dev)
-+{
-+	struct pcpu_dstats *dstats = this_cpu_ptr(dev->dstats);
-+
-+	u64_stats_update_begin(&dstats->syncp);
-+	u64_stats_inc(&dstats->rx_drops);
-+	u64_stats_update_end(&dstats->syncp);
-+}
-+
-+static inline void dev_dstats_tx_add(struct net_device *dev,
-+				     unsigned int len)
-+{
-+	struct pcpu_dstats *dstats = this_cpu_ptr(dev->dstats);
-+
-+	u64_stats_update_begin(&dstats->syncp);
-+	u64_stats_inc(&dstats->tx_packets);
-+	u64_stats_add(&dstats->tx_bytes, len);
-+	u64_stats_update_end(&dstats->syncp);
-+}
-+
-+static inline void dev_dstats_tx_dropped(struct net_device *dev)
-+{
-+	struct pcpu_dstats *dstats = this_cpu_ptr(dev->dstats);
-+
-+	u64_stats_update_begin(&dstats->syncp);
-+	u64_stats_inc(&dstats->tx_drops);
-+	u64_stats_update_end(&dstats->syncp);
-+}
-+
- #define __netdev_alloc_pcpu_stats(type, gfp)				\
- ({									\
- 	typeof(type) __percpu *pcpu_stats = alloc_percpu_gfp(type, gfp);\
+ 	if (!pskb_may_pull(skb, arp_hdr_len(dev))) {
+-		dev_core_stats_tx_dropped_inc(dev);
++		dev_dstats_tx_dropped(dev);
+ 		vxlan_vnifilter_count(vxlan, vni, NULL,
+ 				      VXLAN_VNI_STATS_TX_DROPS, 0);
+ 		goto out;
+@@ -1916,7 +1916,7 @@ static int arp_reduce(struct net_device
+ 		reply->pkt_type = PACKET_HOST;
+ 
+ 		if (netif_rx(reply) == NET_RX_DROP) {
+-			dev_core_stats_rx_dropped_inc(dev);
++			dev_dstats_rx_dropped(dev);
+ 			vxlan_vnifilter_count(vxlan, vni, NULL,
+ 					      VXLAN_VNI_STATS_RX_DROPS, 0);
+ 		}
+@@ -2077,7 +2077,7 @@ static int neigh_reduce(struct net_devic
+ 			goto out;
+ 
+ 		if (netif_rx(reply) == NET_RX_DROP) {
+-			dev_core_stats_rx_dropped_inc(dev);
++			dev_dstats_rx_dropped(dev);
+ 			vxlan_vnifilter_count(vxlan, vni, NULL,
+ 					      VXLAN_VNI_STATS_RX_DROPS, 0);
+ 		}
+@@ -2370,8 +2370,8 @@ static void vxlan_encap_bypass(struct sk
+ {
+ 	union vxlan_addr loopback;
+ 	union vxlan_addr *remote_ip = &dst_vxlan->default_dst.remote_ip;
++	unsigned int len = skb->len;
+ 	struct net_device *dev;
+-	int len = skb->len;
+ 
+ 	skb->pkt_type = PACKET_HOST;
+ 	skb->encapsulation = 0;
+@@ -2398,16 +2398,16 @@ static void vxlan_encap_bypass(struct sk
+ 	if ((dst_vxlan->cfg.flags & VXLAN_F_LEARN) && snoop)
+ 		vxlan_snoop(dev, &loopback, eth_hdr(skb)->h_source, 0, vni);
+ 
+-	dev_sw_netstats_tx_add(src_vxlan->dev, 1, len);
++	dev_dstats_tx_add(src_vxlan->dev, len);
+ 	vxlan_vnifilter_count(src_vxlan, vni, NULL, VXLAN_VNI_STATS_TX, len);
+ 
+ 	if (__netif_rx(skb) == NET_RX_SUCCESS) {
+-		dev_sw_netstats_rx_add(dst_vxlan->dev, len);
++		dev_dstats_rx_add(dst_vxlan->dev, len);
+ 		vxlan_vnifilter_count(dst_vxlan, vni, NULL, VXLAN_VNI_STATS_RX,
+ 				      len);
+ 	} else {
+ drop:
+-		dev_core_stats_rx_dropped_inc(dev);
++		dev_dstats_rx_dropped(dev);
+ 		vxlan_vnifilter_count(dst_vxlan, vni, NULL,
+ 				      VXLAN_VNI_STATS_RX_DROPS, 0);
+ 	}
+@@ -2700,7 +2700,7 @@ out_unlock:
+ 	return;
+ 
+ drop:
+-	dev_core_stats_tx_dropped_inc(dev);
++	dev_dstats_tx_dropped(dev);
+ 	vxlan_vnifilter_count(vxlan, vni, NULL, VXLAN_VNI_STATS_TX_DROPS, 0);
+ 	dev_kfree_skb(skb);
+ 	return;
+@@ -2745,7 +2745,7 @@ static void vxlan_xmit_nh(struct sk_buff
+ 	return;
+ 
+ drop:
+-	dev_core_stats_tx_dropped_inc(dev);
++	dev_dstats_tx_dropped(dev);
+ 	vxlan_vnifilter_count(netdev_priv(dev), vni, NULL,
+ 			      VXLAN_VNI_STATS_TX_DROPS, 0);
+ 	dev_kfree_skb(skb);
+@@ -2783,7 +2783,7 @@ static netdev_tx_t vxlan_xmit_nhid(struc
+ 	return NETDEV_TX_OK;
+ 
+ drop:
+-	dev_core_stats_tx_dropped_inc(dev);
++	dev_dstats_tx_dropped(dev);
+ 	vxlan_vnifilter_count(netdev_priv(dev), vni, NULL,
+ 			      VXLAN_VNI_STATS_TX_DROPS, 0);
+ 	dev_kfree_skb(skb);
+@@ -2881,7 +2881,7 @@ static netdev_tx_t vxlan_xmit(struct sk_
+ 			    !is_multicast_ether_addr(eth->h_dest))
+ 				vxlan_fdb_miss(vxlan, eth->h_dest);
+ 
+-			dev_core_stats_tx_dropped_inc(dev);
++			dev_dstats_tx_dropped(dev);
+ 			vxlan_vnifilter_count(vxlan, vni, NULL,
+ 					      VXLAN_VNI_STATS_TX_DROPS, 0);
+ 			kfree_skb(skb);
+@@ -3259,7 +3259,7 @@ static void vxlan_setup(struct net_devic
+ 	dev->min_mtu = ETH_MIN_MTU;
+ 	dev->max_mtu = ETH_MAX_MTU;
+ 
+-	dev->pcpu_stat_type = NETDEV_PCPU_STAT_TSTATS;
++	dev->pcpu_stat_type = NETDEV_PCPU_STAT_DSTATS;
+ 	INIT_LIST_HEAD(&vxlan->next);
+ 
+ 	timer_setup(&vxlan->age_timer, vxlan_cleanup, TIMER_DEFERRABLE);
 
 
