@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFAA147DD42;
-	Thu, 20 Aug 2026 17:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2242931C0;
+	Thu, 20 Aug 2026 17:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247915; cv=none; b=Hdm86WnT/2bco68KzVetG25v5DpRvWNbPWLa4F6o0RvEkJAAbm7U42omVhxLQomWC+pr9a6myY5iJBWE2oG0Ul6UILXqaj2rG7FNLmRJMdp/iIGKS8B67zA5y+gPXafcC7FYJKOni7CYcLM0M5U/S+ADm34sCOJlXq65LQ70SXs=
+	t=1787247918; cv=none; b=Mj1Z1JJojgpqwMVPhgacgnabdyVnQQ3vYNPJANluvS2beErJtzv/5SEIT0MHGExAlDns/C1RWHkYJYMYY3JvyqSkhpOBGv0t2PikKFedC/w1i3f/d0yIYqPCJU+zg6MbVjy4FsmPGxC9nL4EOFm8GvYSh5xZcEbrPFVerGN5iAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247915; c=relaxed/simple;
-	bh=aaoku57pEMPZ8pfA/xGVowFROW0a1dxn6JaB0Q8q4gU=;
+	s=arc-20240116; t=1787247918; c=relaxed/simple;
+	bh=VebB0lDp8+081BK76Q7u9S2mdX9KMVLTuKcHjA07RfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CZmvuQ00I6oWnWTcwxNQBwyyd+36dci6fv0+ycJ6wIcnocJhK0JymKRih3pQW/NWJBcs54fN0F4vpTt5MbpIYo5q8q/lcZWbqhRZigJYYAn7U3CSRJlp1nq0y1xivkqlShD4yUFq+ifUmHb1v9F81mZZx8PCKYIDOz1aUwpM5uA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bx3Snuuu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GnwUacHG4Ur+AN8LqbBxxbTCCbuX7h+yhCZXnzA855mVf5a3XnftrJS/cvDAxHsBof630gv/gQ5s03s3BdbMy/uKvunrxgKGXw8I0CNnc9JiIolpnWQbYYdJ0bGDmxUOEQUZ8OX24whljAtQCXm3G8aKCUVma/m2M2wt1K3S+8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sedv2JkE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bx3Snuuu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3161F00A3D;
-	Thu, 20 Aug 2026 17:45:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sedv2JkE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E55F01F00A3A;
+	Thu, 20 Aug 2026 17:45:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247914;
-	bh=8BN6L11Xiwy7GOS/D96kBgXVCI/oQP4y/6Qbn/QDSbs=;
+	s=korg; t=1787247917;
+	bh=dNXfbNEBj7fsH58GqEkGuCI3NKfXPBa0oPBqkf9jLp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bx3SnuuuBns+gx0A0S4nudEbtMPckwHTLYzSzGbyOodBlYhpVugo/rVNVRktu7ly6
-	 +JPvOxeDy+rTnchHUog+whouSqQVJuwm8xfETbW5Kje//oCPDCgTn/GD+kfC2X+dgJ
-	 2gLBRcpTde5Ex/Bv4BvuubyfFdyHcoHes6fimX/o=
+	b=Sedv2JkEVE/eEkXP9Fftq+jiqud30jiI2RTillLFte+A2gddu6D+B5DDkfkC17nxW
+	 XwfaodfNSG2/d+1CvgkCjSMGWQDNsA5Xl7VNKHAacV5ChlesZ3ZgQecssm0KUNBKlr
+	 J1Sm2imLp1kB4HLsBzMgC9zmZeiwH0bE8dGBUIxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Rosca <david.rosca@amd.com>,
-	Leo Liu <leo.liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 046/303] drm/amdgpu: Reject UVD message with invalid number of h265 refs
-Date: Thu, 20 Aug 2026 16:53:02 +0200
-Message-ID: <20260820145254.556207083@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 020/303] Input: synaptics-rmi4 - fix F55 transmitter electrode count typo
+Date: Thu, 20 Aug 2026 16:52:36 +0200
+Message-ID: <20260820145253.787699332@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -51,34 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Rosca <david.rosca@amd.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 9fca434208f1f9ab977feac62df8ebb1cc7ce893 upstream.
+commit 6058f0fea10f3caf63a435677358d1b8e9325114 upstream.
 
-Same change as for h264, avoids overflow later when calculating
-min dpb size.
+During F55 sensor detection, the transmitter (TX) electrode count was
+incorrectly assigned the value of the receiver (RX) electrode count
+due to copy-paste typos.
 
-Signed-off-by: David Rosca <david.rosca@amd.com>
-Reviewed-by: Leo Liu <leo.liu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a4b0720e4f1601f97f59a2be9c1b4b94fa6527d5)
+This incorrect value was then propagated to the driver data and used
+by F54 to determine the diagnostics report size. On devices with more
+RX than TX electrodes, this inflated the perceived TX count, leading
+to incorrect report size calculations and potential out-of-bounds
+buffer accesses.
+
+Fix the typos by correctly assigning the TX electrode counts.
+
+Fixes: 6adba43fd222 ("Input: synaptics-rmi4 - add support for F55 sensor tuning")
+Fixes: c762cc68b6a1 ("Input: synaptics-rmi4 - propagate correct number of rx and tx electrodes to F54")
+Reported-by: sashiko-bot@kernel.org
 Cc: stable@vger.kernel.org
+Assisted-by: Antigravity:gemini-3.5-flash
+Link: https://patch.msgid.link/20260626051802.4033172-1-dmitry.torokhov@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/input/rmi4/rmi_f55.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-@@ -778,6 +778,9 @@ static int amdgpu_uvd_cs_msg_decode(stru
- 		image_size = ALIGN(image_size, 256);
+--- a/drivers/input/rmi4/rmi_f55.c
++++ b/drivers/input/rmi4/rmi_f55.c
+@@ -54,10 +54,10 @@ static int rmi_f55_detect(struct rmi_fun
+ 	f55->num_tx_electrodes = f55->qry[F55_NUM_TX_OFFSET];
  
- 		num_dpb_buffer = (le32_to_cpu(msg[59]) & 0xff) + 2;
-+		if (num_dpb_buffer > 17)
-+			return -EINVAL;
-+
- 		min_dpb_size = image_size * num_dpb_buffer;
- 		min_ctx_size = ((width + 255) / 16) * ((height + 255) / 16)
- 					   * 16 * num_dpb_buffer + 52 * 1024;
+ 	f55->cfg_num_rx_electrodes = f55->num_rx_electrodes;
+-	f55->cfg_num_tx_electrodes = f55->num_rx_electrodes;
++	f55->cfg_num_tx_electrodes = f55->num_tx_electrodes;
+ 
+ 	drv_data->num_rx_electrodes = f55->cfg_num_rx_electrodes;
+-	drv_data->num_tx_electrodes = f55->cfg_num_rx_electrodes;
++	drv_data->num_tx_electrodes = f55->cfg_num_tx_electrodes;
+ 
+ 	if (f55->qry[F55_PHYS_CHAR_OFFSET] & F55_CAP_SENSOR_ASSIGN) {
+ 		int i, total;
 
 
