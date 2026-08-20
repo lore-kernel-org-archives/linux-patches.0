@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED875361972;
-	Thu, 20 Aug 2026 15:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C251F379EDA;
+	Thu, 20 Aug 2026 15:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239421; cv=none; b=N6LIjtfkmCnTyttnURwf+WRPM+y/4gmYFpVGplb7lkuFarMtqHDeHGGqoPUF7dho7evstbO5sT/3F7LMzu4DbjrQsSyP6nf26a2Q8MNYavWMplcJrpHfEwpYraQOkY1cNvyaPCHwYTSwp6hfRCELLPxPtNQszMp5GfJky+l8XKQ=
+	t=1787239423; cv=none; b=CvhBWwqy1gKFfzTGYnOMRr/kZRCFdm8mpMZGwAMdXFx2OnYUsw83TRadcLIbxTT4whb3zxWdRQg9/CZQ6u98f6vxKZR74yOUTMAVfCO1HkNgOUY/l6GX9VjKe/ejrNNlx9qfFHSOy3pR15ksEBKkqXuY4urOY/IQn/v5KRmV7KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239421; c=relaxed/simple;
-	bh=wi+rn1aQdQVXkmRDPtio8KgHa+M1BKwv1kHpD3y7Fdw=;
+	s=arc-20240116; t=1787239423; c=relaxed/simple;
+	bh=YrUb8nUOiZpd2WuHxaE+nRpl3BfnsBlloGix6cUoQqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kWMNaIupHuOOcrXSCwMY1ZFmHcokc1V1qD8VHQo2f40Eh3Ck0HhFuxmLTSgYkncSW3rMPWDPv5W9eHn1Nx+7La75GOTjXfzdahOj4eyzwEVlpm0dYgQvZ67wqkPE3qiH71MBf6rWGDUsm3g3jotmqyEvi0utVofCHBVdIcpdz8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDvSgLHT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b95UL1LwViITsOu+pKQnq5boactySQyC+Znlq2WO0CWLvvKqco5IdSrrphMGBDo2G3sEiEHTZMzPVl3f4hpON6aC6YSyXchWTxsCzcLuIqbTOh6X7KhDIW3SUZ9nUcnGyTPvkr3sdixdvacsmzfngGqg5iMlAKbbnoQVsFE7yqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cNXoLq+u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDvSgLHT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA821F00A3A;
-	Thu, 20 Aug 2026 15:23:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cNXoLq+u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A751F00A3A;
+	Thu, 20 Aug 2026 15:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239419;
-	bh=p51iRJf5ydgBQkAnG1BNQ2Ty3HvEpT9vAWGWV+Mf7/E=;
+	s=korg; t=1787239422;
+	bh=TPMd8KbK2lKzhxrVEsbaYOuv55Lfs/xShHuKOxI9KTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eDvSgLHTff+XU5A0SrmdBR+gKPE7QRLq6idalvGE7wr3fJmrnKjM1yuN+N6hvBn+4
-	 /VPkiYA9nyPlNtxoM5auqR+fLW2v2oYS+D6kFuxr9w+eF63WWF+imhSCwJjREaixZg
-	 dWjoRL3I9VTFUxno+aNZdK5ShUo0Ppswq2MrbkGY=
+	b=cNXoLq+uu9z0GAs0604Lv3TpVME6eGAEQAZxKoSkV59vN2LHzxn4bNL+ZWBrxawyL
+	 F9JEsiOlHn4hDhKuCWbTwSGmmZ/Lap3EdNRQR2fGaS0in5hYJJAH6V3/ZYDVwfykli
+	 BqTEPt7Yx/wUQCnGguqycOahp8k3wldxK5Gsz4jY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.12 016/220] selinux: require every boolean value to be defined
-Date: Thu, 20 Aug 2026 16:53:26 +0200
-Message-ID: <20260820145223.983704802@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.12 043/220] Input: iforce - validate input packet lengths
+Date: Thu, 20 Aug 2026 16:53:53 +0200
+Message-ID: <20260820145224.786697471@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -51,68 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit a93d37a09b863810653f93d371fb197457d59deb upstream.
+commit 5751c781d3c97ab6ce0e2a966156ed882152c415 upstream.
 
-p_bools.nprim comes from the policy image independently of how many
-booleans follow it, and cond_index_bool() fills bool_val_to_struct[] at
-value - 1, so a count larger than the values present leaves NULL entries.
-Every user of that array then walks it by index and dereferences each
-entry: cond_evaluate_expr() on the access-vector path,
-security_get_bools() and security_get_bool_value() behind selinuxfs, and
-security_set_bools(). A sparse class value is absorbed by
-policydb_class_isvalid() and its siblings; booleans have no such
-predicate, and no consumer that could use one.
+iforce_process_packet() reads fixed fields from joystick, wheel and
+status packets without first checking their lengths. In particular, the
+shared hats-and-buttons helper unconditionally reads data[6]. The status
+tail is a sequence of 16-bit effect addresses, but an incomplete final
+address is also consumed. A successful zero-length USB URB additionally
+reads the packet ID before the common parser is called.
 
-Reject a boolean value that no boolean defines, once, where the array is
-built. Conforming policies define every boolean they declare and are
-unaffected.
+Reject the zero-length USB transfer, require the seven-byte joystick and
+wheel prefixes and the two-byte status prefix, and consume only complete
+status-tail addresses.
 
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260720115018.75045-1-pengpeng@iscas.ac.cn
 Cc: stable@vger.kernel.org
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/ss/policydb.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/input/joystick/iforce/iforce-packets.c |   11 ++++++++++-
+ drivers/input/joystick/iforce/iforce-usb.c     |    3 +++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
---- a/security/selinux/ss/policydb.c
-+++ b/security/selinux/ss/policydb.c
-@@ -712,6 +712,7 @@ static inline void symtab_hash_eval(stru
- static int policydb_index(struct policydb *p)
- {
- 	int i, rc;
-+	u32 v;
+--- a/drivers/input/joystick/iforce/iforce-packets.c
++++ b/drivers/input/joystick/iforce/iforce-packets.c
+@@ -161,6 +161,9 @@ void iforce_process_packet(struct iforce
+ 	switch (packet_id) {
  
- 	if (p->mls_enabled)
- 		pr_debug(
-@@ -764,6 +765,24 @@ static int policydb_index(struct policyd
- 		if (rc)
- 			goto out;
+ 	case 0x01:	/* joystick position data */
++		if (len < 7)
++			break;
++
+ 		input_report_abs(dev, ABS_X,
+ 				 (__s16) get_unaligned_le16(data));
+ 		input_report_abs(dev, ABS_Y,
+@@ -176,6 +179,9 @@ void iforce_process_packet(struct iforce
+ 		break;
+ 
+ 	case 0x03:	/* wheel position data */
++		if (len < 7)
++			break;
++
+ 		input_report_abs(dev, ABS_WHEEL,
+ 				 (__s16) get_unaligned_le16(data));
+ 		input_report_abs(dev, ABS_GAS,   255 - data[2]);
+@@ -187,6 +193,9 @@ void iforce_process_packet(struct iforce
+ 		break;
+ 
+ 	case 0x02:	/* status report */
++		if (len < 2)
++			break;
++
+ 		input_report_key(dev, BTN_DEAD, data[0] & 0x02);
+ 		input_sync(dev);
+ 
+@@ -206,7 +215,7 @@ void iforce_process_packet(struct iforce
+ 			}
+ 		}
+ 
+-		for (j = 3; j < len; j += 2)
++		for (j = 3; j + sizeof(u16) <= len; j += sizeof(u16))
+ 			mark_core_as_ready(iforce, get_unaligned_le16(data + j));
+ 
+ 		break;
+--- a/drivers/input/joystick/iforce/iforce-usb.c
++++ b/drivers/input/joystick/iforce/iforce-usb.c
+@@ -159,6 +159,9 @@ static void iforce_usb_irq(struct urb *u
+ 		goto exit;
  	}
+ 
++	if (!urb->actual_length)
++		goto exit;
 +
-+	/*
-+	 * A sparse class value is absorbed by policydb_class_isvalid() and
-+	 * its siblings, but no such predicate exists for booleans: every
-+	 * user of bool_val_to_struct[] walks it by index and dereferences
-+	 * each entry -- cond_evaluate_expr(), the two getters and
-+	 * security_set_bools() -- so an unclaimed one has no consumer that
-+	 * can tolerate it.
-+	 */
-+	for (v = 0; v < p->p_bools.nprim; v++) {
-+		if (!p->bool_val_to_struct[v]) {
-+			pr_err("SELinux:  boolean %u is declared but not defined\n",
-+			       v + 1);
-+			rc = -EINVAL;
-+			goto out;
-+		}
-+	}
-+
- 	rc = 0;
- out:
- 	return rc;
+ 	iforce_process_packet(iforce, iforce_usb->data_in[0],
+ 			      iforce_usb->data_in + 1, urb->actual_length - 1);
+ 
 
 
