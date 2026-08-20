@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDEA946D57D;
-	Thu, 20 Aug 2026 17:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE474772A7;
+	Thu, 20 Aug 2026 17:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248113; cv=none; b=uGbHEsJTL8KW8pLByOHAsD+YWjxSKojQa9+1aoiSaJ+wV4V47ZffeSEyLT075rHxCLKYqcqIlBVoXuqXMn4BpnV+5Yoq6vuMT1T6z4tlXfr2H2d0u3yRUVNnZJwS9W72DpLmBKWR23SSvrk3DCpjSm5PQxkUQi4Obu1g7YkRS+E=
+	t=1787248116; cv=none; b=h0XbEn+PPUFd3leNR525Xb68A7GScuw7zJmXyuFEZIg2ZqMixhhuzgAvPtjUsoxZ+aTBUm8atvGqSFDObBp4EsVA3wBbCrcZncaGJ0i26ObR/cJ4Zsg4bQmW+0vXaMrZ0QQx1VPezMehnzIZVUgvmoJ+4cWkEHWfoInFwYD+7AA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248113; c=relaxed/simple;
-	bh=lOOyE83+wOwvy/zj3YZajD7EowgGihDAOuIxa/2+/J4=;
+	s=arc-20240116; t=1787248116; c=relaxed/simple;
+	bh=7fp+f5aKz81x9lyR83e4y83PgQOXJnzF7DvAYLyXMHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IujWwzOl5tbsKmaLkcG/CQUJvXTVVdAzEHPvO/atTxQXkgdCp2gWvuWV+s+70cm/K90AEBcgZsO5+JAKhwk55kvn+VeJbrJeG8gIawlga8J2f/HxRciOotMQPODCYvATim1xQ9PAaoMRk4NFPB+u6uw29kkDPDCVKqj3rz9kiFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zqeMO0iX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jH1lnL8MWBjMc6l3ScapC2sluIwkuiz1AImQohj/5+HQspyzSOEg1hMJ/ViDjKHR5hbUhEOQrhbbM7+utlnZJA4Pbv1SxkOfe4MP6iPM0nYazQuX8NJB/YlfEonTc68/82S4talzusw67nyYjSTyx9aWNH4azoiPTqLNWBy6aLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J61n9lXq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zqeMO0iX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 239151F00A3A;
-	Thu, 20 Aug 2026 17:48:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J61n9lXq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA6AC1F000E9;
+	Thu, 20 Aug 2026 17:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248111;
-	bh=kMuqufYTedfgb9oFKjTo6ExssP7R8jUnzVhcV5DzJDU=;
+	s=korg; t=1787248114;
+	bh=zdLD9HCVf9QtGbKkqhU1jOizUAq5rC2l51D82keotQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zqeMO0iXf9ADYVHWea76aH0QDQy38Qr/LrhjYgqasW+7vofo7h9xrqTypedoUs/0o
-	 RqhWgV02y4+IvwEI/sqPaRteuvHQNp/OL5TW8M/VhQI/1rguDA7/zdcFcOQI6M0Pyn
-	 /nfw/bsqRB+TgVjX3D1FLEhd7LT2oZaKT2FIMEJM=
+	b=J61n9lXqYLmy36VCZXPEtyL3b8zsCkBXVMETiTFL6d1WvGGqqKXpFezAtxxbyEsjT
+	 fHo+42VG7SIlekKOYS5+76jL416t8PmvrfNwh4k84vsPTOVK2I9Dum1MF6dC5hHmLP
+	 x7+IGKiFn0bVCw0K3CmIMTV+InyUKJG23kw+ktOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 115/303] netfilter: nf_tables: pass context structure to nft_parse_register_load
-Date: Thu, 20 Aug 2026 16:54:11 +0200
-Message-ID: <20260820145256.736235840@linuxfoundation.org>
+Subject: [PATCH 6.1 116/303] netfilter: nf_tables: drop unused 3rd argument from validate callback ops
+Date: Thu, 20 Aug 2026 16:54:12 +0200
+Message-ID: <20260820145256.766252146@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -53,9 +53,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 7ea0522ef81a335c2d3a0ab1c8a4fab9a23c4a03 ]
+[ Upstream commit eaf9b2c875ece22768b78aa38da8b232e5de021b ]
 
-Mechanical transformation, no logical changes intended.
+Since commit a654de8fdc18 ("netfilter: nf_tables: fix chain dependency validation")
+the validate() callback no longer needs the return pointer argument.
 
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
@@ -63,395 +64,373 @@ Stable-dep-of: d07955dd34ec ("netfilter: nft_fib: reject fib expression on the n
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_tables.h |    3 ++-
- net/ipv4/netfilter/nft_dup_ipv4.c |    4 ++--
- net/ipv6/netfilter/nft_dup_ipv6.c |    4 ++--
- net/netfilter/nf_tables_api.c     |    3 ++-
- net/netfilter/nft_bitwise.c       |    4 ++--
- net/netfilter/nft_byteorder.c     |    2 +-
- net/netfilter/nft_cmp.c           |    6 +++---
- net/netfilter/nft_ct.c            |    2 +-
- net/netfilter/nft_dup_netdev.c    |    2 +-
- net/netfilter/nft_dynset.c        |    4 ++--
- net/netfilter/nft_exthdr.c        |    2 +-
- net/netfilter/nft_fwd_netdev.c    |    6 +++---
- net/netfilter/nft_hash.c          |    2 +-
- net/netfilter/nft_lookup.c        |    2 +-
- net/netfilter/nft_masq.c          |    4 ++--
- net/netfilter/nft_meta.c          |    2 +-
- net/netfilter/nft_nat.c           |    8 ++++----
- net/netfilter/nft_objref.c        |    2 +-
- net/netfilter/nft_payload.c       |    2 +-
- net/netfilter/nft_queue.c         |    2 +-
- net/netfilter/nft_range.c         |    2 +-
- net/netfilter/nft_redir.c         |    4 ++--
- net/netfilter/nft_tproxy.c        |    4 ++--
- 23 files changed, 39 insertions(+), 37 deletions(-)
+ include/net/netfilter/nf_tables.h        |    3 +--
+ include/net/netfilter/nft_fib.h          |    4 +---
+ include/net/netfilter/nft_meta.h         |    3 +--
+ include/net/netfilter/nft_reject.h       |    3 +--
+ net/bridge/netfilter/nft_reject_bridge.c |    3 +--
+ net/netfilter/nf_tables_api.c            |    3 +--
+ net/netfilter/nft_compat.c               |    6 ++----
+ net/netfilter/nft_fib.c                  |    3 +--
+ net/netfilter/nft_flow_offload.c         |    3 +--
+ net/netfilter/nft_fwd_netdev.c           |    3 +--
+ net/netfilter/nft_immediate.c            |    3 +--
+ net/netfilter/nft_lookup.c               |    3 +--
+ net/netfilter/nft_masq.c                 |    3 +--
+ net/netfilter/nft_meta.c                 |    6 ++----
+ net/netfilter/nft_nat.c                  |    3 +--
+ net/netfilter/nft_osf.c                  |    3 +--
+ net/netfilter/nft_queue.c                |    3 +--
+ net/netfilter/nft_redir.c                |    3 +--
+ net/netfilter/nft_reject.c               |    3 +--
+ net/netfilter/nft_reject_inet.c          |    3 +--
+ net/netfilter/nft_reject_netdev.c        |    3 +--
+ net/netfilter/nft_rt.c                   |    3 +--
+ net/netfilter/nft_socket.c               |    3 +--
+ net/netfilter/nft_synproxy.c             |    3 +--
+ net/netfilter/nft_tproxy.c               |    3 +--
+ net/netfilter/nft_xfrm.c                 |    3 +--
+ 26 files changed, 28 insertions(+), 57 deletions(-)
 
 --- a/include/net/netfilter/nf_tables.h
 +++ b/include/net/netfilter/nf_tables.h
-@@ -252,7 +252,8 @@ static inline enum nft_registers nft_typ
- int nft_parse_u32_check(const struct nlattr *attr, int max, u32 *dest);
- int nft_dump_register(struct sk_buff *skb, unsigned int attr, unsigned int reg);
+@@ -932,8 +932,7 @@ struct nft_expr_ops {
+ 	int				(*dump)(struct sk_buff *skb,
+ 						const struct nft_expr *expr);
+ 	int				(*validate)(const struct nft_ctx *ctx,
+-						    const struct nft_expr *expr,
+-						    const struct nft_data **data);
++						    const struct nft_expr *expr);
+ 	bool				(*reduce)(struct nft_regs_track *track,
+ 						  const struct nft_expr *expr);
+ 	bool				(*gc)(struct net *net,
+--- a/include/net/netfilter/nft_fib.h
++++ b/include/net/netfilter/nft_fib.h
+@@ -21,9 +21,7 @@ nft_fib_is_loopback(const struct sk_buff
+ int nft_fib_dump(struct sk_buff *skb, const struct nft_expr *expr);
+ int nft_fib_init(const struct nft_ctx *ctx, const struct nft_expr *expr,
+ 		 const struct nlattr * const tb[]);
+-int nft_fib_validate(const struct nft_ctx *ctx, const struct nft_expr *expr,
+-		     const struct nft_data **data);
+-
++int nft_fib_validate(const struct nft_ctx *ctx, const struct nft_expr *expr);
  
--int nft_parse_register_load(const struct nlattr *attr, u8 *sreg, u32 len);
-+int nft_parse_register_load(const struct nft_ctx *ctx,
-+			    const struct nlattr *attr, u8 *sreg, u32 len);
- int nft_parse_register_store(const struct nft_ctx *ctx,
- 			     const struct nlattr *attr, u8 *dreg,
- 			     const struct nft_data *data,
---- a/net/ipv4/netfilter/nft_dup_ipv4.c
-+++ b/net/ipv4/netfilter/nft_dup_ipv4.c
-@@ -40,13 +40,13 @@ static int nft_dup_ipv4_init(const struc
- 	if (tb[NFTA_DUP_SREG_ADDR] == NULL)
- 		return -EINVAL;
+ void nft_fib4_eval_type(const struct nft_expr *expr, struct nft_regs *regs,
+ 			const struct nft_pktinfo *pkt);
+--- a/include/net/netfilter/nft_meta.h
++++ b/include/net/netfilter/nft_meta.h
+@@ -41,8 +41,7 @@ void nft_meta_set_destroy(const struct n
+ 			  const struct nft_expr *expr);
  
--	err = nft_parse_register_load(tb[NFTA_DUP_SREG_ADDR], &priv->sreg_addr,
-+	err = nft_parse_register_load(ctx, tb[NFTA_DUP_SREG_ADDR], &priv->sreg_addr,
- 				      sizeof(struct in_addr));
- 	if (err < 0)
- 		return err;
+ int nft_meta_set_validate(const struct nft_ctx *ctx,
+-			  const struct nft_expr *expr,
+-			  const struct nft_data **data);
++			  const struct nft_expr *expr);
  
- 	if (tb[NFTA_DUP_SREG_DEV])
--		err = nft_parse_register_load(tb[NFTA_DUP_SREG_DEV],
-+		err = nft_parse_register_load(ctx, tb[NFTA_DUP_SREG_DEV],
- 					      &priv->sreg_dev, sizeof(int));
+ bool nft_meta_get_reduce(struct nft_regs_track *track,
+ 			 const struct nft_expr *expr);
+--- a/include/net/netfilter/nft_reject.h
++++ b/include/net/netfilter/nft_reject.h
+@@ -15,8 +15,7 @@ struct nft_reject {
+ extern const struct nla_policy nft_reject_policy[];
  
- 	return err;
---- a/net/ipv6/netfilter/nft_dup_ipv6.c
-+++ b/net/ipv6/netfilter/nft_dup_ipv6.c
-@@ -38,13 +38,13 @@ static int nft_dup_ipv6_init(const struc
- 	if (tb[NFTA_DUP_SREG_ADDR] == NULL)
- 		return -EINVAL;
+ int nft_reject_validate(const struct nft_ctx *ctx,
+-			const struct nft_expr *expr,
+-			const struct nft_data **data);
++			const struct nft_expr *expr);
  
--	err = nft_parse_register_load(tb[NFTA_DUP_SREG_ADDR], &priv->sreg_addr,
-+	err = nft_parse_register_load(ctx, tb[NFTA_DUP_SREG_ADDR], &priv->sreg_addr,
- 				      sizeof(struct in6_addr));
- 	if (err < 0)
- 		return err;
+ int nft_reject_init(const struct nft_ctx *ctx,
+ 		    const struct nft_expr *expr,
+--- a/net/bridge/netfilter/nft_reject_bridge.c
++++ b/net/bridge/netfilter/nft_reject_bridge.c
+@@ -170,8 +170,7 @@ out:
+ }
  
- 	if (tb[NFTA_DUP_SREG_DEV])
--		err = nft_parse_register_load(tb[NFTA_DUP_SREG_DEV],
-+		err = nft_parse_register_load(ctx, tb[NFTA_DUP_SREG_DEV],
- 					      &priv->sreg_dev, sizeof(int));
- 
- 	return err;
+ static int nft_reject_bridge_validate(const struct nft_ctx *ctx,
+-				      const struct nft_expr *expr,
+-				      const struct nft_data **data)
++				      const struct nft_expr *expr)
+ {
+ 	return nft_chain_validate_hooks(ctx->chain, (1 << NF_BR_PRE_ROUTING) |
+ 						    (1 << NF_BR_LOCAL_IN));
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -10442,7 +10442,8 @@ static int nft_validate_register_load(en
- 	return 0;
- }
- 
--int nft_parse_register_load(const struct nlattr *attr, u8 *sreg, u32 len)
-+int nft_parse_register_load(const struct nft_ctx *ctx,
-+			    const struct nlattr *attr, u8 *sreg, u32 len)
+@@ -3538,7 +3538,6 @@ static void nf_tables_rule_release(const
+ int nft_chain_validate(const struct nft_ctx *ctx, const struct nft_chain *chain)
  {
- 	u32 reg;
- 	int err;
---- a/net/netfilter/nft_bitwise.c
-+++ b/net/netfilter/nft_bitwise.c
-@@ -172,7 +172,7 @@ static int nft_bitwise_init(const struct
- 
- 	priv->len = len;
- 
--	err = nft_parse_register_load(tb[NFTA_BITWISE_SREG], &priv->sreg,
-+	err = nft_parse_register_load(ctx, tb[NFTA_BITWISE_SREG], &priv->sreg,
- 				      priv->len);
- 	if (err < 0)
- 		return err;
-@@ -365,7 +365,7 @@ static int nft_bitwise_fast_init(const s
- 	struct nft_bitwise_fast_expr *priv = nft_expr_priv(expr);
+ 	struct nft_expr *expr, *last;
+-	const struct nft_data *data;
+ 	struct nft_rule *rule;
  	int err;
  
--	err = nft_parse_register_load(tb[NFTA_BITWISE_SREG], &priv->sreg,
-+	err = nft_parse_register_load(ctx, tb[NFTA_BITWISE_SREG], &priv->sreg,
- 				      sizeof(u32));
- 	if (err < 0)
- 		return err;
---- a/net/netfilter/nft_byteorder.c
-+++ b/net/netfilter/nft_byteorder.c
-@@ -139,7 +139,7 @@ static int nft_byteorder_init(const stru
- 
- 	priv->len = len;
- 
--	err = nft_parse_register_load(tb[NFTA_BYTEORDER_SREG], &priv->sreg,
-+	err = nft_parse_register_load(ctx, tb[NFTA_BYTEORDER_SREG], &priv->sreg,
- 				      priv->len);
- 	if (err < 0)
- 		return err;
---- a/net/netfilter/nft_cmp.c
-+++ b/net/netfilter/nft_cmp.c
-@@ -83,7 +83,7 @@ static int nft_cmp_init(const struct nft
- 	if (err < 0)
- 		return err;
- 
--	err = nft_parse_register_load(tb[NFTA_CMP_SREG], &priv->sreg, desc.len);
-+	err = nft_parse_register_load(ctx, tb[NFTA_CMP_SREG], &priv->sreg, desc.len);
- 	if (err < 0)
- 		return err;
- 
-@@ -221,7 +221,7 @@ static int nft_cmp_fast_init(const struc
- 	if (err < 0)
- 		return err;
- 
--	err = nft_parse_register_load(tb[NFTA_CMP_SREG], &priv->sreg, desc.len);
-+	err = nft_parse_register_load(ctx, tb[NFTA_CMP_SREG], &priv->sreg, desc.len);
- 	if (err < 0)
- 		return err;
- 
-@@ -321,7 +321,7 @@ static int nft_cmp16_fast_init(const str
- 	if (err < 0)
- 		return err;
- 
--	err = nft_parse_register_load(tb[NFTA_CMP_SREG], &priv->sreg, desc.len);
-+	err = nft_parse_register_load(ctx, tb[NFTA_CMP_SREG], &priv->sreg, desc.len);
- 	if (err < 0)
- 		return err;
- 
---- a/net/netfilter/nft_ct.c
-+++ b/net/netfilter/nft_ct.c
-@@ -621,7 +621,7 @@ static int nft_ct_set_init(const struct
- 	}
- 
- 	priv->len = len;
--	err = nft_parse_register_load(tb[NFTA_CT_SREG], &priv->sreg, len);
-+	err = nft_parse_register_load(ctx, tb[NFTA_CT_SREG], &priv->sreg, len);
- 	if (err < 0)
- 		goto err1;
- 
---- a/net/netfilter/nft_dup_netdev.c
-+++ b/net/netfilter/nft_dup_netdev.c
-@@ -40,7 +40,7 @@ static int nft_dup_netdev_init(const str
- 	if (tb[NFTA_DUP_SREG_DEV] == NULL)
- 		return -EINVAL;
- 
--	return nft_parse_register_load(tb[NFTA_DUP_SREG_DEV], &priv->sreg_dev,
-+	return nft_parse_register_load(ctx, tb[NFTA_DUP_SREG_DEV], &priv->sreg_dev,
- 				       sizeof(int));
+@@ -3556,7 +3555,7 @@ int nft_chain_validate(const struct nft_
+ 			/* This may call nft_chain_validate() recursively,
+ 			 * callers that do so must increment ctx->level.
+ 			 */
+-			err = expr->ops->validate(ctx, expr, &data);
++			err = expr->ops->validate(ctx, expr);
+ 			if (err < 0)
+ 				return err;
+ 		}
+--- a/net/netfilter/nft_compat.c
++++ b/net/netfilter/nft_compat.c
+@@ -350,8 +350,7 @@ nla_put_failure:
  }
  
---- a/net/netfilter/nft_dynset.c
-+++ b/net/netfilter/nft_dynset.c
-@@ -222,7 +222,7 @@ static int nft_dynset_init(const struct
- 			return err;
- 	}
- 
--	err = nft_parse_register_load(tb[NFTA_DYNSET_SREG_KEY], &priv->sreg_key,
-+	err = nft_parse_register_load(ctx, tb[NFTA_DYNSET_SREG_KEY], &priv->sreg_key,
- 				      set->klen);
- 	if (err < 0)
- 		return err;
-@@ -233,7 +233,7 @@ static int nft_dynset_init(const struct
- 		if (set->dtype == NFT_DATA_VERDICT)
- 			return -EOPNOTSUPP;
- 
--		err = nft_parse_register_load(tb[NFTA_DYNSET_SREG_DATA],
-+		err = nft_parse_register_load(ctx, tb[NFTA_DYNSET_SREG_DATA],
- 					      &priv->sreg_data, set->dlen);
- 		if (err < 0)
- 			return err;
---- a/net/netfilter/nft_exthdr.c
-+++ b/net/netfilter/nft_exthdr.c
-@@ -590,7 +590,7 @@ static int nft_exthdr_tcp_set_init(const
- 	priv->flags  = flags;
- 	priv->op     = op;
- 
--	return nft_parse_register_load(tb[NFTA_EXTHDR_SREG], &priv->sreg,
-+	return nft_parse_register_load(ctx, tb[NFTA_EXTHDR_SREG], &priv->sreg,
- 				       priv->len);
+ static int nft_target_validate(const struct nft_ctx *ctx,
+-			       const struct nft_expr *expr,
+-			       const struct nft_data **data)
++			       const struct nft_expr *expr)
+ {
+ 	struct xt_target *target = expr->ops->data;
+ 	unsigned int hook_mask = 0;
+@@ -610,8 +609,7 @@ static int nft_match_large_dump(struct s
  }
+ 
+ static int nft_match_validate(const struct nft_ctx *ctx,
+-			      const struct nft_expr *expr,
+-			      const struct nft_data **data)
++			      const struct nft_expr *expr)
+ {
+ 	struct xt_match *match = expr->ops->data;
+ 	unsigned int hook_mask = 0;
+--- a/net/netfilter/nft_fib.c
++++ b/net/netfilter/nft_fib.c
+@@ -25,8 +25,7 @@ EXPORT_SYMBOL(nft_fib_policy);
+ 			NFTA_FIB_F_MARK | NFTA_FIB_F_IIF | NFTA_FIB_F_OIF | \
+ 			NFTA_FIB_F_PRESENT)
+ 
+-int nft_fib_validate(const struct nft_ctx *ctx, const struct nft_expr *expr,
+-		     const struct nft_data **data)
++int nft_fib_validate(const struct nft_ctx *ctx, const struct nft_expr *expr)
+ {
+ 	const struct nft_fib *priv = nft_expr_priv(expr);
+ 	unsigned int hooks;
+--- a/net/netfilter/nft_flow_offload.c
++++ b/net/netfilter/nft_flow_offload.c
+@@ -392,8 +392,7 @@ out:
+ }
+ 
+ static int nft_flow_offload_validate(const struct nft_ctx *ctx,
+-				     const struct nft_expr *expr,
+-				     const struct nft_data **data)
++				     const struct nft_expr *expr)
+ {
+ 	unsigned int hook_mask = (1 << NF_INET_FORWARD);
  
 --- a/net/netfilter/nft_fwd_netdev.c
 +++ b/net/netfilter/nft_fwd_netdev.c
-@@ -52,7 +52,7 @@ static int nft_fwd_netdev_init(const str
- 	if (tb[NFTA_FWD_SREG_DEV] == NULL)
- 		return -EINVAL;
- 
--	return nft_parse_register_load(tb[NFTA_FWD_SREG_DEV], &priv->sreg_dev,
-+	return nft_parse_register_load(ctx, tb[NFTA_FWD_SREG_DEV], &priv->sreg_dev,
- 				       sizeof(int));
+@@ -212,8 +212,7 @@ nla_put_failure:
  }
  
-@@ -187,12 +187,12 @@ static int nft_fwd_neigh_init(const stru
- 		return -EOPNOTSUPP;
- 	}
- 
--	err = nft_parse_register_load(tb[NFTA_FWD_SREG_DEV], &priv->sreg_dev,
-+	err = nft_parse_register_load(ctx, tb[NFTA_FWD_SREG_DEV], &priv->sreg_dev,
- 				      sizeof(int));
- 	if (err < 0)
- 		return err;
- 
--	return nft_parse_register_load(tb[NFTA_FWD_SREG_ADDR], &priv->sreg_addr,
-+	return nft_parse_register_load(ctx, tb[NFTA_FWD_SREG_ADDR], &priv->sreg_addr,
- 				       addr_len);
+ static int nft_fwd_validate(const struct nft_ctx *ctx,
+-			    const struct nft_expr *expr,
+-			    const struct nft_data **data)
++			    const struct nft_expr *expr)
+ {
+ 	return nft_chain_validate_hooks(ctx->chain, (1 << NF_NETDEV_INGRESS) |
+ 						    (1 << NF_NETDEV_EGRESS));
+--- a/net/netfilter/nft_immediate.c
++++ b/net/netfilter/nft_immediate.c
+@@ -243,8 +243,7 @@ nla_put_failure:
  }
  
---- a/net/netfilter/nft_hash.c
-+++ b/net/netfilter/nft_hash.c
-@@ -91,7 +91,7 @@ static int nft_jhash_init(const struct n
- 
- 	priv->len = len;
- 
--	err = nft_parse_register_load(tb[NFTA_HASH_SREG], &priv->sreg, len);
-+	err = nft_parse_register_load(ctx, tb[NFTA_HASH_SREG], &priv->sreg, len);
- 	if (err < 0)
- 		return err;
- 
+ static int nft_immediate_validate(const struct nft_ctx *ctx,
+-				  const struct nft_expr *expr,
+-				  const struct nft_data **d)
++				  const struct nft_expr *expr)
+ {
+ 	const struct nft_immediate_expr *priv = nft_expr_priv(expr);
+ 	struct nft_ctx *pctx = (struct nft_ctx *)ctx;
 --- a/net/netfilter/nft_lookup.c
 +++ b/net/netfilter/nft_lookup.c
-@@ -111,7 +111,7 @@ static int nft_lookup_init(const struct
- 	if (IS_ERR(set))
- 		return PTR_ERR(set);
+@@ -200,8 +200,7 @@ nla_put_failure:
+ }
  
--	err = nft_parse_register_load(tb[NFTA_LOOKUP_SREG], &priv->sreg,
-+	err = nft_parse_register_load(ctx, tb[NFTA_LOOKUP_SREG], &priv->sreg,
- 				      set->klen);
- 	if (err < 0)
- 		return err;
+ static int nft_lookup_validate(const struct nft_ctx *ctx,
+-			       const struct nft_expr *expr,
+-			       const struct nft_data **d)
++			       const struct nft_expr *expr)
+ {
+ 	const struct nft_lookup *priv = nft_expr_priv(expr);
+ 	struct nft_set_iter iter;
 --- a/net/netfilter/nft_masq.c
 +++ b/net/netfilter/nft_masq.c
-@@ -54,13 +54,13 @@ static int nft_masq_init(const struct nf
- 	}
+@@ -26,8 +26,7 @@ static const struct nla_policy nft_masq_
+ };
  
- 	if (tb[NFTA_MASQ_REG_PROTO_MIN]) {
--		err = nft_parse_register_load(tb[NFTA_MASQ_REG_PROTO_MIN],
-+		err = nft_parse_register_load(ctx, tb[NFTA_MASQ_REG_PROTO_MIN],
- 					      &priv->sreg_proto_min, plen);
- 		if (err < 0)
- 			return err;
+ static int nft_masq_validate(const struct nft_ctx *ctx,
+-			     const struct nft_expr *expr,
+-			     const struct nft_data **data)
++			     const struct nft_expr *expr)
+ {
+ 	int err;
  
- 		if (tb[NFTA_MASQ_REG_PROTO_MAX]) {
--			err = nft_parse_register_load(tb[NFTA_MASQ_REG_PROTO_MAX],
-+			err = nft_parse_register_load(ctx, tb[NFTA_MASQ_REG_PROTO_MAX],
- 						      &priv->sreg_proto_max,
- 						      plen);
- 			if (err < 0)
 --- a/net/netfilter/nft_meta.c
 +++ b/net/netfilter/nft_meta.c
-@@ -657,7 +657,7 @@ int nft_meta_set_init(const struct nft_c
- 	}
+@@ -581,8 +581,7 @@ static int nft_meta_get_validate_xfrm(co
+ }
  
- 	priv->len = len;
--	err = nft_parse_register_load(tb[NFTA_META_SREG], &priv->sreg, len);
-+	err = nft_parse_register_load(ctx, tb[NFTA_META_SREG], &priv->sreg, len);
- 	if (err < 0)
- 		return err;
+ static int nft_meta_get_validate(const struct nft_ctx *ctx,
+-				 const struct nft_expr *expr,
+-				 const struct nft_data **data)
++				 const struct nft_expr *expr)
+ {
+ 	const struct nft_meta *priv = nft_expr_priv(expr);
  
+@@ -600,8 +599,7 @@ static int nft_meta_get_validate(const s
+ }
+ 
+ int nft_meta_set_validate(const struct nft_ctx *ctx,
+-			  const struct nft_expr *expr,
+-			  const struct nft_data **data)
++			  const struct nft_expr *expr)
+ {
+ 	struct nft_meta *priv = nft_expr_priv(expr);
+ 	unsigned int hooks;
 --- a/net/netfilter/nft_nat.c
 +++ b/net/netfilter/nft_nat.c
-@@ -213,13 +213,13 @@ static int nft_nat_init(const struct nft
- 	priv->family = family;
+@@ -136,8 +136,7 @@ static const struct nla_policy nft_nat_p
+ };
  
- 	if (tb[NFTA_NAT_REG_ADDR_MIN]) {
--		err = nft_parse_register_load(tb[NFTA_NAT_REG_ADDR_MIN],
-+		err = nft_parse_register_load(ctx, tb[NFTA_NAT_REG_ADDR_MIN],
- 					      &priv->sreg_addr_min, alen);
- 		if (err < 0)
- 			return err;
- 
- 		if (tb[NFTA_NAT_REG_ADDR_MAX]) {
--			err = nft_parse_register_load(tb[NFTA_NAT_REG_ADDR_MAX],
-+			err = nft_parse_register_load(ctx, tb[NFTA_NAT_REG_ADDR_MAX],
- 						      &priv->sreg_addr_max,
- 						      alen);
- 			if (err < 0)
-@@ -233,13 +233,13 @@ static int nft_nat_init(const struct nft
- 
- 	plen = sizeof_field(struct nf_nat_range, min_proto.all);
- 	if (tb[NFTA_NAT_REG_PROTO_MIN]) {
--		err = nft_parse_register_load(tb[NFTA_NAT_REG_PROTO_MIN],
-+		err = nft_parse_register_load(ctx, tb[NFTA_NAT_REG_PROTO_MIN],
- 					      &priv->sreg_proto_min, plen);
- 		if (err < 0)
- 			return err;
- 
- 		if (tb[NFTA_NAT_REG_PROTO_MAX]) {
--			err = nft_parse_register_load(tb[NFTA_NAT_REG_PROTO_MAX],
-+			err = nft_parse_register_load(ctx, tb[NFTA_NAT_REG_PROTO_MAX],
- 						      &priv->sreg_proto_max,
- 						      plen);
- 			if (err < 0)
---- a/net/netfilter/nft_objref.c
-+++ b/net/netfilter/nft_objref.c
-@@ -143,7 +143,7 @@ static int nft_objref_map_init(const str
- 	if (!(set->flags & NFT_SET_OBJECT))
- 		return -EINVAL;
- 
--	err = nft_parse_register_load(tb[NFTA_OBJREF_SET_SREG], &priv->sreg,
-+	err = nft_parse_register_load(ctx, tb[NFTA_OBJREF_SET_SREG], &priv->sreg,
- 				      set->klen);
- 	if (err < 0)
- 		return err;
---- a/net/netfilter/nft_payload.c
-+++ b/net/netfilter/nft_payload.c
-@@ -847,7 +847,7 @@ static int nft_payload_set_init(const st
- 	}
- 	priv->csum_type = csum_type;
- 
--	return nft_parse_register_load(tb[NFTA_PAYLOAD_SREG], &priv->sreg,
-+	return nft_parse_register_load(ctx, tb[NFTA_PAYLOAD_SREG], &priv->sreg,
- 				       priv->len);
+ static int nft_nat_validate(const struct nft_ctx *ctx,
+-			    const struct nft_expr *expr,
+-			    const struct nft_data **data)
++			    const struct nft_expr *expr)
+ {
+ 	struct nft_nat *priv = nft_expr_priv(expr);
+ 	int err;
+--- a/net/netfilter/nft_osf.c
++++ b/net/netfilter/nft_osf.c
+@@ -117,8 +117,7 @@ nla_put_failure:
  }
+ 
+ static int nft_osf_validate(const struct nft_ctx *ctx,
+-			    const struct nft_expr *expr,
+-			    const struct nft_data **data)
++			    const struct nft_expr *expr)
+ {
+ 	unsigned int hooks;
  
 --- a/net/netfilter/nft_queue.c
 +++ b/net/netfilter/nft_queue.c
-@@ -136,7 +136,7 @@ static int nft_queue_sreg_init(const str
- 	struct nft_queue *priv = nft_expr_priv(expr);
- 	int err;
+@@ -69,8 +69,7 @@ static void nft_queue_sreg_eval(const st
+ }
  
--	err = nft_parse_register_load(tb[NFTA_QUEUE_SREG_QNUM],
-+	err = nft_parse_register_load(ctx, tb[NFTA_QUEUE_SREG_QNUM],
- 				      &priv->sreg_qnum, sizeof(u32));
- 	if (err < 0)
- 		return err;
---- a/net/netfilter/nft_range.c
-+++ b/net/netfilter/nft_range.c
-@@ -83,7 +83,7 @@ static int nft_range_init(const struct n
- 		goto err2;
- 	}
- 
--	err = nft_parse_register_load(tb[NFTA_RANGE_SREG], &priv->sreg,
-+	err = nft_parse_register_load(ctx, tb[NFTA_RANGE_SREG], &priv->sreg,
- 				      desc_from.len);
- 	if (err < 0)
- 		goto err2;
+ static int nft_queue_validate(const struct nft_ctx *ctx,
+-			      const struct nft_expr *expr,
+-			      const struct nft_data **data)
++			      const struct nft_expr *expr)
+ {
+ 	static const unsigned int supported_hooks = ((1 << NF_INET_PRE_ROUTING) |
+ 						     (1 << NF_INET_LOCAL_IN) |
 --- a/net/netfilter/nft_redir.c
 +++ b/net/netfilter/nft_redir.c
-@@ -50,13 +50,13 @@ static int nft_redir_init(const struct n
+@@ -26,8 +26,7 @@ static const struct nla_policy nft_redir
+ };
  
- 	plen = sizeof_field(struct nf_nat_range, min_proto.all);
- 	if (tb[NFTA_REDIR_REG_PROTO_MIN]) {
--		err = nft_parse_register_load(tb[NFTA_REDIR_REG_PROTO_MIN],
-+		err = nft_parse_register_load(ctx, tb[NFTA_REDIR_REG_PROTO_MIN],
- 					      &priv->sreg_proto_min, plen);
- 		if (err < 0)
- 			return err;
+ static int nft_redir_validate(const struct nft_ctx *ctx,
+-			      const struct nft_expr *expr,
+-			      const struct nft_data **data)
++			      const struct nft_expr *expr)
+ {
+ 	int err;
  
- 		if (tb[NFTA_REDIR_REG_PROTO_MAX]) {
--			err = nft_parse_register_load(tb[NFTA_REDIR_REG_PROTO_MAX],
-+			err = nft_parse_register_load(ctx, tb[NFTA_REDIR_REG_PROTO_MAX],
- 						      &priv->sreg_proto_max,
- 						      plen);
- 			if (err < 0)
+--- a/net/netfilter/nft_reject.c
++++ b/net/netfilter/nft_reject.c
+@@ -24,8 +24,7 @@ const struct nla_policy nft_reject_polic
+ EXPORT_SYMBOL_GPL(nft_reject_policy);
+ 
+ int nft_reject_validate(const struct nft_ctx *ctx,
+-			const struct nft_expr *expr,
+-			const struct nft_data **data)
++			const struct nft_expr *expr)
+ {
+ 	return nft_chain_validate_hooks(ctx->chain,
+ 					(1 << NF_INET_LOCAL_IN) |
+--- a/net/netfilter/nft_reject_inet.c
++++ b/net/netfilter/nft_reject_inet.c
+@@ -61,8 +61,7 @@ static void nft_reject_inet_eval(const s
+ }
+ 
+ static int nft_reject_inet_validate(const struct nft_ctx *ctx,
+-				    const struct nft_expr *expr,
+-				    const struct nft_data **data)
++				    const struct nft_expr *expr)
+ {
+ 	return nft_chain_validate_hooks(ctx->chain,
+ 					(1 << NF_INET_LOCAL_IN) |
+--- a/net/netfilter/nft_reject_netdev.c
++++ b/net/netfilter/nft_reject_netdev.c
+@@ -145,8 +145,7 @@ out:
+ }
+ 
+ static int nft_reject_netdev_validate(const struct nft_ctx *ctx,
+-				      const struct nft_expr *expr,
+-				      const struct nft_data **data)
++				      const struct nft_expr *expr)
+ {
+ 	return nft_chain_validate_hooks(ctx->chain, (1 << NF_NETDEV_INGRESS));
+ }
+--- a/net/netfilter/nft_rt.c
++++ b/net/netfilter/nft_rt.c
+@@ -160,8 +160,7 @@ nla_put_failure:
+ 	return -1;
+ }
+ 
+-static int nft_rt_validate(const struct nft_ctx *ctx, const struct nft_expr *expr,
+-			   const struct nft_data **data)
++static int nft_rt_validate(const struct nft_ctx *ctx, const struct nft_expr *expr)
+ {
+ 	const struct nft_rt *priv = nft_expr_priv(expr);
+ 	unsigned int hooks;
+--- a/net/netfilter/nft_socket.c
++++ b/net/netfilter/nft_socket.c
+@@ -275,8 +275,7 @@ static bool nft_socket_reduce(struct nft
+ }
+ 
+ static int nft_socket_validate(const struct nft_ctx *ctx,
+-			       const struct nft_expr *expr,
+-			       const struct nft_data **data)
++			       const struct nft_expr *expr)
+ {
+ 	if (ctx->family != NFPROTO_IPV4 &&
+ 	    ctx->family != NFPROTO_IPV6 &&
+--- a/net/netfilter/nft_synproxy.c
++++ b/net/netfilter/nft_synproxy.c
+@@ -247,8 +247,7 @@ static void nft_synproxy_eval(const stru
+ }
+ 
+ static int nft_synproxy_validate(const struct nft_ctx *ctx,
+-				 const struct nft_expr *expr,
+-				 const struct nft_data **data)
++				 const struct nft_expr *expr)
+ {
+ 	if (ctx->family != NFPROTO_IPV4 &&
+ 	    ctx->family != NFPROTO_IPV6 &&
 --- a/net/netfilter/nft_tproxy.c
 +++ b/net/netfilter/nft_tproxy.c
-@@ -254,14 +254,14 @@ static int nft_tproxy_init(const struct
- 	}
+@@ -313,8 +313,7 @@ static int nft_tproxy_dump(struct sk_buf
+ }
  
- 	if (tb[NFTA_TPROXY_REG_ADDR]) {
--		err = nft_parse_register_load(tb[NFTA_TPROXY_REG_ADDR],
-+		err = nft_parse_register_load(ctx, tb[NFTA_TPROXY_REG_ADDR],
- 					      &priv->sreg_addr, alen);
- 		if (err < 0)
- 			return err;
- 	}
+ static int nft_tproxy_validate(const struct nft_ctx *ctx,
+-			       const struct nft_expr *expr,
+-			       const struct nft_data **data)
++			       const struct nft_expr *expr)
+ {
+ 	if (ctx->family != NFPROTO_IPV4 &&
+ 	    ctx->family != NFPROTO_IPV6 &&
+--- a/net/netfilter/nft_xfrm.c
++++ b/net/netfilter/nft_xfrm.c
+@@ -229,8 +229,7 @@ static int nft_xfrm_get_dump(struct sk_b
+ 	return 0;
+ }
  
- 	if (tb[NFTA_TPROXY_REG_PORT]) {
--		err = nft_parse_register_load(tb[NFTA_TPROXY_REG_PORT],
-+		err = nft_parse_register_load(ctx, tb[NFTA_TPROXY_REG_PORT],
- 					      &priv->sreg_port, sizeof(u16));
- 		if (err < 0)
- 			return err;
+-static int nft_xfrm_validate(const struct nft_ctx *ctx, const struct nft_expr *expr,
+-			     const struct nft_data **data)
++static int nft_xfrm_validate(const struct nft_ctx *ctx, const struct nft_expr *expr)
+ {
+ 	const struct nft_xfrm *priv = nft_expr_priv(expr);
+ 	unsigned int hooks;
 
 
