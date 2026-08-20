@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E02272E53;
-	Thu, 20 Aug 2026 16:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1B8377A82;
+	Thu, 20 Aug 2026 16:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243660; cv=none; b=T75YQuakzYHk7/cR1cFPcbU/sp/VGzj3brvKIP3BvnOz7CLbAQ4Q/OpEB5Nc9RHeYUL6UFCFcOt/KCzvLRSQ355PWNF/eesnE6nETYb3AKWFrNmcY0Dc+J2VsyldET9FuKGzJ/koml3W1ky8smktOS4mwEkhI1KwsVEW1xmLkHU=
+	t=1787243662; cv=none; b=rd1bfF+XnpJ8YkreYFWY0Bpj4NK+BfoljlZjGbr7AY3j4Mo2hARAOCQBeARi3IOQQBpriheFSXMU9uxqDJIMK8PIgPVbM0ekppaVoVUN1P8PTs5rDn21v5scFyzkra88vh9iRPVlbcXo0KoItFBZ/AUQr0XcDGMSurwu6vZCO+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243660; c=relaxed/simple;
-	bh=6HnR6PcGLpCnQPvvQH7hhsz+5FqwRINIXWlDW1h6siw=;
+	s=arc-20240116; t=1787243662; c=relaxed/simple;
+	bh=15suWy5+qlivEsa5BZx0mRfasc8QWDQKJJsRAGvEaaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bswMdYAt/wuz1z9fGZq3Vsdy6J0eBWI6w9QOGbo1Quaqp7H63OGHAw2G8n7vQLur4MBr1NhDh+L2iR8bjLaP5l1H3UXfGcyJKWIMln2nEXRwEIgsfh3LcA7I7vEpJIh1MSXLaJ68NRsx8+btwzsWmI8qn/MMQFa2QlQIqRKI0G4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srYYYaCS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JvYUdxGUowtxNkmOx8ZgvZiyNdPs4Qd0mVoGaWvrpbQVkGFPhdkLuIruCofSv1e3SzyvZkbt5Mjxm312MAxymIJJx4gO/OZ7qEBG+vqQuqrC87unsjbIe3EB6asoABJYom+eV8FM0gXC/vC8zAqX/PEieqUA+VwyVCgT0zek3/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P0M3GJbc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srYYYaCS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2910F1F000E9;
-	Thu, 20 Aug 2026 16:34:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0M3GJbc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08DC91F000E9;
+	Thu, 20 Aug 2026 16:34:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243658;
-	bh=oRvD1xanjBojv3KCBYzcrX1ju8u6BErBQaj7XR2onko=;
+	s=korg; t=1787243661;
+	bh=XEdRjezEcYCydn2L/2C7fJV3aQXtB00OK1++8fdU0S0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=srYYYaCS/IWHM29plK6YmYHJPa9XXGYjb2qpJ0Btg5O2LUEsesCczpXozsTurTHW0
-	 4s7hMvJSJDaoxoOF2yXOlPX/BYZhrvBlm33YS3tlsA2hHmi9M/ENafXWgwQhd5d/0U
-	 6WtTnhosI2Q4Q2JZtYjfVPyI00idNBNXof3Bg92I=
+	b=P0M3GJbcz7PQQDGbpbOVp8GV/D0ERMHbWfGCx6H2IySt7eCgyldn5hdTBMES4XF72
+	 zfzl4EudC/VSbC4XtPZulI97+UVurYoTAXFXxgHRzuVP4bNeYPKKy+jU1Fx4fdiKe3
+	 toLIEt57GHr8+X9EEUysqHzwY3eEy7v6+kDiV2y0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	syzbot+72bd3dd3a5d5f39a0271@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 172/272] dma-buf/drivers: make reserving a shared slot mandatory v4
-Date: Thu, 20 Aug 2026 16:55:56 +0200
-Message-ID: <20260820145236.532118044@linuxfoundation.org>
+Subject: [PATCH 5.15 173/272] drm/virtio: use uninterruptible resv lock for plane updates
+Date: Thu, 20 Aug 2026 16:55:57 +0200
+Message-ID: <20260820145236.564063348@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -45,346 +46,152 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit c8d4c18bfbc4ab467188dbe45cc8155759f49d9e ]
+[ Upstream commit a48bbcc7ac739e93562d6148c6fa504c2e9f22f8 ]
 
-Audit all the users of dma_resv_add_excl_fence() and make sure they
-reserve a shared slot also when only trying to add an exclusive fence.
+virtio_gpu_cursor_plane_update() and virtio_gpu_resource_flush() lock
+the framebuffer BO's dma_resv via virtio_gpu_array_lock_resv() and
+ignore its return value. The function can fail with -EINTR from
+dma_resv_lock_interruptible() (signal during lock wait) or with
+-ENOMEM from dma_resv_reserve_fences() (fence slot allocation),
+leaving the resv lock not held. The queue path then walks the object
+array and calls dma_resv_add_fence(), which requires the lock held;
+with lockdep enabled this trips dma_resv_assert_held():
 
-This is the next step towards handling the exclusive fence like a
-shared one.
+  WARNING: drivers/dma-buf/dma-resv.c:296 at dma_resv_add_fence+0x71e/0x840
+  Call Trace:
+   virtio_gpu_array_add_fence
+   virtio_gpu_queue_ctrl_sgs
+   virtio_gpu_queue_fenced_ctrl_buffer
+   virtio_gpu_cursor_plane_update
+   drm_atomic_helper_commit_planes
+   drm_atomic_helper_commit_tail
+   commit_tail
+   drm_atomic_helper_commit
+   drm_atomic_commit
+   drm_atomic_helper_update_plane
+   __setplane_atomic
+   drm_mode_cursor_universal
+   drm_mode_cursor_common
+   drm_mode_cursor_ioctl
+   drm_ioctl
+   __x64_sys_ioctl
 
-v2: fix missed case in amdgpu
-v3: and two more radeon, rename function
-v4: add one more case to TTM, fix i915 after rebase
+Beyond the WARN, mutating the dma_resv fence list without the lock
+races with concurrent readers/writers and can corrupt the list.
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220406075132.3263-2-christian.koenig@amd.com
-Stable-dep-of: a48bbcc7ac73 ("drm/virtio: use uninterruptible resv lock for plane updates")
+Both call sites run inside the .atomic_update plane callback, which
+DRM atomic helpers do not allow to fail (by the time it runs, the
+commit has been signed off to userspace and there is no clean
+rollback path). Moving the lock acquisition to .prepare_fb was
+rejected because the broader lock scope deadlocks against other BO
+locking paths in the same atomic commit.
+
+Introduce virtio_gpu_lock_one_resv_uninterruptible() that uses
+dma_resv_lock() instead of dma_resv_lock_interruptible(). This
+eliminates the -EINTR failure mode -- the realistic syzbot trigger
+-- without extending the lock hold across the commit. The helper
+locks a single BO and rejects nents > 1 with -EINVAL; both fix
+sites lock exactly one BO.
+
+Use it from virtio_gpu_cursor_plane_update() and
+virtio_gpu_resource_flush(); check the return value to handle the
+remaining -ENOMEM case from dma_resv_reserve_fences() by freeing
+the objs and skipping the plane update for that frame. The
+framebuffer BOs touched here are not shared with other contexts
+and lock contention is expected to be brief, so the loss of
+signal-interruptibility is acceptable.
+
+Other callers of virtio_gpu_array_lock_resv() (the ioctl paths)
+continue to use the interruptible variant.
+
+The bug was reported by syzbot, triggered via fault injection
+(fail_nth) on the DRM_IOCTL_MODE_CURSOR path, which forces the
+-ENOMEM branch in dma_resv_reserve_fences().
+
+Reported-by: syzbot+72bd3dd3a5d5f39a0271@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=72bd3dd3a5d5f39a0271
+Fixes: 5cfd31c5b3a3 ("drm/virtio: fix virtio_gpu_cursor_plane_update().")
+Cc: stable@vger.kernel.org
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/20260519082247.34470-1-kartikey406@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/dma-resv.c                       |   10 +++++-----
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c |    4 ++--
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c           |    4 ++--
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c             |    2 +-
- drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c     |    2 +-
- drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c   |    4 ++--
- drivers/gpu/drm/i915/i915_vma.c                  |    2 +-
- drivers/gpu/drm/lima/lima_gem.c                  |    2 +-
- drivers/gpu/drm/msm/msm_gem_submit.c             |    2 +-
- drivers/gpu/drm/nouveau/nouveau_fence.c          |    2 +-
- drivers/gpu/drm/qxl/qxl_release.c                |    2 +-
- drivers/gpu/drm/radeon/radeon_vm.c               |    2 +-
- drivers/gpu/drm/ttm/ttm_bo.c                     |    4 ++--
- drivers/gpu/drm/ttm/ttm_execbuf_util.c           |    4 ++--
- drivers/gpu/drm/vc4/vc4_gem.c                    |    2 +-
- drivers/gpu/drm/vgem/vgem_fence.c                |    2 +-
- drivers/gpu/drm/virtio/virtgpu_gem.c             |    9 +++++++++
- include/linux/dma-resv.h                         |    2 +-
- 18 files changed, 35 insertions(+), 26 deletions(-)
+ drivers/gpu/drm/virtio/virtgpu_drv.h   |    1 +
+ drivers/gpu/drm/virtio/virtgpu_gem.c   |   17 +++++++++++++++++
+ drivers/gpu/drm/virtio/virtgpu_plane.c |   10 ++++++++--
+ 3 files changed, 26 insertions(+), 2 deletions(-)
 
---- a/drivers/dma-buf/dma-resv.c
-+++ b/drivers/dma-buf/dma-resv.c
-@@ -131,7 +131,7 @@ void dma_resv_fini(struct dma_resv *obj)
- EXPORT_SYMBOL(dma_resv_fini);
- 
- /**
-- * dma_resv_reserve_shared - Reserve space to add shared fences to
-+ * dma_resv_reserve_fences - Reserve space to add shared fences to
-  * a dma_resv.
-  * @obj: reservation object
-  * @num_fences: number of fences we want to add
-@@ -142,7 +142,7 @@ EXPORT_SYMBOL(dma_resv_fini);
-  * RETURNS
-  * Zero for success, or -errno
-  */
--int dma_resv_reserve_shared(struct dma_resv *obj, unsigned int num_fences)
-+int dma_resv_reserve_fences(struct dma_resv *obj, unsigned int num_fences)
- {
- 	struct dma_resv_list *old, *new;
- 	unsigned int i, j, k, max;
-@@ -205,7 +205,7 @@ int dma_resv_reserve_shared(struct dma_r
- 
- 	return 0;
- }
--EXPORT_SYMBOL(dma_resv_reserve_shared);
-+EXPORT_SYMBOL(dma_resv_reserve_fences);
- 
- #ifdef CONFIG_DEBUG_MUTEXES
- /**
-@@ -213,7 +213,7 @@ EXPORT_SYMBOL(dma_resv_reserve_shared);
-  * @obj: the dma_resv object to reset
-  *
-  * Reset the number of pre-reserved shared slots to test that drivers do
-- * correct slot allocation using dma_resv_reserve_shared(). See also
-+ * correct slot allocation using dma_resv_reserve_fences(). See also
-  * &dma_resv_list.shared_max.
-  */
- void dma_resv_reset_shared_max(struct dma_resv *obj)
-@@ -235,7 +235,7 @@ EXPORT_SYMBOL(dma_resv_reset_shared_max)
-  * @fence: the shared fence to add
-  *
-  * Add a fence to a shared slot, obj->lock must be held, and
-- * dma_resv_reserve_shared() has been called.
-+ * dma_resv_reserve_fences() has been called.
-  */
- void dma_resv_add_shared_fence(struct dma_resv *obj, struct dma_fence *fence)
- {
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -1236,7 +1236,7 @@ static int init_kfd_vm(struct amdgpu_vm
- 				  AMDGPU_FENCE_OWNER_KFD, false);
- 	if (ret)
- 		goto wait_pd_fail;
--	ret = dma_resv_reserve_shared(vm->root.bo->tbo.base.resv, 1);
-+	ret = dma_resv_reserve_fences(vm->root.bo->tbo.base.resv, 1);
- 	if (ret)
- 		goto reserve_shared_fail;
- 	amdgpu_bo_fence(vm->root.bo,
-@@ -2461,7 +2461,7 @@ int amdgpu_amdkfd_add_gws_to_process(voi
- 	 * Add process eviction fence to bo so they can
- 	 * evict each other.
- 	 */
--	ret = dma_resv_reserve_shared(gws_bo->tbo.base.resv, 1);
-+	ret = dma_resv_reserve_fences(gws_bo->tbo.base.resv, 1);
- 	if (ret)
- 		goto reserve_shared_fail;
- 	amdgpu_bo_fence(gws_bo, &process_info->eviction_fence->base, true);
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -3008,7 +3008,7 @@ int amdgpu_vm_init(struct amdgpu_device
- 	if (r)
- 		goto error_free_root;
- 
--	r = dma_resv_reserve_shared(root_bo->tbo.base.resv, 1);
-+	r = dma_resv_reserve_fences(root_bo->tbo.base.resv, 1);
- 	if (r)
- 		goto error_unreserve;
- 
-@@ -3459,7 +3459,7 @@ bool amdgpu_vm_handle_fault(struct amdgp
- 		value = 0;
- 	}
- 
--	r = dma_resv_reserve_shared(root->tbo.base.resv, 1);
-+	r = dma_resv_reserve_fences(root->tbo.base.resv, 1);
- 	if (r) {
- 		pr_debug("failed %d to reserve fence slot\n", r);
- 		goto error_unlock;
---- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-@@ -512,7 +512,7 @@ svm_range_vram_node_new(struct amdgpu_de
- 		goto reserve_bo_failed;
- 	}
- 
--	r = dma_resv_reserve_shared(bo->tbo.base.resv, 1);
-+	r = dma_resv_reserve_fences(bo->tbo.base.resv, 1);
- 	if (r) {
- 		pr_debug("failed %d to reserve bo\n", r);
- 		amdgpu_bo_unreserve(bo);
---- a/drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c
-@@ -180,7 +180,7 @@ static int submit_fence_sync(struct etna
- 		struct dma_resv *robj = bo->obj->base.resv;
- 
- 		if (!(bo->flags & ETNA_SUBMIT_BO_WRITE)) {
--			ret = dma_resv_reserve_shared(robj, 1);
-+			ret = dma_resv_reserve_fences(robj, 1);
- 			if (ret)
- 				return ret;
- 		}
---- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-@@ -958,7 +958,7 @@ static int eb_validate_vmas(struct i915_
- 		}
- 
- 		if (!(ev->flags & EXEC_OBJECT_WRITE)) {
--			err = dma_resv_reserve_shared(vma->resv, 1);
-+			err = dma_resv_reserve_fences(vma->resv, 1);
- 			if (err)
- 				return err;
- 		}
-@@ -2160,7 +2160,7 @@ static int eb_parse(struct i915_execbuff
- 		goto err_trampoline;
- 	}
- 
--	err = dma_resv_reserve_shared(shadow->resv, 1);
-+	err = dma_resv_reserve_fences(shadow->resv, 1);
- 	if (err)
- 		goto err_trampoline;
- 
---- a/drivers/gpu/drm/i915/i915_vma.c
-+++ b/drivers/gpu/drm/i915/i915_vma.c
-@@ -1278,7 +1278,7 @@ int i915_vma_move_to_active(struct i915_
- 		obj->read_domains = 0;
- 	} else {
- 		if (!(flags & __EXEC_OBJECT_NO_RESERVE)) {
--			err = dma_resv_reserve_shared(vma->resv, 1);
-+			err = dma_resv_reserve_fences(vma->resv, 1);
- 			if (unlikely(err))
- 				return err;
- 		}
---- a/drivers/gpu/drm/lima/lima_gem.c
-+++ b/drivers/gpu/drm/lima/lima_gem.c
-@@ -263,7 +263,7 @@ static int lima_gem_sync_bo(struct lima_
- 	int err = 0;
- 
- 	if (!write) {
--		err = dma_resv_reserve_shared(lima_bo_resv(bo), 1);
-+		err = dma_resv_reserve_fences(lima_bo_resv(bo), 1);
- 		if (err)
- 			return err;
- 	}
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -349,7 +349,7 @@ static int submit_fence_sync(struct msm_
- 			 * strange place to call it.  OTOH this is a
- 			 * convenient can-fail point to hook it in.
- 			 */
--			ret = dma_resv_reserve_shared(obj->resv, 1);
-+			ret = dma_resv_reserve_fences(obj->resv, 1);
- 			if (ret)
- 				return ret;
- 		}
---- a/drivers/gpu/drm/nouveau/nouveau_fence.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_fence.c
-@@ -349,7 +349,7 @@ nouveau_fence_sync(struct nouveau_bo *nv
- 	int ret = 0, i;
- 
- 	if (!exclusive) {
--		ret = dma_resv_reserve_shared(resv, 1);
-+		ret = dma_resv_reserve_fences(resv, 1);
- 
- 		if (ret)
- 			return ret;
---- a/drivers/gpu/drm/qxl/qxl_release.c
-+++ b/drivers/gpu/drm/qxl/qxl_release.c
-@@ -200,7 +200,7 @@ static int qxl_release_validate_bo(struc
- 			return ret;
- 	}
- 
--	ret = dma_resv_reserve_shared(bo->tbo.base.resv, 1);
-+	ret = dma_resv_reserve_fences(bo->tbo.base.resv, 1);
- 	if (ret)
- 		return ret;
- 
---- a/drivers/gpu/drm/radeon/radeon_vm.c
-+++ b/drivers/gpu/drm/radeon/radeon_vm.c
-@@ -831,7 +831,7 @@ static int radeon_vm_update_ptes(struct
- 		int r;
- 
- 		radeon_sync_resv(rdev, &ib->sync, pt->tbo.base.resv, true);
--		r = dma_resv_reserve_shared(pt->tbo.base.resv, 1);
-+		r = dma_resv_reserve_fences(pt->tbo.base.resv, 1);
- 		if (r)
- 			return r;
- 
---- a/drivers/gpu/drm/ttm/ttm_bo.c
-+++ b/drivers/gpu/drm/ttm/ttm_bo.c
-@@ -767,7 +767,7 @@ static int ttm_bo_add_move_fence(struct
- 
- 	dma_resv_add_shared_fence(bo->base.resv, fence);
- 
--	ret = dma_resv_reserve_shared(bo->base.resv, 1);
-+	ret = dma_resv_reserve_fences(bo->base.resv, 1);
- 	if (unlikely(ret)) {
- 		dma_fence_put(fence);
- 		return ret;
-@@ -826,7 +826,7 @@ int ttm_bo_mem_space(struct ttm_buffer_o
- 	bool type_found = false;
- 	int i, ret;
- 
--	ret = dma_resv_reserve_shared(bo->base.resv, 1);
-+	ret = dma_resv_reserve_fences(bo->base.resv, 1);
- 	if (unlikely(ret))
- 		return ret;
- 
---- a/drivers/gpu/drm/ttm/ttm_execbuf_util.c
-+++ b/drivers/gpu/drm/ttm/ttm_execbuf_util.c
-@@ -104,7 +104,7 @@ int ttm_eu_reserve_buffers(struct ww_acq
- 			if (!entry->num_shared)
- 				continue;
- 
--			ret = dma_resv_reserve_shared(bo->base.resv,
-+			ret = dma_resv_reserve_fences(bo->base.resv,
- 								entry->num_shared);
- 			if (!ret)
- 				continue;
-@@ -121,7 +121,7 @@ int ttm_eu_reserve_buffers(struct ww_acq
- 		}
- 
- 		if (!ret && entry->num_shared)
--			ret = dma_resv_reserve_shared(bo->base.resv,
-+			ret = dma_resv_reserve_fences(bo->base.resv,
- 								entry->num_shared);
- 
- 		if (unlikely(ret != 0)) {
---- a/drivers/gpu/drm/vc4/vc4_gem.c
-+++ b/drivers/gpu/drm/vc4/vc4_gem.c
-@@ -644,7 +644,7 @@ retry:
- 	for (i = 0; i < exec->bo_count; i++) {
- 		bo = &exec->bo[i]->base;
- 
--		ret = dma_resv_reserve_shared(bo->resv, 1);
-+		ret = dma_resv_reserve_fences(bo->resv, 1);
- 		if (ret) {
- 			vc4_unlock_bo_reservations(dev, exec, acquire_ctx);
- 			return ret;
---- a/drivers/gpu/drm/vgem/vgem_fence.c
-+++ b/drivers/gpu/drm/vgem/vgem_fence.c
-@@ -161,7 +161,7 @@ int vgem_fence_attach_ioctl(struct drm_d
- 	dma_resv_lock(resv, NULL);
- 	if (arg->flags & VGEM_FENCE_WRITE)
- 		dma_resv_add_excl_fence(resv, fence);
--	else if ((ret = dma_resv_reserve_shared(resv, 1)) == 0)
-+	else if ((ret = dma_resv_reserve_fences(resv, 1)) == 0)
- 		dma_resv_add_shared_fence(resv, fence);
- 	dma_resv_unlock(resv);
- 
+--- a/drivers/gpu/drm/virtio/virtgpu_drv.h
++++ b/drivers/gpu/drm/virtio/virtgpu_drv.h
+@@ -288,6 +288,7 @@ virtio_gpu_array_from_handles(struct drm
+ void virtio_gpu_array_add_obj(struct virtio_gpu_object_array *objs,
+ 			      struct drm_gem_object *obj);
+ int virtio_gpu_array_lock_resv(struct virtio_gpu_object_array *objs);
++int virtio_gpu_lock_one_resv_uninterruptible(struct virtio_gpu_object_array *objs);
+ void virtio_gpu_array_unlock_resv(struct virtio_gpu_object_array *objs);
+ void virtio_gpu_array_add_fence(struct virtio_gpu_object_array *objs,
+ 				struct dma_fence *fence);
 --- a/drivers/gpu/drm/virtio/virtgpu_gem.c
 +++ b/drivers/gpu/drm/virtio/virtgpu_gem.c
-@@ -214,6 +214,7 @@ void virtio_gpu_array_add_obj(struct vir
- 
- int virtio_gpu_array_lock_resv(struct virtio_gpu_object_array *objs)
- {
-+	unsigned int i;
- 	int ret;
- 
- 	if (objs->nents == 1) {
-@@ -222,6 +223,14 @@ int virtio_gpu_array_lock_resv(struct vi
- 		ret = drm_gem_lock_reservations(objs->objs, objs->nents,
- 						&objs->ticket);
- 	}
-+	if (ret)
-+		return ret;
-+
-+	for (i = 0; i < objs->nents; ++i) {
-+		ret = dma_resv_reserve_fences(objs->objs[i]->resv, 1);
-+		if (ret)
-+			return ret;
-+	}
+@@ -234,6 +234,23 @@ int virtio_gpu_array_lock_resv(struct vi
  	return ret;
  }
  
---- a/include/linux/dma-resv.h
-+++ b/include/linux/dma-resv.h
-@@ -364,7 +364,7 @@ static inline struct dma_resv_list *dma_
- 
- void dma_resv_init(struct dma_resv *obj);
- void dma_resv_fini(struct dma_resv *obj);
--int dma_resv_reserve_shared(struct dma_resv *obj, unsigned int num_fences);
-+int dma_resv_reserve_fences(struct dma_resv *obj, unsigned int num_fences);
- void dma_resv_add_shared_fence(struct dma_resv *obj, struct dma_fence *fence);
- void dma_resv_add_excl_fence(struct dma_resv *obj, struct dma_fence *fence);
- int dma_resv_get_fences(struct dma_resv *obj, struct dma_fence **pfence_excl,
++int virtio_gpu_lock_one_resv_uninterruptible(struct virtio_gpu_object_array *objs)
++{
++	int ret;
++
++	if (objs->nents != 1)
++		return -EINVAL;
++
++	dma_resv_lock(objs->objs[0]->resv, NULL);
++
++	ret = dma_resv_reserve_fences(objs->objs[0]->resv, 1);
++	if (ret) {
++		virtio_gpu_array_unlock_resv(objs);
++		return ret;
++	}
++	return 0;
++}
++
+ void virtio_gpu_array_unlock_resv(struct virtio_gpu_object_array *objs)
+ {
+ 	if (objs->nents == 1) {
+--- a/drivers/gpu/drm/virtio/virtgpu_plane.c
++++ b/drivers/gpu/drm/virtio/virtgpu_plane.c
+@@ -147,7 +147,10 @@ static void virtio_gpu_resource_flush(st
+ 		if (!objs)
+ 			return;
+ 		virtio_gpu_array_add_obj(objs, vgfb->base.obj[0]);
+-		virtio_gpu_array_lock_resv(objs);
++		if (virtio_gpu_lock_one_resv_uninterruptible(objs)) {
++			virtio_gpu_array_put_free(objs);
++			return;
++		}
+ 		virtio_gpu_cmd_resource_flush(vgdev, bo->hw_res_handle, x, y,
+ 					      width, height, objs, vgfb->fence);
+ 		virtio_gpu_notify(vgdev);
+@@ -314,7 +317,10 @@ static void virtio_gpu_cursor_plane_upda
+ 		if (!objs)
+ 			return;
+ 		virtio_gpu_array_add_obj(objs, vgfb->base.obj[0]);
+-		virtio_gpu_array_lock_resv(objs);
++		if (virtio_gpu_lock_one_resv_uninterruptible(objs)) {
++			virtio_gpu_array_put_free(objs);
++			return;
++		}
+ 		virtio_gpu_cmd_transfer_to_host_2d
+ 			(vgdev, 0,
+ 			 plane->state->crtc_w,
 
 
