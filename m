@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39BD947ECFC;
-	Thu, 20 Aug 2026 16:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161324779BE;
+	Thu, 20 Aug 2026 16:47:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244468; cv=none; b=sZOzAqnU1n3hdHDn2i0P18KCPY2p6rOZxiuZb2Rfuc/lHsRkrnv0LiezS99dO5DfkJEf11EkHJhL/FsEu+sdGfq6fLz9y4qhTyagYpj3yR28VRXXdnAuVRDezg/t08LeYqiLNl0WBmRW6FFFSL/HnVeb+nroeWL7qbNbEJ4j/NU=
+	t=1787244471; cv=none; b=ZKJf6CdUNkQ1asy4Pk+DzNmxLYltZp4vds0dCk71zqyrtPsL1qTr98Ty1K3MPkbWA1RJO7rwN4w6W2cnhjNzHN3cH4zlp7G8YT61Y+iFWHffwBQsNAnU2fYJFlYdSx7/fnIaipRlk7Xo4m9xECVHgc/8jRAEitUYuHE0ASUGT6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244468; c=relaxed/simple;
-	bh=f3PmONr7TY65A4u1wOitTzp29kOdIrzUnIbHj8KRhPY=;
+	s=arc-20240116; t=1787244471; c=relaxed/simple;
+	bh=m1WPMrJZH9cDsvNgZ1DbZXCGeyvkomVPd1DaXiBzJQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VLlS+52KCfADcysfI4AzuKlR3mkApec8uFLSE0VI9FfkcvY5K9VKki9dKUBc3EJjHU92sUeTmv3VeQ4QlyMpUHtji1fpKkSO3tg+j2P7XnGdEDFBgjXXKbJegUpkgsmH3XBRuPIxsPF+Ry0BReyu4ufI3t91gu9ec5ydWA3mF9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azmZ8y7H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TEXX0yNxZO5iyOGEc+fo5InJn/0kdYuqKiSiaSOYWauBhVtQwNxkuMqf/5BvYOFq1TPIsUcCuBXOVSwmDu806jWz0qpxzW/CJ89orjY+vEFSVE2f9nlmn2k7HQhQhy25UwiWqEBUCyxxXmQqyjioLix0mpELk88K5SOvmRa1vC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fxe7Rc3l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azmZ8y7H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9465A1F000E9;
-	Thu, 20 Aug 2026 16:47:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fxe7Rc3l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A9D1F000E9;
+	Thu, 20 Aug 2026 16:47:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244467;
-	bh=G/g3GKLNLvSGgdGjvg6vRWW07Z51wyl0lUCdQ129uTs=;
+	s=korg; t=1787244470;
+	bh=lEPYv6EwArojnAaZc4GUz8aOJaT3xw80TM2vtE1QEZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=azmZ8y7HKWEF5VaVjyI1Fv9twhCaL+Jg7UjvGlDpy5slS0/qA1kg35BLzojvUGlUd
-	 TJlKpWV6PIMkUzT309ZJ1G9IMNoSD8WwrMn44Zueb+CJF1/Vjr7i/vLk7srYlDAew7
-	 fMblD4TfRoBiLU+lyP4dt27LaLf+Zp8ePyaMeUeg=
+	b=Fxe7Rc3loqWecS3kWr0EEWUlLpRuh/S/7kvcddVbdZJ7VHkc9Kwv4YVjCjYgPz+YL
+	 +MV4aAFOGguy2BZxq+YJFQtYzmq3DWzV6pY4Do0i7ymvhN8SrgMb9cv7PtAHfeSne0
+	 zVAeeJLds/mG93GBDIzvcTruGLzGHQwLSgUxeYeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 177/235] mptcp: decrement subflows counter on failed passive join
-Date: Thu, 20 Aug 2026 16:56:53 +0200
-Message-ID: <20260820145221.884191848@linuxfoundation.org>
+Subject: [PATCH 5.10 141/235] KVM: x86: Drop @vcpu parameter from kvm_x86_ops.hwapic_isr_update()
+Date: Thu, 20 Aug 2026 16:56:17 +0200
+Message-ID: <20260820145220.717475765@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -52,45 +51,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit f3ca0ee2cc308e33896536789cbc5f3a12ca7b30 ]
+[ Upstream commit d39850f57d2102c6b46feb21237bc23bc42de4f7 ]
 
-mptcp_pm_allow_new_subflow() increments extra_subflows before
-__mptcp_finish_join() on the passive MP_JOIN path.
+Drop the unused @vcpu parameter from hwapic_isr_update().  AMD/AVIC is
+unlikely to implement the helper, and VMX/APICv doesn't need the vCPU as
+it operates on the current VMCS.  The result is somewhat odd, but allows
+for a decent amount of (future) cleanup in the APIC code.
 
-In case of race conditions, the subflow is dropped without calling
-mptcp_close_ssk(), so the counter is not rolled back.
+No functional change intended.
 
-Call mptcp_pm_close_subflow() when the join completion fails to
-decrement the subflows counter.
-
-Fixes: 10f6d46c943d ("mptcp: fix race between MP_JOIN and close")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260722-net-mptcp-misc-fixes-7-2-rc5-v1-1-6fb595bc86ef@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20220614230548.3852141-3-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Stable-dep-of: e800decd9c0a ("KVM: x86: Only reset TSC Deadline Timer in apic_timer_expired on KVM_RUN")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/kvm_host.h |    2 +-
+ arch/x86/kvm/lapic.c            |   10 ++++------
+ arch/x86/kvm/svm/avic.c         |    2 +-
+ arch/x86/kvm/svm/svm.h          |    2 +-
+ arch/x86/kvm/vmx/vmx.c          |    2 +-
+ 5 files changed, 8 insertions(+), 10 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2663,8 +2663,10 @@ bool mptcp_finish_join(struct sock *sk)
- 	if (ret && !WARN_ON_ONCE(!list_empty(&subflow->node)))
- 		list_add_tail(&subflow->node, &msk->join_list);
- 	spin_unlock_bh(&msk->join_list_lock);
--	if (!ret)
-+	if (!ret) {
-+		mptcp_pm_close_subflow(msk);
- 		return false;
-+	}
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1179,7 +1179,7 @@ struct kvm_x86_ops {
+ 	void (*pre_update_apicv_exec_ctrl)(struct kvm *kvm, bool activate);
+ 	void (*refresh_apicv_exec_ctrl)(struct kvm_vcpu *vcpu);
+ 	void (*hwapic_irr_update)(struct kvm_vcpu *vcpu, int max_irr);
+-	void (*hwapic_isr_update)(struct kvm_vcpu *vcpu, int isr);
++	void (*hwapic_isr_update)(int isr);
+ 	bool (*guest_apic_has_interrupt)(struct kvm_vcpu *vcpu);
+ 	void (*load_eoi_exitmap)(struct kvm_vcpu *vcpu, u64 *eoi_exit_bitmap);
+ 	void (*set_virtual_apic_mode)(struct kvm_vcpu *vcpu);
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -520,7 +520,7 @@ static inline void apic_set_isr(int vec,
+ 	 * just set SVI.
+ 	 */
+ 	if (unlikely(vcpu->arch.apicv_active))
+-		kvm_x86_ops.hwapic_isr_update(vcpu, vec);
++		kvm_x86_ops.hwapic_isr_update(vec);
+ 	else {
+ 		++apic->isr_count;
+ 		BUG_ON(apic->isr_count > MAX_APIC_VECTOR);
+@@ -568,8 +568,7 @@ static inline void apic_clear_isr(int ve
+ 	 * and must be left alone.
+ 	 */
+ 	if (unlikely(vcpu->arch.apicv_active))
+-		kvm_x86_ops.hwapic_isr_update(vcpu,
+-					       apic_find_highest_isr(apic));
++		kvm_x86_ops.hwapic_isr_update(apic_find_highest_isr(apic));
+ 	else {
+ 		--apic->isr_count;
+ 		BUG_ON(apic->isr_count < 0);
+@@ -2383,7 +2382,7 @@ void kvm_lapic_reset(struct kvm_vcpu *vc
+ 	if (vcpu->arch.apicv_active) {
+ 		kvm_x86_ops.apicv_post_state_restore(vcpu);
+ 		kvm_x86_ops.hwapic_irr_update(vcpu, -1);
+-		kvm_x86_ops.hwapic_isr_update(vcpu, -1);
++		kvm_x86_ops.hwapic_isr_update(-1);
+ 	}
  
- 	/* attach to msk socket only after we are sure he will deal with us
- 	 * at close time
+ 	vcpu->arch.apic_arb_prio = 0;
+@@ -2651,8 +2650,7 @@ int kvm_apic_set_state(struct kvm_vcpu *
+ 		kvm_x86_ops.apicv_post_state_restore(vcpu);
+ 		kvm_x86_ops.hwapic_irr_update(vcpu,
+ 				apic_find_highest_irr(apic));
+-		kvm_x86_ops.hwapic_isr_update(vcpu,
+-				apic_find_highest_isr(apic));
++		kvm_x86_ops.hwapic_isr_update(apic_find_highest_isr(apic));
+ 	}
+ 	kvm_make_request(KVM_REQ_EVENT, vcpu);
+ 	if (ioapic_in_kernel(vcpu->kvm))
+--- a/arch/x86/kvm/svm/avic.c
++++ b/arch/x86/kvm/svm/avic.c
+@@ -603,7 +603,7 @@ void svm_hwapic_irr_update(struct kvm_vc
+ {
+ }
+ 
+-void svm_hwapic_isr_update(struct kvm_vcpu *vcpu, int max_isr)
++void svm_hwapic_isr_update(int max_isr)
+ {
+ }
+ 
+--- a/arch/x86/kvm/svm/svm.h
++++ b/arch/x86/kvm/svm/svm.h
+@@ -457,7 +457,7 @@ bool svm_check_apicv_inhibit_reasons(ulo
+ void svm_pre_update_apicv_exec_ctrl(struct kvm *kvm, bool activate);
+ void svm_load_eoi_exitmap(struct kvm_vcpu *vcpu, u64 *eoi_exit_bitmap);
+ void svm_hwapic_irr_update(struct kvm_vcpu *vcpu, int max_irr);
+-void svm_hwapic_isr_update(struct kvm_vcpu *vcpu, int max_isr);
++void svm_hwapic_isr_update(int max_isr);
+ int svm_deliver_avic_intr(struct kvm_vcpu *vcpu, int vec);
+ bool svm_dy_apicv_has_pending_interrupt(struct kvm_vcpu *vcpu);
+ int svm_update_pi_irte(struct kvm *kvm, unsigned int host_irq,
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -6403,7 +6403,7 @@ static void vmx_set_apic_access_page_add
+ 	put_page(page);
+ }
+ 
+-static void vmx_hwapic_isr_update(struct kvm_vcpu *vcpu, int max_isr)
++static void vmx_hwapic_isr_update(int max_isr)
+ {
+ 	u16 status;
+ 	u8 old;
 
 
