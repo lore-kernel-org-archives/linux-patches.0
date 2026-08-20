@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180B337CD28;
-	Thu, 20 Aug 2026 15:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6CD35C1A6;
+	Thu, 20 Aug 2026 15:15:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238936; cv=none; b=i1S9317iDcauZbd8JajWZu8t8LALqFIcGiyes+Nrno7KO3xGhTpeOJvY7kNN9Eqi4UZZM8TMSRqJ53xUOKpRl7DczH0h8zTOu0PD5Q48sN94Wh108C1LmHNjXLfXg8eafH9iF6VE5sFGvCogMOFn8pJIwSZMgeeH3LBbk3eOKZk=
+	t=1787238939; cv=none; b=Y2SkpNIs7MIvOYlb66VMmOEUj5JwJGl5ocBfNcfnNIoBFfueMtXiZNd0MHKW94YAN8RAAWW3F4tqWcKh7jC2wmbgXFqD7tm6GKL7EJKimtLPWkWqo1edIGW1vlBN12rR9RQUBhCWXcyN2ZM3E3KinYoE8T/xKurEB5qItav3sio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238936; c=relaxed/simple;
-	bh=Y6uKuZGlG6cA3oNISSPflrYErsqzdK1crQ8h5iIo320=;
+	s=arc-20240116; t=1787238939; c=relaxed/simple;
+	bh=SRriLGDS1GOpvfKT/2Evi8YlFVBMxjA3eGw7PHGhk4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RfQFs04MRmLjmviE4GdJ3W89LgejhWbuMSsRxZr9xsNtQXNRLEr7UgZJf1CvZwSw+31egZt3g5siyqbKVYIj/S/0p5pNLe+xcoFiVuDRmHYHFaRfESUnUiACNcve2SAYzGL4yTu3pqA16qPdWlESoCDh+vVXskmoaqOqYs4oOqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yugmo5nX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JaDeYNaO687LEEDKL0OstNGfH3MvkhT5JKJy8XqCI+Y0sn24rIg9JH/t6rDGONMvTyPkuf7326dm6Ak8ACmwLvgpZaUoUu4fdYl1po9O8J9Kyli+i20kA61Ta7pvWNyvDF7CH3J26Ry2NJ8LFl7WUX0XSoG4mQE2Nnqg5UvOawQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YN0EkQyM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yugmo5nX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D791F000E9;
-	Thu, 20 Aug 2026 15:15:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YN0EkQyM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2254A1F00A3A;
+	Thu, 20 Aug 2026 15:15:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238934;
-	bh=KDG3DtB5R/blWg+ebUlv+LnG30q947msGy/uzqneMHQ=;
+	s=korg; t=1787238937;
+	bh=SamAqd5UrM8XNIJGQ0F1H9E9dIYtcWYQvIlhisjNahg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yugmo5nXNkXFeY5BIkXt2JeipkhGO+S19CC7yDlXqsilquZpUQRUu1Bton9hWjovw
-	 9CFW6t3wJE8aqhCAtjFd0X3AXaQgz7Vx8epWhmFHWc15X58KQRgguNzjbLotrY8+kh
-	 ZLeEToFtkC+qBwA8xdBOXyxS0zhKNMN7TaRpndg8=
+	b=YN0EkQyMdEvD8K6V6VtkmGEifm1xQ5i2AttTSs3eKGzj5FAuqYTC7bRqb/y2F3owZ
+	 tzhLiZg1tXNQpKUTo1ah3DMln401uqu7XG4A2hIjL/yd4NRVVfuwW07uOGpgq4UTWr
+	 MfvXH9/CU1ex+8CrcxuhQV6GtZ7fXvSIIkfqhHUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Rosca <david.rosca@amd.com>,
-	Leo Liu <leo.liu@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Kenneth Feng <Kenneth.feng@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 093/217] drm/amdgpu: Reject UVD message with invalid number of h265 refs
-Date: Thu, 20 Aug 2026 16:54:21 +0200
-Message-ID: <20260820145240.550939547@linuxfoundation.org>
+Subject: [PATCH 6.18 094/217] drm/amdgpu: fix nbif 6.3.1 l1 low power not functional
+Date: Thu, 20 Aug 2026 16:54:22 +0200
+Message-ID: <20260820145240.581117796@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -45,40 +46,123 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Rosca <david.rosca@amd.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-commit 9fca434208f1f9ab977feac62df8ebb1cc7ce893 upstream.
+commit cd688a3cb342b9f56399aa076157f1c324c15c5a upstream.
 
-Same change as for h264, avoids overflow later when calculating
-min dpb size.
+The PCIe L1 low‑power settings for NBIF 6.3.1 were never applied due to
+unresolved register mapping, which caused the relevant code to be compiled out.
+As a result, the PCIe link could not enter L1/L23 power‑down states or transition to L0s.
 
-Signed-off-by: David Rosca <david.rosca@amd.com>
-Reviewed-by: Leo Liu <leo.liu@amd.com>
+Properly configure the link control register to enable L1 and L23 power‑down,
+and permit L0s link transitions. Keep LTR disabled and let the PCI core enable it
+only after verifying end‑to‑end root complex support across switches.
+
+Fixes: 894c6d3522d1 ("drm/amdgpu: Add nbif v6_3_1 ip block support")
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Kenneth Feng <Kenneth.feng@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a4b0720e4f1601f97f59a2be9c1b4b94fa6527d5)
+(cherry picked from commit c2417f9fd7049d5a8d87eefd82fd6e36ba1ff7b6)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/nbif_v6_3_1.c |   42 ++++++++++++-------------------
+ 1 file changed, 17 insertions(+), 25 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-@@ -802,6 +802,9 @@ static int amdgpu_uvd_cs_msg_decode(stru
- 		image_size = ALIGN(image_size, 256);
+--- a/drivers/gpu/drm/amd/amdgpu/nbif_v6_3_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/nbif_v6_3_1.c
+@@ -315,7 +315,6 @@ static u32 nbif_v6_3_1_get_rom_offset(st
+ static void nbif_v6_3_1_program_ltr(struct amdgpu_device *adev)
+ {
+ 	uint32_t def, data;
+-	u16 devctl2;
  
- 		num_dpb_buffer = (le32_to_cpu(msg[59]) & 0xff) + 2;
-+		if (num_dpb_buffer > 17)
-+			return -EINVAL;
+ 	def = RREG32_SOC15(NBIO, 0, regRCC_EP_DEV0_0_EP_PCIE_TX_LTR_CNTL);
+ 	data = 0x35EB;
+@@ -329,15 +328,8 @@ static void nbif_v6_3_1_program_ltr(stru
+ 	if (def != data)
+ 		WREG32_SOC15(NBIO, 0, regRCC_STRAP0_RCC_BIF_STRAP2, data);
+ 
+-	pcie_capability_read_word(adev->pdev, PCI_EXP_DEVCTL2, &devctl2);
+-
+-	if (adev->pdev->ltr_path == (devctl2 & PCI_EXP_DEVCTL2_LTR_EN))
+-		return;
+-
+-	if (adev->pdev->ltr_path)
+-		pcie_capability_set_word(adev->pdev, PCI_EXP_DEVCTL2, PCI_EXP_DEVCTL2_LTR_EN);
+-	else
+-		pcie_capability_clear_word(adev->pdev, PCI_EXP_DEVCTL2, PCI_EXP_DEVCTL2_LTR_EN);
++	pcie_capability_set_word(adev->pdev, PCI_EXP_DEVCTL2,
++				 PCI_EXP_DEVCTL2_LTR_EN);
+ }
+ #endif
+ 
+@@ -345,7 +337,7 @@ static void nbif_v6_3_1_program_aspm(str
+ {
+ #ifdef CONFIG_PCIEASPM
+ 	uint32_t def, data;
+-	u16 devctl2, ltr;
++	u16 ltr;
+ 
+ 	def = data = RREG32_SOC15(PCIE, 0, regPCIE_LC_CNTL);
+ 	data &= ~PCIE_LC_CNTL__LC_L1_INACTIVITY_MASK;
+@@ -375,11 +367,8 @@ static void nbif_v6_3_1_program_aspm(str
+ 	if (def != data)
+ 		WREG32_SOC15(NBIO, 0, regRCC_STRAP0_RCC_BIF_STRAP5, data);
+ 
+-	pcie_capability_read_word(adev->pdev, PCI_EXP_DEVCTL2, &devctl2);
+-	data = def = devctl2;
+-	data &= ~PCI_EXP_DEVCTL2_LTR_EN;
+-	if (def != data)
+-		pcie_capability_set_word(adev->pdev, PCI_EXP_DEVCTL2, (u16)data);
++	pcie_capability_clear_word(adev->pdev, PCI_EXP_DEVCTL2,
++				   PCI_EXP_DEVCTL2_LTR_EN);
+ 
+ 	ltr = pci_find_ext_capability(adev->pdev, PCI_EXT_CAP_ID_LTR);
+ 
+@@ -387,15 +376,13 @@ static void nbif_v6_3_1_program_aspm(str
+ 		pci_write_config_dword(adev->pdev, ltr + PCI_LTR_MAX_SNOOP_LAT, 0x10011001);
+ 	}
+ 
+-#if 0
+-	/* regPSWUSP0_PCIE_LC_CNTL2 should be replace by PCIE_LC_CNTL2 or someone else ? */
+-	def = data = RREG32_SOC15(NBIO, 0, regPSWUSP0_PCIE_LC_CNTL2);
+-	data |= PSWUSP0_PCIE_LC_CNTL2__LC_ALLOW_PDWN_IN_L1_MASK |
+-		PSWUSP0_PCIE_LC_CNTL2__LC_ALLOW_PDWN_IN_L23_MASK;
+-	data &= ~PSWUSP0_PCIE_LC_CNTL2__LC_RCV_L0_TO_RCV_L0S_DIS_MASK;
++	def = data = RREG32_SOC15(PCIE, 0, regPCIE_LC_CNTL2);
++	data |= PCIE_LC_CNTL2__LC_ALLOW_PDWN_IN_L1_MASK |
++		PCIE_LC_CNTL2__LC_ALLOW_PDWN_IN_L23_MASK;
++	data &= ~PCIE_LC_CNTL2__LC_RCV_L0_TO_RCV_L0S_DIS_MASK;
+ 	if (def != data)
+-		WREG32_SOC15(NBIO, 0, regPSWUSP0_PCIE_LC_CNTL2, data);
+-#endif
++		WREG32_SOC15(PCIE, 0, regPCIE_LC_CNTL2, data);
 +
- 		min_dpb_size = image_size * num_dpb_buffer;
- 		min_ctx_size = ((width + 255) / 16) * ((height + 255) / 16)
- 					   * 16 * num_dpb_buffer + 52 * 1024;
+ 	def = data = RREG32_SOC15(PCIE, 0, regPCIE_LC_CNTL4);
+ 	data |= PCIE_LC_CNTL4__LC_L1_POWERDOWN_MASK;
+ 	if (def != data)
+@@ -406,7 +393,12 @@ static void nbif_v6_3_1_program_aspm(str
+ 	if (def != data)
+ 		WREG32_SOC15(PCIE, 0, regPCIE_LC_RXRECOVER_RXSTANDBY_CNTL, data);
+ 
+-	nbif_v6_3_1_program_ltr(adev);
++	/*
++	 * Do not enable endpoint LTR unless the Root Complex and every
++	 * upstream switch support it.
++	 */
++	if (adev->pdev->ltr_path)
++		nbif_v6_3_1_program_ltr(adev);
+ 
+ 	def = data = RREG32_SOC15(NBIO, 0, regRCC_STRAP0_RCC_BIF_STRAP3);
+ 	data |= 0x5DE0 << RCC_STRAP0_RCC_BIF_STRAP3__STRAP_VLINK_ASPM_IDLE_TIMER__SHIFT;
 
 
