@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483D844062A;
-	Thu, 20 Aug 2026 17:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19FC484258;
+	Thu, 20 Aug 2026 17:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248074; cv=none; b=TkWpXEwuFtmwosFr2fx2ihao7NU+EL61IUyuYUzo+0nRWq5eNTpjMTrVJ6n5uBLycgAy6zX/Bj1OmFEjFTEjPAkEWXzt08N81wh6UTqxRHXka7ggB4odMBNDe1higoktl1DtMA+hPwjw46Sp4t0p5v9RztA7ArPqIP5HvPBndM0=
+	t=1787248076; cv=none; b=hiIIpqY5ryVVYTRW5WJi3yF94ZUuGXSUr4EnEnuyaAcTeVH4eQOYHdNPUlXqItKgw1bKba/LKspeY5RdolC4oaf7c9VvKQuyLsUOkIBwqF4ybQ1N1CRnGwqdr2ecuiguHPOvJ+3leChmqdAQOt/2MMWk2U89pj+BpNdiouJSBcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248074; c=relaxed/simple;
-	bh=WmUlQIDo+0PBrDsv+Qx3LkxhJDdQkS4wt+JwlKSZGwo=;
+	s=arc-20240116; t=1787248076; c=relaxed/simple;
+	bh=Zk85l7UWCkLl5+CE1karUVO0VfOU6gnrndXlJjot8nU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PySMhTY/gxLwfkLUjNOJCkwR233Clv3BFjNyAbPpPxJvfGoxDDgIUQbArJJqV11qZRxSFYaN3y8FxvgvlNP1J9kqBr4HXz0jVK7ja/RRH4r665yIv7raSQAvLQor3+U2lraMIuCZrDVixkL+gY70kiqiYcAl0Co06qcQuW5lHck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Pwf2PZh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KRiyrD+AL07DLKrIxO9N4IUmqRBsWBQ4pb8p+KiGxNwgsgiGH+HhJlexNTny9k/xqqwaxKT2qBrIV78wXyJSgDYz8frJKC7fvxqcDas9ORoLaVYbFX9BknUdgWSLNFEiHOmxyXjTxOjNTcRQy2g/GGIV7Z1TIsoTcDvh6q/M13E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qQQwKjUu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Pwf2PZh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 598D61F000E9;
-	Thu, 20 Aug 2026 17:47:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qQQwKjUu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2691F000E9;
+	Thu, 20 Aug 2026 17:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248072;
-	bh=gl/d97zXJaTyLQqHGF/krS3Qn7eZFlJNHQW29CwjUYc=;
+	s=korg; t=1787248075;
+	bh=pSwU0uGODuX86Sv7GUq8+5RoZCRSmjGp7TC5m5eqQzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Pwf2PZhq2LY4RZsePowYiN1fhhQ712hTZPUIbaj1nflwXwj9Qfh6qG/AVdkCJdIM
-	 iird1uTMeA4ZOs68BV08pU9LnwYgk+E7aJF8/tjPQvM+1PZN++3wKHd9Fh7VZjeaNM
-	 bZuhFYBMlZB3JVI2LBPSXCjgcPItrdIR0mfOGvJ0=
+	b=qQQwKjUu1CZhbUvM0x/RA5+R0bBVmklGQ52ecAsjt9KiYcCigoLmkQ7ZAmm2/TEQ/
+	 CTbZq4kksUX6r2W3wN/FtwulVCTu063rFEiTSFRF/g2e7PfHOCbofTy3j6jsn35zv8
+	 X7CH49Gqh+FbP5V3ka/0FIakqSjrCb4YmsxWRJjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 064/303] Input: mms114 - fix touch indexing for MMS134S and MMS136
-Date: Thu, 20 Aug 2026 16:53:20 +0200
-Message-ID: <20260820145255.088369901@linuxfoundation.org>
+Subject: [PATCH 6.1 100/303] netfilter: nft_set_pipapo: move prove_locking helper around
+Date: Thu, 20 Aug 2026 16:53:56 +0200
+Message-ID: <20260820145256.294271309@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -52,74 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit a6ac4e24c1a8a533bb61035184fdcc7eede4cc8d ]
+[ Upstream commit a590f4760922acaa2d2b55a88004a38eecdd6412 ]
 
-The MMS134S and MMS136 touch controllers have an event size of 6 bytes
-rather than 8 bytes. When __mms114_read_reg() reads the touch data
-packet from the device into the touch buffer, the events are packed
-tightly at 6-byte intervals. However, the driver iterates through the
-events using standard C array indexing (touch[index]), where each
-element is sizeof(struct mms114_touch) (8 bytes) apart. As a result, any
-touch events beyond the first one are read from incorrect offsets and
-parsed improperly.
+Preparation patch, the helper will soon get called from insert
+function too.
 
-Fix this by explicitly calculating the byte offset for each touch event
-based on the device's specific event size.
-
-Fixes: 53fefdd1d3a3 ("Input: mms114 - support MMS136")
-Fixes: ab108678195f ("Input: mms114 - support MMS134S")
-Reported-by: sashiko-bot@kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Reviewed-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260616050912.1531241-1-dmitry.torokhov@gmail.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 47e65eff5069 ("netfilter: nft_set_pipapo: don't leak bad clone into future transaction")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/mms114.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ net/netfilter/nft_set_pipapo.c |   22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
---- a/drivers/input/touchscreen/mms114.c
-+++ b/drivers/input/touchscreen/mms114.c
-@@ -196,7 +196,9 @@ static irqreturn_t mms114_interrupt(int
- 	struct mms114_data *data = dev_id;
- 	struct input_dev *input_dev = data->input_dev;
- 	struct mms114_touch touch[MMS114_MAX_TOUCH];
-+	struct mms114_touch *t;
- 	int packet_size;
-+	int event_size;
- 	int touch_size;
- 	int index;
- 	int error;
-@@ -214,17 +216,22 @@ static irqreturn_t mms114_interrupt(int
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -1217,6 +1217,17 @@ static int pipapo_realloc_scratch(struct
+ 	return 0;
+ }
  
- 	/* MMS136 has slightly different event size */
- 	if (data->type == TYPE_MMS134S || data->type == TYPE_MMS136)
--		touch_size = packet_size / MMS136_EVENT_SIZE;
-+		event_size = MMS136_EVENT_SIZE;
- 	else
--		touch_size = packet_size / MMS114_EVENT_SIZE;
-+		event_size = MMS114_EVENT_SIZE;
++static bool nft_pipapo_transaction_mutex_held(const struct nft_set *set)
++{
++#ifdef CONFIG_PROVE_LOCKING
++	const struct net *net = read_pnet(&set->net);
 +
-+	touch_size = packet_size / event_size;
- 
- 	error = __mms114_read_reg(data, MMS114_INFORMATION, packet_size,
- 			(u8 *)touch);
- 	if (error < 0)
- 		goto out;
- 
--	for (index = 0; index < touch_size; index++)
--		mms114_process_mt(data, touch + index);
-+	for (index = 0; index < touch_size; index++) {
-+		t = (struct mms114_touch *)((u8 *)touch + index * event_size);
++	return lockdep_is_held(&nft_pernet(net)->commit_mutex);
++#else
++	return true;
++#endif
++}
 +
-+		mms114_process_mt(data, t);
-+	}
+ /**
+  * nft_pipapo_insert() - Validate and insert ranged elements
+  * @net:	Network namespace
+@@ -1803,17 +1814,6 @@ static void nft_pipapo_commit(struct nft
+ 	pipapo_gc_queue(set);
+ }
  
- 	input_mt_report_pointer_emulation(data->input_dev, true);
- 	input_sync(data->input_dev);
+-static bool nft_pipapo_transaction_mutex_held(const struct nft_set *set)
+-{
+-#ifdef CONFIG_PROVE_LOCKING
+-	const struct net *net = read_pnet(&set->net);
+-
+-	return lockdep_is_held(&nft_pernet(net)->commit_mutex);
+-#else
+-	return true;
+-#endif
+-}
+-
+ static void nft_pipapo_abort(const struct nft_set *set)
+ {
+ 	struct nft_pipapo *priv = nft_set_priv(set);
 
 
