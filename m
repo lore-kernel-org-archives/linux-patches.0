@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D11937FF6A;
-	Thu, 20 Aug 2026 15:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4503334F27B;
+	Thu, 20 Aug 2026 15:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239108; cv=none; b=FiXe5oUgJ3xVtJYNFdlZK0h971bNYDnRwpx2YD01eCzkBDBE0CkXtArLy1y2P5f3dv0pLpsfAyFicOqpYQRKhrRwCRg5wL59t2TdkzFtRkK+E5reTW4yQJXY09/Qia7librrg2lBla+a4///LVcxrin5mjvMnSSYKlN6txtdzlc=
+	t=1787239111; cv=none; b=Hpk726boDLqq6ysSzSm6au73ACqPyAauxUgfHVrmVB1YTiEWoL0EB+JvSLjraOH0AyEo9x+bzXOicGydbajaO1IUYgbmGfMeYQnv/kFzbw0/5p3K6VYMnwy/3tXDLO2CjR3e30xqPSeJSj0vx7sMscvIg+tRIyuIQ5wo+1J56rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239108; c=relaxed/simple;
-	bh=l2MIl3xT7mzOkNJpc/tetIdoXb0bS9SlP1BY9nw1zvw=;
+	s=arc-20240116; t=1787239111; c=relaxed/simple;
+	bh=fBt3r/CFwwPd2ue92x2vsgkNLmFXVzUH7kWYlWBUBzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z44c8dDku4xpJ6jSXTH6RdmV+eVXzb+SwBCSxQZTTAHgR4PGs5e3qZ3ZtnQURymInb4PHaxfzrNLLamwS2OTyq+bzKW0qID1NN/fKt/yoasiWYs34BW9AMTTCX3ZcT+PJkj1PnN97xSA02oRa04uMA/q+9/TZgp6dSFcmAHupaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXc9dYee; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rWnUd7YI1jmCPAZwkPraXamfX6dmzbHp1gHrXimpN6B3ue0Ld8ZKpUmwEq74Jf1KyJEe65wnTnaNPgzlEpuI5wK4oIE7z17rwJfcRv1QbAbqc1m7rNh8F74fvWQrZuOKuJnyFPgPv3HBmZx/bE8r+DemEhK67AibWBv42ZdLlxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mb5lEUC4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXc9dYee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871BA1F000E9;
-	Thu, 20 Aug 2026 15:18:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mb5lEUC4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC2D1F000E9;
+	Thu, 20 Aug 2026 15:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239107;
-	bh=V4vxsIz/Um4DBanUKiSlsIZl5Je7/vnK45ADyyWa3JI=;
+	s=korg; t=1787239109;
+	bh=6cD90Q+nA4Sx6nGnMIB9lZBVQVefinuqmCQOMFfKAjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fXc9dYeemM6GaNDh1O5G999qUv4PdAZ/dBgHkD2s0uPLwFCKiOJeQ42iuibMd82Ny
-	 5+2C956nwcAmR6nq/eWQBghOUvwcmodYk6oTLR4q3D8OUbnywxbjymAcatTL2KLUp9
-	 2LSwZO/raDa2WfJ4UawCu+tTAnY49Jdu4LXQRw3k=
+	b=mb5lEUC46T50zxZtk3dE3iViryPvvH1FVrMt3z1Pioop/JleXB7VZMfX8Ux1kDbsA
+	 ZC9voLTuWjW3q3dIZkMmvsp9K9z8N1mwRbL/nGTuYlijz2Ds4RDeN9tR1V32fToy03
+	 CFCacMcYtaG8m735Mr0RVV7qi8uXgVkVSnVxGcuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Biju Das <biju.das.jz@bp.renesas.com>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 151/217] can: rcar_canfd: Invert reset assert order
-Date: Thu, 20 Aug 2026 16:55:19 +0200
-Message-ID: <20260820145242.299347166@linuxfoundation.org>
+Subject: [PATCH 6.18 152/217] can: rcar_canfd: Invert global vs. channel teardown
+Date: Thu, 20 Aug 2026 16:55:20 +0200
+Message-ID: <20260820145242.328623173@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -55,45 +55,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 41c13eaf39932fc79aa1ac245a9b97090fe23d5e ]
+[ Upstream commit 790ec4c453890f1221ea595674a1206bbee41dc4 ]
 
-The two resets are asserted during cleanup in the same order as they
-were deasserted during probe.  Invert the order to restore symmetry.
+Global state is initialized and torn down before per-channel state.
+Invert the order to restore symmetry.
 
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
 Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
 Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://patch.msgid.link/20251124102837.106973-2-biju.das.jz@bp.renesas.com
+Link: https://patch.msgid.link/20251124102837.106973-3-biju.das.jz@bp.renesas.com
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Stable-dep-of: bef9004c5b91 ("can: rcar_canfd: change the initializing flow for clocks and resets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/rcar/rcar_canfd.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/can/rcar/rcar_canfd.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 --- a/drivers/net/can/rcar/rcar_canfd.c
 +++ b/drivers/net/can/rcar/rcar_canfd.c
-@@ -2202,8 +2202,8 @@ fail_mode:
- fail_clk:
- 	clk_disable_unprepare(gpriv->clkp);
- fail_reset:
--	reset_control_assert(gpriv->rstc1);
- 	reset_control_assert(gpriv->rstc2);
-+	reset_control_assert(gpriv->rstc1);
- fail_dev:
- 	return err;
- }
-@@ -2224,8 +2224,8 @@ static void rcar_canfd_remove(struct pla
+@@ -2213,14 +2213,14 @@ static void rcar_canfd_remove(struct pla
+ 	struct rcar_canfd_global *gpriv = platform_get_drvdata(pdev);
+ 	u32 ch;
+ 
+-	rcar_canfd_reset_controller(gpriv);
+-	rcar_canfd_disable_global_interrupts(gpriv);
+-
+ 	for_each_set_bit(ch, &gpriv->channels_mask, gpriv->info->max_channels) {
+ 		rcar_canfd_disable_channel_interrupts(gpriv->ch[ch]);
+ 		rcar_canfd_channel_remove(gpriv, ch);
+ 	}
+ 
++	rcar_canfd_disable_global_interrupts(gpriv);
++	rcar_canfd_reset_controller(gpriv);
++
  	/* Enter global sleep mode */
  	rcar_canfd_set_bit(gpriv->base, RCANFD_GCTR, RCANFD_GCTR_GSLPR);
  	clk_disable_unprepare(gpriv->clkp);
--	reset_control_assert(gpriv->rstc1);
- 	reset_control_assert(gpriv->rstc2);
-+	reset_control_assert(gpriv->rstc1);
- }
- 
- static int __maybe_unused rcar_canfd_suspend(struct device *dev)
 
 
