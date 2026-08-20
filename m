@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010D436B92A;
-	Thu, 20 Aug 2026 15:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1624436A37A;
+	Thu, 20 Aug 2026 15:08:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238526; cv=none; b=SNffLHuGQV4Evh5sn7xGmwChH8kVOfplhDRNXtuWj3dkLUp7Ex/U3hKhzop2Y+CM/LJza8yh9/M+Km/VVIZcTNo03HSGGyshNdfJ/A7/zcwOn34PfUciYvLcsjSMMCqleIhfL41mwq1pQEl/DYKLr6D1QYJtalyHNbe9CvTa7LU=
+	t=1787238529; cv=none; b=JResnSFoKKMqhIhfwabx9WKmr4/fazPgexOPRVw9sB5VTwVi5ExSlUaHHimrlAl71GY7b/8M0WVFFMj8XA1c75uBCSPtBrgDYrrnBzhjDun7oSB2icAQ50uffoqccPjKEQmC0J63mpdc5r59SOGsqKY2SCNN6EqP+3HT8pSn7fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238526; c=relaxed/simple;
-	bh=picoEkhZmyiVbn+1zDVB/g9q06Tj6XvkrLbrJGSyZoM=;
+	s=arc-20240116; t=1787238529; c=relaxed/simple;
+	bh=JPXA9cKmVRmljLC9LfW7M2dWe/r+Uqc59RKbvgRMJvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jmvx5Tmj473UFHJZhEyhDWI5aX7Yxf+4RA6eB2E6jesMf3Vy3qKf4ojTi+zVZxvmYRqjF8UNdyrUja61YmtnyKjVmo/l4adW8oD1GWhNDRmE/jsZk0Nfy7VtNFqe0tF0tYIeKAXHnPU/gBbP2M1F3T7SXYD7/Tr6AQS0hHt8lfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pRndUIa9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=j6JjjRZ4p9Sd5V5a2HqPPE6P+rSYPuUIRZcdWv8oKRAmejjWsDmDyJtu3k73R6c5DcKmeFJRChgAQOGTN5tg0+Rox7i5uptmYe7rkC3FYCXWHzWE+Gist8Cnr2ta5mSHBlQY+xg0yOIH2OHFlXussSpCD84sxqsy47gUlxW5dEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EunrHbFM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pRndUIa9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EE881F000E9;
-	Thu, 20 Aug 2026 15:08:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EunrHbFM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397761F00A3A;
+	Thu, 20 Aug 2026 15:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238524;
-	bh=FiWtSxhVwwBC5qGbKgsb03xWHpVAgEz4snMQ4MAnge4=;
+	s=korg; t=1787238527;
+	bh=1x0VVzpRDJlwgz5UroKjH5YBCRotNmeHavzcNG61TU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pRndUIa9W1qI6MNBI05mpD9dk9HoHCeLkhXqxSqa3uago7tVpeZH/w1Ukd2a/ONUU
-	 E9xvIfxiUJ+TR4Mx84FwQOJbpPXrm2g0ZaK8qX8CCUicjmCC8dlFz3TMu9xUq1STm0
-	 vBnHJk0SFjRLa93xY1wy4nKxCzqSStwMRR+EoWOM=
+	b=EunrHbFMGwH6SkzB0SaoW0CwwIgVQP0AT6Lo3MYJfRIe0G7qFREBhTnVsQfQfrQH8
+	 OreR3Vnc6EXk0c3UXsnr66cf8uN3i9qXreHCznwBw/H28EYzn4VuObrwVorlcwswu4
+	 7zEqLy6NZSW36ibhnSHdfeHW3X4dSOPS0FThI3Ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 177/228] perf: Reject exited events as group leaders
-Date: Thu, 20 Aug 2026 16:55:19 +0200
-Message-ID: <20260820145250.067224327@linuxfoundation.org>
+Subject: [PATCH 7.1 178/228] sctp: validate cookie AUTH state before use
+Date: Thu, 20 Aug 2026 16:55:20 +0200
+Message-ID: <20260820145250.097138110@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -45,68 +46,167 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit fa091f46c3833fb22384f10eade2b4e1e1d0b278 ]
+[ Upstream commit 3dbb44d88b1e94dd31fe43588af7437b34b44d56 ]
 
-perf_event_remove_on_exec() sets remove-on-exec events to the EXIT state
-and detaches their group relationships.  The event's file descriptor can
-remain open, however, and perf_event_open() currently accepts that event
-as a group leader because its early validation rejects only REVOKED and
-DEAD events.
+When cookie authentication is disabled, COOKIE_ECHO restores fixed-size
+AUTH fields directly from peer-controlled cookie bytes.  A forged RANDOM
+length, HMAC list, or CHUNKS list can then reach association consumers
+with lengths or identifiers that were never validated against the local
+backing arrays.
 
-A new sibling can consequently be linked to the detached leader.  When
-the leader is closed, perf_group_detach() observes that its
-PERF_ATTACH_GROUP bit is already clear and skips the new sibling.  The
-sibling then retains a group_leader pointer to the freed event.
+A forged RANDOM length can cause out-of-bounds reads during key-vector
+construction.  A forged HMAC identifier also caused a 32-byte write past
+a zero-length AUTH chunk, providing a primitive for a local privilege
+escalation chain.
 
-Reject group leaders in the EXIT state.  Perform the check while holding
-the shared context mutex so that an exec in the target task cannot detach
-the leader between validation and group attachment.
+Validate the cookie's RANDOM, HMACS, and CHUNKS parameters at the cookie
+trust boundary before copying them into the association.  Reject invalid
+types, malformed lengths, unsupported HMAC identifiers, HMAC lists
+without SHA1, and forbidden chunk ids.
 
-[peterz: make the earlier test fully consistent]
-Fixes: 037a3c43edfb ("perf/core: Detach event groups during remove_on_exec")
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260806205655.75722-1-kylebot@openai.com
+Fixes: bbd0d59809f9 ("[SCTP]: Implement the receive and verification of AUTH chunk")
+Fixes: 1f485649f529 ("[SCTP]: Implement SCTP-AUTH internals")
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260804200042.2412009-1-Jeremy.Jean@oss.cyber.gouv.fr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ include/net/sctp/auth.h  |  3 ++
+ net/sctp/auth.c          | 75 ++++++++++++++++++++++++++++++++++++++++
+ net/sctp/sm_make_chunk.c |  3 ++
+ 3 files changed, 81 insertions(+)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 3b4c43203210d..1a23ae67c3cc8 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -13942,7 +13942,7 @@ SYSCALL_DEFINE5(perf_event_open,
- 			goto err_fd;
- 		}
- 		group_leader = fd_file(group)->private_data;
--		if (group_leader->state <= PERF_EVENT_STATE_REVOKED) {
-+		if (group_leader->state <= PERF_EVENT_STATE_EXIT) {
- 			err = -ENODEV;
- 			goto err_fd;
- 		}
-@@ -14073,6 +14073,12 @@ SYSCALL_DEFINE5(perf_event_open,
- 		if (group_leader->ctx != ctx)
- 			goto err_locked;
+diff --git a/include/net/sctp/auth.h b/include/net/sctp/auth.h
+index 6f2cd562b1de6..74b3790e2a3d5 100644
+--- a/include/net/sctp/auth.h
++++ b/include/net/sctp/auth.h
+@@ -22,6 +22,7 @@ struct sctp_endpoint;
+ struct sctp_association;
+ struct sctp_authkey;
+ struct sctp_hmacalgo;
++struct sctp_cookie;
  
-+		/* Recheck under ctx::mutex to serialize against remove-on-exec. */
-+		if (group_leader->state <= PERF_EVENT_STATE_EXIT) {
-+			err = -ENODEV;
-+			goto err_locked;
-+		}
+ /* Defines an HMAC algorithm supported by SCTP chunk authentication */
+ struct sctp_hmac {
+@@ -72,6 +73,8 @@ struct sctp_shared_key *sctp_auth_get_shkey(
+ int sctp_auth_asoc_copy_shkeys(const struct sctp_endpoint *ep,
+ 				struct sctp_association *asoc,
+ 				gfp_t gfp);
++bool sctp_auth_verify_cookie_params(const struct sctp_endpoint *ep,
++				    const struct sctp_cookie *cookie);
+ const struct sctp_hmac *sctp_auth_get_hmac(__u16 hmac_id);
+ const struct sctp_hmac *
+ sctp_auth_asoc_get_hmac(const struct sctp_association *asoc);
+diff --git a/net/sctp/auth.c b/net/sctp/auth.c
+index c901d373af803..cc4229ee116d1 100644
+--- a/net/sctp/auth.c
++++ b/net/sctp/auth.c
+@@ -377,6 +377,81 @@ int sctp_auth_asoc_copy_shkeys(const struct sctp_endpoint *ep,
+ 	return -ENOMEM;
+ }
+ 
++static bool sctp_auth_chunk_id_forbidden(__u8 chunk_id)
++{
++	switch (chunk_id) {
++	case SCTP_CID_INIT:
++	case SCTP_CID_INIT_ACK:
++	case SCTP_CID_SHUTDOWN_COMPLETE:
++	case SCTP_CID_AUTH:
++		return true;
++	default:
++		return false;
++	}
++}
 +
- 		/*
- 		 * Only a group leader can be exclusive or pinned
- 		 */
++/* Verify AUTH parameters copied from a state cookie before they are restored
++ * into an association.  When cookie authentication is disabled these fields
++ * are peer-controlled, so they must satisfy the same constraints as locally
++ * generated AUTH parameters.
++ */
++bool sctp_auth_verify_cookie_params(const struct sctp_endpoint *ep,
++				    const struct sctp_cookie *cookie)
++{
++	const struct sctp_paramhdr *random;
++	const struct sctp_hmac_algo_param *hmacs;
++	const struct sctp_chunks_param *chunks;
++	u16 hmacs_len, chunks_len;
++	u16 n_hmacs, n_chunks, i;
++	bool has_sha1 = false;
++
++	if (sctp_sk(ep->base.sk)->cookie_auth_enable || !ep->auth_enable)
++		return true;
++
++	random = (const struct sctp_paramhdr *)cookie->auth_random;
++	if (random->type != SCTP_PARAM_RANDOM ||
++	    ntohs(random->length) != sizeof(*random) + SCTP_AUTH_RANDOM_LENGTH)
++		return false;
++
++	hmacs = (const struct sctp_hmac_algo_param *)cookie->auth_hmacs;
++	hmacs_len = ntohs(hmacs->param_hdr.length);
++	if (hmacs->param_hdr.type != SCTP_PARAM_HMAC_ALGO ||
++	    hmacs_len < sizeof(struct sctp_paramhdr) +
++			sizeof(hmacs->hmac_ids[0]) ||
++	    hmacs_len > sizeof(cookie->auth_hmacs) ||
++	    (hmacs_len - sizeof(struct sctp_paramhdr)) %
++			sizeof(hmacs->hmac_ids[0]))
++		return false;
++
++	n_hmacs = (hmacs_len - sizeof(struct sctp_paramhdr)) /
++		  sizeof(hmacs->hmac_ids[0]);
++	for (i = 0; i < n_hmacs; i++) {
++		u16 hmac_id = ntohs(hmacs->hmac_ids[i]);
++
++		if (!sctp_hmac_supported(hmac_id))
++			return false;
++		if (hmac_id == SCTP_AUTH_HMAC_ID_SHA1)
++			has_sha1 = true;
++	}
++	if (!has_sha1)
++		return false;
++
++	chunks = (const struct sctp_chunks_param *)cookie->auth_chunks;
++	chunks_len = ntohs(chunks->param_hdr.length);
++	if (chunks->param_hdr.type != SCTP_PARAM_CHUNKS ||
++	    chunks_len < sizeof(struct sctp_paramhdr) ||
++	    chunks_len > sizeof(cookie->auth_chunks))
++		return false;
++
++	n_chunks = chunks_len - sizeof(struct sctp_paramhdr);
++	for (i = 0; i < n_chunks; i++) {
++		if (sctp_auth_chunk_id_forbidden(chunks->chunks[i]))
++			return false;
++	}
++
++	return true;
++}
++
+ 
+ /* Public interface to create the association shared key.
+  * See code above for the algorithm.
+diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
+index e25612e9d0821..236e25abc7a42 100644
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -1852,6 +1852,9 @@ struct sctp_association *sctp_unpack_cookie(
+ 	/* Set up our peer's port number.  */
+ 	retval->peer.port = ntohs(chunk->sctp_hdr->source);
+ 
++	if (!sctp_auth_verify_cookie_params(ep, bear_cookie))
++		goto malformed;
++
+ 	/* Populate the association from the cookie.  */
+ 	memcpy(&retval->c, bear_cookie, sizeof(*bear_cookie));
+ 
 -- 
 2.53.0
 
