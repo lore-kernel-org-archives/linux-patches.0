@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A05481A9E;
-	Thu, 20 Aug 2026 17:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D843A307492;
+	Thu, 20 Aug 2026 17:35:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247322; cv=none; b=YnaxFgPUNrAvCHla2R/GHB1iSue+S/lk6FZmFWRxTNjd5lgniLvbEGJDl9ynL+zhQbLZFk8OTtfZkaRjCFeD3jHaIFpkhvJ3O9Pmb4PLo0gylglx2KFogzjQMqi/rAWRBdqPe0CQhl27HZFtKCHyOVjaplE0s/9UsLX461Z/QCc=
+	t=1787247325; cv=none; b=ltbmv53XdWvQNDbUDdHlkinUr0Cs2C8fN5lZNHEJZOcgksnJ107H22q7CjziXKrToIhQXxn3OeDQuQyVcCuXzxSb1UndA6IHLTS9S1X+voY7p2Shf9Pxlo8I3j4jLFjeNZyPhXmqmGZPiMxDDjB1paBMczy/KLfuMF4ebanGNYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247322; c=relaxed/simple;
-	bh=QL+dbn5CDaPSnjrtZw872x83HwnZ74lCnUs5UJBZ2os=;
+	s=arc-20240116; t=1787247325; c=relaxed/simple;
+	bh=FCamMTMNh/Sy7n+0aEUmAocSEqJqjFkrcdeQEibmTKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CeyYhBLzAj8JnFvPkkIAx3HBUfdPBcGF/oZI+9anM8fHl1XgalF01yy53VHX8/CZ/MS6aeLy7J8LIpRWkkRS3uqcalCV6VOG2br6ZxtNrvwA3QMWuHDZrmb2cm1ydJ+zAZ/6YRB6wHh1JMQZZ0fJ0VCpLcNdP9fOslDVTgQTuWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ChJM4/PZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KZ4wl+WvOp1ajyRmQdTT+Vk7rjarTb5rR2lfSRuFMPpV+eHFFZeVclojJDUpvsCVWAW4VfcDAZhtEzzylUNc81+MnDZUQNdz0IMcQY/P9vUVyhIlVQRfwgnRHxnehg5iOPrrykKFvW00q/cL+pIJ3oNT7VcGhD7oqbUjQqWN2DE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gcmqlaQo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ChJM4/PZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627881F000E9;
-	Thu, 20 Aug 2026 17:35:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gcmqlaQo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E38F1F000E9;
+	Thu, 20 Aug 2026 17:35:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247320;
-	bh=0QAxHN+zw9Dvk4dya4ZYEpdF/l5+sPO0lP7SnuM1N+A=;
+	s=korg; t=1787247323;
+	bh=BLo6hCHBrHU61Ds4TEV/hcjX0VF781sJarCN+/hwM4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ChJM4/PZcVzBSFHjdaFdcoS+UAuRkDvYoXKqpBj4G8tCm3GaT6sBY27afT09JRNi5
-	 d3Qzhi/6kUl7RvThulyybdTkxZeEQjtt9vgGIxDVg1jxn8ZFZ5y1WEU1rmwvsrUNNW
-	 tnwzLe6kEib7cj9Mjz/7cub4VB4U7wjp/7heVxHw=
+	b=gcmqlaQonK1abj05F9rOL6Sbj9rM7Cwt5JQPboKc9tfTz7lfNoPjaKtApBiBIFDqD
+	 HYEM0Qc42zyv6EGNXu3iMeebKYRxxmoLEN5jzQWSICNPBTJWFnDcCastho9eQW5WVn
+	 NRtbCCnG1HYeb6K1kTHKLvlB0aN9RuleKhLnbjnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 190/220] ASoC: SOF: ipc4-topology: Refresh copier IPC payload before widget setup
-Date: Thu, 20 Aug 2026 16:56:20 +0200
-Message-ID: <20260820145229.226403402@linuxfoundation.org>
+	Baul Lee <baul.lee@xbow.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 191/220] net/x25: fix use-after-free of the socket by its timers
+Date: Thu, 20 Aug 2026 16:56:21 +0200
+Message-ID: <20260820145229.255773806@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -52,106 +51,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit 0c0e418dbcf0582bf80d8dbfd9b306607c065992 upstream.
+commit 2195424c3da2ef1829a63b807e3a900a90e57d85 upstream.
 
-The ipc_config_data buffer for copier widgets is built once during
-ipc_prepare (called from sof_pcm_setup_connected_widgets) and cached
-for reuse. For host copiers this buffer contains the copier_data with
-gtw_cfg.node_id (host DMA ID). For DAI copiers it additionally includes
-a dma_config_tlv trailer with stream_id and dma_channel_id for HDA link
-DMA.
+The x25 timers are armed with mod_timer() and cancelled with
+timer_delete(), so a pending timer holds no reference on the socket and a
+cancel does not wait for a callback already running on another CPU.
 
-On suspend/resume, both host and link DMA streams are released and
-re-allocated with potentially different stream tags. The underlying
-copier_data and dma_config_tlv structures are correctly updated by
-host_config and sdw_hda_dai_hw_params respectively. However, since the
-widget list (spcm->stream[].list) persists across suspend,
-sof_pcm_hw_params skips sof_pcm_setup_connected_widgets and ipc_prepare
-never runs again to rebuild ipc_config_data. The stale cached payload
-is then sent to firmware with boot-time DMA channel assignments, causing
-DMA channel conflicts that lead to firmware errors and crashes.
+x25_heartbeat_expiry() also rearms unconditionally, so it can reinstall
+sk->sk_timer after __x25_destroy_socket() has passed its cancel point.
+The following __sock_put() frees the socket while the timer is still
+queued, and the next expiry uses freed memory.  KASAN reports a
+slab-use-after-free on the kmalloc-2k object freed by close().
 
-Fix this by refreshing copier_data and dma_config_tlv portions of
-ipc_config_data in sof_ipc4_widget_setup right before the IPC message
-is sent. This ensures the payload always reflects the current DMA state
-regardless of whether ipc_prepare ran.
+timer_delete_sync() cannot be used here: x25_heartbeat_expiry() and
+x25_timer_expiry() both reach the cancels from inside the timer they
+would wait on, through __x25_destroy_socket() and x25_disconnect().
 
-For DAI copiers, the gtw_cfg.config_length in copier_data is temporarily
-inflated to include the TLV size (matching the ipc_config_data layout)
-before copying, then restored, mirroring what
-sof_ipc4_prepare_copier_module does when first building the buffer.
+Arm the timers with sk_reset_timer() and cancel them with sk_stop_timer()
+so that an armed timer owns a reference, and release it in both expiry
+handlers.  Rearm the heartbeat only while sk_hashed(sk) is still true,
+since __x25_destroy_socket() unlinks the socket before dropping it.  Arm
+the deferred destroy timer the same way and drop its reference in
+x25_destroy_timer().
 
-Fixes: e9c6b118de1a ("ASoC: SOF: make dma_config_tlv be an array")
+Reproduced on net with KASAN, with the heartbeat period shortened so the
+window recurs.  With this patch the reproducer no longer triggers a
+report and /proc/net/x25 drains.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Link: https://github.com/thesofproject/sof/issues/10700
-Link: https://github.com/thesofproject/sof/issues/10955
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Link: https://patch.msgid.link/20260730054822.5913-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260726220342.47245-1-baul.lee@xbow.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adjusted context due to `del_timer()` not yet renamed to `timer_delete()` ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc4-topology.c |   33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ net/x25/af_x25.c    |    4 ++--
+ net/x25/x25_timer.c |   25 ++++++++++++++++---------
+ 2 files changed, 18 insertions(+), 11 deletions(-)
 
---- a/sound/soc/sof/ipc4-topology.c
-+++ b/sound/soc/sof/ipc4-topology.c
-@@ -2654,6 +2654,15 @@ static int sof_ipc4_widget_setup(struct
- 		ipc_size = ipc4_copier->ipc_config_size;
- 		ipc_data = ipc4_copier->ipc_config_data;
+--- a/net/x25/af_x25.c
++++ b/net/x25/af_x25.c
+@@ -362,6 +362,7 @@ static void x25_destroy_timer(struct tim
+ 	struct sock *sk = from_timer(sk, t, sk_timer);
  
-+		/*
-+		 * Refresh copier_data in ipc_config_data for host copiers.
-+		 * The node_id may have been updated by host_config after
-+		 * ipc_prepare, e.g. when host stream tags change after a
-+		 * suspend/resume cycle.
-+		 */
-+		if (swidget->id != snd_soc_dapm_buffer)
-+			memcpy(ipc_data, &ipc4_copier->data, sizeof(ipc4_copier->data));
-+
- 		msg = &ipc4_copier->msg;
- 		break;
+ 	x25_destroy_socket_from_timer(sk);
++	sock_put(sk);
+ }
+ 
+ /*
+@@ -397,9 +398,8 @@ static void __x25_destroy_socket(struct
+ 
+ 	if (sk_has_allocations(sk)) {
+ 		/* Defer: outstanding buffers */
+-		sk->sk_timer.expires  = jiffies + 10 * HZ;
+ 		sk->sk_timer.function = x25_destroy_timer;
+-		add_timer(&sk->sk_timer);
++		sk_reset_timer(sk, &sk->sk_timer, jiffies + 10 * HZ);
+ 	} else {
+ 		/* drop last reference so sock_put will free */
+ 		__sock_put(sk);
+--- a/net/x25/x25_timer.c
++++ b/net/x25/x25_timer.c
+@@ -36,45 +36,45 @@ void x25_init_timers(struct sock *sk)
+ 
+ void x25_start_heartbeat(struct sock *sk)
+ {
+-	mod_timer(&sk->sk_timer, jiffies + 5 * HZ);
++	sk_reset_timer(sk, &sk->sk_timer, jiffies + 5 * HZ);
+ }
+ 
+ void x25_stop_heartbeat(struct sock *sk)
+ {
+-	del_timer(&sk->sk_timer);
++	sk_stop_timer(sk, &sk->sk_timer);
+ }
+ 
+ void x25_start_t2timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t2);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t2);
+ }
+ 
+ void x25_start_t21timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t21);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t21);
+ }
+ 
+ void x25_start_t22timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t22);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t22);
+ }
+ 
+ void x25_start_t23timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t23);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t23);
+ }
+ 
+ void x25_stop_timer(struct sock *sk)
+ {
+-	del_timer(&x25_sk(sk)->timer);
++	sk_stop_timer(sk, &x25_sk(sk)->timer);
+ }
+ 
+ unsigned long x25_display_timer(struct sock *sk)
+@@ -108,7 +108,7 @@ static void x25_heartbeat_expiry(struct
+ 			     sock_flag(sk, SOCK_DEAD))) {
+ 				bh_unlock_sock(sk);
+ 				x25_destroy_socket_from_timer(sk);
+-				return;
++				goto out;
+ 			}
+ 			break;
+ 
+@@ -120,8 +120,14 @@ static void x25_heartbeat_expiry(struct
+ 			break;
  	}
-@@ -2662,6 +2671,9 @@ static int sof_ipc4_widget_setup(struct
- 	{
- 		struct snd_sof_dai *dai = swidget->private;
- 		struct sof_ipc4_copier *ipc4_copier = dai->private;
-+		struct sof_ipc4_copier_data *copier_data;
-+		u32 gtw_cfg_config_length;
-+		u32 tlv_size;
+ restart_heartbeat:
+-	x25_start_heartbeat(sk);
++	/* Do not rearm once __x25_destroy_socket() has unlinked the socket:
++	 * it is past its cancel point and owns the teardown from there on.
++	 */
++	if (sk_hashed(sk))
++		x25_start_heartbeat(sk);
+ 	bh_unlock_sock(sk);
++out:
++	sock_put(sk);
+ }
  
- 		pipeline = pipe_widget->private;
- 		if (pipeline->use_chain_dma)
-@@ -2670,6 +2682,27 @@ static int sof_ipc4_widget_setup(struct
- 		ipc_size = ipc4_copier->ipc_config_size;
- 		ipc_data = ipc4_copier->ipc_config_data;
- 
-+		/*
-+		 * Refresh copier_data and dma_config_tlv in ipc_config_data.
-+		 * These may have been updated after ipc_prepare, e.g. when
-+		 * link DMA stream tags change after a suspend/resume cycle.
-+		 *
-+		 * copier_data->gtw_cfg.config_length does not include the
-+		 * TLV size (it was restored after sof_ipc4_prepare_copier_module),
-+		 * so temporarily inflate it to match the ipc_config_data layout.
-+		 */
-+		copier_data = &ipc4_copier->data;
-+		gtw_cfg_config_length = copier_data->gtw_cfg.config_length * 4;
-+		tlv_size = ipc_size - sizeof(*copier_data) - gtw_cfg_config_length;
-+
-+		copier_data->gtw_cfg.config_length += tlv_size / 4;
-+		memcpy(ipc_data, copier_data, sizeof(*copier_data));
-+		copier_data->gtw_cfg.config_length = gtw_cfg_config_length / 4;
-+
-+		if (tlv_size)
-+			memcpy(ipc_data + sizeof(*copier_data) + gtw_cfg_config_length,
-+			       &ipc4_copier->dma_config_tlv, tlv_size);
-+
- 		msg = &ipc4_copier->msg;
- 		break;
- 	}
+ /*
+@@ -166,4 +172,5 @@ static void x25_timer_expiry(struct time
+ 	} else
+ 		x25_do_timer_expiry(sk);
+ 	bh_unlock_sock(sk);
++	sock_put(sk);
+ }
 
 
