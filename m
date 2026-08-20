@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC58747F774;
-	Thu, 20 Aug 2026 17:34:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D20481A9E;
+	Thu, 20 Aug 2026 17:34:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247290; cv=none; b=RBxtmDi0XKGTezuhqYFcfmfNVyVaFJGl7PRF2GSFyYDHgMCKEJDuIXRyLmGiPnfoy3Xqz9ofShDtlg6yPUBa7/CwDq6lbsOa4GDd6LIHYZ9leUA/WrfVFstN07Q/Apt+wpnD9HesTlZVteWTrAoOTKWDMqGp21kAIs7NaT6bsv4=
+	t=1787247294; cv=none; b=HV9A16sBw70acPVAWCzzK1gcyzerEd6YA5/MbzezZFWEll37ynBpApFVZhAekV3yvdyThEuFvXWNtx0GGTyPBjkj5zocic2B/CwYKMShe1earzy7MQ8nPzrRjCKYBfsb/70ld+ymgg/45p9iYygxawz3qgJMCzU4kDOqOkkbUR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247290; c=relaxed/simple;
-	bh=faoPOJKH8+6IoG0K/7K1xY7iMe03wmQ3uQ0mNxTzd5k=;
+	s=arc-20240116; t=1787247294; c=relaxed/simple;
+	bh=nmyJJxqHqZsvRfDvZ+IPRedRYzSXO4t2d5X/xO0WJzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JDz9t1vqY9yE+EG8IxJf5sm/MDk1PrR1hSH56g4Jbh+CwzzqaK67MZAAWicrof6GYdITlJeBIrVkiwJrpBhfFx4ub4+X4RRR5iAQp3Y+639O6cNHmmlaRnjXMfue9gSLMKCIyzLOPz+V0Nom40FOFalt+scPrZ2dg+zJ5IVwwt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K4+K/1Xq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q5lFer8AtbvEOQ1ttMgTGf5V92tg8vn9X8yFx6DNUpwNVnGTZQFSeZX3ALkgwkYEhqDcNo8dJ3LH6h/0LQHOSsyrcJY3LBbvam+m5YmcEZjiYc8FAEGqz14ELpOrjJY0sPqs9F9y6zPBpls384tmC0/ih/cezoN4XSJg0Zv6nks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NemQbKSX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K4+K/1Xq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A8A61F00A3D;
-	Thu, 20 Aug 2026 17:34:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NemQbKSX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE4011F00A3A;
+	Thu, 20 Aug 2026 17:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247289;
-	bh=zOpC7yAbQ5Vk15FvDsOtODpCHGIyuOyYvW95JmGTW4M=;
+	s=korg; t=1787247292;
+	bh=at2QncPRcJQHEvtmfehFoFb65O9iE+KyWLtf11i+Gyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K4+K/1XqV2i/MmIgDLkCicBk0rcW7GbvA5WM7/XEUfhiWaQHR7TrqUSdFUsaJ8uw+
-	 ISCeAUCdD7AZrYf4vX/CB/7ErRPKQIQngSWUyQQIrwxP+cAvOqa49sLBQw8twiSwyP
-	 z88VLY4bI9O/z1ESkLWhHQj2OyBgieZHNx/gT6rs=
+	b=NemQbKSXpC+jX9Y/KSIaY0tVCODp+zEKu1KgZqDXQJOXkpbLawG+15Ix26DeoxJSq
+	 hwzDPvvM25lzmFwBfkQryVPZMCHQQeH91uU+gO56AJYDMpRDd2UfX5+5UsHf/nGvUJ
+	 6XxVzO91JjJoF+dPNZTJLXycQk3HOBSmVTrZZTmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Guenter Roeck <groeck7@gmail.com>,
-	Gao Xiang <xiang@kernel.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 214/220] erofs: fix EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS on some UP platforms
-Date: Thu, 20 Aug 2026 16:56:44 +0200
-Message-ID: <20260820145229.965654753@linuxfoundation.org>
+Subject: [PATCH 6.12 215/220] perf: Unify perf_event_free_task() / perf_event_exit_task_context()
+Date: Thu, 20 Aug 2026 16:56:45 +0200
+Message-ID: <20260820145229.998399777@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -54,60 +51,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <xiang@kernel.org>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit a64d500b0078e16e9abb25baca4dee1dbc9054fc ]
+commit 90661365021a6d0d7f3a2c5046ebe33e4df53b92 upstream.
 
-CONFIG_NR_CPUS doesn't define on some UP platforms (e.g.  arm), so this
-can cause make oldconfig to loop indefinitely when CONFIG_SMP=n:
+Both perf_event_free_task() and perf_event_exit_task_context() are
+very similar, except perf_event_exit_task_context() is a little more
+generic / makes less assumptions.
 
-  $ make ARCH=arm allmodconfig
-  $ sed -i "/CONFIG_SMP=y/d" .config
-  $ sed -i "/CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS.*/d" .config
-
-  EROFS LZMA default maximum decompression streams (EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS) [0] (NEW)
-  EROFS LZMA default maximum decompression streams (EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS) [0] (NEW)
-  ...
-
-Let's guard NR_CPUS with SMP instead of using a hardcoded arbitrary CPU
-uplimit here, similar to commit a3344078101c ("mm: make SPLIT_PTE_PTLOCKS
-depend on SMP").
-
-The initial report from SJ Park was for m68k [1] (m68k is the only arch
-without NR_CPUS in Kconfig), and that got fixed in commit 1fd495ef09ee
-("m68k: Define NR_CPUS to 1")
-
-Reported-by: SJ Park <sj@kernel.org>
-Link: https://lore.kernel.org/all/anuyFHLUGDjZWY4K@XiangdeMacBook-Pro.local/T/#u [1]
-Closes: https://lore.kernel.org/r/20260728065447.91511-1-sj@kernel.org
-Reported-by: Guenter Roeck <groeck7@gmail.com>
-Closes: https://lore.kernel.org/r/87853c96-cc8f-49e6-81b1-02bfe409e372@roeck-us.net
-Fixes: c9b47e6b2311 ("erofs: cap LZMA stream pool size")
-Signed-off-by: Gao Xiang <xiang@kernel.org>
-Tested-by: SJ Park <sj@kernel.org>
-Tested-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Link: https://lkml.kernel.org/r/20250307193723.274039710@infradead.org
+Stable-dep-of: 42c5ca1f0a28 ("perf/core: Fix group leader use-after-free after sibling detach")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/events/core.c |   93 +++++++++++++--------------------------------------
+ 1 file changed, 25 insertions(+), 68 deletions(-)
 
-diff --git a/fs/erofs/Kconfig b/fs/erofs/Kconfig
-index d7e004f8cfedb..2d36d7b1b3449 100644
---- a/fs/erofs/Kconfig
-+++ b/fs/erofs/Kconfig
-@@ -117,7 +117,8 @@ config EROFS_FS_ZIP_LZMA
- config EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS
- 	int "EROFS LZMA default maximum decompression streams"
- 	depends on EROFS_FS_ZIP_LZMA
--	range 1 NR_CPUS
-+	range 1 NR_CPUS if SMP
-+	range 1 1 if !SMP
- 	default 16
- 	help
- 	  By default EROFS allocates one LZMA decompression stream per CPU.
--- 
-2.53.0
-
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -13522,13 +13522,11 @@ perf_event_exit_event(struct perf_event
+ 	perf_event_wakeup(event);
+ }
+ 
+-static void perf_event_exit_task_context(struct task_struct *child)
++static void perf_event_exit_task_context(struct task_struct *child, bool exit)
+ {
+ 	struct perf_event_context *child_ctx, *clone_ctx = NULL;
+ 	struct perf_event *child_event, *next;
+ 
+-	WARN_ON_ONCE(child != current);
+-
+ 	child_ctx = perf_pin_task_context(child);
+ 	if (!child_ctx)
+ 		return;
+@@ -13551,7 +13549,8 @@ static void perf_event_exit_task_context
+ 	 * in.
+ 	 */
+ 	raw_spin_lock_irq(&child_ctx->lock);
+-	task_ctx_sched_out(child_ctx, NULL, EVENT_ALL);
++	if (exit)
++		task_ctx_sched_out(child_ctx, NULL, EVENT_ALL);
+ 
+ 	/*
+ 	 * Now that the context is inactive, destroy the task <-> ctx relation
+@@ -13560,7 +13559,7 @@ static void perf_event_exit_task_context
+ 	RCU_INIT_POINTER(child->perf_event_ctxp, NULL);
+ 	put_ctx(child_ctx); /* cannot be last */
+ 	WRITE_ONCE(child_ctx->task, TASK_TOMBSTONE);
+-	put_task_struct(current); /* cannot be last */
++	put_task_struct(child); /* cannot be last */
+ 
+ 	clone_ctx = unclone_ctx(child_ctx);
+ 	raw_spin_unlock_irq(&child_ctx->lock);
+@@ -13573,13 +13572,31 @@ static void perf_event_exit_task_context
+ 	 * won't get any samples after PERF_RECORD_EXIT. We can however still
+ 	 * get a few PERF_RECORD_READ events.
+ 	 */
+-	perf_event_task(child, child_ctx, 0);
++	if (exit)
++		perf_event_task(child, child_ctx, 0);
+ 
+ 	list_for_each_entry_safe(child_event, next, &child_ctx->event_list, event_entry)
+ 		perf_event_exit_event(child_event, child_ctx, 0);
+ 
+ 	mutex_unlock(&child_ctx->mutex);
+ 
++	if (!exit) {
++		/*
++		 * perf_event_release_kernel() could still have a reference on
++		 * this context. In that case we must wait for these events to
++		 * have been freed (in particular all their references to this
++		 * task must've been dropped).
++		 *
++		 * Without this copy_process() will unconditionally free this
++		 * task (irrespective of its reference count) and
++		 * _free_event()'s put_task_struct(event->hw.target) will be a
++		 * use-after-free.
++		 *
++		 * Wait for all events to drop their context reference.
++		 */
++		wait_var_event(&child_ctx->refcount,
++			       refcount_read(&child_ctx->refcount) == 1);
++	}
+ 	put_ctx(child_ctx);
+ }
+ 
+@@ -13607,7 +13624,7 @@ void perf_event_exit_task(struct task_st
+ 	}
+ 	mutex_unlock(&child->perf_event_mutex);
+ 
+-	perf_event_exit_task_context(child);
++	perf_event_exit_task_context(child, true);
+ 
+ 	/*
+ 	 * The perf_event_exit_task_context calls perf_event_task
+@@ -13618,25 +13635,6 @@ void perf_event_exit_task(struct task_st
+ 	perf_event_task(child, NULL, 0);
+ }
+ 
+-static void perf_free_event(struct perf_event *event,
+-			    struct perf_event_context *ctx)
+-{
+-	struct perf_event *parent = event->parent;
+-
+-	if (WARN_ON_ONCE(!parent))
+-		return;
+-
+-	mutex_lock(&parent->child_mutex);
+-	list_del_init(&event->child_list);
+-	mutex_unlock(&parent->child_mutex);
+-
+-	raw_spin_lock_irq(&ctx->lock);
+-	perf_group_detach(event);
+-	list_del_event(event, ctx);
+-	raw_spin_unlock_irq(&ctx->lock);
+-	put_event(event);
+-}
+-
+ /*
+  * Free a context as created by inheritance by perf_event_init_task() below,
+  * used by fork() in case of fail.
+@@ -13646,48 +13644,7 @@ static void perf_free_event(struct perf_
+  */
+ void perf_event_free_task(struct task_struct *task)
+ {
+-	struct perf_event_context *ctx;
+-	struct perf_event *event, *tmp;
+-
+-	ctx = rcu_access_pointer(task->perf_event_ctxp);
+-	if (!ctx)
+-		return;
+-
+-	mutex_lock(&ctx->mutex);
+-	raw_spin_lock_irq(&ctx->lock);
+-	/*
+-	 * Destroy the task <-> ctx relation and mark the context dead.
+-	 *
+-	 * This is important because even though the task hasn't been
+-	 * exposed yet the context has been (through child_list).
+-	 */
+-	RCU_INIT_POINTER(task->perf_event_ctxp, NULL);
+-	WRITE_ONCE(ctx->task, TASK_TOMBSTONE);
+-	put_task_struct(task); /* cannot be last */
+-	raw_spin_unlock_irq(&ctx->lock);
+-
+-
+-	list_for_each_entry_safe(event, tmp, &ctx->event_list, event_entry)
+-		perf_free_event(event, ctx);
+-
+-	mutex_unlock(&ctx->mutex);
+-
+-	/*
+-	 * perf_event_release_kernel() could've stolen some of our
+-	 * child events and still have them on its free_list. In that
+-	 * case we must wait for these events to have been freed (in
+-	 * particular all their references to this task must've been
+-	 * dropped).
+-	 *
+-	 * Without this copy_process() will unconditionally free this
+-	 * task (irrespective of its reference count) and
+-	 * _free_event()'s put_task_struct(event->hw.target) will be a
+-	 * use-after-free.
+-	 *
+-	 * Wait for all events to drop their context reference.
+-	 */
+-	wait_var_event(&ctx->refcount, refcount_read(&ctx->refcount) == 1);
+-	put_ctx(ctx); /* must be last */
++	perf_event_exit_task_context(task, false);
+ }
+ 
+ void perf_event_delayed_put(struct task_struct *task)
 
 
