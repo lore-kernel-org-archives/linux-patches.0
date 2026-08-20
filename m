@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DC147D463;
-	Thu, 20 Aug 2026 16:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B0F47D92B;
+	Thu, 20 Aug 2026 16:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243586; cv=none; b=K9AdEnWfr0n2UPzmzW+Mm1r8BmkjyyUyhqJ9eEcobDSY9sXWVlAXOr9FjBQPAeqpHTQT+wl91TlhTq2S2712x1stevsGBmq9N4d6P1c1V6DCHlHhfrFDpbttnrh/io94wleQ9BJC8/OJxEqy15fEK/6PvdnBjzp8anUQMAka4nw=
+	t=1787243588; cv=none; b=IWdn9XwBHxxECQQlE5OW0RjUI57WJ5a7GX9BuY0/QKc64irGnjZQnDj8nx8HhB3TJsSdrD0zPhHbYK0ZqzQyHMFNHXZJe0h/xdHxWeCqMU7PuDkYdsh/3QNVnvjgwIp0IgjkENg4frpgnM25ryvFj3CNBCqDu8Zsw1vQjFNZd+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243586; c=relaxed/simple;
-	bh=KbutMbaxBEUfIZCdCGil/GpasZK4vQI9362tygTi1CI=;
+	s=arc-20240116; t=1787243588; c=relaxed/simple;
+	bh=J31HUb/s45IOJO60nUFPTIIzYGo2GtXLqU2vw2CLHKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ckAfcjoXMzGEMN9czwQDeKMy/chE+tW0cVeCFsi1KsO3otrlwqhs1gYmtqBr/Jf04r3fs1+QcfoVWEJpdi8kB3i4iRvRAhMFtV1oTRxPXMZpr7FpDZheD8MIAPYioAXaKBlOPCUVu9KWI2mW0pZI0Fj5/ZctDXih3BmGmkvlFf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FJ03tkRB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zl0FhnVhmoajhe5fZutp1+LV34AlNyPyZtCAJLjqzIpe2/dzatY19ex3UuGGduMSNRCeG47cJmU1VoR/grOZucx5jkYSHzU3jccOlelTOt5qzBGsCLNoZF6UCdkpfxB5maCbR0ZSvEPkWonCk1v95brMqkUiX/EvPQCWCGt/CKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R8iR5XCq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FJ03tkRB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB9B1F000E9;
-	Thu, 20 Aug 2026 16:33:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R8iR5XCq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC031F000E9;
+	Thu, 20 Aug 2026 16:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243584;
-	bh=GIP8rRumMFTOq/6ELIT/pLTOZ9ygS4J1yPpU/boIFEA=;
+	s=korg; t=1787243587;
+	bh=t098M/7eL56bXgAmf7CbIpExKKuZ8TbsWK6dkylxldA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FJ03tkRBxE7/GRrfNgEF/Cpl/JJFxpWqyvomnKSfqhAu9vugQoq/OnAusZMBb2xze
-	 IfL8ezAwOpISRXORL8rgejwTrVw83KLkComX6oKjLASoaoiKZt6ngurgYz0FyLUNeX
-	 wfkk/C2ErSCC/auTINdEGIbwpP8HpMSIGP/E8VSQ=
+	b=R8iR5XCqhbfEPY6au9RIdy2tt41tNX2kLM10cKi7eFah/rkp7DUwBrKNWjZ/tzrDW
+	 NJRsxFfAFzm8X5ebkn9mXdd8fG9c28J/IcwjAWhK6/fYluMvSEqAT/T7k9gyPOudIk
+	 4zFuAUTpcT/lBiwxEl/0EXYqU9vGbSKopESyfxk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Jian <liujian56@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Xiao Liang <shaw.leon@gmail.com>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 144/272] net: Add helper function to parse netlink msg of ip_tunnel_encap
-Date: Thu, 20 Aug 2026 16:55:28 +0200
-Message-ID: <20260820145235.624669744@linuxfoundation.org>
+Subject: [PATCH 5.15 145/272] net: ipip: require CAP_NET_ADMIN in the device netns for changelink
+Date: Thu, 20 Aug 2026 16:55:29 +0200
+Message-ID: <20260820145235.658350323@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -51,260 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Jian <liujian56@huawei.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-[ Upstream commit 537dd2d9fb9f4aa7939fb4fcf552ebe4f497bd7e ]
+[ Upstream commit 8211a26324667980a463c069469a818e71207e02 ]
 
-Add ip_tunnel_netlink_encap_parms to parse netlink msg of ip_tunnel_encap.
-Reduces duplicate code, no actual functional changes.
+ipip_changelink() operates on at most two netns, dev_net(dev) and the
+tunnel link netns t->net. They differ once the device is created in or
+moved to a netns other than the one the request runs in. The rtnl
+changelink path checks CAP_NET_ADMIN only against dev_net(dev), so a
+caller privileged there but not in t->net can rewrite a tunnel that
+lives in t->net.
 
-Signed-off-by: Liu Jian <liujian56@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 8211a2632466 ("net: ipip: require CAP_NET_ADMIN in the device netns for changelink")
+Gate ipip_changelink() on rtnl_dev_link_net_capable() at its top,
+before any attribute is parsed.
+
+Reported-by: Xiao Liang <shaw.leon@gmail.com>
+Closes: https://lore.kernel.org/netdev/CABAhCOSzP1vaThGV35_VnsRCb=87_CPjPVsTHbq905k8A+BuUg@mail.gmail.com/
+Fixes: 6c742e714d8c ("ipip: add x-netns support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260612085941.3158249-3-maoyixie.tju@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/ip_tunnels.h  |    3 +++
- net/ipv4/ip_tunnel_core.c |   35 +++++++++++++++++++++++++++++++++++
- net/ipv4/ipip.c           |   38 ++------------------------------------
- net/ipv6/ip6_tunnel.c     |   37 ++-----------------------------------
- net/ipv6/sit.c            |   38 ++------------------------------------
- 5 files changed, 44 insertions(+), 107 deletions(-)
+ net/ipv4/ipip.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/include/net/ip_tunnels.h
-+++ b/include/net/ip_tunnels.h
-@@ -296,6 +296,9 @@ int ip_tunnel_newlink(struct net_device
- 		      struct ip_tunnel_parm *p, __u32 fwmark);
- void ip_tunnel_setup(struct net_device *dev, unsigned int net_id);
- 
-+bool ip_tunnel_netlink_encap_parms(struct nlattr *data[],
-+				   struct ip_tunnel_encap *encap);
-+
- extern const struct header_ops ip_tunnel_header_ops;
- __be16 ip_tunnel_parse_protocol(const struct sk_buff *skb);
- 
---- a/net/ipv4/ip_tunnel_core.c
-+++ b/net/ipv4/ip_tunnel_core.c
-@@ -1091,3 +1091,38 @@ EXPORT_SYMBOL(ip_tunnel_parse_protocol);
- 
- const struct header_ops ip_tunnel_header_ops = { .parse_protocol = ip_tunnel_parse_protocol };
- EXPORT_SYMBOL(ip_tunnel_header_ops);
-+
-+/* This function returns true when ENCAP attributes are present in the nl msg */
-+bool ip_tunnel_netlink_encap_parms(struct nlattr *data[],
-+				   struct ip_tunnel_encap *encap)
-+{
-+	bool ret = false;
-+
-+	memset(encap, 0, sizeof(*encap));
-+
-+	if (!data)
-+		return ret;
-+
-+	if (data[IFLA_IPTUN_ENCAP_TYPE]) {
-+		ret = true;
-+		encap->type = nla_get_u16(data[IFLA_IPTUN_ENCAP_TYPE]);
-+	}
-+
-+	if (data[IFLA_IPTUN_ENCAP_FLAGS]) {
-+		ret = true;
-+		encap->flags = nla_get_u16(data[IFLA_IPTUN_ENCAP_FLAGS]);
-+	}
-+
-+	if (data[IFLA_IPTUN_ENCAP_SPORT]) {
-+		ret = true;
-+		encap->sport = nla_get_be16(data[IFLA_IPTUN_ENCAP_SPORT]);
-+	}
-+
-+	if (data[IFLA_IPTUN_ENCAP_DPORT]) {
-+		ret = true;
-+		encap->dport = nla_get_be16(data[IFLA_IPTUN_ENCAP_DPORT]);
-+	}
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(ip_tunnel_netlink_encap_parms);
 --- a/net/ipv4/ipip.c
 +++ b/net/ipv4/ipip.c
-@@ -448,40 +448,6 @@ static void ipip_netlink_parms(struct nl
- 		*fwmark = nla_get_u32(data[IFLA_IPTUN_FWMARK]);
- }
- 
--/* This function returns true when ENCAP attributes are present in the nl msg */
--static bool ipip_netlink_encap_parms(struct nlattr *data[],
--				     struct ip_tunnel_encap *ipencap)
--{
--	bool ret = false;
--
--	memset(ipencap, 0, sizeof(*ipencap));
--
--	if (!data)
--		return ret;
--
--	if (data[IFLA_IPTUN_ENCAP_TYPE]) {
--		ret = true;
--		ipencap->type = nla_get_u16(data[IFLA_IPTUN_ENCAP_TYPE]);
--	}
--
--	if (data[IFLA_IPTUN_ENCAP_FLAGS]) {
--		ret = true;
--		ipencap->flags = nla_get_u16(data[IFLA_IPTUN_ENCAP_FLAGS]);
--	}
--
--	if (data[IFLA_IPTUN_ENCAP_SPORT]) {
--		ret = true;
--		ipencap->sport = nla_get_be16(data[IFLA_IPTUN_ENCAP_SPORT]);
--	}
--
--	if (data[IFLA_IPTUN_ENCAP_DPORT]) {
--		ret = true;
--		ipencap->dport = nla_get_be16(data[IFLA_IPTUN_ENCAP_DPORT]);
--	}
--
--	return ret;
--}
--
- static int ipip_newlink(struct net *src_net, struct net_device *dev,
- 			struct nlattr *tb[], struct nlattr *data[],
- 			struct netlink_ext_ack *extack)
-@@ -491,7 +457,7 @@ static int ipip_newlink(struct net *src_
- 	struct ip_tunnel_encap ipencap;
- 	__u32 fwmark = 0;
- 
--	if (ipip_netlink_encap_parms(data, &ipencap)) {
-+	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
- 		int err = ip_tunnel_encap_setup(t, &ipencap);
- 
- 		if (err < 0)
-@@ -512,7 +478,7 @@ static int ipip_changelink(struct net_de
+@@ -478,6 +478,9 @@ static int ipip_changelink(struct net_de
  	bool collect_md;
  	__u32 fwmark = t->fwmark;
  
--	if (ipip_netlink_encap_parms(data, &ipencap)) {
-+	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
++	if (!rtnl_dev_link_net_capable(dev, t->net))
++		return -EPERM;
++
+ 	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
  		int err = ip_tunnel_encap_setup(t, &ipencap);
  
- 		if (err < 0)
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -2008,39 +2008,6 @@ static void ip6_tnl_netlink_parms(struct
- 		parms->fwmark = nla_get_u32(data[IFLA_IPTUN_FWMARK]);
- }
- 
--static bool ip6_tnl_netlink_encap_parms(struct nlattr *data[],
--					struct ip_tunnel_encap *ipencap)
--{
--	bool ret = false;
--
--	memset(ipencap, 0, sizeof(*ipencap));
--
--	if (!data)
--		return ret;
--
--	if (data[IFLA_IPTUN_ENCAP_TYPE]) {
--		ret = true;
--		ipencap->type = nla_get_u16(data[IFLA_IPTUN_ENCAP_TYPE]);
--	}
--
--	if (data[IFLA_IPTUN_ENCAP_FLAGS]) {
--		ret = true;
--		ipencap->flags = nla_get_u16(data[IFLA_IPTUN_ENCAP_FLAGS]);
--	}
--
--	if (data[IFLA_IPTUN_ENCAP_SPORT]) {
--		ret = true;
--		ipencap->sport = nla_get_be16(data[IFLA_IPTUN_ENCAP_SPORT]);
--	}
--
--	if (data[IFLA_IPTUN_ENCAP_DPORT]) {
--		ret = true;
--		ipencap->dport = nla_get_be16(data[IFLA_IPTUN_ENCAP_DPORT]);
--	}
--
--	return ret;
--}
--
- static int ip6_tnl_newlink(struct net *src_net, struct net_device *dev,
- 			   struct nlattr *tb[], struct nlattr *data[],
- 			   struct netlink_ext_ack *extack)
-@@ -2053,7 +2020,7 @@ static int ip6_tnl_newlink(struct net *s
- 
- 	nt = netdev_priv(dev);
- 
--	if (ip6_tnl_netlink_encap_parms(data, &ipencap)) {
-+	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
- 		err = ip6_tnl_encap_setup(nt, &ipencap);
- 		if (err < 0)
- 			return err;
-@@ -2090,7 +2057,7 @@ static int ip6_tnl_changelink(struct net
- 	if (dev == ip6n->fb_tnl_dev)
- 		return -EINVAL;
- 
--	if (ip6_tnl_netlink_encap_parms(data, &ipencap)) {
-+	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
- 		int err = ip6_tnl_encap_setup(t, &ipencap);
- 
- 		if (err < 0)
---- a/net/ipv6/sit.c
-+++ b/net/ipv6/sit.c
-@@ -1545,40 +1545,6 @@ static void ipip6_netlink_parms(struct n
- 		*fwmark = nla_get_u32(data[IFLA_IPTUN_FWMARK]);
- }
- 
--/* This function returns true when ENCAP attributes are present in the nl msg */
--static bool ipip6_netlink_encap_parms(struct nlattr *data[],
--				      struct ip_tunnel_encap *ipencap)
--{
--	bool ret = false;
--
--	memset(ipencap, 0, sizeof(*ipencap));
--
--	if (!data)
--		return ret;
--
--	if (data[IFLA_IPTUN_ENCAP_TYPE]) {
--		ret = true;
--		ipencap->type = nla_get_u16(data[IFLA_IPTUN_ENCAP_TYPE]);
--	}
--
--	if (data[IFLA_IPTUN_ENCAP_FLAGS]) {
--		ret = true;
--		ipencap->flags = nla_get_u16(data[IFLA_IPTUN_ENCAP_FLAGS]);
--	}
--
--	if (data[IFLA_IPTUN_ENCAP_SPORT]) {
--		ret = true;
--		ipencap->sport = nla_get_be16(data[IFLA_IPTUN_ENCAP_SPORT]);
--	}
--
--	if (data[IFLA_IPTUN_ENCAP_DPORT]) {
--		ret = true;
--		ipencap->dport = nla_get_be16(data[IFLA_IPTUN_ENCAP_DPORT]);
--	}
--
--	return ret;
--}
--
- #ifdef CONFIG_IPV6_SIT_6RD
- /* This function returns true when 6RD attributes are present in the nl msg */
- static bool ipip6_netlink_6rd_parms(struct nlattr *data[],
-@@ -1630,7 +1596,7 @@ static int ipip6_newlink(struct net *src
- 
- 	nt = netdev_priv(dev);
- 
--	if (ipip6_netlink_encap_parms(data, &ipencap)) {
-+	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
- 		err = ip_tunnel_encap_setup(nt, &ipencap);
- 		if (err < 0)
- 			return err;
-@@ -1685,7 +1651,7 @@ static int ipip6_changelink(struct net_d
- 	if (dev == sitn->fb_tunnel_dev)
- 		return -EINVAL;
- 
--	if (ipip6_netlink_encap_parms(data, &ipencap)) {
-+	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
- 		err = ip_tunnel_encap_setup(t, &ipencap);
- 		if (err < 0)
- 			return err;
 
 
