@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A7F47DD48;
-	Thu, 20 Aug 2026 16:38:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8BB347D93B;
+	Thu, 20 Aug 2026 16:38:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243910; cv=none; b=KNuVmroNRW0/CV1xNlVV3329oeGQgJiP0JNuzHK4crtJcnGOOSkZ+X54bWwZY2CRQScORsNwUx5dxoS5GFxtXxR6FS7luzFhX1E3Dqq5mp8UKENjnWakfd6EQw5Xk9Vd4+rAa0L3fy08/vRTyyAT508NfALIB2brW+zVdaaP++8=
+	t=1787243913; cv=none; b=PpVxnfD7I0YMV4751WKMYGnx64hz7EjBTxd+t7NMjdis/UjPb1Ja716nQpbmJX61UVcGV9xj0NfGYUfavZNuDfOJdvs7AIEjPBskNaKM0hk8s3SvNBD1AarlIrsv8OC+gvfKX63ghNmtbKPWWhK9iesVIeEy5WIgF2O5YNUs5JE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243910; c=relaxed/simple;
-	bh=WM4AJwx7PBjSoct66NK8KNFPh7HV3jnN3nPuIHdXmlc=;
+	s=arc-20240116; t=1787243913; c=relaxed/simple;
+	bh=CD95Owvr9tBM1eAHug0ZygtUmLrpJVRybjIPMjNsweg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lj25pDM8/frRK+acmHx32zsmDKPUZH8+KgKwDU6sAv9ayGI/DADD+zwuz4MBnAXgj4zod4W1sWpLxtBRbY7f3hO7dtrKiljRqm31CZtyz/j95dFwaYX41EgyFsS5+c0Yhf6ivB9ZdBphKMS+3DQEryfiXLAFswIh4To3azGp5tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1LyAL4ok; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AT00oEEBbQ9qh4adBbzilqt+nU57A/Lq9frEtzRFDgvvRltDXR8EhCfEIAEMwFFa82P7rGbMrLg2llyqmuFv862gaSg+6bHPoQUpWrG/cP5TOfdfsQcSBZid18KmK+fbdWXuJ38uKXWn1HBKslZjzsTcutvFy2aJ5sjqpRcaGHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TKa0Dqho; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1LyAL4ok"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F23A1F000E9;
-	Thu, 20 Aug 2026 16:38:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKa0Dqho"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF3E1F000E9;
+	Thu, 20 Aug 2026 16:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243908;
-	bh=LBZb06A8I2bPRa32ZCIA8/R3XUGEdsz5F9LvNY8C5co=;
+	s=korg; t=1787243911;
+	bh=CofV0e9A57fG6wKK9MA8VFpbQMDwWgcCbaNtgjJTd7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1LyAL4okx6hAjTgunmJtvAGcXW9/GAD5NEphaAjrVrF0K8scMAtT20h85sx1VeM5R
-	 y/cBdw4Af3mad+2UhahpLRIaaxvKmDHQvr1d4TYZJxS5DiZSf/qJ8jWkIdB+HY6l3B
-	 8gXEjF5mo01kA13fyy70SXdfUqO0M6nMeOunP02Q=
+	b=TKa0DqhowcCKqq12xfpGhaRLFAE1MzahD4t7dCjgG3KBw0iA/0/gaM/fGezT2Znss
+	 QV5X09Wz5WYrw3q/jc33mS0TGQ8ziG9gMAGv6qVQ2GcBkU0z+l7qoj4qoN+dg++NYw
+	 F8NKKZOzu8x9nVVKBR6ESOlNy2QhttcFy2W1E5Ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 241/272] i2c: bcm-iproc: remove printout on handled timeouts
-Date: Thu, 20 Aug 2026 16:57:05 +0200
-Message-ID: <20260820145238.850921720@linuxfoundation.org>
+Subject: [PATCH 5.15 259/272] netfilter: ipset: fix refcount race between list:set GC and swap
+Date: Thu, 20 Aug 2026 16:57:23 +0200
+Message-ID: <20260820145239.404027703@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -51,34 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-[ Upstream commit 796e2c260187e32530cf343546ba1cdf2e2f5491 ]
+[ Upstream commit 0c88868271653537ed443272dd8e7d13634d214b ]
 
-I2C and SMBus timeouts are not something the user needs to be informed
-about on controller level. The client driver may know if that really is
-a problem and give more detailed information to the user. The controller
-should just pass this information upwards. Remove the printout.
+__ip_set_put_byindex() resolved the index to a set pointer under RCU,
+then took ip_set_ref_lock in __ip_set_put() to decrement set->ref.
+ip_set_swap() holds that same lock while swapping both the ip_set_list
+slots and the two sets' ref counters, so it can interleave between the
+dereference and the lock acquisition, leaving the caller to decrement a
+set whose reference already moved to the other index and hit
+BUG_ON(set->ref == 0). list_set_gc() reaches this from timer softirq,
+which the nfnl mutex does not serialize against swap: an expiring
+list:set member calls list_set_del() -> ip_set_put_byindex() while
+IPSET_CMD_SWAP runs on the referenced sets.
 
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Stable-dep-of: 98f2e9e6d6f9 ("i2c: iproc: reset bus after timeout if START_BUSY is stuck")
+Resolve the index and decrement under ip_set_ref_lock, as ip_set_swap()
+already does, keeping the refcount tied to the index rather than to a
+stale set pointer.
+
+  kernel BUG at net/netfilter/ipset/ip_set_core.c:685!
+  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+  RIP: 0010:ip_set_put_byindex (net/netfilter/ipset/ip_set_core.c:870)
+  Call Trace:
+   <IRQ>
+   list_set_del (net/netfilter/ipset/ip_set_list_set.c:159)
+   set_cleanup_entries (net/netfilter/ipset/ip_set_list_set.c:181)
+   list_set_gc (net/netfilter/ipset/ip_set_list_set.c:578)
+   call_timer_fn (kernel/time/timer.c:1748)
+   __run_timers (kernel/time/timer.c:1799 kernel/time/timer.c:2374)
+   run_timer_softirq (kernel/time/timer.c:2405)
+   </IRQ>
+  Kernel panic - not syncing: Fatal exception in interrupt
+
+Fixes: 9076aea76538 ("netfilter: ipset: Increase the number of maximal sets automatically")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-bcm-iproc.c |    2 --
- 1 file changed, 2 deletions(-)
+ net/netfilter/ipset/ip_set_core.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
---- a/drivers/i2c/busses/i2c-bcm-iproc.c
-+++ b/drivers/i2c/busses/i2c-bcm-iproc.c
-@@ -821,8 +821,6 @@ static int bcm_iproc_i2c_xfer_wait(struc
- 	}
+diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
+index 34d5c973c4ee0..3115591c9d65e 100644
+--- a/net/netfilter/ipset/ip_set_core.c
++++ b/net/netfilter/ipset/ip_set_core.c
+@@ -679,11 +679,18 @@ __ip_set_get(struct ip_set *set)
+ }
  
- 	if (!time_left && !iproc_i2c->xfer_is_done) {
--		dev_err(iproc_i2c->device, "transaction timed out\n");
--
- 		/* flush both TX/RX FIFOs */
- 		val = BIT(M_FIFO_RX_FLUSH_SHIFT) | BIT(M_FIFO_TX_FLUSH_SHIFT);
- 		iproc_i2c_wr_reg(iproc_i2c, M_FIFO_CTRL_OFFSET, val);
+ static void
+-__ip_set_put(struct ip_set *set)
++__ip_set_put_locked(struct ip_set *set)
+ {
+-	write_lock_bh(&ip_set_ref_lock);
++	lockdep_assert_held(&ip_set_ref_lock);
+ 	BUG_ON(set->ref == 0);
+ 	set->ref--;
++}
++
++static void
++__ip_set_put(struct ip_set *set)
++{
++	write_lock_bh(&ip_set_ref_lock);
++	__ip_set_put_locked(set);
+ 	write_unlock_bh(&ip_set_ref_lock);
+ }
+ 
+@@ -856,11 +863,11 @@ __ip_set_put_byindex(struct ip_set_net *inst, ip_set_id_t index)
+ {
+ 	struct ip_set *set;
+ 
+-	rcu_read_lock();
+-	set = rcu_dereference(inst->ip_set_list)[index];
++	write_lock_bh(&ip_set_ref_lock);
++	set = ip_set(inst, index);
+ 	if (set)
+-		__ip_set_put(set);
+-	rcu_read_unlock();
++		__ip_set_put_locked(set);
++	write_unlock_bh(&ip_set_ref_lock);
+ }
+ 
+ void
+-- 
+2.53.0
+
 
 
