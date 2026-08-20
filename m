@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D043793CE;
-	Thu, 20 Aug 2026 16:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0806725C6EE;
+	Thu, 20 Aug 2026 16:48:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244521; cv=none; b=UPPMH2huoF64sjmmNIOyvC7AkIB932OB2YPwehdXgl/TG/nVuGPnX1/nKK+JiSMdG3hHOanlWQ1eVJcH8zYSHkmRTZzIekKBU69SdOE7tb/qATjFq3anUX7MqHWsmoOyXXVpGomSj9hFV62PJ4CaWtrwNqbfDUK0Rvm2jE2VWLA=
+	t=1787244524; cv=none; b=M7Z12RUaOqTvvV6hNX25fHRbi5RImK3j0iK/ADkH9ONyC0vnI5aSOnW2d2jF9IaJgK945VWR54lRn/SvFPDzsgOmM/klzrQYVCPO5VWQ2MmhmD+s6KMt9T664qPwAtnt9gWYAJDCkYP7zrtm6FgZ4js79/J10W58a5hvPz46On4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244521; c=relaxed/simple;
-	bh=kf6nT2BQwdp2I4wxQOsERf+Jlw05EncT3GEJ0CqJR3U=;
+	s=arc-20240116; t=1787244524; c=relaxed/simple;
+	bh=JgW1o9rKeq69bQ3It8LeIg6gKgX9swUSK/BWfr9PyeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UhQ53A0cYDp7h+TPItOXG+rYqf/9bA5Obgb0kLr3wh2d+5/NkzVI4LXWuudat58ZQFxQPMhLQ6q1AhX0IIYzKumSfa+bzw8GMOOx4/a8Obrc9CnQUWdom2deF4nKtBLwB7tNN+gZ5Yh8LQPDrQqaOe3ctjE+ZH888+mUeZFhCr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BtwbuG1E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aaOenmCBZt+at+YdALIQcAOekhRcohnAqcMGV/qPVFMFhmAM8CAcqwgkdkdZNB/bOeoUTHLCz2PEvMQwpbi+UYbvBmkuRaRQmIk3+wEGpdI8Sf9cwFQ4jJ9jmvXgqKfjqh1JR7VvToBHnZgpFPNNkksC/sM1ic3YvsOAmPNNIKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PF7vZOrt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BtwbuG1E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE4E1F000E9;
-	Thu, 20 Aug 2026 16:48:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PF7vZOrt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 649FF1F000E9;
+	Thu, 20 Aug 2026 16:48:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244520;
-	bh=Pl0Ji9lAJKZ7VuI26dpeCYn5JOdMWhwZkStV+BShq8I=;
+	s=korg; t=1787244522;
+	bh=J2TSr20MtvAJF0Ug0T5WL7Z/qUBIl5+SAUYknMKh6UI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BtwbuG1EeLBrIledQrxphvlGoYr5ARqqlKNKNd1NA9R4XJifOaFeiPje1TJsd8mSq
-	 PYqFzj66Sul4ABrrduObzc7psD6abYHVR+CdlhT8FduJAoK9Qj4qc0arFwqCuxtYqz
-	 zF13A0Ve7hNRGQj2p4Eza2CXWcOMDGOQrVzjsG44=
+	b=PF7vZOrtmBErJMKp7I+8Ae3MiZocSG6wPfSMgm9+uGUj1W52aEqVAEQUfwQDfF26l
+	 c4ONiYtcnz+1DaIs+V3DWkBw1MPm9DBe8bXTFdyvt2eXmeYTV08+1yJImUFeoowOVd
+	 qO9EP48/fhQ5ZPR9kVWf+hVxzVelGfz35VUmI4q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Douglas Gilbert <dgilbert@interlog.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 180/235] libceph: Amend checking to fix `make W=1` build breakage
-Date: Thu, 20 Aug 2026 16:56:56 +0200
-Message-ID: <20260820145221.984741813@linuxfoundation.org>
+Subject: [PATCH 5.10 198/235] scsi: scsi_debug: Rename zone type constants
+Date: Thu, 20 Aug 2026 16:57:14 +0200
+Message-ID: <20260820145222.560744067@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -52,53 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-[ Upstream commit 04d8712b079327409b09dee628378f9583e2e035 ]
+[ Upstream commit 35dbe2b9a7b0c92777c855c6a2cca8390f4c166b ]
 
-In a few cases the code compares 32-bit value to a SIZE_MAX derived
-constant which is much higher than that value on 64-bit platforms,
-Clang, in particular, is not happy about this
+Rename the scsi_debug zone type constants to prevent a conflict with the
+ZBC_ZONE_TYPE_GAP constant from include/scsi/scsi_proto.h.
 
-net/ceph/osdmap.c:1441:10: error: result of comparison of constant 4611686018427387891 with expression of type 'u32' (aka 'unsigned int') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
- 1441 |         if (len > (SIZE_MAX - sizeof(*pg)) / sizeof(u32))
-      |             ~~~ ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-net/ceph/osdmap.c:1624:10: error: result of comparison of constant 2305843009213693945 with expression of type 'u32' (aka 'unsigned int') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
- 1624 |         if (len > (SIZE_MAX - sizeof(*pg)) / (2 * sizeof(u32)))
-      |             ~~~ ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Fix this by casting to size_t. Note, that possible replacement of SIZE_MAX
-by U32_MAX may lead to the behaviour changes on the corner cases.
-
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Stable-dep-of: 9f00f9cf2be2 ("libceph: bound pg_{temp,upmap,upmap_items} length to CEPH_PG_MAX_SIZE")
+Link: https://lore.kernel.org/r/20220421183023.3462291-9-bvanassche@acm.org
+Cc: Douglas Gilbert <dgilbert@interlog.com>
+Acked-by: Douglas Gilbert <dgilbert@interlog.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+[ bvanassche: Extracted these changes from a larger patch ]
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 93dde0bf2f39 ("scsi: scsi_debug: Fix REPORT ZONES alloc_len underflow OOB write")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/scsi_debug.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -1424,7 +1424,7 @@ static struct ceph_pg_mapping *__decode_
- 	ceph_decode_32_safe(p, end, len, e_inval);
- 	if (len == 0 && incremental)
- 		return NULL;	/* new_pg_temp: [] to remove */
--	if (len > (SIZE_MAX - sizeof(*pg)) / sizeof(u32))
-+	if ((size_t)len > (SIZE_MAX - sizeof(*pg)) / sizeof(u32))
- 		return ERR_PTR(-EINVAL);
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -250,9 +250,9 @@ static const char *sdebug_version_date =
  
- 	ceph_decode_need(p, end, len * sizeof(u32), e_inval);
-@@ -1607,7 +1607,7 @@ static struct ceph_pg_mapping *__decode_
- 	u32 len, i;
+ /* Zone types (zbcr05 table 25) */
+ enum sdebug_z_type {
+-	ZBC_ZONE_TYPE_CNV	= 0x1,
+-	ZBC_ZONE_TYPE_SWR	= 0x2,
+-	ZBC_ZONE_TYPE_SWP	= 0x3,
++	ZBC_ZTYPE_CNV	= 0x1,
++	ZBC_ZTYPE_SWR	= 0x2,
++	ZBC_ZTYPE_SWP	= 0x3,
+ };
  
- 	ceph_decode_32_safe(p, end, len, e_inval);
--	if (len > (SIZE_MAX - sizeof(*pg)) / (2 * sizeof(u32)))
-+	if ((size_t)len > (SIZE_MAX - sizeof(*pg)) / (2 * sizeof(u32)))
- 		return ERR_PTR(-EINVAL);
+ /* enumeration names taken from table 26, zbcr05 */
+@@ -2681,7 +2681,7 @@ static struct sdeb_zone_state *zbc_zone(
  
- 	ceph_decode_need(p, end, 2 * len * sizeof(u32), e_inval);
+ static inline bool zbc_zone_is_conv(struct sdeb_zone_state *zsp)
+ {
+-	return zsp->z_type == ZBC_ZONE_TYPE_CNV;
++	return zsp->z_type == ZBC_ZTYPE_CNV;
+ }
+ 
+ static void zbc_close_zone(struct sdebug_dev_info *devip,
+@@ -2780,7 +2780,7 @@ static void zbc_inc_wp(struct sdebug_dev
+ 	if (zbc_zone_is_conv(zsp))
+ 		return;
+ 
+-	if (zsp->z_type == ZBC_ZONE_TYPE_SWR) {
++	if (zsp->z_type == ZBC_ZTYPE_SWR) {
+ 		zsp->z_wp += num;
+ 		if (zsp->z_wp >= zend)
+ 			zbc_set_zone_full(devip, zsp);
+@@ -2847,7 +2847,7 @@ static int check_zbc_access_params(struc
+ 		return 0;
+ 	}
+ 
+-	if (zsp->z_type == ZBC_ZONE_TYPE_SWR) {
++	if (zsp->z_type == ZBC_ZTYPE_SWR) {
+ 		/* Writes cannot cross sequential zone boundaries */
+ 		if (zsp_end != zsp) {
+ 			mk_sense_buffer(scp, ILLEGAL_REQUEST,
+@@ -4913,14 +4913,14 @@ static int sdebug_device_create_zones(st
+ 		zsp->z_start = zstart;
+ 
+ 		if (i < devip->nr_conv_zones) {
+-			zsp->z_type = ZBC_ZONE_TYPE_CNV;
++			zsp->z_type = ZBC_ZTYPE_CNV;
+ 			zsp->z_cond = ZBC_NOT_WRITE_POINTER;
+ 			zsp->z_wp = (sector_t)-1;
+ 		} else {
+ 			if (devip->zmodel == BLK_ZONED_HM)
+-				zsp->z_type = ZBC_ZONE_TYPE_SWR;
++				zsp->z_type = ZBC_ZTYPE_SWR;
+ 			else
+-				zsp->z_type = ZBC_ZONE_TYPE_SWP;
++				zsp->z_type = ZBC_ZTYPE_SWP;
+ 			zsp->z_cond = ZC1_EMPTY;
+ 			zsp->z_wp = zsp->z_start;
+ 		}
 
 
