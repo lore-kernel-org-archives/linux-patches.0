@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA97E272E53;
-	Thu, 20 Aug 2026 16:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EE747D931;
+	Thu, 20 Aug 2026 16:37:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243876; cv=none; b=gzUFAQkCctmrw23qr+fRtsorXK1XrgUTW4K9E1nCeANtfzOrVFX0GavVP5vMSrZM3uJdPOYwnXYHWy7c/SPzibusEXFmwCZk7xqxlNJQAWLtcICmYA/PWbfIaJs0maUpvdd6cUg7VQhzF7mz8b9+pnv/cxuKXzyubj5HPr4aYJI=
+	t=1787243879; cv=none; b=s/kS1wh1/D5bIda6UVssCQd3dtvtRrIAqI8dTuTYOSPLeFhh1uFS2FfOW26/PU1oLFaomTp6wJWv2fUGGj9IsP021zyhsFdcoYBqJIaTe1AVLj2spIOIgapQ2WPVNDZy8j6ARCw4ti13fvOR3de6G6KhdQweZRcG2yovNxvugIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243876; c=relaxed/simple;
-	bh=dHiAUQDJkrXCnnjazLfdPOHUbWOmir1mdkJjupHnCk8=;
+	s=arc-20240116; t=1787243879; c=relaxed/simple;
+	bh=969WveCgFODyzxnSQ3Ko7bHdbzKhuh1c80iouwxC6v4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gBENsDYq9R+9P/124bQtgcy06nJepneW83MzAwehkI992CU0475xeydmWHyKOXcWXFdT6V/q1JyXzGDOkU1q9FJHjcEMB+lmTfLUrkQRIBjwnC4RAdo50HHtm28XZZpcKlU8d5pjp9ZC/01npGwrSLzPqUx5jO6lBkJjrkn4JJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ctvmAraA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l5mLf2IwDQK8hpi3WGHKT8E1I9cSNO2R6Bx6P5uxwphopcqikyBPcn/eELy4jKxSpp+gBSOUvaiZOtVD1Voyu5/i0kulhWCgLlBMBNj1DAwSDmrZSa+LnsJxMlE0TF/herXN7ym7gRqxHEnp/+xdLjG6YBolliuOhW488E/uED4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMkiZBAd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ctvmAraA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C5D1F000E9;
-	Thu, 20 Aug 2026 16:37:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMkiZBAd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34841F000E9;
+	Thu, 20 Aug 2026 16:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243874;
-	bh=vitm/tWkIepYP5C8kY8LuuaXPOqhx12PrmKqu4IC+R8=;
+	s=korg; t=1787243877;
+	bh=7I60U8cgJw2hU0oXl4B2UG94geu51t/K5Y6iilQ+YeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ctvmAraAiMmfwRDlrwCRse1wFZBg6N3Kokta+q9UZtuqdgxrNZS6s93idxaltWnvZ
-	 guIg2WmUbBA4tHe2K464ToZ4WBilMJe0dl9IEhfewkaUd+2TFFmZQMbucrkgA4JKPn
-	 KZcRdbhOXyv/fgg7doxv3GHhLd//kBGlfTDnsOww=
+	b=oMkiZBAdoeQU8sE7Kao2nvCeVTXRlkztyaFBnqhq3/ACkhWF0qKnjV/bzN7Q5PsOd
+	 5uprqSYJZ778JeyJmn1qoZ5+Ny6IxCdzHjgDVJif5fX595VVF07oBzk6cC0Xfpt8zh
+	 w7WKx6MVL+i4NewWxBlzNdcBGMivkc/U416YWzCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Tomasz=20Mo=C5=84?= <tomasz.mon@camlingroup.com>,
+	Liem <liem16213@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Carlos Song <carlos.song@nxp.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 197/272] sc16is7xx: Properly resume TX after stop
-Date: Thu, 20 Aug 2026 16:56:21 +0200
-Message-ID: <20260820145237.381955306@linuxfoundation.org>
+Subject: [PATCH 5.15 240/272] i2c: imx: Fix slave registration race and error handling
+Date: Thu, 20 Aug 2026 16:57:04 +0200
+Message-ID: <20260820145238.819781516@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -44,158 +47,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomasz Moń <tomasz.mon@camlingroup.com>
+From: Liem <liem16213@gmail.com>
 
-[ Upstream commit cc4c1d05eb10c3ad4c6315f1897bc56b1e7429aa ]
+[ Upstream commit d64ec362c369bbc33833f7936d5f3a706b0d5c45 ]
 
-sc16is7xx_stop_tx() clears THRI bit and thus disables THRI interrupt.
-This makes it possible for transmission to cease indefinitely when more
-than 64 characters are being sent.
+In i2c_imx_reg_slave(), the slave pointer was assigned before
+pm_runtime_resume_and_get().  If pm_runtime_resume_and_get() failed,
+the error path returned without clearing i2c_imx->slave, leaving it
+non-NULL and causing all subsequent registration attempts to fail
+with -EBUSY.
 
-The sc16is7xx_handle_tx() call executed by sc16is7xx_tx_proc() can send
-up to FIFO length (64) characters. If more characters are written to the
-output buffer, then the THRI interrupt is needed.
+Additionally, because this driver uses a shared IRQ, the interrupt
+handler i2c_imx_isr() can execute concurrently and, after acquiring
+slave_lock, dereference i2c_imx->slave.  The previous fix attempt
+added a lockless i2c_imx->slave = NULL on the error path, but that
+could race with the ISR under the lock and still cause a NULL pointer
+dereference.
 
-Solve the issue by enabling THRI interrupt in sc16is7xx_tx_proc().
+Fix both issues by deferring the assignment of i2c_imx->slave and
+i2c_imx->last_slave_event to after a successful resume, and by
+performing the assignment inside the slave_lock critical section.
+This guarantees that the slave pointer is never left stale on the
+error path and is always valid when observed by the interrupt handler.
 
-Signed-off-by: Tomasz Moń <tomasz.mon@camlingroup.com>
-Link: https://lore.kernel.org/r/20220301060332.2561851-2-tomasz.mon@camlingroup.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: af071d9e07e5 ("serial: sc16is7xx: implement gpio get_direction() callback")
+Fixes: f7414cd6923f ("i2c: imx: support slave mode for imx I2C driver")
+Signed-off-by: Liem <liem16213@gmail.com>
+Cc: <stable@vger.kernel.org> # v5.11+
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Acked-by: Carlos Song <carlos.song@nxp.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260629023829.152651-2-liem16213@gmail.com
+[ open-coded scoped_guard(spinlock_irqsave) into explicit spin_lock_irqsave/spin_unlock_irqrestore since 5.15 builds with -std=gnu89 ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   47 +++++++++++++++++++++++++++++++++++------
- 1 file changed, 41 insertions(+), 6 deletions(-)
+ drivers/i2c/busses/i2c-imx.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -307,7 +307,8 @@ struct sc16is7xx_devtype {
- 
- struct sc16is7xx_one_config {
- 	unsigned int			flags;
--	u8				ier_clear;
-+	u8				ier_mask;
-+	u8				ier_val;
- };
- 
- struct sc16is7xx_one {
-@@ -341,6 +342,9 @@ static struct uart_driver sc16is7xx_uart
- 	.nr		= SC16IS7XX_MAX_DEVS,
- };
- 
-+static void sc16is7xx_ier_set(struct uart_port *port, u8 bit);
-+static void sc16is7xx_stop_tx(struct uart_port *port);
-+
- #define to_sc16is7xx_port(p,e)	((container_of((p), struct sc16is7xx_port, e)))
- #define to_sc16is7xx_one(p,e)	((container_of((p), struct sc16is7xx_one, e)))
- 
-@@ -650,6 +654,7 @@ static void sc16is7xx_handle_tx(struct u
- 	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
- 	struct circ_buf *xmit = &port->state->xmit;
- 	unsigned int txlen, to_send, i;
-+	unsigned long flags;
- 
- 	if (unlikely(port->x_char)) {
- 		sc16is7xx_port_write(port, SC16IS7XX_THR_REG, port->x_char);
-@@ -658,8 +663,12 @@ static void sc16is7xx_handle_tx(struct u
- 		return;
- 	}
- 
--	if (uart_circ_empty(xmit) || uart_tx_stopped(port))
-+	if (uart_circ_empty(xmit) || uart_tx_stopped(port)) {
-+		spin_lock_irqsave(&port->lock, flags);
-+		sc16is7xx_stop_tx(port);
-+		spin_unlock_irqrestore(&port->lock, flags);
- 		return;
-+	}
- 
- 	/* Get length of data pending in circular buffer */
- 	to_send = uart_circ_chars_pending(xmit);
-@@ -686,8 +695,13 @@ static void sc16is7xx_handle_tx(struct u
- 		sc16is7xx_fifo_write(port, to_send);
- 	}
- 
-+	spin_lock_irqsave(&port->lock, flags);
- 	if (uart_circ_chars_pending(xmit) < WAKEUP_CHARS)
- 		uart_write_wakeup(port);
-+
-+	if (uart_circ_empty(xmit))
-+		sc16is7xx_stop_tx(port);
-+	spin_unlock_irqrestore(&port->lock, flags);
- }
- 
- static bool sc16is7xx_port_irq(struct sc16is7xx_port *s, int portno)
-@@ -762,6 +776,7 @@ static void sc16is7xx_tx_proc(struct kth
+--- a/drivers/i2c/busses/i2c-imx.c
++++ b/drivers/i2c/busses/i2c-imx.c
+@@ -832,14 +832,12 @@ static void i2c_imx_slave_init(struct im
+ static int i2c_imx_reg_slave(struct i2c_client *client)
  {
- 	struct uart_port *port = &(to_sc16is7xx_one(ws, tx_work)->port);
- 	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
+ 	struct imx_i2c_struct *i2c_imx = i2c_get_adapdata(client->adapter);
 +	unsigned long flags;
+ 	int ret;
  
- 	if ((port->rs485.flags & SER_RS485_ENABLED) &&
- 	    (port->rs485.delay_rts_before_send > 0))
-@@ -770,6 +785,10 @@ static void sc16is7xx_tx_proc(struct kth
- 	mutex_lock(&s->efr_lock);
- 	sc16is7xx_handle_tx(port);
- 	mutex_unlock(&s->efr_lock);
-+
-+	spin_lock_irqsave(&port->lock, flags);
-+	sc16is7xx_ier_set(port, SC16IS7XX_IER_THRI_BIT);
-+	spin_unlock_irqrestore(&port->lock, flags);
- }
+ 	if (i2c_imx->slave)
+ 		return -EBUSY;
  
- static void sc16is7xx_reconf_rs485(struct uart_port *port)
-@@ -819,7 +838,7 @@ static void sc16is7xx_reg_proc(struct kt
+-	i2c_imx->slave = client;
+-	i2c_imx->last_slave_event = I2C_SLAVE_STOP;
+-
+ 	/* Resume */
+ 	ret = pm_runtime_resume_and_get(i2c_imx->adapter.dev.parent);
+ 	if (ret < 0) {
+@@ -847,6 +845,11 @@ static int i2c_imx_reg_slave(struct i2c_
+ 		return ret;
  	}
- 	if (config.flags & SC16IS7XX_RECONF_IER)
- 		sc16is7xx_port_update(&one->port, SC16IS7XX_IER_REG,
--				      config.ier_clear, 0);
-+				      config.ier_mask, config.ier_val);
  
- 	if (config.flags & SC16IS7XX_RECONF_RS485)
- 		sc16is7xx_reconf_rs485(&one->port);
-@@ -830,8 +849,24 @@ static void sc16is7xx_ier_clear(struct u
- 	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
- 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
- 
-+	lockdep_assert_held_once(&port->lock);
++	spin_lock_irqsave(&i2c_imx->slave_lock, flags);
++	i2c_imx->slave = client;
++	i2c_imx->last_slave_event = I2C_SLAVE_STOP;
++	spin_unlock_irqrestore(&i2c_imx->slave_lock, flags);
 +
-+	one->config.flags |= SC16IS7XX_RECONF_IER;
-+	one->config.ier_mask |= bit;
-+	one->config.ier_val &= ~bit;
-+	kthread_queue_work(&s->kworker, &one->reg_work);
-+}
-+
-+static void sc16is7xx_ier_set(struct uart_port *port, u8 bit)
-+{
-+	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
-+	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
-+
-+	lockdep_assert_held_once(&port->lock);
-+
- 	one->config.flags |= SC16IS7XX_RECONF_IER;
--	one->config.ier_clear |= bit;
-+	one->config.ier_mask |= bit;
-+	one->config.ier_val |= bit;
- 	kthread_queue_work(&s->kworker, &one->reg_work);
- }
- 
-@@ -1059,8 +1094,8 @@ static int sc16is7xx_startup(struct uart
- 			      SC16IS7XX_EFCR_TXDISABLE_BIT,
- 			      0);
- 
--	/* Enable RX, TX interrupts */
--	val = SC16IS7XX_IER_RDI_BIT | SC16IS7XX_IER_THRI_BIT;
-+	/* Enable RX interrupt */
-+	val = SC16IS7XX_IER_RDI_BIT;
- 	sc16is7xx_port_write(port, SC16IS7XX_IER_REG, val);
+ 	i2c_imx_slave_init(i2c_imx);
  
  	return 0;
 
