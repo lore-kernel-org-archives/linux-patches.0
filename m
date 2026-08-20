@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D23377A89;
-	Thu, 20 Aug 2026 15:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B90137F738;
+	Thu, 20 Aug 2026 15:22:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239349; cv=none; b=DrP9X/xjW6LVj2Tn5UudeEXU447msgYu5DEFmM/2Boa8kqCEvgX4eUMqm4jeWH+bHWb0aTrgcGyM0/6OQHcsHD1rUexd43g+7O7Xga7wRwsx0D1pzN6UA1+tbK34CgOPROEzv9aUL3X+rTVMb98UooBRiPeoKRKEZ3roMmgQjtA=
+	t=1787239352; cv=none; b=NbV5NsvNnEsKR7axLZNiLXG7Ae0+fhTtlmEWabLyRtvZWcdp67m87pHbvkCBFQ9KwyzjEQTAblLyebn5Qa6B/fsjqMx5nx0WjTRTtcfkCxezHf3MROhUc9Tv+KdHQlq0LQfSBlq6ZRBf/EX50Bm53WlF7MjpZDTrWLbwqknsxms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239349; c=relaxed/simple;
-	bh=odeK6V/kei6rUZb2r9Iie/+pLRk4HTpK8gH5X12r08Y=;
+	s=arc-20240116; t=1787239352; c=relaxed/simple;
+	bh=pbpyHVJWuFVucxC/C7Nlq+cDVGnLH3yxPZEfioROzlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r2Ewgz/fR6okNMxdVC8TwIOThKFN1qHg9aQsOHGSwytrqGmbKuojLQGyNpHsTcmAsCMJt+TmHb0ueHxPIpEUjoiE9UQMHGDicUcG3RezSlSIIcAZjiDi4Hnj4iL2mD15pk2uDVpu5rs+GFfWXEq1hR2J8QhjCkrPsEXH2vRTohc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRxmak41; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aVd2KBCJCClJ2jgErlYYufVTYY435mz2jRoGnzh5n9dCND42nJul4Vcr4skmw1FyrAHYbc16KuQ86aW35fs7zyQGfHK6C0efa4Jm43SjfK3UeMK3auYu4aig83A+vRYW1GKOBNGV3plOOl0XSOwzjyX5OhWuH+7bOHjyqCaZ5u4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wjmdi5Qk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRxmak41"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A821F000E9;
-	Thu, 20 Aug 2026 15:22:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wjmdi5Qk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3AFC1F000E9;
+	Thu, 20 Aug 2026 15:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239348;
-	bh=GSkB5VcvkOY//nt68Y7PjLNmeOqh6KkxeDOuz3iK+hk=;
+	s=korg; t=1787239351;
+	bh=sfVgfCm8uAYvi87FZwcGJOeY7d7FROW2hZumFbLhFBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SRxmak41WBEpm/+gWEM2Y7P0lT0tSAuccI7oOXEtclGGETPj8iXZ74bmG5DfO/Z40
-	 ETWyaf+OIgWiqzK29xFN734b/4KhFpbSEdOTkq2UWzVICHhlLR4F4x7L4nfkf2Vsti
-	 qkfEYqVwDj38jM2qgANmq1hgGy7ferlq5AgbpAD4=
+	b=Wjmdi5Qkz1rqrHPMErU7E/1H770RHHgc72u1R6M/9+SH92th0VF7NVIIxsAWlwAEo
+	 84j2N/Cez9WC//yQ4pXONaydPZfWinPApjmvWR5c/vWYCZE+tKjw65dIMtjK5VKpQ8
+	 3lj29RNUKL9Q86ajHZZvURJdjBFr/IvJi4/7xuIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liyuan Pang <pangliyuan1@huawei.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
-	Dominique Martinet <dominique.martinet@atmark-techno.com>,
+	SJ Park <sj@kernel.org>,
+	liyouhong <liyouhong@kylinos.cn>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 008/220] ubi: fastmap: fix ubi->fm memory leak
-Date: Thu, 20 Aug 2026 16:53:18 +0200
-Message-ID: <20260820145223.735617892@linuxfoundation.org>
+Subject: [PATCH 6.12 009/220] mm/damon/ops-common: putback folios on invalid migrate nid
+Date: Thu, 20 Aug 2026 16:53:19 +0200
+Message-ID: <20260820145223.766610078@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -53,164 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liyuan Pang <pangliyuan1@huawei.com>
+From: liyouhong <liyouhong@kylinos.cn>
 
-[ Upstream commit d133e30aabc7c8eb8206827f8fbe0f3679adb911 ]
+[ Upstream commit 5deb65c34e682e7c5f5df417a70e223e8fcc5f5a ]
 
-The problem is that scan_fast() allocate memory for ubi->fm
-and ubi->fm->e[x], but if the following attach process fails
-in ubi_wl_init or ubi_read_volume_table, the whole attach
-process will fail without executing ubi_wl_close to free the
-memory under ubi->fm.
+damon_pa_migrate() and damos_va_migrate() isolate folios into a local list
+and then call damon_migrate_pages().  When target_nid is invalid
+(including the scheme default NUMA_NO_NODE / -1), damon_migrate_pages()
+returns early without putting the folios back to the LRU.
 
-Fix this by add a new ubi_free_fastmap function in fastmap.c
-to free the memory allocated for fm.
+Callers then discard the list head while those folios remain isolated with
+an extra reference taken by folio_isolate_lru().  The pages stay off the
+LRU for as long as the mapping exists (anon active+inactive counts drop
+while RSS does not), and the leftover references can pin the pages after
+the mapping is gone.
 
-If SLUB_DEBUG and KUNIT are enabled, the following warning messages
-will show:
-ubi0: detaching mtd0
-ubi0: mtd0 is detached
-ubi0: default fastmap pool size: 200
-ubi0: default fastmap WL pool size: 100
-ubi0: attaching mtd0
-ubi0: attached by fastmap
-ubi0: fastmap pool size: 200
-ubi0: fastmap WL pool size: 100
-ubi0 error: ubi_wl_init [ubi]: no enough physical eraseblocks (4, need 203)
-ubi0 error: ubi_attach_mtd_dev [ubi]: failed to attach mtd0, error -28
-UBI error: cannot attach mtd0
-=================================================================
-BUG ubi_wl_entry_slab (Tainted: G    B      O L   ): Objects remaining in ubi_wl_entry_slab on __kmem_cache_shutdown()
------------------------------------------------------------------------------
+Put the folios back on the invalid-nid path so ignored migration requests
+still return them to the LRU.
 
-Slab 0xffff2fd23a40cd00 objects=22 used=1 fp=0xffff2fd1d0334fd8 flags=0x883fffc010200(slab|head|section=34|node=0|zone=1|lastcpupid=0x7fff)
-CPU: 0 PID: 5884 Comm: insmod Tainted: G    B      O L    5.10.0 #1
-Hardware name: LS1043A RDB Board (DT)
-Call trace:
- dump_backtrace+0x0/0x198
- show_stack+0x18/0x28
- dump_stack+0xe8/0x15c
- slab_err+0x94/0xc0
- __kmem_cache_shutdown+0x1fc/0x39c
- kmem_cache_destroy+0x48/0x138
- ubi_init+0x1d4/0xf34 [ubi]
- do_one_initcall+0xb4/0x24c
- do_init_module+0x4c/0x1dc
- load_module+0x212c/0x2260
- __se_sys_finit_module+0xb4/0xd8
- __arm64_sys_finit_module+0x18/0x28
- el0_svc_common.constprop.0+0x78/0x1a0
- do_el0_svc+0x78/0x90
- el0_svc+0x20/0x38
- el0_sync_handler+0xf0/0x140
- normal+0x3d8/0x400
-Object 0xffff2fd1d0334e68 @offset=3688
-Allocated in ubi_scan_fastmap+0xf04/0xf40 [ubi] age=80 cpu=0 pid=5884
-	__slab_alloc.isra.21+0x6c/0xb4
-	kmem_cache_alloc+0x1e4/0x80c
-	ubi_scan_fastmap+0xf04/0xf40 [ubi]
-	ubi_attach+0x1f0/0x3a8 [ubi]
-	ubi_attach_mtd_dev+0x810/0xbc8 [ubi]
-	ubi_init+0x238/0xf34 [ubi]
-	do_one_initcall+0xb4/0x24c
-	do_init_module+0x4c/0x1dc
-	load_module+0x212c/0x2260
-	__se_sys_finit_module+0xb4/0xd8
-	__arm64_sys_finit_module+0x18/0x28
-	el0_svc_common.constprop.0+0x78/0x1a0
-	do_el0_svc+0x78/0x90
-	el0_svc+0x20/0x38
-	el0_sync_handler+0xf0/0x140
-	normal+0x3d8/0x400
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220744
-
-Signed-off-by: Liyuan Pang <pangliyuan1@huawei.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Link: https://lore.kernel.org/20260726014815.1280757-1-dayou5941@163.com
+Fixes: 7e6c3130690a ("mm/damon/ops-common: ignore migration request to invalid nodes")
+Assisted-by: Cursor:grok-4.5
+Reviewed-by: SJ Park <sj@kernel.org>
+Signed-off-by: liyouhong <liyouhong@kylinos.cn>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/attach.c     |  4 +++-
- drivers/mtd/ubi/fastmap-wl.c |  8 +-------
- drivers/mtd/ubi/ubi.h        | 12 ++++++++++++
- 3 files changed, 16 insertions(+), 8 deletions(-)
+ mm/damon/paddr.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/ubi/attach.c b/drivers/mtd/ubi/attach.c
-index adc47b87b38a..884171871d0e 100644
---- a/drivers/mtd/ubi/attach.c
-+++ b/drivers/mtd/ubi/attach.c
-@@ -1600,7 +1600,7 @@ int ubi_attach(struct ubi_device *ubi, int force_scan)
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 4120a73f4933..884042856f7e 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -432,8 +432,15 @@ static unsigned long damon_pa_migrate_pages(struct list_head *folio_list,
+ 		return nr_migrated;
  
- 	err = ubi_read_volume_table(ubi, ai);
- 	if (err)
--		goto out_ai;
-+		goto out_fm;
- 
- 	err = ubi_wl_init(ubi, ai);
- 	if (err)
-@@ -1642,6 +1642,8 @@ int ubi_attach(struct ubi_device *ubi, int force_scan)
- out_vtbl:
- 	ubi_free_all_volumes(ubi);
- 	vfree(ubi->vtbl);
-+out_fm:
-+	ubi_free_fastmap(ubi);
- out_ai:
- 	destroy_ai(ai);
- 	return err;
-diff --git a/drivers/mtd/ubi/fastmap-wl.c b/drivers/mtd/ubi/fastmap-wl.c
-index 9bdb6525f128..e2bc1122bfd3 100644
---- a/drivers/mtd/ubi/fastmap-wl.c
-+++ b/drivers/mtd/ubi/fastmap-wl.c
-@@ -530,8 +530,6 @@ int ubi_is_erase_work(struct ubi_work *wrk)
- 
- static void ubi_fastmap_close(struct ubi_device *ubi)
- {
--	int i;
--
- 	return_unused_pool_pebs(ubi, &ubi->fm_pool);
- 	return_unused_pool_pebs(ubi, &ubi->fm_wl_pool);
- 
-@@ -540,11 +538,7 @@ static void ubi_fastmap_close(struct ubi_device *ubi)
- 		ubi->fm_anchor = NULL;
- 	}
- 
--	if (ubi->fm) {
--		for (i = 0; i < ubi->fm->used_blocks; i++)
--			kfree(ubi->fm->e[i]);
--	}
--	kfree(ubi->fm);
-+	ubi_free_fastmap(ubi);
- }
- 
- /**
-diff --git a/drivers/mtd/ubi/ubi.h b/drivers/mtd/ubi/ubi.h
-index 1c9e874e8ede..450a7b9a5bd7 100644
---- a/drivers/mtd/ubi/ubi.h
-+++ b/drivers/mtd/ubi/ubi.h
-@@ -970,10 +970,22 @@ int ubi_scan_fastmap(struct ubi_device *ubi, struct ubi_attach_info *ai,
- 		     struct ubi_attach_info *scan_ai);
- int ubi_fastmap_init_checkmap(struct ubi_volume *vol, int leb_count);
- void ubi_fastmap_destroy_checkmap(struct ubi_volume *vol);
-+static inline void ubi_free_fastmap(struct ubi_device *ubi)
-+{
-+	if (ubi->fm) {
-+		int i;
+ 	if (target_nid < 0 || target_nid >= MAX_NUMNODES ||
+-			!node_state(target_nid, N_MEMORY))
++			!node_state(target_nid, N_MEMORY)) {
++		while (!list_empty(folio_list)) {
++			struct folio *folio = lru_to_folio(folio_list);
 +
-+		for (i = 0; i < ubi->fm->used_blocks; i++)
-+			kmem_cache_free(ubi_wl_entry_slab, ubi->fm->e[i]);
-+		kfree(ubi->fm);
-+		ubi->fm = NULL;
++			list_del(&folio->lru);
++			folio_putback_lru(folio);
++		}
+ 		return nr_migrated;
 +	}
-+}
- #else
- static inline int ubi_update_fastmap(struct ubi_device *ubi) { return 0; }
- static inline int ubi_fastmap_init_checkmap(struct ubi_volume *vol, int leb_count) { return 0; }
- static inline void ubi_fastmap_destroy_checkmap(struct ubi_volume *vol) {}
-+static inline void ubi_free_fastmap(struct ubi_device *ubi) { }
- #endif
  
- /* block.c */
+ 	noreclaim_flag = memalloc_noreclaim_save();
+ 
 -- 
 2.53.0
 
