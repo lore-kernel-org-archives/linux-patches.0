@@ -1,41 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56DB47D93E;
-	Thu, 20 Aug 2026 16:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3B647D46A;
+	Thu, 20 Aug 2026 16:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244230; cv=none; b=lpWrX7yaphP93IvahU25SY5UwyWNsyYKslHzFUKoFi/RkO40fIN0cEL0x4qOmSq+e7YugCvvRORI15v6+/ZkS6pntkgEYVo9xErR7opp0TPxTVUEwcc7/k8wAgb6qkkJZy5llUMBa+hj973euFVgtc22itVT4SC334XQgfNkWvo=
+	t=1787244232; cv=none; b=ijfmu9D+ua/AhVcbx2kodl/fbWZJ5cMdf9GhZhuJfI33kEZ6P/HAwG6hrtj/D/wgHt2kH8KeehsYwBZoW8FxmhacO7ZjCBSGgmq77alJCfvzlpMhjMJxMVe1MVYCEGMMuFdJ9pEVr7qIPu/ei7zde4u5RZaMdaAjAtWeAva0Lyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244230; c=relaxed/simple;
-	bh=4yrSc3FX+ffkKzcjfpcrlVMOHZ0B1mo2uuMJ9rGuelA=;
+	s=arc-20240116; t=1787244232; c=relaxed/simple;
+	bh=WS1ODlWY50x/kBJvF2z5GFT6nvVZdjGyeReQKG4P758=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WC15XIR/uYp+T4wdAl5EaG14RweCW2wOaIze/6SwMd289B2zVKgJzBojqsu0qWuaDaibmYDXjtkMT3nWQfCHMnjQtl6f908Z6vA+PtSY8AuoAqgwuFxVGPt31+2D+7CLtjYj0lgrREBKgM/wFcH2+doLsyiwVa0cjtEzePhN2cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sqbK6nti; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lDJ84mcf4ACEb2QP0+RZQETd8wWUeKCcDC7DmMELfWh+gU/WlBocP1vUhcNksC08lrPXUsRk9apuk5IyL8zDGwKXnAU1/kDtYkkTo+KHB+DZxyYNDSFWes9+B3ALeWRq9PP5hYe+RsqsFE9eE6CdVw8J1cI+cH47KIvpXEpYgSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azHvfNmz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqbK6nti"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103DE1F00A3A;
-	Thu, 20 Aug 2026 16:43:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azHvfNmz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38291F000E9;
+	Thu, 20 Aug 2026 16:43:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244228;
-	bh=SSg9ZVxVgPIrUe5wWh2Ls7drWdJ/jStRNRgU27VAD/Y=;
+	s=korg; t=1787244231;
+	bh=HrLJ91RkUTdubwSH/CkY7wUV8PZ9kF4ldwrGWuhADHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sqbK6nti/sHE65rIWLo5elFTR0psT8gDf8MVfS2an8cBydwCDGtv/3Fq5bkKUqYjX
-	 9M32WB80z0pse+NlcBPnW5NW4XsDnpF6eRCcMTbzGVEhcNnRCh7cHwh6iRlWWMMjoB
-	 NtYlIn0M5gKYyyT4IzFMlwo0f1rNRvPMKfTS7znM=
+	b=azHvfNmz3PEDn5w17jmznfSpN13QKot7o2OR3ofIEvKS3InA/vTppCZSEehr+una5
+	 LrSUZM+GnHeSp6r8taCxctX/4pToTwjloyH1hJGufAE7ZGSZCEYOJ5vUkvSjQLy8l9
+	 f1ZdV1e0m2cQPFHgar063cAKcKgrp/W6bKtVl39g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Tapio Reijonen <tapio.reijonen@vaisala.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Li Daming <d4n.for.sec@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 058/235] serial: max310x: implement gpio_chip::get_direction()
-Date: Thu, 20 Aug 2026 16:54:54 +0200
-Message-ID: <20260820145218.206195325@linuxfoundation.org>
+Subject: [PATCH 5.10 059/235] rxrpc: serialize kernel accept preallocation with socket teardown
+Date: Thu, 20 Aug 2026 16:54:55 +0200
+Message-ID: <20260820145218.236509229@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -54,61 +62,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tapio Reijonen <tapio.reijonen@vaisala.com>
+From: Li Daming <d4n.for.sec@gmail.com>
 
-[ Upstream commit a483b1a91b33b7533280e7c3efd2bc1275caef18 ]
+[ Upstream commit dc175389b18c29a5303ee83169ec653adfae3e17 ]
 
-It's strongly recommended for GPIO drivers to always implement the
-.get_direction() callback - even when the direction is tracked in
-software. The GPIO core emits a warning when the callback is missing
-and a user reads the direction of a line, e.g. via
-/sys/kernel/debug/gpio.
+rxrpc_kernel_charge_accept() reads rx->backlog without any
+socket/backlog synchronization and passes that raw pointer into
+rxrpc_service_prealloc_one(). A concurrent rxrpc_discard_prealloc()
+sets rx->backlog = NULL and frees the backlog rings, so a kernel
+preallocation worker can keep using a freed struct rxrpc_backlog
+while updating *_backlog_head/tail and array slots.
 
-The MAX310X keeps the GPIO direction in the GPIOCFG register (a set bit
-selects output), which the existing direction_input/output callbacks
-already program, so the current direction can be read back directly.
+Serialize the state check and backlog lookup with the socket lock,
+and reject kernel preallocation once teardown has disabled
+listening or discarded the service backlog.
 
-Fixes: f65444187a66 ("serial: New serial driver MAX310X")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Tapio Reijonen <tapio.reijonen@vaisala.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Reviewed-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://patch.msgid.link/20260615-b4-serial-max310x-gpio-get-direction-v2-1-4704ba2b181a@vaisala.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 00e907127e6f ("rxrpc: Preallocate peers, conns and calls for incoming service requests")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Li Daming <d4n.for.sec@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260609140911.838677-6-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ kept 6.1's extra user_attach_call argument in the rxrpc_service_prealloc_one() call ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/max310x.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/rxrpc/call_accept.c |   27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
---- a/drivers/tty/serial/max310x.c
-+++ b/drivers/tty/serial/max310x.c
-@@ -1235,6 +1235,17 @@ static void max310x_gpio_set(struct gpio
- 			    value ? 1 << (offset % 4) : 0);
- }
- 
-+static int max310x_gpio_get_direction(struct gpio_chip *chip, unsigned int offset)
-+{
-+	struct max310x_port *s = gpiochip_get_data(chip);
-+	struct uart_port *port = &s->p[offset / 4].port;
-+	unsigned int val;
-+
-+	val = max310x_port_read(port, MAX310X_GPIOCFG_REG);
-+
-+	return val & BIT(offset % 4) ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
-+}
-+
- static int max310x_gpio_direction_input(struct gpio_chip *chip, unsigned int offset)
+--- a/net/rxrpc/call_accept.c
++++ b/net/rxrpc/call_accept.c
+@@ -481,14 +481,27 @@ int rxrpc_kernel_charge_accept(struct so
+ 			       unsigned long user_call_ID, gfp_t gfp,
+ 			       unsigned int debug_id)
  {
- 	struct max310x_port *s = gpiochip_get_data(chip);
-@@ -1441,6 +1452,7 @@ static int max310x_probe(struct device *
- 	s->gpio.owner		= THIS_MODULE;
- 	s->gpio.parent		= dev;
- 	s->gpio.label		= devtype->name;
-+	s->gpio.get_direction	= max310x_gpio_get_direction;
- 	s->gpio.direction_input	= max310x_gpio_direction_input;
- 	s->gpio.get		= max310x_gpio_get;
- 	s->gpio.direction_output= max310x_gpio_direction_output;
+-	struct rxrpc_sock *rx = rxrpc_sk(sock->sk);
+-	struct rxrpc_backlog *b = rx->backlog;
++	struct rxrpc_backlog *b;
++	struct rxrpc_sock *rx;
++	struct sock *sk;
++	int ret;
+ 
+-	if (sock->sk->sk_state == RXRPC_CLOSE)
+-		return -ESHUTDOWN;
++	sk = sock->sk;
++	rx = rxrpc_sk(sk);
+ 
+-	return rxrpc_service_prealloc_one(rx, b, notify_rx,
+-					  user_attach_call, user_call_ID,
+-					  gfp, debug_id);
++	lock_sock(sk);
++	if (sk->sk_state != RXRPC_SERVER_LISTENING || !rx->backlog) {
++		ret = -ESHUTDOWN;
++		goto out;
++	}
++
++	b = rx->backlog;
++	ret = rxrpc_service_prealloc_one(rx, b, notify_rx,
++					 user_attach_call, user_call_ID,
++					 gfp, debug_id);
++
++out:
++	release_sock(sk);
++	return ret;
+ }
+ EXPORT_SYMBOL(rxrpc_kernel_charge_accept);
 
 
