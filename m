@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D6F47FAEA;
-	Thu, 20 Aug 2026 17:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A9847CA7E;
+	Thu, 20 Aug 2026 17:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247424; cv=none; b=BP6c/j83rfw+F6+fEXIIrIB0IlRKdL6GV4fhFLkUBlLN8N1ko+NP7Ds2HJIQE5ky8t0WEPAsUuVChnTnP+C25HWprUuXXTAK7cZNCAczsKHIrP8rdlhN/quYxBAkq8VxFHhi5S6gXP2/Ha9XzLQ3lAKxP3peQHl1P/cOckpIT2w=
+	t=1787247427; cv=none; b=brONua8qFKPtN1dBswdG4/qOkYpFVCvzodVnBcotlx5IRx9qQ2DwkPkS7oGwpf6k2XNeBKHjCjyBJb8kV+qtg18bSdijvCmjKDbKIjqAsWbto/lhHtax/IwBSuihiPJJnqsOcpw+SqnZAOFjo8jT095ViEUaAWCBOczZqvLpS8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247424; c=relaxed/simple;
-	bh=ZvjbBNQBji/mYMdRfakY2JepCUSRiRue56F/+a4FqDc=;
+	s=arc-20240116; t=1787247427; c=relaxed/simple;
+	bh=M5CCEdRNSE8+2gQgjGQjh5scoq6wSxDQpNKrBwXe0Bk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mURrqZ9An3COqm8fKRb4GjQ4YEHBjkaoejYrRF71gDsCplfTQxN4qxFcHr3I4T3PDTmamwH1vGCdFN/ZrcIM0qYNEYW8yD1/xu1OaD/g/TwnB2GNjCpUctAA7D6bao8qd2QV+LIblbOC8Fxl/ICuR1jdsCqP/P7S+Xtqq6PAkiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RcGQo/W5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C0W1yeNANw+dsCpakeIBZuCv/Ncnbl1ipZxL2ig40BGCK5pztwnDNmDMfsUwInYVrQyqy7kwZjnsG9bZw4GB6Q9wVebK8JpVuxPg5GYYflGZXj0wXH+qxyhpM87wSXKKUOCRbkQTQsD0ok0oHv1OKiC5VnhE06RGThH9xyJrMNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gVT+cj+K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RcGQo/W5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FBDF1F000E9;
-	Thu, 20 Aug 2026 17:37:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gVT+cj+K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE8C1F000E9;
+	Thu, 20 Aug 2026 17:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247423;
-	bh=jiYqYBAYEbfbpRACb3GaKJ/tmYIe7fmtqHO1bEhA4Uw=;
+	s=korg; t=1787247426;
+	bh=nMZRcroiO8YCL5hjYRykXPG18ywUhWF5VAOD0li1Z0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RcGQo/W5nJ5vCS0PJNvQhtvRn4+bEOgIENXCWjiGW6EOB+Rx4c8deXUsLqMlpdtar
-	 ig5N+URggwKGfeJnaFg1LNsQ1hqP+0AqnaUN9bglRJtlCU0onVvH7tmtjXjWn861FB
-	 HGBRgPenYoH8CI2j65ANrS9RUxEfDA+q3olWsaqc=
+	b=gVT+cj+KirRXyY+IboMzYUv9i/bBf0bz+9lQqfgXgjY/F28dfJNfqgQvyqOYFW/ED
+	 11cuaiJ43f0i42smQqY8RRzbGxTEYMRuW/zljOrJ8p7M3dOy2klj1n+xBWKptdgokz
+	 hnNudO1+tDPSNXTDwhbCEQuKy+YjLdEA8VyebM78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Zhu <zhuyiming@kuaishou.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Kefu Chai <k.chai@proxmox.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.6 042/166] ceph: fix MDS random selection readiness predicate
-Date: Thu, 20 Aug 2026 16:55:01 +0200
-Message-ID: <20260820145212.440029568@linuxfoundation.org>
+Subject: [PATCH 6.6 043/166] libceph: tolerate addrvecs with multiple entries of the same type
+Date: Thu, 20 Aug 2026 16:55:02 +0200
+Message-ID: <20260820145212.467402325@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -51,38 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yiming Zhu <zhuyiming@kuaishou.com>
+From: Kefu Chai <k.chai@proxmox.com>
 
-commit 2c11c4bfdb7bd2808b3b3ac228e1f2d9bcf25457 upstream.
+commit 5a87925539acecfe88229bad76ab81bd75a7e3f5 upstream.
 
-CEPH_MDS_IS_READY() is parsed so that the ternary expression can
-return true for an MDS entry with state 0 when it is not laggy. This
-allows the random selector to choose a down/DNE rank.
+ceph_decode_entity_addrvec() rejects any addrvec containing more than
+one entry that matches the requested msgr type (LEGACY or MSGR2),
+logging "another match of type N in addrvec" and returning -EINVAL.
 
-Group the ternary expression under the state check so zero-state ranks
-are not treated as ready.
+Some admin tooling (e.g. pveceph mon create from Proxmox VE) generates
+addrvecs with multiple same-type entries when public_network lists more
+than one CIDR: it picks one local IP per subnet and emits both a v2 and
+a v1 entry for each IP.  Monmaps shaped this way cause:
+
+  libceph: mon0 (1)10.10.10.15:6789 session established
+  libceph: another match of type 1 in addrvec
+  libceph: problem decoding monmap, -22
+
+No Ceph code uses the extra entries: since Nautilus, the userspace
+messenger (AsyncMessenger) unconditionally picks the first address of
+the requested type and ignores any subsequent matches.
+
+Match that behavior: use the first matching entry and silently skip any
+subsequent ones.  This is a compatibility fix for existing deployments
+and does not enable dual-stack or multi-subnet address selection.
+
+[ idryomov: tweak ceph_decode_entity_addrvec() comment ]
 
 Cc: stable@vger.kernel.org
-Fixes: b38c9eb4757d ("ceph: add possible_max_rank and make the code more readable")
-Link: https://tracker.ceph.com/issues/78648
-Signed-off-by: Yiming Zhu <zhuyiming@kuaishou.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: a5cbd5fc22d5 ("libceph, ceph: get and handle cluster maps with addrvecs")
+Link: https://bugzilla.proxmox.com/show_bug.cgi?id=7518
+Signed-off-by: Kefu Chai <k.chai@proxmox.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/mdsmap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ceph/decode.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/fs/ceph/mdsmap.c
-+++ b/fs/ceph/mdsmap.c
-@@ -15,7 +15,7 @@
- #include "super.h"
+--- a/net/ceph/decode.c
++++ b/net/ceph/decode.c
+@@ -87,8 +87,9 @@ bad:
+ EXPORT_SYMBOL(ceph_decode_entity_addr);
  
- #define CEPH_MDS_IS_READY(i, ignore_laggy) \
--	(m->m_info[i].state > 0 && ignore_laggy ? true : !m->m_info[i].laggy)
-+	(m->m_info[i].state > 0 && (ignore_laggy ? true : !m->m_info[i].laggy))
+ /*
+- * Return addr of desired type (MSGR2 or LEGACY) or error.
+- * Make sure there is only one match.
++ * Return addr of desired type (MSGR2 or LEGACY) or error.  In case of
++ * multiple matches, use the first one for compatibility with userspace
++ * messenger.
+  *
+  * Assume encoding with MSG_ADDR2.
+  */
+@@ -121,14 +122,13 @@ int ceph_decode_entity_addrvec(void **p,
  
- static int __mdsmap_get_random_mds(struct ceph_mdsmap *m, bool ignore_laggy)
- {
+ 		dout("%s i %d addr %s\n", __func__, i, ceph_pr_addr(&tmp_addr));
+ 		if (tmp_addr.type == my_type) {
+-			if (found) {
+-				pr_err("another match of type %d in addrvec\n",
+-				       le32_to_cpu(my_type));
+-				return -EINVAL;
++			if (!found) {
++				memcpy(addr, &tmp_addr, sizeof(*addr));
++				found = true;
++			} else {
++				dout("%s skipping extra match of type %d in addrvec\n",
++				     __func__, le32_to_cpu(my_type));
+ 			}
+-
+-			memcpy(addr, &tmp_addr, sizeof(*addr));
+-			found = true;
+ 		}
+ 	}
+ 
 
 
