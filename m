@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B267246C84F;
-	Thu, 20 Aug 2026 16:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D385272E53;
+	Thu, 20 Aug 2026 16:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243606; cv=none; b=q3u2ESIyxhT/Z+55nDMVAeelMw7Y3iuKjeK2rTXugd5S4PA2mE8nAiWuI6a6nSw3mtDu/tM0XcJcrApa6RpcP4sZK5ffKXD7VVHQLicpJKCXDn5bI3cvALAd9VtVWlAsjbQtioOkfSlJ7qfL46nhOAY85Fh38e9qXwJlV+4irk4=
+	t=1787243608; cv=none; b=hL6G3kTZPWvahrA0APmvI6JE7B80YVnH0tuo2w6C11XDmxu0sTaXLSfVOIR88aSiDDTAqqbchkIGJjIDL1oak8OZrq9NnuO7+QGgF5CIUNmAjtsOLVxpK5cYubho/F9C9n2G+t6yfD4VKRtvRDRa4tThb9ZRXzkd3HBwZurYAr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243606; c=relaxed/simple;
-	bh=Y6WJUle9WfNtuw38WtaJgHeuigIq8PQFTFN0yYdnAl0=;
+	s=arc-20240116; t=1787243608; c=relaxed/simple;
+	bh=mRT70x+OO+HF2Qx+SjxSYjVMC+jyC1S2WhO2wHiv7mc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JcQ3pyGr7/qQQgFUBWFQQ2x62b6MNtMDzmzF7G0u9EItjzcQiasJcL8Gw7IDLzKPWNpLhc0s/Gzr/Cf6/0Qs3SKhcCeumHMxThhwvYh/+Hj9AXOhHtspLq/q5XGV2WBzz9IT3VAlOpDZ4WYGYzgC2kFX2QP4rqapEfFoV5YqCOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pdfnmz5i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B0/Er7qx+wCpDH4s9cM3Er8NcgbSjI7XyDc2eO0eXUcax95aSt6k445B+Ju73EKvOAFzZrwpBqIjZz/JyNRs9yg00jOr+xroAsgfQh/U5BMapgNQnRSD+R7cFl7zPnWxSQ5VykgwaWe4hjBltoPwwQGM3p+nPWZA1FKVM3tsMx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYXInGxZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pdfnmz5i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A35F1F000E9;
-	Thu, 20 Aug 2026 16:33:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYXInGxZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E923C1F000E9;
+	Thu, 20 Aug 2026 16:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243604;
-	bh=gWPrW2Q7QeOjUBH5IHwaqEj/wkfBcIECba7oXuwnxB4=;
+	s=korg; t=1787243607;
+	bh=FPVckJ8X7Ea13pQMcGa7lZteFLybNgZ1Al/gNofq/6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pdfnmz5iz0JCAL12nypzGY7sqZ/wpbdjwP2wfVe9pkHeQ0qN+mgSPm0wIl5cfAJVK
-	 xBsRou22yzTrnByBCdA1Dljzi7WDUPy/Ab33eBo2wYPTYllMci5Eqo/TbTBYyB/0YX
-	 uo5dsfHCSvnKznXI5E15lQ5t/Dj1+N41Ryxskcpg=
+	b=lYXInGxZtrcc4fq6sUPG+iD6gxzAE1+/m1mtP2abyeGwBaUFrOQ/bNs+zWPurISCe
+	 KMYRFDU0ImgTXLzWMa4zntqpEiJR5m2BimysGPZ0HGB+7pas0fNVzw2mGuDa9350/T
+	 +jYYf77dqOh0aVgiVFTiMpYo80vPqlLy7nL0rTeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 151/272] treewide: rename pinctrl_gpio_direction_output_new()
-Date: Thu, 20 Aug 2026 16:55:35 +0200
-Message-ID: <20260820145235.840914883@linuxfoundation.org>
+Subject: [PATCH 5.15 152/272] gpio: tegra: do not call pinctrl for GPIO direction
+Date: Thu, 20 Aug 2026 16:55:36 +0200
+Message-ID: <20260820145235.873039504@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -51,611 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit b679d6c06b2b29187374f9f4da7eea1961c2eeaa ]
+[ Upstream commit d3e91a95b2b0fc6336dbf3ec90d831a1654d2720 ]
 
-Now that pinctrl_gpio_direction_output() is no longer used, let's drop
-the '_new' suffix from its improved variant.
+tegra_gpio_direction_input() and tegra_gpio_direction_output() already
+program the GPIO controller direction registers directly. The additional
+pinctrl_gpio_direction_input/output() calls do not add a Tegra pinctrl
+operation, because the Tegra pinmux ops provide GPIO request/free
+handling but no gpio_set_direction hook.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
-Stable-dep-of: d3e91a95b2b0 ("gpio: tegra: do not call pinctrl for GPIO direction")
+The extra call still enters the pinctrl core and takes pctldev->mutex.
+Shared GPIO users can call the direction path while holding their
+per-line spinlock, so this otherwise redundant pinctrl direction call can
+sleep in an atomic context.
+
+This was found by our static analysis tool and then confirmed by manual
+review of tegra_gpio_probe(), the Tegra GPIO direction callbacks and the
+Tegra pinctrl ops. The reviewed path has a default non-sleeping
+struct gpio_chip while the direction callback still enters the pinctrl
+mutex path.
+
+A directed runtime validation kept the same non-sleeping chip registration
+and drove:
+
+  gpio_shared_proxy_direction_output()
+  gpiod_direction_output_raw_commit()
+  tegra_gpio_direction_output()
+  pinctrl_gpio_direction_output()
+
+Lockdep reported a sleep-in-atomic warning with the shared GPIO spinlock
+held and pinctrl_get_device_gpio_range() plus tegra_gpio_direction_output()
+on the stack.
+
+Do not mark the whole chip as can_sleep to paper over this: can_sleep
+describes whether get()/set() may sleep, and Tegra value access is MMIO.
+Remove the redundant pinctrl direction calls and keep pinctrl involvement
+in the existing request/free path.
+
+Fixes: 11da90541283 ("gpio: tegra: Fix offset of pinctrl calls")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260619152439.1239561-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-mvebu.c                     |    4 ++--
- drivers/gpio/gpio-pxa.c                       |    4 ++--
- drivers/gpio/gpio-rockchip.c                  |    4 ++--
- drivers/gpio/gpio-tegra.c                     |    4 ++--
- drivers/gpio/gpio-vf610.c                     |    4 ++--
- drivers/pinctrl/bcm/pinctrl-bcm2835.c         |    4 ++--
- drivers/pinctrl/cirrus/pinctrl-lochnagar.c    |    2 +-
- drivers/pinctrl/core.c                        |   15 +++++++++------
- drivers/pinctrl/intel/pinctrl-cherryview.c    |    4 ++--
- drivers/pinctrl/intel/pinctrl-intel.c         |    4 ++--
- drivers/pinctrl/intel/pinctrl-lynxpoint.c     |    4 ++--
- drivers/pinctrl/mediatek/pinctrl-moore.c      |    4 ++--
- drivers/pinctrl/mediatek/pinctrl-mtk-common.c |    4 ++--
- drivers/pinctrl/mediatek/pinctrl-paris.c      |    4 ++--
- drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c     |    4 ++--
- drivers/pinctrl/pinctrl-as3722.c              |    4 ++--
- drivers/pinctrl/pinctrl-axp209.c              |    2 +-
- drivers/pinctrl/pinctrl-ingenic.c             |   11 ++++++++---
- drivers/pinctrl/pinctrl-ocelot.c              |    4 ++--
- drivers/pinctrl/pinctrl-rk805.c               |    4 ++--
- drivers/pinctrl/pinctrl-st.c                  |    4 ++--
- drivers/pinctrl/renesas/gpio.c                |    4 ++--
- drivers/pinctrl/stm32/pinctrl-stm32.c         |    4 ++--
- drivers/pinctrl/sunxi/pinctrl-sunxi.c         |    4 ++--
- drivers/pinctrl/vt8500/pinctrl-wmt.c          |    4 ++--
- include/linux/pinctrl/consumer.h              |   13 +++++++++----
- 26 files changed, 70 insertions(+), 57 deletions(-)
+ drivers/gpio/gpio-tegra.c |   18 ++----------------
+ 1 file changed, 2 insertions(+), 16 deletions(-)
 
---- a/drivers/gpio/gpio-mvebu.c
-+++ b/drivers/gpio/gpio-mvebu.c
-@@ -348,7 +348,7 @@ static int mvebu_gpio_direction_input(st
- 	 * Check with the pinctrl driver whether this pin is usable as
- 	 * an input GPIO
- 	 */
--	ret = pinctrl_gpio_direction_input(chip->base + pin);
-+	ret = pinctrl_gpio_direction_input(chip, pin);
- 	if (ret)
- 		return ret;
- 
-@@ -368,7 +368,7 @@ static int mvebu_gpio_direction_output(s
- 	 * Check with the pinctrl driver whether this pin is usable as
- 	 * an output GPIO
- 	 */
--	ret = pinctrl_gpio_direction_output(chip->base + pin);
-+	ret = pinctrl_gpio_direction_output(chip, pin);
- 	if (ret)
- 		return ret;
- 
---- a/drivers/gpio/gpio-pxa.c
-+++ b/drivers/gpio/gpio-pxa.c
-@@ -266,7 +266,7 @@ static int pxa_gpio_direction_input(stru
- 	int ret;
- 
- 	if (pxa_gpio_has_pinctrl()) {
--		ret = pinctrl_gpio_direction_input(chip->base + offset);
-+		ret = pinctrl_gpio_direction_input(chip, offset);
- 		if (ret)
- 			return ret;
- 	}
-@@ -295,7 +295,7 @@ static int pxa_gpio_direction_output(str
- 	writel_relaxed(mask, base + (value ? GPSR_OFFSET : GPCR_OFFSET));
- 
- 	if (pxa_gpio_has_pinctrl()) {
--		ret = pinctrl_gpio_direction_output(chip->base + offset);
-+		ret = pinctrl_gpio_direction_output(chip, offset);
- 		if (ret)
- 			return ret;
- 	}
---- a/drivers/gpio/gpio-rockchip.c
-+++ b/drivers/gpio/gpio-rockchip.c
-@@ -158,9 +158,9 @@ static int rockchip_gpio_set_direction(s
- 
- 
- 	if (input)
--		pinctrl_gpio_direction_input(bank->pin_base + offset);
-+		pinctrl_gpio_direction_input(chip, offset);
- 	else
--		pinctrl_gpio_direction_output(bank->pin_base + offset);
-+		pinctrl_gpio_direction_output(chip, offset);
- 
- 	raw_spin_lock_irqsave(&bank->slock, flags);
- 	rockchip_gpio_writel_bit(bank, offset, data, bank->gpio_regs->port_ddr);
 --- a/drivers/gpio/gpio-tegra.c
 +++ b/drivers/gpio/gpio-tegra.c
-@@ -179,7 +179,7 @@ static int tegra_gpio_direction_input(st
+@@ -174,18 +174,11 @@ static int tegra_gpio_direction_input(st
+ 				      unsigned int offset)
+ {
+ 	struct tegra_gpio_info *tgi = gpiochip_get_data(chip);
+-	int ret;
+ 
  	tegra_gpio_mask_write(tgi, GPIO_MSK_OE(tgi, offset), offset, 0);
  	tegra_gpio_enable(tgi, offset);
  
--	ret = pinctrl_gpio_direction_input(chip->base + offset);
-+	ret = pinctrl_gpio_direction_input(chip, offset);
- 	if (ret < 0)
- 		dev_err(tgi->dev,
- 			"Failed to set pinctrl input direction of GPIO %d: %d",
-@@ -199,7 +199,7 @@ static int tegra_gpio_direction_output(s
+-	ret = pinctrl_gpio_direction_input(chip, offset);
+-	if (ret < 0)
+-		dev_err(tgi->dev,
+-			"Failed to set pinctrl input direction of GPIO %d: %d",
+-			 chip->base + offset, ret);
+-
+-	return ret;
++	return 0;
+ }
+ 
+ static int tegra_gpio_direction_output(struct gpio_chip *chip,
+@@ -193,19 +186,12 @@ static int tegra_gpio_direction_output(s
+ 				       int value)
+ {
+ 	struct tegra_gpio_info *tgi = gpiochip_get_data(chip);
+-	int ret;
+ 
+ 	tegra_gpio_set(chip, offset, value);
  	tegra_gpio_mask_write(tgi, GPIO_MSK_OE(tgi, offset), offset, 1);
  	tegra_gpio_enable(tgi, offset);
  
--	ret = pinctrl_gpio_direction_output(chip->base + offset);
-+	ret = pinctrl_gpio_direction_output(chip, offset);
- 	if (ret < 0)
- 		dev_err(tgi->dev,
- 			"Failed to set pinctrl output direction of GPIO %d: %d",
---- a/drivers/gpio/gpio-vf610.c
-+++ b/drivers/gpio/gpio-vf610.c
-@@ -117,7 +117,7 @@ static int vf610_gpio_direction_input(st
- 		vf610_gpio_writel(val, port->gpio_base + GPIO_PDDR);
- 	}
- 
--	return pinctrl_gpio_direction_input(chip->base + gpio);
-+	return pinctrl_gpio_direction_input(chip, gpio);
+-	ret = pinctrl_gpio_direction_output(chip, offset);
+-	if (ret < 0)
+-		dev_err(tgi->dev,
+-			"Failed to set pinctrl output direction of GPIO %d: %d",
+-			 chip->base + offset, ret);
+-
+-	return ret;
++	return 0;
  }
  
- static int vf610_gpio_direction_output(struct gpio_chip *chip, unsigned gpio,
-@@ -135,7 +135,7 @@ static int vf610_gpio_direction_output(s
- 		vf610_gpio_writel(val, port->gpio_base + GPIO_PDDR);
- 	}
- 
--	return pinctrl_gpio_direction_output(chip->base + gpio);
-+	return pinctrl_gpio_direction_output(chip, gpio);
- }
- 
- static void vf610_gpio_irq_handler(struct irq_desc *desc)
---- a/drivers/pinctrl/bcm/pinctrl-bcm2835.c
-+++ b/drivers/pinctrl/bcm/pinctrl-bcm2835.c
-@@ -312,7 +312,7 @@ static inline void bcm2835_pinctrl_fsel_
- 
- static int bcm2835_gpio_direction_input(struct gpio_chip *chip, unsigned offset)
- {
--	return pinctrl_gpio_direction_input(chip->base + offset);
-+	return pinctrl_gpio_direction_input(chip, offset);
- }
- 
- static int bcm2835_gpio_get(struct gpio_chip *chip, unsigned offset)
-@@ -348,7 +348,7 @@ static int bcm2835_gpio_direction_output
- 		unsigned offset, int value)
- {
- 	bcm2835_gpio_set(chip, offset, value);
--	return pinctrl_gpio_direction_output(chip->base + offset);
-+	return pinctrl_gpio_direction_output(chip, offset);
- }
- 
- static int bcm2835_of_gpio_ranges_fallback(struct gpio_chip *gc,
---- a/drivers/pinctrl/cirrus/pinctrl-lochnagar.c
-+++ b/drivers/pinctrl/cirrus/pinctrl-lochnagar.c
-@@ -1096,7 +1096,7 @@ static int lochnagar_gpio_direction_out(
- {
- 	lochnagar_gpio_set(chip, offset, value);
- 
--	return pinctrl_gpio_direction_output(chip->base + offset);
-+	return pinctrl_gpio_direction_output(chip, offset);
- }
- 
- static int lochnagar_fill_func_groups(struct lochnagar_pin_priv *priv)
---- a/drivers/pinctrl/core.c
-+++ b/drivers/pinctrl/core.c
-@@ -22,6 +22,7 @@
- #include <linux/list.h>
- #include <linux/debugfs.h>
- #include <linux/seq_file.h>
-+#include <linux/gpio/driver.h>
- #include <linux/pinctrl/consumer.h>
- #include <linux/pinctrl/pinctrl.h>
- #include <linux/pinctrl/machine.h>
-@@ -864,29 +865,31 @@ static int pinctrl_gpio_direction(unsign
- 
- /**
-  * pinctrl_gpio_direction_input() - request a GPIO pin to go into input mode
-- * @gpio: the GPIO pin number from the GPIO subsystem number space
-+ * @gc: GPIO chip structure from the GPIO subsystem
-+ * @offset: hardware offset of the GPIO relative to the controller
-  *
-  * This function should *ONLY* be used from gpiolib-based GPIO drivers,
-  * as part of their gpio_direction_input() semantics, platforms and individual
-  * drivers shall *NOT* touch pin control GPIO calls.
-  */
--int pinctrl_gpio_direction_input(unsigned gpio)
-+int pinctrl_gpio_direction_input(struct gpio_chip *gc, unsigned int offset)
- {
--	return pinctrl_gpio_direction(gpio, true);
-+	return pinctrl_gpio_direction(gc->base + offset, true);
- }
- EXPORT_SYMBOL_GPL(pinctrl_gpio_direction_input);
- 
- /**
-  * pinctrl_gpio_direction_output() - request a GPIO pin to go into output mode
-- * @gpio: the GPIO pin number from the GPIO subsystem number space
-+ * @gc: GPIO chip structure from the GPIO subsystem
-+ * @offset: hardware offset of the GPIO relative to the controller
-  *
-  * This function should *ONLY* be used from gpiolib-based GPIO drivers,
-  * as part of their gpio_direction_output() semantics, platforms and individual
-  * drivers shall *NOT* touch pin control GPIO calls.
-  */
--int pinctrl_gpio_direction_output(unsigned gpio)
-+int pinctrl_gpio_direction_output(struct gpio_chip *gc, unsigned int offset)
- {
--	return pinctrl_gpio_direction(gpio, false);
-+	return pinctrl_gpio_direction(gc->base + offset, false);
- }
- EXPORT_SYMBOL_GPL(pinctrl_gpio_direction_output);
- 
---- a/drivers/pinctrl/intel/pinctrl-cherryview.c
-+++ b/drivers/pinctrl/intel/pinctrl-cherryview.c
-@@ -1220,14 +1220,14 @@ static int chv_gpio_get_direction(struct
- 
- static int chv_gpio_direction_input(struct gpio_chip *chip, unsigned int offset)
- {
--	return pinctrl_gpio_direction_input(chip->base + offset);
-+	return pinctrl_gpio_direction_input(chip, offset);
- }
- 
- static int chv_gpio_direction_output(struct gpio_chip *chip, unsigned int offset,
- 				     int value)
- {
- 	chv_gpio_set(chip, offset, value);
--	return pinctrl_gpio_direction_output(chip->base + offset);
-+	return pinctrl_gpio_direction_output(chip, offset);
- }
- 
- static const struct gpio_chip chv_gpio_chip = {
---- a/drivers/pinctrl/intel/pinctrl-intel.c
-+++ b/drivers/pinctrl/intel/pinctrl-intel.c
-@@ -1000,14 +1000,14 @@ static int intel_gpio_get_direction(stru
- 
- static int intel_gpio_direction_input(struct gpio_chip *chip, unsigned int offset)
- {
--	return pinctrl_gpio_direction_input(chip->base + offset);
-+	return pinctrl_gpio_direction_input(chip, offset);
- }
- 
- static int intel_gpio_direction_output(struct gpio_chip *chip, unsigned int offset,
- 				       int value)
- {
- 	intel_gpio_set(chip, offset, value);
--	return pinctrl_gpio_direction_output(chip->base + offset);
-+	return pinctrl_gpio_direction_output(chip, offset);
- }
- 
- static const struct gpio_chip intel_gpio_chip = {
---- a/drivers/pinctrl/intel/pinctrl-lynxpoint.c
-+++ b/drivers/pinctrl/intel/pinctrl-lynxpoint.c
-@@ -614,7 +614,7 @@ static void lp_gpio_set(struct gpio_chip
- 
- static int lp_gpio_direction_input(struct gpio_chip *chip, unsigned int offset)
- {
--	return pinctrl_gpio_direction_input(chip->base + offset);
-+	return pinctrl_gpio_direction_input(chip, offset);
- }
- 
- static int lp_gpio_direction_output(struct gpio_chip *chip, unsigned int offset,
-@@ -622,7 +622,7 @@ static int lp_gpio_direction_output(stru
- {
- 	lp_gpio_set(chip, offset, value);
- 
--	return pinctrl_gpio_direction_output(chip->base + offset);
-+	return pinctrl_gpio_direction_output(chip, offset);
- }
- 
- static int lp_gpio_get_direction(struct gpio_chip *chip, unsigned int offset)
---- a/drivers/pinctrl/mediatek/pinctrl-moore.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-moore.c
-@@ -471,7 +471,7 @@ static void mtk_gpio_set(struct gpio_chi
- 
- static int mtk_gpio_direction_input(struct gpio_chip *chip, unsigned int gpio)
- {
--	return pinctrl_gpio_direction_input(chip->base + gpio);
-+	return pinctrl_gpio_direction_input(chip, gpio);
- }
- 
- static int mtk_gpio_direction_output(struct gpio_chip *chip, unsigned int gpio,
-@@ -479,7 +479,7 @@ static int mtk_gpio_direction_output(str
- {
- 	mtk_gpio_set(chip, gpio, value);
- 
--	return pinctrl_gpio_direction_output(chip->base + gpio);
-+	return pinctrl_gpio_direction_output(chip, gpio);
- }
- 
- static int mtk_gpio_to_irq(struct gpio_chip *chip, unsigned int offset)
---- a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-@@ -778,14 +778,14 @@ static const struct pinmux_ops mtk_pmx_o
- static int mtk_gpio_direction_input(struct gpio_chip *chip,
- 					unsigned offset)
- {
--	return pinctrl_gpio_direction_input(chip->base + offset);
-+	return pinctrl_gpio_direction_input(chip, offset);
- }
- 
- static int mtk_gpio_direction_output(struct gpio_chip *chip,
- 					unsigned offset, int value)
- {
- 	mtk_gpio_set(chip, offset, value);
--	return pinctrl_gpio_direction_output(chip->base + offset);
-+	return pinctrl_gpio_direction_output(chip, offset);
- }
- 
- static int mtk_gpio_get_direction(struct gpio_chip *chip, unsigned offset)
---- a/drivers/pinctrl/mediatek/pinctrl-paris.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-paris.c
-@@ -786,7 +786,7 @@ static int mtk_gpio_direction_input(stru
- 	if (gpio >= hw->soc->npins)
- 		return -EINVAL;
- 
--	return pinctrl_gpio_direction_input(chip->base + gpio);
-+	return pinctrl_gpio_direction_input(chip, gpio);
- }
- 
- static int mtk_gpio_direction_output(struct gpio_chip *chip, unsigned int gpio,
-@@ -799,7 +799,7 @@ static int mtk_gpio_direction_output(str
- 
- 	mtk_gpio_set(chip, gpio, value);
- 
--	return pinctrl_gpio_direction_output(chip->base + gpio);
-+	return pinctrl_gpio_direction_output(chip, gpio);
- }
- 
- static int mtk_gpio_to_irq(struct gpio_chip *chip, unsigned int offset)
---- a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-@@ -168,7 +168,7 @@ static int npcmgpio_direction_input(stru
- 	struct npcm7xx_gpio *bank = gpiochip_get_data(chip);
- 	int ret;
- 
--	ret = pinctrl_gpio_direction_input(offset + chip->base);
-+	ret = pinctrl_gpio_direction_input(chip, offset);
- 	if (ret)
- 		return ret;
- 
-@@ -185,7 +185,7 @@ static int npcmgpio_direction_output(str
- 	dev_dbg(chip->parent, "gpio_direction_output: offset%d = %x\n", offset,
- 		value);
- 
--	ret = pinctrl_gpio_direction_output(offset + chip->base);
-+	ret = pinctrl_gpio_direction_output(chip, offset);
- 	if (ret)
- 		return ret;
- 
---- a/drivers/pinctrl/pinctrl-as3722.c
-+++ b/drivers/pinctrl/pinctrl-as3722.c
-@@ -514,14 +514,14 @@ static void as3722_gpio_set(struct gpio_
- 
- static int as3722_gpio_direction_input(struct gpio_chip *chip, unsigned offset)
- {
--	return pinctrl_gpio_direction_input(chip->base + offset);
-+	return pinctrl_gpio_direction_input(chip, offset);
- }
- 
- static int as3722_gpio_direction_output(struct gpio_chip *chip,
- 		unsigned offset, int value)
- {
- 	as3722_gpio_set(chip, offset, value);
--	return pinctrl_gpio_direction_output(chip->base + offset);
-+	return pinctrl_gpio_direction_output(chip, offset);
- }
- 
- static int as3722_gpio_to_irq(struct gpio_chip *chip, unsigned offset)
---- a/drivers/pinctrl/pinctrl-axp209.c
-+++ b/drivers/pinctrl/pinctrl-axp209.c
-@@ -112,7 +112,7 @@ static int axp20x_gpio_get_reg(unsigned
- 
- static int axp20x_gpio_input(struct gpio_chip *chip, unsigned int offset)
- {
--	return pinctrl_gpio_direction_input(chip->base + offset);
-+	return pinctrl_gpio_direction_input(chip, offset);
- }
- 
- static int axp20x_gpio_get(struct gpio_chip *chip, unsigned int offset)
---- a/drivers/pinctrl/pinctrl-ingenic.c
-+++ b/drivers/pinctrl/pinctrl-ingenic.c
-@@ -130,6 +130,8 @@ struct ingenic_pinctrl {
- 	struct pinctrl_pin_desc *pdesc;
- 
- 	const struct ingenic_chip_info *info;
-+
-+	struct gpio_chip *gc;
- };
- 
- struct ingenic_gpio_chip {
-@@ -3530,14 +3532,14 @@ static int ingenic_gpio_get(struct gpio_
- static int ingenic_gpio_direction_input(struct gpio_chip *gc,
- 		unsigned int offset)
- {
--	return pinctrl_gpio_direction_input(gc->base + offset);
-+	return pinctrl_gpio_direction_input(gc, offset);
- }
- 
- static int ingenic_gpio_direction_output(struct gpio_chip *gc,
- 		unsigned int offset, int value)
- {
- 	ingenic_gpio_set(gc, offset, value);
--	return pinctrl_gpio_direction_output(gc->base + offset);
-+	return pinctrl_gpio_direction_output(gc, offset);
- }
- 
- static inline void ingenic_config_pin(struct ingenic_pinctrl *jzpc,
-@@ -3998,7 +4000,8 @@ static int ingenic_pinconf_set(struct pi
- 			break;
- 
- 		case PIN_CONFIG_OUTPUT:
--			ret = pinctrl_gpio_direction_output(pin);
-+			ret = pinctrl_gpio_direction_output(jzpc->gc,
-+							pin - jzpc->gc->base);
- 			if (ret)
- 				return ret;
- 
-@@ -4118,6 +4121,8 @@ static int __init ingenic_gpio_probe(str
- 	if (!jzgc)
- 		return -ENOMEM;
- 
-+	jzpc->gc = &jzgc->gc;
-+
- 	jzgc->jzpc = jzpc;
- 	jzgc->reg_base = bank * jzpc->info->reg_offset;
- 
---- a/drivers/pinctrl/pinctrl-ocelot.c
-+++ b/drivers/pinctrl/pinctrl-ocelot.c
-@@ -1174,7 +1174,7 @@ static int ocelot_gpio_get_direction(str
- static int ocelot_gpio_direction_input(struct gpio_chip *chip,
- 				       unsigned int offset)
- {
--	return pinctrl_gpio_direction_input(chip->base + offset);
-+	return pinctrl_gpio_direction_input(chip, offset);
- }
- 
- static int ocelot_gpio_direction_output(struct gpio_chip *chip,
-@@ -1190,7 +1190,7 @@ static int ocelot_gpio_direction_output(
- 		regmap_write(info->map, REG(OCELOT_GPIO_OUT_CLR, info, offset),
- 			     pin);
- 
--	return pinctrl_gpio_direction_output(chip->base + offset);
-+	return pinctrl_gpio_direction_output(chip, offset);
- }
- 
- static const struct gpio_chip ocelot_gpiolib_chip = {
---- a/drivers/pinctrl/pinctrl-rk805.c
-+++ b/drivers/pinctrl/pinctrl-rk805.c
-@@ -166,14 +166,14 @@ static void rk805_gpio_set(struct gpio_c
- static int rk805_gpio_direction_input(struct gpio_chip *chip,
- 				      unsigned int offset)
- {
--	return pinctrl_gpio_direction_input(chip->base + offset);
-+	return pinctrl_gpio_direction_input(chip, offset);
- }
- 
- static int rk805_gpio_direction_output(struct gpio_chip *chip,
- 				       unsigned int offset, int value)
- {
- 	rk805_gpio_set(chip, offset, value);
--	return pinctrl_gpio_direction_output(chip->base + offset);
-+	return pinctrl_gpio_direction_output(chip, offset);
- }
- 
- static int rk805_gpio_get_direction(struct gpio_chip *chip, unsigned int offset)
---- a/drivers/pinctrl/pinctrl-st.c
-+++ b/drivers/pinctrl/pinctrl-st.c
-@@ -715,7 +715,7 @@ static void st_gpio_set(struct gpio_chip
- 
- static int st_gpio_direction_input(struct gpio_chip *chip, unsigned offset)
- {
--	pinctrl_gpio_direction_input(chip->base + offset);
-+	pinctrl_gpio_direction_input(chip, offset);
- 
- 	return 0;
- }
-@@ -726,7 +726,7 @@ static int st_gpio_direction_output(stru
- 	struct st_gpio_bank *bank = gpiochip_get_data(chip);
- 
- 	__st_gpio_set(bank, offset, value);
--	pinctrl_gpio_direction_output(chip->base + offset);
-+	pinctrl_gpio_direction_output(chip, offset);
- 
- 	return 0;
- }
---- a/drivers/pinctrl/renesas/gpio.c
-+++ b/drivers/pinctrl/renesas/gpio.c
-@@ -165,7 +165,7 @@ static void gpio_pin_set_value(struct sh
- 
- static int gpio_pin_direction_input(struct gpio_chip *gc, unsigned offset)
- {
--	return pinctrl_gpio_direction_input(offset);
-+	return pinctrl_gpio_direction_input(gc, offset);
- }
- 
- static int gpio_pin_direction_output(struct gpio_chip *gc, unsigned offset,
-@@ -173,7 +173,7 @@ static int gpio_pin_direction_output(str
- {
- 	gpio_pin_set_value(gpiochip_get_data(gc), offset, value);
- 
--	return pinctrl_gpio_direction_output(offset);
-+	return pinctrl_gpio_direction_output(gc, offset);
- }
- 
- static int gpio_pin_get(struct gpio_chip *gc, unsigned offset)
---- a/drivers/pinctrl/stm32/pinctrl-stm32.c
-+++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
-@@ -255,7 +255,7 @@ static void stm32_gpio_set(struct gpio_c
- 
- static int stm32_gpio_direction_input(struct gpio_chip *chip, unsigned offset)
- {
--	return pinctrl_gpio_direction_input(chip->base + offset);
-+	return pinctrl_gpio_direction_input(chip, offset);
- }
- 
- static int stm32_gpio_direction_output(struct gpio_chip *chip,
-@@ -264,7 +264,7 @@ static int stm32_gpio_direction_output(s
- 	struct stm32_gpio_bank *bank = gpiochip_get_data(chip);
- 
- 	__stm32_gpio_set(bank, offset, value);
--	pinctrl_gpio_direction_output(chip->base + offset);
-+	pinctrl_gpio_direction_output(chip, offset);
- 
- 	return 0;
- }
---- a/drivers/pinctrl/sunxi/pinctrl-sunxi.c
-+++ b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
-@@ -850,7 +850,7 @@ static const struct pinmux_ops sunxi_pmx
- static int sunxi_pinctrl_gpio_direction_input(struct gpio_chip *chip,
- 					unsigned offset)
- {
--	return pinctrl_gpio_direction_input(chip->base + offset);
-+	return pinctrl_gpio_direction_input(chip, offset);
- }
- 
- static int sunxi_pinctrl_gpio_get(struct gpio_chip *chip, unsigned offset)
-@@ -901,7 +901,7 @@ static int sunxi_pinctrl_gpio_direction_
- 					unsigned offset, int value)
- {
- 	sunxi_pinctrl_gpio_set(chip, offset, value);
--	return pinctrl_gpio_direction_output(chip->base + offset);
-+	return pinctrl_gpio_direction_output(chip, offset);
- }
- 
- static int sunxi_pinctrl_gpio_of_xlate(struct gpio_chip *gc,
---- a/drivers/pinctrl/vt8500/pinctrl-wmt.c
-+++ b/drivers/pinctrl/vt8500/pinctrl-wmt.c
-@@ -528,14 +528,14 @@ static void wmt_gpio_set_value(struct gp
- 
- static int wmt_gpio_direction_input(struct gpio_chip *chip, unsigned offset)
- {
--	return pinctrl_gpio_direction_input(chip->base + offset);
-+	return pinctrl_gpio_direction_input(chip, offset);
- }
- 
- static int wmt_gpio_direction_output(struct gpio_chip *chip, unsigned offset,
- 				     int value)
- {
- 	wmt_gpio_set_value(chip, offset, value);
--	return pinctrl_gpio_direction_output(chip->base + offset);
-+	return pinctrl_gpio_direction_output(chip, offset);
- }
- 
- static const struct gpio_chip wmt_gpio_chip = {
---- a/include/linux/pinctrl/consumer.h
-+++ b/include/linux/pinctrl/consumer.h
-@@ -20,6 +20,7 @@
- struct pinctrl;
- struct pinctrl_state;
- struct device;
-+struct gpio_chip;
- 
- #ifdef CONFIG_PINCTRL
- 
-@@ -27,8 +28,10 @@ struct device;
- extern bool pinctrl_gpio_can_use_line(unsigned gpio);
- extern int pinctrl_gpio_request(unsigned gpio);
- extern void pinctrl_gpio_free(unsigned gpio);
--extern int pinctrl_gpio_direction_input(unsigned gpio);
--extern int pinctrl_gpio_direction_output(unsigned gpio);
-+extern int pinctrl_gpio_direction_input(struct gpio_chip *gc,
-+					unsigned int offset);
-+extern int pinctrl_gpio_direction_output(struct gpio_chip *gc,
-+					 unsigned int offset);
- extern int pinctrl_gpio_set_config(unsigned gpio, unsigned long config);
- 
- extern struct pinctrl * __must_check pinctrl_get(struct device *dev);
-@@ -77,12 +80,14 @@ static inline void pinctrl_gpio_free(uns
- {
- }
- 
--static inline int pinctrl_gpio_direction_input(unsigned gpio)
-+static inline int pinctrl_gpio_direction_input(struct gpio_chip *gc,
-+					       unsigned int offset)
- {
- 	return 0;
- }
- 
--static inline int pinctrl_gpio_direction_output(unsigned gpio)
-+static inline int pinctrl_gpio_direction_output(struct gpio_chip *gc,
-+						unsigned int offset)
- {
- 	return 0;
- }
+ static int tegra_gpio_get_direction(struct gpio_chip *chip,
 
 
