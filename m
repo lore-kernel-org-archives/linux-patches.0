@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC69E477E58;
-	Thu, 20 Aug 2026 16:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772E6442B2E;
+	Thu, 20 Aug 2026 16:26:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243184; cv=none; b=mJoO5mg1wrkl1BTgnMLRjqEwmXd3J5qHzWoKKj44bM97uJjy3CcTQLpU6DRHNRRTR3epXFafY+fj7u/R8MSqmDaPLBMJh8zE1W18WGtZSYOaDVjcrISaEhjlxzaYkR9P/O2NCUA6i57TSH+Kg/OmpmIg2AC6F0TyFLBodpD+E6Y=
+	t=1787243187; cv=none; b=t96Y69S1d4Tywo2kbskZki++usXNIi+DZq6lcnTctr6j3DXvgii++ChRh0C49+jpsvMGB/AFjqvrqx1iILHVz/GYgim/HZIPraukOMAQZzJJrmOG/Qn1daIJAj+SdKdRrr3U1FMDet4lEJXcIJG441SzElA1oOz3UsIAuGwK1jA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243184; c=relaxed/simple;
-	bh=dD16Aq0+QgaqWqgJuJKMnFGYX02fP7efeXfGWNfMd2Y=;
+	s=arc-20240116; t=1787243187; c=relaxed/simple;
+	bh=8j2DzMQZ0GlEu5nv7ChufU1S546HO/6QBFwfY/u8yMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YEN/ce0E453v+Fz/OwgAvJkcZmzyJwE75Wt0TRVLKBAh2Me7wJIntAdAGDLgY1dQOhldeevMw0ICr/9CWeFWBwUJ+1S6Xb6RjcGITQUhRfhumpzoyiGOi93wZvlshonZBjLeo03TcTV8TV7Ld6oDZeIZlsUOe6ZsH7lrCcE4nKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2Vr2rY3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Su/0ug+nSRd0MRKPlnNC37hxxGHBlyd4QyDEDATKXE6VMyWNFbAkAWf7TI8xQPLIyxQ1cZton8tK27MsDYLklFpsf+7Hp30EfJ6QxdkM5xcvb1P5+HS9ZqMd8W6U6VpqY567X/HJ6xRujhIV6QUmOOSS30NOmJUNa8Vh5nH7Sro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhX2fSKf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2Vr2rY3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91C21F00A3A;
-	Thu, 20 Aug 2026 16:26:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhX2fSKf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC901F000E9;
+	Thu, 20 Aug 2026 16:26:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243183;
-	bh=DBWkfzktjv6MFHNye3l7zbqJK1uNaavnRAurxhv04f4=;
+	s=korg; t=1787243186;
+	bh=Kcwb/WBRp7OyWMXV9jGwrQu8uVakGPB+JMp8tSscAS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y2Vr2rY3AMDIeyIy/8j5sU/qHKiwQUd0sU1dx58Zwao9GNwNRw1nn3CxvrNCfgsBJ
-	 Q5t7ltpoaquLkYGWPcQnVIAE4P5pcNqeM4t4sg9t5s8foDz1Nua/iyz0BZerr7SXZm
-	 71fjNtBsmhbBQpfm9ihpM+/9x7CQXS01Q1Yz1mOI=
+	b=zhX2fSKf+5E22mTB3LOLcKiOdMBV57OKV+cNZUzoRUZ3ALt7oLE8vK3Xt8NVvCgHK
+	 xNoR5u7pQQd/b6vjKjYWA9ewj2DRYG/4ToHnKTxoNtr6qdy05m7ggnzEkmgWkag8vx
+	 Gc7Da5Q7FXiWhZVspRd7UfxwyuCt/St1mJlHm+fU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Shen Yongchao <grayhat@foxmail.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 279/303] netfilter: ipset: fix refcount race between list:set GC and swap
-Date: Thu, 20 Aug 2026 16:56:55 +0200
-Message-ID: <20260820145301.852797189@linuxfoundation.org>
+Subject: [PATCH 6.1 270/303] KVM: SVM: Serialize accesses to the owner and mirror list with separate lock
+Date: Thu, 20 Aug 2026 16:56:46 +0200
+Message-ID: <20260820145301.571742237@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -53,92 +51,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-[ Upstream commit 0c88868271653537ed443272dd8e7d13634d214b ]
+[ Upstream commit 1d78d33275ef2a16c6d080910b291d0a97a0e613 ]
 
-__ip_set_put_byindex() resolved the index to a set pointer under RCU,
-then took ip_set_ref_lock in __ip_set_put() to decrement set->ref.
-ip_set_swap() holds that same lock while swapping both the ip_set_list
-slots and the two sets' ref counters, so it can interleave between the
-dereference and the lock acquisition, leaving the caller to decrement a
-set whose reference already moved to the other index and hit
-BUG_ON(set->ref == 0). list_set_gc() reaches this from timer softirq,
-which the nfnl mutex does not serialize against swap: an expiring
-list:set member calls list_set_del() -> ip_set_put_byindex() while
-IPSET_CMD_SWAP runs on the referenced sets.
+Interaction between KVM_CAP_VM_MOVE_ENC_CONTEXT_FROM and
+KVM_CAP_VM_COPY_ENC_CONTEXT_FROM can cause two separate issues:
 
-Resolve the index and decrement under ip_set_ref_lock, as ip_set_swap()
-already does, keeping the refcount tied to the index rather than to a
-stale set pointer.
+- in sev_migrate_from(), when the destination KVM is a mirror, the mirror
+  entry is moved from the source's list to the owner's mirror_vms list,
+  without holding the owner's lock unlike other writers of the owner's
+  mirror list (sev_vm_copy_enc_context_from(), sev_vm_destroy()).
+  A concurrent COPY or destroy can race with sev_migrate_from() and
+  corrupt the list.
 
-  kernel BUG at net/netfilter/ipset/ip_set_core.c:685!
-  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:ip_set_put_byindex (net/netfilter/ipset/ip_set_core.c:870)
-  Call Trace:
-   <IRQ>
-   list_set_del (net/netfilter/ipset/ip_set_list_set.c:159)
-   set_cleanup_entries (net/netfilter/ipset/ip_set_list_set.c:181)
-   list_set_gc (net/netfilter/ipset/ip_set_list_set.c:578)
-   call_timer_fn (kernel/time/timer.c:1748)
-   __run_timers (kernel/time/timer.c:1799 kernel/time/timer.c:2374)
-   run_timer_softirq (kernel/time/timer.c:2405)
-   </IRQ>
-  Kernel panic - not syncing: Fatal exception in interrupt
+- In sev_vm_destroy(), the *owner* is still active and could receive
+  concurrently a KVM_CAP_VM_MOVE_ENC_CONTEXT_FROM that causes
+  sev->enc_context_owner to change.  In this case the incorrect VM
+  receives kvm_put_kvm().
 
-Fixes: 9076aea76538 ("netfilter: ipset: Increase the number of maximal sets automatically")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+The second issue needs particular care because the owner could disappear
+altogether (even though the race window is impossibly small) between
+reading it and locking it.  There is thus no way to perform the checks
+under the owner lock without putting struct kvm under SLAB_TYPESAFE_BY_RCU
+(which would allow kvm_get_kvm_safe() under RCU critical section).
+
+It is much simpler to just use a global lock, since the critical
+sections are so small and the new lock is always a leaf lock.
+
+Fixes: b2125513dfc0 ("KVM: SEV: Allow SEV intra-host migration of VM with mirrors")
+Cc: stable@vger.kernel.org
+Reported-by: Shen Yongchao <grayhat@foxmail.com>
+Link: https://lore.kernel.org/kvm/tencent_625C0F42824E542C72B34733392AF2C49709@qq.com/
+Link: https://lore.kernel.org/kvm/tencent_DDC4E4352EC91CAC05A9A8F4E55E8C96730A@qq.com/
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[ Replaced `to_kvm_sev_info(src->enc_context_owner)` with `&to_kvm_svm(src->enc_context_owner)->sev_info` since that helper doesn't exist, and adjusted context for absent `vmsa_features`/`ghcb_version` fields. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipset/ip_set_core.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ arch/x86/kvm/svm/sev.c |   34 +++++++++++++++++++++++++---------
+ arch/x86/kvm/svm/svm.h |    1 +
+ 2 files changed, 26 insertions(+), 9 deletions(-)
 
-diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
-index 7601e4ca02775..70e5ed6d50fe0 100644
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -679,11 +679,18 @@ __ip_set_get(struct ip_set *set)
- }
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -60,6 +60,8 @@ module_param_named(sev_es, sev_es_enable
+ static u8 sev_enc_bit;
+ static DECLARE_RWSEM(sev_deactivate_lock);
+ static DEFINE_MUTEX(sev_bitmap_lock);
++/* Protects kvm_sev_info's enc_context_owner, mirror_vms and mirror_entry.  */
++static DEFINE_MUTEX(sev_mirror_lock);
+ unsigned int max_sev_asid;
+ static unsigned int min_sev_asid;
+ static unsigned long sev_me_mask;
+@@ -1686,18 +1688,18 @@ static void sev_migrate_from(struct kvm
+ 	dst->asid = src->asid;
+ 	dst->handle = src->handle;
+ 	dst->pages_locked = src->pages_locked;
+-	dst->enc_context_owner = src->enc_context_owner;
+ 	dst->es_active = src->es_active;
  
- static void
--__ip_set_put(struct ip_set *set)
-+__ip_set_put_locked(struct ip_set *set)
- {
--	write_lock_bh(&ip_set_ref_lock);
-+	lockdep_assert_held(&ip_set_ref_lock);
- 	BUG_ON(set->ref == 0);
- 	set->ref--;
-+}
+ 	src->asid = 0;
+ 	src->active = false;
+ 	src->handle = 0;
+ 	src->pages_locked = 0;
+-	src->enc_context_owner = NULL;
+ 	src->es_active = false;
+ 
+ 	list_cut_before(&dst->regions_list, &src->regions_list, &src->regions_list);
+ 
++	mutex_lock(&sev_mirror_lock);
 +
-+static void
-+__ip_set_put(struct ip_set *set)
-+{
-+	write_lock_bh(&ip_set_ref_lock);
-+	__ip_set_put_locked(set);
- 	write_unlock_bh(&ip_set_ref_lock);
- }
+ 	/*
+ 	 * If this VM has mirrors, "transfer" each mirror's refcount of the
+ 	 * source to the destination (this KVM).  The caller holds a reference
+@@ -1714,13 +1716,16 @@ static void sev_migrate_from(struct kvm
+ 	 * If this VM is a mirror, remove the old mirror from the owners list
+ 	 * and add the new mirror to the list.
+ 	 */
+-	if (is_mirroring_enc_context(dst_kvm)) {
++	if (is_mirroring_enc_context(src_kvm)) {
+ 		struct kvm_sev_info *owner_sev_info =
+-			&to_kvm_svm(dst->enc_context_owner)->sev_info;
++			&to_kvm_svm(src->enc_context_owner)->sev_info;
  
-@@ -856,11 +863,11 @@ __ip_set_put_byindex(struct ip_set_net *inst, ip_set_id_t index)
- {
- 	struct ip_set *set;
++		dst->enc_context_owner = src->enc_context_owner;
++		src->enc_context_owner = NULL;
+ 		list_del(&src->mirror_entry);
+ 		list_add_tail(&dst->mirror_entry, &owner_sev_info->mirror_vms);
+ 	}
++	mutex_unlock(&sev_mirror_lock);
  
--	rcu_read_lock();
--	set = rcu_dereference(inst->ip_set_list)[index];
-+	write_lock_bh(&ip_set_ref_lock);
-+	set = ip_set(inst, index);
- 	if (set)
--		__ip_set_put(set);
--	rcu_read_unlock();
-+		__ip_set_put_locked(set);
-+	write_unlock_bh(&ip_set_ref_lock);
- }
+ 	kvm_for_each_vcpu(i, dst_vcpu, dst_kvm) {
+ 		dst_svm = to_svm(dst_vcpu);
+@@ -2095,12 +2100,15 @@ int sev_vm_copy_enc_context_from(struct
+ 	 * disappear until we're done with it
+ 	 */
+ 	source_sev = &to_kvm_svm(source_kvm)->sev_info;
+-	kvm_get_kvm(source_kvm);
+ 	mirror_sev = &to_kvm_svm(kvm)->sev_info;
+-	list_add_tail(&mirror_sev->mirror_entry, &source_sev->mirror_vms);
  
- void
--- 
-2.53.0
-
+ 	/* Set enc_context_owner and copy its encryption context over */
++	mutex_lock(&sev_mirror_lock);
++	kvm_get_kvm(source_kvm);
++	list_add_tail(&mirror_sev->mirror_entry, &source_sev->mirror_vms);
+ 	mirror_sev->enc_context_owner = source_kvm;
++	mutex_unlock(&sev_mirror_lock);
++
+ 	mirror_sev->active = true;
+ 	mirror_sev->asid = source_sev->asid;
+ 	mirror_sev->fd = source_sev->fd;
+@@ -2137,11 +2145,19 @@ void sev_vm_destroy(struct kvm *kvm)
+ 
+ 	/* If this is a mirror_kvm release the enc_context_owner and skip sev cleanup */
+ 	if (is_mirroring_enc_context(kvm)) {
+-		struct kvm *owner_kvm = sev->enc_context_owner;
++		struct kvm *owner_kvm;
+ 
+-		mutex_lock(&owner_kvm->lock);
++		mutex_lock(&sev_mirror_lock);
++		owner_kvm = sev->enc_context_owner;
+ 		list_del(&sev->mirror_entry);
+-		mutex_unlock(&owner_kvm->lock);
++		sev->enc_context_owner = NULL;
++
++		/*
++		 * The reference to owner_kvm cannot move after sev_mirror_lock is
++		 * released.  Release it before kvm_put_kvm() so that owner_kvm is
++		 * never destroyed inside sev_mirror_lock.
++		 */
++		mutex_unlock(&sev_mirror_lock);
+ 		kvm_put_kvm(owner_kvm);
+ 		return;
+ 	}
+--- a/arch/x86/kvm/svm/svm.h
++++ b/arch/x86/kvm/svm/svm.h
+@@ -89,6 +89,7 @@ struct kvm_sev_info {
+ 	unsigned long pages_locked; /* Number of pages locked */
+ 	struct list_head regions_list;  /* List of registered regions */
+ 	u64 ap_jump_table;	/* SEV-ES AP Jump Table address */
++	/* The three fields below are protected by sev_mirror_lock */
+ 	struct kvm *enc_context_owner; /* Owner of copied encryption context */
+ 	struct list_head mirror_vms; /* List of VMs mirroring */
+ 	struct list_head mirror_entry; /* Use as a list entry of mirrors */
 
 
