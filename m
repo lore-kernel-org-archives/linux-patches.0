@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE142701B6;
-	Thu, 20 Aug 2026 17:30:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E5A2701B6;
+	Thu, 20 Aug 2026 17:30:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247045; cv=none; b=EGntD2dw40ubGbm1wy4veaScrRmZbxRudM2pTcGCsLpAk9Q90Upw6ptH/A5LHaV3apDmP8tDuis8L+yK4HC+opN42Yqhl9VjgNI2KApOqdJKfrRBvVo6q8e7lUiaSwOW1qqa46u+8zo+kgcKXQpBi2gjvHCY2wogjJG2SWbMbQ0=
+	t=1787247047; cv=none; b=r6q04kgy6D1zBH9FlM3HuF0+n0CRkPGH81ViqViS90InOhZTkXT3EwBocA73rFexQgPmPv0RsxxCNsaB9EblF6xhF2UjM1jRCX9+lj4A1rzbeE9NSMfRnXhNhBkmBW7dp0CiuOkSSlTprcPc8geyYSH634WzkLulOrIQhxuZ1Z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247045; c=relaxed/simple;
-	bh=rnO27i69Q8DiyfUo4RySo2pv1xRiYIvBIrgohQbcOA4=;
+	s=arc-20240116; t=1787247047; c=relaxed/simple;
+	bh=amBaLjVRBpC6zxU16ZRLZDDDnan+51dvsm/HuH3MPzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WKzF4IJQNR/QGF7rpXIoeuRqN7hTd75ay3K8vYc/ik1PbRQethLOcAyy+B2TBd+ghVbJKUFYgVopVOv9TRFi98jzujAn6rBZgRYG6Z+sM+u6jHdKdfyPbRNXdUtxSfi5opThRNRSvoJ4xrAUSy428b6BSrVqTrpHExendWyMyig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZjNDA6gw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aw0olBQq5tYA3aJMfLBRiTaLqHbcxFuQ824lyEKArFCYwaGp3Kv0t1jfsJlzZ5yETP3m+f0Gf5Kx2Hr7ckYH3MLAyDOUdRhZucmMRXftTN2EL+reLJSUoQXlJ9tN4caAXPTQuFozVaY90Z1H8OXfsIoFY1R0QSBJenyIYbCHfkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WxdFA70m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZjNDA6gw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253B71F000E9;
-	Thu, 20 Aug 2026 17:30:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WxdFA70m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F29291F000E9;
+	Thu, 20 Aug 2026 17:30:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247043;
-	bh=vYLoQNtDAOvVhXXkdI2RGjmyx4WslKpMWcdQhZP/CdI=;
+	s=korg; t=1787247046;
+	bh=CWi3kwy5HnmEnG0xiCYVdHMB00PbJVtKd0Wr2qDbVso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZjNDA6gw4rF/hrp2QkJMHUdkr3yDERYK+Bdfc150zmWWyga+pjKPCyHMYqb27ws93
-	 tZrqz96iWaBb6IzS6RV0RZTFI54dpUf7wqFGVz7nqLcg5t2nJhg2AzF6CmSvES1wV7
-	 U0/wy7PjTn6+ke0sGGA/jtiAA0XaY1OtdFIP690M=
+	b=WxdFA70mpTxBeYqcjuZHpXvKZmUCpJvVxUBZvdr3ZCWmNdZPfxSSB/3HI7lLMWUhh
+	 RjHCd2IrpW1VW+DsUZD0IAo9lhxTz2zKcrB+PU/8MVbC6+4jz9mFzqWcPfXEcdU/tA
+	 1+vep2g3V9uoIO7WQZejfjnPFQEGOnCdnIWjPnOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Changcheng <chenchangcheng@kylinos.cn>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 128/220] fs/super: fix emergency thaw double-unlock of s_umount
-Date: Thu, 20 Aug 2026 16:55:18 +0200
-Message-ID: <20260820145227.315535776@linuxfoundation.org>
+Subject: [PATCH 6.12 129/220] super: fix emergency thaw deadlock on frozen block devices
+Date: Thu, 20 Aug 2026 16:55:19 +0200
+Message-ID: <20260820145227.345682195@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -51,97 +50,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Changcheng <chenchangcheng@kylinos.cn>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 503d67fbaec6fdeaba391cb497675071db9d16ea ]
+[ Upstream commit 749d7aa0377aae32af8c0a4ad43371e7bf830ab5 ]
 
-do_thaw_all() iterates over all superblocks via __iterate_supers()
-with SUPER_ITER_EXCL, which acquires s_umount exclusively before
-calling the callback and releases it afterwards. However, the
-callback do_thaw_all_callback() calls thaw_super_locked() which
-unconditionally releases s_umount on every code path. This results
-in a second unlock attempt in __iterate_supers() that corrupts the
-rwsem state, triggering a DEBUG_RWSEMS warning:
+do_thaw_all_callback() calls bdev_thaw() while holding sb->s_umount
+exclusively. If the block device was frozen via bdev_freeze() dropping
+the last block layer freeze reference calls fs_bdev_thaw() which
+reacquires s_umount:
 
-[  182.601148] sysrq: Emergency Thaw of all frozen filesystems
-[  182.601865] ------------[ cut here ]------------
-[  182.602375] DEBUG_RWSEMS_WARN_ON((rwsem_owner(sem) != current) && !rwsem_test_oflags(sem, RWSEM_NONSPINNABLE)): count = 0x0, magic = 0xffff99b1011e5870, owner = 0x0, curr 0xffff99b101b06c80, list not empty
-[  182.603817] WARNING: kernel/locking/rwsem.c:1412 at up_write+0xa3/0x170, CPU#2: kworker/2:1/53
-[  182.604578] Modules linked in:
-[  182.604864] CPU: 2 UID: 0 PID: 53 Comm: kworker/2:1 Not tainted 7.2.0-rc4-00001-gbd3bd93ea98a-dirty #4 PREEMPT(lazy)
-[  182.605711] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1kylin1 04/01/2014
-[  182.606417] Workqueue: events do_thaw_all
-[  182.606750] RIP: 0010:up_write+0xaf/0x170
-[  182.607076] Code: 19 3a 92 48 0f 44 c2 48 8b 55 08 48 8b 55 00 4c 8b 45 08 48 8b 55 00 48 8d 3d ad 91 e0 01 48 8b 4d 20 50 48 c7 c6 f0 8c 26 92 <67> 48 0f b9 3a e8 d7 93 4e 00 58 eb 81 48 83 7f 18 00 48 c7 c2 8d
-[  182.608563] RSP: 0018:ffffb670001d7e08 EFLAGS: 00010246
-[  182.609007] RAX: ffffffff92349e8d RBX: 0000000000000000 RCX: ffff99b1011e5870
-[  182.609595] RDX: 0000000000000000 RSI: ffffffff92268cf0 RDI: ffffffff92914d10
-[  182.610283] RBP: ffff99b1011e5870 R08: 0000000000000000 R09: ffff99b101b06c80
-[  182.610847] R10: ffff99b10139a808 R11: fefefefefefefeff R12: 0000000000000000
-[  182.611414] R13: ffffffff90cf74d0 R14: 0000000000000000 R15: ffff99b1011e5800
-[  182.612009] FS:  0000000000000000(0000) GS:ffff99b1eaaee000(0000) knlGS:0000000000000000
-[  182.612670] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  182.613146] CR2: 00000000005c631c CR3: 00000000013ee000 CR4: 00000000000006f0
-[  182.613722] Call Trace:
-[  182.613946]  <TASK>
-[  182.614130]  __iterate_supers+0x128/0x150
-[  182.614463]  do_thaw_all+0x1b/0x30
-[  182.614759]  process_scheduled_works+0xbb/0x3f0
-[  182.615150]  ? __pfx_worker_thread+0x10/0x10
-[  182.615499]  worker_thread+0x129/0x270
-[  182.615816]  ? __pfx_worker_thread+0x10/0x10
-[  182.616201]  kthread+0xe2/0x120
-[  182.616469]  ? __pfx_kthread+0x10/0x10
-[  182.616792]  ret_from_fork+0x15b/0x240
-[  182.617115]  ? __pfx_kthread+0x10/0x10
-[  182.617426]  ret_from_fork_asm+0x1a/0x30
-[  182.617761]  </TASK>
-[  182.617968] ---[ end trace 0000000000000000 ]---
-[  182.618412] Emergency Thaw complete
+  do_thaw_all_callback(sb)
+    super_lock_excl(sb)                     # holds sb->s_umount
+    bdev_thaw(sb->s_bdev)
+      mutex_lock(&bdev->bd_fsfreeze_mutex)
+      # bd_fsfreeze_count drops 1 -> 0
+      bd_holder_ops->thaw == fs_bdev_thaw
+        get_bdev_super(bdev)
+          bdev_super_lock(bdev, true)
+            super_lock(sb, true)
+              down_write(&sb->s_umount)     # same task: deadlock
 
-Fix this by switching to SUPER_ITER_UNLOCKED and acquiring s_umount
-in the callback via super_lock_excl() before calling
-thaw_super_locked(). This matches the locking pattern expected by
-thaw_super_locked() and eliminates the double unlock.
+The emergency thaw worker deadlocks against itself holding both
+s_umount and bd_fsfreeze_mutex. That fscks any subsequent unmount,
+freeze, or thaw of that filesystem and block device.
 
-While at it, remove the dead 'return;' at the end of
-do_thaw_all_callback().
+  [   81.878470] sysrq: Show Blocked State
+  [   81.880140] task:kworker/0:1     state:D stack:0     pid:11    tgid:11    ppid:2      task_flags:0x4208060 flags:0x00080000
+  [   81.884876] Workqueue: events do_thaw_all
+  [   81.886656] Call Trace:
+  [   81.887759]  <TASK>
+  [   81.888763]  __schedule+0x579/0x1420
+  [   81.890372]  schedule+0x3a/0x100
+  [   81.891794]  schedule_preempt_disabled+0x15/0x30
+  [   81.893848]  rwsem_down_write_slowpath+0x1ea/0x900
+  [   81.895191]  ? __pfx_do_thaw_all_callback+0x10/0x10
+  [   81.896528]  down_write+0xbd/0xc0
+  [   81.897505]  super_lock+0x91/0x180
+  [   81.898457]  ? __mutex_lock+0xa99/0x1140
+  [   81.900748]  ? __mutex_unlock_slowpath+0x1f/0x400
+  [   81.902069]  bdev_super_lock+0x5b/0x150
+  [   81.903132]  get_bdev_super+0x10/0x60
+  [   81.904042]  fs_bdev_thaw+0x23/0xf0
+  [   81.904755]  bdev_thaw+0x82/0x100
+  [   81.905484]  do_thaw_all_callback+0x2c/0x50
+  [   81.906298]  __iterate_supers+0x5d/0x130
+  [   81.907067]  do_thaw_all+0x20/0x40
+  [   81.907739]  process_one_work+0x206/0x5e0
+  [   81.908545]  worker_thread+0x1e2/0x3c0
+  [   81.909339]  ? __pfx_worker_thread+0x10/0x10
+  [   81.910171]  kthread+0xf4/0x130
+  [   81.910799]  ? __pfx_kthread+0x10/0x10
+  [   81.911528]  ret_from_fork+0x2e2/0x3b0
+  [   81.912259]  ? __pfx_kthread+0x10/0x10
+  [   81.913010]  ret_from_fork_asm+0x1a/0x30
+  [   81.913806]  </TASK>
 
-Fixes: 2992476528ae ("super: use a common iterator (Part 1)")
+bdev_super_lock() even documents the violated requirement with
+lockdep_assert_not_held(&sb->s_umount).
+
+Acquiring bd_fsfreeze_mutex under s_umount also inverts the
+bd_fsfreeze_mutex vs. s_umount ordering established by
+bdev_{freeze,thaw}() and can thus ABBA against a concurrent block-layer
+freeze even when the recursive path isn't hit.
+
+Fix this by not holding s_umount around the bdev_thaw() loop at all. Pin
+the superblock with an active reference instead as
+filesystems_freeze_callback() does. The active reference keeps the
+superblock from being shut down and so ->s_bdev stays valid without
+holding s_umount. The block-layer-held freeze is dropped by
+fs_bdev_thaw() with FREEZE_MAY_NEST | FREEZE_HOLDER_USERSPACE exactly as
+a regular unfreeze would and thaw_super_locked() handles
+filesystem-level freezes as before.
+
+The emergency thaw path has deadlocked like this in one form or
+another for a long long time but the current exclusively-held
+shape dates back to commit [1] where thaw_bdev() already ended in
+thaw_super() with s_umount held by do_thaw_all_callback().
+
+Fixes: 08fdc8a0138a ("buffer.c: call thaw_super during emergency thaw") [1]
 Cc: stable@vger.kernel.org
-Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
-Link: https://patch.msgid.link/20260721064140.152305-1-chenchangcheng@kylinos.cn
+Link: https://patch.msgid.link/20260723-work-super-emergency_thaw-v1-1-7c315c600245@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Stable-dep-of: 749d7aa0377a ("super: fix emergency thaw deadlock on frozen block devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/super.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/super.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
 --- a/fs/super.c
 +++ b/fs/super.c
-@@ -1144,16 +1144,19 @@ void emergency_remount(void)
+@@ -1142,16 +1142,30 @@ void emergency_remount(void)
+ 	}
+ }
  
++static inline bool get_active_super(struct super_block *sb)
++{
++	bool active = false;
++
++	if (super_lock_excl(sb)) {
++		active = atomic_inc_not_zero(&sb->s_active);
++		super_unlock_excl(sb);
++	}
++	return active;
++}
++
  static void do_thaw_all_callback(struct super_block *sb, void *unused)
  {
-+	if (!super_lock_excl(sb))
-+		return;
-+
+-	if (!super_lock_excl(sb))
++	if (!get_active_super(sb))
+ 		return;
+ 
++	/* fs_bdev_thaw() acquires s_umount so it must not be held here */
  	if (IS_ENABLED(CONFIG_BLOCK))
  		while (sb->s_bdev && !bdev_thaw(sb->s_bdev))
  			pr_warn("Emergency Thaw on %pg\n", sb->s_bdev);
-+
- 	thaw_super_locked(sb, FREEZE_HOLDER_USERSPACE);
--	return;
+ 
+-	thaw_super_locked(sb, FREEZE_HOLDER_USERSPACE);
++	if (super_lock_excl(sb))
++		thaw_super_locked(sb, FREEZE_HOLDER_USERSPACE);
++	deactivate_super(sb);
  }
  
  static void do_thaw_all(struct work_struct *work)
- {
--	__iterate_supers(do_thaw_all_callback, NULL, SUPER_ITER_EXCL);
-+	__iterate_supers(do_thaw_all_callback, NULL, SUPER_ITER_UNLOCKED);
- 	kfree(work);
- 	printk(KERN_WARNING "Emergency Thaw complete\n");
- }
 
 
