@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15ECD476CED;
-	Thu, 20 Aug 2026 17:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE580476CED;
+	Thu, 20 Aug 2026 17:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248622; cv=none; b=TbJE8URRR2orjLTHHVV9GqRekKZ+W1B6goi04/FnKeayhv1XriCDPOA5NUSR14CHxQRfDmgNvabVRUJKlc92mZ5Hyj3Jsl8U2lxKIxoOyHcTkIKvKaaJg1RvrwxdWWg0kFlJASabyNGPl9AiKuhjiPGDVkkWZvIxrTglV+5TMOk=
+	t=1787248624; cv=none; b=tIWuu+HvcgJRQEeuQDC/gv7XiCW261QtQtPzH8HD3PNZFFSiN1kXuRfe34DJE9wWYXMJCkDw0LP0s5lk2EIrhjk5A5R73UVRYoGfDyGmUGHKi6FWy/A5BPGgDvmH7vjv+BQA6wJdjB9Oki4UmSwXiwpQVKL72bTUtUCv0yM1YVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248622; c=relaxed/simple;
-	bh=WiXZ9k+2tD1EYmN14HfBpNZVFmCC9ybvQiHJjVTlFTE=;
+	s=arc-20240116; t=1787248624; c=relaxed/simple;
+	bh=hXqB2vaPn5WYuNyExZgNolFfP5kT4OWzdap3juBPxVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QHewydMBmt4zX0yDEbLg9gqVdcCAjCyF2BOI3nVARg+RpysKbOltyedu1hKpyGmDa6b/57n6naGCoFkRF7AM2rpiCmWi1a7DS6U7+Q5ucWEsp4p4XHqb7fcGNd0NPUsSvXuTmX02on26RdEBcKeicqBD7ET/fUdlKlYJQcKdNsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mo5FLbF2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jpn6miOxi9zvnJLiNJolo304PbsWpd5u8j83xqiyc/gIO22v2r+XaZxYJQr8if7SXDqEEZIBcBXdAvCGtbFboiegv23CRHBpa5wg8Kg4XkEbNlrnP7oaWLx2gxO4TQaMlSPta8+iI4YgHn+XVoG3I9Arv9CvP0oVVE3FFNf9+rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RGR8OwJo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mo5FLbF2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727C91F000E9;
-	Thu, 20 Aug 2026 17:56:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RGR8OwJo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47EF91F00A3A;
+	Thu, 20 Aug 2026 17:57:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248620;
-	bh=rppym2TV/tz40icAoBb/J/VHlb75E7/ToabWO2iX80s=;
+	s=korg; t=1787248622;
+	bh=KYNbw5CFRpeH1LReQ9GNSYA0oT0TsWILmlcTTY3CxQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mo5FLbF2sLfLc12Y9CNjBCNvzGbAwMyB/WFnnhk3A9AeUmQhTXGVpnJeCNKrOF+Fn
-	 mRxWyu70Jt5E0RiDJDHZhR2G+ZZOilku9c83T51om3zt4kE0vuZAXQhf92xpE3tVOc
-	 StJxVo9Gkp/+sIFztFOSJ1t0SYYTJiQtBnBEeYqk=
+	b=RGR8OwJoW4J8IydMioM8F39Z7UamZ9y0j7kJLySlNGpVTY7Y5/duIv/usVJgNwsHD
+	 im1JkwJWX0j2Fj4F0+5PO40UnVsFEya3FC4kJyKymclPpQn1ygPsc4iQDtElJa+OGW
+	 zThHo9o5V7tMgPjwFDzcqIUMZe/OORLKYwCJ4JK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Chintan Vankar <c-vankar@ti.com>,
-	Simon Horman <horms@kernel.org>,
+	Baul Lee <baul.lee@xbow.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 291/303] net: ethernet: ti: am65-cpsw-nuss: Fix port_id extraction from SRC TAG
-Date: Thu, 20 Aug 2026 16:57:07 +0200
-Message-ID: <20260820145302.219714745@linuxfoundation.org>
+Subject: [PATCH 6.1 292/303] net/x25: fix use-after-free of the socket by its timers
+Date: Thu, 20 Aug 2026 16:57:08 +0200
+Message-ID: <20260820145302.249060402@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -53,49 +51,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-[ Upstream commit 36a05d2820077bb3955acb8111e1041d39148037 ]
+commit 2195424c3da2ef1829a63b807e3a900a90e57d85 upstream.
 
-On the packet reception path, the ID of the MAC Port on which the packet
-was received, is embedded in the RX DMA Descriptor's metadata. The ID is
-extracted using the helper function cppi5_desc_get_tags_ids() which fills
-in the 16-bit Source Tag into the 'port_id' variable. However, it is only
-the lower 8-bits of the 16-bit Source Tag that represent the MAC Port ID,
-while the upper 8-bits are Hardware-Reserved and carry an arbitrary value.
-With the existing logic, sporadic kernel crash is observed due to the
-subsequent driver code accessing out-of-bound memory because of an invalid
-port_id.
+The x25 timers are armed with mod_timer() and cancelled with
+timer_delete(), so a pending timer holds no reference on the socket and a
+cancel does not wait for a callback already running on another CPU.
 
-Hence, fix the port_id extraction logic to use only the lower 8-bits of the
-Source Tag as the MAC Port ID.
+x25_heartbeat_expiry() also rearms unconditionally, so it can reinstall
+sk->sk_timer after __x25_destroy_socket() has passed its cancel point.
+The following __sock_put() frees the socket while the timer is still
+queued, and the next expiry uses freed memory.  KASAN reports a
+slab-use-after-free on the kmalloc-2k object freed by close().
 
-Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Chintan Vankar <c-vankar@ti.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260807111738.2055900-1-s-vadapalli@ti.com
+timer_delete_sync() cannot be used here: x25_heartbeat_expiry() and
+x25_timer_expiry() both reach the cancels from inside the timer they
+would wait on, through __x25_destroy_socket() and x25_disconnect().
+
+Arm the timers with sk_reset_timer() and cancel them with sk_stop_timer()
+so that an armed timer owns a reference, and release it in both expiry
+handlers.  Rearm the heartbeat only while sk_hashed(sk) is still true,
+since __x25_destroy_socket() unlinks the socket before dropping it.  Arm
+the deferred destroy timer the same way and drop its reference in
+x25_destroy_timer().
+
+Reproduced on net with KASAN, with the heartbeat period shortened so the
+window recurs.  With this patch the reproducer no longer triggers a
+report and /proc/net/x25 drains.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260726220342.47245-1-baul.lee@xbow.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adjusted context due to `del_timer()` not yet renamed to `timer_delete()` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/x25/af_x25.c    |    4 ++--
+ net/x25/x25_timer.c |   25 ++++++++++++++++---------
+ 2 files changed, 18 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index d04a05e959bbb..450fd4fb58d1a 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -727,6 +727,8 @@ static int am65_cpsw_nuss_rx_packets(struct am65_cpsw_common *common,
- 	k3_udma_glue_rx_cppi5_to_dma_addr(rx_chn->rx_chn, &buf_dma);
- 	pkt_len = cppi5_hdesc_get_pktlen(desc_rx);
- 	cppi5_desc_get_tags_ids(&desc_rx->hdr, &port_id, NULL);
-+	/* Port ID is contained in the lower 8-bits of the 16-bit Source Tag */
-+	port_id &= 0xFF;
- 	dev_dbg(dev, "%s rx port_id:%d\n", __func__, port_id);
- 	port = am65_common_get_port(common, port_id);
- 	ndev = port->ndev;
--- 
-2.53.0
-
+--- a/net/x25/af_x25.c
++++ b/net/x25/af_x25.c
+@@ -362,6 +362,7 @@ static void x25_destroy_timer(struct tim
+ 	struct sock *sk = from_timer(sk, t, sk_timer);
+ 
+ 	x25_destroy_socket_from_timer(sk);
++	sock_put(sk);
+ }
+ 
+ /*
+@@ -397,9 +398,8 @@ static void __x25_destroy_socket(struct
+ 
+ 	if (sk_has_allocations(sk)) {
+ 		/* Defer: outstanding buffers */
+-		sk->sk_timer.expires  = jiffies + 10 * HZ;
+ 		sk->sk_timer.function = x25_destroy_timer;
+-		add_timer(&sk->sk_timer);
++		sk_reset_timer(sk, &sk->sk_timer, jiffies + 10 * HZ);
+ 	} else {
+ 		/* drop last reference so sock_put will free */
+ 		__sock_put(sk);
+--- a/net/x25/x25_timer.c
++++ b/net/x25/x25_timer.c
+@@ -36,45 +36,45 @@ void x25_init_timers(struct sock *sk)
+ 
+ void x25_start_heartbeat(struct sock *sk)
+ {
+-	mod_timer(&sk->sk_timer, jiffies + 5 * HZ);
++	sk_reset_timer(sk, &sk->sk_timer, jiffies + 5 * HZ);
+ }
+ 
+ void x25_stop_heartbeat(struct sock *sk)
+ {
+-	del_timer(&sk->sk_timer);
++	sk_stop_timer(sk, &sk->sk_timer);
+ }
+ 
+ void x25_start_t2timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t2);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t2);
+ }
+ 
+ void x25_start_t21timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t21);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t21);
+ }
+ 
+ void x25_start_t22timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t22);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t22);
+ }
+ 
+ void x25_start_t23timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t23);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t23);
+ }
+ 
+ void x25_stop_timer(struct sock *sk)
+ {
+-	del_timer(&x25_sk(sk)->timer);
++	sk_stop_timer(sk, &x25_sk(sk)->timer);
+ }
+ 
+ unsigned long x25_display_timer(struct sock *sk)
+@@ -108,7 +108,7 @@ static void x25_heartbeat_expiry(struct
+ 			     sock_flag(sk, SOCK_DEAD))) {
+ 				bh_unlock_sock(sk);
+ 				x25_destroy_socket_from_timer(sk);
+-				return;
++				goto out;
+ 			}
+ 			break;
+ 
+@@ -120,8 +120,14 @@ static void x25_heartbeat_expiry(struct
+ 			break;
+ 	}
+ restart_heartbeat:
+-	x25_start_heartbeat(sk);
++	/* Do not rearm once __x25_destroy_socket() has unlinked the socket:
++	 * it is past its cancel point and owns the teardown from there on.
++	 */
++	if (sk_hashed(sk))
++		x25_start_heartbeat(sk);
+ 	bh_unlock_sock(sk);
++out:
++	sock_put(sk);
+ }
+ 
+ /*
+@@ -166,4 +172,5 @@ static void x25_timer_expiry(struct time
+ 	} else
+ 		x25_do_timer_expiry(sk);
+ 	bh_unlock_sock(sk);
++	sock_put(sk);
+ }
 
 
