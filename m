@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACEBE47CC89;
-	Thu, 20 Aug 2026 16:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D423F1E9919;
+	Thu, 20 Aug 2026 16:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243740; cv=none; b=HpPBH0Auw7YM0LXlLAPvBSTUIZJ1Q7/wZ5l4LII5RsBDGpoUYVw3xOhXeKRgMcQWzV2EziubA6WhhxJYTdINZ7oUrc/rqHpTlv468+rb/Z0ZXP+D/Rvd0kb7OPKJMZmvIlJyVXhmQrGlWS5jFu0V+9u1idi2azbsrLKM0DR2Fdk=
+	t=1787243743; cv=none; b=oWOxjzieOKM8X9rhkNm/wVUJVQvpj85TQ2X9drGbOqr8BT9FqyzcqmqLgAXJnvdHJM6ohaRTaxE4Ot0lXxSSu5BEsidavPrRaTwFEW1Q5A9FmZsLu+DOtbw4MAvdnnUwK2fmLUZeRvTY7JsOoK3Y/+hJXXeJOO6ar+CUFw4v3uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243740; c=relaxed/simple;
-	bh=qdC8w9TRnU2r+TtDI5ce+KpuhQCKhNB49YOnmzW71YM=;
+	s=arc-20240116; t=1787243743; c=relaxed/simple;
+	bh=c6r4du/5sRjFcsBG57VrpVcB5i9tz+6xF6s6rBfAyWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NeTvetWvn3LV5wrvg2r5lwykt89+8YFJ6FFyeTAbTMzc2k5qsdd5RM82aizNsCSdpNupLef1JUzYiEbjULfZfmhtDCJyGSFbZkXUJy1keupfnvYHJqdyEhRrcA/bI1ysBkwerIaOi4/NQksJcNftEIXpuAm+CAsY9DWMSdiVv3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TC/xeQmW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p3wyp2aWTXh6XqaDLPveA+XpoMYl7uDgKzAjQgs5JLBCW4DsiBiOG+9j9ah8P1vGnFX/7WK0RPnwbJw/oyfX1Kj4Tz6WHo4UDVEo2wf/UD/8PQOgUackdt48rFs/xuNHPzb0njPknh9YCkS9r1l9didCBxWqDTIz8Rf30Rq7XAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1jMF90lT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TC/xeQmW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 121C51F000E9;
-	Thu, 20 Aug 2026 16:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1jMF90lT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C1B1F000E9;
+	Thu, 20 Aug 2026 16:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243738;
-	bh=ggNb3G0661o08a1J5Pg/rGc0ebWDrKdyIP5y/mGIzYM=;
+	s=korg; t=1787243741;
+	bh=OGluymcNy52Ff+b/tq27nfjFerrsFebk8V1bsDTUEkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TC/xeQmW/fH8syhxp13y2QpqbcwDUgiZM97+qJmqZ/exgVNI1pNO8t4bLHpuXwO3+
-	 AFlYSD4BMDyMb8K+a/ws2Uzi++XuUecUoTd38+Hqcrp/Jph1FFdlDv/RPwB1dU333P
-	 20B83ZT/xJ8/e6BJd8nUxgOlx7ugbdPrNCVTRRuE=
+	b=1jMF90lTrrUQ6HpI2m5RE6tLGRHXXxMDkDFkgGhDxTU4RVFMqOQfo7Y9Bt+10pde1
+	 Ar7Q6oVVMlFnvhQdz7xEvp6bALdmj68/Ncq90PYFporf+Ktg0SCZCYoPPQRCVC7gH5
+	 Tih7byko7hmIJEGMoXdo2vXyIHrKMKl9qAmYSFvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 160/272] octeontx2-pf: fix SQB pointer leak on init failure
-Date: Thu, 20 Aug 2026 16:55:44 +0200
-Message-ID: <20260820145236.120798518@linuxfoundation.org>
+Subject: [PATCH 5.15 161/272] fs/resctrl: Fix double-add of pseudo-locked regions RMID to free list
+Date: Thu, 20 Aug 2026 16:55:45 +0200
+Message-ID: <20260820145236.151350909@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -52,56 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Reinette Chatre <reinette.chatre@intel.com>
 
-[ Upstream commit 62e7df6d042aeebd5efb581074e28865c04477be ]
+[ Upstream commit b9f089723aee892efc77c349ae47a6b452b293c4 ]
 
-otx2_init_hw_resources() initializes SQ aura and pool resources before
-several later setup steps. On failure, err_free_sq_ptrs only frees SQB
-pages, leaving the per-SQ sqb_ptrs arrays behind.
+A pseudo-locked group's RMID is freed when it is created. On unmount
+rmdir_all_sub() unconditionally frees all RMID of all groups, resulting
+in a double-free of the pseudo-locked group's RMID. The consequence of this
+is that the original free results in the pseudo-locked group's RMID being
+added to the rmid_free_lru linked list and the second free then attempts
+to add the same RMID entry to the rmid_free_lru again.
 
-Use otx2_free_sq_res() for the SQ unwind path and let it free sqb_ptrs
-even when sq->sqe has not been allocated yet.
+Do not double-free a pseudo-locked group's RMID.
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still
-present in v7.1.1.
-
-An x86_64 allyesconfig build showed no new warnings. As we do not have an
-OcteonTX2 PF device and the corresponding AF mailbox setup to test with,
-no runtime testing was able to be performed.
-
-Fixes: caa2da34fd25 ("octeontx2-pf: Initialize and config queues")
-Cc: stable@vger.kernel.org
-Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Link: https://patch.msgid.link/20260630071625.349996-1-dawei.feng@seu.edu.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: e0bdfe8e36f3 ("x86/intel_rdt: Support creation/removal of pseudo-locked region")
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/551432dd7e624a862b8e58314c38aaba0afff3e9.1783377598.git.reinette.chatre@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -1484,14 +1484,13 @@ static int otx2_init_hw_resources(struct
- 	return err;
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -2439,10 +2439,6 @@ static void rmdir_all_sub(void)
+ 		if (rdtgrp == &rdtgroup_default)
+ 			continue;
  
- err_free_nix_queues:
--	otx2_free_sq_res(pf);
- 	otx2_free_cq_res(pf);
- 	otx2_ctx_disable(mbox, NIX_AQ_CTYPE_RQ, false);
- err_free_txsch:
- 	if (otx2_txschq_stop(pf))
- 		dev_err(pf->dev, "%s failed to stop TX schedulers\n", __func__);
- err_free_sq_ptrs:
--	otx2_sq_free_sqbs(pf);
-+	otx2_free_sq_res(pf);
- err_free_rq_ptrs:
- 	otx2_free_aura_ptr(pf, AURA_NIX_RQ);
- 	otx2_ctx_disable(mbox, NPA_AQ_CTYPE_POOL, true);
+-		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
+-		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
+-			rdtgroup_pseudo_lock_remove(rdtgrp);
+-
+ 		/*
+ 		 * Give any CPUs back to the default group. We cannot copy
+ 		 * cpu_online_mask because a CPU might have executed the
+@@ -2451,7 +2447,13 @@ static void rmdir_all_sub(void)
+ 		cpumask_or(&rdtgroup_default.cpu_mask,
+ 			   &rdtgroup_default.cpu_mask, &rdtgrp->cpu_mask);
+ 
+-		free_rmid(rdtgrp->mon.rmid);
++		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
++		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
++			rdtgroup_pseudo_lock_remove(rdtgrp);
++		} else {
++			/* Pseudo-locked group's RMID is freed during setup. */
++			free_rmid(rdtgrp->mon.rmid);
++		}
+ 
+ 		kernfs_remove(rdtgrp->kn);
+ 		list_del(&rdtgrp->rdtgroup_list);
 
 
