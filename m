@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA323D8116;
-	Thu, 20 Aug 2026 15:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CDB3822B5;
+	Thu, 20 Aug 2026 15:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239358; cv=none; b=hd+ukh8BpT4gjpkib7n0m9Vc+/45gGHmGDsj7gKrY2DdTz2vRNiNpB0izmyAtEKBTLiE13FDob/ZYZsUig13HAPLIvrKBMLahenoRqCPLvNa7/3y64IMfJIzkbu3LbCDC+/EgZXwxjtmLjaq4pCU08/yimVOW0id7OsZ0oPgp7w=
+	t=1787239361; cv=none; b=Kpe8D3q5LP0qP5wdxBKIaU/hdmjGT9XUuQg+ByL51vyFXt1VGVoqQS421yemD7aIebSmBzRbvmVQtN3eNsBspx7068RQdVJmXKs0EW1sRJkFcDKVuYt5niYM/j1acFtFL9rfbzIJ9dCG/ciy874nxmrYegncl5abvkHrHh1OtJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239358; c=relaxed/simple;
-	bh=FOJKzVosmoFMMsdhrXPrUuo1wRsoFdLlTEuCCHdT7Ow=;
+	s=arc-20240116; t=1787239361; c=relaxed/simple;
+	bh=tFTj2zWnEG0xm8OCReGOlCNggYenUrdoT7hE1r7dynI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ItydtM9MtHblnbsQf1pBUycF0+hsgGXZphce8ynqQL72/GVy6gqGaZymf6lRaFOfixcznujE+4MWjbXVZm9c9iMPDUglTzuvr4Ug5ZTqOXrr8NW2rfLU34MShVZ7bEa+4UOarfmHqELFHiX6tuLqGMkivymnbvKACiTHvhb5r3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSKM8158; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xy3GkU7p3ilQNbGE8eWgXafZ3QS4bVZZmW0lwUuLviTC54EP3ITf5aJkH8MXaazEpzzHgbvPKjQx+SLo5ef9ZTkYyw1Eb7Mmbbt9kneT2ocZN8ZW/406Q9J43UkhF8xs+aqFT9WeuTnAO8bbR1qVmAjmDiWmhB4h0xBRwkO/pGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TB0n5DqE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSKM8158"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CA71F00A3A;
-	Thu, 20 Aug 2026 15:22:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TB0n5DqE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 621741F000E9;
+	Thu, 20 Aug 2026 15:22:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239357;
-	bh=pZlHPXE2t8zSqKeo4OtEBa6A9drsZu51GsY2h/W/Pbw=;
+	s=korg; t=1787239359;
+	bh=AjObkJcmfQFMbQN3sI5HTWckKFdER2IfAsaVjGbIPAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TSKM81587Syo0BTCy51L4raFR6Vn+dAJOHUOZYZ4hqfA/dI/Ov3JtRfk+pAnpvdU+
-	 tHZ0AuFbVCqXdBUNwrp2E8U8KDxtfeQ48y3+9GnDcBzEdAG2OSG3ALS4IRvyAUK0Kg
-	 wQ4Rl+WoV44jRDa2x0PWdM9JqU6s7XURtsRUA684=
+	b=TB0n5DqEUNVKcpvVfn2O5gXBe0FaCPykPnp/MZzvDjyOU3pW6p7N0lf6sDK7oQbTw
+	 SZPyeRUL0Q3lIVZSfG2SYFbfldo7ydjwQCBUmILIFSUDciUTNbbKGEiF6NcRconcEz
+	 6W8x6s79IsP/aQPL7bqhXeYi1hi2Al7IMwwIJ3zY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 014/220] crypto: ccp: Add external API interface for PSP module initialization
-Date: Thu, 20 Aug 2026 16:53:24 +0200
-Message-ID: <20260820145223.924879876@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Wyatt Feng <bronzed_45_vested@icloud.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 023/220] mptcp: fastopen: only mark MPTFO subflows with SYN data
+Date: Thu, 20 Aug 2026 16:53:33 +0200
+Message-ID: <20260820145224.204882053@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -53,101 +57,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Wyatt Feng <bronzed_45_vested@icloud.com>
 
-[ Upstream commit 435b344a7042e91fb4719d589f18310e8919e39f ]
+commit e00b63056fb4f261455b3e5df5268a1f8ce47a87 upstream.
 
-KVM is dependent on the PSP SEV driver and PSP SEV driver needs to be
-loaded before KVM module. In case of module loading any dependent
-modules are automatically loaded but in case of built-in modules there
-is no inherent mechanism available to specify dependencies between
-modules and ensure that any dependent modules are loaded implicitly.
+Passive TCP Fast Open accepts a valid-cookie SYN even when it carries
+no data. In that case the child socket's receive queue is intentionally
+left empty.
 
-Add a new external API interface for PSP module initialization which
-allows PSP SEV driver to be loaded explicitly if KVM is built-in.
+mptcp_fastopen_subflow_synack_set_params() set is_mptfo before checking
+for queued SYN data. That made data-less TFO SYNs hit a WARN and, if
+the warning was non-fatal, left stale MPTFO state behind. The stale
+flag could later trigger a state-confusion bug in
+check_fully_established().
 
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Co-developed-by: Ashish Kalra <ashish.kalra@amd.com>
-Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Message-ID: <15279ca0cad56a07cf12834ec544310f85ff5edc.1739226950.git.ashish.kalra@amd.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Only mark the subflow as MPTFO after confirming that an SKB was queued.
+Return quietly when the receive queue is empty.
+
+Note that mptcp_subflow_context's is_mptfo field is now not just about
+subflows where the TFO was present, but about MPTFO subflow that
+consumed SYN data. Only having a valid cookie but not carrying data is
+not really "doing TFO".
+
+Fixes: 36b122baf6a8 ("mptcp: add subflow_v(4,6)_send_synack()")
+Cc: stable@vger.kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-7-b8f496d71664@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/ccp/sp-dev.c | 14 ++++++++++++++
- include/linux/psp-sev.h     |  9 +++++++++
- 2 files changed, 23 insertions(+)
+ net/mptcp/fastopen.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/crypto/ccp/sp-dev.c b/drivers/crypto/ccp/sp-dev.c
-index ccbe009ad6e58..f204aa5df96e2 100644
---- a/drivers/crypto/ccp/sp-dev.c
-+++ b/drivers/crypto/ccp/sp-dev.c
-@@ -19,6 +19,7 @@
- #include <linux/types.h>
- #include <linux/ccp.h>
+--- a/net/mptcp/fastopen.c
++++ b/net/mptcp/fastopen.c
+@@ -24,12 +24,13 @@ void mptcp_fastopen_subflow_synack_set_p
+ 	sk = subflow->conn;
+ 	tp = tcp_sk(ssk);
  
-+#include "sev-dev.h"
- #include "ccp-dev.h"
- #include "sp-dev.h"
+-	subflow->is_mptfo = 1;
+-
++	/* A valid TFO cookie does not guarantee SYN data. */
+ 	skb = skb_peek(&ssk->sk_receive_queue);
+-	if (WARN_ON_ONCE(!skb))
++	if (!skb)
+ 		return;
  
-@@ -265,8 +266,12 @@ struct sp_device *sp_get_psp_master_device(void)
- static int __init sp_mod_init(void)
- {
- #ifdef CONFIG_X86
-+	static bool initialized;
- 	int ret;
- 
-+	if (initialized)
-+		return 0;
++	subflow->is_mptfo = 1;
 +
- 	ret = sp_pci_init();
- 	if (ret)
- 		return ret;
-@@ -275,6 +280,8 @@ static int __init sp_mod_init(void)
- 	psp_pci_init();
- #endif
- 
-+	initialized = true;
-+
- 	return 0;
- #endif
- 
-@@ -291,6 +298,13 @@ static int __init sp_mod_init(void)
- 	return -ENODEV;
- }
- 
-+#if IS_BUILTIN(CONFIG_KVM_AMD) && IS_ENABLED(CONFIG_KVM_AMD_SEV)
-+int __init sev_module_init(void)
-+{
-+	return sp_mod_init();
-+}
-+#endif
-+
- static void __exit sp_mod_exit(void)
- {
- #ifdef CONFIG_X86
-diff --git a/include/linux/psp-sev.h b/include/linux/psp-sev.h
-index 6a4435cfa977e..0f5f94137f6da 100644
---- a/include/linux/psp-sev.h
-+++ b/include/linux/psp-sev.h
-@@ -816,6 +816,15 @@ struct sev_data_snp_commit {
- 
- #ifdef CONFIG_CRYPTO_DEV_SP_PSP
- 
-+/**
-+ * sev_module_init - perform PSP SEV module initialization
-+ *
-+ * Returns:
-+ * 0 if the PSP module is successfully initialized
-+ * negative value if the PSP module initialization fails
-+ */
-+int sev_module_init(void);
-+
- /**
-  * sev_platform_init - perform SEV INIT command
-  *
--- 
-2.53.0
-
+ 	/* dequeue the skb from sk receive queue */
+ 	__skb_unlink(skb, &ssk->sk_receive_queue);
+ 	skb_ext_reset(skb);
 
 
