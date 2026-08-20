@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC7747D443;
-	Thu, 20 Aug 2026 16:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB96C46D0BD;
+	Thu, 20 Aug 2026 16:31:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243514; cv=none; b=k2vrc2nWVPZSG4G02q9978prPHNXCKqBzHoeW8wEzvXmrEDHULKnB699zA5SOqn9BvXqIn9BAs1BMffxAUN7XBRcioPSYc1fq8saoDVvBaCIkE2aKMB3EbgyzPA4lNY1K3u7pvn2l7OYzfmDXB814aD/ihr7i95+zzC94VRj9xM=
+	t=1787243517; cv=none; b=YaMeAkw3Ga/YC6nZivk4mriCJFw5X6zoUYoVx8HxphXLSYF+GWkyobLpYhBIWxpEeXygLrt87qSbBIsUNZG/ZHV3/KbiKlt+dmGSaxNEfIOzLVvdl5gmfKKOc3F86rSzU4zHJKWMUJHogisuR4X+Mw2j7TbVdwI7Be/Mi2frqlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243514; c=relaxed/simple;
-	bh=3WJr04acrhhHXMjplak1tYMIgU8frAg0DhAtrZaVqhE=;
+	s=arc-20240116; t=1787243517; c=relaxed/simple;
+	bh=qea6wVB0IBg55q9ncIHiigOFhvhwLBOC9YEaGWMcXSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sUtEsmMzDT0si+4zDxcMEUZKL9oDzUCM1/i3WvDVdh5sP4Ld+w85ETn1xeQpYf7/GMFWBk5K4up5IirYccE+9cbSIy8tq9B690xQSdURMdJwpndbPwoosSqV/GVVkP34WHkUZ5oo3MxLgWB2Fc02TRBCf+df/zGmOLx7so3gXhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lgO5783M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Jxayr07B6jSACYYA3a5M3sADLP8/lkEh3YXR0zl0IsuduTF/YjZjCbBQn5zw6DWNec1STuTyvKgNamSJeSUN45qcVOuvXqcfO3jmTKYS/X1kslWU2eiwd7lKGR/4Y3QIPmkDVH1hBvS7PrxdahdE7V436hO3n1qK5nKvI3Q+t14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vig68mPQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgO5783M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 455AB1F000E9;
-	Thu, 20 Aug 2026 16:31:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vig68mPQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275DA1F00A3A;
+	Thu, 20 Aug 2026 16:31:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243512;
-	bh=wsdAivJDmCfmtuS1ontahTQEigS9WKyV/8Y1tdCu23I=;
+	s=korg; t=1787243515;
+	bh=d4z26U4IaQvt3kkvRxj6hlbhCqUQ8Y+0gxvBWGPBuuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lgO5783Mvz24mWpL4YFPjr3Qvo7j1ZckZX2AkDcpdtNHIspCF//qIc7zicS5b74YB
-	 ijqy2wBt7W7RK++C9zAnKDPlYpIjKglUNd/Z8/+UlWoATIbl2bItCq+a32eTP2Jyjn
-	 x/j2l5gi4aLYQzTLUxkhsQTBXZXUmE+BCaaYM2qQ=
+	b=vig68mPQf22gf6+xN1NcZigQS5n9rLbD7uA05esW2vKacM76QDmE0f3/uWhTF77w3
+	 qneezKLZWVPWZmlXoATcLW0Xugm9zktD5RzxdYHyFwhCgHlGrcFvYUzvs0jlKFzMUI
+	 4cOSqks1nwUdPLw20EFveQ9d/xGOsUeXu52NOIq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jason Wang <jasowang@redhat.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 081/272] net: dst: annotate data-races around dst->output
-Date: Thu, 20 Aug 2026 16:54:25 +0200
-Message-ID: <20260820145233.707162873@linuxfoundation.org>
+Subject: [PATCH 5.15 072/272] vduse: take out allocations from vduse_dev_alloc_coherent
+Date: Thu, 20 Aug 2026 16:54:16 +0200
+Message-ID: <20260820145233.442580531@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -46,84 +46,151 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Eugenio Pérez <eperezma@redhat.com>
 
-[ Upstream commit 2dce8c52a98995c4719def6f88629ab1581c0b82 ]
+[ Upstream commit 489d76520612abf9a4ede4344349105406c91a73 ]
 
-dst_dev_put() can overwrite dst->output while other
-cpus might read this field (for instance from dst_output())
+The function vduse_dev_alloc_coherent will be called under rwlock in
+next patches.  Make it out of the lock to avoid increasing its fail
+rate.
 
-Add READ_ONCE()/WRITE_ONCE() annotations to suppress
-potential issues.
-
-We will likely need RCU protection in the future.
-
-Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250630121934.3399505-6-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: c9c9b37f8c55 ("netfilter: nf_queue: pin bridge device while NFQUEUE holds fake dst")
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260119143306.1818855-10-eperezma@redhat.com>
+Stable-dep-of: 9c1523803445 ("VDUSE: avoid leaking information to userspace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/dst.h      |    2 +-
- include/net/lwtunnel.h |    4 ++--
- net/core/dst.c         |    2 +-
- net/ipv4/route.c       |    2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/vdpa/vdpa_user/iova_domain.c |   24 +++++++-----------------
+ drivers/vdpa/vdpa_user/iova_domain.h |    5 ++---
+ drivers/vdpa/vdpa_user/vduse_dev.c   |   14 ++++++++++----
+ 3 files changed, 19 insertions(+), 24 deletions(-)
 
---- a/include/net/dst.h
-+++ b/include/net/dst.h
-@@ -449,7 +449,7 @@ INDIRECT_CALLABLE_DECLARE(int ip_output(
- /* Output packet to network from transport.  */
- static inline int dst_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- {
--	return INDIRECT_CALL_INET(skb_dst(skb)->output,
-+	return INDIRECT_CALL_INET(READ_ONCE(skb_dst(skb)->output),
- 				  ip6_output, ip_output,
- 				  net, sk, skb);
+--- a/drivers/vdpa/vdpa_user/iova_domain.c
++++ b/drivers/vdpa/vdpa_user/iova_domain.c
+@@ -381,17 +381,15 @@ void vduse_domain_unmap_page(struct vdus
+ 	vduse_domain_free_iova(iovad, dma_addr, size);
  }
---- a/include/net/lwtunnel.h
-+++ b/include/net/lwtunnel.h
-@@ -138,8 +138,8 @@ int bpf_lwt_push_ip_encap(struct sk_buff
- static inline void lwtunnel_set_redirect(struct dst_entry *dst)
- {
- 	if (lwtunnel_output_redirect(dst->lwtstate)) {
--		dst->lwtstate->orig_output = dst->output;
--		dst->output = lwtunnel_output;
-+		dst->lwtstate->orig_output = READ_ONCE(dst->output);
-+		WRITE_ONCE(dst->output, lwtunnel_output);
- 	}
- 	if (lwtunnel_input_redirect(dst->lwtstate)) {
- 		dst->lwtstate->orig_input = READ_ONCE(dst->input);
---- a/net/core/dst.c
-+++ b/net/core/dst.c
-@@ -150,7 +150,7 @@ void dst_dev_put(struct dst_entry *dst)
- 	if (dst->ops->ifdown)
- 		dst->ops->ifdown(dst, dev, true);
- 	WRITE_ONCE(dst->input, dst_discard);
--	dst->output = dst_discard_out;
-+	WRITE_ONCE(dst->output, dst_discard_out);
- 	dst->dev = blackhole_netdev;
- 	dev_hold(dst->dev);
- 	dev_put(dev);
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -1733,7 +1733,7 @@ struct rtable *rt_dst_clone(struct net_d
- 		INIT_LIST_HEAD(&new_rt->rt_uncached);
  
- 		new_rt->dst.input = READ_ONCE(rt->dst.input);
--		new_rt->dst.output = rt->dst.output;
-+		new_rt->dst.output = READ_ONCE(rt->dst.output);
- 		new_rt->dst.error = rt->dst.error;
- 		new_rt->dst.lastuse = jiffies;
- 		new_rt->dst.lwtstate = lwtstate_get(rt->dst.lwtstate);
+-void *vduse_domain_alloc_coherent(struct vduse_iova_domain *domain,
+-				  size_t size, dma_addr_t *dma_addr,
+-				  gfp_t flag, unsigned long attrs)
++dma_addr_t vduse_domain_alloc_coherent(struct vduse_iova_domain *domain,
++				       size_t size, void *orig)
+ {
+ 	struct iova_domain *iovad = &domain->consistent_iovad;
+ 	unsigned long limit = domain->iova_limit;
+ 	dma_addr_t iova = vduse_domain_alloc_iova(iovad, size, limit);
+-	void *orig = alloc_pages_exact(size, flag);
+ 
+-	if (!iova || !orig)
+-		goto err;
++	if (!iova)
++		return DMA_MAPPING_ERROR;
+ 
+ 	spin_lock(&domain->iotlb_lock);
+ 	if (vduse_iotlb_add_range(domain, (u64)iova, (u64)iova + size - 1,
+@@ -402,17 +400,12 @@ void *vduse_domain_alloc_coherent(struct
+ 	}
+ 	spin_unlock(&domain->iotlb_lock);
+ 
+-	*dma_addr = iova;
++	return iova;
+ 
+-	return orig;
+ err:
+-	*dma_addr = DMA_MAPPING_ERROR;
+-	if (orig)
+-		free_pages_exact(orig, size);
+-	if (iova)
+-		vduse_domain_free_iova(iovad, iova, size);
++	vduse_domain_free_iova(iovad, iova, size);
+ 
+-	return NULL;
++	return DMA_MAPPING_ERROR;
+ }
+ 
+ void vduse_domain_free_coherent(struct vduse_iova_domain *domain, size_t size,
+@@ -421,7 +414,6 @@ void vduse_domain_free_coherent(struct v
+ 	struct iova_domain *iovad = &domain->consistent_iovad;
+ 	struct vhost_iotlb_map *map;
+ 	struct vdpa_map_file *map_file;
+-	phys_addr_t pa;
+ 
+ 	spin_lock(&domain->iotlb_lock);
+ 	map = vhost_iotlb_itree_first(domain->iotlb, (u64)dma_addr,
+@@ -433,12 +425,10 @@ void vduse_domain_free_coherent(struct v
+ 	map_file = (struct vdpa_map_file *)map->opaque;
+ 	fput(map_file->file);
+ 	kfree(map_file);
+-	pa = map->addr;
+ 	vhost_iotlb_map_free(domain->iotlb, map);
+ 	spin_unlock(&domain->iotlb_lock);
+ 
+ 	vduse_domain_free_iova(iovad, dma_addr, size);
+-	free_pages_exact(phys_to_virt(pa), size);
+ }
+ 
+ static vm_fault_t vduse_domain_mmap_fault(struct vm_fault *vmf)
+--- a/drivers/vdpa/vdpa_user/iova_domain.h
++++ b/drivers/vdpa/vdpa_user/iova_domain.h
+@@ -56,9 +56,8 @@ void vduse_domain_unmap_page(struct vdus
+ 			     dma_addr_t dma_addr, size_t size,
+ 			     enum dma_data_direction dir, unsigned long attrs);
+ 
+-void *vduse_domain_alloc_coherent(struct vduse_iova_domain *domain,
+-				  size_t size, dma_addr_t *dma_addr,
+-				  gfp_t flag, unsigned long attrs);
++dma_addr_t vduse_domain_alloc_coherent(struct vduse_iova_domain *domain,
++				       size_t size, void *orig);
+ 
+ void vduse_domain_free_coherent(struct vduse_iova_domain *domain, size_t size,
+ 				dma_addr_t dma_addr, unsigned long attrs);
+--- a/drivers/vdpa/vdpa_user/vduse_dev.c
++++ b/drivers/vdpa/vdpa_user/vduse_dev.c
+@@ -795,18 +795,23 @@ static void *vduse_dev_alloc_coherent(st
+ {
+ 	struct vduse_dev *vdev = dev_to_vduse(dev);
+ 	struct vduse_iova_domain *domain = vdev->domain;
+-	unsigned long iova;
+ 	void *addr;
+ 
+ 	*dma_addr = DMA_MAPPING_ERROR;
+-	addr = vduse_domain_alloc_coherent(domain, size,
+-				(dma_addr_t *)&iova, flag, attrs);
++
++	addr = alloc_pages_exact(size, flag);
+ 	if (!addr)
+ 		return NULL;
+ 
+-	*dma_addr = (dma_addr_t)iova;
++	*dma_addr = vduse_domain_alloc_coherent(domain, size, addr);
++	if (*dma_addr == DMA_MAPPING_ERROR)
++		goto err;
+ 
+ 	return addr;
++
++err:
++	free_pages_exact(addr, size);
++	return NULL;
+ }
+ 
+ static void vduse_dev_free_coherent(struct device *dev, size_t size,
+@@ -817,6 +822,7 @@ static void vduse_dev_free_coherent(stru
+ 	struct vduse_iova_domain *domain = vdev->domain;
+ 
+ 	vduse_domain_free_coherent(domain, size, dma_addr, attrs);
++	free_pages_exact(vaddr, size);
+ }
+ 
+ static size_t vduse_dev_max_mapping_size(struct device *dev)
 
 
