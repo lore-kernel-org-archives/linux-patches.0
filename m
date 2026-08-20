@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A207A337107;
-	Thu, 20 Aug 2026 15:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DB837E5CB;
+	Thu, 20 Aug 2026 15:08:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238537; cv=none; b=V1qmn/XAt+UShw0KmE/gpQq/HLhJkaY8zuiBauB3bEPwzvecuvoOKxwF/cgDkXmyZmxdUBPMGsx0+8KZEPqrz1W6I5YBvtXzN4d+DSt0LelbHLgBM9C5SUEACNpve7mVroq3nSU5pl22HG0VhJiVb/ffex9poJdlqZ/GKl1rtTI=
+	t=1787238542; cv=none; b=Wfwv9PpuI7TcHyNZwm78c+V/y/+1Ov7MNNaitxX/0SM/hfLn0PIwETI5XatG6WnXQ+eYRHVaAHzOiAU+wCw7fy+wN1OPba1zhiqHRE3AHvIZsrJ/sCDA9mbSMxWnM2kLFTO6CCy/t8LJ+W88xDpwDAWDus6C0cueYIGyIPoLar0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238537; c=relaxed/simple;
-	bh=2Qh4NsHZR5P674z+/fnqlL4KDEedkM/Hnav73KRAg8Y=;
+	s=arc-20240116; t=1787238542; c=relaxed/simple;
+	bh=m4ggQ5A3oJFQHlSWx23uTl5EyuAD2xqX4yDnft7R4nQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jzY4v6DoOFa/RxjS9meGPG6uF/LzAypStZPsTR8IXN/iFEo+UdOO/BEoxpFyXy//AuPI+hs2/X8+JW4BOlbbnmCOBB8szLVMGtPiSeee6EsLu5CL6A1MUilsF9uHAuLpZnshw2iDOQWiRl32e+z5IV6WjVYSUDTTrZUTaawmm3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMTEWdBk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uUrp6Udk5Z3XaUI0f749jz4I+9QxaZDs5nHqnqF4ZKOZ7p+3egRTtLPOAYCDXKudBBB3vW86iCM4BZnYQpqa1ehDZBLMuH77+KfbJu+g7euiv5MEIDVhvznoqB1TZqjzAvphCLmsDf3dlYq6tNe+1JT60tUneDS2YPntmEznf5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nl4aOnka; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMTEWdBk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65A81F000E9;
-	Thu, 20 Aug 2026 15:08:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nl4aOnka"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38201F000E9;
+	Thu, 20 Aug 2026 15:08:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238536;
-	bh=aYEqaYmEDB4w0U14JV1+1jgiTqsTCSwvIX5HSgQ8O+s=;
+	s=korg; t=1787238539;
+	bh=04haT89xk4QLeCq9xAjEYsj61Pnc5nNpz1uLR71lgHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UMTEWdBkn7Xm6BUn3s1omZKFpM9DWyuA7sLaOlLtibA5HCcniTzE5NKUhsDBG2s7Z
-	 1MNcrXCrpzr+Eu3e3GvlWKn/VbjIr8Ag0maN0K/SG6hCfG3gHUC2DSKhRe/fgr7974
-	 4+k7oRr/rPFfTj+SW1qggjhc1Em+P7c+qKRkrLuQ=
+	b=nl4aOnkash1KPQgwQk+FLZgjkFXM7Jk4fwI4dGPzEN13gMWcQAO+igjNfw0FsyS/s
+	 1vprfeVjTI1MuRMzSXHoS9f8YGddJYINWHWp0MBo3oyIQsk3P3dBkPjbuD75W8h7yU
+	 WknV8UUUw2f5N2U5FjOwOuxRwuKWL/2tHCYBNeJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.1 145/228] xfs: avoid UAF on sc->tempip in xrep_tempfile_create
-Date: Thu, 20 Aug 2026 16:54:47 +0200
-Message-ID: <20260820145249.016598619@linuxfoundation.org>
+	Ralf Lici <ralf@mandelbit.com>,
+	Antonio Quartulli <antonio@openvpn.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 181/228] ovpn: run deferred work on a module-owned workqueue
+Date: Thu, 20 Aug 2026 16:55:23 +0200
+Message-ID: <20260820145250.191821530@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -51,33 +51,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Ralf Lici <ralf@mandelbit.com>
 
-commit 0c88e10d12de9ca7cbed1467bb1b52310101bff8 upstream.
+[ Upstream commit e9714db8041763f59dde152c812b96b3de05c6d9 ]
 
-LOLLM noticed a potential UAF if the tempfile creation code fails after
-it set sc->tempip.  Fix that.
+ovpn queues several work items whose callbacks execute module text.
+These works currently run on the global system workqueues, so module
+exit has no driver-owned drain point that guarantees the callbacks have
+fully returned before the module text can be freed.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: 84c14ee39dd388 ("xfs: create temporary files and directories for online repair")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Object references protect the objects used by the callbacks, but they do
+not prove that a workqueue function has returned. In particular, a
+worker can drop the final reference that unblocks device teardown while
+it is still executing ovpn code.
+
+Add a module-owned workqueue and queue all ovpn work items on it. During
+module exit, unregister rtnl and netlink first, flush the workqueue so
+ordinary ovpn workers finish, run the final RCU barrier, and destroy the
+workqueue last. This keeps the workqueue available for cleanup work
+queued from RCU callbacks, while ensuring no ovpn work item can outlive
+the module text.
+
+The per-device delayed keepalive work remains explicitly disabled during
+netdev teardown (disable_delayed_work_sync in ndo_uninit), since
+flush_workqueue does not flush delayed work that is still only pending
+on its timer.
+
+Fixes: 3ecfd9349f40 ("ovpn: implement keepalive mechanism")
+Fixes: 11851cbd60ea ("ovpn: implement TCP transport")
+Signed-off-by: Ralf Lici <ralf@mandelbit.com>
+Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/tempfile.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ovpn/main.c     | 19 ++++++++++++++++++-
+ drivers/net/ovpn/ovpnpriv.h |  4 ++++
+ drivers/net/ovpn/peer.c     |  8 ++++----
+ drivers/net/ovpn/tcp.c      |  9 ++++-----
+ 4 files changed, 30 insertions(+), 10 deletions(-)
 
---- a/fs/xfs/scrub/tempfile.c
-+++ b/fs/xfs/scrub/tempfile.c
-@@ -174,6 +174,7 @@ out_release_inode:
- 		xfs_iunlock(sc->tempip, XFS_ILOCK_EXCL);
- 		xfs_finish_inode_setup(sc->tempip);
- 		xchk_irele(sc, sc->tempip);
-+		sc->tempip = NULL;
+diff --git a/drivers/net/ovpn/main.c b/drivers/net/ovpn/main.c
+index 168cfe9b59a98..0708249e9607c 100644
+--- a/drivers/net/ovpn/main.c
++++ b/drivers/net/ovpn/main.c
+@@ -12,6 +12,7 @@
+ #include <linux/module.h>
+ #include <linux/netdevice.h>
+ #include <linux/inetdevice.h>
++#include <linux/workqueue.h>
+ #include <net/gro_cells.h>
+ #include <net/ip.h>
+ #include <net/rtnetlink.h>
+@@ -26,6 +27,9 @@
+ #include "tcp.h"
+ #include "udp.h"
+ 
++/* module-owned workqueue on which all ovpn-specific work is queued */
++struct workqueue_struct *ovpn_wq;
++
+ static void ovpn_priv_free(struct net_device *net)
+ {
+ 	struct ovpn_priv *ovpn = netdev_priv(net);
+@@ -264,10 +268,16 @@ static int __init ovpn_init(void)
+ 
+ 	ovpn_tcp_init();
+ 
++	ovpn_wq = alloc_workqueue("ovpn", WQ_PERCPU, 0);
++	if (!ovpn_wq) {
++		pr_err("ovpn: cannot allocate workqueue\n");
++		return -ENOMEM;
++	}
++
+ 	err = rtnl_link_register(&ovpn_link_ops);
+ 	if (err) {
+ 		pr_err("ovpn: can't register rtnl link ops: %d\n", err);
+-		return err;
++		goto destroy_wq;
  	}
- out_release_dquots:
- 	xfs_qm_dqrele(udqp);
+ 
+ 	err = ovpn_nl_register();
+@@ -280,6 +290,9 @@ static int __init ovpn_init(void)
+ 
+ unreg_rtnl:
+ 	rtnl_link_unregister(&ovpn_link_ops);
++destroy_wq:
++	destroy_workqueue(ovpn_wq);
++	ovpn_wq = NULL;
+ 	return err;
+ }
+ 
+@@ -288,7 +301,11 @@ static __exit void ovpn_cleanup(void)
+ 	ovpn_nl_unregister();
+ 	rtnl_link_unregister(&ovpn_link_ops);
+ 
++	flush_workqueue(ovpn_wq);
+ 	rcu_barrier();
++
++	destroy_workqueue(ovpn_wq);
++	ovpn_wq = NULL;
+ }
+ 
+ module_init(ovpn_init);
+diff --git a/drivers/net/ovpn/ovpnpriv.h b/drivers/net/ovpn/ovpnpriv.h
+index 5898f6adada7f..84499140e4bd9 100644
+--- a/drivers/net/ovpn/ovpnpriv.h
++++ b/drivers/net/ovpn/ovpnpriv.h
+@@ -15,6 +15,10 @@
+ #include <uapi/linux/if_link.h>
+ #include <uapi/linux/ovpn.h>
+ 
++struct workqueue_struct;
++
++extern struct workqueue_struct *ovpn_wq;
++
+ /**
+  * struct ovpn_peer_collection - container of peers for MultiPeer mode
+  * @by_id: table of peers index by ID
+diff --git a/drivers/net/ovpn/peer.c b/drivers/net/ovpn/peer.c
+index b0519f9840d83..c95656ca7c357 100644
+--- a/drivers/net/ovpn/peer.c
++++ b/drivers/net/ovpn/peer.c
+@@ -62,7 +62,7 @@ void ovpn_peer_keepalive_set(struct ovpn_peer *peer, u32 interval, u32 timeout)
+ 	/* now that interval and timeout have been changed, kick
+ 	 * off the worker so that the next delay can be recomputed
+ 	 */
+-	mod_delayed_work(system_percpu_wq, &peer->ovpn->keepalive_work, 0);
++	mod_delayed_work(ovpn_wq, &peer->ovpn->keepalive_work, 0);
+ }
+ 
+ /**
+@@ -1371,7 +1371,7 @@ static time64_t ovpn_peer_keepalive_work_single(struct ovpn_peer *peer,
+ 			   peer->id);
+ 		if (WARN_ON(!ovpn_peer_hold(peer)))
+ 			return 0;
+-		if (!schedule_work(&peer->keepalive_work))
++		if (!queue_work(ovpn_wq, &peer->keepalive_work))
+ 			ovpn_peer_put(peer);
+ 	}
+ 
+@@ -1463,8 +1463,8 @@ void ovpn_peer_keepalive_work(struct work_struct *work)
+ 		netdev_dbg(ovpn->dev,
+ 			   "scheduling keepalive work: now=%llu next_run=%llu delta=%llu\n",
+ 			   next_run, now, next_run - now);
+-		schedule_delayed_work(&ovpn->keepalive_work,
+-				      (next_run - now) * HZ);
++		queue_delayed_work(ovpn_wq, &ovpn->keepalive_work,
++				   (next_run - now) * HZ);
+ 	}
+ 	unlock_ovpn(ovpn, &release_list);
+ }
+diff --git a/drivers/net/ovpn/tcp.c b/drivers/net/ovpn/tcp.c
+index 0af14055c39aa..8fe8a8e750a40 100644
+--- a/drivers/net/ovpn/tcp.c
++++ b/drivers/net/ovpn/tcp.c
+@@ -151,7 +151,7 @@ static void ovpn_tcp_rcv(struct strparser *strp, struct sk_buff *skb)
+ 	/* take reference for deferred peer deletion. should never fail */
+ 	if (WARN_ON(!ovpn_peer_hold(peer)))
+ 		goto err_nopeer;
+-	if (!schedule_work(&peer->tcp.defer_del_work))
++	if (!queue_work(ovpn_wq, &peer->tcp.defer_del_work))
+ 		ovpn_peer_put(peer);
+ 	ovpn_dev_dstats_rx_dropped(peer->ovpn->dev);
+ err_nopeer:
+@@ -284,13 +284,12 @@ static void ovpn_tcp_send_sock(struct ovpn_peer *peer, struct sock *sk)
+ 			 * stream therefore we abort the connection
+ 			 */
+ 			ovpn_peer_hold(peer);
+-			if (!schedule_work(&peer->tcp.defer_del_work))
++			if (!queue_work(ovpn_wq, &peer->tcp.defer_del_work))
+ 				ovpn_peer_put(peer);
+ 
+ 			/* we bail out immediately and keep tx_in_progress set
+ 			 * to true. This way we prevent more TX attempts
+-			 * which would lead to more invocations of
+-			 * schedule_work()
++			 * which would lead to more invocations of queue_work()
+ 			 */
+ 			return;
+ 		}
+@@ -487,7 +486,7 @@ static void ovpn_tcp_write_space(struct sock *sk)
+ 	rcu_read_lock();
+ 	sock = rcu_dereference_sk_user_data(sk);
+ 	if (likely(sock && sock->peer)) {
+-		schedule_work(&sock->tcp_tx_work);
++		queue_work(ovpn_wq, &sock->tcp_tx_work);
+ 		sock->peer->tcp.sk_cb.sk_write_space(sk);
+ 	}
+ 	rcu_read_unlock();
+-- 
+2.53.0
+
 
 
