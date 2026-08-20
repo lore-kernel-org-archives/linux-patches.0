@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A7646D57D;
-	Thu, 20 Aug 2026 17:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0713544C51B;
+	Thu, 20 Aug 2026 17:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248125; cv=none; b=IBlvBctE+dShIHgNA0GGvhZFtoVYoS8kscxsl+ISvztKbs+ouT98NFegPJOjZ5s76f7W0/Z5IFpcpLdh2L7iTWZ5Bmq/ImWM8+QqmV2YKUFrk1mCvBof+75L5U/hKAJlqIpnriXQdPiWPSmZdPPFv9MNNGYlvePDkSmAeoe2+x8=
+	t=1787248127; cv=none; b=U8tIiSkh+YgQTSHJcDyiYDCiZLeB+9dyazrF4/QIbp/ikoDTPCW9zb7nqhxA/ABka3I2wnQpVaDqMS155uyOysQVMK+cCSKwRa+nQhKaWbocAWkQx3Ys8W7myVKUGHYPkKxOs+GD7y+NJAiXKdw6J2yGqyNHkq03DFm/NtdJb4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248125; c=relaxed/simple;
-	bh=JnzO66Av/lhpn1OtkM0j0KMJpnabay/PlkOYQ60ba4s=;
+	s=arc-20240116; t=1787248127; c=relaxed/simple;
+	bh=Z+3hk1mC2PeCSXHIUPqzujRq/VrRwomFEKQql2nY4rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WswkSLLwRTbKpdDjfJgDw6m3y0XOxHDoY2kk1ZQH4LyoQuDwziSRbykq20aFMfQiEVw7AxmHjNl8BJLVYfyMwKBfsLfpIjkjm8ttvxsiNS5sB0MI1vBh+1cBFclF7L7QFTxzk4DJ9JrduEKzj1L3jLzwISA5SYcMRep6Ihp3yDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rEwIdzjD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QkIeEAOfQ5sKsw40txMIll/+Azb+eUB8AV7RUunAaiAWOvMIr9pjghi7XwOp04845V7WXU/pZOb9Ji554HkWdf/1LxDn56heokfMV9uxJO0eeoshMY68PCVzFYphmm+X5VFzWJzhin2HAw+duuXvUNB3XqEPSAAV2YHzCsUbhis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B63gpQ1I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rEwIdzjD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F321F00A3A;
-	Thu, 20 Aug 2026 17:48:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B63gpQ1I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 621B51F000E9;
+	Thu, 20 Aug 2026 17:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248123;
-	bh=IKMo9uZnrKhy9EeGM2m/Gupj6r2KHhywmnmIxqII5wI=;
+	s=korg; t=1787248125;
+	bh=T45+Zmhmeo2lX301tixt0UUFxkPrNvblgvGDCxMm88E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rEwIdzjDgwvBPkYLr2KeFN59+l0otXkT6NJrUB4MltiStENte/uUztSJhP7H3XzYX
-	 tumiFamSmSRNOGrMzDWlIjTItLX8IyvvIdzpxWYwreYi8I9p4okbSLK87vyKEEy6/D
-	 0yFiREfb7W6IZatK1TvJYeXaPLr5BmAcT3N6lk4s=
+	b=B63gpQ1IJe2JJ+YXwZcPXb9MGDUWL42H5/hiPY9CxHUfqx5AhscRxG9BvLfA6iteu
+	 L+lCWcranUsnorxU8t/GzUvMYn528tBlZqjGSaJHoX65Bo537x5+kIk+oAbJAU92wM
+	 yn1NNrekLI5CXsLzcdL2R13XnARdo0InSo03kV44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georg Pfuetzenreuter <georg.pfuetzenreuter@suse.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 119/303] netfilter: nft_objref: validate objref and objrefmap expressions
-Date: Thu, 20 Aug 2026 16:54:15 +0200
-Message-ID: <20260820145256.857284317@linuxfoundation.org>
+Subject: [PATCH 6.1 120/303] fs/ntfs3: Undo critial modificatins to keep directory consistency
+Date: Thu, 20 Aug 2026 16:54:16 +0200
+Message-ID: <20260820145256.886969481@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -53,128 +50,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit f359b809d54c6e3dd1d039b97e0b68390b0e53e4 ]
+[ Upstream commit 63e92a0c5a0d5816803907a3e30a91ef72c903a5 ]
 
-Referencing a synproxy stateful object from OUTPUT hook causes kernel
-crash due to infinite recursive calls:
+Affect xfstest 320.
 
-BUG: TASK stack guard page was hit at 000000008bda5b8c (stack is 000000003ab1c4a5..00000000494d8b12)
-[...]
-Call Trace:
- __find_rr_leaf+0x99/0x230
- fib6_table_lookup+0x13b/0x2d0
- ip6_pol_route+0xa4/0x400
- fib6_rule_lookup+0x156/0x240
- ip6_route_output_flags+0xc6/0x150
- __nf_ip6_route+0x23/0x50
- synproxy_send_tcp_ipv6+0x106/0x200
- synproxy_send_client_synack_ipv6+0x1aa/0x1f0
- nft_synproxy_do_eval+0x263/0x310
- nft_do_chain+0x5a8/0x5f0 [nf_tables
- nft_do_chain_inet+0x98/0x110
- nf_hook_slow+0x43/0xc0
- __ip6_local_out+0xf0/0x170
- ip6_local_out+0x17/0x70
- synproxy_send_tcp_ipv6+0x1a2/0x200
- synproxy_send_client_synack_ipv6+0x1aa/0x1f0
-[...]
-
-Implement objref and objrefmap expression validate functions.
-
-Currently, only NFT_OBJECT_SYNPROXY object type requires validation.
-This will also handle a jump to a chain using a synproxy object from the
-OUTPUT hook.
-
-Now when trying to reference a synproxy object in the OUTPUT hook, nft
-will produce the following error:
-
-synproxy_crash.nft: Error: Could not process rule: Operation not supported
-  synproxy name mysynproxy
-  ^^^^^^^^^^^^^^^^^^^^^^^^
-
-Fixes: ee394f96ad75 ("netfilter: nft_synproxy: add synproxy stateful object support")
-Reported-by: Georg Pfuetzenreuter <georg.pfuetzenreuter@suse.com>
-Closes: https://bugzilla.suse.com/1250237
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: d07955dd34ec ("netfilter: nft_fib: reject fib expression on the netdev egress hook")
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Stable-dep-of: f1df9d771df4 ("ntfs3: validate split-point offset in indx_insert_into_buffer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_objref.c |   39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ fs/ntfs3/index.c |   30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
---- a/net/netfilter/nft_objref.c
-+++ b/net/netfilter/nft_objref.c
-@@ -22,6 +22,35 @@ static void nft_objref_eval(const struct
- 	obj->ops->eval(obj, regs, pkt);
- }
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -1812,10 +1812,11 @@ indx_insert_into_buffer(struct ntfs_inde
+ 	struct indx_node *n1 = fnd->nodes[level];
+ 	struct INDEX_HDR *hdr1 = &n1->index->ihdr;
+ 	struct INDEX_HDR *hdr2;
+-	u32 to_copy, used;
++	u32 to_copy, used, used1;
+ 	CLST new_vbn;
+ 	__le64 t_vbn, *sub_vbn;
+ 	u16 sp_size;
++	void *hdr1_saved = NULL;
  
-+static int nft_objref_validate_obj_type(const struct nft_ctx *ctx, u32 type)
-+{
-+	unsigned int hooks;
-+
-+	switch (type) {
-+	case NFT_OBJECT_SYNPROXY:
-+		if (ctx->family != NFPROTO_IPV4 &&
-+		    ctx->family != NFPROTO_IPV6 &&
-+		    ctx->family != NFPROTO_INET)
-+			return -EOPNOTSUPP;
-+
-+		hooks = (1 << NF_INET_LOCAL_IN) | (1 << NF_INET_FORWARD);
-+
-+		return nft_chain_validate_hooks(ctx->chain, hooks);
-+	default:
-+		break;
+ 	/* Try the most easy case. */
+ 	e = fnd->level - 1 == level ? fnd->de[level] : NULL;
+@@ -1848,6 +1849,13 @@ indx_insert_into_buffer(struct ntfs_inde
+ 		return -ENOMEM;
+ 	memcpy(up_e, sp, sp_size);
+ 
++	used1 = le32_to_cpu(hdr1->used);
++	hdr1_saved = kmemdup(hdr1, used1, GFP_NOFS);
++	if (!hdr1_saved) {
++		err = -ENOMEM;
++		goto out;
 +	}
 +
-+	return 0;
-+}
-+
-+static int nft_objref_validate(const struct nft_ctx *ctx,
-+			       const struct nft_expr *expr)
-+{
-+	struct nft_object *obj = nft_objref_priv(expr);
-+
-+	return nft_objref_validate_obj_type(ctx, obj->ops->type->type);
-+}
-+
- static int nft_objref_init(const struct nft_ctx *ctx,
- 			   const struct nft_expr *expr,
- 			   const struct nlattr * const tb[])
-@@ -93,6 +122,7 @@ static const struct nft_expr_ops nft_obj
- 	.activate	= nft_objref_activate,
- 	.deactivate	= nft_objref_deactivate,
- 	.dump		= nft_objref_dump,
-+	.validate	= nft_objref_validate,
- 	.reduce		= NFT_REDUCE_READONLY,
- };
+ 	if (!hdr1->flags) {
+ 		up_e->flags |= NTFS_IE_HAS_SUBNODES;
+ 		up_e->size = cpu_to_le16(sp_size + sizeof(u64));
+@@ -1880,7 +1888,7 @@ indx_insert_into_buffer(struct ntfs_inde
+ 	hdr_insert_head(hdr2, de_t, to_copy);
  
-@@ -197,6 +227,14 @@ static void nft_objref_map_destroy(const
- 	nf_tables_destroy_set(ctx, priv->set);
+ 	/* Remove all entries (sp including) from hdr1. */
+-	used = le32_to_cpu(hdr1->used) - to_copy - sp_size;
++	used = used1 - to_copy - sp_size;
+ 	memmove(de_t, Add2Ptr(sp, sp_size), used - le32_to_cpu(hdr1->de_off));
+ 	hdr1->used = cpu_to_le32(used);
+ 
+@@ -1910,8 +1918,6 @@ indx_insert_into_buffer(struct ntfs_inde
+ 	if (!level) {
+ 		/* Insert in root. */
+ 		err = indx_insert_into_root(indx, ni, up_e, NULL, ctx, fnd, 0);
+-		if (err)
+-			goto out;
+ 	} else {
+ 		/*
+ 		 * The target buffer's parent is another index buffer.
+@@ -1919,12 +1925,20 @@ indx_insert_into_buffer(struct ntfs_inde
+ 		 */
+ 		err = indx_insert_into_buffer(indx, ni, root, up_e, ctx,
+ 					      level - 1, fnd);
+-		if (err)
+-			goto out;
++	}
++
++	if (err) {
++		/*
++		 * Undo critical operations.
++		 */
++		indx_mark_free(indx, ni, new_vbn >> indx->idx2vbn_bits);
++		memcpy(hdr1, hdr1_saved, used1);
++		indx_write(indx, ni, n1, 0);
+ 	}
+ 
+ out:
+ 	kfree(up_e);
++	kfree(hdr1_saved);
+ 
+ 	return err;
  }
+@@ -1983,16 +1997,12 @@ int indx_insert_entry(struct ntfs_index
+ 		 */
+ 		err = indx_insert_into_root(indx, ni, new_de, fnd->root_de, ctx,
+ 					    fnd, undo);
+-		if (err)
+-			goto out;
+ 	} else {
+ 		/*
+ 		 * Found a leaf buffer, so we'll insert the new entry into it.
+ 		 */
+ 		err = indx_insert_into_buffer(indx, ni, root, new_de, ctx,
+ 					      fnd->level - 1, fnd);
+-		if (err)
+-			goto out;
+ 	}
  
-+static int nft_objref_map_validate(const struct nft_ctx *ctx,
-+				   const struct nft_expr *expr)
-+{
-+	const struct nft_objref_map *priv = nft_expr_priv(expr);
-+
-+	return nft_objref_validate_obj_type(ctx, priv->set->objtype);
-+}
-+
- static struct nft_expr_type nft_objref_type;
- static const struct nft_expr_ops nft_objref_map_ops = {
- 	.type		= &nft_objref_type,
-@@ -207,6 +245,7 @@ static const struct nft_expr_ops nft_obj
- 	.deactivate	= nft_objref_map_deactivate,
- 	.destroy	= nft_objref_map_destroy,
- 	.dump		= nft_objref_map_dump,
-+	.validate	= nft_objref_map_validate,
- 	.reduce		= NFT_REDUCE_READONLY,
- };
- 
+ out:
 
 
