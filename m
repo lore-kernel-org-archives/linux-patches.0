@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8A5215075;
-	Thu, 20 Aug 2026 17:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CEA3215075;
+	Thu, 20 Aug 2026 17:53:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248432; cv=none; b=t1g5qsJgAQHsnivTE2CRMAIKAgDwLI55nCOfJyefeNfS8tu4kf14v8hK0Aw8eYQIAkb+0ZSgPeCEuD68tNNcMVIQueLE/OL6Vd0JhAvZfzso52U04Ss0axbkIYJ2jN0wAn19THJ0jvKUvvBBhQ0yAGLpK0toRxYAwn0fHDJqqr4=
+	t=1787248435; cv=none; b=u/YIkK7JpA8K6KA2gcG+KqKottFGHPXhUtbTiHjf/GArdoLmXpUfpvlLfZkvGYCmQGXnsZGcdOSLNkciSlSpDY+s5rU9dHsSXuh1sDuAEZkLyxHduZ3+pTRObDPFtI/1xwQj+6Vgl8MadVVHUpwpO3aZNC8jWbE9+MuP3qAFQKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248432; c=relaxed/simple;
-	bh=qcp6/NVzY/e4amubpOxPGZLuWqQ/wIS8vwPHj6/sdos=;
+	s=arc-20240116; t=1787248435; c=relaxed/simple;
+	bh=jiT4Dc0IFrThWAdGsL7Qq418Js4ebZFAD6rkviA7v88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hzJ1RmYRjYrDrliyKzOV/7hHQXeiI72n4BAB0jg1VcYWCv4zxG0ggrz2VMWJAW0KvoVb1CAoHHELuE/9kJyqMBL9IyDS1f4S00ZHWaL4wSpovuxT9mJpBQXK1ECDJ5nDGMsChWtixJ8nDq0YrZbGnCs7aY4iR+0GR4K4XnHC6sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGQvFoV4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ht9/KvqnVsf9d0zrL1QYlcKV85ZrtTO68Rpnlbo99tcUuJ2pxSYNcwZ1AOcJ7QA5EJYEvvFC9KyLoqzOz5Q1DBq3TEYV2gRB8K+kd6tH1uPcg1AcK948gzobgxUqlIK/NhvQ8xwmm+REL+MvadeV6oX0W7VZB52cbkFRZzG1Ddg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ByXu58xQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGQvFoV4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63031F000E9;
-	Thu, 20 Aug 2026 17:53:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ByXu58xQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A611F00A3D;
+	Thu, 20 Aug 2026 17:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248431;
-	bh=MNgA1b3FpVwBsa5kvetA2oRuehgXIzWXjb1Jq1YZyV4=;
+	s=korg; t=1787248434;
+	bh=+QmsuyOYLaxOkLORR4Oo/B1SO98SM9Gx+tX7xo1b8IQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FGQvFoV4aXArGjp4HH9Jq44bsg0RyMLOSW+vCHucGefd3s6dGFHDTvzYZ/tKPIy9p
-	 Wd2ypHMfwRHfwIldqfiO/4ozUbYHdO+chvm06Em842I74A11eMIOOo0lHkNS+y8o0z
-	 iHrWTcG6yicElRdjLxiIizt0LmI1DLMGFYAwTdiU=
+	b=ByXu58xQsW4gxfli9/wZq+ZpIaGox/tWXpJvBnhvubgWvr2zVe8N1LvA2r/+pS8I8
+	 8V1Wh+2vGa/NIc3Bi4RBwbIe2beYVqRW/gjIjtLEcXpG7IsikSiU8tMPRAkcyJWy/l
+	 8VNGC+PiDK75l9TuEQDL9tzIqw2JvVZ7aYoT8Cq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 224/303] ksmbd: restore DACL size on check_add_overflow() to avoid malformed ACL
-Date: Thu, 20 Aug 2026 16:56:00 +0200
-Message-ID: <20260820145300.141323592@linuxfoundation.org>
+Subject: [PATCH 6.1 225/303] super: fix emergency thaw deadlock on frozen block devices
+Date: Thu, 20 Aug 2026 16:56:01 +0200
+Message-ID: <20260820145300.173706076@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -52,86 +50,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Guan <guanwentao@uniontech.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit bbf0a8e931204ecdab494a88d43b0a24a04285c5 ]
+[ Upstream commit 749d7aa0377aae32af8c0a4ad43371e7bf830ab5 ]
 
-check_add_overflow() unconditionally writes the truncated sum into *d
-even on overflow, per its contract in include/linux/overflow.h.
-The four check_add_overflow() guards in set_posix_acl_entries_dacl()
-and set_ntacl_dacl() break out of the ACE-building loops on overflow,
-but the truncated *size is then consumed downstream at the end of
-set_ntacl_dacl():
+do_thaw_all_callback() calls bdev_thaw() while holding sb->s_umount
+exclusively. If the block device was frozen via bdev_freeze() dropping
+the last block layer freeze reference calls fs_bdev_thaw() which
+reacquires s_umount:
 
-    pndacl->size = cpu_to_le16(le16_to_cpu(pndacl->size) + size);
+  do_thaw_all_callback(sb)
+    super_lock_excl(sb)                     # holds sb->s_umount
+    bdev_thaw(sb->s_bdev)
+      mutex_lock(&bdev->bd_fsfreeze_mutex)
+      # bd_fsfreeze_count drops 1 -> 0
+      bd_holder_ops->thaw == fs_bdev_thaw
+        get_bdev_super(bdev)
+          bdev_super_lock(bdev, true)
+            super_lock(sb, true)
+              down_write(&sb->s_umount)     # same task: deadlock
 
-This produces an on-wire NT ACL whose pndacl->size under-reports the
-bytes actually written by the preceding fill_ace_for_sid()/memcpy()
-calls, yielding a malformed ACL that can trigger out-of-bounds reads
-when re-parsed by clients or ksmbd itself.
+The emergency thaw worker deadlocks against itself holding both
+s_umount and bd_fsfreeze_mutex. That fscks any subsequent unmount,
+freeze, or thaw of that filesystem and block device.
 
-Restore *size to its pre-addition value on each overflow branch (via
-`*size -= ace_sz` / `size -= nt_ace_size`) so that after the break,
-*size once again holds the cumulative size of the successfully-written
-ACEs. The committed ACL is then truncated-but-self-consistent rather
-than malformed.
+  [   81.878470] sysrq: Show Blocked State
+  [   81.880140] task:kworker/0:1     state:D stack:0     pid:11    tgid:11    ppid:2      task_flags:0x4208060 flags:0x00080000
+  [   81.884876] Workqueue: events do_thaw_all
+  [   81.886656] Call Trace:
+  [   81.887759]  <TASK>
+  [   81.888763]  __schedule+0x579/0x1420
+  [   81.890372]  schedule+0x3a/0x100
+  [   81.891794]  schedule_preempt_disabled+0x15/0x30
+  [   81.893848]  rwsem_down_write_slowpath+0x1ea/0x900
+  [   81.895191]  ? __pfx_do_thaw_all_callback+0x10/0x10
+  [   81.896528]  down_write+0xbd/0xc0
+  [   81.897505]  super_lock+0x91/0x180
+  [   81.898457]  ? __mutex_lock+0xa99/0x1140
+  [   81.900748]  ? __mutex_unlock_slowpath+0x1f/0x400
+  [   81.902069]  bdev_super_lock+0x5b/0x150
+  [   81.903132]  get_bdev_super+0x10/0x60
+  [   81.904042]  fs_bdev_thaw+0x23/0xf0
+  [   81.904755]  bdev_thaw+0x82/0x100
+  [   81.905484]  do_thaw_all_callback+0x2c/0x50
+  [   81.906298]  __iterate_supers+0x5d/0x130
+  [   81.907067]  do_thaw_all+0x20/0x40
+  [   81.907739]  process_one_work+0x206/0x5e0
+  [   81.908545]  worker_thread+0x1e2/0x3c0
+  [   81.909339]  ? __pfx_worker_thread+0x10/0x10
+  [   81.910171]  kthread+0xf4/0x130
+  [   81.910799]  ? __pfx_kthread+0x10/0x10
+  [   81.911528]  ret_from_fork+0x2e2/0x3b0
+  [   81.912259]  ? __pfx_kthread+0x10/0x10
+  [   81.913010]  ret_from_fork_asm+0x1a/0x30
+  [   81.913806]  </TASK>
 
-The ksmbd DACL builders are the only check_add_overflow() sites found
-where an overflow path breaks out of a loop and the destination value
-is consumed afterward. The other nearby break-style cases either
-return -EINVAL on overflow (transport_ipc.c) or break without
-consuming the overflowed destination value afterward (buildid.c).
+bdev_super_lock() even documents the violated requirement with
+lockdep_assert_not_held(&sb->s_umount).
 
-Fixes: 299f962c0b02 ("ksmbd: use check_add_overflow() to prevent u16 DACL size overflow")
-Assisted-by: atomcode:glm-5.2
-Assisted-by: Codex:gpt-5.5
+Acquiring bd_fsfreeze_mutex under s_umount also inverts the
+bd_fsfreeze_mutex vs. s_umount ordering established by
+bdev_{freeze,thaw}() and can thus ABBA against a concurrent block-layer
+freeze even when the recursive path isn't hit.
+
+Fix this by not holding s_umount around the bdev_thaw() loop at all. Pin
+the superblock with an active reference instead as
+filesystems_freeze_callback() does. The active reference keeps the
+superblock from being shut down and so ->s_bdev stays valid without
+holding s_umount. The block-layer-held freeze is dropped by
+fs_bdev_thaw() with FREEZE_MAY_NEST | FREEZE_HOLDER_USERSPACE exactly as
+a regular unfreeze would and thaw_super_locked() handles
+filesystem-level freezes as before.
+
+The emergency thaw path has deadlocked like this in one form or
+another for a long long time but the current exclusively-held
+shape dates back to commit [1] where thaw_bdev() already ended in
+thaw_super() with s_umount held by do_thaw_all_callback().
+
+Fixes: 08fdc8a0138a ("buffer.c: call thaw_super during emergency thaw") [1]
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Link: https://patch.msgid.link/20260723-work-super-emergency_thaw-v1-1-7c315c600245@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smbacl.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/super.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -644,6 +644,7 @@ static void set_posix_acl_entries_dacl(s
- 		ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, flags,
- 				pace->e_perm, 0777);
- 		if (check_add_overflow(*size, ace_sz, size)) {
-+			*size -= ace_sz;
- 			kfree(sid);
- 			break;
- 		}
-@@ -658,6 +659,7 @@ static void set_posix_acl_entries_dacl(s
- 			ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED,
- 					0x03, pace->e_perm, 0777);
- 			if (check_add_overflow(*size, ace_sz, size)) {
-+				*size -= ace_sz;
- 				kfree(sid);
- 				break;
- 			}
-@@ -703,6 +705,7 @@ posix_default_acl:
- 		ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, 0x0b,
- 				pace->e_perm, 0777);
- 		if (check_add_overflow(*size, ace_sz, size)) {
-+			*size -= ace_sz;
- 			kfree(sid);
- 			break;
- 		}
-@@ -745,8 +748,10 @@ static void set_ntacl_dacl(struct user_n
- 				goto next_ace;
+--- a/fs/super.c
++++ b/fs/super.c
+@@ -1045,13 +1045,24 @@ void emergency_remount(void)
  
- 			memcpy((char *)pndace + size, ntace, nt_ace_size);
--			if (check_add_overflow(size, nt_ace_size, &size))
-+			if (check_add_overflow(size, nt_ace_size, &size)) {
-+				size -= nt_ace_size;
- 				break;
-+			}
- 			num_aces++;
+ static void do_thaw_all_callback(struct super_block *sb)
+ {
++	bool active = false;
++
++	down_write(&sb->s_umount);
++	if (sb->s_root && sb->s_flags & SB_BORN)
++		active = atomic_inc_not_zero(&sb->s_active);
++	up_write(&sb->s_umount);
++	if (!active)
++		return;
++
++	/* thaw_bdev() acquires s_umount so it must not be held here */
++	emergency_thaw_bdev(sb);
++
+ 	down_write(&sb->s_umount);
+-	if (sb->s_root && sb->s_flags & SB_BORN) {
+-		emergency_thaw_bdev(sb);
++	if (sb->s_root && sb->s_flags & SB_BORN)
+ 		thaw_super_locked(sb);
+-	} else {
++	else
+ 		up_write(&sb->s_umount);
+-	}
++	deactivate_super(sb);
+ }
  
- next_ace:
+ static void do_thaw_all(struct work_struct *work)
 
 
