@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD703793CE;
-	Thu, 20 Aug 2026 16:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D2646D544;
+	Thu, 20 Aug 2026 16:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244555; cv=none; b=UVBycqYq7Jg3Nk+5HAQzXajydAIufhivT9Tuk60dpGDTAPfsoVDc4PDXyQv0gmXAutFmrHiHFo5WCcGqaCq5CBbXkDqPOMHdS76vihsjMm/nnhQWT+jvON0G06jhrV1bt8epazKCWtNQwh6MnprwiZPpQfAs7GJEnPliogmhN5w=
+	t=1787244558; cv=none; b=sG49Ew4tQT8HcXDhepyXbMvPl1O0ak/8AnohiEhwkwntB/gieFW4nn/kOSUypTC/zd+3vKjW8t4LgK+DSdDs+Ih5WTyefYP6GmK5l6bGUXQTBSq9kQzstGYWE9tTr/nB81gt2YzgTdUSERYGlxGhr7mn+tNtqtsOJ0AtjLpBVEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244555; c=relaxed/simple;
-	bh=j8JnsLNQ4s6fYN1Jnr6pzRLN09ueE6cddoEUW0k42kA=;
+	s=arc-20240116; t=1787244558; c=relaxed/simple;
+	bh=OyC+mlXmEsgdoPwy9ndRj7ySNfL0IJZg18CUj5arBx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nmdX+w2fnH3fkXvSHU8DP2f44MC5xyAII4W9B0/j9TpLsJW2hpnLGuuVlPlKGTI1BgYezCuHRlw/qFw6/Q+PJVMGhzY3iun/WMaWXFVYQOKO/sGZ/AbwbOzWUqK4JvV2C7qkZcr18OuVfZ15N+scO7C84qC/cRk5Vxtg0VfrO+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oWJPJDu0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C33GS3mWe+rAfwIU2W01b+nPtroE9mxh1L4LYn+Xb6YRTajncLF7e6t2kXvlKW4IfFJ4VTe1mjvJB4sa69heVCrGKIVgR4SqPo6IDUOrp4lwuaj3XbsDwD93uZspbTOLPmINsfazpi29NEQJg5B7JIHm3JQw2mOZ5ShM/tM/JMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBSSfw99; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oWJPJDu0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A597C1F000E9;
-	Thu, 20 Aug 2026 16:49:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBSSfw99"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 810AD1F000E9;
+	Thu, 20 Aug 2026 16:49:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244554;
-	bh=ALbneKN5MPeojh1i46sry8zwwtr/x1fzhSUT+jrpmIA=;
+	s=korg; t=1787244557;
+	bh=PvJKjDW/FwjvUygxuU1QYoiJBqfoBspVjaGK2jaBEts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oWJPJDu0j25Fpz6kXSraIqjpTeBglegEu6QQ7J4gcc2XJ0HNG5RDp0rz/GDsa9Mtm
-	 tDQID5TowMZT9SeiTabp8BrLnDePZbMyUD+HXkHl4V0/2/nJWZEkIKecrw/+I0XddW
-	 CcD0h9Or48a+W5duwKRgg50XKgdCj95JY4KH/Vhw=
+	b=mBSSfw99EvnnAXXPa80UaBSGyFjBfWE8ql/hVVVf5rqBjOgH3+wCu+4IgdsDxxcCe
+	 zbGvvt3acw+d/8/P0vlZ2jo0askm7WbA0Khn9qET3IID9Qn65LnaWThJ0N00augCyX
+	 Mydn/sdcN5dPpZs37TF0+q6ZvQdlfmwK5uuuuGgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyan Xu <getshell@seu.edu.cn>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 208/235] hwmon: (npcm750-pwm-fan): stop fan timer on device detach
-Date: Thu, 20 Aug 2026 16:57:24 +0200
-Message-ID: <20260820145222.882020026@linuxfoundation.org>
+Subject: [PATCH 5.10 209/235] drm/amd/pm: fix torn gpu metrics reads
+Date: Thu, 20 Aug 2026 16:57:25 +0200
+Message-ID: <20260820145222.920196890@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -51,59 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyan Xu <getshell@seu.edu.cn>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit f27f6976ea269219c1259a7c2f8c6dfe782540a3 ]
+[ Upstream commit 048f4541b71fb19645fb79d6e62e6e4da23a4035 ]
 
-When a fan tach channel is present, npcm7xx_pwm_fan_probe() starts
-fan_timer. The timer callback polls tach state and rearms the timer, but
-the driver has no remove callback or devm cleanup action to stop it. On
-device detach, the devm-managed driver data and I/O mappings can be
-released while the timer is still pending or running.
+amdgpu_dpm_get_gpu_metrics() returns a pointer to the shared metrics cache
+after dropping adev->pm.mutex. The sysfs path then copies from that pointer.
+Another reader can refresh the cache in place during the copy and return a
+snapshot containing data from two generations.
 
-Register a devm cleanup action before starting the timer and shut the
-timer down synchronously from that action.
+Pass caller-provided storage through the DPM interface and copy the metrics
+while the mutex is held. This keeps the cache pointer private and makes each
+sysfs read observe one complete sample.
 
-This issue was found by a static analysis tool.
-
-Fixes: f1fd4a4db777 ("hwmon: Add NPCM7xx PWM and Fan driver")
+Fixes: 25c933b1c4fc ("drm/amd/powerplay: add new sysfs interface for retrieving gpu metrics(V2)")
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 862333bb48693ecafcae25af0c9d9ec31015ac77)
 Cc: stable@vger.kernel.org
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Link: https://lore.kernel.org/r/20260729100116.790-1-getshell@seu.edu.cn
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ changed `timer_shutdown_sync()` to `timer_delete_sync()` since the former is absent in 5.10 ]
+[ applied the fix at the sole caller `amdgpu_get_gpu_metrics()` since 5.10 lacks the `amdgpu_dpm_get_gpu_metrics()` wrapper function, wrapping both the swsmu and pp_funcs dispatch branches in `adev->pm.mutex` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/npcm750-pwm-fan.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/gpu/drm/amd/pm/amdgpu_pm.c |   14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
---- a/drivers/hwmon/npcm750-pwm-fan.c
-+++ b/drivers/hwmon/npcm750-pwm-fan.c
-@@ -360,6 +360,11 @@ static void npcm7xx_fan_polling(struct t
- 	add_timer(&data->fan_timer);
- }
+--- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+@@ -1994,20 +1994,18 @@ static ssize_t amdgpu_get_gpu_metrics(st
+ 		return ret;
+ 	}
  
-+static void npcm7xx_fan_cleanup(void *timer)
-+{
-+	timer_delete_sync(timer);
-+}
-+
- static inline void npcm7xx_fan_compute(struct npcm7xx_pwm_fan_data *data,
- 				       u8 fan, u8 cmp, u8 fan_id, u8 flag_int,
- 				       u8 flag_mode, u8 flag_clear)
-@@ -1003,6 +1008,12 @@ static int npcm7xx_pwm_fan_probe(struct
- 				msecs_to_jiffies(NPCM7XX_FAN_POLL_TIMER_200MS);
- 			timer_setup(&data->fan_timer,
- 				    npcm7xx_fan_polling, 0);
-+			ret = devm_add_action_or_reset(dev,
-+						       npcm7xx_fan_cleanup,
-+						       &data->fan_timer);
-+			if (ret)
-+				return ret;
-+
- 			add_timer(&data->fan_timer);
- 			break;
- 		}
++	mutex_lock(&adev->pm.mutex);
+ 	if (is_support_sw_smu(adev))
+ 		size = smu_sys_get_gpu_metrics(&adev->smu, &gpu_metrics);
+ 	else if (adev->powerplay.pp_funcs->get_gpu_metrics)
+ 		size = amdgpu_dpm_get_gpu_metrics(adev, &gpu_metrics);
+ 
+-	if (size <= 0)
+-		goto out;
+-
+-	if (size >= PAGE_SIZE)
+-		size = PAGE_SIZE - 1;
+-
+-	memcpy(buf, gpu_metrics, size);
++	if (size > 0) {
++		size = min_t(ssize_t, size, PAGE_SIZE - 1);
++		memcpy(buf, gpu_metrics, size);
++	}
++	mutex_unlock(&adev->pm.mutex);
+ 
+-out:
+ 	pm_runtime_mark_last_busy(ddev->dev);
+ 	pm_runtime_put_autosuspend(ddev->dev);
+ 
 
 
