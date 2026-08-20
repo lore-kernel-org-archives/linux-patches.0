@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC0C3803D7;
-	Thu, 20 Aug 2026 17:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C54469843;
+	Thu, 20 Aug 2026 17:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247797; cv=none; b=PYuUfJ2DFQqdJMFFJAY7MZx/fg7EM+tOkFi2zBiR4LSYRHLxUBaLM0NQdARX36nIe/SdLV8oi9IftTTni+8IaMlBHyNVEXAPK8I3RrTO48GXJaNDK8UNddKqwP7Vf+B7NfFVHnKTOhaoijz0O8JcmOT6ayTprdfAzm1GZPTbOq4=
+	t=1787247801; cv=none; b=o//Wpv354zaJpx7gsw4KBrEZkdday7ZjWBSzxmBaeqzrtOFZZwRHwqot8IfwrD9OfAUlCAQsoJz3l7iPz6T1FDtJhhmFrilMtyV2gQTOLHj3YxsD2jMJcp7GU5RivOQf7e+ye7kpHVAOLOS7pTYS71SeONHAywgIvVjZnjN3sQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247797; c=relaxed/simple;
-	bh=3MTEO0H8p88uHcC5NINEMVB2RqVQLsFkwvp232MB7xw=;
+	s=arc-20240116; t=1787247801; c=relaxed/simple;
+	bh=BEh0EFgwDgnLPibnSd/eYv9LRJDqUSU064AVLLgE8+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A5Plf/UKBFf4ZAAYT4PORVhabF5298DMwIgATgF30iKnVKR5lLnswZZMrJ/YKyoQ/pnQEMQY13xDwQLY5iDcfi1+O5Mcx1wmmIx6gIbrFkXXkltMzofRk6D2tb3IgWKsQsP4oQBXjcjUA7/B82hBLz97Y1r/MAG8OBk13L/KYpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8MMAGBw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=omiU1lb3gvoB6VURlbY4R+DIxVsY+Xfg3V1USSXvBvmet/g1MiZv4CPkOMBkVBzkG4z1hzbaCJZoJtvxKkoA5F55VGqx5LGQIhnEZVPQvqvyKvqFgjQsaunRSdSTDc7K59iCk0ddn9UbAFA1JvvJ2clq8RAPZg7yTfv/JiJI7ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6Ky1k+W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8MMAGBw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6398C1F000E9;
-	Thu, 20 Aug 2026 17:43:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6Ky1k+W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B71C1F000E9;
+	Thu, 20 Aug 2026 17:43:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247796;
-	bh=4fmea4RpvRcVpep/+n07BlSmNAJcKSNcpQ6CJGzx3BI=;
+	s=korg; t=1787247800;
+	bh=FZMW946dZIxC7z2ZvmEHfVpDnFLljcDuJjJ9EU5INHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p8MMAGBwk5FGEi25jOhZWPeoiuGPEQkPrwvSBli3Ax72+5AB9n29ncp5ZSEItlYzj
-	 Sqd4Mt4BDsOcMAqoyjRO2mtK8pgwhS83wEX2iYCyQ/nIjHMxch6ZyrEWPpJ+Gx5sJe
-	 6GH43YSUg4eSzo6Np2wQ6VTDaoJ6d8KDRzGQUD+4=
+	b=g6Ky1k+WT9hL+jcEPZJwBfpx8rbonuVsZPMScWgG4PuLGPh4YALcqw1+2LTHCjmSA
+	 53JvpP2R4f/3jHBGDUSfHhL35nNmRZ4cofdX1wg760WT8ii4soNtyZJJpGyWmNk36V
+	 0lZOZEQzoLYYI1ITGS4PHp4chCZnIWWOwd9cADDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.6 165/166] binfmt_misc: use exe_file_deny_write_access() for the interpreter clone
-Date: Thu, 20 Aug 2026 16:57:04 +0200
-Message-ID: <20260820145216.125192945@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 166/166] net: harmonize tstats and dstats
+Date: Thu, 20 Aug 2026 16:57:05 +0200
+Message-ID: <20260820145216.154937421@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -49,59 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit fa5990ca8fd917003e526036bcc50413edb9722c upstream.
+commit d3ed6dee73c560fad0a8e152c8e233b3fb3a2e44 upstream.
 
-For MISC_FMT_OPEN_FILE entries load_misc_binary() clones the
-registered interpreter file and denies write access to the clone via
-plain deny_write_access(). The clone is installed as
-bprm->interpreter and later released by the exec machinery through
-exe_file_allow_write_access() which skips the i_writecount increment
-for files with FMODE_FSNOTIFY_HSM set.
+After the blamed commits below, some UDP tunnel use dstats for
+accounting. On the xmit path, all the UDP-base tunnels ends up
+using iptunnel_xmit_stats() for stats accounting, and the latter
+assumes the relevant (tunnel) network device uses tstats.
 
-The deny and allow side can therefore come to different conclusions
-when pre-content watches are in play: if a pre-content watch is added
-to the interpreter after registration every subsequent exec through
-that entry takes a write denial on the clone that is never paired
-with a write allowance, driving the interpreter inode's i_writecount
-further down with each exec and leaving the interpreter unwritable
-even after the entry and all its users are gone.
+The end result is some 'funny' stat report for the mentioned UDP
+tunnel, e.g. when no packet is actually dropped and a bunch of
+packets are transmitted:
 
-Take the write denial via exe_file_deny_write_access() so both sides
-of the pairing base their decision on the same file mode, and
-propagate failure instead of silently ignoring it: an interpreter
-that is concurrently open for writing now fails the exec with
-ETXTBSY, exactly like an interpreter freshly opened via open_exec()
-would.
+gnv2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue \
+		state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ether ee:7d:09:87:90:ea brd ff:ff:ff:ff:ff:ff
+    RX:  bytes packets errors dropped  missed   mcast
+         14916      23      0      15       0       0
+    TX:  bytes packets errors dropped carrier collsns
+             0    1566      0       0       0       0
 
-Link: https://patch.msgid.link/20260710-work-binfmt_misc-locking-v3-2-a162f7cb58d6@kernel.org
-Fixes: 0357ef03c94e ("fs: don't block write during exec on pre-content watched files")
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Address the issue ensuring the same binary layout for the overlapping
+fields of dstats and tstats. While this solution is a bit hackish, is
+smaller and with no performance pitfall compared to other alternatives
+i.e. supporting both dstat and tstat in iptunnel_xmit_stats() or
+reverting the blamed commit.
+
+With time we should possibly move all the IP-based tunnel (and virtual
+devices) to dstats.
+
+Fixes: c77200c07491 ("bareudp: Handle stats using NETDEV_PCPU_STAT_DSTATS.")
+Fixes: 6fa6de302246 ("geneve: Handle stats using NETDEV_PCPU_STAT_DSTATS.")
+Fixes: be226352e8dc ("vxlan: Handle stats using NETDEV_PCPU_STAT_DSTATS.")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Guillaume Nault <gnault@redhat.com>
+Link: https://patch.msgid.link/2e1c444cf0f63ae472baff29862c4c869be17031.1738432804.git.pabeni@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_misc.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ include/linux/netdevice.h |    2 +-
+ net/core/dev.c            |   14 ++++++++++++++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
---- a/fs/binfmt_misc.c
-+++ b/fs/binfmt_misc.c
-@@ -220,8 +220,14 @@ static int load_misc_binary(struct linux
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -2750,9 +2750,9 @@ struct pcpu_sw_netstats {
+ struct pcpu_dstats {
+ 	u64_stats_t		rx_packets;
+ 	u64_stats_t		rx_bytes;
+-	u64_stats_t		rx_drops;
+ 	u64_stats_t		tx_packets;
+ 	u64_stats_t		tx_bytes;
++	u64_stats_t		rx_drops;
+ 	u64_stats_t		tx_drops;
+ 	struct u64_stats_sync	syncp;
+ } __aligned(8 * sizeof(u64));
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -10710,6 +10710,20 @@ struct rtnl_link_stats64 *dev_get_stats(
+ 	const struct net_device_ops *ops = dev->netdev_ops;
+ 	const struct net_device_core_stats __percpu *p;
  
- 	if (fmt->flags & MISC_FMT_OPEN_FILE) {
- 		interp_file = file_clone_open(fmt->interp_file);
--		if (!IS_ERR(interp_file))
--			deny_write_access(interp_file);
-+		if (!IS_ERR(interp_file)) {
-+			int err = exe_file_deny_write_access(interp_file);
++	/*
++	 * IPv{4,6} and udp tunnels share common stat helpers and use
++	 * different stat type (NETDEV_PCPU_STAT_TSTATS vs
++	 * NETDEV_PCPU_STAT_DSTATS). Ensure the accounting is consistent.
++	 */
++	BUILD_BUG_ON(offsetof(struct pcpu_sw_netstats, rx_bytes) !=
++		     offsetof(struct pcpu_dstats, rx_bytes));
++	BUILD_BUG_ON(offsetof(struct pcpu_sw_netstats, rx_packets) !=
++		     offsetof(struct pcpu_dstats, rx_packets));
++	BUILD_BUG_ON(offsetof(struct pcpu_sw_netstats, tx_bytes) !=
++		     offsetof(struct pcpu_dstats, tx_bytes));
++	BUILD_BUG_ON(offsetof(struct pcpu_sw_netstats, tx_packets) !=
++		     offsetof(struct pcpu_dstats, tx_packets));
 +
-+			if (err) {
-+				fput(interp_file);
-+				interp_file = ERR_PTR(err);
-+			}
-+		}
- 	} else {
- 		interp_file = open_exec(fmt->interpreter);
- 	}
+ 	if (ops->ndo_get_stats64) {
+ 		memset(storage, 0, sizeof(*storage));
+ 		ops->ndo_get_stats64(dev, storage);
 
 
