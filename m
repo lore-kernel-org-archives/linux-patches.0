@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188EB37C925;
-	Thu, 20 Aug 2026 15:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB24F2874E6;
+	Thu, 20 Aug 2026 15:07:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238437; cv=none; b=PLaj6TjmKB4GzdNxtMFaHQbVANE6TWXH/ClAsqb+g9hcKzc2y4DJzzETqDWESC7lbCbrgZ+oHIkZUPCzPea2+ul+Rm+8tLfSqJ3LR4DyOieRM4QwaDEGKPnwk9hnCTqC5JuaKYtHAMG0Bt6LP7emiEva5B6yBMtFrpeVSCHjZmg=
+	t=1787238440; cv=none; b=mHy2zuVOky+xDUkL9pm98MVyxff5lxHTEW/XCn5a7TbNss9nM7+A/+DhXG3vJG2DNjZZqP33Oujf6EVpg/z78ldGxGT5j4l0bpA+NJz12WH92Jit87691OyaUCXBljLi9tXhfG6v81H4CERSR84AYPkY3lqw/xkS77aaZqU8bko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238437; c=relaxed/simple;
-	bh=wI5/b+6yy5eNtGjeiRL5hdDeMh4WDTipL1Y9oLf0LuE=;
+	s=arc-20240116; t=1787238440; c=relaxed/simple;
+	bh=s2W5nOeQmC6uuh+WF8QpRb2pYvQXo6yr7IzeNCDmye0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QY6kdfBGh+jVl3imNxS8yLuPe5pwpPp2Hai1EOdgtLgVEC0UfC72z7IopygNW4zkn8gTbgXJ9mBvFEDIPHkLPqHFkG6kct7cAZl0bXYFVafYwCvPSZM/yRpY91ONavYVcwGKGWIStwB8vogekxiMAVMxIUFI2SPQbsZCe8/L7N0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJ3eU+Ba; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PibbO9/3p9J7iBfc98fT1LCdUhsPhxehWouztSihqBZIwQJLCOGd41oKVJLmQPc1j0WYtRrPc+QHdrTSPOVcXazJmO1B5PpuWUJd3DvRsmRHNC6ETPUL0kJJteLjLb2b5Vkn+raetrMbC9TVueE7lIsjqghRL6EEg+DSnw2l0Uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7r9kkJ1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJ3eU+Ba"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADC61F000E9;
-	Thu, 20 Aug 2026 15:07:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7r9kkJ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48EA31F000E9;
+	Thu, 20 Aug 2026 15:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238436;
-	bh=50WD4s36iYkhs+d/Rtxiaq7GiJ2otle3vFYVclvWiEs=;
+	s=korg; t=1787238438;
+	bh=DNxQRzT7iImIuyF16dXdxdolWOFLnAgRXtJSUuZjtds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BJ3eU+Ba3tPERG9quIHlLqE0AjcpbQQQ3NVYeSEDDY4Rgmegtx3m56Syxo5s60dJR
-	 t++yDuXdX/G4iwE5IszyH6wS8eDi9TaQ5V7ErcGJkKlTQfn1vCMgRSPyluW14i18s2
-	 7einKoxXPCZLiCJxrWxpHVFNbSg9YUwvWm7Nx0zg=
+	b=r7r9kkJ1j89DgBMkgGWv0p3QHHrnhBXvxObvLUgPcQlUWGNdjXXcRaZ7PiOHe9sIH
+	 uuAyqt8niB2JCIxTFNr4wYUqmJB+/is/pdLAHvSXIQ7WmLEsP0LPx5FprCNJhxCZAb
+	 6TtNlQChYBrSZ8iupC+0BPmNAuL9EB1N7Mpmdq9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 7.1 108/228] s390/zcrypt: Improve EP11 CPRB domain handling with ASN.1 parsing
-Date: Thu, 20 Aug 2026 16:54:10 +0200
-Message-ID: <20260820145247.922979744@linuxfoundation.org>
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Eric Farman <farman@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: [PATCH 7.1 099/228] s390/vfio_ccw: Ensure first IDAW remains constant
+Date: Thu, 20 Aug 2026 16:54:01 +0200
+Message-ID: <20260820145247.660784741@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -51,197 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Eric Farman <farman@linux.ibm.com>
 
-commit 0864a163783bff109b548266921829ea794edc93 upstream.
+commit 565bef268d75bf7df665bce6923a88cd0eb74592 upstream.
 
-The zcrypt_msgtype6_send_ep11_cprb() function uses fragile struct
-overlays to access and modify the domain field in the EP11 CPRB
-payload, creating maintainability and security concerns:
-1. Struct overlay approach (pld_hdr) assumes fixed payload structure
-   and doesn't validate the actual ASN.1 encoding.
-2. Complex length format detection logic is error-prone and doesn't
-   properly validate bounds at each parsing step.
-3. Direct struct member access bypasses proper ASN.1 validation.
+The first IDAW in a list does not need to be on a 2K/4K boundary
+like all others, and so is read separately to accurately calculate
+the size of the buffer needed to read the full IDAL.
 
-Fix by replacing struct overlays with explicit ASN.1 parsing that
-validates each field (payload tag/length, function tag/length/value,
-optional domain tag/length/value) with proper bounds checking at every
-step. Add asn1_int_encode() helper function to safely write integer
-values with correct endianness conversion. This makes the code
-consistent with the validation pattern introduced with the rework of
-the xcrb_msg_to_type6_ep11cprb_msgx() function.
+Verify that the address found in the first IDAW is unchanged between
+reads, to ensure a consistent set of IDAWs being worked with.
 
-Fixes: e2c6d91eb8b1 ("s390/zcrypt: Rework domain processing within zcrypt device driver")
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Cc: stable@vger.kernel.org # 7.1+
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: 01aa26c672c0 ("s390/cio: Combine direct and indirect CCW paths")
+Cc: stable@vger.kernel.org
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/zcrypt_msgtype6.c | 125 +++++++++++++++++++-------
- 1 file changed, 95 insertions(+), 30 deletions(-)
+ drivers/s390/cio/vfio_ccw_cp.c |   16 ++++++++++++++++
+ drivers/s390/cio/vfio_ccw_cp.h |    2 ++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/drivers/s390/crypto/zcrypt_msgtype6.c b/drivers/s390/crypto/zcrypt_msgtype6.c
-index 7e1f76c935ee..e79e68b4dd41 100644
---- a/drivers/s390/crypto/zcrypt_msgtype6.c
-+++ b/drivers/s390/crypto/zcrypt_msgtype6.c
-@@ -1226,6 +1226,28 @@ int prep_ep11_ap_msg(bool userspace, struct ep11_urb *xcrb,
- 					       func_code, domain);
- }
- 
-+/*
-+ * Simple asn1 int writer/encoder helper function
-+ * Returns number of bytes processed or < 0 on failure
-+ * Only accepts int length values of 1, 2 or 4.
-+ */
-+static inline int asn1_int_encode(u8 *buf, size_t intlen, u32 u)
-+{
-+	switch (intlen) {
-+	case 1:
-+		*buf = (u8)u;
-+		return 1;
-+	case 2:
-+		put_unaligned_be16((u16)u, buf);
-+		return 2;
-+	case 4:
-+		put_unaligned_be32((u32)u, buf);
-+		return 4;
-+	default:
-+		return -EINVAL;
-+	}
-+}
-+
- /*
-  * The request distributor calls this function if it picked the CEX4P
-  * device to handle a send_ep11_cprb request.
-@@ -1238,51 +1260,94 @@ static long zcrypt_msgtype6_send_ep11_cprb(bool userspace, struct zcrypt_queue *
- 					   struct ap_message *ap_msg)
- {
- 	int rc;
--	unsigned int lfmt;
- 	struct ap_response_type *resp_type = &ap_msg->response;
- 	struct {
- 		struct type6_hdr hdr;
- 		struct ep11_cprb cprbx;
--		unsigned char	pld_tag;	/* fixed value 0x30 */
--		unsigned char	pld_lenfmt;	/* payload length format */
- 	} __packed * msg = ap_msg->msg;
--	struct pld_hdr {
--		unsigned char	func_tag;	/* fixed value 0x4 */
--		unsigned char	func_len;	/* fixed value 0x4 */
--		unsigned int	func_val;	/* function ID	   */
--		unsigned char	dom_tag;	/* fixed value 0x4 */
--		unsigned char	dom_len;	/* fixed value 0x4 */
--		unsigned int	dom_val;	/* domain id	   */
--	} __packed * payload_hdr = NULL;
- 
- 	/*
- 	 * The target domain field within the cprb body/payload block will be
- 	 * replaced by the usage domain for non-management commands only.
- 	 * Therefore we check the first bit of the 'flags' parameter for
- 	 * management command indication.
--	 *   0 - non management command
--	 *   1 - management command
- 	 */
--	if (!((msg->cprbx.flags & 0x80) == 0x80)) {
--		msg->cprbx.target_id = (unsigned int)
--					AP_QID_QUEUE(zq->queue->qid);
-+	if (!(msg->cprbx.flags & 0x80)) {
-+		int i, offs = 0;
-+		size_t pld_len;
-+		u8 *pld;
-+		u32 u;
- 
--		if ((msg->pld_lenfmt & 0x80) == 0x80) { /*ext.len.fmt 2 or 3*/
--			switch (msg->pld_lenfmt & 0x03) {
--			case 1:
--				lfmt = 2;
--				break;
--			case 2:
--				lfmt = 3;
--				break;
--			default:
-+		/* update target field in ep11_cprb */
-+		msg->cprbx.target_id = (u32)AP_QID_QUEUE(zq->queue->qid);
-+
-+		/* ptr and length to payload */
-+		pld = ap_msg->msg +
-+			sizeof(struct type6_hdr) + sizeof(struct ep11_cprb);
-+		pld_len = msg->cprbx.payload_len;
-+		if (pld_len < MIN_EP11_PAYLOAD_SIZE)
-+			return -EINVAL;
-+
-+		/*
-+		 * Parse the asn1 payload, at least we have
-+		 *   pld tag (1 octet)
-+		 *   payload length (1-5 octets)
-+		 *   function tag (1 octet)
-+		 *   function length (1-5 octets)
-+		 *   function value (1-4 octets)
-+		 *   ----- optional fields -----
-+		 *   domain tag (1 octet)
-+		 *   domain length (1-5 octets)
-+		 *   domain value (1-4 octets)
-+		 *   ... maybe much more data ...
-+		 */
-+
-+		/* payload tag */
-+		if (pld[offs++] != 0x30)
-+			return -EINVAL;
-+		/* payload length field */
-+		i = asn1_length_decode(pld + offs, pld_len - offs, &u);
-+		if (i < 0)
-+			return -EINVAL;
-+		offs += i;
-+		if (offs >= pld_len || u > pld_len - offs)
-+			return -EINVAL;
-+		/* function tag */
-+		if (pld[offs++] != 0x04)
-+			return -EINVAL;
-+		/* function length */
-+		if (offs >= pld_len)
-+			return -EINVAL;
-+		i = asn1_length_decode(pld + offs, pld_len - offs, &u);
-+		if (i < 0)
-+			return -EINVAL;
-+		offs += i;
-+		if (u > pld_len - offs)
-+			return -EINVAL;
-+		/* skip over the function value */
-+		offs += u;
-+		/* is there some payload left which could hold a domain value ? */
-+		if (offs < pld_len && pld_len - offs >= 3) {
-+			/* domain tag */
-+			if (pld[offs++] != 0x04)
- 				return -EINVAL;
--			}
--		} else {
--			lfmt = 1; /* length format #1 */
-+			/* domain length */
-+			i = asn1_length_decode(pld + offs, pld_len - offs, &u);
-+			if (i < 0)
-+				return -EINVAL;
-+			offs += i;
-+			if (offs >= pld_len || u > pld_len - offs)
-+				return -EINVAL;
-+			/*
-+			 * pld[offs] is now at the start of the domain value
-+			 * with the value sprawled in u octets.
-+			 */
-+			i = asn1_int_encode(pld + offs, u,
-+					    AP_QID_QUEUE(zq->queue->qid));
-+			if (i < 0)
-+				return -EINVAL;
-+			offs += i;
+--- a/drivers/s390/cio/vfio_ccw_cp.c
++++ b/drivers/s390/cio/vfio_ccw_cp.c
+@@ -530,6 +530,7 @@ static dma64_t *get_guest_idal(struct cc
+ 		&container_of(cp, struct vfio_ccw_private, cp)->vdev;
+ 	dma64_t *idaws;
+ 	dma32_t *idaws_f1;
++	u64 first_idaw;
+ 	int idal_len = idaw_nr * sizeof(*idaws);
+ 	int idaw_size = idal_is_2k(cp) ? PAGE_SIZE / 2 : PAGE_SIZE;
+ 	int idaw_mask = ~(idaw_size - 1);
+@@ -546,6 +547,18 @@ static dma64_t *get_guest_idal(struct cc
+ 			kfree(idaws);
+ 			return ERR_PTR(ret);
  		}
--		payload_hdr = (struct pld_hdr *)((&msg->pld_lenfmt) + lfmt);
--		payload_hdr->dom_val = AP_QID_QUEUE(zq->queue->qid);
++
++		idaws_f1 = (dma32_t *)idaws;
++		if (cp->orb.cmd.c64)
++			first_idaw = dma64_to_u64(idaws[0]);
++		else
++			first_idaw = dma32_to_u32(idaws_f1[0]);
++
++		/* Unexpected mismatch from earlier read */
++		if (first_idaw != cp->guest_iova) {
++			kfree(idaws);
++			return ERR_PTR(-EINVAL);
++		}
+ 	} else {
+ 		/* Fabricate an IDAL based off CCW data address */
+ 		if (cp->orb.cmd.c64) {
+@@ -611,6 +624,9 @@ static int ccw_count_idaws(struct ccw1 *
+ 		iova = dma32_to_u32(ccw->cda);
  	}
  
- 	/*
--- 
-2.55.0
-
++	/* Save the read address for later */
++	cp->guest_iova = iova;
++
+ 	/* Format-1 IDAWs operate on 2K each */
+ 	if (!cp->orb.cmd.c64)
+ 		return idal_2k_nr_words((void *)iova, bytes);
+--- a/drivers/s390/cio/vfio_ccw_cp.h
++++ b/drivers/s390/cio/vfio_ccw_cp.h
+@@ -35,6 +35,7 @@
+  * @initialized: whether this instance is actually initialized
+  * @guest_cp: copy of guest channel program
+  * @ccwchain_count: number of channel program segments (linked by TIC)
++ * @guest_iova: first data address of a guest channel program
+  *
+  * @ccwchain_list is the head of a ccwchain list, that contents the
+  * translated result of the guest channel program that pointed out by
+@@ -46,6 +47,7 @@ struct channel_program {
+ 	bool initialized;
+ 	struct ccw1 *guest_cp;
+ 	unsigned int ccwchain_count;
++	u64 guest_iova;
+ };
+ 
+ int cp_init(struct channel_program *cp, union orb *orb);
 
 
