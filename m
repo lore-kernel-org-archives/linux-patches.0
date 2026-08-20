@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4EE3644C1;
-	Thu, 20 Aug 2026 15:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFB53644C1;
+	Thu, 20 Aug 2026 15:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238469; cv=none; b=P1Djghjv//a5DTT0kOkcypTqH+jSHM97nsxOV5hAS0piP64P0a3GiBySOayYuROQT21TT/WtuncOSQuA/S6/qM8JpJeKwzxqpuwKUzap1wEp674NEg+XQz+RokA78+5RB4Ui7nFe36130k8IdKf+byPZi+Fwo1202RVQeR6Km5E=
+	t=1787238472; cv=none; b=lSzgQsxqS+6tH5NkISTtAWuM7xnRi825O3g+3eHe6M3bCVboM1q0kvsRgy04yawNkIPHIyiOu2AmjRCWJLaEK8btwPDl8NGWSdHjlMPNarm8x+jg/Hzzo7NxV5qDW6DnjNXPftKXNK/kL9ls7qUCcsZ5gGWy9eBHqzHsQtY5NO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238469; c=relaxed/simple;
-	bh=OpTnTW87Ritmy+idsU1Aaac+7yVvgU2/Um2CybhrKEk=;
+	s=arc-20240116; t=1787238472; c=relaxed/simple;
+	bh=9x9w+t8SSI+KNtpGbiJmP17XPGNdVzdiEoW/HxZmNDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L3gnhp8WILtfLIhnkVp7i0wcUt8VXKlDlGATdsk/KNTVFkkN1ni8sAIZ3WqVu557o1wJEpC8dMDQfwbvNH2XQT18olv0NtCAVdQ2AQpW+QGiQhGSM6aE8sCOszojYXQZI9KKGjWVYqkOaUerR/NbVRoR1arTjRi9JnZpJvU21i4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CTze7YLS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=amgklNUb36elI1ZgPtfSeJryQb2tmSOuCJerTnlxGYj4PHyEfcnPB+lVGjTwRKslB6hHKiIT5BuP1i2EJ9OlQw465tvXhKQWnN2i6r0DFDcWEPCu42GN8aWAsqqXQHGTvIw3Umdv3hX8nW8sqCtfdprjtM2GPPwxLhbSv4KnLBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IXRtM1aW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTze7YLS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44511F000E9;
-	Thu, 20 Aug 2026 15:07:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IXRtM1aW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770531F000E9;
+	Thu, 20 Aug 2026 15:07:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238468;
-	bh=Poq2HV1+jjztJvbcLxSCBPxxYu7a2T4zPPRgYA4Q7Qg=;
+	s=korg; t=1787238471;
+	bh=aakuKoiFNdQ+T7CPm0AJV7xotlNrS+Bd2cIj28TC8XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CTze7YLSMbD7MHLlnPZPPP/tq1YxGc99E+lJgVDUHzPMlxmJ9o96CFsXVQqWxAOaT
-	 wQxlT340k5s3hWwYM8zp24r8ug6YEkHoFx3FAhRRWfIB6wX7G9f9qWJ7A2QtLmBYBp
-	 v1RgHbuTp9xDM8zRV2dJx6bhT/Xi5poDWtgWL9IM=
+	b=IXRtM1aWZHvzh7Xl7i8h3vksKYDBjRkT/INu0bA2juyJVMw35ehkluxL9P1mZxEn9
+	 EzMQ/3UKSYEY03rLTw5mU5oAbw6QARZkygktNE8ovFKNjAm1n7rrYf75jlu4jRj1wT
+	 GzQwJdhVknYg6HOivp0TbXqyVL3iBMuLdAk3P72Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Stanislav Fomichev <sdf@fomichev.me>,
+	syzbot+a78926bdac2adb52dc0e@syzkaller.appspotmail.com,
+	Simon Horman <horms@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 159/228] net: rename netdev_ops_assert_locked()
-Date: Thu, 20 Aug 2026 16:55:01 +0200
-Message-ID: <20260820145249.498901258@linuxfoundation.org>
+Subject: [PATCH 7.1 160/228] net: expect instance lock in netdev_queue_get_dma_dev()
+Date: Thu, 20 Aug 2026 16:55:02 +0200
+Message-ID: <20260820145249.534723695@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -55,282 +55,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 251bc9db88fb351ea2dfbd976c4e6aaae6507a91 ]
+[ Upstream commit 92465f46f3c3a92e4758af20d2363b7adc43e1f5 ]
 
-Jakub suggests renaming the existing assert to match
-the netdev_lock_ops_compat() semantics.
+netdev_queue_get_dma_dev() uses "compat" locking assert which wants
+either the rtnl_lock or netdev instance lock. This is not right,
+the callers are taking the instance lock unconditionally. All entry
+points for queue config are purely instance locked.
 
-We want netdev_assert_locked_ops() to mean - if the driver
-is ops locked - check that it's holding the device lock.
+In other words the callers use netdev_get_by_index_lock(), not
+netdev_get_by_index_lock_ops_compat(). All the state we will
+access is effectively instance lock protected (it's const for
+devices which are not ops-locked).
 
-The existing helper check for either ops lock or rtnl_lock,
-which is the locking behavior of netdev_lock_ops_compat().
+Update the assert to avoid false positive warnings.
 
-The reason for naming divergence is likely that
-netdev_ops_assert_locked() predated the _compat() helpers.
-
-Suggested-by: Jakub Sitnicki <jakub@cloudflare.com>
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260603012840.2254293-2-kuba@kernel.org
+Cc: stable@vger.kernel.org
+Fixes: b6c5f9454ef34 ("io_uring/zcrx: call netdev_queue_get_dma_dev() under instance lock")
+Reported-by: syzbot+a78926bdac2adb52dc0e@syzkaller.appspotmail.com
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://patch.msgid.link/20260806225627.3998672-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 92465f46f3c3 ("net: expect instance lock in netdev_queue_get_dma_dev()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c |    2 +-
- include/net/netdev_lock.h                 |    6 +++---
- net/core/dev.c                            |   26 +++++++++++++-------------
- net/core/dev_addr_lists.c                 |    2 +-
- net/core/link_watch.c                     |    2 +-
- net/core/lock_debug.c                     |    2 +-
- net/core/netdev_queues.c                  |    2 +-
- net/ethtool/netlink.c                     |    4 ++--
- net/ipv6/addrconf.c                       |    2 +-
- net/xdp/xsk_buff_pool.c                   |    2 +-
- 10 files changed, 25 insertions(+), 25 deletions(-)
+ net/core/netdev_queues.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -16854,7 +16854,7 @@ int bnxt_restore_pf_fw_resources(struct
- {
- 	int rc;
- 
--	netdev_ops_assert_locked(bp->dev);
-+	netdev_assert_locked_ops_compat(bp->dev);
- 	bnxt_hwrm_func_qcaps(bp);
- 
- 	if (netif_running(bp->dev))
---- a/include/net/netdev_lock.h
-+++ b/include/net/netdev_lock.h
-@@ -64,7 +64,7 @@ static inline void netdev_unlock_full_to
- 		netdev_unlock(dev);
- }
- 
--static inline void netdev_ops_assert_locked(const struct net_device *dev)
-+static inline void netdev_assert_locked_ops_compat(const struct net_device *dev)
- {
- 	if (netdev_need_ops_lock(dev))
- 		lockdep_assert_held(&dev->lock);
-@@ -73,11 +73,11 @@ static inline void netdev_ops_assert_loc
- }
- 
- static inline void
--netdev_ops_assert_locked_or_invisible(const struct net_device *dev)
-+netdev_assert_locked_ops_compat_or_invisible(const struct net_device *dev)
- {
- 	if (dev->reg_state == NETREG_REGISTERED ||
- 	    dev->reg_state == NETREG_UNREGISTERING)
--		netdev_ops_assert_locked(dev);
-+		netdev_assert_locked_ops_compat(dev);
- }
- 
- static inline void netdev_lock_ops_compat(struct net_device *dev)
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -1593,7 +1593,7 @@ EXPORT_SYMBOL(netdev_features_change);
- 
- void netif_state_change(struct net_device *dev)
- {
--	netdev_ops_assert_locked_or_invisible(dev);
-+	netdev_assert_locked_ops_compat_or_invisible(dev);
- 
- 	if (dev->flags & IFF_UP) {
- 		struct netdev_notifier_change_info change_info = {
-@@ -1693,7 +1693,7 @@ static int __dev_open(struct net_device
- 
- 	set_bit(__LINK_STATE_START, &dev->state);
- 
--	netdev_ops_assert_locked(dev);
-+	netdev_assert_locked_ops_compat(dev);
- 
- 	if (ops->ndo_validate_addr)
- 		ret = ops->ndo_validate_addr(dev);
-@@ -1770,7 +1770,7 @@ static void __dev_close_many(struct list
- 		 *	event.
- 		 */
- 
--		netdev_ops_assert_locked(dev);
-+		netdev_assert_locked_ops_compat(dev);
- 
- 		if (ops->ndo_stop)
- 			ops->ndo_stop(dev);
-@@ -3198,7 +3198,7 @@ int netif_set_real_num_tx_queues(struct
- 
- 	if (dev->reg_state == NETREG_REGISTERED ||
- 	    dev->reg_state == NETREG_UNREGISTERING) {
--		netdev_ops_assert_locked(dev);
-+		netdev_assert_locked_ops_compat(dev);
- 
- 		rc = netdev_queue_update_kobjects(dev, dev->real_num_tx_queues,
- 						  txq);
-@@ -3247,7 +3247,7 @@ int netif_set_real_num_rx_queues(struct
- 		return -EINVAL;
- 
- 	if (dev->reg_state == NETREG_REGISTERED) {
--		netdev_ops_assert_locked(dev);
-+		netdev_assert_locked_ops_compat(dev);
- 
- 		rc = net_rx_queue_update_kobjects(dev, dev->real_num_rx_queues,
- 						  rxq);
-@@ -7313,7 +7313,7 @@ void netif_queue_set_napi(struct net_dev
- 
- 	if (WARN_ON_ONCE(napi && !napi->dev))
- 		return;
--	netdev_ops_assert_locked_or_invisible(dev);
-+	netdev_assert_locked_ops_compat_or_invisible(dev);
- 
- 	switch (type) {
- 	case NETDEV_QUEUE_TYPE_RX:
-@@ -9608,7 +9608,7 @@ int __dev_set_promiscuity(struct net_dev
- 	kuid_t uid;
- 	kgid_t gid;
- 
--	netdev_ops_assert_locked(dev);
-+	netdev_assert_locked_ops_compat(dev);
- 
- 	promiscuity = dev->promiscuity + inc;
- 	if (promiscuity == 0) {
-@@ -9667,7 +9667,7 @@ int netif_set_allmulti(struct net_device
- 	unsigned int old_flags = dev->flags, old_gflags = dev->gflags;
- 	unsigned int allmulti, flags;
- 
--	netdev_ops_assert_locked(dev);
-+	netdev_assert_locked_ops_compat(dev);
- 
- 	allmulti = dev->allmulti + inc;
- 	if (allmulti == 0) {
-@@ -9735,7 +9735,7 @@ int __dev_change_flags(struct net_device
- 	unsigned int old_flags = dev->flags;
- 	int ret;
- 
--	netdev_ops_assert_locked(dev);
-+	netdev_assert_locked_ops_compat(dev);
- 
- 	/*
- 	 *	Set the flags on our device.
-@@ -9883,7 +9883,7 @@ int netif_set_mtu_ext(struct net_device
- {
- 	int err, orig_mtu;
- 
--	netdev_ops_assert_locked(dev);
-+	netdev_assert_locked_ops_compat(dev);
- 
- 	if (new_mtu == dev->mtu)
- 		return 0;
-@@ -10317,7 +10317,7 @@ static int dev_xdp_install(struct net_de
- 	struct netdev_bpf xdp;
- 	int err;
- 
--	netdev_ops_assert_locked(dev);
-+	netdev_assert_locked_ops_compat(dev);
- 
- 	if (dev->cfg->hds_config == ETHTOOL_TCP_DATA_SPLIT_ENABLED &&
- 	    prog && !prog->aux->xdp_has_frags) {
-@@ -10769,7 +10769,7 @@ u32 dev_get_min_mp_channel_count(const s
- {
- 	int i;
- 
--	netdev_ops_assert_locked(dev);
-+	netdev_assert_locked_ops_compat(dev);
- 
- 	for (i = dev->real_num_rx_queues - 1; i >= 0; i--)
- 		if (dev->_rx[i].mp_params.mp_priv)
-@@ -10997,7 +10997,7 @@ int __netdev_update_features(struct net_
- 	int err = -1;
- 
- 	ASSERT_RTNL();
--	netdev_ops_assert_locked(dev);
-+	netdev_assert_locked_ops_compat(dev);
- 
- 	features = netdev_get_wanted_features(dev);
- 
---- a/net/core/dev_addr_lists.c
-+++ b/net/core/dev_addr_lists.c
-@@ -1260,7 +1260,7 @@ static void netif_rx_mode_run(struct net
- 	int err;
- 
- 	might_sleep();
--	netdev_ops_assert_locked(dev);
-+	netdev_assert_locked_ops_compat(dev);
- 
- 	__hw_addr_init(&uc_snap);
- 	__hw_addr_init(&mc_snap);
---- a/net/core/link_watch.c
-+++ b/net/core/link_watch.c
-@@ -277,7 +277,7 @@ static bool linkwatch_clean_dev(struct n
- 
- void __linkwatch_sync_dev(struct net_device *dev)
- {
--	netdev_ops_assert_locked(dev);
-+	netdev_assert_locked_ops_compat(dev);
- 
- 	if (linkwatch_clean_dev(dev)) {
- 		linkwatch_do_dev(dev);
---- a/net/core/lock_debug.c
-+++ b/net/core/lock_debug.c
-@@ -24,7 +24,7 @@ int netdev_debug_event(struct notifier_b
- 	case NETDEV_CHANGE:
- 	case NETDEV_REGISTER:
- 	case NETDEV_UP:
--		netdev_ops_assert_locked(dev);
-+		netdev_assert_locked_ops_compat(dev);
- 		fallthrough;
- 	case NETDEV_DOWN:
- 	case NETDEV_REBOOT:
 --- a/net/core/netdev_queues.c
 +++ b/net/core/netdev_queues.c
 @@ -40,7 +40,7 @@ struct device *netdev_queue_get_dma_dev(
  	struct netdev_rx_queue *hw_rxq;
  	struct device *dma_dev;
  
--	netdev_ops_assert_locked(dev);
-+	netdev_assert_locked_ops_compat(dev);
+-	netdev_assert_locked_ops_compat(dev);
++	netdev_assert_locked(dev);
  
  	/* Only RX side supports queue leasing today. */
  	if (type != NETDEV_QUEUE_TYPE_RX || !netif_rxq_is_leased(dev, idx))
---- a/net/ethtool/netlink.c
-+++ b/net/ethtool/netlink.c
-@@ -98,7 +98,7 @@ int ethnl_ops_begin(struct net_device *d
- 	if (dev->dev.parent)
- 		pm_runtime_get_sync(dev->dev.parent);
- 
--	netdev_ops_assert_locked(dev);
-+	netdev_assert_locked_ops_compat(dev);
- 
- 	if (!netif_device_present(dev) ||
- 	    dev->reg_state >= NETREG_UNREGISTERING) {
-@@ -1003,7 +1003,7 @@ static void ethnl_default_notify(struct
- 		       ops->req_info_size - sizeof(*req_info));
- 	}
- 
--	netdev_ops_assert_locked(dev);
-+	netdev_assert_locked_ops_compat(dev);
- 
- 	ethnl_init_reply_data(reply_data, ops, dev);
- 	ret = ops->prepare_data(req_info, reply_data, &info);
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -380,7 +380,7 @@ static struct inet6_dev *ipv6_add_dev(st
- 	int err = -ENOMEM;
- 
- 	ASSERT_RTNL();
--	netdev_ops_assert_locked(dev);
-+	netdev_assert_locked_ops_compat(dev);
- 
- 	if (dev->mtu < IPV6_MIN_MTU && dev != blackhole_netdev)
- 		return ERR_PTR(-EINVAL);
---- a/net/xdp/xsk_buff_pool.c
-+++ b/net/xdp/xsk_buff_pool.c
-@@ -244,7 +244,7 @@ int xp_assign_dev(struct xsk_buff_pool *
- 	bpf.xsk.pool = pool;
- 	bpf.xsk.queue_id = queue_id;
- 
--	netdev_ops_assert_locked(netdev);
-+	netdev_assert_locked_ops_compat(netdev);
- 	err = netdev->netdev_ops->ndo_bpf(netdev, &bpf);
- 	if (err)
- 		goto err_unreg_pool;
 
 
