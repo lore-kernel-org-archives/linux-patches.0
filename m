@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7F833D4E8;
-	Thu, 20 Aug 2026 16:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B792147B403;
+	Thu, 20 Aug 2026 16:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243697; cv=none; b=RM3XijnMNRkS59G45xmxWS3GzKBHbLN8Cw/SbJndpMcm7KGCh82nXMdX6YIS7wdtumeQYyBfVP6nQJIsl4FnlBnQjNCIoGhjyjCUmD/p4P48wCMS9ZmOceC9pXyUqwJeFTp205A68/fMHupyljHEYUj/dhUJz75De0w0ojPJQz4=
+	t=1787243700; cv=none; b=HAVlT3NDfFjI072aTtVAT5KnoTYgGB6plNdTnBh67alaLrQblmobv2tPaCNBnuGxs6PMJ2BAFPI+Iq2aaDp+xcSxAFGUb7jDU8MdA666rlD9Ds/B7lX31wd052k1VijciZGSasiCcGTg2zplF4rUrOqu/1Eb+6Mo2S7XvBMq8hU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243697; c=relaxed/simple;
-	bh=RpmfStJpfzonHajllEDXPT70sMraERIow/SWiut1txo=;
+	s=arc-20240116; t=1787243700; c=relaxed/simple;
+	bh=7abewUYPyjKHQQUQn8WJqmejXgxk7jz9Ge2oQMWgGq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oTophmoU334xiTNuIcWoawng+C5Hv/wZZ9HVNltz/CdurIlgaUSgmwEuG5ytD2hvs9nb20Uz5UhjneMsjAwegSQ2l1NpUkfALH3hq8wJQ31kNqDWDum5mN5LpcKk95yvhrcWdpEFbh5esuOq93YilHW162nXddGWd1fXhriy1P4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1DFBGj4W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Sg1Ua7p71lGveQKsLvRRFE8vUxW5/gvEZ1NLRjqkmre0YCKDNoUvN3VGxgRBOnG/dKgqvWrKrdEMw3EUkz+ij4/ANjKbGw0KJdI0vWGB1C/2ePOvcpw0yaKvo6t/+2/S3A8phuOhmnhDvJXGIG56tZL8wMWkD/78Vw0e00scOPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrWW4YkG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1DFBGj4W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4843D1F000E9;
-	Thu, 20 Aug 2026 16:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrWW4YkG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5401F000E9;
+	Thu, 20 Aug 2026 16:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243695;
-	bh=IuPg3hqIkZjA4WwOC6XJENZH9KPv9GsDM0jkOHwbTI0=;
+	s=korg; t=1787243698;
+	bh=h2HV4Z1Zo7oXpufMbHWcGn+PwEAZ7FRlRgh1ji/N4oM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1DFBGj4W06bOB8C1xdqZgDZ0gusP8OOOHjo4biBOqtg/zODOsCOaHlR3nt20MB9tY
-	 Cw8IP+nUWL8O/BSCngLvicmCqNHA/aZrdKa6l3AjhEkqARgcaMj7E7FpqZ3VBC3S1o
-	 THRuHWYnEV+uf5Aav1YCOzUCYJySi4zHyakrz40M=
+	b=IrWW4YkGGeVF4DqhMijabhCSJSJvcXpSQ1D7DrrOyreL5tyxmInrPiv0KWa9YRIZC
+	 y/xiYKEkUp9zhYV9EwgtEaDuUu7wv6Gbc8wGoiMSrAE10cxCeY8ARW/vPc30ouquf6
+	 Src7Ha6K8C/ZGC/a7PiEzrZBKWMvYebQrz7GklI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Aaron Esau <aaron1esau@gmail.com>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 184/272] media: i2c: imx219: Drop IMX219_VTS_* macros
-Date: Thu, 20 Aug 2026 16:56:08 +0200
-Message-ID: <20260820145236.987603999@linuxfoundation.org>
+Subject: [PATCH 5.15 158/272] espintcp: use sk_msg_free_partial to fix partial send
+Date: Thu, 20 Aug 2026 16:55:42 +0200
+Message-ID: <20260820145236.059248951@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -54,104 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 5ebbdd7aab3321e60a8be23aac1fee4f16644021 ]
+[ Upstream commit 007800408002d871f5699bdb944f985896730b8f ]
 
-The IMX219_VTS_* macros define default VTS values for the modes
-supported by the driver. They are used in a single place, and hinder
-readability compared to using the value directly as a decimal number.
-Drop them.
+sk_msg_free_partial() ensures consistency of the skmsg at every
+iteration, without having to manually handle uncharges and offsets.
+This simplifies the code, and fixes some bugs in skmsg accounting when
+we don't send the full contents.
 
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Stable-dep-of: 2c4f1ba73543 ("media: imx219: Fix maximum frame length in lines")
+Cc: stable@vger.kernel.org
+Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+Reported-by: Aaron Esau <aaron1esau@gmail.com>
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/imx219.c |   24 +++++++-----------------
- 1 file changed, 7 insertions(+), 17 deletions(-)
+ net/xfrm/espintcp.c |   32 ++++++--------------------------
+ 1 file changed, 6 insertions(+), 26 deletions(-)
 
---- a/drivers/media/i2c/imx219.c
-+++ b/drivers/media/i2c/imx219.c
-@@ -49,20 +49,10 @@
+--- a/net/xfrm/espintcp.c
++++ b/net/xfrm/espintcp.c
+@@ -210,41 +210,21 @@ static int espintcp_sendskmsg_locked(str
+ {
+ 	struct sk_msg *skmsg = &emsg->skmsg;
+ 	struct scatterlist *sg;
+-	int done = 0;
+ 	int ret;
  
- /* V_TIMING internal */
- #define IMX219_REG_VTS			0x0160
--#define IMX219_VTS_15FPS		0x0dc6
--#define IMX219_VTS_30FPS_1080P		0x06e3
--#define IMX219_VTS_30FPS_BINNED		0x06e3
--#define IMX219_VTS_30FPS_640x480	0x06e3
--#define IMX219_VTS_MAX			0xffff
-+#define IMX219_FLL_MAX			0xffff
- 
- #define IMX219_VBLANK_MIN		4
- 
--/*Frame Length Line*/
--#define IMX219_FLL_MIN			0x08a6
--#define IMX219_FLL_MAX			0xffff
--#define IMX219_FLL_STEP			1
--#define IMX219_FLL_DEFAULT		0x0c98
+ 	flags |= MSG_SENDPAGE_NOTLAST;
+-	sg = &skmsg->sg.data[skmsg->sg.start];
+ 	do {
+-		size_t size = sg->length - emsg->offset;
+-		int offset = sg->offset + emsg->offset;
+-		struct page *p;
 -
- /* HBLANK control - read only */
- #define IMX219_PPL_DEFAULT		3448
+-		emsg->offset = 0;
+-
++		sg = &skmsg->sg.data[skmsg->sg.start];
+ 		if (sg_is_last(sg))
+ 			flags &= ~MSG_SENDPAGE_NOTLAST;
  
-@@ -386,7 +376,7 @@ static const struct imx219_mode supporte
- 			.width = 3280,
- 			.height = 2464
- 		},
--		.vts_def = IMX219_VTS_15FPS,
-+		.vts_def = 3526,
- 		.reg_list = {
- 			.num_of_regs = ARRAY_SIZE(mode_3280x2464_regs),
- 			.regs = mode_3280x2464_regs,
-@@ -403,7 +393,7 @@ static const struct imx219_mode supporte
- 			.width = 1920,
- 			.height = 1080
- 		},
--		.vts_def = IMX219_VTS_30FPS_1080P,
-+		.vts_def = 1763,
- 		.reg_list = {
- 			.num_of_regs = ARRAY_SIZE(mode_1920_1080_regs),
- 			.regs = mode_1920_1080_regs,
-@@ -420,7 +410,7 @@ static const struct imx219_mode supporte
- 			.width = 3280,
- 			.height = 2464
- 		},
--		.vts_def = IMX219_VTS_30FPS_BINNED,
-+		.vts_def = 1763,
- 		.reg_list = {
- 			.num_of_regs = ARRAY_SIZE(mode_1640_1232_regs),
- 			.regs = mode_1640_1232_regs,
-@@ -437,7 +427,7 @@ static const struct imx219_mode supporte
- 			.width = 1280,
- 			.height = 960
- 		},
--		.vts_def = IMX219_VTS_30FPS_640x480,
-+		.vts_def = 1763,
- 		.reg_list = {
- 			.num_of_regs = ARRAY_SIZE(mode_640_480_regs),
- 			.regs = mode_640_480_regs,
-@@ -841,7 +831,7 @@ static int imx219_set_pad_format(struct
- 		imx219->mode = mode;
- 		/* Update limits and set FPS to default */
- 		__v4l2_ctrl_modify_range(imx219->vblank, IMX219_VBLANK_MIN,
--					 IMX219_VTS_MAX - mode->height, 1,
-+					 IMX219_FLL_MAX - mode->height, 1,
- 					 mode->vts_def - mode->height);
- 		__v4l2_ctrl_s_ctrl(imx219->vblank,
- 				   mode->vts_def - mode->height);
-@@ -1261,7 +1251,7 @@ static int imx219_init_controls(struct i
- 	/* Initial vblank/hblank/exposure parameters based on current mode */
- 	imx219->vblank = v4l2_ctrl_new_std(ctrl_hdlr, &imx219_ctrl_ops,
- 					   V4L2_CID_VBLANK, IMX219_VBLANK_MIN,
--					   IMX219_VTS_MAX - height, 1,
-+					   IMX219_FLL_MAX - height, 1,
- 					   imx219->mode->vts_def - height);
- 	hblank = IMX219_PPL_DEFAULT - imx219->mode->width;
- 	imx219->hblank = v4l2_ctrl_new_std(ctrl_hdlr, &imx219_ctrl_ops,
+-		p = sg_page(sg);
+-retry:
+-		ret = do_tcp_sendpages(sk, p, offset, size, flags);
+-		if (ret < 0) {
+-			emsg->offset = offset - sg->offset;
+-			skmsg->sg.start += done;
++		ret = do_tcp_sendpages(sk, sg_page(sg), sg->offset,
++				       sg->length, flags);
++		if (ret < 0)
+ 			return ret;
+-		}
+-
+-		if (ret != size) {
+-			offset += ret;
+-			size -= ret;
+-			goto retry;
+-		}
+ 
+-		done++;
+-		put_page(p);
+-		sk_mem_uncharge(sk, sg->length);
+-		sg = sg_next(sg);
+-	} while (sg);
++		sk_msg_free_partial(sk, skmsg, ret);
++	} while (skmsg->sg.size);
+ 
+ 	memset(emsg, 0, sizeof(*emsg));
+ 
 
 
