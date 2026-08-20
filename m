@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6634E3803D7;
-	Thu, 20 Aug 2026 17:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295B0307492;
+	Thu, 20 Aug 2026 17:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247571; cv=none; b=CIVirhrkGhP+LnUSz/+4xo0ggVzuhOlk+nPe9yWuzGXFfJ0abayDPDQCEFLtBL5e3h5feDcVlBpfhyx2GdoBlQy6n1fyahizVOYP87F8+FYHFMpPJVKnsomc7zcWZVN1nx73H+Ok1jDuxiySuVkXZyQ7Z1lF0r2MBI/JEjt+Ka0=
+	t=1787247574; cv=none; b=H2jb7r1DWqsbA9aEv4zBMzDQc3e30MczT3xpBgSJeN9vWJx/bT/3BxVv9sg7gjJgfrWs8337GjcdirrNY+eLV1N2CAqIIT3FDE/5BVSrI5PIL9tIlilGqhS5IWT/DU+rDijzMFdpJeTewxl8a5/op52/DAfh4DyzisVGT2viZXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247571; c=relaxed/simple;
-	bh=1vivZP35BWrhWVoO6rZhtfQXkrYQMlhllZjMvr2KIws=;
+	s=arc-20240116; t=1787247574; c=relaxed/simple;
+	bh=FCSHm9UETjPfnyd6PH5EzLtglbAcwBpRarbFXLuiRs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gDjEWq6cSO/TZsDD4gl6L3eGUJoYF2x5zxdXpx/G5iRUTR52LHgSkKqRAKFxYldJi43kQZb2sNizU8FD8Tv05s6dgqubZ0ee3wD3a46SiU8IW1g3Lo8rDmxJlERpjkqEY0z0MGjQWo2w6pG6K7IKf73HkIKalty2EUi6x2r5yzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MyL4X6Zz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CBq6SzRD2cNdZdRLhNRYYjV6z9nBb27GlcCB5x+xv7FLwlECDBHeML7+jjsn7SZ71C/VIhsyZgGN8qiHWYYJlInXgNE8MdyoFg5+3wtcnYS+i3S34eLyvZ1VZqE0IhfappWfirnsN3faLUwj+b1MKvUkw1Dn/RqnDHl0qbqvJNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0tD5Le+l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MyL4X6Zz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1ED41F000E9;
-	Thu, 20 Aug 2026 17:39:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0tD5Le+l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8764B1F000E9;
+	Thu, 20 Aug 2026 17:39:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247570;
-	bh=2FxmDb8VrlxTArMq0uzuPmZRsOcxhJmYpk1rXoXcYWE=;
+	s=korg; t=1787247573;
+	bh=V0iHPKh/Yxi2DSQczt/4dlV3DB4DboVZY+uzM3ISoDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MyL4X6ZzHSblIEA87IJ3rDuwt4euKmn7M9fhsqBywJ9nekSv29YBlQfQxirQSKvSP
-	 rZP2yZwme4wnqhGSiAw9g6CKtsvNukZmxifCENXABBMdAYphrpOCbiLVG1ydzs5AGp
-	 fry4jZeSkqodMf9Qgy+8waDv8j4YGLve0hrbXZmU=
+	b=0tD5Le+lfkocddYYcy75KhxdaVaSnQHp8+sUso5aNW5EqnSldHlE/gc1umeTnIxpE
+	 wjsSojXmcowjF24Fa1c+i3L2ZTIBdmJM3oCBC+xrBu2JnsHDzT8xlnnZYcHUqyDfKi
+	 FCJNeAO4IbKkmBbe0tz0SneMQJc7go1Cs2d7sWd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 075/166] libceph: bound pg_{temp,upmap,upmap_items} length to CEPH_PG_MAX_SIZE
-Date: Thu, 20 Aug 2026 16:55:34 +0200
-Message-ID: <20260820145213.403738674@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.6 093/166] ksmbd: validate minimum PDU size for transform requests
+Date: Thu, 20 Aug 2026 16:55:52 +0200
+Message-ID: <20260820145213.951337929@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -53,69 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 9f00f9cf2be293efe899db67dc5272e3a9c62717 ]
+[ Upstream commit cfc0b8e5080aec87700774e8568765eaa4b7b92b ]
 
-__decode_pg_temp() decodes an user-controlled length but only rejects
-values large enough to overflow the allocation; it does not bound it to
-CEPH_PG_MAX_SIZE. The helper backs both pg_temp and pg_upmap decoding, and
-apply_upmap()/get_temp_osds() later copy the decoded list into the fixed-size
-on-stack array struct ceph_osds.osds[CEPH_PG_MAX_SIZE]. A monitor that sends
-an OSDMap with a pg_temp/pg_upmap entry longer than 32 thus causes a stack
-out-of-bounds write.
+The receive path applies the minimum SMB2 PDU size check only when
+ProtocolId is SMB2_PROTO_NUMBER. A packet carrying
+SMB2_TRANSFORM_PROTO_NUM bypasses the check even when the negotiated
+dialect does not provide transform handling.
 
-An OSD set for a single PG can never exceed CEPH_PG_MAX_SIZE, so reject longer
-entries at decode time. The bound is well below the old overflow threshold, so
-it also covers the allocation-size overflow the previous check guarded against.
+On an SMB 2.1 connection, a short transform packet therefore reaches
+init_smb2_rsp_hdr(), which interprets the request as a full SMB2 header
+and reads beyond the request allocation. The copied fields can then be
+returned to the unauthenticated client.
 
-  BUG: KASAN: stack-out-of-bounds in ceph_pg_to_up_acting_osds
-  Write of size 4 ... by task exploit
-   kasan_report (mm/kasan/report.c:595)
-   ceph_pg_to_up_acting_osds (net/ceph/osdmap.c:2617 net/ceph/osdmap.c:2833)
-   calc_target (net/ceph/osd_client.c:1638)
-   __submit_request (net/ceph/osd_client.c:2394)
-   ceph_osdc_start_request (net/ceph/osd_client.c:2490)
-   ceph_osdc_call (net/ceph/osd_client.c:5164)
-   rbd_dev_image_probe (drivers/block/rbd.c:6899)
-   do_rbd_add (drivers/block/rbd.c:7138)
-   ...
-  kernel BUG at net/ceph/osdmap.c:2670!
+Compression transforms are converted to ordinary SMB2 messages before
+protocol validation. After that conversion, validate ordinary SMB2
+requests against SMB2_MIN_SUPPORTED_PDU_SIZE and require encryption
+transform requests to contain both a transform header and an SMB2
+header. This rejects truncated requests before work allocation.
 
-[ idryomov: do the same in __decode_pg_upmap_items() ]
-
+Fixes: 368ba06881c3 ("ksmbd: check the validation of pdu_size in ksmbd_conn_handler_loop")
 Cc: stable@vger.kernel.org
-Fixes: a303bb0e5834 ("libceph: introduce and switch to decode_pg_mapping()")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-31063
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/server/connection.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -1440,7 +1440,7 @@ static struct ceph_pg_mapping *__decode_
- 	ceph_decode_32_safe(p, end, len, e_inval);
- 	if (len == 0 && incremental)
- 		return NULL;	/* new_pg_temp: [] to remove */
--	if ((size_t)len > (SIZE_MAX - sizeof(*pg)) / sizeof(u32))
-+	if (len > CEPH_PG_MAX_SIZE)
- 		return ERR_PTR(-EINVAL);
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -379,6 +379,8 @@ bool ksmbd_conn_alive(struct ksmbd_conn
+ /* "+2" for BCC field (ByteCount, 2 bytes) */
+ #define SMB1_MIN_SUPPORTED_PDU_SIZE (sizeof(struct smb_hdr) + 2)
+ #define SMB2_MIN_SUPPORTED_PDU_SIZE (sizeof(struct smb2_pdu))
++#define SMB2_TRANSFORM_MIN_SUPPORTED_PDU_SIZE	\
++	(sizeof(struct smb2_transform_hdr) + sizeof(struct smb2_hdr))
  
- 	ceph_decode_need(p, end, len * sizeof(u32), e_inval);
-@@ -1621,7 +1621,7 @@ static struct ceph_pg_mapping *__decode_
- 	u32 len, i;
+ /**
+  * ksmbd_conn_handler_loop() - session thread to listen on new smb requests
+@@ -393,6 +395,7 @@ int ksmbd_conn_handler_loop(void *p)
+ 	struct ksmbd_conn *conn = (struct ksmbd_conn *)p;
+ 	struct ksmbd_transport *t = conn->transport;
+ 	unsigned int pdu_size, max_allowed_pdu_size, max_req;
++	__le32 proto;
+ 	char hdr_buf[4] = {0,};
+ 	int size;
  
- 	ceph_decode_32_safe(p, end, len, e_inval);
--	if ((size_t)len > (SIZE_MAX - sizeof(*pg)) / (2 * sizeof(u32)))
-+	if (len > CEPH_PG_MAX_SIZE)
- 		return ERR_PTR(-EINVAL);
+@@ -476,11 +479,14 @@ recheck:
+ 		if (!ksmbd_smb_request(conn))
+ 			break;
  
- 	ceph_decode_need(p, end, 2 * len * sizeof(u32), e_inval);
+-		if (((struct smb2_hdr *)smb_get_msg(conn->request_buf))->ProtocolId ==
+-		    SMB2_PROTO_NUMBER) {
+-			if (pdu_size < SMB2_MIN_SUPPORTED_PDU_SIZE)
+-				break;
+-		}
++		proto = *(__le32 *)smb_get_msg(conn->request_buf);
++		if (proto == SMB2_PROTO_NUMBER &&
++		    pdu_size < SMB2_MIN_SUPPORTED_PDU_SIZE)
++			break;
++
++		if (proto == SMB2_TRANSFORM_PROTO_NUM &&
++		    pdu_size < SMB2_TRANSFORM_MIN_SUPPORTED_PDU_SIZE)
++			break;
+ 
+ 		if (!default_conn_ops.process_fn) {
+ 			pr_err("No connection request callback\n");
 
 
