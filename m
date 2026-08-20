@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C2647D930;
-	Thu, 20 Aug 2026 16:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8CB147D46D;
+	Thu, 20 Aug 2026 16:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243256; cv=none; b=ZxCFrYd06TXGbCdhszvRl9I8jNMUjx63gqEbM6AwFSWYz3H5AAdQamzO4I/7z2l7zYMALlsMWBCcgiSHvVm4K/Ppz60JMU5FwjmByosV+WgNMLzM5UvCT8MW/2qT29U3rwaq3IKPLhODBh/ogQErzIQl7V1DiouAKQDftGZjsKs=
+	t=1787243259; cv=none; b=H+pCuJoxQa/gPE+N+fsMIYo3sS3a5Xh0UEJ6VayqIa77Rw8PQYzTOCksTnkv4t9ts1/btT6PADwI880U7+NDsijBsCDJ8yNAO8WFWgxP37eoNpabjINzX/SDA15vY75h94p3dWIkcbwPQHtlOZwxQGLjGSSBP8RUVtyCNDIfgHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243256; c=relaxed/simple;
-	bh=kRvfWYc6ASVwnnFvOl7tvbJJkAYhyvDcyBqwvdzIfKQ=;
+	s=arc-20240116; t=1787243259; c=relaxed/simple;
+	bh=RczUCzJirqXFxodQX4Qp7QAQc9oFdp5oHARFJYe3gN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DzPPXr7IHq+P9CNYMZdn39eFCuHZvGFqOrpUTHT+oZKHSFWHFZBvF9MpzBgA6vsCYbdBYITwMn7E4JBJzzAdgxtfa0kUHvX7hzwedqDjwMYN9g9pguaMQWdffZtH61LYijkgIByIcBHCQWCLFHrVtTKg+00pMoptI6iVB0Ls/Es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJt+SFyu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R2kwq9Z4jaDapZxP49YuV0WdDFw8Q/X3WQpAAnnwAY7tSCOZSBzULid7OpVekvL+Pe+JDuCGluSOLPMxi0f+KNwEvxOPv3R/+LAoj5/igs8D33yzn3WorsnfRYcq1HcSepg+Kz4UGpmWpwHunmHwHye3h8bF/6cSGm/YRfzaWWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ziYhxIhO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJt+SFyu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0251F000E9;
-	Thu, 20 Aug 2026 16:27:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziYhxIhO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264F51F00A3A;
+	Thu, 20 Aug 2026 16:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243251;
-	bh=3x01jKLJJbWvXCT9arPe6m6XJRbsLz1fMahegJPIum4=;
+	s=korg; t=1787243254;
+	bh=fp3wbs2ijl1AaaJ/9T9gSZVhxMzkzT0gg+YZF1JcYMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nJt+SFyuKJuW1vjVj+3P9d6kYSv5ZMw/ZU6QdZbpbFktDI75lbxhCwUZ0N2L1Vdoi
-	 3Y/+UkdUNQG7EBvZxGqBxkFYk6QN6Lz0SUQuDM9TqOtL75CioDuCDLqHS4+C2XbAks
-	 CQ5oZgJwBxsfvI4eekcuOu7zVkIoptx9uXqqRUNE=
+	b=ziYhxIhOBqTObeuv1bdDqavtmZE7xJe2me2y0MVavGRP2YACbTriFRnEYZqykVwfy
+	 QU9hs6cnjaS+PsQjv6riTaER8y70TrGVrDcIJuSFZsjzWLtkqRxjPWhEcj6hbTjrOz
+	 Fxqge3DBthXO62xuSilR6Bh1BdbDCxouSQfH0CAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Andrey Troshin <drtrosh@yandex-team.ru>,
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 003/272] media: mediatek: vcodec: Fix a resource leak related to the scp device in FW initialization
-Date: Thu, 20 Aug 2026 16:53:07 +0200
-Message-ID: <20260820145231.339684482@linuxfoundation.org>
+Subject: [PATCH 5.15 004/272] fscrypt: use the mount idmap for the owner check in fscrypt_ioctl_set_policy()
+Date: Thu, 20 Aug 2026 16:53:08 +0200
+Message-ID: <20260820145231.370231323@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -52,45 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Zhan Xusheng <zhanxusheng@xiaomi.com>
 
-[ Upstream commit 4936cd5817af35d23e4d283f48fa59a18ef481e4 ]
+commit cf6c993c0feca7984797e634deba3c80342e199a upstream.
 
-On Mediatek devices with a system companion processor (SCP) the mtk_scp
-structure has to be removed explicitly to avoid a resource leak.
-Free the structure in case the allocation of the firmware structure fails
-during the firmware initialization.
+fscrypt_ioctl_set_policy() calls inode_owner_or_capable() with
+&nop_mnt_idmap before allowing an encryption policy to be set, instead
+of the idmap of the mount the ioctl was issued on.
 
-Fixes: 53dbe0850444 ("media: mtk-vcodec: potential null pointer deference in SCP")
+fscrypt is used by filesystems that support idmapped mounts (e.g. ext4,
+f2fs), so on such a mount this compares the caller's fsuid against the
+unmapped on-disk owner rather than the mapped owner: the actual owner
+can be wrongly denied with -EACCES and an unrelated caller wrongly
+allowed.  Use file_mnt_idmap(filp) instead.
+
+Fixes: 14f3db5542e6 ("ext4: support idmapped mounts")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-[Andrey Troshin: backport fixs from
- drivers/media/platform/mediatek/vcodec/common/mtk_vcodec_fw_scp.c
- to drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_scp.c]
-Signed-off-by: Andrey Troshin <drtrosh@yandex-team.ru>
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Link: https://patch.msgid.link/20260725080004.929328-1-zhanxusheng1024@gmail.com
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_scp.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/crypto/policy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_scp.c b/drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_scp.c
-index 27f08b1d34d1..199a64c853bc 100644
---- a/drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_scp.c
-+++ b/drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_scp.c
-@@ -65,8 +65,11 @@ struct mtk_vcodec_fw *mtk_vcodec_fw_scp_init(struct mtk_vcodec_dev *dev)
- 	}
+diff --git a/fs/crypto/policy.c b/fs/crypto/policy.c
+index cad34dbe8e298..42da1f9e6492b 100644
+--- a/fs/crypto/policy.c
++++ b/fs/crypto/policy.c
+@@ -465,7 +465,7 @@ int fscrypt_ioctl_set_policy(struct file *filp, const void __user *arg)
+ 		return -EFAULT;
+ 	policy.version = version;
  
- 	fw = devm_kzalloc(&dev->plat_dev->dev, sizeof(*fw), GFP_KERNEL);
--	if (!fw)
-+	if (!fw) {
-+		scp_put(scp);
- 		return ERR_PTR(-ENOMEM);
-+	}
-+
- 	fw->type = SCP;
- 	fw->ops = &mtk_vcodec_rproc_msg;
- 	fw->scp = scp;
+-	if (!inode_owner_or_capable(&init_user_ns, inode))
++	if (!inode_owner_or_capable(file_mnt_user_ns(filp), inode))
+ 		return -EACCES;
+ 
+ 	ret = mnt_want_write_file(filp);
 -- 
 2.53.0
 
