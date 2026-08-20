@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B213356742;
-	Thu, 20 Aug 2026 17:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E8E47DD42;
+	Thu, 20 Aug 2026 17:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247947; cv=none; b=Bi0zWVYuOGNGbYKfX7yzJ5f0jc3bTCLCmFQHQ/llqrFZ95gJENsbovTysRCzd685fEO1AaHMhpF97obHBFkkMSrGKH0vpzJPdenUWLeezTVXN4VZxVsLhFoBuFqTkfZInUbZz3UijdeoRYALg5v/swQ/wobnwMWYdclGIjDbwpA=
+	t=1787247950; cv=none; b=SJP6hel0eqlEVBVIortB8khlWyosXA2d41aArpmmwmrzFHWX3JPlrd7bp1VRJ/kSEobmqyyqoL4f/44WKzE5UNGt2dRh232ZB25MFLuFy3CD5MnP5lJyrlqerRNmsQVGSG8DBcVVBHqQPkiBQmQeeVTaX/yK2LtVAOnl7tEsNM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247947; c=relaxed/simple;
-	bh=ZKKTbiMPV8lhRauln5AksqvUC5UHvSKw9DxC2L2PUeI=;
+	s=arc-20240116; t=1787247950; c=relaxed/simple;
+	bh=Ij6GGijthNCh7AdHrhCgmPT6ROZmpEIA/+WJ3L15rm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O+QKmmydn2vTEBTLxK4/4JiCof8GuIvTBg/s8E6hLooiAJSmZj40pffjVKBPbIZ5D8+U+jAbgvA6qaNpXg0gqHBcLSrCMYnbOPPYfbUgI8Bs7MyOlOhaUnOxRih6dcWYglG5fcY+f2MA7FR9TD/7r583Nc5aVB91GA1mcUHuVUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ocy1Ni0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cASlSDGzbYLuh7wjIgj2cD0dZn4DkTMKpTjGxb6/Y5knAnbyxXyYor4T9z/fCZdrv9683ZQsSWa9XgFY75zUYNZb74em0+1+oelup0h9sQQ7fK1TxzolVk5fn5rvXs+e2ZMGKBTftsuoeqB0VCCWLspI3L6ly2THyEi+pczZCS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u4M6PB06; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ocy1Ni0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E4D1F000E9;
-	Thu, 20 Aug 2026 17:45:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4M6PB06"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683161F000E9;
+	Thu, 20 Aug 2026 17:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247946;
-	bh=NMMLf2miOojPNor3a0VK79HxRMxfZ+U13bLzajPf/g4=;
+	s=korg; t=1787247949;
+	bh=E1JAjh3OIOHUth7P6/ntOEUJkzoiDOq6kVyGaCvCx1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0ocy1Ni0E7unPVNmAhnEPJmkCZLwu5y5n3vwnF7MaKOHlwVEQilQnBf7If1gQGIj7
-	 UTqNOlaBGe9vCYTDiQJ35wLmfUNVuBWOPjsYYFH8+1doGh0+HF25D+cpfOvomkQC9v
-	 saHcJbt6MAVzv17wxnJ8ktSoxD42KBNoD5/6FNW8=
+	b=u4M6PB06VDw+pj01CVhoIQ8G+YMeLEGtTFtMZj4VSmjqF7yIWCwk/nXB9mXuL96IA
+	 fICDzRMvdUhhsSq0F1Xbd20z7bTKF5xe3HGYpWqhULVtf0cXDXY+Tr/drXoH2OaHfs
+	 fdA2EOtFy6ABcAoJIEFEM/FoNPoSnnAOdSDrQyh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Ben Zong-You Xie <ben717@andestech.com>
-Subject: [PATCH 6.1 056/303] riscv: Dont use PGD entries for the linear mapping
-Date: Thu, 20 Aug 2026 16:53:12 +0200
-Message-ID: <20260820145254.852591481@linuxfoundation.org>
+	Richard Davies <richard@arachsys.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 021/303] Input: focaltech - fix array out-of-bounds in focaltech_process_rel_packet
+Date: Thu, 20 Aug 2026 16:52:37 +0200
+Message-ID: <20260820145253.817989361@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -51,46 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Richard Davies <richard@arachsys.com>
 
-commit 629db01c64ff6cea08fc61b52426362689ef8618 upstream.
+commit 296736076b3fd078742651c719555a488624023a upstream.
 
-Propagating changes at this level is cumbersome as we need to go through
-all the page tables when that happens (either when changing the
-permissions or when splitting the mapping).
+Make finger2 (and also finger1) unsigned, so that if the finger index in
+the packet is 0 then subtracting 1 creates an array index which overflows
+above the existing check for FOC_MAX_FINGERS, as the existing comment says
+it should, instead of writing to state->fingers[-1].
 
-Note that this prevents the use of 4MB mapping for sv32 and 1GB mapping for
-sv39 in the linear mapping.
-
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20231108075930.7157-2-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-[ Ben: Only backport the RV32 guard. 6.1.y can build the RV32 linear
-mapping from PGD entries, and there is no splitting in __set_memory().
-So a one-page permission change mutates 1024 pages.]
-Signed-off-by: Ben Zong-You Xie <ben717@andestech.com>
+Fixes: 05be1d079ec0 ("Input: psmouse - support for the FocalTech PS/2 protocol extensions")
+Signed-off-by: Richard Davies <richard@arachsys.com>
+Link: https://patch.msgid.link/20260701190932.14960-1-richard@arachsys.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/mm/init.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/input/mouse/focaltech.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/riscv/mm/init.c
-+++ b/arch/riscv/mm/init.c
-@@ -668,8 +668,13 @@ void __init create_pgd_mapping(pgd_t *pg
- 
- static uintptr_t __init best_map_size(phys_addr_t base, phys_addr_t size)
+--- a/drivers/input/mouse/focaltech.c
++++ b/drivers/input/mouse/focaltech.c
+@@ -197,7 +197,7 @@ static void focaltech_process_rel_packet
  {
--	/* Upgrade to PMD_SIZE mappings whenever possible */
--	if ((base & (PMD_SIZE - 1)) || (size & (PMD_SIZE - 1)))
-+	/*
-+	 * Upgrade to PMD_SIZE mappings whenever possible. Not on 32-bit,
-+	 * where PMD_SIZE == PGDIR_SIZE: such a mapping is a PGD leaf entry
-+	 * that __set_memory() is unable to split.
-+	 */
-+	if (!IS_ENABLED(CONFIG_64BIT) ||
-+	    (base & (PMD_SIZE - 1)) || (size & (PMD_SIZE - 1)))
- 		return PAGE_SIZE;
+ 	struct focaltech_data *priv = psmouse->private;
+ 	struct focaltech_hw_state *state = &priv->state;
+-	int finger1, finger2;
++	unsigned int finger1, finger2;
  
- 	return PMD_SIZE;
+ 	state->pressed = packet[0] >> 7;
+ 	finger1 = ((packet[0] >> 4) & 0x7) - 1;
 
 
