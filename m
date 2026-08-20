@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E6D44C51B;
-	Thu, 20 Aug 2026 17:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA86247DFB9;
+	Thu, 20 Aug 2026 17:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248147; cv=none; b=asAWUhQ6T618D7HbJxyvtRbxEKHB4z6UiXvjW94zN7z6HRcwGN3OdDdF7kaDfYJdYYnztiSqattlk/LnUC01l0Xo/3iLYEB4tqdzTvlL8dGFM8vmWmMCP6uVjh2ZP6WZQqpESQTEvChnXcQkwT0A7R9CGo2xFgHEyPTF9CwjaNI=
+	t=1787248150; cv=none; b=nFNd15PJBzpyREKQMpSeAH5163oOsq3umgDcACARBfPu07fPsBwgEQhdysWi1xIwiLHfJChNUu6iBcF+Grf5km0ECrdM0qiszen/P1WMUWrsM9IbkVUNrmnRmAUPLmkYj6WTnSoBqGwc0ZXlkgd1C+7kzNQSQD/0BZaGSrbpBAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248147; c=relaxed/simple;
-	bh=3m5xEbXoFC+o5a5efeUCRPkES/8AoEKl4bKwAVnfyIU=;
+	s=arc-20240116; t=1787248150; c=relaxed/simple;
+	bh=W1nrbewVGVtH57tGqkUrcKdMvyDpwGSWJMiTLrhHPew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TPkrof1lhRIlPxg7iHijop0mWOgDoZt4WiLF+NRtvSScyrStDYtXZ1nWxWjpqOflrxDLW+Ty9Qni1F67PJRPao0TWI81T9FAWEMf8fR0hgmpAQJ70SKgoYBXb2fFUj6SlNwtynSw6AIYw4FEvl4O/2uG69CBHCgdgdQhTf9qYIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HT6eWre1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uNZKlic5lyAIZqn1ci3WlyQRRHdog+CIm92HvUycHqDaJpIhiTFQ1eYdJpxfKGQUtbW3qhOsjn0HSEqAUTgBDC4719foS6pmEv4QWQQVNKVf6/pysxkRowcBCxR3k9qFjC663frQKJp3vuZ5/IPERp+4+lda+1XSijYx/DNBxYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6516ri5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HT6eWre1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3301A1F000E9;
-	Thu, 20 Aug 2026 17:49:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6516ri5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 066B91F000E9;
+	Thu, 20 Aug 2026 17:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248145;
-	bh=EkUWy8O2ZO68g9fvvG5n4MjMqqMMFcMS0n4Z2tFzuLY=;
+	s=korg; t=1787248149;
+	bh=oQdElHJpSbAqO0Ct5zQvXrD53KMAfbP9GopOv9LJpz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HT6eWre118VMmxinNR4SAZD+ETL21E1uqZ2fdXQvThbChzsMa1PqNpXYiCV0ZA3Mw
-	 HXQM4lYaEhce7zR4tHkS2QDcoUTGhL9UF2QdNzuOs+BJ/wp8XtuOvr+XHWh2tW3pKa
-	 FR/4VsdXFIj0It2B1WT6RtJR08d9xKaj7VyuDGkA=
+	b=R6516ri5Fc6Xe8CS7rWHTy4qqfM1mOy9vOjQH0emYWVAsEwxfIa9B+Dk5fnvYPX6+
+	 Yi6fNkFVmtjaonMIVGlkQTOT9K/kd+Wv6uvYJpGH5xGAT+JOZMIO54Tya/0bxfdFtb
+	 jXwKTzQDwjwuXJ+14+wHBBvm5f5Vz/g+vj7pcr5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fuchs <fuchsfl@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 126/303] mtd: maps: vmu-flash: fix fault in unaligned fixup
-Date: Thu, 20 Aug 2026 16:54:22 +0200
-Message-ID: <20260820145257.064320041@linuxfoundation.org>
+Subject: [PATCH 6.1 127/303] net: thunderbolt: Fix frags[] overflow by bounding frame_count
+Date: Thu, 20 Aug 2026 16:54:23 +0200
+Message-ID: <20260820145257.093753573@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -51,55 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fuchs <fuchsfl@gmail.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-[ Upstream commit 79d1661502c6e4b6f626185cef72cf2fa78116e1 ]
+[ Upstream commit 55d9895f89970501fe126d1026b586b04a224c27 ]
 
-Use kzalloc_obj() / kzalloc_objs() to allocate the memcard structs,
-instead of kmalloc_obj() / kmalloc_objs() to prevent access to
-uninitialized data.
+tbnet_poll() assembles a multi-frame ThunderboltIP packet into one skb. The
+first frame goes into the skb linear area and every further frame is added as
+a page fragment.
 
-Fixes runtime error: Fault in unaligned fixup: 0000 [#1] at
-mtd_get_fact_prot_info.
+	skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags,
+			page, hdr_size, frame_size,
+			TBNET_RX_PAGE_SIZE - hdr_size);
 
-Fixes: 47a72688fae7 ("mtd: flash mapping support for Dreamcast VMU.")
+A packet of frame_count frames therefore ends up with frame_count - 1
+fragments. tbnet_check_frame() only bounds the peer supplied frame_count to
+TBNET_RING_SIZE / 4 (64), which is far above MAX_SKB_FRAGS (17 by default). A
+peer that sends a packet of 19 or more small frames pushes nr_frags past
+MAX_SKB_FRAGS, so skb_add_rx_frag() writes past skb_shinfo()->frags[] and
+corrupts memory after the shared info.
+
+Tighten the start of packet bound to MAX_SKB_FRAGS + 1 so a packet can never
+produce more fragments than frags[] can hold. This matches the recent skb
+frags overflow fixes in other receive paths, for example f0813bcd2d9d ("net:
+wwan: t7xx: fix potential skb->frags overflow in RX path") and 600dc40554dc
+("net: usb: cdc-phonet: fix skb frags[] overflow in rx_complete()").
+
+Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
 Cc: stable@vger.kernel.org
-Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://patch.msgid.link/178163152194.2486768.14724194232649760778@maoyixie.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/maps/vmu-flash.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/thunderbolt.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/mtd/maps/vmu-flash.c
-+++ b/drivers/mtd/maps/vmu-flash.c
-@@ -610,7 +610,7 @@ static int vmu_connect(struct maple_devi
- 
- 	basic_flash_data = be32_to_cpu(mdev->devinfo.function_data[c - 1]);
- 
--	card = kmalloc(sizeof(struct memcard), GFP_KERNEL);
-+	card = kzalloc_obj(struct memcard);
- 	if (!card) {
- 		error = -ENOMEM;
- 		goto fail_nomem;
-@@ -628,15 +628,13 @@ static int vmu_connect(struct maple_devi
- 	* Not sure there are actually any multi-partition devices in the
- 	* real world, but the hardware supports them, so, so will we
- 	*/
--	card->parts = kmalloc_array(card->partitions, sizeof(struct vmupart),
--				    GFP_KERNEL);
-+	card->parts = kzalloc_objs(struct vmupart, card->partitions);
- 	if (!card->parts) {
- 		error = -ENOMEM;
- 		goto fail_partitions;
+--- a/drivers/net/thunderbolt.c
++++ b/drivers/net/thunderbolt.c
+@@ -762,8 +762,12 @@ static bool tbnet_check_frame(struct tbn
+ 		return true;
  	}
  
--	card->mtd = kmalloc_array(card->partitions, sizeof(struct mtd_info),
--				  GFP_KERNEL);
-+	card->mtd = kzalloc_objs(struct mtd_info, card->partitions);
- 	if (!card->mtd) {
- 		error = -ENOMEM;
- 		goto fail_mtd_info;
+-	/* Start of packet, validate the frame header */
+-	if (frame_count == 0 || frame_count > TBNET_RING_SIZE / 4) {
++	/* Start of packet, validate the frame header. tbnet_poll() puts the
++	 * first frame in the skb linear area and every further frame in a page
++	 * fragment, so a packet may not span more than MAX_SKB_FRAGS + 1 frames
++	 * without overflowing skb_shinfo()->frags[].
++	 */
++	if (frame_count == 0 || frame_count > MAX_SKB_FRAGS + 1) {
+ 		net->stats.rx_length_errors++;
+ 		return false;
+ 	}
 
 
