@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC14377A89;
-	Thu, 20 Aug 2026 15:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49514381AFB;
+	Thu, 20 Aug 2026 15:22:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239330; cv=none; b=iT71i3MF+7c0KXRaPildacSBkzrF7PMPctX04Qa1TPsPBAV72q9n4YCXGkKPnEtVjex1molQs9eFTZxskdOQfZc0qIAfWR4AnD4o0GtXdxdb+Vp+jI3VBIbsZSt+oChPRCHXGQSM9mY/psIbH6+yu5cWsy1RJIwZX2Pj28ER5yw=
+	t=1787239332; cv=none; b=KY7dxBslgogkO8h8n5rylKfTl6NMyGXbzrl79gxOBMVX4GH/dTfOvShJV2PlrEHpyrGFa/TST2/SncC7UjvKAxFLRAP+eem8MwTnq5A41aky8qcpYIOh4IuE2xT2bcGsqKVH30tknB9WVlFJDk91U3FZ0AWZgtbezJHdvA5W+sE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239330; c=relaxed/simple;
-	bh=4YNzEUGTeTXRrRzvchNJb+UJWZLGk/OcCIfYO7h2QQQ=;
+	s=arc-20240116; t=1787239332; c=relaxed/simple;
+	bh=bWEeAb2bwQtZS+hrBeo/BeKUEDu1GhNEnoBn+u+Q/fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ll5AOpmHoW5rew7D4I0ECh1yujmSoLyiYJnX5t7ULYFPpPL/iUVTWxn2MvjuTcnlobg264fAkgB4+t2bmE1Zf9O/XkGWgy46cs1+tnSele+WFI7JtIw7Kk4Gn/UmlrKoxeRmI25S2+BzJqc/qvZlD8BNczqlK71g8j8jmnLiW+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xm8DFWB7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P+vZDiRASdIupLQAdCrDA4u93vAPFX9iqih2X07/6gQaNGpV3FnuJWFtahWI4B3VKi5MxR6ohKTMlZCaYlBP7eq4Yv8vAxqmX4zvOwXAJpoJiDfGrMl7ehwmFdPmJOzVh5KKs3buK11svBX+ju0YHbB2XfNadYfDit2XsZsmacc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=alOL3CeM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xm8DFWB7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C740A1F000E9;
-	Thu, 20 Aug 2026 15:22:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="alOL3CeM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FF21F000E9;
+	Thu, 20 Aug 2026 15:22:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239328;
-	bh=iFDOMIRehlBk4h6E1k2e9SF6g60Txti20eUSv799mnU=;
+	s=korg; t=1787239331;
+	bh=zL5V52vMahxBDvaeg1PNl+8fgeVH3alAFY7ep5+Wm2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xm8DFWB7cahJJE/4FGNAvO1/I5ZT4CGKvp0kOk4DPFj0xg8PxfuONOKIlp9dym6ib
-	 Zr5vE2fjgDBGGDlgYt3WW1AR8pHnMaWf/dL1pL0bra386qOS/yaZD8R2VJbBTToJsf
-	 1tHWn7qPBsFEePilUdb78MJ6IJFX1yu9VaTpgvBk=
+	b=alOL3CeMmkrOgAJb7VeS33S6S3EoxjNQi+2SBgqEA+8BgsFFSR/40WYfpUOGlZ1ei
+	 4dn5uVuaUOQNjcXOprBp9vy2z05EiEhLlS9HLwKmsDqer4Rxh41MSNzpBVZHQTDbd9
+	 sEUqy3R/Ur/lLDVeTN0TZgsRs+L07ZPdzgpNhsbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	STAR Labs SG <info@starlabs.sg>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 012/220] ipvs: separate destination availability state
-Date: Thu, 20 Aug 2026 16:53:22 +0200
-Message-ID: <20260820145223.865214794@linuxfoundation.org>
+Subject: [PATCH 6.12 002/220] bpf: Fix linked reg delta tracking when src_reg == dst_reg
+Date: Thu, 20 Aug 2026 16:53:12 +0200
+Message-ID: <20260820145223.562434329@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -57,227 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit cdcc4e46180df8161f4d2f3c6fd6beaf6990133d upstream.
+commit d7f14173c0d5866c3cae759dee560ad1bed10d2e upstream.
 
-IPVS configuration paths update destination availability while connection
-accounting updates destination overload state. The two independent states
-share dest->flags, so their read-modify-write updates can race and lose one
-another.
+Consider the case of rX += rX where src_reg and dst_reg are pointers to
+the same bpf_reg_state in adjust_reg_min_max_vals(). The latter first
+modifies the dst_reg in-place, and later in the delta tracking, the
+subsequent is_reg_const(src_reg)/reg_const_value(src_reg) reads the
+post-{add,sub} value instead of the original source.
 
-Keep OVERLOAD in flags, where the preceding patch serializes its updates
-with dst_lock, and move AVAILABLE to cflags. This keeps configuration-
-controlled availability out of the scheduler hot cacheline until a
-scheduler needs to check it. It also prevents availability updates from
-clobbering overload state.
+This is problematic since it sets an incorrect delta, which sync_linked_regs()
+then propagates to linked registers, thus creating a verifier-vs-runtime
+mismatch. Fix it by just skipping this corner case.
 
-The destination status bits are not exposed through the IPVS sockopt or
-netlink interfaces, so keep their definitions in the internal IPVS header.
-
-Readers can still observe stale destination state; this does not provide a
-cross-field snapshot.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Link: https://lore.kernel.org/all/8913381c-1e02-35c7-0ec4-61de5a12fd35@ssi.bg/
-Assisted-by: Claude-Code:GLM-5.2
-Suggested-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-(cherry picked from commit cdcc4e46180df8161f4d2f3c6fd6beaf6990133d)
-[ Julian: Backport by removing the hunks from ip_vs_xmit.c ]
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Fixes: 98d7ca374ba4 ("bpf: Track delta between "linked" registers.")
+Reported-by: STAR Labs SG <info@starlabs.sg>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20260407192421.508817-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+[shung-hsi.yu: contextual difference due to commit 7a433e519364 ("bpf: Support
+negative offsets, BPF_SUB, and alu32 for linked register tracking") not
+backported. ]
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_vs.h              | 7 +++++++
- include/uapi/linux/ip_vs.h       | 6 ------
- net/netfilter/ipvs/ip_vs_conn.c  | 4 ++--
- net/netfilter/ipvs/ip_vs_core.c  | 6 +++---
- net/netfilter/ipvs/ip_vs_ctl.c   | 4 ++--
- net/netfilter/ipvs/ip_vs_dh.c    | 4 ++--
- net/netfilter/ipvs/ip_vs_lblc.c  | 2 +-
- net/netfilter/ipvs/ip_vs_lblcr.c | 8 ++++----
- 8 files changed, 21 insertions(+), 20 deletions(-)
+ kernel/bpf/verifier.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
-index e0077fd28ad1c..35f012f620150 100644
---- a/include/net/ip_vs.h
-+++ b/include/net/ip_vs.h
-@@ -34,6 +34,12 @@
- #define IP_VS_HDR_INVERSE	1
- #define IP_VS_HDR_ICMP		2
- 
-+/* Destination Server Flags */
-+#define IP_VS_DEST_F_OVERLOAD	0x0002		/* server is overloaded */
-+
-+/* Destination Server Config Flags */
-+#define IP_VS_DEST_CF_AVAILABLE	0x0001		/* server is available */
-+
- /* Generic access of ipvs struct */
- static inline struct netns_ipvs *net_ipvs(struct net* net)
- {
-@@ -725,6 +731,7 @@ struct ip_vs_dest {
- 	volatile unsigned int	flags;		/* dest status flags */
- 	atomic_t		conn_flags;	/* flags to copy to conn */
- 	atomic_t		weight;		/* server weight */
-+	unsigned long		cflags;		/* config flags */
- 	atomic_t		last_weight;	/* server latest weight */
- 	__u16			tun_type;	/* tunnel type */
- 	__be16			tun_port;	/* tunnel port */
-diff --git a/include/uapi/linux/ip_vs.h b/include/uapi/linux/ip_vs.h
-index 1ed234e7f2513..2c37c6ac7525a 100644
---- a/include/uapi/linux/ip_vs.h
-+++ b/include/uapi/linux/ip_vs.h
-@@ -28,12 +28,6 @@
- #define IP_VS_SVC_F_SCHED_SH_FALLBACK	IP_VS_SVC_F_SCHED1 /* SH fallback */
- #define IP_VS_SVC_F_SCHED_SH_PORT	IP_VS_SVC_F_SCHED2 /* SH use port */
- 
--/*
-- *      Destination Server Flags
-- */
--#define IP_VS_DEST_F_AVAILABLE	0x0001		/* server is available */
--#define IP_VS_DEST_F_OVERLOAD	0x0002		/* server is overloaded */
--
- /*
-  *      IPVS sync daemon states
-  */
-diff --git a/net/netfilter/ipvs/ip_vs_conn.c b/net/netfilter/ipvs/ip_vs_conn.c
-index f50fbcb13f89c..d7a7e26e9c697 100644
---- a/net/netfilter/ipvs/ip_vs_conn.c
-+++ b/net/netfilter/ipvs/ip_vs_conn.c
-@@ -759,7 +759,7 @@ int ip_vs_check_template(struct ip_vs_conn *ct, struct ip_vs_dest *cdest)
- 	 * Checking the dest server status.
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 275c9fabc955..582be2211ffc 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -14544,7 +14544,8 @@ static int adjust_reg_min_max_vals(struct bpf_verifier_env *env,
  	 */
- 	if ((dest == NULL) ||
--	    !(dest->flags & IP_VS_DEST_F_AVAILABLE) ||
-+	    !(dest->cflags & IP_VS_DEST_CF_AVAILABLE) ||
- 	    expire_quiescent_template(ipvs, dest) ||
- 	    (cdest && (dest != cdest))) {
- 		IP_VS_DBG_BUF(9, "check_template: dest not available for "
-@@ -1402,7 +1402,7 @@ void ip_vs_expire_nodest_conn_flush(struct netns_ipvs *ipvs)
- 				continue;
+ 	if (env->bpf_capable &&
+ 	    BPF_OP(insn->code) == BPF_ADD && !alu32 &&
+-	    dst_reg->id && is_reg_const(src_reg, false)) {
++	    dst_reg->id && is_reg_const(src_reg, false) &&
++	    !(BPF_SRC(insn->code) == BPF_X && insn->src_reg == insn->dst_reg)) {
+ 		u64 val = reg_const_value(src_reg, false);
  
- 			dest = cp->dest;
--			if (!dest || (dest->flags & IP_VS_DEST_F_AVAILABLE))
-+			if (!dest || (dest->cflags & IP_VS_DEST_CF_AVAILABLE))
- 				continue;
- 
- 			if (atomic_read(&cp->n_control))
-diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
-index d121ea3d16bc9..1f62ca2f73309 100644
---- a/net/netfilter/ipvs/ip_vs_core.c
-+++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -124,7 +124,7 @@ ip_vs_in_stats(struct ip_vs_conn *cp, struct sk_buff *skb)
- 	struct ip_vs_dest *dest = cp->dest;
- 	struct netns_ipvs *ipvs = cp->ipvs;
- 
--	if (dest && (dest->flags & IP_VS_DEST_F_AVAILABLE)) {
-+	if (dest && (dest->cflags & IP_VS_DEST_CF_AVAILABLE)) {
- 		struct ip_vs_cpu_stats *s;
- 		struct ip_vs_service *svc;
- 
-@@ -160,7 +160,7 @@ ip_vs_out_stats(struct ip_vs_conn *cp, struct sk_buff *skb)
- 	struct ip_vs_dest *dest = cp->dest;
- 	struct netns_ipvs *ipvs = cp->ipvs;
- 
--	if (dest && (dest->flags & IP_VS_DEST_F_AVAILABLE)) {
-+	if (dest && (dest->cflags & IP_VS_DEST_CF_AVAILABLE)) {
- 		struct ip_vs_cpu_stats *s;
- 		struct ip_vs_service *svc;
- 
-@@ -2030,7 +2030,7 @@ ip_vs_in_hook(void *priv, struct sk_buff *skb, const struct nf_hook_state *state
- 	}
- 
- 	/* Check the server status */
--	if (cp && cp->dest && !(cp->dest->flags & IP_VS_DEST_F_AVAILABLE)) {
-+	if (cp && cp->dest && !(cp->dest->cflags & IP_VS_DEST_CF_AVAILABLE)) {
- 		/* the destination server is not available */
- 		if (sysctl_expire_nodest_conn(ipvs)) {
- 			bool old_ct = ip_vs_conn_uses_old_conntrack(cp, skb);
-diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
-index 8aa29596b36fd..1aec6a078a525 100644
---- a/net/netfilter/ipvs/ip_vs_ctl.c
-+++ b/net/netfilter/ipvs/ip_vs_ctl.c
-@@ -1058,7 +1058,7 @@ __ip_vs_update_dest(struct ip_vs_service *svc, struct ip_vs_dest *dest,
- 	}
- 
- 	/* set the dest status flags */
--	dest->flags |= IP_VS_DEST_F_AVAILABLE;
-+	dest->cflags |= IP_VS_DEST_CF_AVAILABLE;
- 
- 	if (READ_ONCE(dest->u_threshold) != udest->u_threshold ||
- 	    READ_ONCE(dest->l_threshold) != udest->l_threshold) {
-@@ -1325,7 +1325,7 @@ static void __ip_vs_unlink_dest(struct ip_vs_service *svc,
- 				struct ip_vs_dest *dest,
- 				int svcupd)
- {
--	dest->flags &= ~IP_VS_DEST_F_AVAILABLE;
-+	dest->cflags &= ~IP_VS_DEST_CF_AVAILABLE;
- 
- 	/*
- 	 *  Remove it from the d-linked destination list.
-diff --git a/net/netfilter/ipvs/ip_vs_dh.c b/net/netfilter/ipvs/ip_vs_dh.c
-index 75f4c231f4a02..f04d2530a093a 100644
---- a/net/netfilter/ipvs/ip_vs_dh.c
-+++ b/net/netfilter/ipvs/ip_vs_dh.c
-@@ -220,8 +220,8 @@ ip_vs_dh_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
- 
- 	s = (struct ip_vs_dh_state *) svc->sched_data;
- 	dest = ip_vs_dh_get(svc->af, s, &iph->daddr);
--	if (!dest
--	    || !(dest->flags & IP_VS_DEST_F_AVAILABLE)
-+	if (!dest ||
-+	    !(dest->cflags & IP_VS_DEST_CF_AVAILABLE)
- 	    || atomic_read(&dest->weight) <= 0
- 	    || is_overloaded(dest)) {
- 		ip_vs_scheduler_err(svc, "no destination available");
-diff --git a/net/netfilter/ipvs/ip_vs_lblc.c b/net/netfilter/ipvs/ip_vs_lblc.c
-index 2423513d701d4..d22f8154ff949 100644
---- a/net/netfilter/ipvs/ip_vs_lblc.c
-+++ b/net/netfilter/ipvs/ip_vs_lblc.c
-@@ -502,7 +502,7 @@ ip_vs_lblc_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
- 		 */
- 
- 		dest = en->dest;
--		if ((dest->flags & IP_VS_DEST_F_AVAILABLE) &&
-+		if ((dest->cflags & IP_VS_DEST_CF_AVAILABLE) &&
- 		    atomic_read(&dest->weight) > 0 && !is_overloaded(dest, svc))
- 			goto out;
- 	}
-diff --git a/net/netfilter/ipvs/ip_vs_lblcr.c b/net/netfilter/ipvs/ip_vs_lblcr.c
-index cdb1d4bf6761c..abe9fd0764958 100644
---- a/net/netfilter/ipvs/ip_vs_lblcr.c
-+++ b/net/netfilter/ipvs/ip_vs_lblcr.c
-@@ -170,8 +170,8 @@ static inline struct ip_vs_dest *ip_vs_dest_set_min(struct ip_vs_dest_set *set)
- 		if (least->flags & IP_VS_DEST_F_OVERLOAD)
- 			continue;
- 
--		if ((atomic_read(&least->weight) > 0)
--		    && (least->flags & IP_VS_DEST_F_AVAILABLE)) {
-+		if ((atomic_read(&least->weight) > 0) &&
-+		    (least->cflags & IP_VS_DEST_CF_AVAILABLE)) {
- 			loh = ip_vs_dest_conn_overhead(least);
- 			goto nextstage;
- 		}
-@@ -187,8 +187,8 @@ static inline struct ip_vs_dest *ip_vs_dest_set_min(struct ip_vs_dest_set *set)
- 
- 		doh = ip_vs_dest_conn_overhead(dest);
- 		if (((__s64)loh * atomic_read(&dest->weight) >
--		     (__s64)doh * atomic_read(&least->weight))
--		    && (dest->flags & IP_VS_DEST_F_AVAILABLE)) {
-+		     (__s64)doh * atomic_read(&least->weight)) &&
-+		    (dest->cflags & IP_VS_DEST_CF_AVAILABLE)) {
- 			least = dest;
- 			loh = doh;
- 		}
+ 		if ((dst_reg->id & BPF_ADD_CONST) ||
 -- 
 2.53.0
 
