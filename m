@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C77469859;
-	Thu, 20 Aug 2026 17:32:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0951747D94B;
+	Thu, 20 Aug 2026 17:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247180; cv=none; b=iCBqYSMV3wLjV9u9z4I9kCCdtM+we/jjkR7n7Q4XrIe4SKZLWm/DxRuYLbKjzrRlEpO7a9i5T5iBK7gd3hKg7ZdqJnwfexy41JdGhoAT7J7iHB2mblzL+bpg8KDnNG+Bjb64iLoJ0Xw19Msxx1msQ0LeXTXfgIMrkiuiXS5f0G4=
+	t=1787247183; cv=none; b=uJM/PSz+fuHMLxPhuGyhVjbLDUqI0hJP1zlLHvXNYO1+XFmuDetI5u0bHAfKzusn+5NVR+RJ+ai+d6co7xcasI5m8Cu6EEhWq41BLra6y7OwJe4KB3F2Mdsire6/BYL7UmGcsDOfDt+VnVzuewQJNgQ0pu6QB6f62TI6134cROQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247180; c=relaxed/simple;
-	bh=4Ip+XRkLM+YqGPFaFcZI2LmGBxK7la+VMiZ3Wi9Isi0=;
+	s=arc-20240116; t=1787247183; c=relaxed/simple;
+	bh=skN71BH5Uger227d+iSmqNyDi/jhajRzvtiWyKDha50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pNBBFhTOjjZCJzqRLJKfDKV0FzW3P/khb+JguEN5Ib2QuyKYuUNKpU6u4UIN/gz6zhk+dZIonzIwLD91fH+a92d6GPvBKsOqSsVQFDeIqnPfSi8DX8xZjvnpOiKho4ysoGqnj5OSLD9IMpC5xwaB8jZVZHJcSCPCLx3ozwj/wCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9m15JLM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uGYNbNt8+sOrUk9A79whDLNiH1qfPcUXZ6G6NBXuPh0fqsM4EaExmva1fFK2mYczjyg524Oe0Z4dXGy9bw0mMtVT3z5GAf8k7Hhr5wmQ3J0c6npODxfycdUf1gbydPjxSBrDRNwEqxdYp4h8TJeF3VLqOBDsizNbWIpFunkxzwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ypUIRJAn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9m15JLM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71FBB1F00A3A;
-	Thu, 20 Aug 2026 17:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ypUIRJAn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433F01F000E9;
+	Thu, 20 Aug 2026 17:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247177;
-	bh=9yAt0PdPKJl+d3iRIv750GuGys/JJtDBmBYOyc4BsVE=;
+	s=korg; t=1787247179;
+	bh=tLmLYii2VsY1DKsKn9Q4lr4WWaoDk8neYTUoGua/KN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e9m15JLM2LA6QO8DdQKu0mpyRoN6RQskn3Usg0hpKSD+rC5aNRdEXyL6lL94aUPj1
-	 wsPVC7igNz92fYFmtlPAB6X4HOeg4vm4NHlFZjPMmC3bFNVs9Q/YDsrxC3fMoR3hgg
-	 N7Y9VqDCptNl7kapyaChVx+8vlmt1v6x5HP6BIFY=
+	b=ypUIRJAnaw5S0ZSalXdIJC643CIafh441fSEVm9wbDojAmfir7WjhoaSiIXAsyUjJ
+	 Zm4vTY6MvsHWm2johzzAQl5vd2H9E0uVF60DyT2nIGIZ/W8+QvQnoGoXFHdvG+HSoZ
+	 uNNbdM3gnRPqbMH29WkC3lhHLRMPnnDdcJhaLGd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongli Zhang <dongli.zhang@oracle.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Ian Forbes <ian.forbes@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 175/220] net: tap: set skb->dev before parsing virtio net header in tap_get_user_xdp()
-Date: Thu, 20 Aug 2026 16:56:05 +0200
-Message-ID: <20260820145228.735943412@linuxfoundation.org>
+Subject: [PATCH 6.12 176/220] drm/vmwgfx: take fman->lock around fence list mutation in fifo_down
+Date: Thu, 20 Aug 2026 16:56:06 +0200
+Message-ID: <20260820145228.764861467@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -53,83 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dongli Zhang <dongli.zhang@oracle.com>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-[ Upstream commit 3874892dd27d5387aa9a06f58d9060f18f351d24 ]
+[ Upstream commit 250af2e8c3e90dc978e062a936b633870a22e660 ]
 
-The commit 4f61f133f354 ("net: tap: NULL pointer derefence in
-dev_parse_header_protocol when skb->dev is null") fixed a crash in
-tap_get_user() by assigning skb->dev before calling tun_vnet_hdr_to_skb().
-This is required because virtio_net_hdr_to_skb() may invoke
-dev_parse_header_protocol(), which dereferences skb->dev. Without the
-assignment, a NULL pointer dereference can occur.
+vmw_fence_fifo_down() drops fman->lock to wait on a fence and, on
+timeout, mutates fman->fence_list via list_del_init() and signals
+the fence without re-acquiring the lock.  __vmw_fences_update() walks
+and removes entries from the same list under fman->lock from any
+other waiter, the fence-IRQ thread, or vmw_fences_update(), so the
+unlocked list_del_init() can corrupt the list head.
 
-However, tap_get_user_xdp() still parses the virtio-net header before
-assigning skb->dev. When the vhost TX path passes an XDP buffer containing
-a GSO virtio-net header but the protocol is set to zero on purpose,
-tun_vnet_hdr_to_skb() can reach dev_parse_header_protocol() while skb->dev
-is still NULL, resulting in a crash.
+Re-take fman->lock before manipulating fence->head and use
+dma_fence_signal_locked().  Wrap the locked signalling in
+dma_fence_begin_signalling() / dma_fence_end_signalling() so the
+lockdep annotation that dma_fence_signal() previously provided is
+preserved (the same pattern as __vmw_fences_update()).
 
-Fix this by looking up the tap device and assigning skb->dev before calling
-tun_vnet_hdr_to_skb(), matching the ordering already used in
-tap_get_user(). Preserve the existing RCU read-side critical section across
-dev_queue_xmit().
+dma_fence_put() is moved outside the lock to avoid a recursive
+acquire from vmw_fence_obj_destroy(), which also takes fman->lock.
 
-Fixes: 924a9bc362a5 ("net: check if protocol extracted by virtio_net_hdr_set_proto is correct")
+Fixes: ae2a104058e2 ("vmwgfx: Implement fence objects")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://patch.msgid.link/20260802224612.264563-1-dongli.zhang@oracle.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Claude:claude-opus-4.7
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
+Link: https://patch.msgid.link/20260505222728.519626-5-zack.rusin@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/tap.c |   24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_fence.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/net/tap.c
-+++ b/drivers/net/tap.c
-@@ -1199,10 +1199,21 @@ static int tap_get_user_xdp(struct tap_q
- 	skb_reset_mac_header(skb);
- 	skb->protocol = eth_hdr(skb)->h_proto;
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
+@@ -658,9 +658,14 @@ void vmw_fence_fifo_down(struct vmw_fenc
+ 		ret = vmw_fence_obj_wait(fence, false, false,
+ 					 VMW_FENCE_WAIT_TIMEOUT);
  
-+	rcu_read_lock();
-+	tap = rcu_dereference(q->tap);
-+	if (!tap) {
-+		kfree_skb(skb);
-+		rcu_read_unlock();
-+		return 0;
-+	}
-+	skb->dev = tap->dev;
++		spin_lock(&fman->lock);
+ 		if (unlikely(ret != 0)) {
++			bool cookie = dma_fence_begin_signalling();
 +
- 	if (vnet_hdr_len) {
- 		err = virtio_net_hdr_to_skb(skb, gso, tap_is_little_endian(q));
--		if (err)
-+		if (err) {
-+			rcu_read_unlock();
- 			goto err_kfree;
-+		}
+ 			list_del_init(&fence->head);
+-			dma_fence_signal(&fence->base);
++			dma_fence_signal_locked(&fence->base);
++			dma_fence_end_signalling(cookie);
++
+ 			INIT_LIST_HEAD(&action_list);
+ 			list_splice_init(&fence->seq_passed_actions,
+ 					 &action_list);
+@@ -668,7 +673,10 @@ void vmw_fence_fifo_down(struct vmw_fenc
+ 		}
+ 
+ 		BUG_ON(!list_empty(&fence->head));
++		spin_unlock(&fman->lock);
++
+ 		dma_fence_put(&fence->base);
++
+ 		spin_lock(&fman->lock);
  	}
- 
- 	/* Move network header to the right position for VLAN tagged packets */
-@@ -1210,15 +1221,8 @@ static int tap_get_user_xdp(struct tap_q
- 	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
- 		skb_set_network_header(skb, depth);
- 
--	rcu_read_lock();
--	tap = rcu_dereference(q->tap);
--	if (tap) {
--		skb->dev = tap->dev;
--		skb_probe_transport_header(skb);
--		dev_queue_xmit(skb);
--	} else {
--		kfree_skb(skb);
--	}
-+	skb_probe_transport_header(skb);
-+	dev_queue_xmit(skb);
- 	rcu_read_unlock();
- 
- 	return 0;
+ 	spin_unlock(&fman->lock);
 
 
