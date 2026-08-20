@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3436C36A37A;
-	Thu, 20 Aug 2026 15:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2010637F31A;
+	Thu, 20 Aug 2026 15:17:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239064; cv=none; b=Zb6qthT3bhexADI8wEuWZ0kH/fKKo//C5Ybrj032Ufi35c2Qy/BXMtca27aXn7nkBFlnvACtsYtUcNBvUOahhd7bEx17R7xKJmz61Xt0I4t/pmhkj7P1wcNjd0MPW0H7EBiYSIxQ0cvzxhP33odBa13GWQhSmapMJwHZFXI9wsA=
+	t=1787239068; cv=none; b=Ggcy12RBA6OdMB6EQy3UJuyPbQJPv/RDbin3zWKxWwnbFULMEGhFYDzjNzIQIPDtpfCMB1e+GYJbm7e6hC+fD99qHbMuCgiao9OJAVOuCktsU4NlEKRK0gmZnGbCeDxxsYUT3fIxU8zaB0rdJue72Bp3Ntki2AkJ2anI6tYfChI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239064; c=relaxed/simple;
-	bh=lMXDMynCW/StaxBrM54/G1lD/IINr6VvirukKcHp5A0=;
+	s=arc-20240116; t=1787239068; c=relaxed/simple;
+	bh=IOA3r1AdyHkesvk7tkble+U6eSoRRo+8Fr0cWGfWWjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=es1wvRlaekeAc+aOcgKWMcJ4Tz7OF/7/pxedc47wlQ1F82K2Kozk3TGsW01lzpKLm7JV7ElxmUtmMU39JwN+jTmakA5gJW0PdpMjMlHRIjQmL78sHnHegkaufYMkM5kDvHW/WnXa0PferrFg+0r+/QKNnTbCdpEilPUyAdt6Skc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jUlI1zBP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MY36vw8DjtuJCXH6KD/D9HzbqEl0/L4MJcmJCowbv3Vnz50BPrdmr/yf1bPo9bsVYNledx09Wk831S5PTPQaqREaql8Dn5EJQLbRhrgmqw2WFmTmbRT7nbsWpyMZQrgjUZo/IUMj0MKlVpxCywE2z/o2+qAfug1IEaRbWDx9cRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TyZU6xq3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jUlI1zBP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3941F000E9;
-	Thu, 20 Aug 2026 15:17:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TyZU6xq3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B95A1F000E9;
+	Thu, 20 Aug 2026 15:17:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239063;
-	bh=vIgKtRcuz1dFU0G/BkFwweduh87j3TFTGCHcWLSKCf4=;
+	s=korg; t=1787239066;
+	bh=ow/ZBIXWaGIG5x9i0i3g+fZ0h/xKVnrajTgEDmgqlRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jUlI1zBPTyTK6i2Kh0jV6Ki5ob+UhjJG+ZJ8KcUGsKZHsIgHHiqupBn3y79gvX25Y
-	 PZiFEaSPK0cd425m1PUUgbptgaQaQjcCIxsYgiSoyFmutQ2m2OEPkqLfdQU93FJs4i
-	 0qYAGrc+UBFK4uJ5E2BQIkUQrw/eC6yLDt4QlnUI=
+	b=TyZU6xq3Q0KKRaj4X5rOnvaGc7FbiOe2nQeq1+wBY0rvpyXGOzU59NxCdzTas5cWZ
+	 CmAVIekZfv4CdUsqzJKVXvhDDkLbqu7r2tD3KjrKdRdiSzibwtFIgT4NrIoUMLiyKn
+	 nb2ZuH/WbMmsxTz7ZpSHaGig7hn/AQzuX3nQIBzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 120/217] xfs: fix allocated inodes that show up in the unlinked list
-Date: Thu, 20 Aug 2026 16:54:48 +0200
-Message-ID: <20260820145241.346405578@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 138/217] ksmbd: rename smb2_get_msg to smb_get_msg
+Date: Thu, 20 Aug 2026 16:55:06 +0200
+Message-ID: <20260820145241.908858424@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -51,134 +51,489 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 68ab37650ce5195b4f4f8466444a36a78207840c upstream.
+[ Upstream commit 0b444cfd8b74ebce421ccd96eac9c495e536c92e ]
 
-If an allocated inode shows up in the unlinked list, we need to get it
-completely off the list.  Set the corrected next/prev pointers such that
-the inode will not look like it should be on an unlinked list at all.
+With the removal of the RFC1002 length field from the SMB header,
+smb2_get_msg is now used to get the smb1 request from the request buffer.
+Since this function is no longer exclusive to smb2 and now supports smb1
+as well, This patch rename it to smb_get_msg to better reflect its usage.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: ab97f4b1c03075 ("xfs: repair AGI unlinked inode bucket lists")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: cfc0b8e5080a ("ksmbd: validate minimum PDU size for transform requests")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/agheader_repair.c |   63 ++++++++++++++++++++++++++++++++++++-----
- fs/xfs/scrub/trace.h           |    1 
- 2 files changed, 57 insertions(+), 7 deletions(-)
+ fs/smb/server/auth.c       |    4 +-
+ fs/smb/server/connection.c |    2 -
+ fs/smb/server/oplock.c     |    8 ++---
+ fs/smb/server/server.c     |    2 -
+ fs/smb/server/smb2pdu.c    |   70 ++++++++++++++++++++++-----------------------
+ fs/smb/server/smb2pdu.h    |    9 -----
+ fs/smb/server/smb_common.c |   18 +++++------
+ fs/smb/server/smb_common.h |    9 +++++
+ 8 files changed, 61 insertions(+), 61 deletions(-)
 
---- a/fs/xfs/scrub/agheader_repair.c
-+++ b/fs/xfs/scrub/agheader_repair.c
-@@ -980,6 +980,13 @@ err:
+--- a/fs/smb/server/auth.c
++++ b/fs/smb/server/auth.c
+@@ -710,7 +710,7 @@ void ksmbd_gen_smb311_encryptionkey(stru
+ int ksmbd_gen_preauth_integrity_hash(struct ksmbd_conn *conn, char *buf,
+ 				     __u8 *pi_hash)
+ {
+-	struct smb2_hdr *rcv_hdr = smb2_get_msg(buf);
++	struct smb2_hdr *rcv_hdr = smb_get_msg(buf);
+ 	char *all_bytes_msg = (char *)&rcv_hdr->ProtocolId;
+ 	int msg_size = get_rfc1002_len(buf);
+ 	struct sha512_ctx sha_ctx;
+@@ -837,7 +837,7 @@ int ksmbd_crypt_message(struct ksmbd_wor
+ 			unsigned int nvec, int enc)
+ {
+ 	struct ksmbd_conn *conn = work->conn;
+-	struct smb2_transform_hdr *tr_hdr = smb2_get_msg(iov[0].iov_base);
++	struct smb2_transform_hdr *tr_hdr = smb_get_msg(iov[0].iov_base);
+ 	unsigned int assoc_data_len = sizeof(struct smb2_transform_hdr) - 20;
+ 	int rc;
+ 	DECLARE_CRYPTO_WAIT(wait);
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -475,7 +475,7 @@ recheck:
+ 		if (!ksmbd_smb_request(conn))
+ 			break;
+ 
+-		if (((struct smb2_hdr *)smb2_get_msg(conn->request_buf))->ProtocolId ==
++		if (((struct smb2_hdr *)smb_get_msg(conn->request_buf))->ProtocolId ==
+ 		    SMB2_PROTO_NUMBER) {
+ 			if (pdu_size < SMB2_MIN_SUPPORTED_HEADER_SIZE)
+ 				break;
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -663,7 +663,7 @@ static void __smb2_oplock_break_noti(str
+ 		goto out;
+ 	}
+ 
+-	rsp_hdr = smb2_get_msg(work->response_buf);
++	rsp_hdr = smb_get_msg(work->response_buf);
+ 	memset(rsp_hdr, 0, sizeof(struct smb2_hdr) + 2);
+ 	rsp_hdr->ProtocolId = SMB2_PROTO_NUMBER;
+ 	rsp_hdr->StructureSize = SMB2_HEADER_STRUCTURE_SIZE;
+@@ -677,7 +677,7 @@ static void __smb2_oplock_break_noti(str
+ 	rsp_hdr->SessionId = 0;
+ 	memset(rsp_hdr->Signature, 0, 16);
+ 
+-	rsp = smb2_get_msg(work->response_buf);
++	rsp = smb_get_msg(work->response_buf);
+ 
+ 	rsp->StructureSize = cpu_to_le16(24);
+ 	if (!br_info->open_trunc &&
+@@ -776,7 +776,7 @@ static void __smb2_lease_break_noti(stru
+ 		goto out;
+ 	}
+ 
+-	rsp_hdr = smb2_get_msg(work->response_buf);
++	rsp_hdr = smb_get_msg(work->response_buf);
+ 	memset(rsp_hdr, 0, sizeof(struct smb2_hdr) + 2);
+ 	rsp_hdr->ProtocolId = SMB2_PROTO_NUMBER;
+ 	rsp_hdr->StructureSize = SMB2_HEADER_STRUCTURE_SIZE;
+@@ -790,7 +790,7 @@ static void __smb2_lease_break_noti(stru
+ 	rsp_hdr->SessionId = 0;
+ 	memset(rsp_hdr->Signature, 0, 16);
+ 
+-	rsp = smb2_get_msg(work->response_buf);
++	rsp = smb_get_msg(work->response_buf);
+ 	rsp->StructureSize = cpu_to_le16(44);
+ 	rsp->Epoch = br_info->epoch;
+ 	rsp->Flags = 0;
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -95,7 +95,7 @@ static inline int check_conn_state(struc
+ 
+ 	if (ksmbd_conn_exiting(work->conn) ||
+ 	    ksmbd_conn_need_reconnect(work->conn)) {
+-		rsp_hdr = smb2_get_msg(work->response_buf);
++		rsp_hdr = smb_get_msg(work->response_buf);
+ 		rsp_hdr->Status.CifsError = STATUS_CONNECTION_DISCONNECTED;
+ 		return 1;
+ 	}
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -48,8 +48,8 @@ static void __wbuf(struct ksmbd_work *wo
+ 		*req = ksmbd_req_buf_next(work);
+ 		*rsp = ksmbd_resp_buf_next(work);
+ 	} else {
+-		*req = smb2_get_msg(work->request_buf);
+-		*rsp = smb2_get_msg(work->response_buf);
++		*req = smb_get_msg(work->request_buf);
++		*rsp = smb_get_msg(work->response_buf);
+ 	}
  }
  
- /*
-+ * Magic value that means "not unlinked" because xfarrays don't support storing
-+ * totally zeroed elements.  There can't be a cluster that starts in daddr 0 so
-+ * there can't be an inode #1 either.
-+ */
-+#define LINKED_AGINO	(0x1)
+@@ -155,7 +155,7 @@ void smb2_set_err_rsp(struct ksmbd_work
+ 	if (work->next_smb2_rcv_hdr_off)
+ 		err_rsp = ksmbd_resp_buf_next(work);
+ 	else
+-		err_rsp = smb2_get_msg(work->response_buf);
++		err_rsp = smb_get_msg(work->response_buf);
+ 
+ 	if (err_rsp->hdr.Status != STATUS_STOPPED_ON_SYMLINK) {
+ 		int err;
+@@ -181,7 +181,7 @@ void smb2_set_err_rsp(struct ksmbd_work
+  */
+ bool is_smb2_neg_cmd(struct ksmbd_work *work)
+ {
+-	struct smb2_hdr *hdr = smb2_get_msg(work->request_buf);
++	struct smb2_hdr *hdr = smb_get_msg(work->request_buf);
+ 
+ 	/* is it SMB2 header ? */
+ 	if (hdr->ProtocolId != SMB2_PROTO_NUMBER)
+@@ -205,7 +205,7 @@ bool is_smb2_neg_cmd(struct ksmbd_work *
+  */
+ bool is_smb2_rsp(struct ksmbd_work *work)
+ {
+-	struct smb2_hdr *hdr = smb2_get_msg(work->response_buf);
++	struct smb2_hdr *hdr = smb_get_msg(work->response_buf);
+ 
+ 	/* is it SMB2 header ? */
+ 	if (hdr->ProtocolId != SMB2_PROTO_NUMBER)
+@@ -231,7 +231,7 @@ u16 get_smb2_cmd_val(struct ksmbd_work *
+ 	if (work->next_smb2_rcv_hdr_off)
+ 		rcv_hdr = ksmbd_req_buf_next(work);
+ 	else
+-		rcv_hdr = smb2_get_msg(work->request_buf);
++		rcv_hdr = smb_get_msg(work->request_buf);
+ 	return le16_to_cpu(rcv_hdr->Command);
+ }
+ 
+@@ -244,7 +244,7 @@ void set_smb2_rsp_status(struct ksmbd_wo
+ {
+ 	struct smb2_hdr *rsp_hdr;
+ 
+-	rsp_hdr = smb2_get_msg(work->response_buf);
++	rsp_hdr = smb_get_msg(work->response_buf);
+ 	rsp_hdr->Status = err;
+ 
+ 	work->iov_idx = 0;
+@@ -267,7 +267,7 @@ int init_smb2_neg_rsp(struct ksmbd_work
+ 	struct ksmbd_conn *conn = work->conn;
+ 	int err;
+ 
+-	rsp_hdr = smb2_get_msg(work->response_buf);
++	rsp_hdr = smb_get_msg(work->response_buf);
+ 	memset(rsp_hdr, 0, sizeof(struct smb2_hdr) + 2);
+ 	rsp_hdr->ProtocolId = SMB2_PROTO_NUMBER;
+ 	rsp_hdr->StructureSize = SMB2_HEADER_STRUCTURE_SIZE;
+@@ -281,7 +281,7 @@ int init_smb2_neg_rsp(struct ksmbd_work
+ 	rsp_hdr->SessionId = 0;
+ 	memset(rsp_hdr->Signature, 0, 16);
+ 
+-	rsp = smb2_get_msg(work->response_buf);
++	rsp = smb_get_msg(work->response_buf);
+ 
+ 	WARN_ON(ksmbd_conn_good(conn));
+ 
+@@ -455,7 +455,7 @@ static void init_chained_smb2_rsp(struct
+  */
+ bool is_chained_smb2_message(struct ksmbd_work *work)
+ {
+-	struct smb2_hdr *hdr = smb2_get_msg(work->request_buf);
++	struct smb2_hdr *hdr = smb_get_msg(work->request_buf);
+ 	unsigned int len, next_cmd;
+ 
+ 	if (hdr->ProtocolId != SMB2_PROTO_NUMBER)
+@@ -506,8 +506,8 @@ bool is_chained_smb2_message(struct ksmb
+  */
+ int init_smb2_rsp_hdr(struct ksmbd_work *work)
+ {
+-	struct smb2_hdr *rsp_hdr = smb2_get_msg(work->response_buf);
+-	struct smb2_hdr *rcv_hdr = smb2_get_msg(work->request_buf);
++	struct smb2_hdr *rsp_hdr = smb_get_msg(work->response_buf);
++	struct smb2_hdr *rcv_hdr = smb_get_msg(work->request_buf);
+ 
+ 	memset(rsp_hdr, 0, sizeof(struct smb2_hdr) + 2);
+ 	rsp_hdr->ProtocolId = rcv_hdr->ProtocolId;
+@@ -536,7 +536,7 @@ int init_smb2_rsp_hdr(struct ksmbd_work
+  */
+ int smb2_allocate_rsp_buf(struct ksmbd_work *work)
+ {
+-	struct smb2_hdr *hdr = smb2_get_msg(work->request_buf);
++	struct smb2_hdr *hdr = smb_get_msg(work->request_buf);
+ 	size_t small_sz = MAX_CIFS_SMALL_BUFFER_SIZE;
+ 	size_t large_sz = small_sz + work->conn->vals->max_trans_size;
+ 	size_t sz = small_sz;
+@@ -552,7 +552,7 @@ int smb2_allocate_rsp_buf(struct ksmbd_w
+ 		    offsetof(struct smb2_query_info_req, OutputBufferLength))
+ 			return -EINVAL;
+ 
+-		req = smb2_get_msg(work->request_buf);
++		req = smb_get_msg(work->request_buf);
+ 		if ((req->InfoType == SMB2_O_INFO_FILE &&
+ 		     (req->FileInfoClass == FILE_FULL_EA_INFORMATION ||
+ 		     req->FileInfoClass == FILE_ALL_INFORMATION)) ||
+@@ -726,10 +726,10 @@ void smb2_send_interim_resp(struct ksmbd
+ 	}
+ 
+ 	in_work->conn = work->conn;
+-	memcpy(smb2_get_msg(in_work->response_buf), ksmbd_resp_buf_next(work),
++	memcpy(smb_get_msg(in_work->response_buf), ksmbd_resp_buf_next(work),
+ 	       __SMB2_HEADER_STRUCTURE_SIZE);
+ 
+-	rsp_hdr = smb2_get_msg(in_work->response_buf);
++	rsp_hdr = smb_get_msg(in_work->response_buf);
+ 	rsp_hdr->Flags |= SMB2_FLAGS_ASYNC_COMMAND;
+ 	rsp_hdr->Id.AsyncId = cpu_to_le64(work->async_id);
+ 	smb2_set_err_rsp(in_work);
+@@ -1109,8 +1109,8 @@ static __le32 deassemble_neg_contexts(st
+ int smb2_handle_negotiate(struct ksmbd_work *work)
+ {
+ 	struct ksmbd_conn *conn = work->conn;
+-	struct smb2_negotiate_req *req = smb2_get_msg(work->request_buf);
+-	struct smb2_negotiate_rsp *rsp = smb2_get_msg(work->response_buf);
++	struct smb2_negotiate_req *req = smb_get_msg(work->request_buf);
++	struct smb2_negotiate_rsp *rsp = smb_get_msg(work->response_buf);
+ 	int rc = 0;
+ 	unsigned int smb2_buf_len, smb2_neg_size, neg_ctxt_len = 0;
+ 	__le32 status;
+@@ -6088,7 +6088,7 @@ out:
+  */
+ int smb2_echo(struct ksmbd_work *work)
+ {
+-	struct smb2_echo_rsp *rsp = smb2_get_msg(work->response_buf);
++	struct smb2_echo_rsp *rsp = smb_get_msg(work->response_buf);
+ 
+ 	ksmbd_debug(SMB, "Received smb2 echo request\n");
+ 
+@@ -6666,8 +6666,8 @@ int smb2_set_info(struct ksmbd_work *wor
+ 			pid = work->compound_pfid;
+ 		}
+ 	} else {
+-		req = smb2_get_msg(work->request_buf);
+-		rsp = smb2_get_msg(work->response_buf);
++		req = smb_get_msg(work->request_buf);
++		rsp = smb_get_msg(work->response_buf);
+ 	}
+ 
+ 	if (!test_tree_conn_flag(work->tcon, KSMBD_TREE_CONN_FLAG_WRITABLE)) {
+@@ -6895,8 +6895,8 @@ int smb2_read(struct ksmbd_work *work)
+ 			pid = work->compound_pfid;
+ 		}
+ 	} else {
+-		req = smb2_get_msg(work->request_buf);
+-		rsp = smb2_get_msg(work->response_buf);
++		req = smb_get_msg(work->request_buf);
++		rsp = smb_get_msg(work->response_buf);
+ 	}
+ 
+ 	if (!has_file_id(id)) {
+@@ -7324,7 +7324,7 @@ out:
+ int smb2_cancel(struct ksmbd_work *work)
+ {
+ 	struct ksmbd_conn *conn = work->conn;
+-	struct smb2_hdr *hdr = smb2_get_msg(work->request_buf);
++	struct smb2_hdr *hdr = smb_get_msg(work->request_buf);
+ 	struct smb2_hdr *chdr;
+ 	struct ksmbd_work *iter;
+ 	struct list_head *command_list;
+@@ -7341,7 +7341,7 @@ int smb2_cancel(struct ksmbd_work *work)
+ 		spin_lock(&conn->request_lock);
+ 		list_for_each_entry(iter, command_list,
+ 				    async_request_entry) {
+-			chdr = smb2_get_msg(iter->request_buf);
++			chdr = smb_get_msg(iter->request_buf);
+ 
+ 			if (iter->async_id !=
+ 			    le64_to_cpu(hdr->Id.AsyncId))
+@@ -7373,7 +7373,7 @@ int smb2_cancel(struct ksmbd_work *work)
+ 
+ 		spin_lock(&conn->request_lock);
+ 		list_for_each_entry(iter, command_list, request_entry) {
+-			chdr = smb2_get_msg(iter->request_buf);
++			chdr = smb_get_msg(iter->request_buf);
+ 
+ 			if (chdr->MessageId != hdr->MessageId ||
+ 			    iter == work)
+@@ -8330,8 +8330,8 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 			id = work->compound_fid;
+ 		}
+ 	} else {
+-		req = smb2_get_msg(work->request_buf);
+-		rsp = smb2_get_msg(work->response_buf);
++		req = smb_get_msg(work->request_buf);
++		rsp = smb_get_msg(work->response_buf);
+ 	}
+ 
+ 	if (!has_file_id(id))
+@@ -9017,7 +9017,7 @@ int smb2_notify(struct ksmbd_work *work)
+  */
+ bool smb2_is_sign_req(struct ksmbd_work *work, unsigned int command)
+ {
+-	struct smb2_hdr *rcv_hdr2 = smb2_get_msg(work->request_buf);
++	struct smb2_hdr *rcv_hdr2 = smb_get_msg(work->request_buf);
+ 
+ 	if ((rcv_hdr2->Flags & SMB2_FLAGS_SIGNED) &&
+ 	    command != SMB2_NEGOTIATE_HE &&
+@@ -9042,7 +9042,7 @@ int smb2_check_sign_req(struct ksmbd_wor
+ 	struct kvec iov[1];
+ 	size_t len;
+ 
+-	hdr = smb2_get_msg(work->request_buf);
++	hdr = smb_get_msg(work->request_buf);
+ 	if (work->next_smb2_rcv_hdr_off)
+ 		hdr = ksmbd_req_buf_next(work);
+ 
+@@ -9116,7 +9116,7 @@ int smb3_check_sign_req(struct ksmbd_wor
+ 	struct kvec iov[1];
+ 	size_t len;
+ 
+-	hdr = smb2_get_msg(work->request_buf);
++	hdr = smb_get_msg(work->request_buf);
+ 	if (work->next_smb2_rcv_hdr_off)
+ 		hdr = ksmbd_req_buf_next(work);
+ 
+@@ -9252,7 +9252,7 @@ void smb3_preauth_hash_rsp(struct ksmbd_
+ static void fill_transform_hdr(void *tr_buf, char *old_buf, __le16 cipher_type)
+ {
+ 	struct smb2_transform_hdr *tr_hdr = tr_buf + 4;
+-	struct smb2_hdr *hdr = smb2_get_msg(old_buf);
++	struct smb2_hdr *hdr = smb_get_msg(old_buf);
+ 	unsigned int orig_len = get_rfc1002_len(old_buf);
+ 
+ 	/* tr_buf must be cleared by the caller */
+@@ -9291,7 +9291,7 @@ int smb3_encrypt_resp(struct ksmbd_work
+ 
+ bool smb3_is_transform_hdr(void *buf)
+ {
+-	struct smb2_transform_hdr *trhdr = smb2_get_msg(buf);
++	struct smb2_transform_hdr *trhdr = smb_get_msg(buf);
+ 
+ 	return trhdr->ProtocolId == SMB2_TRANSFORM_PROTO_NUM;
+ }
+@@ -9303,7 +9303,7 @@ int smb3_decrypt_req(struct ksmbd_work *
+ 	unsigned int pdu_length = get_rfc1002_len(buf);
+ 	struct kvec iov[2];
+ 	int buf_data_size = pdu_length - sizeof(struct smb2_transform_hdr);
+-	struct smb2_transform_hdr *tr_hdr = smb2_get_msg(buf);
++	struct smb2_transform_hdr *tr_hdr = smb_get_msg(buf);
+ 	int rc = 0;
+ 
+ 	if (pdu_length < sizeof(struct smb2_transform_hdr) ||
+@@ -9344,7 +9344,7 @@ bool smb3_11_final_sess_setup_resp(struc
+ {
+ 	struct ksmbd_conn *conn = work->conn;
+ 	struct ksmbd_session *sess = work->sess;
+-	struct smb2_hdr *rsp = smb2_get_msg(work->response_buf);
++	struct smb2_hdr *rsp = smb_get_msg(work->response_buf);
+ 
+ 	if (conn->dialect < SMB30_PROT_ID)
+ 		return false;
+--- a/fs/smb/server/smb2pdu.h
++++ b/fs/smb/server/smb2pdu.h
+@@ -490,15 +490,6 @@ int smb2_ioctl(struct ksmbd_work *work);
+ int smb2_oplock_break(struct ksmbd_work *work);
+ int smb2_notify(struct ksmbd_work *ksmbd_work);
+ 
+-/*
+- * Get the body of the smb2 message excluding the 4 byte rfc1002 headers
+- * from request/response buffer.
+- */
+-static inline void *smb2_get_msg(void *buf)
+-{
+-	return buf + 4;
+-}
+-
+ #define POSIX_TYPE_FILE		0
+ #define POSIX_TYPE_DIR		1
+ #define POSIX_TYPE_SYMLINK	2
+--- a/fs/smb/server/smb_common.c
++++ b/fs/smb/server/smb_common.c
+@@ -140,7 +140,7 @@ int ksmbd_verify_smb_message(struct ksmb
+ 	if (smb2_hdr->ProtocolId == SMB2_PROTO_NUMBER)
+ 		return ksmbd_smb2_check_message(work);
+ 
+-	hdr = smb2_get_msg(work->request_buf);
++	hdr = smb_get_msg(work->request_buf);
+ 	if (*(__le32 *)hdr->Protocol == SMB1_PROTO_NUMBER &&
+ 	    hdr->Command == SMB_COM_NEGOTIATE) {
+ 		work->conn->outstanding_credits++;
+@@ -163,7 +163,7 @@ bool ksmbd_smb_request(struct ksmbd_conn
+ 	if (conn->request_buf[0] != 0)
+ 		return false;
+ 
+-	proto = (__le32 *)smb2_get_msg(conn->request_buf);
++	proto = (__le32 *)smb_get_msg(conn->request_buf);
+ 	if (*proto == SMB2_COMPRESSION_TRANSFORM_ID) {
+ 		pr_err_ratelimited("smb2 compression not support yet");
+ 		return false;
+@@ -259,14 +259,14 @@ int ksmbd_lookup_dialect_by_id(__le16 *c
+ static int ksmbd_negotiate_smb_dialect(void *buf)
+ {
+ 	int smb_buf_length = get_rfc1002_len(buf);
+-	__le32 proto = ((struct smb2_hdr *)smb2_get_msg(buf))->ProtocolId;
++	__le32 proto = ((struct smb2_hdr *)smb_get_msg(buf))->ProtocolId;
+ 
+ 	if (proto == SMB2_PROTO_NUMBER) {
+ 		struct smb2_negotiate_req *req;
+ 		int smb2_neg_size =
+ 			offsetof(struct smb2_negotiate_req, Dialects);
+ 
+-		req = (struct smb2_negotiate_req *)smb2_get_msg(buf);
++		req = (struct smb2_negotiate_req *)smb_get_msg(buf);
+ 		if (smb2_neg_size > smb_buf_length)
+ 			goto err_out;
+ 
+@@ -281,7 +281,7 @@ static int ksmbd_negotiate_smb_dialect(v
+ 	if (proto == SMB1_PROTO_NUMBER) {
+ 		struct smb_negotiate_req *req;
+ 
+-		req = (struct smb_negotiate_req *)smb2_get_msg(buf);
++		req = (struct smb_negotiate_req *)smb_get_msg(buf);
+ 		if (le16_to_cpu(req->ByteCount) < 2)
+ 			goto err_out;
+ 
+@@ -319,8 +319,8 @@ static u16 get_smb1_cmd_val(struct ksmbd
+  */
+ static int init_smb1_rsp_hdr(struct ksmbd_work *work)
+ {
+-	struct smb_hdr *rsp_hdr = (struct smb_hdr *)smb2_get_msg(work->response_buf);
+-	struct smb_hdr *rcv_hdr = (struct smb_hdr *)smb2_get_msg(work->request_buf);
++	struct smb_hdr *rsp_hdr = (struct smb_hdr *)smb_get_msg(work->response_buf);
++	struct smb_hdr *rcv_hdr = (struct smb_hdr *)smb_get_msg(work->request_buf);
+ 
+ 	rsp_hdr->Command = SMB_COM_NEGOTIATE;
+ 	*(__le32 *)rsp_hdr->Protocol = SMB1_PROTO_NUMBER;
+@@ -411,7 +411,7 @@ static int init_smb1_server(struct ksmbd
+ 
+ int ksmbd_init_smb_server(struct ksmbd_conn *conn)
+ {
+-	struct smb_hdr *rcv_hdr = (struct smb_hdr *)smb2_get_msg(conn->request_buf);
++	struct smb_hdr *rcv_hdr = (struct smb_hdr *)smb_get_msg(conn->request_buf);
+ 	__le32 proto;
+ 
+ 	proto = *(__le32 *)rcv_hdr->Protocol;
+@@ -572,7 +572,7 @@ static int __smb2_negotiate(struct ksmbd
+ 
+ static int smb_handle_negotiate(struct ksmbd_work *work)
+ {
+-	struct smb_negotiate_rsp *neg_rsp = smb2_get_msg(work->response_buf);
++	struct smb_negotiate_rsp *neg_rsp = smb_get_msg(work->response_buf);
+ 
+ 	ksmbd_debug(SMB, "Unsupported SMB1 protocol\n");
+ 
+--- a/fs/smb/server/smb_common.h
++++ b/fs/smb/server/smb_common.h
+@@ -423,4 +423,13 @@ unsigned int ksmbd_server_side_copy_max_
+ unsigned int ksmbd_server_side_copy_max_total_size(void);
+ bool is_asterisk(char *p);
+ __le32 smb_map_generic_desired_access(__le32 daccess);
 +
 +/*
-  * Record a forwards unlinked chain pointer from agino -> next_agino in our
-  * staging information.
-  */
-@@ -1355,6 +1362,35 @@ xrep_iunlink_resolve_bucket(
- 			break;
- 		}
- 
-+		if (VFS_I(ip)->i_nlink != 0) {
-+			/*
-+			 * Inode is linked somewhere!  Blow out both unlinked
-+			 * list pointers, advance the list, and pretend we
-+			 * didn't see this inode.  Clear it from iunlink_bmp
-+			 * because it's linked.
-+			 */
-+			trace_xrep_iunlink_resolve_allocated(sc->sa.pag,
-+					bucket, prev_agino, next_agino);
-+
-+			error = xrep_iunlink_store_next(ragi, next_agino,
-+					NULLAGINO);
-+			if (error)
-+				return error;
-+
-+			error = xrep_iunlink_store_prev(ragi, next_agino,
-+					LINKED_AGINO);
-+			if (error)
-+				return error;
-+
-+			error = xagino_bitmap_clear(&ragi->iunlink_bmp,
-+					next_agino, 1);
-+			if (error)
-+				return error;
-+
-+			next_agino = ip->i_next_unlinked;
-+			continue;
-+		}
-+
- 		if (next_agino % XFS_AGI_UNLINKED_BUCKETS != bucket) {
- 			/*
- 			 * Inode is in the wrong bucket.  Advance the list,
-@@ -1537,6 +1573,24 @@ xrep_iunlink_rebuild_buckets(
- 			xrep_iunlink_add_lost_inodes, ragi);
- }
- 
-+static inline void
-+set_inode_prev_unlinked(
-+	struct xfs_inode	*ip,
-+	xfs_agino_t		prev_agino)
++ * Get the body of the smb message excluding the 4 byte rfc1002 headers
++ * from request/response buffer.
++ */
++static inline void *smb_get_msg(void *buf)
 +{
-+	/*
-+	 * Magic value that means "not unlinked" because xfarrays don't support
-+	 * storing totally zeroed elements.
-+	 */
-+	if (prev_agino == LINKED_AGINO)
-+		prev_agino = 0;
-+
-+	if (ip->i_prev_unlinked != prev_agino) {
-+		trace_xrep_iunlink_relink_prev(ip, prev_agino);
-+		ip->i_prev_unlinked = prev_agino;
-+	}
++	return buf + 4;
 +}
-+
- /* Update i_next_iunlinked for the inode @agino. */
- STATIC int
- xrep_iunlink_relink_next(
-@@ -1570,8 +1624,7 @@ xrep_iunlink_relink_next(
- 		if (error)
- 			goto out_rele;
- 
--		trace_xrep_iunlink_relink_prev(ip, prev_agino);
--		ip->i_prev_unlinked = prev_agino;
-+		set_inode_prev_unlinked(ip, prev_agino);
- 	}
- 
- 	/* Update the forward pointer. */
-@@ -1638,11 +1691,7 @@ xrep_iunlink_relink_prev(
- 		ip->i_next_unlinked = next_agino;
- 	}
- 
--	/* Update the backward pointer. */
--	if (ip->i_prev_unlinked != prev_agino) {
--		trace_xrep_iunlink_relink_prev(ip, prev_agino);
--		ip->i_prev_unlinked = prev_agino;
--	}
-+	set_inode_prev_unlinked(ip, prev_agino);
- 
- out_rele:
- 	/*
---- a/fs/xfs/scrub/trace.h
-+++ b/fs/xfs/scrub/trace.h
-@@ -3583,6 +3583,7 @@ DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep
- DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_wronglist);
- DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_nolist);
- DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_ok);
-+DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_allocated);
- 
- TRACE_EVENT(xrep_iunlink_relink_next,
- 	TP_PROTO(struct xfs_inode *ip, xfs_agino_t next_agino),
+ #endif /* __SMB_SERVER_COMMON_H__ */
 
 
