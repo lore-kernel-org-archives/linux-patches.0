@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2208747D93E;
-	Thu, 20 Aug 2026 16:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B04246781;
+	Thu, 20 Aug 2026 16:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244129; cv=none; b=G9iWYDj1nkV/O0deRDjdsC1+9JT3pSJcEhggyWhTkVxfxfvjN0wyxIcEGtgI91oA/u7v4YsUvNtupUiU0vBoJ7HyfMoJdS3EkZ/GZGj60f0cSF4+SISuqBi2fuqYtuToa2xU/sltgqTkAzI06L+R+dwDIiW1l6iylRAELuPTKME=
+	t=1787244132; cv=none; b=qV9BOwWhmLbhEMVqDh29Kj0pfTV68ptdyQ9bfOf+OZtmDnRmCNZiUJeAt5aGw0hrRRvbIYlgRXSYL6JElzf7ockpsjEpEvb/OfiT9xSBGTPmuCyLsXs6iy8XcKFHLreVKM95nQ3vfiIg4dPVl/TtFzmEtBvwS1AupBZmXy9wXWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244129; c=relaxed/simple;
-	bh=wMq8eJjDWjltDexvgHy5ax1QS3lpK59gCmO/jR1Jw80=;
+	s=arc-20240116; t=1787244132; c=relaxed/simple;
+	bh=Vl473dKOdp/98iRYDNVff2PL+0iTNtIyjb3ZRZ76vG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c115Dvztc6CZ+U1qXO7GJtv12C57OLuaj/TrY5C1ceNrh66MV0PmGoC1d8p+4+ktcecfFP+a+lZ+JO826tzugUPCQKFcmOAGTzWKcKHB9QuHaghiA0Pae5MSsqMI/cVQihM+DjODyBHOV6Qon+AP3FZBoSnd1ITIIrXzQDnB9GE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1KqhBF/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DUHd/eVX/WrDOXsjfcsLdKff6sNnORKlCgg03CQQE7kRGD+YWDlbVF9wcTwgrvdz3lgdMcBFmUWP1idIqPuFXKBXKLgYwjzSVjwCoKe/DFzFe/ahC5dWO1Z0HkyLxZ1gVt4t4aaYWyN0ogVAVnXJmcZASmEIuQoiiSfKaVLrPBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vBvLhDH6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1KqhBF/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD4D1F000E9;
-	Thu, 20 Aug 2026 16:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vBvLhDH6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB9E1F000E9;
+	Thu, 20 Aug 2026 16:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244128;
-	bh=noLk0MkZKe5C+7HrP/i9OgqN/Q9G3a/1SSA55M3VTxM=;
+	s=korg; t=1787244130;
+	bh=1/YSXPagqRnzqHUNqkJS4aiFkMv0X3LW9g3+nJq84O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I1KqhBF/FM6EA4IQuxOUexVvF6M5mGQKUCLK+LzM9zfx0H2WnIArhVrpxA3ESWdoD
-	 elT7/N3wDScbeWDdRD1XPmjzmJiBc41K6y4tP9jksgCUyOqpJolpftwC3Og5b67IMf
-	 Ffp2w/8zANwwDrJQeE9x9LqO6PvY5g/hxxc0Mm7c=
+	b=vBvLhDH6tyCNo2u8NwVWdqIc6OfrEl8jYbb7bfmwMLmfddAI+YjxiZNw4CR6aqJuw
+	 aCv3F/JCqYYNrFbNmNCAzV9a5qZxhuwebflU4YbrttDt1Xodpa6sM96wsy2RtW7idI
+	 s8M+h4z2GsgEjogBMAUCVayyeQbCK6OMoL9j+sJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Paul Moore <paul@paul-moore.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 054/235] audit: use unsigned int instead of unsigned
-Date: Thu, 20 Aug 2026 16:54:50 +0200
-Message-ID: <20260820145218.081388078@linuxfoundation.org>
+Subject: [PATCH 5.10 063/235] rxrpc: Fix socket notification race
+Date: Thu, 20 Aug 2026 16:54:59 +0200
+Message-ID: <20260820145218.359646895@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -51,179 +56,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Robaina <rrobaina@redhat.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 8b226771014beab1292081151a99530886ce54b4 ]
+[ Upstream commit e66f8f32f50116670dbbee5bc9e692cd2cd0c8f8 ]
 
-Address checkpatch.pl warning below, across the audit subsystem:
+There's a race between rxrpc_recvmsg() and rxrpc_notify_socket(), whereby
+the latter's attempt to avoid disabling interrupts and taking the socket's
+recvmsg_lock if the call is already queued may happen simultaneously with
+the former's discarding of a call that has nothing queued.
 
-  WARNING: Prefer 'unsigned int' to bare use of 'unsigned'
+Fix this by removing the shortcut.  Note that this only affects userspace's
+use of AF_RXRPC; the AFS filesystem driver doesn't use the socket queue.
 
-Minor cleanup, no functional changes.
-
-Signed-off-by: Ricardo Robaina <rrobaina@redhat.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Stable-dep-of: 81905b5acbe7 ("audit: fix recursive locking deadlock in audit_dupe_exe()")
+Fixes: 248f219cb8bc ("rxrpc: Rewrite the data and ack handling code")
+Link: https://sashiko.dev/#/patchset/20260616155749.2125907-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260624163819.3017002-10-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/audit.h |   16 ++++++++--------
- kernel/audit.c        |    2 +-
- kernel/audit.h        |    2 +-
- kernel/audit_tree.c   |    2 +-
- kernel/auditfilter.c  |    8 ++++----
- kernel/auditsc.c      |    2 +-
- lib/compat_audit.c    |   12 ++++++------
- 7 files changed, 22 insertions(+), 22 deletions(-)
+ net/rxrpc/recvmsg.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/include/linux/audit.h
-+++ b/include/linux/audit.h
-@@ -120,17 +120,17 @@ enum audit_nfcfgop {
+--- a/net/rxrpc/recvmsg.c
++++ b/net/rxrpc/recvmsg.c
+@@ -27,8 +27,6 @@ void rxrpc_notify_socket(struct rxrpc_ca
  
- extern int is_audit_feature_set(int which);
+ 	_enter("%d", call->debug_id);
  
--extern int __init audit_register_class(int class, unsigned *list);
--extern int audit_classify_syscall(int abi, unsigned syscall);
-+extern int __init audit_register_class(int class, unsigned int *list);
-+extern int audit_classify_syscall(int abi, unsigned int syscall);
- extern int audit_classify_arch(int arch);
- /* only for compat system calls */
--extern unsigned compat_write_class[];
--extern unsigned compat_read_class[];
--extern unsigned compat_dir_class[];
--extern unsigned compat_chattr_class[];
--extern unsigned compat_signal_class[];
-+extern unsigned int compat_write_class[];
-+extern unsigned int compat_read_class[];
-+extern unsigned int compat_dir_class[];
-+extern unsigned int compat_chattr_class[];
-+extern unsigned int compat_signal_class[];
- 
--extern int audit_classify_compat_syscall(int abi, unsigned syscall);
-+extern int audit_classify_compat_syscall(int abi, unsigned int syscall);
- 
- /* audit_names->type values */
- #define	AUDIT_TYPE_UNKNOWN	0	/* we don't know yet */
---- a/kernel/audit.c
-+++ b/kernel/audit.c
-@@ -1989,7 +1989,7 @@ static void audit_log_vformat(struct aud
- 		 * here and AUDIT_BUFSIZ is at least 1024, then we can
- 		 * log everything that printk could have logged. */
- 		avail = audit_expand(ab,
--			max_t(unsigned, AUDIT_BUFSIZ, 1+len-avail));
-+			max_t(unsigned int, AUDIT_BUFSIZ, 1+len-avail));
- 		if (!avail)
- 			goto out_va_end;
- 		len = vsnprintf(skb_tail_pointer(skb), avail, fmt, args2);
---- a/kernel/audit.h
-+++ b/kernel/audit.h
-@@ -217,7 +217,7 @@ static inline int audit_hash_ino(u64 ino
- /* Indicates that audit should log the full pathname. */
- #define AUDIT_NAME_FULL -1
- 
--extern int audit_match_class(int class, unsigned syscall);
-+extern int audit_match_class(int class, unsigned int syscall);
- extern int audit_comparator(const u32 left, const u32 op, const u32 right);
- extern int audit_uid_comparator(kuid_t left, u32 op, kuid_t right);
- extern int audit_gid_comparator(kgid_t left, u32 op, kgid_t right);
---- a/kernel/audit_tree.c
-+++ b/kernel/audit_tree.c
-@@ -33,7 +33,7 @@ struct audit_chunk {
- 	struct node {
- 		struct list_head list;
- 		struct audit_tree *owner;
--		unsigned index;		/* index; upper bit indicates 'will prune' */
-+		unsigned int index;	/* index; upper bit indicates 'will prune' */
- 	} owners[];
- };
- 
---- a/kernel/auditfilter.c
-+++ b/kernel/auditfilter.c
-@@ -162,13 +162,13 @@ static inline int audit_to_inode(struct
- 
- static __u32 *classes[AUDIT_SYSCALL_CLASSES];
- 
--int __init audit_register_class(int class, unsigned *list)
-+int __init audit_register_class(int class, unsigned int *list)
- {
- 	__u32 *p = kcalloc(AUDIT_BITMASK_SIZE, sizeof(__u32), GFP_KERNEL);
- 	if (!p)
- 		return -ENOMEM;
- 	while (*list != ~0U) {
--		unsigned n = *list++;
-+		unsigned int n = *list++;
- 		if (n >= AUDIT_BITMASK_SIZE * 32 - AUDIT_SYSCALL_CLASSES) {
- 			kfree(p);
- 			return -EINVAL;
-@@ -183,7 +183,7 @@ int __init audit_register_class(int clas
- 	return 0;
- }
- 
--int audit_match_class(int class, unsigned syscall)
-+int audit_match_class(int class, unsigned int syscall)
- {
- 	if (unlikely(syscall >= AUDIT_BITMASK_SIZE * 32))
- 		return 0;
-@@ -234,7 +234,7 @@ static int audit_match_signal(struct aud
- /* Common user-space to kernel rule translation. */
- static inline struct audit_entry *audit_to_entry_common(struct audit_rule_data *rule)
- {
--	unsigned listnr;
-+	unsigned int listnr;
- 	struct audit_entry *entry;
- 	int i, err;
- 
---- a/kernel/auditsc.c
-+++ b/kernel/auditsc.c
-@@ -161,7 +161,7 @@ static const struct audit_nfcfgop_tab au
- 
- static int audit_match_perm(struct audit_context *ctx, int mask)
- {
--	unsigned n;
-+	unsigned int n;
- 	if (unlikely(!ctx))
- 		return 0;
- 	n = ctx->major;
---- a/lib/compat_audit.c
-+++ b/lib/compat_audit.c
-@@ -3,32 +3,32 @@
- #include <linux/types.h>
- #include <asm/unistd32.h>
- 
--unsigned compat_dir_class[] = {
-+unsigned int compat_dir_class[] = {
- #include <asm-generic/audit_dir_write.h>
- ~0U
- };
- 
--unsigned compat_read_class[] = {
-+unsigned int compat_read_class[] = {
- #include <asm-generic/audit_read.h>
- ~0U
- };
- 
--unsigned compat_write_class[] = {
-+unsigned int compat_write_class[] = {
- #include <asm-generic/audit_write.h>
- ~0U
- };
- 
--unsigned compat_chattr_class[] = {
-+unsigned int compat_chattr_class[] = {
- #include <asm-generic/audit_change_attr.h>
- ~0U
- };
- 
--unsigned compat_signal_class[] = {
-+unsigned int compat_signal_class[] = {
- #include <asm-generic/audit_signal.h>
- ~0U
- };
- 
--int audit_classify_compat_syscall(int abi, unsigned syscall)
-+int audit_classify_compat_syscall(int abi, unsigned int syscall)
- {
- 	switch (syscall) {
- #ifdef __NR_open
+-	if (!list_empty(&call->recvmsg_link))
+-		return;
+ 	if (test_bit(RXRPC_CALL_RELEASED, &call->flags)) {
+ 		rxrpc_see_call(call);
+ 		return;
 
 
