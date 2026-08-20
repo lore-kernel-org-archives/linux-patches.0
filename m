@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED06481AAD;
-	Thu, 20 Aug 2026 17:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852A237BE6F;
+	Thu, 20 Aug 2026 17:42:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247755; cv=none; b=bfAdcFLdH9OanC+6PI1sQvStLh04R3mmDq0/Ec6grZdxPW9rW/ZD0yR50z6h9akOlLBFsk78/muVQ7CuwJNy+1rqSkmpDADlerruW34M246MMsp0mIBI1YZr1NjTGzPn9eaz/27QJKWTOdO9NfpFVuoIg2C0qR7fVXsYBl9Y20o=
+	t=1787247757; cv=none; b=fWQuvuCaUMPKwCxr9JZEgc66eJEODjJEa14AbrBb730K79ILH2d+vGN32TJ8EdYBt53PM3A40agMv7ZH5iqSeROhMbqfZVHPhQByBEQAfafaFgFLua+StYs5ChuETvTAVkj/b7v/XaZ72+FvErqnmZvYwkCEuKF6z4+w0QgWqYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247755; c=relaxed/simple;
-	bh=fReByEverk6FiKRpQTDdgHMUstvtFEu+2KxsGxUgXeY=;
+	s=arc-20240116; t=1787247757; c=relaxed/simple;
+	bh=l6eZQ30uMA1XaP5XI/B8uaz36Nma9VJ4GH1ORatuN38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CNBL9Hlxg09T7m9W7wZ9jfjRh9EmE35XG+qoZ61WU9WXDq1TE9uaJaLcrlJmviXycsdjc+Q6r9E9nqTRBFQu5x/tZH/98L7m29uBBmaOi+ScvLaSGkk+3LV4LQZdYJOyMlBkRIfd8PHsqRFYHiY/TmTajVhzVb0EeQOC7mlxkZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jetQuI4M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=olHnjyXf2S03itNQRJnxiAXqUgS3TWLGa+ruteYY+bu5pqWWnrUfGsQMMmS/3WglNwbubQMUXpm59DXYD+8Abk42RVflgceAXbxcE9xgC5pCC28HPi93MtDCGSgclFoAxjC1fWb0H1LoetMVogtCSDIAsq95H7NcSY6GGskHjvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fFd0+oHS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jetQuI4M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DA71F000E9;
-	Thu, 20 Aug 2026 17:42:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFd0+oHS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C061F000E9;
+	Thu, 20 Aug 2026 17:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247753;
-	bh=XaKr6I3w+At7FNls9xkgpJooWyUZO8up6V7MmYspOhc=;
+	s=korg; t=1787247756;
+	bh=+CDwuCWwkyUfbRH01yacm8KaTr3Y+3HQzNlchgk1Dvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jetQuI4Mzh8ex0B0WkRMxxv7sPkbdaKivfHOwELETIFGoCHS6D3zOQdddOamx/yrM
-	 qx8uZ4LIJkcDrUu26CNFrKuyJZk18DtHAYz2zRtLilgOnmS1HTCfYKPdEb+NQ1x+Ot
-	 oO+MGoIj7EpidmSRhEssMYtVT5ppcQeWCqg1cmic=
+	b=fFd0+oHShG0PuM3MceBEOCztC5BCHilvPmZuKiw50JHwjxhxJHZo7eFkuSx28lWVm
+	 4YejGNXXuEra2W9b8Gc/dxxWZyQJxiHk872e7NRs2gJmSL9QGF0cD+V37Jd7eNdfZa
+	 +wpjp80VYruyLTmExKGQ1/9yvC5//8QvFGJCyIo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	vega@nebusec.ai,
 	Victor Nogueira <victor@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 155/166] net: sched: Add initial TC error skb drop reasons
-Date: Thu, 20 Aug 2026 16:56:54 +0200
-Message-ID: <20260820145215.830337285@linuxfoundation.org>
+Subject: [PATCH 6.6 156/166] net/sched: act_api: fix TOCTOU NULL deref on a->goto_chain
+Date: Thu, 20 Aug 2026 16:56:55 +0200
+Message-ID: <20260820145215.859555985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -52,165 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 4cf24dc8934074725042c0bd10b91f4d4b5269bb ]
+[ Upstream commit f60b396ee174206fe08ebf997d16cd3801b77b22 ]
 
-Continue expanding Daniel's patch by adding new skb drop reasons that
-are idiosyncratic to TC.
+tcf_action_exec() handles TC_ACT_GOTO_CHAIN by first checking
+rcu_access_pointer(a->goto_chain) and then calling
+tcf_action_goto_chain_exec(), which does a second, independent
+rcu_dereference_bh(a->goto_chain) read and immediately dereferences
+chain->filter_chain. A concurrent tcf_action_set_ctrlact() (e.g. the gact
+replace path) can clear a->goto_chain between the two reads, so the second
+read returns NULL and tcf_action_goto_chain_exec() dereferences NULL.
 
-More specifically:
+Fix the race by doing a single rcu_dereference_bh() read of a->goto_chain
+in tcf_action_exec(), checking it once for NULL, and passing the resulting
+chain pointer into tcf_action_goto_chain_exec(). This turns the split
+check/use into a single check/use on one value.
 
-- SKB_DROP_REASON_TC_COOKIE_ERROR: An error occurred whilst
-  processing a tc ext cookie.
-
-- SKB_DROP_REASON_TC_CHAIN_NOTFOUND: tc chain lookup failed.
-
-- SKB_DROP_REASON_TC_RECLASSIFY_LOOP: tc exceeded max reclassify loop
-  iterations
-
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: f60b396ee174 ("net/sched: act_api: fix TOCTOU NULL deref on a->goto_chain")
+Fixes: ee3bbfe806cd ("net/sched: let actions use RCU to access 'goto_chain'")
+Reported-by: vega@nebusec.ai
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Davide Caratti <dcaratti@redhat.com>
+Link: https://patch.msgid.link/20260809090928.868186-1-jhs@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/dropreason-core.h | 18 +++++++++++++++---
- net/sched/act_api.c           |  3 ++-
- net/sched/cls_api.c           | 22 ++++++++++++++--------
- 3 files changed, 31 insertions(+), 12 deletions(-)
+ net/sched/act_api.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/net/dropreason-core.h b/include/net/dropreason-core.h
-index 6ff543fe8a8b5..e88e785d221bb 100644
---- a/include/net/dropreason-core.h
-+++ b/include/net/dropreason-core.h
-@@ -80,8 +80,10 @@
- 	FN(IPV6_NDISC_BAD_OPTIONS)	\
- 	FN(IPV6_NDISC_NS_OTHERHOST)	\
- 	FN(QUEUE_PURGE)			\
--	FN(TC_ERROR)			\
-+	FN(TC_COOKIE_ERROR)		\
- 	FN(PACKET_SOCK_ERROR)		\
-+	FN(TC_CHAIN_NOTFOUND)		\
-+	FN(TC_RECLASSIFY_LOOP)		\
- 	FNe(MAX)
- 
- /**
-@@ -347,13 +349,23 @@ enum skb_drop_reason {
- 	SKB_DROP_REASON_IPV6_NDISC_NS_OTHERHOST,
- 	/** @SKB_DROP_REASON_QUEUE_PURGE: bulk free. */
- 	SKB_DROP_REASON_QUEUE_PURGE,
--	/** @SKB_DROP_REASON_TC_ERROR: generic internal tc error. */
--	SKB_DROP_REASON_TC_ERROR,
-+	/**
-+	 * @SKB_DROP_REASON_TC_COOKIE_ERROR: An error occurred whilst
-+	 * processing a tc ext cookie.
-+	 */
-+	SKB_DROP_REASON_TC_COOKIE_ERROR,
- 	/**
- 	 * @SKB_DROP_REASON_PACKET_SOCK_ERROR: generic packet socket errors
- 	 * after its filter matches an incoming packet.
- 	 */
- 	SKB_DROP_REASON_PACKET_SOCK_ERROR,
-+	/** @SKB_DROP_REASON_TC_CHAIN_NOTFOUND: tc chain lookup failed. */
-+	SKB_DROP_REASON_TC_CHAIN_NOTFOUND,
-+	/**
-+	 * @SKB_DROP_REASON_TC_RECLASSIFY_LOOP: tc exceeded max reclassify loop
-+	 * iterations.
-+	 */
-+	SKB_DROP_REASON_TC_RECLASSIFY_LOOP,
- 	/**
- 	 * @SKB_DROP_REASON_MAX: the maximum of core drop reasons, which
- 	 * shouldn't be used as a real 'reason' - only for tracing code gen
 diff --git a/net/sched/act_api.c b/net/sched/act_api.c
-index c5a3f316d0de4..96412b374e7b4 100644
+index 96412b374e7b4..8514888378168 100644
 --- a/net/sched/act_api.c
 +++ b/net/sched/act_api.c
-@@ -1118,7 +1118,8 @@ int tcf_action_exec(struct sk_buff *skb, struct tc_action **actions,
+@@ -41,11 +41,9 @@ int tcf_dev_queue_xmit(struct sk_buff *skb, int (*xmit)(struct sk_buff *skb))
+ }
+ EXPORT_SYMBOL_GPL(tcf_dev_queue_xmit);
+ 
+-static void tcf_action_goto_chain_exec(const struct tc_action *a,
++static void tcf_action_goto_chain_exec(const struct tcf_chain *chain,
+ 				       struct tcf_result *res)
+ {
+-	const struct tcf_chain *chain = rcu_dereference_bh(a->goto_chain);
+-
+ 	res->goto_tp = rcu_dereference_bh(chain->filter_chain);
+ }
+ 
+@@ -1117,12 +1115,14 @@ int tcf_action_exec(struct sk_buff *skb, struct tc_action **actions,
+ 					return TC_ACT_OK;
  			}
  		} else if (TC_ACT_EXT_CMP(ret, TC_ACT_GOTO_CHAIN)) {
- 			if (unlikely(!rcu_access_pointer(a->goto_chain))) {
--				tcf_set_drop_reason(skb, SKB_DROP_REASON_TC_ERROR);
-+				tcf_set_drop_reason(skb,
-+						    SKB_DROP_REASON_TC_CHAIN_NOTFOUND);
- 				return TC_ACT_SHOT;
- 			}
- 			tcf_action_goto_chain_exec(a, res);
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index 841360e07d7aa..7f47e937e1b85 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -1732,13 +1732,15 @@ static inline int __tcf_classify(struct sk_buff *skb,
- 			 */
- 			if (unlikely(n->tp != tp || n->tp->chain != n->chain ||
- 				     !tp->ops->get_exts)) {
--				tcf_set_drop_reason(skb, SKB_DROP_REASON_TC_ERROR);
-+				tcf_set_drop_reason(skb,
-+						    SKB_DROP_REASON_TC_COOKIE_ERROR);
- 				return TC_ACT_SHOT;
- 			}
- 
- 			exts = tp->ops->get_exts(tp, n->handle);
- 			if (unlikely(!exts || n->exts != exts)) {
--				tcf_set_drop_reason(skb, SKB_DROP_REASON_TC_ERROR);
-+				tcf_set_drop_reason(skb,
-+						    SKB_DROP_REASON_TC_COOKIE_ERROR);
- 				return TC_ACT_SHOT;
- 			}
- 
-@@ -1767,7 +1769,8 @@ static inline int __tcf_classify(struct sk_buff *skb,
- 	}
- 
- 	if (unlikely(n)) {
--		tcf_set_drop_reason(skb, SKB_DROP_REASON_TC_ERROR);
-+		tcf_set_drop_reason(skb,
-+				    SKB_DROP_REASON_TC_COOKIE_ERROR);
- 		return TC_ACT_SHOT;
- 	}
- 
-@@ -1779,7 +1782,8 @@ static inline int __tcf_classify(struct sk_buff *skb,
- 				       tp->chain->block->index,
- 				       tp->prio & 0xffff,
- 				       ntohs(tp->protocol));
--		tcf_set_drop_reason(skb, SKB_DROP_REASON_TC_ERROR);
-+		tcf_set_drop_reason(skb,
-+				    SKB_DROP_REASON_TC_RECLASSIFY_LOOP);
- 		return TC_ACT_SHOT;
- 	}
- 
-@@ -1817,7 +1821,8 @@ int tcf_classify(struct sk_buff *skb,
- 				n = tcf_exts_miss_cookie_lookup(ext->act_miss_cookie,
- 								&act_index);
- 				if (!n) {
--					tcf_set_drop_reason(skb, SKB_DROP_REASON_TC_ERROR);
-+					tcf_set_drop_reason(skb,
-+							    SKB_DROP_REASON_TC_COOKIE_ERROR);
- 					return TC_ACT_SHOT;
- 				}
- 
-@@ -1828,7 +1833,9 @@ int tcf_classify(struct sk_buff *skb,
- 
- 			fchain = tcf_chain_lookup_rcu(block, chain);
- 			if (!fchain) {
--				tcf_set_drop_reason(skb, SKB_DROP_REASON_TC_ERROR);
-+				tcf_set_drop_reason(skb,
-+						    SKB_DROP_REASON_TC_CHAIN_NOTFOUND);
+-			if (unlikely(!rcu_access_pointer(a->goto_chain))) {
++			struct tcf_chain *chain = rcu_dereference_bh(a->goto_chain);
 +
++			if (unlikely(!chain)) {
+ 				tcf_set_drop_reason(skb,
+ 						    SKB_DROP_REASON_TC_CHAIN_NOTFOUND);
  				return TC_ACT_SHOT;
  			}
+-			tcf_action_goto_chain_exec(a, res);
++			tcf_action_goto_chain_exec(chain, res);
+ 		}
  
-@@ -1850,10 +1857,9 @@ int tcf_classify(struct sk_buff *skb,
- 
- 			ext = tc_skb_ext_alloc(skb);
- 			if (WARN_ON_ONCE(!ext)) {
--				tcf_set_drop_reason(skb, SKB_DROP_REASON_TC_ERROR);
-+				tcf_set_drop_reason(skb, SKB_DROP_REASON_NOMEM);
- 				return TC_ACT_SHOT;
- 			}
--
- 			ext->chain = last_executed_chain;
- 			ext->mru = cb->mru;
- 			ext->post_ct = cb->post_ct;
+ 		if (ret != TC_ACT_PIPE)
 -- 
 2.53.0
 
