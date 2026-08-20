@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B8B33263B;
-	Thu, 20 Aug 2026 15:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2BB133263B;
+	Thu, 20 Aug 2026 15:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238227; cv=none; b=mMFFe8GpNqfBO5Mu/arRnt2zo+tQovd6rMSg+Xs9KlZTfsWTvtB5ySXRvtEJTxbHXqWcwDJ/23BNXo9I9stFPimSmDAsQMaiCvtABoE7kfsL4GiUIqIO0wxiZvlvmGzf0UAwj7C+A9qhIEk28C2eOqXWteHggxwr6Fh+qOmiRqQ=
+	t=1787238230; cv=none; b=fE9lKwwPYPRaOCKk/t2AwYgszgMXwDO52jjJ3In659OICpzgtKTaYuP5+aaVfninFQ1KVmjgffRwVo1C16XIzB8ETYxP7Q/TR3Bi6sjiZAxXRQlaoNNXHxkNdpehSbbE3yLwXP5rE70HfinBz1XWbH1zexuPH2vkAdvY/6LeRSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238227; c=relaxed/simple;
-	bh=rr+O9zVXcU1rZIiJqstq+LhHcA6rPWW/wbQmmeEZoVg=;
+	s=arc-20240116; t=1787238230; c=relaxed/simple;
+	bh=jOj4haE7WirMcvFy0i8Licqx5wFxDHTDiIQaHDlds34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fAryntAT+d1saBTRyO6qVKrOabfdxaztnEQgljmho60P1TdNAX8ugfPSXdH05MtDX7FbiFlmTl2gj5/6kaaO0DG3kfY5GV7fnWUdXi41jWBPi5Vzy0aDLndCLKdeVMduhZvN2ErNJilVYDN291wn0AfZ1cqYckNSnV1CiL1TgVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=haHnputh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eemMQQt4SrCqQ4Y9EzC85+jvFDEMCLvPeBwHVoVoQJJI6O6BW0yUr37HpqjNAwOtmxLeyrzXBQd9bknLaoctaMu02gdtqu5f6aAQMlQIr15jjpwLiJcKEYDFyzuR49fokhYVuA5ZoBr+u6d/2Z1XgG00k7/rxUgzASB1UjsAq2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJcgb4AT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="haHnputh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB5E1F000E9;
-	Thu, 20 Aug 2026 15:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJcgb4AT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B131F000E9;
+	Thu, 20 Aug 2026 15:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238226;
-	bh=JSqV41xXj8gis7PB6NcuEsc9XFe0DeBIIyVM/aRgyoE=;
+	s=korg; t=1787238228;
+	bh=NgsrD7dhKPMXtzcq3zN2kvpfZCSUwlcMFQnLrmkOsK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=haHnputhYy+Vx/D90uBnk7f/vL4roXD9H/8zsYMYhsYI5P4LCNWLlnKBDB0mAW9/l
-	 QtCvOYo1J7GLqJvUBdFnTotkA+tmFuBgtrXWcfhrKnh+GkuxLpjuwDcxa+SjTamXT0
-	 drPjtZqeKNnKwszR7ssCvVVMJ9Mp/rDmN5V0SME8=
+	b=MJcgb4ATGjzLyRkDzC3iNgx57yIqPE+JUJP/hNfTLHyUJts21V9j/sOM1nFL/pXI3
+	 BbMjpso0OpfqwHvK9Fs3Dt5DH1RHQH11rao264yAL3t+MdR369Lt1khTzJNS5Xqg/C
+	 lJNjkIZ5Oc1QRUBlVEf6BcLFSt3AjUYP2UymUU8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Yiming Zhu <zhuyiming@kuaishou.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 7.1 075/228] libceph: Avoid using invalid osd indices from primary_temp
-Date: Thu, 20 Aug 2026 16:53:37 +0200
-Message-ID: <20260820145246.751919623@linuxfoundation.org>
+Subject: [PATCH 7.1 076/228] ceph: fix MDS random selection readiness predicate
+Date: Thu, 20 Aug 2026 16:53:38 +0200
+Message-ID: <20260820145246.785935581@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -50,52 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Yiming Zhu <zhuyiming@kuaishou.com>
 
-commit 3660b98d1204b419f6a77e9a295f148dcf38d042 upstream.
+commit 2c11c4bfdb7bd2808b3b3ac228e1f2d9bcf25457 upstream.
 
-A corrupted osdmap received from a Ceph monitor or OSD may contain osd
-indices in its pg_temp, primary_temp, pg_upmap, and pg_upmap_items parts
-that don't exist, i.e., that are greater than max_osd or smaller than
-CEPH_HOMELESS_OSD (-1). These indices are used to create the up and
-acting set in ceph_pg_to_up_acting_osds(), called from calc_target().
-While most of these osd indices are checked, the one from primary_temp
-is not. Subsequently, this may lead to calc_target() returning this
-(potentially invalid) index as target osd for a (linger) request.
-Because the osd_state, osd_weight, and osd_addr arrays only contain
-max_osd entries (with indices 0 to max_osd -1), this leads to
-out-of-bounds accesses when trying to read values from these arrays.
+CEPH_MDS_IS_READY() is parsed so that the ternary expression can
+return true for an MDS entry with state 0 when it is not laggy. This
+allows the random selector to choose a down/DNE rank.
 
-This patch fixes the issue by adding a check to get_temp_osds(), so that
-only valid osd indices from primary_temp are used, and it falls back to
-using the primary from pg_temp or the up set if it is invalid.
-
-[ idryomov: changelog ]
+Group the ternary expression under the state check so zero-state ranks
+are not treated as ready.
 
 Cc: stable@vger.kernel.org
-Fixes: 5e8d4d36bf23 ("libceph: add support for primary_temp mappings")
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: b38c9eb4757d ("ceph: add possible_max_rank and make the code more readable")
+Link: https://tracker.ceph.com/issues/78648
+Signed-off-by: Yiming Zhu <zhuyiming@kuaishou.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/ceph/mdsmap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -2809,9 +2809,10 @@ static void get_temp_osds(struct ceph_os
- 		}
- 	}
+--- a/fs/ceph/mdsmap.c
++++ b/fs/ceph/mdsmap.c
+@@ -15,7 +15,7 @@
+ #include "super.h"
  
--	/* primary_temp? */
-+	/* primary_temp? (shouldn't ever be a nonexistent or down OSD) */
- 	pg = lookup_pg_mapping(&osdmap->primary_temp, pgid);
--	if (pg)
-+	if (pg && !WARN_ON_ONCE(ceph_osd_is_down(osdmap,
-+						 pg->primary_temp.osd)))
- 		temp->primary = pg->primary_temp.osd;
- }
+ #define CEPH_MDS_IS_READY(i, ignore_laggy) \
+-	(m->m_info[i].state > 0 && ignore_laggy ? true : !m->m_info[i].laggy)
++	(m->m_info[i].state > 0 && (ignore_laggy ? true : !m->m_info[i].laggy))
  
+ static int __mdsmap_get_random_mds(struct ceph_mdsmap *m, bool ignore_laggy)
+ {
 
 
