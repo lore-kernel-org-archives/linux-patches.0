@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00198635D;
-	Thu, 20 Aug 2026 15:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1AB437B032;
+	Thu, 20 Aug 2026 15:00:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238032; cv=none; b=jrGicZsu1v8p4pwPdr5VOp0+VazuaVy8OmvClse3Y7wMBlSNQAnUYpJoxXESx+hMUlElovSlDi2bp35MwvX2vYf0xE6J9rLds8uuGOSZXawd4iMdHNMiHQaS8mwMRLa7uvVFFpe+o39c/fDOswPzLp5w7raAJ/0v0a3wLo06hMI=
+	t=1787238033; cv=none; b=fvryx0Zx7CCK1UI0uvoDo8QJhV2zuhtOTzVl2p/aexyHCeLqtE+TzfVdhIAS3TYJwwY0UBRpJv//j2njuo7vRuMT94kuE49FIYxRKcSbWXF8gimEc7pJYNWKxYpjQgG4qOqSCIr1ITNf3DvECN1WWXBZwjx3YtznoedaVMQlyRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238032; c=relaxed/simple;
-	bh=l3rCUGlwlwKVYtKbD7LkdxWALpTamJwyt262u8kMa7w=;
+	s=arc-20240116; t=1787238033; c=relaxed/simple;
+	bh=ywvbGXfvD/q8Yd4ulElLWO5s1adPfZRI1k92DImFE3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fUrUf3s6X70xEoo8rUXyfzLFYEVROSo2BfLFclmcJ99mS1PcbIzKtt2DrGqk5HJZoVEHAl89ha2vKDOvwxqaf7Y5JGFwOnX/mjPN7HqaBireQnUo9ECGYR4hkeFiZ6zhKKly30Q03fKjD/Tokuil3TrJhtCXB06Du2SkJ40cON8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mLKndA6G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aM7CHnvPCrrPg06zc13gHEn9a6zrJcKqK4nJwJlIDNei+MOXeFuNxeG/I1TGeVILqwTF2F+62DclcwPgBP/0Z2zSuxBYnOKjcNC07IZ0qwAOrVzjRTgkF/9oNhRxt45EeA0oEru9lzaHlknGV32zDXjBuU47jFEAmdGdCg1tzO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h643cSR8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mLKndA6G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93BB81F00A3A;
-	Thu, 20 Aug 2026 15:00:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h643cSR8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC81B1F00A3D;
+	Thu, 20 Aug 2026 15:00:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238029;
-	bh=DquPuLJW3OyWkq3KY8Ty2Eb3Mu8KEmj9Y2kzMG3QfkI=;
+	s=korg; t=1787238032;
+	bh=H+5tz3NjIe3NuWaAP0VwflceuzJp4GhRh7cxb6EBAP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mLKndA6Gqi9FQK49pYc9mh0CvNOKWXAoMkcXrqj3WftqW+SjY5u6Ady6dBFAYW4GE
-	 8wIQZotgtxhIGsV0Ec4qeO2Wcp5YFahZsSs/3cB+dRyL2rBZBvD+Kfliz0HvWpixTc
-	 PYrb2qg2H9Gn7d6qEUj4z5gKJYiSInBTBZQN+5R0=
+	b=h643cSR8C2tbwhcF1AR1w14Ss2DT4CkAfBdY9hfIBYd3+cnupPefq8UmJWF1WwPFp
+	 5YQeFhf8wdVsvcwwOvCzeT51kIvVP3ySkF2kekQpm8bYt1g6qlnBNX82/+wtqHdYpL
+	 ZsMHkDcsIl/lwA7LdV6gscQMHvkq0dUiZdxWX5m4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weidong Zhu <weizhu@fiu.edu>,
-	Chao Shi <coshi036@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 001/228] block: stop the timeout timer when releasing a never added disk
-Date: Thu, 20 Aug 2026 16:52:23 +0200
-Message-ID: <20260820145244.509531861@linuxfoundation.org>
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 010/228] mptcp: options: reset DSS fields in case of unexpected size
+Date: Thu, 20 Aug 2026 16:52:32 +0200
+Message-ID: <20260820145244.777981757@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -53,93 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Shi <coshi036@gmail.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 26cb8ebbfaf713c82e142d08828d4d765057633b ]
+commit 35772b4981f38ba8059372cde8753e8e477e98ec upstream.
 
-disk_release() undoes blk_mq_init_allocated_queue() for a disk whose
-probe failed before add_disk(), but it only calls blk_mq_exit_queue().
-Nothing there stops q->timeout, and that timer rolls forward: it stays
-pending until it next expires, not until the last request completes.
-So if the driver issued any I/O before adding the disk, the
-request_queue is freed while still linked into a timer wheel bucket.
+A remote peer could send a malformed DSS with a wrong size, followed by
+another DSS or MPC + Data. In this case, the first suboption will be
+ignored, but leaving some fields written, which could lead to
+inconsistency or access uninitialized data.
 
-Commit 6f8191fdf41d ("block: simplify disk shutdown") dropped the
-blk_cleanup_queue() call that used to stop it.  __del_gendisk() and
-blk_mq_destroy_queue() still do; only the probe failure path lost it.
+Explicitly reset the fields that could have been modified in case of
+unexpected size.
 
-nvme gets there because nvme_update_ns_info() submits Report Zones or
-FDP io-mgmt-recv on ns->queue before the disk is added, so a later
-failure - a concurrent reset setting NVME_CTRL_FROZEN, or
-device_add_disk() failing - lands in put_disk() with the timer armed:
-
-  BUG: KASAN: slab-use-after-free in detach_if_pending+0x30c/0x340
-  Write of size 8 at addr ffff888004d71310 by task kworker/u8:2/37
-   __timer_delete_sync+0x156/0x240 kernel/time/timer.c:1621
-   blk_sync_queue+0x22/0x40 block/blk-core.c:222
-   nvme_sync_queues+0x100/0x150 drivers/nvme/host/core.c:5362
-   nvme_reset_work+0x138/0x930 drivers/nvme/host/pci.c:3264
-
-  Allocated by task 34:
-   __blk_mq_alloc_disk+0x33/0x100 block/blk-mq.c:4462
-   nvme_alloc_ns+0x290/0x3870 drivers/nvme/host/core.c:4146
-
-  Freed by task 0:
-   blk_free_queue_rcu+0x3a/0x50 block/blk-core.c:254
-   rcu_core+0xc10/0x1730 kernel/rcu/tree.c:2857
-
-The queue being synced there is ctrl->admin_q, only a victim sharing a
-timer wheel bucket with the freed queue's dangling entry; other runs
-tripped in enqueue_timer(), __run_timers() or blk_mq_timeout_work().
-Failing nvme_alloc_ns() with a debug patch makes it deterministic: one
-leaked timer trips KASAN within seconds, while 1987 patched releases
-produced no splat.
-
-Stop the timer and the queue work items before blk_mq_exit_queue(), like
-blk_mq_destroy_queue() does.
-
-Found by FuzzNvme.
-
-Fixes: 6f8191fdf41d ("block: simplify disk shutdown")
-Acked-by: Weidong Zhu <weizhu@fiu.edu>
-Signed-off-by: Chao Shi <coshi036@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260727201257.211635-1-coshi036@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260728-net-mptcp-misc-fixes-7-2-rc6-v1-0-f7e2d229159d%40kernel.org?part=1
+Fixes: 648ef4b88673 ("mptcp: Implement MPTCP receive path")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-1-b8f496d71664@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/genhd.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/mptcp/options.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/block/genhd.c b/block/genhd.c
-index 0da6cdf3d5fb..cb8184c14a4b 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -1281,14 +1281,18 @@ static void disk_release(struct device *dev)
- 	/*
- 	 * To undo the all initialization from blk_mq_init_allocated_queue in
- 	 * case of a probe failure where add_disk is never called we have to
--	 * call blk_mq_exit_queue here. We can't do this for the more common
--	 * teardown case (yet) as the tagset can be gone by the time the disk
--	 * is released once it was added.
-+	 * call blk_mq_exit_queue here, after stopping the timer and work items
-+	 * that I/O issued before add_disk may have left pending.  We can't do
-+	 * this for the more common teardown case (yet) as the tagset can be
-+	 * gone by the time the disk is released once it was added.
- 	 */
- 	if (queue_is_mq(disk->queue) &&
- 	    test_bit(GD_OWNS_QUEUE, &disk->state) &&
--	    !test_bit(GD_ADDED, &disk->state))
-+	    !test_bit(GD_ADDED, &disk->state)) {
-+		blk_sync_queue(disk->queue);
-+		blk_mq_cancel_work_sync(disk->queue);
- 		blk_mq_exit_queue(disk->queue);
-+	}
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -209,8 +209,14 @@ static void mptcp_parse_option(const str
+ 		 * RFC 8684 Section 3.3.0 checks later in subflow_data_ready
+ 		 */
+ 		if (opsize != expected_opsize &&
+-		    opsize != expected_opsize + TCPOLEN_MPTCP_DSS_CHECKSUM)
++		    opsize != expected_opsize + TCPOLEN_MPTCP_DSS_CHECKSUM) {
++			mp_opt->dsn64 = 0;
++			mp_opt->use_map = 0;
++			mp_opt->ack64 = 0;
++			mp_opt->use_ack = 0;
++			mp_opt->data_fin = 0;
+ 			break;
++		}
  
- 	blkcg_exit_disk(disk);
- 
--- 
-2.53.0
-
+ 		mp_opt->suboptions |= OPTION_MPTCP_DSS;
+ 		if (mp_opt->use_ack) {
 
 
