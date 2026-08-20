@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D2637F00C;
-	Thu, 20 Aug 2026 15:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18A825B0AA;
+	Thu, 20 Aug 2026 15:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239438; cv=none; b=Q0qlWa7lqyOzXfwlwjvFVWKiC1aSf76RxrgZi/XQwKTmRO9lNurR8WuC21M0M6DUCPHQFTUbVI0cSS6CquCAIybfT4sAWK9vrQwE/0VUrYpz5Z46g9jx1OieDtiWm2r6Cx6AhRoE4tiX2XTyLtHAAypT47uGkq/MChRhEUeroHc=
+	t=1787239441; cv=none; b=TLdBxTNicJfJTr15Th0gehPowPYb6qzz9umvx1ChRQmwhiDToV12psle62LOeh7y0aV12NukXLeecqDWC+EnI6ZaVixwHJfB5CW7WegBb7MV8SqtLnQUDkbZGrqBKruHn4qM4+6ACVUu/CCyg4+9ttgszmau5W3JplQOXWOU/Hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239438; c=relaxed/simple;
-	bh=RfS40EfCO2pWqmepeW341DnVGp9u/SX0s9LlkxeEab4=;
+	s=arc-20240116; t=1787239441; c=relaxed/simple;
+	bh=2O4rfojucrI+kFya63Rv6OjinoNKvGchBBTtlbzeVWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UHPg2gVT7ZDzYHXqQULvJlFWiKI7vlz53Vt2FlHFdV8gHS1G9T7WPNdJCDWcoVwSa0skgMd3uZEVYCGTXZo6ZyGAScKQ0nhHOskPSQaetGwnrEwxunviGjOESOrfHkWbVGrlFjSkKkJr6PayFlvH2Ys0L7iCdiGgMq4l1rjjDfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XD+9W2iM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nuIJwDMedLjOTIcx237xT6qgkg6bLaXnRU/GuHOcyB70Nu080VNnwzFpuS9EktHgcXoqKCBXkxmDnRd20KnUqtHIU0RrSQYg7SpftwD8VcrTx6frEJqdb2f8mFbVV9cVOfNgbtokBk8jxBDn06oWOO7rNWEucV1MtYFH9UrfwZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2QEdPeei; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XD+9W2iM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6A91F000E9;
-	Thu, 20 Aug 2026 15:23:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2QEdPeei"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C8D1F000E9;
+	Thu, 20 Aug 2026 15:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239437;
-	bh=ISwQ1Qk61xn296qX1UjhReeSoNzLRUzrTiEcII3deoI=;
+	s=korg; t=1787239439;
+	bh=rlKUQA+8tyxKQOzxXvZHLBq++VDMu3vqgtWi6uwsepA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XD+9W2iMob6hpiRLApPtLfgHUVwbS1Bs+QfLZNGb47eFxusXbHvPEeTSH70wqYiRv
-	 jLEKs2qDjd58VAJJQlQkHun8bkkemqrAvTpTjvD8V7CHxUeACOPfI0oRaIZHz/kDTz
-	 QM3cMNX4ywpLCRDIz6I8w9ZUwLpgUp8Q0MVN0DoA=
+	b=2QEdPeei2leglnmDnzSePT6D+sEcOFwolkHDUD407jR330SJfcvfr52/f1GVNBSlb
+	 yljki2sY6DZA6/C4CBV4mzVgZCRcEYiGaARXLG0h3hCUHAx6qhHxAzwrWMg8eQURpB
+	 OsvG6v3Tm44+iCf/6XgGAB5JmEN2fMb08ywsUYpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
+	Jianing Li <m13940358460@163.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 048/220] Input: synaptics-rmi4 - propagate F54 worker errors to V4L2 queue
-Date: Thu, 20 Aug 2026 16:53:58 +0200
-Message-ID: <20260820145224.935413537@linuxfoundation.org>
+Subject: [PATCH 6.12 049/220] Input: hynitron_cstxxx - validate touch count and finger IDs
+Date: Thu, 20 Aug 2026 16:53:59 +0200
+Message-ID: <20260820145224.964447921@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -50,62 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Jianing Li <m13940358460@163.com>
 
-commit 8786d74bf50e6797b6f655eb381ef6b25451161f upstream.
+commit 27f380ef0e1d3de3cde114e02d33f9320ce3a5a6 upstream.
 
-Previously, rmi_f54_buffer_queue() waited for the worker thread to
-finish but ignored whether it succeeded. If the worker failed (e.g.,
-due to a timeout or register read failure), the queue thread would
-silently return success, delivering stale or uninitialized memory to
-userspace.
+The driver allocates max_touch_num input slots, which are indexed from
+zero through max_touch_num - 1. The current check allows a finger ID
+equal to max_touch_num to reach cst3xx_report_contact(). While the input
+core ignores out-of-range slot indices, reporting touch data without a
+valid slot change corrupts the touch state of the previously active slot.
 
-Add a 'report_error' field to struct f54_data to store the worker's exit
-status. Check this field in rmi_f54_buffer_queue() after the worker
-finishes, and mark the buffer as VB2_BUF_STATE_ERROR if an error
-occurred.
+The touch count is read from the controller's report and is used to
+index the fixed-size report buffer without first checking its range.
+Reject counts larger than the supported number of touch slots before
+checking the trailing byte or parsing touch data.
 
-Fixes: 3a762dbd5347 ("[media] Input: synaptics-rmi4 - add support for F54 diagnostics")
-Reported-by: sashiko-bot@kernel.org
+Reject finger IDs equal to or greater than max_touch_num, and return
+immediately when an invalid finger ID is encountered so that corrupt
+touch frames are discarded instead of reporting partial contact state.
+
+The V821 Avaota F1 board configures the vendor driver with one touch
+slot, so finger ID 1 is already invalid on that device.
+
+Fixes: 66603243f528 ("Input: add driver for Hynitron cstxxx touchscreens")
+Signed-off-by: Jianing Li <m13940358460@163.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Link: https://patch.msgid.link/20260626051802.4033172-6-dmitry.torokhov@gmail.com
+Link: https://patch.msgid.link/20260804031339.2379-1-m13940358460@163.com
+Assisted-by: Antigravity:gemini-3.6-flash
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/rmi4/rmi_f54.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/input/touchscreen/hynitron_cstxxx.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/input/rmi4/rmi_f54.c
-+++ b/drivers/input/rmi4/rmi_f54.c
-@@ -106,6 +106,7 @@ struct f54_data {
- 	u8 *report_data;
- 	size_t max_report_size;
- 	int report_size;
-+	int report_error;
+--- a/drivers/input/touchscreen/hynitron_cstxxx.c
++++ b/drivers/input/touchscreen/hynitron_cstxxx.c
+@@ -313,6 +313,12 @@ static void cst3xx_touch_report(struct i
+ 		return;
  
- 	bool is_busy;
- 	struct mutex status_mutex;
-@@ -340,6 +341,12 @@ static void rmi_f54_buffer_queue(struct
- 		mutex_lock(&f54->data_mutex);
- 	}
- 
-+	if (f54->report_error) {
-+		dev_err(&f54->fn->dev, "Error acquiring report: %d\n", f54->report_error);
-+		state = VB2_BUF_STATE_ERROR;
-+		goto data_done;
+ 	touch_cnt = buf[5] & CST3XX_TOUCH_COUNT_MASK;
++	if (touch_cnt > ts_data->chip->max_touch_num) {
++		dev_err(&client->dev, "cst3xx invalid touch count (%d vs %d max)\n",
++			touch_cnt, ts_data->chip->max_touch_num);
++		return;
 +	}
 +
- 	ptr = vb2_plane_vaddr(vb, 0);
- 	if (!ptr) {
- 		dev_err(&f54->fn->dev, "Error acquiring frame ptr\n");
-@@ -612,6 +619,7 @@ out:
- 		report_size = 0;
+ 	/*
+ 	 * Check the check bit of the last touch slot. The check bit is
+ 	 * always present after touch point 1 for valid data, and then
+@@ -335,9 +341,10 @@ static void cst3xx_touch_report(struct i
+ 		finger_id = (buf[idx] >> 4) & 0x0f;
  
- 	f54->report_size = report_size;
-+	f54->report_error = error;
+ 		/* Sanity check we don't have more fingers than we expect */
+-		if (ts_data->chip->max_touch_num < finger_id) {
+-			dev_err(&client->dev, "cst3xx touch read failure\n");
+-			break;
++		if (finger_id >= ts_data->chip->max_touch_num) {
++			dev_err(&client->dev,
++				"cst3xx invalid finger id %d\n", finger_id);
++			return;
+ 		}
  
- 	if (report_size == 0 && !error) {
- 		queue_delayed_work(f54->workqueue, &f54->work,
+ 		/* sw value of 0 means no touch, 0x03 means touch */
 
 
