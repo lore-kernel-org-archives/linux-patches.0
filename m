@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1491E9919;
-	Thu, 20 Aug 2026 16:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D83647B403;
+	Thu, 20 Aug 2026 16:37:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243824; cv=none; b=VYAqsYGpgxuASH/HwnVlDsW7JL6kjZCdVQSKJ4T45bH96gvYi88lwbDaL2iQWe3JFSvIIBZ3qPv3rLTB9GP+5UaFkfyg6Z5LlWkTROZCpXiGEYUOIDR+/jIVBru5hjSEmZB/Q0/sC8vU+6KrVV/6031K3DsVrkkZzl2cqpzhsss=
+	t=1787243827; cv=none; b=ZMcf96rmsCh4R1QTo9Qkp1muzPLEwX1GBYCaDZ2cI3406O0WVtka/ekaup4On26kNRgowZhbPl9eldE0SCnaUrB7kGb3BpOZxosAMS9yONj7lDA6yPWI56YVa7EtnPaTX3AYwR2ZgYTf9G1TFJ7Rrc0Wuf+La1w48N3oLPzAMm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243824; c=relaxed/simple;
-	bh=cgslSua0ZhEKLXRbU1eQ/e1bJVPFjJl6biK5ShJyRTc=;
+	s=arc-20240116; t=1787243827; c=relaxed/simple;
+	bh=CiImhgrRuUOZpPaPmnt9+NXo40cdnoDUZgMkWeRh20w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DnwldJ7QwgFs+A7m6/v3sddkL2900gwwsCmjm1oQnSqSGux0Ci3rPOTWZ7lJgPRf+ddfqX9za9v/5DwHyWBhmI9sKVh0Ghn6IwWFXJhtAj/o2Cl+M4Xp8t5LKI32Ek6YBbbdu0MGKeVVBAIzl3xwUnrLc1Eo1Bvf8CM8Pe9++ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QnbWd1kH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p3SWwKb++jA2AvF/C4nQlAj5g3dEfuKC1xWnl2Tpj4lq+qw+GvDpvxBgtBFO2MlUm6nl0y89L4oh8h26nh3+tbt79YZ8WERh08wcYrEsGTayCBGvkv7ua2v+zxy7RjntUH18IePLwVjbU7ROg/1W4kfzW4JznPaFidaAh7nH4jY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLrdPtmI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QnbWd1kH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226BE1F000E9;
-	Thu, 20 Aug 2026 16:37:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLrdPtmI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C72D81F000E9;
+	Thu, 20 Aug 2026 16:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243823;
-	bh=Qj945Q68mjDiS6hC8SxBqha/rcSr4JPbMmk+4s220zY=;
+	s=korg; t=1787243826;
+	bh=Qnr0sozZziKQcGX1A6i8iLzIGYpoGm6raZ3OEIH6rgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QnbWd1kHGeV8JoHJwHkyDE66TumDsH1XRceFMxTpqc36XZ02sRotrs5hCnZxIqVPo
-	 +tk1eOcM2eixMmDUtMJulmCfxZEYpPDvcJs0xdBxbmrtdu411W1cyYDyU7Q/kbZwti
-	 A1HRGD5aWXeLTq3oAcu0WsfOxLlV02lPBag1Mdzk=
+	b=PLrdPtmIMhicEorHYR05Uc1l9gsMQun9D+0LgmQVRW83wzvY0trj1wpDN3D14GJhc
+	 bQvXlgJfPAjT6adVFVPwPQF6hXszWPG8yIls+SMclhNbYylJpZTv3UToXYyv+y9b1b
+	 uEgYuNdMYghVMTZIvp8jMiatjJ3xWW57ZlXhIohA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Seiderer <ps.report@gmx.net>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 227/272] net: pktgen: fix code style (WARNING: Block comments)
-Date: Thu, 20 Aug 2026 16:56:51 +0200
-Message-ID: <20260820145238.408940648@linuxfoundation.org>
+Subject: [PATCH 5.15 228/272] net: pktgen: fix proc entry use-after-free
+Date: Thu, 20 Aug 2026 16:56:52 +0200
+Message-ID: <20260820145238.442971724@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -46,163 +46,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Seiderer <ps.report@gmx.net>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit 870b856cb478bc02fffe4d89897e62c692efb09a ]
+[ Upstream commit 817ff6efdb7f484ea547218e11e17d8e43daa3b4 ]
 
-Fix checkpatch code style warnings:
+pktgen_change_name() replaces pkt_dev->entry while holding t->if_lock.
+pktgen_remove_device() removes the same entry before
+_rem_dev_from_if_list() takes that lock.
 
-  WARNING: Block comments use a trailing */ on a separate line
-  +                                * removal by worker thread */
+This allows the following interleaving:
 
-  WARNING: Block comments use * on subsequent lines
-  +       __u8 tos;            /* six MSB of (former) IPv4 TOS
-  +                               are for dscp codepoint */
+  CPU 0 (NETDEV_CHANGENAME)       CPU 1 (kpktgend)
+  if_lock(t)
+  proc_remove(pkt_dev->entry)
+                                  proc_remove(pkt_dev->entry)
+  pkt_dev->entry = proc_create_data(...)
+  if_unlock(t)
 
-  WARNING: Block comments use a trailing */ on a separate line
-  +                               are for dscp codepoint */
+The kthread can pass the stale proc_dir_entry to proc_remove() after the
+rename path has freed it. A reproducer with a widened race window reports:
 
-  WARNING: Block comments use * on subsequent lines
-  +       __u8 traffic_class;  /* ditto for the (former) Traffic Class in IPv6
-  +                               (see RFC 3260, sec. 4) */
+  BUG: KASAN: slab-use-after-free in proc_remove+0x78/0x80
+  Read of size 8 at addr ffff8881478fea70 by task kpktgend_0/67
+  Call Trace:
+   proc_remove+0x78/0x80
+   pktgen_remove_device.isra.0+0x11c/0x4c0
+   pktgen_thread_worker+0x1214/0x6bc0
+   kthread+0x2c6/0x3b0
+  Allocated by task 95:
+   __proc_create+0x204/0x790
+   proc_create_data+0x72/0xe0
+   pktgen_thread_write+0xd61/0x1510
+  Freed by task 28:
+   kmem_cache_free+0xcb/0x3d0
+   proc_free_inode+0x5b/0x80
+   rcu_core+0x50a/0x1850
+  The buggy address belongs to the object at ffff8881478fea00
+   which belongs to the cache proc_dir_entry of size 192
 
-  WARNING: Block comments use a trailing */ on a separate line
-  +                               (see RFC 3260, sec. 4) */
+Move proc_remove() into the if_lock-protected list removal helper. Keep it
+before list_del_rcu() to preserve the ordering required by add_device().
+The rename path must then finish replacing the entry before removal, or
+it observes that the device is no longer on the list.
 
-  WARNING: Block comments use * on subsequent lines
-  +       /* = {
-  +          0x00, 0x80, 0xC8, 0x79, 0xB3, 0xCB,
-
-  WARNING: Block comments use * on subsequent lines
-  +       /* Field for thread to receive "posted" events terminate,
-  +          stop ifs etc. */
-
-  WARNING: Block comments use a trailing */ on a separate line
-  +          stop ifs etc. */
-
-  WARNING: Block comments should align the * on each line
-  + * we go look for it ...
-  +*/
-
-  WARNING: Block comments use a trailing */ on a separate line
-  +        * we resolve the dst issue */
-
-  WARNING: Block comments use a trailing */ on a separate line
-  +        * with proc_create_data() */
-
-Signed-off-by: Peter Seiderer <ps.report@gmx.net>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Fixes: 39df232f1a9b ("[PKTGEN]: fix device name handling")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260719145740.2888967-1-nicoyip.dev@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 817ff6efdb7f ("net: pktgen: fix proc entry use-after-free")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/pktgen.c |   39 +++++++++++++++++++++++----------------
- 1 file changed, 23 insertions(+), 16 deletions(-)
+ net/core/pktgen.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 --- a/net/core/pktgen.c
 +++ b/net/core/pktgen.c
-@@ -284,7 +284,8 @@ struct pktgen_dev {
- 	int pkt_overhead;	/* overhead for MPLS, VLANs, IPSEC etc */
- 	int nfrags;
- 	int removal_mark;	/* non-zero => the device is marked for
--				 * removal by worker thread */
-+				 * removal by worker thread
-+				 */
+@@ -3887,6 +3887,7 @@ static void _rem_dev_from_if_list(struct
+ 	struct pktgen_dev *p;
  
- 	struct page *page;
- 	u64 delay;		/* nano-seconds */
-@@ -347,10 +348,12 @@ struct pktgen_dev {
- 	__u16 udp_dst_max;	/* exclusive, dest UDP port */
- 
- 	/* DSCP + ECN */
--	__u8 tos;            /* six MSB of (former) IPv4 TOS
--				are for dscp codepoint */
--	__u8 traffic_class;  /* ditto for the (former) Traffic Class in IPv6
--				(see RFC 3260, sec. 4) */
-+	__u8 tos;		/* six MSB of (former) IPv4 TOS
-+				 * are for dscp codepoint
-+				 */
-+	__u8 traffic_class;	/* ditto for the (former) Traffic Class in IPv6
-+				 * (see RFC 3260, sec. 4)
-+				 */
- 
- 	/* IMIX */
- 	unsigned int n_imix_entries;
-@@ -390,12 +393,12 @@ struct pktgen_dev {
- 
- 	__u8 hh[14];
- 	/* = {
--	   0x00, 0x80, 0xC8, 0x79, 0xB3, 0xCB,
--
--	   We fill in SRC address later
--	   0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
--	   0x08, 0x00
--	   };
-+	 * 0x00, 0x80, 0xC8, 0x79, 0xB3, 0xCB,
-+	 *
-+	 * We fill in SRC address later
-+	 * 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+	 * 0x08, 0x00
-+	 * };
- 	 */
- 	__u16 pad;		/* pad out the hh struct to an even 16 bytes */
- 
-@@ -458,7 +461,8 @@ struct pktgen_thread {
- 	char result[512];
- 
- 	/* Field for thread to receive "posted" events terminate,
--	   stop ifs etc. */
-+	 * stop ifs etc.
-+	 */
- 
- 	u32 control;
- 	int cpu;
-@@ -2341,7 +2345,7 @@ static inline int f_pick(struct pktgen_d
- #ifdef CONFIG_XFRM
- /* If there was already an IPSEC SA, we keep it as is, else
-  * we go look for it ...
--*/
-+ */
- #define DUMMY_MARK 0
- static void get_ipsec_sa(struct pktgen_dev *pkt_dev, int flow)
- {
-@@ -2646,7 +2650,8 @@ static int pktgen_output_ipsec(struct sk
- 	if (!x)
- 		return 0;
- 	/* XXX: we dont support tunnel mode for now until
--	 * we resolve the dst issue */
-+	 * we resolve the dst issue
-+	 */
- 	if ((x->props.mode != XFRM_MODE_TRANSPORT) && (pkt_dev->spi == 0))
- 		return 0;
- 
-@@ -3711,7 +3716,8 @@ static int add_dev_to_thread(struct pktg
- 	 * userspace on another CPU than the kthread.  The if_lock()
- 	 * is used here to sync with concurrent instances of
- 	 * _rem_dev_from_if_list() invoked via kthread, which is also
--	 * updating the if_list */
-+	 * updating the if_list
-+	 */
  	if_lock(t);
- 
- 	if (pkt_dev->pg_thread) {
-@@ -3908,7 +3914,8 @@ static int pktgen_remove_device(struct p
- 
- 	/* Remove proc before if_list entry, because add_device uses
++	proc_remove(pkt_dev->entry);
+ 	list_for_each_safe(q, n, &t->if_list) {
+ 		p = list_entry(q, struct pktgen_dev, list);
+ 		if (p == pkt_dev)
+@@ -3916,9 +3917,6 @@ static int pktgen_remove_device(struct p
  	 * list to determine if interface already exist, avoid race
--	 * with proc_create_data() */
-+	 * with proc_create_data()
-+	 */
- 	proc_remove(pkt_dev->entry);
+ 	 * with proc_create_data()
+ 	 */
+-	proc_remove(pkt_dev->entry);
+-
+-	/* And update the thread if_list */
+ 	_rem_dev_from_if_list(t, pkt_dev);
  
- 	/* And update the thread if_list */
+ #ifdef CONFIG_XFRM
 
 
