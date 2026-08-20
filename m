@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0265246781;
-	Thu, 20 Aug 2026 16:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE4040F754;
+	Thu, 20 Aug 2026 16:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244246; cv=none; b=ZvtFLovzPaOKXuWuuhg/bD4bmku0M5AdhaenjCAcQmWwhXhNpnsh3/LrvgwrrU86P5ZMopiKHOPYAfZNXRxZJG4ok2nkcJtBSCvWnjFwzR/1w1TGC6WlnQYcjx0xoalJnpO6l91a9yKSls0FvhYr35/F3+WASGVdt1gSkmhO0aM=
+	t=1787244250; cv=none; b=FvkJULU6jYyCM2oooqvAOjhYJsMCar4KX2T6Wp3gijoc7hWJCd3Qnc8ZYsLKwsc1+M05x+yCvE4sIlAZ9S3XGr1XpmQLxq4fhfEeYZ5tTGxJq7Ut8Ju3HhHzfZdBObaQCd2BPZlGkGKuyujppvJd7yybpANYY0LaO+K4Lqqrst4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244246; c=relaxed/simple;
-	bh=xkwdt/Nw+b75cHkgmcT3hNj+qje5eBvamztsuf4PNNw=;
+	s=arc-20240116; t=1787244250; c=relaxed/simple;
+	bh=F2KNJcshSzufMVxUGk//n3vBbec/Ng2x1ReudE2e5aQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IL1kpaZ3h7A6MqC4MZ6uae4OepTwyCmnf1mXtxlHoMmRiqXB8L25e0T94slDiKO1dB3y/m6ubW0VV6etct/+02GRWfIYq6k1trRBcM6RtTlj7ShZmSyzzaZOy9leIGQ2wPuWadRVqp4RS1Fu4k0PvZS+J/s4/v02so+aKT365iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9XzVoJH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hqXDsj4H+TNh9/msvA4+XkSnhsMFxdXQy3B0QGzwxIunGMSUQq+OYmAjuz0MAx/PWEITW/e+p4YASGT5ArEuBf2b7KRrPyqBtFpKR0eLLykEJOtO/8rODa4/e+FC01sreLLjC4v0Ydag6QXyJblgpzmfGimDzk7ojmsRMwsI8TY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UImpyyMA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9XzVoJH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 376E71F00A3A;
-	Thu, 20 Aug 2026 16:44:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UImpyyMA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 150F11F000E9;
+	Thu, 20 Aug 2026 16:44:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244245;
-	bh=JgQGj4sPvUgN7vlpZI/P/d5k1q4q20IXFLgffRLc7vM=;
+	s=korg; t=1787244248;
+	bh=vQO6QFarN4ei7mLo0FTiNfuYDIMFZVU/iz9mXTrgGc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M9XzVoJHbU+p2IVcMfdG14su4WtILmqapyZBFYiBZduz201sFG//+qGKpiFRqBODJ
-	 PUONJCkX0YgDwisWyMNjCJ7tWPZNIHTRO0kTgpHnBJbL0Q4WOmrSZcl7fvk/xZ+jLO
-	 6l+gl9lZbzUJaTkeMVHqszpjrXS1BFQRV4MY28cY=
+	b=UImpyyMALmFuq19CqM3WqUHhQbPzVWY4ppMRsh82uvfPUrk3hlEgEbFryxaUYwE4c
+	 QFWaQ8FVDOSAaUsXY6mxRVxjcQJyEMhEJjyUPIUFJn7I34oEBAS9lodBGBKiwdbmSZ
+	 eMcvl+qhhe7oVaZTOXskAOotrGUjdfHwIxejZ3Zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Pratyush Yadav <pratyush@kernel.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 095/235] mtd: spi-nor: swp: Improve locking user experience
-Date: Thu, 20 Aug 2026 16:55:31 +0200
-Message-ID: <20260820145219.339644004@linuxfoundation.org>
+Subject: [PATCH 5.10 104/235] thunderbolt: Keep XDomain reference during the lifetime of a service
+Date: Thu, 20 Aug 2026 16:55:40 +0200
+Message-ID: <20260820145219.606724012@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -53,58 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit e1d456b26bf23e30db305a6184e8abd9ab68bbf2 ]
+[ Upstream commit 8b4060998637f06975fceee9b73845d8672d411e ]
 
-In the case of the first block being locked (or the few first blocks),
-if the user want to fully unlock the device it has two possibilities:
-- either it asks to unlock the entire device, and this works;
-- or it asks to unlock just the block(s) that are currently locked,
-  which fails.
+This is needed because we release the service ID in tb_service_release()
+and the ID array is owned by the parent XDomain.
 
-It fails because the conditions "can_be_top" and "can_be_bottom" are
-true. Indeed, in this case, we unlock everything, so the TB bit does not
-matter. However in the current implementation, use_top would be true (as
-this is the favourite option) and lock_len, which in practice should be
-reduced down to 0, is set to "nor->params->size - (ofs + len)" which is
-a positive number. This is wrong.
-
-An easy way is to simply add an extra condition. In the unlock() path,
-if we can achieve the same result from both sides, it means we unlock
-everything and lock_len must simply be 0. A comment is added to clarify
-that logic.
-
-Fixes: 3dd8012a8eeb ("mtd: spi-nor: add TB (Top/Bottom) protect support")
-Cc: stable@kernel.org
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Michael Walle <mwalle@kernel.org>
-Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Stable-dep-of: 2c5d2d3c3f70 ("thunderbolt: Prevent XDomain delayed work use-after-free on disconnect")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/swp.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/thunderbolt/xdomain.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/spi-nor/swp.c
-+++ b/drivers/mtd/spi-nor/swp.c
-@@ -267,8 +267,15 @@ static int spi_nor_sr_unlock(struct spi_
- 	/* Prefer top, if both are valid */
- 	use_top = can_be_top;
+--- a/drivers/thunderbolt/xdomain.c
++++ b/drivers/thunderbolt/xdomain.c
+@@ -784,6 +784,7 @@ static void tb_service_release(struct de
+ 	ida_simple_remove(&xd->service_ids, svc->id);
+ 	kfree(svc->key);
+ 	kfree(svc);
++	tb_xdomain_put(xd);
+ }
  
--	/* lock_len: length of region that should remain locked */
--	if (use_top)
-+	/*
-+	 * lock_len: length of region that should remain locked.
-+	 *
-+	 * When can_be_top and can_be_bottom booleans are true, both adjacent
-+	 * regions are unlocked, thus the entire flash can be unlocked.
-+	 */
-+	if (can_be_top && can_be_bottom)
-+		lock_len = 0;
-+	else if (use_top)
- 		lock_len = nor->params->size - (ofs + len);
- 	else
- 		lock_len = ofs;
+ struct device_type tb_service_type = {
+@@ -892,7 +893,7 @@ static void enumerate_services(struct tb
+ 		svc->id = id;
+ 		svc->dev.bus = &tb_bus_type;
+ 		svc->dev.type = &tb_service_type;
+-		svc->dev.parent = &xd->dev;
++		svc->dev.parent = get_device(&xd->dev);
+ 		dev_set_name(&svc->dev, "%s.%d", dev_name(&xd->dev), svc->id);
+ 
+ 		if (device_register(&svc->dev)) {
 
 
