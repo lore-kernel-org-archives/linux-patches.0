@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062AF480326;
-	Thu, 20 Aug 2026 17:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C919D47F774;
+	Thu, 20 Aug 2026 17:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787246974; cv=none; b=O5yl9oNz6aa8m4EQChX/0aVhsYexkXOnBnofFClTMH3hC0qg0m2hRYcAx3aRKprtsg0wnn2p4lrBJMtqbbIf0iTmkAhEcxyDbqIuBTJSpyN1P86WbUOSDtLe63GjuUpJlek96JuMb4WgE1R7d/26XST3BXbRl0RLhf8j7czoXhY=
+	t=1787246976; cv=none; b=b0zmbnXHCDXRTkZwvdSSCSdksv+7qlzM+YFzrMSaXmtfgkdChiYmFUe7QB3hR23y02H5o240ZHXnmNi0qZuJ7DQ+h7hNnZv2oAdIj+evhpnhrFG0z24Llcl6XMQUvedfM+qHs9FQUGjfZmEjPHmcKrfQv9OFLehF7EFdD5rxCj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787246974; c=relaxed/simple;
-	bh=tbBDVv9+ajnGhzMoyiyhrAbfFOOYyy9cx5LbMiKWDmQ=;
+	s=arc-20240116; t=1787246976; c=relaxed/simple;
+	bh=5uFbDgscuzi+MWBmDRcaNetf6C1mylN10mosluOl/34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KghHjDGXuQzCadGA+S7u5OvaUTy1GCzntxQciLaSR4EmRY80ONeBcFC0W0Cb5wFZwG17GrTM6wXPW4lJMDP7MoJKJ+Q7flB7BM+Ag63tQOisBPzyGhWSRt1a5SGpCjZLYXN4VWFx5qpiz0n4fJoO4KbV6B4jtkmzXyFFyojMuwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OsyaHSbi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pbMy6gaqYUs4WjcAbhXk6OSqFrOOTWRue4NrqEQIwh5RbidpyGo0Aq3Fda+ELyw3GpcM7MpoaqRvq2IgLLFMtfSvAxh7WkwCkJ2z70Avjemui7RtySeD4gsSjZs66AwoibxubK/nhjxt9hCkzp3UuovuQ+N70flktYpVY6ykM9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JSDvSV2Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OsyaHSbi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC121F000E9;
-	Thu, 20 Aug 2026 17:29:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSDvSV2Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3201D1F000E9;
+	Thu, 20 Aug 2026 17:29:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787246972;
-	bh=yAgVFZXn0ezgv+APL0J08N/CfECdocb3EdJLkh04H88=;
+	s=korg; t=1787246975;
+	bh=ToB1Ipot+WWjsuw5pHq8s5Z6dM9/21aPG++uKMLOKX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OsyaHSbi1YQdD9OWDrv4C1wRdNi4ax30rEBpzo4kkxJpNGCSj+N2szDlLaRzT1d5E
-	 cyn86iDNypPGfmfgddaC4oPet8qyKNu8pHiSSdHD6ovl3uWc9XQR9gGvgNOzwyDZAh
-	 LIFZlQYkvUkFa0w5n5+3P8lOep2MCv7ih0WhGHGU=
+	b=JSDvSV2Y5pTVdbDHVusI6pQJ4qmMUbko1tVeJD6ZIhSxG7ksBuulfdw7fzdN+ppHz
+	 POj+iFp2IRF+7ncjO+/wAC6V36RQnAm0bUrw0paB8EwmLQxQeJukHyMTIeyXaev00T
+	 aNLUFJfGKhftv8yiUhaDjfbCnu2pViAd8Y/4y0eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.12 056/220] ftrace: Fix off-by-one fentry site disable in ftrace_free_mem()
-Date: Thu, 20 Aug 2026 16:54:06 +0200
-Message-ID: <20260820145225.179071608@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.12 099/220] xfs: load next_agino from the correct xfarray in xrep_iunlink_relink_prev
+Date: Thu, 20 Aug 2026 16:54:49 +0200
+Message-ID: <20260820145226.457563394@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -51,62 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 8b8292d6487c81bd57c2605a9b404b1cf8f1edfb upstream.
+commit 6b9cd540138a06660a843a519facc147060acbef upstream.
 
-When a module's init text is freed, do_init_module() calls
-ftrace_free_mem() with a half-open [start, end) range.  However the
-ftrace_cmp_recs() comparator treats the upper bound as inclusive, as all
-its other users do, passing 'ip + size - 1'.  So ftrace_free_mem() can
-delete a record sitting exactly at 'end', which is outside the freed
-range.
+LOLLM notices that xrep_iunlink_relink_prev has the comment "set the
+forward pointer..." but then loads the value from the xfarray that
+stores pointers to the previous inode in the unlinked list.  That's
+wrong, so fix the variable access.
 
-For a kernel without CFI or IBT, the first record of a function is at
-the function start, which for the first function in a module is also the
-base of its text allocation.  As the module allocator packs its regions,
-that address is often the 'end' passed by a neighboring module's
-do_init_module(), causing the first function's ftrace location to get
-disabled, preventing an attempt to livepatch it:
-
-  livepatch: failed to find location for function 'pcspkr_probe'
-
-Convert the exclusive end to the inclusive 'end - 1' the comparator
-expects, and return early for an empty range to avoid the subtraction
-from underflowing when the init text size is zero.
-
-Cc: stable@vger.kernel.org
-Fixes: 42c269c88dc1 ("ftrace: Allow for function tracing to record init functions on boot up")
-Link: https://patch.msgid.link/1b5ccfa8095bdb1277f84af1c2c2e2205aca03ae.1785992188.git.jpoimboe@kernel.org
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Cc: stable@vger.kernel.org # v6.10
+Fixes: ab97f4b1c03075 ("xfs: repair AGI unlinked inode bucket lists")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/agheader_repair.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -7770,7 +7770,8 @@ static void add_to_clear_hash_list(struc
- void ftrace_free_mem(struct module *mod, void *start_ptr, void *end_ptr)
- {
- 	unsigned long start = (unsigned long)(start_ptr);
--	unsigned long end = (unsigned long)(end_ptr);
-+	/* end is inclusive and end_ptr is exclusive */
-+	unsigned long end = (unsigned long)(end_ptr) - 1;
- 	struct ftrace_page **last_pg = &ftrace_pages_start;
- 	struct ftrace_page *tmp_page = NULL;
- 	struct ftrace_page *pg;
-@@ -7780,6 +7781,9 @@ void ftrace_free_mem(struct module *mod,
- 	struct ftrace_init_func *func, *func_next;
- 	LIST_HEAD(clear_hash);
+--- a/fs/xfs/scrub/agheader_repair.c
++++ b/fs/xfs/scrub/agheader_repair.c
+@@ -1634,7 +1634,7 @@ xrep_iunlink_relink_prev(
+ 		want_rele = true;
  
-+	if (start_ptr >= end_ptr)
-+		return;
-+
- 	key.ip = start;
- 	key.flags = end;	/* overload flags, as it is unsigned long */
+ 		/* Set the forward pointer since this just came off disk. */
+-		error = xfarray_load(ragi->iunlink_prev, agino, &next_agino);
++		error = xfarray_load(ragi->iunlink_next, agino, &next_agino);
+ 		if (error)
+ 			goto out_rele;
  
 
 
