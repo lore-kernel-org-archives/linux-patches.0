@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3D946C84F;
-	Thu, 20 Aug 2026 16:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A8D479888;
+	Thu, 20 Aug 2026 16:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243577; cv=none; b=EGMaAcUoWqxqOLjM93Te8yzvV05jFQ0pTKKLDK+QAtSfNy5zzeRO/0u/RTLRbtUUwu/gsvEj0lY0DoMK6A+cpIP9mTRdanRp8vC/YL3Z97VzIRWs07QKF3nutbfvvI1dvRQgVAcOioQMNZzlR5S2Rq4KptpXv4QsuWMtKaZ6elo=
+	t=1787243580; cv=none; b=P2R3/WsA1C97Ntn4LOreeElB1iEtSLN//on1Ux72YsyvTy+3HQDhjqz6ZT08OdkgC1XZSIE2Dz4AyMrFJfm4T1R1l0/FrPDeMthexgKQefPgAyQ37Y87MIZh8kkJwNaJ4cTu1bNt3igHvukJ8R7xbJZ/X88ZG321uEwIxq9C4n8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243577; c=relaxed/simple;
-	bh=rlmZFPqjxb+AabXtpmf0056b9MezuY/dgNf1A0iyDeU=;
+	s=arc-20240116; t=1787243580; c=relaxed/simple;
+	bh=I7XpKA4D2JenM97BYAap99peVz8xAdpGDf5E+jLSlh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s4KjC0/i1FowjWBnE5rTJAIg0qaOvE7VL7w+oE/zYYW9SvuXntHMP3kmuWhvX8IPslNI4Mv6FhDs7eJtnuRSiYIT5o+Sd2l99QjIOpa7V4W3/mD2ye12pPzfxe2LXzC6autiLhsO5owknKr87I/R12DgLq8EBrcE3/Jb3paiLMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9TuTNPV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a9f/PgR1Qm7A+RyYXFZfQGSIGQy3RmyQ4Z1dREPlXeJJ/6DkQPImGNgHpoZQFAGi4UxnoYtrLSjDKVnVbZshcUjQsW1LIKQlKDCI5EJnNLafHbLRFnPPJwgdnmL6JwZsJYPoGumC1opOvfUxJ7jS8EXBf0muOiN7T47B5i4bo6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vswePTSk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9TuTNPV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A8E1F00A3D;
-	Thu, 20 Aug 2026 16:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vswePTSk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 889CE1F000E9;
+	Thu, 20 Aug 2026 16:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243576;
-	bh=v/70PiFBxzJ0gKm795qtax+HO+qLLuOaGBxvTkgwbEY=;
+	s=korg; t=1787243579;
+	bh=aSxVFsIOPtwwmrEjnjdzM+wlgFAwIHE6dLeCs4jb6aY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w9TuTNPVge78RbtQHhb3ssRE28tq/Tc9cAFdK4FRMs1LbqjqaSk2EQi/dGef/wCxP
-	 z+LsJF9Ihqb4qub9ZU9hthf6BpVByZ3Jq2DgY0IDq1GDZHnl5glrdzGei+6xLqOqWD
-	 SdzLXxNjPFF/Vp+VAJyOdbWAsBb94+vv0M9x0/0Y=
+	b=vswePTSkPOATHq6/bjXmmb0/mRav/EMWXLtw3PVrJASZdUqy5gMGMTNTyfY4KpTzF
+	 Xy1wosE5QnqMypd3PeHJcD0foDc545mwWdxjSVemzv0BlvFj6VvOQ9vkhrcNVvY8nA
+	 dgWZPAtIkUFe8MiJvnEAFWHy7k2Sc5YmWoNl1eKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 5.15 142/272] mmc: vub300: fix use-after-free on probe failure
-Date: Thu, 20 Aug 2026 16:55:26 +0200
-Message-ID: <20260820145235.556914466@linuxfoundation.org>
+	syzbot+000c800a02097aaa10ed@syzkaller.appspotmail.com,
+	Thomas Gleixner <tglx@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Sasha Levin <sashal@kernel.org>,
+	Jann Horn <jannh@google.com>
+Subject: [PATCH 5.15 143/272] locking/rt: Fix the incorrect RCU protection in rt_spin_unlock()
+Date: Thu, 20 Aug 2026 16:55:27 +0200
+Message-ID: <20260820145235.590824175@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -51,84 +54,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Thomas Gleixner <tglx@kernel.org>
 
-The vub300 driver lifetime-manages its controller state using
-vub300->kref, with vub300_delete() freeing the mmc host when the last
-reference is dropped. The probe error path after the inactivity timer has
-been armed still bypasses that lifetime rule, however, and falls through
-to mmc_free_host() directly if mmc_add_host() fails.
+[ Upstream commit 89038cc87d80c77e7aa6f42a64b2573b74af339f ]
 
-The race window is between arming the inactivity timer and reaching the
-probe error unwind after mmc_add_host() fails:
+rt_spin_unlock() releases the RCU protection before unlocking the
+lock. That opens the door for the following UAF scenario:
 
-        probe thread                     timer/workqueue
-        ------------                     ---------------
-        kref_init(&vub300->kref)         ref = 1
-        kref_get(&vub300->kref)          ref = 2, timer ref
-        add_timer(inactivity_timer)      fires after one second
-        |
-        |   race window
-        |<---------------------------------------------------->
-        |
-        mmc_add_host(mmc)
-                                         inactivity timer fires
-                                         vub300_queue_dead_work()
-                                           kref_get()          ref = 3
-                                           queue_work(deadwork)
-        mmc_add_host() fails
-        timer_delete_sync()
-        mmc_free_host(mmc)
-          frees vub300
-                                         deadwork runs
-                                           use-after-free
+ T1					T2
+ spin_lock(&p->lock);		rcu_read_lock();
+ invalidate(p);			p = rcu_dereference(ptr);
+ rcu_assign_pointer(ptr, NULL);	if (!p) return;
+ spin_unlock(&p->lock);		spin_lock(&p->lock)
+ 				   lock(&lock->lock);
+				   rcu_read_lock();
+ kfree_rcu(p);			rcu_read_unlock();
+				....
+				spin_unlock(&p->lock)
+				  rcu_read_unlock(); // Ends grace period
+ rcu_do_batch()
+   kfree(p);
+			    UAF ->	  rt_mutex_cmpxchg_release(&lock->lock...)
 
-The inactivity timeout is one second, so this would require
-mmc_add_host() to both fail and take more than one second to do so. This
-is unlikely to happen in practice, but the error path is still wrong.
+Regular spinlocks keep preemption disabled accross the unlock operation,
+which provides full RCU protection, but the RT substitution fails to
+resemble that. Same applies for the rwlock substitution.
 
-timer_delete_sync() only waits for the timer callback itself. It does
-not flush deadwork that the callback may already have queued. As a
-result, queued deadwork can still hold a kref while the probe error path
-directly frees the backing mmc host, including the vub300 storage.
+Move the rcu_read_unlock() invocation past the unlock operations to match
+the non-RT semantics. This makes it asymmetric vs. rt_xxx_lock(), but
+that's harmless as the caller needs to hold RCU read lock across the lock
+operation. The migrate_enable() call stays before the unlock operation
+because there is no per CPU operation in the unlock path which would
+require migration to be kept disabled.
 
-Fix this by using the same lifetime mechanism as disconnect. Clear
-vub300->interface so that the timer callback and any queued deadwork
-return early and drop their references, then drop the initial probe
-reference and return without falling through to err_free_host.
-
-Fixes: 0613ad2401f8 ("mmc: vub300: fix return value check of mmc_add_host()")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Johan Hovold <johan@kernel.org>
+Fixes: 0f383b6dc96e ("locking/spinlock: Provide RT variant")
+Reported-by: syzbot+000c800a02097aaa10ed@syzkaller.appspotmail.com
+Decoded-by: Jann Horn <jannh@google.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Acked-by: Al Viro <viro@zeniv.linux.org.uk>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
-(cherry picked from commit a3b5f242997a3be7404112fd48784881560aea57)
+Link: https://patch.msgid.link/87jyrud75z.ffs@fw13
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/vub300.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ kernel/locking/spinlock_rt.c |   27 ++++++++++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
 
---- a/drivers/mmc/host/vub300.c
-+++ b/drivers/mmc/host/vub300.c
-@@ -2345,12 +2345,16 @@ static int vub300_probe(struct usb_inter
- 			 interface_to_InterfaceNumber(interface));
- 	retval = mmc_add_host(mmc);
- 	if (retval)
--		goto err_delete_timer;
-+		goto err_stop_io;
+--- a/kernel/locking/spinlock_rt.c
++++ b/kernel/locking/spinlock_rt.c
+@@ -66,10 +66,27 @@ void __sched rt_spin_unlock(spinlock_t *
+ {
+ 	spin_release(&lock->dep_map, _RET_IP_);
+ 	migrate_enable();
+-	rcu_read_unlock();
  
- 	return 0;
+ 	if (unlikely(!rt_mutex_cmpxchg_release(&lock->lock, current, NULL)))
+ 		rt_mutex_slowunlock(&lock->lock);
++
++	/*
++	 * This must be last to prevent the following UAF:
++	 *
++	 * T1					T2
++	 * spin_lock(&p->lock);			rcu_read_lock();
++	 * invalidate(p);			p = rcu_dereference(ptr);
++	 * rcu_assign_pointer(ptr, NULL);	if (!p) return;
++	 * spin_unlock(&p->lock);		spin_lock(&p->lock);
++	 * kfree_rcu(p);			rcu_read_unlock();
++	 *					....
++	 *					spin_unlock(&p->lock)
++	 *					  rcu_read_unlock(); // Ends grace period
++	 * rcu_do_batch()
++	 *   kfree(p);
++	 *			    UAF ->	  rt_mutex_cmpxchg_release(&p->lock.lock...)
++	 */
++	rcu_read_unlock();
+ }
+ EXPORT_SYMBOL(rt_spin_unlock);
  
--err_delete_timer:
--	timer_delete_sync(&vub300->inactivity_timer);
-+err_stop_io:
-+	vub300->interface = NULL;
-+	kref_put(&vub300->kref, vub300_delete);
+@@ -232,17 +249,21 @@ void __sched rt_read_unlock(rwlock_t *rw
+ {
+ 	rwlock_release(&rwlock->dep_map, _RET_IP_);
+ 	migrate_enable();
+-	rcu_read_unlock();
+ 	rwbase_read_unlock(&rwlock->rwbase, TASK_RTLOCK_WAIT);
 +
-+	return retval;
++	/* This must be last. See comment in rt_spin_unlock() */
++	rcu_read_unlock();
+ }
+ EXPORT_SYMBOL(rt_read_unlock);
+ 
+ void __sched rt_write_unlock(rwlock_t *rwlock)
+ {
+ 	rwlock_release(&rwlock->dep_map, _RET_IP_);
+-	rcu_read_unlock();
+ 	migrate_enable();
+ 	rwbase_write_unlock(&rwlock->rwbase);
 +
- err_free_host:
- 	mmc_free_host(mmc);
- 	/*
++	/* This must be last. See comment in rt_spin_unlock() */
++	rcu_read_unlock();
+ }
+ EXPORT_SYMBOL(rt_write_unlock);
+ 
 
 
