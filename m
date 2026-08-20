@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2242931C0;
-	Thu, 20 Aug 2026 17:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B637447DD42;
+	Thu, 20 Aug 2026 17:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247918; cv=none; b=Mj1Z1JJojgpqwMVPhgacgnabdyVnQQ3vYNPJANluvS2beErJtzv/5SEIT0MHGExAlDns/C1RWHkYJYMYY3JvyqSkhpOBGv0t2PikKFedC/w1i3f/d0yIYqPCJU+zg6MbVjy4FsmPGxC9nL4EOFm8GvYSh5xZcEbrPFVerGN5iAA=
+	t=1787247922; cv=none; b=CFUlD6EFJQhLSb9fuQK/YDrBbJ0D46dL9nnwU548EYk6Fksox689ykoO52rdll+ge2xWV1/8cdViPkjSg+xICsd9r2WbkOIrLUeCVj2FGObkB0Cb1Qs0qF5od8WkpTOlm0wThiCQZr1pNTHVkEWfWVX+LVWiCw1bUTegdiGRDlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247918; c=relaxed/simple;
-	bh=VebB0lDp8+081BK76Q7u9S2mdX9KMVLTuKcHjA07RfE=;
+	s=arc-20240116; t=1787247922; c=relaxed/simple;
+	bh=pNZ/tivuhdHF9xUlrWVhcAEYyrbG8cJO05Nd6uEXgoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GnwUacHG4Ur+AN8LqbBxxbTCCbuX7h+yhCZXnzA855mVf5a3XnftrJS/cvDAxHsBof630gv/gQ5s03s3BdbMy/uKvunrxgKGXw8I0CNnc9JiIolpnWQbYYdJ0bGDmxUOEQUZ8OX24whljAtQCXm3G8aKCUVma/m2M2wt1K3S+8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sedv2JkE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DXH8K5D+flG3/nR3j1h9KF/OSijpP9KlU/I4MHUKbVjD0dkzgTADs0GaJuqHLbxbcm70weJrmGM6XaDzQOk3sNZdG/tXth2D6GprToREzc9Q4OmUhh5gHu4s5sVpnva8DIU0/6NH27HhNcHF30NaZ7WwpE5SCIZASLxZ3uWYue4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rf8pSeDB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sedv2JkE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E55F01F00A3A;
-	Thu, 20 Aug 2026 17:45:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rf8pSeDB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41A71F000E9;
+	Thu, 20 Aug 2026 17:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247917;
-	bh=dNXfbNEBj7fsH58GqEkGuCI3NKfXPBa0oPBqkf9jLp8=;
+	s=korg; t=1787247920;
+	bh=TH+GT2Fu4c/dOO2XNxX9eZfP5f4VpSrBvFVPpoICjRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sedv2JkEVE/eEkXP9Fftq+jiqud30jiI2RTillLFte+A2gddu6D+B5DDkfkC17nxW
-	 XwfaodfNSG2/d+1CvgkCjSMGWQDNsA5Xl7VNKHAacV5ChlesZ3ZgQecssm0KUNBKlr
-	 J1Sm2imLp1kB4HLsBzMgC9zmZeiwH0bE8dGBUIxA=
+	b=rf8pSeDBwdAOSVYaNPgN6krs6AZUvRsY4rVUgvQa3fO0p6ZDTh20PKFXHNo445Kw1
+	 HMB2p5ZUTA9EkUk8yczHdMVuWvmpBZ2O4OfgnYVkie5eAoI48ogI4GfEYABiv9VNiJ
+	 bgXRSXuydRJO71vOlNbjKQRjW703uK/q8YPrTslM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 020/303] Input: synaptics-rmi4 - fix F55 transmitter electrode count typo
-Date: Thu, 20 Aug 2026 16:52:36 +0200
-Message-ID: <20260820145253.787699332@linuxfoundation.org>
+	Candice Li <candice.li@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 047/303] drm/amdgpu: validate GEM_CREATE domain combinations
+Date: Thu, 20 Aug 2026 16:53:03 +0200
+Message-ID: <20260820145254.588101211@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -44,54 +45,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Candice Li <candice.li@amd.com>
 
-commit 6058f0fea10f3caf63a435677358d1b8e9325114 upstream.
+commit 5e9d136ad74df4edec67e502ce267597064d8f86 upstream.
 
-During F55 sensor detection, the transmitter (TX) electrode count was
-incorrectly assigned the value of the receiver (RX) electrode count
-due to copy-paste typos.
+AMDGPU_GEM_CREATE checked domain bits against AMDGPU_GEM_DOMAIN_MASK,
+but did not validate domain combinations. Userspace could combine
+CPU|GTT|VRAM with DOORBELL, GDS, GWS, or OA, making
+amdgpu_bo_placement_from_domain() exceed AMDGPU_BO_MAX_PLACEMENTS and
+hit BUG_ON().
 
-This incorrect value was then propagated to the driver data and used
-by F54 to determine the diagnostics report size. On devices with more
-RX than TX electrodes, this inflated the perceived TX count, leading
-to incorrect report size calculations and potential out-of-bounds
-buffer accesses.
+Allow combinations only within CPU/GTT/VRAM, and require non-CPU/GTT/
+VRAM domains to be specified one at a time. Return -EINVAL for invalid
+combinations in amdgpu_gem_create_ioctl().
 
-Fix the typos by correctly assigning the TX electrode counts.
+v2: Rename helper from amdgpu_gem_domain_valid() to
+    amdgpu_gem_are_domains_valid() (Christian)
 
-Fixes: 6adba43fd222 ("Input: synaptics-rmi4 - add support for F55 sensor tuning")
-Fixes: c762cc68b6a1 ("Input: synaptics-rmi4 - propagate correct number of rx and tx electrodes to F54")
-Reported-by: sashiko-bot@kernel.org
+Signed-off-by: Candice Li <candice.li@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit db39852d0c39843cb02048dfb47e4b8c703e9080)
 Cc: stable@vger.kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Link: https://patch.msgid.link/20260626051802.4033172-1-dmitry.torokhov@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/rmi4/rmi_f55.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
---- a/drivers/input/rmi4/rmi_f55.c
-+++ b/drivers/input/rmi4/rmi_f55.c
-@@ -54,10 +54,10 @@ static int rmi_f55_detect(struct rmi_fun
- 	f55->num_tx_electrodes = f55->qry[F55_NUM_TX_OFFSET];
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
+@@ -273,6 +273,25 @@ static const struct drm_gem_object_funcs
+ 	.vm_ops = &amdgpu_gem_vm_ops,
+ };
  
- 	f55->cfg_num_rx_electrodes = f55->num_rx_electrodes;
--	f55->cfg_num_tx_electrodes = f55->num_rx_electrodes;
-+	f55->cfg_num_tx_electrodes = f55->num_tx_electrodes;
++static bool amdgpu_gem_are_domains_valid(u32 domains)
++{
++	u32 normal = AMDGPU_GEM_DOMAIN_CPU |
++		     AMDGPU_GEM_DOMAIN_GTT |
++		     AMDGPU_GEM_DOMAIN_VRAM;
++	/* Treat all non CPU/GTT/VRAM domains as special domains. */
++	u32 special = AMDGPU_GEM_DOMAIN_MASK & ~normal;
++	u32 normal_mask = domains & normal;
++	u32 special_mask = domains & special;
++
++	if (!special_mask)
++		return true;
++
++	if (normal_mask)
++		return false;
++
++	return !(special_mask & (special_mask - 1));
++}
++
+ /*
+  * GEM ioctls.
+  */
+@@ -304,6 +323,8 @@ int amdgpu_gem_create_ioctl(struct drm_d
+ 	/* reject invalid gem domains */
+ 	if (args->in.domains & ~AMDGPU_GEM_DOMAIN_MASK)
+ 		return -EINVAL;
++	if (!amdgpu_gem_are_domains_valid(args->in.domains))
++		return -EINVAL;
  
- 	drv_data->num_rx_electrodes = f55->cfg_num_rx_electrodes;
--	drv_data->num_tx_electrodes = f55->cfg_num_rx_electrodes;
-+	drv_data->num_tx_electrodes = f55->cfg_num_tx_electrodes;
- 
- 	if (f55->qry[F55_PHYS_CHAR_OFFSET] & F55_CAP_SENSOR_ASSIGN) {
- 		int i, total;
+ 	if (!amdgpu_is_tmz(adev) && (flags & AMDGPU_GEM_CREATE_ENCRYPTED)) {
+ 		DRM_NOTE_ONCE("Cannot allocate secure buffer since TMZ is disabled\n");
 
 
