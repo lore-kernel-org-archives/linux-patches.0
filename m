@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A6746D0B6;
-	Thu, 20 Aug 2026 17:41:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220BE46D0B6;
+	Thu, 20 Aug 2026 17:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247661; cv=none; b=F5p+PcRZRLTUMhlodPYHgep82F78SgfKHlbs4EgZKLiVofB15XZe+3PSTyoiVUnXX0Tvw7Z9OBDfx3tg30rC77RZhxjcAi1qHOiJtB1IJO9EraC9hDr2Y+aE3SO5aBaAKUoyU23bGpNhEEzQrMzZRk7R15ijlSmTMPcTGFZr0tI=
+	t=1787247664; cv=none; b=UnjbA2uRxonvkAELpxhFcf32spEeC5VBiqvdktv5soTggcBG7t4T+/KPrqpTB/txxLdr7KvrzYMkL7a+CtkCBzivIgU+jzruzKFIVQ5mZEgk4Vt1MXrygp+5vYwB2lx8uCdGOIqEJsiPMKEb/1omeWWh8sjx7apjvLZDnrqoD1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247661; c=relaxed/simple;
-	bh=7eKLZ5g51UwuUR0StZdsDcfP1k4GkiL8JlHcJJu9kGA=;
+	s=arc-20240116; t=1787247664; c=relaxed/simple;
+	bh=GkwxEfbOpDdtxY9mV/A7NSNMrRv1GBpU6WwrF5TrO+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dsqrq079fvSxkR8xKHHZLcVfElW1/7KQwThWaWKnQp8ygFpAKqblDvX//cF4D1Iv+A8WKK2PzCzICbbJ22Vf9lgWLmyEvRkZzCJWNII/q/NciBylhyGU2C3kreB3BJU1n7hrDyGDJDC8Yp8hGjQlgIyUaIV3wZcrYiTjc80JGw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gkS3h4pZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z/sO2X0E2qDZeq8mMicsIHX37qLNmNimtWBiIgdJaY6+45uophLe7UVcv3mrbNop4XCkdDyXtdv/PVoD45oZjg5xZMDvaPqvWhinm8/F2h3hdPfIHt7r4dtpvSTykcbcdsglNZu6DSeVjjeUBusCLBX/N6VvX+IqWCZCRX7Umb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rMkhhToN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gkS3h4pZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E921F000E9;
-	Thu, 20 Aug 2026 17:40:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rMkhhToN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 813611F00ADB;
+	Thu, 20 Aug 2026 17:41:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247660;
-	bh=DLfd0NMXiBdzPoikwcarW9J/vxNhTXXR9Duwk5XloqQ=;
+	s=korg; t=1787247663;
+	bh=sZhZee2xMry7q1jerHSDmKKZfY+RLkFBepfPNpJk298=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gkS3h4pZy/5CiElbNwx4JxbbwPpJqzL8/HYKqVFVaE3oM9yHvwBfooqIUlP1/G0xH
-	 lEhvJl1ZbZYyfpWy/Q5VcjnQ5hW+app+OooroqaP0+23cZchqfJziwFXtjmV/ehCJO
-	 E9qHGQIdKu/bj3SYgCCQgn0zo38jwQ3aMn1pz+Kc=
+	b=rMkhhToNW4Y1Pe/22tA7sjfeEhEpr8UIdWi93useCR3FoNTpRwbVi4fReWDwiAtUh
+	 D7/U7THL6MyZL9VW1U8yK8PzRqpDCuUTEHfLp/XMHm8q8lZ400JAaSlSAjyqzT7ZYW
+	 6MAfliCteSAwIaC/deQEYydHuihwP1xBXuqoDXrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@bisdn.de>,
-	Ray Jui <ray.jui@broadcom.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Tu Nguyen <tu.nguyen.xg@renesas.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 125/166] i2c: iproc: reset bus after timeout if START_BUSY is stuck
-Date: Thu, 20 Aug 2026 16:56:24 +0200
-Message-ID: <20260820145214.923856019@linuxfoundation.org>
+Subject: [PATCH 6.6 126/166] can: rcar_canfd: change the initializing flow for clocks and resets
+Date: Thu, 20 Aug 2026 16:56:25 +0200
+Message-ID: <20260820145214.954151999@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -52,70 +56,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@bisdn.de>
+From: Tu Nguyen <tu.nguyen.xg@renesas.com>
 
-[ Upstream commit 98f2e9e6d6f91a6abb43f166b244b428ba85fa2b ]
+[ Upstream commit bef9004c5b91debfceaea2841855a4ebe81ff2b3 ]
 
-If a transaction times out, the START_BUSY signal can stay up, and
-subsequent transactaction attempts will fail as the bus is still
-considered busy.
+Testing CANFD on RZ/G3E shows that many registers do not reset to their
+initial values with the current flow of deasserting resets first and then
+enabling clocks.
 
-I can easily trigger this by attempting to read from an address with no
-device, e.g. when running i2cdetect. After the first read times out, all
-subsequent read attempts return busy.
+Based on the HW manual, clocks should be supplied first and the
+resets deasserted afterward.
 
-To get to a working state again, the controller needs to be reset to
-clear the START_BUSY signal. So check for START_BUSY still asserted on a
-timeout, and do reset in case it is,
+ section 7.4.3 Procedure for Activating Modules: RZ/G2L
+ section 4.4.9.3 Procedure for Starting up Units: RZ/G3E
 
-This is also done by the original non-upstream iproc-smbus driver
-implementation [1].
+So, update the order of the initializing flow for resets and clocks
+to match the hardware manual, resetting all CANFD registers to their
+initial values. Also update rcar_canfd_global_deinit() to assert
+resets before disabling clocks, so the teardown path mirrors the new
+init ordering.
 
-Works around situations like:
-
-    bcm-iproc-2c 1803b000.i2c: transaction timed out
-    bcm-iproc-2c 1803b000.i2c: bus is busy
-    bcm-iproc-2c 1803b000.i2c: bus is busy
-    bcm-iproc-2c 1803b000.i2c: bus is busy
-    bcm-iproc-2c 1803b000.i2c: bus is busy
-    bcm-iproc-2c 1803b000.i2c: bus is busy
-    ...
-
-where the bus never recovers after a timeout.
-
-[1] https://github.com/opencomputeproject/onie/blob/master/patches/kernel/3.2.69/driver-iproc-smbus.patch
-
-Fixes: e6e5dd3566e0 ("i2c: iproc: Add Broadcom iProc I2C Driver")
-Signed-off-by: Jonas Gorski <jonas.gorski@bisdn.de>
-Cc: <stable@vger.kernel.org> # v4.0+
-Acked-by: Ray Jui <ray.jui@broadcom.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260717085507.34209-1-jonas.gorski@bisdn.de
+Fixes: 76e9353a80e9 ("can: rcar_canfd: Add support for RZ/G2L family")
+Signed-off-by: Tu Nguyen <tu.nguyen.xg@renesas.com>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Tested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
+Link: https://patch.msgid.link/20260625135216.130450-1-biju.das.jz@bp.renesas.com
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-bcm-iproc.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/net/can/rcar/rcar_canfd.c |   28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
---- a/drivers/i2c/busses/i2c-bcm-iproc.c
-+++ b/drivers/i2c/busses/i2c-bcm-iproc.c
-@@ -811,6 +811,17 @@ static int bcm_iproc_i2c_xfer_wait(struc
+--- a/drivers/net/can/rcar/rcar_canfd.c
++++ b/drivers/net/can/rcar/rcar_canfd.c
+@@ -1999,27 +1999,27 @@ static int rcar_canfd_probe(struct platf
+ 		}
  	}
  
- 	if (!time_left && !iproc_i2c->xfer_is_done) {
-+		/*
-+		 * The controller may fail to clear START_BUSY after a timeout,
-+		 * reset the controller to recover in that case.
-+		 */
-+		if (!!(iproc_i2c_rd_reg(iproc_i2c, M_CMD_OFFSET) &
-+		       BIT(M_CMD_START_BUSY_SHIFT))) {
-+			bcm_iproc_i2c_enable_disable(iproc_i2c, false);
-+			bcm_iproc_i2c_init(iproc_i2c);
-+			bcm_iproc_i2c_enable_disable(iproc_i2c, true);
-+		}
+-	err = reset_control_reset(gpriv->rstc1);
+-	if (err)
+-		goto fail_dev;
+-	err = reset_control_reset(gpriv->rstc2);
+-	if (err) {
+-		reset_control_assert(gpriv->rstc1);
+-		goto fail_dev;
+-	}
+-
+ 	/* Enable peripheral clock for register access */
+ 	err = clk_prepare_enable(gpriv->clkp);
+ 	if (err) {
+ 		dev_err(dev, "failed to enable peripheral clock: %pe\n",
+ 			ERR_PTR(err));
+-		goto fail_reset;
++		goto fail_dev;
++	}
 +
- 		/* flush both TX/RX FIFOs */
- 		val = BIT(M_FIFO_RX_FLUSH_SHIFT) | BIT(M_FIFO_TX_FLUSH_SHIFT);
- 		iproc_i2c_wr_reg(iproc_i2c, M_FIFO_CTRL_OFFSET, val);
++	err = reset_control_reset(gpriv->rstc1);
++	if (err)
++		goto fail_clk;
++	err = reset_control_reset(gpriv->rstc2);
++	if (err) {
++		reset_control_assert(gpriv->rstc1);
++		goto fail_clk;
+ 	}
+ 
+ 	err = rcar_canfd_reset_controller(gpriv);
+ 	if (err) {
+ 		dev_err(dev, "reset controller failed: %pe\n", ERR_PTR(err));
+-		goto fail_clk;
++		goto fail_reset;
+ 	}
+ 
+ 	/* Controller in Global reset & Channel reset mode */
+@@ -2070,11 +2070,11 @@ fail_channel:
+ 		rcar_canfd_channel_remove(gpriv, ch);
+ fail_mode:
+ 	rcar_canfd_disable_global_interrupts(gpriv);
+-fail_clk:
+-	clk_disable_unprepare(gpriv->clkp);
+ fail_reset:
+ 	reset_control_assert(gpriv->rstc1);
+ 	reset_control_assert(gpriv->rstc2);
++fail_clk:
++	clk_disable_unprepare(gpriv->clkp);
+ fail_dev:
+ 	return err;
+ }
+@@ -2094,9 +2094,9 @@ static void rcar_canfd_remove(struct pla
+ 
+ 	/* Enter global sleep mode */
+ 	rcar_canfd_set_bit(gpriv->base, RCANFD_GCTR, RCANFD_GCTR_GSLPR);
+-	clk_disable_unprepare(gpriv->clkp);
+ 	reset_control_assert(gpriv->rstc1);
+ 	reset_control_assert(gpriv->rstc2);
++	clk_disable_unprepare(gpriv->clkp);
+ }
+ 
+ static int __maybe_unused rcar_canfd_suspend(struct device *dev)
 
 
