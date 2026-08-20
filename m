@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2210C37C925;
-	Thu, 20 Aug 2026 15:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DE037C925;
+	Thu, 20 Aug 2026 15:14:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238857; cv=none; b=QsMzt3PIcE4QkDZmXYFrqh1XpOCqUZqxyPVtsUYR8KkZ845RACb1Yv367JdMDDXERpwA8VJsxkykv/3vtaVpCi2HS8jCI0Y/jdDkomXgZapuRVUBpSkHDTo9eJtZd4FZCRthMRZn1oesruWUcRkcazMrIHgv3xlX/UFBXbdkmYA=
+	t=1787238860; cv=none; b=mWFRr/NMDsezRj0Dik5zonX4ZvDjLy5MyeGcr4KF5DpyP9Z4Oi+cic2AeqoRQi4RDEc2gg70nzT8d+s/DYwjfVLZhk376rWOViO+wKFgp6vd36p7uxB4ZWyoW4PYpXbbrcWEZmCTmz14TxPREbDPSGtW27hz8/yPj7/rpPrb1uE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238857; c=relaxed/simple;
-	bh=l2OLBE8yxI5YDKhDuLrv5fEtayRjlNhBNY/NLeUfPvs=;
+	s=arc-20240116; t=1787238860; c=relaxed/simple;
+	bh=3WFuokoNc3qTHJiYevDvY1JkQreiMmZDZssoPQP6L/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p7Eu/Ji4r8q2Ty1WN1uVWPlKw+IkKgXtzcvFK4e4cIY4fVr84xJkwvRZNBmefX12nKxJrbt8B+rPvEQyDlRNH8CMwpmf4I8jTEED2FOEeGE9Xzr36N42EarAIolmaDTHfZospHCR1j4dLqqFclsQAAazpj2ihYmt67f6kb9UcvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MgWAASTn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fWaaxSjYs6IVXIZZXnmfP+2EED/7dd1k1N8Vs+kCKYbiVgq18SdTD/pdm1hUVQLvuwO5OcbGl6+vpZxB7ro9VXTTCZfQhYe7mkXle3lTWEyfWRiR+uCniHCa8HSQ6GIlxBLe7OYzA9oLJkVlPesmqnR/hNEI2wM+EjLQUoCcNK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtdcTP8c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MgWAASTn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80EC71F000E9;
-	Thu, 20 Aug 2026 15:14:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtdcTP8c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6290D1F000E9;
+	Thu, 20 Aug 2026 15:14:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238856;
-	bh=ZX20j6HCZYzQhIxTGOg/7oeNmV5Fvm9urt9Db5nuwGg=;
+	s=korg; t=1787238859;
+	bh=nDxxHBE5ZTAgyP56xJpP2qkTYe1h9GTWdXLxYE7XPDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MgWAASTna5JNiF1rAmGhc1vnmq+mfb+IVULa2iDPCd+LQyPat+P38PnfsZgG35FQZ
-	 V+HamMaJCWSQ9w6sSzAtuJfYCYRYSpmuPhFlYqqlEJL3XkmlQe2A/SQpyCVONNKZes
-	 1LHR2YaeNyo7gY96teZGumj37PcNkPUGzavYUT3A=
+	b=PtdcTP8cdnSde4VsbMvlE8mv26MXMQQAHAYpM+yzunl4rk5yn5yQ6BxHqinq0jSNR
+	 GYWBmVPQ3GFXZdjsv5bi13yrEXeC9h8AMWx8hyzNs5HybMdKZWpb7L2G1U2egt7LnG
+	 rHm7IrxiAc/YghDLQ/QzTcSh8VbXVuvOXzQBS1kQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kefu Chai <k.chai@proxmox.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.18 064/217] libceph: tolerate addrvecs with multiple entries of the same type
-Date: Thu, 20 Aug 2026 16:53:52 +0200
-Message-ID: <20260820145239.549940331@linuxfoundation.org>
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.18 065/217] mmc: omap_hsmmc: fix busy_timeout overflow in ns conversion on 32-bit
+Date: Thu, 20 Aug 2026 16:53:53 +0200
+Message-ID: <20260820145239.579244691@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -50,78 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kefu Chai <k.chai@proxmox.com>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-commit 5a87925539acecfe88229bad76ab81bd75a7e3f5 upstream.
+commit f64ea900e4bda3055ef24a2c906f8d049cf1c3bd upstream.
 
-ceph_decode_entity_addrvec() rejects any addrvec containing more than
-one entry that matches the requested msgr type (LEGACY or MSGR2),
-logging "another match of type N in addrvec" and returning -EINVAL.
+omap_hsmmc_prepare_data() converts the command busy timeout to nanoseconds
+with:
 
-Some admin tooling (e.g. pveceph mon create from Proxmox VE) generates
-addrvecs with multiple same-type entries when public_network lists more
-than one CIDR: it picks one local IP per subnet and emits both a v2 and
-a v1 entry for each IP.  Monmaps shaped this way cause:
+	timeout = req->cmd->busy_timeout * NSEC_PER_MSEC;
 
-  libceph: mon0 (1)10.10.10.15:6789 session established
-  libceph: another match of type 1 in addrvec
-  libceph: problem decoding monmap, -22
+busy_timeout is an unsigned int (milliseconds) and timeout is a u64, but
+NSEC_PER_MSEC is 1000000L.  On 32-bit builds the multiplication is
+performed in 32-bit arithmetic and wraps for busy_timeout values above
+~4294 ms, before the result is assigned to the u64.
 
-No Ceph code uses the extra entries: since Nautilus, the userspace
-messenger (AsyncMessenger) unconditionally picks the first address of
-the requested type and ignores any subsequent matches.
+The driver does not set mmc->max_busy_timeout, so the core does not cap the
+busy timeout, and commands such as erase or SANITIZE (MMC_SANITIZE_TIMEOUT_MS
+is 240000 ms) can pass a busy_timeout far larger than 4294 ms.  The wrapped,
+much smaller ns value is then programmed via set_data_timeout(), so the data
+timeout is set too short and the operation can time out prematurely.
 
-Match that behavior: use the first matching entry and silently skip any
-subsequent ones.  This is a compatibility fix for existing deployments
-and does not enable dual-stack or multi-subnet address selection.
+Cast busy_timeout to u64 before the multiplication so the conversion is done
+in 64-bit arithmetic.
 
-[ idryomov: tweak ceph_decode_entity_addrvec() comment ]
-
+Fixes: 8cc9a3e73de1 ("mmc: host: omap_hsmmc: use generic_cmd6_time to program timeout value for CMD6")
 Cc: stable@vger.kernel.org
-Fixes: a5cbd5fc22d5 ("libceph, ceph: get and handle cluster maps with addrvecs")
-Link: https://bugzilla.proxmox.com/show_bug.cgi?id=7518
-Signed-off-by: Kefu Chai <k.chai@proxmox.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/decode.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/mmc/host/omap_hsmmc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ceph/decode.c
-+++ b/net/ceph/decode.c
-@@ -87,8 +87,9 @@ bad:
- EXPORT_SYMBOL(ceph_decode_entity_addr);
+--- a/drivers/mmc/host/omap_hsmmc.c
++++ b/drivers/mmc/host/omap_hsmmc.c
+@@ -1357,7 +1357,7 @@ omap_hsmmc_prepare_data(struct omap_hsmm
+ 	if (req->data == NULL) {
+ 		OMAP_HSMMC_WRITE(host->base, BLK, 0);
+ 		if (req->cmd->flags & MMC_RSP_BUSY) {
+-			timeout = req->cmd->busy_timeout * NSEC_PER_MSEC;
++			timeout = (u64)req->cmd->busy_timeout * NSEC_PER_MSEC;
  
- /*
-- * Return addr of desired type (MSGR2 or LEGACY) or error.
-- * Make sure there is only one match.
-+ * Return addr of desired type (MSGR2 or LEGACY) or error.  In case of
-+ * multiple matches, use the first one for compatibility with userspace
-+ * messenger.
-  *
-  * Assume encoding with MSG_ADDR2.
-  */
-@@ -121,14 +122,13 @@ int ceph_decode_entity_addrvec(void **p,
- 
- 		dout("%s i %d addr %s\n", __func__, i, ceph_pr_addr(&tmp_addr));
- 		if (tmp_addr.type == my_type) {
--			if (found) {
--				pr_err("another match of type %d in addrvec\n",
--				       le32_to_cpu(my_type));
--				return -EINVAL;
-+			if (!found) {
-+				memcpy(addr, &tmp_addr, sizeof(*addr));
-+				found = true;
-+			} else {
-+				dout("%s skipping extra match of type %d in addrvec\n",
-+				     __func__, le32_to_cpu(my_type));
- 			}
--
--			memcpy(addr, &tmp_addr, sizeof(*addr));
--			found = true;
- 		}
- 	}
- 
+ 			/*
+ 			 * Set an arbitrary 100ms data timeout for commands with
 
 
