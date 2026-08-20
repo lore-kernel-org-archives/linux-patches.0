@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD26C35C1A6;
-	Thu, 20 Aug 2026 15:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE5C37FF42;
+	Thu, 20 Aug 2026 15:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238978; cv=none; b=WxPSEQF+AbWV7sCtf2QXQ1e4Ss0jy/3tBotBZqNdyQlrfpkr5BCeEwNZ7nFtn6L+BBq66jfD4HkUYR1NGvukqMCfajdrOxiJ0eej6ytaTNEwmBdDx2DFalioWQNv5Jh0DEKb/nsAi0t8mCNgSOVKwWpwT991qVioW/6RFoBEduo=
+	t=1787238981; cv=none; b=ltdxDIgwL2Yzf2yfRmv2VO4ZqoGGD7d7rBV//6IQVQOWNhx57/PMnXx23s+BkqwIgZenclV2eUVGD9Ckmj1Wcbef3QNxNBgFHBFda5tD2V1orsiCErcGCcAHTglh7r0YMBJUcuhCzVDktRnGGMe6fHMEFqVZWR2uD6JvcpUIR9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238978; c=relaxed/simple;
-	bh=/I7uJqxw5BR30oEptxLvZG8qU3hT2K50DCAFFsNpEKc=;
+	s=arc-20240116; t=1787238981; c=relaxed/simple;
+	bh=1aihZBQvLK211PlKH3mQHWcLR2sV8xv1Q9NRbKKaTpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ICJvQMrOlFEptBIbx4v8XjaIoxopV7OESu7sqISdSoaJSN+SjNWSnbafTTH/CiWX4q5LNaiMEV7MMY+iSg+OkxgMG2twEExU/Ey0Z4+XoESQ+Lvk24SPGmBfetW03NJCAZtHhWB2xQcJ3pz9e6GWCWJtbrW9CtAjv55/XRZGsEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPe7JbZ6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c/Iqc5n7pvlGAAdMQsU1Fks7OPUWJtExVz6FE7lmLB2Tsa+i3PGTBZNFsuZ1XDRgJPqICZh6fhE/xluZfYlRnzdgfRQlroruP143BZ1J+uRFZ0pzJkIdDuzR1RJfeh/uBytnzT9/87chK6opcMSxEhau1eNPohvOQTUZZNtCpes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MTA9Fpm8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPe7JbZ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 091791F000E9;
-	Thu, 20 Aug 2026 15:16:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTA9Fpm8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD1141F000E9;
+	Thu, 20 Aug 2026 15:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238977;
-	bh=heV9mnIlkhfD7zcAcyh4eVY744Hvdiix20hNuoiE+bw=;
+	s=korg; t=1787238980;
+	bh=OP5+6kFNAWcdOGuL49CFFNss2EBSiPXsy0A3Poy1KGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rPe7JbZ68yQ1LHpeF0YEzCzKUNCI+5xirb26bfwzXPDhzsQM74T5dGoMZUbpQX1RO
-	 fz209UyDoDFXrm4aTUUwq3AmBZ35kKNK7kKbNYbZ5s2UWC25dcaP8ohjwUQmcK6Dt5
-	 lLV6jAmygzRgbUpCgP3bEH0eEplN8Agxs6ut6IIg=
+	b=MTA9Fpm8RYq9koK5JWdxLsSy83xIng5SyVdiv09usW8lJAyX21OPxoPHQ6fJOtxLX
+	 Gm0+GqOP0PFdCS491mgUUinQmp+TsLBss6Xda2L5A/nEGQWLBjz/YMILv47S3/+Zdj
+	 609cIIhLX47ZGO+B6akTWIfPYRzXanlDay5uUJvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Qiang Ma <maqianga@uniontech.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 106/217] xfs: mark nonzero sb_gquotino as corrupt on metadir filesystems
-Date: Thu, 20 Aug 2026 16:54:34 +0200
-Message-ID: <20260820145240.929711620@linuxfoundation.org>
+Subject: [PATCH 6.18 107/217] xfs: clear zapped attr fork state when bmap repair finds no attr fork
+Date: Thu, 20 Aug 2026 16:54:35 +0200
+Message-ID: <20260820145240.958877139@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -51,36 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Qiang Ma <maqianga@uniontech.com>
 
-commit b28d23c51635b646784a2a62c71ba99458c07d5e upstream.
+commit 87b2a82e135ba81e49d82b59e3d72468cb66ea98 upstream.
 
-On a metadir filesystem, the superblock gquotino field is always zero
-because we find the quota inodes through the metadata directory tree.
-A nonzero value is therefore a corruption (as pointed out by LOLLM) so
-mark the failure as such.
+xfstests xfs/377 can make xfs_scrub repeatedly check and repair the
+attr block map after inode repair zaps an attr fork.
 
-Cc: stable@vger.kernel.org # v6.13
-Fixes: 06b20ef09ba163 ("xfs: check pre-metadir fields correctly")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
+When inode repair zaps an attr fork, it records
+XFS_SICK_INO_BMBTA_ZAPPED so that scrub/repair can revisit the attr fork
+block map.  If the fork has been reset to an empty state and removed,
+BMBTA repair has no attr fork mappings to rebuild and can return success.
+
+The post-repair scrub then runs with XREP_ALREADY_FIXED set, which means
+xchk_file_looks_zapped() deliberately ignores the stale zapped health bit
+and asks xchk_bmap() to check the current attr fork.  For an absent attr
+fork, xchk_bmap() returns -ENOENT.  Returning that error prevents
+xchk_bmap_attr() from marking XFS_SICK_INO_BMBTA_ZAPPED healthy, leaving
+the zapped health state behind even though there are no attr fork mappings
+left to check.
+
+Treat -ENOENT during post-repair BMBTA revalidation as a clean result for
+the zapped attr fork: clear XFS_SICK_INO_BMBTA_ZAPPED and return success.
+Keep the existing -ENOENT behavior for ordinary scrubs of absent attr
+forks.
+
+Fixes: d9041681dd2f ("xfs: set inode sick state flags when we zap either ondisk fork")
+Cc: stable@vger.kernel.org # v6.8
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Qiang Ma <maqianga@uniontech.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/agheader.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/scrub/bmap.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/xfs/scrub/agheader.c
-+++ b/fs/xfs/scrub/agheader.c
-@@ -266,7 +266,7 @@ xchk_superblock(
- 			xchk_block_set_corrupt(sc, bp);
+--- a/fs/xfs/scrub/bmap.c
++++ b/fs/xfs/scrub/bmap.c
+@@ -1170,6 +1170,11 @@ xchk_bmap_attr(
+ 	}
  
- 		if (sb->sb_gquotino != cpu_to_be64(0))
--			xchk_block_set_preen(sc, bp);
-+			xchk_block_set_corrupt(sc, bp);
- 	} else {
- 		if (sb->sb_uquotino != cpu_to_be64(mp->m_sb.sb_uquotino))
- 			xchk_block_set_preen(sc, bp);
+ 	error = xchk_bmap(sc, XFS_ATTR_FORK);
++	/* A repaired, empty attr fork no longer has mappings to check. */
++	if (error == -ENOENT && (sc->flags & XREP_ALREADY_FIXED)) {
++		xchk_mark_healthy_if_clean(sc, XFS_SICK_INO_BMBTA_ZAPPED);
++		return 0;
++	}
+ 	if (error)
+ 		return error;
+ 
 
 
