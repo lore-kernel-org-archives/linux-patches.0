@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC3337A83C;
-	Thu, 20 Aug 2026 16:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34FAB47AF75;
+	Thu, 20 Aug 2026 16:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243885; cv=none; b=QOTrJhTUraM72rRqavpJxfnb4sj3qkOh5D5jrlFAicmRDs6wRUOz8Emv0lLuTF6C4VDz32/iy/T+uYxIzit/GFTv4D7B2wcxcvlt7CM55fNfVy2rq2B9IJnvPbRIDlk9i5vFLra0hJpZYd8WY7ReDVrbG5KZN+pWz+QUVnzCUak=
+	t=1787243887; cv=none; b=qv3xBav+pxCGSYGB5hOhZmI7vDcY75hksoR6/btEmLpkj0Oz8Akhj0Yhjl+nP4g+i2x/59d2iFPPs5Gb7hVR66h7yfifnhJkMNqgANn7Anqn7fAsLohPKcIRRhI1GBUfFtUmUs5POGTtvRivAdKJiTvuh781maMofIso9J/U9jM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243885; c=relaxed/simple;
-	bh=TSiD3hb8c0LXSGFupOngT4EA+0Ba3xhP84YkegsENi4=;
+	s=arc-20240116; t=1787243887; c=relaxed/simple;
+	bh=08G7Xb9ZXRpJltu3LqauPuzUvyTedWh+1qYFv3lyZfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kpBDeQtD/uoFzvyj6DNylBVqoMFbG5T9RAVVq+6iqTCQ+eTcfoQlSE17mm6MgusPfkYYzmHSTxWcZb56s9KMmb0LwdeTfNLBGpa4mLZGjYPyCMNxE7QihG50JMkenOEyOSImxpNWwANC2U0WAFXk914a9SY0A0w7YdMYi0O4rhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0DuQ4Fpu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BU9IHObP3agSn/94uD+ouSwPWipe2QV2jtcAm8ckP9+V4gW+U1jvhhp52jwIPKm8iHsnXfBxP92+9QymLL+kqORy9+K7VuU2fkK2Difg3VBzpYpCr7KUgzeKFQqn6Fzdb3jELuiXA4OkqwyWWBre7r5ZRtpXpjOK529QcxjWKr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k5BMc1n6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0DuQ4Fpu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12011F000E9;
-	Thu, 20 Aug 2026 16:38:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k5BMc1n6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E9191F000E9;
+	Thu, 20 Aug 2026 16:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243883;
-	bh=cUjn3bfNTYRC7K7xZa7f/2eCMKte+mVKwcveLUWBwJk=;
+	s=korg; t=1787243886;
+	bh=AwHv3yOn5iGkT5gx7HODOP4W+WCkKLlAHyyAJgTk5Cg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0DuQ4FpuTe61Ieve8XBun/M5G3ZRwv3neubiolDmmjuGmz08xAAZdlNPxkEqWyeAF
-	 gUQ6FJIV/gD5OZe89Zk7+VPT6OgR908gUjUh7PZaf7LD9b078NC6S135igWjWPMRdH
-	 Llrfj2Ys7sIdPtAx553kC2wVKP6Y7XeyWmhlqgs0=
+	b=k5BMc1n6E2QQWBDte3j9rABBRHDowm3f87jv1OgKQZHhnVImsF2XAUjkF3aLtfLcI
+	 g/fqNmaVLllU+kXySrOBF4nxQGXhSpOTT/f3i/KTz7gAi0zqSdlcvIti/EUaVEcsBV
+	 bOpy6jaBWKUnFe5129+o/HFsBxfMtEjLsxj5iba0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Xin Long <lucien.xin@gmail.com>,
-	Aaron Conole <aconole@redhat.com>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 250/272] openvswitch: use skb_ip_totlen in conntrack
-Date: Thu, 20 Aug 2026 16:57:14 +0200
-Message-ID: <20260820145239.123589479@linuxfoundation.org>
+Subject: [PATCH 5.15 251/272] net: sched: use skb_ip_totlen and iph_totlen
+Date: Thu, 20 Aug 2026 16:57:15 +0200
+Message-ID: <20260820145239.152607241@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -55,32 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit ec84c955a0d06cef31664bae328d94be7a3e2f03 ]
+[ Upstream commit 043e397e48c58b4442ea5124dc1bdc95367a0a33 ]
 
-IPv4 GSO packets may get processed in ovs_skb_network_trim(),
-and we need to use skb_ip_totlen() to get iph totlen.
+There are 1 action and 1 qdisc that may process IPv4 TCP GSO packets
+and access iph->tot_len, replace them with skb_ip_totlen() and
+iph_totlen() accordingly.
+
+Note that we don't need to replace the one in tcf_csum_ipv4(), as it
+will return for TCP GSO packets in tcf_csum_ipv4_tcp().
 
 Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 8a7ed561671a ("net/sched: act_ct: fix sk_buff leak when the header checks reject a packet")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/conntrack.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/act_ct.c   |    2 +-
+ net/sched/sch_cake.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -1275,7 +1275,7 @@ static int ovs_skb_network_trim(struct s
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -629,7 +629,7 @@ static int tcf_ct_skb_network_trim(struc
  
- 	switch (skb->protocol) {
- 	case htons(ETH_P_IP):
+ 	switch (family) {
+ 	case NFPROTO_IPV4:
 -		len = ntohs(ip_hdr(skb)->tot_len);
 +		len = skb_ip_totlen(skb);
  		break;
- 	case htons(ETH_P_IPV6):
+ 	case NFPROTO_IPV6:
  		len = sizeof(struct ipv6hdr)
+--- a/net/sched/sch_cake.c
++++ b/net/sched/sch_cake.c
+@@ -1269,7 +1269,7 @@ static struct sk_buff *cake_ack_filter(s
+ 			    iph_check->daddr != iph->daddr)
+ 				continue;
+ 
+-			seglen = ntohs(iph_check->tot_len) -
++			seglen = iph_totlen(skb, iph_check) -
+ 				       (4 * iph_check->ihl);
+ 		} else if (iph_check->version == 6) {
+ 			ipv6h = (struct ipv6hdr *)iph;
 
 
