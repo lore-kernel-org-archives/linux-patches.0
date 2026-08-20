@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA56481652;
-	Thu, 20 Aug 2026 17:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C77469859;
+	Thu, 20 Aug 2026 17:32:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247177; cv=none; b=KuOrJSbrGvxmhViQIDyskMPaob1Pg8QOuv8uYkrKoyoihtnfF36Epze/SLpIaNX3WRxndAeZlQRXF7AjSXn44YIXX3/MYwecY1IOTN1UrtMC0bddAHIxnFQtEyYbMSN6vmYU2xKh+WBx7BcHroLIMQ5bE3LHhwqIxkEEu5Xsc34=
+	t=1787247180; cv=none; b=iCBqYSMV3wLjV9u9z4I9kCCdtM+we/jjkR7n7Q4XrIe4SKZLWm/DxRuYLbKjzrRlEpO7a9i5T5iBK7gd3hKg7ZdqJnwfexy41JdGhoAT7J7iHB2mblzL+bpg8KDnNG+Bjb64iLoJ0Xw19Msxx1msQ0LeXTXfgIMrkiuiXS5f0G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247177; c=relaxed/simple;
-	bh=cmtKjAoniviociZ6oYjrE+r1ujb0Uv4HkNyFPhBuON8=;
+	s=arc-20240116; t=1787247180; c=relaxed/simple;
+	bh=4Ip+XRkLM+YqGPFaFcZI2LmGBxK7la+VMiZ3Wi9Isi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z9fPgnU6Dut2XJby/7eXqIPXnC32jSm9feftbebqhsDsSKmXhMcsIrmxZmaJq0LZdlXSBnJbzI0eVN2AVA4/fHaHpB/Sb5xtKTkeZK8pynojc9/GgTEii2MDRXDkfehEm72aTgku1bRrsNWHhNop5UQZfiNGKJZokO8N8ke9e3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=maOz1T2U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pNBBFhTOjjZCJzqRLJKfDKV0FzW3P/khb+JguEN5Ib2QuyKYuUNKpU6u4UIN/gz6zhk+dZIonzIwLD91fH+a92d6GPvBKsOqSsVQFDeIqnPfSi8DX8xZjvnpOiKho4ysoGqnj5OSLD9IMpC5xwaB8jZVZHJcSCPCLx3ozwj/wCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9m15JLM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maOz1T2U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 963161F000E9;
-	Thu, 20 Aug 2026 17:32:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9m15JLM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71FBB1F00A3A;
+	Thu, 20 Aug 2026 17:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247174;
-	bh=xq0lZlkiLpV0SZR31zJDbIeGq6UESF8pJd3beBMDVQo=;
+	s=korg; t=1787247177;
+	bh=9yAt0PdPKJl+d3iRIv750GuGys/JJtDBmBYOyc4BsVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=maOz1T2Uudx93XR6W4P/MFpypobPlu2ze3pPDw8k9dmV0/jNaSVgAO7rdc7TQgYcd
-	 vW6h+oHOHyWjSVUKMSwzeYaP+lrLXH95yIDg2eu+NUF+euRhnhogllaBIBqhHMc+Lf
-	 OPxxabZD+I5YLerDiR2QlV5z5sC5z1zSfqNBOurI=
+	b=e9m15JLM2LA6QO8DdQKu0mpyRoN6RQskn3Usg0hpKSD+rC5aNRdEXyL6lL94aUPj1
+	 wsPVC7igNz92fYFmtlPAB6X4HOeg4vm4NHlFZjPMmC3bFNVs9Q/YDsrxC3fMoR3hgg
+	 N7Y9VqDCptNl7kapyaChVx+8vlmt1v6x5HP6BIFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Dongli Zhang <dongli.zhang@oracle.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 174/220] drm/amd/pm: fix pptable use-after-free
-Date: Thu, 20 Aug 2026 16:56:04 +0200
-Message-ID: <20260820145228.705436626@linuxfoundation.org>
+Subject: [PATCH 6.12 175/220] net: tap: set skb->dev before parsing virtio net header in tap_get_user_xdp()
+Date: Thu, 20 Aug 2026 16:56:05 +0200
+Message-ID: <20260820145228.735943412@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -52,122 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Dongli Zhang <dongli.zhang@oracle.com>
 
-[ Upstream commit bb493058c35c8676e48269ab6732688ea733d23c ]
+[ Upstream commit 3874892dd27d5387aa9a06f58d9060f18f351d24 ]
 
-amdgpu_dpm_get_pp_table() returns a pointer to a driver-owned power table
-after dropping adev->pm.mutex. The sysfs path then copies from that pointer.
-A concurrent pp_table write can replace and free the allocation during the
-copy, causing a use-after-free.
+The commit 4f61f133f354 ("net: tap: NULL pointer derefence in
+dev_parse_header_protocol when skb->dev is null") fixed a crash in
+tap_get_user() by assigning skb->dev before calling tun_vnet_hdr_to_skb().
+This is required because virtio_net_hdr_to_skb() may invoke
+dev_parse_header_protocol(), which dereferences skb->dev. Without the
+assignment, a NULL pointer dereference can occur.
 
-Change the DPM interface to copy into caller-provided storage while the mutex
-is held. Keep the size-only query for attribute discovery without exposing
-the driver-owned pointer.
+However, tap_get_user_xdp() still parses the virtio-net header before
+assigning skb->dev. When the vhost TX path passes an XDP buffer containing
+a GSO virtio-net header but the protocol is set to zero on purpose,
+tun_vnet_hdr_to_skb() can reach dev_parse_header_protocol() while skb->dev
+is still NULL, resulting in a crash.
 
-Fixes: 1684d3ba4885 ("drm/amd/amdgpu: change pptable output format from ASCII to binary")
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f6eed7acfd30099ef7baeb6ba45bb59daad80631)
+Fix this by looking up the tap device and assigning skb->dev before calling
+tun_vnet_hdr_to_skb(), matching the ordering already used in
+tap_get_user(). Preserve the existing RCU read-side critical section across
+dev_queue_xmit().
+
+Fixes: 924a9bc362a5 ("net: check if protocol extracted by virtio_net_hdr_set_proto is correct")
 Cc: stable@vger.kernel.org
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://patch.msgid.link/20260802224612.264563-1-dongli.zhang@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/amdgpu_dpm.c     |   14 +++++++++++---
- drivers/gpu/drm/amd/pm/amdgpu_pm.c      |   13 +++----------
- drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h |    3 ++-
- 3 files changed, 16 insertions(+), 14 deletions(-)
+ drivers/net/tap.c |   24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-@@ -1059,12 +1059,14 @@ int amdgpu_dpm_dispatch_task(struct amdg
- 	return ret;
- }
+--- a/drivers/net/tap.c
++++ b/drivers/net/tap.c
+@@ -1199,10 +1199,21 @@ static int tap_get_user_xdp(struct tap_q
+ 	skb_reset_mac_header(skb);
+ 	skb->protocol = eth_hdr(skb)->h_proto;
  
--int amdgpu_dpm_get_pp_table(struct amdgpu_device *adev, char **table)
-+int amdgpu_dpm_get_pp_table(struct amdgpu_device *adev, char *table,
-+			    size_t size)
- {
- 	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
-+	char *pptable = NULL;
- 	int ret = 0;
- 
--	if (!table)
-+	if ((!table && size) || (table && !size))
- 		return -EINVAL;
- 
- 	if (amdgpu_sriov_vf(adev) || !pp_funcs->get_pp_table || adev->scpm_enabled)
-@@ -1072,7 +1074,13 @@ int amdgpu_dpm_get_pp_table(struct amdgp
- 
- 	mutex_lock(&adev->pm.mutex);
- 	ret = pp_funcs->get_pp_table(adev->powerplay.pp_handle,
--				     table);
-+				     &pptable);
-+	if (ret > 0 && !pptable) {
-+		ret = -EINVAL;
-+	} else if (ret > 0 && table) {
-+		ret = min_t(size_t, ret, size);
-+		memcpy(table, pptable, ret);
++	rcu_read_lock();
++	tap = rcu_dereference(q->tap);
++	if (!tap) {
++		kfree_skb(skb);
++		rcu_read_unlock();
++		return 0;
 +	}
- 	mutex_unlock(&adev->pm.mutex);
- 
- 	return ret;
---- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-@@ -538,7 +538,6 @@ static ssize_t amdgpu_get_pp_table(struc
- {
- 	struct drm_device *ddev = dev_get_drvdata(dev);
- 	struct amdgpu_device *adev = drm_to_adev(ddev);
--	char *table = NULL;
- 	int size, ret;
- 
- 	if (amdgpu_in_reset(adev))
-@@ -552,7 +551,7 @@ static ssize_t amdgpu_get_pp_table(struc
- 		return ret;
++	skb->dev = tap->dev;
++
+ 	if (vnet_hdr_len) {
+ 		err = virtio_net_hdr_to_skb(skb, gso, tap_is_little_endian(q));
+-		if (err)
++		if (err) {
++			rcu_read_unlock();
+ 			goto err_kfree;
++		}
  	}
  
--	size = amdgpu_dpm_get_pp_table(adev, &table);
-+	size = amdgpu_dpm_get_pp_table(adev, buf, PAGE_SIZE - 1);
+ 	/* Move network header to the right position for VLAN tagged packets */
+@@ -1210,15 +1221,8 @@ static int tap_get_user_xdp(struct tap_q
+ 	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
+ 		skb_set_network_header(skb, depth);
  
- 	pm_runtime_mark_last_busy(ddev->dev);
- 	pm_runtime_put_autosuspend(ddev->dev);
-@@ -560,11 +559,6 @@ static ssize_t amdgpu_get_pp_table(struc
- 	if (size <= 0)
- 		return size;
+-	rcu_read_lock();
+-	tap = rcu_dereference(q->tap);
+-	if (tap) {
+-		skb->dev = tap->dev;
+-		skb_probe_transport_header(skb);
+-		dev_queue_xmit(skb);
+-	} else {
+-		kfree_skb(skb);
+-	}
++	skb_probe_transport_header(skb);
++	dev_queue_xmit(skb);
+ 	rcu_read_unlock();
  
--	if (size >= PAGE_SIZE)
--		size = PAGE_SIZE - 1;
--
--	memcpy(buf, table, size);
--
- 	return size;
- }
- 
-@@ -2531,10 +2525,9 @@ static int default_attr_update(struct am
- 			*states = ATTR_STATE_UNSUPPORTED;
- 	} else if (DEVICE_ATTR_IS(pp_table)) {
- 		int ret;
--		char *tmp = NULL;
- 
--		ret = amdgpu_dpm_get_pp_table(adev, &tmp);
--		if (ret == -EOPNOTSUPP || !tmp)
-+		ret = amdgpu_dpm_get_pp_table(adev, NULL, 0);
-+		if (ret <= 0)
- 			*states = ATTR_STATE_UNSUPPORTED;
- 		else
- 			*states = ATTR_STATE_SUPPORTED;
---- a/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
-+++ b/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
-@@ -483,7 +483,8 @@ int amdgpu_dpm_get_pp_num_states(struct
- int amdgpu_dpm_dispatch_task(struct amdgpu_device *adev,
- 			      enum amd_pp_task task_id,
- 			      enum amd_pm_state_type *user_state);
--int amdgpu_dpm_get_pp_table(struct amdgpu_device *adev, char **table);
-+int amdgpu_dpm_get_pp_table(struct amdgpu_device *adev, char *table,
-+			    size_t size);
- int amdgpu_dpm_set_fine_grain_clk_vol(struct amdgpu_device *adev,
- 				      uint32_t type,
- 				      long *input,
+ 	return 0;
 
 
