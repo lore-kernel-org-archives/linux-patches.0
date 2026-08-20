@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB5947F77E;
-	Thu, 20 Aug 2026 16:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E21442B2E;
+	Thu, 20 Aug 2026 16:45:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244355; cv=none; b=SnINVUayOGo9hBifsLqcyCYcQ5mfmj7TfQthssLg4OEKHXOFflXU9vvlNBRm0e6PH6Q/fLK+guKUgEPTfxtAd9iIxgksSbq7c6g/hp9R7FneFJkgTEErApIRGChEyOVO54l7ZYghqgbjntrg311J14MecXUNNShMVU59BbAO7YA=
+	t=1787244359; cv=none; b=jB/AX0ed3xlN8uT6fc/rKKtaqTlVyh97i2I+XtF18UbDhLUvn1YmnRb/w/W3G2NPN0zjxXjz3v5r1lQACiKcQNKLjGNiyy8CHCVZ+kUJ+xq0AN8uaOYjywQrin3ddW1Bzw5lcGNKIItWKTCMIXrpXTDiwnCeLo94H0UBgbS8Okw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244355; c=relaxed/simple;
-	bh=dl3DPfEJVc7dpygCXS5KGnSCnhy9olG/TjzHZlBIY6Y=;
+	s=arc-20240116; t=1787244359; c=relaxed/simple;
+	bh=2LF9F5Wt5VkTh6ZiZ6pAlw7Wjiq/2X/F31rrnUHadXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rIzeNGAoP/Ob5vQGvfwW7xE4cfcrftMIMg3gFz6kL6tRbkF5k/5yZGDro58siIE7+7CXaw6q7HZ+RVvIZH464aDvy8a9Qg9rAr7Y1OUeHHans8U0CuoKncW8GJHKkQ58YaTr9a8fmVJatv2HQadCQRF6sGDk25RDAwRx6RbJ90w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qTm0Y5vq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KvZDOKoGzPFcH3+4NLgJR8+jJ+Cvkm5UFbMu3sPBj6HcDBIY+VirEoyEFeKMOb4hQKfzVQveXTPpqnp0rt7hG4ayrapWATSzaVsECrl1iKaUblbM8PgkSp3T6phLOo/4LzYk+DUNbljy1j7+jVjgNpyi4fSMCXJISuCgyqLGhfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1krOLTc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qTm0Y5vq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D55A31F000E9;
-	Thu, 20 Aug 2026 16:45:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1krOLTc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8ABB1F000E9;
+	Thu, 20 Aug 2026 16:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244354;
-	bh=fJQdmsgA7W8bX4QG72hQZmGQ2VbM1tu2PDM90c40s9k=;
+	s=korg; t=1787244357;
+	bh=GdfRkcYaL1ksom4BUgeD8aLQVo8hOwGGqF15XF/dDao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qTm0Y5vqC2nktOCX7h5r47VHI/eo/STT8Cmu5ilMTwsQWg6D4dWPNpfzVoVyJQRnI
-	 EfjlyEBIDiu2a46QY/cqwdm07hiWpm4kcMzaZDObShrxIjZgzW6Rhphlh0bShQPySs
-	 KJZmX/GSlJENlfd/3fMZxdn90rLce6NN2/pXS1uU=
+	b=S1krOLTcCnO3AahTzZOykQI0TR847XWq5rmxUxG4xrF3hQkriia+J5kdShpmFaIl3
+	 hEixplNmYQiXTQ0lFht8bgaMSlTr+UgLApfpHvS98T8rH0urkpGJkflyxpXaKILqv1
+	 swDACfvoHjqsXXnEaRhTOfZF/doQGymU2IP5sES8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
 	Frank Li <Frank.Li@nxp.com>,
-	Koichiro Den <den@valinux.co.jp>,
-	Vinod Koul <vkoul@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 101/235] dmaengine: dw-edma: Add spinlock to protect DONE_INT_MASK and ABORT_INT_MASK
-Date: Thu, 20 Aug 2026 16:55:37 +0200
-Message-ID: <20260820145219.517194018@linuxfoundation.org>
+Subject: [PATCH 5.10 102/235] i2c: imx: separate atomic, dma and non-dma use case
+Date: Thu, 20 Aug 2026 16:55:38 +0200
+Message-ID: <20260820145219.548949617@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -52,73 +53,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
 
-[ Upstream commit 8ffba0171c6bbce5f093c6dba5a02c0805b31203 ]
+[ Upstream commit b460b15b3cc23ef3639cc51043bf8b2a70ca1878 ]
 
-The DONE_INT_MASK and ABORT_INT_MASK registers are shared by all DMA
-channels, and modifying them requires a read-modify-write sequence.
-Because this operation is not atomic, concurrent calls to
-dw_edma_v0_core_start() can introduce race conditions if two channels
-update these registers simultaneously.
+Separate the atomic, dma and non-dma use case as a preparation step for
+moving the non-dma use case to the isr to avoid rescheduling while a
+transfer is in progress.
 
-Add a spinlock to serialize access to these registers and prevent race
-conditions.
-
-Fixes: 7e4b8a4fbe2c ("dmaengine: Add Synopsys eDMA IP version 0 support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-[den: update dw_edma.lock comment]
-Link: https://lore.kernel.org/dmaengine/20260109-edma_ll-v2-1-5c0b27b2c664@nxp.com/
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Link: https://patch.msgid.link/20260521142153.2957432-5-den@valinux.co.jp
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Stable-dep-of: cb2fc3785769 ("i2c: imx: fix locked bus on SMBus block-read of 0 (atomic)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.h    |    2 +-
- drivers/dma/dw-edma/dw-edma-v0-core.c |    6 ++++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-imx.c |  107 ++++++++++++++++++++++++++++---------------
+ 1 file changed, 70 insertions(+), 37 deletions(-)
 
---- a/drivers/dma/dw-edma/dw-edma-core.h
-+++ b/drivers/dma/dw-edma/dw-edma-core.h
-@@ -131,7 +131,7 @@ struct dw_edma {
+--- a/drivers/i2c/busses/i2c-imx.c
++++ b/drivers/i2c/busses/i2c-imx.c
+@@ -717,6 +717,43 @@ static int i2c_imx_dma_write(struct imx_
+ 	return i2c_imx_acked(i2c_imx);
+ }
  
- 	struct dw_edma_chan		*chan;
- 
--	raw_spinlock_t			lock;		/* Only for legacy */
-+	raw_spinlock_t			lock;		/* Protect v0 shared registers */
- 
- 	struct dw_edma_chip             *chip;
- 
---- a/drivers/dma/dw-edma/dw-edma-v0-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
-@@ -237,6 +237,7 @@ void dw_edma_v0_core_start(struct dw_edm
++static int i2c_imx_prepare_read(struct imx_i2c_struct *i2c_imx,
++				struct i2c_msg *msgs, bool atomic,
++				bool use_dma)
++{
++	int result;
++	unsigned int temp = 0;
++
++	/* write slave address */
++	imx_i2c_write_reg(i2c_8bit_addr_from_msg(msgs), i2c_imx, IMX_I2C_I2DR);
++	result = i2c_imx_trx_complete(i2c_imx, atomic);
++	if (result)
++		return result;
++	result = i2c_imx_acked(i2c_imx);
++	if (result)
++		return result;
++
++	dev_dbg(&i2c_imx->adapter.dev, "<%s> setup bus\n", __func__);
++
++	/* setup bus to read data */
++	temp = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2CR);
++	temp &= ~I2CR_MTX;
++
++	/*
++	 * Reset the I2CR_TXAK flag initially for SMBus block read since the
++	 * length is unknown
++	 */
++	if (msgs->len - 1)
++		temp &= ~I2CR_TXAK;
++	if (use_dma)
++		temp |= I2CR_DMAEN;
++
++	imx_i2c_write_reg(temp, i2c_imx, IMX_I2C_I2CR);
++	imx_i2c_read_reg(i2c_imx, IMX_I2C_I2DR); /* dummy read */
++
++	return 0;
++}
++
+ static int i2c_imx_dma_read(struct imx_i2c_struct *i2c_imx,
+ 			struct i2c_msg *msgs, bool is_lastmsg)
  {
- 	struct dw_edma_chan *chan = chunk->chan;
- 	struct dw_edma *dw = chan->dw;
-+	unsigned long flags;
- 	u32 tmp;
+@@ -727,6 +764,11 @@ static int i2c_imx_dma_read(struct imx_i
+ 	struct imx_i2c_dma *dma = i2c_imx->dma;
+ 	struct device *dev = &i2c_imx->adapter.dev;
  
- 	dw_edma_v0_core_write_chunk(chunk);
-@@ -245,6 +246,8 @@ void dw_edma_v0_core_start(struct dw_edm
- 		/* Enable engine */
- 		SET_RW_32(dw, chan->dir, engine_en, BIT(0));
- 		/* Interrupt unmask - done, abort */
-+		raw_spin_lock_irqsave(&dw->lock, flags);
++	result = i2c_imx_prepare_read(i2c_imx, msgs, false, true);
++	if (result)
++		return result;
 +
- 		tmp = GET_RW_32(dw, chan->dir, int_mask);
- 		tmp &= ~FIELD_PREP(EDMA_V0_DONE_INT_MASK, BIT(chan->id));
- 		tmp &= ~FIELD_PREP(EDMA_V0_ABORT_INT_MASK, BIT(chan->id));
-@@ -253,6 +256,9 @@ void dw_edma_v0_core_start(struct dw_edm
- 		tmp = GET_RW_32(dw, chan->dir, linked_list_err_en);
- 		tmp |= FIELD_PREP(EDMA_V0_LINKED_LIST_ERR_MASK, BIT(chan->id));
- 		SET_RW_32(dw, chan->dir, linked_list_err_en, tmp);
++	dev_dbg(&i2c_imx->adapter.dev, "<%s> read data\n", __func__);
+ 
+ 	dma->chan_using = dma->chan_rx;
+ 	dma->dma_transfer_dir = DMA_DEV_TO_MEM;
+@@ -837,50 +879,24 @@ static int i2c_imx_write(struct imx_i2c_
+ 	return 0;
+ }
+ 
++static int i2c_imx_atomic_write(struct imx_i2c_struct *i2c_imx, struct i2c_msg *msgs)
++{
++	return i2c_imx_write(i2c_imx, msgs, true);
++}
 +
-+		raw_spin_unlock_irqrestore(&dw->lock, flags);
+ static int i2c_imx_read(struct imx_i2c_struct *i2c_imx, struct i2c_msg *msgs,
+ 			bool is_lastmsg, bool atomic)
+ {
+ 	int i, result;
+ 	unsigned int temp;
+ 	int block_data = msgs->flags & I2C_M_RECV_LEN;
+-	int use_dma = i2c_imx->dma && msgs->flags & I2C_M_DMA_SAFE &&
+-		msgs->len >= DMA_THRESHOLD && !block_data;
+-
+-	dev_dbg(&i2c_imx->adapter.dev,
+-		"<%s> write slave address: addr=0x%x\n",
+-		__func__, i2c_8bit_addr_from_msg(msgs));
+ 
+-	/* write slave address */
+-	imx_i2c_write_reg(i2c_8bit_addr_from_msg(msgs), i2c_imx, IMX_I2C_I2DR);
+-	result = i2c_imx_trx_complete(i2c_imx, atomic);
+-	if (result)
+-		return result;
+-	result = i2c_imx_acked(i2c_imx);
++	result = i2c_imx_prepare_read(i2c_imx, msgs, atomic, false);
+ 	if (result)
+ 		return result;
+ 
+-	dev_dbg(&i2c_imx->adapter.dev, "<%s> setup bus\n", __func__);
+-
+-	/* setup bus to read data */
+-	temp = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2CR);
+-	temp &= ~I2CR_MTX;
+-
+-	/*
+-	 * Reset the I2CR_TXAK flag initially for SMBus block read since the
+-	 * length is unknown
+-	 */
+-	if ((msgs->len - 1) || block_data)
+-		temp &= ~I2CR_TXAK;
+-	if (use_dma)
+-		temp |= I2CR_DMAEN;
+-	imx_i2c_write_reg(temp, i2c_imx, IMX_I2C_I2CR);
+-	imx_i2c_read_reg(i2c_imx, IMX_I2C_I2DR); /* dummy read */
+-
+ 	dev_dbg(&i2c_imx->adapter.dev, "<%s> read data\n", __func__);
+ 
+-	if (use_dma)
+-		return i2c_imx_dma_read(i2c_imx, msgs, is_lastmsg);
+-
+ 	/* read data */
+ 	for (i = 0; i < msgs->len; i++) {
+ 		u8 len = 0;
+@@ -947,6 +963,12 @@ static int i2c_imx_read(struct imx_i2c_s
+ 	return 0;
+ }
+ 
++static int i2c_imx_atomic_read(struct imx_i2c_struct *i2c_imx, struct i2c_msg *msgs,
++			       bool is_lastmsg)
++{
++	return i2c_imx_read(i2c_imx, msgs, is_lastmsg, true);
++}
 +
- 		/* Channel control */
- 		SET_CH_32(dw, chan->dir, chan->id, ch_control1,
- 			  (DW_EDMA_V0_CCS | DW_EDMA_V0_LLE));
+ static int i2c_imx_xfer_common(struct i2c_adapter *adapter,
+ 			       struct i2c_msg *msgs, int num, bool atomic)
+ {
+@@ -954,6 +976,7 @@ static int i2c_imx_xfer_common(struct i2
+ 	int result;
+ 	bool is_lastmsg = false;
+ 	struct imx_i2c_struct *i2c_imx = i2c_get_adapdata(adapter);
++	int use_dma = 0;
+ 
+ 	dev_dbg(&i2c_imx->adapter.dev, "<%s>\n", __func__);
+ 
+@@ -1008,15 +1031,25 @@ static int i2c_imx_xfer_common(struct i2
+ 			(temp & I2SR_SRW ? 1 : 0), (temp & I2SR_IIF ? 1 : 0),
+ 			(temp & I2SR_RXAK ? 1 : 0));
+ #endif
++
++		use_dma = i2c_imx->dma && msgs[i].len >= DMA_THRESHOLD &&
++			msgs[i].flags & I2C_M_DMA_SAFE;
+ 		if (msgs[i].flags & I2C_M_RD) {
+-			result = i2c_imx_read(i2c_imx, &msgs[i], is_lastmsg, atomic);
++			int block_data = msgs->flags & I2C_M_RECV_LEN;
++
++			if (atomic)
++				result = i2c_imx_atomic_read(i2c_imx, &msgs[i], is_lastmsg);
++			else if (use_dma && !block_data)
++				result = i2c_imx_dma_read(i2c_imx, &msgs[i], is_lastmsg);
++			else
++				result = i2c_imx_read(i2c_imx, &msgs[i], is_lastmsg, false);
+ 		} else {
+-			if (!atomic &&
+-			    i2c_imx->dma && msgs[i].len >= DMA_THRESHOLD &&
+-				msgs[i].flags & I2C_M_DMA_SAFE)
++			if (atomic)
++				result = i2c_imx_atomic_write(i2c_imx, &msgs[i]);
++			else if (use_dma)
+ 				result = i2c_imx_dma_write(i2c_imx, &msgs[i]);
+ 			else
+-				result = i2c_imx_write(i2c_imx, &msgs[i], atomic);
++				result = i2c_imx_write(i2c_imx, &msgs[i], false);
+ 		}
+ 		if (result)
+ 			goto fail0;
 
 
