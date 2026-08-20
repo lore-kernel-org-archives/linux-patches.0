@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C4237A858;
-	Thu, 20 Aug 2026 16:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356BA37A858;
+	Thu, 20 Aug 2026 16:47:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244428; cv=none; b=PnkN3x6I5GwSM+su1XqeS1SBStelZoMZ8BOFlHzHGK/JZf6t5JldGsEFoytviENgxDGYo3H+bLuo/hK065uO3H82xDvwybrmDfKxwLd9JNerW9p0YcdMi19T4m2jWF6VcYkdjX16y6IqkctoYc87QNOXPC4MSwAON8hQ91qS1hE=
+	t=1787244431; cv=none; b=EUVqnvFW6n2Xs5rLU7mqMfn5jKndiQv6qOtk6zBuDsxJZ+MNh3Btbb+fuXFIMtNYba+nS6RISzu58FVVoA+bVw+3rvRta/pTwRugwubcZajuAtjkYHKXeE/aL1kWTVGsQpQDTfq6OnL3CiV3MjP9p0k49wk6F7od+I6Nh+d2wBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244428; c=relaxed/simple;
-	bh=TR5Dw60X5j8rA8mkPCmhlsmyd9qb46WA+73zieGAHY4=;
+	s=arc-20240116; t=1787244431; c=relaxed/simple;
+	bh=e3tTK6gFPTxhaNw0OZmZ70Ic+vmCRtEpghqHBp0QoNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FygdM9dtvsUWnC66+l3tka1NQKzwWA268KxnlEoGfadIjZ2SkRqxTYIJzJDndQMKD3AgJpa7SMaJ92B1T0djUaEVFVlSbaV5+apOjiMbaEs0wR9L0qT9K1k0IhdwrHSLpw6qNeIRELyxq/bv5QLEfFKmYEJRJipQ5sh8g3SkBmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5d/dcro; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NCp64VzGKzc6w0ZHbBsBPyyC+XGmTuzsHTptBlQ+g6CRs2Ruaexvmq7oPtaSz6mTatoAE/Yqdug4VZ40Xs1pYzOpULaYVgR77Vr3OYD5J2L6EHZEcjibHJtGLQYEI4+ev4DIaz5jqfw8S0tsE3hUW3P76EwDoxwXjm947b+j5A0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lucQ8S/2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5d/dcro"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81E81F00A3F;
-	Thu, 20 Aug 2026 16:47:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lucQ8S/2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B201F000E9;
+	Thu, 20 Aug 2026 16:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244427;
-	bh=irpq8PN64FgoZ/3vBymhRxU0DGFPdc2VmXkrxWBW92Q=;
+	s=korg; t=1787244430;
+	bh=FZdZ2Gfm0jrVg1Je01Y6TzxFkbZ9j9p4d1Ij3+lZo3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I5d/dcroWpbBPm+ZpAmA933vR5zUgANyDL/MB86BWQXhQao5ddbg5EUNuWwIDfsmv
-	 h70wC52FMdMq+n/g+Gvd33k2GtCVAASuAhRfD2HGEceKTZf3xgKxCAKz5Pa0sqctXV
-	 MG+iXhft4HFo7KeQrz591vMT9QfOGw87w8sF8F9E=
+	b=lucQ8S/2XlSPLvVDSOTBlIOpYpdhNjMvn7UJV7yrbtFpFaV/eGoStroEZd2i+8AJA
+	 jb4OMDY3+Sjr3T8dv9keYgLqoCZEtJdn+B0iDVR+MYlUTjz6PhOtZDaPpS6alXVNqa
+	 L8os3br43lYDaoKu4KT8bK3Us7DEoWX1vqzxM5Ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Mirela Rabulea <mirela.rabulea@nxp.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 165/235] media: v4l2-fwnode: Fix subdev owner overwritten in v4l2_async_register_subdev_sensor()
-Date: Thu, 20 Aug 2026 16:56:41 +0200
-Message-ID: <20260820145221.496908039@linuxfoundation.org>
+Subject: [PATCH 5.10 139/235] USB: serial: keyspan_pda: clean up comments and whitespace
+Date: Thu, 20 Aug 2026 16:56:15 +0200
+Message-ID: <20260820145220.657452402@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -53,92 +51,235 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mirela Rabulea <mirela.rabulea@nxp.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 06cb687a5132fcffe624c0070576ab852ac6b568 ]
+[ Upstream commit 491d6927f0de587c1d322d8b29a1187b7e06a221 ]
 
-The v4l2 helper v4l2_async_register_subdev_sensor() calls
-v4l2_async_register_subdev(), which is a macro that expands to
-__v4l2_async_register_subdev(sd,THIS_MODULE). Since the macro is expanded
-inside v4l2-fwnode.c, THIS_MODULE resolves to the v4l2-fwnode module
-rather than the sensor driver module that originally set sd->owner. When
-v4l2-fwnode is built-in, THIS_MODULE evaluates to NULL, which then
-overwrites the sensor driver's owner with NULL.
+Clean up comment style, remove some stale or redundant comments and drop
+superfluous white space.
 
-This causes the problem that the sensor module's reference count is never
-incremented during async registration, so the module can be removed while
-the subdevice is still in use by a notifier (e.g., a CSI-2 receiver
-bridge driver).
-
-Fix this by renaming v4l2_async_register_subdev_sensor() to
-__v4l2_async_register_subdev_sensor() with an added explicit module
-argument and introducing a wrapper macro:
-    #define v4l2_async_register_subdev_sensor(sd) \
-        __v4l2_async_register_subdev_sensor(sd, THIS_MODULE)
-
-This ensures the sensor driver module is properly referenced even when
-the sensor driver does not init the owner field before calling
-v4l2_async_register_subdev_sensor() and prevents premature module removal.
-
-Fixes: aef69d54755d ("media: v4l: fwnode: Add a convenience function for registering sensors")
-Cc: stable@vger.kernel.org
-Suggested-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/linux-media/20240315073125.275501-2-sakari.ailus@linux.intel.com/
-Signed-off-by: Mirela Rabulea <mirela.rabulea@nxp.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Stable-dep-of: 42a97c0480f9 ("USB: serial: keyspan_pda: fix data loss on receive throttling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-fwnode.c |    7 ++++---
- include/media/v4l2-async.h            |    5 ++++-
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/usb/serial/keyspan_pda.c |   97 ++++++++++++++++++---------------------
+ 1 file changed, 47 insertions(+), 50 deletions(-)
 
---- a/drivers/media/v4l2-core/v4l2-fwnode.c
-+++ b/drivers/media/v4l2-core/v4l2-fwnode.c
-@@ -1337,7 +1337,8 @@ int v4l2_async_notifier_parse_fwnode_sen
- }
- EXPORT_SYMBOL_GPL(v4l2_async_notifier_parse_fwnode_sensor_common);
- 
--int v4l2_async_register_subdev_sensor_common(struct v4l2_subdev *sd)
-+int __v4l2_async_register_subdev_sensor_common(struct v4l2_subdev *sd,
-+					       struct module *module)
- {
- 	struct v4l2_async_notifier *notifier;
- 	int ret;
-@@ -1360,7 +1361,7 @@ int v4l2_async_register_subdev_sensor_co
- 	if (ret < 0)
- 		goto out_cleanup;
- 
--	ret = v4l2_async_register_subdev(sd);
-+	ret = __v4l2_async_register_subdev(sd, module);
- 	if (ret < 0)
- 		goto out_unregister;
- 
-@@ -1377,7 +1378,7 @@ out_cleanup:
- 
- 	return ret;
- }
--EXPORT_SYMBOL_GPL(v4l2_async_register_subdev_sensor_common);
-+EXPORT_SYMBOL_GPL(__v4l2_async_register_subdev_sensor_common);
- 
- MODULE_LICENSE("GPL");
- MODULE_AUTHOR("Sakari Ailus <sakari.ailus@linux.intel.com>");
---- a/include/media/v4l2-async.h
-+++ b/include/media/v4l2-async.h
-@@ -321,8 +321,11 @@ int __v4l2_async_register_subdev(struct
-  * An error is returned if the module is no longer loaded on any attempts
-  * to register it.
+--- a/drivers/usb/serial/keyspan_pda.c
++++ b/drivers/usb/serial/keyspan_pda.c
+@@ -11,7 +11,6 @@
+  * driver
   */
-+#define v4l2_async_register_subdev_sensor_common(sd) \
-+	__v4l2_async_register_subdev_sensor_common(sd, THIS_MODULE)
- int __must_check
--v4l2_async_register_subdev_sensor_common(struct v4l2_subdev *sd);
-+__v4l2_async_register_subdev_sensor_common(struct v4l2_subdev *sd,
-+					   struct module *module);
  
- /**
-  * v4l2_async_unregister_subdev - unregisters a sub-device to the asynchronous
+-
+ #include <linux/kernel.h>
+ #include <linux/errno.h>
+ #include <linux/slab.h>
+@@ -146,8 +145,10 @@ static void keyspan_pda_request_unthrott
+ 
+ 	dev_dbg(&port->dev, "%s\n", __func__);
+ 
+-	/* ask the device to tell us when the tx buffer becomes
+-	   sufficiently empty */
++	/*
++	 * Ask the device to tell us when the tx buffer becomes
++	 * sufficiently empty.
++	 */
+ 	result = usb_control_msg(serial->dev,
+ 				 usb_sndctrlpipe(serial->dev, 0),
+ 				 7, /* request_unthrottle */
+@@ -233,7 +234,6 @@ static void keyspan_pda_rx_interrupt(str
+ 
+ 			keyspan_pda_write_start(port);
+ 
+-			/* queue up a wakeup at scheduler time */
+ 			usb_serial_port_softint(port);
+ 			break;
+ 		default:
+@@ -317,8 +317,6 @@ static speed_t keyspan_pda_setbaud(struc
+ 		baud = 9600;
+ 	}
+ 
+-	/* rather than figure out how to sleep while waiting for this
+-	   to complete, I just use the "legacy" API. */
+ 	rc = usb_control_msg(serial->dev, usb_sndctrlpipe(serial->dev, 0),
+ 			     0, /* set baud */
+ 			     USB_TYPE_VENDOR
+@@ -331,10 +329,10 @@ static speed_t keyspan_pda_setbaud(struc
+ 			     2000); /* timeout */
+ 	if (rc < 0)
+ 		return 0;
++
+ 	return baud;
+ }
+ 
+-
+ static void keyspan_pda_break_ctl(struct tty_struct *tty, int break_state)
+ {
+ 	struct usb_serial_port *port = tty->driver_data;
+@@ -346,6 +344,7 @@ static void keyspan_pda_break_ctl(struct
+ 		value = 1; /* start break */
+ 	else
+ 		value = 0; /* clear break */
++
+ 	result = usb_control_msg(serial->dev, usb_sndctrlpipe(serial->dev, 0),
+ 			4, /* set break */
+ 			USB_TYPE_VENDOR | USB_RECIP_INTERFACE | USB_DIR_OUT,
+@@ -353,39 +352,35 @@ static void keyspan_pda_break_ctl(struct
+ 	if (result < 0)
+ 		dev_dbg(&port->dev, "%s - error %d from usb_control_msg\n",
+ 			__func__, result);
+-	/* there is something funky about this.. the TCSBRK that 'cu' performs
+-	   ought to translate into a break_ctl(-1),break_ctl(0) pair HZ/4
+-	   seconds apart, but it feels like the break sent isn't as long as it
+-	   is on /dev/ttyS0 */
+ }
+ 
+-
+ static void keyspan_pda_set_termios(struct tty_struct *tty,
+ 		struct usb_serial_port *port, struct ktermios *old_termios)
+ {
+ 	struct usb_serial *serial = port->serial;
+ 	speed_t speed;
+ 
+-	/* cflag specifies lots of stuff: number of stop bits, parity, number
+-	   of data bits, baud. What can the device actually handle?:
+-	   CSTOPB (1 stop bit or 2)
+-	   PARENB (parity)
+-	   CSIZE (5bit .. 8bit)
+-	   There is minimal hw support for parity (a PSW bit seems to hold the
+-	   parity of whatever is in the accumulator). The UART either deals
+-	   with 10 bits (start, 8 data, stop) or 11 bits (start, 8 data,
+-	   1 special, stop). So, with firmware changes, we could do:
+-	   8N1: 10 bit
+-	   8N2: 11 bit, extra bit always (mark?)
+-	   8[EOMS]1: 11 bit, extra bit is parity
+-	   7[EOMS]1: 10 bit, b0/b7 is parity
+-	   7[EOMS]2: 11 bit, b0/b7 is parity, extra bit always (mark?)
+-
+-	   HW flow control is dictated by the tty->termios.c_cflags & CRTSCTS
+-	   bit.
+-
+-	   For now, just do baud. */
+-
++	/*
++	 * cflag specifies lots of stuff: number of stop bits, parity, number
++	 * of data bits, baud. What can the device actually handle?:
++	 * CSTOPB (1 stop bit or 2)
++	 * PARENB (parity)
++	 * CSIZE (5bit .. 8bit)
++	 * There is minimal hw support for parity (a PSW bit seems to hold the
++	 * parity of whatever is in the accumulator). The UART either deals
++	 * with 10 bits (start, 8 data, stop) or 11 bits (start, 8 data,
++	 * 1 special, stop). So, with firmware changes, we could do:
++	 * 8N1: 10 bit
++	 * 8N2: 11 bit, extra bit always (mark?)
++	 * 8[EOMS]1: 11 bit, extra bit is parity
++	 * 7[EOMS]1: 10 bit, b0/b7 is parity
++	 * 7[EOMS]2: 11 bit, b0/b7 is parity, extra bit always (mark?)
++	 *
++	 * HW flow control is dictated by the tty->termios.c_cflags & CRTSCTS
++	 * bit.
++	 *
++	 * For now, just do baud.
++	 */
+ 	speed = tty_get_baud_rate(tty);
+ 	speed = keyspan_pda_setbaud(serial, speed);
+ 
+@@ -394,17 +389,19 @@ static void keyspan_pda_set_termios(stru
+ 		/* It hasn't changed so.. */
+ 		speed = tty_termios_baud_rate(old_termios);
+ 	}
+-	/* Only speed can change so copy the old h/w parameters
+-	   then encode the new speed */
++	/*
++	 * Only speed can change so copy the old h/w parameters then encode
++	 * the new speed.
++	 */
+ 	tty_termios_copy_hw(&tty->termios, old_termios);
+ 	tty_encode_baud_rate(tty, speed, speed);
+ }
+ 
+-
+-/* modem control pins: DTR and RTS are outputs and can be controlled.
+-   DCD, RI, DSR, CTS are inputs and can be read. All outputs can also be
+-   read. The byte passed is: DTR(b7) DCD RI DSR CTS RTS(b2) unused unused */
+-
++/*
++ * Modem control pins: DTR and RTS are outputs and can be controlled.
++ * DCD, RI, DSR, CTS are inputs and can be read. All outputs can also be
++ * read. The byte passed is: DTR(b7) DCD RI DSR CTS RTS(b2) unused unused.
++ */
+ static int keyspan_pda_get_modem_info(struct usb_serial *serial,
+ 				      unsigned char *value)
+ {
+@@ -428,7 +425,6 @@ static int keyspan_pda_get_modem_info(st
+ 	return rc;
+ }
+ 
+-
+ static int keyspan_pda_set_modem_info(struct usb_serial *serial,
+ 				      unsigned char value)
+ {
+@@ -504,10 +500,11 @@ static int keyspan_pda_write_start(struc
+ 	 * unthrottle work is scheduled).
+ 	 */
+ 
+-	/* we might block because of:
+-	   the TX urb is in-flight (wait until it completes)
+-	   the device is full (wait until it says there is room)
+-	*/
++	/*
++	 * We might block because of:
++	 * the TX urb is in-flight (wait until it completes)
++	 * the device is full (wait until it says there is room)
++	 */
+ 	spin_lock_irqsave(&port->lock, flags);
+ 
+ 	room = priv->tx_room;
+@@ -566,7 +563,6 @@ static void keyspan_pda_write_bulk_callb
+ 
+ 	keyspan_pda_write_start(port);
+ 
+-	/* queue up a wakeup at scheduler time */
+ 	usb_serial_port_softint(port);
+ }
+ 
+@@ -615,7 +611,6 @@ static int keyspan_pda_open(struct tty_s
+ 	priv->tx_room = rc;
+ 	spin_unlock_irq(&port->lock);
+ 
+-	/*Start reading from the device*/
+ 	rc = usb_submit_urb(port->interrupt_in_urb, GFP_KERNEL);
+ 	if (rc) {
+ 		dev_dbg(&port->dev, "%s - usb_submit_urb(read int) failed\n", __func__);
+@@ -673,10 +668,12 @@ static int keyspan_pda_fake_startup(stru
+ 		return -ENOENT;
+ 	}
+ 
+-	/* after downloading firmware Renumeration will occur in a
+-	  moment and the new device will bind to the real driver */
++	/*
++	 * After downloading firmware renumeration will occur in a moment and
++	 * the new device will bind to the real driver.
++	 */
+ 
+-	/* we want this device to fail to have a driver assigned to it. */
++	/* We want this device to fail to have a driver assigned to it. */
+ 	return 1;
+ }
+ 
+@@ -755,7 +752,7 @@ static struct usb_serial_driver keyspan_
+ 	.open =			keyspan_pda_open,
+ 	.close =		keyspan_pda_close,
+ 	.write =		keyspan_pda_write,
+-	.write_bulk_callback = 	keyspan_pda_write_bulk_callback,
++	.write_bulk_callback =	keyspan_pda_write_bulk_callback,
+ 	.read_int_callback =	keyspan_pda_rx_interrupt,
+ 	.throttle =		keyspan_pda_rx_throttle,
+ 	.unthrottle =		keyspan_pda_rx_unthrottle,
 
 
