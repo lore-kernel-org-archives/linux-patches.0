@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D159D47CA8F;
-	Thu, 20 Aug 2026 17:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E240047F779;
+	Thu, 20 Aug 2026 17:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248606; cv=none; b=LdCRB3NZWHOkczTZkZBMWV4bNJEi8Wohts4h4K0VuRLPY2aI+OvUn6kCEMhE4oD6c99kS3afnj8HNKEDSPFKhrWE1/ZwesgdGcuZ/YB2d2lcboR0b+LeZgbD5IVg1pg6tWNzM7QD4y/eUAmEBxndtHV/zIlyp8nTkfGnczCWM+4=
+	t=1787248610; cv=none; b=LcJ2TPqg7SV+oGBGToPRhoxyeIAN77tcuCcwQEJRUEaW2BK++oXFanB4Lh5JvBMVkiqVFjjyfiUjwrRmhgV2i483KmnaKbTxc17TnJjyV8Wa3UA0ZQ+vXwJdLPKMA65sb/h8RrRuaH347Gxu2uHpJB9dOCQBup5rD+ex1+5pbmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248606; c=relaxed/simple;
-	bh=Ft4nH6MmHSQQ/C2psDzBghp2m4U5754sQLgb2msMXBg=;
+	s=arc-20240116; t=1787248610; c=relaxed/simple;
+	bh=N6LcFjRV9DoQtXyZ3kcRIoRkKZr2K1oaHJ+UtfQCeDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jCaLXafn8mC86IVIcoyJT5Ycia17rYJIiW8ITIu5dHvhsNeLnAdvIdZjzm/ug8TzF37MXlChexmOq9WHZCeETDgkkGf+NAePDZtH+nAkQdIwbz9B5SA4E0aOLA+KaUSUCPJAblNqxYyTjcCJFH+eIpTZOOKjT11eDV5QAAA6BEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zktYpigJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nF/OAzYBk14VjVNjq43j3w70d9BIeWORwdHvX08Wnl8UtP/lO3+c+M2wfrMQpum/UpOBW/Eo6M7u156a3UwMWlS0u2xt1OEuk0yPJpwv+M8CO3VViM/JGHf+vqKb2ZmLcg8Z+hHq5+QUCZ2C5vn0m5jaA/Feb8FZoPx/KsQ3huU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rc8pKI/X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zktYpigJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3708B1F000E9;
-	Thu, 20 Aug 2026 17:56:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rc8pKI/X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10BE31F000E9;
+	Thu, 20 Aug 2026 17:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248605;
-	bh=fgEaj9neuPvRuCrAYDNeokSTJzN3KD2c2GuuVqf5u/s=;
+	s=korg; t=1787248608;
+	bh=ZVgAG1bBIbOyVeKRXUvmRmCoNC34EcnaIdmRwCnSv+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zktYpigJNLIZpho13WshmU85UEpWBaZ5w+/d9HlpUAgJDGhfPjsGkbzJq8qZlLyGs
-	 u7hVUD0WEvt9d+CdOeBbH3s7oJbDeL8eY+Udw0Yb5RfEPcwNHjVdaKyi6/FsQmxzUx
-	 Mz1kYxgSMLiLLXjtC1eR0pPA7ucU+z31ts2c50Is=
+	b=rc8pKI/XS1pXFHRCqL9OQXE6EZU3Y95na3X/tBq15oJsQqb10qxxYLJeHsRqGyEtt
+	 GcTD+Ta9Jiclm5RTt2MNdURnqXc4bgMhZPAHj6maturO4m3UDDfAbu2BoCcfVVqwS5
+	 EfxvQYFuw/5jOcPkZQAsrcfPNoq96gyb93JwJrR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Chuck Lever <cel@kernel.org>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 287/303] net/tls: Fail tls_sw_splice_read() after a failed async decrypt
-Date: Thu, 20 Aug 2026 16:57:03 +0200
-Message-ID: <20260820145302.099297953@linuxfoundation.org>
+Subject: [PATCH 6.1 288/303] ASoC: xilinx: formatter_pcm: pass aud_drv_data to irq handlers
+Date: Thu, 20 Aug 2026 16:57:04 +0200
+Message-ID: <20260820145302.129949891@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -53,53 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 976df67f463db1fddaf2a32fb04f57ad2891a23d ]
+[ Upstream commit f12afefb7b01f94d6d66d397f323a9914edbf70e ]
 
-When an async decrypt fails, tls_decrypt_done() records the error in
-ctx->async_wait.err and calls tls_err_abort(), which stores it in
-sk_err. tls_sw_recvmsg() and tls_sw_read_sock() each read
-async_wait.err once they hold the reader lock and fail the call: a
-record that did not authenticate breaks the connection.
+The irq handlers take a struct device pointer and call
+dev_get_drvdata() to obtain the driver data.  However, the driver
+data is only set at the end of probe, after devm_request_irq(),
+so an interrupt taken in between causes the handlers to pass a
+NULL pointer to readl() and crash.
 
-tls_sw_splice_read() has no such check, and sk_err does not stand in
-for one. tls_rx_rec_wait() tests sk_err only inside the loop it
-skips whenever a record is already parsed, and the first reader to
-reach sock_error() clears it, while async_wait.err persists. A
-splice therefore keeps delivering records on a connection that
-recvmsg() and read_sock() refuse to read.
+Pass the private data directly as the devm_request_irq() argument
+instead of the device pointer, matching what the handlers expect.
 
-Read async_wait.err in tls_sw_splice_read() as the other two readers
-do.
-
-Fixes: f314bfee81b1 ("tls: rx: return the already-copied data on crypto error")
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Chuck Lever <cel@kernel.org>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20260806-tls-splice-crypto-fix-v1-1-a2624005a286@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 6f6c3c36f091 ("ASoC: xlnx: add pcm formatter platform driver")
+Assisted-by: opencode:deepseek-v4-flash-free
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Michal Simek <michal.simek@amd.com>
+Link: https://patch.msgid.link/20260806233231.30631-1-rosenp@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/xilinx/xlnx_formatter_pcm.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 5eec7c10acc20..1b336522ca67d 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -2350,6 +2350,11 @@ ssize_t tls_sw_splice_read(struct socket *sock,  loff_t *ppos,
- 	if (err < 0)
- 		return err;
+diff --git a/sound/soc/xilinx/xlnx_formatter_pcm.c b/sound/soc/xilinx/xlnx_formatter_pcm.c
+index ff1fe62fea702..8629bc26ae3c6 100644
+--- a/sound/soc/xilinx/xlnx_formatter_pcm.c
++++ b/sound/soc/xilinx/xlnx_formatter_pcm.c
+@@ -281,8 +281,7 @@ static irqreturn_t xlnx_mm2s_irq_handler(int irq, void *arg)
+ {
+ 	u32 val;
+ 	void __iomem *reg;
+-	struct device *dev = arg;
+-	struct xlnx_pcm_drv_data *adata = dev_get_drvdata(dev);
++	struct xlnx_pcm_drv_data *adata = arg;
  
-+	/* If crypto failed the connection is broken */
-+	err = ctx->async_wait.err;
-+	if (err)
-+		goto splice_read_end;
-+
- 	if (!skb_queue_empty(&ctx->rx_list)) {
- 		skb = __skb_dequeue(&ctx->rx_list);
- 	} else {
+ 	reg = adata->mmio + XLNX_MM2S_OFFSET + XLNX_AUD_STS;
+ 	val = readl(reg);
+@@ -300,8 +299,7 @@ static irqreturn_t xlnx_s2mm_irq_handler(int irq, void *arg)
+ {
+ 	u32 val;
+ 	void __iomem *reg;
+-	struct device *dev = arg;
+-	struct xlnx_pcm_drv_data *adata = dev_get_drvdata(dev);
++	struct xlnx_pcm_drv_data *adata = arg;
+ 
+ 	reg = adata->mmio + XLNX_S2MM_OFFSET + XLNX_AUD_STS;
+ 	val = readl(reg);
+@@ -637,7 +635,7 @@ static int xlnx_formatter_pcm_probe(struct platform_device *pdev)
+ 		}
+ 		ret = devm_request_irq(dev, aud_drv_data->mm2s_irq,
+ 				       xlnx_mm2s_irq_handler, 0,
+-				       "xlnx_formatter_pcm_mm2s_irq", dev);
++				       "xlnx_formatter_pcm_mm2s_irq", aud_drv_data);
+ 		if (ret) {
+ 			dev_err(dev, "xlnx audio mm2s irq request failed\n");
+ 			goto clk_err;
+@@ -664,7 +662,7 @@ static int xlnx_formatter_pcm_probe(struct platform_device *pdev)
+ 		ret = devm_request_irq(dev, aud_drv_data->s2mm_irq,
+ 				       xlnx_s2mm_irq_handler, 0,
+ 				       "xlnx_formatter_pcm_s2mm_irq",
+-				       dev);
++				       aud_drv_data);
+ 		if (ret) {
+ 			dev_err(dev, "xlnx audio s2mm irq request failed\n");
+ 			goto clk_err;
 -- 
 2.53.0
 
