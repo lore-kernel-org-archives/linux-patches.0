@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CC040F754;
-	Thu, 20 Aug 2026 16:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA9740F754;
+	Thu, 20 Aug 2026 16:44:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244261; cv=none; b=R7M9RYk+K3k5ZYIvZRtz18hD2awucMmSNNWcOUSew7x2gXKN5wRnhGdyDyTOrgsJPz5PZAQOBOQL1g5wdEC4Ye/mjd4vjbEE4JeRCSDzNKHH5IIJ/9g4jX2R4zK8EKetitKvyywTYp/Kd683ZTkxEu/946FqiLlnqVg4UTbcP6w=
+	t=1787244264; cv=none; b=rIC28BZRfhzBqvaxrTiFEjZvwp6k8zGo+5c5lwgvL8ycxTcHbxh8bmwMVp0Fm0nvoF4uTtHZfI9Ys47yARD/luy8ZQPJAJt2pqdbszmfbCMUDx20UhuFJZwFmKo28WvKnucFIBtpAgboRNC0TzF7B5mPLLksZXoJ6aOWJHdGItU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244261; c=relaxed/simple;
-	bh=cNaVWWmnostkS87GEfjjBsPBVG8jvfZFvE2V7ArTwbc=;
+	s=arc-20240116; t=1787244264; c=relaxed/simple;
+	bh=PdajstaPjIvPrhAxnyKm/VRBGxnl7hXEenGKLh7j7aU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GUUT0PiKvhvAAO3PY1jw6JTzVbcXRC8Tz8JYUx1radbCd4Z4eoOHgdQV3jF/cobJRufPkR1/HfZ6+PZYMjbSoDIi9aTYgPey4ZfmHQGjL/qJjNTTEw2Yk+XqPiuhxRWBAXpzuvAd/DamF9sbOzRoCMkFwPACmtR9PVegaAxHRfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J+slcalS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oS2ShJF0qnQz+qv+IveZinFkKJIzjLPZEyZkU+wks4BGT82R7QFJ7ExDcTxrcwmeqR6tqRnwRNnCfKUj8FTsUO0zUbffo+5GGmBfqnuKSRVkt2mO7C/frtC/OTANCMqHkGt7jPKieAVnet37LlmxCa/shy7QPUsWcFaP58uJFIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aWDSprGS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+slcalS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789EB1F000E9;
-	Thu, 20 Aug 2026 16:44:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aWDSprGS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E20A1F000E9;
+	Thu, 20 Aug 2026 16:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244260;
-	bh=exIhNmyJloscgqHADk+VnkIgblzW6S0rZWZL3EH+6mw=;
+	s=korg; t=1787244262;
+	bh=voLqyKTi3wityaIhKRI+vt1VeOaSJHp433Wgt/sHtkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J+slcalSOrB8jxCtZ7ScbLhp88XH16LIR/fh5OABl+CaWMRzCstjm8qKCdZELYP4+
-	 5Ndt7QquXipzimM5GqDcege4BR9XS68g2ZVk9HmIHz2GAohJPcnqh4xb3hgZNFGFjw
-	 nRFlqs27zEugUW1oGOjtJR+gsSsUBLCNPvHZ0FGc=
+	b=aWDSprGSXyh2/jBd4CX/CUZ8+ZVvp+om0z3yOiXSPtXf0H3SHEPm4St6eUJQPjt/L
+	 28zZ6ayAb9wLgTq3vphuVabN3Rg8t8X9AqKzq78ozvonPgNtvJEvidaZPmuH8Az1Rk
+	 jVz/79pdnBCdlxGGgLO2RBZZu5yPNdejdXiLPTjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Souvik Banerjee <souvik@amlalabs.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Mike Christie <michael.christie@oracle.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Chaitanya Kulkarni <chaitanya.kulkarni@wdc.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 108/235] ovl: use linked upper dentry in copy-up tmpfile
-Date: Thu, 20 Aug 2026 16:55:44 +0200
-Message-ID: <20260820145219.727954831@linuxfoundation.org>
+Subject: [PATCH 5.10 109/235] scsi: target: core: pr: Initialize arrays at declaration time
+Date: Thu, 20 Aug 2026 16:55:45 +0200
+Message-ID: <20260820145219.756359904@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -47,110 +47,171 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Souvik Banerjee <souvik@amlalabs.com>
+From: Chaitanya Kulkarni <chaitanya.kulkarni@wdc.com>
 
-[ Upstream commit e348eecd4d8fa8d18a5157ff59f7be1dc59c5928 ]
+[ Upstream commit 4db6dfe62c5f76ce9eef28967c2e2000efde10d5 ]
 
-ovl_copy_up_tmpfile() stores the disconnected O_TMPFILE dentry as the
-overlay's upper dentry reference via ovl_inode_update().  vfs_tmpfile()
-allocated this dentry via d_alloc(parentpath->dentry, &slash_name), so
-d_name is "/" and d_parent is c->workdir.  Local upper filesystems
-(ext4, btrfs, xfs, ...) immediately rename it to "#<inum>" via
-d_mark_tmpfile() inside their ->tmpfile() op; FUSE and virtiofs do
-not, so both fields stay that way.  Neither identifies the destination
-directory and filename where ovl_do_link() actually linked the file.
+Avoids calling memset().
 
-When the upper filesystem implements ->d_revalidate() (e.g. FUSE or
-virtiofs), ovl_revalidate_real() calls it with the dentry's parent
-inode and a snapshot of d_name.  The server tries to look up "/" inside
-c->workdir, fails, and overlayfs reports -ESTALE.
-
-This causes persistent ESTALE errors for any file that was copied up via
-the tmpfile path, breaking dpkg, apt, and other tools that do
-rename-over-existing on overlayfs with a FUSE/virtiofs upper.
-
-Before commit 6b52243f633e ("ovl: fold copy-up helpers into callers"),
-the tmpfile copy-up path used a dedicated helper ovl_link_tmpfile()
-that captured the linked destination dentry returned by ovl_do_link():
-
-    err = ovl_do_link(temp, udir, upper);
-    ...
-    if (!err)
-        *newdentry = dget(upper);
-
-and published it via ovl_inode_update(d_inode(c->dentry), newdentry).
-The fold inlined ovl_do_link() into ovl_copy_up_tmpfile() but dropped
-the dget(upper) capture, and rewrote the publish line as
-ovl_inode_update(d_inode(c->dentry), dget(temp)) — where temp is the
-disconnected O_TMPFILE dentry.
-
-Fix by keeping a reference to the linked destination dentry after
-ovl_do_link() succeeds, and publishing that dentry at the existing
-ovl_inode_update() call site.  The non-tmpfile/workdir path continues to
-publish the renamed temporary dentry.
-
-Reproducer:
-  - Mount overlayfs with virtiofs (or a FUSE fs whose server advertises
-    FUSE_TMPFILE) as upper
-  - Run: dpkg -i <any .deb>
-  - Observe: "error installing new file '...': Stale file handle"
-
-Fixes: 6b52243f633e ("ovl: fold copy-up helpers into callers")
-Cc: stable@vger.kernel.org # v4.20+
-Signed-off-by: Souvik Banerjee <souvik@amlalabs.com>
-Link: https://patch.msgid.link/20260501232735.2610824-1-souvik@amlalabs.com
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Link: https://lore.kernel.org/r/20210228055645.22253-21-chaitanya.kulkarni@wdc.com
+Link: https://lore.kernel.org/r/20210228055645.22253-22-chaitanya.kulkarni@wdc.com
+Link: https://lore.kernel.org/r/20210228055645.22253-23-chaitanya.kulkarni@wdc.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Chaitanya Kulkarni <chaitanya.kulkarni@wdc.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: d04a179085c2 ("scsi: target: Bound PR-OUT TransportID parsing to the received buffer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/copy_up.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/target/target_core_pr.c |   36 +++++++++++++-----------------------
+ 1 file changed, 13 insertions(+), 23 deletions(-)
 
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -648,7 +648,7 @@ cleanup:
- static int ovl_copy_up_tmpfile(struct ovl_copy_up_ctx *c)
+--- a/drivers/target/target_core_pr.c
++++ b/drivers/target/target_core_pr.c
+@@ -895,9 +895,8 @@ static void core_scsi3_aptpl_reserve(
+ 	struct se_node_acl *node_acl,
+ 	struct t10_pr_registration *pr_reg)
  {
- 	struct inode *udir = d_inode(c->destdir);
--	struct dentry *temp, *upper;
-+	struct dentry *temp, *upper, *newdentry = NULL;
- 	struct ovl_cu_creds cc;
- 	int err;
+-	char i_buf[PR_REG_ISID_ID_LEN];
++	char i_buf[PR_REG_ISID_ID_LEN] = { };
  
-@@ -672,6 +672,14 @@ static int ovl_copy_up_tmpfile(struct ov
- 	err = PTR_ERR(upper);
- 	if (!IS_ERR(upper)) {
- 		err = ovl_do_link(temp, udir, upper);
-+		if (!err) {
-+			/*
-+			 * Record the linked dentry -- not the disconnected
-+			 * O_TMPFILE dentry -- so that ->d_revalidate() on
-+			 * the upper fs sees the real parent/name.
-+			 */
-+			newdentry = dget(upper);
-+		}
- 		dput(upper);
- 	}
- 	inode_unlock(udir);
-@@ -681,9 +689,7 @@ static int ovl_copy_up_tmpfile(struct ov
+-	memset(i_buf, 0, PR_REG_ISID_ID_LEN);
+ 	core_pr_dump_initiator_port(pr_reg, i_buf, PR_REG_ISID_ID_LEN);
  
- 	if (!c->metacopy)
- 		ovl_set_upperdata(d_inode(c->dentry));
--	ovl_inode_update(d_inode(c->dentry), temp);
+ 	spin_lock(&dev->dev_reservation_lock);
+@@ -927,12 +926,10 @@ static int __core_scsi3_check_aptpl_regi
+ {
+ 	struct t10_pr_registration *pr_reg, *pr_reg_tmp;
+ 	struct t10_reservation *pr_tmpl = &dev->t10_pr;
+-	unsigned char i_port[PR_APTPL_MAX_IPORT_LEN];
+-	unsigned char t_port[PR_APTPL_MAX_TPORT_LEN];
++	unsigned char i_port[PR_APTPL_MAX_IPORT_LEN] = { };
++	unsigned char t_port[PR_APTPL_MAX_TPORT_LEN] = { };
+ 	u16 tpgt;
+ 
+-	memset(i_port, 0, PR_APTPL_MAX_IPORT_LEN);
+-	memset(t_port, 0, PR_APTPL_MAX_TPORT_LEN);
+ 	/*
+ 	 * Copy Initiator Port information from struct se_node_acl
+ 	 */
+@@ -1022,9 +1019,8 @@ static void __core_scsi3_dump_registrati
+ 	enum register_type register_type)
+ {
+ 	struct se_portal_group *se_tpg = nacl->se_tpg;
+-	char i_buf[PR_REG_ISID_ID_LEN];
++	char i_buf[PR_REG_ISID_ID_LEN] = { };
+ 
+-	memset(&i_buf[0], 0, PR_REG_ISID_ID_LEN);
+ 	core_pr_dump_initiator_port(pr_reg, i_buf, PR_REG_ISID_ID_LEN);
+ 
+ 	pr_debug("SPC-3 PR [%s] Service Action: REGISTER%s Initiator"
+@@ -1203,10 +1199,10 @@ static struct t10_pr_registration *core_
+ 	struct se_session *sess)
+ {
+ 	struct se_portal_group *tpg = nacl->se_tpg;
+-	unsigned char buf[PR_REG_ISID_LEN], *isid_ptr = NULL;
++	unsigned char buf[PR_REG_ISID_LEN] = { };
++	unsigned char *isid_ptr = NULL;
+ 
+ 	if (tpg->se_tpg_tfo->sess_get_initiator_sid != NULL) {
+-		memset(&buf[0], 0, PR_REG_ISID_LEN);
+ 		tpg->se_tpg_tfo->sess_get_initiator_sid(sess, &buf[0],
+ 					PR_REG_ISID_LEN);
+ 		isid_ptr = &buf[0];
+@@ -1284,11 +1280,10 @@ static void __core_scsi3_free_registrati
+ 	struct t10_reservation *pr_tmpl = &dev->t10_pr;
+ 	struct se_node_acl *nacl = pr_reg->pr_reg_nacl;
+ 	struct se_dev_entry *deve;
+-	char i_buf[PR_REG_ISID_ID_LEN];
++	char i_buf[PR_REG_ISID_ID_LEN] = { };
+ 
+ 	lockdep_assert_held(&pr_tmpl->registration_lock);
+ 
+-	memset(i_buf, 0, PR_REG_ISID_ID_LEN);
+ 	core_pr_dump_initiator_port(pr_reg, i_buf, PR_REG_ISID_ID_LEN);
+ 
+ 	if (!list_empty(&pr_reg->pr_reg_list))
+@@ -2060,7 +2055,8 @@ core_scsi3_emulate_pro_register(struct s
+ 	struct se_portal_group *se_tpg;
+ 	struct t10_pr_registration *pr_reg, *pr_reg_p, *pr_reg_tmp;
+ 	struct t10_reservation *pr_tmpl = &dev->t10_pr;
+-	unsigned char isid_buf[PR_REG_ISID_LEN], *isid_ptr = NULL;
++	unsigned char isid_buf[PR_REG_ISID_LEN] = { };
++	unsigned char *isid_ptr = NULL;
+ 	sense_reason_t ret = TCM_NO_SENSE;
+ 	int pr_holder = 0, type;
+ 
+@@ -2071,7 +2067,6 @@ core_scsi3_emulate_pro_register(struct s
+ 	se_tpg = se_sess->se_tpg;
+ 
+ 	if (se_tpg->se_tpg_tfo->sess_get_initiator_sid) {
+-		memset(&isid_buf[0], 0, PR_REG_ISID_LEN);
+ 		se_tpg->se_tpg_tfo->sess_get_initiator_sid(se_sess, &isid_buf[0],
+ 				PR_REG_ISID_LEN);
+ 		isid_ptr = &isid_buf[0];
+@@ -2283,11 +2278,9 @@ core_scsi3_pro_reserve(struct se_cmd *cm
+ 	struct se_lun *se_lun = cmd->se_lun;
+ 	struct t10_pr_registration *pr_reg, *pr_res_holder;
+ 	struct t10_reservation *pr_tmpl = &dev->t10_pr;
+-	char i_buf[PR_REG_ISID_ID_LEN];
++	char i_buf[PR_REG_ISID_ID_LEN] = { };
+ 	sense_reason_t ret;
+ 
+-	memset(i_buf, 0, PR_REG_ISID_ID_LEN);
 -
--	return 0;
-+	ovl_inode_update(d_inode(c->dentry), newdentry);
+ 	if (!se_sess || !se_lun) {
+ 		pr_err("SPC-3 PR: se_sess || struct se_lun is NULL!\n");
+ 		return TCM_LOGICAL_UNIT_COMMUNICATION_FAILURE;
+@@ -2458,12 +2451,11 @@ static void __core_scsi3_complete_pro_re
+ 	int unreg)
+ {
+ 	const struct target_core_fabric_ops *tfo = se_nacl->se_tpg->se_tpg_tfo;
+-	char i_buf[PR_REG_ISID_ID_LEN];
++	char i_buf[PR_REG_ISID_ID_LEN] = { };
+ 	int pr_res_type = 0, pr_res_scope = 0;
  
- out_dput:
- 	dput(temp);
+ 	lockdep_assert_held(&dev->dev_reservation_lock);
+ 
+-	memset(i_buf, 0, PR_REG_ISID_ID_LEN);
+ 	core_pr_dump_initiator_port(pr_reg, i_buf, PR_REG_ISID_ID_LEN);
+ 	/*
+ 	 * Go ahead and release the current PR reservation holder.
+@@ -2769,11 +2761,10 @@ static void __core_scsi3_complete_pro_pr
+ {
+ 	struct se_node_acl *nacl = pr_reg->pr_reg_nacl;
+ 	const struct target_core_fabric_ops *tfo = nacl->se_tpg->se_tpg_tfo;
+-	char i_buf[PR_REG_ISID_ID_LEN];
++	char i_buf[PR_REG_ISID_ID_LEN] = { };
+ 
+ 	lockdep_assert_held(&dev->dev_reservation_lock);
+ 
+-	memset(i_buf, 0, PR_REG_ISID_ID_LEN);
+ 	core_pr_dump_initiator_port(pr_reg, i_buf, PR_REG_ISID_ID_LEN);
+ 	/*
+ 	 * Do an implicit RELEASE of the existing reservation.
+@@ -3159,7 +3150,7 @@ core_scsi3_emulate_pro_register_and_move
+ 	struct t10_reservation *pr_tmpl = &dev->t10_pr;
+ 	unsigned char *buf;
+ 	const unsigned char *initiator_str;
+-	char *iport_ptr = NULL, i_buf[PR_REG_ISID_ID_LEN];
++	char *iport_ptr = NULL, i_buf[PR_REG_ISID_ID_LEN] = { };
+ 	u32 tid_len, tmp_tid_len;
+ 	int new_reg = 0, type, scope, matching_iname;
+ 	sense_reason_t ret;
+@@ -3171,7 +3162,6 @@ core_scsi3_emulate_pro_register_and_move
+ 		return TCM_LOGICAL_UNIT_COMMUNICATION_FAILURE;
+ 	}
+ 
+-	memset(i_buf, 0, PR_REG_ISID_ID_LEN);
+ 	se_tpg = se_sess->se_tpg;
+ 	tf_ops = se_tpg->se_tpg_tfo;
+ 	/*
 
 
