@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8214B47DFBD;
-	Thu, 20 Aug 2026 16:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2917D47D94D;
+	Thu, 20 Aug 2026 16:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244361; cv=none; b=CGJDCkiP12wZR+uXSRl9qxo75jIYfO4SDa/T0p85ZE4Eh1t4LpXz5QxP/bM4JF50cKkahWAhabtOLvhZbmUn6BiFUsk00v205iBpZHNiFeKn3FEI9JdkajS9Ybntc0EhD/viYKkmn4+DHyBL7PCHH+Qkox6WtfqtFORW0E8y0rc=
+	t=1787244364; cv=none; b=l26J73kA9CTxOBOetTRKKg2TD4zndO/xZpzJYpu1fxF73tqpb4QRKsSVco0lrjmpqdXRwQGBjyVrvlKqqUxMhC6HLllQF7j2A+LNed0Nl1M6d+jjjHOPxveAoFSWXUNk+3RELIv5SLo1fp52vovazSWs0RSiW9hFb+/uFxU5kRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244361; c=relaxed/simple;
-	bh=Bd1GyxgMPTvZsoudZ57wwimwcuiw9KjyJTPM3OA/HOc=;
+	s=arc-20240116; t=1787244364; c=relaxed/simple;
+	bh=nqyCZ70SzjDBB3e07vTdok5i0zDPH1st3ekuiqwsSRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ilWhw51hk5KG0v+Tir8uh8d+RxWjNaVetDDW6iNkwJ6idDoCpSSkkr0kLy5pNZ868BDlnh5xDswANPcNqY5O5HSu0HsOCn+1bUiaZvFKvHc/qpCK01hXrzVFa8C5d3z5HFlpS5aP1s91vKg8riRK2A7gqZk/v56z1mE1PtebXCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTSfAXdS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ab7lWq8ncw8Afj0aQXBAX/IEYnq1EOJ1Fi3xsKB7KChPZLpRCizMdrouZMjGgf4Zy2h6T+uwYXdX+9s6tickE6HMjTXgvpR/PSkMyDTif8zhbV1NCFYZ38ip02oGz+C6by36vXeTmOj83fi0rC/rwVItpjYhhGOUtgULOXvSa0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrnSzwHb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTSfAXdS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EEDC1F00A3A;
-	Thu, 20 Aug 2026 16:45:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrnSzwHb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D541F000E9;
+	Thu, 20 Aug 2026 16:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244360;
-	bh=Jq5XFwB0KV1rjWqScfKBcHT1jM/nGRBSYmp0m/q2Niw=;
+	s=korg; t=1787244363;
+	bh=hFmJkkFdlJJ9eTO4K/jtY3btYEq+8sS8zq7psHQZ0S8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dTSfAXdSswMMvtKa92ObhnpbIoY4M7CAPdZQVad/emzAs8cqMh+TpvYJVQYYOdkvS
-	 0NVmmJPgs/TzUx+B42tQPsmA7ELoiTPBXvmhsmCU9R0+ptlZ8ihbDIB/kjIibUQxQe
-	 TqpEG448WJ4aH6/Fezd67vECvG+lIphm4FEOh73g=
+	b=zrnSzwHb+Rtl/Xp47a7rDY3xDiT8QfOdI3PMYOgA6rL8lLQKdzYM8hpCM8PRW+BMP
+	 IS7JBd9UVwam5QeIYTbcXQW6cTljd0rVM6G4rbFlbHrh/M9mtk79RwAXL9Zzzqa4ab
+	 +laZ8rzG9EcYDvi7sC1V0NoWvGds+liO+DIA0Pjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Jardin <vjardin@free.fr>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Carlos Song <carlos.song@nxp.com>,
-	Stefan Eichenberger <eichest@gmail.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Jean-Marc Ranger <jmranger@hotmail.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Pratyush Yadav <pratyush@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 103/235] i2c: imx: fix locked bus on SMBus block-read of 0 (atomic)
-Date: Thu, 20 Aug 2026 16:55:39 +0200
-Message-ID: <20260820145219.578394220@linuxfoundation.org>
+Subject: [PATCH 5.10 094/235] mtd: spi-nor: Fix spi_nor_try_unlock_all()
+Date: Thu, 20 Aug 2026 16:55:30 +0200
+Message-ID: <20260820145219.308645096@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -54,84 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Jardin <vjardin@free.fr>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit cb2fc37857693b55909fb77dc2c87cfbc1cdc476 ]
+[ Upstream commit 2e3a7476ec3989e77270b9481e76e137824b17c0 ]
 
-SMBus 3.1 6.5.7 allows a Block Read byte count of 0, but the atomic
-(polling) path rejects it as -EPROTO. Worse, it returns without a
-NACK+STOP: the next receive cycle has already started, so the target
-keeps holding SDA and the bus stays stuck until a power cycle for
-this i2c controller.
+Commit ff67592cbdfc ("mtd: spi-nor: Introduce spi_nor_set_mtd_info()")
+moved all initialization of the mtd fields at the end of spi_nor_scan().
+Normally, the mtd info is only needed for the mtd ops on the device,
+with one exception: spi_nor_try_unlock_all(), which will also make use
+of the mtd->size parameter. With that commit, the size will always be
+zero because it is not initialized. Fix that by not using the size of
+the mtd_info struct, but use the size from struct spi_nor_flash_parameter.
 
-Reading I2DR to obtain the count likewise arms the next byte on the
-count > I2C_SMBUS_BLOCK_MAX path, which also returned -EPROTO directly
-and left the bus held.
-
-Handle both: NACK the in-flight dummy byte (TXAK) and extend msgs->len so
-the existing last-byte handling emits STOP; the dummy byte is discarded.
-A count of 0 is a valid empty block read; a count above
-I2C_SMBUS_BLOCK_MAX is still reported as -EPROTO, but only after the bus
-has been released.
-
-The interrupt-driven path has the same flaw from a later commit and is
-fixed separately, as it carries a different Fixes: tag and stable range.
-
-Fixes: 8e8782c71595 ("i2c: imx: add SMBus block read support")
-Signed-off-by: Vincent Jardin <vjardin@free.fr>
-Cc: <stable@vger.kernel.org> # v3.16+
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Acked-by: Carlos Song <carlos.song@nxp.com>
-Reviewed-by: Stefan Eichenberger <eichest@gmail.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260713-for-upstream-i2c-lx2160-fix-v1-v3-1-073ac9e103a5@free.fr
+Fixes: ff67592cbdfc ("mtd: spi-nor: Introduce spi_nor_set_mtd_info()")
+Cc: stable@vger.kernel.org
+Reported-by: Jean-Marc Ranger <jmranger@hotmail.com>
+Closes: https://lore.kernel.org/all/DM6PR06MB561177323DC5207E34AF2A06C547A@DM6PR06MB5611.namprd06.prod.outlook.com/
+Tested-by: Jean-Marc Ranger <jmranger@hotmail.com>
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
+Link: https://lore.kernel.org/r/20250701140426.2355182-1-mwalle@kernel.org
+Stable-dep-of: e1d456b26bf2 ("mtd: spi-nor: swp: Improve locking user experience")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-imx.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/mtd/spi-nor/swp.c |   14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
---- a/drivers/i2c/busses/i2c-imx.c
-+++ b/drivers/i2c/busses/i2c-imx.c
-@@ -890,6 +890,7 @@ static int i2c_imx_read(struct imx_i2c_s
- 	int i, result;
- 	unsigned int temp;
- 	int block_data = msgs->flags & I2C_M_RECV_LEN;
-+	int block_err = 0;
+--- a/drivers/mtd/spi-nor/swp.c
++++ b/drivers/mtd/spi-nor/swp.c
+@@ -50,7 +50,6 @@ static u64 spi_nor_get_min_prot_length_s
+ static void spi_nor_get_locked_range_sr(struct spi_nor *nor, u8 sr, loff_t *ofs,
+ 					uint64_t *len)
+ {
+-	struct mtd_info *mtd = &nor->mtd;
+ 	u64 min_prot_len;
+ 	u8 mask = spi_nor_get_sr_bp_mask(nor);
+ 	u8 tb_mask = spi_nor_get_sr_tb_mask(nor);
+@@ -71,13 +70,13 @@ static void spi_nor_get_locked_range_sr(
+ 	min_prot_len = spi_nor_get_min_prot_length_sr(nor);
+ 	*len = min_prot_len << (bp - 1);
  
- 	result = i2c_imx_prepare_read(i2c_imx, msgs, atomic, false);
- 	if (result)
-@@ -911,8 +912,20 @@ static int i2c_imx_read(struct imx_i2c_s
- 		 */
- 		if ((!i) && block_data) {
- 			len = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2DR);
--			if ((len == 0) || (len > I2C_SMBUS_BLOCK_MAX))
--				return -EPROTO;
-+			if ((len == 0) || (len > I2C_SMBUS_BLOCK_MAX)) {
-+				/*
-+				 * SMBus 3.1 6.5.7: support count byte of 0.
-+				 * I2C_SMBUS_BLOCK_MAX case should not hold the SDA either.
-+				 */
-+				if (len > I2C_SMBUS_BLOCK_MAX)
-+					block_err = -EPROTO;
-+				temp = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2CR);
-+				temp |= I2CR_TXAK;
-+				imx_i2c_write_reg(temp, i2c_imx, IMX_I2C_I2CR);
-+				msgs->buf[0] = 0;
-+				msgs->len = 2;
-+				continue;
-+			}
- 			dev_dbg(&i2c_imx->adapter.dev,
- 				"<%s> read length: 0x%X\n",
- 				__func__, len);
-@@ -960,7 +973,7 @@ static int i2c_imx_read(struct imx_i2c_s
- 			"<%s> read byte: B%d=0x%X\n",
- 			__func__, i, msgs->buf[i]);
- 	}
--	return 0;
-+	return block_err;
+-	if (*len > mtd->size)
+-		*len = mtd->size;
++	if (*len > nor->params->size)
++		*len = nor->params->size;
+ 
+ 	if (nor->flags & SNOR_F_HAS_SR_TB && sr & tb_mask)
+ 		*ofs = 0;
+ 	else
+-		*ofs = mtd->size - *len;
++		*ofs = nor->params->size - *len;
  }
  
- static int i2c_imx_atomic_read(struct imx_i2c_struct *i2c_imx, struct i2c_msg *msgs,
+ /*
+@@ -150,7 +149,6 @@ static int spi_nor_is_unlocked_sr(struct
+  */
+ static int spi_nor_sr_lock(struct spi_nor *nor, loff_t ofs, uint64_t len)
+ {
+-	struct mtd_info *mtd = &nor->mtd;
+ 	u64 min_prot_len;
+ 	int ret, status_old, status_new;
+ 	u8 mask = spi_nor_get_sr_bp_mask(nor);
+@@ -175,7 +173,7 @@ static int spi_nor_sr_lock(struct spi_no
+ 		can_be_bottom = false;
+ 
+ 	/* If anything above us is unlocked, we can't use 'top' protection */
+-	if (!spi_nor_is_locked_sr(nor, ofs + len, mtd->size - (ofs + len),
++	if (!spi_nor_is_locked_sr(nor, ofs + len, nor->params->size - (ofs + len),
+ 				  status_old))
+ 		can_be_top = false;
+ 
+@@ -187,11 +185,11 @@ static int spi_nor_sr_lock(struct spi_no
+ 
+ 	/* lock_len: length of region that should end up locked */
+ 	if (use_top)
+-		lock_len = mtd->size - ofs;
++		lock_len = nor->params->size - ofs;
+ 	else
+ 		lock_len = ofs + len;
+ 
+-	if (lock_len == mtd->size) {
++	if (lock_len == nor->params->size) {
+ 		val = mask;
+ 	} else {
+ 		min_prot_len = spi_nor_get_min_prot_length_sr(nor);
 
 
