@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7DC837AA7A;
-	Thu, 20 Aug 2026 15:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6613435200C;
+	Thu, 20 Aug 2026 15:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238188; cv=none; b=T1OuAkGCf28AfBloLZZPEH8mCcdtjZk1XmsEVOIoctfogA2zmHcDBhdJelSCBW9ISe6ez72NFQt0TK0YHOY5Ba010IhKcx6/Y2PZWH/I+qepx68/vGqkUznfWXdB03lnVq9oYhaCl4sC2jcdb660/4KiMfS8QyvR0AtZ0t+HmW8=
+	t=1787238191; cv=none; b=WLZ3QRjPtI+X3o6ZKWzfYCJ09UM9fuhQWnExjVe/EmUZQqunK9ey8QtmwNd8LnCPKgD2HCCx6mQPT5ClU8Ag2BQlPg81K8Mo6tlFMmo/FL0RA143KIk1uPjrAXFJxuJRMNEiI5TPthePGjfyiBjlweMAw5LGUR8kUhhSk/RnLrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238188; c=relaxed/simple;
-	bh=9cofGmLqZZA/VxjSSc3G61FYpGOTaskRXsDoU411/rE=;
+	s=arc-20240116; t=1787238191; c=relaxed/simple;
+	bh=P64dnKYJ9e+1gbBNEBBrZa3uXS/p0hL81gapQRMW1wE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=feIwqFvxkjZWAV8R4T1Z9FmH8gU3w8+uQb6BFTINBzo2xPgt5V1r8DqFmd3Ujjw+I3ynA6vQwrcUfoPBNxXU+OKGSzbYq0U4Ieg8hbfO+v+ga0XAqHnx9O2dIGKQC1/gjtQHdvOH5XmRU8KjHOKZrfDCsQerVS/lrgcZazD2vxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iLCj8Fpt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SHnNL86sJcrKqW1MnVb4MoeCYxsZjYz9ErbSPCMCeNqlKg7onDchNTG5oB27F4QE2jlVYXAos0zU9IZbycOV0u0wvizliutWLAyZkilp1wuTRDvIx00frRFGBJpV5YM/2Pdzg25qlNImsYgVJZ7+GpXvnlori8c4EqFIBoBIieU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gj5yL22R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iLCj8Fpt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC43A1F00A3E;
-	Thu, 20 Aug 2026 15:03:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gj5yL22R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D8E1F000E9;
+	Thu, 20 Aug 2026 15:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238187;
-	bh=3ayTiAHV1Eot/gaeQUyLKF+o0M9hGhGbUjoHN1TGWnU=;
+	s=korg; t=1787238190;
+	bh=s8NR5KhWcAibosI0+3QBdfaI8wL+JPePogEV5yjdIjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iLCj8Fptx3qeo6yXYQv8+5Jas3FWS0y0Dn4GTSZZiVA1xHN2mrmeRHiIv5rOJ0Rei
-	 EZ/RxIWLZxfOKfsJ+O4wVilis0L39aJ//+qwyAcGfb/E4u5o7O1NbMjKGVQBdv8NUN
-	 mj1ERp3UUUz4IiliGcBRcYdiOwaz/R2VPz4LeF4s=
+	b=Gj5yL22RbolZbG6trywEV8JjCT0vBLNpMduZqYffD3r2VSPwamDsAD9lbXCNvDtwv
+	 gYh+a4JbLy1wMgQYDSIr8n9Tu54uyJOmBk2Cuo0dOeAWL9Hu00VcFyRd+yVfbQV6Wk
+	 yvjPCeLwTZu8rj/TIPUdMJUmmeU/ej1T2rXnYpzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Dawid=20Wro=CC=81bel?= <me@dawidwrobel.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.1 022/228] ASoC: codecs: lpass-wsa-macro: Fix enum kcontrol accesses
-Date: Thu, 20 Aug 2026 16:52:44 +0200
-Message-ID: <20260820145245.133795865@linuxfoundation.org>
+	Melbin K Mathew <mlbnkm1@gmail.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 7.1 023/228] fbdev: bound mode sysfs output to the sysfs buffer
+Date: Thu, 20 Aug 2026 16:52:45 +0200
+Message-ID: <20260820145245.164510740@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -45,81 +44,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dawid Wróbel <me@dawidwrobel.com>
+From: Melbin K Mathew <mlbnkm1@gmail.com>
 
-commit 56f24311fd5607588a47e44675195a9efb200f29 upstream.
+commit d15d51fb26e830af58f3f21964f1c09c239077ea upstream.
 
-EAR SPKR PA Gain" and the four "WSA RX* Mux" controls are enumerated,
-but their get and put callbacks access the value through
-ucontrol->value.integer.value[0] (a long) instead of
-ucontrol->value.enumerated.item[0] (an unsigned int).
+mode_string() uses snprintf() which can return a value larger than the
+remaining buffer space. show_modes() accumulates the return value into i
+without checking whether i has reached PAGE_SIZE, causing the offset to
+advance past the sysfs buffer if the modelist is long enough.
 
-This same pattern was fixed in the sibling drivers by
-commit bcfe5f76cc40 ("ASoC: codecs: rx-macro: fix accessing array
-out of bounds for enum type") and
-commit 0ea5eff7c606 ("ASoC: codecs: va-macro: fix accessing array
-out of bounds for enum type"), but wsa-macro was missed.
+Add a size parameter to mode_string() and use scnprintf() to return
+only the bytes actually written. Add an early return when offset
+already exceeds the buffer. In show_modes(), stop accumulating once
+the buffer is full.
 
-On 64-bit kernels with CONFIG_SND_CTL_DEBUG this trips the elem value
-sanity check and every read of these controls fails with -EINVAL.
-
-Fixes: 809bcbcecebf ("ASoC: codecs: lpass-wsa-macro: Add support to WSA Macro")
-Fixes: 2c4066e5d428 ("ASoC: codecs: lpass-wsa-macro: add dapm widgets and route")
-Assisted-by: Claude:claude-fable-5
-Cc: stable@vger.kernel.org
-Signed-off-by: Dawid Wróbel <me@dawidwrobel.com>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260730-worktree-lpass-tx-macro-enum-fix-v2-2-6d091c736116@dawidwrobel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: stable@vger.kernel.org # v7.1+
+Signed-off-by: Melbin K Mathew <mlbnkm1@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/lpass-wsa-macro.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/video/fbdev/core/fbsysfs.c |   15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
---- a/sound/soc/codecs/lpass-wsa-macro.c
-+++ b/sound/soc/codecs/lpass-wsa-macro.c
-@@ -2064,7 +2064,7 @@ static int wsa_macro_ear_spkr_pa_gain_ge
- 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
- 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
- 
--	ucontrol->value.integer.value[0] = wsa->ear_spkr_gain;
-+	ucontrol->value.enumerated.item[0] = wsa->ear_spkr_gain;
- 
+--- a/drivers/video/fbdev/core/fbsysfs.c
++++ b/drivers/video/fbdev/core/fbsysfs.c
+@@ -30,12 +30,15 @@ static int activate(struct fb_info *fb_i
  	return 0;
  }
-@@ -2075,7 +2075,7 @@ static int wsa_macro_ear_spkr_pa_gain_pu
- 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
- 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
  
--	wsa->ear_spkr_gain =  ucontrol->value.integer.value[0];
-+	wsa->ear_spkr_gain =  ucontrol->value.enumerated.item[0];
+-static int mode_string(char *buf, unsigned int offset,
++static int mode_string(char *buf, size_t size, unsigned int offset,
+ 		       const struct fb_videomode *mode)
+ {
+ 	char m = 'U';
+ 	char v = 'p';
  
- 	return 0;
++	if (offset >= size)
++		return 0;
++
+ 	if (mode->flag & FB_MODE_IS_DETAILED)
+ 		m = 'D';
+ 	if (mode->flag & FB_MODE_IS_VESA)
+@@ -48,7 +51,7 @@ static int mode_string(char *buf, unsign
+ 	if (mode->vmode & FB_VMODE_DOUBLE)
+ 		v = 'd';
+ 
+-	return snprintf(&buf[offset], PAGE_SIZE - offset, "%c:%dx%d%c-%d\n",
++	return scnprintf(&buf[offset], size - offset, "%c:%dx%d%c-%d\n",
+ 	                m, mode->xres, mode->yres, v, mode->refresh);
  }
-@@ -2088,7 +2088,7 @@ static int wsa_macro_rx_mux_get(struct s
- 				snd_soc_dapm_to_component(widget->dapm);
- 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
  
--	ucontrol->value.integer.value[0] =
-+	ucontrol->value.enumerated.item[0] =
- 			wsa->rx_port_value[widget->shift];
- 	return 0;
+@@ -67,7 +70,7 @@ static ssize_t store_mode(struct device
+ 
+ 	list_for_each_entry(modelist, &fb_info->modelist, list) {
+ 		mode = &modelist->mode;
+-		i = mode_string(mstr, 0, mode);
++		i = mode_string(mstr, sizeof(mstr), 0, mode);
+ 		if (strncmp(mstr, buf, max(count, i)) == 0) {
+ 
+ 			var = fb_info->var;
+@@ -89,7 +92,7 @@ static ssize_t show_mode(struct device *
+ 	if (!fb_info->mode)
+ 		return 0;
+ 
+-	return mode_string(buf, 0, fb_info->mode);
++	return mode_string(buf, PAGE_SIZE, 0, fb_info->mode);
  }
-@@ -2101,7 +2101,7 @@ static int wsa_macro_rx_mux_put(struct s
- 				snd_soc_dapm_to_component(widget->dapm);
- 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
- 	struct snd_soc_dapm_update *update = NULL;
--	u32 rx_port_value = ucontrol->value.integer.value[0];
-+	u32 rx_port_value = ucontrol->value.enumerated.item[0];
- 	u32 bit_input;
- 	u32 aif_rst;
- 	unsigned int dai_id;
+ 
+ static ssize_t store_modes(struct device *device,
+@@ -139,7 +142,9 @@ static ssize_t show_modes(struct device
+ 	i = 0;
+ 	list_for_each_entry(modelist, &fb_info->modelist, list) {
+ 		mode = &modelist->mode;
+-		i += mode_string(buf, i, mode);
++		i += mode_string(buf, PAGE_SIZE, i, mode);
++		if (i >= PAGE_SIZE - 1)
++			break;
+ 	}
+ 	return i;
+ }
 
 
