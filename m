@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EEE437EFFE;
-	Thu, 20 Aug 2026 15:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1762E37E5CB;
+	Thu, 20 Aug 2026 15:09:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238594; cv=none; b=WkOd+oJ38oa8S6KtXeyyZHt9KR4oYz5j4UViU6awmBv7eKE3/hzWftYrn7Y7Eix2M/1D/aGu7DjT5Y5NKS5FAG3WLXjC2lpZc9Gzxyy6kSwaAdyieBfCt3f8wP7ur2LbwVYMjv97ie53wjaPhmn9w3JDO9XhBqcIjs6rRw8Itek=
+	t=1787238596; cv=none; b=L01thlWz7SyUlgClmU+hCJSO9Uq0LmnPgJ5IfsF3YAYsV/gAJBAvE2Ri+JVW9Z7FKhbu6DTWNPVYAc8F3LbIT34ShTRDgSTH2ZNzckN4MrVC9hF1tbhaeD5wXPIIRmqmLMZqgNhvhiYJzLRqtkFGrHQ8ykNC6ZuEDs6As0iWGiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238594; c=relaxed/simple;
-	bh=3N4zDhfMaDVGGnZboboJry9+Jf0k7il/wI9wJT5cnCI=;
+	s=arc-20240116; t=1787238596; c=relaxed/simple;
+	bh=JcTuXFMtVfhkGtzo5f69AEh/ef7kG1rGghrLw+w4T7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qaFbkG4B2fwhWvwfm1x3w+buDIVQvuD+p5bYKl3Hg6kn3t6Ic5VTWLXHIKbBDA8wZL0OHtyWXC0MV5jV7jD/0uCm37u0XAw22zjedT+xpicfO5Yl/RahSt8CMjGxBPjWEVTc8j2PKQtLSNYf/taSss+TkyXPK45Go51VVitEeJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GnLS3hXa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SkWsmzEuAOvRwqodbhUZz1/se9xTO1q609Y4gIpOQNnyThm4yrdrYFJYtnLqlh8bqwHEMWfSsop49CeVoY7aKre7S7+7ksk3Nf654UbbJtZb3wT1mSBZzC682d/Qj8/GWlXLHo/WrbMHCv26coEjiglfDbuIhHV3OINQDrJ3aJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7eBzet+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GnLS3hXa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F271F00A3A;
-	Thu, 20 Aug 2026 15:09:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7eBzet+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718761F000E9;
+	Thu, 20 Aug 2026 15:09:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238592;
-	bh=hnulu9p7nvshD6wbuHl0uVtoCMCqnLujCk0GMH8H0M0=;
+	s=korg; t=1787238595;
+	bh=ZlNVGElG8iM9FLIgAWYX99jDv5v4x4LBg57GsPnrfnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GnLS3hXaOCDG8N/VcMivC6gGMaVPCFhn2rpV+qW6NGol1jPJf/UYUmwSm7idaDuJw
-	 MAaSG8bRDjB+AFTDOn5jLLJu0DfgYPCQl4oYIzZ0+aG3PnPD22MYppPbiD+y85jAiw
-	 tC3pn/bUri/Y4KIC4UocPMuVa5IiUDnYT1y1HciM=
+	b=Z7eBzet+mVZoPQ7LkEdTjGWcHGI1bchZbZY/R1VevtneBIIQfZgyOUgRPpbq3IelS
+	 PPsor1xJFB6nAtlfhbCh7CNjxSG9yDzOud9FJVUNSgy/3Kc8eAp2z/zcBSAIVv45DO
+	 3N6cy7+tLTnvMtJrFxN/97/nY0SfGDmwZ78fUPSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Shenghao Ding <shenghao-ding@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 202/228] net: packet: fix wrong transport_header when sending VLAN-tagged frame
-Date: Thu, 20 Aug 2026 16:55:44 +0200
-Message-ID: <20260820145251.173600282@linuxfoundation.org>
+Subject: [PATCH 7.1 185/228] ASoC: tas2781: fix clang build error for goto bypassing cleanup variable
+Date: Thu, 20 Aug 2026 16:55:27 +0200
+Message-ID: <20260820145250.319964014@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -52,64 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Shenghao Ding <shenghao-ding@ti.com>
 
-[ Upstream commit 01fdecc0480d916c799dbee584833a4a37e94d06 ]
+[ Upstream commit 566fec6a33075a0ea5c441c26571221f17f4ed98 ]
 
-In packet_parse_headers(), when processing a VLAN-tagged frame,
-skb_set_network_header() is called to advance network_header past the
-VLAN tag to the inner protocol header. skb_probe_transport_header() is
-then called with skb->protocol still set to the outer VLAN EtherType
-(e.g. ETH_P_8021Q), while nhoff (derived from skb_network_offset())
-already points past the VLAN tag to the inner protocol header.
+Remove invalid goto exit paths that jump across guard(mutex) cleanup
+variable initialization, replace them with direct kfree(src) and return,
+to fix the s390 clang build error in acoustic_ctl_write().
 
-In __skb_flow_dissect(), proto is initialized to ETH_P_8021Q and nhoff
-points past the VLAN tag. When the dissector hits case ETH_P_8021Q, it
-reads a struct vlan_hdr at nhoff via __skb_header_pointer(), but that
-offset contains the inner protocol header (e.g. an IP header). The bytes
-are misinterpreted as a VLAN header, yielding a garbage encapsulated
-EtherType that matches no known protocol. The dissector returns false,
-so skb_probe_transport_header() never calls skb_set_transport_header(),
-leaving transport_header at its uninitialized sentinel value (~0U).
-
-Move skb_probe_transport_header() to before skb_set_network_header(). At
-the time skb_probe_transport_header() is called, network_header still
-points to the VLAN header, so nhoff correctly points to the VLAN header.
-The flow dissector can then parse the VLAN header, extract the inner
-EtherType, and advance nhoff to the inner protocol header, allowing
-transport_header to be set correctly.
-
-Fixes: dfed913e8b55 ("net/af_packet: add VLAN support for AF_PACKET SOCK_RAW GSO")
-Assisted-by: WChat:claude-opus-4-8
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260807063405.688780-2-wei.fang@oss.nxp.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: d75d38dc4604 ("ASoC: tas2781: Add a debugfs node for acoustic tuning")
+Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
+Link: https://patch.msgid.link/20260807000304.826-1-shenghao-ding@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/tas2781-i2c.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 435756877abaa..213a8a3b7ee52 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -1943,13 +1943,13 @@ static void packet_parse_headers(struct sk_buff *skb, struct socket *sock)
- 	    sock->type == SOCK_RAW)
- 		skb->protocol = dev_parse_header_protocol(skb);
+diff --git a/sound/soc/codecs/tas2781-i2c.c b/sound/soc/codecs/tas2781-i2c.c
+index 775c3767bf3a8..2ad7bb90cf543 100644
+--- a/sound/soc/codecs/tas2781-i2c.c
++++ b/sound/soc/codecs/tas2781-i2c.c
+@@ -1542,8 +1542,8 @@ static ssize_t acoustic_ctl_write(struct file *file,
+ 	if (src[0] > max_pkg_len && src[0] != count) {
+ 		dev_err(priv->dev, "pkg(%u), max(%u), count(%u) mismatch.\n",
+ 			src[0], max_pkg_len, (unsigned int)count);
+-		ret = 0;
+-		goto exit;
++		kfree(src);
++		return 0;
+ 	}
  
-+	skb_probe_transport_header(skb);
+ 	switch (src[1]) {
+@@ -1557,14 +1557,14 @@ static ssize_t acoustic_ctl_write(struct file *file,
+ 		break;
+ 	default:
+ 		dev_err(priv->dev, "%s Wrong code %02x.\n", __func__, src[1]);
+-		ret = 0;
+-		goto exit;
++		kfree(src);
++		return 0;
+ 	}
+ 
+ 	if (len < 1) {
+ 		dev_err(priv->dev, "pkg fmt invalid %02x.\n", len);
+-		ret = 0;
+-		goto exit;
++		kfree(src);
++		return 0;
+ 	}
+ 
+ 	for (j = 0; j < priv->ndev; j++)
+@@ -1574,8 +1574,8 @@ static ssize_t acoustic_ctl_write(struct file *file,
+ 		}
+ 	if (j >= priv->ndev) {
+ 		dev_err(priv->dev, "no such device 0x%02x.\n", src[2]);
+-		ret = 0;
+-		goto exit;
++		kfree(src);
++		return 0;
+ 	}
+ 
+ 	reg = TASDEVICE_REG(src[3], src[4], src[5]);
+@@ -1606,7 +1606,7 @@ static ssize_t acoustic_ctl_write(struct file *file,
+ 		dev_err(priv->dev, "i2c communication error.\n");
+ 	else
+ 		ret = count;
+-exit:
 +
- 	/* Move network header to the right position for VLAN tagged packets */
- 	if (likely(skb->dev->type == ARPHRD_ETHER) &&
- 	    eth_type_vlan(skb->protocol) &&
- 	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
- 		skb_set_network_header(skb, depth);
--
--	skb_probe_transport_header(skb);
+ 	kfree(src);
+ 	return ret;
  }
- 
- /*
 -- 
 2.53.0
 
