@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F08C4854F5;
-	Thu, 20 Aug 2026 17:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B69B410D30;
+	Thu, 20 Aug 2026 17:42:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247724; cv=none; b=hyBcVk49PZI84CiotBjFAFygeSs+lR1x2uUl8jTJLUBUafIrGCyTHctLRx96T/o5NS9znYBtAGA0o3bC6ehN9baXt0rtsVR/PilCXPgFV0gaSDPHNEedwm83AycwCDeBLRby0E8nyusO8ddJX22+q4nLozgFjpKzh/QGIDCSCws=
+	t=1787247726; cv=none; b=LAuSZyiGVenVU6pFONxf9pTW1Hb+Y9SWEbvT8COhb5HYDWP5NQq9xlXfhwYG91JGLQ6s93bpHkeiTmLO1sX6x6xwMUHj6baI5e30LcrN+KHPUkLKgTzmm4DAVa5xvBLC/Vj3hsaKihRHRpQUku5TeJwDuuP9G8NNy6QIbLqaQ7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247724; c=relaxed/simple;
-	bh=ivv30X6FR/0MHWJ2SuSatlJo8rZKn4zCOjBm9ICt52Y=;
+	s=arc-20240116; t=1787247726; c=relaxed/simple;
+	bh=vfm5B+ZnEWPimacfRlWaw2vESxOyzXl/M2lG8FaEw90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hpRoQEWBfce3GX8hcBysZhS4FVAAI8zr+nuGy01S2fSYZRnSTxjwvGIU6fzN81zmut6yzHUdZiJFo3KsVeFaKU5RsJHBJA/03/NPMZb7+TOHNIiABF0yBSCWhoI6GaQpDwZu+0xAZBpGXpXc9uNFsAXWHB7NPnSXLfskzxXUyvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=petaH4XX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nRjPViUIfXcwu/zaiWqSKAEYEaGRwUvxyc4ASZarW2MNggojLx2vmc5MrKrJHL6Y95R220oy0obZF+IeZ4u2DiswsuEttGwWmZC2+a9crP8XA6OaZszi3a1Nfn/2lP8XMe9EcrO4A5uiqMjm9ug6uH9cn7DpNfZiIb+QcooykAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tG8B8x3C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="petaH4XX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5571F000E9;
-	Thu, 20 Aug 2026 17:42:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tG8B8x3C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B701F1F000E9;
+	Thu, 20 Aug 2026 17:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247722;
-	bh=FIF31msdSJhTwdz29tRSsjKPJNS6EW48g/910yMSOSc=;
+	s=korg; t=1787247725;
+	bh=c4PMZK8C0Ni6GAU2SWggbbAuK228KXPf2tHeCk8nbM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=petaH4XXtITr0HCulTnR5wuy2+joeR3Itx0p9HTu4nEhZZ9zajsBk8lS52ySUvGy/
-	 fMutfikYR8x9+OGZOAUV5y+4hxJOw3RV1OWM9bl8AiB39oAs3t6fORt61ZNb/j0G4P
-	 qUngymWQ+1XGhOUWkepv2wWOu5YFxBi0CJpKdD8M=
+	b=tG8B8x3CBAGP9Xxn2ALHNi1TCfx7gz2kthhYCXfe/V5hexZQW5rVqD62AbMu26F/H
+	 tmA7rF8LPvmn4Mt0peooajru2JN7t46HmNfmzMzzbhjv2Hes3BwTAv1bWQsqMheTKm
+	 PAVIRJn2UyB7Aa2rVEbHyfG74PqrPNseL6k/TN20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tangxin Xie <xietangxin@h-partners.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wei Fang <wei.fang@nxp.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 145/166] macvlan: inherit needed_headroom and needed_tailroom from lowerdev
-Date: Thu, 20 Aug 2026 16:56:44 +0200
-Message-ID: <20260820145215.534922176@linuxfoundation.org>
+Subject: [PATCH 6.6 146/166] net: packet: fix wrong transport_header when sending VLAN-tagged frame
+Date: Thu, 20 Aug 2026 16:56:45 +0200
+Message-ID: <20260820145215.564057148@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -53,61 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit cef51860becd9700217c81732ca1eb1ea6ed6fe1 ]
+[ Upstream commit 01fdecc0480d916c799dbee584833a4a37e94d06 ]
 
-macvlan devices inherit hard_header_len from lowerdev during macvlan_init(),
-but leave needed_headroom and needed_tailroom set to 0.
+In packet_parse_headers(), when processing a VLAN-tagged frame,
+skb_set_network_header() is called to advance network_header past the
+VLAN tag to the inner protocol header. skb_probe_transport_header() is
+then called with skb->protocol still set to the outer VLAN EtherType
+(e.g. ETH_P_8021Q), while nhoff (derived from skb_network_offset())
+already points past the VLAN tag to the inner protocol header.
 
-When the underlying lowerdev requires extra headroom or tailroom for
-headers/trailers (e.g. macsec, ipsec, wireguard, tunnels, or veth with rx
-headroom), upper layers calculating packet headroom and tailroom fail to
-reserve sufficient space.
+In __skb_flow_dissect(), proto is initialized to ETH_P_8021Q and nhoff
+points past the VLAN tag. When the dissector hits case ETH_P_8021Q, it
+reads a struct vlan_hdr at nhoff via __skb_header_pointer(), but that
+offset contains the inner protocol header (e.g. an IP header). The bytes
+are misinterpreted as a VLAN header, yielding a garbage encapsulated
+EtherType that matches no known protocol. The dissector returns false,
+so skb_probe_transport_header() never calls skb_set_transport_header(),
+leaving transport_header at its uninitialized sentinel value (~0U).
 
-This can result in reallocation overhead, skb headroom underflows, or KASAN
-slab-use-after-free crashes when dev_hard_header() / macvlan_hard_header()
-prepends header data or when lower devices append tailroom.
+Move skb_probe_transport_header() to before skb_set_network_header(). At
+the time skb_probe_transport_header() is called, network_header still
+points to the VLAN header, so nhoff correctly points to the VLAN header.
+The flow dissector can then parse the VLAN header, extract the inner
+EtherType, and advance nhoff to the inner protocol header, allowing
+transport_header to be set correctly.
 
-Fix this by:
-1. Inheriting needed_headroom and needed_tailroom from lowerdev in macvlan_init().
-2. Propagating needed_headroom and needed_tailroom updates to attached macvlans
-   in macvlan_device_event() when receiving NETDEV_FEAT_CHANGE events.
-
-Fixes: b863ceb7ddce ("[NET]: Add macvlan driver")
-Reported-by: Tangxin Xie <xietangxin@h-partners.com>
-Closes: https://lore.kernel.org/netdev/CANn89i+1EW-sFNK8xoq98gMbPCeLS7e=+rs9gHfLg5Wj+4x0sw@mail.gmail.com/T/#m16adf0ff972cbfd8066c3a8e656e75eaeb12d021
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20260806141938.287660-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: dfed913e8b55 ("net/af_packet: add VLAN support for AF_PACKET SOCK_RAW GSO")
+Assisted-by: WChat:claude-opus-4-8
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260807063405.688780-2-wei.fang@oss.nxp.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macvlan.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/packet/af_packet.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
-index 399c8deb35103..438626c4480ef 100644
---- a/drivers/net/macvlan.c
-+++ b/drivers/net/macvlan.c
-@@ -940,6 +940,8 @@ static int macvlan_init(struct net_device *dev)
- 	dev->hw_enc_features    |= dev->features;
- 	netif_inherit_tso_max(dev, lowerdev);
- 	dev->hard_header_len	= lowerdev->hard_header_len;
-+	dev->needed_headroom	= lowerdev->needed_headroom;
-+	dev->needed_tailroom	= lowerdev->needed_tailroom;
- 	macvlan_set_lockdep_class(dev);
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 493a167a7c85b..89f7a43bed565 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -1995,13 +1995,13 @@ static void packet_parse_headers(struct sk_buff *skb, struct socket *sock)
+ 	    sock->type == SOCK_RAW)
+ 		skb->protocol = dev_parse_header_protocol(skb);
  
- 	vlan->pcpu_stats = netdev_alloc_pcpu_stats(struct vlan_pcpu_stats);
-@@ -1822,6 +1824,8 @@ static int macvlan_device_event(struct notifier_block *unused,
- 	case NETDEV_FEAT_CHANGE:
- 		list_for_each_entry(vlan, &port->vlans, list) {
- 			netif_inherit_tso_max(vlan->dev, dev);
-+			vlan->dev->needed_headroom = dev->needed_headroom;
-+			vlan->dev->needed_tailroom = dev->needed_tailroom;
- 			netdev_update_features(vlan->dev);
- 		}
- 		break;
++	skb_probe_transport_header(skb);
++
+ 	/* Move network header to the right position for VLAN tagged packets */
+ 	if (likely(skb->dev->type == ARPHRD_ETHER) &&
+ 	    eth_type_vlan(skb->protocol) &&
+ 	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
+ 		skb_set_network_header(skb, depth);
+-
+-	skb_probe_transport_header(skb);
+ }
+ 
+ /*
 -- 
 2.53.0
 
