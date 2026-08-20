@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD97A377A89;
-	Thu, 20 Aug 2026 15:23:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B2236212F;
+	Thu, 20 Aug 2026 15:23:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239383; cv=none; b=leKMIkfzZrtW6clVd65RfjeaiBK0+CKzd98DtExjK+hlFjwUUVJcilFIQN9QItSGaVGA0/y0WAR5i4m6QZdQEznDDuNc1K4bwNyZUmgV2Ei70qcFH3wQQFerCdfbZYgzHjsQz5kHIcrqe+e7zf9XXJY+MY7vKraIofVVNjch06Y=
+	t=1787239386; cv=none; b=tWJOFtsy09kx3OAP+g0xy2r3FL5HIUtA+Z+MCfF10g0yDZxQdEzvYv12BzvQ2wJuOS3bcBAp1m1Xy4waqcMisaO8BqiywnIK/pPZAbFdgCgUvIgkP4vU1yoBoDLS+4xzPrjwSzsC+OuiLsOZsmo52Fo7VRRICU973getifxQ6hE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239383; c=relaxed/simple;
-	bh=IFYe170cAdiNq8Mpddbw3C3vDbVzsI4BQeMEU0Gf2mo=;
+	s=arc-20240116; t=1787239386; c=relaxed/simple;
+	bh=jRcVtu/qtqO+xQTcbsTwoJBqGTEzDgYOXMSvPz3Hd3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bAjP42PJtoGj/MEBilso83+b1DfQRqmmCoB9i+lTKsfRbiXnFIiSRYIEexBXghEjCr3ajFl0YsClRO/H7p8ezR8JqkUh1Wrbccd2aHQW4hvPAQqalc1V17KJhwl3dO9DskcqPzBcJ3s1d3jr03cFIJgcJPdXqsmxANvql7BiwCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uLLNiZcH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eUGvZG/32aBL3QPy00vGNU5I2Po7hwF5EpMveghNA0vpycck8XdrIjx7LiQ6PYse5vx4T+gmd8j5D0mUUQnqJUhWaHoe391OxeOQ6UbcBBAXVGcN06fFjV2ncA9lURO8EzvlfhoKKzPrPQsPtlJWX84gb0Fnu+94nUPtqT7LsFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ZQC8kPg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLLNiZcH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A311F000E9;
-	Thu, 20 Aug 2026 15:23:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ZQC8kPg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115D41F000E9;
+	Thu, 20 Aug 2026 15:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239382;
-	bh=3iVJ+fs16pP4B4bRVe/i0bXUtOpeDxz2ixurjME1BbY=;
+	s=korg; t=1787239385;
+	bh=1BnCSUsHK3GnuD0VHo3yQUTV+eyEQIKoH7N2utm//NI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uLLNiZcHefC9sn6y8TJJEIcoHfweaHkFr9emVVOrfq6pwAVoJ/zKA9fmkrJfAIYpn
-	 TovM/zMdDK2OzDQJcsytvG5pzIbUMZ2sARWG1wht2iFf2EUVnafy1BhldI7Tmc0v4I
-	 IQ/5MW72H0N4KTgNoIsh0Yjo9GKaBs0OquvXM81s=
+	b=0ZQC8kPgFSz5xfnhUTpV3GhGwid7Sduz8gOkB9hIBZIgQdl4RvP7GTNuf9oIcCV5N
+	 trOTJtQ39CzgxhdtuG8BUgVZP+a8gk60lXFGIfVysl4FreUsZGBz9RQXQ/dcDIrqVi
+	 xJv1AEh60ahyCm9lNqUPD55eMRNE7gjp9zlYIVVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Steven Price <steven.price@arm.com>
-Subject: [PATCH 6.12 031/220] drm/panthor: skip zero-sized firmware sections
-Date: Thu, 20 Aug 2026 16:53:41 +0200
-Message-ID: <20260820145224.434293300@linuxfoundation.org>
+	Candice Li <candice.li@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 032/220] drm/amdgpu: reject oversized IBs with per-ring packet limits
+Date: Thu, 20 Aug 2026 16:53:42 +0200
+Message-ID: <20260820145224.463528390@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -51,43 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Candice Li <candice.li@amd.com>
 
-commit 2b8f13d3c7e26c46c20d9e367904cf01729c88e6 upstream.
+commit fd37f9dd5b5ab70a46fa7bc76623c0528d602b27 upstream.
 
-panthor_fw_load_section_entry() skips BO creation when the firmware section
-VA range is empty. If such a section is added to the firmware section list,
-section->mem is left as NULL.
+On GFX rings, amdgpu_cs_p2_ib() passed user-supplied ib_bytes through
+to ib->length_dw without a limit, while ring_emit_ib() encodes length
+into packet fields. Oversized values can corrupt adjacent control bits
+and destabilize command submission.
 
-Later reload and unplug paths iterate over all firmware sections and
-dereference section->mem, which can lead to a NULL pointer dereference.
+Add a per-ring IB packet size limit helper and reject command
+submissions exceeding the corresponding dword limit before IB
+allocation. Use the documented 20-bit limit for GFX/compute/SDMA/VPE,
+and apply the MM fallback limit for other ring types.
 
-Zero-sized firmware sections are valid, so accept them as no-op entries but
-skip adding them to the section list.
-
-Fixes: 2718d91816ee ("drm/panthor: Add the FW logical block")
+Signed-off-by: Candice Li <candice.li@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 7f48fa2cf62e3fa6c9c3870aa74988f773247e52)
 Cc: stable@vger.kernel.org
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20260724172621.63046-1-osama.abdelkader@gmail.com
-Signed-off-by: Steven Price <steven.price@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panthor/panthor_fw.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c |   27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/panthor/panthor_fw.c
-+++ b/drivers/gpu/drm/panthor/panthor_fw.c
-@@ -549,6 +549,9 @@ static int panthor_fw_load_section_entry
- 		return -EINVAL;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -41,6 +41,26 @@
+ #include "amdgpu_gem.h"
+ #include "amdgpu_ras.h"
+ 
++/*
++ * Maximum IB length (dwords) for rings whose emit_ib packet format
++ * documents a 20-bit size field.
++ */
++#define AMDGPU_GFX_SDMA_IB_PACKET_SIZE_MAX_DW	0xFFFFF
++#define AMDGPU_MM_IB_PACKET_SIZE_MAX_DW	0x7FFFF0
++
++static u32 amdgpu_cs_ib_packet_size_max_dw(enum amdgpu_ring_type type)
++{
++	switch (type) {
++	case AMDGPU_RING_TYPE_GFX:
++	case AMDGPU_RING_TYPE_COMPUTE:
++	case AMDGPU_RING_TYPE_SDMA:
++	case AMDGPU_RING_TYPE_VPE:
++		return AMDGPU_GFX_SDMA_IB_PACKET_SIZE_MAX_DW;
++	default:
++		return AMDGPU_MM_IB_PACKET_SIZE_MAX_DW;
++	}
++}
++
+ static int amdgpu_cs_parser_init(struct amdgpu_cs_parser *p,
+ 				 struct amdgpu_device *adev,
+ 				 struct drm_file *filp,
+@@ -352,7 +372,6 @@ static int amdgpu_cs_p2_ib(struct amdgpu
+ 
+ 	job = p->jobs[r];
+ 	ring = amdgpu_job_ring(job);
+-	ib = &job->ibs[job->num_ibs++];
+ 
+ 	/* MM engine doesn't support user fences */
+ 	if (p->uf_bo && ring->funcs->no_user_fence)
+@@ -371,6 +390,12 @@ static int amdgpu_cs_p2_ib(struct amdgpu
+ 			return -EINVAL;
  	}
  
-+	if (!section_size)
-+		return 0;
++	if (chunk_ib->ib_bytes / 4 >
++	    amdgpu_cs_ib_packet_size_max_dw(ring->funcs->type))
++		return -EINVAL;
 +
- 	name_len = iter->size - iter->offset;
++	ib = &job->ibs[job->num_ibs++];
++
+ 	if (chunk_ib->flags & AMDGPU_IB_FLAG_PREAMBLE)
+ 		job->preamble_status |= AMDGPU_PREAMBLE_IB_PRESENT;
  
- 	section = drmm_kzalloc(&ptdev->base, sizeof(*section), GFP_KERNEL);
 
 
