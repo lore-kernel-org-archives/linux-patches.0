@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3CB46D091;
-	Thu, 20 Aug 2026 16:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A6C46D091;
+	Thu, 20 Aug 2026 16:39:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243961; cv=none; b=oWeXkYpKkfTq9Cm+bo/Y+wo/IRuTykQk90vRSv+wcFqWUrX7i2fLmXkEFystRy4R1FWoHmWWdgmQ62RF5DghMOQxCvGTegT2LJsAqJ6RVXN+jJ7cvgrUry5EJW56j/o7nM0KRpzRmZbULbzaA8XljbcpNlcPvUcBxu66jEEgXY8=
+	t=1787243964; cv=none; b=URUPrrIaDTjJ1nbCDKvvhbSodhvzsIWAJOERHDvIL+trr41NsPDd5Eis3FV4HxCxzVIUEygIzr1dRrGncZrWlBFBSDjOb1lVll/Fkw3m6Sh4AMvbzIVPPsVzrg/raZS49GPMlUCPlIcp5edGyuQ+wKJWZc1G36qt5fbea7u0RfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243961; c=relaxed/simple;
-	bh=goobbZKetu5HgI/RLLkiJb+/+OpPKE1QPR2noxqcOao=;
+	s=arc-20240116; t=1787243964; c=relaxed/simple;
+	bh=WI/LB9QJziQTF09pkUaEHn5N526HwdxObpuT2AKA2dw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OeKXVisx1gFmBIr+vPvwTw0tQcufC4AIiklsJb968Llx9nuqSZMcoK1kt3m9ZAvr3vz8MFFZk3ksBpsK117BW0aVdE/he+WS2EJpxGAZM6DbellvvGZyvOuJKxieo26lsO99gnUbimw55JVtpuo6lZi2pBfYr3W9UCU++a8B7QU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=keeFYAi/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jo5u6vUOi/zf0ZI8Y2pAK/kyIGYOKhBqMgAbORpsz0O9i65PBm5T5cqsOawBA3mAVs+ELVu6zltSKG+LfjQHDYeu4NGHXDIJWEfIf4V+9ErOOnPsRc5BxP7oty4hXwYqhHAs9loDGH/pEnIp1MS0zovONO6tFqWI015Bd0dmLUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=043CWMJB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="keeFYAi/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66CD1F000E9;
-	Thu, 20 Aug 2026 16:39:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="043CWMJB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7338A1F000E9;
+	Thu, 20 Aug 2026 16:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243960;
-	bh=Ut0i0qiiiiMp4gGSthKyDzVOQiaSmHmt5Omg5fUxdj0=;
+	s=korg; t=1787243963;
+	bh=k8H2p849ASZBrxjlcqvKm5+//i+ZhszP7lx4bj5ajRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=keeFYAi/vuqMK0rja64uOew5wpBb2O2JSwjbWBREr9xmBhrnpM3vj5SP3Fw+qF4jo
-	 ljBWwYxyI0VFqb85MO6xyRABhNHQZJvSxJ2qmZ2iM8frQgfHLbJCJDZOIPrgm6gXcr
-	 FWGiC3CRnQznFj8rPF4qGTX0EQAqMh6fITmHN1bg=
+	b=043CWMJBpFycI5aNpcX4qnDuD8CblZFvqukJ6wWJ00EckkTSOeDf81wvP00sNPwsp
+	 4+pd/pzSRjt3UFa2qpbj2IgCj4DHDRPmjT82wNcauEYpWAky3NlXSGGMVOwPOXb/zE
+	 je31qYZqeUgyJoc135m+FUK4VnIv7lpDV9HwKJq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <kohei@enjuk.jp>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Aaron Ma <aaron.ma@canonical.com>,
-	Alexander Nowlin <alexander.nowlin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 245/272] ice: wait for reset completion in ice_resume()
-Date: Thu, 20 Aug 2026 16:57:09 +0200
-Message-ID: <20260820145238.969713373@linuxfoundation.org>
+Subject: [PATCH 5.15 246/272] drm/amd/pm: fix torn gpu metrics reads
+Date: Thu, 20 Aug 2026 16:57:10 +0200
+Message-ID: <20260820145239.003247728@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -55,66 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Ma <aaron.ma@canonical.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit c2816d613f388814d27bc9fd6dbd931a88056e19 ]
+[ Upstream commit 048f4541b71fb19645fb79d6e62e6e4da23a4035 ]
 
-ice_resume() schedules an asynchronous PF reset and returns
-immediately. The reset runs later in ice_service_task(). If
-userspace tries to bring up the net device before the reset
-finishes, ice_open() fails with -EBUSY:
+amdgpu_dpm_get_gpu_metrics() returns a pointer to the shared metrics cache
+after dropping adev->pm.mutex. The sysfs path then copies from that pointer.
+Another reader can refresh the cache in place during the copy and return a
+snapshot containing data from two generations.
 
-  ice_resume()
-    ice_schedule_reset()          # sets ICE_PFR_REQ, returns
-  ...
-  ice_open()
-    ice_is_reset_in_progress()    # ICE_PFR_REQ still set, -EBUSY
-  ...
-  ice_service_task()
-    ice_do_reset()
-      ice_rebuild()               # clears ICE_PFR_REQ, too late
+Pass caller-provided storage through the DPM interface and copy the metrics
+while the mutex is held. This keeps the cache pointer private and makes each
+sysfs read observe one complete sample.
 
-Reproduced on E800 series NICs during suspend/resume with irdma
-enabled, where the aux device probe widens the race window.
-
-  ice 0000:81:00.0: can't open net device while reset is in progress
-
-Add a best-effort wait (10s timeout, matching ice_devlink_info_get())
-for the reset to complete before returning from ice_resume(). In
-practice the reset completes in ~300ms.
-
-Fixes: 769c500dcc1e ("ice: Add advanced power mgmt for WoL")
+Fixes: 25c933b1c4fc ("drm/amd/powerplay: add new sysfs interface for retrieving gpu metrics(V2)")
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 862333bb48693ecafcae25af0c9d9ec31015ac77)
 Cc: stable@vger.kernel.org
-Reviewed-by: Kohei Enju <kohei@enjuk.jp>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
-Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+[ applied the fix at the caller `amdgpu_get_gpu_metrics()` in amdgpu_pm.c since the `amdgpu_dpm_get_gpu_metrics()` wrapper is a macro on this tree ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/amd/pm/amdgpu_pm.c |   14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -4948,6 +4948,16 @@ static int __maybe_unused ice_resume(str
- 	/* Restart the service task */
- 	mod_timer(&pf->serv_tmr, round_jiffies(jiffies + pf->serv_tmr_period));
+--- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+@@ -1804,18 +1804,16 @@ static ssize_t amdgpu_get_gpu_metrics(st
+ 		return ret;
+ 	}
  
-+	/* Best-effort wait for the scheduled reset to finish so that the
-+	 * device is operational before returning. Without this, userspace
-+	 * (e.g. NetworkManager) may try to open the net device while the
-+	 * asynchronous reset is still in progress, hitting -EBUSY.
-+	 */
-+	ret = ice_wait_for_reset(pf, secs_to_jiffies(10));
-+	if (ret)
-+		dev_err(dev, "Wait for reset timed out (10s) during resume: %d\n",
-+			ret);
-+
- 	return 0;
- }
- #endif /* CONFIG_PM */
++	mutex_lock(&adev->pm.mutex);
+ 	if (adev->powerplay.pp_funcs->get_gpu_metrics)
+ 		size = amdgpu_dpm_get_gpu_metrics(adev, &gpu_metrics);
+ 
+-	if (size <= 0)
+-		goto out;
+-
+-	if (size >= PAGE_SIZE)
+-		size = PAGE_SIZE - 1;
+-
+-	memcpy(buf, gpu_metrics, size);
++	if (size > 0) {
++		size = min_t(ssize_t, size, PAGE_SIZE - 1);
++		memcpy(buf, gpu_metrics, size);
++	}
++	mutex_unlock(&adev->pm.mutex);
+ 
+-out:
+ 	pm_runtime_mark_last_busy(ddev->dev);
+ 	pm_runtime_put_autosuspend(ddev->dev);
+ 
 
 
