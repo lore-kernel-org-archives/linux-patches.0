@@ -1,40 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CD147A0DC;
-	Thu, 20 Aug 2026 16:49:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C19C46D544;
+	Thu, 20 Aug 2026 16:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244569; cv=none; b=hQ2vLdQ39fz+Z4trAxZiiTceMjR5wN0LJqm3KXgwlxS7n+N9nTxTxgrYntzwZGYcwxoi0BCqXfJ5R6FZVZg3TT/IsKHVp5RMXOLf3ksLcNsM5u2CJOltXNXxjrbugZvBEWUdeCUT/k0KY0MTdZpoS4ItzrnwrmJojl+7hgiaTfQ=
+	t=1787244572; cv=none; b=uI0D4isB9RFkLYe20T+jr1arJGt9Nf3duAYL8og8oEeTgJSjsTay8P3L4szLtZN9Yo34YvS6RtvE13uKGpcRVNVC2IAAaD0MHyJwhw5/4DPlbtiDfnXIYJScYirwUzuK3M35NWpoWKH/OPIF4tSxn1Vir92ndibJ1egc4jP5C+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244569; c=relaxed/simple;
-	bh=vIXmo0JGlsDwUvMMyxtr/DYWftWMZcozBsT+4fcVYt8=;
+	s=arc-20240116; t=1787244572; c=relaxed/simple;
+	bh=ItBZy0+ai6S472fDKUW0sjB4Kc+ieSfBzSESbVKWOfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eJpm00BQ1Ks6aSqHC8Q//hWtUyO+5N6KoOuZWIR+nrq5J0kc5wUlgVNReGVGVZ5MxcPyrxxDluVoS9+sI+Gldwbjb1kX2pr97kzxQiM/LVinKOVGdpVljIMaSz478QM0wTTN53DvON2urWNdXezr9QqyD59yDrDyw8tM+KWzjVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxlCgfFq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J/tnkIFz+EyJQWr8QrbyCzG/UuzOZoCdjoKN7zBS82rg7thsAjfNbxeb4Gq7R63zXwL28u4ZAaw57Z2Q5+3kRn+k3WPL+PcrBH3vQoRskubBAv/+1RyZ2u/hPDceWfqJDA+7+OWKPeRtQ5+FE9VY3mvHDstJaxkL1QF5YW1mkKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kI83UTf1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxlCgfFq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBAFE1F000E9;
-	Thu, 20 Aug 2026 16:49:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kI83UTf1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D451F000E9;
+	Thu, 20 Aug 2026 16:49:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244568;
-	bh=t+KDxHPHKW0AQh2R0wFzgsujoQFSQA1a/xvJQQk7+RA=;
+	s=korg; t=1787244571;
+	bh=OfG4EmjhzBBwrlqjNLqUiVrvbhHp+zdkIDoaV2zy+oQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gxlCgfFqVZthwF8u8InHnyNuTN4olqcFMYFX8CLLmJGoSFYosYzaabjgHR9wPpKas
-	 7GKKIqCE46Ld3WJdT1oEjdxfe2OVaFarbGQtQpDT8cWcrQItEpioFXKBWF1NdGsuvw
-	 6GUBao06iOHsNiJqQlrYQ7h5PFI3lHPZkXoBtSwU=
+	b=kI83UTf1/Jq0ZcdhZ0EF1FABrqlMsg18i1PwhMriI9CFvJsRKLJBHbicbySwYX6tC
+	 opKhK7iTw2EqSX60fUTKYXFxGgBudhf7xUihHGt9pt6+IkwEmmZp9t0XzuhzB3v/W1
+	 S/TJXxlzzlF6O7zOXdkFN2MDTu1l038JsHHWxLB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunjung Ko <hj351016@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	"Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	David Carlier <devnexen@gmail.com>,
+	Dev Jain <dev.jain@arm.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Toshi Kani <toshi.kani@hpe.com>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 213/235] net/sched: act_gact, act_police: range check the fallback control action
-Date: Thu, 20 Aug 2026 16:57:29 +0200
-Message-ID: <20260820145223.057004928@linuxfoundation.org>
+Subject: [PATCH 5.10 214/235] mm/ptdump: always stabilise against page table freeing using init_mm
+Date: Thu, 20 Aug 2026 16:57:30 +0200
+Message-ID: <20260820145223.095013065@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -53,127 +73,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunjung Ko <hj351016@gmail.com>
+From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
 
-[ Upstream commit 883b56ae58fe657d8497806c7059646e9ba6dbd0 ]
+[ Upstream commit 27c32e5538344b13c1505a08861e04620c125d47 ]
 
-tcf_action_check_ctrlact() range checks the primary control action:
+Previous commits have established the invariant that kernel page table
+freeing is performed while an mmap read lock on init_mm is held, which
+fixes races between ptdump and kernel page table freeing over init_mm.
 
-	if (!opcode)
-		ret = action > TC_ACT_VALUE_MAX ? -EINVAL : 0;
+However, x86 and arm64 can perform a ptdump over an mm other than init_mm
+via ptdump_walk_pgd() and since kernel memory ranges are shared across
+non-kernel mm's, this means that the race still exists for these cases.
 
-TC_ACT_VALUE_MAX is TC_ACT_TRAP, so kernel-internal verdicts above it
-cannot be set that way. But act_gact and act_police each carry a second,
-independent control action supplied by user space that never reaches that
-helper - TCA_GACT_PROB.paction and TCA_POLICE_RESULT. Both only reject
-TC_ACT_GOTO_CHAIN, so any other value is stored verbatim and returned
-verbatim from the action.
+Fix this by acquiring a nested mmap write lock for init_mm in
+ptdump_walk_pgd().
 
-In particular user space can store TC_ACT_CONSUMED, which is
-TC_ACT_VALUE_MAX + 1 and is deliberately not part of the UAPI value
-range. That verdict tells every caller the action took ownership of the
-skb, so nobody frees it: sch_handle_ingress(), sch_handle_egress() and
-tcf_qevent_handle() all deliberately skip the free for it. The result is
-one leaked sk_buff plus its data buffer per packet traversing the filter,
-unbounded, for all traffic on the chain including kernel-generated
-packets.
+This is safe as we take this after mmap write locking the mm, and nothing
+acquires the init_mm lock first before locking an arbitrary mm, so no
+deadlock is possible.
 
-Both are trivially deterministic. act_gact clamps tcfg_pval to >= 1, so
-with pval = 1 gact_determ() returns the fallback for every packet.
-act_police has no mandatory rate, so rate = 0 leaves tcfp_mtu = ~0 and
-tcf_police_mtu_check() always passes.
+Also update walk_page_range_debug() to assert that init_mm is write
+locked, add a comment explaining why and remove some redundant code, and
+eliminate the unnecessary and confusing invocation of
+walk_kernel_page_table_range().
 
-TC_ACT_CONSUMED was added by commit 720f22fed81b ("net: sched: refactor
-reinsert action"), after both goto-chain guards were written:
-commit 9469f375ab09 ("net/sched: act_gact: disallow 'goto chain' on
-fallback control action") and
-commit c08f5ed5d625 ("net/sched: act_police: disallow 'goto chain' on
-fallback control action"). Neither guard was widened when the new
-verdict appeared.
+We can safely remove the non-NULL check for walk.mm, as the mmap lock
+asserts would NULL pointer deref if it was (and of course no callers do
+this).
 
-Factor the existing range test out of tcf_action_check_ctrlact() as
-tcf_action_valid() and apply it to both fallbacks. The helper cannot call
-tcf_action_check_ctrlact() directly because that also allocates a
-goto_chain, which is exactly what these two sites must not do.
+The first point at which ptdump can race kernel page table freeing is
+commit b6bdb7517c3d ("mm/vmalloc: add interfaces to free unmapped page
+table"), so we target this in the Fixes tag.
 
-Reproduced on v7.2-rc6: kmemleak reports one leaked 232-byte
-skbuff_head_cache object plus its 704-byte data buffer per packet. With
-this patch both configurations are rejected with -EINVAL and kmemleak
-reports none.
-
-Fixes: 720f22fed81b ("net: sched: refactor reinsert action")
-Cc: stable@vger.kernel.org # v5.3+
-Signed-off-by: Hyunjung Ko <hj351016@gmail.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20260806101252.809593-1-hj351016@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Kept only the new helper lines and dropped the surrounding upstream-only context (CONFIG_INET/tcf_frag_xmit_count block) absent in 5.10. ]
+Link: https://lore.kernel.org/20260723-series-vmap-race-fix-v6-4-8cc77dcc0018@kernel.org
+Fixes: b6bdb7517c3d ("mm/vmalloc: add interfaces to free unmapped page table")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Kiryl Shutsemau <kas@kernel.org>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: "Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>
+Cc: "Borislav Petkov (AMD)" <bp@alien8.de>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: David Carlier <devnexen@gmail.com>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Toshi Kani <toshi.kani@hpe.com>
+Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ Adapted the hunk to `walk_page_range_novma()` since 5.15 lacks the `walk_page_range_debug()` rename and the `walk_kernel_page_table_range()` dispatch, keeping the existing `!walk.mm` guard. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/act_api.h  |   20 ++++++++++++++++++++
- net/sched/act_gact.c   |    5 +++++
- net/sched/act_police.c |    6 ++++++
- 3 files changed, 31 insertions(+)
+ mm/pagewalk.c |    8 ++++++++
+ mm/ptdump.c   |    7 +++++++
+ 2 files changed, 15 insertions(+)
 
---- a/include/net/act_api.h
-+++ b/include/net/act_api.h
-@@ -240,6 +240,26 @@ int tcf_action_check_ctrlact(int action,
- 			     struct netlink_ext_ack *newchain);
- struct tcf_chain *tcf_action_set_ctrlact(struct tc_action *a, int action,
- 					 struct tcf_chain *newchain);
-+
-+/* Range check for a control action supplied by user space.
-+ *
-+ * This is the same test tcf_action_check_ctrlact() applies to the primary
-+ * control action, factored out for the *fallback* control actions
-+ * (act_gact's TCA_GACT_PROB.paction and act_police's TCA_POLICE_RESULT),
-+ * which must not reach tcf_action_check_ctrlact() because they have no
-+ * goto_chain to allocate.  Without it, user space can store kernel-internal
-+ * verdicts such as TC_ACT_CONSUMED, which is TC_ACT_VALUE_MAX + 1 and is
-+ * deliberately not part of the UAPI value range.
-+ */
-+static inline bool tcf_action_valid(int action)
-+{
-+	int opcode = TC_ACT_EXT_OPCODE(action);
-+
-+	if (!opcode)
-+		return action <= TC_ACT_VALUE_MAX;
-+	return opcode <= TC_ACT_EXT_OPCODE_MAX || action == TC_ACT_UNSPEC;
-+}
-+
- #endif /* CONFIG_NET_CLS_ACT */
+--- a/mm/pagewalk.c
++++ b/mm/pagewalk.c
+@@ -457,6 +457,14 @@ int walk_page_range_novma(struct mm_stru
+ 		return -EINVAL;
  
- static inline void tcf_action_stats_update(struct tc_action *a, u64 bytes,
---- a/net/sched/act_gact.c
-+++ b/net/sched/act_gact.c
-@@ -89,6 +89,11 @@ static int tcf_gact_init(struct net *net
- 		p_parm = nla_data(tb[TCA_GACT_PROB]);
- 		if (p_parm->ptype >= MAX_RAND)
- 			return -EINVAL;
-+		if (!tcf_action_valid(p_parm->paction)) {
-+			NL_SET_ERR_MSG(extack,
-+				       "invalid fallback control action");
-+			return -EINVAL;
-+		}
- 		if (TC_ACT_EXT_CMP(p_parm->paction, TC_ACT_GOTO_CHAIN)) {
- 			NL_SET_ERR_MSG(extack,
- 				       "goto chain not allowed on fallback");
---- a/net/sched/act_police.c
-+++ b/net/sched/act_police.c
-@@ -134,6 +134,12 @@ static int tcf_police_init(struct net *n
+ 	mmap_assert_write_locked(walk.mm);
++	/*
++	 * x86, arm64 ptdump allow walks of efi mm's and x86 ptdump allows walks
++	 * of arbitrary mm's.
++	 *
++	 * However, they both must also hold the init_mm lock to account for
++	 * concurrent kernel page table freeing.
++	 */
++	mmap_assert_write_locked(&init_mm);
  
- 	if (tb[TCA_POLICE_RESULT]) {
- 		tcfp_result = nla_get_u32(tb[TCA_POLICE_RESULT]);
-+		if (!tcf_action_valid(tcfp_result)) {
-+			NL_SET_ERR_MSG(extack,
-+				       "invalid fallback control action");
-+			err = -EINVAL;
-+			goto failure;
-+		}
- 		if (TC_ACT_EXT_CMP(tcfp_result, TC_ACT_GOTO_CHAIN)) {
- 			NL_SET_ERR_MSG(extack,
- 				       "goto chain not allowed on fallback");
+ 	return walk_pgd_range(start, end, &walk);
+ }
+--- a/mm/ptdump.c
++++ b/mm/ptdump.c
+@@ -143,11 +143,18 @@ void ptdump_walk_pgd(struct ptdump_state
+ 
+ 	get_online_mems();
+ 	mmap_write_lock(mm);
++	/* To stabilise kernel page tables we must hold the init_mm lock too. */
++	if (mm != &init_mm)
++		mmap_write_lock_nested(&init_mm, SINGLE_DEPTH_NESTING);
++
+ 	while (range->start != range->end) {
+ 		walk_page_range_novma(mm, range->start, range->end,
+ 				      &ptdump_ops, pgd, st);
+ 		range++;
+ 	}
++
++	if (mm != &init_mm)
++		mmap_write_unlock(&init_mm);
+ 	mmap_write_unlock(mm);
+ 	put_online_mems();
+ 
 
 
