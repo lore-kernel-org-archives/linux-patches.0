@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E423D7D80;
-	Thu, 20 Aug 2026 16:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBA147CA8C;
+	Thu, 20 Aug 2026 16:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243370; cv=none; b=n6gBvkT2pUKJzg5QgVG1CgBH3D4WlaNlSOWpLp5UyNMGDdj10Bdzhkt/78gdbQjmNHsGIdGN7sFv+sM71N+QjemalXl6P1/jwNGbd7f6ZuphJvA8LjuBGinRZH9wqTqmnFnTVYXyM4nbgo18W9Dier+I7pUQHasbfRXArJs7INM=
+	t=1787243373; cv=none; b=tuyR+eHkYsHr436kdUac6UhQXWn5l3+AMMiJRzi+E0tk9p9WeTLjAG/fo8NQfO7XC26aPkGP+3Z0OUwEfsBlSOgcPIScdtSxvVah/KhK7kzITTbkBrm5nVtfhahhnxNqvV+WS2yYkJJKVU4x3U9doQvaweDu/SOw1AVEXJoNPXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243370; c=relaxed/simple;
-	bh=2/nZKcuvoS3V6nrmmY281r0C8Z9HxMNnmSjZFYLw9pY=;
+	s=arc-20240116; t=1787243373; c=relaxed/simple;
+	bh=3kNJdclpUk9pC2HNgB1eAJsiNcCmZvGTfwhje+Syq3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f3CZZpzYeudKlasapBtbzLQUxt63i5aqKLDaz7BeusUy3DTIpVHbnLk5J3hbZEjCk03gS8INsU2Zf/DzHikcbVi7qh74VA2NGcIFjL1wbdYnYENJbhGlKaAOdinyLBEjvvcY0bIbWePKkpp/oRFBnkREEi+Lh7CiL5tIwIa6bvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wMbY3idW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=boWW2fQdx6uON6xHVdZSrKcn8fLz9qSU44+Ngj/dZ2Zwet0rg2y3F4+YOL4R/EQgYSKCgfp7UfBvsct35o1TW9tABmp6y8zYSt7QHPlMOiv6u7jA9jqGUZWmn5S1zRV9oJl3kj32ybX3xkxhcPqOP+wi8c2V0/SA7OJHdIQlKIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h/JI4+hl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wMbY3idW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D011F000E9;
-	Thu, 20 Aug 2026 16:29:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h/JI4+hl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 687DE1F000E9;
+	Thu, 20 Aug 2026 16:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243369;
-	bh=eDGC1MVPBzfaLTNZ5nWzOtTm+xx/B1bcm378HJT+B3E=;
+	s=korg; t=1787243371;
+	bh=M6JVvzTV/VZsMFXq3kXHDm4VbrJ8rDMuOEPHacLsIYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wMbY3idWZImCpfisTN8FZ+4RyhrTTFEtRPhgsnNJ5bAHqXLvFqstqErnU1yZ6jjqO
-	 paySIKFZuVN4Juy1T64EGRpaDerfmE6yry8hp27MAY8ubz0/bOEiEcA7yvL471pv1Z
-	 xhCvKAJh9z1RJdi/YUrfMrIZN9Dx2qvPPAxmN6gw=
+	b=h/JI4+hlYPM4WNsvti5bVth0p+kYV99spZqH2M4158xWujVYtQUS7a7fzcPBlJSq8
+	 cCM8lq1zgVz+wZqa1y1jr0VzSkl4IlqkULURXUg1hBpnKId2AiCXkULElohDmWL/U1
+	 5NzrtDuxEZOb5x0yBXFiZU9dTgJN4wA5LN+wC7lE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 5.15 034/272] mmc: sdhci: unmap the bounce buffer before device release
-Date: Thu, 20 Aug 2026 16:53:38 +0200
-Message-ID: <20260820145232.254587937@linuxfoundation.org>
+	Sheng Zhao <sheng.zhao@bytedance.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 070/272] vduse: Use fixed 4KB bounce pages for non-4KB page size
+Date: Thu, 20 Aug 2026 16:54:14 +0200
+Message-ID: <20260820145233.384062170@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -52,62 +51,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Sheng Zhao <sheng.zhao@bytedance.com>
 
-commit 9e9f561269dff35e6f84ed21776ec37fd6360b03 upstream.
+[ Upstream commit 3fc3068e7247c94dec08e93fea422a1bb649bfe5 ]
 
-sdhci_allocate_bounce_buffer() allocates its buffer with devm_kmalloc()
-but maps it with dma_map_single(). The buffer is therefore released by
-devres without the streaming DMA mapping being unmapped.
+The allocation granularity of bounce pages is PAGE_SIZE. This may cause
+even small IO requests to occupy an entire bounce page exclusively. The
+kind of memory waste will be more significant when PAGE_SIZE is larger
+than 4KB (e.g. arm64 with 64KB pages).
 
-Register a managed action after dma_map_single() succeeds so the mapping
-is removed before devres releases the buffer. The action is registered
-only for buffers allocated and mapped by the SDHCI core, leaving buffers
-provided by host drivers under their existing ownership.
+So, optimize it by using fixed 4KB bounce maps and iova allocation
+granularity. A single IO request occupies at least a 4KB bounce page
+instead of the entire memory page of PAGE_SIZE.
 
-Fixes: bd9b902798ab ("mmc: sdhci: Implement an SDHCI-specific bounce buffer")
-Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Sheng Zhao <sheng.zhao@bytedance.com>
+Message-Id: <20250925113516.60305-1-sheng.zhao@bytedance.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Stable-dep-of: 9c1523803445 ("VDUSE: avoid leaking information to userspace")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/vdpa/vdpa_user/iova_domain.c |   64 ++++++++++++++++++++++++-----------
+ drivers/vdpa/vdpa_user/iova_domain.h |    5 ++
+ 2 files changed, 50 insertions(+), 19 deletions(-)
 
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -4109,6 +4109,14 @@ void __sdhci_read_caps(struct sdhci_host
- }
- EXPORT_SYMBOL_GPL(__sdhci_read_caps);
+--- a/drivers/vdpa/vdpa_user/iova_domain.c
++++ b/drivers/vdpa/vdpa_user/iova_domain.c
+@@ -103,19 +103,38 @@ void vduse_domain_clear_map(struct vduse
+ static int vduse_domain_map_bounce_page(struct vduse_iova_domain *domain,
+ 					 u64 iova, u64 size, u64 paddr)
+ {
+-	struct vduse_bounce_map *map;
++	struct vduse_bounce_map *map, *head_map;
++	struct page *tmp_page;
+ 	u64 last = iova + size - 1;
  
-+static void sdhci_unmap_bounce_buffer(void *data)
+ 	while (iova <= last) {
+-		map = &domain->bounce_maps[iova >> PAGE_SHIFT];
++		/*
++		 * When PAGE_SIZE is larger than 4KB, multiple adjacent bounce_maps will
++		 * point to the same memory page of PAGE_SIZE. Since bounce_maps originate
++		 * from IO requests, we may not be able to guarantee that the orig_phys
++		 * values of all IO requests within the same 64KB memory page are contiguous.
++		 * Therefore, we need to store them separately.
++		 *
++		 * Bounce pages are allocated on demand. As a result, it may occur that
++		 * multiple bounce pages corresponding to the same 64KB memory page attempt
++		 * to allocate memory simultaneously, so we use cmpxchg to handle this
++		 * concurrency.
++		 */
++		map = &domain->bounce_maps[iova >> BOUNCE_MAP_SHIFT];
+ 		if (!map->bounce_page) {
+-			map->bounce_page = alloc_page(GFP_ATOMIC);
+-			if (!map->bounce_page)
+-				return -ENOMEM;
++			head_map = &domain->bounce_maps[(iova & PAGE_MASK) >> BOUNCE_MAP_SHIFT];
++			if (!head_map->bounce_page) {
++				tmp_page = alloc_page(GFP_ATOMIC);
++				if (!tmp_page)
++					return -ENOMEM;
++				if (cmpxchg(&head_map->bounce_page, NULL, tmp_page))
++					__free_page(tmp_page);
++			}
++			map->bounce_page = head_map->bounce_page;
+ 		}
+ 		map->orig_phys = paddr;
+-		paddr += PAGE_SIZE;
+-		iova += PAGE_SIZE;
++		paddr += BOUNCE_MAP_SIZE;
++		iova += BOUNCE_MAP_SIZE;
+ 	}
+ 	return 0;
+ }
+@@ -127,12 +146,17 @@ static void vduse_domain_unmap_bounce_pa
+ 	u64 last = iova + size - 1;
+ 
+ 	while (iova <= last) {
+-		map = &domain->bounce_maps[iova >> PAGE_SHIFT];
++		map = &domain->bounce_maps[iova >> BOUNCE_MAP_SHIFT];
+ 		map->orig_phys = INVALID_PHYS_ADDR;
+-		iova += PAGE_SIZE;
++		iova += BOUNCE_MAP_SIZE;
+ 	}
+ }
+ 
++static unsigned int offset_in_bounce_page(dma_addr_t addr)
 +{
-+	struct sdhci_host *host = data;
-+
-+	dma_unmap_single(mmc_dev(host->mmc), host->bounce_addr,
-+			 host->bounce_buffer_size, DMA_BIDIRECTIONAL);
++	return (addr & ~BOUNCE_MAP_MASK);
 +}
 +
- static void sdhci_allocate_bounce_buffer(struct sdhci_host *host)
+ static void do_bounce(phys_addr_t orig, void *addr, size_t size,
+ 		      enum dma_data_direction dir)
  {
- 	struct mmc_host *mmc = host->mmc;
-@@ -4163,6 +4171,14 @@ static void sdhci_allocate_bounce_buffer
+@@ -163,7 +187,7 @@ static void vduse_domain_bounce(struct v
+ 				enum dma_data_direction dir)
+ {
+ 	struct vduse_bounce_map *map;
+-	unsigned int offset;
++	unsigned int offset, head_offset;
+ 	void *addr;
+ 	size_t sz;
+ 
+@@ -171,15 +195,16 @@ static void vduse_domain_bounce(struct v
+ 		return;
+ 
+ 	while (size) {
+-		map = &domain->bounce_maps[iova >> PAGE_SHIFT];
+-		offset = offset_in_page(iova);
+-		sz = min_t(size_t, PAGE_SIZE - offset, size);
++		map = &domain->bounce_maps[iova >> BOUNCE_MAP_SHIFT];
++		head_offset = offset_in_page(iova);
++		offset = offset_in_bounce_page(iova);
++		sz = min_t(size_t, BOUNCE_MAP_SIZE - offset, size);
+ 
+ 		if (WARN_ON(!map->bounce_page ||
+ 			    map->orig_phys == INVALID_PHYS_ADDR))
+ 			return;
+ 
+-		addr = page_address(map->bounce_page) + offset;
++		addr = page_address(map->bounce_page) + head_offset;
+ 		do_bounce(map->orig_phys + offset, addr, sz, dir);
+ 		size -= sz;
+ 		iova += sz;
+@@ -214,7 +239,7 @@ vduse_domain_get_bounce_page(struct vdus
+ 	struct page *page = NULL;
+ 
+ 	spin_lock(&domain->iotlb_lock);
+-	map = &domain->bounce_maps[iova >> PAGE_SHIFT];
++	map = &domain->bounce_maps[iova >> BOUNCE_MAP_SHIFT];
+ 	if (!map->bounce_page)
+ 		goto out;
+ 
+@@ -232,7 +257,7 @@ vduse_domain_free_bounce_pages(struct vd
+ 	struct vduse_bounce_map *map;
+ 	unsigned long pfn, bounce_pfns;
+ 
+-	bounce_pfns = domain->bounce_size >> PAGE_SHIFT;
++	bounce_pfns = domain->bounce_size >> BOUNCE_MAP_SHIFT;
+ 
+ 	for (pfn = 0; pfn < bounce_pfns; pfn++) {
+ 		map = &domain->bounce_maps[pfn];
+@@ -242,7 +267,8 @@ vduse_domain_free_bounce_pages(struct vd
+ 		if (!map->bounce_page)
+ 			continue;
+ 
+-		__free_page(map->bounce_page);
++		if (!((pfn << BOUNCE_MAP_SHIFT) & ~PAGE_MASK))
++			__free_page(map->bounce_page);
+ 		map->bounce_page = NULL;
  	}
+ }
+@@ -489,7 +515,7 @@ vduse_domain_create(unsigned long iova_l
+ 	struct vduse_bounce_map *map;
+ 	unsigned long pfn, bounce_pfns;
  
- 	host->bounce_buffer_size = bounce_size;
-+	ret = devm_add_action_or_reset(mmc_dev(mmc),
-+				       sdhci_unmap_bounce_buffer, host);
-+	if (ret) {
-+		devm_kfree(mmc_dev(mmc), host->bounce_buffer);
-+		host->bounce_buffer = NULL;
-+		host->bounce_buffer_size = 0;
-+		return;
-+	}
+-	bounce_pfns = PAGE_ALIGN(bounce_size) >> PAGE_SHIFT;
++	bounce_pfns = PAGE_ALIGN(bounce_size) >> BOUNCE_MAP_SHIFT;
+ 	if (iova_limit <= bounce_size)
+ 		return NULL;
  
- 	/* Lie about this since we're bouncing */
- 	mmc->max_segs = max_blocks;
+@@ -520,7 +546,7 @@ vduse_domain_create(unsigned long iova_l
+ 	domain->file = file;
+ 	spin_lock_init(&domain->iotlb_lock);
+ 	init_iova_domain(&domain->stream_iovad,
+-			PAGE_SIZE, IOVA_START_PFN);
++			BOUNCE_MAP_SIZE, IOVA_START_PFN);
+ 	init_iova_domain(&domain->consistent_iovad,
+ 			PAGE_SIZE, bounce_pfns);
+ 
+--- a/drivers/vdpa/vdpa_user/iova_domain.h
++++ b/drivers/vdpa/vdpa_user/iova_domain.h
+@@ -19,6 +19,11 @@
+ 
+ #define INVALID_PHYS_ADDR (~(phys_addr_t)0)
+ 
++#define BOUNCE_MAP_SHIFT	12
++#define BOUNCE_MAP_SIZE	(1 << BOUNCE_MAP_SHIFT)
++#define BOUNCE_MAP_MASK	(~(BOUNCE_MAP_SIZE - 1))
++#define BOUNCE_MAP_ALIGN(addr)	(((addr) + BOUNCE_MAP_SIZE - 1) & ~(BOUNCE_MAP_SIZE - 1))
++
+ struct vduse_bounce_map {
+ 	struct page *bounce_page;
+ 	u64 orig_phys;
 
 
