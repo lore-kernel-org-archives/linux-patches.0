@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8571215075;
-	Thu, 20 Aug 2026 17:52:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F42B484226;
+	Thu, 20 Aug 2026 17:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248368; cv=none; b=WbA1lZK4U+qIip2yk3jtOynwCqmIgAzBXCCK3LymnSoT4IVT7fJHmtPPi/wuEyNwFxhjrq9+O8SZs1bcJc+0S4QRVyN/Mptg2fUh3rGShpyqdMML4e04KWHAaU3BTYmkjvgg23Rv8l4BvV83UgsvqpLVyn6XhTpzDwJWRM4eTe4=
+	t=1787248370; cv=none; b=M5GKjpBDF/gf2rCytFJtvQScdMdL5Y5BzErgYhOUyl1vpLJc7S30lTV99SvpGeYHvGsputmjuloZt4nVdsxE/mtYP9Tua4mYIVXmtlU97BC8xszhy6XgjU6alfvDz+I1Icfm4R3PPFJ9K+L4dED7pz4SOLsoLvfdI4GyaX0lHHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248368; c=relaxed/simple;
-	bh=qYWAP1Bi2XaB8Sds6A+iEr9cN/tWOpaz/RHGS9qOd04=;
+	s=arc-20240116; t=1787248370; c=relaxed/simple;
+	bh=peDJPA01hoMlOT1havBNCAcTP0+wx2d7z0t0UoT9Ies=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CyeI4orRMwHosO/7Mci8UM5O6xqdyBIHiUG4meSZy5+Es+2VzevV9SIPpdqJFJ8AJ7EHDeLV/DjKBN8waRxVYbrQQU31PhaGpibxLIKC1tGxO48H7mGrCejMGzDmbQ5gErd9eNHpAJJSZTilno8Ao1jA0R6FDWUkP7KA2SJS+EI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5kGFXfr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HOBiu51I31eTd5hTSBHYhSOjnE99xynE/q6SvIf/+CbiWu7HQf8npjZQZmxLpc/bm8V/sQ0YM/ZdH7Q1znBTESnznuQ/VI1SdGLT2XaYG/VgQdTS8F16Rxbn9nEL5NJfQ0HG59GEHRTuZbkW3lsXs3xwT2XatnIBjp1TfzDdbSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=apRCRocc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5kGFXfr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F4B31F000E9;
-	Thu, 20 Aug 2026 17:52:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="apRCRocc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB10E1F000E9;
+	Thu, 20 Aug 2026 17:52:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248366;
-	bh=OBIt1gfH7LBVRDiH9so+TFdwDF6q1lWLUXr+m+dlxSc=;
+	s=korg; t=1787248369;
+	bh=BU+qtB86zEvY9PBtFZXRojvNHfqZDpFKBhtIMd+/uQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s5kGFXfrXeZq1qvRHeNLBsQXIZ4Dmmx3ZV/q/pS3DAUHhfJIHUOgVf0cye0yy51vm
-	 UhRdNH6OidLKC/dJNKb4LgLNOyffNwC4nD/dN6T0axdHS+4y1SXS+G6786nhwRMZTc
-	 /bdyC7yCtnhy5p5TFdLHK3lJf6m8XWrYfixxqnME=
+	b=apRCRoccfhxvJekbt+wx/h8li6r4oXiZGkjF3NEKMQH7aXKXlA4PoKuRBUGWZ3exH
+	 bYHjEfqysiIvNa+l9YSOMbjet/JvSXM7R1KnalS0Smqtn9NcAq9a1ALut+QvOhXpFz
+	 bVz6T3t7EhKyvw4EelDWf+MiuIZFQfU9Q07SBIuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Menachem Adin <menachem.adin@intel.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 204/303] mei: bus: access mei_device under device_lock on cleanup
-Date: Thu, 20 Aug 2026 16:55:40 +0200
-Message-ID: <20260820145259.520464184@linuxfoundation.org>
+Subject: [PATCH 6.1 205/303] mptcp: pm: avoid code duplication to lookup endp
+Date: Thu, 20 Aug 2026 16:55:41 +0200
+Message-ID: <20260820145259.550906149@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -52,71 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit f112ea910e554d58b4b39a4492b7d302f0f4204f ]
+[ Upstream commit 1d7fa6ceb91fddbe38cae3521d5d1075bce6a00e ]
 
-Fix couple of problems in mei_cl_bus_dev_release():
+The helper __lookup_addr() can be used in mptcp_pm_nl_get_local_id()
+and mptcp_pm_nl_is_backup() to simplify the code, and avoid code
+duplication.
 
-mei_cl_flush_queues() is running without lock.
-bus->file_list access after mei_dev_bus_put(bus) can become a
-use-after-free if this was the last reference to bus.
-
-Protect queues cleanup and WARN traversal by device lock there
-to avoid the concurrent access problems.
-Move WARN traversal before mei_dev_bus_put(bus).
-
-This file uses bus variable name for mei_device, adjust
-code of mei_cl_bus_dev_release() to use bus variable too.
-
-Cc: stable <stable@kernel.org>
-Fixes: 35e8a426b16a ("mei: bus: Check for still connected devices in mei_cl_bus_dev_release()")
-Reviewed-by: Menachem Adin <menachem.adin@intel.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://patch.msgid.link/20260705151259.3054795-1-alexander.usyskin@intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Co-developed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20241115-net-next-mptcp-pm-lockless-dump-v1-2-f4a1bcb4ca2c@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 9bc6d5e4ca9f ("mptcp: pm: userspace: fix use-after-free in get_local_id")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/bus.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ net/mptcp/pm_netlink.c |   20 ++++++--------------
+ 1 file changed, 6 insertions(+), 14 deletions(-)
 
---- a/drivers/misc/mei/bus.c
-+++ b/drivers/misc/mei/bus.c
-@@ -4,6 +4,7 @@
-  * Intel Management Engine Interface (Intel MEI) Linux driver
-  */
- 
-+#include <linux/cleanup.h>
- #include <linux/module.h>
- #include <linux/device.h>
- #include <linux/kernel.h>
-@@ -1113,18 +1114,19 @@ static void mei_dev_bus_put(struct mei_d
- static void mei_cl_bus_dev_release(struct device *dev)
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1266,17 +1266,13 @@ int mptcp_pm_nl_get_local_id(struct mptc
  {
- 	struct mei_cl_device *cldev = to_mei_cl_device(dev);
--	struct mei_device *mdev = cldev->cl->dev;
-+	struct mei_device *bus = cldev->bus;
- 	struct mei_cl *cl;
+ 	struct mptcp_pm_addr_entry *entry;
+ 	struct pm_nl_pernet *pernet;
+-	int ret = -1;
++	int ret;
  
- 	if (!cldev)
- 		return;
+ 	pernet = pm_nl_get_pernet_from_msk(msk);
  
--	mei_cl_flush_queues(cldev->cl, NULL);
--	mei_me_cl_put(cldev->me_cl);
--	mei_dev_bus_put(cldev->bus);
--
--	list_for_each_entry(cl, &mdev->file_list, link)
--		WARN_ON(cl == cldev->cl);
-+	scoped_guard(mutex, &bus->device_lock) {
-+		mei_cl_flush_queues(cldev->cl, NULL);
-+		mei_me_cl_put(cldev->me_cl);
-+		list_for_each_entry(cl, &bus->file_list, link)
-+			WARN_ON(cl == cldev->cl);
-+	}
-+	mei_dev_bus_put(bus);
+ 	rcu_read_lock();
+-	list_for_each_entry_rcu(entry, &pernet->local_addr_list, list) {
+-		if (mptcp_addresses_equal(&entry->addr, skc, entry->addr.port)) {
+-			ret = entry->addr.id;
+-			break;
+-		}
+-	}
++	entry = __lookup_addr(pernet, skc);
++	ret = entry ? entry->addr.id : -1;
+ 	rcu_read_unlock();
+ 	if (ret >= 0)
+ 		return ret;
+@@ -1303,15 +1299,11 @@ bool mptcp_pm_nl_is_backup(struct mptcp_
+ {
+ 	struct pm_nl_pernet *pernet = pm_nl_get_pernet_from_msk(msk);
+ 	struct mptcp_pm_addr_entry *entry;
+-	bool backup = false;
++	bool backup;
  
- 	kfree(cldev->cl);
- 	kfree(cldev);
+ 	rcu_read_lock();
+-	list_for_each_entry_rcu(entry, &pernet->local_addr_list, list) {
+-		if (mptcp_addresses_equal(&entry->addr, skc, entry->addr.port)) {
+-			backup = !!(entry->flags & MPTCP_PM_ADDR_FLAG_BACKUP);
+-			break;
+-		}
+-	}
++	entry = __lookup_addr(pernet, skc);
++	backup = entry && !!(entry->flags & MPTCP_PM_ADDR_FLAG_BACKUP);
+ 	rcu_read_unlock();
+ 
+ 	return backup;
 
 
