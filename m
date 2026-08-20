@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3A547ACC6;
-	Thu, 20 Aug 2026 16:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1588442B39;
+	Thu, 20 Aug 2026 16:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244109; cv=none; b=tJCweZ7Vs0CipLH4eVnWqyP5UL3JcwlA1SwkHvOFmsFlX49vHdXY5axdFxaFjMeBU4P7qIxe8vPfJzrXwgY5Dz+zNEPSuuGFByI7IeL/VmTleSSwFBAP5qDCNGft8UqM8h44lo7jlp7iNCQGpB7N5GqZJWxmI8995tOdEhJ041w=
+	t=1787244112; cv=none; b=Lhbd36Dx4wp7wFML59q3kQ0+zuRopZ6uXAS9OWxPEbvPaycNf4VM8Bw2iMuZ4ge8JpCZHQXQp+GEG5Jh97v4mUaZNNTL0DrDI9/VhWPx3jKHY2iJL8I3Sg1/oIUmU9afguzr7qYCC+k4RXtjkHRmdBS23fvjwH9rsl+SRXyxhkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244109; c=relaxed/simple;
-	bh=K5cSTPBRQjNLowI3YmIDk9Mla83OXqlQNjl3Ckhypqw=;
+	s=arc-20240116; t=1787244112; c=relaxed/simple;
+	bh=AFSEUw4b066TSdVUKcDJr++/nwIm16ZI5NFlBq4TQLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J6u5tt8l/MLtpNd8ZtipdM4qEl395A0mZ0jTpKvg3h/GHn9d/b6p8F+sNdh/tIaPRCe5TVb72EM7ZPfZ4IPuwqftvMn3DJo34vjybEJC2JYXYxMFsiFlc2oIJXHmYaYGQfgZHwnqaM5yUtivs/kOI5OAe5J1hvuHcFYcqBrZRJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+Vuu/Cp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aSpmQU2afbvfgQfmsZ9l+mBIFwcFAI5inqgNpOYlm83D4SszkUSSZuNEz6V+v0zp8U9YRpMPWf0dFbYwo8BctSj0S1A/Cgavtn++bXpFJ8V5Fb5GbgPMGMmZGOXe2f/h27NSyOmmAcounJMgu7ZiwXTLlTfEbWuJpljaayfb7Og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yHOsyfEr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+Vuu/Cp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F831F000E9;
-	Thu, 20 Aug 2026 16:41:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yHOsyfEr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487CA1F000E9;
+	Thu, 20 Aug 2026 16:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244107;
-	bh=uYqJdUxDfctL4vM8HtjaluhaHX+QHZKKvJliE+udeaM=;
+	s=korg; t=1787244110;
+	bh=BImtivunzzv+zGJs2muqZ7OUwE7w1UD09n5xOVdmk/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y+Vuu/CpREeGPlyg6lAF1E5pfyurU5NJG9lvNlYxmOKag1WV4Nt0NQfJA7G+xfA5w
-	 CK+bch+T/A9p06qlp1b+KkL1tU87Ob8RtiibB8VqEBMCPRzIe5eCqyVV2cFVgg4xSI
-	 S1fu2TD9rt1ISRtZGS3lSeUENcxjBCbWZvTwwtjE=
+	b=yHOsyfErzs4zQPZ/sH4PmppJJ8nd/BQMb/4+6+fACCHSq9Kh4ph/IliODAXYKrWmy
+	 kAxdEUoMiyOsPq8d6XNHCqex3uW+2WZeOTGDN2ZwiIMrzrbDU8oJf+L0JR3gZ3Ahgy
+	 S50TZxDjkBIA2OjuCsuOJABPr4pJ6bOdTDC3L+RY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neil@brown.name>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 052/235] VFS/audit: introduce kern_path_parent() for audit
-Date: Thu, 20 Aug 2026 16:54:48 +0200
-Message-ID: <20260820145218.015132544@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 015/235] Input: iforce - validate input packet lengths
+Date: Thu, 20 Aug 2026 16:54:11 +0200
+Message-ID: <20260820145216.903886874@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -51,188 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neil@brown.name>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 76a53de6f7ff0641570364234fb4489f4d4fc8e9 ]
+commit 5751c781d3c97ab6ce0e2a966156ed882152c415 upstream.
 
-audit_alloc_mark() and audit_get_nd() both need to perform a path
-lookup getting the parent dentry (which must exist) and the final
-target (following a LAST_NORM name) which sometimes doesn't need to
-exist.
+iforce_process_packet() reads fixed fields from joystick, wheel and
+status packets without first checking their lengths. In particular, the
+shared hats-and-buttons helper unconditionally reads data[6]. The status
+tail is a sequence of 16-bit effect addresses, but an incomplete final
+address is also consumed. A successful zero-length USB URB additionally
+reads the packet ID before the common parser is called.
 
-They don't need the parent to be locked, but use kern_path_locked() or
-kern_path_locked_negative() anyway.  This is somewhat misleading to the
-casual reader.
+Reject the zero-length USB transfer, require the seven-byte joystick and
+wheel prefixes and the two-byte status prefix, and consume only complete
+status-tail addresses.
 
-This patch introduces a more targeted function, kern_path_parent(),
-which returns not holding locks.  On success the "path" will
-be set to the parent, which must be found, and the return value is the
-dentry of the target, which might be negative.
-
-This will clear the way to rename kern_path_locked() which is
-otherwise only used to prepare for removing something.
-
-It also allows us to remove kern_path_locked_negative(), which is
-transformed into the new kern_path_parent().
-
-Signed-off-by: NeilBrown <neil@brown.name>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 81905b5acbe7 ("audit: fix recursive locking deadlock in audit_dupe_exe()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260720115018.75045-1-pengpeng@iscas.ac.cn
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namei.c              |   42 ++++++++++++++++++++++++++++++++++++++++++
- include/linux/namei.h   |    1 +
- kernel/audit.h          |    4 ++--
- kernel/audit_fsnotify.c |   11 ++++-------
- kernel/audit_watch.c    |    9 ++++++---
- 5 files changed, 55 insertions(+), 12 deletions(-)
+ drivers/input/joystick/iforce/iforce-packets.c |   11 ++++++++++-
+ drivers/input/joystick/iforce/iforce-usb.c     |    3 +++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
---- a/fs/namei.c
-+++ b/fs/namei.c
-@@ -2439,6 +2439,48 @@ static struct filename *filename_parenta
- 	return name;
- }
+--- a/drivers/input/joystick/iforce/iforce-packets.c
++++ b/drivers/input/joystick/iforce/iforce-packets.c
+@@ -161,6 +161,9 @@ void iforce_process_packet(struct iforce
+ 	switch (packet_id) {
  
-+/**
-+ * kern_path_parent: lookup path returning parent and target
-+ * @name: path name
-+ * @path: path to store parent in
-+ *
-+ * The path @name should end with a normal component, not "." or ".." or "/".
-+ * A lookup is performed and if successful the parent information
-+ * is store in @parent and the dentry is returned.
-+ *
-+ * The dentry maybe negative, the parent will be positive.
-+ *
-+ * Returns:  dentry or error.
-+ */
-+struct dentry *kern_path_parent(const char *name, struct path *path)
-+{
-+	struct filename *filename;
-+	struct path parent_path;
-+	struct dentry *d;
-+	struct qstr last;
-+	int type;
+ 	case 0x01:	/* joystick position data */
++		if (len < 7)
++			break;
 +
-+	filename = filename_parentat(AT_FDCWD, getname_kernel(name), 0,
-+				     &parent_path, &last, &type);
-+	if (IS_ERR(filename))
-+		return ERR_CAST(filename);
-+	if (unlikely(type != LAST_NORM)) {
-+		path_put(&parent_path);
-+		d = ERR_PTR(-EINVAL);
-+		goto out;
-+	}
+ 		input_report_abs(dev, ABS_X,
+ 				 (__s16) get_unaligned_le16(data));
+ 		input_report_abs(dev, ABS_Y,
+@@ -176,6 +179,9 @@ void iforce_process_packet(struct iforce
+ 		break;
+ 
+ 	case 0x03:	/* wheel position data */
++		if (len < 7)
++			break;
 +
-+	d = lookup_one_len_unlocked(last.name, parent_path.dentry, last.len);
-+	if (IS_ERR(d)) {
-+		path_put(&parent_path);
-+		goto out;
-+	}
-+	*path = parent_path;
-+out:
-+	putname(filename);
-+	return d;
-+}
+ 		input_report_abs(dev, ABS_WHEEL,
+ 				 (__s16) get_unaligned_le16(data));
+ 		input_report_abs(dev, ABS_GAS,   255 - data[2]);
+@@ -187,6 +193,9 @@ void iforce_process_packet(struct iforce
+ 		break;
+ 
+ 	case 0x02:	/* status report */
++		if (len < 2)
++			break;
 +
- /* does lookup, returns the object with parent locked */
- struct dentry *kern_path_locked(const char *name, struct path *path)
- {
---- a/include/linux/namei.h
-+++ b/include/linux/namei.h
-@@ -61,6 +61,7 @@ static inline int user_path_at(int dfd,
- }
+ 		input_report_key(dev, BTN_DEAD, data[0] & 0x02);
+ 		input_sync(dev);
  
- extern int kern_path(const char *, unsigned, struct path *);
-+struct dentry *kern_path_parent(const char *name, struct path *parent);
+@@ -206,7 +215,7 @@ void iforce_process_packet(struct iforce
+ 			}
+ 		}
  
- extern struct dentry *kern_path_create(int, const char *, struct path *, unsigned int);
- extern struct dentry *user_path_create(int, const char __user *, struct path *, unsigned int);
---- a/kernel/audit.h
-+++ b/kernel/audit.h
-@@ -271,8 +271,8 @@ extern struct audit_fsnotify_mark *audit
- extern char *audit_mark_path(struct audit_fsnotify_mark *mark);
- extern void audit_remove_mark(struct audit_fsnotify_mark *audit_mark);
- extern void audit_remove_mark_rule(struct audit_krule *krule);
--extern int audit_mark_compare(struct audit_fsnotify_mark *mark,
--			      unsigned long ino, dev_t dev);
-+extern int audit_mark_compare(struct audit_fsnotify_mark *mark, u64 ino,
-+			      dev_t dev);
- extern int audit_dupe_exe(struct audit_krule *new, struct audit_krule *old);
- extern int audit_exe_compare(struct task_struct *tsk,
- 			     struct audit_fsnotify_mark *mark);
---- a/kernel/audit_fsnotify.c
-+++ b/kernel/audit_fsnotify.c
-@@ -57,7 +57,7 @@ char *audit_mark_path(struct audit_fsnot
- 	return mark->path;
- }
+-		for (j = 3; j < len; j += 2)
++		for (j = 3; j + sizeof(u16) <= len; j += sizeof(u16))
+ 			mark_core_as_ready(iforce, get_unaligned_le16(data + j));
  
--int audit_mark_compare(struct audit_fsnotify_mark *mark, unsigned long ino, dev_t dev)
-+int audit_mark_compare(struct audit_fsnotify_mark *mark, u64 ino, dev_t dev)
- {
- 	if (mark->ino == AUDIT_INO_UNSET)
- 		return 0;
-@@ -76,17 +76,14 @@ struct audit_fsnotify_mark *audit_alloc_
- 	struct audit_fsnotify_mark *audit_mark;
- 	struct path path;
- 	struct dentry *dentry;
--	struct inode *inode;
- 	int ret;
- 
- 	if (pathname[0] != '/' || pathname[len-1] == '/')
- 		return ERR_PTR(-EINVAL);
- 
--	dentry = kern_path_locked(pathname, &path);
-+	dentry = kern_path_parent(pathname, &path);
- 	if (IS_ERR(dentry))
--		return (void *)dentry; /* returning an error */
--	inode = path.dentry->d_inode;
--	inode_unlock(inode);
-+		return ERR_CAST(dentry); /* returning an error */
- 
- 	audit_mark = kzalloc(sizeof(*audit_mark), GFP_KERNEL);
- 	if (unlikely(!audit_mark)) {
-@@ -100,7 +97,7 @@ struct audit_fsnotify_mark *audit_alloc_
- 	audit_update_mark(audit_mark, dentry->d_inode);
- 	audit_mark->rule = krule;
- 
--	ret = fsnotify_add_inode_mark(&audit_mark->mark, inode, 0);
-+	ret = fsnotify_add_inode_mark(&audit_mark->mark, path.dentry->d_inode, 0);
- 	if (ret < 0) {
- 		audit_mark->path = NULL;
- 		fsnotify_put_mark(&audit_mark->mark);
---- a/kernel/audit_watch.c
-+++ b/kernel/audit_watch.c
-@@ -243,7 +243,7 @@ static void audit_watch_log_rule_change(
- /* Update inode info in audit rules based on filesystem event. */
- static void audit_update_watch(struct audit_parent *parent,
- 			       const struct qstr *dname, dev_t dev,
--			       unsigned long ino, unsigned invalidating)
-+			       u64 ino, unsigned int invalidating)
- {
- 	struct audit_watch *owatch, *nwatch, *nextw;
- 	struct audit_krule *r, *nextr;
-@@ -346,15 +346,18 @@ static void audit_remove_parent_watches(
- /* Get path information necessary for adding watches. */
- static int audit_get_nd(struct audit_watch *watch, struct path *parent)
- {
--	struct dentry *d = kern_path_locked(watch->path, parent);
-+	struct dentry *d;
-+
-+	d = kern_path_parent(watch->path, parent);
- 	if (IS_ERR(d))
- 		return PTR_ERR(d);
-+
- 	if (d_is_positive(d)) {
- 		/* update watch filter fields */
- 		watch->dev = d->d_sb->s_dev;
- 		watch->ino = d_backing_inode(d)->i_ino;
+ 		break;
+--- a/drivers/input/joystick/iforce/iforce-usb.c
++++ b/drivers/input/joystick/iforce/iforce-usb.c
+@@ -159,6 +159,9 @@ static void iforce_usb_irq(struct urb *u
+ 		goto exit;
  	}
--	inode_unlock(d_backing_inode(parent->dentry));
+ 
++	if (!urb->actual_length)
++		goto exit;
 +
- 	dput(d);
- 	return 0;
- }
+ 	iforce_process_packet(iforce, iforce_usb->data_in[0],
+ 			      iforce_usb->data_in + 1, urb->actual_length - 1);
+ 
 
 
