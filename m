@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A742931C0;
-	Thu, 20 Aug 2026 17:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8571215075;
+	Thu, 20 Aug 2026 17:52:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248365; cv=none; b=BqfgauDgVWP6jJNo2dNRKXqojObo/PnK36HUE92Ygfk52siD0P/nvWP5hBOTwCSPGJIVOVnwL6R7WUrnota01X4bht9cr/ymxHVJGUkv5hIq909JX9FlJUJ2O8AB49wlTv7KZfg8Dc8W2ehh1ta0Q6r+JuwPkWWhFk5wElfAhZM=
+	t=1787248368; cv=none; b=WbA1lZK4U+qIip2yk3jtOynwCqmIgAzBXCCK3LymnSoT4IVT7fJHmtPPi/wuEyNwFxhjrq9+O8SZs1bcJc+0S4QRVyN/Mptg2fUh3rGShpyqdMML4e04KWHAaU3BTYmkjvgg23Rv8l4BvV83UgsvqpLVyn6XhTpzDwJWRM4eTe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248365; c=relaxed/simple;
-	bh=ffUIlV65xZYYw7JisE8xAr+vF8hLNleVIHfqFxZwjF8=;
+	s=arc-20240116; t=1787248368; c=relaxed/simple;
+	bh=qYWAP1Bi2XaB8Sds6A+iEr9cN/tWOpaz/RHGS9qOd04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iMs0k+ajHsGk0g/a9hFM9tAh1dX8+HLSpiv/JQUggvy2VR/LSMmzmYebi8mk1m3jRNP54bjc5gDdMdvD5qeQc32ahVFXXBJSnVUq8whXH1u1+DORUljOKjxwk/brf+TlcriFA+DiWzdC3aeNZX7iFC01I43Aympw4Yo5UojIsqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0Al3eIG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CyeI4orRMwHosO/7Mci8UM5O6xqdyBIHiUG4meSZy5+Es+2VzevV9SIPpdqJFJ8AJ7EHDeLV/DjKBN8waRxVYbrQQU31PhaGpibxLIKC1tGxO48H7mGrCejMGzDmbQ5gErd9eNHpAJJSZTilno8Ao1jA0R6FDWUkP7KA2SJS+EI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5kGFXfr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0Al3eIG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31B971F000E9;
-	Thu, 20 Aug 2026 17:52:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5kGFXfr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F4B31F000E9;
+	Thu, 20 Aug 2026 17:52:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248363;
-	bh=y9AiQkh+QT7HT6BVK9rqaELOQZMKk4GnCNWkgutnlYA=;
+	s=korg; t=1787248366;
+	bh=OBIt1gfH7LBVRDiH9so+TFdwDF6q1lWLUXr+m+dlxSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L0Al3eIG+fabi1XmqM8BeAaG04B2FOSnP4r/uG9WCc6iq4z1uKisHWgbOyoQyJiHB
-	 8IVZPnLLyHfK9JLd4BBk705Ad8Mmniy2pKctT5TE5knHhO+avblj8ocDSFS1b87pJ6
-	 YdAd1Oys92c5sdSRkKOKOyXO/U/Fq2mQctv7RjEw=
+	b=s5kGFXfrXeZq1qvRHeNLBsQXIZ4Dmmx3ZV/q/pS3DAUHhfJIHUOgVf0cye0yy51vm
+	 UhRdNH6OidLKC/dJNKb4LgLNOyffNwC4nD/dN6T0axdHS+4y1SXS+G6786nhwRMZTc
+	 /bdyC7yCtnhy5p5TFdLHK3lJf6m8XWrYfixxqnME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Kaplan <alexander.kaplan@sms-medipool.de>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	stable <stable@kernel.org>,
+	Menachem Adin <menachem.adin@intel.com>,
+	Alexander Usyskin <alexander.usyskin@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 203/303] ALSA: hda: codecs: hdmi: disable keep-alive before audio format change
-Date: Thu, 20 Aug 2026 16:55:39 +0200
-Message-ID: <20260820145259.492972795@linuxfoundation.org>
+Subject: [PATCH 6.1 204/303] mei: bus: access mei_device under device_lock on cleanup
+Date: Thu, 20 Aug 2026 16:55:40 +0200
+Message-ID: <20260820145259.520464184@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -52,127 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+From: Alexander Usyskin <alexander.usyskin@intel.com>
 
-[ Upstream commit a3d6d3cedfe87bbd5a677d52b22ac20d28e59cf8 ]
+[ Upstream commit f112ea910e554d58b4b39a4492b7d302f0f4204f ]
 
-When a keep-alive (KAE) silent stream is active on an Intel HDMI/DP
-codec, opening a real PCM stream reprograms the converter format and the
-audio infoframe in snd_hda_hdmi_generic_pcm_prepare(). Part of that
-reprogramming - the converter channel count and the channel mapping in
-snd_hda_hdmi_setup_audio_infoframe() - is not safe to do while a
-keep-alive stream is active. This is most visible when switching to a
-multichannel PCM configuration, where the active channel count actually
-changes. In that case the newly opened PCM stream plays no sound.
+Fix couple of problems in mei_cl_bus_dev_release():
 
-Add an optional hdmi_ops .prepare hook, called at the start of the
-PCM prepare sequence (before the format and infoframe are touched), and
-implement it for HSW+ to release keep-alive. Keep-alive is then
-re-enabled as before once the new stream has been set up, in the
-setup_stream op.
+mei_cl_flush_queues() is running without lock.
+bus->file_list access after mei_dev_bus_put(bus) can become a
+use-after-free if this was the last reference to bus.
 
-Fixes: 15175a4f2bbb ("ALSA: hda/hdmi: add keep-alive support for ADL-P and DG2")
-Reported-by: Alexander Kaplan <alexander.kaplan@sms-medipool.de>
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/8412
-Tested-by: Alexander Kaplan <alexander.kaplan@sms-medipool.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Link: https://patch.msgid.link/20260715180610.1371243-1-kai.vehmanen@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ adapted three hunks from the post-6.12 split files (hdmi.c/hdmi_local.h/intelhdmi.c) back into the monolithic sound/pci/hda/patch_hdmi.c, with the prepare hook un-indented one level since 6.12 uses plain mutex_lock() instead of scoped_guard() ]
+Protect queues cleanup and WARN traversal by device lock there
+to avoid the concurrent access problems.
+Move WARN traversal before mei_dev_bus_put(bus).
+
+This file uses bus variable name for mei_device, adjust
+code of mei_cl_bus_dev_release() to use bus variable too.
+
+Cc: stable <stable@kernel.org>
+Fixes: 35e8a426b16a ("mei: bus: Check for still connected devices in mei_cl_bus_dev_release()")
+Reviewed-by: Menachem Adin <menachem.adin@intel.com>
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Link: https://patch.msgid.link/20260705151259.3054795-1-alexander.usyskin@intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_hdmi.c |   48 +++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 42 insertions(+), 6 deletions(-)
+ drivers/misc/mei/bus.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -111,6 +111,15 @@ struct hdmi_ops {
- 			    hda_nid_t pin_nid, int dev_id, u32 stream_tag,
- 			    int format);
+--- a/drivers/misc/mei/bus.c
++++ b/drivers/misc/mei/bus.c
+@@ -4,6 +4,7 @@
+  * Intel Management Engine Interface (Intel MEI) Linux driver
+  */
  
-+	/*
-+	 * Optional hook invoked at the beginning of the PCM prepare
-+	 * sequence, before the audio infoframe and stream format are
-+	 * (re)programmed. Used to disable keep-alive / silent stream so
-+	 * that the format change is not done while keep-alive is active.
-+	 */
-+	void (*prepare)(struct hda_codec *codec,
-+			struct hdmi_spec_per_pin *per_pin);
-+
- 	void (*pin_cvt_fixup)(struct hda_codec *codec,
- 			      struct hdmi_spec_per_pin *per_pin,
- 			      hda_nid_t cvt_nid);
-@@ -2138,6 +2147,9 @@ static int generic_hdmi_playback_pcm_pre
- 	per_pin->channels = substream->runtime->channels;
- 	per_pin->setup = true;
++#include <linux/cleanup.h>
+ #include <linux/module.h>
+ #include <linux/device.h>
+ #include <linux/kernel.h>
+@@ -1113,18 +1114,19 @@ static void mei_dev_bus_put(struct mei_d
+ static void mei_cl_bus_dev_release(struct device *dev)
+ {
+ 	struct mei_cl_device *cldev = to_mei_cl_device(dev);
+-	struct mei_device *mdev = cldev->cl->dev;
++	struct mei_device *bus = cldev->bus;
+ 	struct mei_cl *cl;
  
-+	if (spec->ops.prepare)
-+		spec->ops.prepare(codec, per_pin);
-+
- 	if (get_wcaps(codec, cvt_nid) & AC_WCAP_STRIPE) {
- 		stripe = snd_hdac_get_stream_stripe_ctl(&codec->bus->core,
- 							substream);
-@@ -2903,6 +2915,28 @@ static void register_i915_notifier(struc
- 	codec->relaxed_resume = 1;
- }
+ 	if (!cldev)
+ 		return;
  
-+/*
-+ * prepare ops override for HSW+
-+ *
-+ * Disable keep-alive before the converter format and audio infoframe are
-+ * reprogrammed by the PCM prepare sequence. Changing the audio format (e.g.
-+ * the channel count when switching to multichannel PCM) while a keep-alive
-+ * stream is active is not safe, so release keep-alive here, early in the
-+ * sequence. It is re-enabled once the new stream has been set up, in
-+ * i915_hsw_setup_stream().
-+ */
-+static void i915_hsw_prepare(struct hda_codec *codec,
-+			     struct hdmi_spec_per_pin *per_pin)
-+{
-+	struct hdmi_spec *spec = codec->spec;
-+
-+	if (spec->silent_stream_type == SILENT_STREAM_KAE && per_pin->silent_stream) {
-+		silent_stream_set_kae(codec, per_pin, false);
-+		/* wait for pending transfers in codec to clear */
-+		usleep_range(100, 200);
-+	}
-+}
-+
- /* setup_stream ops override for HSW+ */
- static int i915_hsw_setup_stream(struct hda_codec *codec, hda_nid_t cvt_nid,
- 				 hda_nid_t pin_nid, int dev_id, u32 stream_tag,
-@@ -2920,15 +2954,16 @@ static int i915_hsw_setup_stream(struct
- 
- 	haswell_verify_D0(codec, cvt_nid, pin_nid);
- 
--	if (spec->silent_stream_type == SILENT_STREAM_KAE && per_pin && per_pin->silent_stream) {
--		silent_stream_set_kae(codec, per_pin, false);
--		/* wait for pending transfers in codec to clear */
--		usleep_range(100, 200);
--	}
+-	mei_cl_flush_queues(cldev->cl, NULL);
+-	mei_me_cl_put(cldev->me_cl);
+-	mei_dev_bus_put(cldev->bus);
 -
- 	res = hdmi_setup_stream(codec, cvt_nid, pin_nid, dev_id,
- 				stream_tag, format);
+-	list_for_each_entry(cl, &mdev->file_list, link)
+-		WARN_ON(cl == cldev->cl);
++	scoped_guard(mutex, &bus->device_lock) {
++		mei_cl_flush_queues(cldev->cl, NULL);
++		mei_me_cl_put(cldev->me_cl);
++		list_for_each_entry(cl, &bus->file_list, link)
++			WARN_ON(cl == cldev->cl);
++	}
++	mei_dev_bus_put(bus);
  
-+	/*
-+	 * Keep-alive was disabled in i915_hsw_prepare(), re-enable it now.
-+	 * The pin lookup above resolves to the same per_pin that prepare
-+	 * used (pin_nid comes from that per_pin), so this stays balanced; a
-+	 * NULL per_pin only occurs on a lookup failure that also implies no
-+	 * active keep-alive stream to restore.
-+	 */
- 	if (spec->silent_stream_type == SILENT_STREAM_KAE && per_pin && per_pin->silent_stream) {
- 		usleep_range(100, 200);
- 		silent_stream_set_kae(codec, per_pin, true);
-@@ -3104,6 +3139,7 @@ static int intel_hsw_common_init(struct
- 	codec->depop_delay = 0;
- 	codec->auto_runtime_pm = 1;
- 
-+	spec->ops.prepare = i915_hsw_prepare;
- 	spec->ops.setup_stream = i915_hsw_setup_stream;
- 	spec->ops.pin_cvt_fixup = i915_pin_cvt_fixup;
- 
+ 	kfree(cldev->cl);
+ 	kfree(cldev);
 
 
