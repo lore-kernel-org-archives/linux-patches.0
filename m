@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E55B46D0BD;
-	Thu, 20 Aug 2026 16:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E214272E53;
+	Thu, 20 Aug 2026 16:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243614; cv=none; b=QTCLAqZeuNxLf0xRaw8Ulv1GvuHILAYEDfWEEuzhBEbHPwgBNTtCrD/zUeZvy8XUpRUWJAD8VANiJNH6q1207wlePfi7ZGQw2HbV6tOb8SUMcsJGmcdZ5adMFVHnp+aCVsQ41AgMG1Y7doQ4/bSffKGb7LcznvOV8zdKiHe99NQ=
+	t=1787243617; cv=none; b=ZvHuTBBBviWJijVljx82p6D4Ret0QqXfvN9DdI5Cninc91Qqt/CX9R7MD/oNhQfUoZfyyM+Leb9FZb4Mx/+49iE9OsaTfXcGh3KjAChZhLnnuAG99xwQo3RJ5siDedjj08hKWTIkeOdrzkbaDODbXWyZEoNk+MZNiV0DXCiwfXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243614; c=relaxed/simple;
-	bh=gfpZIymO6AyBsuscML4gDKDEfHVjP4vcaVXBzF0dMUk=;
+	s=arc-20240116; t=1787243617; c=relaxed/simple;
+	bh=3nB+Cyf3NcI8mhJvGCpy2Fi9BJnnMWTl8r/dElBLv0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=slFXBqU+8fFe4cqME8P2Fm+z7VR6dib32ajqy5XdGirm1ORmetbH2CgiUK904+cRAqWbach+rKx4oBiEjLaqG4b/rx5mv4AEk8DsgCGriQ0EcJllJ00YnqOZdUjmMMNGAfJ1OgDPzJl7YPtHyqnXa6ThybwZlfnHWioA7Q4poac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HMjBva1R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ACufLrQ1/mjJJfh0YA+U4w9no7UJxp/wKTNHyC5UaW3NpBEBeK3yc9K4PsNuN7mrdDmkChoXL3t4ywPIVAp6aZw0BHZ9UimNbJO9BqTmLi7fYFv2O7MNOV/WE7m5mpmDJVqE09T8piltBINkFhj00hiy8AHohNXRNe9wNfNF2MQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N2uoptKn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HMjBva1R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E5E1F000E9;
-	Thu, 20 Aug 2026 16:33:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2uoptKn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703871F000E9;
+	Thu, 20 Aug 2026 16:33:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243613;
-	bh=Z3uyNDlKeyFeVSuqR2OLXknkMNlRadkneYz1R/092E8=;
+	s=korg; t=1787243616;
+	bh=fu0CiuZ5jQt+9EaiTUI7wo2M9Coh2sRrJud5TQ9juy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HMjBva1RZGaA6YxRyHQhdDmp/RpKusr9+1gvzRDA76QZLdGJ7Wkm9n14Dp4Nrro7b
-	 Pa6+vxhMl2gHTFKyEtyouW6x/4xUjjzt7G1pmSxFo4b6N7Fur8ZolcHPlWmZmXbkL0
-	 6YzJV3sdXhFNlMPkXv3Fd/K5ANwf+m4njVNmyH8s=
+	b=N2uoptKnUWn5B9ZR3Aubf++nGsAO0DQnKcayEpl4CyOofpggu6y4efy705F7Ygcj2
+	 K5VMoqqJcAVLgRFJH5Oj9iWsRnSpcFJ/AZzXJT961o3cgwlK1g++fmzfyok/X600h4
+	 Nv2biET4KkejVEOLwlIKOlGXgW2/L2SZMpri2CXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 118/272] taskstats: fill_stats_for_tgid: use for_each_thread()
-Date: Thu, 20 Aug 2026 16:55:02 +0200
-Message-ID: <20260820145234.805947368@linuxfoundation.org>
+Subject: [PATCH 5.15 154/272] net/sched: sch_taprio: Replace direct dequeue call with peek and qdisc_dequeue_peeked
+Date: Thu, 20 Aug 2026 16:55:38 +0200
+Message-ID: <20260820145235.931416710@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -52,51 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit ed5378a387fd7c382497f2abcf4605e030b64044 ]
+[ Upstream commit e056e1dfcddca877dd46d704e8ec9860cfc9ec44 ]
 
-do/while_each_thread should be avoided when possible.
+When taprio's software path peeks a non-work-conserving child qdisc, the
+child stashes the peeked skb in its gso_skb; taprio_dequeue_from_txq()
+then takes the packet with a direct child ->dequeue() call, which ignores
+that stash, orphans the peeked skb and desyncs the child's qlen/backlog.
+With a qfq child this re-enters the child on an emptied list and
+dereferences NULL, panicking the kernel from softirq on ordinary egress.
 
-Plus I _think_ this change allows to avoid lock_task_sighand() but I am
-not sure, I forgot everything about taskstats.  In any case, this code
-does not look right in that the same thread can be accounted twice:
-taskstats_exit() can account the exiting thread in signal->stats and drop
-->siglock but this thread is still on the thread-group list, so
-lock_task_sighand() can't help.
+Take the packet through qdisc_dequeue_peeked(), as sch_red and sch_sfb
+now do. The helper returns the child's stashed skb first and is a no-op
+when there is none, so a work-conserving child is unaffected and the
+gated path now consumes the skb whose length was charged to the budget.
 
-Link: https://lkml.kernel.org/r/20230909214951.GA24274@redhat.com
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: b3e4fbb04220 ("taskstats: retain dead thread stats in TGID queries")
+Fixes: 5a781ccbd19e ("tc: Add support for configuring the taprio scheduler")
+Cc: stable@vger.kernel.org
+Cc: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260625-b4-disp-31bcb279-v1-1-85c40b83c529@proton.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/taskstats.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/sched/sch_taprio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/taskstats.c
-+++ b/kernel/taskstats.c
-@@ -211,9 +211,8 @@ static int fill_stats_for_tgid(pid_t tgi
- 	else
- 		memset(stats, 0, sizeof(*stats));
+--- a/net/sched/sch_taprio.c
++++ b/net/sched/sch_taprio.c
+@@ -586,7 +586,7 @@ static struct sk_buff *taprio_dequeue_fr
+ 		return NULL;
  
--	tsk = first;
- 	start_time = ktime_get_ns();
--	do {
-+	for_each_thread(first, tsk) {
- 		if (tsk->exit_state)
- 			continue;
- 		/*
-@@ -236,7 +235,7 @@ static int fill_stats_for_tgid(pid_t tgi
+ skip_peek_checks:
+-	skb = child->ops->dequeue(child);
++	skb = qdisc_dequeue_peeked(child);
+ 	if (unlikely(!skb))
+ 		return NULL;
  
- 		stats->nvcsw += tsk->nvcsw;
- 		stats->nivcsw += tsk->nivcsw;
--	} while_each_thread(first, tsk);
-+	}
- 
- 	unlock_task_sighand(first, &flags);
- 	rc = 0;
 
 
