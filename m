@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3662377A82;
-	Thu, 20 Aug 2026 16:34:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E02272E53;
+	Thu, 20 Aug 2026 16:34:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243657; cv=none; b=TPIkHRylQBQM3Df1TdlMbUDZpO8rf4+CDjtLuRA4MzoRv9KpkWcQj+ZYJFVJz9iixm6Xz/iEbRxZIrs5dv0y4M9bXs4wD1DVAo975j0huniV5MmEeTAFGDIzxc+Kf6ynUo9v8AghOo9B7KBifVg4CplNUGFysESUeZN1GJNHCZ8=
+	t=1787243660; cv=none; b=T75YQuakzYHk7/cR1cFPcbU/sp/VGzj3brvKIP3BvnOz7CLbAQ4Q/OpEB5Nc9RHeYUL6UFCFcOt/KCzvLRSQ355PWNF/eesnE6nETYb3AKWFrNmcY0Dc+J2VsyldET9FuKGzJ/koml3W1ky8smktOS4mwEkhI1KwsVEW1xmLkHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243657; c=relaxed/simple;
-	bh=YpjuuOuk5Ia26qMFEgTrmMVlTzfdC5QKpnP7TEwJRiI=;
+	s=arc-20240116; t=1787243660; c=relaxed/simple;
+	bh=6HnR6PcGLpCnQPvvQH7hhsz+5FqwRINIXWlDW1h6siw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sz7IK3Vmy8SvWyS5B4N7NlV0Y9jNiomXidXHTvQTBfbgea5cfjytKY4tJiK0GEA4Z5c+4nkcDucFWnTjlYQZ/wxRepIo5N8DsbQ0sSqf4fyJsI+KR/0oS+yDYtFGkffQ37m/xLtFSX1Pr2ywv4qudADx3MbREy//j09rsz6Eu7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1hvpW9+o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bswMdYAt/wuz1z9fGZq3Vsdy6J0eBWI6w9QOGbo1Quaqp7H63OGHAw2G8n7vQLur4MBr1NhDh+L2iR8bjLaP5l1H3UXfGcyJKWIMln2nEXRwEIgsfh3LcA7I7vEpJIh1MSXLaJ68NRsx8+btwzsWmI8qn/MMQFa2QlQIqRKI0G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srYYYaCS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1hvpW9+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8131F000E9;
-	Thu, 20 Aug 2026 16:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srYYYaCS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2910F1F000E9;
+	Thu, 20 Aug 2026 16:34:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243655;
-	bh=OR5cWi+eFkaBjmJvCW7Jvpl7DLx2bYxkFaRuAtKMG9o=;
+	s=korg; t=1787243658;
+	bh=oRvD1xanjBojv3KCBYzcrX1ju8u6BErBQaj7XR2onko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1hvpW9+oqWD2lbkLBDDAlAA9ZSSnlMglG6cnHuZy14nRzLG1wL94HpVWyyve/vVO/
-	 FWk9XYoKrbp+nSCyGQdtbaZCYHzFOMLZSY43GUlvb1uu57xvrVAGihKYPlSAe2t+ap
-	 3RM8gBNvc/VniKYQaFI0xHnJKx9VH1VCVfcUsSVA=
+	b=srYYYaCS/IWHM29plK6YmYHJPa9XXGYjb2qpJ0Btg5O2LUEsesCczpXozsTurTHW0
+	 4s7hMvJSJDaoxoOF2yXOlPX/BYZhrvBlm33YS3tlsA2hHmi9M/ENafXWgwQhd5d/0U
+	 6WtTnhosI2Q4Q2JZtYjfVPyI00idNBNXof3Bg92I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashutosh Desai <ashutoshdesai993@gmail.com>,
-	Lyude Paul <lyude@redhat.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 171/272] drm/dp/mst: fix OOB reads on 2-byte fields in sideband reply parsers
-Date: Thu, 20 Aug 2026 16:55:55 +0200
-Message-ID: <20260820145236.498244122@linuxfoundation.org>
+Subject: [PATCH 5.15 172/272] dma-buf/drivers: make reserving a shared slot mandatory v4
+Date: Thu, 20 Aug 2026 16:55:56 +0200
+Message-ID: <20260820145236.532118044@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -45,97 +45,346 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ashutosh Desai <ashutoshdesai993@gmail.com>
+From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit 6b89ba3dba2f583626fb693e47e951ffb8bf591f ]
+[ Upstream commit c8d4c18bfbc4ab467188dbe45cc8155759f49d9e ]
 
-Three sideband reply parsers read 16-bit fields as:
+Audit all the users of dma_resv_add_excl_fence() and make sure they
+reserve a shared slot also when only trying to add an exclusive fence.
 
-  val = (raw->msg[idx] << 8) | (raw->msg[idx+1]);
+This is the next step towards handling the exclusive fence like a
+shared one.
 
-and check bounds only after the fact. When idx == raw->curlen,
-raw->msg[idx+1] reads one byte past the received message data into
-the following struct fields (curchunk_len, curchunk_idx, curlen).
+v2: fix missed case in amdgpu
+v3: and two more radeon, rename function
+v4: add one more case to TTM, fix i915 after rebase
 
-Affected functions:
- - drm_dp_sideband_parse_enum_path_resources_ack()
-   full_payload_bw_number and avail_payload_bw_number fields
- - drm_dp_sideband_parse_allocate_payload_ack()
-   allocated_pbn field
- - drm_dp_sideband_parse_query_payload_ack()
-   allocated_pbn field
-
-Fix by using a single combined check (idx + 2 > curlen) before each
-2-byte read. Since the check is strictly tighter than idx > curlen,
-no separate step is needed.
-
-Fixes: ad7f8a1f9ced ("drm/helper: add Displayport multi-stream helper (v0.6)")
-Cc: <stable@vger.kernel.org> # v3.17+
-Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-[added fixes tag]
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260510203128.2884846-1-ashutoshdesai993@gmail.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Link: https://patchwork.freedesktop.org/patch/msgid/20220406075132.3263-2-christian.koenig@amd.com
+Stable-dep-of: a48bbcc7ac73 ("drm/virtio: use uninterruptible resv lock for plane updates")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_dp_mst_topology.c |   17 ++++-------------
- 1 file changed, 4 insertions(+), 13 deletions(-)
+ drivers/dma-buf/dma-resv.c                       |   10 +++++-----
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c |    4 ++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c           |    4 ++--
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c             |    2 +-
+ drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c     |    2 +-
+ drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c   |    4 ++--
+ drivers/gpu/drm/i915/i915_vma.c                  |    2 +-
+ drivers/gpu/drm/lima/lima_gem.c                  |    2 +-
+ drivers/gpu/drm/msm/msm_gem_submit.c             |    2 +-
+ drivers/gpu/drm/nouveau/nouveau_fence.c          |    2 +-
+ drivers/gpu/drm/qxl/qxl_release.c                |    2 +-
+ drivers/gpu/drm/radeon/radeon_vm.c               |    2 +-
+ drivers/gpu/drm/ttm/ttm_bo.c                     |    4 ++--
+ drivers/gpu/drm/ttm/ttm_execbuf_util.c           |    4 ++--
+ drivers/gpu/drm/vc4/vc4_gem.c                    |    2 +-
+ drivers/gpu/drm/vgem/vgem_fence.c                |    2 +-
+ drivers/gpu/drm/virtio/virtgpu_gem.c             |    9 +++++++++
+ include/linux/dma-resv.h                         |    2 +-
+ 18 files changed, 35 insertions(+), 26 deletions(-)
 
---- a/drivers/gpu/drm/drm_dp_mst_topology.c
-+++ b/drivers/gpu/drm/drm_dp_mst_topology.c
-@@ -924,16 +924,13 @@ static bool drm_dp_sideband_parse_enum_p
- 	repmsg->u.path_resources.port_number = (raw->msg[idx] >> 4) & 0xf;
- 	repmsg->u.path_resources.fec_capable = raw->msg[idx] & 0x1;
- 	idx++;
--	if (idx > raw->curlen)
-+	if (idx + 2 > raw->curlen)
- 		goto fail_len;
- 	repmsg->u.path_resources.full_payload_bw_number = (raw->msg[idx] << 8) | (raw->msg[idx+1]);
- 	idx += 2;
--	if (idx > raw->curlen)
-+	if (idx + 2 > raw->curlen)
- 		goto fail_len;
- 	repmsg->u.path_resources.avail_payload_bw_number = (raw->msg[idx] << 8) | (raw->msg[idx+1]);
--	idx += 2;
--	if (idx > raw->curlen)
--		goto fail_len;
- 	return true;
- fail_len:
- 	DRM_DEBUG_KMS("enum resource parse length fail %d %d\n", idx, raw->curlen);
-@@ -951,12 +948,9 @@ static bool drm_dp_sideband_parse_alloca
- 		goto fail_len;
- 	repmsg->u.allocate_payload.vcpi = raw->msg[idx];
- 	idx++;
--	if (idx > raw->curlen)
-+	if (idx + 2 > raw->curlen)
- 		goto fail_len;
- 	repmsg->u.allocate_payload.allocated_pbn = (raw->msg[idx] << 8) | (raw->msg[idx+1]);
--	idx += 2;
--	if (idx > raw->curlen)
--		goto fail_len;
- 	return true;
- fail_len:
- 	DRM_DEBUG_KMS("allocate payload parse length fail %d %d\n", idx, raw->curlen);
-@@ -970,12 +964,9 @@ static bool drm_dp_sideband_parse_query_
+--- a/drivers/dma-buf/dma-resv.c
++++ b/drivers/dma-buf/dma-resv.c
+@@ -131,7 +131,7 @@ void dma_resv_fini(struct dma_resv *obj)
+ EXPORT_SYMBOL(dma_resv_fini);
  
- 	repmsg->u.query_payload.port_number = (raw->msg[idx] >> 4) & 0xf;
- 	idx++;
--	if (idx > raw->curlen)
-+	if (idx + 2 > raw->curlen)
- 		goto fail_len;
- 	repmsg->u.query_payload.allocated_pbn = (raw->msg[idx] << 8) | (raw->msg[idx + 1]);
--	idx += 2;
--	if (idx > raw->curlen)
--		goto fail_len;
- 	return true;
- fail_len:
- 	DRM_DEBUG_KMS("query payload parse length fail %d %d\n", idx, raw->curlen);
+ /**
+- * dma_resv_reserve_shared - Reserve space to add shared fences to
++ * dma_resv_reserve_fences - Reserve space to add shared fences to
+  * a dma_resv.
+  * @obj: reservation object
+  * @num_fences: number of fences we want to add
+@@ -142,7 +142,7 @@ EXPORT_SYMBOL(dma_resv_fini);
+  * RETURNS
+  * Zero for success, or -errno
+  */
+-int dma_resv_reserve_shared(struct dma_resv *obj, unsigned int num_fences)
++int dma_resv_reserve_fences(struct dma_resv *obj, unsigned int num_fences)
+ {
+ 	struct dma_resv_list *old, *new;
+ 	unsigned int i, j, k, max;
+@@ -205,7 +205,7 @@ int dma_resv_reserve_shared(struct dma_r
+ 
+ 	return 0;
+ }
+-EXPORT_SYMBOL(dma_resv_reserve_shared);
++EXPORT_SYMBOL(dma_resv_reserve_fences);
+ 
+ #ifdef CONFIG_DEBUG_MUTEXES
+ /**
+@@ -213,7 +213,7 @@ EXPORT_SYMBOL(dma_resv_reserve_shared);
+  * @obj: the dma_resv object to reset
+  *
+  * Reset the number of pre-reserved shared slots to test that drivers do
+- * correct slot allocation using dma_resv_reserve_shared(). See also
++ * correct slot allocation using dma_resv_reserve_fences(). See also
+  * &dma_resv_list.shared_max.
+  */
+ void dma_resv_reset_shared_max(struct dma_resv *obj)
+@@ -235,7 +235,7 @@ EXPORT_SYMBOL(dma_resv_reset_shared_max)
+  * @fence: the shared fence to add
+  *
+  * Add a fence to a shared slot, obj->lock must be held, and
+- * dma_resv_reserve_shared() has been called.
++ * dma_resv_reserve_fences() has been called.
+  */
+ void dma_resv_add_shared_fence(struct dma_resv *obj, struct dma_fence *fence)
+ {
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -1236,7 +1236,7 @@ static int init_kfd_vm(struct amdgpu_vm
+ 				  AMDGPU_FENCE_OWNER_KFD, false);
+ 	if (ret)
+ 		goto wait_pd_fail;
+-	ret = dma_resv_reserve_shared(vm->root.bo->tbo.base.resv, 1);
++	ret = dma_resv_reserve_fences(vm->root.bo->tbo.base.resv, 1);
+ 	if (ret)
+ 		goto reserve_shared_fail;
+ 	amdgpu_bo_fence(vm->root.bo,
+@@ -2461,7 +2461,7 @@ int amdgpu_amdkfd_add_gws_to_process(voi
+ 	 * Add process eviction fence to bo so they can
+ 	 * evict each other.
+ 	 */
+-	ret = dma_resv_reserve_shared(gws_bo->tbo.base.resv, 1);
++	ret = dma_resv_reserve_fences(gws_bo->tbo.base.resv, 1);
+ 	if (ret)
+ 		goto reserve_shared_fail;
+ 	amdgpu_bo_fence(gws_bo, &process_info->eviction_fence->base, true);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -3008,7 +3008,7 @@ int amdgpu_vm_init(struct amdgpu_device
+ 	if (r)
+ 		goto error_free_root;
+ 
+-	r = dma_resv_reserve_shared(root_bo->tbo.base.resv, 1);
++	r = dma_resv_reserve_fences(root_bo->tbo.base.resv, 1);
+ 	if (r)
+ 		goto error_unreserve;
+ 
+@@ -3459,7 +3459,7 @@ bool amdgpu_vm_handle_fault(struct amdgp
+ 		value = 0;
+ 	}
+ 
+-	r = dma_resv_reserve_shared(root->tbo.base.resv, 1);
++	r = dma_resv_reserve_fences(root->tbo.base.resv, 1);
+ 	if (r) {
+ 		pr_debug("failed %d to reserve fence slot\n", r);
+ 		goto error_unlock;
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -512,7 +512,7 @@ svm_range_vram_node_new(struct amdgpu_de
+ 		goto reserve_bo_failed;
+ 	}
+ 
+-	r = dma_resv_reserve_shared(bo->tbo.base.resv, 1);
++	r = dma_resv_reserve_fences(bo->tbo.base.resv, 1);
+ 	if (r) {
+ 		pr_debug("failed %d to reserve bo\n", r);
+ 		amdgpu_bo_unreserve(bo);
+--- a/drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c
+@@ -180,7 +180,7 @@ static int submit_fence_sync(struct etna
+ 		struct dma_resv *robj = bo->obj->base.resv;
+ 
+ 		if (!(bo->flags & ETNA_SUBMIT_BO_WRITE)) {
+-			ret = dma_resv_reserve_shared(robj, 1);
++			ret = dma_resv_reserve_fences(robj, 1);
+ 			if (ret)
+ 				return ret;
+ 		}
+--- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
+@@ -958,7 +958,7 @@ static int eb_validate_vmas(struct i915_
+ 		}
+ 
+ 		if (!(ev->flags & EXEC_OBJECT_WRITE)) {
+-			err = dma_resv_reserve_shared(vma->resv, 1);
++			err = dma_resv_reserve_fences(vma->resv, 1);
+ 			if (err)
+ 				return err;
+ 		}
+@@ -2160,7 +2160,7 @@ static int eb_parse(struct i915_execbuff
+ 		goto err_trampoline;
+ 	}
+ 
+-	err = dma_resv_reserve_shared(shadow->resv, 1);
++	err = dma_resv_reserve_fences(shadow->resv, 1);
+ 	if (err)
+ 		goto err_trampoline;
+ 
+--- a/drivers/gpu/drm/i915/i915_vma.c
++++ b/drivers/gpu/drm/i915/i915_vma.c
+@@ -1278,7 +1278,7 @@ int i915_vma_move_to_active(struct i915_
+ 		obj->read_domains = 0;
+ 	} else {
+ 		if (!(flags & __EXEC_OBJECT_NO_RESERVE)) {
+-			err = dma_resv_reserve_shared(vma->resv, 1);
++			err = dma_resv_reserve_fences(vma->resv, 1);
+ 			if (unlikely(err))
+ 				return err;
+ 		}
+--- a/drivers/gpu/drm/lima/lima_gem.c
++++ b/drivers/gpu/drm/lima/lima_gem.c
+@@ -263,7 +263,7 @@ static int lima_gem_sync_bo(struct lima_
+ 	int err = 0;
+ 
+ 	if (!write) {
+-		err = dma_resv_reserve_shared(lima_bo_resv(bo), 1);
++		err = dma_resv_reserve_fences(lima_bo_resv(bo), 1);
+ 		if (err)
+ 			return err;
+ 	}
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -349,7 +349,7 @@ static int submit_fence_sync(struct msm_
+ 			 * strange place to call it.  OTOH this is a
+ 			 * convenient can-fail point to hook it in.
+ 			 */
+-			ret = dma_resv_reserve_shared(obj->resv, 1);
++			ret = dma_resv_reserve_fences(obj->resv, 1);
+ 			if (ret)
+ 				return ret;
+ 		}
+--- a/drivers/gpu/drm/nouveau/nouveau_fence.c
++++ b/drivers/gpu/drm/nouveau/nouveau_fence.c
+@@ -349,7 +349,7 @@ nouveau_fence_sync(struct nouveau_bo *nv
+ 	int ret = 0, i;
+ 
+ 	if (!exclusive) {
+-		ret = dma_resv_reserve_shared(resv, 1);
++		ret = dma_resv_reserve_fences(resv, 1);
+ 
+ 		if (ret)
+ 			return ret;
+--- a/drivers/gpu/drm/qxl/qxl_release.c
++++ b/drivers/gpu/drm/qxl/qxl_release.c
+@@ -200,7 +200,7 @@ static int qxl_release_validate_bo(struc
+ 			return ret;
+ 	}
+ 
+-	ret = dma_resv_reserve_shared(bo->tbo.base.resv, 1);
++	ret = dma_resv_reserve_fences(bo->tbo.base.resv, 1);
+ 	if (ret)
+ 		return ret;
+ 
+--- a/drivers/gpu/drm/radeon/radeon_vm.c
++++ b/drivers/gpu/drm/radeon/radeon_vm.c
+@@ -831,7 +831,7 @@ static int radeon_vm_update_ptes(struct
+ 		int r;
+ 
+ 		radeon_sync_resv(rdev, &ib->sync, pt->tbo.base.resv, true);
+-		r = dma_resv_reserve_shared(pt->tbo.base.resv, 1);
++		r = dma_resv_reserve_fences(pt->tbo.base.resv, 1);
+ 		if (r)
+ 			return r;
+ 
+--- a/drivers/gpu/drm/ttm/ttm_bo.c
++++ b/drivers/gpu/drm/ttm/ttm_bo.c
+@@ -767,7 +767,7 @@ static int ttm_bo_add_move_fence(struct
+ 
+ 	dma_resv_add_shared_fence(bo->base.resv, fence);
+ 
+-	ret = dma_resv_reserve_shared(bo->base.resv, 1);
++	ret = dma_resv_reserve_fences(bo->base.resv, 1);
+ 	if (unlikely(ret)) {
+ 		dma_fence_put(fence);
+ 		return ret;
+@@ -826,7 +826,7 @@ int ttm_bo_mem_space(struct ttm_buffer_o
+ 	bool type_found = false;
+ 	int i, ret;
+ 
+-	ret = dma_resv_reserve_shared(bo->base.resv, 1);
++	ret = dma_resv_reserve_fences(bo->base.resv, 1);
+ 	if (unlikely(ret))
+ 		return ret;
+ 
+--- a/drivers/gpu/drm/ttm/ttm_execbuf_util.c
++++ b/drivers/gpu/drm/ttm/ttm_execbuf_util.c
+@@ -104,7 +104,7 @@ int ttm_eu_reserve_buffers(struct ww_acq
+ 			if (!entry->num_shared)
+ 				continue;
+ 
+-			ret = dma_resv_reserve_shared(bo->base.resv,
++			ret = dma_resv_reserve_fences(bo->base.resv,
+ 								entry->num_shared);
+ 			if (!ret)
+ 				continue;
+@@ -121,7 +121,7 @@ int ttm_eu_reserve_buffers(struct ww_acq
+ 		}
+ 
+ 		if (!ret && entry->num_shared)
+-			ret = dma_resv_reserve_shared(bo->base.resv,
++			ret = dma_resv_reserve_fences(bo->base.resv,
+ 								entry->num_shared);
+ 
+ 		if (unlikely(ret != 0)) {
+--- a/drivers/gpu/drm/vc4/vc4_gem.c
++++ b/drivers/gpu/drm/vc4/vc4_gem.c
+@@ -644,7 +644,7 @@ retry:
+ 	for (i = 0; i < exec->bo_count; i++) {
+ 		bo = &exec->bo[i]->base;
+ 
+-		ret = dma_resv_reserve_shared(bo->resv, 1);
++		ret = dma_resv_reserve_fences(bo->resv, 1);
+ 		if (ret) {
+ 			vc4_unlock_bo_reservations(dev, exec, acquire_ctx);
+ 			return ret;
+--- a/drivers/gpu/drm/vgem/vgem_fence.c
++++ b/drivers/gpu/drm/vgem/vgem_fence.c
+@@ -161,7 +161,7 @@ int vgem_fence_attach_ioctl(struct drm_d
+ 	dma_resv_lock(resv, NULL);
+ 	if (arg->flags & VGEM_FENCE_WRITE)
+ 		dma_resv_add_excl_fence(resv, fence);
+-	else if ((ret = dma_resv_reserve_shared(resv, 1)) == 0)
++	else if ((ret = dma_resv_reserve_fences(resv, 1)) == 0)
+ 		dma_resv_add_shared_fence(resv, fence);
+ 	dma_resv_unlock(resv);
+ 
+--- a/drivers/gpu/drm/virtio/virtgpu_gem.c
++++ b/drivers/gpu/drm/virtio/virtgpu_gem.c
+@@ -214,6 +214,7 @@ void virtio_gpu_array_add_obj(struct vir
+ 
+ int virtio_gpu_array_lock_resv(struct virtio_gpu_object_array *objs)
+ {
++	unsigned int i;
+ 	int ret;
+ 
+ 	if (objs->nents == 1) {
+@@ -222,6 +223,14 @@ int virtio_gpu_array_lock_resv(struct vi
+ 		ret = drm_gem_lock_reservations(objs->objs, objs->nents,
+ 						&objs->ticket);
+ 	}
++	if (ret)
++		return ret;
++
++	for (i = 0; i < objs->nents; ++i) {
++		ret = dma_resv_reserve_fences(objs->objs[i]->resv, 1);
++		if (ret)
++			return ret;
++	}
+ 	return ret;
+ }
+ 
+--- a/include/linux/dma-resv.h
++++ b/include/linux/dma-resv.h
+@@ -364,7 +364,7 @@ static inline struct dma_resv_list *dma_
+ 
+ void dma_resv_init(struct dma_resv *obj);
+ void dma_resv_fini(struct dma_resv *obj);
+-int dma_resv_reserve_shared(struct dma_resv *obj, unsigned int num_fences);
++int dma_resv_reserve_fences(struct dma_resv *obj, unsigned int num_fences);
+ void dma_resv_add_shared_fence(struct dma_resv *obj, struct dma_fence *fence);
+ void dma_resv_add_excl_fence(struct dma_resv *obj, struct dma_fence *fence);
+ int dma_resv_get_fences(struct dma_resv *obj, struct dma_fence **pfence_excl,
 
 
