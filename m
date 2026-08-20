@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889D137DE89;
-	Thu, 20 Aug 2026 15:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67DDB37C90E;
+	Thu, 20 Aug 2026 15:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238337; cv=none; b=uZEW4T20ltzqnNC8ErSkJ3azLicMxSngSjqoX6HR3svBKTnWknwK7b7Lm/gTlDI/eLySESCLLajoX3C85NhO9dHpzTINo4lzhh5GeUGap297xklImQhjnaVH9IxVPFWUw97k4E4kUFLRn8518jTIbKOMfV9OKJB0WfaY5kS0KPY=
+	t=1787238340; cv=none; b=gTDQX3ge09Z00LwHkhuayeMjJHYsWQjqNAApdLrhVutKMO2i1evvkMrtVjK/AjC1WRZ5def/wJidPU5ADypQMHIxhp7Ln5ccRmasQxWvjv8JzD1uGv3dY/lTQTOr//6fnqL1YrbXhfyU1Yx0vFu4oT4vvaWQH2FTY/uQvBOqVpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238337; c=relaxed/simple;
-	bh=bUA1q4LQO1Ja2dVZynwBTxeVq3e9mQZh8wzHyZ69o00=;
+	s=arc-20240116; t=1787238340; c=relaxed/simple;
+	bh=9oKtdOameHKXbyRFQBEHGetc6pU6gJbZam8/iIAdK0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hw/RrJjB0jI6ew3bEGO4PaOVXbetW+BhvG9ivfPQkOdGkdipeILK5YySoL54WUzv6ri1FAe3AnzVAz25hnr8zpoW/MHDOMNKV73dM0LGn8rUmd7eh1jLY4tWHrQxhIfn0ORO247zgL5V5JzKZrYFHtbB6El/rjnM4jRla/xYKTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CWBxS2pH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D0HB+fqTRpcn0SMIq+9osdFHaSBVyv8anHNANi8bhOmU9tUDOXLLa+RQWTICZNpVeKKbiBqF5HC6lohGh5rPucvydEyBaHIJZ9Hl4jQ/sUSfwMNDmiuqIG+eDDWhG04vdMgL6IpDH1vVgaFjipZKGaxkGYaNTnRD5bWY4ybuxXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6CoT663; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CWBxS2pH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3EE11F000E9;
-	Thu, 20 Aug 2026 15:05:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6CoT663"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C19AC1F000E9;
+	Thu, 20 Aug 2026 15:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238336;
-	bh=g+79pS9xGasXCARW0O/zLZD+SEV7cIhWRcP6mtxaI44=;
+	s=korg; t=1787238339;
+	bh=uKYJPt0w0hqUhZf85ss2jnbJNh2or2CMhDPMB7/bcqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CWBxS2pHL58FKlrDQM+q79aGsCN3Rw5fIb/4ddT3TZbJQEcarlZuWOW0q1nwh/jvl
-	 E0a2fBpFHctsF0aWojmF+QMzAu7VHPm9LIRZi2VPBMNuffW59xe77ZPDIolL/3ir0K
-	 uLJlPjWd1EbvKlrc17q7Y1+2a/hCC1K0M/Pnz4nM=
+	b=U6CoT663IM6dypXfAq38ZFBvonzglwApytSCOK2abtPRrzqSteXCNp226YL+K/IIs
+	 oXMQS0+qJgThAbnqvwQgJUGnkT9bHOgQ40gOif+e78mxG/n+kWQtgKJ1G/k1JFnOuN
+	 Up9LOmzzvRliwWdZrXuAZ4EVT6+RW2aj7X/x4SUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Rosca <david.rosca@amd.com>,
-	Leo Liu <leo.liu@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 113/228] drm/amdgpu: Reject UVD message with invalid number of h265 refs
-Date: Thu, 20 Aug 2026 16:54:15 +0200
-Message-ID: <20260820145248.071043798@linuxfoundation.org>
+Subject: [PATCH 7.1 114/228] drm/amdgpu: Prefer default discovery offset
+Date: Thu, 20 Aug 2026 16:54:16 +0200
+Message-ID: <20260820145248.101236514@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -51,34 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Rosca <david.rosca@amd.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-commit 9fca434208f1f9ab977feac62df8ebb1cc7ce893 upstream.
+commit ac828b94e027d29af82325fcc55556dc8173fd85 upstream.
 
-Same change as for h264, avoids overflow later when calculating
-min dpb size.
+If a valid signature is seen at the default offset, use the default
+size/offset for discovery.
 
-Signed-off-by: David Rosca <david.rosca@amd.com>
-Reviewed-by: Leo Liu <leo.liu@amd.com>
+Fixes: 01bdc7e219c4 ("drm/amdgpu: New interface to get IP discovery binary v3")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5447
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a4b0720e4f1601f97f59a2be9c1b4b94fa6527d5)
+(cherry picked from commit 46a0df99a0b2fa2fa61d864b04b6a5d5fe748779)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-@@ -803,6 +803,9 @@ static int amdgpu_uvd_cs_msg_decode(stru
- 		image_size = ALIGN(image_size, 256);
- 
- 		num_dpb_buffer = (le32_to_cpu(msg[59]) & 0xff) + 2;
-+		if (num_dpb_buffer > 17)
-+			return -EINVAL;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+@@ -310,6 +310,19 @@ static int amdgpu_discovery_get_tmr_info
+ 			goto out;
+ 		}
+ 	} else {
++		if (adev->discovery.offset) {
++			u32 signature;
 +
- 		min_dpb_size = image_size * num_dpb_buffer;
- 		min_ctx_size = ((width + 255) / 16) * ((height + 255) / 16)
- 					   * 16 * num_dpb_buffer + 52 * 1024;
++			/* If VRAM holds a valid discovery signature at the default
++			 * discovery offset, use it as-is.
++			 */
++			amdgpu_device_vram_access(adev, adev->discovery.offset,
++						  &signature, sizeof(signature),
++						  false);
++			if (le32_to_cpu(signature) == BINARY_SIGNATURE)
++				goto out;
++		}
++
+ 		tmr_size = RREG32(mmDRIVER_SCRATCH_2);
+ 		if (tmr_size) {
+ 			/* It's preferred to transition to PSP mailbox reg interface
 
 
