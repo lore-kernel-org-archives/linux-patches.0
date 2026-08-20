@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E4F36A37A;
-	Thu, 20 Aug 2026 15:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D794236A37A;
+	Thu, 20 Aug 2026 15:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238455; cv=none; b=aqNHQJ+PegujaTISoPyqTOiL14shdDThXPOXC7sk+E9+VbQMg5TxAgid+Hhh1YcMHwTcgDWRTY50PswLTVd0sGnbMz5r/CRH8luKtwLSvVchM/oJO6slg0q3MetjIO29baVfieGO4YQPB5yVwzcCGovZtjwDx7xkhXvYOyvpHPQ=
+	t=1787238457; cv=none; b=ql+cWNLhidnofYsp1X2ca2OvLlNTpTJk53NfcaolWGT2IwMUOVQvEpYg+w19+ymV9yarGHpgPBT5Y0utiDlQJPc89X2qtDyCTq8JOw5lDM5aS/o7TXnrIJv22z6R2coaPSl0NR7lWtXUpBJ03GUGKjsxnW9/mr4SG38dOXP9GQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238455; c=relaxed/simple;
-	bh=pqzl8/SkD0PRjoWXcx4PR4pY40MB11MT2jrXsVpgiqA=;
+	s=arc-20240116; t=1787238457; c=relaxed/simple;
+	bh=jIBXLZUU7UO421PBt5JFM99iCOd5z4vIJHpZ1CVNtKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PxYh6XxFlCx/PqsTWj4nW9ySdwe9hsBlp59++FwZ4F2gv8a4cjvEB/yquI1cst/zdGpC+SMtL0ZocaXC9lmNus1QiFbBqBj/ItnvNqYzzfdDYGdy9Q2aYkqLjnIylWZnN/JxyGAm4UXGHwbPpqZtBDM18LmoVUWWsQE9qr125sM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFyo/1+R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OqD4fWayhKXTZVGQUb/lb2LinCFapOM/S1pwsd77i3Xvp4Z1UrVze8kvHORzpQSh9lgHUAKD+HPWmeyexLOWlnopg5hDmAipwqymyed3ddAic2DjDmlZ7cYcMcLjpMM5Oh8pycjkgoVTXq2lzhEOuuzRXcMu2m/al6KfvhbgMoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAq4syUV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFyo/1+R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D201F000E9;
-	Thu, 20 Aug 2026 15:07:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAq4syUV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EBE71F000E9;
+	Thu, 20 Aug 2026 15:07:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238453;
-	bh=lfl63QFbqjR0lihbEM5ul04kPAjP0uHltu8Y/fb7fcs=;
+	s=korg; t=1787238456;
+	bh=IMekU3H3TNlIiOLbIi8Y6NL5W7Fzl71rh6Dc0LAbVlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OFyo/1+RltIjYTicAz2K490bL80EaaMSUp/wFmOf3JkbtwjLSLsqWx4Xrv77PScZr
-	 WMjOHZo/4sjw2fAjyRLF6bp1qtSmmVGkZxAasS7jYT8xmNsHjdD6HqeSxuvETZaiDR
-	 dW06AQt3E7fpzNB1DGjUE4yHIXdy0ryIJjbb8yh4=
+	b=SAq4syUV8/IFPr0oPgzTWp+KXJeG89sma+UVwWKyO+/WxdTlHM160Fk4dTMuktY9+
+	 MH9SiYih7fUXasvSDiiMz759sbOXup+puVVG4xt/7tOgWrEF0TEZUUsDZGKyvZPkXu
+	 SsvzUwObk0YQTfOidOcplCKs14eeRtEIfDFji2mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 154/228] ceph: fix hanging __ceph_get_caps() with stale mds_wanted
-Date: Thu, 20 Aug 2026 16:54:56 +0200
-Message-ID: <20260820145249.328800428@linuxfoundation.org>
+Subject: [PATCH 7.1 155/228] ASoC: tas2562: Validate values for volume writes
+Date: Thu, 20 Aug 2026 16:54:57 +0200
+Message-ID: <20260820145249.362069335@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -52,159 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 50958bb928bad3bdba9e5d1b7ff4bbadcf6951e6 ]
+[ Upstream commit 8fb41964f7e4e4207c8999af2056894caa7a252a ]
 
-A reader can hang forever in __ceph_get_caps() when the client no
-longer holds `FILE_RD`, but local cap state still says that the
-capability is already wanted (via `mds_wanted`).
-
-One way to trigger this is through MDS cap revocation.  If another
-client performs a conflicting operation, the MDS can revoke `FILE_RD`
-from the reader; the next read then has to reacquire `FILE_RD`.  If
-the cap update that should request `FILE_RD` never reaches the MDS
-after `cap->mds_wanted` was raised, the reader is left holding only
-non-file caps while local `mds_wanted` still includes the file read
-caps.
-
-In that state, try_get_cap_refs() sees `need <= mds_wanted` and
-returns 0, so __ceph_get_caps() just waits on `i_cap_wq`.  If the cap
-update that was supposed to request `FILE_RD never reaches the MDS
-after `cap->mds_wanted was` raised, no further request is sent and the
-waiter can sleep indefinitely until unrelated cap traffic happens to
-wake it up.
-
-The ordering issue is that `cap->mds_wanted` is updated in
-__prep_cap() before the `CEPH_MSG_CLIENT_CAPS message` is actually
-queued for send.  That makes one field serve two different meanings at
-once: what this client wants, and what the client believes the MDS
-already knows it wants.
-
-A proper fix would be to split those states and track whether a cap
-update is actually in flight or has been observed by the MDS.
-However, simply moving the `cap->mds_wanted assignment` later would
-not be sufficient: queueing the message in the messenger does not
-guarantee that the MDS processed that specific wanted set, and
-reconnect or message loss can still invalidate that assumption.
-Fixing that properly would require a larger rework of the cap state
-machine.
-
-To allow simpler backports to stable kernels, this patch implements a
-simpler workaround:
-
-- stop waiting forever in __ceph_get_caps(); after a bounded wait,
-  fall back to the renew path
-
-- make ceph_renew_caps() issue a synchronous `OPEN` request whenever
-  the inode still does not actually hold the wanted caps, instead of
-  only calling ceph_check_caps()
-
-The extra issued-vs-wanted check in ceph_renew_caps() is necessary
-because the previous test only checked whether the inode still had any
-real caps at all.  That is not enough after revocation: the client can
-still hold something like `pLs` and yet be missing `FILE_RD`
-completely.  In that case, falling back to ceph_check_caps() is not
-sufficient, because it still trusts `cap->mds_wanted` and may resend
-nothing.  By requiring `(issued & wanted) == wanted` before taking the
-asynchronous path, the code only uses ceph_check_caps() when the
-`wanted caps` are already actually issued.  Otherwise, it sends the
-synchronous `OPEN` renew.
-
-This preserves the existing asynchronous fast path when the wanted
-caps are already issued, avoids changing cap-state semantics, and
-fixes the hang by guaranteeing that a stalled waiter eventually
-retries through a path that does not rely on the stale `mds_wanted`
-state.
-
-[ idryomov: move CEPH_GET_CAPS_WAIT_TIMEOUT from libceph.h to
-  mds_client.h, formatting ]
+tas2562_volume_control_put() does not do any validation of the control
+value written by userspace, it uses it to look up a value in a fixed
+size array which can easily be overflowed and then writes whatever value
+it gets back to the device.  Add validation that we are loading a value
+we have in the array.
 
 Cc: stable@vger.kernel.org
-Fixes: 0a454bdd501a ("ceph: reorganize __send_cap for less spinlock abuse")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20260715-asoc-tas2562-put-retval-v1-1-97bf467c924e@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/caps.c       |   17 +++++++++++++++--
- fs/ceph/file.c       |    9 +++++----
- fs/ceph/mds_client.h |    1 +
- 3 files changed, 21 insertions(+), 6 deletions(-)
+ sound/soc/codecs/tas2562.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -3091,7 +3091,19 @@ int __ceph_get_caps(struct inode *inode,
- 					ret = -ERESTARTSYS;
- 					break;
- 				}
--				wait_woken(&wait, TASK_INTERRUPTIBLE, MAX_SCHEDULE_TIMEOUT);
-+
-+				/*
-+				 * If a cap update is lost after
-+				 * mds_wanted was raised, waiting
-+				 * forever will never make progress.
-+				 * Retry the renew path periodically
-+				 * so we can resend synchronously.
-+				 */
-+				if (!wait_woken(&wait, TASK_INTERRUPTIBLE,
-+						CEPH_GET_CAPS_WAIT_TIMEOUT)) {
-+					ret = -EUCLEAN;
-+					break;
-+				}
- 			}
- 
- 			remove_wait_queue(&ci->i_cap_wq, &wait);
-@@ -3125,7 +3137,8 @@ int __ceph_get_caps(struct inode *inode,
- 				continue;
- 			}
- 			if (ret == -EUCLEAN) {
--				/* session was killed, try renew caps */
-+				/* session was killed or a waited cap
-+				 * request needs a retry */
- 				ret = ceph_renew_caps(inode, flags);
- 				if (ret == 0)
- 					continue;
---- a/fs/ceph/file.c
-+++ b/fs/ceph/file.c
-@@ -314,7 +314,7 @@ static int ceph_init_file(struct inode *
- }
- 
- /*
-- * try renew caps after session gets killed.
-+ * Retry cap acquisition after a stale session or a lost cap update.
-  */
- int ceph_renew_caps(struct inode *inode, int fmode)
+--- a/sound/soc/codecs/tas2562.c
++++ b/sound/soc/codecs/tas2562.c
+@@ -472,10 +472,15 @@ static int tas2562_volume_control_put(st
  {
-@@ -322,14 +322,15 @@ int ceph_renew_caps(struct inode *inode,
- 	struct ceph_client *cl = mdsc->fsc->client;
- 	struct ceph_inode_info *ci = ceph_inode(inode);
- 	struct ceph_mds_request *req;
--	int err, flags, wanted;
-+	int err, flags, wanted, issued;
+ 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
+ 	struct tas2562_data *tas2562 = snd_soc_component_get_drvdata(component);
+-	int ret;
++	int ret, index;
+ 	u32 reg_val;
  
- 	spin_lock(&ci->i_ceph_lock);
- 	__ceph_touch_fmode(ci, mdsc, fmode);
- 	wanted = __ceph_caps_file_wanted(ci);
-+	issued = __ceph_caps_issued(ci, NULL);
- 	if (__ceph_is_any_real_caps(ci) &&
--	    (!(wanted & CEPH_CAP_ANY_WR) || ci->i_auth_cap)) {
--		int issued = __ceph_caps_issued(ci, NULL);
-+	    (!(wanted & CEPH_CAP_ANY_WR) || ci->i_auth_cap) &&
-+	    (issued & wanted) == wanted) {
- 		spin_unlock(&ci->i_ceph_lock);
- 		doutc(cl, "%p %llx.%llx want %s issued %s updating mds_wanted\n",
- 		      inode, ceph_vinop(inode), ceph_cap_string(wanted),
---- a/fs/ceph/mds_client.h
-+++ b/fs/ceph/mds_client.h
-@@ -77,6 +77,7 @@ struct ceph_fs_client;
- struct ceph_cap;
- 
- #define MDS_AUTH_UID_ANY -1
-+#define CEPH_GET_CAPS_WAIT_TIMEOUT (5 * HZ)
- 
- struct ceph_mds_cap_match {
- 	s64 uid;  /* default to MDS_AUTH_UID_ANY */
+-	reg_val = float_vol_db_lookup[ucontrol->value.integer.value[0]/2];
++	index = ucontrol->value.integer.value[0] / 2;
++	if (index < 0 || index >= ARRAY_SIZE(float_vol_db_lookup))
++		return -EINVAL;
++
++	reg_val = float_vol_db_lookup[index];
++
+ 	/*
+ 	 * The device applies the 32-bit coefficient to the playback path on
+ 	 * the write to DVC_CFG4 (the LSB, book 0 page 2 reg 0x0F), so the
 
 
