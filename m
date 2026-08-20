@@ -1,51 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F709481A87;
-	Thu, 20 Aug 2026 17:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8A647DFB9;
+	Thu, 20 Aug 2026 17:49:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248141; cv=none; b=sHaO2V3I/tSV/IDeOQlsr3teyPih+gROf5m3J2hxyUxopkDe3Dye4IflAmkBve+WS0MH3WlvJMrMmVMWTTwKmVSv9L4LvnHXZXuxDO1SHdAebsCLywi8YzYPZPG7ioiSw/pJrTaoIlJNdnN0SMJ8YCUU1+KBA8ilHs9qVlcsAK0=
+	t=1787248144; cv=none; b=iVnGwB/N3QIyYn1HCCZYaRiZJI8ZF49dD6MjWL8f643Use5bWhR8ixzKLMZ13uan1sSIFzLzfj+vn89m7GciVB4HvVsGWCn07F/SdAiBFZjcMCtgkNfzpACJBQhWJAcDi3X9U3KrXVZCPZpljmKvDDpaRtOPrhUoYF2pvAs1FLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248141; c=relaxed/simple;
-	bh=dBmsTNeHsyLV4fKrvBuMIvGJxCUipmPiRV9sYIfyrlM=;
+	s=arc-20240116; t=1787248144; c=relaxed/simple;
+	bh=dNVgJbJlS0gXl6Fy4SM6Bi3DHoGnd6Is4WxYci+H1fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WBiBKnTWTJZEJnORhCdtgH2dONHKX0W0NtJ1Kl8VNxhrccxHmMkL1SrFuTGR2LcYIRwFL6d0h4lE2hitOZ1fCFX11jOBtzGwyUroW4xbuGCLhNts823+baciM+OmXn4eJWYyzrZtxyUwMdOf7ekehL6KXwcKJAgcUJavDs9dFLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iykeb+l/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qt3HBh6bvPLf5UB+Damy9KWXhB5nJX7jVhFRiWjx3IP4o6OAYPvCTWygo2iuEXhizs3HXtFB+zg41j1G7/k9aV33LmG1VnJEo0DZ+hAQdSUJoUeBuAMZEUALcL0PhGM093/vX0/Iw5bSNVQpfg9cdHTR4ScAtksXZQexWhE0FBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBVWeTCx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iykeb+l/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B2181F000E9;
-	Thu, 20 Aug 2026 17:48:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBVWeTCx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 676C01F000E9;
+	Thu, 20 Aug 2026 17:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248140;
-	bh=DIaUJ/mpJbFkN/u92Cnu2BPTaQA9FzyG//0eM3zEg7s=;
+	s=korg; t=1787248142;
+	bh=5Y3Ivu2mPII6q/8OHyJc4B35k9dVl3GJIvrxWMlK6bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iykeb+l/Lnif1OLtkYv/kFFGx5khHAF7iIEu7BOod6+W1M0foklajoO+WXPtHyIsM
-	 +/GIIwhomdA5iuY2v9hFZTiGTIpE7tnzwfH7EZTsgAxhR2BB9a0Uw9MVIBtwkOZcd6
-	 tvfz7REN6yRV7OvnGa5uUhxHFRlKjCAhmlUUQEhs=
+	b=wBVWeTCxzCgjRmVLzf3LacYcS9H1Eel+/RWow/BZ49DZ7sybx6jxxGP727Reqaotw
+	 3uBxFKBqXJ/lFDg59i22/bJDXkzKp5ItoD/s5NcFZRBhYZrTQoVLCrfsiQDu68YBS9
+	 hQBKFIRzNKWN/LCQzXLtGjVDn3wl7QbUfVqJ6kKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <songmuchun@bytedance.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Michal Hocko <mhocko@suse.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Breno Leitao <leitao@debian.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 124/303] mm/mm_init: fix uninitialized struct pages for ZONE_DEVICE
-Date: Thu, 20 Aug 2026 16:54:20 +0200
-Message-ID: <20260820145257.005114732@linuxfoundation.org>
+Subject: [PATCH 6.1 125/303] 9p: skip nlink update in cacheless mode to fix WARN_ON
+Date: Thu, 20 Aug 2026 16:54:21 +0200
+Message-ID: <20260820145257.035580190@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -64,74 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit cd681403a87085562499d60325b7b45d3be11217 ]
+[ Upstream commit 574aa0b4799470ac814479f1138d19efe6262255 ]
 
-If DAX memory is hotplugged into an unoccupied subsection of an early
-section, section_activate() reuses the unoptimized boot memmap.  However,
-compound_nr_pages() still assumes that vmemmap optimization is in effect
-and initializes only the reduced number of struct pages.  As a result, the
-remaining tail struct pages are left uninitialized, which can later lead
-to unexpected behavior or crashes.
+v9fs_dec_count() unconditionally calls drop_nlink() on regular files,
+even when the inode's nlink is already zero. In cacheless mode the
+client refetches inode metadata from the server (the source of truth)
+on every operation, so by the time v9fs_remove() returns, the locally
+cached nlink may already reflect the post-unlink value:
 
-Fix this by treating early sections as unoptimized when calculating how
-many struct pages to initialize.
+  1. Client initiates unlink, server processes it and sets nlink to 0
+  2. Client refetches inode metadata (nlink=0) before unlink returns
+  3. Client's v9fs_remove() completes successfully
+  4. Client calls v9fs_dec_count() which calls drop_nlink() on nlink=0
 
-Link: https://lore.kernel.org/20260428081855.1249045-7-songmuchun@bytedance.com
-Fixes: 6fd3620b3428 ("mm/page_alloc: reuse tail struct pages for compound devmaps")
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Acked-by: Liam R. Howlett <liam@infradead.org>
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
-Cc: Joao Martins <joao.m.martins@oracle.com>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+This race is easily triggered under heavy unlink workloads, such as
+stress-ng's unlink stressor, producing the following warning:
+
+  WARNING: fs/inode.c:417 at drop_nlink+0x4c/0xc8
+  Call trace:
+   drop_nlink+0x4c/0xc8
+   v9fs_remove+0x1e0/0x250 [9p]
+   v9fs_vfs_unlink+0x20/0x38 [9p]
+   vfs_unlink+0x13c/0x258
+   ...
+
+In cacheless mode the server is authoritative and the inode is on its
+way out, so locally adjusting nlink buys nothing. Skip v9fs_dec_count()
+entirely when neither CACHE_META nor CACHE_LOOSE is set, which both
+avoids the warning and removes a class of nlink races (two concurrent
+unlinkers observing nlink > 0 and both calling drop_nlink()) that an
+nlink == 0 guard alone would only narrow rather than close.
+
+Fixes: ac89b2ef9b55 ("9p: don't maintain dir i_nlink if the exported fs doesn't either")
+Cc: stable@vger.kernel.org
+Suggested-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Message-ID: <20260421-9p-v2-1-48762d294fad@debian.org>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+[ Adapted `v9ses->cache & (CACHE_META | CACHE_LOOSE)` bitmask test to the pre-bitmask exclusive enum form `v9ses->cache != CACHE_LOOSE && v9ses->cache != CACHE_FSCACHE`. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mm_init.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ fs/9p/vfs_inode.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/mm/mm_init.c
-+++ b/mm/mm_init.c
-@@ -262,10 +262,17 @@ do {									\
-  * of how the sparse_vmemmap internals handle compound pages in the lack
-  * of an altmap. See vmemmap_populate_compound_pages().
+--- a/fs/9p/vfs_inode.c
++++ b/fs/9p/vfs_inode.c
+@@ -536,10 +536,19 @@ static int v9fs_at_to_dotl_flags(int fla
+  * - ext4 (with dir_nlink feature enabled) sets nlink to 1 if a dir has more
+  *   than EXT4_LINK_MAX (65000) links.
+  *
++ * In cacheless mode the server is the source of truth for nlink and the
++ * inode is going away immediately, so locally adjusting i_nlink buys
++ * nothing and races with concurrent metadata fetches that may already
++ * have observed the post-unlink value (nlink == 0).
++ *
+  * @inode: inode whose nlink is being dropped
   */
--static inline unsigned long compound_nr_pages(struct vmem_altmap *altmap,
-+static inline unsigned long compound_nr_pages(unsigned long pfn,
-+					      struct vmem_altmap *altmap,
- 					      struct dev_pagemap *pgmap)
+ static void v9fs_dec_count(struct inode *inode)
  {
--	if (!vmemmap_can_optimize(altmap, pgmap))
-+	/*
-+	 * If DAX memory is hot-plugged into an unoccupied subsection
-+	 * of an early section, the unoptimized boot memmap is reused.
-+	 * See section_activate().
-+	 */
-+	if (early_section(__pfn_to_section(pfn)) ||
-+	    !vmemmap_can_optimize(altmap, pgmap))
- 		return pgmap_vmemmap_nr(pgmap);
- 
- 	return VMEMMAP_RESERVE_NR * (PAGE_SIZE / sizeof(struct page));
-@@ -338,7 +345,7 @@ void __ref memmap_init_zone_device(struc
- 			continue;
- 
- 		memmap_init_compound(page, pfn, zone_idx, nid, pgmap,
--				     compound_nr_pages(altmap, pgmap));
-+				     compound_nr_pages(pfn, altmap, pgmap));
- 	}
- 
- 	pageblock_migratetype_init_range(start_pfn, nr_pages, MIGRATE_MOVABLE);
++	struct v9fs_session_info *v9ses = v9fs_inode2v9ses(inode);
++
++	if (v9ses->cache != CACHE_LOOSE && v9ses->cache != CACHE_FSCACHE)
++		return;
+ 	if (!S_ISDIR(inode->i_mode) || inode->i_nlink > 2)
+ 		drop_nlink(inode);
+ }
 
 
