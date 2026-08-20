@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9B919E992;
-	Thu, 20 Aug 2026 17:54:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DB9481AAD;
+	Thu, 20 Aug 2026 17:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248470; cv=none; b=oPt0lzd5UZNA2WuThCeqz1U3H2VfWap/lgu2TRhIPgAIMtqER7AUKzaRnNgB3FT7Tkrd53PMYVaSGdJ4qRx5UNAYA3lewvS8+w+PgTB+0bDbg59EeCtB3+HGyLIhyhfa/Cg/KHYjoCdMTt9lyvMIK8r4QxkElXwvY6o64TgvQwk=
+	t=1787248472; cv=none; b=t3uczNl+t8u0cR3/RkgU8Ml+eIUlexZEWMGoVKhiXvFDJ67q8FtB1ILIJEWkmjHbPdlAYEekqMeBW0pRdrjiIiRCM81RX0CvJ/AAYEiH+pN8ksR4P9IcZBegpYq1UXVmEFtouSDeBv+nxr7TZ8+fuNadqDldP/drSjfnXTW16Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248470; c=relaxed/simple;
-	bh=EIrzm0t9BkVOXiq2zERZjB58++b9NVEWvdgHdV6P/7w=;
+	s=arc-20240116; t=1787248472; c=relaxed/simple;
+	bh=BU+OSPfOH79A8oMSz6NQuhDfeAL70BkblU9nhoMt/J8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=svpMQYx7Wr2jzp7bLBPNfvy6PpJp/eJWVcrkY+vpmZD4H3KmyXJuwxaSGkpoHjWUH1TUKOJU8Fb2nxhh5mSB0UCGr1y2ucF/vfbGFLOqO7Gz368rvjr52MiIQN0ZkICaOcPswWuubz4uw8H79uTLIXCy3qvclLs6uGQ5EEAoHFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cVYozFF9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yqdzkqcm2ngT1BbddioV/67076/LvOTS+ym5426jluCck+MTnXCOdeBpsNieOnxRJkfMRFsKHP6gno4KwGy6Dl9/q8FJAZJRUYaMeCcxgwZbPqJAGGZECRFdC7BS0yn7C43zo1KuvGImPRkYFr1JRkQ0GRx+knOQCOHQ6VyDlKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3AlGRXq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cVYozFF9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B76691F000E9;
-	Thu, 20 Aug 2026 17:54:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3AlGRXq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9456D1F000E9;
+	Thu, 20 Aug 2026 17:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248468;
-	bh=lg6t2ppBbE4mWn9BZJDTXGPxeXzKlDnztXttku2bGJE=;
+	s=korg; t=1787248471;
+	bh=q18V1tYgouFjEMSquARMw3A4irxbbizduAYATME6GWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cVYozFF9T6dmFbCJ2PqnoX3VNxoNijvXxhufnoWNcLnN+N7pAsa2Mea4ZvIs/5SAl
-	 FemeZQ7L49+h1v23TCY9mGPxztcAbzswlfFVkTlmrHZBJ1nm4zEYVfoblnYOWmbjcR
-	 /AYgumKtRDJY9IKJswrVRr60eY/pEcumFeItkJ1o=
+	b=h3AlGRXqkk/aNQcC2T/ro2XWFrWvw8V4XKKUS836ZjxtliIj20rD8tgL6mCXHhwBX
+	 BpqUG9DhcNpORNrLkhjNWrBZGT2Avuj4ErhzKBMgzFxvs3mDCBij1LDiZUtbWO94ck
+	 nE7v04sn2cBNxeKMpxxYfP5d7/kME0ZECIfDfnB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0a7039d5d9986ff4ecec@syzkaller.appspotmail.com,
-	syzbot+cc0cc52e7f43dc9e6df1@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <xizh2024@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 239/303] Bluetooth: MGMT: Protect mgmt_pending list with its own lock
-Date: Thu, 20 Aug 2026 16:56:15 +0200
-Message-ID: <20260820145300.633142912@linuxfoundation.org>
+Subject: [PATCH 6.1 240/303] Bluetooth: mgmt: fix UAF in pair command cancellation
+Date: Thu, 20 Aug 2026 16:56:16 +0200
+Message-ID: <20260820145300.662192404@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -53,615 +53,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Zihan Xi <xizh2024@lzu.edu.cn>
 
-[ Upstream commit 6fe26f694c824b8a4dbf50c635bee1302e3f099c ]
+[ Upstream commit d0a7b48ad0921bd88effaee10bf970ab1d5d0ddd ]
 
-This uses a mutex to protect from concurrent access of mgmt_pending
-list which can cause crashes like:
+The pairing completion and authentication failure callbacks look up the
+pending MGMT_OP_PAIR_DEVICE command by walking hdev->mgmt_pending. The
+lookup returned a command that was still linked on the shared pending list,
+without keeping mgmt_pending_lock held for the later dereference and
+removal.
 
-==================================================================
-BUG: KASAN: slab-use-after-free in hci_sock_get_channel+0x60/0x68 net/bluetooth/hci_sock.c:91
-Read of size 2 at addr ffff0000c48885b2 by task syz.4.334/7318
+A concurrent MGMT_OP_CANCEL_PAIR_DEVICE request can remove and free the
+same pending command before the callback uses it. The reverse race is also
+possible when cancel_pair_device() gets a command from pending_find() and a
+callback removes it before the cancel path dereferences it. This can lead
+to a use-after-free and a second list_del().
 
-CPU: 0 UID: 0 PID: 7318 Comm: syz.4.334 Not tainted 6.15.0-rc7-syzkaller-g187899f4124a #0 PREEMPT
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2025
-Call trace:
- show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:466 (C)
- __dump_stack+0x30/0x40 lib/dump_stack.c:94
- dump_stack_lvl+0xd8/0x12c lib/dump_stack.c:120
- print_address_description+0xa8/0x254 mm/kasan/report.c:408
- print_report+0x68/0x84 mm/kasan/report.c:521
- kasan_report+0xb0/0x110 mm/kasan/report.c:634
- __asan_report_load2_noabort+0x20/0x2c mm/kasan/report_generic.c:379
- hci_sock_get_channel+0x60/0x68 net/bluetooth/hci_sock.c:91
- mgmt_pending_find+0x7c/0x140 net/bluetooth/mgmt_util.c:223
- pending_find net/bluetooth/mgmt.c:947 [inline]
- remove_adv_monitor+0x44/0x1a4 net/bluetooth/mgmt.c:5445
- hci_mgmt_cmd+0x780/0xc00 net/bluetooth/hci_sock.c:1712
- hci_sock_sendmsg+0x544/0xbb0 net/bluetooth/hci_sock.c:1832
- sock_sendmsg_nosec net/socket.c:712 [inline]
- __sock_sendmsg net/socket.c:727 [inline]
- sock_write_iter+0x25c/0x378 net/socket.c:1131
- new_sync_write fs/read_write.c:591 [inline]
- vfs_write+0x62c/0x97c fs/read_write.c:684
- ksys_write+0x120/0x210 fs/read_write.c:736
- __do_sys_write fs/read_write.c:747 [inline]
- __se_sys_write fs/read_write.c:744 [inline]
- __arm64_sys_write+0x7c/0x90 fs/read_write.c:744
- __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
- invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
- el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
- do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
- el0_svc+0x58/0x17c arch/arm64/kernel/entry-common.c:767
- el0t_64_sync_handler+0x78/0x108 arch/arm64/kernel/entry-common.c:786
- el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
+Make the pairing lookup helpers transfer ownership of the pending command
+by removing it from hdev->mgmt_pending while holding mgmt_pending_lock.
+The callbacks and cancel path then complete the command and free it
+directly, so racing paths cannot find or free the same command again. Take
+a temporary hci_conn reference in cancel_pair_device() because the command
+completion drops the reference stored in the pending command.
 
-Allocated by task 7037:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x40/0x78 mm/kasan/common.c:68
- kasan_save_alloc_info+0x44/0x54 mm/kasan/generic.c:562
- poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
- __kasan_kmalloc+0x9c/0xb4 mm/kasan/common.c:394
- kasan_kmalloc include/linux/kasan.h:260 [inline]
- __do_kmalloc_node mm/slub.c:4327 [inline]
- __kmalloc_noprof+0x2fc/0x4c8 mm/slub.c:4339
- kmalloc_noprof include/linux/slab.h:909 [inline]
- sk_prot_alloc+0xc4/0x1f0 net/core/sock.c:2198
- sk_alloc+0x44/0x3ac net/core/sock.c:2254
- bt_sock_alloc+0x4c/0x300 net/bluetooth/af_bluetooth.c:148
- hci_sock_create+0xa8/0x194 net/bluetooth/hci_sock.c:2202
- bt_sock_create+0x14c/0x24c net/bluetooth/af_bluetooth.c:132
- __sock_create+0x43c/0x91c net/socket.c:1541
- sock_create net/socket.c:1599 [inline]
- __sys_socket_create net/socket.c:1636 [inline]
- __sys_socket+0xd4/0x1c0 net/socket.c:1683
- __do_sys_socket net/socket.c:1697 [inline]
- __se_sys_socket net/socket.c:1695 [inline]
- __arm64_sys_socket+0x7c/0x94 net/socket.c:1695
- __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
- invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:49
- el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:132
- do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:151
- el0_svc+0x58/0x17c arch/arm64/kernel/entry-common.c:767
- el0t_64_sync_handler+0x78/0x108 arch/arm64/kernel/entry-common.c:786
- el0t_64_sync+0x198/0x19c arch/arm64/kernel/entry.S:600
-
-Freed by task 6607:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x40/0x78 mm/kasan/common.c:68
- kasan_save_free_info+0x58/0x70 mm/kasan/generic.c:576
- poison_slab_object mm/kasan/common.c:247 [inline]
- __kasan_slab_free+0x68/0x88 mm/kasan/common.c:264
- kasan_slab_free include/linux/kasan.h:233 [inline]
- slab_free_hook mm/slub.c:2380 [inline]
- slab_free mm/slub.c:4642 [inline]
- kfree+0x17c/0x474 mm/slub.c:4841
- sk_prot_free net/core/sock.c:2237 [inline]
- __sk_destruct+0x4f4/0x760 net/core/sock.c:2332
- sk_destruct net/core/sock.c:2360 [inline]
- __sk_free+0x320/0x430 net/core/sock.c:2371
- sk_free+0x60/0xc8 net/core/sock.c:2382
- sock_put include/net/sock.h:1944 [inline]
- mgmt_pending_free+0x88/0x118 net/bluetooth/mgmt_util.c:290
- mgmt_pending_remove+0xec/0x104 net/bluetooth/mgmt_util.c:298
- mgmt_set_powered_complete+0x418/0x5cc net/bluetooth/mgmt.c:1355
- hci_cmd_sync_work+0x204/0x33c net/bluetooth/hci_sync.c:334
- process_one_work+0x7e8/0x156c kernel/workqueue.c:3238
- process_scheduled_works kernel/workqueue.c:3319 [inline]
- worker_thread+0x958/0xed8 kernel/workqueue.c:3400
- kthread+0x5fc/0x75c kernel/kthread.c:464
- ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:847
-
-Fixes: a380b6cff1a2 ("Bluetooth: Add generic mgmt helper API")
-Closes: https://syzkaller.appspot.com/bug?extid=0a7039d5d9986ff4ecec
-Closes: https://syzkaller.appspot.com/bug?extid=cc0cc52e7f43dc9e6df1
-Reported-by: syzbot+0a7039d5d9986ff4ecec@syzkaller.appspotmail.com
-Tested-by: syzbot+0a7039d5d9986ff4ecec@syzkaller.appspotmail.com
-Tested-by: syzbot+cc0cc52e7f43dc9e6df1@syzkaller.appspotmail.com
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Fixes: e9a416b5ce0c ("Bluetooth: Add mgmt_pair_device command")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Zihan Xi <xizh2024@lzu.edu.cn>
+Reviewed-by: Ren Wei <enjou1224z@gmail.com>
+Reported-by: Vega <vega@nebusec.ai>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: d0a7b48ad092 ("Bluetooth: mgmt: fix UAF in pair command cancellation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/hci_core.h |    1 
- net/bluetooth/hci_core.c         |    1 
- net/bluetooth/mgmt.c             |  101 ++++++++++++++++++---------------------
- net/bluetooth/mgmt_util.c        |   32 ++++++++++--
- net/bluetooth/mgmt_util.h        |    4 -
- 5 files changed, 80 insertions(+), 59 deletions(-)
+ net/bluetooth/mgmt.c |   64 ++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 46 insertions(+), 18 deletions(-)
 
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -543,6 +543,7 @@ struct hci_dev {
- 	struct hci_conn_hash	conn_hash;
- 
- 	struct list_head	mesh_pending;
-+	struct mutex		mgmt_pending_lock;
- 	struct list_head	mgmt_pending;
- 	struct list_head	reject_list;
- 	struct list_head	accept_list;
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2513,6 +2513,7 @@ struct hci_dev *hci_alloc_dev_priv(int s
- 
- 	mutex_init(&hdev->lock);
- 	mutex_init(&hdev->req_lock);
-+	mutex_init(&hdev->mgmt_pending_lock);
- 
- 	ida_init(&hdev->unset_handle_ida);
- 
 --- a/net/bluetooth/mgmt.c
 +++ b/net/bluetooth/mgmt.c
-@@ -1428,22 +1428,17 @@ static void settings_rsp(struct mgmt_pen
- 
- 	send_settings_rsp(cmd->sk, cmd->opcode, match->hdev);
- 
--	list_del(&cmd->list);
--
- 	if (match->sk == NULL) {
- 		match->sk = cmd->sk;
- 		sock_hold(match->sk);
- 	}
--
--	mgmt_pending_free(cmd);
+@@ -3343,11 +3343,13 @@ static int set_io_capability(struct sock
+ 				 NULL, 0);
  }
  
- static void cmd_status_rsp(struct mgmt_pending_cmd *cmd, void *data)
+-static struct mgmt_pending_cmd *find_pairing(struct hci_conn *conn)
++static struct mgmt_pending_cmd *remove_pairing(struct hci_conn *conn)
  {
- 	u8 *status = data;
- 
--	mgmt_cmd_status(cmd->sk, cmd->index, cmd->opcode, *status);
--	mgmt_pending_remove(cmd);
-+	mgmt_cmd_status(cmd->sk, cmd->hdev->id, cmd->opcode, *status);
- }
- 
- static void cmd_complete_rsp(struct mgmt_pending_cmd *cmd, void *data)
-@@ -1457,8 +1452,6 @@ static void cmd_complete_rsp(struct mgmt
- 
- 	if (cmd->cmd_complete) {
- 		cmd->cmd_complete(cmd, match->mgmt_status);
--		mgmt_pending_remove(cmd);
--
- 		return;
- 	}
- 
-@@ -1467,13 +1460,13 @@ static void cmd_complete_rsp(struct mgmt
- 
- static int generic_cmd_complete(struct mgmt_pending_cmd *cmd, u8 status)
- {
--	return mgmt_cmd_complete(cmd->sk, cmd->index, cmd->opcode, status,
-+	return mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode, status,
- 				 cmd->param, cmd->param_len);
- }
- 
- static int addr_cmd_complete(struct mgmt_pending_cmd *cmd, u8 status)
- {
--	return mgmt_cmd_complete(cmd->sk, cmd->index, cmd->opcode, status,
-+	return mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode, status,
- 				 cmd->param, sizeof(struct mgmt_addr_info));
- }
- 
-@@ -1513,7 +1506,7 @@ static void mgmt_set_discoverable_comple
- 
- 	if (err) {
- 		u8 mgmt_err = mgmt_status(err);
--		mgmt_cmd_status(cmd->sk, cmd->index, cmd->opcode, mgmt_err);
-+		mgmt_cmd_status(cmd->sk, cmd->hdev->id, cmd->opcode, mgmt_err);
- 		hci_dev_clear_flag(hdev, HCI_LIMITED_DISCOVERABLE);
- 		goto done;
- 	}
-@@ -1688,7 +1681,7 @@ static void mgmt_set_connectable_complet
- 
- 	if (err) {
- 		u8 mgmt_err = mgmt_status(err);
--		mgmt_cmd_status(cmd->sk, cmd->index, cmd->opcode, mgmt_err);
-+		mgmt_cmd_status(cmd->sk, cmd->hdev->id, cmd->opcode, mgmt_err);
- 		goto done;
- 	}
- 
-@@ -1925,8 +1918,8 @@ static void set_ssp_complete(struct hci_
- 			new_settings(hdev, NULL);
- 		}
- 
--		mgmt_pending_foreach(MGMT_OP_SET_SSP, hdev, cmd_status_rsp,
--				     &mgmt_err);
-+		mgmt_pending_foreach(MGMT_OP_SET_SSP, hdev, true,
-+				     cmd_status_rsp, &mgmt_err);
- 		return;
- 	}
- 
-@@ -1936,7 +1929,7 @@ static void set_ssp_complete(struct hci_
- 		changed = hci_dev_test_and_clear_flag(hdev, HCI_SSP_ENABLED);
- 	}
- 
--	mgmt_pending_foreach(MGMT_OP_SET_SSP, hdev, settings_rsp, &match);
-+	mgmt_pending_foreach(MGMT_OP_SET_SSP, hdev, true, settings_rsp, &match);
- 
- 	if (changed)
- 		new_settings(hdev, match.sk);
-@@ -2056,12 +2049,12 @@ static void set_le_complete(struct hci_d
- 	bt_dev_dbg(hdev, "err %d", err);
- 
- 	if (status) {
--		mgmt_pending_foreach(MGMT_OP_SET_LE, hdev, cmd_status_rsp,
--							&status);
-+		mgmt_pending_foreach(MGMT_OP_SET_LE, hdev, true, cmd_status_rsp,
-+				     &status);
- 		return;
- 	}
- 
--	mgmt_pending_foreach(MGMT_OP_SET_LE, hdev, settings_rsp, &match);
-+	mgmt_pending_foreach(MGMT_OP_SET_LE, hdev, true, settings_rsp, &match);
- 
- 	new_settings(hdev, match.sk);
- 
-@@ -2120,7 +2113,7 @@ static void set_mesh_complete(struct hci
- 	struct sock *sk = cmd->sk;
- 
- 	if (status) {
--		mgmt_pending_foreach(MGMT_OP_SET_MESH_RECEIVER, hdev,
-+		mgmt_pending_foreach(MGMT_OP_SET_MESH_RECEIVER, hdev, true,
- 				     cmd_status_rsp, &status);
- 		return;
- 	}
-@@ -2590,7 +2583,7 @@ static void mgmt_class_complete(struct h
- 
- 	bt_dev_dbg(hdev, "err %d", err);
- 
--	mgmt_cmd_complete(cmd->sk, cmd->index, cmd->opcode,
-+	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode,
- 			  mgmt_status(err), hdev->dev_class, 3);
- 
- 	mgmt_pending_free(cmd);
-@@ -3377,7 +3370,7 @@ static int pairing_complete(struct mgmt_
- 	bacpy(&rp.addr.bdaddr, &conn->dst);
- 	rp.addr.type = link_to_bdaddr(conn->type, conn->dst_type);
- 
--	err = mgmt_cmd_complete(cmd->sk, cmd->index, MGMT_OP_PAIR_DEVICE,
-+	err = mgmt_cmd_complete(cmd->sk, cmd->hdev->id, MGMT_OP_PAIR_DEVICE,
- 				status, &rp, sizeof(rp));
- 
- 	/* So we don't get further callbacks for this connection */
-@@ -5282,7 +5275,7 @@ static void mgmt_add_adv_patterns_monito
- 		hci_free_adv_monitor(hdev, monitor);
- 	}
- 
--	mgmt_cmd_complete(cmd->sk, cmd->index, cmd->opcode,
-+	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode,
- 			  mgmt_status(status), &rp, sizeof(rp));
- 	mgmt_pending_remove(cmd);
- 
-@@ -5497,7 +5490,7 @@ static void mgmt_remove_adv_monitor_comp
- 		hci_update_passive_scan(hdev);
- 	}
- 
--	mgmt_cmd_complete(cmd->sk, cmd->index, cmd->opcode,
-+	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode,
- 			  mgmt_status(status), &rp, sizeof(rp));
- 	mgmt_pending_free(cmd);
- 
-@@ -5896,7 +5889,7 @@ static void start_discovery_complete(str
- 	    cmd != pending_find(MGMT_OP_START_SERVICE_DISCOVERY, hdev))
- 		return;
- 
--	mgmt_cmd_complete(cmd->sk, cmd->index, cmd->opcode, mgmt_status(err),
-+	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode, mgmt_status(err),
- 			  cmd->param, 1);
- 	mgmt_pending_remove(cmd);
- 
-@@ -6134,7 +6127,7 @@ static void stop_discovery_complete(stru
- 
- 	bt_dev_dbg(hdev, "err %d", err);
- 
--	mgmt_cmd_complete(cmd->sk, cmd->index, cmd->opcode, mgmt_status(err),
-+	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode, mgmt_status(err),
- 			  cmd->param, 1);
- 	mgmt_pending_remove(cmd);
- 
-@@ -6359,7 +6352,7 @@ static void set_advertising_complete(str
- 	u8 status = mgmt_status(err);
- 
- 	if (status) {
--		mgmt_pending_foreach(MGMT_OP_SET_ADVERTISING, hdev,
-+		mgmt_pending_foreach(MGMT_OP_SET_ADVERTISING, hdev, true,
- 				     cmd_status_rsp, &status);
- 		return;
- 	}
-@@ -6369,7 +6362,7 @@ static void set_advertising_complete(str
- 	else
- 		hci_dev_clear_flag(hdev, HCI_ADVERTISING);
- 
--	mgmt_pending_foreach(MGMT_OP_SET_ADVERTISING, hdev, settings_rsp,
-+	mgmt_pending_foreach(MGMT_OP_SET_ADVERTISING, hdev, true, settings_rsp,
- 			     &match);
- 
- 	new_settings(hdev, match.sk);
-@@ -6714,7 +6707,7 @@ static void set_bredr_complete(struct hc
- 		 */
- 		hci_dev_clear_flag(hdev, HCI_BREDR_ENABLED);
- 
--		mgmt_cmd_status(cmd->sk, cmd->index, cmd->opcode, mgmt_err);
-+		mgmt_cmd_status(cmd->sk, cmd->hdev->id, cmd->opcode, mgmt_err);
- 	} else {
- 		send_settings_rsp(cmd->sk, MGMT_OP_SET_BREDR, hdev);
- 		new_settings(hdev, cmd->sk);
-@@ -6851,7 +6844,7 @@ static void set_secure_conn_complete(str
- 	if (err) {
- 		u8 mgmt_err = mgmt_status(err);
- 
--		mgmt_cmd_status(cmd->sk, cmd->index, cmd->opcode, mgmt_err);
-+		mgmt_cmd_status(cmd->sk, cmd->hdev->id, cmd->opcode, mgmt_err);
- 		goto done;
- 	}
- 
-@@ -7301,7 +7294,7 @@ static void get_conn_info_complete(struc
- 		rp.max_tx_power = HCI_TX_POWER_INVALID;
- 	}
- 
--	mgmt_cmd_complete(cmd->sk, cmd->index, MGMT_OP_GET_CONN_INFO, status,
-+	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, MGMT_OP_GET_CONN_INFO, status,
- 			  &rp, sizeof(rp));
- 
- 	mgmt_pending_free(cmd);
-@@ -7462,7 +7455,7 @@ static void get_clock_info_complete(stru
- 	}
- 
- complete:
--	mgmt_cmd_complete(cmd->sk, cmd->index, cmd->opcode, status, &rp,
-+	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode, status, &rp,
- 			  sizeof(rp));
- 
- 	mgmt_pending_free(cmd);
-@@ -8629,10 +8622,10 @@ static void add_advertising_complete(str
- 	rp.instance = cp->instance;
- 
- 	if (err)
--		mgmt_cmd_status(cmd->sk, cmd->index, cmd->opcode,
-+		mgmt_cmd_status(cmd->sk, cmd->hdev->id, cmd->opcode,
- 				mgmt_status(err));
- 	else
--		mgmt_cmd_complete(cmd->sk, cmd->index, cmd->opcode,
-+		mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode,
- 				  mgmt_status(err), &rp, sizeof(rp));
- 
- 	add_adv_complete(hdev, cmd->sk, cp->instance, err);
-@@ -8820,10 +8813,10 @@ static void add_ext_adv_params_complete(
- 
- 		hci_remove_adv_instance(hdev, cp->instance);
- 
--		mgmt_cmd_status(cmd->sk, cmd->index, cmd->opcode,
-+		mgmt_cmd_status(cmd->sk, cmd->hdev->id, cmd->opcode,
- 				mgmt_status(err));
- 	} else {
--		mgmt_cmd_complete(cmd->sk, cmd->index, cmd->opcode,
-+		mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode,
- 				  mgmt_status(err), &rp, sizeof(rp));
- 	}
- 
-@@ -8971,10 +8964,10 @@ static void add_ext_adv_data_complete(st
- 	rp.instance = cp->instance;
- 
- 	if (err)
--		mgmt_cmd_status(cmd->sk, cmd->index, cmd->opcode,
-+		mgmt_cmd_status(cmd->sk, cmd->hdev->id, cmd->opcode,
- 				mgmt_status(err));
- 	else
--		mgmt_cmd_complete(cmd->sk, cmd->index, cmd->opcode,
-+		mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode,
- 				  mgmt_status(err), &rp, sizeof(rp));
- 
- 	mgmt_pending_free(cmd);
-@@ -9140,10 +9133,10 @@ static void remove_advertising_complete(
- 	rp.instance = cp->instance;
- 
- 	if (err)
--		mgmt_cmd_status(cmd->sk, cmd->index, cmd->opcode,
-+		mgmt_cmd_status(cmd->sk, cmd->hdev->id, cmd->opcode,
- 				mgmt_status(err));
- 	else
--		mgmt_cmd_complete(cmd->sk, cmd->index, cmd->opcode,
-+		mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode,
- 				  MGMT_STATUS_SUCCESS, &rp, sizeof(rp));
- 
- 	mgmt_pending_free(cmd);
-@@ -9414,7 +9407,7 @@ void mgmt_index_removed(struct hci_dev *
- 	if (test_bit(HCI_QUIRK_RAW_DEVICE, &hdev->quirks))
- 		return;
- 
--	mgmt_pending_foreach(0, hdev, cmd_complete_rsp, &match);
-+	mgmt_pending_foreach(0, hdev, true, cmd_complete_rsp, &match);
- 
- 	if (hci_dev_test_flag(hdev, HCI_UNCONFIGURED)) {
- 		mgmt_index_event(MGMT_EV_UNCONF_INDEX_REMOVED, hdev, NULL, 0,
-@@ -9453,7 +9446,8 @@ void mgmt_power_on(struct hci_dev *hdev,
- 		hci_update_passive_scan(hdev);
- 	}
- 
--	mgmt_pending_foreach(MGMT_OP_SET_POWERED, hdev, settings_rsp, &match);
-+	mgmt_pending_foreach(MGMT_OP_SET_POWERED, hdev, true, settings_rsp,
-+			     &match);
- 
- 	new_settings(hdev, match.sk);
- 
-@@ -9468,7 +9462,8 @@ void __mgmt_power_off(struct hci_dev *hd
- 	struct cmd_lookup match = { NULL, hdev };
- 	u8 zero_cod[] = { 0, 0, 0 };
- 
--	mgmt_pending_foreach(MGMT_OP_SET_POWERED, hdev, settings_rsp, &match);
-+	mgmt_pending_foreach(MGMT_OP_SET_POWERED, hdev, true, settings_rsp,
-+			     &match);
- 
- 	/* If the power off is because of hdev unregistration let
- 	 * use the appropriate INVALID_INDEX status. Otherwise use
-@@ -9482,7 +9477,7 @@ void __mgmt_power_off(struct hci_dev *hd
- 	else
- 		match.mgmt_status = MGMT_STATUS_NOT_POWERED;
- 
--	mgmt_pending_foreach(0, hdev, cmd_complete_rsp, &match);
-+	mgmt_pending_foreach(0, hdev, true, cmd_complete_rsp, &match);
- 
- 	if (memcmp(hdev->dev_class, zero_cod, sizeof(zero_cod)) != 0) {
- 		mgmt_limited_event(MGMT_EV_CLASS_OF_DEV_CHANGED, hdev,
-@@ -9720,7 +9715,6 @@ static void unpair_device_rsp(struct mgm
- 	device_unpaired(hdev, &cp->addr.bdaddr, cp->addr.type, cmd->sk);
- 
- 	cmd->cmd_complete(cmd, 0);
--	mgmt_pending_remove(cmd);
- }
- 
- bool mgmt_powering_down(struct hci_dev *hdev)
-@@ -9773,8 +9767,8 @@ void mgmt_disconnect_failed(struct hci_d
- 	struct mgmt_cp_disconnect *cp;
+ 	struct hci_dev *hdev = conn->hdev;
  	struct mgmt_pending_cmd *cmd;
  
--	mgmt_pending_foreach(MGMT_OP_UNPAIR_DEVICE, hdev, unpair_device_rsp,
--			     hdev);
-+	mgmt_pending_foreach(MGMT_OP_UNPAIR_DEVICE, hdev, true,
-+			     unpair_device_rsp, hdev);
++	mutex_lock(&hdev->mgmt_pending_lock);
++
+ 	list_for_each_entry(cmd, &hdev->mgmt_pending, list) {
+ 		if (cmd->opcode != MGMT_OP_PAIR_DEVICE)
+ 			continue;
+@@ -3355,9 +3357,39 @@ static struct mgmt_pending_cmd *find_pai
+ 		if (cmd->user_data != conn)
+ 			continue;
  
- 	cmd = pending_find(MGMT_OP_DISCONNECT, hdev);
- 	if (!cmd)
-@@ -9967,7 +9961,7 @@ void mgmt_auth_enable_complete(struct hc
- 
- 	if (status) {
- 		u8 mgmt_err = mgmt_status(status);
--		mgmt_pending_foreach(MGMT_OP_SET_LINK_SECURITY, hdev,
-+		mgmt_pending_foreach(MGMT_OP_SET_LINK_SECURITY, hdev, true,
- 				     cmd_status_rsp, &mgmt_err);
- 		return;
++		list_del(&cmd->list);
++		mutex_unlock(&hdev->mgmt_pending_lock);
+ 		return cmd;
  	}
-@@ -9977,8 +9971,8 @@ void mgmt_auth_enable_complete(struct hc
- 	else
- 		changed = hci_dev_test_and_clear_flag(hdev, HCI_LINK_SECURITY);
  
--	mgmt_pending_foreach(MGMT_OP_SET_LINK_SECURITY, hdev, settings_rsp,
--			     &match);
-+	mgmt_pending_foreach(MGMT_OP_SET_LINK_SECURITY, hdev, true,
-+			     settings_rsp, &match);
- 
- 	if (changed)
- 		new_settings(hdev, match.sk);
-@@ -10002,9 +9996,12 @@ void mgmt_set_class_of_dev_complete(stru
- {
- 	struct cmd_lookup match = { NULL, hdev, mgmt_status(status) };
- 
--	mgmt_pending_foreach(MGMT_OP_SET_DEV_CLASS, hdev, sk_lookup, &match);
--	mgmt_pending_foreach(MGMT_OP_ADD_UUID, hdev, sk_lookup, &match);
--	mgmt_pending_foreach(MGMT_OP_REMOVE_UUID, hdev, sk_lookup, &match);
-+	mgmt_pending_foreach(MGMT_OP_SET_DEV_CLASS, hdev, false, sk_lookup,
-+			     &match);
-+	mgmt_pending_foreach(MGMT_OP_ADD_UUID, hdev, false, sk_lookup,
-+			     &match);
-+	mgmt_pending_foreach(MGMT_OP_REMOVE_UUID, hdev, false, sk_lookup,
-+			     &match);
- 
- 	if (!status) {
- 		mgmt_limited_event(MGMT_EV_CLASS_OF_DEV_CHANGED, hdev, dev_class,
---- a/net/bluetooth/mgmt_util.c
-+++ b/net/bluetooth/mgmt_util.c
-@@ -217,30 +217,47 @@ int mgmt_cmd_complete(struct sock *sk, u
- struct mgmt_pending_cmd *mgmt_pending_find(unsigned short channel, u16 opcode,
- 					   struct hci_dev *hdev)
- {
--	struct mgmt_pending_cmd *cmd;
-+	struct mgmt_pending_cmd *cmd, *tmp;
++	mutex_unlock(&hdev->mgmt_pending_lock);
++
++	return NULL;
++}
++
++static struct mgmt_pending_cmd *remove_pairing_by_addr(struct hci_dev *hdev,
++						       bdaddr_t *bdaddr)
++{
++	struct mgmt_pending_cmd *cmd;
++	struct hci_conn *conn;
 +
 +	mutex_lock(&hdev->mgmt_pending_lock);
- 
--	list_for_each_entry(cmd, &hdev->mgmt_pending, list) {
-+	list_for_each_entry_safe(cmd, tmp, &hdev->mgmt_pending, list) {
- 		if (hci_sock_get_channel(cmd->sk) != channel)
- 			continue;
--		if (cmd->opcode == opcode)
 +
-+		if (cmd->opcode == opcode) {
-+			mutex_unlock(&hdev->mgmt_pending_lock);
- 			return cmd;
-+		}
- 	}
- 
++	list_for_each_entry(cmd, &hdev->mgmt_pending, list) {
++		if (cmd->opcode != MGMT_OP_PAIR_DEVICE)
++			continue;
++
++		conn = cmd->user_data;
++		if (bacmp(bdaddr, &conn->dst) != 0)
++			continue;
++
++		list_del(&cmd->list);
++		mutex_unlock(&hdev->mgmt_pending_lock);
++		return cmd;
++	}
++
 +	mutex_unlock(&hdev->mgmt_pending_lock);
 +
  	return NULL;
  }
  
--void mgmt_pending_foreach(u16 opcode, struct hci_dev *hdev,
-+void mgmt_pending_foreach(u16 opcode, struct hci_dev *hdev, bool remove,
- 			  void (*cb)(struct mgmt_pending_cmd *cmd, void *data),
- 			  void *data)
- {
- 	struct mgmt_pending_cmd *cmd, *tmp;
+@@ -3395,10 +3427,10 @@ void mgmt_smp_complete(struct hci_conn *
+ 	u8 status = complete ? MGMT_STATUS_SUCCESS : MGMT_STATUS_FAILED;
+ 	struct mgmt_pending_cmd *cmd;
  
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
- 	list_for_each_entry_safe(cmd, tmp, &hdev->mgmt_pending, list) {
- 		if (opcode > 0 && cmd->opcode != opcode)
- 			continue;
- 
-+		if (remove)
-+			list_del(&cmd->list);
-+
- 		cb(cmd, data);
-+
-+		if (remove)
-+			mgmt_pending_free(cmd);
+-	cmd = find_pairing(conn);
++	cmd = remove_pairing(conn);
+ 	if (cmd) {
+ 		cmd->cmd_complete(cmd, status);
+-		mgmt_pending_remove(cmd);
++		mgmt_pending_free(cmd);
  	}
+ }
+ 
+@@ -3408,14 +3440,14 @@ static void pairing_complete_cb(struct h
+ 
+ 	BT_DBG("status %u", status);
+ 
+-	cmd = find_pairing(conn);
++	cmd = remove_pairing(conn);
+ 	if (!cmd) {
+ 		BT_DBG("Unable to find a pending command");
+ 		return;
+ 	}
+ 
+ 	cmd->cmd_complete(cmd, mgmt_status(status));
+-	mgmt_pending_remove(cmd);
++	mgmt_pending_free(cmd);
+ }
+ 
+ static void le_pairing_complete_cb(struct hci_conn *conn, u8 status)
+@@ -3427,14 +3459,14 @@ static void le_pairing_complete_cb(struc
+ 	if (!status)
+ 		return;
+ 
+-	cmd = find_pairing(conn);
++	cmd = remove_pairing(conn);
+ 	if (!cmd) {
+ 		BT_DBG("Unable to find a pending command");
+ 		return;
+ 	}
+ 
+ 	cmd->cmd_complete(cmd, mgmt_status(status));
+-	mgmt_pending_remove(cmd);
++	mgmt_pending_free(cmd);
+ }
+ 
+ static int pair_device(struct sock *sk, struct hci_dev *hdev, void *data,
+@@ -3602,23 +3634,17 @@ static int cancel_pair_device(struct soc
+ 		goto unlock;
+ 	}
+ 
+-	cmd = pending_find(MGMT_OP_PAIR_DEVICE, hdev);
++	cmd = remove_pairing_by_addr(hdev, &addr->bdaddr);
+ 	if (!cmd) {
+ 		err = mgmt_cmd_status(sk, hdev->id, MGMT_OP_CANCEL_PAIR_DEVICE,
+ 				      MGMT_STATUS_INVALID_PARAMS);
+ 		goto unlock;
+ 	}
+ 
+-	conn = cmd->user_data;
+-
+-	if (bacmp(&addr->bdaddr, &conn->dst) != 0) {
+-		err = mgmt_cmd_status(sk, hdev->id, MGMT_OP_CANCEL_PAIR_DEVICE,
+-				      MGMT_STATUS_INVALID_PARAMS);
+-		goto unlock;
+-	}
++	conn = hci_conn_get(cmd->user_data);
+ 
+ 	cmd->cmd_complete(cmd, MGMT_STATUS_CANCELLED);
+-	mgmt_pending_remove(cmd);
++	mgmt_pending_free(cmd);
+ 
+ 	err = mgmt_cmd_complete(sk, hdev->id, MGMT_OP_CANCEL_PAIR_DEVICE, 0,
+ 				addr, sizeof(*addr));
+@@ -3637,6 +3663,8 @@ static int cancel_pair_device(struct soc
+ 		hci_cmd_sync_queue(hdev, abort_conn_sync, ERR_PTR(conn->handle),
+ 				   NULL);
+ 
++	hci_conn_put(conn);
 +
-+	mutex_unlock(&hdev->mgmt_pending_lock);
+ unlock:
+ 	hci_dev_unlock(hdev);
+ 	return err;
+@@ -9943,14 +9971,14 @@ void mgmt_auth_failed(struct hci_conn *c
+ 	ev.addr.type = link_to_bdaddr(conn->type, conn->dst_type);
+ 	ev.status = status;
+ 
+-	cmd = find_pairing(conn);
++	cmd = remove_pairing(conn);
+ 
+ 	mgmt_event(MGMT_EV_AUTH_FAILED, conn->hdev, &ev, sizeof(ev),
+ 		    cmd ? cmd->sk : NULL);
+ 
+ 	if (cmd) {
+ 		cmd->cmd_complete(cmd, status);
+-		mgmt_pending_remove(cmd);
++		mgmt_pending_free(cmd);
+ 	}
  }
  
- struct mgmt_pending_cmd *mgmt_pending_new(struct sock *sk, u16 opcode,
-@@ -254,7 +271,7 @@ struct mgmt_pending_cmd *mgmt_pending_ne
- 		return NULL;
- 
- 	cmd->opcode = opcode;
--	cmd->index = hdev->id;
-+	cmd->hdev = hdev;
- 
- 	cmd->param = kmemdup(data, len, GFP_KERNEL);
- 	if (!cmd->param) {
-@@ -280,7 +297,9 @@ struct mgmt_pending_cmd *mgmt_pending_ad
- 	if (!cmd)
- 		return NULL;
- 
-+	mutex_lock(&hdev->mgmt_pending_lock);
- 	list_add_tail(&cmd->list, &hdev->mgmt_pending);
-+	mutex_unlock(&hdev->mgmt_pending_lock);
- 
- 	return cmd;
- }
-@@ -294,7 +313,10 @@ void mgmt_pending_free(struct mgmt_pendi
- 
- void mgmt_pending_remove(struct mgmt_pending_cmd *cmd)
- {
-+	mutex_lock(&cmd->hdev->mgmt_pending_lock);
- 	list_del(&cmd->list);
-+	mutex_unlock(&cmd->hdev->mgmt_pending_lock);
-+
- 	mgmt_pending_free(cmd);
- }
- 
---- a/net/bluetooth/mgmt_util.h
-+++ b/net/bluetooth/mgmt_util.h
-@@ -33,7 +33,7 @@ struct mgmt_mesh_tx {
- struct mgmt_pending_cmd {
- 	struct list_head list;
- 	u16 opcode;
--	int index;
-+	struct hci_dev *hdev;
- 	void *param;
- 	size_t param_len;
- 	struct sock *sk;
-@@ -54,7 +54,7 @@ int mgmt_cmd_complete(struct sock *sk, u
- 
- struct mgmt_pending_cmd *mgmt_pending_find(unsigned short channel, u16 opcode,
- 					   struct hci_dev *hdev);
--void mgmt_pending_foreach(u16 opcode, struct hci_dev *hdev,
-+void mgmt_pending_foreach(u16 opcode, struct hci_dev *hdev, bool remove,
- 			  void (*cb)(struct mgmt_pending_cmd *cmd, void *data),
- 			  void *data);
- struct mgmt_pending_cmd *mgmt_pending_add(struct sock *sk, u16 opcode,
 
 
