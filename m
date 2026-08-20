@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C1947ACD7;
-	Thu, 20 Aug 2026 16:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315CE46D0BD;
+	Thu, 20 Aug 2026 16:28:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243301; cv=none; b=cyBJPZaAU2G+3KH5OzEjDk4mCRmMqrwwebx69hduzj0TwMWKtSXLmYt49IlSZj5nsor4KMJDoZk1gmy4FUYApV/dhzDUwOyna4jtarpkZZYFndnbFIy1lCXrFCfgg1uMbo2Em3rGSzuc9Xw3NCobmAMxf1q8u9wM4Hq6jWRwfko=
+	t=1787243304; cv=none; b=jDOc+zWbwpdsGMq0nUbnbJ7p3t85zy/vk0fUL832Uaz3XgHGA9yD0tBdKnyn/3Q8twzlpukTqmNlD0RShylYAAsTY7SmyPJ3uTLnK7D02pOmcpHu8O3vk88oOWXaYIw0CZgv6WEqTfK1F83cwjLhssQ2nugl96m7MQHMaQycu6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243301; c=relaxed/simple;
-	bh=rduTiLR8dQJeQyyRhGAQHf8h3ouHS1MeWk7YCv9DXuY=;
+	s=arc-20240116; t=1787243304; c=relaxed/simple;
+	bh=vwu/PscxGK7dKNVSfMLqy3X51FcELdj67f9JDGs7Qs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B0hvn34gKoGtbAFFkYKLYzPexA9wKBLrRR3ADGCUVMdzy5Ia7bWBJrvKiFj/ewYcCWAKmK/XFfoVndncLJS9qgs6mqh26V2qN5pMv+Z3Ng0+LsOYUmPVotuXq6PNIotHF6W9+oCDkdSwyxTHxzHCjvOHEx7DmPEj7eQftsmw8vY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TY4rdHH4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NmavtuyEC/nXJPJCMXCLfE3Y5GfDoE6g7mAF1tK8aqDvFWC4HkfEvHUJKCxQYf98hQBg4sNTkXKlPMlcJZgHYz3UMWkV5OPOMjMF4wBXOuAukMN+Bmt5Vd5JeGtZRYPMpU1zzr7oCLbj11126N41fpQxIErhK3iVU7yAVtGmS5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d7czhjB/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TY4rdHH4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6531F000E9;
-	Thu, 20 Aug 2026 16:28:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7czhjB/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93BB51F000E9;
+	Thu, 20 Aug 2026 16:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243300;
-	bh=GLyjanNRdaXMlWCfmId7ehhipjANhNSY0Jgz//LbPCg=;
+	s=korg; t=1787243303;
+	bh=QLCYyotljJ7cbA6s9wbW7BmI45XujGmqPXTaGYdw50I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TY4rdHH4/2BGRD3c3zGIOb71kAXKi2sEmn3PF+eFuW/rK3FWP1YYA1YTTMxNNHwMD
-	 ozP1sDVUo+JKcfT8I2vlznHGStiS90w/dXXhJXa0GAVHm2lt3wOoP8mJxIs/AX3aQd
-	 eeAdy+4pG/d1lO4yOCz92TfvriEX4HW53IS8MSCw=
+	b=d7czhjB/MiKdDbzpP3/odarURO/PXEQqbNavdzTwlKUQuA/rRWR8Xi4r4a697Cpsc
+	 9Dyyickfj0UQu2NN8EKAboM1SdRSJGatJbFCFoUUYt6UCq1pZqRxzpTOXv0WPqt/Ep
+	 FtU3I2TUUMHtTygCtBr2LsgQM0HGpoTGWAy3UyKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Weinan Liu <wnliu@google.com>,
-	Wei Wang <wei.w.wang@hotmail.com>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	oxsignal <awo@kakao.com>,
+	Matt Bobrowski <mattbobrowski@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Amery Hung <ameryhung@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 048/272] iommu/amd: Dont split flush for amd_iommu_domain_flush_all()
-Date: Thu, 20 Aug 2026 16:53:52 +0200
-Message-ID: <20260820145232.664880667@linuxfoundation.org>
+Subject: [PATCH 5.15 049/272] bpf: Reject BPF_MAP_TYPE_INODE_STORAGE creation if BPF LSM is uninitialized
+Date: Thu, 20 Aug 2026 16:53:53 +0200
+Message-ID: <20260820145232.692161010@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -57,62 +54,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weinan Liu <wnliu@google.com>
+From: Matt Bobrowski <mattbobrowski@google.com>
 
-[ Upstream commit 69fe699afe1afcb730164b86c228483c2da05f94 ]
+[ Upstream commit a6f0643e4f63cfaa0d5d4a69de4f132eac4b8fe4 ]
 
-We have observed multiple full invalidations occurring during device
-detach when we are done using the vfio-device.
+When CONFIG_BPF_LSM=y is set, BPF inode storage maps
+(BPF_MAP_TYPE_INODE_STORAGE) are compiled into the kernel. However,
+if the BPF LSM is not explicitly enabled at boot time (e.g. omitted
+from the "lsm=" boot parameter), lsm_prepare() is never executed for
+the BPF LSM.
 
-blocked_domain_attach_device()
-  -> detach_device()
-    -> amd_iommu_domain_flush_all()
-      -> amd_iommu_domain_flush_pages(..., CMD_INV_IOMMU_ALL_PAGES_ADDRESS)
+Consequently, the BPF inode security blob offset
+(bpf_lsm_blob_sizes.lbs_inode) is never initialized and remains at
+its default compiled size of 8 bytes instead of being updated to a
+valid offset past the reserved struct rcu_head (typically 16 bytes
+or more).
 
-      	while (size != 0) {
+When a privileged user creates and updates a BPF_MAP_TYPE_INODE_STORAGE
+map, bpf_inode() evaluates inode->i_security + 8. This erroneously
+aliases the struct rcu_head.func callback pointer at the beginning
+of the inode->i_security blob. During subsequent map element cleanup
+or inode destruction, writing NULL to owner_storage clears the queued
+RCU callback pointer. When rcu_do_batch() later executes the queued
+callback, it attempts an instruction fetch at address 0x0, triggering
+an immediate kernel panic.
 
-          -> __domain_flush_pages( flush_size /* power of 2 flush_size */)
-            -> domain_flush_pages_v1()
-              -> build_inv_iommu_pages()
-                -> build_inv_address()
+Fix this by introducing a global bpf_lsm_initialized boolean flag
+marked with __ro_after_init. Set this flag to true inside bpf_lsm_init()
+when the LSM framework successfully registers the BPF LSM. Gate map
+allocation in inode_storage_map_alloc() on this flag, returning
+-EOPNOTSUPP if the BPF LSM is in turn uninitialized.
 
-         }
+This fail-fast approach prevents userspace from allocating inode
+storage maps when the supporting BPF LSM infrastructure is absent,
+avoiding zombie map states.
 
-build_inv_address() will trigger a full invalidation  if the chunk
-size > (1 << 51). Consequently, the guest will issue multiple full
-invalidations for a single call to  amd_iommu_domain_flush_all()
-
-Without this patch, we will see 10 time instead of 1 time full
-invalidations for every amd_iommu_domain_flush_all().
-
-Cc: stable@vger.kernel.org
-Fixes: a270be1b3fdf ("iommu/amd: Use only natural aligned flushes in a VM")
-Suggested-by: Josef Bacik <josef@toxicpanda.com>
-Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Weinan Liu <wnliu@google.com>
-Reviewed-by: Wei Wang <wei.w.wang@hotmail.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: 8ea636848aca ("bpf: Implement bpf_local_storage for inodes")
+Reported-by: oxsignal <awo@kakao.com>
+Signed-off-by: Matt Bobrowski <mattbobrowski@google.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Reviewed-by: Amery Hung <ameryhung@gmail.com>
+Link: https://lore.kernel.org/bpf/20260628201103.3624525-1-mattbobrowski@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/iommu.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/bpf_lsm.h        |    4 ++++
+ kernel/bpf/bpf_inode_storage.c |   10 ++++++++++
+ security/bpf/hooks.c           |    3 +++
+ 3 files changed, 17 insertions(+)
 
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -1284,7 +1284,8 @@ static void __domain_flush_pages(struct
- static void domain_flush_pages(struct protection_domain *domain,
- 			       u64 address, size_t size, int pde)
+--- a/include/linux/bpf_lsm.h
++++ b/include/linux/bpf_lsm.h
+@@ -13,6 +13,8 @@
+ 
+ #ifdef CONFIG_BPF_LSM
+ 
++extern bool bpf_lsm_initialized __ro_after_init;
++
+ #define LSM_HOOK(RET, DEFAULT, NAME, ...) \
+ 	RET bpf_lsm_##NAME(__VA_ARGS__);
+ #include <linux/lsm_hook_defs.h>
+@@ -44,6 +46,8 @@ void bpf_inode_storage_free(struct inode
+ 
+ #else /* !CONFIG_BPF_LSM */
+ 
++#define bpf_lsm_initialized false
++
+ static inline bool bpf_lsm_is_sleepable_hook(u32 btf_id)
  {
--	if (likely(!amd_iommu_np_cache)) {
-+	if (likely(!amd_iommu_np_cache) ||
-+		size >= (1ULL<<52)) {
- 		__domain_flush_pages(domain, address, size, pde);
- 		return;
- 	}
+ 	return false;
+--- a/kernel/bpf/bpf_inode_storage.c
++++ b/kernel/bpf/bpf_inode_storage.c
+@@ -223,6 +223,16 @@ static struct bpf_map *inode_storage_map
+ {
+ 	struct bpf_local_storage_map *smap;
+ 
++	/*
++	 * Do not allow allocation of BPF_MAP_TYPE_INODE_STORAGE if the BPF LSM
++	 * was not initialized by the LSM framework at boot. Without proper
++	 * initialization, the BPF inode security blob offset remains unprepared,
++	 * causing bpf_inode() to calculate an invalid memory offset and corrupt
++	 * inode->i_security.
++	 */
++	if (!bpf_lsm_initialized)
++		return ERR_PTR(-EOPNOTSUPP);
++
+ 	smap = bpf_local_storage_map_alloc(attr);
+ 	if (IS_ERR(smap))
+ 		return ERR_CAST(smap);
+--- a/security/bpf/hooks.c
++++ b/security/bpf/hooks.c
+@@ -6,6 +6,8 @@
+ #include <linux/lsm_hooks.h>
+ #include <linux/bpf_lsm.h>
+ 
++bool bpf_lsm_initialized __ro_after_init;
++
+ static struct security_hook_list bpf_lsm_hooks[] __lsm_ro_after_init = {
+ 	#define LSM_HOOK(RET, DEFAULT, NAME, ...) \
+ 	LSM_HOOK_INIT(NAME, bpf_lsm_##NAME),
+@@ -18,6 +20,7 @@ static struct security_hook_list bpf_lsm
+ static int __init bpf_lsm_init(void)
+ {
+ 	security_add_hooks(bpf_lsm_hooks, ARRAY_SIZE(bpf_lsm_hooks), "bpf");
++	bpf_lsm_initialized = true;
+ 	pr_info("LSM support for eBPF active\n");
+ 	return 0;
+ }
 
 
