@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3973447F2FA;
-	Thu, 20 Aug 2026 17:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C935215075;
+	Thu, 20 Aug 2026 17:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248655; cv=none; b=XQAHDFXZvqwyt7+k9W+fLu2VNCq0KYKDwzF5jrziCYyR0EStpUQ2/arZ0fjaSUk9rggM2f46ZDsNuHoMKTf8ZTfzhiliJDcPe48Nk/eQsjPv+HbGk5gzXeHlKytZ3woTAitP42Sqn8zHW0xSZ8BB1WobdCXeYe9Z9PEZURcRj0A=
+	t=1787248658; cv=none; b=cle42croAN/+rMKaHSs8usVvr85ot6YfgS0Qwj3T3gl8j8m84/5sTHviJH+bNGJVXPjCxAuA1vqBXnIgrIrMQQgBgBV4TFOtt+bJPcqT82LlWE8rkKLHDxr09fNc3hpvWHg9BSt1d9vTkALhUC3dZFqo1HmWjHIbVg59wkz5rqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248655; c=relaxed/simple;
-	bh=ATK/G/F3XHiuoKFHvAWEzGRWeI5qsPG2YeKlzVjLYM4=;
+	s=arc-20240116; t=1787248658; c=relaxed/simple;
+	bh=GOAeXK4Awco1jT28oy/rnWzlLVhxDT9BDhZDXPhK+HQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XcdNWRzS/w+dOOdpNXbyixyzPnzYaKft2ReVOWa1xWfLiG4cX8+BkscjJTcBv/uscnlmiMiaNrTjzdojKUOB1gf9tFAWM8d6+gPWbvX81CdqR/aw2IabHSgI2nbCbGigwL+7PLlcsv0YLJRToN7p/SjcrXeVMe/pTriY2pL9/Io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MhH8k39a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MT2u0pRv92qSz4fQq91XNCtPLjZJ/bjsNCQYeOs57xSm1jRHqEDS3L9+OvWLfe5DC7+TwQlDBWzbVLTlVthRiDTnMOvlgf3l+FYnuaonHVauE0TlGy6XV1iZLTbGl8yeVGdcxCsrPLo8eZgXK3GKTe3GPGuiOw0NZMtL26S+9VM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IeECihUG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MhH8k39a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FB91F000E9;
-	Thu, 20 Aug 2026 17:57:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IeECihUG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC211F000E9;
+	Thu, 20 Aug 2026 17:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248654;
-	bh=65yMB4zBf/4MJQshHCAaDK+DoeFTAP71pqYvOfYvrtw=;
+	s=korg; t=1787248657;
+	bh=OIJgQoWe2emVWtIljAYS1BQuLITx42y4CB48q863EM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MhH8k39aGMHbHOMR0rgRZvJ7UIw7pnyeaulaGWsJ1HBWKYtb8FN0npJg9eVzxC0NW
-	 elLBVkP2HZ8SMVq5xGn9B0sRhnhxS1yo+smlkRZrkRBmUEvUhaxUuEk/ja682ztE2f
-	 qLULOLhqot2dV6SFsm/rnSQz4Y+Dy4L/Gh3LVELs=
+	b=IeECihUGsC+4r8Jxu9Hqz7c5rNv7x/vkjfBWhRrbDu0DBnsGAKx7xUL0JUZB4S8KQ
+	 wkwTMi7F/nv13RPeortcfuXOt7i0m6nlMF/ALj+DQLN8r39KoALM4RzH6xRzqvENWx
+	 J5hV6aF/mAVHRvVMmvhQWdR39yv9FOG1Rk0xDO/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Ren Wei <enjou1224z@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 302/303] Bluetooth: mgmt: fix locking in unpair_device/disconnect_sync
-Date: Thu, 20 Aug 2026 16:57:18 +0200
-Message-ID: <20260820145302.545757576@linuxfoundation.org>
+Subject: [PATCH 6.1 303/303] Bluetooth: mgmt: fix pending command UAF in EIR updates
+Date: Thu, 20 Aug 2026 16:57:19 +0200
+Message-ID: <20260820145302.576500545@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -50,83 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit 16cd66443957e4ad42155c6fec401012f600c6f8 upstream.
+commit 8f2f62855a41d1730fb9e8122912bd2c8d6bed5d upstream.
 
-Dereferencing RCU-protected pointers outside critical sections is
-invalid and may lead to UAF.
+MGMT_OP_SET_LOCAL_NAME is handled asynchronously on powered controllers
+and can run set_name_sync().  When the controller is BR/EDR capable,
+set_name_sync() updates the local name and then rebuilds EIR data through
+eir_create().  The EIR builder walks hdev->uuids, but the UUID list can
+be changed and entries can be freed by MGMT_OP_ADD_UUID and
+MGMT_OP_REMOVE_UUID.
 
-Take hdev->lock for hci_conn lookup and hci_abort_conn().  Don't use RCU
-to ensure the conn is fully initialized at this point.
+pending_eir_or_class() is meant to serialize management commands that
+can change EIR or the class of device, but it did not include
+MGMT_OP_SET_LOCAL_NAME.  In addition, it walked hdev->mgmt_pending
+without hdev->mgmt_pending_lock even though pending commands are added
+and removed under that mutex.  A racing command completion can therefore
+remove and free a pending command while pending_eir_or_class() is still
+inspecting it, leading to a use-after-free in the pending-command list or
+allowing a local name update to rebuild EIR while UUID entries are being
+removed.
 
-Fixes: 227a0cdf4a028 ("Bluetooth: MGMT: Fix not generating command complete for MGMT_OP_DISCONNECT")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Take hdev->mgmt_pending_lock while scanning hdev->mgmt_pending and treat
+MGMT_OP_SET_LOCAL_NAME as an EIR/class-affecting pending command on the
+powered asynchronous path.  Check for a conflicting pending command before
+copying the new short name so a rejected SET_LOCAL_NAME request does not
+modify hdev->short_name.
+
+Fixes: 6fe26f694c82 ("Bluetooth: MGMT: Protect mgmt_pending list with its own lock")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Reported-by: Vega <vega@nebusec.ai>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/mgmt.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ net/bluetooth/mgmt.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
 --- a/net/bluetooth/mgmt.c
 +++ b/net/bluetooth/mgmt.c
-@@ -2939,6 +2939,8 @@ static int unpair_device_sync(struct hci
- 	struct mgmt_cp_unpair_device *cp = cmd->param;
- 	struct hci_conn *conn;
- 
-+	hci_dev_lock(hdev);
+@@ -2544,18 +2544,28 @@ unlock:
+ static bool pending_eir_or_class(struct hci_dev *hdev)
+ {
+ 	struct mgmt_pending_cmd *cmd;
++	bool pending = false;
 +
- 	if (cp->addr.type == BDADDR_BREDR)
- 		conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK,
- 					       &cp->addr.bdaddr);
-@@ -2946,6 +2948,11 @@ static int unpair_device_sync(struct hci
- 		conn = hci_conn_hash_lookup_le(hdev, &cp->addr.bdaddr,
- 					       le_addr_type(cp->addr.type));
++	mutex_lock(&hdev->mgmt_pending_lock);
  
-+	if (conn)
-+		hci_conn_get(conn);
+ 	list_for_each_entry(cmd, &hdev->mgmt_pending, list) {
+ 		switch (cmd->opcode) {
+ 		case MGMT_OP_ADD_UUID:
+ 		case MGMT_OP_REMOVE_UUID:
+ 		case MGMT_OP_SET_DEV_CLASS:
++		case MGMT_OP_SET_LOCAL_NAME:
+ 		case MGMT_OP_SET_POWERED:
+-			return true;
++			pending = true;
++			break;
+ 		}
 +
-+	hci_dev_unlock(hdev);
++		if (pending)
++			break;
+ 	}
+ 
+-	return false;
++	mutex_unlock(&hdev->mgmt_pending_lock);
 +
- 	if (!conn)
- 		return 0;
- 
-@@ -2953,6 +2960,7 @@ static int unpair_device_sync(struct hci
- 	 * will clean up the connection no matter the error.
- 	 */
- 	hci_abort_conn(conn, HCI_ERROR_REMOTE_USER_TERM);
-+	hci_conn_put(conn);
- 
- 	return 0;
++	return pending;
  }
-@@ -3100,6 +3108,8 @@ static int disconnect_sync(struct hci_de
- 	struct mgmt_cp_disconnect *cp = cmd->param;
- 	struct hci_conn *conn;
  
-+	hci_dev_lock(hdev);
+ static const u8 bluetooth_base_uuid[] = {
+@@ -3916,6 +3926,12 @@ static int set_local_name(struct sock *s
+ 		goto failed;
+ 	}
+ 
++	if (hdev_is_powered(hdev) && pending_eir_or_class(hdev)) {
++		err = mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_LOCAL_NAME,
++				      MGMT_STATUS_BUSY);
++		goto failed;
++	}
 +
- 	if (cp->addr.type == BDADDR_BREDR)
- 		conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK,
- 					       &cp->addr.bdaddr);
-@@ -3107,6 +3117,11 @@ static int disconnect_sync(struct hci_de
- 		conn = hci_conn_hash_lookup_le(hdev, &cp->addr.bdaddr,
- 					       le_addr_type(cp->addr.type));
+ 	memcpy(hdev->short_name, cp->short_name, sizeof(hdev->short_name));
  
-+	if (conn)
-+		hci_conn_get(conn);
-+
-+	hci_dev_unlock(hdev);
-+
- 	if (!conn)
- 		return -ENOTCONN;
- 
-@@ -3114,6 +3129,7 @@ static int disconnect_sync(struct hci_de
- 	 * will clean up the connection no matter the error.
- 	 */
- 	hci_abort_conn(conn, HCI_ERROR_REMOTE_USER_TERM);
-+	hci_conn_put(conn);
- 
- 	return 0;
- }
+ 	if (!hdev_is_powered(hdev)) {
 
 
