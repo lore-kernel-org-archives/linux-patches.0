@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA4446D091;
-	Thu, 20 Aug 2026 16:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EDD47D478;
+	Thu, 20 Aug 2026 16:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243793; cv=none; b=nE1MkpgnNbVwAnx0kEWoAwn03t7eloVkFCe/rbPk9f0KAVm/nxYjdzi0KI5sy+sbsu4Rge7sJhdpiqg45Nr19PEhkvwAlyONaz3jEov7KEpC8TEy0ZW7Z9uInZeEPhOfkIvUgc2OkjEjdpXg19CxBrjw7X1kXusNRjvVR5ROwfc=
+	t=1787243798; cv=none; b=pxepIhih4gppeHhnhgo8TbQCCDgLcs/w8XWAmjJyYYB3YJhdTfNm97QOL5xYma2umGFivTIL72DeRgb0hQpaTHjZPtijBxLsyZU2sbYMLXjLkJL6Fb7Ax+Vd5B+TTRZf6hYGspFesjMj1WLMTqnTyuDfXLm7zef26byu1CwnuL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243793; c=relaxed/simple;
-	bh=mC3XQmR0lZgJNZOnEY1pU4OWSsBTwYpOulzLg2sJ9sw=;
+	s=arc-20240116; t=1787243798; c=relaxed/simple;
+	bh=fakxTu2igl2AKOVu3UOF0r1CR7iklDkpqWpgt6yRzzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A4k9OzD16lzwMiCwSE+CNY2uvXCSG13qf55FCHs7uV5u8AJpAYkt0Gp06smwaKGYcouOUow76MHV45DzrpkIs0K3Uq/TSNtJX36qMVMZY6CqXNPE+EOUl3o2SLO1oVamzX9SnXOD9YI4WXTBPb1JqLN5mS0uXyzKK+Y/rL6en54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VDV5rS6F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e8yjkp/3+m0rxovHLljrfwM03oSR+qKkdM2qXsqCms4RyCqFW8OQiuqO5TBXzUn4B8ch3AMfeVK5+lsFwkX8BcrmzXegYMVlHxH2W9wa5rF5WRfRF0zBOQyPmDsOI5tcl6ITtnLhRGAkNnTF5N6XxChbYhCFrpP5nlf15x0pVa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=grrK2ax6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VDV5rS6F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A539A1F000E9;
-	Thu, 20 Aug 2026 16:36:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grrK2ax6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89C1B1F000E9;
+	Thu, 20 Aug 2026 16:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243792;
-	bh=Mm3rBmG9Mi5CSG+sEB3IW6CLVCMYnglo2qyH0tpbLpA=;
+	s=korg; t=1787243795;
+	bh=RxkVWHeNSGFMBS7FeALf37YZJsr1i/cV023VWfNEbVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VDV5rS6FBqA53t3rlujdqESpc0MPIrlmd7ibeTRw40sEXOd1ANtFTZzhFIpDiDJO2
-	 Y6Xb5uFZhTILEmV3UsNMdmbChK0Zi0Qweej/Yj5FLT/nYXqG64hIPUe1zR5v8t7xbq
-	 rLj5URaXWC30501JMOISclvt5uRJAy8U1pmx90KU=
+	b=grrK2ax6bPyjYpmoWaOtyZCQbWv+Es0VOItgTDxhP9qSvqZbnGxoFAFT4j9bXpRAB
+	 vnj7cHoEEHS9qe1JwEwezlFOgdgHZI3N31YSgTorJadRNhdeDY7TyJByA/KThB4VWt
+	 TBmSXN83Z+5JucZR83KxfUTXh3guTt+czQgH3/3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 217/272] super: fix emergency thaw deadlock on frozen block devices
-Date: Thu, 20 Aug 2026 16:56:41 +0200
-Message-ID: <20260820145238.115400085@linuxfoundation.org>
+Subject: [PATCH 5.15 218/272] ksmbd: rename smb2_get_msg to smb_get_msg
+Date: Thu, 20 Aug 2026 16:56:42 +0200
+Message-ID: <20260820145238.144512535@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -50,123 +51,428 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 749d7aa0377aae32af8c0a4ad43371e7bf830ab5 ]
+[ Upstream commit 0b444cfd8b74ebce421ccd96eac9c495e536c92e ]
 
-do_thaw_all_callback() calls bdev_thaw() while holding sb->s_umount
-exclusively. If the block device was frozen via bdev_freeze() dropping
-the last block layer freeze reference calls fs_bdev_thaw() which
-reacquires s_umount:
+With the removal of the RFC1002 length field from the SMB header,
+smb2_get_msg is now used to get the smb1 request from the request buffer.
+Since this function is no longer exclusive to smb2 and now supports smb1
+as well, This patch rename it to smb_get_msg to better reflect its usage.
 
-  do_thaw_all_callback(sb)
-    super_lock_excl(sb)                     # holds sb->s_umount
-    bdev_thaw(sb->s_bdev)
-      mutex_lock(&bdev->bd_fsfreeze_mutex)
-      # bd_fsfreeze_count drops 1 -> 0
-      bd_holder_ops->thaw == fs_bdev_thaw
-        get_bdev_super(bdev)
-          bdev_super_lock(bdev, true)
-            super_lock(sb, true)
-              down_write(&sb->s_umount)     # same task: deadlock
-
-The emergency thaw worker deadlocks against itself holding both
-s_umount and bd_fsfreeze_mutex. That fscks any subsequent unmount,
-freeze, or thaw of that filesystem and block device.
-
-  [   81.878470] sysrq: Show Blocked State
-  [   81.880140] task:kworker/0:1     state:D stack:0     pid:11    tgid:11    ppid:2      task_flags:0x4208060 flags:0x00080000
-  [   81.884876] Workqueue: events do_thaw_all
-  [   81.886656] Call Trace:
-  [   81.887759]  <TASK>
-  [   81.888763]  __schedule+0x579/0x1420
-  [   81.890372]  schedule+0x3a/0x100
-  [   81.891794]  schedule_preempt_disabled+0x15/0x30
-  [   81.893848]  rwsem_down_write_slowpath+0x1ea/0x900
-  [   81.895191]  ? __pfx_do_thaw_all_callback+0x10/0x10
-  [   81.896528]  down_write+0xbd/0xc0
-  [   81.897505]  super_lock+0x91/0x180
-  [   81.898457]  ? __mutex_lock+0xa99/0x1140
-  [   81.900748]  ? __mutex_unlock_slowpath+0x1f/0x400
-  [   81.902069]  bdev_super_lock+0x5b/0x150
-  [   81.903132]  get_bdev_super+0x10/0x60
-  [   81.904042]  fs_bdev_thaw+0x23/0xf0
-  [   81.904755]  bdev_thaw+0x82/0x100
-  [   81.905484]  do_thaw_all_callback+0x2c/0x50
-  [   81.906298]  __iterate_supers+0x5d/0x130
-  [   81.907067]  do_thaw_all+0x20/0x40
-  [   81.907739]  process_one_work+0x206/0x5e0
-  [   81.908545]  worker_thread+0x1e2/0x3c0
-  [   81.909339]  ? __pfx_worker_thread+0x10/0x10
-  [   81.910171]  kthread+0xf4/0x130
-  [   81.910799]  ? __pfx_kthread+0x10/0x10
-  [   81.911528]  ret_from_fork+0x2e2/0x3b0
-  [   81.912259]  ? __pfx_kthread+0x10/0x10
-  [   81.913010]  ret_from_fork_asm+0x1a/0x30
-  [   81.913806]  </TASK>
-
-bdev_super_lock() even documents the violated requirement with
-lockdep_assert_not_held(&sb->s_umount).
-
-Acquiring bd_fsfreeze_mutex under s_umount also inverts the
-bd_fsfreeze_mutex vs. s_umount ordering established by
-bdev_{freeze,thaw}() and can thus ABBA against a concurrent block-layer
-freeze even when the recursive path isn't hit.
-
-Fix this by not holding s_umount around the bdev_thaw() loop at all. Pin
-the superblock with an active reference instead as
-filesystems_freeze_callback() does. The active reference keeps the
-superblock from being shut down and so ->s_bdev stays valid without
-holding s_umount. The block-layer-held freeze is dropped by
-fs_bdev_thaw() with FREEZE_MAY_NEST | FREEZE_HOLDER_USERSPACE exactly as
-a regular unfreeze would and thaw_super_locked() handles
-filesystem-level freezes as before.
-
-The emergency thaw path has deadlocked like this in one form or
-another for a long long time but the current exclusively-held
-shape dates back to commit [1] where thaw_bdev() already ended in
-thaw_super() with s_umount held by do_thaw_all_callback().
-
-Fixes: 08fdc8a0138a ("buffer.c: call thaw_super during emergency thaw") [1]
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260723-work-super-emergency_thaw-v1-1-7c315c600245@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: cfc0b8e5080a ("ksmbd: validate minimum PDU size for transform requests")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/super.c |   19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ fs/ksmbd/auth.c       |    4 +-
+ fs/ksmbd/connection.c |    2 -
+ fs/ksmbd/oplock.c     |    8 ++---
+ fs/ksmbd/smb2pdu.c    |   70 +++++++++++++++++++++++++-------------------------
+ fs/ksmbd/smb2pdu.h    |    9 ------
+ fs/ksmbd/smb_common.c |    6 ++--
+ fs/ksmbd/smb_common.h |    9 ++++++
+ 7 files changed, 54 insertions(+), 54 deletions(-)
 
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -1006,13 +1006,24 @@ void emergency_remount(void)
- 
- static void do_thaw_all_callback(struct super_block *sb)
+--- a/fs/ksmbd/auth.c
++++ b/fs/ksmbd/auth.c
+@@ -920,7 +920,7 @@ int ksmbd_gen_preauth_integrity_hash(str
+ 				     __u8 *pi_hash)
  {
-+	bool active = false;
-+
-+	down_write(&sb->s_umount);
-+	if (sb->s_root && sb->s_flags & SB_BORN)
-+		active = atomic_inc_not_zero(&sb->s_active);
-+	up_write(&sb->s_umount);
-+	if (!active)
-+		return;
-+
-+	/* thaw_bdev() acquires s_umount so it must not be held here */
-+	emergency_thaw_bdev(sb);
-+
- 	down_write(&sb->s_umount);
--	if (sb->s_root && sb->s_flags & SB_BORN) {
--		emergency_thaw_bdev(sb);
-+	if (sb->s_root && sb->s_flags & SB_BORN)
- 		thaw_super_locked(sb);
--	} else {
-+	else
- 		up_write(&sb->s_umount);
--	}
-+	deactivate_super(sb);
+ 	int rc;
+-	struct smb2_hdr *rcv_hdr = smb2_get_msg(buf);
++	struct smb2_hdr *rcv_hdr = smb_get_msg(buf);
+ 	char *all_bytes_msg = (char *)&rcv_hdr->ProtocolId;
+ 	int msg_size = get_rfc1002_len(buf);
+ 	struct ksmbd_crypto_ctx *ctx = NULL;
+@@ -1107,7 +1107,7 @@ int ksmbd_crypt_message(struct ksmbd_wor
+ 			unsigned int nvec, int enc)
+ {
+ 	struct ksmbd_conn *conn = work->conn;
+-	struct smb2_transform_hdr *tr_hdr = smb2_get_msg(iov[0].iov_base);
++	struct smb2_transform_hdr *tr_hdr = smb_get_msg(iov[0].iov_base);
+ 	unsigned int assoc_data_len = sizeof(struct smb2_transform_hdr) - 20;
+ 	int rc;
+ 	DECLARE_CRYPTO_WAIT(wait);
+--- a/fs/ksmbd/connection.c
++++ b/fs/ksmbd/connection.c
+@@ -396,7 +396,7 @@ int ksmbd_conn_handler_loop(void *p)
+ 		if (!ksmbd_smb_request(conn))
+ 			break;
+ 
+-		if (((struct smb2_hdr *)smb2_get_msg(conn->request_buf))->ProtocolId ==
++		if (((struct smb2_hdr *)smb_get_msg(conn->request_buf))->ProtocolId ==
+ 		    SMB2_PROTO_NUMBER) {
+ 			if (pdu_size < SMB2_MIN_SUPPORTED_HEADER_SIZE)
+ 				break;
+--- a/fs/ksmbd/oplock.c
++++ b/fs/ksmbd/oplock.c
+@@ -656,7 +656,7 @@ static void __smb2_oplock_break_noti(str
+ 		goto out;
+ 	}
+ 
+-	rsp_hdr = smb2_get_msg(work->response_buf);
++	rsp_hdr = smb_get_msg(work->response_buf);
+ 	memset(rsp_hdr, 0, sizeof(struct smb2_hdr) + 2);
+ 	rsp_hdr->ProtocolId = SMB2_PROTO_NUMBER;
+ 	rsp_hdr->StructureSize = SMB2_HEADER_STRUCTURE_SIZE;
+@@ -670,7 +670,7 @@ static void __smb2_oplock_break_noti(str
+ 	rsp_hdr->SessionId = 0;
+ 	memset(rsp_hdr->Signature, 0, 16);
+ 
+-	rsp = smb2_get_msg(work->response_buf);
++	rsp = smb_get_msg(work->response_buf);
+ 
+ 	rsp->StructureSize = cpu_to_le16(24);
+ 	if (!br_info->open_trunc &&
+@@ -760,7 +760,7 @@ static void __smb2_lease_break_noti(stru
+ 		goto out;
+ 	}
+ 
+-	rsp_hdr = smb2_get_msg(work->response_buf);
++	rsp_hdr = smb_get_msg(work->response_buf);
+ 	memset(rsp_hdr, 0, sizeof(struct smb2_hdr) + 2);
+ 	rsp_hdr->ProtocolId = SMB2_PROTO_NUMBER;
+ 	rsp_hdr->StructureSize = SMB2_HEADER_STRUCTURE_SIZE;
+@@ -774,7 +774,7 @@ static void __smb2_lease_break_noti(stru
+ 	rsp_hdr->SessionId = 0;
+ 	memset(rsp_hdr->Signature, 0, 16);
+ 
+-	rsp = smb2_get_msg(work->response_buf);
++	rsp = smb_get_msg(work->response_buf);
+ 	rsp->StructureSize = cpu_to_le16(44);
+ 	rsp->Epoch = br_info->epoch;
+ 	rsp->Flags = 0;
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -46,8 +46,8 @@ static void __wbuf(struct ksmbd_work *wo
+ 		*req = ksmbd_req_buf_next(work);
+ 		*rsp = ksmbd_resp_buf_next(work);
+ 	} else {
+-		*req = smb2_get_msg(work->request_buf);
+-		*rsp = smb2_get_msg(work->response_buf);
++		*req = smb_get_msg(work->request_buf);
++		*rsp = smb_get_msg(work->response_buf);
+ 	}
  }
  
- static void do_thaw_all(struct work_struct *work)
+@@ -147,7 +147,7 @@ void smb2_set_err_rsp(struct ksmbd_work
+ 	if (work->next_smb2_rcv_hdr_off)
+ 		err_rsp = ksmbd_resp_buf_next(work);
+ 	else
+-		err_rsp = smb2_get_msg(work->response_buf);
++		err_rsp = smb_get_msg(work->response_buf);
+ 
+ 	if (err_rsp->hdr.Status != STATUS_STOPPED_ON_SYMLINK) {
+ 		int err;
+@@ -173,7 +173,7 @@ void smb2_set_err_rsp(struct ksmbd_work
+  */
+ bool is_smb2_neg_cmd(struct ksmbd_work *work)
+ {
+-	struct smb2_hdr *hdr = smb2_get_msg(work->request_buf);
++	struct smb2_hdr *hdr = smb_get_msg(work->request_buf);
+ 
+ 	/* is it SMB2 header ? */
+ 	if (hdr->ProtocolId != SMB2_PROTO_NUMBER)
+@@ -197,7 +197,7 @@ bool is_smb2_neg_cmd(struct ksmbd_work *
+  */
+ bool is_smb2_rsp(struct ksmbd_work *work)
+ {
+-	struct smb2_hdr *hdr = smb2_get_msg(work->response_buf);
++	struct smb2_hdr *hdr = smb_get_msg(work->response_buf);
+ 
+ 	/* is it SMB2 header ? */
+ 	if (hdr->ProtocolId != SMB2_PROTO_NUMBER)
+@@ -223,7 +223,7 @@ u16 get_smb2_cmd_val(struct ksmbd_work *
+ 	if (work->next_smb2_rcv_hdr_off)
+ 		rcv_hdr = ksmbd_req_buf_next(work);
+ 	else
+-		rcv_hdr = smb2_get_msg(work->request_buf);
++		rcv_hdr = smb_get_msg(work->request_buf);
+ 	return le16_to_cpu(rcv_hdr->Command);
+ }
+ 
+@@ -236,7 +236,7 @@ void set_smb2_rsp_status(struct ksmbd_wo
+ {
+ 	struct smb2_hdr *rsp_hdr;
+ 
+-	rsp_hdr = smb2_get_msg(work->response_buf);
++	rsp_hdr = smb_get_msg(work->response_buf);
+ 	rsp_hdr->Status = err;
+ 
+ 	work->iov_idx = 0;
+@@ -259,7 +259,7 @@ int init_smb2_neg_rsp(struct ksmbd_work
+ 	struct ksmbd_conn *conn = work->conn;
+ 	int err;
+ 
+-	rsp_hdr = smb2_get_msg(work->response_buf);
++	rsp_hdr = smb_get_msg(work->response_buf);
+ 	memset(rsp_hdr, 0, sizeof(struct smb2_hdr) + 2);
+ 	rsp_hdr->ProtocolId = SMB2_PROTO_NUMBER;
+ 	rsp_hdr->StructureSize = SMB2_HEADER_STRUCTURE_SIZE;
+@@ -273,7 +273,7 @@ int init_smb2_neg_rsp(struct ksmbd_work
+ 	rsp_hdr->SessionId = 0;
+ 	memset(rsp_hdr->Signature, 0, 16);
+ 
+-	rsp = smb2_get_msg(work->response_buf);
++	rsp = smb_get_msg(work->response_buf);
+ 
+ 	WARN_ON(ksmbd_conn_good(conn));
+ 
+@@ -448,7 +448,7 @@ static void init_chained_smb2_rsp(struct
+  */
+ bool is_chained_smb2_message(struct ksmbd_work *work)
+ {
+-	struct smb2_hdr *hdr = smb2_get_msg(work->request_buf);
++	struct smb2_hdr *hdr = smb_get_msg(work->request_buf);
+ 	unsigned int len, next_cmd;
+ 
+ 	if (hdr->ProtocolId != SMB2_PROTO_NUMBER)
+@@ -499,8 +499,8 @@ bool is_chained_smb2_message(struct ksmb
+  */
+ int init_smb2_rsp_hdr(struct ksmbd_work *work)
+ {
+-	struct smb2_hdr *rsp_hdr = smb2_get_msg(work->response_buf);
+-	struct smb2_hdr *rcv_hdr = smb2_get_msg(work->request_buf);
++	struct smb2_hdr *rsp_hdr = smb_get_msg(work->response_buf);
++	struct smb2_hdr *rcv_hdr = smb_get_msg(work->request_buf);
+ 
+ 	memset(rsp_hdr, 0, sizeof(struct smb2_hdr) + 2);
+ 	rsp_hdr->ProtocolId = rcv_hdr->ProtocolId;
+@@ -529,7 +529,7 @@ int init_smb2_rsp_hdr(struct ksmbd_work
+  */
+ int smb2_allocate_rsp_buf(struct ksmbd_work *work)
+ {
+-	struct smb2_hdr *hdr = smb2_get_msg(work->request_buf);
++	struct smb2_hdr *hdr = smb_get_msg(work->request_buf);
+ 	size_t small_sz = MAX_CIFS_SMALL_BUFFER_SIZE;
+ 	size_t large_sz = small_sz + work->conn->vals->max_trans_size;
+ 	size_t sz = small_sz;
+@@ -545,7 +545,7 @@ int smb2_allocate_rsp_buf(struct ksmbd_w
+ 		    offsetof(struct smb2_query_info_req, OutputBufferLength))
+ 			return -EINVAL;
+ 
+-		req = smb2_get_msg(work->request_buf);
++		req = smb_get_msg(work->request_buf);
+ 		if ((req->InfoType == SMB2_O_INFO_FILE &&
+ 		     (req->FileInfoClass == FILE_FULL_EA_INFORMATION ||
+ 		      req->FileInfoClass == FILE_ALL_INFORMATION)) ||
+@@ -732,10 +732,10 @@ void smb2_send_interim_resp(struct ksmbd
+ 	}
+ 
+ 	in_work->conn = work->conn;
+-	memcpy(smb2_get_msg(in_work->response_buf), ksmbd_resp_buf_next(work),
++	memcpy(smb_get_msg(in_work->response_buf), ksmbd_resp_buf_next(work),
+ 	       __SMB2_HEADER_STRUCTURE_SIZE);
+ 
+-	rsp_hdr = smb2_get_msg(in_work->response_buf);
++	rsp_hdr = smb_get_msg(in_work->response_buf);
+ 	rsp_hdr->Flags |= SMB2_FLAGS_ASYNC_COMMAND;
+ 	rsp_hdr->Id.AsyncId = cpu_to_le64(work->async_id);
+ 	smb2_set_err_rsp(in_work);
+@@ -1112,8 +1112,8 @@ static __le32 deassemble_neg_contexts(st
+ int smb2_handle_negotiate(struct ksmbd_work *work)
+ {
+ 	struct ksmbd_conn *conn = work->conn;
+-	struct smb2_negotiate_req *req = smb2_get_msg(work->request_buf);
+-	struct smb2_negotiate_rsp *rsp = smb2_get_msg(work->response_buf);
++	struct smb2_negotiate_req *req = smb_get_msg(work->request_buf);
++	struct smb2_negotiate_rsp *rsp = smb_get_msg(work->response_buf);
+ 	int rc = 0;
+ 	unsigned int smb2_buf_len, smb2_neg_size, neg_ctxt_len = 0;
+ 	__le32 status;
+@@ -5569,7 +5569,7 @@ out:
+  */
+ int smb2_echo(struct ksmbd_work *work)
+ {
+-	struct smb2_echo_rsp *rsp = smb2_get_msg(work->response_buf);
++	struct smb2_echo_rsp *rsp = smb_get_msg(work->response_buf);
+ 
+ 	if (work->next_smb2_rcv_hdr_off)
+ 		rsp = ksmbd_resp_buf_next(work);
+@@ -6130,8 +6130,8 @@ int smb2_set_info(struct ksmbd_work *wor
+ 			pid = work->compound_pfid;
+ 		}
+ 	} else {
+-		req = smb2_get_msg(work->request_buf);
+-		rsp = smb2_get_msg(work->response_buf);
++		req = smb_get_msg(work->request_buf);
++		rsp = smb_get_msg(work->response_buf);
+ 	}
+ 
+ 	if (!test_tree_conn_flag(work->tcon, KSMBD_TREE_CONN_FLAG_WRITABLE)) {
+@@ -6360,8 +6360,8 @@ int smb2_read(struct ksmbd_work *work)
+ 			pid = work->compound_pfid;
+ 		}
+ 	} else {
+-		req = smb2_get_msg(work->request_buf);
+-		rsp = smb2_get_msg(work->response_buf);
++		req = smb_get_msg(work->request_buf);
++		rsp = smb_get_msg(work->response_buf);
+ 	}
+ 
+ 	if (!has_file_id(id)) {
+@@ -6778,7 +6778,7 @@ out:
+ int smb2_cancel(struct ksmbd_work *work)
+ {
+ 	struct ksmbd_conn *conn = work->conn;
+-	struct smb2_hdr *hdr = smb2_get_msg(work->request_buf);
++	struct smb2_hdr *hdr = smb_get_msg(work->request_buf);
+ 	struct smb2_hdr *chdr;
+ 	struct ksmbd_work *iter;
+ 	struct list_head *command_list;
+@@ -6795,7 +6795,7 @@ int smb2_cancel(struct ksmbd_work *work)
+ 		spin_lock(&conn->request_lock);
+ 		list_for_each_entry(iter, command_list,
+ 				    async_request_entry) {
+-			chdr = smb2_get_msg(iter->request_buf);
++			chdr = smb_get_msg(iter->request_buf);
+ 
+ 			if (iter->async_id !=
+ 			    le64_to_cpu(hdr->Id.AsyncId))
+@@ -6816,7 +6816,7 @@ int smb2_cancel(struct ksmbd_work *work)
+ 
+ 		spin_lock(&conn->request_lock);
+ 		list_for_each_entry(iter, command_list, request_entry) {
+-			chdr = smb2_get_msg(iter->request_buf);
++			chdr = smb_get_msg(iter->request_buf);
+ 
+ 			if (chdr->MessageId != hdr->MessageId ||
+ 			    iter == work)
+@@ -7748,8 +7748,8 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 			id = work->compound_fid;
+ 		}
+ 	} else {
+-		req = smb2_get_msg(work->request_buf);
+-		rsp = smb2_get_msg(work->response_buf);
++		req = smb_get_msg(work->request_buf);
++		rsp = smb_get_msg(work->response_buf);
+ 	}
+ 
+ 	if (!has_file_id(id))
+@@ -8417,7 +8417,7 @@ int smb2_notify(struct ksmbd_work *work)
+  */
+ bool smb2_is_sign_req(struct ksmbd_work *work, unsigned int command)
+ {
+-	struct smb2_hdr *rcv_hdr2 = smb2_get_msg(work->request_buf);
++	struct smb2_hdr *rcv_hdr2 = smb_get_msg(work->request_buf);
+ 
+ 	if ((rcv_hdr2->Flags & SMB2_FLAGS_SIGNED) &&
+ 	    command != SMB2_NEGOTIATE_HE &&
+@@ -8442,7 +8442,7 @@ int smb2_check_sign_req(struct ksmbd_wor
+ 	struct kvec iov[1];
+ 	size_t len;
+ 
+-	hdr = smb2_get_msg(work->request_buf);
++	hdr = smb_get_msg(work->request_buf);
+ 	if (work->next_smb2_rcv_hdr_off)
+ 		hdr = ksmbd_req_buf_next(work);
+ 
+@@ -8517,7 +8517,7 @@ int smb3_check_sign_req(struct ksmbd_wor
+ 	struct kvec iov[1];
+ 	size_t len;
+ 
+-	hdr = smb2_get_msg(work->request_buf);
++	hdr = smb_get_msg(work->request_buf);
+ 	if (work->next_smb2_rcv_hdr_off)
+ 		hdr = ksmbd_req_buf_next(work);
+ 
+@@ -8653,7 +8653,7 @@ void smb3_preauth_hash_rsp(struct ksmbd_
+ static void fill_transform_hdr(void *tr_buf, char *old_buf, __le16 cipher_type)
+ {
+ 	struct smb2_transform_hdr *tr_hdr = tr_buf + 4;
+-	struct smb2_hdr *hdr = smb2_get_msg(old_buf);
++	struct smb2_hdr *hdr = smb_get_msg(old_buf);
+ 	unsigned int orig_len = get_rfc1002_len(old_buf);
+ 
+ 	/* tr_buf must be cleared by the caller */
+@@ -8692,7 +8692,7 @@ int smb3_encrypt_resp(struct ksmbd_work
+ 
+ bool smb3_is_transform_hdr(void *buf)
+ {
+-	struct smb2_transform_hdr *trhdr = smb2_get_msg(buf);
++	struct smb2_transform_hdr *trhdr = smb_get_msg(buf);
+ 
+ 	return trhdr->ProtocolId == SMB2_TRANSFORM_PROTO_NUM;
+ }
+@@ -8704,7 +8704,7 @@ int smb3_decrypt_req(struct ksmbd_work *
+ 	unsigned int pdu_length = get_rfc1002_len(buf);
+ 	struct kvec iov[2];
+ 	int buf_data_size = pdu_length - sizeof(struct smb2_transform_hdr);
+-	struct smb2_transform_hdr *tr_hdr = smb2_get_msg(buf);
++	struct smb2_transform_hdr *tr_hdr = smb_get_msg(buf);
+ 	int rc = 0;
+ 
+ 	if (pdu_length < sizeof(struct smb2_transform_hdr) ||
+@@ -8745,7 +8745,7 @@ bool smb3_11_final_sess_setup_resp(struc
+ {
+ 	struct ksmbd_conn *conn = work->conn;
+ 	struct ksmbd_session *sess = work->sess;
+-	struct smb2_hdr *rsp = smb2_get_msg(work->response_buf);
++	struct smb2_hdr *rsp = smb_get_msg(work->response_buf);
+ 
+ 	if (conn->dialect < SMB30_PROT_ID)
+ 		return false;
+--- a/fs/ksmbd/smb2pdu.h
++++ b/fs/ksmbd/smb2pdu.h
+@@ -1704,13 +1704,4 @@ int smb2_ioctl(struct ksmbd_work *work);
+ int smb2_oplock_break(struct ksmbd_work *work);
+ int smb2_notify(struct ksmbd_work *ksmbd_work);
+ 
+-/*
+- * Get the body of the smb2 message excluding the 4 byte rfc1002 headers
+- * from request/response buffer.
+- */
+-static inline void *smb2_get_msg(void *buf)
+-{
+-	return buf + 4;
+-}
+-
+ #endif	/* _SMB2PDU_H */
+--- a/fs/ksmbd/smb_common.c
++++ b/fs/ksmbd/smb_common.c
+@@ -163,7 +163,7 @@ bool ksmbd_smb_request(struct ksmbd_conn
+ 	if (conn->request_buf[0] != 0)
+ 		return false;
+ 
+-	proto = (__le32 *)smb2_get_msg(conn->request_buf);
++	proto = (__le32 *)smb_get_msg(conn->request_buf);
+ 	if (*proto == SMB2_COMPRESSION_TRANSFORM_ID) {
+ 		pr_err_ratelimited("smb2 compression not support yet");
+ 		return false;
+@@ -259,14 +259,14 @@ int ksmbd_lookup_dialect_by_id(__le16 *c
+ static int ksmbd_negotiate_smb_dialect(void *buf)
+ {
+ 	int smb_buf_length = get_rfc1002_len(buf);
+-	__le32 proto = ((struct smb2_hdr *)smb2_get_msg(buf))->ProtocolId;
++	__le32 proto = ((struct smb2_hdr *)smb_get_msg(buf))->ProtocolId;
+ 
+ 	if (proto == SMB2_PROTO_NUMBER) {
+ 		struct smb2_negotiate_req *req;
+ 		int smb2_neg_size =
+ 			offsetof(struct smb2_negotiate_req, Dialects);
+ 
+-		req = (struct smb2_negotiate_req *)smb2_get_msg(buf);
++		req = (struct smb2_negotiate_req *)smb_get_msg(buf);
+ 		if (smb2_neg_size > smb_buf_length)
+ 			goto err_out;
+ 
+--- a/fs/ksmbd/smb_common.h
++++ b/fs/ksmbd/smb_common.h
+@@ -512,4 +512,13 @@ static inline void inc_rfc1001_len(void
+ {
+ 	be32_add_cpu((__be32 *)buf, count);
+ }
++
++/*
++ * Get the body of the smb message excluding the 4 byte rfc1002 headers
++ * from request/response buffer.
++ */
++static inline void *smb_get_msg(void *buf)
++{
++	return buf + 4;
++}
+ #endif /* __SMB_COMMON_H__ */
 
 
