@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02360376BD1;
-	Thu, 20 Aug 2026 15:15:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E251D37C109;
+	Thu, 20 Aug 2026 15:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238910; cv=none; b=i/JxL7qkd+MamSbwzPuNaR/VEiEZk2BRwYAAqBPJ2b0/eswCP+R8sSkrUNnFtqu7wzcehsXEm28A2CUDOhBP/IS/HdrGMlwu1NInVsPOhGk3z8Mwy/jTQ8JV9viro/0TjgOocf5LafVRIMXcBrhOv6JpSCvWbgiKkfB+K//F3KE=
+	t=1787238913; cv=none; b=APvJ7xzlV0i5eQUyYgjxzyoonQbl14V6Zd+PZixHs5ebyxEAjrrYrUgc60LfKHzGMWfY1wA+jQAiO+7/PmdfLjJYGOT0ZYIsKkbPjQdOCxI9JiEeL3HVUOUyskwwkxqqNBpJPy6FlZMow5yUCDjdymW9w46jjMs+g0RG6p2aDnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238910; c=relaxed/simple;
-	bh=CBvaZh63vailaL2e2Z8O1BdcEvaXx0oTueiZ9+PjV/4=;
+	s=arc-20240116; t=1787238913; c=relaxed/simple;
+	bh=H+sszjKWNO/YzUh65ccnuiKo8s4SWAGkrFdNDgM5Ae8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cvj68CwZ7+xEtjKi2JRGrnO53IBJQoJQGdraKDsytNRtaVqAJiMza+hPJCDhXFJyVuSuf+YFiK0subnEYFcDZcXn0+p0R/pXsGoRs1mKbylTwQ3tBqhJlz0j14JYYoVJCo79lfcDbn46mLeQ03Sc0JwkGBjzwQkVOEQqpZnK7Qk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbePczip; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cvkxJS6MZv35wpEP2av7UdbfdcKmES4Rw41tv26+52y5pmog6JN2YDRznFHTBHevp5IqNmhYHtOzqOayCnTJvVeHbrr4OExCQHMWxzyeFYYoLLuE3i2P2h6/HqSt7Vzv1QXvA1VWFQG1BvgvN5HXoi2s+3LHUWHjhn3zoS9D9qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=05gml6TJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbePczip"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DEAF1F000E9;
-	Thu, 20 Aug 2026 15:15:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="05gml6TJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC061F000E9;
+	Thu, 20 Aug 2026 15:15:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238908;
-	bh=N9Op5yq+w1f8Tp/eWTvUW2j9//9l9iRLrhS6NF29+KI=;
+	s=korg; t=1787238911;
+	bh=YUdZaqJ3nNGYJI/mfFntExqJOScAhAqBHWxaqPkBN8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gbePczipoDNYCHDQURLdipcPz1QUs7R9F7YiJk8iqP1O2Fo1bIE0j67MrHrUq5f70
-	 ZbODdwpH0HPmiRWxq8cS8OxWhdEjYbdlU53hupyAyhetmst7BjY8oXJVPM5LHp0gmA
-	 aktuCwKuL+zLsy6fBDuDDVj5k6hDdk9YZJLDXwLM=
+	b=05gml6TJO0e6STjCaMNpgf6/XZFGyE0hKE5XSTrq4fpWMHnVjHP78HNJCeESSPnXA
+	 E0Q5cE05BdHE5nv23QUUc4JPPAH1B/hwysh8ZaLDAiENSL5iXiW3T43wAFyvrAczE3
+	 DG5MFhdow6Rb52V9X9z+s0yhDH+WBVOMCFhDa7jY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nayna Jain <nayna@linux.ibm.com>,
-	R Nageswara Sastry <rnsastry@linux.ibm.com>,
-	George Wilson <gcwilson@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.18 034/217] powerpc/pseries: pci - logic bug
-Date: Thu, 20 Aug 2026 16:53:22 +0200
-Message-ID: <20260820145238.643647478@linuxfoundation.org>
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Max Kellermann <max.kellermann@ionos.com>
+Subject: [PATCH 6.18 077/217] eth: bnxt: always set the queue mgmt ops
+Date: Thu, 20 Aug 2026 16:54:05 +0200
+Message-ID: <20260820145239.945386632@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -52,34 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: George Wilson <gcwilson@linux.ibm.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit 649c10bff5cb7a514bf299094833ec8c9190aac3 upstream.
+commit 1410c7416dc343f15e9b7152eabddbdbe483002d upstream.
 
-The checks on num_vfs in pseries_pci_sriov_enable() are ANDed where OR
-was apparently intended.  Change it to OR.
+Core provides a centralized callback for validating per-queue settings
+but the callback is part of the queue management ops. Having the ops
+conditionally set complicates the parts of the driver which could
+otherwise lean on the core to feed it the correct settings.
 
-Fixes: 9a7f6b438664 ("powerpc/pseries/pci: Associate PEs to VFs in configure SR-IOV")
-Acked-by: Nayna Jain <nayna@linux.ibm.com>
-Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
-Cc: stable@vger.kernel.org # 4.16
-Signed-off-by: George Wilson <gcwilson@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Always set the queue ops, but provide no restart-related callbacks if
+queue ops are not supported by the device. This should maintain current
+behavior, the check in netdev_rx_queue_restart() looks both at op struct
+and individual ops.
+
+Reviewed-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Link: https://patch.msgid.link/20260122005113.2476634-2-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Max Kellermann <max.kellermann@ionos.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/pci.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/powerpc/platforms/pseries/pci.c
-+++ b/arch/powerpc/platforms/pseries/pci.c
-@@ -132,7 +132,7 @@ static int pseries_pci_sriov_enable(stru
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -16325,6 +16325,9 @@ static const struct netdev_queue_mgmt_op
+ 	.supported_params	= QCFG_RX_PAGE_SIZE,
+ };
  
- 	/* First integer stores max config */
- 	max_config_vfs = of_read_number(&max_vfs[0], 1);
--	if (max_config_vfs < num_vfs && num_vfs > MAX_VFS_FOR_MAP_PE) {
-+	if (max_config_vfs < num_vfs || num_vfs > MAX_VFS_FOR_MAP_PE) {
- 		dev_err(&pdev->dev,
- 			"Num VFs %x > %x Configurable VFs\n",
- 			num_vfs, (num_vfs > MAX_VFS_FOR_MAP_PE) ?
++static const struct netdev_queue_mgmt_ops bnxt_queue_mgmt_ops_unsupp = {
++};
++
+ static void bnxt_remove_one(struct pci_dev *pdev)
+ {
+ 	struct net_device *dev = pci_get_drvdata(pdev);
+@@ -16977,9 +16980,10 @@ static int bnxt_init_one(struct pci_dev
+ 
+ 	if (BNXT_SUPPORTS_NTUPLE_VNIC(bp))
+ 		bp->rss_cap |= BNXT_RSS_CAP_MULTI_RSS_CTX;
++
++	dev->queue_mgmt_ops = &bnxt_queue_mgmt_ops_unsupp;
+ 	if (BNXT_SUPPORTS_QUEUE_API(bp))
+ 		dev->queue_mgmt_ops = &bnxt_queue_mgmt_ops;
+-	dev->request_ops_lock = true;
+ 	dev->netmem_tx = true;
+ 
+ 	rc = register_netdev(dev);
 
 
