@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A0447AF6D;
-	Thu, 20 Aug 2026 16:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B6F37A858;
+	Thu, 20 Aug 2026 16:44:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244283; cv=none; b=oUEKnYLeoKuM16Hd/t/jMVd5kpCTeTw4r/50GKCyIHxphyxHpAdg2L4Gc6TwXJupBGmiwhB1PL9yW9PjleimKgcfix8/Q3SDdiF7DJMBz6YpSKNqBo5mG0n4GJi8KYxWKP8K5AVFY+TRl5k2tIg0194hWYNR8wOE8jNyFTWy/KU=
+	t=1787244286; cv=none; b=O9RZvpENa7nQo2kFQSRK+tZTSgQK9AKuxvyFuFFxvptbGp6VMpirCpbmdYFjRoMC5ad7Fm9pj0AXu8vHJPfyftTDc8PPwhbRU/BxgIiFiZaajv9qg7p4wv3O2G0fYbSe1TInYmzwgJ19Pk7QJTylW5Tpn0aKoZbe/qzSpxktH6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244283; c=relaxed/simple;
-	bh=6wDLayFmq1jfXeAdhUor1YwO5z9HhBHXIMN266cjxSw=;
+	s=arc-20240116; t=1787244286; c=relaxed/simple;
+	bh=1Ft23HaaYVO9K3d8x3bAcTyPpT2b+0Sp8Pi+SnCZKn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IMJWmhTaqgv38DibAJcbYGYpQS6F1hqfP5p280KWpTHoIR/VSsFYhZjjHFoxNGcpPg3vRh54Bxuzs6+LWICY9k8Xqb68PGNCtvWfEw8GZAkQyX9ShVo8l/pzuUI//HaNB4aw6XVqHhE48KLo8WMZhBTD4H/NAF0smzDEJ7DrSQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nxDXWWkL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uclPIELCxMGZfKqL5BiJGtnbs+N4BVCEMPSSVmsrWzQ/Bn3XTs99r1r+ZgSnN52DWnatgjHBzaMYF7q2B2DJCtlgp2jZannxDEPpO5XqRLPlqtRQ6AvLgm+6G3DKpLCsZhuoI5FbUCEv0Hf1dNYfW1JDUN3iY/v+hpY/OgUVl7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eR5gdoeM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxDXWWkL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDE31F000E9;
-	Thu, 20 Aug 2026 16:44:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eR5gdoeM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C5B1F000E9;
+	Thu, 20 Aug 2026 16:44:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244282;
-	bh=4gVw/7SIWHnpUS1Zop+HRm/Z5oWTAvPgfGwb9XhSGeU=;
+	s=korg; t=1787244285;
+	bh=WqrpIC4MYHDdUqcxZXQZCC3F6s4qWuebMp85MolUWq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nxDXWWkLdpLh/RZH7gbI1qYlc1jSmIMkRs1KWQiz8CuYpWC42aDRYi1XgU68AHRlI
-	 zCYim4qq1DbF0bghgEfBEvve94A65bdBpfFUWNmlz2S1EtdExfDhd1pgOBiIdyKDMK
-	 WAhgfHmufr8Hd5Xw2mrh5vzAZraQ6SQMau7LHsZ4=
+	b=eR5gdoeMToBZvJ+HeC5aFHew646vjccujQZh0rH7IzzrIZJLY0grrdwRVqzuYFeVu
+	 S9I05rzmBup8Bck8Hd9xzR45VHfDHeJwPKDSMJ0E9G1hhhRAkicvrP8ITprApaNTXL
+	 L/dPJ4/7gQUErasXHEo0kSa2He7TWn2XajcvPFQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 115/235] wifi: libertas_tf: fix use-after-free in lbtf_free_adapter()
-Date: Thu, 20 Aug 2026 16:55:51 +0200
-Message-ID: <20260820145219.940976794@linuxfoundation.org>
+	Binbin Zhou <zhoubinbin@loongson.cn>,
+	Johan Hovold <johan@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 116/235] mmc: vub300: fix use-after-free on disconnect
+Date: Thu, 20 Aug 2026 16:55:52 +0200
+Message-ID: <20260820145219.968448566@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -51,46 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit aa6dcd5c8dd9ba1d7d0f60093bcda41c0d6d438d ]
+The vub300 driver maintains an explicit reference count for the
+controller and its driver data and the last reference can in theory be
+dropped after the driver has been unbound.
 
-lbtf_free_adapter() calls timer_delete(&priv->command_timer), which does
-not wait for a running command_timer_fn() callback. lbtf_free_adapter()
-runs on the teardown path right before ieee80211_free_hw() frees priv,
-both in lbtf_remove_card() and in the probe error path. command_timer is
-armed by mod_timer() in lbtf_cmd() whenever a firmware command is sent.
-command_timer_fn() dereferences priv. If a command times out as the
-device is removed, command_timer_fn() runs concurrently with teardown and
-dereferences priv after it has been freed.
+This specifically means that the controller allocation must not be
+device managed as that can lead to use-after-free.
 
-This is the same use-after-free that commit 03cc8f90d053 ("wifi: libertas:
-fix use-after-free in lbs_free_adapter()") fixed in the sibling libertas
-driver. The libertas_tf variant has the identical pattern and was left
-unchanged. Use timer_delete_sync() so any in-flight callback completes
-before priv is freed.
+Note that the lifetime is currently also incorrectly tied the parent USB
+device rather than interface, which can lead to memory leaks if the
+driver is unbound without its device being physically disconnected (e.g.
+on probe deferral).
 
-Fixes: 06b16ae53192 ("libertas_tf: main.c, data paths and mac80211 handlers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Link: https://patch.msgid.link/178211481807.2212567.8773346114561900100@maoyixie.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix both issues by reverting to non-managed allocation of the controller.
+
+Fixes: dcfdd698dc52 ("mmc: vub300: Use devm_mmc_alloc_host() helper")
+Cc: stable@vger.kernel.org # 6.17+
+Cc: Binbin Zhou <zhoubinbin@loongson.cn>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+(cherry picked from commit 8f4d20a710225ec7a565f6a0459862d3b1f32330)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/libertas_tf/main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/vub300.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/net/wireless/marvell/libertas_tf/main.c
-+++ b/drivers/net/wireless/marvell/libertas_tf/main.c
-@@ -174,7 +174,7 @@ static void lbtf_free_adapter(struct lbt
- {
- 	lbtf_deb_enter(LBTF_DEB_MAIN);
- 	lbtf_free_cmd_buffer(priv);
--	del_timer(&priv->command_timer);
-+	timer_delete_sync(&priv->command_timer);
- 	lbtf_deb_leave(LBTF_DEB_MAIN);
- }
- 
+--- a/drivers/mmc/host/vub300.c
++++ b/drivers/mmc/host/vub300.c
+@@ -2281,7 +2281,7 @@ static int vub300_probe(struct usb_inter
+ 		dev_err(&vub300->udev->dev,
+ 		    "Could not find two sets of bulk-in/out endpoint pairs\n");
+ 		retval = -EINVAL;
+-		goto error5;
++		goto err_free_host;
+ 	}
+ 	retval =
+ 		usb_control_msg(vub300->udev, usb_rcvctrlpipe(vub300->udev, 0),
+@@ -2290,14 +2290,14 @@ static int vub300_probe(struct usb_inter
+ 				0x0000, 0x0000, &vub300->hc_info,
+ 				sizeof(vub300->hc_info), 1000);
+ 	if (retval < 0)
+-		goto error5;
++		goto err_free_host;
+ 	retval =
+ 		usb_control_msg(vub300->udev, usb_sndctrlpipe(vub300->udev, 0),
+ 				SET_ROM_WAIT_STATES,
+ 				USB_DIR_OUT | USB_TYPE_VENDOR | USB_RECIP_DEVICE,
+ 				firmware_rom_wait_states, 0x0000, NULL, 0, 1000);
+ 	if (retval < 0)
+-		goto error5;
++		goto err_free_host;
+ 	dev_info(&vub300->udev->dev,
+ 		 "operating_mode = %s %s %d MHz %s %d byte USB packets\n",
+ 		 (mmc->caps & MMC_CAP_SDIO_IRQ) ? "IRQs" : "POLL",
+@@ -2312,7 +2312,7 @@ static int vub300_probe(struct usb_inter
+ 				0x0000, 0x0000, &vub300->system_port_status,
+ 				sizeof(vub300->system_port_status), 1000);
+ 	if (retval < 0) {
+-		goto error5;
++		goto err_free_host;
+ 	} else if (sizeof(vub300->system_port_status) == retval) {
+ 		vub300->card_present =
+ 			(0x0001 & vub300->system_port_status.port_flags) ? 1 : 0;
+@@ -2320,7 +2320,7 @@ static int vub300_probe(struct usb_inter
+ 			(0x0010 & vub300->system_port_status.port_flags) ? 1 : 0;
+ 	} else {
+ 		retval = -EINVAL;
+-		goto error5;
++		goto err_free_host;
+ 	}
+ 	usb_set_intfdata(interface, vub300);
+ 	INIT_DELAYED_WORK(&vub300->pollwork, vub300_pollwork_thread);
+@@ -2350,7 +2350,7 @@ static int vub300_probe(struct usb_inter
+ 	return 0;
+ error6:
+ 	del_timer_sync(&vub300->inactivity_timer);
+-error5:
++err_free_host:
+ 	mmc_free_host(mmc);
+ 	/*
+ 	 * and hence also frees vub300
 
 
