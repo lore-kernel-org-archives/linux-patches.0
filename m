@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E9332B110;
-	Thu, 20 Aug 2026 15:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1080132B110;
+	Thu, 20 Aug 2026 15:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238320; cv=none; b=m7MC3erJO67nCOv3fSVHzj7UFKYHrgGVocUhv5dxvyli+vdL/yOZW9uRNJ5fYEx5R56mpOMqf6vmHOUXK750Y+NeuPD6XUjDEzJVslewS49bGOQCzKoDXjzgHJMfKqIiOcDFvg9/zicXjuTL/mqNbKfrF1cU9D0L8bG9HkOjgDs=
+	t=1787238323; cv=none; b=UqwGT5cdKEhh9J0xqZ4Skx2Rs/eQeffdrqRLPxuJKLnuuaZqA8LDXlcPyvpVixqsN5QeGyt7Jw3so+34JoxW7UCoOGyxe6xOAPZF1BAF26VhKCC++sGkrH4CsA3F+DXhEOto/cKKKM8wq+YPiGozz36znP1sFqafzmc2db5T2HA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238320; c=relaxed/simple;
-	bh=Nf8ApX0aJJ9Nd/o7qLfkDY1rrbVchosdEwp4Y6InR/o=;
+	s=arc-20240116; t=1787238323; c=relaxed/simple;
+	bh=wJ1yRTxc/UyPqoaS66RR+6TVPL5S4ry3zPXNBA7Drig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b3nGLmeFlQgJth3QxgGoDQPQaBGExgN2l2rLmbTjnoYe+aE5pJ3ak98QZG6GDWqN+AIG5xP01/8SX4wxhhHrsBRbodBETeLGtIBj8hzK5yBptTM3HTz+x4J+5IsAYtZJ6AdbcUa64Z7XiqDWGSVWxCrgrZva5gB0+F1Igl3WaGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrTrHWyb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lXiQF7ml7H6B2rOvTRP0RBOwTUY69EgNvCbemlQRHKQtNnD3Rxe6IvTWCUdof5pLxvbz8hsCPofX8lNKKUkmXgT5oN8XWEZ1YOxr+hQvOdRUSfjHd0aZBg/0x5hn8upyrK7r7geP6l+XsgHMFxZROONSYOCTXMdXWa8iloS7dzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EuUywNfP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrTrHWyb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89FF11F000E9;
-	Thu, 20 Aug 2026 15:05:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EuUywNfP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 656AA1F000E9;
+	Thu, 20 Aug 2026 15:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238319;
-	bh=JcmzfZ2UFj9VunRZ4wuaAHAHqRN+L7I7f4G730b7nwo=;
+	s=korg; t=1787238321;
+	bh=m3caYpDvKoKryGd4IPFSDsdFQMalMUluSouRtGHt74c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rrTrHWyb9gF1nnXL7jAuCgcx1MN6TsK1uneDl5yr22zNg5Or0ZYSVq6rXBZE8oEVF
-	 sLyvXPCjXZVsUUiiddAGsZfWNYfyGMi28OL0IyYfVxUfx8YEqKEQ5VdotxdEdxrW+S
-	 2n47DpUqrb61Y0s3cJYH8EN5gDzetQxCuH6H6bac=
+	b=EuUywNfPx7IfI0Tax8p2+FXRwPEQjxlphuOo4o6MDLdXcMHCZAF8Cd0zBc9Rb+BMU
+	 kQtjo/KYsFKjnLZwI/dIZ4VyzasLPqmx7XvcY/uKdzryC7fszRqcJuKjkFFHsdSYgZ
+	 zFIG+gI0JiATc3jxNFxAi7uI+BnX+0SM/bCjsTGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 7.1 057/228] crypto: starfive - use scatterlist length before DMA mapping
-Date: Thu, 20 Aug 2026 16:53:19 +0200
-Message-ID: <20260820145246.204716862@linuxfoundation.org>
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Eric Farman <farman@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: [PATCH 7.1 100/228] s390/vfio_ccw: Fix out of bounds check on CCW array
+Date: Thu, 20 Aug 2026 16:54:02 +0200
+Message-ID: <20260820145247.690635316@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -50,36 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Eric Farman <farman@linux.ibm.com>
 
-commit 6b36f13891ab4709b7d60023005176cdd5c368cf upstream.
+commit a005b7f1a491ffda61bff0fd0f6548f8986fb977 upstream.
 
-Using sg_dma_len() is only valid after mapping a scatterlist with
-dma_map_sg(). However, starfive_aes_aead_do_one_req() uses it before
-mapping the scatterlist.
+The routine ccwchain_calc_length() counts the number of channel
+command words (CCWs) that are chained together in a single channel
+program, and rejects anything larger than CCWCHAIN_LEN_MAX (256) CCWs.
 
-Use the original scatterlist length because the DMA length has not been
-populated yet when CONFIG_NEED_SG_DMA_LENGTH=y.
+The loop itself is "do..while (count < 257)", and while the logic in
+is_cpa_within_range() correctly adjusts between the 0-index array of
+CCWs and the count of CCWs starting at 1, this means it would look
+at a possible 257th CCW before ending the loop and (correctly)
+returning an error.
 
-Fixes: 7467147ef9bf ("crypto: starfive - Use dma for aes requests")
+Fix this by restructuring the loop to break as soon as 256 CCWs
+(thus indexes 0-255) are examined, without looking at memory
+outside the range.
+
+Fixes: 0a19e61e6d4c ("vfio: ccw: introduce channel program interfaces")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/starfive/jh7110-aes.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/s390/cio/vfio_ccw_cp.c |   17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
 
---- a/drivers/crypto/starfive/jh7110-aes.c
-+++ b/drivers/crypto/starfive/jh7110-aes.c
-@@ -677,7 +677,7 @@ static int starfive_aes_aead_do_one_req(
+--- a/drivers/s390/cio/vfio_ccw_cp.c
++++ b/drivers/s390/cio/vfio_ccw_cp.c
+@@ -377,11 +377,9 @@ static void ccwchain_cda_free(struct ccw
+ static int ccwchain_calc_length(u64 iova, struct channel_program *cp)
+ {
+ 	struct ccw1 *ccw = cp->guest_cp;
+-	int cnt = 0;
+-
+-	do {
+-		cnt++;
++	int cnt;
  
- 	if (cryp->total_in)
- 		sg_zero_buffer(rctx->in_sg, sg_nents(rctx->in_sg),
--			       sg_dma_len(rctx->in_sg) - cryp->total_in,
-+			       rctx->in_sg->length - cryp->total_in,
- 			       cryp->total_in);
++	for (cnt = 1; cnt <= CCWCHAIN_LEN_MAX; cnt++, ccw++) {
+ 		/*
+ 		 * We want to keep counting if the current CCW has the
+ 		 * command-chaining flag enabled, or if it is a TIC CCW
+@@ -391,15 +389,10 @@ static int ccwchain_calc_length(u64 iova
+ 		 * after the TIC, depending on the results of its operation.
+ 		 */
+ 		if (!ccw_is_chain(ccw) && !is_tic_within_range(ccw, iova, cnt))
+-			break;
+-
+-		ccw++;
+-	} while (cnt < CCWCHAIN_LEN_MAX + 1);
+-
+-	if (cnt == CCWCHAIN_LEN_MAX + 1)
+-		cnt = -EINVAL;
++			return cnt;
++	}
  
- 	ctx->rctx = rctx;
+-	return cnt;
++	return -EINVAL;
+ }
+ 
+ static int tic_target_chain_exists(struct ccw1 *tic, struct channel_program *cp)
 
 
