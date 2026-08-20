@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 493F747F2C3;
-	Thu, 20 Aug 2026 17:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9ABF19E992;
+	Thu, 20 Aug 2026 17:54:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248458; cv=none; b=TZDzd0ZbXNT/VCXYuOOLFpdVDmJYSeIWXAff+57ePWkERY7cLwtQUd2qDMOBlmxE4sqJHkWUxXfSRHGX+FlgBAB3JAGu8g1HvO7NZnWeO7k4uG6DvbAor7hgtNSLwcsPPq0zDH8nCvHHYstdt+DHCXQjn2NlzwDZ6sbNg4UCtJg=
+	t=1787248461; cv=none; b=UlZxXmoHBLehqr2FvfQJt27rcBzM6cT1XUax0ewbGGMnz16D7bXelcYx7nD4t4tgxzbMeFO2TONVIchUJXP3QE0UfsUSmEsrnOzlceJji64tkVD9xqf/2WZQv0tu7dJqZ3MU0Pmf/XCMGJj3kBJbPnm1iGmKnMzxCV9iqsRUh5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248458; c=relaxed/simple;
-	bh=mHKwVhn51GEjtVu18LwL6awDai2lJy+1kl/KeYSeWW0=;
+	s=arc-20240116; t=1787248461; c=relaxed/simple;
+	bh=kB8dlOhUGx66vsko9Qu9HXLqn2wSX16rLF7iqP9gK6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qCNMJ8I1Bev9u0Ruc0vuyhbPZOKy8WtZnEGp9Sro9BTWQ2gqtWY5zHqtnLvd6n9D93HdaJKTlsPd8slji71q7ld6zA10OnqRrzmTVhJOZaLHM9T920KI0BEltAfiWtEC5UMIj8t/X9Yqmm35wmCsnTuzFuh6epqa800vbj4Ck+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yBcSka8a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pfsU6bE7zmpwZqm1eC+kEsL1ZtHbn0Wa1l6jadpbk3+rBXtcPHKwAuHloqsre3K6k7T+Clqs0AjnmZipBq4Kn7APqw0hoablt4/EWRGO+53JUK64rfY7G9n77isl8EnZHi3fnpLICc9TwUj7kaSPP9sr4Hfk4M/+4DRwnJkgetI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZSEY7Z8/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yBcSka8a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3651F000E9;
-	Thu, 20 Aug 2026 17:54:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZSEY7Z8/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 290B41F000E9;
+	Thu, 20 Aug 2026 17:54:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248456;
-	bh=Jzcl36Y488/I4itUt7OBEKUU9/vuGEw7+MYLp69RXOk=;
+	s=korg; t=1787248459;
+	bh=yam5e0RGQxJxUd39P3AkOzQk+Nrqzdt9NTbtPPm5OZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yBcSka8aiBw/RVH2qz7H/i3sHliXUzQXUqXs7FAdMKwsfJHIt2phulwml1UcaiZsq
-	 ASHG+VC3In7w2W8PRYOiACpYxrYeSRPvMjCROvtYR/JGmMMNOdpdAhg/D+r44aRYe/
-	 CHoNcCT/X9cBiYCtgzRIcvXSk3dknTVfUYk31CBU=
+	b=ZSEY7Z8/loMFgUMmnQ7PhImkCwGBh9SyiEZfI/9HBXlFIdw1TU1Qsm3A0hSRQs5iO
+	 mS6+wMp+B9plxxrfpoH8Ve+OfFAWrpKw1vIgbYMh15ChhnelaOy8fsS+rB9YOruZas
+	 6H4aSKLjfDltZF07DupTdjTVEmeG7QO1ATIjXBQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	stable <stable@kernel.org>,
+	Andrei Kuchynski <akuchynski@chromium.org>,
+	Benson Leung <bleung@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 195/303] media: i2c: imx219: Drop IMX219_VTS_* macros
-Date: Thu, 20 Aug 2026 16:55:31 +0200
-Message-ID: <20260820145259.246930120@linuxfoundation.org>
+Subject: [PATCH 6.1 186/303] usb: typec: ucsi: Fix race condition and ordering in port unregistration
+Date: Thu, 20 Aug 2026 16:55:22 +0200
+Message-ID: <20260820145258.905291113@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -54,104 +52,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Andrei Kuchynski <akuchynski@chromium.org>
 
-[ Upstream commit 5ebbdd7aab3321e60a8be23aac1fee4f16644021 ]
+[ Upstream commit 7aa7d4bf9d3fa9a6a47b640ad103ab433b7ff261 ]
 
-The IMX219_VTS_* macros define default VTS values for the modes
-supported by the driver. They are used in a single place, and hinder
-readability compared to using the value directly as a decimal number.
-Drop them.
+A synchronization issue exists during port unregistration where pending
+partner work items can race against workqueue destruction, leading to
+use-after-free conditions:
 
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Stable-dep-of: 2c4f1ba73543 ("media: imx219: Fix maximum frame length in lines")
+  cros_ec_ucsi cros_ec_ucsi.3.auto: error -ETIMEDOUT: PPM init failed
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  RIP: 0010:__queue_work+0x83/0x4a0
+  Call Trace:
+    <IRQ>
+    __cfi_delayed_work_timer_fn+0x10/0x10
+    run_timer_softirq+0x3b6/0xbd0
+    sched_clock_cpu+0xc/0x110
+    irq_exit_rcu+0x18d/0x330
+    fred_sysvec_apic_timer_interrupt+0x5e/0x80
+
+Fix this by ensuring strict ordering and proper serialization during
+teardown:
+
+1. Move ucsi_unregister_partner() to the beginning of the teardown
+sequence and protect it under the connector mutex lock.
+2. Ensure all pending partner tasks are explicitly flushed and finished
+before the workqueue is destroyed.
+3. Switch from mod_delayed_work() to a cancel_delayed_work() and
+queue_delayed_work() sequence. This guarantees that items currently marked
+as pending won't be scheduled an additional time, preventing a double
+release of resources which leads to the following crash:
+
+  Oops: general protection fault, probably for non-canonical address
+    0xdead000000000122: 0000 [#1] SMP NOPTI
+  Workqueue: cros_ec_ucsi.3.auto-con2 ucsi_poll_worker
+  RIP: 0010:ucsi_poll_worker+0x65/0x1e0
+  Call Trace:
+  <TASK>
+    process_scheduled_works+0x218/0x6d0
+    worker_thread+0x188/0x3f0
+    __cfi_worker_thread+0x10/0x10
+    kthread+0x226/0x2a0
+
+To ensure these rules are applied identically across both the normal
+teardown and the ucsi_init() error paths, consolidate the cleanup logic
+into a new helper, ucsi_unregister_port().
+
+Cc: stable <stable@kernel.org>
+Fixes: b9aa02ca39a4 ("usb: typec: ucsi: Add polling mechanism for partner tasks like alt mode checking")
+Fixes: b13abcb7ddd8 ("usb: typec: ucsi: Fix NULL pointer access")
+Fixes: fac4b8633fd6 ("usb: ucsi: Ensure connector delayed work items are flushed")
+Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Link: https://patch.msgid.link/20260707141736.1635698-1-akuchynski@chromium.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/imx219.c |   24 +++++++-----------------
- 1 file changed, 7 insertions(+), 17 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c |   62 ++++++++++++++++++++++--------------------
+ 1 file changed, 33 insertions(+), 29 deletions(-)
 
---- a/drivers/media/i2c/imx219.c
-+++ b/drivers/media/i2c/imx219.c
-@@ -49,20 +49,10 @@
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1255,6 +1255,36 @@ out_unlock:
+ 	return ret;
+ }
  
- /* V_TIMING internal */
- #define IMX219_REG_VTS			0x0160
--#define IMX219_VTS_15FPS		0x0dc6
--#define IMX219_VTS_30FPS_1080P		0x06e3
--#define IMX219_VTS_30FPS_BINNED		0x06e3
--#define IMX219_VTS_30FPS_640x480	0x06e3
--#define IMX219_VTS_MAX			0xffff
-+#define IMX219_FLL_MAX			0xffff
++static void ucsi_unregister_port(struct ucsi_connector *con)
++{
++	struct ucsi_work *uwork;
++
++	if (con->wq) {
++		mutex_lock(&con->lock);
++		ucsi_unregister_partner(con);
++		/*
++		 * queue delayed items immediately so they can execute
++		 * and free themselves before the wq is destroyed
++		 */
++		list_for_each_entry(uwork, &con->partner_tasks, node) {
++			if (cancel_delayed_work(&uwork->work))
++				queue_delayed_work(con->wq, &uwork->work, 0);
++		}
++		mutex_unlock(&con->lock);
++
++		destroy_workqueue(con->wq);
++		con->wq = NULL;
++	} else {
++		ucsi_unregister_partner(con);
++	}
++
++	ucsi_unregister_altmodes(con, UCSI_RECIPIENT_CON);
++	ucsi_unregister_port_psy(con);
++
++	typec_unregister_port(con->port);
++	con->port = NULL;
++}
++
+ static u64 ucsi_get_supported_notifications(struct ucsi *ucsi)
+ {
+ 	u8 features = ucsi->cap.features;
+@@ -1363,15 +1393,8 @@ err_unregister:
+ 	for (i = 0; i < ucsi->cap.num_connectors; i++)
+ 		lockdep_unregister_key(&connector[i].lock_key);
  
- #define IMX219_VBLANK_MIN		4
+-	for (con = connector; con->port; con++) {
+-		if (con->wq)
+-			destroy_workqueue(con->wq);
+-		ucsi_unregister_partner(con);
+-		ucsi_unregister_altmodes(con, UCSI_RECIPIENT_CON);
+-		ucsi_unregister_port_psy(con);
+-		typec_unregister_port(con->port);
+-		con->port = NULL;
+-	}
++	for (con = connector; con->port; con++)
++		ucsi_unregister_port(con);
+ 	kfree(connector);
+ err_reset:
+ 	memset(&ucsi->cap, 0, sizeof(ucsi->cap));
+@@ -1584,26 +1607,7 @@ void ucsi_unregister(struct ucsi *ucsi)
  
--/*Frame Length Line*/
--#define IMX219_FLL_MIN			0x08a6
--#define IMX219_FLL_MAX			0xffff
--#define IMX219_FLL_STEP			1
--#define IMX219_FLL_DEFAULT		0x0c98
+ 	for (i = 0; i < ucsi->cap.num_connectors; i++) {
+ 		cancel_work_sync(&ucsi->connector[i].work);
 -
- /* HBLANK control - read only */
- #define IMX219_PPL_DEFAULT		3448
+-		if (ucsi->connector[i].wq) {
+-			struct ucsi_work *uwork;
+-
+-			mutex_lock(&ucsi->connector[i].lock);
+-			/*
+-			 * queue delayed items immediately so they can execute
+-			 * and free themselves before the wq is destroyed
+-			 */
+-			list_for_each_entry(uwork, &ucsi->connector[i].partner_tasks, node)
+-				mod_delayed_work(ucsi->connector[i].wq, &uwork->work, 0);
+-			mutex_unlock(&ucsi->connector[i].lock);
+-			destroy_workqueue(ucsi->connector[i].wq);
+-		}
+-
+-		ucsi_unregister_partner(&ucsi->connector[i]);
+-		ucsi_unregister_altmodes(&ucsi->connector[i],
+-					 UCSI_RECIPIENT_CON);
+-		ucsi_unregister_port_psy(&ucsi->connector[i]);
+-		typec_unregister_port(ucsi->connector[i].port);
++		ucsi_unregister_port(&ucsi->connector[i]);
+ 		lockdep_unregister_key(&ucsi->connector[i].lock_key);
+ 	}
  
-@@ -386,7 +376,7 @@ static const struct imx219_mode supporte
- 			.width = 3280,
- 			.height = 2464
- 		},
--		.vts_def = IMX219_VTS_15FPS,
-+		.vts_def = 3526,
- 		.reg_list = {
- 			.num_of_regs = ARRAY_SIZE(mode_3280x2464_regs),
- 			.regs = mode_3280x2464_regs,
-@@ -403,7 +393,7 @@ static const struct imx219_mode supporte
- 			.width = 1920,
- 			.height = 1080
- 		},
--		.vts_def = IMX219_VTS_30FPS_1080P,
-+		.vts_def = 1763,
- 		.reg_list = {
- 			.num_of_regs = ARRAY_SIZE(mode_1920_1080_regs),
- 			.regs = mode_1920_1080_regs,
-@@ -420,7 +410,7 @@ static const struct imx219_mode supporte
- 			.width = 3280,
- 			.height = 2464
- 		},
--		.vts_def = IMX219_VTS_30FPS_BINNED,
-+		.vts_def = 1763,
- 		.reg_list = {
- 			.num_of_regs = ARRAY_SIZE(mode_1640_1232_regs),
- 			.regs = mode_1640_1232_regs,
-@@ -437,7 +427,7 @@ static const struct imx219_mode supporte
- 			.width = 1280,
- 			.height = 960
- 		},
--		.vts_def = IMX219_VTS_30FPS_640x480,
-+		.vts_def = 1763,
- 		.reg_list = {
- 			.num_of_regs = ARRAY_SIZE(mode_640_480_regs),
- 			.regs = mode_640_480_regs,
-@@ -841,7 +831,7 @@ static int imx219_set_pad_format(struct
- 		imx219->mode = mode;
- 		/* Update limits and set FPS to default */
- 		__v4l2_ctrl_modify_range(imx219->vblank, IMX219_VBLANK_MIN,
--					 IMX219_VTS_MAX - mode->height, 1,
-+					 IMX219_FLL_MAX - mode->height, 1,
- 					 mode->vts_def - mode->height);
- 		__v4l2_ctrl_s_ctrl(imx219->vblank,
- 				   mode->vts_def - mode->height);
-@@ -1261,7 +1251,7 @@ static int imx219_init_controls(struct i
- 	/* Initial vblank/hblank/exposure parameters based on current mode */
- 	imx219->vblank = v4l2_ctrl_new_std(ctrl_hdlr, &imx219_ctrl_ops,
- 					   V4L2_CID_VBLANK, IMX219_VBLANK_MIN,
--					   IMX219_VTS_MAX - height, 1,
-+					   IMX219_FLL_MAX - height, 1,
- 					   imx219->mode->vts_def - height);
- 	hblank = IMX219_PPL_DEFAULT - imx219->mode->width;
- 	imx219->hblank = v4l2_ctrl_new_std(ctrl_hdlr, &imx219_ctrl_ops,
 
 
