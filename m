@@ -1,39 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A224E4854FC;
-	Thu, 20 Aug 2026 17:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AF4485CE9;
+	Thu, 20 Aug 2026 17:41:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247672; cv=none; b=aoDIX6mA+uTpuANHOwvEZmcc4jWvosrFHiLNWR6S2BpqHH/tz/n2MOoptrFVRf49C925uekWXWZY8NlX0sbnfYs7UFPjC6B6Z7MC8pWLxiHD6C4/ZF9EkVKwbMnFb2nos+1kapvkEeg/GGD+ea4bxdQbLGWCKqnuEHPQBjvhiSk=
+	t=1787247676; cv=none; b=RuWQJCQCSYm9xnLx+D5jHpkkA/2rNxS1RmwTEZAwN0tnLgIZkm2d84UrWScg70KRaimzKu7XWQNJ0PIoXnCsQxnqmB5TPBSUtqLvX1u8PqRTELBjEtu72YMTx5Q3qE3pZmSVvXdZDN7oZsO7nkhUJp0vysgLP3SWMvW+38uYDIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247672; c=relaxed/simple;
-	bh=V18e3/A19UpMg8frpzalYptcJhSbRa0YMCeRCBE9f7A=;
+	s=arc-20240116; t=1787247676; c=relaxed/simple;
+	bh=Ve80KBtHNRVN5LZacZ+NFRRZJ+kyAfArbu6GnmxUvto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Oi9L+/lNWbkBoXcy9igmxxLKlBOXxOzO3kWRU4XQkDRlUw1tAJBunzL+d1YtgKVCxwhMC6PUEcd+z3+bLDPDOaSo0cbRU7Nz+kmhHw3G3kPHR/MXEUtX05bM6SCjBXzlD4gPIdbab/8UFwydRCV2b6Pbon1zjT12KF474N9oMl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PFEjd8R1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FuXgpOjHGQivQniCtSJpqlY6oWEbnt2g2gW4dl/IYf9EYliZbnDT9YKUc+33nzBk6Y5oz3NnZB52nF7l5S3SimZREqBzQ9xHW43ZW90iz3TjGzOZaPhf0dNx5olk+urkS1JNStxxrJmNZpGtdp2VpWt8Nvh8fWBKLce7e5PoCVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tCbJUPQn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PFEjd8R1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F09C51F000E9;
-	Thu, 20 Aug 2026 17:41:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCbJUPQn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16AD1F000E9;
+	Thu, 20 Aug 2026 17:41:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247671;
-	bh=D0ggawj+7OCITWwOt0qfXbKYfuDJoTg31IpQNYrcmjA=;
+	s=korg; t=1787247674;
+	bh=PxQ2A3N1vfm60rfSkJKikg2ysHmPG/YXKbUXxnJTeHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PFEjd8R1dB4Fz2C9+pTZGpNT9hb3R952O9Ho2l0lAvLVvJedlmdzXKt8rd3HT9I+s
-	 j/UU5zg+GRgv9sNGe/CWViXNQjCf4qMb+NPuisC8VPHSuScJcsGkOq0XOOFKixss4k
-	 GNiLssyg9mZRfMdplKhAksKmY7Os3XCCSgmESOCc=
+	b=tCbJUPQnD3RHIKT5PHT62BTCGGEKJ6pR03vt6ATMzpbLvtRpxYNMe03KXXRBeiwXS
+	 5N/w982O1bRtxDu/hPadelr8feZkav+199gpYTqOR0vpYfI+bZGXNoQOoBMKe3MgWt
+	 Izz5FQDEmnkgWzhV66NQ6LiwvS/HN7qhKYRoxwnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	David Hildenbrand <david@redhat.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Barry Song <baohua@kernel.org>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Jonas Bonn <jonas@southpole.se>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Stafford Horne <shorne@gmail.com>,
+	Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
+	WANG Xuerui <kernel@xen0n.name>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 129/166] drm/amdgpu: move debug_vm handling to amdgpu_cs_parser_fini
-Date: Thu, 20 Aug 2026 16:56:28 +0200
-Message-ID: <20260820145215.047268039@linuxfoundation.org>
+Subject: [PATCH 6.6 130/166] mm/pagewalk: split walk_page_range_novma() into kernel/user parts
+Date: Thu, 20 Aug 2026 16:56:29 +0200
+Message-ID: <20260820145215.078867354@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -46,89 +65,297 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-[ Upstream commit d8726ef11512754a68c0ab53c57634a569b8feff ]
+[ Upstream commit 96d81e4766f9e88b66a0502b5a7f34a4c20ac754 ]
 
-The commit referenced below restarts the CS if the validation is
-still in progress. When debug_vm is enabled, all BOs from the CS
-are invalidated so we will hit an infinite loop.
+walk_page_range_novma() is rather confusing - it supports two modes, one
+used often, the other used only for debugging.
 
-To avoid that, defer BO invalidation to amdgpu_cs_parser_fini.
+The first mode is the common case of traversal of kernel page tables,
+which is what nearly all callers use this for.
 
-Fixes: 59720bfd8c6d ("drm/amdgpu: restart the CS if some parts of the VM are still invalidated")
-Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 8c990ee9daa295462df24982ce6878db997a380a)
-Cc: stable@vger.kernel.org
-[ adjusted `adev->debug_vm` back to the global `amdgpu_vm_debug` param and restored the `adev` argument to `amdgpu_vm_bo_invalidate()` calls ]
+Secondly it provides an unusual debugging interface that allows for the
+traversal of page tables in a userland range of memory even for that
+memory which is not described by a VMA.
+
+It is far from certain that such page tables should even exist, but
+perhaps this is precisely why it is useful as a debugging mechanism.
+
+As a result, this is utilised by ptdump only.  Historically, things were
+reversed - ptdump was the only user, and other parts of the kernel evolved
+to use the kernel page table walking here.
+
+Since we have some complicated and confusing locking rules for the novma
+case, it makes sense to separate the two usages into their own functions.
+
+Doing this also provide self-documentation as to the intent of the caller
+- are they doing something rather unusual or are they simply doing a
+standard kernel page table walk?
+
+We therefore establish two separate functions - walk_page_range_debug()
+for this single usage, and walk_kernel_page_table_range() for general
+kernel page table walking.
+
+The walk_page_range_debug() function is currently used to traverse both
+userland and kernel mappings, so we maintain this and in the case of
+kernel mappings being traversed, we have walk_page_range_debug() invoke
+walk_kernel_page_table_range() internally.
+
+We additionally make walk_page_range_debug() internal to mm.
+
+Link: https://lkml.kernel.org/r/20250605135104.90720-1-lorenzo.stoakes@oracle.com
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Acked-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: Alexandre Ghiti <alex@ghiti.fr>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Jonas Bonn <jonas@southpole.se>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Stafford Horne <shorne@gmail.com>
+Cc: Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>
+Cc: WANG Xuerui <kernel@xen0n.name>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 26444eb71465 ("mm/vmalloc: acquire init_mm lock on huge vmap to avoid ptdump UAF")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c |   30 ++++++++++++++++--------------
- 1 file changed, 16 insertions(+), 14 deletions(-)
+ arch/openrisc/kernel/dma.c |    4 +-
+ arch/riscv/mm/pageattr.c   |    8 ++---
+ include/linux/pagewalk.h   |    7 +---
+ mm/internal.h              |    7 ++++
+ mm/pagewalk.c              |   72 ++++++++++++++++++++++++++++++++++++++++-----
+ mm/ptdump.c                |    3 +
+ 6 files changed, 83 insertions(+), 18 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -1182,19 +1182,6 @@ static int amdgpu_cs_vm_handling(struct
- 		job->vm_pd_addr = amdgpu_gmc_pd_addr(vm->root.bo);
+--- a/arch/openrisc/kernel/dma.c
++++ b/arch/openrisc/kernel/dma.c
+@@ -75,7 +75,7 @@ void *arch_dma_set_uncached(void *cpu_ad
+ 	 * them and setting the cache-inhibit bit.
+ 	 */
+ 	mmap_write_lock(&init_mm);
+-	error = walk_page_range_novma(&init_mm, va, va + size,
++	error = walk_kernel_page_table_range(va, va + size,
+ 			&set_nocache_walk_ops, NULL, NULL);
+ 	mmap_write_unlock(&init_mm);
+ 
+@@ -90,7 +90,7 @@ void arch_dma_clear_uncached(void *cpu_a
+ 
+ 	mmap_write_lock(&init_mm);
+ 	/* walk_page_range shouldn't be able to fail here */
+-	WARN_ON(walk_page_range_novma(&init_mm, va, va + size,
++	WARN_ON(walk_kernel_page_table_range(va, va + size,
+ 			&clear_nocache_walk_ops, NULL, NULL));
+ 	mmap_write_unlock(&init_mm);
+ }
+--- a/arch/riscv/mm/pageattr.c
++++ b/arch/riscv/mm/pageattr.c
+@@ -299,7 +299,7 @@ static int __set_memory(unsigned long ad
+ 			if (ret)
+ 				goto unlock;
+ 
+-			ret = walk_page_range_novma(&init_mm, lm_start, lm_end,
++			ret = walk_kernel_page_table_range(lm_start, lm_end,
+ 						    &pageattr_ops, NULL, &masks);
+ 			if (ret)
+ 				goto unlock;
+@@ -317,13 +317,13 @@ static int __set_memory(unsigned long ad
+ 		if (ret)
+ 			goto unlock;
+ 
+-		ret = walk_page_range_novma(&init_mm, lm_start, lm_end,
++		ret = walk_kernel_page_table_range(lm_start, lm_end,
+ 					    &pageattr_ops, NULL, &masks);
+ 		if (ret)
+ 			goto unlock;
  	}
  
--	if (amdgpu_vm_debug) {
--		/* Invalidate all BOs to test for userspace bugs */
--		amdgpu_bo_list_for_each_entry(e, p->bo_list) {
--			struct amdgpu_bo *bo = e->bo;
--
--			/* ignore duplicates */
--			if (!bo)
--				continue;
--
--			amdgpu_vm_bo_invalidate(adev, bo, false);
--		}
--	}
--
- 	return 0;
+-	ret =  walk_page_range_novma(&init_mm, start, end, &pageattr_ops, NULL,
++	ret =  walk_kernel_page_table_range(start, end, &pageattr_ops, NULL,
+ 				     &masks);
+ 
+ unlock:
+@@ -335,7 +335,7 @@ unlock:
+ 	 */
+ 	flush_tlb_all();
+ #else
+-	ret =  walk_page_range_novma(&init_mm, start, end, &pageattr_ops, NULL,
++	ret =  walk_kernel_page_table_range(start, end, &pageattr_ops, NULL,
+ 				     &masks);
+ 
+ 	mmap_write_unlock(&init_mm);
+--- a/include/linux/pagewalk.h
++++ b/include/linux/pagewalk.h
+@@ -117,10 +117,9 @@ struct mm_walk {
+ int walk_page_range(struct mm_struct *mm, unsigned long start,
+ 		unsigned long end, const struct mm_walk_ops *ops,
+ 		void *private);
+-int walk_page_range_novma(struct mm_struct *mm, unsigned long start,
+-			  unsigned long end, const struct mm_walk_ops *ops,
+-			  pgd_t *pgd,
+-			  void *private);
++int walk_kernel_page_table_range(unsigned long start,
++		unsigned long end, const struct mm_walk_ops *ops,
++		pgd_t *pgd, void *private);
+ int walk_page_range_vma(struct vm_area_struct *vma, unsigned long start,
+ 			unsigned long end, const struct mm_walk_ops *ops,
+ 			void *private);
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -10,6 +10,7 @@
+ #include <linux/fs.h>
+ #include <linux/mm.h>
+ #include <linux/pagemap.h>
++#include <linux/pagewalk.h>
+ #include <linux/rmap.h>
+ #include <linux/tracepoint-defs.h>
+ 
+@@ -1229,4 +1230,10 @@ struct vma_prepare {
+ 	struct vm_area_struct *remove;
+ 	struct vm_area_struct *remove2;
+ };
++
++/* pagewalk.c */
++int walk_page_range_debug(struct mm_struct *mm, unsigned long start,
++			  unsigned long end, const struct mm_walk_ops *ops,
++			  pgd_t *pgd, void *private);
++
+ #endif	/* __MM_INTERNAL_H */
+--- a/mm/pagewalk.c
++++ b/mm/pagewalk.c
+@@ -527,8 +527,7 @@ int walk_page_range(struct mm_struct *mm
  }
  
-@@ -1383,6 +1370,8 @@ static int amdgpu_cs_submit(struct amdgp
- /* Cleanup the parser structure */
- static void amdgpu_cs_parser_fini(struct amdgpu_cs_parser *parser)
+ /**
+- * walk_page_range_novma - walk a range of pagetables not backed by a vma
+- * @mm:		mm_struct representing the target process of page table walk
++ * walk_kernel_page_table_range - walk a range of kernel pagetables.
+  * @start:	start address of the virtual address range
+  * @end:	end address of the virtual address range
+  * @ops:	operation to call during the walk
+@@ -538,12 +537,59 @@ int walk_page_range(struct mm_struct *mm
+  * Similar to walk_page_range() but can walk any page tables even if they are
+  * not backed by VMAs. Because 'unusual' entries may be walked this function
+  * will also not lock the PTEs for the pte_entry() callback. This is useful for
+- * walking the kernel pages tables or page tables for firmware.
++ * walking kernel pages tables or page tables for firmware.
++ *
++ * Note: Be careful to walk the kernel pages tables, the caller may be need to
++ * take other effective approaches (mmap lock may be insufficient) to prevent
++ * the intermediate kernel page tables belonging to the specified address range
++ * from being freed (e.g. memory hot-remove).
++ */
++int walk_kernel_page_table_range(unsigned long start, unsigned long end,
++		const struct mm_walk_ops *ops, pgd_t *pgd, void *private)
++{
++	struct mm_struct *mm = &init_mm;
++	struct mm_walk walk = {
++		.ops		= ops,
++		.mm		= mm,
++		.pgd		= pgd,
++		.private	= private,
++		.no_vma		= true
++	};
++
++	if (start >= end)
++		return -EINVAL;
++
++	/*
++	 * Kernel intermediate page tables are usually not freed, so the mmap
++	 * read lock is sufficient. But there are some exceptions.
++	 * E.g. memory hot-remove. In which case, the mmap lock is insufficient
++	 * to prevent the intermediate kernel pages tables belonging to the
++	 * specified address range from being freed. The caller should take
++	 * other actions to prevent this race.
++	 */
++	mmap_assert_locked(mm);
++
++	return walk_pgd_range(start, end, &walk);
++}
++
++/**
++ * walk_page_range_debug - walk a range of pagetables not backed by a vma
++ * @mm:		mm_struct representing the target process of page table walk
++ * @start:	start address of the virtual address range
++ * @end:	end address of the virtual address range
++ * @ops:	operation to call during the walk
++ * @pgd:	pgd to walk if different from mm->pgd
++ * @private:	private data for callbacks' usage
++ *
++ * Similar to walk_page_range() but can walk any page tables even if they are
++ * not backed by VMAs. Because 'unusual' entries may be walked this function
++ * will also not lock the PTEs for the pte_entry() callback.
++ *
++ * This is for debugging purposes ONLY.
+  */
+-int walk_page_range_novma(struct mm_struct *mm, unsigned long start,
++int walk_page_range_debug(struct mm_struct *mm, unsigned long start,
+ 			  unsigned long end, const struct mm_walk_ops *ops,
+-			  pgd_t *pgd,
+-			  void *private)
++			  pgd_t *pgd, void *private)
  {
-+	struct amdgpu_device *adev = parser->adev;
-+	struct amdgpu_bo_list_entry *e;
- 	unsigned int i;
+ 	struct mm_walk walk = {
+ 		.ops		= ops,
+@@ -553,10 +599,22 @@ int walk_page_range_novma(struct mm_stru
+ 		.no_vma		= true
+ 	};
  
- 	amdgpu_sync_free(&parser->sync);
-@@ -1398,8 +1387,21 @@ static void amdgpu_cs_parser_fini(struct
++	/* For convenience, we allow traversal of kernel mappings. */
++	if (mm == &init_mm)
++		return walk_kernel_page_table_range(start, end, ops,
++						    pgd, private);
+ 	if (start >= end || !walk.mm)
+ 		return -EINVAL;
  
- 	if (parser->ctx)
- 		amdgpu_ctx_put(parser->ctx);
--	if (parser->bo_list)
-+	if (parser->bo_list) {
-+		if (amdgpu_vm_debug) {
-+			/* Invalidate all BOs to test for userspace bugs */
-+			amdgpu_bo_list_for_each_entry(e, parser->bo_list) {
-+				struct amdgpu_bo *bo = e->bo;
-+
-+				/* ignore duplicates */
-+				if (!bo)
-+					continue;
-+
-+				amdgpu_vm_bo_invalidate(adev, bo, false);
-+			}
-+		}
- 		amdgpu_bo_list_put(parser->bo_list);
-+	}
+-	mmap_assert_write_locked(walk.mm);
++	/*
++	 * The mmap lock protects the page walker from changes to the page
++	 * tables during the walk.  However a read lock is insufficient to
++	 * protect those areas which don't have a VMA as munmap() detaches
++	 * the VMAs before downgrading to a read lock and actually tearing
++	 * down PTEs/page tables. In which case, the mmap write lock should
++	 * be held.
++	 */
++	mmap_assert_write_locked(mm);
  
- 	for (i = 0; i < parser->nchunks; i++)
- 		kvfree(parser->chunks[i].kdata);
+ 	return walk_pgd_range(start, end, &walk);
+ }
+--- a/mm/ptdump.c
++++ b/mm/ptdump.c
+@@ -3,6 +3,7 @@
+ #include <linux/pagewalk.h>
+ #include <linux/ptdump.h>
+ #include <linux/kasan.h>
++#include "internal.h"
+ 
+ #if defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)
+ /*
+@@ -155,7 +156,7 @@ void ptdump_walk_pgd(struct ptdump_state
+ 	get_online_mems();
+ 	mmap_write_lock(mm);
+ 	while (range->start != range->end) {
+-		walk_page_range_novma(mm, range->start, range->end,
++		walk_page_range_debug(mm, range->start, range->end,
+ 				      &ptdump_ops, pgd, st);
+ 		range++;
+ 	}
 
 
