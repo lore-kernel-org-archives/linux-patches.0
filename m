@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4178C40F754;
-	Thu, 20 Aug 2026 16:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1685740F754;
+	Thu, 20 Aug 2026 16:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244275; cv=none; b=u70FREP7YWKuZVEZpMgS1rNLHlGBFoE0gnR5Fyl6GaFH73RrR1HbzZLp6tybx3XHnOXCEiBMqcmmt8/B/MqF362lvFsw1WN3pK4cajDSpuUupKwjFTDodhgcJ8ab++9KcYq0mvui9GnDzLFJ2iq5dR1lm6O6GZzlMSAC6xkDH1U=
+	t=1787244278; cv=none; b=RJVplGMh9HCED5lZRPcOY32s+De0HkIKx224fO9yTX7j+wj/uaPEfZyo6gCLhsQSIlG7XqC+kTmljGbmZW2BGiHdoBiBNZOibiergrwJePBjVwWKeXIiI9ACmwvmRFLoM14cC+wXMc09WcoBn9BMLXinCCvm5v7VEjtpuO/Kze8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244275; c=relaxed/simple;
-	bh=twI1ejmJXonc7GeBgdzo2AG+Zc8h7KgCtai0ovC81eM=;
+	s=arc-20240116; t=1787244278; c=relaxed/simple;
+	bh=S120dAYugaTvfvfKS9qkJYqPP7NWyBftmFkw4LzprAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ijFIq1w58YN/DC7TLpzE8CqI7ZstdziqwjfAmmDZfGE5KGC3BsH5UxdVUbm/6wwnfrECUxgBxO74m+uRLMs6ZVnilT9k3nT84TEpkYDswR0EjqieLuPTyCFJvhnfXIbJE8AXZqtcC3gP6f+93dIJdHvETLce5oSzHn+aXZB5X8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lK2nHdW5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e+pF06NFksDBIL91usQxkzcgiXsnfr0UYAAkyIfPF8se/ejhKB4KQBBr0UEGMRU5o0EWy9EQikY4ocCTLvlzPFIGcDyIUTwU6TfSaiFNietexjhBm06KU7MDduczdaRiKSbdJNMF05k47Z4pRGZL0PM1a3flGxZSw0jwklBrBkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ef0x7Rv4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lK2nHdW5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94EAB1F000E9;
-	Thu, 20 Aug 2026 16:44:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ef0x7Rv4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 708C81F00A3A;
+	Thu, 20 Aug 2026 16:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244274;
-	bh=dg886dHpxt/+VAR5tA0Jc4a3UrN03AiQnS7e7dkiK38=;
+	s=korg; t=1787244277;
+	bh=eugPAXSGQATWEkaJLjSRWQTfih85Aqg5mzf/rYA2fVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lK2nHdW58v42YaaSyyHL7GxQDJ3qzQbDB8Uv5R7z75aXOTRzFBj0X+fNBwYQC8Gwi
-	 OASQc1TsCl9kweL/zi+PtJ0s8exUI1v5IqCRhOMGF1dqovPzTO+2qfa4VPlu5Xwl4M
-	 T32AePDNkit+dK9LaK1Ep4RLsSAL2N3ru5+7qthQ=
+	b=Ef0x7Rv44MixQxk94VCe66Sn5uuUgTRZsX9rM6CNRT3yCPptwV9l/YasdTLn7DCwe
+	 w+V7BfUI1uZaSoVdSTry7oKxLLbkhIZL7DgoyYD23xAhCs8gUujZSZZCBF3eiQoL65
+	 y3y/iWArksxiixAvcZz7xeMh9p+QoGT5DM32rsU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Fredric Cover <fredric.cover.lkernel@gmail.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 113/235] dm-verity: make error counter atomic
-Date: Thu, 20 Aug 2026 16:55:49 +0200
-Message-ID: <20260820145219.879876660@linuxfoundation.org>
+Subject: [PATCH 5.10 096/235] smb: client: use kvzalloc() for megabyte buffer in simple fallocate
+Date: Thu, 20 Aug 2026 16:55:32 +0200
+Message-ID: <20260820145219.370288859@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -50,69 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Fredric Cover <fredric.cover.lkernel@gmail.com>
 
-[ Upstream commit 8ec4d9c5a5cf4b61fc087f871465b1f79b393325 ]
+[ Upstream commit 806c00c23e3ce8eae397a40ced536ef88ae4e012 ]
 
-The error counter "v->corrupted_errs" was not atomic, thus it could be
-subject to race conditions. The call to
-dm_audit_log_target("max-corrupted-errors") may be skipped due to the
-races.
+Currently in smb3_simple_fallocate_range(), a 1 MB buffer is allocated
+using kzalloc(). Under heavy memory fragmentation, a contiguous 1 MB block
+of physical memory (an order-8 allocation) may not be available,
+causing the allocation to fail.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-4.6
-Fixes: 65ff5b7ddf05 ("dm verity: add error handling modes for corrupted blocks")
+This failure was observed during xfstests generic/013 on a 4GB RAM
+test machine running fsstress:
+
+fsstress: page allocation failure: order:8,
+mode:0x40dc0(GFP_KERNEL|__GFP_ZERO|__GFP_COMP),
+nodemask=(null),cpuset=/,mems_allowed=0
+
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x5d/0x80
+ warn_alloc+0x163/0x190
+ __alloc_pages_slowpath.constprop.0+0x71b/0x12f0
+ __alloc_frozen_pages_noprof+0x2f6/0x340
+ alloc_pages_mpol+0xb6/0x170
+ ___kmalloc_large_node+0xb3/0xd0
+ __kmalloc_large_noprof+0x1e/0xc0
+ smb3_simple_falloc.isra.0+0x62b/0x960
+ cifs_fallocate+0xed/0x180
+ vfs_fallocate+0x165/0x3c0
+ __x64_sys_fallocate+0x48/0xa0
+ do_syscall_64+0xe1/0x640
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ </TASK>
+
+Node 0 Normal: 3375*4kB ... 7*128kB 0*256kB 0*512kB 0*1024kB 0*2048kB 0*4096kB
+
+Since this scratch buffer does not require physically contiguous memory,
+switch the allocation to kvzalloc(). This retains the performance
+benefits of kmalloc() under normal conditions, while gracefully falling
+back to virtually contiguous memory when physical allocation fails.
+
+Fixes: 966a3cb7c7db ("cifs: improve fallocate emulation")
 Cc: stable@vger.kernel.org
-[ kept 5.15's braceless single-statement DMERR body instead of upstream's braced block containing the absent dm_audit_log_target() call ]
+Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
+Tested-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-verity-target.c |   12 +++++++-----
- drivers/md/dm-verity.h        |    2 +-
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ fs/cifs/smb2ops.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-verity-target.c
-+++ b/drivers/md/dm-verity-target.c
-@@ -217,14 +217,16 @@ static int verity_handle_err(struct dm_v
- 	char *envp[] = { verity_env, NULL };
- 	const char *type_str = "";
- 	struct mapped_device *md = dm_table_get_md(v->ti->table);
-+	int ce;
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -3568,7 +3568,7 @@ static int smb3_simple_fallocate_range(u
+ 	if (rc)
+ 		goto out;
  
- 	/* Corruption should be visible in device status in all modes */
- 	v->hash_failed = 1;
+-	buf = kzalloc(1024 * 1024, GFP_KERNEL);
++	buf = kvzalloc(1024 * 1024, GFP_KERNEL);
+ 	if (buf == NULL) {
+ 		rc = -ENOMEM;
+ 		goto out;
+@@ -3635,7 +3635,7 @@ static int smb3_simple_fallocate_range(u
  
--	if (v->corrupted_errs >= DM_VERITY_MAX_CORRUPTED_ERRS)
--		goto out;
--
--	v->corrupted_errs++;
-+	ce = atomic_read(&v->corrupted_errs);
-+	do {
-+		if (ce >= DM_VERITY_MAX_CORRUPTED_ERRS)
-+			goto out;
-+	} while (!atomic_try_cmpxchg(&v->corrupted_errs, &ce, ce + 1));
- 
- 	switch (type) {
- 	case DM_VERITY_BLOCK_TYPE_DATA:
-@@ -240,7 +242,7 @@ static int verity_handle_err(struct dm_v
- 	DMERR_LIMIT("%s: %s block %llu is corrupted", v->data_dev->name,
- 		    type_str, block);
- 
--	if (v->corrupted_errs == DM_VERITY_MAX_CORRUPTED_ERRS)
-+	if (ce + 1 == DM_VERITY_MAX_CORRUPTED_ERRS)
- 		DMERR("%s: reached maximum errors", v->data_dev->name);
- 
- 	snprintf(verity_env, DM_VERITY_ENV_LENGTH, "%s=%d,%llu",
---- a/drivers/md/dm-verity.h
-+++ b/drivers/md/dm-verity.h
-@@ -55,7 +55,7 @@ struct dm_verity {
- 	unsigned int ahash_reqsize;/* the size of temporary space for crypto */
- 	int hash_failed;	/* set to 1 if hash of any block failed */
- 	enum verity_mode mode;	/* mode for handling verification errors */
--	unsigned corrupted_errs;/* Number of errors for corrupted blocks */
-+	atomic_t corrupted_errs;/* Number of errors for corrupted blocks */
- 
- 	struct workqueue_struct *verify_wq;
+  out:
+ 	kfree(out_data);
+-	kfree(buf);
++	kvfree(buf);
+ 	return rc;
+ }
  
 
 
