@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DC22931C0;
-	Thu, 20 Aug 2026 17:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4216D2931C0;
+	Thu, 20 Aug 2026 17:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247447; cv=none; b=o0ipq9mNXYvd6giSsdRl4zMfaXOjvMChU1DQOLHuC7h5dtITAnfFR7BU2ADPgajTv0/U4JhbZYBcLA3GRnMrHr9PyUMwkEKY7aQEaElOYLjmYANakTkOGRnSJP5VWX53iSarZKBN1ecOWDx/p5+9piAbenIn4cFY/kAdbjJmwiU=
+	t=1787247450; cv=none; b=MFZuPi45aJQHSrH4Tgem0b1Vf0eVwK4MtYtt4z/xso4g0c3uknCM7z+0R5qQjFEaGv0jlFgvwm5+mlsj602j/FtLizVWGDNR0AiNk/rfMOUZBX0EJw5Md9P5Ue0KBktrCvH33UxmxQToUpLhaRk4Hpca0QNbLEcAgUCWZWbwXN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247447; c=relaxed/simple;
-	bh=mnLroqsnu5is2UOvKOy8gaWBhp5VDz0qx3SgMUdremQ=;
+	s=arc-20240116; t=1787247450; c=relaxed/simple;
+	bh=gukJ8rL1YSjbfydbADSYebq7yoJHosaVi9c7WGliPxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rV6ooDyAJIFbXDBLq5U14XfDwCVE52qag3qKnZpFiWIQLatlbktnsI2Ih/kqutJc5eSjWW8rY4w6NtOTNYIxR45slZVLBKnI6rpkytbloG01KQpH6zbq350b3pKuVpsKzSzYg7ABYQbNAie2fpLKS/wyQhG8eewX2YHDjVHlB4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nompkUtL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vl7zFzxZgfqzkGXtmGYnQP5MI+10i0ItlXi2azpF99dgZsvGgZ/DZBeA0om26hQi/xh7urAd/pPuw5+qZ+3fmqflOcz/l1zGSZmcKiTr0w08p9893bWQCxoSqYOrwLq6RDTZi8Qdu5GMQFsTx5zjAgfvuJERTLfnks+jbXi7m4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjtXeknN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nompkUtL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38FB1F000E9;
-	Thu, 20 Aug 2026 17:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjtXeknN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DEA41F000E9;
+	Thu, 20 Aug 2026 17:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247446;
-	bh=vIlmun2GKx8aai4ezmEnSOD22xtRUSTfS6GMWt0HCwY=;
+	s=korg; t=1787247449;
+	bh=siyL/0d7tgUM3tvt6SX0/Q387kUPDZpmY9QVBYiqxHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nompkUtLvBwF3EyqoeEAV3yKxJBYWDl0avvy6LfzOyWhNq0F4IVwSiOc0auZ8yvtA
-	 nCS9deTj/jo3LpSAn+h0lBsos3AoAffC4EfWpYrFlzyz9d5B0LeJ8Kr4yOr74hmq1f
-	 nqvHQ8T2n7hCMC1cADgmIM+8gJe3fD8Q+pUtF5C8=
+	b=GjtXeknNNDjIFxgj+CRCP17B43ILhS/EPloxFmvaPkTqv/vKRMPh6X2/SAS8Xc27y
+	 FPpWfZxol7vEq1CQNSk6fLmNTsoPsh2rKi1up+TK9QxA2CaTPUXNjM6yoCHoBrylNZ
+	 9DdLwHVkbUoiGq9MgWQ/z/IXmCN6FoXLdrRzwduY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Eric Farman <farman@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.6 050/166] s390/vfio_ccw: Limit the number of channel program segments
-Date: Thu, 20 Aug 2026 16:55:09 +0200
-Message-ID: <20260820145212.666740600@linuxfoundation.org>
+	Jianing Li <m13940358460@163.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.6 033/166] Input: hynitron_cstxxx - validate touch count and finger IDs
+Date: Thu, 20 Aug 2026 16:54:52 +0200
+Message-ID: <20260820145212.178920983@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -51,87 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Farman <farman@linux.ibm.com>
+From: Jianing Li <m13940358460@163.com>
 
-commit 5405c90d6a47b3014e74ee0618a162449abbbc93 upstream.
+commit 27f380ef0e1d3de3cde114e02d33f9320ce3a5a6 upstream.
 
-The processing of channel programs, and the CCWs within them, is done
-recursively. As such, there is an arbitrary (but not architectural)
-limit to the number of CCWs that can exist in a single channel program.
+The driver allocates max_touch_num input slots, which are indexed from
+zero through max_touch_num - 1. The current check allows a finger ID
+equal to max_touch_num to reach cst3xx_report_contact(). While the input
+core ignores out-of-range slot indices, reporting touch data without a
+valid slot change corrupts the touch state of the previously active slot.
 
-The vfio-ccw logic breaks these channel programs into segments whenever
-it encounters a Transfer-In-Channel (TIC) CCW, and the combined number
-of segments count towards the global limit. Impose an equivalent limit
-to the number of segments until such logic can be made non-recursive.
+The touch count is read from the controller's report and is used to
+index the fixed-size report buffer without first checking its range.
+Reject counts larger than the supported number of touch slots before
+checking the trailing byte or parsing touch data.
 
-Fixes: 0a19e61e6d4c ("vfio: ccw: introduce channel program interfaces")
+Reject finger IDs equal to or greater than max_touch_num, and return
+immediately when an invalid finger ID is encountered so that corrupt
+touch frames are discarded instead of reporting partial contact state.
+
+The V821 Avaota F1 board configures the vendor driver with one touch
+slot, so finger ID 1 is already invalid on that device.
+
+Fixes: 66603243f528 ("Input: add driver for Hynitron cstxxx touchscreens")
+Signed-off-by: Jianing Li <m13940358460@163.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Link: https://patch.msgid.link/20260804031339.2379-1-m13940358460@163.com
+Assisted-by: Antigravity:gemini-3.6-flash
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/vfio_ccw_cp.c |    6 ++++++
- drivers/s390/cio/vfio_ccw_cp.h |    8 ++++++++
- 2 files changed, 14 insertions(+)
+ drivers/input/touchscreen/hynitron_cstxxx.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/s390/cio/vfio_ccw_cp.c
-+++ b/drivers/s390/cio/vfio_ccw_cp.c
-@@ -331,6 +331,7 @@ static struct ccwchain *ccwchain_alloc(s
- 		goto out_err;
+--- a/drivers/input/touchscreen/hynitron_cstxxx.c
++++ b/drivers/input/touchscreen/hynitron_cstxxx.c
+@@ -313,6 +313,12 @@ static void cst3xx_touch_report(struct i
+ 		return;
  
- 	list_add_tail(&chain->next, &cp->ccwchain_list);
-+	cp->ccwchain_count++;
- 
- 	return chain;
- 
-@@ -438,6 +439,10 @@ static int ccwchain_handle_ccw(u32 cda,
- 	if (len < 0)
- 		return len;
- 
-+	/* Limit number of chains in a single channel program */
-+	if (cp->ccwchain_count >= CCWCHAIN_COUNT_MAX)
-+		return -EINVAL;
+ 	touch_cnt = buf[5] & CST3XX_TOUCH_COUNT_MASK;
++	if (touch_cnt > ts_data->chip->max_touch_num) {
++		dev_err(&client->dev, "cst3xx invalid touch count (%d vs %d max)\n",
++			touch_cnt, ts_data->chip->max_touch_num);
++		return;
++	}
 +
- 	/* Need alloc a new chain for this one. */
- 	chain = ccwchain_alloc(cp, len);
- 	if (!chain)
-@@ -739,6 +744,7 @@ int cp_init(struct channel_program *cp,
- 			vdev->dev,
- 			"Prefetching channel program even though prefetch not specified in ORB");
+ 	/*
+ 	 * Check the check bit of the last touch slot. The check bit is
+ 	 * always present after touch point 1 for valid data, and then
+@@ -335,9 +341,10 @@ static void cst3xx_touch_report(struct i
+ 		finger_id = (buf[idx] >> 4) & 0x0f;
  
-+	cp->ccwchain_count = 0;
- 	INIT_LIST_HEAD(&cp->ccwchain_list);
- 	memcpy(&cp->orb, orb, sizeof(*orb));
+ 		/* Sanity check we don't have more fingers than we expect */
+-		if (ts_data->chip->max_touch_num < finger_id) {
+-			dev_err(&client->dev, "cst3xx touch read failure\n");
+-			break;
++		if (finger_id >= ts_data->chip->max_touch_num) {
++			dev_err(&client->dev,
++				"cst3xx invalid finger id %d\n", finger_id);
++			return;
+ 		}
  
---- a/drivers/s390/cio/vfio_ccw_cp.h
-+++ b/drivers/s390/cio/vfio_ccw_cp.h
-@@ -23,11 +23,18 @@
-  */
- #define CCWCHAIN_LEN_MAX	256
- 
-+/*
-+ * Maximum number of chains
-+ */
-+#define CCWCHAIN_COUNT_MAX	16
-+
- /**
-  * struct channel_program - manage information for channel program
-  * @ccwchain_list: list head of ccwchains
-  * @orb: orb for the currently processed ssch request
-  * @initialized: whether this instance is actually initialized
-+ * @guest_cp: copy of guest channel program
-+ * @ccwchain_count: number of channel program segments (linked by TIC)
-  *
-  * @ccwchain_list is the head of a ccwchain list, that contents the
-  * translated result of the guest channel program that pointed out by
-@@ -38,6 +45,7 @@ struct channel_program {
- 	union orb orb;
- 	bool initialized;
- 	struct ccw1 *guest_cp;
-+	unsigned int ccwchain_count;
- };
- 
- int cp_init(struct channel_program *cp, union orb *orb);
+ 		/* sw value of 0 means no touch, 0x03 means touch */
 
 
