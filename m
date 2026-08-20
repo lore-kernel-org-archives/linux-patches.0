@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B9547DD5F;
-	Thu, 20 Aug 2026 17:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC03479873;
+	Thu, 20 Aug 2026 17:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248485; cv=none; b=mVxuTYOZrf1kbwznWwrPmQ2c2MSauPR7Ffr3mvMbaOKOby1Q6B9Ucjfk+PuX0G2PTPa422XIjyrUs9hQdzjp3YnJijmuYo5GvX0E8QarFxuRTqQvxOUIoUIWPFxjatB1MRvXBivoxe+fQm58npSEFnX0JsnYe4DRfvjP9CE24jg=
+	t=1787248487; cv=none; b=Tam/mwelONopzg5WUL4E7OLRbxNbPZ88fZA7AYgrd9nYjEiF9a8GBihyvkZVf3O1kEIXbw88x7clxVyv1AkVTpuPgNwsrvJvnWabCi0aY4Ni+kOiCMjGfqalDZ0vdOsA+0u2DqKMOrM1/wZQEDPvPCsbPTwe3+NaDWK5bw+p9Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248485; c=relaxed/simple;
-	bh=upi2FQG3M7pHt8kyEoQF1orunnaPkQYXNxpEMLDbe9E=;
+	s=arc-20240116; t=1787248487; c=relaxed/simple;
+	bh=1aI0VQ/cDtLNBoUXv8kKkH641WJFIEwNrFXKgV0Ab3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NNG1bbPJIT5dclP9EfYlsyIIYXWFTMed48mnrV/e7HA6w9KNh9C6Y0yUTmAJvgMgeoLNp7EwJvYoFwtnQzxD+R1Y7nNE0jmLV5aKZyLZomaZkx3oM1gXdriA11wALP/0GXZDd/K9RJDj/f8leGQP5Z9Ml86+5IQo9dfoUS/UK80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNgSFAPM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QhVflJdPl2Gg3pny3LWgzriOwX6KtWUBuaSESLipVM0rzCS25vbkqPQbEXbkrvr/mSB5egS5MIu91YjFvuanIw/vIHM1AByM2Qj5tb2vL8uDJNM/MgENC3JfeblxZXOersNj1tyzp/Guo4MytVW9ugkcGTedeDO3WQc8RJfWevE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TUgBvuy3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNgSFAPM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D6F1F000E9;
-	Thu, 20 Aug 2026 17:54:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TUgBvuy3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59411F000E9;
+	Thu, 20 Aug 2026 17:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248483;
-	bh=6ABFWz438qwV+/1EQPIc8qri9FmKBuxVnRev3y+SU1M=;
+	s=korg; t=1787248486;
+	bh=k/XkHKNbg1E4ADmYIkGPctD31VeaKjhiJGXviWMa3Ik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fNgSFAPMIuUKiumr+eoB7syVw4kEi/StiioymD4CUHgZ0g3kHxhQhFy6iTqugMt2+
-	 xcuc3InElHT///bUlOcLKwbumAQyJjlHzeYFjNJ1d2wiA+D+CXU5Va6x7aUKQ+7abo
-	 FEfT7DPIE0q7lpi1s6oScxw/xF7bQgxW9PFTK4yw=
+	b=TUgBvuy3ng8htMW57u3BsSdOAZS7MIqML+vkWcYC0lQ1J5znwcAxiP92RXfZfnVhD
+	 WikMyrE9XB1homN5Gzk/NYz681KIUZgPLvDMSYBycb6dpy5A45ON643PNGN+i4hDTJ
+	 ea+7HkobGPj5JaMzvLA685bWlopdFmQaWW7BhQ/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 244/303] Bluetooth: hci_core: Fix not handling hdev->le_num_of_adv_sets=1
-Date: Thu, 20 Aug 2026 16:56:20 +0200
-Message-ID: <20260820145300.780301898@linuxfoundation.org>
+Subject: [PATCH 6.1 245/303] Bluetooth: hci_sync: Fix advertising data UAFs
+Date: Thu, 20 Aug 2026 16:56:21 +0200
+Message-ID: <20260820145300.810320247@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -50,127 +52,342 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit e77f43d531af41e9ce299eab10dcae8fa5dbc293 ]
+[ Upstream commit cdc36db204ffd97b947d64374cf23a210dc74777 ]
 
-If hdev->le_num_of_adv_sets is set to 1 it means that only handle 0x00
-can be used, but since the MGMT interface instances start from 1
-(instance 0 means all instances in case of MGMT_OP_REMOVE_ADVERTISING)
-the code needs to map the instance to handle otherwise users will not be
-able to advertise as instance 1 would attempt to use handle 0x01.
+hci_find_adv_instance() returns an adv_info pointer that is valid only
+while hdev->lock is held.  The advertising command-sync paths perform
+instance lookups without that lock and, in some cases, retain the pointer
+while waiting for a controller response.
 
-Fixes: 1d0fac2c38ed ("Bluetooth: Use controller sets when available")
+An advertising termination event can therefore interleave as follows:
+
+  hci_cmd_sync_work                 hci_rx_work
+  hci_find_adv_instance()
+  __hci_cmd_sync_status()
+    wait for controller reply       hci_dev_lock()
+                                    hci_remove_adv_instance()
+                                      kfree(adv)
+  adv->scan_rsp_changed = false
+
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in hci_set_ext_scan_rsp_data_sync+0x2e1/0x300
+  Write of size 1 at addr ffff88810a45d21d by task kworker/u17:0/88
+  Workqueue: hci0 hci_cmd_sync_work
+  Call Trace:
+   hci_set_ext_scan_rsp_data_sync+0x2e1/0x300
+   hci_schedule_adv_instance_sync+0x390/0x4c0
+   hci_cmd_sync_work+0x173/0x300
+  Allocated by task 87:
+   hci_add_adv_instance+0x538/0xac0
+   add_advertising+0x885/0x1160
+  Freed by task 89:
+   kfree+0x131/0x3c0
+   hci_remove_adv_instance+0x1d8/0x3b0
+   hci_le_ext_adv_term_evt+0x17b/0x730
+
+Protect the instance lookup and payload construction in the extended
+advertising, scan response, and periodic advertising data paths.  Snapshot
+the advertising parameters under hdev->lock, but release the lock before
+waiting for the controller.
+
+Clear advertising-data dirty bits before issuing their commands and
+restore them after a failure using a fresh lookup.  Likewise, update the
+reported transmit power through a fresh lookup after the parameter command
+completes.  No adv_info pointer then survives an HCI command wait.
+
+Fixes: cba6b758711c ("Bluetooth: hci_sync: Make use of hci_cmd_sync_queue set 2")
+Cc: stable@vger.kernel.org
+Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: cdc36db204ff ("Bluetooth: hci_sync: Fix advertising data UAFs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/hci_core.h |    1 +
- net/bluetooth/hci_core.c         |    9 +++++++++
- net/bluetooth/hci_sync.c         |   17 ++++++++---------
- 3 files changed, 18 insertions(+), 9 deletions(-)
+ net/bluetooth/hci_sync.c |  131 ++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 97 insertions(+), 34 deletions(-)
 
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -242,6 +242,7 @@ struct adv_info {
- 	bool	periodic;
- 	__u8	mesh;
- 	__u8	instance;
-+	__u8	handle;
- 	__u32	flags;
- 	__u16	timeout;
- 	__u16	remaining_time;
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -1706,6 +1706,15 @@ struct adv_info *hci_add_adv_instance(st
- 
- 		adv->pending = true;
- 		adv->instance = instance;
-+
-+		/* If controller support only one set and the instance is set to
-+		 * 1 then there is no option other than using handle 0x00.
-+		 */
-+		if (hdev->le_num_of_adv_sets == 1 && instance == 1)
-+			adv->handle = 0x00;
-+		else
-+			adv->handle = instance;
-+
- 		list_add(&adv->list, &hdev->adv_instances);
- 		hdev->adv_instance_cnt++;
- 	}
 --- a/net/bluetooth/hci_sync.c
 +++ b/net/bluetooth/hci_sync.c
-@@ -1183,11 +1183,10 @@ static int hci_disable_ext_adv_instance_
- 	struct hci_cp_ext_adv_set *set;
- 	u8 data[sizeof(*cp) + sizeof(*set) * 1];
- 	u8 size;
-+	struct adv_info *adv = NULL;
+@@ -1240,10 +1240,11 @@ static int hci_set_adv_set_random_addr_s
+ }
  
- 	/* If request specifies an instance that doesn't exist, fail */
- 	if (instance > 0) {
--		struct adv_info *adv;
--
- 		adv = hci_find_adv_instance(hdev, instance);
- 		if (!adv)
- 			return -EINVAL;
-@@ -1206,7 +1205,7 @@ static int hci_disable_ext_adv_instance_
- 	cp->num_of_sets = !!instance;
- 	cp->enable = 0x00;
+ static int
+-hci_set_ext_adv_params_sync(struct hci_dev *hdev, struct adv_info *adv,
++hci_set_ext_adv_params_sync(struct hci_dev *hdev, u8 instance,
+ 			    const struct hci_cp_le_set_ext_adv_params *cp,
+ 			    struct hci_rp_le_set_ext_adv_params *rp)
+ {
++	struct adv_info *adv;
+ 	struct sk_buff *skb;
  
--	set->handle = instance;
-+	set->handle = adv ? adv->handle : instance;
+ 	skb = __hci_cmd_sync(hdev, HCI_OP_LE_SET_EXT_ADV_PARAMS, sizeof(*cp),
+@@ -1271,11 +1272,15 @@ hci_set_ext_adv_params_sync(struct hci_d
  
- 	size = sizeof(*cp) + sizeof(*set) * cp->num_of_sets;
+ 	if (!rp->status) {
+ 		hdev->adv_addr_type = cp->own_addr_type;
+-		if (!cp->handle) {
++		if (!instance) {
+ 			/* Store in hdev for instance 0 */
+ 			hdev->adv_tx_power = rp->tx_power;
+-		} else if (adv) {
+-			adv->tx_power = rp->tx_power;
++		} else {
++			hci_dev_lock(hdev);
++			adv = hci_find_adv_instance(hdev, instance);
++			if (adv)
++				adv->tx_power = rp->tx_power;
++			hci_dev_unlock(hdev);
+ 		}
+ 	}
  
-@@ -1301,7 +1300,7 @@ static int hci_set_ext_adv_data_sync(str
- 				  HCI_MAX_EXT_AD_LENGTH);
- 
- 	pdu->length = len;
--	pdu->handle = instance;
-+	pdu->handle = adv ? adv->handle : instance;
- 	pdu->operation = LE_SET_ADV_DATA_OP_COMPLETE;
- 	pdu->frag_pref = LE_SET_ADV_DATA_NO_FRAG;
- 
-@@ -1512,7 +1511,7 @@ static int hci_set_ext_scan_rsp_data_syn
- 
- 	len = eir_create_scan_rsp(hdev, instance, pdu->data);
- 
--	pdu->handle = instance;
-+	pdu->handle = adv ? adv->handle : instance;
- 	pdu->length = len;
- 	pdu->operation = LE_SET_ADV_DATA_OP_COMPLETE;
- 	pdu->frag_pref = LE_SET_ADV_DATA_NO_FRAG;
-@@ -1594,7 +1593,7 @@ int hci_enable_ext_advertising_sync(stru
- 
- 	memset(set, 0, sizeof(*set));
- 
--	set->handle = instance;
-+	set->handle = adv ? adv->handle : instance;
- 
- 	/* Set duration per instance since controller is responsible for
- 	 * scheduling it.
-@@ -1671,10 +1670,10 @@ static int hci_set_per_adv_data_sync(str
- 	DEFINE_FLEX(struct hci_cp_le_set_per_adv_data, pdu, data, length,
- 		    HCI_MAX_PER_AD_LENGTH);
- 	u8 len;
-+	struct adv_info *adv = NULL;
+@@ -1291,9 +1296,13 @@ static int hci_set_ext_adv_data_sync(str
+ 	int err;
  
  	if (instance) {
--		struct adv_info *adv = hci_find_adv_instance(hdev, instance);
--
-+		adv = hci_find_adv_instance(hdev, instance);
- 		if (!adv || !adv->periodic)
++		hci_dev_lock(hdev);
++
+ 		adv = hci_find_adv_instance(hdev, instance);
+-		if (!adv || !adv->adv_data_changed)
++		if (!adv || !adv->adv_data_changed) {
++			hci_dev_unlock(hdev);
  			return 0;
++		}
  	}
-@@ -1682,7 +1681,7 @@ static int hci_set_per_adv_data_sync(str
- 	len = eir_create_per_adv_data(hdev, instance, pdu->data);
  
- 	pdu->length = len;
--	pdu->handle = instance;
-+	pdu->handle = adv ? adv->handle : instance;
+ 	len = eir_create_adv_data(hdev, instance, pdu->data,
+@@ -1304,16 +1313,27 @@ static int hci_set_ext_adv_data_sync(str
+ 	pdu->operation = LE_SET_ADV_DATA_OP_COMPLETE;
+ 	pdu->frag_pref = LE_SET_ADV_DATA_NO_FRAG;
+ 
++	if (adv) {
++		adv->adv_data_changed = false;
++		hci_dev_unlock(hdev);
++	}
++
+ 	err = __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_EXT_ADV_DATA,
+ 				    struct_size(pdu, data, len), pdu,
+ 				    HCI_CMD_TIMEOUT);
+-	if (err)
++	if (err) {
++		if (instance) {
++			hci_dev_lock(hdev);
++			adv = hci_find_adv_instance(hdev, instance);
++			if (adv)
++				adv->adv_data_changed = true;
++			hci_dev_unlock(hdev);
++		}
++
+ 		return err;
++	}
+ 
+-	/* Update data if the command succeed */
+-	if (adv) {
+-		adv->adv_data_changed = false;
+-	} else {
++	if (!instance) {
+ 		memcpy(hdev->adv_data, pdu->data, len);
+ 		hdev->adv_data_len = len;
+ 	}
+@@ -1367,22 +1387,22 @@ int hci_setup_ext_adv_instance_sync(stru
+ 	struct adv_info *adv;
+ 	bool secondary_adv;
+ 
+-	if (instance > 0) {
+-		adv = hci_find_adv_instance(hdev, instance);
+-		if (!adv)
+-			return -EINVAL;
+-	} else {
+-		adv = NULL;
+-	}
+-
+ 	/* Updating parameters of an active instance will return a
+-	 * Command Disallowed error, so we must first disable the
+-	 * instance if it is active.
++	 * Command Disallowed error, so disable it before taking a snapshot.
+ 	 */
+-	if (adv) {
++	if (instance > 0) {
+ 		err = hci_disable_ext_adv_instance_sync(hdev, instance);
+ 		if (err)
+ 			return err;
++
++		hci_dev_lock(hdev);
++		adv = hci_find_adv_instance(hdev, instance);
++		if (!adv) {
++			hci_dev_unlock(hdev);
++			return -EINVAL;
++		}
++	} else {
++		adv = NULL;
+ 	}
+ 
+ 	flags = hci_adv_instance_flags(hdev, instance);
+@@ -1393,8 +1413,11 @@ int hci_setup_ext_adv_instance_sync(stru
+ 	connectable = (flags & MGMT_ADV_FLAG_CONNECTABLE) ||
+ 		      mgmt_get_connectable(hdev);
+ 
+-	if (!is_advertising_allowed(hdev, connectable))
++	if (!is_advertising_allowed(hdev, connectable)) {
++		if (instance)
++			hci_dev_unlock(hdev);
+ 		return -EPERM;
++	}
+ 
+ 	/* Set require_privacy to true only when non-connectable
+ 	 * advertising is used and it is not periodic.
+@@ -1405,8 +1428,11 @@ int hci_setup_ext_adv_instance_sync(stru
+ 	err = hci_get_random_address(hdev, require_privacy,
+ 				     adv_use_rpa(hdev, flags), adv,
+ 				     &own_addr_type, &random_addr);
+-	if (err < 0)
++	if (err < 0) {
++		if (instance)
++			hci_dev_unlock(hdev);
+ 		return err;
++	}
+ 
+ 	memset(&cp, 0, sizeof(cp));
+ 
+@@ -1455,6 +1481,9 @@ int hci_setup_ext_adv_instance_sync(stru
+ 	cp.channel_map = hdev->le_adv_channel_map;
+ 	cp.handle = instance;
+ 
++	if (instance)
++		hci_dev_unlock(hdev);
++
+ 	if (flags & MGMT_ADV_FLAG_SEC_2M) {
+ 		cp.primary_phy = HCI_ADV_PHY_1M;
+ 		cp.secondary_phy = HCI_ADV_PHY_2M;
+@@ -1467,12 +1496,12 @@ int hci_setup_ext_adv_instance_sync(stru
+ 		cp.secondary_phy = HCI_ADV_PHY_1M;
+ 	}
+ 
+-	err = hci_set_ext_adv_params_sync(hdev, adv, &cp, &rp);
++	err = hci_set_ext_adv_params_sync(hdev, instance, &cp, &rp);
+ 	if (err)
+ 		return err;
+ 
+ 	/* Update adv data as tx power is known now */
+-	err = hci_set_ext_adv_data_sync(hdev, cp.handle);
++	err = hci_set_ext_adv_data_sync(hdev, instance);
+ 	if (err)
+ 		return err;
+ 
+@@ -1480,9 +1509,14 @@ int hci_setup_ext_adv_instance_sync(stru
+ 	     own_addr_type == ADDR_LE_DEV_RANDOM_RESOLVED) &&
+ 	    bacmp(&random_addr, BDADDR_ANY)) {
+ 		/* Check if random address need to be updated */
+-		if (adv) {
+-			if (!bacmp(&random_addr, &adv->random_addr))
++		if (instance) {
++			hci_dev_lock(hdev);
++			adv = hci_find_adv_instance(hdev, instance);
++			if (!adv || !bacmp(&random_addr, &adv->random_addr)) {
++				hci_dev_unlock(hdev);
+ 				return 0;
++			}
++			hci_dev_unlock(hdev);
+ 		} else {
+ 			if (!bacmp(&random_addr, &hdev->random_addr))
+ 				return 0;
+@@ -1504,9 +1538,13 @@ static int hci_set_ext_scan_rsp_data_syn
+ 	int err;
+ 
+ 	if (instance) {
++		hci_dev_lock(hdev);
++
+ 		adv = hci_find_adv_instance(hdev, instance);
+-		if (!adv || !adv->scan_rsp_changed)
++		if (!adv || !adv->scan_rsp_changed) {
++			hci_dev_unlock(hdev);
+ 			return 0;
++		}
+ 	}
+ 
+ 	len = eir_create_scan_rsp(hdev, instance, pdu->data);
+@@ -1516,15 +1554,27 @@ static int hci_set_ext_scan_rsp_data_syn
+ 	pdu->operation = LE_SET_ADV_DATA_OP_COMPLETE;
+ 	pdu->frag_pref = LE_SET_ADV_DATA_NO_FRAG;
+ 
++	if (adv) {
++		adv->scan_rsp_changed = false;
++		hci_dev_unlock(hdev);
++	}
++
+ 	err = __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_EXT_SCAN_RSP_DATA,
+ 				    struct_size(pdu, data, len), pdu,
+ 				    HCI_CMD_TIMEOUT);
+-	if (err)
++	if (err) {
++		if (instance) {
++			hci_dev_lock(hdev);
++			adv = hci_find_adv_instance(hdev, instance);
++			if (adv)
++				adv->scan_rsp_changed = true;
++			hci_dev_unlock(hdev);
++		}
++
+ 		return err;
++	}
+ 
+-	if (adv) {
+-		adv->scan_rsp_changed = false;
+-	} else {
++	if (!instance) {
+ 		memcpy(hdev->scan_rsp_data, pdu->data, len);
+ 		hdev->scan_rsp_data_len = len;
+ 	}
+@@ -1539,8 +1589,14 @@ static int __hci_set_scan_rsp_data_sync(
+ 
+ 	memset(&cp, 0, sizeof(cp));
+ 
++	if (instance)
++		hci_dev_lock(hdev);
++
+ 	len = eir_create_scan_rsp(hdev, instance, cp.data);
+ 
++	if (instance)
++		hci_dev_unlock(hdev);
++
+ 	if (hdev->scan_rsp_data_len == len &&
+ 	    !memcmp(cp.data, hdev->scan_rsp_data, len))
+ 		return 0;
+@@ -1673,9 +1729,13 @@ static int hci_set_per_adv_data_sync(str
+ 	struct adv_info *adv = NULL;
+ 
+ 	if (instance) {
++		hci_dev_lock(hdev);
++
+ 		adv = hci_find_adv_instance(hdev, instance);
+-		if (!adv || !adv->periodic)
++		if (!adv || !adv->periodic) {
++			hci_dev_unlock(hdev);
+ 			return 0;
++		}
+ 	}
+ 
+ 	len = eir_create_per_adv_data(hdev, instance, pdu->data);
+@@ -1684,6 +1744,9 @@ static int hci_set_per_adv_data_sync(str
+ 	pdu->handle = adv ? adv->handle : instance;
  	pdu->operation = LE_SET_ADV_DATA_OP_COMPLETE;
  
++	if (adv)
++		hci_dev_unlock(hdev);
++
  	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_PER_ADV_DATA,
+ 				     struct_size(pdu, data, len), pdu,
+ 				     HCI_CMD_TIMEOUT);
+@@ -6215,7 +6278,7 @@ static int hci_le_ext_directed_advertisi
+ 	if (err)
+ 		return err;
+ 
+-	err = hci_set_ext_adv_params_sync(hdev, NULL, &cp, &rp);
++	err = hci_set_ext_adv_params_sync(hdev, 0, &cp, &rp);
+ 	if (err)
+ 		return err;
+ 
 
 
