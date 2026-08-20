@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8D947604E;
-	Thu, 20 Aug 2026 17:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F05747D94B;
+	Thu, 20 Aug 2026 17:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247602; cv=none; b=LPL9N3v2mEurhjskdlMCzA3SlLfcZP8hPLGkRGOwAYLHlv+7CpVogCP+fcXHuiwRG1fUjzhxOPZV8fFi5Cq8kgXR4tECHsAqCmywl+Sf+mJua/W5e8iXajRdoo2zYdohbqWlP0Gh0mZ5EU9aheEgWBeZ2f3F2DNW2exsjhNsxTA=
+	t=1787247605; cv=none; b=A3GbwPOAQc6RQXX/NkS+qLgTSbSPnl6NgyNjhzZai+ujgF04N5/W4CYTK6syzzeONFIPbnZVoLjyDDMudfjEH6glcCbgYPDTpLzmVsVmVHDWV6oKaVDTKWc/Kd6ctgb/W5+nbHgmBQKsy3rr2SU+S51YlBtHt4/AmlWUy19Lm88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247602; c=relaxed/simple;
-	bh=2HOzjtWenWC1R58EjV0OlyMhPCSM8eyEHYqEfcpeaUA=;
+	s=arc-20240116; t=1787247605; c=relaxed/simple;
+	bh=+q1S3fIb/yKOJYBvvf4+XZdZnjxMQzjhvYLqOmChdJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wu7yPzVRSUTtxuq1hiN7GyxXWpe9ZNdihcOU38UBcWJaRXMIJVtavbKwLmvx0KyM0c0xr9bIA4RTLuveaYhVUW9aIYKNnhzm3eGfiGv3OOAZH1qQwUbLGRCfyU9vGQxpSDL6eHiBnVIKl9PIRP8qCYNP6OTjczF6SQnTVWizt1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=afTqtxwb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hRnpp1VY0qONHH0ebusLF6wMzSmRc045tWDo8nGf0KJdlht6pAYfMtvsowfI2EYJXcoRUIucvGZzfPGgEJ+D1RchAs9d+6ERC7Eb0kKZFhmqg/qtDMttBkdYrDPxNMpyWmnAwK0lg73Z7w+sZT7R7uXIgww2Ppg+49TxIeY4VZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hwbuOPWg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afTqtxwb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73C61F000E9;
-	Thu, 20 Aug 2026 17:40:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hwbuOPWg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 902341F000E9;
+	Thu, 20 Aug 2026 17:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247601;
-	bh=Yd8LulHqUG8Di2UlHq9GnxyshK5T4wum6TqtQxFsO4M=;
+	s=korg; t=1787247604;
+	bh=6emtz+3SmpYM0VTzCpWxG0SAw+7FLU+2lrGoyzlBRHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=afTqtxwbR6H+eQaJIyu/2eih1kIP3UcO3VDaDoang35+APx2u9ggoHzOMtW8rIywF
-	 LH/NiVPzXWtbZnz+N3xqGDRlpMrkG/WO0TmESJlXKqnpkIPE71EWxRFXnWg/uJcoj8
-	 qCTm9YhmYKEn/IJXbqI1AZw06xXQeo3AoOZna9yg=
+	b=hwbuOPWgj58eGxzsh5ERw2sfbbdGpZ6HOFoCQ+c2JPkpATgsegiNxuvKwM0KdGFep
+	 UAkoQ2fEGC4R4YmN2pY0InlSU7a73cafeWX5sef7NQQFAQ4GVy3U3HVocPTyxFwcKa
+	 NhGCv+b0Bmgw4ZflDVm9xa9FMsdXhidFfAwPgMqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chancel Liu <chancel.liu@nxp.com>,
-	Shengjiu Wang <shengjiu.wang@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 076/166] ASoC: fsl_sai: Fix spurious BCLK on resume by clearing BYP
-Date: Thu, 20 Aug 2026 16:55:35 +0200
-Message-ID: <20260820145213.434108964@linuxfoundation.org>
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Magnus Karlsson <magnus.karlsson@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Chandan Kumar Rout <chandanx.rout@intel.com>
+Subject: [PATCH 6.6 103/166] ice: make ice_vsi_cfg_rxq() static
+Date: Thu, 20 Aug 2026 16:56:02 +0200
+Message-ID: <20260820145214.261163229@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -52,81 +54,224 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chancel Liu <chancel.liu@nxp.com>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit d091132889c1378dd0944a72f86eae3e4da1e4fa ]
+[ Upstream commit 3e5fb691faee1d43ee13d4ce2666b0a05e1555b3 ]
 
-When the BCLK divider ratio is 1:1, fsl_sai_set_bclk() enables bypass
-mode by setting BYP, but never clears the bit. The BYP=1 value remains
-in the regcache, and is restored by regcache_sync() on the next runtime
-resume.
+Currently, XSK control path in ice driver calls directly
+ice_vsi_cfg_rxq() whereas we have ice_vsi_cfg_single_rxq() for that
+purpose. Use the latter from XSK side and make ice_vsi_cfg_rxq() static.
 
-Since BYP=1 combined with BCD=1 immediately outputs the ungated MCLK
-as BCLK without waiting for BCE/TE/RE to be enabled, the clock is
-driven prematurely before the stream is fully configured, causing
-noise on some codecs.
+ice_vsi_cfg_rxq() resides in ice_base.c and is rather big, so to reduce
+the code churn let us move two callers of it from ice_lib.c to
+ice_base.c.
 
-Fix this by clearing BYP and BCI in fsl_sai_hw_free() taking into
-account sync mode and the opposite stream's state, so that the regcache
-holds BYP=0 before runtime suspend and regcache_sync() on resume will
-not restore bypass mode prematurely.
-
-Fixes: a50b7926d015 ("ASoC: fsl_sai: implement 1:1 bclk:mclk ratio support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chancel Liu <chancel.liu@nxp.com>
-Reviewed-by: Shengjiu Wang <shengjiu.wang@gmail.com>
-Link: https://patch.msgid.link/20260710070835.3749817-1-chancel.liu@oss.nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: cdc36db204ff ("Bluetooth: hci_sync: Fix advertising data UAFs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/fsl_sai.c |   29 +++++++++++++++++++++++++----
- 1 file changed, 25 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_base.c |   58 +++++++++++++++++++++++++++++-
+ drivers/net/ethernet/intel/ice/ice_base.h |    3 +
+ drivers/net/ethernet/intel/ice/ice_lib.c  |   56 ----------------------------
+ drivers/net/ethernet/intel/ice/ice_lib.h  |    4 --
+ drivers/net/ethernet/intel/ice/ice_xsk.c  |    2 -
+ 5 files changed, 60 insertions(+), 63 deletions(-)
 
---- a/sound/soc/fsl/fsl_sai.c
-+++ b/sound/soc/fsl/fsl_sai.c
-@@ -716,6 +716,8 @@ static int fsl_sai_hw_free(struct snd_pc
- 	struct fsl_sai *sai = snd_soc_dai_get_drvdata(cpu_dai);
- 	bool tx = substream->stream == SNDRV_PCM_STREAM_PLAYBACK;
- 	unsigned int ofs = sai->soc_data->reg_offset;
-+	int adir = tx ? RX : TX;
-+	int dir  = tx ? TX : RX;
- 
- 	/* Clear xMR to avoid channel swap with mclk_with_tere enabled case */
- 	regmap_write(sai->regmap, FSL_SAI_xMR(tx), 0);
-@@ -723,10 +725,29 @@ static int fsl_sai_hw_free(struct snd_pc
- 	regmap_update_bits(sai->regmap, FSL_SAI_xCR3(tx, ofs),
- 			   FSL_SAI_CR3_TRCE_MASK, 0);
- 
--	if (!sai->is_consumer_mode &&
--			sai->mclk_streams & BIT(substream->stream)) {
--		clk_disable_unprepare(sai->mclk_clk[sai->mclk_id[tx]]);
--		sai->mclk_streams &= ~BIT(substream->stream);
-+	if (!sai->is_consumer_mode) {
-+		bool adir_active = !!(sai->mclk_streams & BIT(!substream->stream));
-+		/*
-+		 * If opposite stream provides clocks for synchronous mode and
-+		 * it is inactive, Clear BYP and BCI
-+		 */
-+		if (fsl_sai_dir_is_synced(sai, adir) && !adir_active)
-+			regmap_update_bits(sai->regmap, FSL_SAI_xCR2(!tx, ofs),
-+					   FSL_SAI_CR2_BCI | FSL_SAI_CR2_BYP, 0);
-+		/*
-+		 * Clear BYP and BCI of current stream if either of:
-+		 * 1. current stream doesn't provide clocks for synchronous mode
-+		 * 2. current stream provides clocks for synchronous mode but no
-+		 *    more stream is active.
-+		 */
-+		if (!fsl_sai_dir_is_synced(sai, dir) || !adir_active)
-+			regmap_update_bits(sai->regmap, FSL_SAI_xCR2(tx, ofs),
-+					   FSL_SAI_CR2_BCI | FSL_SAI_CR2_BYP, 0);
-+
-+		if (sai->mclk_streams & BIT(substream->stream)) {
-+			clk_disable_unprepare(sai->mclk_clk[sai->mclk_id[tx]]);
-+			sai->mclk_streams &= ~BIT(substream->stream);
-+		}
- 	}
+--- a/drivers/net/ethernet/intel/ice/ice_base.c
++++ b/drivers/net/ethernet/intel/ice/ice_base.c
+@@ -544,7 +544,7 @@ static unsigned int ice_get_frame_sz(str
+  *
+  * Return 0 on success and a negative value on error.
+  */
+-int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
++static int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
+ {
+ 	struct device *dev = ice_pf_to_dev(ring->vsi->back);
+ 	u32 num_bufs = ICE_RX_DESC_UNUSED(ring);
+@@ -636,6 +636,62 @@ int ice_vsi_cfg_rxq(struct ice_rx_ring *
  
  	return 0;
+ }
++
++int ice_vsi_cfg_single_rxq(struct ice_vsi *vsi, u16 q_idx)
++{
++	if (q_idx >= vsi->num_rxq)
++		return -EINVAL;
++
++	return ice_vsi_cfg_rxq(vsi->rx_rings[q_idx]);
++}
++
++/**
++ * ice_vsi_cfg_frame_size - setup max frame size and Rx buffer length
++ * @vsi: VSI
++ */
++static void ice_vsi_cfg_frame_size(struct ice_vsi *vsi)
++{
++	if (!vsi->netdev || test_bit(ICE_FLAG_LEGACY_RX, vsi->back->flags)) {
++		vsi->max_frame = ICE_MAX_FRAME_LEGACY_RX;
++		vsi->rx_buf_len = ICE_RXBUF_1664;
++#if (PAGE_SIZE < 8192)
++	} else if (!ICE_2K_TOO_SMALL_WITH_PADDING &&
++		   (vsi->netdev->mtu <= ETH_DATA_LEN)) {
++		vsi->max_frame = ICE_RXBUF_1536 - NET_IP_ALIGN;
++		vsi->rx_buf_len = ICE_RXBUF_1536 - NET_IP_ALIGN;
++#endif
++	} else {
++		vsi->max_frame = ICE_AQ_SET_MAC_FRAME_SIZE_MAX;
++		vsi->rx_buf_len = ICE_RXBUF_3072;
++	}
++}
++
++/**
++ * ice_vsi_cfg_rxqs - Configure the VSI for Rx
++ * @vsi: the VSI being configured
++ *
++ * Return 0 on success and a negative value on error
++ * Configure the Rx VSI for operation.
++ */
++int ice_vsi_cfg_rxqs(struct ice_vsi *vsi)
++{
++	u16 i;
++
++	if (vsi->type == ICE_VSI_VF)
++		goto setup_rings;
++
++	ice_vsi_cfg_frame_size(vsi);
++setup_rings:
++	/* set up individual rings */
++	ice_for_each_rxq(vsi, i) {
++		int err = ice_vsi_cfg_rxq(vsi->rx_rings[i]);
++
++		if (err)
++			return err;
++	}
++
++	return 0;
++}
+ 
+ /**
+  * __ice_vsi_get_qs - helper function for assigning queues from PF to VSI
+--- a/drivers/net/ethernet/intel/ice/ice_base.h
++++ b/drivers/net/ethernet/intel/ice/ice_base.h
+@@ -6,7 +6,8 @@
+ 
+ #include "ice.h"
+ 
+-int ice_vsi_cfg_rxq(struct ice_rx_ring *ring);
++int ice_vsi_cfg_single_rxq(struct ice_vsi *vsi, u16 q_idx);
++int ice_vsi_cfg_rxqs(struct ice_vsi *vsi);
+ int __ice_vsi_get_qs(struct ice_qs_cfg *qs_cfg);
+ int
+ ice_vsi_ctrl_one_rx_ring(struct ice_vsi *vsi, bool ena, u16 rxq_idx, bool wait);
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -1697,27 +1697,6 @@ static void ice_vsi_set_rss_flow_fld(str
+ }
+ 
+ /**
+- * ice_vsi_cfg_frame_size - setup max frame size and Rx buffer length
+- * @vsi: VSI
+- */
+-static void ice_vsi_cfg_frame_size(struct ice_vsi *vsi)
+-{
+-	if (!vsi->netdev || test_bit(ICE_FLAG_LEGACY_RX, vsi->back->flags)) {
+-		vsi->max_frame = ICE_MAX_FRAME_LEGACY_RX;
+-		vsi->rx_buf_len = ICE_RXBUF_1664;
+-#if (PAGE_SIZE < 8192)
+-	} else if (!ICE_2K_TOO_SMALL_WITH_PADDING &&
+-		   (vsi->netdev->mtu <= ETH_DATA_LEN)) {
+-		vsi->max_frame = ICE_RXBUF_1536 - NET_IP_ALIGN;
+-		vsi->rx_buf_len = ICE_RXBUF_1536 - NET_IP_ALIGN;
+-#endif
+-	} else {
+-		vsi->max_frame = ICE_AQ_SET_MAC_FRAME_SIZE_MAX;
+-		vsi->rx_buf_len = ICE_RXBUF_3072;
+-	}
+-}
+-
+-/**
+  * ice_pf_state_is_nominal - checks the PF for nominal state
+  * @pf: pointer to PF to check
+  *
+@@ -1823,14 +1802,6 @@ ice_write_qrxflxp_cntxt(struct ice_hw *h
+ 	wr32(hw, QRXFLXP_CNTXT(pf_q), regval);
+ }
+ 
+-int ice_vsi_cfg_single_rxq(struct ice_vsi *vsi, u16 q_idx)
+-{
+-	if (q_idx >= vsi->num_rxq)
+-		return -EINVAL;
+-
+-	return ice_vsi_cfg_rxq(vsi->rx_rings[q_idx]);
+-}
+-
+ int ice_vsi_cfg_single_txq(struct ice_vsi *vsi, struct ice_tx_ring **tx_rings, u16 q_idx)
+ {
+ 	struct ice_aqc_add_tx_qgrp *qg_buf;
+@@ -1851,33 +1822,6 @@ int ice_vsi_cfg_single_txq(struct ice_vs
+ }
+ 
+ /**
+- * ice_vsi_cfg_rxqs - Configure the VSI for Rx
+- * @vsi: the VSI being configured
+- *
+- * Return 0 on success and a negative value on error
+- * Configure the Rx VSI for operation.
+- */
+-int ice_vsi_cfg_rxqs(struct ice_vsi *vsi)
+-{
+-	u16 i;
+-
+-	if (vsi->type == ICE_VSI_VF)
+-		goto setup_rings;
+-
+-	ice_vsi_cfg_frame_size(vsi);
+-setup_rings:
+-	/* set up individual rings */
+-	ice_for_each_rxq(vsi, i) {
+-		int err = ice_vsi_cfg_rxq(vsi->rx_rings[i]);
+-
+-		if (err)
+-			return err;
+-	}
+-
+-	return 0;
+-}
+-
+-/**
+  * ice_vsi_cfg_txqs - Configure the VSI for Tx
+  * @vsi: the VSI being configured
+  * @rings: Tx ring array to be configured
+--- a/drivers/net/ethernet/intel/ice/ice_lib.h
++++ b/drivers/net/ethernet/intel/ice/ice_lib.h
+@@ -54,12 +54,8 @@ bool ice_pf_state_is_nominal(struct ice_
+ 
+ void ice_update_eth_stats(struct ice_vsi *vsi);
+ 
+-int ice_vsi_cfg_single_rxq(struct ice_vsi *vsi, u16 q_idx);
+-
+ int ice_vsi_cfg_single_txq(struct ice_vsi *vsi, struct ice_tx_ring **tx_rings, u16 q_idx);
+ 
+-int ice_vsi_cfg_rxqs(struct ice_vsi *vsi);
+-
+ int ice_vsi_cfg_lan_txqs(struct ice_vsi *vsi);
+ 
+ void ice_vsi_cfg_msix(struct ice_vsi *vsi);
+--- a/drivers/net/ethernet/intel/ice/ice_xsk.c
++++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
+@@ -252,7 +252,7 @@ static int ice_qp_ena(struct ice_vsi *vs
+ 		ice_tx_xsk_pool(vsi, q_idx);
+ 	}
+ 
+-	err = ice_vsi_cfg_rxq(rx_ring);
++	err = ice_vsi_cfg_single_rxq(vsi, q_idx);
+ 	if (err)
+ 		goto free_buf;
+ 
 
 
