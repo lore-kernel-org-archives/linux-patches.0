@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2BB133263B;
-	Thu, 20 Aug 2026 15:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE7135200C;
+	Thu, 20 Aug 2026 15:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238230; cv=none; b=fE9lKwwPYPRaOCKk/t2AwYgszgMXwDO52jjJ3In659OICpzgtKTaYuP5+aaVfninFQ1KVmjgffRwVo1C16XIzB8ETYxP7Q/TR3Bi6sjiZAxXRQlaoNNXHxkNdpehSbbE3yLwXP5rE70HfinBz1XWbH1zexuPH2vkAdvY/6LeRSc=
+	t=1787238232; cv=none; b=DrwdxqJKci7k8H3nBcnrX6CwwxX9h+4HC7sHIYR45gOsPHfUUWWpe6k7BZnwY30KBp0a3ntWgbSH070gbxGgxyjmoM7lLJCYnob6cqKmY50156jcbnHV6e6tAuZegQOZd4JP9P3ydtlkPZj5X4WV+/Yhmzf+NRJqR4ApNKppRkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238230; c=relaxed/simple;
-	bh=jOj4haE7WirMcvFy0i8Licqx5wFxDHTDiIQaHDlds34=;
+	s=arc-20240116; t=1787238232; c=relaxed/simple;
+	bh=++N/vlxe8/sB9DOYF2tOPLvauPwzTOJGx7nfhBQ3iKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eemMQQt4SrCqQ4Y9EzC85+jvFDEMCLvPeBwHVoVoQJJI6O6BW0yUr37HpqjNAwOtmxLeyrzXBQd9bknLaoctaMu02gdtqu5f6aAQMlQIr15jjpwLiJcKEYDFyzuR49fokhYVuA5ZoBr+u6d/2Z1XgG00k7/rxUgzASB1UjsAq2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJcgb4AT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rGTvGterhnVYyBKh2WenlzwOVzOGcKlL32tckd+I/tmxp6a8ujybmwXIbMaaI7URgHlAjBCf3EmhadTWE5QsZ1qtixVYHX1hJ5KipPlxCAcCcX2R2yjfLode9XK0C/Byf8IgqcjZca4oJQwmwH8wgaRJlVCPDzFqbpcDLyxlH+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmACqP76; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJcgb4AT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B131F000E9;
-	Thu, 20 Aug 2026 15:03:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmACqP76"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E131F000E9;
+	Thu, 20 Aug 2026 15:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238228;
-	bh=NgsrD7dhKPMXtzcq3zN2kvpfZCSUwlcMFQnLrmkOsK8=;
+	s=korg; t=1787238231;
+	bh=NGgzcFd86aFPvvcG6GdB13rj8AfKtOv8tAaH9hXNM9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MJcgb4ATGjzLyRkDzC3iNgx57yIqPE+JUJP/hNfTLHyUJts21V9j/sOM1nFL/pXI3
-	 BbMjpso0OpfqwHvK9Fs3Dt5DH1RHQH11rao264yAL3t+MdR369Lt1khTzJNS5Xqg/C
-	 lJNjkIZ5Oc1QRUBlVEf6BcLFSt3AjUYP2UymUU8Y=
+	b=RmACqP76h4a7d3ZmWJP5CfQBXVqe7SQPRMyNpcx9U8ZTHpaAj1WTqMFTvU58Av+mf
+	 huc00hpXVyaPEvGqJ/5x/FxEa0HTrVA0Q/nYJt9bCXuH/LmmRLkCysYFSU5iWH/YcI
+	 0uHJBr22sUMj16w2fkr5MyElTVzXAOid/4/VbFAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Zhu <zhuyiming@kuaishou.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 7.1 076/228] ceph: fix MDS random selection readiness predicate
-Date: Thu, 20 Aug 2026 16:53:38 +0200
-Message-ID: <20260820145246.785935581@linuxfoundation.org>
+	Jordan Rhee <jordanrhee@google.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 059/228] gve: fix NULL dereference due to missing ptp adjfine
+Date: Thu, 20 Aug 2026 16:53:21 +0200
+Message-ID: <20260820145246.267499873@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -51,38 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yiming Zhu <zhuyiming@kuaishou.com>
+From: Jordan Rhee <jordanrhee@google.com>
 
-commit 2c11c4bfdb7bd2808b3b3ac228e1f2d9bcf25457 upstream.
+commit 3992ced109c70b771efad9e51ae68e5c7a04dea3 upstream.
 
-CEPH_MDS_IS_READY() is parsed so that the ternary expression can
-return true for an MDS entry with state 0 when it is not laggy. This
-allows the random selector to choose a down/DNE rank.
+Fix NULL dereference due to missing implementation of adjfine, which can
+be triggered from usermode as follows:
 
-Group the ternary expression under the state check so zero-state ranks
-are not treated as ready.
+sudo ./testptp -d /dev/ptp0 -f 0
+[  551.943697] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[...]
+[  552.061946] Call Trace:
+[  552.064487]  <TASK>
+[  552.066681]  ptp_clock_adjtime+0x1c0/0x2c0
+[  552.070874]  ? get_clock_desc+0x6b/0xb0
+[  552.074825]  pc_clock_adjtime+0x78/0xc0
+[  552.078755]  __do_sys_clock_adjtime+0x85/0x110
+[  552.083293]  do_syscall_64+0xea/0x610
 
 Cc: stable@vger.kernel.org
-Fixes: b38c9eb4757d ("ceph: add possible_max_rank and make the code more readable")
-Link: https://tracker.ceph.com/issues/78648
-Signed-off-by: Yiming Zhu <zhuyiming@kuaishou.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: acd16380523b ("gve: Add initial PTP device support")
+Signed-off-by: Jordan Rhee <jordanrhee@google.com>
+Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20260807224315.234152-3-hramamurthy@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/mdsmap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/google/gve/gve_ptp.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/ceph/mdsmap.c
-+++ b/fs/ceph/mdsmap.c
-@@ -15,7 +15,7 @@
- #include "super.h"
+--- a/drivers/net/ethernet/google/gve/gve_ptp.c
++++ b/drivers/net/ethernet/google/gve/gve_ptp.c
+@@ -26,6 +26,11 @@ int gve_clock_nic_ts_read(struct gve_pri
+ 	return 0;
+ }
  
- #define CEPH_MDS_IS_READY(i, ignore_laggy) \
--	(m->m_info[i].state > 0 && ignore_laggy ? true : !m->m_info[i].laggy)
-+	(m->m_info[i].state > 0 && (ignore_laggy ? true : !m->m_info[i].laggy))
- 
- static int __mdsmap_get_random_mds(struct ceph_mdsmap *m, bool ignore_laggy)
- {
++static int gve_ptp_adjfine(struct ptp_clock_info *ptp, long scaled_ppm)
++{
++	return -EOPNOTSUPP;
++}
++
+ static int gve_ptp_gettimex64(struct ptp_clock_info *info,
+ 			      struct timespec64 *ts,
+ 			      struct ptp_system_timestamp *sts)
+@@ -60,6 +65,7 @@ out:
+ static const struct ptp_clock_info gve_ptp_caps = {
+ 	.owner          = THIS_MODULE,
+ 	.name		= "gve clock",
++	.adjfine	= gve_ptp_adjfine,
+ 	.gettimex64	= gve_ptp_gettimex64,
+ 	.settime64	= gve_ptp_settime64,
+ 	.do_aux_work	= gve_ptp_do_aux_work,
 
 
