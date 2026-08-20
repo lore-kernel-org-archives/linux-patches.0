@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D9147DFB9;
-	Thu, 20 Aug 2026 17:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E8EC38D3F8;
+	Thu, 20 Aug 2026 17:51:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248273; cv=none; b=psyP+2iygW9P8WjERMfKJMTCzEpPQl7fM1wH/gMQY3MGoZIf69DYu0soyL8UxmhCPHWxSubU2G/g+lhbmXa+hSUYac1IURBMKETaGANNhJW3EHe1OGTOALqn2kJR19Tq7/CBZju1ZbQXlU4qboeOEdnD024Y1GShHXBCp7lIfSw=
+	t=1787248276; cv=none; b=oY7TKIPaPR5cfX8dsXacFdLRI5ZH2SQE0ohyZVB6Qm3oITIm5jyLgTb194T59w3zYhueT3Y70Wu0LsjpJCQ1OKts2G1Hhb/eTfHl6c8oFZxIki+MWAPHwaeWrJb694kjQN+P7DBbL4/3pKh0JeFDDCH6PkUDRFBkZENib4zz5gM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248273; c=relaxed/simple;
-	bh=KPk6H+w3U+ct1LOeAKTLG0RfZsbmrTljZPrBPHM6pQ4=;
+	s=arc-20240116; t=1787248276; c=relaxed/simple;
+	bh=uF9IxnnkXnMOsRwJ9qy7I9v6iVpyk7XKRSfrGmuEAWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bw3MnexbR0A/5Vb3ewdnh2PXKa0j/sOtwmvQc91ChoY5pybKXxyc2c2VZEalgEX/Zq49+A3KQfvU071pmIBZyjmDJKcFSLhveAX5uQDNPA+YpLDjsmP0L/4S9wT9UdLmlhXrxYcU2RrPkEM4h4BwxTeTi/1B9ntauSwrT0dYMOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v69BmM9b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gl+VuDwAIGFpn3N3jXu/McGW/Nw2xR5eDLyBA6jt5a3Gu8w0FwpPld+FMBmCWjk4CH2LRSULPQfGF7bPmkL0aF6AQw2EUIUjw+DX4Dh4iodmXpywbAWOyasVMvda9RdZioJnBq266qLm537KVYZfx6aTz+Tky9F2Ow1zfmafs+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W8ewuS2F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v69BmM9b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D12891F000E9;
-	Thu, 20 Aug 2026 17:51:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W8ewuS2F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE8C1F000E9;
+	Thu, 20 Aug 2026 17:51:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248272;
-	bh=V0dTVsBAtW3zNzk/gcdS9u5pjBvOm+9yRnw7161O5Q8=;
+	s=korg; t=1787248275;
+	bh=Fy3Cdq5bGoHDNbpXdqKgmVoEllHxp+y4+jF43miV2lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v69BmM9bhLTQlg0fSYf6K/l+c62dIAa4oBGlA71uoVtoe76JrkmgaPTUwFb5uPq+X
-	 NEuxSx6vtJeHA/dUhYrp2+hgsc6a4kqH6g1ucgVILVTRVWAlMc3K9zyJSonnSppO89
-	 eGazA4XrjpwsstigwRCgw+d4TIxwAly3mE8i+jno=
+	b=W8ewuS2FQ5QfcfdwApgaC6PET06C3ZUCP1sLM6b2JVVkwZsc8R1QAhJmi1pPwRvcR
+	 wuJVyp6ejIhTUJgq163r9xhTLSn1gQOByhl0ANIoy2zDrbGY57GVmpfbxHzRTu7M0x
+	 nNAFBD9cnx9Ki6SwRMQas+t2I0WZV8PnKj3pwQ/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Alex Elder <elder@riscstar.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 170/303] net: ipa: fix SMEM state handle leaks in SMP2P init
-Date: Thu, 20 Aug 2026 16:55:06 +0200
-Message-ID: <20260820145258.414416134@linuxfoundation.org>
+Subject: [PATCH 6.1 171/303] octeontx2-pf: fix SQB pointer leak on init failure
+Date: Thu, 20 Aug 2026 16:55:07 +0200
+Message-ID: <20260820145258.446840717@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -53,88 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-[ Upstream commit 96ca1e658ae459276292bd6d971ab5d8c7e0379a ]
+[ Upstream commit 62e7df6d042aeebd5efb581074e28865c04477be ]
 
-ipa_smp2p_init() acquires two Qualcomm SMEM state handles with
-qcom_smem_state_get(). However, neither the init error paths
-nor ipa_smp2p_exit() release them.
+otx2_init_hw_resources() initializes SQ aura and pool resources before
+several later setup steps. On failure, err_free_sq_ptrs only frees SQB
+pages, leaving the per-SQ sqb_ptrs arrays behind.
 
-Release both handles with qcom_smem_state_put() in the init
-error paths and in ipa_smp2p_exit().
+Use otx2_free_sq_res() for the SQ unwind path and let it free sqb_ptrs
+even when sq->sqe has not been allocated yet.
 
-Fixes: 530f9216a953 ("soc: qcom: ipa: AP/modem communications")
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1.1.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have an
+OcteonTX2 PF device and the corresponding AF mailbox setup to test with,
+no runtime testing was able to be performed.
+
+Fixes: caa2da34fd25 ("octeontx2-pf: Initialize and config queues")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Reviewed-by: Alex Elder <elder@riscstar.com>
-Link: https://patch.msgid.link/20260624065955.2822765-1-haoxiang_li2024@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ kzalloc_obj() context line kept as kzalloc(sizeof(*smp2p), GFP_KERNEL) since ipa_smp2p.c was not yet converted in this tree ]
+Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Link: https://patch.msgid.link/20260630071625.349996-1-dawei.feng@seu.edu.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ipa/ipa_smp2p.c |   30 ++++++++++++++++++++++--------
- 1 file changed, 22 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/net/ipa/ipa_smp2p.c
-+++ b/drivers/net/ipa/ipa_smp2p.c
-@@ -233,19 +233,27 @@ int ipa_smp2p_init(struct ipa *ipa, bool
- 					  &valid_bit);
- 	if (IS_ERR(valid_state))
- 		return PTR_ERR(valid_state);
--	if (valid_bit >= 32)		/* BITS_PER_U32 */
--		return -EINVAL;
-+	if (valid_bit >= 32) {		/* BITS_PER_U32 */
-+		ret = -EINVAL;
-+		goto err_valid_state_put;
-+	}
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+@@ -1553,13 +1553,12 @@ static int otx2_init_hw_resources(struct
+ 	return err;
  
- 	enabled_state = qcom_smem_state_get(dev, "ipa-clock-enabled",
- 					    &enabled_bit);
--	if (IS_ERR(enabled_state))
--		return PTR_ERR(enabled_state);
--	if (enabled_bit >= 32)		/* BITS_PER_U32 */
--		return -EINVAL;
-+	if (IS_ERR(enabled_state)) {
-+		ret = PTR_ERR(enabled_state);
-+		goto err_valid_state_put;
-+	}
-+	if (enabled_bit >= 32) {		/* BITS_PER_U32 */
-+		ret = -EINVAL;
-+		goto err_enabled_state_put;
-+	}
- 
- 	smp2p = kzalloc(sizeof(*smp2p), GFP_KERNEL);
--	if (!smp2p)
--		return -ENOMEM;
-+	if (!smp2p) {
-+		ret = -ENOMEM;
-+		goto err_enabled_state_put;
-+	}
- 
- 	smp2p->ipa = ipa;
- 
-@@ -290,6 +298,10 @@ err_null_smp2p:
- 	ipa->smp2p = NULL;
- 	mutex_destroy(&smp2p->mutex);
- 	kfree(smp2p);
-+err_enabled_state_put:
-+	qcom_smem_state_put(enabled_state);
-+err_valid_state_put:
-+	qcom_smem_state_put(valid_state);
- 
- 	return ret;
- }
-@@ -306,6 +318,8 @@ void ipa_smp2p_exit(struct ipa *ipa)
- 	ipa_smp2p_power_release(ipa);
- 	ipa->smp2p = NULL;
- 	mutex_destroy(&smp2p->mutex);
-+	qcom_smem_state_put(smp2p->enabled_state);
-+	qcom_smem_state_put(smp2p->valid_state);
- 	kfree(smp2p);
- }
- 
+ err_free_nix_queues:
+-	otx2_free_sq_res(pf);
+ 	otx2_free_cq_res(pf);
+ 	otx2_ctx_disable(mbox, NIX_AQ_CTYPE_RQ, false);
+ err_free_txsch:
+ 	otx2_txschq_stop(pf);
+ err_free_sq_ptrs:
+-	otx2_sq_free_sqbs(pf);
++	otx2_free_sq_res(pf);
+ err_free_rq_ptrs:
+ 	otx2_free_aura_ptr(pf, AURA_NIX_RQ);
+ 	otx2_ctx_disable(mbox, NPA_AQ_CTYPE_POOL, true);
 
 
