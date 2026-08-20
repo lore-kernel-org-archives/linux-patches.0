@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E22947ECC6;
-	Thu, 20 Aug 2026 17:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B7E47A88F;
+	Thu, 20 Aug 2026 17:32:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247149; cv=none; b=Y1Z8tOleOxt4yi5NiVY7SrxwlVpqi5KfHBUIJF0Nnt2I6o8MI6AGMMsHxonawY6x61Oug0jWWdvilixihGuD/Vv1v5k7HB4koE7qJ0pkv2Q4YxQr2+7JMv/U9k1zfzQg2g/a2lVKOlnZ7D6PSFbz7JE1de4ANgvsoK7nkKnksCw=
+	t=1787247152; cv=none; b=fqZR6oNg/BW83Mdb3/mlp2gtXGApLK/mWsJ9bl+89vxtmElG+d5SuLD8N/Hddaa3EMr5ik/V46uJ97o6TL+zr6VznWCx9pchlEKRdU/SKkYZjQHC1NDHaBZdG9RFlDaLwjz4cgkEmP3W4cFVmk60H6m/Zk9hXDVTLm0LuIXwI70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247149; c=relaxed/simple;
-	bh=n/6dq9plsJAzyROaxy1c0+xKIxeiptbzNgS386EDQy8=;
+	s=arc-20240116; t=1787247152; c=relaxed/simple;
+	bh=jg8ff/lIXhKEzosJoGvDHkeWXnLsgXPiU4ie68PDJXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fiaZ0kfSW4jpYV1z20mPPHXe+jLiSUqTIhbjnNvCUXd7PkGwFlMzoOhxozNVzY7vKpT0NU4u4mBgdhzxR6DL1MrO7+7DHY6gkN2Z2Kz/DbY2J3Dny35fCg8n0iQ7uAPpfB/5FidIq0gtl740DlpsB8yjOVk41JSapWjoYXW/kKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBIdkW+9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C7gym8xNkiRde2L02vPxgBJmM0t5CRgRe326dMhE+kVfKivHB4vjUgoGs9AFvelc1hKMRmI8GdlK3TZO90jrudEm7XtbC0q11F7IUt89VrEwZzzNwyTpuu2OMcSMcyiDzkdI5ymI53IYqF1Xg//X6YipU67hwRZyg6ZwetvDXuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=viQmO1Eg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBIdkW+9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5611F000E9;
-	Thu, 20 Aug 2026 17:32:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="viQmO1Eg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79FB1F000E9;
+	Thu, 20 Aug 2026 17:32:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247148;
-	bh=iWZKcFFCD4BbMrvO8tV5BYlYeGTEecdngUkq5gVrRTY=;
+	s=korg; t=1787247151;
+	bh=A8XkSA7eRb3wh2MBJ+K4Cc4FgiiHc3MalXTd9rRIgOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mBIdkW+95KjESMkbxzZ2MRv6Z04Je9XYkfjLFu2Bw1FyCCQHJVmRidipt5+MlKW/0
-	 t9U6zj3W9f17GImoJAYIjnfOtMj2iN8gBKnlJioh+ukOwOxqU92xmGpKp9oIHJIGjA
-	 sGgAa6o4/8FWlNwhgYSfhwUN1H4BwuD2P/gv80dM=
+	b=viQmO1EgHMw3S/tRLd9D0e18+16eWJMxLotLAsk73xnFlc7MX1b6x57jmAFVNttUH
+	 1KSegxAkgjtvb5AoXG36uOM7sg/YWSIEUZjpxfPGE7xgRy4wSDOMmXFhdXHKv0km/p
+	 nzVB+3BXcBK9Ndf1gzJOoCCRVwEpgtGV7/Ff00ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Huiwen He <hehuiwen@kylinos.cn>,
-	Frank Sorenson <sorenson@redhat.com>,
-	Steve French <stfrench@microsoft.com>,
+	Tu Nguyen <tu.nguyen.xg@renesas.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 166/220] cifs: add fscache_resize_cookie() to cifs_setsize()
-Date: Thu, 20 Aug 2026 16:55:56 +0200
-Message-ID: <20260820145228.465691865@linuxfoundation.org>
+Subject: [PATCH 6.12 167/220] can: rcar_canfd: change the initializing flow for clocks and resets
+Date: Thu, 20 Aug 2026 16:55:57 +0200
+Message-ID: <20260820145228.495400955@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -54,51 +56,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Tu Nguyen <tu.nguyen.xg@renesas.com>
 
-[ Upstream commit fa724e235cfdb0fb0bb427d0f9dfe864ae27403e ]
+[ Upstream commit bef9004c5b91debfceaea2841855a4ebe81ff2b3 ]
 
-Several code paths update the VFS inode size by calling
-netfs_resize_file() and cifs_setsize(), but omit the corresponding
-fscache_resize_cookie() call, leaving the fscache cookie out of sync
-with the actual file size:
+Testing CANFD on RZ/G3E shows that many registers do not reset to their
+initial values with the current flow of deasserting resets first and then
+enabling clocks.
 
-  - cifs_file_set_size() in inode.c: server-side truncation via setattr
-  - cifs_do_truncate() in file.c: truncates to zero on O_TRUNC open
-  - smb2_duplicate_extents() in smb2ops.c: file clone extending EOF
-  - smb3_simple_falloc() in smb2ops.c: two branches that extend EOF
-    via write-range and SMB2_set_eof respectively
+Based on the HW manual, clocks should be supplied first and the
+resets deasserted afterward.
 
-Since every caller of cifs_setsize() must resize the fscache cookie,
-add the call to cifs_setsize() itself, consistent with how
-truncate_pagecache() is already consolidated there.
+ section 7.4.3 Procedure for Activating Modules: RZ/G2L
+ section 4.4.9.3 Procedure for Starting up Units: RZ/G3E
 
-Fixes: 70431bfd825d ("cifs: Support fscache indexing rewrite")
-Fixes: 93a43155127f ("cifs: Fix missing set of remote_i_size")
-Fixes: 110fee6b9bb5 ("smb: client: fix missing timestamp updates with O_TRUNC")
-Fixes: 7a06d3b816d7 ("smb/client: emulate small EOF-extending mode 0 fallocate ranges")
-Cc: stable@vger.kernel.org
-Cc: David Howells <dhowells@redhat.com>
-Cc: Paulo Alcantara <pc@manguebit.org>
-Cc: Huiwen He <hehuiwen@kylinos.cn>
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Reviewed-by: Paulo Alcantara <pc@manguebit.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+So, update the order of the initializing flow for resets and clocks
+to match the hardware manual, resetting all CANFD registers to their
+initial values. Also update rcar_canfd_global_deinit() to assert
+resets before disabling clocks, so the teardown path mirrors the new
+init ordering.
+
+Fixes: 76e9353a80e9 ("can: rcar_canfd: Add support for RZ/G2L family")
+Signed-off-by: Tu Nguyen <tu.nguyen.xg@renesas.com>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Tested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
+Link: https://patch.msgid.link/20260625135216.130450-1-biju.das.jz@bp.renesas.com
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/inode.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/can/rcar/rcar_canfd.c |   28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -2966,6 +2966,7 @@ void cifs_setsize(struct inode *inode, l
- 	cifs_i->time = 0;
- 	truncate_pagecache(inode, offset);
- 	netfs_wait_for_outstanding_io(inode);
-+	fscache_resize_cookie(cifs_inode_cookie(inode), offset);
+--- a/drivers/net/can/rcar/rcar_canfd.c
++++ b/drivers/net/can/rcar/rcar_canfd.c
+@@ -1989,27 +1989,27 @@ static int rcar_canfd_probe(struct platf
+ 		}
+ 	}
+ 
+-	err = reset_control_reset(gpriv->rstc1);
+-	if (err)
+-		goto fail_dev;
+-	err = reset_control_reset(gpriv->rstc2);
+-	if (err) {
+-		reset_control_assert(gpriv->rstc1);
+-		goto fail_dev;
+-	}
+-
+ 	/* Enable peripheral clock for register access */
+ 	err = clk_prepare_enable(gpriv->clkp);
+ 	if (err) {
+ 		dev_err(dev, "failed to enable peripheral clock: %pe\n",
+ 			ERR_PTR(err));
+-		goto fail_reset;
++		goto fail_dev;
++	}
++
++	err = reset_control_reset(gpriv->rstc1);
++	if (err)
++		goto fail_clk;
++	err = reset_control_reset(gpriv->rstc2);
++	if (err) {
++		reset_control_assert(gpriv->rstc1);
++		goto fail_clk;
+ 	}
+ 
+ 	err = rcar_canfd_reset_controller(gpriv);
+ 	if (err) {
+ 		dev_err(dev, "reset controller failed: %pe\n", ERR_PTR(err));
+-		goto fail_clk;
++		goto fail_reset;
+ 	}
+ 
+ 	/* Controller in Global reset & Channel reset mode */
+@@ -2061,11 +2061,11 @@ fail_channel:
+ 		rcar_canfd_channel_remove(gpriv, ch);
+ fail_mode:
+ 	rcar_canfd_disable_global_interrupts(gpriv);
+-fail_clk:
+-	clk_disable_unprepare(gpriv->clkp);
+ fail_reset:
+ 	reset_control_assert(gpriv->rstc1);
+ 	reset_control_assert(gpriv->rstc2);
++fail_clk:
++	clk_disable_unprepare(gpriv->clkp);
+ fail_dev:
+ 	return err;
+ }
+@@ -2085,9 +2085,9 @@ static void rcar_canfd_remove(struct pla
+ 
+ 	/* Enter global sleep mode */
+ 	rcar_canfd_set_bit(gpriv->base, RCANFD_GCTR, RCANFD_GCTR_GSLPR);
+-	clk_disable_unprepare(gpriv->clkp);
+ 	reset_control_assert(gpriv->rstc1);
+ 	reset_control_assert(gpriv->rstc2);
++	clk_disable_unprepare(gpriv->clkp);
  }
  
- static int
+ static int __maybe_unused rcar_canfd_suspend(struct device *dev)
 
 
