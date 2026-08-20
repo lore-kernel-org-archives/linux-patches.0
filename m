@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914C347F2CE;
-	Thu, 20 Aug 2026 17:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C2C47F774;
+	Thu, 20 Aug 2026 17:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248507; cv=none; b=WfLwMhwqAyM2lIGYDM2fx8jHAiaeI5wevusqm/fDCM1PAq7hSpzKd5JpmG+vAURnxKzBoICoGSUSRUbApgLt7LMQE77Lp9X4klkipcF3WYyk/qfhPe5ZJFI93bwHSnCRUT+4L5Z+s5y5R4tW0xknHpJJ86v1d2ZkBjLG2X7VIw4=
+	t=1787248510; cv=none; b=SQCTCoG09JCCxwxeVZdS666gi7qDZZFvvZL0eaniwCoXV++X91JPnoPKen4auSCOS912Uuvn9o7yv/OTqzMEEDDhpaOJDONhEMSdg+FDALqVKEYZ77yZCOYkGoK2j0NvjtRrHoufjuJ7i8UAFxGhP01XzlQ5CCDVD/Z+8h5cpmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248507; c=relaxed/simple;
-	bh=0aSOrRiP99XDsLM1YIsnQkqvRltZOugicVe6RIVQ1r0=;
+	s=arc-20240116; t=1787248510; c=relaxed/simple;
+	bh=gPg1R6ttg/wH5aEbEQjt7LzYJTbYppsJGgPrhDgp4rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B2dCXtDz/0MR2mhnTF827MLVNxphpbIH0+HHRBb2byaguJCRnV8XKt4PxtM0Wzyb86+0TEHU2KYqSvzutbe5eV2JH4VEN4ylyy1zywO7P0InsRQHVNHK+gZte//bLp6u/Z7Fj4EAQH1SOaueotbcN/0ouPDAAFbUIfJNOfTSToU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvwjasZt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e0dBG15Uu9aCwjkAgpOAYsBgVSSIUMVt21XTQBNNZhLmYtdF1IBprMHXyuRG0lE7lftSwRPKzXogR4mctby5aN4zaRRLJJbOSkUwr2W61kEwURHc157OPmk9qqEbPSYNJ2BoEY7+UEGsi1/hBdFDscaSvGypqCNSay7m9NvvuJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FzrYOnV4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvwjasZt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB931F000E9;
-	Thu, 20 Aug 2026 17:55:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FzrYOnV4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CABCB1F000E9;
+	Thu, 20 Aug 2026 17:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248506;
-	bh=+QSQp4NdPNFwv0v0/Z0k9jTDuoGOkXFEMxSoZIJXOyA=;
+	s=korg; t=1787248509;
+	bh=3H8zyBnHdlWFDvY/XV54ddeEc9e9LqTPDnPmAZQ7/sA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KvwjasZtqF8NTbYnydC0ytIaS9e2CH7eRoutFKPf7dBMiboizpU5OQDS01343ZUvT
-	 N4XlukHM9r0CxtoYr0GYF/xf9Z5kSInpSRhJ+//8y8G1Mx8K9GeJQkRWYOxFblerH6
-	 LOobiIhKbbb+y4BWxrGypXbUnLOO12EGtEAL2AXs=
+	b=FzrYOnV4Pe+8x0fd2TP3Fm5b2yQ0yPrThUeRQYCiKMOI3u2LQCIuACpChc0z6+6Ok
+	 k9o8nsrp/iztECg25RUeIhtjJxtdo5RVhr9EDuC3McaRAlTpTAZ4Fo4ezAVAwr3wKD
+	 29g1VaYu7FxjJZgeW6c6rQzfgt2buXnPXv1az470=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Fleming <mfleming@cloudflare.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vladimir Medvedkin <vladimir.medvedkin@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Patryk Holda <patryk.holda@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 251/303] veth: convert frag_list skbs before running XDP
-Date: Thu, 20 Aug 2026 16:56:27 +0200
-Message-ID: <20260820145300.993353287@linuxfoundation.org>
+Subject: [PATCH 6.1 252/303] ice: fix VF interrupts cleanup
+Date: Thu, 20 Aug 2026 16:56:28 +0200
+Message-ID: <20260820145301.023040435@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -47,66 +49,136 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matt Fleming <mfleming@cloudflare.com>
+From: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
 
-[ Upstream commit d0d6415963040c401e7a7e4e482a698ba52448cb ]
+[ Upstream commit fb096882095e5a8d6b5159e43793d4a38a0c5b1f ]
 
-A frag_list skb can reach veth with data_len set but nr_frags zero.
-veth_convert_skb_to_xdp_buff() only converts skbs that are shared,
-locked, have frags[], or do not have enough headroom. It later uses
-skb_is_nonlinear() to decide whether to set XDP_FLAGS_HAS_FRAGS and
-xdp_frags_size.
+When a virtual function sends an IRQ map command, the PF will set up
+interrupts according to that request. However, because these interrupts are
+never reset, the next time Virtual Function initializes, the interrupts are
+still enabled for a given VF, which leads to performance degradation in
+certain cases due to interrupts being unexpectedly enabled and thus causing
+interrupt floods.
 
-That exposes frag_list data to XDP as if it were stored in frags[], but
-frags[] is empty. AF_XDP copy mode can then trust the bogus XDP fragment
-metadata, walk an empty fragment entry, and crash in memcpy() from
-__xsk_rcv().
-
-Route non-linear skbs through skb_pp_cow_data() before exposing them to
-XDP, and only advertise XDP frags when the resulting skb has frags[].
-skb_copy_bits() already handles frag_list input, and skb_pp_cow_data()
-builds frags[] output with skb_add_rx_frag(), which is the
-representation XDP multi-buffer expects.
-
-Fixes: 718a18a0c8a6 ("veth: Rework veth_xdp_rcv_skb in order to accept non-linear skb")
 Cc: stable@vger.kernel.org
-Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260722191925.2192070-1-matt@readmodwrite.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1071a8358a28 ("ice: Implement virtchnl commands for AVF support")
+Suggested-by: Vladimir Medvedkin <vladimir.medvedkin@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Patryk Holda <patryk.holda@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+[ changed the file path for the `ice_vf_ena_rxq_interrupt` hunk from `ice/virt/queues.c` to `ice_virtchnl.c`, which predates the upstream directory split ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/veth.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_vf_lib.c         |   27 ++++++++++++++++++++
+ drivers/net/ethernet/intel/ice/ice_vf_lib_private.h |    1 
+ drivers/net/ethernet/intel/ice/ice_virtchnl.c       |   21 +++++++++++++++
+ 3 files changed, 49 insertions(+)
 
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -695,7 +695,7 @@ static int veth_convert_skb_to_xdp_buff(
- 	u32 frame_sz;
+--- a/drivers/net/ethernet/intel/ice/ice_vf_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
+@@ -555,6 +555,30 @@ static void ice_notify_vf_reset(struct i
+ }
  
- 	if (skb_shared(skb) || skb_head_is_locked(skb) ||
--	    skb_shinfo(skb)->nr_frags ||
-+	    skb_is_nonlinear(skb) ||
- 	    skb_headroom(skb) < XDP_PACKET_HEADROOM) {
- 		u32 size, len, max_head_size, off;
- 		struct sk_buff *nskb;
-@@ -770,7 +770,7 @@ static int veth_convert_skb_to_xdp_buff(
- 	xdp_prepare_buff(xdp, skb->head, skb_headroom(skb),
- 			 skb_headlen(skb), true);
+ /**
++ * ice_reset_interrupts - clear all queue interrupt configuration for a VSI
++ * @vsi: the VSI whose interrupt registers should be cleared
++ *
++ * Zero the QINT_RQCTL and QINT_TQCTL registers for all allocated queues
++ * in the VSI. This clears the entire register including MSIX_INDX, ITR_INDX,
++ * CAUSE_ENA and NEXTQ fields, unlike ice_vf_dis_rxq_interrupt() which only
++ * clears the CAUSE_ENA bit.
++ */
++void ice_reset_interrupts(struct ice_vsi *vsi)
++{
++	struct ice_pf *pf = vsi->back;
++	struct ice_hw *hw = &pf->hw;
++	int i;
++
++	ice_for_each_alloc_rxq(vsi, i)
++		wr32(hw, QINT_RQCTL(vsi->rxq_map[i]), 0);
++
++	ice_for_each_alloc_txq(vsi, i)
++		wr32(hw, QINT_TQCTL(vsi->txq_map[i]), 0);
++
++	ice_flush(hw);
++}
++
++/**
+  * ice_reset_vf - Reset a particular VF
+  * @vf: pointer to the VF structure
+  * @flags: flags controlling behavior of the reset
+@@ -623,6 +647,9 @@ int ice_reset_vf(struct ice_vf *vf, u32
  
--	if (skb_is_nonlinear(skb)) {
-+	if (skb_shinfo(skb)->nr_frags) {
- 		skb_shinfo(skb)->xdp_frags_size = skb->data_len;
- 		xdp_buff_set_frags_flag(xdp);
- 	} else {
+ 	ice_dis_vf_qs(vf);
+ 
++	/* cleanup interrupt registers */
++	ice_reset_interrupts(vsi);
++
+ 	/* Call Disable LAN Tx queue AQ whether or not queues are
+ 	 * enabled. This is needed for successful completion of VFR.
+ 	 */
+--- a/drivers/net/ethernet/intel/ice/ice_vf_lib_private.h
++++ b/drivers/net/ethernet/intel/ice/ice_vf_lib_private.h
+@@ -24,6 +24,7 @@
+ #endif
+ 
+ void ice_dis_vf_qs(struct ice_vf *vf);
++void ice_reset_interrupts(struct ice_vsi *vsi);
+ int ice_check_vf_init(struct ice_vf *vf);
+ struct ice_port_info *ice_vf_get_port_info(struct ice_vf *vf);
+ int ice_vsi_apply_spoofchk(struct ice_vsi *vsi, bool enable);
+--- a/drivers/net/ethernet/intel/ice/ice_virtchnl.c
++++ b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
+@@ -1210,6 +1210,24 @@ static void ice_vf_ena_rxq_interrupt(str
+ }
+ 
+ /**
++ * ice_vf_dis_rxq_interrupt - disable Rx queue interrupt via QINT_RQCTL
++ * @vsi: VSI of the VF to configure
++ * @q_idx: VF queue index used to determine the queue in the PF's space
++ */
++static void ice_vf_dis_rxq_interrupt(struct ice_vsi *vsi, u32 q_idx)
++{
++	struct ice_hw *hw = &vsi->back->hw;
++	u32 pfq = vsi->rxq_map[q_idx];
++	u32 reg;
++
++	reg = rd32(hw, QINT_RQCTL(pfq));
++	reg &= ~QINT_RQCTL_CAUSE_ENA_M;
++	wr32(hw, QINT_RQCTL(pfq), reg);
++
++	ice_flush(hw);
++}
++
++/**
+  * ice_vc_ena_qs_msg
+  * @vf: pointer to the VF info
+  * @msg: pointer to the msg buffer
+@@ -1402,6 +1420,8 @@ static int ice_vc_dis_qs_msg(struct ice_
+ 			goto error_param;
+ 		}
+ 
++		for_each_set_bit(vf_q_id, &q_map, ICE_MAX_RSS_QS_PER_VF)
++			ice_vf_dis_rxq_interrupt(vsi, vf_q_id);
+ 		bitmap_zero(vf->rxq_ena, ICE_MAX_RSS_QS_PER_VF);
+ 	} else if (q_map) {
+ 		for_each_set_bit(vf_q_id, &q_map, ICE_MAX_RSS_QS_PER_VF) {
+@@ -1422,6 +1442,7 @@ static int ice_vc_dis_qs_msg(struct ice_
+ 				goto error_param;
+ 			}
+ 
++			ice_vf_dis_rxq_interrupt(vsi, vf_q_id);
+ 			/* Clear enabled queues flag */
+ 			clear_bit(vf_q_id, vf->rxq_ena);
+ 		}
 
 
