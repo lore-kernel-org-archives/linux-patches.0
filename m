@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBA437F31A;
-	Thu, 20 Aug 2026 15:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B16637FF61;
+	Thu, 20 Aug 2026 15:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238726; cv=none; b=JF9VKsaZ8uQAFKUdrGvPl7ncJ3JiStWXZ8zbS5mbd1UipQ+lxU1xk6RhCHlAB8JN21yV0VUdsOkOY6I+ZKh2RlA9pPj8NSMD+DrSmyog6AuFMTC7iQFUb693dDaLvZADYRT6FeujgQorx2uWrnsax3JEhZj4o3UlG+F6lmBbte0=
+	t=1787238729; cv=none; b=GHKkIh78h0ZI2HqzTs8xT6058VubBcK2qNnwXltWnH8wVm7pWZJVIieLvA5XTdXrd4Pte67ZsO05RNF174or6leGlzXOV9CdMFpRekZwX/eO91yQngPM4HfJ8LurExXxlZkD3wxeA4g1pzMTGHKyxajcR42L/k4plLMG6+Vs8Fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238726; c=relaxed/simple;
-	bh=Gr5x2MjXL4geBCAtTZtAhGRZwDbx2xIjCQZGAZFjNmw=;
+	s=arc-20240116; t=1787238729; c=relaxed/simple;
+	bh=kIIzCGpugIMtxNknNEp/1EE12MW8BzyrxWmOL8tYeh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tprvFY78an2dqFd1JgpCn1Q7LPtScKxMNIZ9g2euqDu4AunF1ytohAR9MDHEa8ESit6TnRmloqFoROfNoYU02zL99kvMqo7bQM/AVvTt2REKjIBCkUsY4w7CMtCOsAlH06KMdwB9x2+6oS4ed15XzlfW3jDyy6Oj2Lo7MboQ8k4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1zNCe2vF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HtlBgu9S9bTITjL/Ts1H7yk3Z1vO+bc0/M27eS/TdbKKzsO+coquzy8g9HElVRBQqzhZI2zNLKXNCQA6O75UJWPE2E6mMGh/APhEFkUGLIRRXcgQz+NnCY4FZUjHq8cbQubMGy+ceawCzFBBW1evYSBOWFTQ+ptbgduyUL3qgAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vnEN/NUR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1zNCe2vF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6EF71F00A3A;
-	Thu, 20 Aug 2026 15:12:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vnEN/NUR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961751F000E9;
+	Thu, 20 Aug 2026 15:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238725;
-	bh=fGmFiyAYw9rb091fm+j00BLa0KfM5hyWMcVd0HfJr+w=;
+	s=korg; t=1787238728;
+	bh=rFtbzCyzSLy1ARt0mWG6yWJyZzeJxySNw+5QuO2CVVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1zNCe2vFimuYKcTQ+SxG3JpIKjpBUysYzsYWm8w6/06l6stkawAJoWGUtFbpaxANT
-	 GmuXK/bT6cKk5DJlWoJLUrfnkDMzOm5/LvcZUr9ztWKU8OxvYU8NFGI6yduxh0Tkpn
-	 LiE3Z4b5Oka842vr3OvubwtZov4uDLMLFywPp3+c=
+	b=vnEN/NURSF+t2d932AwUjVK2bS18KikZJjKO80lSD94MfjYyLniCtUX7DUBsjHwra
+	 iymD/84nDjTTaV/0zGf3xMcJ4l0gMfnPtNqNKLdrSBT3W/ZAP7C0vkb81mSLkOUXQB
+	 kEFhCHETgh5dzqnl1tTjqYGBrpMOXJPQQLZ+Twn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weidong Zhu <weizhu@fiu.edu>,
-	Chao Shi <coshi036@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 002/217] block: stop the timeout timer when releasing a never added disk
-Date: Thu, 20 Aug 2026 16:52:50 +0200
-Message-ID: <20260820145237.622840115@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 020/217] ASoC: cs4265: sort the register default table
+Date: Thu, 20 Aug 2026 16:53:08 +0200
+Message-ID: <20260820145238.232480428@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -53,93 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Shi <coshi036@gmail.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 26cb8ebbfaf713c82e142d08828d4d765057633b ]
+commit e4fe3e046524e5de3c04c6eef3743780cbdc231c upstream.
 
-disk_release() undoes blk_mq_init_allocated_queue() for a disk whose
-probe failed before add_disk(), but it only calls blk_mq_exit_queue().
-Nothing there stops q->timeout, and that timer rolls forward: it stays
-pending until it next expires, not until the last request completes.
-So if the driver issued any I/O before adding the disk, the
-request_queue is freed while still linked into a timer wheel bucket.
+reg_defaults must be sorted by ascending register address, as
+regcache_lookup_reg() locates entries in it with bsearch().  See commit
+fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
 
-Commit 6f8191fdf41d ("block: simplify disk shutdown") dropped the
-blk_cleanup_queue() call that used to stop it.  __del_gendisk() and
-blk_mq_destroy_queue() still do; only the probe failure path lost it.
+cs4265_reg_defaults[] lists CS4265_INT_MASK (0x0e),
+CS4265_STATUS_MODE_MSB (0x0f) and CS4265_STATUS_MODE_LSB (0x10) after
+CS4265_SPDIF_CTL1 (0x11) and CS4265_SPDIF_CTL2 (0x12), so the binary search
+does not find those three entries.  regcache_reg_needs_sync() then cannot
+compare them against their default and reports that a sync is needed, so
+they are written to the device on every regcache_sync() even when they were
+never touched.
 
-nvme gets there because nvme_update_ns_info() submits Report Zones or
-FDP io-mgmt-recv on ns->queue before the disk is added, so a later
-failure - a concurrent reset setting NVME_CTRL_FROZEN, or
-device_add_disk() failing - lands in put_disk() with the timer armed:
+Sort the table by register address.
 
-  BUG: KASAN: slab-use-after-free in detach_if_pending+0x30c/0x340
-  Write of size 8 at addr ffff888004d71310 by task kworker/u8:2/37
-   __timer_delete_sync+0x156/0x240 kernel/time/timer.c:1621
-   blk_sync_queue+0x22/0x40 block/blk-core.c:222
-   nvme_sync_queues+0x100/0x150 drivers/nvme/host/core.c:5362
-   nvme_reset_work+0x138/0x930 drivers/nvme/host/pci.c:3264
-
-  Allocated by task 34:
-   __blk_mq_alloc_disk+0x33/0x100 block/blk-mq.c:4462
-   nvme_alloc_ns+0x290/0x3870 drivers/nvme/host/core.c:4146
-
-  Freed by task 0:
-   blk_free_queue_rcu+0x3a/0x50 block/blk-core.c:254
-   rcu_core+0xc10/0x1730 kernel/rcu/tree.c:2857
-
-The queue being synced there is ctrl->admin_q, only a victim sharing a
-timer wheel bucket with the freed queue's dangling entry; other runs
-tripped in enqueue_timer(), __run_timers() or blk_mq_timeout_work().
-Failing nvme_alloc_ns() with a debug patch makes it deterministic: one
-leaked timer trips KASAN within seconds, while 1987 patched releases
-produced no splat.
-
-Stop the timer and the queue work items before blk_mq_exit_queue(), like
-blk_mq_destroy_queue() does.
-
-Found by FuzzNvme.
-
-Fixes: 6f8191fdf41d ("block: simplify disk shutdown")
-Acked-by: Weidong Zhu <weizhu@fiu.edu>
-Signed-off-by: Chao Shi <coshi036@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260727201257.211635-1-coshi036@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: fb6f806967f6 ("ASoC: Add support for the CS4265 CODEC")
+Cc: stable@vger.kernel.org
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260805082413.26174-4-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/genhd.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ sound/soc/codecs/cs4265.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/genhd.c b/block/genhd.c
-index d23cb33ea127..b00fa6baf4ff 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -1281,14 +1281,18 @@ static void disk_release(struct device *dev)
- 	/*
- 	 * To undo the all initialization from blk_mq_init_allocated_queue in
- 	 * case of a probe failure where add_disk is never called we have to
--	 * call blk_mq_exit_queue here. We can't do this for the more common
--	 * teardown case (yet) as the tagset can be gone by the time the disk
--	 * is released once it was added.
-+	 * call blk_mq_exit_queue here, after stopping the timer and work items
-+	 * that I/O issued before add_disk may have left pending.  We can't do
-+	 * this for the more common teardown case (yet) as the tagset can be
-+	 * gone by the time the disk is released once it was added.
- 	 */
- 	if (queue_is_mq(disk->queue) &&
- 	    test_bit(GD_OWNS_QUEUE, &disk->state) &&
--	    !test_bit(GD_ADDED, &disk->state))
-+	    !test_bit(GD_ADDED, &disk->state)) {
-+		blk_sync_queue(disk->queue);
-+		blk_mq_cancel_work_sync(disk->queue);
- 		blk_mq_exit_queue(disk->queue);
-+	}
+--- a/sound/soc/codecs/cs4265.c
++++ b/sound/soc/codecs/cs4265.c
+@@ -46,11 +46,11 @@ static const struct reg_default cs4265_r
+ 	{ CS4265_DAC_CHA_VOL, 0x00 },
+ 	{ CS4265_DAC_CHB_VOL, 0x00 },
+ 	{ CS4265_DAC_CTL2, 0xC0 },
+-	{ CS4265_SPDIF_CTL1, 0x00 },
+-	{ CS4265_SPDIF_CTL2, 0x00 },
+ 	{ CS4265_INT_MASK, 0x00 },
+ 	{ CS4265_STATUS_MODE_MSB, 0x00 },
+ 	{ CS4265_STATUS_MODE_LSB, 0x00 },
++	{ CS4265_SPDIF_CTL1, 0x00 },
++	{ CS4265_SPDIF_CTL2, 0x00 },
+ };
  
- 	blkcg_exit_disk(disk);
- 
--- 
-2.53.0
-
+ static bool cs4265_readable_register(struct device *dev, unsigned int reg)
 
 
