@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960B747CA9D;
-	Thu, 20 Aug 2026 17:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766CB47D94B;
+	Thu, 20 Aug 2026 17:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247330; cv=none; b=r6K0PLkKr/lEs4olHsm26T08f8mUal5vNqho98uudYjftLl6ERCAwRaH5VmU31rGjWyG1bdV2W6cYcv5xkMj2dTVFYixsnyN6K5VhKdJLXKuPd2/aSymHInwpas6FJ2v9a1mqHfo9gaRrxLy7qvV5kyLn/xoCiMDLmjuDk6Wp2A=
+	t=1787247333; cv=none; b=QI4Z32xyQ5CdchKgnqZZsYlC6TeZ0P5274RMRznXxq6EfdBKHGjW5+irFSNLbbWjvMm+jArjsuvje4YmxliarHS4wkY0n604iRgdRXSW4oDnbzW9Euo5ZG7zJmbRsV8cHif0/Zb2OWe7fRnZI7r2qkMEyXVdjuvobfuh02d7D04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247330; c=relaxed/simple;
-	bh=AftQ7bwLYHX4tPBcWDKxYmswKtWWK6vawqtp1pa0+qY=;
+	s=arc-20240116; t=1787247333; c=relaxed/simple;
+	bh=zCg8sjTxA4vVAHSTnupdWRMGTYqT+aS7ombatgKnCos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oX60424/gZ6969JLMLAvBPb0dtt1jskK1xeMXry/kznwbJVDUry8naIXSAcX3bWGtk9kEhQ4fH4DwDdlzGf62UFCpIRNfPBMksv22Th7cx3eug1JWYxSI8kpuUziMZHhrHjjQhzTnWGJlMgI9hvHAyoCeWJLH3HSuoFowt4QX9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ABoL02Do; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QgbeasFMNSoIhgoU7dCrmFBociDYAl2M4dRj9qZMtvmsR8rK9qGdX4AFSBSnjRDJr6wcWYYpRxyh5iffOQCmEPEj4cyIH4gVWtwinXFycuv9+j6KpJ8WEmhG5hqh4X5wJGzkEc9eIwvwOiANFrO6Wm6qBpEsJo+Hzqjd8sGT7Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LTuHgm6I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ABoL02Do"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFFA11F000E9;
-	Thu, 20 Aug 2026 17:35:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LTuHgm6I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13891F000E9;
+	Thu, 20 Aug 2026 17:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247329;
-	bh=NdJA1EnG2S5mQ801MCFji27SUznLLpso3jbNOUPexFk=;
+	s=korg; t=1787247332;
+	bh=JiUBf+aK8g53yX2/FqM0afhrpoJYBRLa7Q2SHyOFO+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ABoL02Do/SJd+D2jXQLk5Zu8cDyT9KBE/ScBnnOEP8rl5GIFXnRvLwwSDYcZYEC49
-	 sbBxHGpTe0x3B0vNUfgF+zIvfD6vu9VMj2f5mcigu69X/i3dwrFAk+0P6gBCtpmul/
-	 URF0ChD2WtdVUSufsUxP9ubNEUnWWJqOxN6OfGVI=
+	b=LTuHgm6IARP31FzX98L9blE8SwZRWILKCFWBcIspTcg27I1T4TSyEhTOgwBJzC8U7
+	 r9az8XGjUEnw8A81bsX7YLKf77kZTT38NhB6gQZKyhdfgx2+2n6t7kNA/EDT5y5FVm
+	 eJ2/pFerli81rs+J4mqSLHpi2RM5KyWbuSdvVoq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weidong Zhu <weizhu@fiu.edu>,
-	Chao Shi <coshi036@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 001/166] block: stop the timeout timer when releasing a never added disk
-Date: Thu, 20 Aug 2026 16:54:20 +0200
-Message-ID: <20260820145211.238934156@linuxfoundation.org>
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 010/166] mptcp: avoid combining some incoming suboptions
+Date: Thu, 20 Aug 2026 16:54:29 +0200
+Message-ID: <20260820145211.502025611@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -53,93 +50,226 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Shi <coshi036@gmail.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 26cb8ebbfaf713c82e142d08828d4d765057633b ]
+commit b6ee361524641f57b2e2363f7737f20e17f67827 upstream.
 
-disk_release() undoes blk_mq_init_allocated_queue() for a disk whose
-probe failed before add_disk(), but it only calls blk_mq_exit_queue().
-Nothing there stops q->timeout, and that timer rolls forward: it stays
-pending until it next expires, not until the last request completes.
-So if the driver issued any I/O before adding the disk, the
-request_queue is freed while still linked into a timer wheel bucket.
+Some MPTCP suboptions are mutually exclusive according to the RFC8684,
+but also because in different places, the code doesn't expect some
+combinations to be present. That's specially true for suboptions that
+would be present twice, but with different attributes.
 
-Commit 6f8191fdf41d ("block: simplify disk shutdown") dropped the
-blk_cleanup_queue() call that used to stop it.  __del_gendisk() and
-blk_mq_destroy_queue() still do; only the probe failure path lost it.
+The new restrictions are the same as the ones applied on the output
+side, with mptcp_write_options. The same rules can be reused with a
+small fix: an MP_FASTCLOSE can be used with a DSS when the sender picks
+this option [1], which is not the case on Linux. Here are the rules:
 
-nvme gets there because nvme_update_ns_info() submits Report Zones or
-FDP io-mgmt-recv on ns->queue before the disk is added, so a later
-failure - a concurrent reset setting NVME_CTRL_FROZEN, or
-device_add_disk() failing - lands in put_disk() with the timer armed:
+  Which options can be used together?
 
-  BUG: KASAN: slab-use-after-free in detach_if_pending+0x30c/0x340
-  Write of size 8 at addr ffff888004d71310 by task kworker/u8:2/37
-   __timer_delete_sync+0x156/0x240 kernel/time/timer.c:1621
-   blk_sync_queue+0x22/0x40 block/blk-core.c:222
-   nvme_sync_queues+0x100/0x150 drivers/nvme/host/core.c:5362
-   nvme_reset_work+0x138/0x930 drivers/nvme/host/pci.c:3264
+  X: mutually exclusive
+  O: often used together
+  C: can be used together in some cases
+  P: could be used together but we prefer not to (optimisations)
 
-  Allocated by task 34:
-   __blk_mq_alloc_disk+0x33/0x100 block/blk-mq.c:4462
-   nvme_alloc_ns+0x290/0x3870 drivers/nvme/host/core.c:4146
+  | Opt: | MPC  | MPJ  | DSS  | ADD  |  RM  | PRIO | FAIL |  FC  |
+  |------|------|------|------|------|------|------|------|------|
+  | MPC  |------|------|------|------|------|------|------|------|
+  | MPJ  |  X   |------|------|------|------|------|------|------|
+  | DSS  |  X   |  X   |------|------|------|------|------|------|
+  | ADD  |  X   |  X   |  P   |------|------|------|------|------|
+  | RM   |  C   |  C   |  C   |  P   |------|------|------|------|
+  | PRIO |  X   |  C   |  C   |  C   |  C   |------|------|------|
+  | FAIL |  X   |  X   |  C   |  X   |  X   |  X   |------|------|
+  | FC   |  X   |  X   |  P   |  X   |  X   |  X   |  X   |------|
+  | RST  |  X   |  X   |  X   |  X   |  X   |  X   |  O   |  O   |
+  |------|------|------|------|------|------|------|------|------|
 
-  Freed by task 0:
-   blk_free_queue_rcu+0x3a/0x50 block/blk-core.c:254
-   rcu_core+0xc10/0x1730 kernel/rcu/tree.c:2857
+The only difference is with the 'P': another stack could send and
+ADD_ADDR with other suboptions (DSS, RM_ADDR), and this should be
+allowed.
 
-The queue being synced there is ctrl->admin_q, only a victim sharing a
-timer wheel bucket with the freed queue's dangling entry; other runs
-tripped in enqueue_timer(), __run_timers() or blk_mq_timeout_work().
-Failing nvme_alloc_ns() with a debug patch makes it deterministic: one
-leaked timer trips KASAN within seconds, while 1987 patched releases
-produced no splat.
+A few points of attention:
 
-Stop the timer and the queue work items before blk_mq_exit_queue(), like
-blk_mq_destroy_queue() does.
+ - In theory, an MP_CAPABLE could be used with a RM_ADDR, but there is
+   no reason to add it with a SYN. Note that even with a 4th ACK, it
+   doesn't seem to be useful, except when IDs are known in advance via
+   another channel. Better not to break that.
 
-Found by FuzzNvme.
+ - Now, combining both an MP_CAPABLE and an MP_JOIN will no longer
+   result to a reject of the two options, but only the second suboption
+   is ignored. That seems OK to do that for this unexpected error. At
+   least now all inconsistent combinations are handled the same way.
+   This could change later in next. This also means the explicit checks
+   for having both MPC + MPJ in subflow.c will now be unreachable.
+   That's fine, they will be removed in a follow-up patch.
 
-Fixes: 6f8191fdf41d ("block: simplify disk shutdown")
-Acked-by: Weidong Zhu <weizhu@fiu.edu>
-Signed-off-by: Chao Shi <coshi036@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260727201257.211635-1-coshi036@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ - In case of conflicting combinations, the extra suboption(s) is/are
+   ignored: having such combinations either means the remote peer is
+   buggy, or is evil. The simplest action is then taken in this case:
+   stop processing the current suboption.
+
+ - In mp_opt->suboptions, there is also a bit reserved to the checksum,
+   which can be used in an MP_CAPABLE and a DSS. Each time a DSS option
+   can be used in parallel with another option, the checksum can be set,
+   so the verification is combined into a new OPTIONS_MPTCP_DSS macro.
+
+ - An MP_CAPABLE ACK can carry a Data-Level Length, and an optional
+   Checksum: they are the same as the ones found in a DSS, because a DSS
+   cannot be used in parallel to an MP_CAPABLE. Similarly, even if there
+   is room, a DSS cannot be used with an MP_JOIN.
+
+Fixes: eda7acddf808 ("mptcp: Handle MPTCP TCP options")
+Cc: stable@vger.kernel.org
+Link: https://www.rfc-editor.org/rfc/rfc8684.html#section-3.5-5.1 [1]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-2-b8f496d71664@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/genhd.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/mptcp/options.c  |   59 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ net/mptcp/protocol.h |    1 
+ 2 files changed, 59 insertions(+), 1 deletion(-)
 
-diff --git a/block/genhd.c b/block/genhd.c
-index 6d01b0e3e1ea..3e88fe53f269 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -1174,14 +1174,18 @@ static void disk_release(struct device *dev)
- 	/*
- 	 * To undo the all initialization from blk_mq_init_allocated_queue in
- 	 * case of a probe failure where add_disk is never called we have to
--	 * call blk_mq_exit_queue here. We can't do this for the more common
--	 * teardown case (yet) as the tagset can be gone by the time the disk
--	 * is released once it was added.
-+	 * call blk_mq_exit_queue here, after stopping the timer and work items
-+	 * that I/O issued before add_disk may have left pending.  We can't do
-+	 * this for the more common teardown case (yet) as the tagset can be
-+	 * gone by the time the disk is released once it was added.
- 	 */
- 	if (queue_is_mq(disk->queue) &&
- 	    test_bit(GD_OWNS_QUEUE, &disk->state) &&
--	    !test_bit(GD_ADDED, &disk->state))
-+	    !test_bit(GD_ADDED, &disk->state)) {
-+		blk_sync_queue(disk->queue);
-+		blk_mq_cancel_work_sync(disk->queue);
- 		blk_mq_exit_queue(disk->queue);
-+	}
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -50,6 +50,14 @@ static void mptcp_parse_option(const str
+ 			}
+ 		}
  
- 	blkcg_exit_disk(disk);
++		/* Only the MPC + ACK can be used with a RM_ADDR */
++		if (subopt == OPTION_MPTCP_MPC_ACK) {
++			if ((mp_opt->suboptions & ~OPTION_MPTCP_RM_ADDR) != 0)
++				break;
++		} else if (mp_opt->suboptions != 0) {
++			break;
++		}
++
+ 		/* Cfr RFC 8684 Section 3.3.0:
+ 		 * If a checksum is present but its use had
+ 		 * not been negotiated in the MP_CAPABLE handshake, the receiver MUST
+@@ -122,6 +130,11 @@ static void mptcp_parse_option(const str
+ 		break;
  
--- 
-2.53.0
-
+ 	case MPTCPOPT_MP_JOIN:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTION_MPTCP_RM_ADDR |
++					    OPTION_MPTCP_PRIO)) != 0)
++			break;
++
+ 		if (opsize == TCPOLEN_MPTCP_MPJ_SYN) {
+ 			mp_opt->suboptions |= OPTION_MPTCP_MPJ_SYN;
+ 			mp_opt->backup = *ptr++ & MPTCPOPT_BACKUP;
+@@ -153,6 +166,14 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_DSS:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTION_MPTCP_ADD_ADDR |
++					    OPTION_MPTCP_RM_ADDR |
++					    OPTION_MPTCP_PRIO |
++					    OPTION_MPTCP_FASTCLOSE |
++					    OPTION_MPTCP_FAIL)) != 0)
++			break;
++
+ 		pr_debug("DSS\n");
+ 		ptr++;
+ 
+@@ -234,6 +255,12 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_ADD_ADDR:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_DSS |
++					    OPTION_MPTCP_RM_ADDR |
++					    OPTION_MPTCP_PRIO)) != 0)
++			break;
++
+ 		mp_opt->echo = (*ptr++) & MPTCP_ADDR_ECHO;
+ 		if (!mp_opt->echo) {
+ 			if (opsize == TCPOLEN_MPTCP_ADD_ADDR ||
+@@ -293,6 +320,14 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_RM_ADDR:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTION_MPTCP_MPC_ACK |
++					    OPTIONS_MPTCP_MPJ |
++					    OPTIONS_MPTCP_DSS |
++					    OPTION_MPTCP_ADD_ADDR |
++					    OPTION_MPTCP_PRIO)) != 0)
++			break;
++
+ 		if (opsize < TCPOLEN_MPTCP_RM_ADDR_BASE + 1 ||
+ 		    opsize > TCPOLEN_MPTCP_RM_ADDR_BASE + MPTCP_RM_IDS_MAX)
+ 			break;
+@@ -307,6 +342,13 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_MP_PRIO:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_MPJ |
++					    OPTIONS_MPTCP_DSS |
++					    OPTION_MPTCP_ADD_ADDR |
++					    OPTION_MPTCP_RM_ADDR)) != 0)
++			break;
++
+ 		if (opsize != TCPOLEN_MPTCP_PRIO)
+ 			break;
+ 
+@@ -316,6 +358,11 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_MP_FASTCLOSE:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_DSS |
++					    OPTION_MPTCP_RST)) != 0)
++			break;
++
+ 		if (opsize != TCPOLEN_MPTCP_FASTCLOSE)
+ 			break;
+ 
+@@ -327,6 +374,11 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_RST:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTION_MPTCP_FAIL |
++					    OPTION_MPTCP_FASTCLOSE)) != 0)
++			break;
++
+ 		if (opsize != TCPOLEN_MPTCP_RST)
+ 			break;
+ 
+@@ -342,6 +394,11 @@ static void mptcp_parse_option(const str
+ 		break;
+ 
+ 	case MPTCPOPT_MP_FAIL:
++		/* Can be used with a restricted number of other options */
++		if ((mp_opt->suboptions & ~(OPTIONS_MPTCP_DSS |
++					    OPTION_MPTCP_RST)) != 0)
++			break;
++
+ 		if (opsize != TCPOLEN_MPTCP_FAIL)
+ 			break;
+ 
+@@ -1415,7 +1472,7 @@ void mptcp_write_options(struct tcphdr *
+ 	 *  RM   |  C   |  C   |  C   |  P   |------|------|------|------|
+ 	 *  PRIO |  X   |  C   |  C   |  C   |  C   |------|------|------|
+ 	 *  FAIL |  X   |  X   |  C   |  X   |  X   |  X   |------|------|
+-	 *  FC   |  X   |  X   |  X   |  X   |  X   |  X   |  X   |------|
++	 *  FC   |  X   |  X   |  P   |  X   |  X   |  X   |  X   |------|
+ 	 *  RST  |  X   |  X   |  X   |  X   |  X   |  X   |  O   |  O   |
+ 	 * ------|------|------|------|------|------|------|------|------|
+ 	 *
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -36,6 +36,7 @@
+ 				 OPTION_MPTCP_MPC_ACK)
+ #define OPTIONS_MPTCP_MPJ	(OPTION_MPTCP_MPJ_SYN | OPTION_MPTCP_MPJ_SYNACK | \
+ 				 OPTION_MPTCP_MPJ_ACK)
++#define OPTIONS_MPTCP_DSS	(OPTION_MPTCP_DSS | OPTION_MPTCP_CSUMREQD)
+ 
+ /* MPTCP option subtypes */
+ #define MPTCPOPT_MP_CAPABLE	0
 
 
