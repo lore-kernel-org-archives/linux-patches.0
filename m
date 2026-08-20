@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E127F46C84F;
-	Thu, 20 Aug 2026 16:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52B8272E53;
+	Thu, 20 Aug 2026 16:32:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243543; cv=none; b=q5oeT+jgaXvh3/O6a+r1cYD/hTrWzqbyo7JEbJWNwKz1cAgE5ttSE+vFaF9xP7fCwELYeUi7LWi+gh1exzZjPEFdz4f4vtbc5qvx2pnxAi+yDV6D/IAxfOfGfJeDyw62EKi1xOPlWlTcPDGGVSXWHqZW9dTuCajqcSqJ2hUM8Sw=
+	t=1787243546; cv=none; b=FX01LSPtUfDOPcayAxiitqMtcF1lUkkAtAHuRI9jRTFrXEAMiawgJWZRh9VgoJ4f8yfc48SI1JEDOdlXNkjoHDrn5+McSc+8GxEeUQF0WoeZH49tveIJjx5x77VBePpB/CaD1wRn+H73qsExFcdjU6ah11+LWzEa8elZk5/XXo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243543; c=relaxed/simple;
-	bh=4JxNO54PvEWXJHx48G8RTH/SrAAHiza4KXgJqbWUWns=;
+	s=arc-20240116; t=1787243546; c=relaxed/simple;
+	bh=SPUDX20Xc2aikRrzxAlKMfO/BpnzddglYQ0WJNyjems=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PTwj1sJt8ZjmX0mbVQRqyzpu6Y3UjYjfe/wcDMYBoBM1SzieBy0qemtCNybwIgzSkk+k2PkIzRGN4GrQmvX0IBR8ib/Hov70JGoAXw5/Lmx/fq1RrtPnY+tpe7Rhqkb+Q0N10c5hYNYTyRWTg0H5HIxad1xo4dW16oguyOr+T3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzr2Joof; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lRSD6u3fWEyu80f+guGZFCQttkeMMLZdCfm54xj829adDqIvFAbyefCisUv8kU0VDYCQ/X2v0PMsVbz7ZxGq49ScXSgQ5A+9Ni6DjyvK8MmlXxRAJ3KkNXZdX5jTQfG6aqOQCfA2bIRhJdY7aAMg35aExz7pdVFa/bAZxi2ViLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZL9o9cc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzr2Joof"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 455D81F000E9;
-	Thu, 20 Aug 2026 16:32:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZL9o9cc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB2D1F000E9;
+	Thu, 20 Aug 2026 16:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243541;
-	bh=LDPaOHZMl+WowfvrEgmN1AGGg/jsX6GGE7C1bHW897k=;
+	s=korg; t=1787243544;
+	bh=KXZdBgVfTB6XqRiQs8kaIaWGhdrK0y26H0DRt7klZXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mzr2Joofln4KviaNA/oH+cJNmTQIB+CT5H4PQso6QewICVFbK+m8WpIqzjD1R4Aw2
-	 kDIvd5aLMqPazmKR//TqZjf9RI5sDOGe2L7P7PPST19X6QqnRJg6TpZDdVU2/+DPa4
-	 ZIzVXOPn4R+fP+40YA+KvVHdZ9aKuxMhhjKlR2O4=
+	b=nZL9o9cc+3xqqfYfeoLz/XiCpa1nWO4CIY5kPUdwP6ktpCFHQXYXrQXcEkkw/oaf3
+	 3nSd8xaFyESdqxqC2RQ/5aIOBOZOG1mXiz5T3rBqx/JkHJ4UTAbDc85rf/k9ETHNG7
+	 aQHOpTYXlDPr787pDhG7Xv8MWbEy6LiI7t9gSCLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 131/272] thunderbolt: Remove XDomain from the bus without holding tb->lock
-Date: Thu, 20 Aug 2026 16:55:15 +0200
-Message-ID: <20260820145235.190310228@linuxfoundation.org>
+Subject: [PATCH 5.15 132/272] thunderbolt: Prevent XDomain delayed work use-after-free on disconnect
+Date: Thu, 20 Aug 2026 16:55:16 +0200
+Message-ID: <20260820145235.221015005@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -50,318 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit a8937f35cf39c39c64325aa84d0463d866850857 ]
+[ Upstream commit 2c5d2d3c3f70cde2565d7b279b544893a2035842 ]
 
-Currently we call device_unregister() for services and the XDomain
-itself with tb->lock held. This prevents the service drivers from
-calling any functions that may take it. For this reason separate
-removing the XDomain from the topology data structures (where we need
-the lock) from unregistering the device from the bus (where remove
-callbacks of the drivers are being called).
+tb_xdp_handle_request() runs on system_wq and queues
+xd->state_work via queue_delayed_work() in three request handlers:
+PROPERTIES_CHANGED_REQUEST, UUID_REQUEST (via start_handshake),
+and LINK_STATE_CHANGE_REQUEST.  Similarly, update_xdomain() queues
+xd->properties_changed_work when local properties change.
 
+Concurrently, tb_xdomain_remove() calls stop_handshake() which does
+cancel_delayed_work_sync() on both delayed works.  Later,
+tb_xdomain_unregister() calls device_unregister() which eventually
+frees the xdomain.  Since commit 559c1e1e0134 ("thunderbolt: Run
+tb_xdp_handle_request() in system workqueue") moved the request
+handler off tb->wq, the handler and the remove path are no longer
+serialized.  If queue_delayed_work() executes after
+cancel_delayed_work_sync() but before the xdomain is freed, the
+delayed work fires on a freed object.
+
+Add xd->removing that tb_xdomain_remove() sets under xd->lock
+before calling stop_handshake().  Each external queue site holds
+the same lock and checks removing before calling
+queue_delayed_work().  This provides the mutual exclusion needed:
+either the queue site acquires the lock first and queues work that
+the subsequent cancel will see, or the remove path acquires the
+lock first and the queue site observes removing == true and skips
+the queue.
+
+Fixes: 559c1e1e0134 ("thunderbolt: Run tb_xdp_handle_request() in system workqueue")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Stable-dep-of: 2c5d2d3c3f70 ("thunderbolt: Prevent XDomain delayed work use-after-free on disconnect")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/domain.c  |   30 +++++++++++++++++++++
- drivers/thunderbolt/icm.c     |    5 +++
- drivers/thunderbolt/switch.c  |   14 ++++++++++
- drivers/thunderbolt/tb.c      |   58 +++++++++++++++++++++---------------------
- drivers/thunderbolt/tb.h      |    2 +
- drivers/thunderbolt/xdomain.c |   51 +++++++++++++++++++++++-------------
- 6 files changed, 113 insertions(+), 47 deletions(-)
+ drivers/thunderbolt/xdomain.c |   22 +++++++++++++++++-----
+ include/linux/thunderbolt.h   |    3 +++
+ 2 files changed, 20 insertions(+), 5 deletions(-)
 
---- a/drivers/thunderbolt/domain.c
-+++ b/drivers/thunderbolt/domain.c
-@@ -874,6 +874,36 @@ int tb_domain_disconnect_all_paths(struc
- 	return bus_for_each_dev(&tb_bus_type, NULL, tb, disconnect_xdomain);
- }
- 
-+struct unregister_context {
-+	const struct tb *tb;
-+	int n;
-+};
-+
-+static int unregister_unplugged_xdomain(struct device *dev, void *data)
-+{
-+	struct unregister_context *ctx = data;
-+	struct tb_xdomain *xd;
-+
-+	xd = tb_to_xdomain(dev);
-+	if (xd && xd->tb == ctx->tb && xd->is_unplugged) {
-+		tb_xdomain_unregister(xd);
-+		ctx->n++;
-+	}
-+	return 0;
-+}
-+
-+int tb_domain_unregister_unplugged_xdomains(struct tb *tb)
-+{
-+	struct unregister_context ctx;
-+
-+	ctx.tb = tb_domain_get(tb);
-+	ctx.n = 0;
-+	bus_for_each_dev(&tb_bus_type, NULL, &ctx, unregister_unplugged_xdomain);
-+	tb_domain_put(tb);
-+
-+	return ctx.n;
-+}
-+
- int tb_domain_init(void)
- {
- 	int ret;
---- a/drivers/thunderbolt/icm.c
-+++ b/drivers/thunderbolt/icm.c
-@@ -715,6 +715,7 @@ static void remove_xdomain(struct tb_xdo
- 
- 	sw = tb_to_switch(xd->dev.parent);
- 	tb_port_at(xd->route, sw)->xdomain = NULL;
-+	xd->is_unplugged = true;
- 	tb_xdomain_remove(xd);
- }
- 
-@@ -1730,6 +1731,8 @@ static void icm_handle_notification(stru
- 
- 	kfree(n->pkg);
- 	kfree(n);
-+
-+	tb_domain_unregister_unplugged_xdomains(tb);
- }
- 
- static void icm_handle_event(struct tb *tb, enum tb_cfg_pkg_type type,
-@@ -2075,6 +2078,8 @@ static void icm_rescan_work(struct work_
- 	if (tb->root_switch)
- 		icm_free_unplugged_children(tb->root_switch);
- 	mutex_unlock(&tb->lock);
-+
-+	tb_domain_unregister_unplugged_xdomains(tb);
- }
- 
- static void icm_complete(struct tb *tb)
---- a/drivers/thunderbolt/switch.c
-+++ b/drivers/thunderbolt/switch.c
-@@ -3035,6 +3035,20 @@ int tb_switch_resume(struct tb_switch *s
- 				tb_port_warn(port,
- 					     "lost during suspend, disconnecting\n");
- 				tb_sw_set_unplugged(port->remote->sw);
-+			} else if (port->xdomain) {
-+				/*
-+				 * If the user replaced the XDomain with
-+				 * another router, this will succeed in
-+				 * which case we must remove the XDomain
-+				 * before adding the new router.
-+				 */
-+				err = tb_cfg_get_upstream_port(sw->tb->ctl,
-+							       port->xdomain->route);
-+				if (err > 0) {
-+					tb_port_warn(port,
-+						     "XDomain was disconnected\n");
-+					port->xdomain->is_unplugged = true;
-+				}
- 			}
- 		}
- 	}
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -1310,6 +1310,8 @@ put_sw:
- out:
- 	mutex_unlock(&tb->lock);
- 
-+	tb_domain_unregister_unplugged_xdomains(tb);
-+
- 	pm_runtime_mark_last_busy(&tb->dev);
- 	pm_runtime_put_autosuspend(&tb->dev);
- 
-@@ -1479,6 +1481,24 @@ static void tb_restore_children(struct t
- 	}
- }
- 
-+static void tb_free_unplugged_xdomains(struct tb_switch *sw)
-+{
-+	struct tb_port *port;
-+
-+	tb_switch_for_each_port(sw, port) {
-+		if (tb_is_upstream_port(port))
-+			continue;
-+		if (port->xdomain && port->xdomain->is_unplugged) {
-+			tb_retimer_remove_all(port);
-+			tb_xdomain_remove(port->xdomain);
-+			tb_port_unconfigure_xdomain(port);
-+			port->xdomain = NULL;
-+		} else if (port->remote) {
-+			tb_free_unplugged_xdomains(port->remote->sw);
-+		}
-+	}
-+}
-+
- static int tb_resume_noirq(struct tb *tb)
- {
- 	struct tb_cm *tcm = tb_priv(tb);
-@@ -1494,6 +1514,7 @@ static int tb_resume_noirq(struct tb *tb
- 	tb_switch_resume(tb->root_switch, false);
- 	tb_free_invalid_tunnels(tb);
- 	tb_free_unplugged_children(tb->root_switch);
-+	tb_free_unplugged_xdomains(tb->root_switch);
- 	tb_restore_children(tb->root_switch);
- 
- 	/*
-@@ -1535,28 +1556,6 @@ static int tb_resume_noirq(struct tb *tb
- 	return 0;
- }
- 
--static int tb_free_unplugged_xdomains(struct tb_switch *sw)
--{
--	struct tb_port *port;
--	int ret = 0;
--
--	tb_switch_for_each_port(sw, port) {
--		if (tb_is_upstream_port(port))
--			continue;
--		if (port->xdomain && port->xdomain->is_unplugged) {
--			tb_retimer_remove_all(port);
--			tb_xdomain_remove(port->xdomain);
--			tb_port_unconfigure_xdomain(port);
--			port->xdomain = NULL;
--			ret++;
--		} else if (port->remote) {
--			ret += tb_free_unplugged_xdomains(port->remote->sw);
--		}
--	}
--
--	return ret;
--}
--
- static int tb_freeze_noirq(struct tb *tb)
- {
- 	struct tb_cm *tcm = tb_priv(tb);
-@@ -1576,14 +1575,15 @@ static int tb_thaw_noirq(struct tb *tb)
- static void tb_complete(struct tb *tb)
- {
- 	/*
--	 * Release any unplugged XDomains and if there is a case where
-+	 * Unregister unplugged XDomains and if there is a case where
- 	 * another domain is swapped in place of unplugged XDomain we
- 	 * need to run another rescan.
- 	 */
--	mutex_lock(&tb->lock);
--	if (tb_free_unplugged_xdomains(tb->root_switch))
-+	if (tb_domain_unregister_unplugged_xdomains(tb)) {
-+		mutex_lock(&tb->lock);
- 		tb_scan_switch(tb->root_switch);
--	mutex_unlock(&tb->lock);
-+		mutex_unlock(&tb->lock);
-+	}
- }
- 
- static int tb_runtime_suspend(struct tb *tb)
-@@ -1604,11 +1604,11 @@ static void tb_remove_work(struct work_s
- 	struct tb *tb = tcm_to_tb(tcm);
- 
- 	mutex_lock(&tb->lock);
--	if (tb->root_switch) {
-+	if (tb->root_switch)
- 		tb_free_unplugged_children(tb->root_switch);
--		tb_free_unplugged_xdomains(tb->root_switch);
--	}
- 	mutex_unlock(&tb->lock);
-+
-+	tb_free_unplugged_xdomains(tb->root_switch);
- }
- 
- static int tb_runtime_resume(struct tb *tb)
---- a/drivers/thunderbolt/tb.h
-+++ b/drivers/thunderbolt/tb.h
-@@ -700,6 +700,7 @@ int tb_domain_disconnect_xdomain_paths(s
- 				       int transmit_path, int transmit_ring,
- 				       int receive_path, int receive_ring);
- int tb_domain_disconnect_all_paths(struct tb *tb);
-+int tb_domain_unregister_unplugged_xdomains(struct tb *tb);
- 
- static inline struct tb *tb_domain_get(struct tb *tb)
- {
-@@ -1025,6 +1026,7 @@ struct tb_xdomain *tb_xdomain_alloc(stru
- 				    const uuid_t *remote_uuid);
- void tb_xdomain_add(struct tb_xdomain *xd);
- void tb_xdomain_remove(struct tb_xdomain *xd);
-+void tb_xdomain_unregister(struct tb_xdomain *xd);
- struct tb_xdomain *tb_xdomain_find_by_link_depth(struct tb *tb, u8 link,
- 						 u8 depth);
- 
 --- a/drivers/thunderbolt/xdomain.c
 +++ b/drivers/thunderbolt/xdomain.c
-@@ -1475,37 +1475,52 @@ static int unregister_service(struct dev
- }
+@@ -630,9 +630,13 @@ static void tb_xdp_handle_request(struct
+ 		 * the xdomain related to this connection as well in
+ 		 * case there is a change in services it offers.
+ 		 */
+-		if (xd && device_is_registered(&xd->dev)) {
+-			queue_delayed_work(tb->wq, &xd->get_properties_work,
+-					   msecs_to_jiffies(50));
++		if (xd) {
++			mutex_lock(&xd->lock);
++			if (!xd->removing && device_is_registered(&xd->dev))
++				queue_delayed_work(tb->wq,
++						   &xd->get_properties_work,
++						   msecs_to_jiffies(50));
++			mutex_unlock(&xd->lock);
+ 		}
+ 		break;
  
- /**
-- * tb_xdomain_remove() - Remove XDomain from the bus
-+ * tb_xdomain_remove() - Remove XDomain
-  * @xd: XDomain to remove
-  *
-- * This will stop all ongoing configuration work and remove the XDomain
-- * along with any services from the bus. When the last reference to @xd
-- * is released the object will be released as well.
-+ * This will stop all ongoing configuration work. XDomain is not removed
-+ * from the bus if it was added. That needs to be done separately by
-+ * calling tb_xdomain_unregister().
-+ *
-+ * Called with @tb->lock held.
+@@ -1486,6 +1490,10 @@ static int unregister_service(struct dev
   */
  void tb_xdomain_remove(struct tb_xdomain *xd)
  {
++	mutex_lock(&xd->lock);
++	xd->removing = true;
++	mutex_unlock(&xd->lock);
++
  	stop_handshake(xd);
  
--	device_for_each_child_reverse(&xd->dev, xd, unregister_service);
--
--	/*
--	 * Undo runtime PM here explicitly because it is possible that
--	 * the XDomain was never added to the bus and thus device_del()
--	 * is not called for it (device_del() would handle this otherwise).
--	 */
--	pm_runtime_disable(&xd->dev);
--	pm_runtime_put_noidle(&xd->dev);
--	pm_runtime_set_suspended(&xd->dev);
--
  	if (!device_is_registered(&xd->dev)) {
-+		/*
-+		 * Undo runtime PM here explicitly because it is
-+		 * possible that the XDomain was never added to the bus
-+		 * and thus device_del() is not called for it
-+		 * (device_del() would handle this otherwise).
-+		 */
-+		pm_runtime_disable(&xd->dev);
-+		pm_runtime_put_noidle(&xd->dev);
-+		pm_runtime_set_suspended(&xd->dev);
- 		put_device(&xd->dev);
--	} else {
--		dev_info(&xd->dev, "host disconnected\n");
--		device_unregister(&xd->dev);
- 	}
- }
+@@ -1885,8 +1893,12 @@ static int update_xdomain(struct device
  
- /**
-+ * tb_xdomain_unregister() - Unregister XDomain
-+ * @xd: XDomain to unregister
-+ *
-+ * This will unregister the XDomain along with any services from the
-+ * bus. When the last reference to @xd is released the object will be
-+ * released as well.
-+ */
-+void tb_xdomain_unregister(struct tb_xdomain *xd)
-+{
-+	lockdep_assert_not_held(&xd->tb->lock);
-+
-+	device_for_each_child_reverse(&xd->dev, xd, unregister_service);
-+
-+	dev_info(&xd->dev, "host disconnected\n");
-+	device_unregister(&xd->dev);
-+}
-+
-+/**
-  * tb_xdomain_lane_bonding_enable() - Enable lane bonding on XDomain
-  * @xd: XDomain connection
-  *
+ 	xd = tb_to_xdomain(dev);
+ 	if (xd) {
+-		queue_delayed_work(xd->tb->wq, &xd->properties_changed_work,
+-				   msecs_to_jiffies(50));
++		mutex_lock(&xd->lock);
++		if (!xd->removing)
++			queue_delayed_work(xd->tb->wq,
++					   &xd->properties_changed_work,
++					   msecs_to_jiffies(50));
++		mutex_unlock(&xd->lock);
+ 	}
+ 
+ 	return 0;
+--- a/include/linux/thunderbolt.h
++++ b/include/linux/thunderbolt.h
+@@ -188,6 +188,8 @@ void tb_unregister_property_dir(const ch
+  * @link_speed: Speed of the link in Gb/s
+  * @link_width: Width of the link (1 or 2)
+  * @is_unplugged: The XDomain is unplugged
++ * @removing: Set by tb_xdomain_remove() under @lock to prevent
++ *	      concurrent delayed work queueing
+  * @needs_uuid: If the XDomain does not have @remote_uuid it will be
+  *		queried first
+  * @service_ids: Used to generate IDs for the services
+@@ -235,6 +237,7 @@ struct tb_xdomain {
+ 	unsigned int link_speed;
+ 	unsigned int link_width;
+ 	bool is_unplugged;
++	bool removing;
+ 	bool needs_uuid;
+ 	struct ida service_ids;
+ 	struct ida in_hopids;
 
 
