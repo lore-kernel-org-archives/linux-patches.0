@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4AD37F32A;
-	Thu, 20 Aug 2026 15:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A638737A498;
+	Thu, 20 Aug 2026 15:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238808; cv=none; b=XFc6eAwNKPUUGeSsCZFv28dKNjl5YcV4xsk/AnGVtP4+QXXP/AgApmhBiWYcLOfOgle51DucbGxqrYFKRqYzRMXdDq5HGLA88TFeoR6ZojX9nXmap2LYPFjFdRr2IsuR7kNWW4Hcy5lampoBxnpPypEVVEkixc7nceEWsuMPLT8=
+	t=1787238811; cv=none; b=YzTMrkktUSoZiItYg3Yq73ibuU9XLUrkhJyHbjNLi7L+0/9FiYIPnWEoKup6qwTTOIT8vpCBq4lsa48140G68DcUwDK2Mf5n1aP6tA+g6VdBBgc6r6Vl/D8RLgTN3R3L7jLSR21lQa/WKsVnfn0EfBGJm42Qm8+YPwnh2tIOPkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238808; c=relaxed/simple;
-	bh=oqk056qHQ7yXLMM1jc21q34Ouy3KkPvV6L8uJaqo79A=;
+	s=arc-20240116; t=1787238811; c=relaxed/simple;
+	bh=stJpwI/ZcPDHxQYQgt6t40aTCuiBV1cRB6qqky3Pggo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ob9ZGRGdK3GMs+rHSIuXKXdQJY5pvrm3UYYTFboSRCRrz/XEe/9qxamV6X3TwpncOTehhMFBRgsiHGK4IaUylDzuGUx5ypCQmnWhWH6O/GxNpe3/Z8d/X3A/SMy7lvgTL8PniHHt+b2CFxIhUrnVxGRimFIN1bDfbJ9aC/tEOPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrPyKBcb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HTIBz2CWAixkGgeH7rVz9Uw9FQdhQjkmLWg5FrGnTZ8KNTvgkdBSy+a01ksdZf6Y3AUVFxmgyXvju+bmhZG3OaCTqWZhDkdvckXtsWLlP745NPaQbuYUX836WiMdSX1niGcQkBcglQZ/RjLA+w067hPTsjvVkhPTkSb5sq6UJlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FjCU9j5/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrPyKBcb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 359711F000E9;
-	Thu, 20 Aug 2026 15:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FjCU9j5/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E33D1F000E9;
+	Thu, 20 Aug 2026 15:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238807;
-	bh=F2MeQTgiedq8OTbvysCEyjs3FP44EianrLLMmkzpdkw=;
+	s=korg; t=1787238810;
+	bh=Anh+BbyXjVTPaC8DG+FwTAtb/2Y6RfFyWqVKcuNEtBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WrPyKBcbOBM2ygOsk0ew30091Wf0VYtvZODacASW4+dpOB21vpj8oGUExV6UCW/Ml
-	 Kl3e1GAslHC8z/sX4APM4nu02MuDpb6A7XRM1bc6tumV6iJ08gCZCoAou8OzKav+s+
-	 o4A4TwiuLz+TzLeJ8nGseszdrrcZq+IZqEiYvUnk=
+	b=FjCU9j5/t9fe+Pnf1eBVD7zzYulvwFwY9HQUhjkzmNLT8zgjN0M10GjX3D7NZ1X9z
+	 yjl09Vzr9x2X7fiNEEpoyIRdn8HOw+Da81nfjITmYFIw7sUP5F1xLcpPxsa8GrobDK
+	 DGIly2/vnSfWrjAGhJPDiYTxWsNXTD94nzc11Ong=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 049/217] crypto: qce - fix error path in devm_qce_register_algs
-Date: Thu, 20 Aug 2026 16:53:37 +0200
-Message-ID: <20260820145239.098842427@linuxfoundation.org>
+	Jordan Rhee <jordanrhee@google.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 050/217] gve: fix NULL dereference due to missing ptp adjfine
+Date: Thu, 20 Aug 2026 16:53:38 +0200
+Message-ID: <20260820145239.127482181@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -51,34 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Jordan Rhee <jordanrhee@google.com>
 
-commit 9c75402286409f5e1a75e4a445555c84066f89db upstream.
+commit 3992ced109c70b771efad9e51ae68e5c7a04dea3 upstream.
 
-If ops->register_algs() fails, the error path repeatedly calls the same
-ops->unregister_algs() from the failed registration. Use the loop index
-to unregister the previously registered algorithms instead.
+Fix NULL dereference due to missing implementation of adjfine, which can
+be triggered from usermode as follows:
 
-Fixes: e80cf84b6087 ("crypto: qce - unregister previously registered algos in error path")
+sudo ./testptp -d /dev/ptp0 -f 0
+[  551.943697] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[...]
+[  552.061946] Call Trace:
+[  552.064487]  <TASK>
+[  552.066681]  ptp_clock_adjtime+0x1c0/0x2c0
+[  552.070874]  ? get_clock_desc+0x6b/0xb0
+[  552.074825]  pc_clock_adjtime+0x78/0xc0
+[  552.078755]  __do_sys_clock_adjtime+0x85/0x110
+[  552.083293]  do_syscall_64+0xea/0x610
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: acd16380523b ("gve: Add initial PTP device support")
+Signed-off-by: Jordan Rhee <jordanrhee@google.com>
+Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20260807224315.234152-3-hramamurthy@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/qce/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/google/gve/gve_ptp.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/crypto/qce/core.c
-+++ b/drivers/crypto/qce/core.c
-@@ -60,7 +60,7 @@ static int devm_qce_register_algs(struct
- 		ret = ops->register_algs(qce);
- 		if (ret) {
- 			for (j = i - 1; j >= 0; j--)
--				ops->unregister_algs(qce);
-+				qce_ops[j]->unregister_algs(qce);
- 			return ret;
- 		}
- 	}
+diff --git a/drivers/net/ethernet/google/gve/gve_ptp.c b/drivers/net/ethernet/google/gve/gve_ptp.c
+index 06b1cf4a5efc..1d6c59f4ead3 100644
+--- a/drivers/net/ethernet/google/gve/gve_ptp.c
++++ b/drivers/net/ethernet/google/gve/gve_ptp.c
+@@ -26,6 +26,11 @@ int gve_clock_nic_ts_read(struct gve_priv *priv)
+ 	return 0;
+ }
+ 
++static int gve_ptp_adjfine(struct ptp_clock_info *ptp, long scaled_ppm)
++{
++	return -EOPNOTSUPP;
++}
++
+ static int gve_ptp_gettimex64(struct ptp_clock_info *info,
+ 			      struct timespec64 *ts,
+ 			      struct ptp_system_timestamp *sts)
+@@ -60,6 +65,7 @@ static long gve_ptp_do_aux_work(struct ptp_clock_info *info)
+ static const struct ptp_clock_info gve_ptp_caps = {
+ 	.owner          = THIS_MODULE,
+ 	.name		= "gve clock",
++	.adjfine	= gve_ptp_adjfine,
+ 	.gettimex64	= gve_ptp_gettimex64,
+ 	.settime64	= gve_ptp_settime64,
+ 	.do_aux_work	= gve_ptp_do_aux_work,
+-- 
+2.55.0
+
 
 
