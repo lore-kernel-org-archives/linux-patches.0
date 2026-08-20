@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5AA2479873;
-	Thu, 20 Aug 2026 17:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD4546C82A;
+	Thu, 20 Aug 2026 17:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248528; cv=none; b=mwnaAl/QS6P1LZ5ef2ckLgdzZycjRJ8bZcQTR5Hy+hTmmds5YQv2eZ0mYvscKGeR3o6agL4a3TESzClRHRcuhqPEGPZ6IqzB3fUKNuPKV1vayL/M0tIdhEKZDqdasutz86MmIpiDD71jmeuvBCPOk+6/49Gi1Hc67KZoopnCgWM=
+	t=1787248530; cv=none; b=TYOtPZe0qNi3JuN7dhgmLDY2urrToIiAawT0cQpcXDXvTUk19S0fqPdajHA1TDDA59tJvv1hv0hBgDApZp6nItOrj26quUSbC0078KJUooKvB8hNBsQkQ35h5Glpdc2zOTEtD010aRgEZHhp2o4gh/xzrLg7lMku2492dxEIiSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248528; c=relaxed/simple;
-	bh=a6iRmpZZ3nJGhj/wfKo7GEXKb8EDbRmlWzThH0jyJKw=;
+	s=arc-20240116; t=1787248530; c=relaxed/simple;
+	bh=AUFInAYq7AZlwTzqsnQFz6d+HWufuixX5Fytv6+7Aq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IURut6HMGyLU4V8L2HKJ4KkYOtIHPXpiERa2HVyfxWHwDD7uWwLCZGDA7ShF9lfD/pWgmZdAOKrAB9uj/KXqCIUXftdhMPNukS01tfKYDm1xsjsXNW468EM/v2q5b2EHPDRBOJ88VjCb+HHC1WKCWEvhfSdFzCMRrIUqvEgps1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4Ikz70e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tif8AJGE8fwItszMopzx+fOQbAYa6Pvx9Kxifa+jpIE+DIfgiHJ+85qcn239TDcbbHpDl/jgNbQ1EM5WuVtjzARzezhqaTLlNkS8e7nw7B9Q57cTYky3vyavZA/9so77UywBGjIzs/HNuc0GrA3dBeBT2wEcqnKcXPAcguMgq30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BRUAaqYG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4Ikz70e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D991F000E9;
-	Thu, 20 Aug 2026 17:55:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BRUAaqYG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3741F000E9;
+	Thu, 20 Aug 2026 17:55:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248526;
-	bh=SbGhdMarfphwP3vmuOzFUgEeEHPq35Cvm0DT0Sm29Mg=;
+	s=korg; t=1787248529;
+	bh=c2JHvTDDcZG81Jfa0J58EBUD1V0ozpgZUgXjj3zv0UM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V4Ikz70enbooHeocUyzqCP4QhpyJgrTvRhk6v9lsJCu+73E/wnTcapLoTy2F45FBN
-	 DSSLdTiMyql95pYQD06yqpfD72e2mOb4txUZvyaLOJcJBeFS+BJcy2O+fzerpGbbvp
-	 hFV7oDT1rcI3PJpqTwAq2WlqCaGPA6kNafnaoMEA=
+	b=BRUAaqYGUwRjYcrXctlA8sC758oFhWf6aodZYmOcvbtQ1NHeSmAoImMrYveTNAC7q
+	 jeeAVlYJELGt+NFQv9KQTBUyvbmMWnBKWC/WsQRCeYwDN7FesaHc7ehXLexn4MAcgX
+	 v20Y0p6199D+Izwje50GE5PC4izKcRKQrCf5a1Ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Hugh Dickins <hughd@google.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Peter Xu <peterx@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Yin Fengwei <fengwei.yin@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Jonas Gorski <jonas.gorski@bisdn.de>,
+	Ray Jui <ray.jui@broadcom.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 231/303] mm/migrate_device: page_remove_rmap() -> folio_remove_rmap_pte()
-Date: Thu, 20 Aug 2026 16:56:07 +0200
-Message-ID: <20260820145300.395222344@linuxfoundation.org>
+Subject: [PATCH 6.1 258/303] i2c: iproc: reset bus after timeout if START_BUSY is stuck
+Date: Thu, 20 Aug 2026 16:56:34 +0200
+Message-ID: <20260820145301.199076659@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -58,126 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Jonas Gorski <jonas.gorski@bisdn.de>
 
-[ Upstream commit 5b205c7f2684764c8a9cc3442986623d4d6e87f1 ]
+[ Upstream commit 98f2e9e6d6f91a6abb43f166b244b428ba85fa2b ]
 
-Let's convert migrate_vma_collect_pmd().  While at it, perform more folio
-conversion.
+If a transaction times out, the START_BUSY signal can stay up, and
+subsequent transactaction attempts will fail as the bus is still
+considered busy.
 
-Link: https://lkml.kernel.org/r/20231220224504.646757-30-david@redhat.com
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Yin Fengwei <fengwei.yin@intel.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 63867c82d0c0 ("mm: migrate_device: fix pte_pfn/pte_dirty called on non-present PTE")
+I can easily trigger this by attempting to read from an address with no
+device, e.g. when running i2cdetect. After the first read times out, all
+subsequent read attempts return busy.
+
+To get to a working state again, the controller needs to be reset to
+clear the START_BUSY signal. So check for START_BUSY still asserted on a
+timeout, and do reset in case it is,
+
+This is also done by the original non-upstream iproc-smbus driver
+implementation [1].
+
+Works around situations like:
+
+    bcm-iproc-2c 1803b000.i2c: transaction timed out
+    bcm-iproc-2c 1803b000.i2c: bus is busy
+    bcm-iproc-2c 1803b000.i2c: bus is busy
+    bcm-iproc-2c 1803b000.i2c: bus is busy
+    bcm-iproc-2c 1803b000.i2c: bus is busy
+    bcm-iproc-2c 1803b000.i2c: bus is busy
+    ...
+
+where the bus never recovers after a timeout.
+
+[1] https://github.com/opencomputeproject/onie/blob/master/patches/kernel/3.2.69/driver-iproc-smbus.patch
+
+Fixes: e6e5dd3566e0 ("i2c: iproc: Add Broadcom iProc I2C Driver")
+Signed-off-by: Jonas Gorski <jonas.gorski@bisdn.de>
+Cc: <stable@vger.kernel.org> # v4.0+
+Acked-by: Ray Jui <ray.jui@broadcom.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260717085507.34209-1-jonas.gorski@bisdn.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/migrate_device.c |   39 +++++++++++++++++++++------------------
- 1 file changed, 21 insertions(+), 18 deletions(-)
+ drivers/i2c/busses/i2c-bcm-iproc.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/mm/migrate_device.c
-+++ b/mm/migrate_device.c
-@@ -114,6 +114,7 @@ again:
+--- a/drivers/i2c/busses/i2c-bcm-iproc.c
++++ b/drivers/i2c/busses/i2c-bcm-iproc.c
+@@ -811,6 +811,17 @@ static int bcm_iproc_i2c_xfer_wait(struc
+ 	}
  
- 	for (; addr < end; addr += PAGE_SIZE, ptep++) {
- 		unsigned long mpfn = 0, pfn;
-+		struct folio *folio;
- 		struct page *page;
- 		swp_entry_t entry;
- 		pte_t pte;
-@@ -175,41 +176,43 @@ again:
- 		}
- 
- 		/*
--		 * By getting a reference on the page we pin it and that blocks
-+		 * By getting a reference on the folio we pin it and that blocks
- 		 * any kind of migration. Side effect is that it "freezes" the
- 		 * pte.
- 		 *
--		 * We drop this reference after isolating the page from the lru
--		 * for non device page (device page are not on the lru and thus
-+		 * We drop this reference after isolating the folio from the lru
-+		 * for non device folio (device folio are not on the lru and thus
- 		 * can't be dropped from it).
- 		 */
--		get_page(page);
-+		folio = page_folio(page);
-+		folio_get(folio);
- 
- 		/*
--		 * We rely on trylock_page() to avoid deadlock between
-+		 * We rely on folio_trylock() to avoid deadlock between
- 		 * concurrent migrations where each is waiting on the others
--		 * page lock. If we can't immediately lock the page we fail this
-+		 * folio lock. If we can't immediately lock the folio we fail this
- 		 * migration as it is only best effort anyway.
- 		 *
--		 * If we can lock the page it's safe to set up a migration entry
--		 * now. In the common case where the page is mapped once in a
-+		 * If we can lock the folio it's safe to set up a migration entry
-+		 * now. In the common case where the folio is mapped once in a
- 		 * single process setting up the migration entry now is an
- 		 * optimisation to avoid walking the rmap later with
- 		 * try_to_migrate().
- 		 */
--		if (trylock_page(page)) {
-+		if (folio_trylock(folio)) {
- 			bool anon_exclusive;
- 			pte_t swp_pte;
- 
--			flush_cache_page(vma, addr, pte_pfn(*ptep));
--			anon_exclusive = PageAnon(page) && PageAnonExclusive(page);
-+			flush_cache_page(vma, addr, pte_pfn(pte));
-+			anon_exclusive = folio_test_anon(folio) &&
-+					  PageAnonExclusive(page);
- 			if (anon_exclusive) {
- 				pte = ptep_clear_flush(vma, addr, ptep);
- 
- 				if (page_try_share_anon_rmap(page)) {
- 					set_pte_at(mm, addr, ptep, pte);
--					unlock_page(page);
--					put_page(page);
-+					folio_unlock(folio);
-+					folio_put(folio);
- 					mpfn = 0;
- 					goto next;
- 				}
-@@ -221,7 +224,7 @@ again:
- 
- 			/* Set the dirty flag on the folio now the pte is gone. */
- 			if (pte_dirty(pte))
--				folio_mark_dirty(page_folio(page));
-+				folio_mark_dirty(folio);
- 
- 			/* Setup special migration page table entry */
- 			if (mpfn & MIGRATE_PFN_WRITE)
-@@ -255,16 +258,16 @@ again:
- 
- 			/*
- 			 * This is like regular unmap: we remove the rmap and
--			 * drop page refcount. Page won't be freed, as we took
--			 * a reference just above.
-+			 * drop the folio refcount. The folio won't be freed, as
-+			 * we took a reference just above.
- 			 */
- 			page_remove_rmap(page, vma, false);
--			put_page(page);
-+			folio_put(folio);
- 
- 			if (pte_present(pte))
- 				unmapped++;
- 		} else {
--			put_page(page);
-+			folio_put(folio);
- 			mpfn = 0;
- 		}
- 
+ 	if (!time_left && !iproc_i2c->xfer_is_done) {
++		/*
++		 * The controller may fail to clear START_BUSY after a timeout,
++		 * reset the controller to recover in that case.
++		 */
++		if (!!(iproc_i2c_rd_reg(iproc_i2c, M_CMD_OFFSET) &
++		       BIT(M_CMD_START_BUSY_SHIFT))) {
++			bcm_iproc_i2c_enable_disable(iproc_i2c, false);
++			bcm_iproc_i2c_init(iproc_i2c);
++			bcm_iproc_i2c_enable_disable(iproc_i2c, true);
++		}
++
+ 		/* flush both TX/RX FIFOs */
+ 		val = BIT(M_FIFO_RX_FLUSH_SHIFT) | BIT(M_FIFO_TX_FLUSH_SHIFT);
+ 		iproc_i2c_wr_reg(iproc_i2c, M_FIFO_CTRL_OFFSET, val);
 
 
