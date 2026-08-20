@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D91D47DFB9;
-	Thu, 20 Aug 2026 17:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DE4215075;
+	Thu, 20 Aug 2026 17:53:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248418; cv=none; b=YYNpr/z4k8QIQ6S83wfXYBQ1HP38uzGVnltr4Gd0q6aq+Lm+Rfy6Gt745x8sivLvcNyB9RJZ+iXhLls0y2LCMaR6GwsVmCIlN7v/3LrRHNxVyuwCu7iOkDDchamjT84DvgZnWEvVza+opQPgTcvN4AZJ38zQf3/Yun1sGXirQNc=
+	t=1787248421; cv=none; b=rjK5SRsV0RaQK0HK/qc3KKmZvr1vbXi/cwIrIbLqMAPof99Z5hNalGwMtgZE4syUYdS6JNKRmQ12xD8L2hIN02wvEKiX7JNjI9bNF7xdZUbrhfnwiJjUwbrOPJ0pDHrg/O2Rtxf/RQbNQ3Zn/A2d/t75BxwFTsQo/VzQzZ03RE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248418; c=relaxed/simple;
-	bh=kCYrjDDrOrfMWFvOZ+/K74exkBlJjsmEj35k74msZj0=;
+	s=arc-20240116; t=1787248421; c=relaxed/simple;
+	bh=BChLQQm+sX5/NuzGzN3KGHwCoOB/1turIGN/WKvEyL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uJ7IiYzw1mjdTQg1RGgyFsAcGb+Psh2nV2nZFHdc1c94h4N7yGiPnfhqON2g3BoIrQKd/WS+z+z+nMoBl9/CWuIj3xbgDhxXsbPptoLBWtju4ESfXEVJEjnTxBjrWs+simpuQYYfWdEd31KF2NSdvlYd8UyO0hGlCL/Tzs8HbT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnsqK+iX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IFppMpRS9VKgWpxHBBqlCndhgcylrsnnB8RWX8PU3Qq6QxCQoarbmqSUNYNCkdOG+kDC0uhIm53B7e2VnrblOHZCZeKxCopY2DvmvA7NsAEhbQ+Gi1lrCDR33F5M6NIQyjDUADAdZikzURszYFeDw56vqFSQgENS6ibzPTBkCFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whkSbJOX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnsqK+iX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FAF01F000E9;
-	Thu, 20 Aug 2026 17:53:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whkSbJOX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4659E1F000E9;
+	Thu, 20 Aug 2026 17:53:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248417;
-	bh=/9N3iY+zbGDk+fKZ0C7RYMnF/HesBz/8O326IjufZhM=;
+	s=korg; t=1787248419;
+	bh=znqUNM6JaTnLgdyFUxLq0gIh2mgBh9bXmsumzL1U6XI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EnsqK+iXuqRxT5xSJzvVPLitTGHSD+aX7xXPlmiGEtwUmnKp+0FMKNqClqjr4RJ6u
-	 tQc1PcDWwEIeArDXmc4/oGTSk0BchWcWh0TmJq9qcmm950OLHRM+CwHeq1EK0Wi/Ty
-	 ocpIMTj44LMN27c7SjXEXH2UtcX20zbofo1IxtwQ=
+	b=whkSbJOXrkXdICVUiII0yqNbv/6h4EIs6IhclWtG32O2WSjo7NP2MO7IqPkd6UBHZ
+	 eNHbE6t1It6j8sTAFX5dOtXxzhLhGhyZPM8SmBKHeYWjz4H2zWXC7DXyTYc4vqUSCJ
+	 lJ1Be5+yJUztUAZvyaARoW/J3Isl4iFkrAV9qA9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	David Ahern <dsahern@kernel.org>,
+	Shiming Cheng <shiming.cheng@mediatek.com>,
 	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 219/303] net: move skb_gro_receive_list from udp to core
-Date: Thu, 20 Aug 2026 16:55:55 +0200
-Message-ID: <20260820145259.980850001@linuxfoundation.org>
+Subject: [PATCH 6.1 220/303] net: gro: fix double aggregation of flush-marked skbs
+Date: Thu, 20 Aug 2026 16:55:56 +0200
+Message-ID: <20260820145300.011928820@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -54,112 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Shiming Cheng <shiming.cheng@mediatek.com>
 
-[ Upstream commit 8928756d53d5b99dcd18073dc7738b8ebdbe7d96 ]
+[ Upstream commit e751256486d0ded20f5a9f9863467f1dce65142f ]
 
-This helper function will be used for TCP fraglist GRO support
+Commit 0ab03f353d36 ("net-gro: Fix GRO flush when receiving a GSO
+packet.") added a flush check to skb_gro_receive(), but
+skb_gro_receive_list() lacks the same validation.
 
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Reviewed-by: David Ahern <dsahern@kernel.org>
+As a result, packets marked with NAPI_GRO_CB(skb)->flush may still be
+re-aggregated.
+
+This allows already-GRO'd packets with existing frag_list to be
+re-aggregated into a new GRO session, corrupting the frag_list chain
+structure. When skb_segment() attempts to unpack these malformed packets,
+it encounters invalid state and triggers a kernel panic.
+
+Scenario (Tethering/Device forwarding):
+  1. Driver: Generated aggregated packet P1 via LRO with frag_list
+  2. Dev A: Receives aggregated fraglist packet and flush flag set
+  3. Dev A: Re-enters GRO, skb_gro_receive_list() is called
+  4. Missing flush check allows re-aggregation despite flush flag
+  5. Frag_list chain becomes corrupted (loops or dangling refs)
+  6. Dev B: TX path calls skb_segment(), crashes on corrupted frag_list
+
+Root cause in skb_segment():
+  The check at line ~4891:
+    if (hsize <= 0 && i >= nfrags && skb_headlen(list_skb) &&
+        (skb_headlen(list_skb) == len || sg)) {
+
+  When frag_list is corrupted by double aggregation, when list_skb is
+  a NULL pointer from skb->next, skb_headlen(list_skb) dereference
+  NULL/corrupted pointers occurs.
+
+Call Trace:
+ skb_headlen(NULL skb)
+ skb_segment
+ tcp_gso_segment
+ tcp4_gso_segment
+ inet_gso_segment
+ skb_mac_gso_segment
+ __skb_gso_segment
+ skb_gso_segment
+ validate_xmit_skb
+ validate_xmit_skb_list
+ sch_direct_xmit
+ qdisc_restart
+ __qdisc_run
+ qdisc_run
+ net_tx_action
+
+Fix: Add NAPI_GRO_CB(skb)->flush validation to the early-return check in
+skb_gro_receive_list(), matching the defensive programming pattern of
+skb_gro_receive().
+
+Fixes: 3a1296a38d0c ("net: Support GRO/GSO fraglist chaining.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shiming Cheng <shiming.cheng@mediatek.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: e751256486d0 ("net: gro: fix double aggregation of flush-marked skbs")
+Link: https://patch.msgid.link/20260709014704.3625-1-shiming.cheng@mediatek.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/gro.h      |    1 +
- net/core/gro.c         |   29 +++++++++++++++++++++++++++++
- net/ipv4/udp_offload.c |   29 -----------------------------
- 3 files changed, 30 insertions(+), 29 deletions(-)
+ net/core/gro.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/include/net/gro.h
-+++ b/include/net/gro.h
-@@ -424,6 +424,7 @@ static inline __wsum ip6_gro_compute_pse
- }
- 
- int skb_gro_receive(struct sk_buff *p, struct sk_buff *skb);
-+int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb);
- 
- /* Pass the currently batched GRO_NORMAL SKBs up to the stack. */
- static inline void gro_normal_list(struct napi_struct *napi)
 --- a/net/core/gro.c
 +++ b/net/core/gro.c
-@@ -295,6 +295,35 @@ done:
- 	return 0;
- }
+@@ -297,7 +297,9 @@ done:
  
-+int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb)
-+{
-+	if (unlikely(p->len + skb->len >= 65536))
-+		return -E2BIG;
-+
-+	if (NAPI_GRO_CB(p)->last == p)
-+		skb_shinfo(p)->frag_list = skb;
-+	else
-+		NAPI_GRO_CB(p)->last->next = skb;
-+
-+	skb_pull(skb, skb_gro_offset(skb));
-+
-+	NAPI_GRO_CB(p)->last = skb;
-+	NAPI_GRO_CB(p)->count++;
-+	p->data_len += skb->len;
-+
-+	/* sk ownership - if any - completely transferred to the aggregated packet */
-+	skb->destructor = NULL;
-+	skb->sk = NULL;
-+	p->truesize += skb->truesize;
-+	p->len += skb->len;
-+
-+	skb_shinfo(p)->flags |= skb_shinfo(skb)->flags & SKBFL_SHARED_FRAG;
-+
-+	NAPI_GRO_CB(skb)->same_flow = 1;
-+
-+	return 0;
-+}
-+
- 
- static void napi_gro_complete(struct napi_struct *napi, struct sk_buff *skb)
+ int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb)
  {
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -526,35 +526,6 @@ out:
- 	return segs;
- }
- 
--static int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb)
--{
 -	if (unlikely(p->len + skb->len >= 65536))
--		return -E2BIG;
--
--	if (NAPI_GRO_CB(p)->last == p)
--		skb_shinfo(p)->frag_list = skb;
--	else
--		NAPI_GRO_CB(p)->last->next = skb;
--
--	skb_pull(skb, skb_gro_offset(skb));
--
--	NAPI_GRO_CB(p)->last = skb;
--	NAPI_GRO_CB(p)->count++;
--	p->data_len += skb->len;
--
--	/* sk ownership - if any - completely transferred to the aggregated packet */
--	skb->destructor = NULL;
--	skb->sk = NULL;
--	p->truesize += skb->truesize;
--	p->len += skb->len;
--
--	skb_shinfo(p)->flags |= skb_shinfo(skb)->flags & SKBFL_SHARED_FRAG;
--
--	NAPI_GRO_CB(skb)->same_flow = 1;
--
--	return 0;
--}
--
++	/* make sure to check flush flag and to not merge */
++	if (unlikely(p->len + skb->len >= 65536 ||
++		     NAPI_GRO_CB(skb)->flush))
+ 		return -E2BIG;
  
- #define UDP_GRO_CNT_MAX 64
- static struct sk_buff *udp_gro_receive_segment(struct list_head *head,
+ 	if (NAPI_GRO_CB(p)->last == p)
 
 
