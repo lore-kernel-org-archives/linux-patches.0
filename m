@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3866B479873;
-	Thu, 20 Aug 2026 17:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A742931C0;
+	Thu, 20 Aug 2026 17:52:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248362; cv=none; b=Cu2rtviQ8ZeEal/2Wa4emZgABLpMAOd0Y1YyF0+yvtad2FpSjbj4VoOcswHC2RRgM2W4DpKL+Uo6FZ0jgEKdvqucreF0x8LQXgl6wWY2T8AGmhJTVqQgbABP0WzSclx6XOiVM/XNw+8q+HI1e9zKAR20Woqdy1I6nI7WrdnXeWc=
+	t=1787248365; cv=none; b=BqfgauDgVWP6jJNo2dNRKXqojObo/PnK36HUE92Ygfk52siD0P/nvWP5hBOTwCSPGJIVOVnwL6R7WUrnota01X4bht9cr/ymxHVJGUkv5hIq909JX9FlJUJ2O8AB49wlTv7KZfg8Dc8W2ehh1ta0Q6r+JuwPkWWhFk5wElfAhZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248362; c=relaxed/simple;
-	bh=bAHi1YtMLJYjAeQFSdsl5Pc5JFwz5DYGHy1sdoF2bFQ=;
+	s=arc-20240116; t=1787248365; c=relaxed/simple;
+	bh=ffUIlV65xZYYw7JisE8xAr+vF8hLNleVIHfqFxZwjF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bd65tWAQ0hZM2rA6GxMzQjO3d/WO3wOUsoYuiZMCPcaXrECT6rY+l1SqWZ3awE5lD1u4s0x+XlwYuw2oI9Rqdc9aYn3VLZk6y3G9xwJpbwVZSIqh9fYY2fhvZKooQODfiHMYbtfVgYLMCCF7im/rovPrWvkTfuFEyV6V2VNG/es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjyU7+F8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iMs0k+ajHsGk0g/a9hFM9tAh1dX8+HLSpiv/JQUggvy2VR/LSMmzmYebi8mk1m3jRNP54bjc5gDdMdvD5qeQc32ahVFXXBJSnVUq8whXH1u1+DORUljOKjxwk/brf+TlcriFA+DiWzdC3aeNZX7iFC01I43Aympw4Yo5UojIsqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0Al3eIG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjyU7+F8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB461F00A3A;
-	Thu, 20 Aug 2026 17:52:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0Al3eIG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31B971F000E9;
+	Thu, 20 Aug 2026 17:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248360;
-	bh=1E/9gg0PaKNpwlIdzCWwV5Rg7S8L8Y1bnOgBUIH/ioM=;
+	s=korg; t=1787248363;
+	bh=y9AiQkh+QT7HT6BVK9rqaELOQZMKk4GnCNWkgutnlYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OjyU7+F8SjNalnVfu8aRJQDzSFUkLdY08IRxVMTt2inLVY15JWV0SG10Z9p4xnhUd
-	 eN80q1ooMoUZxsRMzwq/7QrbpUomUH5RaSkqj3/JzTnhE9bWEG8iArfjuSjlNb9eMZ
-	 rq88GmTqZ7TEFU7aNj5IlvlL8D7vT4lfeKCfatVU=
+	b=L0Al3eIG+fabi1XmqM8BeAaG04B2FOSnP4r/uG9WCc6iq4z1uKisHWgbOyoQyJiHB
+	 8IVZPnLLyHfK9JLd4BBk705Ad8Mmniy2pKctT5TE5knHhO+avblj8ocDSFS1b87pJ6
+	 YdAd1Oys92c5sdSRkKOKOyXO/U/Fq2mQctv7RjEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	LiangCheng Wang <zaq14760@gmail.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Alexander Kaplan <alexander.kaplan@sms-medipool.de>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 202/303] wifi: brcmfmac: set F2 blocksize to 256 for BCM43752
-Date: Thu, 20 Aug 2026 16:55:38 +0200
-Message-ID: <20260820145259.461710673@linuxfoundation.org>
+Subject: [PATCH 6.1 203/303] ALSA: hda: codecs: hdmi: disable keep-alive before audio format change
+Date: Thu, 20 Aug 2026 16:55:39 +0200
+Message-ID: <20260820145259.492972795@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -52,56 +52,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: LiangCheng Wang <zaq14760@gmail.com>
+From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 
-[ Upstream commit 29ab31f3f27157648f2f7e6d5e1fd9792fdf0614 ]
+[ Upstream commit a3d6d3cedfe87bbd5a677d52b22ac20d28e59cf8 ]
 
-The BCM43752 is not reliable with the default 512-byte SDIO function 2
-block size: on an i.MX8MP board with an AMPAK AP6275S module at
-SDR104 / 200 MHz, an iperf TX stress test kills WLAN within seconds:
+When a keep-alive (KAE) silent stream is active on an Intel HDMI/DP
+codec, opening a real PCM stream reprograms the converter format and the
+audio infoframe in snd_hda_hdmi_generic_pcm_prepare(). Part of that
+reprogramming - the converter channel count and the channel mapping in
+snd_hda_hdmi_setup_audio_infoframe() - is not safe to do while a
+keep-alive stream is active. This is most visible when switching to a
+multichannel PCM configuration, where the active channel count actually
+changes. In that case the newly opened PCM stream plays no sound.
 
-  mmc_submit_one: CMD53 sg block write failed -84
-  brcmf_sdio_dpc: failed backplane access over SDIO, halting operation
+Add an optional hdmi_ops .prepare hook, called at the start of the
+PCM prepare sequence (before the format and infoframe are touched), and
+implement it for HSW+ to release keep-alive. Keep-alive is then
+re-enabled as before once the new stream has been set up, in the
+setup_stream op.
 
-Commit d2587c57ffd8 ("brcmfmac: add 43752 SDIO ids and initialization")
-set up the 43752 like the 4373 for the F2 watermark but missed the F2
-block size, which the 4373 limits to 256 bytes. The vendor driver
-(bcmdhd) also programs a 256-byte F2 block size for this chip and runs
-the same hardware without errors.
-
-Group the 43752 with the 4373, matching the F2 watermark handling.
-With this change a 10-minute bidirectional iperf3 soak completes with
-zero SDIO errors at ~270 Mbit/s in each direction.
-
-Backporting note: kernels before v6.18 name this id
-SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752, so on those trees the case
-label added by this patch must be adjusted to that name. Cherry-picking
-the rename commit 74e2ef72bd4b ("wifi: brcmfmac: fix 43752 SDIO FWVID
-incorrectly labelled as Cypress (CYW)") first is not a clean
-alternative: on trees before v6.17 its context collides with the 43751
-additions, and trees before v6.2 lack the FWVID framework it touches.
-
-Fixes: d2587c57ffd8 ("brcmfmac: add 43752 SDIO ids and initialization")
-Cc: stable@vger.kernel.org # see patch description, needs adjustments for <= 6.17
-Signed-off-by: LiangCheng Wang <zaq14760@gmail.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260715-b43752-f2-blksz-v2-1-f9be49856050@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 15175a4f2bbb ("ALSA: hda/hdmi: add keep-alive support for ADL-P and DG2")
+Reported-by: Alexander Kaplan <alexander.kaplan@sms-medipool.de>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/8412
+Tested-by: Alexander Kaplan <alexander.kaplan@sms-medipool.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Link: https://patch.msgid.link/20260715180610.1371243-1-kai.vehmanen@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ adapted three hunks from the post-6.12 split files (hdmi.c/hdmi_local.h/intelhdmi.c) back into the monolithic sound/pci/hda/patch_hdmi.c, with the prepare hook un-indented one level since 6.12 uses plain mutex_lock() instead of scoped_guard() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/patch_hdmi.c |   48 +++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 42 insertions(+), 6 deletions(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-@@ -906,6 +906,7 @@ int brcmf_sdiod_probe(struct brcmf_sdio_
- 		return ret;
- 	}
- 	switch (sdiodev->func2->device) {
-+	case SDIO_DEVICE_ID_BROADCOM_43752:
- 	case SDIO_DEVICE_ID_BROADCOM_CYPRESS_4373:
- 		f2_blksz = SDIO_4373_FUNC2_BLOCKSIZE;
- 		break;
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -111,6 +111,15 @@ struct hdmi_ops {
+ 			    hda_nid_t pin_nid, int dev_id, u32 stream_tag,
+ 			    int format);
+ 
++	/*
++	 * Optional hook invoked at the beginning of the PCM prepare
++	 * sequence, before the audio infoframe and stream format are
++	 * (re)programmed. Used to disable keep-alive / silent stream so
++	 * that the format change is not done while keep-alive is active.
++	 */
++	void (*prepare)(struct hda_codec *codec,
++			struct hdmi_spec_per_pin *per_pin);
++
+ 	void (*pin_cvt_fixup)(struct hda_codec *codec,
+ 			      struct hdmi_spec_per_pin *per_pin,
+ 			      hda_nid_t cvt_nid);
+@@ -2138,6 +2147,9 @@ static int generic_hdmi_playback_pcm_pre
+ 	per_pin->channels = substream->runtime->channels;
+ 	per_pin->setup = true;
+ 
++	if (spec->ops.prepare)
++		spec->ops.prepare(codec, per_pin);
++
+ 	if (get_wcaps(codec, cvt_nid) & AC_WCAP_STRIPE) {
+ 		stripe = snd_hdac_get_stream_stripe_ctl(&codec->bus->core,
+ 							substream);
+@@ -2903,6 +2915,28 @@ static void register_i915_notifier(struc
+ 	codec->relaxed_resume = 1;
+ }
+ 
++/*
++ * prepare ops override for HSW+
++ *
++ * Disable keep-alive before the converter format and audio infoframe are
++ * reprogrammed by the PCM prepare sequence. Changing the audio format (e.g.
++ * the channel count when switching to multichannel PCM) while a keep-alive
++ * stream is active is not safe, so release keep-alive here, early in the
++ * sequence. It is re-enabled once the new stream has been set up, in
++ * i915_hsw_setup_stream().
++ */
++static void i915_hsw_prepare(struct hda_codec *codec,
++			     struct hdmi_spec_per_pin *per_pin)
++{
++	struct hdmi_spec *spec = codec->spec;
++
++	if (spec->silent_stream_type == SILENT_STREAM_KAE && per_pin->silent_stream) {
++		silent_stream_set_kae(codec, per_pin, false);
++		/* wait for pending transfers in codec to clear */
++		usleep_range(100, 200);
++	}
++}
++
+ /* setup_stream ops override for HSW+ */
+ static int i915_hsw_setup_stream(struct hda_codec *codec, hda_nid_t cvt_nid,
+ 				 hda_nid_t pin_nid, int dev_id, u32 stream_tag,
+@@ -2920,15 +2954,16 @@ static int i915_hsw_setup_stream(struct
+ 
+ 	haswell_verify_D0(codec, cvt_nid, pin_nid);
+ 
+-	if (spec->silent_stream_type == SILENT_STREAM_KAE && per_pin && per_pin->silent_stream) {
+-		silent_stream_set_kae(codec, per_pin, false);
+-		/* wait for pending transfers in codec to clear */
+-		usleep_range(100, 200);
+-	}
+-
+ 	res = hdmi_setup_stream(codec, cvt_nid, pin_nid, dev_id,
+ 				stream_tag, format);
+ 
++	/*
++	 * Keep-alive was disabled in i915_hsw_prepare(), re-enable it now.
++	 * The pin lookup above resolves to the same per_pin that prepare
++	 * used (pin_nid comes from that per_pin), so this stays balanced; a
++	 * NULL per_pin only occurs on a lookup failure that also implies no
++	 * active keep-alive stream to restore.
++	 */
+ 	if (spec->silent_stream_type == SILENT_STREAM_KAE && per_pin && per_pin->silent_stream) {
+ 		usleep_range(100, 200);
+ 		silent_stream_set_kae(codec, per_pin, true);
+@@ -3104,6 +3139,7 @@ static int intel_hsw_common_init(struct
+ 	codec->depop_delay = 0;
+ 	codec->auto_runtime_pm = 1;
+ 
++	spec->ops.prepare = i915_hsw_prepare;
+ 	spec->ops.setup_stream = i915_hsw_setup_stream;
+ 	spec->ops.pin_cvt_fixup = i915_pin_cvt_fixup;
+ 
 
 
