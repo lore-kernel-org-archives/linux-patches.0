@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5C147887F;
-	Thu, 20 Aug 2026 17:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58AF47CA74;
+	Thu, 20 Aug 2026 17:31:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247093; cv=none; b=ejgvPEBz1i8HcHLjFeApzk5xky73GAQeFKC5Ynqh6MShdkDZce1lKc8xsl7nssbUX6bM1nYBGrOdLV3Yec+iOHv44q5mgbQ8OPWH9vEhS/tUpFiXuqf7aGF6vZw0to4im5Iw1kg3ILd+kM0q72WJEfhjNOJK/Bp4FR6yC9R2OmM=
+	t=1787247095; cv=none; b=lFDEZqthHDURxT9poHCaSRGbOvoZiUQY4ZVfao3SByD99jJXz442u5peXdfTys0sPJnCkWl4fEPBn0weBkAJB0P4Odps3+ZpYbSyDunsQKxilpjM19c7yOFS1S2SYqtKzJNWh+se50G+e0o4OfKHC5x5SA1GI809pc9OvHwl49o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247093; c=relaxed/simple;
-	bh=GTEB8v+1VrGPr0t401nM1UzuE/NbUbiioWtQnTUueI0=;
+	s=arc-20240116; t=1787247095; c=relaxed/simple;
+	bh=hj7z/Skgep7GVNY78fajEO5VIBP26M9MTy7is2djtQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t+eez/iZvESYfmsIAliY2+3PFD95xAg8eswafplU/Tz+s8T1Uu3PhX0RsiKZuCcTAxUdWAtq1jpEiK7rIzx0fttEjfJYJ5tt70dkJLjTGGLgqTTskkfooLK7hcjTXhNXsFFh/y92kovQwmk7VGxL/DrXBYJj3X3OK946sreqr5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMCeJIj9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W0018gVHdPFHks/o4FlxSFldpoB5gtbPfziZOoPQB+AxCS9Q1zirgBsfdqr699MQ/ToRx7Oj2ajrLH8fcy7pfKDAxpTKZLhNjUdXG4JgOgYOWsYuc+VczXKwf7TZsoIjmqlHehbALhG2k8Fxc30P74AmHD3wRN0iFPG9aaIs8uY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pfvDOj/l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMCeJIj9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDB61F000E9;
-	Thu, 20 Aug 2026 17:31:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfvDOj/l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0261F000E9;
+	Thu, 20 Aug 2026 17:31:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247091;
-	bh=eyNx4djvI2Kyz5zsFO2RZasJ23GcZq2L5o6cohLGb8M=;
+	s=korg; t=1787247094;
+	bh=sbNDqDgX87eru8zS2rD8Ek7iTI0+qRElLIwPIhVHt28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bMCeJIj9HnYkZls3g0OOMAmSOF0BNGxFUysdgzA4zTiiaal30ylKSOurrRKG/awnH
-	 HQglCHu2224GeuVOTdn3DMPxMyrQNYNPUP23j+7lcUDCUpHHdRkXloeLWp+Puoobbb
-	 mCDoPGgp0dv1tiwFFsudPHk7otjWKfldFI8Z3IDs=
+	b=pfvDOj/lX9p7qRlUBaoqEbHHYVcWGQW/BXheb/r1GHOGaGaKVTRGl26WsrA6f3KhB
+	 W31l6JdpmRAysNL+0IaEY585q2B3dCqhU7zhU/1jrHyJnL1PHsKXErzByFN0UlA4Bi
+	 5rLMY6yt45VdTbDmiXFB0s4J8nKo0MSKpRoF5Jtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lin Jiapeng (TencentOS Red Team)" <jiapenglin@tencent.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 107/220] xfs: fix exchange-range reflink flag clearing issue with INO1_WRITTEN
-Date: Thu, 20 Aug 2026 16:54:57 +0200
-Message-ID: <20260820145226.695527254@linuxfoundation.org>
+Subject: [PATCH 6.12 098/220] xfs: nlink scrub must take IOLOCK before determining ILOCK state
+Date: Thu, 20 Aug 2026 16:54:48 +0200
+Message-ID: <20260820145226.424050830@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -52,61 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Jiapeng <ljp1205831794@gmail.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit b2d5a81dae385333f9734910277fbf94c78bd17f upstream.
+commit b1a296fc2241f724ef8f14da6a4efa800d444dac upstream.
 
-When exchanging two full-file ranges, xmi_can_exchange_reflink_flags()
-can move the reflink inode flag from the file that currently has it to
-the other file, as long as exactly one side is marked.  This assumes
-that the file contents, and therefore all shared extents, are exchanged.
+In xchk_nlinks_ilock_dir, take the IOLOCK before accessing internal
+inode state to figure out if we need to take ILOCK shared or exclusive.
+That way we can't race with directory updates.  LOLLM pointed out that
+the code was initially correct w.r.t. the IOLOCK, but then I broke it.
 
-That assumption is not true when XFS_EXCHMAPS_INO1_WRITTEN is set.
-xfs_exchmaps_can_skip_mapping() can skip hole and unwritten mappings
-from file1, so an exchange can complete without moving every mapping
-that the earlier flag-swap decision accounted for.  In that case the
-post-operation cleanup can clear the reflink flag from an inode that
-still owns shared written extents.  Later writes then take the
-non-reflink write path and may update blocks that should still have
-been protected by CoW, which shows up as data corruption between
-reflink-related files.
-
-Fix this by disabling the reflink flag exchange whenever
-XFS_EXCHMAPS_INO1_WRITTEN is requested.  The contents exchange can still
-proceed; the conservative outcome is that both inodes keep the reflink
-flag.  The regular reflink flag cleanup path can drop the extra flag
-later once the inode no longer has shared extents.
-
-Reported-by: Lin Jiapeng (TencentOS Red Team) <jiapenglin@tencent.com>
-Fixes: 966ceafc7a43 ("xfs: create deferred log items for file mapping exchanges")
-Cc: stable@vger.kernel.org # v6.10
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Cc: stable@vger.kernel.org # v6.18
+Fixes: f477af0cfa0487 ("xfs: fix locking in xchk_nlinks_collect_dir")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Lin Jiapeng <jiapenglin@tencent.com>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_exchmaps.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/xfs/scrub/nlinks.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_exchmaps.c
-+++ b/fs/xfs/libxfs/xfs_exchmaps.c
-@@ -957,6 +957,16 @@ xmi_can_exchange_reflink_flags(
+diff --git a/fs/xfs/scrub/nlinks.c b/fs/xfs/scrub/nlinks.c
+index 355ab6de23ea..bcedb8c3e4e6 100644
+--- a/fs/xfs/scrub/nlinks.c
++++ b/fs/xfs/scrub/nlinks.c
+@@ -382,6 +382,12 @@ xchk_nlinks_ilock_dir(
  {
- 	struct xfs_mount		*mp = req->ip1->i_mount;
+ 	uint			lock_mode = XFS_ILOCK_SHARED;
  
 +	/*
-+	 * The INO1_WRITTEN optimization can skip exchanging hole and
-+	 * unwritten mappings, which means we cannot guarantee that all
-+	 * shared extents actually moved to the other file.  Clearing the
-+	 * reflink flag of an inode that still holds shared extents breaks
-+	 * the CoW write path, so refuse to exchange the flags in that case.
++	 * Take the IOLOCK so that other threads cannot start a directory
++	 * update while we're scanning.
 +	 */
-+	if (req->flags & XFS_EXCHMAPS_INO1_WRITTEN)
-+		return false;
++	xfs_ilock(ip, XFS_IOLOCK_SHARED);
 +
- 	if (hweight32(reflink_state) != 1)
- 		return false;
- 	if (req->startoff1 != 0 || req->startoff2 != 0)
+ 	/*
+ 	 * We're going to scan the directory entries, so we must be ready to
+ 	 * pull the data fork mappings into memory if they aren't already.
+@@ -397,13 +403,8 @@ xchk_nlinks_ilock_dir(
+ 	    xfs_need_iread_extents(&ip->i_af))
+ 		lock_mode = XFS_ILOCK_EXCL;
+ 
+-	/*
+-	 * Take the IOLOCK so that other threads cannot start a directory
+-	 * update while we're scanning.
+-	 */
+-	lock_mode |= XFS_IOLOCK_SHARED;
+ 	xfs_ilock(ip, lock_mode);
+-	return lock_mode;
++	return lock_mode | XFS_IOLOCK_SHARED;
+ }
+ 
+ /* Walk a directory to bump the observed link counts of the children. */
+-- 
+2.55.0
+
 
 
