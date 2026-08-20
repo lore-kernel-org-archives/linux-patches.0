@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B0047F2CE;
-	Thu, 20 Aug 2026 17:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5479747D463;
+	Thu, 20 Aug 2026 17:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248038; cv=none; b=gw9doAyp2V99vfZQLpqzXqzuYnEWpRE599Dho1qUd1Nxhn7wMDSacrOwPwiutcD0LwqJbY+f3hUycjWdZK2UL9AV97wKPcygdA3E6+0tpGS63X93zwH8B2J2YfDvf5+sSM5Vf9/dJZbREvmhGzm9V3avB8YyOF6xt/rDGXjpZfM=
+	t=1787248040; cv=none; b=CInnM7tap4MzYNsvtwbuAapCKQSEI3pUpFOxf0oWanKxsFfsHeWpkeKvQXcaRqf/b/F1r4L3g6kr0C9wPTuqTfJ0qOO+BGJdiENzhAthHgyKFcGrfQkFsFCuGTMXXhbfWEAyxjlAGn6Ols4qi2Pz3Iz7+CYY+gjMRD2y7TQEbsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248038; c=relaxed/simple;
-	bh=LTSBTFgoMUMqeeDgoYMaKNMrPOq+0dPsxm/RGR5FqqE=;
+	s=arc-20240116; t=1787248040; c=relaxed/simple;
+	bh=JmEnYj44X5VcYlWaiPbsn7J3Tpn2LhycbGHVDj89KRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JgaoJSC3sw4wbsnX0yVpnEbdGY8yuWLlPiRQkg03gTr0aOy/UCuiAzM52dbaBtKGu7C7YAWK6jF7BcCGi3MFPRj64tyygugLZXA1hCvl4HkdorR/G6fsAJaiMtitH2JCGAvK99bGh+ZxBscag5QvwY5bxQiuuDjuMFSy40Cc+PU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sKaI+N5t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tj9M8WnVV5urrKDA8HIfpf872nBXyz/8G7fmDLFUvbG9Np7y0TEGu0/5CY+tBp08xjCm4puhka86qQ6sVnhgGEpa/wCrl7NOgCFsVPCxflF858Vy2bq3vPCm7eUq4+CnN0PzEa1rlJsq6Euk15pyKPIlrpnysoT+Cu0eltJTPLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1cXBTZ3i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sKaI+N5t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DAA01F000E9;
-	Thu, 20 Aug 2026 17:47:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1cXBTZ3i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9D21F00A3A;
+	Thu, 20 Aug 2026 17:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248035;
-	bh=kiFDKfm48ZjHFxqNvfS+f+DQnCaQs1I750nnwh6Qbr0=;
+	s=korg; t=1787248038;
+	bh=zBMV7lGwYw7p1qJgWnEHV9xBcEUdTxBkjbnuUwXHj5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sKaI+N5tMccocGPvcU2VCDv/1HnvFiqUaowcor7h3d21ZSrCpKm9gTZOzJ7RQfu++
-	 HS9yG+vQVHCxNWhA4+q/z+1Ljr8GJ3S+UaKX9th1JdfmQ5UCduS58ZE4XgDylqSyHP
-	 NxEwMBn+o0gTEKHRyk1SvvxUJEplxXZVtj4N52g0=
+	b=1cXBTZ3ih4J3chXNsxuYK+uYWDt/jfewka6En3K4CXDq0U6Lz3etqUPM12vczMAuI
+	 JTQdUzhEMUf2eeiE05hsjWxf1Lv8Uy9d3Pie/YTtYshf5CyVew5uHpbQQlfuVHTog+
+	 z6WakkJpPGguU114/I0YfT0wp67W5jaUclHIbIuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 088/303] ASoC: SOF: ipc3-control: Fix heap overflow in bytes_ext put/get
-Date: Thu, 20 Aug 2026 16:53:44 +0200
-Message-ID: <20260820145255.947247621@linuxfoundation.org>
+Subject: [PATCH 6.1 089/303] ASoC: mediatek: mt8192-afe-pcm: Convert to devm_pm_runtime_enable()
+Date: Thu, 20 Aug 2026 16:53:45 +0200
+Message-ID: <20260820145255.974211371@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -53,106 +52,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit fd46668d538993218eea19c6925c868ac0f2630c ]
+[ Upstream commit 7aaaa22de56ce0dae15fd9f42a69a1d1a7a6e078 ]
 
-The ipc_control_data buffer is allocated as kzalloc(max_size), where
-max_size covers the entire struct sof_ipc_ctrl_data including its
-flexible array payload. However, the bounds checks in bytes_ext_put
-and _bytes_ext_get compared user data lengths against max_size
-directly, ignoring that cdata->data sits at an offset of
-sizeof(struct sof_ipc_ctrl_data) bytes into the allocation.
+Switch from pm_runtime_enable() to devm_pm_runtime_enable(), allowing
+to remove all gotos from the probe function.
 
-This allowed writing up to sizeof(struct sof_ipc_ctrl_data) bytes past
-the end of the heap buffer from unprivileged userspace via the ALSA TLV
-kcontrol interface, and similarly allowed over-reading adjacent heap
-data on the get path.
-
-Fix all bounds checks to subtract sizeof(*cdata) from max_size so they
-reflect the actual space available at the cdata->data offset. Also fix
-the error-path restore in bytes_ext_put which wrote to cdata->data
-instead of cdata, causing the same overflow.
-
-Fixes: 67ec2a091630 ("ASoC: SOF: Add bytes_ext control IPC ops for IPC3")
-Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20260609083458.31193-7-peter.ujfalusi@linux.intel.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://msgid.link/r/20240313110147.1267793-2-angelogioacchino.delregno@collabora.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-[ replicated the single shared-helper bounds-check fix into the two standalone get functions and dropped the err_restore memcpy hunk absent in 6.1 ]
+Stable-dep-of: e24d5dde56a5 ("ASoC: mediatek: mt8192: Check runtime resume during probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc3-control.c |   34 ++++++++++++++++++++++++----------
- 1 file changed, 24 insertions(+), 10 deletions(-)
+ sound/soc/mediatek/mt8192/mt8192-afe-pcm.c |   46 ++++++++++-------------------
+ 1 file changed, 17 insertions(+), 29 deletions(-)
 
---- a/sound/soc/sof/ipc3-control.c
-+++ b/sound/soc/sof/ipc3-control.c
-@@ -363,10 +363,13 @@ static int sof_ipc3_bytes_ext_get(struct
- 	cdata->data->abi = SOF_ABI_VERSION;
- 
- 	/* check data size doesn't exceed max coming from topology */
--	if (cdata->data->size > scontrol->max_size - sizeof(struct sof_abi_hdr)) {
--		dev_err_ratelimited(scomp->dev, "User data size %d exceeds max size %zu\n",
-+	if (cdata->data->size > scontrol->max_size - sizeof(*cdata) -
-+				sizeof(struct sof_abi_hdr)) {
-+		dev_err_ratelimited(scomp->dev,
-+				    "User data size %u exceeds max size %zu\n",
- 				    cdata->data->size,
--				    scontrol->max_size - sizeof(struct sof_abi_hdr));
-+				    scontrol->max_size - sizeof(*cdata) -
-+				    sizeof(struct sof_abi_hdr));
- 		return -EINVAL;
- 	}
- 
-@@ -412,9 +415,17 @@ static int sof_ipc3_bytes_ext_put(struct
- 	}
- 
- 	/* be->max is coming from topology */
--	if (header.length > scontrol->max_size) {
--		dev_err_ratelimited(scomp->dev, "Bytes data size %d exceeds max %zu\n",
--				    header.length, scontrol->max_size);
-+	if (header.length > scontrol->max_size - sizeof(*cdata)) {
-+		dev_err_ratelimited(scomp->dev, "Bytes data size %u exceeds max %zu\n",
-+				    header.length, scontrol->max_size - sizeof(*cdata));
-+		return -EINVAL;
-+	}
-+
-+	/* Ensure the data is large enough to contain the ABI header */
-+	if (header.length < sizeof(struct sof_abi_hdr)) {
-+		dev_err_ratelimited(scomp->dev,
-+				    "Bytes data size %u less than ABI header %zu\n",
-+				    header.length, sizeof(struct sof_abi_hdr));
- 		return -EINVAL;
- 	}
- 
-@@ -440,7 +451,7 @@ static int sof_ipc3_bytes_ext_put(struct
- 	}
- 
- 	/* be->max has been verified to be >= sizeof(struct sof_abi_hdr) */
--	if (cdata->data->size > scontrol->max_size - sizeof(struct sof_abi_hdr)) {
-+	if (cdata->data->size > scontrol->max_size - sizeof(*cdata) - sizeof(struct sof_abi_hdr)) {
- 		dev_err_ratelimited(scomp->dev, "Mismatch in ABI data size (truncated?)\n");
- 		return -EINVAL;
- 	}
-@@ -482,10 +493,13 @@ static int sof_ipc3_bytes_ext_volatile_g
+--- a/sound/soc/mediatek/mt8192/mt8192-afe-pcm.c
++++ b/sound/soc/mediatek/mt8192/mt8192-afe-pcm.c
+@@ -2221,21 +2221,20 @@ static int mt8192_afe_pcm_dev_probe(stru
  		return ret;
- 
- 	/* check data size doesn't exceed max coming from topology */
--	if (cdata->data->size > scontrol->max_size - sizeof(struct sof_abi_hdr)) {
--		dev_err_ratelimited(scomp->dev, "User data size %d exceeds max size %zu\n",
-+	if (cdata->data->size > scontrol->max_size - sizeof(*cdata) -
-+				sizeof(struct sof_abi_hdr)) {
-+		dev_err_ratelimited(scomp->dev,
-+				    "User data size %u exceeds max size %zu\n",
- 				    cdata->data->size,
--				    scontrol->max_size - sizeof(struct sof_abi_hdr));
-+				    scontrol->max_size - sizeof(*cdata) -
-+				    sizeof(struct sof_abi_hdr));
- 		return -EINVAL;
  	}
  
+-	pm_runtime_enable(&pdev->dev);
+-	if (!pm_runtime_enabled(&pdev->dev))
+-		goto err_pm_disable;
++	ret = devm_pm_runtime_enable(&pdev->dev);
++	if (ret)
++		return ret;
+ 
+ 	/* regmap init */
+ 	afe->regmap = syscon_node_to_regmap(dev->parent->of_node);
+ 	if (IS_ERR(afe->regmap)) {
+ 		dev_err(dev, "could not get regmap from parent\n");
+-		ret = PTR_ERR(afe->regmap);
+-		goto err_pm_disable;
++		return PTR_ERR(afe->regmap);
+ 	}
+ 	ret = regmap_attach_dev(dev, afe->regmap, &mt8192_afe_regmap_config);
+ 	if (ret) {
+ 		dev_warn(dev, "regmap_attach_dev fail, ret %d\n", ret);
+-		goto err_pm_disable;
++		return ret;
+ 	}
+ 
+ 	/* enable clock for regcache get default value from hw */
+@@ -2245,7 +2244,7 @@ static int mt8192_afe_pcm_dev_probe(stru
+ 	ret = regmap_reinit_cache(afe->regmap, &mt8192_afe_regmap_config);
+ 	if (ret) {
+ 		dev_err(dev, "regmap_reinit_cache fail, ret %d\n", ret);
+-		goto err_pm_disable;
++		return ret;
+ 	}
+ 
+ 	pm_runtime_put_sync(&pdev->dev);
+@@ -2258,10 +2257,8 @@ static int mt8192_afe_pcm_dev_probe(stru
+ 	afe->memif_size = MT8192_MEMIF_NUM;
+ 	afe->memif = devm_kcalloc(dev, afe->memif_size, sizeof(*afe->memif),
+ 				  GFP_KERNEL);
+-	if (!afe->memif) {
+-		ret = -ENOMEM;
+-		goto err_pm_disable;
+-	}
++	if (!afe->memif)
++		return -ENOMEM;
+ 
+ 	for (i = 0; i < afe->memif_size; i++) {
+ 		afe->memif[i].data = &memif_data[i];
+@@ -2275,26 +2272,22 @@ static int mt8192_afe_pcm_dev_probe(stru
+ 	afe->irqs_size = MT8192_IRQ_NUM;
+ 	afe->irqs = devm_kcalloc(dev, afe->irqs_size, sizeof(*afe->irqs),
+ 				 GFP_KERNEL);
+-	if (!afe->irqs) {
+-		ret = -ENOMEM;
+-		goto err_pm_disable;
+-	}
++	if (!afe->irqs)
++		return -ENOMEM;
+ 
+ 	for (i = 0; i < afe->irqs_size; i++)
+ 		afe->irqs[i].irq_data = &irq_data[i];
+ 
+ 	/* request irq */
+ 	irq_id = platform_get_irq(pdev, 0);
+-	if (irq_id < 0) {
+-		ret = irq_id;
+-		goto err_pm_disable;
+-	}
++	if (irq_id < 0)
++		return irq_id;
+ 
+ 	ret = devm_request_irq(dev, irq_id, mt8192_afe_irq_handler,
+ 			       IRQF_TRIGGER_NONE, "asys-isr", (void *)afe);
+ 	if (ret) {
+ 		dev_err(dev, "could not request_irq for Afe_ISR_Handle\n");
+-		goto err_pm_disable;
++		return ret;
+ 	}
+ 
+ 	/* init sub_dais */
+@@ -2305,7 +2298,7 @@ static int mt8192_afe_pcm_dev_probe(stru
+ 		if (ret) {
+ 			dev_warn(afe->dev, "dai register i %d fail, ret %d\n",
+ 				 i, ret);
+-			goto err_pm_disable;
++			return ret;
+ 		}
+ 	}
+ 
+@@ -2314,7 +2307,7 @@ static int mt8192_afe_pcm_dev_probe(stru
+ 	if (ret) {
+ 		dev_warn(afe->dev, "mtk_afe_combine_sub_dai fail, ret %d\n",
+ 			 ret);
+-		goto err_pm_disable;
++		return ret;
+ 	}
+ 
+ 	/* others */
+@@ -2333,7 +2326,7 @@ static int mt8192_afe_pcm_dev_probe(stru
+ 					      &mt8192_afe_component, NULL, 0);
+ 	if (ret) {
+ 		dev_warn(dev, "err_platform\n");
+-		goto err_pm_disable;
++		return ret;
+ 	}
+ 
+ 	ret = devm_snd_soc_register_component(&pdev->dev,
+@@ -2342,15 +2335,10 @@ static int mt8192_afe_pcm_dev_probe(stru
+ 					      afe->num_dai_drivers);
+ 	if (ret) {
+ 		dev_warn(dev, "err_dai_component\n");
+-		goto err_pm_disable;
++		return ret;
+ 	}
+ 
+ 	return 0;
+-
+-err_pm_disable:
+-	pm_runtime_disable(&pdev->dev);
+-
+-	return ret;
+ }
+ 
+ static int mt8192_afe_pcm_dev_remove(struct platform_device *pdev)
 
 
