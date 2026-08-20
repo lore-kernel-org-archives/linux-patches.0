@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349233403F8;
-	Thu, 20 Aug 2026 17:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6D23403F8;
+	Thu, 20 Aug 2026 17:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247158; cv=none; b=haCNm9ry+2EWK0sHFkjxip+3n9okyh3mzO/LJ93QoSjlT9ph7iv7iqH9/GXKmBJ1yO1lstPD6kiPkKFZyMSxHQ7HhWfaocpFIHtmSU5y+P0QWO/+ZF8Y1/8xdtM+MDW4QR7i780inHqC6vB/8vWEp3pBViXSGG4T1DvzkC87uaw=
+	t=1787247161; cv=none; b=e3/uibJ0Y6P8j/M5k/2QU2LBzski1Mxx6rcxwz8FnxvL9cVQv62Eb7iLI+bKL4UF7J2964ZUib8T80pExvwMaA8khjjLl9fkcuhpo/4UUVQvms7vieEdVWFSOsbagiLK0G2MG3B13LmNkO0SAFViHFug9aFB9heq1WBnY735YoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247158; c=relaxed/simple;
-	bh=nCy4iRo9E9wYhBjqCN2zdX0aiOCZmTjNxyyFGD30dp0=;
+	s=arc-20240116; t=1787247161; c=relaxed/simple;
+	bh=3POQkiey7HBWZrt5Yzf9KWuQrW9DRTLDyLUzQWkyNPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PkTMUV5mKjJOQ4j1W1vBjRkEF8S+pqtcFiuF5yAcwX8whwBzCoGBKp+exupNfcpXPIx9eF9lpR/WG3H9FnXswEKNcHINt7DWjwrKwQWIKk5N28mCoTOWMRngOz1z9V4MIs6w2oEjZF3tvbxl6GShkNq+SUbO+9wZZQ6PPYvbuz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3HMBtqh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J4k7vXHKm51iX7Ry2sDPyoz8G6QYMqacSkht0hVDlXl8C+BegFC2pIglse3Op0Xamrz2yFbGreXXzuJwVP9rG9QVD2klT/OhYinXN5G8tdV2pFturQ6sidPAxPXq1DJZsxUd5mKftVEFo4w8EYx0SU1M/8wHOuhpaOHypCwvmGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d3vr0dt9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3HMBtqh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1471F000E9;
-	Thu, 20 Aug 2026 17:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d3vr0dt9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672E31F000E9;
+	Thu, 20 Aug 2026 17:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247157;
-	bh=LX0qq6VX+3hfZLykenaAaw2WxyGY6rkNqk7OdUod4kM=;
+	s=korg; t=1787247159;
+	bh=B8gOBrLkp+OEK9l0g8LHNLYYJ2eaiZkJmb8yU5JYjK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y3HMBtqh2WgISgAvdKgGvCVGbtCIP3MQvRDNbhlutdff666jfc2WImv59GAkMbjwL
-	 QFIItxZeb9MkWKdivG0uy11YcJI8eR6AAszMxZdJm5g0CxsycW/uiB/Iv5/4Z/ls2w
-	 XVcp7Lo3PCg6UlSoFKCw4XLM1p/i2lDzPc3RAQGg=
+	b=d3vr0dt9jhzQXvC0gZdiVqIUMix/MGHyuUNoP/RMEe2g8k6MvnDM/591xMN6ANdl4
+	 yfuGUMTiYt1Z2BtIlxsmn50toc/P/3Qi9GEOQZgrjEM4PSJBdSi8jMM2PkJWqhxTwh
+	 JK34lxQMc4nKfNhhc+l4R/Krghcinku39wUqil9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 169/220] drm/amd/pm: Use macro to initialize metrics table
-Date: Thu, 20 Aug 2026 16:55:59 +0200
-Message-ID: <20260820145228.556543758@linuxfoundation.org>
+Subject: [PATCH 6.12 143/220] btrfs: add debug build only WARN
+Date: Thu, 20 Aug 2026 16:55:33 +0200
+Message-ID: <20260820145227.769844062@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -54,122 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit 1327d8f4061c08c29ea8ce7bb89e209d3c1e8b29 ]
+[ Upstream commit 3db15c6ca6feb2c5000a1cbb39c33866e0349abd ]
 
-Helps to keep a build time check about usage of right datatype and
-avoids maintenance as new versions get added.
+Add conditional WARN() wrapper that's enabled only in debug build. It
+should be used for unexpected conditions that should be noisy.  Use it
+instead of ASSERT(0). As it will not lead to BUG() make sure that
+continuing is still possible, e.g. the error is handled anyway.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Asad Kamal <asad.kamal@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 048f4541b71f ("drm/amd/pm: fix torn gpu metrics reads")
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 8bc4d7209611 ("btrfs: zoned: fix missing chunk metadata reservation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c |   58 ---------------------------------
- drivers/gpu/drm/amd/pm/swsmu/smu_cmn.h |   14 ++++++-
- 2 files changed, 12 insertions(+), 60 deletions(-)
+ fs/btrfs/messages.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
-@@ -1051,64 +1051,6 @@ int smu_cmn_get_combo_pptable(struct smu
- 				    false);
- }
+--- a/fs/btrfs/messages.h
++++ b/fs/btrfs/messages.h
+@@ -181,6 +181,13 @@ do {								\
+ #define ASSERT(expr)	(void)(expr)
+ #endif
  
--void smu_cmn_init_soft_gpu_metrics(void *table, uint8_t frev, uint8_t crev)
--{
--	struct metrics_table_header *header = (struct metrics_table_header *)table;
--	uint16_t structure_size;
--
--#define METRICS_VERSION(a, b)	((a << 16) | b)
--
--	switch (METRICS_VERSION(frev, crev)) {
--	case METRICS_VERSION(1, 0):
--		structure_size = sizeof(struct gpu_metrics_v1_0);
--		break;
--	case METRICS_VERSION(1, 1):
--		structure_size = sizeof(struct gpu_metrics_v1_1);
--		break;
--	case METRICS_VERSION(1, 2):
--		structure_size = sizeof(struct gpu_metrics_v1_2);
--		break;
--	case METRICS_VERSION(1, 3):
--		structure_size = sizeof(struct gpu_metrics_v1_3);
--		break;
--	case METRICS_VERSION(1, 4):
--		structure_size = sizeof(struct gpu_metrics_v1_4);
--		break;
--	case METRICS_VERSION(1, 5):
--		structure_size = sizeof(struct gpu_metrics_v1_5);
--		break;
--	case METRICS_VERSION(2, 0):
--		structure_size = sizeof(struct gpu_metrics_v2_0);
--		break;
--	case METRICS_VERSION(2, 1):
--		structure_size = sizeof(struct gpu_metrics_v2_1);
--		break;
--	case METRICS_VERSION(2, 2):
--		structure_size = sizeof(struct gpu_metrics_v2_2);
--		break;
--	case METRICS_VERSION(2, 3):
--		structure_size = sizeof(struct gpu_metrics_v2_3);
--		break;
--	case METRICS_VERSION(2, 4):
--		structure_size = sizeof(struct gpu_metrics_v2_4);
--		break;
--	case METRICS_VERSION(3, 0):
--		structure_size = sizeof(struct gpu_metrics_v3_0);
--		break;
--	default:
--		return;
--	}
--
--#undef METRICS_VERSION
--
--	memset(header, 0xFF, structure_size);
--
--	header->format_revision = frev;
--	header->content_revision = crev;
--	header->structure_size = structure_size;
--
--}
--
- int smu_cmn_set_mp1_state(struct smu_context *smu,
- 			  enum pp_mp1_state mp1_state)
- {
---- a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.h
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.h
-@@ -40,6 +40,18 @@
- #define SMU_IH_INTERRUPT_CONTEXT_ID_FAN_ABNORMAL        0x8
- #define SMU_IH_INTERRUPT_CONTEXT_ID_FAN_RECOVERY        0x9
- 
-+#define smu_cmn_init_soft_gpu_metrics(ptr, frev, crev)         \
-+	do {                                                   \
-+		typecheck(struct gpu_metrics_v##frev##_##crev, \
-+			  typeof(*(ptr)));                     \
-+		struct metrics_table_header *header =          \
-+			(struct metrics_table_header *)(ptr);  \
-+		memset(header, 0xFF, sizeof(*(ptr)));          \
-+		header->format_revision = frev;                \
-+		header->content_revision = crev;               \
-+		header->structure_size = sizeof(*(ptr));       \
-+	} while (0)
++#ifdef CONFIG_BTRFS_DEBUG
++/* Verbose warning only under debug build. */
++#define DEBUG_WARN(args...)			WARN(1, KERN_ERR args)
++#else
++#define DEBUG_WARN(...)				do {} while(0)
++#endif
 +
- extern const int link_speed[];
- 
- /* Helper to Convert from PCIE Gen 1/2/3/4/5/6 to 0.1 GT/s speed units */
-@@ -125,8 +137,6 @@ int smu_cmn_get_metrics_table(struct smu
- 
- int smu_cmn_get_combo_pptable(struct smu_context *smu);
- 
--void smu_cmn_init_soft_gpu_metrics(void *table, uint8_t frev, uint8_t crev);
--
- int smu_cmn_set_mp1_state(struct smu_context *smu,
- 			  enum pp_mp1_state mp1_state);
- 
+ __printf(5, 6)
+ __cold
+ void __btrfs_handle_fs_error(struct btrfs_fs_info *fs_info, const char *function,
 
 
