@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC64246781;
-	Thu, 20 Aug 2026 16:42:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4167447D94B;
+	Thu, 20 Aug 2026 16:42:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244166; cv=none; b=XkamX6XVwQgT5wdHhXrVeJRMsy0+LXG6lTv0zk/QY0iEKBtv/qyTR6aIuniMGrkNa8hYX7DBLUIsTW/JC6sTJ77ODsAeTwZmAVfdIXaInSKmCf2EWNzFMQfdGW4t/hbFIl7SR7EDUxgETc/KyH7k0Hj2dn0yRowrsntE9BhRtGw=
+	t=1787244169; cv=none; b=mP8Fc7hjZM3euq+8AhwUSeiRhCJ2LIbfgLfTX6EQaJpTV+WeEvFGUip08yyMwe10jRgi155uuApZ1mC8XdtJXMyxChYePsmsFmj4cocpeAbATPjRx5Fy37gzlteLJqa/LhNChalb16XEhn7pIeJWxe3ljRxZbc7h5auH+aRM0CQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244166; c=relaxed/simple;
-	bh=gsMcnALeRc+rSe49tTTDFi9YGNkjp1ufYT4w04fjPJo=;
+	s=arc-20240116; t=1787244169; c=relaxed/simple;
+	bh=Ipv8EQ7S55EqAJ71hLlNcdGsr1eOG5+JeAXr7i0D+wA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FzVqAqv4jiewgAWf6py/AtY39QBrbtoZkEF7xCOInpw0TKE0aB7unWkJwYMyw2bXT75/Q+GmgAhD+8ThUxTUxqExGD7i0vkFwEVxBRbxOdqndr8PMTcvD6z2kUWs+p9RuPbyAR3iGlvnpcnHaV9M6s2wmv2Hf5kocwNaf0rRke8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jy/D16Cx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a0y3NxPtpr0KqRQqhdCsQeLiJg4hpcm/mo4DEdDEjK3jWu9H0CWvZR+HlY5VcfZswCKw8adMlKW482suxaDmFSxGJD0fXjWsZm2YyKPn+QZ/ANvHTIBAwivlbr+edm29pExi9gfZblEo0bCDRHH+ooag5xWJ/l6GgQQ1Qvreiwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyjmZbx4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jy/D16Cx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADDEC1F000E9;
-	Thu, 20 Aug 2026 16:42:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyjmZbx4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B751F000E9;
+	Thu, 20 Aug 2026 16:42:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244165;
-	bh=IJuyuO+4McDrcpf511YKgSxHSbNytqSordAFOZYzvnA=;
+	s=korg; t=1787244168;
+	bh=DBHKPfzeiBTjUBrT+iR1Q5mUZsn3TZa7oIJjo5EtXag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jy/D16Cxp03AyWD2dlWIFDReInr0hKSPdV9tv/CglZqsjRkGk86vj8COF9M8Z04Yo
-	 El/xOPjkuwrupnbNQbl8A7HC4tuD5HaTuJKqljOurnjbcaTsyv513KZSHUWpTR4acT
-	 X9wMUxhhVTke8OGiMDV/KTZz3TJYwd34HKMg7T3Y=
+	b=DyjmZbx4sO/pycsm/Qdf6EMNh7zXZV3s85eXiZjol9F55vkJj9MhSyYX868s4hfgT
+	 rpSY2JjAZD/hyXzsD++8x4QwwHPy9XSmO/OzDwxz/w4VbNWD6sJwe/W5tX8Sty0p2V
+	 3Aij36UphLdr2tUMP1SDZfpJvfkha8N2ioimiNZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 074/235] jbd2: fix integer underflow in jbd2_journal_initialize_fast_commit()
-Date: Thu, 20 Aug 2026 16:55:10 +0200
-Message-ID: <20260820145218.689830323@linuxfoundation.org>
+Subject: [PATCH 5.10 075/235] netfilter: nft_set_pipapo: use GFP_KERNEL for insertions
+Date: Thu, 20 Aug 2026 16:55:11 +0200
+Message-ID: <20260820145218.720243313@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -55,49 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 289a2ca0c9b7eae74f93fc213b0b971669b8683d ]
+[ Upstream commit 5b651783d80b97167ecd27dc6a4408c694873902 ]
 
-jbd2_journal_initialize_fast_commit() validates journal capacity by
-checking (journal->j_last - num_fc_blks < JBD2_MIN_JOURNAL_BLOCKS).
-Both j_last and num_fc_blks are unsigned, so when num_fc_blks exceeds
-j_last the subtraction wraps to a large value, bypassing the bounds
-check.
+An earlier attempt changed this to GFP_KERNEL, but the get helper is
+also called for get requests from userspace, which uses rcu.
 
-The resulting underflow corrupts j_last, j_fc_first, and j_free,
-leading to journal abort.
+Let the caller pass in the kmalloc flags to allow insertions
+to schedule if needed.
 
-Fix by checking num_fc_blks against j_last before the subtraction,
-returning -EFSCORRUPTED.
-
-Fixes: 6866d7b3f2bb ("ext4 / jbd2: add fast commit initialization")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Fixes: e029c5f27987 ("ext4: make num of fast commit blocks configurable")
-Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
-Fixes: e029c5f279872 ("ext4: make num of fast commit blocks configurable")
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/SYBPR01MB7881663C927DE9D7BBF4D1DFAF062@SYBPR01MB7881.ausprd01.prod.outlook.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Suggested-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: 47e65eff5069 ("netfilter: nft_set_pipapo: don't leak bad clone into future transaction")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/journal.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nft_set_pipapo.c |   17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
---- a/fs/jbd2/journal.c
-+++ b/fs/jbd2/journal.c
-@@ -2116,6 +2116,8 @@ jbd2_journal_initialize_fast_commit(jour
- 	unsigned long long num_fc_blks;
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -505,6 +505,7 @@ out:
+  * @data:	Key data to be matched against existing elements
+  * @genmask:	If set, check that element is active in given genmask
+  * @tstamp:	timestamp to check for expired elements
++ * @gfp:	the type of memory to allocate (see kmalloc).
+  *
+  * This is essentially the same as the lookup function, except that it matches
+  * key data against the uncommitted copy and doesn't use preallocated maps for
+@@ -515,7 +516,7 @@ out:
+ static struct nft_pipapo_elem *pipapo_get(const struct net *net,
+ 					  const struct nft_set *set,
+ 					  const u8 *data, u8 genmask,
+-					  u64 tstamp)
++					  u64 tstamp, gfp_t gfp)
+ {
+ 	struct nft_pipapo_elem *ret = ERR_PTR(-ENOENT);
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+@@ -527,13 +528,13 @@ static struct nft_pipapo_elem *pipapo_ge
+ 	if (m->bsize_max == 0)
+ 		return ret;
  
- 	num_fc_blks = jbd2_journal_get_num_fc_blks(sb);
-+	if (num_fc_blks > journal->j_last)
-+		return -EFSCORRUPTED;
- 	if (journal->j_last - num_fc_blks < JBD2_MIN_JOURNAL_BLOCKS)
- 		return -ENOSPC;
+-	res_map = kmalloc_array(m->bsize_max, sizeof(*res_map), GFP_ATOMIC);
++	res_map = kmalloc_array(m->bsize_max, sizeof(*res_map), gfp);
+ 	if (!res_map) {
+ 		ret = ERR_PTR(-ENOMEM);
+ 		goto out;
+ 	}
+ 
+-	fill_map = kcalloc(m->bsize_max, sizeof(*res_map), GFP_ATOMIC);
++	fill_map = kcalloc(m->bsize_max, sizeof(*res_map), gfp);
+ 	if (!fill_map) {
+ 		ret = ERR_PTR(-ENOMEM);
+ 		goto out;
+@@ -608,7 +609,7 @@ static void *nft_pipapo_get(const struct
+ 			    const struct nft_set_elem *elem, unsigned int flags)
+ {
+ 	return pipapo_get(net, set, (const u8 *)elem->key.val.data,
+-			  nft_genmask_cur(net), get_jiffies_64());
++			  nft_genmask_cur(net), get_jiffies_64(), GFP_ATOMIC);
+ }
+ 
+ /**
+@@ -1217,7 +1218,7 @@ static int nft_pipapo_insert(const struc
+ 	else
+ 		end = start;
+ 
+-	dup = pipapo_get(net, set, start, genmask, tstamp);
++	dup = pipapo_get(net, set, start, genmask, tstamp, GFP_KERNEL);
+ 	if (!IS_ERR(dup)) {
+ 		/* Check if we already have the same exact entry */
+ 		const struct nft_data *dup_key, *dup_end;
+@@ -1239,7 +1240,8 @@ static int nft_pipapo_insert(const struc
+ 
+ 	if (PTR_ERR(dup) == -ENOENT) {
+ 		/* Look for partially overlapping entries */
+-		dup = pipapo_get(net, set, end, nft_genmask_next(net), tstamp);
++		dup = pipapo_get(net, set, end, nft_genmask_next(net), tstamp,
++				 GFP_KERNEL);
+ 	}
+ 
+ 	if (PTR_ERR(dup) != -ENOENT) {
+@@ -1814,7 +1816,8 @@ static void *pipapo_deactivate(const str
+ {
+ 	struct nft_pipapo_elem *e;
+ 
+-	e = pipapo_get(net, set, data, nft_genmask_next(net), nft_net_tstamp(net));
++	e = pipapo_get(net, set, data, nft_genmask_next(net),
++		       nft_net_tstamp(net), GFP_KERNEL);
+ 	if (IS_ERR(e))
+ 		return NULL;
  
 
 
