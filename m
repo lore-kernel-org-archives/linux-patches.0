@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64947215075;
-	Thu, 20 Aug 2026 17:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4016819E992;
+	Thu, 20 Aug 2026 17:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248393; cv=none; b=Qr8Oo0pNpH1bOGCKbXWU5TzHETgyC+8QSL76agNW92V1TFrvKgMGaLJ52p8qHC/91MplyNGz6+baYOsX/S/i6D7vnsyglwb9Hn7dzoCSeqQJg9+qIVxkZ2a/O+/lmEkKAgP+zW55xDW4lKfByV6joSyiQyvWVPx+gENWRAsKszQ=
+	t=1787248396; cv=none; b=ped+ELpLPIbG/yr84yksj0v1sN+fSdOKCsrzpGp1i4lVgHUZ6K6eznIlqq1oC6N9zqTJy0jw/dtj4qkMgUAxyrsHFw50i2qQSzHB3KN90E2/MBUZWapQIXX4YVje3+dEh4R85QdaBOT/smTnTYX/MlidDMLWcWqNdcC5+05g0MM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248393; c=relaxed/simple;
-	bh=EWCCHMyhKBA+sVAaFN5prvHkIGfSq0Z2uDUYWzJx86U=;
+	s=arc-20240116; t=1787248396; c=relaxed/simple;
+	bh=r2Dt7n7eRiNe0VuZqFpcenzIuOgWW12lpzWcAdBk7to=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dOkH2PrMdVaGp8+F0fmzjduCq9dHnht2fW/ypwAHG1Mn8d/JHjFdIw2K0TYghyVeq7tCIdt8oMCzFgBzO1zKoKRT9nTJhYRIxFYDPdHtFRKRrZQOM951jTx0CaP7IX9fXj5mAYWzH7z7+0prcb6qcvflyeR3zAOrZKCNBlKBZes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzlQqogw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uMYsVWPgDgiqBd8SRVbm65U8mmiLo7JkYUaS5XXxLLiymvFvGj0fi3Ejhkq0YWWZHNE7jVFlbt9PG3fzEDf/x247l477WIwpDIVjqRpDtvcQNjPqA5VFdddrZQe5ZQDEsRRj4tyy6OAJQHBXmN5fKmIQV5gdlmS2YRA2+eTiGBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vmjNkYLR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzlQqogw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C298A1F000E9;
-	Thu, 20 Aug 2026 17:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vmjNkYLR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB481F000E9;
+	Thu, 20 Aug 2026 17:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248392;
-	bh=Iw1QPglrghkKdDz7qe8llZbNSnH0papRdVW9zlhY4FM=;
+	s=korg; t=1787248395;
+	bh=R/pdB3aja3D4AnmlBxamxPodPea8pLbdAz0x+Pn0jqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XzlQqogwPAMEhuGJMxyu53zJpUzGMwSv6kcoLiui16rDu6wP003bGHCk6QkJkheJm
-	 AlQDlvvsZt/PVcHF6Xz3+yvbPzbru2r2JRopw3afYlaYtxGjoA+3mfTwT0aVQhYYZ9
-	 4hSH2QrjHGOACsoq5lhF2KoFind2zo2fO82iUkF0=
+	b=vmjNkYLRdi8H9ViNLJiuX4iWEOacHNazmCM5XVSPEibIpQZwMkv2/XgHvz7zu29sQ
+	 L1xDjlGNzfFZRQn2KzVyQL/AGTQF81Czg8AcPNDNxsWys616UXbjBEyKjO4DB5sxux
+	 4rJqs/wRzWsiX0abvK2Pgjp6vlZYn7/i6J5S0qq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Alex Markuze <amarkuze@redhat.com>,
+	Xiubo Li <xiubli@redhat.com>,
+	Patrick Donnelly <pdonnell@redhat.com>,
+	Milind Changire <mchangir@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 212/303] libceph: bound pg_{temp,upmap,upmap_items} length to CEPH_PG_MAX_SIZE
-Date: Thu, 20 Aug 2026 16:55:48 +0200
-Message-ID: <20260820145259.763584006@linuxfoundation.org>
+Subject: [PATCH 6.1 213/303] libceph: add doutc and *_client debug macros support
+Date: Thu, 20 Aug 2026 16:55:49 +0200
+Message-ID: <20260820145259.794071746@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -53,69 +53,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Xiubo Li <xiubli@redhat.com>
 
-[ Upstream commit 9f00f9cf2be293efe899db67dc5272e3a9c62717 ]
+[ Upstream commit 5c5f0d2b5f92c47baf82b9b211e27edd7d195158 ]
 
-__decode_pg_temp() decodes an user-controlled length but only rejects
-values large enough to overflow the allocation; it does not bound it to
-CEPH_PG_MAX_SIZE. The helper backs both pg_temp and pg_upmap decoding, and
-apply_upmap()/get_temp_osds() later copy the decoded list into the fixed-size
-on-stack array struct ceph_osds.osds[CEPH_PG_MAX_SIZE]. A monitor that sends
-an OSDMap with a pg_temp/pg_upmap entry longer than 32 thus causes a stack
-out-of-bounds write.
+This will help print the fsid and client's global_id in debug logs,
+and also print the function names.
 
-An OSD set for a single PG can never exceed CEPH_PG_MAX_SIZE, so reject longer
-entries at decode time. The bound is well below the old overflow threshold, so
-it also covers the allocation-size overflow the previous check guarded against.
+[ idryomov: %lld -> %llu, leading space for doutc(), don't include
+  __func__ in pr_*() variants ]
 
-  BUG: KASAN: stack-out-of-bounds in ceph_pg_to_up_acting_osds
-  Write of size 4 ... by task exploit
-   kasan_report (mm/kasan/report.c:595)
-   ceph_pg_to_up_acting_osds (net/ceph/osdmap.c:2617 net/ceph/osdmap.c:2833)
-   calc_target (net/ceph/osd_client.c:1638)
-   __submit_request (net/ceph/osd_client.c:2394)
-   ceph_osdc_start_request (net/ceph/osd_client.c:2490)
-   ceph_osdc_call (net/ceph/osd_client.c:5164)
-   rbd_dev_image_probe (drivers/block/rbd.c:6899)
-   do_rbd_add (drivers/block/rbd.c:7138)
-   ...
-  kernel BUG at net/ceph/osdmap.c:2670!
-
-[ idryomov: do the same in __decode_pg_upmap_items() ]
-
-Cc: stable@vger.kernel.org
-Fixes: a303bb0e5834 ("libceph: introduce and switch to decode_pg_mapping()")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Link: https://tracker.ceph.com/issues/61590
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Patrick Donnelly <pdonnell@redhat.com>
+Reviewed-by: Milind Changire <mchangir@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Stable-dep-of: 50958bb928ba ("ceph: fix hanging __ceph_get_caps() with stale mds_wanted")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/ceph/ceph_debug.h |   38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -1440,7 +1440,7 @@ static struct ceph_pg_mapping *__decode_
- 	ceph_decode_32_safe(p, end, len, e_inval);
- 	if (len == 0 && incremental)
- 		return NULL;	/* new_pg_temp: [] to remove */
--	if ((size_t)len > (SIZE_MAX - sizeof(*pg)) / sizeof(u32))
-+	if (len > CEPH_PG_MAX_SIZE)
- 		return ERR_PTR(-EINVAL);
+--- a/include/linux/ceph/ceph_debug.h
++++ b/include/linux/ceph/ceph_debug.h
+@@ -19,12 +19,25 @@
+ 	pr_debug("%.*s %12.12s:%-4d : " fmt,				\
+ 		 8 - (int)sizeof(KBUILD_MODNAME), "    ",		\
+ 		 kbasename(__FILE__), __LINE__, ##__VA_ARGS__)
++#  define doutc(client, fmt, ...)					\
++	pr_debug("%.*s %12.12s:%-4d : [%pU %llu] " fmt,			\
++		 8 - (int)sizeof(KBUILD_MODNAME), "    ",		\
++		 kbasename(__FILE__), __LINE__,				\
++		 &client->fsid, client->monc.auth->global_id,		\
++		 ##__VA_ARGS__)
+ # else
+ /* faux printk call just to see any compiler warnings. */
+ #  define dout(fmt, ...)	do {				\
+ 		if (0)						\
+ 			printk(KERN_DEBUG fmt, ##__VA_ARGS__);	\
+ 	} while (0)
++#  define doutc(client, fmt, ...)	do {			\
++		if (0)						\
++			printk(KERN_DEBUG "[%pU %llu] " fmt,	\
++			&client->fsid,				\
++			client->monc.auth->global_id,		\
++			##__VA_ARGS__);				\
++		} while (0)
+ # endif
  
- 	ceph_decode_need(p, end, len * sizeof(u32), e_inval);
-@@ -1621,7 +1621,7 @@ static struct ceph_pg_mapping *__decode_
- 	u32 len, i;
+ #else
+@@ -33,7 +46,32 @@
+  * or, just wrap pr_debug
+  */
+ # define dout(fmt, ...)	pr_debug(" " fmt, ##__VA_ARGS__)
++# define doutc(client, fmt, ...)					\
++	pr_debug(" [%pU %llu] %s: " fmt, &client->fsid,			\
++		 client->monc.auth->global_id, __func__, ##__VA_ARGS__)
  
- 	ceph_decode_32_safe(p, end, len, e_inval);
--	if ((size_t)len > (SIZE_MAX - sizeof(*pg)) / (2 * sizeof(u32)))
-+	if (len > CEPH_PG_MAX_SIZE)
- 		return ERR_PTR(-EINVAL);
+ #endif
  
- 	ceph_decode_need(p, end, 2 * len * sizeof(u32), e_inval);
++#define pr_notice_client(client, fmt, ...)				\
++	pr_notice("[%pU %llu]: " fmt, &client->fsid,			\
++		  client->monc.auth->global_id, ##__VA_ARGS__)
++#define pr_info_client(client, fmt, ...)				\
++	pr_info("[%pU %llu]: " fmt, &client->fsid,			\
++		client->monc.auth->global_id, ##__VA_ARGS__)
++#define pr_warn_client(client, fmt, ...)				\
++	pr_warn("[%pU %llu]: " fmt, &client->fsid,			\
++		client->monc.auth->global_id, ##__VA_ARGS__)
++#define pr_warn_once_client(client, fmt, ...)				\
++	pr_warn_once("[%pU %llu]: " fmt, &client->fsid,			\
++		     client->monc.auth->global_id, ##__VA_ARGS__)
++#define pr_err_client(client, fmt, ...)					\
++	pr_err("[%pU %llu]: " fmt, &client->fsid,			\
++	       client->monc.auth->global_id, ##__VA_ARGS__)
++#define pr_warn_ratelimited_client(client, fmt, ...)			\
++	pr_warn_ratelimited("[%pU %llu]: " fmt, &client->fsid,		\
++			    client->monc.auth->global_id, ##__VA_ARGS__)
++#define pr_err_ratelimited_client(client, fmt, ...)			\
++	pr_err_ratelimited("[%pU %llu]: " fmt, &client->fsid,		\
++			   client->monc.auth->global_id, ##__VA_ARGS__)
++
+ #endif
 
 
