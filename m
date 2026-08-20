@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9B646D0BD;
-	Thu, 20 Aug 2026 16:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA97E272E53;
+	Thu, 20 Aug 2026 16:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243873; cv=none; b=ZvEx+H+navPZhLKl6joHNMkuibqV6UzfmXlSM0exrDV2I1imXijRx2a9/ZqmdX52E6xFRqa9rQ7aDusQrxomrv5v5nwWvxz71kdpm0c9HNaLpKAPkwJtPVdojM7eZVDVYqdl31K986jGFskSQp9cuFYzlOcC647c3+SCCkTlusk=
+	t=1787243876; cv=none; b=gzUFAQkCctmrw23qr+fRtsorXK1XrgUTW4K9E1nCeANtfzOrVFX0GavVP5vMSrZM3uJdPOYwnXYHWy7c/SPzibusEXFmwCZk7xqxlNJQAWLtcICmYA/PWbfIaJs0maUpvdd6cUg7VQhzF7mz8b9+pnv/cxuKXzyubj5HPr4aYJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243873; c=relaxed/simple;
-	bh=sFR39vlWmL+OajkFbn4Y2NFDkGxLg6yafv7DrkmxBds=;
+	s=arc-20240116; t=1787243876; c=relaxed/simple;
+	bh=dHiAUQDJkrXCnnjazLfdPOHUbWOmir1mdkJjupHnCk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cDKpD+E5D17QXAP6RB5ycbSgVf5K3lEbua8Sla3/heAdjmOaDN78tgaMUSZuOynrekzWIygaAGlJQqaWnfC0tBbs6h62FXqpEOzxo8xIngYO/w6+xeHtS648Ze3MoKcHiFKG6TTezAId1zC6L7kIx9EeEoLDLoMLkvBWivqfaXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sKOTZPRw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gBENsDYq9R+9P/124bQtgcy06nJepneW83MzAwehkI992CU0475xeydmWHyKOXcWXFdT6V/q1JyXzGDOkU1q9FJHjcEMB+lmTfLUrkQRIBjwnC4RAdo50HHtm28XZZpcKlU8d5pjp9ZC/01npGwrSLzPqUx5jO6lBkJjrkn4JJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ctvmAraA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sKOTZPRw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C721F000E9;
-	Thu, 20 Aug 2026 16:37:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ctvmAraA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C5D1F000E9;
+	Thu, 20 Aug 2026 16:37:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243871;
-	bh=AShY7Lk+MXcRKjmSMcPla2LvTfztY/oa3/0IvGs2I3I=;
+	s=korg; t=1787243874;
+	bh=vitm/tWkIepYP5C8kY8LuuaXPOqhx12PrmKqu4IC+R8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sKOTZPRwkARAARJeYJiw5tvFQ+DzVvR4gWF31xhCOKeZGjgIoRHfKKf44w1G3DVQr
-	 ahotwWMNhILDHSTbZi+0tVXlyiKU/vCW8iiQIhU/Hw0s/pM1AYLktcQRxO5e3Ym+Hl
-	 3mv90O5MZxUCQrgzasqNsnUKyH7Q7zhSWI9b3oNY=
+	b=ctvmAraAiMmfwRDlrwCRse1wFZBg6N3Kokta+q9UZtuqdgxrNZS6s93idxaltWnvZ
+	 guIg2WmUbBA4tHe2K464ToZ4WBilMJe0dl9IEhfewkaUd+2TFFmZQMbucrkgA4JKPn
+	 KZcRdbhOXyv/fgg7doxv3GHhLd//kBGlfTDnsOww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Xiubo Li <xiubo.li@clyso.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	=?UTF-8?q?Tomasz=20Mo=C5=84?= <tomasz.mon@camlingroup.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 206/272] ceph: avoid fs reclaim while using current->journal_info
-Date: Thu, 20 Aug 2026 16:56:30 +0200
-Message-ID: <20260820145237.678945760@linuxfoundation.org>
+Subject: [PATCH 5.15 197/272] sc16is7xx: Properly resume TX after stop
+Date: Thu, 20 Aug 2026 16:56:21 +0200
+Message-ID: <20260820145237.381955306@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -47,119 +44,159 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Tomasz Moń <tomasz.mon@camlingroup.com>
 
-[ Upstream commit 5b602344a49e039e792ce5a8923bcc61412ee134 ]
+[ Upstream commit cc4c1d05eb10c3ad4c6315f1897bc56b1e7429aa ]
 
-handle_reply() stores a `ceph_mds_request` pointer in
-`current->journal_info` while filling the inode and dentry cache from
-an MDS reply.
+sc16is7xx_stop_tx() clears THRI bit and thus disables THRI interrupt.
+This makes it possible for transmission to cease indefinitely when more
+than 64 characters are being sent.
 
-An allocation in this section can enter direct reclaim and prune
-dentries from another filesystem.  If this dirties an ext4 inode, ext4
-starts a JBD2 transaction.  JBD2 interprets the Ceph request in
-`current->journal_info` as a journal handle and dereferences the
-request's `r_tid` as `h_transaction`, causing a kernel crash, e.g.:
+The sc16is7xx_handle_tx() call executed by sc16is7xx_tx_proc() can send
+up to FIFO length (64) characters. If more characters are written to the
+output buffer, then the THRI interrupt is needed.
 
- Unable to handle kernel paging request at virtual address 00000000077b4818
- [...]
- Internal error: Oops: 0000000096000004 [#1]  SMP
- Modules linked in:
- CPU: 6 UID: 0 PID: 2699135 Comm: kworker/6:3 Tainted: G        W           6.18.38-i3 #1113 NONE
- [...]
- Workqueue: ceph-msgr ceph_con_workfn
- pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : jbd2__journal_start+0x2c/0x208
- lr : __ext4_journal_start_sb+0x100/0x178
- [...]
- Call trace:
-  jbd2__journal_start+0x2c/0x208 (P)
-  __ext4_journal_start_sb+0x100/0x178
-  ext4_dirty_inode+0x3c/0x90
-  __mark_inode_dirty+0x58/0x400
-  iput.part.0+0x2b0/0x370
-  iput+0x18/0x30
-  dentry_unlink_inode+0xc0/0x158
-  __dentry_kill+0x80/0x250
-  shrink_dentry_list+0x90/0x130
-  prune_dcache_sb+0x60/0x98
-  super_cache_scan+0xe8/0x190
-  do_shrink_slab+0x174/0x388
-  shrink_slab+0xd8/0x4c0
-  shrink_node+0x31c/0x908
-  do_try_to_free_pages+0xd0/0x508
-  try_to_free_pages+0x11c/0x238
-  __alloc_frozen_pages_noprof+0x4d0/0xdd0
-  __folio_alloc_noprof+0x18/0x70
-  __filemap_get_folio+0x248/0x440
-  ceph_readdir_prepopulate+0x570/0x9e8
-  mds_dispatch+0x1424/0x1ba0
-  ceph_con_process_message+0x74/0xa0
-  ceph_con_v1_try_read+0x3a0/0x1510
-  ceph_con_workfn+0x260/0x460
+Solve the issue by enabling THRI interrupt in sc16is7xx_tx_proc().
 
-Enter a scoped NOFS allocation context and leave it after clearing
-`journal_info`.  This prevents filesystem reclaim from recursing into
-another filesystem while the field contains Ceph-private data.
-
-Cc: stable@vger.kernel.org
-Fixes: 315f24088048 ("ceph: fix security xattr deadlock")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Tomasz Moń <tomasz.mon@camlingroup.com>
+Link: https://lore.kernel.org/r/20220301060332.2561851-2-tomasz.mon@camlingroup.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: af071d9e07e5 ("serial: sc16is7xx: implement gpio get_direction() callback")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/mds_client.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/tty/serial/sc16is7xx.c |   47 +++++++++++++++++++++++++++++++++++------
+ 1 file changed, 41 insertions(+), 6 deletions(-)
 
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -6,6 +6,7 @@
- #include <linux/slab.h>
- #include <linux/gfp.h>
- #include <linux/sched.h>
-+#include <linux/sched/mm.h>
- #include <linux/debugfs.h>
- #include <linux/seq_file.h>
- #include <linux/ratelimit.h>
-@@ -3158,6 +3159,7 @@ static void handle_reply(struct ceph_mds
- 	struct ceph_mds_reply_head *head = msg->front.iov_base;
- 	struct ceph_mds_reply_info_parsed *rinfo;  /* parsed reply info */
- 	struct ceph_snap_realm *realm;
-+	unsigned int nofs_flags;
- 	u64 tid;
- 	int err, result;
- 	int mds = session->s_mds;
-@@ -3307,6 +3309,14 @@ static void handle_reply(struct ceph_mds
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -307,7 +307,8 @@ struct sc16is7xx_devtype {
  
- 	/* insert trace into our cache */
- 	mutex_lock(&req->r_fill_mutex);
+ struct sc16is7xx_one_config {
+ 	unsigned int			flags;
+-	u8				ier_clear;
++	u8				ier_mask;
++	u8				ier_val;
+ };
+ 
+ struct sc16is7xx_one {
+@@ -341,6 +342,9 @@ static struct uart_driver sc16is7xx_uart
+ 	.nr		= SC16IS7XX_MAX_DEVS,
+ };
+ 
++static void sc16is7xx_ier_set(struct uart_port *port, u8 bit);
++static void sc16is7xx_stop_tx(struct uart_port *port);
 +
-+	/* disable fs reclaim while we are using current->journal_info
-+	 * for our own purposes, or else shrinkers of other
-+	 * filesystems might dereference this pointer as a different
-+	 * type
-+	 */
-+	nofs_flags = memalloc_nofs_save();
-+
- 	current->journal_info = req;
- 	err = ceph_fill_trace(mdsc->fsc->sb, req);
- 	if (err == 0) {
-@@ -3315,6 +3325,7 @@ static void handle_reply(struct ceph_mds
- 			ceph_readdir_prepopulate(req, req->r_session);
+ #define to_sc16is7xx_port(p,e)	((container_of((p), struct sc16is7xx_port, e)))
+ #define to_sc16is7xx_one(p,e)	((container_of((p), struct sc16is7xx_one, e)))
+ 
+@@ -650,6 +654,7 @@ static void sc16is7xx_handle_tx(struct u
+ 	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
+ 	struct circ_buf *xmit = &port->state->xmit;
+ 	unsigned int txlen, to_send, i;
++	unsigned long flags;
+ 
+ 	if (unlikely(port->x_char)) {
+ 		sc16is7xx_port_write(port, SC16IS7XX_THR_REG, port->x_char);
+@@ -658,8 +663,12 @@ static void sc16is7xx_handle_tx(struct u
+ 		return;
  	}
- 	current->journal_info = NULL;
-+	memalloc_nofs_restore(nofs_flags);
- 	mutex_unlock(&req->r_fill_mutex);
  
- 	up_read(&mdsc->snap_rwsem);
+-	if (uart_circ_empty(xmit) || uart_tx_stopped(port))
++	if (uart_circ_empty(xmit) || uart_tx_stopped(port)) {
++		spin_lock_irqsave(&port->lock, flags);
++		sc16is7xx_stop_tx(port);
++		spin_unlock_irqrestore(&port->lock, flags);
+ 		return;
++	}
+ 
+ 	/* Get length of data pending in circular buffer */
+ 	to_send = uart_circ_chars_pending(xmit);
+@@ -686,8 +695,13 @@ static void sc16is7xx_handle_tx(struct u
+ 		sc16is7xx_fifo_write(port, to_send);
+ 	}
+ 
++	spin_lock_irqsave(&port->lock, flags);
+ 	if (uart_circ_chars_pending(xmit) < WAKEUP_CHARS)
+ 		uart_write_wakeup(port);
++
++	if (uart_circ_empty(xmit))
++		sc16is7xx_stop_tx(port);
++	spin_unlock_irqrestore(&port->lock, flags);
+ }
+ 
+ static bool sc16is7xx_port_irq(struct sc16is7xx_port *s, int portno)
+@@ -762,6 +776,7 @@ static void sc16is7xx_tx_proc(struct kth
+ {
+ 	struct uart_port *port = &(to_sc16is7xx_one(ws, tx_work)->port);
+ 	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
++	unsigned long flags;
+ 
+ 	if ((port->rs485.flags & SER_RS485_ENABLED) &&
+ 	    (port->rs485.delay_rts_before_send > 0))
+@@ -770,6 +785,10 @@ static void sc16is7xx_tx_proc(struct kth
+ 	mutex_lock(&s->efr_lock);
+ 	sc16is7xx_handle_tx(port);
+ 	mutex_unlock(&s->efr_lock);
++
++	spin_lock_irqsave(&port->lock, flags);
++	sc16is7xx_ier_set(port, SC16IS7XX_IER_THRI_BIT);
++	spin_unlock_irqrestore(&port->lock, flags);
+ }
+ 
+ static void sc16is7xx_reconf_rs485(struct uart_port *port)
+@@ -819,7 +838,7 @@ static void sc16is7xx_reg_proc(struct kt
+ 	}
+ 	if (config.flags & SC16IS7XX_RECONF_IER)
+ 		sc16is7xx_port_update(&one->port, SC16IS7XX_IER_REG,
+-				      config.ier_clear, 0);
++				      config.ier_mask, config.ier_val);
+ 
+ 	if (config.flags & SC16IS7XX_RECONF_RS485)
+ 		sc16is7xx_reconf_rs485(&one->port);
+@@ -830,8 +849,24 @@ static void sc16is7xx_ier_clear(struct u
+ 	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
+ 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+ 
++	lockdep_assert_held_once(&port->lock);
++
++	one->config.flags |= SC16IS7XX_RECONF_IER;
++	one->config.ier_mask |= bit;
++	one->config.ier_val &= ~bit;
++	kthread_queue_work(&s->kworker, &one->reg_work);
++}
++
++static void sc16is7xx_ier_set(struct uart_port *port, u8 bit)
++{
++	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
++	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
++
++	lockdep_assert_held_once(&port->lock);
++
+ 	one->config.flags |= SC16IS7XX_RECONF_IER;
+-	one->config.ier_clear |= bit;
++	one->config.ier_mask |= bit;
++	one->config.ier_val |= bit;
+ 	kthread_queue_work(&s->kworker, &one->reg_work);
+ }
+ 
+@@ -1059,8 +1094,8 @@ static int sc16is7xx_startup(struct uart
+ 			      SC16IS7XX_EFCR_TXDISABLE_BIT,
+ 			      0);
+ 
+-	/* Enable RX, TX interrupts */
+-	val = SC16IS7XX_IER_RDI_BIT | SC16IS7XX_IER_THRI_BIT;
++	/* Enable RX interrupt */
++	val = SC16IS7XX_IER_RDI_BIT;
+ 	sc16is7xx_port_write(port, SC16IS7XX_IER_REG, val);
+ 
+ 	return 0;
 
 
