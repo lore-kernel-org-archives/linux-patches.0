@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4736137E5D8;
-	Thu, 20 Aug 2026 15:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B681C380FD6;
+	Thu, 20 Aug 2026 15:19:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239165; cv=none; b=ASntyypDp15IwTxGF/UFwchG+DVJOtGRVxsXrYjj48PmaCQLD2r8T9a+YFjhO4EAR8AjKLiKXRehewlH46/Q9zuaxJAvuyDdWLahYR58fAdxydZqJwrVAnSv7WShfolCpth5iOOE68cushb7Jt+znlkNquV7o3FuNqdu76apzFQ=
+	t=1787239169; cv=none; b=VlUO37Cb4e1Cto3p+UeLhoC47v+NprHxbNuOqjdt7RdKAQWTzkGV6csTUjHFeW64e8pClS2ZRofVI6WUaPumME5h7tvgjrlWsOtgCHEWeRIKNczwai+Jds9SQ6JMyCtd1i9nHIPKld7bsyUgeXkPJBS1sstKT06uu1IHBDLA92Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239165; c=relaxed/simple;
-	bh=gnxOwL35gLMIlU7NV9tihovla4OVJwoeVScjG+6xC8c=;
+	s=arc-20240116; t=1787239169; c=relaxed/simple;
+	bh=9QYeubG/RfzTK//J1n0okhom7sy7DVq9zCDcKEhL/wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V3LobnoXxO0tF/xDOJfHbZ0URcd8ZIM6avfK5I3k4CWg0eJlc78j735UaQanCCwPkdZG6pRb2MCJKUVtrr7++IKznfBKaE08nxAfH1WrSoFJlitzOJU2A4SS+EtJk90wV3h4Rnobhl9LrH0tt15zXDkb3dnwWXZH1Ov6xLsJCrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FTkoKyUq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uMYDlyKny4Ef2WLZtdTAeGhGL/kVRlWbIJtHjjahDIwl2oyeuTnW2CEh/eVJ664HBwpHkWUpWDfWvEZavM/dIlr74iVoccuC+3WUEPhteg0mA+62/KzPYddc9hJW+S6B6+BkjTsqzjMH863aPhd25vgYBWsbmZuHoDyw+TK6KzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0ruXNmX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FTkoKyUq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1ADE1F000E9;
-	Thu, 20 Aug 2026 15:19:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0ruXNmX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 089C11F00A3A;
+	Thu, 20 Aug 2026 15:19:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239164;
-	bh=R5AtWKnx6g0QhLOaDrAmt6QaAKAUSzMa+VHeW43bsJU=;
+	s=korg; t=1787239167;
+	bh=mPXKGmSiV5L0uovdHGel/n4+y3kuoDGeMDpN9U3QTcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FTkoKyUqb3GHxTDYAfbvwCWcUIkfkdMcdSiATEQVYV5Ta4qfJ6dtHMj8XCr6LJCKa
-	 oZSPfRmHIMygfEmjaIiDAx8C5JlQn7/5giV1hGL6wrPaOT4svrSdnc095jyhSps+QT
-	 QdfzUFhsI5f/RuLNWYUzoV08qIC0uRykZiMe8wgI=
+	b=Y0ruXNmXMvvqRUKFEctYlDuoWP08MIJkbkpH3H2zK/0tLlE/cwiA/tdIu5p08lTx8
+	 cWh5R8836rvWP+kxDiUrWqoUHi/EoeedXWInQuYnuAJFgPS7EfN3GfVuOeKBEmXA/i
+	 x9YnqHh+4rasfiNtDPYaXNSNgzxlvBXiOQQewTMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralf Lici <ralf@mandelbit.com>,
-	Antonio Quartulli <antonio@openvpn.net>,
+	Pu Lehui <pulehui@huawei.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 173/217] ovpn: finish crypto callback cleanup before peer release
-Date: Thu, 20 Aug 2026 16:55:41 +0200
-Message-ID: <20260820145242.945555324@linuxfoundation.org>
+Subject: [PATCH 6.18 174/217] riscv: ftrace: Fix ftrace_modify_call failure on kprobed functions
+Date: Thu, 20 Aug 2026 16:55:42 +0200
+Message-ID: <20260820145242.973850691@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -51,64 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralf Lici <ralf@mandelbit.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit 9e163917a86c6adfbe150e13f4c73653a54616de ]
+[ Upstream commit 2820d227ad4ee70805d693d698437cc3e88d6c3d ]
 
-Crypto completion callbacks hold both key-slot and peer references. The
-peer reference pins the netdev, and dropping the last peer reference can
-let netdev unregistration and module removal make progress.
+We are frequently hitting the following splat during the riscv bpf
+selftests:
 
-Do not release that peer reference before the callback has finished its
-own cleanup. If ovpn_crypto_key_slot_put runs after ovpn_peer_put, it can
-schedule an RCU callback backed by module text after ovpn_cleanup
-rcu_barrier has already run. The TX error path also freed the remaining
-skb after ovpn_peer_put, leaving callback cleanup outside the peer/netdev
-lifetime window.
+00000000026dc75a: expected (7c3ff297) but got (00100073)
+------------[ ftrace bug ]------------
+ftrace failed to modify
+[<ffffffff03c44c1c>] bpf_kfunc_common_test+0x4/0x20 [bpf_testmod]
+ actual:   e7:82:c2:ce
+Updating ftrace call site to call a different ftrace function
+ftrace record flags: 80100002
+ (2)
+ expected tramp: ffffffff80043904
+------------[ cut here ]------------
+WARNING: kernel/trace/ftrace.c:2278 at ftrace_bug+0x46e/0x4b0, CPU#1: test_progs/98
+...
+[<ffffffff80008f4e>] ftrace_bug+0x46e/0x4b0
+[<ffffffff803d3e86>] ftrace_replace_code+0x16e/0x170
+[<ffffffff803d42b6>] ftrace_modify_all_code+0x12e/0x1b8
+[<ffffffff800430f4>] arch_ftrace_update_code+0x14/0x28
+[<ffffffff803e0324>] ftrace_startup+0x14c/0x2a0
+[<ffffffff803e133c>] ftrace_startup_subops+0x584/0x1050
+[<ffffffff804500e6>] register_ftrace_graph+0x4e6/0x1018
+[<ffffffff804cf9f6>] register_fprobe_ips+0xc66/0x12f8
+[<ffffffff8049abe8>] bpf_kprobe_multi_link_attach+0x5d8/0xe68
+[<ffffffff8050fcaa>] __sys_bpf+0x3d5a/0x47f0
+[<ffffffff805107ee>] __riscv_sys_bpf+0xae/0x168
+[<ffffffff80034d78>] syscall_handler+0x60/0x100
+[<ffffffff8228b4f4>] do_trap_ecall_u+0x174/0x208
+[<ffffffff822b69c4>] handle_exception+0x16c/0x178
 
-Release the key slot and free any remaining skb first, then drop the peer
-reference as the last callback action.
+After debugging, it can be triggered by similar commands below:
+```
+echo do_nanosleep > set_ftrace_filter
+echo function > current_tracer
+echo 'p do_nanosleep' > kprobe_events
+echo 1 > events/kprobes/enable
+echo 'f do_nanosleep' > dynamic_events
+echo 1 > events/fprobes/enable
+```
 
-Fixes: 8534731dbf2d ("ovpn: implement packet processing")
-Signed-off-by: Ralf Lici <ralf@mandelbit.com>
-Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
+The reason is that attaching a kprobe to an ftrace-traced function entry
+replaces its initial auipc insn with ebreak. When ftrace_modify_call
+later runs, it expects auipc insn, so verification fails and triggers
+ftrace_bug.
+
+The expected auipc logic remains conceptually unchanged, and kprobe
+single-stepping ensures normal execution. Therefore, if the first insn
+is ebreak, bypassing the check to continue patching the jalr insn is
+safe and avoids ftrace failures.
+
+Fixes: b2137c3b6d7a ("riscv: ftrace: prepare ftrace for atomic code patching")
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Link: https://patch.msgid.link/20260802094929.3978390-1-pulehui@huaweicloud.com
+[pjw@kernel.org: fixed reproducer in commit message]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/io.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/riscv/kernel/ftrace.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ovpn/io.c b/drivers/net/ovpn/io.c
-index 0008a3d30c198..65a904c64e056 100644
---- a/drivers/net/ovpn/io.c
-+++ b/drivers/net/ovpn/io.c
-@@ -199,10 +199,10 @@ void ovpn_decrypt_post(void *data, int ret)
- 		ovpn_dev_dstats_rx_dropped(peer->ovpn->dev);
- 	kfree_skb(skb);
- drop_nocount:
--	if (likely(peer))
--		ovpn_peer_put(peer);
- 	if (likely(ks))
- 		ovpn_crypto_key_slot_put(ks);
-+	if (likely(peer))
-+		ovpn_peer_put(peer);
- }
+diff --git a/arch/riscv/kernel/ftrace.c b/arch/riscv/kernel/ftrace.c
+index 8d18d6727f0fc..c201c6bac1dda 100644
+--- a/arch/riscv/kernel/ftrace.c
++++ b/arch/riscv/kernel/ftrace.c
+@@ -12,6 +12,7 @@
+ #include <linux/stop_machine.h>
+ #include <asm/cacheflush.h>
+ #include <asm/text-patching.h>
++#include <asm/insn.h>
  
- /* RX path entry point: decrypt packet and forward it to the device */
-@@ -299,11 +299,11 @@ void ovpn_encrypt_post(void *data, int ret)
- err:
- 	if (unlikely(skb))
- 		ovpn_dev_dstats_tx_dropped(peer->ovpn->dev);
--	if (likely(peer))
--		ovpn_peer_put(peer);
-+	kfree_skb(skb);
- 	if (likely(ks))
- 		ovpn_crypto_key_slot_put(ks);
--	kfree_skb(skb);
-+	if (likely(peer))
-+		ovpn_peer_put(peer);
- }
+ #ifdef CONFIG_DYNAMIC_FTRACE
+ void ftrace_arch_code_modify_prepare(void)
+@@ -63,7 +64,9 @@ static int __ftrace_modify_call(unsigned long source, unsigned long target, bool
+ 		if (copy_from_kernel_nofault(replaced, (void *)source, 2 * MCOUNT_INSN_SIZE))
+ 			return -EFAULT;
  
- static bool ovpn_encrypt_one(struct ovpn_peer *peer, struct sk_buff *skb)
+-		if (replaced[0] != call[0]) {
++		/* Bypass the check if the auipc insn is a kprobe breakpoint */
++		if (replaced[0] != call[0] &&
++		    !(riscv_insn_is_ebreak(replaced[0]) || riscv_insn_is_c_ebreak(replaced[0]))) {
+ 			pr_err("%p: expected (%08x) but got (%08x)\n",
+ 			       (void *)source, call[0], replaced[0]);
+ 			return -EINVAL;
 -- 
 2.53.0
 
