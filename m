@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1043546D2C9;
-	Thu, 20 Aug 2026 17:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C0646D0B6;
+	Thu, 20 Aug 2026 17:39:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247580; cv=none; b=rcToXU/H6gyWYoyAuzOfH55SU6HFe2G8yIJVKNfnzMRjO0Bz5LHRFlL/ncSXGmbKxKfHhrmh9mM40FyHIUA+nJcC11n6rayA8iWrWxGus2PqNoQY6JZjmLKmAOdT1Si/gPsvw8LD6nP2+lx1XijESvldgFAvB2Qml6K/bmw60h8=
+	t=1787247582; cv=none; b=Au0OJH2dpprCqeOHHqxK8QkvdFSYyxz5w6KKI0VzONhkMSr8enRYXXO/9ocsutbn+z2v0iwLsiEofDKJpXAY70o5mWk9lCEIwxvkTkHNHTGCEwlsYqyngy0XnCxAW1odpXBCRr8ncLB9e/QWpczfdladAbMShA1LuK5jKA8ViI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247580; c=relaxed/simple;
-	bh=NmvErtjKI2MGZvcMpnGMz3+HU4dd32rUWXzgoRJOKOg=;
+	s=arc-20240116; t=1787247582; c=relaxed/simple;
+	bh=gqjlXhvaZ3aW//4gW/vA1I6Y8ikY3TDd1w7JrdT8+xs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CZiG6FGxRKMIAbGmhumzbF9Qnv4KHzQS5dghZDgLyhs5LBGQpLw/3id6NtSwGwnN2s11I/+aKJ9/rwMBS+aMwxrvoI1sClFBuGG0r3j+93pPNu+bTWSPeeLtuOtcYroivve2zCMP2AT02iOMMb64ec7sdmGSN8MhOgfJmmQivws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cxVmYsPF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cNBRUSd5rd8IjLp2ATFYj9GxLqTuSyJLzbqLDKuzuQJEopyo4Tgp2bTrWxGJ6ESy3Hop0IfQWlXLylPYu14HJToLx1PB1n1Ob/g2mTCmdYovhfd+ofokswYZQU+lTzszeUNhVllZ31VL9oZZQVj3xOYL5AY7lczRvzydMX2415M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5eXLEhJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cxVmYsPF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37BD91F000E9;
-	Thu, 20 Aug 2026 17:39:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5eXLEhJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167221F000E9;
+	Thu, 20 Aug 2026 17:39:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247578;
-	bh=qKaMkyVy5fcbXkAbTT6X898QnLvX7+DzRT1YDpXEVok=;
+	s=korg; t=1787247581;
+	bh=ed9rZ+5ZiarxDlTiGiV+RM51gxInaOSTxkcgNZfjv4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cxVmYsPFLDDRAfCqhv2kEukV5LDnzkh+aHw0BjPKfgsd7YuUQ+p3F26WUdAxbm+Ag
-	 NauDLWzXZXoxddm3heop3usJuxUutAH2zssqXEoi4RtJLR5SpI2geECfI5WXREjwKu
-	 dHgWI2GrCdyRacpV7a1ilHh9gJGdTzi2/SmEtKmk=
+	b=e5eXLEhJRfqoqvDYWf46HktvDsrt6WrZrht+aOKmI78WTJbgzekKOBCzHsQuoo1dr
+	 R01giWdHipKIM2azf93LrmPoSyRSGErc+Iz9MGAc7RzYLPZWtPQfWYbSh9k5t1wjWt
+	 srtc9nheMWfzN+sVR6klU3xXMiFeCt+2keHXC0cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ij@kernel.org>,
-	Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 095/166] tcp: fast path functions later
-Date: Thu, 20 Aug 2026 16:55:54 +0200
-Message-ID: <20260820145214.012469371@linuxfoundation.org>
+Subject: [PATCH 6.6 096/166] tcp: challenge ACK for non-exact RST in SYN-RECEIVED
+Date: Thu, 20 Aug 2026 16:55:55 +0200
+Message-ID: <20260820145214.046892323@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -47,104 +51,172 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ij@kernel.org>
+From: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
 
-[ Upstream commit 61b2f7baa9779b12a7bf1b9800a3f2a2549a1315 ]
+[ Upstream commit a28c4fcbf774e23b4779cae468e3497a5ad1f4a1 ]
 
-The following patch will use tcp_ecn_mode_accecn(),
-TCP_ACCECN_CEP_INIT_OFFSET, TCP_ACCECN_CEP_ACE_MASK in
-__tcp_fast_path_on() to make new flag for AccECN.
+The SYN-RECEIVED request-socket path in tcp_check_req() accepts an
+in-window RST without requiring SEG.SEQ to exactly match RCV.NXT.  A
+non-exact RST therefore removes the request instead of eliciting a
+challenge ACK.
 
-No functional changes.
+RFC 9293 section 3.10.7.4 applies the RFC 5961 reset check in
+SYN-RECEIVED: an exact RST resets the connection, while a non-exact
+in-window RST must trigger a challenge ACK and be dropped.
 
-Signed-off-by: Ilpo Järvinen <ij@kernel.org>
-Signed-off-by: Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>
+Apply that check before the ACK-field validation, following the RFC
+sequence-number, RST, then ACK processing order.  Factor the per-netns
+challenge ACK quota out of tcp_send_challenge_ack() so request sockets
+can share it.  Use the request socket's send_ack() callback and its own
+out-of-window ACK timestamp to send and rate-limit the response.
+
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Fixes: 282f23c6ee34 ("tcp: implement RFC 5961 3.2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250911110642.87529-3-chia-yu.chang@nokia-bell-labs.com
+Link: https://patch.msgid.link/20260717081443.809393-2-yangyx22@mails.tsinghua.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: a28c4fcbf774 ("tcp: challenge ACK for non-exact RST in SYN-RECEIVED")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/tcp.h |   54 +++++++++++++++++++++++++++---------------------------
- 1 file changed, 27 insertions(+), 27 deletions(-)
+ include/net/tcp.h        |    2 +
+ net/ipv4/tcp_input.c     |   56 ++++++++++++++++++++++++++++++++++++-----------
+ net/ipv4/tcp_minisocks.c |   12 +++++++++-
+ 3 files changed, 56 insertions(+), 14 deletions(-)
 
 --- a/include/net/tcp.h
 +++ b/include/net/tcp.h
-@@ -715,33 +715,6 @@ static inline u32 __tcp_set_rto(const st
- 	return usecs_to_jiffies((tp->srtt_us >> 3) + tp->rttvar_us);
- }
+@@ -1660,6 +1660,8 @@ static inline void tcp_fast_path_check(s
  
--static inline void __tcp_fast_path_on(struct tcp_sock *tp, u32 snd_wnd)
--{
--	/* mptcp hooks are only on the slow path */
--	if (sk_is_mptcp((struct sock *)tp))
--		return;
--
--	tp->pred_flags = htonl((tp->tcp_header_len << 26) |
--			       ntohl(TCP_FLAG_ACK) |
--			       snd_wnd);
--}
--
--static inline void tcp_fast_path_on(struct tcp_sock *tp)
--{
--	__tcp_fast_path_on(tp, tp->snd_wnd >> tp->rx_opt.snd_wscale);
--}
--
--static inline void tcp_fast_path_check(struct sock *sk)
--{
--	struct tcp_sock *tp = tcp_sk(sk);
--
--	if (RB_EMPTY_ROOT(&tp->out_of_order_queue) &&
--	    tp->rcv_wnd &&
--	    atomic_read(&sk->sk_rmem_alloc) < sk->sk_rcvbuf &&
--	    !tp->urg_data)
--		tcp_fast_path_on(tp);
--}
--
- u32 tcp_delack_max(const struct sock *sk);
- 
- /* Compute the actual rto_min value */
-@@ -1658,6 +1631,33 @@ static inline bool tcp_paws_reject(const
- 	return true;
- }
- 
-+static inline void __tcp_fast_path_on(struct tcp_sock *tp, u32 snd_wnd)
-+{
-+	/* mptcp hooks are only on the slow path */
-+	if (sk_is_mptcp((struct sock *)tp))
-+		return;
-+
-+	tp->pred_flags = htonl((tp->tcp_header_len << 26) |
-+			       ntohl(TCP_FLAG_ACK) |
-+			       snd_wnd);
-+}
-+
-+static inline void tcp_fast_path_on(struct tcp_sock *tp)
-+{
-+	__tcp_fast_path_on(tp, tp->snd_wnd >> tp->rx_opt.snd_wscale);
-+}
-+
-+static inline void tcp_fast_path_check(struct sock *sk)
-+{
-+	struct tcp_sock *tp = tcp_sk(sk);
-+
-+	if (RB_EMPTY_ROOT(&tp->out_of_order_queue) &&
-+	    tp->rcv_wnd &&
-+	    atomic_read(&sk->sk_rmem_alloc) < sk->sk_rcvbuf &&
-+	    !tp->urg_data)
-+		tcp_fast_path_on(tp);
-+}
-+
  bool tcp_oow_rate_limited(struct net *net, const struct sk_buff *skb,
  			  int mib_idx, u32 *last_oow_ack_time);
++void tcp_reqsk_send_challenge_ack(struct sock *sk, struct sk_buff *skb,
++				  struct request_sock *req);
  
+ static inline void tcp_mib_init(struct net *net)
+ {
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -3739,24 +3739,17 @@ bool tcp_oow_rate_limited(struct net *ne
+ 	return __tcp_oow_rate_limited(net, mib_idx, last_oow_ack_time);
+ }
+ 
+-/* RFC 5961 7 [ACK Throttling] */
+-static void tcp_send_challenge_ack(struct sock *sk)
++/* Consume one slot from the per-netns RFC 5961 challenge ACK quota.
++ * Returns true if a challenge ACK may be sent.
++ */
++static bool tcp_challenge_ack_allowed(struct net *net)
+ {
+-	struct tcp_sock *tp = tcp_sk(sk);
+-	struct net *net = sock_net(sk);
+ 	u32 count, now, ack_limit;
+ 
+-	/* First check our per-socket dupack rate limit. */
+-	if (__tcp_oow_rate_limited(net,
+-				   LINUX_MIB_TCPACKSKIPPEDCHALLENGE,
+-				   &tp->last_oow_ack_time))
+-		return;
+-
+ 	ack_limit = READ_ONCE(net->ipv4.sysctl_tcp_challenge_ack_limit);
+ 	if (ack_limit == INT_MAX)
+-		goto send_ack;
++		return true;
+ 
+-	/* Then check host-wide RFC 5961 rate limit. */
+ 	now = jiffies / HZ;
+ 	if (now != READ_ONCE(net->ipv4.tcp_challenge_timestamp)) {
+ 		u32 half = (ack_limit + 1) >> 1;
+@@ -3768,12 +3761,49 @@ static void tcp_send_challenge_ack(struc
+ 	count = READ_ONCE(net->ipv4.tcp_challenge_count);
+ 	if (count > 0) {
+ 		WRITE_ONCE(net->ipv4.tcp_challenge_count, count - 1);
+-send_ack:
++		return true;
++	}
++	return false;
++}
++
++/* RFC 5961 7 [ACK Throttling] */
++static void tcp_send_challenge_ack(struct sock *sk)
++{
++	struct tcp_sock *tp = tcp_sk(sk);
++	struct net *net = sock_net(sk);
++
++	/* First check our per-socket dupack rate limit. */
++	if (__tcp_oow_rate_limited(net,
++				   LINUX_MIB_TCPACKSKIPPEDCHALLENGE,
++				   &tp->last_oow_ack_time))
++		return;
++
++	/* Then check the per-netns RFC 5961 rate limit. */
++	if (tcp_challenge_ack_allowed(net)) {
+ 		NET_INC_STATS(net, LINUX_MIB_TCPCHALLENGEACK);
+ 		tcp_send_ack(sk);
+ 	}
+ }
+ 
++/* Send a challenge ACK from a SYN-RECEIVED request socket. Uses
++ * __tcp_oow_rate_limited() directly so that an RST carrying payload
++ * cannot bypass the per-request rate limit.
++ */
++void tcp_reqsk_send_challenge_ack(struct sock *sk, struct sk_buff *skb,
++				  struct request_sock *req)
++{
++	struct net *net = sock_net(sk);
++
++	if (__tcp_oow_rate_limited(net, LINUX_MIB_TCPACKSKIPPEDCHALLENGE,
++				   &tcp_rsk(req)->last_oow_ack_time))
++		return;
++
++	if (tcp_challenge_ack_allowed(net)) {
++		NET_INC_STATS(net, LINUX_MIB_TCPCHALLENGEACK);
++		req->rsk_ops->send_ack(sk, skb, req);
++	}
++}
++
+ static void tcp_store_ts_recent(struct tcp_sock *tp)
+ {
+ 	tp->rx_opt.ts_recent = tp->rx_opt.rcv_tsval;
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -736,7 +736,7 @@ struct sock *tcp_check_req(struct sock *
+ 	 * elsewhere and is checked directly against the child socket rather
+ 	 * than req because user data may have been sent out.
+ 	 */
+-	if ((flg & TCP_FLAG_ACK) && !fastopen &&
++	if ((flg & TCP_FLAG_ACK) && !(flg & TCP_FLAG_RST) && !fastopen &&
+ 	    (TCP_SKB_CB(skb)->ack_seq !=
+ 	     tcp_rsk(req)->snt_isn + 1))
+ 		return sk;
+@@ -769,6 +769,16 @@ struct sock *tcp_check_req(struct sock *
+ 		flg &= ~TCP_FLAG_SYN;
+ 	}
+ 
++	/* RFC 5961 section 3.2, as clarified by RFC 9293 section
++	 * 3.10.7.4, requires a challenge ACK for a non-exact
++	 * in-window RST in SYN-RECEIVED.
++	 */
++	if ((flg & TCP_FLAG_RST) &&
++	    TCP_SKB_CB(skb)->seq != tcp_rsk(req)->rcv_nxt) {
++		tcp_reqsk_send_challenge_ack(sk, skb, req);
++		return NULL;
++	}
++
+ 	/* RFC793: "second check the RST bit" and
+ 	 *	   "fourth, check the SYN bit"
+ 	 */
 
 
