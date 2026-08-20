@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F055360745;
-	Thu, 20 Aug 2026 15:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2FC367B9F;
+	Thu, 20 Aug 2026 15:12:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238757; cv=none; b=al8gr+MEEpE17YPLaSPPMUNU3q7mFHTA9uXXPuIOcOSD1AY9Wb7zB9Zml3gxExn17lpqqGc2Oo8zmIkvBcRqiG3/QETW+LIizqoN3UJppLA5GiXuDrM9JYUP3tBwVq73TjUyUVxbWmZZn4ucCArvBSPj0PoLS7w7qR+XfZet5AY=
+	t=1787238760; cv=none; b=Yl/BE6q9SjW8mPenHosAr0DJ2AjPI6IRfpLGMAgnQQppuPG5dWmiA6t2TJ2646TH2mmRxt9FthbuR5+TkdY9vwT62jrMXtSBMs1w2NwlxqawfTHyvv0Uvlni/bR5tpM4OJOs41bxUaGqClXzlPgjIoqz5hjmTpIOP1IvoPlEGuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238757; c=relaxed/simple;
-	bh=9UQ45mGdoGCI5VNmzqjphzqGhS5kBrzlHAvv1MhpFhs=;
+	s=arc-20240116; t=1787238760; c=relaxed/simple;
+	bh=raPFydIGfld9EzxOPMSQmj63wMybHh5be417QrXTzQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uLZbAZ30jMImtF2Fc7lSKXroA51+pxtnMMYlz+KucA+Ak6so9BmLHnYZ75h8GFfcGIEX7j9BknGyHLiwcM118O5RAbKvGbGwZTJmR70ncsItI6pwDzqXKvzlhNbchoASeBV/K0aqGFWWHo3fCyhnZIPpZxq+t5EXPduMI9WXkjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTLC/rAD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RqXdBhXuGPyZq3oLsAkuh2cfDCDkz4r9nXx84Frcf5nuiSht6mDE7Z/BCmEM7WQrDy1/7dRFn1VsAUJxLaNMsuK/SLujGb18RE3FHHillAsxmYwop8e4+AUPGJSG3HI9nyeu1SCviQZaexBP8MAT+JF6Wa1uFSEl0E/mrTezZRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VL+CP3VS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTLC/rAD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047561F000E9;
-	Thu, 20 Aug 2026 15:12:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VL+CP3VS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E301F00A3D;
+	Thu, 20 Aug 2026 15:12:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238756;
-	bh=eK3dFgHomykb4QTAb2D2RxRFfPTdcw2FZ+8pcYGFjLs=;
+	s=korg; t=1787238759;
+	bh=cAnRJbbHXk5c04rnOcsspmi552XT3CV5gqPI6xLvIbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bTLC/rADF1NRog4T5FiKvjS/x4x8K+Mei4Ki+9OWdf14JCM1IjUioFhooIyVEiPgi
-	 CgH0Pt475PWEsUZDYS8NlKtsKa+vjUaGePqXe6TkqJGWErmX0/KNz94+t42gcDswId
-	 ow/4jZ7PIBe45lIY/T9UccxEseBUVrQYKaq687ZE=
+	b=VL+CP3VSvBw6WATD8Ye7trR3rtVvPnGugjHwIaHD7j54RMk5QXYNcwBQqCjqLpsrd
+	 WQAEZM+pWnPus8NgM1rpnsDkyE7sotyOCwNQ+v6kVZ2+7rInbMMXwmRcrBSTuBt3Ag
+	 bgp+fiZw/cc+TkSkgZduFcn74VWoiejJABeTFCa0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Ming Lin <chengminglin@mxic.com.tw>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
-	Dominique Martinet <dominique.martinet@atmark-techno.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 003/217] mtd: ubi: skip programming unused bits in ubi headers
-Date: Thu, 20 Aug 2026 16:52:51 +0200
-Message-ID: <20260820145237.658087483@linuxfoundation.org>
+	Asad Kamal <asad.kamal@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 030/217] drm/amdgpu: fix aperture iounmap skipped on device removal
+Date: Thu, 20 Aug 2026 16:53:18 +0200
+Message-ID: <20260820145238.526511781@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -54,70 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Ming Lin <chengminglin@mxic.com.tw>
+From: Asad Kamal <asad.kamal@amd.com>
 
-[ Upstream commit 77530d1a78ca5c274e37d6494a965223672630b2 ]
+commit f9e5f51549000e2665e3b5e02ff876b9e09cfe95 upstream.
 
-This patch prevents unnecessary programming of bits in ec_hdr and
-vid_hdr that are not used or read during normal UBI operation. These
-unused bits are typcially already set to 1 in erased flash and do not
-need to be explicitly programmed to 0 if they are not used.
+amdgpu_pci_remove() calls drm_dev_unplug() before invoking the fini
+routines. After drm_dev_unplug() the drm_dev_enter() guard in
+amdgpu_ttm_fini() always returns false, so iounmap() for
+aper_base_kaddr is silently skipped. On connected_to_cpu hardware
+ioremap_cache() maps the aperture as WB; when iounmap() is skipped the
+stale WB PAT entry persists. On reload IP discovery's
+memremap(MEMREMAP_WC) on the same aperture range hits a WB/WC conflict,
+producing an ioremap error and failing re-probe.
 
-Programming such unused areas offers no functional benefit and may
-result in unnecessary flash wear, reducing the overall lifetime of the
-device. By skipping these writes, we preserve the flash state as much as
-possible and minimize wear caused by redundant operations.
+Remove the drm_dev_enter() guard and call iounmap() unconditionally.
+The aperture mapping is plain MMIO and does not require device-presence
+protection. Surprise-removal cleanup of aper_base_kaddr is already
+handled unconditionally by amdgpu_device_unmap_mmio().
 
-This change ensures that only necessary fields are written when preparing
-UBI headers, improving flash efficiency without affecting functionality.
-
-Additionally, the Kioxia TC58NVG1S3HTA00 datasheet (page 63) also notes
-that continuous program/erase cycling with a high percentage of '0' bits
-in the data pattern can accelerate block endurance degradation.
-This further supports avoiding large 0x00 patterns.
-
-Link: https://europe.kioxia.com/content/dam/kioxia/newidr/productinfo/datasheet/201910/DST_TC58NVG1S3HTA00-TDE_EN_31442.pdf
-
-Signed-off-by: Cheng Ming Lin <chengminglin@mxic.com.tw>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 62d5f9f7110a ("drm/amdgpu: Unmap MMIO mappings when device is not unplugged")
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit fb3f68af9f6fce9343a2bd13b4d68a1c02d283df)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/ubi/io.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |   10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/mtd/ubi/io.c b/drivers/mtd/ubi/io.c
-index a4999bce435f..915eb64cb001 100644
---- a/drivers/mtd/ubi/io.c
-+++ b/drivers/mtd/ubi/io.c
-@@ -868,6 +868,8 @@ int ubi_io_write_ec_hdr(struct ubi_device *ubi, int pnum,
- 		return -EROFS;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -2163,8 +2163,6 @@ int amdgpu_ttm_init(struct amdgpu_device
+  */
+ void amdgpu_ttm_fini(struct amdgpu_device *adev)
+ {
+-	int idx;
+-
+ 	if (!adev->mman.initialized)
+ 		return;
+ 
+@@ -2191,13 +2189,9 @@ void amdgpu_ttm_fini(struct amdgpu_devic
+ 	amdgpu_ttm_fw_reserve_vram_fini(adev);
+ 	amdgpu_ttm_drv_reserve_vram_fini(adev);
+ 
+-	if (drm_dev_enter(adev_to_drm(adev), &idx)) {
+-
+-		if (adev->mman.aper_base_kaddr)
+-			iounmap(adev->mman.aper_base_kaddr);
++	if (adev->mman.aper_base_kaddr) {
++		iounmap(adev->mman.aper_base_kaddr);
+ 		adev->mman.aper_base_kaddr = NULL;
+-
+-		drm_dev_exit(idx);
  	}
  
-+	memset((char *)ec_hdr + UBI_EC_HDR_SIZE, 0xFF, ubi->ec_hdr_alsize - UBI_EC_HDR_SIZE);
-+
- 	err = ubi_io_write(ubi, ec_hdr, pnum, 0, ubi->ec_hdr_alsize);
- 	return err;
- }
-@@ -1150,6 +1152,14 @@ int ubi_io_write_vid_hdr(struct ubi_device *ubi, int pnum,
- 		return -EROFS;
- 	}
- 
-+	if (ubi->vid_hdr_shift) {
-+		memset((char *)p, 0xFF, ubi->vid_hdr_shift);
-+		memset((char *)p + ubi->vid_hdr_shift + UBI_VID_HDR_SIZE, 0xFF,
-+		       ubi->vid_hdr_alsize - (ubi->vid_hdr_shift + UBI_VID_HDR_SIZE));
-+	} else {
-+		memset((char *)p + UBI_VID_HDR_SIZE, 0xFF, ubi->vid_hdr_alsize - UBI_VID_HDR_SIZE);
-+	}
-+
- 	err = ubi_io_write(ubi, p, pnum, ubi->vid_hdr_aloffset,
- 			   ubi->vid_hdr_alsize);
- 	return err;
--- 
-2.53.0
-
+ 	if (!adev->gmc.is_app_apu)
 
 
