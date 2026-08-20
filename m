@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178133815D5;
-	Thu, 20 Aug 2026 15:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA531382371;
+	Thu, 20 Aug 2026 15:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239268; cv=none; b=n/1zumOOiUdhg/BAbAcwvOztSFRudnlQBzCQ0ThXmGSPS4iBQV750DBPKprGYywQG6lgU8qBMl793/7inbS72zplMXv2pLOiqrop4FCQh7I29rEDChpmGZxhR05a+DM5aQSfIEtbNc2KMbm1Kuvo87Gq1mmAxnsumjVjzy+gv4w=
+	t=1787239270; cv=none; b=G+m+MSvNsb9UBJs/06LqBBGdFImimBbfQskku3kcnBijFTkYimEEKTB+20FmrqoqnQOvpXQ2eLbAs0sgJeI5sq0BtGXZZGs7co1/qYQCUni9++KHoMOubnYo4/TvUTkmyYsfxIey7Swif29VyV2mrMpDBVnQrRyBn6yXQ7KaRLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239268; c=relaxed/simple;
-	bh=9qwaSzQ4BXk0CavOWmOg9d3KJPhWM0ZEJWWsK8y63gU=;
+	s=arc-20240116; t=1787239270; c=relaxed/simple;
+	bh=6c2HtcC65Gd25t2I8bAkltXcIQFAoSDr/FUgifnkdiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kuaPNfsZmQs2rr9FNRMZpBCGEVMB9v9uuWdF9e0k6Oby1pW/2Hz/bFhaRCZiRg7fetqX/QL52QWvJIoAwrMlm8UE4JL1ss/ISpBK38gsyf4acGUWQOJwME1XWRV3qZzYV4EQUJRNwr39h0/oVMgZzSFko4At+DQB0YWyJJ3bYBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQiBjeJG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hNlJMz3arYGzTdTMOMRFQWwEzE6AeUVg37mcZB6XjWXgjrtE9tknxz4+npqydvFtA5XYl/5F4Lw5b2Rb8X+H53ynqHFNc4uhzyFR+2vS64ss98TyehRAkQyE/g67jcGw7kxlCoyLONAAS7n6yh7jiHhTXhrOsuKPb+3zYIVhRZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rYfcpiBe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQiBjeJG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E248F1F00A3A;
-	Thu, 20 Aug 2026 15:21:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rYfcpiBe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A501F000E9;
+	Thu, 20 Aug 2026 15:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239265;
-	bh=90oOy+q3cCGk9mHiQhcyH6Z2eCXvPPbAHSR4e/paIK4=;
+	s=korg; t=1787239268;
+	bh=7koQmJgUd4V9Rr63K3c2mLvLozpun5PhlSVpWHdm2dI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JQiBjeJGRLs7AlVYfLyiHnVlAkHg1Kbi1DlMY2e52qM5esBNC82l2xF1RDa5+ycqZ
-	 /4/UVX9AM1KKMLg33J+QYLxCb+pPplNKR7/cG75AXll2TBcErXXHQyRvG/foAVUK1X
-	 iHVmKYPLfeThgoXsRrkx9kmFlUUOu/KMr7B17vY8=
+	b=rYfcpiBeSwjZjGCuIQsjyM4UiwjtEAm6r5ixPTtn6f9YDlBKxd9Z0qg4BstwmXm/S
+	 44+0EK+9yihSEOzOaJ9oMqbY5UZOnX2ilMuCmX82H1hMfmYP28LA6Xpe4QM4LadBwx
+	 3PWQA4lNbVTQ/kgMJ3BAaFAQEp1p4C6uMsAZbNgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 168/217] NTB: ntb_netdev: Preserve RX queue depth on allocation failure
-Date: Thu, 20 Aug 2026 16:55:36 +0200
-Message-ID: <20260820145242.801771179@linuxfoundation.org>
+Subject: [PATCH 6.18 169/217] arm64: tegra: Add EL2 virtual timer interrupt for Tegra194
+Date: Thu, 20 Aug 2026 16:55:37 +0200
+Message-ID: <20260820145242.830605116@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -52,71 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-commit d2121faf133ac3bf9531b53a7e21273649a08517 upstream.
+[ Upstream commit a7c28483fd57dd0e1487024af70622315320774b ]
 
-ntb_netdev_rx_handler() hands the received skb to the network stack
-before allocating its replacement. If the allocation fails, nothing is
-reposted. Every failure therefore takes one buffer out of the RX queue
-while the interface remains up, and enough failures eventually stall
-reception.
+Commit d87773de9efe ("clocksource/drivers/arm_arch_timer: Default to EL2
+virtual timer when running VHE") updated the ARM arch timer driver to
+use the virtual timer by default if the CPU is running at EL2 with VHE
+enabled. If the CPU is running at EL2 with VHE enabled but there is no
+interrupt provided for the virtual timer, then the following warning is
+displayed:
 
-A retry path could refill the queue later, but ntb_netdev has none.
-Allocate the replacement first instead. If that fails, drop the packet
-and repost the same skb. This keeps the queue full and lets packet
-delivery resume as soon as memory is available again.
+ arch_timer: [Firmware Bug]: VHE-capable CPU without EL2 virtual timer
+  interrupt
 
-Fixes: 548c237c0a99 ("net: Add support for NTB virtual ethernet device")
-Cc: stable@vger.kernel.org
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260806032537.3526498-1-den@valinux.co.jp
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This warning is observed on Tegra194 platforms. Tegra194 SoC includes
+NVIDIA Carmel ARM v8.2 CPUs and support an EL2 virtual timer. Fix the
+above warning by adding the PPI for the EL2 virtual timer interrupt for
+Tegra194.
+
+Fixes: 5425fb15d8ee ("arm64: tegra: Add Tegra194 chip device tree")
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ntb_netdev.c |   15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/nvidia/tegra194.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ntb_netdev.c
-+++ b/drivers/net/ntb_netdev.c
-@@ -118,8 +118,8 @@ static void ntb_netdev_rx_handler(struct
- {
- 	struct ntb_netdev_queue *q = qp_data;
- 	struct ntb_netdev *dev = q->ntdev;
-+	struct sk_buff *skb, *new_skb;
- 	struct net_device *ndev;
--	struct sk_buff *skb;
- 	int rc;
- 
- 	ndev = dev->ndev;
-@@ -135,6 +135,12 @@ static void ntb_netdev_rx_handler(struct
- 		goto enqueue_again;
- 	}
- 
-+	new_skb = netdev_alloc_skb(ndev, ndev->mtu + ETH_HLEN);
-+	if (!new_skb) {
-+		ndev->stats.rx_dropped++;
-+		goto enqueue_again;
-+	}
-+
- 	skb_put(skb, len);
- 	skb->protocol = eth_type_trans(skb, ndev);
- 	skb->ip_summed = CHECKSUM_NONE;
-@@ -148,12 +154,7 @@ static void ntb_netdev_rx_handler(struct
- 		ndev->stats.rx_bytes += len;
- 	}
- 
--	skb = netdev_alloc_skb(ndev, ndev->mtu + ETH_HLEN);
--	if (!skb) {
--		ndev->stats.rx_errors++;
--		ndev->stats.rx_frame_errors++;
--		return;
--	}
-+	skb = new_skb;
- 
- enqueue_again:
- 	rc = ntb_transport_rx_enqueue(qp, skb, skb->data, ndev->mtu + ETH_HLEN);
+diff --git a/arch/arm64/boot/dts/nvidia/tegra194.dtsi b/arch/arm64/boot/dts/nvidia/tegra194.dtsi
+index 1399342f23e1c..def60103179ff 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra194.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra194.dtsi
+@@ -3177,6 +3177,8 @@ timer {
+ 			     <GIC_PPI 11
+ 				(GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+ 			     <GIC_PPI 10
++				(GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
++			     <GIC_PPI 15
+ 				(GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
+ 		interrupt-parent = <&gic>;
+ 		always-on;
+-- 
+2.53.0
+
 
 
