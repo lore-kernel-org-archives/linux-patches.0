@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7677A47DFAA;
-	Thu, 20 Aug 2026 17:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51ADB46D2C9;
+	Thu, 20 Aug 2026 17:41:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247689; cv=none; b=aAWIf/WDhVSjYy/vxaksQUfttYYBvN3ugdeO3teX0NGAtnvzcPuz2OYuoZUNrwr6QdlH7/CpY97VVoXF3HIYpE0X2fGq1NlpZSl9XhtvA9c46HdtSoTJL8QjtP+N58p54rBp/ZihQ0HbLnNyt7HtQLlXsFCzUJmkmcKjDKrYy1I=
+	t=1787247692; cv=none; b=QJUcZ4DUjKrp+SBgXxmeVmTnSdXsGio8WRiiqjneMzdevHtCezmnVAD6XGmFNizbb+2woRMM9ntgfvjowia03z5jvv7O/JQNlwECblSsx8j+233riv75qNh1HZ5qusSEbuCFkVGhN4UrrrR8oGP9U9tZaqPMEqMO/jhrB62dX24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247689; c=relaxed/simple;
-	bh=Vt3Q8y7kYX/ZtrJlZJ+C9MG7iA52c6PF26HURpyNd8w=;
+	s=arc-20240116; t=1787247692; c=relaxed/simple;
+	bh=q3Y/2cuBuO9DF4qZPADOudmEzVBi7Vz/vDnsgQ9H6rU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BcI3m31FaBWyQgvKt6rTAx/1sdtaqVWw/RSgbEqhgAc6oJw9Qs3q/d/A/RLAKQB0EJAUDR5cpcWTY/QgqwWnM+gX8+9dYgKt07fFeGvbU7zXVcRZ87JuOBbFTw/IqOHeg59KRyys2bH7bBaouSYxz1UUoJsQzu6iFav6QGscFhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=roOZOnP8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=M5sFbpYzc/T1ua0/cHRpz8+vZX03sEYmf9KAfQ9RkgxRHxGEvflhieN9ljF8eGDJSUQp6l364jNkLk6ttL1uIrbAfebFmO0cPOTHwl3u7jTQy0+1pUvwVFPGN7kAaN/RxrIyxzEy+Gld+v1SS4Gwf6q9oy2I/7TkGpRMhBbmnU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKQe2Q6Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="roOZOnP8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D31421F000E9;
-	Thu, 20 Aug 2026 17:41:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKQe2Q6Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF771F000E9;
+	Thu, 20 Aug 2026 17:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247688;
-	bh=Bu2CnpBqwQwgaH4LaUbYk7tizmkWHt1J2zhC9EW8Lnk=;
+	s=korg; t=1787247691;
+	bh=iokeJooKcke3DKV5QzL1WqG4PY0AAvqUml63hf1+Rkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=roOZOnP8CyZQtzUXWuBAlqCBsYqJlKEUW60kwx82rWhfe37lhQlzgpP+Ii+wbfA5n
-	 WnuahacGLGljhuSSA4Dy40NYvL1bGvNBqb+lWb4R4blPwUFJUw8lOXeHCqrnliJhoN
-	 PW9TUv3yP2i2e0pSgO6L/1QsZwRBiXnHhPC5bcdg=
+	b=zKQe2Q6YVrmqr9neawH1Wt4njwIxEzSVNE2aZiEKFH049cj+RE1/FrDwI1wjvViwz
+	 7bQlaV7EWEALguTnv5qfeW/2TKrO19uRENrvuii9SZk6RGJUBH8bmFsdiPkf0eJEk6
+	 Cv6W6zVe39vu4Fq+dXpU6ltTQd6kPc37+GmfPs3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 117/166] binfmt_misc: restore write access when removing an entry
-Date: Thu, 20 Aug 2026 16:56:16 +0200
-Message-ID: <20260820145214.684507522@linuxfoundation.org>
+Subject: [PATCH 6.6 135/166] tls: rx: restore msg_iter before TLS 1.3 optimistic retry
+Date: Thu, 20 Aug 2026 16:56:34 +0200
+Message-ID: <20260820145215.230300407@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -44,55 +45,122 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit db1856ea9196cf6e015d12199a34c0b9313c7bfa ]
+[ Upstream commit 1c8629651cb54f7b51db8fc0b1a9944e4a4b0f5e ]
 
-Registering an entry with the MISC_FMT_OPEN_FILE flag opens the
-interpreter via open_exec() which denies write access to it for as
-long as the entry exists. Removing the entry closes the interpreter
-file via filp_close() but never restores write access, leaving the
-inode's i_writecount permanently negative. Opening the interpreter
-for writing keeps failing with ETXTBSY long after the entry is gone
-until the inode is evicted from the inode cache.
+tls_decrypt_sg() advances msg->msg_iter when it maps user pages for
+the optimistic TLS 1.3 zero-copy path. If the decrypted record turns
+out not to be unpadded application data, tls_decrypt_sw() retries into
+a kernel skb, but leaves the iterator advanced.
 
-Commit 90f601b497d7 ("binfmt_misc: restore write access before
-closing files opened by open_exec()") fixed the same imbalance in the
-error path of bm_register_write() but the actual removal path has
-been leaking the write denial since the introduction of the flag.
+The subsequent copy from the skb then writes decrypted bytes again at
+a later point in the caller iovecs while recvmsg() reports only the
+post-retry length. A TLS peer can trigger this after the receiver
+enables TLS_RX_EXPECT_NO_PAD.
 
-Restore write access in put_binfmt_handler() before closing the
-interpreter file.
+Revert the iterator by the number of bytes consumed by the optimistic
+mapping before retrying without zero-copy.
 
-Link: https://patch.msgid.link/20260710-work-binfmt_misc-locking-v3-1-a162f7cb58d6@kernel.org
-Fixes: 948b701a607f ("binfmt_misc: add persistent opened binary handler for containers")
+Add a selftest which sends a TLS 1.3 control record with
+TLS_RX_EXPECT_NO_PAD enabled and verifies that recvmsg() does not
+overwrite later iovecs beyond the returned length.
+
+Fixes: ce61327ce989 ("tls: rx: support optimistic decrypt to user buffer with TLS 1.3")
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Link: https://patch.msgid.link/20260804125528.2139928-1-Jeremy.Jean@oss.cyber.gouv.fr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_misc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/tls/tls_sw.c                  |    2 +
+ tools/testing/selftests/net/tls.c |   57 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+)
 
---- a/fs/binfmt_misc.c
-+++ b/fs/binfmt_misc.c
-@@ -163,8 +163,10 @@ static Node *get_binfmt_handler(struct l
- static void put_binfmt_handler(Node *e)
- {
- 	if (refcount_dec_and_test(&e->users)) {
--		if (e->flags & MISC_FMT_OPEN_FILE)
-+		if (e->flags & MISC_FMT_OPEN_FILE) {
-+			exe_file_allow_write_access(e->interp_file);
- 			filp_close(e->interp_file, NULL);
-+		}
- 		kfree(e);
- 	}
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -1741,6 +1741,8 @@ tls_decrypt_sw(struct sock *sk, struct t
+ 	/* If opportunistic TLS 1.3 ZC failed retry without ZC */
+ 	if (unlikely(darg->zc && prot->version == TLS_1_3_VERSION &&
+ 		     darg->tail != TLS_RECORD_TYPE_DATA)) {
++		iov_iter_revert(&msg->msg_iter, strp_msg(darg->skb)->full_len -
++				prot->overhead_size);
+ 		darg->zc = false;
+ 		if (!darg->tail)
+ 			TLS_INC_STATS(sock_net(sk), LINUX_MIB_TLSRXNOPADVIOL);
+--- a/tools/testing/selftests/net/tls.c
++++ b/tools/testing/selftests/net/tls.c
+@@ -1605,6 +1605,63 @@ TEST_F(tls, recv_efault)
  }
+ 
+ #define TLS_RECORD_TYPE_HANDSHAKE      0x16
++
++TEST_F(tls_basic, recvmsg_nopad_retry_iov)
++{
++	char payload[32];
++	char first_iov[sizeof(payload)];
++	char later_iov[sizeof(payload) * 2];
++	char expected_later_iov[sizeof(later_iov)];
++	char cbuf[CMSG_SPACE(sizeof(char))];
++	struct tls_crypto_info_keys tls13;
++	struct iovec iov[] = {
++		{ .iov_base = first_iov, .iov_len = sizeof(first_iov) },
++		{ .iov_base = later_iov, .iov_len = sizeof(later_iov) },
++	};
++	struct msghdr msg = {
++		.msg_iov = iov,
++		.msg_iovlen = ARRAY_SIZE(iov),
++		.msg_control = cbuf,
++		.msg_controllen = sizeof(cbuf),
++	};
++	int one = 1;
++	int ret;
++	int i;
++
++	if (self->notls)
++		SKIP(return, "no TLS support");
++
++	tls_crypto_info_init(TLS_1_3_VERSION, TLS_CIPHER_AES_GCM_128,
++			     &tls13, 0);
++
++	ret = setsockopt(self->fd, SOL_TLS, TLS_TX, &tls13, tls13.len);
++	ASSERT_EQ(ret, 0);
++
++	ret = setsockopt(self->cfd, SOL_TLS, TLS_RX, &tls13, tls13.len);
++	ASSERT_EQ(ret, 0);
++
++	ret = setsockopt(self->cfd, SOL_TLS, TLS_RX_EXPECT_NO_PAD,
++			 &one, sizeof(one));
++	ASSERT_EQ(ret, 0);
++
++	for (i = 0; i < sizeof(payload); i++)
++		payload[i] = 0x40 + i;
++	memset(first_iov, 0xa5, sizeof(first_iov));
++	memset(later_iov, 0x5a, sizeof(later_iov));
++	memset(expected_later_iov, 0x5a, sizeof(expected_later_iov));
++
++	/* A control record forces optimistic TLS 1.3 RX to retry. */
++	ret = tls_send_cmsg(self->fd, TLS_RECORD_TYPE_HANDSHAKE,
++			    payload, sizeof(payload), 0);
++	ASSERT_EQ(ret, sizeof(payload));
++
++	ret = recvmsg(self->cfd, &msg, 0);
++	ASSERT_EQ(ret, sizeof(payload));
++	EXPECT_EQ(memcmp(first_iov, payload, sizeof(payload)), 0);
++	EXPECT_EQ(memcmp(later_iov, expected_later_iov,
++			 sizeof(later_iov)), 0);
++}
++
+ /* key_update, length 1, update_not_requested */
+ static const char key_update_msg[] = "\x18\x00\x00\x01\x00";
+ static void tls_send_keyupdate(struct __test_metadata *_metadata, int fd)
 
 
