@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FC947AF6D;
-	Thu, 20 Aug 2026 16:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1A8246781;
+	Thu, 20 Aug 2026 16:44:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244241; cv=none; b=IMAta5DN6Fky3HtTDJQVgumrySXv0puSMfIbMzLx9zFu9lvT9A49oq30Bgm/ZU3mkdrB1ArkaII/vV74eN7iw2WAZPjPN5dBLqq/W6oyqc3StF+pdnYtAAAsgsG/6vTJEldNgw5nlrR2iq/F9ujXUor1RhqA26exgO4My7No1Kw=
+	t=1787244244; cv=none; b=Tk1HkCvEAxMTPS625N4lz5EGb7KofaL5Ux5XTNTYXACIVK5ozLs71eUCyginTa+1frs136LlNI0NsT/qtNCKwfIFI8DmkUsODSDnv6HwxtliXzL6b0ltDE0hLPmPBEHsLB9FGahgDbPuvggsoFgmbXPAflDapUDtP7Vs4d6Z5+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244241; c=relaxed/simple;
-	bh=lHqOp2VsA5ViTWPOcJ2FEWyBx3V4rVkTLS50okMyn+M=;
+	s=arc-20240116; t=1787244244; c=relaxed/simple;
+	bh=uOmIFJKmjcnwhz9h+oIAU/TFuq6pphdqFFMjl3g77D8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lpXKytV45eM0x2bQKYFmZo7H8JZk9cv/YW7PxRxduY3xd+JRafrkwrk2VGFz0JAwTgVtdyVOvx4r5vSnOQLTcEhk3wXfNLemoK69KZ1QTnc9o9b9vuDwz939S1T3KqDrG4Tk0yxv+BGJ1zxVO6P+QgujVXrniK6rVxAVrzUiVow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E5g2bWCu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eNUp3t8krhI9W6OgWKbXy5XMwyT1rNJJ8UR/SK+j1K/iCYmk6KF310tUX/LN6rmcv1EgoongufzGHy5hYvcPpFvTLGvO1MTlcYSMKE8ukwJGbkuWk5ulLWHy7kZMVASdX5hiev8SAjC5lgS9gU72Ot84qXo2o+L1bJcyvMd40f8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jF4fwIk4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E5g2bWCu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682741F00A3A;
-	Thu, 20 Aug 2026 16:43:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jF4fwIk4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50EA61F000E9;
+	Thu, 20 Aug 2026 16:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244239;
-	bh=czirxMCWvcXn3IR5Kicg/QYssullSNvc5bGm4UQi5e8=;
+	s=korg; t=1787244242;
+	bh=LKpp5ZU/D5Rjfx0YkDMfCBT+rOSTDV5I5P2BKQPP/X0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E5g2bWCu6QPuzS0V4SuqV5ApmVQmZlKePZfpBZeXQufOzxzyLtRNaZf4K3BjdadiF
-	 kErrmiFpxhA0km+dF65ZWxY2/SViascLmFOKaqIZWZrA7IpLixAIDJhgS+e+zaVpRL
-	 54+fbs9SpUAN1pmu5rpFFqUNkNohUwV+2bMPYn8E=
+	b=jF4fwIk4ePXxtvyWqnOXfPZfUcKSNOIwQw9G1BYjirVlrkKv01Hx4EF6nNUD169ha
+	 Dhd9t1+2T7+Hk4IZWtu/RDWvThEroqaNcS1nDTm9RD2yysMgDE/Ueb0UDd4AVEpYK/
+	 e+/UMmRyXjw8oAaHXE6KF45sGudmXM+f6V34O+lg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	"Junvyyang, Tencent Zhuque Lab" <zhuque@tencent.com>,
-	LePremierHomme <kwqcheii@proton.me>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Paul Moore <paul@paul-moore.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 062/235] rxrpc: Fix notification vs call-release vs recvmsg
-Date: Thu, 20 Aug 2026 16:54:58 +0200
-Message-ID: <20260820145218.328175099@linuxfoundation.org>
+Subject: [PATCH 5.10 053/235] audit: widen ino fields to u64
+Date: Thu, 20 Aug 2026 16:54:49 +0200
+Message-ID: <20260820145218.048318806@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -57,111 +52,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 2fd895842d49c23137ae48252dd211e5d6d8a3ed ]
+[ Upstream commit 125dfa218134df7cc112667e92984de9d8cd0bf6 ]
 
-When a call is released, rxrpc takes the spinlock and removes it from
-->recvmsg_q in an effort to prevent racing recvmsg() invocations from
-seeing the same call.  Now, rxrpc_recvmsg() only takes the spinlock when
-actually removing a call from the queue; it doesn't, however, take it in
-the lead up to that when it checks to see if the queue is empty.  It *does*
-hold the socket lock, which prevents a recvmsg/recvmsg race - but this
-doesn't prevent sendmsg from ending the call because sendmsg() drops the
-socket lock and relies on the call->user_mutex.
+inode->i_ino is being widened from unsigned long to u64. The audit
+subsystem uses unsigned long ino in struct fields, function parameters,
+and local variables that store inode numbers from arbitrary filesystems.
+On 32-bit platforms this truncates inode numbers that exceed 32 bits,
+which will cause incorrect audit log entries and broken watch/mark
+comparisons.
 
-Fix this by firstly removing the bit in rxrpc_release_call() that dequeues
-the released call and, instead, rely on recvmsg() to simply discard
-released calls (done in a preceding fix).
+Widen all audit ino fields, parameters, and locals to u64, and update
+the inode format string from %lu to %llu to match.
 
-Secondly, rxrpc_notify_socket() is abandoned if the call is already marked
-as released rather than trying to be clever by setting both pointers in
-call->recvmsg_link to NULL to trick list_empty().  This isn't perfect and
-can still race, resulting in a released call on the queue, but recvmsg()
-will now clean that up.
-
-Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
-cc: LePremierHomme <kwqcheii@proton.me>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-Link: https://patch.msgid.link/20250717074350.3767366-4-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e66f8f32f501 ("rxrpc: Fix socket notification race")
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260304-iino-u64-v3-2-2257ad83d372@kernel.org
+Acked-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 81905b5acbe7 ("audit: fix recursive locking deadlock in audit_dupe_exe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/call_object.c |   27 +++++++++++----------------
- net/rxrpc/recvmsg.c     |    4 ++++
- 2 files changed, 15 insertions(+), 16 deletions(-)
+ include/linux/audit.h   |    2 +-
+ kernel/audit.h          |    9 ++++-----
+ kernel/audit_fsnotify.c |    2 +-
+ kernel/audit_watch.c    |   10 +++++-----
+ kernel/auditsc.c        |    4 ++--
+ 5 files changed, 13 insertions(+), 14 deletions(-)
 
---- a/net/rxrpc/call_object.c
-+++ b/net/rxrpc/call_object.c
-@@ -529,7 +529,6 @@ void rxrpc_release_call(struct rxrpc_soc
+--- a/include/linux/audit.h
++++ b/include/linux/audit.h
+@@ -14,7 +14,7 @@
+ #include <uapi/linux/audit.h>
+ #include <uapi/linux/netfilter/nf_tables.h>
+ 
+-#define AUDIT_INO_UNSET ((unsigned long)-1)
++#define AUDIT_INO_UNSET ((u64)-1)
+ #define AUDIT_DEV_UNSET ((dev_t)-1)
+ 
+ struct audit_sig_info {
+--- a/kernel/audit.h
++++ b/kernel/audit.h
+@@ -71,7 +71,7 @@ struct audit_names {
+ 	int			name_len;	/* number of chars to log */
+ 	bool			hidden;		/* don't log this record */
+ 
+-	unsigned long		ino;
++	u64			ino;
+ 	dev_t			dev;
+ 	umode_t			mode;
+ 	kuid_t			uid;
+@@ -209,9 +209,9 @@ extern int auditd_test_task(struct task_
+ #define AUDIT_INODE_BUCKETS	32
+ extern struct list_head audit_inode_hash[AUDIT_INODE_BUCKETS];
+ 
+-static inline int audit_hash_ino(u32 ino)
++static inline int audit_hash_ino(u64 ino)
  {
- 	const void *here = __builtin_return_address(0);
- 	struct rxrpc_connection *conn = call->conn;
--	bool put = false;
- 
- 	_enter("{%d,%d}", call->debug_id, refcount_read(&call->ref));
- 
-@@ -547,23 +546,13 @@ void rxrpc_release_call(struct rxrpc_soc
- 	rxrpc_put_call_slot(call);
- 	rxrpc_delete_call_timer(call);
- 
--	/* Make sure we don't get any more notifications */
-+	/* Note that at this point, the call may still be on or may have been
-+	 * added back on to the socket receive queue.  recvmsg() must discard
-+	 * released calls.  The CALL_RELEASED flag should prevent further
-+	 * notifications.
-+	 */
- 	write_lock_bh(&rx->recvmsg_lock);
--
--	if (!list_empty(&call->recvmsg_link)) {
--		_debug("unlinking once-pending call %p { e=%lx f=%lx }",
--		       call, call->events, call->flags);
--		list_del(&call->recvmsg_link);
--		put = true;
--	}
--
--	/* list_empty() must return false in rxrpc_notify_socket() */
--	call->recvmsg_link.next = NULL;
--	call->recvmsg_link.prev = NULL;
--
- 	write_unlock_bh(&rx->recvmsg_lock);
--	if (put)
--		rxrpc_put_call(call, rxrpc_call_put);
- 
- 	write_lock(&rx->call_lock);
- 
-@@ -612,6 +601,12 @@ void rxrpc_release_calls_on_socket(struc
- 		rxrpc_put_call(call, rxrpc_call_put);
- 	}
- 
-+	while ((call = list_first_entry_or_null(&rx->recvmsg_q,
-+						struct rxrpc_call, recvmsg_link))) {
-+		list_del_init(&call->recvmsg_link);
-+		rxrpc_put_call(call, rxrpc_call_put);
-+	}
-+
- 	_leave("");
+-	return (ino & (AUDIT_INODE_BUCKETS-1));
++	return ((u32)ino & (AUDIT_INODE_BUCKETS-1));
  }
  
---- a/net/rxrpc/recvmsg.c
-+++ b/net/rxrpc/recvmsg.c
-@@ -29,6 +29,10 @@ void rxrpc_notify_socket(struct rxrpc_ca
+ /* Indicates that audit should log the full pathname. */
+@@ -263,8 +263,7 @@ extern int audit_to_watch(struct audit_k
+ extern int audit_add_watch(struct audit_krule *krule, struct list_head **list);
+ extern void audit_remove_watch_rule(struct audit_krule *krule);
+ extern char *audit_watch_path(struct audit_watch *watch);
+-extern int audit_watch_compare(struct audit_watch *watch, unsigned long ino,
+-			       dev_t dev);
++extern int audit_watch_compare(struct audit_watch *watch, u64 ino, dev_t dev);
  
- 	if (!list_empty(&call->recvmsg_link))
- 		return;
-+	if (test_bit(RXRPC_CALL_RELEASED, &call->flags)) {
-+		rxrpc_see_call(call);
-+		return;
-+	}
+ extern struct audit_fsnotify_mark *audit_alloc_mark(struct audit_krule *krule,
+ 						    char *pathname, int len);
+--- a/kernel/audit_fsnotify.c
++++ b/kernel/audit_fsnotify.c
+@@ -25,7 +25,7 @@
+  */
+ struct audit_fsnotify_mark {
+ 	dev_t dev;		/* associated superblock device */
+-	unsigned long ino;	/* associated inode number */
++	u64 ino;		/* associated inode number */
+ 	char *path;		/* insertion path */
+ 	struct fsnotify_mark mark; /* fsnotify mark on the inode */
+ 	struct audit_krule *rule;
+--- a/kernel/audit_watch.c
++++ b/kernel/audit_watch.c
+@@ -37,7 +37,7 @@ struct audit_watch {
+ 	refcount_t		count;	/* reference count */
+ 	dev_t			dev;	/* associated superblock device */
+ 	char			*path;	/* insertion path */
+-	unsigned long		ino;	/* associated inode number */
++	u64			ino;	/* associated inode number */
+ 	struct audit_parent	*parent; /* associated parent */
+ 	struct list_head	wlist;	/* entry in parent->watches list */
+ 	struct list_head	rules;	/* anchor for krule->rlist */
+@@ -125,7 +125,7 @@ char *audit_watch_path(struct audit_watc
+ 	return watch->path;
+ }
  
- 	rcu_read_lock();
+-int audit_watch_compare(struct audit_watch *watch, unsigned long ino, dev_t dev)
++int audit_watch_compare(struct audit_watch *watch, u64 ino, dev_t dev)
+ {
+ 	return (watch->ino != AUDIT_INO_UNSET) &&
+ 		(watch->ino == ino) &&
+@@ -284,7 +284,7 @@ static void audit_update_watch(struct au
+ 				list_del(&oentry->rule.list);
+ 				audit_panic("error updating watch, removing");
+ 			} else {
+-				int h = audit_hash_ino((u32)ino);
++				int h = audit_hash_ino(ino);
  
+ 				/*
+ 				 * nentry->rule.watch == oentry->rule.watch so
+@@ -438,7 +438,7 @@ int audit_add_watch(struct audit_krule *
+ 
+ 	audit_add_to_parent(krule, parent);
+ 
+-	h = audit_hash_ino((u32)watch->ino);
++	h = audit_hash_ino(watch->ino);
+ 	*list = &audit_inode_hash[h];
+ error:
+ 	path_put(&parent_path);
+@@ -526,7 +526,7 @@ int audit_dupe_exe(struct audit_krule *n
+ int audit_exe_compare(struct task_struct *tsk, struct audit_fsnotify_mark *mark)
+ {
+ 	struct file *exe_file;
+-	unsigned long ino;
++	u64 ino;
+ 	dev_t dev;
+ 
+ 	/* only do exe filtering if we are recording @current events/records */
+--- a/kernel/auditsc.c
++++ b/kernel/auditsc.c
+@@ -837,7 +837,7 @@ static enum audit_state audit_filter_sys
+ static int audit_filter_inode_name(struct task_struct *tsk,
+ 				   struct audit_names *n,
+ 				   struct audit_context *ctx) {
+-	int h = audit_hash_ino((u32)n->ino);
++	int h = audit_hash_ino(n->ino);
+ 	struct list_head *list = &audit_inode_hash[h];
+ 	struct audit_entry *e;
+ 	enum audit_state state;
+@@ -1431,7 +1431,7 @@ static void audit_log_name(struct audit_
+ 		audit_log_format(ab, " name=(null)");
+ 
+ 	if (n->ino != AUDIT_INO_UNSET)
+-		audit_log_format(ab, " inode=%lu dev=%02x:%02x mode=%#ho ouid=%u ogid=%u rdev=%02x:%02x",
++		audit_log_format(ab, " inode=%llu dev=%02x:%02x mode=%#ho ouid=%u ogid=%u rdev=%02x:%02x",
+ 				 n->ino,
+ 				 MAJOR(n->dev),
+ 				 MINOR(n->dev),
 
 
