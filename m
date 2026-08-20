@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6C844062A;
-	Thu, 20 Aug 2026 17:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF5A47F2FA;
+	Thu, 20 Aug 2026 17:50:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248219; cv=none; b=IOyVjrmr/jJkOuQv7Fx8K5Xwi4r8KB+X+LAY+R1NaFEHBj5sCcWtOPnNG6aAyWKk9r6eWQTn+MeCBy7mwLDW9y07Pnb4TSbo8Ygz7kfO43DV6fAUGqHEg8iTLye/6NlWbiTIhGQ6GFviYIkHnpJFi8uNGWAYMw8havON8t3U0hU=
+	t=1787248222; cv=none; b=NxWCUn+ggcNiJRwWLo4ns1vvMkleQCny7xMdf21dHAYQ3sdFw4JC2mApIj75WJMzIeVoMIMVponXR39bbx2FZLaeQc03Q8eLiWW+1UJpLIfqlAKe2Co57ny2YLgUx9/KCGRST7DI7HfW0k9bccZjNnMRAp7B1jkrVszH0kwLFWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248219; c=relaxed/simple;
-	bh=+mPZs+Wt+6lRq9YAAfrqI6B3bA5onW/m+ZhxOxoMs8E=;
+	s=arc-20240116; t=1787248222; c=relaxed/simple;
+	bh=GWrxvSXjxY20fxR315LvY6tM6TPPpNNVwetQSv4Jd+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JsIVayRGK+4M8sNT4P8Jh6bKiRjJdnrtSuyxY6MPU/rmySn8May3rRymDrM2ZzzcYnoVTBE1DwuDpeiDrYdxDQaef+p01Mk+fdav6x29NYR59m+YiOdpKk3sXf0YwpdYJncGXRpu9MmHpqntDjcYHlgb8Jn6Z5ArkfYxnKKGe/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTK8y2S6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QPke2/JwQYuAa8LYv1Y4d/TWcFV15HwpFDdi2sY9b4DVC/FBYNfeoEQphbQC+RyNwyzFjFYxNxvqhaUZc8wLDW1uQMtenGlS/weyqP0YrTA+hQdjo6BSBul9bMXNIPP+X1H/W8IkEdVXoTH4GIJrCu7AkSBhUi8EmYgjexCYtiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvj/5HzM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTK8y2S6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C021F000E9;
-	Thu, 20 Aug 2026 17:50:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvj/5HzM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B80A01F000E9;
+	Thu, 20 Aug 2026 17:50:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248218;
-	bh=6n0zjVnIPy8tWJzI+p7zlL+b8cmm2nA5nIEaskW6emE=;
+	s=korg; t=1787248221;
+	bh=mGuUZA6E+4JN2EjecJQAGza+xWTLZJIGG1XmAqCbG44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vTK8y2S6g38tpviVinNbMDFAidLyRnZjszT+bTI2XJcDXrbYKz/WKL3IogCUZR8Sc
-	 RcDaPq79CpMK8b+S7LUoZjRndzNvxtXcvDvdF8n+onCsXYv2fPwfTfjEM+14ZSXy+m
-	 LiVBB1v59qwefhNvjw+wmdgegEvct89kaSJyPC1c=
+	b=dvj/5HzMnCT93dcFzhMXdkSJKzHh27pHVZ5jJXQwlYYBDF6vA8ek3LAYQcHKJ9qYa
+	 o2m2xpVUGNtFl4Zh52Pm9JAph/bbFeLwe88r5RG5LqqoBX89Xpc8/H+JgtY55H3C3z
+	 0sms4LxBJ7ngdeqVOPNpuyCRxI1gkqJO9s6CPGak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 102/303] netfilter: nft_set_pipapo: prepare walk function for on-demand clone
-Date: Thu, 20 Aug 2026 16:53:58 +0200
-Message-ID: <20260820145256.352794890@linuxfoundation.org>
+	Binbin Zhou <zhoubinbin@loongson.cn>,
+	Johan Hovold <johan@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 145/303] mmc: vub300: fix use-after-free on disconnect
+Date: Thu, 20 Aug 2026 16:54:41 +0200
+Message-ID: <20260820145257.641668420@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -52,128 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 6c108d9bee448a850b03e682836bfe91fca645cb ]
+The vub300 driver maintains an explicit reference count for the
+controller and its driver data and the last reference can in theory be
+dropped after the driver has been unbound.
 
-The existing code uses iter->type to figure out what data is needed, the
-live copy (READ) or clone (UPDATE).
+This specifically means that the controller allocation must not be
+device managed as that can lead to use-after-free.
 
-Without pending updates, priv->clone and priv->match will point to
-different memory locations, but they have identical content.
+Note that the lifetime is currently also incorrectly tied the parent USB
+device rather than interface, which can lead to memory leaks if the
+driver is unbound without its device being physically disconnected (e.g.
+on probe deferral).
 
-Future patch will make priv->clone == NULL if there are no pending changes,
-in this case we must copy the live data for the UPDATE case.
+Fix both issues by reverting to non-managed allocation of the controller.
 
-Currently this would require GFP_ATOMIC allocation.  Split the walk
-function in two parts: one that does the walk and one that decides which
-data is needed.
-
-In the UPDATE case, callers hold the transaction mutex so we do not need
-the rcu read lock.  This allows to use GFP_KERNEL allocation while
-cloning.
-
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 47e65eff5069 ("netfilter: nft_set_pipapo: don't leak bad clone into future transaction")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: dcfdd698dc52 ("mmc: vub300: Use devm_mmc_alloc_host() helper")
+Cc: stable@vger.kernel.org # 6.17+
+Cc: Binbin Zhou <zhoubinbin@loongson.cn>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+(cherry picked from commit 8f4d20a710225ec7a565f6a0459862d3b1f32330)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_set_pipapo.c |   60 ++++++++++++++++++++++++++---------------
- 1 file changed, 39 insertions(+), 21 deletions(-)
+ drivers/mmc/host/vub300.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -2110,35 +2110,23 @@ static void nft_pipapo_remove(const stru
- }
- 
- /**
-- * nft_pipapo_walk() - Walk over elements
-+ * nft_pipapo_do_walk() - Walk over elements in m
-  * @ctx:	nftables API context
-  * @set:	nftables API set representation
-+ * @m:		matching data pointing to key mapping array
-  * @iter:	Iterator
-  *
-  * As elements are referenced in the mapping array for the last field, directly
-  * scan that array: there's no need to follow rule mappings from the first
-- * field.
-+ * field. @m is protected either by RCU read lock or by transaction mutex.
-  */
--static void nft_pipapo_walk(const struct nft_ctx *ctx, struct nft_set *set,
--			    struct nft_set_iter *iter)
-+static void nft_pipapo_do_walk(const struct nft_ctx *ctx, struct nft_set *set,
-+			       const struct nft_pipapo_match *m,
-+			       struct nft_set_iter *iter)
- {
--	struct nft_pipapo *priv = nft_set_priv(set);
--	const struct nft_pipapo_match *m;
- 	const struct nft_pipapo_field *f;
- 	int i, r;
- 
--	WARN_ON_ONCE(iter->type != NFT_ITER_READ &&
--		     iter->type != NFT_ITER_UPDATE);
--
--	rcu_read_lock();
--	if (iter->type == NFT_ITER_READ)
--		m = rcu_dereference(priv->match);
--	else
--		m = priv->clone;
--
--	if (unlikely(!m))
--		goto out;
--
- 	for (i = 0, f = m->f; i < m->field_count - 1; i++, f++)
- 		;
- 
-@@ -2158,14 +2146,44 @@ static void nft_pipapo_walk(const struct
- 
- 		iter->err = iter->fn(ctx, set, iter, &elem);
- 		if (iter->err < 0)
--			goto out;
-+			return;
- 
- cont:
- 		iter->count++;
+--- a/drivers/mmc/host/vub300.c
++++ b/drivers/mmc/host/vub300.c
+@@ -2281,7 +2281,7 @@ static int vub300_probe(struct usb_inter
+ 		dev_err(&vub300->udev->dev,
+ 		    "Could not find two sets of bulk-in/out endpoint pairs\n");
+ 		retval = -EINVAL;
+-		goto error5;
++		goto err_free_host;
  	}
-+}
- 
--out:
--	rcu_read_unlock();
-+/**
-+ * nft_pipapo_walk() - Walk over elements
-+ * @ctx:	nftables API context
-+ * @set:	nftables API set representation
-+ * @iter:	Iterator
-+ *
-+ * Test if destructive action is needed or not, clone active backend if needed
-+ * and call the real function to work on the data.
-+ */
-+static void nft_pipapo_walk(const struct nft_ctx *ctx, struct nft_set *set,
-+			    struct nft_set_iter *iter)
-+{
-+	struct nft_pipapo *priv = nft_set_priv(set);
-+	const struct nft_pipapo_match *m;
-+
-+	switch (iter->type) {
-+	case NFT_ITER_UPDATE:
-+		m = priv->clone;
-+		nft_pipapo_do_walk(ctx, set, m, iter);
-+		break;
-+	case NFT_ITER_READ:
-+		rcu_read_lock();
-+		m = rcu_dereference(priv->match);
-+		nft_pipapo_do_walk(ctx, set, m, iter);
-+		rcu_read_unlock();
-+		break;
-+	default:
-+		iter->err = -EINVAL;
-+		WARN_ON_ONCE(1);
-+		break;
-+	}
- }
- 
- /**
+ 	retval =
+ 		usb_control_msg(vub300->udev, usb_rcvctrlpipe(vub300->udev, 0),
+@@ -2290,14 +2290,14 @@ static int vub300_probe(struct usb_inter
+ 				0x0000, 0x0000, &vub300->hc_info,
+ 				sizeof(vub300->hc_info), 1000);
+ 	if (retval < 0)
+-		goto error5;
++		goto err_free_host;
+ 	retval =
+ 		usb_control_msg(vub300->udev, usb_sndctrlpipe(vub300->udev, 0),
+ 				SET_ROM_WAIT_STATES,
+ 				USB_DIR_OUT | USB_TYPE_VENDOR | USB_RECIP_DEVICE,
+ 				firmware_rom_wait_states, 0x0000, NULL, 0, 1000);
+ 	if (retval < 0)
+-		goto error5;
++		goto err_free_host;
+ 	dev_info(&vub300->udev->dev,
+ 		 "operating_mode = %s %s %d MHz %s %d byte USB packets\n",
+ 		 (mmc->caps & MMC_CAP_SDIO_IRQ) ? "IRQs" : "POLL",
+@@ -2312,7 +2312,7 @@ static int vub300_probe(struct usb_inter
+ 				0x0000, 0x0000, &vub300->system_port_status,
+ 				sizeof(vub300->system_port_status), 1000);
+ 	if (retval < 0) {
+-		goto error5;
++		goto err_free_host;
+ 	} else if (sizeof(vub300->system_port_status) == retval) {
+ 		vub300->card_present =
+ 			(0x0001 & vub300->system_port_status.port_flags) ? 1 : 0;
+@@ -2320,7 +2320,7 @@ static int vub300_probe(struct usb_inter
+ 			(0x0010 & vub300->system_port_status.port_flags) ? 1 : 0;
+ 	} else {
+ 		retval = -EINVAL;
+-		goto error5;
++		goto err_free_host;
+ 	}
+ 	usb_set_intfdata(interface, vub300);
+ 	INIT_DELAYED_WORK(&vub300->pollwork, vub300_pollwork_thread);
+@@ -2350,7 +2350,7 @@ static int vub300_probe(struct usb_inter
+ 	return 0;
+ error6:
+ 	del_timer_sync(&vub300->inactivity_timer);
+-error5:
++err_free_host:
+ 	mmc_free_host(mmc);
+ 	/*
+ 	 * and hence also frees vub300
 
 
