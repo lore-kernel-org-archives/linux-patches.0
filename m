@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB24F2874E6;
-	Thu, 20 Aug 2026 15:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C074037E2ED;
+	Thu, 20 Aug 2026 15:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238440; cv=none; b=mHy2zuVOky+xDUkL9pm98MVyxff5lxHTEW/XCn5a7TbNss9nM7+A/+DhXG3vJG2DNjZZqP33Oujf6EVpg/z78ldGxGT5j4l0bpA+NJz12WH92Jit87691OyaUCXBljLi9tXhfG6v81H4CERSR84AYPkY3lqw/xkS77aaZqU8bko=
+	t=1787238442; cv=none; b=EY3w/a61r2mqDD3vGOrVbFxQ2jRV6sN8/Zn2CJXEpTnjm4R4xPNZA8GHa6BZLbUQEqo2BnlnZhc7xo3lRNL6o7nMofMGvg/YGhoh7OYiJWDMvq7K9JzUF9Dkli/GrIvhfzcWyyLJjYBpZ+1OTd0prquh7jMKEQtS6MhGQU0ggOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238440; c=relaxed/simple;
-	bh=s2W5nOeQmC6uuh+WF8QpRb2pYvQXo6yr7IzeNCDmye0=;
+	s=arc-20240116; t=1787238442; c=relaxed/simple;
+	bh=8KbvEQJzDYmaUyV92JR0h69JcfnCo0qrjtiKeivFJ30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PibbO9/3p9J7iBfc98fT1LCdUhsPhxehWouztSihqBZIwQJLCOGd41oKVJLmQPc1j0WYtRrPc+QHdrTSPOVcXazJmO1B5PpuWUJd3DvRsmRHNC6ETPUL0kJJteLjLb2b5Vkn+raetrMbC9TVueE7lIsjqghRL6EEg+DSnw2l0Uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7r9kkJ1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MsXXfufwWrk/Up8WATuxFM0bIvHQf0xLHad8dQJRSh0TQi6GCVf+bbtjbh4yJ++EVlfuXT1qGOWojLsD6tw7XVhoAO6HAzsnWCqlRpBvYuvjEQlb8D2DjsIlTtkpR0qBKk6nkdatla4sc1w/KHEA0Hxy2LP9NWhIO44GAE8Ze2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIGAAOzQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7r9kkJ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48EA31F000E9;
-	Thu, 20 Aug 2026 15:07:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIGAAOzQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243F91F00A3A;
+	Thu, 20 Aug 2026 15:07:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238438;
-	bh=DNxQRzT7iImIuyF16dXdxdolWOFLnAgRXtJSUuZjtds=;
+	s=korg; t=1787238441;
+	bh=0aoPpp+19CTCJHPDQyJWglgv2yErlzPM59mu1IPgTi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r7r9kkJ1j89DgBMkgGWv0p3QHHrnhBXvxObvLUgPcQlUWGNdjXXcRaZ7PiOHe9sIH
-	 uuAyqt8niB2JCIxTFNr4wYUqmJB+/is/pdLAHvSXIQ7WmLEsP0LPx5FprCNJhxCZAb
-	 6TtNlQChYBrSZ8iupC+0BPmNAuL9EB1N7Mpmdq9c=
+	b=qIGAAOzQG6GoXtpYF52B61gXo8MPRueIoFcNjbvxzJpWSs6CVzUhvZIkwwIAC/wct
+	 0amBI5GkdjrTQ3NQ0lycvg/5nYx/jxTCyVCoar2UspaFwZGjM+lJDkoJts2fJdtZOY
+	 43Cr73sU2WfO+ARHbjllSMB2tRKmw3bT+2nHOFjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Eric Farman <farman@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 7.1 099/228] s390/vfio_ccw: Ensure first IDAW remains constant
-Date: Thu, 20 Aug 2026 16:54:01 +0200
-Message-ID: <20260820145247.660784741@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 7.1 142/228] xfs: fix allocated inodes that show up in the unlinked list
+Date: Thu, 20 Aug 2026 16:54:44 +0200
+Message-ID: <20260820145248.920149217@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -51,84 +51,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Farman <farman@linux.ibm.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 565bef268d75bf7df665bce6923a88cd0eb74592 upstream.
+commit 68ab37650ce5195b4f4f8466444a36a78207840c upstream.
 
-The first IDAW in a list does not need to be on a 2K/4K boundary
-like all others, and so is read separately to accurately calculate
-the size of the buffer needed to read the full IDAL.
+If an allocated inode shows up in the unlinked list, we need to get it
+completely off the list.  Set the corrected next/prev pointers such that
+the inode will not look like it should be on an unlinked list at all.
 
-Verify that the address found in the first IDAW is unchanged between
-reads, to ensure a consistent set of IDAWs being worked with.
-
-Fixes: 01aa26c672c0 ("s390/cio: Combine direct and indirect CCW paths")
-Cc: stable@vger.kernel.org
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: stable@vger.kernel.org # v6.10
+Fixes: ab97f4b1c03075 ("xfs: repair AGI unlinked inode bucket lists")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/vfio_ccw_cp.c |   16 ++++++++++++++++
- drivers/s390/cio/vfio_ccw_cp.h |    2 ++
- 2 files changed, 18 insertions(+)
+ fs/xfs/scrub/agheader_repair.c |   63 ++++++++++++++++++++++++++++++++++++-----
+ fs/xfs/scrub/trace.h           |    1 
+ 2 files changed, 57 insertions(+), 7 deletions(-)
 
---- a/drivers/s390/cio/vfio_ccw_cp.c
-+++ b/drivers/s390/cio/vfio_ccw_cp.c
-@@ -530,6 +530,7 @@ static dma64_t *get_guest_idal(struct cc
- 		&container_of(cp, struct vfio_ccw_private, cp)->vdev;
- 	dma64_t *idaws;
- 	dma32_t *idaws_f1;
-+	u64 first_idaw;
- 	int idal_len = idaw_nr * sizeof(*idaws);
- 	int idaw_size = idal_is_2k(cp) ? PAGE_SIZE / 2 : PAGE_SIZE;
- 	int idaw_mask = ~(idaw_size - 1);
-@@ -546,6 +547,18 @@ static dma64_t *get_guest_idal(struct cc
- 			kfree(idaws);
- 			return ERR_PTR(ret);
+--- a/fs/xfs/scrub/agheader_repair.c
++++ b/fs/xfs/scrub/agheader_repair.c
+@@ -980,6 +980,13 @@ err:
+ }
+ 
+ /*
++ * Magic value that means "not unlinked" because xfarrays don't support storing
++ * totally zeroed elements.  There can't be a cluster that starts in daddr 0 so
++ * there can't be an inode #1 either.
++ */
++#define LINKED_AGINO	(0x1)
++
++/*
+  * Record a forwards unlinked chain pointer from agino -> next_agino in our
+  * staging information.
+  */
+@@ -1355,6 +1362,35 @@ xrep_iunlink_resolve_bucket(
+ 			break;
  		}
+ 
++		if (VFS_I(ip)->i_nlink != 0) {
++			/*
++			 * Inode is linked somewhere!  Blow out both unlinked
++			 * list pointers, advance the list, and pretend we
++			 * didn't see this inode.  Clear it from iunlink_bmp
++			 * because it's linked.
++			 */
++			trace_xrep_iunlink_resolve_allocated(sc->sa.pag,
++					bucket, prev_agino, next_agino);
 +
-+		idaws_f1 = (dma32_t *)idaws;
-+		if (cp->orb.cmd.c64)
-+			first_idaw = dma64_to_u64(idaws[0]);
-+		else
-+			first_idaw = dma32_to_u32(idaws_f1[0]);
++			error = xrep_iunlink_store_next(ragi, next_agino,
++					NULLAGINO);
++			if (error)
++				return error;
 +
-+		/* Unexpected mismatch from earlier read */
-+		if (first_idaw != cp->guest_iova) {
-+			kfree(idaws);
-+			return ERR_PTR(-EINVAL);
++			error = xrep_iunlink_store_prev(ragi, next_agino,
++					LINKED_AGINO);
++			if (error)
++				return error;
++
++			error = xagino_bitmap_clear(&ragi->iunlink_bmp,
++					next_agino, 1);
++			if (error)
++				return error;
++
++			next_agino = ip->i_next_unlinked;
++			continue;
 +		}
- 	} else {
- 		/* Fabricate an IDAL based off CCW data address */
- 		if (cp->orb.cmd.c64) {
-@@ -611,6 +624,9 @@ static int ccw_count_idaws(struct ccw1 *
- 		iova = dma32_to_u32(ccw->cda);
++
+ 		if (next_agino % XFS_AGI_UNLINKED_BUCKETS != bucket) {
+ 			/*
+ 			 * Inode is in the wrong bucket.  Advance the list,
+@@ -1537,6 +1573,24 @@ xrep_iunlink_rebuild_buckets(
+ 			xrep_iunlink_add_lost_inodes, ragi);
+ }
+ 
++static inline void
++set_inode_prev_unlinked(
++	struct xfs_inode	*ip,
++	xfs_agino_t		prev_agino)
++{
++	/*
++	 * Magic value that means "not unlinked" because xfarrays don't support
++	 * storing totally zeroed elements.
++	 */
++	if (prev_agino == LINKED_AGINO)
++		prev_agino = 0;
++
++	if (ip->i_prev_unlinked != prev_agino) {
++		trace_xrep_iunlink_relink_prev(ip, prev_agino);
++		ip->i_prev_unlinked = prev_agino;
++	}
++}
++
+ /* Update i_next_iunlinked for the inode @agino. */
+ STATIC int
+ xrep_iunlink_relink_next(
+@@ -1570,8 +1624,7 @@ xrep_iunlink_relink_next(
+ 		if (error)
+ 			goto out_rele;
+ 
+-		trace_xrep_iunlink_relink_prev(ip, prev_agino);
+-		ip->i_prev_unlinked = prev_agino;
++		set_inode_prev_unlinked(ip, prev_agino);
  	}
  
-+	/* Save the read address for later */
-+	cp->guest_iova = iova;
-+
- 	/* Format-1 IDAWs operate on 2K each */
- 	if (!cp->orb.cmd.c64)
- 		return idal_2k_nr_words((void *)iova, bytes);
---- a/drivers/s390/cio/vfio_ccw_cp.h
-+++ b/drivers/s390/cio/vfio_ccw_cp.h
-@@ -35,6 +35,7 @@
-  * @initialized: whether this instance is actually initialized
-  * @guest_cp: copy of guest channel program
-  * @ccwchain_count: number of channel program segments (linked by TIC)
-+ * @guest_iova: first data address of a guest channel program
-  *
-  * @ccwchain_list is the head of a ccwchain list, that contents the
-  * translated result of the guest channel program that pointed out by
-@@ -46,6 +47,7 @@ struct channel_program {
- 	bool initialized;
- 	struct ccw1 *guest_cp;
- 	unsigned int ccwchain_count;
-+	u64 guest_iova;
- };
+ 	/* Update the forward pointer. */
+@@ -1638,11 +1691,7 @@ xrep_iunlink_relink_prev(
+ 		ip->i_next_unlinked = next_agino;
+ 	}
  
- int cp_init(struct channel_program *cp, union orb *orb);
+-	/* Update the backward pointer. */
+-	if (ip->i_prev_unlinked != prev_agino) {
+-		trace_xrep_iunlink_relink_prev(ip, prev_agino);
+-		ip->i_prev_unlinked = prev_agino;
+-	}
++	set_inode_prev_unlinked(ip, prev_agino);
+ 
+ out_rele:
+ 	/*
+--- a/fs/xfs/scrub/trace.h
++++ b/fs/xfs/scrub/trace.h
+@@ -3583,6 +3583,7 @@ DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep
+ DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_wronglist);
+ DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_nolist);
+ DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_ok);
++DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_allocated);
+ 
+ TRACE_EVENT(xrep_iunlink_relink_next,
+ 	TP_PROTO(struct xfs_inode *ip, xfs_agino_t next_agino),
 
 
