@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9EB43030D;
-	Thu, 20 Aug 2026 17:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3403815E3;
+	Thu, 20 Aug 2026 17:39:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247548; cv=none; b=rVn2t99YcEKwul/62i+e/HYKBt7H21/0GQeCjFpF2qj6fNXB3O9lP9bWp6HMrAUvil4tcf8qHhC/wxTkDPl3EA0kmK2uwYLsvSOxK48dlTgThcnOV3DfLQVMhx1u63A7/2KyQarWdPoWEVDr3veuv4qgqFQRbngqCjyGmphH3Iw=
+	t=1787247551; cv=none; b=Rw0HZlcH5nOFRUuHK1/ZR0xyk8Yykp+pLFvgM7b2WVdEvSpzxlR8NlFoSt+RP1o+Ow6s2CEFfI2B6/eQ/l4oTS+t8qEYEL/R3x7gKLu8GGzPOs+mgV+eAXmsKrfYeA363YT9UQ1O7BME0bvKCHooOJnUHZH6nn4aezRxs32ckcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247548; c=relaxed/simple;
-	bh=KnqA8BQi91N6Ym8F8uV9FCAXcfFYWPEZxa7zYOhCaN4=;
+	s=arc-20240116; t=1787247551; c=relaxed/simple;
+	bh=L2GgR2Dsim6km+XKAR4cZLR3Hs2CmxBhpDNPIu1Peh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WDORZ34GZs82YOgUMOSy5ceHuFWI4C/gfLTOHFTRoQMN6/B6/1aB0pLRxLKJrOk40h13to88cg/4dHy+P2YLND/QHB3QQDH98uf4ffdvKd17qPLUHlWxldavT3yhJVjVPjnrpB6wF3vWEh7PrVXBRCEffDLFayNTduRKF9MjgKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwSHRFNc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tmypdRS1YQ/AClXBM5luTTq4Y8VV4NEaU73rcJdD9N4C7h3LbQlub2cNVAyjyNpqyBcth5U6ITapxAhvlPokgYzRNfjrcmRvn2/tY7LLF4r7oSmeu/WOYLLIzE94y1buLfIu19sBSCbur/eoxoOJ4Vqk0rp8UlLamvPZzf0UVrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FMWuwrwe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwSHRFNc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15DF41F000E9;
-	Thu, 20 Aug 2026 17:39:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FMWuwrwe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EABE91F000E9;
+	Thu, 20 Aug 2026 17:39:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247547;
-	bh=9h/Vns7hc/2/F+q94mcvcSrbfc+gxiO+CX2BFOfXGPs=;
+	s=korg; t=1787247550;
+	bh=AyOzeTWFi+Cwvgwy2rJz8fo65jX9zYIxyKndhDXS/Pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AwSHRFNcM/WJGotY+R+p67Rbs+WhJhQcJUJq9PFA/1Ezae1RkoJv1IdcNqo0mB/EB
-	 Xmmx2/V3FS33m7OJJ+W6tYNo3BaZvQ3l+Wt5+0ts99qR4hUsHMB1Zc+OS/7YvG+BpI
-	 m1k9aTZ/Q86UNFcSzyA3Yme/19X/BXgm0f4Sfa8w=
+	b=FMWuwrwedRdsScNZDCiRL47qRtriMC5G85LjIU7ReUNGEhbSEVIhV4LYzyyi/ZGX9
+	 wXJKDXdZfoipg9I6avwrj+tHNaxEqHUoXwOiNX+ggIU9F6B5z4Gk0GYByDw3/t42x0
+	 Vo57QX7Q+PQJ6vnovwRYxT5QkEBKog0ICq8nUlgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 085/166] net/sched: serialize qdisc_rtab_list against concurrent get/put
-Date: Thu, 20 Aug 2026 16:55:44 +0200
-Message-ID: <20260820145213.710072285@linuxfoundation.org>
+Subject: [PATCH 6.6 086/166] super: fix emergency thaw deadlock on frozen block devices
+Date: Thu, 20 Aug 2026 16:55:45 +0200
+Message-ID: <20260820145213.740039939@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -53,134 +50,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit f43ee0c0730d6191629b5ee1ceae27b1ebfdc047 ]
+[ Upstream commit 749d7aa0377aae32af8c0a4ad43371e7bf830ab5 ]
 
-qdisc_get_rtab() and qdisc_put_rtab() mutate the process-global singly
-linked list qdisc_rtab_list and a plain non-atomic 'int refcnt' with no
-lock. This was only safe because every caller historically held the RTNL
-mutex, which serialized all rate-table lookups, inserts and frees.
+do_thaw_all_callback() calls bdev_thaw() while holding sb->s_umount
+exclusively. If the block device was frozen via bdev_freeze() dropping
+the last block layer freeze reference calls fs_bdev_thaw() which
+reacquires s_umount:
 
-That invariant no longer holds. cls_flower sets
-TCF_PROTO_OPS_DOIT_UNLOCKED, so tc_new_tfilter() keeps rtnl_held == false
-for it and sets TCA_ACT_FLAGS_NO_RTNL. That flag propagates through
-tcf_exts_validate_ex() -> tcf_action_init() -> tcf_action_init_1() ->
-tcf_police_init(), which calls qdisc_get_rtab()/qdisc_put_rtab() with the
-RTNL mutex NOT held. Two RTM_NEWTFILTER requests on different CPUs, each
-adding a flower filter with a police action carrying the same rate, then
-race on qdisc_rtab_list and on the non-atomic refcnt, leading to a
-use-after-free / double-free of the kmalloc-2k struct qdisc_rate_table.
-qdisc_rtab_list is a single global (not per-netns), so the corrupted
-object is shared system-wide.
+  do_thaw_all_callback(sb)
+    super_lock_excl(sb)                     # holds sb->s_umount
+    bdev_thaw(sb->s_bdev)
+      mutex_lock(&bdev->bd_fsfreeze_mutex)
+      # bd_fsfreeze_count drops 1 -> 0
+      bd_holder_ops->thaw == fs_bdev_thaw
+        get_bdev_super(bdev)
+          bdev_super_lock(bdev, true)
+            super_lock(sb, true)
+              down_write(&sb->s_umount)     # same task: deadlock
 
-  BUG: KASAN: slab-use-after-free in qdisc_put_rtab+0x12f/0x160
-   qdisc_put_rtab+0x12f/0x160
-   tcf_police_init+0xda9/0x1590
-   tcf_action_init_1+0x460/0x6b0
-   tcf_action_init+0x439/0xa40
-   tcf_exts_validate_ex+0x42d/0x550
-   fl_change+0xddd/0x7da0
-   tc_new_tfilter+0xaa7/0x2420
-   rtnetlink_rcv_msg+0x95e/0xe90
-  which belongs to the cache kmalloc-2k of size 2048
+The emergency thaw worker deadlocks against itself holding both
+s_umount and bd_fsfreeze_mutex. That fscks any subsequent unmount,
+freeze, or thaw of that filesystem and block device.
 
-Protect qdisc_rtab_list and the refcount with a dedicated spinlock. The
-(sleeping, GFP_KERNEL) allocation in qdisc_get_rtab() is performed before
-taking the lock; if a concurrent inserter added an identical table in the
-meantime the freshly allocated one is freed under the lock, so no
-duplicate is leaked. qdisc_put_rtab() now decrements the refcount and
-unlinks under the same lock.
+  [   81.878470] sysrq: Show Blocked State
+  [   81.880140] task:kworker/0:1     state:D stack:0     pid:11    tgid:11    ppid:2      task_flags:0x4208060 flags:0x00080000
+  [   81.884876] Workqueue: events do_thaw_all
+  [   81.886656] Call Trace:
+  [   81.887759]  <TASK>
+  [   81.888763]  __schedule+0x579/0x1420
+  [   81.890372]  schedule+0x3a/0x100
+  [   81.891794]  schedule_preempt_disabled+0x15/0x30
+  [   81.893848]  rwsem_down_write_slowpath+0x1ea/0x900
+  [   81.895191]  ? __pfx_do_thaw_all_callback+0x10/0x10
+  [   81.896528]  down_write+0xbd/0xc0
+  [   81.897505]  super_lock+0x91/0x180
+  [   81.898457]  ? __mutex_lock+0xa99/0x1140
+  [   81.900748]  ? __mutex_unlock_slowpath+0x1f/0x400
+  [   81.902069]  bdev_super_lock+0x5b/0x150
+  [   81.903132]  get_bdev_super+0x10/0x60
+  [   81.904042]  fs_bdev_thaw+0x23/0xf0
+  [   81.904755]  bdev_thaw+0x82/0x100
+  [   81.905484]  do_thaw_all_callback+0x2c/0x50
+  [   81.906298]  __iterate_supers+0x5d/0x130
+  [   81.907067]  do_thaw_all+0x20/0x40
+  [   81.907739]  process_one_work+0x206/0x5e0
+  [   81.908545]  worker_thread+0x1e2/0x3c0
+  [   81.909339]  ? __pfx_worker_thread+0x10/0x10
+  [   81.910171]  kthread+0xf4/0x130
+  [   81.910799]  ? __pfx_kthread+0x10/0x10
+  [   81.911528]  ret_from_fork+0x2e2/0x3b0
+  [   81.912259]  ? __pfx_kthread+0x10/0x10
+  [   81.913010]  ret_from_fork_asm+0x1a/0x30
+  [   81.913806]  </TASK>
 
-Fixes: 470502de5bdb ("net: sched: unlock rules update API")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+bdev_super_lock() even documents the violated requirement with
+lockdep_assert_not_held(&sb->s_umount).
+
+Acquiring bd_fsfreeze_mutex under s_umount also inverts the
+bd_fsfreeze_mutex vs. s_umount ordering established by
+bdev_{freeze,thaw}() and can thus ABBA against a concurrent block-layer
+freeze even when the recursive path isn't hit.
+
+Fix this by not holding s_umount around the bdev_thaw() loop at all. Pin
+the superblock with an active reference instead as
+filesystems_freeze_callback() does. The active reference keeps the
+superblock from being shut down and so ->s_bdev stays valid without
+holding s_umount. The block-layer-held freeze is dropped by
+fs_bdev_thaw() with FREEZE_MAY_NEST | FREEZE_HOLDER_USERSPACE exactly as
+a regular unfreeze would and thaw_super_locked() handles
+filesystem-level freezes as before.
+
+The emergency thaw path has deadlocked like this in one form or
+another for a long long time but the current exclusively-held
+shape dates back to commit [1] where thaw_bdev() already ended in
+thaw_super() with s_umount held by do_thaw_all_callback().
+
+Fixes: 08fdc8a0138a ("buffer.c: call thaw_super during emergency thaw") [1]
 Cc: stable@vger.kernel.org
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260715114114.446841-1-qwe.aldo@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260723-work-super-emergency_thaw-v1-1-7c315c600245@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_api.c |   24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ fs/super.c |   22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -413,12 +413,13 @@ static __u8 __detect_linklayer(struct tc
- }
+--- a/fs/super.c
++++ b/fs/super.c
+@@ -1217,16 +1217,24 @@ void emergency_remount(void)
  
- static struct qdisc_rate_table *qdisc_rtab_list;
-+static DEFINE_SPINLOCK(qdisc_rtab_lock);
- 
- struct qdisc_rate_table *qdisc_get_rtab(struct tc_ratespec *r,
- 					struct nlattr *tab,
- 					struct netlink_ext_ack *extack)
+ static void do_thaw_all_callback(struct super_block *sb)
  {
--	struct qdisc_rate_table *rtab;
-+	struct qdisc_rate_table *rtab, *new_rtab;
+-	bool born = super_lock_excl(sb);
++	bool active = false;
  
- 	if (tab == NULL || r->rate == 0 ||
- 	    r->cell_log == 0 || r->cell_log >= 32 ||
-@@ -427,15 +428,20 @@ struct qdisc_rate_table *qdisc_get_rtab(
- 		return NULL;
- 	}
- 
-+	new_rtab = kmalloc(sizeof(*new_rtab), GFP_KERNEL);
-+
-+	spin_lock(&qdisc_rtab_lock);
- 	for (rtab = qdisc_rtab_list; rtab; rtab = rtab->next) {
- 		if (!memcmp(&rtab->rate, r, sizeof(struct tc_ratespec)) &&
- 		    !memcmp(&rtab->data, nla_data(tab), 1024)) {
- 			rtab->refcnt++;
-+			spin_unlock(&qdisc_rtab_lock);
-+			kfree(new_rtab);
- 			return rtab;
- 		}
- 	}
- 
--	rtab = kmalloc(sizeof(*rtab), GFP_KERNEL);
-+	rtab = new_rtab;
- 	if (rtab) {
- 		rtab->rate = *r;
- 		rtab->refcnt = 1;
-@@ -447,6 +453,7 @@ struct qdisc_rate_table *qdisc_get_rtab(
- 	} else {
- 		NL_SET_ERR_MSG(extack, "Failed to allocate new qdisc rate table");
- 	}
-+	spin_unlock(&qdisc_rtab_lock);
- 	return rtab;
- }
- EXPORT_SYMBOL(qdisc_get_rtab);
-@@ -455,18 +462,25 @@ void qdisc_put_rtab(struct qdisc_rate_ta
- {
- 	struct qdisc_rate_table *rtab, **rtabp;
- 
--	if (!tab || --tab->refcnt)
-+	if (!tab)
+-	if (born && sb->s_root) {
+-		if (IS_ENABLED(CONFIG_BLOCK))
+-			while (sb->s_bdev && !thaw_bdev(sb->s_bdev))
+-				pr_warn("Emergency Thaw on %pg\n", sb->s_bdev);
++	if (super_lock_excl(sb))
++		active = atomic_inc_not_zero(&sb->s_active);
++	super_unlock_excl(sb);
++	if (!active)
 +		return;
 +
-+	spin_lock(&qdisc_rtab_lock);
-+	if (--tab->refcnt) {
-+		spin_unlock(&qdisc_rtab_lock);
- 		return;
-+	}
- 
- 	for (rtabp = &qdisc_rtab_list;
- 	     (rtab = *rtabp) != NULL;
- 	     rtabp = &rtab->next) {
- 		if (rtab == tab) {
- 			*rtabp = rtab->next;
--			kfree(rtab);
--			return;
-+			break;
- 		}
- 	}
-+	spin_unlock(&qdisc_rtab_lock);
-+	kfree(tab);
++	/* thaw_bdev() acquires s_umount so it must not be held here */
++	if (IS_ENABLED(CONFIG_BLOCK))
++		while (sb->s_bdev && !thaw_bdev(sb->s_bdev))
++			pr_warn("Emergency Thaw on %pg\n", sb->s_bdev);
++
++	if (super_lock_excl(sb))
+ 		thaw_super_locked(sb, FREEZE_HOLDER_USERSPACE);
+-	} else {
++	else
+ 		super_unlock_excl(sb);
+-	}
++	deactivate_super(sb);
  }
- EXPORT_SYMBOL(qdisc_put_rtab);
  
+ static void do_thaw_all(struct work_struct *work)
 
 
