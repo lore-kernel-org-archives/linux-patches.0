@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFBDA377A89;
-	Thu, 20 Aug 2026 15:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C781381AEC;
+	Thu, 20 Aug 2026 15:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239261; cv=none; b=sN43auIOfxZIfnQ0GY9CEXreHDg6B1LflcuuBcus2WJgCJTh+77q3WErCOnKtmNgSjYyuac2vwlyxk6ahsXo9nZxeTv6JByox8C4gW884q5xkh+m+VgX87GueH0MEJdFSPUz2hF5Q1CT22IV4KHF51mjPWeu89Y05PociiV3z6U=
+	t=1787239265; cv=none; b=dChMXsoPux6wksmmazPeFb1+TH3Mmj7gVj8CmY+8KRff8l9j5ARTsIgwNYAFo7j/MBmdM+TlmozFFvW0nRN+rzVy5A8PGSXPt9p6sqE/uZHWfYXkBYOyI83xaGvPHD/7qwg9PrhiLbav30tYC32sMdMTZDXPRg4duGFHnamfBpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239261; c=relaxed/simple;
-	bh=ckCkJ0JqskxhEqD6DzUkLO0VWgNfZEEgrthfU4m8Ajo=;
+	s=arc-20240116; t=1787239265; c=relaxed/simple;
+	bh=8Z2oBP3PO1GIGC15kjCse3JbLP0VvhM4yT3LLTqehRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fxpqIHWicOWapD4IAwVHyAxnRWcw3X3e+jEUzjm63hUYV7psF8JFkM0H0w73vyPxvNveEMtRJ0tB7ClnaORNrMVYCzNUaaT+h8EaiUHV4MktYxNkB6N4jI/UWuXqZgXM/nwPRoE4rBrlv6sRPjJbw9jT+UJvktfVx89yV4byyLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NtdlCqD0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oCczCttU9YBs1FXuFsQocTJOREW+Aezqu6J9c9+HPWl/B6gPK+evCuqvNmDXX+Z/4MvWARFG2Fv+3W6lKhAKr7uGvkWNO4iodU5aP5E5UBqlKUCmo3Vx7CbJoRYOgALkf75DnLPaPBWKWSF4Ui0WdQBcRJPU43zF78xxx2TLLUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zWe1LlcK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NtdlCqD0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 246711F000E9;
-	Thu, 20 Aug 2026 15:20:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zWe1LlcK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1235A1F000E9;
+	Thu, 20 Aug 2026 15:21:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239259;
-	bh=/laNU3Vf5NYOqmLdJ4VLZ9t3PYNrRFvi6B4+Q01ZF4Q=;
+	s=korg; t=1787239262;
+	bh=ARSHHwHxAKA7n/G+HTRcreq7fEyPEBQaaAo7uw97ndY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NtdlCqD0W/gdDZnxm49iOdj4juX+UuHEBhulzijUfdA93DLUxveyzaXjvVBNY0ZwT
-	 VEchYZDB0+hsWmledcPbxbR3OOHal3GzZF26C0xj6QuHZThf+HFn1WMU9zGwIfI4N0
-	 mj/kJidnERhZ76py3nPAKcEM09dW05yfzjG1V8gQ=
+	b=zWe1LlcKxu3F45mANZ9cvKslH/v97HacQW3SbRxbfNTFnYCyIKI4sx7TA5VzCKSFO
+	 eliW+1WaOoEMtAvvREL68QvUwQA5YJ0xbEa+ZyMG+7P9AAECxqtNZFgBbRZBn98TYy
+	 6v/14NiVriYxsGUttcPWNDRQn81Si765Aav1KuiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 166/217] ASoC: SOF: ipc4-topology: Refresh copier IPC payload before widget setup
-Date: Thu, 20 Aug 2026 16:55:34 +0200
-Message-ID: <20260820145242.744503945@linuxfoundation.org>
+	Koichiro Den <den@valinux.co.jp>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 167/217] net: ntb_netdev: Introduce per-queue context
+Date: Thu, 20 Aug 2026 16:55:35 +0200
+Message-ID: <20260820145242.773273161@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -52,106 +51,528 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 0c0e418dbcf0582bf80d8dbfd9b306607c065992 upstream.
+commit ee970634c7773f248a0a27d8a645500371ae5249 upstream.
 
-The ipc_config_data buffer for copier widgets is built once during
-ipc_prepare (called from sof_pcm_setup_connected_widgets) and cached
-for reuse. For host copiers this buffer contains the copier_data with
-gtw_cfg.node_id (host DMA ID). For DAI copiers it additionally includes
-a dma_config_tlv trailer with stream_id and dma_channel_id for HDA link
-DMA.
+Prepare ntb_netdev for multi-queue operation by moving queue-pair state
+out of struct ntb_netdev.
 
-On suspend/resume, both host and link DMA streams are released and
-re-allocated with potentially different stream tags. The underlying
-copier_data and dma_config_tlv structures are correctly updated by
-host_config and sdw_hda_dai_hw_params respectively. However, since the
-widget list (spcm->stream[].list) persists across suspend,
-sof_pcm_hw_params skips sof_pcm_setup_connected_widgets and ipc_prepare
-never runs again to rebuild ipc_config_data. The stale cached payload
-is then sent to firmware with boot-time DMA channel assignments, causing
-DMA channel conflicts that lead to firmware errors and crashes.
+Introduce struct ntb_netdev_queue to carry the ntb_transport_qp pointer,
+the per-QP TX timer and queue id. Pass this object as the callback
+context and convert the RX/TX handlers and link event path accordingly.
 
-Fix this by refreshing copier_data and dma_config_tlv portions of
-ipc_config_data in sof_ipc4_widget_setup right before the IPC message
-is sent. This ensures the payload always reflects the current DMA state
-regardless of whether ipc_prepare ran.
+The probe path allocates a fixed upper bound for netdev queues while
+instantiating only a single ntb_transport queue pair, preserving the
+previous behavior. Also store client_dev for future queue pair
+creation/removal via the ntb_transport API.
 
-For DAI copiers, the gtw_cfg.config_length in copier_data is temporarily
-inflated to include the TLV size (matching the ipc_config_data layout)
-before copying, then restored, mirroring what
-sof_ipc4_prepare_copier_module does when first building the buffer.
-
-Fixes: e9c6b118de1a ("ASoC: SOF: make dma_config_tlv be an array")
-Cc: stable@vger.kernel.org
-Link: https://github.com/thesofproject/sof/issues/10700
-Link: https://github.com/thesofproject/sof/issues/10955
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Link: https://patch.msgid.link/20260730054822.5913-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Link: https://patch.msgid.link/20260305155639.1885517-2-den@valinux.co.jp
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: d2121faf133a ("NTB: ntb_netdev: Preserve RX queue depth on allocation failure")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc4-topology.c |   33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ drivers/net/ntb_netdev.c |  275 +++++++++++++++++++++++++++++++----------------
+ 1 file changed, 187 insertions(+), 88 deletions(-)
 
---- a/sound/soc/sof/ipc4-topology.c
-+++ b/sound/soc/sof/ipc4-topology.c
-@@ -3007,6 +3007,15 @@ static int sof_ipc4_widget_setup(struct
- 		ipc_size = ipc4_copier->ipc_config_size;
- 		ipc_data = ipc4_copier->ipc_config_data;
+--- a/drivers/net/ntb_netdev.c
++++ b/drivers/net/ntb_netdev.c
+@@ -53,6 +53,7 @@
+ #include <linux/pci.h>
+ #include <linux/ntb.h>
+ #include <linux/ntb_transport.h>
++#include <linux/slab.h>
  
-+		/*
-+		 * Refresh copier_data in ipc_config_data for host copiers.
-+		 * The node_id may have been updated by host_config after
-+		 * ipc_prepare, e.g. when host stream tags change after a
-+		 * suspend/resume cycle.
-+		 */
-+		if (swidget->id != snd_soc_dapm_buffer)
-+			memcpy(ipc_data, &ipc4_copier->data, sizeof(ipc4_copier->data));
+ #define NTB_NETDEV_VER	"0.7"
+ 
+@@ -70,11 +71,24 @@ static unsigned int tx_start = 10;
+ /* Number of descriptors still available before stop upper layer tx */
+ static unsigned int tx_stop = 5;
+ 
++#define NTB_NETDEV_MAX_QUEUES		64
++#define NTB_NETDEV_DEFAULT_QUEUES	1
 +
- 		msg = &ipc4_copier->msg;
- 		break;
++struct ntb_netdev;
++
++struct ntb_netdev_queue {
++	struct ntb_netdev *ntdev;
++	struct ntb_transport_qp *qp;
++	struct timer_list tx_timer;
++	u16 qid;
++};
++
+ struct ntb_netdev {
+ 	struct pci_dev *pdev;
++	struct device *client_dev;
+ 	struct net_device *ndev;
+-	struct ntb_transport_qp *qp;
+-	struct timer_list tx_timer;
++	unsigned int num_queues;
++	struct ntb_netdev_queue *queues;
+ };
+ 
+ #define	NTB_TX_TIMEOUT_MS	1000
+@@ -82,14 +96,17 @@ struct ntb_netdev {
+ 
+ static void ntb_netdev_event_handler(void *data, int link_is_up)
+ {
+-	struct net_device *ndev = data;
+-	struct ntb_netdev *dev = netdev_priv(ndev);
++	struct ntb_netdev_queue *q = data;
++	struct ntb_netdev *dev = q->ntdev;
++	struct net_device *ndev;
++
++	ndev = dev->ndev;
+ 
+-	netdev_dbg(ndev, "Event %x, Link %x\n", link_is_up,
+-		   ntb_transport_link_query(dev->qp));
++	netdev_dbg(ndev, "Event %x, Link %x, qp %u\n", link_is_up,
++		   ntb_transport_link_query(q->qp), q->qid);
+ 
+ 	if (link_is_up) {
+-		if (ntb_transport_link_query(dev->qp))
++		if (ntb_transport_link_query(q->qp))
+ 			netif_carrier_on(ndev);
+ 	} else {
+ 		netif_carrier_off(ndev);
+@@ -99,10 +116,13 @@ static void ntb_netdev_event_handler(voi
+ static void ntb_netdev_rx_handler(struct ntb_transport_qp *qp, void *qp_data,
+ 				  void *data, int len)
+ {
+-	struct net_device *ndev = qp_data;
++	struct ntb_netdev_queue *q = qp_data;
++	struct ntb_netdev *dev = q->ntdev;
++	struct net_device *ndev;
+ 	struct sk_buff *skb;
+ 	int rc;
+ 
++	ndev = dev->ndev;
+ 	skb = data;
+ 	if (!skb)
+ 		return;
+@@ -118,6 +138,7 @@ static void ntb_netdev_rx_handler(struct
+ 	skb_put(skb, len);
+ 	skb->protocol = eth_type_trans(skb, ndev);
+ 	skb->ip_summed = CHECKSUM_NONE;
++	skb_record_rx_queue(skb, q->qid);
+ 
+ 	if (netif_rx(skb) == NET_RX_DROP) {
+ 		ndev->stats.rx_errors++;
+@@ -144,42 +165,43 @@ enqueue_again:
+ }
+ 
+ static int __ntb_netdev_maybe_stop_tx(struct net_device *netdev,
+-				      struct ntb_transport_qp *qp, int size)
++				      struct ntb_netdev_queue *q, int size)
+ {
+-	struct ntb_netdev *dev = netdev_priv(netdev);
++	netif_stop_subqueue(netdev, q->qid);
+ 
+-	netif_stop_queue(netdev);
+ 	/* Make sure to see the latest value of ntb_transport_tx_free_entry()
+ 	 * since the queue was last started.
+ 	 */
+ 	smp_mb();
+ 
+-	if (likely(ntb_transport_tx_free_entry(qp) < size)) {
+-		mod_timer(&dev->tx_timer, jiffies + usecs_to_jiffies(tx_time));
++	if (likely(ntb_transport_tx_free_entry(q->qp) < size)) {
++		mod_timer(&q->tx_timer, jiffies + usecs_to_jiffies(tx_time));
+ 		return -EBUSY;
  	}
-@@ -3015,6 +3024,9 @@ static int sof_ipc4_widget_setup(struct
- 	{
- 		struct snd_sof_dai *dai = swidget->private;
- 		struct sof_ipc4_copier *ipc4_copier = dai->private;
-+		struct sof_ipc4_copier_data *copier_data;
-+		u32 gtw_cfg_config_length;
-+		u32 tlv_size;
  
- 		pipeline = pipe_widget->private;
- 		if (pipeline->use_chain_dma)
-@@ -3023,6 +3035,27 @@ static int sof_ipc4_widget_setup(struct
- 		ipc_size = ipc4_copier->ipc_config_size;
- 		ipc_data = ipc4_copier->ipc_config_data;
+-	netif_start_queue(netdev);
++	netif_start_subqueue(netdev, q->qid);
+ 	return 0;
+ }
  
-+		/*
-+		 * Refresh copier_data and dma_config_tlv in ipc_config_data.
-+		 * These may have been updated after ipc_prepare, e.g. when
-+		 * link DMA stream tags change after a suspend/resume cycle.
-+		 *
-+		 * copier_data->gtw_cfg.config_length does not include the
-+		 * TLV size (it was restored after sof_ipc4_prepare_copier_module),
-+		 * so temporarily inflate it to match the ipc_config_data layout.
-+		 */
-+		copier_data = &ipc4_copier->data;
-+		gtw_cfg_config_length = copier_data->gtw_cfg.config_length * 4;
-+		tlv_size = ipc_size - sizeof(*copier_data) - gtw_cfg_config_length;
-+
-+		copier_data->gtw_cfg.config_length += tlv_size / 4;
-+		memcpy(ipc_data, copier_data, sizeof(*copier_data));
-+		copier_data->gtw_cfg.config_length = gtw_cfg_config_length / 4;
-+
-+		if (tlv_size)
-+			memcpy(ipc_data + sizeof(*copier_data) + gtw_cfg_config_length,
-+			       &ipc4_copier->dma_config_tlv, tlv_size);
-+
- 		msg = &ipc4_copier->msg;
- 		break;
+ static int ntb_netdev_maybe_stop_tx(struct net_device *ndev,
+-				    struct ntb_transport_qp *qp, int size)
++				    struct ntb_netdev_queue *q, int size)
+ {
+-	if (netif_queue_stopped(ndev) ||
+-	    (ntb_transport_tx_free_entry(qp) >= size))
++	if (__netif_subqueue_stopped(ndev, q->qid) ||
++	    (ntb_transport_tx_free_entry(q->qp) >= size))
+ 		return 0;
+ 
+-	return __ntb_netdev_maybe_stop_tx(ndev, qp, size);
++	return __ntb_netdev_maybe_stop_tx(ndev, q, size);
+ }
+ 
+ static void ntb_netdev_tx_handler(struct ntb_transport_qp *qp, void *qp_data,
+ 				  void *data, int len)
+ {
+-	struct net_device *ndev = qp_data;
++	struct ntb_netdev_queue *q = qp_data;
++	struct ntb_netdev *dev = q->ntdev;
++	struct net_device *ndev;
+ 	struct sk_buff *skb;
+-	struct ntb_netdev *dev = netdev_priv(ndev);
+ 
++	ndev = dev->ndev;
+ 	skb = data;
+ 	if (!skb || !ndev)
+ 		return;
+@@ -194,13 +216,13 @@ static void ntb_netdev_tx_handler(struct
+ 
+ 	dev_kfree_skb_any(skb);
+ 
+-	if (ntb_transport_tx_free_entry(dev->qp) >= tx_start) {
++	if (ntb_transport_tx_free_entry(qp) >= tx_start) {
+ 		/* Make sure anybody stopping the queue after this sees the new
+ 		 * value of ntb_transport_tx_free_entry()
+ 		 */
+ 		smp_mb();
+-		if (netif_queue_stopped(ndev))
+-			netif_wake_queue(ndev);
++		if (__netif_subqueue_stopped(ndev, q->qid))
++			netif_wake_subqueue(ndev, q->qid);
  	}
+ }
+ 
+@@ -208,16 +230,20 @@ static netdev_tx_t ntb_netdev_start_xmit
+ 					 struct net_device *ndev)
+ {
+ 	struct ntb_netdev *dev = netdev_priv(ndev);
++	u16 qid = skb_get_queue_mapping(skb);
++	struct ntb_netdev_queue *q;
+ 	int rc;
+ 
+-	ntb_netdev_maybe_stop_tx(ndev, dev->qp, tx_stop);
++	q = &dev->queues[qid];
++
++	ntb_netdev_maybe_stop_tx(ndev, q, tx_stop);
+ 
+-	rc = ntb_transport_tx_enqueue(dev->qp, skb, skb->data, skb->len);
++	rc = ntb_transport_tx_enqueue(q->qp, skb, skb->data, skb->len);
+ 	if (rc)
+ 		goto err;
+ 
+ 	/* check for next submit */
+-	ntb_netdev_maybe_stop_tx(ndev, dev->qp, tx_stop);
++	ntb_netdev_maybe_stop_tx(ndev, q, tx_stop);
+ 
+ 	return NETDEV_TX_OK;
+ 
+@@ -229,80 +255,104 @@ err:
+ 
+ static void ntb_netdev_tx_timer(struct timer_list *t)
+ {
+-	struct ntb_netdev *dev = timer_container_of(dev, t, tx_timer);
+-	struct net_device *ndev = dev->ndev;
++	struct ntb_netdev_queue *q = timer_container_of(q, t, tx_timer);
++	struct ntb_netdev *dev = q->ntdev;
++	struct net_device *ndev;
++
++	ndev = dev->ndev;
+ 
+-	if (ntb_transport_tx_free_entry(dev->qp) < tx_stop) {
+-		mod_timer(&dev->tx_timer, jiffies + usecs_to_jiffies(tx_time));
++	if (ntb_transport_tx_free_entry(q->qp) < tx_stop) {
++		mod_timer(&q->tx_timer, jiffies + usecs_to_jiffies(tx_time));
+ 	} else {
+ 		/* Make sure anybody stopping the queue after this sees the new
+ 		 * value of ntb_transport_tx_free_entry()
+ 		 */
+ 		smp_mb();
+-		if (netif_queue_stopped(ndev))
+-			netif_wake_queue(ndev);
++		if (__netif_subqueue_stopped(ndev, q->qid))
++			netif_wake_subqueue(ndev, q->qid);
+ 	}
+ }
+ 
+ static int ntb_netdev_open(struct net_device *ndev)
+ {
+ 	struct ntb_netdev *dev = netdev_priv(ndev);
++	struct ntb_netdev_queue *queue;
+ 	struct sk_buff *skb;
+-	int rc, i, len;
++	int rc = 0, i, len;
++	unsigned int q;
+ 
+-	/* Add some empty rx bufs */
+-	for (i = 0; i < NTB_RXQ_SIZE; i++) {
+-		skb = netdev_alloc_skb(ndev, ndev->mtu + ETH_HLEN);
+-		if (!skb) {
+-			rc = -ENOMEM;
+-			goto err;
+-		}
++	/* Add some empty rx bufs for each queue */
++	for (q = 0; q < dev->num_queues; q++) {
++		queue = &dev->queues[q];
+ 
+-		rc = ntb_transport_rx_enqueue(dev->qp, skb, skb->data,
+-					      ndev->mtu + ETH_HLEN);
+-		if (rc) {
+-			dev_kfree_skb(skb);
+-			goto err;
++		for (i = 0; i < NTB_RXQ_SIZE; i++) {
++			skb = netdev_alloc_skb(ndev, ndev->mtu + ETH_HLEN);
++			if (!skb) {
++				rc = -ENOMEM;
++				goto err;
++			}
++
++			rc = ntb_transport_rx_enqueue(queue->qp, skb, skb->data,
++						      ndev->mtu + ETH_HLEN);
++			if (rc) {
++				dev_kfree_skb(skb);
++				goto err;
++			}
+ 		}
+-	}
+ 
+-	timer_setup(&dev->tx_timer, ntb_netdev_tx_timer, 0);
++		timer_setup(&queue->tx_timer, ntb_netdev_tx_timer, 0);
++	}
+ 
+ 	netif_carrier_off(ndev);
+-	ntb_transport_link_up(dev->qp);
++
++	for (q = 0; q < dev->num_queues; q++)
++		ntb_transport_link_up(dev->queues[q].qp);
++
+ 	netif_start_queue(ndev);
+ 
+ 	return 0;
+ 
+ err:
+-	while ((skb = ntb_transport_rx_remove(dev->qp, &len)))
+-		dev_kfree_skb(skb);
++	for (q = 0; q < dev->num_queues; q++) {
++		queue = &dev->queues[q];
++
++		while ((skb = ntb_transport_rx_remove(queue->qp, &len)))
++			dev_kfree_skb(skb);
++	}
+ 	return rc;
+ }
+ 
+ static int ntb_netdev_close(struct net_device *ndev)
+ {
+ 	struct ntb_netdev *dev = netdev_priv(ndev);
++	struct ntb_netdev_queue *queue;
+ 	struct sk_buff *skb;
++	unsigned int q;
+ 	int len;
+ 
+-	ntb_transport_link_down(dev->qp);
+ 
+-	while ((skb = ntb_transport_rx_remove(dev->qp, &len)))
+-		dev_kfree_skb(skb);
++	for (q = 0; q < dev->num_queues; q++) {
++		queue = &dev->queues[q];
+ 
+-	timer_delete_sync(&dev->tx_timer);
++		ntb_transport_link_down(queue->qp);
++
++		while ((skb = ntb_transport_rx_remove(queue->qp, &len)))
++			dev_kfree_skb(skb);
+ 
++		timer_delete_sync(&queue->tx_timer);
++	}
+ 	return 0;
+ }
+ 
+ static int ntb_netdev_change_mtu(struct net_device *ndev, int new_mtu)
+ {
+ 	struct ntb_netdev *dev = netdev_priv(ndev);
++	struct ntb_netdev_queue *queue;
+ 	struct sk_buff *skb;
+-	int len, rc;
++	unsigned int q, i;
++	int len, rc = 0;
+ 
+-	if (new_mtu > ntb_transport_max_size(dev->qp) - ETH_HLEN)
++	if (new_mtu > ntb_transport_max_size(dev->queues[0].qp) - ETH_HLEN)
+ 		return -EINVAL;
+ 
+ 	if (!netif_running(ndev)) {
+@@ -311,41 +361,54 @@ static int ntb_netdev_change_mtu(struct
+ 	}
+ 
+ 	/* Bring down the link and dispose of posted rx entries */
+-	ntb_transport_link_down(dev->qp);
++	for (q = 0; q < dev->num_queues; q++)
++		ntb_transport_link_down(dev->queues[q].qp);
+ 
+ 	if (ndev->mtu < new_mtu) {
+-		int i;
+-
+-		for (i = 0; (skb = ntb_transport_rx_remove(dev->qp, &len)); i++)
+-			dev_kfree_skb(skb);
+-
+-		for (; i; i--) {
+-			skb = netdev_alloc_skb(ndev, new_mtu + ETH_HLEN);
+-			if (!skb) {
+-				rc = -ENOMEM;
+-				goto err;
+-			}
++		for (q = 0; q < dev->num_queues; q++) {
++			queue = &dev->queues[q];
+ 
+-			rc = ntb_transport_rx_enqueue(dev->qp, skb, skb->data,
+-						      new_mtu + ETH_HLEN);
+-			if (rc) {
++			for (i = 0;
++			     (skb = ntb_transport_rx_remove(queue->qp, &len));
++			     i++)
+ 				dev_kfree_skb(skb);
+-				goto err;
++
++			for (; i; i--) {
++				skb = netdev_alloc_skb(ndev,
++						       new_mtu + ETH_HLEN);
++				if (!skb) {
++					rc = -ENOMEM;
++					goto err;
++				}
++
++				rc = ntb_transport_rx_enqueue(queue->qp, skb,
++							      skb->data,
++							      new_mtu +
++							      ETH_HLEN);
++				if (rc) {
++					dev_kfree_skb(skb);
++					goto err;
++				}
+ 			}
+ 		}
+ 	}
+ 
+ 	WRITE_ONCE(ndev->mtu, new_mtu);
+ 
+-	ntb_transport_link_up(dev->qp);
++	for (q = 0; q < dev->num_queues; q++)
++		ntb_transport_link_up(dev->queues[q].qp);
+ 
+ 	return 0;
+ 
+ err:
+-	ntb_transport_link_down(dev->qp);
++	for (q = 0; q < dev->num_queues; q++) {
++		struct ntb_netdev_queue *queue = &dev->queues[q];
++
++		ntb_transport_link_down(queue->qp);
+ 
+-	while ((skb = ntb_transport_rx_remove(dev->qp, &len)))
+-		dev_kfree_skb(skb);
++		while ((skb = ntb_transport_rx_remove(queue->qp, &len)))
++			dev_kfree_skb(skb);
++	}
+ 
+ 	netdev_err(ndev, "Error changing MTU, device inoperable\n");
+ 	return rc;
+@@ -404,6 +467,7 @@ static int ntb_netdev_probe(struct devic
+ 	struct net_device *ndev;
+ 	struct pci_dev *pdev;
+ 	struct ntb_netdev *dev;
++	unsigned int q;
+ 	int rc;
+ 
+ 	ntb = dev_ntb(client_dev->parent);
+@@ -411,7 +475,7 @@ static int ntb_netdev_probe(struct devic
+ 	if (!pdev)
+ 		return -ENODEV;
+ 
+-	ndev = alloc_etherdev(sizeof(*dev));
++	ndev = alloc_etherdev_mq(sizeof(*dev), NTB_NETDEV_MAX_QUEUES);
+ 	if (!ndev)
+ 		return -ENOMEM;
+ 
+@@ -420,6 +484,16 @@ static int ntb_netdev_probe(struct devic
+ 	dev = netdev_priv(ndev);
+ 	dev->ndev = ndev;
+ 	dev->pdev = pdev;
++	dev->client_dev = client_dev;
++	dev->num_queues = 0;
++
++	dev->queues = kzalloc_objs(*dev->queues, NTB_NETDEV_MAX_QUEUES,
++				   GFP_KERNEL);
++	if (!dev->queues) {
++		rc = -ENOMEM;
++		goto err_free_netdev;
++	}
++
+ 	ndev->features = NETIF_F_HIGHDMA;
+ 
+ 	ndev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
+@@ -436,26 +510,47 @@ static int ntb_netdev_probe(struct devic
+ 	ndev->min_mtu = 0;
+ 	ndev->max_mtu = ETH_MAX_MTU;
+ 
+-	dev->qp = ntb_transport_create_queue(ndev, client_dev,
+-					     &ntb_netdev_handlers);
+-	if (!dev->qp) {
++	for (q = 0; q < NTB_NETDEV_DEFAULT_QUEUES; q++) {
++		struct ntb_netdev_queue *queue = &dev->queues[q];
++
++		queue->ntdev = dev;
++		queue->qid = q;
++		queue->qp = ntb_transport_create_queue(queue, client_dev,
++						       &ntb_netdev_handlers);
++		if (!queue->qp)
++			break;
++
++		dev->num_queues++;
++	}
++
++	if (!dev->num_queues) {
+ 		rc = -EIO;
+-		goto err;
++		goto err_free_queues;
+ 	}
+ 
+-	ndev->mtu = ntb_transport_max_size(dev->qp) - ETH_HLEN;
++	rc = netif_set_real_num_queues(ndev, dev->num_queues, dev->num_queues);
++	if (rc)
++		goto err_free_qps;
++
++	ndev->mtu = ntb_transport_max_size(dev->queues[0].qp) - ETH_HLEN;
+ 
+ 	rc = register_netdev(ndev);
+ 	if (rc)
+-		goto err1;
++		goto err_free_qps;
+ 
+ 	dev_set_drvdata(client_dev, ndev);
+-	dev_info(&pdev->dev, "%s created\n", ndev->name);
++	dev_info(&pdev->dev, "%s created with %u queue pairs\n",
++		 ndev->name, dev->num_queues);
+ 	return 0;
+ 
+-err1:
+-	ntb_transport_free_queue(dev->qp);
+-err:
++err_free_qps:
++	for (q = 0; q < dev->num_queues; q++)
++		ntb_transport_free_queue(dev->queues[q].qp);
++
++err_free_queues:
++	kfree(dev->queues);
++
++err_free_netdev:
+ 	free_netdev(ndev);
+ 	return rc;
+ }
+@@ -464,9 +559,13 @@ static void ntb_netdev_remove(struct dev
+ {
+ 	struct net_device *ndev = dev_get_drvdata(client_dev);
+ 	struct ntb_netdev *dev = netdev_priv(ndev);
++	unsigned int q;
+ 
+ 	unregister_netdev(ndev);
+-	ntb_transport_free_queue(dev->qp);
++	for (q = 0; q < dev->num_queues; q++)
++		ntb_transport_free_queue(dev->queues[q].qp);
++
++	kfree(dev->queues);
+ 	free_netdev(ndev);
+ }
+ 
 
 
