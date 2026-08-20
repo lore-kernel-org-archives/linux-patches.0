@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E31D37A498;
-	Thu, 20 Aug 2026 15:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C20E352019;
+	Thu, 20 Aug 2026 15:02:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238141; cv=none; b=C36s+qTQyzbvXkTFnbRu2uoqUQ/cMzHN9Cg/hM6kGpPpL18zXVeFWK2bSqdCZTgs/gagRV7n9ZgT92VQ8Xm9JkR/QiaB9IUkUYtr0G/TVr/Viwn6ITbXdGAT9M47DBAjaGt+ksYrTk6hZSdzI9KN0nUqQVQf+vFkvGQlLZoP+3o=
+	t=1787238144; cv=none; b=Hdo4ghtqQohUPTZwL5OhHVso1mouBsyNWp7LoKroIgmEdEBBv0gBtV8o6k90fF2WR34pkbY2N6/6rY99lFZ04zqxLbu6NvCWzgsI9rryTzgjrgfEgQUrnxWNRA5WV91IBXJjjmTwsn3mkrpAIlG9+1F9WP+owpxNrBr0ombKG2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238141; c=relaxed/simple;
-	bh=SvPjlHlMgmb8936HrtEfyGa3cyCDz+7AZlMEP8lqor8=;
+	s=arc-20240116; t=1787238144; c=relaxed/simple;
+	bh=C8pksKCnBLRLYnNcYe7tHM7a8HzBAt/BqUYDv0j2qHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F2doTbgNqnC1zgTTE9kDN8FsTf2aKCNp2iXbk18EzMGviDFhN0HeORvqgIHkpuhz8sIZoetkgsTjVrazh2ifUN1WftizuxJ0xAcTPmOVSp0QVHYbixOWCcugjExw+RbSbVT+eojD7RQA+c6mNemTzL6h37QjlNBE39cyw5F8Rw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WizUSuUZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ghVuukBXtZnfcUVA8xpL5iVWw+Ccg+NlLNVycSXrZ4BpmqRBNDtWSA6XeJWNRni95toMAqp5EgXP/XME6aKgOJQYFlI5CQBF+XzrKVa6zQ0jztHXEdIv3iPfPwzg+LZqsKMrvfLEvhIyVKgMJ/LN6mI8pvgx9+IKLGxdvomRa4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/0NYySz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WizUSuUZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EFAC1F000E9;
-	Thu, 20 Aug 2026 15:02:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/0NYySz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922FB1F000E9;
+	Thu, 20 Aug 2026 15:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238140;
-	bh=oVE3I2MUCCA88m5jEL1gVTZ6vAeh8kswLz/Jr3ehAro=;
+	s=korg; t=1787238143;
+	bh=9SUwFuAldep9FXCvL3PSDtDXnftB0MZQqhdx6VbDzXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WizUSuUZMrhoRy4UHaah90Wb1qQ331wd4vOqp80EcZ4LZjKSPaeSnJXgytrkJRbTv
-	 vPOyNPxzdRBAZJUBDcGXsN8q7yexg2EHAwPy7sE1AZUygjLojILXsF6dkj7sRth07k
-	 xF5xEuhkEJB7E5V2JkUd6llf2/cZnln8vWL9bnqw=
+	b=d/0NYySz+nl6ht0ywFFTSHSq0XuT17j5gnuz/pMVilWEGhEax40Xfp+8XTpqfs2O2
+	 Fn0ZOgTWUCT+ILf/rywpxJ7UAyj1ZFtZT3flAjOsOOTbdanaEo7OLbo3sRM8ueccWu
+	 Hjtry56eRl7APcLHCwoSqDX10oyGTsryqy4PGva4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.1 018/228] ASoC: SOF: ipc4-pcm: Continue the pipeline trigger in case of IPC timeout
-Date: Thu, 20 Aug 2026 16:52:40 +0200
-Message-ID: <20260820145245.017463865@linuxfoundation.org>
+	Linmao Li <lilinmao@kylinos.cn>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 7.1 045/228] Input: psxpad-spi - set driver data before use
+Date: Thu, 20 Aug 2026 16:53:07 +0200
+Message-ID: <20260820145245.840127745@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -51,77 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-commit 17661c67b206612cb3ba65d5ae726cd2015d0a53 upstream.
+commit 732f38c36059e68ba3b4b89c56911d777fd3185c upstream.
 
-Ignore IPC errors for pipeline state change if the firmware state is
-crashed or the IPC has timed out.
+psxpad_spi_suspend() retrieves the controller state with
+spi_get_drvdata(), but probe never stores it, so suspend dereferences a
+NULL pointer. Store it during probe.
 
-If the firmware has crashed the kernel still needs to go through the state
-changes to reset its internal to be able to correctly work the next time
-the DSP is booted up.
-
-The case with IPC timeout is a bit more problematic, but it has been
-rootcaused to be the result of system scheduling blockage and the firmware
-did actually received and handled the message, but the reply handling got
-blocked by issues outside of the SOF stack.
-So far the best way to handle this is to continue with setting the state.
-
-Fixes: c40aad7c81e5 ("ASoC: SOF: ipc4-pcm: Workaround for crashed firmware on system suspend")
+Fixes: 8be193c7b1f4 ("Input: add support for PlayStation 1/2 joypads connected via SPI")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Link: https://patch.msgid.link/20260730112343.26687-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20260721055551.1714965-1-lilinmao@kylinos.cn
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc4-pcm.c |   25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ drivers/input/joystick/psxpad-spi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/sof/ipc4-pcm.c
-+++ b/sound/soc/sof/ipc4-pcm.c
-@@ -528,7 +528,19 @@ static int sof_ipc4_trigger_pipelines(st
- 	ret = sof_ipc4_set_multi_pipeline_state(sdev, SOF_IPC4_PIPE_PAUSED, trigger_list);
- 	if (ret < 0) {
- 		spcm_err(spcm, substream->stream, "failed to pause all pipelines\n");
--		goto free;
-+		/*
-+		 * workaround: if the firmware is crashed or the IPC timed out
-+		 * while setting the pipeline state we must ignore the error
-+		 * code and proceed to set adjust the local pipeline states.
-+		 *
-+		 * If the firmware is crashed we will not send IPC messages
-+		 * and we are going to see errors printed, but the state of the
-+		 * widgets will be correct for the next boot.
-+		 */
-+		if (sdev->fw_state != SOF_FW_CRASHED && ret != -ETIMEDOUT)
-+			goto free;
-+
-+		ret = 0;
+--- a/drivers/input/joystick/psxpad-spi.c
++++ b/drivers/input/joystick/psxpad-spi.c
+@@ -373,6 +373,7 @@ static int psxpad_spi_probe(struct spi_d
+ 		return err;
  	}
  
- 	/* update PAUSED state for all pipelines just triggered */
-@@ -560,14 +572,15 @@ skip_pause_transition:
- 			 "failed to set final state %d for all pipelines\n",
- 			 state);
- 		/*
--		 * workaround: if the firmware is crashed while setting the
--		 * pipelines to reset state we must ignore the error code and
--		 * reset it to 0.
--		 * Since the firmware is crashed we will not send IPC messages
-+		 * workaround: if the firmware is crashed or the IPC timed out
-+		 * while setting the pipeline state we must ignore the error
-+		 * code and proceed to set adjust the local pipeline states.
-+		 *
-+		 * If the firmware is crashed we will not send IPC messages
- 		 * and we are going to see errors printed, but the state of the
- 		 * widgets will be correct for the next boot.
- 		 */
--		if (sdev->fw_state != SOF_FW_CRASHED || state != SOF_IPC4_PIPE_RESET)
-+		if (sdev->fw_state != SOF_FW_CRASHED && ret != -ETIMEDOUT)
- 			goto free;
++	spi_set_drvdata(spi, pad);
+ 	pm_runtime_enable(&spi->dev);
  
- 		ret = 0;
+ 	return 0;
 
 
