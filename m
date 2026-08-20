@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6889379EDA;
-	Thu, 20 Aug 2026 15:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A89337F00C;
+	Thu, 20 Aug 2026 15:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239449; cv=none; b=kBxVW8nKHobRkSMKMOUDUWkZf07QSipX9YsKit5/5Yd58MoI2kZ37LiYMZ/cZrJyDyvIe+olNO6+KLLV4rYLn44hEdg1RVGouS+wXgiTfHgpISm3LLhhGLkpYqYzcICDJR43c8o2tXCKS4J/1MlMYJ9tI2WRlll9KCsklCeWeOE=
+	t=1787239452; cv=none; b=nCByatHGmxtNXnftAyHeVWFhX0lBLiOrhrQNEHkXXiYwYv5U0CG1wZadULQvkA3A/Y+yBFjAS1LWXrS8if3BkITp/1SmNdwVxRiFmPDJxvG/tWNgT5oxpQsZjKQGNaB/s5dOhxp1i/MBF2x6Re31CRKQrUO1h8MMwu1Jb4u9uCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239449; c=relaxed/simple;
-	bh=TcKEAQ+OvIF42weqNlZLDFJfN4NgTR/9S0nn0ZE6Bh4=;
+	s=arc-20240116; t=1787239452; c=relaxed/simple;
+	bh=KRZmf3o9oygZCL6xtXcar3RSzZLT++nC08IXM0mB0C8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NKW3H7IHhSCYJ+/ij2LDr2bBIxN/+oOJGvvL/BvKGlMILvoTjVBEX9j+npOWPq2xC8RTmGrzjq1uwiaQN8Xka6HNpcDP6MKv6NScC0EpJacWfhNZboJ3Wp81mpRkvsZl2IJvjoNTy9syubnmohZTUpK/Zf9qQv5qEj57Jkt/j7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l2vxdoM4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ue9a8vE0NemYJiHB23TB//HFHp5ke17/2UMBViPaJiTLAD0eUUvGp5l5gZCouw7clPfQRUadh4MT0FvWkWQLv8Hnq4EVLMBaShTmdCxChTESehashSgjdFuffHc2V9gcTe7Xq6jq7YJWCIP8Pa4DF8qnusMBX6C2mP0Pf3jag2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LNORMi5M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l2vxdoM4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 037ED1F000E9;
-	Thu, 20 Aug 2026 15:24:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNORMi5M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61E91F000E9;
+	Thu, 20 Aug 2026 15:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239448;
-	bh=mOvkO7cq7/1dPs6TOd0b1pxuZ1CUWO+8C5K7JhxSMRs=;
+	s=korg; t=1787239451;
+	bh=RRp3aXcqE3ZlRdmiMADgKnlTCPtu6+xpRnR+DSvGTbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l2vxdoM4LAYgLln3i1dPBKtkl4QYZxFRG1AXjsjMzMgQsXpatQyokj5v7B91X9PGs
-	 zIqfS7QvyB62itTR+lsnDvTsHGw3h0LovLoQdu0Svwz6bIAPfkSBKHuCMzPYnyEHNA
-	 EykQMpSll3khNhMed1iGCoMC6fj6wraFMtyHfMlY=
+	b=LNORMi5MWvj2D12ALCGfxd2eJGBMrsHUq7jX3belnTm2YDhP2NfuB3uiE3gAxQTcK
+	 sZQ+/oSk09wisH+Np7L7xCiDKoe4LwNCX0Jv8X6/HSUqONm7mY5qdC6qICBY/MjEM0
+	 2oK99eTqWDn2bDlUf4GP4xsi9hb+t4zgeyiv7hiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cengiz Can <cengiz.can@canonical.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.12 052/220] gpio: sloppy-logic-analyzer: fix use-after-free via debugfs trigger on unbind
-Date: Thu, 20 Aug 2026 16:54:02 +0200
-Message-ID: <20260820145225.060031820@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.12 017/220] selinux: reject a class permission count below its inherited common
+Date: Thu, 20 Aug 2026 16:53:27 +0200
+Message-ID: <20260820145224.020299217@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -51,67 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cengiz Can <cengiz.can@canonical.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 44f3468a0aef1aabdad551898ab7cfa2a9d20e99 upstream.
+commit 9a82dcd98b6e6e11cfd162410967951f12152528 upstream.
 
-The "trigger" debugfs file has a hand-rolled ->write handler
-(trigger_write()) that dereferences the per-device gpio_la_poll_priv. The
-file is created with debugfs_create_file_unsafe(), and the handler never
-takes a debugfs reference. Nothing keeps the object alive while the
-handler runs.
+security_get_permissions() maps an inherited common's permissions into
+an array sized by the class's own permissions.nprim, but class_read()
+takes that nprim verbatim from the policy image and never checks that it
+covers the common.  A class that inherits a common of N permissions while
+declaring a smaller nprim is accepted, and on load the common's
+permissions are written past the class-sized array -- an out-of-bounds
+heap write.
 
-priv is allocated with devm_kzalloc(). devres frees it when the platform
-device is unbound. debugfs_create_file_unsafe() installs no full_proxy
-wrapper, so debugfs_remove_recursive() in gpio_la_poll_remove() does not
-wait for an in-flight trigger_write(). The blob_lock taken there does not
-help, because trigger_write() never takes it. A write that races an unbind
-therefore writes into freed memory:
+Reject a class whose permission count is below its inherited common's.
+Well-formed policies, where the class count already includes the
+inherited permissions, are unaffected.
 
-  trigger_write()                  gpio_la_poll_remove()
-    priv = m->private
-    buf = memdup_user()  [may sleep]
-                                     mutex_lock(&priv->blob_lock)
-                                     debugfs_remove_recursive()  [no wait]
-                                     mutex_unlock(&priv->blob_lock)
-                                   (remove returns; devres frees priv)
-    priv->trig_data = buf   <-- use-after-free write
-    priv->trig_len  = count
-
-The race is reachable by root via
-/sys/bus/platform/drivers/gpio-sloppy-logic-analyzer/unbind.
-
-Create "trigger" with debugfs_create_file() instead. Its full_proxy
-wrapper makes debugfs_remove_recursive() drain any in-flight ->write
-before it returns.
-
-The use-after-free is confirmed under KASAN with a minimal reproducer of
-the same debugfs_create_file_unsafe() plus devm_kzalloc() pattern
-(available on request); it produces a slab-use-after-free write in the
-handler.
-
-Fixes: 7828b7bbbf20 ("gpio: add sloppy logic analyzer using polling")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4.8
-Signed-off-by: Cengiz Can <cengiz.can@canonical.com>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://patch.msgid.link/20260730220258.358169-2-cengiz.can@canonical.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: 55fcf09b3fe4 ("selinux: add support for querying object classes and permissions from the running policy")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-sloppy-logic-analyzer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/selinux/ss/policydb.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/gpio/gpio-sloppy-logic-analyzer.c
-+++ b/drivers/gpio/gpio-sloppy-logic-analyzer.c
-@@ -301,7 +301,7 @@ static int gpio_la_poll_probe(struct pla
- 	debugfs_create_ulong("delay_ns_acquisition", 0400, priv->debug_dir, &priv->acq_delay);
- 	debugfs_create_file_unsafe("buf_size", 0600, priv->debug_dir, priv, &fops_buf_size);
- 	debugfs_create_file_unsafe("capture", 0200, priv->debug_dir, priv, &fops_capture);
--	debugfs_create_file_unsafe("trigger", 0200, priv->debug_dir, priv, &fops_trigger);
-+	debugfs_create_file("trigger", 0200, priv->debug_dir, priv, &fops_trigger);
- 
- 	return 0;
- }
+--- a/security/selinux/ss/policydb.c
++++ b/security/selinux/ss/policydb.c
+@@ -1375,6 +1375,18 @@ static int class_read(struct policydb *p
+ 			       cladatum->comkey);
+ 			goto bad;
+ 		}
++
++		/*
++		 * security_get_permissions() maps the common's permissions
++		 * into an array sized by this class's nprim, so a class must
++		 * declare at least as many as the common it inherits.
++		 */
++		if (cladatum->permissions.nprim <
++		    cladatum->comdatum->permissions.nprim) {
++			pr_err("SELinux:  class %s has fewer permissions than common %s\n",
++			       key, cladatum->comkey);
++			goto bad;
++		}
+ 	}
+ 	for (i = 0; i < nel; i++) {
+ 		rc = perm_read(p, &cladatum->permissions, fp);
 
 
