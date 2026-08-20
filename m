@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08F6037E5E5;
-	Thu, 20 Aug 2026 15:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E96B3806D8;
+	Thu, 20 Aug 2026 15:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239036; cv=none; b=BlmeMg9Wq3GnnEt8b01QQA8NQP9Oc7lhX+4p+va+GkdU8pK8M/AJiFsR2cwlnALh5MNaWTX+232EqmbnKpADvpGECwTradNtEhEJ2VIvkDx5ZxUcjZo8TjdwQynQxoApEcDlb/IUVjvbMMJK04RIyjCRiT2JbfEDTU0qvyP5wJw=
+	t=1787239038; cv=none; b=W+slytmn9W74J2KNRVmMi5MvbB94UQrquhQHYw6ZPRkN6DyY4BFzhoGJdk3MFDSvJLZIBzZ9uropklPatVUh8B6OiHHimPQRJvQT+g/Kfu8gREzlu4sLrByyqZJ1gdccQumkj0ESoWapBSZEZ6q1coLHvixCh7XrFw0LJLgq9lE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239036; c=relaxed/simple;
-	bh=3EUtUAyYa6ye1ugm1G1kgtW1Ccg8M+FmEzmjp53o9rw=;
+	s=arc-20240116; t=1787239038; c=relaxed/simple;
+	bh=i2T2BEqN4dh5HBM5g28pQiEDfX64TjwUcA3NtZkIlyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mHf7NFvIPlilKyZ60ljmiy61KjU6RYk4DJRsGfrp4F2MpZbiwoILRA+7SOQiJj7UUvDbi4UmH8ZnoHZk9mkKKhBUjE5RH0tgzOF4mBDhVRfbCKrRY9l92wE0ZghU50a8Pc7lzHd9ohN+xHCxr5g64j2PIMjY4Ua4IUCFvXp1E2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXW7Kg1o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ck6EAo90KzBMI1oi194/mDS3h2uAG5pBRLK6CLwHCN0vqlI8yOH6m85CA9l2FgNGSzGKyn81A7DvEmLiLJk66xCU4goKVOSMWR6OADkUJVxBh7xRQ4O059on2PnnAYzIgxugujhoE623tEcsbaDTMkTpU/VgjldGTp+WZ5CCmCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ip0z6cTo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXW7Kg1o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1584E1F000E9;
-	Thu, 20 Aug 2026 15:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ip0z6cTo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC00E1F000E9;
+	Thu, 20 Aug 2026 15:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239034;
-	bh=4VGyIA505+qwbm3yXbCPTvcCUXK2sY5ur+QXBV432zg=;
+	s=korg; t=1787239037;
+	bh=VWbm/HnsU929qvO1wRquiT0eNKi79ESoLchllsubNDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WXW7Kg1o3xM+qOJfBCYId2taTBymko0Fy7T1lMSQBg+0P4JGVBRw8xbl9eIy3i5iJ
-	 IMjU1ctz6ngE925CVyXXI9d5afjDexRe73MgGnKcS1y2MAW47Fje25T4w945Cbk7Do
-	 9kGl2OGCaufewQF5c3Q0nYuIMZ/67chIvnIbz6PE=
+	b=ip0z6cTodHMPJGsh6IBOmUQVyOeVmCjA5r4uTUhG0iW5Jp+Vnu7rGdPbZADlX8rHj
+	 MX9gl/riUDFJEeFt/YvqYCr55JXIRG9kpt7Y35EW+psBwFHQifxlpmh+Y7fVmgT8Ub
+	 /i5G8vRiRDnmMomNyVcGmwY5Zn8PDRqNEpVQpi/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 128/217] xfs: check v5 superblock features early
-Date: Thu, 20 Aug 2026 16:54:56 +0200
-Message-ID: <20260820145241.584242720@linuxfoundation.org>
+	Max Kellermann <max.kellermann@ionos.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Xiubo Li <xiubo.li@clyso.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 129/217] ceph: avoid fs reclaim while using current->journal_info
+Date: Thu, 20 Aug 2026 16:54:57 +0200
+Message-ID: <20260820145241.615518168@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -51,45 +53,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-commit eb6b2cc1fc8ad566d746d128a559989ff0bba5cc upstream.
+[ Upstream commit 5b602344a49e039e792ce5a8923bcc61412ee134 ]
 
-When working on a new features that reuses the existing pad in the
-superblock, I noticed that mounting such a file system on an old kernel
-logs a rather confusing warning:
+handle_reply() stores a `ceph_mds_request` pointer in
+`current->journal_info` while filling the inode and dentry cache from
+an MDS reply.
 
-    XFS (vdc): Metadir superblock padding fields must be zero.
+An allocation in this section can enter direct reclaim and prune
+dentries from another filesystem.  If this dirties an ext4 inode, ext4
+starts a JBD2 transaction.  JBD2 interprets the Ceph request in
+`current->journal_info` as a journal handle and dereferences the
+request's `r_tid` as `h_transaction`, causing a kernel crash, e.g.:
 
-This is because we only validate the various feature fields in v5
-superblocks after the common superblock validation helper is called.
+ Unable to handle kernel paging request at virtual address 00000000077b4818
+ [...]
+ Internal error: Oops: 0000000096000004 [#1]  SMP
+ Modules linked in:
+ CPU: 6 UID: 0 PID: 2699135 Comm: kworker/6:3 Tainted: G        W           6.18.38-i3 #1113 NONE
+ [...]
+ Workqueue: ceph-msgr ceph_con_workfn
+ pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : jbd2__journal_start+0x2c/0x208
+ lr : __ext4_journal_start_sb+0x100/0x178
+ [...]
+ Call trace:
+  jbd2__journal_start+0x2c/0x208 (P)
+  __ext4_journal_start_sb+0x100/0x178
+  ext4_dirty_inode+0x3c/0x90
+  __mark_inode_dirty+0x58/0x400
+  iput.part.0+0x2b0/0x370
+  iput+0x18/0x30
+  dentry_unlink_inode+0xc0/0x158
+  __dentry_kill+0x80/0x250
+  shrink_dentry_list+0x90/0x130
+  prune_dcache_sb+0x60/0x98
+  super_cache_scan+0xe8/0x190
+  do_shrink_slab+0x174/0x388
+  shrink_slab+0xd8/0x4c0
+  shrink_node+0x31c/0x908
+  do_try_to_free_pages+0xd0/0x508
+  try_to_free_pages+0x11c/0x238
+  __alloc_frozen_pages_noprof+0x4d0/0xdd0
+  __folio_alloc_noprof+0x18/0x70
+  __filemap_get_folio+0x248/0x440
+  ceph_readdir_prepopulate+0x570/0x9e8
+  mds_dispatch+0x1424/0x1ba0
+  ceph_con_process_message+0x74/0xa0
+  ceph_con_v1_try_read+0x3a0/0x1510
+  ceph_con_workfn+0x260/0x460
 
-Fix this by calling the feature validation first.
+Enter a scoped NOFS allocation context and leave it after clearing
+`journal_info`.  This prevents filesystem reclaim from recursing into
+another filesystem while the field contains Ceph-private data.
 
-Fixes: eca383fcd63b ("xfs: refactor superblock verifiers")
-Cc: <stable@vger.kernel.org> # v4.19
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 315f24088048 ("ceph: fix security xattr deadlock")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_sb.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ceph/mds_client.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/fs/xfs/libxfs/xfs_sb.c
-+++ b/fs/xfs/libxfs/xfs_sb.c
-@@ -1118,10 +1118,10 @@ xfs_sb_read_verify(
- 	 * because _verify_common checks the on-disk values.
- 	 */
- 	__xfs_sb_from_disk(&sb, dsb, false);
--	error = xfs_validate_sb_common(mp, bp, &sb);
-+	error = xfs_validate_sb_read(mp, &sb);
- 	if (error)
- 		goto out_error;
--	error = xfs_validate_sb_read(mp, &sb);
-+	error = xfs_validate_sb_common(mp, bp, &sb);
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -6,6 +6,7 @@
+ #include <linux/slab.h>
+ #include <linux/gfp.h>
+ #include <linux/sched.h>
++#include <linux/sched/mm.h>
+ #include <linux/debugfs.h>
+ #include <linux/seq_file.h>
+ #include <linux/ratelimit.h>
+@@ -3843,6 +3844,7 @@ static void handle_reply(struct ceph_mds
+ 	struct ceph_mds_reply_head *head = msg->front.iov_base;
+ 	struct ceph_mds_reply_info_parsed *rinfo;  /* parsed reply info */
+ 	struct ceph_snap_realm *realm;
++	unsigned int nofs_flags;
+ 	u64 tid;
+ 	int err, result;
+ 	int mds = session->s_mds;
+@@ -3985,6 +3987,14 @@ static void handle_reply(struct ceph_mds
  
- out_error:
- 	if (error == -EFSCORRUPTED || error == -EFSBADCRC)
+ 	/* insert trace into our cache */
+ 	mutex_lock(&req->r_fill_mutex);
++
++	/* disable fs reclaim while we are using current->journal_info
++	 * for our own purposes, or else shrinkers of other
++	 * filesystems might dereference this pointer as a different
++	 * type
++	 */
++	nofs_flags = memalloc_nofs_save();
++
+ 	current->journal_info = req;
+ 	err = ceph_fill_trace(mdsc->fsc->sb, req);
+ 	if (err == 0) {
+@@ -3993,6 +4003,7 @@ static void handle_reply(struct ceph_mds
+ 			err = ceph_readdir_prepopulate(req, req->r_session);
+ 	}
+ 	current->journal_info = NULL;
++	memalloc_nofs_restore(nofs_flags);
+ 	mutex_unlock(&req->r_fill_mutex);
+ 
+ 	up_read(&mdsc->snap_rwsem);
 
 
