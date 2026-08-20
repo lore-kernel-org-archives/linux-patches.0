@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6613435200C;
-	Thu, 20 Aug 2026 15:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B1F37BE7A;
+	Thu, 20 Aug 2026 15:03:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238191; cv=none; b=WLZ3QRjPtI+X3o6ZKWzfYCJ09UM9fuhQWnExjVe/EmUZQqunK9ey8QtmwNd8LnCPKgD2HCCx6mQPT5ClU8Ag2BQlPg81K8Mo6tlFMmo/FL0RA143KIk1uPjrAXFJxuJRMNEiI5TPthePGjfyiBjlweMAw5LGUR8kUhhSk/RnLrg=
+	t=1787238194; cv=none; b=UcEgIWnRW9ojK7lHki8UiMglxzqlEW1FbkxZUnkFNb6LuvhdJsl9Zo9pNQWt8ONIkF/0CQGYHCj8y8XWiglWdOZ5z4PjGCY3epTRGTGJOBBMzXjO+nY5WpX1WyXsj9dbZHXS9zEQlAIk1WbGgPWC3PpRj2TRiA3vN/4KYc7JVSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238191; c=relaxed/simple;
-	bh=P64dnKYJ9e+1gbBNEBBrZa3uXS/p0hL81gapQRMW1wE=;
+	s=arc-20240116; t=1787238194; c=relaxed/simple;
+	bh=J81FEn1BbNMyPG33diJX3lFvwgLyJD0T1av/EtSa5/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SHnNL86sJcrKqW1MnVb4MoeCYxsZjYz9ErbSPCMCeNqlKg7onDchNTG5oB27F4QE2jlVYXAos0zU9IZbycOV0u0wvizliutWLAyZkilp1wuTRDvIx00frRFGBJpV5YM/2Pdzg25qlNImsYgVJZ7+GpXvnlori8c4EqFIBoBIieU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gj5yL22R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s9XoH8oJuFRfdzM+Ys3/3PbtgWAvJQEJ4ROmoTqp1GD+nnR5+e2g7VQhaDwL6IQQd8TwqZTtmZK96gcWt2h7B7/+KjbRjtBJ80GOFWzwg2IYdg/dXjW8YVqvz4/gzlDDqVghon/NuGkZSE8LFf97L8C4f9PXSraEo604iJMmZ/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/Z61H05; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gj5yL22R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D8E1F000E9;
-	Thu, 20 Aug 2026 15:03:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/Z61H05"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A4C41F000E9;
+	Thu, 20 Aug 2026 15:03:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238190;
-	bh=s8NR5KhWcAibosI0+3QBdfaI8wL+JPePogEV5yjdIjA=;
+	s=korg; t=1787238193;
+	bh=8D6maMpGkmIMOmzYGFcrjV5GJlD+birCBIrYxV1Tyg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gj5yL22RbolZbG6trywEV8JjCT0vBLNpMduZqYffD3r2VSPwamDsAD9lbXCNvDtwv
-	 gYh+a4JbLy1wMgQYDSIr8n9Tu54uyJOmBk2Cuo0dOeAWL9Hu00VcFyRd+yVfbQV6Wk
-	 yvjPCeLwTZu8rj/TIPUdMJUmmeU/ej1T2rXnYpzw=
+	b=W/Z61H05lcNnHvjdQycedRjK/Ml4aI13OfnrrdHtt9+egHRTpZEr8kW/QD/Zt5sIF
+	 JRcJmN27qnADkfYCqMwHcSEhj/8CxEDzrf2TC4nHIi+XdYqaH9gn+QDnV2yJXjRaRX
+	 WfzTDn5Uh6dEO1bkrPixsl7nNEvjdlp0j7g52UT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Melbin K Mathew <mlbnkm1@gmail.com>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 7.1 023/228] fbdev: bound mode sysfs output to the sysfs buffer
-Date: Thu, 20 Aug 2026 16:52:45 +0200
-Message-ID: <20260820145245.164510740@linuxfoundation.org>
+Subject: [PATCH 7.1 024/228] fbdev: clear fb_info->mode before deleting a videomode
+Date: Thu, 20 Aug 2026 16:52:46 +0200
+Message-ID: <20260820145245.195014871@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -52,82 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Melbin K Mathew <mlbnkm1@gmail.com>
 
-commit d15d51fb26e830af58f3f21964f1c09c239077ea upstream.
+commit 95e647d2a5304a8fd11f1ba3c8502de700650131 upstream.
 
-mode_string() uses snprintf() which can return a value larger than the
-remaining buffer space. show_modes() accumulates the return value into i
-without checking whether i has reached PAGE_SIZE, causing the offset to
-advance past the sysfs buffer if the modelist is long enough.
+fb_set_var() can delete a mode from info->modelist when userspace
+passes FB_ACTIVATE_INV_MODE through FBIOPUT_VSCREENINFO. The code
+checks that the mode being deleted is not the current info->var and
+that fbcon is not using it, but it does not check fb_info->mode.
 
-Add a size parameter to mode_string() and use scnprintf() to return
-only the bytes actually written. Add an early return when offset
-already exceeds the buffer. In show_modes(), stop accumulating once
-the buffer is full.
+fb_info->mode may still point into the modelist entry being deleted.
+If the entry is freed, later mode sysfs reads through show_mode() can
+dereference a stale pointer.
+
+Clear fb_info->mode before calling fb_delete_videomode() when it
+matches the mode being removed.
 
 Cc: stable@vger.kernel.org # v7.1+
 Signed-off-by: Melbin K Mathew <mlbnkm1@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbsysfs.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/video/fbdev/core/fbmem.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/core/fbsysfs.c
-+++ b/drivers/video/fbdev/core/fbsysfs.c
-@@ -30,12 +30,15 @@ static int activate(struct fb_info *fb_i
- 	return 0;
- }
+diff --git a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
+index 2f1c56e5a7a2..c8aa163b0ecf 100644
+--- a/drivers/video/fbdev/core/fbmem.c
++++ b/drivers/video/fbdev/core/fbmem.c
+@@ -246,8 +246,11 @@ fb_set_var(struct fb_info *info, struct fb_var_screeninfo *var)
+ 		ret = fb_mode_is_equal(&mode1, &mode2);
+ 		if (!ret) {
+ 			ret = fbcon_mode_deleted(info, &mode1);
+-			if (!ret)
++			if (!ret) {
++				if (info->mode && fb_mode_is_equal(info->mode, &mode1))
++					info->mode = NULL;
+ 				fb_delete_videomode(&mode1, &info->modelist);
++			}
+ 		}
  
--static int mode_string(char *buf, unsigned int offset,
-+static int mode_string(char *buf, size_t size, unsigned int offset,
- 		       const struct fb_videomode *mode)
- {
- 	char m = 'U';
- 	char v = 'p';
- 
-+	if (offset >= size)
-+		return 0;
-+
- 	if (mode->flag & FB_MODE_IS_DETAILED)
- 		m = 'D';
- 	if (mode->flag & FB_MODE_IS_VESA)
-@@ -48,7 +51,7 @@ static int mode_string(char *buf, unsign
- 	if (mode->vmode & FB_VMODE_DOUBLE)
- 		v = 'd';
- 
--	return snprintf(&buf[offset], PAGE_SIZE - offset, "%c:%dx%d%c-%d\n",
-+	return scnprintf(&buf[offset], size - offset, "%c:%dx%d%c-%d\n",
- 	                m, mode->xres, mode->yres, v, mode->refresh);
- }
- 
-@@ -67,7 +70,7 @@ static ssize_t store_mode(struct device
- 
- 	list_for_each_entry(modelist, &fb_info->modelist, list) {
- 		mode = &modelist->mode;
--		i = mode_string(mstr, 0, mode);
-+		i = mode_string(mstr, sizeof(mstr), 0, mode);
- 		if (strncmp(mstr, buf, max(count, i)) == 0) {
- 
- 			var = fb_info->var;
-@@ -89,7 +92,7 @@ static ssize_t show_mode(struct device *
- 	if (!fb_info->mode)
- 		return 0;
- 
--	return mode_string(buf, 0, fb_info->mode);
-+	return mode_string(buf, PAGE_SIZE, 0, fb_info->mode);
- }
- 
- static ssize_t store_modes(struct device *device,
-@@ -139,7 +142,9 @@ static ssize_t show_modes(struct device
- 	i = 0;
- 	list_for_each_entry(modelist, &fb_info->modelist, list) {
- 		mode = &modelist->mode;
--		i += mode_string(buf, i, mode);
-+		i += mode_string(buf, PAGE_SIZE, i, mode);
-+		if (i >= PAGE_SIZE - 1)
-+			break;
- 	}
- 	return i;
- }
+ 		return ret ? -EINVAL : 0;
+-- 
+2.55.0
+
 
 
