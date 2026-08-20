@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930A547DFB9;
-	Thu, 20 Aug 2026 17:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701B92931C0;
+	Thu, 20 Aug 2026 17:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248446; cv=none; b=kvbskBJqOJXu6X7t3udOVCCOc3l1jL3fBPloq84/6X5MvXmMavqrjXF3e0ZJt4wV2pBjvfTz07ZFaBUt35/VW6A1WY+lLxwVVZhL/1DbtZ68er4hp7YtUKKapqyTzDbq4HYGgpVu0oBCPlL3fxBfwFEjU0VnW4a5g6SwIbRy6u0=
+	t=1787248449; cv=none; b=QZlLQO9HoH70yjsW1bQDlo2FlAmgPsrX2k0COEgaDK39/aLG+xS3f+HDQzqy8UEyjwHJ+XoDZjWWgk8GXiRwXhyonkVkvkKCtZBdyIbSPXMuxyyeJyA7HoAyJGmLIfqzgFnkNmU4tFpZy3hS2xlSTNLYuAbbmeQX4VxCPj3WdUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248446; c=relaxed/simple;
-	bh=JincaEiW7ER/Otq/xP8VHIMYN/OaOKVC/RE1EPmWo28=;
+	s=arc-20240116; t=1787248449; c=relaxed/simple;
+	bh=J5ini2/lHjSKhhZja+Gy7mByD2M19PIMTqwdXhYOvn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d747SJISfmwjNF01UwW9c+Bhcoikai18GAiMc2dQyHfRZuRSrCuAsMqTYcZmJagnN3zgBRNH621W9PyM1+8qH/hjMq0EGcEAXrPhhVa3AboFwrjagCryM5GKAXJ9adoj0NUJxAkkcJDIQooW8zc0M/TKndhlLmI72z3z08Yau5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uSbd+Kcn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Np+x9+rhX1i0AkhD8DxZJRG/qZorDSnIIvsaW1zGTWP+wa0966JCZ59RcVkHwJnN30SqZxm0WVFah+vevl8ATnnHMl1EOpWnbP0ZWcI7HR2lFeB+Sc4rGWD0yoQsIRKqhfWd4kJR5EhbVOopJpQsQGBz5MhZQDGBhDaBYPQ2VTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qod44h1Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uSbd+Kcn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08FC1F000E9;
-	Thu, 20 Aug 2026 17:54:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qod44h1Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB051F000E9;
+	Thu, 20 Aug 2026 17:54:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248445;
-	bh=wf49TPY8u5/fZ2Ql9mAb8FmVyK9m0rMe3guWmZq4ZRU=;
+	s=korg; t=1787248448;
+	bh=zwjujhDktDNl4hUyjkebaTI1MxnHyq1XxDbEi44tD0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uSbd+Kcn5nE17XLrEB0ibq4gw3hlY77zSKLk9Zo9BETlIcf2FxQZbc1PxtV0Ofx0y
-	 IfsWbn49mMQaSbVoFe8V2l8/Lcn+wX8C/7BiY7uw9HTt8Q1JWbC/9YORMvy82/O65V
-	 wenDPHAMOHDEoPvV3UKuzo7AxrTYMbmx1kZ3magA=
+	b=Qod44h1ZWiQDNGoctHTz7re+y2BROCOKuTj4TDaTtPyUd3AwYd3VIeY0kiSj2OlvT
+	 11V0pMdPr0HGP3UtdEt9SxNACvp6xzzhY9G+0Qy48c0Jc0AMhrc9XTulvaXPOc4wnd
+	 u21jAyTKAauXT2wWQ2elUHsC+me4JjZjdV+/0SNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Hodo <martin.hodo@intel.com>,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
 	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 191/303] drm/i915/vrr: require valid min/max vfreq for VRR
-Date: Thu, 20 Aug 2026 16:55:27 +0200
-Message-ID: <20260820145259.054715809@linuxfoundation.org>
+Subject: [PATCH 6.1 192/303] drm/i915/hdcp: Move to using intel_display in intel_hdcp
+Date: Thu, 20 Aug 2026 16:55:28 +0200
+Message-ID: <20260820145259.085422930@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -53,46 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Suraj Kandpal <suraj.kandpal@intel.com>
 
-[ Upstream commit f8a9262c7a6fc2de9802e14b0228114f0333869e ]
+[ Upstream commit e35bf8f6a0ff06ceeff15bb032351cd5d006f92b ]
 
-Ensure the EDID provided min/max vfreq are valid. Most scenarios are
-already covered (by coincidence) through the checks in
-intel_vrr_is_capable() and intel_vrr_is_in_range(), but be more explicit
-about it. At worst, a zero min_vfreq could lead to a division by zero in
-intel_vrr_compute_vmax().
+Move to using intel_display wherever possible in intel_hdcp.c
+as a part of code refactor.
 
-Discovered using AI-assisted static analysis confirmed by Intel Product
-Security.
+--v2
+-Move intel_display to the first line wherever possible [Jani]
+-use the closest reference when using to_intel_display [Jani]
 
-Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: 117cd09ba528 ("drm/i915/display/dp: Compute VRR state in atomic_check")
-Cc: stable@vger.kernel.org # v5.12+
-Cc: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Link: https://patch.msgid.link/20260625131040.1051272-1-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 1765cf59f517b02f3b0591fe5120930d08bddeb6)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240911090540.643155-2-suraj.kandpal@intel.com
+Stable-dep-of: db9e64c983dc ("drm/i915/hdcp: require monotonically increasing seq_num_v")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_vrr.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/i915/display/intel_display_core.h |    3 +++
+ drivers/gpu/drm/i915/display/intel_hdcp.c         |   12 ++++++------
+ drivers/gpu/drm/i915/i915_driver.c                |    3 +++
+ 3 files changed, 12 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_vrr.c
-+++ b/drivers/gpu/drm/i915/display/intel_vrr.c
-@@ -40,6 +40,10 @@ bool intel_vrr_is_capable(struct intel_c
- 		return false;
+--- a/drivers/gpu/drm/i915/display/intel_display_core.h
++++ b/drivers/gpu/drm/i915/display/intel_display_core.h
+@@ -244,6 +244,9 @@ struct intel_wm {
+ };
+ 
+ struct intel_display {
++	/* drm device backpointer */
++	struct drm_device *drm;
++
+ 	/* Display functions */
+ 	struct {
+ 		/* Top level crtc-ish functions */
+--- a/drivers/gpu/drm/i915/display/intel_hdcp.c
++++ b/drivers/gpu/drm/i915/display/intel_hdcp.c
+@@ -1634,8 +1634,8 @@ out:
+ static
+ int hdcp2_authenticate_repeater_topology(struct intel_connector *connector)
+ {
++	struct intel_display *display = &to_i915(connector->base.dev)->display;
+ 	struct intel_digital_port *dig_port = intel_attached_dig_port(connector);
+-	struct drm_i915_private *dev_priv = to_i915(connector->base.dev);
+ 	struct intel_hdcp *hdcp = &connector->hdcp;
+ 	union {
+ 		struct hdcp2_rep_send_receiverid_list recvid_list;
+@@ -1655,7 +1655,7 @@ int hdcp2_authenticate_repeater_topology
+ 
+ 	if (HDCP_2_2_MAX_CASCADE_EXCEEDED(rx_info[1]) ||
+ 	    HDCP_2_2_MAX_DEVS_EXCEEDED(rx_info[1])) {
+-		drm_dbg_kms(&dev_priv->drm, "Topology Max Size Exceeded\n");
++		drm_dbg_kms(display->drm, "Topology Max Size Exceeded\n");
+ 		return -EINVAL;
  	}
  
-+	if (!info->monitor_range.min_vfreq || !info->monitor_range.max_vfreq ||
-+	    info->monitor_range.min_vfreq > info->monitor_range.max_vfreq)
-+		return false;
+@@ -1672,23 +1672,23 @@ int hdcp2_authenticate_repeater_topology
+ 		drm_hdcp_be24_to_cpu((const u8 *)msgs.recvid_list.seq_num_v);
+ 
+ 	if (!hdcp->hdcp2_encrypted && seq_num_v) {
+-		drm_dbg_kms(&dev_priv->drm,
++		drm_dbg_kms(display->drm,
+ 			    "Non zero Seq_num_v at first RecvId_List msg\n");
+ 		return -EINVAL;
+ 	}
+ 
+ 	if (seq_num_v < hdcp->seq_num_v) {
+ 		/* Roll over of the seq_num_v from repeater. Reauthenticate. */
+-		drm_dbg_kms(&dev_priv->drm, "Seq_num_v roll over.\n");
++		drm_dbg_kms(display->drm, "Seq_num_v roll over.\n");
+ 		return -EINVAL;
+ 	}
+ 
+ 	device_cnt = (HDCP_2_2_DEV_COUNT_HI(rx_info[0]) << 4 |
+ 		      HDCP_2_2_DEV_COUNT_LO(rx_info[1]));
+-	if (drm_hdcp_check_ksvs_revoked(&dev_priv->drm,
++	if (drm_hdcp_check_ksvs_revoked(display->drm,
+ 					msgs.recvid_list.receiver_ids,
+ 					device_cnt) > 0) {
+-		drm_err(&dev_priv->drm, "Revoked receiver ID(s) is in list\n");
++		drm_err(display->drm, "Revoked receiver ID(s) is in list\n");
+ 		return -EPERM;
+ 	}
+ 
+--- a/drivers/gpu/drm/i915/i915_driver.c
++++ b/drivers/gpu/drm/i915/i915_driver.c
+@@ -844,6 +844,9 @@ i915_driver_create(struct pci_dev *pdev,
+ 
+ 	pci_set_drvdata(pdev, i915);
+ 
++	/* Add drm device backpointer as early as possible. */
++	i915->display.drm = &i915->drm;
 +
- 	return info->monitor_range.max_vfreq - info->monitor_range.min_vfreq > 10;
- }
+ 	/* Device parameters start as a copy of module parameters. */
+ 	i915_params_copy(&i915->params, &i915_modparams);
  
 
 
