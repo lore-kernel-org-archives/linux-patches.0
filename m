@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766D535C681;
-	Thu, 20 Aug 2026 17:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633062DB788;
+	Thu, 20 Aug 2026 17:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247514; cv=none; b=Hsa+MAy9BXsXKcplmmQlaMJUc40Lp4o8YYDMAtHcC+aqWfGypiEZornWp4Yic1ihASuLpSym+Mi/V+rrWO6P1Yuadtl+vm7Ix/IYDmDIwJ3u/we5E1u5FOnEgwIwKJ61fW5LWKwabxNZOmB1muK3HripxotcyDARsjGNadMcQWA=
+	t=1787247517; cv=none; b=RbKHOX4XUHx8AM6OJQ8KYuWjY5hVr9YFafpePv2lE68VMQTdNsJgPLYsbTtgghZLvpS0+6y/b+215Rzhfmt+XG5LXF92i/uvqfPusyhej6WOJ42pzRBABGJ5D861KHjj0rASyFMweZ48sv3hLKH1PnVeEdq8BMQiMiYvCikGUos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247514; c=relaxed/simple;
-	bh=L3NQ2XFNLOp2pspUpNCHxNLkIns9r/+FhuQqc5oYVfI=;
+	s=arc-20240116; t=1787247517; c=relaxed/simple;
+	bh=Q+uQRxfkP+x67ZP6fBj0U2bLLJZ/JOzb+Fu7drkU59M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q7Uvc8FK5YMzJMelJzHxJQvaLGC2pJBolj0zSxtD269DVk4mtNaQTKAlIRYbbx0KYw5y70rdVKw5PBuW8LDsskpa5TKvFvE96gXr+MP5oFahORbWEd5LF7ssE1KrABc4YifITvkQ7b5GYJpemlnbYqrtCfWKUkStqEyELmEoABg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1qhyQxnI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IQvnjYYLJrGalaeDsbj23nW3QnK6eI/1CauxYkZwInNtqppqIGFCw5qzd7df1gP6F7yqqrluveuyRLTECkF9hFlXnjbdB4PB+1LM6WckUR2e/9QsvT5a85uG5vutgHp8+e/7KHSqcbAz3aej1dMiocp214tELUMyAv8AGPW5NGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMlle0Lk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1qhyQxnI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D221B1F000E9;
-	Thu, 20 Aug 2026 17:38:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMlle0Lk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54931F000E9;
+	Thu, 20 Aug 2026 17:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247513;
-	bh=lcQ+0xwkpvrxCGD+TTdKg6VxiaZT1aLOqHbSIt8XMI0=;
+	s=korg; t=1787247516;
+	bh=Qsxwf98eQatwxGunUbxJxK3HnHRb9j2h7KyAlZDnU8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1qhyQxnI/gO625p1xbbqqhK5/L/V1diI8ml8CHU9koED+8/XVzO8jd0EvGUDdfZxS
-	 bfUn6N1cp75zW87ul/itgpTU274JW+PRn8OuCUpw/c85dqpMWjEQ/KdYZJlUJyArfd
-	 y/lwUfjEo8LeBTszdhO/OUGd38bZDsoUJ7KZrjGA=
+	b=pMlle0LkiLT/hJjmMEz8BlXwU2n+QJyJ2Rpa9OqJnsuypBIS+xJETO1M6bovH0UJ3
+	 g7c/faz7hMt5lZV5/a4BEd0VVXtOxBSrzt2JeYdSALDOEpcZkXD+vfXlvD7RfHx9WH
+	 qWsfWVTyqhowFM+lr8/RuFiMUhbQ+WhAx8L4cSrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavitra Jha <jhapavitra98@gmail.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.6 035/166] libceph: fix multiple unsafe decodes in decode_locker()
-Date: Thu, 20 Aug 2026 16:54:54 +0200
-Message-ID: <20260820145212.238386550@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 071/166] ceph: Remove ceph_writepage()
+Date: Thu, 20 Aug 2026 16:55:30 +0200
+Message-ID: <20260820145213.277695839@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -50,96 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavitra Jha <jhapavitra98@gmail.com>
+From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 
-commit 437b6551cfcc235eea1d735a874f9d421f555e17 upstream.
+[ Upstream commit 19a288110435408fcf2cb274823f2a17d03caf9b ]
 
-decode_locker() in cls_lock_client.c contains three unsafe decode
-operations that allow a malicious or compromised OSD to trigger
-slab-out-of-bounds reads:
+Ceph already has a writepages operation which is preferred over writepage
+in all situations except for page migration.  By adding a migrate_folio
+operation, there will be no situations in which ->writepage should
+be called.  filemap_migrate_folio() is an appropriate operation to use
+because the ceph data stored in folio->private does not contain any
+reference to the memory address of the folio.
 
-1. ceph_decode_copy() at the locker_id_t name field has no preceding
-   bounds check. With p == end after ceph_start_decoding() accepts
-   struct_len=0, this reads sizeof(ceph_entity_name) = 9 bytes past
-   the validated buffer boundary.
-
-2. *p += sizeof(struct ceph_timespec) after the locker_info_t header
-   is an unchecked pointer advance. A malicious OSD can position p
-   past end, causing all subsequent _safe checks to pass against a
-   bogus boundary.
-
-3. len = ceph_decode_32(p) has no preceding bounds check, and the
-   immediately following *p += len is uncapped. A malicious OSD can
-   send len=0xffffffff, advancing p gigabytes past end and escaping
-   the decode window entirely.
-
-Fix all three by replacing bare operations with their safe variants:
-  ceph_decode_copy   -> ceph_decode_copy_safe
-  *p += sizeof(...)  -> ceph_decode_skip_n
-  ceph_decode_32(p)  -> ceph_decode_32_safe
-  *p += len          -> ceph_decode_skip_n
-
-A new label is added to return -EINVAL on any bounds violation.
--EINVAL is appropriate here: the data received from the OSD
-is structurally malformed, which is an invalid argument to the decode
-contract regardless of whether the caller or the wire is at fault.
-
-Attacker model: a malicious or compromised OSD in a multi-tenant Ceph
-deployment can trigger this against any kernel client that issues the
-lock.get_info class method (e.g. during RBD exclusive lock acquisition)
-without any further privileges beyond OSD session establishment.
-
-[ idryomov: use ceph_decode_skip_string() to skip description, trim
-  changelog ]
-
-Cc: stable@vger.kernel.org
-Fixes: d4ed4a530562 ("libceph: support for lock.lock_info")
-Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: "Matthew Wilcox (Oracle)" <willy@infradead.org>
+Link: https://lore.kernel.org/r/20250217185119.430193-2-willy@infradead.org
+Tested-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: cbf59617cd71 ("ceph: fix writeback_count leak in write_folio_nounlock()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/cls_lock_client.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ fs/ceph/addr.c |   28 +---------------------------
+ 1 file changed, 1 insertion(+), 27 deletions(-)
 
---- a/net/ceph/cls_lock_client.c
-+++ b/net/ceph/cls_lock_client.c
-@@ -259,7 +259,8 @@ static int decode_locker(void **p, void
- 	if (ret)
- 		return ret;
- 
--	ceph_decode_copy(p, &locker->id.name, sizeof(locker->id.name));
-+	ceph_decode_copy_safe(p, end, &locker->id.name,
-+			      sizeof(locker->id.name), bad);
- 	s = ceph_extract_encoded_string(p, end, NULL, GFP_NOIO);
- 	if (IS_ERR(s))
- 		return PTR_ERR(s);
-@@ -270,19 +271,23 @@ static int decode_locker(void **p, void
- 	if (ret)
- 		return ret;
- 
--	*p += sizeof(struct ceph_timespec); /* skip expiration */
-+	/* skip expiration */
-+	ceph_decode_skip_n(p, end, sizeof(struct ceph_timespec), bad);
- 
- 	ret = ceph_decode_entity_addr(p, end, &locker->info.addr);
- 	if (ret)
- 		return ret;
- 
--	len = ceph_decode_32(p);
--	*p += len; /* skip description */
-+	/* skip description */
-+	ceph_decode_skip_string(p, end, bad);
- 
- 	dout("%s %s%llu cookie %s addr %s\n", __func__,
- 	     ENTITY_NAME(locker->id.name), locker->id.cookie,
- 	     ceph_pr_addr(&locker->info.addr));
- 	return 0;
-+
-+bad:
-+	return -EINVAL;
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -810,32 +810,6 @@ static int writepage_nounlock(struct pag
+ 	return err;
  }
  
- static int decode_lockers(void **p, void *end, u8 *type, char **tag,
+-static int ceph_writepage(struct page *page, struct writeback_control *wbc)
+-{
+-	int err;
+-	struct inode *inode = page->mapping->host;
+-	BUG_ON(!inode);
+-	ihold(inode);
+-
+-	if (wbc->sync_mode == WB_SYNC_NONE &&
+-	    ceph_inode_to_fs_client(inode)->write_congested) {
+-		redirty_page_for_writepage(wbc, page);
+-		return AOP_WRITEPAGE_ACTIVATE;
+-	}
+-
+-	wait_on_page_fscache(page);
+-
+-	err = writepage_nounlock(page, wbc);
+-	if (err == -ERESTARTSYS) {
+-		/* direct memory reclaimer was killed by SIGKILL. return 0
+-		 * to prevent caller from setting mapping/page error */
+-		err = 0;
+-	}
+-	unlock_page(page);
+-	iput(inode);
+-	return err;
+-}
+-
+ /*
+  * async writeback completion handler.
+  *
+@@ -1586,7 +1560,6 @@ out:
+ const struct address_space_operations ceph_aops = {
+ 	.read_folio = netfs_read_folio,
+ 	.readahead = netfs_readahead,
+-	.writepage = ceph_writepage,
+ 	.writepages = ceph_writepages_start,
+ 	.write_begin = ceph_write_begin,
+ 	.write_end = ceph_write_end,
+@@ -1594,6 +1567,7 @@ const struct address_space_operations ce
+ 	.invalidate_folio = ceph_invalidate_folio,
+ 	.release_folio = ceph_release_folio,
+ 	.direct_IO = noop_direct_IO,
++	.migrate_folio = filemap_migrate_folio,
+ };
+ 
+ static void ceph_block_sigs(sigset_t *oldset)
 
 
