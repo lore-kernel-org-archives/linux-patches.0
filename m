@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1209A272E53;
-	Thu, 20 Aug 2026 16:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147E4377A89;
+	Thu, 20 Aug 2026 16:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243393; cv=none; b=qUQb43rtolQdAGzO05o4BpVpsLnwGLULSMXevOsLqj4joJEezASSW+/DNOBICpXKmLUouT0qsgzuqBnr66cwsrwHWV1TINFM7El9sE8pNhKzrSuSo7GpsgaeRIRE60ub2YPD/WYP7Y2y4UET8ZEAYuq44P1qbuBbdGJrEtu0UGo=
+	t=1787243396; cv=none; b=CfHFxMt7wH0ijUvNYkHa3RPypoEtDtDn3LKkDq+G0uwp3GGYrthwte092VJrpKnTtyDsyGaJMDFpgZyKQRVz8D/472PnGTK7iFlnfHcdiiOmAdr7M7KUq0ZQDonxYImE5p64oP5TBl30uE8UZH5p4hG77ryl++4KoauUcPluMwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243393; c=relaxed/simple;
-	bh=OHliEtq5Qf+xE7gKI9YBw8m7z7oHrnlJiZf9FGEBz5U=;
+	s=arc-20240116; t=1787243396; c=relaxed/simple;
+	bh=e5cMMWp8Lb5QD0InEAKhg1wYbyZIiYIJfh4oJ/92AuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XV/+dItSvH6U2NDSTNDQkdJtZNX/gTc/1mTHlpGoYapRyHDCIEQ8SPWlrI/l4WonR2coc5Xdxm2hizCalpduhHH8RXkj2u1YHMVQSMGn6QRIUPy+1Bz5P0J9nsTiQRmbQh9rqZPBhzLAD6dj5HqZjkFLITi8IgIKb53qRqINiyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0maUsX0r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dpQE+KrVpeGMabF3WqVpl19ILX9D1KU9dbo1GkedxXK6oyrHfdtv6YkTTlOLDAIG/3qdvfRTEkmiR0Gw9WG7Q96O9+oZSH/c9iPTwkb2S+uWe9jBx5ZPMAZePukpUTXTBRqL23oqB+IhU1nx/EELUWb9UIi0p/nGTajfW7PD5Nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LMAfpvCA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0maUsX0r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3591F000E9;
-	Thu, 20 Aug 2026 16:29:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LMAfpvCA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F84B1F000E9;
+	Thu, 20 Aug 2026 16:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243392;
-	bh=abXlpOUXPNkFHK9w2xMTb60XJphZdO7Kkp+58iI/rKI=;
+	s=korg; t=1787243394;
+	bh=afLzopoGE8DqBSO6Ka3djlTaMirQmgr2Vdaw9HFikyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0maUsX0rK4XibnSIPP6pq3PRk17qAR6KHI45Xo8jroD4sipQYeYNsyyRoUIl6vo65
-	 7+gFrr+klyWweWNcMR4eEZ/p+Y8ornNRbC1OOkfWJKrlo4VF5BTGj6Hrv7Ic68Pj8C
-	 NpDKWYNwg3itx8nXtAddW+TEkTuHLByRBZ3CW9ew=
+	b=LMAfpvCAezAE1YE3iwjRxauZUMLRsN9IvOE+JvCXBAj5oh2kGZd+/St8PbavSGqc4
+	 5cff8qbwfgEvGD5+HKKf4S7cPYalo3LvzgxVgVlDBIrliMGVB6pnJ7VUUXnMdvRnw6
+	 1NpeYifRzMIzCAJimQ52C1tpwf+pGSS5/ErQd9oE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.15 030/272] libceph: Avoid using invalid osd indices from primary_temp
-Date: Thu, 20 Aug 2026 16:53:34 +0200
-Message-ID: <20260820145232.135746030@linuxfoundation.org>
+	Jason Wang <jasowang@redhat.com>,
+	Xie Yongji <xieyongji@bytedance.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 073/272] VDUSE: avoid leaking information to userspace
+Date: Thu, 20 Aug 2026 16:54:17 +0200
+Message-ID: <20260820145233.472442267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -44,58 +47,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Jason Wang <jasowang@redhat.com>
 
-commit 3660b98d1204b419f6a77e9a295f148dcf38d042 upstream.
+[ Upstream commit 9c1523803445ee0348f62b77793266dd981596e0 ]
 
-A corrupted osdmap received from a Ceph monitor or OSD may contain osd
-indices in its pg_temp, primary_temp, pg_upmap, and pg_upmap_items parts
-that don't exist, i.e., that are greater than max_osd or smaller than
-CEPH_HOMELESS_OSD (-1). These indices are used to create the up and
-acting set in ceph_pg_to_up_acting_osds(), called from calc_target().
-While most of these osd indices are checked, the one from primary_temp
-is not. Subsequently, this may lead to calc_target() returning this
-(potentially invalid) index as target osd for a (linger) request.
-Because the osd_state, osd_weight, and osd_addr arrays only contain
-max_osd entries (with indices 0 to max_osd -1), this leads to
-out-of-bounds accesses when trying to read values from these arrays.
+The bounceing is not necessarily page aligned, so current VDUSE can
+leak kernel information through mapping bounce pages to
+userspace. Allocate bounce pages with __GFP_ZERO to avoid leaking
+information to userspace.
 
-This patch fixes the issue by adding a check to get_temp_osds(), so that
-only valid osd indices from primary_temp are used, and it falls back to
-using the primary from pg_temp or the up set if it is invalid.
-
-[ idryomov: changelog ]
-
+Fixes: 8c773d53fb7b ("vduse: Implement an MMU-based software IOTLB")
 Cc: stable@vger.kernel.org
-Fixes: 5e8d4d36bf23 ("libceph: add support for primary_temp mappings")
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
+Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260130050750.4050-1-jasowang@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/vdpa/vdpa_user/iova_domain.c |    2 +-
+ drivers/vdpa/vdpa_user/vduse_dev.c   |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -2791,9 +2791,10 @@ static void get_temp_osds(struct ceph_os
- 		}
- 	}
+--- a/drivers/vdpa/vdpa_user/iova_domain.c
++++ b/drivers/vdpa/vdpa_user/iova_domain.c
+@@ -124,7 +124,7 @@ static int vduse_domain_map_bounce_page(
+ 		if (!map->bounce_page) {
+ 			head_map = &domain->bounce_maps[(iova & PAGE_MASK) >> BOUNCE_MAP_SHIFT];
+ 			if (!head_map->bounce_page) {
+-				tmp_page = alloc_page(GFP_ATOMIC);
++				tmp_page = alloc_page(GFP_ATOMIC | __GFP_ZERO);
+ 				if (!tmp_page)
+ 					return -ENOMEM;
+ 				if (cmpxchg(&head_map->bounce_page, NULL, tmp_page))
+--- a/drivers/vdpa/vdpa_user/vduse_dev.c
++++ b/drivers/vdpa/vdpa_user/vduse_dev.c
+@@ -799,7 +799,7 @@ static void *vduse_dev_alloc_coherent(st
  
--	/* primary_temp? */
-+	/* primary_temp? (shouldn't ever be a nonexistent or down OSD) */
- 	pg = lookup_pg_mapping(&osdmap->primary_temp, pgid);
--	if (pg)
-+	if (pg && !WARN_ON_ONCE(ceph_osd_is_down(osdmap,
-+						 pg->primary_temp.osd)))
- 		temp->primary = pg->primary_temp.osd;
- }
+ 	*dma_addr = DMA_MAPPING_ERROR;
+ 
+-	addr = alloc_pages_exact(size, flag);
++	addr = alloc_pages_exact(size, flag | __GFP_ZERO);
+ 	if (!addr)
+ 		return NULL;
  
 
 
