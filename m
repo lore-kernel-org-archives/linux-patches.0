@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B19937A858;
-	Thu, 20 Aug 2026 16:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9482A4779BE;
+	Thu, 20 Aug 2026 16:49:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244547; cv=none; b=Ne2DwNaSBEPrOQVQ7u2Sid2ztZfdoUJNr/KHtjN8hPtkXsy1jZCUmTN8n46AFU1cidH8Am23OGIl2aFTK6smMNF6nEfi96Sgq0hmcvT3OgSok49mMhzYB+8UchkChsKvZtpayNpCyPtlOi95vFrcDc91xS3o27bMjtpQ8TDytTw=
+	t=1787244549; cv=none; b=HLC5y3/vWfOJxPOoo7aAKKUuu9kOtil53JKVVChh/4O+tE2WwKEopYQCp8i+Rv5TNBN4vThaloi1eJX/eouvIAytnuDb5S6z3wsOq4GKO4xBldWxB+/d3CCGrktRpxcb8cIsupzpR0GHeJKBlxok7XvizUlPIMZ/ofFsF/Otw8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244547; c=relaxed/simple;
-	bh=9PDkiNPHdXECO3XcbfExDkNXxc9wkvyoiQw4KaixvJk=;
+	s=arc-20240116; t=1787244549; c=relaxed/simple;
+	bh=m0jYO6jvIKD2khB55SshsD4nwvR4PLIlhErxItxdjYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HS7XRivPGkZwa70wd6EkvLgKVOJbONZvyM5vdh2n/Q+2XP8/xBGjmgjN5jdHj3JEn2lx24L23pl8jr68H4UIik99NmEzInKTL3z17S49uxSVa1al6BfKAekJ/Fb03zIZah+0HZEfPF0xHUAiB+2dHPqdwSoQVF0xx1gkW/yA+E4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNNnnKf3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SjbzTjbdyFIIwxf4MntCUqxhYhcSeiWaVgSJklMVoFhccXK/LizdrZaHdDHaL/BdARJ53tZphxVgI96aadPsGqpl/AllC+KzXQVSA1ANMCu9WmDowALPucoSY9YyGc/eua4BQ3m5tvA7zHP4uUfgI1HduEJbY76QQAoRrilq4F8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gC9YSnwJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNNnnKf3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC651F000E9;
-	Thu, 20 Aug 2026 16:49:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gC9YSnwJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC051F000E9;
+	Thu, 20 Aug 2026 16:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244545;
-	bh=PLIxFUXd4tusv3CHyM/5NrWuGFno+dUMQ9ODabBMwpA=;
+	s=korg; t=1787244548;
+	bh=PC9AtzMKc2ebEYjaCBKh/vVw+kXoyiKOqginK07IWhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lNNnnKf3kNIT58nOJP12FPHP9f+eVVHSfRn+uGf38Uttnqp9BaeSd+QFfIApaFAjb
-	 oUDQ6Gs+TQTYA2GoaZf+oUNAhwoDiX3m9Ftt83d39ZA6jg0Wl+2IeIjHM+54O5M7Bs
-	 hvRZH7bFHbGvh0Beb4bICB9JNbjQgiZ2usBkeJ2E=
+	b=gC9YSnwJJhY0OELcQ7evk6GyecfDw84rjVm8JMBlaxMBtlYEBKNL5AzWNolbBOd2u
+	 oWlXxYlRUF1s6rXaNUVowgU25kqYzEB1C0QpFg9OTWpDVZBsSiFiXDvaL+Z9R/dMEL
+	 PzqQmmqUlgFpxxgeiO2zdzYJ8uj4+t541+MR/EtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 206/235] binfmt_misc: restore write access when removing an entry
-Date: Thu, 20 Aug 2026 16:57:22 +0200
-Message-ID: <20260820145222.809804252@linuxfoundation.org>
+Subject: [PATCH 5.10 207/235] can: gs_usb: gs_usb_receive_bulk_callback(): resubmit URB on skb allocation failure
+Date: Thu, 20 Aug 2026 16:57:23 +0200
+Message-ID: <20260820145222.847694617@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -50,49 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit db1856ea9196cf6e015d12199a34c0b9313c7bfa ]
+[ Upstream commit 68c5724ecd159992f76edb7b57dc508a44c8b7da ]
 
-Registering an entry with the MISC_FMT_OPEN_FILE flag opens the
-interpreter via open_exec() which denies write access to it for as
-long as the entry exists. Removing the entry closes the interpreter
-file via filp_close() but never restores write access, leaving the
-inode's i_writecount permanently negative. Opening the interpreter
-for writing keeps failing with ETXTBSY long after the entry is gone
-until the inode is evicted from the inode cache.
+If the allocation of the SKB in gs_usb_receive_bulk_callback() fails, the
+driver returns from the callback without resubmitting the URB in order to
+receive further USB in URBs.
 
-Commit 90f601b497d7 ("binfmt_misc: restore write access before
-closing files opened by open_exec()") fixed the same imbalance in the
-error path of bm_register_write() but the actual removal path has
-been leaking the write denial since the introduction of the flag.
+This results in a silent performance degradation which, if it occurs
+repeatedly, results in starvation of USB in traffic.
 
-Restore write access in put_binfmt_handler() before closing the
-interpreter file.
+Instead of returning immediately, try to resend the URB. If this also
+fails, this is logged as an info message.
 
-Link: https://patch.msgid.link/20260710-work-binfmt_misc-locking-v3-1-a162f7cb58d6@kernel.org
-Fixes: 948b701a607f ("binfmt_misc: add persistent opened binary handler for containers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
+Fixes: 26949ac935e3 ("can: gs_usb: add CAN-FD support")
+Link: https://patch.msgid.link/20260709-gs_usb-resubmit-urb-v1-1-4dd40030cc84@pengutronix.de
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_misc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/can/usb/gs_usb.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/binfmt_misc.c
-+++ b/fs/binfmt_misc.c
-@@ -163,8 +163,10 @@ static Node *get_binfmt_handler(struct l
- static void put_binfmt_handler(Node *e)
- {
- 	if (refcount_dec_and_test(&e->users)) {
--		if (e->flags & MISC_FMT_OPEN_FILE)
-+		if (e->flags & MISC_FMT_OPEN_FILE) {
-+			exe_file_allow_write_access(e->interp_file);
- 			filp_close(e->interp_file, NULL);
-+		}
- 		kfree(e);
- 	}
- }
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -332,7 +332,7 @@ static void gs_usb_receive_bulk_callback
+ 	if (hf->echo_id == -1) { /* normal rx */
+ 		skb = alloc_can_skb(dev->netdev, &cf);
+ 		if (!skb)
+-			return;
++			goto resubmit_urb;
+ 
+ 		cf->can_id = le32_to_cpu(hf->can_id);
+ 
 
 
