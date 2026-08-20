@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1EF37F330;
-	Thu, 20 Aug 2026 15:14:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361AD37EFFE;
+	Thu, 20 Aug 2026 15:14:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238870; cv=none; b=GI6KnWcn1et3OeB3BDQCHDy77gpfRO23kkOfYGksNsvx96zsoPxoVR3vD0nd4mft6TEVkQneWqAh1FnHIFjDOzbINhWjlfaKa+HCBbi5Iu8d4aPeu7hhWHoh8eDi+p5Tus4OH5sihiqupHNNXOYVwB++zTCyPYY/AjKyB4h5mKY=
+	t=1787238873; cv=none; b=HEqjmYGUHwfNPyEtCjTVc+774XYc1NOL2MwgAgCR5fCWPzchRY+0eZog0HgYweN9lTTAyo7/XyVbFmw1AM4SxXwvf3zjawHPEGwIhWm1C1xDopJNlyS/eSJ6H/a4JuD+Db5LiGIL9lIcFAjghGY+iUdJOwj4Va5NSIXr3pcTs5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238870; c=relaxed/simple;
-	bh=4tYSLfnkMe4bsq4jE/9VjHuuI9CyAi5xlcHhV3uUYUE=;
+	s=arc-20240116; t=1787238873; c=relaxed/simple;
+	bh=EGDqx2DCTj50r4/Yf31eLgQ21xcoXtZm8taujmBs2Xo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kVeXKAfZ3409rorXI7aPiuz4wLNT6zWEdCKz02j/375Sqr4iL99nJVEgbcKHIZCnVzxRq+RN0r4wW24SnpgHEm/uuQTGCg4woWMJPgdjicCgwdo61uK9/N6Ql0suWAwp1uO2CQLkmPJ8zOu+2P4OUxes4ZYLdtYfmYa4VAAczuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sv1+Xc3X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IS+SHFw/2PO2Ats7PNN0YZxN5hadHMHq/JC2T3fQqjTzR+Gcz4XhHtg0fShy9bl8HStLX4xAMDBD4AboDfnpQi7wtUTTwG6NJBLRRY+j32HOOb0uDMXMOWZDxBbGz8abf0UJy64XY46t+rukZ/qxbqlpsITmLD+sgraJfuu80vI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ar5r5rT7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sv1+Xc3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70D11F000E9;
-	Thu, 20 Aug 2026 15:14:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ar5r5rT7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C9E1F000E9;
+	Thu, 20 Aug 2026 15:14:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238869;
-	bh=iZjJ91H16gtiKDsH1mMIiNVdTfC3EZCJ4Ho+b0Hcadk=;
+	s=korg; t=1787238872;
+	bh=T+lqMRxVW7dqDRnNZLSYyUN23WinxuEh9tmjlQC3QME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sv1+Xc3XTNF/kX0C4d+qzgG9v3XKdxLcPmqyT+EKE+IZtAEu1rMZ2nCH7AyPFFW/a
-	 ElxJl+TRo0PcuTf6M5KY/qAvz+5piI6nF+3yi0KiURvPcIaA0Nz2J70rmE4dttQ2fS
-	 /esmQ7Nzkpps59Xe3hL7PFOXWpH1t/64y3pxA9mw=
+	b=Ar5r5rT7uq0L3o9gC1fvL0ZoftW4kYJkJpLwVVfnqN2+UudtzhuzoRFuG08FR4f7h
+	 I+EIYZtZhqTWoT6VwvbghLmHlBewKr7tu72CT4mYFKuLuBq9L+Law1DNRlqP2Xk8Fr
+	 bXVMElIZET/An1KfrbKwfdnGY8aPt+u6LDNA5IOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 068/217] mmc: sdhci: make tuning_err a signed int
-Date: Thu, 20 Aug 2026 16:53:56 +0200
-Message-ID: <20260820145239.668277822@linuxfoundation.org>
+Subject: [PATCH 6.18 069/217] pmdomains: mediatek: Avoid setting RTFFs CLK_DIS before NRESTORE
+Date: Thu, 20 Aug 2026 16:53:57 +0200
+Message-ID: <20260820145239.697587783@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -51,51 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-commit ae31bcc92bb42502bb7c9029e6dc7a824cf6cd14 upstream.
+commit cbb0140379de69fa46526672f3003f128f0b4e2e upstream.
 
-Coverity report INTEGER_OVERFLOW for host->tuning_err.
-The tuning_err field in struct sdhci_host is used to store an error
-code for re-tuning, but it was declared as unsigned int. Several call
-sites store negative error codes into it and later compare against
-negative values:
+For the PCIE_PHY (also called PEXTP_PHY) type of RTFF hardware,
+there is special handling setting CLK_DIS before performing the
+NRESTORE sequence for resetting the RTFF and start sequencing
+from a clean state.
 
-  - sdhci.c, sdhci-of-dwcmshc.c and sdhci-pci-gli.c assign it the
-    return value of __sdhci_execute_tuning()/__sdhci_execute_tuning_9750(),
-    both of which return a signed int (possibly a negative errno);
-  - sdhci-of-esdhc.c assigns host->tuning_err = -EAGAIN and later does
-    "ret = host->tuning_err; if (ret == -EAGAIN ...)";
-  - sdhci-of-dwcmshc.c prints it with the %d (signed) conversion.
+That special handling, though, poses an issue in case the machine
+specific bootchain (bootloader in particular) ends up booting the
+kernel with both PCIe MAC and PHY enabled (not just power domains)
+as doing so will partially corrupt the PCIe MAC/PHY registers in
+an unpredictable manner, producing either an initialization fail
+in the PCI-Express drivers, or even a hard lockup!
 
-Storing a negative errno in an unsigned int and reading it back as a
-signed int only happens to work because of two's-complement, same-width
-integer conversions. It is misleading and triggers sign-conversion
-warnings. All users treat the value either as a signed error code or as
-a boolean (zero / non-zero), so changing the type to a signed int is
-safe and makes the intent explicit.
+Resolve this by simply removing the special handling: in this case
+the bootchain, or remote processors, setting is getting honored by
+the later check for PWR_RTFF_SAVE_FLAG presence in the RTFF ctl
+register.
 
-Fixes: 7d8bb1f46e13 ("mmc: sdhci: add tuning error codes")
-Assisted-by: Cline:claude-sonnet [read_file, search_files, git]
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Fixes: 9d02c94342b3 ("pmdomain: mediatek: Add support for RTFF Hardware in MT8196/MT6991")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pmdomain/mediatek/mtk-pm-domains.c |    8 --------
+ 1 file changed, 8 deletions(-)
 
---- a/drivers/mmc/host/sdhci.h
-+++ b/drivers/mmc/host/sdhci.h
-@@ -659,7 +659,7 @@ struct sdhci_host {
+--- a/drivers/pmdomain/mediatek/mtk-pm-domains.c
++++ b/drivers/pmdomain/mediatek/mtk-pm-domains.c
+@@ -266,16 +266,8 @@ static int scpsys_ctl_pwrseq_on(struct s
+ 	if (ret < 0)
+ 		return ret;
  
- 	unsigned int		tuning_count;	/* Timer count for re-tuning */
- 	unsigned int		tuning_mode;	/* Re-tuning mode supported by host */
--	unsigned int		tuning_err;	/* Error code for re-tuning */
-+	int			tuning_err;	/* Error code for re-tuning */
- #define SDHCI_TUNING_MODE_1	0
- #define SDHCI_TUNING_MODE_2	1
- #define SDHCI_TUNING_MODE_3	2
+-	if (pd->data->rtff_type == SCPSYS_RTFF_TYPE_PCIE_PHY)
+-		regmap_set_bits(scpsys->base, pd->data->ctl_offs, PWR_RTFF_CLK_DIS);
+-
+ 	regmap_clear_bits(scpsys->base, pd->data->ctl_offs, PWR_CLK_DIS_BIT);
+ 	regmap_clear_bits(scpsys->base, pd->data->ctl_offs, PWR_ISO_BIT);
+-
+-	/* Wait for RTFF HW to sync buck isolation state if this is PCIe PHY RTFF */
+-	if (pd->data->rtff_type == SCPSYS_RTFF_TYPE_PCIE_PHY)
+-		udelay(5);
+-
+ 	regmap_set_bits(scpsys->base, pd->data->ctl_offs, PWR_RST_B_BIT);
+ 
+ 	/*
 
 
