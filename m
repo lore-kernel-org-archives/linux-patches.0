@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BADDB47ACF5;
-	Thu, 20 Aug 2026 16:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC4147ACF5;
+	Thu, 20 Aug 2026 16:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244477; cv=none; b=sYswoRt5yD/a2LVEr5ZnDlKxAzpH+fwEPTTzzptkdTXg9KBB2m4jLYTDNgdv8VSR4XtV+rgBxwD0+kMcD81RZ0ZMJWfQYAxv81EUEGZdzV5ftu9TwcT0NLVtzDH7rKbKF5itEzalXuwOPe581M2trPKYowQy6LfaQmvsF8Ny/iQ=
+	t=1787244479; cv=none; b=ctm0a6x0hPCUg5FN9X48sSG7YVGyRNXwld/rRhWq46vky9EwgLhZcprB+YgF7TYP5KXIykJcSoOWcMNzc/udTLjBDcqu/5bHcEGfdF7yGJai/0Qv0Se2Q+EmEvUhlgihma/K0iyLgTT+0tFXMFD0JYFq/0Jle9rkYRjyFPbEfKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244477; c=relaxed/simple;
-	bh=x6tKt9P46QgJnldbgSACHC2FN0Gtz7Nj4qW2+8XgOC0=;
+	s=arc-20240116; t=1787244479; c=relaxed/simple;
+	bh=68jCdGuLxjGa3eDZLzdk1pqAdtQtLNsm+MKrGYmeAas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hmVxX6JiVGb6nzD19i4c2iFWVLS1a3DbGgaa40BafZKv3lz4uxxTHuGO/O/lGpsNlf95G1AHxreIkWTSb/2kerDoAy5Gipo0xQ1x1q2c6+0/vb0LmZhUvEZ+6Q+smGCJ+KoAKMdU8oIuPIrD0I7YNGiY7j4KHENqrjWAawcspD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ew5fJnRS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pX4jSIO6HaLRN7t/n+Og+wqj9SjkRJ1hppeER19mJ4Z45DUVzmUe1a9F8Du3S55rRAwwp4HB/HRvWsxnbQDzDe+TgonCvZRca0l6TWEj08KmXs+EWehdQaob39h5GQtKnrNXGHd4u0ud8yj/Bx4eVpprGRF+V1CAmqJ85QycICI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvByHKAe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ew5fJnRS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203791F000E9;
-	Thu, 20 Aug 2026 16:47:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvByHKAe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0299D1F00A3D;
+	Thu, 20 Aug 2026 16:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244475;
-	bh=HnnLV6I8NlPA87nynFXNP77QD9Qjy6ByKsfkF9LnPQU=;
+	s=korg; t=1787244478;
+	bh=s6fG9Mc8fO+TOVWle1wkB4i84oAtoBAvEITErKssFpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ew5fJnRS91LdftqlHhzeOFJ2idgfcF4Q8dCc9s2F+6W2dfpoletxgyV+TvfH2tix2
-	 wIdRwSAPNkyUMSPhiyuSde68vWoX+v8zUsc4fd8IJVaHS6pJuLwZG7xpz9XlXhvE8g
-	 Nupu1OW1AVCxbQAQNEqz5hRswu8vLxEmtbLQ4kBE=
+	b=dvByHKAezBZM8W850wbNjjMOsgr2mUC9tLE2thbehZyimnM21ulm8oj0QN3vM9t4s
+	 blGU0L8yyhkKN3TXEY16xCrr57FJDQ8SlwMhLwLo9+8E1BbgnezoTeFMpagC3F6Iso
+	 yXw/8erUIKuhklZkfvCMzaN3C3N4RJ4GogiWmaNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	David Matlack <dmatlack@google.com>,
 	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 143/235] KVM: x86: Move "apicv_active" into "struct kvm_lapic"
-Date: Thu, 20 Aug 2026 16:56:19 +0200
-Message-ID: <20260820145220.777322558@linuxfoundation.org>
+Subject: [PATCH 5.10 144/235] KVM: Introduce vcpu->wants_to_run
+Date: Thu, 20 Aug 2026 16:56:20 +0200
+Message-ID: <20260820145220.808791198@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -51,273 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: David Matlack <dmatlack@google.com>
 
-[ Upstream commit ce0a58f4756c14d7646cfdf279dbaada9d7712a0 ]
+[ Upstream commit a6816314af5749cd88944bfdceb270c627cdf348 ]
 
-Move the per-vCPU apicv_active flag into KVM's local APIC instance.
-APICv is fully dependent on an in-kernel local APIC, but that's not at
-all clear when reading the current code due to the flag being stored in
-the generic kvm_vcpu_arch struct.
+Introduce vcpu->wants_to_run to indicate when a vCPU is in its core run
+loop, i.e. when the vCPU is running the KVM_RUN ioctl and immediate_exit
+was not set.
 
-No functional change intended.
+Replace all references to vcpu->run->immediate_exit with
+!vcpu->wants_to_run to avoid TOCTOU races with userspace. For example, a
+malicious userspace could invoked KVM_RUN with immediate_exit=true and
+then after KVM reads it to set wants_to_run=false, flip it to false.
+This would result in the vCPU running in KVM_RUN with
+wants_to_run=false. This wouldn't cause any real bugs today but is a
+dangerous landmine.
 
+Signed-off-by: David Matlack <dmatlack@google.com>
+Link: https://lore.kernel.org/r/20240503181734.1467938-2-dmatlack@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20220614230548.3852141-5-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Stable-dep-of: e800decd9c0a ("KVM: x86: Only reset TSC Deadline Timer in apic_timer_expired on KVM_RUN")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/kvm_host.h |    1 -
- arch/x86/kvm/lapic.c            |   31 ++++++++++---------------------
- arch/x86/kvm/lapic.h            |    3 ++-
- arch/x86/kvm/svm/avic.c         |    2 +-
- arch/x86/kvm/vmx/vmx.c          |    7 ++++---
- arch/x86/kvm/x86.c              |   12 ++++++------
- 6 files changed, 23 insertions(+), 33 deletions(-)
+ arch/arm64/kvm/arm.c       |    2 +-
+ arch/mips/kvm/mips.c       |    2 +-
+ arch/powerpc/kvm/powerpc.c |    2 +-
+ arch/s390/kvm/kvm-s390.c   |    2 +-
+ arch/x86/kvm/x86.c         |    4 ++--
+ include/linux/kvm_host.h   |    1 +
+ virt/kvm/kvm_main.c        |    3 +++
+ 7 files changed, 10 insertions(+), 6 deletions(-)
 
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -544,7 +544,6 @@ struct kvm_vcpu_arch {
- 	u64 efer;
- 	u64 apic_base;
- 	struct kvm_lapic *apic;    /* kernel irqchip context */
--	bool apicv_active;
- 	bool load_eoi_exitmap_pending;
- 	DECLARE_BITMAP(ioapic_handled_vectors, 256);
- 	unsigned long apic_attention;
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -482,14 +482,10 @@ static inline int apic_find_highest_irr(
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -686,7 +686,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
+ 			return ret;
+ 	}
  
- static inline void apic_clear_irr(int vec, struct kvm_lapic *apic)
- {
--	struct kvm_vcpu *vcpu;
--
--	vcpu = apic->vcpu;
--
--	if (unlikely(vcpu->arch.apicv_active)) {
-+	if (unlikely(apic->apicv_active)) {
- 		/* need to update RVI */
- 		kvm_lapic_clear_vector(vec, apic->regs + APIC_IRR);
--		kvm_x86_ops.hwapic_irr_update(vcpu,
-+		kvm_x86_ops.hwapic_irr_update(apic->vcpu,
- 				apic_find_highest_irr(apic));
- 	} else {
- 		apic->irr_pending = false;
-@@ -507,19 +503,15 @@ EXPORT_SYMBOL_GPL(kvm_apic_clear_irr);
+-	if (run->immediate_exit)
++	if (!vcpu->wants_to_run)
+ 		return -EINTR;
  
- static inline void apic_set_isr(int vec, struct kvm_lapic *apic)
- {
--	struct kvm_vcpu *vcpu;
--
- 	if (__apic_test_and_set_vector(vec, apic->regs + APIC_ISR))
- 		return;
+ 	vcpu_load(vcpu);
+--- a/arch/mips/kvm/mips.c
++++ b/arch/mips/kvm/mips.c
+@@ -464,7 +464,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
+ 		vcpu->mmio_needed = 0;
+ 	}
  
--	vcpu = apic->vcpu;
--
- 	/*
- 	 * With APIC virtualization enabled, all caching is disabled
- 	 * because the processor can modify ISR under the hood.  Instead
- 	 * just set SVI.
- 	 */
--	if (unlikely(vcpu->arch.apicv_active))
-+	if (unlikely(apic->apicv_active))
- 		kvm_x86_ops.hwapic_isr_update(vec);
- 	else {
- 		++apic->isr_count;
-@@ -554,12 +546,9 @@ static inline int apic_find_highest_isr(
+-	if (vcpu->run->immediate_exit)
++	if (!vcpu->wants_to_run)
+ 		goto out;
  
- static inline void apic_clear_isr(int vec, struct kvm_lapic *apic)
- {
--	struct kvm_vcpu *vcpu;
- 	if (!__apic_test_and_clear_vector(vec, apic->regs + APIC_ISR))
- 		return;
+ 	lose_fpu(1);
+--- a/arch/powerpc/kvm/powerpc.c
++++ b/arch/powerpc/kvm/powerpc.c
+@@ -1832,7 +1832,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
  
--	vcpu = apic->vcpu;
--
- 	/*
- 	 * We do get here for APIC virtualization enabled if the guest
- 	 * uses the Hyper-V APIC enlightenment.  In this case we may need
-@@ -567,7 +556,7 @@ static inline void apic_clear_isr(int ve
- 	 * on the other hand isr_count and highest_isr_cache are unused
- 	 * and must be left alone.
- 	 */
--	if (unlikely(vcpu->arch.apicv_active))
-+	if (unlikely(apic->apicv_active))
- 		kvm_x86_ops.hwapic_isr_update(apic_find_highest_isr(apic));
- 	else {
- 		--apic->isr_count;
-@@ -706,7 +695,7 @@ static void pv_eoi_clr_pending(struct kv
- static int apic_has_interrupt_for_ppr(struct kvm_lapic *apic, u32 ppr)
- {
- 	int highest_irr;
--	if (apic->vcpu->arch.apicv_active)
-+	if (apic->apicv_active)
- 		highest_irr = kvm_x86_ops.sync_pir_to_irr(apic->vcpu);
+ 	kvm_sigset_activate(vcpu);
+ 
+-	if (run->immediate_exit)
++	if (!vcpu->wants_to_run)
+ 		r = -EINTR;
  	else
- 		highest_irr = apic_find_highest_irr(apic);
-@@ -1538,7 +1527,7 @@ static bool lapic_timer_int_injected(str
- 		int vec = reg & APIC_VECTOR_MASK;
- 		void *bitmap = apic->regs + APIC_ISR;
+ 		r = kvmppc_vcpu_run(vcpu);
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -4373,7 +4373,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
+ 	struct kvm_run *kvm_run = vcpu->run;
+ 	int rc;
  
--		if (vcpu->arch.apicv_active)
-+		if (apic->apicv_active)
- 			bitmap = apic->regs + APIC_IRR;
+-	if (kvm_run->immediate_exit)
++	if (!vcpu->wants_to_run)
+ 		return -EINTR;
  
- 		if (apic_test_vector(vec, bitmap))
-@@ -1647,7 +1636,7 @@ static void apic_timer_expired(struct kv
- 	if (apic_lvtt_tscdeadline(apic) || ktimer->hv_timer_in_use)
- 		ktimer->expired_tscdeadline = ktimer->tscdeadline;
- 
--	if (!from_timer_fn && vcpu->arch.apicv_active) {
-+	if (!from_timer_fn && apic->apicv_active) {
- 		WARN_ON(kvm_get_running_vcpu() != vcpu);
- 		kvm_apic_inject_pending_timer_irqs(apic);
- 		return;
-@@ -2317,7 +2306,7 @@ void kvm_apic_update_apicv(struct kvm_vc
- {
- 	struct kvm_lapic *apic = vcpu->arch.apic;
- 
--	if (vcpu->arch.apicv_active) {
-+	if (apic->apicv_active) {
- 		/* irr_pending is always true when apicv is activated. */
- 		apic->irr_pending = true;
- 		apic->isr_count = 1;
-@@ -2379,7 +2368,7 @@ void kvm_lapic_reset(struct kvm_vcpu *vc
- 				vcpu->arch.apic_base | MSR_IA32_APICBASE_BSP);
- 	vcpu->arch.pv_eoi.msr_val = 0;
- 	apic_update_ppr(apic);
--	if (vcpu->arch.apicv_active) {
-+	if (apic->apicv_active) {
- 		kvm_x86_ops.apicv_post_state_restore(vcpu);
- 		kvm_x86_ops.hwapic_irr_update(vcpu, -1);
- 		kvm_x86_ops.hwapic_isr_update(-1);
-@@ -2646,7 +2635,7 @@ int kvm_apic_set_state(struct kvm_vcpu *
- 	__start_apic_timer(apic, APIC_TMCCT);
- 	kvm_apic_update_apicv(vcpu);
- 	apic->highest_isr_cache = -1;
--	if (vcpu->arch.apicv_active) {
-+	if (apic->apicv_active) {
- 		kvm_x86_ops.apicv_post_state_restore(vcpu);
- 		kvm_x86_ops.hwapic_irr_update(vcpu,
- 				apic_find_highest_irr(apic));
---- a/arch/x86/kvm/lapic.h
-+++ b/arch/x86/kvm/lapic.h
-@@ -47,6 +47,7 @@ struct kvm_lapic {
- 	struct kvm_timer lapic_timer;
- 	u32 divide_count;
- 	struct kvm_vcpu *vcpu;
-+	bool apicv_active;
- 	bool sw_enabled;
- 	bool irr_pending;
- 	bool lvt0_in_nmi_mode;
-@@ -216,7 +217,7 @@ static inline int apic_x2apic_mode(struc
- 
- static inline bool kvm_vcpu_apicv_active(struct kvm_vcpu *vcpu)
- {
--	return vcpu->arch.apic && vcpu->arch.apicv_active;
-+	return vcpu->arch.apic && vcpu->arch.apic->apicv_active;
- }
- 
- static inline bool kvm_apic_has_events(struct kvm_vcpu *vcpu)
---- a/arch/x86/kvm/svm/avic.c
-+++ b/arch/x86/kvm/svm/avic.c
-@@ -673,7 +673,7 @@ void svm_load_eoi_exitmap(struct kvm_vcp
- 
- int svm_deliver_avic_intr(struct kvm_vcpu *vcpu, int vec)
- {
--	if (!vcpu->arch.apicv_active)
-+	if (!kvm_vcpu_apicv_active(vcpu))
- 		return -1;
- 
- 	kvm_lapic_set_irr(vec, vcpu->arch.apic);
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -4116,7 +4116,8 @@ static int vmx_deliver_posted_interrupt(
- 	if (!r)
- 		return 0;
- 
--	if (!vcpu->arch.apicv_active)
-+	/* Note, this is called iff the local APIC is in-kernel. */
-+	if (!vcpu->arch.apic->apicv_active)
- 		return -1;
- 
- 	if (pi_test_and_set_pir(vector, &vmx->pi_desc))
-@@ -6457,7 +6458,7 @@ static int vmx_sync_pir_to_irr(struct kv
- 	int max_irr;
- 	bool max_irr_updated;
- 
--	WARN_ON(!vcpu->arch.apicv_active);
-+	WARN_ON(!kvm_vcpu_apicv_active(vcpu));
- 	if (pi_test_on(&vmx->pi_desc)) {
- 		pi_clear_on(&vmx->pi_desc);
- 		/*
-@@ -6983,7 +6984,7 @@ reenter_guest:
- 			 * but it would incur the cost of a retpoline for now.
- 			 * Revisit once static calls are available.
- 			 */
--			if (vcpu->arch.apicv_active)
-+			if (kvm_vcpu_apicv_active(vcpu))
- 				vmx_sync_pir_to_irr(vcpu);
- 			goto reenter_guest;
- 		}
+ 	if (kvm_run->kvm_valid_regs & ~KVM_SYNC_S390_VALID_FIELDS ||
 --- a/arch/x86/kvm/x86.c
 +++ b/arch/x86/kvm/x86.c
-@@ -4182,7 +4182,7 @@ void kvm_arch_vcpu_put(struct kvm_vcpu *
- static int kvm_vcpu_ioctl_get_lapic(struct kvm_vcpu *vcpu,
- 				    struct kvm_lapic_state *s)
- {
--	if (vcpu->arch.apicv_active)
-+	if (kvm_vcpu_apicv_active(vcpu))
- 		kvm_x86_ops.sync_pir_to_irr(vcpu);
+@@ -9648,7 +9648,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
+ 	kvm_load_guest_fpu(vcpu);
  
- 	return kvm_apic_get_state(vcpu, s);
-@@ -8504,7 +8504,7 @@ static void update_cr8_intercept(struct
- 	if (!lapic_in_kernel(vcpu))
- 		return;
- 
--	if (vcpu->arch.apicv_active)
-+	if (vcpu->arch.apic->apicv_active)
- 		return;
- 
- 	if (!vcpu->arch.apic->vapic_addr)
-@@ -8967,7 +8967,7 @@ void kvm_vcpu_update_apicv(struct kvm_vc
- 	if (!lapic_in_kernel(vcpu))
- 		return;
- 
--	vcpu->arch.apicv_active = kvm_apicv_activated(vcpu->kvm);
-+	vcpu->arch.apic->apicv_active = kvm_apicv_activated(vcpu->kvm);
- 	kvm_apic_update_apicv(vcpu);
- 	kvm_x86_ops.refresh_apicv_exec_ctrl(vcpu);
- }
-@@ -9031,7 +9031,7 @@ static void vcpu_scan_ioapic(struct kvm_
- 	if (irqchip_split(vcpu->kvm))
- 		kvm_scan_ioapic_routes(vcpu, vcpu->arch.ioapic_handled_vectors);
- 	else {
--		if (vcpu->arch.apicv_active)
-+		if (kvm_vcpu_apicv_active(vcpu))
- 			kvm_x86_ops.sync_pir_to_irr(vcpu);
- 		if (ioapic_in_kernel(vcpu->kvm))
- 			kvm_ioapic_scan_entry(vcpu, vcpu->arch.ioapic_handled_vectors);
-@@ -9275,7 +9275,7 @@ static int vcpu_enter_guest(struct kvm_v
- 	 * This handles the case where a posted interrupt was
- 	 * notified with kvm_vcpu_kick.
- 	 */
--	if (kvm_lapic_enabled(vcpu) && vcpu->arch.apicv_active)
-+	if (kvm_lapic_enabled(vcpu) && kvm_vcpu_apicv_active(vcpu))
- 		kvm_x86_ops.sync_pir_to_irr(vcpu);
- 
- 	if (kvm_vcpu_exit_request(vcpu)) {
-@@ -10254,7 +10254,7 @@ int kvm_arch_vcpu_create(struct kvm_vcpu
- 		if (r < 0)
- 			goto fail_mmu_destroy;
- 		if (kvm_apicv_activated(vcpu->kvm))
--			vcpu->arch.apicv_active = true;
-+			vcpu->arch.apic->apicv_active = true;
+ 	if (unlikely(vcpu->arch.mp_state == KVM_MP_STATE_UNINITIALIZED)) {
+-		if (kvm_run->immediate_exit) {
++		if (!vcpu->wants_to_run) {
+ 			r = -EINTR;
+ 			goto out;
+ 		}
+@@ -9692,7 +9692,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
  	} else
- 		static_key_slow_inc(&kvm_no_apic_vcpu);
+ 		WARN_ON(vcpu->arch.pio.count || vcpu->mmio_needed);
  
+-	if (kvm_run->immediate_exit)
++	if (!vcpu->wants_to_run)
+ 		r = -EINTR;
+ 	else
+ 		r = vcpu_run(vcpu);
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -318,6 +318,7 @@ struct kvm_vcpu {
+ 		bool dy_eligible;
+ 	} spin_loop;
+ #endif
++	bool wants_to_run;
+ 	bool preempted;
+ 	bool ready;
+ 	struct kvm_vcpu_arch arch;
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -3366,7 +3366,10 @@ static long kvm_vcpu_ioctl(struct file *
+ 				synchronize_rcu();
+ 			put_pid(oldpid);
+ 		}
++		vcpu->wants_to_run = !READ_ONCE(vcpu->run->immediate_exit);
+ 		r = kvm_arch_vcpu_ioctl_run(vcpu);
++		vcpu->wants_to_run = false;
++
+ 		trace_kvm_userspace_exit(vcpu->run->exit_reason, r);
+ 		break;
+ 	}
 
 
