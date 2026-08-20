@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FBAD37A498;
-	Thu, 20 Aug 2026 15:13:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5CA3803C3;
+	Thu, 20 Aug 2026 15:13:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238814; cv=none; b=iafBXCa56VtPh1tKGMlpk4gao80BaIFdCSetbVv8VLxv/xxSLgX14VNAvVtHLR4AgenLOnpGH2H2zzKl/DcDutStPEsGo59kX4hnJzJfZYfppgzp0GApnOjeIlsVZmoTTa5pg1D5cD50ZReda6bV6ioiuMUAoSHt2uw35uJ/usI=
+	t=1787238817; cv=none; b=l7+W3HY6m1uq9Af6S5pI1AHV7AVVgQzUItPT2TbqqkwVrb1EIvh5FiLvyeMVTKClpnrkx0ijktM85iV7A7GZves20fQyAmV1lQyWgQTwvli9AbOZ1S4LhkTENlyg9nQ+WHl7WZ+81Y3REPzeqH4iuSDbWF/d2chNtgdZnIyrszA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238814; c=relaxed/simple;
-	bh=2F5j2UFzbNiwzOXE3KZjn2fHLvhfuSEaJmDtl7epU8k=;
+	s=arc-20240116; t=1787238817; c=relaxed/simple;
+	bh=J46ruC53ip81NlM8x4Z3knZ9R89q9xicfcEYVOD027c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s3U35ZA8HeoCA1TvAYSSB1y5WjnhQ9LX9ArE0NiAlGhXR20BYpy8yR/8FpJHAMeGxU08Lmq501do5+OrfDvmshcbRwaEqYqN5UQzO2OZ/hm1BAIVa/zKial9cFsgutmxRSjxZhV9jo++CC5G8kfXxmvnqhTc4weQbQGedIW6B+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDPINrNV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gaa+XsTBQRawc1u0mn5ecEFAB8TaeJEDqLhVQkCUuEeejL2DdZvtekvwP+G+fRBNdNlN1eMGlkHsfhdObclIiTfAdz0ElbdS/BCC6dIcbI3TdCMkrvipXxk8D6bst2kmj4hxYoRaUwtoXYw2VJys0FA0ck/xGaEMnSmPH80bQAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7n9ydvJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDPINrNV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82531F000E9;
-	Thu, 20 Aug 2026 15:13:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7n9ydvJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAFBD1F000E9;
+	Thu, 20 Aug 2026 15:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238813;
-	bh=n6oXB8ZjQZppl+gjTOKVNmg3oSg0m8igEe6TFbkaNs4=;
+	s=korg; t=1787238816;
+	bh=2V/VpxO5y+fZbYz0NZVlIbJ8SswX9tWcAkerQx09Nxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oDPINrNViJmMTQiyHBM4PpDdsJ1Y2qlAHTTlVJUddNDc2a2gMs3DQ/ii9vtbr8XWF
-	 GhOXoqKcjssXNqhevuXWcZh8q+dinT6Yv6KDOT6PGouDM1NethNm6C9etpYb2DAzhV
-	 9LTL4RCuMMf3PfCUiabU2l2GYBv8G19GTfGbklYc=
+	b=i7n9ydvJK78Xc2C7YXLbguhE6oN/Zk55tNRkxSfB7w9k6EnbPaXBg+19Mx3BHV3JD
+	 vv2DCmGsQvcsr66Nnqr2zXMJX/pHhpD1MWvZ37fMC1tmwbpmcJ+VDrD8OIIwUBmc7v
+	 ip/Cm/piHjaA0khbb3hAzfdyCwDwMVL0d0GPCx7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cengiz Can <cengiz.can@canonical.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.18 051/217] gpio: sloppy-logic-analyzer: fix use-after-free via debugfs trigger on unbind
-Date: Thu, 20 Aug 2026 16:53:39 +0200
-Message-ID: <20260820145239.155451506@linuxfoundation.org>
+	Rui Qi <qirui.001@bytedance.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.18 052/217] selftests/ftrace: Convert ELF entry point to file offset in uprobe test
+Date: Thu, 20 Aug 2026 16:53:40 +0200
+Message-ID: <20260820145239.184686296@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -51,67 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cengiz Can <cengiz.can@canonical.com>
+From: Rui Qi <qirui.001@bytedance.com>
 
-commit 44f3468a0aef1aabdad551898ab7cfa2a9d20e99 upstream.
+commit 24aa630f6259e6a2107936c06fed72063f712b64 upstream.
 
-The "trigger" debugfs file has a hand-rolled ->write handler
-(trigger_write()) that dereferences the per-device gpio_la_poll_priv. The
-file is created with debugfs_create_file_unsafe(), and the handler never
-takes a debugfs reference. Nothing keeps the object alive while the
-handler runs.
+The add_remove_uprobe test uses readelf -h to obtain the ELF entry
+point (e_entry) and passes it directly as the offset to uprobe_events.
+However, uprobe_events expects a file offset, not a virtual address.
 
-priv is allocated with devm_kzalloc(). devres frees it when the platform
-device is unbound. debugfs_create_file_unsafe() installs no full_proxy
-wrapper, so debugfs_remove_recursive() in gpio_la_poll_remove() does not
-wait for an in-flight trigger_write(). The blob_lock taken there does not
-help, because trigger_write() never takes it. A write that races an unbind
-therefore writes into freed memory:
+For PIE binaries, the virtual address happens to equal the file offset
+because the first LOAD segment has p_vaddr == p_offset, so the test
+works by coincidence. But for non-PIE executables, e_entry is an
+absolute virtual address that can far exceed the file size. When the
+probe is enabled, uprobe_register() checks offset > i_size_read(inode)
+and rejects it with -EINVAL.
 
-  trigger_write()                  gpio_la_poll_remove()
-    priv = m->private
-    buf = memdup_user()  [may sleep]
-                                     mutex_lock(&priv->blob_lock)
-                                     debugfs_remove_recursive()  [no wait]
-                                     mutex_unlock(&priv->blob_lock)
-                                   (remove returns; devres frees priv)
-    priv->trig_data = buf   <-- use-after-free write
-    priv->trig_len  = count
+Fix this by converting the virtual address to a file offset using the
+ELF program headers: scan readelf -lW output for the LOAD segment
+containing the entry point, then compute file_offset = e_entry -
+p_vaddr + p_offset. For PIE binaries the result is unchanged; for
+non-PIE binaries the offset is correctly translated.
 
-The race is reachable by root via
-/sys/bus/platform/drivers/gpio-sloppy-logic-analyzer/unbind.
+The conversion uses only POSIX shell primitives, with no dependency on
+gawk or perl.
 
-Create "trigger" with debugfs_create_file() instead. Its full_proxy
-wrapper makes debugfs_remove_recursive() drain any in-flight ->write
-before it returns.
+Link: https://lore.kernel.org/all/20260807081512.2974757-3-qirui.001@bytedance.com/
 
-The use-after-free is confirmed under KASAN with a minimal reproducer of
-the same debugfs_create_file_unsafe() plus devm_kzalloc() pattern
-(available on request); it produces a slab-use-after-free write in the
-handler.
-
-Fixes: 7828b7bbbf20 ("gpio: add sloppy logic analyzer using polling")
+Fixes: dc4b165855f2 ("selftests/ftrace: Use readelf to find entry point in uprobe test")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4.8
-Signed-off-by: Cengiz Can <cengiz.can@canonical.com>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://patch.msgid.link/20260730220258.358169-2-cengiz.can@canonical.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Rui Qi <qirui.001@bytedance.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-sloppy-logic-analyzer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/ftrace/test.d/dynevent/add_remove_uprobe.tc |   27 +++++++++-
+ 1 file changed, 25 insertions(+), 2 deletions(-)
 
---- a/drivers/gpio/gpio-sloppy-logic-analyzer.c
-+++ b/drivers/gpio/gpio-sloppy-logic-analyzer.c
-@@ -301,7 +301,7 @@ static int gpio_la_poll_probe(struct pla
- 	debugfs_create_ulong("delay_ns_acquisition", 0400, priv->debug_dir, &priv->acq_delay);
- 	debugfs_create_file_unsafe("buf_size", 0600, priv->debug_dir, priv, &fops_buf_size);
- 	debugfs_create_file_unsafe("capture", 0200, priv->debug_dir, priv, &fops_capture);
--	debugfs_create_file_unsafe("trigger", 0200, priv->debug_dir, priv, &fops_trigger);
-+	debugfs_create_file("trigger", 0200, priv->debug_dir, priv, &fops_trigger);
+--- a/tools/testing/selftests/ftrace/test.d/dynevent/add_remove_uprobe.tc
++++ b/tools/testing/selftests/ftrace/test.d/dynevent/add_remove_uprobe.tc
+@@ -12,9 +12,32 @@ echo 0 > events/enable
+ echo > dynamic_events
  
- 	return 0;
- }
+ REALBIN=`readlink -f /bin/sh`
+-ENTRYPOINT=`readelf -h ${REALBIN} | grep Entry | sed -e 's/[^0]*//'`
+ 
+-echo "p:myevent ${REALBIN}:${ENTRYPOINT}" >> uprobe_events
++# Get the entry point virtual address from ELF header
++ENTRY=`readelf -hW ${REALBIN} | grep "Entry point" | awk '{print $NF}'`
++
++# Convert virtual address to file offset: find the LOAD segment containing
++# the entry point, then compute file_offset = e_entry - p_vaddr + p_offset.
++# For PIE binaries this is a no-op (vaddr == file offset), but for non-PIE
++# executables the virtual address is much larger than the file size and
++# must be converted, otherwise uprobe_register() rejects it with -EINVAL.
++ENTRY_DEC=$(printf '%d' "$ENTRY")
++OFFSET=$ENTRY
++while IFS= read -r line; do
++    set -- $line
++    [ "$1" = "LOAD" ] || continue
++    VA_DEC=$(printf '%d' "$3")
++    OFF_DEC=$(printf '%d' "$2")
++    FSZ_DEC=$(printf '%d' "$5")
++    if [ "$ENTRY_DEC" -ge "$VA_DEC" ] && [ "$ENTRY_DEC" -lt "$((VA_DEC + FSZ_DEC))" ]; then
++        OFFSET=$(printf '0x%x' "$((ENTRY_DEC - VA_DEC + OFF_DEC))")
++        break
++    fi
++done << EOF
++$(readelf -lW ${REALBIN} | grep LOAD)
++EOF
++
++echo "p:myevent ${REALBIN}:${OFFSET}" >> uprobe_events
+ 
+ grep -q myevent uprobe_events
+ test -d events/uprobes/myevent
 
 
