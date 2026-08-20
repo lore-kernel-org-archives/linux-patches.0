@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B7E47CC73;
-	Thu, 20 Aug 2026 16:35:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0310B1E9919;
+	Thu, 20 Aug 2026 16:35:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243751; cv=none; b=WkwL6fM+XO9DVV+oPtNcn0rudeN69vEvETThhyrt3D8Cm3IwDcDKBw7uMLhfMCY0m/acg3ToTjwcpwescYxave9uhzsIq7OIWImTc1WCvS0Dc8YUHaqb5LFK0GAC0Ybm34j3xd6VzpLyc3qS8ey6+MOn7tMfDVMN9X5I3n875/k=
+	t=1787243754; cv=none; b=XsRiWeN6QHX1aeyUBa+QBXpETkHVOTnf7s6Ap+buv61TvgfPHzPbKc0ce4aCX8l2qgU/p0I1Ilgoi9dYCMOhY1xs1pIfQ5U7bDkdUctZNdBeIi+g9RWaTn8lEB7a5hJtey9tFt/npXsYMFk/5rFJa6chsadd1Uj7AmtrvMTnZ9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243751; c=relaxed/simple;
-	bh=lGgtkiyTXYBGCVCWRlTnwS0hVPdZH/huywNTgPYh90Q=;
+	s=arc-20240116; t=1787243754; c=relaxed/simple;
+	bh=WywFiwUg1/myp5HI6WPl0oHrsvrmbBogseLj1SIuhFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KPs97j6DAedA/stkPmolxfty06VpWeG0CqaGeqMLG1Q07PHKjfak5RW8MyjnstMFQSCDGSStCnUajx4nd5GycLwlA0dS0cXD11SUnzGXwTtYk1e2xkHgPXUo5vgjlo+vEXMHZLUuC153Q9h0nT76Y2+9OuVqUu4BgcmeWoYmKN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7+vJCxN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g3oq47bd7IZdzR6TpKERMu8UM7SenTJxbkkqFX/BAh81/Lkyn1NfNLaoqE+DnOEyr0s0C7asbykyDzp1dum+ChSYgLJ6IipYkn/loPwvlUsB8pFRHlstuqekZEfub6549RzCk5m6weDTgZr/L51yloXUN6dKXIyFxEKRjnD3VVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYLNOPCl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7+vJCxN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EDEC1F000E9;
-	Thu, 20 Aug 2026 16:35:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYLNOPCl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8661F000E9;
+	Thu, 20 Aug 2026 16:35:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243750;
-	bh=7l6F5NOQwVfV4FzCPpjvi3ydzecKGm0udUeKaUQrMKM=;
+	s=korg; t=1787243752;
+	bh=e+2a59lo/RuR3yd/Nv7lp91+EMLkRAGH50puHKzdVnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O7+vJCxNVWIp7sT2e43Xtfp5IHFzUdxo8fMlg05m6N2Uph/Ykyo2lRjoNfc9BThVC
-	 2po47biSun/8Nl+n6hdMgkNAKY4Ax2BgWU3bcQrCeg8t1P8aj9In+nqENMs0V9XPUN
-	 BU9yKQ9mQoH5783MX5MvshM6h1j3lzLPRiaCJCDQ=
+	b=mYLNOPCl1G4uh9yMVRmttzy6jBHnHnVKY6z6ds9BiOhwL8jLZ0zZstItNsmnI3EZ6
+	 R0qmAG0W2/DmjY4Ok37UolQsFALbTbMaceKTo+j5zUXEQ2imQnkG+rCRD6acXcM+bZ
+	 1TzWRQzvB2jG+1hdv0sZllg3c8SQodEGLZVJbCb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 164/272] KVM: x86/mmu: Document the "rules" for using host_pfn_mapping_level()
-Date: Thu, 20 Aug 2026 16:55:48 +0200
-Message-ID: <20260820145236.272863997@linuxfoundation.org>
+Subject: [PATCH 5.15 155/272] bootconfig: do not put quotes on cmdline items unless necessary
+Date: Thu, 20 Aug 2026 16:55:39 +0200
+Message-ID: <20260820145235.962303618@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -51,65 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
 
-[ Upstream commit 65e3b446bcceaac7448cb25a2a5bf4adbcf25fe6 ]
+[ Upstream commit 212f863fa8811c780abacc1d0404c573fdc0a2de ]
 
-Add a comment to document how host_pfn_mapping_level() can be used safely,
-as the line between safe and dangerous is quite thin.  E.g. if KVM were
-to ever support in-place promotion to create huge pages, consuming the
-level is safe if the caller holds mmu_lock and checks that there's an
-existing _leaf_ SPTE, but unsafe if the caller only checks that there's a
-non-leaf SPTE.
+When trying to migrate to using bootconfig to embed the kernel's and
+PID1's command line with the kernel image itself, and so allowing changing
+that without modifying the bootloader, I noticed that /proc/cmdline
+changed from e.g.
 
-Opportunistically tweak the existing comments to explicitly document why
-KVM needs to use READ_ONCE().
+  console=ttymxc0,115200n8 cma=128M quiet -- --log-level=notice
 
-No functional change intended.
+to
 
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20220715232107.3775620-3-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: 2abd5287f083 ("KVM: x86: Check for invalid/obsolete root *after* making MMU pages available")
+  console="ttymxc0,115200n8" cma="128M" quiet -- --log-level="notice"
+
+The kernel parameters are parsed just fine, and the quotes are indeed
+stripped from the actual argv[] given to PID1.  However, the quoting
+doesn't really serve any purpose and looks excessive, and might confuse
+some (naive) userspace tool trying to parse /proc/cmdline.  So do not
+quote the value unless it contains whitespace.
+
+Link: https://lkml.kernel.org/r/20240320101952.62135-1-linux@rasmusvillemoes.dk
+Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: dec4d8118c17 ("bootconfig: fix NULL-pointer arithmetic in xbc_snprint_cmdline()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c |   25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ init/main.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -2869,6 +2869,31 @@ static void direct_pte_prefetch(struct k
- 	__direct_pte_prefetch(vcpu, sp, sptep);
- }
- 
-+/*
-+ * Lookup the mapping level for @gfn in the current mm.
-+ *
-+ * WARNING!  Use of host_pfn_mapping_level() requires the caller and the end
-+ * consumer to be tied into KVM's handlers for MMU notifier events!
-+ *
-+ * There are several ways to safely use this helper:
-+ *
-+ * - Check mmu_notifier_retry_hva() after grabbing the mapping level, before
-+ *   consuming it.  In this case, mmu_lock doesn't need to be held during the
-+ *   lookup, but it does need to be held while checking the MMU notifier.
-+ *
-+ * - Hold mmu_lock AND ensure there is no in-progress MMU notifier invalidation
-+ *   event for the hva.  This can be done by explicit checking the MMU notifier
-+ *   or by ensuring that KVM already has a valid mapping that covers the hva.
-+ *
-+ * - Do not use the result to install new mappings, e.g. use the host mapping
-+ *   level only to decide whether or not to zap an entry.  In this case, it's
-+ *   not required to hold mmu_lock (though it's highly likely the caller will
-+ *   want to hold mmu_lock anyways, e.g. to modify SPTEs).
-+ *
-+ * Note!  The lookup can still race with modifications to host page tables, but
-+ * the above "rules" ensure KVM will not _consume_ the result of the walk if a
-+ * race with the primary MMU occurs.
-+ */
- static int host_pfn_mapping_level(struct kvm *kvm, gfn_t gfn, kvm_pfn_t pfn,
- 				  const struct kvm_memory_slot *slot)
+--- a/init/main.c
++++ b/init/main.c
+@@ -328,7 +328,7 @@ static int __init xbc_snprint_cmdline(ch
  {
+ 	struct xbc_node *knode, *vnode;
+ 	char *end = buf + size;
+-	const char *val;
++	const char *val, *q;
+ 	int ret;
+ 
+ 	xbc_node_for_each_key_value(root, knode, val) {
+@@ -346,8 +346,14 @@ static int __init xbc_snprint_cmdline(ch
+ 			continue;
+ 		}
+ 		xbc_array_for_each_value(vnode, val) {
+-			ret = snprintf(buf, rest(buf, end), "%s=\"%s\" ",
+-				       xbc_namebuf, val);
++			/*
++			 * For prettier and more readable /proc/cmdline, only
++			 * quote the value when necessary, i.e. when it contains
++			 * whitespace.
++			 */
++			q = strpbrk(val, " \t\r\n") ? "\"" : "";
++			ret = snprintf(buf, rest(buf, end), "%s=%s%s%s ",
++				       xbc_namebuf, q, val, q);
+ 			if (ret < 0)
+ 				return ret;
+ 			buf += ret;
 
 
