@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B16637FF61;
-	Thu, 20 Aug 2026 15:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FAA737C925;
+	Thu, 20 Aug 2026 15:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238729; cv=none; b=GHKkIh78h0ZI2HqzTs8xT6058VubBcK2qNnwXltWnH8wVm7pWZJVIieLvA5XTdXrd4Pte67ZsO05RNF174or6leGlzXOV9CdMFpRekZwX/eO91yQngPM4HfJ8LurExXxlZkD3wxeA4g1pzMTGHKyxajcR42L/k4plLMG6+Vs8Fc=
+	t=1787238732; cv=none; b=dicG7O9ZxX7lOpJaOF52JRavLT/bZxJa15rxcDG9W6fH8s1QIqpiziSuIqqtunXsxhpASKTqMME8esNwsmHkq2V9kChYbcBndUVEtJ1TXWQEMSDth82ka4kAARJ/rtj4EnlfRlNylvftJNR/G6gZTfqQxbFVRlOkrGxbKmKcTPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238729; c=relaxed/simple;
-	bh=kIIzCGpugIMtxNknNEp/1EE12MW8BzyrxWmOL8tYeh8=;
+	s=arc-20240116; t=1787238732; c=relaxed/simple;
+	bh=5otgsgEjvYh5zJCfTG/g4On/C+2jTDIYCInzLzQYmgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HtlBgu9S9bTITjL/Ts1H7yk3Z1vO+bc0/M27eS/TdbKKzsO+coquzy8g9HElVRBQqzhZI2zNLKXNCQA6O75UJWPE2E6mMGh/APhEFkUGLIRRXcgQz+NnCY4FZUjHq8cbQubMGy+ceawCzFBBW1evYSBOWFTQ+ptbgduyUL3qgAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vnEN/NUR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TuoSsadukdZ/lA9wzL/D2Hnv0dmWdiab9uBlvckO2Wto+qqa2IkJmgLlOdXaGARagQaUYOmeJKPTtPOOG2ZwFu+VABBUI5hM3SpzPWC/69PPvgAvBqKi7LIpBa3M0kXumNuE/33mMLb5DQ41skPgD/aRa/OP1VzHFj0k9EolSxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6mDj0oE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vnEN/NUR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961751F000E9;
-	Thu, 20 Aug 2026 15:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6mDj0oE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7311F000E9;
+	Thu, 20 Aug 2026 15:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238728;
-	bh=rFtbzCyzSLy1ARt0mWG6yWJyZzeJxySNw+5QuO2CVVs=;
+	s=korg; t=1787238731;
+	bh=wN+/SjwS0woc+qoUwOGzpNHhipb9xIt6HkxKBYBKlcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vnEN/NURSF+t2d932AwUjVK2bS18KikZJjKO80lSD94MfjYyLniCtUX7DUBsjHwra
-	 iymD/84nDjTTaV/0zGf3xMcJ4l0gMfnPtNqNKLdrSBT3W/ZAP7C0vkb81mSLkOUXQB
-	 kEFhCHETgh5dzqnl1tTjqYGBrpMOXJPQQLZ+Twn8=
+	b=m6mDj0oEQYwUMovOVpnArDTMS7yZ7YPSz2OdJkn7ZjnrHRQk2DNx5JxrLCdhxpkjg
+	 n48qv8w5sZUqPhPpddkDD8qr/viueP60bw72sJWn+5SQhz09fPUkzWgN7ONap/k3M8
+	 ISOy6z3H8EAtiAmd53YI82/AjQVMA244ae4DSvRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 020/217] ASoC: cs4265: sort the register default table
-Date: Thu, 20 Aug 2026 16:53:08 +0200
-Message-ID: <20260820145238.232480428@linuxfoundation.org>
+Subject: [PATCH 6.18 021/217] ASoC: cs35l45: sort the register default table
+Date: Thu, 20 Aug 2026 16:53:09 +0200
+Message-ID: <20260820145238.260794210@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -54,49 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit e4fe3e046524e5de3c04c6eef3743780cbdc231c upstream.
+commit f39a68ed08bb6eef0ae711b41d645ee5e9448c09 upstream.
 
 reg_defaults must be sorted by ascending register address, as
 regcache_lookup_reg() locates entries in it with bsearch().  See commit
 fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
 
-cs4265_reg_defaults[] lists CS4265_INT_MASK (0x0e),
-CS4265_STATUS_MODE_MSB (0x0f) and CS4265_STATUS_MODE_LSB (0x10) after
-CS4265_SPDIF_CTL1 (0x11) and CS4265_SPDIF_CTL2 (0x12), so the binary search
-does not find those three entries.  regcache_reg_needs_sync() then cannot
-compare them against their default and reports that a sync is needed, so
-they are written to the device on every regcache_sync() even when they were
-never touched.
+cs35l45_defaults[] lists the DSP1_RX*_RATE and DSP1_TX*_RATE registers
+(0x02b80080 - 0x02b802b8) in the middle of the table, ahead of entries with
+much lower addresses, so the binary search does not find 36 of its 73
+entries.  regcache_reg_needs_sync() then cannot compare those against their
+default and reports that a sync is needed, so they are written to the
+device on every regcache_sync() even when they were never touched.
 
 Sort the table by register address.
 
-Fixes: fb6f806967f6 ("ASoC: Add support for the CS4265 CODEC")
+Fixes: 74b14e2850a3 ("ASoC: cs35l45: DSP Support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
 Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260805082413.26174-4-peter.ujfalusi@linux.intel.com
+Link: https://patch.msgid.link/20260805082413.26174-3-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/cs4265.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/cs35l45-tables.c |   32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
---- a/sound/soc/codecs/cs4265.c
-+++ b/sound/soc/codecs/cs4265.c
-@@ -46,11 +46,11 @@ static const struct reg_default cs4265_r
- 	{ CS4265_DAC_CHA_VOL, 0x00 },
- 	{ CS4265_DAC_CHB_VOL, 0x00 },
- 	{ CS4265_DAC_CTL2, 0xC0 },
--	{ CS4265_SPDIF_CTL1, 0x00 },
--	{ CS4265_SPDIF_CTL2, 0x00 },
- 	{ CS4265_INT_MASK, 0x00 },
- 	{ CS4265_STATUS_MODE_MSB, 0x00 },
- 	{ CS4265_STATUS_MODE_LSB, 0x00 },
-+	{ CS4265_SPDIF_CTL1, 0x00 },
-+	{ CS4265_SPDIF_CTL2, 0x00 },
+--- a/sound/soc/codecs/cs35l45-tables.c
++++ b/sound/soc/codecs/cs35l45-tables.c
+@@ -66,22 +66,6 @@ static const struct reg_default cs35l45_
+ 	{ CS35L45_ASPTX3_INPUT,			0x00000020 },
+ 	{ CS35L45_ASPTX4_INPUT,			0x00000028 },
+ 	{ CS35L45_ASPTX5_INPUT,			0x00000048 },
+-	{ CS35L45_DSP1_RX1_RATE,		0x00000001 },
+-	{ CS35L45_DSP1_RX2_RATE,		0x00000001 },
+-	{ CS35L45_DSP1_RX3_RATE,		0x00000001 },
+-	{ CS35L45_DSP1_RX4_RATE,		0x00000001 },
+-	{ CS35L45_DSP1_RX5_RATE,		0x00000001 },
+-	{ CS35L45_DSP1_RX6_RATE,		0x00000001 },
+-	{ CS35L45_DSP1_RX7_RATE,		0x00000001 },
+-	{ CS35L45_DSP1_RX8_RATE,		0x00000001 },
+-	{ CS35L45_DSP1_TX1_RATE,		0x00000001 },
+-	{ CS35L45_DSP1_TX2_RATE,		0x00000001 },
+-	{ CS35L45_DSP1_TX3_RATE,		0x00000001 },
+-	{ CS35L45_DSP1_TX4_RATE,		0x00000001 },
+-	{ CS35L45_DSP1_TX5_RATE,		0x00000001 },
+-	{ CS35L45_DSP1_TX6_RATE,		0x00000001 },
+-	{ CS35L45_DSP1_TX7_RATE,		0x00000001 },
+-	{ CS35L45_DSP1_TX8_RATE,		0x00000001 },
+ 	{ CS35L45_DSP1RX1_INPUT,		0x00000008 },
+ 	{ CS35L45_DSP1RX2_INPUT,		0x00000009 },
+ 	{ CS35L45_DSP1RX3_INPUT,		0x00000018 },
+@@ -114,6 +98,22 @@ static const struct reg_default cs35l45_
+ 	{ CS35L45_GPIO1_CTRL1,			0x81000001 },
+ 	{ CS35L45_GPIO2_CTRL1,			0x81000001 },
+ 	{ CS35L45_GPIO3_CTRL1,			0x81000001 },
++	{ CS35L45_DSP1_RX1_RATE,		0x00000001 },
++	{ CS35L45_DSP1_RX2_RATE,		0x00000001 },
++	{ CS35L45_DSP1_RX3_RATE,		0x00000001 },
++	{ CS35L45_DSP1_RX4_RATE,		0x00000001 },
++	{ CS35L45_DSP1_RX5_RATE,		0x00000001 },
++	{ CS35L45_DSP1_RX6_RATE,		0x00000001 },
++	{ CS35L45_DSP1_RX7_RATE,		0x00000001 },
++	{ CS35L45_DSP1_RX8_RATE,		0x00000001 },
++	{ CS35L45_DSP1_TX1_RATE,		0x00000001 },
++	{ CS35L45_DSP1_TX2_RATE,		0x00000001 },
++	{ CS35L45_DSP1_TX3_RATE,		0x00000001 },
++	{ CS35L45_DSP1_TX4_RATE,		0x00000001 },
++	{ CS35L45_DSP1_TX5_RATE,		0x00000001 },
++	{ CS35L45_DSP1_TX6_RATE,		0x00000001 },
++	{ CS35L45_DSP1_TX7_RATE,		0x00000001 },
++	{ CS35L45_DSP1_TX8_RATE,		0x00000001 },
  };
  
- static bool cs4265_readable_register(struct device *dev, unsigned int reg)
+ static bool cs35l45_readable_reg(struct device *dev, unsigned int reg)
 
 
