@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C223806DC;
-	Thu, 20 Aug 2026 15:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E49B38A70B;
+	Thu, 20 Aug 2026 15:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239540; cv=none; b=gr2gMC6yAhRRDPt5U20HmGQxxYXxaGYN/sV1OL+EHW2tvJxGZ1TL8pkYBYfWJ6c5m7bUOMSIPfahESz4NOJFlw6LfQcIFvPCG50TQS5alUai4RMNW9jVF9a+TESytCrpNbrG+Ng8F30c1SdTYK5+4kBYs/L7Biro76J3+vZ7ljM=
+	t=1787239543; cv=none; b=SV6lHZd5jZfk4bm2SVTQioECPF8UmamKxgqvxjfmydKIu0nKofcPVBHv7CV/PEoOgSAvgFDAXLJl9HgCH4Q4p9u0mvpY+JRmA+94E82XwMzAj4c1WQ+sIVLcD2e4qqJJv2OzFo6wWpfbsSjRgUpkao9syBFzk7BK0mV+lIN6PyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239540; c=relaxed/simple;
-	bh=S7lemm8lNmHl2dXI4VI1bANMMIZIq3rGrdFI2Q3ZKS0=;
+	s=arc-20240116; t=1787239543; c=relaxed/simple;
+	bh=mSt2dK+PmzgzrYQZiT2t8/imr2vUjLaixSkdi3ydQos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MTLf69nPQtuZXrXGxdRXdyS0rk638xHU6Hfd3Ud5LiFB7WA91MBhPTc0uABIwPRmZGATSGX5c9ma5t/mORUJeerRH2szM6s8xymb7/4LjuNFgfZabM2b+luX5hP+ZhbRLBI6TsqX8Gc1hFsq3zJMpWsIs/n8WgzpK0uwoCo1Q3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ExSfVJoN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=K3W5MP7J2l0sevoYoL66ZICZ9Ex8UKahOULThcPI4BlxwGJroG77GZZZ2uECXjsZIKY0EMIAcOFgml/RL7YsgZaL8A+ygQ3Wwb3KMicv5mQPZIOqGZ4MDv5BrmS5S3/ZZPOsb9z8tzsACeuLW0sOn2PaGZ+/8jLeK1Wr6UO1F5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OhllQX0J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ExSfVJoN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20151F00A3D;
-	Thu, 20 Aug 2026 15:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OhllQX0J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E751F000E9;
+	Thu, 20 Aug 2026 15:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239539;
-	bh=VzsvWpFkP1HFNNXmppwAEZ9C/OjP5gvFAUEV+OMJ9BI=;
+	s=korg; t=1787239542;
+	bh=4YBbCRw1WiNlpcR7FO7inx2QTdqZsCIue44ew3NcbXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ExSfVJoNwagv8dbhJIcs83yKm4X7aQ7R4gqo9UpP5uLRt+OYN0LRL62/0aICTv6vj
-	 qzNk12OgILFg10gwTSzxF8Z8yQdLUWzJZ/pbLks/hjtXx9cE0qp3SbiQC7Nv+mP4e1
-	 VYhMiSvxUbsgjQjobN8bU7Fymbxl5M5/9UeybyZU=
+	b=OhllQX0JW6NoXc5P1rWviYArDkzkf5I33awLLS8LJwif+tIJaC6pE1JsejD/Bjuef
+	 RpOnKdGXs8asLV34hT9NGl3gVc+btwT293ougx9J6PdIBc2koIya8cKVd4C72EdeQI
+	 hVdAxgVWUohzQh1dnHvrt8HABLJ37qRlCKUrKzrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
+	Candice Li <candice.li@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 084/220] drm/amdgpu: check ASPM on the dGPU host link
-Date: Thu, 20 Aug 2026 16:54:34 +0200
-Message-ID: <20260820145226.008854131@linuxfoundation.org>
+Subject: [PATCH 6.12 085/220] drm/amdgpu: validate GEM_CREATE domain combinations
+Date: Thu, 20 Aug 2026 16:54:35 +0200
+Message-ID: <20260820145226.037943167@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -46,107 +45,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Candice Li <candice.li@amd.com>
 
-commit 2a9c5154a5650c09ad44ff5e1dff74754e15a3c6 upstream.
+commit 5e9d136ad74df4edec67e502ce267597064d8f86 upstream.
 
-dGPUs with an internal PCIe switch expose graphics functions below the
-switch downstream port. The automatic ASPM check uses the display
-endpoint and evaluates the internal link instead of the host link.
+AMDGPU_GEM_CREATE checked domain bits against AMDGPU_GEM_DOMAIN_MASK,
+but did not validate domain combinations. Userspace could combine
+CPU|GTT|VRAM with DOORBELL, GDS, GWS, or OA, making
+amdgpu_bo_placement_from_domain() exceed AMDGPU_BO_MAX_PLACEMENTS and
+hit BUG_ON().
 
-Use the switch upstream port for the check and report the selected
-link.
+Allow combinations only within CPU/GTT/VRAM, and require non-CPU/GTT/
+VRAM domains to be specified one at a time. Return -EINVAL for invalid
+combinations in amdgpu_gem_create_ioctl().
 
-Fixes: 0ab5d711ec74 ("drm/amd: Refactor `amdgpu_aspm` to be evaluated per device")
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+v2: Rename helper from amdgpu_gem_domain_valid() to
+    amdgpu_gem_are_domains_valid() (Christian)
+
+Signed-off-by: Candice Li <candice.li@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4e0d6f2876e704fff707b18c40dbd383aea4a1c9)
+(cherry picked from commit db39852d0c39843cb02048dfb47e4b8c703e9080)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   50 ++++++++++++++++++++++++++++-
- 1 file changed, 49 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -1806,6 +1806,31 @@ static bool amdgpu_device_aspm_support_q
- #endif
- }
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
+@@ -304,6 +304,25 @@ const struct drm_gem_object_funcs amdgpu
+ 	.vm_ops = &amdgpu_gem_vm_ops,
+ };
  
-+/*
-+ * Some dGPUs expose their display endpoint below an internal PCIe switch.
-+ * Use the switch upstream port to query the host-facing link.
-+ */
-+static struct pci_dev *amdgpu_device_get_aspm_pdev(struct amdgpu_device *adev)
++static bool amdgpu_gem_are_domains_valid(u32 domains)
 +{
-+	struct pci_dev *swds, *swus;
++	u32 normal = AMDGPU_GEM_DOMAIN_CPU |
++		     AMDGPU_GEM_DOMAIN_GTT |
++		     AMDGPU_GEM_DOMAIN_VRAM;
++	/* Treat all non CPU/GTT/VRAM domains as special domains. */
++	u32 special = AMDGPU_GEM_DOMAIN_MASK & ~normal;
++	u32 normal_mask = domains & normal;
++	u32 special_mask = domains & special;
 +
-+	swds = pci_upstream_bridge(adev->pdev);
-+	if (!swds ||
-+	    (swds->vendor != PCI_VENDOR_ID_ATI &&
-+	     swds->vendor != PCI_VENDOR_ID_AMD) ||
-+	    pci_pcie_type(swds) != PCI_EXP_TYPE_DOWNSTREAM)
-+		return adev->pdev;
++	if (!special_mask)
++		return true;
 +
-+	swus = pci_upstream_bridge(swds);
-+	if (!swus ||
-+	    (swus->vendor != PCI_VENDOR_ID_ATI &&
-+	     swus->vendor != PCI_VENDOR_ID_AMD) ||
-+	    pci_pcie_type(swus) != PCI_EXP_TYPE_UPSTREAM)
-+		return adev->pdev;
++	if (normal_mask)
++		return false;
 +
-+	return swus;
++	return !(special_mask & (special_mask - 1));
 +}
 +
- /**
-  * amdgpu_device_should_use_aspm - check if the device should program ASPM
-  *
-@@ -1818,6 +1843,9 @@ static bool amdgpu_device_aspm_support_q
+ /*
+  * GEM ioctls.
   */
- bool amdgpu_device_should_use_aspm(struct amdgpu_device *adev)
- {
-+	struct pci_dev *aspm_pdev, *parent;
-+	bool enabled;
-+
- 	switch (amdgpu_aspm) {
- 	case -1:
- 		break;
-@@ -1832,7 +1860,27 @@ bool amdgpu_device_should_use_aspm(struc
- 		return false;
- 	if (amdgpu_device_aspm_support_quirk(adev))
- 		return false;
--	return pcie_aspm_enabled(adev->pdev);
-+
-+	/*
-+	 * pcie_aspm_enabled() checks the link between its argument and
-+	 * the immediate upstream bridge. Use SWUS for dGPUs with an
-+	 * internal switch so that this is the host-facing link.
-+	 */
-+	aspm_pdev = amdgpu_device_get_aspm_pdev(adev);
-+	parent = pci_upstream_bridge(aspm_pdev);
-+	if (!parent) {
-+		dev_dbg(adev->dev, "ASPM: no upstream PCIe link for %s\n",
-+			pci_name(aspm_pdev));
-+		return false;
-+	}
-+
-+	enabled = pcie_aspm_enabled(aspm_pdev);
-+	/* Report the exact link used for the automatic ASPM decision. */
-+	dev_dbg(adev->dev, "ASPM: link %s <-> %s is %s\n",
-+		pci_name(parent), pci_name(aspm_pdev),
-+		enabled ? "enabled" : "disabled");
-+
-+	return enabled;
- }
+@@ -340,6 +359,8 @@ int amdgpu_gem_create_ioctl(struct drm_d
+ 	/* reject invalid gem domains */
+ 	if (args->in.domains & ~AMDGPU_GEM_DOMAIN_MASK)
+ 		return -EINVAL;
++	if (!amdgpu_gem_are_domains_valid(args->in.domains))
++		return -EINVAL;
  
- /* if we get transitioned to only one device, take VGA back */
+ 	if (!amdgpu_is_tmz(adev) && (flags & AMDGPU_GEM_CREATE_ENCRYPTED)) {
+ 		DRM_NOTE_ONCE("Cannot allocate secure buffer since TMZ is disabled\n");
 
 
