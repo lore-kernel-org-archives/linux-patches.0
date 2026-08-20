@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AF5377A89;
-	Thu, 20 Aug 2026 15:01:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58D6258EE9;
+	Thu, 20 Aug 2026 15:01:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238114; cv=none; b=UGaRIUHDm7/06kW4xYHFOtgQu02GBE0DBzhPStotblnBjjhohEbVZ8DziNijtImNX4hcTLU7JYYQllYcFhXNghiLeIKQkkv3Y/RPXIs/tyr1O9htSMijElgQ240U6gzzrWC1iUSh43NkMFh1iDeH18wOsTT/Qz/pDefmbDqgcKM=
+	t=1787238116; cv=none; b=fjw/0ZKPnxHX5dVMhaiKj5vQ2IzksAB9qANsJGoOUlMhLMVaiDhYqmbRiHbTmBVi0nKtOSkxI58tkodny0fsY3XWFMFk7yLsThNGdzWbvW0aTTYiXOwGjQZDA6O5fiayF5tzO2RR8xY9ddk9JOGtozPhSpkr3mNzsunh1RKm97w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238114; c=relaxed/simple;
-	bh=Rxa7iDe6PBeC8tj/Y0FBgllvGPlK7oufjPZ1ZNvLJDg=;
+	s=arc-20240116; t=1787238116; c=relaxed/simple;
+	bh=skETKm9mzjgZUXBnrqiiOAHKbmtMM14zmGADuy8d1qQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tEONjuSK8pqpDCMc21oIinJ1ulRTJil50fXezxkZQ4cmfgS5JmH1NSRqhs6uAzqFPk6ARohaf8e6Dc3AF2+hS5He7OkQDJVhfbvBCYAse38PDQbrqoeXPfAxMWSmVmoDAWo9cg7cbaPXLXTSx0XaPsWtquBN21AIrlPkCC6+vnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CRxjAktG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mXMobuh9VPPs+lo7q1tNbLEn9fkFgPOvhUyleU2MyWOR0ATP2upqhgAQoMcpjjAMxKMWaYAv4cataA+AXErxWDpW4Js279JvR/RLxl8VCDZJdvYensCtIccAy0Pq7cs8h+zEhqDnENt2yHIbTLMGsJTrjCSB8WeAFPL9x0kE0vE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9iFPdab; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CRxjAktG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E6DA1F000E9;
-	Thu, 20 Aug 2026 15:01:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9iFPdab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA901F000E9;
+	Thu, 20 Aug 2026 15:01:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238112;
-	bh=aIQkqGQrT3kMR3bLbWRB57Is/b2wT2nzDfok34vBoSw=;
+	s=korg; t=1787238115;
+	bh=J4whMfUChGyNswWzEsI/iyXnUcNpXMDWN7SzOUKGRak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CRxjAktGc+cXrRjJp5vlJvz3zh6dHe+SFEivN6qqnxILM/ZIoh5nca/RV0zt5DEt4
-	 Pa3P0sVdlg17M4VI80y51Fp/nYfUjZBFofjOjTvZ4Igwe1Y9OGr8e7BzpZNn9wZNwt
-	 +uQhH5odUsfau4tTfczZhxS0M/Iy36aZfurQ0lIU=
+	b=t9iFPdabmSoC7/1ClCssWUdJBWYDllYk0w3jcUdUYuwtrHxK72egLXzsOUUpYnSOV
+	 JZKg9RJMDDkgjalVi1LQkrIT/te8PB0bvtUPsQTJcjKiJt5jNJGSjlpmeQFnOiINpo
+	 Y6PFeB0oaj/Jt1XN9QngNQsL1oHgCzGY6HODDJno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asad Kamal <asad.kamal@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Sonny Jiang <sonny.jiang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 036/228] drm/amdgpu: fix aperture iounmap skipped on device removal
-Date: Thu, 20 Aug 2026 16:52:58 +0200
-Message-ID: <20260820145245.561243525@linuxfoundation.org>
+Subject: [PATCH 7.1 037/228] drm/amdgpu/gmc12.1: implement tlb inv semaphore
+Date: Thu, 20 Aug 2026 16:52:59 +0200
+Message-ID: <20260820145245.597743773@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -52,62 +50,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit f9e5f51549000e2665e3b5e02ff876b9e09cfe95 upstream.
+commit cda6ab11c1a25a572857b9ea2ded4b7cb13c2895 upstream.
 
-amdgpu_pci_remove() calls drm_dev_unplug() before invoking the fini
-routines. After drm_dev_unplug() the drm_dev_enter() guard in
-amdgpu_ttm_fini() always returns false, so iounmap() for
-aper_base_kaddr is silently skipped. On connected_to_cpu hardware
-ioremap_cache() maps the aperture as WB; when iounmap() is skipped the
-stale WB PAT entry persists. On reload IP discovery's
-memremap(MEMREMAP_WC) on the same aperture range hits a WB/WC conflict,
-producing an ioremap error and failing re-probe.
+Needed to properly lock the interface before using it.
 
-Remove the drm_dev_enter() guard and call iounmap() unconditionally.
-The aperture mapping is plain MMIO and does not require device-presence
-protection. Surprise-removal cleanup of aper_base_kaddr is already
-handled unconditionally by amdgpu_device_unmap_mmio().
-
-Fixes: 62d5f9f7110a ("drm/amdgpu: Unmap MMIO mappings when device is not unplugged")
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Cc: Sonny Jiang <sonny.jiang@amd.com>
+Reviewed-by: Sonny Jiang <sonny.jiang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit fb3f68af9f6fce9343a2bd13b4d68a1c02d283df)
+(cherry picked from commit 8e37aa0bd56ba75801a6a21bed45f96372cd9fdc)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |   10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gmc_v12_1.c |   46 +++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -2260,8 +2260,6 @@ int amdgpu_ttm_init(struct amdgpu_device
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v12_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v12_1.c
+@@ -254,9 +254,24 @@ static bool gmc_v12_1_get_vmid_pasid_map
+  * by the amdgpu vm/hsa code.
   */
- void amdgpu_ttm_fini(struct amdgpu_device *adev)
+ 
++/**
++ * gmc_v12_1_use_invalidate_semaphore - judge whether to use semaphore
++ *
++ * @adev: amdgpu_device pointer
++ * @vmhub: vmhub type
++ *
++ */
++static bool gmc_v12_1_use_invalidate_semaphore(struct amdgpu_device *adev,
++				       uint32_t vmhub)
++{
++	return ((!AMDGPU_IS_GFXHUB(vmhub)) &&
++		(!amdgpu_sriov_vf(adev)));
++}
++
+ static void gmc_v12_1_flush_vm_hub(struct amdgpu_device *adev, uint32_t vmid,
+ 				   unsigned int vmhub, uint32_t flush_type)
  {
--	int idx;
--
- 	if (!adev->mman.initialized)
- 		return;
++	bool use_semaphore = gmc_v12_1_use_invalidate_semaphore(adev, vmhub);
+ 	struct amdgpu_vmhub *hub = &adev->vmhub[vmhub];
+ 	u32 inv_req = hub->vmhub_funcs->get_invalidate_req(vmid, flush_type);
+ 	u32 tmp;
+@@ -270,6 +285,19 @@ static void gmc_v12_1_flush_vm_hub(struc
  
-@@ -2284,13 +2282,9 @@ void amdgpu_ttm_fini(struct amdgpu_devic
- 	amdgpu_ttm_unmark_vram_reserved(adev, AMDGPU_RESV_FW_VRAM_USAGE);
- 	amdgpu_ttm_unmark_vram_reserved(adev, AMDGPU_RESV_DRV_VRAM_USAGE);
+ 	spin_lock(&adev->gmc.invalidate_lock);
  
--	if (drm_dev_enter(adev_to_drm(adev), &idx)) {
--
--		if (adev->mman.aper_base_kaddr)
--			iounmap(adev->mman.aper_base_kaddr);
-+	if (adev->mman.aper_base_kaddr) {
-+		iounmap(adev->mman.aper_base_kaddr);
- 		adev->mman.aper_base_kaddr = NULL;
--
--		drm_dev_exit(idx);
++	if (use_semaphore) {
++		for (i = 0; i < adev->usec_timeout; i++) {
++			/* a read return value of 1 means semaphore acuqire */
++			tmp = RREG32_RLC_NO_KIQ(hub->vm_inv_eng0_sem + hub->eng_distance * eng, hub_ip);
++			if (tmp & 0x1)
++				break;
++			udelay(1);
++		}
++
++		if (i >= adev->usec_timeout)
++			DRM_ERROR("Timeout waiting for sem acquire in VM flush!\n");
++	}
++
+ 	WREG32_RLC_NO_KIQ(hub->vm_inv_eng0_req + hub->eng_distance * eng, inv_req, hub_ip);
+ 
+ 	/* Wait for ACK with a delay.*/
+@@ -283,6 +311,9 @@ static void gmc_v12_1_flush_vm_hub(struc
+ 		udelay(1);
  	}
  
- 	if (!adev->gmc.is_app_apu)
++	if (use_semaphore)
++		WREG32_RLC_NO_KIQ(hub->vm_inv_eng0_sem + hub->eng_distance * eng, 0, hub_ip);
++
+ 	/* Issue additional private vm invalidation to MMHUB */
+ 	if (!AMDGPU_IS_GFXHUB(vmhub) &&
+ 	    (hub->vm_l2_bank_select_reserved_cid2) &&
+@@ -418,10 +449,17 @@ static void gmc_v12_1_flush_gpu_tlb_pasi
+ static uint64_t gmc_v12_1_emit_flush_gpu_tlb(struct amdgpu_ring *ring,
+ 					     unsigned vmid, uint64_t pd_addr)
+ {
++	bool use_semaphore = gmc_v12_1_use_invalidate_semaphore(ring->adev, ring->vm_hub);
+ 	struct amdgpu_vmhub *hub = &ring->adev->vmhub[ring->vm_hub];
+ 	uint32_t req = hub->vmhub_funcs->get_invalidate_req(vmid, 0);
+ 	unsigned eng = ring->vm_inv_eng;
+ 
++	if (use_semaphore)
++		/* a read return value of 1 means semaphore acuqire */
++		amdgpu_ring_emit_reg_wait(ring,
++					  hub->vm_inv_eng0_sem +
++					  hub->eng_distance * eng, 0x1, 0x1);
++
+ 	amdgpu_ring_emit_wreg(ring, hub->ctx0_ptb_addr_lo32 +
+ 			      (hub->ctx_addr_distance * vmid),
+ 			      lower_32_bits(pd_addr));
+@@ -436,6 +474,14 @@ static uint64_t gmc_v12_1_emit_flush_gpu
+ 					    hub->eng_distance * eng,
+ 					    req, 1 << vmid);
+ 
++	if (use_semaphore)
++		/*
++		 * add semaphore release after invalidation,
++		 * write with 0 means semaphore release
++		 */
++		amdgpu_ring_emit_wreg(ring, hub->vm_inv_eng0_sem +
++				      hub->eng_distance * eng, 0);
++
+ 	return pd_addr;
+ }
+ 
 
 
