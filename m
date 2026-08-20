@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42822874E6;
-	Thu, 20 Aug 2026 15:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE29236A37A;
+	Thu, 20 Aug 2026 15:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238512; cv=none; b=L9Q9tXwGEXxidH0q4WlMGQXvZmulsx5ngF+VJEBAvvfZKEylOOzFSjSEYernX84oTqU02tScRQ/YFCypf35/YxPJ3xOl67cHNQ7/Ahft9oqa6URxHL01Kd0LHORHheBuPj8uuXoq6xHmM/d9q+V0oaZ9MLRnweXQmBc2mcHdzpI=
+	t=1787238514; cv=none; b=JL0+hlvaTkJ5gzFoizwTVYv8GW9lvqCkyVLiSeV4dSYzlrYa6L/jGrD8XUhha4QKtezjIIIsqHzkTJg+P6hwHb0CzcHU/nMdqnZodY8eyeukCrtHGywbukmUJnMnDeCcl6eWi/39Lqr/C2ttGfJxEmSvBdOYz+V5P3N5+U0jjgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238512; c=relaxed/simple;
-	bh=oyIt0cFEmTP2S3JP+atXzgszRa/PD3Lfi/zaNrjOF+8=;
+	s=arc-20240116; t=1787238514; c=relaxed/simple;
+	bh=fpuLcqRdZp0UtcZDAvfBItTxbRpw39lwL9Ay73FJngA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IzmS4Z47I5NL0uu0X70hpY+XFXTO//6KCA3fFgfqkM135yQiLHRgV2CVMZeW63SbEXwjUsk/mOMgYgJmSV+it6S+ZZKDs6JrOno+h9gucdroHf7pSMvPS5f5DsDWYD3dqHrO7kXGzqX6zObMK4WIJbSgNR9sb2l4dOj3JoNtzxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qp/1H+6y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p/vTts50whEslJX3UIQ8ki553cXlChFk5KYfWLIDYJ7oUYUxmiJCyLkuB0NEnEQaDq4u9JmuXRMxPPapcANutKi6BMQD54kzsx3dIfBV/vGRadsVaNTuZVniMnVuvMJINpPnw9rvYF/cLBsJDqRhJjHDbh0fbXv8OxfLIoWthyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mjdM6aHc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qp/1H+6y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2891F000E9;
-	Thu, 20 Aug 2026 15:08:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mjdM6aHc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252B31F00A3A;
+	Thu, 20 Aug 2026 15:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238510;
-	bh=DrrlJ4+RmRzUKWI2dDfE8ILUJN1sUZBDA1ohOtzulG0=;
+	s=korg; t=1787238513;
+	bh=0aGGkrqMh0Gt+8vK2v0RNF67JVpHWank9cbnC4NyfNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qp/1H+6yfbpEEz9oaNKIHKu4zFUCjBUyvrV5cct6OyoeqsAYnCgv2wb+TA/Ww/10T
-	 MWwk6IcLW5GHdLxuM2sCebBs1nLHTtBfA/R80lUi90OfqpBuR39UMZvS1ic2Y8URnt
-	 43Qk513qp2UInJgtAB9/ozVyHKKkMJB8m3G+KaoQ=
+	b=mjdM6aHcs2AefQw426+Hoj8PsV7yO0kY7ZJ50q+bAEIV6L96NgorIJ7dr1+UknWE6
+	 I0ANvVzM6m6UEIkQHMFyQsoWjupkUHyz/rovCSCKSbVA6/O6h7EUv66PmgfJejelg6
+	 VCrsSnd4CmtFnJErhf8ZY0ezTPbmIdHBjJC2rU0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ralf Lici <ralf@mandelbit.com>,
+	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 172/228] af_unix: Unlink scc_entry in unix_del_edge().
-Date: Thu, 20 Aug 2026 16:55:14 +0200
-Message-ID: <20260820145249.920685524@linuxfoundation.org>
+Subject: [PATCH 7.1 173/228] ovpn: fix NULL dereference when killing missing key
+Date: Thu, 20 Aug 2026 16:55:15 +0200
+Message-ID: <20260820145249.950871428@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -52,70 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Ralf Lici <ralf@mandelbit.com>
 
-[ Upstream commit 594d905195024b228c962627ae5ae7c17bd582a4 ]
+[ Upstream commit 41d44ac7a61e2f74453af40d4fe1b82af9ea0ada ]
 
-Kyle Zeng reported that GC could free a dead SCC partially.
+ovpn_crypto_kill_key assumes both crypto slots are populated and
+dereferences each slot before checking it. That is not guaranteed: a
+peer can have only one installed key, and the kill path may be asked to
+remove a key that is not present.
 
-The scenario is as follows:
+Read each slot once while holding the crypto state lock, check for NULL
+before looking at key_id, and only replace the slot that actually
+matches.
 
-   1) Create two SCCs:
-
-       X -.   A <-> B
-       ^--'
-
-   2) Run the following concurrently:
-
-      2-1) send() sk-B to sk-B from sk-X
-      2-2) close() both A and B
-
-At 2-1), there is a small window where unix_add_edges()
-publishes a new edge (B <-> B) to GC but its skb is not queued
-by skb_queue_tail().
-
-If 2-2) completes before skb_queue_tail() and GC is triggered,
-it judges A <-> B as dead, but B is not freed because GC cannot
-collect the not-yet-queued skb holding the B <-> B edge.
-
-       X -.   A <-> B -. This edge is visible
-       ^--'         ^..'  but skb is not
-
-This itself is not a problem since the next GC run will judge
-B as dead as well and free it finally.
-
-       X -.   A <.> B -.
-       ^--'         ^--'
-
-However, X's SCC forces the next GC to call unix_walk_scc_fast(),
-and it iterates over A through B's scc_entry.
-
-Let's unlink scc_entry before freeing the vertex in unix_del_edge().
-
-Fixes: 4090fa373f0e ("af_unix: Replace garbage collection algorithm.")
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Kyle Zeng <kylebot@openai.com>
-Fixes: 4090fa373f0e ("af_unix: Replace garbage collection algorithm.").
-Link: https://patch.msgid.link/20260804002155.2233594-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 89d3c0e4612a ("ovpn: kill key and notify userspace in case of IV exhaustion")
+Signed-off-by: Ralf Lici <ralf@mandelbit.com>
+Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/garbage.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ovpn/crypto.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/net/unix/garbage.c b/net/unix/garbage.c
-index 0783555e25266..9fcaaf55cba5d 100644
---- a/net/unix/garbage.c
-+++ b/net/unix/garbage.c
-@@ -186,6 +186,7 @@ static void unix_del_edge(struct scm_fp_list *fpl, struct unix_edge *edge)
- 	if (!vertex->out_degree) {
- 		edge->predecessor->vertex = NULL;
- 		list_move_tail(&vertex->entry, &fpl->vertices);
-+		list_del(&vertex->scc_entry);
- 	}
- }
+diff --git a/drivers/net/ovpn/crypto.c b/drivers/net/ovpn/crypto.c
+index 90580e32052fb..2e95f29514fc4 100644
+--- a/drivers/net/ovpn/crypto.c
++++ b/drivers/net/ovpn/crypto.c
+@@ -58,15 +58,19 @@ void ovpn_crypto_state_release(struct ovpn_crypto_state *cs)
+ bool ovpn_crypto_kill_key(struct ovpn_crypto_state *cs, u8 key_id)
+ {
+ 	struct ovpn_crypto_key_slot *ks = NULL;
++	struct ovpn_crypto_key_slot *tmp;
++	int slot = 0;
  
+ 	spin_lock_bh(&cs->lock);
+-	if (rcu_access_pointer(cs->slots[0])->key_id == key_id) {
+-		ks = rcu_replace_pointer(cs->slots[0], NULL,
+-					 lockdep_is_held(&cs->lock));
+-	} else if (rcu_access_pointer(cs->slots[1])->key_id == key_id) {
+-		ks = rcu_replace_pointer(cs->slots[1], NULL,
+-					 lockdep_is_held(&cs->lock));
++	tmp = rcu_access_pointer(cs->slots[slot]);
++	if (!tmp || tmp->key_id != key_id) {
++		slot = 1;
++		tmp = rcu_access_pointer(cs->slots[slot]);
+ 	}
++
++	if (tmp && tmp->key_id == key_id)
++		ks = rcu_replace_pointer(cs->slots[slot], NULL,
++					 lockdep_is_held(&cs->lock));
+ 	spin_unlock_bh(&cs->lock);
+ 
+ 	if (ks)
 -- 
 2.53.0
 
