@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D95347F2CE;
-	Thu, 20 Aug 2026 17:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A90346C82A;
+	Thu, 20 Aug 2026 17:54:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248463; cv=none; b=sjAS8jEGG0P2Urrn6irC4MLNoPfHlLBCZhKIS1BFGPF5mceTRZ4liIv4VJ76KgFAyf0WrwXXfmXoYRYWAhq0tFZKxU+BQaIwD5E/n4IVsN7bkf2HLvFuVcs3G7V7dIuB2dG8d7AlPrhygyg9/Ap78/52X9Tjsm4ysKraRhULoDk=
+	t=1787248466; cv=none; b=gxfwKsPcM8Mff2dTUhIpWTcnREVAObCWnUDaeNw9lN4MdxEWTwr4f90jcJb3wYrULuqCm+H2mGUl8lVOM0MMkcMFJGuvcuCg1AQPyq1JC1Rj9uetGC213QC2cQHu/IobYEgPo8ISZvwg8u4qgPY8i6m7SakvQCwlpfIapQQLilM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248463; c=relaxed/simple;
-	bh=QfTJCESfLtg4yJlgkaBGH39Ora3Z7/xVDvPMx7C4rcA=;
+	s=arc-20240116; t=1787248466; c=relaxed/simple;
+	bh=QxfHTNajaFzevOba06yqAIVKdSLdkUzWJ0+maiIml7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=deGT7GQbe6b8OYv5+WLdyxm3UO4g0NOo3mdQAc+YJ1hadNRSHF997FQh1pc97vPq5rq1Y3Z8/fexikPnswAkC08O5sG3MFA74U9GsXnd/cKgUsiyXsUF2uoDB7RbBuCC0wPtnWZCBMiUqiAO80qmfqorZbGtzU2ut+mNJb71WW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DDlvpCCf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oEJk6x42aiZgtFb2siUG5PKvWT+WZ3goKtXrCdArTHYXVyPRGKLEoYwW7uAlfWKnWn7ERE7Hqd0r+Y9vyuWZ/IKF7HUIl4tdJfjYTretbxKqjDFvIxJTts0w5cnum+vsgOqxx3caj5e182i5WbSRb0WnI4sJDpTnpF76NOC1M4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nMiJnYu0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DDlvpCCf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 066AE1F000E9;
-	Thu, 20 Aug 2026 17:54:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nMiJnYu0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D560E1F000E9;
+	Thu, 20 Aug 2026 17:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248462;
-	bh=nBt77s5wARhgjv1C9AhJCA1x0ZSPY/Yj1JEJNPhEcVY=;
+	s=korg; t=1787248465;
+	bh=OxFjcYu4S06hmqKWDBktrJwh6xf8klUm6ofNf0wCmvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DDlvpCCfkN2apLbDCgjcTsNJDqBiQC/vf2n8wwy4i1UvXOOqARF1rNeQ7RWGxuAD3
-	 XbKl1LqmD6JWvoLXlmMa80W9LC3HDhFCXMJA9mO6UC+PAxTC7PQaL28sGEzUv2KUS8
-	 GWqITJemC/r/JAvQqbKtwF4Zp1sIzfZSEIUT7O5E=
+	b=nMiJnYu0oDFBcZfuWF/SGYtZMkkoElRMQtEsY0Z2WbjObq03w9M3/BwxgqJNgJZTa
+	 SB9WJNyAjmxC9V8zD9fT1+OjQcaleoiJYsGE24EjL66LBVnCAGEy7Bjwr/EdZNc0pR
+	 mhaqy0yAQ1BAJmKFV3iugLRuBJaa6ep/KBuf+z5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
+	"Dr. David Alan Gilbert" <linux@treblig.org>,
+	Simon Horman <horms@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 229/303] smb/server: fix minimum SMB2 PDU size
-Date: Thu, 20 Aug 2026 16:56:05 +0200
-Message-ID: <20260820145300.334115879@linuxfoundation.org>
+Subject: [PATCH 6.1 238/303] Bluetooth: MGMT: Remove unused mgmt_pending_find_data
+Date: Thu, 20 Aug 2026 16:56:14 +0200
+Message-ID: <20260820145300.604617384@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -53,45 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+From: "Dr. David Alan Gilbert" <linux@treblig.org>
 
-[ Upstream commit 4c7d8eb9a79ae5400eac19c4f6f0815bff674452 ]
+[ Upstream commit 276af34d82f13bda0b2a4d9786c90b8bbf1cd064 ]
 
-The minimum SMB2 PDU size should be updated to the size of
-`struct smb2_pdu` (that is, the size of `struct smb2_hdr` + 2).
+mgmt_pending_find_data() last use was removed in 2021 by
+commit 5a7501374664 ("Bluetooth: hci_sync: Convert MGMT_OP_GET_CLOCK_INFO")
 
-Suggested-by: David Howells <dhowells@redhat.com>
-Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: cfc0b8e5080a ("ksmbd: validate minimum PDU size for transform requests")
+Remove it.
+
+Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: d0a7b48ad092 ("Bluetooth: mgmt: fix UAF in pair command cancellation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/connection.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/mgmt_util.c |   17 -----------------
+ net/bluetooth/mgmt_util.h |    4 ----
+ 2 files changed, 21 deletions(-)
 
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -307,7 +307,7 @@ bool ksmbd_conn_alive(struct ksmbd_conn
+--- a/net/bluetooth/mgmt_util.c
++++ b/net/bluetooth/mgmt_util.c
+@@ -229,23 +229,6 @@ struct mgmt_pending_cmd *mgmt_pending_fi
+ 	return NULL;
+ }
  
- /* "+2" for BCC field (ByteCount, 2 bytes) */
- #define SMB1_MIN_SUPPORTED_PDU_SIZE (sizeof(struct smb_hdr) + 2)
--#define SMB2_MIN_SUPPORTED_HEADER_SIZE (sizeof(struct smb2_hdr) + 4)
-+#define SMB2_MIN_SUPPORTED_PDU_SIZE (sizeof(struct smb2_pdu))
+-struct mgmt_pending_cmd *mgmt_pending_find_data(unsigned short channel,
+-						u16 opcode,
+-						struct hci_dev *hdev,
+-						const void *data)
+-{
+-	struct mgmt_pending_cmd *cmd;
+-
+-	list_for_each_entry(cmd, &hdev->mgmt_pending, list) {
+-		if (cmd->user_data != data)
+-			continue;
+-		if (cmd->opcode == opcode)
+-			return cmd;
+-	}
+-
+-	return NULL;
+-}
+-
+ void mgmt_pending_foreach(u16 opcode, struct hci_dev *hdev,
+ 			  void (*cb)(struct mgmt_pending_cmd *cmd, void *data),
+ 			  void *data)
+--- a/net/bluetooth/mgmt_util.h
++++ b/net/bluetooth/mgmt_util.h
+@@ -54,10 +54,6 @@ int mgmt_cmd_complete(struct sock *sk, u
  
- /**
-  * ksmbd_conn_handler_loop() - session thread to listen on new smb requests
-@@ -399,7 +399,7 @@ int ksmbd_conn_handler_loop(void *p)
- 
- 		if (((struct smb2_hdr *)smb_get_msg(conn->request_buf))->ProtocolId ==
- 		    SMB2_PROTO_NUMBER) {
--			if (pdu_size < SMB2_MIN_SUPPORTED_HEADER_SIZE)
-+			if (pdu_size < SMB2_MIN_SUPPORTED_PDU_SIZE)
- 				break;
- 		}
- 
+ struct mgmt_pending_cmd *mgmt_pending_find(unsigned short channel, u16 opcode,
+ 					   struct hci_dev *hdev);
+-struct mgmt_pending_cmd *mgmt_pending_find_data(unsigned short channel,
+-						u16 opcode,
+-						struct hci_dev *hdev,
+-						const void *data);
+ void mgmt_pending_foreach(u16 opcode, struct hci_dev *hdev,
+ 			  void (*cb)(struct mgmt_pending_cmd *cmd, void *data),
+ 			  void *data);
 
 
