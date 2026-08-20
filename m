@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711D947F77D;
-	Thu, 20 Aug 2026 16:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F1247ECFC;
+	Thu, 20 Aug 2026 17:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244652; cv=none; b=PchRXkZmY0iVtyxJyoacO+lTNvROwwF7BjnNaedt82p5q2v6xBVyVcky1mKNQOLdh0K09Y6v2F+dLk7weeIl+4ZJtN9F/B51HYJ4LlGsh6PpdMv4UE8aE+B67xGKYAa/MLk310GuS+Mci7+LLZs5ZXeQGDMe8E9E58rhRjr9zLU=
+	t=1787246943; cv=none; b=iSTrF5kl463jfMpnmtxHiLSf5JzMviHRaO3VErum0yRwIKxPJSjMhpEpUHGmMlfsR6JbcId2EE5sqK7kaXDOVFNCOnH6Ndf5ULIwheJxTfAi5tUF16n+tuklphHZWKEB4jn23zZYtn/TIGMHOwt3+P7jJPpFsjQFEe1ULVr7tiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244652; c=relaxed/simple;
-	bh=lqsB+kftdn9QdjvmatvPSds7PGIESQUu8/uTbfdShfQ=;
+	s=arc-20240116; t=1787246943; c=relaxed/simple;
+	bh=QaV6gVz3M5ZdhgdXZLZdOrlyxmVLndkQimWLxHdJ65k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pKPPyB+EgBB5GQajgmxy2fN+NXAly+u6muylqNl8sbvCEKiMblCt7zU7VqJqv3NLCC2pEzZfn0sJ4WCnkgHjkIalR7wzDbW909hPVe8qO3N+qxpBunJs9J4CqwcC69/NGkD7PodAp4FshbpR0S3ysbAIiMAbLb6mBtnkY2Ny3jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6RAiZGW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dMj7eZnzJCvyfXCRbS/WY7onWMlv54AU9viiNOz0wdj9TwWOMcHfcjtviJ5dKOhs7WQUhCKSdNm8aJGbhYo6TP54n04xLiIzrw/MCadgWX8oHIs89xiYkJrcE8VdHmb6zjIc5pA2QZd2jgJWxhyVbPW5x6TR6HWAnYpOTHXZaCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQGnjhCE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6RAiZGW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E981F00A3A;
-	Thu, 20 Aug 2026 16:50:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQGnjhCE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 038791F000E9;
+	Thu, 20 Aug 2026 17:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244651;
-	bh=Xou5j5cBHPou1hnm6tWIV2RN1vqXpNbkRxXbWIYNBEw=;
+	s=korg; t=1787246941;
+	bh=y15xia7w7kMJm8vqO0oQwPEVbimaOjnkKj/ciFsxrZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y6RAiZGWlOPjpxbWFuME40HO7NfLZ4QEAnh1BVYgPoR2/hw8WcRmxxsDwcS+Fu7VK
-	 qquuChW4S18q3VQsObBGyHih4VNx6cGd0LqxfUMAqvLcZ/7lmgX1QjcLU8EKDAPE+Q
-	 /X3CdNaano46cn8NstoCM5S1y15+t68vE1UXl9oU=
+	b=AQGnjhCEY3fZlWum25DikduWXZ3h57DaA0dxglnlQbhVovRECyhaxO0NNmuos3Xa1
+	 PjzUzo0jCbs00GStZFWWNvYNH+j7lCkhUQocbfLw8cg3VFDxiadhjjjRko/ozJL9rn
+	 7cnoRbVOIRg2lYIz0bbl32Lv/qDYw4jtJhWfbJ8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Velichayshiy <a.velichayshiy@ispras.ru>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 219/235] netfilter: nf_tables_offload: suppress WARN_ON_ONCE for ENOMEM in abort path
-Date: Thu, 20 Aug 2026 16:57:35 +0200
-Message-ID: <20260820145223.258170100@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Qiang Ma <maqianga@uniontech.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.12 092/220] xfs: clear zapped attr fork state when bmap repair finds no attr fork
+Date: Thu, 20 Aug 2026 16:54:42 +0200
+Message-ID: <20260820145226.244460138@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
-References: <20260820145216.426568665@linuxfoundation.org>
+In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
+References: <20260820145223.480031205@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,85 +48,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
+From: Qiang Ma <maqianga@uniontech.com>
 
-[ Upstream commit d02f592064347e0c1e0d84f24941ad338838cc48 ]
+commit 87b2a82e135ba81e49d82b59e3d72468cb66ea98 upstream.
 
-In nft_flow_rule_offload_abort(), WARN_ON_ONCE(err) is triggered on every
-error during rollback, including -ENOMEM. Memory allocation failures are
-expected under low-memory conditions and do not indicate a kernel bug.
+xfstests xfs/377 can make xfs_scrub repeatedly check and repair the
+attr block map after inode repair zaps an attr fork.
 
-Trace for example:
-nft_flow_offload_chain() // FLOW_BLOCK_BIND
-  nft_flow_block_chain()
-    nft_chain_offload_cmd()
-      nft_block_offload_cmd()
-        ->ndo_setup_tc()
-        nsim_setup_tc()
-          flow_block_cb_setup_simple()
-            flow_block_cb_alloc() // fails to -ENOMEM
+When inode repair zaps an attr fork, it records
+XFS_SICK_INO_BMBTA_ZAPPED so that scrub/repair can revisit the attr fork
+block map.  If the fork has been reset to an empty state and removed,
+BMBTA repair has no attr fork mappings to rebuild and can return success.
 
-The warning was reproduced on the 5.10 stable kernel under memory pressure
-via fault injection, but the underlying bug exists in mainline as well,
-as demonstrated by the ENOMEM trace above. The following splat was
-triggered during nf_tables transaction processing:
+The post-repair scrub then runs with XREP_ALREADY_FIXED set, which means
+xchk_file_looks_zapped() deliberately ignores the stale zapped health bit
+and asks xchk_bmap() to check the current attr fork.  For an absent attr
+fork, xchk_bmap() returns -ENOENT.  Returning that error prevents
+xchk_bmap_attr() from marking XFS_SICK_INO_BMBTA_ZAPPED healthy, leaving
+the zapped health state behind even though there are no attr fork mappings
+left to check.
 
-WARNING: CPU: 0 PID: 8567 at net/netfilter/nf_tables_offload.c:532 nft_flow_rule_offload_abort net/netfilter/nf_tables_offload.c:532 [inline]
-WARNING: CPU: 0 PID: 8567 at net/netfilter/nf_tables_offload.c:532 nft_flow_rule_offload_commit+0x971/0xcd0 net/netfilter/nf_tables_offload.c:591
-Modules linked in:
-CPU: 0 PID: 8567 Comm: syz-executor.0 Not tainted 5.10.260-syzkaller #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-RIP: 0010:nft_flow_rule_offload_abort net/netfilter/nf_tables_offload.c:532 [inline]
-RIP: 0010:nft_flow_rule_offload_commit+0x971/0xcd0 net/netfilter/nf_tables_offload.c:591
-Call Trace:
- nf_tables_commit+0x3bd/0x4bd0 net/netfilter/nf_tables_api.c:8604
- nfnetlink_rcv_batch+0xb1e/0x1f20 net/netfilter/nfnetlink.c:509
- nfnetlink_rcv_skb_batch net/netfilter/nfnetlink.c:579 [inline]
- nfnetlink_rcv+0x3b3/0x420 net/netfilter/nfnetlink.c:597
- netlink_unicast_kernel net/netlink/af_netlink.c:1314 [inline]
- netlink_unicast+0x6cd/0xa00 net/netfilter/af_netlink.c:1340
- netlink_sendmsg+0x906/0xe10 net/netfilter/af_netlink.c:1919
- sock_sendmsg_nosec net/socket.c:651 [inline]
- __sock_sendmsg+0x155/0x190 net/socket.c:663
- ____sys_sendmsg+0x705/0x870 net/socket.c:2379
- ___sys_sendmsg+0x100/0x170 net/socket.c:2433
- __sys_sendmsg+0xe9/0x1c0 net/socket.c:2462
- do_syscall_64+0x33/0x40 arch/x86/entry/common.c:46
- entry_SYSCALL_64_after_hwframe+0x67/0xd1
+Treat -ENOENT during post-repair BMBTA revalidation as a clean result for
+the zapped attr fork: clear XFS_SICK_INO_BMBTA_ZAPPED and return success.
+Keep the existing -ENOENT behavior for ordinary scrubs of absent attr
+forks.
 
-Change the condition to WARN_ON_ONCE(err && err != -ENOMEM) so that
-warnings are only emitted for unexpected errors. This aligns with the
-common kernel practice of not warning on -ENOMEM.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 63b48c73ff56 ("netfilter: nf_tables_offload: undo updates if transaction fails")
-Signed-off-by: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d9041681dd2f ("xfs: set inode sick state flags when we zap either ondisk fork")
+Cc: stable@vger.kernel.org # v6.8
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Qiang Ma <maqianga@uniontech.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_offload.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/scrub/bmap.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_offload.c b/net/netfilter/nf_tables_offload.c
-index 5cfbb29d8a34a..f975df48ea622 100644
---- a/net/netfilter/nf_tables_offload.c
-+++ b/net/netfilter/nf_tables_offload.c
-@@ -522,7 +522,7 @@ static void nft_flow_rule_offload_abort(struct net *net,
- 			break;
- 		}
- 
--		if (WARN_ON_ONCE(err))
-+		if (WARN_ON_ONCE(err && err != -ENOMEM))
- 			break;
+--- a/fs/xfs/scrub/bmap.c
++++ b/fs/xfs/scrub/bmap.c
+@@ -1062,6 +1062,11 @@ xchk_bmap_attr(
  	}
- }
--- 
-2.53.0
-
+ 
+ 	error = xchk_bmap(sc, XFS_ATTR_FORK);
++	/* A repaired, empty attr fork no longer has mappings to check. */
++	if (error == -ENOENT && (sc->flags & XREP_ALREADY_FIXED)) {
++		xchk_mark_healthy_if_clean(sc, XFS_SICK_INO_BMBTA_ZAPPED);
++		return 0;
++	}
+ 	if (error)
+ 		return error;
+ 
 
 
