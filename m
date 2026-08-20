@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AB73C07A;
-	Thu, 20 Aug 2026 15:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468173C07A;
+	Thu, 20 Aug 2026 15:10:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238641; cv=none; b=MfuY9dmTvjY6xNY639aj74ZTFbbTnzk13ILnORs19GU7LVtr/53JC4Xta9pX+z53OHeUvgjsYqq6Bhv6Rdz+hFkssxTJ4EAQSxaZmmqYoVXWmA9nx97zEBFOHt4jshz4lmotqT+9+oUPXmVlMVRv2ioMrTyF9jdI2SE6E6oplh0=
+	t=1787238644; cv=none; b=G1yS5XGsr2sJ+UJn6KqVHzDzBr3fHILb2GQxpxMvVZG6t0bIZ7WS9Fxz83O01qUwp4Rm2R6XqjG6q434zwUm/WtZzGgsfiKB1zkIP04tWhn7ouhDrNCsUYBSBAWFYlw3JH12AZ22A0BB4+sedDmGVvC0ttt6jt2nxXTECG3aQGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238641; c=relaxed/simple;
-	bh=8yRplxCEoAOc9bXEUPbLkpdoC5641FTIHxHQoY1jAKs=;
+	s=arc-20240116; t=1787238644; c=relaxed/simple;
+	bh=JPxkxgzMONWMOkAR2kYqCj/rhfdugKpz/48YsX1S/LA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QyDfywgbDxmKYp3jo/ANTKhG6KDTLZiWJfeL1dZnWf2aAY+IQpycJNvYFZ5JmdIcWGFH4jeuIR+tOEwuUmaVOkHBxVwQAQBJwoyG5mXekQyxEnBs/3fIk6OVRgbgebVcZaB/ifD1MvHVqteeE2VpWG6IEKxIwgYRb+aV04luwuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDGlYw3s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=paqxG85808uSQvqjdrpi1UjrrMapC0n7tf3Uq7jbPKQFEm5QkMH1uDF+95Qgk9ABrvlwa101FPViujtzDspyVeP6IbhSLkSJlYrhBP3QbD0HUlr81Y++yMQdl02dQBvgewgNxdvn4blsqmrWLIjY5EA4FGInDOuWgsMQct9UuSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KtE8w3K4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDGlYw3s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C451F000E9;
-	Thu, 20 Aug 2026 15:10:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KtE8w3K4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FCF61F000E9;
+	Thu, 20 Aug 2026 15:10:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238640;
-	bh=/P7WElSkmOI1ORrqM1OAFWKlcdgnCMXl1uIvEO8W520=;
+	s=korg; t=1787238643;
+	bh=e4dvyILaff2oGAg+6m916mDV2MXs/caw4qCDZdAgGNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xDGlYw3srmoqVbTJI9adV1173nF8vZ7WP47vpS99jOjs+oiRpLyLSzO7aYbiXeARh
-	 JV1tSBQxcRVjuz6sqIQmsjimsgAYsm1ABAMgbKWbV/1gzRXtT2eTON8RxfNMJjwi/G
-	 tUN00fZ38eBhTpNJCKHggQIFlxnDEGRagQ7kcewk=
+	b=KtE8w3K4ijnPS08uCJS3QRPdHdbsYmTi2LeVlNzVp5yBNxF70//dkuvOmc3+VjJO0
+	 DyVyQR3xvFZcX+Kyfgznw+9qBYN5J/+8dyE0G3+2IZRqFn42UCpNceUW2CpOnVTldL
+	 k6d4yGjsp+/1fiulevUaDXrDh0QlNLxmjFjW95II=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d6fa74e3f19d6ee01e3a@syzkaller.appspotmail.com,
-	James Chapman <jchapman@katalix.com>,
-	Guillaume Nault <gnault@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot+d30aad27833a559defab@syzkaller.appspotmail.com,
+	Aleksandr Nogikh <nogikh@google.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 217/228] l2tp: fix tunnel and session refcount leak on seq_file release
-Date: Thu, 20 Aug 2026 16:55:59 +0200
-Message-ID: <20260820145251.651193997@linuxfoundation.org>
+Subject: [PATCH 7.1 218/228] firewire: ohci: fix NULL pointer dereference in ar_context_release
+Date: Thu, 20 Aug 2026 16:56:00 +0200
+Message-ID: <20260820145251.683961644@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -54,136 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Aleksandr Nogikh <nogikh@google.com>
 
-[ Upstream commit 9006c116dd111d457bf5d074990210f70a4ad2c8 ]
+[ Upstream commit 42d217add8d80d6e7d9f58f80d11ea9b07ea113e ]
 
-In pppol2tp_proc_open() and l2tp_dfs_seq_open(), iteration state
-(pd->tunnel and pd->session) is kept in seq_file private data to allow
-iteration across multiple read() system calls.
+During the error handling path of the driver's probe function, a NULL
+pointer dereference can occur in ar_context_release().
 
-However, if userspace closes /proc/net/pppol2tp or /sys/kernel/debug/l2tp/tunnels
-before reading to end-of-file (EOF), any tunnel or session reference stored in
-pd->tunnel / pd->session is left un-dropped when seq_file private data is freed.
+When pci_probe() fails early (e.g., if pcim_enable_device() or MMIO mapping
+fails), the devres cleanup mechanism invokes release_ohci(). This function
+unconditionally calls ar_context_release() to clean up the asynchronous
+receive contexts. However, if ar_context_init() was not yet called,
+ctx->ohci remains NULL (as the fw_ohci structure is zero-initialized by
+devres_alloc()).
 
-Fix this by dropping any remaining pd->tunnel and pd->session references in
-pppol2tp_proc_release() and l2tp_dfs_seq_release() when closing the file.
+ar_context_release() immediately dereferences ctx->ohci to get the dev
+pointer before checking if the context was actually initialized, leading to
+a crash:
 
-Fixes: 0e0c3fee3a59 ("l2tp: hold reference on tunnels printed in pppol2tp proc file")
-Fixes: f726214d9b23 ("l2tp: hold reference on tunnels printed in l2tp/tunnels debugfs file")
-Reported-by: syzbot+d6fa74e3f19d6ee01e3a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a760f32.01d0871a.3a0d52.004f.GAE@google.com/T/#u
-Assisted-by: Jetski:Gemini-3.1-Pro
-Cc: James Chapman <jchapman@katalix.com>
-Cc: Guillaume Nault <gnault@redhat.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260811144651.2733424-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Oops: general protection fault, probably for non-canonical address
+0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+RIP: 0010:ar_context_release+0x3f/0x380 drivers/firewire/ohci.c:543
+Call Trace:
+ release_ohci+0x3f/0x60 drivers/firewire/ohci.c:3567
+ release_nodes drivers/base/devres.c:546 [inline]
+ devres_release_all+0x1a8/0x260 drivers/base/devres.c:576
+ device_unbind_cleanup drivers/base/dd.c:597 [inline]
+ really_probe+0x451/0xae0 drivers/base/dd.c:772
+
+To fix this, move the assignment of the dev pointer after the !ctx->buffer
+check. If ctx->buffer is NULL, it indicates that the context was never
+successfully initialized and there is nothing to release, safely avoiding
+the dereference of the uninitialized ctx->ohci pointer.
+
+Fixes: 5716e58aecdd ("firewire: ohci: release buffer for AR req/resp contexts when managed resource is released")
+Assisted-by: Gemini:gemini-3.5-flash Gemini:gemini-3.1-pro-preview syzbot
+Reported-by: syzbot+d30aad27833a559defab@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d30aad27833a559defab
+Link: https://syzkaller.appspot.com/ai_job?id=10a18617-7893-42dd-bf1c-cd49e19e95d9
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Link: https://lore.kernel.org/r/90c5db71-dd1f-4d46-b9d3-2f1046cbd5ea@mail.kernel.org
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/l2tp/l2tp_debugfs.c |  4 +++
- net/l2tp/l2tp_ppp.c     | 56 ++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 57 insertions(+), 3 deletions(-)
+ drivers/firewire/ohci.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/l2tp/l2tp_debugfs.c b/net/l2tp/l2tp_debugfs.c
-index b26986fda9d6c..c12d5e1ee550c 100644
---- a/net/l2tp/l2tp_debugfs.c
-+++ b/net/l2tp/l2tp_debugfs.c
-@@ -306,6 +306,10 @@ static int l2tp_dfs_seq_release(struct inode *inode, struct file *file)
+diff --git a/drivers/firewire/ohci.c b/drivers/firewire/ohci.c
+index 8153d62c58f06..e947227e01acc 100644
+--- a/drivers/firewire/ohci.c
++++ b/drivers/firewire/ohci.c
+@@ -540,11 +540,13 @@ static void ar_context_link_page(struct ar_context *ctx, unsigned int index)
  
- 	seq = file->private_data;
- 	pd = seq->private;
-+	if (pd->session)
-+		l2tp_session_put(pd->session);
-+	if (pd->tunnel)
-+		l2tp_tunnel_put(pd->tunnel);
- 	if (pd->net)
- 		put_net_track(pd->net, &pd->ns_tracker);
- 	kfree(pd);
-diff --git a/net/l2tp/l2tp_ppp.c b/net/l2tp/l2tp_ppp.c
-index e0b1915be1a6e..353f8ecf754d6 100644
---- a/net/l2tp/l2tp_ppp.c
-+++ b/net/l2tp/l2tp_ppp.c
-@@ -1603,7 +1603,53 @@ static const struct seq_operations pppol2tp_seq_ops = {
- 	.stop		= pppol2tp_seq_stop,
- 	.show		= pppol2tp_seq_show,
- };
--#endif /* CONFIG_PROC_FS */
-+
-+static int pppol2tp_proc_open(struct inode *inode, struct file *file)
-+{
-+	struct net *net = pde_data(inode);
-+	struct pppol2tp_seq_data *pd;
-+
-+	net = maybe_get_net(net);
-+	if (!net)
-+		return -ENXIO;
-+
-+	pd = __seq_open_private(file, &pppol2tp_seq_ops, sizeof(*pd));
-+	if (!pd) {
-+		put_net(net);
-+		return -ENOMEM;
-+	}
-+
-+#ifdef CONFIG_NET_NS
-+	pd->p.net = net;
-+	netns_tracker_alloc(net, &pd->p.ns_tracker, GFP_KERNEL);
-+#endif
-+	return 0;
-+}
-+
-+static int pppol2tp_proc_release(struct inode *inode, struct file *file)
-+{
-+	struct seq_file *seq = file->private_data;
-+	struct pppol2tp_seq_data *pd = seq->private;
-+
-+	if (pd->session)
-+		l2tp_session_put(pd->session);
-+	if (pd->tunnel)
-+		l2tp_tunnel_put(pd->tunnel);
-+
-+#ifdef CONFIG_NET_NS
-+	put_net_track(pd->p.net, &pd->p.ns_tracker);
-+#else
-+	put_net(&init_net);
-+#endif
-+	return seq_release_private(inode, file);
-+}
-+
-+static const struct proc_ops pppol2tp_proc_ops = {
-+	.proc_open	= pppol2tp_proc_open,
-+	.proc_read	= seq_read,
-+	.proc_lseek	= seq_lseek,
-+	.proc_release	= pppol2tp_proc_release,
-+};
+ static void ar_context_release(struct ar_context *ctx)
+ {
+-	struct device *dev = ctx->ohci->card.device;
++	struct device *dev;
  
- /*****************************************************************************
-  * Network namespace
-@@ -1614,8 +1660,8 @@ static __net_init int pppol2tp_init_net(struct net *net)
- 	struct proc_dir_entry *pde;
- 	int err = 0;
+ 	if (!ctx->buffer)
+ 		return;
  
--	pde = proc_create_net("pppol2tp", 0444, net->proc_net,
--			      &pppol2tp_seq_ops, sizeof(struct pppol2tp_seq_data));
-+	pde = proc_create_data("pppol2tp", 0444, net->proc_net,
-+			       &pppol2tp_proc_ops, net);
- 	if (!pde) {
- 		err = -ENOMEM;
- 		goto out;
-@@ -1630,9 +1676,13 @@ static __net_exit void pppol2tp_exit_net(struct net *net)
- 	remove_proc_entry("pppol2tp", net->proc_net);
- }
- 
-+#endif /* CONFIG_PROC_FS */
++	dev = ctx->ohci->card.device;
 +
- static struct pernet_operations pppol2tp_net_ops = {
-+#ifdef CONFIG_PROC_FS
- 	.init = pppol2tp_init_net,
- 	.exit = pppol2tp_exit_net,
-+#endif
- };
- 
- /*****************************************************************************
+ 	for (int i = 0; i < AR_BUFFERS; ++i) {
+ 		dma_addr_t dma_addr = ctx->dma_addrs[i];
+ 		if (dma_addr)
 -- 
 2.53.0
 
