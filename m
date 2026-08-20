@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D83647B403;
-	Thu, 20 Aug 2026 16:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5511947D46A;
+	Thu, 20 Aug 2026 16:37:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243827; cv=none; b=ZMcf96rmsCh4R1QTo9Qkp1muzPLEwX1GBYCaDZ2cI3406O0WVtka/ekaup4On26kNRgowZhbPl9eldE0SCnaUrB7kGb3BpOZxosAMS9yONj7lDA6yPWI56YVa7EtnPaTX3AYwR2ZgYTf9G1TFJ7Rrc0Wuf+La1w48N3oLPzAMm8=
+	t=1787243830; cv=none; b=sNr9mIMRCPbjWFDoauWEsOH/7AWDJXpVpe/QCejJXNda5Nn91qz9CYp3bQhUygF6+z3O5mhxWRObdRbFeatc6m1E4WbUMJz0xC3gU0mK+nrr+98+56xTbjKiR4ymgNWwG5RTDAVunUHbQFoW008KeOu/vh4v+nBSktRxS2mOjW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243827; c=relaxed/simple;
-	bh=CiImhgrRuUOZpPaPmnt9+NXo40cdnoDUZgMkWeRh20w=;
+	s=arc-20240116; t=1787243830; c=relaxed/simple;
+	bh=WAZUQJbbOompQN0wGHgojID44hzmfp9L5i2eKNH6EmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3SWwKb++jA2AvF/C4nQlAj5g3dEfuKC1xWnl2Tpj4lq+qw+GvDpvxBgtBFO2MlUm6nl0y89L4oh8h26nh3+tbt79YZ8WERh08wcYrEsGTayCBGvkv7ua2v+zxy7RjntUH18IePLwVjbU7ROg/1W4kfzW4JznPaFidaAh7nH4jY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLrdPtmI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PW36DOaFbulaZHKeSFkoMBucBoIb+fuqP3UK5OxJQF13c77rUTwqoWXJ7gQ7S56ihAiKJygNjDb0qUDt6hokAhtyXEtuZ2vD//j7GwXow/Nn/8CpCsOAe+1BytgcYKilS52et1p4+SnuytzVAJfqdJLMp6F9M5FHFIyxjmnMQFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KVHOngck; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLrdPtmI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C72D81F000E9;
-	Thu, 20 Aug 2026 16:37:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KVHOngck"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70EC1F000E9;
+	Thu, 20 Aug 2026 16:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243826;
-	bh=Qnr0sozZziKQcGX1A6i8iLzIGYpoGm6raZ3OEIH6rgk=;
+	s=korg; t=1787243829;
+	bh=td89NiSpn2f/AvyS4LMxCwqErgElgMBYpVuOPh4B38s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PLrdPtmIMhicEorHYR05Uc1l9gsMQun9D+0LgmQVRW83wzvY0trj1wpDN3D14GJhc
-	 bQvXlgJfPAjT6adVFVPwPQF6hXszWPG8yIls+SMclhNbYylJpZTv3UToXYyv+y9b1b
-	 uEgYuNdMYghVMTZIvp8jMiatjJ3xWW57ZlXhIohA=
+	b=KVHOngckaHPafFpvDAIs9bRcSNh+6xUWpniDqI7QxsKdFgWnvIMy6yDZ5iIKgDoPe
+	 Y/nhlbKnAt/IBf6qf3pTPuMoDb8VFLnu2Y5YHO/+P1/fGgT8/uvmU6joHGgyYKmSHw
+	 BqY7jdqfsYRVd2fth0tonCpUt49dX8J9qYu3FzQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	Douglas Gilbert <dgilbert@interlog.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 228/272] net: pktgen: fix proc entry use-after-free
-Date: Thu, 20 Aug 2026 16:56:52 +0200
-Message-ID: <20260820145238.442971724@linuxfoundation.org>
+Subject: [PATCH 5.15 229/272] scsi: sd: sd_zbc: Improve source code documentation
+Date: Thu, 20 Aug 2026 16:56:53 +0200
+Message-ID: <20260820145238.475616400@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -52,80 +54,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 817ff6efdb7f484ea547218e11e17d8e43daa3b4 ]
+[ Upstream commit aa96bfb4caff59c93f0637092efe3a714cab0fe6 ]
 
-pktgen_change_name() replaces pkt_dev->entry while holding t->if_lock.
-pktgen_remove_device() removes the same entry before
-_rem_dev_from_if_list() takes that lock.
+Add several kernel-doc headers. Declare input arrays const. Specify the
+array size in function declarations.
 
-This allows the following interleaving:
-
-  CPU 0 (NETDEV_CHANGENAME)       CPU 1 (kpktgend)
-  if_lock(t)
-  proc_remove(pkt_dev->entry)
-                                  proc_remove(pkt_dev->entry)
-  pkt_dev->entry = proc_create_data(...)
-  if_unlock(t)
-
-The kthread can pass the stale proc_dir_entry to proc_remove() after the
-rename path has freed it. A reproducer with a widened race window reports:
-
-  BUG: KASAN: slab-use-after-free in proc_remove+0x78/0x80
-  Read of size 8 at addr ffff8881478fea70 by task kpktgend_0/67
-  Call Trace:
-   proc_remove+0x78/0x80
-   pktgen_remove_device.isra.0+0x11c/0x4c0
-   pktgen_thread_worker+0x1214/0x6bc0
-   kthread+0x2c6/0x3b0
-  Allocated by task 95:
-   __proc_create+0x204/0x790
-   proc_create_data+0x72/0xe0
-   pktgen_thread_write+0xd61/0x1510
-  Freed by task 28:
-   kmem_cache_free+0xcb/0x3d0
-   proc_free_inode+0x5b/0x80
-   rcu_core+0x50a/0x1850
-  The buggy address belongs to the object at ffff8881478fea00
-   which belongs to the cache proc_dir_entry of size 192
-
-Move proc_remove() into the if_lock-protected list removal helper. Keep it
-before list_del_rcu() to preserve the ordering required by add_device().
-The rename path must then finish replacing the entry before removal, or
-it observes that the device is no longer on the list.
-
-Fixes: 39df232f1a9b ("[PKTGEN]: fix device name handling")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260719145740.2888967-1-nicoyip.dev@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20220421183023.3462291-2-bvanassche@acm.org
+Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Acked-by: Douglas Gilbert <dgilbert@interlog.com>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 93dde0bf2f39 ("scsi: scsi_debug: Fix REPORT ZONES alloc_len underflow OOB write")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/pktgen.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/scsi/sd.h     |    5 +---
+ drivers/scsi/sd_zbc.c |   55 +++++++++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 54 insertions(+), 6 deletions(-)
 
---- a/net/core/pktgen.c
-+++ b/net/core/pktgen.c
-@@ -3887,6 +3887,7 @@ static void _rem_dev_from_if_list(struct
- 	struct pktgen_dev *p;
+--- a/drivers/scsi/sd.h
++++ b/drivers/scsi/sd.h
+@@ -217,7 +217,7 @@ static inline int sd_is_zoned(struct scs
+ #ifdef CONFIG_BLK_DEV_ZONED
  
- 	if_lock(t);
-+	proc_remove(pkt_dev->entry);
- 	list_for_each_safe(q, n, &t->if_list) {
- 		p = list_entry(q, struct pktgen_dev, list);
- 		if (p == pkt_dev)
-@@ -3916,9 +3917,6 @@ static int pktgen_remove_device(struct p
- 	 * list to determine if interface already exist, avoid race
- 	 * with proc_create_data()
- 	 */
--	proc_remove(pkt_dev->entry);
--
--	/* And update the thread if_list */
- 	_rem_dev_from_if_list(t, pkt_dev);
+ void sd_zbc_release_disk(struct scsi_disk *sdkp);
+-int sd_zbc_read_zones(struct scsi_disk *sdkp, unsigned char *buffer);
++int sd_zbc_read_zones(struct scsi_disk *sdkp, u8 buf[SD_BUF_SIZE]);
+ int sd_zbc_revalidate_zones(struct scsi_disk *sdkp);
+ blk_status_t sd_zbc_setup_zone_mgmt_cmnd(struct scsi_cmnd *cmd,
+ 					 unsigned char op, bool all);
+@@ -233,8 +233,7 @@ blk_status_t sd_zbc_prepare_zone_append(
  
- #ifdef CONFIG_XFRM
+ static inline void sd_zbc_release_disk(struct scsi_disk *sdkp) {}
+ 
+-static inline int sd_zbc_read_zones(struct scsi_disk *sdkp,
+-				    unsigned char *buf)
++static inline int sd_zbc_read_zones(struct scsi_disk *sdkp, u8 buf[SD_BUF_SIZE])
+ {
+ 	return 0;
+ }
+--- a/drivers/scsi/sd_zbc.c
++++ b/drivers/scsi/sd_zbc.c
+@@ -20,6 +20,12 @@
+ 
+ #include "sd.h"
+ 
++/**
++ * sd_zbc_get_zone_wp_offset - Get zone write pointer offset.
++ * @zone: Zone for which to return the write pointer offset.
++ *
++ * Return: offset of the write pointer from the start of the zone.
++ */
+ static unsigned int sd_zbc_get_zone_wp_offset(struct blk_zone *zone)
+ {
+ 	if (zone->type == ZBC_ZONE_TYPE_CONV)
+@@ -44,7 +50,21 @@ static unsigned int sd_zbc_get_zone_wp_o
+ 	}
+ }
+ 
+-static int sd_zbc_parse_report(struct scsi_disk *sdkp, u8 *buf,
++/**
++ * sd_zbc_parse_report - Parse a SCSI zone descriptor
++ * @sdkp: SCSI disk pointer.
++ * @buf: SCSI zone descriptor.
++ * @idx: Index of the zone relative to the first zone reported by the current
++ *	sd_zbc_report_zones() call.
++ * @cb: Callback function pointer.
++ * @data: Second argument passed to @cb.
++ *
++ * Return: Value returned by @cb.
++ *
++ * Convert a SCSI zone descriptor into struct blk_zone format. Additionally,
++ * call @cb(blk_zone, @data).
++ */
++static int sd_zbc_parse_report(struct scsi_disk *sdkp, const u8 buf[64],
+ 			       unsigned int idx, report_zones_cb cb, void *data)
+ {
+ 	struct scsi_device *sdp = sdkp->device;
+@@ -188,6 +208,17 @@ static inline sector_t sd_zbc_zone_secto
+ 	return logical_to_sectors(sdkp->device, sdkp->zone_blocks);
+ }
+ 
++/**
++ * sd_zbc_report_zones - SCSI .report_zones() callback.
++ * @disk: Disk to report zones for.
++ * @sector: Start sector.
++ * @nr_zones: Maximum number of zones to report.
++ * @cb: Callback function called to report zone information.
++ * @data: Second argument passed to @cb.
++ *
++ * Called by the block layer to iterate over zone information. See also the
++ * disk->fops->report_zones() calls in block/blk-zoned.c.
++ */
+ int sd_zbc_report_zones(struct gendisk *disk, sector_t sector,
+ 			unsigned int nr_zones, report_zones_cb cb, void *data)
+ {
+@@ -275,6 +306,10 @@ static int sd_zbc_update_wp_offset_cb(st
+ 	return 0;
+ }
+ 
++/*
++ * An attempt to append a zone triggered an invalid write pointer error.
++ * Reread the write pointer of the zone(s) in which the append failed.
++ */
+ static void sd_zbc_update_wp_offset_workfn(struct work_struct *work)
+ {
+ 	struct scsi_disk *sdkp;
+@@ -586,7 +621,7 @@ static int sd_zbc_check_zoned_characteri
+  * sd_zbc_check_capacity - Check the device capacity
+  * @sdkp: Target disk
+  * @buf: command buffer
+- * @zblocks: zone size in number of blocks
++ * @zblocks: zone size in logical blocks
+  *
+  * Get the device zone size and check that the device capacity as reported
+  * by READ CAPACITY matches the max_lba value (plus one) of the report zones
+@@ -697,6 +732,11 @@ static void sd_zbc_revalidate_zones_cb(s
+ 	swap(sdkp->zones_wp_offset, sdkp->rev_wp_offset);
+ }
+ 
++/*
++ * Call blk_revalidate_disk_zones() if any of the zoned disk properties have
++ * changed that make it necessary to call that function. Called by
++ * sd_revalidate_disk() after the gendisk capacity has been set.
++ */
+ int sd_zbc_revalidate_zones(struct scsi_disk *sdkp)
+ {
+ 	struct gendisk *disk = sdkp->disk;
+@@ -775,7 +815,16 @@ unlock:
+ 	return ret;
+ }
+ 
+-int sd_zbc_read_zones(struct scsi_disk *sdkp, unsigned char *buf)
++/**
++ * sd_zbc_read_zones - Read zone information and update the request queue
++ * @sdkp: SCSI disk pointer.
++ * @buf: 512 byte buffer used for storing SCSI command output.
++ *
++ * Read zone information and update the request queue zone characteristics and
++ * also the zoned device information in *sdkp. Called by sd_revalidate_disk()
++ * before the gendisk capacity has been set.
++ */
++int sd_zbc_read_zones(struct scsi_disk *sdkp, u8 buf[SD_BUF_SIZE])
+ {
+ 	struct gendisk *disk = sdkp->disk;
+ 	struct request_queue *q = disk->queue;
 
 
