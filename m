@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE09B36A37A;
-	Thu, 20 Aug 2026 15:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C8237DAC2;
+	Thu, 20 Aug 2026 15:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238475; cv=none; b=RFtrAaisceZugI6wYKiMZESy1i/IHRGTDEwxK0s4xIkn9KQCRQxUS+MiiXF1aFMcD95qg4Y1aYfyws6XDw2RdQSQDRBJUztCQ8zzDO48O9nrOQ8JPrNfO0/idK4n5PucJMKy9DMNlXr+JQGVtuvU9q5HuSHtTGFekoKPx7Qvdx0=
+	t=1787238478; cv=none; b=EnF5+u6UVLThedvTcY8jrLmfLncUgscZD0dAJV5EkOnj42NmyvLgkWF9KXWM4xnxAfFABkUGzMa+OjuCHDs21YA9Xqq4V5GkRsfFZbXaLbSXuk//wW2pURM0Eeg2ycHaBLH9sLLEw723RIy2mN4YQjAMBainjEyKQ/F9IkBuZXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238475; c=relaxed/simple;
-	bh=EL4w7f5EdZ+SjhNrzz8C+gT18Hcr7W0jS6RcLSvmhhU=;
+	s=arc-20240116; t=1787238478; c=relaxed/simple;
+	bh=tdA10+71tU5PtNoLgrXkwyqALN3PnmcYDWHY37pJSiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SYwDX0vX+2r8FvCLy7ZJUTpj8acegPkw9nmTMgXvc/G6qAmMh5cf3oIPG6QdJ9TAYlJ39wDyFBhGKZDr+r+ufjmtXu5VbrVCP3GNOsSRSjAEmRax53c7ywn6Tc0bHamqI+55VBE3EtSnQDLaalhc9zWplhmYRlnRqJUiZWzNa2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdCZO61o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bGVDSyXlIiwpLS3nxMz3gZ6Yvbhv0QhWxu0TSqndHsvmz2Th59s+cZSOFGbNLvPHEn44DaHqWRSQbawGtacRiXFNqbA1otha3qk4ZveUN7RR9whnmWfqKZfkF/CZP/8ClN6iAywMnebpaYPJQ1KdiVLPK6jk8wCoTY7me4euDxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JFVq+yjG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdCZO61o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52DAE1F000E9;
-	Thu, 20 Aug 2026 15:07:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFVq+yjG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307681F000E9;
+	Thu, 20 Aug 2026 15:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238473;
-	bh=zqvdIUhsTd+VKgXth6yadMRRLBWY32LU/Tuf8sAFMb4=;
+	s=korg; t=1787238476;
+	bh=SHI0ps1NzojP+tiigkCeS+rRqOnHngWDBKH8f4hnssc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jdCZO61oI7K8A48/W7cr2Lbu0BcvsV73npDf3vDX6ktTBc5mrMK/HLr2BmmttkYQ3
-	 73EmvWs4qq+x9eo1dLHGGRT5+7/2Fg1HO8AqverSC9KlAl/amB+F+XoAcl+CJHs+1H
-	 znIs9JZYAwgj1R8Y72/NQYevvkZCwMC9qP+fx8BU=
+	b=JFVq+yjGCOGckERrCK57e1z29rDODZ2wJfaDd/BSigf7uBycKR1CV7orNMYPxZcbh
+	 4s3RQDG2Gio7rSZprH132zsCtOVP+cD6GU8BwRMEd0JsJSF31OR7cPCQxQ3oY86Nrf
+	 BjAO0RspxSJddVTHL3byuFstngjCUkaZXGMvlsiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.1 143/228] xfs: fix another iunlink infinite loop bug in online fsck
-Date: Thu, 20 Aug 2026 16:54:45 +0200
-Message-ID: <20260820145248.950095421@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.1 161/228] ASoC: SOF: ipc4-topology: Refresh copier IPC payload before widget setup
+Date: Thu, 20 Aug 2026 16:55:03 +0200
+Message-ID: <20260820145249.566304545@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -51,137 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit 6d67c6b99f1fc07c64b97fcbc974c6f1ada7f622 upstream.
+commit 0c0e418dbcf0582bf80d8dbfd9b306607c065992 upstream.
 
-xrep_iunlink_resolve_bucket is supposed to reconstruct as much of the
-incore prev and next unlinked list pointers based on what it finds on
-disk and in memory before we move on to relinking the truly lost inodes
-back into the unlinked list.  However, it's still vulnerable to infinite
-loops that come in via the next_unlinked pointers.
+The ipc_config_data buffer for copier widgets is built once during
+ipc_prepare (called from sof_pcm_setup_connected_widgets) and cached
+for reuse. For host copiers this buffer contains the copier_data with
+gtw_cfg.node_id (host DMA ID). For DAI copiers it additionally includes
+a dma_config_tlv trailer with stream_id and dma_channel_id for HDA link
+DMA.
 
-Fix this problem by remembering which inodes we've already seen and
-checking new agino pointers against that.  If a bit is already set,
-either this is a loop or the inode has nonzero link count.  We'll deal
-with the second case in a subsequent patch.
+On suspend/resume, both host and link DMA streams are released and
+re-allocated with potentially different stream tags. The underlying
+copier_data and dma_config_tlv structures are correctly updated by
+host_config and sdw_hda_dai_hw_params respectively. However, since the
+widget list (spcm->stream[].list) persists across suspend,
+sof_pcm_hw_params skips sof_pcm_setup_connected_widgets and ipc_prepare
+never runs again to rebuild ipc_config_data. The stale cached payload
+is then sent to firmware with boot-time DMA channel assignments, causing
+DMA channel conflicts that lead to firmware errors and crashes.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: ab97f4b1c03075 ("xfs: repair AGI unlinked inode bucket lists")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Fix this by refreshing copier_data and dma_config_tlv portions of
+ipc_config_data in sof_ipc4_widget_setup right before the IPC message
+is sent. This ensures the payload always reflects the current DMA state
+regardless of whether ipc_prepare ran.
+
+For DAI copiers, the gtw_cfg.config_length in copier_data is temporarily
+inflated to include the TLV size (matching the ipc_config_data layout)
+before copying, then restored, mirroring what
+sof_ipc4_prepare_copier_module does when first building the buffer.
+
+Fixes: e9c6b118de1a ("ASoC: SOF: make dma_config_tlv be an array")
+Cc: stable@vger.kernel.org
+Link: https://github.com/thesofproject/sof/issues/10700
+Link: https://github.com/thesofproject/sof/issues/10955
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Link: https://patch.msgid.link/20260730054822.5913-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/agheader_repair.c |   37 ++++++++++++++++++++++++++++---------
- fs/xfs/scrub/trace.h           |    1 +
- 2 files changed, 29 insertions(+), 9 deletions(-)
+ sound/soc/sof/ipc4-topology.c |   33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
---- a/fs/xfs/scrub/agheader_repair.c
-+++ b/fs/xfs/scrub/agheader_repair.c
-@@ -1341,15 +1341,32 @@ xrep_iunlink_resolve_bucket(
- 	struct xrep_agi		*ragi,
- 	unsigned int		bucket)
- {
-+	struct xagino_bitmap	seen;
- 	struct xfs_scrub	*sc = ragi->sc;
- 	struct xfs_inode	*ip;
- 	xfs_agino_t		prev_agino = NULLAGINO;
- 	xfs_agino_t		next_agino = ragi->iunlink_heads[bucket];
- 	int			error = 0;
+--- a/sound/soc/sof/ipc4-topology.c
++++ b/sound/soc/sof/ipc4-topology.c
+@@ -3151,6 +3151,15 @@ static int sof_ipc4_widget_setup(struct
+ 		ipc_size = ipc4_copier->ipc_config_size;
+ 		ipc_data = ipc4_copier->ipc_config_data;
  
-+	xagino_bitmap_init(&seen);
++		/*
++		 * Refresh copier_data in ipc_config_data for host copiers.
++		 * The node_id may have been updated by host_config after
++		 * ipc_prepare, e.g. when host stream tags change after a
++		 * suspend/resume cycle.
++		 */
++		if (swidget->id != snd_soc_dapm_buffer)
++			memcpy(ipc_data, &ipc4_copier->data, sizeof(ipc4_copier->data));
 +
- 	while (next_agino != NULLAGINO) {
-+		unsigned int len = 1;
-+
- 		if (xchk_should_terminate(ragi->sc, &error))
--			return error;
-+			goto out_bitmap;
-+
-+		/* Inode already seen?  We're stuck in a loop */
-+		if (xagino_bitmap_test(&seen, next_agino, &len)) {
-+			trace_xrep_iunlink_resolve_infinite_loop(sc->sa.pag,
-+					bucket, prev_agino, next_agino);
-+			next_agino = NULLAGINO;
-+			break;
-+		}
-+
-+		error = xagino_bitmap_set(&seen, next_agino, 1);
-+		if (error)
-+			goto out_bitmap;
- 
- 		/* Find the next inode in the chain. */
- 		ip = xfs_iunlink_lookup(sc->sa.pag, next_agino);
-@@ -1375,17 +1392,17 @@ xrep_iunlink_resolve_bucket(
- 			error = xrep_iunlink_store_next(ragi, next_agino,
- 					NULLAGINO);
- 			if (error)
--				return error;
-+				goto out_bitmap;
- 
- 			error = xrep_iunlink_store_prev(ragi, next_agino,
- 					LINKED_AGINO);
- 			if (error)
--				return error;
-+				goto out_bitmap;
- 
- 			error = xagino_bitmap_clear(&ragi->iunlink_bmp,
- 					next_agino, 1);
- 			if (error)
--				return error;
-+				goto out_bitmap;
- 
- 			next_agino = ip->i_next_unlinked;
- 			continue;
-@@ -1426,20 +1443,20 @@ xrep_iunlink_resolve_bucket(
- 		 */
- 		error = xagino_bitmap_clear(&ragi->iunlink_bmp, next_agino, 1);
- 		if (error)
--			return error;
-+			goto out_bitmap;
- 
- 		/* Remember the previous inode's next pointer. */
- 		if (prev_agino != NULLAGINO) {
- 			error = xrep_iunlink_store_next(ragi, prev_agino,
- 					next_agino);
- 			if (error)
--				return error;
-+				goto out_bitmap;
- 		}
- 
- 		/* Remember this inode's previous pointer. */
- 		error = xrep_iunlink_store_prev(ragi, next_agino, prev_agino);
- 		if (error)
--			return error;
-+			goto out_bitmap;
- 
- 		/* Advance the list and remember this inode. */
- 		prev_agino = next_agino;
-@@ -1450,10 +1467,12 @@ xrep_iunlink_resolve_bucket(
- 	if (prev_agino != NULLAGINO) {
- 		error = xrep_iunlink_store_next(ragi, prev_agino, next_agino);
- 		if (error)
--			return error;
-+			goto out_bitmap;
+ 		msg = &ipc4_copier->msg;
+ 		break;
  	}
+@@ -3159,6 +3168,9 @@ static int sof_ipc4_widget_setup(struct
+ 	{
+ 		struct snd_sof_dai *dai = swidget->private;
+ 		struct sof_ipc4_copier *ipc4_copier = dai->private;
++		struct sof_ipc4_copier_data *copier_data;
++		u32 gtw_cfg_config_length;
++		u32 tlv_size;
  
--	return 0;
-+out_bitmap:
-+	xagino_bitmap_destroy(&seen);
-+	return error;
- }
+ 		pipeline = pipe_widget->private;
+ 		if (pipeline->use_chain_dma)
+@@ -3167,6 +3179,27 @@ static int sof_ipc4_widget_setup(struct
+ 		ipc_size = ipc4_copier->ipc_config_size;
+ 		ipc_data = ipc4_copier->ipc_config_data;
  
- /* Reinsert this unlinked inode into the head of the staged bucket list. */
---- a/fs/xfs/scrub/trace.h
-+++ b/fs/xfs/scrub/trace.h
-@@ -3579,6 +3579,7 @@ DEFINE_EVENT(xrep_iunlink_resolve_class,
- 	TP_PROTO(const struct xfs_perag *pag, unsigned int bucket, \
- 		 xfs_agino_t prev_agino, xfs_agino_t next_agino), \
- 	TP_ARGS(pag, bucket, prev_agino, next_agino))
-+DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_infinite_loop);
- DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_uncached);
- DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_wronglist);
- DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_nolist);
++		/*
++		 * Refresh copier_data and dma_config_tlv in ipc_config_data.
++		 * These may have been updated after ipc_prepare, e.g. when
++		 * link DMA stream tags change after a suspend/resume cycle.
++		 *
++		 * copier_data->gtw_cfg.config_length does not include the
++		 * TLV size (it was restored after sof_ipc4_prepare_copier_module),
++		 * so temporarily inflate it to match the ipc_config_data layout.
++		 */
++		copier_data = &ipc4_copier->data;
++		gtw_cfg_config_length = copier_data->gtw_cfg.config_length * 4;
++		tlv_size = ipc_size - sizeof(*copier_data) - gtw_cfg_config_length;
++
++		copier_data->gtw_cfg.config_length += tlv_size / 4;
++		memcpy(ipc_data, copier_data, sizeof(*copier_data));
++		copier_data->gtw_cfg.config_length = gtw_cfg_config_length / 4;
++
++		if (tlv_size)
++			memcpy(ipc_data + sizeof(*copier_data) + gtw_cfg_config_length,
++			       &ipc4_copier->dma_config_tlv, tlv_size);
++
+ 		msg = &ipc4_copier->msg;
+ 		break;
+ 	}
 
 
