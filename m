@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C1F47DFA7;
-	Thu, 20 Aug 2026 16:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B8647DD43;
+	Thu, 20 Aug 2026 16:47:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244457; cv=none; b=gokFHtgChQPcctHHvfGTRA9DqDH503ijMbuaZc4b5xoTqGVIismpvoS1cdkMZ1WZeMSuDhd6TBg55Eq62uWcRLILL9J+du7uNoFRzn5h5P6uNvoZ8Rhawg/3Hmv6Z86+TMr1rVOZ4huGrrMZQBtIOJ4YjLPKWN7Dzcd1eH0kEGI=
+	t=1787244459; cv=none; b=bXyegG0Y9NjMWq7Vj+qxfjlwcuFOlCbN2bnYaRdKb+MLd95cvW53/NJTG36vQO319NKS5L8dIHFaA1KlbYKixhsraCP3ILagqYjP+cxDT9cimF21E9BwhKd2mbzm8FolFYllEtIwAIFRURPept6ARcPsfWByeJIjsPJEWXRoEcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244457; c=relaxed/simple;
-	bh=1+GX1w8v+kHQPxMdC8B29pId/qhQRAFyVtBmElCeenw=;
+	s=arc-20240116; t=1787244459; c=relaxed/simple;
+	bh=Hnz+k35BvOH3wES1wPfdeCDEDCBlM1Srfq2eAGnphAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LHZkqThbilNmu6Q8JxhwezI1tCNTktX4VgJl/ymfkd4Qs7N9DDGq8TJ+Ji9TKLxeNuQja86w/gImyHVStLSxatQhBZLiWX4B2FehNDTCg6m1WMQV/II0g5aigyeGwlt7sDMA299ODmVSS3KXC2q2D4g1xZXW3glnlQZ1i6pVbXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BMnp6HPO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ixtsqf0Eu4HXyIG0KwwZ0E+/GploM70ax7xw4/6bKRhrm52nk/in39lh1/rEJ8hY/8TDsuUhiZaAiyZROPQoU45qzrLUPU5T7DN6xAoHhjpdwNnVArxcVsBn24kPa7olyYJIUbEyLgUfx6Q/YxAzwx/JSUF2LNEnvp3pqkqPK/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNyfjhAU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BMnp6HPO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 309C71F00A3A;
-	Thu, 20 Aug 2026 16:47:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNyfjhAU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 091D81F00A3A;
+	Thu, 20 Aug 2026 16:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244455;
-	bh=5/aE1SsiGFbqrbDuzeIHHY1Ils/cC7UxDHHH0Val9h8=;
+	s=korg; t=1787244458;
+	bh=+xASM810kJFh5cyYjpMDQDDt5T36TG5slUL3e+IeSSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BMnp6HPOlzxq0blkDpcJfXOTk6YmS3pXCTLF1OuxyM/5UnFzLTLF5TNJbes+uo7FA
-	 ZXsxOaUEvj0+h4gkUlQgVJeeqIpHPCjekGJdUIp2Q5URh0cw51VHRlyOBdY20Dosa2
-	 cEdqAAL7Xf4e/0zN3FNuAH7e5ojvUuiatdRqI2Nw=
+	b=vNyfjhAUmxD06tTGf+Z3ywLXnQ7kMFCciYf5VJG2Bwwapbp3NL6BloO+1xVPItKTg
+	 STJjpv7mslC51IgUymnVa/kw0Y/x8/mOwg87Yag627hgRr53DV7ggsaZG3nhZpnVT4
+	 rVJeq784+WIJGy7EXHXhOpOjVK00WO13KdnbD8pQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable <stable@kernel.org>,
 	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Lech Perczak <lech.perczak@camlingroup.com>,
-	Rob Herring <robh@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 174/235] serial: sc16is7xx: fix regression with GPIO configuration
-Date: Thu, 20 Aug 2026 16:56:50 +0200
-Message-ID: <20260820145221.791747238@linuxfoundation.org>
+Subject: [PATCH 5.10 175/235] serial: sc16is7xx: implement gpio get_direction() callback
+Date: Thu, 20 Aug 2026 16:56:51 +0200
+Message-ID: <20260820145221.822835133@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -55,231 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 0499942928341d572a42199580433c2b0725211e ]
+[ Upstream commit af071d9e07e57cfff239e8d09d2f3b05ebc9c667 ]
 
-Commit 679875d1d880 ("sc16is7xx: Separate GPIOs from modem control lines")
-and commit 21144bab4f11 ("sc16is7xx: Handle modem status lines")
-changed the function of the GPIOs pins to act as modem control
-lines without any possibility of selecting GPIO function.
+It's strongly recommended for GPIO drivers to always implement the
+.get_direction() callback - even when the direction is tracked in
+software. The GPIO core emits a warning when the callback is missing
+and a user reads the direction of a line, e.g. via
+/sys/kernel/debug/gpio.
 
-As a consequence, applications that depends on GPIO lines configured
-by default as GPIO pins no longer work as expected.
-
-Also, the change to select modem control lines function was done only
-for channel A of dual UART variants (752/762). This was not documented
-in the log message.
-
-Allow to specify GPIO or modem control line function in the device
-tree, and for each of the ports (A or B).
-
-Do so by using the new device-tree property named
-"nxp,modem-control-line-ports" (property added in separate patch).
-
-When registering GPIO chip controller, mask-out GPIO pins declared as
-modem control lines according to this new DT property.
-
-Fixes: 679875d1d880 ("sc16is7xx: Separate GPIOs from modem control lines")
-Fixes: 21144bab4f11 ("sc16is7xx: Handle modem status lines")
-Cc: stable@vger.kernel.org
+Fixes: dfeae619d781 ("serial: sc16is7xx")
+Cc: stable <stable@kernel.org>
 Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Reviewed-by: Lech Perczak <lech.perczak@camlingroup.com>
-Tested-by: Lech Perczak <lech.perczak@camlingroup.com>
-Acked-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20230807214556.540627-5-hugo@hugovil.com
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260716210813.2582826-1-hugo@hugovil.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: af071d9e07e5 ("serial: sc16is7xx: implement gpio get_direction() callback")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |  124 ++++++++++++++++++++++++++++++++++-------
- 1 file changed, 105 insertions(+), 19 deletions(-)
+ drivers/tty/serial/sc16is7xx.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 --- a/drivers/tty/serial/sc16is7xx.c
 +++ b/drivers/tty/serial/sc16is7xx.c
-@@ -237,7 +237,8 @@
- 
- /* IOControl register bits (Only 750/760) */
- #define SC16IS7XX_IOCONTROL_LATCH_BIT	(1 << 0) /* Enable input latching */
--#define SC16IS7XX_IOCONTROL_MODEM_BIT	(1 << 1) /* Enable GPIO[7:4] as modem pins */
-+#define SC16IS7XX_IOCONTROL_MODEM_A_BIT	(1 << 1) /* Enable GPIO[7:4] as modem A pins */
-+#define SC16IS7XX_IOCONTROL_MODEM_B_BIT	(1 << 2) /* Enable GPIO[3:0] as modem B pins */
- #define SC16IS7XX_IOCONTROL_SRESET_BIT	(1 << 3) /* Software Reset */
- 
- /* EFCR register bits */
-@@ -294,6 +295,7 @@
- /* Misc definitions */
- #define SC16IS7XX_FIFO_SIZE		(64)
- #define SC16IS7XX_REG_SHIFT		2
-+#define SC16IS7XX_GPIOS_PER_BANK	4
- 
- struct sc16is7xx_devtype {
- 	char	name[10];
-@@ -326,7 +328,9 @@ struct sc16is7xx_port {
- 	struct clk			*clk;
- #ifdef CONFIG_GPIOLIB
- 	struct gpio_chip		gpio;
-+	unsigned long			gpio_valid_mask;
- #endif
-+	u8				mctrl_mask;
- 	unsigned char			buf[SC16IS7XX_FIFO_SIZE];
- 	struct kthread_worker		kworker;
- 	struct task_struct		*kworker_task;
-@@ -1237,8 +1241,98 @@ static int sc16is7xx_gpio_direction_outp
- 
- 	return 0;
+@@ -1204,6 +1204,17 @@ static void sc16is7xx_gpio_set(struct gp
+ 			      val ? BIT(offset) : 0);
  }
-+
-+static int sc16is7xx_gpio_init_valid_mask(struct gpio_chip *chip,
-+					  unsigned long *valid_mask,
-+					  unsigned int ngpios)
+ 
++static int sc16is7xx_gpio_get_direction(struct gpio_chip *chip, unsigned int offset)
 +{
 +	struct sc16is7xx_port *s = gpiochip_get_data(chip);
++	struct uart_port *port = &s->p[0].port;
++	unsigned int val;
 +
-+	*valid_mask = s->gpio_valid_mask;
++	val = sc16is7xx_port_read(port, SC16IS7XX_IODIR_REG);
 +
-+	return 0;
++	return val & BIT(offset) ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
 +}
 +
-+static int sc16is7xx_setup_gpio_chip(struct sc16is7xx_port *s)
-+{
-+	struct device *dev = s->p[0].port.dev;
-+
-+	if (!s->devtype->nr_gpio)
-+		return 0;
-+
-+	switch (s->mctrl_mask) {
-+	case 0:
-+		s->gpio_valid_mask = GENMASK(7, 0);
-+		break;
-+	case SC16IS7XX_IOCONTROL_MODEM_A_BIT:
-+		s->gpio_valid_mask = GENMASK(3, 0);
-+		break;
-+	case SC16IS7XX_IOCONTROL_MODEM_B_BIT:
-+		s->gpio_valid_mask = GENMASK(7, 4);
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	if (s->gpio_valid_mask == 0)
-+		return 0;
-+
-+	s->gpio.owner		 = THIS_MODULE;
-+	s->gpio.parent		 = dev;
-+	s->gpio.label		 = dev_name(dev);
-+	s->gpio.init_valid_mask	 = sc16is7xx_gpio_init_valid_mask;
-+	s->gpio.direction_input	 = sc16is7xx_gpio_direction_input;
-+	s->gpio.get		 = sc16is7xx_gpio_get;
-+	s->gpio.direction_output = sc16is7xx_gpio_direction_output;
-+	s->gpio.set		 = sc16is7xx_gpio_set;
-+	s->gpio.base		 = -1;
-+	s->gpio.ngpio		 = s->devtype->nr_gpio;
-+	s->gpio.can_sleep	 = 1;
-+
-+	return gpiochip_add_data(&s->gpio, s);
-+}
- #endif
- 
-+/*
-+ * Configure ports designated to operate as modem control lines.
-+ */
-+static int sc16is7xx_setup_mctrl_ports(struct sc16is7xx_port *s)
-+{
-+	int i;
-+	int ret;
-+	int count;
-+	u32 mctrl_port[2];
-+	struct device *dev = s->p[0].port.dev;
-+
-+	count = device_property_count_u32(dev, "nxp,modem-control-line-ports");
-+	if (count < 0 || count > ARRAY_SIZE(mctrl_port))
-+		return 0;
-+
-+	ret = device_property_read_u32_array(dev, "nxp,modem-control-line-ports",
-+					     mctrl_port, count);
-+	if (ret)
-+		return ret;
-+
-+	s->mctrl_mask = 0;
-+
-+	for (i = 0; i < count; i++) {
-+		/* Use GPIO lines as modem control lines */
-+		if (mctrl_port[i] == 0)
-+			s->mctrl_mask |= SC16IS7XX_IOCONTROL_MODEM_A_BIT;
-+		else if (mctrl_port[i] == 1)
-+			s->mctrl_mask |= SC16IS7XX_IOCONTROL_MODEM_B_BIT;
-+	}
-+
-+	if (s->mctrl_mask)
-+		regmap_update_bits(
-+			s->regmap,
-+			SC16IS7XX_IOCONTROL_REG << SC16IS7XX_REG_SHIFT,
-+			SC16IS7XX_IOCONTROL_MODEM_A_BIT |
-+			SC16IS7XX_IOCONTROL_MODEM_B_BIT, s->mctrl_mask);
-+
-+	return 0;
-+}
-+
- static const struct serial_rs485 sc16is7xx_rs485_supported = {
- 	.flags = SER_RS485_ENABLED | SER_RS485_RTS_AFTER_SEND,
- 	.delay_rts_before_send = 1,
-@@ -1346,6 +1440,7 @@ static int sc16is7xx_probe(struct device
- 		sc16is7xx_port_write(&s->p[i].port, SC16IS7XX_EFCR_REG,
- 				     SC16IS7XX_EFCR_RXDISABLE_BIT |
- 				     SC16IS7XX_EFCR_TXDISABLE_BIT);
-+
- 		/* Initialize kthread work structs */
- 		kthread_init_work(&s->p[i].tx_work, sc16is7xx_tx_proc);
- 		kthread_init_work(&s->p[i].reg_work, sc16is7xx_reg_proc);
-@@ -1382,23 +1477,14 @@ static int sc16is7xx_probe(struct device
- 				s->p[u].irda_mode = true;
- 	}
- 
-+	ret = sc16is7xx_setup_mctrl_ports(s);
-+	if (ret)
-+		goto out_ports;
-+
- #ifdef CONFIG_GPIOLIB
--	if (devtype->nr_gpio) {
--		/* Setup GPIO cotroller */
--		s->gpio.owner		 = THIS_MODULE;
--		s->gpio.parent		 = dev;
--		s->gpio.label		 = dev_name(dev);
--		s->gpio.direction_input	 = sc16is7xx_gpio_direction_input;
--		s->gpio.get		 = sc16is7xx_gpio_get;
--		s->gpio.direction_output = sc16is7xx_gpio_direction_output;
--		s->gpio.set		 = sc16is7xx_gpio_set;
--		s->gpio.base		 = -1;
--		s->gpio.ngpio		 = devtype->nr_gpio;
--		s->gpio.can_sleep	 = 1;
--		ret = gpiochip_add_data(&s->gpio, s);
--		if (ret)
--			goto out_ports;
--	}
-+	ret = sc16is7xx_setup_gpio_chip(s);
-+	if (ret)
-+		goto out_ports;
- #endif
- 
- 	/*
-@@ -1421,7 +1507,7 @@ static int sc16is7xx_probe(struct device
- 		return 0;
- 
- #ifdef CONFIG_GPIOLIB
--	if (devtype->nr_gpio)
-+	if (s->gpio_valid_mask)
- 		gpiochip_remove(&s->gpio);
- #endif
- 
-@@ -1446,7 +1532,7 @@ static int sc16is7xx_remove(struct devic
- 	int i;
- 
- #ifdef CONFIG_GPIOLIB
--	if (s->devtype->nr_gpio)
-+	if (s->gpio_valid_mask)
- 		gpiochip_remove(&s->gpio);
- #endif
- 
+ static int sc16is7xx_gpio_direction_input(struct gpio_chip *chip,
+ 					  unsigned offset)
+ {
+@@ -1281,6 +1292,7 @@ static int sc16is7xx_setup_gpio_chip(str
+ 	s->gpio.parent		 = dev;
+ 	s->gpio.label		 = dev_name(dev);
+ 	s->gpio.init_valid_mask	 = sc16is7xx_gpio_init_valid_mask;
++	s->gpio.get_direction	 = sc16is7xx_gpio_get_direction;
+ 	s->gpio.direction_input	 = sc16is7xx_gpio_direction_input;
+ 	s->gpio.get		 = sc16is7xx_gpio_get;
+ 	s->gpio.direction_output = sc16is7xx_gpio_direction_output;
 
 
