@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B4F384CEF;
-	Thu, 20 Aug 2026 15:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626B237E5D8;
+	Thu, 20 Aug 2026 15:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239184; cv=none; b=OkEFJmsGnHfShhpP/h0PjRmKuVzY/f5ZVL8e30HPST8zVyvQr3wL86LykfHjZ72vDNrPnuNLLNsG+d295/ST/C+Jikrcu4y8djLTbIXL/1NHt4hRn4SYgW8CfVyeme+q7xxbYuKONIDMf96/CPnN2pDyNwneNx6RzKfjzOnO9JU=
+	t=1787239187; cv=none; b=aERHkLLsF6V9Jq50ZGhYWpXC33Pue3iO75Ypq4ntFEQnL9TOnqNyVgEIDnPJvtDM9/GfiJxGF45iDPJVeK/+0w7R1b7thOKbHH2rGZJscfwnRhBfyXhOREKbGFoDNone6smfE65gvNtuX+pa/G0GZy8lVsbI7TONNbHP4Xoe4gU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239184; c=relaxed/simple;
-	bh=tKvaS8eZ8bMhvC+CG1+Ump3W5ikmqsgGQ1+Lz2Q056I=;
+	s=arc-20240116; t=1787239187; c=relaxed/simple;
+	bh=8AcYi1CifSdB2TlXwCNX2sObxxbfLhx0DPNszopa7oU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HCkEyLhD6ASIkAV28AeOQmQlVFtgqEq3plVnMOIYfjxeSBMGjpiw5KUqobCOd2jcRHrGIO7RIldZHvDF31SeolHCNHNSLsoJiJm/wXjxwaWzZNFEItgDhm1BClWCLAQShoPvdsNGaG08FqT9SKRaaZEPiByr0rDpZor+e9LvdFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U7lYYUKt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kAjZX4bjrprEXh+ueDqh9Fn7sFXo5pqp5MBXeEP4hFlTvwlMOrLZFWZx8gaikit+IyO9L86+Kei7+LBqDl42oOkNIyOtV+Mk5kZ2rxdA+zDR8GZXUOdjXqNbHeJGCQiQJyaH6lJLnYIDk05r/2+J82NY0qx8DXXzwAnqR8T7Fxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1wGNJXH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U7lYYUKt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7557C1F000E9;
-	Thu, 20 Aug 2026 15:19:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1wGNJXH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8E81F00A3A;
+	Thu, 20 Aug 2026 15:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239183;
-	bh=9b/s2domb7hhO89F4w0bR4zgVkfRNx6Q+vP2pTPber8=;
+	s=korg; t=1787239185;
+	bh=kgiM8z9R7RcTusYWO0u5TG0FQNkuz6NdWpLqOSyvpYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U7lYYUKtlI0gLc0+AqYSDAvxRDriqlNmI+GR54bevCYlHJBN4oAMOJpVoMJ+Lu2Va
-	 0/zfkfmd3v/g2dqsu/dz8DsAmluEg5jbZjZIIndB5HOld2jVsgJJWBOVV6OUOsvv2P
-	 H6YtZnQXXxKTvqhKU7zjcL0CxmV+6uEMNngdZ2V4=
+	b=d1wGNJXH9RvjcScoVWxsbntXx6Cn6pcCYtxbiKN7LEW3ZYImkrvAQmWO+XOiZx3Yn
+	 FgX4Z6hXJDq8jPRBCQ1qFP0qmYUUmFbCo1eBJzjWOje4rWIYWJUpYqsAu5MdbM8mNA
+	 6REVHLVz4qVys317ZbnuO8YDwYjxOjkD+zy/kPMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Velichayshiy <a.velichayshiy@ispras.ru>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 179/217] netfilter: nf_tables_offload: suppress WARN_ON_ONCE for ENOMEM in abort path
-Date: Thu, 20 Aug 2026 16:55:47 +0200
-Message-ID: <20260820145243.122307321@linuxfoundation.org>
+Subject: [PATCH 6.18 162/217] ring-buffer: Prevent resizing of persistent ring buffer
+Date: Thu, 20 Aug 2026 16:55:30 +0200
+Message-ID: <20260820145242.627573553@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -51,81 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
+From: Vincent Donnefort <vdonnefort@google.com>
 
-[ Upstream commit d02f592064347e0c1e0d84f24941ad338838cc48 ]
+[ Upstream commit 7c727dfce6be04dd009b29091a4a17d952dbfe03 ]
 
-In nft_flow_rule_offload_abort(), WARN_ON_ONCE(err) is triggered on every
-error during rollback, including -ENOMEM. Memory allocation failures are
-expected under low-memory conditions and do not indicate a kernel bug.
+Dynamically resizing a persistent ring buffer is not possible. Disable
+the feature.
 
-Trace for example:
-nft_flow_offload_chain() // FLOW_BLOCK_BIND
-  nft_flow_block_chain()
-    nft_chain_offload_cmd()
-      nft_block_offload_cmd()
-        ->ndo_setup_tc()
-        nsim_setup_tc()
-          flow_block_cb_setup_simple()
-            flow_block_cb_alloc() // fails to -ENOMEM
-
-The warning was reproduced on the 5.10 stable kernel under memory pressure
-via fault injection, but the underlying bug exists in mainline as well,
-as demonstrated by the ENOMEM trace above. The following splat was
-triggered during nf_tables transaction processing:
-
-WARNING: CPU: 0 PID: 8567 at net/netfilter/nf_tables_offload.c:532 nft_flow_rule_offload_abort net/netfilter/nf_tables_offload.c:532 [inline]
-WARNING: CPU: 0 PID: 8567 at net/netfilter/nf_tables_offload.c:532 nft_flow_rule_offload_commit+0x971/0xcd0 net/netfilter/nf_tables_offload.c:591
-Modules linked in:
-CPU: 0 PID: 8567 Comm: syz-executor.0 Not tainted 5.10.260-syzkaller #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-RIP: 0010:nft_flow_rule_offload_abort net/netfilter/nf_tables_offload.c:532 [inline]
-RIP: 0010:nft_flow_rule_offload_commit+0x971/0xcd0 net/netfilter/nf_tables_offload.c:591
-Call Trace:
- nf_tables_commit+0x3bd/0x4bd0 net/netfilter/nf_tables_api.c:8604
- nfnetlink_rcv_batch+0xb1e/0x1f20 net/netfilter/nfnetlink.c:509
- nfnetlink_rcv_skb_batch net/netfilter/nfnetlink.c:579 [inline]
- nfnetlink_rcv+0x3b3/0x420 net/netfilter/nfnetlink.c:597
- netlink_unicast_kernel net/netlink/af_netlink.c:1314 [inline]
- netlink_unicast+0x6cd/0xa00 net/netfilter/af_netlink.c:1340
- netlink_sendmsg+0x906/0xe10 net/netfilter/af_netlink.c:1919
- sock_sendmsg_nosec net/socket.c:651 [inline]
- __sock_sendmsg+0x155/0x190 net/socket.c:663
- ____sys_sendmsg+0x705/0x870 net/socket.c:2379
- ___sys_sendmsg+0x100/0x170 net/socket.c:2433
- __sys_sendmsg+0xe9/0x1c0 net/socket.c:2462
- do_syscall_64+0x33/0x40 arch/x86/entry/common.c:46
- entry_SYSCALL_64_after_hwframe+0x67/0xd1
-
-Change the condition to WARN_ON_ONCE(err && err != -ENOMEM) so that
-warnings are only emitted for unexpected errors. This aligns with the
-common kernel practice of not warning on -ENOMEM.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 63b48c73ff56 ("netfilter: nf_tables_offload: undo updates if transaction fails")
-Signed-off-by: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Cc: stable@vger.kernel.org
+Fixes: be68d63a139b ("ring-buffer: Add ring_buffer_alloc_range()")
+Link: https://patch.msgid.link/20260806211306.3704194-2-vdonnefort@google.com
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+[ dropped the incoming `else if (buffer->remote)` block since 6.18 has a plain `else` arm ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_offload.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_offload.c b/net/netfilter/nf_tables_offload.c
-index fd30e205de849..933a17d0f2513 100644
---- a/net/netfilter/nf_tables_offload.c
-+++ b/net/netfilter/nf_tables_offload.c
-@@ -558,7 +558,7 @@ static void nft_flow_rule_offload_abort(struct net *net,
- 			break;
- 		}
- 
--		if (WARN_ON_ONCE(err))
-+		if (WARN_ON_ONCE(err && err != -ENOMEM))
- 			break;
- 	}
- }
--- 
-2.53.0
-
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -2399,6 +2399,8 @@ rb_allocate_cpu_buffer(struct trace_buff
+ 		if (cpu_buffer->ring_meta->head_buffer)
+ 			rb_meta_buffer_update(cpu_buffer, bpage);
+ 		bpage->range = 1;
++
++		atomic_inc(&cpu_buffer->resize_disabled);
+ 	} else {
+ 		int order = cpu_buffer->buffer->subbuf_order;
+ 		bpage->page = alloc_cpu_data(cpu, order);
 
 
