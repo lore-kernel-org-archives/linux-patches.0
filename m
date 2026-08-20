@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE88380FF6;
-	Thu, 20 Aug 2026 15:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8BF383984;
+	Thu, 20 Aug 2026 15:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239321; cv=none; b=FbKaXhd+TZ89sRKLO3XjwtBKbpwgWv3q+LUhLc+e8cQy3b0R4FIqdQCxMhA/h3VzqGGU2SkJON6MiZp30P1w9AFkmYzlSWuB+J6ZKLYV6uollca3ZkYLAH1xw9IF8UcwbUNMsuWvYZvdpdiltcvUP+EXwoUeR7XIl5Kw/+eSc/g=
+	t=1787239323; cv=none; b=LsgU+w8ZLHmT8trkGoiTyCyPQc1rkFUpmG15qcRZ9TkPdeDqfVq1NlqAcO5qeiA9iB8nYGt56Eu0fNoTt5CXLksEMFOwoYLGv5uFCHVzSPdpuSbSu35UH9R+ozCoOzXu0CITh2bmlt7sqbTzfc0kt4mXHDuQ4QXCaQ3ItoBU1H0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239321; c=relaxed/simple;
-	bh=OvE+7/AC/R+ZGMBgcBbZm4dqZnYiSvbLO/nQL5b0EBo=;
+	s=arc-20240116; t=1787239323; c=relaxed/simple;
+	bh=JelWiorz2GgDhqi+EcQ4l+qAg4G8FRS1Jtz1/1k6yqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dRd0k8cO9s+OzIbPaouRCyh0LHlyeHbGapEYJ5Cb/jOaSEScDhnD9AW8BEC64UWIiqJSZg3p7JHbNqAUtamKrKpcCaRoPsk04B8/6agarXlc25TR3ekiTXTiLugt1rwhA+SE4ClbZ1q7uMxOIp1HBK3/ysJxoN/zgALfXR7KGEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Nr3BKng; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mZ5hwJ5mvv1nUnO+OLxu2wH0pq9n6h+lQ6GcmS2RRBsO7Xv5OymYW0GE4LTw7BTRIPtnauteA+Avzp5t6yEFBrHnwQF3XHrl/2vZhLBYVBl0A7+DC6QfV3rvGKNOe9IpRAsNujdyNYMDs3nzf5x+Qg7R+KMgVC+5EXb3vqAczGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IkMJElwW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Nr3BKng"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD3C1F000E9;
-	Thu, 20 Aug 2026 15:21:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IkMJElwW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21CCA1F000E9;
+	Thu, 20 Aug 2026 15:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239319;
-	bh=mhYKs56Wb20V+JoxQEduOdrmf3pMV4o3NbqwmlvjKPk=;
+	s=korg; t=1787239322;
+	bh=PJOYnRWZUJdZ3EP7KRp5PuN41fTL4nwXce2XQcnJ43Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Nr3BKng66oqAgtcm4ugej9Gy5JueZyLv3+sJe/+hwTaaxSDal5TpeGkl8/bIC0ar
-	 Hvah5Vyfm86D/8/zniS0VIrzzbXVTcaCrqKYHFqdmi0oMXqaVky7Fx4UUQHoWggMlK
-	 zSAY4XCvAXE2Vr/XrkARPXLWYauILevLC4Blmkb4=
+	b=IkMJElwWx94+d4UXodhRvZS6J7b3dll7g6GJ+ZpF1cQal7r5XlcTGjyacFTKV6Af0
+	 tBD/AMfrMbsa2V4RzgM6PLxYDSp3qo3+f8zZVrTJP3c7ZOdIHFgeG1Jp4kva+WwPJR
+	 yZvElBu7Xh76dBXP9J1kEdz+ENfxGr9cHN/PIzvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weidong Zhu <weizhu@fiu.edu>,
-	Chao Shi <coshi036@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	SJ Park <sj@kernel.org>,
+	Honggyu Kim <honggyu.kim@sk.com>,
+	Hyeongtak Ji <hyeongtak.ji@sk.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 001/220] block: stop the timeout timer when releasing a never added disk
-Date: Thu, 20 Aug 2026 16:53:11 +0200
-Message-ID: <20260820145223.533603968@linuxfoundation.org>
+Subject: [PATCH 6.12 010/220] mm/damon: adjust isolated pages stat for DAMOS_MIGRATE_{HOT,COLD}
+Date: Thu, 20 Aug 2026 16:53:20 +0200
+Message-ID: <20260820145223.797217001@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -53,91 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Shi <coshi036@gmail.com>
+From: SJ Park <sj@kernel.org>
 
-[ Upstream commit 26cb8ebbfaf713c82e142d08828d4d765057633b ]
+[ Upstream commit 1ec0e6b6f7321feb769f50d2f094a0aa6c2eda63 ]
 
-disk_release() undoes blk_mq_init_allocated_queue() for a disk whose
-probe failed before add_disk(), but it only calls blk_mq_exit_queue().
-Nothing there stops q->timeout, and that timer rolls forward: it stays
-pending until it next expires, not until the last request completes.
-So if the driver issued any I/O before adding the disk, the
-request_queue is freed while still linked into a timer wheel bucket.
+Callers of migrate_pages() should adjust NR_MIGRATED_{ANON,FILE} for
+isolations and putback of the folios.  That for migration succeeded folios
+is done by migrate_pages(), in migrate_folio_done().  That for MR_DEMOTION
+reason is an exception though.
 
-Commit 6f8191fdf41d ("block: simplify disk shutdown") dropped the
-blk_cleanup_queue() call that used to stop it.  __del_gendisk() and
-blk_mq_destroy_queue() still do; only the probe failure path lost it.
+DAMOS_MIGRATE_{HOT,COLD} call migrate_pages() but mistakenly not doing the
+stat adjustment.  As a result, use of DAMOS_MIGRATE_{HOT,COLD} could
+corrupt the stat.  It could confuse too_many_isolated(), make compaction
+and reclaim to behave in unexpected ways.  The stat corruption can be
+reproduced and confirmed using DAMON user-space tool [1] on NUMA systems,
+like below.
 
-nvme gets there because nvme_update_ns_info() submits Report Zones or
-FDP io-mgmt-recv on ns->queue before the disk is added, so a later
-failure - a concurrent reset setting NVME_CTRL_FROZEN, or
-device_add_disk() failing - lands in put_disk() with the timer armed:
+    $ numactl --hardware
+    available: 2 nodes (0-1)
+    [...]
+    $ sudo ./damo start --damos_action migrate_hot 1
+    $ sudo cat /proc/sys/vm/stat_refresh
+    $ sudo dmesg
+    [...]
+    [   80.215554] vmstat_refresh: nr_isolated_anon -5578
+    [   80.216842] vmstat_refresh: nr_isolated_file -34400
 
-  BUG: KASAN: slab-use-after-free in detach_if_pending+0x30c/0x340
-  Write of size 8 at addr ffff888004d71310 by task kworker/u8:2/37
-   __timer_delete_sync+0x156/0x240 kernel/time/timer.c:1621
-   blk_sync_queue+0x22/0x40 block/blk-core.c:222
-   nvme_sync_queues+0x100/0x150 drivers/nvme/host/core.c:5362
-   nvme_reset_work+0x138/0x930 drivers/nvme/host/pci.c:3264
+This issue was discovered [2] by Sashiko.
 
-  Allocated by task 34:
-   __blk_mq_alloc_disk+0x33/0x100 block/blk-mq.c:4462
-   nvme_alloc_ns+0x290/0x3870 drivers/nvme/host/core.c:4146
-
-  Freed by task 0:
-   blk_free_queue_rcu+0x3a/0x50 block/blk-core.c:254
-   rcu_core+0xc10/0x1730 kernel/rcu/tree.c:2857
-
-The queue being synced there is ctrl->admin_q, only a victim sharing a
-timer wheel bucket with the freed queue's dangling entry; other runs
-tripped in enqueue_timer(), __run_timers() or blk_mq_timeout_work().
-Failing nvme_alloc_ns() with a debug patch makes it deterministic: one
-leaked timer trips KASAN within seconds, while 1987 patched releases
-produced no splat.
-
-Stop the timer and the queue work items before blk_mq_exit_queue(), like
-blk_mq_destroy_queue() does.
-
-Found by FuzzNvme.
-
-Fixes: 6f8191fdf41d ("block: simplify disk shutdown")
-Acked-by: Weidong Zhu <weizhu@fiu.edu>
-Signed-off-by: Chao Shi <coshi036@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260727201257.211635-1-coshi036@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/20260728140404.94476-1-sj@kernel.org
+Link: https://github.com/damonitor/damo [1]
+Link: https://lore.kernel.org/20260726164356.87940-1-sj@kernel.org [2]
+Fixes: b51820ebea65 ("mm/damon/paddr: introduce DAMOS_MIGRATE_COLD action for demotion")
+Signed-off-by: SJ Park <sj@kernel.org>
+Cc: Honggyu Kim <honggyu.kim@sk.com>
+Cc: Hyeongtak Ji <hyeongtak.ji@sk.com>
+Cc: <stable@vger.kernel.org> # 6.11.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/genhd.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ mm/damon/paddr.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/block/genhd.c b/block/genhd.c
-index 31e1539e6e6a..a909817bf1c8 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -1192,14 +1192,18 @@ static void disk_release(struct device *dev)
- 	/*
- 	 * To undo the all initialization from blk_mq_init_allocated_queue in
- 	 * case of a probe failure where add_disk is never called we have to
--	 * call blk_mq_exit_queue here. We can't do this for the more common
--	 * teardown case (yet) as the tagset can be gone by the time the disk
--	 * is released once it was added.
-+	 * call blk_mq_exit_queue here, after stopping the timer and work items
-+	 * that I/O issued before add_disk may have left pending.  We can't do
-+	 * this for the more common teardown case (yet) as the tagset can be
-+	 * gone by the time the disk is released once it was added.
- 	 */
- 	if (queue_is_mq(disk->queue) &&
- 	    test_bit(GD_OWNS_QUEUE, &disk->state) &&
--	    !test_bit(GD_ADDED, &disk->state))
-+	    !test_bit(GD_ADDED, &disk->state)) {
-+		blk_sync_queue(disk->queue);
-+		blk_mq_cancel_work_sync(disk->queue);
- 		blk_mq_exit_queue(disk->queue);
-+	}
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 884042856f7e..d4a4d51750f5 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -414,6 +414,8 @@ static unsigned int damon_pa_migrate_folio_list(struct list_head *folio_list,
+ 	while (!list_empty(folio_list)) {
+ 		folio = lru_to_folio(folio_list);
+ 		list_del(&folio->lru);
++		node_stat_sub_folio(folio, NR_ISOLATED_ANON +
++				folio_is_file_lru(folio));
+ 		folio_putback_lru(folio);
+ 	}
  
- 	blkcg_exit_disk(disk);
+@@ -437,6 +439,8 @@ static unsigned long damon_pa_migrate_pages(struct list_head *folio_list,
+ 			struct folio *folio = lru_to_folio(folio_list);
  
+ 			list_del(&folio->lru);
++			node_stat_sub_folio(folio, NR_ISOLATED_ANON +
++					folio_is_file_lru(folio));
+ 			folio_putback_lru(folio);
+ 		}
+ 		return nr_migrated;
+@@ -487,6 +491,8 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s)
+ 
+ 		if (!folio_isolate_lru(folio))
+ 			goto put_folio;
++		node_stat_add_folio(folio, NR_ISOLATED_ANON +
++				folio_is_file_lru(folio));
+ 		list_add(&folio->lru, &folio_list);
+ put_folio:
+ 		addr += folio_size(folio);
 -- 
 2.53.0
 
