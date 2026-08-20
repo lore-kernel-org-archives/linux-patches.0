@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97329307492;
-	Thu, 20 Aug 2026 17:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766D535C681;
+	Thu, 20 Aug 2026 17:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247511; cv=none; b=Y20ROG7I320d05jpT6XZRE6O8ZlT8ao0p3MoGzZVbv8nirmVc5qd1eVPu/h710EodZe31q4cSHrRVMksA450YiwVhrl5Dlt9Zqd73rp28BArZeA6DOOzwyeZEkZmY75bq/jw9f4zl+l1tQKCxAz5quoB0oYN6bn/+X1HHoFoQME=
+	t=1787247514; cv=none; b=Hsa+MAy9BXsXKcplmmQlaMJUc40Lp4o8YYDMAtHcC+aqWfGypiEZornWp4Yic1ihASuLpSym+Mi/V+rrWO6P1Yuadtl+vm7Ix/IYDmDIwJ3u/we5E1u5FOnEgwIwKJ61fW5LWKwabxNZOmB1muK3HripxotcyDARsjGNadMcQWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247511; c=relaxed/simple;
-	bh=T9wBPtlMoOZGDjI1kKclxYNpDMr1Th07xgGfg+BTBVg=;
+	s=arc-20240116; t=1787247514; c=relaxed/simple;
+	bh=L3NQ2XFNLOp2pspUpNCHxNLkIns9r/+FhuQqc5oYVfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cYTZQvTTtIgUKbcxR1WK7lXzCwo8ecKyYFrTNDTQs8E3CRjxlVuGET41FCZzAxp29LAvjYPCgVvICkaDMc8X3v0eXnjc+vOpwamlohAAvMA+uiZ8OZJCeptukCzNMOexPFZGpqvklFLcYwpZS+aJU6215Hgw2s9jqR9I5CTP9n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uA2g8Ww3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q7Uvc8FK5YMzJMelJzHxJQvaLGC2pJBolj0zSxtD269DVk4mtNaQTKAlIRYbbx0KYw5y70rdVKw5PBuW8LDsskpa5TKvFvE96gXr+MP5oFahORbWEd5LF7ssE1KrABc4YifITvkQ7b5GYJpemlnbYqrtCfWKUkStqEyELmEoABg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1qhyQxnI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uA2g8Ww3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F33841F000E9;
-	Thu, 20 Aug 2026 17:38:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1qhyQxnI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D221B1F000E9;
+	Thu, 20 Aug 2026 17:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247510;
-	bh=snV0ES/6e+LN8E/ERCUZYUc2Ftyd+XI/ZnbGvwEpYgI=;
+	s=korg; t=1787247513;
+	bh=lcQ+0xwkpvrxCGD+TTdKg6VxiaZT1aLOqHbSIt8XMI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uA2g8Ww36UCPV0VsbHLVSUE+3hgENUpWSn9mkYmujBp9q7kEMKEsHBetGISrDB/fi
-	 BCUY1B5Zme0+io/+t5M2H8UKLem+d7pOLmcO8wZq/oU0ID5s5suU3tXGeFAbsWQDyG
-	 zMCFduPWc1kcefVyBbqczcfV32pzVfFC21ou5Y4M=
+	b=1qhyQxnI/gO625p1xbbqqhK5/L/V1diI8ml8CHU9koED+8/XVzO8jd0EvGUDdfZxS
+	 bfUn6N1cp75zW87ul/itgpTU274JW+PRn8OuCUpw/c85dqpMWjEQ/KdYZJlUJyArfd
+	 y/lwUfjEo8LeBTszdhO/OUGd38bZDsoUJ7KZrjGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Xiubo Li <xiubo.li@clyso.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 070/166] ceph: avoid fs reclaim while using current->journal_info
-Date: Thu, 20 Aug 2026 16:55:29 +0200
-Message-ID: <20260820145213.247969287@linuxfoundation.org>
+	Pavitra Jha <jhapavitra98@gmail.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.6 035/166] libceph: fix multiple unsafe decodes in decode_locker()
+Date: Thu, 20 Aug 2026 16:54:54 +0200
+Message-ID: <20260820145212.238386550@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -53,113 +50,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Pavitra Jha <jhapavitra98@gmail.com>
 
-[ Upstream commit 5b602344a49e039e792ce5a8923bcc61412ee134 ]
+commit 437b6551cfcc235eea1d735a874f9d421f555e17 upstream.
 
-handle_reply() stores a `ceph_mds_request` pointer in
-`current->journal_info` while filling the inode and dentry cache from
-an MDS reply.
+decode_locker() in cls_lock_client.c contains three unsafe decode
+operations that allow a malicious or compromised OSD to trigger
+slab-out-of-bounds reads:
 
-An allocation in this section can enter direct reclaim and prune
-dentries from another filesystem.  If this dirties an ext4 inode, ext4
-starts a JBD2 transaction.  JBD2 interprets the Ceph request in
-`current->journal_info` as a journal handle and dereferences the
-request's `r_tid` as `h_transaction`, causing a kernel crash, e.g.:
+1. ceph_decode_copy() at the locker_id_t name field has no preceding
+   bounds check. With p == end after ceph_start_decoding() accepts
+   struct_len=0, this reads sizeof(ceph_entity_name) = 9 bytes past
+   the validated buffer boundary.
 
- Unable to handle kernel paging request at virtual address 00000000077b4818
- [...]
- Internal error: Oops: 0000000096000004 [#1]  SMP
- Modules linked in:
- CPU: 6 UID: 0 PID: 2699135 Comm: kworker/6:3 Tainted: G        W           6.18.38-i3 #1113 NONE
- [...]
- Workqueue: ceph-msgr ceph_con_workfn
- pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : jbd2__journal_start+0x2c/0x208
- lr : __ext4_journal_start_sb+0x100/0x178
- [...]
- Call trace:
-  jbd2__journal_start+0x2c/0x208 (P)
-  __ext4_journal_start_sb+0x100/0x178
-  ext4_dirty_inode+0x3c/0x90
-  __mark_inode_dirty+0x58/0x400
-  iput.part.0+0x2b0/0x370
-  iput+0x18/0x30
-  dentry_unlink_inode+0xc0/0x158
-  __dentry_kill+0x80/0x250
-  shrink_dentry_list+0x90/0x130
-  prune_dcache_sb+0x60/0x98
-  super_cache_scan+0xe8/0x190
-  do_shrink_slab+0x174/0x388
-  shrink_slab+0xd8/0x4c0
-  shrink_node+0x31c/0x908
-  do_try_to_free_pages+0xd0/0x508
-  try_to_free_pages+0x11c/0x238
-  __alloc_frozen_pages_noprof+0x4d0/0xdd0
-  __folio_alloc_noprof+0x18/0x70
-  __filemap_get_folio+0x248/0x440
-  ceph_readdir_prepopulate+0x570/0x9e8
-  mds_dispatch+0x1424/0x1ba0
-  ceph_con_process_message+0x74/0xa0
-  ceph_con_v1_try_read+0x3a0/0x1510
-  ceph_con_workfn+0x260/0x460
+2. *p += sizeof(struct ceph_timespec) after the locker_info_t header
+   is an unchecked pointer advance. A malicious OSD can position p
+   past end, causing all subsequent _safe checks to pass against a
+   bogus boundary.
 
-Enter a scoped NOFS allocation context and leave it after clearing
-`journal_info`.  This prevents filesystem reclaim from recursing into
-another filesystem while the field contains Ceph-private data.
+3. len = ceph_decode_32(p) has no preceding bounds check, and the
+   immediately following *p += len is uncapped. A malicious OSD can
+   send len=0xffffffff, advancing p gigabytes past end and escaping
+   the decode window entirely.
+
+Fix all three by replacing bare operations with their safe variants:
+  ceph_decode_copy   -> ceph_decode_copy_safe
+  *p += sizeof(...)  -> ceph_decode_skip_n
+  ceph_decode_32(p)  -> ceph_decode_32_safe
+  *p += len          -> ceph_decode_skip_n
+
+A new label is added to return -EINVAL on any bounds violation.
+-EINVAL is appropriate here: the data received from the OSD
+is structurally malformed, which is an invalid argument to the decode
+contract regardless of whether the caller or the wire is at fault.
+
+Attacker model: a malicious or compromised OSD in a multi-tenant Ceph
+deployment can trigger this against any kernel client that issues the
+lock.get_info class method (e.g. during RBD exclusive lock acquisition)
+without any further privileges beyond OSD session establishment.
+
+[ idryomov: use ceph_decode_skip_string() to skip description, trim
+  changelog ]
 
 Cc: stable@vger.kernel.org
-Fixes: 315f24088048 ("ceph: fix security xattr deadlock")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
+Fixes: d4ed4a530562 ("libceph: support for lock.lock_info")
+Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/mds_client.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/ceph/cls_lock_client.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -6,6 +6,7 @@
- #include <linux/slab.h>
- #include <linux/gfp.h>
- #include <linux/sched.h>
-+#include <linux/sched/mm.h>
- #include <linux/debugfs.h>
- #include <linux/seq_file.h>
- #include <linux/ratelimit.h>
-@@ -3675,6 +3676,7 @@ static void handle_reply(struct ceph_mds
- 	struct ceph_mds_reply_head *head = msg->front.iov_base;
- 	struct ceph_mds_reply_info_parsed *rinfo;  /* parsed reply info */
- 	struct ceph_snap_realm *realm;
-+	unsigned int nofs_flags;
- 	u64 tid;
- 	int err, result;
- 	int mds = session->s_mds;
-@@ -3817,6 +3819,14 @@ static void handle_reply(struct ceph_mds
+--- a/net/ceph/cls_lock_client.c
++++ b/net/ceph/cls_lock_client.c
+@@ -259,7 +259,8 @@ static int decode_locker(void **p, void
+ 	if (ret)
+ 		return ret;
  
- 	/* insert trace into our cache */
- 	mutex_lock(&req->r_fill_mutex);
-+
-+	/* disable fs reclaim while we are using current->journal_info
-+	 * for our own purposes, or else shrinkers of other
-+	 * filesystems might dereference this pointer as a different
-+	 * type
-+	 */
-+	nofs_flags = memalloc_nofs_save();
-+
- 	current->journal_info = req;
- 	err = ceph_fill_trace(mdsc->fsc->sb, req);
- 	if (err == 0) {
-@@ -3825,6 +3835,7 @@ static void handle_reply(struct ceph_mds
- 			err = ceph_readdir_prepopulate(req, req->r_session);
- 	}
- 	current->journal_info = NULL;
-+	memalloc_nofs_restore(nofs_flags);
- 	mutex_unlock(&req->r_fill_mutex);
+-	ceph_decode_copy(p, &locker->id.name, sizeof(locker->id.name));
++	ceph_decode_copy_safe(p, end, &locker->id.name,
++			      sizeof(locker->id.name), bad);
+ 	s = ceph_extract_encoded_string(p, end, NULL, GFP_NOIO);
+ 	if (IS_ERR(s))
+ 		return PTR_ERR(s);
+@@ -270,19 +271,23 @@ static int decode_locker(void **p, void
+ 	if (ret)
+ 		return ret;
  
- 	up_read(&mdsc->snap_rwsem);
+-	*p += sizeof(struct ceph_timespec); /* skip expiration */
++	/* skip expiration */
++	ceph_decode_skip_n(p, end, sizeof(struct ceph_timespec), bad);
+ 
+ 	ret = ceph_decode_entity_addr(p, end, &locker->info.addr);
+ 	if (ret)
+ 		return ret;
+ 
+-	len = ceph_decode_32(p);
+-	*p += len; /* skip description */
++	/* skip description */
++	ceph_decode_skip_string(p, end, bad);
+ 
+ 	dout("%s %s%llu cookie %s addr %s\n", __func__,
+ 	     ENTITY_NAME(locker->id.name), locker->id.cookie,
+ 	     ceph_pr_addr(&locker->info.addr));
+ 	return 0;
++
++bad:
++	return -EINVAL;
+ }
+ 
+ static int decode_lockers(void **p, void *end, u8 *type, char **tag,
 
 
