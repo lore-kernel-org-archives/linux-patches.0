@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8533F361657;
-	Thu, 20 Aug 2026 16:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C1947ACD7;
+	Thu, 20 Aug 2026 16:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243298; cv=none; b=LBhda86GAu3wX8pB56owLqmp/LDU6D+NeUZhVyEgpM7kMLzXI/XStxGMGmgIby2xb/Ew+IxjOue6/8uNmMtiUHN2mbNflRWvEROF2G3OHfrH4bPt/YjMOVsJ27wR4dLWx+H8FRhS/yxVnE/vB9E+qPLY0y5vp+daFi47oqZp8fk=
+	t=1787243301; cv=none; b=cyBJPZaAU2G+3KH5OzEjDk4mCRmMqrwwebx69hduzj0TwMWKtSXLmYt49IlSZj5nsor4KMJDoZk1gmy4FUYApV/dhzDUwOyna4jtarpkZZYFndnbFIy1lCXrFCfgg1uMbo2Em3rGSzuc9Xw3NCobmAMxf1q8u9wM4Hq6jWRwfko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243298; c=relaxed/simple;
-	bh=GvD0I1R8F6ewAMbn5EetM5/em/wnUGNlfpx9PHx03Eo=;
+	s=arc-20240116; t=1787243301; c=relaxed/simple;
+	bh=rduTiLR8dQJeQyyRhGAQHf8h3ouHS1MeWk7YCv9DXuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hooyH5PwhwqCVUKQn3nfN39ZXSB/BPp8ecsVXxVuP6PJzTWHlPWZmnzwqLd+OnhvLCTTkkfw7iLL4+V7i+OuRQcxmLiXexy5bZYGX+EXnJzVJtgru+cKrwbPPdnjKOUY5+qSUAxqyjimzDPpBVDzUeXBo+SdE2Cr//yiObXXXN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mhOt33kc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B0hvn34gKoGtbAFFkYKLYzPexA9wKBLrRR3ADGCUVMdzy5Ia7bWBJrvKiFj/ewYcCWAKmK/XFfoVndncLJS9qgs6mqh26V2qN5pMv+Z3Ng0+LsOYUmPVotuXq6PNIotHF6W9+oCDkdSwyxTHxzHCjvOHEx7DmPEj7eQftsmw8vY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TY4rdHH4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mhOt33kc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB2C1F000E9;
-	Thu, 20 Aug 2026 16:28:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TY4rdHH4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6531F000E9;
+	Thu, 20 Aug 2026 16:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243297;
-	bh=QLY2A+dKYasOgOFJIaATthB/M+AtsoFDK+vdCC/N+nk=;
+	s=korg; t=1787243300;
+	bh=GLyjanNRdaXMlWCfmId7ehhipjANhNSY0Jgz//LbPCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mhOt33kcBMiZ8je0Ez/4Jb7HFmGEwF6bNWzctPQvWMllYa/p7emmHqf8clQ1StouA
-	 RVu2cHyyps2/S56cPsLCC8X8nVAxZR/K+oyyOzlsGXU6VnVwYEop3qOtEjaXlrLsPi
-	 XXsAnzRpEsXdAvP9FnkRzehmIeOFXX+cNPzfrocU=
+	b=TY4rdHH4/2BGRD3c3zGIOb71kAXKi2sEmn3PF+eFuW/rK3FWP1YYA1YTTMxNNHwMD
+	 ozP1sDVUo+JKcfT8I2vlznHGStiS90w/dXXhJXa0GAVHm2lt3wOoP8mJxIs/AX3aQd
+	 eeAdy+4pG/d1lO4yOCz92TfvriEX4HW53IS8MSCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Falcato <pfalcato@suse.de>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Jann Horn <jannh@google.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Weinan Liu <wnliu@google.com>,
+	Wei Wang <wei.w.wang@hotmail.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 047/272] mm: do file ownership checks with the proper mount idmap
-Date: Thu, 20 Aug 2026 16:53:51 +0200
-Message-ID: <20260820145232.634212619@linuxfoundation.org>
+Subject: [PATCH 5.15 048/272] iommu/amd: Dont split flush for amd_iommu_domain_flush_all()
+Date: Thu, 20 Aug 2026 16:53:52 +0200
+Message-ID: <20260820145232.664880667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -59,91 +57,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Falcato <pfalcato@suse.de>
+From: Weinan Liu <wnliu@google.com>
 
-[ Upstream commit e187bc02f8fa4226d62814592cf064ee4557c470 ]
+[ Upstream commit 69fe699afe1afcb730164b86c228483c2da05f94 ]
 
-Ever since idmapped mounts were introduced, inode ownership checks (for
-side-channel protection) in mincore() and madvise(MADV_PAGEOUT) were done
-against the nop_mnt_idmap, which completely ignores the file's mount's
-idmap.  This results in odd edgecases like:
+We have observed multiple full invalidations occurring during device
+detach when we are done using the vfio-device.
 
-1) mount/bind-mount with an idmap userA:userB:1
-2) userB runs an owner_or_capable() check on file that is owned by userA
-on-disk/in-memory, but owned by userB after idmap translation
-3) owner_or_capable() mysteriously fails as the correct idmap wasn't supplied
+blocked_domain_attach_device()
+  -> detach_device()
+    -> amd_iommu_domain_flush_all()
+      -> amd_iommu_domain_flush_pages(..., CMD_INV_IOMMU_ALL_PAGES_ADDRESS)
 
-In the case of mincore/madvise MADV_PAGEOUT, this is usually benign,
-because file_permission(file, MAY_WRITE) will probably succeed, as it uses
-the proper idmap internally, but it does not need to be the case on e.g a
-0444 file where even the owner itself doesn't have permissions to write to
-it.
+      	while (size != 0) {
 
-Since this is clearly not trivial to get right, introduce a
-file_owner_or_capable() that can carry the correct semantics, and switch
-the various users in mm to it.
+          -> __domain_flush_pages( flush_size /* power of 2 flush_size */)
+            -> domain_flush_pages_v1()
+              -> build_inv_iommu_pages()
+                -> build_inv_address()
 
-The issue was found by manual code inspection & an off-list discussion
-with Jan Kara.
+         }
 
-Link: https://lore.kernel.org/20260625153853.913949-1-pfalcato@suse.de
-Fixes: 9caccd41541a ("fs: introduce MOUNT_ATTR_IDMAP")
-Signed-off-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Jann Horn <jannh@google.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+build_inv_address() will trigger a full invalidation  if the chunk
+size > (1 << 51). Consequently, the guest will issue multiple full
+invalidations for a single call to  amd_iommu_domain_flush_all()
+
+Without this patch, we will see 10 time instead of 1 time full
+invalidations for every amd_iommu_domain_flush_all().
+
+Cc: stable@vger.kernel.org
+Fixes: a270be1b3fdf ("iommu/amd: Use only natural aligned flushes in a VM")
+Suggested-by: Josef Bacik <josef@toxicpanda.com>
+Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Weinan Liu <wnliu@google.com>
+Reviewed-by: Wei Wang <wei.w.wang@hotmail.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/fs.h |    5 +++++
- mm/madvise.c       |    3 +--
- mm/mincore.c       |    3 +--
- 3 files changed, 7 insertions(+), 4 deletions(-)
+ drivers/iommu/amd/iommu.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -2743,6 +2743,11 @@ static inline struct user_namespace *fil
- 	return mnt_user_ns(file->f_path.mnt);
- }
- 
-+static inline bool file_owner_or_capable(struct file *file)
-+{
-+	return inode_owner_or_capable(file_mnt_user_ns(file), file_inode(file));
-+}
-+
- /**
-  * is_idmapped_mnt - check whether a mount is mapped
-  * @mnt: the mount to check
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -544,8 +544,7 @@ static inline bool can_do_pageout(struct
- 	 * otherwise we'd be including shared non-exclusive mappings, which
- 	 * opens a side channel.
- 	 */
--	return inode_owner_or_capable(&init_user_ns,
--				      file_inode(vma->vm_file)) ||
-+	return file_owner_or_capable(vma->vm_file) ||
- 	       file_permission(vma->vm_file, MAY_WRITE) == 0;
- }
- 
---- a/mm/mincore.c
-+++ b/mm/mincore.c
-@@ -166,8 +166,7 @@ static inline bool can_do_mincore(struct
- 	 * for writing; otherwise we'd be including shared non-exclusive
- 	 * mappings, which opens a side channel.
- 	 */
--	return inode_owner_or_capable(&init_user_ns,
--				      file_inode(vma->vm_file)) ||
-+	return file_owner_or_capable(vma->vm_file) ||
- 	       file_permission(vma->vm_file, MAY_WRITE) == 0;
- }
- 
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -1284,7 +1284,8 @@ static void __domain_flush_pages(struct
+ static void domain_flush_pages(struct protection_domain *domain,
+ 			       u64 address, size_t size, int pde)
+ {
+-	if (likely(!amd_iommu_np_cache)) {
++	if (likely(!amd_iommu_np_cache) ||
++		size >= (1ULL<<52)) {
+ 		__domain_flush_pages(domain, address, size, pde);
+ 		return;
+ 	}
 
 
