@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52802DB788;
-	Thu, 20 Aug 2026 17:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A0037E5CD;
+	Thu, 20 Aug 2026 17:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247478; cv=none; b=ca3wYdopRsWWWU9hBCBizHppKaGL+T9jFgeJ64Uu7KPGkpZl2v1iLmTFtvzySTKKzetzm8T7fuoYlVXlAKzvnLH4slGT16DV1JuASwdU+luHMZurmOXAdR2mzelft/RVng1EDr4aYkcLBWxrgppjXysHpmxbJfonpY+KHDvAGbk=
+	t=1787247481; cv=none; b=R1R6MacNwH3lFvH8yIe99uNaj2/SFaPGI80IHN6/eaw7J7pB65ow73kUiHbT2fSir13wbKZwPiHZlZ/vnwQ9xz9l6vo5EJpr6Sm6dXYSknLd3L4tMp2RX/4Iy1DPoRIZiDQgvWp5GQAoKLGiu2bIZXhS9dG/+vSwWZMAnTyptLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247478; c=relaxed/simple;
-	bh=Db1Bqbs7rC5iaxQBsjl9lT13ib+lPUY0QmCOzCOyf+w=;
+	s=arc-20240116; t=1787247481; c=relaxed/simple;
+	bh=0TH1qyWTwLu5pERwqrKACObDaoVh2rPhT3piBt+54rs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cqlgwbuVEOgid27zrGKqfP/FQMHX/kl0i2A/Oq6Ji+yWQBlsrtxXD43qLhOznt+o4EgKphKGylrgicNAQFcACif4/PeO/eC1B7ODFX5ZsdlIethdo7utFYogaPxwsSnuGUwaQXc8quwdGc60oqEqbk/fSGtTkUWfsWLqvpSD29w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9DBp1Po; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HIn6uU5SsoP+1e8BodUA+84FG+sDQg7xhJgULPAYTXek9SP7TR3zR76Wkle2aZlSSUlWkEA+4thJtWObC3VVQST7yb0AXBme+WxuL7SXEY8WaG70E+SI9+gy1NtEv8y+O/Hn6asQB3SnVUE83xjQj8TL61TJ/BQi5f84pxfgyJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shDTyVGd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9DBp1Po"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5AB1F000E9;
-	Thu, 20 Aug 2026 17:37:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shDTyVGd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57001F000E9;
+	Thu, 20 Aug 2026 17:37:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247477;
-	bh=6Gx/gjMJ1Tj/9r7m4XFuAEgeApLgz/ceAgyTIJF8Q8Y=;
+	s=korg; t=1787247480;
+	bh=dihpOESwg9miRBH6FEuk25nhXECxIal+2jY/zY11BYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K9DBp1PoU0oCsx5MJCwwc6gCMAYumYXhTdWFUsa898iER2fwC6+k5Z2NSZLHEdkKx
-	 wAnG/yHnsn/uqtnlYJbH8EsmOKVlc71+ilvM5gyRnA3Y8hF1PanTwNaHrnLIdi7VfF
-	 EqvlYMQQ3y7LnuZeQcMJ6azklIdRdlf7fSBa06ZU=
+	b=shDTyVGdpffnxM0rEiAKITs9YN2QbJCj1IBXUEZ4ot9tB3fJTJvYqxqvtf4QMamqQ
+	 NaiApEOF88EAiY8C2l2QN7ygngIQQK7DgNqkG/lElxKAK8z8MJ0XagZJn9jgKQYG+Z
+	 7jFi++VwxXF+TlJFb2bWlz04gUhJU8izYvp03cA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Rosca <david.rosca@amd.com>,
-	Leo Liu <leo.liu@amd.com>,
-	Ruijing Dong <ruijing.dong@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 060/166] drm/amdgpu: Fix UVD min buffer sizes
-Date: Thu, 20 Aug 2026 16:55:19 +0200
-Message-ID: <20260820145212.954733537@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.6 034/166] crypto: qce - fix error path in devm_qce_register_algs
+Date: Thu, 20 Aug 2026 16:54:53 +0200
+Message-ID: <20260820145212.208682690@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -52,60 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Rosca <david.rosca@amd.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 18727670b44753865b81c56a9338c0d7bd102c54 upstream.
+commit 9c75402286409f5e1a75e4a445555c84066f89db upstream.
 
-Use correct size for message buffer = sizeof(struct ruvd_msg).
-Add ITSCALING_TABLE_BUFFER size.
+If ops->register_algs() fails, the error path repeatedly calls the same
+ops->unregister_algs() from the failed registration. Use the loop index
+to unregister the previously registered algorithms instead.
 
-Signed-off-by: David Rosca <david.rosca@amd.com>
-Acked-by: Leo Liu <leo.liu@amd.com>
-Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 37519d007e4261febbcf35b3045f8344f3145497)
+Fixes: e80cf84b6087 ("crypto: qce - unregister previously registered algos in error path")
 Cc: stable@vger.kernel.org
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/crypto/qce/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-@@ -967,15 +967,16 @@ static int amdgpu_uvd_cs_pass2(struct am
- 				  ctx->buf_sizes[cmd]);
- 			return -EINVAL;
+--- a/drivers/crypto/qce/core.c
++++ b/drivers/crypto/qce/core.c
+@@ -58,7 +58,7 @@ static int qce_register_algs(struct qce_
+ 		ret = ops->register_algs(qce);
+ 		if (ret) {
+ 			for (j = i - 1; j >= 0; j--)
+-				ops->unregister_algs(qce);
++				qce_ops[j]->unregister_algs(qce);
+ 			return ret;
  		}
-+	} else if (cmd == 0x204 || cmd == 0x206) {
-+		unsigned int min_size = ctx->buf_sizes[cmd == 0x204 ? 5 : 4];
- 
--	} else if (cmd == 0x206) {
--		if ((end - start) < ctx->buf_sizes[4]) {
-+		if ((end - start) < min_size) {
- 			DRM_ERROR("buffer (%d) to small (%d / %d)!\n", cmd,
- 					  (unsigned int)(end - start),
--					  ctx->buf_sizes[4]);
-+					  min_size);
- 			return -EINVAL;
- 		}
--	} else if ((cmd != 0x100) && (cmd != 0x204)) {
-+	} else if ((cmd != 0x100)) {
- 		DRM_ERROR("invalid UVD command %X!\n", cmd);
- 		return -EINVAL;
  	}
-@@ -1105,11 +1106,12 @@ int amdgpu_uvd_ring_parse_cs(struct amdg
- {
- 	struct amdgpu_uvd_cs_ctx ctx = {};
- 	unsigned int buf_sizes[] = {
--		[0x00000000]	=	2048,
-+		[0x00000000]	=	3556,
- 		[0x00000001]	=	0xFFFFFFFF,
- 		[0x00000002]	=	0xFFFFFFFF,
- 		[0x00000003]	=	2048,
- 		[0x00000004]	=	0xFFFFFFFF,
-+		[0x00000005]	=	992,
- 	};
- 	int r;
- 
 
 
