@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E1237DE89;
-	Thu, 20 Aug 2026 15:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C60E32B110;
+	Thu, 20 Aug 2026 15:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238311; cv=none; b=qqhjNDGx7eMD5wE8+zL4RYwhDWsXIoFJPPdImMZEmX75zrgB3ePGl6FL1OK7Uch1PXj+ACy5bXRA5YWNz6/ifn4DZGHey3mhfMWcqsd4Z0YZcuooWDvbgIM6ghgY3guAXThQUedT4hNuMlJLmZFGuDoAiAJ0ODHG6ZH5HiGoA30=
+	t=1787238314; cv=none; b=uIMKNA0VpjzyQpFgZN21CdSYIleDzDXSQjp37kAatF7Yb9nx80brBXKqiOagcDcyllQcEm1VAjLJAArtzcLcdD9mgJABTzET4tvMqKkM49X5hOtisyilr11K9Wx9cGrfc5xa2A6mcWCNMibsFNMvgwuuFbzZaxObqIhHiR5Bxag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238311; c=relaxed/simple;
-	bh=NqtJMcelD7CWLHLApPeDNBWacvv3Z3bub63wPvkbvdc=;
+	s=arc-20240116; t=1787238314; c=relaxed/simple;
+	bh=spBiFWmDen1ReC4psepYbKJ2Oen4G3RKg5efWXsSB1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CmUg1DP14IVn54a/K/gcYhaqir8YPnIJEyrsgOzLO4Ew9V3e9ZCmPocQ4aYFugolJqWdSKsqhPfIJHjMjVppp7xqbp/ZMl/sDDBHwrpkgrro0tDEKh4Zaz0vftbR+arx3uZls4cT4yI02Vus4pAjur3UtTDxUoq9e2oh6C/D1Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QlCd0Rk+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XuEEcU0gPD1FAZZ0jzyM5S7GjTh08rXb64Kq5znni8u4Yqr/U/h/matAkUQfMToaOehdmhwI4cfQ1cX4U3p8qoEB8M2e+rGmtuZ+LIYs6QBlK+ZzUtZEqcuORZeDofq+5Nzez8xEOk9Aqj4M0h6K9vs3B8dsZQp2oF89wNAHrao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pd4Q+LuW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QlCd0Rk+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EB451F000E9;
-	Thu, 20 Aug 2026 15:05:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pd4Q+LuW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0E41F000E9;
+	Thu, 20 Aug 2026 15:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238310;
-	bh=hNstC4qagYZbL0PheeV+Zt+s8XE2aBPaYau5/brv05I=;
+	s=korg; t=1787238313;
+	bh=iF6K9pIBKBwlxuARyN3Emq4wEJjLyR/WsQhkgG3ZHSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QlCd0Rk+HbNheqyYY62J8Bh7uRGWVWQGgBrihFb+10oe7O7sqLwgxu6nDGIVyN1o+
-	 CTsKROAuJbO0UFgroolpgTNJrPsz9fEi3pXBQ5LLxllgVHvJ2F1SJKKdo/0MUPe97T
-	 lkPSKqq6StC3HE/QaJKrbB2VmdYJji+klJJi5XIk=
+	b=Pd4Q+LuWTi6HOzB5Ea9Rkcex34DU48Eh73eLXdd9SuMOZUELG3/6ffRGe8HOsY5PJ
+	 GyjJ5SD5L8eTsVlTw26qR2XiD8NHYVh/9alJe4jAdJJ7ndqfnF08cNgfywnQEejQ5R
+	 xJtbL1ZbQZTUHQEIq63zIV51Ql+02Tgj0FwONsxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Praveen Talari <praveen.talari@oss.qualcomm.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 7.1 064/228] pmdomain: qcom: rpmhpd: Add missing MXC and MMCX power domains for Eliza
-Date: Thu, 20 Aug 2026 16:53:26 +0200
-Message-ID: <20260820145246.409241907@linuxfoundation.org>
+Subject: [PATCH 7.1 065/228] pmdomain: arm: Fix -EINVAL from scmi_pd_set_perf_state() on state 0
+Date: Thu, 20 Aug 2026 16:53:27 +0200
+Message-ID: <20260820145246.438870786@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -50,40 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+From: Praveen Talari <praveen.talari@oss.qualcomm.com>
 
-commit b48a0a0a76ccecec60f0568e2af4d89994b08bec upstream.
+commit 3314c90a2eda3df7da4ab6f4388e667b2758de7f upstream.
 
-MXC and MMCX were initially omitted as they were believed to have no
-consumers, and they were not present downstream either.
+Currently, scmi_pd_set_perf_state() treats a performance state of 0 as
+invalid and returns -EINVAL. As a result, devices attached to SCMI
+performance domains can report failures when relinquishing their
+performance vote.
 
-The Iris video codec requires these power domains, so add MXC and MMCX
-along with the MXC_AO and MMCX_AO.
+The OPP framework use performance state 0 to indicate that no performance
+vote is required. For example, dev_pm_opp_set_rate(dev, 0) is commonly
+used (by firmware or linux)  when a device is runtime suspended.
 
-Fixes: f387ecdd492f ("pmdomain: qcom: rpmhpd: Add Eliza RPMh Power Domains")
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+A zero performance state does not require any SCMI performance request
+to be sent. Treat it as a no-op and return success instead of reporting
+an error.
+
+Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Fixes: 2af23ceb8624 ("pmdomain: arm: Add the SCMI performance domain")
 Cc: stable@vger.kernel.org
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/qcom/rpmhpd.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/pmdomain/arm/scmi_perf_domain.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pmdomain/qcom/rpmhpd.c
-+++ b/drivers/pmdomain/qcom/rpmhpd.c
-@@ -235,9 +235,13 @@ static struct rpmhpd *eliza_rpmhpds[] =
- 	[RPMHPD_GFX] = &gfx,
- 	[RPMHPD_LCX] = &lcx,
- 	[RPMHPD_LMX] = &lmx,
-+	[RPMHPD_MMCX] = &mmcx,
-+	[RPMHPD_MMCX_AO] = &mmcx_ao,
- 	[RPMHPD_MSS] = &mss,
- 	[RPMHPD_MX] = &mx,
- 	[RPMHPD_MX_AO] = &mx_ao,
-+	[RPMHPD_MXC] = &mxc,
-+	[RPMHPD_MXC_AO] = &mxc_ao,
- 	[RPMHPD_NSP] = &nsp,
- };
+--- a/drivers/pmdomain/arm/scmi_perf_domain.c
++++ b/drivers/pmdomain/arm/scmi_perf_domain.c
+@@ -33,7 +33,7 @@ scmi_pd_set_perf_state(struct generic_pm
+ 		return 0;
  
+ 	if (!state)
+-		return -EINVAL;
++		return 0;
+ 
+ 	ret = pd->perf_ops->level_set(pd->ph, pd->domain_id, state, false);
+ 	if (ret)
 
 
