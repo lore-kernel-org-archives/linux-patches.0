@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47DB28C2BF;
-	Thu, 20 Aug 2026 17:33:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882C2381AEC;
+	Thu, 20 Aug 2026 17:33:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247217; cv=none; b=BTen/cReGm5MhrNqzDUznrnd/KyfxhaJJuwMwstzxpgRcZuERioptBPMzP3xmIx3MS3tv5LEilFn3JwV7S0ccpRP4R0EbIIuUmt+SD7tYWjZyXvDKaUCSnxJ0NDSgMgGZ3e72rBkWD3guHBkiSxgqbBVxQIJFF231sdxNPibmlE=
+	t=1787247219; cv=none; b=tS6K4o+JO1W+jqXzn8hbvN0ngXOvyzuNe9m53VbZi1Qdq+I9+Q4ba7JHMuFEWTjZjkyHJSpAjyehcE3s9eH5eVL/Q3vYdS5bqoJVA6OTN9G4nNxrmSnAUZjCflLnhNbAZ/0YheQqR4e8hvsj+6Byt5VLpftavuhm5KokfHAAP8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247217; c=relaxed/simple;
-	bh=BlkkP6M/kK+aMqCK9FMwpnFKpy7l9Z0PA4EvBkchq1I=;
+	s=arc-20240116; t=1787247219; c=relaxed/simple;
+	bh=cQsMx37wDqoDgsCw2yrOuiGkQ22aZl5q0GQCwADPgYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V5DhuKCSUm9oWv3BLZ92IZuDc6x/Ii77zo2sshN64BIFOkESn9NXLzemM1Kpj+sd8IBljy8yzqWQP1MFOBMv/SV6Cyuw1uwUmo3ajaTBeeRJcnYfl3BKqojlpJyXJEqvJInSb2evxThdGdgc9BY+nTWGRHkN+KT8SnzLuawhuk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjA8SbWZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bXhet8eDAvUOi4ieOLslXwtjrym0eST+Ul8Y3PZtrV9syiJKegMd/aH+QFgBDce0ofprCbCGCr9GyJ+s84CtlA6sWvAlydqV9yvF7gWIVCcuOUZ96iW0W6VGPCQKoZSeeC4qfulf+htv3oTu+wwaW8XNJpNNxa1Xpe9xa1yVXM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vK45Ibsp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjA8SbWZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDF31F000E9;
-	Thu, 20 Aug 2026 17:33:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vK45Ibsp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64F51F000E9;
+	Thu, 20 Aug 2026 17:33:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247215;
-	bh=qcD7D7Xdvu1vYgsulNHYMiWF96+bmY8Q2/YbCvpy9bw=;
+	s=korg; t=1787247218;
+	bh=7fy8odT8O5JNhYhT6dX5iiicXFJa5ld/lQVFujiFqvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OjA8SbWZkHiKBE4WB90SYGOg242jilsgTFwR0rqfMakE5T/gb9grh50u7nHicDqfM
-	 8XArXhr0g5QdG7kzkgIVjCVEZa1kovWNMYs6MJbU2JrRPrqPWJVwFDBPZ12rN+sdBu
-	 6tW2XiDNYhKVkAIdfSZTm7+w3GUkORqiYhy+ODmE=
+	b=vK45IbspORUPHgbL/igZhoT7k7XR2TQJDh0AD7LHq4883x1FQYafFJDvGr/i/9Jyu
+	 aADVtQNgQgVLGZpEwfyeDNYSo4ooDnWTEPc/aKHpZs4PYrAVyTYMGv4t5Naen6MFNM
+	 My3LHOJ/jNMyk8eOMvErzGUScx+etzoMu8NLpZ9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 140/220] tcp: reorganize tcp_sock_write_txrx group for variables later
-Date: Thu, 20 Aug 2026 16:55:30 +0200
-Message-ID: <20260820145227.681557962@linuxfoundation.org>
+Subject: [PATCH 6.12 183/220] ring-buffer: Simplify ring_buffer_read_page() with guard()
+Date: Thu, 20 Aug 2026 16:56:13 +0200
+Message-ID: <20260820145228.993737811@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -52,116 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit c3426ba2ed6942fe33c75bf17fc7513ba2c6ac64 ]
+[ Upstream commit b2e7c6ed26e90fab1e5e626071e54e3b9ec9cb5a ]
 
-Use the first 3-byte hole at the beginning of the tcp_sock_write_txrx
-group for 'noneagle'/'rate_app_limited' to fill in the existing hole
-in later patches. Therefore, the group size of tcp_sock_write_txrx is
-reduced from 92 + 4 to 91 + 4. In addition, the group size of
-tcp_sock_write_rx is changed to 96 to fit in the pahole outcome.
-Below are the trimmed pahole outcomes before and after this patch:
+The function ring_buffer_read_page() had two gotos. One was simply
+returning "ret" and the other was unlocking the reader_lock.
 
-[BEFORE THIS PATCH]
-struct tcp_sock {
-    [...]
-    __cacheline_group_begin__tcp_sock_write_txrx[0]; /*  2521     0 */
-    /* XXX 3 bytes hole, try to pack */
+There's no reason to use goto to simply return the "ret" variable. Instead
+just return the value.
 
-    [...]
-    struct tcp_options_received rx_opt;              /*  2588    24 */
-    u8                         nonagle:4;            /*  2612: 0  1 */
-    u8                         rate_app_limited:1;   /*  2612: 4  1 */
-    /* XXX 3 bits hole, try to pack */
+The jump to the unlocking of the reader_lock can be replaced by
+guard(raw_spinlock_irqsave)(&cpu_buffer->reader_lock).
 
-    __cacheline_group_end__tcp_sock_write_txrx[0];   /*  2613     0 */
-    /* XXX 3 bytes hole, try to pack */
+With these two changes the "ret" variable is no longer used and can be
+removed. The return value on non-error is what was read and is stored in
+the "read" variable.
 
-    __cacheline_group_begin__tcp_sock_write_rx[0] __attribute__((__aligned__(8))); /*  2616     0 */
-
-    [...]
-    __cacheline_group_end__tcp_sock_write_rx[0];     /*  2712     0 */
-
-    [...]
-    /* size: 3200, cachelines: 50, members: 161 */
-}
-
-[AFTER THIS PATCH]
-struct tcp_sock {
-    [...]
-    __cacheline_group_begin__tcp_sock_write_txrx[0]; /*  2521     0 */
-    u8                         nonagle:4;            /*  2521: 0  1 */
-    u8                         rate_app_limited:1;   /*  2521: 4  1 */
-    /* XXX 3 bits hole, try to pack */
-    /* XXX 2 bytes hole, try to pack */
-
-    [...]
-    struct tcp_options_received rx_opt;              /*  2588    24 */
-
-    __cacheline_group_end__tcp_sock_write_txrx[0];   /*  2612     0 */
-    /* XXX 4 bytes hole, try to pack */
-
-    __cacheline_group_begin__tcp_sock_write_rx[0] __attribute__((__aligned__(8))); /*  2616     0 */
-
-    [...]
-    __cacheline_group_end__tcp_sock_write_rx[0];     /*  2712     0 */
-
-    [...]
-    /* size: 3200, cachelines: 50, members: 161 */
-}
-
-Signed-off-by: Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250911110642.87529-4-chia-yu.chang@nokia-bell-labs.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: a28c4fcbf774 ("tcp: challenge ACK for non-exact RST in SYN-RECEIVED")
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20250527145216.0187cf36@gandalf.local.home
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: 7c727dfce6be ("ring-buffer: Prevent resizing of persistent ring buffer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/tcp.h |    4 ++--
- net/ipv4/tcp.c      |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ kernel/trace/ring_buffer.c |   28 +++++++++++-----------------
+ 1 file changed, 11 insertions(+), 17 deletions(-)
 
---- a/include/linux/tcp.h
-+++ b/include/linux/tcp.h
-@@ -282,6 +282,8 @@ struct tcp_sock {
-  *	Header prediction flags
-  *	0x5?10 << 16 + snd_wnd in net byte order
-  */
-+	u8	nonagle     : 4,/* Disable Nagle algorithm?             */
-+		rate_app_limited:1;  /* rate_{delivered,interval_us} limited? */
- 	__be32	pred_flags;
- 	u64	tcp_clock_cache; /* cache last tcp_clock_ns() (see tcp_mstamp_refresh()) */
- 	u64	tcp_mstamp;	/* most recent packet received/sent */
-@@ -300,8 +302,6 @@ struct tcp_sock {
-  *      Options received (usually on last packet, some only on SYN packets).
-  */
- 	struct tcp_options_received rx_opt;
--	u8	nonagle     : 4,/* Disable Nagle algorithm?             */
--		rate_app_limited:1;  /* rate_{delivered,interval_us} limited? */
- 	__cacheline_group_end(tcp_sock_write_txrx);
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -6480,38 +6480,37 @@ int ring_buffer_read_page(struct trace_b
+ 	struct buffer_data_page *bpage;
+ 	struct buffer_page *reader;
+ 	unsigned long missed_events;
+-	unsigned long flags;
+ 	unsigned int commit;
+ 	unsigned int read;
+ 	u64 save_timestamp;
+-	int ret = -1;
  
- 	/* RX read-write hotpath cache lines */
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -5061,7 +5061,7 @@ static void __init tcp_struct_check(void
- 	/* 32bit arches with 8byte alignment on u64 fields might need padding
- 	 * before tcp_clock_cache.
+ 	if (!cpumask_test_cpu(cpu, buffer->cpumask))
+-		goto out;
++		return -1;
+ 
+ 	/*
+ 	 * If len is not big enough to hold the page header, then
+ 	 * we can not copy anything.
  	 */
--	CACHELINE_ASSERT_GROUP_SIZE(struct tcp_sock, tcp_sock_write_txrx, 92 + 4);
-+	CACHELINE_ASSERT_GROUP_SIZE(struct tcp_sock, tcp_sock_write_txrx, 91 + 4);
+ 	if (len <= BUF_PAGE_HDR_SIZE)
+-		goto out;
++		return -1;
  
- 	/* RX read-write hotpath cache lines */
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_rx, bytes_received);
-@@ -5078,7 +5078,7 @@ static void __init tcp_struct_check(void
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_rx, bytes_acked);
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_rx, rcv_rtt_est);
- 	CACHELINE_ASSERT_GROUP_MEMBER(struct tcp_sock, tcp_sock_write_rx, rcvq_space);
--	CACHELINE_ASSERT_GROUP_SIZE(struct tcp_sock, tcp_sock_write_rx, 99);
-+	CACHELINE_ASSERT_GROUP_SIZE(struct tcp_sock, tcp_sock_write_rx, 96);
+ 	len -= BUF_PAGE_HDR_SIZE;
+ 
+ 	if (!data_page || !data_page->data)
+-		goto out;
++		return -1;
++
+ 	if (data_page->order != buffer->subbuf_order)
+-		goto out;
++		return -1;
+ 
+ 	bpage = data_page->data;
+ 	if (!bpage)
+-		goto out;
++		return -1;
+ 
+-	raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
++	guard(raw_spinlock_irqsave)(&cpu_buffer->reader_lock);
+ 
+ 	reader = rb_get_reader_page(cpu_buffer);
+ 	if (!reader)
+-		goto out_unlock;
++		return -1;
+ 
+ 	event = rb_reader_event(cpu_buffer);
+ 
+@@ -6545,7 +6544,7 @@ int ring_buffer_read_page(struct trace_b
+ 		if (full &&
+ 		    (!read || (len < (commit - read)) ||
+ 		     cpu_buffer->reader_page == cpu_buffer->commit_page))
+-			goto out_unlock;
++			return -1;
+ 
+ 		if (len > (commit - read))
+ 			len = (commit - read);
+@@ -6554,7 +6553,7 @@ int ring_buffer_read_page(struct trace_b
+ 		size = rb_event_ts_length(event);
+ 
+ 		if (len < size)
+-			goto out_unlock;
++			return -1;
+ 
+ 		/* save the current timestamp, since the user will need it */
+ 		save_timestamp = cpu_buffer->read_stamp;
+@@ -6612,7 +6611,6 @@ int ring_buffer_read_page(struct trace_b
+ 		if (reader->real_end)
+ 			local_set(&bpage->commit, reader->real_end);
+ 	}
+-	ret = read;
+ 
+ 	cpu_buffer->lost_events = 0;
+ 
+@@ -6639,11 +6637,7 @@ int ring_buffer_read_page(struct trace_b
+ 	if (commit < buffer->subbuf_size)
+ 		memset(&bpage->data[commit], 0, buffer->subbuf_size - commit);
+ 
+- out_unlock:
+-	raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
+-
+- out:
+-	return ret;
++	return read;
  }
+ EXPORT_SYMBOL_GPL(ring_buffer_read_page);
  
- void __init tcp_init(void)
 
 
