@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D593D37F31A;
-	Thu, 20 Aug 2026 15:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C3C377016;
+	Thu, 20 Aug 2026 15:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238386; cv=none; b=ExkWtu0qaEoXW0bTVOgI83cxSikXkSB2CyY4xGH327A8i0Kso9VqCYGX7I46nrTWfUa6iyz16e16m9k2rHydMoNbRHaUFlts6IL0GvJm+4bh+Qzqumr0Y2BdtV25jWRVC1EhH1VEX3IuTLxgs8tNONx0LBZAhRO2SyL+Itdbaac=
+	t=1787238388; cv=none; b=Wkw33WoTW7z8B4e8FELbV1RGeLd6v2KdrmyLN4bVil/eXpSsz/WHInrkOUv/RN6q8skn1iKZDt2JSyCp7NX7QNXl6GRG9jMa3AEePSO4niD+SxW1GYK9mupS3F1eNglTB4k/bWyJ3QI/5KbkG9GA9qobjkDN5jlgpAhdBkVVYv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238386; c=relaxed/simple;
-	bh=UyDYm8w5MFxsxwKAMa9U+W5CrpEK1iA9ZEngwe2xHvk=;
+	s=arc-20240116; t=1787238388; c=relaxed/simple;
+	bh=L6pw8fVUieBhT33dvTQzBIrSuhrSIsvDjIi1aUxqk+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eKLgbEz6dQCtHw7KiT3l73C+mnq6nW0dpWQFoHCEH5Y3zkOGIIe/oG3Rl7zlgiJAQyVog0WLTg+J/B/0of3+BgJBBktDh0ZSA0jQwV02xAdFfm9ocWGGh1+pjSiOOgdQubLY81EcCl1MBWLCpkPfrNxwCq076kATnGgJnHGWkkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYUcsuv3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V6GW6sPwmb8x0VKG6EFYkt/Fh3eLf8iH2OHvcuL4uxzoYzoCytQ3F0T/ZctWPxG8BYndpYROQht0In9Mio9GEItvSK98my27JXDMGomm4GixOc9u1T6IcpM7CfNgPLd7/udK7XhQrryYAK1nGaSMA3AIxCfxKBEhBhbPRwAWivc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KePaJltL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYUcsuv3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B4961F000E9;
-	Thu, 20 Aug 2026 15:06:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KePaJltL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B391F000E9;
+	Thu, 20 Aug 2026 15:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238384;
-	bh=yJgre99bHj8z9ohtKKzcmJ6vfPGHxsjPab1aLlsLa0M=;
+	s=korg; t=1787238387;
+	bh=acO2llyQ30lYEo78v2W47ATkRWQP4o+EnJ4fwITBoZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JYUcsuv3z10NiJQy+3Pr7vn4morGK9rUu/9oKwD499QtYvN0n3vkKEeDTZ5XuYy36
-	 nx9+fIw2extS3yaJDgKvCIoqmhaf/Pij/TvdtbQiMjBZ2yUJl6jzaLwcuAx+Ogt6cS
-	 e86TU0KNknjNuCJevbanPL+igT5QLV4ni8wH1PX8=
+	b=KePaJltLR8xd3TeFghQy+AU42OVjkBpWmYwnt1S+HgWjzvys2xib5gseBr+EBR8Bv
+	 bpcN4W0YCxNhDVeofE3ANX3aO2MX69qBLSWwtzQMPZuLm+PD6SeRlxVociK6ZyX9GK
+	 HuS+22stv69gstxNoFrSQnMElDX4cIH+RWj198BM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Farman <farman@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 7.1 102/228] s390/vfio_ccw: Selectively expand io_mutex
-Date: Thu, 20 Aug 2026 16:54:04 +0200
-Message-ID: <20260820145247.748003438@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Qiang Ma <maqianga@uniontech.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 7.1 129/228] xfs: clear zapped attr fork state when bmap repair finds no attr fork
+Date: Thu, 20 Aug 2026 16:54:31 +0200
+Message-ID: <20260820145248.534447134@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -51,154 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Farman <farman@linux.ibm.com>
+From: Qiang Ma <maqianga@uniontech.com>
 
-commit 34f4feff3e90bd09308fad0974e97113b23b812a upstream.
+commit 87b2a82e135ba81e49d82b59e3d72468cb66ea98 upstream.
 
-The io_mutex was defined to serialize the io_regions, but then has
-also sort of been associated with the I/O themselves because of
-the close relationship they share.
+xfstests xfs/377 can make xfs_scrub repeatedly check and repair the
+attr block map after inode repair zaps an attr fork.
 
-With the handful of races that are possible, the choices are either to:
- A) expand the scope of io_mutex to close these remaining windows, or
- B) reduce the scope of io_mutex to just io_region, and introduce a new
-    lock mechanism for the remaining I/O resources
+When inode repair zaps an attr fork, it records
+XFS_SICK_INO_BMBTA_ZAPPED so that scrub/repair can revisit the attr fork
+block map.  If the fork has been reset to an empty state and removed,
+BMBTA repair has no attr fork mappings to rebuild and can return success.
 
-This patch implements A, since B brings with it a lot more interactions
-that would need to be tracked and kept in a correct hierarchy. It also
-takes advantage of the workqueue element for cp_free() that now gets
-called out of fsm_notoper(), which could be invoked out of an interrupt
-context and thus cannot acquire a mutex itself.
+The post-repair scrub then runs with XREP_ALREADY_FIXED set, which means
+xchk_file_looks_zapped() deliberately ignores the stale zapped health bit
+and asks xchk_bmap() to check the current attr fork.  For an absent attr
+fork, xchk_bmap() returns -ENOENT.  Returning that error prevents
+xchk_bmap_attr() from marking XFS_SICK_INO_BMBTA_ZAPPED healthy, leaving
+the zapped health state behind even though there are no attr fork mappings
+left to check.
 
-Fixes: 4f76617378ee ("vfio-ccw: protect the I/O region")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Treat -ENOENT during post-repair BMBTA revalidation as a clean result for
+the zapped attr fork: clear XFS_SICK_INO_BMBTA_ZAPPED and return success.
+Keep the existing -ENOENT behavior for ordinary scrubs of absent attr
+forks.
+
+Fixes: d9041681dd2f ("xfs: set inode sick state flags when we zap either ondisk fork")
+Cc: stable@vger.kernel.org # v6.8
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Qiang Ma <maqianga@uniontech.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/vfio_ccw_chp.c     |    2 +-
- drivers/s390/cio/vfio_ccw_cp.c      |    8 +++++++-
- drivers/s390/cio/vfio_ccw_drv.c     |    6 ++++--
- drivers/s390/cio/vfio_ccw_fsm.c     |    5 +++++
- drivers/s390/cio/vfio_ccw_private.h |    3 ++-
- 5 files changed, 19 insertions(+), 5 deletions(-)
+ fs/xfs/scrub/bmap.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/s390/cio/vfio_ccw_chp.c
-+++ b/drivers/s390/cio/vfio_ccw_chp.c
-@@ -98,13 +98,13 @@ static ssize_t vfio_ccw_crw_region_read(
- 	if (pos + count > sizeof(*region))
- 		return -EINVAL;
- 
-+	mutex_lock(&private->io_mutex);
- 	crw = list_first_entry_or_null(&private->crw,
- 				       struct vfio_ccw_crw, next);
- 
- 	if (crw)
- 		list_del(&crw->next);
- 
--	mutex_lock(&private->io_mutex);
- 	if (i >= private->num_regions) {
- 		ret = -EINVAL;
- 		goto out;
---- a/drivers/s390/cio/vfio_ccw_cp.c
-+++ b/drivers/s390/cio/vfio_ccw_cp.c
-@@ -976,17 +976,23 @@ void cp_update_scsw(struct channel_progr
-  */
- bool cp_iova_pinned(struct channel_program *cp, u64 iova, u64 length)
- {
-+	struct vfio_ccw_private *private =
-+		container_of(cp, struct vfio_ccw_private, cp);
- 	struct ccwchain *chain;
- 	int i;
- 
- 	if (!cp->initialized)
- 		return false;
- 
-+	mutex_lock(&private->io_mutex);
- 	list_for_each_entry(chain, &cp->ccwchain_list, next) {
- 		for (i = 0; i < chain->ch_len; i++)
--			if (page_array_iova_pinned(&chain->ch_pa[i], iova, length))
-+			if (page_array_iova_pinned(&chain->ch_pa[i], iova, length)) {
-+				mutex_unlock(&private->io_mutex);
- 				return true;
-+			}
+--- a/fs/xfs/scrub/bmap.c
++++ b/fs/xfs/scrub/bmap.c
+@@ -1170,6 +1170,11 @@ xchk_bmap_attr(
  	}
-+	mutex_unlock(&private->io_mutex);
  
- 	return false;
- }
---- a/drivers/s390/cio/vfio_ccw_drv.c
-+++ b/drivers/s390/cio/vfio_ccw_drv.c
-@@ -91,6 +91,7 @@ void vfio_ccw_sch_io_todo(struct work_st
+ 	error = xchk_bmap(sc, XFS_ATTR_FORK);
++	/* A repaired, empty attr fork no longer has mappings to check. */
++	if (error == -ENOENT && (sc->flags & XREP_ALREADY_FIXED)) {
++		xchk_mark_healthy_if_clean(sc, XFS_SICK_INO_BMBTA_ZAPPED);
++		return 0;
++	}
+ 	if (error)
+ 		return error;
  
- 	is_final = !(scsw_actl(&irb->scsw) &
- 		     (SCSW_ACTL_DEVACT | SCSW_ACTL_SCHACT));
-+	mutex_lock(&private->io_mutex);
- 	if (scsw_is_solicited(&irb->scsw)) {
- 		cp_update_scsw(&private->cp, &irb->scsw);
- 		if (is_final && private->state == VFIO_CCW_STATE_CP_PENDING) {
-@@ -98,9 +99,7 @@ void vfio_ccw_sch_io_todo(struct work_st
- 			cp_is_finished = true;
- 		}
- 	}
--	mutex_lock(&private->io_mutex);
- 	memcpy(private->io_region->irb_area, irb, sizeof(*irb));
--	mutex_unlock(&private->io_mutex);
- 
- 	/*
- 	 * Reset to IDLE only if processing of a channel program
-@@ -110,6 +109,7 @@ void vfio_ccw_sch_io_todo(struct work_st
- 	 */
- 	if (cp_is_finished)
- 		private->state = VFIO_CCW_STATE_IDLE;
-+	mutex_unlock(&private->io_mutex);
- 
- 	if (private->io_trigger)
- 		eventfd_signal(private->io_trigger);
-@@ -131,7 +131,9 @@ void vfio_ccw_notoper_todo(struct work_s
- 
- 	private = container_of(work, struct vfio_ccw_private, notoper_work);
- 
-+	mutex_lock(&private->io_mutex);
- 	cp_free(&private->cp);
-+	mutex_unlock(&private->io_mutex);
- }
- 
- /*
---- a/drivers/s390/cio/vfio_ccw_fsm.c
-+++ b/drivers/s390/cio/vfio_ccw_fsm.c
-@@ -170,6 +170,7 @@ static void fsm_notoper(struct vfio_ccw_
- 	css_sched_sch_todo(sch, SCH_TODO_UNREG);
- 	private->state = VFIO_CCW_STATE_NOT_OPER;
- 
-+	/* This routine could be called from IRQ context, so defer */
- 	queue_work(vfio_ccw_work_q, &private->notoper_work);
- }
- 
-@@ -409,7 +410,11 @@ static void fsm_close(struct vfio_ccw_pr
- 
- 	private->state = VFIO_CCW_STATE_STANDBY;
- 	spin_unlock_irq(&sch->lock);
-+
-+	mutex_lock(&private->io_mutex);
- 	cp_free(&private->cp);
-+	mutex_unlock(&private->io_mutex);
-+
- 	return;
- 
- err_unlock:
---- a/drivers/s390/cio/vfio_ccw_private.h
-+++ b/drivers/s390/cio/vfio_ccw_private.h
-@@ -88,7 +88,8 @@ struct vfio_ccw_parent {
-  * @state: internal state of the device
-  * @completion: synchronization helper of the I/O completion
-  * @io_region: MMIO region to input/output I/O arguments/results
-- * @io_mutex: protect against concurrent update of I/O regions
-+ * @io_mutex: protect against concurrent update of I/O resources
-+ *            and @cp lifecycle
-  * @region: additional regions for other subchannel operations
-  * @cmd_region: MMIO region for asynchronous I/O commands other than START
-  * @schib_region: MMIO region for SCHIB information
 
 
