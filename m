@@ -1,38 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6FEA28C2BF;
-	Thu, 20 Aug 2026 17:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9217247ECC6;
+	Thu, 20 Aug 2026 17:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247188; cv=none; b=bSh0CpUpAlItCfA4yayzYhOc1Cxa+J3WkIJ02xwfvWRss9DLVgvaTEjLzKEltw8rnhrphChqgZuRxbI+cKAMFg9kESt/OOF2XDAPbJQBjQvFfiPmvwnirzEpcyuuin8NAcjcEwO/Hgkr2vXRX1/YXOoRFtWFY+/TRlS502Yi8sQ=
+	t=1787247192; cv=none; b=P2AJEkEMu+CTc/VMHwqIeLP2UdePGks0tin2GGdB4VKgtMpwxgaDymWPswD9RzQ7vQIX3z96kZ5dhxQlTSjHhRb3eEFKBMgoFnnCfld9na3JowDXxy2yBTjIpm9iAFltCTFCSte0u+h4AKY0P5C7jg0NU0JIQ7TKMnxl9VAzyDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247188; c=relaxed/simple;
-	bh=gTf12NUuaLXPF0Xj6+C6ypfix0LEN8qjI/0cMZEECOI=;
+	s=arc-20240116; t=1787247192; c=relaxed/simple;
+	bh=IIQzKnqscP3+ZyYgMNPtzXefk1W9l93Gkq7x8vRyDuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jcApMDSPFPRyOkia4CCBXerm8FqTGpCaMhyhocD1DCGLpD0/HOebSjRhwMzbeHOBxE2e3hkYkleZotPgowPXeTie369l+rMp9LrMrCgvJ1s3jmt4sNfsIuf2C0Cp9USh7sevYxvz0JAYZoumtwYwZJRfUHLhQH7pWItEvhjIY5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHD8B31t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e8wLq94bDzX3naXnpRg+hpz1+HxZM7hFCfKNRHcG60ukwTEq/q4PJEA5eKmE+xUOl86snj3NHZw91VsMoFLbOqseK6nsDIE5SLuTW2BzgqiSgNb0AVGQwowjdxDXAcFaASR77bgEQpuG0qQo8A0O3d8Ecxj66+GPs5eU/FCPTf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DykK5dYS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHD8B31t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17D6F1F00A3A;
-	Thu, 20 Aug 2026 17:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DykK5dYS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74D011F00A3A;
+	Thu, 20 Aug 2026 17:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247186;
-	bh=NyvBVYZcQP1gA/iphyOON55FZmWozlno52eDc2C64ls=;
+	s=korg; t=1787247190;
+	bh=ntmDvKs2ufXE0MJLaUQbuwsaS49Ch/N9+PH45PBHT6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oHD8B31tuiRmhhPxBkSR6xaSBN5eea19EQOre9R9HjiYqgeZs5nVsB/UBkOd/2uRl
-	 j+s4hC+9S2Ymb7t7udeYbKkz0gUMVVP79G3oAIY4RsLPgimVwJ05v9I93mqZI9GNEl
-	 U4S+DFAlDovSw4vcpJK+U+M5owtVJ6WWQhlATMFw=
+	b=DykK5dYScsPz95k7ldChpby+bUX2PAhbmxT57xaJsTT/JxvdcCwHXICCaTV4Iks8W
+	 Z7SvKAd4R7K5J+OTKHHKFmNYczVQwsVZeNxoykwQU3ck6oEUWDVeKgM1RRBSZNdHHl
+	 ISBN4xYnp+oMi2he0dB24Sp45+Q+ysqIe0JTwRts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	David Hildenbrand <david@redhat.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Barry Song <baohua@kernel.org>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Jonas Bonn <jonas@southpole.se>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Stafford Horne <shorne@gmail.com>,
+	Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
+	WANG Xuerui <kernel@xen0n.name>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 178/220] ring-buffer: Initialise reader page order in rb_allocate_cpu_buffer()
-Date: Thu, 20 Aug 2026 16:56:08 +0200
-Message-ID: <20260820145228.824412034@linuxfoundation.org>
+Subject: [PATCH 6.12 179/220] mm/pagewalk: split walk_page_range_novma() into kernel/user parts
+Date: Thu, 20 Aug 2026 16:56:09 +0200
+Message-ID: <20260820145228.857384786@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -51,35 +71,338 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-[ Upstream commit 6d014e44b68ddd43f71288d2a4dbb1a259869149 ]
+[ Upstream commit 96d81e4766f9e88b66a0502b5a7f34a4c20ac754 ]
 
-In rb_allocate_cpu_buffer(), bpage->order was omitted, leaving it as 0.
-This is an issue for a ring-buffer with subbufs bigger than PAGE_SIZE if
-when freed: free_buffer_page() relies on this value. Align the value
-with the actual allocation size (buffer::subbuf_order).
+walk_page_range_novma() is rather confusing - it supports two modes, one
+used often, the other used only for debugging.
 
-Cc: stable@vger.kernel.org
-Fixes: f9b94daa542a ("ring-buffer: Set new size of the ring buffer sub page")
-Link: https://patch.msgid.link/20260806211306.3704194-4-vdonnefort@google.com
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+The first mode is the common case of traversal of kernel page tables,
+which is what nearly all callers use this for.
+
+Secondly it provides an unusual debugging interface that allows for the
+traversal of page tables in a userland range of memory even for that
+memory which is not described by a VMA.
+
+It is far from certain that such page tables should even exist, but
+perhaps this is precisely why it is useful as a debugging mechanism.
+
+As a result, this is utilised by ptdump only.  Historically, things were
+reversed - ptdump was the only user, and other parts of the kernel evolved
+to use the kernel page table walking here.
+
+Since we have some complicated and confusing locking rules for the novma
+case, it makes sense to separate the two usages into their own functions.
+
+Doing this also provide self-documentation as to the intent of the caller
+- are they doing something rather unusual or are they simply doing a
+standard kernel page table walk?
+
+We therefore establish two separate functions - walk_page_range_debug()
+for this single usage, and walk_kernel_page_table_range() for general
+kernel page table walking.
+
+The walk_page_range_debug() function is currently used to traverse both
+userland and kernel mappings, so we maintain this and in the case of
+kernel mappings being traversed, we have walk_page_range_debug() invoke
+walk_kernel_page_table_range() internally.
+
+We additionally make walk_page_range_debug() internal to mm.
+
+Link: https://lkml.kernel.org/r/20250605135104.90720-1-lorenzo.stoakes@oracle.com
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Acked-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: Alexandre Ghiti <alex@ghiti.fr>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Jonas Bonn <jonas@southpole.se>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Stafford Horne <shorne@gmail.com>
+Cc: Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>
+Cc: WANG Xuerui <kernel@xen0n.name>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 27c32e553834 ("mm/ptdump: always stabilise against page table freeing using init_mm")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/loongarch/mm/pageattr.c |    2 -
+ arch/openrisc/kernel/dma.c   |    4 +-
+ arch/riscv/mm/pageattr.c     |    8 ++--
+ include/linux/pagewalk.h     |    7 +--
+ mm/hugetlb_vmemmap.c         |    2 -
+ mm/internal.h                |    6 +++
+ mm/pagewalk.c                |   77 ++++++++++++++++++++++++++++++-------------
+ mm/ptdump.c                  |    3 +
+ 8 files changed, 74 insertions(+), 35 deletions(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -2220,6 +2220,7 @@ rb_allocate_cpu_buffer(struct trace_buff
- 			    GFP_KERNEL, cpu_to_node(cpu));
- 	if (!bpage)
- 		return NULL;
-+	bpage->order = cpu_buffer->buffer->subbuf_order;
+--- a/arch/loongarch/mm/pageattr.c
++++ b/arch/loongarch/mm/pageattr.c
+@@ -118,7 +118,7 @@ static int __set_memory(unsigned long ad
+ 		return 0;
  
- 	rb_check_bpage(cpu_buffer, bpage);
+ 	mmap_write_lock(&init_mm);
+-	ret = walk_page_range_novma(&init_mm, start, end, &pageattr_ops, NULL, &masks);
++	ret = walk_kernel_page_table_range(start, end, &pageattr_ops, NULL, &masks);
+ 	mmap_write_unlock(&init_mm);
  
+ 	flush_tlb_kernel_range(start, end);
+--- a/arch/openrisc/kernel/dma.c
++++ b/arch/openrisc/kernel/dma.c
+@@ -75,7 +75,7 @@ void *arch_dma_set_uncached(void *cpu_ad
+ 	 * them and setting the cache-inhibit bit.
+ 	 */
+ 	mmap_write_lock(&init_mm);
+-	error = walk_page_range_novma(&init_mm, va, va + size,
++	error = walk_kernel_page_table_range(va, va + size,
+ 			&set_nocache_walk_ops, NULL, NULL);
+ 	mmap_write_unlock(&init_mm);
+ 
+@@ -90,7 +90,7 @@ void arch_dma_clear_uncached(void *cpu_a
+ 
+ 	mmap_write_lock(&init_mm);
+ 	/* walk_page_range shouldn't be able to fail here */
+-	WARN_ON(walk_page_range_novma(&init_mm, va, va + size,
++	WARN_ON(walk_kernel_page_table_range(va, va + size,
+ 			&clear_nocache_walk_ops, NULL, NULL));
+ 	mmap_write_unlock(&init_mm);
+ }
+--- a/arch/riscv/mm/pageattr.c
++++ b/arch/riscv/mm/pageattr.c
+@@ -299,7 +299,7 @@ static int __set_memory(unsigned long ad
+ 			if (ret)
+ 				goto unlock;
+ 
+-			ret = walk_page_range_novma(&init_mm, lm_start, lm_end,
++			ret = walk_kernel_page_table_range(lm_start, lm_end,
+ 						    &pageattr_ops, NULL, &masks);
+ 			if (ret)
+ 				goto unlock;
+@@ -317,13 +317,13 @@ static int __set_memory(unsigned long ad
+ 		if (ret)
+ 			goto unlock;
+ 
+-		ret = walk_page_range_novma(&init_mm, lm_start, lm_end,
++		ret = walk_kernel_page_table_range(lm_start, lm_end,
+ 					    &pageattr_ops, NULL, &masks);
+ 		if (ret)
+ 			goto unlock;
+ 	}
+ 
+-	ret =  walk_page_range_novma(&init_mm, start, end, &pageattr_ops, NULL,
++	ret =  walk_kernel_page_table_range(start, end, &pageattr_ops, NULL,
+ 				     &masks);
+ 
+ unlock:
+@@ -335,7 +335,7 @@ unlock:
+ 	 */
+ 	flush_tlb_all();
+ #else
+-	ret =  walk_page_range_novma(&init_mm, start, end, &pageattr_ops, NULL,
++	ret =  walk_kernel_page_table_range(start, end, &pageattr_ops, NULL,
+ 				     &masks);
+ 
+ 	mmap_write_unlock(&init_mm);
+--- a/include/linux/pagewalk.h
++++ b/include/linux/pagewalk.h
+@@ -117,10 +117,9 @@ struct mm_walk {
+ int walk_page_range(struct mm_struct *mm, unsigned long start,
+ 		unsigned long end, const struct mm_walk_ops *ops,
+ 		void *private);
+-int walk_page_range_novma(struct mm_struct *mm, unsigned long start,
+-			  unsigned long end, const struct mm_walk_ops *ops,
+-			  pgd_t *pgd,
+-			  void *private);
++int walk_kernel_page_table_range(unsigned long start,
++		unsigned long end, const struct mm_walk_ops *ops,
++		pgd_t *pgd, void *private);
+ int walk_page_range_vma(struct vm_area_struct *vma, unsigned long start,
+ 			unsigned long end, const struct mm_walk_ops *ops,
+ 			void *private);
+--- a/mm/hugetlb_vmemmap.c
++++ b/mm/hugetlb_vmemmap.c
+@@ -166,7 +166,7 @@ static int vmemmap_remap_range(unsigned
+ 	VM_BUG_ON(!PAGE_ALIGNED(start | end));
+ 
+ 	mmap_read_lock(&init_mm);
+-	ret = walk_page_range_novma(&init_mm, start, end, &vmemmap_remap_ops,
++	ret = walk_kernel_page_table_range(start, end, &vmemmap_remap_ops,
+ 				    NULL, walk);
+ 	mmap_read_unlock(&init_mm);
+ 	if (ret)
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -12,6 +12,7 @@
+ #include <linux/mm.h>
+ #include <linux/mm_inline.h>
+ #include <linux/pagemap.h>
++#include <linux/pagewalk.h>
+ #include <linux/rmap.h>
+ #include <linux/swap.h>
+ #include <linux/swapops.h>
+@@ -1540,4 +1541,9 @@ static inline void accept_page(struct pa
+ }
+ #endif /* CONFIG_UNACCEPTED_MEMORY */
+ 
++/* pagewalk.c */
++int walk_page_range_debug(struct mm_struct *mm, unsigned long start,
++			  unsigned long end, const struct mm_walk_ops *ops,
++			  pgd_t *pgd, void *private);
++
+ #endif	/* __MM_INTERNAL_H */
+--- a/mm/pagewalk.c
++++ b/mm/pagewalk.c
+@@ -6,6 +6,8 @@
+ #include <linux/swap.h>
+ #include <linux/swapops.h>
+ 
++#include "internal.h"
++
+ /*
+  * We want to know the real level where a entry is located ignoring any
+  * folding of levels which may be happening. For example if p4d is folded then
+@@ -500,8 +502,7 @@ int walk_page_range(struct mm_struct *mm
+ }
+ 
+ /**
+- * walk_page_range_novma - walk a range of pagetables not backed by a vma
+- * @mm:		mm_struct representing the target process of page table walk
++ * walk_kernel_page_table_range - walk a range of kernel pagetables.
+  * @start:	start address of the virtual address range
+  * @end:	end address of the virtual address range
+  * @ops:	operation to call during the walk
+@@ -511,17 +512,59 @@ int walk_page_range(struct mm_struct *mm
+  * Similar to walk_page_range() but can walk any page tables even if they are
+  * not backed by VMAs. Because 'unusual' entries may be walked this function
+  * will also not lock the PTEs for the pte_entry() callback. This is useful for
+- * walking the kernel pages tables or page tables for firmware.
++ * walking kernel pages tables or page tables for firmware.
+  *
+  * Note: Be careful to walk the kernel pages tables, the caller may be need to
+  * take other effective approache (mmap lock may be insufficient) to prevent
+  * the intermediate kernel page tables belonging to the specified address range
+  * from being freed (e.g. memory hot-remove).
+  */
+-int walk_page_range_novma(struct mm_struct *mm, unsigned long start,
++int walk_kernel_page_table_range(unsigned long start, unsigned long end,
++		const struct mm_walk_ops *ops, pgd_t *pgd, void *private)
++{
++	struct mm_struct *mm = &init_mm;
++	struct mm_walk walk = {
++		.ops		= ops,
++		.mm		= mm,
++		.pgd		= pgd,
++		.private	= private,
++		.no_vma		= true
++	};
++
++	if (start >= end)
++		return -EINVAL;
++
++	/*
++	 * Kernel intermediate page tables are usually not freed, so the mmap
++	 * read lock is sufficient. But there are some exceptions.
++	 * E.g. memory hot-remove. In which case, the mmap lock is insufficient
++	 * to prevent the intermediate kernel pages tables belonging to the
++	 * specified address range from being freed. The caller should take
++	 * other actions to prevent this race.
++	 */
++	mmap_assert_locked(mm);
++
++	return walk_pgd_range(start, end, &walk);
++}
++
++/**
++ * walk_page_range_debug - walk a range of pagetables not backed by a vma
++ * @mm:		mm_struct representing the target process of page table walk
++ * @start:	start address of the virtual address range
++ * @end:	end address of the virtual address range
++ * @ops:	operation to call during the walk
++ * @pgd:	pgd to walk if different from mm->pgd
++ * @private:	private data for callbacks' usage
++ *
++ * Similar to walk_page_range() but can walk any page tables even if they are
++ * not backed by VMAs. Because 'unusual' entries may be walked this function
++ * will also not lock the PTEs for the pte_entry() callback.
++ *
++ * This is for debugging purposes ONLY.
++ */
++int walk_page_range_debug(struct mm_struct *mm, unsigned long start,
+ 			  unsigned long end, const struct mm_walk_ops *ops,
+-			  pgd_t *pgd,
+-			  void *private)
++			  pgd_t *pgd, void *private)
+ {
+ 	struct mm_walk walk = {
+ 		.ops		= ops,
+@@ -531,32 +574,22 @@ int walk_page_range_novma(struct mm_stru
+ 		.no_vma		= true
+ 	};
+ 
++	/* For convenience, we allow traversal of kernel mappings. */
++	if (mm == &init_mm)
++		return walk_kernel_page_table_range(start, end, ops,
++						    pgd, private);
+ 	if (start >= end || !walk.mm)
+ 		return -EINVAL;
+ 
+ 	/*
+-	 * 1) For walking the user virtual address space:
+-	 *
+ 	 * The mmap lock protects the page walker from changes to the page
+ 	 * tables during the walk.  However a read lock is insufficient to
+ 	 * protect those areas which don't have a VMA as munmap() detaches
+ 	 * the VMAs before downgrading to a read lock and actually tearing
+ 	 * down PTEs/page tables. In which case, the mmap write lock should
+-	 * be hold.
+-	 *
+-	 * 2) For walking the kernel virtual address space:
+-	 *
+-	 * The kernel intermediate page tables usually do not be freed, so
+-	 * the mmap map read lock is sufficient. But there are some exceptions.
+-	 * E.g. memory hot-remove. In which case, the mmap lock is insufficient
+-	 * to prevent the intermediate kernel pages tables belonging to the
+-	 * specified address range from being freed. The caller should take
+-	 * other actions to prevent this race.
++	 * be held.
+ 	 */
+-	if (mm == &init_mm)
+-		mmap_assert_locked(walk.mm);
+-	else
+-		mmap_assert_write_locked(walk.mm);
++	mmap_assert_write_locked(mm);
+ 
+ 	return walk_pgd_range(start, end, &walk);
+ }
+--- a/mm/ptdump.c
++++ b/mm/ptdump.c
+@@ -4,6 +4,7 @@
+ #include <linux/debugfs.h>
+ #include <linux/ptdump.h>
+ #include <linux/kasan.h>
++#include "internal.h"
+ 
+ #if defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)
+ /*
+@@ -156,7 +157,7 @@ void ptdump_walk_pgd(struct ptdump_state
+ 	get_online_mems();
+ 	mmap_write_lock(mm);
+ 	while (range->start != range->end) {
+-		walk_page_range_novma(mm, range->start, range->end,
++		walk_page_range_debug(mm, range->start, range->end,
+ 				      &ptdump_ops, pgd, st);
+ 		range++;
+ 	}
 
 
