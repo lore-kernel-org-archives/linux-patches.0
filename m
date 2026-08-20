@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9754195C0;
-	Thu, 20 Aug 2026 16:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFE647D46A;
+	Thu, 20 Aug 2026 16:40:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244033; cv=none; b=pHXnq3WZ28WYemg1Q3P7IHZ0L3rSnzAbdUPplghfK0CUvDT108X0ibQh+YqunhN4S5/TuJ801X76xD6kQWBuretRWJybcHKlt6Wm9hD3RK92aNWLmE3DIofzA+EVOPNBpTzmB8ItqmAMaVVhmT5MHOeo4Ww7BODP9Y0DqUGfxys=
+	t=1787244035; cv=none; b=beo4jfu9rf/AHi0x1DPrbkL/tzdkrmG46EDa82dh/A4oG1TLetYgqV2TnaAdLa73sTsit5doOWTvLvsDnC5S9gNiMgAVRnjHm7JpBcA2dxGFIPRu7SyP8kqUOyArpbgSjNuozOYSjoUmk/GNyPBaJhxTSc5b3lCq7m56zUR9fNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244033; c=relaxed/simple;
-	bh=7UYdIFqpcNA8/XGZaabm7SwxhZJ/XAs1kW8V2jIiYME=;
+	s=arc-20240116; t=1787244035; c=relaxed/simple;
+	bh=qt56gLkyugtDjiCh77I0db14nAutSvob/NKmxqzM2NU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EerjzEZeXrXrddRv5XyR09hiA6l9QeRciRraoqcWkVRh+2g/S9Tk+aemjLR+IniovJXHA4iYnxtFtMXzBSeA3kbmtLKFSQTCYv8kxIQ37/BsxujXZuf8R8pNjQVniAkBECl6vBcF6TD/fPRXEM5zA+P3rG3lM85RwA6skN08IAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AI1qtSOT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oJPSj3z34a3bX3PxdfdjnTCnOj55nLQ2fYbiWUNwXL+bmUU2NYcdTnsBGARPlLs+EwXJlambHLwY0NQiLwv3I1WkC9sJLJpsjNkl7/wXdxoi1ixjER84F24MXdjKKUra45HZVTAO+ZOOmaHb2Hz/9usHJDvMxHljSNJ8I7z8/n0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EF0E7jWX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AI1qtSOT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 551511F000E9;
-	Thu, 20 Aug 2026 16:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EF0E7jWX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 338811F000E9;
+	Thu, 20 Aug 2026 16:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244031;
-	bh=xhfqLVWk4h3oSkL01AJq2OvEHKFbzuk249/3iQd45ck=;
+	s=korg; t=1787244034;
+	bh=JTqFuhyhm9cBvLTas4ASUiWmCjROlP9/nvfXlXIiekg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AI1qtSOTesojhtEcY8KPbNC/BWJvpKAKHtBZa9VPUORaQ8pK0oxzb03KIcwk2UlIO
-	 MEpVPQAdCAa6o3XrSQbV35Xet3rGPBvF11E7Q2e6hcP1LswPp0SC+sV/ybgxO71p/x
-	 9WfW2S36cCD/eifMQOVLO3h4JsxNxtltkA7V6C78=
+	b=EF0E7jWXog9hBOywGi/TE16NHwoeQwbsOd1lPsn6qKMuPjD/j9gYQV5g5jUeV5pb5
+	 NlKaZ0smULDT+T9rnqJzHY5uuXWl9JWELzqnzwbUxTBpwLlV/rTlT1GhPhyujb/ltR
+	 3L8gs2FMbFRbugotVLSjOk2UoNB0blF3MQXVjFpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 5.10 029/235] mmc: omap_hsmmc: fix busy_timeout overflow in ns conversion on 32-bit
-Date: Thu, 20 Aug 2026 16:54:25 +0200
-Message-ID: <20260820145217.321188842@linuxfoundation.org>
+	Richard Davies <richard@arachsys.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 012/235] Input: focaltech - fix array out-of-bounds in focaltech_process_rel_packet
+Date: Thu, 20 Aug 2026 16:54:08 +0200
+Message-ID: <20260820145216.813207505@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -50,48 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Richard Davies <richard@arachsys.com>
 
-commit f64ea900e4bda3055ef24a2c906f8d049cf1c3bd upstream.
+commit 296736076b3fd078742651c719555a488624023a upstream.
 
-omap_hsmmc_prepare_data() converts the command busy timeout to nanoseconds
-with:
+Make finger2 (and also finger1) unsigned, so that if the finger index in
+the packet is 0 then subtracting 1 creates an array index which overflows
+above the existing check for FOC_MAX_FINGERS, as the existing comment says
+it should, instead of writing to state->fingers[-1].
 
-	timeout = req->cmd->busy_timeout * NSEC_PER_MSEC;
-
-busy_timeout is an unsigned int (milliseconds) and timeout is a u64, but
-NSEC_PER_MSEC is 1000000L.  On 32-bit builds the multiplication is
-performed in 32-bit arithmetic and wraps for busy_timeout values above
-~4294 ms, before the result is assigned to the u64.
-
-The driver does not set mmc->max_busy_timeout, so the core does not cap the
-busy timeout, and commands such as erase or SANITIZE (MMC_SANITIZE_TIMEOUT_MS
-is 240000 ms) can pass a busy_timeout far larger than 4294 ms.  The wrapped,
-much smaller ns value is then programmed via set_data_timeout(), so the data
-timeout is set too short and the operation can time out prematurely.
-
-Cast busy_timeout to u64 before the multiplication so the conversion is done
-in 64-bit arithmetic.
-
-Fixes: 8cc9a3e73de1 ("mmc: host: omap_hsmmc: use generic_cmd6_time to program timeout value for CMD6")
+Fixes: 05be1d079ec0 ("Input: psmouse - support for the FocalTech PS/2 protocol extensions")
+Signed-off-by: Richard Davies <richard@arachsys.com>
+Link: https://patch.msgid.link/20260701190932.14960-1-richard@arachsys.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/omap_hsmmc.c |    2 +-
+ drivers/input/mouse/focaltech.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/omap_hsmmc.c
-+++ b/drivers/mmc/host/omap_hsmmc.c
-@@ -1363,7 +1363,7 @@ omap_hsmmc_prepare_data(struct omap_hsmm
- 	if (req->data == NULL) {
- 		OMAP_HSMMC_WRITE(host->base, BLK, 0);
- 		if (req->cmd->flags & MMC_RSP_BUSY) {
--			timeout = req->cmd->busy_timeout * NSEC_PER_MSEC;
-+			timeout = (u64)req->cmd->busy_timeout * NSEC_PER_MSEC;
+--- a/drivers/input/mouse/focaltech.c
++++ b/drivers/input/mouse/focaltech.c
+@@ -197,7 +197,7 @@ static void focaltech_process_rel_packet
+ {
+ 	struct focaltech_data *priv = psmouse->private;
+ 	struct focaltech_hw_state *state = &priv->state;
+-	int finger1, finger2;
++	unsigned int finger1, finger2;
  
- 			/*
- 			 * Set an arbitrary 100ms data timeout for commands with
+ 	state->pressed = packet[0] >> 7;
+ 	finger1 = ((packet[0] >> 4) & 0x7) - 1;
 
 
