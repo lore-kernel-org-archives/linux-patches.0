@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04A3360745;
-	Thu, 20 Aug 2026 15:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 977E436A37A;
+	Thu, 20 Aug 2026 15:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238618; cv=none; b=IYg/EvllJUQoRh5hT2R9wfh9lYT4xLfBHEcP8xhKEUZr9vwPjj+p7V43ptJCkSJoJ/LPePO4wPZuBm6zRV09l5N9P9a6w2D3OwDKrp1gchiaGxPQEx/OJzpz6fOg6xCuqdtsYowFjwo+2toMHvJJTp8alubIWt5FbsGxfywoSVg=
+	t=1787238621; cv=none; b=YKRB5axk4w2tbfVDHn/6paJFjzi/NAwX7Est7kutNw+fvHjGi5ENcV1YmA92KCfRG7W7ntOsjaanIhyBgjv+0e/Hq/HY88ZzyGmGGhAfVl8xVMLsFuXtjzneOJPdmdyV2+3n+24Mu1IbBR216my9dOx1sx3CRGpE5sLS5Y+QTTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238618; c=relaxed/simple;
-	bh=25eUadmWc5jaSEio1LNDYe95ApLF6KZJvRBpEHxELuc=;
+	s=arc-20240116; t=1787238621; c=relaxed/simple;
+	bh=eHuIzfZZgGhzU9UjvYFSDUH/b2nEToEG0jBTqQKvKSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J/7E6/+7tgOUOMxPkAwcBWSkMKxwVfVfpRNKxaIh2OVHK3YJuN2TARkQgYkR4Q7CY61+AcavLrRC2XG/oA/LGmffu6YVhq79pgIsOWp2+4OmCc++NwcIDtm3KN+5HVGYAYNwT7GO5yd9HFPv4s6DyvP0bZ78xnLxzadLYBVzNXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VsMLlwcz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=myQylP1k34kLmz/7wGNeYqAOZzhy4c7liubjctsBZ4IzvxH73hj4QEx+HXC0xEdAkXj/Sht32P/10VEc5vK750CPpDhCHRlTEhXQNjdwos08b8LOKDL7w6Qd6VtybqUxRxLFXUWUC70jX4214mFpDBm5/HqwU1NeY90NJdRR7l4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xejfWH5t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VsMLlwcz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1F31F000E9;
-	Thu, 20 Aug 2026 15:10:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xejfWH5t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3CFC1F000E9;
+	Thu, 20 Aug 2026 15:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238617;
-	bh=2j9jeNTpFOeVw3B+8dyngCrYyS7yDQMxL0/rmStuUiY=;
+	s=korg; t=1787238620;
+	bh=7RphpMBHJsKGi5YPYKltw1fAExgWhoFL9MWxZXfuQoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VsMLlwcztLI9x8KIbgpeV3TOzDhnJ7O0d/Etgvy5qWvBq0YAsyeJFQdJaxXzqieZB
-	 LjA7iyfrFrwfKaSkgx+27asP1Bsp46K6UyTzWSLPcJuKnBR3Eo5fhpjoVIwTCAz30g
-	 GHO1wDXt/FQqcBinGXPWZZSV/IBFrpLkHIM9Wpuw=
+	b=xejfWH5t1PMxy0AMXSstLCiC1hB5uAYJc4B9jVTxxhoNrAsrbmobo+oXk+UUTQ0Ze
+	 UneoqPtLNbkm/TLNtwR384dQPqXm48NQ0IpaJmnjLq1/Dqv8iy/dGO0VmGgr5m9KCI
+	 HvvylOYkD3WN3Bn7nP/fNPVPXg04qX5PxWbvdZ6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 210/228] net/sched: cls_u32: skip hash tables in u32_bind_class()
-Date: Thu, 20 Aug 2026 16:55:52 +0200
-Message-ID: <20260820145251.413528267@linuxfoundation.org>
+Subject: [PATCH 7.1 211/228] pid: reject allocations through dead ancestor pid namespaces
+Date: Thu, 20 Aug 2026 16:55:53 +0200
+Message-ID: <20260820145251.445564130@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -46,55 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 6d3724e616faf952c3adcf8414fc21a828ef3709 ]
+[ Upstream commit b64a9f67e082e04835ddd69d422a25168d69375b ]
 
-u32_walk() enumerates both struct tc_u_hnode and struct tc_u_knode
-through the walker callback. u32_bind_class() unconditionally casts the
-passed fh to tc_u_knode and accesses &n->res, so when fh is actually a
-tc_u_hnode, which has no tcf_result member, this results in a
-slab-out-of-bounds read of res->classid in tc_cls_bind_class().
+alloc_pid() checks PIDNS_ADDING only on the leaf pid namespace before
+making a new struct pid visible in every ancestor namespace. That is
+insufficient when an unborn descendant pid namespace outlives an
+ancestor whose init task has already exited. The descendant can still be
+initialized later through setns(), and the new pid is then published
+into the dead ancestor as well.
 
-The issue can be reproduced with the following commands:
+Keep the existing ENOMEM behavior, but require PIDNS_ADDING to be set in
+every namespace that will receive the new pid before publishing any of
+them. This preserves the invariant that free_pid() never decrements
+pid_allocated in a namespace whose child_reaper is no longer live.
 
-    tc qdisc add dev lo root handle 1: hfsc
-    tc class add dev lo parent 1: classid 1:1 hfsc sc rate 1000kbit
-    tc filter add dev lo parent 1:1 protocol ip prio 1 u32 match u32 0 0 flowid 1:1
-    tc class add dev lo parent 1: classid 1:2 hfsc sc rate 2000kbit
-
-Fix this by skipping hash tables via the TC_U32_KEY(handle) check.
-
-Fixes: 07d79fc7d94e ("net_sched: add reverse binding for tc class")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/1786089038-36366-1-git-send-email-zhangchangzhong@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a3bdc23ba8ea ("pid_namespace: allow opening pid_for_children before init was created")
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Reviewed-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_u32.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/pid.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index ac98b1c2144a7..c297d7dbcf916 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -1346,6 +1346,9 @@ static void u32_bind_class(void *fh, u32 classid, unsigned long cl, void *q,
- {
- 	struct tc_u_knode *n = fh;
- 
-+	if (TC_U32_KEY(n->handle) == 0)
-+		return;
+diff --git a/kernel/pid.c b/kernel/pid.c
+index f55189a3d07d4..d01d0dd7114b2 100644
+--- a/kernel/pid.c
++++ b/kernel/pid.c
+@@ -324,8 +324,10 @@ struct pid *alloc_pid(struct pid_namespace *ns, pid_t *arg_set_tid,
+ 	 * error path may try to wakeup the possibly freed ns->child_reaper.
+ 	 */
+ 	retval = -ENOMEM;
+-	if (unlikely(!(ns->pid_allocated & PIDNS_ADDING)))
+-		goto out_free;
++	for (upid = pid->numbers + ns->level; upid >= pid->numbers; --upid)
++		if (unlikely(!(upid->ns->pid_allocated & PIDNS_ADDING)))
++			goto out_free;
 +
- 	tc_cls_bind_class(classid, cl, q, &n->res, base);
- }
- 
+ 	for (upid = pid->numbers + ns->level; upid >= pid->numbers; --upid) {
+ 		/* Make the PID visible to find_pid_ns. */
+ 		idr_replace(&upid->ns->idr, pid, upid->nr);
 -- 
 2.53.0
 
