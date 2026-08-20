@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C3C377016;
-	Thu, 20 Aug 2026 15:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D353C34F27B;
+	Thu, 20 Aug 2026 15:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238388; cv=none; b=Wkw33WoTW7z8B4e8FELbV1RGeLd6v2KdrmyLN4bVil/eXpSsz/WHInrkOUv/RN6q8skn1iKZDt2JSyCp7NX7QNXl6GRG9jMa3AEePSO4niD+SxW1GYK9mupS3F1eNglTB4k/bWyJ3QI/5KbkG9GA9qobjkDN5jlgpAhdBkVVYv8=
+	t=1787238392; cv=none; b=BCSJVUrpiLCzgkYzISMk54klu6NRIhExh04BmHpM1tWTK5jWA1/bP09BfDb2UzpzG8tAs7kyXqD9Kwr86LXJRyjPLE/O7NcWE+8aslhMaDq96Ch1gtrKHnuSlut/sLK4maaXikZUPihxVO4qGGA3q/VC/A5dLlBfJPEB/6nVkiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238388; c=relaxed/simple;
-	bh=L6pw8fVUieBhT33dvTQzBIrSuhrSIsvDjIi1aUxqk+0=;
+	s=arc-20240116; t=1787238392; c=relaxed/simple;
+	bh=gM4Cnwub3B8hI/jrDAoLqQpBtuiUzS3A35dZwZIGmm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6GW6sPwmb8x0VKG6EFYkt/Fh3eLf8iH2OHvcuL4uxzoYzoCytQ3F0T/ZctWPxG8BYndpYROQht0In9Mio9GEItvSK98my27JXDMGomm4GixOc9u1T6IcpM7CfNgPLd7/udK7XhQrryYAK1nGaSMA3AIxCfxKBEhBhbPRwAWivc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KePaJltL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qgKFFeRjEd9fG+6I/y8gF2D5KVTMlECuwEKSlHD9FpJeyfOPhhJ40EizpxcjvkdMH1kJldK9lPWK7pV+8cEyAHrz4gpPESNFuiJQgOvxOQP5YimYw+1z+5RIDmhsfnLNUbttxAF4GAyynyIzKxIbCQavqrBa6q2LnXFW34Zmkuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nSGfQzg0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KePaJltL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B391F000E9;
-	Thu, 20 Aug 2026 15:06:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nSGfQzg0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D612D1F000E9;
+	Thu, 20 Aug 2026 15:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238387;
-	bh=acO2llyQ30lYEo78v2W47ATkRWQP4o+EnJ4fwITBoZA=;
+	s=korg; t=1787238390;
+	bh=+N6d3jwmK4dp9xveZ29gHKu2bq1kKA8bGXD8qt2lIkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KePaJltLR8xd3TeFghQy+AU42OVjkBpWmYwnt1S+HgWjzvys2xib5gseBr+EBR8Bv
-	 bpcN4W0YCxNhDVeofE3ANX3aO2MX69qBLSWwtzQMPZuLm+PD6SeRlxVociK6ZyX9GK
-	 HuS+22stv69gstxNoFrSQnMElDX4cIH+RWj198BM=
+	b=nSGfQzg076au92iyDBEzc/+mtdmgyMbYEV3Gdriiv7Nv6XIds3DVONgKP4ICDzxdZ
+	 3VM+logPcWn3n9HQjWqpePuBPgiIDQSgci9bU0CrlRWymtaWyyCUv1crJ4SKRH60c2
+	 R8BPYrH19ycxZU4nrOrHbX1+2Po0ENK3LjkifbHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Darrick J. Wong" <djwong@kernel.org>,
-	Qiang Ma <maqianga@uniontech.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.1 129/228] xfs: clear zapped attr fork state when bmap repair finds no attr fork
-Date: Thu, 20 Aug 2026 16:54:31 +0200
-Message-ID: <20260820145248.534447134@linuxfoundation.org>
+Subject: [PATCH 7.1 130/228] xfs: check cowextsize in xrep_inode_cowextsize
+Date: Thu, 20 Aug 2026 16:54:32 +0200
+Message-ID: <20260820145248.563459938@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -52,55 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Ma <maqianga@uniontech.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 87b2a82e135ba81e49d82b59e3d72468cb66ea98 upstream.
+commit 270ffcd9b0a46254fbf3079d0e3341db7d7ec0e6 upstream.
 
-xfstests xfs/377 can make xfs_scrub repeatedly check and repair the
-attr block map after inode repair zaps an attr fork.
+LOLLM points out that the function that corrects cowextsize should check
+i_cowextsize, not i_extsize.
 
-When inode repair zaps an attr fork, it records
-XFS_SICK_INO_BMBTA_ZAPPED so that scrub/repair can revisit the attr fork
-block map.  If the fork has been reset to an empty state and removed,
-BMBTA repair has no attr fork mappings to rebuild and can return success.
-
-The post-repair scrub then runs with XREP_ALREADY_FIXED set, which means
-xchk_file_looks_zapped() deliberately ignores the stale zapped health bit
-and asks xchk_bmap() to check the current attr fork.  For an absent attr
-fork, xchk_bmap() returns -ENOENT.  Returning that error prevents
-xchk_bmap_attr() from marking XFS_SICK_INO_BMBTA_ZAPPED healthy, leaving
-the zapped health state behind even though there are no attr fork mappings
-left to check.
-
-Treat -ENOENT during post-repair BMBTA revalidation as a clean result for
-the zapped attr fork: clear XFS_SICK_INO_BMBTA_ZAPPED and return success.
-Keep the existing -ENOENT behavior for ordinary scrubs of absent attr
-forks.
-
-Fixes: d9041681dd2f ("xfs: set inode sick state flags when we zap either ondisk fork")
-Cc: stable@vger.kernel.org # v6.8
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Qiang Ma <maqianga@uniontech.com>
+Cc: stable@vger.kernel.org # v6.14
+Fixes: a9600db96f74af ("xfs: detect and repair misaligned rtinherit directory cowextsize hints")
+Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/bmap.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/xfs/scrub/inode_repair.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/bmap.c
-+++ b/fs/xfs/scrub/bmap.c
-@@ -1170,6 +1170,11 @@ xchk_bmap_attr(
+--- a/fs/xfs/scrub/inode_repair.c
++++ b/fs/xfs/scrub/inode_repair.c
+@@ -1956,7 +1956,7 @@ xrep_inode_cowextsize(
+ 	/* Fix misaligned CoW extent size hints on a directory. */
+ 	if ((sc->ip->i_diflags & XFS_DIFLAG_RTINHERIT) &&
+ 	    (sc->ip->i_diflags2 & XFS_DIFLAG2_COWEXTSIZE) &&
+-	    sc->ip->i_extsize % sc->mp->m_sb.sb_rextsize > 0) {
++	    xfs_extlen_to_rtxmod(sc->mp, sc->ip->i_cowextsize) > 0) {
+ 		sc->ip->i_cowextsize = 0;
+ 		sc->ip->i_diflags2 &= ~XFS_DIFLAG2_COWEXTSIZE;
  	}
- 
- 	error = xchk_bmap(sc, XFS_ATTR_FORK);
-+	/* A repaired, empty attr fork no longer has mappings to check. */
-+	if (error == -ENOENT && (sc->flags & XREP_ALREADY_FIXED)) {
-+		xchk_mark_healthy_if_clean(sc, XFS_SICK_INO_BMBTA_ZAPPED);
-+		return 0;
-+	}
- 	if (error)
- 		return error;
- 
 
 
