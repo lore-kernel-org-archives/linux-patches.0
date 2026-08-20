@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C278246781;
-	Thu, 20 Aug 2026 16:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2112E47D449;
+	Thu, 20 Aug 2026 16:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244295; cv=none; b=gb1TlGUAHUzv2js/05dK5UdlDK7n0WpO4YY7aNDyNbdseOVqB+exIl4ApSBKF/3QIKRP1ZYrg/u/dH5/Wq56Xb9PskIYXuzy/221ku8BIbywIloTBjmGO/YX4Lbs2VfRlxKugBqfLVUjXVdKGz/Wrpl+ugShyDZyM01Sbc0jOKg=
+	t=1787244298; cv=none; b=Ss/WAFxhV95yB/wx3JlJSR95tQjhPET0YM6goFa5i/JCqMruSwyvFPv38JiHBvRrNvq4r6ofLtxvtJpZgx2LfKUPdS6y/az8SyTVjAAJrpdTjjm1YWh5mwpPNvzb9SwyzpVtsS3y2/5osrabPMIG4OXE3JM2ZoGAHTAA9VQNa4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244295; c=relaxed/simple;
-	bh=093twQ+Rr0O7B0Bq5xwEkfTOwa0Ql0WRKwPWYizeAsE=;
+	s=arc-20240116; t=1787244298; c=relaxed/simple;
+	bh=fWVM3KCecC6sY7OG53Ftenpy7d0zDXruRNUVUmLixjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SUhxhOXaGSjgnAdCIfRAvoPNOtKBMcHfXRFACsbqf/E2PCpAK8F7FhE8nwmzAzDHCuWF5gg4CKWerH5WrrAonP6w9ep+2WDPMk2G9ZP+Guggz8bqzPp3KU34n4PD/POw3vWdcLNl5UEKGtb7zkPtBv+kZMHud6JgKYV/br1JKRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18OlNSDx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FQ2GIid9JDO2IvjSMwOffcrwy8l/VUFKWc5bbneg04igW0B8ra8yT5sS3ccHvmUtie2JxQciz8cRL6kKHDHbEu3S/TnizgWFLFFIY8GoK0xFWyhpg8n4sVDtVikFSKwn9mFvxy7Mp1MwpmHY5XfDtbl/8KXkE8Fi+Ct9N8iLu+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEIOWSKW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18OlNSDx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7451F000E9;
-	Thu, 20 Aug 2026 16:44:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEIOWSKW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0471F000E9;
+	Thu, 20 Aug 2026 16:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244294;
-	bh=AVf24GgYkR7zYxzqMRhug3f/LOcsLMAKuRL3YvUbSfA=;
+	s=korg; t=1787244297;
+	bh=XRYy4IjZ9ewUIFDQnUJeScJYPDu02eXuGnvcDtWBCGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=18OlNSDxne1IBRzX5IjfMxJqp++5UeH48NNvCMIxkFMNRUO+cp1GsgElqkAi29At+
-	 8R3FtAEsBLxzVv9DNr1h9dmyR+LCfl5YpMTuwThGZiWIgI0+4ljY3DLF3xwS0Di5hx
-	 djY8D0asotTXY4+46PBByS+tQNi9t2017lvALM24=
+	b=kEIOWSKWFGQgAHkdVDFwP9SxKVK1zZxqY1sMgvHyn/PNqeaDYPtFFswE6NnVUsW6b
+	 /HJTbJRRjgbFXxlj+lKqcG37d9WYPyh6gYFxEU8PG+NgAjYjNxQa1g+rbiK/+gUZAZ
+	 qcK+J+fbKrEzCURBhJLyogEEGAXF6uJ1x7JAJ0p4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko bot <sashiko-bot@kernel.org>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Luis Chamberalin <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 119/235] firmware_loader: introduce __free() cleanup hanler
-Date: Thu, 20 Aug 2026 16:55:55 +0200
-Message-ID: <20260820145220.056282909@linuxfoundation.org>
+Subject: [PATCH 5.10 120/235] Input: ims-pcu - fix firmware leak in async update
+Date: Thu, 20 Aug 2026 16:55:56 +0200
+Message-ID: <20260820145220.085897791@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -53,65 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 8dde8fa0cc3edce73c050b9882d06c1a575f6402 ]
+[ Upstream commit d48795b5cd6828d36b707e8d62fc9e5c90e004ab ]
 
-Define cleanup handler using facilities from linux/cleanup.h to simplify
-error handling in code using firmware loader. This will allow writing code
-like this:
+The firmware object was not being released if validation failed.
+Use __free(firmware) to ensure the firmware is always released.
 
-int driver_update_firmware(...)
-{
-	const struct firmware *fw_entry __free(firmware) = NULL;
-	int error;
-
-	...
-	error = request_firmware(&fw_entry, fw_name, dev);
-	if (error) {
-		dev_err(dev, "failed to request firmware %s: %d",
-			fw_name, error);
-		return error;
-	}
-
-	error = check_firmware_valid(fw_entry);
-	if (error)
-		return error;
-
-	guard(mutex)(&instance->lock);
-
-	error = use_firmware(instance, fw);
-	if (error)
-		return error;
-
-	return 0;
-}
-
+Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko bot <sashiko-bot@kernel.org>
+Assisted-by: Gemini:gemini-3.1-pro
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Acked-by: Luis Chamberalin <mcgrof@kernel.org>
-Link: https://lore.kernel.org/r/ZaeQw7VXhnirX4pQ@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: d48795b5cd68 ("Input: ims-pcu - fix firmware leak in async update")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/firmware.h |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/input/misc/ims-pcu.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/include/linux/firmware.h
-+++ b/include/linux/firmware.h
-@@ -4,6 +4,7 @@
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -964,9 +964,10 @@ out:
+ 	return retval;
+ }
  
- #include <linux/types.h>
- #include <linux/compiler.h>
-+#include <linux/cleanup.h>
- #include <linux/gfp.h>
+-static void ims_pcu_process_async_firmware(const struct firmware *fw,
++static void ims_pcu_process_async_firmware(const struct firmware *_fw,
+ 					   void *context)
+ {
++	const struct firmware *fw __free(firmware) = _fw;
+ 	struct ims_pcu *pcu = context;
+ 	int error;
  
- #define FW_ACTION_NOHOTPLUG 0
-@@ -118,4 +119,6 @@ static inline int request_partial_firmwa
+@@ -987,8 +988,6 @@ static void ims_pcu_process_async_firmwa
+ 	ims_pcu_handle_firmware_update(pcu, fw);
+ 	mutex_unlock(&pcu->cmd_mutex);
  
- int firmware_request_cache(struct device *device, const char *name);
- 
-+DEFINE_FREE(firmware, struct firmware *, release_firmware(_T))
-+
- #endif
+-	release_firmware(fw);
+-
+ out:
+ 	complete(&pcu->async_firmware_done);
+ }
 
 
