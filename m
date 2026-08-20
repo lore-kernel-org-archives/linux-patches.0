@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB72237AA7D;
-	Thu, 20 Aug 2026 17:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2149947141A;
+	Thu, 20 Aug 2026 17:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247399; cv=none; b=HowBTvOlchW5+W5RkHB4LPIwRMBmKFPkJ6sSeLvZsO6UYsRxTzoGEaydVBF/f7/zHjPapYJY1XofnRgBwTqoMw415iEzad9UGgadP0MTrwvEpmiFX+pnf2Fv+TssTPAxJ4JEg3g1hrxg/IHH/t3q44B2SwkcnIs+I+zh6hCY95I=
+	t=1787247402; cv=none; b=e9rSqjUQJM/PF7NVZ1EPkQTxH7wrX0cpnNvrs2MNThV/aPoEZqjgQN0Ni8Br5e/SgmX0tcnqAHZMjnNm5/NG4Xdg0WEP0LPJDeVeOoPprlW2kVYGwtaWa+eqAZ6tfkGAlkLk/e0fV8wc9O2aLnDR8ECSOJ6DodfbA++bWYtdGsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247399; c=relaxed/simple;
-	bh=AXP99IRtWD5Q3+OP4ejNuOMvLVDURoYsebev8P+2akk=;
+	s=arc-20240116; t=1787247402; c=relaxed/simple;
+	bh=8Eljjfz5jlfvByySGnsFDgCrvxbWqCluU8K9rnQ0Hi8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Opsj7JzevcmTjUNX2Q0bF0Txt+7qsQJgVBnHjX1R48BzS2ddKIRa67l7PXtMi4/MpHZHPypnXNHhgZIh1S6jeWEFeSzrmngN4zaTWL0kTP/ZF4U2KmglNlwPLmQ8n4MDFSm8/dRb9W0igYInaxtYIEDTZvI7//Y/4dZYBqD70F0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ml9YfTVG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aP4ct7Zn0j5S/WQKuD6m01Dq7204NM3q3lC8wctwMPNaMUjvHYbi+Uj5Yu5qqr38NQNnCXEKnOGzl4iPcuKR2Ks9zxYTCMvD/zUn0RiAGs9PPXxBkVE3QcjYX5zK9ZORj1Wgm+1vojezRufXZ0NX+Cy6AoGVxV4gJ67UoJDn2CM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=owRVrnDx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ml9YfTVG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 359F41F000E9;
-	Thu, 20 Aug 2026 17:36:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="owRVrnDx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C58E1F000E9;
+	Thu, 20 Aug 2026 17:36:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247397;
-	bh=bUofwmjheBe7sIzinwm00nnv8leQCNajfng1c0F0Mu0=;
+	s=korg; t=1787247400;
+	bh=EL1vZI0rDWbJxdpTBpzhbPC3Q1pF1nVc/ZE5VZxrvII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ml9YfTVGy0XpKP4yLwaOBL9oc2BGa+pqon8VdZp6R/e/Z2VC50JRKxguZyTnmHhu+
-	 ZDvcLqEjuUq/CJeOKrlfeo/iYMbBNfr2hGaqJ/EroDBK+N3USiytIyFKDXDBSVLTsC
-	 NKgz/kclAKvWglOvr0sE4oSJCqXEYMnT/c6b0qLU=
+	b=owRVrnDx3/NcsDFxA+GOz/q0WgyxfKkMd4A8Suw+irTn++h8HAuR4lRalM4P5CRA/
+	 xxYNPAsMLuhqLDzKm11Vydfyl8zD0RL8Uu03z1AEirtAH2vznmoHiY4Xb0aoajoO6i
+	 /JAbxTKFxPWat9UBstRTZSeO1n0Qz1eEit75kb4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erni Sri Satya Vennela <ernis@linux.microsoft.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/166] net: mana: Fix EQ leak in mana_remove on NULL port
-Date: Thu, 20 Aug 2026 16:54:23 +0200
-Message-ID: <20260820145211.328330007@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.6 005/166] selinux: require every boolean value to be defined
+Date: Thu, 20 Aug 2026 16:54:24 +0200
+Message-ID: <20260820145211.358475685@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -53,60 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 65267c9c4f28199985505977bc2c628c82fc50ef ]
+commit a93d37a09b863810653f93d371fb197457d59deb upstream.
 
-In mana_remove(), when a NULL port is encountered in the port iteration
-loop, 'goto out' skips the mana_destroy_eq(ac) call, leaking the event
-queues allocated earlier by mana_create_eq().
+p_bools.nprim comes from the policy image independently of how many
+booleans follow it, and cond_index_bool() fills bool_val_to_struct[] at
+value - 1, so a count larger than the values present leaves NULL entries.
+Every user of that array then walks it by index and dereferences each
+entry: cond_evaluate_expr() on the access-vector path,
+security_get_bools() and security_get_bool_value() behind selinuxfs, and
+security_set_bools(). A sparse class value is absorbed by
+policydb_class_isvalid() and its siblings; booleans have no such
+predicate, and no consumer that could use one.
 
-This can happen when mana_probe_port() fails for port 0, leaving
-ac->ports[0] as NULL. On driver unload or error cleanup, mana_remove()
-hits the NULL entry and jumps past mana_destroy_eq().
+Reject a boolean value that no boolean defines, once, where the array is
+built. Conforming policies define every boolean they declare and are
+unaffected.
 
-Change 'goto out' to 'break' so the for-loop exits normally and
-mana_destroy_eq() is always reached. Remove the now-unreferenced out:
-label.
-
-Fixes: 1e2d0824a9c3 ("net: mana: Add support for EQ sharing")
-Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
-Link: https://patch.msgid.link/20260420124741.1056179-6-ernis@linux.microsoft.com
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ hmahfooz: resolve conflict in mana_remove() due to missing commit
-  3b194343c250 ("net: mana: Implement ndo_tx_timeout and serialize
-  queue resets per port.") ]
-Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ security/selinux/ss/policydb.c |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
-index ec5d38164d41b..2808527315fe5 100644
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -2931,7 +2931,7 @@ void mana_remove(struct gdma_dev *gd, bool suspending)
- 		if (!ndev) {
- 			if (i == 0)
- 				dev_err(dev, "No net device to remove\n");
--			goto out;
-+			break;
- 		}
+--- a/security/selinux/ss/policydb.c
++++ b/security/selinux/ss/policydb.c
+@@ -715,6 +715,7 @@ static inline void symtab_hash_eval(stru
+ static int policydb_index(struct policydb *p)
+ {
+ 	int i, rc;
++	u32 v;
  
- 		/* All cleanup actions should stay after rtnl_lock(), otherwise
-@@ -2958,7 +2958,7 @@ void mana_remove(struct gdma_dev *gd, bool suspending)
+ 	if (p->mls_enabled)
+ 		pr_debug("SELinux:  %d users, %d roles, %d types, %d bools, %d sens, %d cats\n",
+@@ -770,6 +771,24 @@ static int policydb_index(struct policyd
+ 		if (rc)
+ 			goto out;
  	}
- 
- 	mana_destroy_eq(ac);
--out:
 +
- 	mana_gd_deregister_device(gd);
- 
- 	if (suspending)
--- 
-2.53.0
-
++	/*
++	 * A sparse class value is absorbed by policydb_class_isvalid() and
++	 * its siblings, but no such predicate exists for booleans: every
++	 * user of bool_val_to_struct[] walks it by index and dereferences
++	 * each entry -- cond_evaluate_expr(), the two getters and
++	 * security_set_bools() -- so an unclaimed one has no consumer that
++	 * can tolerate it.
++	 */
++	for (v = 0; v < p->p_bools.nprim; v++) {
++		if (!p->bool_val_to_struct[v]) {
++			pr_err("SELinux:  boolean %u is declared but not defined\n",
++			       v + 1);
++			rc = -EINVAL;
++			goto out;
++		}
++	}
++
+ 	rc = 0;
+ out:
+ 	return rc;
 
 
