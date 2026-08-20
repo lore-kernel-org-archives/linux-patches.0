@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E74635C681;
-	Thu, 20 Aug 2026 17:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5438146D2C9;
+	Thu, 20 Aug 2026 17:38:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247535; cv=none; b=VOd/Iuit7HJTgEpjl7N+1t6dHq5zRjSnjKrDGX57IXmR0OJRuaOI7MzkuWkV2AFeMBgyjlIuqg+cMxewiTzRvRJ0H7+uIdLeOYs3zRwFyYNxCHS7uNxGlQe+DV8qxn4MzH3uvjNcdBpa82T5RxMQ0uRVUFOuvCTSwa1FAM3+jVA=
+	t=1787247537; cv=none; b=HPOJQcqICC2cucqddx4FvYEdY/PsU11G1vPJr7s0pMKYr9ZvkaVS+sHopnOrexSZPOgczXGgmVVtao9f4z1FBp989kyNkzc1bgxj036uGx+CNF+sk9QuG8gn/0OeYbWaW4yBuPDNKnvaS0nGgbl/k/QaK9+GFdyUzXtwDsFKNCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247535; c=relaxed/simple;
-	bh=G9o3VBpt4uY3iTwwf+Xj4ju8wDJsM6Gz2ToUMapIOyY=;
+	s=arc-20240116; t=1787247537; c=relaxed/simple;
+	bh=5CUNyft9UkDHu6gBtgF2/1qES8KUQVBSAhJECTHth1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qG47S0eEaxtHIiDRoEWoDwc6d+qtgjRz1ahQy7frb3mvgXufWmWjuvScpRYEs4WyfYMT5TCW5t944fhVFm+BPmutZ149eVcu5cZWqRi+p28hBTiOLyYhmZr9O+/g02H/tAdW6/ZG6D6KYD7UB84rJXrpDpJfr+b44Ys4sQX+5L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QKmB20xx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P71kQIpozrQISvx/915A/Z4GuSV7oMkBPHREAmwA7izBZtCoZZp4QkBCuDDX2zdeNhFKsazcB2OhbMmFkmSpPW8xxeQt66uOfDeTj7J0N5/RMSGxrg11bVT/91IJVNusuLml/1OigQn9jYdVw3E1wnZW2Wcgj38Jscylcm2VnJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrEnoG1S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKmB20xx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D96151F000E9;
-	Thu, 20 Aug 2026 17:38:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrEnoG1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEEEB1F000E9;
+	Thu, 20 Aug 2026 17:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247533;
-	bh=LhL5FHzQmyyXzwxrqerLzrSveXPVFlPISUHbxKLmCP0=;
+	s=korg; t=1787247536;
+	bh=0Hgqx4FW3CvVg5n4rARXecf3KCBDxbv5lNhv1fdL3p8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QKmB20xxj4V/SFQNvu9ALBwCyO3bHEFN2yNh/MoF5nv962VHJmjPSCi8dY96uE3hG
-	 5p5gTXGTOmS5tFhMHQWqz7S9AOsBtlVULhFPL3Q0jTngt4tCB6OK1eSJ+wCnlK2IPS
-	 DHC/eRmyAba5qCznW0YDNdLlzB0YLZOORMMpgyzo=
+	b=DrEnoG1SwD6OG32McP5f79eUCpRb23NnBLCpMcloWMpfbcXBMAzKtf/mBSgJz9XIj
+	 RP+5zG9QVxPpNzjNIfEFS5kWHFCXd/c5FlM0NjGMIo0qRrGyvVNn4qRqBCqbbJzGIG
+	 hpaziWWWk+xJPwkfxpJzc62Ey8tMx2n2SiluhX3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 040/166] Input: sur40 - fix V4L error path cleanup
-Date: Thu, 20 Aug 2026 16:54:59 +0200
-Message-ID: <20260820145212.379027599@linuxfoundation.org>
+Subject: [PATCH 6.6 031/166] Input: synaptics-rmi4 - block s_input when F54 queue is busy
+Date: Thu, 20 Aug 2026 16:54:50 +0200
+Message-ID: <20260820145212.120345805@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -52,46 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 062dc4693e2c10d77de06f61e6f3faf37c0a8383 upstream.
+commit fbfd76746adc16d64be29ff113f673b70bc3f5c2 upstream.
 
-In sur40_probe(), if video_register_device() fails, the error path jumps to
-err_unreg_video. This incorrectly attempts to unregister a video device
-that was never successfully registered, and fails to free the V4L2 control
-handler (v4l2_ctrl_handler_free) that was initialized immediately prior.
+Changing the input (diagnostic report type) mid-stream changes the
+report size. Since V4L2 buffers are allocated based on the size at
+stream start, changing the input while streaming could lead to a
+heap buffer overflow if the new size is larger than the allocated
+buffers.
 
-Fix this by introducing an err_free_ctrl label to properly free the V4L2
-control handler and bypass video_unregister_device() when video device
-registration fails.
+Prevent this by blocking VIDIOC_S_INPUT with -EBUSY if the V4L2 queue
+is busy (streaming).
 
-Reported-by: sashiko-bot@kernel.org
+Fixes: 3a762dbd5347 ("[media] Input: synaptics-rmi4 - add support for F54 diagnostics")
 Cc: stable@vger.kernel.org
 Assisted-by: Antigravity:gemini-3.5-flash
-Link: https://patch.msgid.link/20260616051235.1549517-2-dmitry.torokhov@gmail.com
+Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Link: https://patch.msgid.link/20260626051802.4033172-5-dmitry.torokhov@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/sur40.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/input/rmi4/rmi_f54.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/input/touchscreen/sur40.c
-+++ b/drivers/input/touchscreen/sur40.c
-@@ -787,7 +787,7 @@ static int sur40_probe(struct usb_interf
- 	if (error) {
- 		dev_err(&interface->dev,
- 			"Unable to register video subdevice.");
--		goto err_unreg_video;
-+		goto err_free_ctrl;
- 	}
+--- a/drivers/input/rmi4/rmi_f54.c
++++ b/drivers/input/rmi4/rmi_f54.c
+@@ -447,7 +447,12 @@ static int rmi_f54_set_input(struct f54_
  
- 	/* register the polled input device */
-@@ -806,6 +806,8 @@ static int sur40_probe(struct usb_interf
+ static int rmi_f54_vidioc_s_input(struct file *file, void *priv, unsigned int i)
+ {
+-	return rmi_f54_set_input(video_drvdata(file), i);
++	struct f54_data *f54 = video_drvdata(file);
++
++	if (vb2_is_busy(&f54->queue))
++		return -EBUSY;
++
++	return rmi_f54_set_input(f54, i);
+ }
  
- err_unreg_video:
- 	video_unregister_device(&sur40->vdev);
-+err_free_ctrl:
-+	v4l2_ctrl_handler_free(&sur40->hdl);
- err_unreg_v4l2:
- 	v4l2_device_unregister(&sur40->v4l2);
- err_free_buffer:
+ static int rmi_f54_vidioc_g_input(struct file *file, void *priv,
 
 
