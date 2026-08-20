@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4016819E992;
-	Thu, 20 Aug 2026 17:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C04215075;
+	Thu, 20 Aug 2026 17:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248396; cv=none; b=ped+ELpLPIbG/yr84yksj0v1sN+fSdOKCsrzpGp1i4lVgHUZ6K6eznIlqq1oC6N9zqTJy0jw/dtj4qkMgUAxyrsHFw50i2qQSzHB3KN90E2/MBUZWapQIXX4YVje3+dEh4R85QdaBOT/smTnTYX/MlidDMLWcWqNdcC5+05g0MM=
+	t=1787248399; cv=none; b=tmTeMuY4Ay6Ojdm3oy6RtfVlneYhC8IYWwLcOlRxFgRI5dL/3sl0mG6RLOh3LPMhU3l4ZwFeWCkaThcNFGLgZxMADa58wuVkpGAJyoPE2pLtARboGM7yWH3xkJ/1szhR7ugdhiRMrOWyvIikYxviJxypx5/9sZWMSNmHmy0zY5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248396; c=relaxed/simple;
-	bh=r2Dt7n7eRiNe0VuZqFpcenzIuOgWW12lpzWcAdBk7to=;
+	s=arc-20240116; t=1787248399; c=relaxed/simple;
+	bh=BmcfrFvg3tlC2ZfTktCBJV4na7OXq8KQaz9kDxVuXSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uMYsVWPgDgiqBd8SRVbm65U8mmiLo7JkYUaS5XXxLLiymvFvGj0fi3Ejhkq0YWWZHNE7jVFlbt9PG3fzEDf/x247l477WIwpDIVjqRpDtvcQNjPqA5VFdddrZQe5ZQDEsRRj4tyy6OAJQHBXmN5fKmIQV5gdlmS2YRA2+eTiGBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vmjNkYLR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XM3O9XSISwXzpGbmWi/+c1jabYTXy8PMkkoOSAYy54YniSwPX4NF58zFi/MtL5xaJvrlK/blwLWoZZUwKxMTcF2IjvBVho7P0eOh6w5HC9zZZSwvoNz7Mdc3LN4bl+Zv4rQ0rkv/sqmT3egSnctrJIxJM876nqB/iS6Dazihsls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9ga9Jve; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vmjNkYLR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB481F000E9;
-	Thu, 20 Aug 2026 17:53:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9ga9Jve"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B1EE1F000E9;
+	Thu, 20 Aug 2026 17:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248395;
-	bh=R/pdB3aja3D4AnmlBxamxPodPea8pLbdAz0x+Pn0jqE=;
+	s=korg; t=1787248398;
+	bh=j1zz+Jbuz3Db+gGzZfgnrN+kmlw9J21WN5yvdmusJHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vmjNkYLRdi8H9ViNLJiuX4iWEOacHNazmCM5XVSPEibIpQZwMkv2/XgHvz7zu29sQ
-	 L1xDjlGNzfFZRQn2KzVyQL/AGTQF81Czg8AcPNDNxsWys616UXbjBEyKjO4DB5sxux
-	 4rJqs/wRzWsiX0abvK2Pgjp6vlZYn7/i6J5S0qq8=
+	b=V9ga9JvesP3r/XTBGgr83UZLpkngF5a69DE9Ui27BZbSKcJfYq20Z3iy0281uGjjZ
+	 CFVkrA/H8Mc+9hto975VDzTvX4nXByqnykL/6mmjcfN7KVnZ4FODaGZ6JsznnjDzHy
+	 WBgwqrJFmuWsnf0SQJtMBmsk4inzHpByvl2Pbyqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Milind Changire <mchangir@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 213/303] libceph: add doutc and *_client debug macros support
-Date: Thu, 20 Aug 2026 16:55:49 +0200
-Message-ID: <20260820145259.794071746@linuxfoundation.org>
+Subject: [PATCH 6.1 214/303] ceph: pass the mdsc to several helpers
+Date: Thu, 20 Aug 2026 16:55:50 +0200
+Message-ID: <20260820145259.826289271@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -55,13 +55,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Xiubo Li <xiubli@redhat.com>
 
-[ Upstream commit 5c5f0d2b5f92c47baf82b9b211e27edd7d195158 ]
+[ Upstream commit 197b7d792d6aead2e30d4b2c054ffabae2ed73dc ]
 
-This will help print the fsid and client's global_id in debug logs,
-and also print the function names.
-
-[ idryomov: %lld -> %llu, leading space for doutc(), don't include
-  __func__ in pr_*() variants ]
+We will use the 'mdsc' to get the global_id in the following commits.
 
 Link: https://tracker.ceph.com/issues/61590
 Signed-off-by: Xiubo Li <xiubli@redhat.com>
@@ -72,69 +68,380 @@ Stable-dep-of: 50958bb928ba ("ceph: fix hanging __ceph_get_caps() with stale mds
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/ceph/ceph_debug.h |   38 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ fs/ceph/caps.c              |   15 +++++++++------
+ fs/ceph/debugfs.c           |    4 ++--
+ fs/ceph/dir.c               |    2 +-
+ fs/ceph/file.c              |    2 +-
+ fs/ceph/mds_client.c        |   38 +++++++++++++++++++++-----------------
+ fs/ceph/mds_client.h        |    3 ++-
+ fs/ceph/mdsmap.c            |    3 ++-
+ fs/ceph/snap.c              |   16 ++++++++++------
+ fs/ceph/super.h             |    3 ++-
+ include/linux/ceph/mdsmap.h |    5 ++++-
+ 10 files changed, 54 insertions(+), 37 deletions(-)
 
---- a/include/linux/ceph/ceph_debug.h
-+++ b/include/linux/ceph/ceph_debug.h
-@@ -19,12 +19,25 @@
- 	pr_debug("%.*s %12.12s:%-4d : " fmt,				\
- 		 8 - (int)sizeof(KBUILD_MODNAME), "    ",		\
- 		 kbasename(__FILE__), __LINE__, ##__VA_ARGS__)
-+#  define doutc(client, fmt, ...)					\
-+	pr_debug("%.*s %12.12s:%-4d : [%pU %llu] " fmt,			\
-+		 8 - (int)sizeof(KBUILD_MODNAME), "    ",		\
-+		 kbasename(__FILE__), __LINE__,				\
-+		 &client->fsid, client->monc.auth->global_id,		\
-+		 ##__VA_ARGS__)
- # else
- /* faux printk call just to see any compiler warnings. */
- #  define dout(fmt, ...)	do {				\
- 		if (0)						\
- 			printk(KERN_DEBUG fmt, ##__VA_ARGS__);	\
- 	} while (0)
-+#  define doutc(client, fmt, ...)	do {			\
-+		if (0)						\
-+			printk(KERN_DEBUG "[%pU %llu] " fmt,	\
-+			&client->fsid,				\
-+			client->monc.auth->global_id,		\
-+			##__VA_ARGS__);				\
-+		} while (0)
- # endif
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -1176,7 +1176,8 @@ void __ceph_remove_cap(struct ceph_cap *
+ 	}
+ }
  
- #else
-@@ -33,7 +46,32 @@
-  * or, just wrap pr_debug
+-void ceph_remove_cap(struct ceph_cap *cap, bool queue_release)
++void ceph_remove_cap(struct ceph_mds_client *mdsc, struct ceph_cap *cap,
++		     bool queue_release)
+ {
+ 	struct ceph_inode_info *ci = cap->ci;
+ 	struct ceph_fs_client *fsc;
+@@ -1317,6 +1318,8 @@ static void encode_cap_msg(struct ceph_m
   */
- # define dout(fmt, ...)	pr_debug(" " fmt, ##__VA_ARGS__)
-+# define doutc(client, fmt, ...)					\
-+	pr_debug(" [%pU %llu] %s: " fmt, &client->fsid,			\
-+		 client->monc.auth->global_id, __func__, ##__VA_ARGS__)
+ void __ceph_remove_caps(struct ceph_inode_info *ci)
+ {
++	struct inode *inode = &ci->netfs.inode;
++	struct ceph_mds_client *mdsc = ceph_inode_to_client(inode)->mdsc;
+ 	struct rb_node *p;
  
- #endif
+ 	/* lock i_ceph_lock, because ceph_d_revalidate(..., LOOKUP_RCU)
+@@ -1326,7 +1329,7 @@ void __ceph_remove_caps(struct ceph_inod
+ 	while (p) {
+ 		struct ceph_cap *cap = rb_entry(p, struct ceph_cap, ci_node);
+ 		p = rb_next(p);
+-		ceph_remove_cap(cap, true);
++		ceph_remove_cap(mdsc, cap, true);
+ 	}
+ 	spin_unlock(&ci->i_ceph_lock);
+ }
+@@ -3900,7 +3903,7 @@ retry:
+ 		goto out_unlock;
  
-+#define pr_notice_client(client, fmt, ...)				\
-+	pr_notice("[%pU %llu]: " fmt, &client->fsid,			\
-+		  client->monc.auth->global_id, ##__VA_ARGS__)
-+#define pr_info_client(client, fmt, ...)				\
-+	pr_info("[%pU %llu]: " fmt, &client->fsid,			\
-+		client->monc.auth->global_id, ##__VA_ARGS__)
-+#define pr_warn_client(client, fmt, ...)				\
-+	pr_warn("[%pU %llu]: " fmt, &client->fsid,			\
-+		client->monc.auth->global_id, ##__VA_ARGS__)
-+#define pr_warn_once_client(client, fmt, ...)				\
-+	pr_warn_once("[%pU %llu]: " fmt, &client->fsid,			\
-+		     client->monc.auth->global_id, ##__VA_ARGS__)
-+#define pr_err_client(client, fmt, ...)					\
-+	pr_err("[%pU %llu]: " fmt, &client->fsid,			\
-+	       client->monc.auth->global_id, ##__VA_ARGS__)
-+#define pr_warn_ratelimited_client(client, fmt, ...)			\
-+	pr_warn_ratelimited("[%pU %llu]: " fmt, &client->fsid,		\
-+			    client->monc.auth->global_id, ##__VA_ARGS__)
-+#define pr_err_ratelimited_client(client, fmt, ...)			\
-+	pr_err_ratelimited("[%pU %llu]: " fmt, &client->fsid,		\
-+			   client->monc.auth->global_id, ##__VA_ARGS__)
+ 	if (target < 0) {
+-		ceph_remove_cap(cap, false);
++		ceph_remove_cap(mdsc, cap, false);
+ 		goto out_unlock;
+ 	}
+ 
+@@ -3935,7 +3938,7 @@ retry:
+ 				change_auth_cap_ses(ci, tcap->session);
+ 			}
+ 		}
+-		ceph_remove_cap(cap, false);
++		ceph_remove_cap(mdsc, cap, false);
+ 		goto out_unlock;
+ 	} else if (tsession) {
+ 		/* add placeholder for the export tagert */
+@@ -3952,7 +3955,7 @@ retry:
+ 			spin_unlock(&mdsc->cap_dirty_lock);
+ 		}
+ 
+-		ceph_remove_cap(cap, false);
++		ceph_remove_cap(mdsc, cap, false);
+ 		goto out_unlock;
+ 	}
+ 
+@@ -4065,7 +4068,7 @@ retry:
+ 					ocap->mseq, mds, le32_to_cpu(ph->seq),
+ 					le32_to_cpu(ph->mseq));
+ 		}
+-		ceph_remove_cap(ocap, (ph->flags & CEPH_CAP_FLAG_RELEASE));
++		ceph_remove_cap(mdsc, ocap, (ph->flags & CEPH_CAP_FLAG_RELEASE));
+ 	}
+ 
+ 	*old_issued = issued;
+--- a/fs/ceph/debugfs.c
++++ b/fs/ceph/debugfs.c
+@@ -81,7 +81,7 @@ static int mdsc_show(struct seq_file *s,
+ 		if (req->r_inode) {
+ 			seq_printf(s, " #%llx", ceph_ino(req->r_inode));
+ 		} else if (req->r_dentry) {
+-			path = ceph_mdsc_build_path(req->r_dentry, &pathlen,
++			path = ceph_mdsc_build_path(mdsc, req->r_dentry, &pathlen,
+ 						    &pathbase, 0);
+ 			if (IS_ERR(path))
+ 				path = NULL;
+@@ -100,7 +100,7 @@ static int mdsc_show(struct seq_file *s,
+ 		}
+ 
+ 		if (req->r_old_dentry) {
+-			path = ceph_mdsc_build_path(req->r_old_dentry, &pathlen,
++			path = ceph_mdsc_build_path(mdsc, req->r_old_dentry, &pathlen,
+ 						    &pathbase, 0);
+ 			if (IS_ERR(path))
+ 				path = NULL;
+--- a/fs/ceph/dir.c
++++ b/fs/ceph/dir.c
+@@ -1118,7 +1118,7 @@ static void ceph_async_unlink_cb(struct
+ 	if (result) {
+ 		int pathlen = 0;
+ 		u64 base = 0;
+-		char *path = ceph_mdsc_build_path(dentry, &pathlen,
++		char *path = ceph_mdsc_build_path(mdsc, dentry, &pathlen,
+ 						  &base, 0);
+ 
+ 		/* mark error on parent + clear complete */
+--- a/fs/ceph/file.c
++++ b/fs/ceph/file.c
+@@ -564,7 +564,7 @@ static void ceph_async_create_cb(struct
+ 	if (result) {
+ 		int pathlen = 0;
+ 		u64 base = 0;
+-		char *path = ceph_mdsc_build_path(req->r_dentry, &pathlen,
++		char *path = ceph_mdsc_build_path(mdsc, req->r_dentry, &pathlen,
+ 						  &base, 0);
+ 
+ 		pr_warn("async create failure path=(%llx)%s result=%d!\n",
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -1972,6 +1972,7 @@ out:
+  */
+ static int trim_caps_cb(struct inode *inode, int mds, void *arg)
+ {
++	struct ceph_mds_client *mdsc = ceph_sb_to_mdsc(inode->i_sb);
+ 	int *remaining = arg;
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+ 	int used, wanted, oissued, mine;
+@@ -2019,7 +2020,7 @@ static int trim_caps_cb(struct inode *in
+ 
+ 	if (oissued) {
+ 		/* we aren't the only cap.. just remove us */
+-		ceph_remove_cap(cap, true);
++		ceph_remove_cap(mdsc, cap, true);
+ 		(*remaining)--;
+ 	} else {
+ 		struct dentry *dentry;
+@@ -2384,8 +2385,8 @@ static inline  u64 __get_oldest_tid(stru
+  * Encode hidden .snap dirs as a double /, i.e.
+  *   foo/.snap/bar -> foo//bar
+  */
+-char *ceph_mdsc_build_path(struct dentry *dentry, int *plen, u64 *pbase,
+-			   int stop_on_nosnap)
++char *ceph_mdsc_build_path(struct ceph_mds_client *mdsc, struct dentry *dentry,
++			   int *plen, u64 *pbase, int stop_on_nosnap)
+ {
+ 	struct dentry *temp;
+ 	char *path;
+@@ -2462,9 +2463,9 @@ retry:
+ 	return path + pos;
+ }
+ 
+-static int build_dentry_path(struct dentry *dentry, struct inode *dir,
+-			     const char **ppath, int *ppathlen, u64 *pino,
+-			     bool *pfreepath, bool parent_locked)
++static int build_dentry_path(struct ceph_mds_client *mdsc, struct dentry *dentry,
++			     struct inode *dir, const char **ppath, int *ppathlen,
++			     u64 *pino, bool *pfreepath, bool parent_locked)
+ {
+ 	char *path;
+ 
+@@ -2479,7 +2480,7 @@ static int build_dentry_path(struct dent
+ 		return 0;
+ 	}
+ 	rcu_read_unlock();
+-	path = ceph_mdsc_build_path(dentry, ppathlen, pino, 1);
++	path = ceph_mdsc_build_path(mdsc, dentry, ppathlen, pino, 1);
+ 	if (IS_ERR(path))
+ 		return PTR_ERR(path);
+ 	*ppath = path;
+@@ -2491,6 +2492,7 @@ static int build_inode_path(struct inode
+ 			    const char **ppath, int *ppathlen, u64 *pino,
+ 			    bool *pfreepath)
+ {
++	struct ceph_mds_client *mdsc = ceph_sb_to_mdsc(inode->i_sb);
+ 	struct dentry *dentry;
+ 	char *path;
+ 
+@@ -2500,7 +2502,7 @@ static int build_inode_path(struct inode
+ 		return 0;
+ 	}
+ 	dentry = d_find_alias(inode);
+-	path = ceph_mdsc_build_path(dentry, ppathlen, pino, 1);
++	path = ceph_mdsc_build_path(mdsc, dentry, ppathlen, pino, 1);
+ 	dput(dentry);
+ 	if (IS_ERR(path))
+ 		return PTR_ERR(path);
+@@ -2513,10 +2515,11 @@ static int build_inode_path(struct inode
+  * request arguments may be specified via an inode *, a dentry *, or
+  * an explicit ino+path.
+  */
+-static int set_request_path_attr(struct inode *rinode, struct dentry *rdentry,
+-				  struct inode *rdiri, const char *rpath,
+-				  u64 rino, const char **ppath, int *pathlen,
+-				  u64 *ino, bool *freepath, bool parent_locked)
++static int set_request_path_attr(struct ceph_mds_client *mdsc, struct inode *rinode,
++				 struct dentry *rdentry, struct inode *rdiri,
++				 const char *rpath, u64 rino, const char **ppath,
++				 int *pathlen, u64 *ino, bool *freepath,
++				 bool parent_locked)
+ {
+ 	int r = 0;
+ 
+@@ -2525,7 +2528,7 @@ static int set_request_path_attr(struct
+ 		dout(" inode %p %llx.%llx\n", rinode, ceph_ino(rinode),
+ 		     ceph_snap(rinode));
+ 	} else if (rdentry) {
+-		r = build_dentry_path(rdentry, rdiri, ppath, pathlen, ino,
++		r = build_dentry_path(mdsc, rdentry, rdiri, ppath, pathlen, ino,
+ 					freepath, parent_locked);
+ 		dout(" dentry %p %llx/%.*s\n", rdentry, *ino, *pathlen,
+ 		     *ppath);
+@@ -2577,7 +2580,7 @@ static struct ceph_msg *create_request_m
+ 	int ret;
+ 	bool legacy = !(session->s_con.peer_features & CEPH_FEATURE_FS_BTIME);
+ 
+-	ret = set_request_path_attr(req->r_inode, req->r_dentry,
++	ret = set_request_path_attr(mdsc, req->r_inode, req->r_dentry,
+ 			      req->r_parent, req->r_path1, req->r_ino1.ino,
+ 			      &path1, &pathlen1, &ino1, &freepath1,
+ 			      test_bit(CEPH_MDS_R_PARENT_LOCKED,
+@@ -2588,7 +2591,7 @@ static struct ceph_msg *create_request_m
+ 	}
+ 
+ 	/* If r_old_dentry is set, then assume that its parent is locked */
+-	ret = set_request_path_attr(NULL, req->r_old_dentry,
++	ret = set_request_path_attr(mdsc, NULL, req->r_old_dentry,
+ 			      req->r_old_dentry_dir,
+ 			      req->r_path2, req->r_ino2.ino,
+ 			      &path2, &pathlen2, &ino2, &freepath2, true);
+@@ -3940,6 +3943,7 @@ out_unlock:
+  */
+ static int reconnect_caps_cb(struct inode *inode, int mds, void *arg)
+ {
++	struct ceph_mds_client *mdsc = ceph_sb_to_mdsc(inode->i_sb);
+ 	union {
+ 		struct ceph_mds_cap_reconnect v2;
+ 		struct ceph_mds_cap_reconnect_v1 v1;
+@@ -3957,7 +3961,7 @@ static int reconnect_caps_cb(struct inod
+ 	dentry = d_find_primary(inode);
+ 	if (dentry) {
+ 		/* set pathbase to parent dir when msg_version >= 2 */
+-		path = ceph_mdsc_build_path(dentry, &pathlen, &pathbase,
++		path = ceph_mdsc_build_path(mdsc, dentry, &pathlen, &pathbase,
+ 					    recon_state->msg_version >= 2);
+ 		dput(dentry);
+ 		if (IS_ERR(path)) {
+@@ -5312,7 +5316,7 @@ void ceph_mdsc_handle_mdsmap(struct ceph
+ 		return;
+ 	}
+ 
+-	newmap = ceph_mdsmap_decode(&p, end, ceph_msgr2(mdsc->fsc->client));
++	newmap = ceph_mdsmap_decode(mdsc, &p, end, ceph_msgr2(mdsc->fsc->client));
+ 	if (IS_ERR(newmap)) {
+ 		err = PTR_ERR(newmap);
+ 		goto bad_unlock;
+--- a/fs/ceph/mds_client.h
++++ b/fs/ceph/mds_client.h
+@@ -561,7 +561,8 @@ static inline void ceph_mdsc_free_path(c
+ 		__putname(path - (PATH_MAX - 1 - len));
+ }
+ 
+-extern char *ceph_mdsc_build_path(struct dentry *dentry, int *plen, u64 *base,
++extern char *ceph_mdsc_build_path(struct ceph_mds_client *mdsc,
++				  struct dentry *dentry, int *plen, u64 *base,
+ 				  int stop_on_nosnap);
+ 
+ extern void __ceph_mdsc_drop_dentry_lease(struct dentry *dentry);
+--- a/fs/ceph/mdsmap.c
++++ b/fs/ceph/mdsmap.c
+@@ -114,7 +114,8 @@ bad:
+  * Ignore any fields we don't care about (there are quite a few of
+  * them).
+  */
+-struct ceph_mdsmap *ceph_mdsmap_decode(void **p, void *end, bool msgr2)
++struct ceph_mdsmap *ceph_mdsmap_decode(struct ceph_mds_client *mdsc, void **p,
++				       void *end, bool msgr2)
+ {
+ 	struct ceph_mdsmap *m;
+ 	const void *start = *p;
+--- a/fs/ceph/snap.c
++++ b/fs/ceph/snap.c
+@@ -329,7 +329,8 @@ static int cmpu64_rev(const void *a, con
+ /*
+  * build the snap context for a given realm.
+  */
+-static int build_snap_context(struct ceph_snap_realm *realm,
++static int build_snap_context(struct ceph_mds_client *mdsc,
++			      struct ceph_snap_realm *realm,
+ 			      struct list_head *realm_queue,
+ 			      struct list_head *dirty_realms)
+ {
+@@ -425,7 +426,8 @@ fail:
+ /*
+  * rebuild snap context for the given realm and all of its children.
+  */
+-static void rebuild_snap_realms(struct ceph_snap_realm *realm,
++static void rebuild_snap_realms(struct ceph_mds_client *mdsc,
++				struct ceph_snap_realm *realm,
+ 				struct list_head *dirty_realms)
+ {
+ 	LIST_HEAD(realm_queue);
+@@ -451,7 +453,8 @@ static void rebuild_snap_realms(struct c
+ 			continue;
+ 		}
+ 
+-		last = build_snap_context(_realm, &realm_queue, dirty_realms);
++		last = build_snap_context(mdsc, _realm, &realm_queue,
++					  dirty_realms);
+ 		dout("%s %llx %p, %s\n", __func__, _realm->ino, _realm,
+ 		     last > 0 ? "is deferred" : !last ? "succeeded" : "failed");
+ 
+@@ -705,7 +708,8 @@ int __ceph_finish_cap_snap(struct ceph_i
+  * Queue cap_snaps for snap writeback for this realm and its children.
+  * Called under snap_rwsem, so realm topology won't change.
+  */
+-static void queue_realm_cap_snaps(struct ceph_snap_realm *realm)
++static void queue_realm_cap_snaps(struct ceph_mds_client *mdsc,
++				  struct ceph_snap_realm *realm)
+ {
+ 	struct ceph_inode_info *ci;
+ 	struct inode *lastinode = NULL;
+@@ -852,7 +856,7 @@ more:
+ 
+ 	/* rebuild_snapcs when we reach the _end_ (root) of the trace */
+ 	if (realm_to_rebuild && p >= e)
+-		rebuild_snap_realms(realm_to_rebuild, &dirty_realms);
++		rebuild_snap_realms(mdsc, realm_to_rebuild, &dirty_realms);
+ 
+ 	if (!first_realm)
+ 		first_realm = realm;
+@@ -870,7 +874,7 @@ more:
+ 		realm = list_first_entry(&dirty_realms, struct ceph_snap_realm,
+ 					 dirty_item);
+ 		list_del_init(&realm->dirty_item);
+-		queue_realm_cap_snaps(realm);
++		queue_realm_cap_snaps(mdsc, realm);
+ 	}
+ 
+ 	if (realm_ret)
+--- a/fs/ceph/super.h
++++ b/fs/ceph/super.h
+@@ -1188,7 +1188,8 @@ extern void ceph_add_cap(struct inode *i
+ 			 unsigned cap, unsigned seq, u64 realmino, int flags,
+ 			 struct ceph_cap **new_cap);
+ extern void __ceph_remove_cap(struct ceph_cap *cap, bool queue_release);
+-extern void ceph_remove_cap(struct ceph_cap *cap, bool queue_release);
++extern void ceph_remove_cap(struct ceph_mds_client *mdsc, struct ceph_cap *cap,
++			    bool queue_release);
+ extern void __ceph_remove_caps(struct ceph_inode_info *ci);
+ extern void ceph_put_cap(struct ceph_mds_client *mdsc,
+ 			 struct ceph_cap *cap);
+--- a/include/linux/ceph/mdsmap.h
++++ b/include/linux/ceph/mdsmap.h
+@@ -5,6 +5,8 @@
+ #include <linux/bug.h>
+ #include <linux/ceph/types.h>
+ 
++struct ceph_mds_client;
 +
- #endif
+ /*
+  * mds map - describe servers in the mds cluster.
+  *
+@@ -69,7 +71,8 @@ static inline bool ceph_mdsmap_is_laggy(
+ }
+ 
+ extern int ceph_mdsmap_get_random_mds(struct ceph_mdsmap *m);
+-struct ceph_mdsmap *ceph_mdsmap_decode(void **p, void *end, bool msgr2);
++struct ceph_mdsmap *ceph_mdsmap_decode(struct ceph_mds_client *mdsc, void **p,
++				       void *end, bool msgr2);
+ extern void ceph_mdsmap_destroy(struct ceph_mdsmap *m);
+ extern bool ceph_mdsmap_is_cluster_available(struct ceph_mdsmap *m);
+ 
 
 
