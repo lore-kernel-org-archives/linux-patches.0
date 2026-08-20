@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C2447F2C3;
-	Thu, 20 Aug 2026 17:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F332931C0;
+	Thu, 20 Aug 2026 17:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248376; cv=none; b=kzDXuOHZDIRYTzDA79XvdjOhFr2lHUeKOocuxJ8TMQxKK85NxYwTHjYWBs2OrshKxoUhqO4JZr6kh5ly+S0O92f4KzSWX1NpHIB/2N5xpzHEv+WqDLEwgQIZAibZxaQm3JLbOH94nSe6nj1SUKGh3rFAi9o+NI2EIJZWg/VB8Go=
+	t=1787248379; cv=none; b=jR6SeVQOHByhY9KRIscuDMkjGVFgD35Z3uYm8XSA37IiPd9pLj0rjccDGEG7YvfX84IUW82vrptJa4Z4ykzEWKeBJkpBbQuENlW/S1/NX2qPj8sYdZ0R6RZK8qggSZCzkGDoYe3t9mC0MncSogBdZ2Pe53rYvAmcwoSIz5zIqQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248376; c=relaxed/simple;
-	bh=Mqm6VAGZNo/8qBzaw2NXO4v73OZCFnFhU097tLQCj5c=;
+	s=arc-20240116; t=1787248379; c=relaxed/simple;
+	bh=fF1187nvmT84191KpdpCx7yRyVpWEKvIHn6FR1ALgA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LSWYoU8PCXgilG1wFb5XkN8jNdZz+Zi+Yb8YncMrRtOfwNFHtxc9kipWug5UO9XnwAvwShD3RpW7zGke4ln/KviRAc6qcA7jLv19fOkuTO06viaQCghZo4SU3gVkmFJJVau3QwuPHTe90vHvefso+tDx2kQC36VyJPxPXJSAPzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JON91KU5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mhygVh1mwYO4vmpXM9iKMX85e0MAd6iDepArGi0c9goZWPCSoyq6pV45I80rJL2dPbtCSWuEupfl7XW95jPXO4pv+2ySTWX0lAjbC1gsJB6B7vwWrl6nk+1KUaOQ+//tLPzZIa6GdjtHmYrWsAZfiF2gsEVKXa5L/XatFojPvKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqviLxxv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JON91KU5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF6E41F000E9;
-	Thu, 20 Aug 2026 17:52:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqviLxxv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 918E51F000E9;
+	Thu, 20 Aug 2026 17:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248375;
-	bh=+sSNx9ojtW+NKsTINzTeJfj3duCISv6QVIgkPdZ0iXc=;
+	s=korg; t=1787248378;
+	bh=WfY1Rj3Ey9LnsmhSL1Yv/Cq0xr5s5gGoUv3SJJIhcog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JON91KU5iCYsNgRz23FfOj+gV8qqpSGK26YidpMfR3WUk1kkWbLrcun84smx0H2f2
-	 o5hHh9rxBVUufRlydurXhXsnOIFQn8SFbIAZ83LpyMUUc7UcA3gYO3PChDzBO+/PHl
-	 rPon4GeUgzdaFVAUSSc8Od5E7HPkWqDp4z+ehgIo=
+	b=FqviLxxv6j10B2UkFv8c106rL0WjA7qskqLCHmkT3eWHm9LrIDUZh/vRA2aZiS58R
+	 jZIFAegu2wAMjTzRTkkjdtPQAqD87BkoyryqKpfX7qzVMeXteAuValKJY8lHB+Arkd
+	 T33apHLg7WjejX+hJ+1wbEQjgcUMWcKiVjrS1d/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 206/303] mptcp: add mptcp_userspace_pm_lookup_addr helper
-Date: Thu, 20 Aug 2026 16:55:42 +0200
-Message-ID: <20260820145259.577920753@linuxfoundation.org>
+Subject: [PATCH 6.1 207/303] mptcp: pm: use addr entry for get_local_id
+Date: Thu, 20 Aug 2026 16:55:43 +0200
+Message-ID: <20260820145259.608813533@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -54,150 +54,150 @@ Content-Transfer-Encoding: 8bit
 
 From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit e7b4083b90b7213902124d13fd1ed808360e32b1 ]
+[ Upstream commit 7462fe22cc74321eb663768848976d42eba3ddbb ]
 
-Like __lookup_addr() helper in pm_netlink.c, a new helper
-mptcp_userspace_pm_lookup_addr() is also defined in pm_userspace.c.
-It looks up the corresponding mptcp_pm_addr_entry address in
-userspace_pm_local_addr_list through the passed "addr" parameter
-and returns the found address entry.
+The following code in mptcp_userspace_pm_get_local_id() that assigns "skc"
+to "new_entry" is not allowed in BPF if we use the same code to implement
+the get_local_id() interface of a BFP path manager:
 
-This helper can be used in mptcp_userspace_pm_delete_local_addr(),
-mptcp_userspace_pm_set_flags(), mptcp_userspace_pm_get_local_id()
-and mptcp_userspace_pm_is_backup() to simplify the code.
+	memset(&new_entry, 0, sizeof(struct mptcp_pm_addr_entry));
+	new_entry.addr = *skc;
+	new_entry.addr.id = 0;
+	new_entry.flags = MPTCP_PM_ADDR_FLAG_IMPLICIT;
 
-Please note that with this change now list_for_each_entry() is used in
-mptcp_userspace_pm_append_new_local_addr(), not list_for_each_entry_safe(),
-but that's OK to do so because mptcp_userspace_pm_lookup_addr() only
-returns an entry from the list, the list hasn't been modified here.
+To solve the issue, this patch moves this assignment to "new_entry" forward
+to mptcp_pm_get_local_id(), and then passing "new_entry" as a parameter to
+both mptcp_pm_nl_get_local_id() and mptcp_userspace_pm_get_local_id().
+
+No behavioural changes intended.
 
 Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
 Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20241213-net-next-mptcp-pm-misc-cleanup-v1-1-ddb6d00109a8@kernel.org
+Link: https://patch.msgid.link/20250307-net-next-mptcp-pm-reorg-v1-1-abef20ada03b@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 9bc6d5e4ca9f ("mptcp: pm: userspace: fix use-after-free in get_local_id")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_userspace.c |   71 +++++++++++++++++++++++------------------------
- 1 file changed, 36 insertions(+), 35 deletions(-)
+ net/mptcp/pm.c           |    9 ++++++---
+ net/mptcp/pm_netlink.c   |   11 ++++-------
+ net/mptcp/pm_userspace.c |   17 ++++++-----------
+ net/mptcp/protocol.h     |    6 ++++--
+ 4 files changed, 20 insertions(+), 23 deletions(-)
 
+--- a/net/mptcp/pm.c
++++ b/net/mptcp/pm.c
+@@ -434,7 +434,7 @@ out_unlock:
+ 
+ int mptcp_pm_get_local_id(struct mptcp_sock *msk, struct sock_common *skc)
+ {
+-	struct mptcp_addr_info skc_local;
++	struct mptcp_pm_addr_entry skc_local = { 0 };
+ 	struct mptcp_addr_info msk_local;
+ 
+ 	if (WARN_ON_ONCE(!msk))
+@@ -444,10 +444,13 @@ int mptcp_pm_get_local_id(struct mptcp_s
+ 	 * addr
+ 	 */
+ 	mptcp_local_address((struct sock_common *)msk, &msk_local);
+-	mptcp_local_address((struct sock_common *)skc, &skc_local);
+-	if (mptcp_addresses_equal(&msk_local, &skc_local, false))
++	mptcp_local_address((struct sock_common *)skc, &skc_local.addr);
++	if (mptcp_addresses_equal(&msk_local, &skc_local.addr, false))
+ 		return 0;
+ 
++	skc_local.addr.id = 0;
++	skc_local.flags = MPTCP_PM_ADDR_FLAG_IMPLICIT;
++
+ 	if (mptcp_pm_is_userspace(msk))
+ 		return mptcp_userspace_pm_get_local_id(msk, &skc_local);
+ 	return mptcp_pm_nl_get_local_id(msk, &skc_local);
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1262,7 +1262,8 @@ static int mptcp_pm_nl_create_listen_soc
+ 	return 0;
+ }
+ 
+-int mptcp_pm_nl_get_local_id(struct mptcp_sock *msk, struct mptcp_addr_info *skc)
++int mptcp_pm_nl_get_local_id(struct mptcp_sock *msk,
++			     struct mptcp_pm_addr_entry *skc)
+ {
+ 	struct mptcp_pm_addr_entry *entry;
+ 	struct pm_nl_pernet *pernet;
+@@ -1271,7 +1272,7 @@ int mptcp_pm_nl_get_local_id(struct mptc
+ 	pernet = pm_nl_get_pernet_from_msk(msk);
+ 
+ 	rcu_read_lock();
+-	entry = __lookup_addr(pernet, skc);
++	entry = __lookup_addr(pernet, &skc->addr);
+ 	ret = entry ? entry->addr.id : -1;
+ 	rcu_read_unlock();
+ 	if (ret >= 0)
+@@ -1282,12 +1283,8 @@ int mptcp_pm_nl_get_local_id(struct mptc
+ 	if (!entry)
+ 		return -ENOMEM;
+ 
+-	entry->addr = *skc;
+-	entry->addr.id = 0;
++	*entry = *skc;
+ 	entry->addr.port = 0;
+-	entry->ifindex = 0;
+-	entry->flags = MPTCP_PM_ADDR_FLAG_IMPLICIT;
+-	entry->lsk = NULL;
+ 	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry, false);
+ 	if (ret < 0)
+ 		kfree(entry);
 --- a/net/mptcp/pm_userspace.c
 +++ b/net/mptcp/pm_userspace.c
-@@ -25,6 +25,19 @@ void mptcp_free_local_addr_list(struct m
- 	}
+@@ -150,27 +150,22 @@ int mptcp_userspace_pm_get_flags_and_ifi
  }
  
-+static struct mptcp_pm_addr_entry *
-+mptcp_userspace_pm_lookup_addr(struct mptcp_sock *msk,
-+			       const struct mptcp_addr_info *addr)
-+{
-+	struct mptcp_pm_addr_entry *entry;
-+
-+	list_for_each_entry(entry, &msk->pm.userspace_pm_local_addr_list, list) {
-+		if (mptcp_addresses_equal(&entry->addr, addr, false))
-+			return entry;
-+	}
-+	return NULL;
-+}
-+
- static int mptcp_userspace_pm_append_new_local_addr(struct mptcp_sock *msk,
- 						    struct mptcp_pm_addr_entry *entry,
- 						    bool needs_id)
-@@ -88,22 +101,20 @@ static int mptcp_userspace_pm_append_new
- static int mptcp_userspace_pm_delete_local_addr(struct mptcp_sock *msk,
- 						struct mptcp_pm_addr_entry *addr)
- {
--	struct mptcp_pm_addr_entry *entry, *tmp;
- 	struct sock *sk = (struct sock *)msk;
-+	struct mptcp_pm_addr_entry *entry;
- 
--	list_for_each_entry_safe(entry, tmp, &msk->pm.userspace_pm_local_addr_list, list) {
--		if (mptcp_addresses_equal(&entry->addr, &addr->addr, false)) {
--			/* TODO: a refcount is needed because the entry can
--			 * be used multiple times (e.g. fullmesh mode).
--			 */
--			list_del_rcu(&entry->list);
--			sock_kfree_s(sk, entry, sizeof(*entry));
--			msk->pm.local_addr_used--;
--			return 0;
--		}
--	}
--
--	return -EINVAL;
-+	entry = mptcp_userspace_pm_lookup_addr(msk, &addr->addr);
-+	if (!entry)
-+		return -EINVAL;
-+
-+	/* TODO: a refcount is needed because the entry can
-+	 * be used multiple times (e.g. fullmesh mode).
-+	 */
-+	list_del_rcu(&entry->list);
-+	sock_kfree_s(sk, entry, sizeof(*entry));
-+	msk->pm.local_addr_used--;
-+	return 0;
- }
- 
- static struct mptcp_pm_addr_entry *
-@@ -141,17 +152,12 @@ int mptcp_userspace_pm_get_flags_and_ifi
  int mptcp_userspace_pm_get_local_id(struct mptcp_sock *msk,
- 				    struct mptcp_addr_info *skc)
+-				    struct mptcp_addr_info *skc)
++				    struct mptcp_pm_addr_entry *skc)
  {
--	struct mptcp_pm_addr_entry *entry = NULL, *e, new_entry;
-+	struct mptcp_pm_addr_entry *entry = NULL, new_entry;
+-	struct mptcp_pm_addr_entry *entry = NULL, new_entry;
  	__be16 msk_sport =  ((struct inet_sock *)
  			     inet_sk((struct sock *)msk))->inet_sport;
++	struct mptcp_pm_addr_entry *entry;
  
  	spin_lock_bh(&msk->pm.lock);
--	list_for_each_entry(e, &msk->pm.userspace_pm_local_addr_list, list) {
--		if (mptcp_addresses_equal(&e->addr, skc, false)) {
--			entry = e;
--			break;
--		}
--	}
-+	entry = mptcp_userspace_pm_lookup_addr(msk, skc);
+-	entry = mptcp_userspace_pm_lookup_addr(msk, skc);
++	entry = mptcp_userspace_pm_lookup_addr(msk, &skc->addr);
  	spin_unlock_bh(&msk->pm.lock);
  	if (entry)
  		return entry->addr.id;
-@@ -171,15 +177,11 @@ bool mptcp_userspace_pm_is_backup(struct
- 				  struct mptcp_addr_info *skc)
- {
- 	struct mptcp_pm_addr_entry *entry;
--	bool backup = false;
-+	bool backup;
  
- 	spin_lock_bh(&msk->pm.lock);
--	list_for_each_entry(entry, &msk->pm.userspace_pm_local_addr_list, list) {
--		if (mptcp_addresses_equal(&entry->addr, skc, false)) {
--			backup = !!(entry->flags & MPTCP_PM_ADDR_FLAG_BACKUP);
--			break;
--		}
--	}
-+	entry = mptcp_userspace_pm_lookup_addr(msk, skc);
-+	backup = entry && !!(entry->flags & MPTCP_PM_ADDR_FLAG_BACKUP);
- 	spin_unlock_bh(&msk->pm.lock);
+-	memset(&new_entry, 0, sizeof(struct mptcp_pm_addr_entry));
+-	new_entry.addr = *skc;
+-	new_entry.addr.id = 0;
+-	new_entry.flags = MPTCP_PM_ADDR_FLAG_IMPLICIT;
++	if (skc->addr.port == msk_sport)
++		skc->addr.port = 0;
  
- 	return backup;
-@@ -593,13 +595,12 @@ int mptcp_userspace_pm_set_flags(struct
- 		goto set_flags_err;
+-	if (new_entry.addr.port == msk_sport)
+-		new_entry.addr.port = 0;
+-
+-	return mptcp_userspace_pm_append_new_local_addr(msk, &new_entry, true);
++	return mptcp_userspace_pm_append_new_local_addr(msk, skc, true);
+ }
  
- 	spin_lock_bh(&msk->pm.lock);
--	list_for_each_entry(entry, &msk->pm.userspace_pm_local_addr_list, list) {
--		if (mptcp_addresses_equal(&entry->addr, &loc->addr, false)) {
--			if (bkup)
--				entry->flags |= MPTCP_PM_ADDR_FLAG_BACKUP;
--			else
--				entry->flags &= ~MPTCP_PM_ADDR_FLAG_BACKUP;
--		}
-+	entry = mptcp_userspace_pm_lookup_addr(msk, &loc->addr);
-+	if (entry) {
-+		if (bkup)
-+			entry->flags |= MPTCP_PM_ADDR_FLAG_BACKUP;
-+		else
-+			entry->flags &= ~MPTCP_PM_ADDR_FLAG_BACKUP;
- 	}
- 	spin_unlock_bh(&msk->pm.lock);
- 
+ bool mptcp_userspace_pm_is_backup(struct mptcp_sock *msk,
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -927,8 +927,10 @@ bool mptcp_pm_add_addr_signal(struct mpt
+ bool mptcp_pm_rm_addr_signal(struct mptcp_sock *msk, unsigned int remaining,
+ 			     struct mptcp_rm_list *rm_list);
+ int mptcp_pm_get_local_id(struct mptcp_sock *msk, struct sock_common *skc);
+-int mptcp_pm_nl_get_local_id(struct mptcp_sock *msk, struct mptcp_addr_info *skc);
+-int mptcp_userspace_pm_get_local_id(struct mptcp_sock *msk, struct mptcp_addr_info *skc);
++int mptcp_pm_nl_get_local_id(struct mptcp_sock *msk,
++			     struct mptcp_pm_addr_entry *skc);
++int mptcp_userspace_pm_get_local_id(struct mptcp_sock *msk,
++				    struct mptcp_pm_addr_entry *skc);
+ bool mptcp_pm_is_backup(struct mptcp_sock *msk, struct sock_common *skc);
+ bool mptcp_pm_nl_is_backup(struct mptcp_sock *msk, struct mptcp_addr_info *skc);
+ bool mptcp_userspace_pm_is_backup(struct mptcp_sock *msk, struct mptcp_addr_info *skc);
 
 
