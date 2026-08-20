@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA8B3793CE;
-	Thu, 20 Aug 2026 16:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD703793CE;
+	Thu, 20 Aug 2026 16:49:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244552; cv=none; b=o0aUElidB//icyhyQCi5fHlbvT6Tvjewkn9hbUPSvKftDGG23fk3QfHtHLWdhhKWDewI9HZ/pdcJwSlQ/BUfJgr3KFynJsjiQipsx9IascagQHNof7liZXBdVnr1qZl/ffww3UGwQRyWMfz3cJ9LNXDhNH+yeTANkEaQxZfwOVI=
+	t=1787244555; cv=none; b=UVBycqYq7Jg3Nk+5HAQzXajydAIufhivT9Tuk60dpGDTAPfsoVDc4PDXyQv0gmXAutFmrHiHFo5WCcGqaCq5CBbXkDqPOMHdS76vihsjMm/nnhQWT+jvON0G06jhrV1bt8epazKCWtNQwh6MnprwiZPpQfAs7GJEnPliogmhN5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244552; c=relaxed/simple;
-	bh=U52qIjKP3CaRa04b3KqE89+YK+x7CMzIVtEVVy+rKSs=;
+	s=arc-20240116; t=1787244555; c=relaxed/simple;
+	bh=j8JnsLNQ4s6fYN1Jnr6pzRLN09ueE6cddoEUW0k42kA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sipNxiWwHbNyUaMdb5SlHrT+260zCKl0zBmN3MvQCABKRDorAzDruafdov8wXCJxO+Sta6VFdxiEvK7cayLVF8acnLCMaX71xCWylA4r+/uhcq+x0xgEhsUpTyMLSGQlpDROxyu02FL6D1X8Hr6wjGbZ/nqmBhq20Uy2EtlZtSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5u6fCRH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nmdX+w2fnH3fkXvSHU8DP2f44MC5xyAII4W9B0/j9TpLsJW2hpnLGuuVlPlKGTI1BgYezCuHRlw/qFw6/Q+PJVMGhzY3iun/WMaWXFVYQOKO/sGZ/AbwbOzWUqK4JvV2C7qkZcr18OuVfZ15N+scO7C84qC/cRk5Vxtg0VfrO+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oWJPJDu0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5u6fCRH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2AF1F000E9;
-	Thu, 20 Aug 2026 16:49:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oWJPJDu0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A597C1F000E9;
+	Thu, 20 Aug 2026 16:49:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244551;
-	bh=tE6bm6BEials16ai4q/pOkDKI1tZ24cwU7twQjzkR3Q=;
+	s=korg; t=1787244554;
+	bh=ALbneKN5MPeojh1i46sry8zwwtr/x1fzhSUT+jrpmIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S5u6fCRHAxC2xUVYGcGm48xeXnBK1JsRO2NsXxT2/HRfscmFUw8vZ10gxhvJFqYMn
-	 RdKMEWYCVDZdOKyJVULL7Mx7c9J1TTTj6FB7j71S9zpjDfLPJu0vMy4XkGI3H02akV
-	 tHmkXfK9sqsr5eE4g0CqQLSXw2fwGbEdslTvjLP4=
+	b=oWJPJDu0j25Fpz6kXSraIqjpTeBglegEu6QQ7J4gcc2XJ0HNG5RDp0rz/GDsa9Mtm
+	 tDQID5TowMZT9SeiTabp8BrLnDePZbMyUD+HXkHl4V0/2/nJWZEkIKecrw/+I0XddW
+	 CcD0h9Or48a+W5duwKRgg50XKgdCj95JY4KH/Vhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 181/235] libceph: bound pg_{temp,upmap,upmap_items} length to CEPH_PG_MAX_SIZE
-Date: Thu, 20 Aug 2026 16:56:57 +0200
-Message-ID: <20260820145222.013703801@linuxfoundation.org>
+Subject: [PATCH 5.10 208/235] hwmon: (npcm750-pwm-fan): stop fan timer on device detach
+Date: Thu, 20 Aug 2026 16:57:24 +0200
+Message-ID: <20260820145222.882020026@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -53,69 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit 9f00f9cf2be293efe899db67dc5272e3a9c62717 ]
+[ Upstream commit f27f6976ea269219c1259a7c2f8c6dfe782540a3 ]
 
-__decode_pg_temp() decodes an user-controlled length but only rejects
-values large enough to overflow the allocation; it does not bound it to
-CEPH_PG_MAX_SIZE. The helper backs both pg_temp and pg_upmap decoding, and
-apply_upmap()/get_temp_osds() later copy the decoded list into the fixed-size
-on-stack array struct ceph_osds.osds[CEPH_PG_MAX_SIZE]. A monitor that sends
-an OSDMap with a pg_temp/pg_upmap entry longer than 32 thus causes a stack
-out-of-bounds write.
+When a fan tach channel is present, npcm7xx_pwm_fan_probe() starts
+fan_timer. The timer callback polls tach state and rearms the timer, but
+the driver has no remove callback or devm cleanup action to stop it. On
+device detach, the devm-managed driver data and I/O mappings can be
+released while the timer is still pending or running.
 
-An OSD set for a single PG can never exceed CEPH_PG_MAX_SIZE, so reject longer
-entries at decode time. The bound is well below the old overflow threshold, so
-it also covers the allocation-size overflow the previous check guarded against.
+Register a devm cleanup action before starting the timer and shut the
+timer down synchronously from that action.
 
-  BUG: KASAN: stack-out-of-bounds in ceph_pg_to_up_acting_osds
-  Write of size 4 ... by task exploit
-   kasan_report (mm/kasan/report.c:595)
-   ceph_pg_to_up_acting_osds (net/ceph/osdmap.c:2617 net/ceph/osdmap.c:2833)
-   calc_target (net/ceph/osd_client.c:1638)
-   __submit_request (net/ceph/osd_client.c:2394)
-   ceph_osdc_start_request (net/ceph/osd_client.c:2490)
-   ceph_osdc_call (net/ceph/osd_client.c:5164)
-   rbd_dev_image_probe (drivers/block/rbd.c:6899)
-   do_rbd_add (drivers/block/rbd.c:7138)
-   ...
-  kernel BUG at net/ceph/osdmap.c:2670!
+This issue was found by a static analysis tool.
 
-[ idryomov: do the same in __decode_pg_upmap_items() ]
-
+Fixes: f1fd4a4db777 ("hwmon: Add NPCM7xx PWM and Fan driver")
 Cc: stable@vger.kernel.org
-Fixes: a303bb0e5834 ("libceph: introduce and switch to decode_pg_mapping()")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Link: https://lore.kernel.org/r/20260729100116.790-1-getshell@seu.edu.cn
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+[ changed `timer_shutdown_sync()` to `timer_delete_sync()` since the former is absent in 5.10 ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hwmon/npcm750-pwm-fan.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -1424,7 +1424,7 @@ static struct ceph_pg_mapping *__decode_
- 	ceph_decode_32_safe(p, end, len, e_inval);
- 	if (len == 0 && incremental)
- 		return NULL;	/* new_pg_temp: [] to remove */
--	if ((size_t)len > (SIZE_MAX - sizeof(*pg)) / sizeof(u32))
-+	if (len > CEPH_PG_MAX_SIZE)
- 		return ERR_PTR(-EINVAL);
+--- a/drivers/hwmon/npcm750-pwm-fan.c
++++ b/drivers/hwmon/npcm750-pwm-fan.c
+@@ -360,6 +360,11 @@ static void npcm7xx_fan_polling(struct t
+ 	add_timer(&data->fan_timer);
+ }
  
- 	ceph_decode_need(p, end, len * sizeof(u32), e_inval);
-@@ -1607,7 +1607,7 @@ static struct ceph_pg_mapping *__decode_
- 	u32 len, i;
- 
- 	ceph_decode_32_safe(p, end, len, e_inval);
--	if ((size_t)len > (SIZE_MAX - sizeof(*pg)) / (2 * sizeof(u32)))
-+	if (len > CEPH_PG_MAX_SIZE)
- 		return ERR_PTR(-EINVAL);
- 
- 	ceph_decode_need(p, end, 2 * len * sizeof(u32), e_inval);
++static void npcm7xx_fan_cleanup(void *timer)
++{
++	timer_delete_sync(timer);
++}
++
+ static inline void npcm7xx_fan_compute(struct npcm7xx_pwm_fan_data *data,
+ 				       u8 fan, u8 cmp, u8 fan_id, u8 flag_int,
+ 				       u8 flag_mode, u8 flag_clear)
+@@ -1003,6 +1008,12 @@ static int npcm7xx_pwm_fan_probe(struct
+ 				msecs_to_jiffies(NPCM7XX_FAN_POLL_TIMER_200MS);
+ 			timer_setup(&data->fan_timer,
+ 				    npcm7xx_fan_polling, 0);
++			ret = devm_add_action_or_reset(dev,
++						       npcm7xx_fan_cleanup,
++						       &data->fan_timer);
++			if (ret)
++				return ret;
++
+ 			add_timer(&data->fan_timer);
+ 			break;
+ 		}
 
 
