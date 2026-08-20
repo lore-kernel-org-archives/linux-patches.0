@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E77F19049B;
-	Thu, 20 Aug 2026 16:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E9D46D0BD;
+	Thu, 20 Aug 2026 16:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243479; cv=none; b=BnE9H5ejWomgm6JfuMpmqApwTb5nw3phto2dxrefIFgljTH4ZX/3a7lY84A6VNDgzdnplvzjvdxw5EViC97vxq/QHzaIp+czxJupKrqINOCbbH192xYkN39LgwG2nIvIXrz6QgrTQ6FTRIfLSrL/jIKPulSpp3HFqRtfLV+p6j4=
+	t=1787243482; cv=none; b=K7f3N1SV2Ma2Xe2OpB1aeXiDk/IqUQExk6enLeNqBMyMIVaiKl6y6L4ddJb0VzRt5wUTlGisaq0KiI/f4QDtr8TXf4j6ggd8ETgcZweiUiPaiWXFmS0dkl5oqUEkNa2Tecd0Xbh0Cs6tzLQH+JjuPmWkepOi1RS7YnoQ3Oea/T0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243479; c=relaxed/simple;
-	bh=G1xMaKKaX8UDyDDdR93RlQfZx1rJbEXO7Q8OnQC9dDE=;
+	s=arc-20240116; t=1787243482; c=relaxed/simple;
+	bh=Pl/C+1pXhCo6GYeVmG0+X703a9ge2D/OGMxRQh/QFps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TEezM1BYFtVABnKgCPf0Zfc7s46mfBivaOakbJn3SJQ7Y/RiOWSiBX8oIhJsK+9hESA1LPUKimVgxSsIJffBCbm+191HyIUdgX2rehZhlYDR90aR3TF5xLlqOVj6HzQt1B9cDhqPIC/VQbhIlsTL4L1oWneeoSn4R42cBn9xAhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTWcn7x5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M84cmnraTr65X574AqnGKaOMGTuTLPTwkj8UZZXJEn8+xTZW+3J2YkmZeZVtHEVIq8y1NBB5lOzAgdentwxVWsB4wVmjBYMn0r3hcP3IY+33QB2Ecp36BMOuCtF365ZoFVFBWNOJlCLph5Jv48QDTPZZamDpZetTXKOQhpu/S1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/cbenJv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTWcn7x5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86B91F000E9;
-	Thu, 20 Aug 2026 16:31:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/cbenJv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C26651F000E9;
+	Thu, 20 Aug 2026 16:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243478;
-	bh=HhYmv5yxTDbw2t/+U0EF7oen++7a070Ddk9GZU2F/RA=;
+	s=korg; t=1787243481;
+	bh=JC9SMMIBBQsjlJWw9uqkEhh2QyriMBjffN6YBwkFn6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BTWcn7x5Uwsz9xTTqc5fp/f2N20xjLuRR3tpbJPXSgBeMz8vOi1kzA9qG1eC8nBgF
-	 qLPuc7zY/Hng0SIEYAlom3PmIo2oj/bgWA9MXqlcLdb6lxrEyRpgcPN3601Qu1nse7
-	 fKg8JmSGxrWf30GEv3536QPpIjng6/NrKkRllaHE=
+	b=O/cbenJvxgKbgnhxesGpEXLjkq7+Z5QfyHwtefQB5f85L3GZ7+OGMb4wO4pea3uqT
+	 qVdzZAn5T19jN/QWisttIlsXb1mVGSj49Dx//893RxBnROIm2iFNsdD7Djc8spRmnp
+	 JzGwtEpQvGHcMxHMoOIRFwFoLiQNKPdH1r7vv9x8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Skripkin <paskripkin@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 107/272] fs/ntfs3: Make ntfs_update_mftmirr return void
-Date: Thu, 20 Aug 2026 16:54:51 +0200
-Message-ID: <20260820145234.479451547@linuxfoundation.org>
+Subject: [PATCH 5.15 108/272] fs/ntfs3: Undo critial modificatins to keep directory consistency
+Date: Thu, 20 Aug 2026 16:54:52 +0200
+Message-ID: <20260820145234.508366998@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -51,94 +50,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Skripkin <paskripkin@gmail.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit e66af07ca2b57e01dbf6001ae565ab40037b2df3 ]
+[ Upstream commit 63e92a0c5a0d5816803907a3e30a91ef72c903a5 ]
 
-None of callers check the return value of ntfs_update_mftmirr(), so make
-it return void to make code simpler.
+Affect xfstest 320.
 
-Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Stable-dep-of: 5e7b598660cf ("fs/ntfs3: bound copy_lcns dp->page_lcns[] index in analysis pass")
+Stable-dep-of: f1df9d771df4 ("ntfs3: validate split-point offset in indx_insert_into_buffer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fsntfs.c  |   20 +++++++-------------
- fs/ntfs3/ntfs_fs.h |    2 +-
- 2 files changed, 8 insertions(+), 14 deletions(-)
+ fs/ntfs3/index.c |   30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
---- a/fs/ntfs3/fsntfs.c
-+++ b/fs/ntfs3/fsntfs.c
-@@ -830,7 +830,7 @@ int ntfs_refresh_zone(struct ntfs_sb_inf
- /*
-  * ntfs_update_mftmirr - Update $MFTMirr data.
-  */
--int ntfs_update_mftmirr(struct ntfs_sb_info *sbi, int wait)
-+void ntfs_update_mftmirr(struct ntfs_sb_info *sbi, int wait)
- {
- 	int err;
- 	struct super_block *sb = sbi->sb;
-@@ -839,12 +839,12 @@ int ntfs_update_mftmirr(struct ntfs_sb_i
- 	u32 bytes;
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -1819,10 +1819,11 @@ indx_insert_into_buffer(struct ntfs_inde
+ 	struct indx_node *n1 = fnd->nodes[level];
+ 	struct INDEX_HDR *hdr1 = &n1->index->ihdr;
+ 	struct INDEX_HDR *hdr2;
+-	u32 to_copy, used;
++	u32 to_copy, used, used1;
+ 	CLST new_vbn;
+ 	__le64 t_vbn, *sub_vbn;
+ 	u16 sp_size;
++	void *hdr1_saved = NULL;
  
- 	if (!sb)
--		return -EINVAL;
-+		return;
+ 	/* Try the most easy case. */
+ 	e = fnd->level - 1 == level ? fnd->de[level] : NULL;
+@@ -1855,6 +1856,13 @@ indx_insert_into_buffer(struct ntfs_inde
+ 		return -ENOMEM;
+ 	memcpy(up_e, sp, sp_size);
  
- 	blocksize = sb->s_blocksize;
++	used1 = le32_to_cpu(hdr1->used);
++	hdr1_saved = kmemdup(hdr1, used1, GFP_NOFS);
++	if (!hdr1_saved) {
++		err = -ENOMEM;
++		goto out;
++	}
++
+ 	if (!hdr1->flags) {
+ 		up_e->flags |= NTFS_IE_HAS_SUBNODES;
+ 		up_e->size = cpu_to_le16(sp_size + sizeof(u64));
+@@ -1887,7 +1895,7 @@ indx_insert_into_buffer(struct ntfs_inde
+ 	hdr_insert_head(hdr2, de_t, to_copy);
  
- 	if (!(sbi->flags & NTFS_FLAGS_MFTMIRR))
--		return 0;
-+		return;
+ 	/* Remove all entries (sp including) from hdr1. */
+-	used = le32_to_cpu(hdr1->used) - to_copy - sp_size;
++	used = used1 - to_copy - sp_size;
+ 	memmove(de_t, Add2Ptr(sp, sp_size), used - le32_to_cpu(hdr1->de_off));
+ 	hdr1->used = cpu_to_le32(used);
  
- 	err = 0;
- 	bytes = sbi->mft.recs_mirr << sbi->record_bits;
-@@ -855,16 +855,13 @@ int ntfs_update_mftmirr(struct ntfs_sb_i
- 		struct buffer_head *bh1, *bh2;
- 
- 		bh1 = sb_bread(sb, block1++);
--		if (!bh1) {
--			err = -EIO;
+@@ -1917,8 +1925,6 @@ indx_insert_into_buffer(struct ntfs_inde
+ 	if (!level) {
+ 		/* Insert in root. */
+ 		err = indx_insert_into_root(indx, ni, up_e, NULL, ctx, fnd, 0);
+-		if (err)
 -			goto out;
--		}
-+		if (!bh1)
-+			return;
- 
- 		bh2 = sb_getblk(sb, block2++);
- 		if (!bh2) {
- 			put_bh(bh1);
--			err = -EIO;
+ 	} else {
+ 		/*
+ 		 * The target buffer's parent is another index buffer.
+@@ -1926,12 +1932,20 @@ indx_insert_into_buffer(struct ntfs_inde
+ 		 */
+ 		err = indx_insert_into_buffer(indx, ni, root, up_e, ctx,
+ 					      level - 1, fnd);
+-		if (err)
 -			goto out;
-+			return;
- 		}
- 
- 		if (buffer_locked(bh2))
-@@ -884,13 +881,10 @@ int ntfs_update_mftmirr(struct ntfs_sb_i
- 
- 		put_bh(bh2);
- 		if (err)
--			goto out;
-+			return;
++	}
++
++	if (err) {
++		/*
++		 * Undo critical operations.
++		 */
++		indx_mark_free(indx, ni, new_vbn >> indx->idx2vbn_bits);
++		memcpy(hdr1, hdr1_saved, used1);
++		indx_write(indx, ni, n1, 0);
  	}
  
- 	sbi->flags &= ~NTFS_FLAGS_MFTMIRR;
--
--out:
--	return err;
- }
+ out:
+ 	kfree(up_e);
++	kfree(hdr1_saved);
  
- /*
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -599,7 +599,7 @@ int ntfs_look_free_mft(struct ntfs_sb_in
- void ntfs_mark_rec_free(struct ntfs_sb_info *sbi, CLST rno, bool is_mft);
- int ntfs_clear_mft_tail(struct ntfs_sb_info *sbi, size_t from, size_t to);
- int ntfs_refresh_zone(struct ntfs_sb_info *sbi);
--int ntfs_update_mftmirr(struct ntfs_sb_info *sbi, int wait);
-+void ntfs_update_mftmirr(struct ntfs_sb_info *sbi, int wait);
- enum NTFS_DIRTY_FLAGS {
- 	NTFS_DIRTY_CLEAR = 0,
- 	NTFS_DIRTY_DIRTY = 1,
+ 	return err;
+ }
+@@ -1990,16 +2004,12 @@ int indx_insert_entry(struct ntfs_index
+ 		 */
+ 		err = indx_insert_into_root(indx, ni, new_de, fnd->root_de, ctx,
+ 					    fnd, undo);
+-		if (err)
+-			goto out;
+ 	} else {
+ 		/*
+ 		 * Found a leaf buffer, so we'll insert the new entry into it.
+ 		 */
+ 		err = indx_insert_into_buffer(indx, ni, root, new_de, ctx,
+ 					      fnd->level - 1, fnd);
+-		if (err)
+-			goto out;
+ 	}
+ 
+ out:
 
 
