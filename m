@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594803403F8;
-	Thu, 20 Aug 2026 17:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BE03812E4;
+	Thu, 20 Aug 2026 17:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247067; cv=none; b=rU5Y72fMYXyuGIJmjYDom3CjGjlC46X/Ho4XqyQkxUeCPZK6Xa6SKyLhyZ6Zy4f8HfyCswKHyhNGzNwz07jw58Xgdkc6gIH1IngvO30sHq+hUiHvH+dOIJsC101rXINJbdTJd2wZvORrer1INzVrBRT0iKctQ3P0bVIwzi7FdBU=
+	t=1787247070; cv=none; b=ZxhSUzJsNVIrylcJnmTw6bQXR0BppEG3eZX9yhUZKyQr5qGNbLSKydsJoqqdftUNSsKIVP2XolILDCCPdb8vvT8sU84fxIhMiKw6b4BuGtL88GPQPnHO9i079bD+XSeZkFgB4JNHsJ4p7IXdCv5pVOOttADzW+GaH2dZnUNUjj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247067; c=relaxed/simple;
-	bh=1QzUdm2MxLGqZr7o44/ws9I3u/57lpmOeXd9YJg+BD0=;
+	s=arc-20240116; t=1787247070; c=relaxed/simple;
+	bh=pVYKv6CUvRHoge2nhc4w8usofhUumZ+epFlMyloKoVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oUtRkLqaYax8K/Ys3hmi0lvLS3/Dc8dJ0VQThXWtNP7vWWtX5lW4YWzXjcxLzNY7gmehomVHQCRIbAbgcEVKGFNidOoyZk8et/4yb7sGyDB/zf+AHGZKIyHLlyMD5tp3KeBZfXY2r6TOHnBbpCT6TrkcUrDaKRrblrzKN4Scwpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JOM82G/l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OozdKZAPZTmSJ7BOQewSCyRv8RN4bP0Hvxfj749P343WLgI9caMZxJcoLLvNy2Vg+XltB+MX5rKp2xKibgg5OMTqmCXgwxzAWB+sXQqo8QEFGvNLRCaf3j3OqIwdHCJ/E+HKaCLgr3+7C5524ZrLNNUBbLwZdZC+Y2Zouv0/iS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CTfbCYK5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JOM82G/l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81BC1F000E9;
-	Thu, 20 Aug 2026 17:31:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTfbCYK5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903BE1F000E9;
+	Thu, 20 Aug 2026 17:31:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247066;
-	bh=mEvZVWPgQMjeljMy8zSnUlUFPFJienW5VeRocf+NVvk=;
+	s=korg; t=1787247069;
+	bh=AiKGyZqku0eyO1hxvzibszznB9nWUHDZtPStW3WQClg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JOM82G/lvxh5hs3mJ8Zks3kL/3ghvYZszuMNEftEwqUeFn1AGtVFkNNP0IKOUCWTV
-	 P058EL7a9ROJ6KDHA1qzdzppmA95IOS4xbfHg9dfypxpe5OntaNCesmWLFrTkbyq4Y
-	 SwK1PiSYJF21vVhudxCFd7jvJLnZ+qKMKGDt2qYg=
+	b=CTfbCYK5kq5OYeXkFLlGVd6WhdGENbtqRyvTw42qChiW82ECMPHb6AHD4yzwm1Cyj
+	 6Oyo324p7OsZ4v+6YgiQ3MhsdB+4Vcy+EtFdOk2y+hOWj77E5eyKOSzMVqFmfKtM0U
+	 54LRmFu4CzNOntgYRNiEX7rexGX7c59dmQs4w9XQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.12 136/220] ksmbd: validate minimum PDU size for transform requests
-Date: Thu, 20 Aug 2026 16:55:26 +0200
-Message-ID: <20260820145227.555956365@linuxfoundation.org>
+	Qi Tang <tpluszz77@gmail.com>,
+	Junxi Qian <qjx1298677004@gmail.com>,
+	Guidong Han <2045gemini@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 137/220] eventpoll: pin files while checking reverse paths
+Date: Thu, 20 Aug 2026 16:55:27 +0200
+Message-ID: <20260820145227.586002747@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -52,75 +53,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Guidong Han <2045gemini@gmail.com>
 
-[ Upstream commit cfc0b8e5080aec87700774e8568765eaa4b7b92b ]
+[ Upstream commit 8b7e8245e2293078f657521236ac92c045552e5a ]
 
-The receive path applies the minimum SMB2 PDU size check only when
-ProtocolId is SMB2_PROTO_NUMBER. A packet carrying
-SMB2_TRANSFORM_PROTO_NUM bypasses the check even when the negotiated
-dialect does not provide transform handling.
+Commit 319c15174757 ("epoll: take epitem list out of struct file")
+intentionally removed temporary file references from the reverse path
+check list. At the time, both epitems and their files were freed after
+an RCU grace period, so unlist_file() could obtain file->f_lock through
+an epitem while clear_tfile_check_list() held rcu_read_lock().
 
-On an SMB 2.1 connection, a short transform packet therefore reaches
-init_smb2_rsp_hdr(), which interprets the request as a full SMB2 header
-and reads beyond the request allocation. The copied fields can then be
-returned to the unauthenticated client.
+Commit 0ede61d8589c ("file: convert to SLAB_TYPESAFE_BY_RCU") made
+struct file SLAB_TYPESAFE_BY_RCU and removed its RCU-delayed freeing.
+RCU still protects the epitem, but no longer keeps the referenced file
+from being freed and reused. A concurrent close can therefore make
+unlist_file() lock or unlock f_lock in a recycled file object.
 
-Compression transforms are converted to ordinary SMB2 messages before
-protocol validation. After that conversion, validate ordinary SMB2
-requests against SMB2_MIN_SUPPORTED_PDU_SIZE and require encryption
-transform requests to contain both a transform header and an SMB2
-header. This rejects truncated requests before work allocation.
+This violates the documented SLAB_TYPESAFE_BY_RCU rule requiring a
+reference before acquiring an object's lock. The race was reproduced,
+causing a wild unlock of f_lock in a recycled file and breaking its
+mutual exclusion.
 
-Fixes: 368ba06881c3 ("ksmbd: check the validation of pdu_size in ksmbd_conn_handler_loop")
+Add ->file to epitems_head to remember the pinned file independently of
+->epitems. A concurrent EPOLL_CTL_DEL can empty ->epitems before the head
+is unlisted, leaving no epi->ffd.file from which to drop the reference.
+
+In list_file(), acquire the reference before adding the head to the
+check list. The caller either owns a reference or holds the ep->mtx for
+the epitem leading to the file. In the latter case, file_ref_get() can
+fail after the last reference is dropped, but eventpoll_release_file()
+must acquire the same mutex before the file can be freed. The dying leaf
+can be skipped because removing links cannot increase the reverse path
+count.
+
+In unlist_file(), epnested_mutex excludes another list_file() or
+unlist_file(), while head->next prevents a concurrent EPOLL_CTL_DEL from
+freeing the head. Save head->file locally, clear it with head->next
+under f_lock, and drop the reference after the RCU-protected operation.
+
+Christian Brauner <brauner@kernel.org> quotes:
+
+> SLAB_TYPESAFE_BY_RCU allows a slab slot to be reused while an RCU reader
+> still holds its old address. Once that address contains a new live
+> struct file, KASAN sees valid, unpoisoned memory and cannot distinguish
+> the stale object identity. CONFIG_DEBUG_SPINLOCK exposes the failure
+> instead.
+>
+> The failing interleaving is:
+>
+> CPU0: nested EPOLL_CTL_ADD             CPU1: close/open churn
+> ------------------------------------   ---------------------------------
+> p = hlist_first_rcu(&head->epitems)
+> epi = container_of(p, ...)
+>                                        close(victim)
+>                                          __fput()
+>                                            eventpoll_release_file()
+>                                            file_free(victim)
+>                                        // the slot is free; f_lock remains
+> spin_lock(&epi->ffd.file->f_lock)
+>                                        open() reuses the slot as new_file
+>                                          spin_lock_init(&new_file->f_lock)
+> spin_unlock(&epi->ffd.file->f_lock)     // wild unlock of new_file's lock
+>
+> CONFIG_DEBUG_SPINLOCK reports:
+>
+> BUG: spinlock already unlocked on CPU#0, poc_unlist/150
+>  lock: 0xffff8880067fb200, .magic: dead4ead, .owner: <none>/-1, .owner_cpu: -1
+> CPU: 0 UID: 1000 PID: 150 Comm: poc_unlist Not tainted 7.2.0-rc3-dirty #22 PREEMPTLAZY
+> Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+> Call Trace:
+>  <TASK>
+>  dump_stack_lvl+0x64/0x80
+>  do_raw_spin_unlock+0x75/0xb0
+>  _raw_spin_unlock+0xe/0x30
+>  clear_tfile_check_list+0x88/0xe0
+>  do_epoll_ctl_file+0x519/0xcf0
+>  ? __pfx_ep_ptable_queue_proc+0x10/0x10
+>  do_epoll_ctl+0x8f/0x100
+>  __x64_sys_epoll_ctl+0x6f/0xa0
+>  do_syscall_64+0xdc/0x520
+>  ? srso_alias_return_thunk+0x5/0xfbef5
+>  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+> RIP: 0033:0x42034e
+> Code: 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 49 89 ca b8 e9 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+> RSP: 002b:00007a657ff3c198 EFLAGS: 00000202 ORIG_RAX: 00000000000000e9
+> RAX: ffffffffffffffda RBX: 00007a657ff3ccdc RCX: 000000000042034e
+> RDX: 0000000000000003 RSI: 0000000000000001 RDI: 0000000000000004
+> RBP: 00007a657ff3c2f0 R08: 0000000000000000 R09: 00007a657ff3c6c0
+> R10: 00007a657ff3c1a4 R11: 0000000000000202 R12: 00007a657ff3c6c0
+> R13: ffffffffffffffb8 R14: 000000000000000d R15: 00007fffb7de0210
+>  </TASK>
+> ------------[ cut here ]------------
+>
+> unlist_file() does not appear as a separate frame because it was inlined
+> into clear_tfile_check_list(). This report was obtained with mdelay()
+> instrumentation immediately before spin_lock() and spin_unlock() in
+> unlist_file() to widen the two race windows.
+>
+> More importantly, this is a wild unlock. The stale unlock can target
+> f_lock of a different live file and invalidate mutual exclusion for
+> state protected by that lock. Turning this into a reliable exploit
+> would require precise scheduling and same-slot reuse and is likely
+> difficult, but the primitive is potentially exploitable.
+
+Reported-by: Qi Tang <tpluszz77@gmail.com>
+Reported-by: Junxi Qian <qjx1298677004@gmail.com>
+Fixes: 0ede61d8589c ("file: convert to SLAB_TYPESAFE_BY_RCU")
 Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-31063
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Guidong Han <2045gemini@gmail.com>
+Link: https://patch.msgid.link/20260718104406.27897-1-2045gemini@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/connection.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ fs/eventpoll.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -379,6 +379,8 @@ bool ksmbd_conn_alive(struct ksmbd_conn
- /* "+2" for BCC field (ByteCount, 2 bytes) */
- #define SMB1_MIN_SUPPORTED_PDU_SIZE (sizeof(struct smb_hdr) + 2)
- #define SMB2_MIN_SUPPORTED_PDU_SIZE (sizeof(struct smb2_pdu))
-+#define SMB2_TRANSFORM_MIN_SUPPORTED_PDU_SIZE	\
-+	(sizeof(struct smb2_transform_hdr) + sizeof(struct smb2_hdr))
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -404,11 +404,13 @@ static struct kmem_cache *pwq_cache __ro
  
- /**
-  * ksmbd_conn_handler_loop() - session thread to listen on new smb requests
-@@ -393,6 +395,7 @@ int ksmbd_conn_handler_loop(void *p)
- 	struct ksmbd_conn *conn = (struct ksmbd_conn *)p;
- 	struct ksmbd_transport *t = conn->transport;
- 	unsigned int pdu_size, max_allowed_pdu_size, max_req;
-+	__le32 proto;
- 	char hdr_buf[4] = {0,};
- 	int size;
+ /*
+  * List of files with newly added links, where we may need to limit the number
+- * of emanating paths. Protected by the epnested_mutex.
++ * of emanating paths. Protected by the epnested_mutex. The ->file field holds
++ * a reference to the associated file while the head is on the list.
+  */
+ struct epitems_head {
+ 	struct hlist_head epitems;
+ 	struct epitems_head *next;
++	struct file *file;
+ };
+ static struct epitems_head *tfile_check_list = EP_UNACTIVE_PTR;
  
-@@ -476,11 +479,14 @@ recheck:
- 		if (!ksmbd_smb_request(conn))
- 			break;
+@@ -426,6 +428,16 @@ static void list_file(struct file *file)
  
--		if (((struct smb2_hdr *)smb_get_msg(conn->request_buf))->ProtocolId ==
--		    SMB2_PROTO_NUMBER) {
--			if (pdu_size < SMB2_MIN_SUPPORTED_PDU_SIZE)
--				break;
--		}
-+		proto = *(__le32 *)smb_get_msg(conn->request_buf);
-+		if (proto == SMB2_PROTO_NUMBER &&
-+		    pdu_size < SMB2_MIN_SUPPORTED_PDU_SIZE)
-+			break;
-+
-+		if (proto == SMB2_TRANSFORM_PROTO_NUM &&
-+		    pdu_size < SMB2_TRANSFORM_MIN_SUPPORTED_PDU_SIZE)
-+			break;
+ 	head = container_of(file->f_ep, struct epitems_head, epitems);
+ 	if (!head->next) {
++		/*
++		 * The caller owns a reference to @file or holds the ep->mtx for the
++		 * epitem that led here. The latter blocks eventpoll_release_file()
++		 * before the file allocation can be freed and reused. A dying leaf
++		 * can be skipped since removing links cannot increase the reverse
++		 * path count.
++		 */
++		if (!atomic_long_inc_not_zero(&file->f_count))
++			return;
++		head->file = file;
+ 		head->next = tfile_check_list;
+ 		tfile_check_list = head;
+ 	}
+@@ -435,15 +447,18 @@ static void unlist_file(struct epitems_h
+ {
+ 	struct epitems_head *to_free = head;
+ 	struct hlist_node *p = rcu_dereference(hlist_first_rcu(&head->epitems));
++	struct file *file = head->file;
+ 	if (p) {
+ 		struct epitem *epi= container_of(p, struct epitem, fllink);
+ 		spin_lock(&epi->ffd.file->f_lock);
+ 		if (!hlist_empty(&head->epitems))
+ 			to_free = NULL;
+ 		head->next = NULL;
++		head->file = NULL;
+ 		spin_unlock(&epi->ffd.file->f_lock);
+ 	}
+ 	free_ephead(to_free);
++	fput(file);
+ }
  
- 		if (!default_conn_ops.process_fn) {
- 			pr_err("No connection request callback\n");
+ #ifdef CONFIG_SYSCTL
 
 
