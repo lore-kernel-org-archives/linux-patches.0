@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059A7218EBA;
-	Thu, 20 Aug 2026 17:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893A147887F;
+	Thu, 20 Aug 2026 17:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247116; cv=none; b=Kc9f3C7gaOyF4AysHEWlc9vpcmhAhoIfl358TCntqgWaBYZg4R/Sa8shrUKhGnp0qEdX1Ya5BGfKREffCUMBz8tzW45P+cYtLsJd1qkIWog1EeGksX1ay1tNjhmR0XN48DdW4Y/9arzqRqIDYCSEJ2bOFCOc3OjJWAKLFUfRhJk=
+	t=1787247118; cv=none; b=dTmLz9/hClklZ//U2g4j2CsDqRLF8M9U1j2iGNhlHqLruFcnX7tRGUqWP1665LtP8YI44H1GBQXuQjEFGDqIl8FPe+iA4xoxY92fx1pkE7SoevhWYOVmkzjrrqaLlq08Q0pS5hDWwmpaT7Y6G/XmGmEscg+8Md0/er/utoBnBeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247116; c=relaxed/simple;
-	bh=I02VD0IUsylFbeKxFLMK79oYUhwyI0Xkw3lyPbxUKIA=;
+	s=arc-20240116; t=1787247118; c=relaxed/simple;
+	bh=A90MgT9LDH9fpvFC+Ir3BKb9DeauvCYkxD9DA2rOePg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p4SVH0LPJEGZw73i/vFKCvcVwpZZT1UIrNLsbEJEBZMF6ad/w1bKM68/kI7UXPG5b5zcypSy/7KYaf/Y0B7WaUZa2beb1ayKcuBOVzfaTS8LHd0NWVbc9O45xW1+na2rmLHvrHOTBPIq0/x0XeJjbftY5UY39dlsL3Q3S4y83X0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iO7d8d+H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eUfOkLTRa27oxikfED5Hiz9NXi9g/5UXqvs8XfmVju7CMLfuKs5rMNt2q47Q7WlirDwcvgoDIEMzhCOEKpmNhYKst/iTjYAfUdP+UoJABytfyeOSBk4IoZ7+Vbm/BYBzAs6IbzxlNTHEPt7YB5IbVPRV/1dEskrzac6w8Y8MUpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEfjimjG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iO7d8d+H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166D11F000E9;
-	Thu, 20 Aug 2026 17:31:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEfjimjG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B631F000E9;
+	Thu, 20 Aug 2026 17:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247114;
-	bh=by6Z+RnGUXljLrZ++I+iQDDZTLOsu2lEWt1YInZyTpU=;
+	s=korg; t=1787247117;
+	bh=nLuYD57HxJMf01/KFZMOj3HdiGxCTZ990DMgY/0qWug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iO7d8d+HPEGTlNZ1E1BTCyUPPsZQOR+gwPp3A23UhPDK/lyObZ48b2OE2+SqG3tGg
-	 Cf1DT6tkTOvSdG5QKJiYoRBqr9MEtjiUN4zTMLkMQoEkjc5p/9eOpu0iSQG9ULPOS3
-	 0r8goA1gIviFeeJtcTLLXIJBU+oqQbltCEwohhPk=
+	b=kEfjimjGpNAJltcwL1UYqzLGy6PLwN+mxYlROAZqIZWhy1KGuikKSCN43O60uFn0R
+	 gth0n30rAq7teNzINVBnjCzP8oE+wuRyFM5UNar+c+3D0SM5VtEMHVBGzVOEP0+RgN
+	 d2idAIl3ZZOuNMbQtNvytN5vseUpirt9EbFy2cAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Song Liu <song@kernel.org>,
+	Paul Moore <paul@paul-moore.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 155/220] binfmt_misc: dont leak the user namespace when the mount fails
-Date: Thu, 20 Aug 2026 16:55:45 +0200
-Message-ID: <20260820145228.134433771@linuxfoundation.org>
+Subject: [PATCH 6.12 156/220] fsnotify, lsm: Decouple fsnotify from lsm
+Date: Thu, 20 Aug 2026 16:55:46 +0200
+Message-ID: <20260820145228.165172852@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -50,119 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Song Liu <song@kernel.org>
 
-[ Upstream commit b8206f516fe7cbe785cf44bf09c17c438d7c3cad ]
+[ Upstream commit 1cda52f1b4611f4daa9d89e69d9428fb4137dc3f ]
 
-bm_get_tree() takes a reference to the user namespace and hands it to
-get_tree_keyed() as the sget key. sget_fc() moves that reference into
-sb->s_fs_info and clears fc->s_fs_info, so from that point on the
-superblock owns it and bm_free() doesn't see it anymore.
+Currently, fsnotify_open_perm() is called from security_file_open().
+This is a a bit unexpected and creates otherwise unnecessary dependency
+of CONFIG_FANOTIFY_ACCESS_PERMISSIONS on CONFIG_SECURITY. Fix this by
+calling fsnotify_open_perm() directly.
 
-The superblock drops it in ->put_super(). But generic_shutdown_super()
-only calls ->put_super() from inside the if (sb->s_root) branch, so
-nothing releases it when bm_fill_super() fails:
-
-- The kzalloc_obj() failure leaves s_root NULL and the whole branch is
-  skipped.
-
-- A simple_fill_super() failure in the file loop leaves s_root set, but
-  s_op still points at simple_super_operations, which has no
-  ->put_super(). bm_fill_super() installs s_ops only once
-  simple_fill_super() returned success, and installing it earlier
-  wouldn't help either because simple_fill_super() overwrites s_op.
-
-Either way vfs_get_super() calls deactivate_locked_super() and the
-reference is gone for good. binfmt_misc mounts are available in a user
-namespace and both the inode and the dentry cache are SLAB_ACCOUNT, so
-an unprivileged caller under a tight memory cgroup can fail
-simple_fill_super() on demand and leak one user namespace per attempt.
-
-Drop the reference in ->kill_sb() instead, which runs unconditionally,
-the same way nfsd and rpc_pipefs release their keyed s_fs_info.
-
-That also stops ->put_super() from clearing s_fs_info while the
-superblock is still on @fs_supers. generic_shutdown_super() leaves it
-there on purpose so that sget_fc() keeps finding it until kill_sb() has
-run, but a NULL s_fs_info makes test_keyed_super() miss it, so a
-concurrent mount for the same user namespace skips the grab_super()
-wait and creates a second superblock for a namespace that is still
-being torn down.
-
-Link: https://patch.msgid.link/20260728-work-binfmt_misc-usernsleak-v1-1-dbd8d5e626e7@kernel.org
-Fixes: 21ca59b365c0 ("binfmt_misc: enable sandboxed mounts")
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Song Liu <song@kernel.org>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20241013002248.3984442-1-song@kernel.org
+Stable-dep-of: db1856ea9196 ("binfmt_misc: restore write access when removing an entry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_misc.c |   32 +++++++++++++++-----------------
- 1 file changed, 15 insertions(+), 17 deletions(-)
+ fs/notify/fanotify/Kconfig |    1 -
+ fs/open.c                  |    4 ++++
+ security/security.c        |    9 +--------
+ 3 files changed, 5 insertions(+), 9 deletions(-)
 
---- a/fs/binfmt_misc.c
-+++ b/fs/binfmt_misc.c
-@@ -958,18 +958,9 @@ static const struct file_operations bm_s
+--- a/fs/notify/fanotify/Kconfig
++++ b/fs/notify/fanotify/Kconfig
+@@ -15,7 +15,6 @@ config FANOTIFY
+ config FANOTIFY_ACCESS_PERMISSIONS
+ 	bool "fanotify permissions checking"
+ 	depends on FANOTIFY
+-	depends on SECURITY
+ 	default n
+ 	help
+ 	   Say Y here is you want fanotify listeners to be able to make permissions
+--- a/fs/open.c
++++ b/fs/open.c
+@@ -940,6 +940,10 @@ static int do_dentry_open(struct file *f
+ 	if (error)
+ 		goto cleanup_all;
  
- /* Superblock handling */
- 
--static void bm_put_super(struct super_block *sb)
--{
--	struct user_namespace *user_ns = sb->s_fs_info;
--
--	sb->s_fs_info = NULL;
--	put_user_ns(user_ns);
--}
--
- static const struct super_operations s_ops = {
- 	.statfs		= simple_statfs,
- 	.evict_inode	= bm_evict_inode,
--	.put_super	= bm_put_super,
- };
- 
- static int bm_fill_super(struct super_block *sb, struct fs_context *fc)
-@@ -1028,13 +1019,12 @@ static int bm_fill_super(struct super_bl
- 	/*
- 	 * When the binfmt_misc superblock for this userns is shutdown
- 	 * ->enabled might have been set to false and we don't reinitialize
--	 * ->enabled again in put_super() as someone might already be mounting
--	 * binfmt_misc again. It also would be pointless since by the time
--	 * ->put_super() is called we know that the binary type list for this
--	 * bintfmt_misc mount is empty making load_misc_binary() return
--	 * -ENOEXEC independent of whether ->enabled is true. Instead, if
--	 * someone mounts binfmt_misc for the first time or again we simply
--	 * reset ->enabled to true.
-+	 * ->enabled again during shutdown as someone might already be mounting
-+	 * binfmt_misc again. It also would be pointless since by then we know
-+	 * that the binary type list for this binfmt_misc mount is empty making
-+	 * load_misc_binary() return -ENOEXEC independent of whether ->enabled
-+	 * is true. Instead, if someone mounts binfmt_misc for the first time or
-+	 * again we simply reset ->enabled to true.
- 	 */
- 	misc->enabled = true;
- 
-@@ -1060,6 +1050,14 @@ static const struct fs_context_operation
- 	.get_tree	= bm_get_tree,
- };
- 
-+static void bm_kill_sb(struct super_block *sb)
-+{
-+	struct user_namespace *user_ns = sb->s_fs_info;
++	error = fsnotify_open_perm(f);
++	if (error)
++		goto cleanup_all;
 +
-+	kill_litter_super(sb);
-+	put_user_ns(user_ns);
-+}
-+
- static int bm_init_fs_context(struct fs_context *fc)
+ 	error = break_lease(file_inode(f), f->f_flags);
+ 	if (error)
+ 		goto cleanup_all;
+--- a/security/security.c
++++ b/security/security.c
+@@ -19,7 +19,6 @@
+ #include <linux/kernel.h>
+ #include <linux/kernel_read_file.h>
+ #include <linux/lsm_hooks.h>
+-#include <linux/fsnotify.h>
+ #include <linux/mman.h>
+ #include <linux/mount.h>
+ #include <linux/personality.h>
+@@ -3214,13 +3213,7 @@ int security_file_receive(struct file *f
+  */
+ int security_file_open(struct file *file)
  {
- 	fc->ops = &bm_context_ops;
-@@ -1076,7 +1074,7 @@ static struct file_system_type bm_fs_typ
- 	.name		= "binfmt_misc",
- 	.init_fs_context = bm_init_fs_context,
- 	.fs_flags	= FS_USERNS_MOUNT,
--	.kill_sb	= kill_litter_super,
-+	.kill_sb	= bm_kill_sb,
- };
- MODULE_ALIAS_FS("binfmt_misc");
+-	int ret;
+-
+-	ret = call_int_hook(file_open, file);
+-	if (ret)
+-		return ret;
+-
+-	return fsnotify_open_perm(file);
++	return call_int_hook(file_open, file);
+ }
  
+ /**
 
 
