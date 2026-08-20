@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5315747AF4D;
-	Thu, 20 Aug 2026 16:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3B7377A82;
+	Thu, 20 Aug 2026 16:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243434; cv=none; b=FERb77Ea7jRXMXCumA/gmJTvJpBNogGYEi1iqIFHPVBL5+zkfKeNHl1V+aQbRfCWEAPJkDccLUx5FPmKn6444qzAh6Y1ZmmvgITUUudT85Z1MdhFcTUxbzrHeT5R1rC7gVEL2gLuK0aCWGaFHBTdnHm2w54fokrhMRfbmIc48KE=
+	t=1787243437; cv=none; b=fXf9CDsVx5Z+/rYTLASuHLtN62N3+TmgqFn7XD80W+xOOpXGoNn90WOVUDzdPNHOMNyGdL7HSUE+IxOvQrFFBuVydo7V/qbYiHI9Cwew50jRu2+/QowMZWkFSKdrHVZP7tVRLF1DQdwVmSS8OUPfv1tVu0Gz8JqARxAEewKO07E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243434; c=relaxed/simple;
-	bh=VLE60Urw+ZO7cHWkQWvJ4a5mNCebkW9FXCPTKCoC3as=;
+	s=arc-20240116; t=1787243437; c=relaxed/simple;
+	bh=7jgFEpTG0fc0Zn+yFB6ucKSLs2IPlHkbga1AhBEcz6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IM72fVKmWev4mZfPOJY9pocj1RLbTKo8Bv3Gd2dvCwoc9meRMIXgpzSmuSlSXjquR1GNI74qqyJViF17J4jESYIGGtxv5+zBLBlw06i4hOusqZaS8qFDP+/m1YZkCqqAPQiq6CZbH2Ef+uGhGbojn38K/oF+ifwZdryxBvaFCU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=05KILfyL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PgDLKuQ6JTaFAkfdURPHFhxAaHUxnxPnZ3WC2TFvO+Hlbsgp3W5dpQnuQkdrxNiAvnuFPzke0+mZZxTOTKQd+7Euct2VNI5uO2Qr2g9Fx03g11hVfNXFLbYbaOZZXBepQpIgNpmLIdNmtAQGwnM3LqVTlX/onzzqgi24Ec1o0NE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xe+7vpPA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="05KILfyL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1CA1F000E9;
-	Thu, 20 Aug 2026 16:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xe+7vpPA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BFEA1F000E9;
+	Thu, 20 Aug 2026 16:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243433;
-	bh=csO2pARVZ8idcqWyY1DUaHRoizz92doefpHxqPFgKbc=;
+	s=korg; t=1787243436;
+	bh=SEeYSV+67fjyWxYs/asJrPoV3AiHE521ZQFuwFwolZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=05KILfyLF5A/QkWpHmIgrRLyQ78zx29GQkVIlhEw6Yc0+l2cbO0bi+1ComRE/TekA
-	 FfD/AXfo/k/Ip9OpPWPxsXeUfakJQU9wWXWHB5A4bfP9vx0Igwm4Y3YrnuUloKwmvo
-	 kbgx7pRRakZz/kOWf4eX5qQBhG3A2y+F6dhdkq/Q=
+	b=xe+7vpPAl2ANfJJFzaEjm83Ro3FIP47Ouw8Eg3qdurcCamQOC1BzzmTx7Bv+auDzN
+	 S94ZFXDLSvHUa5Pe3eJxWm+vNwbxpEw9zR/x9Rupez9E0NrZl4Pq4aJ+YcIazyq+0e
+	 O10j/lDo8vYbI7caWCzOlaKto9hXsOFKhR+QBCJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Florian Westphal <fw@strlen.de>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 093/272] netfilter: nf_conntrack_sip: validate skb_dst() before accessing it
-Date: Thu, 20 Aug 2026 16:54:37 +0200
-Message-ID: <20260820145234.062092882@linuxfoundation.org>
+Subject: [PATCH 5.15 094/272] netfilter: nft_set_pipapo: make pipapo_clone helper return NULL
+Date: Thu, 20 Aug 2026 16:54:38 +0200
+Message-ID: <20260820145234.091057785@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -52,53 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit e5e24a365a5e024efef63cc49abb345fbd4852c5 ]
+[ Upstream commit 80efd2997fb9343a0283cf3cac5524a4595c8ff4 ]
 
-tc ingress and openvswitch do not guarantee routing information to be
-available. These subsystems use the conntrack helper infrastructure, and
-the SIP helper relies on the skb_dst() to be present if
-sip_external_media is set to 1 (which is disabled by default as a module
-parameter).
+Currently it returns an error pointer, but the only possible failure
+is ENOMEM.
 
-This effectively disables the sip_external_media toggle for these
-subsystems without resulting in a crash.
+After a followup patch, we'd need to discard the errno code, i.e.
 
-Fixes: cae3a2627520 ("openvswitch: Allow attaching helpers to ct action")
-Fixes: b57dc7c13ea9 ("net/sched: Introduce action ct")
-Cc: stable@vger.kernel.org
-Reported-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+x = pipapo_clone()
+if (IS_ERR(x))
+	return NULL
+
+or make more changes to fix up callers to expect IS_ERR() code
+from set->ops->deactivate().
+
+So simplify this and make it return ptr-or-null.
+
 Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 47e65eff5069 ("netfilter: nft_set_pipapo: don't leak bad clone into future transaction")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_sip.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/netfilter/nft_set_pipapo.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/net/netfilter/nf_conntrack_sip.c
-+++ b/net/netfilter/nf_conntrack_sip.c
-@@ -947,7 +947,6 @@ static int set_expected_rtp_rtcp(struct
- 			return NF_ACCEPT;
- 		saddr = &ct->tuplehash[!dir].tuple.src.u3;
- 	} else if (sip_external_media) {
--		struct net_device *dev = skb_dst(skb)->dev;
- 		struct dst_entry *dst = NULL;
- 		struct flowi fl;
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -1331,7 +1331,7 @@ static int nft_pipapo_insert(const struc
+  * pipapo_clone() - Clone matching data to create new working copy
+  * @old:	Existing matching data
+  *
+- * Return: copy of matching data passed as 'old', error pointer on failure
++ * Return: copy of matching data passed as 'old' or NULL.
+  */
+ static struct nft_pipapo_match *pipapo_clone(struct nft_pipapo_match *old)
+ {
+@@ -1342,7 +1342,7 @@ static struct nft_pipapo_match *pipapo_c
+ 	new = kmalloc(sizeof(*new) + sizeof(*dst) * old->field_count,
+ 		      GFP_KERNEL);
+ 	if (!new)
+-		return ERR_PTR(-ENOMEM);
++		return NULL;
  
-@@ -969,7 +968,11 @@ static int set_expected_rtp_rtcp(struct
- 		 * through the same interface as the signalling peer.
- 		 */
- 		if (dst) {
--			bool external_media = (dst->dev == dev);
-+			const struct dst_entry *this_dst = skb_dst(skb);
-+			bool external_media = false;
-+
-+			if (this_dst && dst->dev == this_dst->dev)
-+				external_media = true;
+ 	new->field_count = old->field_count;
+ 	new->bsize_max = old->bsize_max;
+@@ -1416,7 +1416,7 @@ out_scratch:
+ 	free_percpu(new->scratch);
+ 	kfree(new);
  
- 			dst_release(dst);
- 			if (external_media)
+-	return ERR_PTR(-ENOMEM);
++	return NULL;
+ }
+ 
+ /**
+@@ -1770,7 +1770,7 @@ static void nft_pipapo_commit(struct nft
+ 		return;
+ 
+ 	new_clone = pipapo_clone(priv->clone);
+-	if (IS_ERR(new_clone))
++	if (!new_clone)
+ 		return;
+ 
+ 	priv->dirty = false;
+@@ -1796,7 +1796,7 @@ static void nft_pipapo_abort(const struc
+ 	m = rcu_dereference_protected(priv->match, nft_pipapo_transaction_mutex_held(set));
+ 
+ 	new_clone = pipapo_clone(m);
+-	if (IS_ERR(new_clone))
++	if (!new_clone)
+ 		return;
+ 
+ 	priv->dirty = false;
+@@ -2238,8 +2238,8 @@ static int nft_pipapo_init(const struct
+ 
+ 	/* Create an initial clone of matching data for next insertion */
+ 	priv->clone = pipapo_clone(m);
+-	if (IS_ERR(priv->clone)) {
+-		err = PTR_ERR(priv->clone);
++	if (!priv->clone) {
++		err = -ENOMEM;
+ 		goto out_free;
+ 	}
+ 
 
 
