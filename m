@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AFB446C84F;
-	Thu, 20 Aug 2026 16:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DC147D463;
+	Thu, 20 Aug 2026 16:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243583; cv=none; b=ckmfhuW8+wXQYDKSbuu2s/QuCqavXVW1fJn/vLgQOSTpwlg3Xl1wTGP6Ihn96lwuCYXpg7Z0Jy5k/FQCQ4bqbVO/Vo/6F0s5DYPUFbpgpgz6kIRE4rFU3yu9LQSgqxnJazgxeSfzYACGTx2J3dufuD+JuAy11oPuvy4a6xIQClA=
+	t=1787243586; cv=none; b=K9AdEnWfr0n2UPzmzW+Mm1r8BmkjyyUyhqJ9eEcobDSY9sXWVlAXOr9FjBQPAeqpHTQT+wl91TlhTq2S2712x1stevsGBmq9N4d6P1c1V6DCHlHhfrFDpbttnrh/io94wleQ9BJC8/OJxEqy15fEK/6PvdnBjzp8anUQMAka4nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243583; c=relaxed/simple;
-	bh=OLs2iVA+RWR9uoAR68zO0yrlKuBfH6Dm7tlaae8GUeQ=;
+	s=arc-20240116; t=1787243586; c=relaxed/simple;
+	bh=KbutMbaxBEUfIZCdCGil/GpasZK4vQI9362tygTi1CI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u23THNjsvO+9eEpvHGuvurLgvLONO8RCR3zWhtbLr30VugeihtGD1NW8MDdgBcUQYJ8AGQLzjAToJ5KDis3Xfqkr44xzcSHNRwqklHMY2IYBJEmgy8hkMbAeMzVXzb6quL8/ZaGMmBTDxpGJt9BccHGlmfayPg0Z1zEAy05m2jQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dixXlgBs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ckAfcjoXMzGEMN9czwQDeKMy/chE+tW0cVeCFsi1KsO3otrlwqhs1gYmtqBr/Jf04r3fs1+QcfoVWEJpdi8kB3i4iRvRAhMFtV1oTRxPXMZpr7FpDZheD8MIAPYioAXaKBlOPCUVu9KWI2mW0pZI0Fj5/ZctDXih3BmGmkvlFf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FJ03tkRB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dixXlgBs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641891F000E9;
-	Thu, 20 Aug 2026 16:33:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FJ03tkRB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB9B1F000E9;
+	Thu, 20 Aug 2026 16:33:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243581;
-	bh=iUS6+A4fCYylSyuljZDB0Q1zIsw2RrLtyLp7KYMFhrc=;
+	s=korg; t=1787243584;
+	bh=GIP8rRumMFTOq/6ELIT/pLTOZ9ygS4J1yPpU/boIFEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dixXlgBsnlwtl6mwGQylQDAxxtN9qKTzd/1Bbei42uFgjcoRBOWGWaWfYXsr26Qgc
-	 1/T27BBQXOt5kdz3z/0IU8xdJUxBDUTreRFcrhsY7Tv+8qqYV8seq0+Y6dg2wMvxM1
-	 7+UlqAyYPsSR3PELqVv3U2QwD3KXMt47qJv6siUM=
+	b=FJ03tkRBxE7/GRrfNgEF/Cpl/JJFxpWqyvomnKSfqhAu9vugQoq/OnAusZMBb2xze
+	 IfL8ezAwOpISRXORL8rgejwTrVw83KLkComX6oKjLASoaoiKZt6ngurgYz0FyLUNeX
+	 wfkk/C2ErSCC/auTINdEGIbwpP8HpMSIGP/E8VSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Koichiro Den <den@valinux.co.jp>,
-	Vinod Koul <vkoul@kernel.org>,
+	Liu Jian <liujian56@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 117/272] dmaengine: dw-edma: Add spinlock to protect DONE_INT_MASK and ABORT_INT_MASK
-Date: Thu, 20 Aug 2026 16:55:01 +0200
-Message-ID: <20260820145234.776811304@linuxfoundation.org>
+Subject: [PATCH 5.15 144/272] net: Add helper function to parse netlink msg of ip_tunnel_encap
+Date: Thu, 20 Aug 2026 16:55:28 +0200
+Message-ID: <20260820145235.624669744@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -52,73 +51,260 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Liu Jian <liujian56@huawei.com>
 
-[ Upstream commit 8ffba0171c6bbce5f093c6dba5a02c0805b31203 ]
+[ Upstream commit 537dd2d9fb9f4aa7939fb4fcf552ebe4f497bd7e ]
 
-The DONE_INT_MASK and ABORT_INT_MASK registers are shared by all DMA
-channels, and modifying them requires a read-modify-write sequence.
-Because this operation is not atomic, concurrent calls to
-dw_edma_v0_core_start() can introduce race conditions if two channels
-update these registers simultaneously.
+Add ip_tunnel_netlink_encap_parms to parse netlink msg of ip_tunnel_encap.
+Reduces duplicate code, no actual functional changes.
 
-Add a spinlock to serialize access to these registers and prevent race
-conditions.
-
-Fixes: 7e4b8a4fbe2c ("dmaengine: Add Synopsys eDMA IP version 0 support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-[den: update dw_edma.lock comment]
-Link: https://lore.kernel.org/dmaengine/20260109-edma_ll-v2-1-5c0b27b2c664@nxp.com/
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Link: https://patch.msgid.link/20260521142153.2957432-5-den@valinux.co.jp
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Liu Jian <liujian56@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 8211a2632466 ("net: ipip: require CAP_NET_ADMIN in the device netns for changelink")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.h    |    2 +-
- drivers/dma/dw-edma/dw-edma-v0-core.c |    6 ++++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ include/net/ip_tunnels.h  |    3 +++
+ net/ipv4/ip_tunnel_core.c |   35 +++++++++++++++++++++++++++++++++++
+ net/ipv4/ipip.c           |   38 ++------------------------------------
+ net/ipv6/ip6_tunnel.c     |   37 ++-----------------------------------
+ net/ipv6/sit.c            |   38 ++------------------------------------
+ 5 files changed, 44 insertions(+), 107 deletions(-)
 
---- a/drivers/dma/dw-edma/dw-edma-core.h
-+++ b/drivers/dma/dw-edma/dw-edma-core.h
-@@ -109,7 +109,7 @@ struct dw_edma {
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -296,6 +296,9 @@ int ip_tunnel_newlink(struct net_device
+ 		      struct ip_tunnel_parm *p, __u32 fwmark);
+ void ip_tunnel_setup(struct net_device *dev, unsigned int net_id);
  
- 	struct dw_edma_chan		*chan;
- 
--	raw_spinlock_t			lock;		/* Only for legacy */
-+	raw_spinlock_t			lock;		/* Protect v0 shared registers */
- 
- 	struct dw_edma_chip             *chip;
- #ifdef CONFIG_DEBUG_FS
---- a/drivers/dma/dw-edma/dw-edma-v0-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-v0-core.c
-@@ -358,6 +358,7 @@ void dw_edma_v0_core_start(struct dw_edm
- {
- 	struct dw_edma_chan *chan = chunk->chan;
- 	struct dw_edma *dw = chan->dw;
-+	unsigned long flags;
- 	u32 tmp;
- 
- 	dw_edma_v0_core_write_chunk(chunk);
-@@ -402,6 +403,8 @@ void dw_edma_v0_core_start(struct dw_edm
- 			}
- 		}
- 		/* Interrupt unmask - done, abort */
-+		raw_spin_lock_irqsave(&dw->lock, flags);
++bool ip_tunnel_netlink_encap_parms(struct nlattr *data[],
++				   struct ip_tunnel_encap *encap);
 +
- 		tmp = GET_RW_32(dw, chan->dir, int_mask);
- 		tmp &= ~FIELD_PREP(EDMA_V0_DONE_INT_MASK, BIT(chan->id));
- 		tmp &= ~FIELD_PREP(EDMA_V0_ABORT_INT_MASK, BIT(chan->id));
-@@ -410,6 +413,9 @@ void dw_edma_v0_core_start(struct dw_edm
- 		tmp = GET_RW_32(dw, chan->dir, linked_list_err_en);
- 		tmp |= FIELD_PREP(EDMA_V0_LINKED_LIST_ERR_MASK, BIT(chan->id));
- 		SET_RW_32(dw, chan->dir, linked_list_err_en, tmp);
+ extern const struct header_ops ip_tunnel_header_ops;
+ __be16 ip_tunnel_parse_protocol(const struct sk_buff *skb);
+ 
+--- a/net/ipv4/ip_tunnel_core.c
++++ b/net/ipv4/ip_tunnel_core.c
+@@ -1091,3 +1091,38 @@ EXPORT_SYMBOL(ip_tunnel_parse_protocol);
+ 
+ const struct header_ops ip_tunnel_header_ops = { .parse_protocol = ip_tunnel_parse_protocol };
+ EXPORT_SYMBOL(ip_tunnel_header_ops);
 +
-+		raw_spin_unlock_irqrestore(&dw->lock, flags);
++/* This function returns true when ENCAP attributes are present in the nl msg */
++bool ip_tunnel_netlink_encap_parms(struct nlattr *data[],
++				   struct ip_tunnel_encap *encap)
++{
++	bool ret = false;
 +
- 		/* Channel control */
- 		SET_CH_32(dw, chan->dir, chan->id, ch_control1,
- 			  (DW_EDMA_V0_CCS | DW_EDMA_V0_LLE));
++	memset(encap, 0, sizeof(*encap));
++
++	if (!data)
++		return ret;
++
++	if (data[IFLA_IPTUN_ENCAP_TYPE]) {
++		ret = true;
++		encap->type = nla_get_u16(data[IFLA_IPTUN_ENCAP_TYPE]);
++	}
++
++	if (data[IFLA_IPTUN_ENCAP_FLAGS]) {
++		ret = true;
++		encap->flags = nla_get_u16(data[IFLA_IPTUN_ENCAP_FLAGS]);
++	}
++
++	if (data[IFLA_IPTUN_ENCAP_SPORT]) {
++		ret = true;
++		encap->sport = nla_get_be16(data[IFLA_IPTUN_ENCAP_SPORT]);
++	}
++
++	if (data[IFLA_IPTUN_ENCAP_DPORT]) {
++		ret = true;
++		encap->dport = nla_get_be16(data[IFLA_IPTUN_ENCAP_DPORT]);
++	}
++
++	return ret;
++}
++EXPORT_SYMBOL_GPL(ip_tunnel_netlink_encap_parms);
+--- a/net/ipv4/ipip.c
++++ b/net/ipv4/ipip.c
+@@ -448,40 +448,6 @@ static void ipip_netlink_parms(struct nl
+ 		*fwmark = nla_get_u32(data[IFLA_IPTUN_FWMARK]);
+ }
+ 
+-/* This function returns true when ENCAP attributes are present in the nl msg */
+-static bool ipip_netlink_encap_parms(struct nlattr *data[],
+-				     struct ip_tunnel_encap *ipencap)
+-{
+-	bool ret = false;
+-
+-	memset(ipencap, 0, sizeof(*ipencap));
+-
+-	if (!data)
+-		return ret;
+-
+-	if (data[IFLA_IPTUN_ENCAP_TYPE]) {
+-		ret = true;
+-		ipencap->type = nla_get_u16(data[IFLA_IPTUN_ENCAP_TYPE]);
+-	}
+-
+-	if (data[IFLA_IPTUN_ENCAP_FLAGS]) {
+-		ret = true;
+-		ipencap->flags = nla_get_u16(data[IFLA_IPTUN_ENCAP_FLAGS]);
+-	}
+-
+-	if (data[IFLA_IPTUN_ENCAP_SPORT]) {
+-		ret = true;
+-		ipencap->sport = nla_get_be16(data[IFLA_IPTUN_ENCAP_SPORT]);
+-	}
+-
+-	if (data[IFLA_IPTUN_ENCAP_DPORT]) {
+-		ret = true;
+-		ipencap->dport = nla_get_be16(data[IFLA_IPTUN_ENCAP_DPORT]);
+-	}
+-
+-	return ret;
+-}
+-
+ static int ipip_newlink(struct net *src_net, struct net_device *dev,
+ 			struct nlattr *tb[], struct nlattr *data[],
+ 			struct netlink_ext_ack *extack)
+@@ -491,7 +457,7 @@ static int ipip_newlink(struct net *src_
+ 	struct ip_tunnel_encap ipencap;
+ 	__u32 fwmark = 0;
+ 
+-	if (ipip_netlink_encap_parms(data, &ipencap)) {
++	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
+ 		int err = ip_tunnel_encap_setup(t, &ipencap);
+ 
+ 		if (err < 0)
+@@ -512,7 +478,7 @@ static int ipip_changelink(struct net_de
+ 	bool collect_md;
+ 	__u32 fwmark = t->fwmark;
+ 
+-	if (ipip_netlink_encap_parms(data, &ipencap)) {
++	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
+ 		int err = ip_tunnel_encap_setup(t, &ipencap);
+ 
+ 		if (err < 0)
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -2008,39 +2008,6 @@ static void ip6_tnl_netlink_parms(struct
+ 		parms->fwmark = nla_get_u32(data[IFLA_IPTUN_FWMARK]);
+ }
+ 
+-static bool ip6_tnl_netlink_encap_parms(struct nlattr *data[],
+-					struct ip_tunnel_encap *ipencap)
+-{
+-	bool ret = false;
+-
+-	memset(ipencap, 0, sizeof(*ipencap));
+-
+-	if (!data)
+-		return ret;
+-
+-	if (data[IFLA_IPTUN_ENCAP_TYPE]) {
+-		ret = true;
+-		ipencap->type = nla_get_u16(data[IFLA_IPTUN_ENCAP_TYPE]);
+-	}
+-
+-	if (data[IFLA_IPTUN_ENCAP_FLAGS]) {
+-		ret = true;
+-		ipencap->flags = nla_get_u16(data[IFLA_IPTUN_ENCAP_FLAGS]);
+-	}
+-
+-	if (data[IFLA_IPTUN_ENCAP_SPORT]) {
+-		ret = true;
+-		ipencap->sport = nla_get_be16(data[IFLA_IPTUN_ENCAP_SPORT]);
+-	}
+-
+-	if (data[IFLA_IPTUN_ENCAP_DPORT]) {
+-		ret = true;
+-		ipencap->dport = nla_get_be16(data[IFLA_IPTUN_ENCAP_DPORT]);
+-	}
+-
+-	return ret;
+-}
+-
+ static int ip6_tnl_newlink(struct net *src_net, struct net_device *dev,
+ 			   struct nlattr *tb[], struct nlattr *data[],
+ 			   struct netlink_ext_ack *extack)
+@@ -2053,7 +2020,7 @@ static int ip6_tnl_newlink(struct net *s
+ 
+ 	nt = netdev_priv(dev);
+ 
+-	if (ip6_tnl_netlink_encap_parms(data, &ipencap)) {
++	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
+ 		err = ip6_tnl_encap_setup(nt, &ipencap);
+ 		if (err < 0)
+ 			return err;
+@@ -2090,7 +2057,7 @@ static int ip6_tnl_changelink(struct net
+ 	if (dev == ip6n->fb_tnl_dev)
+ 		return -EINVAL;
+ 
+-	if (ip6_tnl_netlink_encap_parms(data, &ipencap)) {
++	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
+ 		int err = ip6_tnl_encap_setup(t, &ipencap);
+ 
+ 		if (err < 0)
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -1545,40 +1545,6 @@ static void ipip6_netlink_parms(struct n
+ 		*fwmark = nla_get_u32(data[IFLA_IPTUN_FWMARK]);
+ }
+ 
+-/* This function returns true when ENCAP attributes are present in the nl msg */
+-static bool ipip6_netlink_encap_parms(struct nlattr *data[],
+-				      struct ip_tunnel_encap *ipencap)
+-{
+-	bool ret = false;
+-
+-	memset(ipencap, 0, sizeof(*ipencap));
+-
+-	if (!data)
+-		return ret;
+-
+-	if (data[IFLA_IPTUN_ENCAP_TYPE]) {
+-		ret = true;
+-		ipencap->type = nla_get_u16(data[IFLA_IPTUN_ENCAP_TYPE]);
+-	}
+-
+-	if (data[IFLA_IPTUN_ENCAP_FLAGS]) {
+-		ret = true;
+-		ipencap->flags = nla_get_u16(data[IFLA_IPTUN_ENCAP_FLAGS]);
+-	}
+-
+-	if (data[IFLA_IPTUN_ENCAP_SPORT]) {
+-		ret = true;
+-		ipencap->sport = nla_get_be16(data[IFLA_IPTUN_ENCAP_SPORT]);
+-	}
+-
+-	if (data[IFLA_IPTUN_ENCAP_DPORT]) {
+-		ret = true;
+-		ipencap->dport = nla_get_be16(data[IFLA_IPTUN_ENCAP_DPORT]);
+-	}
+-
+-	return ret;
+-}
+-
+ #ifdef CONFIG_IPV6_SIT_6RD
+ /* This function returns true when 6RD attributes are present in the nl msg */
+ static bool ipip6_netlink_6rd_parms(struct nlattr *data[],
+@@ -1630,7 +1596,7 @@ static int ipip6_newlink(struct net *src
+ 
+ 	nt = netdev_priv(dev);
+ 
+-	if (ipip6_netlink_encap_parms(data, &ipencap)) {
++	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
+ 		err = ip_tunnel_encap_setup(nt, &ipencap);
+ 		if (err < 0)
+ 			return err;
+@@ -1685,7 +1651,7 @@ static int ipip6_changelink(struct net_d
+ 	if (dev == sitn->fb_tunnel_dev)
+ 		return -EINVAL;
+ 
+-	if (ipip6_netlink_encap_parms(data, &ipencap)) {
++	if (ip_tunnel_netlink_encap_parms(data, &ipencap)) {
+ 		err = ip_tunnel_encap_setup(t, &ipencap);
+ 		if (err < 0)
+ 			return err;
 
 
