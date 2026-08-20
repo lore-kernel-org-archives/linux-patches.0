@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49984468C0C;
-	Thu, 20 Aug 2026 16:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299B425C6EE;
+	Thu, 20 Aug 2026 16:49:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244538; cv=none; b=ni+oRE9ujwZX9JjrLRMlx8GUp+27FPzzKiOW4edJvXEFuzu51XfNhIAuvE5F2OcuCVMTnGcCIKlNzXCbuTpwotW7BxBcU+hJNrhbieBasDT4FVlcTc4lBmdX97VHcUsWGIg8A6AKy6kcCdT3CZKfoih5qsMQyvMb3FGHBsy6FZM=
+	t=1787244541; cv=none; b=qaWuYtJ6ad6ZKcBt/MkQuh0rWJZew7OOZIKk6GBEPDRch8b7BwN54AG21UT9qqj/1adLIuGr8vovtJA6o8mclPtYRQsfjCw3r+zQL1rlzdV9RbxU67ojReyEZjQavC0JdEHrCHsDGb+L0ih3RP4+ObcBU0uKftrbUVowcOkRVlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244538; c=relaxed/simple;
-	bh=0JmOVBHi1Lj46/28dHdgrUlnPwjS9awfCc5KvSJh4FA=;
+	s=arc-20240116; t=1787244541; c=relaxed/simple;
+	bh=lmCq+NpvNbHGN64VXLgzum/meNbLuWAGIptWLVsHX8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYrCXCvPS1UWd2ttf4+b16E0gNOJVArKV6e8XfuS9buRxnPFnLZWlcLEVZ2veH8ug3UZQz0fWtfUuKsmLEigqX3cODsogDV8rE4uQFgVFf2WgKCwtBaqKQljYrDpEDX59jrUhwOdUkijf2fWYpHtxMStwRtrhv+4rCP0veoNm8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g73SfDCn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=btxAoBSzYV6xIfXDrqPe3HNDaG6YDx7NtyeP+2ZdE6dG5i4LQ3FkGuolcpkt0R3ZPL+tQM4F8CmBNs+H41N3nWJu/hfF+EAWcJ/dme/B5dlRNIfcSOrMzB0FD7k6V1lXmRiWzRvWLlVr3sb4OpSztvbWaLT7FxEu9iSE2/nano4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DDivQmwN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g73SfDCn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A281F000E9;
-	Thu, 20 Aug 2026 16:48:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DDivQmwN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CEF1F000E9;
+	Thu, 20 Aug 2026 16:48:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244537;
-	bh=ya2sLiJY5/IzUaws0i3nzHWrQrEkRsIe8GThsJA0VvY=;
+	s=korg; t=1787244540;
+	bh=VBr85JX4hzDnzeM2gDZpf0iKTZAFpBoJWi3LLrcsrGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g73SfDCnNXJyHJQF7Yl+EVCFWWNQ1RpL4D/HfK3cTRveiKduyCZyOxhbY0RN7IZOY
-	 W8CaKhin2i5cK28mL8SlfkJ//Xjbh1C3bOmwl5kDdyVSuvAjzsVwkWQE+t+g4ZYzTj
-	 +ZrBRyhPcQTXG+4vR12hxBSs2EU4JyFeOEBVmmPY=
+	b=DDivQmwNA8EWJe36TvqIBNlzPYEbKTgo5YrsRgxJE/CDKQo3+BVb3rYMDKsKPbFKD
+	 c2Fdq79HNn9TyZ2CYJxyjTZl0qLeEJmyPhZGX0v/ArZWVWmkZ6RqtNEuK47V1Mqnij
+	 SAkuQN92AMfjFcajMbJSosBxpUGRLRUkW69t3fr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@bisdn.de>,
-	Ray Jui <ray.jui@broadcom.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 203/235] i2c: iproc: reset bus after timeout if START_BUSY is stuck
-Date: Thu, 20 Aug 2026 16:57:19 +0200
-Message-ID: <20260820145222.708905262@linuxfoundation.org>
+Subject: [PATCH 5.10 204/235] fsnotify: opt-in for permission events at file open time
+Date: Thu, 20 Aug 2026 16:57:20 +0200
+Message-ID: <20260820145222.737911172@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -52,70 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@bisdn.de>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 98f2e9e6d6f91a6abb43f166b244b428ba85fa2b ]
+[ Upstream commit a94204f4d48e28a711b7ed10399f749286c433e3 ]
 
-If a transaction times out, the START_BUSY signal can stay up, and
-subsequent transactaction attempts will fail as the bus is still
-considered busy.
+Legacy inotify/fanotify listeners can add watches for events on inode,
+parent or mount and expect to get events (e.g. FS_MODIFY) on files that
+were already open at the time of setting up the watches.
 
-I can easily trigger this by attempting to read from an address with no
-device, e.g. when running i2cdetect. After the first read times out, all
-subsequent read attempts return busy.
+fanotify permission events are typically used by Anti-malware sofware,
+that is watching the entire mount and it is not common to have more that
+one Anti-malware engine installed on a system.
 
-To get to a working state again, the controller needs to be reset to
-clear the START_BUSY signal. So check for START_BUSY still asserted on a
-timeout, and do reset in case it is,
+To reduce the overhead of the fsnotify_file_perm() hooks on every file
+access, relax the semantics of the legacy FAN_ACCESS_PERM event to generate
+events only if there were *any* permission event listeners on the
+filesystem at the time that the file was opened.
 
-This is also done by the original non-upstream iproc-smbus driver
-implementation [1].
+The new semantic is implemented by extending the FMODE_NONOTIFY bit into
+two FMODE_NONOTIFY_* bits, that are used to store a mode for which of the
+events types to report.
 
-Works around situations like:
+This is going to apply to the new fanotify pre-content events in order
+to reduce the cost of the new pre-content event vfs hooks.
 
-    bcm-iproc-2c 1803b000.i2c: transaction timed out
-    bcm-iproc-2c 1803b000.i2c: bus is busy
-    bcm-iproc-2c 1803b000.i2c: bus is busy
-    bcm-iproc-2c 1803b000.i2c: bus is busy
-    bcm-iproc-2c 1803b000.i2c: bus is busy
-    bcm-iproc-2c 1803b000.i2c: bus is busy
-    ...
+[Thanks to Bert Karwatzki <spasswolf@web.de> for reporting a bug in this
+code with CONFIG_FANOTIFY_ACCESS_PERMISSIONS disabled]
 
-where the bus never recovers after a timeout.
-
-[1] https://github.com/opencomputeproject/onie/blob/master/patches/kernel/3.2.69/driver-iproc-smbus.patch
-
-Fixes: e6e5dd3566e0 ("i2c: iproc: Add Broadcom iProc I2C Driver")
-Signed-off-by: Jonas Gorski <jonas.gorski@bisdn.de>
-Cc: <stable@vger.kernel.org> # v4.0+
-Acked-by: Ray Jui <ray.jui@broadcom.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260717085507.34209-1-jonas.gorski@bisdn.de
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/linux-fsdevel/CAHk-=wj8L=mtcRTi=NECHMGfZQgXOp_uix1YVh04fEmrKaMnXA@mail.gmail.com/
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/5ea5f8e283d1edb55aa79c35187bfe344056af14.1731684329.git.josef@toxicpanda.com
+Stable-dep-of: db1856ea9196 ("binfmt_misc: restore write access when removing an entry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-bcm-iproc.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ include/linux/fs.h |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/i2c/busses/i2c-bcm-iproc.c
-+++ b/drivers/i2c/busses/i2c-bcm-iproc.c
-@@ -789,6 +789,17 @@ static int bcm_iproc_i2c_xfer_wait(struc
- 	}
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -179,6 +179,12 @@ typedef int (dio_iodone_t)(struct kiocb
+ #define FMODE_BUF_RASYNC	((__force fmode_t)0x40000000)
  
- 	if (!time_left && !iproc_i2c->xfer_is_done) {
-+		/*
-+		 * The controller may fail to clear START_BUSY after a timeout,
-+		 * reset the controller to recover in that case.
-+		 */
-+		if (!!(iproc_i2c_rd_reg(iproc_i2c, M_CMD_OFFSET) &
-+		       BIT(M_CMD_START_BUSY_SHIFT))) {
-+			bcm_iproc_i2c_enable_disable(iproc_i2c, false);
-+			bcm_iproc_i2c_init(iproc_i2c);
-+			bcm_iproc_i2c_enable_disable(iproc_i2c, true);
-+		}
+ /*
++ * fsnotify pre-content events do not exist in this kernel, so a file is never
++ * watched by a pre-content event listener.
++ */
++#define FMODE_FSNOTIFY_HSM(mode)	0
 +
- 		/* flush both TX/RX FIFOs */
- 		val = BIT(M_FIFO_RX_FLUSH_SHIFT) | BIT(M_FIFO_TX_FLUSH_SHIFT);
- 		iproc_i2c_wr_reg(iproc_i2c, M_FIFO_CTRL_OFFSET, val);
++/*
+  * Attribute flags.  These should be or-ed together to figure out what
+  * has been changed!
+  */
 
 
