@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322E548167D;
-	Thu, 20 Aug 2026 17:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF2647F77A;
+	Thu, 20 Aug 2026 17:56:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248582; cv=none; b=but2o52uhFylLo0zlern5TmvalrzCqLreMFVFB4mOOsTD6bRfWU/ty2qZfRr3HZzRyPGsAOSbvE2Ky0iHeyBxdbvw+fEDM2m9OmzK3UKoD35ZmI4KxyWjCi1O88raKLp2m56zF1Cms2D0zGY2EA7l7v1dEAenMfAtuMHugoT8EI=
+	t=1787248584; cv=none; b=alsiNB3I5uEgloN+i7S+LB+EGi1PYj/STCwx45eFT7vMiXzzreQxtKpPfoyiXxJuQiJm2kp5hO5jEdhfoSRHoKaL+WLw8VyHneVe8xo5sjgJHPxpV3dIi8kh1HghtOsXtntqmVHGIYuStpBwBz77boc5ShpCMY2bzxrImsIOudU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248582; c=relaxed/simple;
-	bh=CwaiHnvcmP1E+Jli3Wc2GbFFZIG1Sgo0WwHzCUMVOlQ=;
+	s=arc-20240116; t=1787248584; c=relaxed/simple;
+	bh=J7H7wmXdFliUN/Whhix8kZJR6ivzBvMQnTmrRQj6LZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=umVhu2mkweY8yPwH+XjQSFoVjr9WYzUesObr2inWXlPx62hAOz2HF19OW0UGM39wEuF4QrFyydphhMgBjhDsFi5iyTXWTk+92Wke6HirxDyjTKss75G50+K+G617vCPfEdnmMW/iBGdfvS+pNLiBfsqUB359qYp4ASgArmKMoLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ykm7dulz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KvWvdi1Z6T+L2wDRqACAVqg0a0ZaNtCGwqgBzxhtuZwOgXoAx2GpVylKd6txGB246mtCl3vK+ngKnvdJ1tO6wDP2R5Kxa2emfrAvAcF1mIkXL6IgcABNPCoE1Yo8vGAK2R4HBgWLb5NHa7WfhJZF5BDvQaSjt9oHbMl8UtrweCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvkpvpIB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ykm7dulz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9AB1F000E9;
-	Thu, 20 Aug 2026 17:56:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvkpvpIB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9F31F00A3A;
+	Thu, 20 Aug 2026 17:56:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248580;
-	bh=ypg+PJRIqPBdascwMy9smJr8XxXazm/bu/ZeEnYV42M=;
+	s=korg; t=1787248583;
+	bh=R/IQHaZ8tBMT5GFJ1fHNnzgZaLfNdTNIDORX2M3oG9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ykm7dulz+KpnOLf66aff/cALhq/k21/81+/DnpPskYN7FYUxBlPlnfgYVvI5lh5I1
-	 JFRQ/lmMjQqTH/brrGCg6IB+1JI+mqjOQo9efpIRdy5uKFh70CA0NXdwsXrms3F76Z
-	 igb5FhyM/D42L/Az8th8pRksFPZG8i9XzS2IOGKE=
+	b=LvkpvpIBten0ZWO9H+Cz9MUPX3BuDMDv2lkoTXa++OsaHm2SqPrmZRR1ytcImqPON
+	 5zkxt4bt254dK0YuH9tRLHXxIRnK6nqRmogA6pFYX2n/67je/2nRB1z5wsNBQgMbFo
+	 STu1UfoFeQiQm5QBv8/3pL2n4AsZzor+V0S2Ha94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Aaron Conole <aconole@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 228/303] smb/server: fix minimum SMB1 PDU size
-Date: Thu, 20 Aug 2026 16:56:04 +0200
-Message-ID: <20260820145300.265399778@linuxfoundation.org>
+Subject: [PATCH 6.1 271/303] openvswitch: use skb_ip_totlen in conntrack
+Date: Thu, 20 Aug 2026 16:56:47 +0200
+Message-ID: <20260820145301.605768545@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -53,47 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 3b9c30eb8f5aaad4a54cdfa470b74c0467cc71e8 ]
+[ Upstream commit ec84c955a0d06cef31664bae328d94be7a3e2f03 ]
 
-Since the RFC1002 header has been removed from `struct smb_hdr`,
-the minimum SMB1 PDU size should be updated as well.
+IPv4 GSO packets may get processed in ovs_skb_network_trim(),
+and we need to use skb_ip_totlen() to get iph totlen.
 
-Fixes: 83bfbd0bb902 ("cifs: Remove the RFC1002 header from smb_hdr")
-Suggested-by: David Howells <dhowells@redhat.com>
-Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: cfc0b8e5080a ("ksmbd: validate minimum PDU size for transform requests")
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 8a7ed561671a ("net/sched: act_ct: fix sk_buff leak when the header checks reject a packet")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/connection.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/openvswitch/conntrack.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -305,7 +305,8 @@ bool ksmbd_conn_alive(struct ksmbd_conn
- 	return true;
- }
+--- a/net/openvswitch/conntrack.c
++++ b/net/openvswitch/conntrack.c
+@@ -1282,7 +1282,7 @@ static int ovs_skb_network_trim(struct s
  
--#define SMB1_MIN_SUPPORTED_HEADER_SIZE (sizeof(struct smb_hdr))
-+/* "+2" for BCC field (ByteCount, 2 bytes) */
-+#define SMB1_MIN_SUPPORTED_PDU_SIZE (sizeof(struct smb_hdr) + 2)
- #define SMB2_MIN_SUPPORTED_HEADER_SIZE (sizeof(struct smb2_hdr) + 4)
- 
- /**
-@@ -365,7 +366,7 @@ int ksmbd_conn_handler_loop(void *p)
- 		if (pdu_size > MAX_STREAM_PROT_LEN)
- 			break;
- 
--		if (pdu_size < SMB1_MIN_SUPPORTED_HEADER_SIZE)
-+		if (pdu_size < SMB1_MIN_SUPPORTED_PDU_SIZE)
- 			break;
- 
- 		/* 4 for rfc1002 length field */
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_IP):
+-		len = ntohs(ip_hdr(skb)->tot_len);
++		len = skb_ip_totlen(skb);
+ 		break;
+ 	case htons(ETH_P_IPV6):
+ 		len = sizeof(struct ipv6hdr)
 
 
