@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF8A37AA7D;
-	Thu, 20 Aug 2026 17:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C712481ABD;
+	Thu, 20 Aug 2026 17:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247703; cv=none; b=DZaijhkeknVWtXTxoi9KtHKyfLH5XkbETj1Z0dWaZ/qpfMLCLBeLrAvDebWgo9vk4BHuSsmgImBGMDXA3VjFHAUcIbgyuBb2PbEzMKD41bwkpGRyhQ4XdDE4p7/FcIP+GgnirrErMDc7rSZ+PWBYBAyChVy2T0Eg+Q1NoBamXyg=
+	t=1787247706; cv=none; b=Vh21L0/aNyYC8iyBsN8usEm7f3V+MHgrpMQwm7Vqh5Du63SsXvdyZ/9ceinu05l5gePArBKa7dlQMqae8yuZODGcw2otwmEdiJsKbRBHHuNWytAW5s19GKKVDLvKmtoL7CjRgK9wSOVx58qqx0q7oSyvWMkihQ4pHaAlh6uhLHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247703; c=relaxed/simple;
-	bh=PuHfwMZLpDp0doUG142sG+rGpqQfxe7EzknqThFIO+4=;
+	s=arc-20240116; t=1787247706; c=relaxed/simple;
+	bh=hyJmzjaZg2L+yKJ/snjUkkWT5sf9Y6Bv3/3/0256v7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hLYue31mTp6vAkRKal8j3hb30MZ4C3j/9mnkKhR/NSktPQeQ5/LYMRAbFibZWF2Hc04K2NOSmuOeo23S1ok/m9iIonk3uFS+o4bhzhhUQJ+v5k4im+dbwW1fvK4ZsZ84B3aEgzElvecQnchVrGMxJXDiEiea2qcYKQdfSxSbR6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J0Tjhu4o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MuQLjamcMZAQEZvJG/1Sjegykc5r3jFm98dMeEiV3JPfJqHY6VZW8Ea6Z/wlhzXmFfULQkv2bkV2rNtcws2tFed6ItpzpymcYz+7IJrItvDHQOTH+zmrjuT9XXzCcLJ/m1YTLXoz55eNfPr4djRwaBI61S+kzHgjas8HaSro77k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kckw0bDU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J0Tjhu4o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0524F1F000E9;
-	Thu, 20 Aug 2026 17:41:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kckw0bDU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D77771F000E9;
+	Thu, 20 Aug 2026 17:41:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247702;
-	bh=VTNhbSB7GJfCkYp8sDj9u6iYWMggqpP6tE+8BJLvU1E=;
+	s=korg; t=1787247705;
+	bh=HNQWxrMvic6GH+pXoEeYTMGGksNsSZdW/veG7tbiato=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J0Tjhu4oQwUsAd+OIQHwAQJjubkCF+km0P8sdl9fJWx0ejRcxoX8nq70dex+FoOvy
-	 Sz9C+shfZyf84tJcza59f9fTVCj0T2ZL7tqg5n+vjX+cvKDL1zPtJW72gRBjiHKW0f
-	 vEU4Xvz50KUm/jBNYqNwUPtpH8cCxbIAOOSY4emM=
+	b=Kckw0bDUvrcuH0OWWjLK7MgtQDxreHXUoI2cvZMbGGsCx3ZekerBw7FPkR3gg9ufJ
+	 J2iPvMoC5yEuecfo036rilNznkgf46TbaawtuS+bl2tO5pkDcfGzAs/yVPKYW8rOFu
+	 TSty01idahG0XZTtIEIlNActI/WWkBpbkRSv9ejI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Alexey Velichayshiy <a.velichayshiy@ispras.ru>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 139/166] netfilter: ipset: fix refcount race between list:set GC and swap
-Date: Thu, 20 Aug 2026 16:56:38 +0200
-Message-ID: <20260820145215.352804584@linuxfoundation.org>
+Subject: [PATCH 6.6 140/166] netfilter: nf_tables_offload: suppress WARN_ON_ONCE for ENOMEM in abort path
+Date: Thu, 20 Aug 2026 16:56:39 +0200
+Message-ID: <20260820145215.383614429@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -53,90 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
 
-[ Upstream commit 0c88868271653537ed443272dd8e7d13634d214b ]
+[ Upstream commit d02f592064347e0c1e0d84f24941ad338838cc48 ]
 
-__ip_set_put_byindex() resolved the index to a set pointer under RCU,
-then took ip_set_ref_lock in __ip_set_put() to decrement set->ref.
-ip_set_swap() holds that same lock while swapping both the ip_set_list
-slots and the two sets' ref counters, so it can interleave between the
-dereference and the lock acquisition, leaving the caller to decrement a
-set whose reference already moved to the other index and hit
-BUG_ON(set->ref == 0). list_set_gc() reaches this from timer softirq,
-which the nfnl mutex does not serialize against swap: an expiring
-list:set member calls list_set_del() -> ip_set_put_byindex() while
-IPSET_CMD_SWAP runs on the referenced sets.
+In nft_flow_rule_offload_abort(), WARN_ON_ONCE(err) is triggered on every
+error during rollback, including -ENOMEM. Memory allocation failures are
+expected under low-memory conditions and do not indicate a kernel bug.
 
-Resolve the index and decrement under ip_set_ref_lock, as ip_set_swap()
-already does, keeping the refcount tied to the index rather than to a
-stale set pointer.
+Trace for example:
+nft_flow_offload_chain() // FLOW_BLOCK_BIND
+  nft_flow_block_chain()
+    nft_chain_offload_cmd()
+      nft_block_offload_cmd()
+        ->ndo_setup_tc()
+        nsim_setup_tc()
+          flow_block_cb_setup_simple()
+            flow_block_cb_alloc() // fails to -ENOMEM
 
-  kernel BUG at net/netfilter/ipset/ip_set_core.c:685!
-  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:ip_set_put_byindex (net/netfilter/ipset/ip_set_core.c:870)
-  Call Trace:
-   <IRQ>
-   list_set_del (net/netfilter/ipset/ip_set_list_set.c:159)
-   set_cleanup_entries (net/netfilter/ipset/ip_set_list_set.c:181)
-   list_set_gc (net/netfilter/ipset/ip_set_list_set.c:578)
-   call_timer_fn (kernel/time/timer.c:1748)
-   __run_timers (kernel/time/timer.c:1799 kernel/time/timer.c:2374)
-   run_timer_softirq (kernel/time/timer.c:2405)
-   </IRQ>
-  Kernel panic - not syncing: Fatal exception in interrupt
+The warning was reproduced on the 5.10 stable kernel under memory pressure
+via fault injection, but the underlying bug exists in mainline as well,
+as demonstrated by the ENOMEM trace above. The following splat was
+triggered during nf_tables transaction processing:
 
-Fixes: 9076aea76538 ("netfilter: ipset: Increase the number of maximal sets automatically")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+WARNING: CPU: 0 PID: 8567 at net/netfilter/nf_tables_offload.c:532 nft_flow_rule_offload_abort net/netfilter/nf_tables_offload.c:532 [inline]
+WARNING: CPU: 0 PID: 8567 at net/netfilter/nf_tables_offload.c:532 nft_flow_rule_offload_commit+0x971/0xcd0 net/netfilter/nf_tables_offload.c:591
+Modules linked in:
+CPU: 0 PID: 8567 Comm: syz-executor.0 Not tainted 5.10.260-syzkaller #0
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
+RIP: 0010:nft_flow_rule_offload_abort net/netfilter/nf_tables_offload.c:532 [inline]
+RIP: 0010:nft_flow_rule_offload_commit+0x971/0xcd0 net/netfilter/nf_tables_offload.c:591
+Call Trace:
+ nf_tables_commit+0x3bd/0x4bd0 net/netfilter/nf_tables_api.c:8604
+ nfnetlink_rcv_batch+0xb1e/0x1f20 net/netfilter/nfnetlink.c:509
+ nfnetlink_rcv_skb_batch net/netfilter/nfnetlink.c:579 [inline]
+ nfnetlink_rcv+0x3b3/0x420 net/netfilter/nfnetlink.c:597
+ netlink_unicast_kernel net/netlink/af_netlink.c:1314 [inline]
+ netlink_unicast+0x6cd/0xa00 net/netfilter/af_netlink.c:1340
+ netlink_sendmsg+0x906/0xe10 net/netfilter/af_netlink.c:1919
+ sock_sendmsg_nosec net/socket.c:651 [inline]
+ __sock_sendmsg+0x155/0x190 net/socket.c:663
+ ____sys_sendmsg+0x705/0x870 net/socket.c:2379
+ ___sys_sendmsg+0x100/0x170 net/socket.c:2433
+ __sys_sendmsg+0xe9/0x1c0 net/socket.c:2462
+ do_syscall_64+0x33/0x40 arch/x86/entry/common.c:46
+ entry_SYSCALL_64_after_hwframe+0x67/0xd1
+
+Change the condition to WARN_ON_ONCE(err && err != -ENOMEM) so that
+warnings are only emitted for unexpected errors. This aligns with the
+common kernel practice of not warning on -ENOMEM.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 63b48c73ff56 ("netfilter: nf_tables_offload: undo updates if transaction fails")
+Signed-off-by: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_core.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ net/netfilter/nf_tables_offload.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
-index 29bf5ee74fe36..e7c85b0af729b 100644
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -679,11 +679,18 @@ __ip_set_get(struct ip_set *set)
+diff --git a/net/netfilter/nf_tables_offload.c b/net/netfilter/nf_tables_offload.c
+index 12ab78fa5d842..27530bad6619d 100644
+--- a/net/netfilter/nf_tables_offload.c
++++ b/net/netfilter/nf_tables_offload.c
+@@ -551,7 +551,7 @@ static void nft_flow_rule_offload_abort(struct net *net,
+ 			break;
+ 		}
+ 
+-		if (WARN_ON_ONCE(err))
++		if (WARN_ON_ONCE(err && err != -ENOMEM))
+ 			break;
+ 	}
  }
- 
- static void
--__ip_set_put(struct ip_set *set)
-+__ip_set_put_locked(struct ip_set *set)
- {
--	write_lock_bh(&ip_set_ref_lock);
-+	lockdep_assert_held(&ip_set_ref_lock);
- 	BUG_ON(set->ref == 0);
- 	set->ref--;
-+}
-+
-+static void
-+__ip_set_put(struct ip_set *set)
-+{
-+	write_lock_bh(&ip_set_ref_lock);
-+	__ip_set_put_locked(set);
- 	write_unlock_bh(&ip_set_ref_lock);
- }
- 
-@@ -854,11 +861,11 @@ __ip_set_put_byindex(struct ip_set_net *inst, ip_set_id_t index)
- {
- 	struct ip_set *set;
- 
--	rcu_read_lock();
--	set = rcu_dereference(inst->ip_set_list)[index];
-+	write_lock_bh(&ip_set_ref_lock);
-+	set = ip_set(inst, index);
- 	if (set)
--		__ip_set_put(set);
--	rcu_read_unlock();
-+		__ip_set_put_locked(set);
-+	write_unlock_bh(&ip_set_ref_lock);
- }
- 
- void
 -- 
 2.53.0
 
