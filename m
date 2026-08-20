@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F270381AEC;
-	Thu, 20 Aug 2026 15:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BC3381AFF;
+	Thu, 20 Aug 2026 15:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239212; cv=none; b=tZWVmZjJoqERjxGF/kCMwhhv8ohhJv8WOGMB2IVI7HfjPDs6LK3jm2sMTZ0eWdi6ovAjMyPpn54Iuc11t1csVKsZWjbJss1AslZjGpV/Qv7v+u6n5c+ETT/hMcQ4cYMtSe91/UqxqGtiobzxwNYvGB/eRgpomVjbWODz5wRldOg=
+	t=1787239215; cv=none; b=RmhhytIXIRY4n+0Ni/S9fXIdclLbKWm7pbPKBVEMNUDxbluZ6ZJ46EcvU9oHxZsPe4+fwB3fxdo3h9qD57QZm2tDvezRcvrZ785S0qdeFr4Ih4dMc055nnikzmuIkVMflgbPzXETmJBbcTwoEbBLcFpWGRKtjBvqxaVeohXNnm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239212; c=relaxed/simple;
-	bh=OJ5KXfGf/ZVY0AI+mDE5CaNOO2Wc3LVgCKKfUDshz7Q=;
+	s=arc-20240116; t=1787239215; c=relaxed/simple;
+	bh=5ZPh+HotmM4NWrPSZoPw5D5DWEn+TwjxOCHHyTlBaRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u5y541UVRWsUHIxC/tkAp7bC8j+0gRRf9LprO5oouhIUPhQT/vKsE03HX5dM8OXQvkzP7ZwPIrjQB+cHeWcNZCq3rjjDZl8qZu3t+l5Fh54Ef/dFdo0H2t2N4NYoWNs+Tl9AxPTl5cvj5hvCet2i+K5HKjeHz7NFzU9OCQ+k8rY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6Lc32NB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g2h+pwZ9Stx6Cfr2g75ZQMkwSUh9g9PqMWhdfyl/weBsUTkwMBcaXf8MvvZYwaHCNj4o4qioSscGM+VmrfcPGROWCq4PgBdZN9ils9aW99XSYdYDJGrj+B4PVE7bruQSvXBtEDNx4z8YAhH6i3uZbErDTucPwL9Tw6tnJ5oo+Vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbVZHb7q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6Lc32NB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D013C1F000E9;
-	Thu, 20 Aug 2026 15:20:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbVZHb7q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4D11F000E9;
+	Thu, 20 Aug 2026 15:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239211;
-	bh=J2sDd6VAlF06sg8lFYulO65aamlOQr62QeIMScUkT0w=;
+	s=korg; t=1787239214;
+	bh=OBi80wwqjcgKNPLqyFjSDN8unOll3WdSJljKGXP1R9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D6Lc32NBJ8t6k3vilP+1fSqujdZpaKAYKurzajXUKbNsjsIRfrs71QVZ7HGlntMVh
-	 VDRUSd/8OypsxK1bslq3cyBCnpRypGv84H/UxAzAFfvZjTvXaU++GMtoeHHLuWmiNP
-	 3w8pUDl5ZGe+f37ZtSX2F5l8I5IgY9csYaxcu5qg=
+	b=nbVZHb7qlNADsIT7CgsnDx4iKI30ke6PYpfUUU2quxI45o5oxj4aCnJijW8Z2QFQ4
+	 pJn3a6IO31JeeqT0/i6zYeFH5nX9U9DaKv44pP1zuBQD/eKxZ1DvZa04ck0xFGreu7
+	 MT6SaB0fX9UFFEWize4ovphubQ74bnO5iNYun4io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Neal Cardwell <ncardwell@google.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 188/217] tcp: fix icsk_ack.ato bitfield overflow
-Date: Thu, 20 Aug 2026 16:55:56 +0200
-Message-ID: <20260820145243.377086142@linuxfoundation.org>
+Subject: [PATCH 6.18 189/217] net: phy: realtek: fix EEE advertisement write on the internal PHY MMD path
+Date: Thu, 20 Aug 2026 16:55:57 +0200
+Message-ID: <20260820145243.406792006@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -52,69 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 60837e4b840a9c3f7ec826e3584df0bc6542a2c2 ]
+[ Upstream commit 202fef9bbbf5784487eec27581389c6fb97c350d ]
 
-On cross-region connections we observed delayed ACKs suddenly turning
-into immediate ACKs plus a TCP_MAX_QUICKACKS burst, as if the
-connection had just received its first data segment.
+In rtlgen_write_mmd(), the MDIO_AN_EEE_ADV case swaps the arguments to
+rtlgen_write_vend2(): it passes the MMD register number as the OCP address
+and the OCP address constant as the value. The caller's value is discarded
+and the write lands on the wrong register, so the EEE advertisement cannot
+be configured on the affected PHYs.
 
-Commit 95b9a87c6a6b ("tcp: record last received ipv6 flowlabel")
-squeezed icsk_ack.ato into 8 bits, sized for TCP_DELACK_MAX. But both
-writers still bound ato by icsk_rto, which can be well above 255
-jiffies, so the bitfield assignment silently wraps mod 256: repeated
-delack timer misses double ato up to icsk_rto, storing 320 as 64 and
-256 as 0, and ato == 0 is the "first data packet" sentinel in
-tcp_event_data_recv().
+Mirror rtlgen_read_mmd() and write the value to RTL_MDIO_AN_EEE_ADV.
 
-Clamp both writers to TCP_DELACK_MAX, which the static_assert already
-guarantees to fit and tcp_send_delayed_ack() effectively caps ato at
-anyway.
-
-Fixes: 95b9a87c6a6b ("tcp: record last received ipv6 flowlabel")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Neal Cardwell <ncardwell@google.com>
-Link: https://patch.msgid.link/20260807014437.36687-1-jiayuan.chen@linux.dev
+Fixes: da681ed73fb9 ("net: phy: realtek: improve mmd register access for internal PHY's")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20260806134716.3511821-1-o.rempel@pengutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 6 +++---
- net/ipv4/tcp_timer.c | 4 +++-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/phy/realtek/realtek_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index c1769031a9e93..05521a3509a96 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -1006,9 +1006,9 @@ static void tcp_event_data_recv(struct sock *sk, struct sk_buff *skb)
- 			/* The fastest case is the first. */
- 			icsk->icsk_ack.ato = (icsk->icsk_ack.ato >> 1) + TCP_ATO_MIN / 2;
- 		} else if (m < icsk->icsk_ack.ato) {
--			icsk->icsk_ack.ato = (icsk->icsk_ack.ato >> 1) + m;
--			if (icsk->icsk_ack.ato > icsk->icsk_rto)
--				icsk->icsk_ack.ato = icsk->icsk_rto;
-+			icsk->icsk_ack.ato = min3((icsk->icsk_ack.ato >> 1) + (u32)m,
-+						  icsk->icsk_rto,
-+						  (u32)TCP_DELACK_MAX);
- 		} else if (m > icsk->icsk_rto) {
- 			/* Too long gap. Apparently sender failed to
- 			 * restart window, so that we send ACKs quickly.
-diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
-index 1e6d7d90371a9..9ebce13fa8ad8 100644
---- a/net/ipv4/tcp_timer.c
-+++ b/net/ipv4/tcp_timer.c
-@@ -333,7 +333,9 @@ void tcp_delack_timer_handler(struct sock *sk)
- 	if (inet_csk_ack_scheduled(sk)) {
- 		if (!inet_csk_in_pingpong_mode(sk)) {
- 			/* Delayed ACK missed: inflate ATO. */
--			icsk->icsk_ack.ato = min_t(u32, icsk->icsk_ack.ato << 1, icsk->icsk_rto);
-+			icsk->icsk_ack.ato = min3((u32)icsk->icsk_ack.ato << 1,
-+						  icsk->icsk_rto,
-+						  (u32)TCP_DELACK_MAX);
- 		} else {
- 			/* Delayed ACK missed: leave pingpong mode and
- 			 * deflate ATO.
+diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
+index 05df1a33b0e20..ef8c3b23bee88 100644
+--- a/drivers/net/phy/realtek/realtek_main.c
++++ b/drivers/net/phy/realtek/realtek_main.c
+@@ -1164,7 +1164,7 @@ static int rtlgen_write_mmd(struct phy_device *phydev, int devnum, u16 regnum,
+ 	if (devnum == MDIO_MMD_VEND2)
+ 		ret = rtlgen_write_vend2(phydev, regnum, val);
+ 	else if (devnum == MDIO_MMD_AN && regnum == MDIO_AN_EEE_ADV)
+-		ret = rtlgen_write_vend2(phydev, regnum, RTL_MDIO_AN_EEE_ADV);
++		ret = rtlgen_write_vend2(phydev, RTL_MDIO_AN_EEE_ADV, val);
+ 	else
+ 		ret = -EOPNOTSUPP;
+ 
 -- 
 2.53.0
 
