@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88E13C07A;
-	Thu, 20 Aug 2026 15:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACBF3C07A;
+	Thu, 20 Aug 2026 15:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239529; cv=none; b=iJOEwljtWXU+J8BvSJLVZCKoda+T26V1/c1mVTs5CvWWlxj/0Gk7w48nyMe5JUxoO71Y9JerkIgfNnag8cXDHzpRxwdFitTa9aazaDQ4NGxICo65udbaTKbcjJmcC+LLG7h6Qfqj4QUSlIkyIF45pnPwKg1ioRDcY2MRu7f9YUw=
+	t=1787239531; cv=none; b=q5SyYkkUyrXwk0w4b5rH6GuAijIrXxzmOpG1uFLS6LCWrJaaYQYI5B/aaqQYjqqJjc5PALXmYMDxbk5P2vlyZcfxNfoOyEYE5OItrWQ1oty/zdYLxF3v1Z5GVf5wQVLiRnsJiLze23/Ld660wfhbl3mx5d/0JkmakgyZXnsQco8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239529; c=relaxed/simple;
-	bh=unMXD86PXQZiVSj6RJQQG4oD9TZQUlNSw+KPgxF+ws4=;
+	s=arc-20240116; t=1787239531; c=relaxed/simple;
+	bh=QydmORL4xYtya3aEW5JypXNQ0VdBU0ulWosQuILEqsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r6r67IckP025CJPgSQR27qeMFTXR/Y4peCRsba9nGGCiVuTwGZnOiOYVrGHUbmgfrRJcGJ+Fh/4WQFLABOGGOv6V3cHDNUfWuAT5aA1EyfU9n3sqDK10jhpi22fxsiwvi2AxFA63w0TcNxa0sHo7mSUvrX6QUUD/or6IHS3eL6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPxOvjoU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MJtZGkiCRP8+cHBbWt0uLNZVWMYop43taYEqqaLX8oYHd77m3Hav70nrFm42RZeQj/TcebK6i29ncKUJIzyM3gu4TLtWhosFsAwza/wBxat5PAA+duXqs9hPSvK04zyau+fAqB7POUybl2mP4f78ZvcBieMzJPR/poTUhFFHsf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aCbkjLVG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPxOvjoU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE691F000E9;
-	Thu, 20 Aug 2026 15:25:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aCbkjLVG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F98D1F000E9;
+	Thu, 20 Aug 2026 15:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239527;
-	bh=2qr2qz04DSR0SBdgmq4/t0b5n6UesZepmgzLqlLsGw4=;
+	s=korg; t=1787239530;
+	bh=XURolEGw71Kb4ozNnzstmFLb6iEilewaE/XL2nGjIj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LPxOvjoUV3+mOiHFybNaP3JRx0uUezeOB0mqAVfRKPhIYv8YkEju9GkOQSac7odRw
-	 ouo2eH+zK0FRhzet759u/a6c9TWZifUAOgPrOnSuBJAujlYS1BtnVgCXye62w1OjUl
-	 MS6rBowtg2/QCYQLaEaKTBt94VhJ3lDIPgwvQoe4=
+	b=aCbkjLVGRdjf0wXIVDHdu9xP6k6gP5hzO0bB44ew6dFc92X+rf81zodNif8DJMbJT
+	 0z6hMlWhTToXjCp/sAxs4sTOJ1nBVAkUlmMkEW0ohEXyfJLDMBTjl5DF1H9hJjmd0a
+	 Wm4diRNfxaXX7xehny5Hk7xzNBJN7kUBh04HF5r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Satyajit Roy <sroy14@alum.utk.edu>,
 	Nathan Lucas <nlucasgit@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 080/220] drm/amd/display: fix BT.2020 YCbCr limited output CSC matrix
-Date: Thu, 20 Aug 2026 16:54:30 +0200
-Message-ID: <20260820145225.891901427@linuxfoundation.org>
+Subject: [PATCH 6.12 081/220] drm/amd/display: fix BT.2020 YCbCr output CSC matrices for DCE
+Date: Thu, 20 Aug 2026 16:54:31 +0200
+Message-ID: <20260820145225.919183925@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -54,131 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Nathan Lucas <nlucasgit@gmail.com>
 
-commit 2f9a5c0f018d4a1586ee892f81f1383219676415 upstream.
+commit cd22349e86faf6e15e6c622d70c0efc57d43201e upstream.
 
-COLOR_SPACE_YCBCR2020_TYPE, which is selected for
-COLOR_SPACE_2020_YCBCR_LIMITED color_space, has coefficients that are
-incorrect for limited-range output. Its luma and chroma scaling is
-full-range so output is too bright and colors are incorrect.
+The commit cited by the Fixes tag added separate limited and full-range
+BT.2020 YCbCr entries to the DCE output CSC tables, but populated both
+entries with the same matrix copied from the common DC table. That
+matrix combined full-range scaling with limited-range luma offset and was
+incorrect for both limited and full-range output.
 
-COLOR_SPACE_YCBCR2020_TYPE is closer to a full-range conversion matrix with
-incorrect luma offset, so correct the luma offset for full-range and rename
-it to COLOR_SPACE_YCBCR2020_FULL_TYPE.
+Replace the coefficients in both entries in the DCE paths with those from
+the new COLOR_SPACE_YCBCR2020_LIMITED_TYPE
+and COLOR_SPACE_YCBCR2020_FULL_TYPE entries in the preceding commit
+("drm/amd/display: fix BT.2020 YCbCr limited output CSC matrix").
 
-Add COLOR_SPACE_YCBCR2020_LIMITED_TYPE with correct scaling and range for
-limited-range output.
-
-Fix related functions so COLOR_SPACE_YCBCR2020_LIMITED_TYPE and
-COLOR_SPACE_YCBCR2020_FULL_TYPE are correctly selected based on
-dc_color_space.
-
-Derivation of both matrices follows ITU-T H.273:
-
-Table 4, MatrixCoefficients 9, BT.2020-NCL weights:
-KR = 0.2627, KB = 0.0593, KG = 1 - KR - KB = 0.6780.
-
-Equations 45-47 in matrix form:
-            [  KR             KG             KB            0 ]
-M2020_NCL = [ -KR/(2(1-KB))  -KG/(2(1-KB))   1/2           0 ]
-            [  1/2           -KG/(2(1-KR))  -KB/(2(1-KR))  0 ]
-            [  0              0              0             1 ]
-
-Limited and Full transforms based on equations 30-32 and 36-38 with bit
-depth 10, normalized by 1023:
-
-            [ 876/1023   0         0         64/1023  ]
-MLimited  = [ 0          896/1023  0         512/1023 ]
-            [ 0          0         896/1023  512/1023 ]
-            [ 0          0         0         1        ]
-
-            [ 1023/1023  0         0         0        ]
-    MFull = [ 0          1023/1023 0         512/1023 ]
-            [ 0          0         1023/1023 512/1023 ]
-            [ 0          0         0         1        ]
-
-M2020_NCL_Limited = MLimited x M2020_NCL
-M2020_NCL_Full    = MFull x M2020_NCL
-
-The upper three rows of M2020_NCL_* are stored in CR, Y, CB order. Each
-M2020_NCL_* value is stored as Round(value * 8192) in its 16-bit
-two's-complement representation.
-
-Fixes: 973a9c810c78 ("drm/amd/display: Fix COLOR_SPACE_YCBCR2020_TYPE matrix")
+Fixes: 51e6668ab4ba ("drm/amd/display: add missing CSC entries for BT.2020 for DCE IPs")
 Assisted-by: OpenAI-Codex:GPT-5.6-Sol
 Tested-by: Igor Paunovic <royalnet026@gmail.com>
 Tested-by: Satyajit Roy <sroy14@alum.utk.edu>
 Signed-off-by: Nathan Lucas <nlucasgit@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 3b906e1dc7e3c9ff9f7940f6828b367a6a9ec73c)
+(cherry picked from commit 14c8726b79d19934d6eb6d35c612e3f7204af2c6)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c |   31 +++++++++++-------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dce/dce_transform.c       |    7 ++++---
+ drivers/gpu/drm/amd/display/dc/dce110/dce110_opp_csc_v.c |    7 ++++---
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
-@@ -50,7 +50,8 @@ enum dc_color_space_type {
- 	COLOR_SPACE_RGB_LIMITED_TYPE,
- 	COLOR_SPACE_YCBCR601_TYPE,
- 	COLOR_SPACE_YCBCR709_TYPE,
--	COLOR_SPACE_YCBCR2020_TYPE,
-+	COLOR_SPACE_YCBCR2020_LIMITED_TYPE,
-+	COLOR_SPACE_YCBCR2020_FULL_TYPE,
- 	COLOR_SPACE_YCBCR601_LIMITED_TYPE,
- 	COLOR_SPACE_YCBCR709_LIMITED_TYPE,
- 	COLOR_SPACE_YCBCR709_BLACK_TYPE,
-@@ -102,9 +103,15 @@ static const struct out_csc_color_matrix
- 		{ 0xE00, 0xF349, 0xFEB7, 0x1000,
- 		  0x6CE, 0x16E3, 0x24F,  0x200,
- 		  0xFCCB, 0xF535, 0xE00, 0x1000} },
--	{ COLOR_SPACE_YCBCR2020_TYPE,
-+	/* Corrected. Not included in the TODO above. */
-+	{ COLOR_SPACE_YCBCR2020_LIMITED_TYPE,
-+		{ 0x0E04, 0xF31D, 0xFEDF, 0x1004,
-+		  0x0733, 0x1294, 0x01A0, 0x0201,
-+		  0xFC16, 0xF5E6, 0x0E04, 0x1004} },
-+	/* Corrected. Not included in the TODO above. */
-+	{ COLOR_SPACE_YCBCR2020_FULL_TYPE,
- 		{ 0x1000, 0xF149, 0xFEB7, 0x1004,
--		  0x0868, 0x15B2, 0x01E6, 0x201,
-+		  0x0868, 0x15B2, 0x01E6, 0,
- 		  0xFB88, 0xF478, 0x1000, 0x1004} },
- 	{ COLOR_SPACE_YCBCR709_BLACK_TYPE,
- 		{ 0x0000, 0x0000, 0x0000, 0x1000,
-@@ -171,14 +178,14 @@ static bool is_ycbcr709_type(
- 	return ret;
- }
+--- a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c
++++ b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c
+@@ -115,10 +115,11 @@ static const struct out_csc_color_matrix
+ 	{ 0x2000, 0, 0, 0, 0, 0x2000, 0, 0, 0, 0, 0x2000, 0} },
+ { COLOR_SPACE_2020_RGB_LIMITEDRANGE,
+ 	{ 0x1B67, 0, 0, 0x201, 0, 0x1B67, 0, 0x201, 0, 0, 0x1B67, 0x201} },
+-{ COLOR_SPACE_2020_YCBCR_LIMITED, { 0x1000, 0xF149, 0xFEB7, 0x1004, 0x0868,
+-	0x15B2, 0x01E6, 0x201, 0xFB88, 0xF478, 0x1000, 0x1004} },
++/* COLOR_SPACE_2020_YCBCR_* values corrected. Not included in the TODO above. */
++{ COLOR_SPACE_2020_YCBCR_LIMITED, { 0x0E04, 0xF31D, 0xFEDF, 0x1004, 0x0733,
++	0x1294, 0x01A0, 0x201, 0xFC16, 0xF5E6, 0x0E04, 0x1004} },
+ { COLOR_SPACE_2020_YCBCR_FULL, { 0x1000, 0xF149, 0xFEB7, 0x1004, 0x0868, 0x15B2,
+-	0x01E6, 0x201, 0xFB88, 0xF478, 0x1000, 0x1004} }
++	0x01E6, 0, 0xFB88, 0xF478, 0x1000, 0x1004} }
+ };
  
--static bool is_ycbcr2020_type(
--	enum dc_color_space color_space)
-+static bool is_ycbcr2020_limited_type(enum dc_color_space color_space)
- {
--	bool ret = false;
-+	return color_space == COLOR_SPACE_2020_YCBCR_LIMITED;
-+}
+ static bool setup_scaling_configuration(
+--- a/drivers/gpu/drm/amd/display/dc/dce110/dce110_opp_csc_v.c
++++ b/drivers/gpu/drm/amd/display/dc/dce110/dce110_opp_csc_v.c
+@@ -93,10 +93,11 @@ static const struct out_csc_color_matrix
+ 	{ 0x2000, 0, 0, 0, 0, 0x2000, 0, 0, 0, 0, 0x2000, 0} },
+ { COLOR_SPACE_2020_RGB_LIMITEDRANGE,
+ 	{ 0x1B67, 0, 0, 0x201, 0, 0x1B67, 0, 0x201, 0, 0, 0x1B67, 0x201} },
+-{ COLOR_SPACE_2020_YCBCR_LIMITED, { 0x1000, 0xF149, 0xFEB7, 0x1004, 0x0868,
+-	0x15B2, 0x01E6, 0x201, 0xFB88, 0xF478, 0x1000, 0x1004} },
++/* COLOR_SPACE_2020_YCBCR_* values corrected. Not included in the TODO above. */
++{ COLOR_SPACE_2020_YCBCR_LIMITED, { 0x0E04, 0xF31D, 0xFEDF, 0x1004, 0x0733,
++	0x1294, 0x01A0, 0x201, 0xFC16, 0xF5E6, 0x0E04, 0x1004} },
+ { COLOR_SPACE_2020_YCBCR_FULL, { 0x1000, 0xF149, 0xFEB7, 0x1004, 0x0868, 0x15B2,
+-	0x01E6, 0x201, 0xFB88, 0xF478, 0x1000, 0x1004} }
++	0x01E6, 0, 0xFB88, 0xF478, 0x1000, 0x1004} }
+ };
  
--	if (color_space == COLOR_SPACE_2020_YCBCR_LIMITED || color_space == COLOR_SPACE_2020_YCBCR_FULL)
--		ret = true;
--	return ret;
-+static bool is_ycbcr2020_full_type(enum dc_color_space color_space)
-+{
-+	return color_space == COLOR_SPACE_2020_YCBCR_FULL;
- }
- 
- static bool is_ycbcr709_limited_type(
-@@ -207,8 +214,10 @@ static enum dc_color_space_type get_colo
- 		type = COLOR_SPACE_YCBCR601_LIMITED_TYPE;
- 	else if (is_ycbcr709_limited_type(color_space))
- 		type = COLOR_SPACE_YCBCR709_LIMITED_TYPE;
--	else if (is_ycbcr2020_type(color_space))
--		type = COLOR_SPACE_YCBCR2020_TYPE;
-+	else if (is_ycbcr2020_limited_type(color_space))
-+		type = COLOR_SPACE_YCBCR2020_LIMITED_TYPE;
-+	else if (is_ycbcr2020_full_type(color_space))
-+		type = COLOR_SPACE_YCBCR2020_FULL_TYPE;
- 	else if (color_space == COLOR_SPACE_YCBCR709)
- 		type = COLOR_SPACE_YCBCR709_BLACK_TYPE;
- 	else if (color_space == COLOR_SPACE_YCBCR709_BLACK)
+ enum csc_color_mode {
 
 
