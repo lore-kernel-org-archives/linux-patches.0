@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93CF47CA7E;
-	Thu, 20 Aug 2026 17:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E0E2931C0;
+	Thu, 20 Aug 2026 17:36:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247391; cv=none; b=QzV/ZsUEwYFUNYdrgIEONOv9BtOjsCN226SNmme1MEAC7oJbpah/w4N7qB1yvlocoTCBT+RZR22vYtUcGANRQU4b6LSUSR2jDVBo8+rKC03K4Aq7kgEb2V2lK+fe/yfl4QIKdw3hSuXbzfoduJ1tKTvz4bjqEBOK9ylSj4p9GNg=
+	t=1787247394; cv=none; b=jdGQ+lEZmbgV6SG4jWNn0wH0kXNcgf98Pgrlk/HSiiqcxiLWP0dDH8UPaTicDX0dCZm7OweEw0xyWw0bMQr8+mDiq716VzORJJoJALQBahHBz/6wAy4Z0TqVznx0NHSjK6R6IqguRVGXb5o9l7Y1gFA2GJl7UbGtTIyk86d5bTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247391; c=relaxed/simple;
-	bh=U751bxQAH1xPuyFmcSV+opYXjd0zx0bFDmw97YuNXqM=;
+	s=arc-20240116; t=1787247394; c=relaxed/simple;
+	bh=h+rbwDih5pK4DU/CX/ZdG8YWORIjPU1hvGZE2dent/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MeymXDMK+1qLuX0bOnLnTdf5W+45gapBmpcAHH+YFTp2IfdLAiAS/QKch8ebKu1RTvAXVy6xDxnPeuaunCtRGzIowmS9U/2DMl0CfE/pk5OditoHlxHxXX2GGUFz+zJ52pFWS1ciSaYtx0hYa3xKbsM2OKflZ7x8PqQ9fwSN2eU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gb1CMDrU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hBCakybbpE9tooVU7uziDPeGHV1oWYOpgH3lDkTO84yvld9gLTD0P8jk9ZSWS4wnekAWWzr8J2/sEbQ7R9fyPfGJetakTQoF9tntZsZ9H+d5RmQJE4C+15X1BQkeRNnR5yyuEeLFJ2POapVa8zL715UYsjiooyXlN5xTZiNAyKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqHIiyLU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gb1CMDrU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0FDC1F00A3A;
-	Thu, 20 Aug 2026 17:36:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqHIiyLU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 825901F000E9;
+	Thu, 20 Aug 2026 17:36:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247389;
-	bh=qF8wE8WLNqKUuqM3YGTNUTC9bqgVm5ua6NVBHgNkYsI=;
+	s=korg; t=1787247392;
+	bh=rt1r8f2AU/wJDlH+sobq0y9Cbs5CFtytBD7kPBPc3o4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gb1CMDrUv2RnQNfEJAOUCtjbgNmkO1fXbzAGkZc1aQfpyH4YYb3VvdmQTztIb5bdC
-	 o0FSbJs/B8xc2C2IJbA752XCZSt/1s/kCrma8SS8jcLou9EEHiR9Irg3wf6gTs6TG0
-	 8qQRxJ8mW/7+zxenlft9sfKqN2ufI+PPwYRJxqE8=
+	b=tqHIiyLUq9Ky5RVkK73dGMwJKAUmwe268oqQbVVqs/sBWokyQRr9DaIDKs+pTU+MB
+	 U90V/4b75jCmflFMBeI4z5gPQN/0XMx9cyrD98b6qAzmyjyYOo2PpoSaVG6SV2wCtw
+	 /rD/qKWqlJcVJm0WeLQTf1am0ft5CVt2YV5lDXks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 029/166] Input: synaptics-rmi4 - zero report size on F54 work error
-Date: Thu, 20 Aug 2026 16:54:48 +0200
-Message-ID: <20260820145212.062203520@linuxfoundation.org>
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 003/166] ipvs: separate destination availability state
+Date: Thu, 20 Aug 2026 16:54:22 +0200
+Message-ID: <20260820145211.300904491@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -50,93 +57,229 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-commit dc76c3c8e8ad09362b8c1561f3928288c15cba2e upstream.
+commit cdcc4e46180df8161f4d2f3c6fd6beaf6990133d upstream.
 
-In rmi_f54_work(), if an error occurs during report request or command
-verification, the code jumped directly to the 'error' label, bypassing
-the 'abort' label where f54->report_size was normally zeroed out.
+IPVS configuration paths update destination availability while connection
+accounting updates destination overload state. The two independent states
+share dest->flags, so their read-modify-write updates can race and lose one
+another.
 
-This left f54->report_size containing its previous successful payload
-size. If a user then altered the V4L2 format to a smaller size, and a
-subsequent run failed, rmi_f54_buffer_queue() would copy the stale,
-larger payload size into the shrunken V4L2 buffer, causing a heap
-buffer overflow.
+Keep OVERLOAD in flags, where the preceding patch serializes its updates
+with dst_lock, and move AVAILABLE to cflags. This keeps configuration-
+controlled availability out of the scheduler hot cacheline until a
+scheduler needs to check it. It also prevents availability updates from
+clobbering overload state.
 
-Fix this by merging the 'abort' and 'error' labels into a single 'out'
-exit path, and ensuring that f54->report_size is always set to 0 on
-failure by checking for error and zeroing the local report_size first.
+The destination status bits are not exposed through the IPVS sockopt or
+netlink interfaces, so keep their definitions in the internal IPVS header.
 
-Fixes: 3a762dbd5347 ("[media] Input: synaptics-rmi4 - add support for F54 diagnostics")
+Readers can still observe stale destination state; this does not provide a
+cross-field snapshot.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reported-by: sashiko-bot@kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Link: https://patch.msgid.link/20260626051802.4033172-2-dmitry.torokhov@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Link: https://lore.kernel.org/all/8913381c-1e02-35c7-0ec4-61de5a12fd35@ssi.bg/
+Assisted-by: Claude-Code:GLM-5.2
+Suggested-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+(cherry picked from commit cdcc4e46180df8161f4d2f3c6fd6beaf6990133d)
+[ Julian: Backport by removing the hunks from ip_vs_xmit.c ]
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/rmi4/rmi_f54.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ include/net/ip_vs.h              | 7 +++++++
+ include/uapi/linux/ip_vs.h       | 6 ------
+ net/netfilter/ipvs/ip_vs_conn.c  | 4 ++--
+ net/netfilter/ipvs/ip_vs_core.c  | 6 +++---
+ net/netfilter/ipvs/ip_vs_ctl.c   | 4 ++--
+ net/netfilter/ipvs/ip_vs_dh.c    | 4 ++--
+ net/netfilter/ipvs/ip_vs_lblc.c  | 2 +-
+ net/netfilter/ipvs/ip_vs_lblcr.c | 8 ++++----
+ 8 files changed, 21 insertions(+), 20 deletions(-)
 
---- a/drivers/input/rmi4/rmi_f54.c
-+++ b/drivers/input/rmi4/rmi_f54.c
-@@ -547,7 +547,7 @@ static void rmi_f54_work(struct work_str
- 		dev_err(&fn->dev, "Bad report size, report type=%d\n",
- 				f54->report_type);
- 		error = -EINVAL;
--		goto error;     /* retry won't help */
-+		goto out;     /* retry won't help */
+diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
+index e0077fd28ad1c..35f012f620150 100644
+--- a/include/net/ip_vs.h
++++ b/include/net/ip_vs.h
+@@ -34,6 +34,12 @@
+ #define IP_VS_HDR_INVERSE	1
+ #define IP_VS_HDR_ICMP		2
+ 
++/* Destination Server Flags */
++#define IP_VS_DEST_F_OVERLOAD	0x0002		/* server is overloaded */
++
++/* Destination Server Config Flags */
++#define IP_VS_DEST_CF_AVAILABLE	0x0001		/* server is available */
++
+ /* Generic access of ipvs struct */
+ static inline struct netns_ipvs *net_ipvs(struct net* net)
+ {
+@@ -725,6 +731,7 @@ struct ip_vs_dest {
+ 	volatile unsigned int	flags;		/* dest status flags */
+ 	atomic_t		conn_flags;	/* flags to copy to conn */
+ 	atomic_t		weight;		/* server weight */
++	unsigned long		cflags;		/* config flags */
+ 	atomic_t		last_weight;	/* server latest weight */
+ 	__u16			tun_type;	/* tunnel type */
+ 	__be16			tun_port;	/* tunnel port */
+diff --git a/include/uapi/linux/ip_vs.h b/include/uapi/linux/ip_vs.h
+index 1ed234e7f2513..2c37c6ac7525a 100644
+--- a/include/uapi/linux/ip_vs.h
++++ b/include/uapi/linux/ip_vs.h
+@@ -28,12 +28,6 @@
+ #define IP_VS_SVC_F_SCHED_SH_FALLBACK	IP_VS_SVC_F_SCHED1 /* SH fallback */
+ #define IP_VS_SVC_F_SCHED_SH_PORT	IP_VS_SVC_F_SCHED2 /* SH use port */
+ 
+-/*
+- *      Destination Server Flags
+- */
+-#define IP_VS_DEST_F_AVAILABLE	0x0001		/* server is available */
+-#define IP_VS_DEST_F_OVERLOAD	0x0002		/* server is overloaded */
+-
+ /*
+  *      IPVS sync daemon states
+  */
+diff --git a/net/netfilter/ipvs/ip_vs_conn.c b/net/netfilter/ipvs/ip_vs_conn.c
+index b2b74ce674909..f0a00e902450b 100644
+--- a/net/netfilter/ipvs/ip_vs_conn.c
++++ b/net/netfilter/ipvs/ip_vs_conn.c
+@@ -758,7 +758,7 @@ int ip_vs_check_template(struct ip_vs_conn *ct, struct ip_vs_dest *cdest)
+ 	 * Checking the dest server status.
+ 	 */
+ 	if ((dest == NULL) ||
+-	    !(dest->flags & IP_VS_DEST_F_AVAILABLE) ||
++	    !(dest->cflags & IP_VS_DEST_CF_AVAILABLE) ||
+ 	    expire_quiescent_template(ipvs, dest) ||
+ 	    (cdest && (dest != cdest))) {
+ 		IP_VS_DBG_BUF(9, "check_template: dest not available for "
+@@ -1401,7 +1401,7 @@ void ip_vs_expire_nodest_conn_flush(struct netns_ipvs *ipvs)
+ 				continue;
+ 
+ 			dest = cp->dest;
+-			if (!dest || (dest->flags & IP_VS_DEST_F_AVAILABLE))
++			if (!dest || (dest->cflags & IP_VS_DEST_CF_AVAILABLE))
+ 				continue;
+ 
+ 			if (atomic_read(&cp->n_control))
+diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
+index a722bacce4613..d15661e5a7f16 100644
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -124,7 +124,7 @@ ip_vs_in_stats(struct ip_vs_conn *cp, struct sk_buff *skb)
+ 	struct ip_vs_dest *dest = cp->dest;
+ 	struct netns_ipvs *ipvs = cp->ipvs;
+ 
+-	if (dest && (dest->flags & IP_VS_DEST_F_AVAILABLE)) {
++	if (dest && (dest->cflags & IP_VS_DEST_CF_AVAILABLE)) {
+ 		struct ip_vs_cpu_stats *s;
+ 		struct ip_vs_service *svc;
+ 
+@@ -160,7 +160,7 @@ ip_vs_out_stats(struct ip_vs_conn *cp, struct sk_buff *skb)
+ 	struct ip_vs_dest *dest = cp->dest;
+ 	struct netns_ipvs *ipvs = cp->ipvs;
+ 
+-	if (dest && (dest->flags & IP_VS_DEST_F_AVAILABLE)) {
++	if (dest && (dest->cflags & IP_VS_DEST_CF_AVAILABLE)) {
+ 		struct ip_vs_cpu_stats *s;
+ 		struct ip_vs_service *svc;
+ 
+@@ -2026,7 +2026,7 @@ ip_vs_in_hook(void *priv, struct sk_buff *skb, const struct nf_hook_state *state
  	}
+ 
+ 	/* Check the server status */
+-	if (cp && cp->dest && !(cp->dest->flags & IP_VS_DEST_F_AVAILABLE)) {
++	if (cp && cp->dest && !(cp->dest->cflags & IP_VS_DEST_CF_AVAILABLE)) {
+ 		/* the destination server is not available */
+ 		if (sysctl_expire_nodest_conn(ipvs)) {
+ 			bool old_ct = ip_vs_conn_uses_old_conntrack(cp, skb);
+diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
+index c98bdcea8b2f5..97a7de8498d54 100644
+--- a/net/netfilter/ipvs/ip_vs_ctl.c
++++ b/net/netfilter/ipvs/ip_vs_ctl.c
+@@ -1058,7 +1058,7 @@ __ip_vs_update_dest(struct ip_vs_service *svc, struct ip_vs_dest *dest,
+ 	}
+ 
+ 	/* set the dest status flags */
+-	dest->flags |= IP_VS_DEST_F_AVAILABLE;
++	dest->cflags |= IP_VS_DEST_CF_AVAILABLE;
+ 
+ 	if (READ_ONCE(dest->u_threshold) != udest->u_threshold ||
+ 	    READ_ONCE(dest->l_threshold) != udest->l_threshold) {
+@@ -1325,7 +1325,7 @@ static void __ip_vs_unlink_dest(struct ip_vs_service *svc,
+ 				struct ip_vs_dest *dest,
+ 				int svcupd)
+ {
+-	dest->flags &= ~IP_VS_DEST_F_AVAILABLE;
++	dest->cflags &= ~IP_VS_DEST_CF_AVAILABLE;
  
  	/*
-@@ -558,7 +558,7 @@ static void rmi_f54_work(struct work_str
- 			 &command);
- 	if (error) {
- 		dev_err(&fn->dev, "Failed to read back command\n");
--		goto error;
-+		goto out;
+ 	 *  Remove it from the d-linked destination list.
+diff --git a/net/netfilter/ipvs/ip_vs_dh.c b/net/netfilter/ipvs/ip_vs_dh.c
+index 5e6ec32aff2b1..6d88bb4bf4ae8 100644
+--- a/net/netfilter/ipvs/ip_vs_dh.c
++++ b/net/netfilter/ipvs/ip_vs_dh.c
+@@ -220,8 +220,8 @@ ip_vs_dh_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
+ 
+ 	s = (struct ip_vs_dh_state *) svc->sched_data;
+ 	dest = ip_vs_dh_get(svc->af, s, &iph->daddr);
+-	if (!dest
+-	    || !(dest->flags & IP_VS_DEST_F_AVAILABLE)
++	if (!dest ||
++	    !(dest->cflags & IP_VS_DEST_CF_AVAILABLE)
+ 	    || atomic_read(&dest->weight) <= 0
+ 	    || is_overloaded(dest)) {
+ 		ip_vs_scheduler_err(svc, "no destination available");
+diff --git a/net/netfilter/ipvs/ip_vs_lblc.c b/net/netfilter/ipvs/ip_vs_lblc.c
+index cf78ba4ce5ffd..70014c89955d6 100644
+--- a/net/netfilter/ipvs/ip_vs_lblc.c
++++ b/net/netfilter/ipvs/ip_vs_lblc.c
+@@ -503,7 +503,7 @@ ip_vs_lblc_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
+ 		 */
+ 
+ 		dest = en->dest;
+-		if ((dest->flags & IP_VS_DEST_F_AVAILABLE) &&
++		if ((dest->cflags & IP_VS_DEST_CF_AVAILABLE) &&
+ 		    atomic_read(&dest->weight) > 0 && !is_overloaded(dest, svc))
+ 			goto out;
  	}
- 	if (command & F54_GET_REPORT) {
- 		if (time_after(jiffies, f54->timeout)) {
-@@ -566,7 +566,7 @@ static void rmi_f54_work(struct work_str
- 			error = -ETIMEDOUT;
+diff --git a/net/netfilter/ipvs/ip_vs_lblcr.c b/net/netfilter/ipvs/ip_vs_lblcr.c
+index 9eddf118b40ec..6b582be087785 100644
+--- a/net/netfilter/ipvs/ip_vs_lblcr.c
++++ b/net/netfilter/ipvs/ip_vs_lblcr.c
+@@ -170,8 +170,8 @@ static inline struct ip_vs_dest *ip_vs_dest_set_min(struct ip_vs_dest_set *set)
+ 		if (least->flags & IP_VS_DEST_F_OVERLOAD)
+ 			continue;
+ 
+-		if ((atomic_read(&least->weight) > 0)
+-		    && (least->flags & IP_VS_DEST_F_AVAILABLE)) {
++		if ((atomic_read(&least->weight) > 0) &&
++		    (least->cflags & IP_VS_DEST_CF_AVAILABLE)) {
+ 			loh = ip_vs_dest_conn_overhead(least);
+ 			goto nextstage;
  		}
- 		report_size = 0;
--		goto error;
-+		goto out;
- 	}
+@@ -187,8 +187,8 @@ static inline struct ip_vs_dest *ip_vs_dest_set_min(struct ip_vs_dest_set *set)
  
- 	rmi_dbg(RMI_DEBUG_FN, &fn->dev, "Get report command completed, reading data\n");
-@@ -581,7 +581,7 @@ static void rmi_f54_work(struct work_str
- 					fifo, sizeof(fifo));
- 		if (error) {
- 			dev_err(&fn->dev, "Failed to set fifo start offset\n");
--			goto abort;
-+			goto out;
+ 		doh = ip_vs_dest_conn_overhead(dest);
+ 		if (((__s64)loh * atomic_read(&dest->weight) >
+-		     (__s64)doh * atomic_read(&least->weight))
+-		    && (dest->flags & IP_VS_DEST_F_AVAILABLE)) {
++		     (__s64)doh * atomic_read(&least->weight)) &&
++		    (dest->cflags & IP_VS_DEST_CF_AVAILABLE)) {
+ 			least = dest;
+ 			loh = doh;
  		}
- 
- 		error = rmi_read_block(fn->rmi_dev, fn->fd.data_base_addr +
-@@ -590,16 +590,16 @@ static void rmi_f54_work(struct work_str
- 		if (error) {
- 			dev_err(&fn->dev, "%s: read [%d bytes] returned %d\n",
- 				__func__, size, error);
--			goto abort;
-+			goto out;
- 		}
- 	}
- 
--abort:
--	f54->report_size = error ? 0 : report_size;
--error:
-+out:
- 	if (error)
- 		report_size = 0;
- 
-+	f54->report_size = report_size;
-+
- 	if (report_size == 0 && !error) {
- 		queue_delayed_work(f54->workqueue, &f54->work,
- 				   msecs_to_jiffies(1));
+-- 
+2.53.0
+
 
 
