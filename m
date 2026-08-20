@@ -1,54 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1249B47F2CE;
-	Thu, 20 Aug 2026 17:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A0F44062A;
+	Thu, 20 Aug 2026 17:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248245; cv=none; b=vAEEIhXt6XfMAURfslBQtv3MXVmimizhmJyi1QDyMkmvbM1JbWajclzOIyWX+dS/i3vPgdSe0/G4jRIz25HnwjlNH1gspRygem8OlyZR8kouyHKpzP2bwVfpbvQr/3x/5VmD02y8VyOWWAyL7KrEmhzbQu1ZL+zxC20v4kha1E8=
+	t=1787248248; cv=none; b=MQeP2qdgp2bANyW1SChYuchcrLDUVignH/ukxmtV7PAh7h5pX0D8CSpg87iEfi3DC5PpvF28ysb01b6L8Okv1u74+nW2/3k7ihqxUxL9NpqwL11woc7J+d56mgJoamveG0wQuLja0ExFD9EI6p7dISoqix2+BtBLqXWPVWMT2bM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248245; c=relaxed/simple;
-	bh=+/9luYqm1FAT/GCdYMnaYPq8GvApaYQgD/CJKehrSTE=;
+	s=arc-20240116; t=1787248248; c=relaxed/simple;
+	bh=EKV40ET7h/r6oyKgU+14IOxq8KlsBjxQcE3rK01yDlc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SKdE7EXKb5LFFIN3UAcA5zcrml6LsR1SGyFygNQZGqwOCoErGoB9GWTJ/5SxgQAQNe0gto6gl6UpDhpJPUZI0QIYa8gBantBVkIRfKQrYENV2G1tB+eoPwNBEq3s7C5wVWtwMvdYg8B8ml6pq0O3Lfdm25LLIdUhEuk2de9pnH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AT39MByZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Od0nxvYcPbYrNrB4BjXdAOzb1VBVcCpapCJYC37e/TTAKbamBDCoRB3VJ1J8SWT4pVq34XgSP1bRDQRfnYCNxpBwGVaJaLujZJRzpuXncPXzxF+rBaQ9Qf74+dDaxrr1wMxlXXlBj8ekj2KNa+LCQr958GZtcCqvh4OxcMDS8pY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cLeRdYYV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AT39MByZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C15E1F000E9;
-	Thu, 20 Aug 2026 17:50:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cLeRdYYV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5BE1F000E9;
+	Thu, 20 Aug 2026 17:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248244;
-	bh=/EAbWV7HiB4LR+i+OYyYcvP2yNIWaYYe8HwS6nJ3jOE=;
+	s=korg; t=1787248246;
+	bh=796HY/N1wJ38isoFGVnBf2QJckpfY4jaepfDIhXUIKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AT39MByZ2lXCdUgZcKoFsGXVgSaJ3AArN/E4mXBIkNLmrj8CKduA0vy5Syz5pWsws
-	 fpAFJV/qDat92gcjSETEheQ33/EUokcZkEMxiVadr2PCOH4mdja/uYQB3mlvWzJTAY
-	 iNDJWHm4RX2Hkvjd6L7GEgfa7VRfWkLl/P/WzXzQ=
+	b=cLeRdYYVkC4AQoH3WxQ6e/68Q7haRWK2ZFNkz7LoClUD4fZzALSm/Hang52gj5Wug
+	 324RpI2GEk2pnEmPObIBUmrdjQ3Jblx0caIdGI0ktlmXACt67BpeZ1lR/TWW+SZm10
+	 pWszvph8i51U9Ldsk6s4Zx2QKOEFTWebkmrTZ2xY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	Bernard Metzler <bmt@zurich.ibm.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Leon Romanovsky <leon@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	David Ahern <dsahern@kernel.org>,
-	Karsten Graul <kgraul@linux.ibm.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
-	Jan Karcher <jaka@linux.ibm.com>,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Tony Lu <tonylu@linux.alibaba.com>,
-	Wen Gu <guwen@linux.alibaba.com>,
-	Boris Pismenny <borisp@nvidia.com>,
+	Aaron Esau <aaron1esau@gmail.com>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 161/303] tcp_bpf, smc, tls, espintcp, siw: Reduce MSG_SENDPAGE_NOTLAST usage
-Date: Thu, 20 Aug 2026 16:54:57 +0200
-Message-ID: <20260820145258.137390080@linuxfoundation.org>
+Subject: [PATCH 6.1 162/303] espintcp: use sk_msg_free_partial to fix partial send
+Date: Thu, 20 Aug 2026 16:54:58 +0200
+Message-ID: <20260820145258.167206120@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -67,164 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit f8dd95b29d7ef08c19ec9720564acf72243ddcf6 ]
+[ Upstream commit 007800408002d871f5699bdb944f985896730b8f ]
 
-As MSG_SENDPAGE_NOTLAST is being phased out along with sendpage(), don't
-use it further in than the sendpage methods, but rather translate it to
-MSG_MORE and use that instead.
+sk_msg_free_partial() ensures consistency of the skmsg at every
+iteration, without having to manually handle uncharges and offsets.
+This simplifies the code, and fixes some bugs in skmsg accounting when
+we don't send the full contents.
 
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-cc: Bernard Metzler <bmt@zurich.ibm.com>
-cc: Jason Gunthorpe <jgg@ziepe.ca>
-cc: Leon Romanovsky <leon@kernel.org>
-cc: John Fastabend <john.fastabend@gmail.com>
-cc: Jakub Sitnicki <jakub@cloudflare.com>
-cc: David Ahern <dsahern@kernel.org>
-cc: Karsten Graul <kgraul@linux.ibm.com>
-cc: Wenjia Zhang <wenjia@linux.ibm.com>
-cc: Jan Karcher <jaka@linux.ibm.com>
-cc: "D. Wythe" <alibuda@linux.alibaba.com>
-cc: Tony Lu <tonylu@linux.alibaba.com>
-cc: Wen Gu <guwen@linux.alibaba.com>
-cc: Boris Pismenny <borisp@nvidia.com>
-cc: Steffen Klassert <steffen.klassert@secunet.com>
-cc: Herbert Xu <herbert@gondor.apana.org.au>
-Link: https://lore.kernel.org/r/20230623225513.2732256-2-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 007800408002 ("espintcp: use sk_msg_free_partial to fix partial send")
+Cc: stable@vger.kernel.org
+Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+Reported-by: Aaron Esau <aaron1esau@gmail.com>
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_tx.c |    5 ++---
- net/ipv4/tcp_bpf.c                    |    5 +++--
- net/smc/smc_tx.c                      |    6 ++++--
- net/tls/tls_device.c                  |    4 ++--
- net/xfrm/espintcp.c                   |   10 ++++++----
- 5 files changed, 17 insertions(+), 13 deletions(-)
+ net/xfrm/espintcp.c |   34 +++++++---------------------------
+ 1 file changed, 7 insertions(+), 27 deletions(-)
 
---- a/drivers/infiniband/sw/siw/siw_qp_tx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
-@@ -326,8 +326,7 @@ static int siw_tcp_sendpages(struct sock
- {
- 	struct bio_vec bvec;
- 	struct msghdr msg = {
--		.msg_flags = (MSG_MORE | MSG_DONTWAIT | MSG_SENDPAGE_NOTLAST |
--			      MSG_SPLICE_PAGES),
-+		.msg_flags = (MSG_MORE | MSG_DONTWAIT | MSG_SPLICE_PAGES),
- 	};
- 	struct sock *sk = s->sk;
- 	int i = 0, rv = 0, sent = 0;
-@@ -336,7 +335,7 @@ static int siw_tcp_sendpages(struct sock
- 		size_t bytes = min_t(size_t, PAGE_SIZE - offset, size);
- 
- 		if (size + offset <= PAGE_SIZE)
--			msg.msg_flags &= ~MSG_SENDPAGE_NOTLAST;
-+			msg.msg_flags &= ~MSG_MORE;
- 
- 		tcp_rate_check_app_limited(sk);
- 		bvec_set_page(&bvec, page[i], bytes, offset);
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -90,9 +90,9 @@ static int bpf_tcp_ingress(struct sock *
- static int tcp_bpf_push(struct sock *sk, struct sk_msg *msg, u32 apply_bytes,
- 			int flags, bool uncharge)
- {
-+	struct msghdr msghdr = {};
- 	bool apply = apply_bytes;
- 	struct scatterlist *sge;
--	struct msghdr msghdr = { .msg_flags = flags | MSG_SPLICE_PAGES, };
- 	struct page *page;
- 	int size, ret = 0;
- 	u32 off;
-@@ -109,11 +109,12 @@ static int tcp_bpf_push(struct sock *sk,
- 
- 		tcp_rate_check_app_limited(sk);
- retry:
-+		msghdr.msg_flags = flags | MSG_SPLICE_PAGES;
- 		has_tx_ulp = tls_sw_has_ctx_tx(sk);
- 		if (has_tx_ulp)
- 			msghdr.msg_flags |= MSG_SENDPAGE_NOPOLICY;
- 
--		if (flags & MSG_SENDPAGE_NOTLAST)
-+		if (size < sge->length && msg->sg.start != msg->sg.end)
- 			msghdr.msg_flags |= MSG_MORE;
- 
- 		bvec_set_page(&bvec, page, size, off);
---- a/net/smc/smc_tx.c
-+++ b/net/smc/smc_tx.c
-@@ -168,8 +168,7 @@ static bool smc_tx_should_cork(struct sm
- 	 * should known how/when to uncork it.
- 	 */
- 	if ((msg->msg_flags & MSG_MORE ||
--	     smc_tx_is_corked(smc) ||
--	     msg->msg_flags & MSG_SENDPAGE_NOTLAST) &&
-+	     smc_tx_is_corked(smc)) &&
- 	    atomic_read(&conn->sndbuf_space))
- 		return true;
- 
-@@ -306,6 +305,9 @@ int smc_tx_sendpage(struct smc_sock *smc
- 	struct kvec iov;
- 	int rc;
- 
-+	if (flags & MSG_SENDPAGE_NOTLAST)
-+		msg.msg_flags |= MSG_MORE;
-+
- 	iov.iov_base = kaddr + offset;
- 	iov.iov_len = size;
- 	iov_iter_kvec(&msg.msg_iter, ITER_SOURCE, &iov, 1, size);
---- a/net/tls/tls_device.c
-+++ b/net/tls/tls_device.c
-@@ -457,7 +457,7 @@ static int tls_push_data(struct sock *sk
- 		return -sk->sk_err;
- 
- 	flags |= MSG_SENDPAGE_DECRYPTED;
--	tls_push_record_flags = flags | MSG_SENDPAGE_NOTLAST;
-+	tls_push_record_flags = flags | MSG_MORE;
- 
- 	timeo = sock_sndtimeo(sk, flags & MSG_DONTWAIT);
- 	if (tls_is_partially_sent_record(tls_ctx)) {
-@@ -526,7 +526,7 @@ handle_error:
- 		if (!size) {
- last_record:
- 			tls_push_record_flags = flags;
--			if (flags & (MSG_SENDPAGE_NOTLAST | MSG_MORE)) {
-+			if (flags & MSG_MORE) {
- 				more = true;
- 				break;
- 			}
 --- a/net/xfrm/espintcp.c
 +++ b/net/xfrm/espintcp.c
-@@ -206,13 +206,15 @@ static int espintcp_sendskb_locked(struc
- static int espintcp_sendskmsg_locked(struct sock *sk,
- 				     struct espintcp_msg *emsg, int flags)
- {
--	struct msghdr msghdr = { .msg_flags = flags | MSG_SPLICE_PAGES, };
-+	struct msghdr msghdr = {
-+		.msg_flags = flags | MSG_SPLICE_PAGES | MSG_MORE,
-+	};
+@@ -212,43 +212,23 @@ static int espintcp_sendskmsg_locked(str
  	struct sk_msg *skmsg = &emsg->skmsg;
-+	bool more = flags & MSG_MORE;
+ 	bool more = flags & MSG_MORE;
  	struct scatterlist *sg;
- 	int done = 0;
+-	int done = 0;
  	int ret;
  
--	msghdr.msg_flags |= MSG_SENDPAGE_NOTLAST;
- 	sg = &skmsg->sg.data[skmsg->sg.start];
+-	sg = &skmsg->sg.data[skmsg->sg.start];
  	do {
  		struct bio_vec bvec;
-@@ -222,8 +224,8 @@ static int espintcp_sendskmsg_locked(str
+-		size_t size = sg->length - emsg->offset;
+-		int offset = sg->offset + emsg->offset;
+-		struct page *p;
+-
+-		emsg->offset = 0;
  
- 		emsg->offset = 0;
++		sg = &skmsg->sg.data[skmsg->sg.start];
+ 		if (sg_is_last(sg) && !more)
+ 			msghdr.msg_flags &= ~MSG_MORE;
  
--		if (sg_is_last(sg))
--			msghdr.msg_flags &= ~MSG_SENDPAGE_NOTLAST;
-+		if (sg_is_last(sg) && !more)
-+			msghdr.msg_flags &= ~MSG_MORE;
+-		p = sg_page(sg);
+-retry:
+-		bvec_set_page(&bvec, p, size, offset);
+-		iov_iter_bvec(&msghdr.msg_iter, ITER_SOURCE, &bvec, 1, size);
+-		ret = tcp_sendmsg_locked(sk, &msghdr, size);
+-		if (ret < 0) {
+-			emsg->offset = offset - sg->offset;
+-			skmsg->sg.start += done;
++		bvec_set_page(&bvec, sg_page(sg), sg->length, sg->offset);
++		iov_iter_bvec(&msghdr.msg_iter, ITER_SOURCE, &bvec, 1, sg->length);
++		ret = tcp_sendmsg_locked(sk, &msghdr, sg->length);
++		if (ret < 0)
+ 			return ret;
+-		}
  
- 		p = sg_page(sg);
- retry:
+-		if (ret != size) {
+-			offset += ret;
+-			size -= ret;
+-			goto retry;
+-		}
+-
+-		done++;
+-		put_page(p);
+-		sk_mem_uncharge(sk, sg->length);
+-		sg = sg_next(sg);
+-	} while (sg);
++		sk_msg_free_partial(sk, skmsg, ret);
++	} while (skmsg->sg.size);
+ 
+ 	memset(emsg, 0, sizeof(*emsg));
+ 
 
 
