@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E8F367B70;
-	Thu, 20 Aug 2026 15:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42822874E6;
+	Thu, 20 Aug 2026 15:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238509; cv=none; b=iorb3waXWAq+ZNmf6BnvZgUUTTbNyEmzpEHu9XmbutFXXpLrJqEAs1I6/WCjkE0OxOUo7igA7yEmDi7qnxcMMk5tDYgDyKeyPU/u7aLXgPH485jHijAQIdVUh6Qe94XgRUOhPrN6D2nGv+Px//DfmtvYdntwAbm/Pcgbedd7JMQ=
+	t=1787238512; cv=none; b=L9Q9tXwGEXxidH0q4WlMGQXvZmulsx5ngF+VJEBAvvfZKEylOOzFSjSEYernX84oTqU02tScRQ/YFCypf35/YxPJ3xOl67cHNQ7/Ahft9oqa6URxHL01Kd0LHORHheBuPj8uuXoq6xHmM/d9q+V0oaZ9MLRnweXQmBc2mcHdzpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238509; c=relaxed/simple;
-	bh=rmnX1HQUTDEBRSNJzF7HREBnHBXX54sSIvOiB+VR5rk=;
+	s=arc-20240116; t=1787238512; c=relaxed/simple;
+	bh=oyIt0cFEmTP2S3JP+atXzgszRa/PD3Lfi/zaNrjOF+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RkdppgwSPif6xy3L0fBQxm/gbhVIJlYiqR6AV3qDVFSLhuU72QMoJkCDl7KfoVCDgadiy+mT7rrOj5LMHYxkukoJ0YOp83r4znoCjL5W5wrOQWpy2IhG1S1I/VQaaq6I1KJLPjlvmspi65V/4WRS7OacIwe6WHCnAKzi9olPBXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eyYCR05l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IzmS4Z47I5NL0uu0X70hpY+XFXTO//6KCA3fFgfqkM135yQiLHRgV2CVMZeW63SbEXwjUsk/mOMgYgJmSV+it6S+ZZKDs6JrOno+h9gucdroHf7pSMvPS5f5DsDWYD3dqHrO7kXGzqX6zObMK4WIJbSgNR9sb2l4dOj3JoNtzxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qp/1H+6y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eyYCR05l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 675BD1F000E9;
-	Thu, 20 Aug 2026 15:08:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qp/1H+6y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2891F000E9;
+	Thu, 20 Aug 2026 15:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238507;
-	bh=gdDTrAlHlJBUkv0qEIz16cG/1PuQeKaMbzBSxP4IkS8=;
+	s=korg; t=1787238510;
+	bh=DrrlJ4+RmRzUKWI2dDfE8ILUJN1sUZBDA1ohOtzulG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eyYCR05lDIYmMciFWmCaoBnF83KtI4RW08ztEZjAx7sBD9LW6Kw8LwZCBFqCaPvge
-	 oiyg+Qa2J2CTRuVFX560Q1vJ1Ujr2pfJYrfD9WDEX1ludukjHuKrypPUJKPPO4lHno
-	 L9xUm2gaWdTK0W56abacClvBCFB3m82WQDfGHArk=
+	b=qp/1H+6yfbpEEz9oaNKIHKu4zFUCjBUyvrV5cct6OyoeqsAYnCgv2wb+TA/Ww/10T
+	 MWwk6IcLW5GHdLxuM2sCebBs1nLHTtBfA/R80lUi90OfqpBuR39UMZvS1ic2Y8URnt
+	 43Qk513qp2UInJgtAB9/ozVyHKKkMJB8m3G+KaoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robby Cai <robby.cai@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 171/228] regulator: fp9931: Fix VPOS/VNEG voltage selector table
-Date: Thu, 20 Aug 2026 16:55:13 +0200
-Message-ID: <20260820145249.887817209@linuxfoundation.org>
+Subject: [PATCH 7.1 172/228] af_unix: Unlink scc_entry in unix_del_edge().
+Date: Thu, 20 Aug 2026 16:55:14 +0200
+Message-ID: <20260820145249.920685524@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -51,108 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robby Cai <robby.cai@nxp.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 66694b5f90f3876fccb87bbd02b453cdc33b3ae4 ]
+[ Upstream commit 594d905195024b228c962627ae5ae7c17bd582a4 ]
 
-The VPOSNEG_table[] mapping does not match the FP9931 datasheet.
+Kyle Zeng reported that GC could free a dead SCC partially.
 
-The datasheet defines the VPOS/VNEG voltage mapping as:
+The scenario is as follows:
 
-  00h-04h ->  7.04V (-7.04V)
-  05h     ->  7.26V (-7.26V)
-  06h     ->  7.49V (-7.49V)
-  ...
-  28h-3Fh -> 15.06V (-15.06V)
+   1) Create two SCCs:
 
-However, VPOSNEG_table[] has two issues:
+       X -.   A <-> B
+       ^--'
 
-1. Selector 0x00~0x04 should all map to 7.04V (5 entries), but the
-   table has 6 entries of 7.04V, causing all subsequent entries to be
-   shifted by one position.
+   2) Run the following concurrently:
 
-2. Selectors 0x29~0x3F should all clamp to 15.06V (23 entries), but
-   the table has only 41 entries. Any selector value above 0x28
-   would result in an out-of-bounds table access.
+      2-1) send() sk-B to sk-B from sk-X
+      2-2) close() both A and B
 
-Fix both issues by removing the duplicate 7.04V entry and appending
-the missing 23 clamped 15.06V entries, bringing the table to the
-correct size of 64 entries (0x00~0x3F).
+At 2-1), there is a small window where unix_add_edges()
+publishes a new edge (B <-> B) to GC but its skb is not queued
+by skb_queue_tail().
 
-Fixes: 12d821bd13d4 ("regulator: Add FP9931/JD9930 driver")
-Signed-off-by: Robby Cai <robby.cai@nxp.com>
-Link: https://patch.msgid.link/20260724103441.800522-2-robby.cai@oss.nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+If 2-2) completes before skb_queue_tail() and GC is triggered,
+it judges A <-> B as dead, but B is not freed because GC cannot
+collect the not-yet-queued skb holding the B <-> B edge.
+
+       X -.   A <-> B -. This edge is visible
+       ^--'         ^..'  but skb is not
+
+This itself is not a problem since the next GC run will judge
+B as dead as well and free it finally.
+
+       X -.   A <.> B -.
+       ^--'         ^--'
+
+However, X's SCC forces the next GC to call unix_walk_scc_fast(),
+and it iterates over A through B's scc_entry.
+
+Let's unlink scc_entry before freeing the vertex in unix_del_edge().
+
+Fixes: 4090fa373f0e ("af_unix: Replace garbage collection algorithm.")
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Kyle Zeng <kylebot@openai.com>
+Fixes: 4090fa373f0e ("af_unix: Replace garbage collection algorithm.").
+Link: https://patch.msgid.link/20260804002155.2233594-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/fp9931.c | 54 +++++++++-----------------------------
- 1 file changed, 12 insertions(+), 42 deletions(-)
+ net/unix/garbage.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/regulator/fp9931.c b/drivers/regulator/fp9931.c
-index 002b41f53eff8..ff743a8b0dfe8 100644
---- a/drivers/regulator/fp9931.c
-+++ b/drivers/regulator/fp9931.c
-@@ -37,48 +37,18 @@ struct fp9931_data {
- };
+diff --git a/net/unix/garbage.c b/net/unix/garbage.c
+index 0783555e25266..9fcaaf55cba5d 100644
+--- a/net/unix/garbage.c
++++ b/net/unix/garbage.c
+@@ -186,6 +186,7 @@ static void unix_del_edge(struct scm_fp_list *fpl, struct unix_edge *edge)
+ 	if (!vertex->out_degree) {
+ 		edge->predecessor->vertex = NULL;
+ 		list_move_tail(&vertex->entry, &fpl->vertices);
++		list_del(&vertex->scc_entry);
+ 	}
+ }
  
- static const unsigned int VPOSNEG_table[] = {
--	7040000,
--	7040000,
--	7040000,
--	7040000,
--	7040000,
--	7040000,
--	7260000,
--	7490000,
--	7710000,
--	7930000,
--	8150000,
--	8380000,
--	8600000,
--	8820000,
--	9040000,
--	9270000,
--	9490000,
--	9710000,
--	9940000,
--	10160000,
--	10380000,
--	10600000,
--	10830000,
--	11050000,
--	11270000,
--	11490000,
--	11720000,
--	11940000,
--	12160000,
--	12380000,
--	12610000,
--	12830000,
--	13050000,
--	13280000,
--	13500000,
--	13720000,
--	13940000,
--	14170000,
--	14390000,
--	14610000,
--	14830000,
--	15060000,
-+	7040000,  7040000,  7040000,  7040000,  7040000,            /* 00h-04h */
-+	7260000,  7490000,  7710000,  7930000,  8150000,  8380000,  /* 05h-0Ah */
-+	8600000,  8820000,  9040000,  9270000,  9490000,  9710000,  /* 0Bh-10h */
-+	9940000,  10160000, 10380000, 10600000, 10830000, 11050000, /* 11h-16h */
-+	11270000, 11490000, 11720000, 11940000, 12160000, 12380000, /* 17h-1Ch */
-+	12610000, 12830000, 13050000, 13280000, 13500000, 13720000, /* 1Dh-22h */
-+	13940000, 14170000, 14390000, 14610000, 14830000, 15060000, /* 23h-28h */
-+	/* 29h-3Fh: clamped to 15.06V per datasheet */
-+	15060000, 15060000, 15060000, 15060000, 15060000, 15060000,
-+	15060000, 15060000, 15060000, 15060000, 15060000, 15060000,
-+	15060000, 15060000, 15060000, 15060000, 15060000, 15060000,
-+	15060000, 15060000, 15060000, 15060000, 15060000,
- };
- 
- static const struct hwmon_channel_info *fp9931_info[] = {
 -- 
 2.53.0
 
