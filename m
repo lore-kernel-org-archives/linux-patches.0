@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13F14772A7;
-	Thu, 20 Aug 2026 17:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FDC47DFAA;
+	Thu, 20 Aug 2026 17:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247953; cv=none; b=dDAKbVxmt2VYn/ToQ7xQwepyHNkLitp9eXmNi0Yb8K1/ovGcQJMEJmXpP2EdJlnSsI9K21KQr60ahW3RdKuA480br6I8Yfm/ERZERYJH6ld9V4qjFmx03rjQiny5HU7HUPYod0cuAJD0HbCXPF+dqrgTqubTuEbBvbb+aQX9lrQ=
+	t=1787247955; cv=none; b=G1briU0dBB1RnTgZhorr6aeIVeJUD8GbBdIWBUhSffvbrg3f/x2O2LnM+OWIDSSOOIbLODsHFNzO8pvPM0Na+eUIetgWdgiqjlYsH8NvZFyHI2OwTX8zxdNuhAjoyDGUVVyh+8Qdc8ggpbuzBk43fJEA6XW3hldosC8jCQXxXfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247953; c=relaxed/simple;
-	bh=boQn3yRxtwM4D9e9fKY2qiZiAVJkxIwTMe2ZLRAldB4=;
+	s=arc-20240116; t=1787247955; c=relaxed/simple;
+	bh=bQvEZs9+pW2DidOMX3OYjaFzDakUu4GI2/havDLlDHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aLJNxWheQziNRQAinNKA2tFKVLBNdkWOmTaa0YAd6LYD3QfrAe3p5Z2fY2DS3IxgKPt/MdY0mEtVhVBdFQeyuFXq2d7hvh52MAjVz7TMXSNzP0mIOILtTSbmRKcLE6Zk6qV6Rgoh5/Cfj1s/7w5kj6QN/4fZ7nQptd77+mFaXP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=id5uqO5o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OQwc6TOtbo71dP+yg12sOUHXu4myfvyedORvKHmuV5iKdcv2Kyeo6CUheOWPwu0z2ALdGG1NN4PBppYdaBKViny5fUpwpEu4v5T4so1vnsYyZIiycEA9FfTOyWQaf7cc2odpJfHlz9AtG8lcQeJYfX9+16r0BHHcf53M7+kRWio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3aR7yeo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="id5uqO5o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2277F1F000E9;
-	Thu, 20 Aug 2026 17:45:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3aR7yeo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086311F000E9;
+	Thu, 20 Aug 2026 17:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247951;
-	bh=sD5lMYUntVq2WrwqpHBe0672nre+H32e4ZyhjcBjO4U=;
+	s=korg; t=1787247954;
+	bh=8vYU9DF0lNja/0eaRoGnhvuXZV9wcHMkmU9mi1OVhLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=id5uqO5o+NtJw5wlUXK1Q/LRtwkprGtcSvZNNqyt2SbC7Mi37MK7QyHdCvvix827k
-	 /f+UuWrFFGBXMubY/xm34YRC9bIwr/m72QTIfS/N/JBSMrtZUZSh6t7ZAAMNr2/VHy
-	 Ze3Ks7qJrhvylX68CkHwEgJYnrDe5M3WmaKQfV4g=
+	b=f3aR7yeor3iGMuW6OZxbkzh1e5rjq/vuX41wJhKw0QEaaC1TY9rrBEYFZh8MMS+no
+	 tRDyIXOW7UtMbiLy7XOu2CYHQJDfijB4MP0/x1PwXQKLqAcapvEbP/96euB86Hxpyn
+	 tQ3T4EkW+uI4cW14qOXDK8NiifzJrbCaM8GecR/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Falcato <pfalcato@suse.de>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Jann Horn <jannh@google.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	oxsignal <awo@kakao.com>,
+	Matt Bobrowski <mattbobrowski@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Amery Hung <ameryhung@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 057/303] mm: do file ownership checks with the proper mount idmap
-Date: Thu, 20 Aug 2026 16:53:13 +0200
-Message-ID: <20260820145254.879654206@linuxfoundation.org>
+Subject: [PATCH 6.1 058/303] bpf: Reject BPF_MAP_TYPE_INODE_STORAGE creation if BPF LSM is uninitialized
+Date: Thu, 20 Aug 2026 16:53:14 +0200
+Message-ID: <20260820145254.909547270@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -59,91 +54,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Falcato <pfalcato@suse.de>
+From: Matt Bobrowski <mattbobrowski@google.com>
 
-[ Upstream commit e187bc02f8fa4226d62814592cf064ee4557c470 ]
+[ Upstream commit a6f0643e4f63cfaa0d5d4a69de4f132eac4b8fe4 ]
 
-Ever since idmapped mounts were introduced, inode ownership checks (for
-side-channel protection) in mincore() and madvise(MADV_PAGEOUT) were done
-against the nop_mnt_idmap, which completely ignores the file's mount's
-idmap.  This results in odd edgecases like:
+When CONFIG_BPF_LSM=y is set, BPF inode storage maps
+(BPF_MAP_TYPE_INODE_STORAGE) are compiled into the kernel. However,
+if the BPF LSM is not explicitly enabled at boot time (e.g. omitted
+from the "lsm=" boot parameter), lsm_prepare() is never executed for
+the BPF LSM.
 
-1) mount/bind-mount with an idmap userA:userB:1
-2) userB runs an owner_or_capable() check on file that is owned by userA
-on-disk/in-memory, but owned by userB after idmap translation
-3) owner_or_capable() mysteriously fails as the correct idmap wasn't supplied
+Consequently, the BPF inode security blob offset
+(bpf_lsm_blob_sizes.lbs_inode) is never initialized and remains at
+its default compiled size of 8 bytes instead of being updated to a
+valid offset past the reserved struct rcu_head (typically 16 bytes
+or more).
 
-In the case of mincore/madvise MADV_PAGEOUT, this is usually benign,
-because file_permission(file, MAY_WRITE) will probably succeed, as it uses
-the proper idmap internally, but it does not need to be the case on e.g a
-0444 file where even the owner itself doesn't have permissions to write to
-it.
+When a privileged user creates and updates a BPF_MAP_TYPE_INODE_STORAGE
+map, bpf_inode() evaluates inode->i_security + 8. This erroneously
+aliases the struct rcu_head.func callback pointer at the beginning
+of the inode->i_security blob. During subsequent map element cleanup
+or inode destruction, writing NULL to owner_storage clears the queued
+RCU callback pointer. When rcu_do_batch() later executes the queued
+callback, it attempts an instruction fetch at address 0x0, triggering
+an immediate kernel panic.
 
-Since this is clearly not trivial to get right, introduce a
-file_owner_or_capable() that can carry the correct semantics, and switch
-the various users in mm to it.
+Fix this by introducing a global bpf_lsm_initialized boolean flag
+marked with __ro_after_init. Set this flag to true inside bpf_lsm_init()
+when the LSM framework successfully registers the BPF LSM. Gate map
+allocation in inode_storage_map_alloc() on this flag, returning
+-EOPNOTSUPP if the BPF LSM is in turn uninitialized.
 
-The issue was found by manual code inspection & an off-list discussion
-with Jan Kara.
+This fail-fast approach prevents userspace from allocating inode
+storage maps when the supporting BPF LSM infrastructure is absent,
+avoiding zombie map states.
 
-Link: https://lore.kernel.org/20260625153853.913949-1-pfalcato@suse.de
-Fixes: 9caccd41541a ("fs: introduce MOUNT_ATTR_IDMAP")
-Signed-off-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Jann Horn <jannh@google.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 8ea636848aca ("bpf: Implement bpf_local_storage for inodes")
+Reported-by: oxsignal <awo@kakao.com>
+Signed-off-by: Matt Bobrowski <mattbobrowski@google.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Reviewed-by: Amery Hung <ameryhung@gmail.com>
+Link: https://lore.kernel.org/bpf/20260628201103.3624525-1-mattbobrowski@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/fs.h |    5 +++++
- mm/madvise.c       |    3 +--
- mm/mincore.c       |    3 +--
- 3 files changed, 7 insertions(+), 4 deletions(-)
+ include/linux/bpf_lsm.h        |    4 ++++
+ kernel/bpf/bpf_inode_storage.c |    9 +++++++++
+ security/bpf/hooks.c           |    3 +++
+ 3 files changed, 16 insertions(+)
 
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -2811,6 +2811,11 @@ static inline struct user_namespace *fil
- 	return mnt_user_ns(file->f_path.mnt);
- }
+--- a/include/linux/bpf_lsm.h
++++ b/include/linux/bpf_lsm.h
+@@ -13,6 +13,8 @@
  
-+static inline bool file_owner_or_capable(struct file *file)
-+{
-+	return inode_owner_or_capable(file_mnt_user_ns(file), file_inode(file));
-+}
+ #ifdef CONFIG_BPF_LSM
+ 
++extern bool bpf_lsm_initialized __ro_after_init;
 +
- /**
-  * is_idmapped_mnt - check whether a mount is mapped
-  * @mnt: the mount to check
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -565,8 +565,7 @@ static inline bool can_do_pageout(struct
- 	 * otherwise we'd be including shared non-exclusive mappings, which
- 	 * opens a side channel.
- 	 */
--	return inode_owner_or_capable(&init_user_ns,
--				      file_inode(vma->vm_file)) ||
-+	return file_owner_or_capable(vma->vm_file) ||
- 	       file_permission(vma->vm_file, MAY_WRITE) == 0;
+ #define LSM_HOOK(RET, DEFAULT, NAME, ...) \
+ 	RET bpf_lsm_##NAME(__VA_ARGS__);
+ #include <linux/lsm_hook_defs.h>
+@@ -46,6 +48,8 @@ void bpf_lsm_find_cgroup_shim(const stru
+ 
+ #else /* !CONFIG_BPF_LSM */
+ 
++#define bpf_lsm_initialized false
++
+ static inline bool bpf_lsm_is_sleepable_hook(u32 btf_id)
+ {
+ 	return false;
+--- a/kernel/bpf/bpf_inode_storage.c
++++ b/kernel/bpf/bpf_inode_storage.c
+@@ -205,6 +205,15 @@ static int notsupp_get_next_key(struct b
+ 
+ static struct bpf_map *inode_storage_map_alloc(union bpf_attr *attr)
+ {
++	/*
++	 * Do not allow allocation of BPF_MAP_TYPE_INODE_STORAGE if the BPF LSM
++	 * was not initialized by the LSM framework at boot. Without proper
++	 * initialization, the BPF inode security blob offset remains unprepared,
++	 * causing bpf_inode() to calculate an invalid memory offset and corrupt
++	 * inode->i_security.
++	 */
++	if (!bpf_lsm_initialized)
++		return ERR_PTR(-EOPNOTSUPP);
+ 	return bpf_local_storage_map_alloc(attr, &inode_cache);
  }
  
---- a/mm/mincore.c
-+++ b/mm/mincore.c
-@@ -168,8 +168,7 @@ static inline bool can_do_mincore(struct
- 	 * for writing; otherwise we'd be including shared non-exclusive
- 	 * mappings, which opens a side channel.
- 	 */
--	return inode_owner_or_capable(&init_user_ns,
--				      file_inode(vma->vm_file)) ||
-+	return file_owner_or_capable(vma->vm_file) ||
- 	       file_permission(vma->vm_file, MAY_WRITE) == 0;
- }
+--- a/security/bpf/hooks.c
++++ b/security/bpf/hooks.c
+@@ -6,6 +6,8 @@
+ #include <linux/lsm_hooks.h>
+ #include <linux/bpf_lsm.h>
  
++bool bpf_lsm_initialized __ro_after_init;
++
+ static struct security_hook_list bpf_lsm_hooks[] __lsm_ro_after_init = {
+ 	#define LSM_HOOK(RET, DEFAULT, NAME, ...) \
+ 	LSM_HOOK_INIT(NAME, bpf_lsm_##NAME),
+@@ -18,6 +20,7 @@ static struct security_hook_list bpf_lsm
+ static int __init bpf_lsm_init(void)
+ {
+ 	security_add_hooks(bpf_lsm_hooks, ARRAY_SIZE(bpf_lsm_hooks), "bpf");
++	bpf_lsm_initialized = true;
+ 	pr_info("LSM support for eBPF active\n");
+ 	return 0;
+ }
 
 
