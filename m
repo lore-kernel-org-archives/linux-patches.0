@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6EF5442B2E;
-	Thu, 20 Aug 2026 16:48:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9BC47A0DC;
+	Thu, 20 Aug 2026 16:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244482; cv=none; b=oMbjsQOHS3uNU8ujFm5XaDc9eAVYRD5zSEwgz592UtmC3naXt3IWp+O8Xq3nJSliJ1OCs4DJjpL7td0QX7RaVwFk2s/EuU4jySCyAzkurmR7HboF6Ru46G5hQKkK4lHs2YgSqnY/rmF/7Tbdc/ARsbjGWiC5bnF0LiIbWLzldeg=
+	t=1787244485; cv=none; b=oZWAGwSxqf0kvQwBtMeLYjf6Odhs7jnoazn/6WPiFcu6KoLS8HexR2YYAnMpz4a8yz3w7hngRBr6bO1mcjwZxUYdePhRtvH5Sp1MfZsKvBgXhEM3bcivoFyvEZ0mITM+eQt79YBea5+rmE7UgfIf6XCUbVkmzDrHMaflR6EdMNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244482; c=relaxed/simple;
-	bh=9GJigR2iMTmOUVEYEo42tWLW42ISBcjv4cQf1nbLphk=;
+	s=arc-20240116; t=1787244485; c=relaxed/simple;
+	bh=0N6eZEEyJOhnasQP585yTZbtyD8j32Z+hDP+as40BSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mRVaTo3TqYiXBL6wBC8JZLmWn/a05AmtUGt3F6B8eqeyqHfmCrHKLq8FxBlqoryyxEkzAjs+tKywKeAfSFJodgvyy1cuQvN8IGNcGWpTJGW/wEPvmPXb0Vl8DT/IQ7HON4Gdy95vw/AXPrco6ETRpBrNBu0C80IiAmxdpM+IyT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=klLcmQFJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EpVQkjWdgv95/Vsz3jaK2f1qeTq64NDBVfUVtoMmpnFE/l8RWqi0YFB3C3SaaQnzzUb9lO2oSBIEXO06UK3kne8e16Kmgtpf+pY5W+LS54Z4+bImvFIP+pFYusxQHahfNckrfcDwm6tlu6mV0lr7bafR1NSOXDj5NFDk3SMQ7uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9hIlrhs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="klLcmQFJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E851F000E9;
-	Thu, 20 Aug 2026 16:48:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9hIlrhs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A607E1F000E9;
+	Thu, 20 Aug 2026 16:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244481;
-	bh=k0qHqXfJHuDhvu6oPLIIJ0X2BuL3RyHtIe5bTGZBV6E=;
+	s=korg; t=1787244484;
+	bh=Ol8KvC9Enq6yRr7ZlMY2UKGXJDMmrKqBOmqRfsOtdqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=klLcmQFJKKuY/7njBVxd5CCs0bwzB5K5e5iDN2s1c6eTtkcSPXOh0G91Flr3yxm9V
-	 BdXwMWRRRvs9mQebPINjJ6LIqr/g+OKxFWN+SwTbglPQ7rsMTh5RFeqfb6lgWasQBu
-	 TtcNaXNJxTEiRiEvxYth/h1X9cKhBamM1gKQ7SF0=
+	b=e9hIlrhsJG/JKjrgfdBL3Kv0+ZhbTXHIt07YmuOLOQjUc0S017wbybddhPQWyn9ey
+	 IydksbyBacukuEPmfynK/I4ek0skLzl2wo68s3vQlFjRXM1PKvjGeTo+6Szw93rU2y
+	 gKi/E2ZgNbTlCloTC5A6ujux9cGp5qIMxor3xT9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkatesh Srinivas <venkateshs@chromium.org>,
-	James Houghton <jthoughton@google.com>,
-	Chao Gao <chao.gao@intel.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	David Matlack <dmatlack@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Jim Mattson <jmattson@google.com>
-Subject: [PATCH 5.10 145/235] KVM: x86: Only reset TSC Deadline Timer in apic_timer_expired on KVM_RUN
-Date: Thu, 20 Aug 2026 16:56:21 +0200
-Message-ID: <20260820145220.838934051@linuxfoundation.org>
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Johan Hovold <johan@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 136/235] USB: serial: keyspan_pda: refactor write-room handling
+Date: Thu, 20 Aug 2026 16:56:12 +0200
+Message-ID: <20260820145220.567801702@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -56,65 +51,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Venkatesh Srinivas <venkateshs@chromium.org>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit e800decd9c0ac4349bcd8f8f9b29fd21fe93165e ]
+[ Upstream commit 79fe6826a5ebee2724d432a736ec04d8dca143ba ]
 
-On Intel platforms with a VMX preemption timer and APICv, if a VMM
-calls KVM_GET_LAPIC before KVM_GET_MSRS to save the vCPU state, it is
-possible to lose a pending timer interrupt.
+Add helper to retrieve the available device transfer-buffer space.
 
-If the thread running these ioctls is migrated to another core after
-calling KVM_GET_LAPIC but before KVM_GET_MSRS and the guest is using
-their LAPIC timer in TSC-deadline mode, not only does the save LAPIC
-state not carry the pending interrupt, the TSCDEADLINE MSR will be
-zeroed.
-
-After migration across CPUs, KVM_GET_MSRS calls vcpu_load, posting the
-interrupt and clearing the MSR:
-vcpu_load() ->
-  kvm_arch_vcpu_load() ->
-    kvm_lapic_restart_hv_timer() ->
-      start_hv_timer() ->
-        apic_timer_expired() ->
-          kvm_apic_inject_pending_timer_irqs()
-            . post interrupt into the LAPIC state
-            . clear IA32_TSCDEADLINE
-
-The saved LAPIC state will be missing the pending interrupt and the saved
-MSR will be zero. Oops.
-
-Fix by only posting an interrupt when we're attempting to enter the guest
-(vcpu->wants_to_run == true), not for vcpu_load from other paths.
-
-Assisted-by: gemini:gemini-3.1-pro-preview
-Debugged-by: David Matlack <dmatlack@google.com>
-Debugged-by: Sean Christopherson <seanjc@google.com>
-Debugged-by: Jim Mattson <jmattson@google.com>
-Debugged-by: James Houghton <jthoughton@google.com>
-Signed-off-by: Venkatesh Srinivas <venkateshs@chromium.org>
-Message-ID: <20260715234234.15382-2-venkateshs@chromium.org>
-Reviewed-by: James Houghton <jthoughton@google.com>
-Reviewed-by: Chao Gao <chao.gao@intel.com>
-Cc: stable@vger.kernel.org
-Fixes: ae95f566b3d2 ("KVM: X86: TSCDEADLINE MSR emulation fastpath", 2020-05-15)
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Stable-dep-of: 42a97c0480f9 ("USB: serial: keyspan_pda: fix data loss on receive throttling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/lapic.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/keyspan_pda.c |  113 +++++++++++++++++----------------------
+ 1 file changed, 50 insertions(+), 63 deletions(-)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -1636,7 +1636,7 @@ static void apic_timer_expired(struct kv
- 	if (apic_lvtt_tscdeadline(apic) || ktimer->hv_timer_in_use)
- 		ktimer->expired_tscdeadline = ktimer->tscdeadline;
+--- a/drivers/usb/serial/keyspan_pda.c
++++ b/drivers/usb/serial/keyspan_pda.c
+@@ -98,6 +98,42 @@ static const struct usb_device_id id_tab
+ };
+ #endif
  
--	if (!from_timer_fn && apic->apicv_active) {
-+	if (!from_timer_fn && apic->apicv_active && vcpu->wants_to_run) {
- 		WARN_ON(kvm_get_running_vcpu() != vcpu);
- 		kvm_apic_inject_pending_timer_irqs(apic);
- 		return;
++static int keyspan_pda_get_write_room(struct keyspan_pda_private *priv)
++{
++	struct usb_serial_port *port = priv->port;
++	struct usb_serial *serial = priv->serial;
++	u8 *room;
++	int rc;
++
++	room = kmalloc(1, GFP_KERNEL);
++	if (!room)
++		return -ENOMEM;
++
++	rc = usb_control_msg(serial->dev,
++			     usb_rcvctrlpipe(serial->dev, 0),
++			     6, /* write_room */
++			     USB_TYPE_VENDOR | USB_RECIP_INTERFACE
++			     | USB_DIR_IN,
++			     0, /* value: 0 means "remaining room" */
++			     0, /* index */
++			     room,
++			     1,
++			     2000);
++	if (rc != 1) {
++		if (rc >= 0)
++			rc = -EIO;
++		dev_dbg(&port->dev, "roomquery failed: %d\n", rc);
++		goto out_free;
++	}
++
++	dev_dbg(&port->dev, "roomquery says %d\n", *room);
++	rc = *room;
++out_free:
++	kfree(room);
++
++	return rc;
++}
++
+ static void keyspan_pda_request_unthrottle(struct work_struct *work)
+ {
+ 	struct keyspan_pda_private *priv =
+@@ -436,7 +472,6 @@ static int keyspan_pda_tiocmset(struct t
+ static int keyspan_pda_write(struct tty_struct *tty,
+ 	struct usb_serial_port *port, const unsigned char *buf, int count)
+ {
+-	struct usb_serial *serial = port->serial;
+ 	int request_unthrottle = 0;
+ 	int rc = 0;
+ 	struct keyspan_pda_private *priv;
+@@ -479,38 +514,11 @@ static int keyspan_pda_write(struct tty_
+ 	   device how much room it really has.  This is done only on
+ 	   scheduler time, since usb_control_msg() sleeps. */
+ 	if (count > priv->tx_room && !in_interrupt()) {
+-		u8 *room;
+-
+-		room = kmalloc(1, GFP_KERNEL);
+-		if (!room) {
+-			rc = -ENOMEM;
++		rc = keyspan_pda_get_write_room(priv);
++		if (rc < 0)
+ 			goto exit;
+-		}
+ 
+-		rc = usb_control_msg(serial->dev,
+-				     usb_rcvctrlpipe(serial->dev, 0),
+-				     6, /* write_room */
+-				     USB_TYPE_VENDOR | USB_RECIP_INTERFACE
+-				     | USB_DIR_IN,
+-				     0, /* value: 0 means "remaining room" */
+-				     0, /* index */
+-				     room,
+-				     1,
+-				     2000);
+-		if (rc > 0) {
+-			dev_dbg(&port->dev, "roomquery says %d\n", *room);
+-			priv->tx_room = *room;
+-		}
+-		kfree(room);
+-		if (rc < 0) {
+-			dev_dbg(&port->dev, "roomquery failed\n");
+-			goto exit;
+-		}
+-		if (rc == 0) {
+-			dev_dbg(&port->dev, "roomquery returned 0 bytes\n");
+-			rc = -EIO; /* device didn't return any data */
+-			goto exit;
+-		}
++		priv->tx_room = rc;
+ 	}
+ 
+ 	if (count >= priv->tx_room) {
+@@ -612,48 +620,27 @@ static void keyspan_pda_dtr_rts(struct u
+ static int keyspan_pda_open(struct tty_struct *tty,
+ 					struct usb_serial_port *port)
+ {
+-	struct usb_serial *serial = port->serial;
+-	u8 *room;
+-	int rc = 0;
+-	struct keyspan_pda_private *priv;
++	struct keyspan_pda_private *priv = usb_get_serial_port_data(port);
++	int rc;
+ 
+ 	/* find out how much room is in the Tx ring */
+-	room = kmalloc(1, GFP_KERNEL);
+-	if (!room)
+-		return -ENOMEM;
++	rc = keyspan_pda_get_write_room(priv);
++	if (rc < 0)
++		return rc;
+ 
+-	rc = usb_control_msg(serial->dev, usb_rcvctrlpipe(serial->dev, 0),
+-			     6, /* write_room */
+-			     USB_TYPE_VENDOR | USB_RECIP_INTERFACE
+-			     | USB_DIR_IN,
+-			     0, /* value */
+-			     0, /* index */
+-			     room,
+-			     1,
+-			     2000);
+-	if (rc < 0) {
+-		dev_dbg(&port->dev, "%s - roomquery failed\n", __func__);
+-		goto error;
+-	}
+-	if (rc == 0) {
+-		dev_dbg(&port->dev, "%s - roomquery returned 0 bytes\n", __func__);
+-		rc = -EIO;
+-		goto error;
+-	}
+-	priv = usb_get_serial_port_data(port);
+-	priv->tx_room = *room;
+-	priv->tx_throttled = *room ? 0 : 1;
++	priv->tx_room = rc;
++	priv->tx_throttled = rc ? 0 : 1;
+ 
+ 	/*Start reading from the device*/
+ 	rc = usb_submit_urb(port->interrupt_in_urb, GFP_KERNEL);
+ 	if (rc) {
+ 		dev_dbg(&port->dev, "%s - usb_submit_urb(read int) failed\n", __func__);
+-		goto error;
++		return rc;
+ 	}
+-error:
+-	kfree(room);
+-	return rc;
++
++	return 0;
+ }
++
+ static void keyspan_pda_close(struct usb_serial_port *port)
+ {
+ 	struct keyspan_pda_private *priv = usb_get_serial_port_data(port);
 
 
