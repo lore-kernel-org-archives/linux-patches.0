@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6295E47F2FA;
-	Thu, 20 Aug 2026 17:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 493F747F2C3;
+	Thu, 20 Aug 2026 17:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248456; cv=none; b=TkjWRVpSqC7uzZ+kvfpOQM8OtzYp8KL3G2T+jwU0CEUaBEeYD07y2LEDClZcF9Lp4fi1cRp+gxTUpJVZYDBmqOm6pgT3owfhuSw3MHqzctwbXsFwBfoRC1jQA1B1Pk1TL9UnWutU6D2YvGVg1TSkFC8GV4LG3CHR4284yCaBYrY=
+	t=1787248458; cv=none; b=TZDzd0ZbXNT/VCXYuOOLFpdVDmJYSeIWXAff+57ePWkERY7cLwtQUd2qDMOBlmxE4sqJHkWUxXfSRHGX+FlgBAB3JAGu8g1HvO7NZnWeO7k4uG6DvbAor7hgtNSLwcsPPq0zDH8nCvHHYstdt+DHCXQjn2NlzwDZ6sbNg4UCtJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248456; c=relaxed/simple;
-	bh=3enS90YRkL0a1uOlpXEicLwJ+4aQ1Eobxax5LITYm7o=;
+	s=arc-20240116; t=1787248458; c=relaxed/simple;
+	bh=mHKwVhn51GEjtVu18LwL6awDai2lJy+1kl/KeYSeWW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NSmLBv3Z/NboeKMPeUca7Wpv4s9ZOT0DVfdVzQnS89XQHCdAT7bngD2b3EV+xe3ZtKAjFXLhigo9J26aw6fJIsIqkjOPPcTNRXTu/P74yKg8rqF6r1TTzxwr9Dvid0uNFACyhv5ObZ3LeaxND7ohNmHbAgDJjRyMbq479Cr4fKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VMqznHm2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qCNMJ8I1Bev9u0Ruc0vuyhbPZOKy8WtZnEGp9Sro9BTWQ2gqtWY5zHqtnLvd6n9D93HdaJKTlsPd8slji71q7ld6zA10OnqRrzmTVhJOZaLHM9T920KI0BEltAfiWtEC5UMIj8t/X9Yqmm35wmCsnTuzFuh6epqa800vbj4Ck+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yBcSka8a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VMqznHm2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F891F00A3A;
-	Thu, 20 Aug 2026 17:54:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yBcSka8a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3651F000E9;
+	Thu, 20 Aug 2026 17:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248454;
-	bh=Ikdl4JV6Ie2bPj5XRk+enJU+NfCj2PWdWh6BWdkrYhY=;
+	s=korg; t=1787248456;
+	bh=Jzcl36Y488/I4itUt7OBEKUU9/vuGEw7+MYLp69RXOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VMqznHm20qIggW6sOV3FXZ7UZi9x+YuwMVEJynglM27N2XnEPcQGTu4IN8Qu6n3cI
-	 Pc9D9S8khKRfoh3UPySfmvqUyupY/0Y8Bwj2Fs7VCNRyxZ+vNlCYom3yZ/i0dB9En/
-	 bAAqwEPIv/lR7H7/amdwYKQCoqcfqc3MG1fssC/I=
+	b=yBcSka8aiBw/RVH2qz7H/i3sHliXUzQXUqXs7FAdMKwsfJHIt2phulwml1UcaiZsq
+	 ASHG+VC3In7w2W8PRYOiACpYxrYeSRPvMjCROvtYR/JGmMMNOdpdAhg/D+r44aRYe/
+	 CHoNcCT/X9cBiYCtgzRIcvXSk3dknTVfUYk31CBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Hodo <martin.hodo@intel.com>,
-	Anshuman Gupta <anshuman.gupta@intel.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 194/303] drm/i915/hdcp: check streams[] bounds before overflow
-Date: Thu, 20 Aug 2026 16:55:30 +0200
-Message-ID: <20260820145259.213476327@linuxfoundation.org>
+Subject: [PATCH 6.1 195/303] media: i2c: imx219: Drop IMX219_VTS_* macros
+Date: Thu, 20 Aug 2026 16:55:31 +0200
+Message-ID: <20260820145259.246930120@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -54,56 +54,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit bbb15a6b042d02e5508a02b4847e02d2579ee7bc ]
+[ Upstream commit 5ebbdd7aab3321e60a8be23aac1fee4f16644021 ]
 
-The data->streams[] overflow check is done after the buffer overflow has
-already happened. Move the overflow check before the write.
+The IMX219_VTS_* macros define default VTS values for the modes
+supported by the driver. They are used in a single place, and hinder
+readability compared to using the value directly as a decimal number.
+Drop them.
 
-Side note, emitting a warning splat with a backtrace might be overkill
-here, but prefer not changing the behaviour other than not doing the
-overrun.
-
-Discovered using AI-assisted static analysis confirmed by Intel Product
-Security.
-
-Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: e03187e12cae ("drm/i915/hdcp: MST streams support in hdcp port_data")
-Cc: stable@vger.kernel.org # v5.12+
-Cc: Anshuman Gupta <anshuman.gupta@intel.com>
-Cc: Suraj Kandpal <suraj.kandpal@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260625170304.1104723-1-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 9284ab3b6e776c315883ac2611283d263c9460fd)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: 2c4f1ba73543 ("media: imx219: Fix maximum frame length in lines")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_hdcp.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/media/i2c/imx219.c |   24 +++++++-----------------
+ 1 file changed, 7 insertions(+), 17 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_hdcp.c
-+++ b/drivers/gpu/drm/i915/display/intel_hdcp.c
-@@ -98,6 +98,9 @@ intel_hdcp_required_content_stream(struc
- 		if (!enforce_type0 && !dig_port->hdcp_mst_type1_capable)
- 			enforce_type0 = true;
+--- a/drivers/media/i2c/imx219.c
++++ b/drivers/media/i2c/imx219.c
+@@ -49,20 +49,10 @@
  
-+		if (drm_WARN_ON(&i915->drm, data->k >= INTEL_NUM_PIPES(i915)))
-+			return -EINVAL;
-+
- 		data->streams[data->k].stream_id = intel_conn_to_vcpi(connector);
- 		data->k++;
+ /* V_TIMING internal */
+ #define IMX219_REG_VTS			0x0160
+-#define IMX219_VTS_15FPS		0x0dc6
+-#define IMX219_VTS_30FPS_1080P		0x06e3
+-#define IMX219_VTS_30FPS_BINNED		0x06e3
+-#define IMX219_VTS_30FPS_640x480	0x06e3
+-#define IMX219_VTS_MAX			0xffff
++#define IMX219_FLL_MAX			0xffff
  
-@@ -107,7 +110,7 @@ intel_hdcp_required_content_stream(struc
- 	}
- 	drm_connector_list_iter_end(&conn_iter);
+ #define IMX219_VBLANK_MIN		4
  
--	if (drm_WARN_ON(&i915->drm, data->k > INTEL_NUM_PIPES(i915) || data->k == 0))
-+	if (drm_WARN_ON(&i915->drm, !data->k))
- 		return -EINVAL;
+-/*Frame Length Line*/
+-#define IMX219_FLL_MIN			0x08a6
+-#define IMX219_FLL_MAX			0xffff
+-#define IMX219_FLL_STEP			1
+-#define IMX219_FLL_DEFAULT		0x0c98
+-
+ /* HBLANK control - read only */
+ #define IMX219_PPL_DEFAULT		3448
  
- 	/*
+@@ -386,7 +376,7 @@ static const struct imx219_mode supporte
+ 			.width = 3280,
+ 			.height = 2464
+ 		},
+-		.vts_def = IMX219_VTS_15FPS,
++		.vts_def = 3526,
+ 		.reg_list = {
+ 			.num_of_regs = ARRAY_SIZE(mode_3280x2464_regs),
+ 			.regs = mode_3280x2464_regs,
+@@ -403,7 +393,7 @@ static const struct imx219_mode supporte
+ 			.width = 1920,
+ 			.height = 1080
+ 		},
+-		.vts_def = IMX219_VTS_30FPS_1080P,
++		.vts_def = 1763,
+ 		.reg_list = {
+ 			.num_of_regs = ARRAY_SIZE(mode_1920_1080_regs),
+ 			.regs = mode_1920_1080_regs,
+@@ -420,7 +410,7 @@ static const struct imx219_mode supporte
+ 			.width = 3280,
+ 			.height = 2464
+ 		},
+-		.vts_def = IMX219_VTS_30FPS_BINNED,
++		.vts_def = 1763,
+ 		.reg_list = {
+ 			.num_of_regs = ARRAY_SIZE(mode_1640_1232_regs),
+ 			.regs = mode_1640_1232_regs,
+@@ -437,7 +427,7 @@ static const struct imx219_mode supporte
+ 			.width = 1280,
+ 			.height = 960
+ 		},
+-		.vts_def = IMX219_VTS_30FPS_640x480,
++		.vts_def = 1763,
+ 		.reg_list = {
+ 			.num_of_regs = ARRAY_SIZE(mode_640_480_regs),
+ 			.regs = mode_640_480_regs,
+@@ -841,7 +831,7 @@ static int imx219_set_pad_format(struct
+ 		imx219->mode = mode;
+ 		/* Update limits and set FPS to default */
+ 		__v4l2_ctrl_modify_range(imx219->vblank, IMX219_VBLANK_MIN,
+-					 IMX219_VTS_MAX - mode->height, 1,
++					 IMX219_FLL_MAX - mode->height, 1,
+ 					 mode->vts_def - mode->height);
+ 		__v4l2_ctrl_s_ctrl(imx219->vblank,
+ 				   mode->vts_def - mode->height);
+@@ -1261,7 +1251,7 @@ static int imx219_init_controls(struct i
+ 	/* Initial vblank/hblank/exposure parameters based on current mode */
+ 	imx219->vblank = v4l2_ctrl_new_std(ctrl_hdlr, &imx219_ctrl_ops,
+ 					   V4L2_CID_VBLANK, IMX219_VBLANK_MIN,
+-					   IMX219_VTS_MAX - height, 1,
++					   IMX219_FLL_MAX - height, 1,
+ 					   imx219->mode->vts_def - height);
+ 	hblank = IMX219_PPL_DEFAULT - imx219->mode->width;
+ 	imx219->hblank = v4l2_ctrl_new_std(ctrl_hdlr, &imx219_ctrl_ops,
 
 
