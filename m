@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54178272E53;
-	Thu, 20 Aug 2026 16:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309BC46C84F;
+	Thu, 20 Aug 2026 16:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243594; cv=none; b=Zgj3cs8ohu88l7MCnsLyU8zQXEhYhdVrNfHTl45Om/idFouyvvZQZwRLyJauvhDLV+lN/t3BA19epxw5ccr6csz+ZPv+cD/a+a2ONtSeJqyRBwbNv8br6EX6njDlkeCLKKDhRRqMZ83xXwFiY6q7WqUfFy5ZlAUtyYGvWAPpu38=
+	t=1787243597; cv=none; b=KM5NnnT82zFCuacyBbeDeN5F48VYEksa0VIXO1GVnMJPJGoDmanZup/ZDB6+zBCARGaqLuxN+oXamXW7PDRJEerVBRqCqT7QN9CJr8nUphxgy6nsIzhfI5/m4K/nBDMGKwOPqy/6MEKQ3CYvfkT3nFvVePM/X9ylcvgaMYHFWYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243594; c=relaxed/simple;
-	bh=F8jOeEesjFP1n4QMVYDErr59pxsLbXN+I0H07B4tkzc=;
+	s=arc-20240116; t=1787243597; c=relaxed/simple;
+	bh=aiJTdosWCurIDoIPW9vJGMIPugtorLVR/MC2TkwV5Hs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CeB1LvOcFRPrK7/NUwEhFOHIPARtJrXmRSCDGkFtGaGYiTVgEnNN3Ic9dV1rzj/Q2j0HvkvvVA67/lXMqUkYsFp/ql5wKbMp8he2djya7ZR84qd9c4L7MmGchTmnfly3U0ZPMNby6mozQ6NqlscGbcaOxYzZsNpRqbHO8qs/EZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LY3GoZxl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q4g/cLXrlFLtSJHN/nxApmTPGSqJPJkA0OQ/wwrsj5ZuSkrl3A8DBjfWMKj0McLz3T2TvNfNZhtamtBfxzUujXcm6uJVcxBzAanM8xFoabex3dtpcD7C8ctXDW7qXQBS6lrnDl6A7pRQd/bcXHJVm6Ot/XpwPxmTUhfLtXBOla8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/0ksPH4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LY3GoZxl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E811F000E9;
-	Thu, 20 Aug 2026 16:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/0ksPH4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C6991F000E9;
+	Thu, 20 Aug 2026 16:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243593;
-	bh=Kuu8nS+PDUaOX8E/LXoa6WRviJjC27b+J4LmzeLfe2Y=;
+	s=korg; t=1787243596;
+	bh=Z6QYmLrQpLTVraq5/jhLt77IKV+sYYAc2+W/hf8HrL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LY3GoZxlzFF0+ib/tCg5/QrHJLz8DTlimQyBE1V84FHDxDOgFzvjFWRc7u4VQ8gvx
-	 XwcFr2ilAWAO4c/nbR3Bcm3bCfR6WKoyJDN2kTIsfAbdDlTWGmrI9n7LMA0btvX25n
-	 DGPPCGyk0Hebd7Bb6UWFrulA/EC7zuh8diK9kSC8=
+	b=t/0ksPH480n5buYmJZ40jG+umpJSqoCx4eI4kzHg129Zm8/D3iF8yjq5624fwnTyT
+	 DrIk6R0pso/naG4ln6DB9CtXcyswO18nFcd/jHeSpEwL7sn58QEbaNiZrAP/lt5jgn
+	 SacaEpqhidM03psrRa2qxjxO50VGAcLMaxmz7bMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Zihan Xi <xizh2024@lzu.edu.cn>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Dexuan Cui <decui@microsoft.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 147/272] net/sched: act_ct: preserve tc_skb_cb across defragmentation
-Date: Thu, 20 Aug 2026 16:55:31 +0200
-Message-ID: <20260820145235.718716139@linuxfoundation.org>
+Subject: [PATCH 5.15 148/272] net: mana: Validate the packet length reported by the NIC
+Date: Thu, 20 Aug 2026 16:55:32 +0200
+Message-ID: <20260820145235.749398253@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -56,84 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <xizh2024@lzu.edu.cn>
+From: Dexuan Cui <decui@microsoft.com>
 
-[ Upstream commit 9092e15defbe6c7bc241c306093ca9d358a578e7 ]
+[ Upstream commit 2e2a83b4998af4384e677d3b2ac08565274279bf ]
 
-tcf_ct_handle_fragments() calls nf_ct_handle_fragments() without saving
-and restoring skb->cb. The defrag helper clears IPCB/IP6CB, which aliases
-the tc_skb_cb/qdisc_skb_cb control buffer. Fragmented traffic through
-act_ct therefore loses qdisc metadata such as pkt_segs and can trigger
-WARN_ON_ONCE() in qdisc_pkt_segs() when panic_on_warn is enabled.
+Validate the packet length reported in the RX CQE before passing it
+to skb processing. The CQE is supplied by the NIC device and should
+not be blindly trusted.
 
-Save and restore the full tc_skb_cb around nf_ct_handle_fragments(),
-matching the pattern used by ovs_ct_handle_fragments().
-
-Fixes: ec624fe740b4 ("net/sched: Extend qdisc control block with tc control block")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Zihan Xi <xizh2024@lzu.edu.cn>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/510c51217fd7aaf29c6dc298bab8d643fe229b1c.1781358692.git.xizh2024@lzu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
+Signed-off-by: Dexuan Cui <decui@microsoft.com>
+Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
+Link: https://patch.msgid.link/20260702041237.617719-2-decui@microsoft.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_ct.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/microsoft/mana/mana_en.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -700,10 +700,10 @@ static int tcf_ct_handle_fragments(struc
- 				   u8 family, u16 zone, bool *defrag)
- {
- 	enum ip_conntrack_info ctinfo;
-+	struct tc_skb_cb cb;
- 	struct nf_conn *ct;
- 	int err = 0;
- 	bool frag;
--	u16 mru;
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -1021,6 +1021,19 @@ static void mana_process_rx_cqe(struct m
+ 	rxbuf_oob = &rxq->rx_oobs[curr];
+ 	WARN_ON_ONCE(rxbuf_oob->wqe_inf.wqe_size_in_bu != 1);
  
- 	/* Previously seen (loopback)? Ignore. */
- 	ct = nf_ct_get(skb, &ctinfo);
-@@ -717,7 +717,7 @@ static int tcf_ct_handle_fragments(struc
- 	if (err || !frag)
- 		return err;
++	if (unlikely(pktlen > rxq->datasize)) {
++		/* Increase it even if mana_rx_skb() isn't called. */
++		rxq->rx_cq.work_done++;
++
++		++ndev->stats.rx_dropped;
++		netdev_warn_once(ndev,
++				 "Dropped oversized RX packet: len=%u, datasize=%u\n",
++				 pktlen, rxq->datasize);
++
++		/* Reuse the RX buffer since rxbuf_oob is unchanged. */
++		goto drop;
++	}
++
+ 	new_page = alloc_page(GFP_ATOMIC);
  
--	mru = tc_skb_cb(skb)->mru;
-+	cb = *tc_skb_cb(skb);
- 
- 	if (family == NFPROTO_IPV4) {
- 		enum ip_defrag_users user = IP_DEFRAG_CONNTRACK_IN + zone;
-@@ -731,7 +731,7 @@ static int tcf_ct_handle_fragments(struc
- 
- 		if (!err) {
- 			*defrag = true;
--			mru = IPCB(skb)->frag_max_size;
-+			cb.mru = IPCB(skb)->frag_max_size;
- 		}
- 	} else { /* NFPROTO_IPV6 */
- #if IS_ENABLED(CONFIG_NF_DEFRAG_IPV6)
-@@ -744,7 +744,7 @@ static int tcf_ct_handle_fragments(struc
- 
- 		if (!err) {
- 			*defrag = true;
--			mru = IP6CB(skb)->frag_max_size;
-+			cb.mru = IP6CB(skb)->frag_max_size;
- 		}
- #else
- 		err = -EOPNOTSUPP;
-@@ -753,7 +753,7 @@ static int tcf_ct_handle_fragments(struc
- 	}
- 
- 	if (err != -EINPROGRESS)
--		tc_skb_cb(skb)->mru = mru;
-+		*tc_skb_cb(skb) = cb;
- 	skb_clear_hash(skb);
- 	skb->ignore_df = 1;
- 	return err;
+ 	if (new_page) {
 
 
