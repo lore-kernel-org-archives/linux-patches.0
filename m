@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8885C377A82;
-	Thu, 20 Aug 2026 16:35:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CF847B403;
+	Thu, 20 Aug 2026 16:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243728; cv=none; b=VvV8f9Fw8v52mIW+wSHe2S3VmDxtU8cxa0MN6GuTsYxhAec9M3ljQpzpK5Fk+9AkhciXZHgXYFxEGRSo6LAHtrxNTLsF/pCYLe6RMgXtZCSodmQpkI3y9RXs3BHUhdemqiyIf7PljR/vu2sUL1xBIv8oO6VUVwhPxhOZv5H5jzc=
+	t=1787243731; cv=none; b=ogEJe8ncN+BL0e+iOEfRStnSqv6zEOIN/SLr2PK6FR2Qi+Ji8xvyOh8LQcphS5FjRzSMCgAiT6C0lGCAnNWci/ykM8RVorwCMPUe7CwYfKEFruDJsK0rHsmG0Oy2cZ6XjKog2tBZhwgXeode9KwnU5Y9TuPCpWPoKA4Cq/dyS1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243728; c=relaxed/simple;
-	bh=/hgP0ywn/zosyZsjm5AkWJ+cnzCqrWnZbR5cbLBOGuM=;
+	s=arc-20240116; t=1787243731; c=relaxed/simple;
+	bh=7sQNHfmgWxMOz2WZcllG/cMpjPr+zrDwBVT/RES7faw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJGDrlkPwAzT8xR2BML795svaK5GYTrItIWdeWM1igk8Q0ARnyF7IZRFR0h0X2VhuPLM/Oqv+gWOTo2iEuwg1ghisvWUhRvsInnoZYe9CbPnnFfYymlXs/7vCm5LSbVYH9x6eE4Az4JcgcSkeG9lLTclRlcQizFprzVNzpnCbic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bq+2n6P5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WMhkVCna+Za78dAT7ZAQGRC17AfHAyiLcnuAubQkTkxIDyq6zaUUzWHrvvBvSNN6YUPnumTE2z1GWFklcFFbB+m8/bOmb6aVQ9OYZmQngygZAlJ7IZrV2GaiCeSC91gfNghy2bqTUbTKDjDG8nZr5aeRktxCff0vFJm2sJDzLl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aYsFgg3f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bq+2n6P5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98ED91F000E9;
-	Thu, 20 Aug 2026 16:35:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYsFgg3f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0111F000E9;
+	Thu, 20 Aug 2026 16:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243727;
-	bh=/GfGjkjsE9g+O05k/zlnQQKZ1MHzALZ8UeszEwi48CU=;
+	s=korg; t=1787243730;
+	bh=NHzfHnP6872Wb+c/bDEzqbXznEdEzk3FKsQgWOscZ64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bq+2n6P5gTQVMKWXkWnnqU7I+YmzM3A8kbShLV/I/7SaRkBCsLugrRu+FE0zWKjxm
-	 KZw6TtNBl8f2FTUX7uy4TIkPt99UjJYXjVk+xcsdU21RIOABmYDVQLdfjj5fv8kFKS
-	 Y3t0reFHr6dvnsDhaWl/DaxOfgXrv65L7kZDU3u0=
+	b=aYsFgg3fM2wYSpEAFqUFUbXrJm/XwAj1EzPWmIWJG2FYrG96YNduZ/krblsvpYVGE
+	 DQp/CIiFgACkE/IKLlutzvYosKwApT+VFUTPWAzqgF8WtDQffA44QATRSuT3MpKEjC
+	 1i5dz+CMWNxB4s8emmXiPhjwlCD06o0cFRXV6Qtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Alex Elder <elder@riscstar.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 194/272] serial: 8250_mid: Fix NULL function pointer dereference on DNV/ICX-D/SNR platforms
-Date: Thu, 20 Aug 2026 16:56:18 +0200
-Message-ID: <20260820145237.292525500@linuxfoundation.org>
+Subject: [PATCH 5.15 159/272] net: ipa: fix SMEM state handle leaks in SMP2P init
+Date: Thu, 20 Aug 2026 16:55:43 +0200
+Message-ID: <20260820145236.089990247@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -52,69 +53,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit 7fb13fd7e9a59a37cd911efff83abe19e3ee029d ]
+[ Upstream commit 96ca1e658ae459276292bd6d971ab5d8c7e0379a ]
 
-Commit b1b4efea05a5 ("serial: 8250_mid: Disable DMA for selected
-platforms") replaced the dnv_board setup and exit callbacks with
-PTR_IF(false, ...), which evaluates to NULL. However, the three call
-sites in mid8250_probe() and mid8250_remove() unconditionally
-dereference these function pointers without NULL checks, causing a NULL
-pointer dereference (kernel oops) on any Denverton (DNV), Ice Lake Xeon
-D (ICX-D/CDF), or Snowridge (SNR) platform.
+ipa_smp2p_init() acquires two Qualcomm SMEM state handles with
+qcom_smem_state_get(). However, neither the init error paths
+nor ipa_smp2p_exit() release them.
 
-Fix this by adding the missing NULL checks before calling the setup and
-exit callbacks.
+Release both handles with qcom_smem_state_put() in the init
+error paths and in ipa_smp2p_exit().
 
-Fixes: b1b4efea05a5 ("serial: 8250_mid: Disable DMA for selected platforms")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Link: https://patch.msgid.link/20260715073546.1875083-1-yijiangshan@kylinos.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 530f9216a953 ("soc: qcom: ipa: AP/modem communications")
+Cc: stable@vger.kernel.org
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Reviewed-by: Alex Elder <elder@riscstar.com>
+Link: https://patch.msgid.link/20260624065955.2822765-1-haoxiang_li2024@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ kzalloc_obj() context line kept as kzalloc(sizeof(*smp2p), GFP_KERNEL) since ipa_smp2p.c was not yet converted in this tree ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_mid.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/net/ipa/ipa_smp2p.c |   30 ++++++++++++++++++++++--------
+ 1 file changed, 22 insertions(+), 8 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_mid.c
-+++ b/drivers/tty/serial/8250/8250_mid.c
-@@ -319,9 +319,11 @@ static int mid8250_probe(struct pci_dev
- 	if (!uart.port.membase)
- 		return -ENOMEM;
- 
--	ret = mid->board->setup(mid, &uart.port);
--	if (ret)
--		return ret;
-+	if (mid->board->setup) {
-+		ret = mid->board->setup(mid, &uart.port);
-+		if (ret)
-+			return ret;
+--- a/drivers/net/ipa/ipa_smp2p.c
++++ b/drivers/net/ipa/ipa_smp2p.c
+@@ -233,19 +233,27 @@ int ipa_smp2p_init(struct ipa *ipa, bool
+ 					  &valid_bit);
+ 	if (IS_ERR(valid_state))
+ 		return PTR_ERR(valid_state);
+-	if (valid_bit >= 32)		/* BITS_PER_U32 */
+-		return -EINVAL;
++	if (valid_bit >= 32) {		/* BITS_PER_U32 */
++		ret = -EINVAL;
++		goto err_valid_state_put;
 +	}
  
- 	ret = mid8250_dma_setup(mid, &uart);
- 	if (ret)
-@@ -337,7 +339,8 @@ static int mid8250_probe(struct pci_dev
- 	return 0;
+ 	enabled_state = qcom_smem_state_get(dev, "ipa-clock-enabled",
+ 					    &enabled_bit);
+-	if (IS_ERR(enabled_state))
+-		return PTR_ERR(enabled_state);
+-	if (enabled_bit >= 32)		/* BITS_PER_U32 */
+-		return -EINVAL;
++	if (IS_ERR(enabled_state)) {
++		ret = PTR_ERR(enabled_state);
++		goto err_valid_state_put;
++	}
++	if (enabled_bit >= 32) {		/* BITS_PER_U32 */
++		ret = -EINVAL;
++		goto err_enabled_state_put;
++	}
  
- err:
--	mid->board->exit(mid);
-+	if (mid->board->exit)
-+		mid->board->exit(mid);
+ 	smp2p = kzalloc(sizeof(*smp2p), GFP_KERNEL);
+-	if (!smp2p)
+-		return -ENOMEM;
++	if (!smp2p) {
++		ret = -ENOMEM;
++		goto err_enabled_state_put;
++	}
+ 
+ 	smp2p->ipa = ipa;
+ 
+@@ -290,6 +298,10 @@ err_null_smp2p:
+ 	ipa->smp2p = NULL;
+ 	mutex_destroy(&smp2p->mutex);
+ 	kfree(smp2p);
++err_enabled_state_put:
++	qcom_smem_state_put(enabled_state);
++err_valid_state_put:
++	qcom_smem_state_put(valid_state);
+ 
  	return ret;
  }
- 
-@@ -347,7 +350,8 @@ static void mid8250_remove(struct pci_de
- 
- 	serial8250_unregister_port(mid->line);
- 
--	mid->board->exit(mid);
-+	if (mid->board->exit)
-+		mid->board->exit(mid);
+@@ -306,6 +318,8 @@ void ipa_smp2p_exit(struct ipa *ipa)
+ 	ipa_smp2p_power_release(ipa);
+ 	ipa->smp2p = NULL;
+ 	mutex_destroy(&smp2p->mutex);
++	qcom_smem_state_put(smp2p->enabled_state);
++	qcom_smem_state_put(smp2p->valid_state);
+ 	kfree(smp2p);
  }
  
- static const struct mid8250_board pnw_board = {
 
 
