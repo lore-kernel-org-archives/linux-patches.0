@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D994246788;
-	Thu, 20 Aug 2026 17:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266004772A7;
+	Thu, 20 Aug 2026 17:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248156; cv=none; b=lwoD8UcDTtuz211fTVBIOxwJSEU2MoEq7QRJVhQP3eLGVaHHNLynxb/NW0nCYMyVQUfG1AME5tpegMaGI/DN3wHB7AJy7/WkJ8FSKbzI87reYhPjkhm6b+x93ueFlcjT364sg9CGX76E4ALpqNuHQe4y2nD7PdbIGfHWbNmmyM0=
+	t=1787248159; cv=none; b=N5j/0lvQF3DajZmiS9EKZ0aU9woL1r0cChP0bWhm2EPOngq/HQA4Nw60mIDI0ncRHhabXkFS0xshCbPj79kdhfDBisGKEEPDA7DHl+LLBiKK/I4awmprCDcRSOaTzDx1C9VaP13oi8ja4Yfb3bCP/8CXzu9T59QnTonNfAgkvXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248156; c=relaxed/simple;
-	bh=dQ7qsxEN6/easJDiMJExNQQy9QnPgA5XXQ0K6gBKuq4=;
+	s=arc-20240116; t=1787248159; c=relaxed/simple;
+	bh=fVmnbBLaxCVppSdKaBQ6hEvc7yBzkRzuFeAEvbw+ew8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=spF8o9HX3O+8Ql1OR4dImWV6eIinc6svV46TKc7QT0do/PwBZYmZTpamtUa4TYkDToAe6F37UyQDNeZ1DclIY8y0zaK2nGRZ5NipOnPHiePZY3cdxH+gnLic6fGOddJkQGl8uymPffO2tnInEJ+MxXE1U+eiWSUoghiyQNXjAJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i29ut1dq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y59wHfrk+QZYY3zp3H1pkq9RdXKhyoMSsDw/hAMVhQOQhB/js3Dm5C39sRoGP4TpgT6SItk/QlDAyDtHufm1EdV+jMUr7WSqRV+Y9Nl5sn8hGQHRtPMDasAX5j44pqxplXTncS1AWquF5welw9I3gqpVkA1EzJdb0qxY4TsfIF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJBJmbrQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i29ut1dq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22781F000E9;
-	Thu, 20 Aug 2026 17:49:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJBJmbrQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D8D1F000E9;
+	Thu, 20 Aug 2026 17:49:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248155;
-	bh=JQEdb7zMMNlMhzc9D4i6Es3/6zMy8krHHnz7obL6+8g=;
+	s=korg; t=1787248158;
+	bh=VYgr82WwTuF2BtC1PETaQYRHIeJCai+T06IASBd4yGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i29ut1dqgxk38Ggt9jMKHoWZuMJj/XpJdqs3oN37A8yvP9prwTD8n1x2gYGtW/3t9
-	 +9XhX7fO7MY780ACksf/XM+5dD+wLVDaQ6/iEK8CN8/jEBMbzP4bjl3Jcgf+WFNO6T
-	 2cht8RBfbKrN+DdVkhAMt+ZJMHSgcrURQ7hFXXR0=
+	b=gJBJmbrQA8/ZMw5qafpqzz53OtY8X98uczkIAIvDklv+eaVV2nnPmmyRD3NjTXy0t
+	 NnPCwC1CA7zIck8HjhacN9DDOaMRdPZHl27kWC5s6//Z46MKD1jhI+5piJghsVE40s
+	 WpTN4mBhgEs7v8BRSCQQlKWTEIuPk1utuWNsZqLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiyang Chen <cyyzero16@gmail.com>,
-	Balbir Singh <balbirs@nvidia.com>,
-	"Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Wang Yaxin <wang.yaxin@zte.com.cn>,
-	Yang Yang <yang.yang29@zte.com.cn>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 129/303] taskstats: retain dead thread stats in TGID queries
-Date: Thu, 20 Aug 2026 16:54:25 +0200
-Message-ID: <20260820145257.150137580@linuxfoundation.org>
+Subject: [PATCH 6.1 130/303] thunderbolt: Prevent XDomain delayed work use-after-free on disconnect
+Date: Thu, 20 Aug 2026 16:54:26 +0200
+Message-ID: <20260820145257.179727296@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -56,167 +51,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yiyang Chen <cyyzero16@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit b3e4fbb04220efc3bc022bcf31b5689d39c6b111 ]
+[ Upstream commit 2c5d2d3c3f70cde2565d7b279b544893a2035842 ]
 
-Patch series "taskstats: fix TGID dead-thread stat retention", v3.
+tb_xdp_handle_request() runs on system_wq and queues
+xd->state_work via queue_delayed_work() in three request handlers:
+PROPERTIES_CHANGED_REQUEST, UUID_REQUEST (via start_handshake),
+and LINK_STATE_CHANGE_REQUEST.  Similarly, update_xdomain() queues
+xd->properties_changed_work when local properties change.
 
-This series fixes a taskstats TGID aggregation bug where fields added in
-the TGID query path were not preserved after thread exit, and adds a
-kselftest covering the regression.
+Concurrently, tb_xdomain_remove() calls stop_handshake() which does
+cancel_delayed_work_sync() on both delayed works.  Later,
+tb_xdomain_unregister() calls device_unregister() which eventually
+frees the xdomain.  Since commit 559c1e1e0134 ("thunderbolt: Run
+tb_xdp_handle_request() in system workqueue") moved the request
+handler off tb->wq, the handler and the remove path are no longer
+serialized.  If queue_delayed_work() executes after
+cancel_delayed_work_sync() but before the xdomain is freed, the
+delayed work fires on a freed object.
 
-The first patch keeps the cached TGID aggregate used for dead threads in
-step with the fields already accumulated for live threads, and also fixes
-the final TGID exit notification emitted when group_dead is true.
+Add xd->removing that tb_xdomain_remove() sets under xd->lock
+before calling stop_handshake().  Each external queue site holds
+the same lock and checks removing before calling
+queue_delayed_work().  This provides the mutual exclusion needed:
+either the queue site acquires the lock first and queues work that
+the subsequent cancel will see, or the remove path acquires the
+lock first and the queue site observes removing == true and skips
+the queue.
 
-The second patch adds a kselftest that verifies TGID CPU stats do not
-regress after a worker thread exits and has been reaped.
-
-This patch (of 2):
-
-fill_stats_for_tgid() builds TGID stats from two sources: the cached
-aggregate in signal->stats and a scan of the live threads in the group.
-
-However, fill_tgid_exit() only accumulates delay accounting into
-signal->stats.  This means that once a thread exits, TGID queries lose the
-fields that fill_stats_for_tgid() adds for live threads.
-
-This gap was introduced incrementally by two earlier changes that extended
-fill_stats_for_tgid() but did not make the corresponding update to
-fill_tgid_exit():
-
-- commit 8c733420bdd5 ("taskstats: add e/u/stime for TGID command")
-  added ac_etime, ac_utime, and ac_stime to the TGID query path.
-- commit b663a79c1915 ("taskstats: add context-switch counters")
-  added nvcsw and nivcsw to the TGID query path.
-
-As a result, those fields were accounted for live threads in TGID queries,
-but were dropped from the cached TGID aggregate after thread exit.  The
-final TGID exit notification emitted when group_dead is true also copies
-that cached aggregate, so it loses the same fields.
-
-Factor the per-task TGID accumulation into tgid_stats_add_task() and use
-it in both fill_stats_for_tgid() and fill_tgid_exit().  This keeps the
-cached aggregate used for dead threads aligned with the live-thread
-accumulation used by TGID queries.
-
-Link: https://lore.kernel.org/cover.1776094300.git.cyyzero16@gmail.com
-Link: https://lore.kernel.org/abd2a15d33343636ab5ba43d540bcfe508bd66c7.1776094300.git.cyyzero16@gmail.com
-Fixes: 8c733420bdd5 ("taskstats: add e/u/stime for TGID command")
-Fixes: b663a79c1915 ("taskstats: add context-switch counters")
-Signed-off-by: Yiyang Chen <cyyzero16@gmail.com>
-Acked-by: Balbir Singh <balbirs@nvidia.com>
-Cc: Dr. Thomas Orgis <thomas.orgis@uni-hamburg.de>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Wang Yaxin <wang.yaxin@zte.com.cn>
-Cc: Yang Yang <yang.yang29@zte.com.cn>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 559c1e1e0134 ("thunderbolt: Run tb_xdp_handle_request() in system workqueue")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/taskstats.c |   62 ++++++++++++++++++++++++++++-------------------------
- 1 file changed, 33 insertions(+), 29 deletions(-)
+ drivers/thunderbolt/xdomain.c |   40 ++++++++++++++++++++++++++++++----------
+ include/linux/thunderbolt.h   |    3 +++
+ 2 files changed, 33 insertions(+), 10 deletions(-)
 
---- a/kernel/taskstats.c
-+++ b/kernel/taskstats.c
-@@ -210,13 +210,39 @@ static int fill_stats_for_pid(pid_t pid,
- 	return 0;
- }
+--- a/drivers/thunderbolt/xdomain.c
++++ b/drivers/thunderbolt/xdomain.c
+@@ -784,9 +784,13 @@ static void tb_xdp_handle_request(struct
+ 		 * the xdomain related to this connection as well in
+ 		 * case there is a change in services it offers.
+ 		 */
+-		if (xd && device_is_registered(&xd->dev))
+-			queue_delayed_work(tb->wq, &xd->state_work,
+-					   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
++		if (xd) {
++			mutex_lock(&xd->lock);
++			if (!xd->removing && device_is_registered(&xd->dev))
++				queue_delayed_work(tb->wq, &xd->state_work,
++						   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
++			mutex_unlock(&xd->lock);
++		}
+ 		break;
  
-+static void tgid_stats_add_task(struct taskstats *stats,
-+				struct task_struct *tsk, u64 now_ns)
-+{
-+	u64 delta, utime, stime;
-+
-+	/*
-+	 * Each accounting subsystem calls its functions here to
-+	 * accumulate its per-task stats for tsk, into the per-tgid structure
-+	 *
-+	 *	per-task-foo(stats, tsk);
-+	 */
-+	delayacct_add_tsk(stats, tsk);
-+
-+	/* calculate task elapsed time in nsec */
-+	delta = now_ns - tsk->start_time;
-+	/* Convert to micro seconds */
-+	do_div(delta, NSEC_PER_USEC);
-+	stats->ac_etime += delta;
-+
-+	task_cputime(tsk, &utime, &stime);
-+	stats->ac_utime += div_u64(utime, NSEC_PER_USEC);
-+	stats->ac_stime += div_u64(stime, NSEC_PER_USEC);
-+
-+	stats->nvcsw += tsk->nvcsw;
-+	stats->nivcsw += tsk->nivcsw;
-+}
-+
- static int fill_stats_for_tgid(pid_t tgid, struct taskstats *stats)
+ 	case UUID_REQUEST_OLD:
+@@ -799,8 +803,12 @@ static void tb_xdp_handle_request(struct
+ 		 * received UUID request from the remote host.
+ 		 */
+ 		if (!ret && xd && xd->state == XDOMAIN_STATE_ERROR) {
+-			dev_dbg(&xd->dev, "restarting handshake\n");
+-			start_handshake(xd);
++			mutex_lock(&xd->lock);
++			if (!xd->removing) {
++				dev_dbg(&xd->dev, "restarting handshake\n");
++				start_handshake(xd);
++			}
++			mutex_unlock(&xd->lock);
+ 		}
+ 		break;
+ 
+@@ -828,9 +836,13 @@ static void tb_xdp_handle_request(struct
+ 
+ 			ret = tb_xdp_link_state_change_response(ctl, route,
+ 								sequence, 0);
+-			xd->target_link_width = lsc->tlw;
+-			queue_delayed_work(tb->wq, &xd->state_work,
+-					   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
++			mutex_lock(&xd->lock);
++			if (!xd->removing) {
++				xd->target_link_width = lsc->tlw;
++				queue_delayed_work(tb->wq, &xd->state_work,
++						   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
++			}
++			mutex_unlock(&xd->lock);
+ 		} else {
+ 			tb_xdp_error_response(ctl, route, sequence,
+ 					      ERROR_NOT_READY);
+@@ -1978,6 +1990,10 @@ void tb_xdomain_remove(struct tb_xdomain
  {
- 	struct task_struct *tsk, *first;
- 	unsigned long flags;
- 	int rc = -ESRCH;
--	u64 delta, utime, stime;
--	u64 start_time;
-+	u64 now_ns;
+ 	tb_xdomain_debugfs_remove(xd);
  
- 	/*
- 	 * Add additional stats from live tasks except zombie thread group
-@@ -233,30 +259,12 @@ static int fill_stats_for_tgid(pid_t tgi
- 	else
- 		memset(stats, 0, sizeof(*stats));
++	mutex_lock(&xd->lock);
++	xd->removing = true;
++	mutex_unlock(&xd->lock);
++
+ 	stop_handshake(xd);
  
--	start_time = ktime_get_ns();
-+	now_ns = ktime_get_ns();
- 	for_each_thread(first, tsk) {
- 		if (tsk->exit_state)
- 			continue;
--		/*
--		 * Accounting subsystem can call its functions here to
--		 * fill in relevant parts of struct taskstsats as follows
--		 *
--		 *	per-task-foo(stats, tsk);
--		 */
--		delayacct_add_tsk(stats, tsk);
--
--		/* calculate task elapsed time in nsec */
--		delta = start_time - tsk->start_time;
--		/* Convert to micro seconds */
--		do_div(delta, NSEC_PER_USEC);
--		stats->ac_etime += delta;
--
--		task_cputime(tsk, &utime, &stime);
--		stats->ac_utime += div_u64(utime, NSEC_PER_USEC);
--		stats->ac_stime += div_u64(stime, NSEC_PER_USEC);
+ 	device_for_each_child_reverse(&xd->dev, xd, unregister_service);
+@@ -2364,8 +2380,12 @@ static int update_xdomain(struct device
  
--		stats->nvcsw += tsk->nvcsw;
--		stats->nivcsw += tsk->nivcsw;
-+		tgid_stats_add_task(stats, tsk, now_ns);
+ 	xd = tb_to_xdomain(dev);
+ 	if (xd) {
+-		queue_delayed_work(xd->tb->wq, &xd->properties_changed_work,
+-				   msecs_to_jiffies(50));
++		mutex_lock(&xd->lock);
++		if (!xd->removing)
++			queue_delayed_work(xd->tb->wq,
++					   &xd->properties_changed_work,
++					   msecs_to_jiffies(50));
++		mutex_unlock(&xd->lock);
  	}
  
- 	unlock_task_sighand(first, &flags);
-@@ -275,18 +283,14 @@ out:
- static void fill_tgid_exit(struct task_struct *tsk)
- {
- 	unsigned long flags;
-+	u64 now_ns;
- 
- 	spin_lock_irqsave(&tsk->sighand->siglock, flags);
- 	if (!tsk->signal->stats)
- 		goto ret;
- 
--	/*
--	 * Each accounting subsystem calls its functions here to
--	 * accumalate its per-task stats for tsk, into the per-tgid structure
--	 *
--	 *	per-task-foo(tsk->signal->stats, tsk);
--	 */
--	delayacct_add_tsk(tsk->signal->stats, tsk);
-+	now_ns = ktime_get_ns();
-+	tgid_stats_add_task(tsk->signal->stats, tsk, now_ns);
- ret:
- 	spin_unlock_irqrestore(&tsk->sighand->siglock, flags);
- 	return;
+ 	return 0;
+--- a/include/linux/thunderbolt.h
++++ b/include/linux/thunderbolt.h
+@@ -189,6 +189,8 @@ void tb_unregister_property_dir(const ch
+  * @link_width: Width of the link (1 or 2)
+  * @link_usb4: Downstream link is USB4
+  * @is_unplugged: The XDomain is unplugged
++ * @removing: Set by tb_xdomain_remove() under @lock to prevent
++ *	      concurrent delayed work queueing
+  * @needs_uuid: If the XDomain does not have @remote_uuid it will be
+  *		queried first
+  * @service_ids: Used to generate IDs for the services
+@@ -237,6 +239,7 @@ struct tb_xdomain {
+ 	unsigned int link_width;
+ 	bool link_usb4;
+ 	bool is_unplugged;
++	bool removing;
+ 	bool needs_uuid;
+ 	struct ida service_ids;
+ 	struct ida in_hopids;
 
 
