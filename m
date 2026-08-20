@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F9E25B0BE;
-	Thu, 20 Aug 2026 17:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8233035DA68;
+	Thu, 20 Aug 2026 17:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248133; cv=none; b=p5glHA3+SxtHnBE8YJBEsaAP60It7SoHCWyGaMkc202J+dbbNn15ycPtNzackW0KicCH9LKlLfLn8LYMD9fHuzM716pbahwcWReAsRQruWQ0AG/p+gHxXyLpZxqJkuBnKhWnJPnhBylVJPtXkBtVMjd5yHy+MWPFc8dBVdMgBkk=
+	t=1787248136; cv=none; b=LqbQmZPXCMpExUFDJu3Iar4oMmARwhaTx8iECaHEQG7SzG6gCbuMmHfSx86zJ7rBkE62XgwIDrpFPwnIymizhAZRO6p2AX+ZEUok6Uz5617JJP+qMYFWq87RiNqB/3PgHnbU9h0hCukxn6nh5dhPVojKj5RZbvKQljsyhxSVNeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248133; c=relaxed/simple;
-	bh=QEWI1Ov1EQPed2YoCuHKeDohkEupkbxZzvo8YnKCKwI=;
+	s=arc-20240116; t=1787248136; c=relaxed/simple;
+	bh=G+PfcJl7DEgc4D0svxF4JHNTcQPRXBXg1yVg9vsswfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eff34Up6EoKQ10aVMUMFPPil4i5MZ30TilnW+uKtyAlNV97xzNZ+VxpUwnfkRnuNvxnebB8t+YoHAuDrAbtgSQhQwvIf/ZxDIskmE7XZU3DbURkjjA07GQ/M9OMevUshUtaoG9Zg1A6+Klwk+Jpd2JMy6wgG9D9rstPsGd7xkBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PpLkROUW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JQZM1c4FuPQYSM3/+8t0HtPMrOj9pvQHJ33H97OBVW5g2M5TNtaHhfiTi/sOey97Xiur4ZMD8k5ACIIMIGTgdUDKQv33TGxy2LkUHWCkQ5Vy950iYHyHz90X0iqZ+kRjt16RdkDiqwvfFxZKfBFRPQdCTgCfjfJnc6DSBzjzwqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXNJ5uGd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PpLkROUW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120861F000E9;
-	Thu, 20 Aug 2026 17:48:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXNJ5uGd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E341F00A3D;
+	Thu, 20 Aug 2026 17:48:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248131;
-	bh=h0xsM3tCbDPWWFXnF3q6pfT3eNioVj8YMeHFyKSxv+g=;
+	s=korg; t=1787248134;
+	bh=xN5cr2UcGPtbGLOiiuKCsg+n6zcAW/t9xMrtjjMZgx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PpLkROUWE5gBCDifT2Urtxc4V+2ktCyfeu6+0lOQt6IkQ0pPwbfxI+sh8CRqOSZ3K
-	 7hSoEauPaf0g+qw49GBtZSqnTYtid/20EcIlkQopvneZbShxTieIrNshMCSstdB2iq
-	 QnaQSukQT+/gt82SZvnYhLITJOpppzasqJwazYQ8=
+	b=vXNJ5uGddZJIZT+MdWkfQa2VfuRSV1JObu9PmYhyAeU0d8c4qR993a2BPC0U+YZHS
+	 N9SCXcoHg8jmqV/w9NUyTQvh5PhhBgc/PFZjKsQ20TiUld+eDUwUCpMcZGpJNf3ypb
+	 Lzj3aMgnVJCvntbYJZHtVMU5qTQRuCWJjJHQop9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	David Hildenbrand <david@redhat.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Doug Berger <opendmb@gmail.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Mel Gorman <mgorman@suse.de>,
+	Michal Hocko <mhocko@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 104/303] netfilter: nft_set_pipapo: prepare pipapo_get helper for on-demand clone
-Date: Thu, 20 Aug 2026 16:54:00 +0200
-Message-ID: <20260820145256.411321476@linuxfoundation.org>
+Subject: [PATCH 6.1 122/303] mm: move most of core MM initialization to mm/mm_init.c
+Date: Thu, 20 Aug 2026 16:54:18 +0200
+Message-ID: <20260820145256.948021515@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -52,119 +58,392 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: "Mike Rapoport (IBM)" <rppt@kernel.org>
 
-[ Upstream commit a238106703ab4ae1090b86eba128815b8626d8f1 ]
+[ Upstream commit 9420f89db2dd611c5b436a13e13f74d65ecc3a6a ]
 
-The helper uses priv->clone unconditionally which will fail once we do
-the clone conditionally on first insert or removal.
+The bulk of memory management initialization code is spread all over
+mm/page_alloc.c and makes navigating through page allocator functionality
+difficult.
 
-'nft get element' from userspace needs to use priv->match since this
-runs from rcu read side lock section.
+Move most of the functions marked __init and __meminit to mm/mm_init.c to
+make it better localized and allow some more spare room before
+mm/page_alloc.c reaches 10k lines.
 
-Prepare for this by passing the match backend data as argument.
+No functional changes.
 
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 47e65eff5069 ("netfilter: nft_set_pipapo: don't leak bad clone into future transaction")
+Link: https://lkml.kernel.org/r/20230321170513.2401534-4-rppt@kernel.org
+Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Doug Berger <opendmb@gmail.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Mel Gorman <mgorman@suse.de>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: cd681403a870 ("mm/mm_init: fix uninitialized struct pages for ZONE_DEVICE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_set_pipapo.c |   25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ mm/internal.h   |    4 +
+ mm/mm_init.c    |  154 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ mm/page_alloc.c |  144 +---------------------------------------------------
+ 3 files changed, 162 insertions(+), 140 deletions(-)
 
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -502,6 +502,7 @@ out:
-  * pipapo_get() - Get matching element reference given key data
-  * @net:	Network namespace
-  * @set:	nftables API set representation
-+ * @m:		storage containing active/existing elements
-  * @data:	Key data to be matched against existing elements
-  * @genmask:	If set, check that element is active in given genmask
-  * @tstamp:	timestamp to check for expired elements
-@@ -515,17 +516,15 @@ out:
-  */
- static struct nft_pipapo_elem *pipapo_get(const struct net *net,
- 					  const struct nft_set *set,
-+					  const struct nft_pipapo_match *m,
- 					  const u8 *data, u8 genmask,
- 					  u64 tstamp, gfp_t gfp)
- {
- 	struct nft_pipapo_elem *ret = ERR_PTR(-ENOENT);
--	struct nft_pipapo *priv = nft_set_priv(set);
- 	unsigned long *res_map, *fill_map = NULL;
--	const struct nft_pipapo_match *m;
- 	const struct nft_pipapo_field *f;
- 	int i;
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -389,6 +389,10 @@ extern void __putback_isolated_page(stru
+ extern void memblock_free_pages(struct page *page, unsigned long pfn,
+ 					unsigned int order);
+ extern void __free_pages_core(struct page *page, unsigned int order);
++void __init_single_page(struct page *page, unsigned long pfn,
++			unsigned long zone, int nid);
++void prep_compound_head(struct page *page, unsigned int order);
++void prep_compound_tail(struct page *head, int tail_idx);
+ extern void prep_compound_page(struct page *page, unsigned int order);
+ extern void post_alloc_hook(struct page *page, unsigned int order,
+ 					gfp_t gfp_flags);
+--- a/mm/mm_init.c
++++ b/mm/mm_init.c
+@@ -14,6 +14,9 @@
+ #include <linux/notifier.h>
+ #include <linux/sched.h>
+ #include <linux/mman.h>
++#include <linux/jiffies.h>
++#include <linux/memremap.h>
++#include <linux/page-isolation.h>
+ #include "internal.h"
  
--	m = priv->clone;
- 	if (m->bsize_max == 0)
- 		return ret;
- 
-@@ -609,7 +608,10 @@ out:
- static void *nft_pipapo_get(const struct net *net, const struct nft_set *set,
- 			    const struct nft_set_elem *elem, unsigned int flags)
- {
--	return pipapo_get(net, set, (const u8 *)elem->key.val.data,
-+	struct nft_pipapo *priv = nft_set_priv(set);
-+	struct nft_pipapo_match *m = rcu_dereference(priv->match);
+ #ifdef CONFIG_DEBUG_MEMORY_INIT
+@@ -204,3 +207,154 @@ static int __init mm_sysfs_init(void)
+ 	return 0;
+ }
+ postcore_initcall(mm_sysfs_init);
 +
-+	return pipapo_get(net, set, m, (const u8 *)elem->key.val.data,
- 			 nft_genmask_cur(net), get_jiffies_64(), GFP_ATOMIC);
++#ifdef CONFIG_ZONE_DEVICE
++static void __ref __init_zone_device_page(struct page *page, unsigned long pfn,
++					  unsigned long zone_idx, int nid,
++					  struct dev_pagemap *pgmap)
++{
++	__init_single_page(page, pfn, zone_idx, nid);
++
++	/*
++	 * Mark page reserved as it will need to wait for onlining
++	 * phase for it to be fully associated with a zone.
++	 *
++	 * We can use the non-atomic __set_bit operation for setting
++	 * the flag as we are still initializing the pages.
++	 */
++	__SetPageReserved(page);
++
++	/*
++	 * ZONE_DEVICE pages union ->lru with a ->pgmap back pointer
++	 * and zone_device_data.  It is a bug if a ZONE_DEVICE page is
++	 * ever freed or placed on a driver-private list.
++	 */
++	page->pgmap = pgmap;
++	page->zone_device_data = NULL;
++
++	/*
++	 * ZONE_DEVICE pages are released directly to the driver page allocator
++	 * which will set the page count to 1 when allocating the page.
++	 */
++	if (pgmap->type == MEMORY_DEVICE_PRIVATE ||
++	    pgmap->type == MEMORY_DEVICE_COHERENT)
++		set_page_count(page, 0);
++}
++
++#define VMEMMAP_RESERVE_NR	2
++#ifdef CONFIG_ARCH_WANT_HUGETLB_PAGE_OPTIMIZE_VMEMMAP
++#define vmemmap_can_optimize(altmap, pgmap)				\
++	(is_power_of_2(sizeof(struct page)) && !(altmap) &&		\
++	 (((pgmap_vmemmap_nr(pgmap) * sizeof(struct page)) >> PAGE_SHIFT) > \
++	  VMEMMAP_RESERVE_NR))
++#else
++#define vmemmap_can_optimize(altmap, pgmap)	\
++	((void)(altmap), (void)(pgmap), false)
++#endif
++
++#define pageblock_migratetype_init_range(start_pfn, nr_pages, migratetype) \
++do {									\
++	unsigned long __start = (start_pfn);				\
++	unsigned long __pfn = pageblock_align(__start);			\
++	unsigned long __end = __start + (nr_pages);			\
++									\
++	for (; __pfn < __end; __pfn += pageblock_nr_pages) {		\
++		set_pageblock_migratetype(pfn_to_page(__pfn), migratetype); \
++		if (IS_ALIGNED(__pfn, PAGES_PER_SECTION))			\
++			cond_resched();					\
++	}								\
++} while (0)
++
++/*
++ * With compound page geometry and when struct pages are stored in ram most
++ * tail pages are reused. Consequently, the amount of unique struct pages to
++ * initialize is a lot smaller that the total amount of struct pages being
++ * mapped. This is a paired / mild layering violation with explicit knowledge
++ * of how the sparse_vmemmap internals handle compound pages in the lack
++ * of an altmap. See vmemmap_populate_compound_pages().
++ */
++static inline unsigned long compound_nr_pages(struct vmem_altmap *altmap,
++					      struct dev_pagemap *pgmap)
++{
++	if (!vmemmap_can_optimize(altmap, pgmap))
++		return pgmap_vmemmap_nr(pgmap);
++
++	return VMEMMAP_RESERVE_NR * (PAGE_SIZE / sizeof(struct page));
++}
++
++static void __ref memmap_init_compound(struct page *head,
++				       unsigned long head_pfn,
++				       unsigned long zone_idx, int nid,
++				       struct dev_pagemap *pgmap,
++				       unsigned long nr_pages)
++{
++	unsigned long pfn, end_pfn = head_pfn + nr_pages;
++	unsigned int order = pgmap->vmemmap_shift;
++
++	__SetPageHead(head);
++	for (pfn = head_pfn + 1; pfn < end_pfn; pfn++) {
++		struct page *page = pfn_to_page(pfn);
++
++		__init_zone_device_page(page, pfn, zone_idx, nid, pgmap);
++		prep_compound_tail(head, pfn - head_pfn);
++		set_page_count(page, 0);
++
++		/*
++		 * The first tail page stores compound_mapcount_ptr() and
++		 * compound_order() and the second tail page stores
++		 * compound_pincount_ptr(). Call prep_compound_head() after
++		 * the first and second tail pages have been initialized to
++		 * not have the data overwritten.
++		 */
++		if (pfn == head_pfn + 2)
++			prep_compound_head(head, order);
++	}
++}
++
++void __ref memmap_init_zone_device(struct zone *zone,
++				   unsigned long start_pfn,
++				   unsigned long nr_pages,
++				   struct dev_pagemap *pgmap)
++{
++	unsigned long pfn, end_pfn = start_pfn + nr_pages;
++	struct pglist_data *pgdat = zone->zone_pgdat;
++	struct vmem_altmap *altmap = pgmap_altmap(pgmap);
++	unsigned int pfns_per_compound = pgmap_vmemmap_nr(pgmap);
++	unsigned long zone_idx = zone_idx(zone);
++	unsigned long start = jiffies;
++	int nid = pgdat->node_id;
++
++	if (WARN_ON_ONCE(!pgmap || zone_idx != ZONE_DEVICE))
++		return;
++
++	/*
++	 * The call to memmap_init should have already taken care
++	 * of the pages reserved for the memmap, so we can just jump to
++	 * the end of that region and start processing the device pages.
++	 */
++	if (altmap) {
++		start_pfn = altmap->base_pfn + vmem_altmap_offset(altmap);
++		nr_pages = end_pfn - start_pfn;
++	}
++
++	for (pfn = start_pfn; pfn < end_pfn; pfn += pfns_per_compound) {
++		struct page *page = pfn_to_page(pfn);
++
++		__init_zone_device_page(page, pfn, zone_idx, nid, pgmap);
++
++		if (IS_ALIGNED(pfn, PAGES_PER_SECTION))
++			cond_resched();
++
++		if (pfns_per_compound == 1)
++			continue;
++
++		memmap_init_compound(page, pfn, zone_idx, nid, pgmap,
++				     compound_nr_pages(altmap, pgmap));
++	}
++
++	pageblock_migratetype_init_range(start_pfn, nr_pages, MIGRATE_MOVABLE);
++
++	pr_debug("%s initialised %lu pages in %ums\n", __func__,
++		 nr_pages, jiffies_to_msecs(jiffies - start));
++}
++#endif
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -804,7 +804,7 @@ void free_compound_page(struct page *pag
+ 	free_the_page(page, compound_order(page));
  }
  
-@@ -1258,7 +1260,7 @@ static int nft_pipapo_insert(const struc
- 	else
- 		end = start;
+-static void prep_compound_head(struct page *page, unsigned int order)
++void prep_compound_head(struct page *page, unsigned int order)
+ {
+ 	set_compound_page_dtor(page, COMPOUND_PAGE_DTOR);
+ 	set_compound_order(page, order);
+@@ -812,7 +812,7 @@ static void prep_compound_head(struct pa
+ 	atomic_set(compound_pincount_ptr(page), 0);
+ }
  
--	dup = pipapo_get(net, set, start, genmask, tstamp, GFP_KERNEL);
-+	dup = pipapo_get(net, set, m, start, genmask, tstamp, GFP_KERNEL);
- 	if (!IS_ERR(dup)) {
- 		/* Check if we already have the same exact entry */
- 		const struct nft_data *dup_key, *dup_end;
-@@ -1280,7 +1282,7 @@ static int nft_pipapo_insert(const struc
+-static void prep_compound_tail(struct page *head, int tail_idx)
++void prep_compound_tail(struct page *head, int tail_idx)
+ {
+ 	struct page *p = head + tail_idx;
  
- 	if (PTR_ERR(dup) == -ENOENT) {
- 		/* Look for partially overlapping entries */
--		dup = pipapo_get(net, set, end, nft_genmask_next(net), tstamp,
-+		dup = pipapo_get(net, set, m, end, nft_genmask_next(net), tstamp,
- 				 GFP_KERNEL);
+@@ -1658,8 +1658,8 @@ static void free_one_page(struct zone *z
+ 	spin_unlock_irqrestore(&zone->lock, flags);
+ }
+ 
+-static void __meminit __init_single_page(struct page *page, unsigned long pfn,
+-				unsigned long zone, int nid)
++void __meminit __init_single_page(struct page *page, unsigned long pfn,
++				  unsigned long zone, int nid)
+ {
+ 	mm_zero_struct_page(page);
+ 	set_page_links(page, zone, nid, pfn);
+@@ -6911,142 +6911,6 @@ void __meminit memmap_init_range(unsigne
  	}
- 
-@@ -1866,16 +1868,18 @@ static void *nft_pipapo_deactivate(const
- 				   const struct nft_set *set,
- 				   const struct nft_set_elem *elem)
- {
-+	const struct nft_pipapo *priv = nft_set_priv(set);
-+	struct nft_pipapo_match *m = priv->clone;
- 	struct nft_pipapo_elem *e;
- 
--	e = pipapo_get(net, set, (const u8 *)elem->key.val.data,
-+	e = pipapo_get(net, set, m, (const u8 *)elem->key.val.data,
- 		       nft_genmask_next(net), nft_net_tstamp(net), GFP_KERNEL);
- 	if (IS_ERR(e))
- 		return NULL;
- 
- 	nft_set_elem_change_active(net, set, &e->ext);
- 
--	return &e->priv;
-+	return e;
  }
  
- /**
-@@ -1901,8 +1905,9 @@ static bool nft_pipapo_flush(const struc
+-#ifdef CONFIG_ZONE_DEVICE
+-static void __ref __init_zone_device_page(struct page *page, unsigned long pfn,
+-					  unsigned long zone_idx, int nid,
+-					  struct dev_pagemap *pgmap)
+-{
+-
+-	__init_single_page(page, pfn, zone_idx, nid);
+-
+-	/*
+-	 * Mark page reserved as it will need to wait for onlining
+-	 * phase for it to be fully associated with a zone.
+-	 *
+-	 * We can use the non-atomic __set_bit operation for setting
+-	 * the flag as we are still initializing the pages.
+-	 */
+-	__SetPageReserved(page);
+-
+-	/*
+-	 * ZONE_DEVICE pages union ->lru with a ->pgmap back pointer
+-	 * and zone_device_data.  It is a bug if a ZONE_DEVICE page is
+-	 * ever freed or placed on a driver-private list.
+-	 */
+-	page->pgmap = pgmap;
+-	page->zone_device_data = NULL;
+-
+-	/*
+-	 * Mark the block movable so that blocks are reserved for
+-	 * movable at startup. This will force kernel allocations
+-	 * to reserve their blocks rather than leaking throughout
+-	 * the address space during boot when many long-lived
+-	 * kernel allocations are made.
+-	 *
+-	 * Please note that MEMINIT_HOTPLUG path doesn't clear memmap
+-	 * because this is done early in section_activate()
+-	 */
+-	if (pageblock_aligned(pfn)) {
+-		set_pageblock_migratetype(page, MIGRATE_MOVABLE);
+-		cond_resched();
+-	}
+-
+-	/*
+-	 * ZONE_DEVICE pages are released directly to the driver page allocator
+-	 * which will set the page count to 1 when allocating the page.
+-	 */
+-	if (pgmap->type == MEMORY_DEVICE_PRIVATE ||
+-	    pgmap->type == MEMORY_DEVICE_COHERENT)
+-		set_page_count(page, 0);
+-}
+-
+-/*
+- * With compound page geometry and when struct pages are stored in ram most
+- * tail pages are reused. Consequently, the amount of unique struct pages to
+- * initialize is a lot smaller that the total amount of struct pages being
+- * mapped. This is a paired / mild layering violation with explicit knowledge
+- * of how the sparse_vmemmap internals handle compound pages in the lack
+- * of an altmap. See vmemmap_populate_compound_pages().
+- */
+-static inline unsigned long compound_nr_pages(struct vmem_altmap *altmap,
+-					      unsigned long nr_pages)
+-{
+-	return is_power_of_2(sizeof(struct page)) &&
+-		!altmap ? 2 * (PAGE_SIZE / sizeof(struct page)) : nr_pages;
+-}
+-
+-static void __ref memmap_init_compound(struct page *head,
+-				       unsigned long head_pfn,
+-				       unsigned long zone_idx, int nid,
+-				       struct dev_pagemap *pgmap,
+-				       unsigned long nr_pages)
+-{
+-	unsigned long pfn, end_pfn = head_pfn + nr_pages;
+-	unsigned int order = pgmap->vmemmap_shift;
+-
+-	__SetPageHead(head);
+-	for (pfn = head_pfn + 1; pfn < end_pfn; pfn++) {
+-		struct page *page = pfn_to_page(pfn);
+-
+-		__init_zone_device_page(page, pfn, zone_idx, nid, pgmap);
+-		prep_compound_tail(head, pfn - head_pfn);
+-		set_page_count(page, 0);
+-
+-		/*
+-		 * The first tail page stores compound_mapcount_ptr() and
+-		 * compound_order() and the second tail page stores
+-		 * compound_pincount_ptr(). Call prep_compound_head() after
+-		 * the first and second tail pages have been initialized to
+-		 * not have the data overwritten.
+-		 */
+-		if (pfn == head_pfn + 2)
+-			prep_compound_head(head, order);
+-	}
+-}
+-
+-void __ref memmap_init_zone_device(struct zone *zone,
+-				   unsigned long start_pfn,
+-				   unsigned long nr_pages,
+-				   struct dev_pagemap *pgmap)
+-{
+-	unsigned long pfn, end_pfn = start_pfn + nr_pages;
+-	struct pglist_data *pgdat = zone->zone_pgdat;
+-	struct vmem_altmap *altmap = pgmap_altmap(pgmap);
+-	unsigned int pfns_per_compound = pgmap_vmemmap_nr(pgmap);
+-	unsigned long zone_idx = zone_idx(zone);
+-	unsigned long start = jiffies;
+-	int nid = pgdat->node_id;
+-
+-	if (WARN_ON_ONCE(!pgmap || zone_idx != ZONE_DEVICE))
+-		return;
+-
+-	/*
+-	 * The call to memmap_init should have already taken care
+-	 * of the pages reserved for the memmap, so we can just jump to
+-	 * the end of that region and start processing the device pages.
+-	 */
+-	if (altmap) {
+-		start_pfn = altmap->base_pfn + vmem_altmap_offset(altmap);
+-		nr_pages = end_pfn - start_pfn;
+-	}
+-
+-	for (pfn = start_pfn; pfn < end_pfn; pfn += pfns_per_compound) {
+-		struct page *page = pfn_to_page(pfn);
+-
+-		__init_zone_device_page(page, pfn, zone_idx, nid, pgmap);
+-
+-		if (pfns_per_compound == 1)
+-			continue;
+-
+-		memmap_init_compound(page, pfn, zone_idx, nid, pgmap,
+-				     compound_nr_pages(altmap, pfns_per_compound));
+-	}
+-
+-	pr_info("%s initialised %lu pages in %ums\n", __func__,
+-		nr_pages, jiffies_to_msecs(jiffies - start));
+-}
+-
+-#endif
+ static void __meminit zone_init_free_lists(struct zone *zone)
  {
- 	struct nft_pipapo_elem *e = elem;
- 
--	return pipapo_deactivate(net, set, (const u8 *)nft_set_ext_key(&e->ext),
--				 &e->ext);
-+	nft_set_elem_change_active(net, set, &e->ext);
-+
-+	return true;
- }
- 
- /**
+ 	unsigned int order, t;
 
 
