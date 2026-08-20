@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1300469849;
-	Thu, 20 Aug 2026 16:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DC047CC73;
+	Thu, 20 Aug 2026 16:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243626; cv=none; b=NGZ6U5g63SJfkq75fjMPS0Nv0IUQJQeuoswPzaybqlWB+NK3iDiFHULzBssFZWionf0U9ljitckhC0w3X81vF40KMnPXWbFLH9LjyBCHrgUJPnA8b22Nhi3VIdgao3c925vl0FqqCa9azIdvZZAq6rW1fglDZUZ5z9VZmGB2Q4c=
+	t=1787243628; cv=none; b=Og2Jeg1e+yGaqBChjNvivReRcJdOBLj054KTokVGKFK3k4LgZ1Pr6h1dYYv3UrssBNJCQJS7Ar9cA+YSaKuQshQ2zzGu5Chgqgg6SzVIdx1x8UYmBKfpypvO1ffFz8ojdrmVlmcYmvHcvdIpcg7R0yDBlUP6jyQuIQmsE9wfJto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243626; c=relaxed/simple;
-	bh=aJ0sCOcKK3L+G6j4QYcMOoI52KHc2wr5vHR0kAEnVKg=;
+	s=arc-20240116; t=1787243628; c=relaxed/simple;
+	bh=KmsyLaXEkLHIgYUjGo1K5nNHbCsVkqaEPeUkuM3ntf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LyjQQO7+jahtLmfF2AsjA50LzLLh5nsrR+J9kp86/kJm5FV+HIcD0TZoAvsHPGz0pEC/b0gqa9qNPWpAZfVtqI2HhEBYD4Rb8fb50MXOk1vRkjCCn58Ip/xmCD2zUHrSrMuNUGA5MMmJKzxIGg5V3dSCMdXFS5pHldFbIWPxPiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQpfRO3l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hM4564QVmIRj3MAlBD+KWcaA8q+YTk4ll7z8Ki3MPdpDQkDQepCBpKe4+W18K05M3DRORXPMeuL1bwa8gHtcWtND1x0Iw/sqNcvhMaHkzCBD4VAfR4Oo6FNH0u3E31gY4hRgiKwUXCD91yHSyc7vJTy+3m5tRIqxAIfsbt9Qlck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nq83cLXx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQpfRO3l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5AC21F000E9;
-	Thu, 20 Aug 2026 16:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nq83cLXx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37A71F000E9;
+	Thu, 20 Aug 2026 16:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243624;
-	bh=jX0iDDrp9KAAO4oalMiK+71eL6d7t5Svlx39s+8FteI=;
+	s=korg; t=1787243627;
+	bh=Bz9ck4BJICVUExriYCjSN5IaOYbSyCeeK+2M/1xoFzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZQpfRO3lvlOll7Tq5bqIhc7/NfNFk0Oe+0jgz0APu5ffeZcXnA7skSENAUq3oDOjr
-	 yVZ/y4SYTAB68kf4LEy0SmB4KpNWHbmxQ2GfeMDVkIbRmAom62LZ/I2HRetDrybEVN
-	 yODrNUqbmxQwVHygk+xgfUrZvFV+6Lic70T7mncg=
+	b=Nq83cLXx2kvi9fwfvJrk5J4PhfjIX9AQwYgICRZn8K4q9mhRRCc0LfS9JZzd10ROW
+	 Ua/D3XyVgPE8nOFi3/4w5K3A+BnbaIYuSlw8Csg7RwOGTu0JnZvFPtlO9yPdD631p2
+	 7M6g0K35xHZSueB+rDe+SOKQlcOy4Uw1rWqg13CE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Ibrahim Hashimov <security@auditcode.ai>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 121/272] tpm: tpm_tis_spi: Use wait_woken() in wait_for_tmp_stat()
-Date: Thu, 20 Aug 2026 16:55:05 +0200
-Message-ID: <20260820145234.894589786@linuxfoundation.org>
+Subject: [PATCH 5.15 122/272] ksmbd: fix integer overflow in set_file_allocation_info()
+Date: Thu, 20 Aug 2026 16:55:06 +0200
+Message-ID: <20260820145234.923706244@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -52,101 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko@kernel.org>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-[ Upstream commit c0c9cfb3b75def8bf200a2d4db09015806acfeaf ]
+[ Upstream commit 1c0ae3df692ea2a4ce992f786346154e75a3f0d5 ]
 
-wait_event_interruptible_timeout() evaluates its condition after setting
-the current task state to TASK_INTERRUPTIBLE.
+set_file_allocation_info() converts the client-supplied
+FILE_ALLOCATION_INFORMATION::AllocationSize into a 512-byte block
+count with:
 
-With CONFIG_DEBUG_ATOMIC_SLEEP this triggers a warning when the IRQ wait
-path is used:
+	alloc_blks = (le64_to_cpu(file_alloc_info->AllocationSize) + 511) >> 9;
 
-    tpm_tis_status()
-      tpm_tis_spi_read_bytes()
-        tpm_tis_spi_transfer_full()
-          spi_bus_lock()
-            mutex_lock()
+AllocationSize is a fully client-controlled __le64 field; the only
+validation performed by the caller (smb2_set_info_file(), case
+FILE_ALLOCATION_INFORMATION) is that the fixed buffer is at least
+sizeof(struct smb2_file_alloc_info) == 8 bytes. The value itself is
+never range-checked before this arithmetic.
 
-Address this with the following measures:
+When AllocationSize is close to U64_MAX (e.g. 0xffffffffffffffff),
+"AllocationSize + 511" wraps around mod 2^64 to a small number
+(0xffffffffffffffff + 511 = 510), so alloc_blks becomes 0. Since any
+existing regular file has stat.blocks > 0, the function then takes
+the "shrink" branch and calls:
 
-1. Call wait_tpm_stat_cond() only while tasking is running.
-2. Use wait_woken() to wait for changes.
+	ksmbd_vfs_truncate(work, fp, alloc_blks * 512);   /* == 0 */
 
-Cc: stable@vger.kernel.org # v4.19+
-Cc: Linus Walleij <linusw@kernel.org>
-Reported-by: Stefan Wahren <wahrenst@gmx.net>
-Closes: https://lore.kernel.org/linux-integrity/6964bec7-3dbb-453b-89ef-9b990217a8b9@gmx.net/
-Fixes: 1a339b658d9d ("tpm_tis_spi: Pass the SPI IRQ down to the driver")
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Tested-by: Stefan Wahren <wahrenst@gmx.net>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+silently truncating the file to size 0, even though the client asked
+to grow the allocation to (what looks like) the maximum possible
+size. The trailing "if (size < alloc_blks * 512) i_size_write(inode,
+size);" restore is guarded by a comparison that is never true once
+alloc_blks == 0, so the truncation is not undone. This lets an
+authenticated SMB client that already holds an open handle with
+FILE_WRITE_DATA on a file silently truncate that same file to size 0
+via a single crafted SET_INFO(FILE_ALLOCATION_INFORMATION) request
+advertising a near-U64_MAX AllocationSize, even though the request
+asks to grow the file's allocation rather than shrink it. This is a
+functional/data-loss bug, not a privilege-boundary
+violation: the same client could already truncate the file via
+FILE_END_OF_FILE_INFORMATION or a plain write.
+
+Fix it by validating AllocationSize against MAX_LFS_FILESIZE, the
+same upper bound the VFS itself uses to reject unrepresentable file
+sizes, before doing the "+511" rounding, and rejecting oversized
+values with -EINVAL. Bounding AllocationSize to
+MAX_LFS_FILESIZE - 511 guarantees the "+511" addition cannot wrap,
+and that the subsequent "alloc_blks * 512" values passed to
+vfs_fallocate() and ksmbd_vfs_truncate() stay within a representable
+loff_t as well.
+
+No legitimate SMB client asks for an allocation size anywhere near
+2^64 bytes, so this only rejects a value that was previously
+silently misinterpreted as zero.
+
+Runtime-verified on a v6.19 KASAN test stand: sending SET_INFO
+(FILE_ALLOCATION_INFORMATION) with AllocationSize = 0xffffffffffffffff
+against ksmbd now returns -EINVAL and leaves the target file's size
+unchanged, where the unpatched kernel truncated it from 4096 to 0
+bytes.
+
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Assisted-by: AuditCode-AI:2026.07
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm_tis_core.c |   38 ++++++++++++++++++++++++--------------
- 1 file changed, 24 insertions(+), 14 deletions(-)
+ fs/ksmbd/smb2pdu.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -49,10 +49,11 @@ static int wait_for_tpm_stat(struct tpm_
- 		bool check_cancel)
- {
- 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
-+	DEFINE_WAIT_FUNC(wait, woken_wake_function);
- 	unsigned long stop;
--	long rc;
- 	u8 status;
- 	bool canceled = false;
-+	int ret;
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -5814,6 +5814,7 @@ static int set_file_allocation_info(stru
+ 	 */
  
- 	/* check current status */
- 	status = chip->ops->status(chip);
-@@ -62,23 +63,32 @@ static int wait_for_tpm_stat(struct tpm_
- 	stop = jiffies + timeout;
+ 	loff_t alloc_blks;
++	u64 alloc_size;
+ 	struct inode *inode;
+ 	struct kstat stat;
+ 	int rc;
+@@ -5826,7 +5827,19 @@ static int set_file_allocation_info(stru
+ 	if (rc)
+ 		return rc;
  
- 	if (chip->flags & TPM_CHIP_FLAG_IRQ) {
-+		ret = -ETIME;
-+		add_wait_queue(queue, &wait);
- again:
-+		if (wait_for_tpm_stat_cond(chip, mask, check_cancel,
-+					   &canceled)) {
-+			ret = canceled ? -ECANCELED : 0;
-+			goto out;
-+		}
+-	alloc_blks = (le64_to_cpu(file_alloc_info->AllocationSize) + 511) >> 9;
++	/*
++	 * AllocationSize is fully client-controlled (the caller only
++	 * validates the fixed 8-byte buffer length). Reject values that
++	 * would overflow the "round up to 512-byte blocks" conversion
++	 * below instead of silently wrapping it to a tiny block count,
++	 * which would truncate the file to a size the client never
++	 * asked for.
++	 */
++	alloc_size = le64_to_cpu(file_alloc_info->AllocationSize);
++	if (alloc_size > MAX_LFS_FILESIZE - 511)
++		return -EINVAL;
 +
- 		timeout = stop - jiffies;
- 		if ((long)timeout <= 0)
--			return -ETIME;
--		rc = wait_event_interruptible_timeout(*queue,
--			wait_for_tpm_stat_cond(chip, mask, check_cancel,
--					       &canceled),
--			timeout);
--		if (rc > 0) {
--			if (canceled)
--				return -ECANCELED;
--			return 0;
--		}
--		if (rc == -ERESTARTSYS && freezing(current)) {
--			clear_thread_flag(TIF_SIGPENDING);
--			goto again;
-+			goto out;
-+
-+		if (signal_pending(current)) {
-+			if (freezing(current)) {
-+				clear_thread_flag(TIF_SIGPENDING);
-+				goto again;
-+			}
-+			goto out;
- 		}
-+
-+		wait_woken(&wait, TASK_INTERRUPTIBLE, timeout);
-+		goto again;
-+out:
-+		remove_wait_queue(queue, &wait);
-+		return ret;
- 	} else {
- 		do {
- 			usleep_range(priv->timeout_min,
++	alloc_blks = (alloc_size + 511) >> 9;
+ 	inode = file_inode(fp->filp);
+ 
+ 	if (alloc_blks > stat.blocks) {
 
 
