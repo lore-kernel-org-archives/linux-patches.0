@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F91F37B00F;
-	Thu, 20 Aug 2026 15:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8301237F738;
+	Thu, 20 Aug 2026 15:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239497; cv=none; b=Q3RmHPZM5ObNdXFmyM0kVOdZDYRzYVHbe6K+TuQrfzFbMdHzqn4/ygphwoFV/2X2IEp/J6njrd0GLQ0msQzFGjyjP+ewFEVyPzj/ks+1hmAmlmZPWwb0kWvfXJU0/0jQhgL3VKvjqn5dv/Ayug/Y+f9pMuxjHup+7lHhsHvZAMQ=
+	t=1787239500; cv=none; b=Oj3kbHaxzeKAqqbbhrtsxpU/GY8ZBa7IVYAx8kjBznpQeGuiVNi0EqzU5Oj/5+ay+q1HIq12U+Ir+UfBUU7GBQzVD6P4n+MNYjTIrUPBol+uckVjSjjGV+Jxxz6UT5ffRiqPPIjo6Hw0bTwKuFxg94F96oyGQPEGxaRsruZSbcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239497; c=relaxed/simple;
-	bh=JLS5FK9IwCKk7oV09qAMCFebwlg9AewA+GoPgP2lckc=;
+	s=arc-20240116; t=1787239500; c=relaxed/simple;
+	bh=s6Ab2xdcFoDoyU56XHnovTFr02HCIFcfxYjDuvbpOk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u0qMGoSOfTllrsjE+HJ7IARcjv2XsT1b5xxdH35H1F7vEQpqmVFcO2ZpTOI2ag8pxKkC0jtWzkjUlRexAFy4npAlp2w7/Td8/Hs8CQYKpKMJwuFHBv1/iwnM/ZZl8DXrPOEL+Xy7ZKV1AVAgY3FUDtGxOQzcMdeNGfWL+5QIXYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EG42m55M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iTiCvAKdjUicGQ0eWU0oqeAhJ7C4M8NUg+ubqocP/BANfNXi1+hMi6sSWaXv7BLOd3QyVpMng/IuVPxy+BnzxQQzvPjKMGUkeI9PR4ZLEj1rZKf42UJq4/Uo5j97x64c95f9Zh/gIX05U8eNd52vnPWptIl84qBL+B4rA//7JBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wth2eR9Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EG42m55M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2ADD1F000E9;
-	Thu, 20 Aug 2026 15:24:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wth2eR9Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C831F000E9;
+	Thu, 20 Aug 2026 15:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239496;
-	bh=eC8ztH8B22srsoLQxe6myxwqzClpCL/QzK7wQcIqJsY=;
+	s=korg; t=1787239499;
+	bh=zFN0WK5bGtfWVEkot6qSg+DYde2lgaYwJN+CO7gMrZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EG42m55Mc5YGb3lmWu7mtAph6SCacpuWaE28/DnozqKfyt+D/M+0FT16ZmWUSxzuJ
-	 lzdJ5bF+pVm/NWDCdU9Gl3Suh3kqX3GKmpddf7FjsLPptFPy06OxBrEeT5ybFQ96EC
-	 E4PApqcyuFI2A4hPa27+FVBCZp6vF1EEb+uZk34U=
+	b=Wth2eR9QX1btKxIJbrGIqSVUIvwmKKWqfBDhNzvJuEZpnvmuhqb/IDGzGI3n0RrDI
+	 tbGMZo2vHfAmXirSTdpsbO2rkpLcZKbCraN9kahnokcf2qcgWEbdWdy7NUs01qNnJq
+	 NATsNQGB8EsOdaclG8RmYHychQkPx8CoEBUSbDNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhan Ali <alifm@linux.ibm.com>,
 	Matthew Rosato <mjrosato@linux.ibm.com>,
 	Eric Farman <farman@linux.ibm.com>,
 	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.12 070/220] s390/vfio_ccw: Free all memory if cp_init() fails
-Date: Thu, 20 Aug 2026 16:54:20 +0200
-Message-ID: <20260820145225.594214437@linuxfoundation.org>
+Subject: [PATCH 6.12 071/220] s390/vfio_ccw: Limit the number of channel program segments
+Date: Thu, 20 Aug 2026 16:54:21 +0200
+Message-ID: <20260820145225.624787667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -54,77 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Farman <farman@linux.ibm.com>
 
-commit 74186c2968f8f756ac3226b545b598457c910c75 upstream.
+commit 5405c90d6a47b3014e74ee0618a162449abbbc93 upstream.
 
-The routine cp_free() is called to unpin/free any memory once an I/O
-is completed successfully, or if cp_prefetch() fails. But if cp_init()
-fails, and cp->initialized is not enabled, the same routine cannot be
-used to free all the memory.
+The processing of channel programs, and the CCWs within them, is done
+recursively. As such, there is an arbitrary (but not architectural)
+limit to the number of CCWs that can exist in a single channel program.
 
-An attempt to address this exists in ccwchain_handle_ccw(), where a
-single call to ccwchain_free() is made for the currently-processed
-CCW segment. But this will leak other segments (created as a result
-of a Transfer in Channel) that had been allocated as part of the same
-channel program.
+The vfio-ccw logic breaks these channel programs into segments whenever
+it encounters a Transfer-In-Channel (TIC) CCW, and the combined number
+of segments count towards the global limit. Impose an equivalent limit
+to the number of segments until such logic can be made non-recursive.
 
-Address this by performing the cleanup outside of the recursive
-ccwchain_handle_ccw()/ccwchain_loop_tic() logic.
-
-Fixes: 8b515be512a2 ("vfio-ccw: Fix memory leak and don't call cp_free in cp_init")
+Fixes: 0a19e61e6d4c ("vfio: ccw: introduce channel program interfaces")
 Cc: stable@vger.kernel.org
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/vfio_ccw_cp.c |   22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ drivers/s390/cio/vfio_ccw_cp.c |    6 ++++++
+ drivers/s390/cio/vfio_ccw_cp.h |    8 ++++++++
+ 2 files changed, 14 insertions(+)
 
 --- a/drivers/s390/cio/vfio_ccw_cp.c
 +++ b/drivers/s390/cio/vfio_ccw_cp.c
-@@ -455,9 +455,6 @@ static int ccwchain_handle_ccw(dma32_t c
- 	/* Loop for tics on this new chain. */
- 	ret = ccwchain_loop_tic(chain, cp);
+@@ -332,6 +332,7 @@ static struct ccwchain *ccwchain_alloc(s
+ 		goto out_err;
  
--	if (ret)
--		ccwchain_free(chain);
--
- 	return ret;
- }
+ 	list_add_tail(&chain->next, &cp->ccwchain_list);
++	cp->ccwchain_count++;
  
-@@ -486,6 +483,23 @@ static int ccwchain_loop_tic(struct ccwc
- 	return 0;
- }
+ 	return chain;
  
-+static int ccwchain_build_ccws(dma32_t cda, struct channel_program *cp)
-+{
-+	struct ccwchain *chain, *temp;
-+	int ret;
+@@ -441,6 +442,10 @@ static int ccwchain_handle_ccw(dma32_t c
+ 	if (len < 0)
+ 		return len;
+ 
++	/* Limit number of chains in a single channel program */
++	if (cp->ccwchain_count >= CCWCHAIN_COUNT_MAX)
++		return -EINVAL;
 +
-+	ret = ccwchain_handle_ccw(cda, cp);
-+
-+	if (ret) {
-+		/* Cleanup if an error occurred */
-+		list_for_each_entry_safe(chain, temp, &cp->ccwchain_list, next) {
-+			ccwchain_free(chain);
-+		}
-+	}
-+
-+	return ret;
-+}
-+
- static int ccwchain_fetch_tic(struct ccw1 *ccw,
- 			      struct channel_program *cp)
- {
-@@ -735,7 +749,7 @@ int cp_init(struct channel_program *cp,
+ 	/* Need alloc a new chain for this one. */
+ 	chain = ccwchain_alloc(cp, len);
+ 	if (!chain)
+@@ -745,6 +750,7 @@ int cp_init(struct channel_program *cp,
+ 			vdev->dev,
+ 			"Prefetching channel program even though prefetch not specified in ORB");
+ 
++	cp->ccwchain_count = 0;
+ 	INIT_LIST_HEAD(&cp->ccwchain_list);
  	memcpy(&cp->orb, orb, sizeof(*orb));
  
- 	/* Build a ccwchain for the first CCW segment */
--	ret = ccwchain_handle_ccw(orb->cmd.cpa, cp);
-+	ret = ccwchain_build_ccws(orb->cmd.cpa, cp);
+--- a/drivers/s390/cio/vfio_ccw_cp.h
++++ b/drivers/s390/cio/vfio_ccw_cp.h
+@@ -23,11 +23,18 @@
+  */
+ #define CCWCHAIN_LEN_MAX	256
  
- 	if (!ret)
- 		cp->initialized = true;
++/*
++ * Maximum number of chains
++ */
++#define CCWCHAIN_COUNT_MAX	16
++
+ /**
+  * struct channel_program - manage information for channel program
+  * @ccwchain_list: list head of ccwchains
+  * @orb: orb for the currently processed ssch request
+  * @initialized: whether this instance is actually initialized
++ * @guest_cp: copy of guest channel program
++ * @ccwchain_count: number of channel program segments (linked by TIC)
+  *
+  * @ccwchain_list is the head of a ccwchain list, that contents the
+  * translated result of the guest channel program that pointed out by
+@@ -38,6 +45,7 @@ struct channel_program {
+ 	union orb orb;
+ 	bool initialized;
+ 	struct ccw1 *guest_cp;
++	unsigned int ccwchain_count;
+ };
+ 
+ int cp_init(struct channel_program *cp, union orb *orb);
 
 
