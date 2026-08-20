@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5AF28C2BF;
-	Thu, 20 Aug 2026 17:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C94147F77A;
+	Thu, 20 Aug 2026 17:34:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247265; cv=none; b=c6ud3qZaq8eHr+2AYw2it93EIkdacDHKbJB0lD2XuD2+E/7WeOPNKmMx4vZ9VpFh5zcHNs3W9R5wDPnVIHVatF3MeM1snyc4NXvOaGlXFl5c02td5SpC3bmB570WZr0lilkgwrPCZBx4eB4qpwA0R9QfIEIbiD24yFOL5RZ5/WU=
+	t=1787247268; cv=none; b=kA0weztgKN4+zfjljBvQ8OGt7aBT6jtmktA/P2jCByCFexxYqqglwbcRZq4Zxm8Z+8nThD5oZsk0zr+9vIE6XQ9rV3GO8dQ4gNmkkpM+WiDZbl+4xAvrtP/bHXfLPBARXfk/dD5TPKPHOLlsy4J2rad2Xdc4pZrHXKgAodRsC9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247265; c=relaxed/simple;
-	bh=nplgFtmWptEqh4zkvs0UkQM1IFBjpkuA/8wSjX0gLr4=;
+	s=arc-20240116; t=1787247268; c=relaxed/simple;
+	bh=PTJJsizUp3QRQkZyQoNK+4gLmaD4Aa/ligbLxXcNowY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X+xo+mPFuXFdyqTKaF5nGKou3sotP8wS2sYMnlEXK+8LS5YFc8HNL175IOap6BlU2lZtaGBiyBqRVjKRkyUvN/qnJh7zl2JPxMhEvJciYWVaMNR1gC6TxT+U0Hm6GXIV1paQzmj0VUr7oFgz2xxc7VZn9d7w4WXe+tnfpRnevYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YKg1+Pqk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DwZIx/YCxR7Ege3koY01aQPexMW8Hb0rynSCdRvSfaWRyjwFbqSxnsO1p87+mLp9/jgpWIoyvaAYHuN7vQQTX13v0M4900YpbdaAJ0vEMwz2vrQqv5EG01iA6w0P55HBrhaINGhxu3yxbGRxg1+2vi//6OA3vQSXAHVeB+hMPoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhoeoBQF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YKg1+Pqk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F401F000E9;
-	Thu, 20 Aug 2026 17:34:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhoeoBQF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686A71F000E9;
+	Thu, 20 Aug 2026 17:34:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247264;
-	bh=9mw3nJvnVQuI6pEhJTCVBfHamINlm1TXuBgDYzA6IWQ=;
+	s=korg; t=1787247266;
+	bh=dO1AJY4p/YOd/dN1lQtzDkcDufxGW7rERgVc5FQorYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YKg1+Pqk94SToHAUtyIzvhD66I018lCtdS1pKzxPlc9nubuQCZFMUGsf5auxrxII1
-	 q8O/OSzzJx8bh+AGfOEUl/9wLhxxb4XWox3sQCZ1MMrBAYptdfvfDa9Lr6q95mR0ZZ
-	 uRcx1PrEdETJcig6hlqiw+CmCiw5rMYlXK70D8lU=
+	b=hhoeoBQFxJzOd3S8XN4IN1lRcL2taf1gSNicxvnNogapvWJze3xmDL2hZZzALHrfJ
+	 49Fv8zwBf2vl08sQiRW0AasozcmKKPMgacPuYe/t3Bon6FMgve70woxrCEb50pRbtj
+	 JXa2kkoY2mkLiL4NFE5iGK3a/zv0ZjNWs/Lh/AhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+30b93b6845b19cc38581@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 206/220] ASoC: xilinx: formatter_pcm: pass aud_drv_data to irq handlers
-Date: Thu, 20 Aug 2026 16:56:36 +0200
-Message-ID: <20260820145229.704871979@linuxfoundation.org>
+Subject: [PATCH 6.12 207/220] af_packet: Dont send zero-byte data in tpacket_snd().
+Date: Thu, 20 Aug 2026 16:56:37 +0200
+Message-ID: <20260820145229.734409897@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -52,72 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f12afefb7b01f94d6d66d397f323a9914edbf70e ]
+[ Upstream commit 6bcd76c134c55c697148acb5c0194e9666abdf84 ]
 
-The irq handlers take a struct device pointer and call
-dev_get_drvdata() to obtain the driver data.  However, the driver
-data is only set at the end of probe, after devm_request_irq(),
-so an interrupt taken in between causes the handlers to pass a
-NULL pointer to readl() and crash.
+syzbot reported a WARNING in __dev_queue_xmit() triggered via tpacket_snd():
 
-Pass the private data directly as the devm_request_irq() argument
-instead of the device pointer, matching what the handlers expect.
+skb_assert_len
+WARNING: at include/linux/skbuff.h:2753 skb_assert_len
+WARNING: at __dev_queue_xmit+0x21bc/0x4970 net/core/dev.c:4781
 
-Fixes: 6f6c3c36f091 ("ASoC: xlnx: add pcm formatter platform driver")
-Assisted-by: opencode:deepseek-v4-flash-free
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Michal Simek <michal.simek@amd.com>
-Link: https://patch.msgid.link/20260806233231.30631-1-rosenp@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Call Trace:
+ <TASK>
+ dev_queue_xmit include/linux/netdevice.h:3448 [inline]
+ packet_xmit+0x243/0x310 net/packet/af_packet.c:276
+ tpacket_snd net/packet/af_packet.c:2907 [inline]
+ packet_sendmsg+0x28d6/0x4eb0 net/packet/af_packet.c:3134
+
+When sending 0-byte packets via TPACKET ring buffer on devices with no
+hard header (e.g. dev->hard_header_len == 0), tpacket_fill_skb()
+populates an skb with skb->len == 0 and returns 0. tpacket_snd() then
+forwards this empty skb to packet_xmit(), causing __dev_queue_xmit() to
+hit skb_assert_len(skb).
+
+Similar checks exist in packet_snd() via commit dc633700f00f
+("net/af_packet: check len when min_header_len equals to 0") and in
+packet_sendmsg_spkt() via commit 6a341729fb31 ("af_packet: Don't send
+zero-byte data in packet_sendmsg_spkt().").
+
+Return -EINVAL in tpacket_fill_skb() when skb->len is zero to reject
+zero-length packets in tpacket_snd().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+30b93b6845b19cc38581@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a79e807.01d0871a.3a0d52.00ac.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260810150447.1220864-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/xilinx/xlnx_formatter_pcm.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ net/packet/af_packet.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/xilinx/xlnx_formatter_pcm.c b/sound/soc/xilinx/xlnx_formatter_pcm.c
-index 17ef053094694..45b178148b98b 100644
---- a/sound/soc/xilinx/xlnx_formatter_pcm.c
-+++ b/sound/soc/xilinx/xlnx_formatter_pcm.c
-@@ -281,8 +281,7 @@ static irqreturn_t xlnx_mm2s_irq_handler(int irq, void *arg)
- {
- 	u32 val;
- 	void __iomem *reg;
--	struct device *dev = arg;
--	struct xlnx_pcm_drv_data *adata = dev_get_drvdata(dev);
-+	struct xlnx_pcm_drv_data *adata = arg;
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 6a12d9c704a91..7e55ddab7b961 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2712,6 +2712,9 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
+ 		len = ((to_write > len_max) ? len_max : to_write);
+ 	}
  
- 	reg = adata->mmio + XLNX_MM2S_OFFSET + XLNX_AUD_STS;
- 	val = readl(reg);
-@@ -300,8 +299,7 @@ static irqreturn_t xlnx_s2mm_irq_handler(int irq, void *arg)
- {
- 	u32 val;
- 	void __iomem *reg;
--	struct device *dev = arg;
--	struct xlnx_pcm_drv_data *adata = dev_get_drvdata(dev);
-+	struct xlnx_pcm_drv_data *adata = arg;
++	if (unlikely(!skb->len))
++		return -EINVAL;
++
+ 	packet_parse_headers(skb, sock);
  
- 	reg = adata->mmio + XLNX_S2MM_OFFSET + XLNX_AUD_STS;
- 	val = readl(reg);
-@@ -637,7 +635,7 @@ static int xlnx_formatter_pcm_probe(struct platform_device *pdev)
- 		}
- 		ret = devm_request_irq(dev, aud_drv_data->mm2s_irq,
- 				       xlnx_mm2s_irq_handler, 0,
--				       "xlnx_formatter_pcm_mm2s_irq", dev);
-+				       "xlnx_formatter_pcm_mm2s_irq", aud_drv_data);
- 		if (ret) {
- 			dev_err(dev, "xlnx audio mm2s irq request failed\n");
- 			goto clk_err;
-@@ -664,7 +662,7 @@ static int xlnx_formatter_pcm_probe(struct platform_device *pdev)
- 		ret = devm_request_irq(dev, aud_drv_data->s2mm_irq,
- 				       xlnx_s2mm_irq_handler, 0,
- 				       "xlnx_formatter_pcm_s2mm_irq",
--				       dev);
-+				       aud_drv_data);
- 		if (ret) {
- 			dev_err(dev, "xlnx audio s2mm irq request failed\n");
- 			goto clk_err;
+ 	return tp_len;
 -- 
 2.53.0
 
