@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6404442FDA;
-	Thu, 20 Aug 2026 17:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF73442FDA;
+	Thu, 20 Aug 2026 17:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247785; cv=none; b=GbsaQQcVBospt0ukV8BvzblkEjpQ/hQPhFJEdFAkux+TGrFG7guYg6mCeGNPN9AZ+pn5ubjXFZEURyuL+dIbl5CdYDjCPzJ9rZBXyghPdd4/INwDO+Vv1kvJEz87LF9AZNh6ZA4bQvnseVYUTg5K4nZu1h+g2MJddxXS3V24NtE=
+	t=1787247789; cv=none; b=aKQ+rWBpfhPzaXR+246g89xjAYFJS1U57csBse28dFXkBTPilb026Sziz9uzJ8zQ/S3vNdKRTZf4f/OC5UM/GzpD5h0pBJOtpq3leLJG1hNjvDcsQIYjkqGJ9bjyKIBtZyVcTzHEren4WmUev8tRUSrsje7Zf/zlMMNnGOpOa18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247785; c=relaxed/simple;
-	bh=eG9R/5ck2mkOLzh3pS6BUwT37Qvh6JDAhkQmWwUecTU=;
+	s=arc-20240116; t=1787247789; c=relaxed/simple;
+	bh=hsnsqoUjduxi1xbNb6Fm7wHU7AsMew6XWYZEUVFGdKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ao3IvSM0Lz2QvU7oNYsiMae29Nsza7Cx2sHI8sq1QBTegLheegoerWuIbvCP1iGzsOTQdcOscjPF2J1kR8bh5kIS7bPLYfx0LoEqmYD/fvPAGlRlJ8LJgf0CS0Km+yWS7J0uj5RQRmSgbL8eNahc+8u6ah5bE9SyZwc1O87eanM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWoT1OeZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ouZEo8fokhYdmW82uFx0x/jjq5i2APuGgkM2rqwaY83QMiCeyfzr5Z1ahx8V11cjrtAMNTQgbF/N63Iifm6q0WttTEcifBt3b2vOJhFJImlzOKsij8zUTS3lqebpqn7wD7GHLiH0vgv4xpWUCS8po0XGkyjKKJXxUbArUMkpPMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAqLzCyG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWoT1OeZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E33B1F000E9;
-	Thu, 20 Aug 2026 17:43:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAqLzCyG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C941F000E9;
+	Thu, 20 Aug 2026 17:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247784;
-	bh=Qq+45ITja0slRNksYd7wKDsVa0veBLlsYOnPTdqdLM8=;
+	s=korg; t=1787247787;
+	bh=KK6AKkyNqPsp2SwWzmgwZ7DVL/M57Ieby9PbGbneQeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jWoT1OeZOWHfjIJLWhCbI4SReUZFxeGeo/ZjOvNRjsWrqxOeT/Zawn3zQC/6zat9k
-	 nSe9MaJNuJpLdvi5LI59mPXAgllzA4WOVCpPcozoOq3zJvhI325HzuuZHf4zgYXRDP
-	 TdO2vP9myXCgkrXGt8b+4rtmBnB24BQCmo5I9yPk=
+	b=jAqLzCyGx3zcAaFA9HE4k8DkcKQU/yHjEGSLdFImGpGPGwc1QrS/VaszpmhUNLxAJ
+	 WDqGiGCUq13IuNmhv34DN5qhyhQsfLYsHtzIyFGVP3tvQF5B58LQkhDf9BKNU8lcqN
+	 ZdIia+HucxbvivFea+qZP4DjGz0irbPHwKYALWgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Chintan Vankar <c-vankar@ti.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	vega@nebusec.ai,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 161/166] net: ethernet: ti: am65-cpsw-nuss: Fix port_id extraction from SRC TAG
-Date: Thu, 20 Aug 2026 16:57:00 +0200
-Message-ID: <20260820145216.007141811@linuxfoundation.org>
+Subject: [PATCH 6.6 162/166] net/sched: cls_bpf: reject dev-bound programs bound to a different device
+Date: Thu, 20 Aug 2026 16:57:01 +0200
+Message-ID: <20260820145216.036595672@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -53,47 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 36a05d2820077bb3955acb8111e1041d39148037 ]
+[ Upstream commit 120977e2c096deea4e866e4273be9220b957c29e ]
 
-On the packet reception path, the ID of the MAC Port on which the packet
-was received, is embedded in the RX DMA Descriptor's metadata. The ID is
-extracted using the helper function cppi5_desc_get_tags_ids() which fills
-in the 16-bit Source Tag into the 'port_id' variable. However, it is only
-the lower 8-bits of the 16-bit Source Tag that represent the MAC Port ID,
-while the upper 8-bits are Hardware-Reserved and carry an arbitrary value.
-With the existing logic, sporadic kernel crash is observed due to the
-subsequent driver code accessing out-of-bound memory because of an invalid
-port_id.
+cls_bpf_prog_from_efd() obtained a SCHED_CLS program via
+bpf_prog_get_type_dev() but never verified that a device-bound (offloaded)
+program's bound netdev matches the TC netdev the classifier is being
+attached to. This let a program loaded with prog_ifindex for device A be
+attached via cls_bpf + skip_sw to device B; deleting device A then
+destroyed the program's offload state while it was still attached to
+device B, triggering a netdevsim WARN (panic with panic_on_warn=1).
 
-Hence, fix the port_id extraction logic to use only the lower 8-bits of the
-Source Tag as the MAC Port ID.
+Mirror the XDP attach path (net/core/dev.c) and reject the attach with
+-EINVAL when a dev-bound program's bound device does not match the
+target device.
 
-Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Chintan Vankar <c-vankar@ti.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260807111738.2055900-1-s-vadapalli@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2b3486bc2d23 ("bpf: Introduce device-bound XDP programs")
+Reported-by: vega@nebusec.ai
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://patch.msgid.link/20260809094418.901607-1-jhs@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/sched/cls_bpf.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 93cb4193cf0ac..8e7bcb3e42251 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -753,6 +753,8 @@ static int am65_cpsw_nuss_rx_packets(struct am65_cpsw_common *common,
- 	k3_udma_glue_rx_cppi5_to_dma_addr(rx_chn->rx_chn, &buf_dma);
- 	pkt_len = cppi5_hdesc_get_pktlen(desc_rx);
- 	cppi5_desc_get_tags_ids(&desc_rx->hdr, &port_id, NULL);
-+	/* Port ID is contained in the lower 8-bits of the 16-bit Source Tag */
-+	port_id &= 0xFF;
- 	dev_dbg(dev, "%s rx port_id:%d\n", __func__, port_id);
- 	port = am65_common_get_port(common, port_id);
- 	ndev = port->ndev;
+diff --git a/net/sched/cls_bpf.c b/net/sched/cls_bpf.c
+index cede21257d27c..8ca716bf9e42b 100644
+--- a/net/sched/cls_bpf.c
++++ b/net/sched/cls_bpf.c
+@@ -374,7 +374,8 @@ static int cls_bpf_prog_from_ops(struct nlattr **tb, struct cls_bpf_prog *prog)
+ }
+ 
+ static int cls_bpf_prog_from_efd(struct nlattr **tb, struct cls_bpf_prog *prog,
+-				 u32 gen_flags, const struct tcf_proto *tp)
++				 u32 gen_flags, const struct tcf_proto *tp,
++				 struct netlink_ext_ack *extack)
+ {
+ 	struct bpf_prog *fp;
+ 	char *name = NULL;
+@@ -388,6 +389,19 @@ static int cls_bpf_prog_from_efd(struct nlattr **tb, struct cls_bpf_prog *prog,
+ 	if (IS_ERR(fp))
+ 		return PTR_ERR(fp);
+ 
++	if (bpf_prog_is_dev_bound(fp->aux)) {
++		struct tcf_block *block = tp->chain->block;
++		struct net_device *dev;
++
++		dev = block->q ? qdisc_dev(block->q) : NULL;
++		if (!dev || !bpf_offload_dev_match(fp, dev)) {
++			NL_SET_ERR_MSG(extack,
++				       "Program is bound to a different device");
++			bpf_prog_put(fp);
++			return -EINVAL;
++		}
++	}
++
+ 	if (tb[TCA_BPF_NAME]) {
+ 		name = nla_memdup(tb[TCA_BPF_NAME], GFP_KERNEL);
+ 		if (!name) {
+@@ -492,7 +506,7 @@ static int cls_bpf_change(struct net *net, struct sk_buff *in_skb,
+ 	prog->gen_flags = gen_flags;
+ 
+ 	ret = is_bpf ? cls_bpf_prog_from_ops(tb, prog) :
+-		cls_bpf_prog_from_efd(tb, prog, gen_flags, tp);
++		cls_bpf_prog_from_efd(tb, prog, gen_flags, tp, extack);
+ 	if (ret < 0)
+ 		goto errout_idr;
+ 
 -- 
 2.53.0
 
