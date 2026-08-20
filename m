@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266004772A7;
-	Thu, 20 Aug 2026 17:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFBA44062A;
+	Thu, 20 Aug 2026 17:49:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248159; cv=none; b=N5j/0lvQF3DajZmiS9EKZ0aU9woL1r0cChP0bWhm2EPOngq/HQA4Nw60mIDI0ncRHhabXkFS0xshCbPj79kdhfDBisGKEEPDA7DHl+LLBiKK/I4awmprCDcRSOaTzDx1C9VaP13oi8ja4Yfb3bCP/8CXzu9T59QnTonNfAgkvXE=
+	t=1787248162; cv=none; b=qhiOnHBhFu+5t4D3jZuVd9nU/AgIjX/VmMmfDo5QJDUxDuR0gCQg4q2IaJgDY7RFgc75kc3EJmiRHxPmbEOF/UhgjEF/K6wyI78BPn0/K2xd7pIba8LnAo/w8g5zV4B+T3N2boTX55aUjGgRkalHe/wTIoXVgZty/p3Yy8YY7vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248159; c=relaxed/simple;
-	bh=fVmnbBLaxCVppSdKaBQ6hEvc7yBzkRzuFeAEvbw+ew8=;
+	s=arc-20240116; t=1787248162; c=relaxed/simple;
+	bh=0YoMssej/WG4YOlLZ2fpsdvxUJ0PMDtaOe0YN/AG8Ek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y59wHfrk+QZYY3zp3H1pkq9RdXKhyoMSsDw/hAMVhQOQhB/js3Dm5C39sRoGP4TpgT6SItk/QlDAyDtHufm1EdV+jMUr7WSqRV+Y9Nl5sn8hGQHRtPMDasAX5j44pqxplXTncS1AWquF5welw9I3gqpVkA1EzJdb0qxY4TsfIF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJBJmbrQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gItPDc1BNF0iIJ45ItE/uh4R0PQe6iGJiLlxkp02CPVtG/PDX9a2YqXdmIc+oM99xLAcHcm7xLH5dLA8OhutbYdn7OjC6Ut4E19101VatHxYID0f9CDesw7k2fyeSwHPRLu6GffCBtBHxK6IgP9LmsIK1PBPtSD9O4IhGCz4QbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C+ZTOHPn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJBJmbrQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D8D1F000E9;
-	Thu, 20 Aug 2026 17:49:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+ZTOHPn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 624021F000E9;
+	Thu, 20 Aug 2026 17:49:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248158;
-	bh=VYgr82WwTuF2BtC1PETaQYRHIeJCai+T06IASBd4yGQ=;
+	s=korg; t=1787248160;
+	bh=W/oPAmx+24c4B2jHJZ/E3vYekud47X6jgEls8Od1yLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gJBJmbrQA8/ZMw5qafpqzz53OtY8X98uczkIAIvDklv+eaVV2nnPmmyRD3NjTXy0t
-	 NnPCwC1CA7zIck8HjhacN9DDOaMRdPZHl27kWC5s6//Z46MKD1jhI+5piJghsVE40s
-	 WpTN4mBhgEs7v8BRSCQQlKWTEIuPk1utuWNsZqLg=
+	b=C+ZTOHPnYyT3/OOJwIXpv+a8JhTtkqpH6ZqLD47V7CDrAMr4bMmodJxfOeN7TcaZr
+	 em21zZDkQguggCVutPGYqbG0Z22OCiWXsoMmKlruj7+4gxDAcBQotvNoZD0hcZXQB6
+	 Wm5UAl6pvqYktgj55kCNqqbiVfZmblWmt5D6nCqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 130/303] thunderbolt: Prevent XDomain delayed work use-after-free on disconnect
-Date: Thu, 20 Aug 2026 16:54:26 +0200
-Message-ID: <20260820145257.179727296@linuxfoundation.org>
+Subject: [PATCH 6.1 131/303] i2c: imx: separate atomic, dma and non-dma use case
+Date: Thu, 20 Aug 2026 16:54:27 +0200
+Message-ID: <20260820145257.210847933@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -51,142 +53,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
 
-[ Upstream commit 2c5d2d3c3f70cde2565d7b279b544893a2035842 ]
+[ Upstream commit b460b15b3cc23ef3639cc51043bf8b2a70ca1878 ]
 
-tb_xdp_handle_request() runs on system_wq and queues
-xd->state_work via queue_delayed_work() in three request handlers:
-PROPERTIES_CHANGED_REQUEST, UUID_REQUEST (via start_handshake),
-and LINK_STATE_CHANGE_REQUEST.  Similarly, update_xdomain() queues
-xd->properties_changed_work when local properties change.
+Separate the atomic, dma and non-dma use case as a preparation step for
+moving the non-dma use case to the isr to avoid rescheduling while a
+transfer is in progress.
 
-Concurrently, tb_xdomain_remove() calls stop_handshake() which does
-cancel_delayed_work_sync() on both delayed works.  Later,
-tb_xdomain_unregister() calls device_unregister() which eventually
-frees the xdomain.  Since commit 559c1e1e0134 ("thunderbolt: Run
-tb_xdp_handle_request() in system workqueue") moved the request
-handler off tb->wq, the handler and the remove path are no longer
-serialized.  If queue_delayed_work() executes after
-cancel_delayed_work_sync() but before the xdomain is freed, the
-delayed work fires on a freed object.
-
-Add xd->removing that tb_xdomain_remove() sets under xd->lock
-before calling stop_handshake().  Each external queue site holds
-the same lock and checks removing before calling
-queue_delayed_work().  This provides the mutual exclusion needed:
-either the queue site acquires the lock first and queues work that
-the subsequent cancel will see, or the remove path acquires the
-lock first and the queue site observes removing == true and skips
-the queue.
-
-Fixes: 559c1e1e0134 ("thunderbolt: Run tb_xdp_handle_request() in system workqueue")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Stable-dep-of: cb2fc3785769 ("i2c: imx: fix locked bus on SMBus block-read of 0 (atomic)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/xdomain.c |   40 ++++++++++++++++++++++++++++++----------
- include/linux/thunderbolt.h   |    3 +++
- 2 files changed, 33 insertions(+), 10 deletions(-)
+ drivers/i2c/busses/i2c-imx.c |  107 ++++++++++++++++++++++++++++---------------
+ 1 file changed, 70 insertions(+), 37 deletions(-)
 
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -784,9 +784,13 @@ static void tb_xdp_handle_request(struct
- 		 * the xdomain related to this connection as well in
- 		 * case there is a change in services it offers.
- 		 */
--		if (xd && device_is_registered(&xd->dev))
--			queue_delayed_work(tb->wq, &xd->state_work,
--					   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
-+		if (xd) {
-+			mutex_lock(&xd->lock);
-+			if (!xd->removing && device_is_registered(&xd->dev))
-+				queue_delayed_work(tb->wq, &xd->state_work,
-+						   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
-+			mutex_unlock(&xd->lock);
-+		}
- 		break;
+--- a/drivers/i2c/busses/i2c-imx.c
++++ b/drivers/i2c/busses/i2c-imx.c
+@@ -1015,6 +1015,43 @@ static int i2c_imx_dma_write(struct imx_
+ 	return i2c_imx_acked(i2c_imx);
+ }
  
- 	case UUID_REQUEST_OLD:
-@@ -799,8 +803,12 @@ static void tb_xdp_handle_request(struct
- 		 * received UUID request from the remote host.
- 		 */
- 		if (!ret && xd && xd->state == XDOMAIN_STATE_ERROR) {
--			dev_dbg(&xd->dev, "restarting handshake\n");
--			start_handshake(xd);
-+			mutex_lock(&xd->lock);
-+			if (!xd->removing) {
-+				dev_dbg(&xd->dev, "restarting handshake\n");
-+				start_handshake(xd);
-+			}
-+			mutex_unlock(&xd->lock);
- 		}
- 		break;
- 
-@@ -828,9 +836,13 @@ static void tb_xdp_handle_request(struct
- 
- 			ret = tb_xdp_link_state_change_response(ctl, route,
- 								sequence, 0);
--			xd->target_link_width = lsc->tlw;
--			queue_delayed_work(tb->wq, &xd->state_work,
--					   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
-+			mutex_lock(&xd->lock);
-+			if (!xd->removing) {
-+				xd->target_link_width = lsc->tlw;
-+				queue_delayed_work(tb->wq, &xd->state_work,
-+						   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
-+			}
-+			mutex_unlock(&xd->lock);
- 		} else {
- 			tb_xdp_error_response(ctl, route, sequence,
- 					      ERROR_NOT_READY);
-@@ -1978,6 +1990,10 @@ void tb_xdomain_remove(struct tb_xdomain
- {
- 	tb_xdomain_debugfs_remove(xd);
- 
-+	mutex_lock(&xd->lock);
-+	xd->removing = true;
-+	mutex_unlock(&xd->lock);
++static int i2c_imx_prepare_read(struct imx_i2c_struct *i2c_imx,
++				struct i2c_msg *msgs, bool atomic,
++				bool use_dma)
++{
++	int result;
++	unsigned int temp = 0;
 +
- 	stop_handshake(xd);
++	/* write slave address */
++	imx_i2c_write_reg(i2c_8bit_addr_from_msg(msgs), i2c_imx, IMX_I2C_I2DR);
++	result = i2c_imx_trx_complete(i2c_imx, atomic);
++	if (result)
++		return result;
++	result = i2c_imx_acked(i2c_imx);
++	if (result)
++		return result;
++
++	dev_dbg(&i2c_imx->adapter.dev, "<%s> setup bus\n", __func__);
++
++	/* setup bus to read data */
++	temp = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2CR);
++	temp &= ~I2CR_MTX;
++
++	/*
++	 * Reset the I2CR_TXAK flag initially for SMBus block read since the
++	 * length is unknown
++	 */
++	if (msgs->len - 1)
++		temp &= ~I2CR_TXAK;
++	if (use_dma)
++		temp |= I2CR_DMAEN;
++
++	imx_i2c_write_reg(temp, i2c_imx, IMX_I2C_I2CR);
++	imx_i2c_read_reg(i2c_imx, IMX_I2C_I2DR); /* dummy read */
++
++	return 0;
++}
++
+ static int i2c_imx_dma_read(struct imx_i2c_struct *i2c_imx,
+ 			struct i2c_msg *msgs, bool is_lastmsg)
+ {
+@@ -1025,6 +1062,11 @@ static int i2c_imx_dma_read(struct imx_i
+ 	struct imx_i2c_dma *dma = i2c_imx->dma;
+ 	struct device *dev = &i2c_imx->adapter.dev;
  
- 	device_for_each_child_reverse(&xd->dev, xd, unregister_service);
-@@ -2364,8 +2380,12 @@ static int update_xdomain(struct device
++	result = i2c_imx_prepare_read(i2c_imx, msgs, false, true);
++	if (result)
++		return result;
++
++	dev_dbg(&i2c_imx->adapter.dev, "<%s> read data\n", __func__);
  
- 	xd = tb_to_xdomain(dev);
- 	if (xd) {
--		queue_delayed_work(xd->tb->wq, &xd->properties_changed_work,
--				   msecs_to_jiffies(50));
-+		mutex_lock(&xd->lock);
-+		if (!xd->removing)
-+			queue_delayed_work(xd->tb->wq,
-+					   &xd->properties_changed_work,
-+					   msecs_to_jiffies(50));
-+		mutex_unlock(&xd->lock);
- 	}
- 
+ 	dma->chan_using = dma->chan_rx;
+ 	dma->dma_transfer_dir = DMA_DEV_TO_MEM;
+@@ -1135,50 +1177,24 @@ static int i2c_imx_write(struct imx_i2c_
  	return 0;
---- a/include/linux/thunderbolt.h
-+++ b/include/linux/thunderbolt.h
-@@ -189,6 +189,8 @@ void tb_unregister_property_dir(const ch
-  * @link_width: Width of the link (1 or 2)
-  * @link_usb4: Downstream link is USB4
-  * @is_unplugged: The XDomain is unplugged
-+ * @removing: Set by tb_xdomain_remove() under @lock to prevent
-+ *	      concurrent delayed work queueing
-  * @needs_uuid: If the XDomain does not have @remote_uuid it will be
-  *		queried first
-  * @service_ids: Used to generate IDs for the services
-@@ -237,6 +239,7 @@ struct tb_xdomain {
- 	unsigned int link_width;
- 	bool link_usb4;
- 	bool is_unplugged;
-+	bool removing;
- 	bool needs_uuid;
- 	struct ida service_ids;
- 	struct ida in_hopids;
+ }
+ 
++static int i2c_imx_atomic_write(struct imx_i2c_struct *i2c_imx, struct i2c_msg *msgs)
++{
++	return i2c_imx_write(i2c_imx, msgs, true);
++}
++
+ static int i2c_imx_read(struct imx_i2c_struct *i2c_imx, struct i2c_msg *msgs,
+ 			bool is_lastmsg, bool atomic)
+ {
+ 	int i, result;
+ 	unsigned int temp;
+ 	int block_data = msgs->flags & I2C_M_RECV_LEN;
+-	int use_dma = i2c_imx->dma && msgs->flags & I2C_M_DMA_SAFE &&
+-		msgs->len >= DMA_THRESHOLD && !block_data;
+-
+-	dev_dbg(&i2c_imx->adapter.dev,
+-		"<%s> write slave address: addr=0x%x\n",
+-		__func__, i2c_8bit_addr_from_msg(msgs));
+ 
+-	/* write slave address */
+-	imx_i2c_write_reg(i2c_8bit_addr_from_msg(msgs), i2c_imx, IMX_I2C_I2DR);
+-	result = i2c_imx_trx_complete(i2c_imx, atomic);
+-	if (result)
+-		return result;
+-	result = i2c_imx_acked(i2c_imx);
++	result = i2c_imx_prepare_read(i2c_imx, msgs, atomic, false);
+ 	if (result)
+ 		return result;
+ 
+-	dev_dbg(&i2c_imx->adapter.dev, "<%s> setup bus\n", __func__);
+-
+-	/* setup bus to read data */
+-	temp = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2CR);
+-	temp &= ~I2CR_MTX;
+-
+-	/*
+-	 * Reset the I2CR_TXAK flag initially for SMBus block read since the
+-	 * length is unknown
+-	 */
+-	if ((msgs->len - 1) || block_data)
+-		temp &= ~I2CR_TXAK;
+-	if (use_dma)
+-		temp |= I2CR_DMAEN;
+-	imx_i2c_write_reg(temp, i2c_imx, IMX_I2C_I2CR);
+-	imx_i2c_read_reg(i2c_imx, IMX_I2C_I2DR); /* dummy read */
+-
+ 	dev_dbg(&i2c_imx->adapter.dev, "<%s> read data\n", __func__);
+ 
+-	if (use_dma)
+-		return i2c_imx_dma_read(i2c_imx, msgs, is_lastmsg);
+-
+ 	/* read data */
+ 	for (i = 0; i < msgs->len; i++) {
+ 		u8 len = 0;
+@@ -1245,6 +1261,12 @@ static int i2c_imx_read(struct imx_i2c_s
+ 	return 0;
+ }
+ 
++static int i2c_imx_atomic_read(struct imx_i2c_struct *i2c_imx, struct i2c_msg *msgs,
++			       bool is_lastmsg)
++{
++	return i2c_imx_read(i2c_imx, msgs, is_lastmsg, true);
++}
++
+ static int i2c_imx_xfer_common(struct i2c_adapter *adapter,
+ 			       struct i2c_msg *msgs, int num, bool atomic)
+ {
+@@ -1252,6 +1274,7 @@ static int i2c_imx_xfer_common(struct i2
+ 	int result;
+ 	bool is_lastmsg = false;
+ 	struct imx_i2c_struct *i2c_imx = i2c_get_adapdata(adapter);
++	int use_dma = 0;
+ 
+ 	/* Start I2C transfer */
+ 	result = i2c_imx_start(i2c_imx, atomic);
+@@ -1304,15 +1327,25 @@ static int i2c_imx_xfer_common(struct i2
+ 			(temp & I2SR_SRW ? 1 : 0), (temp & I2SR_IIF ? 1 : 0),
+ 			(temp & I2SR_RXAK ? 1 : 0));
+ #endif
++
++		use_dma = i2c_imx->dma && msgs[i].len >= DMA_THRESHOLD &&
++			msgs[i].flags & I2C_M_DMA_SAFE;
+ 		if (msgs[i].flags & I2C_M_RD) {
+-			result = i2c_imx_read(i2c_imx, &msgs[i], is_lastmsg, atomic);
++			int block_data = msgs->flags & I2C_M_RECV_LEN;
++
++			if (atomic)
++				result = i2c_imx_atomic_read(i2c_imx, &msgs[i], is_lastmsg);
++			else if (use_dma && !block_data)
++				result = i2c_imx_dma_read(i2c_imx, &msgs[i], is_lastmsg);
++			else
++				result = i2c_imx_read(i2c_imx, &msgs[i], is_lastmsg, false);
+ 		} else {
+-			if (!atomic &&
+-			    i2c_imx->dma && msgs[i].len >= DMA_THRESHOLD &&
+-				msgs[i].flags & I2C_M_DMA_SAFE)
++			if (atomic)
++				result = i2c_imx_atomic_write(i2c_imx, &msgs[i]);
++			else if (use_dma)
+ 				result = i2c_imx_dma_write(i2c_imx, &msgs[i]);
+ 			else
+-				result = i2c_imx_write(i2c_imx, &msgs[i], atomic);
++				result = i2c_imx_write(i2c_imx, &msgs[i], false);
+ 		}
+ 		if (result)
+ 			goto fail0;
 
 
