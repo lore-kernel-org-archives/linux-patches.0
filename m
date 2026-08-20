@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4BF379EDA;
-	Thu, 20 Aug 2026 15:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED875361972;
+	Thu, 20 Aug 2026 15:23:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239418; cv=none; b=ERBB4e4XPrumA7M9IlrzQjEbCrrxkh9s3fiDbDXDkJtpzwPzSBf28zxj03w0LHSEriOOkPUOaXLNQhRXry1Fk1dLx0+1d5AJgHhv9tfEmxnD5KOXmO7IEj5311NJj+ZrAKT/30BFk5x5oPxM6WOC+2XGT6f45Hz/XhZoZ8KxzHA=
+	t=1787239421; cv=none; b=N6LIjtfkmCnTyttnURwf+WRPM+y/4gmYFpVGplb7lkuFarMtqHDeHGGqoPUF7dho7evstbO5sT/3F7LMzu4DbjrQsSyP6nf26a2Q8MNYavWMplcJrpHfEwpYraQOkY1cNvyaPCHwYTSwp6hfRCELLPxPtNQszMp5GfJky+l8XKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239418; c=relaxed/simple;
-	bh=P5BUuDN76pb+HwFR4gb/weU6ztT6aB5xLIRDMvPO9y4=;
+	s=arc-20240116; t=1787239421; c=relaxed/simple;
+	bh=wi+rn1aQdQVXkmRDPtio8KgHa+M1BKwv1kHpD3y7Fdw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PYfI6LrPEo0vBQZ+3I92hhcE3i8tYFswZvHkGHGvxwHnc1xTV/gpebEDunHp+dMzwnJNNb3EyH/rIKixtqEY3Ng0oihRp2QAY6GWBWoj9EsiVkUV0Yt4C7w3xaA/4uQXxQ2JplXZ3gMjR123fIUKHJgAq3MEsiQiyQA01RHIVuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WwyuK/tk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kWMNaIupHuOOcrXSCwMY1ZFmHcokc1V1qD8VHQo2f40Eh3Ck0HhFuxmLTSgYkncSW3rMPWDPv5W9eHn1Nx+7La75GOTjXfzdahOj4eyzwEVlpm0dYgQvZ67wqkPE3qiH71MBf6rWGDUsm3g3jotmqyEvi0utVofCHBVdIcpdz8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDvSgLHT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwyuK/tk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76FF61F000E9;
-	Thu, 20 Aug 2026 15:23:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDvSgLHT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA821F00A3A;
+	Thu, 20 Aug 2026 15:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239417;
-	bh=a0w9YAv+EaS6n2u9MGNseIfljWA6cgnRyo2R28EAYoM=;
+	s=korg; t=1787239419;
+	bh=p51iRJf5ydgBQkAnG1BNQ2Ty3HvEpT9vAWGWV+Mf7/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WwyuK/tkGrOO/bBvmhaBsgOaIT/FdIMJghpwAv5HqUC/HsRwd0ckpmx15Nkn97Hap
-	 15p/JXQLJBOdWr7oUxZVacilU22Fq5ClQ/hN1SVttvN27pkPYxoOufRIXsY+/i+1mX
-	 WMxQdzzwo0JO0YhHe05uVtYxBjv09ymOYPTbdsBE=
+	b=eDvSgLHTff+XU5A0SrmdBR+gKPE7QRLq6idalvGE7wr3fJmrnKjM1yuN+N6hvBn+4
+	 /VPkiYA9nyPlNtxoM5auqR+fLW2v2oYS+D6kFuxr9w+eF63WWF+imhSCwJjREaixZg
+	 dWjoRL3I9VTFUxno+aNZdK5ShUo0Ppswq2MrbkGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhefu Zhang <a723356@gmail.com>,
-	Andrew Zhou <zhoulol888@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 042/220] Input: atkbd - skip deactivate for Xiaomi Book Pro 14s internal keyboard
-Date: Thu, 20 Aug 2026 16:53:52 +0200
-Message-ID: <20260820145224.757714113@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.12 016/220] selinux: require every boolean value to be defined
+Date: Thu, 20 Aug 2026 16:53:26 +0200
+Message-ID: <20260820145223.983704802@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -51,45 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhefu Zhang <a723356@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 3a046db33bb9f28b43a951a7a090db771dc0f8b3 upstream.
+commit a93d37a09b863810653f93d371fb197457d59deb upstream.
 
-The internal keyboard of the Xiaomi Book Pro 14 does not work unless
-atkbd skips deactivating it at the end of atkbd_probe().
+p_bools.nprim comes from the policy image independently of how many
+booleans follow it, and cond_index_bool() fills bool_val_to_struct[] at
+value - 1, so a count larger than the values present leaves NULL entries.
+Every user of that array then walks it by index and dereferences each
+entry: cond_evaluate_expr() on the access-vector path,
+security_get_bools() and security_get_bool_value() behind selinuxfs, and
+security_set_bools(). A sparse class value is absorbed by
+policydb_class_isvalid() and its siblings; booleans have no such
+predicate, and no consumer that could use one.
 
-Using 'i8042.dumbkbd=1' also makes the keyboard work, but then the driver
-never writes to the keyboard at all, so the Caps Lock LED is lost. The
-atkbd_deactivate_fixup quirk fixes both without a boot parameter.
+Reject a boolean value that no boolean defines, once, where the array is
+built. Conforming policies define every boolean they declare and are
+unaffected.
 
-DMI: XIAOMI Xiaomi Book Pro 14/TM2424, BIOS XMAPT4B0P0909 05/06/2026
-
-Signed-off-by: Zhefu Zhang <a723356@gmail.com>
-Reviewed-by: Andrew Zhou <zhoulol888@gmail.com>
-Link: https://patch.msgid.link/20260802031559.19701-1-a723356@gmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/atkbd.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ security/selinux/ss/policydb.c |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -1952,6 +1952,14 @@ static const struct dmi_system_id atkbd_
- 		},
- 		.callback = atkbd_deactivate_fixup,
- 	},
-+	{
-+		/* Xiaomi Book Pro 14 (TM2424) */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "XIAOMI"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Xiaomi Book Pro 14"),
-+		},
-+		.callback = atkbd_deactivate_fixup,
-+	},
- 	{ }
- };
+--- a/security/selinux/ss/policydb.c
++++ b/security/selinux/ss/policydb.c
+@@ -712,6 +712,7 @@ static inline void symtab_hash_eval(stru
+ static int policydb_index(struct policydb *p)
+ {
+ 	int i, rc;
++	u32 v;
  
+ 	if (p->mls_enabled)
+ 		pr_debug(
+@@ -764,6 +765,24 @@ static int policydb_index(struct policyd
+ 		if (rc)
+ 			goto out;
+ 	}
++
++	/*
++	 * A sparse class value is absorbed by policydb_class_isvalid() and
++	 * its siblings, but no such predicate exists for booleans: every
++	 * user of bool_val_to_struct[] walks it by index and dereferences
++	 * each entry -- cond_evaluate_expr(), the two getters and
++	 * security_set_bools() -- so an unclaimed one has no consumer that
++	 * can tolerate it.
++	 */
++	for (v = 0; v < p->p_bools.nprim; v++) {
++		if (!p->bool_val_to_struct[v]) {
++			pr_err("SELinux:  boolean %u is declared but not defined\n",
++			       v + 1);
++			rc = -EINVAL;
++			goto out;
++		}
++	}
++
+ 	rc = 0;
+ out:
+ 	return rc;
 
 
