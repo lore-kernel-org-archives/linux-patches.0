@@ -1,61 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9473803D7;
-	Thu, 20 Aug 2026 17:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0756B37E5E5;
+	Thu, 20 Aug 2026 17:40:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247647; cv=none; b=BjlHMaArzBkPZOiUfSKka6032rv4XrHv5oa9/6NYQdU2mcA4jLt/OoeqG7J2jrkCj76N3WWm2neddyqT3gK1e0X7Gev0Ul61FFQ7UUdyv0ClZRGcvc6W+wuKPz2anlX4t4qwV2YqoRzBciwYM1KJx1bPoLDomczEWk44ibbaEko=
+	t=1787247650; cv=none; b=Ti82FI0OtTIXMnICkAlfpXHGNe9fujHmlRriT2CURa0xxGOb4PCmg23mAP6UsCBQ2BpuIagQr4OfjCn9Ap+A6MDb0irbII6T3J9NGcSKpMBlCpiPr7AnnGRSRmP+Aw79bR8CwgVg5DSJVP0fUpRZVHHB+Fk1IxNhtuvQPNHiLG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247647; c=relaxed/simple;
-	bh=ZW9pdjfLuiL/Orwz0rGzvUnwQk5uHmtvqly+X+Axgt4=;
+	s=arc-20240116; t=1787247650; c=relaxed/simple;
+	bh=lHTxhU1dUXdmsGkadsCocS/gD99dCUz28ZKR8io6Mag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rZYhZ6Iapd9ViBZuoAJs9fpv+UKJss1GHpHvHytZ9qsgY4Qz6QmrRGpTvBrauVxpoGmK+I2Sr9DHeWwcnyiWrZgaR6PvWXpYcmbxQp91sPdjc+K41MRPjwHLsUL0hyoCRJ8D01Ynqh0WBIBYbIDp4h4++MiQxpuFdbx+nAbm3iI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bEJzSyJo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YwFxeD3QMjjTKpl9w89gB/cLlhNZc+sn5iq4GnoG0fcbRqa+zJGbAPEJc9FWZpGyKata2AimsJsULYM1816k7SUyo8r2p0C41LEEqmP/UVE0Y85b/hvxAwpFQUgSxyEWXK2Z49o5ru0qATQOuLa4W7g3TC/O/EaZl5c6YGzkHG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZvsAxJ1V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bEJzSyJo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71A51F00A3A;
-	Thu, 20 Aug 2026 17:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvsAxJ1V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C30C1F000E9;
+	Thu, 20 Aug 2026 17:40:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247646;
-	bh=eMYD95ZgmZHK52pl/ymypBRrzXn3O4KDKBGcTQ35VSQ=;
+	s=korg; t=1787247648;
+	bh=gmmlTtIeT4Mbkyd3RUWbameyh4vjy4BnavKRSt7z5+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bEJzSyJo7gCIjo3kLQwdJF9JqDw81DO2cdgcT/p77hjbqtgEEcjQf4UEx27zivJQ1
-	 L8f2Jk+ULh7Z0MVnz+W3Nv+JiqoS1MnHHyWfX2kvkKMBf2Nvq3zfoStozS+SGwVHn1
-	 dw22xv44KNjsTvJXixPgaFpA/C7kPQ/Vx5Xr2CZQ=
+	b=ZvsAxJ1V1iS74Bt1wYCumJ5VmG9jtutqkPB9Citcx6A8nABukCALHN4OunhC0FQCx
+	 O+Su+87M+3ajhiNepNNOYXzqm1qgVFUvfgc5Y552deLbhPbsrkNOtSgrcBjeL5aeUr
+	 BkMj5hpcgZGu4MJI0ZLxgeQiGwhpXZYGurPUCvQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	"David Hildenbrand (Red Hat)" <david@kernel.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Andrei Vagin <avagin@google.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Harry Yoo <harry.yoo@oracle.com>,
-	"Harry Yoo (Oracle)" <harry@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
-	James Houghton <jthoughton@google.com>,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Nikita Kalyazin <kalyazin@amazon.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	vova tokarev <vladimirelitokarev@gmail.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Linus Torvalds <torvalds@linuxfoundation.org>,
+	Oleg Nesterov <oleg@redhat.com>,
 	Peter Xu <peterx@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	David Carlier <devnexen@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 080/166] userfaultfd: move vma_can_userfault out of line
-Date: Thu, 20 Aug 2026 16:55:39 +0200
-Message-ID: <20260820145213.556469572@linuxfoundation.org>
+Subject: [PATCH 6.6 081/166] userfaultfd: prevent registration of special VMAs
+Date: Thu, 20 Aug 2026 16:55:40 +0200
+Message-ID: <20260820145213.589040780@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -76,104 +62,58 @@ Content-Transfer-Encoding: 8bit
 
 From: "Mike Rapoport (Microsoft)" <rppt@kernel.org>
 
-[ Upstream commit a5bb8669872b6b8463b8777a7a259a8305060016 ]
+[ Upstream commit 3c58f641e813c3c71039f8fd4d4e2a3aab713288 ]
 
-vma_can_userfault() has grown pretty big and it's not called on
-performance critical path.
+Vova Tokarev says:
 
-Move it out of line.
+  userfaultfd allows registration on shadow stack VMAs.  With userfaultfd
+  access, you can register on the shadow stack, discard a page ... and
+  inject a page with chosen return addresses via UFFDIO_COPY.
 
-No functional changes.
+Update vma_can_userfault() to reject VM_SHADOW_STACK.
 
-Link: https://lore.kernel.org/20260402041156.1377214-7-rppt@kernel.org
+While on it, also reject VM_SPECIAL so that if a driver would implement
+vm_uffd_ops, it wouldn't be possible to register special VMAs with
+userfaultfd.
+
+Since VM_SPECIAL includes VM_DONTEXPAND which is set but hugetlb, exclude
+hugetlb VMAs from the check for VM_SPECIAL.
+
+Link: https://lore.kernel.org/20260618095017.2553004-1-rppt@kernel.org
+Fixes: 54007f818206 ("mm: Introduce VM_SHADOW_STACK for shadow stack memory")
 Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Reviewed-by: David Hildenbrand (Red Hat) <david@kernel.org>
-Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Andrei Vagin <avagin@google.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Harry Yoo <harry.yoo@oracle.com>
-Cc: Harry Yoo (Oracle) <harry@kernel.org>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: James Houghton <jthoughton@google.com>
-Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Nikita Kalyazin <kalyazin@amazon.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
+Reported-by: vova tokarev <vladimirelitokarev@gmail.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Linus Torvalds <torvalds@linuxfoundation.org>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Oleg Nesterov <oleg@redhat.com>
 Cc: Peter Xu <peterx@redhat.com>
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: David Carlier <devnexen@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 3c58f641e813 ("userfaultfd: prevent registration of special VMAs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/userfaultfd_k.h |   21 +--------------------
- mm/userfaultfd.c              |   20 ++++++++++++++++++++
- 2 files changed, 21 insertions(+), 20 deletions(-)
+ mm/userfaultfd.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/include/linux/userfaultfd_k.h
-+++ b/include/linux/userfaultfd_k.h
-@@ -160,26 +160,7 @@ static inline bool userfaultfd_armed(str
- 	return vma->vm_flags & __VM_UFFD_FLAGS;
- }
- 
--static inline bool vma_can_userfault(struct vm_area_struct *vma,
--				     unsigned long vm_flags)
--{
--	if ((vm_flags & VM_UFFD_MINOR) &&
--	    (!is_vm_hugetlb_page(vma) && !vma_is_shmem(vma)))
--		return false;
--
--	/*
--	 * If user requested uffd-wp but not enabled pte markers for
--	 * uffd-wp, then shmem & hugetlbfs are not supported but only
--	 * anonymous.
--	 */
--	if (!uffd_supports_wp_marker() && (vm_flags & VM_UFFD_WP) &&
--	    !vma_is_anonymous(vma))
--		return false;
--
--	/* By default, allow any of anon|shmem|hugetlb */
--	return vma_is_anonymous(vma) || is_vm_hugetlb_page(vma) ||
--	    vma_is_shmem(vma);
--}
-+bool vma_can_userfault(struct vm_area_struct *vma, unsigned long vm_flags);
- 
- extern int dup_userfaultfd(struct vm_area_struct *, struct list_head *);
- extern void dup_userfaultfd_complete(struct list_head *);
 --- a/mm/userfaultfd.c
 +++ b/mm/userfaultfd.c
-@@ -891,3 +891,23 @@ out_unlock:
- 	mmap_read_unlock(dst_mm);
- 	return err;
- }
-+
-+bool vma_can_userfault(struct vm_area_struct *vma, unsigned long vm_flags)
-+{
-+	if ((vm_flags & VM_UFFD_MINOR) &&
-+	    (!is_vm_hugetlb_page(vma) && !vma_is_shmem(vma)))
+@@ -894,6 +894,12 @@ out_unlock:
+ 
+ bool vma_can_userfault(struct vm_area_struct *vma, unsigned long vm_flags)
+ {
++	if (vma->vm_flags & VM_SHADOW_STACK)
 +		return false;
 +
-+	/*
-+	 * If user requested uffd-wp but not enabled pte markers for
-+	 * uffd-wp, then shmem & hugetlbfs are not supported but only
-+	 * anonymous.
-+	 */
-+	if (!uffd_supports_wp_marker() && (vm_flags & VM_UFFD_WP) &&
-+	    !vma_is_anonymous(vma))
++	if (!is_vm_hugetlb_page(vma) && (vma->vm_flags & VM_SPECIAL))
 +		return false;
 +
-+	/* By default, allow any of anon|shmem|hugetlb */
-+	return vma_is_anonymous(vma) || is_vm_hugetlb_page(vma) ||
-+	    vma_is_shmem(vma);
-+}
+ 	if ((vm_flags & VM_UFFD_MINOR) &&
+ 	    (!is_vm_hugetlb_page(vma) && !vma_is_shmem(vma)))
+ 		return false;
 
 
