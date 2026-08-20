@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140FB374E5A;
-	Thu, 20 Aug 2026 16:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8533F361657;
+	Thu, 20 Aug 2026 16:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243296; cv=none; b=H1fiYZCoFaGcld85wtls6VxreGhoSWKdKSgDfDDb/HxxPVgtc8+sCB1st74t7LqoHKyxne/T1PnyJuffgvwwJKo4PHqkUeSLS+loZosANImN5Tbj+Dm2eLDf3zImxfaofFZgen81QmEQ2pq6U6B5ZLrqbAh06J7YfLTamkjRjwA=
+	t=1787243298; cv=none; b=LBhda86GAu3wX8pB56owLqmp/LDU6D+NeUZhVyEgpM7kMLzXI/XStxGMGmgIby2xb/Ew+IxjOue6/8uNmMtiUHN2mbNflRWvEROF2G3OHfrH4bPt/YjMOVsJ27wR4dLWx+H8FRhS/yxVnE/vB9E+qPLY0y5vp+daFi47oqZp8fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243296; c=relaxed/simple;
-	bh=ORq6KOImIuzwgLdpmiNIDT9tjvFRK/sqdKFMjxT2tfs=;
+	s=arc-20240116; t=1787243298; c=relaxed/simple;
+	bh=GvD0I1R8F6ewAMbn5EetM5/em/wnUGNlfpx9PHx03Eo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NXgh3JvgYtW442sis9mrhjO3kqjWl16r/x/0LzQdMoF2Ytq57ZGClfFCoocCyk7/bJKoPprZj17RVPxXqOzGGMMP/Ds/cqLj8O0JG7jgzndU0lhL4/OACF56Qdis01Caengf+XX9nI/28KaD0Y9OlVGhQR6mZRGwXewMbaO2qlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QeML8VUt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hooyH5PwhwqCVUKQn3nfN39ZXSB/BPp8ecsVXxVuP6PJzTWHlPWZmnzwqLd+OnhvLCTTkkfw7iLL4+V7i+OuRQcxmLiXexy5bZYGX+EXnJzVJtgru+cKrwbPPdnjKOUY5+qSUAxqyjimzDPpBVDzUeXBo+SdE2Cr//yiObXXXN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mhOt33kc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QeML8VUt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375221F000E9;
-	Thu, 20 Aug 2026 16:28:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mhOt33kc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB2C1F000E9;
+	Thu, 20 Aug 2026 16:28:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243294;
-	bh=G2extqhJ7NA6HxsxMte7PCAQNO+DNQg/L9qjl3/KiLI=;
+	s=korg; t=1787243297;
+	bh=QLY2A+dKYasOgOFJIaATthB/M+AtsoFDK+vdCC/N+nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QeML8VUt1l1YWFBg42YJkPrGTXW9wCxhsc4LQo8Bma75+mqwTUzoUyXv2rY1DyPdH
-	 +zTvWZK3L4+d2d8gcYYp2DsKr3Y8TmB+TD/Sqh90+o0IbhhgUss/1sHy8rJTjaf9hy
-	 hsYR1DYvmywps/bM41xNeYT2IdghzPJw7Y1mJEu8=
+	b=mhOt33kcBMiZ8je0Ez/4Jb7HFmGEwF6bNWzctPQvWMllYa/p7emmHqf8clQ1StouA
+	 RVu2cHyyps2/S56cPsLCC8X8nVAxZR/K+oyyOzlsGXU6VnVwYEop3qOtEjaXlrLsPi
+	 XXsAnzRpEsXdAvP9FnkRzehmIeOFXX+cNPzfrocU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Andrey Troshin <drtrosh@yandex-team.ru>
-Subject: [PATCH 5.15 046/272] net/smc: reject CHID-0 ACCEPT that matches an empty ism_dev slot
-Date: Thu, 20 Aug 2026 16:53:50 +0200
-Message-ID: <20260820145232.604735234@linuxfoundation.org>
+	Pedro Falcato <pfalcato@suse.de>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Jann Horn <jannh@google.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 047/272] mm: do file ownership checks with the proper mount idmap
+Date: Thu, 20 Aug 2026 16:53:51 +0200
+Message-ID: <20260820145232.634212619@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -52,59 +59,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Pedro Falcato <pfalcato@suse.de>
 
-commit 277740023def559a4a2ddc3e8e784ee37a0f16a9 upstream.
+[ Upstream commit e187bc02f8fa4226d62814592cf064ee4557c470 ]
 
-On the SMC-D client, slot 0 of ini->ism_dev[]/ini->ism_chid[] is
-reserved for an SMC-Dv1 device. smc_find_ism_v2_device_clnt()
-populates V2 entries starting at index 1, so when no V1 device is
-selected slot 0 is left in its kzalloc()'ed state with ism_dev[0] ==
-NULL and ism_chid[0] == 0.
+Ever since idmapped mounts were introduced, inode ownership checks (for
+side-channel protection) in mincore() and madvise(MADV_PAGEOUT) were done
+against the nop_mnt_idmap, which completely ignores the file's mount's
+idmap.  This results in odd edgecases like:
 
-smc_v2_determine_accepted_chid() then matches the peer's CHID against
-the array starting from index 0 using the CHID alone. A malicious
-peer replying to a SMC-Dv2-only proposal with d1.chid == 0 matches
-the empty slot, ini->ism_selected becomes 0, and the subsequent
-ism_dev[0]->lgr_lock dereference in smc_conn_create() faults at
-offsetof(struct smcd_dev, lgr_lock) == 0x68:
+1) mount/bind-mount with an idmap userA:userB:1
+2) userB runs an owner_or_capable() check on file that is owned by userA
+on-disk/in-memory, but owned by userB after idmap translation
+3) owner_or_capable() mysteriously fails as the correct idmap wasn't supplied
 
-  BUG: KASAN: null-ptr-deref in _raw_spin_lock_bh+0x79/0xe0
-  Write of size 4 at addr 0000000000000068 by task exploit/144
-  Call Trace:
-   _raw_spin_lock_bh
-   smc_conn_create (net/smc/smc_core.c:1997)
-   __smc_connect (net/smc/af_smc.c:1447)
-   smc_connect (net/smc/af_smc.c:1720)
-   __sys_connect
-   __x64_sys_connect
-   do_syscall_64
+In the case of mincore/madvise MADV_PAGEOUT, this is usually benign,
+because file_permission(file, MAY_WRITE) will probably succeed, as it uses
+the proper idmap internally, but it does not need to be the case on e.g a
+0444 file where even the owner itself doesn't have permissions to write to
+it.
 
-Require ism_dev[i] to be non-NULL before accepting a CHID match.
+Since this is clearly not trivial to get right, introduce a
+file_owner_or_capable() that can carry the correct semantics, and switch
+the various users in mm to it.
 
-Fixes: a7c9c5f4af7f ("net/smc: CLC accept / confirm V2")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260511062138.2839584-1-xmei5@asu.edu
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Andrey Troshin <drtrosh@yandex-team.ru>
+The issue was found by manual code inspection & an off-list discussion
+with Jan Kara.
+
+Link: https://lore.kernel.org/20260625153853.913949-1-pfalcato@suse.de
+Fixes: 9caccd41541a ("fs: introduce MOUNT_ATTR_IDMAP")
+Signed-off-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Jann Horn <jannh@google.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/af_smc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/fs.h |    5 +++++
+ mm/madvise.c       |    3 +--
+ mm/mincore.c       |    3 +--
+ 3 files changed, 7 insertions(+), 4 deletions(-)
 
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -1107,7 +1107,8 @@ smc_v2_determine_accepted_chid(struct sm
- 	int i;
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -2743,6 +2743,11 @@ static inline struct user_namespace *fil
+ 	return mnt_user_ns(file->f_path.mnt);
+ }
  
- 	for (i = 0; i < ini->ism_offered_cnt + 1; i++) {
--		if (ini->ism_chid[i] == ntohs(aclc->chid)) {
-+		if (ini->ism_dev[i] &&
-+			ini->ism_chid[i] == ntohs(aclc->chid)) {
- 			ini->ism_selected = i;
- 			return 0;
- 		}
++static inline bool file_owner_or_capable(struct file *file)
++{
++	return inode_owner_or_capable(file_mnt_user_ns(file), file_inode(file));
++}
++
+ /**
+  * is_idmapped_mnt - check whether a mount is mapped
+  * @mnt: the mount to check
+--- a/mm/madvise.c
++++ b/mm/madvise.c
+@@ -544,8 +544,7 @@ static inline bool can_do_pageout(struct
+ 	 * otherwise we'd be including shared non-exclusive mappings, which
+ 	 * opens a side channel.
+ 	 */
+-	return inode_owner_or_capable(&init_user_ns,
+-				      file_inode(vma->vm_file)) ||
++	return file_owner_or_capable(vma->vm_file) ||
+ 	       file_permission(vma->vm_file, MAY_WRITE) == 0;
+ }
+ 
+--- a/mm/mincore.c
++++ b/mm/mincore.c
+@@ -166,8 +166,7 @@ static inline bool can_do_mincore(struct
+ 	 * for writing; otherwise we'd be including shared non-exclusive
+ 	 * mappings, which opens a side channel.
+ 	 */
+-	return inode_owner_or_capable(&init_user_ns,
+-				      file_inode(vma->vm_file)) ||
++	return file_owner_or_capable(vma->vm_file) ||
+ 	       file_permission(vma->vm_file, MAY_WRITE) == 0;
+ }
+ 
 
 
