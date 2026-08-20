@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE82377A82;
-	Thu, 20 Aug 2026 16:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA6F47AF75;
+	Thu, 20 Aug 2026 16:36:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243787; cv=none; b=HVhOswDY3AxqiaikzLcwWCAIxVQIC1sijNbPAMlSt6brfziqFYbOvtU7SBYOqSVUHWR+070rLM8PZRAlf2jZ55kSgfJVMkXejJRd6YDYdQeFHGXIkLWeHMtJc6xhDmKX3ylxCfSy5Dp9gVKz93xJqpAJlgSopF3VBi4RYP3nA90=
+	t=1787243791; cv=none; b=H1Xfeex3XC9vUyT7XYDWha2yirrdWls4aqjM20kpNZiiUvZIN9xQkrQ04mbXwtEiA9pYgWmj9lwDNxo+yhw0aiI4Jo7z/Xz7++yVLFmKmfUIIGWG46pYmjftoMfm3N09iwj4Aqi625f4zgOgHyzTVOY7bcPX5GUQ4Bor2G+dMzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243787; c=relaxed/simple;
-	bh=/88EdfVG/4i/yGiF1MR7RcqwdljtLDdg8E9wDfng4FE=;
+	s=arc-20240116; t=1787243791; c=relaxed/simple;
+	bh=XOo56aPtOuhfcHxrj9dBhPgWjNxF5FvvArzDeAr9DP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qvG+nT4TCgDhZ4Q9qLC3ewUXPm3gu9e1cxD0BqRDOAHlmWJSvUFoSkEIvBaEaiWOBJcDFCuLL7miAuxWC5hraYBXDFLM3H+gf1DXL2Qgr+02xt2snHPBmPtyuUb4wm2aNsXZPajPyPP9W77GuLjw8vcaZ3JsNpxSrHgQQMmM8RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTEUioMD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RRDMh4NkK/KVZPhUij9AqF8uORVE6elKVxaaegGbKGelle+6UCWRx5vxLeLNV12MsxVzTA1jbqUoAXzvFEAY2C0urFHZU7mQM9+Tx6G6Rk7x2KIhYXK6yQy7W2RrKYMATzXI/0If99aqjPUiv2Hs7RXI637KDXrou1D4I+xuyCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgvItjLi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTEUioMD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C2B1F00A3A;
-	Thu, 20 Aug 2026 16:36:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgvItjLi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C78FA1F000E9;
+	Thu, 20 Aug 2026 16:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243786;
-	bh=xoovg7RmaTBeDw6PRdnwr606wBM0cAjOyfP25RBPXeY=;
+	s=korg; t=1787243789;
+	bh=BDhMYpnccQSxvjDFKCQdZQ+Sk+l+mPZn+lSJvHWOgYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BTEUioMDgNOqPMg38Zc7XSZSlcfLWJS50UtOXdGOvDycd0G5Qs+BT12BuuOQhNAfL
-	 rI7frx1wqE0nvVd1UiQyeynZgClzB9sls/J9p9q2zMGayxXRPlqxSfitxVmJoo+sza
-	 AovT2QL6zqKrRFpkPR0CqSUw3UgWvqwCm5YQLM3Q=
+	b=SgvItjLiDS/QSHXHvu93zXjppF3BaJqs219F6BhuPv2Rg051sKkvMP+HnDwn60AwB
+	 waT3V5lX96TozqARuDwFiE3SreeTbpzJghkVen4HyjB0veXzzBcACAkJ1UW1hiOTkf
+	 B6Ce9XUnvbtO/zVGZJSGxcH8sS9GwT4F66YBRHxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Lech Perczak <lech.perczak@camlingroup.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 216/272] ftrace: Add global mutex to serialize trace_parser access
-Date: Thu, 20 Aug 2026 16:56:40 +0200
-Message-ID: <20260820145238.085528110@linuxfoundation.org>
+Subject: [PATCH 5.15 199/272] serial: sc16is7xx: remove obsolete out_thread label
+Date: Thu, 20 Aug 2026 16:56:23 +0200
+Message-ID: <20260820145237.443258160@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -51,116 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tengda Wu <wutengda@huaweicloud.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 7720b63bcef3f54c7fe288774b720a227d54a306 ]
+[ Upstream commit dabc54a45711fe77674a6c0348231e00e66bd567 ]
 
-In ftrace, the trace_parser structure is allocated and initialized when
-a trace file is opened, and is subsequently used across write and release
-handlers to parse user input.
+Commit c8f71b49ee4d ("serial: sc16is7xx: setup GPIO controller later
+in probe") moved GPIO setup code later in probe function. Doing so
+also required to move ports cleanup code (out_ports label) after the
+GPIO cleanup code.
 
-The affected handler paths and their specific functions are:
-  - Open paths: ftrace_regex_open(), ftrace_graph_open()
-  - Write paths: ftrace_regex_write(), ftrace_graph_write()
-  - Release paths: ftrace_regex_release(), ftrace_graph_release()
+After these moves, the out_thread label becomes misplaced and makes
+part of the cleanup code illogical.
 
-If userspace opens a trace file descriptor and shares it across multiple
-threads, concurrent write calls will race on the parser's internal state,
-specifically the 'idx', 'cont', and 'buffer' fields, leading to corrupted
-input or undefined behavior.
+This patch remove the now obsolete out_thread label and make GPIO
+setup code jump to out_ports label if it fails.
 
-Fix this by adding a global mutex, parser_lock, to serialize all access
-to trace_parser across write and release paths, preventing concurrent
-corruption of parser state.
-
-Fixes: e704eff3ff51 ("ftrace: Have set_graph_function handle multiple functions in one write")
-Fixes: 689fd8b65d66 ("tracing: trace parser support for function and graph")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260725024721.1983675-1-wutengda@huaweicloud.com
-Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-[ Replaced `guard(mutex)(&parser_lock)` with explicit `mutex_lock`/`mutex_unlock` pairs because 5.15 builds `-std=gnu89` with `-Werror=declaration-after-statement`. ]
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Reviewed-by: Lech Perczak <lech.perczak@camlingroup.com>
+Tested-by: Lech Perczak <lech.perczak@camlingroup.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://lore.kernel.org/r/20230807214556.540627-3-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: af071d9e07e5 ("serial: sc16is7xx: implement gpio get_direction() callback")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/tty/serial/sc16is7xx.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -1043,6 +1043,12 @@ struct ftrace_ops global_ops = {
- };
- 
- /*
-+ * parser_lock - Protects trace_parser state against concurrent operations.
-+ * Held across trace_get_user() and subsequent buffer parsing to prevent races.
-+ */
-+static DEFINE_MUTEX(parser_lock);
-+
-+/*
-  * Used by the stack unwinder to know about dynamic ftrace trampolines.
-  */
- struct ftrace_ops *ftrace_ops_trampoline(unsigned long addr)
-@@ -4928,6 +4934,8 @@ ftrace_regex_write(struct file *file, co
- 	/* iter->hash is a local copy, so we don't need regex_lock */
- 
- 	parser = &iter->parser;
-+
-+	mutex_lock(&parser_lock);
- 	read = trace_get_user(parser, ubuf, cnt, ppos);
- 
- 	if (read >= 0 && trace_parser_loaded(parser) &&
-@@ -4941,6 +4949,7 @@ ftrace_regex_write(struct file *file, co
- 
- 	ret = read;
-  out:
-+	mutex_unlock(&parser_lock);
- 	return ret;
- }
- 
-@@ -5675,12 +5684,14 @@ int ftrace_regex_release(struct inode *i
- 		iter = file->private_data;
- 
- 	parser = &iter->parser;
-+	mutex_lock(&parser_lock);
- 	if (trace_parser_loaded(parser)) {
- 		int enable = !(iter->flags & FTRACE_ITER_NOTRACE);
- 
- 		ftrace_process_regex(iter, parser->buffer,
- 				     parser->idx, enable);
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -1399,7 +1399,7 @@ static int sc16is7xx_probe(struct device
+ 		s->gpio.can_sleep	 = 1;
+ 		ret = gpiochip_add_data(&s->gpio, s);
+ 		if (ret)
+-			goto out_thread;
++			goto out_ports;
  	}
-+	mutex_unlock(&parser_lock);
+ #endif
  
- 	trace_parser_put(parser);
+@@ -1425,8 +1425,6 @@ static int sc16is7xx_probe(struct device
+ #ifdef CONFIG_GPIOLIB
+ 	if (devtype->nr_gpio)
+ 		gpiochip_remove(&s->gpio);
+-
+-out_thread:
+ #endif
  
-@@ -5998,10 +6009,12 @@ ftrace_graph_release(struct inode *inode
- 
- 		parser = &fgd->parser;
- 
-+		mutex_lock(&parser_lock);
- 		if (trace_parser_loaded((parser))) {
- 			ret = ftrace_graph_set_hash(fgd->new_hash,
- 						    parser->buffer);
- 		}
-+		mutex_unlock(&parser_lock);
- 
- 		trace_parser_put(parser);
- 
-@@ -6121,6 +6134,7 @@ ftrace_graph_write(struct file *file, co
- 
- 	parser = &fgd->parser;
- 
-+	mutex_lock(&parser_lock);
- 	read = trace_get_user(parser, ubuf, cnt, ppos);
- 
- 	if (read >= 0 && trace_parser_loaded(parser) &&
-@@ -6134,6 +6148,7 @@ ftrace_graph_write(struct file *file, co
- 	if (!ret)
- 		ret = read;
- 
-+	mutex_unlock(&parser_lock);
- 	return ret;
- }
- 
+ out_ports:
 
 
