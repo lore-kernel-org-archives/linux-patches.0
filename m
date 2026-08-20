@@ -1,50 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C706337CD47;
-	Thu, 20 Aug 2026 15:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3EF737F31A;
+	Thu, 20 Aug 2026 15:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238879; cv=none; b=AoZcrDEJZIVKAAftT09ipOMbqnRtMSzoYn4gsSSfgcYOYNqfFGppFRTLuoxJGz8VAdylWEcW3pOppTBz1EO0Z/s+HMvYD802fn3pFui5AkWGDPNnUNgMaNoPvthB+JiCn+hfY7CFb2OYRH1icVfRo2AXvtwkdZ8/KdetYWkxOfs=
+	t=1787238881; cv=none; b=VCoO/H/cMZU+FGi3u3cid9q/aCN/E2cKCb6vHNy+3C7KIeQSWqfSmUzqUVMoR5jOjuJIBzqKw7u/TkuMrSxZEv/8ovL+GkhevwFmIqOcMkJoHuh2WwSQ94plomEdzPEfhbqtw/GSHyQbAp0Wqgxtn585oC2JRLRpumLHRnQyGfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238879; c=relaxed/simple;
-	bh=PWfGijcpg1wuwQNhCXcfSAf9ah9BaYwzFI0uTipzu68=;
+	s=arc-20240116; t=1787238881; c=relaxed/simple;
+	bh=A40Me3YMKyuadQ2AG7W1R02wqpgNkZxfBSsdXJvJxEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I7bIRmsbh/o7OmA6O2Ugs/BuArW5TeeNpa+sFzwEHlxV9hs1ltx2t20r5h/TisFWV7IZ7/54xLk9b6jcQ4sC7Eb59xyld23Q/946pZLBTYJnJthcIHvRsGtTJnoU4F/QRYEDwJrzFjpyrpSFXgjzLRHLrV2YztbDVQR4GrCKT98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YE2d7j0E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CjH0AehpLU8gt66vdEBUWDQTFrURzhOCJ5RRx43ZLhMvj7sFBkbvrMILR1IpW0ZCEKpYOJ6q0e6wikIrOTd803ufG1bEjcSG8s4DThsY0UxeLsy2MkH4hJ60H/eKDTlCLYCvJ5B1zDuEiLS91PWgPpru0qIp7eq564HSZwLq34k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxLPVX91; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YE2d7j0E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 106611F000E9;
-	Thu, 20 Aug 2026 15:14:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxLPVX91"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB051F000E9;
+	Thu, 20 Aug 2026 15:14:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238877;
-	bh=6fFjGvEp7gdihv24T0Y08V6FeHjOuaYumNNp75/yAqo=;
+	s=korg; t=1787238880;
+	bh=uWYG2vmKfYZqyqVGW2XuBSaYS2fTT6WgtVx01yLt1+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YE2d7j0EQeY4QEUQEX8ppk+Rm8A4dvKC+o5DDkbIgTHfwJvdSO+7HphBhMsa8WgpH
-	 WmTDnOV9GI7+MBehGb2LitFhllC/EzjqS3MvdAHqog3vQMLiX0ekANf2ULFZx2UFYt
-	 Bj15b+cbRMLZ/NW3pPkrL1LQzut2+1lP4irOHVE0=
+	b=GxLPVX91aHwYRqZ+hoXnpZ9zDvwuUer538E22A77//vZM6sST1yqpa2GCzKt2ZqS4
+	 GHCfkLvQxwB2UXY9egrtdm1dmR1Gbo1fRMv1lGjTft62XLsawxxWRsNL4MSsjgMpQu
+	 2+Alg8P3V/8JsUM7CB6ZKjTD+rsgcfIw6j5Y5E8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Maxime Ripard <mripard@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Daniel Stone <daniel@fooishbar.org>,
-	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	dri-devel@lists.freedesktop.org,
-	John Harrison <John.Harrison@Igalia.com>
-Subject: [PATCH 6.18 071/217] drm/connector/hdmi: Fix out of bounds memory read
-Date: Thu, 20 Aug 2026 16:53:59 +0200
-Message-ID: <20260820145239.759144904@linuxfoundation.org>
+	Binbin Zhou <zhoubinbin@loongson.cn>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.18 072/217] mmc: loongson2: Fix sg iteration in data reorder functions
+Date: Thu, 20 Aug 2026 16:54:00 +0200
+Message-ID: <20260820145239.791231382@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -57,67 +44,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Harrison <John.Harrison@Igalia.com>
+From: Binbin Zhou <zhoubinbin@loongson.cn>
 
-commit 9ecf8ba763d0ffe0673538eb4bf7806f20455d19 upstream.
+commit 00179ed9fbe07799676e2cb63c4e7f0e7cd80a5c upstream.
 
-A helper function was copying a given audio infoframe into the
-connector's copy but using the size of the destination (a generic
-target, sized to accept many different data blocks) not the source (a
-very specific type of data block). Thus, it was copying 60 bytes of
-data from a 28 byte allocation.
+In ls2k0500_mmc_reorder_cmd_data() and ls2k2000_mmc_reorder_cmd_data(),
+the for_each_sg() macro already iterates over the scatterlist entries,
+with 'sg' pointing to the current entry. However, the code incorrectly
+uses '&sg[i]' and 'sg_dma_len(&sg[i])' inside the loop, which treats
+'sg' as an array base and indexes it again, leading to access of
+wrong sg entries (or out-of-bounds if the list is not an array).
 
-Fix that by using the source size instead, together with a build bug
-on the source size actually being smaller than the destination.
-
-I hit this running KUnit tests under KASAN (while debugging something
-else entirely). In the real world, it seems unlikely to cause an
-actual problem. It is a read not a write so it can't corrupt any
-memory. However, it could potentially fall off the end of a page and
-cause an accvio bug.
-
-Fixes: f378b77227bc ("drm/connector: hdmi: Add Infoframes generation")
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Daniel Stone <daniel@fooishbar.org>
-Cc: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: José Expósito <jose.exposito89@gmail.com>
-Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: stable@vger.kernel.org # v6.11+
-Signed-off-by: John Harrison <John.Harrison@Igalia.com>
-Link: https://patch.msgid.link/20260723220652.533345-1-John.Harrison@Igalia.com
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: d0f8e961deae ("mmc: loongson2: Add Loongson-2K2000 SD/SDIO/eMMC controller driver")
+Fixes: 2115772014bd ("mmc: loongson2: Add Loongson-2K SD/SDIO controller driver")
+Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/display/drm_hdmi_state_helper.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mmc/host/loongson2-mmc.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-+++ b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-@@ -1072,7 +1072,8 @@ drm_atomic_helper_connector_hdmi_update_
+--- a/drivers/mmc/host/loongson2-mmc.c
++++ b/drivers/mmc/host/loongson2-mmc.c
+@@ -628,8 +628,8 @@ static void ls2k0500_mmc_reorder_cmd_dat
+ 		return;
  
- 	mutex_lock(&connector->hdmi.infoframes.lock);
+ 	for_each_sg(cmd->data->sg, sg, cmd->data->sg_len, i) {
+-		data = sg_virt(&sg[i]);
+-		for (j = 0; j < (sg_dma_len(&sg[i]) / 4); j++)
++		data = sg_virt(sg);
++		for (j = 0; j < (sg_dma_len(sg) / 4); j++)
+ 			if (cmd->opcode == SD_SWITCH)
+ 				data[j] = bitrev8x4(data[j]);
+ 			else
+@@ -761,8 +761,8 @@ static void ls2k2000_mmc_reorder_cmd_dat
+ 		return;
  
--	memcpy(&infoframe->data, frame, sizeof(infoframe->data));
-+	BUILD_BUG_ON(sizeof(*frame) > sizeof(infoframe->data));
-+	memcpy(&infoframe->data, frame, sizeof(*frame));
- 	infoframe->set = true;
- 
- 	ret = write_infoframe(connector, infoframe);
+ 	for_each_sg(cmd->data->sg, sg, cmd->data->sg_len, i) {
+-		data = sg_virt(&sg[i]);
+-		for (j = 0; j < (sg_dma_len(&sg[i]) / 4); j++)
++		data = sg_virt(sg);
++		for (j = 0; j < (sg_dma_len(sg) / 4); j++)
+ 			data[j] = bitrev8x4(data[j]);
+ 	}
+ }
 
 
