@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522FA47A88F;
-	Thu, 20 Aug 2026 17:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349233403F8;
+	Thu, 20 Aug 2026 17:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247155; cv=none; b=oUn6W5XUJC0aj4nAANXFA6DouXAe/EmfUfGuDFzg1i71NscGHzLOzFB7hiTZlxbDcrCi6ZqOuUHUQnWozCLpVkPqf9TKwFfjvnmIh3fgyXa2QrxYQxNT2il8KJrmuPxp9nO9mV+tDs5+gyncMepbwZdmYT//vcrMLN0Zdts2Hi8=
+	t=1787247158; cv=none; b=haCNm9ry+2EWK0sHFkjxip+3n9okyh3mzO/LJ93QoSjlT9ph7iv7iqH9/GXKmBJ1yO1lstPD6kiPkKFZyMSxHQ7HhWfaocpFIHtmSU5y+P0QWO/+ZF8Y1/8xdtM+MDW4QR7i780inHqC6vB/8vWEp3pBViXSGG4T1DvzkC87uaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247155; c=relaxed/simple;
-	bh=cN+R0aRQKaWQIUxVB/lhuwZymvWrtlRrHoKxOWstRCs=;
+	s=arc-20240116; t=1787247158; c=relaxed/simple;
+	bh=nCy4iRo9E9wYhBjqCN2zdX0aiOCZmTjNxyyFGD30dp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N01lqi1SiroXpcDMw4V7dApff30Yb7B9DRJvD7t90vLbV75NT3AVCmqsr0P1WXEVy6iwRM8Bsa6Bz4u5EOcBI+FpbUUHKxt7IcrkoxfCaKsGPeDEWmjdl3Zx/5hz/FvXQdNn3W+ztXE1IHbR0I5K7SflaAwAUhZohwpfpuNdQ+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Us+nr0vv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PkTMUV5mKjJOQ4j1W1vBjRkEF8S+pqtcFiuF5yAcwX8whwBzCoGBKp+exupNfcpXPIx9eF9lpR/WG3H9FnXswEKNcHINt7DWjwrKwQWIKk5N28mCoTOWMRngOz1z9V4MIs6w2oEjZF3tvbxl6GShkNq+SUbO+9wZZQ6PPYvbuz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3HMBtqh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Us+nr0vv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB671F000E9;
-	Thu, 20 Aug 2026 17:32:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3HMBtqh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1471F000E9;
+	Thu, 20 Aug 2026 17:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247154;
-	bh=YR8p3l6KZnoHdrZsEAYmWFmsMsFm9yP/iWbwPTKa0cs=;
+	s=korg; t=1787247157;
+	bh=LX0qq6VX+3hfZLykenaAaw2WxyGY6rkNqk7OdUod4kM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Us+nr0vvGcobdH5EjPpJYxO8rMa8YT6fQDqdDDrkHZt9uNya1g7T6MF4BjRESjimi
-	 fGwRrhh0lTcvw8rNheewSVbAuc2G8aJg1YJjQ/SMHRMsbre2SpMuVK+TpUuiB9hc8i
-	 Od0U8izm29KCsC2Zf67+y88BfntknnuLaPsZjfcg=
+	b=y3HMBtqh2WgISgAvdKgGvCVGbtCIP3MQvRDNbhlutdff666jfc2WImv59GAkMbjwL
+	 QFIItxZeb9MkWKdivG0uy11YcJI8eR6AAszMxZdJm5g0CxsycW/uiB/Iv5/4Z/ls2w
+	 XVcp7Lo3PCg6UlSoFKCw4XLM1p/i2lDzPc3RAQGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asad Kamal <asad.kamal@amd.com>,
 	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 168/220] drm/amd/pm: Use same metric table for APU
-Date: Thu, 20 Aug 2026 16:55:58 +0200
-Message-ID: <20260820145228.526326896@linuxfoundation.org>
+Subject: [PATCH 6.12 169/220] drm/amd/pm: Use macro to initialize metrics table
+Date: Thu, 20 Aug 2026 16:55:59 +0200
+Message-ID: <20260820145228.556543758@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -52,296 +54,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 56cbb36696407a27cfbfdbc2dee0b1e206178cec ]
+[ Upstream commit 1327d8f4061c08c29ea8ce7bb89e209d3c1e8b29 ]
 
-Use same metric table for APU and Non APU systems
-for smu_v_13_0_6 to get metric data based on newer pmfw
-versions
+Helps to keep a build time check about usage of right datatype and
+avoids maintenance as new versions get added.
 
-v2: Use inline func to check for unified metrics support
-
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: 048f4541b71f ("drm/amd/pm: fix torn gpu metrics reads")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c |  102 ++++++++++---------
- 1 file changed, 55 insertions(+), 47 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c |   58 ---------------------------------
+ drivers/gpu/drm/amd/pm/swsmu/smu_cmn.h |   14 ++++++-
+ 2 files changed, 12 insertions(+), 60 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-@@ -102,6 +102,12 @@ MODULE_FIRMWARE("amdgpu/smu_13_0_14.bin"
- #define MCA_BANK_IPID(_ip, _hwid, _type) \
- 	[AMDGPU_MCA_IP_##_ip] = { .hwid = _hwid, .mcatype = _type, }
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
+@@ -1051,64 +1051,6 @@ int smu_cmn_get_combo_pptable(struct smu
+ 				    false);
+ }
  
-+static inline bool smu_v13_0_6_is_unified_metrics(struct smu_context *smu)
-+{
-+	return (smu->adev->flags & AMD_IS_APU) &&
-+		smu->smc_fw_version <= 0x4556900;
-+}
+-void smu_cmn_init_soft_gpu_metrics(void *table, uint8_t frev, uint8_t crev)
+-{
+-	struct metrics_table_header *header = (struct metrics_table_header *)table;
+-	uint16_t structure_size;
+-
+-#define METRICS_VERSION(a, b)	((a << 16) | b)
+-
+-	switch (METRICS_VERSION(frev, crev)) {
+-	case METRICS_VERSION(1, 0):
+-		structure_size = sizeof(struct gpu_metrics_v1_0);
+-		break;
+-	case METRICS_VERSION(1, 1):
+-		structure_size = sizeof(struct gpu_metrics_v1_1);
+-		break;
+-	case METRICS_VERSION(1, 2):
+-		structure_size = sizeof(struct gpu_metrics_v1_2);
+-		break;
+-	case METRICS_VERSION(1, 3):
+-		structure_size = sizeof(struct gpu_metrics_v1_3);
+-		break;
+-	case METRICS_VERSION(1, 4):
+-		structure_size = sizeof(struct gpu_metrics_v1_4);
+-		break;
+-	case METRICS_VERSION(1, 5):
+-		structure_size = sizeof(struct gpu_metrics_v1_5);
+-		break;
+-	case METRICS_VERSION(2, 0):
+-		structure_size = sizeof(struct gpu_metrics_v2_0);
+-		break;
+-	case METRICS_VERSION(2, 1):
+-		structure_size = sizeof(struct gpu_metrics_v2_1);
+-		break;
+-	case METRICS_VERSION(2, 2):
+-		structure_size = sizeof(struct gpu_metrics_v2_2);
+-		break;
+-	case METRICS_VERSION(2, 3):
+-		structure_size = sizeof(struct gpu_metrics_v2_3);
+-		break;
+-	case METRICS_VERSION(2, 4):
+-		structure_size = sizeof(struct gpu_metrics_v2_4);
+-		break;
+-	case METRICS_VERSION(3, 0):
+-		structure_size = sizeof(struct gpu_metrics_v3_0);
+-		break;
+-	default:
+-		return;
+-	}
+-
+-#undef METRICS_VERSION
+-
+-	memset(header, 0xFF, structure_size);
+-
+-	header->format_revision = frev;
+-	header->content_revision = crev;
+-	header->structure_size = structure_size;
+-
+-}
+-
+ int smu_cmn_set_mp1_state(struct smu_context *smu,
+ 			  enum pp_mp1_state mp1_state)
+ {
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.h
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.h
+@@ -40,6 +40,18 @@
+ #define SMU_IH_INTERRUPT_CONTEXT_ID_FAN_ABNORMAL        0x8
+ #define SMU_IH_INTERRUPT_CONTEXT_ID_FAN_RECOVERY        0x9
+ 
++#define smu_cmn_init_soft_gpu_metrics(ptr, frev, crev)         \
++	do {                                                   \
++		typecheck(struct gpu_metrics_v##frev##_##crev, \
++			  typeof(*(ptr)));                     \
++		struct metrics_table_header *header =          \
++			(struct metrics_table_header *)(ptr);  \
++		memset(header, 0xFF, sizeof(*(ptr)));          \
++		header->format_revision = frev;                \
++		header->content_revision = crev;               \
++		header->structure_size = sizeof(*(ptr));       \
++	} while (0)
 +
- struct mca_bank_ipid {
- 	enum amdgpu_mca_ip ip;
- 	uint16_t hwid;
-@@ -253,7 +259,7 @@ struct PPTable_t {
- #define SMUQ10_TO_UINT(x) ((x) >> 10)
- #define SMUQ10_FRAC(x) ((x) & 0x3ff)
- #define SMUQ10_ROUND(x) ((SMUQ10_TO_UINT(x)) + ((SMUQ10_FRAC(x)) >= 0x200))
--#define GET_METRIC_FIELD(field) ((adev->flags & AMD_IS_APU) ?\
-+#define GET_METRIC_FIELD(field, flag) ((flag) ?\
- 		(metrics_a->field) : (metrics_x->field))
+ extern const int link_speed[];
  
- struct smu_v13_0_6_dpm_map {
-@@ -584,7 +590,7 @@ static int smu_v13_0_6_setup_driver_ppta
- 	MetricsTableA_t *metrics_a = (MetricsTableA_t *)smu_table->metrics_table;
- 	struct PPTable_t *pptable =
- 		(struct PPTable_t *)smu_table->driver_pptable;
--	struct amdgpu_device *adev = smu->adev;
-+	bool flag = smu_v13_0_6_is_unified_metrics(smu);
- 	int ret, i, retry = 100;
- 	uint32_t table_version;
+ /* Helper to Convert from PCIE Gen 1/2/3/4/5/6 to 0.1 GT/s speed units */
+@@ -125,8 +137,6 @@ int smu_cmn_get_metrics_table(struct smu
  
-@@ -596,7 +602,7 @@ static int smu_v13_0_6_setup_driver_ppta
- 				return ret;
+ int smu_cmn_get_combo_pptable(struct smu_context *smu);
  
- 			/* Ensure that metrics have been updated */
--			if (GET_METRIC_FIELD(AccumulationCounter))
-+			if (GET_METRIC_FIELD(AccumulationCounter, flag))
- 				break;
+-void smu_cmn_init_soft_gpu_metrics(void *table, uint8_t frev, uint8_t crev);
+-
+ int smu_cmn_set_mp1_state(struct smu_context *smu,
+ 			  enum pp_mp1_state mp1_state);
  
- 			usleep_range(1000, 1100);
-@@ -613,29 +619,29 @@ static int smu_v13_0_6_setup_driver_ppta
- 			table_version;
- 
- 		pptable->MaxSocketPowerLimit =
--			SMUQ10_ROUND(GET_METRIC_FIELD(MaxSocketPowerLimit));
-+			SMUQ10_ROUND(GET_METRIC_FIELD(MaxSocketPowerLimit, flag));
- 		pptable->MaxGfxclkFrequency =
--			SMUQ10_ROUND(GET_METRIC_FIELD(MaxGfxclkFrequency));
-+			SMUQ10_ROUND(GET_METRIC_FIELD(MaxGfxclkFrequency, flag));
- 		pptable->MinGfxclkFrequency =
--			SMUQ10_ROUND(GET_METRIC_FIELD(MinGfxclkFrequency));
-+			SMUQ10_ROUND(GET_METRIC_FIELD(MinGfxclkFrequency, flag));
- 
- 		for (i = 0; i < 4; ++i) {
- 			pptable->FclkFrequencyTable[i] =
--				SMUQ10_ROUND(GET_METRIC_FIELD(FclkFrequencyTable)[i]);
-+				SMUQ10_ROUND(GET_METRIC_FIELD(FclkFrequencyTable, flag)[i]);
- 			pptable->UclkFrequencyTable[i] =
--				SMUQ10_ROUND(GET_METRIC_FIELD(UclkFrequencyTable)[i]);
-+				SMUQ10_ROUND(GET_METRIC_FIELD(UclkFrequencyTable, flag)[i]);
- 			pptable->SocclkFrequencyTable[i] = SMUQ10_ROUND(
--				GET_METRIC_FIELD(SocclkFrequencyTable)[i]);
-+				GET_METRIC_FIELD(SocclkFrequencyTable, flag)[i]);
- 			pptable->VclkFrequencyTable[i] =
--				SMUQ10_ROUND(GET_METRIC_FIELD(VclkFrequencyTable)[i]);
-+				SMUQ10_ROUND(GET_METRIC_FIELD(VclkFrequencyTable, flag)[i]);
- 			pptable->DclkFrequencyTable[i] =
--				SMUQ10_ROUND(GET_METRIC_FIELD(DclkFrequencyTable)[i]);
-+				SMUQ10_ROUND(GET_METRIC_FIELD(DclkFrequencyTable, flag)[i]);
- 			pptable->LclkFrequencyTable[i] =
--				SMUQ10_ROUND(GET_METRIC_FIELD(LclkFrequencyTable)[i]);
-+				SMUQ10_ROUND(GET_METRIC_FIELD(LclkFrequencyTable, flag)[i]);
- 		}
- 
- 		/* use AID0 serial number by default */
--		pptable->PublicSerialNumber_AID = GET_METRIC_FIELD(PublicSerialNumber_AID)[0];
-+		pptable->PublicSerialNumber_AID = GET_METRIC_FIELD(PublicSerialNumber_AID, flag)[0];
- 
- 		pptable->Init = true;
- 	}
-@@ -958,6 +964,7 @@ static int smu_v13_0_6_get_smu_metrics_d
- 	struct smu_table_context *smu_table = &smu->smu_table;
- 	MetricsTableX_t *metrics_x = (MetricsTableX_t *)smu_table->metrics_table;
- 	MetricsTableA_t *metrics_a = (MetricsTableA_t *)smu_table->metrics_table;
-+	bool flag = smu_v13_0_6_is_unified_metrics(smu);
- 	struct amdgpu_device *adev = smu->adev;
- 	int ret = 0;
- 	int xcc_id;
-@@ -972,50 +979,50 @@ static int smu_v13_0_6_get_smu_metrics_d
- 	case METRICS_AVERAGE_GFXCLK:
- 		if (smu->smc_fw_version >= 0x552F00) {
- 			xcc_id = GET_INST(GC, 0);
--			*value = SMUQ10_ROUND(GET_METRIC_FIELD(GfxclkFrequency)[xcc_id]);
-+			*value = SMUQ10_ROUND(GET_METRIC_FIELD(GfxclkFrequency, flag)[xcc_id]);
- 		} else {
- 			*value = 0;
- 		}
- 		break;
- 	case METRICS_CURR_SOCCLK:
- 	case METRICS_AVERAGE_SOCCLK:
--		*value = SMUQ10_ROUND(GET_METRIC_FIELD(SocclkFrequency)[0]);
-+		*value = SMUQ10_ROUND(GET_METRIC_FIELD(SocclkFrequency, flag)[0]);
- 		break;
- 	case METRICS_CURR_UCLK:
- 	case METRICS_AVERAGE_UCLK:
--		*value = SMUQ10_ROUND(GET_METRIC_FIELD(UclkFrequency));
-+		*value = SMUQ10_ROUND(GET_METRIC_FIELD(UclkFrequency, flag));
- 		break;
- 	case METRICS_CURR_VCLK:
--		*value = SMUQ10_ROUND(GET_METRIC_FIELD(VclkFrequency)[0]);
-+		*value = SMUQ10_ROUND(GET_METRIC_FIELD(VclkFrequency, flag)[0]);
- 		break;
- 	case METRICS_CURR_DCLK:
--		*value = SMUQ10_ROUND(GET_METRIC_FIELD(DclkFrequency)[0]);
-+		*value = SMUQ10_ROUND(GET_METRIC_FIELD(DclkFrequency, flag)[0]);
- 		break;
- 	case METRICS_CURR_FCLK:
--		*value = SMUQ10_ROUND(GET_METRIC_FIELD(FclkFrequency));
-+		*value = SMUQ10_ROUND(GET_METRIC_FIELD(FclkFrequency, flag));
- 		break;
- 	case METRICS_AVERAGE_GFXACTIVITY:
--		*value = SMUQ10_ROUND(GET_METRIC_FIELD(SocketGfxBusy));
-+		*value = SMUQ10_ROUND(GET_METRIC_FIELD(SocketGfxBusy, flag));
- 		break;
- 	case METRICS_AVERAGE_MEMACTIVITY:
--		*value = SMUQ10_ROUND(GET_METRIC_FIELD(DramBandwidthUtilization));
-+		*value = SMUQ10_ROUND(GET_METRIC_FIELD(DramBandwidthUtilization, flag));
- 		break;
- 	case METRICS_CURR_SOCKETPOWER:
--		*value = SMUQ10_ROUND(GET_METRIC_FIELD(SocketPower)) << 8;
-+		*value = SMUQ10_ROUND(GET_METRIC_FIELD(SocketPower, flag)) << 8;
- 		break;
- 	case METRICS_TEMPERATURE_HOTSPOT:
--		*value = SMUQ10_ROUND(GET_METRIC_FIELD(MaxSocketTemperature)) *
-+		*value = SMUQ10_ROUND(GET_METRIC_FIELD(MaxSocketTemperature, flag)) *
- 			 SMU_TEMPERATURE_UNITS_PER_CENTIGRADES;
- 		break;
- 	case METRICS_TEMPERATURE_MEM:
--		*value = SMUQ10_ROUND(GET_METRIC_FIELD(MaxHbmTemperature)) *
-+		*value = SMUQ10_ROUND(GET_METRIC_FIELD(MaxHbmTemperature, flag)) *
- 			 SMU_TEMPERATURE_UNITS_PER_CENTIGRADES;
- 		break;
- 	/* This is the max of all VRs and not just SOC VR.
- 	 * No need to define another data type for the same.
- 	 */
- 	case METRICS_TEMPERATURE_VRSOC:
--		*value = SMUQ10_ROUND(GET_METRIC_FIELD(MaxVrTemperature)) *
-+		*value = SMUQ10_ROUND(GET_METRIC_FIELD(MaxVrTemperature, flag)) *
- 			 SMU_TEMPERATURE_UNITS_PER_CENTIGRADES;
- 		break;
- 	default:
-@@ -2303,6 +2310,7 @@ static ssize_t smu_v13_0_6_get_gpu_metri
- 	struct smu_table_context *smu_table = &smu->smu_table;
- 	struct gpu_metrics_v1_5 *gpu_metrics =
- 		(struct gpu_metrics_v1_5 *)smu_table->gpu_metrics_table;
-+	bool flag = smu_v13_0_6_is_unified_metrics(smu);
- 	struct amdgpu_device *adev = smu->adev;
- 	int ret = 0, xcc_id, inst, i, j;
- 	MetricsTableX_t *metrics_x;
-@@ -2321,50 +2329,50 @@ static ssize_t smu_v13_0_6_get_gpu_metri
- 	smu_cmn_init_soft_gpu_metrics(gpu_metrics, 1, 5);
- 
- 	gpu_metrics->temperature_hotspot =
--		SMUQ10_ROUND(GET_METRIC_FIELD(MaxSocketTemperature));
-+		SMUQ10_ROUND(GET_METRIC_FIELD(MaxSocketTemperature, flag));
- 	/* Individual HBM stack temperature is not reported */
- 	gpu_metrics->temperature_mem =
--		SMUQ10_ROUND(GET_METRIC_FIELD(MaxHbmTemperature));
-+		SMUQ10_ROUND(GET_METRIC_FIELD(MaxHbmTemperature, flag));
- 	/* Reports max temperature of all voltage rails */
- 	gpu_metrics->temperature_vrsoc =
--		SMUQ10_ROUND(GET_METRIC_FIELD(MaxVrTemperature));
-+		SMUQ10_ROUND(GET_METRIC_FIELD(MaxVrTemperature, flag));
- 
- 	gpu_metrics->average_gfx_activity =
--		SMUQ10_ROUND(GET_METRIC_FIELD(SocketGfxBusy));
-+		SMUQ10_ROUND(GET_METRIC_FIELD(SocketGfxBusy, flag));
- 	gpu_metrics->average_umc_activity =
--		SMUQ10_ROUND(GET_METRIC_FIELD(DramBandwidthUtilization));
-+		SMUQ10_ROUND(GET_METRIC_FIELD(DramBandwidthUtilization, flag));
- 
- 	gpu_metrics->curr_socket_power =
--		SMUQ10_ROUND(GET_METRIC_FIELD(SocketPower));
-+		SMUQ10_ROUND(GET_METRIC_FIELD(SocketPower, flag));
- 	/* Energy counter reported in 15.259uJ (2^-16) units */
--	gpu_metrics->energy_accumulator = GET_METRIC_FIELD(SocketEnergyAcc);
-+	gpu_metrics->energy_accumulator = GET_METRIC_FIELD(SocketEnergyAcc, flag);
- 
- 	for (i = 0; i < MAX_GFX_CLKS; i++) {
- 		xcc_id = GET_INST(GC, i);
- 		if (xcc_id >= 0)
- 			gpu_metrics->current_gfxclk[i] =
--				SMUQ10_ROUND(GET_METRIC_FIELD(GfxclkFrequency)[xcc_id]);
-+				SMUQ10_ROUND(GET_METRIC_FIELD(GfxclkFrequency, flag)[xcc_id]);
- 
- 		if (i < MAX_CLKS) {
- 			gpu_metrics->current_socclk[i] =
--				SMUQ10_ROUND(GET_METRIC_FIELD(SocclkFrequency)[i]);
-+				SMUQ10_ROUND(GET_METRIC_FIELD(SocclkFrequency, flag)[i]);
- 			inst = GET_INST(VCN, i);
- 			if (inst >= 0) {
- 				gpu_metrics->current_vclk0[i] =
--					SMUQ10_ROUND(GET_METRIC_FIELD(VclkFrequency)[inst]);
-+					SMUQ10_ROUND(GET_METRIC_FIELD(VclkFrequency, flag)[inst]);
- 				gpu_metrics->current_dclk0[i] =
--					SMUQ10_ROUND(GET_METRIC_FIELD(DclkFrequency)[inst]);
-+					SMUQ10_ROUND(GET_METRIC_FIELD(DclkFrequency, flag)[inst]);
- 			}
- 		}
- 	}
- 
--	gpu_metrics->current_uclk = SMUQ10_ROUND(GET_METRIC_FIELD(UclkFrequency));
-+	gpu_metrics->current_uclk = SMUQ10_ROUND(GET_METRIC_FIELD(UclkFrequency, flag));
- 
- 	/* Throttle status is not reported through metrics now */
- 	gpu_metrics->throttle_status = 0;
- 
- 	/* Clock Lock Status. Each bit corresponds to each GFXCLK instance */
--	gpu_metrics->gfxclk_lock_status = GET_METRIC_FIELD(GfxLockXCDMak) >> GET_INST(GC, 0);
-+	gpu_metrics->gfxclk_lock_status = GET_METRIC_FIELD(GfxLockXCDMak, flag) >> GET_INST(GC, 0);
- 
- 	if (!(adev->flags & AMD_IS_APU)) {
- 		/*Check smu version, PCIE link speed and width will be reported from pmfw metric
-@@ -2405,22 +2413,22 @@ static ssize_t smu_v13_0_6_get_gpu_metri
- 	gpu_metrics->system_clock_counter = ktime_get_boottime_ns();
- 
- 	gpu_metrics->gfx_activity_acc =
--		SMUQ10_ROUND(GET_METRIC_FIELD(SocketGfxBusyAcc));
-+		SMUQ10_ROUND(GET_METRIC_FIELD(SocketGfxBusyAcc, flag));
- 	gpu_metrics->mem_activity_acc =
--		SMUQ10_ROUND(GET_METRIC_FIELD(DramBandwidthUtilizationAcc));
-+		SMUQ10_ROUND(GET_METRIC_FIELD(DramBandwidthUtilizationAcc, flag));
- 
- 	for (i = 0; i < NUM_XGMI_LINKS; i++) {
- 		gpu_metrics->xgmi_read_data_acc[i] =
--			SMUQ10_ROUND(GET_METRIC_FIELD(XgmiReadDataSizeAcc)[i]);
-+			SMUQ10_ROUND(GET_METRIC_FIELD(XgmiReadDataSizeAcc, flag)[i]);
- 		gpu_metrics->xgmi_write_data_acc[i] =
--			SMUQ10_ROUND(GET_METRIC_FIELD(XgmiWriteDataSizeAcc)[i]);
-+			SMUQ10_ROUND(GET_METRIC_FIELD(XgmiWriteDataSizeAcc, flag)[i]);
- 	}
- 
- 	for (i = 0; i < adev->jpeg.num_jpeg_inst; ++i) {
- 		inst = GET_INST(JPEG, i);
- 		for (j = 0; j < adev->jpeg.num_jpeg_rings; ++j) {
- 			gpu_metrics->jpeg_activity[(i * adev->jpeg.num_jpeg_rings) + j] =
--				SMUQ10_ROUND(GET_METRIC_FIELD(JpegBusy)
-+				SMUQ10_ROUND(GET_METRIC_FIELD(JpegBusy, flag)
- 				[(inst * adev->jpeg.num_jpeg_rings) + j]);
- 		}
- 	}
-@@ -2428,13 +2436,13 @@ static ssize_t smu_v13_0_6_get_gpu_metri
- 	for (i = 0; i < adev->vcn.num_vcn_inst; ++i) {
- 		inst = GET_INST(VCN, i);
- 		gpu_metrics->vcn_activity[i] =
--			SMUQ10_ROUND(GET_METRIC_FIELD(VcnBusy)[inst]);
-+			SMUQ10_ROUND(GET_METRIC_FIELD(VcnBusy, flag)[inst]);
- 	}
- 
--	gpu_metrics->xgmi_link_width = SMUQ10_ROUND(GET_METRIC_FIELD(XgmiWidth));
--	gpu_metrics->xgmi_link_speed = SMUQ10_ROUND(GET_METRIC_FIELD(XgmiBitrate));
-+	gpu_metrics->xgmi_link_width = SMUQ10_ROUND(GET_METRIC_FIELD(XgmiWidth, flag));
-+	gpu_metrics->xgmi_link_speed = SMUQ10_ROUND(GET_METRIC_FIELD(XgmiBitrate, flag));
- 
--	gpu_metrics->firmware_timestamp = GET_METRIC_FIELD(Timestamp);
-+	gpu_metrics->firmware_timestamp = GET_METRIC_FIELD(Timestamp, flag);
- 
- 	*table = (void *)gpu_metrics;
- 	kfree(metrics_x);
 
 
