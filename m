@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C939C379EDA;
-	Thu, 20 Aug 2026 15:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F236C37D13D;
+	Thu, 20 Aug 2026 15:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238288; cv=none; b=HGjGgaN52Kx51MMgXyoBJSDpb46o103wao2RGtczNPK66pCMtCi6ZkJm5ToRELOa4F/jL3mwpjvEDoRqgTn/HL+E/eqgeyk1YZa+fchlTiqo392q14wz3l7lZcE0dGOgXprbzpO/CJkb3n8z9pMliuXbKA6B/IO+SqJkWXjTeWU=
+	t=1787238292; cv=none; b=iZODKmVsC8H3KPrMgwwEb3xTLeVSYJo0PZKOYgMzKSGspzdKCljGVeUYWyb/JLXUpNF4dPvzGwFrScuX1H1ipUH1k0lgQc1p9EwZ2GhGdwo93yjQDL6U/5Ux8zHSDOHC4iRpfLsyZ2wLf0slMD21Pu8M/6nfvyWI4e63wZfsJCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238288; c=relaxed/simple;
-	bh=iSrsxHOQV+B0nIeRj0+3fhikQV0Sk3FqRociJui7khY=;
+	s=arc-20240116; t=1787238292; c=relaxed/simple;
+	bh=swGO1C0P3sXhUTWPPd/wRs4wGCSlYt+Q3Y0i8V4i3go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XFnDXuJDk7pewlSdPfX/vfD5p9PzaqmEdHzh6798C4DRAKLhRChE8byeblCYpksuGYpMP51wFG/p+BQnDL03QLDg0rzuWjz0Ia9okNEjzbKoAZBWXWtlO1CwVRRoNtY3BNza1qm7KdF0M2T95xf3XUdclLmLxI5/SGue5IMI4PU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G8CLjDqZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HE6OhakmXvWtqaoqlAlNSnt+3iZu1sgrtlORdf+Uq3EOAbrbn4tlnBJq9FmqBd8icdVdgAir8udzvKUu2DWG/+sv1wvIq+eKPfrXwJJp4QPTaAilqyFQUi1sK3YenKmjq+bHWbAhAvDeSlZMPaC+k908AZAjGtrNKbULp5z56xA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Nv/0OI2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G8CLjDqZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E69B1F000E9;
-	Thu, 20 Aug 2026 15:04:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Nv/0OI2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11F2F1F000E9;
+	Thu, 20 Aug 2026 15:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238287;
-	bh=toTiJCU38YZoxrdGOltoJUJlxFVhuyvBMGvMYRaVJLE=;
+	s=korg; t=1787238290;
+	bh=JpEkUTf27GMXKZ7eFS2iD/21i1tj7Bvk7J4kIxGCQC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G8CLjDqZTYTPFn8xjg6ihQ70i785V80vlgKZDH3SEHTVcCb8UXJqHzJAhwklphVH6
-	 uklDKURYpvWgQBz5xGCHjxjJS895V3EFo3CZOdxihDlzswU2W0mXxcwZr1qU57vV20
-	 ki8ScN/+wWyZVDW0rxVIrBJchqsHa/kgUxqESJp8=
+	b=2Nv/0OI2M1dUY/gZU3DKn9vQD4Sgwt+2c/xeH3k9TlUI0HmpBD2Er6UfYMASgKz7w
+	 xTRaCoYfHQvHqZ527+B1QI0nMfK/9QyhN8cWLRPyWZW9jPN0/+zREIChKZXmkOASue
+	 8BIuk406lGEVnYI8Ji4H+1BiLxWABD6/NVynl4DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 094/228] drm/radeon: fix autosuspend cleanup during teardown
-Date: Thu, 20 Aug 2026 16:53:56 +0200
-Message-ID: <20260820145247.510785568@linuxfoundation.org>
+	Farhan Ali <alifm@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Eric Farman <farman@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: [PATCH 7.1 095/228] s390/vfio_ccw: Free all memory if cp_init() fails
+Date: Thu, 20 Aug 2026 16:53:57 +0200
+Message-ID: <20260820145247.539844437@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -50,48 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Eric Farman <farman@linux.ibm.com>
 
-commit 587be7a17358ef8c0106775fcedae5a7bef50735 upstream.
+commit 74186c2968f8f756ac3226b545b598457c910c75 upstream.
 
-radeon_driver_load_kms() calls pm_runtime_use_autosuspend() for PX
-devices, but radeon_driver_unload_kms() does not call the matching
-pm_runtime_dont_use_autosuspend() during teardown.
+The routine cp_free() is called to unpin/free any memory once an I/O
+is completed successfully, or if cp_prefetch() fails. But if cp_init()
+fails, and cp->initialized is not enabled, the same routine cannot be
+used to free all the memory.
 
-If the autosuspend delay is set to a negative value while autosuspend
-is enabled, the runtime PM core increments usage_count to prevent
-runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
-during teardown, this reference is not dropped.
+An attempt to address this exists in ccwchain_handle_ccw(), where a
+single call to ccwchain_free() is made for the currently-processed
+CCW segment. But this will leak other segments (created as a result
+of a Transfer in Channel) that had been allocated as part of the same
+channel program.
 
-The documentation for pm_runtime_use_autosuspend() also notes that it
-is important to undo it with pm_runtime_dont_use_autosuspend() at
-driver exit time, unless runtime PM was initially enabled with
-devm_pm_runtime_enable().
+Address this by performing the cleanup outside of the recursive
+ccwchain_handle_ccw()/ccwchain_loop_tic() logic.
 
-Add the missing pm_runtime_dont_use_autosuspend() call to the driver
-unload path.
-
-This issue was found by manual code inspection.
-
-Fixes: 10ebc0bc0934 ("drm/radeon: add runtime PM support (v2)")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 0fdc1ff82ea14844c22795e9e0813c3ca03235e1)
+Fixes: 8b515be512a2 ("vfio-ccw: Fix memory leak and don't call cp_free in cp_init")
 Cc: stable@vger.kernel.org
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/radeon_kms.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/s390/cio/vfio_ccw_cp.c |   22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/radeon/radeon_kms.c
-+++ b/drivers/gpu/drm/radeon/radeon_kms.c
-@@ -71,6 +71,7 @@ void radeon_driver_unload_kms(struct drm
- 	if (radeon_is_px(dev)) {
- 		pm_runtime_get_sync(dev->dev);
- 		pm_runtime_forbid(dev->dev);
-+		pm_runtime_dont_use_autosuspend(dev->dev);
- 	}
+--- a/drivers/s390/cio/vfio_ccw_cp.c
++++ b/drivers/s390/cio/vfio_ccw_cp.c
+@@ -455,9 +455,6 @@ static int ccwchain_handle_ccw(dma32_t c
+ 	/* Loop for tics on this new chain. */
+ 	ret = ccwchain_loop_tic(chain, cp);
  
- 	radeon_acpi_fini(rdev);
+-	if (ret)
+-		ccwchain_free(chain);
+-
+ 	return ret;
+ }
+ 
+@@ -486,6 +483,23 @@ static int ccwchain_loop_tic(struct ccwc
+ 	return 0;
+ }
+ 
++static int ccwchain_build_ccws(dma32_t cda, struct channel_program *cp)
++{
++	struct ccwchain *chain, *temp;
++	int ret;
++
++	ret = ccwchain_handle_ccw(cda, cp);
++
++	if (ret) {
++		/* Cleanup if an error occurred */
++		list_for_each_entry_safe(chain, temp, &cp->ccwchain_list, next) {
++			ccwchain_free(chain);
++		}
++	}
++
++	return ret;
++}
++
+ static int ccwchain_fetch_tic(struct ccw1 *ccw,
+ 			      struct channel_program *cp)
+ {
+@@ -735,7 +749,7 @@ int cp_init(struct channel_program *cp,
+ 	memcpy(&cp->orb, orb, sizeof(*orb));
+ 
+ 	/* Build a ccwchain for the first CCW segment */
+-	ret = ccwchain_handle_ccw(orb->cmd.cpa, cp);
++	ret = ccwchain_build_ccws(orb->cmd.cpa, cp);
+ 
+ 	if (!ret)
+ 		cp->initialized = true;
 
 
