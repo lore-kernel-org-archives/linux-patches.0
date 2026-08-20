@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5438146D2C9;
-	Thu, 20 Aug 2026 17:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18081469843;
+	Thu, 20 Aug 2026 17:39:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247537; cv=none; b=HPOJQcqICC2cucqddx4FvYEdY/PsU11G1vPJr7s0pMKYr9ZvkaVS+sHopnOrexSZPOgczXGgmVVtao9f4z1FBp989kyNkzc1bgxj036uGx+CNF+sk9QuG8gn/0OeYbWaW4yBuPDNKnvaS0nGgbl/k/QaK9+GFdyUzXtwDsFKNCA=
+	t=1787247543; cv=none; b=dZZnOUEvHQSvZSupS3gv1INhRRP9AHH6i5E8WlZIlZy+2Bf6Qm6ZTnqcZCV06IIvahq9vk+zJ3x5yblX2fTZ9Va6s6bbxCil6eXo7U/kgu1qv0c1gU2L3aDpACyyqonJhgU+MGmdNDaUq7kw2pIJpV00VTxg/kGH9ec1uH1uoXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247537; c=relaxed/simple;
-	bh=5CUNyft9UkDHu6gBtgF2/1qES8KUQVBSAhJECTHth1o=;
+	s=arc-20240116; t=1787247543; c=relaxed/simple;
+	bh=c9oDIzFQi5qOrUZKOR0iXTdLT2Ds0eL+n7K4Lv7JzU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P71kQIpozrQISvx/915A/Z4GuSV7oMkBPHREAmwA7izBZtCoZZp4QkBCuDDX2zdeNhFKsazcB2OhbMmFkmSpPW8xxeQt66uOfDeTj7J0N5/RMSGxrg11bVT/91IJVNusuLml/1OigQn9jYdVw3E1wnZW2Wcgj38Jscylcm2VnJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrEnoG1S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dA9zvCH7+AIE3dVSbqRcHWsapLer++EGy8fRkATQcqqF/teE/dAd+B1Pet3zPJqLznduTAw1rqU8NF1wt7wL1zFB7/UeDJw9g2toARM350FEbeXvQwzp9p7KoFngyhWYcanDFrZKRS86UrAat91w0VonmSEiBPNfDzF9+HrvUtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KEQafnli; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrEnoG1S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEEEB1F000E9;
-	Thu, 20 Aug 2026 17:38:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KEQafnli"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4931F00A3A;
+	Thu, 20 Aug 2026 17:39:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247536;
-	bh=0Hgqx4FW3CvVg5n4rARXecf3KCBDxbv5lNhv1fdL3p8=;
+	s=korg; t=1787247541;
+	bh=6XYz4t/xI+XefasOYxEKOdwZkngxL1sE6424EkGxJVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DrEnoG1SwD6OG32McP5f79eUCpRb23NnBLCpMcloWMpfbcXBMAzKtf/mBSgJz9XIj
-	 RP+5zG9QVxPpNzjNIfEFS5kWHFCXd/c5FlM0NjGMIo0qRrGyvVNn4qRqBCqbbJzGIG
-	 hpaziWWWk+xJPwkfxpJzc62Ey8tMx2n2SiluhX3Q=
+	b=KEQafnliEgUQoAbg818U1bpCQDSmOxWo+2DT+9oVK8QwehecdUqFneSdwYovzSm+a
+	 EgG7XnQpHoJ548SHuPR6N6C9dde1YEkU1EdU9ED7fTlRODGCd91Khpqu9S+dwDaZJ4
+	 1tefF5Zhj1c93CqJOhwEY8fR6ZBVCgWkkJbZ567o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 031/166] Input: synaptics-rmi4 - block s_input when F54 queue is busy
-Date: Thu, 20 Aug 2026 16:54:50 +0200
-Message-ID: <20260820145212.120345805@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	David Ahern <dsahern@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 083/166] net: move skb_gro_receive_list from udp to core
+Date: Thu, 20 Aug 2026 16:55:42 +0200
+Message-ID: <20260820145213.649435901@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -50,45 +54,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit fbfd76746adc16d64be29ff113f673b70bc3f5c2 upstream.
+[ Upstream commit 8928756d53d5b99dcd18073dc7738b8ebdbe7d96 ]
 
-Changing the input (diagnostic report type) mid-stream changes the
-report size. Since V4L2 buffers are allocated based on the size at
-stream start, changing the input while streaming could lead to a
-heap buffer overflow if the new size is larger than the allocated
-buffers.
+This helper function will be used for TCP fraglist GRO support
 
-Prevent this by blocking VIDIOC_S_INPUT with -EBUSY if the V4L2 queue
-is busy (streaming).
-
-Fixes: 3a762dbd5347 ("[media] Input: synaptics-rmi4 - add support for F54 diagnostics")
-Cc: stable@vger.kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Link: https://patch.msgid.link/20260626051802.4033172-5-dmitry.torokhov@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: e751256486d0 ("net: gro: fix double aggregation of flush-marked skbs")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/rmi4/rmi_f54.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ include/net/gro.h      |    1 +
+ net/core/gro.c         |   29 +++++++++++++++++++++++++++++
+ net/ipv4/udp_offload.c |   29 -----------------------------
+ 3 files changed, 30 insertions(+), 29 deletions(-)
 
---- a/drivers/input/rmi4/rmi_f54.c
-+++ b/drivers/input/rmi4/rmi_f54.c
-@@ -447,7 +447,12 @@ static int rmi_f54_set_input(struct f54_
- 
- static int rmi_f54_vidioc_s_input(struct file *file, void *priv, unsigned int i)
- {
--	return rmi_f54_set_input(video_drvdata(file), i);
-+	struct f54_data *f54 = video_drvdata(file);
-+
-+	if (vb2_is_busy(&f54->queue))
-+		return -EBUSY;
-+
-+	return rmi_f54_set_input(f54, i);
+--- a/include/net/gro.h
++++ b/include/net/gro.h
+@@ -442,6 +442,7 @@ static inline __wsum ip6_gro_compute_pse
  }
  
- static int rmi_f54_vidioc_g_input(struct file *file, void *priv,
+ int skb_gro_receive(struct sk_buff *p, struct sk_buff *skb);
++int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb);
+ 
+ /* Pass the currently batched GRO_NORMAL SKBs up to the stack. */
+ static inline void gro_normal_list(struct napi_struct *napi)
+--- a/net/core/gro.c
++++ b/net/core/gro.c
+@@ -230,6 +230,35 @@ done:
+ 	return 0;
+ }
+ 
++int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb)
++{
++	if (unlikely(p->len + skb->len >= 65536))
++		return -E2BIG;
++
++	if (NAPI_GRO_CB(p)->last == p)
++		skb_shinfo(p)->frag_list = skb;
++	else
++		NAPI_GRO_CB(p)->last->next = skb;
++
++	skb_pull(skb, skb_gro_offset(skb));
++
++	NAPI_GRO_CB(p)->last = skb;
++	NAPI_GRO_CB(p)->count++;
++	p->data_len += skb->len;
++
++	/* sk ownership - if any - completely transferred to the aggregated packet */
++	skb->destructor = NULL;
++	skb->sk = NULL;
++	p->truesize += skb->truesize;
++	p->len += skb->len;
++
++	skb_shinfo(p)->flags |= skb_shinfo(skb)->flags & SKBFL_SHARED_FRAG;
++
++	NAPI_GRO_CB(skb)->same_flow = 1;
++
++	return 0;
++}
++
+ 
+ static void napi_gro_complete(struct napi_struct *napi, struct sk_buff *skb)
+ {
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -527,35 +527,6 @@ out:
+ 	return segs;
+ }
+ 
+-static int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb)
+-{
+-	if (unlikely(p->len + skb->len >= 65536))
+-		return -E2BIG;
+-
+-	if (NAPI_GRO_CB(p)->last == p)
+-		skb_shinfo(p)->frag_list = skb;
+-	else
+-		NAPI_GRO_CB(p)->last->next = skb;
+-
+-	skb_pull(skb, skb_gro_offset(skb));
+-
+-	NAPI_GRO_CB(p)->last = skb;
+-	NAPI_GRO_CB(p)->count++;
+-	p->data_len += skb->len;
+-
+-	/* sk ownership - if any - completely transferred to the aggregated packet */
+-	skb->destructor = NULL;
+-	skb->sk = NULL;
+-	p->truesize += skb->truesize;
+-	p->len += skb->len;
+-
+-	skb_shinfo(p)->flags |= skb_shinfo(skb)->flags & SKBFL_SHARED_FRAG;
+-
+-	NAPI_GRO_CB(skb)->same_flow = 1;
+-
+-	return 0;
+-}
+-
+ 
+ #define UDP_GRO_CNT_MAX 64
+ static struct sk_buff *udp_gro_receive_segment(struct list_head *head,
 
 
