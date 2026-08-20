@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8C53822BF;
-	Thu, 20 Aug 2026 15:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A8733909AB;
+	Thu, 20 Aug 2026 15:21:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239295; cv=none; b=sJQzjs6aPcxGVM/b/9Xk2Mtyc+Ee/YDScW9NFjNg3tSFPUybyNQWgcSBv1xrMVx2/pHfRhpByV0Kjzr1puDzUVUubY+44I3FWZyndRxXM9DtmSSrgL6HZLkCh2wUR4IaZLJNEeqPEFCZNoSeiHKnt5I9Jiys6yITWetqrg14Lu0=
+	t=1787239299; cv=none; b=egNFrmhRA1p81vl9AgFrGke3/oAthSaDODdfW6cazhjNwEOaGajcIzRJcOiC9RrndDhl3msR9kDB2m91w3yfowxTmH2fGbAu/OwXM6lpMadqUmhPrXyHs2cVvWoQr33xnYiXMM0U9ji1Y6LJfHd3vKtrIg4Uau81kGW+jk+Mmj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239295; c=relaxed/simple;
-	bh=iZWSdPbdHKbe7db/npIG9CiFWfVq6kO/CCb1qbcBZeM=;
+	s=arc-20240116; t=1787239299; c=relaxed/simple;
+	bh=gS8CLYoWBMB8dbWIjzeN6JW+6BSyOamoX4kGiQBQySA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uQzWbyOzX1JpFLNnAjEwPoXq6o26HEIL1ikbWVWo5xsjD6caav6OwVzys/o54n3jlE1eO42NW+1aBmlLXUSPjOg/GE11yxwBFFG5jv9974XPW0bADUcuMpmsHbqh01r2pFMNJrFFP9g9jXaf06pRzxlTKP641fcFowWgqacIfQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i2sSfNCu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GvjkTz9VspuldEpCJPAT0kcQkEdE6jPLiFjtvY69Tyxa7Jq81s0lRxekbTMFh2MAfi2Oj/lghKXUeVoEUxExvZjJoOVU2qb/lU8qdmm5pWlPTNayAk9O/p0Yp2mCdHMq5v9wjRy14hGzxD/KyOrKHGVqD+fJBEHYdn7MQ+XOwu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JrbBvjRj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2sSfNCu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830D81F000E9;
-	Thu, 20 Aug 2026 15:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JrbBvjRj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6035F1F000E9;
+	Thu, 20 Aug 2026 15:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239294;
-	bh=DDMcnmh3Dn0+t0xKjKJzFanz4iIKVI8NdfwFpPx1Dgc=;
+	s=korg; t=1787239296;
+	bh=OQFglNQNkuzfPYY9HjrAprdylSGnLPpKCqdfCykRGw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i2sSfNCu0YnM0a6cjXAIXydNVQimCrebioV8lGf5ndk98JIK45CAhoIqBCg/03Nir
-	 obaH1QCtLHjAhn+nO0JUFXlq6+Y2wG7VEORWR03Lcvr294Jq2AqdrDnI6tuXz1miQq
-	 gjKH12whmN18t4nA715YA2vBmH8OoTNgnOjLKFnE=
+	b=JrbBvjRj8sBJd59pUKaeLhb6cZbzmUGflcMNQUu+sT92c8VLqk/9sRYkRaso6Q/f2
+	 7BnGWkL48eua8vw09ArGFtceDI6V+uYY9G9b7e78QdIB7jLLCCayee3rpI7/i01GNs
+	 LonsP4nAK/aMfHFvO2PB9j0jDh4xU2cOpSjoWWCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+d30aad27833a559defab@syzkaller.appspotmail.com,
+	Aleksandr Nogikh <nogikh@google.com>,
 	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 204/217] firewire: ohci: split page allocation from dma mapping
-Date: Thu, 20 Aug 2026 16:56:12 +0200
-Message-ID: <20260820145243.844698786@linuxfoundation.org>
+Subject: [PATCH 6.18 205/217] firewire: ohci: fix NULL pointer dereference in ar_context_release
+Date: Thu, 20 Aug 2026 16:56:13 +0200
+Message-ID: <20260820145243.872793336@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -50,149 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Aleksandr Nogikh <nogikh@google.com>
 
-[ Upstream commit f2ae92780ab93ed7e59e469cfd5c7269bd68ddb4 ]
+[ Upstream commit 42d217add8d80d6e7d9f58f80d11ea9b07ea113e ]
 
-1394 OHCI PCI driver had long been the only user of dma_alloc_pages().
-Although tee subsystem recently started using it, they are still a few
-users of the infrequently-used function.
+During the error handling path of the driver's probe function, a NULL
+pointer dereference can occur in ar_context_release().
 
-In the discussion for dma-mapping function, Jason Gunthorpe shows his
-opinion about the design of public API for the function. According to it,
-the users provide physical address to the function, then receive DMA
-mapping address, regardless of the location of mapping target.
+When pci_probe() fails early (e.g., if pcim_enable_device() or MMIO mapping
+fails), the devres cleanup mechanism invokes release_ohci(). This function
+unconditionally calls ar_context_release() to clean up the asynchronous
+receive contexts. However, if ar_context_init() was not yet called,
+ctx->ohci remains NULL (as the fw_ohci structure is zero-initialized by
+devres_alloc()).
 
-With the above aspects, this commit eliminates the use of
-dma_alloc_pages() from this subsystem.
+ar_context_release() immediately dereferences ctx->ohci to get the dev
+pointer before checking if the context was actually initialized, leading to
+a crash:
 
-Link: https://lore.kernel.org/lkml/20250905174324.GI616306@nvidia.com/
-Link: https://lore.kernel.org/r/20260110013911.19160-8-o-takashi@sakamocchi.jp
+Oops: general protection fault, probably for non-canonical address
+0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+RIP: 0010:ar_context_release+0x3f/0x380 drivers/firewire/ohci.c:543
+Call Trace:
+ release_ohci+0x3f/0x60 drivers/firewire/ohci.c:3567
+ release_nodes drivers/base/devres.c:546 [inline]
+ devres_release_all+0x1a8/0x260 drivers/base/devres.c:576
+ device_unbind_cleanup drivers/base/dd.c:597 [inline]
+ really_probe+0x451/0xae0 drivers/base/dd.c:772
+
+To fix this, move the assignment of the dev pointer after the !ctx->buffer
+check. If ctx->buffer is NULL, it indicates that the context was never
+successfully initialized and there is nothing to release, safely avoiding
+the dereference of the uninitialized ctx->ohci pointer.
+
+Fixes: 5716e58aecdd ("firewire: ohci: release buffer for AR req/resp contexts when managed resource is released")
+Assisted-by: Gemini:gemini-3.5-flash Gemini:gemini-3.1-pro-preview syzbot
+Reported-by: syzbot+d30aad27833a559defab@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d30aad27833a559defab
+Link: https://syzkaller.appspot.com/ai_job?id=10a18617-7893-42dd-bf1c-cd49e19e95d9
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Link: https://lore.kernel.org/r/90c5db71-dd1f-4d46-b9d3-2f1046cbd5ea@mail.kernel.org
 Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Stable-dep-of: 42d217add8d8 ("firewire: ohci: fix NULL pointer dereference in ar_context_release")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/ohci.c | 77 +++++++++++++++++++++++++++--------------
- 1 file changed, 51 insertions(+), 26 deletions(-)
+ drivers/firewire/ohci.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/firewire/ohci.c b/drivers/firewire/ohci.c
-index 030aed5453a17..afcf36c01ef83 100644
+index afcf36c01ef83..cacedca4e9774 100644
 --- a/drivers/firewire/ohci.c
 +++ b/drivers/firewire/ohci.c
-@@ -539,18 +539,22 @@ static void ar_context_link_page(struct ar_context *ctx, unsigned int index)
+@@ -538,11 +538,13 @@ static void ar_context_link_page(struct ar_context *ctx, unsigned int index)
+ 
  static void ar_context_release(struct ar_context *ctx)
  {
- 	struct device *dev = ctx->ohci->card.device;
--	unsigned int i;
+-	struct device *dev = ctx->ohci->card.device;
++	struct device *dev;
  
  	if (!ctx->buffer)
  		return;
  
--	vunmap(ctx->buffer);
-+	for (int i = 0; i < AR_BUFFERS; ++i) {
-+		dma_addr_t dma_addr = page_private(ctx->pages[i]);
- 
--	for (i = 0; i < AR_BUFFERS; i++) {
--		if (ctx->pages[i])
--			dma_free_pages(dev, PAGE_SIZE, ctx->pages[i],
--				       ar_buffer_bus(ctx, i), DMA_FROM_DEVICE);
-+		dma_unmap_page(dev, dma_addr, PAGE_SIZE, DMA_FROM_DEVICE);
-+		set_page_private(ctx->pages[i], 0);
- 	}
++	dev = ctx->ohci->card.device;
 +
-+	vunmap(ctx->buffer);
-+	ctx->buffer = NULL;
-+
-+	release_pages(ctx->pages, AR_BUFFERS);
-+	memset(ctx->pages, 0, sizeof(ctx->pages));
- }
+ 	for (int i = 0; i < AR_BUFFERS; ++i) {
+ 		dma_addr_t dma_addr = page_private(ctx->pages[i]);
  
- static void ar_context_abort(struct ar_context *ctx, const char *error_msg)
-@@ -845,31 +849,57 @@ static int ar_context_init(struct ar_context *ctx, struct fw_ohci *ohci,
- {
- 	struct device *dev = ohci->card.device;
- 	unsigned int i;
--	dma_addr_t dma_addr;
- 	struct page *pages[AR_BUFFERS + AR_WRAPAROUND_PAGES];
-+	void *vaddr;
- 	struct descriptor *d;
- 
- 	ctx->regs        = regs;
- 	ctx->ohci        = ohci;
- 	INIT_WORK(&ctx->work, ohci_ar_context_work);
- 
--	for (i = 0; i < AR_BUFFERS; i++) {
--		ctx->pages[i] = dma_alloc_pages(dev, PAGE_SIZE, &dma_addr,
--						DMA_FROM_DEVICE, GFP_KERNEL);
--		if (!ctx->pages[i])
--			goto out_of_memory;
--		set_page_private(ctx->pages[i], dma_addr);
--		dma_sync_single_for_device(dev, dma_addr, PAGE_SIZE,
--					   DMA_FROM_DEVICE);
-+	// Retrieve noncontiguous pages. The descriptors for 1394 OHCI AR DMA contexts have a set
-+	// of address and length per each. The reason to use pages is to construct contiguous
-+	// address range in kernel virtual address space.
-+	unsigned long nr_populated = alloc_pages_bulk(GFP_KERNEL | GFP_DMA32, AR_BUFFERS, pages);
-+
-+	if (nr_populated != AR_BUFFERS) {
-+		release_pages(pages, nr_populated);
-+		return -ENOMEM;
- 	}
- 
--	for (i = 0; i < AR_BUFFERS; i++)
--		pages[i]              = ctx->pages[i];
-+	// Map the pages into contiguous kernel virtual addresses so that the packet data
-+	// across the pages can be referred as being contiguous, especially across the last
-+	// and first pages.
- 	for (i = 0; i < AR_WRAPAROUND_PAGES; i++)
--		pages[AR_BUFFERS + i] = ctx->pages[i];
--	ctx->buffer = vmap(pages, ARRAY_SIZE(pages), VM_MAP, PAGE_KERNEL);
--	if (!ctx->buffer)
--		goto out_of_memory;
-+		pages[AR_BUFFERS + i] = pages[i];
-+	vaddr = vmap(pages, ARRAY_SIZE(pages), VM_MAP, PAGE_KERNEL);
-+	if (!vaddr) {
-+		release_pages(pages, nr_populated);
-+		return -ENOMEM;
-+	}
-+
-+	// Retrieve DMA mapping addresses for the pages. They are not contiguous. Maintain the cache
-+	// coherency for the pages by hand.
-+	for (i = 0; i < AR_BUFFERS; i++) {
-+		// The dma_map_phys() with a physical address per page is available here, instead.
-+		dma_addr_t dma_addr = dma_map_page(dev, pages[i], 0, PAGE_SIZE, DMA_FROM_DEVICE);
-+		if (dma_mapping_error(dev, dma_addr))
-+			break;
-+		set_page_private(pages[i], dma_addr);
-+		dma_sync_single_for_device(dev, dma_addr, PAGE_SIZE, DMA_FROM_DEVICE);
-+	}
-+	if (i < AR_BUFFERS) {
-+		while (i-- > 0) {
-+			dma_addr_t dma_addr = page_private(pages[i]);
-+			dma_unmap_page(dev, dma_addr, PAGE_SIZE, DMA_FROM_DEVICE);
-+		}
-+		vunmap(vaddr);
-+		release_pages(pages, nr_populated);
-+		return -ENOMEM;
-+	}
-+
-+	ctx->buffer = vaddr;
-+	memcpy(ctx->pages, pages, sizeof(ctx->pages));
- 
- 	ctx->descriptors     = ohci->misc_buffer     + descriptors_offset;
- 	ctx->descriptors_bus = ohci->misc_buffer_bus + descriptors_offset;
-@@ -886,11 +916,6 @@ static int ar_context_init(struct ar_context *ctx, struct fw_ohci *ohci,
- 	}
- 
- 	return 0;
--
--out_of_memory:
--	ar_context_release(ctx);
--
--	return -ENOMEM;
- }
- 
- static void ar_context_run(struct ar_context *ctx)
 -- 
 2.53.0
 
