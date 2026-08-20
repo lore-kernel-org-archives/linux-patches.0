@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5643377A82;
-	Thu, 20 Aug 2026 17:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914C347F2CE;
+	Thu, 20 Aug 2026 17:55:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248504; cv=none; b=NujseZWi5ObAk8/ajFXK6R3xHXEz54380INzuFteQwMkFW1NF76dznaOB0pnSlILBeA5SbgvWmWpVDDMpDkM63vjyh5XQjckHJY8UyVLcH+t+RFEGEj83KNwwB0gtiHgPF3slPjreX0JX+/InsydbdSsWD+FqJbKFsKpLp40XPo=
+	t=1787248507; cv=none; b=WfLwMhwqAyM2lIGYDM2fx8jHAiaeI5wevusqm/fDCM1PAq7hSpzKd5JpmG+vAURnxKzBoICoGSUSRUbApgLt7LMQE77Lp9X4klkipcF3WYyk/qfhPe5ZJFI93bwHSnCRUT+4L5Z+s5y5R4tW0xknHpJJ86v1d2ZkBjLG2X7VIw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248504; c=relaxed/simple;
-	bh=bwSxvUn4CYbvksIQn/W9tb3fKuoVWtz2vg/bmFG0+pM=;
+	s=arc-20240116; t=1787248507; c=relaxed/simple;
+	bh=0aSOrRiP99XDsLM1YIsnQkqvRltZOugicVe6RIVQ1r0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJgpNN+DnrPN+ZjcwXqHLsyemDckgIjk7mIlIfxwH72V30ZDh5CisyfWTGjCIH/lvqM1wJ3LTwJiDOoTp0vRf1MLcUG9GRPh2Rt8LlpIZOTzBhgYacjSGhqANJlt4lRwTND55dogoounm4f3u1UzCMAa2HGO8ud9y5DP2MrtCwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k7QtVejc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=B2dCXtDz/0MR2mhnTF827MLVNxphpbIH0+HHRBb2byaguJCRnV8XKt4PxtM0Wzyb86+0TEHU2KYqSvzutbe5eV2JH4VEN4ylyy1zywO7P0InsRQHVNHK+gZte//bLp6u/Z7Fj4EAQH1SOaueotbcN/0ouPDAAFbUIfJNOfTSToU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvwjasZt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k7QtVejc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B03D1F000E9;
-	Thu, 20 Aug 2026 17:55:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvwjasZt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB931F000E9;
+	Thu, 20 Aug 2026 17:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248503;
-	bh=2O242QYfhJHEWXvgMWTGyWajKOjQn9jrxbY2dN19Llc=;
+	s=korg; t=1787248506;
+	bh=+QSQp4NdPNFwv0v0/Z0k9jTDuoGOkXFEMxSoZIJXOyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k7QtVejcrF7lXI8HIenjmmvIvH5Uze15Tq/ADyJ73VcI/EYtQnduYN4Rgp4ouR6Kf
-	 d98V2Dh0ixvKRfQD15ADKMMF9uEUxT180c3H0jhpk5ELV/J/tjU3Ip23QKuhfzDsLW
-	 Yxwd6NMCkDW9YJpUFMv3qwXP5gvPUIDo4eK31Ytw=
+	b=KvwjasZtqF8NTbYnydC0ytIaS9e2CH7eRoutFKPf7dBMiboizpU5OQDS01343ZUvT
+	 N4XlukHM9r0CxtoYr0GYF/xf9Z5kSInpSRhJ+//8y8G1Mx8K9GeJQkRWYOxFblerH6
+	 LOobiIhKbbb+y4BWxrGypXbUnLOO12EGtEAL2AXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Matt Fleming <mfleming@cloudflare.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 250/303] net: pktgen: fix proc entry use-after-free
-Date: Thu, 20 Aug 2026 16:56:26 +0200
-Message-ID: <20260820145300.962837334@linuxfoundation.org>
+Subject: [PATCH 6.1 251/303] veth: convert frag_list skbs before running XDP
+Date: Thu, 20 Aug 2026 16:56:27 +0200
+Message-ID: <20260820145300.993353287@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -46,86 +47,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Matt Fleming <mfleming@cloudflare.com>
 
-[ Upstream commit 817ff6efdb7f484ea547218e11e17d8e43daa3b4 ]
+[ Upstream commit d0d6415963040c401e7a7e4e482a698ba52448cb ]
 
-pktgen_change_name() replaces pkt_dev->entry while holding t->if_lock.
-pktgen_remove_device() removes the same entry before
-_rem_dev_from_if_list() takes that lock.
+A frag_list skb can reach veth with data_len set but nr_frags zero.
+veth_convert_skb_to_xdp_buff() only converts skbs that are shared,
+locked, have frags[], or do not have enough headroom. It later uses
+skb_is_nonlinear() to decide whether to set XDP_FLAGS_HAS_FRAGS and
+xdp_frags_size.
 
-This allows the following interleaving:
+That exposes frag_list data to XDP as if it were stored in frags[], but
+frags[] is empty. AF_XDP copy mode can then trust the bogus XDP fragment
+metadata, walk an empty fragment entry, and crash in memcpy() from
+__xsk_rcv().
 
-  CPU 0 (NETDEV_CHANGENAME)       CPU 1 (kpktgend)
-  if_lock(t)
-  proc_remove(pkt_dev->entry)
-                                  proc_remove(pkt_dev->entry)
-  pkt_dev->entry = proc_create_data(...)
-  if_unlock(t)
+Route non-linear skbs through skb_pp_cow_data() before exposing them to
+XDP, and only advertise XDP frags when the resulting skb has frags[].
+skb_copy_bits() already handles frag_list input, and skb_pp_cow_data()
+builds frags[] output with skb_add_rx_frag(), which is the
+representation XDP multi-buffer expects.
 
-The kthread can pass the stale proc_dir_entry to proc_remove() after the
-rename path has freed it. A reproducer with a widened race window reports:
-
-  BUG: KASAN: slab-use-after-free in proc_remove+0x78/0x80
-  Read of size 8 at addr ffff8881478fea70 by task kpktgend_0/67
-  Call Trace:
-   proc_remove+0x78/0x80
-   pktgen_remove_device.isra.0+0x11c/0x4c0
-   pktgen_thread_worker+0x1214/0x6bc0
-   kthread+0x2c6/0x3b0
-  Allocated by task 95:
-   __proc_create+0x204/0x790
-   proc_create_data+0x72/0xe0
-   pktgen_thread_write+0xd61/0x1510
-  Freed by task 28:
-   kmem_cache_free+0xcb/0x3d0
-   proc_free_inode+0x5b/0x80
-   rcu_core+0x50a/0x1850
-  The buggy address belongs to the object at ffff8881478fea00
-   which belongs to the cache proc_dir_entry of size 192
-
-Move proc_remove() into the if_lock-protected list removal helper. Keep it
-before list_del_rcu() to preserve the ordering required by add_device().
-The rename path must then finish replacing the entry before removal, or
-it observes that the device is no longer on the list.
-
-Fixes: 39df232f1a9b ("[PKTGEN]: fix device name handling")
+Fixes: 718a18a0c8a6 ("veth: Rework veth_xdp_rcv_skb in order to accept non-linear skb")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260719145740.2888967-1-nicoyip.dev@gmail.com
+Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260722191925.2192070-1-matt@readmodwrite.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/pktgen.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/net/veth.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/core/pktgen.c
-+++ b/net/core/pktgen.c
-@@ -3888,6 +3888,7 @@ static void _rem_dev_from_if_list(struct
- 	struct pktgen_dev *p;
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -695,7 +695,7 @@ static int veth_convert_skb_to_xdp_buff(
+ 	u32 frame_sz;
  
- 	if_lock(t);
-+	proc_remove(pkt_dev->entry);
- 	list_for_each_safe(q, n, &t->if_list) {
- 		p = list_entry(q, struct pktgen_dev, list);
- 		if (p == pkt_dev)
-@@ -3917,9 +3918,6 @@ static int pktgen_remove_device(struct p
- 	 * list to determine if interface already exist, avoid race
- 	 * with proc_create_data()
- 	 */
--	proc_remove(pkt_dev->entry);
--
--	/* And update the thread if_list */
- 	_rem_dev_from_if_list(t, pkt_dev);
+ 	if (skb_shared(skb) || skb_head_is_locked(skb) ||
+-	    skb_shinfo(skb)->nr_frags ||
++	    skb_is_nonlinear(skb) ||
+ 	    skb_headroom(skb) < XDP_PACKET_HEADROOM) {
+ 		u32 size, len, max_head_size, off;
+ 		struct sk_buff *nskb;
+@@ -770,7 +770,7 @@ static int veth_convert_skb_to_xdp_buff(
+ 	xdp_prepare_buff(xdp, skb->head, skb_headroom(skb),
+ 			 skb_headlen(skb), true);
  
- #ifdef CONFIG_XFRM
+-	if (skb_is_nonlinear(skb)) {
++	if (skb_shinfo(skb)->nr_frags) {
+ 		skb_shinfo(skb)->xdp_frags_size = skb->data_len;
+ 		xdp_buff_set_frags_flag(xdp);
+ 	} else {
 
 
