@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF10B471D0B;
-	Thu, 20 Aug 2026 17:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC0A47D94B;
+	Thu, 20 Aug 2026 17:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247899; cv=none; b=gDaqtQPUVZUUJUby4PD4An/9/az73TkeUAS/ksGODP8m/OneUggqnT7wFUAi5Y9EpKTkz/g0mkrDVGjD/WybBRn+UU9HzLbSn694xbB9YLbM/WBZHEFV8ARv0ZSe3x0uLRaPyY20vukSoELPgE0YPqfukPSHg2gNRss8bkE0Ey8=
+	t=1787247901; cv=none; b=LnQo9YklNoQWTO2XzjSUOrPLKMcmFV2rbeApDuMZxLhubXRb0++y4Wncq53Qvrn5JeAG/3LaK3qFbAtJ6s7hH//xEkD62UQE6GxG+wGgOI6EbLqVb16gtQ23C9HBIrKZlIirrDJSIRh+cBzvwXHBXb34tkbK7eXLa4tFV0x12WQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247899; c=relaxed/simple;
-	bh=9rdOVEVEoWcFnzSGQTcKLnoSVyFGErVDIKY2soY3J5c=;
+	s=arc-20240116; t=1787247901; c=relaxed/simple;
+	bh=o0+S+ZyIQ0vJBBsE0oK5veBQVJCTPwwLSfrncypv/XY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k8qlAgG4wlWp5HQm7NFLSGz4NySUF6fGJ3TGJhlEEUeZg+yrivISGXEcxFuZgnEUnYT96NWjJXc13k8AtIr5/S9MMy/+7Nog7Eon0QrwTBLg69QMR0DSy5rzFY6rl1UUx0mqNnKytfWgRSpvr21WoMBYzXw3JwiiyKSqgNbK27w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UIPa07N+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=geetGmG+W+dvGqdbqpPctqfmVyRKWAFJmDJ6VU7WfoOqHLeLd6wU0U6dyaZ9r+mGp+rFqvpqFyyVCyzh7DtmDEMRithbkIjkm2R+gl/AOVvoOcSusrp1Pxem6gmWIPsQk2/T/MtfZBMoL/B0j/VjjqMUazz7TM9ZifHftBScev4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSzML88w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UIPa07N+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0313B1F00A3A;
-	Thu, 20 Aug 2026 17:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSzML88w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C371F00A3A;
+	Thu, 20 Aug 2026 17:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247897;
-	bh=JhM44tB4xrtFm17k1ehXwcvzwfqU8K4+aFqoo5Eaqfk=;
+	s=korg; t=1787247900;
+	bh=DkNV6jvoyxkFJbGWcpMU/8MPYOR6GJEGOggnQcq7uns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UIPa07N+L0m5MBAnLQwYKTAK1KntU9hnaxxHdnDvBIfPUmeeHiXGaRFRLUqSCib/Q
-	 prnk6p+ecwWWseKoYN99Wpgqsj5E90SWc+SnZm6IbuN4SIHLiMyWxuQYJcQLz3VNOk
-	 mk8Mn9eAlE7IdU0QD3lSqx0FYNZwpsQLSOYMud+M=
+	b=OSzML88wFJLMH1ctfR58ZGewJE1e57rzzE9XjmEUe5X4ip2NV29ePul3gepheqIk7
+	 tZmNCaGbNuLiS3l2m80xI706JjPMqoJZ63LN2ThU+DFU6iVYUnepKfkpBb6ATG4Kel
+	 DVVfFni2DqaFiujS1cMAFiXc4uTCz8M20y/ilsf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.1 040/303] mmc: sdhci: unmap the bounce buffer before device release
-Date: Thu, 20 Aug 2026 16:52:56 +0200
-Message-ID: <20260820145254.387244798@linuxfoundation.org>
+Subject: [PATCH 6.1 041/303] mmc: sdhci: make tuning_err a signed int
+Date: Thu, 20 Aug 2026 16:52:57 +0200
+Message-ID: <20260820145254.415239251@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -52,62 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-commit 9e9f561269dff35e6f84ed21776ec37fd6360b03 upstream.
+commit ae31bcc92bb42502bb7c9029e6dc7a824cf6cd14 upstream.
 
-sdhci_allocate_bounce_buffer() allocates its buffer with devm_kmalloc()
-but maps it with dma_map_single(). The buffer is therefore released by
-devres without the streaming DMA mapping being unmapped.
+Coverity report INTEGER_OVERFLOW for host->tuning_err.
+The tuning_err field in struct sdhci_host is used to store an error
+code for re-tuning, but it was declared as unsigned int. Several call
+sites store negative error codes into it and later compare against
+negative values:
 
-Register a managed action after dma_map_single() succeeds so the mapping
-is removed before devres releases the buffer. The action is registered
-only for buffers allocated and mapped by the SDHCI core, leaving buffers
-provided by host drivers under their existing ownership.
+  - sdhci.c, sdhci-of-dwcmshc.c and sdhci-pci-gli.c assign it the
+    return value of __sdhci_execute_tuning()/__sdhci_execute_tuning_9750(),
+    both of which return a signed int (possibly a negative errno);
+  - sdhci-of-esdhc.c assigns host->tuning_err = -EAGAIN and later does
+    "ret = host->tuning_err; if (ret == -EAGAIN ...)";
+  - sdhci-of-dwcmshc.c prints it with the %d (signed) conversion.
 
-Fixes: bd9b902798ab ("mmc: sdhci: Implement an SDHCI-specific bounce buffer")
+Storing a negative errno in an unsigned int and reading it back as a
+signed int only happens to work because of two's-complement, same-width
+integer conversions. It is misleading and triggers sign-conversion
+warnings. All users treat the value either as a signed error code or as
+a boolean (zero / non-zero), so changing the type to a signed int is
+safe and makes the intent explicit.
+
+Fixes: 7d8bb1f46e13 ("mmc: sdhci: add tuning error codes")
+Assisted-by: Cline:claude-sonnet [read_file, search_files, git]
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/mmc/host/sdhci.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -4178,6 +4178,14 @@ void __sdhci_read_caps(struct sdhci_host
- }
- EXPORT_SYMBOL_GPL(__sdhci_read_caps);
+--- a/drivers/mmc/host/sdhci.h
++++ b/drivers/mmc/host/sdhci.h
+@@ -601,7 +601,7 @@ struct sdhci_host {
  
-+static void sdhci_unmap_bounce_buffer(void *data)
-+{
-+	struct sdhci_host *host = data;
-+
-+	dma_unmap_single(mmc_dev(host->mmc), host->bounce_addr,
-+			 host->bounce_buffer_size, DMA_BIDIRECTIONAL);
-+}
-+
- static void sdhci_allocate_bounce_buffer(struct sdhci_host *host)
- {
- 	struct mmc_host *mmc = host->mmc;
-@@ -4232,6 +4240,14 @@ static void sdhci_allocate_bounce_buffer
- 	}
- 
- 	host->bounce_buffer_size = bounce_size;
-+	ret = devm_add_action_or_reset(mmc_dev(mmc),
-+				       sdhci_unmap_bounce_buffer, host);
-+	if (ret) {
-+		devm_kfree(mmc_dev(mmc), host->bounce_buffer);
-+		host->bounce_buffer = NULL;
-+		host->bounce_buffer_size = 0;
-+		return;
-+	}
- 
- 	/* Lie about this since we're bouncing */
- 	mmc->max_segs = max_blocks;
+ 	unsigned int		tuning_count;	/* Timer count for re-tuning */
+ 	unsigned int		tuning_mode;	/* Re-tuning mode supported by host */
+-	unsigned int		tuning_err;	/* Error code for re-tuning */
++	int			tuning_err;	/* Error code for re-tuning */
+ #define SDHCI_TUNING_MODE_1	0
+ #define SDHCI_TUNING_MODE_2	1
+ #define SDHCI_TUNING_MODE_3	2
 
 
