@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F41481AAD;
-	Thu, 20 Aug 2026 17:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A73481FD7;
+	Thu, 20 Aug 2026 17:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247305; cv=none; b=VI4+3aGzB8tUZsbWDtXY0fNUV5bSJ6B3av/AXrLrYZDWmhYJLCf0nazEc4606HHio+R/DR8PMGwP/r/JkQkbvmkUchLuRI40P49QRW0ytfqi/lCJ6fP65jTw9l303bvJUjpLR3MB77J36CiqvxvlPMS6DGZKeiYN9ghTOxB1HOY=
+	t=1787247308; cv=none; b=UQ/R80jyxjR8dTZmgJ61oxzDfKCa6sQIKqEN0rNP5lGC2lK3r/ERS8+EDJU0jPp5L6ywVU9MMiBl6x08UT/UfCMJLly+LBYI36RVC7V2pi6n98lrFOTMLYgh04lATMKIy7+iaO3spcnkoDTkBC2KC8EaRdavpf47CKK35l0GsuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247305; c=relaxed/simple;
-	bh=ZCuGB1lbE3E8jVqslNs6vAmYn2xOUZjOC6KjcS4/6po=;
+	s=arc-20240116; t=1787247308; c=relaxed/simple;
+	bh=RiAlhmh+MW9S7uS+9ArHZKjiPgPCjOUrzJX/eDyR/Fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XlX9Bz+0t8PoAhe0sIWm33Q2ylo2+E1qK1QCCUhAnWV60ca+3g7/9r7PM8xG0V2WtEq76TQOIK87rrrPSnyrsAhaQkLMiA6Ywuq1fgxCwrBodpYnsnmkWSwSCpB/Eo+BaiG5twtNiPHqDHdg9DTOtRzyXQxNskuEZ5NkBWOCirk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zDNMLPfL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NUmRf7KPF6fJ16nBzSCdIfMjiEYmT1jed2EKnaDCp/c1MWM1EIZ96bE7hUEqOspDuKWmif5kJVTloOZd1C1KzUhSzVh406M0ojZ5m+MsftC7GZwmLCwJEripYBj/MleX/l3/xQmOcbPpLqod3X3NsfvwB8Bjb0pnFRLOgeAEBp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P8NG0uow; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zDNMLPfL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC7C1F00A3A;
-	Thu, 20 Aug 2026 17:35:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8NG0uow"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FFF61F000E9;
+	Thu, 20 Aug 2026 17:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247303;
-	bh=dl7grH0Zs1p6kSZig6L8LUJp5YEXDyyDG37tJXcIqew=;
+	s=korg; t=1787247306;
+	bh=e4TdPTShXvRN6POyweo2I3fMCXRbNo+xttcGUCpF5vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zDNMLPfLXI8WVbppMMy5TwAurxislOaMj3EHmDAYX8OUOieZqTEbg/eoiFMDYPnx+
-	 CBqeBS3YwFE2yYT2eGwi5Kmckn/lFs/aHmWiNsNF+nQB4pp1GlPGPpKrWMhG4akSBM
-	 o6DtdqbwHVOI4S/vkxaWxsQbVa/+1rts+45xG0j4=
+	b=P8NG0uowmkNmUhILfNATl9gYTH0g9wzmtKnUCjvl3008z3gne65oAH7W0F5stUG1I
+	 LydKnI1j5R2CiPkzbw9FWvxw7qGji/rXn/5Mq6tE1BXxYNlRJp9shcrg+oYHj6O4vw
+	 rCLqlcVPXU3YOCVOqe5xpoDnzfithbZa7NykWT0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Guillaume Nault <gnault@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 219/220] net: harmonize tstats and dstats
-Date: Thu, 20 Aug 2026 16:56:49 +0200
-Message-ID: <20260820145230.127378901@linuxfoundation.org>
+Subject: [PATCH 6.12 220/220] ip_tunnel: adapt iptunnel_xmit_stats() to NETDEV_PCPU_STAT_DSTATS
+Date: Thu, 20 Aug 2026 16:56:50 +0200
+Message-ID: <20260820145230.158834446@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -51,84 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit d3ed6dee73c560fad0a8e152c8e233b3fb3a2e44 upstream.
+commit 8431c602f551549f082bbfa67f3003f2d8e3e132 upstream.
 
-After the blamed commits below, some UDP tunnel use dstats for
-accounting. On the xmit path, all the UDP-base tunnels ends up
-using iptunnel_xmit_stats() for stats accounting, and the latter
-assumes the relevant (tunnel) network device uses tstats.
+Blamed commits forgot that vxlan/geneve use udp_tunnel[6]_xmit_skb() which
+call iptunnel_xmit_stats().
 
-The end result is some 'funny' stat report for the mentioned UDP
-tunnel, e.g. when no packet is actually dropped and a bunch of
-packets are transmitted:
+iptunnel_xmit_stats() was assuming tunnels were only using
+NETDEV_PCPU_STAT_TSTATS.
 
-gnv2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue \
-		state UNKNOWN mode DEFAULT group default qlen 1000
-    link/ether ee:7d:09:87:90:ea brd ff:ff:ff:ff:ff:ff
-    RX:  bytes packets errors dropped  missed   mcast
-         14916      23      0      15       0       0
-    TX:  bytes packets errors dropped carrier collsns
-             0    1566      0       0       0       0
+@syncp offset in pcpu_sw_netstats and pcpu_dstats is different.
 
-Address the issue ensuring the same binary layout for the overlapping
-fields of dstats and tstats. While this solution is a bit hackish, is
-smaller and with no performance pitfall compared to other alternatives
-i.e. supporting both dstat and tstat in iptunnel_xmit_stats() or
-reverting the blamed commit.
+32bit kernels would either have corruptions or freezes if the syncp
+sequence was overwritten.
 
-With time we should possibly move all the IP-based tunnel (and virtual
-devices) to dstats.
+This patch also moves pcpu_stat_type closer to dev->{t,d}stats to avoid
+a potential cache line miss since iptunnel_xmit_stats() needs to read it.
 
-Fixes: c77200c07491 ("bareudp: Handle stats using NETDEV_PCPU_STAT_DSTATS.")
 Fixes: 6fa6de302246 ("geneve: Handle stats using NETDEV_PCPU_STAT_DSTATS.")
 Fixes: be226352e8dc ("vxlan: Handle stats using NETDEV_PCPU_STAT_DSTATS.")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Guillaume Nault <gnault@redhat.com>
-Link: https://patch.msgid.link/2e1c444cf0f63ae472baff29862c4c869be17031.1738432804.git.pabeni@redhat.com
+Link: https://patch.msgid.link/20260311123110.1471930-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/netdevice.h |    2 +-
- net/core/dev.c            |   14 ++++++++++++++
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ include/linux/netdevice.h |    3 +--
+ include/net/ip_tunnels.h  |   28 ++++++++++++++++++++++------
+ 2 files changed, 23 insertions(+), 8 deletions(-)
 
 --- a/include/linux/netdevice.h
 +++ b/include/linux/netdevice.h
-@@ -2746,9 +2746,9 @@ struct pcpu_sw_netstats {
- struct pcpu_dstats {
- 	u64_stats_t		rx_packets;
- 	u64_stats_t		rx_bytes;
--	u64_stats_t		rx_drops;
- 	u64_stats_t		tx_packets;
- 	u64_stats_t		tx_bytes;
-+	u64_stats_t		rx_drops;
- 	u64_stats_t		tx_drops;
- 	struct u64_stats_sync	syncp;
- } __aligned(8 * sizeof(u64));
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -11070,6 +11070,20 @@ struct rtnl_link_stats64 *dev_get_stats(
- 	const struct net_device_ops *ops = dev->netdev_ops;
- 	const struct net_device_core_stats __percpu *p;
+@@ -2069,6 +2069,7 @@ struct net_device {
+ 	unsigned long		state;
+ 	unsigned int		flags;
+ 	unsigned short		hard_header_len;
++	enum netdev_stat_type	pcpu_stat_type:8;
+ 	netdev_features_t	features;
+ 	struct inet6_dev __rcu	*ip6_ptr;
+ 	__cacheline_group_end(net_device_read_txrx);
+@@ -2314,8 +2315,6 @@ struct net_device {
+ 	void				*ml_priv;
+ 	enum netdev_ml_priv_type	ml_priv_type;
  
-+	/*
-+	 * IPv{4,6} and udp tunnels share common stat helpers and use
-+	 * different stat type (NETDEV_PCPU_STAT_TSTATS vs
-+	 * NETDEV_PCPU_STAT_DSTATS). Ensure the accounting is consistent.
-+	 */
-+	BUILD_BUG_ON(offsetof(struct pcpu_sw_netstats, rx_bytes) !=
-+		     offsetof(struct pcpu_dstats, rx_bytes));
-+	BUILD_BUG_ON(offsetof(struct pcpu_sw_netstats, rx_packets) !=
-+		     offsetof(struct pcpu_dstats, rx_packets));
-+	BUILD_BUG_ON(offsetof(struct pcpu_sw_netstats, tx_bytes) !=
-+		     offsetof(struct pcpu_dstats, tx_bytes));
-+	BUILD_BUG_ON(offsetof(struct pcpu_sw_netstats, tx_packets) !=
-+		     offsetof(struct pcpu_dstats, tx_packets));
+-	enum netdev_stat_type		pcpu_stat_type:8;
+-
+ #if IS_ENABLED(CONFIG_GARP)
+ 	struct garp_port __rcu	*garp_port;
+ #endif
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -651,13 +651,29 @@ static inline int iptunnel_pull_offloads
+ static inline void iptunnel_xmit_stats(struct net_device *dev, int pkt_len)
+ {
+ 	if (pkt_len > 0) {
+-		struct pcpu_sw_netstats *tstats = get_cpu_ptr(dev->tstats);
++		if (dev->pcpu_stat_type == NETDEV_PCPU_STAT_DSTATS) {
++			struct pcpu_dstats *dstats = get_cpu_ptr(dev->dstats);
+ 
+-		u64_stats_update_begin(&tstats->syncp);
+-		u64_stats_add(&tstats->tx_bytes, pkt_len);
+-		u64_stats_inc(&tstats->tx_packets);
+-		u64_stats_update_end(&tstats->syncp);
+-		put_cpu_ptr(tstats);
++			u64_stats_update_begin(&dstats->syncp);
++			u64_stats_add(&dstats->tx_bytes, pkt_len);
++			u64_stats_inc(&dstats->tx_packets);
++			u64_stats_update_end(&dstats->syncp);
++			put_cpu_ptr(dstats);
++			return;
++		}
++		if (dev->pcpu_stat_type == NETDEV_PCPU_STAT_TSTATS) {
++			struct pcpu_sw_netstats *tstats = get_cpu_ptr(dev->tstats);
 +
- 	if (ops->ndo_get_stats64) {
- 		memset(storage, 0, sizeof(*storage));
- 		ops->ndo_get_stats64(dev, storage);
++			u64_stats_update_begin(&tstats->syncp);
++			u64_stats_add(&tstats->tx_bytes, pkt_len);
++			u64_stats_inc(&tstats->tx_packets);
++			u64_stats_update_end(&tstats->syncp);
++			put_cpu_ptr(tstats);
++			return;
++		}
++		pr_err_once("iptunnel_xmit_stats pcpu_stat_type=%d\n",
++			    dev->pcpu_stat_type);
++		WARN_ON_ONCE(1);
+ 		return;
+ 	}
+ 
 
 
