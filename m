@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3EA6377016;
-	Thu, 20 Aug 2026 15:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CCD37E2E6;
+	Thu, 20 Aug 2026 15:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238352; cv=none; b=it1Vhp8RFq9S2sZrW+St4+ulkfLIh59dKlE78QTbRUTB4/1WQfkAlFFxusxjVvKuWpJ40vuuAJBHGUP/8e4TW/INHV8/thfDQEFGCwRB5mUGAtVdBu4GlsEZz9XBl99Fsy9zhtWFkQ+Scd6/0NsT2HKsJizJGWHp7rZsNhWG5Fs=
+	t=1787238354; cv=none; b=BJ8RqNz7PaZp9QgkPTUhBJTAzaQKvNzmSnkKeQNxuuBPQKrBYjaOtUV2CzW13iEO49dBhz3bUpV+xWU0wz4lfqC0mSoVG2Cu5r/wG5x/tSmGwMxpI0+cPqZKix8JD40h7VglocjsqooFQax+2PYjMLsH7S7VmhUwIVbfs6AfIL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238352; c=relaxed/simple;
-	bh=qx3EKYWqcrKNKJbtC2xEzxKjiFk84Lvn3dbMo9E8Sro=;
+	s=arc-20240116; t=1787238354; c=relaxed/simple;
+	bh=IsmtgptktCz8oZ5LTIk+EBB945uJfa7FVhy5yIl2qjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lsJBUWjintVVbv+tUubzuXiHT6DPAmKfDAtYkM8krBNcjqhY/hXkVJC5jJBjr1xglnehMGVuqiXFqdVhDqwSv04yzEH60BY+JSfO0Rq1/yb9PpzkyHpe0f9CkFUd/l1LrZZgyL6jRguCZbn4uz8DXJBDt4Q25BSqxiC8DEKoDxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxFiwQuW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kZCJjHHvTt/1uoPuc+12OPMOTmeVq5TbUBr75kuej2683oGGbanty0IzRXIBDSYjWxL1pDaJ7B49HzxcPiNTZK745reXC7fPWqOexamVAfOYLsD6nxl63XGHgftBVOAYkBaoEgAbalOWr4xlUVt2WS+g2xU+Tv+LY7+06qOwalk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sC1yLR5K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxFiwQuW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38F901F000E9;
-	Thu, 20 Aug 2026 15:05:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sC1yLR5K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09EF11F000E9;
+	Thu, 20 Aug 2026 15:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238350;
-	bh=Go3EcbsqQ1Z0nrdhwH49Vt9JjUA+0blZAHnm+w5goU4=;
+	s=korg; t=1787238353;
+	bh=C6AiC8vjK34IcbZa5EiqjkmMRmegmZ6142fO+8kN8uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HxFiwQuWmS9Tyz1FvLlFzVLFzQwNqoIrwySocZUXwLKj1YJKiRcuAytL252f1UfUt
-	 rQ0JU9843SApev2P4z9+e86zhrzsyWxfGClfZaMRk2Al72GZf40m8LizXZU1VogFjH
-	 p7UQdFggKBmtDNIAX/GebV92YrbNsF1DUHiN5on0=
+	b=sC1yLR5Kt9SgvWdSaGNn8q7SbaIkK15Af/pWhwMAKwyiiXmXdsQ6k1qyJSDjx7DcM
+	 5f62eOcCzmmmYzJmxHs2TAu4MMB3pRccShTvoAftHxkzocr/C2KQ6vOuPoC133kERK
+	 TLySApiKG1GKTUk3uLSm5lJ92RgdcQm3NtV+t+rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Candice Li <candice.li@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 118/228] drm/amdgpu: validate GEM_CREATE domain combinations
-Date: Thu, 20 Aug 2026 16:54:20 +0200
-Message-ID: <20260820145248.218272664@linuxfoundation.org>
+	Eric Farman <farman@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: [PATCH 7.1 101/228] s390/vfio_ccw: Move cp cleanup out of not operational
+Date: Thu, 20 Aug 2026 16:54:03 +0200
+Message-ID: <20260820145247.718312393@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -45,76 +45,134 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Candice Li <candice.li@amd.com>
+From: Eric Farman <farman@linux.ibm.com>
 
-commit 5e9d136ad74df4edec67e502ce267597064d8f86 upstream.
+commit 0c11f61a876ed6fcca53d442ed3f33ea8362a0f9 upstream.
 
-AMDGPU_GEM_CREATE checked domain bits against AMDGPU_GEM_DOMAIN_MASK,
-but did not validate domain combinations. Userspace could combine
-CPU|GTT|VRAM with DOORBELL, GDS, GWS, or OA, making
-amdgpu_bo_placement_from_domain() exceed AMDGPU_BO_MAX_PLACEMENTS and
-hit BUG_ON().
+The fsm_notoper() routine is called when the device has been
+lost, and is (by definition) no longer operational. Since this
+can happen asynchronously from the normal behavior of the
+driver, the cleanup may happen when holding other locks
+in the calling sequence (notably, the cio subchannel lock).
 
-Allow combinations only within CPU/GTT/VRAM, and require non-CPU/GTT/
-VRAM domains to be specified one at a time. Return -EINVAL for invalid
-combinations in amdgpu_gem_create_ioctl().
+Push the cleanup of the private->cp resources to a workqueue,
+where it can be done out from under that lock sequence and
+a future patch can safely manage the locking requirements.
 
-v2: Rename helper from amdgpu_gem_domain_valid() to
-    amdgpu_gem_are_domains_valid() (Christian)
-
-Signed-off-by: Candice Li <candice.li@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit db39852d0c39843cb02048dfb47e4b8c703e9080)
+Fixes: 204b394a23ad ("vfio/ccw: Move FSM open/close to MDEV open/close")
 Cc: stable@vger.kernel.org
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c |   21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/s390/cio/vfio_ccw_drv.c     |    9 +++++++++
+ drivers/s390/cio/vfio_ccw_fsm.c     |    3 +--
+ drivers/s390/cio/vfio_ccw_ops.c     |   13 +++++++++++++
+ drivers/s390/cio/vfio_ccw_private.h |    3 +++
+ 4 files changed, 26 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-@@ -397,6 +397,25 @@ const struct drm_gem_object_funcs amdgpu
- 	.vm_ops = &amdgpu_gem_vm_ops,
- };
+--- a/drivers/s390/cio/vfio_ccw_drv.c
++++ b/drivers/s390/cio/vfio_ccw_drv.c
+@@ -125,6 +125,15 @@ void vfio_ccw_crw_todo(struct work_struc
+ 		eventfd_signal(private->crw_trigger);
+ }
  
-+static bool amdgpu_gem_are_domains_valid(u32 domains)
++void vfio_ccw_notoper_todo(struct work_struct *work)
 +{
-+	u32 normal = AMDGPU_GEM_DOMAIN_CPU |
-+		     AMDGPU_GEM_DOMAIN_GTT |
-+		     AMDGPU_GEM_DOMAIN_VRAM;
-+	/* Treat all non CPU/GTT/VRAM domains as special domains. */
-+	u32 special = AMDGPU_GEM_DOMAIN_MASK & ~normal;
-+	u32 normal_mask = domains & normal;
-+	u32 special_mask = domains & special;
++	struct vfio_ccw_private *private;
 +
-+	if (!special_mask)
-+		return true;
++	private = container_of(work, struct vfio_ccw_private, notoper_work);
 +
-+	if (normal_mask)
-+		return false;
-+
-+	return !(special_mask & (special_mask - 1));
++	cp_free(&private->cp);
 +}
 +
  /*
-  * GEM ioctls.
+  * Css driver callbacks
   */
-@@ -421,6 +440,8 @@ int amdgpu_gem_create_ioctl(struct drm_d
- 	/* reject invalid gem domains */
- 	if (args->in.domains & ~AMDGPU_GEM_DOMAIN_MASK)
- 		return -EINVAL;
-+	if (!amdgpu_gem_are_domains_valid(args->in.domains))
-+		return -EINVAL;
+--- a/drivers/s390/cio/vfio_ccw_fsm.c
++++ b/drivers/s390/cio/vfio_ccw_fsm.c
+@@ -170,8 +170,7 @@ static void fsm_notoper(struct vfio_ccw_
+ 	css_sched_sch_todo(sch, SCH_TODO_UNREG);
+ 	private->state = VFIO_CCW_STATE_NOT_OPER;
  
- 	if (!amdgpu_is_tmz(adev) && (flags & AMDGPU_GEM_CREATE_ENCRYPTED)) {
- 		DRM_NOTE_ONCE("Cannot allocate secure buffer since TMZ is disabled\n");
+-	/* This is usually handled during CLOSE event */
+-	cp_free(&private->cp);
++	queue_work(vfio_ccw_work_q, &private->notoper_work);
+ }
+ 
+ /*
+--- a/drivers/s390/cio/vfio_ccw_ops.c
++++ b/drivers/s390/cio/vfio_ccw_ops.c
+@@ -54,6 +54,7 @@ static int vfio_ccw_mdev_init_dev(struct
+ 	INIT_LIST_HEAD(&private->crw);
+ 	INIT_WORK(&private->io_work, vfio_ccw_sch_io_todo);
+ 	INIT_WORK(&private->crw_work, vfio_ccw_crw_todo);
++	INIT_WORK(&private->notoper_work, vfio_ccw_notoper_todo);
+ 
+ 	private->cp.guest_cp = kzalloc_objs(struct ccw1, CCWCHAIN_LEN_MAX);
+ 	if (!private->cp.guest_cp)
+@@ -134,9 +135,16 @@ static void vfio_ccw_mdev_release_dev(st
+ 	/*
+ 	 * Ensure these work items are fully drained, so none can
+ 	 * fire after being released.
++	 *
++	 * notoper_work should have nothing to do here, because only
++	 * open devices could have channel_program resources in use
++	 * and those would be released during close. Nevertheless,
++	 * call flush here as well to be certain anything that was
++	 * allocated is freed.
+ 	 */
+ 	cancel_work_sync(&private->io_work);
+ 	cancel_work_sync(&private->crw_work);
++	flush_work(&private->notoper_work);
+ 
+ 	list_for_each_entry_safe(crw, temp, &private->crw, next) {
+ 		list_del(&crw->next);
+@@ -213,9 +221,14 @@ static void vfio_ccw_mdev_close_device(s
+ 	/*
+ 	 * Ensure these work items are drained, in the event the
+ 	 * device is re-opened instead of released.
++	 *
++	 * notoper_work needs to be given a chance to run if it
++	 * is queued, so any memory associated with the channel
++	 * program can be returned.
+ 	 */
+ 	cancel_work_sync(&private->io_work);
+ 	cancel_work_sync(&private->crw_work);
++	flush_work(&private->notoper_work);
+ 
+ 	vfio_ccw_unregister_dev_regions(private);
+ }
+--- a/drivers/s390/cio/vfio_ccw_private.h
++++ b/drivers/s390/cio/vfio_ccw_private.h
+@@ -102,6 +102,7 @@ struct vfio_ccw_parent {
+  * @req_trigger: eventfd ctx for signaling userspace to return device
+  * @io_work: work for deferral process of I/O handling
+  * @crw_work: work for deferral process of CRW handling
++ * @notoper_work: work for deferred processing in not-operational state
+  */
+ struct vfio_ccw_private {
+ 	struct vfio_device vdev;
+@@ -125,11 +126,13 @@ struct vfio_ccw_private {
+ 	struct eventfd_ctx	*req_trigger;
+ 	struct work_struct	io_work;
+ 	struct work_struct	crw_work;
++	struct work_struct	notoper_work;
+ } __aligned(8);
+ 
+ int vfio_ccw_sch_quiesce(struct subchannel *sch);
+ void vfio_ccw_sch_io_todo(struct work_struct *work);
+ void vfio_ccw_crw_todo(struct work_struct *work);
++void vfio_ccw_notoper_todo(struct work_struct *work);
+ 
+ extern struct mdev_driver vfio_ccw_mdev_driver;
+ 
 
 
