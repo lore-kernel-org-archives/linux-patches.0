@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D96E37F8C1;
-	Thu, 20 Aug 2026 15:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B71037FF54;
+	Thu, 20 Aug 2026 15:13:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238831; cv=none; b=ZMub5IPNV70oRi4bVcoUCANlF1zMSA+Ltarx0KLdJIaz1eZ5oQNoeAF1OxFsCVLRx+qIzB54LZhsRQIXaXSLSDzIun+in93jxKCcsnDhjaxb0cZQVng8OFicBE/ZfjHSvfp1VS5wVI2zjFp+f009kDD7FPO/aExB+szBpjk/Wmk=
+	t=1787238834; cv=none; b=tzCoHf07ZcFW80kir7bNs+VT8/WwIQm4L7WecH1xuHX5fnwwqxFkA5vzkRRJuG/KQX/rlVUWTbvY4ZbBmTUqU9mD39tWRjK3C+vC0Pu171P66n510s9qeBrXP2nvCRvnKwb54AUL3DQ7SEjnB3iK9t+kbNKjRO8XePtzVBTJWb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238831; c=relaxed/simple;
-	bh=YP40Bo15q7x1OoYnyeh5o4c6edqUOG9pS8Y0A4ck1oc=;
+	s=arc-20240116; t=1787238834; c=relaxed/simple;
+	bh=+kaVlIhFx5AXGQeBavXqihf0aNuGllLHygjc2gICukI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m3TQ2RHCKbJ/ZVLbxPsagJoBGy2HbbFR1y/fI8nsY556pshRfyOXCrVAS6SoqLyW+BlDWm8H9EY9RS5Ym0/0Bf0BC9u4d411+1KFv5zO8/IQ25Y/vmaNWfzoyC3NwEZ4Mmh9ppDVPI4sWT2m4HYuRi2CndX/fJgUAAbB7pkKn98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ef7w8hbO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ivqk2bD+io7+JKeo8d3TZZwV+7MpWAMP0txi/uSo158kJUSqRuehuCwFlgL5xohwN7sFk+v2iCt48ye3YurKHb+EB5APuWE66UzYbLMNkF/cuIM8Fk+1T7ujDd8Q1+wZ9DBFTYG3S0HDC+Nq1NunGh9zG7MsxHNgcrSCCfgTY+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e1t8d8m8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ef7w8hbO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0260B1F000E9;
-	Thu, 20 Aug 2026 15:13:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e1t8d8m8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D673B1F000E9;
+	Thu, 20 Aug 2026 15:13:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238830;
-	bh=pEF2iZ1jQLCTCoORQJNlt8+y/Nipzs6S/CQe/aX3xqc=;
+	s=korg; t=1787238833;
+	bh=CptqCGYC7tZp8Vh8zjHf9YDwhLPnhVGKFLT8uLnExkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ef7w8hbOgnLQ8cNoNasDrU4XmfbgENrXod6OryhpAVjqLCgru4oi6Q9dDvUo62Zru
-	 4qxiZvvkCBBte3qrGUmR/EpTAcyY8wP+bCBsxF7asG6lRA7nAicWDf7FQNqBAUMNWB
-	 4YNxccIMSfreMk3kNddTOb4XynqGOh4qlgWh8Clc=
+	b=e1t8d8m8zv7zrmd8EsJaZ9IDZ8m+Lf3T7lI3RGbr7M86lC6YknT5Yx2zI+X+u5cJs
+	 0DCn9dV4I2hnHIUOwaKfV/3iAUGb9/T/vsU9khU6ltQpYwPIQPmtTjiYe59kO8EvS1
+	 AJjUXWAkUmCYMw8b7j1yl6GxLmoWUKhjHfq150oI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavitra Jha <jhapavitra98@gmail.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.18 056/217] libceph: fix multiple unsafe decodes in decode_locker()
-Date: Thu, 20 Aug 2026 16:53:44 +0200
-Message-ID: <20260820145239.306619552@linuxfoundation.org>
+	Jiri Olsa <jolsa@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Leon Hwang <leon.hwang@linux.dev>
+Subject: [PATCH 6.18 057/217] ftrace: Protect direct_functions in ftrace_find_rec_direct
+Date: Thu, 20 Aug 2026 16:53:45 +0200
+Message-ID: <20260820145239.336161768@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -50,96 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavitra Jha <jhapavitra98@gmail.com>
+From: Leon Hwang <leon.hwang@linux.dev>
 
-commit 437b6551cfcc235eea1d735a874f9d421f555e17 upstream.
+commit 63444b7617c09aeed36282e061c3f80818f2b600 upstream.
 
-decode_locker() in cls_lock_client.c contains three unsafe decode
-operations that allow a malicious or compromised OSD to trigger
-slab-out-of-bounds reads:
-
-1. ceph_decode_copy() at the locker_id_t name field has no preceding
-   bounds check. With p == end after ceph_start_decoding() accepts
-   struct_len=0, this reads sizeof(ceph_entity_name) = 9 bytes past
-   the validated buffer boundary.
-
-2. *p += sizeof(struct ceph_timespec) after the locker_info_t header
-   is an unchecked pointer advance. A malicious OSD can position p
-   past end, causing all subsequent _safe checks to pass against a
-   bogus boundary.
-
-3. len = ceph_decode_32(p) has no preceding bounds check, and the
-   immediately following *p += len is uncapped. A malicious OSD can
-   send len=0xffffffff, advancing p gigabytes past end and escaping
-   the decode window entirely.
-
-Fix all three by replacing bare operations with their safe variants:
-  ceph_decode_copy   -> ceph_decode_copy_safe
-  *p += sizeof(...)  -> ceph_decode_skip_n
-  ceph_decode_32(p)  -> ceph_decode_32_safe
-  *p += len          -> ceph_decode_skip_n
-
-A new label is added to return -EINVAL on any bounds violation.
--EINVAL is appropriate here: the data received from the OSD
-is structurally malformed, which is an invalid argument to the decode
-contract regardless of whether the caller or the wire is at fault.
-
-Attacker model: a malicious or compromised OSD in a multi-tenant Ceph
-deployment can trigger this against any kernel client that issues the
-lock.get_info class method (e.g. during RBD exclusive lock acquisition)
-without any further privileges beyond OSD session establishment.
-
-[ idryomov: use ceph_decode_skip_string() to skip description, trim
-  changelog ]
+Fix accessing the __rcu pointer direct_functions with RCU protection.
 
 Cc: stable@vger.kernel.org
-Fixes: d4ed4a530562 ("libceph: support for lock.lock_info")
-Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Link: https://patch.msgid.link/20260730150411.88667-2-leon.hwang@linux.dev
+Fixes: d05cb470663a ("ftrace: Fix modification of direct_function hash while in use")
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Suggested-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/cls_lock_client.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ kernel/trace/ftrace.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/ceph/cls_lock_client.c
-+++ b/net/ceph/cls_lock_client.c
-@@ -259,7 +259,8 @@ static int decode_locker(void **p, void
- 	if (ret)
- 		return ret;
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -2594,7 +2594,8 @@ unsigned long ftrace_find_rec_direct(uns
+ {
+ 	struct ftrace_func_entry *entry;
  
--	ceph_decode_copy(p, &locker->id.name, sizeof(locker->id.name));
-+	ceph_decode_copy_safe(p, end, &locker->id.name,
-+			      sizeof(locker->id.name), bad);
- 	s = ceph_extract_encoded_string(p, end, NULL, GFP_NOIO);
- 	if (IS_ERR(s))
- 		return PTR_ERR(s);
-@@ -270,19 +271,23 @@ static int decode_locker(void **p, void
- 	if (ret)
- 		return ret;
+-	entry = __ftrace_lookup_ip(direct_functions, ip);
++	guard(preempt_notrace)();
++	entry = __ftrace_lookup_ip(rcu_dereference_sched(direct_functions), ip);
+ 	if (!entry)
+ 		return 0;
  
--	*p += sizeof(struct ceph_timespec); /* skip expiration */
-+	/* skip expiration */
-+	ceph_decode_skip_n(p, end, sizeof(struct ceph_timespec), bad);
- 
- 	ret = ceph_decode_entity_addr(p, end, &locker->info.addr);
- 	if (ret)
- 		return ret;
- 
--	len = ceph_decode_32(p);
--	*p += len; /* skip description */
-+	/* skip description */
-+	ceph_decode_skip_string(p, end, bad);
- 
- 	dout("%s %s%llu cookie %s addr %s\n", __func__,
- 	     ENTITY_NAME(locker->id.name), locker->id.cookie,
- 	     ceph_pr_addr(&locker->info.addr));
- 	return 0;
-+
-+bad:
-+	return -EINVAL;
- }
- 
- static int decode_lockers(void **p, void *end, u8 *type, char **tag,
 
 
