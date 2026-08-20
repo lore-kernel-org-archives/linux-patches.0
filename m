@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B71037FF54;
-	Thu, 20 Aug 2026 15:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBEB3803E9;
+	Thu, 20 Aug 2026 15:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238834; cv=none; b=tzCoHf07ZcFW80kir7bNs+VT8/WwIQm4L7WecH1xuHX5fnwwqxFkA5vzkRRJuG/KQX/rlVUWTbvY4ZbBmTUqU9mD39tWRjK3C+vC0Pu171P66n510s9qeBrXP2nvCRvnKwb54AUL3DQ7SEjnB3iK9t+kbNKjRO8XePtzVBTJWb8=
+	t=1787238837; cv=none; b=dzc86NwJ/XsbZ/vZKnz4MIAIQf8NamVKXFNzyZ1pHgjyLOY1pxdtWMmMZXtGwUGkskdIT6+QGqi6FtFyc14KPDkhebxTDkPafrOceV5WyHN5vGrQylW9nwWwOZomEZKPQn3Ak1mtRGnU8lAh6UQoRrePJ8C85u7JlOzAKODO9KY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238834; c=relaxed/simple;
-	bh=+kaVlIhFx5AXGQeBavXqihf0aNuGllLHygjc2gICukI=;
+	s=arc-20240116; t=1787238837; c=relaxed/simple;
+	bh=j0URh4FM6ijZCgupvfYxlgNWTrhbVJacg/Zp0rQzMZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ivqk2bD+io7+JKeo8d3TZZwV+7MpWAMP0txi/uSo158kJUSqRuehuCwFlgL5xohwN7sFk+v2iCt48ye3YurKHb+EB5APuWE66UzYbLMNkF/cuIM8Fk+1T7ujDd8Q1+wZ9DBFTYG3S0HDC+Nq1NunGh9zG7MsxHNgcrSCCfgTY+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e1t8d8m8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X7rAEGugjzFgF3e52Ciryb37dS09sIoccyqF4bRnyMvDk6O/M9MBHn387nBa090vlkmNzIAm0+2Qr4V/jP8yvMAsALdUttc9igP9cSLAJ10zomWt/U2ECgE5MbLPT6ucYE7PB33TV6CGpBxnH6rn9PQ3VaRli3qGLcoNwLguHKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDstkDyq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e1t8d8m8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D673B1F000E9;
-	Thu, 20 Aug 2026 15:13:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDstkDyq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA8051F000E9;
+	Thu, 20 Aug 2026 15:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238833;
-	bh=CptqCGYC7tZp8Vh8zjHf9YDwhLPnhVGKFLT8uLnExkU=;
+	s=korg; t=1787238836;
+	bh=pQPYc0k2ZIVn4hAVbz3PJHxKKwq1Iy/FAJaYjlCXOs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e1t8d8m8zv7zrmd8EsJaZ9IDZ8m+Lf3T7lI3RGbr7M86lC6YknT5Yx2zI+X+u5cJs
-	 0DCn9dV4I2hnHIUOwaKfV/3iAUGb9/T/vsU9khU6ltQpYwPIQPmtTjiYe59kO8EvS1
-	 AJjUXWAkUmCYMw8b7j1yl6GxLmoWUKhjHfq150oI=
+	b=ZDstkDyqF+8s+tk8YrJ6KygIymLkuEAZ9JhPOZM9TqFfUhN71lxwHbqGHnwwjLS1r
+	 onMy3ODyEUJ/+RN0UsoFNVoLIhj7X66OwC4iH/F9jS8EZSPOvNrSq6oucvz1WwqRL0
+	 ipxb4PN5w2jGy/hUbpPixfSrmQ/3q8w26l8AX2r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Leon Hwang <leon.hwang@linux.dev>
-Subject: [PATCH 6.18 057/217] ftrace: Protect direct_functions in ftrace_find_rec_direct
-Date: Thu, 20 Aug 2026 16:53:45 +0200
-Message-ID: <20260820145239.336161768@linuxfoundation.org>
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.18 058/217] ftrace: Fix off-by-one fentry site disable in ftrace_free_mem()
+Date: Thu, 20 Aug 2026 16:53:46 +0200
+Message-ID: <20260820145239.367068935@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -51,35 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-commit 63444b7617c09aeed36282e061c3f80818f2b600 upstream.
+commit 8b8292d6487c81bd57c2605a9b404b1cf8f1edfb upstream.
 
-Fix accessing the __rcu pointer direct_functions with RCU protection.
+When a module's init text is freed, do_init_module() calls
+ftrace_free_mem() with a half-open [start, end) range.  However the
+ftrace_cmp_recs() comparator treats the upper bound as inclusive, as all
+its other users do, passing 'ip + size - 1'.  So ftrace_free_mem() can
+delete a record sitting exactly at 'end', which is outside the freed
+range.
+
+For a kernel without CFI or IBT, the first record of a function is at
+the function start, which for the first function in a module is also the
+base of its text allocation.  As the module allocator packs its regions,
+that address is often the 'end' passed by a neighboring module's
+do_init_module(), causing the first function's ftrace location to get
+disabled, preventing an attempt to livepatch it:
+
+  livepatch: failed to find location for function 'pcspkr_probe'
+
+Convert the exclusive end to the inclusive 'end - 1' the comparator
+expects, and return early for an empty range to avoid the subtraction
+from underflowing when the init text size is zero.
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260730150411.88667-2-leon.hwang@linux.dev
-Fixes: d05cb470663a ("ftrace: Fix modification of direct_function hash while in use")
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
+Fixes: 42c269c88dc1 ("ftrace: Allow for function tracing to record init functions on boot up")
+Link: https://patch.msgid.link/1b5ccfa8095bdb1277f84af1c2c2e2205aca03ae.1785992188.git.jpoimboe@kernel.org
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/ftrace.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 --- a/kernel/trace/ftrace.c
 +++ b/kernel/trace/ftrace.c
-@@ -2594,7 +2594,8 @@ unsigned long ftrace_find_rec_direct(uns
+@@ -7864,7 +7864,8 @@ static void add_to_clear_hash_list(struc
+ void ftrace_free_mem(struct module *mod, void *start_ptr, void *end_ptr)
  {
- 	struct ftrace_func_entry *entry;
+ 	unsigned long start = (unsigned long)(start_ptr);
+-	unsigned long end = (unsigned long)(end_ptr);
++	/* end is inclusive and end_ptr is exclusive */
++	unsigned long end = (unsigned long)(end_ptr) - 1;
+ 	struct ftrace_page **last_pg = &ftrace_pages_start;
+ 	struct ftrace_page *tmp_page = NULL;
+ 	struct ftrace_page *pg;
+@@ -7874,6 +7875,9 @@ void ftrace_free_mem(struct module *mod,
+ 	struct ftrace_init_func *func, *func_next;
+ 	LIST_HEAD(clear_hash);
  
--	entry = __ftrace_lookup_ip(direct_functions, ip);
-+	guard(preempt_notrace)();
-+	entry = __ftrace_lookup_ip(rcu_dereference_sched(direct_functions), ip);
- 	if (!entry)
- 		return 0;
++	if (start_ptr >= end_ptr)
++		return;
++
+ 	key.ip = start;
+ 	key.flags = end;	/* overload flags, as it is unsigned long */
  
 
 
