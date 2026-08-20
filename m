@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701B92931C0;
-	Thu, 20 Aug 2026 17:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4654E46C82A;
+	Thu, 20 Aug 2026 17:54:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248449; cv=none; b=QZlLQO9HoH70yjsW1bQDlo2FlAmgPsrX2k0COEgaDK39/aLG+xS3f+HDQzqy8UEyjwHJ+XoDZjWWgk8GXiRwXhyonkVkvkKCtZBdyIbSPXMuxyyeJyA7HoAyJGmLIfqzgFnkNmU4tFpZy3hS2xlSTNLYuAbbmeQX4VxCPj3WdUc=
+	t=1787248452; cv=none; b=qqCVOHbKCD5TvLniL7DtCtWmohWNoGj0jNZhbWdcdfHx3pSQLEqEs7wdzo//3ejcwd/YoJXrKF4MwKI6OGLf/j4D0fgySR7igcQfnGskdteVhV+zmmbcLmhoNR05F6IgTTXaB3Lj2kTXhed9AmVCe5eDKekI6sDstz8KfK5Mz78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248449; c=relaxed/simple;
-	bh=J5ini2/lHjSKhhZja+Gy7mByD2M19PIMTqwdXhYOvn8=;
+	s=arc-20240116; t=1787248452; c=relaxed/simple;
+	bh=5J8m1FK/79gzAJkQa9FFt9I8ppn7fGOtUlT6b9Ms2o8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Np+x9+rhX1i0AkhD8DxZJRG/qZorDSnIIvsaW1zGTWP+wa0966JCZ59RcVkHwJnN30SqZxm0WVFah+vevl8ATnnHMl1EOpWnbP0ZWcI7HR2lFeB+Sc4rGWD0yoQsIRKqhfWd4kJR5EhbVOopJpQsQGBz5MhZQDGBhDaBYPQ2VTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qod44h1Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ieCf71mypLeAdngvhD7L16AxbSdpzsap3cwIFj75jsg5YAL61rM68dRrN6Uq9EnVSnEgGJhAbIvhh+e5dFO/ANyrL3+8JhWGdh9j5j108nMq27si93WfXUfIJTW4Pj3GMhYv9RSZVqrQfb/sACS/XL5PxQkMdT9kuK7amZUGimY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6VGf0ee; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qod44h1Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB051F000E9;
-	Thu, 20 Aug 2026 17:54:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6VGf0ee"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30601F000E9;
+	Thu, 20 Aug 2026 17:54:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248448;
-	bh=zwjujhDktDNl4hUyjkebaTI1MxnHyq1XxDbEi44tD0I=;
+	s=korg; t=1787248451;
+	bh=scyDFovWeiQVIxfLtcRbFZwTvMDqe41qH8uvm/UmKoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qod44h1ZWiQDNGoctHTz7re+y2BROCOKuTj4TDaTtPyUd3AwYd3VIeY0kiSj2OlvT
-	 11V0pMdPr0HGP3UtdEt9SxNACvp6xzzhY9G+0Qy48c0Jc0AMhrc9XTulvaXPOc4wnd
-	 u21jAyTKAauXT2wWQ2elUHsC+me4JjZjdV+/0SNs=
+	b=g6VGf0eeAf4ntu4RvoUguGia3ymeULAJEFSvogoc6Q4G5DfHgmyyabO5sdI4h7hp1
+	 do/g/UXRbm/krIhlx5SObuTjpvtzKU1WsEsDwyOlqMfYw+m1Q0ExsnldsSLOWK8ERQ
+	 vt1PZNgLngMiX0txh19hkKaYwbG4q/bJ7StJ37Js=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Martin Hodo <martin.hodo@intel.com>,
 	Suraj Kandpal <suraj.kandpal@intel.com>,
 	Jani Nikula <jani.nikula@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 192/303] drm/i915/hdcp: Move to using intel_display in intel_hdcp
-Date: Thu, 20 Aug 2026 16:55:28 +0200
-Message-ID: <20260820145259.085422930@linuxfoundation.org>
+Subject: [PATCH 6.1 193/303] drm/i915/hdcp: require monotonically increasing seq_num_v
+Date: Thu, 20 Aug 2026 16:55:29 +0200
+Message-ID: <20260820145259.147040094@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -51,101 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Kandpal <suraj.kandpal@intel.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit e35bf8f6a0ff06ceeff15bb032351cd5d006f92b ]
+[ Upstream commit db9e64c983dcb07ff256bd455f258c44aa530ff8 ]
 
-Move to using intel_display wherever possible in intel_hdcp.c
-as a part of code refactor.
+The HDCP 2.2 specification requires the seq_num_v to be monotonically
+increasing, and repeated seq_num_v needs to be treated as an integrity
+failure. Make it so.
 
---v2
--Move intel_display to the first line wherever possible [Jani]
--use the closest reference when using to_intel_display [Jani]
+For the first message, seq_num_v must be zero, and is already
+checked. We can only check for less-than-or-equal for the subsequent
+messages, where hdcp2_encrypted is true.
 
-Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240911090540.643155-2-suraj.kandpal@intel.com
-Stable-dep-of: db9e64c983dc ("drm/i915/hdcp: require monotonically increasing seq_num_v")
+Discovered using AI-assisted static analysis confirmed by Intel Product
+Security.
+
+Reported-by: Martin Hodo <martin.hodo@intel.com>
+Fixes: d849178e2c9e ("drm/i915: Implement HDCP2.2 repeater authentication")
+Cc: stable@vger.kernel.org # v5.2+
+Cc: Suraj Kandpal <suraj.kandpal@intel.com>
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patch.msgid.link/20260625104407.1025614-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 58a224375c81179b52558c53d8857b93196d2687)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_display_core.h |    3 +++
- drivers/gpu/drm/i915/display/intel_hdcp.c         |   12 ++++++------
- drivers/gpu/drm/i915/i915_driver.c                |    3 +++
- 3 files changed, 12 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/i915/display/intel_hdcp.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_display_core.h
-+++ b/drivers/gpu/drm/i915/display/intel_display_core.h
-@@ -244,6 +244,9 @@ struct intel_wm {
- };
- 
- struct intel_display {
-+	/* drm device backpointer */
-+	struct drm_device *drm;
-+
- 	/* Display functions */
- 	struct {
- 		/* Top level crtc-ish functions */
 --- a/drivers/gpu/drm/i915/display/intel_hdcp.c
 +++ b/drivers/gpu/drm/i915/display/intel_hdcp.c
-@@ -1634,8 +1634,8 @@ out:
- static
- int hdcp2_authenticate_repeater_topology(struct intel_connector *connector)
- {
-+	struct intel_display *display = &to_i915(connector->base.dev)->display;
- 	struct intel_digital_port *dig_port = intel_attached_dig_port(connector);
--	struct drm_i915_private *dev_priv = to_i915(connector->base.dev);
- 	struct intel_hdcp *hdcp = &connector->hdcp;
- 	union {
- 		struct hdcp2_rep_send_receiverid_list recvid_list;
-@@ -1655,7 +1655,7 @@ int hdcp2_authenticate_repeater_topology
- 
- 	if (HDCP_2_2_MAX_CASCADE_EXCEEDED(rx_info[1]) ||
- 	    HDCP_2_2_MAX_DEVS_EXCEEDED(rx_info[1])) {
--		drm_dbg_kms(&dev_priv->drm, "Topology Max Size Exceeded\n");
-+		drm_dbg_kms(display->drm, "Topology Max Size Exceeded\n");
+@@ -1677,9 +1677,10 @@ int hdcp2_authenticate_repeater_topology
  		return -EINVAL;
  	}
  
-@@ -1672,23 +1672,23 @@ int hdcp2_authenticate_repeater_topology
- 		drm_hdcp_be24_to_cpu((const u8 *)msgs.recvid_list.seq_num_v);
- 
- 	if (!hdcp->hdcp2_encrypted && seq_num_v) {
--		drm_dbg_kms(&dev_priv->drm,
-+		drm_dbg_kms(display->drm,
- 			    "Non zero Seq_num_v at first RecvId_List msg\n");
+-	if (seq_num_v < hdcp->seq_num_v) {
+-		/* Roll over of the seq_num_v from repeater. Reauthenticate. */
+-		drm_dbg_kms(display->drm, "Seq_num_v roll over.\n");
++	if (hdcp->hdcp2_encrypted && seq_num_v <= hdcp->seq_num_v) {
++		/* Reauthenticate on Seq_num_v repeat or rollover */
++		drm_dbg_kms(display->drm, "Seq_num_v %s\n",
++			    seq_num_v == hdcp->seq_num_v ? "repeat" : "rollover");
  		return -EINVAL;
  	}
- 
- 	if (seq_num_v < hdcp->seq_num_v) {
- 		/* Roll over of the seq_num_v from repeater. Reauthenticate. */
--		drm_dbg_kms(&dev_priv->drm, "Seq_num_v roll over.\n");
-+		drm_dbg_kms(display->drm, "Seq_num_v roll over.\n");
- 		return -EINVAL;
- 	}
- 
- 	device_cnt = (HDCP_2_2_DEV_COUNT_HI(rx_info[0]) << 4 |
- 		      HDCP_2_2_DEV_COUNT_LO(rx_info[1]));
--	if (drm_hdcp_check_ksvs_revoked(&dev_priv->drm,
-+	if (drm_hdcp_check_ksvs_revoked(display->drm,
- 					msgs.recvid_list.receiver_ids,
- 					device_cnt) > 0) {
--		drm_err(&dev_priv->drm, "Revoked receiver ID(s) is in list\n");
-+		drm_err(display->drm, "Revoked receiver ID(s) is in list\n");
- 		return -EPERM;
- 	}
- 
---- a/drivers/gpu/drm/i915/i915_driver.c
-+++ b/drivers/gpu/drm/i915/i915_driver.c
-@@ -844,6 +844,9 @@ i915_driver_create(struct pci_dev *pdev,
- 
- 	pci_set_drvdata(pdev, i915);
- 
-+	/* Add drm device backpointer as early as possible. */
-+	i915->display.drm = &i915->drm;
-+
- 	/* Device parameters start as a copy of module parameters. */
- 	i915_params_copy(&i915->params, &i915_modparams);
  
 
 
