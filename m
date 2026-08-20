@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832C844C51B;
-	Thu, 20 Aug 2026 17:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D91D47DFB9;
+	Thu, 20 Aug 2026 17:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248414; cv=none; b=E2tOdh/lpxvCoMILgfCSa/Cn6aTrgmQbpbaS27Wu9U+GKuRK98CRd4foUJ8R2LsbNsuNjavHlvino5xvS+JfuqBoODq1spOv/DqAVM6RiNqUpo8Jf25EscecZJeR/dcZukB2csD4I60YDyQImvI2UhtnMVsvRdZsctuJlRfnC8k=
+	t=1787248418; cv=none; b=YYNpr/z4k8QIQ6S83wfXYBQ1HP38uzGVnltr4Gd0q6aq+Lm+Rfy6Gt745x8sivLvcNyB9RJZ+iXhLls0y2LCMaR6GwsVmCIlN7v/3LrRHNxVyuwCu7iOkDDchamjT84DvgZnWEvVza+opQPgTcvN4AZJ38zQf3/Yun1sGXirQNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248414; c=relaxed/simple;
-	bh=a38Y3vdUMX8bNKiR0CtC9ieC3TVoyUYYOtD8fN3qbJ4=;
+	s=arc-20240116; t=1787248418; c=relaxed/simple;
+	bh=kCYrjDDrOrfMWFvOZ+/K74exkBlJjsmEj35k74msZj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hdzcEkUSM7GabySZRzk430kVv5lUueAXUzb6zH1qQXVt9rzsVbMXgE5z280KbRTFCU7+sxJoU+VYSe57LLUU7xflzOEzrE3NrGMQPalKTFq/Zc063+ObGB0WAcOBoJ0PFvKs9FaFa2GLGWeP8wDf41trpaKRQR30R/KJVle7G/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgAGgYAE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uJ7IiYzw1mjdTQg1RGgyFsAcGb+Psh2nV2nZFHdc1c94h4N7yGiPnfhqON2g3BoIrQKd/WS+z+z+nMoBl9/CWuIj3xbgDhxXsbPptoLBWtju4ESfXEVJEjnTxBjrWs+simpuQYYfWdEd31KF2NSdvlYd8UyO0hGlCL/Tzs8HbT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnsqK+iX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgAGgYAE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98AA91F000E9;
-	Thu, 20 Aug 2026 17:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnsqK+iX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FAF01F000E9;
+	Thu, 20 Aug 2026 17:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248413;
-	bh=T/5C8zta2m0jQc3zf+E9WwJBOwUwDSWpwa/5MqlKPe8=;
+	s=korg; t=1787248417;
+	bh=/9N3iY+zbGDk+fKZ0C7RYMnF/HesBz/8O326IjufZhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RgAGgYAEXb3OherTDH8E+spfxpBY23OGq6SrcQ8WQH5tT3yTVeCl49id6aaXGDE/4
-	 39kXvbtR3XHe58XbDVqVjTI6DrxES2z0IR/k+ymzOSMohJrKQt4FUKeyDkXl1FA+cl
-	 8u4/Rc9Tl33zRmMQ7nn0MAYblv6AGcS2AdlJ4F30=
+	b=EnsqK+iXuqRxT5xSJzvVPLitTGHSD+aX7xXPlmiGEtwUmnKp+0FMKNqClqjr4RJ6u
+	 tQc1PcDWwEIeArDXmc4/oGTSk0BchWcWh0TmJq9qcmm950OLHRM+CwHeq1EK0Wi/Ty
+	 ocpIMTj44LMN27c7SjXEXH2UtcX20zbofo1IxtwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavitra Jha <jhapavitra98@gmail.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	David Ahern <dsahern@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 218/303] libceph: fix two unsafe bare decodes in decode_lockers()
-Date: Thu, 20 Aug 2026 16:55:54 +0200
-Message-ID: <20260820145259.950981392@linuxfoundation.org>
+Subject: [PATCH 6.1 219/303] net: move skb_gro_receive_list from udp to core
+Date: Thu, 20 Aug 2026 16:55:55 +0200
+Message-ID: <20260820145259.980850001@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -52,105 +54,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavitra Jha <jhapavitra98@gmail.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit a109a556115271ca7896dcda7b4b7e45e156c227 ]
+[ Upstream commit 8928756d53d5b99dcd18073dc7738b8ebdbe7d96 ]
 
-decode_lockers() in cls_lock_client.c contains two bare decode operations
-that allow a malicious or compromised OSD to trigger slab-out-of-bounds
-reads:
+This helper function will be used for TCP fraglist GRO support
 
-1. ceph_decode_32(p) at the num_lockers field has no preceding bounds
-   check. ceph_start_decoding() accepts struct_len=0 as valid -- the
-   internal ceph_decode_need(p, end, 0, bad) always passes -- so when an
-   OSD sends struct_len=0, ceph_start_decoding() returns success with
-   p == end. The immediately following bare ceph_decode_32(p) then reads
-   4 bytes past the validated buffer boundary. The garbage value is
-   passed directly to kzalloc_objs() as the locker count.
-
-   The sibling function decode_watchers() in osd_client.c already uses
-   ceph_decode_32_safe() after its own ceph_start_decoding() call.
-   decode_lockers() was the only site using the bare variant.
-
-2. ceph_decode_8(p) after the decode_locker() loop has no preceding
-   bounds check. If an OSD crafts num_lockers such that the loop
-   advances p exactly to end, the subsequent bare ceph_decode_8(p) reads
-   one byte past the validated buffer boundary. The result is passed
-   directly into *type, which is used as a lock type discriminator by
-   callers, giving an OSD-controlled one-byte OOB read with direct
-   influence over the lock type field.
-
-Fix both by replacing bare operations with their safe variants:
-  ceph_decode_32(p) -> ceph_decode_32_safe(p, end, *num_lockers,
-                                           err_inval)
-  ceph_decode_8(p)  -> ceph_decode_8_safe(p, end, *type,
-                                          err_free_lockers)
-
-The goto targets differ intentionally:
-  err_inval: is a new label returning -EINVAL directly. It is used for
-  the pre-allocation failure path where *lockers is not yet allocated
-  and must not be passed to ceph_free_lockers().
-
-  err_free_lockers: is the existing label. It is used for the
-  post-allocation failure path where *lockers is allocated and must
-  be freed.
-
-ret is set to -EINVAL before ceph_decode_8_safe() so that
-err_free_lockers returns the correct error code on bounds violation.
-Without this, err_free_lockers would return a stale ret value (0 from
-the successful decode_locker() loop), silently swallowing the error.
-
--EINVAL is correct for both failure paths. The data received from the
-OSD is structurally malformed. -ENOMEM would misrepresent the failure
-class to callers and to stable@ backporters triaging error paths.
-
-Attacker model: a malicious or compromised OSD in a multi-tenant Ceph
-deployment can trigger this against any kernel client that issues the
-lock.get_info class method (e.g. during RBD exclusive lock acquisition).
-
-[ idryomov: trim changelog, formatting ]
-
-Cc: stable@vger.kernel.org
-Fixes: d4ed4a530562 ("libceph: support for lock.lock_info")
-Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: e751256486d0 ("net: gro: fix double aggregation of flush-marked skbs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/cls_lock_client.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/net/gro.h      |    1 +
+ net/core/gro.c         |   29 +++++++++++++++++++++++++++++
+ net/ipv4/udp_offload.c |   29 -----------------------------
+ 3 files changed, 30 insertions(+), 29 deletions(-)
 
---- a/net/ceph/cls_lock_client.c
-+++ b/net/ceph/cls_lock_client.c
-@@ -304,7 +304,7 @@ static int decode_lockers(void **p, void
- 	if (ret)
- 		return ret;
+--- a/include/net/gro.h
++++ b/include/net/gro.h
+@@ -424,6 +424,7 @@ static inline __wsum ip6_gro_compute_pse
+ }
  
--	*num_lockers = ceph_decode_32(p);
-+	ceph_decode_32_safe(p, end, *num_lockers, err_inval);
- 	*lockers = kcalloc(*num_lockers, sizeof(**lockers), GFP_NOIO);
- 	if (!*lockers)
- 		return -ENOMEM;
-@@ -315,7 +315,8 @@ static int decode_lockers(void **p, void
- 			goto err_free_lockers;
- 	}
+ int skb_gro_receive(struct sk_buff *p, struct sk_buff *skb);
++int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb);
  
--	*type = ceph_decode_8(p);
-+	ret = -EINVAL;
-+	ceph_decode_8_safe(p, end, *type, err_free_lockers);
- 	s = ceph_extract_encoded_string(p, end, NULL, GFP_NOIO);
- 	if (IS_ERR(s)) {
- 		ret = PTR_ERR(s);
-@@ -325,6 +326,9 @@ static int decode_lockers(void **p, void
- 	*tag = s;
+ /* Pass the currently batched GRO_NORMAL SKBs up to the stack. */
+ static inline void gro_normal_list(struct napi_struct *napi)
+--- a/net/core/gro.c
++++ b/net/core/gro.c
+@@ -295,6 +295,35 @@ done:
  	return 0;
+ }
  
-+err_inval:
-+	return -EINVAL;
++int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb)
++{
++	if (unlikely(p->len + skb->len >= 65536))
++		return -E2BIG;
 +
- err_free_lockers:
- 	ceph_free_lockers(*lockers, *num_lockers);
- 	return ret;
++	if (NAPI_GRO_CB(p)->last == p)
++		skb_shinfo(p)->frag_list = skb;
++	else
++		NAPI_GRO_CB(p)->last->next = skb;
++
++	skb_pull(skb, skb_gro_offset(skb));
++
++	NAPI_GRO_CB(p)->last = skb;
++	NAPI_GRO_CB(p)->count++;
++	p->data_len += skb->len;
++
++	/* sk ownership - if any - completely transferred to the aggregated packet */
++	skb->destructor = NULL;
++	skb->sk = NULL;
++	p->truesize += skb->truesize;
++	p->len += skb->len;
++
++	skb_shinfo(p)->flags |= skb_shinfo(skb)->flags & SKBFL_SHARED_FRAG;
++
++	NAPI_GRO_CB(skb)->same_flow = 1;
++
++	return 0;
++}
++
+ 
+ static void napi_gro_complete(struct napi_struct *napi, struct sk_buff *skb)
+ {
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -526,35 +526,6 @@ out:
+ 	return segs;
+ }
+ 
+-static int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb)
+-{
+-	if (unlikely(p->len + skb->len >= 65536))
+-		return -E2BIG;
+-
+-	if (NAPI_GRO_CB(p)->last == p)
+-		skb_shinfo(p)->frag_list = skb;
+-	else
+-		NAPI_GRO_CB(p)->last->next = skb;
+-
+-	skb_pull(skb, skb_gro_offset(skb));
+-
+-	NAPI_GRO_CB(p)->last = skb;
+-	NAPI_GRO_CB(p)->count++;
+-	p->data_len += skb->len;
+-
+-	/* sk ownership - if any - completely transferred to the aggregated packet */
+-	skb->destructor = NULL;
+-	skb->sk = NULL;
+-	p->truesize += skb->truesize;
+-	p->len += skb->len;
+-
+-	skb_shinfo(p)->flags |= skb_shinfo(skb)->flags & SKBFL_SHARED_FRAG;
+-
+-	NAPI_GRO_CB(skb)->same_flow = 1;
+-
+-	return 0;
+-}
+-
+ 
+ #define UDP_GRO_CNT_MAX 64
+ static struct sk_buff *udp_gro_receive_segment(struct list_head *head,
 
 
