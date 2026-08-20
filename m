@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0713544C51B;
-	Thu, 20 Aug 2026 17:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C5D25B0BE;
+	Thu, 20 Aug 2026 17:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248127; cv=none; b=U8tIiSkh+YgQTSHJcDyiYDCiZLeB+9dyazrF4/QIbp/ikoDTPCW9zb7nqhxA/ABka3I2wnQpVaDqMS155uyOysQVMK+cCSKwRa+nQhKaWbocAWkQx3Ys8W7myVKUGHYPkKxOs+GD7y+NJAiXKdw6J2yGqyNHkq03DFm/NtdJb4k=
+	t=1787248130; cv=none; b=k28R+Gy/ZKYRbVa88HavoG4C6yjjgWBNlWoyYQWn65ce7xCQVgzFBUi3sa4rzaDARcTlK9hj/28J6QSWR4rGQV6sSF8PHM/x4/06ZfEYCOVL0xHCb315r4cVqGnsyBwQkXBU57AHm10JuUKfouvGhEvPapfC6kCpqJkw0HBhpZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248127; c=relaxed/simple;
-	bh=Z+3hk1mC2PeCSXHIUPqzujRq/VrRwomFEKQql2nY4rg=;
+	s=arc-20240116; t=1787248130; c=relaxed/simple;
+	bh=1glCk2KbGzAaMzlFITyvZzL11qkNGMqnqZAODer7bq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QkIeEAOfQ5sKsw40txMIll/+Azb+eUB8AV7RUunAaiAWOvMIr9pjghi7XwOp04845V7WXU/pZOb9Ji554HkWdf/1LxDn56heokfMV9uxJO0eeoshMY68PCVzFYphmm+X5VFzWJzhin2HAw+duuXvUNB3XqEPSAAV2YHzCsUbhis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B63gpQ1I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u2GZ+mKe+Xwjhdh7I1WvuEe4RQWDYEBhgMf3dceAItUq31t4eT/QUTBuxeLA9whfxR1QgBxl41pcsJabczcrr0eD6X2l9ey6tLfpCsbVTImtK0QkOTq83txt/46bw2CkA0w7/FBpFpuqBG5bqj2/tvYzx1H52mIoVj2L6lXZXXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQu42yFo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B63gpQ1I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 621B51F000E9;
-	Thu, 20 Aug 2026 17:48:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQu42yFo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE8E1F000E9;
+	Thu, 20 Aug 2026 17:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248125;
-	bh=T45+Zmhmeo2lX301tixt0UUFxkPrNvblgvGDCxMm88E=;
+	s=korg; t=1787248128;
+	bh=6NSJakzUpA0EUQwnPkk3WXEu/JlDn55bW1fxO7yULFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B63gpQ1IJe2JJ+YXwZcPXb9MGDUWL42H5/hiPY9CxHUfqx5AhscRxG9BvLfA6iteu
-	 L+lCWcranUsnorxU8t/GzUvMYn528tBlZqjGSaJHoX65Bo537x5+kIk+oAbJAU92wM
-	 yn1NNrekLI5CXsLzcdL2R13XnARdo0InSo03kV44=
+	b=SQu42yFoc0PkxNXGgUCuuird91ak7IGd85GmwquTTwXzqrRpqKuFJwRV+soeNoded
+	 wRkoCs2NHwC9kgsyl/qZ+CFbmC8pk3BGuIj6VqT6UW8UXVTreoc6aVCDzW24d/+FZP
+	 1pY4xI+wubh9+ozeN5ksVXrn407fuFz2XoTVs2SE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 120/303] fs/ntfs3: Undo critial modificatins to keep directory consistency
-Date: Thu, 20 Aug 2026 16:54:16 +0200
-Message-ID: <20260820145256.886969481@linuxfoundation.org>
+Subject: [PATCH 6.1 121/303] ntfs3: validate split-point offset in indx_insert_into_buffer
+Date: Thu, 20 Aug 2026 16:54:17 +0200
+Message-ID: <20260820145256.917561246@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -50,106 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 63e92a0c5a0d5816803907a3e30a91ef72c903a5 ]
+[ Upstream commit f1df9d771df47aa40de6d70949c28720ae1e430d ]
 
-Affect xfstest 320.
+indx_insert_into_buffer() computes
 
+    used = used1 - to_copy - sp_size;
+    memmove(de_t, Add2Ptr(sp, sp_size), used - le32_to_cpu(hdr1->de_off));
+
+where sp and sp_size come from hdr_find_split().  hdr_find_split()
+walks entries by le16_to_cpu(e->size) without validating that each
+step stays within hdr->used or that the size field is at least
+sizeof(struct NTFS_DE).  index_hdr_check(), the on-load gatekeeper,
+only validates header-level fields (used, total, de_off) and does
+not walk per-entry sizes.
+
+A crafted NTFS image whose leaf INDEX_HDR reports used == total but
+contains one interior NTFS_DE with size = 0xFFF0 therefore passes
+validation, descends to indx_insert_into_buffer() through the
+ntfs_create() -> indx_insert_entry() path, and makes hdr_find_split()
+return an sp whose sp_size (0xFFF0) greatly exceeds the remaining
+bytes in the buffer.  The u32 subtraction underflows and the memmove
+count becomes a near-4-GiB value, producing an out-of-bounds kernel
+write that corrupts adjacent allocations and panics the kernel.
+
+Reproduced on 7.0.0-rc7 with UML + KASAN via a crafted image and a
+single 'touch' inside the mounted directory; crash site resolves to
+fs/ntfs3/index.c at the memmove.  Trigger requires only local mount
+of an attacker-supplied filesystem image (USB, loopback, or removable
+media auto-mount).
+
+Reject the split whenever the chosen sp plus its declared size
+already extends past hdr1->used.  This is the minimal fix; it
+preserves the existing hdr_find_split() contract and relies on the
+same out: cleanup path as the pre-existing error returns.
+
+A prior OOB read in the very same indx_insert_into_buffer() memmove
+was fixed in commit b8c44949044e ("fs/ntfs3: Fix OOB read in
+indx_insert_into_buffer") by tightening hdr_find_e(), but that fix
+does not cover the split-point size field path addressed here: sp is
+returned by hdr_find_split(), not hdr_find_e(), and the underflow is
+driven by sp->size rather than hdr->used exceeding hdr->total.
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Cc: stable@vger.kernel.org
+Reported-by: Michael Bommarito <michael.bommarito@gmail.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Stable-dep-of: f1df9d771df4 ("ntfs3: validate split-point offset in indx_insert_into_buffer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/index.c |   30 ++++++++++++++++++++----------
- 1 file changed, 20 insertions(+), 10 deletions(-)
+ fs/ntfs3/index.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 --- a/fs/ntfs3/index.c
 +++ b/fs/ntfs3/index.c
-@@ -1812,10 +1812,11 @@ indx_insert_into_buffer(struct ntfs_inde
- 	struct indx_node *n1 = fnd->nodes[level];
- 	struct INDEX_HDR *hdr1 = &n1->index->ihdr;
- 	struct INDEX_HDR *hdr2;
--	u32 to_copy, used;
-+	u32 to_copy, used, used1;
- 	CLST new_vbn;
- 	__le64 t_vbn, *sub_vbn;
- 	u16 sp_size;
-+	void *hdr1_saved = NULL;
- 
- 	/* Try the most easy case. */
- 	e = fnd->level - 1 == level ? fnd->de[level] : NULL;
-@@ -1848,6 +1849,13 @@ indx_insert_into_buffer(struct ntfs_inde
- 		return -ENOMEM;
+@@ -1850,6 +1850,20 @@ indx_insert_into_buffer(struct ntfs_inde
  	memcpy(up_e, sp, sp_size);
  
-+	used1 = le32_to_cpu(hdr1->used);
-+	hdr1_saved = kmemdup(hdr1, used1, GFP_NOFS);
-+	if (!hdr1_saved) {
-+		err = -ENOMEM;
+ 	used1 = le32_to_cpu(hdr1->used);
++
++	/*
++	 * hdr_find_split does not validate per-entry sizes, so a crafted
++	 * NTFS_DE whose le16 size field is out of range can place sp such
++	 * that (PtrOffset(hdr1, sp) + sp_size) exceeds used1. Without this
++	 * guard the u32 'used = used1 - to_copy - sp_size' underflows and
++	 * the subsequent memmove count becomes a near-4-GiB value,
++	 * triggering an out-of-bounds kernel write.
++	 */
++	if (PtrOffset(hdr1, sp) + sp_size > used1) {
++		err = -EINVAL;
 +		goto out;
 +	}
 +
- 	if (!hdr1->flags) {
- 		up_e->flags |= NTFS_IE_HAS_SUBNODES;
- 		up_e->size = cpu_to_le16(sp_size + sizeof(u64));
-@@ -1880,7 +1888,7 @@ indx_insert_into_buffer(struct ntfs_inde
- 	hdr_insert_head(hdr2, de_t, to_copy);
- 
- 	/* Remove all entries (sp including) from hdr1. */
--	used = le32_to_cpu(hdr1->used) - to_copy - sp_size;
-+	used = used1 - to_copy - sp_size;
- 	memmove(de_t, Add2Ptr(sp, sp_size), used - le32_to_cpu(hdr1->de_off));
- 	hdr1->used = cpu_to_le32(used);
- 
-@@ -1910,8 +1918,6 @@ indx_insert_into_buffer(struct ntfs_inde
- 	if (!level) {
- 		/* Insert in root. */
- 		err = indx_insert_into_root(indx, ni, up_e, NULL, ctx, fnd, 0);
--		if (err)
--			goto out;
- 	} else {
- 		/*
- 		 * The target buffer's parent is another index buffer.
-@@ -1919,12 +1925,20 @@ indx_insert_into_buffer(struct ntfs_inde
- 		 */
- 		err = indx_insert_into_buffer(indx, ni, root, up_e, ctx,
- 					      level - 1, fnd);
--		if (err)
--			goto out;
-+	}
-+
-+	if (err) {
-+		/*
-+		 * Undo critical operations.
-+		 */
-+		indx_mark_free(indx, ni, new_vbn >> indx->idx2vbn_bits);
-+		memcpy(hdr1, hdr1_saved, used1);
-+		indx_write(indx, ni, n1, 0);
- 	}
- 
- out:
- 	kfree(up_e);
-+	kfree(hdr1_saved);
- 
- 	return err;
- }
-@@ -1983,16 +1997,12 @@ int indx_insert_entry(struct ntfs_index
- 		 */
- 		err = indx_insert_into_root(indx, ni, new_de, fnd->root_de, ctx,
- 					    fnd, undo);
--		if (err)
--			goto out;
- 	} else {
- 		/*
- 		 * Found a leaf buffer, so we'll insert the new entry into it.
- 		 */
- 		err = indx_insert_into_buffer(indx, ni, root, new_de, ctx,
- 					      fnd->level - 1, fnd);
--		if (err)
--			goto out;
- 	}
- 
- out:
+ 	hdr1_saved = kmemdup(hdr1, used1, GFP_NOFS);
+ 	if (!hdr1_saved) {
+ 		err = -ENOMEM;
 
 
