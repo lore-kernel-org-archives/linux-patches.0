@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DB837E5CB;
-	Thu, 20 Aug 2026 15:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CCD337107;
+	Thu, 20 Aug 2026 15:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238542; cv=none; b=Wfwv9PpuI7TcHyNZwm78c+V/y/+1Ov7MNNaitxX/0SM/hfLn0PIwETI5XatG6WnXQ+eYRHVaAHzOiAU+wCw7fy+wN1OPba1zhiqHRE3AHvIZsrJ/sCDA9mbSMxWnM2kLFTO6CCy/t8LJ+W88xDpwDAWDus6C0cueYIGyIPoLar0=
+	t=1787238544; cv=none; b=JrLInG4GhX1toZnoy3OU9ebpiZZWETLb5EYS/we81XVb3/FL2HFuAcg3ysp0vghWsdhWNYC6ypP8TC6+iaMN8SrxUY66DBL8q6ExI2oBqP5rsSK1x5weGvPaMTHkQPfAzEdvAWgUVh8RAyM99d8f9cEod66+8zOh00xiaTWudeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238542; c=relaxed/simple;
-	bh=m4ggQ5A3oJFQHlSWx23uTl5EyuAD2xqX4yDnft7R4nQ=;
+	s=arc-20240116; t=1787238544; c=relaxed/simple;
+	bh=rC3D9ofzFwtZ1y6VbTZpTQ6zQzLPlg5yqs9Fb0UQCMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uUrp6Udk5Z3XaUI0f749jz4I+9QxaZDs5nHqnqF4ZKOZ7p+3egRTtLPOAYCDXKudBBB3vW86iCM4BZnYQpqa1ehDZBLMuH77+KfbJu+g7euiv5MEIDVhvznoqB1TZqjzAvphCLmsDf3dlYq6tNe+1JT60tUneDS2YPntmEznf5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nl4aOnka; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YLLCHvyIdnj46aWz/cjWxsTg5rSyIbM1ekfl3HuYEHGWmanCRkJK9xCttTEmxL7mci1HrR4NFVzGWlwtDHwFxbdVgBUnLp4va9ndCqTqaIaoe0Es4vKC3UGJOchFyAX1vKi5JRniftFNfuff/t/sQKP7MnodmRWXxNCguwUkmc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJBIAEHW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nl4aOnka"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38201F000E9;
-	Thu, 20 Aug 2026 15:08:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJBIAEHW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED661F00A3A;
+	Thu, 20 Aug 2026 15:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238539;
-	bh=04haT89xk4QLeCq9xAjEYsj61Pnc5nNpz1uLR71lgHk=;
+	s=korg; t=1787238542;
+	bh=drP+LPRsnbHz9hbbdEjIkdgQyzL7IuNRnQN1LjplRWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nl4aOnkash1KPQgwQk+FLZgjkFXM7Jk4fwI4dGPzEN13gMWcQAO+igjNfw0FsyS/s
-	 1vprfeVjTI1MuRMzSXHoS9f8YGddJYINWHWp0MBo3oyIQsk3P3dBkPjbuD75W8h7yU
-	 WknV8UUUw2f5N2U5FjOwOuxRwuKWL/2tHCYBNeJM=
+	b=eJBIAEHWFcq2Y/PFaIlzwiPIBJbGnNlmLDPLt6LrbN8ISyWoflYpeZ4AMBrDGU6or
+	 k+LZRnMcQUd+laIcJ+PF9Qzxqnv5noC5zg11c4MUdtqm7Yz3iNOR4J6+yi806CTnCR
+	 XoHamTkHQYnp67rOYYhfroTTic02duft2aA7ZEYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ralf Lici <ralf@mandelbit.com>,
 	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 181/228] ovpn: run deferred work on a module-owned workqueue
-Date: Thu, 20 Aug 2026 16:55:23 +0200
-Message-ID: <20260820145250.191821530@linuxfoundation.org>
+Subject: [PATCH 7.1 182/228] ovpn: defer key slot crypto freeing to workqueue
+Date: Thu, 20 Aug 2026 16:55:24 +0200
+Message-ID: <20260820145250.219772712@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -53,190 +53,149 @@ Content-Transfer-Encoding: 8bit
 
 From: Ralf Lici <ralf@mandelbit.com>
 
-[ Upstream commit e9714db8041763f59dde152c812b96b3de05c6d9 ]
+[ Upstream commit 2da3dfa1ddfe55a065f484750c83660e3bd4ac00 ]
 
-ovpn queues several work items whose callbacks execute module text.
-These works currently run on the global system workqueues, so module
-exit has no driver-owned drain point that guarantees the callbacks have
-fully returned before the module text can be freed.
+Key slots are released through a kref and the existing release path
+frees the AEAD transforms from an RCU callback. That is not safe for all
+crypto implementations: crypto_free_aead can sleep, for example when an
+async or hardware implementation has teardown work to complete.
 
-Object references protect the objects used by the callbacks, but they do
-not prove that a workqueue function has returned. In particular, a
-worker can drop the final reference that unblocks device teardown while
-it is still executing ovpn code.
+Use queue_rcu_work for key-slot release. This keeps the RCU grace period
+needed by lockless key-slot readers, but runs the actual crypto teardown
+from workqueue context where sleeping is allowed. Once the rcu_work
+callback runs, pre-existing RCU readers are gone, and the final kref put
+already proves that no transform user remains, so the worker can release
+the AEAD transforms and free the slot directly.
 
-Add a module-owned workqueue and queue all ovpn work items on it. During
-module exit, unregister rtnl and netlink first, flush the workqueue so
-ordinary ovpn workers finish, run the final RCU barrier, and destroy the
-workqueue last. This keeps the workqueue available for cleanup work
-queued from RCU callbacks, while ensuring no ovpn work item can outlive
-the module text.
+The previous patch drains ovpn_wq during module exit, so queued key-slot
+teardown work cannot outlive module text.
 
-The per-device delayed keepalive work remains explicitly disabled during
-netdev teardown (disable_delayed_work_sync in ndo_uninit), since
-flush_workqueue does not flush delayed work that is still only pending
-on its timer.
-
-Fixes: 3ecfd9349f40 ("ovpn: implement keepalive mechanism")
-Fixes: 11851cbd60ea ("ovpn: implement TCP transport")
+Fixes: 8534731dbf2d ("ovpn: implement packet processing")
 Signed-off-by: Ralf Lici <ralf@mandelbit.com>
 Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/main.c     | 19 ++++++++++++++++++-
- drivers/net/ovpn/ovpnpriv.h |  4 ++++
- drivers/net/ovpn/peer.c     |  8 ++++----
- drivers/net/ovpn/tcp.c      |  9 ++++-----
- 4 files changed, 30 insertions(+), 10 deletions(-)
+ drivers/net/ovpn/crypto.c      | 10 +---------
+ drivers/net/ovpn/crypto.h      |  4 +++-
+ drivers/net/ovpn/crypto_aead.c | 19 ++++++++++++++-----
+ drivers/net/ovpn/crypto_aead.h |  1 -
+ 4 files changed, 18 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ovpn/main.c b/drivers/net/ovpn/main.c
-index 168cfe9b59a98..0708249e9607c 100644
---- a/drivers/net/ovpn/main.c
-+++ b/drivers/net/ovpn/main.c
-@@ -12,6 +12,7 @@
- #include <linux/module.h>
- #include <linux/netdevice.h>
- #include <linux/inetdevice.h>
-+#include <linux/workqueue.h>
- #include <net/gro_cells.h>
- #include <net/ip.h>
- #include <net/rtnetlink.h>
-@@ -26,6 +27,9 @@
- #include "tcp.h"
- #include "udp.h"
+diff --git a/drivers/net/ovpn/crypto.c b/drivers/net/ovpn/crypto.c
+index 2e95f29514fc4..7e545428900a9 100644
+--- a/drivers/net/ovpn/crypto.c
++++ b/drivers/net/ovpn/crypto.c
+@@ -18,20 +18,12 @@
+ #include "crypto_aead.h"
+ #include "crypto.h"
  
-+/* module-owned workqueue on which all ovpn-specific work is queued */
-+struct workqueue_struct *ovpn_wq;
-+
- static void ovpn_priv_free(struct net_device *net)
+-static void ovpn_ks_destroy_rcu(struct rcu_head *head)
+-{
+-	struct ovpn_crypto_key_slot *ks;
+-
+-	ks = container_of(head, struct ovpn_crypto_key_slot, rcu);
+-	ovpn_aead_crypto_key_slot_destroy(ks);
+-}
+-
+ void ovpn_crypto_key_slot_release(struct kref *kref)
  {
- 	struct ovpn_priv *ovpn = netdev_priv(net);
-@@ -264,10 +268,16 @@ static int __init ovpn_init(void)
+ 	struct ovpn_crypto_key_slot *ks;
  
- 	ovpn_tcp_init();
- 
-+	ovpn_wq = alloc_workqueue("ovpn", WQ_PERCPU, 0);
-+	if (!ovpn_wq) {
-+		pr_err("ovpn: cannot allocate workqueue\n");
-+		return -ENOMEM;
-+	}
-+
- 	err = rtnl_link_register(&ovpn_link_ops);
- 	if (err) {
- 		pr_err("ovpn: can't register rtnl link ops: %d\n", err);
--		return err;
-+		goto destroy_wq;
- 	}
- 
- 	err = ovpn_nl_register();
-@@ -280,6 +290,9 @@ static int __init ovpn_init(void)
- 
- unreg_rtnl:
- 	rtnl_link_unregister(&ovpn_link_ops);
-+destroy_wq:
-+	destroy_workqueue(ovpn_wq);
-+	ovpn_wq = NULL;
- 	return err;
+ 	ks = container_of(kref, struct ovpn_crypto_key_slot, refcount);
+-	call_rcu(&ks->rcu, ovpn_ks_destroy_rcu);
++	queue_rcu_work(ovpn_wq, &ks->free_work);
  }
  
-@@ -288,7 +301,11 @@ static __exit void ovpn_cleanup(void)
- 	ovpn_nl_unregister();
- 	rtnl_link_unregister(&ovpn_link_ops);
+ /* can only be invoked when all peer references have been dropped (i.e. RCU
+diff --git a/drivers/net/ovpn/crypto.h b/drivers/net/ovpn/crypto.h
+index 0e284fec3a75a..e3feb16d54985 100644
+--- a/drivers/net/ovpn/crypto.h
++++ b/drivers/net/ovpn/crypto.h
+@@ -10,6 +10,8 @@
+ #ifndef _NET_OVPN_OVPNCRYPTO_H_
+ #define _NET_OVPN_OVPNCRYPTO_H_
  
-+	flush_workqueue(ovpn_wq);
- 	rcu_barrier();
++#include <linux/workqueue.h>
 +
-+	destroy_workqueue(ovpn_wq);
-+	ovpn_wq = NULL;
+ #include "pktid.h"
+ #include "proto.h"
+ 
+@@ -45,8 +47,8 @@ struct ovpn_crypto_key_slot {
+ 
+ 	struct ovpn_pktid_recv pid_recv ____cacheline_aligned_in_smp;
+ 	struct ovpn_pktid_xmit pid_xmit ____cacheline_aligned_in_smp;
++	struct rcu_work free_work;
+ 	struct kref refcount;
+-	struct rcu_head rcu;
+ };
+ 
+ struct ovpn_crypto_state {
+diff --git a/drivers/net/ovpn/crypto_aead.c b/drivers/net/ovpn/crypto_aead.c
+index 8f07c418622b2..74eaf6fac2f52 100644
+--- a/drivers/net/ovpn/crypto_aead.c
++++ b/drivers/net/ovpn/crypto_aead.c
+@@ -9,6 +9,7 @@
+ 
+ #include <crypto/aead.h>
+ #include <linux/skbuff.h>
++#include <linux/workqueue.h>
+ #include <net/ip.h>
+ #include <net/ipv6.h>
+ #include <net/udp.h>
+@@ -380,13 +381,19 @@ static struct crypto_aead *ovpn_aead_init(const char *title,
+ 	return ERR_PTR(ret);
  }
  
- module_init(ovpn_init);
-diff --git a/drivers/net/ovpn/ovpnpriv.h b/drivers/net/ovpn/ovpnpriv.h
-index 5898f6adada7f..84499140e4bd9 100644
---- a/drivers/net/ovpn/ovpnpriv.h
-+++ b/drivers/net/ovpn/ovpnpriv.h
-@@ -15,6 +15,10 @@
- #include <uapi/linux/if_link.h>
- #include <uapi/linux/ovpn.h>
- 
-+struct workqueue_struct;
+-void ovpn_aead_crypto_key_slot_destroy(struct ovpn_crypto_key_slot *ks)
++static void ovpn_aead_crypto_key_slot_free(struct ovpn_crypto_key_slot *ks)
+ {
+-	if (!ks)
+-		return;
+-
+ 	crypto_free_aead(ks->encrypt);
+ 	crypto_free_aead(ks->decrypt);
++}
 +
-+extern struct workqueue_struct *ovpn_wq;
++static void ovpn_aead_crypto_key_slot_free_work(struct work_struct *work)
++{
++	struct ovpn_crypto_key_slot *ks;
 +
- /**
-  * struct ovpn_peer_collection - container of peers for MultiPeer mode
-  * @by_id: table of peers index by ID
-diff --git a/drivers/net/ovpn/peer.c b/drivers/net/ovpn/peer.c
-index b0519f9840d83..c95656ca7c357 100644
---- a/drivers/net/ovpn/peer.c
-+++ b/drivers/net/ovpn/peer.c
-@@ -62,7 +62,7 @@ void ovpn_peer_keepalive_set(struct ovpn_peer *peer, u32 interval, u32 timeout)
- 	/* now that interval and timeout have been changed, kick
- 	 * off the worker so that the next delay can be recomputed
- 	 */
--	mod_delayed_work(system_percpu_wq, &peer->ovpn->keepalive_work, 0);
-+	mod_delayed_work(ovpn_wq, &peer->ovpn->keepalive_work, 0);
++	ks = container_of(to_rcu_work(work), struct ovpn_crypto_key_slot,
++			  free_work);
++	ovpn_aead_crypto_key_slot_free(ks);
+ 	kfree(ks);
  }
  
- /**
-@@ -1371,7 +1371,7 @@ static time64_t ovpn_peer_keepalive_work_single(struct ovpn_peer *peer,
- 			   peer->id);
- 		if (WARN_ON(!ovpn_peer_hold(peer)))
- 			return 0;
--		if (!schedule_work(&peer->keepalive_work))
-+		if (!queue_work(ovpn_wq, &peer->keepalive_work))
- 			ovpn_peer_put(peer);
- 	}
+@@ -420,6 +427,7 @@ ovpn_aead_crypto_key_slot_new(const struct ovpn_key_config *kc)
  
-@@ -1463,8 +1463,8 @@ void ovpn_peer_keepalive_work(struct work_struct *work)
- 		netdev_dbg(ovpn->dev,
- 			   "scheduling keepalive work: now=%llu next_run=%llu delta=%llu\n",
- 			   next_run, now, next_run - now);
--		schedule_delayed_work(&ovpn->keepalive_work,
--				      (next_run - now) * HZ);
-+		queue_delayed_work(ovpn_wq, &ovpn->keepalive_work,
-+				   (next_run - now) * HZ);
- 	}
- 	unlock_ovpn(ovpn, &release_list);
+ 	ks->encrypt = NULL;
+ 	ks->decrypt = NULL;
++	INIT_RCU_WORK(&ks->free_work, ovpn_aead_crypto_key_slot_free_work);
+ 	kref_init(&ks->refcount);
+ 	ks->key_id = kc->key_id;
+ 
+@@ -453,7 +461,8 @@ ovpn_aead_crypto_key_slot_new(const struct ovpn_key_config *kc)
+ 	return ks;
+ 
+ destroy_ks:
+-	ovpn_aead_crypto_key_slot_destroy(ks);
++	ovpn_aead_crypto_key_slot_free(ks);
++	kfree(ks);
+ 	return ERR_PTR(ret);
  }
-diff --git a/drivers/net/ovpn/tcp.c b/drivers/net/ovpn/tcp.c
-index 0af14055c39aa..8fe8a8e750a40 100644
---- a/drivers/net/ovpn/tcp.c
-+++ b/drivers/net/ovpn/tcp.c
-@@ -151,7 +151,7 @@ static void ovpn_tcp_rcv(struct strparser *strp, struct sk_buff *skb)
- 	/* take reference for deferred peer deletion. should never fail */
- 	if (WARN_ON(!ovpn_peer_hold(peer)))
- 		goto err_nopeer;
--	if (!schedule_work(&peer->tcp.defer_del_work))
-+	if (!queue_work(ovpn_wq, &peer->tcp.defer_del_work))
- 		ovpn_peer_put(peer);
- 	ovpn_dev_dstats_rx_dropped(peer->ovpn->dev);
- err_nopeer:
-@@ -284,13 +284,12 @@ static void ovpn_tcp_send_sock(struct ovpn_peer *peer, struct sock *sk)
- 			 * stream therefore we abort the connection
- 			 */
- 			ovpn_peer_hold(peer);
--			if (!schedule_work(&peer->tcp.defer_del_work))
-+			if (!queue_work(ovpn_wq, &peer->tcp.defer_del_work))
- 				ovpn_peer_put(peer);
  
- 			/* we bail out immediately and keep tx_in_progress set
- 			 * to true. This way we prevent more TX attempts
--			 * which would lead to more invocations of
--			 * schedule_work()
-+			 * which would lead to more invocations of queue_work()
- 			 */
- 			return;
- 		}
-@@ -487,7 +486,7 @@ static void ovpn_tcp_write_space(struct sock *sk)
- 	rcu_read_lock();
- 	sock = rcu_dereference_sk_user_data(sk);
- 	if (likely(sock && sock->peer)) {
--		schedule_work(&sock->tcp_tx_work);
-+		queue_work(ovpn_wq, &sock->tcp_tx_work);
- 		sock->peer->tcp.sk_cb.sk_write_space(sk);
- 	}
- 	rcu_read_unlock();
+diff --git a/drivers/net/ovpn/crypto_aead.h b/drivers/net/ovpn/crypto_aead.h
+index 65a2ff3078986..fae3b585a43b3 100644
+--- a/drivers/net/ovpn/crypto_aead.h
++++ b/drivers/net/ovpn/crypto_aead.h
+@@ -22,7 +22,6 @@ int ovpn_aead_decrypt(struct ovpn_peer *peer, struct ovpn_crypto_key_slot *ks,
+ 
+ struct ovpn_crypto_key_slot *
+ ovpn_aead_crypto_key_slot_new(const struct ovpn_key_config *kc);
+-void ovpn_aead_crypto_key_slot_destroy(struct ovpn_crypto_key_slot *ks);
+ 
+ enum ovpn_cipher_alg ovpn_aead_crypto_alg(struct ovpn_crypto_key_slot *ks);
+ 
 -- 
 2.53.0
 
