@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2799238A70B;
-	Thu, 20 Aug 2026 16:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39FA272E53;
+	Thu, 20 Aug 2026 16:28:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243290; cv=none; b=e7xTK8DcDohapSHKVNMkG+K0gCJtbfJwrbDYMrs2EACPyUQSGUSR8TrDBsX3HIeQZd+izeWuxFB1to3FzLSdmVBY3FZ/XsPmVIGQ9QXafC5HPAtsG3imMSgqXFd4+m1p228xSk0D78COuZX17EbnBBqrrwkVUinNJfljXZdEcI0=
+	t=1787243293; cv=none; b=OYzhoRo92BvDYYkcf6W5Q+PhO9KoDkYj2G5sE64SG6k2XC+25Ujn0z0qH3MHRRD/hMtp1ewOifG0OCJX4zC913wXdRFQLsmS/zweMy531NLeAWm+08zE+K9+BXzIDW0KDTjMMRld52rpX2+rd6GfL/WC+3yJvKcU0rnUttOJokw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243290; c=relaxed/simple;
-	bh=V4r9NNTFhue1aegvfB7hk0riwHDylsEF7d2dyvoCDX8=;
+	s=arc-20240116; t=1787243293; c=relaxed/simple;
+	bh=5vIPJL6rl8DcuN+uJBgvkZGefysxSP30YacrFJBPtqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nw04zm02S68Q+V2wsYfxv1lR71tL99ajUjfjxP1N6J+iusRs+8QMPj6zFR8nuROyVV0zakNuAomiuwZAbf51IXUENApEw4XOpFmA0Gs3q/HNuJaN1aQCx5JtErVdLQMF8X4eti3rENOAcBlYy0jqbzWwMq+0bdJRBK1gKFv79II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S38SB7ul; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MoVWQwrar0AwRqP6XLqi6pq12pnVijzLEOe4IfpXumgTqeTqVeDYlqpbHIbwv/RQz0EqvTYwOpoQ7BEUWb4C1thl30WriHuRO/+8zRT0Ygy4VXRMtCvg5drtPkOVr9TcQ3hl+SCUAPHcEqOLobV0ZQjQn6N2vHSEYC7PRtJjLRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DYHJnBaH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S38SB7ul"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F9BD1F000E9;
-	Thu, 20 Aug 2026 16:28:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DYHJnBaH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AECD1F000E9;
+	Thu, 20 Aug 2026 16:28:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243289;
-	bh=BYzQqidbVAgu54J/+tkc3sLLvyKdRmW3qfvIJ/i+GFo=;
+	s=korg; t=1787243291;
+	bh=6LDPjKJanuhp78Q4JZ4iNn1pPQEoeogtCiuK48sqmB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S38SB7ulGNQ4hnFd/dxP7mSOilfDWLGeJQKfjh2ZmDewqSQ1vZyYzyeh7ild7NDSa
-	 z9YEM5pNAuac3U0B6Kt0POu9SEqFbDNJVbsuemAtPWpk1DQijR+y9FhvzCG73e5Lid
-	 nmWSziMO2SkCXGrpMTCpSe74v0crF1ce9M3XgRfE=
+	b=DYHJnBaHd04vL7xzO2dAO7NMISOjbvjxk733ILFXV5iPuawtqkAbukV/62mSwXVMM
+	 lBWmzL2Ohxp3KFyMMxH2cKoJh+7vip4L3RiGPA4458HkzUx9KTDLNIP5StHRs+kUlL
+	 M+jTR+o1pFJhgcchR7f0g46XI1fPnrgm+f/sQ00k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <leo.lilong@huawei.com>,
 	Christoph Hellwig <hch@lst.de>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 5.15 044/272] xfs: fix ilock leak on error in xfs_dq_get_next_id
-Date: Thu, 20 Aug 2026 16:53:48 +0200
-Message-ID: <20260820145232.545222218@linuxfoundation.org>
+Subject: [PATCH 5.15 045/272] xfs: check v5 superblock features early
+Date: Thu, 20 Aug 2026 16:53:49 +0200
+Message-ID: <20260820145232.574117511@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -52,48 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <leo.lilong@huawei.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 63320a0f70f66f311f4bccff3af0719c2119f46c upstream.
+commit eb6b2cc1fc8ad566d746d128a559989ff0bba5cc upstream.
 
-xfs_dq_get_next_id() takes the quota inode ILOCK before calling
-xfs_iread_extents().  If xfs_iread_extents() fails, the function returns
-immediately without releasing the lock, leaking the quota inode ILOCK.
-This can leave the quota inode locked and cause subsequent quota
-operations to hang.
+When working on a new features that reuses the existing pad in the
+superblock, I noticed that mounting such a file system on an old kernel
+logs a rather confusing warning:
 
-Fix this by jumping to a common unlock path on error instead of returning
-directly.
+    XFS (vdc): Metadir superblock padding fields must be zero.
 
-Fixes: bda250dbaf39f ("xfs: rewrite xfs_dq_get_next_id using xfs_iext_lookup_extent")
-Cc: stable@vger.kernel.org # v4.12
-Signed-off-by: Long Li <leo.lilong@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+This is because we only validate the various feature fields in v5
+superblocks after the common superblock validation helper is called.
+
+Fix this by calling the feature validation first.
+
+Fixes: eca383fcd63b ("xfs: refactor superblock verifiers")
+Cc: <stable@vger.kernel.org> # v4.19
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_dquot.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/xfs/libxfs/xfs_sb.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/xfs/xfs_dquot.c
-+++ b/fs/xfs/xfs_dquot.c
-@@ -750,7 +750,7 @@ xfs_dq_get_next_id(
- 	lock_flags = xfs_ilock_data_map_shared(quotip);
- 	error = xfs_iread_extents(NULL, quotip, XFS_DATA_FORK);
+--- a/fs/xfs/libxfs/xfs_sb.c
++++ b/fs/xfs/libxfs/xfs_sb.c
+@@ -805,10 +805,10 @@ xfs_sb_read_verify(
+ 	 * because _verify_common checks the on-disk values.
+ 	 */
+ 	__xfs_sb_from_disk(&sb, dsb, false);
+-	error = xfs_validate_sb_common(mp, bp, &sb);
++	error = xfs_validate_sb_read(mp, &sb);
  	if (error)
--		return error;
-+		goto out_unlock;
+ 		goto out_error;
+-	error = xfs_validate_sb_read(mp, &sb);
++	error = xfs_validate_sb_common(mp, bp, &sb);
  
- 	if (xfs_iext_lookup_extent(quotip, &quotip->i_df, start, &cur, &got)) {
- 		/* contiguous chunk, bump startoff for the id calculation */
-@@ -761,6 +761,7 @@ xfs_dq_get_next_id(
- 		error = -ENOENT;
- 	}
- 
-+out_unlock:
- 	xfs_iunlock(quotip, lock_flags);
- 
- 	return error;
+ out_error:
+ 	if (error == -EFSCORRUPTED || error == -EFSBADCRC)
 
 
