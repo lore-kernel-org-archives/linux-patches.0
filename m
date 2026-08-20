@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEC246D2C9;
-	Thu, 20 Aug 2026 17:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3A8471254;
+	Thu, 20 Aug 2026 17:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247419; cv=none; b=rUxcgEaVTKyBuTtP9Xd7vqQ0jOu20Gw/aATSuTFQRxGwP9w8wZQRnmjWNN/jBaxkUY1VVsE3vGN7LwjaYjlgP82ZjxkWD9sWme8E48Hk+sSoxcsQElgMNTOeKlKikbwEgc82HlbFEhrwd9nic522bo58vyUSLZwpvvxjfcsGCBE=
+	t=1787247422; cv=none; b=QSYhaCquKheDGl23s8n1++/52uks5pHJEFzv+hTaxQnZpbPbxpi6yH3OTR552ZemNYzXXmNIp+kHsd7cG/BSVAAJnSjOwxHdLiTjgiVbSQj1ybRxF0/FJWKmfpEPQG9xaApqNoqtVg/EXqu0pquzSXfXKE+BfFoFbTI7xi9cmpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247419; c=relaxed/simple;
-	bh=Ngrg4d/q3G24wiZNCzsh6nSaVKoo02GrqAXb//1dYHg=;
+	s=arc-20240116; t=1787247422; c=relaxed/simple;
+	bh=91lNGZ7IhhiImt5ueBD7ZJ2Bp4kNHRe3jSdfsevf3QM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KW2JuT2WrNzVaOIIq5GMh6F07O9kj5sDaSiiobAtNUWv7gzQ0mh9reA1iLruhX0FZ3r3Y3kn93RaVc0Q3Ia0rWC9fEmCWuZanvPiyh5ULzySXioR1kRd8K0W1mwOmGVWE2HJK2eH6OeI6dSKasBZgPLGWUonXnAHJv+qvgCuDhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nRzZva81; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pP9fRgvzxwRsjcRvDWRRxNmksHOqDhxylZsDPrkqsiWGo2ZKn/u5eYz1eZ5PXutbthRa8A7GuwznSzMfIARrQ5PuNqOUiAc7uSmcyA1yDKZ/xka68Rgg7VwAhOqUSV16nACxDe+pYNWCCECppGuOWeXnSkG+3adlM4rmIGUbrKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0xtmpF1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nRzZva81"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E251F00A3A;
-	Thu, 20 Aug 2026 17:36:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0xtmpF1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D0D71F000E9;
+	Thu, 20 Aug 2026 17:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247417;
-	bh=TtEHntSbmOoZ1B23S6O4u8OWhT3OXO/19N0mpTHE4BM=;
+	s=korg; t=1787247420;
+	bh=OCU2kAgd9hWgy/ifyQY94iCS+gvhbeiwvER0sKyhkGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nRzZva81EEut/Dm7T99cjmMW91mZ9aZECVEJPEy6wmEhjHCXwCQanJbv9shGWi2AN
-	 UD8lRNqzVARagssg1RZH+jxlt5tzfmn5PyDaH6tmgFSuEF8eylAQ0lz83TWmjwmhM0
-	 qUZIAA1zv/3rRkZ+YKTUXEjHoBCECDqtoLVJVGpY=
+	b=z0xtmpF1gD/5SfDs2U82HQcOoQV7RQl79sAGxKCH2mTXtFYzgtQps9/fHiz9Nuk+4
+	 gE3J85jJHZl7DARDPbDHoSLJ4tYwVyoHx6Ye/c71TykSklDqfETyzaPa5DGt68hPrG
+	 89F+6Jt+v+lsnU3Zvphv13ePYoiih1wKxED6FoRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 032/166] Input: synaptics-rmi4 - propagate F54 worker errors to V4L2 queue
-Date: Thu, 20 Aug 2026 16:54:51 +0200
-Message-ID: <20260820145212.148500058@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.6 041/166] libceph: Avoid using invalid osd indices from primary_temp
+Date: Thu, 20 Aug 2026 16:55:00 +0200
+Message-ID: <20260820145212.408815336@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -50,62 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 8786d74bf50e6797b6f655eb381ef6b25451161f upstream.
+commit 3660b98d1204b419f6a77e9a295f148dcf38d042 upstream.
 
-Previously, rmi_f54_buffer_queue() waited for the worker thread to
-finish but ignored whether it succeeded. If the worker failed (e.g.,
-due to a timeout or register read failure), the queue thread would
-silently return success, delivering stale or uninitialized memory to
-userspace.
+A corrupted osdmap received from a Ceph monitor or OSD may contain osd
+indices in its pg_temp, primary_temp, pg_upmap, and pg_upmap_items parts
+that don't exist, i.e., that are greater than max_osd or smaller than
+CEPH_HOMELESS_OSD (-1). These indices are used to create the up and
+acting set in ceph_pg_to_up_acting_osds(), called from calc_target().
+While most of these osd indices are checked, the one from primary_temp
+is not. Subsequently, this may lead to calc_target() returning this
+(potentially invalid) index as target osd for a (linger) request.
+Because the osd_state, osd_weight, and osd_addr arrays only contain
+max_osd entries (with indices 0 to max_osd -1), this leads to
+out-of-bounds accesses when trying to read values from these arrays.
 
-Add a 'report_error' field to struct f54_data to store the worker's exit
-status. Check this field in rmi_f54_buffer_queue() after the worker
-finishes, and mark the buffer as VB2_BUF_STATE_ERROR if an error
-occurred.
+This patch fixes the issue by adding a check to get_temp_osds(), so that
+only valid osd indices from primary_temp are used, and it falls back to
+using the primary from pg_temp or the up set if it is invalid.
 
-Fixes: 3a762dbd5347 ("[media] Input: synaptics-rmi4 - add support for F54 diagnostics")
-Reported-by: sashiko-bot@kernel.org
+[ idryomov: changelog ]
+
 Cc: stable@vger.kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Link: https://patch.msgid.link/20260626051802.4033172-6-dmitry.torokhov@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 5e8d4d36bf23 ("libceph: add support for primary_temp mappings")
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/rmi4/rmi_f54.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/ceph/osdmap.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/input/rmi4/rmi_f54.c
-+++ b/drivers/input/rmi4/rmi_f54.c
-@@ -106,6 +106,7 @@ struct f54_data {
- 	u8 *report_data;
- 	size_t max_report_size;
- 	int report_size;
-+	int report_error;
- 
- 	bool is_busy;
- 	struct mutex status_mutex;
-@@ -340,6 +341,12 @@ static void rmi_f54_buffer_queue(struct
- 		mutex_lock(&f54->data_mutex);
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -2811,9 +2811,10 @@ static void get_temp_osds(struct ceph_os
+ 		}
  	}
  
-+	if (f54->report_error) {
-+		dev_err(&f54->fn->dev, "Error acquiring report: %d\n", f54->report_error);
-+		state = VB2_BUF_STATE_ERROR;
-+		goto data_done;
-+	}
-+
- 	ptr = vb2_plane_vaddr(vb, 0);
- 	if (!ptr) {
- 		dev_err(&f54->fn->dev, "Error acquiring frame ptr\n");
-@@ -612,6 +619,7 @@ out:
- 		report_size = 0;
+-	/* primary_temp? */
++	/* primary_temp? (shouldn't ever be a nonexistent or down OSD) */
+ 	pg = lookup_pg_mapping(&osdmap->primary_temp, pgid);
+-	if (pg)
++	if (pg && !WARN_ON_ONCE(ceph_osd_is_down(osdmap,
++						 pg->primary_temp.osd)))
+ 		temp->primary = pg->primary_temp.osd;
+ }
  
- 	f54->report_size = report_size;
-+	f54->report_error = error;
- 
- 	if (report_size == 0 && !error) {
- 		queue_delayed_work(f54->workqueue, &f54->work,
 
 
