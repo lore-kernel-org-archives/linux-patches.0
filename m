@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E53272E53;
-	Thu, 20 Aug 2026 16:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA86469849;
+	Thu, 20 Aug 2026 16:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243634; cv=none; b=PN/ULuGSByKrK4YvJX3yP7a6M2+/pnG7VYg7NmPwdWZ5isDRt/wveOT/fpuA8vcmHS07TkdjYuUZwSsno2E8XNVMmhY0Psem4KKDmUGlBdm+1Y1iZZcOGhPiNddJgza0qT00S5oTLEML8Rfnk150JzdYlpoxG7AV7Bq/5wEHegc=
+	t=1787243637; cv=none; b=bjNVgxGSmyoeyNsLnExFjbtU5V1rhNQwXn+vDZnfpCdnuc46NlCvCl4v3bWBjcDfBHgpgA5D/TTB1WnD/fOo29sMK4Yjnbqxx4vbqDqWTPdQ43pX1+If7lr34ik/2h8XrJTFLdZTkl4shJCn2w5q2vZKMnDgr1WMni0QAyWa8mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243634; c=relaxed/simple;
-	bh=awrjKMC7Yy+1vN9pdd6jicRiXbuym/X12qNVgI++xCs=;
+	s=arc-20240116; t=1787243637; c=relaxed/simple;
+	bh=juWiimiW16aI78XSy9HqprqS5t9KXNiGn2yaa9vhmc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T29c3FDDMTV4gUdC81o47dUDaQ8SJe6AysZQH9uH3JtOT7UDJFiY9+yibFb/aVjT1svSn0gFNsUztuH8m3tIAM5UACoMGKIsbTWoufsAdEMVolkOZ4JdFqUBEB6D/w0HMLaVICmVPN/d/WMQRl6n+iqWyOG2KIMepkUYbxxfs/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vr5rkzkL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IZ+gAziiRAuAUsbZEDoV6UJhRzZqiR5jIMpFa0vlB8pzAsdhkC0Cu9IVrqhLpYnqAnNAdJc3m3dGPhKYoaBcp08boxheEvUX8RdASWb/aiCW6yLdWiXAe7yghvSj8XBuUXxg6gkKpEnj6RDbFZQDV2499Wv83aMsaczAzFqqUVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qMCmhwVB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vr5rkzkL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E5851F000E9;
-	Thu, 20 Aug 2026 16:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMCmhwVB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477161F000E9;
+	Thu, 20 Aug 2026 16:33:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243633;
-	bh=mkSBcYWxcCLmihPPnGU05enuHNA55SYngadeH2EsK4k=;
+	s=korg; t=1787243635;
+	bh=NkguXTifF8slQAZ+51ZrEYJnJHtnXYYbrXxnE8u+zM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vr5rkzkLiUwr89CLxq6JDylVezybTSjBuKir0KavQXwgOSlPRKRs6YGvLL0LehMHW
-	 bcveszX6r/SKF2SvkWZvuK1QytGvtct40kzsjtKT89V0bq6v/9WAsKiM/pYLkGn2ke
-	 1Bfxp3g60cUCLmQREr/gbYX1YRee3nCsU+3jEYqw=
+	b=qMCmhwVBOVFD2O7OFg2c/V59E5mXK1KFymNVy/0Z0nMd8AkyWzKjGB0C82zlegX4a
+	 HxJTzVqxvTPctfOKQ1lIV+6WFcU+i9wl2enmAUQ83o40RP+BoxKlLPawzL7En9/J6g
+	 yAg9qBDw0XosvzBZZH3jPDzd3XA/DU3avOf5RvOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Pratyush Yadav <pratyush@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 114/272] mtd: spi-nor: swp: Improve locking user experience
-Date: Thu, 20 Aug 2026 16:54:58 +0200
-Message-ID: <20260820145234.690744888@linuxfoundation.org>
+Subject: [PATCH 5.15 156/272] bootconfig: move xbc_snprint_cmdline() to lib/bootconfig.c
+Date: Thu, 20 Aug 2026 16:55:40 +0200
+Message-ID: <20260820145235.991581318@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -53,58 +51,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit e1d456b26bf23e30db305a6184e8abd9ab68bbf2 ]
+[ Upstream commit 5a643e4623238e14b03d75ca0d4eda0645720cee ]
 
-In the case of the first block being locked (or the few first blocks),
-if the user want to fully unlock the device it has two possibilities:
-- either it asks to unlock the entire device, and this works;
-- or it asks to unlock just the block(s) that are currently locked,
-  which fails.
+Move xbc_snprint_cmdline() from init/main.c to lib/bootconfig.c so the
+function (and its xbc_namebuf scratch buffer) becomes part of the shared
+parser library. tools/bootconfig already compiles lib/bootconfig.c
+directly, which lets a follow-up patch reuse the same renderer in the
+userspace tool to convert a bootconfig file into a flat cmdline string
+at build time.
 
-It fails because the conditions "can_be_top" and "can_be_bottom" are
-true. Indeed, in this case, we unlock everything, so the TB bit does not
-matter. However in the current implementation, use_top would be true (as
-this is the favourite option) and lock_len, which in practice should be
-reduced down to 0, is set to "nor->params->size - (ofs + len)" which is
-a positive number. This is wrong.
+No functional change.
 
-An easy way is to simply add an extra condition. In the unlock() path,
-if we can achieve the same result from both sides, it means we unlock
-everything and lock_len must simply be 0. A comment is added to clarify
-that logic.
+Link: https://lore.kernel.org/all/20260508-bootconfig_using_tools-v1-1-1132219aa773@debian.org/
 
-Fixes: 3dd8012a8eeb ("mtd: spi-nor: add TB (Top/Bottom) protect support")
-Cc: stable@kernel.org
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Reviewed-by: Michael Walle <mwalle@kernel.org>
-Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Stable-dep-of: dec4d8118c17 ("bootconfig: fix NULL-pointer arithmetic in xbc_snprint_cmdline()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/swp.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ include/linux/bootconfig.h |    3 ++
+ init/main.c                |   45 ------------------------------------
+ lib/bootconfig.c           |   56 +++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 59 insertions(+), 45 deletions(-)
 
---- a/drivers/mtd/spi-nor/swp.c
-+++ b/drivers/mtd/spi-nor/swp.c
-@@ -272,8 +272,15 @@ static int spi_nor_sr_unlock(struct spi_
- 	/* Prefer top, if both are valid */
- 	use_top = can_be_top;
+--- a/include/linux/bootconfig.h
++++ b/include/linux/bootconfig.h
+@@ -254,6 +254,9 @@ static inline struct xbc_node * __init x
+ int __init xbc_node_compose_key_after(struct xbc_node *root,
+ 			struct xbc_node *node, char *buf, size_t size);
  
--	/* lock_len: length of region that should remain locked */
--	if (use_top)
-+	/*
-+	 * lock_len: length of region that should remain locked.
-+	 *
-+	 * When can_be_top and can_be_bottom booleans are true, both adjacent
-+	 * regions are unlocked, thus the entire flash can be unlocked.
-+	 */
-+	if (can_be_top && can_be_bottom)
-+		lock_len = 0;
-+	else if (use_top)
- 		lock_len = nor->params->size - (ofs + len);
- 	else
- 		lock_len = ofs;
++/* Render key/value pairs under @root as a flat cmdline string */
++int __init xbc_snprint_cmdline(char *buf, size_t size, struct xbc_node *root);
++
+ /**
+  * xbc_node_compose_key() - Compose full key string of the XBC node
+  * @node: An XBC node.
+--- a/init/main.c
++++ b/init/main.c
+@@ -319,51 +319,6 @@ static void * __init get_boot_config_fro
+ 
+ #ifdef CONFIG_BOOT_CONFIG
+ 
+-static char xbc_namebuf[XBC_KEYLEN_MAX] __initdata;
+-
+-#define rest(dst, end) ((end) > (dst) ? (end) - (dst) : 0)
+-
+-static int __init xbc_snprint_cmdline(char *buf, size_t size,
+-				      struct xbc_node *root)
+-{
+-	struct xbc_node *knode, *vnode;
+-	char *end = buf + size;
+-	const char *val, *q;
+-	int ret;
+-
+-	xbc_node_for_each_key_value(root, knode, val) {
+-		ret = xbc_node_compose_key_after(root, knode,
+-					xbc_namebuf, XBC_KEYLEN_MAX);
+-		if (ret < 0)
+-			return ret;
+-
+-		vnode = xbc_node_get_child(knode);
+-		if (!vnode) {
+-			ret = snprintf(buf, rest(buf, end), "%s ", xbc_namebuf);
+-			if (ret < 0)
+-				return ret;
+-			buf += ret;
+-			continue;
+-		}
+-		xbc_array_for_each_value(vnode, val) {
+-			/*
+-			 * For prettier and more readable /proc/cmdline, only
+-			 * quote the value when necessary, i.e. when it contains
+-			 * whitespace.
+-			 */
+-			q = strpbrk(val, " \t\r\n") ? "\"" : "";
+-			ret = snprintf(buf, rest(buf, end), "%s=%s%s%s ",
+-				       xbc_namebuf, q, val, q);
+-			if (ret < 0)
+-				return ret;
+-			buf += ret;
+-		}
+-	}
+-
+-	return buf - (end - size);
+-}
+-#undef rest
+-
+ /* Make an extra command line under given key word */
+ static char * __init xbc_make_cmdline(const char *key)
+ {
+--- a/lib/bootconfig.c
++++ b/lib/bootconfig.c
+@@ -339,6 +339,62 @@ const char * __init xbc_node_find_next_k
+ 		return "";	/* No value key */
+ }
+ 
++static char xbc_namebuf[XBC_KEYLEN_MAX] __initdata;
++
++#define rest(dst, end) ((end) > (dst) ? (end) - (dst) : 0)
++
++/**
++ * xbc_snprint_cmdline() - Render bootconfig keys under @root as a cmdline string
++ * @buf: Destination buffer (may be NULL when @size is 0 to query the length)
++ * @size: Size of @buf in bytes
++ * @root: Subtree root whose key=value pairs should be rendered
++ *
++ * Walk all key/value pairs under @root and emit them as a space-separated
++ * cmdline string into @buf. Values containing whitespace are quoted with
++ * double quotes. Returns the number of bytes that would be written if @buf
++ * were large enough (matching snprintf semantics), or a negative errno on
++ * failure.
++ */
++int __init xbc_snprint_cmdline(char *buf, size_t size, struct xbc_node *root)
++{
++	struct xbc_node *knode, *vnode;
++	char *end = buf + size;
++	const char *val, *q;
++	int ret;
++
++	xbc_node_for_each_key_value(root, knode, val) {
++		ret = xbc_node_compose_key_after(root, knode,
++					xbc_namebuf, XBC_KEYLEN_MAX);
++		if (ret < 0)
++			return ret;
++
++		vnode = xbc_node_get_child(knode);
++		if (!vnode) {
++			ret = snprintf(buf, rest(buf, end), "%s ", xbc_namebuf);
++			if (ret < 0)
++				return ret;
++			buf += ret;
++			continue;
++		}
++		xbc_array_for_each_value(vnode, val) {
++			/*
++			 * For prettier and more readable /proc/cmdline, only
++			 * quote the value when necessary, i.e. when it contains
++			 * whitespace.
++			 */
++			q = strpbrk(val, " \t\r\n") ? "\"" : "";
++			ret = snprintf(buf, rest(buf, end), "%s=%s%s%s ",
++				       xbc_namebuf, q, val, q);
++			if (ret < 0)
++				return ret;
++			buf += ret;
++		}
++	}
++
++	return buf - (end - size);
++}
++#undef rest
++
+ /* XBC parse and tree build */
+ 
+ static int __init xbc_init_node(struct xbc_node *node, char *data, u32 flag)
 
 
