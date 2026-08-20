@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13B1380FD6;
-	Thu, 20 Aug 2026 15:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2749380FE3;
+	Thu, 20 Aug 2026 15:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239243; cv=none; b=JAOMUAvkXfW6tVzqAb5bCukO717r10a9UmFniefAmvBs4880FMdKx9BaMktzImTFc+MEj2O/O1hiF6lpCGlS48lbJ463CVM4KlUWbPSD1mgSAuikxSxFfXT60hwwV2kx5G6wkOur0supSrj5QS/bXvy9jwjWRtopGrYm9bVf3Mw=
+	t=1787239246; cv=none; b=E//xURvPcbcFQ9H32d94KeCT1klaWG8DVUPtREawsAroDw56pYvKjEOsFbIA+jzOq06JcJwEiCfZ6Xuk7TSG54m7GwLbYyXhcNxzgG7SHeIKTomOs9PoHQewekHjbbctAokUsewXfeG09nYPjw92y1b7RxVfY1HgRwkhaezc04E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239243; c=relaxed/simple;
-	bh=0d+gOdoWPjFTsWl9LC2R8XXIHptJG1a5xJpCwiDR7kc=;
+	s=arc-20240116; t=1787239246; c=relaxed/simple;
+	bh=F2We1t842EVMN9/ic0rVIC7Q2Jwl9NFUi+tLYzDObNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bpv1p+t0ibJ3438khFLqQW8C2fC/B/jbwls9YH95/RQWU2NUn6qGp5JCjUJ6w1ID/RgDUBHCy37Dg6ivZWal5G+iuax1PljeUg7x2+VLaOA5OtTKzwBFg+awsdhk4wRykdOnhLnBt8NftlZPQBVbHokjZ7BwDtNRFyz69PRL6Yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCobXE3s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DpwyDKtqt669riJHQmtAJH8v2wfufakV3Ux1Kp7tZ+NhO33NisOk4KJMxfWKwei0WME3MFP+dSjWKfaIz5ExNvg+IK+BtEeBKhfmNFPvguxnoh4elM6qh7kMqE4pY+Ug8DrGpd/NGoJhGNg6tQCSYVtKdZJCbB0ZhY1+64pT5eY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cFI1apDC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCobXE3s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26FF41F00A3D;
-	Thu, 20 Aug 2026 15:20:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cFI1apDC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05FDC1F000E9;
+	Thu, 20 Aug 2026 15:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239242;
-	bh=sXjJ44cl6iQv8GbgNE0jsYdJwxLAgtVsJg/oMjsb7mI=;
+	s=korg; t=1787239245;
+	bh=B7N8754Zead5E+QrEXNT6OVADUb++AfNRxSi+olhSPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uCobXE3sUn88X/XEzAMKd/cZQlnwZCIl6RsuSRDpjNMkj/5heDqDF6aMMEUBo839n
-	 wMou+nN3FtdDanpnzTl5bx4INp+C+V3hFguEhF/gYY2xXoR3sWou/XkT78IF6byLq2
-	 f5K5pIrMlGbY5QhSI5l8aLYqgUUqOi6I5fs1zU8U=
+	b=cFI1apDCTqvKD9l3ygiGbtMCdXUAVzmrrrPT38gCq4ZkfPbFSfUf64R9a59Z2Ozsy
+	 sN4roDM99X+643+CQ1+0pOXbcLvcXZra0w32LfiKeUafbBhoJn+UTuzVFJbmzPsM2A
+	 VDlYo1U4AX/rKjFDWo/Ai+yDlokHC1X+3Kw63EHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 198/217] net/sched: cls_u32: skip hash tables in u32_bind_class()
-Date: Thu, 20 Aug 2026 16:56:06 +0200
-Message-ID: <20260820145243.668497532@linuxfoundation.org>
+Subject: [PATCH 6.18 199/217] m68k: Define NR_CPUS to 1
+Date: Thu, 20 Aug 2026 16:56:07 +0200
+Message-ID: <20260820145243.700465228@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -46,55 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Uwe Kleine-König <ukleinek@kernel.org>
 
-[ Upstream commit 6d3724e616faf952c3adcf8414fc21a828ef3709 ]
+[ Upstream commit 1fd495ef09eef96169a379a749c24b5e69974bb8 ]
 
-u32_walk() enumerates both struct tc_u_hnode and struct tc_u_knode
-through the walker callback. u32_bind_class() unconditionally casts the
-passed fh to tc_u_knode and accesses &n->res, so when fh is actually a
-tc_u_hnode, which has no tcf_result member, this results in a
-slab-out-of-bounds read of res->classid in tc_cls_bind_class().
+This fixes a Kconfig warning
 
-The issue can be reproduced with the following commands:
+	fs/erofs/Kconfig:137:warning: range is invalid
 
-    tc qdisc add dev lo root handle 1: hfsc
-    tc class add dev lo parent 1: classid 1:1 hfsc sc rate 1000kbit
-    tc filter add dev lo parent 1:1 protocol ip prio 1 u32 match u32 0 0 flowid 1:1
-    tc class add dev lo parent 1: classid 1:2 hfsc sc rate 2000kbit
+which originates from EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS using
+NR_CPUS which up to now didn't exist for ARCH=m68k.  All other
+architectures define this symbol, so fix the outlier.
 
-Fix this by skipping hash tables via the TC_U32_KEY(handle) check.
+[geert] This also fixes:
+  - CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS being set to the
+    literal NR_CPUS instead of a number by automatic configs like
+    "make allmodconfig" or "make olddefconfig",
+  - An infinite loop in manual configs like "make oldconfig" when
+    CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS is not present or
+    has an invalid value in your existing .config.
 
-Fixes: 07d79fc7d94e ("net_sched: add reverse binding for tc class")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/1786089038-36366-1-git-send-email-zhangchangzhong@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c9b47e6b2311 ("erofs: cap LZMA stream pool size")
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://patch.msgid.link/20260731094950.1988084-2-ukleinek@kernel.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_u32.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/m68k/Kconfig.cpu | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index 58e849c0acf41..a90de52e1ac8d 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -1336,6 +1336,9 @@ static void u32_bind_class(void *fh, u32 classid, unsigned long cl, void *q,
- {
- 	struct tc_u_knode *n = fh;
+diff --git a/arch/m68k/Kconfig.cpu b/arch/m68k/Kconfig.cpu
+index c9a7e602d8a4d..83f46fd6b97cf 100644
+--- a/arch/m68k/Kconfig.cpu
++++ b/arch/m68k/Kconfig.cpu
+@@ -548,6 +548,10 @@ config CACHE_COPYBACK
+ endchoice
+ endif # HAVE_CACHE_CB
  
-+	if (TC_U32_KEY(n->handle) == 0)
-+		return;
++config NR_CPUS
++	int
++	default "1"
 +
- 	tc_cls_bind_class(classid, cl, q, &n->res, base);
- }
- 
+ # Coldfire cores that do not have a data cache configured can do coherent DMA.
+ config COLDFIRE_COHERENT_DMA
+ 	bool
 -- 
 2.53.0
 
