@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A618746D091;
-	Thu, 20 Aug 2026 16:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85AE47D478;
+	Thu, 20 Aug 2026 16:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243772; cv=none; b=XLLJa1ni4XETkQNUKDMV/mPALKz6Zrn8Ed+JNdyXz3yZeKHUxCz8JWMUMd7/UyCpzPLC51v6N4+oX8vy6whktncxXWGp1owEx0NQ1XpFl+Nui2ECQQtyzk9ECFiimP7OXKGlGGKMz0uMYkgBaMsCaP+Jr1igjR6SZnLMqwVAXYA=
+	t=1787243776; cv=none; b=cp/5n5qVsDsiyrE7vd/nerhum+ICeDPD4FtdZH/3bGoHL8KrtE+irB3HlsYajK4UVR2TxwImC/NeS/JeC6nckYU6r9Bsq0szwORB4AyJUaRRhA01of+O/Iom4J2mFr0KpaBhPjUomI5ZLOOGIZn827t3t6nzHMUiqCfjXLAsbwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243772; c=relaxed/simple;
-	bh=ijCkvHOAKfpOd1uh6RbgJAXiXyuz4bZPdKS1CMgIk+g=;
+	s=arc-20240116; t=1787243776; c=relaxed/simple;
+	bh=Njomv+1jfE5KVvpRLjGUk/buumqVdRhg68pcaG9hZ4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Op/tCTDnq8KOPpQvWpamhXTrhPiGA9g3eZEXpgqAIMLRJeWzKnwXQBgJYOIjrFnockib52Dksom6bi6dlh+jjE6gzIWXt/9MVFa0Mtb3ekcodrhiXZ8tm3K5S/B1et1fKcYSdY8tc424sHK7K9O/dnD+dD2sjpsoQILPKFc+AhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPBVmxXD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pVk6QOu/562rPTdvC5q8YOPvf8FUuuJjj+zRwjdg/iDq+1VLMC0fGIvsk+x16+kXS3vE5zNBlqPuYtkMIt77ZR4Z8+GeJc0Kge6ZfLLQ+96H01vlu4y5xjqsa25WifPSVjYoIxhnXDkBPGjJY8zfFT3Pl1duje4s1E4LR+IgogU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h5A9K0fe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPBVmxXD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAA011F00A3A;
-	Thu, 20 Aug 2026 16:36:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5A9K0fe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B78AD1F000E9;
+	Thu, 20 Aug 2026 16:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243770;
-	bh=lMuRZlJyNO2B++1K7cBk3QnuukyQMFjgm6u9tkc5eBQ=;
+	s=korg; t=1787243774;
+	bh=d/DMCgCjsW46zWsfKLzzCgmmY1Urq2Hab4yFI3JTOJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zPBVmxXDGuJO6Q4X0exw1RCVF/kuRWLHUCzB42A6WguenMxVR8yBSMLYeviIqWdGg
-	 IA7SQG6zOpZhfa9lDa7d/qAV36eReGJG9AX1qexbYtS6pg4oiYbchqvrmWqjj63RmX
-	 4JJ+r2NVl+WF4lcqAhp1AbeZt/3GIljXv7zEUITo=
+	b=h5A9K0fefW9hGmLm+RIEAyhwkG0qtyX21BHnnBHMot5YwAKtHTsRve3Z8RZbdTzXN
+	 j4OlTWx+OWgYZ7fb6AZF9IXiKKf4gXr0eedU8gLSpP9kT2SJhHSF/vnBO3pIOopPwW
+	 Hsgs6QNrIuuOXTKigQEZd7v91A3V9/mJj3Dpo+hY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubli@redhat.com>,
-	Patrick Donnelly <pdonnell@redhat.com>,
-	Milind Changire <mchangir@redhat.com>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 211/272] ceph: print cluster fsid and client global_id in all debug logs
-Date: Thu, 20 Aug 2026 16:56:35 +0200
-Message-ID: <20260820145237.848851855@linuxfoundation.org>
+Subject: [PATCH 5.15 212/272] ceph: fix hanging __ceph_get_caps() with stale mds_wanted
+Date: Thu, 20 Aug 2026 16:56:36 +0200
+Message-ID: <20260820145237.879558887@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -53,130 +52,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit 38d46409c4639a1d659ebfa70e27a8bed6b8ee1d ]
+[ Upstream commit 50958bb928bad3bdba9e5d1b7ff4bbadcf6951e6 ]
 
-Multiple CephFS mounts on a host is increasingly common so
-disambiguating messages like this is necessary and will make it easier
-to debug issues.
+A reader can hang forever in __ceph_get_caps() when the client no
+longer holds `FILE_RD`, but local cap state still says that the
+capability is already wanted (via `mds_wanted`).
 
-At the same this will improve the debug logs to make them easier to
-troubleshooting issues, such as print the ino# instead only printing
-the memory addresses of the corresponding inodes and print the dentry
-names instead of the corresponding memory addresses for the dentry,etc.
+One way to trigger this is through MDS cap revocation.  If another
+client performs a conflicting operation, the MDS can revoke `FILE_RD`
+from the reader; the next read then has to reacquire `FILE_RD`.  If
+the cap update that should request `FILE_RD` never reaches the MDS
+after `cap->mds_wanted` was raised, the reader is left holding only
+non-file caps while local `mds_wanted` still includes the file read
+caps.
 
-Link: https://tracker.ceph.com/issues/61590
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Patrick Donnelly <pdonnell@redhat.com>
-Reviewed-by: Milind Changire <mchangir@redhat.com>
+In that state, try_get_cap_refs() sees `need <= mds_wanted` and
+returns 0, so __ceph_get_caps() just waits on `i_cap_wq`.  If the cap
+update that was supposed to request `FILE_RD never reaches the MDS
+after `cap->mds_wanted was` raised, no further request is sent and the
+waiter can sleep indefinitely until unrelated cap traffic happens to
+wake it up.
+
+The ordering issue is that `cap->mds_wanted` is updated in
+__prep_cap() before the `CEPH_MSG_CLIENT_CAPS message` is actually
+queued for send.  That makes one field serve two different meanings at
+once: what this client wants, and what the client believes the MDS
+already knows it wants.
+
+A proper fix would be to split those states and track whether a cap
+update is actually in flight or has been observed by the MDS.
+However, simply moving the `cap->mds_wanted assignment` later would
+not be sufficient: queueing the message in the messenger does not
+guarantee that the MDS processed that specific wanted set, and
+reconnect or message loss can still invalidate that assumption.
+Fixing that properly would require a larger rework of the cap state
+machine.
+
+To allow simpler backports to stable kernels, this patch implements a
+simpler workaround:
+
+- stop waiting forever in __ceph_get_caps(); after a bounded wait,
+  fall back to the renew path
+
+- make ceph_renew_caps() issue a synchronous `OPEN` request whenever
+  the inode still does not actually hold the wanted caps, instead of
+  only calling ceph_check_caps()
+
+The extra issued-vs-wanted check in ceph_renew_caps() is necessary
+because the previous test only checked whether the inode still had any
+real caps at all.  That is not enough after revocation: the client can
+still hold something like `pLs` and yet be missing `FILE_RD`
+completely.  In that case, falling back to ceph_check_caps() is not
+sufficient, because it still trusts `cap->mds_wanted` and may resend
+nothing.  By requiring `(issued & wanted) == wanted` before taking the
+asynchronous path, the code only uses ceph_check_caps() when the
+`wanted caps` are already actually issued.  Otherwise, it sends the
+synchronous `OPEN` renew.
+
+This preserves the existing asynchronous fast path when the wanted
+caps are already issued, avoids changing cap-state semantics, and
+fixes the hang by guaranteeing that a stalled waiter eventually
+retries through a path that does not rely on the stale `mds_wanted`
+state.
+
+[ idryomov: move CEPH_GET_CAPS_WAIT_TIMEOUT from libceph.h to
+  mds_client.h, formatting ]
+
+Cc: stable@vger.kernel.org
+Fixes: 0a454bdd501a ("ceph: reorganize __send_cap for less spinlock abuse")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Stable-dep-of: 50958bb928ba ("ceph: fix hanging __ceph_get_caps() with stale mds_wanted")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/acl.c    |    6 ++++--
- fs/ceph/file.c   |    9 ++++++---
- fs/ceph/metric.c |    5 +++--
- fs/ceph/super.h  |    6 ++++++
- 4 files changed, 19 insertions(+), 7 deletions(-)
+ fs/ceph/caps.c       |   17 +++++++++++++++--
+ fs/ceph/file.c       |    9 +++++----
+ fs/ceph/mds_client.h |    2 ++
+ 3 files changed, 22 insertions(+), 6 deletions(-)
 
---- a/fs/ceph/acl.c
-+++ b/fs/ceph/acl.c
-@@ -15,6 +15,7 @@
- #include <linux/slab.h>
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -2910,7 +2910,19 @@ int ceph_get_caps(struct file *filp, int
+ 					ret = -ERESTARTSYS;
+ 					break;
+ 				}
+-				wait_woken(&wait, TASK_INTERRUPTIBLE, MAX_SCHEDULE_TIMEOUT);
++
++				/*
++				 * If a cap update is lost after
++				 * mds_wanted was raised, waiting
++				 * forever will never make progress.
++				 * Retry the renew path periodically
++				 * so we can resend synchronously.
++				 */
++				if (!wait_woken(&wait, TASK_INTERRUPTIBLE,
++						CEPH_GET_CAPS_WAIT_TIMEOUT)) {
++					ret = -ESTALE;
++					break;
++				}
+ 			}
  
- #include "super.h"
-+#include "mds_client.h"
- 
- static inline void ceph_set_cached_acl(struct inode *inode,
- 					int type, struct posix_acl *acl)
-@@ -31,6 +32,7 @@ static inline void ceph_set_cached_acl(s
- 
- struct posix_acl *ceph_get_acl(struct inode *inode, int type, bool rcu)
- {
-+	struct ceph_client *cl = ceph_inode_to_client(inode);
- 	int size;
- 	unsigned int retry_cnt = 0;
- 	const char *name;
-@@ -72,8 +74,8 @@ retry:
- 	} else if (size == -ENODATA || size == 0) {
- 		acl = NULL;
- 	} else {
--		pr_err_ratelimited("get acl %llx.%llx failed, err=%d\n",
--				   ceph_vinop(inode), size);
-+		pr_err_ratelimited_client(cl, "%llx.%llx failed, err=%d\n",
-+					  ceph_vinop(inode), size);
- 		acl = ERR_PTR(-EIO);
- 	}
- 
+ 			remove_wait_queue(&ci->i_cap_wq, &wait);
+@@ -2942,7 +2954,8 @@ int ceph_get_caps(struct file *filp, int
+ 				continue;
+ 			}
+ 			if (ret == -ESTALE) {
+-				/* session was killed, try renew caps */
++				/* session was killed or a waited cap
++				 * request needs a retry */
+ 				ret = ceph_renew_caps(inode, flags);
+ 				if (ret == 0)
+ 					continue;
 --- a/fs/ceph/file.c
 +++ b/fs/ceph/file.c
-@@ -282,6 +282,7 @@ static int ceph_init_file(struct inode *
+@@ -277,7 +277,7 @@ static int ceph_init_file(struct inode *
+ }
+ 
+ /*
+- * try renew caps after session gets killed.
++ * Retry cap acquisition after a stale session or a lost cap update.
+  */
  int ceph_renew_caps(struct inode *inode, int fmode)
  {
- 	struct ceph_mds_client *mdsc = ceph_sb_to_mdsc(inode->i_sb);
-+	struct ceph_client *cl = mdsc->fsc->client;
+@@ -285,14 +285,15 @@ int ceph_renew_caps(struct inode *inode,
+ 	struct ceph_client *cl = mdsc->fsc->client;
  	struct ceph_inode_info *ci = ceph_inode(inode);
  	struct ceph_mds_request *req;
- 	int err, flags, wanted;
-@@ -293,8 +294,9 @@ int ceph_renew_caps(struct inode *inode,
- 	    (!(wanted & CEPH_CAP_ANY_WR) || ci->i_auth_cap)) {
- 		int issued = __ceph_caps_issued(ci, NULL);
+-	int err, flags, wanted;
++	int err, flags, wanted, issued;
+ 
+ 	spin_lock(&ci->i_ceph_lock);
+ 	__ceph_touch_fmode(ci, mdsc, fmode);
+ 	wanted = __ceph_caps_file_wanted(ci);
++	issued = __ceph_caps_issued(ci, NULL);
+ 	if (__ceph_is_any_real_caps(ci) &&
+-	    (!(wanted & CEPH_CAP_ANY_WR) || ci->i_auth_cap)) {
+-		int issued = __ceph_caps_issued(ci, NULL);
++	    (!(wanted & CEPH_CAP_ANY_WR) || ci->i_auth_cap) &&
++	    (issued & wanted) == wanted) {
  		spin_unlock(&ci->i_ceph_lock);
--		dout("renew caps %p want %s issued %s updating mds_wanted\n",
--		     inode, ceph_cap_string(wanted), ceph_cap_string(issued));
-+		doutc(cl, "%p %llx.%llx want %s issued %s updating mds_wanted\n",
-+		      inode, ceph_vinop(inode), ceph_cap_string(wanted),
-+		      ceph_cap_string(issued));
- 		ceph_check_caps(ci, 0, NULL);
- 		return 0;
- 	}
-@@ -325,7 +327,8 @@ int ceph_renew_caps(struct inode *inode,
- 	err = ceph_mdsc_do_request(mdsc, NULL, req);
- 	ceph_mdsc_put_request(req);
- out:
--	dout("renew caps %p open result=%d\n", inode, err);
-+	doutc(cl, "%p %llx.%llx open result=%d\n", inode, ceph_vinop(inode),
-+	      err);
- 	return err < 0 ? err : 0;
- }
+ 		doutc(cl, "%p %llx.%llx want %s issued %s updating mds_wanted\n",
+ 		      inode, ceph_vinop(inode), ceph_cap_string(wanted),
+--- a/fs/ceph/mds_client.h
++++ b/fs/ceph/mds_client.h
+@@ -61,6 +61,8 @@ enum ceph_feature_type {
+ struct ceph_fs_client;
+ struct ceph_cap;
  
---- a/fs/ceph/metric.c
-+++ b/fs/ceph/metric.c
-@@ -25,6 +25,7 @@ static bool ceph_mdsc_send_metrics(struc
- 	struct ceph_client_metric *m = &mdsc->metric;
- 	u64 nr_caps = atomic64_read(&m->total_caps);
- 	u32 header_len = sizeof(struct ceph_metric_header);
-+	struct ceph_client *cl = mdsc->fsc->client;
- 	struct ceph_msg *msg;
- 	struct timespec64 ts;
- 	s64 sum;
-@@ -38,8 +39,8 @@ static bool ceph_mdsc_send_metrics(struc
- 
- 	msg = ceph_msg_new(CEPH_MSG_CLIENT_METRICS, len, GFP_NOFS, true);
- 	if (!msg) {
--		pr_err("send metrics to mds%d, failed to allocate message\n",
--		       s->s_mds);
-+		pr_err_client(cl, "to mds%d, failed to allocate message\n",
-+			      s->s_mds);
- 		return false;
- 	}
- 
---- a/fs/ceph/super.h
-+++ b/fs/ceph/super.h
-@@ -456,6 +456,12 @@ ceph_sb_to_mdsc(const struct super_block
- 	return (struct ceph_mds_client *)ceph_sb_to_fs_client(sb)->mdsc;
- }
- 
-+static inline struct ceph_client *
-+ceph_inode_to_client(const struct inode *inode)
-+{
-+	return (struct ceph_client *)ceph_inode_to_fs_client(inode)->client;
-+}
++#define CEPH_GET_CAPS_WAIT_TIMEOUT (5 * HZ)
 +
- static inline struct ceph_vino
- ceph_vino(const struct inode *inode)
- {
+ /*
+  * parsed info about a single inode.  pointers are into the encoded
+  * on-wire structures within the mds reply message payload.
 
 
