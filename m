@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A180E483BD1;
-	Thu, 20 Aug 2026 17:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7277E483BD1;
+	Thu, 20 Aug 2026 17:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248327; cv=none; b=RJTXQcvQtM3ilHmoP5cd0viTkSUfM1MrIE5Z/OcZICdI2K5d+8Hx6T5qGeInkiMxYrI3SxacONwK/s9TRGkA3yHAQf+A2Zq8289MQ3Mg69E/iQuVWHKM5hKnPBZDTE6U1bDJXzJBJW72+gALa0EyrjNCc7Tt8yi2D8lyEEEsiY0=
+	t=1787248330; cv=none; b=m1v9ILqKa82tngsp1ywTlCDTOeYvSDU5fzYaJ35dDXs427fFMmhoc58aRsXD6+u+XEFD5kKdul4xYnb9aWBzG+ZNS6KQNhiiHEATlts+3shGbWAZmK0vfELkvsFg77zRkjbHaMAlzM2BX6z5TBKQ4dUlRTfKx3lUD349C1qfdPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248327; c=relaxed/simple;
-	bh=LOGaziGaPdqQ3Awq5BEDRrE4fN26DJov839ZKTV/vhk=;
+	s=arc-20240116; t=1787248330; c=relaxed/simple;
+	bh=Cq//tcXjcfP8mycbOElkkxw3zpqmgAdq2sK1+za5Lyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FCFWDyh011Y+mKLimQXLTxbPGCbIvent9vbMjSNfe54qVM8V9/PLXL6NYEx2Mv8ioLSZHjQBraUQjr3ucfYtpzp1Jo/6wiO2+NjV5O5F7sLqqmTGUnwOee3Al7SX0nkkysmabmCWOR7FCBY0Z9pqdJfJQbbKWVJH+IQna8DrzEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHtoCd1c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P3xQfPSYbyyXFGLXRY0PHXbd9dmxnPgADT0bgiuHrlZLiLe/4D/iU9WwWctfSp9nx5zHL9ivfbggkU/xo/COXHi+JC4MoAe9szWmHrC14pUiXkPP7nq5c94rhwuq+MSAEnGCLM7n+nnXDoHKB/2rqmaajWdtmZ4B0sFFWlF8Vbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YS806/Y8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHtoCd1c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07AF11F000E9;
-	Thu, 20 Aug 2026 17:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YS806/Y8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02EF1F000E9;
+	Thu, 20 Aug 2026 17:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248326;
-	bh=lirIOCMEFRJjnAclANXpsNJrvNZDH7vkOjNLoDso6CM=;
+	s=korg; t=1787248329;
+	bh=N0iHDqDiwXf0vMD11nYt3YTdw9P3lScfTvACkGBMBB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZHtoCd1cpq2uoCdCtCkWaddiKlGFDFDJO1XJGxYcM+dPvhJM3dlS5mJVNQ6LDXzMk
-	 iMYWZddXnD8XyINAzwPTLGAU4cbt3SKsjEVQHJchmY781kl8eKQaXP7fPmqedzNh4K
-	 v/q/ai+pOM+vbkqQJUdjX1pmkFFjtS1//XVsp/qA=
+	b=YS806/Y8W/zD40Reh3o+Ot655KoodJwuVFonFG38OaVnHgpQf94x8aIYhxNf86iNL
+	 Za5FoVu9eb+S8JqKx1PJP48i8DKpZ5TYga8Y3Q4y5bc7+Vq6c9HA2/Ey34uFUR7jXA
+	 xueRPwghdowgyHUdf2177CATjkwlJU6O3j8KI0Lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Zihan Xi <xizh2024@lzu.edu.cn>,
-	Ren Wei <n05ec@lzu.edu.cn>,
+	Xiao Liang <shaw.leon@gmail.com>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 150/303] net/sched: act_ct: preserve tc_skb_cb across defragmentation
-Date: Thu, 20 Aug 2026 16:54:46 +0200
-Message-ID: <20260820145257.795250424@linuxfoundation.org>
+Subject: [PATCH 6.1 151/303] net: ip6_tunnel: require CAP_NET_ADMIN in the device netns for changelink
+Date: Thu, 20 Aug 2026 16:54:47 +0200
+Message-ID: <20260820145257.827347042@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -56,84 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <xizh2024@lzu.edu.cn>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-[ Upstream commit 9092e15defbe6c7bc241c306093ca9d358a578e7 ]
+[ Upstream commit 2496fa0b7d180b3ad356b514e7ff93bb14e6140a ]
 
-tcf_ct_handle_fragments() calls nf_ct_handle_fragments() without saving
-and restoring skb->cb. The defrag helper clears IPCB/IP6CB, which aliases
-the tc_skb_cb/qdisc_skb_cb control buffer. Fragmented traffic through
-act_ct therefore loses qdisc metadata such as pkt_segs and can trigger
-WARN_ON_ONCE() in qdisc_pkt_segs() when panic_on_warn is enabled.
+ip6_tnl_changelink() operates on at most two netns, dev_net(dev) and the
+tunnel link netns t->net. They differ once the device is created in or
+moved to a netns other than the one the request runs in. The rtnl
+changelink path checks CAP_NET_ADMIN only against dev_net(dev), so a
+caller privileged there but not in t->net can rewrite a tunnel that
+lives in t->net.
 
-Save and restore the full tc_skb_cb around nf_ct_handle_fragments(),
-matching the pattern used by ovs_ct_handle_fragments().
+Gate ip6_tnl_changelink() on rtnl_dev_link_net_capable() at its top,
+before any attribute is parsed.
 
-Fixes: ec624fe740b4 ("net/sched: Extend qdisc control block with tc control block")
+Reported-by: Xiao Liang <shaw.leon@gmail.com>
+Closes: https://lore.kernel.org/netdev/CABAhCOSzP1vaThGV35_VnsRCb=87_CPjPVsTHbq905k8A+BuUg@mail.gmail.com/
+Fixes: 0bd8762824e7 ("ip6tnl: add x-netns support")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Zihan Xi <xizh2024@lzu.edu.cn>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/510c51217fd7aaf29c6dc298bab8d643fe229b1c.1781358692.git.xizh2024@lzu.edu.cn
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260612085941.3158249-5-maoyixie.tju@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_ct.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/ipv6/ip6_tunnel.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -858,10 +858,10 @@ static int tcf_ct_handle_fragments(struc
- 				   u8 family, u16 zone, bool *defrag)
- {
- 	enum ip_conntrack_info ctinfo;
-+	struct tc_skb_cb cb;
- 	struct nf_conn *ct;
- 	int err = 0;
- 	bool frag;
--	u16 mru;
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -2060,6 +2060,9 @@ static int ip6_tnl_changelink(struct net
+ 	struct ip6_tnl_net *ip6n = net_generic(net, ip6_tnl_net_id);
+ 	struct ip_tunnel_encap ipencap;
  
- 	/* Previously seen (loopback)? Ignore. */
- 	ct = nf_ct_get(skb, &ctinfo);
-@@ -875,7 +875,7 @@ static int tcf_ct_handle_fragments(struc
- 	if (err || !frag)
- 		return err;
++	if (!rtnl_dev_link_net_capable(dev, net))
++		return -EPERM;
++
+ 	if (dev == ip6n->fb_tnl_dev)
+ 		return -EINVAL;
  
--	mru = tc_skb_cb(skb)->mru;
-+	cb = *tc_skb_cb(skb);
- 
- 	if (family == NFPROTO_IPV4) {
- 		enum ip_defrag_users user = IP_DEFRAG_CONNTRACK_IN + zone;
-@@ -889,7 +889,7 @@ static int tcf_ct_handle_fragments(struc
- 
- 		if (!err) {
- 			*defrag = true;
--			mru = IPCB(skb)->frag_max_size;
-+			cb.mru = IPCB(skb)->frag_max_size;
- 		}
- 	} else { /* NFPROTO_IPV6 */
- #if IS_ENABLED(CONFIG_NF_DEFRAG_IPV6)
-@@ -902,7 +902,7 @@ static int tcf_ct_handle_fragments(struc
- 
- 		if (!err) {
- 			*defrag = true;
--			mru = IP6CB(skb)->frag_max_size;
-+			cb.mru = IP6CB(skb)->frag_max_size;
- 		}
- #else
- 		err = -EOPNOTSUPP;
-@@ -911,7 +911,7 @@ static int tcf_ct_handle_fragments(struc
- 	}
- 
- 	if (err != -EINPROGRESS)
--		tc_skb_cb(skb)->mru = mru;
-+		*tc_skb_cb(skb) = cb;
- 	skb_clear_hash(skb);
- 	skb->ignore_df = 1;
- 	return err;
 
 
