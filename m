@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73B119E992;
-	Thu, 20 Aug 2026 17:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A64847DF94;
+	Thu, 20 Aug 2026 17:34:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247253; cv=none; b=tARpJprVbDznaOMkmEVoVlLaah9ozSoEVZ4GXTd+XoaxMI7Jj+s/IQMVII9fR6Ig9A8lv5cezT0PWwT+fgaCJGbvj0PcGlDYpPThrzns9mEn7sWOg5Fan34WL1I15p3Mz0u99O3fPNnt+TLUD7+AJ/HNJj0HqfKQMXDHUEezGZY=
+	t=1787247256; cv=none; b=iCX3eU9tTiQV4HR8+oPmNyRr3ZbC7jQNut4+6N3Q7Jn9N/hvdn9Tjs80fDE5O2CsGbKeQ8ZoE8flBHTydfv27lZU5AeWG1WW3CtLV/EUOSwKc6ZWfTH3oHB/P4JNUMx7PprTH6LW1sfhYJ9s8vgHBxStjtRZyhcAqZzIEHhlVFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247253; c=relaxed/simple;
-	bh=Zx2dR90oR5KYRgfczhjXpXXK7N83NbitFF3im6YNeKw=;
+	s=arc-20240116; t=1787247256; c=relaxed/simple;
+	bh=z3mtJEWhAGXAnKx+SEH+H3x4812ZCWksIBhn81nQwpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fheuvZ19n+lDB4TakKwgyDPpqioiXzu8OWYIDiE+jC/ecHYo7kavPue6ZWmKI++XVyXA/h/7+ZBjHkjCDXEapldpy4QVyeK3Wv7TEBzES6YgLLaidoG1Dtx7vdiRPSJEQacnvgym0Dk7zgCoHHxrAW7wQL1o4c30nVJllMFe5/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l8uoyisg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=onDoDicqccf9QNBvPT41URGrbRFWweS23U9JIiJVu1DPr3pc9X8UmkdGlSWWO7RKNLfT6vC7uSD3gMU9rgdkCgXvfDJfTzQ3S+RyCmcDFFIkRMlWozy0Xb6Ajno+4mkuMmzT+5D4u8oWEb+FBwZa2dBZ4SL0tptQ0VPe4e6qpY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6g2cOL0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l8uoyisg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E181F000E9;
-	Thu, 20 Aug 2026 17:34:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6g2cOL0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C101F000E9;
+	Thu, 20 Aug 2026 17:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247252;
-	bh=jHmk5sodHNeYkCJ2nXkS6PjOj/eW7g/ycBnanLGKJfQ=;
+	s=korg; t=1787247255;
+	bh=e0LXMaI0BrVDx5Th+aDjB0FpXkd9x+S8SkA0WZ54Ilw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l8uoyisgu2flUkU0k8O4t2l6N7po/o5h/yqpaDiVERenGGGa3LocDjba+Lh7uiMgp
-	 rK6XeaIh2vnzNbdjSjhXCi4GXhTeXCw9xjId01wFi6jZz09SRDpBSz/gdfY827wnhQ
-	 OVtvZ8jcHku4cZl1VVav5UuzWGAmCmQoCoqVLm6Q=
+	b=l6g2cOL0h1tueRKyGa8q6qB6Hoa8JyqsV0Q9tObkngku31N5IyKN9B3NwTam6MkIu
+	 Xsb20knQWuLyCfJgvKRcoEcmMaupQL112OY3d8hlitJpWvpCFaF0SG98q6uhJ1JBr5
+	 HHh1gp4cdsSZA/2w4KQ1h1rDD7Hk+ae4V58HAZ4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jonas=20K=C3=B6ppeler?= <j.koeppeler@tu-berlin.de>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Neal Cardwell <ncardwell@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 202/220] veth: fix queue index used to wake the peer txq in veth_poll
-Date: Thu, 20 Aug 2026 16:56:32 +0200
-Message-ID: <20260820145229.585901230@linuxfoundation.org>
+Subject: [PATCH 6.12 203/220] tcp: fix icsk_ack.ato bitfield overflow
+Date: Thu, 20 Aug 2026 16:56:33 +0200
+Message-ID: <20260820145229.615987597@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -46,61 +46,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Köppeler <j.koeppeler@tu-berlin.de>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 60db47f02bfa2aa688938aa199117ec4f8e31d23 ]
+[ Upstream commit 60837e4b840a9c3f7ec826e3584df0bc6542a2c2 ]
 
-veth_poll() derives the index of the peer TX queue to wake from
-rq->xdp_rxq.queue_index. That field is only initialized by
-xdp_rxq_info_reg() in veth_enable_xdp_range(), which runs only when an
-XDP program is attached. On the plain GRO/NAPI path
-(veth_napi_enable_range()) xdp_rxq_info_reg() is never called, so
-queue_index stays 0 for every queue, as priv->rq is zero-allocated.
+On cross-region connections we observed delayed ACKs suddenly turning
+into immediate ACKs plus a TCP_MAX_QUICKACKS burst, as if the
+connection had just received its first data segment.
 
-So in a multi-queue setup with GRO enabled and no XDP program attached,
-every NAPI instance looks at the peer's TX queue 0. If veth_xmit() stops
-peer TX queue 1 because the ptr_ring is full (NETDEV_TX_BUSY), nothing
-ever wakes it again: the poller draining queue 1 wakes queue 0 instead.
-veth implements no ndo_tx_timeout, so the netdev watchdog does not kick
-in either, and the queue stays stopped indefinitely.
+Commit 95b9a87c6a6b ("tcp: record last received ipv6 flowlabel")
+squeezed icsk_ack.ato into 8 bits, sized for TCP_DELACK_MAX. But both
+writers still bound ato by icsk_rto, which can be well above 255
+jiffies, so the bitfield assignment silently wraps mod 256: repeated
+delack timer misses double ato up to icsk_rto, storing 320 as 64 and
+256 as 0, and ato == 0 is the "first data packet" sentinel in
+tcp_event_data_recv().
 
-Derive the index from the position of the rq within priv->rq instead,
-which is correct regardless of whether XDP was ever enabled.
+Clamp both writers to TCP_DELACK_MAX, which the static_assert already
+guarantees to fit and tcp_send_delayed_ack() effectively caps ato at
+anyway.
 
-Scripts to reproduce the stall are available at
-https://github.com/netoptimizer/veth-backpressure-performance-testing
-
-Fixes: dc82a33297fc ("veth: apply qdisc backpressure on full ptr_ring to reduce TX drops")
-Signed-off-by: Jonas Köppeler <j.koeppeler@tu-berlin.de>
-Tested-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Link: https://patch.msgid.link/20260806-veth-fix-poll-queue-idx-v1-1-c5357fb7573d@tu-berlin.de
+Fixes: 95b9a87c6a6b ("tcp: record last received ipv6 flowlabel")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Neal Cardwell <ncardwell@google.com>
+Link: https://patch.msgid.link/20260807014437.36687-1-jiayuan.chen@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_input.c | 6 +++---
+ net/ipv4/tcp_timer.c | 4 +++-
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index 2feb694f58bb9..96e373d65897c 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -967,7 +967,7 @@ static int veth_poll(struct napi_struct *napi, int budget)
- 	struct veth_rq *rq =
- 		container_of(napi, struct veth_rq, xdp_napi);
- 	struct veth_priv *priv = netdev_priv(rq->dev);
--	int queue_idx = rq->xdp_rxq.queue_index;
-+	int queue_idx = rq - priv->rq;
- 	struct netdev_queue *peer_txq;
- 	struct veth_stats stats = {};
- 	struct net_device *peer_dev;
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 96800d5e16a4c..55b34cf309be7 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -853,9 +853,9 @@ static void tcp_event_data_recv(struct sock *sk, struct sk_buff *skb)
+ 			/* The fastest case is the first. */
+ 			icsk->icsk_ack.ato = (icsk->icsk_ack.ato >> 1) + TCP_ATO_MIN / 2;
+ 		} else if (m < icsk->icsk_ack.ato) {
+-			icsk->icsk_ack.ato = (icsk->icsk_ack.ato >> 1) + m;
+-			if (icsk->icsk_ack.ato > icsk->icsk_rto)
+-				icsk->icsk_ack.ato = icsk->icsk_rto;
++			icsk->icsk_ack.ato = min3((icsk->icsk_ack.ato >> 1) + (u32)m,
++						  icsk->icsk_rto,
++						  (u32)TCP_DELACK_MAX);
+ 		} else if (m > icsk->icsk_rto) {
+ 			/* Too long gap. Apparently sender failed to
+ 			 * restart window, so that we send ACKs quickly.
+diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
+index 16a410386ffa6..a58094b0acd4f 100644
+--- a/net/ipv4/tcp_timer.c
++++ b/net/ipv4/tcp_timer.c
+@@ -332,7 +332,9 @@ void tcp_delack_timer_handler(struct sock *sk)
+ 	if (inet_csk_ack_scheduled(sk)) {
+ 		if (!inet_csk_in_pingpong_mode(sk)) {
+ 			/* Delayed ACK missed: inflate ATO. */
+-			icsk->icsk_ack.ato = min_t(u32, icsk->icsk_ack.ato << 1, icsk->icsk_rto);
++			icsk->icsk_ack.ato = min3((u32)icsk->icsk_ack.ato << 1,
++						  icsk->icsk_rto,
++						  (u32)TCP_DELACK_MAX);
+ 		} else {
+ 			/* Delayed ACK missed: leave pingpong mode and
+ 			 * deflate ATO.
 -- 
 2.53.0
 
