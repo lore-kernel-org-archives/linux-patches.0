@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5C237E5E5;
-	Thu, 20 Aug 2026 17:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F1C3803D7;
+	Thu, 20 Aug 2026 17:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247653; cv=none; b=DC/KmbUjNfdyrK1ZVwqNdoE0RckndG9vCjPleb3pqWQufz/t2wOy9cpFHfFCBOt3vijYg4Uza174UObD0xSVJQVR4nRxZaL+MJhdmRyPDwQGytd+0/SymCxgxYBAxGy9iAcGX8bpJ3M1uK3qFxlTwX7/xfAZf3H372yierGCYwc=
+	t=1787247655; cv=none; b=hUdYn1ThZ8kAxIVW//dymV7YO7BQB3pld9u4mgOYEFJgTvo7LVJvZiwlOIoxjM05CwUByutH+D6jjoyyCvRYUs/fMf0gmL/AqwR/v8ldZLtbpQSEaIeZdL3bV6N6GVXO2/rASYCIUIds1eBob6ft0KyPcMwdY0SWdKIoE3vKSkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247653; c=relaxed/simple;
-	bh=UnGE1YxnaQsnRQCWIsbGvXx1O5jClK37NUYax8LJEGw=;
+	s=arc-20240116; t=1787247655; c=relaxed/simple;
+	bh=xhPv7LfnGwlB1N5LwUjlk+y3yGK6ynlqCWraw8d2EqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g77PS6kNePQELZt5Eme3A32rJpOYPqOOK5MTO+nTm3NYPh/6UZGE548p8z4qqtA4tTtJJfHODk3BXYVZUgocy8S6Y6gI39UpCnt0TDbEX52ZWfd5P5EMvJQalZwdtGSOS0zuvIledSZ0zMqdbV66upYsrST2xngIGJMMGX5yORI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LdKC0Cb2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ekuztQ6vc+j02RzfR8aD89siylBzYtAVhrPoGxKyluFyFkz3kJIQ82aYKtfxGidJC3l92Uw1YyJVax8dpjmX33U+O4dIQWU8IZR377OT/oyog8DAc6ze6YOA01KQGXZdHWh2AQKQ1mSBT54HLZO7+CjCnJLaYv5tPSz6SnmP864=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UeImhQf+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LdKC0Cb2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 463241F000E9;
-	Thu, 20 Aug 2026 17:40:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UeImhQf+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E0351F000E9;
+	Thu, 20 Aug 2026 17:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247651;
-	bh=q15MG4uHHSeDMgSCwVqJVddCo5f2MGottsrh45AvAGQ=;
+	s=korg; t=1787247654;
+	bh=tolN5kNiIU0BO7xzwbbq3AbBOkIiCYjiYkHYAwpHn6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LdKC0Cb2zSYG5IBXMp3ovt2f6AyvAedSCJC9YxMJxp5JEtfTIvPwbFKIxCpBrywUF
-	 8o2wnVN4N95Nmlw08uvbG9lmvwV6STLl9CDC0vnvxAMEXUUE2tWMup1EpEnG+vdS40
-	 NVV05Uj2kAsxiga+GdFVgB9fQnMDS3ujWQrYPgCU=
+	b=UeImhQf+J4NExkZne54tXzr+Xx4BN/9F38WV0EWUtaZdqtGpqIS1WP6De9XH6JAnJ
+	 ArQrjIFEmBsjIbjwtK50XvXJll4LTsleOKqcc5pfvrmkacS2GLCrRH7berPUzPs6u/
+	 KRSq6FS++N4MiIOsnFbz8HysQaBjHods7LO5I2Pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavitra Jha <jhapavitra98@gmail.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 082/166] libceph: fix two unsafe bare decodes in decode_lockers()
-Date: Thu, 20 Aug 2026 16:55:41 +0200
-Message-ID: <20260820145213.619070641@linuxfoundation.org>
+Subject: [PATCH 6.6 073/166] ceph: Use a folio in ceph_page_mkwrite()
+Date: Thu, 20 Aug 2026 16:55:32 +0200
+Message-ID: <20260820145213.339628805@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -52,105 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavitra Jha <jhapavitra98@gmail.com>
+From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 
-[ Upstream commit a109a556115271ca7896dcda7b4b7e45e156c227 ]
+[ Upstream commit 88a59bda3f3786107694a3f5fd7f9df421752c21 ]
 
-decode_lockers() in cls_lock_client.c contains two bare decode operations
-that allow a malicious or compromised OSD to trigger slab-out-of-bounds
-reads:
+Convert the passed page to a folio and use it
+throughout ceph_page_mkwrite().  Removes the last call to
+page_mkwrite_check_truncate(), the last call to offset_in_thp() and one
+of the last calls to thp_size().  Saves a few calls to compound_head().
 
-1. ceph_decode_32(p) at the num_lockers field has no preceding bounds
-   check. ceph_start_decoding() accepts struct_len=0 as valid -- the
-   internal ceph_decode_need(p, end, 0, bad) always passes -- so when an
-   OSD sends struct_len=0, ceph_start_decoding() returns success with
-   p == end. The immediately following bare ceph_decode_32(p) then reads
-   4 bytes past the validated buffer boundary. The garbage value is
-   passed directly to kzalloc_objs() as the locker count.
-
-   The sibling function decode_watchers() in osd_client.c already uses
-   ceph_decode_32_safe() after its own ceph_start_decoding() call.
-   decode_lockers() was the only site using the bare variant.
-
-2. ceph_decode_8(p) after the decode_locker() loop has no preceding
-   bounds check. If an OSD crafts num_lockers such that the loop
-   advances p exactly to end, the subsequent bare ceph_decode_8(p) reads
-   one byte past the validated buffer boundary. The result is passed
-   directly into *type, which is used as a lock type discriminator by
-   callers, giving an OSD-controlled one-byte OOB read with direct
-   influence over the lock type field.
-
-Fix both by replacing bare operations with their safe variants:
-  ceph_decode_32(p) -> ceph_decode_32_safe(p, end, *num_lockers,
-                                           err_inval)
-  ceph_decode_8(p)  -> ceph_decode_8_safe(p, end, *type,
-                                          err_free_lockers)
-
-The goto targets differ intentionally:
-  err_inval: is a new label returning -EINVAL directly. It is used for
-  the pre-allocation failure path where *lockers is not yet allocated
-  and must not be passed to ceph_free_lockers().
-
-  err_free_lockers: is the existing label. It is used for the
-  post-allocation failure path where *lockers is allocated and must
-  be freed.
-
-ret is set to -EINVAL before ceph_decode_8_safe() so that
-err_free_lockers returns the correct error code on bounds violation.
-Without this, err_free_lockers would return a stale ret value (0 from
-the successful decode_locker() loop), silently swallowing the error.
-
--EINVAL is correct for both failure paths. The data received from the
-OSD is structurally malformed. -ENOMEM would misrepresent the failure
-class to callers and to stable@ backporters triaging error paths.
-
-Attacker model: a malicious or compromised OSD in a multi-tenant Ceph
-deployment can trigger this against any kernel client that issues the
-lock.get_info class method (e.g. during RBD exclusive lock acquisition).
-
-[ idryomov: trim changelog, formatting ]
-
-Cc: stable@vger.kernel.org
-Fixes: d4ed4a530562 ("libceph: support for lock.lock_info")
-Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
+Signed-off-by: "Matthew Wilcox (Oracle)" <willy@infradead.org>
+Link: https://lore.kernel.org/r/20250217185119.430193-3-willy@infradead.org
+Tested-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: cbf59617cd71 ("ceph: fix writeback_count leak in write_folio_nounlock()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/cls_lock_client.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/ceph/addr.c |   26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
---- a/net/ceph/cls_lock_client.c
-+++ b/net/ceph/cls_lock_client.c
-@@ -304,7 +304,7 @@ static int decode_lockers(void **p, void
- 	if (ret)
- 		return ret;
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -1684,8 +1684,8 @@ static vm_fault_t ceph_page_mkwrite(stru
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+ 	struct ceph_file_info *fi = vma->vm_file->private_data;
+ 	struct ceph_cap_flush *prealloc_cf;
+-	struct page *page = vmf->page;
+-	loff_t off = page_offset(page);
++	struct folio *folio = page_folio(vmf->page);
++	loff_t off = folio_pos(folio);
+ 	loff_t size = i_size_read(inode);
+ 	size_t len;
+ 	int want, got, err;
+@@ -1702,10 +1702,10 @@ static vm_fault_t ceph_page_mkwrite(stru
+ 	sb_start_pagefault(inode->i_sb);
+ 	ceph_block_sigs(&oldset);
  
--	*num_lockers = ceph_decode_32(p);
-+	ceph_decode_32_safe(p, end, *num_lockers, err_inval);
- 	*lockers = kcalloc(*num_lockers, sizeof(**lockers), GFP_NOIO);
- 	if (!*lockers)
- 		return -ENOMEM;
-@@ -315,7 +315,8 @@ static int decode_lockers(void **p, void
- 			goto err_free_lockers;
- 	}
+-	if (off + thp_size(page) <= size)
+-		len = thp_size(page);
++	if (off + folio_size(folio) <= size)
++		len = folio_size(folio);
+ 	else
+-		len = offset_in_thp(page, size);
++		len = offset_in_folio(folio, size);
  
--	*type = ceph_decode_8(p);
-+	ret = -EINVAL;
-+	ceph_decode_8_safe(p, end, *type, err_free_lockers);
- 	s = ceph_extract_encoded_string(p, end, NULL, GFP_NOIO);
- 	if (IS_ERR(s)) {
- 		ret = PTR_ERR(s);
-@@ -325,6 +326,9 @@ static int decode_lockers(void **p, void
- 	*tag = s;
- 	return 0;
+ 	doutc(cl, "%llx.%llx %llu~%zd getting caps i_size %llu\n",
+ 	      ceph_vinop(inode), off, len, size);
+@@ -1722,30 +1722,30 @@ static vm_fault_t ceph_page_mkwrite(stru
+ 	doutc(cl, "%llx.%llx %llu~%zd got cap refs on %s\n", ceph_vinop(inode),
+ 	      off, len, ceph_cap_string(got));
  
-+err_inval:
-+	return -EINVAL;
-+
- err_free_lockers:
- 	ceph_free_lockers(*lockers, *num_lockers);
- 	return ret;
+-	/* Update time before taking page lock */
++	/* Update time before taking folio lock */
+ 	file_update_time(vma->vm_file);
+ 	inode_inc_iversion_raw(inode);
+ 
+ 	do {
+ 		struct ceph_snap_context *snapc;
+ 
+-		lock_page(page);
++		folio_lock(folio);
+ 
+-		if (page_mkwrite_check_truncate(page, inode) < 0) {
+-			unlock_page(page);
++		if (folio_mkwrite_check_truncate(folio, inode) < 0) {
++			folio_unlock(folio);
+ 			ret = VM_FAULT_NOPAGE;
+ 			break;
+ 		}
+ 
+-		snapc = ceph_find_incompatible(page);
++		snapc = ceph_find_incompatible(&folio->page);
+ 		if (!snapc) {
+-			/* success.  we'll keep the page locked. */
+-			set_page_dirty(page);
++			/* success.  we'll keep the folio locked. */
++			folio_mark_dirty(folio);
+ 			ret = VM_FAULT_LOCKED;
+ 			break;
+ 		}
+ 
+-		unlock_page(page);
++		folio_unlock(folio);
+ 
+ 		if (IS_ERR(snapc)) {
+ 			ret = VM_FAULT_SIGBUS;
 
 
