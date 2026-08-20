@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C04215075;
-	Thu, 20 Aug 2026 17:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30171215075;
+	Thu, 20 Aug 2026 17:53:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248399; cv=none; b=tmTeMuY4Ay6Ojdm3oy6RtfVlneYhC8IYWwLcOlRxFgRI5dL/3sl0mG6RLOh3LPMhU3l4ZwFeWCkaThcNFGLgZxMADa58wuVkpGAJyoPE2pLtARboGM7yWH3xkJ/1szhR7ugdhiRMrOWyvIikYxviJxypx5/9sZWMSNmHmy0zY5g=
+	t=1787248403; cv=none; b=h9fhhkMBUgiXlonhs15Gz17Q26Ra/QWb3tverpi9IqnZzey4bLd3e11NYMzjrxfMH2UJNlHKERcR5g2mZyixlnj5NssSK3ROdg9iuJC56kgV4dciZX8Rga7CNu+Oqrck2rcM/xoxIr6e4+z4e0bQLGD6KumNKsDHXb/6mIUVVvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248399; c=relaxed/simple;
-	bh=BmcfrFvg3tlC2ZfTktCBJV4na7OXq8KQaz9kDxVuXSc=;
+	s=arc-20240116; t=1787248403; c=relaxed/simple;
+	bh=VaXDdb1pg+nfhyP9eHJCCalCJ+PFtQlZ3B1Hqn+A9ak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XM3O9XSISwXzpGbmWi/+c1jabYTXy8PMkkoOSAYy54YniSwPX4NF58zFi/MtL5xaJvrlK/blwLWoZZUwKxMTcF2IjvBVho7P0eOh6w5HC9zZZSwvoNz7Mdc3LN4bl+Zv4rQ0rkv/sqmT3egSnctrJIxJM876nqB/iS6Dazihsls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9ga9Jve; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GiH1+qTUvu/XQKM9NEXiToZ/YeLMP6CJqHS8ZXgG7Q9PrXqaPclb3ljceMPjrtyM7Vd0V1DenNDQeBESS8YUoJy0aomErwM44yDhTJrmOGFYpPM+pNX1iuoFpMQxCpKDGSJ5TXs46pghDVb+OPzVB7Y9s1iNsjPCPTzqeyvKmPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qlxay1QD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9ga9Jve"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B1EE1F000E9;
-	Thu, 20 Aug 2026 17:53:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qlxay1QD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4CD1F000E9;
+	Thu, 20 Aug 2026 17:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248398;
-	bh=j1zz+Jbuz3Db+gGzZfgnrN+kmlw9J21WN5yvdmusJHs=;
+	s=korg; t=1787248401;
+	bh=sjFGF0+AKSnBapRmbjPGsd5xDbKyrYhQJqBn2b9mTjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V9ga9JvesP3r/XTBGgr83UZLpkngF5a69DE9Ui27BZbSKcJfYq20Z3iy0281uGjjZ
-	 CFVkrA/H8Mc+9hto975VDzTvX4nXByqnykL/6mmjcfN7KVnZ4FODaGZ6JsznnjDzHy
-	 WBgwqrJFmuWsnf0SQJtMBmsk4inzHpByvl2Pbyqc=
+	b=Qlxay1QD1BSR978bkjNfCB2mwMrWATMKQ2IwNNHexMvWpc297S5agI8pHsf0aL/Ed
+	 dTM715ql9rpmIsdWwLbR4UJVHRPQMp3RUZM+1HbSNSuNq+wewvaxSQpP2uoT2+FFBs
+	 fp7yzkppBqrlLrhk/dBFy2FXNWWdFUf1iZe9H5e4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Milind Changire <mchangir@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 214/303] ceph: pass the mdsc to several helpers
-Date: Thu, 20 Aug 2026 16:55:50 +0200
-Message-ID: <20260820145259.826289271@linuxfoundation.org>
+Subject: [PATCH 6.1 215/303] ceph: rename _to_client() to _to_fs_client()
+Date: Thu, 20 Aug 2026 16:55:51 +0200
+Message-ID: <20260820145259.858003081@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -55,9 +55,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Xiubo Li <xiubli@redhat.com>
 
-[ Upstream commit 197b7d792d6aead2e30d4b2c054ffabae2ed73dc ]
+[ Upstream commit 5995d90d2d19f337df6a50bcf4699ef053214dac ]
 
-We will use the 'mdsc' to get the global_id in the following commits.
+We need to covert the inode to ceph_client in the following commit,
+and will add one new helper for that, here we rename the old helper
+to _fs_client().
 
 Link: https://tracker.ceph.com/issues/61590
 Signed-off-by: Xiubo Li <xiubli@redhat.com>
@@ -68,380 +70,884 @@ Stable-dep-of: 50958bb928ba ("ceph: fix hanging __ceph_get_caps() with stale mds
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/caps.c              |   15 +++++++++------
- fs/ceph/debugfs.c           |    4 ++--
- fs/ceph/dir.c               |    2 +-
- fs/ceph/file.c              |    2 +-
- fs/ceph/mds_client.c        |   38 +++++++++++++++++++++-----------------
- fs/ceph/mds_client.h        |    3 ++-
- fs/ceph/mdsmap.c            |    3 ++-
- fs/ceph/snap.c              |   16 ++++++++++------
- fs/ceph/super.h             |    3 ++-
- include/linux/ceph/mdsmap.h |    5 ++++-
- 10 files changed, 54 insertions(+), 37 deletions(-)
+ fs/ceph/addr.c       |   20 ++++++++++----------
+ fs/ceph/cache.c      |    2 +-
+ fs/ceph/caps.c       |   40 ++++++++++++++++++++--------------------
+ fs/ceph/dir.c        |   22 +++++++++++-----------
+ fs/ceph/export.c     |   10 +++++-----
+ fs/ceph/file.c       |   24 ++++++++++++------------
+ fs/ceph/inode.c      |   14 +++++++-------
+ fs/ceph/ioctl.c      |    8 ++++----
+ fs/ceph/mds_client.c |    2 +-
+ fs/ceph/snap.c       |    2 +-
+ fs/ceph/super.c      |   22 +++++++++++-----------
+ fs/ceph/super.h      |   10 +++++-----
+ fs/ceph/xattr.c      |   12 ++++++------
+ 13 files changed, 94 insertions(+), 94 deletions(-)
 
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -227,7 +227,7 @@ static void ceph_netfs_expand_readahead(
+ static bool ceph_netfs_clamp_length(struct netfs_io_subrequest *subreq)
+ {
+ 	struct inode *inode = subreq->rreq->inode;
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+ 	u64 objno, objoff;
+ 	u32 xlen;
+@@ -241,7 +241,7 @@ static bool ceph_netfs_clamp_length(stru
+ 
+ static void finish_netfs_read(struct ceph_osd_request *req)
+ {
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(req->r_inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(req->r_inode);
+ 	struct ceph_osd_data *osd_data = osd_req_op_extent_osd_data(req, 0);
+ 	struct netfs_io_subrequest *subreq = req->r_priv;
+ 	int num_pages;
+@@ -329,7 +329,7 @@ static void ceph_netfs_issue_read(struct
+ 	struct netfs_io_request *rreq = subreq->rreq;
+ 	struct inode *inode = rreq->inode;
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	struct ceph_osd_request *req = NULL;
+ 	struct ceph_vino vino = ceph_vino(inode);
+ 	struct iov_iter iter;
+@@ -607,7 +607,7 @@ static int writepage_nounlock(struct pag
+ 	struct folio *folio = page_folio(page);
+ 	struct inode *inode = page->mapping->host;
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	struct ceph_snap_context *snapc, *oldest;
+ 	loff_t page_off = page_offset(page);
+ 	int err;
+@@ -730,7 +730,7 @@ static int ceph_writepage(struct page *p
+ 	ihold(inode);
+ 
+ 	if (wbc->sync_mode == WB_SYNC_NONE &&
+-	    ceph_inode_to_client(inode)->write_congested)
++	    ceph_inode_to_fs_client(inode)->write_congested)
+ 		return AOP_WRITEPAGE_ACTIVATE;
+ 
+ 	wait_on_page_fscache(page);
+@@ -763,7 +763,7 @@ static void writepages_finish(struct cep
+ 	int rc = req->r_result;
+ 	struct ceph_snap_context *snapc = req->r_snapc;
+ 	struct address_space *mapping = inode->i_mapping;
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	unsigned int len = 0;
+ 	bool remove_page;
+ 
+@@ -847,7 +847,7 @@ static int ceph_writepages_start(struct
+ {
+ 	struct inode *inode = mapping->host;
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	struct ceph_vino vino = ceph_vino(inode);
+ 	pgoff_t index, start_index, end = -1;
+ 	struct ceph_snap_context *snapc = NULL, *last_snapc = NULL, *pgsnapc;
+@@ -1700,7 +1700,7 @@ int ceph_uninline_data(struct file *file
+ {
+ 	struct inode *inode = file_inode(file);
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	struct ceph_osd_request *req = NULL;
+ 	struct ceph_cap_flush *prealloc_cf = NULL;
+ 	struct folio *folio = NULL;
+@@ -1874,7 +1874,7 @@ enum {
+ static int __ceph_pool_perm_get(struct ceph_inode_info *ci,
+ 				s64 pool, struct ceph_string *pool_ns)
+ {
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(&ci->netfs.inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(&ci->netfs.inode);
+ 	struct ceph_mds_client *mdsc = fsc->mdsc;
+ 	struct ceph_osd_request *rd_req = NULL, *wr_req = NULL;
+ 	struct rb_node **p, *parent;
+@@ -2065,7 +2065,7 @@ int ceph_pool_perm_check(struct inode *i
+ 		return 0;
+ 	}
+ 
+-	if (ceph_test_mount_opt(ceph_inode_to_client(inode),
++	if (ceph_test_mount_opt(ceph_inode_to_fs_client(inode),
+ 				NOPOOLPERM))
+ 		return 0;
+ 
+--- a/fs/ceph/cache.c
++++ b/fs/ceph/cache.c
+@@ -15,7 +15,7 @@
+ void ceph_fscache_register_inode_cookie(struct inode *inode)
+ {
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 
+ 	/* No caching for filesystem? */
+ 	if (!fsc->fscache)
 --- a/fs/ceph/caps.c
 +++ b/fs/ceph/caps.c
-@@ -1176,7 +1176,8 @@ void __ceph_remove_cap(struct ceph_cap *
- 	}
- }
- 
--void ceph_remove_cap(struct ceph_cap *cap, bool queue_release)
-+void ceph_remove_cap(struct ceph_mds_client *mdsc, struct ceph_cap *cap,
-+		     bool queue_release)
+@@ -633,7 +633,7 @@ void ceph_add_cap(struct inode *inode,
+ 		  unsigned seq, unsigned mseq, u64 realmino, int flags,
+ 		  struct ceph_cap **new_cap)
  {
- 	struct ceph_inode_info *ci = cap->ci;
- 	struct ceph_fs_client *fsc;
-@@ -1317,6 +1318,8 @@ static void encode_cap_msg(struct ceph_m
-  */
+-	struct ceph_mds_client *mdsc = ceph_inode_to_client(inode)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_inode_to_fs_client(inode)->mdsc;
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+ 	struct ceph_cap *cap;
+ 	int mds = session->s_mds;
+@@ -920,7 +920,7 @@ int __ceph_caps_issued_mask(struct ceph_
+ int __ceph_caps_issued_mask_metric(struct ceph_inode_info *ci, int mask,
+ 				   int touch)
+ {
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(ci->netfs.inode.i_sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(ci->netfs.inode.i_sb);
+ 	int r;
+ 
+ 	r = __ceph_caps_issued_mask(ci, mask, touch);
+@@ -994,7 +994,7 @@ int __ceph_caps_file_wanted(struct ceph_
+ 	const int WR_SHIFT = ffs(CEPH_FILE_MODE_WR);
+ 	const int LAZY_SHIFT = ffs(CEPH_FILE_MODE_LAZY);
+ 	struct ceph_mount_options *opt =
+-		ceph_inode_to_client(&ci->netfs.inode)->mount_options;
++		ceph_inode_to_fs_client(&ci->netfs.inode)->mount_options;
+ 	unsigned long used_cutoff = jiffies - opt->caps_wanted_delay_max * HZ;
+ 	unsigned long idle_cutoff = jiffies - opt->caps_wanted_delay_min * HZ;
+ 
+@@ -1119,7 +1119,7 @@ void __ceph_remove_cap(struct ceph_cap *
+ 
+ 	dout("__ceph_remove_cap %p from %p\n", cap, &ci->netfs.inode);
+ 
+-	mdsc = ceph_inode_to_client(&ci->netfs.inode)->mdsc;
++	mdsc = ceph_inode_to_fs_client(&ci->netfs.inode)->mdsc;
+ 
+ 	/* remove from inode's cap rbtree, and clear auth cap */
+ 	rb_erase(&cap->ci_node, &ci->i_caps);
+@@ -1190,7 +1190,7 @@ void ceph_remove_cap(struct ceph_mds_cli
+ 
+ 	lockdep_assert_held(&ci->i_ceph_lock);
+ 
+-	fsc = ceph_inode_to_client(&ci->netfs.inode);
++	fsc = ceph_inode_to_fs_client(&ci->netfs.inode);
+ 	WARN_ON_ONCE(ci->i_auth_cap == cap &&
+ 		     !list_empty(&ci->i_dirty_item) &&
+ 		     !fsc->blocklisted &&
+@@ -1319,7 +1319,7 @@ static void encode_cap_msg(struct ceph_m
  void __ceph_remove_caps(struct ceph_inode_info *ci)
  {
-+	struct inode *inode = &ci->netfs.inode;
-+	struct ceph_mds_client *mdsc = ceph_inode_to_client(inode)->mdsc;
+ 	struct inode *inode = &ci->netfs.inode;
+-	struct ceph_mds_client *mdsc = ceph_inode_to_client(inode)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_inode_to_fs_client(inode)->mdsc;
  	struct rb_node *p;
  
  	/* lock i_ceph_lock, because ceph_d_revalidate(..., LOOKUP_RCU)
-@@ -1326,7 +1329,7 @@ void __ceph_remove_caps(struct ceph_inod
- 	while (p) {
- 		struct ceph_cap *cap = rb_entry(p, struct ceph_cap, ci_node);
- 		p = rb_next(p);
--		ceph_remove_cap(cap, true);
-+		ceph_remove_cap(mdsc, cap, true);
- 	}
- 	spin_unlock(&ci->i_ceph_lock);
- }
-@@ -3900,7 +3903,7 @@ retry:
- 		goto out_unlock;
+@@ -1628,7 +1628,7 @@ void ceph_flush_snaps(struct ceph_inode_
+ 		      struct ceph_mds_session **psession)
+ {
+ 	struct inode *inode = &ci->netfs.inode;
+-	struct ceph_mds_client *mdsc = ceph_inode_to_client(inode)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_inode_to_fs_client(inode)->mdsc;
+ 	struct ceph_mds_session *session = NULL;
+ 	bool need_put = false;
+ 	int mds;
+@@ -1693,7 +1693,7 @@ int __ceph_mark_dirty_caps(struct ceph_i
+ 			   struct ceph_cap_flush **pcf)
+ {
+ 	struct ceph_mds_client *mdsc =
+-		ceph_sb_to_client(ci->netfs.inode.i_sb)->mdsc;
++		ceph_sb_to_fs_client(ci->netfs.inode.i_sb)->mdsc;
+ 	struct inode *inode = &ci->netfs.inode;
+ 	int was = ci->i_dirty_caps;
+ 	int dirty = 0;
+@@ -1816,7 +1816,7 @@ static u64 __mark_caps_flushing(struct i
+ 				struct ceph_mds_session *session, bool wake,
+ 				u64 *oldest_flush_tid)
+ {
+-	struct ceph_mds_client *mdsc = ceph_sb_to_client(inode->i_sb)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(inode->i_sb)->mdsc;
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+ 	struct ceph_cap_flush *cf = NULL;
+ 	int flushing;
+@@ -2177,7 +2177,7 @@ ack:
+  */
+ static int try_flush_caps(struct inode *inode, u64 *ptid)
+ {
+-	struct ceph_mds_client *mdsc = ceph_sb_to_client(inode->i_sb)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(inode->i_sb)->mdsc;
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+ 	int flushing = 0;
+ 	u64 flush_tid = 0, oldest_flush_tid = 0;
+@@ -2255,7 +2255,7 @@ static int caps_are_flushed(struct inode
+  */
+ static int flush_mdlog_and_wait_inode_unsafe_requests(struct inode *inode)
+ {
+-	struct ceph_mds_client *mdsc = ceph_sb_to_client(inode->i_sb)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(inode->i_sb)->mdsc;
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+ 	struct ceph_mds_request *req1 = NULL, *req2 = NULL;
+ 	int ret, err = 0;
+@@ -2438,7 +2438,7 @@ int ceph_write_inode(struct inode *inode
+ 				       caps_are_flushed(inode, flush_tid));
+ 	} else {
+ 		struct ceph_mds_client *mdsc =
+-			ceph_sb_to_client(inode->i_sb)->mdsc;
++			ceph_sb_to_fs_client(inode->i_sb)->mdsc;
  
- 	if (target < 0) {
--		ceph_remove_cap(cap, false);
-+		ceph_remove_cap(mdsc, cap, false);
- 		goto out_unlock;
- 	}
+ 		spin_lock(&ci->i_ceph_lock);
+ 		if (__ceph_caps_dirty(ci))
+@@ -2691,7 +2691,7 @@ static int try_get_cap_refs(struct inode
+ 			    loff_t endoff, int flags, int *got)
+ {
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_mds_client *mdsc = ceph_inode_to_client(inode)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_inode_to_fs_client(inode)->mdsc;
+ 	int ret = 0;
+ 	int have, implemented;
+ 	bool snap_rwsem_locked = false;
+@@ -2910,7 +2910,7 @@ int ceph_get_caps(struct file *filp, int
+ 	struct ceph_file_info *fi = filp->private_data;
+ 	struct inode *inode = file_inode(filp);
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	int ret, _got, flags;
  
-@@ -3935,7 +3938,7 @@ retry:
- 				change_auth_cap_ses(ci, tcap->session);
- 			}
+ 	ret = ceph_pool_perm_check(inode, need);
+@@ -3640,7 +3640,7 @@ static void handle_cap_flush_ack(struct
+ 	__releases(ci->i_ceph_lock)
+ {
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_mds_client *mdsc = ceph_sb_to_client(inode->i_sb)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(inode->i_sb)->mdsc;
+ 	struct ceph_cap_flush *cf, *tmp_cf;
+ 	LIST_HEAD(to_remove);
+ 	unsigned seq = le32_to_cpu(m->seq);
+@@ -3746,7 +3746,7 @@ void __ceph_remove_capsnap(struct inode
+ 			   bool *wake_ci, bool *wake_mdsc)
+ {
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_mds_client *mdsc = ceph_sb_to_client(inode->i_sb)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(inode->i_sb)->mdsc;
+ 	bool ret;
+ 
+ 	lockdep_assert_held(&ci->i_ceph_lock);
+@@ -3790,7 +3790,7 @@ static void handle_cap_flushsnap_ack(str
+ 				     struct ceph_mds_session *session)
+ {
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_mds_client *mdsc = ceph_sb_to_client(inode->i_sb)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(inode->i_sb)->mdsc;
+ 	u64 follows = le64_to_cpu(m->snap_follows);
+ 	struct ceph_cap_snap *capsnap = NULL, *iter;
+ 	bool wake_ci = false;
+@@ -3873,7 +3873,7 @@ static void handle_cap_export(struct ino
+ 			      struct ceph_mds_cap_peer *ph,
+ 			      struct ceph_mds_session *session)
+ {
+-	struct ceph_mds_client *mdsc = ceph_inode_to_client(inode)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_inode_to_fs_client(inode)->mdsc;
+ 	struct ceph_mds_session *tsession = NULL;
+ 	struct ceph_cap *cap, *tcap, *new_cap = NULL;
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+@@ -4506,7 +4506,7 @@ int ceph_drop_caps_for_unlink(struct ino
+ 
+ 		if (__ceph_caps_dirty(ci)) {
+ 			struct ceph_mds_client *mdsc =
+-				ceph_inode_to_client(inode)->mdsc;
++				ceph_inode_to_fs_client(inode)->mdsc;
+ 			__cap_delay_requeue_front(mdsc, ci);
  		}
--		ceph_remove_cap(cap, false);
-+		ceph_remove_cap(mdsc, cap, false);
- 		goto out_unlock;
- 	} else if (tsession) {
- 		/* add placeholder for the export tagert */
-@@ -3952,7 +3955,7 @@ retry:
- 			spin_unlock(&mdsc->cap_dirty_lock);
- 		}
- 
--		ceph_remove_cap(cap, false);
-+		ceph_remove_cap(mdsc, cap, false);
- 		goto out_unlock;
  	}
+@@ -4662,7 +4662,7 @@ static int remove_capsnaps(struct ceph_m
  
-@@ -4065,7 +4068,7 @@ retry:
- 					ocap->mseq, mds, le32_to_cpu(ph->seq),
- 					le32_to_cpu(ph->mseq));
- 		}
--		ceph_remove_cap(ocap, (ph->flags & CEPH_CAP_FLAG_RELEASE));
-+		ceph_remove_cap(mdsc, ocap, (ph->flags & CEPH_CAP_FLAG_RELEASE));
- 	}
- 
- 	*old_issued = issued;
---- a/fs/ceph/debugfs.c
-+++ b/fs/ceph/debugfs.c
-@@ -81,7 +81,7 @@ static int mdsc_show(struct seq_file *s,
- 		if (req->r_inode) {
- 			seq_printf(s, " #%llx", ceph_ino(req->r_inode));
- 		} else if (req->r_dentry) {
--			path = ceph_mdsc_build_path(req->r_dentry, &pathlen,
-+			path = ceph_mdsc_build_path(mdsc, req->r_dentry, &pathlen,
- 						    &pathbase, 0);
- 			if (IS_ERR(path))
- 				path = NULL;
-@@ -100,7 +100,7 @@ static int mdsc_show(struct seq_file *s,
- 		}
- 
- 		if (req->r_old_dentry) {
--			path = ceph_mdsc_build_path(req->r_old_dentry, &pathlen,
-+			path = ceph_mdsc_build_path(mdsc, req->r_old_dentry, &pathlen,
- 						    &pathbase, 0);
- 			if (IS_ERR(path))
- 				path = NULL;
+ int ceph_purge_inode_cap(struct inode *inode, struct ceph_cap *cap, bool *invalidate)
+ {
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	struct ceph_mds_client *mdsc = fsc->mdsc;
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+ 	bool is_auth;
 --- a/fs/ceph/dir.c
 +++ b/fs/ceph/dir.c
-@@ -1118,7 +1118,7 @@ static void ceph_async_unlink_cb(struct
- 	if (result) {
- 		int pathlen = 0;
- 		u64 base = 0;
--		char *path = ceph_mdsc_build_path(dentry, &pathlen,
-+		char *path = ceph_mdsc_build_path(mdsc, dentry, &pathlen,
- 						  &base, 0);
- 
- 		/* mark error on parent + clear complete */
---- a/fs/ceph/file.c
-+++ b/fs/ceph/file.c
-@@ -564,7 +564,7 @@ static void ceph_async_create_cb(struct
- 	if (result) {
- 		int pathlen = 0;
- 		u64 base = 0;
--		char *path = ceph_mdsc_build_path(req->r_dentry, &pathlen,
-+		char *path = ceph_mdsc_build_path(mdsc, req->r_dentry, &pathlen,
- 						  &base, 0);
- 
- 		pr_warn("async create failure path=(%llx)%s result=%d!\n",
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -1972,6 +1972,7 @@ out:
-  */
- static int trim_caps_cb(struct inode *inode, int mds, void *arg)
- {
-+	struct ceph_mds_client *mdsc = ceph_sb_to_mdsc(inode->i_sb);
- 	int *remaining = arg;
+@@ -307,7 +307,7 @@ static int ceph_readdir(struct file *fil
+ 	struct ceph_dir_file_info *dfi = file->private_data;
+ 	struct inode *inode = file_inode(file);
  	struct ceph_inode_info *ci = ceph_inode(inode);
- 	int used, wanted, oissued, mine;
-@@ -2019,7 +2020,7 @@ static int trim_caps_cb(struct inode *in
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	struct ceph_mds_client *mdsc = fsc->mdsc;
+ 	int i;
+ 	int err;
+@@ -679,7 +679,7 @@ out:
+ struct dentry *ceph_handle_snapdir(struct ceph_mds_request *req,
+ 				   struct dentry *dentry)
+ {
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(dentry->d_sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(dentry->d_sb);
+ 	struct inode *parent = d_inode(dentry->d_parent); /* we hold i_rwsem */
  
- 	if (oissued) {
- 		/* we aren't the only cap.. just remove us */
--		ceph_remove_cap(cap, true);
-+		ceph_remove_cap(mdsc, cap, true);
- 		(*remaining)--;
- 	} else {
- 		struct dentry *dentry;
-@@ -2384,8 +2385,8 @@ static inline  u64 __get_oldest_tid(stru
-  * Encode hidden .snap dirs as a double /, i.e.
-  *   foo/.snap/bar -> foo//bar
+ 	/* .snap dir? */
+@@ -748,7 +748,7 @@ static bool is_root_ceph_dentry(struct i
+ static struct dentry *ceph_lookup(struct inode *dir, struct dentry *dentry,
+ 				  unsigned int flags)
+ {
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(dir->i_sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(dir->i_sb);
+ 	struct ceph_mds_client *mdsc = ceph_sb_to_mdsc(dir->i_sb);
+ 	struct ceph_mds_request *req;
+ 	int op;
+@@ -1091,7 +1091,7 @@ static void ceph_async_unlink_cb(struct
+ 				 struct ceph_mds_request *req)
+ {
+ 	struct dentry *dentry = req->r_dentry;
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(dentry->d_sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(dentry->d_sb);
+ 	struct ceph_dentry_info *di = ceph_dentry(dentry);
+ 	int result = req->r_err ? req->r_err :
+ 			le32_to_cpu(req->r_reply_info.head->result);
+@@ -1182,7 +1182,7 @@ static int get_caps_for_async_unlink(str
   */
--char *ceph_mdsc_build_path(struct dentry *dentry, int *plen, u64 *pbase,
--			   int stop_on_nosnap)
-+char *ceph_mdsc_build_path(struct ceph_mds_client *mdsc, struct dentry *dentry,
-+			   int *plen, u64 *pbase, int stop_on_nosnap)
+ static int ceph_unlink(struct inode *dir, struct dentry *dentry)
  {
- 	struct dentry *temp;
- 	char *path;
-@@ -2462,9 +2463,9 @@ retry:
- 	return path + pos;
- }
- 
--static int build_dentry_path(struct dentry *dentry, struct inode *dir,
--			     const char **ppath, int *ppathlen, u64 *pino,
--			     bool *pfreepath, bool parent_locked)
-+static int build_dentry_path(struct ceph_mds_client *mdsc, struct dentry *dentry,
-+			     struct inode *dir, const char **ppath, int *ppathlen,
-+			     u64 *pino, bool *pfreepath, bool parent_locked)
- {
- 	char *path;
- 
-@@ -2479,7 +2480,7 @@ static int build_dentry_path(struct dent
- 		return 0;
- 	}
- 	rcu_read_unlock();
--	path = ceph_mdsc_build_path(dentry, ppathlen, pino, 1);
-+	path = ceph_mdsc_build_path(mdsc, dentry, ppathlen, pino, 1);
- 	if (IS_ERR(path))
- 		return PTR_ERR(path);
- 	*ppath = path;
-@@ -2491,6 +2492,7 @@ static int build_inode_path(struct inode
- 			    const char **ppath, int *ppathlen, u64 *pino,
- 			    bool *pfreepath)
- {
-+	struct ceph_mds_client *mdsc = ceph_sb_to_mdsc(inode->i_sb);
- 	struct dentry *dentry;
- 	char *path;
- 
-@@ -2500,7 +2502,7 @@ static int build_inode_path(struct inode
- 		return 0;
- 	}
- 	dentry = d_find_alias(inode);
--	path = ceph_mdsc_build_path(dentry, ppathlen, pino, 1);
-+	path = ceph_mdsc_build_path(mdsc, dentry, ppathlen, pino, 1);
- 	dput(dentry);
- 	if (IS_ERR(path))
- 		return PTR_ERR(path);
-@@ -2513,10 +2515,11 @@ static int build_inode_path(struct inode
-  * request arguments may be specified via an inode *, a dentry *, or
-  * an explicit ino+path.
-  */
--static int set_request_path_attr(struct inode *rinode, struct dentry *rdentry,
--				  struct inode *rdiri, const char *rpath,
--				  u64 rino, const char **ppath, int *pathlen,
--				  u64 *ino, bool *freepath, bool parent_locked)
-+static int set_request_path_attr(struct ceph_mds_client *mdsc, struct inode *rinode,
-+				 struct dentry *rdentry, struct inode *rdiri,
-+				 const char *rpath, u64 rino, const char **ppath,
-+				 int *pathlen, u64 *ino, bool *freepath,
-+				 bool parent_locked)
- {
- 	int r = 0;
- 
-@@ -2525,7 +2528,7 @@ static int set_request_path_attr(struct
- 		dout(" inode %p %llx.%llx\n", rinode, ceph_ino(rinode),
- 		     ceph_snap(rinode));
- 	} else if (rdentry) {
--		r = build_dentry_path(rdentry, rdiri, ppath, pathlen, ino,
-+		r = build_dentry_path(mdsc, rdentry, rdiri, ppath, pathlen, ino,
- 					freepath, parent_locked);
- 		dout(" dentry %p %llx/%.*s\n", rdentry, *ino, *pathlen,
- 		     *ppath);
-@@ -2577,7 +2580,7 @@ static struct ceph_msg *create_request_m
- 	int ret;
- 	bool legacy = !(session->s_con.peer_features & CEPH_FEATURE_FS_BTIME);
- 
--	ret = set_request_path_attr(req->r_inode, req->r_dentry,
-+	ret = set_request_path_attr(mdsc, req->r_inode, req->r_dentry,
- 			      req->r_parent, req->r_path1, req->r_ino1.ino,
- 			      &path1, &pathlen1, &ino1, &freepath1,
- 			      test_bit(CEPH_MDS_R_PARENT_LOCKED,
-@@ -2588,7 +2591,7 @@ static struct ceph_msg *create_request_m
- 	}
- 
- 	/* If r_old_dentry is set, then assume that its parent is locked */
--	ret = set_request_path_attr(NULL, req->r_old_dentry,
-+	ret = set_request_path_attr(mdsc, NULL, req->r_old_dentry,
- 			      req->r_old_dentry_dir,
- 			      req->r_path2, req->r_ino2.ino,
- 			      &path2, &pathlen2, &ino2, &freepath2, true);
-@@ -3940,6 +3943,7 @@ out_unlock:
-  */
- static int reconnect_caps_cb(struct inode *inode, int mds, void *arg)
- {
-+	struct ceph_mds_client *mdsc = ceph_sb_to_mdsc(inode->i_sb);
- 	union {
- 		struct ceph_mds_cap_reconnect v2;
- 		struct ceph_mds_cap_reconnect_v1 v1;
-@@ -3957,7 +3961,7 @@ static int reconnect_caps_cb(struct inod
- 	dentry = d_find_primary(inode);
- 	if (dentry) {
- 		/* set pathbase to parent dir when msg_version >= 2 */
--		path = ceph_mdsc_build_path(dentry, &pathlen, &pathbase,
-+		path = ceph_mdsc_build_path(mdsc, dentry, &pathlen, &pathbase,
- 					    recon_state->msg_version >= 2);
- 		dput(dentry);
- 		if (IS_ERR(path)) {
-@@ -5312,7 +5316,7 @@ void ceph_mdsc_handle_mdsmap(struct ceph
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(dir->i_sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(dir->i_sb);
+ 	struct ceph_mds_client *mdsc = fsc->mdsc;
+ 	struct inode *inode = d_inode(dentry);
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+@@ -1369,7 +1369,7 @@ void __ceph_dentry_lease_touch(struct ce
  		return;
  	}
  
--	newmap = ceph_mdsmap_decode(&p, end, ceph_msgr2(mdsc->fsc->client));
-+	newmap = ceph_mdsmap_decode(mdsc, &p, end, ceph_msgr2(mdsc->fsc->client));
- 	if (IS_ERR(newmap)) {
- 		err = PTR_ERR(newmap);
- 		goto bad_unlock;
---- a/fs/ceph/mds_client.h
-+++ b/fs/ceph/mds_client.h
-@@ -561,7 +561,8 @@ static inline void ceph_mdsc_free_path(c
- 		__putname(path - (PATH_MAX - 1 - len));
- }
- 
--extern char *ceph_mdsc_build_path(struct dentry *dentry, int *plen, u64 *base,
-+extern char *ceph_mdsc_build_path(struct ceph_mds_client *mdsc,
-+				  struct dentry *dentry, int *plen, u64 *base,
- 				  int stop_on_nosnap);
- 
- extern void __ceph_mdsc_drop_dentry_lease(struct dentry *dentry);
---- a/fs/ceph/mdsmap.c
-+++ b/fs/ceph/mdsmap.c
-@@ -114,7 +114,8 @@ bad:
-  * Ignore any fields we don't care about (there are quite a few of
-  * them).
-  */
--struct ceph_mdsmap *ceph_mdsmap_decode(void **p, void *end, bool msgr2)
-+struct ceph_mdsmap *ceph_mdsmap_decode(struct ceph_mds_client *mdsc, void **p,
-+				       void *end, bool msgr2)
- {
- 	struct ceph_mdsmap *m;
- 	const void *start = *p;
---- a/fs/ceph/snap.c
-+++ b/fs/ceph/snap.c
-@@ -329,7 +329,8 @@ static int cmpu64_rev(const void *a, con
- /*
-  * build the snap context for a given realm.
-  */
--static int build_snap_context(struct ceph_snap_realm *realm,
-+static int build_snap_context(struct ceph_mds_client *mdsc,
-+			      struct ceph_snap_realm *realm,
- 			      struct list_head *realm_queue,
- 			      struct list_head *dirty_realms)
- {
-@@ -425,7 +426,8 @@ fail:
- /*
-  * rebuild snap context for the given realm and all of its children.
-  */
--static void rebuild_snap_realms(struct ceph_snap_realm *realm,
-+static void rebuild_snap_realms(struct ceph_mds_client *mdsc,
-+				struct ceph_snap_realm *realm,
- 				struct list_head *dirty_realms)
- {
- 	LIST_HEAD(realm_queue);
-@@ -451,7 +453,8 @@ static void rebuild_snap_realms(struct c
- 			continue;
- 		}
- 
--		last = build_snap_context(_realm, &realm_queue, dirty_realms);
-+		last = build_snap_context(mdsc, _realm, &realm_queue,
-+					  dirty_realms);
- 		dout("%s %llx %p, %s\n", __func__, _realm->ino, _realm,
- 		     last > 0 ? "is deferred" : !last ? "succeeded" : "failed");
- 
-@@ -705,7 +708,8 @@ int __ceph_finish_cap_snap(struct ceph_i
-  * Queue cap_snaps for snap writeback for this realm and its children.
-  * Called under snap_rwsem, so realm topology won't change.
-  */
--static void queue_realm_cap_snaps(struct ceph_snap_realm *realm)
-+static void queue_realm_cap_snaps(struct ceph_mds_client *mdsc,
-+				  struct ceph_snap_realm *realm)
- {
- 	struct ceph_inode_info *ci;
- 	struct inode *lastinode = NULL;
-@@ -852,7 +856,7 @@ more:
- 
- 	/* rebuild_snapcs when we reach the _end_ (root) of the trace */
- 	if (realm_to_rebuild && p >= e)
--		rebuild_snap_realms(realm_to_rebuild, &dirty_realms);
-+		rebuild_snap_realms(mdsc, realm_to_rebuild, &dirty_realms);
- 
- 	if (!first_realm)
- 		first_realm = realm;
-@@ -870,7 +874,7 @@ more:
- 		realm = list_first_entry(&dirty_realms, struct ceph_snap_realm,
- 					 dirty_item);
- 		list_del_init(&realm->dirty_item);
--		queue_realm_cap_snaps(realm);
-+		queue_realm_cap_snaps(mdsc, realm);
+-	mdsc = ceph_sb_to_client(dn->d_sb)->mdsc;
++	mdsc = ceph_sb_to_fs_client(dn->d_sb)->mdsc;
+ 	spin_lock(&mdsc->dentry_list_lock);
+ 	list_move_tail(&di->lease_list, &mdsc->dentry_leases);
+ 	spin_unlock(&mdsc->dentry_list_lock);
+@@ -1416,7 +1416,7 @@ void __ceph_dentry_dir_lease_touch(struc
+ 		return;
  	}
  
- 	if (realm_ret)
+-	mdsc = ceph_sb_to_client(dn->d_sb)->mdsc;
++	mdsc = ceph_sb_to_fs_client(dn->d_sb)->mdsc;
+ 	spin_lock(&mdsc->dentry_list_lock);
+ 	__dentry_dir_lease_touch(mdsc, di),
+ 	spin_unlock(&mdsc->dentry_list_lock);
+@@ -1430,7 +1430,7 @@ static void __dentry_lease_unlist(struct
+ 	if (list_empty(&di->lease_list))
+ 		return;
+ 
+-	mdsc = ceph_sb_to_client(di->dentry->d_sb)->mdsc;
++	mdsc = ceph_sb_to_fs_client(di->dentry->d_sb)->mdsc;
+ 	spin_lock(&mdsc->dentry_list_lock);
+ 	list_del_init(&di->lease_list);
+ 	spin_unlock(&mdsc->dentry_list_lock);
+@@ -1783,7 +1783,7 @@ static int ceph_d_revalidate(struct dent
+ 	dout("d_revalidate %p '%pd' inode %p offset 0x%llx\n", dentry,
+ 	     dentry, inode, ceph_dentry(dentry)->offset);
+ 
+-	mdsc = ceph_sb_to_client(dir->i_sb)->mdsc;
++	mdsc = ceph_sb_to_fs_client(dir->i_sb)->mdsc;
+ 
+ 	/* always trust cached snapped dentries, snapdir dentry */
+ 	if (ceph_snap(dir) != CEPH_NOSNAP) {
+@@ -1890,7 +1890,7 @@ static int ceph_d_delete(const struct de
+ static void ceph_d_release(struct dentry *dentry)
+ {
+ 	struct ceph_dentry_info *di = ceph_dentry(dentry);
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(dentry->d_sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(dentry->d_sb);
+ 
+ 	dout("d_release %p\n", dentry);
+ 
+@@ -1959,7 +1959,7 @@ static ssize_t ceph_read_dir(struct file
+ 	int left;
+ 	const int bufsize = 1024;
+ 
+-	if (!ceph_test_mount_opt(ceph_sb_to_client(inode->i_sb), DIRSTAT))
++	if (!ceph_test_mount_opt(ceph_sb_to_fs_client(inode->i_sb), DIRSTAT))
+ 		return -EISDIR;
+ 
+ 	if (!dfi->dir_info) {
+--- a/fs/ceph/export.c
++++ b/fs/ceph/export.c
+@@ -122,7 +122,7 @@ static int ceph_encode_fh(struct inode *
+ 
+ static struct inode *__lookup_inode(struct super_block *sb, u64 ino)
+ {
+-	struct ceph_mds_client *mdsc = ceph_sb_to_client(sb)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(sb)->mdsc;
+ 	struct inode *inode;
+ 	struct ceph_vino vino;
+ 	int err;
+@@ -204,7 +204,7 @@ static struct dentry *__snapfh_to_dentry
+ 					  struct ceph_nfs_snapfh *sfh,
+ 					  bool want_parent)
+ {
+-	struct ceph_mds_client *mdsc = ceph_sb_to_client(sb)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(sb)->mdsc;
+ 	struct ceph_mds_request *req;
+ 	struct inode *inode;
+ 	struct ceph_vino vino;
+@@ -316,7 +316,7 @@ static struct dentry *ceph_fh_to_dentry(
+ static struct dentry *__get_parent(struct super_block *sb,
+ 				   struct dentry *child, u64 ino)
+ {
+-	struct ceph_mds_client *mdsc = ceph_sb_to_client(sb)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(sb)->mdsc;
+ 	struct ceph_mds_request *req;
+ 	struct inode *inode;
+ 	int mask;
+@@ -438,7 +438,7 @@ static int __get_snap_name(struct dentry
+ {
+ 	struct inode *inode = d_inode(child);
+ 	struct inode *dir = d_inode(parent);
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	struct ceph_mds_request *req = NULL;
+ 	char *last_name = NULL;
+ 	unsigned next_offset = 2;
+@@ -541,7 +541,7 @@ static int ceph_get_name(struct dentry *
+ 	if (ceph_snap(inode) != CEPH_NOSNAP)
+ 		return __get_snap_name(parent, name, child);
+ 
+-	mdsc = ceph_inode_to_client(inode)->mdsc;
++	mdsc = ceph_inode_to_fs_client(inode)->mdsc;
+ 	req = ceph_mdsc_create_request(mdsc, CEPH_MDS_OP_LOOKUPNAME,
+ 				       USE_ANY_MDS);
+ 	if (IS_ERR(req))
+--- a/fs/ceph/file.c
++++ b/fs/ceph/file.c
+@@ -204,7 +204,7 @@ static int ceph_init_file_info(struct in
+ {
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+ 	struct ceph_mount_options *opt =
+-		ceph_inode_to_client(&ci->netfs.inode)->mount_options;
++		ceph_inode_to_fs_client(&ci->netfs.inode)->mount_options;
+ 	struct ceph_file_info *fi;
+ 	int ret;
+ 
+@@ -238,7 +238,7 @@ static int ceph_init_file_info(struct in
+ 
+ 	spin_lock_init(&fi->rw_contexts_lock);
+ 	INIT_LIST_HEAD(&fi->rw_contexts);
+-	fi->filp_gen = READ_ONCE(ceph_inode_to_client(inode)->filp_gen);
++	fi->filp_gen = READ_ONCE(ceph_inode_to_fs_client(inode)->filp_gen);
+ 
+ 	if ((file->f_mode & FMODE_WRITE) && ceph_has_inline_data(ci)) {
+ 		ret = ceph_uninline_data(file);
+@@ -356,7 +356,7 @@ out:
+ int ceph_open(struct inode *inode, struct file *file)
+ {
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(inode->i_sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(inode->i_sb);
+ 	struct ceph_mds_client *mdsc = fsc->mdsc;
+ 	struct ceph_mds_request *req;
+ 	struct ceph_file_info *fi = file->private_data;
+@@ -725,7 +725,7 @@ static int ceph_finish_async_create(stru
+ int ceph_atomic_open(struct inode *dir, struct dentry *dentry,
+ 		     struct file *file, unsigned flags, umode_t mode)
+ {
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(dir->i_sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(dir->i_sb);
+ 	struct ceph_mds_client *mdsc = fsc->mdsc;
+ 	struct ceph_mds_request *req;
+ 	struct dentry *dn;
+@@ -924,7 +924,7 @@ static ssize_t ceph_sync_read(struct kio
+ 	struct file *file = iocb->ki_filp;
+ 	struct inode *inode = file_inode(file);
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	struct ceph_osd_client *osdc = &fsc->client->osdc;
+ 	ssize_t ret;
+ 	u64 off = iocb->ki_pos;
+@@ -1135,7 +1135,7 @@ static void ceph_aio_complete_req(struct
+ 		if (aio_work) {
+ 			INIT_WORK(&aio_work->work, ceph_aio_retry_work);
+ 			aio_work->req = req;
+-			queue_work(ceph_inode_to_client(inode)->inode_wq,
++			queue_work(ceph_inode_to_fs_client(inode)->inode_wq,
+ 				   &aio_work->work);
+ 			return;
+ 		}
+@@ -1263,7 +1263,7 @@ ceph_direct_read_write(struct kiocb *ioc
+ 	struct file *file = iocb->ki_filp;
+ 	struct inode *inode = file_inode(file);
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	struct ceph_client_metric *metric = &fsc->mdsc->metric;
+ 	struct ceph_vino vino;
+ 	struct ceph_osd_request *req;
+@@ -1475,7 +1475,7 @@ ceph_sync_write(struct kiocb *iocb, stru
+ 	struct file *file = iocb->ki_filp;
+ 	struct inode *inode = file_inode(file);
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	struct ceph_vino vino;
+ 	struct ceph_osd_request *req;
+ 	struct page **pages;
+@@ -1758,7 +1758,7 @@ static ssize_t ceph_write_iter(struct ki
+ 	struct ceph_file_info *fi = file->private_data;
+ 	struct inode *inode = file_inode(file);
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	struct ceph_osd_client *osdc = &fsc->client->osdc;
+ 	struct ceph_cap_flush *prealloc_cf;
+ 	ssize_t count, written = 0;
+@@ -1996,7 +1996,7 @@ static int ceph_zero_partial_object(stru
+ 				    loff_t offset, loff_t *length)
+ {
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	struct ceph_osd_request *req;
+ 	struct ceph_snap_context *snapc;
+ 	int ret = 0;
+@@ -2391,7 +2391,7 @@ static ssize_t __ceph_copy_file_range(st
+ 	struct ceph_inode_info *src_ci = ceph_inode(src_inode);
+ 	struct ceph_inode_info *dst_ci = ceph_inode(dst_inode);
+ 	struct ceph_cap_flush *prealloc_cf;
+-	struct ceph_fs_client *src_fsc = ceph_inode_to_client(src_inode);
++	struct ceph_fs_client *src_fsc = ceph_inode_to_fs_client(src_inode);
+ 	loff_t size;
+ 	ssize_t ret = -EIO, bytes;
+ 	u64 src_objnum, dst_objnum, src_objoff, dst_objoff;
+@@ -2399,7 +2399,7 @@ static ssize_t __ceph_copy_file_range(st
+ 	int src_got = 0, dst_got = 0, err, dirty;
+ 
+ 	if (src_inode->i_sb != dst_inode->i_sb) {
+-		struct ceph_fs_client *dst_fsc = ceph_inode_to_client(dst_inode);
++		struct ceph_fs_client *dst_fsc = ceph_inode_to_fs_client(dst_inode);
+ 
+ 		if (ceph_fsid_compare(&src_fsc->client->fsid,
+ 				      &dst_fsc->client->fsid)) {
+--- a/fs/ceph/inode.c
++++ b/fs/ceph/inode.c
+@@ -1278,7 +1278,7 @@ int ceph_fill_trace(struct super_block *
+ 	struct ceph_mds_reply_info_parsed *rinfo = &req->r_reply_info;
+ 	struct inode *in = NULL;
+ 	struct ceph_vino tvino, dvino;
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(sb);
+ 	int err = 0;
+ 
+ 	dout("fill_trace %p is_dentry %d is_target %d\n", req,
+@@ -1838,7 +1838,7 @@ bool ceph_inode_set_size(struct inode *i
+ 
+ void ceph_queue_inode_work(struct inode *inode, int work_bit)
+ {
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+ 	set_bit(work_bit, &ci->i_work_mask);
+ 
+@@ -2012,7 +2012,7 @@ int __ceph_setattr(struct inode *inode,
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+ 	unsigned int ia_valid = attr->ia_valid;
+ 	struct ceph_mds_request *req;
+-	struct ceph_mds_client *mdsc = ceph_sb_to_client(inode->i_sb)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(inode->i_sb)->mdsc;
+ 	struct ceph_cap_flush *prealloc_cf;
+ 	int issued;
+ 	int release = 0, dirtied = 0;
+@@ -2229,7 +2229,7 @@ int ceph_setattr(struct user_namespace *
+ 		 struct iattr *attr)
+ {
+ 	struct inode *inode = d_inode(dentry);
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	int err;
+ 
+ 	if (ceph_snap(inode) != CEPH_NOSNAP)
+@@ -2295,7 +2295,7 @@ int ceph_try_to_choose_auth_mds(struct i
+ int __ceph_do_getattr(struct inode *inode, struct page *locked_page,
+ 		      int mask, bool force)
+ {
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(inode->i_sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(inode->i_sb);
+ 	struct ceph_mds_client *mdsc = fsc->mdsc;
+ 	struct ceph_mds_request *req;
+ 	int mode;
+@@ -2341,7 +2341,7 @@ int __ceph_do_getattr(struct inode *inod
+ int ceph_do_getvxattr(struct inode *inode, const char *name, void *value,
+ 		      size_t size)
+ {
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(inode->i_sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(inode->i_sb);
+ 	struct ceph_mds_client *mdsc = fsc->mdsc;
+ 	struct ceph_mds_request *req;
+ 	int mode = USE_AUTH_MDS;
+@@ -2482,7 +2482,7 @@ int ceph_getattr(struct user_namespace *
+ 		stat->dev = ci->i_snapid_map ? ci->i_snapid_map->dev : 0;
+ 
+ 	if (S_ISDIR(inode->i_mode)) {
+-		if (ceph_test_mount_opt(ceph_sb_to_client(sb), RBYTES)) {
++		if (ceph_test_mount_opt(ceph_sb_to_fs_client(sb), RBYTES)) {
+ 			stat->size = ci->i_rbytes;
+ 		} else if (ceph_snap(inode) == CEPH_SNAPDIR) {
+ 			struct ceph_inode_info *pci;
+--- a/fs/ceph/ioctl.c
++++ b/fs/ceph/ioctl.c
+@@ -64,7 +64,7 @@ static long __validate_layout(struct cep
+ static long ceph_ioctl_set_layout(struct file *file, void __user *arg)
+ {
+ 	struct inode *inode = file_inode(file);
+-	struct ceph_mds_client *mdsc = ceph_sb_to_client(inode->i_sb)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(inode->i_sb)->mdsc;
+ 	struct ceph_mds_request *req;
+ 	struct ceph_ioctl_layout l;
+ 	struct ceph_inode_info *ci = ceph_inode(file_inode(file));
+@@ -139,7 +139,7 @@ static long ceph_ioctl_set_layout_policy
+ 	struct ceph_mds_request *req;
+ 	struct ceph_ioctl_layout l;
+ 	int err;
+-	struct ceph_mds_client *mdsc = ceph_sb_to_client(inode->i_sb)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(inode->i_sb)->mdsc;
+ 
+ 	/* copy and validate */
+ 	if (copy_from_user(&l, arg, sizeof(l)))
+@@ -182,7 +182,7 @@ static long ceph_ioctl_get_dataloc(struc
+ 	struct inode *inode = file_inode(file);
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+ 	struct ceph_osd_client *osdc =
+-		&ceph_sb_to_client(inode->i_sb)->client->osdc;
++		&ceph_sb_to_fs_client(inode->i_sb)->client->osdc;
+ 	struct ceph_object_locator oloc;
+ 	CEPH_DEFINE_OID_ONSTACK(oid);
+ 	u32 xlen;
+@@ -243,7 +243,7 @@ static long ceph_ioctl_lazyio(struct fil
+ 	struct ceph_file_info *fi = file->private_data;
+ 	struct inode *inode = file_inode(file);
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_mds_client *mdsc = ceph_inode_to_client(inode)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_inode_to_fs_client(inode)->mdsc;
+ 
+ 	if ((fi->fmode & CEPH_FILE_MODE_LAZY) == 0) {
+ 		spin_lock(&ci->i_ceph_lock);
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -679,7 +679,7 @@ static void destroy_reply_info(struct ce
+  */
+ int ceph_wait_on_conflict_unlink(struct dentry *dentry)
+ {
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(dentry->d_sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(dentry->d_sb);
+ 	struct dentry *pdentry = dentry->d_parent;
+ 	struct dentry *udentry, *found = NULL;
+ 	struct ceph_dentry_info *di;
+--- a/fs/ceph/snap.c
++++ b/fs/ceph/snap.c
+@@ -961,7 +961,7 @@ static void flush_snaps(struct ceph_mds_
+ void ceph_change_snap_realm(struct inode *inode, struct ceph_snap_realm *realm)
+ {
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_mds_client *mdsc = ceph_inode_to_client(inode)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_inode_to_fs_client(inode)->mdsc;
+ 	struct ceph_snap_realm *oldrealm = ci->i_snap_realm;
+ 
+ 	lockdep_assert_held(&ci->i_ceph_lock);
+--- a/fs/ceph/super.c
++++ b/fs/ceph/super.c
+@@ -43,7 +43,7 @@ static LIST_HEAD(ceph_fsc_list);
+  */
+ static void ceph_put_super(struct super_block *s)
+ {
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(s);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(s);
+ 
+ 	dout("put_super\n");
+ 	ceph_mdsc_close_sessions(fsc->mdsc);
+@@ -51,7 +51,7 @@ static void ceph_put_super(struct super_
+ 
+ static int ceph_statfs(struct dentry *dentry, struct kstatfs *buf)
+ {
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(d_inode(dentry));
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(d_inode(dentry));
+ 	struct ceph_mon_client *monc = &fsc->client->monc;
+ 	struct ceph_statfs st;
+ 	int i, err;
+@@ -116,7 +116,7 @@ static int ceph_statfs(struct dentry *de
+ 
+ static int ceph_sync_fs(struct super_block *sb, int wait)
+ {
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(sb);
+ 
+ 	if (!wait) {
+ 		dout("sync_fs (non-blocking)\n");
+@@ -663,7 +663,7 @@ static int compare_mount_options(struct
+  */
+ static int ceph_show_options(struct seq_file *m, struct dentry *root)
+ {
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(root->d_sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(root->d_sb);
+ 	struct ceph_mount_options *fsopt = fsc->mount_options;
+ 	size_t pos;
+ 	int ret;
+@@ -992,7 +992,7 @@ static void __ceph_umount_begin(struct c
+  */
+ void ceph_umount_begin(struct super_block *sb)
+ {
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(sb);
+ 
+ 	dout("ceph_umount_begin - starting forced umount\n");
+ 	if (!fsc)
+@@ -1152,7 +1152,7 @@ static int ceph_compare_super(struct sup
+ 	struct ceph_fs_client *new = fc->s_fs_info;
+ 	struct ceph_mount_options *fsopt = new->mount_options;
+ 	struct ceph_options *opt = new->client->options;
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(sb);
+ 
+ 	dout("ceph_compare_super %p\n", sb);
+ 
+@@ -1248,9 +1248,9 @@ static int ceph_get_tree(struct fs_conte
+ 		goto out;
+ 	}
+ 
+-	if (ceph_sb_to_client(sb) != fsc) {
++	if (ceph_sb_to_fs_client(sb) != fsc) {
+ 		destroy_fs_client(fsc);
+-		fsc = ceph_sb_to_client(sb);
++		fsc = ceph_sb_to_fs_client(sb);
+ 		dout("get_sb got existing client %p\n", fsc);
+ 	} else {
+ 		dout("get_sb using new client %p\n", fsc);
+@@ -1301,7 +1301,7 @@ static int ceph_reconfigure_fc(struct fs
+ {
+ 	struct ceph_parse_opts_ctx *pctx = fc->fs_private;
+ 	struct ceph_mount_options *fsopt = pctx->opts;
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(fc->root->d_sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(fc->root->d_sb);
+ 
+ 	if (fsopt->flags & CEPH_MOUNT_OPT_ASYNC_DIROPS)
+ 		ceph_set_mount_opt(fsc, ASYNC_DIROPS);
+@@ -1420,7 +1420,7 @@ void ceph_dec_mds_stopping_blocker(struc
+ 
+ static void ceph_kill_sb(struct super_block *s)
+ {
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(s);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(s);
+ 	struct ceph_mds_client *mdsc = fsc->mdsc;
+ 	bool wait;
+ 
+@@ -1482,7 +1482,7 @@ MODULE_ALIAS_FS("ceph");
+ 
+ int ceph_force_reconnect(struct super_block *sb)
+ {
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(sb);
+ 	int err = 0;
+ 
+ 	fsc->mount_state = CEPH_MOUNT_RECOVER;
 --- a/fs/ceph/super.h
 +++ b/fs/ceph/super.h
-@@ -1188,7 +1188,8 @@ extern void ceph_add_cap(struct inode *i
- 			 unsigned cap, unsigned seq, u64 realmino, int flags,
- 			 struct ceph_cap **new_cap);
- extern void __ceph_remove_cap(struct ceph_cap *cap, bool queue_release);
--extern void ceph_remove_cap(struct ceph_cap *cap, bool queue_release);
-+extern void ceph_remove_cap(struct ceph_mds_client *mdsc, struct ceph_cap *cap,
-+			    bool queue_release);
- extern void __ceph_remove_caps(struct ceph_inode_info *ci);
- extern void ceph_put_cap(struct ceph_mds_client *mdsc,
- 			 struct ceph_cap *cap);
---- a/include/linux/ceph/mdsmap.h
-+++ b/include/linux/ceph/mdsmap.h
-@@ -5,6 +5,8 @@
- #include <linux/bug.h>
- #include <linux/ceph/types.h>
- 
-+struct ceph_mds_client;
-+
- /*
-  * mds map - describe servers in the mds cluster.
-  *
-@@ -69,7 +71,8 @@ static inline bool ceph_mdsmap_is_laggy(
+@@ -471,13 +471,13 @@ ceph_inode(const struct inode *inode)
  }
  
- extern int ceph_mdsmap_get_random_mds(struct ceph_mdsmap *m);
--struct ceph_mdsmap *ceph_mdsmap_decode(void **p, void *end, bool msgr2);
-+struct ceph_mdsmap *ceph_mdsmap_decode(struct ceph_mds_client *mdsc, void **p,
-+				       void *end, bool msgr2);
- extern void ceph_mdsmap_destroy(struct ceph_mdsmap *m);
- extern bool ceph_mdsmap_is_cluster_available(struct ceph_mdsmap *m);
+ static inline struct ceph_fs_client *
+-ceph_inode_to_client(const struct inode *inode)
++ceph_inode_to_fs_client(const struct inode *inode)
+ {
+ 	return (struct ceph_fs_client *)inode->i_sb->s_fs_info;
+ }
  
+ static inline struct ceph_fs_client *
+-ceph_sb_to_client(const struct super_block *sb)
++ceph_sb_to_fs_client(const struct super_block *sb)
+ {
+ 	return (struct ceph_fs_client *)sb->s_fs_info;
+ }
+@@ -485,7 +485,7 @@ ceph_sb_to_client(const struct super_blo
+ static inline struct ceph_mds_client *
+ ceph_sb_to_mdsc(const struct super_block *sb)
+ {
+-	return (struct ceph_mds_client *)ceph_sb_to_client(sb)->mdsc;
++	return (struct ceph_mds_client *)ceph_sb_to_fs_client(sb)->mdsc;
+ }
+ 
+ static inline struct ceph_vino
+@@ -541,7 +541,7 @@ static inline u64 ceph_snap(struct inode
+  */
+ static inline u64 ceph_present_ino(struct super_block *sb, u64 ino)
+ {
+-	if (unlikely(ceph_test_mount_opt(ceph_sb_to_client(sb), INO32)))
++	if (unlikely(ceph_test_mount_opt(ceph_sb_to_fs_client(sb), INO32)))
+ 		return ceph_ino_to_ino32(ino);
+ 	return ino;
+ }
+@@ -1074,7 +1074,7 @@ void ceph_inode_shutdown(struct inode *i
+ static inline bool ceph_inode_is_shutdown(struct inode *inode)
+ {
+ 	unsigned long flags = READ_ONCE(ceph_inode(inode)->i_ceph_flags);
+-	struct ceph_fs_client *fsc = ceph_inode_to_client(inode);
++	struct ceph_fs_client *fsc = ceph_inode_to_fs_client(inode);
+ 	int state = READ_ONCE(fsc->mount_state);
+ 
+ 	return (flags & CEPH_I_SHUTDOWN) || state >= CEPH_MOUNT_SHUTDOWN;
+--- a/fs/ceph/xattr.c
++++ b/fs/ceph/xattr.c
+@@ -57,7 +57,7 @@ static bool ceph_vxattrcb_layout_exists(
+ static ssize_t ceph_vxattrcb_layout(struct ceph_inode_info *ci, char *val,
+ 				    size_t size)
+ {
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(ci->netfs.inode.i_sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(ci->netfs.inode.i_sb);
+ 	struct ceph_osd_client *osdc = &fsc->client->osdc;
+ 	struct ceph_string *pool_ns;
+ 	s64 pool = ci->i_layout.pool_id;
+@@ -161,7 +161,7 @@ static ssize_t ceph_vxattrcb_layout_pool
+ 					 char *val, size_t size)
+ {
+ 	ssize_t ret;
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(ci->netfs.inode.i_sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(ci->netfs.inode.i_sb);
+ 	struct ceph_osd_client *osdc = &fsc->client->osdc;
+ 	s64 pool = ci->i_layout.pool_id;
+ 	const char *pool_name;
+@@ -313,7 +313,7 @@ static ssize_t ceph_vxattrcb_snap_btime(
+ static ssize_t ceph_vxattrcb_cluster_fsid(struct ceph_inode_info *ci,
+ 					  char *val, size_t size)
+ {
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(ci->netfs.inode.i_sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(ci->netfs.inode.i_sb);
+ 
+ 	return ceph_fmt_xattr(val, size, "%pU", &fsc->client->fsid);
+ }
+@@ -321,7 +321,7 @@ static ssize_t ceph_vxattrcb_cluster_fsi
+ static ssize_t ceph_vxattrcb_client_id(struct ceph_inode_info *ci,
+ 				       char *val, size_t size)
+ {
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(ci->netfs.inode.i_sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(ci->netfs.inode.i_sb);
+ 
+ 	return ceph_fmt_xattr(val, size, "client%lld",
+ 			      ceph_client_gid(fsc->client));
+@@ -1061,7 +1061,7 @@ out:
+ static int ceph_sync_setxattr(struct inode *inode, const char *name,
+ 			      const char *value, size_t size, int flags)
+ {
+-	struct ceph_fs_client *fsc = ceph_sb_to_client(inode->i_sb);
++	struct ceph_fs_client *fsc = ceph_sb_to_fs_client(inode->i_sb);
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+ 	struct ceph_mds_request *req;
+ 	struct ceph_mds_client *mdsc = fsc->mdsc;
+@@ -1131,7 +1131,7 @@ int __ceph_setxattr(struct inode *inode,
+ {
+ 	struct ceph_vxattr *vxattr;
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	struct ceph_mds_client *mdsc = ceph_sb_to_client(inode->i_sb)->mdsc;
++	struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(inode->i_sb)->mdsc;
+ 	struct ceph_cap_flush *prealloc_cf = NULL;
+ 	struct ceph_buffer *old_blob = NULL;
+ 	int issued;
 
 
