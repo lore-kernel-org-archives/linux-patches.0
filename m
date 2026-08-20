@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14820379EDA;
-	Thu, 20 Aug 2026 15:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5AC9360745;
+	Thu, 20 Aug 2026 15:12:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238749; cv=none; b=PMz3ediBPKg4wBRta5tKhnQh04CmbtRhacyiDvxmv301rVmOpzjQ51YvgxlLsR+4kYB72BWD5qrtVc8dkUH9uZ1q1Prdm3TnHgQs5F3UGomGZyoi8BQKBj5kOsJvVfnHDWdxPD6H/+rTDV1D0QUlERclr0M/7ULJqeF+WCZwYAs=
+	t=1787238752; cv=none; b=LEi7/8UzTgv2JCAyyGYv3JpTV9vjMQ9iMmzFDT9fpqhpEEJzwEa3eKL81NFyUgLBKiUdpEFsclUwM1s4vIsoj9rBswYMEbmsQrSHN/9VqfcYolFhbkORarnBvRGQMUElpbloe9nYzLUotVPGKi+rZGMiav7FRHLpsAe+cq69cs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238749; c=relaxed/simple;
-	bh=QsB9oWbkjff8Mnhf+OigLPIKpOPvAev7V7toa0i3dbI=;
+	s=arc-20240116; t=1787238752; c=relaxed/simple;
+	bh=KRz1T9jEaPl7fLttF4HFa+MBw/PrbLo/3l0uCBpUJnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tD9VY13pwiAPjyX2Y+eblAr/sFHY+6z9e4/i+rKk6KJeBOdOIBjoMpGmwQ/rDMQfRUDtb77gpWN3ptqP/F0A3IwLDgqdvU25Q5SvZ0qIOFVvS0z084Erd1mhTy6cJoGYzHmagVBY1OFIkepo7s35bGCqzTw7OjwKdGTlpZkz6Fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQN/JtRK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LHJSp2jKCBkfSqsrP1w2b8wL7I5qcZ4SrBx3Ei6UJpBCEs1G+8+dBYXU/FfrAAqK4T4S97gvrRCNPVR8fmg4hunDNRSNtZER08HDnpe8WTRzd1sf5nmT7kELgpaDOtP7fYKHsFa3cms9rssCDhj82kBNGEnZxZF7gMp2Ual15m4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDUH1LHL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQN/JtRK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710D61F000E9;
-	Thu, 20 Aug 2026 15:12:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDUH1LHL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ACE31F000E9;
+	Thu, 20 Aug 2026 15:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238748;
-	bh=wWMCARy9yMyUfMKWYOqdjjkswK2No8LY1U6KA80FqJE=;
+	s=korg; t=1787238750;
+	bh=5qXgtZoKNclEM6KlpcLDz7oAaAKta2zg0RVoaAXOmno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yQN/JtRKv1dDo5cVnUyR7TeT6R8gchMDcsf82z6WSMdA5KsVqHLffGR0wlz9TbrI4
-	 l6wqK1vtt9Ofcy2Wvxwi+j0qA34fDmwT3OVyVtMEv02EpGZKsQeqo8SveM8nT70oMo
-	 H82rLf3GVPCm3tBg8Zk82B7DccTgHw3YbUqwDLvY=
+	b=wDUH1LHLXKUEwgsQDeio0V5lvl/H/noL8cURhGN+vDLMaoooGp9rCfNRwgy4DU+D3
+	 olbucoLYCdRE+3ThKjD/9wSunbsONGayvS0FehctHfmm950kRdGJj1yl3orTSrtdkr
+	 ykZXrwiGfakNY0433ejLRMvPQoK3kiLH3mu/gq3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Yu <Qiang.Yu@amd.com>,
-	=?UTF-8?q?Marek=20Ol=C5=A1=C3=A1k?= <maraeo@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 027/217] drm/amdgpu: read TRUNCATE_COORD_MODE on gfx12
-Date: Thu, 20 Aug 2026 16:53:15 +0200
-Message-ID: <20260820145238.434817759@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>
+Subject: [PATCH 6.18 028/217] drm/amdgpu: fix JPEG v5.0.0 queue reset failure in DPG mode
+Date: Thu, 20 Aug 2026 16:53:16 +0200
+Message-ID: <20260820145238.466648267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -45,50 +44,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qiang Yu <Qiang.Yu@amd.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-commit 2d69604b4d0b9c0c0ac71624b5fafb36cf249729 upstream.
+commit c87801f545dac9fcbb84c96f280706572be00a85 upstream.
 
-TA_CNTL2.TRUNCATE_COORD_MODE selects whether texture coordinate
-truncation is D3D9/GL/Vulkan conformant. gfx11 reads it and reports it to
-userspace via AMDGPU_IDS_FLAGS_CONFORMANT_TRUNC_COORD, but gfx12 never
-read it, so the flag was always reported as 0 and userspace fell back to
-the non-conformant path.
+In DPG mode jpeg_v5_0_0_ring_reset() takes the DPG stop path, which only
+clears the JPEG_PG_MODE bit and never resets the JRBC. A hung ring is not
+recovered: the post-reset ring test times out and the driver falls back to
+a full MODE1 reset.
 
-Read it in gfx_v12_0_constants_init() like gfx11 does.
+Temporarily force the static power-gating path during the reset so the
+stop/start sequence power-cycles the JPEG block (JMI soft reset + power
+off/on), matching the jpeg_v4_0 reset which has no DPG path.
 
-Fixes: 52cb80c12e8a ("drm/amdgpu: Add gfx v12_0 ip block support (v6)")
-Signed-off-by: Qiang Yu <Qiang.Yu@amd.com>
-Reviewed-by: Marek Olšák <maraeo@gmail.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4261cbc7b03f1f56e95aeaf1492b8690fa5a253e)
+(cherry picked from commit 79b3612827d1adcd2008cd585961fa35a6ff20f2)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_0.c |   21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-@@ -1810,6 +1810,11 @@ static void gfx_v12_0_constants_init(str
- 	gfx_v12_0_get_tcc_info(adev);
- 	adev->gfx.config.pa_sc_tile_steering_override = 0;
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_0.c
+@@ -648,15 +648,28 @@ static int jpeg_v5_0_0_ring_reset(struct
+ 				  unsigned int vmid,
+ 				  struct amdgpu_fence *timedout_fence)
+ {
++	struct amdgpu_device *adev = ring->adev;
++	u32 pg_flags = adev->pg_flags;
+ 	int r;
  
-+	/* Set whether texture coordinate truncation is conformant. */
-+	tmp = RREG32_SOC15(GC, 0, regTA_CNTL2);
-+	adev->gfx.config.ta_cntl2_truncate_coord_mode =
-+		REG_GET_FIELD(tmp, TA_CNTL2, TRUNCATE_COORD_MODE);
+ 	amdgpu_ring_reset_helper_begin(ring, timedout_fence);
+-	r = jpeg_v5_0_0_stop(ring->adev);
+-	if (r)
+-		return r;
+-	r = jpeg_v5_0_0_start(ring->adev);
 +
- 	/* XXX SH_MEM regs */
- 	/* where to put LDS, scratch, GPUVM in FSA64 space */
- 	mutex_lock(&adev->srbm_mutex);
++	/*
++	 * The DPG stop path only clears the JPEG_PG_MODE bit and never resets a
++	 * hung JRBC, so the post-reset ring test times out and the driver falls
++	 * back to a full MODE1 reset. Temporarily force the static power-gating
++	 * path so the stop/start sequence actually power-cycles the JPEG block
++	 * (JMI soft reset + ONO1 power off/on), matching the working jpeg_v4_0
++	 * reset.
++	 */
++	adev->pg_flags &= ~AMD_PG_SUPPORT_JPEG_DPG;
++	r = jpeg_v5_0_0_stop(adev);
++	if (!r)
++		r = jpeg_v5_0_0_start(adev);
++	adev->pg_flags = pg_flags;
+ 	if (r)
+ 		return r;
++
+ 	return amdgpu_ring_reset_helper_end(ring, timedout_fence);
+ }
+ 
 
 
