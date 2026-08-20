@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB31360EF6;
-	Thu, 20 Aug 2026 15:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB9E37B3F7;
+	Thu, 20 Aug 2026 15:00:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238057; cv=none; b=n9C/yeF1yot3pn9Il+Q8HCLxcDGAna+3d5rYpMi4GiYfEDo9NxW2XoTmMZE9Nd4v2jDO8tMcTckq3z3LQJFd/KKcIFP1yp8W15neTNx3ppO4JQcJ8cSYc7cCZdgOPgtxi2QkEsEhf0skMn0L02boPFNG0bLarAdIvBz+jFCk8Qc=
+	t=1787238059; cv=none; b=Zqq00pEhN+4PxCxUm9h2853oy7KWBkJ8yjx/uCo4ngCdKOBsJfAN/4HhlJK6OxG/1FMT5GtW++rkEXXbPmyfFK4JOiYYIHlmE3exO8KEKX92isRVmdsbJ2AJwjOAZXvLPuAO2mAJqeKjcfc345WPxS0KiDKuq0ammwUyXoeDU4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238057; c=relaxed/simple;
-	bh=jNbNtTh+gK2RfzqBaGt7BZEpABO8l60sIc82k7zE75w=;
+	s=arc-20240116; t=1787238059; c=relaxed/simple;
+	bh=XgG5A45h4TRYLqvPBqR6JqIOBvAx5UFDbzQ0B861uKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FVr5HwXGKaXwQgnN6dTlSzTJTVEV6xVaYBotuK8O+uvS9se0ZJowhnNn3qtgImaoa7cM2lhT4mMQ//U6k3wd7o6U8egmH6FHps1HaH7F/3lPkAmfVB5w+skit2LW4aCGDZI8Mt2v8HwPlnjQVfPoycHciaB5/C0SKhptaovl9TU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vGUQDsM3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RCX+pKSxZF70WASDueyLN+NhZJ+BY7IowhWmsgYNOGi0+7iquNQd2eeWssGxjxi+JjRoqCZ9JIVGKfBikekLzRYCqFl6TLAGDMSSEeu/gtX6XBomYXHFmUBTrcTXJmktuCm9KckFdXWpIzpuc5qI82y33jLu5U/pIBlJD8RpD5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0kY5xtx/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vGUQDsM3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5861F000E9;
-	Thu, 20 Aug 2026 15:00:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0kY5xtx/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49DDB1F00A3D;
+	Thu, 20 Aug 2026 15:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238055;
-	bh=YOgWofllrX3sshLaKf0P+V7xFJ+xaG8zmI0fGuYgRtQ=;
+	s=korg; t=1787238057;
+	bh=yAHvJ3tCcy5F7RXdZManS4lJfU2qndwibI1RycrQfu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vGUQDsM3Gc2I9NdEZe1B2aqNdtGNVUHTmqDdwV9UU/tTF9Nm3EcMcWLXO8hy6I5ux
-	 p+bdGe46PPSA36mnzF96p3xeiZlLn2W2YLkjvNsYbGI8/i5qrqiZytcZ5mOiuPIutt
-	 YdPwXs3BcZdCubt5Rp1S/fW/yPJTkmFhIPr+jlUI=
+	b=0kY5xtx/8UkuCSXFmIc2oLDWyGnC1q6NBBfnnomEcecjUtp7EykAtIP5bJvQovtAi
+	 xQPOfX2YAgvJCCsbQjyal4bKvNFbD0HEsXXtM5tcPu0h32Ps7IVAHl2gewB+eLzwmU
+	 isrpyaQQCRuohwl2VBD3aR9ACYi62SE497Xn9FfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bryam Vargas <hexlabsecurity@proton.me>,
 	Stephen Smalley <stephen.smalley.work@gmail.com>,
 	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 7.1 005/228] selinux: reject an unclaimed class value in security_get_classes()
-Date: Thu, 20 Aug 2026 16:52:27 +0200
-Message-ID: <20260820145244.628864298@linuxfoundation.org>
+Subject: [PATCH 7.1 006/228] selinux: reject a permission value exceeding the class permission count
+Date: Thu, 20 Aug 2026 16:52:28 +0200
+Message-ID: <20260820145244.659570969@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -53,74 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 22b05fec62c0fe9864cfceb52f7d0f3a34d9b1dd upstream.
+commit d14b5d0e97fccd27974fedc03b903408872907fd upstream.
 
-security_get_classes() sizes an array by p_classes.nprim and fills it at
-value - 1, so a class value the policy never defines leaves a NULL.
-sel_make_classes() passes every entry to sel_make_dir(), reaching the same
-d_alloc_name() dereference as the permission array. The class symbol table
-is allowed to be sparse (policydb_class_isvalid() exists to absorb that),
-but this getter builds its own array straight from the hash table and has
-no such predicate.
+perm_read() bounds a permission value by SEL_VEC_MAX but never by the
+nprim of the owning class or common, which is taken verbatim from the
+policy image.  security_get_permissions() then writes perms[value - 1]
+into an nprim-sized kcalloc() array, so a class declaring fewer
+permissions than its largest permission value drives an out-of-bounds
+heap write.  The top-level symbol tables are validated this way; the
+nested per-class permission table is not.
 
-Fail the lookup when a value went unclaimed instead of handing out the
-NULL. Conforming policies define every class they declare and are
-unaffected.
+Reject a permission whose value exceeds nprim, which is already set when
+perm_read() runs.  Well-formed policies are unaffected.
 
 Cc: stable@vger.kernel.org
 Fixes: 55fcf09b3fe4 ("selinux: add support for querying object classes and permissions from the running policy")
 Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
 Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+[PM: tweak comment for line length]
 Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/ss/services.c |   24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ security/selinux/ss/policydb.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/security/selinux/ss/services.c
-+++ b/security/selinux/ss/services.c
-@@ -3303,6 +3303,7 @@ int security_get_classes(struct selinux_
- 			 char ***classes, u32 *nclasses)
- {
- 	struct policydb *policydb;
-+	u32 i;
- 	int rc;
+--- a/security/selinux/ss/policydb.c
++++ b/security/selinux/ss/policydb.c
+@@ -1167,6 +1167,9 @@ static int perm_read(struct policydb *p,
+ 	rc = symtab_insert(s, key, perdatum);
+ 	if (rc)
+ 		goto bad;
++	/* indexes an nprim-sized array in security_get_permissions() */
++	if (perdatum->value > s->nprim)
++		goto bad;
  
- 	policydb = &policy->policydb;
-@@ -3315,16 +3316,29 @@ int security_get_classes(struct selinux_
- 
- 	rc = hashtab_map(&policydb->p_classes.table, get_classes_callback,
- 			 *classes);
--	if (rc) {
--		u32 i;
-+	if (rc)
-+		goto err;
- 
--		for (i = 0; i < *nclasses; i++)
--			kfree((*classes)[i]);
--		kfree(*classes);
-+	/*
-+	 * The class symtab may be sparse, which policydb_class_isvalid() exists
-+	 * to absorb; the callback fills this array by value, so an unclaimed
-+	 * one leaves a NULL that sel_make_classes() hands to sel_make_dir().
-+	 */
-+	for (i = 0; i < *nclasses; i++) {
-+		if (!(*classes)[i]) {
-+			rc = -EINVAL;
-+			goto err;
-+		}
- 	}
- 
- out:
- 	return rc;
-+
-+err:
-+	for (i = 0; i < *nclasses; i++)
-+		kfree((*classes)[i]);
-+	kfree(*classes);
-+	return rc;
- }
- 
- static int get_permissions_callback(void *k, void *d, void *args)
+ 	return 0;
+ bad:
 
 
