@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0951747D94B;
-	Thu, 20 Aug 2026 17:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2813C410D30;
+	Thu, 20 Aug 2026 17:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247183; cv=none; b=uJM/PSz+fuHMLxPhuGyhVjbLDUqI0hJP1zlLHvXNYO1+XFmuDetI5u0bHAfKzusn+5NVR+RJ+ai+d6co7xcasI5m8Cu6EEhWq41BLra6y7OwJe4KB3F2Mdsire6/BYL7UmGcsDOfDt+VnVzuewQJNgQ0pu6QB6f62TI6134cROQ=
+	t=1787247184; cv=none; b=X4wzogFkDG1DY71yI/+dnbplCeTujFCeiyWyC1zQf1yRXvJyZoEve9iFarI7NwdniQi4loDVZpXBXpRQAqOXpi5RWH6VlFr/E3crb+iwOfXMGTNykKRjPgOkO2c0Bc3wezWcWh5X6UEeWMg1Ww1Lt9lg/sy0l9+xefTBZqNTV+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247183; c=relaxed/simple;
-	bh=skN71BH5Uger227d+iSmqNyDi/jhajRzvtiWyKDha50=;
+	s=arc-20240116; t=1787247184; c=relaxed/simple;
+	bh=8qOVffOBcBZjnKWgzfu8tJPtO4yAoriA6qRzqyjNDf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uGYNbNt8+sOrUk9A79whDLNiH1qfPcUXZ6G6NBXuPh0fqsM4EaExmva1fFK2mYczjyg524Oe0Z4dXGy9bw0mMtVT3z5GAf8k7Hhr5wmQ3J0c6npODxfycdUf1gbydPjxSBrDRNwEqxdYp4h8TJeF3VLqOBDsizNbWIpFunkxzwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ypUIRJAn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cVwBOzFKW7R4fBpMyIssqJM2suqWbdJu0hMF2+iPAtkjKVmnM7sbLOSya/v4HzyYmaWfh0G3J7nBTQB1HxDGw2kxoEq0pxdqCEnc/bPjYe9xCMC4VtzeMYSasspeBAMAJCZgseVzLLyt7nMRk/2ULYke1fJxtLbq9k56A5Ky4tI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCJajtNt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ypUIRJAn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433F01F000E9;
-	Thu, 20 Aug 2026 17:32:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCJajtNt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 235321F00A3E;
+	Thu, 20 Aug 2026 17:33:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247179;
-	bh=tLmLYii2VsY1DKsKn9Q4lr4WWaoDk8neYTUoGua/KN8=;
+	s=korg; t=1787247182;
+	bh=ZzoX2e3xXe3PyrE0NfZzHVNa0jGpU2wWk47SBQ/Qpjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ypUIRJAnaw5S0ZSalXdIJC643CIafh441fSEVm9wbDojAmfir7WjhoaSiIXAsyUjJ
-	 Zm4vTY6MvsHWm2johzzAQl5vd2H9E0uVF60DyT2nIGIZ/W8+QvQnoGoXFHdvG+HSoZ
-	 uNNbdM3gnRPqbMH29WkC3lhHLRMPnnDdcJhaLGd4=
+	b=dCJajtNtIYbztly/wC6XASzgyLa8SfNLz0x0Zv7GZWsq8xrKjtjrM+wmY1oKeENct
+	 CvkaBAYcl4CkZC48Uvf91jebQd82Wfqn4w+SXg0CXXlx6pMAdffXdMq7zd6HwOiwF7
+	 FbiLifyAoCUB/Qh0NFwjJMTOEcyscR5a18I4Xtg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Ian Forbes <ian.forbes@broadcom.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 176/220] drm/vmwgfx: take fman->lock around fence list mutation in fifo_down
-Date: Thu, 20 Aug 2026 16:56:06 +0200
-Message-ID: <20260820145228.764861467@linuxfoundation.org>
+Subject: [PATCH 6.12 177/220] ring-buffer: Simplify functions with __free(kfree) to free allocations
+Date: Thu, 20 Aug 2026 16:56:07 +0200
+Message-ID: <20260820145228.794442506@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -51,66 +52,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 250af2e8c3e90dc978e062a936b633870a22e660 ]
+[ Upstream commit 99d232804405e35d7a9af1536a057578a1442e81 ]
 
-vmw_fence_fifo_down() drops fman->lock to wait on a fence and, on
-timeout, mutates fman->fence_list via list_del_init() and signals
-the fence without re-acquiring the lock.  __vmw_fences_update() walks
-and removes entries from the same list under fman->lock from any
-other waiter, the fence-IRQ thread, or vmw_fences_update(), so the
-unlocked list_del_init() can corrupt the list head.
+The function rb_allocate_pages() allocates cpu_buffer and on error needs
+to free it. It has a single return. Use __free(kfree) and return directly
+on errors and have the return use return_ptr(cpu_buffer).
 
-Re-take fman->lock before manipulating fence->head and use
-dma_fence_signal_locked().  Wrap the locked signalling in
-dma_fence_begin_signalling() / dma_fence_end_signalling() so the
-lockdep annotation that dma_fence_signal() previously provided is
-preserved (the same pattern as __vmw_fences_update()).
+The function alloc_buffer() allocates buffer and on error needs to free
+it. It has a single return. Use __free(kfree) and return directly on
+errors and have the return use return_ptr(buffer).
 
-dma_fence_put() is moved outside the lock to avoid a recursive
-acquire from vmw_fence_obj_destroy(), which also takes fman->lock.
+The function __rb_map_vma() allocates a temporary array "pages". Have it
+use __free() and not worry about freeing it when returning.
 
-Fixes: ae2a104058e2 ("vmwgfx: Implement fence objects")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4.7
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
-Link: https://patch.msgid.link/20260505222728.519626-5-zack.rusin@broadcom.com
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20250527143144.6edc4625@gandalf.local.home
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: 6d014e44b68d ("ring-buffer: Initialise reader page order in rb_allocate_cpu_buffer()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_fence.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c |   27 +++++++++------------------
+ 1 file changed, 9 insertions(+), 18 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
-@@ -658,9 +658,14 @@ void vmw_fence_fifo_down(struct vmw_fenc
- 		ret = vmw_fence_obj_wait(fence, false, false,
- 					 VMW_FENCE_WAIT_TIMEOUT);
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -2193,7 +2193,7 @@ static int rb_allocate_pages(struct ring
+ static struct ring_buffer_per_cpu *
+ rb_allocate_cpu_buffer(struct trace_buffer *buffer, long nr_pages, int cpu)
+ {
+-	struct ring_buffer_per_cpu *cpu_buffer;
++	struct ring_buffer_per_cpu *cpu_buffer __free(kfree) = NULL;
+ 	struct ring_buffer_meta *meta;
+ 	struct buffer_page *bpage;
+ 	struct page *page;
+@@ -2219,7 +2219,7 @@ rb_allocate_cpu_buffer(struct trace_buff
+ 	bpage = kzalloc_node(ALIGN(sizeof(*bpage), cache_line_size()),
+ 			    GFP_KERNEL, cpu_to_node(cpu));
+ 	if (!bpage)
+-		goto fail_free_buffer;
++		return NULL;
  
-+		spin_lock(&fman->lock);
- 		if (unlikely(ret != 0)) {
-+			bool cookie = dma_fence_begin_signalling();
-+
- 			list_del_init(&fence->head);
--			dma_fence_signal(&fence->base);
-+			dma_fence_signal_locked(&fence->base);
-+			dma_fence_end_signalling(cookie);
-+
- 			INIT_LIST_HEAD(&action_list);
- 			list_splice_init(&fence->seq_passed_actions,
- 					 &action_list);
-@@ -668,7 +673,10 @@ void vmw_fence_fifo_down(struct vmw_fenc
- 		}
+ 	rb_check_bpage(cpu_buffer, bpage);
  
- 		BUG_ON(!list_empty(&fence->head));
-+		spin_unlock(&fman->lock);
-+
- 		dma_fence_put(&fence->base);
-+
- 		spin_lock(&fman->lock);
+@@ -2285,13 +2285,11 @@ rb_allocate_cpu_buffer(struct trace_buff
+ 		rb_head_page_activate(cpu_buffer);
  	}
- 	spin_unlock(&fman->lock);
+ 
+-	return cpu_buffer;
++	return_ptr(cpu_buffer);
+ 
+  fail_free_reader:
+ 	free_buffer_page(cpu_buffer->reader_page);
+ 
+- fail_free_buffer:
+-	kfree(cpu_buffer);
+ 	return NULL;
+ }
+ 
+@@ -2335,7 +2333,7 @@ static struct trace_buffer *alloc_buffer
+ 					 unsigned long end,
+ 					 struct lock_class_key *key)
+ {
+-	struct trace_buffer *buffer;
++	struct trace_buffer *buffer __free(kfree) = NULL;
+ 	long nr_pages;
+ 	int subbuf_size;
+ 	int bsize;
+@@ -2349,7 +2347,7 @@ static struct trace_buffer *alloc_buffer
+ 		return NULL;
+ 
+ 	if (!zalloc_cpumask_var(&buffer->cpumask, GFP_KERNEL))
+-		goto fail_free_buffer;
++		return NULL;
+ 
+ 	buffer->subbuf_order = order;
+ 	subbuf_size = (PAGE_SIZE << order);
+@@ -2441,7 +2439,7 @@ static struct trace_buffer *alloc_buffer
+ 		atomic_notifier_chain_register(&panic_notifier_list, &buffer->flush_nb);
+ 	}
+ 
+-	return buffer;
++	return_ptr(buffer);
+ 
+  fail_free_buffers:
+ 	for_each_buffer_cpu(buffer, cpu) {
+@@ -2453,8 +2451,6 @@ static struct trace_buffer *alloc_buffer
+  fail_free_cpumask:
+ 	free_cpumask_var(buffer->cpumask);
+ 
+- fail_free_buffer:
+-	kfree(buffer);
+ 	return NULL;
+ }
+ 
+@@ -7007,7 +7003,7 @@ static int __rb_map_vma(struct ring_buff
+ {
+ 	unsigned long nr_subbufs, nr_pages, nr_vma_pages, pgoff = vma->vm_pgoff;
+ 	unsigned int subbuf_pages, subbuf_order;
+-	struct page **pages;
++	struct page **pages __free(kfree) = NULL;
+ 	int p = 0, s = 0;
+ 	int err;
+ 
+@@ -7075,10 +7071,8 @@ static int __rb_map_vma(struct ring_buff
+ 		struct page *page;
+ 		int off = 0;
+ 
+-		if (WARN_ON_ONCE(s >= nr_subbufs)) {
+-			err = -EINVAL;
+-			goto out;
+-		}
++		if (WARN_ON_ONCE(s >= nr_subbufs))
++			return -EINVAL;
+ 
+ 		page = virt_to_page((void *)cpu_buffer->subbuf_ids[s]);
+ 
+@@ -7093,9 +7087,6 @@ static int __rb_map_vma(struct ring_buff
+ 
+ 	err = vm_insert_pages(vma, vma->vm_start, pages, &nr_pages);
+ 
+-out:
+-	kfree(pages);
+-
+ 	return err;
+ }
+ #else
 
 
