@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E7137A498;
-	Thu, 20 Aug 2026 15:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D10367B9F;
+	Thu, 20 Aug 2026 15:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238675; cv=none; b=cLQVhEs0W81idUkUUqa4LFcyeeMmsjollLHhi8KwJjZI8LwPbOAzgVIzUP0xAJ+m9dnrIMo2j1HIkiatsTVbrpXyIhjLk1cqD16yyXmH3pRALPuBWxFV1ZgvPnP1xvPoxEvCgF36Pk4yeuTTL5PvcfoX7RnduDb3MCf5UpQPTeU=
+	t=1787238678; cv=none; b=cj2K1ZgaX3MA8AE0lDXt3IAdYDbkMA9CwnXYohCVerHk1paVxmuGeOyLsQkOUowKodlRiWBwQopW4bqK54MoyJTP1rnxPZYqtg3XicsUPbekl/QCWA5Z2GK82dX9UNfphUYgiUJf/jbo2fSjtShEsByyuImMnejTTo/Ha+cBLoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238675; c=relaxed/simple;
-	bh=4ELMtVUpiIPga9EeSxe4uk1NDx/u5JqDq00vRa20BIM=;
+	s=arc-20240116; t=1787238678; c=relaxed/simple;
+	bh=cjnDmL9sYNLXJwZB5bff9FTXrXRzqNhurNMDop0MNmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BPdVD/jZXXe6zfnGvb/4MuE1mQtW4F5S3U/NxCLKFBFLFsd1m3K7GUoS+G9CtEWGv3T+/ZQ2bkFxbF29pH2+/lzRNS688OqPuYlGV92rCER/x0HCNJpvlW2qn//UEAwEXRoH/vVMdkDKL3S1tDBWmKU6ZpOUb4eEhy8C1qEZ1CM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Da6ueD3K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rnHqjlH5fW3uQ18evHLKGAj3WCzalBK+gJ2f33/lNoV3TBevBM3CKKZERDupEztWRsh2cDjCMt19qT9pheogZ8SfUWpcw60/xD8jtF5UY/py1Rc17qv9MDywx+OtCZmaCjSDgKVtBe16mqReqyTr5dycMUftqAf62P5/gOtuzno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xlNhp+dO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Da6ueD3K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51FC1F000E9;
-	Thu, 20 Aug 2026 15:11:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xlNhp+dO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D2B1F000E9;
+	Thu, 20 Aug 2026 15:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238674;
-	bh=jRTcKMGT1AJL+V2brY5PP4hPj6dONHdhtAgcofj9E6k=;
+	s=korg; t=1787238677;
+	bh=C+GmSDAnXEY8rr4A1JqzOf6Kg/oUmbdhymqZmd+KWw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Da6ueD3Kk9H5Czyb22z2HsjNrEG33bCpEbg7ZqJ6xMh4FLzAj9PL9Lcz5OBci37WQ
-	 w5aSh0Nal66KJ661cYDTVE95vfZqGuMhN1L7voPbBdLGktBOjsZyM+1eTjePVUrZzx
-	 7XJZ8dAPFtp1tsqjpiF1tTaNZWEPTrxSWu+HZeLg=
+	b=xlNhp+dOn477x0KVdGq+DZi6JEpR8bk3DU7rxI4vDTv1ufAMjCWb7Z9AahLy/Jzag
+	 rN8Hp8p55xtPD9qb8UZJHij2/SHflQKvGWRPh9rcZsBjDxL0C9ePusIWHoZugFyyxC
+	 g1HEWuBSa0vWjRNh/oG/MNRQI+mKr1l131t1vCBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
 	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 191/228] netfilter: ipset: fix list type element drift bug
-Date: Thu, 20 Aug 2026 16:55:33 +0200
-Message-ID: <20260820145250.519843043@linuxfoundation.org>
+Subject: [PATCH 7.1 192/228] netfilter: ipset: let destroy callbacks adjust ext mem size
+Date: Thu, 20 Aug 2026 16:55:34 +0200
+Message-ID: <20260820145250.552341675@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -54,40 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 4cbd69766b35a089664cadb1f613bb85f7ef77a9 ]
+[ Upstream commit 490937b88cb592cc0c5367758edd700fd5abd15c ]
 
-If list_set_uadd() calls list_set_replace() to swap an expired entry,
-the element count remains the same, therefore the increment must be elided.
+For bitmap this change makes no difference, because destructors are
+called synchronously.
 
-Fixes: 702b71e7c666 ("netfilter: ipset: Add element count to all set types header")
-Link: https://sashiko.dev/#/patchset/20260806101947.2802-1-fw%40strlen.de
+List type however calls them via call_rcu() so accounting decrement can
+happen after list_set_flush() set ext_size to 0.
+
+'set->elements = 0' can be removed for the same reason in the list type
+case, it calls 'set->elements--' for each element.
+
+Fixes: 9e41f26a505c ("netfilter: ipset: Count non-static extension memory for userspace")
+Suggested-by: Jozsef Kadlecsik <kadlec@netfilter.org>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_list_set.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/netfilter/ipset/ip_set_bitmap_gen.h | 2 +-
+ net/netfilter/ipset/ip_set_list_set.c   | 3 +--
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
+diff --git a/net/netfilter/ipset/ip_set_bitmap_gen.h b/net/netfilter/ipset/ip_set_bitmap_gen.h
+index 226fdf17b6832..d6a7e66045422 100644
+--- a/net/netfilter/ipset/ip_set_bitmap_gen.h
++++ b/net/netfilter/ipset/ip_set_bitmap_gen.h
+@@ -77,7 +77,7 @@ mtype_flush(struct ip_set *set)
+ 		mtype_ext_cleanup(set);
+ 	bitmap_zero(map->members, map->elements);
+ 	set->elements = 0;
+-	atomic64_set(&set->ext_size, 0);
++	DEBUG_NET_WARN_ON_ONCE(atomic64_read(&set->ext_size) > 0);
+ }
+ 
+ /* Calculate the actual memory size of the set data */
 diff --git a/net/netfilter/ipset/ip_set_list_set.c b/net/netfilter/ipset/ip_set_list_set.c
-index ca3ef9479e838..0bc2370773af3 100644
+index 0bc2370773af3..f070088742d60 100644
 --- a/net/netfilter/ipset/ip_set_list_set.c
 +++ b/net/netfilter/ipset/ip_set_list_set.c
-@@ -301,9 +301,12 @@ list_set_uadd(struct ip_set *set, void *value, const struct ip_set_ext *ext,
- 	e->set = set;
- 	INIT_LIST_HEAD(&e->list);
- 	list_set_init_extensions(set, ext, e);
--	if (n)
-+	if (n) {
- 		list_set_replace(set, e, n);
--	else if (next)
-+		return 0;
-+	}
-+
-+	if (next)
- 		list_add_tail_rcu(&e->list, &next->list);
- 	else if (prev)
- 		list_add_rcu(&e->list, &prev->list);
+@@ -423,8 +423,7 @@ list_set_flush(struct ip_set *set)
+ 
+ 	list_for_each_entry_safe(e, n, &map->members, list)
+ 		list_set_del(set, e);
+-	set->elements = 0;
+-	atomic64_set(&set->ext_size, 0);
++	DEBUG_NET_WARN_ON_ONCE(set->elements > 0);
+ }
+ 
+ static void
 -- 
 2.53.0
 
