@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10D0377A89;
-	Thu, 20 Aug 2026 16:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EEED361657;
+	Thu, 20 Aug 2026 16:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243312; cv=none; b=GT0j59L3lWJjiVa9YUIkSmaICDxlyy0s6LcLaN+t7nJUdpINFPowaRszhagmgpEdFnbkiToViE9uvz5iEMOpWmIJqOdgrHxm5t3NnoJtkm8du/ZwzXSI3ztFTtJKZ64sZcqHyRUH0mDmrbwWF2mCQmTzYFiePgMZeTSDTOps5eo=
+	t=1787243315; cv=none; b=r3W1eH/lIEB2K2PfhIlMCc08cVKkd4N7KVreWmZ9MVQAnWtSrMLtxqAQZ2qUVAc/xFMYaLbJIkMyJqCGfx8DM46rraNAhqy+Uqu4cOT/sLgJUjtAY3YCJ4OMMgptSnPh8KXDHlE7g2RjfPqQouDJh88FL/B6yuzdVTMzSMwWMaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243312; c=relaxed/simple;
-	bh=ebV3Ky/fZBB41lyCRMzJxXu6+GCoq5iIkVoQDf2T1Po=;
+	s=arc-20240116; t=1787243315; c=relaxed/simple;
+	bh=z4UOGOtTmqm9dA6Q8nl6TeqtLI5JvGivh+Mn2kw6iLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GSsT2ak1oxlPniBnyJjqDe6o8UwX7kx6G3mvEQy4FeAgdzubTibo7ABGCX6LTXCFoi5/ElmQSWJAULrDeIi/0yuZ/KFv5krgNSpPgXd2Mc7MwDrDZ0kaXUM02gnj+xtREbSt+2cyJYthKuU9O5jrI+vYb2lr168/FYTFavr5D0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDw2sHC/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hAVLfSv13Ttf1Iy5zYgPcMazUT9WC1AuB/aMjSFSrfkq4chOGqcb8wvAsES2FFCCRT9fW71uYjiDZ328IjxTAHHDMssck57qEhSSNqPN8VP49UtaDDuz5eqs6CFf8tw15m5dmV+y0Q4XMmKPXwoVqwtnLETSe755JbuXcp1ilcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eoDmt6+t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDw2sHC/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 199F31F000E9;
-	Thu, 20 Aug 2026 16:28:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoDmt6+t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B321F000E9;
+	Thu, 20 Aug 2026 16:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243311;
-	bh=mvQLA9S2ZN3DenKh9gf4fj+K3PY2txrRxm3ObcLM9rw=;
+	s=korg; t=1787243314;
+	bh=3bu2BBRwgclcqMmakwspMMHXmUIiGj1tR1ixd+jVUyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PDw2sHC/b/qXOdUieJ2X9y+H6D7767YYvK4qe2C5S1xQZPes+rcK2J9cQbyUsCH//
-	 uFaCnsp7h5Vl0Wzx71LvAHHfxWTHu7dKdsfGDExO06X+YP6CQpDWU4revOTFCpfEXB
-	 VSYTsMbv397N+4G5tlx1uMWxw0FLSiTLA0xFtNTo=
+	b=eoDmt6+t2Viiox8ufp62LOeTGNTmhGTOCf90qPovRB9xg22J2aPaPEQThkusyu6ei
+	 IxX+jqpaXM2dNFyjvQGZknFWqqkZyn7esuSDAAIhnoqwMYBEVaohYgZAA66HbIAasU
+	 CwAIY8ejBibCEMhp8yuvtsIipsL6hlIaH1dlJne0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	Sebastian Alba Vives <sebasjosue84@gmail.com>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 051/272] dma-buf/udmabuf: skip redundant cpu sync to fix cacheline EEXIST warning
-Date: Thu, 20 Aug 2026 16:53:55 +0200
-Message-ID: <20260820145232.749461316@linuxfoundation.org>
+Subject: [PATCH 5.15 052/272] fpga: dfl-afu: validate DMA mapping length in afu_dma_map_region()
+Date: Thu, 20 Aug 2026 16:53:56 +0200
+Message-ID: <20260820145232.776434323@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -51,82 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+From: Sebastian Alba Vives <sebasjosue84@gmail.com>
 
-[ Upstream commit 504e2b4ab97a51d56d966cd36d0997ad30b65b2d ]
+[ Upstream commit fc3b071a7c8dc0f5d56defddf6e6fd5aaa3e1e27 ]
 
-When CONFIG_DMA_API_DEBUG_SG is enabled, importing a udmabuf into a DRM
-driver (e.g. amdgpu for video playback in GNOME Videos / Showtime)
-triggers a spurious warning:
+afu_ioctl_dma_map() accepts a 64-bit length from userspace via
+DFL_FPGA_PORT_DMA_MAP ioctl without an upper bound check. The value
+is passed to afu_dma_pin_pages() where npages is derived as
+length >> PAGE_SHIFT and passed to pin_user_pages_fast() which takes
+int nr_pages, causing implicit truncation if length is very large.
 
-  DMA-API: amdgpu 0000:03:00.0: cacheline tracking EEXIST, \
-      overlapping mappings aren't supported
-  WARNING: kernel/dma/debug.c:619 at add_dma_entry+0x473/0x5f0
+Validate map.length at the ioctl entry point before calling
+afu_dma_map_region(), rejecting values whose page count exceeds
+INT_MAX.
 
-The call chain is:
-
-  amdgpu_cs_ioctl
-   -> amdgpu_ttm_backend_bind
-    -> dma_buf_map_attachment
-     -> [udmabuf] map_udmabuf -> get_sg_table
-      -> dma_map_sgtable(dev, sg, direction, 0)  // attrs=0
-       -> debug_dma_map_sg -> add_dma_entry -> EEXIST
-
-This happens because udmabuf builds a per-page scatter-gather list via
-sg_set_folio().  When begin_cpu_udmabuf() has already created an sg
-table mapped for the misc device, and an importer such as amdgpu maps
-the same pages for its own device via map_udmabuf(), the DMA debug
-infrastructure sees two active mappings whose physical addresses share
-cacheline boundaries and warns about the overlap.
-
-The DMA_ATTR_SKIP_CPU_SYNC flag suppresses this check in
-add_dma_entry() because it signals that no CPU cache maintenance is
-performed at map/unmap time, making the cacheline overlap harmless.
-
-All other major dma-buf exporters already pass this flag:
-  - drm_gem_map_dma_buf() passes DMA_ATTR_SKIP_CPU_SYNC
-  - amdgpu_dma_buf_map() passes DMA_ATTR_SKIP_CPU_SYNC
-
-The CPU sync at map/unmap time is also redundant for udmabuf:
-begin_cpu_udmabuf() and end_cpu_udmabuf() already perform explicit
-cache synchronization via dma_sync_sgtable_for_cpu/device() when CPU
-access is requested through the dma-buf interface.
-
-Pass DMA_ATTR_SKIP_CPU_SYNC to dma_map_sgtable() and
-dma_unmap_sgtable() in udmabuf to suppress the spurious warning and
-skip the redundant sync.
-
-Fixes: 284562e1f348 ("udmabuf: implement begin_cpu_access/end_cpu_access hooks")
+Fixes: fa8dda1edef9 ("fpga: dfl: afu: add DFL_FPGA_PORT_DMA_MAP/UNMAP ioctls support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Acked-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Link: https://patch.msgid.link/20260331061657.79983-1-mikhail.v.gavrilov@gmail.com
+Signed-off-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
+Reviewed-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20260518190742.61426-3-sebasjosue84@gmail.com
+Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/udmabuf.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/fpga/dfl-afu-main.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/dma-buf/udmabuf.c
-+++ b/drivers/dma-buf/udmabuf.c
-@@ -74,7 +74,7 @@ static struct sg_table *get_sg_table(str
- 	if (ret < 0)
- 		goto err_alloc;
+--- a/drivers/fpga/dfl-afu-main.c
++++ b/drivers/fpga/dfl-afu-main.c
+@@ -720,6 +720,9 @@ afu_ioctl_dma_map(struct dfl_feature_pla
+ 	if (map.argsz < minsz || map.flags)
+ 		return -EINVAL;
  
--	ret = dma_map_sgtable(dev, sg, direction, 0);
-+	ret = dma_map_sgtable(dev, sg, direction, DMA_ATTR_SKIP_CPU_SYNC);
- 	if (ret < 0)
- 		goto err_map;
- 	return sg;
-@@ -89,7 +89,7 @@ err_alloc:
- static void put_sg_table(struct device *dev, struct sg_table *sg,
- 			 enum dma_data_direction direction)
- {
--	dma_unmap_sgtable(dev, sg, direction, 0);
-+	dma_unmap_sgtable(dev, sg, direction, DMA_ATTR_SKIP_CPU_SYNC);
- 	sg_free_table(sg);
- 	kfree(sg);
- }
++	if (map.length >> PAGE_SHIFT > (u64)INT_MAX)
++		return -EINVAL;
++
+ 	ret = afu_dma_map_region(pdata, map.user_addr, map.length, &map.iova);
+ 	if (ret)
+ 		return ret;
 
 
