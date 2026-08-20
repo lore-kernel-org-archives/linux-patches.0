@@ -1,60 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06BC472F82;
-	Thu, 20 Aug 2026 17:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F5F471D0B;
+	Thu, 20 Aug 2026 17:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247681; cv=none; b=Yhb6KsdmAE6Y7E5+rs9QLiAScJ95ZGuuUtyqqjCrACEipsGyixM7XofF9TDSfQ6Zaenb1l3EWuvVr5rsW7h/tdbtchKZ9jgWZo9mgbF2BlfHRGBTCrnbTbH4MLWCofDoC3w0NDJtoTNbc0UpVFO6PlAtVR9KosNXItpTKabtLG0=
+	t=1787247684; cv=none; b=cdhdMe30zuuOkcK3Sm8fCOPWQ6eSwTmOoMuXPIfc2UEdI3ZDPxdHonuO+oxFrtK4cEMnCRfXsXjBOmaIgxLn9EnSp1dD+gqkchvu12LD4e/OjIHo8a9Ntt9uN+OF9fjKOexaKYunROlFHx9XDiWFW3yiagSC3UoXLSjjetursj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247681; c=relaxed/simple;
-	bh=7D9R4dmMscLZRcrguFvJXYx5oRpud/tjw5a7VvYUTGE=;
+	s=arc-20240116; t=1787247684; c=relaxed/simple;
+	bh=42D/fpS7X8Atl8m3yzA2f9RfLwbeGEG7B7kSi7kDAhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bur9NPYJka2EYVOEAG2xQJItZBYWqKX3SVF8Bqwgbw64+DzpDuNR5DQMPf/VPWM9qhPil4PrC+nOXtGdhJh3tVP6ZEVMbkrUrqs8WT7Ulcu5tSvweHcTUZ7PJnJ/5mABsw6J+W/5aNbG1MLiLKuE4GP3C3SDGU2/LjaDl+sR6fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVNi7FWW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hCS8fRdwPI1D+eeM00WfaR0aVQF+h+sbPo0A7YwovedTbJjhu4eTWHQETwHQcC+R9nM5slx+ThLbLKbzL25X3LtjAsi11kfEXntc4YbzjmyQgVR+A2k0o6WU2+L9+6PWSPJMkY7DV4STZA84YbibvfNYWVmfe5ce3A7KFycR2H8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+5NldVl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVNi7FWW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B7541F000E9;
-	Thu, 20 Aug 2026 17:41:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+5NldVl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 220431F000E9;
+	Thu, 20 Aug 2026 17:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247679;
-	bh=UcZs4i2eX71iO/y59vMHTq39VGTFsN64bQcWHdWB9uA=;
+	s=korg; t=1787247682;
+	bh=LjYzVYhp3wqPct1f9iishqJ50od69g3H6x0LP/VLCWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HVNi7FWWYwzUORhWBIw3wS2fd5QZDLE2BSS0DJYt7OvGTJpaKrWAaRX3mqAyblqfr
-	 rTU85Z87Zp/Pn4Ah9Pti+2A2dKCxa0b/6tV9S1UlG90FC/uckPB2ldWUgswBp4ytc2
-	 bw+Z0zya3Z/XROywwPeb+0nksXOo1CSwds446TZo=
+	b=g+5NldVlTz0/vCz6zQd2em444BUDdTlIMoJ17vKT3bXKz6qJdkEhfP0WU+wGGHU2y
+	 XgAEQs5GUbKSxNvTF93i/JFn91pQQBY2y1pHBtbGUJ9DEq4CPQ8S70Xc+Pmb1Rs/1w
+	 kAkubiISIVULr4o5wbiWak8Ee90BuO781MnPR7W0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Andy Lutomirski <luto@kernel.org>,
-	"Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	David Carlier <devnexen@gmail.com>,
-	Dev Jain <dev.jain@arm.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Toshi Kani <toshi.kani@hpe.com>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Shen Yongchao <grayhat@foxmail.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 132/166] mm/ptdump: always stabilise against page table freeing using init_mm
-Date: Thu, 20 Aug 2026 16:56:31 +0200
-Message-ID: <20260820145215.137940966@linuxfoundation.org>
+Subject: [PATCH 6.6 133/166] KVM: SVM: Serialize accesses to the owner and mirror list with separate lock
+Date: Thu, 20 Aug 2026 16:56:32 +0200
+Message-ID: <20260820145215.169960309@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -73,116 +51,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-[ Upstream commit 27c32e5538344b13c1505a08861e04620c125d47 ]
+[ Upstream commit 1d78d33275ef2a16c6d080910b291d0a97a0e613 ]
 
-Previous commits have established the invariant that kernel page table
-freeing is performed while an mmap read lock on init_mm is held, which
-fixes races between ptdump and kernel page table freeing over init_mm.
+Interaction between KVM_CAP_VM_MOVE_ENC_CONTEXT_FROM and
+KVM_CAP_VM_COPY_ENC_CONTEXT_FROM can cause two separate issues:
 
-However, x86 and arm64 can perform a ptdump over an mm other than init_mm
-via ptdump_walk_pgd() and since kernel memory ranges are shared across
-non-kernel mm's, this means that the race still exists for these cases.
+- in sev_migrate_from(), when the destination KVM is a mirror, the mirror
+  entry is moved from the source's list to the owner's mirror_vms list,
+  without holding the owner's lock unlike other writers of the owner's
+  mirror list (sev_vm_copy_enc_context_from(), sev_vm_destroy()).
+  A concurrent COPY or destroy can race with sev_migrate_from() and
+  corrupt the list.
 
-Fix this by acquiring a nested mmap write lock for init_mm in
-ptdump_walk_pgd().
+- In sev_vm_destroy(), the *owner* is still active and could receive
+  concurrently a KVM_CAP_VM_MOVE_ENC_CONTEXT_FROM that causes
+  sev->enc_context_owner to change.  In this case the incorrect VM
+  receives kvm_put_kvm().
 
-This is safe as we take this after mmap write locking the mm, and nothing
-acquires the init_mm lock first before locking an arbitrary mm, so no
-deadlock is possible.
+The second issue needs particular care because the owner could disappear
+altogether (even though the race window is impossibly small) between
+reading it and locking it.  There is thus no way to perform the checks
+under the owner lock without putting struct kvm under SLAB_TYPESAFE_BY_RCU
+(which would allow kvm_get_kvm_safe() under RCU critical section).
 
-Also update walk_page_range_debug() to assert that init_mm is write
-locked, add a comment explaining why and remove some redundant code, and
-eliminate the unnecessary and confusing invocation of
-walk_kernel_page_table_range().
+It is much simpler to just use a global lock, since the critical
+sections are so small and the new lock is always a leaf lock.
 
-We can safely remove the non-NULL check for walk.mm, as the mmap lock
-asserts would NULL pointer deref if it was (and of course no callers do
-this).
-
-The first point at which ptdump can race kernel page table freeing is
-commit b6bdb7517c3d ("mm/vmalloc: add interfaces to free unmapped page
-table"), so we target this in the Fixes tag.
-
-Link: https://lore.kernel.org/20260723-series-vmap-race-fix-v6-4-8cc77dcc0018@kernel.org
-Fixes: b6bdb7517c3d ("mm/vmalloc: add interfaces to free unmapped page table")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Kiryl Shutsemau <kas@kernel.org>
-Cc: Andy Lutomirski <luto@kernel.org>
-Cc: "Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>
-Cc: "Borislav Petkov (AMD)" <bp@alien8.de>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: David Carlier <devnexen@gmail.com>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Toshi Kani <toshi.kani@hpe.com>
-Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: b2125513dfc0 ("KVM: SEV: Allow SEV intra-host migration of VM with mirrors")
+Cc: stable@vger.kernel.org
+Reported-by: Shen Yongchao <grayhat@foxmail.com>
+Link: https://lore.kernel.org/kvm/tencent_625C0F42824E542C72B34733392AF2C49709@qq.com/
+Link: https://lore.kernel.org/kvm/tencent_DDC4E4352EC91CAC05A9A8F4E55E8C96730A@qq.com/
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[ Replaced `to_kvm_sev_info(src->enc_context_owner)` with `&to_kvm_svm(src->enc_context_owner)->sev_info` since that helper doesn't exist, and adjusted context for absent `vmsa_features`/`ghcb_version` fields. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/pagewalk.c |   14 +++++++++-----
- mm/ptdump.c   |    7 +++++++
- 2 files changed, 16 insertions(+), 5 deletions(-)
+ arch/x86/kvm/svm/sev.c |   34 +++++++++++++++++++++++++---------
+ arch/x86/kvm/svm/svm.h |    1 +
+ 2 files changed, 26 insertions(+), 9 deletions(-)
 
---- a/mm/pagewalk.c
-+++ b/mm/pagewalk.c
-@@ -610,12 +610,16 @@ int walk_page_range_debug(struct mm_stru
- 	 * to account for page table freeing on vmap huge page mapping.
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -68,6 +68,8 @@ module_param_named(debug_swap, sev_es_de
+ static u8 sev_enc_bit;
+ static DECLARE_RWSEM(sev_deactivate_lock);
+ static DEFINE_MUTEX(sev_bitmap_lock);
++/* Protects kvm_sev_info's enc_context_owner, mirror_vms and mirror_entry.  */
++static DEFINE_MUTEX(sev_mirror_lock);
+ unsigned int max_sev_asid;
+ static unsigned int min_sev_asid;
+ static unsigned long sev_me_mask;
+@@ -1713,18 +1715,18 @@ static void sev_migrate_from(struct kvm
+ 	dst->asid = src->asid;
+ 	dst->handle = src->handle;
+ 	dst->pages_locked = src->pages_locked;
+-	dst->enc_context_owner = src->enc_context_owner;
+ 	dst->es_active = src->es_active;
+ 
+ 	src->asid = 0;
+ 	src->active = false;
+ 	src->handle = 0;
+ 	src->pages_locked = 0;
+-	src->enc_context_owner = NULL;
+ 	src->es_active = false;
+ 
+ 	list_cut_before(&dst->regions_list, &src->regions_list, &src->regions_list);
+ 
++	mutex_lock(&sev_mirror_lock);
++
+ 	/*
+ 	 * If this VM has mirrors, "transfer" each mirror's refcount of the
+ 	 * source to the destination (this KVM).  The caller holds a reference
+@@ -1741,13 +1743,16 @@ static void sev_migrate_from(struct kvm
+ 	 * If this VM is a mirror, remove the old mirror from the owners list
+ 	 * and add the new mirror to the list.
  	 */
- 	mmap_assert_write_locked(mm);
-+	/*
-+	 * x86, arm64 ptdump allow walks of efi mm's and x86 ptdump allows walks
-+	 * of arbitrary mm's.
-+	 *
-+	 * However, they both must also hold the init_mm lock to account for
-+	 * concurrent kernel page table freeing.
-+	 */
-+	mmap_assert_write_locked(&init_mm);
+-	if (is_mirroring_enc_context(dst_kvm)) {
++	if (is_mirroring_enc_context(src_kvm)) {
+ 		struct kvm_sev_info *owner_sev_info =
+-			&to_kvm_svm(dst->enc_context_owner)->sev_info;
++			&to_kvm_svm(src->enc_context_owner)->sev_info;
  
--	/* For convenience, we allow traversal of kernel mappings. */
--	if (mm == &init_mm)
--		return walk_kernel_page_table_range(start, end, ops,
--						    pgd, private);
--	if (start >= end || !walk.mm)
-+	if (start >= end)
- 		return -EINVAL;
- 
- 	return walk_pgd_range(start, end, &walk);
---- a/mm/ptdump.c
-+++ b/mm/ptdump.c
-@@ -155,11 +155,18 @@ void ptdump_walk_pgd(struct ptdump_state
- 
- 	get_online_mems();
- 	mmap_write_lock(mm);
-+	/* To stabilise kernel page tables we must hold the init_mm lock too. */
-+	if (mm != &init_mm)
-+		mmap_write_lock_nested(&init_mm, SINGLE_DEPTH_NESTING);
-+
- 	while (range->start != range->end) {
- 		walk_page_range_debug(mm, range->start, range->end,
- 				      &ptdump_ops, pgd, st);
- 		range++;
++		dst->enc_context_owner = src->enc_context_owner;
++		src->enc_context_owner = NULL;
+ 		list_del(&src->mirror_entry);
+ 		list_add_tail(&dst->mirror_entry, &owner_sev_info->mirror_vms);
  	}
-+
-+	if (mm != &init_mm)
-+		mmap_write_unlock(&init_mm);
- 	mmap_write_unlock(mm);
- 	put_online_mems();
++	mutex_unlock(&sev_mirror_lock);
  
+ 	kvm_for_each_vcpu(i, dst_vcpu, dst_kvm) {
+ 		dst_svm = to_svm(dst_vcpu);
+@@ -2125,12 +2130,15 @@ int sev_vm_copy_enc_context_from(struct
+ 	 * disappear until we're done with it
+ 	 */
+ 	source_sev = &to_kvm_svm(source_kvm)->sev_info;
+-	kvm_get_kvm(source_kvm);
+ 	mirror_sev = &to_kvm_svm(kvm)->sev_info;
+-	list_add_tail(&mirror_sev->mirror_entry, &source_sev->mirror_vms);
+ 
+ 	/* Set enc_context_owner and copy its encryption context over */
++	mutex_lock(&sev_mirror_lock);
++	kvm_get_kvm(source_kvm);
++	list_add_tail(&mirror_sev->mirror_entry, &source_sev->mirror_vms);
+ 	mirror_sev->enc_context_owner = source_kvm;
++	mutex_unlock(&sev_mirror_lock);
++
+ 	mirror_sev->active = true;
+ 	mirror_sev->asid = source_sev->asid;
+ 	mirror_sev->fd = source_sev->fd;
+@@ -2166,11 +2174,19 @@ void sev_vm_destroy(struct kvm *kvm)
+ 
+ 	/* If this is a mirror_kvm release the enc_context_owner and skip sev cleanup */
+ 	if (is_mirroring_enc_context(kvm)) {
+-		struct kvm *owner_kvm = sev->enc_context_owner;
++		struct kvm *owner_kvm;
+ 
+-		mutex_lock(&owner_kvm->lock);
++		mutex_lock(&sev_mirror_lock);
++		owner_kvm = sev->enc_context_owner;
+ 		list_del(&sev->mirror_entry);
+-		mutex_unlock(&owner_kvm->lock);
++		sev->enc_context_owner = NULL;
++
++		/*
++		 * The reference to owner_kvm cannot move after sev_mirror_lock is
++		 * released.  Release it before kvm_put_kvm() so that owner_kvm is
++		 * never destroyed inside sev_mirror_lock.
++		 */
++		mutex_unlock(&sev_mirror_lock);
+ 		kvm_put_kvm(owner_kvm);
+ 		return;
+ 	}
+--- a/arch/x86/kvm/svm/svm.h
++++ b/arch/x86/kvm/svm/svm.h
+@@ -86,6 +86,7 @@ struct kvm_sev_info {
+ 	unsigned long pages_locked; /* Number of pages locked */
+ 	struct list_head regions_list;  /* List of registered regions */
+ 	u64 ap_jump_table;	/* SEV-ES AP Jump Table address */
++	/* The three fields below are protected by sev_mirror_lock */
+ 	struct kvm *enc_context_owner; /* Owner of copied encryption context */
+ 	struct list_head mirror_vms; /* List of VMs mirroring */
+ 	struct list_head mirror_entry; /* Use as a list entry of mirrors */
 
 
