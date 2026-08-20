@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A0B3793CE;
-	Thu, 20 Aug 2026 16:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6A425C6EE;
+	Thu, 20 Aug 2026 16:50:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244601; cv=none; b=rpBJoh2XCpQ5tT33plk7irP9iF2VfrmUu9auR3If5u8RRczwkZwwnekraciq+50s6MXgDrMQNB3ywMuVTbWCWWFwpSC1E3DBpQn6B2SvAOIiN4qXySLenSSJztXIz1smk6ksddVym+6QrVUd7oX5TgfMt65rfjSIG0wbtMRuEh4=
+	t=1787244604; cv=none; b=WZ5Z+SQa6DZzT1O3LSUFerPTN9Gv+B44+3P135bt6j6lHwqSqA2DiM9cAWtZGBRbfOD46cn0aESIKC9OgScXmmByCXXByQYaS7mNAI0sP2NN8RvrDpVB6sRPWHM9iKf7iVc3a92laahax/5qqOmdthZrfrC26J6GUyplaUUWT78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244601; c=relaxed/simple;
-	bh=r72PsapKqA8e7O0HCC5mtLflTDhbA6Bl4yr3Gu6lIbc=;
+	s=arc-20240116; t=1787244604; c=relaxed/simple;
+	bh=KdiN/G/1qZivNdiBsXxi3ov+5vJe+JLzKTO5Oe8Hokk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FzahGRkZkA5xsCmHfYVWeiM9P6DnSidSFbEhFJzuK5F5guXAC1goM07FnLQUjdJLtjD6bEg/iHNi9JVisIOd3oFaRMwetjEkL/nC8AcYw9VT+oXjTZ9bjxKiyiF20QYbJlriu8HBrlFUWgDSDTiIfSAdU3XjxauBkEF6fWA5XhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qU2wvmAD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pWF2dqlFPwv1dG1e8acOyQ2nQJBBjQVoBCaWXb9lMccXVvZSg5e9rOx561pU9Nj/+Hdtp92onHY6WR1lYqqckZ443c+y8Cw8nExl0Y/zhdsYFuxp/rcVmEj2qCeNdlVDSYwA3sa1eKQoHNGhSHTx6v9mYdLPHq4wPgu6dmGlrTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZnb1+IB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qU2wvmAD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 838FF1F000E9;
-	Thu, 20 Aug 2026 16:49:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZnb1+IB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E35F1F000E9;
+	Thu, 20 Aug 2026 16:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244600;
-	bh=xihNIhQQ9i0Htb0iYmanXUE7xk+vJDZPF3lAdmkhD2Q=;
+	s=korg; t=1787244603;
+	bh=ker0KaRZK0e8SZjhCJIsJYb9s2Fuy2N8ODycVwAZTvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qU2wvmADAby8/GnZQgWSCgrZivpNJMxLkaFux6f7SWCSd7s1o1fOzQxf6DwK/OFIR
-	 OHYWbMTYmHmpx0mTR6f9q7f9cJTx8DtwMmrzTN9nb0Kx594uONvJl4RZEQxSLM+evv
-	 BMI92kPo5lyFIwJ5/6ScPZSwugppdGH84P5Wu0LY=
+	b=AZnb1+IBwIwfweGUSURgPYrGJXSuNkccYVQb324BnTW8/ad56GHsfG3+yeOVQqcWc
+	 wQqR92CBOM3H+dMw0jjpz0b2xKIoKy2C9GM+DkkrDPEs33SpOMT+/uKMFnHxWMm3I8
+	 D1723BNUUTh+EvFN4MP5cdm81r7fBjlX5ekIqggs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiming Cheng <shiming.cheng@mediatek.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Qi Tang <tpluszz77@gmail.com>,
+	Zhiling Zou <roxy520tt@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 187/235] net: gro: fix double aggregation of flush-marked skbs
-Date: Thu, 20 Aug 2026 16:57:03 +0200
-Message-ID: <20260820145222.209600871@linuxfoundation.org>
+Subject: [PATCH 5.10 178/235] sctp: avoid auth_enable sysctl UAF during netns teardown
+Date: Thu, 20 Aug 2026 16:56:54 +0200
+Message-ID: <20260820145221.916502648@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -52,84 +58,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shiming Cheng <shiming.cheng@mediatek.com>
+From: Zhiling Zou <roxy520tt@gmail.com>
 
-[ Upstream commit e751256486d0ded20f5a9f9863467f1dce65142f ]
+[ Upstream commit f8d5e7846025f4ab15a461235f8ebae9094a361a ]
 
-Commit 0ab03f353d36 ("net-gro: Fix GRO flush when receiving a GSO
-packet.") added a flush check to skb_gro_receive(), but
-skb_gro_receive_list() lacks the same validation.
+proc_sctp_do_auth() updates the SCTP control socket after changing
+net.sctp.auth_enable. The handler gets the per-net SCTP state from
+ctl->data, so an already opened sysctl file can still target a network
+namespace while that namespace is being torn down.
 
-As a result, packets marked with NAPI_GRO_CB(skb)->flush may still be
-re-aggregated.
+SCTP previously registered its per-net sysctls from sctp_defaults_init(),
+while the control socket is created later from sctp_ctrlsock_init(). This
+exposed a window during initialization where auth_enable was writable
+before net->sctp.ctl_sock existed, and a teardown window where auth_enable
+stayed writable after inet_ctl_sock_destroy() had released the control
+socket.
 
-This allows already-GRO'd packets with existing frag_list to be
-re-aggregated into a new GRO session, corrupting the frag_list chain
-structure. When skb_segment() attempts to unpack these malformed packets,
-it encounters invalid state and triggers a kernel panic.
+Move the per-net SCTP sysctl registration into sctp_ctrlsock_init() after
+sctp_ctl_sock_init() succeeds, and unregister the sysctl table before
+destroying the control socket in sctp_ctrlsock_exit(). If sysctl
+registration fails after the control socket was created, destroy the
+control socket in the same init path.
 
-Scenario (Tethering/Device forwarding):
-  1. Driver: Generated aggregated packet P1 via LRO with frag_list
-  2. Dev A: Receives aggregated fraglist packet and flush flag set
-  3. Dev A: Re-enters GRO, skb_gro_receive_list() is called
-  4. Missing flush check allows re-aggregation despite flush flag
-  5. Frag_list chain becomes corrupted (loops or dangling refs)
-  6. Dev B: TX path calls skb_segment(), crashes on corrupted frag_list
+Make sctp_sysctl_net_unregister() tolerate a missing header and clear the
+saved pointer so init-error and exit paths can safely share the unregister
+helper.
 
-Root cause in skb_segment():
-  The check at line ~4891:
-    if (hsize <= 0 && i >= nfrags && skb_headlen(list_skb) &&
-        (skb_headlen(list_skb) == len || sg)) {
-
-  When frag_list is corrupted by double aggregation, when list_skb is
-  a NULL pointer from skb->next, skb_headlen(list_skb) dereference
-  NULL/corrupted pointers occurs.
-
-Call Trace:
- skb_headlen(NULL skb)
- skb_segment
- tcp_gso_segment
- tcp4_gso_segment
- inet_gso_segment
- skb_mac_gso_segment
- __skb_gso_segment
- skb_gso_segment
- validate_xmit_skb
- validate_xmit_skb_list
- sch_direct_xmit
- qdisc_restart
- __qdisc_run
- qdisc_run
- net_tx_action
-
-Fix: Add NAPI_GRO_CB(skb)->flush validation to the early-return check in
-skb_gro_receive_list(), matching the defensive programming pattern of
-skb_gro_receive().
-
-Fixes: 3a1296a38d0c ("net: Support GRO/GSO fraglist chaining.")
+Fixes: 15649fd5415e ("sctp: sysctl: auth_enable: avoid using current->nsproxy")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shiming Cheng <shiming.cheng@mediatek.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260709014704.3625-1-shiming.cheng@mediatek.com
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Co-developed-by: Qi Tang <tpluszz77@gmail.com>
+Signed-off-by: Qi Tang <tpluszz77@gmail.com>
+Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/390cd5e91ed60eea27b0b64d0468301a9e73b808.1784033357.git.roxy520tt@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ dropped the missing `l3mdev_accept` context block and kept 6.1's non-const `struct ctl_table *table` declaration ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sctp/protocol.c |   20 ++++++++++++--------
+ net/sctp/sysctl.c   |    9 +++++++--
+ 2 files changed, 19 insertions(+), 10 deletions(-)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -3830,7 +3830,9 @@ EXPORT_SYMBOL_GPL(skb_segment_list);
+--- a/net/sctp/protocol.c
++++ b/net/sctp/protocol.c
+@@ -1286,10 +1286,6 @@ static int __net_init sctp_defaults_init
+ 	/* Initialize maximum autoclose timeout. */
+ 	net->sctp.max_autoclose		= INT_MAX / HZ;
  
- int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb)
+-	status = sctp_sysctl_net_register(net);
+-	if (status)
+-		goto err_sysctl_register;
+-
+ 	/* Allocate and initialise sctp mibs.  */
+ 	status = init_sctp_mibs(net);
+ 	if (status)
+@@ -1323,8 +1319,6 @@ err_init_proc:
+ 	cleanup_sctp_mibs(net);
+ #endif
+ err_init_mibs:
+-	sctp_sysctl_net_unregister(net);
+-err_sysctl_register:
+ 	return status;
+ }
+ 
+@@ -1339,7 +1333,6 @@ static void __net_exit sctp_defaults_exi
+ 	net->sctp.proc_net_sctp = NULL;
+ #endif
+ 	cleanup_sctp_mibs(net);
+-	sctp_sysctl_net_unregister(net);
+ }
+ 
+ static struct pernet_operations sctp_defaults_ops = {
+@@ -1353,16 +1346,27 @@ static int __net_init sctp_ctrlsock_init
+ 
+ 	/* Initialize the control inode/socket for handling OOTB packets.  */
+ 	status = sctp_ctl_sock_init(net);
+-	if (status)
++	if (status) {
+ 		pr_err("Failed to initialize the SCTP control sock\n");
++		return status;
++	}
++
++	status = sctp_sysctl_net_register(net);
++	if (status) {
++		inet_ctl_sock_destroy(net->sctp.ctl_sock);
++		net->sctp.ctl_sock = NULL;
++	}
+ 
+ 	return status;
+ }
+ 
+ static void __net_exit sctp_ctrlsock_exit(struct net *net)
  {
--	if (unlikely(p->len + skb->len >= 65536))
-+	/* make sure to check flush flag and to not merge */
-+	if (unlikely(p->len + skb->len >= 65536 ||
-+		     NAPI_GRO_CB(skb)->flush))
- 		return -E2BIG;
++	sctp_sysctl_net_unregister(net);
++
+ 	/* Free the control endpoint.  */
+ 	inet_ctl_sock_destroy(net->sctp.ctl_sock);
++	net->sctp.ctl_sock = NULL;
+ }
  
- 	if (NAPI_GRO_CB(p)->last == p)
+ static struct pernet_operations sctp_ctrlsock_ops = {
+--- a/net/sctp/sysctl.c
++++ b/net/sctp/sysctl.c
+@@ -515,11 +515,16 @@ int sctp_sysctl_net_register(struct net
+ 
+ void sctp_sysctl_net_unregister(struct net *net)
+ {
++	struct ctl_table_header *header = net->sctp.sysctl_header;
+ 	struct ctl_table *table;
+ 
+-	table = net->sctp.sysctl_header->ctl_table_arg;
+-	unregister_net_sysctl_table(net->sctp.sysctl_header);
++	if (!header)
++		return;
++
++	table = header->ctl_table_arg;
++	unregister_net_sysctl_table(header);
+ 	kfree(table);
++	net->sctp.sysctl_header = NULL;
+ }
+ 
+ static struct ctl_table_header *sctp_sysctl_header;
 
 
