@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FB825C6EE;
-	Thu, 20 Aug 2026 16:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D224779BE;
+	Thu, 20 Aug 2026 16:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244501; cv=none; b=cX3N3ztyvhDevawtRbZZ1Rag8q/KOaHe7EPcAcjYDB7s64koIeqTRlnbYip5gR/wNkQ85YpUAPwlP9CXa2rDYounSlSppFIR+FcLosI5z6qS+gsUBKOlzM9xHCROSb035B0EG4slnObR2C/to9jkWkNNZ5d7LnVfUoWbJSLvnMg=
+	t=1787244504; cv=none; b=SfFw37TotOfGMq4yTzjW8LjpH3htQWnr9BSpjgs4KCP8DDqAw3BjIolLyEyRI08J8vKolmISPl9c8I19dUZHOgpD3jGm80rI+kL9Kg16FTny8rUUp+EX5HWc6GQ+zW6kzVLTKzjFVp6vjwAlFq+rh8a5XsY0fFlqbIg6+UB3yhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244501; c=relaxed/simple;
-	bh=wLmK2o2SvxdcGRksPVitFMivS7ZbtukqQaIDNs/EdeA=;
+	s=arc-20240116; t=1787244504; c=relaxed/simple;
+	bh=q5xA19kKIRPUX+JBPZP9q37LoEswMD/RNbvbHq4o2Gs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LBzrRwXnNuLOXMSobc98Bn73ML3C/yi5tauavtht0ro8whJX44Oqw+tCgQK3aHghjGlVoEOHK6gysGg/azf0XAJzjmzWhf2AITCqijw4Rn8RiWNMzOQTW1f+zJGlAcrWA3dZm59AXFc/9J6pSg7C9Z1bHdyZCrJaVqCZuuTLfDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZigqSVa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GW7IMXGKuW8DR3wLvVYMp9DnI6KzClHPLAM3nYvKCESpm5hdVH27vMfFiXxuh52xMj8lY/bcWWT5ZbDwV1/X0KGjFYSPOkcRDBBM3R6J70A0SZsNy/PNWHf2/xfGsME4T37NDVB5oi2uHCHQsZPzywfZMMZPcBV1CcXq3Ovykco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03+H0Zi0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZigqSVa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254391F000E9;
-	Thu, 20 Aug 2026 16:48:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03+H0Zi0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BBBB1F000E9;
+	Thu, 20 Aug 2026 16:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244499;
-	bh=5DBBuOg2cD4pv/16sHwy80fefceSELYP+Ymi94+aU+w=;
+	s=korg; t=1787244503;
+	bh=vljDhq7JMT/P3nzYgwfCkc2uP4EF2dOq6ZmDLRR6EUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FZigqSVaoe9F36bsNuSjvKmrpFktOrBDouAX4qwQAGbfK3WrRh7wqcMoLvKVQzr+c
-	 0WEZ/WxQgOd0cI1Itgo0MFLKOqHykwFJJjoCf47e4PvnGR/azuzTd9rNHNkj3ZnvWY
-	 g6ri1hLshT7rR8Vi6uZwPCVLdSl7mGCNw0B8ANaE=
+	b=03+H0Zi0jU5rKQK8pYXhp/8ip7v5yhHxlKYDzieyGqtdzg1dF1APSULj5QwY58uuP
+	 tKRb5jJ2zGJ1WcUdLRv8bRItyrGsTeQZUV+bQ85s2/YUitABX28Z87WpJajW8Wr17T
+	 akieySIEa1a1MJ6AYk5CH6hCHt8an4ssa7RT4KXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sangho Lee <kudo3228@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Gregory Price <gourry@gourry.net>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Mike Rapoport <rppt@kernel.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 191/235] Bluetooth: HIDP: reject frames without a transaction header
-Date: Thu, 20 Aug 2026 16:57:07 +0200
-Message-ID: <20260820145222.333261427@linuxfoundation.org>
+Subject: [PATCH 5.10 192/235] mm/vmstat: fold stranded per-cpu node stats when a node comes online
+Date: Thu, 20 Aug 2026 16:57:08 +0200
+Message-ID: <20260820145222.361590007@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -51,106 +55,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sangho Lee <kudo3228@gmail.com>
+From: Gregory Price <gourry@gourry.net>
 
-[ Upstream commit 47778d2c2087b5d192398f6fddf692d16a5431cf ]
+[ Upstream commit ea3034b2b00fa50c8d2518d0804c9d427bbafa86 ]
 
-hidp_recv_ctrl_frame() and hidp_recv_intr_frame() read skb->data[0]
-before checking that the L2CAP SDU contains a transaction header. A
-connected HIDP peer can send an empty basic-mode SDU and make both paths
-use an uninitialized byte from skb tailroom.
+A per-node vmstat counter is pgdat->vm_stat[] plus per-cpu deltas.  A
+balanced counter can sit split as global=+N / per-cpu=-N.
 
-KMSAN reports the use in hidp_session_run(), with the uninitialized value
-originating in __alloc_skb() through vhci_write(). The control path
-produces two reports and the interrupt path produces one.
+The folds reconciling the split only walk online nodes, so when
+try_offline_node() marks a node offline the per-cpu deltas are stranded.
 
-The byte can also be controlled by a malformed lower-layer packet. If an
-HCI ACL packet contains an L2CAP PDU with a declared zero-length payload
-followed by an extra 0x15 byte, l2cap_recv_acldata() reduces skb->len to
-the declared PDU length before dispatch. The current HIDP path nevertheless
-consumes the extra byte as HIDP_TRANS_HID_CONTROL |
-HIDP_CTRL_VIRTUAL_CABLE_UNPLUG and terminates the HIDP session. With this
-change, the same packet is discarded and a subsequent feature report
-request succeeds.
+A subsequent online resets the per-cpu area but not pgdat->vm_stat[],
+orphaning the +N permanently.  All NR_VM_NODE_STAT_ITEMS are affected.
 
-Pull the transaction header with skb_pull_data() and discard frames that
-do not contain it.
+The existing code zeroes the per-cpu counters and causes a permanent skew.
+Fold the stranded deltas instead, before the node rejoins the online set.
+The node is not online yet and the hotplug lock is held, so the remote
+access to per-cpu values is safe.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sangho Lee <kudo3228@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Discovered when node compaction hung for a nearly empty node, as the math
+to determine throttling broke.  Reproduced by repeated memory
+hotplug/unplug cycles on a node under pressure: NR_ISOLATED_ANON ratchets
+up and never returns to zero.
+
+Link: https://lore.kernel.org/20260627202243.758289-1-gourry@gourry.net
+Fixes: 75ef71840539 ("mm, vmstat: add infrastructure for per-node vmstats")
+Signed-off-by: Gregory Price <gourry@gourry.net>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hidp/core.c |   25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ mm/memory_hotplug.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/net/bluetooth/hidp/core.c
-+++ b/net/bluetooth/hidp/core.c
-@@ -551,16 +551,18 @@ static int hidp_process_data(struct hidp
- static void hidp_recv_ctrl_frame(struct hidp_session *session,
- 					struct sk_buff *skb)
- {
--	unsigned char hdr, type, param;
-+	unsigned char type, param;
-+	u8 *hdr;
- 	int free_skb = 1;
- 
- 	BT_DBG("session %p skb %p len %d", session, skb, skb->len);
- 
--	hdr = skb->data[0];
--	skb_pull(skb, 1);
-+	hdr = skb_pull_data(skb, 1);
-+	if (!hdr)
-+		goto free;
- 
--	type = hdr & HIDP_HEADER_TRANS_MASK;
--	param = hdr & HIDP_HEADER_PARAM_MASK;
-+	type = *hdr & HIDP_HEADER_TRANS_MASK;
-+	param = *hdr & HIDP_HEADER_PARAM_MASK;
- 
- 	switch (type) {
- 	case HIDP_TRANS_HANDSHAKE:
-@@ -581,6 +583,7 @@ static void hidp_recv_ctrl_frame(struct
- 		break;
- 	}
- 
-+free:
- 	if (free_skb)
- 		kfree_skb(skb);
- }
-@@ -588,14 +591,15 @@ static void hidp_recv_ctrl_frame(struct
- static void hidp_recv_intr_frame(struct hidp_session *session,
- 				struct sk_buff *skb)
- {
--	unsigned char hdr;
-+	u8 *hdr;
- 
- 	BT_DBG("session %p skb %p len %d", session, skb, skb->len);
- 
--	hdr = skb->data[0];
--	skb_pull(skb, 1);
-+	hdr = skb_pull_data(skb, 1);
-+	if (!hdr)
-+		goto free;
- 
--	if (hdr == (HIDP_TRANS_DATA | HIDP_DATA_RTYPE_INPUT)) {
-+	if (*hdr == (HIDP_TRANS_DATA | HIDP_DATA_RTYPE_INPUT)) {
- 		hidp_set_timer(session);
- 
- 		if (session->input)
-@@ -607,9 +611,10 @@ static void hidp_recv_intr_frame(struct
- 			BT_DBG("report len %d", skb->len);
- 		}
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -894,7 +894,7 @@ static pg_data_t __ref *hotadd_new_pgdat
+ 			alloc_percpu(struct per_cpu_nodestat);
+ 		arch_refresh_nodedata(nid, pgdat);
  	} else {
--		BT_DBG("Unsupported protocol header 0x%02x", hdr);
-+		BT_DBG("Unsupported protocol header 0x%02x", *hdr);
+-		int cpu;
++		int cpu, i;
+ 		/*
+ 		 * Reset the nr_zones, order and highest_zoneidx before reuse.
+ 		 * Note that kswapd will init kswapd_highest_zoneidx properly
+@@ -903,10 +903,17 @@ static pg_data_t __ref *hotadd_new_pgdat
+ 		pgdat->nr_zones = 0;
+ 		pgdat->kswapd_order = 0;
+ 		pgdat->kswapd_highest_zoneidx = 0;
+-		for_each_online_cpu(cpu) {
+-			struct per_cpu_nodestat *p;
++		/*
++		 * Hot-unplug can leave per-cpu vmstat deltas unfolded (folders skip
++		 * offline nodes) - reconcile this at online. Foreign access to counters
++		 * is safe: the node is not online yet and we hold the hotplug lock.
++		 */
++		for_each_possible_cpu(cpu) {
++			struct per_cpu_nodestat *p = per_cpu_ptr(pgdat->per_cpu_nodestats, cpu);
+ 
+-			p = per_cpu_ptr(pgdat->per_cpu_nodestats, cpu);
++			for (i = 0; i < NR_VM_NODE_STAT_ITEMS; i++)
++				if (p->vm_node_stat_diff[i])
++					node_page_state_add(p->vm_node_stat_diff[i], pgdat, i);
+ 			memset(p, 0, sizeof(*p));
+ 		}
  	}
- 
-+free:
- 	kfree_skb(skb);
- }
- 
 
 
