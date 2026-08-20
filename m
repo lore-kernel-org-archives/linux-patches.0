@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8E23803F7;
-	Thu, 20 Aug 2026 15:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486483803D2;
+	Thu, 20 Aug 2026 15:13:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238797; cv=none; b=igYtZx0TozeydPtQheKgqhvWCDYomgafy353HD+/s1yBKfY4tg/D3gul5qRvomrvyiP1n9Yz7mt1et2a/fAcwTZAeIaa1OAX7ZN/rPN/a7HOS4z6nvpQhAk7gsiAZBcw+AT3Z2ZpbOIG1e9Y84zG6RgZbbg0MxykckojV+8oKic=
+	t=1787238800; cv=none; b=WI6jdauiVpbwJz5KiJYJpwICYvSlijWPNvG1wT0I1Y8QiTwVvYsIwA3bKFGrJj1fgmZRk5Q2uZuBFpnNOEdNOdIbG7Z1EpYWPb88XrP1vF+ngeRUyekDrwRybRw0+SEsAOwsLiViCpFV5bE/JFXOlSJ5QYJxc86+UAhM331bl7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238797; c=relaxed/simple;
-	bh=Mqyr85PSpaIxw6KtdsYk3nqTxDjvT5eiWvtv4yamr4k=;
+	s=arc-20240116; t=1787238800; c=relaxed/simple;
+	bh=8f4GqBOACWZXgGYs+ttxGgOvRG6R0XGTGKMVqgBNDLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jYyD9nkyOiN4JSOuFAr0zpxW6dLxSbtJeD1+L4Qk9KzDV2UAFmv4oVKC4vcNXauY+rbJmmrGUWxe7p9yh8tCt7PcON5/HTXWrr7ZNt5hD97hln6S4tKLqeIkLSwN0uSsSsUIdLv/4lH4e8T92c6NzaxjRTVjHzkjW5VX3DL1nIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Go4ADrLV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eI7dNUDqRqcaHOVqEKaRGHs+E6AzBG9/QeFmV1OqUEJSuOySyiDbOVgvBJ2tKIezEP7oMZ3Sg7Sp533RjGIJyfRPgsTUaMRwnEnnslN0PjDTUnQQXOcA1NBllaqsQZCypE0V3wCbvCIlMDhUdvCcPeeXs5GSrZhH+BWvMh8M2Ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMVUOcIK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Go4ADrLV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C86211F000E9;
-	Thu, 20 Aug 2026 15:13:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMVUOcIK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27FC1F000E9;
+	Thu, 20 Aug 2026 15:13:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238796;
-	bh=fEqFfawPjV/5mfrH9cViPWTovJW+iHRRrJ7TBm5BkJ4=;
+	s=korg; t=1787238799;
+	bh=X1ZplOL4ULmcsDDDirjtZ/tMKN6/DXtL8bdlVlyNCXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Go4ADrLVrFRlG1ZXzzhmtoXV+nTU1PpopTpzAc1ipNxdeU4Io1dpfDhfdZqdZ/uBw
-	 LwTMuJxoi/cmRDXxiA7EHWP2wJTcZiNW1Rj7Rz/eFgCLkRCdqC4IHZXL0Mc1VXDPPd
-	 1p1nVIxGm3Ii9nIWHDOffjddJHPwuJqAjZvYYMak=
+	b=jMVUOcIKes4CvVfyQNR9tpL7c3UTtCGwyaSeM2NmeOV/xPb95TDVvGSBaZ82PnoQf
+	 EGvmP//6bT9vyNgr6Vw/jGlNHajn3anovf2771g3U2FhSTXTJmX/05Ut8tRyixBpt/
+	 OekxyM9gfCWOAy34JMEzYKfh0ckQkiG6tMQhykcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	sashiko-bot@kernel.org,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 045/217] Input: synaptics-rmi4 - block s_input when F54 queue is busy
-Date: Thu, 20 Aug 2026 16:53:33 +0200
-Message-ID: <20260820145238.978348882@linuxfoundation.org>
+Subject: [PATCH 6.18 046/217] Input: synaptics-rmi4 - propagate F54 worker errors to V4L2 queue
+Date: Thu, 20 Aug 2026 16:53:34 +0200
+Message-ID: <20260820145239.010466419@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -52,43 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit fbfd76746adc16d64be29ff113f673b70bc3f5c2 upstream.
+commit 8786d74bf50e6797b6f655eb381ef6b25451161f upstream.
 
-Changing the input (diagnostic report type) mid-stream changes the
-report size. Since V4L2 buffers are allocated based on the size at
-stream start, changing the input while streaming could lead to a
-heap buffer overflow if the new size is larger than the allocated
-buffers.
+Previously, rmi_f54_buffer_queue() waited for the worker thread to
+finish but ignored whether it succeeded. If the worker failed (e.g.,
+due to a timeout or register read failure), the queue thread would
+silently return success, delivering stale or uninitialized memory to
+userspace.
 
-Prevent this by blocking VIDIOC_S_INPUT with -EBUSY if the V4L2 queue
-is busy (streaming).
+Add a 'report_error' field to struct f54_data to store the worker's exit
+status. Check this field in rmi_f54_buffer_queue() after the worker
+finishes, and mark the buffer as VB2_BUF_STATE_ERROR if an error
+occurred.
 
 Fixes: 3a762dbd5347 ("[media] Input: synaptics-rmi4 - add support for F54 diagnostics")
+Reported-by: sashiko-bot@kernel.org
 Cc: stable@vger.kernel.org
 Assisted-by: Antigravity:gemini-3.5-flash
-Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Link: https://patch.msgid.link/20260626051802.4033172-5-dmitry.torokhov@gmail.com
+Link: https://patch.msgid.link/20260626051802.4033172-6-dmitry.torokhov@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/rmi4/rmi_f54.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/input/rmi4/rmi_f54.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 --- a/drivers/input/rmi4/rmi_f54.c
 +++ b/drivers/input/rmi4/rmi_f54.c
-@@ -445,7 +445,12 @@ static int rmi_f54_set_input(struct f54_
+@@ -106,6 +106,7 @@ struct f54_data {
+ 	u8 *report_data;
+ 	size_t max_report_size;
+ 	int report_size;
++	int report_error;
  
- static int rmi_f54_vidioc_s_input(struct file *file, void *priv, unsigned int i)
- {
--	return rmi_f54_set_input(video_drvdata(file), i);
-+	struct f54_data *f54 = video_drvdata(file);
-+
-+	if (vb2_is_busy(&f54->queue))
-+		return -EBUSY;
-+
-+	return rmi_f54_set_input(f54, i);
- }
+ 	bool is_busy;
+ 	struct mutex status_mutex;
+@@ -340,6 +341,12 @@ static void rmi_f54_buffer_queue(struct
+ 		mutex_lock(&f54->data_mutex);
+ 	}
  
- static int rmi_f54_vidioc_g_input(struct file *file, void *priv,
++	if (f54->report_error) {
++		dev_err(&f54->fn->dev, "Error acquiring report: %d\n", f54->report_error);
++		state = VB2_BUF_STATE_ERROR;
++		goto data_done;
++	}
++
+ 	ptr = vb2_plane_vaddr(vb, 0);
+ 	if (!ptr) {
+ 		dev_err(&f54->fn->dev, "Error acquiring frame ptr\n");
+@@ -610,6 +617,7 @@ out:
+ 		report_size = 0;
+ 
+ 	f54->report_size = report_size;
++	f54->report_error = error;
+ 
+ 	if (report_size == 0 && !error) {
+ 		queue_delayed_work(f54->workqueue, &f54->work,
 
 
