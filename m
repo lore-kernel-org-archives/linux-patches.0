@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1A8246781;
-	Thu, 20 Aug 2026 16:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0265246781;
+	Thu, 20 Aug 2026 16:44:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244244; cv=none; b=Tk1HkCvEAxMTPS625N4lz5EGb7KofaL5Ux5XTNTYXACIVK5ozLs71eUCyginTa+1frs136LlNI0NsT/qtNCKwfIFI8DmkUsODSDnv6HwxtliXzL6b0ltDE0hLPmPBEHsLB9FGahgDbPuvggsoFgmbXPAflDapUDtP7Vs4d6Z5+o=
+	t=1787244246; cv=none; b=ZvtFLovzPaOKXuWuuhg/bD4bmku0M5AdhaenjCAcQmWwhXhNpnsh3/LrvgwrrU86P5ZMopiKHOPYAfZNXRxZJG4ok2nkcJtBSCvWnjFwzR/1w1TGC6WlnQYcjx0xoalJnpO6l91a9yKSls0FvhYr35/F3+WASGVdt1gSkmhO0aM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244244; c=relaxed/simple;
-	bh=uOmIFJKmjcnwhz9h+oIAU/TFuq6pphdqFFMjl3g77D8=;
+	s=arc-20240116; t=1787244246; c=relaxed/simple;
+	bh=xkwdt/Nw+b75cHkgmcT3hNj+qje5eBvamztsuf4PNNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eNUp3t8krhI9W6OgWKbXy5XMwyT1rNJJ8UR/SK+j1K/iCYmk6KF310tUX/LN6rmcv1EgoongufzGHy5hYvcPpFvTLGvO1MTlcYSMKE8ukwJGbkuWk5ulLWHy7kZMVASdX5hiev8SAjC5lgS9gU72Ot84qXo2o+L1bJcyvMd40f8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jF4fwIk4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IL1kpaZ3h7A6MqC4MZ6uae4OepTwyCmnf1mXtxlHoMmRiqXB8L25e0T94slDiKO1dB3y/m6ubW0VV6etct/+02GRWfIYq6k1trRBcM6RtTlj7ShZmSyzzaZOy9leIGQ2wPuWadRVqp4RS1Fu4k0PvZS+J/s4/v02so+aKT365iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9XzVoJH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jF4fwIk4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50EA61F000E9;
-	Thu, 20 Aug 2026 16:44:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9XzVoJH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 376E71F00A3A;
+	Thu, 20 Aug 2026 16:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244242;
-	bh=LKpp5ZU/D5Rjfx0YkDMfCBT+rOSTDV5I5P2BKQPP/X0=;
+	s=korg; t=1787244245;
+	bh=JgQGj4sPvUgN7vlpZI/P/d5k1q4q20IXFLgffRLc7vM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jF4fwIk4ePXxtvyWqnOXfPZfUcKSNOIwQw9G1BYjirVlrkKv01Hx4EF6nNUD169ha
-	 Dhd9t1+2T7+Hk4IZWtu/RDWvThEroqaNcS1nDTm9RD2yysMgDE/Ueb0UDd4AVEpYK/
-	 e+/UMmRyXjw8oAaHXE6KF45sGudmXM+f6V34O+lg=
+	b=M9XzVoJHbU+p2IVcMfdG14su4WtILmqapyZBFYiBZduz201sFG//+qGKpiFRqBODJ
+	 PUONJCkX0YgDwisWyMNjCJ7tWPZNIHTRO0kTgpHnBJbL0Q4WOmrSZcl7fvk/xZ+jLO
+	 6l+gl9lZbzUJaTkeMVHqszpjrXS1BFQRV4MY28cY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Paul Moore <paul@paul-moore.com>,
-	Christian Brauner <brauner@kernel.org>,
+	stable@kernel.org,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Pratyush Yadav <pratyush@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 053/235] audit: widen ino fields to u64
-Date: Thu, 20 Aug 2026 16:54:49 +0200
-Message-ID: <20260820145218.048318806@linuxfoundation.org>
+Subject: [PATCH 5.10 095/235] mtd: spi-nor: swp: Improve locking user experience
+Date: Thu, 20 Aug 2026 16:55:31 +0200
+Message-ID: <20260820145219.339644004@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -52,156 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 125dfa218134df7cc112667e92984de9d8cd0bf6 ]
+[ Upstream commit e1d456b26bf23e30db305a6184e8abd9ab68bbf2 ]
 
-inode->i_ino is being widened from unsigned long to u64. The audit
-subsystem uses unsigned long ino in struct fields, function parameters,
-and local variables that store inode numbers from arbitrary filesystems.
-On 32-bit platforms this truncates inode numbers that exceed 32 bits,
-which will cause incorrect audit log entries and broken watch/mark
-comparisons.
+In the case of the first block being locked (or the few first blocks),
+if the user want to fully unlock the device it has two possibilities:
+- either it asks to unlock the entire device, and this works;
+- or it asks to unlock just the block(s) that are currently locked,
+  which fails.
 
-Widen all audit ino fields, parameters, and locals to u64, and update
-the inode format string from %lu to %llu to match.
+It fails because the conditions "can_be_top" and "can_be_bottom" are
+true. Indeed, in this case, we unlock everything, so the TB bit does not
+matter. However in the current implementation, use_top would be true (as
+this is the favourite option) and lock_len, which in practice should be
+reduced down to 0, is set to "nor->params->size - (ofs + len)" which is
+a positive number. This is wrong.
 
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260304-iino-u64-v3-2-2257ad83d372@kernel.org
-Acked-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 81905b5acbe7 ("audit: fix recursive locking deadlock in audit_dupe_exe()")
+An easy way is to simply add an extra condition. In the unlock() path,
+if we can achieve the same result from both sides, it means we unlock
+everything and lock_len must simply be 0. A comment is added to clarify
+that logic.
+
+Fixes: 3dd8012a8eeb ("mtd: spi-nor: add TB (Top/Bottom) protect support")
+Cc: stable@kernel.org
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Michael Walle <mwalle@kernel.org>
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/audit.h   |    2 +-
- kernel/audit.h          |    9 ++++-----
- kernel/audit_fsnotify.c |    2 +-
- kernel/audit_watch.c    |   10 +++++-----
- kernel/auditsc.c        |    4 ++--
- 5 files changed, 13 insertions(+), 14 deletions(-)
+ drivers/mtd/spi-nor/swp.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/include/linux/audit.h
-+++ b/include/linux/audit.h
-@@ -14,7 +14,7 @@
- #include <uapi/linux/audit.h>
- #include <uapi/linux/netfilter/nf_tables.h>
+--- a/drivers/mtd/spi-nor/swp.c
++++ b/drivers/mtd/spi-nor/swp.c
+@@ -267,8 +267,15 @@ static int spi_nor_sr_unlock(struct spi_
+ 	/* Prefer top, if both are valid */
+ 	use_top = can_be_top;
  
--#define AUDIT_INO_UNSET ((unsigned long)-1)
-+#define AUDIT_INO_UNSET ((u64)-1)
- #define AUDIT_DEV_UNSET ((dev_t)-1)
- 
- struct audit_sig_info {
---- a/kernel/audit.h
-+++ b/kernel/audit.h
-@@ -71,7 +71,7 @@ struct audit_names {
- 	int			name_len;	/* number of chars to log */
- 	bool			hidden;		/* don't log this record */
- 
--	unsigned long		ino;
-+	u64			ino;
- 	dev_t			dev;
- 	umode_t			mode;
- 	kuid_t			uid;
-@@ -209,9 +209,9 @@ extern int auditd_test_task(struct task_
- #define AUDIT_INODE_BUCKETS	32
- extern struct list_head audit_inode_hash[AUDIT_INODE_BUCKETS];
- 
--static inline int audit_hash_ino(u32 ino)
-+static inline int audit_hash_ino(u64 ino)
- {
--	return (ino & (AUDIT_INODE_BUCKETS-1));
-+	return ((u32)ino & (AUDIT_INODE_BUCKETS-1));
- }
- 
- /* Indicates that audit should log the full pathname. */
-@@ -263,8 +263,7 @@ extern int audit_to_watch(struct audit_k
- extern int audit_add_watch(struct audit_krule *krule, struct list_head **list);
- extern void audit_remove_watch_rule(struct audit_krule *krule);
- extern char *audit_watch_path(struct audit_watch *watch);
--extern int audit_watch_compare(struct audit_watch *watch, unsigned long ino,
--			       dev_t dev);
-+extern int audit_watch_compare(struct audit_watch *watch, u64 ino, dev_t dev);
- 
- extern struct audit_fsnotify_mark *audit_alloc_mark(struct audit_krule *krule,
- 						    char *pathname, int len);
---- a/kernel/audit_fsnotify.c
-+++ b/kernel/audit_fsnotify.c
-@@ -25,7 +25,7 @@
-  */
- struct audit_fsnotify_mark {
- 	dev_t dev;		/* associated superblock device */
--	unsigned long ino;	/* associated inode number */
-+	u64 ino;		/* associated inode number */
- 	char *path;		/* insertion path */
- 	struct fsnotify_mark mark; /* fsnotify mark on the inode */
- 	struct audit_krule *rule;
---- a/kernel/audit_watch.c
-+++ b/kernel/audit_watch.c
-@@ -37,7 +37,7 @@ struct audit_watch {
- 	refcount_t		count;	/* reference count */
- 	dev_t			dev;	/* associated superblock device */
- 	char			*path;	/* insertion path */
--	unsigned long		ino;	/* associated inode number */
-+	u64			ino;	/* associated inode number */
- 	struct audit_parent	*parent; /* associated parent */
- 	struct list_head	wlist;	/* entry in parent->watches list */
- 	struct list_head	rules;	/* anchor for krule->rlist */
-@@ -125,7 +125,7 @@ char *audit_watch_path(struct audit_watc
- 	return watch->path;
- }
- 
--int audit_watch_compare(struct audit_watch *watch, unsigned long ino, dev_t dev)
-+int audit_watch_compare(struct audit_watch *watch, u64 ino, dev_t dev)
- {
- 	return (watch->ino != AUDIT_INO_UNSET) &&
- 		(watch->ino == ino) &&
-@@ -284,7 +284,7 @@ static void audit_update_watch(struct au
- 				list_del(&oentry->rule.list);
- 				audit_panic("error updating watch, removing");
- 			} else {
--				int h = audit_hash_ino((u32)ino);
-+				int h = audit_hash_ino(ino);
- 
- 				/*
- 				 * nentry->rule.watch == oentry->rule.watch so
-@@ -438,7 +438,7 @@ int audit_add_watch(struct audit_krule *
- 
- 	audit_add_to_parent(krule, parent);
- 
--	h = audit_hash_ino((u32)watch->ino);
-+	h = audit_hash_ino(watch->ino);
- 	*list = &audit_inode_hash[h];
- error:
- 	path_put(&parent_path);
-@@ -526,7 +526,7 @@ int audit_dupe_exe(struct audit_krule *n
- int audit_exe_compare(struct task_struct *tsk, struct audit_fsnotify_mark *mark)
- {
- 	struct file *exe_file;
--	unsigned long ino;
-+	u64 ino;
- 	dev_t dev;
- 
- 	/* only do exe filtering if we are recording @current events/records */
---- a/kernel/auditsc.c
-+++ b/kernel/auditsc.c
-@@ -837,7 +837,7 @@ static enum audit_state audit_filter_sys
- static int audit_filter_inode_name(struct task_struct *tsk,
- 				   struct audit_names *n,
- 				   struct audit_context *ctx) {
--	int h = audit_hash_ino((u32)n->ino);
-+	int h = audit_hash_ino(n->ino);
- 	struct list_head *list = &audit_inode_hash[h];
- 	struct audit_entry *e;
- 	enum audit_state state;
-@@ -1431,7 +1431,7 @@ static void audit_log_name(struct audit_
- 		audit_log_format(ab, " name=(null)");
- 
- 	if (n->ino != AUDIT_INO_UNSET)
--		audit_log_format(ab, " inode=%lu dev=%02x:%02x mode=%#ho ouid=%u ogid=%u rdev=%02x:%02x",
-+		audit_log_format(ab, " inode=%llu dev=%02x:%02x mode=%#ho ouid=%u ogid=%u rdev=%02x:%02x",
- 				 n->ino,
- 				 MAJOR(n->dev),
- 				 MINOR(n->dev),
+-	/* lock_len: length of region that should remain locked */
+-	if (use_top)
++	/*
++	 * lock_len: length of region that should remain locked.
++	 *
++	 * When can_be_top and can_be_bottom booleans are true, both adjacent
++	 * regions are unlocked, thus the entire flash can be unlocked.
++	 */
++	if (can_be_top && can_be_bottom)
++		lock_len = 0;
++	else if (use_top)
+ 		lock_len = nor->params->size - (ofs + len);
+ 	else
+ 		lock_len = ofs;
 
 
