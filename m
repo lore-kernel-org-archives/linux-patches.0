@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5511947D46A;
-	Thu, 20 Aug 2026 16:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3045947D463;
+	Thu, 20 Aug 2026 16:37:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243830; cv=none; b=sNr9mIMRCPbjWFDoauWEsOH/7AWDJXpVpe/QCejJXNda5Nn91qz9CYp3bQhUygF6+z3O5mhxWRObdRbFeatc6m1E4WbUMJz0xC3gU0mK+nrr+98+56xTbjKiR4ymgNWwG5RTDAVunUHbQFoW008KeOu/vh4v+nBSktRxS2mOjW4=
+	t=1787243833; cv=none; b=Kij1y61/xbIsII1niOnMsjpdkz4gYkB48Eoa6HHu4fa+AUINb//xEe884CAn/+MJ2JVOcheu4SDJZPz/IgsEycjN3Dql8zUh+e0nQ9wxX/hdyg5xwUWOov9SMF/clAurctDSPSvPWZQu/7KGJmjJS5LHImO67w1CGRDX7FvshsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243830; c=relaxed/simple;
-	bh=WAZUQJbbOompQN0wGHgojID44hzmfp9L5i2eKNH6EmU=;
+	s=arc-20240116; t=1787243833; c=relaxed/simple;
+	bh=kvXHjudUEsCNP4mOzkWFtIpJUhJ3BGvRnkFlhf0X4hs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PW36DOaFbulaZHKeSFkoMBucBoIb+fuqP3UK5OxJQF13c77rUTwqoWXJ7gQ7S56ihAiKJygNjDb0qUDt6hokAhtyXEtuZ2vD//j7GwXow/Nn/8CpCsOAe+1BytgcYKilS52et1p4+SnuytzVAJfqdJLMp6F9M5FHFIyxjmnMQFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KVHOngck; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A/Ld1q4HLlDCW9aAwV1C2htRxRJoOyJHflbPDqBavS7uq7S65d/Yeuk2fYUKXPQbvfF4kFJMMz4XjAlYdf6DkH9oIUnzxROhnuTYoUzNNWEWMqH1DRNput3SjwTiLe5gQ02X7rlnMmtE14VYmS5ZG8Mm5PbkAATpagWf4Gm8iy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IsgShhm3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KVHOngck"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70EC1F000E9;
-	Thu, 20 Aug 2026 16:37:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IsgShhm3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 743981F000E9;
+	Thu, 20 Aug 2026 16:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243829;
-	bh=td89NiSpn2f/AvyS4LMxCwqErgElgMBYpVuOPh4B38s=;
+	s=korg; t=1787243832;
+	bh=s/fA1Wd36a7VucKiwMFtfYEBQBsqUikv2pdrhAM2+Rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KVHOngckaHPafFpvDAIs9bRcSNh+6xUWpniDqI7QxsKdFgWnvIMy6yDZ5iIKgDoPe
-	 Y/nhlbKnAt/IBf6qf3pTPuMoDb8VFLnu2Y5YHO/+P1/fGgT8/uvmU6joHGgyYKmSHw
-	 BqY7jdqfsYRVd2fth0tonCpUt49dX8J9qYu3FzQw=
+	b=IsgShhm3tzgGHuVtZ6rQERGT82ZErqeAbT8cDnQlHZV9iFnKlwE/7DLu1KS0/3NGB
+	 fw/38DQW0bMh3VOkQ+eED0x/nca76erfDpH/p8DaZjXAeeLIfx8pRK7Gc3DTk4RVeM
+	 Bn26F23DHwNb8rW+sG1FEjK/N3LfgdRFIyhl3OU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	Douglas Gilbert <dgilbert@interlog.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 229/272] scsi: sd: sd_zbc: Improve source code documentation
-Date: Thu, 20 Aug 2026 16:56:53 +0200
-Message-ID: <20260820145238.475616400@linuxfoundation.org>
+Subject: [PATCH 5.15 230/272] scsi: sd: sd_zbc: Use logical blocks as unit when querying zones
+Date: Thu, 20 Aug 2026 16:56:54 +0200
+Message-ID: <20260820145238.506673368@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -54,153 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-[ Upstream commit aa96bfb4caff59c93f0637092efe3a714cab0fe6 ]
+[ Upstream commit 43af5da09efb8abe450ec859d3063adeb7d1eb54 ]
 
-Add several kernel-doc headers. Declare input arrays const. Specify the
-array size in function declarations.
+When querying zones, track the position in logical blocks instead of in
+sectors. This change slightly simplifies sd_zbc_report_zones().
 
-Link: https://lore.kernel.org/r/20220421183023.3462291-2-bvanassche@acm.org
-Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Link: https://lore.kernel.org/r/20220421183023.3462291-4-bvanassche@acm.org
 Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Acked-by: Douglas Gilbert <dgilbert@interlog.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+[ bvanassche: extracted this change from a larger patch ]
 Signed-off-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: 93dde0bf2f39 ("scsi: scsi_debug: Fix REPORT ZONES alloc_len underflow OOB write")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sd.h     |    5 +---
- drivers/scsi/sd_zbc.c |   55 +++++++++++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 54 insertions(+), 6 deletions(-)
+ drivers/scsi/sd_zbc.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/drivers/scsi/sd.h
-+++ b/drivers/scsi/sd.h
-@@ -217,7 +217,7 @@ static inline int sd_is_zoned(struct scs
- #ifdef CONFIG_BLK_DEV_ZONED
- 
- void sd_zbc_release_disk(struct scsi_disk *sdkp);
--int sd_zbc_read_zones(struct scsi_disk *sdkp, unsigned char *buffer);
-+int sd_zbc_read_zones(struct scsi_disk *sdkp, u8 buf[SD_BUF_SIZE]);
- int sd_zbc_revalidate_zones(struct scsi_disk *sdkp);
- blk_status_t sd_zbc_setup_zone_mgmt_cmnd(struct scsi_cmnd *cmd,
- 					 unsigned char op, bool all);
-@@ -233,8 +233,7 @@ blk_status_t sd_zbc_prepare_zone_append(
- 
- static inline void sd_zbc_release_disk(struct scsi_disk *sdkp) {}
- 
--static inline int sd_zbc_read_zones(struct scsi_disk *sdkp,
--				    unsigned char *buf)
-+static inline int sd_zbc_read_zones(struct scsi_disk *sdkp, u8 buf[SD_BUF_SIZE])
- {
- 	return 0;
- }
 --- a/drivers/scsi/sd_zbc.c
 +++ b/drivers/scsi/sd_zbc.c
-@@ -20,6 +20,12 @@
- 
- #include "sd.h"
- 
-+/**
-+ * sd_zbc_get_zone_wp_offset - Get zone write pointer offset.
-+ * @zone: Zone for which to return the write pointer offset.
-+ *
-+ * Return: offset of the write pointer from the start of the zone.
-+ */
- static unsigned int sd_zbc_get_zone_wp_offset(struct blk_zone *zone)
- {
- 	if (zone->type == ZBC_ZONE_TYPE_CONV)
-@@ -44,7 +50,21 @@ static unsigned int sd_zbc_get_zone_wp_o
- 	}
- }
- 
--static int sd_zbc_parse_report(struct scsi_disk *sdkp, u8 *buf,
-+/**
-+ * sd_zbc_parse_report - Parse a SCSI zone descriptor
-+ * @sdkp: SCSI disk pointer.
-+ * @buf: SCSI zone descriptor.
-+ * @idx: Index of the zone relative to the first zone reported by the current
-+ *	sd_zbc_report_zones() call.
-+ * @cb: Callback function pointer.
-+ * @data: Second argument passed to @cb.
-+ *
-+ * Return: Value returned by @cb.
-+ *
-+ * Convert a SCSI zone descriptor into struct blk_zone format. Additionally,
-+ * call @cb(blk_zone, @data).
-+ */
-+static int sd_zbc_parse_report(struct scsi_disk *sdkp, const u8 buf[64],
- 			       unsigned int idx, report_zones_cb cb, void *data)
- {
- 	struct scsi_device *sdp = sdkp->device;
-@@ -188,6 +208,17 @@ static inline sector_t sd_zbc_zone_secto
- 	return logical_to_sectors(sdkp->device, sdkp->zone_blocks);
- }
- 
-+/**
-+ * sd_zbc_report_zones - SCSI .report_zones() callback.
-+ * @disk: Disk to report zones for.
-+ * @sector: Start sector.
-+ * @nr_zones: Maximum number of zones to report.
-+ * @cb: Callback function called to report zone information.
-+ * @data: Second argument passed to @cb.
-+ *
-+ * Called by the block layer to iterate over zone information. See also the
-+ * disk->fops->report_zones() calls in block/blk-zoned.c.
-+ */
- int sd_zbc_report_zones(struct gendisk *disk, sector_t sector,
+@@ -223,7 +223,7 @@ int sd_zbc_report_zones(struct gendisk *
  			unsigned int nr_zones, report_zones_cb cb, void *data)
  {
-@@ -275,6 +306,10 @@ static int sd_zbc_update_wp_offset_cb(st
- 	return 0;
- }
+ 	struct scsi_disk *sdkp = scsi_disk(disk);
+-	sector_t capacity = logical_to_sectors(sdkp->device, sdkp->capacity);
++	sector_t lba = sectors_to_logical(sdkp->device, sector);
+ 	unsigned int nr, i;
+ 	unsigned char *buf;
+ 	size_t offset, buflen = 0;
+@@ -234,7 +234,7 @@ int sd_zbc_report_zones(struct gendisk *
+ 		/* Not a zoned device */
+ 		return -EOPNOTSUPP;
  
-+/*
-+ * An attempt to append a zone triggered an invalid write pointer error.
-+ * Reread the write pointer of the zone(s) in which the append failed.
-+ */
- static void sd_zbc_update_wp_offset_workfn(struct work_struct *work)
- {
- 	struct scsi_disk *sdkp;
-@@ -586,7 +621,7 @@ static int sd_zbc_check_zoned_characteri
-  * sd_zbc_check_capacity - Check the device capacity
-  * @sdkp: Target disk
-  * @buf: command buffer
-- * @zblocks: zone size in number of blocks
-+ * @zblocks: zone size in logical blocks
-  *
-  * Get the device zone size and check that the device capacity as reported
-  * by READ CAPACITY matches the max_lba value (plus one) of the report zones
-@@ -697,6 +732,11 @@ static void sd_zbc_revalidate_zones_cb(s
- 	swap(sdkp->zones_wp_offset, sdkp->rev_wp_offset);
- }
+-	if (!capacity)
++	if (!sdkp->capacity)
+ 		/* Device gone or invalid */
+ 		return -ENODEV;
  
-+/*
-+ * Call blk_revalidate_disk_zones() if any of the zoned disk properties have
-+ * changed that make it necessary to call that function. Called by
-+ * sd_revalidate_disk() after the gendisk capacity has been set.
-+ */
- int sd_zbc_revalidate_zones(struct scsi_disk *sdkp)
- {
- 	struct gendisk *disk = sdkp->disk;
-@@ -775,7 +815,16 @@ unlock:
- 	return ret;
- }
+@@ -242,9 +242,8 @@ int sd_zbc_report_zones(struct gendisk *
+ 	if (!buf)
+ 		return -ENOMEM;
  
--int sd_zbc_read_zones(struct scsi_disk *sdkp, unsigned char *buf)
-+/**
-+ * sd_zbc_read_zones - Read zone information and update the request queue
-+ * @sdkp: SCSI disk pointer.
-+ * @buf: 512 byte buffer used for storing SCSI command output.
-+ *
-+ * Read zone information and update the request queue zone characteristics and
-+ * also the zoned device information in *sdkp. Called by sd_revalidate_disk()
-+ * before the gendisk capacity has been set.
-+ */
-+int sd_zbc_read_zones(struct scsi_disk *sdkp, u8 buf[SD_BUF_SIZE])
- {
- 	struct gendisk *disk = sdkp->disk;
- 	struct request_queue *q = disk->queue;
+-	while (zone_idx < nr_zones && sector < capacity) {
+-		ret = sd_zbc_do_report_zones(sdkp, buf, buflen,
+-				sectors_to_logical(sdkp->device, sector), true);
++	while (zone_idx < nr_zones && lba < sdkp->capacity) {
++		ret = sd_zbc_do_report_zones(sdkp, buf, buflen, lba, true);
+ 		if (ret)
+ 			goto out;
+ 
+@@ -262,7 +261,7 @@ int sd_zbc_report_zones(struct gendisk *
+ 			zone_idx++;
+ 		}
+ 
+-		sector += sd_zbc_zone_sectors(sdkp) * i;
++		lba += sdkp->zone_blocks * i;
+ 	}
+ 
+ 	ret = zone_idx;
 
 
