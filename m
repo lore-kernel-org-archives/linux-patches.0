@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4298C215075;
-	Thu, 20 Aug 2026 17:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15ECD476CED;
+	Thu, 20 Aug 2026 17:57:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248618; cv=none; b=PD9rpZq9Q8/WhsrcnLWqIDrHUTGvLMg/CAWCU8twpYYPeuq48Z3pjj98/RiJAclPRhnUaJliLk6trZZbhrBzQjLg6GazXo1GLzv3pnugoYKd1JasWwWBGTznxNx9IcZPaqPsX5moUU8Ct7o3ZYl0Kuoz9KpkJO6yEm2zhAw5Zv8=
+	t=1787248622; cv=none; b=TbJE8URRR2orjLTHHVV9GqRekKZ+W1B6goi04/FnKeayhv1XriCDPOA5NUSR14CHxQRfDmgNvabVRUJKlc92mZ5Hyj3Jsl8U2lxKIxoOyHcTkIKvKaaJg1RvrwxdWWg0kFlJASabyNGPl9AiKuhjiPGDVkkWZvIxrTglV+5TMOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248618; c=relaxed/simple;
-	bh=FzpxociNs8t6yURbhP8Iw0fWuoyDy1BMsLGL7mgsSEY=;
+	s=arc-20240116; t=1787248622; c=relaxed/simple;
+	bh=WiXZ9k+2tD1EYmN14HfBpNZVFmCC9ybvQiHJjVTlFTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UHv4wzwZ/KI3ttVa71ZuELKkfM35X251JOwiTLF5ogo3FefaHnN7Zpb3U+7EzHdup3FQu/g4JWsvjY3zVv/TyxUChqxsa1YKvjURMLuamJ3dLiBrI+z8cTrBvNxyau4pVdr14nKxfOMTkJvVpawiqrhL0Jq6FShfM1SD+aPDzHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hi9P2iTL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QHewydMBmt4zX0yDEbLg9gqVdcCAjCyF2BOI3nVARg+RpysKbOltyedu1hKpyGmDa6b/57n6naGCoFkRF7AM2rpiCmWi1a7DS6U7+Q5ucWEsp4p4XHqb7fcGNd0NPUsSvXuTmX02on26RdEBcKeicqBD7ET/fUdlKlYJQcKdNsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mo5FLbF2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hi9P2iTL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944391F000E9;
-	Thu, 20 Aug 2026 17:56:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mo5FLbF2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727C91F000E9;
+	Thu, 20 Aug 2026 17:56:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248617;
-	bh=JJk/Nzjhwb+lXpID98fnOG3roN2RDjKAZrYDvFjDMrA=;
+	s=korg; t=1787248620;
+	bh=rppym2TV/tz40icAoBb/J/VHlb75E7/ToabWO2iX80s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hi9P2iTLbVz2TO8VSxppSRTPuuBnl9WRsXjc99ghz1pcMvlaR/R53Gs0SGXJO3hoJ
-	 AQyGZl4bl1gdBDdAqUXDMd6sc0AeuZ9bEeT49CQlXPSRFoIo5cyB0Uh5B3NTA+DPvo
-	 1SbpKER5JFIUMpuxVbPpkUFtniuYeIEn9kHctPAU=
+	b=mo5FLbF2sLfLc12Y9CNjBCNvzGbAwMyB/WFnnhk3A9AeUmQhTXGVpnJeCNKrOF+Fn
+	 mRxWyu70Jt5E0RiDJDHZhR2G+ZZOilku9c83T51om3zt4kE0vuZAXQhf92xpE3tVOc
+	 StJxVo9Gkp/+sIFztFOSJ1t0SYYTJiQtBnBEeYqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Chintan Vankar <c-vankar@ti.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 290/303] net/sched: cls_u32: skip hash tables in u32_bind_class()
-Date: Thu, 20 Aug 2026 16:57:06 +0200
-Message-ID: <20260820145302.189730118@linuxfoundation.org>
+Subject: [PATCH 6.1 291/303] net: ethernet: ti: am65-cpsw-nuss: Fix port_id extraction from SRC TAG
+Date: Thu, 20 Aug 2026 16:57:07 +0200
+Message-ID: <20260820145302.219714745@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -52,49 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-[ Upstream commit 6d3724e616faf952c3adcf8414fc21a828ef3709 ]
+[ Upstream commit 36a05d2820077bb3955acb8111e1041d39148037 ]
 
-u32_walk() enumerates both struct tc_u_hnode and struct tc_u_knode
-through the walker callback. u32_bind_class() unconditionally casts the
-passed fh to tc_u_knode and accesses &n->res, so when fh is actually a
-tc_u_hnode, which has no tcf_result member, this results in a
-slab-out-of-bounds read of res->classid in tc_cls_bind_class().
+On the packet reception path, the ID of the MAC Port on which the packet
+was received, is embedded in the RX DMA Descriptor's metadata. The ID is
+extracted using the helper function cppi5_desc_get_tags_ids() which fills
+in the 16-bit Source Tag into the 'port_id' variable. However, it is only
+the lower 8-bits of the 16-bit Source Tag that represent the MAC Port ID,
+while the upper 8-bits are Hardware-Reserved and carry an arbitrary value.
+With the existing logic, sporadic kernel crash is observed due to the
+subsequent driver code accessing out-of-bound memory because of an invalid
+port_id.
 
-The issue can be reproduced with the following commands:
+Hence, fix the port_id extraction logic to use only the lower 8-bits of the
+Source Tag as the MAC Port ID.
 
-    tc qdisc add dev lo root handle 1: hfsc
-    tc class add dev lo parent 1: classid 1:1 hfsc sc rate 1000kbit
-    tc filter add dev lo parent 1:1 protocol ip prio 1 u32 match u32 0 0 flowid 1:1
-    tc class add dev lo parent 1: classid 1:2 hfsc sc rate 2000kbit
-
-Fix this by skipping hash tables via the TC_U32_KEY(handle) check.
-
-Fixes: 07d79fc7d94e ("net_sched: add reverse binding for tc class")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/1786089038-36366-1-git-send-email-zhangchangzhong@huawei.com
+Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Reviewed-by: Chintan Vankar <c-vankar@ti.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260807111738.2055900-1-s-vadapalli@ti.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_u32.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index 5e85a8bf21237..1c914e721a3ca 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -1330,6 +1330,9 @@ static void u32_bind_class(void *fh, u32 classid, unsigned long cl, void *q,
- {
- 	struct tc_u_knode *n = fh;
- 
-+	if (TC_U32_KEY(n->handle) == 0)
-+		return;
-+
- 	tc_cls_bind_class(classid, cl, q, &n->res, base);
- }
- 
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index d04a05e959bbb..450fd4fb58d1a 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -727,6 +727,8 @@ static int am65_cpsw_nuss_rx_packets(struct am65_cpsw_common *common,
+ 	k3_udma_glue_rx_cppi5_to_dma_addr(rx_chn->rx_chn, &buf_dma);
+ 	pkt_len = cppi5_hdesc_get_pktlen(desc_rx);
+ 	cppi5_desc_get_tags_ids(&desc_rx->hdr, &port_id, NULL);
++	/* Port ID is contained in the lower 8-bits of the 16-bit Source Tag */
++	port_id &= 0xFF;
+ 	dev_dbg(dev, "%s rx port_id:%d\n", __func__, port_id);
+ 	port = am65_common_get_port(common, port_id);
+ 	ndev = port->ndev;
 -- 
 2.53.0
 
