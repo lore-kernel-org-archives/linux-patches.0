@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0473793D5;
-	Thu, 20 Aug 2026 17:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7E6356742;
+	Thu, 20 Aug 2026 17:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247958; cv=none; b=X3Z6Wg3eJmoj0PNJ/XNuQV1A2HbTevdDcfpXabdc5MlufzA0ZIaCihewJ5j36yaDUOTWKBdz+KJvJdDCyVz3CexvGbyLmJrX/QMbUMq5SeNbOTWQO/RX82FnoQUx5haGsARG85BcDdj+ugb8LSZHE7e2MtPUJ7YpkJZhb/hi8e4=
+	t=1787247961; cv=none; b=tWK0lCoRKhffO9DC06CDjlW/c7EUFTSLxq4PGbkTWkO6Dez68qBYbwBeUHe4Zgk0l9/T7xL4kGy3EXR+7n02s9pYn2nNy3ydg72+36ih/kpqkBRBDBRYx1mz5xpVi/jZMCYUN+pPEPxAY8u2WwNuiPnzxFuJ4lyC+mecOq26oXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247958; c=relaxed/simple;
-	bh=LDTOzaEdn5v6EWxiNlwzIzWIeXELscGMOt2AvEfQ+mU=;
+	s=arc-20240116; t=1787247961; c=relaxed/simple;
+	bh=GP2CLXiWi2Zdkx3HnEUM6ZRuWdQ3ejuWOJBaC3WWSL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iWtsJO02u6F3sDKUtv7yRhvnbFsSytf2EbQJzG2SrwI+uIhLsyzQWUXob7+HfgX+g5vtB5l8L+aC4sftE9/P1pA9Rj54sIEPCGeqAHomhzU1Da7X2tGcntdFU8ju3OWw/rx3TemGHiVnHDJDXW3+o2NPK6z5oU74JaKk8AZok54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P0LNXSlE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u3NEPwOPVrh6IPRCurJMef2W6zd+82840mXDnwgta+h4A8aJ+1hq+erPkoHIeLWf8OA8X08ArLXefw/mdVGDPcRD3LfV/qLzXN2g1biCn34kukzwNyuduIJfKo1xZONUaO0qe+obejEQvCIqOF7xWJ57YEcuw2dEvLysHYQyqYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ot6CKVGq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0LNXSlE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEADE1F000E9;
-	Thu, 20 Aug 2026 17:45:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ot6CKVGq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990641F000E9;
+	Thu, 20 Aug 2026 17:45:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247957;
-	bh=ceX2jSUpD1At6zXeDF311yItIYb6TCElVRYsmcpV1Nk=;
+	s=korg; t=1787247960;
+	bh=ThTGyQXta8ovEzcCsUy/1Jo4L1oKWivxWioIH0Wo1RE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P0LNXSlE2/lRYLNHPY77KjuutHF5TshV29XlJ3y247fQ53XogPZUQeZ7UmxSQZKAf
-	 bwCSpCuZqRXXxvIymo5TXn4WS1ASvTPH31HhwoS1IpztQiVqgihxMmEyoLF1k+wpv2
-	 ZhqZhdSkC6eqWg1lZ2/O7ervU6HqYXZgif31WghE=
+	b=Ot6CKVGqbhXmqHOdvIdpZmPSaz2/5bPVNZTaFleMNik8E795WS34Ly1gKl5T+uxPR
+	 sdH0zxOVGamfiNyQIwR0V37uB1QTIo2r22kFZDVZTboqH2446j1kgIFgvOr9uZg4n+
+	 BizUkEj+xlB39NUKwCibhFH5gIV9H+L5VfFZrOoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Weinan Liu <wnliu@google.com>,
-	Wei Wang <wei.w.wang@hotmail.com>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 059/303] iommu/amd: Dont split flush for amd_iommu_domain_flush_all()
-Date: Thu, 20 Aug 2026 16:53:15 +0200
-Message-ID: <20260820145254.940067290@linuxfoundation.org>
+	Linmao Li <lilinmao@kylinos.cn>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 022/303] Input: psxpad-spi - set driver data before use
+Date: Thu, 20 Aug 2026 16:52:38 +0200
+Message-ID: <20260820145253.847814097@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -57,62 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weinan Liu <wnliu@google.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit 69fe699afe1afcb730164b86c228483c2da05f94 ]
+commit 732f38c36059e68ba3b4b89c56911d777fd3185c upstream.
 
-We have observed multiple full invalidations occurring during device
-detach when we are done using the vfio-device.
+psxpad_spi_suspend() retrieves the controller state with
+spi_get_drvdata(), but probe never stores it, so suspend dereferences a
+NULL pointer. Store it during probe.
 
-blocked_domain_attach_device()
-  -> detach_device()
-    -> amd_iommu_domain_flush_all()
-      -> amd_iommu_domain_flush_pages(..., CMD_INV_IOMMU_ALL_PAGES_ADDRESS)
-
-      	while (size != 0) {
-
-          -> __domain_flush_pages( flush_size /* power of 2 flush_size */)
-            -> domain_flush_pages_v1()
-              -> build_inv_iommu_pages()
-                -> build_inv_address()
-
-         }
-
-build_inv_address() will trigger a full invalidation  if the chunk
-size > (1 << 51). Consequently, the guest will issue multiple full
-invalidations for a single call to  amd_iommu_domain_flush_all()
-
-Without this patch, we will see 10 time instead of 1 time full
-invalidations for every amd_iommu_domain_flush_all().
-
+Fixes: 8be193c7b1f4 ("Input: add support for PlayStation 1/2 joypads connected via SPI")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
 Cc: stable@vger.kernel.org
-Fixes: a270be1b3fdf ("iommu/amd: Use only natural aligned flushes in a VM")
-Suggested-by: Josef Bacik <josef@toxicpanda.com>
-Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Weinan Liu <wnliu@google.com>
-Reviewed-by: Wei Wang <wei.w.wang@hotmail.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/20260721055551.1714965-1-lilinmao@kylinos.cn
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/iommu.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/input/joystick/psxpad-spi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -1395,7 +1395,8 @@ static void __domain_flush_pages(struct
- static void domain_flush_pages(struct protection_domain *domain,
- 			       u64 address, size_t size, int pde)
- {
--	if (likely(!amd_iommu_np_cache)) {
-+	if (likely(!amd_iommu_np_cache) ||
-+		size >= (1ULL<<52)) {
- 		__domain_flush_pages(domain, address, size, pde);
- 		return;
+--- a/drivers/input/joystick/psxpad-spi.c
++++ b/drivers/input/joystick/psxpad-spi.c
+@@ -366,6 +366,7 @@ static int psxpad_spi_probe(struct spi_d
+ 		return err;
  	}
+ 
++	spi_set_drvdata(spi, pad);
+ 	pm_runtime_enable(&spi->dev);
+ 
+ 	return 0;
 
 
