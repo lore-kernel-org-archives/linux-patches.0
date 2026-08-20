@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5D428C2BF;
-	Thu, 20 Aug 2026 17:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498A628C2BF;
+	Thu, 20 Aug 2026 17:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247222; cv=none; b=g87IjjT8q5aVBCgJTUW1LmL09RAACOpPglXjywD4LMc9Kv38oVo7Wc8i+GXeL5SExKoPWgmkt2b9e/n9+1fAJmO1AxULuz9vY7b9/x0ExlI6DZn64Kj1LLttPQ1xuH9HVx+G9IGmRPiinYkjDy2PdIYX4kDzFKMeXmqPiSAvxOs=
+	t=1787247225; cv=none; b=l80F//JU1NsJm03Vo+eysH0ORSWv6lBdtW9yXF6+m6X2CEA9n2hBdUrfki9er57FX2AP5AvRfgfsd7TWYdAlq8kfQKCI0k7SWJViwGLO/Kz89tGbzoHO8KHHV+ovYuYFXXC5lFyrZ/pv8Uy17PcUoF00NZzBeqFx8rLKRf1CSvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247222; c=relaxed/simple;
-	bh=3KuofyWnjZSdmWLIiosI802TeCC0/+lBPur6Upt01nw=;
+	s=arc-20240116; t=1787247225; c=relaxed/simple;
+	bh=4YnDeZF1o68IpYCjkLYGIzV0B/rrFyGpudiqa6Ikzs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FRUrFGHYgu8Xq3AJfFKxFKtpPax95eLYGreCNRGzfGWb8cUiUuYwPb+neIpTboHEYx63jrWwx9Fn/8RvEWVaZZ4KzTFttmOssY1QfDTScsiLRWRcyIXY+PU/ZbPswZwwYRc5xpVP9jnO315ZRlcYJMxKveuAYTMx1E6WmU7FC3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUduc6Ip; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UsxLvm+LQ8jCRVe75RmySwmauGF8DBYDAtt47XiHLLEeA8KAMSfLAuIPKQrgsQFoCciiRsF9bhP44aa1ckv1h21ZwIC70Bge+V/QMqb/NjvvX10BHnEsUnaX3P+ZHg7G+lp6vLOkLPZxo7TUK2br9QARPZA9P78qbzZNiCauC3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o8S5ACwb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUduc6Ip"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6CCF1F000E9;
-	Thu, 20 Aug 2026 17:33:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o8S5ACwb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5EE71F000E9;
+	Thu, 20 Aug 2026 17:33:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247221;
-	bh=QulYOrVrxAOUjBJ/CCOIutqgqGLSMxg/1y7r7eUg3r8=;
+	s=korg; t=1787247224;
+	bh=pzeGFnxQSBb34Kygx0n8XbLD0nBmqvqnwCd42+9W1dM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VUduc6Ip36+vZeZC3IiMrIx7+jgC0TNDP7shkb8oQZz8qNu0cNDsNvmP8TBOPMsgH
-	 Pa+9NkMQcbJITehsh404CaGqiHKlXt5D/8RpTcR+nFv3CosVOVcAbRzQityL+Zi+KF
-	 9DlfYYKI3uQTWkNvS9WfcQgsvml7xAPtQ+4OmvRo=
+	b=o8S5ACwbU0MEpyxSHGbQSoOfgrEQPB7q7jm2r7ceJI44jl2h6ATJky6XzU48zxRwe
+	 6g31o4MupBEp6r4CGF1vVFMM3UFU0u65mKMRMxTdSNNZhuPYOF94e5O805/uTIVUv4
+	 RwXTnDQ3Zw1Ahv4qScR+cJpQMfG1A0my6C2/8PxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Seohyeon Maeng <bioloidgp@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 192/220] arm64: tegra: Add EL2 virtual timer interrupt for Tegra194
-Date: Thu, 20 Aug 2026 16:56:22 +0200
-Message-ID: <20260820145229.287410651@linuxfoundation.org>
+Subject: [PATCH 6.12 193/220] crypto: ccm - Set rfc4309 maxauthsize from child
+Date: Thu, 20 Aug 2026 16:56:23 +0200
+Message-ID: <20260820145229.316774243@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -51,46 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jon Hunter <jonathanh@nvidia.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit a7c28483fd57dd0e1487024af70622315320774b ]
+[ Upstream commit 438f4896f78f69ec73d5f32d2c024193f1223569 ]
 
-Commit d87773de9efe ("clocksource/drivers/arm_arch_timer: Default to EL2
-virtual timer when running VHE") updated the ARM arch timer driver to
-use the virtual timer by default if the CPU is running at EL2 with VHE
-enabled. If the CPU is running at EL2 with VHE enabled but there is no
-interrupt provided for the virtual timer, then the following warning is
-displayed:
+Set the maxauthsize of rfc4309 using that of the child algorithm.
 
- arch_timer: [Firmware Bug]: VHE-capable CPU without EL2 virtual timer
-  interrupt
-
-This warning is observed on Tegra194 platforms. Tegra194 SoC includes
-NVIDIA Carmel ARM v8.2 CPUs and support an EL2 virtual timer. Fix the
-above warning by adding the PPI for the EL2 virtual timer interrupt for
-Tegra194.
-
-Fixes: 5425fb15d8ee ("arm64: tegra: Add Tegra194 chip device tree")
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Fixes: 4a49b499dfa0 ("[CRYPTO] ccm: Added CCM mode")
+Reported-by: Seohyeon Maeng <bioloidgp@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra194.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ crypto/ccm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra194.dtsi b/arch/arm64/boot/dts/nvidia/tegra194.dtsi
-index c369507747851..45d0606bd5444 100644
---- a/arch/arm64/boot/dts/nvidia/tegra194.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra194.dtsi
-@@ -3161,6 +3161,8 @@ timer {
- 			     <GIC_PPI 11
- 				(GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
- 			     <GIC_PPI 10
-+				(GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
-+			     <GIC_PPI 15
- 				(GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
- 		interrupt-parent = <&gic>;
- 		always-on;
+diff --git a/crypto/ccm.c b/crypto/ccm.c
+index 36f0acec32e19..88c932faf6ced 100644
+--- a/crypto/ccm.c
++++ b/crypto/ccm.c
+@@ -751,7 +751,7 @@ static int crypto_rfc4309_create(struct crypto_template *tmpl,
+ 
+ 	inst->alg.ivsize = 8;
+ 	inst->alg.chunksize = crypto_aead_alg_chunksize(alg);
+-	inst->alg.maxauthsize = 16;
++	inst->alg.maxauthsize = crypto_aead_alg_maxauthsize(alg);
+ 
+ 	inst->alg.base.cra_ctxsize = sizeof(struct crypto_rfc4309_ctx);
+ 
 -- 
 2.53.0
 
