@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B5347DD44;
-	Thu, 20 Aug 2026 16:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E558E47F2D9;
+	Thu, 20 Aug 2026 16:46:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244384; cv=none; b=nJYpV9l1EQ7FoGPVHWNf+rYxa9gYEqXPD0FyFw1slwe/fKs9UUaYc6HUGSiF+GApoFcI2mv4IHqnUeC+Uv4R6w+MyFiGXZd36x8RWnQIpg5KzypgKDhs3NN0498Ozg0UdWTQpYTkk20/MDGGp6iWv+sB1o789wg/0ycpDiJ2aYo=
+	t=1787244388; cv=none; b=K6CViAT1TA0itQt1a8RmW9BYRJqMs5m2VPm9IgiBzS/iRi8yh2Mw1HXLRkVvoVzL6zZfVo8LX6VJwRyhfc2orEyCq9SkP8PPpPXMRR0h1bt5LF8249tKHkK/ld5Ta3rGYgR7QcyRCuUH7g6uz0wseQwJ/GH+unkEtQIo14Hoz8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244384; c=relaxed/simple;
-	bh=Fvcrysfz0UL6Grp8H4iRRrYGQzX4MCbJZv5YtLCgAQY=;
+	s=arc-20240116; t=1787244388; c=relaxed/simple;
+	bh=kFOCGlnCHa81w/lntlmJODXPLoXW98im/3Vg4I4catI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=os7cym0sUDI5+coZJf8sHiHFMH/5nBtAEomDquR4q6FTbiAnHVqU43uMahhn9hFBhNhbeAFToFJwPZBd6r1JmJjrTyDRPbbSp6vYnnBRmZDNzXnEVPigZZfxnxtAuwp3pnGlmXd2yAQ2lcPuWSySK5/soxcaIod6RQFVD2YDLAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fm2T4jcp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Za7oJpsNF+jThnISgquTt2ZyqZoNW9zxIxEo7OZ7Pc064eUZ4RxLZ5h7vPVilTQgRYw2wysATeYmY9AZHi2hHI0rW9CPCAsEbcKPHKWuwJzv7i56yqAkVx1oVe6Jh7YN47YEv1LpebZsC/IaH7L4LM83pHhZKAwZc8m0Vxkv+i0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DRCyoweD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fm2T4jcp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 621381F00A3A;
-	Thu, 20 Aug 2026 16:46:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DRCyoweD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E7E1F000E9;
+	Thu, 20 Aug 2026 16:46:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244382;
-	bh=fbIfJ04ERwxL6iPGKSMRYBM7i7MF0EqpB/TUdte7wyU=;
+	s=korg; t=1787244386;
+	bh=hsV1NdcILKfU4rqLQRjucZhGPR8V1mtqlE3YPzH06Ck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fm2T4jcp3jUmvbPfiW3dSi7SC7Jt4lGILjNvXgwZUpFJnlGstL0P+BPrhy4wuWUKu
-	 Hcww0iZTsXFRQ7xunHmhtaV/dLa7wgHvaJGekxij584WkKZ45rWkPlE3oe6zEluTFC
-	 2uj0iKOY1lIMc8HSc+IAHa/ebtnUqt1EEkPPVNcw=
+	b=DRCyoweD9xAjeOFW4oB6l4xeChD9gKVRK2T42dgYc8Iy6PZS/W8icnQblq3xvB9HC
+	 hh0BEnbOCJxDIzynpEPUCWd0g1PGv95mQoTIhH1zmHS9cjiAxsG3LGb6961ni1ASfc
+	 VuvFeDi7114DgOgx2J0Nm8+nTM4Ge3aS7l98GdxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+72bd3dd3a5d5f39a0271@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Dave Airlie <airlied@redhat.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 151/235] drm/virtio: use uninterruptible resv lock for plane updates
-Date: Thu, 20 Aug 2026 16:56:27 +0200
-Message-ID: <20260820145221.029429428@linuxfoundation.org>
+Subject: [PATCH 5.10 152/235] drm/displayid: fix Tiled Display Topology ID size
+Date: Thu, 20 Aug 2026 16:56:28 +0200
+Message-ID: <20260820145221.064584152@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -52,134 +51,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit a48bbcc7ac739e93562d6148c6fa504c2e9f22f8 ]
+[ Upstream commit 90c0486a82e27393f9eaf3bb350f51a0bd38cb6b ]
 
-virtio_gpu_cursor_plane_update() and virtio_gpu_resource_flush() lock
-the framebuffer BO's dma_resv via virtio_gpu_array_lock_resv() and
-ignore its return value. The function can fail with -EINTR from
-dma_resv_lock_interruptible() (signal during lock wait) or with
--ENOMEM from dma_resv_reserve_fences() (fence slot allocation),
-leaving the resv lock not held. The queue path then walks the object
-array and calls dma_resv_add_fence(), which requires the lock held;
-with lockdep enabled this trips dma_resv_assert_held():
+The Tiled Display Topology ID of a DisplayID Tiled Display Topology Data
+Block consists of three fields:
 
-  WARNING: drivers/dma-buf/dma-resv.c:296 at dma_resv_add_fence+0x71e/0x840
-  Call Trace:
-   virtio_gpu_array_add_fence
-   virtio_gpu_queue_ctrl_sgs
-   virtio_gpu_queue_fenced_ctrl_buffer
-   virtio_gpu_cursor_plane_update
-   drm_atomic_helper_commit_planes
-   drm_atomic_helper_commit_tail
-   commit_tail
-   drm_atomic_helper_commit
-   drm_atomic_commit
-   drm_atomic_helper_update_plane
-   __setplane_atomic
-   drm_mode_cursor_universal
-   drm_mode_cursor_common
-   drm_mode_cursor_ioctl
-   drm_ioctl
-   __x64_sys_ioctl
+- Tiled Display Manufacturer/Vendor ID Field (3 bytes)
+- Tiled Display Product ID Code Field (2 bytes)
+- Tiled Display Serial Number Field (4 bytes)
 
-Beyond the WARN, mutating the dma_resv fence list without the lock
-races with concurrent readers/writers and can corrupt the list.
+i.e. a total of 9 bytes, not 8.
 
-Both call sites run inside the .atomic_update plane callback, which
-DRM atomic helpers do not allow to fail (by the time it runs, the
-commit has been signed off to userspace and there is no clean
-rollback path). Moving the lock acquisition to .prepare_fb was
-rejected because the broader lock scope deadlocks against other BO
-locking paths in the same atomic commit.
+The DisplayID Tiled Display Topology ID is used as the tile group
+identifier.
 
-Introduce virtio_gpu_lock_one_resv_uninterruptible() that uses
-dma_resv_lock() instead of dma_resv_lock_interruptible(). This
-eliminates the -EINTR failure mode -- the realistic syzbot trigger
--- without extending the lock hold across the commit. The helper
-locks a single BO and rejects nents > 1 with -EINVAL; both fix
-sites lock exactly one BO.
+Update both struct displayid_tiled_block topology_id member and struct
+drm_tile_group group_data member to full 9 bytes.
 
-Use it from virtio_gpu_cursor_plane_update() and
-virtio_gpu_resource_flush(); check the return value to handle the
-remaining -ENOMEM case from dma_resv_reserve_fences() by freeing
-the objs and skipping the plane update for that frame. The
-framebuffer BOs touched here are not shared with other contexts
-and lock contention is expected to be brief, so the loss of
-signal-interruptibility is acceptable.
+The group data was missing the last byte of the serial number. I don't
+know whether there are known bug reports that might be linked to this,
+but it's plausible the last byte could be the differentiating part for
+the tile groups, and fewer tile groups might have been created than
+intended.
 
-Other callers of virtio_gpu_array_lock_resv() (the ioctl paths)
-continue to use the interruptible variant.
-
-The bug was reported by syzbot, triggered via fault injection
-(fail_nth) on the DRM_IOCTL_MODE_CURSOR path, which forces the
--ENOMEM branch in dma_resv_reserve_fences().
-
-Reported-by: syzbot+72bd3dd3a5d5f39a0271@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=72bd3dd3a5d5f39a0271
-Fixes: 5cfd31c5b3a3 ("drm/virtio: fix virtio_gpu_cursor_plane_update().")
-Cc: stable@vger.kernel.org
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patch.msgid.link/20260519082247.34470-1-kartikey406@gmail.com
+Fixes: b49b55bd4fba ("drm/displayid: add displayid defines and edid extension (v2)")
+Fixes: 138f9ebb9755 ("drm: add tile_group support. (v3)")
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: stable@vger.kernel.org # v3.19+
+Reviewed-by: Dave Airlie <airlied@redhat.com>
+Link: https://patch.msgid.link/20260610141549.555605-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_drv.h   |    1 +
- drivers/gpu/drm/virtio/virtgpu_gem.c   |   17 +++++++++++++++++
- drivers/gpu/drm/virtio/virtgpu_plane.c |    5 ++++-
- 3 files changed, 22 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_connector.c |   12 ++++++------
+ include/drm/drm_connector.h     |    6 +++---
+ include/drm/drm_displayid.h     |    2 +-
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/virtio/virtgpu_drv.h
-+++ b/drivers/gpu/drm/virtio/virtgpu_drv.h
-@@ -259,6 +259,7 @@ virtio_gpu_array_from_handles(struct drm
- void virtio_gpu_array_add_obj(struct virtio_gpu_object_array *objs,
- 			      struct drm_gem_object *obj);
- int virtio_gpu_array_lock_resv(struct virtio_gpu_object_array *objs);
-+int virtio_gpu_lock_one_resv_uninterruptible(struct virtio_gpu_object_array *objs);
- void virtio_gpu_array_unlock_resv(struct virtio_gpu_object_array *objs);
- void virtio_gpu_array_add_fence(struct virtio_gpu_object_array *objs,
- 				struct dma_fence *fence);
---- a/drivers/gpu/drm/virtio/virtgpu_gem.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_gem.c
-@@ -217,6 +217,23 @@ int virtio_gpu_array_lock_resv(struct vi
- 	return ret;
- }
- 
-+int virtio_gpu_lock_one_resv_uninterruptible(struct virtio_gpu_object_array *objs)
-+{
-+	int ret;
-+
-+	if (objs->nents != 1)
-+		return -EINVAL;
-+
-+	dma_resv_lock(objs->objs[0]->resv, NULL);
-+
-+	ret = dma_resv_reserve_fences(objs->objs[0]->resv, 1);
-+	if (ret) {
-+		virtio_gpu_array_unlock_resv(objs);
-+		return ret;
-+	}
-+	return 0;
-+}
-+
- void virtio_gpu_array_unlock_resv(struct virtio_gpu_object_array *objs)
+--- a/drivers/gpu/drm/drm_connector.c
++++ b/drivers/gpu/drm/drm_connector.c
+@@ -2586,7 +2586,7 @@ EXPORT_SYMBOL(drm_mode_put_tile_group);
+ /**
+  * drm_mode_get_tile_group - get a reference to an existing tile group
+  * @dev: DRM device
+- * @topology: 8-bytes unique per monitor.
++ * @topology_id: 9-byte unique ID per monitor.
+  *
+  * Use the unique bytes to get a reference to an existing tile group.
+  *
+@@ -2594,14 +2594,14 @@ EXPORT_SYMBOL(drm_mode_put_tile_group);
+  * tile group or NULL if not found.
+  */
+ struct drm_tile_group *drm_mode_get_tile_group(struct drm_device *dev,
+-					       const char topology[8])
++					       const char topology_id[9])
  {
- 	if (objs->nents == 1) {
---- a/drivers/gpu/drm/virtio/virtgpu_plane.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_plane.c
-@@ -260,7 +260,10 @@ static void virtio_gpu_cursor_plane_upda
- 		if (!objs)
- 			return;
- 		virtio_gpu_array_add_obj(objs, vgfb->base.obj[0]);
--		virtio_gpu_array_lock_resv(objs);
-+		if (virtio_gpu_lock_one_resv_uninterruptible(objs)) {
-+			virtio_gpu_array_put_free(objs);
-+			return;
-+		}
- 		virtio_gpu_cmd_transfer_to_host_2d
- 			(vgdev, 0,
- 			 plane->state->crtc_w,
+ 	struct drm_tile_group *tg;
+ 	int id;
+ 
+ 	mutex_lock(&dev->mode_config.idr_mutex);
+ 	idr_for_each_entry(&dev->mode_config.tile_idr, tg, id) {
+-		if (!memcmp(tg->group_data, topology, 8)) {
++		if (!memcmp(tg->group_data, topology_id, sizeof(tg->group_data))) {
+ 			if (!kref_get_unless_zero(&tg->refcount))
+ 				tg = NULL;
+ 			mutex_unlock(&dev->mode_config.idr_mutex);
+@@ -2616,7 +2616,7 @@ EXPORT_SYMBOL(drm_mode_get_tile_group);
+ /**
+  * drm_mode_create_tile_group - create a tile group from a displayid description
+  * @dev: DRM device
+- * @topology: 8-bytes unique per monitor.
++ * @topology_id: 9-byte unique ID per monitor.
+  *
+  * Create a tile group for the unique monitor, and get a unique
+  * identifier for the tile group.
+@@ -2625,7 +2625,7 @@ EXPORT_SYMBOL(drm_mode_get_tile_group);
+  * new tile group or NULL.
+  */
+ struct drm_tile_group *drm_mode_create_tile_group(struct drm_device *dev,
+-						  const char topology[8])
++						  const char topology_id[9])
+ {
+ 	struct drm_tile_group *tg;
+ 	int ret;
+@@ -2635,7 +2635,7 @@ struct drm_tile_group *drm_mode_create_t
+ 		return NULL;
+ 
+ 	kref_init(&tg->refcount);
+-	memcpy(tg->group_data, topology, 8);
++	memcpy(tg->group_data, topology_id, sizeof(tg->group_data));
+ 	tg->dev = dev;
+ 
+ 	mutex_lock(&dev->mode_config.idr_mutex);
+--- a/include/drm/drm_connector.h
++++ b/include/drm/drm_connector.h
+@@ -1689,13 +1689,13 @@ struct drm_tile_group {
+ 	struct kref refcount;
+ 	struct drm_device *dev;
+ 	int id;
+-	u8 group_data[8];
++	u8 group_data[9];
+ };
+ 
+ struct drm_tile_group *drm_mode_create_tile_group(struct drm_device *dev,
+-						  const char topology[8]);
++						  const char topology_id[9]);
+ struct drm_tile_group *drm_mode_get_tile_group(struct drm_device *dev,
+-					       const char topology[8]);
++					       const char topology_id[9]);
+ void drm_mode_put_tile_group(struct drm_device *dev,
+ 			     struct drm_tile_group *tg);
+ 
+--- a/include/drm/drm_displayid.h
++++ b/include/drm/drm_displayid.h
+@@ -71,7 +71,7 @@ struct displayid_tiled_block {
+ 	u8 topo[3];
+ 	u8 tile_size[4];
+ 	u8 tile_pixel_bezel[5];
+-	u8 topology_id[8];
++	u8 topology_id[9];
+ } __packed;
+ 
+ struct displayid_detailed_timings_1 {
 
 
