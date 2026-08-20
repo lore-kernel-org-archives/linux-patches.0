@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108D347D930;
-	Thu, 20 Aug 2026 16:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D541B25C6EE;
+	Thu, 20 Aug 2026 16:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244491; cv=none; b=OU8J4AHB+4sUlM7Dw6oWJNdqolGz9Q2K2UiBVrf2bipX6GR2O9yI5AXevAA7vGPdUYTYA15ACPT6w+6zMi8BKHzNDgNucYpEU66NlQXWnPor/8obds2V6heeZt9Hu9SKlGtaJppHCpySLBz7IVDKatTlWTJQrm1OWfTkp6ATyq0=
+	t=1787244494; cv=none; b=EH7nNyNXwROg41/Njgj5jeshPEl/JvomkdRJrTVwc5r+oFaxO8Y0CKQasdm3Sfuf1aVNh3L8uRcWDAwpTNoIqfShncrkPeHoXoR52MlzM4nPCN09eVAviLY+k0S2KIXU2JluxhkS4heJIJYbXW1ijTmzG+q82rB2aRRGnVwimKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244491; c=relaxed/simple;
-	bh=7x9lPMRP24/O9TbX2GutQs4a9qtuwjvA+z2IKjVzSBc=;
+	s=arc-20240116; t=1787244494; c=relaxed/simple;
+	bh=IVqZP1XABYKxUEgAteSfRj1hMsmyYfJOTePGJwBdrNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YPiABAZ7jG167feuELb8rffw/aWGcpq5zEaGn4ywW1aiQIctIcIZTp1unelXroF8ESJC0BYRFrpgeO5XAcG/muKfxOi5pAYHoXGv/xK5KX4N6iv/XPzIUHfAd3BVJrEbHAZmC0+augDVoxS62bL6UvNBBaogb74s+wm75OwqqMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PV15veCs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QDSp5sOwE6kc3b0+d2UEzEwphOguxDRoDJN9qFLfeIRcbmyT07R8NyB6EAv44ecVDPkwtd+nCNlPX5sGozqCeAdPg6MQxVjbTU0gExiAZ6/1JuDiG8+2QtE8KKvZpNUXD4yobhz3eLLGSTOydiDYSLkFuO9X+Ps+cBrucPIW8iY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfDOnV0r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PV15veCs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619A81F000E9;
-	Thu, 20 Aug 2026 16:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfDOnV0r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BEA81F000E9;
+	Thu, 20 Aug 2026 16:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244489;
-	bh=eaHmRuf5C3hQ1WMEfKHUAVUOsxtM0FtHZ25xrJ7f5w8=;
+	s=korg; t=1787244492;
+	bh=RUdWTcxC5DugpoHNodWWVdHzdXYCElpMpuPy1uDXWL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PV15veCskWns0+XTzubYGBpsBcVeaPY7jhVgoEpCKBoBV2jV5KVKlYIroGvST9/Aa
-	 rEuqZDvXHgzYKzmBEEEXk0owaUHX1nUdPDf+uYoReQoWUoqQUXdYOzFZpvBTByHGR5
-	 UijKxqc6yUnqurtbTXJzFMNW/4WvKcmr32sog3iU=
+	b=jfDOnV0rboH6yKCys1cZCc7aPq4fDuPkrsg/r+uHqb0Q85bF+BDtILsg+inisY1lT
+	 dvpyJLn1S7YlQ5A0BCPCDm89DyCkNWkj7yfi7XmAKYjxAh2t584dZgTjWZo0bWun92
+	 KgQxYuBV3fjpY5IrtQTjg5p6bcd/Tgvo3IZZyd0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Tengda Wu <wutengda@huaweicloud.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 188/235] super: fix emergency thaw deadlock on frozen block devices
-Date: Thu, 20 Aug 2026 16:57:04 +0200
-Message-ID: <20260820145222.242550329@linuxfoundation.org>
+Subject: [PATCH 5.10 189/235] ftrace: Add global mutex to serialize trace_parser access
+Date: Thu, 20 Aug 2026 16:57:05 +0200
+Message-ID: <20260820145222.272054503@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -50,123 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-[ Upstream commit 749d7aa0377aae32af8c0a4ad43371e7bf830ab5 ]
+[ Upstream commit 7720b63bcef3f54c7fe288774b720a227d54a306 ]
 
-do_thaw_all_callback() calls bdev_thaw() while holding sb->s_umount
-exclusively. If the block device was frozen via bdev_freeze() dropping
-the last block layer freeze reference calls fs_bdev_thaw() which
-reacquires s_umount:
+In ftrace, the trace_parser structure is allocated and initialized when
+a trace file is opened, and is subsequently used across write and release
+handlers to parse user input.
 
-  do_thaw_all_callback(sb)
-    super_lock_excl(sb)                     # holds sb->s_umount
-    bdev_thaw(sb->s_bdev)
-      mutex_lock(&bdev->bd_fsfreeze_mutex)
-      # bd_fsfreeze_count drops 1 -> 0
-      bd_holder_ops->thaw == fs_bdev_thaw
-        get_bdev_super(bdev)
-          bdev_super_lock(bdev, true)
-            super_lock(sb, true)
-              down_write(&sb->s_umount)     # same task: deadlock
+The affected handler paths and their specific functions are:
+  - Open paths: ftrace_regex_open(), ftrace_graph_open()
+  - Write paths: ftrace_regex_write(), ftrace_graph_write()
+  - Release paths: ftrace_regex_release(), ftrace_graph_release()
 
-The emergency thaw worker deadlocks against itself holding both
-s_umount and bd_fsfreeze_mutex. That fscks any subsequent unmount,
-freeze, or thaw of that filesystem and block device.
+If userspace opens a trace file descriptor and shares it across multiple
+threads, concurrent write calls will race on the parser's internal state,
+specifically the 'idx', 'cont', and 'buffer' fields, leading to corrupted
+input or undefined behavior.
 
-  [   81.878470] sysrq: Show Blocked State
-  [   81.880140] task:kworker/0:1     state:D stack:0     pid:11    tgid:11    ppid:2      task_flags:0x4208060 flags:0x00080000
-  [   81.884876] Workqueue: events do_thaw_all
-  [   81.886656] Call Trace:
-  [   81.887759]  <TASK>
-  [   81.888763]  __schedule+0x579/0x1420
-  [   81.890372]  schedule+0x3a/0x100
-  [   81.891794]  schedule_preempt_disabled+0x15/0x30
-  [   81.893848]  rwsem_down_write_slowpath+0x1ea/0x900
-  [   81.895191]  ? __pfx_do_thaw_all_callback+0x10/0x10
-  [   81.896528]  down_write+0xbd/0xc0
-  [   81.897505]  super_lock+0x91/0x180
-  [   81.898457]  ? __mutex_lock+0xa99/0x1140
-  [   81.900748]  ? __mutex_unlock_slowpath+0x1f/0x400
-  [   81.902069]  bdev_super_lock+0x5b/0x150
-  [   81.903132]  get_bdev_super+0x10/0x60
-  [   81.904042]  fs_bdev_thaw+0x23/0xf0
-  [   81.904755]  bdev_thaw+0x82/0x100
-  [   81.905484]  do_thaw_all_callback+0x2c/0x50
-  [   81.906298]  __iterate_supers+0x5d/0x130
-  [   81.907067]  do_thaw_all+0x20/0x40
-  [   81.907739]  process_one_work+0x206/0x5e0
-  [   81.908545]  worker_thread+0x1e2/0x3c0
-  [   81.909339]  ? __pfx_worker_thread+0x10/0x10
-  [   81.910171]  kthread+0xf4/0x130
-  [   81.910799]  ? __pfx_kthread+0x10/0x10
-  [   81.911528]  ret_from_fork+0x2e2/0x3b0
-  [   81.912259]  ? __pfx_kthread+0x10/0x10
-  [   81.913010]  ret_from_fork_asm+0x1a/0x30
-  [   81.913806]  </TASK>
+Fix this by adding a global mutex, parser_lock, to serialize all access
+to trace_parser across write and release paths, preventing concurrent
+corruption of parser state.
 
-bdev_super_lock() even documents the violated requirement with
-lockdep_assert_not_held(&sb->s_umount).
-
-Acquiring bd_fsfreeze_mutex under s_umount also inverts the
-bd_fsfreeze_mutex vs. s_umount ordering established by
-bdev_{freeze,thaw}() and can thus ABBA against a concurrent block-layer
-freeze even when the recursive path isn't hit.
-
-Fix this by not holding s_umount around the bdev_thaw() loop at all. Pin
-the superblock with an active reference instead as
-filesystems_freeze_callback() does. The active reference keeps the
-superblock from being shut down and so ->s_bdev stays valid without
-holding s_umount. The block-layer-held freeze is dropped by
-fs_bdev_thaw() with FREEZE_MAY_NEST | FREEZE_HOLDER_USERSPACE exactly as
-a regular unfreeze would and thaw_super_locked() handles
-filesystem-level freezes as before.
-
-The emergency thaw path has deadlocked like this in one form or
-another for a long long time but the current exclusively-held
-shape dates back to commit [1] where thaw_bdev() already ended in
-thaw_super() with s_umount held by do_thaw_all_callback().
-
-Fixes: 08fdc8a0138a ("buffer.c: call thaw_super during emergency thaw") [1]
+Fixes: e704eff3ff51 ("ftrace: Have set_graph_function handle multiple functions in one write")
+Fixes: 689fd8b65d66 ("tracing: trace parser support for function and graph")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260723-work-super-emergency_thaw-v1-1-7c315c600245@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Link: https://patch.msgid.link/20260725024721.1983675-1-wutengda@huaweicloud.com
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/super.c |   19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ kernel/trace/ftrace.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -1048,13 +1048,24 @@ void emergency_remount(void)
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -1043,6 +1043,12 @@ struct ftrace_ops global_ops = {
+ };
  
- static void do_thaw_all_callback(struct super_block *sb)
- {
-+	bool active = false;
+ /*
++ * parser_lock - Protects trace_parser state against concurrent operations.
++ * Held across trace_get_user() and subsequent buffer parsing to prevent races.
++ */
++static DEFINE_MUTEX(parser_lock);
 +
-+	down_write(&sb->s_umount);
-+	if (sb->s_root && sb->s_flags & SB_BORN)
-+		active = atomic_inc_not_zero(&sb->s_active);
-+	up_write(&sb->s_umount);
-+	if (!active)
-+		return;
++/*
+  * Used by the stack undwinder to know about dynamic ftrace trampolines.
+  */
+ struct ftrace_ops *ftrace_ops_trampoline(unsigned long addr)
+@@ -4934,6 +4940,8 @@ ftrace_regex_write(struct file *file, co
+ 	/* iter->hash is a local copy, so we don't need regex_lock */
+ 
+ 	parser = &iter->parser;
 +
-+	/* thaw_bdev() acquires s_umount so it must not be held here */
-+	emergency_thaw_bdev(sb);
-+
- 	down_write(&sb->s_umount);
--	if (sb->s_root && sb->s_flags & SB_BORN) {
--		emergency_thaw_bdev(sb);
-+	if (sb->s_root && sb->s_flags & SB_BORN)
- 		thaw_super_locked(sb);
--	} else {
-+	else
- 		up_write(&sb->s_umount);
--	}
-+	deactivate_super(sb);
++	mutex_lock(&parser_lock);
+ 	read = trace_get_user(parser, ubuf, cnt, ppos);
+ 
+ 	if (read >= 0 && trace_parser_loaded(parser) &&
+@@ -4947,6 +4955,7 @@ ftrace_regex_write(struct file *file, co
+ 
+ 	ret = read;
+  out:
++	mutex_unlock(&parser_lock);
+ 	return ret;
  }
  
- static void do_thaw_all(struct work_struct *work)
+@@ -5682,12 +5691,14 @@ int ftrace_regex_release(struct inode *i
+ 		iter = file->private_data;
+ 
+ 	parser = &iter->parser;
++	mutex_lock(&parser_lock);
+ 	if (trace_parser_loaded(parser)) {
+ 		int enable = !(iter->flags & FTRACE_ITER_NOTRACE);
+ 
+ 		ftrace_process_regex(iter, parser->buffer,
+ 				     parser->idx, enable);
+ 	}
++	mutex_unlock(&parser_lock);
+ 
+ 	trace_parser_put(parser);
+ 
+@@ -6005,10 +6016,12 @@ ftrace_graph_release(struct inode *inode
+ 
+ 		parser = &fgd->parser;
+ 
++		mutex_lock(&parser_lock);
+ 		if (trace_parser_loaded((parser))) {
+ 			ret = ftrace_graph_set_hash(fgd->new_hash,
+ 						    parser->buffer);
+ 		}
++		mutex_unlock(&parser_lock);
+ 
+ 		trace_parser_put(parser);
+ 
+@@ -6127,6 +6140,7 @@ ftrace_graph_write(struct file *file, co
+ 
+ 	parser = &fgd->parser;
+ 
++	mutex_lock(&parser_lock);
+ 	read = trace_get_user(parser, ubuf, cnt, ppos);
+ 
+ 	if (read >= 0 && trace_parser_loaded(parser) &&
+@@ -6139,6 +6153,7 @@ ftrace_graph_write(struct file *file, co
+ 
+ 	if (!ret)
+ 		ret = read;
++	mutex_unlock(&parser_lock);
+ 
+ 	return ret;
+ }
 
 
