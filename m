@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61237477E58;
-	Thu, 20 Aug 2026 16:26:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E288737CD5A;
+	Thu, 20 Aug 2026 16:26:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243190; cv=none; b=Z2zzdrie8ssyIbFzqRKqENh8VQpsK+xzUpS2Jm5tcXZhDiPhErxIzeAP8xMBs93NaCabnZdflJERlxMz/lzR46lzhQ9L0oz+tQC9iv230XF6oCjoaX9DellQvUYyy1uSQn660Ghzh++J8Q71Y/Bcf2XYxwdi5ehMafKgWHAhmeo=
+	t=1787243193; cv=none; b=lVQTsRJ/KgbwVRCmkyIJdY7JGncojmqNvMxkrhklx+1IWCBG3Ejes5RQBU2WVdnWs8GCLe7WvSwn+0ig2r+s6ky2F9btEcRE+hjWpoXZhVZWFQLDqZ9tBsBFBOg8qtN1a4+FgLNCYblCWevCnuchPkMsIMddYSihxe7VHC3jGl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243190; c=relaxed/simple;
-	bh=cDGtwdSO6NBTtZAPgihEJ48cnP3rlTcgi9LEOZ/vkhU=;
+	s=arc-20240116; t=1787243193; c=relaxed/simple;
+	bh=emYYQd0OMiqatBUdL4+qBWhLPNHpzEMs/peoy5rDzB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Anh3yYlLMIhhwwIlD4FwSo+XC/IjIncn+sBqR3gKvRb9IQeew3GY4HJEXcUTv3hMOkodOf6fEQkx/sOpWiOl5qOXhKFMsg9NmQ0g25FMjzo9bXIiiBuCY69Ob3vwqpyWXFKmU9OL+xVWG0zzLIGq8dDTkh05Iqbwomx8dDOydyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LbVMboZc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YsN+szbukB66cJpjgExSWo3tTVr/sUDf5S67LfuOUjVPLDNw1s4+Con4rlqU/0UFbXmKaNwGvls2bt9EPUruAJZDQMaInuSj5M1+ueu0Rx5JE8Rj0Ha0lidQsiA/DK2vt0SsadNXW9crHNzigE/a/lzEkLB0Kq/W2dNXUOn1SUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1Uz1bZ/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LbVMboZc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F021F000E9;
-	Thu, 20 Aug 2026 16:26:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1Uz1bZ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49EDF1F000E9;
+	Thu, 20 Aug 2026 16:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243189;
-	bh=F7Cu9GmnnLlwTvBF349MUnvqBCQTEWaAzoWyhKpnfd8=;
+	s=korg; t=1787243191;
+	bh=GhVoT/6LWtUY2vQTyaBhTowpSsf19NYX713gv3LizMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LbVMboZcAgCTW4jahVnZ2ozFSTUGiub9d31GInNMdxN3sSdjV/JPBInPh9FBJs61C
-	 mILWuQ2gltNnznpvU7P4J3d5jh6KQGCeLKCAysFp6FiDkXuZeVvITlVWkbQPhuOOlv
-	 DnhNpfMfgEaGsj/z0w1ObGtSKEgHoU/0L7ZtpJkY=
+	b=Z1Uz1bZ/hNTlu9PwF43zjJfyJRs5VkyzivR46GpKTlqPGpnOu2j3zveKJdEKjTGg5
+	 9QggHJTPuRFAXo932ub2lTSbLiKLQHZi/DfvqhIeVFfi8reLZOsHOQ4u44ZbfpMudp
+	 8/70B0ubcJwmouSc4JuhoeZDMXCwuuePRImrNZqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	JY <JY.Ho@mediatek.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Jiucheng Xu <jiucheng.xu@amlogic.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 001/272] f2fs: fix UAF issue in f2fs_merge_page_bio()
-Date: Thu, 20 Aug 2026 16:53:05 +0200
-Message-ID: <20260820145231.279698338@linuxfoundation.org>
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Hidayath Khan <hidayath@linux.ibm.com>,
+	Joe Damato <joe@dama.to>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 010/272] s390/qeth: validate user buffer length in SNMP and ARP query ioctls
+Date: Thu, 20 Aug 2026 16:53:14 +0200
+Message-ID: <20260820145231.546380188@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -53,111 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Hidayath Khan <hidayath@linux.ibm.com>
 
-commit edf7e9040fc52c922db947f9c6c36f07377c52ea upstream.
+commit d141f087b1af656f055d7c5793a3e87817ba0bbe upstream.
 
-As JY reported in bugzilla [1],
+qeth_snmp_command() and qeth_l3_arp_query() allocate a buffer sized by
+a user-supplied length (udata_len) without checking a lower bound, then
+set udata_offset to a fixed non-zero value and pass both to a reply
+callback. The callback bounds-checks the copy with
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-pc : [0xffffffe51d249484] f2fs_is_cp_guaranteed+0x70/0x98
-lr : [0xffffffe51d24adbc] f2fs_merge_page_bio+0x520/0x6d4
-CPU: 3 UID: 0 PID: 6790 Comm: kworker/u16:3 Tainted: P    B   W  OE      6.12.30-android16-5-maybe-dirty-4k #1 5f7701c9cbf727d1eebe77c89bbbeb3371e895e5
-Tainted: [P]=PROPRIETARY_MODULE, [B]=BAD_PAGE, [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-Workqueue: writeback wb_workfn (flush-254:49)
-Call trace:
- f2fs_is_cp_guaranteed+0x70/0x98
- f2fs_inplace_write_data+0x174/0x2f4
- f2fs_do_write_data_page+0x214/0x81c
- f2fs_write_single_data_page+0x28c/0x764
- f2fs_write_data_pages+0x78c/0xce4
- do_writepages+0xe8/0x2fc
- __writeback_single_inode+0x4c/0x4b4
- writeback_sb_inodes+0x314/0x540
- __writeback_inodes_wb+0xa4/0xf4
- wb_writeback+0x160/0x448
- wb_workfn+0x2f0/0x5dc
- process_scheduled_works+0x1c8/0x458
- worker_thread+0x334/0x3f0
- kthread+0x118/0x1ac
- ret_from_fork+0x10/0x20
+        if ((udata_len - udata_offset) < len)
 
-[1] https://bugzilla.kernel.org/show_bug.cgi?id=220575
+Both fields are u32, so a udata_len smaller than udata_offset makes the
+subtraction wrap and the check pass, and the following memcpy() writes
+past the allocation. A udata_len of 0 also yields ZERO_SIZE_PTR from
+kzalloc(), which the existing NULL check does not catch.
 
-The panic was caused by UAF issue w/ below race condition:
+Reject buffers smaller than udata_offset before allocating, so the
+callback subtraction can no longer underflow.
 
-kworker
-- writepages
- - f2fs_write_cache_pages
-  - f2fs_write_single_data_page
-   - f2fs_do_write_data_page
-    - f2fs_inplace_write_data
-     - f2fs_merge_page_bio
-      - add_inu_page
-      : cache page #1 into bio & cache bio in
-        io->bio_list
-  - f2fs_write_single_data_page
-   - f2fs_do_write_data_page
-    - f2fs_inplace_write_data
-     - f2fs_merge_page_bio
-      - add_inu_page
-      : cache page #2 into bio which is linked
-        in io->bio_list
-						write
-						- f2fs_write_begin
-						: write page #1
-						 - f2fs_folio_wait_writeback
-						  - f2fs_submit_merged_ipu_write
-						   - f2fs_submit_write_bio
-						   : submit bio which inclues page #1 and #2
-
-						software IRQ
-						- f2fs_write_end_io
-						 - fscrypt_free_bounce_page
-						 : freed bounced page which belongs to page #2
-      - inc_page_count( , WB_DATA_TYPE(data_folio), false)
-      : data_folio points to fio->encrypted_page
-        the bounced page can be freed before
-        accessing it in f2fs_is_cp_guarantee()
-
-It can reproduce w/ below testcase:
-Run below script in shell #1:
-for ((i=1;i>0;i++)) do xfs_io -f /mnt/f2fs/enc/file \
--c "pwrite 0 32k" -c "fdatasync"
-
-Run below script in shell #2:
-for ((i=1;i>0;i++)) do xfs_io -f /mnt/f2fs/enc/file \
--c "pwrite 0 32k" -c "fdatasync"
-
-So, in f2fs_merge_page_bio(), let's avoid using fio->encrypted_page after
-commit page into internal ipu cache.
-
-Fixes: 0b20fcec8651 ("f2fs: cache global IPU bio")
-Reported-by: JY <JY.Ho@mediatek.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[Jiucheng Xu: backport to 5.15.y]
-Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4a71df50047f ("qeth: new qeth device driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
+Reviewed-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260730142216.218309-1-hidayath@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/s390/net/qeth_core_main.c |    3 +++
+ drivers/s390/net/qeth_l3_main.c   |    5 +++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index c74b27eba94b..90cb8560af1d 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -926,7 +926,7 @@ int f2fs_merge_page_bio(struct f2fs_io_info *fio)
- 	if (fio->io_wbc)
- 		wbc_account_cgroup_owner(fio->io_wbc, fio->page, PAGE_SIZE);
+--- a/drivers/s390/net/qeth_core_main.c
++++ b/drivers/s390/net/qeth_core_main.c
+@@ -4674,6 +4674,9 @@ static int qeth_snmp_command(struct qeth
+ 	if (req_len > QETH_BUFSIZE)
+ 		return -EINVAL;
  
--	inc_page_count(fio->sbi, WB_DATA_TYPE(page));
-+	inc_page_count(fio->sbi, WB_DATA_TYPE(fio->page));
- 
- 	*fio->last_block = fio->new_blkaddr;
- 	*fio->bio = bio;
--- 
-2.53.0
-
++	if (qinfo.udata_len < sizeof(struct qeth_snmp_ureq_hdr))
++		return -EINVAL;
++
+ 	iob = qeth_get_adapter_cmd(card, IPA_SETADP_SET_SNMP_CONTROL, req_len);
+ 	if (!iob)
+ 		return -ENOMEM;
+--- a/drivers/s390/net/qeth_l3_main.c
++++ b/drivers/s390/net/qeth_l3_main.c
+@@ -1415,6 +1415,11 @@ static int qeth_l3_arp_query(struct qeth
+ 		rc = -EFAULT;
+ 		goto out;
+ 	}
++
++	if (qinfo.udata_len < QETH_QARP_ENTRIES_OFFSET) {
++		rc = -EINVAL;
++		goto out;
++	}
+ 	qinfo.udata = kzalloc(qinfo.udata_len, GFP_KERNEL);
+ 	if (!qinfo.udata) {
+ 		rc = -ENOMEM;
 
 
