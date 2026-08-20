@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4F437A858;
-	Thu, 20 Aug 2026 16:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E5F437A858;
+	Thu, 20 Aug 2026 16:47:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244445; cv=none; b=VMXIq+LyjNv9g7mKoeQchfZioX+1NsbBDJNDUiOYeYR2zJRZzmXv2szBRECbyukv9+OT4yLj88OWU+VbjIWAw9gekKXriWCvjTSORPSTn8qlGKQWMIBWO7GXsUGVORoAhAdyh3NFxATwD0cLhqA5f/rdV7B8slZCbOU7cV+cDX4=
+	t=1787244448; cv=none; b=Mlsxh3RV7l+SR+ChfgWQQNSufd7RANn1Jwn34BuiBoEgolBxKC8hMkehHmzFsrMCrLt9qMynPThn6ZreoT02j8Fhttb7p+zOK1k0XcvudYHsXFRgFrXj4MjQE4kkIoCHHeSnBcgeW45sbtjGYVncl3OCKfFN8iUJU/cyGc3/0L4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244445; c=relaxed/simple;
-	bh=msWfnKjA9RgsrVmhpHN7lTRwZF1yWdROsT4fidAg6/0=;
+	s=arc-20240116; t=1787244448; c=relaxed/simple;
+	bh=PIMok5oxb53f23C/4xCQQnX2onsCoPo+I2lUVHqse9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B8kBnfIJ2kwR1wVcOz8O6JSbcQGJ8SSFz8sEjW5tf/6qk78oLHLWaL69bflxyIhFt7KUZ8VhZDkMDEmN0b6ymGIy388XH6dLqDfIBh5q8iIwPW58GMf61+1UC5fhURNPeeIOztUqKt0ruCBuv9B8cbI2GQgga1Ag4fXsodfWR80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+fPbm0k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RcVC4mKsDhskN2KVryI9VCDgrnI4eg61qx7Jr9LsTSwedI90o58R9tRP8dpMMgwhC8XC1vB9NSFxM/6P4I1L9mb07eV30ePxmOXcZw5kbLIdUsdDpNs21PTPtffXCGAYa0KbqiPffGDc9NlRUYxPw/U+llArGSaoy4AQdmvo9HE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cc0dR2JW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+fPbm0k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C554E1F000E9;
-	Thu, 20 Aug 2026 16:47:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cc0dR2JW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9F51F000E9;
+	Thu, 20 Aug 2026 16:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244444;
-	bh=Iut0h7Oh2mffGONT1UFqb+qWJ+TlwZXuylG5Ui7QPTo=;
+	s=korg; t=1787244447;
+	bh=1lEDw2Sr6dAD3Za8bsB4vaexOlbRsBOayD3ew1Wn1nA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1+fPbm0knl2bcaAVKNzct81SGW4uTcUwBCBBKUM3ah/WD658fFS40hmBJcrD0nYPE
-	 plp32sTJud6Ndfx1xgjHD7gw0pGPHQnc2QSRPiKMFLqXV60M5F9Nbp8waKQtjf2jRb
-	 gA3nLf5/dqhi4K/gSQgLjslXbJd+sd/RmfKjMd4w=
+	b=Cc0dR2JWnv4PJKLXoMZzdN/P1MM6INhJgifUa5GTRec94fRzf63ZSMM+FT/wxYodo
+	 gQhBqRpf9yL1BUQ07k/JOe3spVmHpXzNdXJFIXJ2BkPFiuDO4orX+3D0M19oVqK5Rb
+	 xxaWpVY8qtTc9DdtxQc4JAtn1g6cngsvhrcTWf7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Tomasz=20Mo=C5=84?= <tomasz.mon@camlingroup.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 170/235] mptcp: only set DATA_FIN when a mapping is present
-Date: Thu, 20 Aug 2026 16:56:46 +0200
-Message-ID: <20260820145221.656309559@linuxfoundation.org>
+Subject: [PATCH 5.10 171/235] sc16is7xx: Properly resume TX after stop
+Date: Thu, 20 Aug 2026 16:56:47 +0200
+Message-ID: <20260820145221.686689868@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -47,104 +44,159 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Tomasz Moń <tomasz.mon@camlingroup.com>
 
-[ Upstream commit b2ff91b752b0d85e8815e7f44fd85205c4268094 ]
+[ Upstream commit cc4c1d05eb10c3ad4c6315f1897bc56b1e7429aa ]
 
-mptcp_get_options() clears only the status group of struct
-mptcp_options_received; data_seq, subflow_seq and data_len are filled in
-by mptcp_parse_option() exclusively inside the DSS mapping block, which
-runs only when the DSS M (mapping present) bit is set.
+sc16is7xx_stop_tx() clears THRI bit and thus disables THRI interrupt.
+This makes it possible for transmission to cease indefinitely when more
+than 64 characters are being sent.
 
-A peer can send a DSS option with the DATA_FIN flag set but the mapping
-bit clear. The parser then records mp_opt->data_fin while leaving
-data_len and data_seq uninitialized. For a zero-length segment
-mptcp_incoming_options() evaluates
+The sc16is7xx_handle_tx() call executed by sc16is7xx_tx_proc() can send
+up to FIFO length (64) characters. If more characters are written to the
+output buffer, then the THRI interrupt is needed.
 
-	if (mp_opt.data_fin && mp_opt.data_len == 1 &&
-	    mptcp_update_rcv_data_fin(msk, mp_opt.data_seq, mp_opt.dsn64))
+Solve the issue by enabling THRI interrupt in sc16is7xx_tx_proc().
 
-which reads the uninitialized data_len and data_seq; KMSAN reports an
-uninit-value in mptcp_incoming_options(). The stale data_seq can also be
-fed into the receive-side DATA_FIN sequence tracking.
-
-Record the DATA_FIN flag only when the DSS option carries a mapping, so
-data_fin is never set without data_seq and data_len also being present.
-data_fin is part of the status group that mptcp_get_options() clears up
-front, so on the no-map path it stays zero and the zero-length DATA_FIN
-branch is simply skipped. A DATA_FIN is always transmitted together with
-a mapping (mptcp_write_data_fin() sets use_map along with data_seq and
-data_len), so legitimate DATA_FIN handling is unaffected.
-
-Move the pr_debug() that logs the parsed DSS flags below the mapping
-block, so it reports the final data_fin value instead of the stale one
-it would otherwise print before the assignment.
-
-Fixes: 43b54c6ee382 ("mptcp: Use full MPTCP-level disconnect state machine")
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260709191925.2811195-1-michael.bommarito@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Tomasz Moń <tomasz.mon@camlingroup.com>
+Link: https://lore.kernel.org/r/20220301060332.2561851-2-tomasz.mon@camlingroup.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: af071d9e07e5 ("serial: sc16is7xx: implement gpio get_direction() callback")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/tty/serial/sc16is7xx.c |   47 +++++++++++++++++++++++++++++++++++------
+ 1 file changed, 41 insertions(+), 6 deletions(-)
 
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -142,17 +142,11 @@ static void mptcp_parse_option(const str
- 		 */
- 		mp_opt->mpc_map = 0;
- 		flags = (*ptr++) & MPTCP_DSS_FLAG_MASK;
--		mp_opt->data_fin = (flags & MPTCP_DSS_DATA_FIN) != 0;
- 		mp_opt->dsn64 = (flags & MPTCP_DSS_DSN64) != 0;
- 		mp_opt->use_map = (flags & MPTCP_DSS_HAS_MAP) != 0;
- 		mp_opt->ack64 = (flags & MPTCP_DSS_ACK64) != 0;
- 		mp_opt->use_ack = (flags & MPTCP_DSS_HAS_ACK);
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -307,7 +307,8 @@ struct sc16is7xx_devtype {
  
--		pr_debug("data_fin=%d dsn64=%d use_map=%d ack64=%d use_ack=%d\n",
--			 mp_opt->data_fin, mp_opt->dsn64,
--			 mp_opt->use_map, mp_opt->ack64,
--			 mp_opt->use_ack);
--
- 		expected_opsize = TCPOLEN_MPTCP_DSS_BASE;
+ struct sc16is7xx_one_config {
+ 	unsigned int			flags;
+-	u8				ier_clear;
++	u8				ier_mask;
++	u8				ier_val;
+ };
  
- 		if (mp_opt->use_ack) {
-@@ -163,12 +157,18 @@ static void mptcp_parse_option(const str
- 		}
+ struct sc16is7xx_one {
+@@ -341,6 +342,9 @@ static struct uart_driver sc16is7xx_uart
+ 	.nr		= SC16IS7XX_MAX_DEVS,
+ };
  
- 		if (mp_opt->use_map) {
-+			mp_opt->data_fin = (flags & MPTCP_DSS_DATA_FIN) != 0;
- 			if (mp_opt->dsn64)
- 				expected_opsize += TCPOLEN_MPTCP_DSS_MAP64;
- 			else
- 				expected_opsize += TCPOLEN_MPTCP_DSS_MAP32;
- 		}
- 
-+		pr_debug("data_fin=%d dsn64=%d use_map=%d ack64=%d use_ack=%d\n",
-+			 mp_opt->data_fin, mp_opt->dsn64,
-+			 mp_opt->use_map, mp_opt->ack64,
-+			 mp_opt->use_ack);
++static void sc16is7xx_ier_set(struct uart_port *port, u8 bit);
++static void sc16is7xx_stop_tx(struct uart_port *port);
 +
- 		/* RFC 6824, Section 3.3:
- 		 * If a checksum is present, but its use had
- 		 * not been negotiated in the MP_CAPABLE handshake,
-@@ -306,6 +306,7 @@ void mptcp_get_options(const struct sk_b
- 	mp_opt->port = 0;
- 	mp_opt->rm_addr = 0;
- 	mp_opt->dss = 0;
-+	mp_opt->data_fin = 0;
+ #define to_sc16is7xx_port(p,e)	((container_of((p), struct sc16is7xx_port, e)))
+ #define to_sc16is7xx_one(p,e)	((container_of((p), struct sc16is7xx_one, e)))
  
- 	length = (th->doff * 4) - sizeof(struct tcphdr);
- 	ptr = (const unsigned char *)(th + 1);
+@@ -650,6 +654,7 @@ static void sc16is7xx_handle_tx(struct u
+ 	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
+ 	struct circ_buf *xmit = &port->state->xmit;
+ 	unsigned int txlen, to_send, i;
++	unsigned long flags;
+ 
+ 	if (unlikely(port->x_char)) {
+ 		sc16is7xx_port_write(port, SC16IS7XX_THR_REG, port->x_char);
+@@ -658,8 +663,12 @@ static void sc16is7xx_handle_tx(struct u
+ 		return;
+ 	}
+ 
+-	if (uart_circ_empty(xmit) || uart_tx_stopped(port))
++	if (uart_circ_empty(xmit) || uart_tx_stopped(port)) {
++		spin_lock_irqsave(&port->lock, flags);
++		sc16is7xx_stop_tx(port);
++		spin_unlock_irqrestore(&port->lock, flags);
+ 		return;
++	}
+ 
+ 	/* Get length of data pending in circular buffer */
+ 	to_send = uart_circ_chars_pending(xmit);
+@@ -686,8 +695,13 @@ static void sc16is7xx_handle_tx(struct u
+ 		sc16is7xx_fifo_write(port, to_send);
+ 	}
+ 
++	spin_lock_irqsave(&port->lock, flags);
+ 	if (uart_circ_chars_pending(xmit) < WAKEUP_CHARS)
+ 		uart_write_wakeup(port);
++
++	if (uart_circ_empty(xmit))
++		sc16is7xx_stop_tx(port);
++	spin_unlock_irqrestore(&port->lock, flags);
+ }
+ 
+ static bool sc16is7xx_port_irq(struct sc16is7xx_port *s, int portno)
+@@ -762,6 +776,7 @@ static void sc16is7xx_tx_proc(struct kth
+ {
+ 	struct uart_port *port = &(to_sc16is7xx_one(ws, tx_work)->port);
+ 	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
++	unsigned long flags;
+ 
+ 	if ((port->rs485.flags & SER_RS485_ENABLED) &&
+ 	    (port->rs485.delay_rts_before_send > 0))
+@@ -770,6 +785,10 @@ static void sc16is7xx_tx_proc(struct kth
+ 	mutex_lock(&s->efr_lock);
+ 	sc16is7xx_handle_tx(port);
+ 	mutex_unlock(&s->efr_lock);
++
++	spin_lock_irqsave(&port->lock, flags);
++	sc16is7xx_ier_set(port, SC16IS7XX_IER_THRI_BIT);
++	spin_unlock_irqrestore(&port->lock, flags);
+ }
+ 
+ static void sc16is7xx_reconf_rs485(struct uart_port *port)
+@@ -819,7 +838,7 @@ static void sc16is7xx_reg_proc(struct kt
+ 	}
+ 	if (config.flags & SC16IS7XX_RECONF_IER)
+ 		sc16is7xx_port_update(&one->port, SC16IS7XX_IER_REG,
+-				      config.ier_clear, 0);
++				      config.ier_mask, config.ier_val);
+ 
+ 	if (config.flags & SC16IS7XX_RECONF_RS485)
+ 		sc16is7xx_reconf_rs485(&one->port);
+@@ -830,8 +849,24 @@ static void sc16is7xx_ier_clear(struct u
+ 	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
+ 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+ 
++	lockdep_assert_held_once(&port->lock);
++
++	one->config.flags |= SC16IS7XX_RECONF_IER;
++	one->config.ier_mask |= bit;
++	one->config.ier_val &= ~bit;
++	kthread_queue_work(&s->kworker, &one->reg_work);
++}
++
++static void sc16is7xx_ier_set(struct uart_port *port, u8 bit)
++{
++	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
++	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
++
++	lockdep_assert_held_once(&port->lock);
++
+ 	one->config.flags |= SC16IS7XX_RECONF_IER;
+-	one->config.ier_clear |= bit;
++	one->config.ier_mask |= bit;
++	one->config.ier_val |= bit;
+ 	kthread_queue_work(&s->kworker, &one->reg_work);
+ }
+ 
+@@ -1059,8 +1094,8 @@ static int sc16is7xx_startup(struct uart
+ 			      SC16IS7XX_EFCR_TXDISABLE_BIT,
+ 			      0);
+ 
+-	/* Enable RX, TX interrupts */
+-	val = SC16IS7XX_IER_RDI_BIT | SC16IS7XX_IER_THRI_BIT;
++	/* Enable RX interrupt */
++	val = SC16IS7XX_IER_RDI_BIT;
+ 	sc16is7xx_port_write(port, SC16IS7XX_IER_REG, val);
+ 
+ 	return 0;
 
 
