@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC91272E53;
-	Thu, 20 Aug 2026 16:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A091272E53;
+	Thu, 20 Aug 2026 16:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243844; cv=none; b=VI8X5BW0dlQEYwjv8fSPRI0uMm3xLYbf7TOljFw/gR1WlDW2E9f5SvZtCNQCQCPJZcylAuivwvlm1mfDEh+14ZflUU94DYdiM/V5byoqGRB78mjIR8zfRfCwj5quPcQ6aUad74gQWq42XGOZEpm7nAVnrzVA6/mZ12mwDIqmE8U=
+	t=1787243847; cv=none; b=mJebvAssKef1e5inFU0XMCvqymxqedqARHhyZTJJIQxSrp1e/7t66dwBBxB/oN0LGZaZr0lcvY78VB6efTWR9b/SpTCqF5QbiU0ks+lVJjUK5iVcvN/oG4K6JkOuzcwRf93jxtr6DjujU1LE58Eah4oIvo7Wb8a+eACmOIMZZeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243844; c=relaxed/simple;
-	bh=rZJ59zA1IQjkelsjcRBTRCKvP1jCpy0XMwHCiQ9GbNQ=;
+	s=arc-20240116; t=1787243847; c=relaxed/simple;
+	bh=18dSHsJNazWOWpGENGwPsOdlz8YenfQOtnD6/PDrBC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OL20cCcfWRtqwmadlo8gto3jGD1s2SAEPj1wF5L8VqYmUyy/HJuExWoo5k0UdhAAgUjCJNMF+AzVSO7HEjsCUHCIHwclE0PzEooKdqU2MsJQKwm4vJyfmC2ol8mv4WWdRDq6SDhkGXHoTht7//hzttenk43dCe9GeRuAeoLyELU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=me+PbTtr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PGCDwG2VeVVwsVp/jxMCX9L4ciyh4Q5plVcjzcd7657R0HiTmErYjUDyIt5PL/kwzwuzrW+HjjhdKPbg5XOcs57YlYWHfMLJR0GKZCYHsCtxSpC7c6Ie4tHhZHBj44H4JT6qgQA6TKsJdeB+1ze8jktNUC9GdKxMQXLbZ7uKyh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ko01G4Vu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="me+PbTtr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79631F000E9;
-	Thu, 20 Aug 2026 16:37:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ko01G4Vu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B999F1F000E9;
+	Thu, 20 Aug 2026 16:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243843;
-	bh=gsXzIEDJm5vP6+FdWoR6rbsLCKHa/N3Gn9l+lTV3l6I=;
+	s=korg; t=1787243846;
+	bh=84eqVCFFlkoBB8Lv2InvoHHuvfSjhbgODEEafAj6r/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=me+PbTtrrakTGSUqmeeV8dz5pOJePapcgXqOkHKV+Ie/tdZJpBmGV1wBFtuiyYF92
-	 8K+nsQc7e+uP6QhTYxhofcpngrFdKCQhp4SG5E2zrfbJX4E9vXvby3HzOSPEs2mVHK
-	 nr6CKVqUD8qOEo2RaoIHCSWBo68Xj95T5ziOvf/c=
+	b=ko01G4Vux337w2ypd1JS+v8uSuGrj2kvdcqBTofA8lFuRuBQA1fuh9Ns5Tl0r4RdK
+	 7FxXBY9dSo+Ad1LmhCGwBChBq7qBogJLR5rS5uH3lbSJxXo2CiOWFwbOa07vOUqYQN
+	 ykZxMasLQBBopY5py58oDOVBDY1zkONsl44Unsr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Ibrahim Hashimov <security@auditcode.ai>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Vladimir Medvedkin <vladimir.medvedkin@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Patryk Holda <patryk.holda@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 234/272] scsi: scsi_debug: Fix REPORT ZONES alloc_len underflow OOB write
-Date: Thu, 20 Aug 2026 16:56:58 +0200
-Message-ID: <20260820145238.636041751@linuxfoundation.org>
+Subject: [PATCH 5.15 235/272] ice: fix VF interrupts cleanup
+Date: Thu, 20 Aug 2026 16:56:59 +0200
+Message-ID: <20260820145238.665461858@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -53,70 +55,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
 
-[ Upstream commit 93dde0bf2f39a0f9f57fd610aa3201ce5b753433 ]
+[ Upstream commit fb096882095e5a8d6b5159e43793d4a38a0c5b1f ]
 
-resp_report_zones() sizes the reply buffer from the CDB allocation
-length. The v3 fix rounds alloc_len up with ALIGN() before deriving the
-descriptor count:
+When a virtual function sends an IRQ map command, the PF will set up
+interrupts according to that request. However, because these interrupts are
+never reset, the next time Virtual Function initializes, the interrupts are
+still enabled for a given VF, which leads to performance degradation in
+certain cases due to interrupts being unexpectedly enabled and thus causing
+interrupt floods.
 
-	rep_max_zones = (ALIGN((u64)alloc_len, RZONES_DESC_HD) -
-			 RZONES_DESC_HD) >> ilog2(RZONES_DESC_HD);
-	arr_len = (u64)RZONES_DESC_HD * (rep_max_zones + 1);
-
-For alloc_len in 0xFFFFFFC1..0xFFFFFFFF, ALIGN() rounds up to
-0x100000000, so arr_len is 4 GB. On 32-bit, kzalloc()'s size_t is 32-bit
-and truncates 0x100000000 to 0; kzalloc(0) returns ZERO_SIZE_PTR, which
-passes the !arr check, and desc = arr + 64 is then dereferenced in the
-loop -> out-of-bounds write / panic.
-
-Clamp rep_max_zones to devip->nr_zones. The loop already stops at
-sdebug_capacity (after nr_zones zones), so a report can never hold more
-than nr_zones descriptors; the clamp does not change the report, it only
-bounds arr_len to (nr_zones + 1) * RZONES_DESC_HD, a real device
-property that can never reach 0x100000000.
-
-Fixes: 7db0e0c8190a ("scsi: scsi_debug: Fix buffer size of REPORT ZONES command")
-Suggested-by: Damien Le Moal <dlemoal@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Assisted-by: AuditCode-AI:2026.07
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260712183739.83915-1-security@auditcode.ai
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 1071a8358a28 ("ice: Implement virtchnl commands for AVF support")
+Suggested-by: Vladimir Medvedkin <vladimir.medvedkin@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Patryk Holda <patryk.holda@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_debug.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_virtchnl_pf.c |   48 +++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -4341,6 +4341,7 @@ static int resp_report_zones(struct scsi
- 	u32 alloc_len, rep_opts, rep_len;
- 	bool partial;
- 	u64 lba, zs_lba;
-+	u64 arr_len;
- 	u8 *arr = NULL, *desc;
- 	u8 *cmd = scp->cmnd;
- 	struct sdeb_zone_state *zsp;
-@@ -4364,10 +4365,12 @@ static int resp_report_zones(struct scsi
- 	}
+--- a/drivers/net/ethernet/intel/ice/ice_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/ice/ice_virtchnl_pf.c
+@@ -1588,6 +1588,30 @@ static bool ice_is_vf_disabled(struct ic
+ }
  
- 	max_zones = devip->nr_zones - (zs_lba >> devip->zsize_shift);
--	rep_max_zones = min((alloc_len - 64) >> ilog2(RZONES_DESC_HD),
--			    max_zones);
-+	rep_max_zones = (ALIGN((u64)alloc_len, RZONES_DESC_HD) - RZONES_DESC_HD) >>
-+			ilog2(RZONES_DESC_HD);
-+	rep_max_zones = min_t(unsigned int, rep_max_zones, max_zones);
-+	arr_len = (u64)RZONES_DESC_HD * (rep_max_zones + 1);
+ /**
++ * ice_reset_interrupts - clear all queue interrupt configuration for a VSI
++ * @vsi: the VSI whose interrupt registers should be cleared
++ *
++ * Zero the QINT_RQCTL and QINT_TQCTL registers for all allocated queues
++ * in the VSI. This clears the entire register including MSIX_INDX, ITR_INDX,
++ * CAUSE_ENA and NEXTQ fields, unlike ice_vf_dis_rxq_interrupt() which only
++ * clears the CAUSE_ENA bit.
++ */
++static void ice_reset_interrupts(struct ice_vsi *vsi)
++{
++	struct ice_pf *pf = vsi->back;
++	struct ice_hw *hw = &pf->hw;
++	int i;
++
++	ice_for_each_alloc_rxq(vsi, i)
++		wr32(hw, QINT_RQCTL(vsi->rxq_map[i]), 0);
++
++	ice_for_each_alloc_txq(vsi, i)
++		wr32(hw, QINT_TQCTL(vsi->txq_map[i]), 0);
++
++	ice_flush(hw);
++}
++
++/**
+  * ice_reset_vf - Reset a particular VF
+  * @vf: pointer to the VF structure
+  * @is_vflr: true if VFLR was issued, false if not
+@@ -1630,6 +1654,9 @@ bool ice_reset_vf(struct ice_vf *vf, boo
  
--	arr = kzalloc(alloc_len, GFP_ATOMIC | __GFP_NOWARN);
-+	arr = kzalloc(arr_len, GFP_ATOMIC | __GFP_NOWARN);
- 	if (!arr) {
- 		mk_sense_buffer(scp, ILLEGAL_REQUEST, INSUFF_RES_ASC,
- 				INSUFF_RES_ASCQ);
+ 	ice_dis_vf_qs(vf);
+ 
++	/* cleanup interrupt registers */
++	ice_reset_interrupts(vsi);
++
+ 	/* Call Disable LAN Tx queue AQ whether or not queues are
+ 	 * enabled. This is needed for successful completion of VFR.
+ 	 */
+@@ -3168,6 +3195,24 @@ static void ice_vf_ena_rxq_interrupt(str
+ }
+ 
+ /**
++ * ice_vf_dis_rxq_interrupt - disable Rx queue interrupt via QINT_RQCTL
++ * @vsi: VSI of the VF to configure
++ * @q_idx: VF queue index used to determine the queue in the PF's space
++ */
++static void ice_vf_dis_rxq_interrupt(struct ice_vsi *vsi, u32 q_idx)
++{
++	struct ice_hw *hw = &vsi->back->hw;
++	u32 pfq = vsi->rxq_map[q_idx];
++	u32 reg;
++
++	reg = rd32(hw, QINT_RQCTL(pfq));
++	reg &= ~QINT_RQCTL_CAUSE_ENA_M;
++	wr32(hw, QINT_RQCTL(pfq), reg);
++
++	ice_flush(hw);
++}
++
++/**
+  * ice_vc_ena_qs_msg
+  * @vf: pointer to the VF info
+  * @msg: pointer to the msg buffer
+@@ -3336,6 +3381,8 @@ static int ice_vc_dis_qs_msg(struct ice_
+ 			goto error_param;
+ 		}
+ 
++		for_each_set_bit(vf_q_id, &q_map, ICE_MAX_RSS_QS_PER_VF)
++			ice_vf_dis_rxq_interrupt(vsi, vf_q_id);
+ 		bitmap_zero(vf->rxq_ena, ICE_MAX_RSS_QS_PER_VF);
+ 	} else if (q_map) {
+ 		for_each_set_bit(vf_q_id, &q_map, ICE_MAX_RSS_QS_PER_VF) {
+@@ -3356,6 +3403,7 @@ static int ice_vc_dis_qs_msg(struct ice_
+ 				goto error_param;
+ 			}
+ 
++			ice_vf_dis_rxq_interrupt(vsi, vf_q_id);
+ 			/* Clear enabled queues flag */
+ 			clear_bit(vf_q_id, vf->rxq_ena);
+ 		}
 
 
