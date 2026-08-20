@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C94147F77A;
-	Thu, 20 Aug 2026 17:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF6E37F00C;
+	Thu, 20 Aug 2026 17:34:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247268; cv=none; b=kA0weztgKN4+zfjljBvQ8OGt7aBT6jtmktA/P2jCByCFexxYqqglwbcRZq4Zxm8Z+8nThD5oZsk0zr+9vIE6XQ9rV3GO8dQ4gNmkkpM+WiDZbl+4xAvrtP/bHXfLPBARXfk/dD5TPKPHOLlsy4J2rad2Xdc4pZrHXKgAodRsC9Y=
+	t=1787247271; cv=none; b=KsmF5/O1VZCrbX8qq9GtDnet+7H8Ht9LZXv1bREFxbGnVGUuLUqKRg26naxEqW6TC5s41AVSXj6kak68LjaOAGh6JKB16z2gt2/c+JolUWOQx7lUmpUR5LDgRAr6eY2ObsWvBNActY+9RbkEMfikI5XBTMjpljOKL0AOyA1RG2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247268; c=relaxed/simple;
-	bh=PTJJsizUp3QRQkZyQoNK+4gLmaD4Aa/ligbLxXcNowY=;
+	s=arc-20240116; t=1787247271; c=relaxed/simple;
+	bh=ddcHDKAvJuiNdDPB1Bonbe37VGRyZ0jk8wbJTbIOenc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DwZIx/YCxR7Ege3koY01aQPexMW8Hb0rynSCdRvSfaWRyjwFbqSxnsO1p87+mLp9/jgpWIoyvaAYHuN7vQQTX13v0M4900YpbdaAJ0vEMwz2vrQqv5EG01iA6w0P55HBrhaINGhxu3yxbGRxg1+2vi//6OA3vQSXAHVeB+hMPoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhoeoBQF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l4WeVPnw3hAXaZe9flg++QYNXNpqReBtH/Ofa++lhtIhdGQshTC+3e0ZJE6kjfzX22KDoAg5UoJg5XbjUeXsVz1xh9qy/wLWfmHDU3f7nDhlOPal/3O5OGnLgGq5HEQQER0MmagNC/AgnXTKqIYYY0Hu9ofbEx948yuhd5lIMZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osQd2Buv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhoeoBQF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686A71F000E9;
-	Thu, 20 Aug 2026 17:34:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osQd2Buv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466401F000E9;
+	Thu, 20 Aug 2026 17:34:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247266;
-	bh=dO1AJY4p/YOd/dN1lQtzDkcDufxGW7rERgVc5FQorYc=;
+	s=korg; t=1787247269;
+	bh=ZG4J35Akm1nGwpbqjvyYkrN0LBaSA9Q2IQGECCLN2hU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hhoeoBQFxJzOd3S8XN4IN1lRcL2taf1gSNicxvnNogapvWJze3xmDL2hZZzALHrfJ
-	 49Fv8zwBf2vl08sQiRW0AasozcmKKPMgacPuYe/t3Bon6FMgve70woxrCEb50pRbtj
-	 JXa2kkoY2mkLiL4NFE5iGK3a/zv0ZjNWs/Lh/AhI=
+	b=osQd2BuvW6nfluY4ruhQpBqODCPQ8CRwT40tWduFNxM/j8OwFI6HfiwaTmg5HRrBC
+	 LYMYxqaVMUYGiRkAmFM7lp+C+uWBKlHPrb31HtpAQFnZL2T8Svz2JyuNC3EFqHk2Xj
+	 /Q/EBqT+4TFOHTjSDoaJVPwSvr18fe6o7e6Ij64Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+30b93b6845b19cc38581@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	vega@nebusec.ai,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Davide Caratti <dcaratti@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 207/220] af_packet: Dont send zero-byte data in tpacket_snd().
-Date: Thu, 20 Aug 2026 16:56:37 +0200
-Message-ID: <20260820145229.734409897@linuxfoundation.org>
+Subject: [PATCH 6.12 208/220] net/sched: act_api: fix TOCTOU NULL deref on a->goto_chain
+Date: Thu, 20 Aug 2026 16:56:38 +0200
+Message-ID: <20260820145229.763247301@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -54,64 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 6bcd76c134c55c697148acb5c0194e9666abdf84 ]
+[ Upstream commit f60b396ee174206fe08ebf997d16cd3801b77b22 ]
 
-syzbot reported a WARNING in __dev_queue_xmit() triggered via tpacket_snd():
+tcf_action_exec() handles TC_ACT_GOTO_CHAIN by first checking
+rcu_access_pointer(a->goto_chain) and then calling
+tcf_action_goto_chain_exec(), which does a second, independent
+rcu_dereference_bh(a->goto_chain) read and immediately dereferences
+chain->filter_chain. A concurrent tcf_action_set_ctrlact() (e.g. the gact
+replace path) can clear a->goto_chain between the two reads, so the second
+read returns NULL and tcf_action_goto_chain_exec() dereferences NULL.
 
-skb_assert_len
-WARNING: at include/linux/skbuff.h:2753 skb_assert_len
-WARNING: at __dev_queue_xmit+0x21bc/0x4970 net/core/dev.c:4781
+Fix the race by doing a single rcu_dereference_bh() read of a->goto_chain
+in tcf_action_exec(), checking it once for NULL, and passing the resulting
+chain pointer into tcf_action_goto_chain_exec(). This turns the split
+check/use into a single check/use on one value.
 
-Call Trace:
- <TASK>
- dev_queue_xmit include/linux/netdevice.h:3448 [inline]
- packet_xmit+0x243/0x310 net/packet/af_packet.c:276
- tpacket_snd net/packet/af_packet.c:2907 [inline]
- packet_sendmsg+0x28d6/0x4eb0 net/packet/af_packet.c:3134
-
-When sending 0-byte packets via TPACKET ring buffer on devices with no
-hard header (e.g. dev->hard_header_len == 0), tpacket_fill_skb()
-populates an skb with skb->len == 0 and returns 0. tpacket_snd() then
-forwards this empty skb to packet_xmit(), causing __dev_queue_xmit() to
-hit skb_assert_len(skb).
-
-Similar checks exist in packet_snd() via commit dc633700f00f
-("net/af_packet: check len when min_header_len equals to 0") and in
-packet_sendmsg_spkt() via commit 6a341729fb31 ("af_packet: Don't send
-zero-byte data in packet_sendmsg_spkt().").
-
-Return -EINVAL in tpacket_fill_skb() when skb->len is zero to reject
-zero-length packets in tpacket_snd().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+30b93b6845b19cc38581@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a79e807.01d0871a.3a0d52.00ac.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260810150447.1220864-1-edumazet@google.com
+Fixes: ee3bbfe806cd ("net/sched: let actions use RCU to access 'goto_chain'")
+Reported-by: vega@nebusec.ai
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Davide Caratti <dcaratti@redhat.com>
+Link: https://patch.msgid.link/20260809090928.868186-1-jhs@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/sched/act_api.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 6a12d9c704a91..7e55ddab7b961 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2712,6 +2712,9 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
- 		len = ((to_write > len_max) ? len_max : to_write);
- 	}
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index 3b7ae280d32eb..6774edbdd5280 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -41,11 +41,9 @@ int tcf_dev_queue_xmit(struct sk_buff *skb, int (*xmit)(struct sk_buff *skb))
+ }
+ EXPORT_SYMBOL_GPL(tcf_dev_queue_xmit);
  
-+	if (unlikely(!skb->len))
-+		return -EINVAL;
+-static void tcf_action_goto_chain_exec(const struct tc_action *a,
++static void tcf_action_goto_chain_exec(const struct tcf_chain *chain,
+ 				       struct tcf_result *res)
+ {
+-	const struct tcf_chain *chain = rcu_dereference_bh(a->goto_chain);
+-
+ 	res->goto_tp = rcu_dereference_bh(chain->filter_chain);
+ }
+ 
+@@ -1117,12 +1115,14 @@ int tcf_action_exec(struct sk_buff *skb, struct tc_action **actions,
+ 					return TC_ACT_OK;
+ 			}
+ 		} else if (TC_ACT_EXT_CMP(ret, TC_ACT_GOTO_CHAIN)) {
+-			if (unlikely(!rcu_access_pointer(a->goto_chain))) {
++			struct tcf_chain *chain = rcu_dereference_bh(a->goto_chain);
 +
- 	packet_parse_headers(skb, sock);
++			if (unlikely(!chain)) {
+ 				tcf_set_drop_reason(skb,
+ 						    SKB_DROP_REASON_TC_CHAIN_NOTFOUND);
+ 				return TC_ACT_SHOT;
+ 			}
+-			tcf_action_goto_chain_exec(a, res);
++			tcf_action_goto_chain_exec(chain, res);
+ 		}
  
- 	return tp_len;
+ 		if (ret != TC_ACT_PIPE)
 -- 
 2.53.0
 
