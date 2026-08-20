@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A0037E5CD;
-	Thu, 20 Aug 2026 17:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37331307492;
+	Thu, 20 Aug 2026 17:38:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247481; cv=none; b=R1R6MacNwH3lFvH8yIe99uNaj2/SFaPGI80IHN6/eaw7J7pB65ow73kUiHbT2fSir13wbKZwPiHZlZ/vnwQ9xz9l6vo5EJpr6Sm6dXYSknLd3L4tMp2RX/4Iy1DPoRIZiDQgvWp5GQAoKLGiu2bIZXhS9dG/+vSwWZMAnTyptLM=
+	t=1787247484; cv=none; b=MEibq55lpO3XiwO33D7aX7Xxu30a+IYfdm6hhi7C6x/tFo/W6p5zjsbXCSKReG37cWVKtDb4pZrBjohgAH51AKnFmgR4pVN4ljGvv/UIoHMVpNnmRZljpVRWAILtc0cvTgKBHGSMpX1tRpxauW+E+iL5OsHbayrbZp5hIJuHvGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247481; c=relaxed/simple;
-	bh=0TH1qyWTwLu5pERwqrKACObDaoVh2rPhT3piBt+54rs=;
+	s=arc-20240116; t=1787247484; c=relaxed/simple;
+	bh=BEugDAol69EVPMW7dm7Nsia3sDXfaxJvtEfE0zqYUmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HIn6uU5SsoP+1e8BodUA+84FG+sDQg7xhJgULPAYTXek9SP7TR3zR76Wkle2aZlSSUlWkEA+4thJtWObC3VVQST7yb0AXBme+WxuL7SXEY8WaG70E+SI9+gy1NtEv8y+O/Hn6asQB3SnVUE83xjQj8TL61TJ/BQi5f84pxfgyJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shDTyVGd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UNIdQVzFPwgimQ1TmQ5vPLDHfkGkriilC+B05Ke9E9uU95nt9P2jTlYzOW5XpFpoZOE0dUbgTxE0RLNy4jbyG4k+50xh6ca6cijtGGLfGNNTGB9a6Qk5rNwSqf7qVoZqWA3KoxHuTU6X5603wG5pgK2RQpnEYBxVquwXmGz2Ad8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PFrKL+7h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shDTyVGd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57001F000E9;
-	Thu, 20 Aug 2026 17:37:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PFrKL+7h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD2221F000E9;
+	Thu, 20 Aug 2026 17:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247480;
-	bh=dihpOESwg9miRBH6FEuk25nhXECxIal+2jY/zY11BYg=;
+	s=korg; t=1787247483;
+	bh=6vab1T8+uFO4p2XmkQV1PrNFW5KtnkJgBoQKB1XKZ6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=shDTyVGdpffnxM0rEiAKITs9YN2QbJCj1IBXUEZ4ot9tB3fJTJvYqxqvtf4QMamqQ
-	 NaiApEOF88EAiY8C2l2QN7ygngIQQK7DgNqkG/lElxKAK8z8MJ0XagZJn9jgKQYG+Z
-	 7jFi++VwxXF+TlJFb2bWlz04gUhJU8izYvp03cA0=
+	b=PFrKL+7hObyTSS3KbUs+WuugXoEJ/SPtHXBO5BqGckrLNJaaWbQcgYvuY8OFnr2a3
+	 FmZzPYFXqfCos4wQUld5SX0H0q7PA4w3xkB7V5G+iQR/UdXvwj398Z9mRCwlbFJYnf
+	 BP9Ryiq6OohKtuW9uMvlTINWdUTQ/SFiRECFaOaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.6 034/166] crypto: qce - fix error path in devm_qce_register_algs
-Date: Thu, 20 Aug 2026 16:54:53 +0200
-Message-ID: <20260820145212.208682690@linuxfoundation.org>
+	David Rosca <david.rosca@amd.com>,
+	Leo Liu <leo.liu@amd.com>,
+	Ruijing Dong <ruijing.dong@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 061/166] drm/amdgpu: Fix UVD dpb min size calculation for H264
+Date: Thu, 20 Aug 2026 16:55:20 +0200
+Message-ID: <20260820145212.984203788@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -51,34 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: David Rosca <david.rosca@amd.com>
 
-commit 9c75402286409f5e1a75e4a445555c84066f89db upstream.
+commit 21a8084cd76223a13493237e04d45f5226d7cee6 upstream.
 
-If ops->register_algs() fails, the error path repeatedly calls the same
-ops->unregister_algs() from the failed registration. Use the loop index
-to unregister the previously registered algorithms instead.
+This should use actual number of references from the decode
+message, instead of maximum derived from level.
 
-Fixes: e80cf84b6087 ("crypto: qce - unregister previously registered algos in error path")
+Signed-off-by: David Rosca <david.rosca@amd.com>
+Acked-by: Leo Liu <leo.liu@amd.com>
+Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 64b525edb7e7bdfcdc77883c5e413804e2396856)
 Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/qce/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |   62 ++------------------------------
+ 1 file changed, 4 insertions(+), 58 deletions(-)
 
---- a/drivers/crypto/qce/core.c
-+++ b/drivers/crypto/qce/core.c
-@@ -58,7 +58,7 @@ static int qce_register_algs(struct qce_
- 		ret = ops->register_algs(qce);
- 		if (ret) {
- 			for (j = i - 1; j >= 0; j--)
--				ops->unregister_algs(qce);
-+				qce_ops[j]->unregister_algs(qce);
- 			return ret;
- 		}
- 	}
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
+@@ -638,11 +638,9 @@ static int amdgpu_uvd_cs_msg_decode(stru
+ 	unsigned int height = msg[7];
+ 	unsigned int dpb_size = msg[9];
+ 	unsigned int pitch = msg[28];
+-	unsigned int level = msg[57];
+ 
+ 	unsigned int width_in_mb = width / 16;
+ 	unsigned int height_in_mb = ALIGN(height / 16, 2);
+-	unsigned int fs_in_mb = width_in_mb * height_in_mb;
+ 
+ 	unsigned int image_size, tmp, min_dpb_size, num_dpb_buffer;
+ 	unsigned int min_ctx_size = ~0;
+@@ -661,35 +659,9 @@ static int amdgpu_uvd_cs_msg_decode(stru
+ 
+ 	switch (stream_type) {
+ 	case 0: /* H264 */
+-		switch (level) {
+-		case 30:
+-			num_dpb_buffer = 8100 / fs_in_mb;
+-			break;
+-		case 31:
+-			num_dpb_buffer = 18000 / fs_in_mb;
+-			break;
+-		case 32:
+-			num_dpb_buffer = 20480 / fs_in_mb;
+-			break;
+-		case 41:
+-			num_dpb_buffer = 32768 / fs_in_mb;
+-			break;
+-		case 42:
+-			num_dpb_buffer = 34816 / fs_in_mb;
+-			break;
+-		case 50:
+-			num_dpb_buffer = 110400 / fs_in_mb;
+-			break;
+-		case 51:
+-			num_dpb_buffer = 184320 / fs_in_mb;
+-			break;
+-		default:
+-			num_dpb_buffer = 184320 / fs_in_mb;
+-			break;
+-		}
+-		num_dpb_buffer++;
++		num_dpb_buffer = ((msg[61] >> 16) & 0xff) + 1;
+ 		if (num_dpb_buffer > 17)
+-			num_dpb_buffer = 17;
++			return -EINVAL;
+ 
+ 		/* reference picture buffer */
+ 		min_dpb_size = image_size * num_dpb_buffer;
+@@ -739,35 +711,9 @@ static int amdgpu_uvd_cs_msg_decode(stru
+ 		break;
+ 
+ 	case 7: /* H264 Perf */
+-		switch (level) {
+-		case 30:
+-			num_dpb_buffer = 8100 / fs_in_mb;
+-			break;
+-		case 31:
+-			num_dpb_buffer = 18000 / fs_in_mb;
+-			break;
+-		case 32:
+-			num_dpb_buffer = 20480 / fs_in_mb;
+-			break;
+-		case 41:
+-			num_dpb_buffer = 32768 / fs_in_mb;
+-			break;
+-		case 42:
+-			num_dpb_buffer = 34816 / fs_in_mb;
+-			break;
+-		case 50:
+-			num_dpb_buffer = 110400 / fs_in_mb;
+-			break;
+-		case 51:
+-			num_dpb_buffer = 184320 / fs_in_mb;
+-			break;
+-		default:
+-			num_dpb_buffer = 184320 / fs_in_mb;
+-			break;
+-		}
+-		num_dpb_buffer++;
++		num_dpb_buffer = ((msg[61] >> 16) & 0xff) + 1;
+ 		if (num_dpb_buffer > 17)
+-			num_dpb_buffer = 17;
++			return -EINVAL;
+ 
+ 		/* reference picture buffer */
+ 		min_dpb_size = image_size * num_dpb_buffer;
 
 
