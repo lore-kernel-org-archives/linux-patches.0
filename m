@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D4037CD47;
-	Thu, 20 Aug 2026 15:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4E0379EDA;
+	Thu, 20 Aug 2026 15:15:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238898; cv=none; b=ml3aDSgLO9F7S9j+2134jy6vvl2fAQFPvpPqoN1Oc/PgvOrsyqE4lt+JHbMGe/egHpjADiilNpk5Whnp1SvhGJZ0Z8tsJrSM0RZSsOKn/hnCP1oG/UuiQ2TM5ovsxtDR49j6vytD/SwEECbq6ou94+jF1TKFuPcE18s716as16E=
+	t=1787238901; cv=none; b=TDaTJY8Y9ebeP0XwOsvkvscQIOZ8bdEJaOQ00N2/ot/8yRXK+IDij5RNBIyMR1jg9/zq7K9BClxoEIvZ7i/jyvZIPQZF5gv9iS7eKINoiOv4Ql9WDJEhB+XFXbqOgrguj125VxDXaueUiSloVP0KOvoAbbxtAKDW3vcvXTgC2cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238898; c=relaxed/simple;
-	bh=hiDbVmp1aoDObZowJACTnPaOsqKKlxHuMm4vRmxsslM=;
+	s=arc-20240116; t=1787238901; c=relaxed/simple;
+	bh=oNa9BzqUAKVjkbI8BYjrQ/ngW/S+/Hxi6IDSC/iYsqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A8FRRMKS+TAq6uXJkPwXnUQa3JnUlbi3th+IWWy2P/3gNZQCaVUiIAJf5qiP/mSaglW8SqjkBPc5+y62CLv6QM3NUhha+YlhFq72MlngaLmkhnNGDRV/GMk+XASw5JlDjln1DcFRcug3CS7Co2cOmtgzOvYIqp0K3kgH/C6eEaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OprwB3Ay; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H9WZZpmmTeVFy8XwHV5FPfG7D20wYGd0mZSgAC2TiohqBfHdqK81PepObqnjHfa/avhgFhLFSX+5DcDhmANy4aA+bvw8D5xzk5lJ9SFbPblYCaC8xP/pWSiNLUc9HUoH+3vqu48URQmq1pgX0Szba31Je271xm/Ao1SkkR/zN78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYgP/Hwq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OprwB3Ay"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E49D1F000E9;
-	Thu, 20 Aug 2026 15:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYgP/Hwq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64DB1F000E9;
+	Thu, 20 Aug 2026 15:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238897;
-	bh=CUQZ2UJ9Zsjq/a4rpsDbePiGi7TXJtgmwpvC3xXRUzM=;
+	s=korg; t=1787238900;
+	bh=VcWndUDg+hquW4+2vnnTlQAwTxRhYejGmsOnNajifZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OprwB3AyhJx8YvpwoVNLncpJXCPcAFdu1J/HXJ45dcmG49PjavASa0Tez8xhSbxmj
-	 elDyB2YDsZmGMMrJjnZk6nEEUrDK3L0cvMYDWOr25M+2DsyHW8h83obyH4K9h/z1bd
-	 uuaddE3LovOPwd14cAK+y0aYwWaQMA0xz7J7glu0=
+	b=KYgP/HwqjgDKpbvY/lzbxzgsdaC9isWTx/8C3KfUzF3SvFeIzKsc3oPnT810AeZSr
+	 mqdmfdNf3bhIr2BuKhEGqpZ4TXdxbNjzutn3ozbVzv3dZq40MpxNgOhpdCoAJfr8P5
+	 Sp/t2xTyLJEcfCD6ueqlB5RtA1SMi0FaNowrKDI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 040/217] Input: byd - synchronize timer deletion before freeing private data
-Date: Thu, 20 Aug 2026 16:53:28 +0200
-Message-ID: <20260820145238.824934472@linuxfoundation.org>
+	Nayna Jain <nayna@linux.ibm.com>,
+	R Nageswara Sastry <rnsastry@linux.ibm.com>,
+	George Wilson <gcwilson@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.18 041/217] powerpc/pseries: lparcfg - fix kbuf[] underflow
+Date: Thu, 20 Aug 2026 16:53:29 +0200
+Message-ID: <20260820145238.855265638@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -50,40 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: George Wilson <gcwilson@linux.ibm.com>
 
-commit c83e79c0842ed29860648bcce5022ef0ba5001c6 upstream.
+commit fb442a6673ff1046bf67754957d95880fdb394b5 upstream.
 
-byd_disconnect() uses timer_delete() before freeing the driver's private
-data.  This does not wait for a running byd_clear_touch() callback, which
-dereferences the private data and its psmouse pointer.  A callback racing
-with disconnect can therefore access the private data after it has been
-freed.  The timer can also still be re-armed by byd_process_byte() while
-the disconnect is in progress.
+In lparcfg_write(), a count of 0 results in kbuf[] being indexed at -1.
+Check for count == 0 in the existing check for count > sizeof(kbuf) and
+return -EINVAL if true.
 
-Use timer_shutdown_sync() before freeing the private data: it waits for
-a running callback and turns any later re-arm attempt into a no-op.
-
-Fixes: 2d5f5611dd0d ("Input: byd - enable absolute mode")
-Cc: stable@vger.kernel.org
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Link: https://patch.msgid.link/20260720061259.1601281-1-lilinmao@kylinos.cn
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 74422e2b1939 ("powerpc/pseries: Remove VLA from lparcfg_write()")
+Acked-by: Nayna Jain <nayna@linux.ibm.com>
+Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Cc: stable@vger.kernel.org # 4.20
+Signed-off-by: George Wilson <gcwilson@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/byd.c |    2 +-
+ arch/powerpc/platforms/pseries/lparcfg.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/mouse/byd.c
-+++ b/drivers/input/mouse/byd.c
-@@ -425,7 +425,7 @@ static void byd_disconnect(struct psmous
- 	struct byd_data *priv = psmouse->private;
+--- a/arch/powerpc/platforms/pseries/lparcfg.c
++++ b/arch/powerpc/platforms/pseries/lparcfg.c
+@@ -686,7 +686,7 @@ static ssize_t lparcfg_write(struct file
+ 	if (!firmware_has_feature(FW_FEATURE_SPLPAR))
+ 		return -EINVAL;
  
- 	if (priv) {
--		timer_delete(&priv->timer);
-+		timer_shutdown_sync(&priv->timer);
- 		kfree(psmouse->private);
- 		psmouse->private = NULL;
- 	}
+-	if (count > sizeof(kbuf))
++	if (count == 0 || count > sizeof(kbuf))
+ 		return -EINVAL;
+ 
+ 	if (copy_from_user(kbuf, buf, count))
 
 
