@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FB535DA68;
-	Thu, 20 Aug 2026 17:48:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3924772A7;
+	Thu, 20 Aug 2026 17:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248082; cv=none; b=E9GVwkBIEyqaChE6NzwV+fSZy4IlH1FLje8XLjYEs+28eY4xRJJ3Mol83KrHEENUijtBsES1AYoJoHg/ES7tAp9v2MFGNm/5K4B9MYtk4mBNYS74XTX67TpgFuwT+Ui1QF92vCDjSlZ4U5JwsCCABmKykqO1Wy7kGs2yEIYM1jo=
+	t=1787248085; cv=none; b=e9UqkGVnCaLmCHp+wKD4zhPc1dlWYnoNvB9G53xPAygSyTy27pu86myUFjzSx7Ud6/AXM+dZzBUgL8AkV93ob9mLAyZoGENo41gKfoBOMVs4L5UF6FoJzodQraS4uxvgO7u9a+Q3u4GWzQFOzmKRxdgfBH+G+tav8uGchpigk4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248082; c=relaxed/simple;
-	bh=QB/PZXahnvaav0c0vvuFI97va9ZwWDn8QjcRjNUDbME=;
+	s=arc-20240116; t=1787248085; c=relaxed/simple;
+	bh=PkHSg3IdesVo6c5IE75dPk9fSs8xuiHuaFsk+V86Dm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PJyPl8JaWEeG84kdGE/UCMQjnD/Cw/ZA2f52xBpusysFh1eySXGRty77a1fCBZQlIEGMuKMuH2mGkL/zfcEkKC7GhEhXM+X635PGec1fAO6fLWWZAZWXcJMEQfwruCIlUW3vwY5lodPqiWufRMlArjB6x14jN7rhDdRxkbhkEhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvGNEw7W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=itN5MaKkWbI3btY+Qq11eRBHFIp+GRHxBDyViGFtt4e067wNRsEPSo5MHze9NNxI4ZqQBpQJP3yvOJl6dBMCMLjEvHHFbNYk7HvuzVh9O1eZDRTFoz55wqAfW+fWKk3EZTBlXnVHhNXl29Sj/qbCVt46++HHFD+8nFemz/s4wLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJ0GNxZf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvGNEw7W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C83481F00A3A;
-	Thu, 20 Aug 2026 17:48:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJ0GNxZf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E3021F000E9;
+	Thu, 20 Aug 2026 17:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248081;
-	bh=+Lbf71bK34/c7kqJhLQvs2YvjaM9lrYF4cN+iG/+iqU=;
+	s=korg; t=1787248084;
+	bh=fAnlX6gOVG4ZkOrfjqr29RjKVIDBvP8AainUQq4ZNNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xvGNEw7W/J30jUBeLr+cNQGL8avq+V950/eMqZNiJqgyY08eMBdGkz6Vp/G4KACuH
-	 SjK4qGpuVfHJJvg96uRRYhquT/bCcKxPHCNF21crNyIs6k70TidpFMhTFwlsxqglSK
-	 8z6EC7zsuvQHWaKSRHw577YOan8ttahTfbkjYw2A=
+	b=yJ0GNxZfcZOsVuifwgoSLgzY8cD4zGqzQodzU07OJoNqtCym/U+gjLJcxLbPnj761
+	 a2NbgNhF7dX+Hn3byjuJ08qInSRN5Ral+7qzf4zQClmMN+Znq9orDUFa4aOSUudBhw
+	 VPPWfvaMZiZEwhgQBRl6C6kvF+p1MAOyWvtHaVQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	NeilBrown <neil@brown.name>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 065/303] Input: mms114 - reject an oversized device packet size
-Date: Thu, 20 Aug 2026 16:53:21 +0200
-Message-ID: <20260820145255.119502771@linuxfoundation.org>
+Subject: [PATCH 6.1 066/303] VFS/audit: introduce kern_path_parent() for audit
+Date: Thu, 20 Aug 2026 16:53:22 +0200
+Message-ID: <20260820145255.150252202@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -51,64 +51,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: NeilBrown <neil@brown.name>
 
-[ Upstream commit 66725039f7090afe14c31bd259e2059a68f04023 ]
+[ Upstream commit 76a53de6f7ff0641570364234fb4489f4d4fc8e9 ]
 
-mms114_interrupt() reads a packet of touch data from the device into a
-fixed-size on-stack buffer
+audit_alloc_mark() and audit_get_nd() both need to perform a path
+lookup getting the parent dentry (which must exist) and the final
+target (following a LAST_NORM name) which sometimes doesn't need to
+exist.
 
-	struct mms114_touch touch[MMS114_MAX_TOUCH];
+They don't need the parent to be locked, but use kern_path_locked() or
+kern_path_locked_negative() anyway.  This is somewhat misleading to the
+casual reader.
 
-which holds MMS114_MAX_TOUCH (10) events of MMS114_EVENT_SIZE (8) bytes,
-i.e. 80 bytes. The length of the I2C read into it is taken verbatim from
-the device:
+This patch introduces a more targeted function, kern_path_parent(),
+which returns not holding locks.  On success the "path" will
+be set to the parent, which must be found, and the return value is the
+dentry of the target, which might be negative.
 
-	packet_size = mms114_read_reg(data, MMS114_PACKET_SIZE);
-	if (packet_size <= 0)
-		goto out;
-	...
-	error = __mms114_read_reg(data, MMS114_INFORMATION, packet_size,
-			(u8 *)touch);
+This will clear the way to rename kern_path_locked() which is
+otherwise only used to prepare for removing something.
 
-packet_size is a single device register byte (0x0F) and the only check
-is the lower bound packet_size <= 0; it is never bounded against the
-size of touch[]. A malfunctioning, malicious or counterfeit controller
-(or an attacker tampering with the I2C bus) can report a packet_size of
-up to 255, so __mms114_read_reg() writes up to 175 bytes past the end of
-touch[] on the IRQ-thread stack: a stack out-of-bounds write that can
-overwrite the stack canary, saved registers and the return address.
+It also allows us to remove kern_path_locked_negative(), which is
+transformed into the new kern_path_parent().
 
-A well-formed device never reports more than the buffer holds, so reject
-an oversized packet and drop the report, consistent with the handler's
-other error paths, rather than reading past the buffer.
-
-Fixes: 07b8481d4aff ("Input: add MELFAS mms114 touchscreen driver")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260612-b4-disp-dc4b8dc4-v1-1-d7cb0a828d92@proton.me
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-[ changed `&client->dev` to `&data->client->dev` since 6.1's interrupt handler lacks the `client` local variable ]
+Signed-off-by: NeilBrown <neil@brown.name>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 81905b5acbe7 ("audit: fix recursive locking deadlock in audit_dupe_exe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/mms114.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/namei.c              |   43 +++++++++++++++++++++++++++++++++++++++++++
+ include/linux/namei.h   |    1 +
+ kernel/audit.h          |    4 ++--
+ kernel/audit_fsnotify.c |    9 +++------
+ kernel/audit_watch.c    |    9 ++++++---
+ 5 files changed, 55 insertions(+), 11 deletions(-)
 
---- a/drivers/input/touchscreen/mms114.c
-+++ b/drivers/input/touchscreen/mms114.c
-@@ -214,6 +214,12 @@ static irqreturn_t mms114_interrupt(int
- 	if (packet_size <= 0)
- 		goto out;
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -2599,6 +2599,49 @@ static struct dentry *__kern_path_locked
+ 	return d;
+ }
  
-+	if (packet_size > sizeof(touch)) {
-+		dev_err(&data->client->dev, "Invalid packet size %d (max %zu)\n",
-+			packet_size, sizeof(touch));
++/**
++ * kern_path_parent: lookup path returning parent and target
++ * @name: path name
++ * @path: path to store parent in
++ *
++ * The path @name should end with a normal component, not "." or ".." or "/".
++ * A lookup is performed and if successful the parent information
++ * is store in @parent and the dentry is returned.
++ *
++ * The dentry maybe negative, the parent will be positive.
++ *
++ * Returns:  dentry or error.
++ */
++struct dentry *kern_path_parent(const char *name, struct path *path)
++{
++	struct filename *filename = getname_kernel(name);
++	struct path parent_path;
++	struct dentry *d;
++	struct qstr last;
++	int type, error;
++
++	error = filename_parentat(AT_FDCWD, filename, 0, &parent_path, &last, &type);
++	if (error) {
++		d = ERR_PTR(error);
++		goto out;
++	}
++	if (unlikely(type != LAST_NORM)) {
++		path_put(&parent_path);
++		d = ERR_PTR(-EINVAL);
 +		goto out;
 +	}
 +
- 	/* MMS136 has slightly different event size */
- 	if (data->type == TYPE_MMS134S || data->type == TYPE_MMS136)
- 		event_size = MMS136_EVENT_SIZE;
++	d = lookup_one_len_unlocked(last.name, parent_path.dentry, last.len);
++	if (IS_ERR(d)) {
++		path_put(&parent_path);
++		goto out;
++	}
++	*path = parent_path;
++out:
++	putname(filename);
++	return d;
++}
++
+ struct dentry *kern_path_locked(const char *name, struct path *path)
+ {
+ 	struct filename *filename = getname_kernel(name);
+--- a/include/linux/namei.h
++++ b/include/linux/namei.h
+@@ -61,6 +61,7 @@ struct dentry *lookup_one_qstr_excl(cons
+ 				    struct dentry *base,
+ 				    unsigned int flags);
+ extern int kern_path(const char *, unsigned, struct path *);
++struct dentry *kern_path_parent(const char *name, struct path *parent);
+ 
+ extern struct dentry *kern_path_create(int, const char *, struct path *, unsigned int);
+ extern struct dentry *user_path_create(int, const char __user *, struct path *, unsigned int);
+--- a/kernel/audit.h
++++ b/kernel/audit.h
+@@ -279,8 +279,8 @@ extern struct audit_fsnotify_mark *audit
+ extern char *audit_mark_path(struct audit_fsnotify_mark *mark);
+ extern void audit_remove_mark(struct audit_fsnotify_mark *audit_mark);
+ extern void audit_remove_mark_rule(struct audit_krule *krule);
+-extern int audit_mark_compare(struct audit_fsnotify_mark *mark,
+-			      unsigned long ino, dev_t dev);
++extern int audit_mark_compare(struct audit_fsnotify_mark *mark, u64 ino,
++			      dev_t dev);
+ extern int audit_dupe_exe(struct audit_krule *new, struct audit_krule *old);
+ extern int audit_exe_compare(struct task_struct *tsk,
+ 			     struct audit_fsnotify_mark *mark);
+--- a/kernel/audit_fsnotify.c
++++ b/kernel/audit_fsnotify.c
+@@ -57,7 +57,7 @@ char *audit_mark_path(struct audit_fsnot
+ 	return mark->path;
+ }
+ 
+-int audit_mark_compare(struct audit_fsnotify_mark *mark, unsigned long ino, dev_t dev)
++int audit_mark_compare(struct audit_fsnotify_mark *mark, u64 ino, dev_t dev)
+ {
+ 	if (mark->ino == AUDIT_INO_UNSET)
+ 		return 0;
+@@ -76,17 +76,14 @@ struct audit_fsnotify_mark *audit_alloc_
+ 	struct audit_fsnotify_mark *audit_mark;
+ 	struct path path;
+ 	struct dentry *dentry;
+-	struct inode *inode;
+ 	int ret;
+ 
+ 	if (pathname[0] != '/' || pathname[len-1] == '/')
+ 		return ERR_PTR(-EINVAL);
+ 
+-	dentry = kern_path_locked(pathname, &path);
++	dentry = kern_path_parent(pathname, &path);
+ 	if (IS_ERR(dentry))
+ 		return ERR_CAST(dentry); /* returning an error */
+-	inode = path.dentry->d_inode;
+-	inode_unlock(inode);
+ 
+ 	audit_mark = kzalloc(sizeof(*audit_mark), GFP_KERNEL);
+ 	if (unlikely(!audit_mark)) {
+@@ -100,7 +97,7 @@ struct audit_fsnotify_mark *audit_alloc_
+ 	audit_update_mark(audit_mark, dentry->d_inode);
+ 	audit_mark->rule = krule;
+ 
+-	ret = fsnotify_add_inode_mark(&audit_mark->mark, inode, 0);
++	ret = fsnotify_add_inode_mark(&audit_mark->mark, path.dentry->d_inode, 0);
+ 	if (ret < 0) {
+ 		audit_mark->path = NULL;
+ 		fsnotify_put_mark(&audit_mark->mark);
+--- a/kernel/audit_watch.c
++++ b/kernel/audit_watch.c
+@@ -244,7 +244,7 @@ static void audit_watch_log_rule_change(
+ /* Update inode info in audit rules based on filesystem event. */
+ static void audit_update_watch(struct audit_parent *parent,
+ 			       const struct qstr *dname, dev_t dev,
+-			       unsigned long ino, unsigned invalidating)
++			       u64 ino, unsigned int invalidating)
+ {
+ 	struct audit_watch *owatch, *nwatch, *nextw;
+ 	struct audit_krule *r, *nextr;
+@@ -347,15 +347,18 @@ static void audit_remove_parent_watches(
+ /* Get path information necessary for adding watches. */
+ static int audit_get_nd(struct audit_watch *watch, struct path *parent)
+ {
+-	struct dentry *d = kern_path_locked(watch->path, parent);
++	struct dentry *d;
++
++	d = kern_path_parent(watch->path, parent);
+ 	if (IS_ERR(d))
+ 		return PTR_ERR(d);
++
+ 	if (d_is_positive(d)) {
+ 		/* update watch filter fields */
+ 		watch->dev = d->d_sb->s_dev;
+ 		watch->ino = d_backing_inode(d)->i_ino;
+ 	}
+-	inode_unlock(d_backing_inode(parent->dentry));
++
+ 	dput(d);
+ 	return 0;
+ }
 
 
