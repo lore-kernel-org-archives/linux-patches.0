@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233C2381B0A;
-	Thu, 20 Aug 2026 15:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E663B3815D5;
+	Thu, 20 Aug 2026 15:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239255; cv=none; b=FrU/n1YG5+Mft+YvN/q/u2kR5TZfo5WSjU5Y9bPRK8+przXF817znduYKM0ErUv7FirsRgfRSPg/5h+iHTGur0ZqdtVxAPKWbmQscODetPzaWC1IehJJW8T941M/ejz49iyB3cB7sbxMCV8VRjHqmbDlaMtnNMYnfrFnzZHluQs=
+	t=1787239258; cv=none; b=Lsjdv9bjl1YphTNNIBLXAl7LXZLymrlawv913eHY5uWFdPh9dc6yXqTfHxFo1VLtgx0VhEs5igmEkibn16DY/p4KyXbQmXOg2lva3FdZsJNRmPmcyHIN3rVIs++yx6xCFffAizHxudc0u8escbooIp6SgWEER8t/z0pUhAzVjg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239255; c=relaxed/simple;
-	bh=pqc8l9SIp+U4tr/uTbxiUYkr4iPW3w+QaDlEZCrxQBc=;
+	s=arc-20240116; t=1787239258; c=relaxed/simple;
+	bh=9oivRUJJIy+pekQtCeYHrRbQNEUbLNizRSX6SDvezYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FySkyrcDyrBNJQc86z/Yyobnqnv/Kl4PyPat7CTxMONzasb0iTCFoWFbEjWJ8O9SQrEi5t1uT8dRAhQLobzmYK1fh1RcrttM3pkJyfyxMtl62jvRwuXhfFAqAK/4oawO497LtRfQiIqJC5yir8xIiuw3s7+azh2av0pXAjWo1Wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsp3tfUh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eUmznEM00UlXCBA19PNNdh6oU/f1G30N8pJ5KN/4KjBLQIAnybZcn37ncjyFKnzLTj/HbzdgpzM9fPO2wijH0iRCCteFy+MgjIJ6M+gVm+gmPqBbcfKm8xXM0ZDdfEmVGeTQw25YCyt5DaHyVD5iZasyEPIYBmx5/BE5NwkmMkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlMiuVAN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsp3tfUh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A7441F000E9;
-	Thu, 20 Aug 2026 15:20:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlMiuVAN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C3631F000E9;
+	Thu, 20 Aug 2026 15:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239254;
-	bh=M02rpCBGJVJJesuZzA55QCRpKOoqcEK43fUN2HTX9pI=;
+	s=korg; t=1787239256;
+	bh=O1X3nSQBbvbzz+P0aUtGPdrcJj/S4tR+ZoKuA896X1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qsp3tfUhv/KUIJUWjJjBjGxKcOSi24D4H4cz/YrPbAwT9eJEQ27k3MP3LSCAqH4nV
-	 9RsmNU/GGCUSc82a6WZoa0Gs9qCry+OtpQhE/hzWiEsMbBiNr4Iy/9knQppkGI9b3N
-	 6V2XNqn9y13eKCJiJfJW51a/cQ9WzDHoo+YDLTy0=
+	b=mlMiuVANQwiQRr7wLtf5xWdigAjlFepAl4qDPngE5Ub/LTUvQmpYPlMT1sYkhXH/Y
+	 qslcSURLgzGEZw+PEVEYUWnZXalj3RsSblaIxRlyuAnZxe9ijSe+AHr1/BDDQIeUb2
+	 wkB2+lfeY8+XzUMf5rEQJmRrtg2rcANf7Ey+Nm4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Chintan Vankar <c-vankar@ti.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 201/217] net: ethernet: ti: am65-cpsw-nuss: Fix port_id extraction from SRC TAG
-Date: Thu, 20 Aug 2026 16:56:09 +0200
-Message-ID: <20260820145243.758939155@linuxfoundation.org>
+Subject: [PATCH 6.18 165/217] drm/amd/pm: fix pptable use-after-free
+Date: Thu, 20 Aug 2026 16:55:33 +0200
+Message-ID: <20260820145242.715402245@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -53,49 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit 36a05d2820077bb3955acb8111e1041d39148037 ]
+[ Upstream commit bb493058c35c8676e48269ab6732688ea733d23c ]
 
-On the packet reception path, the ID of the MAC Port on which the packet
-was received, is embedded in the RX DMA Descriptor's metadata. The ID is
-extracted using the helper function cppi5_desc_get_tags_ids() which fills
-in the 16-bit Source Tag into the 'port_id' variable. However, it is only
-the lower 8-bits of the 16-bit Source Tag that represent the MAC Port ID,
-while the upper 8-bits are Hardware-Reserved and carry an arbitrary value.
-With the existing logic, sporadic kernel crash is observed due to the
-subsequent driver code accessing out-of-bound memory because of an invalid
-port_id.
+amdgpu_dpm_get_pp_table() returns a pointer to a driver-owned power table
+after dropping adev->pm.mutex. The sysfs path then copies from that pointer.
+A concurrent pp_table write can replace and free the allocation during the
+copy, causing a use-after-free.
 
-Hence, fix the port_id extraction logic to use only the lower 8-bits of the
-Source Tag as the MAC Port ID.
+Change the DPM interface to copy into caller-provided storage while the mutex
+is held. Keep the size-only query for attribute discovery without exposing
+the driver-owned pointer.
 
-Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Chintan Vankar <c-vankar@ti.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260807111738.2055900-1-s-vadapalli@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1684d3ba4885 ("drm/amd/amdgpu: change pptable output format from ASCII to binary")
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit f6eed7acfd30099ef7baeb6ba45bb59daad80631)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/pm/amdgpu_dpm.c     |   14 +++++++++++---
+ drivers/gpu/drm/amd/pm/amdgpu_pm.c      |   13 +++----------
+ drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h |    3 ++-
+ 3 files changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 31d436cdceb7c..5bcf1126d627e 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -1312,6 +1312,8 @@ static int am65_cpsw_nuss_rx_packets(struct am65_cpsw_rx_flow *flow,
- 	k3_udma_glue_rx_cppi5_to_dma_addr(rx_chn->rx_chn, &buf_dma);
- 	pkt_len = cppi5_hdesc_get_pktlen(desc_rx);
- 	cppi5_desc_get_tags_ids(&desc_rx->hdr, &port_id, NULL);
-+	/* Port ID is contained in the lower 8-bits of the 16-bit Source Tag */
-+	port_id &= 0xFF;
- 	dev_dbg(dev, "%s rx port_id:%d\n", __func__, port_id);
- 	port = am65_common_get_port(common, port_id);
- 	ndev = port->ndev;
--- 
-2.53.0
-
+--- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
+@@ -1183,12 +1183,14 @@ int amdgpu_dpm_dispatch_task(struct amdg
+ 	return ret;
+ }
+ 
+-int amdgpu_dpm_get_pp_table(struct amdgpu_device *adev, char **table)
++int amdgpu_dpm_get_pp_table(struct amdgpu_device *adev, char *table,
++			    size_t size)
+ {
+ 	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
++	char *pptable = NULL;
+ 	int ret = 0;
+ 
+-	if (!table)
++	if ((!table && size) || (table && !size))
+ 		return -EINVAL;
+ 
+ 	if (amdgpu_sriov_vf(adev) || !pp_funcs->get_pp_table || adev->scpm_enabled)
+@@ -1196,7 +1198,13 @@ int amdgpu_dpm_get_pp_table(struct amdgp
+ 
+ 	mutex_lock(&adev->pm.mutex);
+ 	ret = pp_funcs->get_pp_table(adev->powerplay.pp_handle,
+-				     table);
++				     &pptable);
++	if (ret > 0 && !pptable) {
++		ret = -EINVAL;
++	} else if (ret > 0 && table) {
++		ret = min_t(size_t, ret, size);
++		memcpy(table, pptable, ret);
++	}
+ 	mutex_unlock(&adev->pm.mutex);
+ 
+ 	return ret;
+--- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+@@ -556,25 +556,19 @@ static ssize_t amdgpu_get_pp_table(struc
+ {
+ 	struct drm_device *ddev = dev_get_drvdata(dev);
+ 	struct amdgpu_device *adev = drm_to_adev(ddev);
+-	char *table = NULL;
+ 	int size, ret;
+ 
+ 	ret = amdgpu_pm_get_access_if_active(adev);
+ 	if (ret)
+ 		return ret;
+ 
+-	size = amdgpu_dpm_get_pp_table(adev, &table);
++	size = amdgpu_dpm_get_pp_table(adev, buf, PAGE_SIZE - 1);
+ 
+ 	amdgpu_pm_put_access(adev);
+ 
+ 	if (size <= 0)
+ 		return size;
+ 
+-	if (size >= PAGE_SIZE)
+-		size = PAGE_SIZE - 1;
+-
+-	memcpy(buf, table, size);
+-
+ 	return size;
+ }
+ 
+@@ -2641,10 +2635,9 @@ static int default_attr_update(struct am
+ 			*states = ATTR_STATE_UNSUPPORTED;
+ 	} else if (DEVICE_ATTR_IS(pp_table)) {
+ 		int ret;
+-		char *tmp = NULL;
+ 
+-		ret = amdgpu_dpm_get_pp_table(adev, &tmp);
+-		if (ret == -EOPNOTSUPP || !tmp)
++		ret = amdgpu_dpm_get_pp_table(adev, NULL, 0);
++		if (ret <= 0)
+ 			*states = ATTR_STATE_UNSUPPORTED;
+ 		else
+ 			*states = ATTR_STATE_SUPPORTED;
+--- a/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
++++ b/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
+@@ -487,7 +487,8 @@ int amdgpu_dpm_get_pp_num_states(struct
+ int amdgpu_dpm_dispatch_task(struct amdgpu_device *adev,
+ 			      enum amd_pp_task task_id,
+ 			      enum amd_pm_state_type *user_state);
+-int amdgpu_dpm_get_pp_table(struct amdgpu_device *adev, char **table);
++int amdgpu_dpm_get_pp_table(struct amdgpu_device *adev, char *table,
++			    size_t size);
+ int amdgpu_dpm_set_fine_grain_clk_vol(struct amdgpu_device *adev,
+ 				      uint32_t type,
+ 				      long *input,
 
 
