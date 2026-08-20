@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B111F377A82;
-	Thu, 20 Aug 2026 16:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE82377A82;
+	Thu, 20 Aug 2026 16:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243784; cv=none; b=EebsRlwLQc3g3LDi9aJcFj0fYBRiJtBHCodAiTytl+BHol73+YNcu6nkZugpipq9q9OcVKm3rGOyCjK594XNMn8rUJbg5qggUoUflsGk6gSiGTrwPCTGoTMHhOKVb2ZGg9WUSQyelXqwY88SgrWIfbwGnXRuRlNByJYp5CfWd3s=
+	t=1787243787; cv=none; b=HVhOswDY3AxqiaikzLcwWCAIxVQIC1sijNbPAMlSt6brfziqFYbOvtU7SBYOqSVUHWR+070rLM8PZRAlf2jZ55kSgfJVMkXejJRd6YDYdQeFHGXIkLWeHMtJc6xhDmKX3ylxCfSy5Dp9gVKz93xJqpAJlgSopF3VBi4RYP3nA90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243784; c=relaxed/simple;
-	bh=M2qMKsX2HLa2my0Y71J24A2hDKVYo4yTvO9+6nPIZ8A=;
+	s=arc-20240116; t=1787243787; c=relaxed/simple;
+	bh=/88EdfVG/4i/yGiF1MR7RcqwdljtLDdg8E9wDfng4FE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lUuOiG7oNfDB9KAVsedx1kVzlcszTWVlBpO1o++ACzY+HGfo5AdEIRae+1W4wGsdvXQKQshwXGqXdIhmPI373IQyUwzq3G584aN1ye0HmXImV9SmZb1dT5/9AMWQu+yCizdde/Oi6CGFq7h3K48F3pS5rox0gTdqoabiFY3kYlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=odjOYdqE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qvG+nT4TCgDhZ4Q9qLC3ewUXPm3gu9e1cxD0BqRDOAHlmWJSvUFoSkEIvBaEaiWOBJcDFCuLL7miAuxWC5hraYBXDFLM3H+gf1DXL2Qgr+02xt2snHPBmPtyuUb4wm2aNsXZPajPyPP9W77GuLjw8vcaZ3JsNpxSrHgQQMmM8RU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTEUioMD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="odjOYdqE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DCB1F000E9;
-	Thu, 20 Aug 2026 16:36:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTEUioMD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C2B1F00A3A;
+	Thu, 20 Aug 2026 16:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243783;
-	bh=SE4rA5xWxAWCOLECyStP/aew/uI1reIce6RagrHRHMs=;
+	s=korg; t=1787243786;
+	bh=xoovg7RmaTBeDw6PRdnwr606wBM0cAjOyfP25RBPXeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=odjOYdqE3teHj8USD+jd2rAV2k2QZ1uXwqN6DD9iQmQXKJrso5/zwv33aq5xpam/p
-	 Ds7uqkjxVKPuzjjpjHlCPtOHwtrLMlheT3S7xKBVYVWDKKM5FnT4dd9gcC7k4cr8fU
-	 GyugthmK0o/gwdpFG9TAtAfRQsBdH/r5oMpR/6GU=
+	b=BTEUioMDgNOqPMg38Zc7XSZSlcfLWJS50UtOXdGOvDycd0G5Qs+BT12BuuOQhNAfL
+	 rI7frx1wqE0nvVd1UiQyeynZgClzB9sls/J9p9q2zMGayxXRPlqxSfitxVmJoo+sza
+	 AovT2QL6zqKrRFpkPR0CqSUw3UgWvqwCm5YQLM3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tengda Wu <wutengda@huaweicloud.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 215/272] net/sched: serialize qdisc_rtab_list against concurrent get/put
-Date: Thu, 20 Aug 2026 16:56:39 +0200
-Message-ID: <20260820145238.056161093@linuxfoundation.org>
+Subject: [PATCH 5.15 216/272] ftrace: Add global mutex to serialize trace_parser access
+Date: Thu, 20 Aug 2026 16:56:40 +0200
+Message-ID: <20260820145238.085528110@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -53,134 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-[ Upstream commit f43ee0c0730d6191629b5ee1ceae27b1ebfdc047 ]
+[ Upstream commit 7720b63bcef3f54c7fe288774b720a227d54a306 ]
 
-qdisc_get_rtab() and qdisc_put_rtab() mutate the process-global singly
-linked list qdisc_rtab_list and a plain non-atomic 'int refcnt' with no
-lock. This was only safe because every caller historically held the RTNL
-mutex, which serialized all rate-table lookups, inserts and frees.
+In ftrace, the trace_parser structure is allocated and initialized when
+a trace file is opened, and is subsequently used across write and release
+handlers to parse user input.
 
-That invariant no longer holds. cls_flower sets
-TCF_PROTO_OPS_DOIT_UNLOCKED, so tc_new_tfilter() keeps rtnl_held == false
-for it and sets TCA_ACT_FLAGS_NO_RTNL. That flag propagates through
-tcf_exts_validate_ex() -> tcf_action_init() -> tcf_action_init_1() ->
-tcf_police_init(), which calls qdisc_get_rtab()/qdisc_put_rtab() with the
-RTNL mutex NOT held. Two RTM_NEWTFILTER requests on different CPUs, each
-adding a flower filter with a police action carrying the same rate, then
-race on qdisc_rtab_list and on the non-atomic refcnt, leading to a
-use-after-free / double-free of the kmalloc-2k struct qdisc_rate_table.
-qdisc_rtab_list is a single global (not per-netns), so the corrupted
-object is shared system-wide.
+The affected handler paths and their specific functions are:
+  - Open paths: ftrace_regex_open(), ftrace_graph_open()
+  - Write paths: ftrace_regex_write(), ftrace_graph_write()
+  - Release paths: ftrace_regex_release(), ftrace_graph_release()
 
-  BUG: KASAN: slab-use-after-free in qdisc_put_rtab+0x12f/0x160
-   qdisc_put_rtab+0x12f/0x160
-   tcf_police_init+0xda9/0x1590
-   tcf_action_init_1+0x460/0x6b0
-   tcf_action_init+0x439/0xa40
-   tcf_exts_validate_ex+0x42d/0x550
-   fl_change+0xddd/0x7da0
-   tc_new_tfilter+0xaa7/0x2420
-   rtnetlink_rcv_msg+0x95e/0xe90
-  which belongs to the cache kmalloc-2k of size 2048
+If userspace opens a trace file descriptor and shares it across multiple
+threads, concurrent write calls will race on the parser's internal state,
+specifically the 'idx', 'cont', and 'buffer' fields, leading to corrupted
+input or undefined behavior.
 
-Protect qdisc_rtab_list and the refcount with a dedicated spinlock. The
-(sleeping, GFP_KERNEL) allocation in qdisc_get_rtab() is performed before
-taking the lock; if a concurrent inserter added an identical table in the
-meantime the freshly allocated one is freed under the lock, so no
-duplicate is leaked. qdisc_put_rtab() now decrements the refcount and
-unlinks under the same lock.
+Fix this by adding a global mutex, parser_lock, to serialize all access
+to trace_parser across write and release paths, preventing concurrent
+corruption of parser state.
 
-Fixes: 470502de5bdb ("net: sched: unlock rules update API")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Fixes: e704eff3ff51 ("ftrace: Have set_graph_function handle multiple functions in one write")
+Fixes: 689fd8b65d66 ("tracing: trace parser support for function and graph")
 Cc: stable@vger.kernel.org
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260715114114.446841-1-qwe.aldo@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260725024721.1983675-1-wutengda@huaweicloud.com
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+[ Replaced `guard(mutex)(&parser_lock)` with explicit `mutex_lock`/`mutex_unlock` pairs because 5.15 builds `-std=gnu89` with `-Werror=declaration-after-statement`. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_api.c |   24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ kernel/trace/ftrace.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -410,12 +410,13 @@ static __u8 __detect_linklayer(struct tc
- }
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -1043,6 +1043,12 @@ struct ftrace_ops global_ops = {
+ };
  
- static struct qdisc_rate_table *qdisc_rtab_list;
-+static DEFINE_SPINLOCK(qdisc_rtab_lock);
- 
- struct qdisc_rate_table *qdisc_get_rtab(struct tc_ratespec *r,
- 					struct nlattr *tab,
- 					struct netlink_ext_ack *extack)
- {
--	struct qdisc_rate_table *rtab;
-+	struct qdisc_rate_table *rtab, *new_rtab;
- 
- 	if (tab == NULL || r->rate == 0 ||
- 	    r->cell_log == 0 || r->cell_log >= 32 ||
-@@ -424,15 +425,20 @@ struct qdisc_rate_table *qdisc_get_rtab(
- 		return NULL;
- 	}
- 
-+	new_rtab = kmalloc(sizeof(*new_rtab), GFP_KERNEL);
+ /*
++ * parser_lock - Protects trace_parser state against concurrent operations.
++ * Held across trace_get_user() and subsequent buffer parsing to prevent races.
++ */
++static DEFINE_MUTEX(parser_lock);
 +
-+	spin_lock(&qdisc_rtab_lock);
- 	for (rtab = qdisc_rtab_list; rtab; rtab = rtab->next) {
- 		if (!memcmp(&rtab->rate, r, sizeof(struct tc_ratespec)) &&
- 		    !memcmp(&rtab->data, nla_data(tab), 1024)) {
- 			rtab->refcnt++;
-+			spin_unlock(&qdisc_rtab_lock);
-+			kfree(new_rtab);
- 			return rtab;
- 		}
- 	}
++/*
+  * Used by the stack unwinder to know about dynamic ftrace trampolines.
+  */
+ struct ftrace_ops *ftrace_ops_trampoline(unsigned long addr)
+@@ -4928,6 +4934,8 @@ ftrace_regex_write(struct file *file, co
+ 	/* iter->hash is a local copy, so we don't need regex_lock */
  
--	rtab = kmalloc(sizeof(*rtab), GFP_KERNEL);
-+	rtab = new_rtab;
- 	if (rtab) {
- 		rtab->rate = *r;
- 		rtab->refcnt = 1;
-@@ -444,6 +450,7 @@ struct qdisc_rate_table *qdisc_get_rtab(
- 	} else {
- 		NL_SET_ERR_MSG(extack, "Failed to allocate new qdisc rate table");
- 	}
-+	spin_unlock(&qdisc_rtab_lock);
- 	return rtab;
- }
- EXPORT_SYMBOL(qdisc_get_rtab);
-@@ -452,18 +459,25 @@ void qdisc_put_rtab(struct qdisc_rate_ta
- {
- 	struct qdisc_rate_table *rtab, **rtabp;
- 
--	if (!tab || --tab->refcnt)
-+	if (!tab)
-+		return;
+ 	parser = &iter->parser;
 +
-+	spin_lock(&qdisc_rtab_lock);
-+	if (--tab->refcnt) {
-+		spin_unlock(&qdisc_rtab_lock);
- 		return;
-+	}
++	mutex_lock(&parser_lock);
+ 	read = trace_get_user(parser, ubuf, cnt, ppos);
  
- 	for (rtabp = &qdisc_rtab_list;
- 	     (rtab = *rtabp) != NULL;
- 	     rtabp = &rtab->next) {
- 		if (rtab == tab) {
- 			*rtabp = rtab->next;
--			kfree(rtab);
--			return;
-+			break;
- 		}
- 	}
-+	spin_unlock(&qdisc_rtab_lock);
-+	kfree(tab);
+ 	if (read >= 0 && trace_parser_loaded(parser) &&
+@@ -4941,6 +4949,7 @@ ftrace_regex_write(struct file *file, co
+ 
+ 	ret = read;
+  out:
++	mutex_unlock(&parser_lock);
+ 	return ret;
  }
- EXPORT_SYMBOL(qdisc_put_rtab);
+ 
+@@ -5675,12 +5684,14 @@ int ftrace_regex_release(struct inode *i
+ 		iter = file->private_data;
+ 
+ 	parser = &iter->parser;
++	mutex_lock(&parser_lock);
+ 	if (trace_parser_loaded(parser)) {
+ 		int enable = !(iter->flags & FTRACE_ITER_NOTRACE);
+ 
+ 		ftrace_process_regex(iter, parser->buffer,
+ 				     parser->idx, enable);
+ 	}
++	mutex_unlock(&parser_lock);
+ 
+ 	trace_parser_put(parser);
+ 
+@@ -5998,10 +6009,12 @@ ftrace_graph_release(struct inode *inode
+ 
+ 		parser = &fgd->parser;
+ 
++		mutex_lock(&parser_lock);
+ 		if (trace_parser_loaded((parser))) {
+ 			ret = ftrace_graph_set_hash(fgd->new_hash,
+ 						    parser->buffer);
+ 		}
++		mutex_unlock(&parser_lock);
+ 
+ 		trace_parser_put(parser);
+ 
+@@ -6121,6 +6134,7 @@ ftrace_graph_write(struct file *file, co
+ 
+ 	parser = &fgd->parser;
+ 
++	mutex_lock(&parser_lock);
+ 	read = trace_get_user(parser, ubuf, cnt, ppos);
+ 
+ 	if (read >= 0 && trace_parser_loaded(parser) &&
+@@ -6134,6 +6148,7 @@ ftrace_graph_write(struct file *file, co
+ 	if (!ret)
+ 		ret = read;
+ 
++	mutex_unlock(&parser_lock);
+ 	return ret;
+ }
  
 
 
