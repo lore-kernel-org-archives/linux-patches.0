@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C180D37CD47;
-	Thu, 20 Aug 2026 15:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E5B360745;
+	Thu, 20 Aug 2026 15:12:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238740; cv=none; b=QWwdESzx5Ek/3tOPyRlf87AafIfuG8Vy7NmS3dqvqU85v//ojqO7PbTo8379VMncYL56qT5J9ySD9HJ9aTiTAPYdkdAeil4I4kgWKfhI0x0Cb5oYEG2AIdQsEgUT83rSmt2jdeFVuW5FyI31xzZuCjm33+9NV76qPPIKYnFyVnA=
+	t=1787238743; cv=none; b=BBFDcUe9dhgl0DZqNao+qsWUT7L4VPPd3bzLwGQhmPy0hmcURK6r82kNT2OGWLrtUD8NjW2OL1epc6kGTgib3/txVgy01h1jZkHvQfon+bl36P0SC5Zs6qqTIenE+uIYm4RVNqKQw3cA2Aa1h/2+SiZ5Y4Cd9HOqKixWMLcNYPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238740; c=relaxed/simple;
-	bh=thQRJD+PpBtPK8pI4UJ9fqK6L+ui9y8Yj5CHLO/m6eE=;
+	s=arc-20240116; t=1787238743; c=relaxed/simple;
+	bh=zArGgR2A0RKYQlZenK+CRWZ4M1hD4ZEYS28C4bqSDxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zlk7U3IX/zlxAzqK3JZdrtqkThRjbCgcqloOl1GU+Iqau/oFQOyf9Z9+x/jfx5MAfJOrzlmQnUuddp5PMiIG1MFXkbz7dCTDzVlSOS5VYjlSl2BfP1pIhYgFy/RpjH/tGLviv0/R4WeK2lXm/9SWF+tnYyKjN6ML47yRbgEu3xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UdER3Hon; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sHa3LA8DM8WoqUXsEoagoDrBpgJ1bXb0O19LeG3+KsSlfCH8vNSoJhh6deU3sY3gTP3D+fh4c13ptwOeyqyozcdqC2hFZ3O7Ilst+2HuKh6bLH/x6swt0WUL0+vGIHNbiJfJhJSjvnUOqSuq8IIg0lFa6FrRmHV+OXYCJ2TXv+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R8Y8iRdK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UdER3Hon"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB3A31F000E9;
-	Thu, 20 Aug 2026 15:12:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R8Y8iRdK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4701F00A3D;
+	Thu, 20 Aug 2026 15:12:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238739;
-	bh=FfXiBnsicBQniKdYSUgpiHHbK/fHKoExljwoGNtwfII=;
+	s=korg; t=1787238742;
+	bh=+9XfCGFUgdhOowD4rjPLqVColRWPa/eGVBTPW0gzXsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UdER3HonvH+0HJ2+bi4iBqS0TqbYIa+Io9EPl6JuvLAEoW4tP1I8Zptc7odQC+Nbc
-	 Fvl6uMghBcaJvMhEFEJoR0YXEePseMgKG+FG/ztUmITg3GUeWlrczq1WOEvtayUufL
-	 m0w/ruWtjqA8NniEseVk8UiWTZLsQx2GWgdLgnRc=
+	b=R8Y8iRdK+knywfw0ezySDnv0UkJpH/aDvBDWLGgg1muBtmtUF9458FFsktZDdymlH
+	 RvXAWUiQMJwgK9xFcE9Mk+t+M9Y/XviCGoPHXRHoymcpYsfqH5pTO8d0WvA5nzhGeb
+	 lHOQPJ08oMcCESHo8SQRO4E/r3ZEJhKczjUOphZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.18 024/217] fbdev: core: Fix pointer desynchronization in fb_io_read()
-Date: Thu, 20 Aug 2026 16:53:12 +0200
-Message-ID: <20260820145238.348527623@linuxfoundation.org>
+	Osama Abdelkader <osama.abdelkader@gmail.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Steven Price <steven.price@arm.com>
+Subject: [PATCH 6.18 025/217] drm/panthor: skip zero-sized firmware sections
+Date: Thu, 20 Aug 2026 16:53:13 +0200
+Message-ID: <20260820145238.378044792@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -50,52 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: Osama Abdelkader <osama.abdelkader@gmail.com>
 
-commit 81cc73be40c6f028f1ee3f438ace46afe666dbae upstream.
+commit 2b8f13d3c7e26c46c20d9e367904cf01729c88e6 upstream.
 
-In fb_io_read(), if copy_to_user() performs a partial copy (e.g., due to
-a faulty user buffer), the loop adjusts the chunk size 'c' and updates
-the remaining 'count'. However, the hardware 'src' pointer has already
-been eagerly advanced by the original chunk size.
+panthor_fw_load_section_entry() skips BO creation when the firmware section
+VA range is empty. If such a section is added to the firmware section list,
+section->mem is left as NULL.
 
-If the loop is allowed to continue, the read will resume from an
-incorrect, over-advanced offset. Since the remaining 'count' was only
-decremented by the successful bytes, this desynchronization causes the
-next iterations to execute more hardware reads than originally bounded,
-eventually leading to out-of-bounds I/O reads.
+Later reload and unplug paths iterate over all firmware sections and
+dereference section->mem, which can lead to a NULL pointer dereference.
 
-Fix this by breaking out of the loop immediately upon a partial
-copy_to_user(). A partial copy indicates a faulty user buffer, making
-subsequent read attempts futile. Breaking out ensures we return the
-number of successfully read bytes without risking out-of-bounds hardware
-accesses in subsequent mismatched iterations.
+Zero-sized firmware sections are valid, so accept them as no-op entries but
+skip adding them to the section list.
 
-Fixes: 6121cd9ef911 ("fbdev: Move I/O read and write code into helper functions")
+Fixes: 2718d91816ee ("drm/panthor: Add the FW logical block")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20260724172621.63046-1-osama.abdelkader@gmail.com
+Signed-off-by: Steven Price <steven.price@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fb_io_fops.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/panthor/panthor_fw.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/video/fbdev/core/fb_io_fops.c
-+++ b/drivers/video/fbdev/core/fb_io_fops.c
-@@ -61,6 +61,14 @@ ssize_t fb_io_read(struct fb_info *info,
- 		buf += c;
- 		cnt += c;
- 		count -= c;
-+
-+		/*
-+		 * If there was a partial copy, the user buffer is faulty.
-+		 * Break out to avoid over-advancing the src pointer and
-+		 * reading out of bounds in the next iteration.
-+		 */
-+		if (trailing)
-+			break;
+--- a/drivers/gpu/drm/panthor/panthor_fw.c
++++ b/drivers/gpu/drm/panthor/panthor_fw.c
+@@ -553,6 +553,9 @@ static int panthor_fw_load_section_entry
+ 		return -EINVAL;
  	}
  
- 	kfree(buffer);
++	if (!section_size)
++		return 0;
++
+ 	name_len = iter->size - iter->offset;
+ 
+ 	section = drmm_kzalloc(&ptdev->base, sizeof(*section), GFP_KERNEL);
 
 
