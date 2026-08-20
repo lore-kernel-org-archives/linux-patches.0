@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BC2442B2E;
-	Thu, 20 Aug 2026 16:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108D347D930;
+	Thu, 20 Aug 2026 16:48:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244488; cv=none; b=QQiblhRzp1M9w/n+mC/qmvwe4OAtMz75QTkiL+aEUp0KLner8sbzhxFSMIkg49XQq7g1ElAxa7BN550kt95Ov2zZM2DTtsnh3L8VNr9sCRNRvOWHWqMnk1KrMS2wTWB6UcTpoO1prIUxwUdfOMk8HcwouNG/wFOwBeOwwynbxYM=
+	t=1787244491; cv=none; b=OU8J4AHB+4sUlM7Dw6oWJNdqolGz9Q2K2UiBVrf2bipX6GR2O9yI5AXevAA7vGPdUYTYA15ACPT6w+6zMi8BKHzNDgNucYpEU66NlQXWnPor/8obds2V6heeZt9Hu9SKlGtaJppHCpySLBz7IVDKatTlWTJQrm1OWfTkp6ATyq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244488; c=relaxed/simple;
-	bh=mVud08j9VKmlFSsiMuDpm/XuKzBAY8I9+GPS3IbQGXY=;
+	s=arc-20240116; t=1787244491; c=relaxed/simple;
+	bh=7x9lPMRP24/O9TbX2GutQs4a9qtuwjvA+z2IKjVzSBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BAUdsWLmKwvlvCcjoNbhG2nm/JWv7+FbRTfNshyFZVJBnZlnK26Mj151VDF+bBEe4T+mo+KNlPLR9qkm1EtmrhhoJSqcjK+v60gI9YUD/K84Lp7VlqTLyjTX+PHCuKw2JDWOdDDqaxlOJRgEENBIWf4gEW6a/+v3vdevKwgUR8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQDNSc/p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YPiABAZ7jG167feuELb8rffw/aWGcpq5zEaGn4ywW1aiQIctIcIZTp1unelXroF8ESJC0BYRFrpgeO5XAcG/muKfxOi5pAYHoXGv/xK5KX4N6iv/XPzIUHfAd3BVJrEbHAZmC0+augDVoxS62bL6UvNBBaogb74s+wm75OwqqMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PV15veCs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQDNSc/p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F0A51F000E9;
-	Thu, 20 Aug 2026 16:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PV15veCs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619A81F000E9;
+	Thu, 20 Aug 2026 16:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244487;
-	bh=eJhL73Lezp7PPWvgLXr1FuiN+yR5G0DzW9kySRaWjjo=;
+	s=korg; t=1787244489;
+	bh=eaHmRuf5C3hQ1WMEfKHUAVUOsxtM0FtHZ25xrJ7f5w8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tQDNSc/pN2Q+4rO5QdZuJ6Vf/LtYqGRpBKmDtMyBWG4igYROZ9SvwxHQ0uJctxGgw
-	 SRMhKkT27tVZVcbVKAcy/cU72Cp+vGESdxpooP5S9lSnAZH/2VxUmyvi2FdA5zZZby
-	 5gMEXgsyqgxThoLqbGw0ZL7N9voKshUbl7EHtPIw=
+	b=PV15veCskWns0+XTzubYGBpsBcVeaPY7jhVgoEpCKBoBV2jV5KVKlYIroGvST9/Aa
+	 rEuqZDvXHgzYKzmBEEEXk0owaUHX1nUdPDf+uYoReQoWUoqQUXdYOzFZpvBTByHGR5
+	 UijKxqc6yUnqurtbTXJzFMNW/4WvKcmr32sog3iU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Xiubo Li <xiubo.li@clyso.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 179/235] ceph: avoid fs reclaim while using current->journal_info
-Date: Thu, 20 Aug 2026 16:56:55 +0200
-Message-ID: <20260820145221.946879710@linuxfoundation.org>
+Subject: [PATCH 5.10 188/235] super: fix emergency thaw deadlock on frozen block devices
+Date: Thu, 20 Aug 2026 16:57:04 +0200
+Message-ID: <20260820145222.242550329@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -53,113 +50,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 5b602344a49e039e792ce5a8923bcc61412ee134 ]
+[ Upstream commit 749d7aa0377aae32af8c0a4ad43371e7bf830ab5 ]
 
-handle_reply() stores a `ceph_mds_request` pointer in
-`current->journal_info` while filling the inode and dentry cache from
-an MDS reply.
+do_thaw_all_callback() calls bdev_thaw() while holding sb->s_umount
+exclusively. If the block device was frozen via bdev_freeze() dropping
+the last block layer freeze reference calls fs_bdev_thaw() which
+reacquires s_umount:
 
-An allocation in this section can enter direct reclaim and prune
-dentries from another filesystem.  If this dirties an ext4 inode, ext4
-starts a JBD2 transaction.  JBD2 interprets the Ceph request in
-`current->journal_info` as a journal handle and dereferences the
-request's `r_tid` as `h_transaction`, causing a kernel crash, e.g.:
+  do_thaw_all_callback(sb)
+    super_lock_excl(sb)                     # holds sb->s_umount
+    bdev_thaw(sb->s_bdev)
+      mutex_lock(&bdev->bd_fsfreeze_mutex)
+      # bd_fsfreeze_count drops 1 -> 0
+      bd_holder_ops->thaw == fs_bdev_thaw
+        get_bdev_super(bdev)
+          bdev_super_lock(bdev, true)
+            super_lock(sb, true)
+              down_write(&sb->s_umount)     # same task: deadlock
 
- Unable to handle kernel paging request at virtual address 00000000077b4818
- [...]
- Internal error: Oops: 0000000096000004 [#1]  SMP
- Modules linked in:
- CPU: 6 UID: 0 PID: 2699135 Comm: kworker/6:3 Tainted: G        W           6.18.38-i3 #1113 NONE
- [...]
- Workqueue: ceph-msgr ceph_con_workfn
- pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : jbd2__journal_start+0x2c/0x208
- lr : __ext4_journal_start_sb+0x100/0x178
- [...]
- Call trace:
-  jbd2__journal_start+0x2c/0x208 (P)
-  __ext4_journal_start_sb+0x100/0x178
-  ext4_dirty_inode+0x3c/0x90
-  __mark_inode_dirty+0x58/0x400
-  iput.part.0+0x2b0/0x370
-  iput+0x18/0x30
-  dentry_unlink_inode+0xc0/0x158
-  __dentry_kill+0x80/0x250
-  shrink_dentry_list+0x90/0x130
-  prune_dcache_sb+0x60/0x98
-  super_cache_scan+0xe8/0x190
-  do_shrink_slab+0x174/0x388
-  shrink_slab+0xd8/0x4c0
-  shrink_node+0x31c/0x908
-  do_try_to_free_pages+0xd0/0x508
-  try_to_free_pages+0x11c/0x238
-  __alloc_frozen_pages_noprof+0x4d0/0xdd0
-  __folio_alloc_noprof+0x18/0x70
-  __filemap_get_folio+0x248/0x440
-  ceph_readdir_prepopulate+0x570/0x9e8
-  mds_dispatch+0x1424/0x1ba0
-  ceph_con_process_message+0x74/0xa0
-  ceph_con_v1_try_read+0x3a0/0x1510
-  ceph_con_workfn+0x260/0x460
+The emergency thaw worker deadlocks against itself holding both
+s_umount and bd_fsfreeze_mutex. That fscks any subsequent unmount,
+freeze, or thaw of that filesystem and block device.
 
-Enter a scoped NOFS allocation context and leave it after clearing
-`journal_info`.  This prevents filesystem reclaim from recursing into
-another filesystem while the field contains Ceph-private data.
+  [   81.878470] sysrq: Show Blocked State
+  [   81.880140] task:kworker/0:1     state:D stack:0     pid:11    tgid:11    ppid:2      task_flags:0x4208060 flags:0x00080000
+  [   81.884876] Workqueue: events do_thaw_all
+  [   81.886656] Call Trace:
+  [   81.887759]  <TASK>
+  [   81.888763]  __schedule+0x579/0x1420
+  [   81.890372]  schedule+0x3a/0x100
+  [   81.891794]  schedule_preempt_disabled+0x15/0x30
+  [   81.893848]  rwsem_down_write_slowpath+0x1ea/0x900
+  [   81.895191]  ? __pfx_do_thaw_all_callback+0x10/0x10
+  [   81.896528]  down_write+0xbd/0xc0
+  [   81.897505]  super_lock+0x91/0x180
+  [   81.898457]  ? __mutex_lock+0xa99/0x1140
+  [   81.900748]  ? __mutex_unlock_slowpath+0x1f/0x400
+  [   81.902069]  bdev_super_lock+0x5b/0x150
+  [   81.903132]  get_bdev_super+0x10/0x60
+  [   81.904042]  fs_bdev_thaw+0x23/0xf0
+  [   81.904755]  bdev_thaw+0x82/0x100
+  [   81.905484]  do_thaw_all_callback+0x2c/0x50
+  [   81.906298]  __iterate_supers+0x5d/0x130
+  [   81.907067]  do_thaw_all+0x20/0x40
+  [   81.907739]  process_one_work+0x206/0x5e0
+  [   81.908545]  worker_thread+0x1e2/0x3c0
+  [   81.909339]  ? __pfx_worker_thread+0x10/0x10
+  [   81.910171]  kthread+0xf4/0x130
+  [   81.910799]  ? __pfx_kthread+0x10/0x10
+  [   81.911528]  ret_from_fork+0x2e2/0x3b0
+  [   81.912259]  ? __pfx_kthread+0x10/0x10
+  [   81.913010]  ret_from_fork_asm+0x1a/0x30
+  [   81.913806]  </TASK>
 
+bdev_super_lock() even documents the violated requirement with
+lockdep_assert_not_held(&sb->s_umount).
+
+Acquiring bd_fsfreeze_mutex under s_umount also inverts the
+bd_fsfreeze_mutex vs. s_umount ordering established by
+bdev_{freeze,thaw}() and can thus ABBA against a concurrent block-layer
+freeze even when the recursive path isn't hit.
+
+Fix this by not holding s_umount around the bdev_thaw() loop at all. Pin
+the superblock with an active reference instead as
+filesystems_freeze_callback() does. The active reference keeps the
+superblock from being shut down and so ->s_bdev stays valid without
+holding s_umount. The block-layer-held freeze is dropped by
+fs_bdev_thaw() with FREEZE_MAY_NEST | FREEZE_HOLDER_USERSPACE exactly as
+a regular unfreeze would and thaw_super_locked() handles
+filesystem-level freezes as before.
+
+The emergency thaw path has deadlocked like this in one form or
+another for a long long time but the current exclusively-held
+shape dates back to commit [1] where thaw_bdev() already ended in
+thaw_super() with s_umount held by do_thaw_all_callback().
+
+Fixes: 08fdc8a0138a ("buffer.c: call thaw_super during emergency thaw") [1]
 Cc: stable@vger.kernel.org
-Fixes: 315f24088048 ("ceph: fix security xattr deadlock")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Link: https://patch.msgid.link/20260723-work-super-emergency_thaw-v1-1-7c315c600245@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/mds_client.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/super.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -6,6 +6,7 @@
- #include <linux/slab.h>
- #include <linux/gfp.h>
- #include <linux/sched.h>
-+#include <linux/sched/mm.h>
- #include <linux/debugfs.h>
- #include <linux/seq_file.h>
- #include <linux/ratelimit.h>
-@@ -3126,6 +3127,7 @@ static void handle_reply(struct ceph_mds
- 	struct ceph_mds_reply_head *head = msg->front.iov_base;
- 	struct ceph_mds_reply_info_parsed *rinfo;  /* parsed reply info */
- 	struct ceph_snap_realm *realm;
-+	unsigned int nofs_flags;
- 	u64 tid;
- 	int err, result;
- 	int mds = session->s_mds;
-@@ -3258,6 +3260,14 @@ static void handle_reply(struct ceph_mds
+--- a/fs/super.c
++++ b/fs/super.c
+@@ -1048,13 +1048,24 @@ void emergency_remount(void)
  
- 	/* insert trace into our cache */
- 	mutex_lock(&req->r_fill_mutex);
+ static void do_thaw_all_callback(struct super_block *sb)
+ {
++	bool active = false;
 +
-+	/* disable fs reclaim while we are using current->journal_info
-+	 * for our own purposes, or else shrinkers of other
-+	 * filesystems might dereference this pointer as a different
-+	 * type
-+	 */
-+	nofs_flags = memalloc_nofs_save();
++	down_write(&sb->s_umount);
++	if (sb->s_root && sb->s_flags & SB_BORN)
++		active = atomic_inc_not_zero(&sb->s_active);
++	up_write(&sb->s_umount);
++	if (!active)
++		return;
 +
- 	current->journal_info = req;
- 	err = ceph_fill_trace(mdsc->fsc->sb, req);
- 	if (err == 0) {
-@@ -3266,6 +3276,7 @@ static void handle_reply(struct ceph_mds
- 			ceph_readdir_prepopulate(req, req->r_session);
- 	}
- 	current->journal_info = NULL;
-+	memalloc_nofs_restore(nofs_flags);
- 	mutex_unlock(&req->r_fill_mutex);
++	/* thaw_bdev() acquires s_umount so it must not be held here */
++	emergency_thaw_bdev(sb);
++
+ 	down_write(&sb->s_umount);
+-	if (sb->s_root && sb->s_flags & SB_BORN) {
+-		emergency_thaw_bdev(sb);
++	if (sb->s_root && sb->s_flags & SB_BORN)
+ 		thaw_super_locked(sb);
+-	} else {
++	else
+ 		up_write(&sb->s_umount);
+-	}
++	deactivate_super(sb);
+ }
  
- 	up_read(&mdsc->snap_rwsem);
+ static void do_thaw_all(struct work_struct *work)
 
 
