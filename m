@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D9E3803D7;
-	Thu, 20 Aug 2026 17:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610EF3815E3;
+	Thu, 20 Aug 2026 17:39:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247585; cv=none; b=Wgx+GuUxM6tnog9H9QC8+CTQCikk+NUNqhEO6D4CC1CWmCU2MPBDFB1ktF8gNNia3rl0XQ9SbQex8qQo+JG63d5HoeTXT/3dC6RA59aBOHGJkJpIODOB3Lt7AgvdCCrSebR89gg2OoC2QTN+BT5eaJBhTLOoiOPFvVfwhFQ2QF8=
+	t=1787247588; cv=none; b=I81fUCYC1CK6xvinXFQWQtQJyKthTrK76XMENnf/xUzlQ5xu+Mhuykg63gIARtZGCRW+P48AbXc8LJP8hVutDsLCiJ4Ongcny8CMXAecJWBVMdNdzJ66akESOYdvy8F2BySPr94XmBApoUSNMWEYE6QiqfDznYW0uMg2G+wwwno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247585; c=relaxed/simple;
-	bh=gBqfcmUVcWomqcpKg8IKeuUgc/DY2hwEy7urYg66L+s=;
+	s=arc-20240116; t=1787247588; c=relaxed/simple;
+	bh=lHrfj/LZBb/euos2irKbkDfnHern724HAfXVf9Yri5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sS7BWwqHjSjKaHqGX1kPz2aefqnT65HVQ48NcMaHJ1wep1usgSxOMOU64mecMa4/hcRzlGJc00vp7HwndpktWMo21jhKBWkv+4gLSUUMzo54SddBNAx75+Vx3hDtaxKKhncwEbInvurqybFp0Uoor17NrFrT3nCA78b77Ptsf7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+GZUC+4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZE3JbxG+xxVWPWOYkaC0seieLvtv6jttKcTaYzpmQ4yxByfIF6A3d8Ai4vMsFB3WF5pzf0QTI35fpAEDyuyWqGPK3v51Q20JFUXn4J0x9txtbzqNipUqUYE+FUHh8weqw6XCVHMwzBzipbFajQHxZZZB8Cc8DUyOaxdLZ3pbzhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1tJgWYW5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+GZUC+4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC441F000E9;
-	Thu, 20 Aug 2026 17:39:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1tJgWYW5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB44B1F000E9;
+	Thu, 20 Aug 2026 17:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247584;
-	bh=g9vyEJcLeY7hVzlap9P+DWmPaFUk4auRUacWmS5wWVo=;
+	s=korg; t=1787247587;
+	bh=N66mT8cd1O3Q9eE6s7sPZFW82mzL0ckiUiuLBjMR+KA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M+GZUC+4efNIy3HfdT3QuGi3wcc+mG+Hkv4j+Ut7ZMldu1KtWuwZJUVmZK6xzyA/o
-	 DHL1jIgGjjmIXuS7M8y0sc09tVVJGI9cKO/QPwrBq3i6XpmP//5iJiEUSF5+X3m6Cy
-	 oQAj/IblIBlVekzw4bLennBFqG2TjIR9FhqCUnVI=
+	b=1tJgWYW59F9Eat8gmH4MOTg11Kzm6PiGarDd9X/psZfk7f5vmQM8r/hLVyyAbzB5n
+	 Hhlm2Cn56Ry4E/s9DsyOOLTyJfmmNr6Q34SFVEk4kce7R8UuZVC8zzMikbmRXCPswT
+	 GkWBxUE3jYeuC9oZqHOY4bIrmND7RhUnimYCE40E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 097/166] btrfs: add debug build only WARN
-Date: Thu, 20 Aug 2026 16:55:56 +0200
-Message-ID: <20260820145214.078473043@linuxfoundation.org>
+Subject: [PATCH 6.6 098/166] btrfs: add space_info argument to btrfs_chunk_alloc()
+Date: Thu, 20 Aug 2026 16:55:57 +0200
+Message-ID: <20260820145214.107486698@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -51,39 +51,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-[ Upstream commit 3db15c6ca6feb2c5000a1cbb39c33866e0349abd ]
+[ Upstream commit 098a442d5b6d440602604dc1a88706a2a91bce4e ]
 
-Add conditional WARN() wrapper that's enabled only in debug build. It
-should be used for unexpected conditions that should be noisy.  Use it
-instead of ASSERT(0). As it will not lead to BUG() make sure that
-continuing is still possible, e.g. the error is handled anyway.
+Take a btrfs_space_info argument in btrfs_chunk_alloc(). New block group
+will belong to that space_info.
 
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Stable-dep-of: 8bc4d7209611 ("btrfs: zoned: fix missing chunk metadata reservation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/messages.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/btrfs/block-group.c |   27 +++++++++++++++++----------
+ fs/btrfs/block-group.h |    3 ++-
+ fs/btrfs/extent-tree.c |    6 ++++--
+ fs/btrfs/space-info.c  |    2 +-
+ fs/btrfs/transaction.c |    5 +++--
+ 5 files changed, 27 insertions(+), 16 deletions(-)
 
---- a/fs/btrfs/messages.h
-+++ b/fs/btrfs/messages.h
-@@ -181,6 +181,13 @@ do {								\
- #define ASSERT(expr)	(void)(expr)
- #endif
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -2929,6 +2929,7 @@ int btrfs_inc_block_group_ro(struct btrf
+ 			     bool do_chunk_alloc)
+ {
+ 	struct btrfs_fs_info *fs_info = cache->fs_info;
++	struct btrfs_space_info *space_info = cache->space_info;
+ 	struct btrfs_trans_handle *trans;
+ 	struct btrfs_root *root = btrfs_block_group_root(fs_info);
+ 	u64 alloc_flags;
+@@ -2981,7 +2982,7 @@ int btrfs_inc_block_group_ro(struct btrf
+ 		 */
+ 		alloc_flags = btrfs_get_alloc_profile(fs_info, cache->flags);
+ 		if (alloc_flags != cache->flags) {
+-			ret = btrfs_chunk_alloc(trans, alloc_flags,
++			ret = btrfs_chunk_alloc(trans, space_info, alloc_flags,
+ 						CHUNK_ALLOC_FORCE);
+ 			/*
+ 			 * ENOSPC is allowed here, we may have enough space
+@@ -3009,15 +3010,15 @@ int btrfs_inc_block_group_ro(struct btrf
+ 	    (cache->flags & BTRFS_BLOCK_GROUP_SYSTEM))
+ 		goto unlock_out;
  
-+#ifdef CONFIG_BTRFS_DEBUG
-+/* Verbose warning only under debug build. */
-+#define DEBUG_WARN(args...)			WARN(1, KERN_ERR args)
-+#else
-+#define DEBUG_WARN(...)				do {} while(0)
-+#endif
+-	alloc_flags = btrfs_get_alloc_profile(fs_info, cache->space_info->flags);
+-	ret = btrfs_chunk_alloc(trans, alloc_flags, CHUNK_ALLOC_FORCE);
++	alloc_flags = btrfs_get_alloc_profile(fs_info, space_info->flags);
++	ret = btrfs_chunk_alloc(trans, space_info, alloc_flags, CHUNK_ALLOC_FORCE);
+ 	if (ret < 0)
+ 		goto out;
+ 	/*
+ 	 * We have allocated a new chunk. We also need to activate that chunk to
+ 	 * grant metadata tickets for zoned filesystem.
+ 	 */
+-	ret = btrfs_zoned_activate_one_bg(fs_info, cache->space_info, true);
++	ret = btrfs_zoned_activate_one_bg(fs_info, space_info, true);
+ 	if (ret < 0)
+ 		goto out;
+ 
+@@ -3875,8 +3876,15 @@ static int should_alloc_chunk(const stru
+ int btrfs_force_chunk_alloc(struct btrfs_trans_handle *trans, u64 type)
+ {
+ 	u64 alloc_flags = btrfs_get_alloc_profile(trans->fs_info, type);
++	struct btrfs_space_info *space_info;
 +
- __printf(5, 6)
- __cold
- void __btrfs_handle_fs_error(struct btrfs_fs_info *fs_info, const char *function,
++	space_info = btrfs_find_space_info(trans->fs_info, type);
++	if (!space_info) {
++		DEBUG_WARN();
++		return -EINVAL;
++	}
+ 
+-	return btrfs_chunk_alloc(trans, alloc_flags, CHUNK_ALLOC_FORCE);
++	return btrfs_chunk_alloc(trans, space_info, alloc_flags, CHUNK_ALLOC_FORCE);
+ }
+ 
+ static struct btrfs_block_group *do_chunk_alloc(struct btrfs_trans_handle *trans, u64 flags)
+@@ -4072,6 +4080,8 @@ out:
+  *
+  * This function, btrfs_chunk_alloc(), belongs to phase 1.
+  *
++ * @space_info: specify which space_info the new chunk should belong to.
++ *
+  * If @force is CHUNK_ALLOC_FORCE:
+  *    - return 1 if it successfully allocates a chunk,
+  *    - return errors including -ENOSPC otherwise.
+@@ -4080,11 +4090,11 @@ out:
+  *    - return 1 if it successfully allocates a chunk,
+  *    - return errors including -ENOSPC otherwise.
+  */
+-int btrfs_chunk_alloc(struct btrfs_trans_handle *trans, u64 flags,
++int btrfs_chunk_alloc(struct btrfs_trans_handle *trans,
++		      struct btrfs_space_info *space_info, u64 flags,
+ 		      enum btrfs_chunk_alloc_enum force)
+ {
+ 	struct btrfs_fs_info *fs_info = trans->fs_info;
+-	struct btrfs_space_info *space_info;
+ 	struct btrfs_block_group *ret_bg;
+ 	bool wait_for_alloc = false;
+ 	bool should_alloc = false;
+@@ -4123,9 +4133,6 @@ int btrfs_chunk_alloc(struct btrfs_trans
+ 	if (flags & BTRFS_BLOCK_GROUP_SYSTEM)
+ 		return -ENOSPC;
+ 
+-	space_info = btrfs_find_space_info(fs_info, flags);
+-	ASSERT(space_info);
+-
+ 	do {
+ 		spin_lock(&space_info->lock);
+ 		if (force < space_info->force_alloc)
+--- a/fs/btrfs/block-group.h
++++ b/fs/btrfs/block-group.h
+@@ -327,7 +327,8 @@ int btrfs_add_reserved_bytes(struct btrf
+ 			     bool force_wrong_size_class);
+ void btrfs_free_reserved_bytes(struct btrfs_block_group *cache,
+ 			       u64 num_bytes, int delalloc);
+-int btrfs_chunk_alloc(struct btrfs_trans_handle *trans, u64 flags,
++int btrfs_chunk_alloc(struct btrfs_trans_handle *trans,
++		      struct btrfs_space_info *space_info, u64 flags,
+ 		      enum btrfs_chunk_alloc_enum force);
+ int btrfs_force_chunk_alloc(struct btrfs_trans_handle *trans, u64 type);
+ void check_system_chunk(struct btrfs_trans_handle *trans, const u64 type);
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -4034,6 +4034,7 @@ static int can_allocate_chunk(struct btr
+ static int find_free_extent_update_loop(struct btrfs_fs_info *fs_info,
+ 					struct btrfs_key *ins,
+ 					struct find_free_extent_ctl *ffe_ctl,
++					struct btrfs_space_info *space_info,
+ 					bool full_search)
+ {
+ 	struct btrfs_root *root = fs_info->chunk_root;
+@@ -4088,7 +4089,7 @@ static int find_free_extent_update_loop(
+ 				return ret;
+ 			}
+ 
+-			ret = btrfs_chunk_alloc(trans, ffe_ctl->flags,
++			ret = btrfs_chunk_alloc(trans, space_info, ffe_ctl->flags,
+ 						CHUNK_ALLOC_FORCE_FOR_EXTENT);
+ 
+ 			/* Do not bail out on ENOSPC since we can do more. */
+@@ -4488,7 +4489,8 @@ loop:
+ 	}
+ 	up_read(&space_info->groups_sem);
+ 
+-	ret = find_free_extent_update_loop(fs_info, ins, ffe_ctl, full_search);
++	ret = find_free_extent_update_loop(fs_info, ins, ffe_ctl, space_info,
++					   full_search);
+ 	if (ret > 0)
+ 		goto search;
+ 
+--- a/fs/btrfs/space-info.c
++++ b/fs/btrfs/space-info.c
+@@ -807,7 +807,7 @@ static void flush_space(struct btrfs_fs_
+ 			ret = PTR_ERR(trans);
+ 			break;
+ 		}
+-		ret = btrfs_chunk_alloc(trans,
++		ret = btrfs_chunk_alloc(trans, space_info,
+ 				btrfs_get_alloc_profile(fs_info, space_info->flags),
+ 				(state == ALLOC_CHUNK) ? CHUNK_ALLOC_NO_FORCE :
+ 					CHUNK_ALLOC_FORCE);
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -729,9 +729,10 @@ got_it:
+ 	 * value here.
+ 	 */
+ 	if (do_chunk_alloc && num_bytes) {
+-		u64 flags = h->block_rsv->space_info->flags;
++		struct btrfs_space_info *space_info = h->block_rsv->space_info;
++		u64 flags = space_info->flags;
+ 
+-		btrfs_chunk_alloc(h, btrfs_get_alloc_profile(fs_info, flags),
++		btrfs_chunk_alloc(h, space_info, btrfs_get_alloc_profile(fs_info, flags),
+ 				  CHUNK_ALLOC_NO_FORCE);
+ 	}
+ 
 
 
