@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C63352019;
-	Thu, 20 Aug 2026 15:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0EF537D13D;
+	Thu, 20 Aug 2026 15:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238236; cv=none; b=R5qjD3yyrBoU8u0Mxh9XXMbBkgrNML2XOFVssnxsgCEmYyYir5Uq9GsHene8PssVBeGggmoZFPgpOEgw1TmPMipCxkn5hPfaaGZMuIQIhCTdzDSZl0Ew7BM3RC0NJhP1GB2Tj8TCqvhN8U0wgEvC8I4hOh2Gyzp2mvF4kbqS8yg=
+	t=1787238239; cv=none; b=DDFEEqmhx8AAaPFp0qvuLJg+iU+tpmoESJ4dAzxII0QBvsQlsjf2AvRf0pNsBIDjgaIh5L6kErH5RLW2a7QYNkq3M7xmw/3XGwqSF28JxJE1h/ulq/PxopwBHD/EALOeozR4vvlMPKMmRR+ozJZIIeysg3d9/nrZ7brqHpKlSNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238236; c=relaxed/simple;
-	bh=ZMsn5ITY/pwyl2EuEzzLJcr/Mxf8DIqvsQ4Z637IMdU=;
+	s=arc-20240116; t=1787238239; c=relaxed/simple;
+	bh=eZW1HoVJWf9wV1J2EEkvFVpZhHEkWD211d6PlPnJ2ok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l91E+8+TZoIuf305PHM2y62Igj3wHB+CR5g3y1iF4MKuAtdlUaShp9BlSuDk7YIqcpvXeYaPOagn1ccu7wXpeo6SXJx1LUt/jPOwM467K9MJgyWpNGuGw0GjbO0vDsqv/72qRq/udSfpygfpJtwWJ/V2N02Apq3/RPM8FEysWD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZxFMGXXZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OyIBnAS3pV3QQfq0RzkSZzcxqGd4IeayTYlUZGKzSy3HDepJOsxFKsOEFVZ9m1slYbsRKcKanYrknn2D16ZPfucy+hotlZdU2qgPQGPONkiLi2UMfQl7FFwWS+dPzCP+ta67GU0mPRyIT4RWkWB5/Rywnl23Nyf+LHIsrPoSSLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0FXFcUBd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZxFMGXXZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12DCD1F000E9;
-	Thu, 20 Aug 2026 15:03:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0FXFcUBd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2CF1F000E9;
+	Thu, 20 Aug 2026 15:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238234;
-	bh=FueaOs8UvyZJjxnBPr1HNUBC1yfHibvkcIKxMLuyAFs=;
+	s=korg; t=1787238237;
+	bh=kQ6GVAZ8QrO67+13vqB8mkvMKhyMUyjz9ArgrnrMY4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZxFMGXXZ4RLRoCWXw0aPlDYcQgGCyMW4piZKI3LBSNCeZEiXtw0kIU06RK8Dh3/7G
-	 0Jg05pxECSUttevJ3XR466gK4IBbkPHv4tseWY03bO/tMD+WR2kkPHc+U2voZzcXiS
-	 AyAcmYRC34SoD4EBphwTqLmj35CoiZl2VpEIuOII=
+	b=0FXFcUBdDvSeWCuQ9vO+mvZSlFDloAG41pcQ+R4+YGJ/lqK4i0Y6pUcTdmhUftA3x
+	 ZS637Q95amSepDLEkOUvg18cdpYR+zmylneiB5QHAdG6Z1uwGt8tJxUMYGkfBOJTSn
+	 G7tLNPhr2fQyGPs4FWjyUsbOGQcFRzPruc0GG8PM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavitra Jha <jhapavitra98@gmail.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Kefu Chai <k.chai@proxmox.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 7.1 077/228] libceph: fix OOB read in decode_watchers() via missing bounds check
-Date: Thu, 20 Aug 2026 16:53:39 +0200
-Message-ID: <20260820145246.816534900@linuxfoundation.org>
+Subject: [PATCH 7.1 078/228] libceph: tolerate addrvecs with multiple entries of the same type
+Date: Thu, 20 Aug 2026 16:53:40 +0200
+Message-ID: <20260820145246.845222754@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -51,67 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavitra Jha <jhapavitra98@gmail.com>
+From: Kefu Chai <k.chai@proxmox.com>
 
-commit 00ead17c7de137a692edee59f2772e6af687e8eb upstream.
+commit 5a87925539acecfe88229bad76ab81bd75a7e3f5 upstream.
 
-ceph_start_decoding() validates that struct_len bytes remain in the
-buffer after the encoding header, but accepts struct_len=0 as valid:
-ceph_decode_need(p, end, 0, bad) always passes. When a malicious or
-compromised OSD sends an obj_list_watch_response_t reply with
-struct_len=0, ceph_start_decoding() returns success with p == end,
-leaving zero bytes guaranteed for subsequent reads.
+ceph_decode_entity_addrvec() rejects any addrvec containing more than
+one entry that matches the requested msgr type (LEGACY or MSGR2),
+logging "another match of type N in addrvec" and returning -EINVAL.
 
-The immediately following ceph_decode_32(p) in decode_watchers() has
-no preceding bounds check. With p == end this is a 4-byte read past
-the validated buffer boundary. The garbage value is then passed
-directly to kzalloc_objs() as the watcher count.
+Some admin tooling (e.g. pveceph mon create from Proxmox VE) generates
+addrvecs with multiple same-type entries when public_network lists more
+than one CIDR: it picks one local IP per subnet and emits both a v2 and
+a v1 entry for each IP.  Monmaps shaped this way cause:
 
-The sibling function decode_watcher() already uses the safe variants
-(ceph_decode_copy_safe, ceph_decode_64_safe, ceph_decode_skip_32)
-after its own ceph_start_decoding() call. decode_watchers() is the
-only site that uses the bare variant, confirming an oversight.
+  libceph: mon0 (1)10.10.10.15:6789 session established
+  libceph: another match of type 1 in addrvec
+  libceph: problem decoding monmap, -22
 
-Fix by replacing ceph_decode_32(p) with ceph_decode_32_safe(p, end,
-*num_watchers, bad), consistent with the established pattern.
+No Ceph code uses the extra entries: since Nautilus, the userspace
+messenger (AsyncMessenger) unconditionally picks the first address of
+the requested type and ignores any subsequent matches.
 
-Attacker model: a malicious or compromised OSD in a multi-tenant Ceph
-deployment (e.g. cloud) can trigger this against any kernel client
-that calls CEPH_OSD_OP_LIST_WATCHERS, without any further privileges
-beyond OSD session establishment.
+Match that behavior: use the first matching entry and silently skip any
+subsequent ones.  This is a compatibility fix for existing deployments
+and does not enable dual-stack or multi-subnet address selection.
 
-[ idryomov: trim changelog ]
+[ idryomov: tweak ceph_decode_entity_addrvec() comment ]
 
 Cc: stable@vger.kernel.org
-Fixes: a4ed38d7a180 ("libceph: support for CEPH_OSD_OP_LIST_WATCHERS")
-Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Fixes: a5cbd5fc22d5 ("libceph, ceph: get and handle cluster maps with addrvecs")
+Link: https://bugzilla.proxmox.com/show_bug.cgi?id=7518
+Signed-off-by: Kefu Chai <k.chai@proxmox.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osd_client.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/ceph/decode.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/net/ceph/osd_client.c
-+++ b/net/ceph/osd_client.c
-@@ -5030,7 +5030,7 @@ static int decode_watchers(void **p, voi
- 	if (ret)
- 		return ret;
- 
--	*num_watchers = ceph_decode_32(p);
-+	ceph_decode_32_safe(p, end, *num_watchers, bad);
- 	*watchers = kzalloc_objs(**watchers, *num_watchers, GFP_NOIO);
- 	if (!*watchers)
- 		return -ENOMEM;
-@@ -5044,6 +5044,9 @@ static int decode_watchers(void **p, voi
- 	}
- 
- 	return 0;
-+
-+bad:
-+	return -EINVAL;
- }
+--- a/net/ceph/decode.c
++++ b/net/ceph/decode.c
+@@ -87,8 +87,9 @@ bad:
+ EXPORT_SYMBOL(ceph_decode_entity_addr);
  
  /*
+- * Return addr of desired type (MSGR2 or LEGACY) or error.
+- * Make sure there is only one match.
++ * Return addr of desired type (MSGR2 or LEGACY) or error.  In case of
++ * multiple matches, use the first one for compatibility with userspace
++ * messenger.
+  *
+  * Assume encoding with MSG_ADDR2.
+  */
+@@ -121,14 +122,13 @@ int ceph_decode_entity_addrvec(void **p,
+ 
+ 		dout("%s i %d addr %s\n", __func__, i, ceph_pr_addr(&tmp_addr));
+ 		if (tmp_addr.type == my_type) {
+-			if (found) {
+-				pr_err("another match of type %d in addrvec\n",
+-				       le32_to_cpu(my_type));
+-				return -EINVAL;
++			if (!found) {
++				memcpy(addr, &tmp_addr, sizeof(*addr));
++				found = true;
++			} else {
++				dout("%s skipping extra match of type %d in addrvec\n",
++				     __func__, le32_to_cpu(my_type));
+ 			}
+-
+-			memcpy(addr, &tmp_addr, sizeof(*addr));
+-			found = true;
+ 		}
+ 	}
+ 
 
 
