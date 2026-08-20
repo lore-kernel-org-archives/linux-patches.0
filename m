@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87950272E53;
-	Thu, 20 Aug 2026 16:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6128547B438;
+	Thu, 20 Aug 2026 16:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243554; cv=none; b=G+i+0djWWIWK1NVQ91Z8VPDw9xs13ma66yXiEg0iHFhODaOOF3GpovRiiVoMu6mYWt79iiTcRDayfzDXyL3LarBPBI25bA1ZnfOH2tGwY1Kx2PoCrBlDMMLgBL3Vo++j1rMQpgnGEnmOzFKpU0OVYcTX/2HE8tUF3R9PPB8aSYI=
+	t=1787243557; cv=none; b=Oo/exUGYY6gIV7K70XlA0rMfkOXwVbzbf+X0gtRq7R2pAjX4V1s1UCvbdwytb5vE4bCIII46R3ovxYLoc6xZntvQkFj6O0+Y3n1tD/cta/Y4ll1YEdyvH57Sh9o0YvKS+Du0VFD2QdAWYJwZPzW3EcntrvrOoNkQOP3nQs9stTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243554; c=relaxed/simple;
-	bh=CscOx+qtYV5VXc65zyxflLqc0RTATwiOBF6MovKOw0Q=;
+	s=arc-20240116; t=1787243557; c=relaxed/simple;
+	bh=sreJR2oqKxqZwHsmTacx27/TvvlVMs7wl4m3UcSl2ug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HN/+G9l7+1mV79POUi/USbt+FCaAtMyggKaWmJDTBmGrE1SuLJkFc6L4JOvXHd9g5r9OHiJEDEU4tNVVo+MSyyPm8wyIsNe10M41RRTImNypPFPQk8/i1hFfvEjFdZkRG47lozjvFK3jPBYrxdpkPwzqdv7C0RgDGkfc79yAnTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuwgqNtn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j4/dq+FgiH8gC/+GRWJ6huO7FqWnBavAqQm1MSufCaGsLaVwe2PxI6d1bjN9CkBnicBFHExZDWqGjHkxnuWCt+Paj/xZkNEPM+R64b8QAta8Gi1mwrY77sgRJD8MMNNKpuL7FXlR1B92WRK6OoHTa1FBPg5BYiCxyEjPEqL7z6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJLP0vzz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuwgqNtn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2CAC1F000E9;
-	Thu, 20 Aug 2026 16:32:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJLP0vzz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6D61F000E9;
+	Thu, 20 Aug 2026 16:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243553;
-	bh=n151Z2rg5ozQ51CM9Iv68lYwBnSkETgzS9J2TdpR43Q=;
+	s=korg; t=1787243556;
+	bh=6jq3cwbE90IrkbZfuMvGkbMxKcpOWeVjs5toeeSGoV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tuwgqNtnZsLCZsju+fmjRLt1HaHWbOVyg6pXIvMqOq20wswMUo90pc6ijV8E1rPcP
-	 85tl1f4o1ETZ3odCQk6HBBP/EicGXLthaYejwnxuKqsKnDIxpy4G9T7dH3VRjlWwOc
-	 5j0dM1UYXrh0wqfSb/T8yIE+Rr2Y34+tTlY0fhU4=
+	b=mJLP0vzzx3GmMXaFrH2ZIMvoQG6lqzkUWxXMc1S7kLyXE6nDVhUTz5kn+kczDXnEF
+	 NBFVm5UboFvf2rqD7MSFWHsHwrY22SbL5URdMfIWn54bn3xXlFv1IFESOIeKsvFtFr
+	 HwPfebyXSx7yudKkwhwaAEOnYejgzW6Mvo29bghA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Souvik Banerjee <souvik@amlalabs.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 134/272] ovl: use linked upper dentry in copy-up tmpfile
-Date: Thu, 20 Aug 2026 16:55:18 +0200
-Message-ID: <20260820145235.287262584@linuxfoundation.org>
+Subject: [PATCH 5.15 135/272] scsi: lpfc: Fix memory leak in lpfc_sli4_driver_resource_setup()
+Date: Thu, 20 Aug 2026 16:55:19 +0200
+Message-ID: <20260820145235.318788171@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -47,110 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Souvik Banerjee <souvik@amlalabs.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit e348eecd4d8fa8d18a5157ff59f7be1dc59c5928 ]
+[ Upstream commit 1bd28625e25be549ee7c47532e7c3ef91c682410 ]
 
-ovl_copy_up_tmpfile() stores the disconnected O_TMPFILE dentry as the
-overlay's upper dentry reference via ovl_inode_update().  vfs_tmpfile()
-allocated this dentry via d_alloc(parentpath->dentry, &slash_name), so
-d_name is "/" and d_parent is c->workdir.  Local upper filesystems
-(ext4, btrfs, xfs, ...) immediately rename it to "#<inum>" via
-d_mark_tmpfile() inside their ->tmpfile() op; FUSE and virtiofs do
-not, so both fields stay that way.  Neither identifies the destination
-directory and filename where ovl_do_link() actually linked the file.
+The memory allocated for mboxq using mempool_alloc() is not freed in
+some of the early exit error paths. Fix that by moving the
+mempool_free() call to an earlier point after last use.
 
-When the upper filesystem implements ->d_revalidate() (e.g. FUSE or
-virtiofs), ovl_revalidate_real() calls it with the dentry's parent
-inode and a snapshot of d_name.  The server tries to look up "/" inside
-c->workdir, fails, and overlayfs reports -ESTALE.
-
-This causes persistent ESTALE errors for any file that was copied up via
-the tmpfile path, breaking dpkg, apt, and other tools that do
-rename-over-existing on overlayfs with a FUSE/virtiofs upper.
-
-Before commit 6b52243f633e ("ovl: fold copy-up helpers into callers"),
-the tmpfile copy-up path used a dedicated helper ovl_link_tmpfile()
-that captured the linked destination dentry returned by ovl_do_link():
-
-    err = ovl_do_link(temp, udir, upper);
-    ...
-    if (!err)
-        *newdentry = dget(upper);
-
-and published it via ovl_inode_update(d_inode(c->dentry), newdentry).
-The fold inlined ovl_do_link() into ovl_copy_up_tmpfile() but dropped
-the dget(upper) capture, and rewrote the publish line as
-ovl_inode_update(d_inode(c->dentry), dget(temp)) — where temp is the
-disconnected O_TMPFILE dentry.
-
-Fix by keeping a reference to the linked destination dentry after
-ovl_do_link() succeeds, and publishing that dentry at the existing
-ovl_inode_update() call site.  The non-tmpfile/workdir path continues to
-publish the renamed temporary dentry.
-
-Reproducer:
-  - Mount overlayfs with virtiofs (or a FUSE fs whose server advertises
-    FUSE_TMPFILE) as upper
-  - Run: dpkg -i <any .deb>
-  - Observe: "error installing new file '...': Stale file handle"
-
-Fixes: 6b52243f633e ("ovl: fold copy-up helpers into callers")
-Cc: stable@vger.kernel.org # v4.20+
-Signed-off-by: Souvik Banerjee <souvik@amlalabs.com>
-Link: https://patch.msgid.link/20260501232735.2610824-1-souvik@amlalabs.com
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: d79c9e9d4b3d ("scsi: lpfc: Support dynamic unbounded SGL lists on G7 hardware.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://patch.msgid.link/20260707065304.949135-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/copy_up.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/scsi/lpfc/lpfc_init.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -730,7 +730,7 @@ static int ovl_copy_up_tmpfile(struct ov
- {
- 	struct ovl_fs *ofs = OVL_FS(c->dentry->d_sb);
- 	struct inode *udir = d_inode(c->destdir);
--	struct dentry *temp, *upper;
-+	struct dentry *temp, *upper, *newdentry = NULL;
- 	struct ovl_cu_creds cc;
- 	int err;
- 
-@@ -754,6 +754,14 @@ static int ovl_copy_up_tmpfile(struct ov
- 	err = PTR_ERR(upper);
- 	if (!IS_ERR(upper)) {
- 		err = ovl_do_link(ofs, temp, udir, upper);
-+		if (!err) {
-+			/*
-+			 * Record the linked dentry -- not the disconnected
-+			 * O_TMPFILE dentry -- so that ->d_revalidate() on
-+			 * the upper fs sees the real parent/name.
-+			 */
-+			newdentry = dget(upper);
-+		}
- 		dput(upper);
+--- a/drivers/scsi/lpfc/lpfc_init.c
++++ b/drivers/scsi/lpfc/lpfc_init.c
+@@ -8010,6 +8010,7 @@ lpfc_sli4_driver_resource_setup(struct l
+ 			goto out_free_bsmbx;
+ 		}
  	}
- 	inode_unlock(udir);
-@@ -763,9 +771,7 @@ static int ovl_copy_up_tmpfile(struct ov
++	mempool_free(mboxq, phba->mbox_mem_pool);
  
- 	if (!c->metacopy)
- 		ovl_set_upperdata(d_inode(c->dentry));
--	ovl_inode_update(d_inode(c->dentry), temp);
+ 	/*
+ 	 * 1 for cmd, 1 for rsp, NVME adds an extra one
+@@ -8131,8 +8132,6 @@ lpfc_sli4_driver_resource_setup(struct l
+ 	if (!phba->lpfc_cmd_rsp_buf_pool)
+ 		goto out_free_sg_dma_buf;
+ 
+-	mempool_free(mboxq, phba->mbox_mem_pool);
 -
--	return 0;
-+	ovl_inode_update(d_inode(c->dentry), newdentry);
+ 	/* Verify OAS is supported */
+ 	lpfc_sli4_oas_verify(phba);
  
- out_dput:
- 	dput(temp);
 
 
