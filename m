@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3404546C82A;
-	Thu, 20 Aug 2026 17:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191DB46C82A;
+	Thu, 20 Aug 2026 17:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248635; cv=none; b=EJeLOWWWUlQbNgppAP2X+Hu4XQmfAg51JM9gIXy5sUCF98kbbMlrW3bAQxRahTU6dYCQ13meGM1R0M7aEj6MyMBC78Qz+0oBdQTLypcD9rKk1yu3qgrDqdwpDmU2A5jmoBfRMSY+0aqevIsP6xJ9mGpsG8wv9NW+VvmFrNCRJZQ=
+	t=1787248638; cv=none; b=WbuFDtypN0RuQh04eNAt8j5eVTW2wz7UAWFJ3L2oBIN+/Gwxe40N5Brvm8p+nvVoy6rT63LqkpW+K6AcndfpQza9p+83dMBPz4jdt8XFQD4VfIMOKHIukIGEh4x9s83ogx4SjdtA8HOeyulCy3d7auLCwVIqi/utEwVHEqjk9yM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248635; c=relaxed/simple;
-	bh=bkKxs2efA1QzOaMJMmytjpVot9niF5UaBqJQXiecouI=;
+	s=arc-20240116; t=1787248638; c=relaxed/simple;
+	bh=RxJms990st+vKpgVfgh8NvWVfbR9KoeisIbdyeiyoF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V+SnYKZh2I5Be9JBmtyVMKaMiDQMA0sTeIkkI89+yUaPv7cxjkH/cGoETVDsmaHXPGf8IXYOOjjAgY/Wbhwv+ufU3bO1sII37fcFpRZka70hJ3ErfUw6nZmZ4ICGSeQvff/Xh713eeXooH4PR29uPKUoR3tFAKSfVzSLOBqiZ1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/ZA503q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZPzWzomTnF+GlRei0ZWbbcik6Aleg0kYiCX8yrPtDEqrCgYNztu/2vjiCcI+fyfedhroI6GF6Mdh0wO9bIAWSw+jVo+kJns48/F6gEB9u4cziVNxlej9ryjttNuyhr7mAThU5cbmev+rUxkNeuMRmgtsC/gI+NjWCNb7yO0Vo4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+mmG6T4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/ZA503q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905A21F000E9;
-	Thu, 20 Aug 2026 17:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+mmG6T4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0E51F000E9;
+	Thu, 20 Aug 2026 17:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248634;
-	bh=G7TIr9ldr9BtpzZBihRvc39gXgnJLoVgVBwKosemiVQ=;
+	s=korg; t=1787248637;
+	bh=eNQPntIt/zwB38ZIMd/iJ/3Eskrb+oLWKKGIz04bOvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M/ZA503qSGGU5J3j0aBXOhY85d//vlZ1olxRzKm5D4cpsn7Xm7Mb52xPieBlBiGhd
-	 Ar8MxWqKt9Ewx5ASw7D3mQZSWrao8tMHitV68E7tFfOVnBJCs0KxpgpFxNXCFerLqK
-	 0xC2JlLAfi0uX4mKOR5FPqUGjjNWCq0U8+fJZ9xo=
+	b=O+mmG6T4o0FuEpirTOm7wo6zI4eqAjP1vG3tZaWjIPsJpV57eYmdde5AdDH2mkXEu
+	 cBxfhzgj44zWsSrTjfRsv3a1fTInd/UPUAz5EnGfCbwS30UiFgVmvoGgEZEngmx35A
+	 LMFTEv5fLXFjM8E0S7rvsXdnZ6xs3WgwuSIw7kmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	David Howells <dhowells@redhat.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.1 296/303] RDMA/siw: Fix the sendmsg byte count in siw_tcp_sendpages
-Date: Thu, 20 Aug 2026 16:57:12 +0200
-Message-ID: <20260820145302.371758714@linuxfoundation.org>
+	"Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>,
+	Andrei Kuchynski <akuchynski@chromium.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.1 297/303] usb: typec: ucsi: Correct teardown ordering in ucsi_init() error path
+Date: Thu, 20 Aug 2026 16:57:13 +0200
+Message-ID: <20260820145302.400452077@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -53,95 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Falcato <pfalcato@suse.de>
+From: Andrei Kuchynski <akuchynski@chromium.org>
 
-commit c18646248fed07683d4cee8a8af933fc4fe83c0d upstream.
+commit fb0bf289f5d529336ef490c8273e88a8a8b29f69 upstream.
 
-Ever since commit c2ff29e99a76 ("siw: Inline do_tcp_sendpages()"),
-we have been doing this:
+The commit 7aa7d4bf9d3f ("usb: typec: ucsi: Fix race condition and
+ordering in port unregistration") consolidated port teardown into the
+ucsi_unregister_port() helper. However, it introduced an ordering problem
+in the ucsi_init() error path.
 
-static int siw_tcp_sendpages(struct socket *s, struct page **page, int offset,
-                             size_t size)
-[...]
-        /* Calculate the number of bytes we need to push, for this page
-         * specifically */
-        size_t bytes = min_t(size_t, PAGE_SIZE - offset, size);
-        /* If we can't splice it, then copy it in, as normal */
-        if (!sendpage_ok(page[i]))
-                msg.msg_flags &= ~MSG_SPLICE_PAGES;
-        /* Set the bvec pointing to the page, with len $bytes */
-        bvec_set_page(&bvec, page[i], bytes, offset);
-        /* Set the iter to $size, aka the size of the whole sendpages (!!!) */
-        iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, &bvec, 1, size);
-try_page_again:
-        lock_sock(sk);
-        /* Sendmsg with $size size (!!!) */
-        rv = tcp_sendmsg_locked(sk, &msg, size);
+Fix this by ensuring ucsi_unregister_port() is called before we unregister
+their corresponding lockdep keys.
 
-This means we've been sending oversized iov_iters and tcp_sendmsg calls
-for a while. This has a been a benign bug because sendpage_ok() always
-returned true. With the recent slab allocator changes being slowly
-introduced into next (that disallow sendpage on large kmalloc
-allocations), we have recently hit out-of-bounds crashes, due to slight
-differences in iov_iter behavior between the MSG_SPLICE_PAGES and
-"regular" copy paths:
-
-(MSG_SPLICE_PAGES)
-skb_splice_from_iter
-  iov_iter_extract_pages
-    iov_iter_extract_bvec_pages
-      uses i->nr_segs to correctly stop in its tracks before OoB'ing everywhere
-  skb_splice_from_iter gets a "short" read
-
-(!MSG_SPLICE_PAGES)
-skb_copy_to_page_nocache copy=iov_iter_count
- [...]
-   copy_from_iter
-        /* this doesn't help */
-        if (unlikely(iter->count < len))
-                len = iter->count;
-          iterate_bvec
-            ... and we run off the bvecs
-
-Fix this by properly setting the iov_iter's byte count, plus sending the
-correct byte count to tcp_sendmsg_locked.
-
-Link: https://patch.msgid.link/r/20250729120348.495568-1-pfalcato@suse.de
 Cc: stable@vger.kernel.org
-Fixes: c2ff29e99a76 ("siw: Inline do_tcp_sendpages()")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202507220801.50a7210-lkp@intel.com
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 7aa7d4bf9d3f ("usb: typec: ucsi: Fix race condition and ordering in port unregistration")
+Reported-by: "Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>
+Closes: https://lore.kernel.org/all/22064276-6c56-411a-9f20-6917ceeb865f@intel.com/
+Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
+Tested-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260717104614.325250-1-akuchynski@chromium.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_tx.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/infiniband/sw/siw/siw_qp_tx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
-@@ -339,18 +339,17 @@ static int siw_tcp_sendpages(struct sock
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1390,11 +1390,11 @@ static int ucsi_init(struct ucsi *ucsi)
+ 	return 0;
  
- 		tcp_rate_check_app_limited(sk);
- 		bvec_set_page(&bvec, page[i], bytes, offset);
--		iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, &bvec, 1, size);
-+		iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, &bvec, 1, bytes);
+ err_unregister:
++	for (con = connector; con->port; con++)
++		ucsi_unregister_port(con);
+ 	for (i = 0; i < ucsi->cap.num_connectors; i++)
+ 		lockdep_unregister_key(&connector[i].lock_key);
  
- try_page_again:
- 		lock_sock(sk);
--		rv = tcp_sendmsg_locked(sk, &msg, size);
-+		rv = tcp_sendmsg_locked(sk, &msg, bytes);
- 		release_sock(sk);
- 
- 		if (rv > 0) {
- 			size -= rv;
- 			sent += rv;
- 			if (rv != bytes) {
--				offset += rv;
- 				bytes -= rv;
- 				goto try_page_again;
- 			}
+-	for (con = connector; con->port; con++)
+-		ucsi_unregister_port(con);
+ 	kfree(connector);
+ err_reset:
+ 	memset(&ucsi->cap, 0, sizeof(ucsi->cap));
 
 
