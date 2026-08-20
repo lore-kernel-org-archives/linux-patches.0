@@ -1,38 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51ADB46D2C9;
-	Thu, 20 Aug 2026 17:41:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEA547ECD9;
+	Thu, 20 Aug 2026 17:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247692; cv=none; b=QJUcZ4DUjKrp+SBgXxmeVmTnSdXsGio8WRiiqjneMzdevHtCezmnVAD6XGmFNizbb+2woRMM9ntgfvjowia03z5jvv7O/JQNlwECblSsx8j+233riv75qNh1HZ5qusSEbuCFkVGhN4UrrrR8oGP9U9tZaqPMEqMO/jhrB62dX24=
+	t=1787247695; cv=none; b=QycET+/9DgnXRTcZgCT4o827ZKs2Uj08ud0rAnSW1PS22j+og5wPACYPO68p4rQdHJ0R1hhXBOaWcDS8Af9x4VcBAeObSuDRFEIgWPl4bBgtJluPRb+q1VZCnD7ttuEPTZFS6pnoIBWgw3CdjmcO4Q11AeQR+j57wNvBmJBvvK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247692; c=relaxed/simple;
-	bh=q3Y/2cuBuO9DF4qZPADOudmEzVBi7Vz/vDnsgQ9H6rU=;
+	s=arc-20240116; t=1787247695; c=relaxed/simple;
+	bh=fsIwHi/I225LH/ycsbAMC9FGVh4fcv3vUgZyWdYzBXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=M5sFbpYzc/T1ua0/cHRpz8+vZX03sEYmf9KAfQ9RkgxRHxGEvflhieN9ljF8eGDJSUQp6l364jNkLk6ttL1uIrbAfebFmO0cPOTHwl3u7jTQy0+1pUvwVFPGN7kAaN/RxrIyxzEy+Gld+v1SS4Gwf6q9oy2I/7TkGpRMhBbmnU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKQe2Q6Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e9UieTCD8nXsK86i7Lt/KbCFzSgsAm45EFMCoF/DmKK+JvWE5tV3dBadY+YNCtEk8gS41flNIKUf6b8Oz7Sw4zDz67VDAtGRXiWjt0Uh5YRQ4xseDQorsomxRpSBMuTM/hCPw1P/abPmOAsWzCiV81uKHfciTbj5mddMP4p49zQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5bFi5W0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKQe2Q6Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF771F000E9;
-	Thu, 20 Aug 2026 17:41:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5bFi5W0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5391F00A3A;
+	Thu, 20 Aug 2026 17:41:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247691;
-	bh=iokeJooKcke3DKV5QzL1WqG4PY0AAvqUml63hf1+Rkw=;
+	s=korg; t=1787247694;
+	bh=9IMIbeDDYthH2blRGr52RaeCwvGwLl/khZ2Baywpaog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zKQe2Q6YVrmqr9neawH1Wt4njwIxEzSVNE2aZiEKFH049cj+RE1/FrDwI1wjvViwz
-	 7bQlaV7EWEALguTnv5qfeW/2TKrO19uRENrvuii9SZk6RGJUBH8bmFsdiPkf0eJEk6
-	 Cv6W6zVe39vu4Fq+dXpU6ltTQd6kPc37+GmfPs3o=
+	b=P5bFi5W0gQydq+U9RdHsHuDQkFiJAy/MJ5iyuiOLxia6yUGIQSNNGxugBNwCEW3mn
+	 9tAjMlFCCvMFcdmSINUHH187xiWZI+bYejZ9MECQCkUABDtGuO+klMZkbXm6I4v+eu
+	 YhjcZDDDfJfABixT5J7zpTjO6er83ucG19ciQTO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Hengbin Zhang <uqbarz@gmail.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Hugh Dickins <hughd@google.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Nico Pache <npache@redhat.com>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Yang Shi <shy828301@gmail.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 135/166] tls: rx: restore msg_iter before TLS 1.3 optimistic retry
-Date: Thu, 20 Aug 2026 16:56:34 +0200
-Message-ID: <20260820145215.230300407@linuxfoundation.org>
+Subject: [PATCH 6.6 136/166] mm/huge_memory: fix huge_zero_pfn race
+Date: Thu, 20 Aug 2026 16:56:35 +0200
+Message-ID: <20260820145215.262445436@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -45,122 +60,266 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit 1c8629651cb54f7b51db8fc0b1a9944e4a4b0f5e ]
+commit 33192a26cddea7a7e4ca66e5c3eebd36fa8be2bb upstream.
 
-tls_decrypt_sg() advances msg->msg_iter when it maps user pages for
-the optimistic TLS 1.3 zero-copy path. If the decrypted record turns
-out not to be unpadded application data, tls_decrypt_sw() retries into
-a kernel skb, but leaves the iterator advanced.
+Patch series "mm/huge_memory: fix huge_zero_pfn race", v2.
 
-The subsequent copy from the skb then writes decrypted bytes again at
-a later point in the caller iovecs while recvmsg() reports only the
-post-retry length. A TLS peer can trigger this after the receiver
-enables TLS_RX_EXPECT_NO_PAD.
+There is a subtle race in the reference-counted huge_zero_folio
+implementation.
 
-Revert the iterator by the number of bytes consumed by the optimistic
-mapping before retrying without zero-copy.
+The fast path atomic logic fails to account for the fact that the shrinker
+(which drops the final huge_zero_refcount pin) can overwrite huge_zero_pfn
+with the ~0UL sentinel value in shrink_huge_zero_folio_scan() after a
+racing get_huge_zero_folio() installed a valid value there.
 
-Add a selftest which sends a TLS 1.3 control record with
-TLS_RX_EXPECT_NO_PAD enabled and verifies that recvmsg() does not
-overwrite later iovecs beyond the returned length.
+This results in huge_zero_folio being correctly set but huge_zero_pfn
+being set incorrectly and thus is_huge_zero_pfn() and consequently
+is_huge_zero_pmd() will misidentify the huge zero folio as being an
+ordinary THP folio.
 
-Fixes: ce61327ce989 ("tls: rx: support optimistic decrypt to user buffer with TLS 1.3")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Link: https://patch.msgid.link/20260804125528.2139928-1-Jeremy.Jean@oss.cyber.gouv.fr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This can result in the huge zero folio being split and otherwise treated
+incorrectly.
+
+The solution to this is very subtle as there is an atomic fast path, and
+thus ordering in weakly ordered architectures has to be treated very
+carefully.
+
+The first commit fixes the issue by introducing a spinlock around
+huge_zero_[pfn, folio, refcount] write, with careful consideration paid to
+load/store ordering in the fast path.  It is placed first and kept as
+small as possible so that it can be backported on its own.
+
+The second commit is a pure cleanup which reworks the
+CONFIG_PERSISTENT_HUGE_ZERO_FOLIO logic to better separate the persistent
+logic from the dynamically allocated one.
+
+
+This patch (of 2):
+
+If !CONFIG_PERSISTENT_HUGE_ZERO_FOLIO, the huge_zero_folio is refcounted
+by huge_zero_refcount and returned by mm_get_huge_zero_folio().
+
+When the caller is done with the huge zero page, its reference count is
+decremented.  Only a shrinker can set the reference count to zero.
+
+A race can unfortunately occur between a shrinker decrementing the
+reference count to zero and a concurrent page fault.
+
+This is because shrink_huge_zero_folio_scan() might, if very unlucky, be
+preempted between setting huge_zero_refcount to zero and writing an
+invalid value.
+
+During this time get_huge_zero_folio() could write to huge_zero_pfn before
+shrink_huge_zero_folio_scan() resumes.
+
+In this event the huge zero folio will be persistently misidentified
+causing the THP code path to be entered inappropriately for the huge zero
+folio:
+
+                CPU 0                                   CPU 1
+=======================================|=================================
+shrink_huge_zero_folio_scan()          |
+   atomic_cmpxchg() sets refcount to 0 |
+   xchg() sets huge_zero_folio to NULL | get_huge_zero_folio()
+                 |                     |    atomic_inc_not_zero() -> zero
+      preempted for a long time        |    Allocate new huge zero folio
+                 |                     |    Write valid huge_zero_folio
+                 v                     |    Write valid huge_zero_pfn
+  Overwrite huge_zero_pfn with ~0UL   <--- Invalid overwrite!
+
+This results in is_huge_zero_pfn() and is_huge_zero_pmd() incorrectly
+returning false for a huge zero page which could result in issues like the
+huge zero folio being incorrectly split.
+
+Note that the issue is with huge_zero_pfn not huge_zero_folio, as
+get_huge_zero_folio() uses cmpxchg() gated on huge_zero_folio being NULL
+with a retry loop and shrink_huge_zero_folio_scan() uses xchg() to set
+huge_zero_folio.
+
+Fix the issue by introducing a spinlock, huge_zero_lock, to prevent
+concurrent write of huge_zero_folio, huge_zero_pfn and huge_zero_refcount.
+
+There needs to be significant care taken here to ensure correctness:
+
+The fast path in get_huge_zero_folio() uses atomic_inc_not_zero(), which
+is outside of the critical section, and means huge zero allocation is
+gated on zero huge_zero_refcount.
+
+The fast path doesn't use huge_zero_lock, so the critical section is
+irrelevant to it.
+
+So invariants are required - huge_zero_refcount MUST:
+
+* Only be set in the huge_zero_lock critical section to ensure
+  serialisation of huge_zero_pfn, huge_zero_folio and huge_zero_refcount
+  writes.
+
+* Be set non-zero only AFTER huge_zero_[pfn, folio] are set to valid values
+  so installation of the huge zero folio on read page fault ensures
+  concurrent is_huge_zero_*() calls correctly identify the huge zero folio.
+
+* Be set zero only BEFORE huge_zero_[pfn, folio] are set to NULL and ~0UL
+  respectively, and atomically.
+
+Establish these by:
+
+* Only setting huge_zero_refcount to zero or an absolute value in the
+  huge_zero_lock critical section in get_huge_zero_folio() and
+  shrink_huge_zero_folio_scan(), and always updating atomically there
+  and elsewhere.
+
+* Using atomic_set_release(&huge_zero_refcount) in get_huge_zero_folio()
+  after huge_zero_[pfn, folio] are set. This is paired with
+  atomic_inc_not_zero() to ensure atomic_inc_not_zero() only observes a
+  non-zero value if huge_zero_[pfn, folio] are set.
+
+* Using atomic_cmpxchg() in shrink_huge_zero_folio_scan() (as before) to
+  ensure that it is set zero only when equal to 1 and set atomically.
+
+* atomic_cmpxchg() being fully ordered ensures this is done prior to
+  huge_zero_[folio, pfn] being set to NULL and ~0UL respectively.
+
+Eliminate the retry loop in get_huge_zero_folio() as the atomic_cmpxchg()
+in shrink_huge_zero_folio_scan() is now performed under the lock, and
+replace with an equally locked atomic_inc() to set the reference count
+should the caller be raced on huge zero folio installation.
+
+folio_put() naturally implies a full memory barrier so its ordering is
+maintained correctly.
+
+The huge zero folio also cannot be released except when the shrinker does
+so as it is non-LRU and non-rmappable.
+
+Note that only the huge zero shrinker (via shrink_huge_zero_folio_scan())
+can actually set huge_zero_refcount to zero, which is the count of mm's
+which have at least one huge zero folio installed plus one shrinker pin.
+
+Additionally convert a BUG_ON() to a VM_WARN_ON_ONCE().
+
+Link: https://lore.kernel.org/20260730-fix-refcounted-huge-zero-v2-0-c5d8a41b317f@kernel.org
+Link: https://lore.kernel.org/20260730-fix-refcounted-huge-zero-v2-1-c5d8a41b317f@kernel.org
+Fixes: 3b77e8c8cde5 ("mm/thp: make is_huge_zero_pmd() safe and quicker")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reported-by: Hengbin Zhang <uqbarz@gmail.com>
+Closes: https://lore.kernel.org/linux-mm/20260727154001.4102341-1-uqbarz@gmail.com/
+Suggested-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Hannes Reinecke <hare@suse.de>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Kiryl Shutsemau <kas@kernel.org>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Pankaj Raghav <p.raghav@samsung.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ adapted folio API (`huge_zero_folio`, `folio_pfn`, `folio_put`) to pre-6.11 page naming (`huge_zero_page`, `page_to_pfn`, `__free_pages`) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c                  |    2 +
- tools/testing/selftests/net/tls.c |   57 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 59 insertions(+)
+ mm/huge_memory.c |   43 +++++++++++++++++++++++++++++--------------
+ 1 file changed, 29 insertions(+), 14 deletions(-)
 
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1741,6 +1741,8 @@ tls_decrypt_sw(struct sock *sk, struct t
- 	/* If opportunistic TLS 1.3 ZC failed retry without ZC */
- 	if (unlikely(darg->zc && prot->version == TLS_1_3_VERSION &&
- 		     darg->tail != TLS_RECORD_TYPE_DATA)) {
-+		iov_iter_revert(&msg->msg_iter, strp_msg(darg->skb)->full_len -
-+				prot->overhead_size);
- 		darg->zc = false;
- 		if (!darg->tail)
- 			TLS_INC_STATS(sock_net(sk), LINUX_MIB_TLSRXNOPADVIOL);
---- a/tools/testing/selftests/net/tls.c
-+++ b/tools/testing/selftests/net/tls.c
-@@ -1605,6 +1605,63 @@ TEST_F(tls, recv_efault)
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -38,6 +38,7 @@
+ #include <linux/sched/sysctl.h>
+ #include <linux/memory-tiers.h>
+ #include <linux/compat.h>
++#include <linux/cleanup.h>
+ 
+ #include <asm/tlb.h>
+ #include <asm/pgalloc.h>
+@@ -69,6 +70,7 @@ unsigned long transparent_hugepage_flags
+ static struct shrinker deferred_split_shrinker;
+ 
+ static atomic_t huge_zero_refcount;
++static DEFINE_SPINLOCK(huge_zero_lock);
+ struct page *huge_zero_page __read_mostly;
+ unsigned long huge_zero_pfn __read_mostly = ~0UL;
+ 
+@@ -144,7 +146,8 @@ bool hugepage_vma_check(struct vm_area_s
+ static bool get_huge_zero_page(void)
+ {
+ 	struct page *zero_page;
+-retry:
++
++	/* Paired with atomic_set_release(). */
+ 	if (likely(atomic_inc_not_zero(&huge_zero_refcount)))
+ 		return true;
+ 
+@@ -154,17 +157,22 @@ retry:
+ 		count_vm_event(THP_ZERO_PAGE_ALLOC_FAILED);
+ 		return false;
+ 	}
+-	preempt_disable();
+-	if (cmpxchg(&huge_zero_page, NULL, zero_page)) {
+-		preempt_enable();
++
++	/* Paired with critical section in shrink_huge_zero_page_scan(). */
++	spin_lock(&huge_zero_lock);
++	if (huge_zero_page) {
++		/* Somebody else already installed it. */
++		atomic_inc(&huge_zero_refcount);
++		spin_unlock(&huge_zero_lock);
+ 		__free_pages(zero_page, compound_order(zero_page));
+-		goto retry;
++		return true;
+ 	}
++	WRITE_ONCE(huge_zero_page, zero_page);
+ 	WRITE_ONCE(huge_zero_pfn, page_to_pfn(zero_page));
++	/* Paired with atomic_inc_not_zero(). +1 for shrinker pin. */
++	atomic_set_release(&huge_zero_refcount, 2);
++	spin_unlock(&huge_zero_lock);
+ 
+-	/* We take additional reference here. It will be put back by shrinker */
+-	atomic_set(&huge_zero_refcount, 2);
+-	preempt_enable();
+ 	count_vm_event(THP_ZERO_PAGE_ALLOC);
+ 	return true;
+ }
+@@ -208,15 +216,22 @@ static unsigned long shrink_huge_zero_pa
+ static unsigned long shrink_huge_zero_page_scan(struct shrinker *shrink,
+ 				       struct shrink_control *sc)
+ {
+-	if (atomic_cmpxchg(&huge_zero_refcount, 1, 0) == 1) {
+-		struct page *zero_page = xchg(&huge_zero_page, NULL);
+-		BUG_ON(zero_page == NULL);
++	struct page *zero_page;
++
++	/* Paired with critical section in get_huge_zero_page(). */
++	scoped_guard(spinlock, &huge_zero_lock) {
++		/* Paired with atomic_inc_not_zero() in get_huge_zero_page(). */
++		if (atomic_cmpxchg(&huge_zero_refcount, 1, 0) != 1)
++			return 0;
++
++		zero_page = huge_zero_page;
++		VM_WARN_ON_ONCE(!zero_page);
++		WRITE_ONCE(huge_zero_page, NULL);
+ 		WRITE_ONCE(huge_zero_pfn, ~0UL);
+-		__free_pages(zero_page, compound_order(zero_page));
+-		return HPAGE_PMD_NR;
+ 	}
+ 
+-	return 0;
++	__free_pages(zero_page, compound_order(zero_page));
++	return HPAGE_PMD_NR;
  }
  
- #define TLS_RECORD_TYPE_HANDSHAKE      0x16
-+
-+TEST_F(tls_basic, recvmsg_nopad_retry_iov)
-+{
-+	char payload[32];
-+	char first_iov[sizeof(payload)];
-+	char later_iov[sizeof(payload) * 2];
-+	char expected_later_iov[sizeof(later_iov)];
-+	char cbuf[CMSG_SPACE(sizeof(char))];
-+	struct tls_crypto_info_keys tls13;
-+	struct iovec iov[] = {
-+		{ .iov_base = first_iov, .iov_len = sizeof(first_iov) },
-+		{ .iov_base = later_iov, .iov_len = sizeof(later_iov) },
-+	};
-+	struct msghdr msg = {
-+		.msg_iov = iov,
-+		.msg_iovlen = ARRAY_SIZE(iov),
-+		.msg_control = cbuf,
-+		.msg_controllen = sizeof(cbuf),
-+	};
-+	int one = 1;
-+	int ret;
-+	int i;
-+
-+	if (self->notls)
-+		SKIP(return, "no TLS support");
-+
-+	tls_crypto_info_init(TLS_1_3_VERSION, TLS_CIPHER_AES_GCM_128,
-+			     &tls13, 0);
-+
-+	ret = setsockopt(self->fd, SOL_TLS, TLS_TX, &tls13, tls13.len);
-+	ASSERT_EQ(ret, 0);
-+
-+	ret = setsockopt(self->cfd, SOL_TLS, TLS_RX, &tls13, tls13.len);
-+	ASSERT_EQ(ret, 0);
-+
-+	ret = setsockopt(self->cfd, SOL_TLS, TLS_RX_EXPECT_NO_PAD,
-+			 &one, sizeof(one));
-+	ASSERT_EQ(ret, 0);
-+
-+	for (i = 0; i < sizeof(payload); i++)
-+		payload[i] = 0x40 + i;
-+	memset(first_iov, 0xa5, sizeof(first_iov));
-+	memset(later_iov, 0x5a, sizeof(later_iov));
-+	memset(expected_later_iov, 0x5a, sizeof(expected_later_iov));
-+
-+	/* A control record forces optimistic TLS 1.3 RX to retry. */
-+	ret = tls_send_cmsg(self->fd, TLS_RECORD_TYPE_HANDSHAKE,
-+			    payload, sizeof(payload), 0);
-+	ASSERT_EQ(ret, sizeof(payload));
-+
-+	ret = recvmsg(self->cfd, &msg, 0);
-+	ASSERT_EQ(ret, sizeof(payload));
-+	EXPECT_EQ(memcmp(first_iov, payload, sizeof(payload)), 0);
-+	EXPECT_EQ(memcmp(later_iov, expected_later_iov,
-+			 sizeof(later_iov)), 0);
-+}
-+
- /* key_update, length 1, update_not_requested */
- static const char key_update_msg[] = "\x18\x00\x00\x01\x00";
- static void tls_send_keyupdate(struct __test_metadata *_metadata, int fd)
+ static struct shrinker huge_zero_page_shrinker = {
 
 
