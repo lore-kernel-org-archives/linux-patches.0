@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F1D479873;
-	Thu, 20 Aug 2026 17:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F297389473;
+	Thu, 20 Aug 2026 17:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247967; cv=none; b=n2B+Jh0TBnbNIfEvm8xPh3l1istQ1F+Eb+ZD8thGNAIJzI4K3RMx6u70W/x2pYUyCOLduPD9Vld5g2rUJ1Lksox+pHgyzBbfD6oiFvODjoeIscs9BdsCdHapdUlcuHmhKv4Yeoas0/iLXGESqeWQkHYfC10OtoXlkBywLM964hA=
+	t=1787247970; cv=none; b=as+c/BOGGJmNVbHGKwoOx8Gp1gSMErwfMsXLFnx9knT7ap0WbWCZ4xXin33ZxtQWwnXSZ3KycgXjCUeulbktftVhj2+zyAXshlXCXjac29SCp1uOm07T5YaVTxsFI0rsjMBerU2vtZ4k+OR9/wYlOVwfGjt8iACgQ7D+GoTXB3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247967; c=relaxed/simple;
-	bh=LPdGpkiYEfrR4HIh1CeAMI9zX+s6tMZDtF7K+kVGNEw=;
+	s=arc-20240116; t=1787247970; c=relaxed/simple;
+	bh=SKFWmyKtpXOqkmeaLFc/47gcF/z7cgzN5sog15iUz1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m9Ao3SPB0b1a09eqJ5QPKpTGgCODiCXK94LVAeh8r4LKX3idoKvMl3lLDx4qiBiwLnhmilQd0h7XzMWNMidewRGFiGbhHE0xZabTO6OARyj33U0T3VxOegjAoS2hgUK7wZfQwRLzibXJ7HnXYDQ4sH9uLhcdJTP4wH6yYbBp3KY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UREBWhO+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eeUigBy9asI6WPpLTTeML0GKaBe2NIwuITesreCFD6+LjxeKNx25/SJD5JnxNlMCT3To0UiI03EBNiwL5FlSU33fqKmpRxLFGYnZO+fxIODAvf2kVG1YcFvyEC1WYtI9Zk02kz+w8QgtUbIXEYlkvA4P9SoLU4jw1A1646Vg0AM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v63I/Sra; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UREBWhO+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602921F000E9;
-	Thu, 20 Aug 2026 17:46:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v63I/Sra"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 336901F00A3A;
+	Thu, 20 Aug 2026 17:46:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247965;
-	bh=Bsl4hy+RHLu610m14n6Knk+ynNnwRqdmvwsjVaTnTig=;
+	s=korg; t=1787247968;
+	bh=yIecoVWrFRtxu78X0exM7W31jtXsjFsrvWq++rYMHkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UREBWhO+V+TBkI+OvDwwSXHv6yjAL9W3Civ98MbaEPDZQj4nASExZuzh//rbwdATV
-	 HjMuohVZytswWKVxJ8Kjj4Qz4+CFr6uAaC7swDxi8WrAOUP1qK6xRiPqOw/E9wvgtM
-	 Rq8TAJQE9MBjfD2E0Orrs5BNDDUyScH5YGHaVBGw=
+	b=v63I/Sraqv7K0yN8YIQeIDhCkHK8Kwch84WhRuOuPrEA/R+D3soWECO2N2A8XUfsE
+	 vTIAFvwRDo2pIAwiWfYsqNucB6P9lqbhb4DSOrb+7JCvZzB1ZNxCIeGP9lQ3uxnO2C
+	 1MT6w2/+yE/cjSmHeQcxpxqXLxwi+MHWRRmQ8EnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 024/303] Input: iforce - validate input packet lengths
-Date: Thu, 20 Aug 2026 16:52:40 +0200
-Message-ID: <20260820145253.906415504@linuxfoundation.org>
+	Nayna Jain <nayna@linux.ibm.com>,
+	R Nageswara Sastry <rnsastry@linux.ibm.com>,
+	George Wilson <gcwilson@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.1 025/303] powerpc/pseries: lparcfg - fix kbuf[] underflow
+Date: Thu, 20 Aug 2026 16:52:41 +0200
+Message-ID: <20260820145253.937722821@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -50,83 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: George Wilson <gcwilson@linux.ibm.com>
 
-commit 5751c781d3c97ab6ce0e2a966156ed882152c415 upstream.
+commit fb442a6673ff1046bf67754957d95880fdb394b5 upstream.
 
-iforce_process_packet() reads fixed fields from joystick, wheel and
-status packets without first checking their lengths. In particular, the
-shared hats-and-buttons helper unconditionally reads data[6]. The status
-tail is a sequence of 16-bit effect addresses, but an incomplete final
-address is also consumed. A successful zero-length USB URB additionally
-reads the packet ID before the common parser is called.
+In lparcfg_write(), a count of 0 results in kbuf[] being indexed at -1.
+Check for count == 0 in the existing check for count > sizeof(kbuf) and
+return -EINVAL if true.
 
-Reject the zero-length USB transfer, require the seven-byte joystick and
-wheel prefixes and the two-byte status prefix, and consume only complete
-status-tail addresses.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260720115018.75045-1-pengpeng@iscas.ac.cn
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 74422e2b1939 ("powerpc/pseries: Remove VLA from lparcfg_write()")
+Acked-by: Nayna Jain <nayna@linux.ibm.com>
+Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Cc: stable@vger.kernel.org # 4.20
+Signed-off-by: George Wilson <gcwilson@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/iforce/iforce-packets.c |   11 ++++++++++-
- drivers/input/joystick/iforce/iforce-usb.c     |    3 +++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ arch/powerpc/platforms/pseries/lparcfg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/joystick/iforce/iforce-packets.c
-+++ b/drivers/input/joystick/iforce/iforce-packets.c
-@@ -161,6 +161,9 @@ void iforce_process_packet(struct iforce
- 	switch (packet_id) {
+--- a/arch/powerpc/platforms/pseries/lparcfg.c
++++ b/arch/powerpc/platforms/pseries/lparcfg.c
+@@ -729,7 +729,7 @@ static ssize_t lparcfg_write(struct file
+ 	if (!firmware_has_feature(FW_FEATURE_SPLPAR))
+ 		return -EINVAL;
  
- 	case 0x01:	/* joystick position data */
-+		if (len < 7)
-+			break;
-+
- 		input_report_abs(dev, ABS_X,
- 				 (__s16) get_unaligned_le16(data));
- 		input_report_abs(dev, ABS_Y,
-@@ -176,6 +179,9 @@ void iforce_process_packet(struct iforce
- 		break;
+-	if (count > sizeof(kbuf))
++	if (count == 0 || count > sizeof(kbuf))
+ 		return -EINVAL;
  
- 	case 0x03:	/* wheel position data */
-+		if (len < 7)
-+			break;
-+
- 		input_report_abs(dev, ABS_WHEEL,
- 				 (__s16) get_unaligned_le16(data));
- 		input_report_abs(dev, ABS_GAS,   255 - data[2]);
-@@ -187,6 +193,9 @@ void iforce_process_packet(struct iforce
- 		break;
- 
- 	case 0x02:	/* status report */
-+		if (len < 2)
-+			break;
-+
- 		input_report_key(dev, BTN_DEAD, data[0] & 0x02);
- 		input_sync(dev);
- 
-@@ -206,7 +215,7 @@ void iforce_process_packet(struct iforce
- 			}
- 		}
- 
--		for (j = 3; j < len; j += 2)
-+		for (j = 3; j + sizeof(u16) <= len; j += sizeof(u16))
- 			mark_core_as_ready(iforce, get_unaligned_le16(data + j));
- 
- 		break;
---- a/drivers/input/joystick/iforce/iforce-usb.c
-+++ b/drivers/input/joystick/iforce/iforce-usb.c
-@@ -159,6 +159,9 @@ static void iforce_usb_irq(struct urb *u
- 		goto exit;
- 	}
- 
-+	if (!urb->actual_length)
-+		goto exit;
-+
- 	iforce_process_packet(iforce, iforce_usb->data_in[0],
- 			      iforce_usb->data_in + 1, urb->actual_length - 1);
- 
+ 	if (copy_from_user(kbuf, buf, count))
 
 
