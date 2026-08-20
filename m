@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52B8272E53;
-	Thu, 20 Aug 2026 16:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A957747CA7A;
+	Thu, 20 Aug 2026 16:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243546; cv=none; b=FX01LSPtUfDOPcayAxiitqMtcF1lUkkAtAHuRI9jRTFrXEAMiawgJWZRh9VgoJ4f8yfc48SI1JEDOdlXNkjoHDrn5+McSc+8GxEeUQF0WoeZH49tveIJjx5x77VBePpB/CaD1wRn+H73qsExFcdjU6ah11+LWzEa8elZk5/XXo4=
+	t=1787243548; cv=none; b=cMQOUMFnk3fIIFkJpeU9MSfZP7bu2Vb8Ek71we+5Y1aK7Uk8Xwy9Alu/MC+F82w8whalNVh9fQu0TOjEmNacY7Sw5LimIUYp8emPPNPH3xFcR9fiCqknm/ZWgMwrvqb/FdHgbXIZiWR39rdfiP+sYHpcFwqnd/4hopk0JNijW8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243546; c=relaxed/simple;
-	bh=SPUDX20Xc2aikRrzxAlKMfO/BpnzddglYQ0WJNyjems=;
+	s=arc-20240116; t=1787243548; c=relaxed/simple;
+	bh=Q2dNSZIAzQulB2Ue+6wfTTzMk7hfrYjjk2QeXw26Zro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lRSD6u3fWEyu80f+guGZFCQttkeMMLZdCfm54xj829adDqIvFAbyefCisUv8kU0VDYCQ/X2v0PMsVbz7ZxGq49ScXSgQ5A+9Ni6DjyvK8MmlXxRAJ3KkNXZdX5jTQfG6aqOQCfA2bIRhJdY7aAMg35aExz7pdVFa/bAZxi2ViLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZL9o9cc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pcpXgVa7wU9WPU3hq1vqfo12Lj3UXn8aH63HpXM4H2Vs0pRUKt4h/2gnmXRMbgMuykjjODz+kZDWeQaScRjcoURmjSat/JuGNCNwwL+yBJNdgROBmuI7ie0k442q5nAty6fwcmgnVZGQJJfLYNDOUqujJTU6t7FyPWrJsjagLeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6VMiNxg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZL9o9cc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB2D1F000E9;
-	Thu, 20 Aug 2026 16:32:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6VMiNxg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6121F000E9;
+	Thu, 20 Aug 2026 16:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243544;
-	bh=KXZdBgVfTB6XqRiQs8kaIaWGhdrK0y26H0DRt7klZXc=;
+	s=korg; t=1787243547;
+	bh=NTmcJoFOomQo/G5RVivZN1kZGwl7fIciDl1lVYDemCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nZL9o9cc+3xqqfYfeoLz/XiCpa1nWO4CIY5kPUdwP6ktpCFHQXYXrQXcEkkw/oaf3
-	 3nSd8xaFyESdqxqC2RQ/5aIOBOZOG1mXiz5T3rBqx/JkHJ4UTAbDc85rf/k9ETHNG7
-	 aQHOpTYXlDPr787pDhG7Xv8MWbEy6LiI7t9gSCLk=
+	b=v6VMiNxgwZME8sQtmIi12EIsnwsgvuY5OcqhxsFRvKh5TI0nxUFMPB0xihb+Hd5hV
+	 uBtUdSrSxKgK69xL66kD0WchMFeWajLZ1eSemXvdzNiwU97FeRkB5srlcqUG+2kiFH
+	 MIIrA3LKMpr6rpVkggTmPjwI+KZKYHsS6OCtDK6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	stable@kernel.org,
+	Jann Horn <jannh@google.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 132/272] thunderbolt: Prevent XDomain delayed work use-after-free on disconnect
-Date: Thu, 20 Aug 2026 16:55:16 +0200
-Message-ID: <20260820145235.221015005@linuxfoundation.org>
+Subject: [PATCH 5.15 133/272] bpf,fork: wipe ->bpf_storage before bailouts that access it
+Date: Thu, 20 Aug 2026 16:55:17 +0200
+Message-ID: <20260820145235.253971165@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -51,110 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 2c5d2d3c3f70cde2565d7b279b544893a2035842 ]
+[ Upstream commit 9b51a6155d14389876916726430da30eabb1d4ed ]
 
-tb_xdp_handle_request() runs on system_wq and queues
-xd->state_work via queue_delayed_work() in three request handlers:
-PROPERTIES_CHANGED_REQUEST, UUID_REQUEST (via start_handshake),
-and LINK_STATE_CHANGE_REQUEST.  Similarly, update_xdomain() queues
-xd->properties_changed_work when local properties change.
+Currently, copy_process() can bail out to free_task() before p->bpf_storage
+has been initialized, with this call graph (shown here for the
+!CONFIG_MEMCG case):
 
-Concurrently, tb_xdomain_remove() calls stop_handshake() which does
-cancel_delayed_work_sync() on both delayed works.  Later,
-tb_xdomain_unregister() calls device_unregister() which eventually
-frees the xdomain.  Since commit 559c1e1e0134 ("thunderbolt: Run
-tb_xdp_handle_request() in system workqueue") moved the request
-handler off tb->wq, the handler and the remove path are no longer
-serialized.  If queue_delayed_work() executes after
-cancel_delayed_work_sync() but before the xdomain is freed, the
-delayed work fires on a freed object.
+copy_process
+  dup_task_struct
+    arch_dup_task_struct
+      [copies the entire task_struct, including ->bpf_storage member]
+  [RLIMIT_NPROC check fails]
+  delayed_free_task
+    free_task
+      bpf_task_storage_free
+        rcu_dereference(task->bpf_storage)
+        bpf_local_storage_destroy
 
-Add xd->removing that tb_xdomain_remove() sets under xd->lock
-before calling stop_handshake().  Each external queue site holds
-the same lock and checks removing before calling
-queue_delayed_work().  This provides the mutual exclusion needed:
-either the queue site acquires the lock first and queues work that
-the subsequent cancel will see, or the remove path acquires the
-lock first and the queue site observes removing == true and skips
-the queue.
+In this case, the nascent task's ->bpf_storage member that
+bpf_local_storage_destroy() operates on is a plain copy of the parent's
+->bpf_storage pointer, not a real initialized pointer.
+This leads to badness (kernel hangs, UAF).
 
-Fixes: 559c1e1e0134 ("thunderbolt: Run tb_xdp_handle_request() in system workqueue")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+This is reachable as long as the process calling fork() has been inserted
+into a task storage map.
+
+Cc: stable@kernel.org
+Fixes: a10787e6d58c ("bpf: Enable task local storage for tracing programs")
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/xdomain.c |   22 +++++++++++++++++-----
- include/linux/thunderbolt.h   |    3 +++
- 2 files changed, 20 insertions(+), 5 deletions(-)
+ kernel/fork.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -630,9 +630,13 @@ static void tb_xdp_handle_request(struct
- 		 * the xdomain related to this connection as well in
- 		 * case there is a change in services it offers.
- 		 */
--		if (xd && device_is_registered(&xd->dev)) {
--			queue_delayed_work(tb->wq, &xd->get_properties_work,
--					   msecs_to_jiffies(50));
-+		if (xd) {
-+			mutex_lock(&xd->lock);
-+			if (!xd->removing && device_is_registered(&xd->dev))
-+				queue_delayed_work(tb->wq,
-+						   &xd->get_properties_work,
-+						   msecs_to_jiffies(50));
-+			mutex_unlock(&xd->lock);
- 		}
- 		break;
- 
-@@ -1486,6 +1490,10 @@ static int unregister_service(struct dev
-  */
- void tb_xdomain_remove(struct tb_xdomain *xd)
- {
-+	mutex_lock(&xd->lock);
-+	xd->removing = true;
-+	mutex_unlock(&xd->lock);
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -983,6 +983,11 @@ static struct task_struct *dup_task_stru
+ #ifdef CONFIG_MEMCG
+ 	tsk->active_memcg = NULL;
+ #endif
 +
- 	stop_handshake(xd);
++#ifdef CONFIG_BPF_SYSCALL
++	RCU_INIT_POINTER(tsk->bpf_storage, NULL);
++	tsk->bpf_ctx = NULL;
++#endif
+ 	return tsk;
  
- 	if (!device_is_registered(&xd->dev)) {
-@@ -1885,8 +1893,12 @@ static int update_xdomain(struct device
+ free_stack:
+@@ -2252,10 +2257,6 @@ static __latent_entropy struct task_stru
+ 	p->sequential_io	= 0;
+ 	p->sequential_io_avg	= 0;
+ #endif
+-#ifdef CONFIG_BPF_SYSCALL
+-	RCU_INIT_POINTER(p->bpf_storage, NULL);
+-	p->bpf_ctx = NULL;
+-#endif
  
- 	xd = tb_to_xdomain(dev);
- 	if (xd) {
--		queue_delayed_work(xd->tb->wq, &xd->properties_changed_work,
--				   msecs_to_jiffies(50));
-+		mutex_lock(&xd->lock);
-+		if (!xd->removing)
-+			queue_delayed_work(xd->tb->wq,
-+					   &xd->properties_changed_work,
-+					   msecs_to_jiffies(50));
-+		mutex_unlock(&xd->lock);
- 	}
- 
- 	return 0;
---- a/include/linux/thunderbolt.h
-+++ b/include/linux/thunderbolt.h
-@@ -188,6 +188,8 @@ void tb_unregister_property_dir(const ch
-  * @link_speed: Speed of the link in Gb/s
-  * @link_width: Width of the link (1 or 2)
-  * @is_unplugged: The XDomain is unplugged
-+ * @removing: Set by tb_xdomain_remove() under @lock to prevent
-+ *	      concurrent delayed work queueing
-  * @needs_uuid: If the XDomain does not have @remote_uuid it will be
-  *		queried first
-  * @service_ids: Used to generate IDs for the services
-@@ -235,6 +237,7 @@ struct tb_xdomain {
- 	unsigned int link_speed;
- 	unsigned int link_width;
- 	bool is_unplugged;
-+	bool removing;
- 	bool needs_uuid;
- 	struct ida service_ids;
- 	struct ida in_hopids;
+ 	/* Perform scheduler related setup. Assign this task to a CPU. */
+ 	retval = sched_fork(clone_flags, p);
 
 
