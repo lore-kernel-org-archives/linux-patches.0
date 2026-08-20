@@ -1,39 +1,93 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD313803D6;
-	Thu, 20 Aug 2026 15:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D6B3644C1;
+	Thu, 20 Aug 2026 15:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239082; cv=none; b=qEXKvgQ5HlNaDk9LvU1nQC/9GtTuaE0qm8juZIgrPT/oAhz/yfwqsEiJo50oW3w+GykN5H7m1nQWOyGVUNfxI/pPAzUxRPWhvkD81O5A6Y/h167R1R+TKkl5xt/gGqXpHasvREnJfAb6O6DXQQQwXQYmETz2rkFXh35kDoamB/A=
+	t=1787239085; cv=none; b=tZ0AzRAbVdn8jG+u44BuXX1Eql8360IhM8ECZ84GEmK5Xq3cOCwX6RPJdxku+NrcEt/KpoPqZnoWUpZpIuQwEbq+ruid9UP+fGc7SVO2+8wC8UumynZk8mkiQlANkQYhO4/8PkEyOlMbOEoHMhzz7nzLM3bFCHzznBEzRTK83rE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239082; c=relaxed/simple;
-	bh=CEjqSA3/FABDWksgWMYP1PALw7HydQIbppKeS6KJfks=;
+	s=arc-20240116; t=1787239085; c=relaxed/simple;
+	bh=Lr5mgIYk7VTf5NQUfuS5r/OMX+WAxfsUfmtcJWM32X4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lCf8mMAiriBoCpl0z/8bUu/7Yu8/lYJgStqQr7VdYNYHaP2InTq91cuX4JYjWeuqXMamp5Nob/VjLwMUwkVHgNnWMtENyjDw+utO+g3NIWDzdDP++NjdFoyafdMZTtjC1PA08pNDiFOzKM8njmef4AEQ7eV9Dk5ctPqLuGlpJwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2OCZ/Mv/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B/wXQSVnp6NCJyEiG8sJmxX5e/yXPjqEqoQ8zCJhE0y1+VAsW/cjwQl9alJR/vzAhiUKrrbYM4ZQ667/eImTcze9LBKXA98IHQCWutTZKv8TM2NEDTBX2Lmz9w50Y0IOJla6vyXzd8pxNP+zEW7csCxb/6hATcFyUahNgrdEqbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1k4GXQB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2OCZ/Mv/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16BF1F00A3A;
-	Thu, 20 Aug 2026 15:17:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1k4GXQB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82FE91F000E9;
+	Thu, 20 Aug 2026 15:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239080;
-	bh=gCpLMbq/HMCp27Cck5zebsEgfZwoQ2EuY6bkV1yM6+g=;
+	s=korg; t=1787239083;
+	bh=xV3BkJtq3+yZSoGLc7UbIExuihB+Ys2XmWnhjrSyopg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2OCZ/Mv/rJn4J8Jggs1ObSjJvOpBR8eDAThTmHkrcFi0Kxe/ueIjfAiYaO87OiHLw
-	 8nniuebgzc2XXJqf2pLlmHw9y9hex7Xgu5Kx6GMbv9WlON5ZQlo7A+hLYRuX24SArI
-	 K+qqcT6bd0/Fi22+0UGNG19NC58l1UTLmTEKynfg=
+	b=L1k4GXQBuY1pV9uLuhl0bUhTOU1QqMdqdnQfUoDeCq2kNQUaZ4G34mrtlE9GK4I9U
+	 bZs8xYXpWyzKnn0TYGhal20hTnjLbdCEPJkw21q/metUcSYo4pQFL/gj1ToZ5w961C
+	 5A9dQBwEJjc80pemBEyK3q1HwxUEs3J2L6d7Tc50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Guanghui Yang <3497809730@qq.com>,
-	David Sterba <dsterba@suse.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Baoquan He <bhe@redhat.com>,
+	Barry Song <baohua@kernel.org>,
+	Byungchul Park <byungchul@sk.com>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	Chris Li <chrisl@kernel.org>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Gregory Price <gourry@gourry.net>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	"Huang, Ying" <ying.huang@linux.alibaba.com>,
+	Hugh Dickins <hughd@google.com>,
+	Jan Kara <jack@suse.cz>,
+	Jann Horn <jannh@google.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Kairui Song <kasong@tencent.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Mathew Brost <matthew.brost@intel.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Nico Pache <npache@redhat.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Peter Xu <peterx@redhat.com>,
+	Rakie Kim <rakie.kim@sk.com>,
+	Rik van Riel <riel@surriel.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	SeongJae Park <sj@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Wei Xu <weixugc@google.com>,
+	xu xin <xu.xin16@zte.com.cn>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 143/217] btrfs: zoned: fix missing chunk metadata reservation
-Date: Thu, 20 Aug 2026 16:55:11 +0200
-Message-ID: <20260820145242.057888670@linuxfoundation.org>
+Subject: [PATCH 6.18 144/217] fs/proc/task_mmu: refactor pagemap_pmd_range()
+Date: Thu, 20 Aug 2026 16:55:12 +0200
+Message-ID: <20260820145242.088481617@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -52,78 +106,254 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Yang <3497809730@qq.com>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-[ Upstream commit 8bc4d7209611e8aa9d5409b6a4a86a9eb91b69a3 ]
+[ Upstream commit de4d6c94914f3659f0b51725e23e637d4e9f78cc ]
 
-reserve_chunk_space() stores the return value of
-btrfs_zoned_activate_one_bg() in ret. The helper can return 1 after
-successfully activating a block group, but ret is later used to decide
-whether to reserve metadata for chunk tree updates.
+Separate out THP logic so we can drop an indentation level and reduce the
+amount of noise in this function.
 
-As a result, successful activation skips btrfs_block_rsv_add() and leaves
-trans->chunk_bytes_reserved unchanged. Use a separate variable for the
-activation result so positive success does not affect the later
-reservation. Keep activation failures in ret instead of returning early so
-the function uses the common tail path.
+We add pagemap_pmd_range_thp() for this purpose.
 
-Fixes: b6a98021e401 ("btrfs: zoned: activate necessary block group")
-CC: stable@vger.kernel.org
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Guanghui Yang <3497809730@qq.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+While we're here, convert the VM_BUG_ON() to a VM_WARN_ON_ONCE() at the
+same time.
+
+No functional change intended.
+
+Link: https://lkml.kernel.org/r/f9ce7f3bb57e3627288225e23f2498cc5315f5ab.1762812360.git.lorenzo.stoakes@oracle.com
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: Chengming Zhou <chengming.zhou@linux.dev>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Cc: Gregory Price <gourry@gourry.net>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Jann Horn <jannh@google.com>
+Cc: Janosch Frank <frankja@linux.ibm.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Kemeng Shi <shikemeng@huaweicloud.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Mathew Brost <matthew.brost@intel.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Rakie Kim <rakie.kim@sk.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: SeongJae Park <sj@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Wei Xu <weixugc@google.com>
+Cc: xu xin <xu.xin16@zte.com.cn>
+Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 4165b7d1c45c ("userfaultfd: wait on source PMD during UFFDIO_MOVE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/block-group.c |   34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ fs/proc/task_mmu.c |  148 +++++++++++++++++++++++++++--------------------------
+ 1 file changed, 78 insertions(+), 70 deletions(-)
 
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -4350,25 +4350,29 @@ static void reserve_chunk_space(struct b
- 		if (IS_ERR(bg)) {
- 			ret = PTR_ERR(bg);
- 		} else {
-+			int activate_ret;
-+
- 			/*
- 			 * We have a new chunk. We also need to activate it for
- 			 * zoned filesystem.
- 			 */
--			ret = btrfs_zoned_activate_one_bg(info, true);
--			if (ret < 0)
--				return;
--
--			/*
--			 * If we fail to add the chunk item here, we end up
--			 * trying again at phase 2 of chunk allocation, at
--			 * btrfs_create_pending_block_groups(). So ignore
--			 * any error here. An ENOSPC here could happen, due to
--			 * the cases described at do_chunk_alloc() - the system
--			 * block group we just created was just turned into RO
--			 * mode by a scrub for example, or a running discard
--			 * temporarily removed its free space entries, etc.
--			 */
--			btrfs_chunk_alloc_add_chunk_item(trans, bg);
-+			activate_ret = btrfs_zoned_activate_one_bg(info, true);
-+			if (activate_ret < 0) {
-+				ret = activate_ret;
-+			} else {
-+				/*
-+				 * If we fail to add the chunk item here, we end
-+				 * up trying again at phase 2 of chunk allocation,
-+				 * at btrfs_create_pending_block_groups(). So
-+				 * ignore any error here. An ENOSPC here could
-+				 * happen, due to the cases described at
-+				 * do_chunk_alloc() - the system block group we
-+				 * just created was just turned into RO mode by a
-+				 * scrub for example, or a running discard
-+				 * temporarily removed its free space entries, etc.
-+				 */
-+				btrfs_chunk_alloc_add_chunk_item(trans, bg);
-+			}
- 		}
- 	}
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -1989,6 +1989,81 @@ static pagemap_entry_t pte_to_pagemap_en
+ 	return make_pme(frame, flags);
+ }
  
++#ifdef CONFIG_TRANSPARENT_HUGEPAGE
++static int pagemap_pmd_range_thp(pmd_t *pmdp, unsigned long addr,
++		unsigned long end, struct vm_area_struct *vma,
++		struct pagemapread *pm)
++{
++	unsigned int idx = (addr & ~PMD_MASK) >> PAGE_SHIFT;
++	u64 flags = 0, frame = 0;
++	pmd_t pmd = *pmdp;
++	struct page *page = NULL;
++	struct folio *folio = NULL;
++	int err = 0;
++
++	if (vma->vm_flags & VM_SOFTDIRTY)
++		flags |= PM_SOFT_DIRTY;
++
++	if (pmd_present(pmd)) {
++		page = pmd_page(pmd);
++
++		flags |= PM_PRESENT;
++		if (pmd_soft_dirty(pmd))
++			flags |= PM_SOFT_DIRTY;
++		if (pmd_uffd_wp(pmd))
++			flags |= PM_UFFD_WP;
++		if (pm->show_pfn)
++			frame = pmd_pfn(pmd) + idx;
++	} else if (thp_migration_supported() && is_swap_pmd(pmd)) {
++		swp_entry_t entry = pmd_to_swp_entry(pmd);
++		unsigned long offset;
++
++		if (pm->show_pfn) {
++			if (is_pfn_swap_entry(entry))
++				offset = swp_offset_pfn(entry) + idx;
++			else
++				offset = swp_offset(entry) + idx;
++			frame = swp_type(entry) |
++				(offset << MAX_SWAPFILES_SHIFT);
++		}
++		flags |= PM_SWAP;
++		if (pmd_swp_soft_dirty(pmd))
++			flags |= PM_SOFT_DIRTY;
++		if (pmd_swp_uffd_wp(pmd))
++			flags |= PM_UFFD_WP;
++		VM_WARN_ON_ONCE(!is_pmd_migration_entry(pmd));
++		page = pfn_swap_entry_to_page(entry);
++	}
++
++	if (page) {
++		folio = page_folio(page);
++		if (!folio_test_anon(folio))
++			flags |= PM_FILE;
++	}
++
++	for (; addr != end; addr += PAGE_SIZE, idx++) {
++		u64 cur_flags = flags;
++		pagemap_entry_t pme;
++
++		if (folio && (flags & PM_PRESENT) &&
++		    __folio_page_mapped_exclusively(folio, page))
++			cur_flags |= PM_MMAP_EXCLUSIVE;
++
++		pme = make_pme(frame, cur_flags);
++		err = add_to_pagemap(&pme, pm);
++		if (err)
++			break;
++		if (pm->show_pfn) {
++			if (flags & PM_PRESENT)
++				frame++;
++			else if (flags & PM_SWAP)
++				frame += (1 << MAX_SWAPFILES_SHIFT);
++		}
++	}
++	return err;
++}
++#endif /* CONFIG_TRANSPARENT_HUGEPAGE */
++
+ static int pagemap_pmd_range(pmd_t *pmdp, unsigned long addr, unsigned long end,
+ 			     struct mm_walk *walk)
+ {
+@@ -1997,82 +2072,15 @@ static int pagemap_pmd_range(pmd_t *pmdp
+ 	spinlock_t *ptl;
+ 	pte_t *pte, *orig_pte;
+ 	int err = 0;
+-#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ 
++#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ 	ptl = pmd_trans_huge_lock(pmdp, vma);
+ 	if (ptl) {
+-		unsigned int idx = (addr & ~PMD_MASK) >> PAGE_SHIFT;
+-		u64 flags = 0, frame = 0;
+-		pmd_t pmd = *pmdp;
+-		struct page *page = NULL;
+-		struct folio *folio = NULL;
+-
+-		if (vma->vm_flags & VM_SOFTDIRTY)
+-			flags |= PM_SOFT_DIRTY;
+-
+-		if (pmd_present(pmd)) {
+-			page = pmd_page(pmd);
+-
+-			flags |= PM_PRESENT;
+-			if (pmd_soft_dirty(pmd))
+-				flags |= PM_SOFT_DIRTY;
+-			if (pmd_uffd_wp(pmd))
+-				flags |= PM_UFFD_WP;
+-			if (pm->show_pfn)
+-				frame = pmd_pfn(pmd) + idx;
+-		}
+-#ifdef CONFIG_ARCH_ENABLE_THP_MIGRATION
+-		else if (is_swap_pmd(pmd)) {
+-			swp_entry_t entry = pmd_to_swp_entry(pmd);
+-			unsigned long offset;
+-
+-			if (pm->show_pfn) {
+-				if (is_pfn_swap_entry(entry))
+-					offset = swp_offset_pfn(entry) + idx;
+-				else
+-					offset = swp_offset(entry) + idx;
+-				frame = swp_type(entry) |
+-					(offset << MAX_SWAPFILES_SHIFT);
+-			}
+-			flags |= PM_SWAP;
+-			if (pmd_swp_soft_dirty(pmd))
+-				flags |= PM_SOFT_DIRTY;
+-			if (pmd_swp_uffd_wp(pmd))
+-				flags |= PM_UFFD_WP;
+-			VM_BUG_ON(!is_pmd_migration_entry(pmd));
+-			page = pfn_swap_entry_to_page(entry);
+-		}
+-#endif
+-
+-		if (page) {
+-			folio = page_folio(page);
+-			if (!folio_test_anon(folio))
+-				flags |= PM_FILE;
+-		}
+-
+-		for (; addr != end; addr += PAGE_SIZE, idx++) {
+-			u64 cur_flags = flags;
+-			pagemap_entry_t pme;
+-
+-			if (folio && (flags & PM_PRESENT) &&
+-			    __folio_page_mapped_exclusively(folio, page))
+-				cur_flags |= PM_MMAP_EXCLUSIVE;
+-
+-			pme = make_pme(frame, cur_flags);
+-			err = add_to_pagemap(&pme, pm);
+-			if (err)
+-				break;
+-			if (pm->show_pfn) {
+-				if (flags & PM_PRESENT)
+-					frame++;
+-				else if (flags & PM_SWAP)
+-					frame += (1 << MAX_SWAPFILES_SHIFT);
+-			}
+-		}
++		err = pagemap_pmd_range_thp(pmdp, addr, end, vma, pm);
+ 		spin_unlock(ptl);
+ 		return err;
+ 	}
+-#endif /* CONFIG_TRANSPARENT_HUGEPAGE */
++#endif
+ 
+ 	/*
+ 	 * We can assume that @vma always points to a valid one and @end never
 
 
