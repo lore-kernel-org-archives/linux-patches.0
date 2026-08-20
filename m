@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F8D47D949;
-	Thu, 20 Aug 2026 16:42:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC02C42AF95;
+	Thu, 20 Aug 2026 16:42:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244152; cv=none; b=hOAO1rfwrICKgC5+1NXATYMb8XgsRQmSzFa0/s9V8eR0KMpK0N1xsYdEjZ5qLPxxm36KKV0EbjZftu0OHN1uFHNGxqKYRp7jQ4ZuoGEYxOekaxbNqLYtB89zMWtEbvdi0wiTbdqJt8r+FYYPCs12Hq31uuCRwRP4WzuIjTYuQI4=
+	t=1787244155; cv=none; b=tlzra4bXhsT1mF/VomodEBk7OokZrnf83A2SSy74+7+6697Q1jMXgASiIEpy/yGx0oyWyAZvcOjDb94qi8OjETcOmCjex4A/RVa0Cy0jp8M6Uas0MnAuVox90ffaPPB80u7AUzJoLI7wjSCOQmI61kBq4B2ONzCgmTMvsFqrVf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244152; c=relaxed/simple;
-	bh=sp5dNbTMRe96zshHdSm3kZOD4c/TiTH1Kd7iER/1LAA=;
+	s=arc-20240116; t=1787244155; c=relaxed/simple;
+	bh=5f7P3778Cl4gsdDpUYSaD+Yz4Az/VmBgysZNetHntus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/8nGCrR6lY2iosqTct3ltFUK2wQr4iQ0WpQo+H0fJMOQPYPk1DDCq/+OSegWfAEgNHqdgVmIu8PRIJFmlRBrnRjMs5cXJqQ1k3cutz5QODf2VzpPkVKaTS8otsYWHQz4D5z0Q7jkP3S4oMJNbeikT22qFsWRTSSu05jJgSByXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnKVKJlz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s6KquiiBFMemqVi/8zNO856S0Lhgbg9lLGz2ShnSmAmBnO4VgQCM8uasYtF3xolmfyJJDIUdshbbmNifEk1yRCQ1irDY+GDEkhWcczaZf64VWgA2D7kVleo6IlRaCtOk8oUyju5u5XDaF2GefKXPKQPwxQXfaTpPP70cupxHThM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUOgRWsS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnKVKJlz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C411F000E9;
-	Thu, 20 Aug 2026 16:42:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUOgRWsS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4339B1F000E9;
+	Thu, 20 Aug 2026 16:42:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244150;
-	bh=Zek9GPwHFZjh8UFe+nGvweL1TcqVQa6aL/Xw04VaMMo=;
+	s=korg; t=1787244153;
+	bh=KO53i3YFmkLwmBv1NmdojdPNkwHaDYGh+9SXaJ4PinE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pnKVKJlzgMgt6Phkqfhi0lc9B1WYXOkvMuJjG+5UZUIoCQIM+EjOlPUWCP4kVKrj1
-	 MYzh9ey02Rdue/GuV6Z2rcE13CmtHzRetQQ6Xn1VYL/YF/hmT7ivgtRRDwOl+KpDuT
-	 DXBUXn1Bsouw7/NmMnwjnNS8M7nDOgnNdzTs9l9U=
+	b=aUOgRWsSCxJSa4BDjv65STIUA9Qeo8n6b4w8ITcKE5MAZ6DQJ+ktmMkQlciUGVDXj
+	 rWT9Mwtm89eCQv1MGJDxsu0LH8qc2pUwJBVJiIEYjXdgYglqviEMUo1bFSF9By6TJ0
+	 H2EdaLQbXm1OFE7z8Nr2ycE9bYsdiDpQhkpQq8ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Simon Horman <horms@kernel.org>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 070/235] octeontx2-vf: clear stale mailbox IRQ state before request_irq()
-Date: Thu, 20 Aug 2026 16:55:06 +0200
-Message-ID: <20260820145218.565909930@linuxfoundation.org>
+Subject: [PATCH 5.10 071/235] netfilter: nf_conntrack_sip: remove net variable shadowing
+Date: Thu, 20 Aug 2026 16:55:07 +0200
+Message-ID: <20260820145218.596355891@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -53,64 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 0b352f04b9be2c83c0240aa6dae7257fefa90464 ]
+[ Upstream commit 7970d6aaf710db166de98c5356a260089896fae5 ]
 
-otx2vf_register_mbox_intr() currently installs the VF mailbox IRQ
-handler before clearing stale mailbox interrupt state. The code then says
-that local interrupt bits should be cleared first to avoid spurious
-interrupts, but that clear still happens only after request_irq() has
-already made the handler reachable.
+net is already set, derived from nf_conn.
+I don't see how the device could be living in a different netns
+than the conntrack entry.
 
-A running system can reach this during VF mailbox interrupt registration
-while stale or latched RVU_VF_INT state is still present. If delivery
-happens in the request_irq()-to-clear window,
-otx2vf_vfaf_mbox_intr_handler() can run before local quiesce and touch
-the same vf->mbox and vf->mbox_wq carrier that probe and teardown later
-reuse or destroy.
+Remove the extra variable and re-use existing one.
 
-Move the stale mailbox interrupt clear ahead of request_irq(), but keep
-interrupt enabling after the handler is installed. This closes the
-pre-clear early-IRQ window without creating a new enable-before-handler
-window.
-
-Fixes: 3184fb5ba96e ("octeontx2-vf: Virtual function driver support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Link: https://patch.msgid.link/20260611160014.3202224-3-runyu.xiao@seu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: e5e24a365a5e ("netfilter: nf_conntrack_sip: validate skb_dst() before accessing it")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/netfilter/nf_conntrack_sip.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
-@@ -230,6 +230,9 @@ static int otx2vf_register_mbox_intr(str
- 	char *irq_name;
- 	int err;
+--- a/net/netfilter/nf_conntrack_sip.c
++++ b/net/netfilter/nf_conntrack_sip.c
+@@ -948,9 +948,8 @@ static int set_expected_rtp_rtcp(struct
+ 		saddr = &ct->tuplehash[!dir].tuple.src.u3;
+ 	} else if (sip_external_media) {
+ 		struct net_device *dev = skb_dst(skb)->dev;
+-		struct net *net = dev_net(dev);
+-		struct flowi fl;
+ 		struct dst_entry *dst = NULL;
++		struct flowi fl;
  
-+	/* Clear stale mailbox interrupt state before installing the handler. */
-+	otx2_write64(vf, RVU_VF_INT, BIT_ULL(0));
-+
- 	/* Register mailbox interrupt handler */
- 	irq_name = &hw->irq_name[RVU_VF_INT_VEC_MBOX * NAME_SIZE];
- 	snprintf(irq_name, NAME_SIZE, "RVUVFAF Mbox");
-@@ -241,10 +244,7 @@ static int otx2vf_register_mbox_intr(str
- 		return err;
- 	}
+ 		memset(&fl, 0, sizeof(fl));
  
--	/* Enable mailbox interrupt for msgs coming from PF.
--	 * First clear to avoid spurious interrupts, if any.
--	 */
--	otx2_write64(vf, RVU_VF_INT, BIT_ULL(0));
-+	/* Enable mailbox interrupt for msgs coming from PF. */
- 	otx2_write64(vf, RVU_VF_INT_ENA_W1S, BIT_ULL(0));
- 
- 	if (!probe_pf)
 
 
