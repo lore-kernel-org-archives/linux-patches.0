@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A0F44062A;
-	Thu, 20 Aug 2026 17:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97693750DC;
+	Thu, 20 Aug 2026 17:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248248; cv=none; b=MQeP2qdgp2bANyW1SChYuchcrLDUVignH/ukxmtV7PAh7h5pX0D8CSpg87iEfi3DC5PpvF28ysb01b6L8Okv1u74+nW2/3k7ihqxUxL9NpqwL11woc7J+d56mgJoamveG0wQuLja0ExFD9EI6p7dISoqix2+BtBLqXWPVWMT2bM=
+	t=1787248251; cv=none; b=GEHTDaFArYDmfXoq5bM1CCp2iZ3MhWrQ1s6BGUTt2J4l8h2Pvjn3JQqu5lIMMxm5W5ue8YmvmTW+UWCuXOBbwrH8loz48cxyk48tiA8HlDklsdwCjtqPrbLj7PU9Q/PzGzDE7Lcjthvw3iQiW/bTjJ8N5qkh2ErESuXS7lm1LH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248248; c=relaxed/simple;
-	bh=EKV40ET7h/r6oyKgU+14IOxq8KlsBjxQcE3rK01yDlc=;
+	s=arc-20240116; t=1787248251; c=relaxed/simple;
+	bh=ywei+JcIlngae4lGKcbfHVVXbXYvgylNSARd9p7duQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Od0nxvYcPbYrNrB4BjXdAOzb1VBVcCpapCJYC37e/TTAKbamBDCoRB3VJ1J8SWT4pVq34XgSP1bRDQRfnYCNxpBwGVaJaLujZJRzpuXncPXzxF+rBaQ9Qf74+dDaxrr1wMxlXXlBj8ekj2KNa+LCQr958GZtcCqvh4OxcMDS8pY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cLeRdYYV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jmVP3nQ3mvNFvjcHWCEwWyonQK9PEWEBDCj8+L6y2n3oRAO5TudaGvGVPtwkHufDS4U7dZoKc09yjgjmWS9T5GXHcnhYgpOzl8IoGl5RP9pMiSmx+gfyDLLUWvGqwdC0JDRLXyt1Tjkop4lLkIPbpP4rL/tkSa3X7PyT/81qOwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JPk+KhEi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cLeRdYYV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5BE1F000E9;
-	Thu, 20 Aug 2026 17:50:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JPk+KhEi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3129D1F000E9;
+	Thu, 20 Aug 2026 17:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248246;
-	bh=796HY/N1wJ38isoFGVnBf2QJckpfY4jaepfDIhXUIKM=;
+	s=korg; t=1787248249;
+	bh=cv2Pkj9jijvIf1HPQbYxcp3YQ4CISX8n03Lt3kfByBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cLeRdYYVkC4AQoH3WxQ6e/68Q7haRWK2ZFNkz7LoClUD4fZzALSm/Hang52gj5Wug
-	 324RpI2GEk2pnEmPObIBUmrdjQ3Jblx0caIdGI0ktlmXACt67BpeZ1lR/TWW+SZm10
-	 pWszvph8i51U9Ldsk6s4Zx2QKOEFTWebkmrTZ2xY=
+	b=JPk+KhEi37qOFGi2g0VMi7YhRX5A8VOF5Q/QJyeF75E/D38YwfO5NjtkJgKeZmt20
+	 dJNJ1V0+b3g0A92fgcvzIVM2poiwAtdNi8Q2E79ViwofMTPsgf9whN7XIoCpEc1vRO
+	 Obcg+LReHyDh1jHgKM9yGd2dqngvc7xtaubf/9FA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Esau <aaron1esau@gmail.com>,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 162/303] espintcp: use sk_msg_free_partial to fix partial send
-Date: Thu, 20 Aug 2026 16:54:58 +0200
-Message-ID: <20260820145258.167206120@linuxfoundation.org>
+Subject: [PATCH 6.1 163/303] bootconfig: do not put quotes on cmdline items unless necessary
+Date: Thu, 20 Aug 2026 16:54:59 +0200
+Message-ID: <20260820145258.202762658@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -53,79 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
 
-[ Upstream commit 007800408002d871f5699bdb944f985896730b8f ]
+[ Upstream commit 212f863fa8811c780abacc1d0404c573fdc0a2de ]
 
-sk_msg_free_partial() ensures consistency of the skmsg at every
-iteration, without having to manually handle uncharges and offsets.
-This simplifies the code, and fixes some bugs in skmsg accounting when
-we don't send the full contents.
+When trying to migrate to using bootconfig to embed the kernel's and
+PID1's command line with the kernel image itself, and so allowing changing
+that without modifying the bootloader, I noticed that /proc/cmdline
+changed from e.g.
 
-Cc: stable@vger.kernel.org
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
-Reported-by: Aaron Esau <aaron1esau@gmail.com>
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+  console=ttymxc0,115200n8 cma=128M quiet -- --log-level=notice
+
+to
+
+  console="ttymxc0,115200n8" cma="128M" quiet -- --log-level="notice"
+
+The kernel parameters are parsed just fine, and the quotes are indeed
+stripped from the actual argv[] given to PID1.  However, the quoting
+doesn't really serve any purpose and looks excessive, and might confuse
+some (naive) userspace tool trying to parse /proc/cmdline.  So do not
+quote the value unless it contains whitespace.
+
+Link: https://lkml.kernel.org/r/20240320101952.62135-1-linux@rasmusvillemoes.dk
+Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: dec4d8118c17 ("bootconfig: fix NULL-pointer arithmetic in xbc_snprint_cmdline()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/espintcp.c |   34 +++++++---------------------------
- 1 file changed, 7 insertions(+), 27 deletions(-)
+ init/main.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/net/xfrm/espintcp.c
-+++ b/net/xfrm/espintcp.c
-@@ -212,43 +212,23 @@ static int espintcp_sendskmsg_locked(str
- 	struct sk_msg *skmsg = &emsg->skmsg;
- 	bool more = flags & MSG_MORE;
- 	struct scatterlist *sg;
--	int done = 0;
+--- a/init/main.c
++++ b/init/main.c
+@@ -332,7 +332,7 @@ static int __init xbc_snprint_cmdline(ch
+ {
+ 	struct xbc_node *knode, *vnode;
+ 	char *end = buf + size;
+-	const char *val;
++	const char *val, *q;
  	int ret;
  
--	sg = &skmsg->sg.data[skmsg->sg.start];
- 	do {
- 		struct bio_vec bvec;
--		size_t size = sg->length - emsg->offset;
--		int offset = sg->offset + emsg->offset;
--		struct page *p;
--
--		emsg->offset = 0;
- 
-+		sg = &skmsg->sg.data[skmsg->sg.start];
- 		if (sg_is_last(sg) && !more)
- 			msghdr.msg_flags &= ~MSG_MORE;
- 
--		p = sg_page(sg);
--retry:
--		bvec_set_page(&bvec, p, size, offset);
--		iov_iter_bvec(&msghdr.msg_iter, ITER_SOURCE, &bvec, 1, size);
--		ret = tcp_sendmsg_locked(sk, &msghdr, size);
--		if (ret < 0) {
--			emsg->offset = offset - sg->offset;
--			skmsg->sg.start += done;
-+		bvec_set_page(&bvec, sg_page(sg), sg->length, sg->offset);
-+		iov_iter_bvec(&msghdr.msg_iter, ITER_SOURCE, &bvec, 1, sg->length);
-+		ret = tcp_sendmsg_locked(sk, &msghdr, sg->length);
-+		if (ret < 0)
- 			return ret;
--		}
- 
--		if (ret != size) {
--			offset += ret;
--			size -= ret;
--			goto retry;
--		}
--
--		done++;
--		put_page(p);
--		sk_mem_uncharge(sk, sg->length);
--		sg = sg_next(sg);
--	} while (sg);
-+		sk_msg_free_partial(sk, skmsg, ret);
-+	} while (skmsg->sg.size);
- 
- 	memset(emsg, 0, sizeof(*emsg));
- 
+ 	xbc_node_for_each_key_value(root, knode, val) {
+@@ -350,8 +350,14 @@ static int __init xbc_snprint_cmdline(ch
+ 			continue;
+ 		}
+ 		xbc_array_for_each_value(vnode, val) {
+-			ret = snprintf(buf, rest(buf, end), "%s=\"%s\" ",
+-				       xbc_namebuf, val);
++			/*
++			 * For prettier and more readable /proc/cmdline, only
++			 * quote the value when necessary, i.e. when it contains
++			 * whitespace.
++			 */
++			q = strpbrk(val, " \t\r\n") ? "\"" : "";
++			ret = snprintf(buf, rest(buf, end), "%s=%s%s%s ",
++				       xbc_namebuf, q, val, q);
+ 			if (ret < 0)
+ 				return ret;
+ 			buf += ret;
 
 
