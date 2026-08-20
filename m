@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE8A38A70B;
-	Thu, 20 Aug 2026 16:29:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E6746D0BD;
+	Thu, 20 Aug 2026 16:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243384; cv=none; b=VNe2IjHcPbAbyF1HwXkiHPdDCXXIoY7NL8s2I4B16TvF1K7aoQlnw3zvumt2EmADx+27eIs2s0LV0GnPYb0g0cQl5IqtAadD9D3aZo/veZiAEqwgtAspxruS6LKhnwBpWUBvHiwIP1R4n8ycqf+FhUH2kDYJGAQa/7ed9fjTJ2A=
+	t=1787243387; cv=none; b=fRxc6JoTb5JgBinifaR+SgKB9kbKPWAJRJVG/9FV5uVkwNbPVERi/XUeiOYNWUELejcIAYlmFld9q/qjI/T5CfH8nCYw+7J/zmTQ8zmiPeVog5qGblbtfVORZhkSnd3Gv9qoYQceti6bzzZbrw7AbEhnwQIx5k1/cZl5hdv1rPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243384; c=relaxed/simple;
-	bh=IVdnlqcJpe3/tqXGBxOEoA7B84zrVA0cN8IAES05Q7Y=;
+	s=arc-20240116; t=1787243387; c=relaxed/simple;
+	bh=nWejgZp3H5Fp55HVoiFDYAzyGJFPHH6SRX9X21lqn2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y2lhE9IUt0kGFrqOF+2RIPDnmywsPat7Cmv9e/MQ/mJofDRRJfSI20eBWEMXnO1274ZEKOeZtw0isk1FLmRWzNRMXWVVykbqSkEz3towXQXMqYxoCUhznsonYaNxi3YYHFrSUz5NqscZyzzzbtg5vnvcak9ziyecpTazcyyytLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zdeRFg0p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lIvJd9a0bwXw+iNlvvqSAIOjY6eI105se5v+ocoYAUWWg9gqoYMdWMh9OkWTR+AkSumhClrhDDDH479WrtGRe0nNyaEXMAt813OLF5exeR4h27G5w6sT0iBbMXAQGolAxc+U4GGb5KOYg4arbkChneFMQuWC8r2lXtetIOdx484=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1HszDQ40; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zdeRFg0p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62731F000E9;
-	Thu, 20 Aug 2026 16:29:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1HszDQ40"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAC61F000E9;
+	Thu, 20 Aug 2026 16:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243383;
-	bh=Bb12yhnacCJ5Uy1T6f5Qj9uQ/k3fBQWJ18xqiSE976s=;
+	s=korg; t=1787243386;
+	bh=cZ0cXmC+nGqyoOt8iBrcKSPbA8VVwSx2QS3W250WYiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zdeRFg0pknThr7rgsgxTIuf0J8VNWBf2E5J4c3+NF3pnY1Vx1CKSFcU+h4WymneuF
-	 Y/W8a1/S44ksrG625d3V6cbPlrneW1XFZ0Bn0xIGGaOp+z0SMWEIUNxqm/XyvuJ/g2
-	 izhGYJAQi2m+LyzhypvPQz4vtcXjSUY/AMX+aJbg=
+	b=1HszDQ40fvJJlMhBvLuta1KWZ2/JjXaoUAvn35kAX9+hqJRBTr2VQK5r28LytdtNW
+	 g/kF7f66gObce+2X+jDLt+1GTQzXqYUFRuM5SqXsFT+EyliIeYf6gYbK9JnuFXs0Wc
+	 6RohejZrxtVQXSq3/Cfyo86l+6LXjTdMAdviXp7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 037/272] drm/radeon: fix autosuspend cleanup during teardown
-Date: Thu, 20 Aug 2026 16:53:41 +0200
-Message-ID: <20260820145232.339942217@linuxfoundation.org>
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Eric Farman <farman@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: [PATCH 5.15 038/272] s390/vfio_ccw: Fix out of bounds check on CCW array
+Date: Thu, 20 Aug 2026 16:53:42 +0200
+Message-ID: <20260820145232.369215870@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -50,48 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Eric Farman <farman@linux.ibm.com>
 
-commit 587be7a17358ef8c0106775fcedae5a7bef50735 upstream.
+commit a005b7f1a491ffda61bff0fd0f6548f8986fb977 upstream.
 
-radeon_driver_load_kms() calls pm_runtime_use_autosuspend() for PX
-devices, but radeon_driver_unload_kms() does not call the matching
-pm_runtime_dont_use_autosuspend() during teardown.
+The routine ccwchain_calc_length() counts the number of channel
+command words (CCWs) that are chained together in a single channel
+program, and rejects anything larger than CCWCHAIN_LEN_MAX (256) CCWs.
 
-If the autosuspend delay is set to a negative value while autosuspend
-is enabled, the runtime PM core increments usage_count to prevent
-runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
-during teardown, this reference is not dropped.
+The loop itself is "do..while (count < 257)", and while the logic in
+is_cpa_within_range() correctly adjusts between the 0-index array of
+CCWs and the count of CCWs starting at 1, this means it would look
+at a possible 257th CCW before ending the loop and (correctly)
+returning an error.
 
-The documentation for pm_runtime_use_autosuspend() also notes that it
-is important to undo it with pm_runtime_dont_use_autosuspend() at
-driver exit time, unless runtime PM was initially enabled with
-devm_pm_runtime_enable().
+Fix this by restructuring the loop to break as soon as 256 CCWs
+(thus indexes 0-255) are examined, without looking at memory
+outside the range.
 
-Add the missing pm_runtime_dont_use_autosuspend() call to the driver
-unload path.
-
-This issue was found by manual code inspection.
-
-Fixes: 10ebc0bc0934 ("drm/radeon: add runtime PM support (v2)")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 0fdc1ff82ea14844c22795e9e0813c3ca03235e1)
+Fixes: 0a19e61e6d4c ("vfio: ccw: introduce channel program interfaces")
 Cc: stable@vger.kernel.org
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/radeon_kms.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/s390/cio/vfio_ccw_cp.c |   17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
 
---- a/drivers/gpu/drm/radeon/radeon_kms.c
-+++ b/drivers/gpu/drm/radeon/radeon_kms.c
-@@ -72,6 +72,7 @@ void radeon_driver_unload_kms(struct drm
- 	if (radeon_is_px(dev)) {
- 		pm_runtime_get_sync(dev->dev);
- 		pm_runtime_forbid(dev->dev);
-+		pm_runtime_dont_use_autosuspend(dev->dev);
- 	}
+--- a/drivers/s390/cio/vfio_ccw_cp.c
++++ b/drivers/s390/cio/vfio_ccw_cp.c
+@@ -371,11 +371,9 @@ static void ccwchain_cda_free(struct ccw
+ static int ccwchain_calc_length(u64 iova, struct channel_program *cp)
+ {
+ 	struct ccw1 *ccw = cp->guest_cp;
+-	int cnt = 0;
+-
+-	do {
+-		cnt++;
++	int cnt;
  
- 	radeon_acpi_fini(rdev);
++	for (cnt = 1; cnt <= CCWCHAIN_LEN_MAX; cnt++, ccw++) {
+ 		/*
+ 		 * As we don't want to fail direct addressing even if the
+ 		 * orb specified one of the unsupported formats, we defer
+@@ -393,15 +391,10 @@ static int ccwchain_calc_length(u64 iova
+ 		 * after the TIC, depending on the results of its operation.
+ 		 */
+ 		if (!ccw_is_chain(ccw) && !is_tic_within_range(ccw, iova, cnt))
+-			break;
+-
+-		ccw++;
+-	} while (cnt < CCWCHAIN_LEN_MAX + 1);
+-
+-	if (cnt == CCWCHAIN_LEN_MAX + 1)
+-		cnt = -EINVAL;
++			return cnt;
++	}
+ 
+-	return cnt;
++	return -EINVAL;
+ }
+ 
+ static int tic_target_chain_exists(struct ccw1 *tic, struct channel_program *cp)
 
 
