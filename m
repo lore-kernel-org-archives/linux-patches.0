@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72D025B0AA;
-	Thu, 20 Aug 2026 15:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EADE3803D9;
+	Thu, 20 Aug 2026 15:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239514; cv=none; b=X+T/SUx9lMwk47xcSb98aPtTETrafjGJn8gE19GGTts2RpdcObdw3WFAMAvaJgWtwwqH8m8E4o5rQHjOgTmhSLQeQgHSYR0tcwsNuPv/Jl9CKrU+EwtdsbIsHawsWnnHZh4UeaHaYToOja2gCDU231jU320UsxZRXbpyQ4/1CEY=
+	t=1787239517; cv=none; b=L/78/QfMoZK9f3M6o9r3/ZStXDlifWsYwPdM6Qy4qXFyViVuJk4w+2mYmVf7oAlJONpNbBARHd2elZYOhX34aBeNan3IH4JjFJ+mqchMDL+tRppT/kSMOB5qZBhGnLIPGM/ipbFmKACay6kNdRv6Ogw4M5frM2i1F++c+gO76T4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239514; c=relaxed/simple;
-	bh=b79CCpYfuPBnsXhq9G1x2ebcy/doBx2zWGm63b1uRVY=;
+	s=arc-20240116; t=1787239517; c=relaxed/simple;
+	bh=I4BiNZ+4GsaUgmKh0m8vLhT7ldMnyMae9FYqCXNJn4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oUUlTXCYaekW7fox1cBQxaQbwaqi4pTiyI6S8m1uSe8P+NxUgoXhRP3NwO+YCAqIkYWIF2weCS9UUs7tQR6dRUZRXnhQwkAVdWaTLcJl4SICqF2XE7KiqFxRvrti+6LZLEPl9hCrwpK8YNt/eVV8m0bJ1C2ARx+/aJki/8N58qM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PiB+DGkm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MsHbta1i2He1wAczVCwVZ/3eEa2St9iSOzl9Gc69EbGTw31JHQhwgGoZdhe1ppBSxuk5mzuSRrlFuneiOYCiJ1urIQkR5SrYbeb+9C3lVnJWhgokk4gvjzTzVf+vfFE0hu3c4/uSJf5XXMEHcwKzivF9uuG6RSGffSh0de4FP3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWI3+LJX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PiB+DGkm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA5671F000E9;
-	Thu, 20 Aug 2026 15:25:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWI3+LJX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04241F000E9;
+	Thu, 20 Aug 2026 15:25:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239513;
-	bh=ErRcq/3zfoegkt0gN1scT2mWALQu4CyOCzCf/KXk624=;
+	s=korg; t=1787239516;
+	bh=7t77v024AdtGhL79m3RCNhmp1Yl5CVtJ0JFa+py3zL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PiB+DGkmOzmhqMjKFz8eQPl86GEslXVpQrY5LU1TQNMTkVU2X7bTsBfaPattCqNd4
-	 OE6eEUJ2ysS5nizUfsdLiBsL9d54EAtg6thyUrD7gOsqJebgl8vXl6n7dcDvLhU44D
-	 R5t8As1H6Mk7cHirfLHKJsc0/KR9enFa8/SPEdLs=
+	b=iWI3+LJXZ6kthvqOrKILZm1AgnXvpQKg4dgPioQ8Inp11YdQKuOJHHgf9xCxGuonm
+	 7LgoVPLADlYcMtR853ZrbEegknVDnAITMHnhbchBMoTTetsAad4bN8jGihGXrFmnyR
+	 jHocjMd+BXHRH5l+0olNyW/EXClce+n35e7v6AdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 058/220] Input: sur40 - fix input device registration ordering
-Date: Thu, 20 Aug 2026 16:54:08 +0200
-Message-ID: <20260820145225.237694756@linuxfoundation.org>
+	Eric Farman <farman@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: [PATCH 6.12 076/220] s390/vfio_ccw: Move cp cleanup out of not operational
+Date: Thu, 20 Aug 2026 16:54:26 +0200
+Message-ID: <20260820145225.776116975@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -50,95 +51,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Eric Farman <farman@linux.ibm.com>
 
-commit 9da976eb649c9e2f588a4499410e4d8af687925f upstream.
+commit 0c11f61a876ed6fcca53d442ed3f33ea8362a0f9 upstream.
 
-In sur40_probe(), input_register_device() was previously called early before
-the V4L2 video device and vb2_queue components were fully initialized. If
-userspace opened the input device immediately upon registration, sur40_open()
-would trigger and start the sur40_poll() worker thread. This worker thread
-invokes sur40_process_video() and accesses the uninitialized vb2_queue
-structure, leading to a data race and potential system crash.
+The fsm_notoper() routine is called when the device has been
+lost, and is (by definition) no longer operational. Since this
+can happen asynchronously from the normal behavior of the
+driver, the cleanup may happen when holding other locks
+in the calling sequence (notably, the cio subchannel lock).
 
-Furthermore, if V4L2 or video registration failed after input_register_device()
-succeeded, the error path fell through to calling input_free_device() on a
-successfully registered device instead of input_unregister_device(), corrupting
-input core state.
+Push the cleanup of the private->cp resources to a workqueue,
+where it can be done out from under that lock sequence and
+a future patch can safely manage the locking requirements.
 
-Move input_register_device() to the very end of sur40_probe(). This ensures
-the V4L2 and video queue structures are fully initialized before polling can
-start, and naturally resolves the error path bug since input_free_device()
-is now only called when input registration has not yet occurred.
-
-To maintain strict LIFO (Last-In, First-Out) teardown ordering, also move
-input_unregister_device() to the very beginning of sur40_disconnect(). This
-guarantees that the input polling worker thread is stopped before V4L2
-video components or control handlers are unregistered.
-
-Reported-by: sashiko-bot@kernel.org
+Fixes: 204b394a23ad ("vfio/ccw: Move FSM open/close to MDEV open/close")
 Cc: stable@vger.kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Link: https://patch.msgid.link/20260616051235.1549517-1-dmitry.torokhov@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/sur40.c |   21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/s390/cio/vfio_ccw_drv.c     |    9 +++++++++
+ drivers/s390/cio/vfio_ccw_fsm.c     |    3 +--
+ drivers/s390/cio/vfio_ccw_ops.c     |   13 +++++++++++++
+ drivers/s390/cio/vfio_ccw_private.h |    3 +++
+ 4 files changed, 26 insertions(+), 2 deletions(-)
 
---- a/drivers/input/touchscreen/sur40.c
-+++ b/drivers/input/touchscreen/sur40.c
-@@ -725,21 +725,13 @@ static int sur40_probe(struct usb_interf
- 		goto err_free_input;
- 	}
+--- a/drivers/s390/cio/vfio_ccw_drv.c
++++ b/drivers/s390/cio/vfio_ccw_drv.c
+@@ -125,6 +125,15 @@ void vfio_ccw_crw_todo(struct work_struc
+ 		eventfd_signal(private->crw_trigger);
+ }
  
--	/* register the polled input device */
--	error = input_register_device(input);
--	if (error) {
--		dev_err(&interface->dev,
--			"Unable to register polled input device.");
--		goto err_free_buffer;
--	}
--
- 	/* register the video master device */
- 	snprintf(sur40->v4l2.name, sizeof(sur40->v4l2.name), "%s", DRIVER_LONG);
- 	error = v4l2_device_register(sur40->dev, &sur40->v4l2);
- 	if (error) {
- 		dev_err(&interface->dev,
- 			"Unable to register video master device.");
--		goto err_unreg_v4l2;
-+		goto err_free_buffer;
- 	}
- 
- 	/* initialize the lock and subdevice */
-@@ -798,6 +790,14 @@ static int sur40_probe(struct usb_interf
- 		goto err_unreg_video;
- 	}
- 
-+	/* register the polled input device */
-+	error = input_register_device(input);
-+	if (error) {
-+		dev_err(&interface->dev,
-+			"Unable to register polled input device.");
-+		goto err_unreg_video;
-+	}
++void vfio_ccw_notoper_todo(struct work_struct *work)
++{
++	struct vfio_ccw_private *private;
 +
- 	/* we can register the device now, as it is ready */
- 	usb_set_intfdata(interface, sur40);
- 	dev_dbg(&interface->dev, "%s is now attached\n", DRIVER_DESC);
-@@ -823,11 +823,12 @@ static void sur40_disconnect(struct usb_
- {
- 	struct sur40_state *sur40 = usb_get_intfdata(interface);
- 
-+	input_unregister_device(sur40->input);
++	private = container_of(work, struct vfio_ccw_private, notoper_work);
 +
- 	v4l2_ctrl_handler_free(&sur40->hdl);
- 	video_unregister_device(&sur40->vdev);
- 	v4l2_device_unregister(&sur40->v4l2);
++	cp_free(&private->cp);
++}
++
+ /*
+  * Css driver callbacks
+  */
+--- a/drivers/s390/cio/vfio_ccw_fsm.c
++++ b/drivers/s390/cio/vfio_ccw_fsm.c
+@@ -170,8 +170,7 @@ static void fsm_notoper(struct vfio_ccw_
+ 	css_sched_sch_todo(sch, SCH_TODO_UNREG);
+ 	private->state = VFIO_CCW_STATE_NOT_OPER;
  
--	input_unregister_device(sur40->input);
- 	kfree(sur40->bulk_in_buffer);
- 	kfree(sur40);
+-	/* This is usually handled during CLOSE event */
+-	cp_free(&private->cp);
++	queue_work(vfio_ccw_work_q, &private->notoper_work);
+ }
+ 
+ /*
+--- a/drivers/s390/cio/vfio_ccw_ops.c
++++ b/drivers/s390/cio/vfio_ccw_ops.c
+@@ -54,6 +54,7 @@ static int vfio_ccw_mdev_init_dev(struct
+ 	INIT_LIST_HEAD(&private->crw);
+ 	INIT_WORK(&private->io_work, vfio_ccw_sch_io_todo);
+ 	INIT_WORK(&private->crw_work, vfio_ccw_crw_todo);
++	INIT_WORK(&private->notoper_work, vfio_ccw_notoper_todo);
+ 
+ 	private->cp.guest_cp = kcalloc(CCWCHAIN_LEN_MAX, sizeof(struct ccw1),
+ 				       GFP_KERNEL);
+@@ -135,9 +136,16 @@ static void vfio_ccw_mdev_release_dev(st
+ 	/*
+ 	 * Ensure these work items are fully drained, so none can
+ 	 * fire after being released.
++	 *
++	 * notoper_work should have nothing to do here, because only
++	 * open devices could have channel_program resources in use
++	 * and those would be released during close. Nevertheless,
++	 * call flush here as well to be certain anything that was
++	 * allocated is freed.
+ 	 */
+ 	cancel_work_sync(&private->io_work);
+ 	cancel_work_sync(&private->crw_work);
++	flush_work(&private->notoper_work);
+ 
+ 	list_for_each_entry_safe(crw, temp, &private->crw, next) {
+ 		list_del(&crw->next);
+@@ -214,9 +222,14 @@ static void vfio_ccw_mdev_close_device(s
+ 	/*
+ 	 * Ensure these work items are drained, in the event the
+ 	 * device is re-opened instead of released.
++	 *
++	 * notoper_work needs to be given a chance to run if it
++	 * is queued, so any memory associated with the channel
++	 * program can be returned.
+ 	 */
+ 	cancel_work_sync(&private->io_work);
+ 	cancel_work_sync(&private->crw_work);
++	flush_work(&private->notoper_work);
+ 
+ 	vfio_ccw_unregister_dev_regions(private);
+ }
+--- a/drivers/s390/cio/vfio_ccw_private.h
++++ b/drivers/s390/cio/vfio_ccw_private.h
+@@ -102,6 +102,7 @@ struct vfio_ccw_parent {
+  * @req_trigger: eventfd ctx for signaling userspace to return device
+  * @io_work: work for deferral process of I/O handling
+  * @crw_work: work for deferral process of CRW handling
++ * @notoper_work: work for deferred processing in not-operational state
+  */
+ struct vfio_ccw_private {
+ 	struct vfio_device vdev;
+@@ -125,11 +126,13 @@ struct vfio_ccw_private {
+ 	struct eventfd_ctx	*req_trigger;
+ 	struct work_struct	io_work;
+ 	struct work_struct	crw_work;
++	struct work_struct	notoper_work;
+ } __aligned(8);
+ 
+ int vfio_ccw_sch_quiesce(struct subchannel *sch);
+ void vfio_ccw_sch_io_todo(struct work_struct *work);
+ void vfio_ccw_crw_todo(struct work_struct *work);
++void vfio_ccw_notoper_todo(struct work_struct *work);
+ 
+ extern struct mdev_driver vfio_ccw_mdev_driver;
  
 
 
