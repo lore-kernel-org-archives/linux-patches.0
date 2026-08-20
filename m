@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC55472F8B;
-	Thu, 20 Aug 2026 17:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB72237AA7D;
+	Thu, 20 Aug 2026 17:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247396; cv=none; b=p5H9wpFtc27rhU8l1WbxsSLuhmUl42JhsbTiQFbMCHqzORkrnS/tUDAJGCcW6duZbRcsIosKwUN3O0/9vsJeM8K6nQeMQ20WHrdZMm5jl9JSazwVhxU2yLbhZ0YXxptIWFTOalKhMSlhic3qVjwjFO63h5cRK3VHOPZDtxdFkZE=
+	t=1787247399; cv=none; b=HowBTvOlchW5+W5RkHB4LPIwRMBmKFPkJ6sSeLvZsO6UYsRxTzoGEaydVBF/f7/zHjPapYJY1XofnRgBwTqoMw415iEzad9UGgadP0MTrwvEpmiFX+pnf2Fv+TssTPAxJ4JEg3g1hrxg/IHH/t3q44B2SwkcnIs+I+zh6hCY95I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247396; c=relaxed/simple;
-	bh=y8kM6SIJVdUXRAPdlv7lsUceQIVsD0kW6/Lh/Y9p6cE=;
+	s=arc-20240116; t=1787247399; c=relaxed/simple;
+	bh=AXP99IRtWD5Q3+OP4ejNuOMvLVDURoYsebev8P+2akk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sv2oTGTXbcveMxTwsHiZERQfEuM6OTzhTnN9HM9Yfd+1yefvEvB2KkX/RxvukQyCtlGcafS+yT01v1Com3eXgggS7uvhMTozaS5eJ/uFIqfmSBkVYGqr8J4BEOMzjkBb+OHHdxeZO1RcqH3pswXAqiwWPUMOjN4cjIgOhkfGEpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vMFJqarc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Opsj7JzevcmTjUNX2Q0bF0Txt+7qsQJgVBnHjX1R48BzS2ddKIRa67l7PXtMi4/MpHZHPypnXNHhgZIh1S6jeWEFeSzrmngN4zaTWL0kTP/ZF4U2KmglNlwPLmQ8n4MDFSm8/dRb9W0igYInaxtYIEDTZvI7//Y/4dZYBqD70F0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ml9YfTVG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vMFJqarc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B651F000E9;
-	Thu, 20 Aug 2026 17:36:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ml9YfTVG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 359F41F000E9;
+	Thu, 20 Aug 2026 17:36:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247394;
-	bh=g1I6pyda1uI5nUww0ZNgPERdM/vLtbb0CCye1sMG4nM=;
+	s=korg; t=1787247397;
+	bh=bUofwmjheBe7sIzinwm00nnv8leQCNajfng1c0F0Mu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vMFJqarc4aMzFel9I+n7s3mXI+JAVtAtDqem/os7CYz4m/lu1JSUkzLcSIB9GdnqG
-	 nRmfmv5wOUGsdUDti9/VHZo4+qoD09MVzW8aVmizcLO4IrkzhridJ74Een+EVsdHnt
-	 0VGiUSRuVbBgHYnjMvpoxrAey6FsdFPlYrJ1Ifo4=
+	b=ml9YfTVGy0XpKP4yLwaOBL9oc2BGa+pqon8VdZp6R/e/Z2VC50JRKxguZyTnmHhu+
+	 ZDvcLqEjuUq/CJeOKrlfeo/iYMbBNfr2hGaqJ/EroDBK+N3USiytIyFKDXDBSVLTsC
+	 NKgz/kclAKvWglOvr0sE4oSJCqXEYMnT/c6b0qLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 030/166] Input: synaptics-rmi4 - bound the F54 report size to the allocated buffer
-Date: Thu, 20 Aug 2026 16:54:49 +0200
-Message-ID: <20260820145212.089671416@linuxfoundation.org>
+	Erni Sri Satya Vennela <ernis@linux.microsoft.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 004/166] net: mana: Fix EQ leak in mana_remove on NULL port
+Date: Thu, 20 Aug 2026 16:54:23 +0200
+Message-ID: <20260820145211.328330007@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -50,85 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
 
-commit 49c5adc2b7d6e43c5cf033e1c86fdb9c16ababb1 upstream.
+[ Upstream commit 65267c9c4f28199985505977bc2c628c82fc50ef ]
 
-rmi_f54_work() reads a diagnostics report from the device into
-f54->report_data, sizing the transfer with rmi_f54_get_report_size():
+In mana_remove(), when a NULL port is encountered in the port iteration
+loop, 'goto out' skips the mana_destroy_eq(ac) call, leaking the event
+queues allocated earlier by mana_create_eq().
 
-	report_size = rmi_f54_get_report_size(f54);
-	...
-	for (i = 0; i < report_size; i += F54_REPORT_DATA_SIZE) {
-		int size = min(F54_REPORT_DATA_SIZE, report_size - i);
-		...
-		rmi_read_block(.., f54->report_data + i, size);
-	}
+This can happen when mana_probe_port() fails for port 0, leaving
+ac->ports[0] as NULL. On driver unload or error cleanup, mana_remove()
+hits the NULL entry and jumps past mana_destroy_eq().
 
-report_data is allocated once at probe from F54's own electrode counts
-(array3_size(f54->num_tx_electrodes, f54->num_rx_electrodes, sizeof(u16))),
-but rmi_f54_get_report_size() computes the size from
-drv_data->num_*_electrodes when those are set, i.e. from the F55
-function's electrode counts. Both counts come straight from device
-queries (F54 and F55 each report up to 255 electrodes) and nothing
-constrains the F55 counts to the F54 ones.
+Change 'goto out' to 'break' so the for-loop exits normally and
+mana_destroy_eq() is always reached. Remove the now-unreferenced out:
+label.
 
-A malicious or malfunctioning RMI4 device that reports larger F55
-electrode counts than its F54 counts makes report_size exceed the
-allocation, so the read loop writes past report_data (and the V4L2
-dequeue memcpy() then reads past it). On conforming hardware the F55
-configured electrodes are a subset of the F54 physical electrodes, so
-report_size never exceeds the buffer and well-behaved devices are
-unaffected.
-
-Record the allocation size and reject a report that does not fit,
-mirroring the existing zero-size check.
-
-Fixes: c762cc68b6a1 ("Input: synaptics-rmi4 - propagate correct number of rx and tx electrodes to F54")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Assisted-by: Antigravity:gemini-3.5-flash
-Link: https://patch.msgid.link/20260626051802.4033172-3-dmitry.torokhov@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1e2d0824a9c3 ("net: mana: Add support for EQ sharing")
+Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
+Link: https://patch.msgid.link/20260420124741.1056179-6-ernis@linux.microsoft.com
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ hmahfooz: resolve conflict in mana_remove() due to missing commit
+  3b194343c250 ("net: mana: Implement ndo_tx_timeout and serialize
+  queue resets per port.") ]
+Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/rmi4/rmi_f54.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/microsoft/mana/mana_en.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/input/rmi4/rmi_f54.c
-+++ b/drivers/input/rmi4/rmi_f54.c
-@@ -104,6 +104,7 @@ struct f54_data {
+diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
+index ec5d38164d41b..2808527315fe5 100644
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -2931,7 +2931,7 @@ void mana_remove(struct gdma_dev *gd, bool suspending)
+ 		if (!ndev) {
+ 			if (i == 0)
+ 				dev_err(dev, "No net device to remove\n");
+-			goto out;
++			break;
+ 		}
  
- 	enum rmi_f54_report_type report_type;
- 	u8 *report_data;
-+	size_t max_report_size;
- 	int report_size;
- 
- 	bool is_busy;
-@@ -550,6 +551,13 @@ static void rmi_f54_work(struct work_str
- 		goto out;     /* retry won't help */
+ 		/* All cleanup actions should stay after rtnl_lock(), otherwise
+@@ -2958,7 +2958,7 @@ void mana_remove(struct gdma_dev *gd, bool suspending)
  	}
  
-+	if (report_size > f54->max_report_size) {
-+		dev_err(&fn->dev, "Report size %d exceeds buffer size %zu\n",
-+			report_size, f54->max_report_size);
-+		error = -EINVAL;
-+		goto out;
-+	}
+ 	mana_destroy_eq(ac);
+-out:
 +
- 	/*
- 	 * Need to check if command has completed.
- 	 * If not try again later.
-@@ -680,8 +688,8 @@ static int rmi_f54_probe(struct rmi_func
+ 	mana_gd_deregister_device(gd);
  
- 	rx = f54->num_rx_electrodes;
- 	tx = f54->num_tx_electrodes;
--	f54->report_data = devm_kzalloc(&fn->dev,
--					array3_size(tx, rx, sizeof(u16)),
-+	f54->max_report_size = array3_size(tx, rx, sizeof(u16));
-+	f54->report_data = devm_kzalloc(&fn->dev, f54->max_report_size,
- 					GFP_KERNEL);
- 	if (f54->report_data == NULL)
- 		return -ENOMEM;
+ 	if (suspending)
+-- 
+2.53.0
+
 
 
