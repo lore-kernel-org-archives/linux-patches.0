@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361A040F754;
-	Thu, 20 Aug 2026 16:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D58E477E58;
+	Thu, 20 Aug 2026 16:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244318; cv=none; b=SHqe5siAtpfIoA5ySupgTEPEJwzrMzZaVthItfa6KFETDboi/0OgmCa488MnQHxPzTGmrywRZUNQGoYpogM8ysm39w7QN454X7N6KFHe/eedsyasCfFsAnjvxG7c5m1xpcb4kiFFNbC4/ZywnTnZXvCuT+DYFjhB+J9WCwcIuJM=
+	t=1787244321; cv=none; b=A9FT1MW5pFakm8Wxg5ax+fq0AAAMyvWWE3MJ6k8cN5UKGISXchNmIku/wMyYqWP2wnyRy7Ax1x8GUfQBJOUDFycmqycdND8zwPfsd9fLgQxutTy8FOpBpK9t4e5G2+O120WBcau0yyZMtRhveOZeF0t3Ej3Di9r7dmVILoHLEq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244318; c=relaxed/simple;
-	bh=4NoBXTrStPYfZGvMhu6INaxTyRTKYmmJIm42b5tAtvE=;
+	s=arc-20240116; t=1787244321; c=relaxed/simple;
+	bh=ydbq+osGYgqlUwDwVPHtQVDUOElhYnDGaLRxWdVsbl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YnmiaYZPRhCz47JATvM9LzpkoXVIN7G9LipQUTedakOJG2ow8bK1/N/J2Zi0jYU1legvfCmGVT4m3C65thUr/f+YA0B1gN0+3uC+DNltqbso3f4eI7T9osIEaM3eat7lC9nbkAdbF1yfH58uVRcHZQ/DAo9ka5JXa9fKZMykxf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deJWHbT+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P0E3CAQmMx1wDRYt122PI5ymwcJ++aCGjKDxuUIji94SYiJrB3r8QylVtlDAmOfNAs7YCdD9E68hLWepkZ7zLVdW1dNOBF0ZLqhv6pbqQih5i0Aoub5hGNgu3LNXdKLsrEhcnA47YZo/1g9cELEOFFp6P187eNQXpiq6AXYVVS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjrPAO4o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deJWHbT+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 906AF1F000E9;
-	Thu, 20 Aug 2026 16:45:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjrPAO4o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 754021F00A3D;
+	Thu, 20 Aug 2026 16:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244317;
-	bh=JuiG7ol/N6u8ykvpKgKbalDVjv1ok01i2t2MOzp5Qw4=;
+	s=korg; t=1787244320;
+	bh=jlhJDM3VI6Pn23l4A/RGtf5mMjJaGYxrgz4pwMcw+r0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=deJWHbT+6Svi5WZDulRnFra1UIiBmJcDg5rDxS3HbZKm3px8dIpOv3bNDG7r1DJ9I
-	 rO7qAu68GKNJrnBew4CKN8bEckfaQK+6nOub/APbTQkAbC9k+F1kOBSuk1hfyRIgus
-	 h9dT3o3t9UL1KDMEk2Sb3SaGINKmgDdowQ9iy2I8=
+	b=GjrPAO4obYVZ5vIm7W4Nva4hVBT9DmP4JgBuGbtpt6QXCtLdMJJkBF5adnry5+Jdx
+	 O7YGujK2nkjqtS682oW30pE2ZTIRDM68u2m1OWmdtihXzHX6Vrf5YSvE8XaMbNhavC
+	 6zP8bkjCFjWj+MMkHNWG7AsZ7V4RZccezJoTK3Co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 126/235] gpio: tegra: do not call pinctrl for GPIO direction
-Date: Thu, 20 Aug 2026 16:56:02 +0200
-Message-ID: <20260820145220.264993515@linuxfoundation.org>
+Subject: [PATCH 5.10 127/235] bootconfig: do not put quotes on cmdline items unless necessary
+Date: Thu, 20 Aug 2026 16:56:03 +0200
+Message-ID: <20260820145220.295908326@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -51,97 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
 
-[ Upstream commit d3e91a95b2b0fc6336dbf3ec90d831a1654d2720 ]
+[ Upstream commit 212f863fa8811c780abacc1d0404c573fdc0a2de ]
 
-tegra_gpio_direction_input() and tegra_gpio_direction_output() already
-program the GPIO controller direction registers directly. The additional
-pinctrl_gpio_direction_input/output() calls do not add a Tegra pinctrl
-operation, because the Tegra pinmux ops provide GPIO request/free
-handling but no gpio_set_direction hook.
+When trying to migrate to using bootconfig to embed the kernel's and
+PID1's command line with the kernel image itself, and so allowing changing
+that without modifying the bootloader, I noticed that /proc/cmdline
+changed from e.g.
 
-The extra call still enters the pinctrl core and takes pctldev->mutex.
-Shared GPIO users can call the direction path while holding their
-per-line spinlock, so this otherwise redundant pinctrl direction call can
-sleep in an atomic context.
+  console=ttymxc0,115200n8 cma=128M quiet -- --log-level=notice
 
-This was found by our static analysis tool and then confirmed by manual
-review of tegra_gpio_probe(), the Tegra GPIO direction callbacks and the
-Tegra pinctrl ops. The reviewed path has a default non-sleeping
-struct gpio_chip while the direction callback still enters the pinctrl
-mutex path.
+to
 
-A directed runtime validation kept the same non-sleeping chip registration
-and drove:
+  console="ttymxc0,115200n8" cma="128M" quiet -- --log-level="notice"
 
-  gpio_shared_proxy_direction_output()
-  gpiod_direction_output_raw_commit()
-  tegra_gpio_direction_output()
-  pinctrl_gpio_direction_output()
+The kernel parameters are parsed just fine, and the quotes are indeed
+stripped from the actual argv[] given to PID1.  However, the quoting
+doesn't really serve any purpose and looks excessive, and might confuse
+some (naive) userspace tool trying to parse /proc/cmdline.  So do not
+quote the value unless it contains whitespace.
 
-Lockdep reported a sleep-in-atomic warning with the shared GPIO spinlock
-held and pinctrl_get_device_gpio_range() plus tegra_gpio_direction_output()
-on the stack.
-
-Do not mark the whole chip as can_sleep to paper over this: can_sleep
-describes whether get()/set() may sleep, and Tegra value access is MMIO.
-Remove the redundant pinctrl direction calls and keep pinctrl involvement
-in the existing request/free path.
-
-Fixes: 11da90541283 ("gpio: tegra: Fix offset of pinctrl calls")
-Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260619152439.1239561-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://lkml.kernel.org/r/20240320101952.62135-1-linux@rasmusvillemoes.dk
+Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: dec4d8118c17 ("bootconfig: fix NULL-pointer arithmetic in xbc_snprint_cmdline()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-tegra.c |   18 ++----------------
- 1 file changed, 2 insertions(+), 16 deletions(-)
+ init/main.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/gpio/gpio-tegra.c
-+++ b/drivers/gpio/gpio-tegra.c
-@@ -168,18 +168,11 @@ static int tegra_gpio_direction_input(st
- 				      unsigned int offset)
+--- a/init/main.c
++++ b/init/main.c
+@@ -323,7 +323,7 @@ static int __init xbc_snprint_cmdline(ch
  {
- 	struct tegra_gpio_info *tgi = gpiochip_get_data(chip);
--	int ret;
+ 	struct xbc_node *knode, *vnode;
+ 	char *end = buf + size;
+-	const char *val;
++	const char *val, *q;
+ 	int ret;
  
- 	tegra_gpio_mask_write(tgi, GPIO_MSK_OE(tgi, offset), offset, 0);
- 	tegra_gpio_enable(tgi, offset);
- 
--	ret = pinctrl_gpio_direction_input(chip->base + offset);
--	if (ret < 0)
--		dev_err(tgi->dev,
--			"Failed to set pinctrl input direction of GPIO %d: %d",
--			 chip->base + offset, ret);
--
--	return ret;
-+	return 0;
- }
- 
- static int tegra_gpio_direction_output(struct gpio_chip *chip,
-@@ -187,19 +180,12 @@ static int tegra_gpio_direction_output(s
- 				       int value)
- {
- 	struct tegra_gpio_info *tgi = gpiochip_get_data(chip);
--	int ret;
- 
- 	tegra_gpio_set(chip, offset, value);
- 	tegra_gpio_mask_write(tgi, GPIO_MSK_OE(tgi, offset), offset, 1);
- 	tegra_gpio_enable(tgi, offset);
- 
--	ret = pinctrl_gpio_direction_output(chip->base + offset);
--	if (ret < 0)
--		dev_err(tgi->dev,
--			"Failed to set pinctrl output direction of GPIO %d: %d",
--			 chip->base + offset, ret);
--
--	return ret;
-+	return 0;
- }
- 
- static int tegra_gpio_get_direction(struct gpio_chip *chip,
+ 	xbc_node_for_each_key_value(root, knode, val) {
+@@ -341,8 +341,14 @@ static int __init xbc_snprint_cmdline(ch
+ 			continue;
+ 		}
+ 		xbc_array_for_each_value(vnode, val) {
+-			ret = snprintf(buf, rest(buf, end), "%s=\"%s\" ",
+-				       xbc_namebuf, val);
++			/*
++			 * For prettier and more readable /proc/cmdline, only
++			 * quote the value when necessary, i.e. when it contains
++			 * whitespace.
++			 */
++			q = strpbrk(val, " \t\r\n") ? "\"" : "";
++			ret = snprintf(buf, rest(buf, end), "%s=%s%s%s ",
++				       xbc_namebuf, q, val, q);
+ 			if (ret < 0)
+ 				return ret;
+ 			buf += ret;
 
 
