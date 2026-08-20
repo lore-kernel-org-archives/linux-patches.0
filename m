@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6430D47D46A;
-	Thu, 20 Aug 2026 16:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38A447CC97;
+	Thu, 20 Aug 2026 16:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244575; cv=none; b=qNMJ3BHOM3+ILKf42xjSGui2D9q6S1darFbd99A1GL88O35l8Qd7g61MoRp8+bOOHNo3d5GT2Tkqvk3xJZPkH8idPIYMs1WWrIYLN0ju4ZYy7FtTJGHqTOuJogLuwNC+cNfzcWcqrw7w+z2QF53mQU+IPrLuOIAws2Ha+Srdx/U=
+	t=1787244578; cv=none; b=QB4aGDJR+q3u5X6grw4Vp738RJ8pQ/SFr9Rg7wh8Q6sBG6RmFdkNExRlzQoPb46VGIEdPmfkJ1KdN8aoC9IaGGvHGzvZGsoeYQ34riwJE1fXk7ZoIZn3/Uke4ByWI3lRomJE01FF85OjlWdLD5fD5BVadQyRmZkECYGEwm0XnLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244575; c=relaxed/simple;
-	bh=F8UsCnfTQOc2Cc/smBi+aW2c6amVJrndU79JHqnRGCk=;
+	s=arc-20240116; t=1787244578; c=relaxed/simple;
+	bh=7z0JflO6m+jOoo0eif57YDUo1lFFx6b0zLakrSwfz/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ke+yjJWZpsqgYP9LKt87AIBWEnNv2Y00s4unNtdEXGn19WuKhsz3yOS0U+y0AP9F6+sjWRBf5wLYcpZmF3w9IP+fYjD0b6apWNc6wv9VeTcP9WGQCGqOv6nzNpbwu14IzQm6ZUt/v8+l0J+gl4fWvgvvOIpwX7ZqjdxDXdQXZX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Lig52Xw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s5d+2yCqyOsKtD/T4/PBXcAVhwEaZUu7DuwJIhvxggHgliAXXkciN3dtArI3gk2pZK+EaUI09Oet9i53ruorW1cPhA0sx/w3nMbOkDq734tWecB4T6hAtAPLti8uTBjEg/tdE+wekl+V1ruGHOtTu6P1tI8Ak+EqLOlzPljetrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aM7IoD4+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Lig52Xw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0161F000E9;
-	Thu, 20 Aug 2026 16:49:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aM7IoD4+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59DC11F00A3F;
+	Thu, 20 Aug 2026 16:49:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244574;
-	bh=qY+BCJX+8lqYHmC9BQybVaOs0fw6WwLYcejomx9YVZI=;
+	s=korg; t=1787244576;
+	bh=ufI1qHLuuQSJ3wBlZO9wQGzRe70klruj3M4nNEPhPxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Lig52XwRZwGBZ6Hzbb73La7mt1Vj8czhcqxsIYEzS+PwIgAAYjHzqrRcs5yx4Ncd
-	 GtvzkTXWxFdbiO+s2vzDUDq7R5RIzSyKBd4vlz2Xz2JKZ8ggSu6Xp+k+NN1MCniTpj
-	 0u929bh48BlyaMAkHG8Yu+Nv/b2RMLDn+apxN7Q8=
+	b=aM7IoD4+shqPS6R9yIWCcFB6p+I9KGdNuF4Q39+F+T1aVwYcyZpv98mJPJCcsrLBJ
+	 0cW4aZ+n2DSseepauMlwDTUgPCwr4iNPAZyi8hgDtNchZtwV5Aa7cg2B9IuGR8mRrU
+	 knZDBcur+ZITtS+LDl1x9rLHpfVYA8G8wo8FiJGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sukhdeep Singh <sukhdeeps@marvell.com>,
-	Yangyu Chen <cyy@cyyself.name>,
-	Mina Almasry <almasrymina@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 215/235] net: atlantic: free stranded TX buffers on ring deinit
-Date: Thu, 20 Aug 2026 16:57:31 +0200
-Message-ID: <20260820145223.132187749@linuxfoundation.org>
+Subject: [PATCH 5.10 216/235] arm64: tegra: Add EL2 virtual timer interrupt for Tegra194
+Date: Thu, 20 Aug 2026 16:57:32 +0200
+Message-ID: <20260820145223.164873913@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -53,103 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yangyu Chen <cyy@cyyself.name>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-commit 452636ea5410a96e02ebaaf80b21e3620b98e0dd upstream.
+[ Upstream commit a7c28483fd57dd0e1487024af70622315320774b ]
 
-aq_vec_deinit() drains the TX rings with a single aq_ring_tx_clean()
-call, which frees at most AQ_CFG_TX_CLEAN_BUDGET (256) descriptors and
-stops at hw_head, which no longer moves once aq_vec_stop() has stopped
-the hardware and NAPI. Completed descriptors beyond the budget and
-everything still posted in [hw_head, sw_tail) keep their skb or
-xdp_frame when the interface goes down: aq_vec_ring_free() then frees
-the buffer ring and the references are lost for good.
+Commit d87773de9efe ("clocksource/drivers/arm_arch_timer: Default to EL2
+virtual timer when running VHE") updated the ARM arch timer driver to
+use the virtual timer by default if the CPU is running at EL2 with VHE
+enabled. If the CPU is running at EL2 with VHE enabled but there is no
+interrupt provided for the virtual timer, then the following warning is
+displayed:
 
-Today this is a silent memory leak on every interface down under
-TX/XDP_TX load. With the conversion of the RX path to page_pool posted
-for net-next it becomes much more visible: XDP_TX frames carry fragment
-references on the RX ring's page_pool, so a single stranded frame keeps
-the pool's inflight count above zero forever. page_pool_destroy() then
-never completes, the pool is leaked together with its pages, and
-"page_pool_release_retry() stalled pool shutdown" is warned every 60
-seconds from that point on, on every ifdown, XDP detach or ring resize
-under XDP_TX load.
+ arch_timer: [Firmware Bug]: VHE-capable CPU without EL2 virtual timer
+  interrupt
 
-Bring back aq_ring_tx_deinit() as it was before the removal and use it
-for teardown again, with one extension: TX rings can hold xdp_frames
-nowadays, so release those too. They are returned with
-xdp_return_frame() since this runs in process context.
+This warning is observed on Tegra194 platforms. Tegra194 SoC includes
+NVIDIA Carmel ARM v8.2 CPUs and support an EL2 virtual timer. Fix the
+above warning by adding the PPI for the EL2 virtual timer interrupt for
+Tegra194.
 
-Fixes: eb36bedf28be ("net: aquantia: remove function aq_ring_tx_deinit")
-Cc: stable@vger.kernel.org # v4.11+
-Reviewed-by: Sukhdeep Singh <sukhdeeps@marvell.com>
-Signed-off-by: Yangyu Chen <cyy@cyyself.name>
-Acked-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/tencent_EEDC35FAF2750A3A6A0B39BAE0E2C484860A@qq.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Dropped the XDP frame arm from the new teardown loop since `buff->xdpf` and `xdp_return_frame()` don't exist in 5.15, and omitted the `aq_xdp_xmit()` context line in the header hunk. ]
+Fixes: 5425fb15d8ee ("arm64: tegra: Add Tegra194 chip device tree")
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/aquantia/atlantic/aq_ring.c |   25 +++++++++++++++++++++++
- drivers/net/ethernet/aquantia/atlantic/aq_ring.h |    1 
- drivers/net/ethernet/aquantia/atlantic/aq_vec.c  |    2 -
- 3 files changed, 27 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/nvidia/tegra194.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-@@ -314,6 +314,31 @@ bool aq_ring_tx_clean(struct aq_ring_s *
- 	return !!budget;
- }
- 
-+void aq_ring_tx_deinit(struct aq_ring_s *self)
-+{
-+	if (!self)
-+		return;
-+
-+	for (; self->sw_head != self->sw_tail;
-+		self->sw_head = aq_ring_next_dx(self, self->sw_head)) {
-+		struct aq_ring_buff_s *buff = &self->buff_ring[self->sw_head];
-+		struct device *ndev = aq_nic_get_dev(self->aq_nic);
-+
-+		if (buff->is_mapped) {
-+			if (buff->is_sop) {
-+				dma_unmap_single(ndev, buff->pa, buff->len,
-+						 DMA_TO_DEVICE);
-+			} else {
-+				dma_unmap_page(ndev, buff->pa, buff->len,
-+					       DMA_TO_DEVICE);
-+			}
-+		}
-+
-+		if (buff->is_eop && buff->skb)
-+			dev_kfree_skb_any(buff->skb);
-+	}
-+}
-+
- static void aq_rx_checksum(struct aq_ring_s *self,
- 			   struct aq_ring_buff_s *buff,
- 			   struct sk_buff *skb)
---- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.h
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.h
-@@ -182,6 +182,7 @@ void aq_ring_update_queue_state(struct a
- void aq_ring_queue_wake(struct aq_ring_s *ring);
- void aq_ring_queue_stop(struct aq_ring_s *ring);
- bool aq_ring_tx_clean(struct aq_ring_s *self);
-+void aq_ring_tx_deinit(struct aq_ring_s *self);
- int aq_ring_rx_clean(struct aq_ring_s *self,
- 		     struct napi_struct *napi,
- 		     int *work_done,
---- a/drivers/net/ethernet/aquantia/atlantic/aq_vec.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_vec.c
-@@ -270,7 +270,7 @@ void aq_vec_deinit(struct aq_vec_s *self
- 
- 	for (i = 0U; self->tx_rings > i; ++i) {
- 		ring = self->ring[i];
--		aq_ring_tx_clean(&ring[AQ_VEC_TX_ID]);
-+		aq_ring_tx_deinit(&ring[AQ_VEC_TX_ID]);
- 		aq_ring_rx_deinit(&ring[AQ_VEC_RX_ID]);
- 	}
- 
+diff --git a/arch/arm64/boot/dts/nvidia/tegra194.dtsi b/arch/arm64/boot/dts/nvidia/tegra194.dtsi
+index 05cf606b85c9f..b38c16f25f1ff 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra194.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra194.dtsi
+@@ -2375,6 +2375,8 @@ timer {
+ 			     <GIC_PPI 11
+ 				(GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+ 			     <GIC_PPI 10
++				(GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
++			     <GIC_PPI 15
+ 				(GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
+ 		interrupt-parent = <&gic>;
+ 		always-on;
+-- 
+2.53.0
+
 
 
