@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF8247D93B;
-	Thu, 20 Aug 2026 16:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA3747D935;
+	Thu, 20 Aug 2026 16:50:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244624; cv=none; b=s/05Xky19YrVziHJ6tFV/L0PQAcrAGES8tKXV5prirUcj8xvBlRI7VSD+wxSZKhtuh3qaPoS8ET1iSVvVWYKyZcsunqwBjD52waum71paH6MmpFpZtGgNJNJmve9paKSBB+LV+59LvhehtnR54BefSLO9r+M+bCNfkvT+WURgvo=
+	t=1787244626; cv=none; b=O+ImIYNEmtVaRyFUFOhBDi/Qy0zSgLP/YnS1Uw3tyLA/nPze14cl26IvxG9lGM25V3QziCFzS/mZA6M3TYVaNzkRXbpRf9cPGQvQklGs9ioko2PTUg0LgVmaY50t7mAazRyhff93T1J9ELp/bCfdw45upGuAOSYA/bITEgwnzlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244624; c=relaxed/simple;
-	bh=rbzMGoEEeJtG3HhlKCTDvIeCwFL4UFB9fgOlM/PHxlA=;
+	s=arc-20240116; t=1787244626; c=relaxed/simple;
+	bh=OHzd7KiDv519naX3fZJPobalsA7ZPnQ5mYf2CSK3mnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h5aiStyKAIpG9GRgf3EswpqoEORY6Y2HeT0tz+ib5QLNj5Md+O/jx5MfLYddsBSfaXWxMMo0JxEKwZkE+AQ7QcaUNQnKO93KLTweWmB595jQnIQZFzj9Skl2j910I26kKkHgU2SQQ4/ljttHU5qZe7TR3+WwjYZ/+GiBRcXzxvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8nkP+AS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AWN602qj2UlsgfqqAsFbGYelJAYZPt3cOKlAbiSI1MLMhoHk2IP95iWNo3O8HjHaILVZVzOi9I/lwU7rJdlFPJGmnAYNIystZf5UuzZzSMDDPWhIURpBkEi3y8877AfF/1E26WsR71Yoq6Vj8+ILsgJc0XqADj0xk53oIJDFpWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QnZcOnXP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8nkP+AS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54EF51F000E9;
-	Thu, 20 Aug 2026 16:50:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QnZcOnXP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350AD1F000E9;
+	Thu, 20 Aug 2026 16:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244622;
-	bh=HBhCp3Gd7RXb2F4/xw3jm0NJGibQtqDr1BSEX3RccBI=;
+	s=korg; t=1787244625;
+	bh=KC71auolRXsUa1QwvBcU3FfppIchXJIfDQE5vNBAPUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e8nkP+ASBqTZsNbZlCPPOGGFMHuIUSlVWQ6lO7dFIWUy1hHJxuZxI65dSvNsFf/V6
-	 958hKtHm49S+AXxkSN6uvQqI+SOHaAdyGoEsyfVAYIdWO7PvquLWohngZ80PMd/pV9
-	 fznLdpXMr7U+7Ltm3wvnhUZL8ky2ciiwoGk8hd1I=
+	b=QnZcOnXPazq1T5k9vNfiMm/w8Rxn89kAF0T3AIVTE07b7PmqNdBPWGZhY2czzqgGO
+	 u0tq96zphjhdUdzRdijpzd+P0FT+ExvhBF1pBh5wdQPexNSlMrh7D9g6SFUZGd5qCg
+	 WmQ0/Y60gyKkJwOcEqx5lLFtZ51gkvnUhohFte7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 234/235] net: ethernet: ti: am65-cpsw: fix error handling in am65_cpsw_nuss_probe()
-Date: Thu, 20 Aug 2026 16:57:50 +0200
-Message-ID: <20260820145223.708285611@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 235/235] USB: serial: keyspan_pda: fix information leak
+Date: Thu, 20 Aug 2026 16:57:51 +0200
+Message-ID: <20260820145223.738333075@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -51,36 +49,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 46fb6512538d201d9a5b2bd7138b6751c37fdf0b upstream.
+commit 6bfc8d01ac4068eced509f8fc74d0cd205e4dcec upstream.
 
-The am65_cpsw_nuss_cleanup_ndev() function calls unregister_netdev()
-even if register_netdev() fails, which triggers WARN_ON(1) in
-unregister_netdevice_many(). To fix it, make sure that
-unregister_netdev() is called only on registered netdev.
+The write() callback is supposed to return the number of characters
+accepted or a negative errno. Since the addition of write fifo support
+the keyspan_pda implementation will however return the number characters
+submitted to the device if the write urb is not already in use. If this
+number is larger than the number of characters passed to write(), the
+line discipline continues writing data from beyond the tty write buffer.
 
-Compile tested only.
+Fix the information leak by making sure that keyspan_pda_write_start()
+returns zero on success as intended.
 
-Fixes: 84b4aa493249 ("net: ethernet: ti: am65-cpsw: add multi port support in mac-only mode")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 034e38e8f687 ("USB: serial: keyspan_pda: add write-fifo support")
+Cc: stable@vger.kernel.org	# 5.11
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c |    2 +-
+ drivers/usb/serial/keyspan_pda.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -1947,7 +1947,7 @@ static void am65_cpsw_nuss_cleanup_ndev(
+--- a/drivers/usb/serial/keyspan_pda.c
++++ b/drivers/usb/serial/keyspan_pda.c
+@@ -606,7 +606,7 @@ static int keyspan_pda_write(struct tty_
+ 	if (rc)
+ 		return rc;
  
- 	for (i = 0; i < common->port_num; i++) {
- 		port = &common->ports[i];
--		if (port->ndev)
-+		if (port->ndev && port->ndev->reg_state == NETREG_REGISTERED)
- 			unregister_netdev(port->ndev);
- 	}
+-	return count;
++	return 0;
  }
+ 
+ static void keyspan_pda_dtr_rts(struct usb_serial_port *port, int on)
 
 
