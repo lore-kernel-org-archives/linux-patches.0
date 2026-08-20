@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A6A377A82;
-	Thu, 20 Aug 2026 16:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B111F377A82;
+	Thu, 20 Aug 2026 16:36:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243782; cv=none; b=qq73TXsA1F1JXPMZ2YbGbpT2C7aSTQfj6mFASNKNyBb0WLzW4btNpZVSW5ok+69YXGHNI54WPLT0740LsMQBAh6+CZusppRKXpx8Gj+grX33VjG7IeWpw+VrtqTg6HB+kSpl1/gY0Zbdk8NrIb79zT3yoYL9rKcjETAi1LQ/V5U=
+	t=1787243784; cv=none; b=EebsRlwLQc3g3LDi9aJcFj0fYBRiJtBHCodAiTytl+BHol73+YNcu6nkZugpipq9q9OcVKm3rGOyCjK594XNMn8rUJbg5qggUoUflsGk6gSiGTrwPCTGoTMHhOKVb2ZGg9WUSQyelXqwY88SgrWIfbwGnXRuRlNByJYp5CfWd3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243782; c=relaxed/simple;
-	bh=t9gomQYL3zeOEVoKR1FCYCfggDstPwT65IZDFkxeHZY=;
+	s=arc-20240116; t=1787243784; c=relaxed/simple;
+	bh=M2qMKsX2HLa2my0Y71J24A2hDKVYo4yTvO9+6nPIZ8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VOtxuFFq9Xdfjvg8TTIbzh8j4lONP/wwFfgbDSqAFyh1KHduoeZ3hZmOKs8bvcKdHPTJSsGULvVr6og/wUTGJbgR63ItVMDeG+AmJ2DhQFXbrTdD/GNqxA+5mTjUde5/5gzt20m812ka30vDaYpcPyHFJSU1Kt1E4jMl8eS43fI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejzcNa78; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lUuOiG7oNfDB9KAVsedx1kVzlcszTWVlBpO1o++ACzY+HGfo5AdEIRae+1W4wGsdvXQKQshwXGqXdIhmPI373IQyUwzq3G584aN1ye0HmXImV9SmZb1dT5/9AMWQu+yCizdde/Oi6CGFq7h3K48F3pS5rox0gTdqoabiFY3kYlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=odjOYdqE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejzcNa78"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1AC1F000E9;
-	Thu, 20 Aug 2026 16:36:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="odjOYdqE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DCB1F000E9;
+	Thu, 20 Aug 2026 16:36:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243780;
-	bh=t21z64gjIbfUYgZkeEwSJVpXCiSc/nIGr36EB2YnVnI=;
+	s=korg; t=1787243783;
+	bh=SE4rA5xWxAWCOLECyStP/aew/uI1reIce6RagrHRHMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ejzcNa78jsE6jzPrNSMfiOHTz5mR0Bpj6Iav0AtFnQEUxQSh0SbSX54MuYFAoVGYk
-	 WPumrGqGNenUW0YalxOsu7hdQBFoRDu+XfSKkf0JemS6KDMeNw9s6EQfeiQMkXqO7D
-	 YoSu41RZzy6mDwZF8rN5rSXR0K4MiM5660pBPjCo=
+	b=odjOYdqE3teHj8USD+jd2rAV2k2QZ1uXwqN6DD9iQmQXKJrso5/zwv33aq5xpam/p
+	 Ds7uqkjxVKPuzjjpjHlCPtOHwtrLMlheT3S7xKBVYVWDKKM5FnT4dd9gcC7k4cr8fU
+	 GyugthmK0o/gwdpFG9TAtAfRQsBdH/r5oMpR/6GU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Montgomery <james_montgomery@disroot.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 214/272] ksmbd: defer destroy_previous_session() until after NTLM authentication
-Date: Thu, 20 Aug 2026 16:56:38 +0200
-Message-ID: <20260820145238.026583760@linuxfoundation.org>
+Subject: [PATCH 5.15 215/272] net/sched: serialize qdisc_rtab_list against concurrent get/put
+Date: Thu, 20 Aug 2026 16:56:39 +0200
+Message-ID: <20260820145238.056161093@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -52,61 +53,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Montgomery <james_montgomery@disroot.org>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-[ Upstream commit c74801ee524f477c174a1899782b6c3b6918d407 ]
+[ Upstream commit f43ee0c0730d6191629b5ee1ceae27b1ebfdc047 ]
 
-In ntlm_authenticate(), destroy_previous_session() is called using a
-user pointer resolved from the client-supplied NTLM blob username field
-before the NTLMv2 response is validated. An authenticated attacker can
-set the NTLM blob username to match a victim account and set
-PreviousSessionId to the victim's session ID; destroy_previous_session()
-destroys the victim's session while ksmbd_decode_ntlmssp_auth_blob()
-subsequently rejects the request with -EPERM.
+qdisc_get_rtab() and qdisc_put_rtab() mutate the process-global singly
+linked list qdisc_rtab_list and a plain non-atomic 'int refcnt' with no
+lock. This was only safe because every caller historically held the RTNL
+mutex, which serialized all rate-table lookups, inserts and frees.
 
-Move destroy_previous_session() and the prev_id assignment to after
-ksmbd_decode_ntlmssp_auth_blob() returns success and use sess->user
-rather than the pre-authentication lookup result. This matches the
-ordering already used by krb5_authenticate(), where
-destroy_previous_session() is called only after
-ksmbd_krb5_authenticate() returns success.
+That invariant no longer holds. cls_flower sets
+TCF_PROTO_OPS_DOIT_UNLOCKED, so tc_new_tfilter() keeps rtnl_held == false
+for it and sets TCA_ACT_FLAGS_NO_RTNL. That flag propagates through
+tcf_exts_validate_ex() -> tcf_action_init() -> tcf_action_init_1() ->
+tcf_police_init(), which calls qdisc_get_rtab()/qdisc_put_rtab() with the
+RTNL mutex NOT held. Two RTM_NEWTFILTER requests on different CPUs, each
+adding a flower filter with a police action carrying the same rate, then
+race on qdisc_rtab_list and on the non-atomic refcnt, leading to a
+use-after-free / double-free of the kmalloc-2k struct qdisc_rate_table.
+qdisc_rtab_list is a single global (not per-netns), so the corrupted
+object is shared system-wide.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+  BUG: KASAN: slab-use-after-free in qdisc_put_rtab+0x12f/0x160
+   qdisc_put_rtab+0x12f/0x160
+   tcf_police_init+0xda9/0x1590
+   tcf_action_init_1+0x460/0x6b0
+   tcf_action_init+0x439/0xa40
+   tcf_exts_validate_ex+0x42d/0x550
+   fl_change+0xddd/0x7da0
+   tc_new_tfilter+0xaa7/0x2420
+   rtnetlink_rcv_msg+0x95e/0xe90
+  which belongs to the cache kmalloc-2k of size 2048
+
+Protect qdisc_rtab_list and the refcount with a dedicated spinlock. The
+(sleeping, GFP_KERNEL) allocation in qdisc_get_rtab() is performed before
+taking the lock; if a concurrent inserter added an identical table in the
+meantime the freshly allocated one is freed under the lock, so no
+duplicate is leaked. qdisc_put_rtab() now decrements the refcount and
+unlinks under the same lock.
+
+Fixes: 470502de5bdb ("net: sched: unlock rules update API")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-cifs/20260702155449.3639773-1-james_montgomery@disroot.org/
-Signed-off-by: James Montgomery <james_montgomery@disroot.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260715114114.446841-1-qwe.aldo@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2pdu.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ net/sched/sch_api.c |   24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -1495,11 +1495,6 @@ static int ntlm_authenticate(struct ksmb
- 		return -EPERM;
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -410,12 +410,13 @@ static __u8 __detect_linklayer(struct tc
+ }
+ 
+ static struct qdisc_rate_table *qdisc_rtab_list;
++static DEFINE_SPINLOCK(qdisc_rtab_lock);
+ 
+ struct qdisc_rate_table *qdisc_get_rtab(struct tc_ratespec *r,
+ 					struct nlattr *tab,
+ 					struct netlink_ext_ack *extack)
+ {
+-	struct qdisc_rate_table *rtab;
++	struct qdisc_rate_table *rtab, *new_rtab;
+ 
+ 	if (tab == NULL || r->rate == 0 ||
+ 	    r->cell_log == 0 || r->cell_log >= 32 ||
+@@ -424,15 +425,20 @@ struct qdisc_rate_table *qdisc_get_rtab(
+ 		return NULL;
  	}
  
--	/* Check for previous session */
--	prev_id = le64_to_cpu(req->PreviousSessionId);
--	if (prev_id && prev_id != sess->id)
--		destroy_previous_session(conn, user, prev_id);
--
- 	if (sess->state == SMB2_SESSION_VALID) {
- 		/*
- 		 * Reuse session if anonymous try to connect
-@@ -1537,6 +1532,10 @@ static int ntlm_authenticate(struct ksmb
++	new_rtab = kmalloc(sizeof(*new_rtab), GFP_KERNEL);
++
++	spin_lock(&qdisc_rtab_lock);
+ 	for (rtab = qdisc_rtab_list; rtab; rtab = rtab->next) {
+ 		if (!memcmp(&rtab->rate, r, sizeof(struct tc_ratespec)) &&
+ 		    !memcmp(&rtab->data, nla_data(tab), 1024)) {
+ 			rtab->refcnt++;
++			spin_unlock(&qdisc_rtab_lock);
++			kfree(new_rtab);
+ 			return rtab;
  		}
  	}
  
-+	prev_id = le64_to_cpu(req->PreviousSessionId);
-+	if (prev_id && prev_id != sess->id)
-+		destroy_previous_session(conn, sess->user, prev_id);
+-	rtab = kmalloc(sizeof(*rtab), GFP_KERNEL);
++	rtab = new_rtab;
+ 	if (rtab) {
+ 		rtab->rate = *r;
+ 		rtab->refcnt = 1;
+@@ -444,6 +450,7 @@ struct qdisc_rate_table *qdisc_get_rtab(
+ 	} else {
+ 		NL_SET_ERR_MSG(extack, "Failed to allocate new qdisc rate table");
+ 	}
++	spin_unlock(&qdisc_rtab_lock);
+ 	return rtab;
+ }
+ EXPORT_SYMBOL(qdisc_get_rtab);
+@@ -452,18 +459,25 @@ void qdisc_put_rtab(struct qdisc_rate_ta
+ {
+ 	struct qdisc_rate_table *rtab, **rtabp;
+ 
+-	if (!tab || --tab->refcnt)
++	if (!tab)
++		return;
 +
- 	/*
- 	 * If session state is SMB2_SESSION_VALID, We can assume
- 	 * that it is reauthentication. And the user/password
++	spin_lock(&qdisc_rtab_lock);
++	if (--tab->refcnt) {
++		spin_unlock(&qdisc_rtab_lock);
+ 		return;
++	}
+ 
+ 	for (rtabp = &qdisc_rtab_list;
+ 	     (rtab = *rtabp) != NULL;
+ 	     rtabp = &rtab->next) {
+ 		if (rtab == tab) {
+ 			*rtabp = rtab->next;
+-			kfree(rtab);
+-			return;
++			break;
+ 		}
+ 	}
++	spin_unlock(&qdisc_rtab_lock);
++	kfree(tab);
+ }
+ EXPORT_SYMBOL(qdisc_put_rtab);
+ 
 
 
