@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95421379EDA;
-	Thu, 20 Aug 2026 15:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A1F361640;
+	Thu, 20 Aug 2026 15:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238294; cv=none; b=CSYTyAgHdQgx0u4Eks5BWhdXX4W05XTRiGj5hKv9JwLR+my8gGx9NbKacXdgJQgsFgzDhqFq931fzHDKC3n51HE+C0bobFMHOrj8T3PQxBmF7vfw+Hcku4rAs66ENH2bCAlw7DECThwZqQbL9Xt2QB6wH8P+KKrFLWhkAzOEB8k=
+	t=1787238297; cv=none; b=mtHezQz0JGOISftW2mwjA9G49WwxCYfbGc4UfuPpBCq1WIixM2be/BTfO0Yl3gSa0ATTw1QYNqBXm9GZ/pNpy767Lv6+XRM33LKzjhMunp2QFei7DpMNhsUWKU/cnWIBSqrlbCU3wzftzm9TeQCiG+XF+fELttApOHE4x0wYIxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238294; c=relaxed/simple;
-	bh=osmi4TzPlv8vf/e/lCPjJ6Mmiynv0V0FMRVkidsr3Sw=;
+	s=arc-20240116; t=1787238297; c=relaxed/simple;
+	bh=t/TT5S+Hhg6pUnYq7pDCmJ9s77htOUmNYpYWQXgBgtI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WSdwsfad8wvUUWUOZrmYkQRw8kQu2jX5e1jh+Xicn24XdkrBIzqzAVyiSf+Zdp1KPBaj4umSZWf6s8oSSMb+AbZj/N5FDECGSdL2vmJ4E8/HkaE/Vny0YfnOufTSVC32AFYg6V/te2HM1oJZGiY8NPtVt5mYuEzSm1ayAv8af7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sXxgfzvA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jOBvelQpLwLFopWpwnEPn8amgFTudmJLur0MTbYhveWA4ieJtuTYN00eP7/YgbIggWGns3bg+EnhSiZ//aVFNS6SYzo4R3pxQvmb3eIuKj0naApul5xU4a0ZVkUB9UXVz2Q4GzsXoAOK4G2iiHdHZjOAzYHwDjhjy6UuiG+dMCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+CHTMUe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sXxgfzvA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65B91F000E9;
-	Thu, 20 Aug 2026 15:04:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+CHTMUe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A691F000E9;
+	Thu, 20 Aug 2026 15:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238293;
-	bh=HnO/1FE+v3y7sWU5yXNfhEETQTaIYtPcIw7JTla8XLc=;
+	s=korg; t=1787238296;
+	bh=ir7zOGoACXWJ9OINENsgZ53TyvVhkY8DEbhrO+TFVoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sXxgfzvAPjNy915nKhRamHbJi9P3EKY9274rZ5H/EEx3UM7+GmW9esfxZKIM1gTr4
-	 BTgxBd1N7ULBaD1AmXXrxGeVPZut99viAU9HA8y2f1uA1sFOjPbcjhf+Wp85oNJu/4
-	 L5QsU+L/+RePU8HMewCJau9wYl53tGlKqUh2OXg4=
+	b=V+CHTMUecvCxQF4x6pNwVwMgkKy1y1paRDW6zjn2oPEAwDdx+uiwrzP8rHvb/Dl4M
+	 CscTl9EP9XlSkPrX8Vgb8kAgj7223vtrsrw3VnqFrZBDpVrMGjD3YjIOrpEmyxguP8
+	 bnDAIleqvw7D50aNs2MR+C0DBTRk0RG5vnemxXGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Eric Farman <farman@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 7.1 096/228] s390/vfio_ccw: Limit the number of channel program segments
-Date: Thu, 20 Aug 2026 16:53:58 +0200
-Message-ID: <20260820145247.570818820@linuxfoundation.org>
+	Rui Qi <qirui.001@bytedance.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 7.1 061/228] selftests/ftrace: Convert ELF entry point to file offset in uprobe test
+Date: Thu, 20 Aug 2026 16:53:23 +0200
+Message-ID: <20260820145246.323812526@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -51,87 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Farman <farman@linux.ibm.com>
+From: Rui Qi <qirui.001@bytedance.com>
 
-commit 5405c90d6a47b3014e74ee0618a162449abbbc93 upstream.
+commit 24aa630f6259e6a2107936c06fed72063f712b64 upstream.
 
-The processing of channel programs, and the CCWs within them, is done
-recursively. As such, there is an arbitrary (but not architectural)
-limit to the number of CCWs that can exist in a single channel program.
+The add_remove_uprobe test uses readelf -h to obtain the ELF entry
+point (e_entry) and passes it directly as the offset to uprobe_events.
+However, uprobe_events expects a file offset, not a virtual address.
 
-The vfio-ccw logic breaks these channel programs into segments whenever
-it encounters a Transfer-In-Channel (TIC) CCW, and the combined number
-of segments count towards the global limit. Impose an equivalent limit
-to the number of segments until such logic can be made non-recursive.
+For PIE binaries, the virtual address happens to equal the file offset
+because the first LOAD segment has p_vaddr == p_offset, so the test
+works by coincidence. But for non-PIE executables, e_entry is an
+absolute virtual address that can far exceed the file size. When the
+probe is enabled, uprobe_register() checks offset > i_size_read(inode)
+and rejects it with -EINVAL.
 
-Fixes: 0a19e61e6d4c ("vfio: ccw: introduce channel program interfaces")
+Fix this by converting the virtual address to a file offset using the
+ELF program headers: scan readelf -lW output for the LOAD segment
+containing the entry point, then compute file_offset = e_entry -
+p_vaddr + p_offset. For PIE binaries the result is unchanged; for
+non-PIE binaries the offset is correctly translated.
+
+The conversion uses only POSIX shell primitives, with no dependency on
+gawk or perl.
+
+Link: https://lore.kernel.org/all/20260807081512.2974757-3-qirui.001@bytedance.com/
+
+Fixes: dc4b165855f2 ("selftests/ftrace: Use readelf to find entry point in uprobe test")
 Cc: stable@vger.kernel.org
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Rui Qi <qirui.001@bytedance.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/vfio_ccw_cp.c |    6 ++++++
- drivers/s390/cio/vfio_ccw_cp.h |    8 ++++++++
- 2 files changed, 14 insertions(+)
+ tools/testing/selftests/ftrace/test.d/dynevent/add_remove_uprobe.tc |   27 +++++++++-
+ 1 file changed, 25 insertions(+), 2 deletions(-)
 
---- a/drivers/s390/cio/vfio_ccw_cp.c
-+++ b/drivers/s390/cio/vfio_ccw_cp.c
-@@ -332,6 +332,7 @@ static struct ccwchain *ccwchain_alloc(s
- 		goto out_err;
+--- a/tools/testing/selftests/ftrace/test.d/dynevent/add_remove_uprobe.tc
++++ b/tools/testing/selftests/ftrace/test.d/dynevent/add_remove_uprobe.tc
+@@ -12,9 +12,32 @@ echo 0 > events/enable
+ echo > dynamic_events
  
- 	list_add_tail(&chain->next, &cp->ccwchain_list);
-+	cp->ccwchain_count++;
+ REALBIN=`readlink -f /bin/sh`
+-ENTRYPOINT=`readelf -h ${REALBIN} | grep Entry | sed -e 's/[^0]*//'`
  
- 	return chain;
- 
-@@ -441,6 +442,10 @@ static int ccwchain_handle_ccw(dma32_t c
- 	if (len < 0)
- 		return len;
- 
-+	/* Limit number of chains in a single channel program */
-+	if (cp->ccwchain_count >= CCWCHAIN_COUNT_MAX)
-+		return -EINVAL;
+-echo "p:myevent ${REALBIN}:${ENTRYPOINT}" >> uprobe_events
++# Get the entry point virtual address from ELF header
++ENTRY=`readelf -hW ${REALBIN} | grep "Entry point" | awk '{print $NF}'`
 +
- 	/* Need alloc a new chain for this one. */
- 	chain = ccwchain_alloc(cp, len);
- 	if (!chain)
-@@ -745,6 +750,7 @@ int cp_init(struct channel_program *cp,
- 			vdev->dev,
- 			"Prefetching channel program even though prefetch not specified in ORB");
- 
-+	cp->ccwchain_count = 0;
- 	INIT_LIST_HEAD(&cp->ccwchain_list);
- 	memcpy(&cp->orb, orb, sizeof(*orb));
- 
---- a/drivers/s390/cio/vfio_ccw_cp.h
-+++ b/drivers/s390/cio/vfio_ccw_cp.h
-@@ -23,11 +23,18 @@
-  */
- #define CCWCHAIN_LEN_MAX	256
- 
-+/*
-+ * Maximum number of chains
-+ */
-+#define CCWCHAIN_COUNT_MAX	16
++# Convert virtual address to file offset: find the LOAD segment containing
++# the entry point, then compute file_offset = e_entry - p_vaddr + p_offset.
++# For PIE binaries this is a no-op (vaddr == file offset), but for non-PIE
++# executables the virtual address is much larger than the file size and
++# must be converted, otherwise uprobe_register() rejects it with -EINVAL.
++ENTRY_DEC=$(printf '%d' "$ENTRY")
++OFFSET=$ENTRY
++while IFS= read -r line; do
++    set -- $line
++    [ "$1" = "LOAD" ] || continue
++    VA_DEC=$(printf '%d' "$3")
++    OFF_DEC=$(printf '%d' "$2")
++    FSZ_DEC=$(printf '%d' "$5")
++    if [ "$ENTRY_DEC" -ge "$VA_DEC" ] && [ "$ENTRY_DEC" -lt "$((VA_DEC + FSZ_DEC))" ]; then
++        OFFSET=$(printf '0x%x' "$((ENTRY_DEC - VA_DEC + OFF_DEC))")
++        break
++    fi
++done << EOF
++$(readelf -lW ${REALBIN} | grep LOAD)
++EOF
 +
- /**
-  * struct channel_program - manage information for channel program
-  * @ccwchain_list: list head of ccwchains
-  * @orb: orb for the currently processed ssch request
-  * @initialized: whether this instance is actually initialized
-+ * @guest_cp: copy of guest channel program
-+ * @ccwchain_count: number of channel program segments (linked by TIC)
-  *
-  * @ccwchain_list is the head of a ccwchain list, that contents the
-  * translated result of the guest channel program that pointed out by
-@@ -38,6 +45,7 @@ struct channel_program {
- 	union orb orb;
- 	bool initialized;
- 	struct ccw1 *guest_cp;
-+	unsigned int ccwchain_count;
- };
++echo "p:myevent ${REALBIN}:${OFFSET}" >> uprobe_events
  
- int cp_init(struct channel_program *cp, union orb *orb);
+ grep -q myevent uprobe_events
+ test -d events/uprobes/myevent
 
 
