@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A364647A0D8;
-	Thu, 20 Aug 2026 16:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B63442B2E;
+	Thu, 20 Aug 2026 16:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243238; cv=none; b=LYmm9wdMrkcD6v2Tiat2XKWw4D9RaBhykCQM5Q+dGYdJlQAwB6fIw8wP2BxMhihYnE5r7ot/LP/ni84eioLRgicvt8gZcVg1oXGFUYQrwgFd7dXE3pkMHFRjS2fjj+X2tOcSRjFwRh+Wo3FhDmDHNjSMMVWVAy+LrIknS0HEZFI=
+	t=1787243241; cv=none; b=So+Qc3eazHpFb/x7N6jzCBfz4nbbIsEvDuMQU+9AzUcT3hQTNy1o/e2pNtBaSL803dyxVU0fPycvRJX6XfgUPF4g+wkhTn4hGR4yoV9j18Gr6turzkbj82lG+VTQjyf8rmu6tRSBGYRovsGquFITBG13Xv0lZtb9qC3Nc9JumeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243238; c=relaxed/simple;
-	bh=PoEF0ns2IEL8mowM3YUsDoqoOo0jLi3waeKUvhGyN0c=;
+	s=arc-20240116; t=1787243241; c=relaxed/simple;
+	bh=bvUeXOEObRGAgSwpFTpmpg01uz0AthxjQz5/CNllKRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SEdaUjA4apU/V+qIFroVpzcggGyzm/N2nECT6JcyImMWlhYjRaeHr6iPZuX9NqhC+PN4YMl1Q/nToD1Omnjy1kCRLySbtT4S1MwGnsn/hUwdFD0aZPiVMvMwrzBDBXIw5gIWQSsN23gMXm9l76zilKlQKC5ZOdjB9wJk72X75yI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dci2OudU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j8AGC39MpQshHrQjLKJBL4mXleufpjJ6hNzRZt+EIYrYFnFSYzIfOYN75p2dJBrqqxCbwHng11IP9r9uweMpZy68pWegt16vep2aZ7euCvQGZuy27VcFCi+f7ffAF+PyqUciULP1J5JjL5s42ZmGMwo27NBA0EVD0R2WSPmSXwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlhK3gSj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dci2OudU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F021F000E9;
-	Thu, 20 Aug 2026 16:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlhK3gSj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE651F000E9;
+	Thu, 20 Aug 2026 16:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243237;
-	bh=eou0UpdsrSrMiq4UVJKGkUEoXfg9tzQEjvCyENn8KTo=;
+	s=korg; t=1787243240;
+	bh=EhxXnwJ1cflvQuws62RzlFWGgI/ZdaoOgcCOn8zrjic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dci2OudU8yvSFhSfp5XdlOmPsIeGcXbnmKY/YO0TeLHVBIwgph4LYFpUK/y6rxny2
-	 bG6h5uprqsrMXhREY2Vj5krSX10ujDsGrtMFgN8z4AaUlufgWaqg37J6x13ybdnVmq
-	 43C5Gkp8B2gYr6NCkn/N1GabLtiuz6qBTRJ20aMY=
+	b=LlhK3gSjL69j/v3BgFL3RDVCtUrLkQCoya3rLgZ0yWaY06mVpXK295vrQuno8G+SS
+	 dM+45ZeGBI8waaEWJVDCRa4h01tXpI68XPc0iizIg9Zdk65cqLE8kYQPCxiL7vYi40
+	 /Q07FXlBKNvrCADynhmgaceY9RdvsIkIPaHZu6R0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavitra Jha <jhapavitra98@gmail.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.15 025/272] libceph: fix multiple unsafe decodes in decode_locker()
-Date: Thu, 20 Aug 2026 16:53:29 +0200
-Message-ID: <20260820145231.986432783@linuxfoundation.org>
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.15 026/272] ftrace: Fix off-by-one fentry site disable in ftrace_free_mem()
+Date: Thu, 20 Aug 2026 16:53:30 +0200
+Message-ID: <20260820145232.016240648@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -50,96 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavitra Jha <jhapavitra98@gmail.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-commit 437b6551cfcc235eea1d735a874f9d421f555e17 upstream.
+commit 8b8292d6487c81bd57c2605a9b404b1cf8f1edfb upstream.
 
-decode_locker() in cls_lock_client.c contains three unsafe decode
-operations that allow a malicious or compromised OSD to trigger
-slab-out-of-bounds reads:
+When a module's init text is freed, do_init_module() calls
+ftrace_free_mem() with a half-open [start, end) range.  However the
+ftrace_cmp_recs() comparator treats the upper bound as inclusive, as all
+its other users do, passing 'ip + size - 1'.  So ftrace_free_mem() can
+delete a record sitting exactly at 'end', which is outside the freed
+range.
 
-1. ceph_decode_copy() at the locker_id_t name field has no preceding
-   bounds check. With p == end after ceph_start_decoding() accepts
-   struct_len=0, this reads sizeof(ceph_entity_name) = 9 bytes past
-   the validated buffer boundary.
+For a kernel without CFI or IBT, the first record of a function is at
+the function start, which for the first function in a module is also the
+base of its text allocation.  As the module allocator packs its regions,
+that address is often the 'end' passed by a neighboring module's
+do_init_module(), causing the first function's ftrace location to get
+disabled, preventing an attempt to livepatch it:
 
-2. *p += sizeof(struct ceph_timespec) after the locker_info_t header
-   is an unchecked pointer advance. A malicious OSD can position p
-   past end, causing all subsequent _safe checks to pass against a
-   bogus boundary.
+  livepatch: failed to find location for function 'pcspkr_probe'
 
-3. len = ceph_decode_32(p) has no preceding bounds check, and the
-   immediately following *p += len is uncapped. A malicious OSD can
-   send len=0xffffffff, advancing p gigabytes past end and escaping
-   the decode window entirely.
-
-Fix all three by replacing bare operations with their safe variants:
-  ceph_decode_copy   -> ceph_decode_copy_safe
-  *p += sizeof(...)  -> ceph_decode_skip_n
-  ceph_decode_32(p)  -> ceph_decode_32_safe
-  *p += len          -> ceph_decode_skip_n
-
-A new label is added to return -EINVAL on any bounds violation.
--EINVAL is appropriate here: the data received from the OSD
-is structurally malformed, which is an invalid argument to the decode
-contract regardless of whether the caller or the wire is at fault.
-
-Attacker model: a malicious or compromised OSD in a multi-tenant Ceph
-deployment can trigger this against any kernel client that issues the
-lock.get_info class method (e.g. during RBD exclusive lock acquisition)
-without any further privileges beyond OSD session establishment.
-
-[ idryomov: use ceph_decode_skip_string() to skip description, trim
-  changelog ]
+Convert the exclusive end to the inclusive 'end - 1' the comparator
+expects, and return early for an empty range to avoid the subtraction
+from underflowing when the init text size is zero.
 
 Cc: stable@vger.kernel.org
-Fixes: d4ed4a530562 ("libceph: support for lock.lock_info")
-Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: 42c269c88dc1 ("ftrace: Allow for function tracing to record init functions on boot up")
+Link: https://patch.msgid.link/1b5ccfa8095bdb1277f84af1c2c2e2205aca03ae.1785992188.git.jpoimboe@kernel.org
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/cls_lock_client.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ kernel/trace/ftrace.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/net/ceph/cls_lock_client.c
-+++ b/net/ceph/cls_lock_client.c
-@@ -259,7 +259,8 @@ static int decode_locker(void **p, void
- 	if (ret)
- 		return ret;
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -6838,7 +6838,8 @@ static void add_to_clear_hash_list(struc
+ void ftrace_free_mem(struct module *mod, void *start_ptr, void *end_ptr)
+ {
+ 	unsigned long start = (unsigned long)(start_ptr);
+-	unsigned long end = (unsigned long)(end_ptr);
++	/* end is inclusive and end_ptr is exclusive */
++	unsigned long end = (unsigned long)(end_ptr) - 1;
+ 	struct ftrace_page **last_pg = &ftrace_pages_start;
+ 	struct ftrace_page *tmp_page = NULL;
+ 	struct ftrace_page *pg;
+@@ -6850,6 +6851,9 @@ void ftrace_free_mem(struct module *mod,
  
--	ceph_decode_copy(p, &locker->id.name, sizeof(locker->id.name));
-+	ceph_decode_copy_safe(p, end, &locker->id.name,
-+			      sizeof(locker->id.name), bad);
- 	s = ceph_extract_encoded_string(p, end, NULL, GFP_NOIO);
- 	if (IS_ERR(s))
- 		return PTR_ERR(s);
-@@ -270,19 +271,23 @@ static int decode_locker(void **p, void
- 	if (ret)
- 		return ret;
+ 	INIT_LIST_HEAD(&clear_hash);
  
--	*p += sizeof(struct ceph_timespec); /* skip expiration */
-+	/* skip expiration */
-+	ceph_decode_skip_n(p, end, sizeof(struct ceph_timespec), bad);
- 
- 	ret = ceph_decode_entity_addr(p, end, &locker->info.addr);
- 	if (ret)
- 		return ret;
- 
--	len = ceph_decode_32(p);
--	*p += len; /* skip description */
-+	/* skip description */
-+	ceph_decode_skip_string(p, end, bad);
- 
- 	dout("%s %s%llu cookie %s addr %s\n", __func__,
- 	     ENTITY_NAME(locker->id.name), locker->id.cookie,
- 	     ceph_pr_addr(&locker->info.addr));
- 	return 0;
++	if (start_ptr >= end_ptr)
++		return;
 +
-+bad:
-+	return -EINVAL;
- }
+ 	key.ip = start;
+ 	key.flags = end;	/* overload flags, as it is unsigned long */
  
- static int decode_lockers(void **p, void *end, u8 *type, char **tag,
 
 
