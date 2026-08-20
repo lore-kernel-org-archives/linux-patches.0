@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C1737C925;
-	Thu, 20 Aug 2026 15:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B822874E6;
+	Thu, 20 Aug 2026 15:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238573; cv=none; b=s/OgHytEUOUI0h0BGz7r2vJe6jLRz8j8o8iYUHh7xtXLUkFbCAgv8K0Q45imfs5MLA//ug1eHret+vGFIxXCpwO8qYpPlvlVJfxc/+uph3uI7u7rwYMUvubVqLixFyjYcUuDzZNKokr49QXTVXClu6BGY9t+6FUwlKmLbMmRoAs=
+	t=1787238576; cv=none; b=lZxMNwLYT1Ihhii/ekk5DA+IdR/eDDoILwYQuUrE3f7ChR5HLiz6ZXEP0WSiMLcZ3dJH0ckjagMD5E4DF6UsNELwFV/jcqBXpm3KQ7tHD0qet/LPZ7/nB066U8XDDq5vE6BQ2vqxFk1X9/KSn56lE2CFf25Lcnbjv8o+seqvshE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238573; c=relaxed/simple;
-	bh=BLrmEZYnfwa34Iat+10kKr2TRocZtIH6Wi8vcocufEo=;
+	s=arc-20240116; t=1787238576; c=relaxed/simple;
+	bh=mM/1EbSdWVteIB2x6xQ65Gr3M1r75Q5GnSxCgfwsrHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BE+VpKhKEfpORQh18NFApJpM0CwzcIJ/qphV7Y9QQxkKKywJ5QtDxkUoRA1J4rO2j4XnlVB1Kv+U6lbPTHxSCR54c8sixQQP99YmyQ9ErvOL8shIDjfwSTdiJzyTwqD0EO+SFshC/j1fDJ/hJ5bMg7je83FiAr4oiHeuRneEMps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wkuk5a+2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qhgWuUrd2KYJCZQncO3Sb8QD+VtAE6iBPr01h6lSkFDMdmDDZa/2oPpjS5DE0KSSp0cawUmEEAtVobn9OOwVjmMjFuCpmWATCcCYPK5BXPlLeD+SDz4/Aw81Pyr1hxTN1PYzJbAO/BzVGcQwSFDincY6iRYiGv/KjdVCZ9DbvrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wQXdERTU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wkuk5a+2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BECED1F000E9;
-	Thu, 20 Aug 2026 15:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wQXdERTU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9313D1F000E9;
+	Thu, 20 Aug 2026 15:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238572;
-	bh=r80RtIyaVf+znglgTP5pqp/Kr/PZBP6xDlges8qhOtY=;
+	s=korg; t=1787238575;
+	bh=Ws51peDWWMD0dUSSQMcpnbZZ4SCfjM63ZTph1sHn0X8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wkuk5a+2xW0aYijkFYk7jYWHVSkSV3cjRyYcHTrDqIEMlslqIJEIBFsLO43jX0sEY
-	 a+CuFZN++iTxXUmF0V1vKk1nuh7LxuMIpvYc88tLJUCmoXyffspwusgRKoPuLrF92U
-	 KUCD8q+P183ixDn1LIyv7g45S98HxSSshk4HQnLM=
+	b=wQXdERTU3mCZbkc1+RflvwvLakN6SdXqs9Sy/QmLD/6PFPYeqpO2ZXSgni4tW/jU1
+	 N4sxUrXMTbhto/7rHmwKeaMikYd5NQsCUKsViZbzwyNlpl9DzfvSJyg77xSiEXgCX7
+	 FD21oolNGfVIlzeF0Hv4J5WDsMpDRdGDidc4VtMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
+	Vishvambar Panth S <vishvambar.panth-s@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 195/228] eth: bnxt: decrease indent in bnxt_request_irq()
-Date: Thu, 20 Aug 2026 16:55:37 +0200
-Message-ID: <20260820145250.651612691@linuxfoundation.org>
+Subject: [PATCH 7.1 196/228] eth: bnxt: avoid deadlock when canceling IRQ affinity notifier
+Date: Thu, 20 Aug 2026 16:55:38 +0200
+Message-ID: <20260820145250.687683002@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -53,98 +53,210 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 0fd562c7b9e48e7958f7405e54bf98e8e22ad184 ]
+[ Upstream commit 51e96fa31f7e7eac2cba8f854e24d36600cc040b ]
 
-bnxt_request_irq() has unnecessary level of indentation.
-Use continue instead. No need to re-fetch NUMA node for
-each IRQ, move to the function level.
+Unregistering IRQ affinity notifiers waits for the callback synchronously.
+bnxt takes the netdev instance lock in the notifier (to restart the queue)
+and cancels the work under the same lock. This may obviously deadlock.
 
-No functional changes.
+Move the restart to the async service task. The queue restart isn't
+super time sensitive. Store the new TPH tag, schedule the task.
+Safely canceling the service task is already ironed out.
 
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260803193135.2030368-4-kuba@kernel.org
+In bnxt_request_irq() the order of registering notifier, affinity and
+initial TPH programming has to be inverted. I think it was racy
+previously since user may trigger an update as soon as notifier
+is installed.
+
+There's a small known gap - if pcie_tph_get_cpu_st() fails at init
+and the target tag is 0 we may miss programming the entry.
+This does not seem worth fixing, the code has skip-on-failure
+all over the place, anyway.
+
+Fixes: c214410c47d6 ("bnxt_en: Add TPH support in BNXT driver")
+Tested-by: Vishvambar Panth S <vishvambar.panth-s@broadcom.com>
+Link: https://patch.msgid.link/20260803193135.2030368-5-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 51e96fa31f7e ("eth: bnxt: avoid deadlock when canceling IRQ affinity notifier")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 46 +++++++++++------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 86 ++++++++++++++++-------
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h |  3 +
+ 2 files changed, 64 insertions(+), 25 deletions(-)
 
 diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 55b5abc84a04b..6475b018358ed 100644
+index 6475b018358ed..89ad7c1bd124b 100644
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -11906,6 +11906,7 @@ static void bnxt_free_irq(struct bnxt *bp)
- 
- static int bnxt_request_irq(struct bnxt *bp)
+@@ -11785,12 +11785,13 @@ static void bnxt_irq_affinity_notify(struct irq_affinity_notify *notify,
  {
-+	const int numa_node = dev_to_node(&bp->pdev->dev);
- 	struct cpu_rmap *rmap = NULL;
- 	int i, j, rc = 0;
- 	unsigned long flags = 0;
-@@ -11928,6 +11929,7 @@ static int bnxt_request_irq(struct bnxt *bp)
+ 	struct bnxt_irq *irq;
+ 	u16 tag;
+-	int err;
+ 
+ 	irq = container_of(notify, struct bnxt_irq, affinity_notify);
+ 
+ #ifdef CONFIG_RFS_ACCEL
+ 	if (irq->bp->dev->rx_cpu_rmap && irq->ring_nr < irq->bp->rx_nr_rings) {
++		int err;
++
+ 		err = cpu_rmap_update(irq->bp->dev->rx_cpu_rmap, irq->ring_nr,
+ 				      mask);
+ 		if (err)
+@@ -11808,20 +11809,11 @@ static void bnxt_irq_affinity_notify(struct irq_affinity_notify *notify,
+ 		return;
+ 
+ 	if (pcie_tph_get_cpu_st(irq->bp->pdev, TPH_MEM_TYPE_VM,
+-				cpumask_first(irq->cpu_mask), &tag))
++				cpumask_first(mask), &tag))
+ 		return;
+ 
+-	if (pcie_tph_set_st_entry(irq->bp->pdev, irq->msix_nr, tag))
+-		return;
+-
+-	netdev_lock(irq->bp->dev);
+-	if (netif_running(irq->bp->dev)) {
+-		err = netdev_rx_queue_restart(irq->bp->dev, irq->ring_nr);
+-		if (err)
+-			netdev_err(irq->bp->dev,
+-				   "RX queue restart failed: err=%d\n", err);
+-	}
+-	netdev_unlock(irq->bp->dev);
++	WRITE_ONCE(irq->new_tag, tag);
++	bnxt_queue_sp_work(irq->bp, BNXT_TPH_UPDATE_SP_EVENT);
+ }
+ 
+ static void bnxt_irq_affinity_release(struct kref *ref)
+@@ -11892,6 +11884,8 @@ static void bnxt_free_irq(struct bnxt *bp)
+ 		}
+ 
+ 		irq->requested = 0;
++		irq->tag = 0;
++		irq->new_tag = 0;
+ 	}
+ 
+ 	/* Disable TPH support */
+@@ -11929,6 +11923,7 @@ static int bnxt_request_irq(struct bnxt *bp)
  	for (i = 0, j = 0; i < bp->cp_nr_rings; i++) {
  		int map_idx = bnxt_cp_num_to_irq_num(bp, i);
  		struct bnxt_irq *irq = &bp->irq_tbl[map_idx];
-+		u16 tag;
++		unsigned int cpu_num;
+ 		u16 tag;
  
  		if (IS_ENABLED(CONFIG_RFS_ACCEL) &&
- 		    rmap && bp->bnapi[i]->rx_ring) {
-@@ -11946,33 +11948,31 @@ static int bnxt_request_irq(struct bnxt *bp)
- 		netif_napi_set_irq_locked(&bp->bnapi[i]->napi, irq->vector);
- 		irq->requested = 1;
- 
--		if (zalloc_cpumask_var(&irq->cpu_mask, GFP_KERNEL)) {
--			int numa_node = dev_to_node(&bp->pdev->dev);
--			u16 tag;
-+		if (!zalloc_cpumask_var(&irq->cpu_mask, GFP_KERNEL))
-+			continue;
- 
--			irq->have_cpumask = 1;
--			irq->msix_nr = map_idx;
--			irq->ring_nr = i;
--			cpumask_set_cpu(cpumask_local_spread(i, numa_node),
--					irq->cpu_mask);
--			rc = irq_update_affinity_hint(irq->vector, irq->cpu_mask);
--			if (rc) {
--				netdev_warn(bp->dev,
--					    "Update affinity hint failed, IRQ = %d\n",
--					    irq->vector);
--				break;
--			}
-+		irq->have_cpumask = 1;
-+		irq->msix_nr = map_idx;
-+		irq->ring_nr = i;
-+		cpumask_set_cpu(cpumask_local_spread(i, numa_node),
-+				irq->cpu_mask);
-+		rc = irq_update_affinity_hint(irq->vector, irq->cpu_mask);
-+		if (rc) {
-+			netdev_warn(bp->dev,
-+				    "Update affinity hint failed, IRQ = %d\n",
-+				    irq->vector);
-+			break;
+@@ -11954,8 +11949,19 @@ static int bnxt_request_irq(struct bnxt *bp)
+ 		irq->have_cpumask = 1;
+ 		irq->msix_nr = map_idx;
+ 		irq->ring_nr = i;
+-		cpumask_set_cpu(cpumask_local_spread(i, numa_node),
+-				irq->cpu_mask);
++		cpu_num = cpumask_local_spread(i, numa_node);
++		cpumask_set_cpu(cpu_num, irq->cpu_mask);
++
++		/* Init ST table entry if we can get the mapping */
++		if (!pcie_tph_get_cpu_st(bp->pdev, TPH_MEM_TYPE_VM,
++					 cpu_num, &tag)) {
++			pcie_tph_set_st_entry(bp->pdev, irq->msix_nr, tag);
++			irq->tag = tag;
++			irq->new_tag = tag;
 +		}
- 
--			bnxt_register_irq_notifier(bp, irq);
++
 +		bnxt_register_irq_notifier(bp, irq);
- 
--			/* Init ST table entry */
--			if (pcie_tph_get_cpu_st(irq->bp->pdev, TPH_MEM_TYPE_VM,
--						cpumask_first(irq->cpu_mask),
--						&tag))
--				continue;
-+		/* Init ST table entry */
-+		if (pcie_tph_get_cpu_st(irq->bp->pdev, TPH_MEM_TYPE_VM,
-+					cpumask_first(irq->cpu_mask),
-+					&tag))
-+			continue;
- 
--			pcie_tph_set_st_entry(irq->bp->pdev, irq->msix_nr, tag);
--		}
-+		pcie_tph_set_st_entry(irq->bp->pdev, irq->msix_nr, tag);
++
+ 		rc = irq_update_affinity_hint(irq->vector, irq->cpu_mask);
+ 		if (rc) {
+ 			netdev_warn(bp->dev,
+@@ -11963,16 +11969,6 @@ static int bnxt_request_irq(struct bnxt *bp)
+ 				    irq->vector);
+ 			break;
+ 		}
+-
+-		bnxt_register_irq_notifier(bp, irq);
+-
+-		/* Init ST table entry */
+-		if (pcie_tph_get_cpu_st(irq->bp->pdev, TPH_MEM_TYPE_VM,
+-					cpumask_first(irq->cpu_mask),
+-					&tag))
+-			continue;
+-
+-		pcie_tph_set_st_entry(irq->bp->pdev, irq->msix_nr, tag);
  	}
  	return rc;
  }
+@@ -14479,6 +14475,43 @@ static void bnxt_rtnl_unlock_sp(struct bnxt *bp)
+ 	rtnl_unlock();
+ }
+ 
++static void bnxt_tph_update(struct bnxt *bp)
++{
++	struct net_device *dev = bp->dev;
++	int i;
++
++	bnxt_lock_sp(bp);
++	if (!test_bit(BNXT_STATE_OPEN, &bp->state))
++		goto unlock;
++
++	for (i = 0; i < bp->rx_nr_rings; i++) {
++		struct bnxt_irq *irq;
++		int map_idx, err;
++		u16 tag;
++
++		map_idx = bnxt_cp_num_to_irq_num(bp, i);
++		irq = &bp->irq_tbl[map_idx];
++		tag = READ_ONCE(irq->new_tag);
++		if (irq->tag == tag)
++			continue;
++
++		if (pcie_tph_set_st_entry(bp->pdev, irq->msix_nr, tag))
++			continue;
++
++		err = netdev_rx_queue_restart(dev, irq->ring_nr);
++		if (err) {
++			netdev_err(dev, "RX queue restart failed: err=%d\n",
++				   err);
++			continue;
++		}
++
++		irq->tag = tag;
++	}
++
++unlock:
++	bnxt_unlock_sp(bp);
++}
++
+ /* Only called from bnxt_sp_task() */
+ static void bnxt_reset(struct bnxt *bp, bool silent)
+ {
+@@ -14911,6 +14944,9 @@ static void bnxt_sp_task(struct work_struct *work)
+ 			bnxt_devlink_health_fw_report(bp);
+ 	}
+ 
++	if (test_and_clear_bit(BNXT_TPH_UPDATE_SP_EVENT, &bp->sp_event))
++		bnxt_tph_update(bp);
++
+ 	smp_mb__before_atomic();
+ 	clear_bit(BNXT_STATE_IN_SP_TASK, &bp->state);
+ }
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index 8e04cc934c32b..de48ef59b8de2 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -1268,6 +1268,8 @@ struct bnxt_irq {
+ 	struct bnxt	*bp;
+ 	int		msix_nr;
+ 	int		ring_nr;
++	u16		tag;
++	u16		new_tag;
+ 	struct irq_affinity_notify affinity_notify;
+ };
+ 
+@@ -2644,6 +2646,7 @@ struct bnxt {
+ #define BNXT_RING_COAL_NOW_SP_EVENT	17
+ #define BNXT_FW_RESET_NOTIFY_SP_EVENT	18
+ #define BNXT_FW_EXCEPTION_SP_EVENT	19
++#define BNXT_TPH_UPDATE_SP_EVENT	20
+ #define BNXT_LINK_CFG_CHANGE_SP_EVENT	21
+ #define BNXT_THERMAL_THRESHOLD_SP_EVENT	22
+ #define BNXT_FW_ECHO_REQUEST_SP_EVENT	23
 -- 
 2.53.0
 
