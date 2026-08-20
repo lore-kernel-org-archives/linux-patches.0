@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2749380FE3;
-	Thu, 20 Aug 2026 15:20:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800E4380FD6;
+	Thu, 20 Aug 2026 15:20:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239246; cv=none; b=E//xURvPcbcFQ9H32d94KeCT1klaWG8DVUPtREawsAroDw56pYvKjEOsFbIA+jzOq06JcJwEiCfZ6Xuk7TSG54m7GwLbYyXhcNxzgG7SHeIKTomOs9PoHQewekHjbbctAokUsewXfeG09nYPjw92y1b7RxVfY1HgRwkhaezc04E=
+	t=1787239249; cv=none; b=g0WfIy5SF19L76xzjDEAU05WXF739BolfJQ4vS+sKhTQuErckV60pZKjXb/+W7KleSsBQtom/8pUMzQrjgPrtcpK/GAQResmleJlK3tdVhSzXl9Ww1CnDZIVaUaxHZaqBbZsBakLnPFpcpWW1HRh4GgwdJBmKtUV1N7btjJWCQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239246; c=relaxed/simple;
-	bh=F2We1t842EVMN9/ic0rVIC7Q2Jwl9NFUi+tLYzDObNI=;
+	s=arc-20240116; t=1787239249; c=relaxed/simple;
+	bh=6UgzbltIsgdsN+p+WHXQ5hVVhNVRlXEd2Z4vTjs1Nt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DpwyDKtqt669riJHQmtAJH8v2wfufakV3Ux1Kp7tZ+NhO33NisOk4KJMxfWKwei0WME3MFP+dSjWKfaIz5ExNvg+IK+BtEeBKhfmNFPvguxnoh4elM6qh7kMqE4pY+Ug8DrGpd/NGoJhGNg6tQCSYVtKdZJCbB0ZhY1+64pT5eY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cFI1apDC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kJXwghrJvB6E3crb8xUDEDhIDbfxKJg72Ee0MFVe7+rBQte7LHmTavKE/u9lagmYePVC7k3n+1KOrjh69vTgUHIKt9oQ+hSW+Zlle+ef3fQpaPQwmcTAKTd1n6R8oWojF3FTOI+4xGDkegSXuf4FYy7+Wd4f6M4vlN6lkDsOTXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=itr3LrlB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cFI1apDC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05FDC1F000E9;
-	Thu, 20 Aug 2026 15:20:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="itr3LrlB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8EC41F000E9;
+	Thu, 20 Aug 2026 15:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239245;
-	bh=B7N8754Zead5E+QrEXNT6OVADUb++AfNRxSi+olhSPo=;
+	s=korg; t=1787239248;
+	bh=er25GdFjDQZhxOQ1flY8NAnSIyd9iDo91I36EIKwNao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cFI1apDCTqvKD9l3ygiGbtMCdXUAVzmrrrPT38gCq4ZkfPbFSfUf64R9a59Z2Ozsy
-	 sN4roDM99X+643+CQ1+0pOXbcLvcXZra0w32LfiKeUafbBhoJn+UTuzVFJbmzPsM2A
-	 VDlYo1U4AX/rKjFDWo/Ai+yDlokHC1X+3Kw63EHU=
+	b=itr3LrlB40bV0Uqam9G3IJQEBgPix2F8sra6urq4EgsuFXkzjWPTh0tbimv5ZSDCL
+	 JcHSlcGolRRNC0X1JbcvF1eXQNiZWL6Q0+dfX/sEjo2Ub3yuC6S35Xskny7oOCPzKt
+	 mSkUbKd1sBMMNKU/XPtTa+QIC1oSXdbR3qn2gRys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 199/217] m68k: Define NR_CPUS to 1
-Date: Thu, 20 Aug 2026 16:56:07 +0200
-Message-ID: <20260820145243.700465228@linuxfoundation.org>
+Subject: [PATCH 6.18 164/217] drm/amd/pm: adjust the visibility of pp_table sysfs node
+Date: Thu, 20 Aug 2026 16:55:32 +0200
+Message-ID: <20260820145242.686285577@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -45,60 +46,121 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <ukleinek@kernel.org>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit 1fd495ef09eef96169a379a749c24b5e69974bb8 ]
+[ Upstream commit 5de8ce0f3709ad93ca5a579aa45cf1b52d72bc90 ]
 
-This fixes a Kconfig warning
+v1:
+- make pp_table invisible on VF mode (only valid on BM)
+- make pp_table invisible on Mi* chips (Not supported)
+- make pp_table invisible if scpm feature is enabled.
 
-	fs/erofs/Kconfig:137:warning: range is invalid
+v2:
+move pp_table invisible code logic into amdgpu_dpm_get_pp_table() function.
 
-which originates from EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS using
-NR_CPUS which up to now didn't exist for ARCH=m68k.  All other
-architectures define this symbol, so fix the outlier.
+v3:
+add table buffer pointer check both on powerplay & swsmu.
 
-[geert] This also fixes:
-  - CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS being set to the
-    literal NR_CPUS instead of a number by automatic configs like
-    "make allmodconfig" or "make olddefconfig",
-  - An infinite loop in manual configs like "make oldconfig" when
-    CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS is not present or
-    has an invalid value in your existing .config.
-
-Fixes: c9b47e6b2311 ("erofs: cap LZMA stream pool size")
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://patch.msgid.link/20260731094950.1988084-2-ukleinek@kernel.org
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: bb493058c35c ("drm/amd/pm: fix pptable use-after-free")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/m68k/Kconfig.cpu | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/pm/amdgpu_dpm.c              |   12 +++++++++---
+ drivers/gpu/drm/amd/pm/amdgpu_pm.c               |   11 ++++++++++-
+ drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c |    5 ++++-
+ drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c        |    2 +-
+ 4 files changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/arch/m68k/Kconfig.cpu b/arch/m68k/Kconfig.cpu
-index c9a7e602d8a4d..83f46fd6b97cf 100644
---- a/arch/m68k/Kconfig.cpu
-+++ b/arch/m68k/Kconfig.cpu
-@@ -548,6 +548,10 @@ config CACHE_COPYBACK
- endchoice
- endif # HAVE_CACHE_CB
+--- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
+@@ -1188,8 +1188,11 @@ int amdgpu_dpm_get_pp_table(struct amdgp
+ 	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
+ 	int ret = 0;
  
-+config NR_CPUS
-+	int
-+	default "1"
+-	if (!pp_funcs->get_pp_table)
+-		return 0;
++	if (!table)
++		return -EINVAL;
 +
- # Coldfire cores that do not have a data cache configured can do coherent DMA.
- config COLDFIRE_COHERENT_DMA
- 	bool
--- 
-2.53.0
-
++	if (amdgpu_sriov_vf(adev) || !pp_funcs->get_pp_table || adev->scpm_enabled)
++		return -EOPNOTSUPP;
+ 
+ 	mutex_lock(&adev->pm.mutex);
+ 	ret = pp_funcs->get_pp_table(adev->powerplay.pp_handle,
+@@ -1721,7 +1724,10 @@ int amdgpu_dpm_set_pp_table(struct amdgp
+ 	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
+ 	int ret = 0;
+ 
+-	if (!pp_funcs->set_pp_table)
++	if (!buf || !size)
++		return -EINVAL;
++
++	if (amdgpu_sriov_vf(adev) || !pp_funcs->set_pp_table || adev->scpm_enabled)
+ 		return -EOPNOTSUPP;
+ 
+ 	mutex_lock(&adev->pm.mutex);
+--- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+@@ -2502,7 +2502,7 @@ static struct amdgpu_device_attr amdgpu_
+ 	AMDGPU_DEVICE_ATTR_RO(pp_num_states,				ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF),
+ 	AMDGPU_DEVICE_ATTR_RO(pp_cur_state,				ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF),
+ 	AMDGPU_DEVICE_ATTR_RW(pp_force_state,				ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF),
+-	AMDGPU_DEVICE_ATTR_RW(pp_table,					ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF),
++	AMDGPU_DEVICE_ATTR_RW(pp_table,					ATTR_FLAG_BASIC),
+ 	AMDGPU_DEVICE_ATTR_RW(pp_dpm_sclk,				ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF,
+ 			      .attr_update = pp_dpm_clk_default_attr_update),
+ 	AMDGPU_DEVICE_ATTR_RW(pp_dpm_mclk,				ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF,
+@@ -2639,6 +2639,15 @@ static int default_attr_update(struct am
+ 		if (amdgpu_dpm_get_apu_thermal_limit(adev, &limit) ==
+ 		    -EOPNOTSUPP)
+ 			*states = ATTR_STATE_UNSUPPORTED;
++	} else if (DEVICE_ATTR_IS(pp_table)) {
++		int ret;
++		char *tmp = NULL;
++
++		ret = amdgpu_dpm_get_pp_table(adev, &tmp);
++		if (ret == -EOPNOTSUPP || !tmp)
++			*states = ATTR_STATE_UNSUPPORTED;
++		else
++			*states = ATTR_STATE_SUPPORTED;
+ 	}
+ 
+ 	switch (gc_ver) {
+--- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
+@@ -634,9 +634,12 @@ static int pp_dpm_get_pp_table(void *han
+ {
+ 	struct pp_hwmgr *hwmgr = handle;
+ 
+-	if (!hwmgr || !hwmgr->pm_en || !hwmgr->soft_pp_table)
++	if (!hwmgr || !hwmgr->pm_en || !table)
+ 		return -EINVAL;
+ 
++	if (!hwmgr->soft_pp_table)
++		return -EOPNOTSUPP;
++
+ 	*table = (char *)hwmgr->soft_pp_table;
+ 	return hwmgr->soft_pp_table_size;
+ }
+--- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
+@@ -620,7 +620,7 @@ static int smu_sys_get_pp_table(void *ha
+ 		return -EOPNOTSUPP;
+ 
+ 	if (!smu_table->power_play_table && !smu_table->hardcode_pptable)
+-		return -EINVAL;
++		return -EOPNOTSUPP;
+ 
+ 	if (smu_table->hardcode_pptable)
+ 		*table = smu_table->hardcode_pptable;
 
 
