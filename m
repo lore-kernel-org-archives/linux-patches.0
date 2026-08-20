@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D424480953;
-	Thu, 20 Aug 2026 17:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062AF480326;
+	Thu, 20 Aug 2026 17:29:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787246971; cv=none; b=pWy+tgcBVfJa4RNjE7fjxwQGoE9mlBnCb8P1ojMEHTXtosCOLyboCq3uwND8jUXidmT254+f8MauIxJ5jGfO8D5z4wiJHFpnssmufioPr9dE4FLEhMb/4V6Z87tK08gq13uj/W0ImKVOYD9GmHb3RO/7pQRiSxNENdBHwBTmC9A=
+	t=1787246974; cv=none; b=O5yl9oNz6aa8m4EQChX/0aVhsYexkXOnBnofFClTMH3hC0qg0m2hRYcAx3aRKprtsg0wnn2p4lrBJMtqbbIf0iTmkAhEcxyDbqIuBTJSpyN1P86WbUOSDtLe63GjuUpJlek96JuMb4WgE1R7d/26XST3BXbRl0RLhf8j7czoXhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787246971; c=relaxed/simple;
-	bh=3kWWYA+shw7C5HK6AhAj2DALFCnBFdQ9J5roW2u/2mY=;
+	s=arc-20240116; t=1787246974; c=relaxed/simple;
+	bh=tbBDVv9+ajnGhzMoyiyhrAbfFOOYyy9cx5LbMiKWDmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fw5M45qDg1hykE3kW1emN4NR8Ruc7tIR5NNmOIVAksqN8wDrijd/zJ8VBNlaaK5DlZJtq5GF0eYwJ+bFmW9s32EfQA/R869eFu50nMiSG8TkvUO7vQiic8sbqlcxQycMWsMSOps//5SqsqvTnCA3RTBXFZIYpn7e2m/aHgU7OGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFSAfIR6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KghHjDGXuQzCadGA+S7u5OvaUTy1GCzntxQciLaSR4EmRY80ONeBcFC0W0Cb5wFZwG17GrTM6wXPW4lJMDP7MoJKJ+Q7flB7BM+Ag63tQOisBPzyGhWSRt1a5SGpCjZLYXN4VWFx5qpiz0n4fJoO4KbV6B4jtkmzXyFFyojMuwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OsyaHSbi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFSAfIR6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701921F000E9;
-	Thu, 20 Aug 2026 17:29:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OsyaHSbi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC121F000E9;
+	Thu, 20 Aug 2026 17:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787246970;
-	bh=WuBgbaq7y5QvggoP4efgFYzR6ygEST2K5msuUu87xVU=;
+	s=korg; t=1787246972;
+	bh=yAgVFZXn0ezgv+APL0J08N/CfECdocb3EdJLkh04H88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YFSAfIR6Jw1Ro8rfqNZgPPFc9MLdfJpRAzvqqgxC6kHMSWk3H3yOfiBcebXU/dWkH
-	 V0q86W3kDNY+NcmOLGCtNKeG7d8BZmjwxtmUC8UjgmazrMcDnK9RZh9sOlSVnuXSqJ
-	 7vKbeh0oKHJmmqVPPv11opK+MQEa0wtv/pJiN22A=
+	b=OsyaHSbi1YQdD9OWDrv4C1wRdNi4ax30rEBpzo4kkxJpNGCSj+N2szDlLaRzT1d5E
+	 cyn86iDNypPGfmfgddaC4oPet8qyKNu8pHiSSdHD6ovl3uWc9XQR9gGvgNOzwyDZAh
+	 LIFZlQYkvUkFa0w5n5+3P8lOep2MCv7ih0WhGHGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.12 065/220] mmc: sdhci: make tuning_err a signed int
-Date: Thu, 20 Aug 2026 16:54:15 +0200
-Message-ID: <20260820145225.440311661@linuxfoundation.org>
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.12 056/220] ftrace: Fix off-by-one fentry site disable in ftrace_free_mem()
+Date: Thu, 20 Aug 2026 16:54:06 +0200
+Message-ID: <20260820145225.179071608@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -51,51 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-commit ae31bcc92bb42502bb7c9029e6dc7a824cf6cd14 upstream.
+commit 8b8292d6487c81bd57c2605a9b404b1cf8f1edfb upstream.
 
-Coverity report INTEGER_OVERFLOW for host->tuning_err.
-The tuning_err field in struct sdhci_host is used to store an error
-code for re-tuning, but it was declared as unsigned int. Several call
-sites store negative error codes into it and later compare against
-negative values:
+When a module's init text is freed, do_init_module() calls
+ftrace_free_mem() with a half-open [start, end) range.  However the
+ftrace_cmp_recs() comparator treats the upper bound as inclusive, as all
+its other users do, passing 'ip + size - 1'.  So ftrace_free_mem() can
+delete a record sitting exactly at 'end', which is outside the freed
+range.
 
-  - sdhci.c, sdhci-of-dwcmshc.c and sdhci-pci-gli.c assign it the
-    return value of __sdhci_execute_tuning()/__sdhci_execute_tuning_9750(),
-    both of which return a signed int (possibly a negative errno);
-  - sdhci-of-esdhc.c assigns host->tuning_err = -EAGAIN and later does
-    "ret = host->tuning_err; if (ret == -EAGAIN ...)";
-  - sdhci-of-dwcmshc.c prints it with the %d (signed) conversion.
+For a kernel without CFI or IBT, the first record of a function is at
+the function start, which for the first function in a module is also the
+base of its text allocation.  As the module allocator packs its regions,
+that address is often the 'end' passed by a neighboring module's
+do_init_module(), causing the first function's ftrace location to get
+disabled, preventing an attempt to livepatch it:
 
-Storing a negative errno in an unsigned int and reading it back as a
-signed int only happens to work because of two's-complement, same-width
-integer conversions. It is misleading and triggers sign-conversion
-warnings. All users treat the value either as a signed error code or as
-a boolean (zero / non-zero), so changing the type to a signed int is
-safe and makes the intent explicit.
+  livepatch: failed to find location for function 'pcspkr_probe'
 
-Fixes: 7d8bb1f46e13 ("mmc: sdhci: add tuning error codes")
-Assisted-by: Cline:claude-sonnet [read_file, search_files, git]
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Convert the exclusive end to the inclusive 'end - 1' the comparator
+expects, and return early for an empty range to avoid the subtraction
+from underflowing when the init text size is zero.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Fixes: 42c269c88dc1 ("ftrace: Allow for function tracing to record init functions on boot up")
+Link: https://patch.msgid.link/1b5ccfa8095bdb1277f84af1c2c2e2205aca03ae.1785992188.git.jpoimboe@kernel.org
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/ftrace.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci.h
-+++ b/drivers/mmc/host/sdhci.h
-@@ -604,7 +604,7 @@ struct sdhci_host {
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -7770,7 +7770,8 @@ static void add_to_clear_hash_list(struc
+ void ftrace_free_mem(struct module *mod, void *start_ptr, void *end_ptr)
+ {
+ 	unsigned long start = (unsigned long)(start_ptr);
+-	unsigned long end = (unsigned long)(end_ptr);
++	/* end is inclusive and end_ptr is exclusive */
++	unsigned long end = (unsigned long)(end_ptr) - 1;
+ 	struct ftrace_page **last_pg = &ftrace_pages_start;
+ 	struct ftrace_page *tmp_page = NULL;
+ 	struct ftrace_page *pg;
+@@ -7780,6 +7781,9 @@ void ftrace_free_mem(struct module *mod,
+ 	struct ftrace_init_func *func, *func_next;
+ 	LIST_HEAD(clear_hash);
  
- 	unsigned int		tuning_count;	/* Timer count for re-tuning */
- 	unsigned int		tuning_mode;	/* Re-tuning mode supported by host */
--	unsigned int		tuning_err;	/* Error code for re-tuning */
-+	int			tuning_err;	/* Error code for re-tuning */
- #define SDHCI_TUNING_MODE_1	0
- #define SDHCI_TUNING_MODE_2	1
- #define SDHCI_TUNING_MODE_3	2
++	if (start_ptr >= end_ptr)
++		return;
++
+ 	key.ip = start;
+ 	key.flags = end;	/* overload flags, as it is unsigned long */
+ 
 
 
