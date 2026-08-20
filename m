@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D572437A498;
-	Thu, 20 Aug 2026 17:53:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CBA2931C0;
+	Thu, 20 Aug 2026 17:53:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248385; cv=none; b=pg8D/c5mpqquguvLvRBsosc0YWBh5P+DBhfCyxVjaerFtq3XNs6k9VlrlXWJSHMOWfpD38Zs/sWdX2VBUFPkVAIiXSPF4rCWaqzbIneoJmR0AjEQso5k75i2pf9BwF4lv8WpZp28A7+LmNPFM88Jr6TvvvBVztE8TUhxmOxY1QA=
+	t=1787248387; cv=none; b=mpiTj0ZB/TMsPxj0ktOYiCaYp1eumMWT4F2mwa2+lVId0ckjWZKsQfIn5zAn2elgP8EPXSwd6EhGdT7Jpr6AEgRYD/6iF0hdk5jfR24jdt7x5XyMYyTwlkZmGEPi0nowAxittq+Yn3ixJEx8X+THqERfcSWXfBLiGvIU0/J363Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248385; c=relaxed/simple;
-	bh=jol6VnE10V+TQv1IhAxeGcwXEO7OhW2uvSj4btaXqnQ=;
+	s=arc-20240116; t=1787248387; c=relaxed/simple;
+	bh=T+2YDJfTeX5qBWYSoIfuk0psYw2OEg89U45xuBx0KMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PR3j+ujycKoAZQ8PiLjzL5jsWBvIrXz6Ag8fgpQDzr0LJE002ssTigfB3ivWInZIgDxEtgCXwcQy2tgDG386X0ntg3wSTdsSfHIOzadexiJnLxwK7OcI8oXU4xQ4iRycX9T5O/IrsXzfJs0Tfn9m7C+zFvk2ROfHNSCH7qd3tGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N931Fr7y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RbrrdN67oBLvSyd1oNJNL/0oJ2UPRMq5771usKKLONkoeTwLqZxzqxA8GkP+/60nOnvUWT1paWmrXqOC89S8qcaJD187curWvmfyBNRufd2quxq9jn9VeG+2Y5aEZEroDRf+SavXfXjY5qHI8WXIYJ7RKhXq23ZJR0wHJyPT2sY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RqrBzUui; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N931Fr7y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44B911F000E9;
-	Thu, 20 Aug 2026 17:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RqrBzUui"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C03D1F000E9;
+	Thu, 20 Aug 2026 17:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248383;
-	bh=+l9Z921mSiR+Ok5+399Q25R1ESMD6Fl57nwJtDGFN8k=;
+	s=korg; t=1787248386;
+	bh=j6JmZVfvtJeJZ3KZy+vwR74qvCP/sw0pmOqG+anPD6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N931Fr7y9EJlj4mFSmADtFbQjbAOA/MaiylViYl35vzgioGcG2VH3CE/1C1AMLdKy
-	 xThkgovY3ICFXb5470kJW8/aP2FiSgBGk8zAG2A7Y8UPYxekfzo/d3ilEsbqr4VL+Y
-	 mtfVyY3tQktxMn5E+gUxPBI19tOM5riU9TmCgNss=
+	b=RqrBzUuiID4RxK6/WH90wgBHQdx/67ZljMLP9NWo5BKlKWLcz1hFunwT6lPN4sAA/
+	 yM6JEF4cnOE5bbMbm16fYqsT4M+yIXShBGMITrKcRuhmrezIPrbkWq+B2sY+qHFRES
+	 2EKvH/Lm4Se1I+9QFsNACillYw/demLSQgFOqiPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Qi Tang <tpluszz77@gmail.com>,
-	Zhiling Zou <roxy520tt@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Xiubo Li <xiubo.li@clyso.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 209/303] sctp: avoid auth_enable sysctl UAF during netns teardown
-Date: Thu, 20 Aug 2026 16:55:45 +0200
-Message-ID: <20260820145259.676686621@linuxfoundation.org>
+Subject: [PATCH 6.1 210/303] ceph: avoid fs reclaim while using current->journal_info
+Date: Thu, 20 Aug 2026 16:55:46 +0200
+Message-ID: <20260820145259.704991937@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -58,132 +53,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <roxy520tt@gmail.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit f8d5e7846025f4ab15a461235f8ebae9094a361a ]
+[ Upstream commit 5b602344a49e039e792ce5a8923bcc61412ee134 ]
 
-proc_sctp_do_auth() updates the SCTP control socket after changing
-net.sctp.auth_enable. The handler gets the per-net SCTP state from
-ctl->data, so an already opened sysctl file can still target a network
-namespace while that namespace is being torn down.
+handle_reply() stores a `ceph_mds_request` pointer in
+`current->journal_info` while filling the inode and dentry cache from
+an MDS reply.
 
-SCTP previously registered its per-net sysctls from sctp_defaults_init(),
-while the control socket is created later from sctp_ctrlsock_init(). This
-exposed a window during initialization where auth_enable was writable
-before net->sctp.ctl_sock existed, and a teardown window where auth_enable
-stayed writable after inet_ctl_sock_destroy() had released the control
-socket.
+An allocation in this section can enter direct reclaim and prune
+dentries from another filesystem.  If this dirties an ext4 inode, ext4
+starts a JBD2 transaction.  JBD2 interprets the Ceph request in
+`current->journal_info` as a journal handle and dereferences the
+request's `r_tid` as `h_transaction`, causing a kernel crash, e.g.:
 
-Move the per-net SCTP sysctl registration into sctp_ctrlsock_init() after
-sctp_ctl_sock_init() succeeds, and unregister the sysctl table before
-destroying the control socket in sctp_ctrlsock_exit(). If sysctl
-registration fails after the control socket was created, destroy the
-control socket in the same init path.
+ Unable to handle kernel paging request at virtual address 00000000077b4818
+ [...]
+ Internal error: Oops: 0000000096000004 [#1]  SMP
+ Modules linked in:
+ CPU: 6 UID: 0 PID: 2699135 Comm: kworker/6:3 Tainted: G        W           6.18.38-i3 #1113 NONE
+ [...]
+ Workqueue: ceph-msgr ceph_con_workfn
+ pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : jbd2__journal_start+0x2c/0x208
+ lr : __ext4_journal_start_sb+0x100/0x178
+ [...]
+ Call trace:
+  jbd2__journal_start+0x2c/0x208 (P)
+  __ext4_journal_start_sb+0x100/0x178
+  ext4_dirty_inode+0x3c/0x90
+  __mark_inode_dirty+0x58/0x400
+  iput.part.0+0x2b0/0x370
+  iput+0x18/0x30
+  dentry_unlink_inode+0xc0/0x158
+  __dentry_kill+0x80/0x250
+  shrink_dentry_list+0x90/0x130
+  prune_dcache_sb+0x60/0x98
+  super_cache_scan+0xe8/0x190
+  do_shrink_slab+0x174/0x388
+  shrink_slab+0xd8/0x4c0
+  shrink_node+0x31c/0x908
+  do_try_to_free_pages+0xd0/0x508
+  try_to_free_pages+0x11c/0x238
+  __alloc_frozen_pages_noprof+0x4d0/0xdd0
+  __folio_alloc_noprof+0x18/0x70
+  __filemap_get_folio+0x248/0x440
+  ceph_readdir_prepopulate+0x570/0x9e8
+  mds_dispatch+0x1424/0x1ba0
+  ceph_con_process_message+0x74/0xa0
+  ceph_con_v1_try_read+0x3a0/0x1510
+  ceph_con_workfn+0x260/0x460
 
-Make sctp_sysctl_net_unregister() tolerate a missing header and clear the
-saved pointer so init-error and exit paths can safely share the unregister
-helper.
+Enter a scoped NOFS allocation context and leave it after clearing
+`journal_info`.  This prevents filesystem reclaim from recursing into
+another filesystem while the field contains Ceph-private data.
 
-Fixes: 15649fd5415e ("sctp: sysctl: auth_enable: avoid using current->nsproxy")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Co-developed-by: Qi Tang <tpluszz77@gmail.com>
-Signed-off-by: Qi Tang <tpluszz77@gmail.com>
-Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/390cd5e91ed60eea27b0b64d0468301a9e73b808.1784033357.git.roxy520tt@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ dropped the missing `l3mdev_accept` context block and kept 6.1's non-const `struct ctl_table *table` declaration ]
+Fixes: 315f24088048 ("ceph: fix security xattr deadlock")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/protocol.c |   20 ++++++++++++--------
- net/sctp/sysctl.c   |    9 +++++++--
- 2 files changed, 19 insertions(+), 10 deletions(-)
+ fs/ceph/mds_client.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/net/sctp/protocol.c
-+++ b/net/sctp/protocol.c
-@@ -1383,10 +1383,6 @@ static int __net_init sctp_defaults_init
- 	/* Initialize maximum autoclose timeout. */
- 	net->sctp.max_autoclose		= INT_MAX / HZ;
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -6,6 +6,7 @@
+ #include <linux/slab.h>
+ #include <linux/gfp.h>
+ #include <linux/sched.h>
++#include <linux/sched/mm.h>
+ #include <linux/debugfs.h>
+ #include <linux/seq_file.h>
+ #include <linux/ratelimit.h>
+@@ -3268,6 +3269,7 @@ static void handle_reply(struct ceph_mds
+ 	struct ceph_mds_reply_head *head = msg->front.iov_base;
+ 	struct ceph_mds_reply_info_parsed *rinfo;  /* parsed reply info */
+ 	struct ceph_snap_realm *realm;
++	unsigned int nofs_flags;
+ 	u64 tid;
+ 	int err, result;
+ 	int mds = session->s_mds;
+@@ -3396,6 +3398,14 @@ static void handle_reply(struct ceph_mds
  
--	status = sctp_sysctl_net_register(net);
--	if (status)
--		goto err_sysctl_register;
--
- 	/* Allocate and initialise sctp mibs.  */
- 	status = init_sctp_mibs(net);
- 	if (status)
-@@ -1420,8 +1416,6 @@ err_init_proc:
- 	cleanup_sctp_mibs(net);
- #endif
- err_init_mibs:
--	sctp_sysctl_net_unregister(net);
--err_sysctl_register:
- 	return status;
- }
- 
-@@ -1436,7 +1430,6 @@ static void __net_exit sctp_defaults_exi
- 	net->sctp.proc_net_sctp = NULL;
- #endif
- 	cleanup_sctp_mibs(net);
--	sctp_sysctl_net_unregister(net);
- }
- 
- static struct pernet_operations sctp_defaults_ops = {
-@@ -1450,16 +1443,27 @@ static int __net_init sctp_ctrlsock_init
- 
- 	/* Initialize the control inode/socket for handling OOTB packets.  */
- 	status = sctp_ctl_sock_init(net);
--	if (status)
-+	if (status) {
- 		pr_err("Failed to initialize the SCTP control sock\n");
-+		return status;
-+	}
+ 	/* insert trace into our cache */
+ 	mutex_lock(&req->r_fill_mutex);
 +
-+	status = sctp_sysctl_net_register(net);
-+	if (status) {
-+		inet_ctl_sock_destroy(net->sctp.ctl_sock);
-+		net->sctp.ctl_sock = NULL;
-+	}
- 
- 	return status;
- }
- 
- static void __net_exit sctp_ctrlsock_exit(struct net *net)
- {
-+	sctp_sysctl_net_unregister(net);
++	/* disable fs reclaim while we are using current->journal_info
++	 * for our own purposes, or else shrinkers of other
++	 * filesystems might dereference this pointer as a different
++	 * type
++	 */
++	nofs_flags = memalloc_nofs_save();
 +
- 	/* Free the control endpoint.  */
- 	inet_ctl_sock_destroy(net->sctp.ctl_sock);
-+	net->sctp.ctl_sock = NULL;
- }
+ 	current->journal_info = req;
+ 	err = ceph_fill_trace(mdsc->fsc->sb, req);
+ 	if (err == 0) {
+@@ -3404,6 +3414,7 @@ static void handle_reply(struct ceph_mds
+ 			ceph_readdir_prepopulate(req, req->r_session);
+ 	}
+ 	current->journal_info = NULL;
++	memalloc_nofs_restore(nofs_flags);
+ 	mutex_unlock(&req->r_fill_mutex);
  
- static struct pernet_operations sctp_ctrlsock_ops = {
---- a/net/sctp/sysctl.c
-+++ b/net/sctp/sysctl.c
-@@ -617,11 +617,16 @@ int sctp_sysctl_net_register(struct net
- 
- void sctp_sysctl_net_unregister(struct net *net)
- {
-+	struct ctl_table_header *header = net->sctp.sysctl_header;
- 	struct ctl_table *table;
- 
--	table = net->sctp.sysctl_header->ctl_table_arg;
--	unregister_net_sysctl_table(net->sctp.sysctl_header);
-+	if (!header)
-+		return;
-+
-+	table = header->ctl_table_arg;
-+	unregister_net_sysctl_table(header);
- 	kfree(table);
-+	net->sctp.sysctl_header = NULL;
- }
- 
- static struct ctl_table_header *sctp_sysctl_header;
+ 	up_read(&mdsc->snap_rwsem);
 
 
