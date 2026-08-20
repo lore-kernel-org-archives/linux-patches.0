@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9ABF19E992;
-	Thu, 20 Aug 2026 17:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D95347F2CE;
+	Thu, 20 Aug 2026 17:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248461; cv=none; b=UlZxXmoHBLehqr2FvfQJt27rcBzM6cT1XUax0ewbGGMnz16D7bXelcYx7nD4t4tgxzbMeFO2TONVIchUJXP3QE0UfsUSmEsrnOzlceJji64tkVD9xqf/2WZQv0tu7dJqZ3MU0Pmf/XCMGJj3kBJbPnm1iGmKnMzxCV9iqsRUh5E=
+	t=1787248463; cv=none; b=sjAS8jEGG0P2Urrn6irC4MLNoPfHlLBCZhKIS1BFGPF5mceTRZ4liIv4VJ76KgFAyf0WrwXXfmXoYRYWAhq0tFZKxU+BQaIwD5E/n4IVsN7bkf2HLvFuVcs3G7V7dIuB2dG8d7AlPrhygyg9/Ap78/52X9Tjsm4ysKraRhULoDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248461; c=relaxed/simple;
-	bh=kB8dlOhUGx66vsko9Qu9HXLqn2wSX16rLF7iqP9gK6s=;
+	s=arc-20240116; t=1787248463; c=relaxed/simple;
+	bh=QfTJCESfLtg4yJlgkaBGH39Ora3Z7/xVDvPMx7C4rcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pfsU6bE7zmpwZqm1eC+kEsL1ZtHbn0Wa1l6jadpbk3+rBXtcPHKwAuHloqsre3K6k7T+Clqs0AjnmZipBq4Kn7APqw0hoablt4/EWRGO+53JUK64rfY7G9n77isl8EnZHi3fnpLICc9TwUj7kaSPP9sr4Hfk4M/+4DRwnJkgetI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZSEY7Z8/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=deGT7GQbe6b8OYv5+WLdyxm3UO4g0NOo3mdQAc+YJ1hadNRSHF997FQh1pc97vPq5rq1Y3Z8/fexikPnswAkC08O5sG3MFA74U9GsXnd/cKgUsiyXsUF2uoDB7RbBuCC0wPtnWZCBMiUqiAO80qmfqorZbGtzU2ut+mNJb71WW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DDlvpCCf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZSEY7Z8/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 290B41F000E9;
-	Thu, 20 Aug 2026 17:54:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DDlvpCCf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 066AE1F000E9;
+	Thu, 20 Aug 2026 17:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248459;
-	bh=yam5e0RGQxJxUd39P3AkOzQk+Nrqzdt9NTbtPPm5OZE=;
+	s=korg; t=1787248462;
+	bh=nBt77s5wARhgjv1C9AhJCA1x0ZSPY/Yj1JEJNPhEcVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZSEY7Z8/loMFgUMmnQ7PhImkCwGBh9SyiEZfI/9HBXlFIdw1TU1Qsm3A0hSRQs5iO
-	 mS6+wMp+B9plxxrfpoH8Ve+OfFAWrpKw1vIgbYMh15ChhnelaOy8fsS+rB9YOruZas
-	 6H4aSKLjfDltZF07DupTdjTVEmeG7QO1ATIjXBQU=
+	b=DDlvpCCfkN2apLbDCgjcTsNJDqBiQC/vf2n8wwy4i1UvXOOqARF1rNeQ7RWGxuAD3
+	 XbKl1LqmD6JWvoLXlmMa80W9LC3HDhFCXMJA9mO6UC+PAxTC7PQaL28sGEzUv2KUS8
+	 GWqITJemC/r/JAvQqbKtwF4Zp1sIzfZSEIUT7O5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Benson Leung <bleung@chromium.org>,
+	David Howells <dhowells@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 186/303] usb: typec: ucsi: Fix race condition and ordering in port unregistration
-Date: Thu, 20 Aug 2026 16:55:22 +0200
-Message-ID: <20260820145258.905291113@linuxfoundation.org>
+Subject: [PATCH 6.1 229/303] smb/server: fix minimum SMB2 PDU size
+Date: Thu, 20 Aug 2026 16:56:05 +0200
+Message-ID: <20260820145300.334115879@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -52,150 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Kuchynski <akuchynski@chromium.org>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-[ Upstream commit 7aa7d4bf9d3fa9a6a47b640ad103ab433b7ff261 ]
+[ Upstream commit 4c7d8eb9a79ae5400eac19c4f6f0815bff674452 ]
 
-A synchronization issue exists during port unregistration where pending
-partner work items can race against workqueue destruction, leading to
-use-after-free conditions:
+The minimum SMB2 PDU size should be updated to the size of
+`struct smb2_pdu` (that is, the size of `struct smb2_hdr` + 2).
 
-  cros_ec_ucsi cros_ec_ucsi.3.auto: error -ETIMEDOUT: PPM init failed
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  RIP: 0010:__queue_work+0x83/0x4a0
-  Call Trace:
-    <IRQ>
-    __cfi_delayed_work_timer_fn+0x10/0x10
-    run_timer_softirq+0x3b6/0xbd0
-    sched_clock_cpu+0xc/0x110
-    irq_exit_rcu+0x18d/0x330
-    fred_sysvec_apic_timer_interrupt+0x5e/0x80
-
-Fix this by ensuring strict ordering and proper serialization during
-teardown:
-
-1. Move ucsi_unregister_partner() to the beginning of the teardown
-sequence and protect it under the connector mutex lock.
-2. Ensure all pending partner tasks are explicitly flushed and finished
-before the workqueue is destroyed.
-3. Switch from mod_delayed_work() to a cancel_delayed_work() and
-queue_delayed_work() sequence. This guarantees that items currently marked
-as pending won't be scheduled an additional time, preventing a double
-release of resources which leads to the following crash:
-
-  Oops: general protection fault, probably for non-canonical address
-    0xdead000000000122: 0000 [#1] SMP NOPTI
-  Workqueue: cros_ec_ucsi.3.auto-con2 ucsi_poll_worker
-  RIP: 0010:ucsi_poll_worker+0x65/0x1e0
-  Call Trace:
-  <TASK>
-    process_scheduled_works+0x218/0x6d0
-    worker_thread+0x188/0x3f0
-    __cfi_worker_thread+0x10/0x10
-    kthread+0x226/0x2a0
-
-To ensure these rules are applied identically across both the normal
-teardown and the ucsi_init() error paths, consolidate the cleanup logic
-into a new helper, ucsi_unregister_port().
-
-Cc: stable <stable@kernel.org>
-Fixes: b9aa02ca39a4 ("usb: typec: ucsi: Add polling mechanism for partner tasks like alt mode checking")
-Fixes: b13abcb7ddd8 ("usb: typec: ucsi: Fix NULL pointer access")
-Fixes: fac4b8633fd6 ("usb: ucsi: Ensure connector delayed work items are flushed")
-Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Link: https://patch.msgid.link/20260707141736.1635698-1-akuchynski@chromium.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: David Howells <dhowells@redhat.com>
+Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: cfc0b8e5080a ("ksmbd: validate minimum PDU size for transform requests")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |   62 ++++++++++++++++++++++--------------------
- 1 file changed, 33 insertions(+), 29 deletions(-)
+ fs/smb/server/connection.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1255,6 +1255,36 @@ out_unlock:
- 	return ret;
- }
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -307,7 +307,7 @@ bool ksmbd_conn_alive(struct ksmbd_conn
  
-+static void ucsi_unregister_port(struct ucsi_connector *con)
-+{
-+	struct ucsi_work *uwork;
-+
-+	if (con->wq) {
-+		mutex_lock(&con->lock);
-+		ucsi_unregister_partner(con);
-+		/*
-+		 * queue delayed items immediately so they can execute
-+		 * and free themselves before the wq is destroyed
-+		 */
-+		list_for_each_entry(uwork, &con->partner_tasks, node) {
-+			if (cancel_delayed_work(&uwork->work))
-+				queue_delayed_work(con->wq, &uwork->work, 0);
-+		}
-+		mutex_unlock(&con->lock);
-+
-+		destroy_workqueue(con->wq);
-+		con->wq = NULL;
-+	} else {
-+		ucsi_unregister_partner(con);
-+	}
-+
-+	ucsi_unregister_altmodes(con, UCSI_RECIPIENT_CON);
-+	ucsi_unregister_port_psy(con);
-+
-+	typec_unregister_port(con->port);
-+	con->port = NULL;
-+}
-+
- static u64 ucsi_get_supported_notifications(struct ucsi *ucsi)
- {
- 	u8 features = ucsi->cap.features;
-@@ -1363,15 +1393,8 @@ err_unregister:
- 	for (i = 0; i < ucsi->cap.num_connectors; i++)
- 		lockdep_unregister_key(&connector[i].lock_key);
+ /* "+2" for BCC field (ByteCount, 2 bytes) */
+ #define SMB1_MIN_SUPPORTED_PDU_SIZE (sizeof(struct smb_hdr) + 2)
+-#define SMB2_MIN_SUPPORTED_HEADER_SIZE (sizeof(struct smb2_hdr) + 4)
++#define SMB2_MIN_SUPPORTED_PDU_SIZE (sizeof(struct smb2_pdu))
  
--	for (con = connector; con->port; con++) {
--		if (con->wq)
--			destroy_workqueue(con->wq);
--		ucsi_unregister_partner(con);
--		ucsi_unregister_altmodes(con, UCSI_RECIPIENT_CON);
--		ucsi_unregister_port_psy(con);
--		typec_unregister_port(con->port);
--		con->port = NULL;
--	}
-+	for (con = connector; con->port; con++)
-+		ucsi_unregister_port(con);
- 	kfree(connector);
- err_reset:
- 	memset(&ucsi->cap, 0, sizeof(ucsi->cap));
-@@ -1584,26 +1607,7 @@ void ucsi_unregister(struct ucsi *ucsi)
+ /**
+  * ksmbd_conn_handler_loop() - session thread to listen on new smb requests
+@@ -399,7 +399,7 @@ int ksmbd_conn_handler_loop(void *p)
  
- 	for (i = 0; i < ucsi->cap.num_connectors; i++) {
- 		cancel_work_sync(&ucsi->connector[i].work);
--
--		if (ucsi->connector[i].wq) {
--			struct ucsi_work *uwork;
--
--			mutex_lock(&ucsi->connector[i].lock);
--			/*
--			 * queue delayed items immediately so they can execute
--			 * and free themselves before the wq is destroyed
--			 */
--			list_for_each_entry(uwork, &ucsi->connector[i].partner_tasks, node)
--				mod_delayed_work(ucsi->connector[i].wq, &uwork->work, 0);
--			mutex_unlock(&ucsi->connector[i].lock);
--			destroy_workqueue(ucsi->connector[i].wq);
--		}
--
--		ucsi_unregister_partner(&ucsi->connector[i]);
--		ucsi_unregister_altmodes(&ucsi->connector[i],
--					 UCSI_RECIPIENT_CON);
--		ucsi_unregister_port_psy(&ucsi->connector[i]);
--		typec_unregister_port(ucsi->connector[i].port);
-+		ucsi_unregister_port(&ucsi->connector[i]);
- 		lockdep_unregister_key(&ucsi->connector[i].lock_key);
- 	}
+ 		if (((struct smb2_hdr *)smb_get_msg(conn->request_buf))->ProtocolId ==
+ 		    SMB2_PROTO_NUMBER) {
+-			if (pdu_size < SMB2_MIN_SUPPORTED_HEADER_SIZE)
++			if (pdu_size < SMB2_MIN_SUPPORTED_PDU_SIZE)
+ 				break;
+ 		}
  
 
 
