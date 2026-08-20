@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DB9481AAD;
-	Thu, 20 Aug 2026 17:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D06047F796;
+	Thu, 20 Aug 2026 17:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248472; cv=none; b=t3uczNl+t8u0cR3/RkgU8Ml+eIUlexZEWMGoVKhiXvFDJ67q8FtB1ILIJEWkmjHbPdlAYEekqMeBW0pRdrjiIiRCM81RX0CvJ/AAYEiH+pN8ksR4P9IcZBegpYq1UXVmEFtouSDeBv+nxr7TZ8+fuNadqDldP/drSjfnXTW16Ic=
+	t=1787248475; cv=none; b=XAIEaK7APT7V0Gp/XXkYEGWBfm88LBSj8k6XsLA0/gS4rSYBLCl9sNzMKEnAr6TcwGbQ6XqKxTtP8ETMTxgsDtUyJ/ycosiSEdsJlQZLh6dgL8Vu1U+a5QcYXVq/bAu9PhaKi29SWueHKt7gKTqLZNY+ZJ4aaKd51UXQ15KI8AY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248472; c=relaxed/simple;
-	bh=BU+OSPfOH79A8oMSz6NQuhDfeAL70BkblU9nhoMt/J8=;
+	s=arc-20240116; t=1787248475; c=relaxed/simple;
+	bh=MobdE5b2M2B5I0Z9/WzNN9Fhl6YW6rnvcMwEE/DSrKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yqdzkqcm2ngT1BbddioV/67076/LvOTS+ym5426jluCck+MTnXCOdeBpsNieOnxRJkfMRFsKHP6gno4KwGy6Dl9/q8FJAZJRUYaMeCcxgwZbPqJAGGZECRFdC7BS0yn7C43zo1KuvGImPRkYFr1JRkQ0GRx+knOQCOHQ6VyDlKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3AlGRXq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k01uM1oBd9meIEJy9bFLFAMOkd6nytrZIkavVyRP6mWu6JxyHROTL0MnyaFmDDeujInP9bD6FRD6e7N65EDj7MLox+R9Z4GHWox9UQ6ik4sQRJW6zc31AWie+2/K/oQRFLZeW79Chl9FEItc6X/NhnFYYkwumtlOCbGEgd+9S0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ltHZrAfn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3AlGRXq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9456D1F000E9;
-	Thu, 20 Aug 2026 17:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ltHZrAfn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DDED1F000E9;
+	Thu, 20 Aug 2026 17:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248471;
-	bh=q18V1tYgouFjEMSquARMw3A4irxbbizduAYATME6GWs=;
+	s=korg; t=1787248473;
+	bh=Ksy8ZHEWPTXf9rTQIeZvksS0YlmdGbzp3vOmdEq/wSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h3AlGRXqkk/aNQcC2T/ro2XWFrWvw8V4XKKUS836ZjxtliIj20rD8tgL6mCXHhwBX
-	 BpqUG9DhcNpORNrLkhjNWrBZGT2Avuj4ErhzKBMgzFxvs3mDCBij1LDiZUtbWO94ck
-	 nE7v04sn2cBNxeKMpxxYfP5d7/kME0ZECIfDfnB0=
+	b=ltHZrAfnA6Ygn5dqvVsz8Jq/rOygoYeFtVsYu0j9olkg9TK7CqExQTM/QDDRTvpdS
+	 o1LOHROVc7gGJwWnJujCXd9Zgs7+Tl+3ncLHVHBXrpwAm6LO7wHbwFfqoirZZ1N3QR
+	 SNF6R7wNIQ5HfW2ctlV0Bw7tPm1v3MyB48S61P3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <xizh2024@lzu.edu.cn>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Gregory Price <gourry@gourry.net>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Mike Rapoport <rppt@kernel.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 240/303] Bluetooth: mgmt: fix UAF in pair command cancellation
-Date: Thu, 20 Aug 2026 16:56:16 +0200
-Message-ID: <20260820145300.662192404@linuxfoundation.org>
+Subject: [PATCH 6.1 241/303] mm/vmstat: fold stranded per-cpu node stats when a node comes online
+Date: Thu, 20 Aug 2026 16:56:17 +0200
+Message-ID: <20260820145300.691133884@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -53,199 +55,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <xizh2024@lzu.edu.cn>
+From: Gregory Price <gourry@gourry.net>
 
-[ Upstream commit d0a7b48ad0921bd88effaee10bf970ab1d5d0ddd ]
+[ Upstream commit ea3034b2b00fa50c8d2518d0804c9d427bbafa86 ]
 
-The pairing completion and authentication failure callbacks look up the
-pending MGMT_OP_PAIR_DEVICE command by walking hdev->mgmt_pending. The
-lookup returned a command that was still linked on the shared pending list,
-without keeping mgmt_pending_lock held for the later dereference and
-removal.
+A per-node vmstat counter is pgdat->vm_stat[] plus per-cpu deltas.  A
+balanced counter can sit split as global=+N / per-cpu=-N.
 
-A concurrent MGMT_OP_CANCEL_PAIR_DEVICE request can remove and free the
-same pending command before the callback uses it. The reverse race is also
-possible when cancel_pair_device() gets a command from pending_find() and a
-callback removes it before the cancel path dereferences it. This can lead
-to a use-after-free and a second list_del().
+The folds reconciling the split only walk online nodes, so when
+try_offline_node() marks a node offline the per-cpu deltas are stranded.
 
-Make the pairing lookup helpers transfer ownership of the pending command
-by removing it from hdev->mgmt_pending while holding mgmt_pending_lock.
-The callbacks and cancel path then complete the command and free it
-directly, so racing paths cannot find or free the same command again. Take
-a temporary hci_conn reference in cancel_pair_device() because the command
-completion drops the reference stored in the pending command.
+A subsequent online resets the per-cpu area but not pgdat->vm_stat[],
+orphaning the +N permanently.  All NR_VM_NODE_STAT_ITEMS are affected.
 
-Fixes: e9a416b5ce0c ("Bluetooth: Add mgmt_pair_device command")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Zihan Xi <xizh2024@lzu.edu.cn>
-Reviewed-by: Ren Wei <enjou1224z@gmail.com>
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+The existing code zeroes the per-cpu counters and causes a permanent skew.
+Fold the stranded deltas instead, before the node rejoins the online set.
+The node is not online yet and the hotplug lock is held, so the remote
+access to per-cpu values is safe.
+
+Discovered when node compaction hung for a nearly empty node, as the math
+to determine throttling broke.  Reproduced by repeated memory
+hotplug/unplug cycles on a node under pressure: NR_ISOLATED_ANON ratchets
+up and never returns to zero.
+
+Link: https://lore.kernel.org/20260627202243.758289-1-gourry@gourry.net
+Fixes: 75ef71840539 ("mm, vmstat: add infrastructure for per-node vmstats")
+Signed-off-by: Gregory Price <gourry@gourry.net>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/mgmt.c |   64 ++++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 46 insertions(+), 18 deletions(-)
+ mm/page_alloc.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -3343,11 +3343,13 @@ static int set_io_capability(struct sock
- 				 NULL, 0);
- }
- 
--static struct mgmt_pending_cmd *find_pairing(struct hci_conn *conn)
-+static struct mgmt_pending_cmd *remove_pairing(struct hci_conn *conn)
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -7734,7 +7734,7 @@ void __ref free_area_init_core_hotplug(s
  {
- 	struct hci_dev *hdev = conn->hdev;
- 	struct mgmt_pending_cmd *cmd;
+ 	int nid = pgdat->node_id;
+ 	enum zone_type z;
+-	int cpu;
++	int cpu, i;
  
-+	mutex_lock(&hdev->mgmt_pending_lock);
+ 	pgdat_init_internals(pgdat);
+ 
+@@ -7750,10 +7750,18 @@ void __ref free_area_init_core_hotplug(s
+ 	pgdat->kswapd_order = 0;
+ 	pgdat->kswapd_highest_zoneidx = 0;
+ 	pgdat->node_start_pfn = 0;
+-	for_each_online_cpu(cpu) {
+-		struct per_cpu_nodestat *p;
+ 
+-		p = per_cpu_ptr(pgdat->per_cpu_nodestats, cpu);
++	/*
++	 * Hot-unplug can leave per-cpu vmstat deltas unfolded (folders skip
++	 * offline nodes) - reconcile this at online. Foreign access to counters
++	 * is safe: the node is not online yet and we hold the hotplug lock.
++	 */
++	for_each_possible_cpu(cpu) {
++		struct per_cpu_nodestat *p = per_cpu_ptr(pgdat->per_cpu_nodestats, cpu);
 +
- 	list_for_each_entry(cmd, &hdev->mgmt_pending, list) {
- 		if (cmd->opcode != MGMT_OP_PAIR_DEVICE)
- 			continue;
-@@ -3355,9 +3357,39 @@ static struct mgmt_pending_cmd *find_pai
- 		if (cmd->user_data != conn)
- 			continue;
- 
-+		list_del(&cmd->list);
-+		mutex_unlock(&hdev->mgmt_pending_lock);
- 		return cmd;
++		for (i = 0; i < NR_VM_NODE_STAT_ITEMS; i++)
++			if (p->vm_node_stat_diff[i])
++				node_page_state_add(p->vm_node_stat_diff[i], pgdat, i);
+ 		memset(p, 0, sizeof(*p));
  	}
- 
-+	mutex_unlock(&hdev->mgmt_pending_lock);
-+
-+	return NULL;
-+}
-+
-+static struct mgmt_pending_cmd *remove_pairing_by_addr(struct hci_dev *hdev,
-+						       bdaddr_t *bdaddr)
-+{
-+	struct mgmt_pending_cmd *cmd;
-+	struct hci_conn *conn;
-+
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
-+	list_for_each_entry(cmd, &hdev->mgmt_pending, list) {
-+		if (cmd->opcode != MGMT_OP_PAIR_DEVICE)
-+			continue;
-+
-+		conn = cmd->user_data;
-+		if (bacmp(bdaddr, &conn->dst) != 0)
-+			continue;
-+
-+		list_del(&cmd->list);
-+		mutex_unlock(&hdev->mgmt_pending_lock);
-+		return cmd;
-+	}
-+
-+	mutex_unlock(&hdev->mgmt_pending_lock);
-+
- 	return NULL;
- }
- 
-@@ -3395,10 +3427,10 @@ void mgmt_smp_complete(struct hci_conn *
- 	u8 status = complete ? MGMT_STATUS_SUCCESS : MGMT_STATUS_FAILED;
- 	struct mgmt_pending_cmd *cmd;
- 
--	cmd = find_pairing(conn);
-+	cmd = remove_pairing(conn);
- 	if (cmd) {
- 		cmd->cmd_complete(cmd, status);
--		mgmt_pending_remove(cmd);
-+		mgmt_pending_free(cmd);
- 	}
- }
- 
-@@ -3408,14 +3440,14 @@ static void pairing_complete_cb(struct h
- 
- 	BT_DBG("status %u", status);
- 
--	cmd = find_pairing(conn);
-+	cmd = remove_pairing(conn);
- 	if (!cmd) {
- 		BT_DBG("Unable to find a pending command");
- 		return;
- 	}
- 
- 	cmd->cmd_complete(cmd, mgmt_status(status));
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- }
- 
- static void le_pairing_complete_cb(struct hci_conn *conn, u8 status)
-@@ -3427,14 +3459,14 @@ static void le_pairing_complete_cb(struc
- 	if (!status)
- 		return;
- 
--	cmd = find_pairing(conn);
-+	cmd = remove_pairing(conn);
- 	if (!cmd) {
- 		BT_DBG("Unable to find a pending command");
- 		return;
- 	}
- 
- 	cmd->cmd_complete(cmd, mgmt_status(status));
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- }
- 
- static int pair_device(struct sock *sk, struct hci_dev *hdev, void *data,
-@@ -3602,23 +3634,17 @@ static int cancel_pair_device(struct soc
- 		goto unlock;
- 	}
- 
--	cmd = pending_find(MGMT_OP_PAIR_DEVICE, hdev);
-+	cmd = remove_pairing_by_addr(hdev, &addr->bdaddr);
- 	if (!cmd) {
- 		err = mgmt_cmd_status(sk, hdev->id, MGMT_OP_CANCEL_PAIR_DEVICE,
- 				      MGMT_STATUS_INVALID_PARAMS);
- 		goto unlock;
- 	}
- 
--	conn = cmd->user_data;
--
--	if (bacmp(&addr->bdaddr, &conn->dst) != 0) {
--		err = mgmt_cmd_status(sk, hdev->id, MGMT_OP_CANCEL_PAIR_DEVICE,
--				      MGMT_STATUS_INVALID_PARAMS);
--		goto unlock;
--	}
-+	conn = hci_conn_get(cmd->user_data);
- 
- 	cmd->cmd_complete(cmd, MGMT_STATUS_CANCELLED);
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- 
- 	err = mgmt_cmd_complete(sk, hdev->id, MGMT_OP_CANCEL_PAIR_DEVICE, 0,
- 				addr, sizeof(*addr));
-@@ -3637,6 +3663,8 @@ static int cancel_pair_device(struct soc
- 		hci_cmd_sync_queue(hdev, abort_conn_sync, ERR_PTR(conn->handle),
- 				   NULL);
- 
-+	hci_conn_put(conn);
-+
- unlock:
- 	hci_dev_unlock(hdev);
- 	return err;
-@@ -9943,14 +9971,14 @@ void mgmt_auth_failed(struct hci_conn *c
- 	ev.addr.type = link_to_bdaddr(conn->type, conn->dst_type);
- 	ev.status = status;
- 
--	cmd = find_pairing(conn);
-+	cmd = remove_pairing(conn);
- 
- 	mgmt_event(MGMT_EV_AUTH_FAILED, conn->hdev, &ev, sizeof(ev),
- 		    cmd ? cmd->sk : NULL);
- 
- 	if (cmd) {
- 		cmd->cmd_complete(cmd, status);
--		mgmt_pending_remove(cmd);
-+		mgmt_pending_free(cmd);
- 	}
- }
  
 
 
