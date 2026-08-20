@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DAEF415B60;
-	Thu, 20 Aug 2026 17:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C320747F779;
+	Thu, 20 Aug 2026 17:30:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787246999; cv=none; b=f21efkz5qHvHZ5hiTiLGbxONRGDAYHa+NtmsseosJvWtw86Af2y5mePvmHsdmyp+799hi/wuu8yBDWO6dODhsWNV0R3+tnQ0FzXqNbi75vL96ABZLQB4RAMsEYHQ9GsEejIk5X7WPKAO6dWqej3IWFGf0gxJLRBZaqm5JiWdi20=
+	t=1787247003; cv=none; b=qVnvPui1KtXULp1QgbgX51fCuAGx+0SMvbDLWAx97IsCbQEK6IPBNa8ZNLwMYY4xyxQrlDsc27+sEpfKRmdJUN/sRV8EuAVJ+SeWab3ZlzKbQvxC7bmHz8L1iWPKwDBzePCKV1CGHEBg8LTAohQ4Dxyc/utpOD3WlJumw82K4JQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787246999; c=relaxed/simple;
-	bh=gJQ7Zt6KazqRfhGfk+kEnqiKN07KsD4N5xUiPjySmlg=;
+	s=arc-20240116; t=1787247003; c=relaxed/simple;
+	bh=P6BYH4hxJSiUnVaz3JUn77gkMdaZJJdx0LvmTFwbsKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qts201P5JJb7JgblIa4VBtvs160t2/81Prl+ZvGtuq15fpDr+8HECix4xNjynv+34w8/uGVzaALBfNASX7bzTa30gEULAPSjLRi6bqlGEzZELSQ66K/pjR6Ywo29svs0eppb0RSpltpSAFVe/TMT2ByC+lfvn9XbLT9ebuk6syo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hy+QUD4f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i/qh+yMT9B3hG3CJ4C4ebrxD/PSqG8/bFQUZeQr6gYV0LzQVA+9nXCqY2vJGcJCEZ2TgZZRWr2KXlxB4/jSYFDKExpjJl4UnZCO/VKQlWNTCPIe2YSDA+5gWd3YHK/MbWkZi1LUperyaUySJl5rzCjqiYSIcSlzaXH7MOFI4rdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uEYzDJql; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hy+QUD4f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053051F000E9;
-	Thu, 20 Aug 2026 17:29:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uEYzDJql"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E69A81F000E9;
+	Thu, 20 Aug 2026 17:30:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787246998;
-	bh=S1rrw6KQBTsuIEMOwr+9FyLEjueJ+kPXcLfPk6xZXA4=;
+	s=korg; t=1787247001;
+	bh=IhplAn2tLoYQutRprO2ty7w4LZpL/dHL6ldNoZU90qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hy+QUD4fKjUzDz+RzHK5E7vsY8H0Hso4Lj3czvRA98wA68ype5K2kOVY2QgYZm+eE
-	 i6FzygMBK0oJVqlQDRuRnLRlAjlkCbgGw0ovEssG/phe7ZqOd1eyL12DpGUvJZuuLY
-	 ulP+/BdDjfrKXmXA2pDXpbSazGQuEpVGTIIaDls4=
+	b=uEYzDJql+9Jh6u1Cg1SrXCpa06j5EsURvv+X68R3+J38LSP08PkvhBUA2jNflz5se
+	 q2DoVJtoi+2MA4v5twOtj1rQIh1Esqm5uW2FhkC6d41zDUZPOSWWTH9i70DrcZMu0S
+	 dyYkjqg/ok6Eswol/Ex6Vaj0FrgqoqmgtsndOc38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Xiubo Li <xiubo.li@clyso.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 115/220] ceph: fix writeback_count leak in write_folio_nounlock()
-Date: Thu, 20 Aug 2026 16:55:05 +0200
-Message-ID: <20260820145226.931731273@linuxfoundation.org>
+Subject: [PATCH 6.12 116/220] ceph: avoid fs reclaim while using current->journal_info
+Date: Thu, 20 Aug 2026 16:55:06 +0200
+Message-ID: <20260820145226.966101676@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -52,65 +53,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit cbf59617cd715219e84c50d106a3d0e1e8ba054e ]
+[ Upstream commit 5b602344a49e039e792ce5a8923bcc61412ee134 ]
 
-write_folio_nounlock() increments fsc->writeback_count to track
-in-flight writeback operations. On several error paths where the
-function returns early (folio lookup failure, snapshot context
-allocation failure, and writepages submission failure), the function
-returns without calling atomic_long_dec_return() to decrement the
-counter.
+handle_reply() stores a `ceph_mds_request` pointer in
+`current->journal_info` while filling the inode and dentry cache from
+an MDS reply.
 
-Each leaked increment keeps the counter above zero, which can prevent
-the filesystem from cleanly unmounting or suspending writes.
+An allocation in this section can enter direct reclaim and prune
+dentries from another filesystem.  If this dirties an ext4 inode, ext4
+starts a JBD2 transaction.  JBD2 interprets the Ceph request in
+`current->journal_info` as a journal handle and dereferences the
+request's `r_tid` as `h_transaction`, causing a kernel crash, e.g.:
 
-Add atomic_long_dec_return() calls on all error paths that currently
-return without decrementing the counter.
+ Unable to handle kernel paging request at virtual address 00000000077b4818
+ [...]
+ Internal error: Oops: 0000000096000004 [#1]  SMP
+ Modules linked in:
+ CPU: 6 UID: 0 PID: 2699135 Comm: kworker/6:3 Tainted: G        W           6.18.38-i3 #1113 NONE
+ [...]
+ Workqueue: ceph-msgr ceph_con_workfn
+ pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : jbd2__journal_start+0x2c/0x208
+ lr : __ext4_journal_start_sb+0x100/0x178
+ [...]
+ Call trace:
+  jbd2__journal_start+0x2c/0x208 (P)
+  __ext4_journal_start_sb+0x100/0x178
+  ext4_dirty_inode+0x3c/0x90
+  __mark_inode_dirty+0x58/0x400
+  iput.part.0+0x2b0/0x370
+  iput+0x18/0x30
+  dentry_unlink_inode+0xc0/0x158
+  __dentry_kill+0x80/0x250
+  shrink_dentry_list+0x90/0x130
+  prune_dcache_sb+0x60/0x98
+  super_cache_scan+0xe8/0x190
+  do_shrink_slab+0x174/0x388
+  shrink_slab+0xd8/0x4c0
+  shrink_node+0x31c/0x908
+  do_try_to_free_pages+0xd0/0x508
+  try_to_free_pages+0x11c/0x238
+  __alloc_frozen_pages_noprof+0x4d0/0xdd0
+  __folio_alloc_noprof+0x18/0x70
+  __filemap_get_folio+0x248/0x440
+  ceph_readdir_prepopulate+0x570/0x9e8
+  mds_dispatch+0x1424/0x1ba0
+  ceph_con_process_message+0x74/0xa0
+  ceph_con_v1_try_read+0x3a0/0x1510
+  ceph_con_workfn+0x260/0x460
+
+Enter a scoped NOFS allocation context and leave it after clearing
+`journal_info`.  This prevents filesystem reclaim from recursing into
+another filesystem while the field contains Ceph-private data.
 
 Cc: stable@vger.kernel.org
-Fixes: d55207717ded ("ceph: add encryption support to writepage and writepages")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Fixes: 315f24088048 ("ceph: fix security xattr deadlock")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/addr.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/ceph/mds_client.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -746,6 +746,9 @@ static int write_folio_nounlock(struct f
- 				    ceph_wbc.truncate_size, true);
- 	if (IS_ERR(req)) {
- 		folio_redirty_for_writepage(wbc, folio);
-+		if (atomic_long_dec_return(&fsc->writeback_count) <
-+				CONGESTION_OFF_THRESH(fsc->mount_options->congestion_kb))
-+			fsc->write_congested = false;
- 		return PTR_ERR(req);
- 	}
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -6,6 +6,7 @@
+ #include <linux/slab.h>
+ #include <linux/gfp.h>
+ #include <linux/sched.h>
++#include <linux/sched/mm.h>
+ #include <linux/debugfs.h>
+ #include <linux/seq_file.h>
+ #include <linux/ratelimit.h>
+@@ -3842,6 +3843,7 @@ static void handle_reply(struct ceph_mds
+ 	struct ceph_mds_reply_head *head = msg->front.iov_base;
+ 	struct ceph_mds_reply_info_parsed *rinfo;  /* parsed reply info */
+ 	struct ceph_snap_realm *realm;
++	unsigned int nofs_flags;
+ 	u64 tid;
+ 	int err, result;
+ 	int mds = session->s_mds;
+@@ -3984,6 +3986,14 @@ static void handle_reply(struct ceph_mds
  
-@@ -765,6 +768,9 @@ static int write_folio_nounlock(struct f
- 			folio_redirty_for_writepage(wbc, folio);
- 			folio_end_writeback(folio);
- 			ceph_osdc_put_request(req);
-+			if (atomic_long_dec_return(&fsc->writeback_count) <
-+					CONGESTION_OFF_THRESH(fsc->mount_options->congestion_kb))
-+				fsc->write_congested = false;
- 			return PTR_ERR(bounce_page);
- 		}
+ 	/* insert trace into our cache */
+ 	mutex_lock(&req->r_fill_mutex);
++
++	/* disable fs reclaim while we are using current->journal_info
++	 * for our own purposes, or else shrinkers of other
++	 * filesystems might dereference this pointer as a different
++	 * type
++	 */
++	nofs_flags = memalloc_nofs_save();
++
+ 	current->journal_info = req;
+ 	err = ceph_fill_trace(mdsc->fsc->sb, req);
+ 	if (err == 0) {
+@@ -3992,6 +4002,7 @@ static void handle_reply(struct ceph_mds
+ 			err = ceph_readdir_prepopulate(req, req->r_session);
  	}
-@@ -799,6 +805,9 @@ static int write_folio_nounlock(struct f
- 			      ceph_vinop(inode), folio);
- 			folio_redirty_for_writepage(wbc, folio);
- 			folio_end_writeback(folio);
-+			if (atomic_long_dec_return(&fsc->writeback_count) <
-+					CONGESTION_OFF_THRESH(fsc->mount_options->congestion_kb))
-+				fsc->write_congested = false;
- 			return err;
- 		}
- 		if (err == -EBLOCKLISTED)
+ 	current->journal_info = NULL;
++	memalloc_nofs_restore(nofs_flags);
+ 	mutex_unlock(&req->r_fill_mutex);
+ 
+ 	up_read(&mdsc->snap_rwsem);
 
 
