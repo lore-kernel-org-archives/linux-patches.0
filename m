@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4412A38236C;
-	Thu, 20 Aug 2026 15:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2046C361972;
+	Thu, 20 Aug 2026 15:23:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239395; cv=none; b=Ejk8rEYaWQdpeqTQERDcyQB9K0V87NO8n0JVkWkE39DI1yhAYuYfWjcqz2q03yt4Wy5KrmVtw3w9I4UQ3KE12lPlxNbrP3mPzx2i2748dOIKQdtAt7VWmPRG6A6PuFZoY33WloD0Kcr9jOec5dsWAffB8pX+f3fhzBhkQDBASXE=
+	t=1787239398; cv=none; b=llq2atCH0cP9S50/ZdGbzhBYbqQFDddDoLTXI72TDLxiVDkKIEQUjMngUnak6rR0nDARwZMq+C7wyI25AqASZbp+NqrLY0qRQDNidMDUGMxZGmNNb4yd+GF4/+Xy0Jl3UvCMS28PdcrLFy7Y/eb5p6K341hCBedUlmTVHIvtTuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239395; c=relaxed/simple;
-	bh=VFhQAH101fw+DaWBqBwwqc+v/sHxVWcOzkD20Do2T6g=;
+	s=arc-20240116; t=1787239398; c=relaxed/simple;
+	bh=oFrmG6iHJ9b8is34BEqtiwCFlUWeOJGsOl7HKoUGqOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TgiJAKoVsJRpCVUsAIWH2kRRCMu+mA7re69L92RQYWSK8o+XDbL+4NYCby5LYXbJrpbOZ91AOGDZ8qfK7pSJ0u7pZGkHVzE6/wAqcQtcZtZZfs/SdAB26dKI3GIQHMaDekHg9mj2KfLVegXTSy2nrO7esgAut+S1mkEHQ0sYhdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1NxXhS7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ccT8FOoDhcRfs3W1kJfdatMS2G4g30M6hD/jgAPBzMC+rpnKsVMA8ji4vy/EAXU+ze55vV8wvy60uOQve5vbaLBP0LBuys9bpmVz23sFvYDavUZWIxZU7qtvtKeFsFtKqM7t9hoBq6/vfZZbom6Afw9yKjnAINukJZKf4TSgGQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RVX4f4tx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1NxXhS7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE371F00A3A;
-	Thu, 20 Aug 2026 15:23:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RVX4f4tx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A10F1F000E9;
+	Thu, 20 Aug 2026 15:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239394;
-	bh=fURcTnC2C9o+w20Qa9788WMv81msOQVk2WY6lAUc2CI=;
+	s=korg; t=1787239397;
+	bh=9TJlPjQi1EAf4bBVWVox+ryy3o+qVjaclENB16pow1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n1NxXhS7i0c9BHQgwZniPDt+lIeUlpKvt5PCz1qp+KvO4nOVzGzCWbgXGX1Adm17y
-	 Z51TuBjVKKUomMdAivxAzqNgQgLJ+lCl7AKQP5RNw8n5VnIh1ymFaxsHUPb0nifHlG
-	 ubOndRbpqAx4d9lxPpl4IJ3z5XVIbvMLDXzZmIEY=
+	b=RVX4f4tx3R0TQgG/npvLy8QbkuwqrcE8Q+WBDPx0aU+ivpXREMxiWIdDTYCYxyUOv
+	 M69jxjlS9xeST7zpyDn9J5wIBuBW3QAhEcDbmEjDezVpbZuEgkZYF1DNvBXUgb9w2j
+	 Y6Mz8hOp0a+KFCyf/ovRA8GCagjL9r6vMDzT4tKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asad Kamal <asad.kamal@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 034/220] drm/amdgpu: fix aperture iounmap skipped on device removal
-Date: Thu, 20 Aug 2026 16:53:44 +0200
-Message-ID: <20260820145224.526598449@linuxfoundation.org>
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 035/220] ASoC: SOF: topology: Use acpi mach from the machine driver
+Date: Thu, 20 Aug 2026 16:53:45 +0200
+Message-ID: <20260820145224.554805941@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -46,68 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-commit f9e5f51549000e2665e3b5e02ff876b9e09cfe95 upstream.
+commit ae63720dd7c3647d64f7a85e5e1870f90eb569d6 upstream.
 
-amdgpu_pci_remove() calls drm_dev_unplug() before invoking the fini
-routines. After drm_dev_unplug() the drm_dev_enter() guard in
-amdgpu_ttm_fini() always returns false, so iounmap() for
-aper_base_kaddr is silently skipped. On connected_to_cpu hardware
-ioremap_cache() maps the aperture as WB; when iounmap() is skipped the
-stale WB PAT entry persists. On reload IP discovery's
-memremap(MEMREMAP_WC) on the same aperture range hits a WB/WC conflict,
-producing an ioremap error and failing re-probe.
+The parameters may be changed by the sof_sdw machine driver is the
+SOC_SDW_PCH_DMIC quirk is set. Use the mach_params from the machine
+driver to ensure the sof_sdw_get_tplg_files() function select the right
+function topologies.
 
-Remove the drm_dev_enter() guard and call iounmap() unconditionally.
-The aperture mapping is plain MMIO and does not require device-presence
-protection. Surprise-removal cleanup of aper_base_kaddr is already
-handled unconditionally by amdgpu_device_unmap_mmio().
-
-Fixes: 62d5f9f7110a ("drm/amdgpu: Unmap MMIO mappings when device is not unplugged")
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit fb3f68af9f6fce9343a2bd13b4d68a1c02d283df)
+Fixes: 2fbeff33381c ("ASoC: Intel: add sof_sdw_get_tplg_files ops")
 Cc: stable@vger.kernel.org
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20260730071724.22296-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |   10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ sound/soc/intel/common/sof-function-topology-lib.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -2066,8 +2066,6 @@ int amdgpu_ttm_init(struct amdgpu_device
-  */
- void amdgpu_ttm_fini(struct amdgpu_device *adev)
+--- a/sound/soc/intel/common/sof-function-topology-lib.c
++++ b/sound/soc/intel/common/sof-function-topology-lib.c
+@@ -30,7 +30,12 @@ enum tplg_device_id {
+ int sof_sdw_get_tplg_files(struct snd_soc_card *card, const struct snd_soc_acpi_mach *mach,
+ 			   const char *prefix, const char ***tplg_files)
  {
--	int idx;
--
- 	if (!adev->mman.initialized)
- 		return;
- 
-@@ -2090,13 +2088,9 @@ void amdgpu_ttm_fini(struct amdgpu_devic
- 	amdgpu_ttm_fw_reserve_vram_fini(adev);
- 	amdgpu_ttm_drv_reserve_vram_fini(adev);
- 
--	if (drm_dev_enter(adev_to_drm(adev), &idx)) {
--
--		if (adev->mman.aper_base_kaddr)
--			iounmap(adev->mman.aper_base_kaddr);
-+	if (adev->mman.aper_base_kaddr) {
-+		iounmap(adev->mman.aper_base_kaddr);
- 		adev->mman.aper_base_kaddr = NULL;
--
--		drm_dev_exit(idx);
- 	}
- 
- 	amdgpu_vram_mgr_fini(adev);
+-	struct snd_soc_acpi_mach_params mach_params = mach->mach_params;
++	struct snd_soc_acpi_mach *card_mach = dev_get_platdata(card->dev);
++	/*
++	 * Use the acpi mach from the machine driver because the machine driver
++	 * may change the dmic_num based on the machine driver quirk.
++	 */
++	struct snd_soc_acpi_mach_params mach_params = card_mach->mach_params;
+ 	struct snd_soc_dai_link *dai_link;
+ 	const struct firmware *fw;
+ 	char platform[SOF_INTEL_PLATFORM_NAME_MAX];
 
 
