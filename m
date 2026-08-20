@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC1447CC83;
-	Thu, 20 Aug 2026 17:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9FF1471D0B;
+	Thu, 20 Aug 2026 17:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247594; cv=none; b=dEuJZ3hCXoJdXSEZQQlu7im1ncLhLpVt+1zXCrQ6JdIANCa5LqwJ8rzG1+5RB0OqES55v+jOA0pMxncGiBESpLQWsKN4Q/9PJJyK9M/PzF3Rh/+r4JDqbrND9eVtklno2BgCfC+xrkauUxraV0YDblbDcY6jID5LwBP4fRW1DDw=
+	t=1787247597; cv=none; b=oAzzBDtBu5naneUUhM8bP0zBPLfx/Zqcxl0ZUVZxp4xsvNQjdWb+Hsh2eS/C101op/3Kmu3nsSC8XVx1HDgGkvQ5J2xDG8d9Ho8nlDwr2I3yb11A+VoXN8k2imEmdjpFuJa6yxRj15e+ZsBIrt8NHNv0lk2wqN2GEGhxsqAKdKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247594; c=relaxed/simple;
-	bh=lfgyh9jK9uDs5/IMtY4iClwekLwHaXW9vRXHsfHkGFk=;
+	s=arc-20240116; t=1787247597; c=relaxed/simple;
+	bh=FGD6iMAgc/3buXOlk00eFL3XDvJV6DzqWVb6KVHENwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OuuGI0AXt5GUlf7kvFd13J1eQxMVSbOp7Q/rKxkixKN6Gp8pRQT19p2tSV78PWkJ3eHsXEmsMPmqqitg7F3m5pnS9Vgrfcqn5cascsrzKQ995DJ4np9dP8NTH0OhJYkSrGB7/1tWoWU8pcWf8HZtdPg3EGffZ6eNNQLq3l0f+9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNoDs8Eh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qiWevg2drZdHWWBh/QM0ryBiywt7ozkmmqZLZRnfd6nq2csUxw3kGl5Nk7FRqtxsRrIh2lB4AS+KlxPVcGRnECVCD6ZAf0TmCp+YvYMEQNCuvtk3BlUcTuxGYjiafnCZEVvIWD35fE/avkHWHipEJ1RZdxulB/1MN7xT6zhUY3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0jdAGg1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNoDs8Eh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F9C1F000E9;
-	Thu, 20 Aug 2026 17:39:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0jdAGg1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE781F000E9;
+	Thu, 20 Aug 2026 17:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247593;
-	bh=kS3WWZ9jrzCFI8cP2G6sDN5BbjVtZLeXDhcDHGGIp7o=;
+	s=korg; t=1787247595;
+	bh=ta5DP9ZqmNrld5ZjqrfIISs+Lasr00gEsGk5IBl2S+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yNoDs8Ehg0cwFBW1Gr+xHt27Jgs1E/RSDTwi1ZssPrWaAtyxtp4X1iUXk+1pDqLfw
-	 nelxHGOROzQwFpPT3631YqRi7xRmMeId1poEj60KH3Jjv6T1u511jTbR572oiE0oUQ
-	 8smK5wTdykVsyMrZNNmum84HV9N3ZIcrzQJm0myY=
+	b=Q0jdAGg1pV5w6ewX5UGY+NEj2Iv9ykSUynkei4Ea+/Eejbc3OfliHG3GpKVKX+4oS
+	 6YQSp2b7eahsqmI3JarkVvBM0GBm0ghpMWSHjYJ11S/yIii45Mlgot8qra3zjDb77p
+	 C6mt8MUXWpVNSv8ewZSC16EMFm6f1rXlMe9yi3W4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Guanghui Yang <3497809730@qq.com>,
-	David Sterba <dsterba@suse.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Byungchul Park <byungchul@sk.com>,
+	David Hildenbrand <david@kernel.org>,
+	Gregory Price <gourry@gourry.net>,
+	"Huang, Ying" <ying.huang@linux.alibaba.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rakie Kim <rakie.kim@sk.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 100/166] btrfs: zoned: fix missing chunk metadata reservation
-Date: Thu, 20 Aug 2026 16:55:59 +0200
-Message-ID: <20260820145214.167504391@linuxfoundation.org>
+Subject: [PATCH 6.6 101/166] mm: migrate_device: fix pte_pfn/pte_dirty called on non-present PTE
+Date: Thu, 20 Aug 2026 16:56:00 +0200
+Message-ID: <20260820145214.197614122@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -52,78 +61,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Yang <3497809730@qq.com>
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
 
-[ Upstream commit 8bc4d7209611e8aa9d5409b6a4a86a9eb91b69a3 ]
+[ Upstream commit 63867c82d0c0c2d182016a32b1cc0103116b0ea5 ]
 
-reserve_chunk_space() stores the return value of
-btrfs_zoned_activate_one_bg() in ret. The helper can return 1 after
-successfully activating a block group, but ret is later used to decide
-whether to reserve metadata for chunk tree updates.
+pte_pfn() and pte_dirty() have undefined behaviour when called on a
+non-present PTE. In migrate_vma_collect_pmd(), these functions may be
+invoked on non-present entries (e.g., device-private entries), leading
+to potential crashes from pte_pfn() or incorrect dirty folio accounting
+from pte_dirty(). Fix both by guarding with pte_present() checks.
 
-As a result, successful activation skips btrfs_block_rsv_add() and leaves
-trans->chunk_bytes_reserved unchanged. Use a separate variable for the
-activation result so positive success does not affect the later
-reservation. Keep activation failures in ret instead of returning early so
-the function uses the common tail path.
-
-Fixes: b6a98021e401 ("btrfs: zoned: activate necessary block group")
-CC: stable@vger.kernel.org
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Guanghui Yang <3497809730@qq.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Link: https://lore.kernel.org/20260708003955.4024340-1-wangkefeng.wang@huawei.com
+Link: https://lore.kernel.org/20260706111958.3649651-1-wangkefeng.wang@huawei.com
+Fixes: fd35ca3d12cc ("mm/migrate_device.c: copy pte dirty bit to page")
+Fixes: 6c287605fd56 ("mm: remember exclusively mapped anonymous pages with PG_anon_exclusive")
+Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+Reviewed-by: Balbir Singh <balbirs@nvidia.com>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Gregory Price <gourry@gourry.net>
+Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Rakie Kim <rakie.kim@sk.com>
+Cc: Ying Huang <ying.huang@linux.alibaba.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ adapted `folio_test_anon(folio)`/`folio_mark_dirty(folio)` context lines to 6.6's `PageAnon(page)`/`folio_mark_dirty(page_folio(page))` spelling since the `folio` local doesn't exist ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/block-group.c |   34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ mm/migrate_device.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -4280,25 +4280,29 @@ static void reserve_chunk_space(struct b
- 		if (IS_ERR(bg)) {
- 			ret = PTR_ERR(bg);
- 		} else {
-+			int activate_ret;
-+
- 			/*
- 			 * We have a new chunk. We also need to activate it for
- 			 * zoned filesystem.
- 			 */
--			ret = btrfs_zoned_activate_one_bg(info, true);
--			if (ret < 0)
--				return;
--
--			/*
--			 * If we fail to add the chunk item here, we end up
--			 * trying again at phase 2 of chunk allocation, at
--			 * btrfs_create_pending_block_groups(). So ignore
--			 * any error here. An ENOSPC here could happen, due to
--			 * the cases described at do_chunk_alloc() - the system
--			 * block group we just created was just turned into RO
--			 * mode by a scrub for example, or a running discard
--			 * temporarily removed its free space entries, etc.
--			 */
--			btrfs_chunk_alloc_add_chunk_item(trans, bg);
-+			activate_ret = btrfs_zoned_activate_one_bg(info, true);
-+			if (activate_ret < 0) {
-+				ret = activate_ret;
-+			} else {
-+				/*
-+				 * If we fail to add the chunk item here, we end
-+				 * up trying again at phase 2 of chunk allocation,
-+				 * at btrfs_create_pending_block_groups(). So
-+				 * ignore any error here. An ENOSPC here could
-+				 * happen, due to the cases described at
-+				 * do_chunk_alloc() - the system block group we
-+				 * just created was just turned into RO mode by a
-+				 * scrub for example, or a running discard
-+				 * temporarily removed its free space entries, etc.
-+				 */
-+				btrfs_chunk_alloc_add_chunk_item(trans, bg);
-+			}
- 		}
- 	}
+--- a/mm/migrate_device.c
++++ b/mm/migrate_device.c
+@@ -194,7 +194,8 @@ again:
+ 			bool anon_exclusive;
+ 			pte_t swp_pte;
  
+-			flush_cache_page(vma, addr, pte_pfn(pte));
++			if (pte_present(pte))
++				flush_cache_page(vma, addr, pte_pfn(pte));
+ 			anon_exclusive = PageAnon(page) && PageAnonExclusive(page);
+ 			if (anon_exclusive) {
+ 				pte = ptep_clear_flush(vma, addr, ptep);
+@@ -213,7 +214,7 @@ again:
+ 			migrate->cpages++;
+ 
+ 			/* Set the dirty flag on the folio now the pte is gone. */
+-			if (pte_dirty(pte))
++			if (pte_present(pte) && pte_dirty(pte))
+ 				folio_mark_dirty(page_folio(page));
+ 
+ 			/* Setup special migration page table entry */
 
 
