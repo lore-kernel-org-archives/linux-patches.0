@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA33246781;
-	Thu, 20 Aug 2026 16:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F125246781;
+	Thu, 20 Aug 2026 16:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244180; cv=none; b=Hvlgcn2VlSC3gjrQMW4z+YvBoulAykFQD6whwIRssLiQy7U+cMY2pRc2NF2hXSdav4jnOeovnQIXKy1neYdRGyzA0jiLZKZwyB6B/ikyweR+QoTJrnCjLuTCeUGcBPl3Tv5bgfxsrTDiEED5ZP7DGs/IkMMwHv1n3Knr+jnJrZ8=
+	t=1787244183; cv=none; b=MOqIu60qjotH3AgkgUWRWRP+2GyHHrBTEvI+tNoe/S1iHeT7sUvVqZUn4S2Sy/EwwDCM6Z2+9RI3+s9Ok3LIQdNCGIJiDMj+8ggfxW2dMUOwWFaOymHhYkPwPw/KKtAscNNc5Y1cJ+bOsyL3NBWhynXa3E3yPUj3T6cFhvbkWow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244180; c=relaxed/simple;
-	bh=6cUko1QHBjdqzV2ConMVz3vuf4vQeOMdpRqjDhNSDVA=;
+	s=arc-20240116; t=1787244183; c=relaxed/simple;
+	bh=23Qrzcer9LaICFPpOyE/rEag083xZJdx+hsVv2V0fFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D83LdWYYcQE8d8BPhh2Nm1EFbc6tYIrvS9M/2eWfx4R0hUvUqdUaXX7tpYE6bya9JxIRZtNZq0w5gwVRdDgIrvWhKYN5bXLx3iFgYHmA0BNwy9g0XkH5Ei7Ldbo5CKyWFfhZbIyFZ+NavthaLYs2s6EXQ8/uwW2a5eTqgj684dY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pn5AEXA5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m1sUlumB4KA1qRe97K2ZZe+7orJF/Cay43NJ08DRg9vFRq9DXlnBgvNLBkZmC2NPSGY1yl+h6A6sXoEcc5sr2bkZQwdtOSVpRkEy8KogORp4F0000g7El4X5gEtLNUTWDH+e4RhstBNgsPh9GRUHV7G6/RCzt5lZf9L4v/+ddVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zm6ANwte; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pn5AEXA5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8D631F000E9;
-	Thu, 20 Aug 2026 16:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zm6ANwte"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D472E1F000E9;
+	Thu, 20 Aug 2026 16:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244179;
-	bh=CpKuTkipYCa8w3s4oydeSkX95LVV6+i/gceFE7Js3j8=;
+	s=korg; t=1787244182;
+	bh=eplt7GhitT4KavN4uFwWZ6yb88VaQAiZCgTBwmriT9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pn5AEXA57SduZyVOoItZqZXenehCsOwIYGWDQxH7Gb7KVTuUvDGVTlM944x+cugY9
-	 8uz97eBKEbod3HxEW1trYfTiWAbXPsSRp0s+CetTJI4GFFGSor/WR76tSXtk+VrgsY
-	 FUl2uxLEgjQqeoZk0Lc95puTW6trk2zB4rNwVJCg=
+	b=Zm6ANwtemWgs4hQWg71JVBdUoegsVbNWhvRr3HS8TG7u8y1JQ0CnTIGAdiW4pOHz9
+	 KDkWghVzSBJiz8OSGPy1SZRVZKa2rkITyDyk9LyLbcXoJUzBFCCAITI3Hm78+ksWDL
+	 69Ps9QhilhwpM4Jr+aWxu30Mz8xBZUGB8jmKZaO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stefano Brivio <sbrivio@redhat.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 079/235] netfilter: nft_set_pipapo: prepare pipapo_get helper for on-demand clone
-Date: Thu, 20 Aug 2026 16:55:15 +0200
-Message-ID: <20260820145218.840760593@linuxfoundation.org>
+Subject: [PATCH 5.10 080/235] netfilter: nft_set_pipapo: move cloning of match info to insert/removal path
+Date: Thu, 20 Aug 2026 16:55:16 +0200
+Message-ID: <20260820145218.874258950@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -54,15 +54,28 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit a238106703ab4ae1090b86eba128815b8626d8f1 ]
+[ Upstream commit 3f1d886cc7c3525d4dbeee24bfa9bb3fe0d48ddc ]
 
-The helper uses priv->clone unconditionally which will fail once we do
-the clone conditionally on first insert or removal.
+This set type keeps two copies of the sets' content,
+   priv->match (live version, used to match from packet path)
+   priv->clone (work-in-progress version of the 'future' priv->match).
 
-'nft get element' from userspace needs to use priv->match since this
-runs from rcu read side lock section.
+All additions and removals are done on priv->clone.  When transaction
+completes, priv->clone becomes priv->match and a new clone is allocated
+for use by next transaction.
 
-Prepare for this by passing the match backend data as argument.
+Problem is that the cloning requires GFP_KERNEL allocations but we
+cannot fail at either commit or abort time.
+
+This patch defers the clone until we get an insertion or removal
+request.  This allows us to handle OOM situations correctly.
+
+This also allows to remove ->dirty in a followup change:
+
+If ->clone exists, ->dirty is always true
+If ->clone is NULL, ->dirty is always false, no elements were added
+or removed (except catchall elements which are external to the specific
+set backend).
 
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
@@ -71,95 +84,161 @@ Stable-dep-of: 47e65eff5069 ("netfilter: nft_set_pipapo: don't leak bad clone in
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_set_pipapo.c |   24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ net/netfilter/nft_set_pipapo.c |   82 ++++++++++++++++++++++++++++++-----------
+ 1 file changed, 61 insertions(+), 21 deletions(-)
 
 --- a/net/netfilter/nft_set_pipapo.c
 +++ b/net/netfilter/nft_set_pipapo.c
-@@ -502,6 +502,7 @@ out:
-  * pipapo_get() - Get matching element reference given key data
-  * @net:	Network namespace
-  * @set:	nftables API set representation
-+ * @m:		storage containing active/existing elements
-  * @data:	Key data to be matched against existing elements
-  * @genmask:	If set, check that element is active in given genmask
-  * @tstamp:	timestamp to check for expired elements
-@@ -515,12 +516,11 @@ out:
-  */
- static struct nft_pipapo_elem *pipapo_get(const struct net *net,
- 					  const struct nft_set *set,
-+					  const struct nft_pipapo_match *m,
- 					  const u8 *data, u8 genmask,
- 					  u64 tstamp, gfp_t gfp)
- {
- 	struct nft_pipapo_elem *ret = ERR_PTR(-ENOENT);
--	struct nft_pipapo *priv = nft_set_priv(set);
--	struct nft_pipapo_match *m = priv->clone;
- 	unsigned long *res_map, *fill_map = NULL;
- 	struct nft_pipapo_field *f;
- 	int i;
-@@ -608,7 +608,10 @@ out:
- static void *nft_pipapo_get(const struct net *net, const struct nft_set *set,
- 			    const struct nft_set_elem *elem, unsigned int flags)
- {
--	return pipapo_get(net, set, (const u8 *)elem->key.val.data,
-+	struct nft_pipapo *priv = nft_set_priv(set);
-+	struct nft_pipapo_match *m = rcu_dereference(priv->match);
-+
-+	return pipapo_get(net, set, m, (const u8 *)elem->key.val.data,
- 			  nft_genmask_cur(net), get_jiffies_64(), GFP_ATOMIC);
+@@ -1191,6 +1191,41 @@ static int pipapo_realloc_scratch(struct
+ 	return 0;
  }
  
-@@ -1218,7 +1221,7 @@ static int nft_pipapo_insert(const struc
++static bool nft_pipapo_transaction_mutex_held(const struct nft_set *set)
++{
++#ifdef CONFIG_PROVE_LOCKING
++	const struct net *net = read_pnet(&set->net);
++	struct nftables_pernet *nft_net = net_generic(net, nf_tables_net_id);
++
++	return lockdep_is_held(&nft_net->commit_mutex);
++#else
++	return true;
++#endif
++}
++
++static struct nft_pipapo_match *pipapo_clone(struct nft_pipapo_match *old);
++
++/**
++ * pipapo_maybe_clone() - Build clone for pending data changes, if not existing
++ * @set:	nftables API set representation
++ *
++ * Return: newly created or existing clone, if any. NULL on allocation failure
++ */
++static struct nft_pipapo_match *pipapo_maybe_clone(const struct nft_set *set)
++{
++	struct nft_pipapo *priv = nft_set_priv(set);
++	struct nft_pipapo_match *m;
++
++	if (priv->clone)
++		return priv->clone;
++
++	m = rcu_dereference_protected(priv->match,
++				      nft_pipapo_transaction_mutex_held(set));
++	priv->clone = pipapo_clone(m);
++
++	return priv->clone;
++}
++
+ /**
+  * nft_pipapo_insert() - Validate and insert ranged elements
+  * @net:	Network namespace
+@@ -1208,14 +1243,17 @@ static int nft_pipapo_insert(const struc
+ 	union nft_pipapo_map_bucket rulemap[NFT_PIPAPO_MAX_FIELDS];
+ 	const u8 *start = (const u8 *)elem->key.val.data, *end;
+ 	struct nft_pipapo_elem *e = elem->priv, *dup;
++	struct nft_pipapo_match *m = pipapo_maybe_clone(set);
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+-	struct nft_pipapo_match *m = priv->clone;
+ 	u8 genmask = nft_genmask_next(net);
+ 	u64 tstamp = nft_net_tstamp(net);
+ 	struct nft_pipapo_field *f;
+ 	const u8 *start_p, *end_p;
+ 	int i, bsize_max, err = 0;
+ 
++	if (!m)
++		return -ENOMEM;
++
+ 	if (nft_set_ext_exists(ext, NFT_SET_EXT_KEY_END))
+ 		end = (const u8 *)nft_set_ext_key_end(ext)->data;
  	else
- 		end = start;
+@@ -1737,7 +1775,10 @@ static void pipapo_reclaim_match(struct
+ static void nft_pipapo_commit(const struct nft_set *set)
+ {
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+-	struct nft_pipapo_match *new_clone, *old;
++	struct nft_pipapo_match *old;
++
++	if (!priv->clone)
++		return;
  
--	dup = pipapo_get(net, set, start, genmask, tstamp, GFP_KERNEL);
-+	dup = pipapo_get(net, set, m, start, genmask, tstamp, GFP_KERNEL);
- 	if (!IS_ERR(dup)) {
- 		/* Check if we already have the same exact entry */
- 		const struct nft_data *dup_key, *dup_end;
-@@ -1240,7 +1243,7 @@ static int nft_pipapo_insert(const struc
+ 	if (time_after_eq(jiffies, priv->last_gc + nft_set_gc_interval(set)))
+ 		pipapo_gc_scan(set, priv->clone);
+@@ -1745,18 +1786,13 @@ static void nft_pipapo_commit(const stru
+ 	if (!priv->dirty)
+ 		goto out;
  
- 	if (PTR_ERR(dup) == -ENOENT) {
- 		/* Look for partially overlapping entries */
--		dup = pipapo_get(net, set, end, nft_genmask_next(net), tstamp,
-+		dup = pipapo_get(net, set, m, end, nft_genmask_next(net), tstamp,
- 				 GFP_KERNEL);
- 	}
+-	new_clone = pipapo_clone(priv->clone);
+-	if (!new_clone)
+-		goto out;
+-
++	old = rcu_replace_pointer(priv->match, priv->clone,
++				  nft_pipapo_transaction_mutex_held(set));
++	priv->clone = NULL;
+ 	priv->dirty = false;
  
-@@ -1810,16 +1813,18 @@ static void *nft_pipapo_deactivate(const
+-	old = rcu_access_pointer(priv->match);
+-	rcu_assign_pointer(priv->match, priv->clone);
+ 	if (old)
+ 		call_rcu(&old->rcu, pipapo_reclaim_match);
+-
+-	priv->clone = new_clone;
+ out:
+ 	pipapo_gc_queue(set);
+ }
+@@ -1764,21 +1800,15 @@ out:
+ static void nft_pipapo_abort(const struct nft_set *set)
+ {
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+-	struct nft_pipapo_match *new_clone, *m;
+ 
+ 	if (!priv->dirty)
+ 		return;
+ 
+-	m = rcu_dereference(priv->match);
+-
+-	new_clone = pipapo_clone(m);
+-	if (!new_clone)
++	if (!priv->clone)
+ 		return;
+-
+ 	priv->dirty = false;
+-
+ 	pipapo_free_match(priv->clone);
+-	priv->clone = new_clone;
++	priv->clone = NULL;
+ }
+ 
+ /**
+@@ -1813,10 +1843,15 @@ static void *nft_pipapo_deactivate(const
  				   const struct nft_set *set,
  				   const struct nft_set_elem *elem)
  {
-+	const struct nft_pipapo *priv = nft_set_priv(set);
-+	struct nft_pipapo_match *m = priv->clone;
+-	const struct nft_pipapo *priv = nft_set_priv(set);
+-	struct nft_pipapo_match *m = priv->clone;
++	struct nft_pipapo_match *m = pipapo_maybe_clone(set);
  	struct nft_pipapo_elem *e;
  
--	e = pipapo_get(net, set, (const u8 *)elem->key.val.data,
-+	e = pipapo_get(net, set, m, (const u8 *)elem->key.val.data,
++	/* removal must occur on priv->clone, if we are low on memory
++	 * we have no choice and must fail the removal request.
++	 */
++	if (!m)
++		return NULL;
++
+ 	e = pipapo_get(net, set, m, (const u8 *)elem->key.val.data,
  		       nft_genmask_next(net), nft_net_tstamp(net), GFP_KERNEL);
  	if (IS_ERR(e))
- 		return NULL;
+@@ -2102,7 +2137,12 @@ static void nft_pipapo_walk(const struct
  
- 	nft_set_elem_change_active(net, set, &e->ext);
- 
--	return &e->priv;
-+	return e;
- }
- 
- /**
-@@ -1845,8 +1850,9 @@ static bool nft_pipapo_flush(const struc
- {
- 	struct nft_pipapo_elem *e = elem;
- 
--	return pipapo_deactivate(net, set, (const u8 *)nft_set_ext_key(&e->ext),
--				 &e->ext);
-+	nft_set_elem_change_active(net, set, &e->ext);
+ 	switch (iter->type) {
+ 	case NFT_ITER_UPDATE:
+-		m = priv->clone;
++		m = pipapo_maybe_clone(set);
++		if (!m) {
++			iter->err = -ENOMEM;
++			return;
++		}
 +
-+	return true;
- }
- 
- /**
+ 		nft_pipapo_do_walk(ctx, set, m, iter);
+ 		break;
+ 	case NFT_ITER_READ:
 
 
