@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A395377A82;
-	Thu, 20 Aug 2026 16:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4435D46D0BD;
+	Thu, 20 Aug 2026 16:36:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243799; cv=none; b=ux2AnPZ2YiLrKZGVu7oWCAEWAtgkI0atQzKw88hygKVEWGl3moEZaQEhGQGhK9pkQZdwfJerXu4zgLU1waemz+IocSzKeZs2zKaDvIOoHa+4lv4ODeEOeMGLxrkSppS93NRUO2zvX9elfG+Bl1jc8kEpXRS89fIRzRPrQnHhd70=
+	t=1787243802; cv=none; b=ND47bMEMzzf98ASYNfKhQJVrzN/rPhgP8+RfPn8Xuw+O+Hlyfw1RApDvqCTFKrwnPdeI/MzN4TyZL9SksB6ptpasXqdBgX5oXZWLvVD/geU46B2Z1pxpYC3VQsEBZzjxL3DFVxmQWIXV8uck6gen7zq/i8PcIwLnjXQNl0bOo+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243799; c=relaxed/simple;
-	bh=j53EUQjB3YwWG/vCKgOjW+kewL/R/WoZ/eSCe7VxOIo=;
+	s=arc-20240116; t=1787243802; c=relaxed/simple;
+	bh=8Lx3V4mg8mJPWAdntzid4NvmUL2CHNsQsCihnjq/QaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t5FCN0wvxYHVwhVhno9kllIPoE2YgRPwM0rZ9MST8ulJ8WSs9Ox140RRrmA5W5fZ27zM5HLLZaCYdmSB+qlvEO0Uq+TsxcaXuFbw4ksKfGqwO9hT8nqKeod7DNbRPUvrhAjLZxzBR5swmwXLLN4w+GlpQ1blFhIAbYBNoNiZ7vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lfrFFKky; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=muK4ekdyWwgW7gEAyB+2mmHZ3C1ColE6hrZQDCQFgn+74hOsO0E6cjMAKN0SZRYEUN1v+7NpEpWQy6N89D4fh30hyBWbafaeWSR7/v9kC+2pW8qowBLk3VXLnlor6qeeetPRBR7W6ZiAkhM0CXEw8q0bwYh4ogWn43E5el5AOVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EUxCNVMA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lfrFFKky"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64BDD1F00A3A;
-	Thu, 20 Aug 2026 16:36:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EUxCNVMA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FB91F000E9;
+	Thu, 20 Aug 2026 16:36:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243797;
-	bh=Epq/ntW/RyXtdIwPHl5Cy05sO6ZK/ix2p2pM1SwQ4oo=;
+	s=korg; t=1787243800;
+	bh=NMI6/+8SGTwjuqDYZfneRA3WaD8Q21MzEEbrUQwu+bE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lfrFFKkyfy3r1gzS2HxI+Bod6nS+37Mx+Ec+vfxbXOocZW7domTCJs5vJAVJprEN8
-	 E9OOHzzM/vZPbvrPfkhdOt55FS6+BPO9c8BbegbOqKheBp4IvHr8P1J84Y2J8TyJcp
-	 +W/7bjyETnqVRdd/tcavPfO6Yh6qR0gnx9YiRcC4=
+	b=EUxCNVMAovRONwumuoPOYBF/IXUjjGX3zoVcseUCY4nVJm7eR1BalvH37S4V7tZJm
+	 WTWh85WIQO9+uQrj61x6wLPhdVhY72Iu4Gsfs2HAG92ER53dYdFanwa/E3dKhjS7C7
+	 EzUZnNEAg4UIwiextKZNy/lqA803TIF1moqAyCmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 219/272] smb/server: fix minimum SMB1 PDU size
-Date: Thu, 20 Aug 2026 16:56:43 +0200
-Message-ID: <20260820145238.173546367@linuxfoundation.org>
+Subject: [PATCH 5.15 220/272] smb/server: fix minimum SMB2 PDU size
+Date: Thu, 20 Aug 2026 16:56:44 +0200
+Message-ID: <20260820145238.204172818@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -55,12 +55,11 @@ Content-Transfer-Encoding: 8bit
 
 From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-[ Upstream commit 3b9c30eb8f5aaad4a54cdfa470b74c0467cc71e8 ]
+[ Upstream commit 4c7d8eb9a79ae5400eac19c4f6f0815bff674452 ]
 
-Since the RFC1002 header has been removed from `struct smb_hdr`,
-the minimum SMB1 PDU size should be updated as well.
+The minimum SMB2 PDU size should be updated to the size of
+`struct smb2_pdu` (that is, the size of `struct smb2_hdr` + 2).
 
-Fixes: 83bfbd0bb902 ("cifs: Remove the RFC1002 header from smb_hdr")
 Suggested-by: David Howells <dhowells@redhat.com>
 Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
@@ -71,29 +70,28 @@ Stable-dep-of: cfc0b8e5080a ("ksmbd: validate minimum PDU size for transform req
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/connection.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/ksmbd/connection.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/fs/ksmbd/connection.c
 +++ b/fs/ksmbd/connection.c
-@@ -305,7 +305,8 @@ bool ksmbd_conn_alive(struct ksmbd_conn
- 	return true;
- }
+@@ -307,7 +307,7 @@ bool ksmbd_conn_alive(struct ksmbd_conn
  
--#define SMB1_MIN_SUPPORTED_HEADER_SIZE (sizeof(struct smb_hdr))
-+/* "+2" for BCC field (ByteCount, 2 bytes) */
-+#define SMB1_MIN_SUPPORTED_PDU_SIZE (sizeof(struct smb_hdr) + 2)
- #define SMB2_MIN_SUPPORTED_HEADER_SIZE (sizeof(struct smb2_hdr) + 4)
+ /* "+2" for BCC field (ByteCount, 2 bytes) */
+ #define SMB1_MIN_SUPPORTED_PDU_SIZE (sizeof(struct smb_hdr) + 2)
+-#define SMB2_MIN_SUPPORTED_HEADER_SIZE (sizeof(struct smb2_hdr) + 4)
++#define SMB2_MIN_SUPPORTED_PDU_SIZE (sizeof(struct smb2_pdu))
  
  /**
-@@ -365,7 +366,7 @@ int ksmbd_conn_handler_loop(void *p)
- 		if (pdu_size > MAX_STREAM_PROT_LEN)
- 			break;
+  * ksmbd_conn_handler_loop() - session thread to listen on new smb requests
+@@ -399,7 +399,7 @@ int ksmbd_conn_handler_loop(void *p)
  
--		if (pdu_size < SMB1_MIN_SUPPORTED_HEADER_SIZE)
-+		if (pdu_size < SMB1_MIN_SUPPORTED_PDU_SIZE)
- 			break;
+ 		if (((struct smb2_hdr *)smb_get_msg(conn->request_buf))->ProtocolId ==
+ 		    SMB2_PROTO_NUMBER) {
+-			if (pdu_size < SMB2_MIN_SUPPORTED_HEADER_SIZE)
++			if (pdu_size < SMB2_MIN_SUPPORTED_PDU_SIZE)
+ 				break;
+ 		}
  
- 		/* 4 for rfc1002 length field */
 
 
