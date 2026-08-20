@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE1E4195C0;
-	Thu, 20 Aug 2026 16:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ADE442AF95;
+	Thu, 20 Aug 2026 16:40:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244024; cv=none; b=nR3TYps1WY5J4ZOxNyABYxl5wQD6MhYeKOYQ3j+Nbu+nTxiUGJTFEN9rIcccOQSqAIuD+HVpK5kc0No+d8m4M6WrMoni9Lc2DyDB+a4+bDSrvWAWO1tpbgSj8CELXXA/Avz6HQYRQO+aOiTTje/YSkyi/nfgeJ/TVagE6hL/WwA=
+	t=1787244027; cv=none; b=jeZVmiOtKjl6hVqev5E8uCPB00LxvbLvEXGT5viNianBZhzU4rNv/slLeCAzVeSkTJmLRNMS1MRVv/0yVkLnPFPVdP1QEwuTshRd1QLdc/gudKKzRVwhK7JoEOk8VEW/TjtlTcBA9gd2tV8F5Nzk/PSvFSKA/rQz2AZNqFvmp8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244024; c=relaxed/simple;
-	bh=0Z+1HOCk0J2AXRf6T58CKw1nXLripbs0VaDLh5NyHC4=;
+	s=arc-20240116; t=1787244027; c=relaxed/simple;
+	bh=pHOcKcDf8FvPjTjZdx1P3PBwPaTNacn55R3RZXdL+5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AlKiJ/HV/2s/r9RWvcZQyohr3P9uv8+tms6OjYzJhAvo/9y8lF3eOnC5IQmmFXgEMqrBh1X+xJ2AN64fXP43ZSfdLF2irqsDcQL3MYcmlnUFX7M8/ARmJvfa9RsQqlP7dGT+09/CVio3fmo/FrbfYaxQt+02lqQnvdbu+hVeEoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YvW9tSBd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ByZY2g7aI3DjeSzB3vvZM4vm5J4GWlJWsTy+8YNkHGrIjitKX9uAUp7K5xlQpWb57EU6374dqIOKYG8NVcrJOmI1mCl60eC7RvpEqmd1w098OKmeOZzM7+KOV3SFtRN1Psxv8ZeB1UjeJFBUSsNZvHBTFdmo38jsFqrcA/PdFIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uy7wmkoQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YvW9tSBd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68581F000E9;
-	Thu, 20 Aug 2026 16:40:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uy7wmkoQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FCC1F00A3D;
+	Thu, 20 Aug 2026 16:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244023;
-	bh=r05UfiICQEHq2TQjKhFgwThmkC8aT+jhHmNsY6nHXz8=;
+	s=korg; t=1787244026;
+	bh=IRu0/Y//yZ07Ke34VxNczVUeep2/8E+44PUWp03Jj+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YvW9tSBduVXBz8nx4HhR7QVzfya/iTmlGfryoYNeFFUH1m1EfI1heBVeWXtvMEKWx
-	 V598TyWm2AjWXzTGHuNe/nzTFbs56Lh5q01f+TSU3bWnxoDdcimM4YzgUIFK6XIZ+U
-	 IM8DxAE3sSsSzc2/OaiLWNMZfqfS2twKf51Ux8k8=
+	b=uy7wmkoQQF3MGo7e6eY0LbyWIvBrY5WlhAXC8xPogqJ70Qb+tvJDwyo8hl0HmwPwZ
+	 cUn6bRoU0lwxwK392PCsNWZQHsI/99kf/PGvWsD15wbmLQ6aQ9kzCQyBqfU82HpbCR
+	 pCrr3wGPBZR1rgiSrhvI8kdAMWmKRNAKL0FcZUAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 026/235] Input: sur40 - fix V4L error path cleanup
-Date: Thu, 20 Aug 2026 16:54:22 +0200
-Message-ID: <20260820145217.231717499@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 5.10 027/235] libceph: Avoid using invalid osd indices from primary_temp
+Date: Thu, 20 Aug 2026 16:54:23 +0200
+Message-ID: <20260820145217.259820536@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -50,48 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 062dc4693e2c10d77de06f61e6f3faf37c0a8383 upstream.
+commit 3660b98d1204b419f6a77e9a295f148dcf38d042 upstream.
 
-In sur40_probe(), if video_register_device() fails, the error path jumps to
-err_unreg_video. This incorrectly attempts to unregister a video device
-that was never successfully registered, and fails to free the V4L2 control
-handler (v4l2_ctrl_handler_free) that was initialized immediately prior.
+A corrupted osdmap received from a Ceph monitor or OSD may contain osd
+indices in its pg_temp, primary_temp, pg_upmap, and pg_upmap_items parts
+that don't exist, i.e., that are greater than max_osd or smaller than
+CEPH_HOMELESS_OSD (-1). These indices are used to create the up and
+acting set in ceph_pg_to_up_acting_osds(), called from calc_target().
+While most of these osd indices are checked, the one from primary_temp
+is not. Subsequently, this may lead to calc_target() returning this
+(potentially invalid) index as target osd for a (linger) request.
+Because the osd_state, osd_weight, and osd_addr arrays only contain
+max_osd entries (with indices 0 to max_osd -1), this leads to
+out-of-bounds accesses when trying to read values from these arrays.
 
-Fix this by introducing an err_free_ctrl label to properly free the V4L2
-control handler and bypass video_unregister_device() when video device
-registration fails.
+This patch fixes the issue by adding a check to get_temp_osds(), so that
+only valid osd indices from primary_temp are used, and it falls back to
+using the primary from pg_temp or the up set if it is invalid.
 
-Reported-by: sashiko-bot@kernel.org
+[ idryomov: changelog ]
+
 Cc: stable@vger.kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Link: https://patch.msgid.link/20260616051235.1549517-2-dmitry.torokhov@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 5e8d4d36bf23 ("libceph: add support for primary_temp mappings")
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/sur40.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ceph/osdmap.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/input/touchscreen/sur40.c
-+++ b/drivers/input/touchscreen/sur40.c
-@@ -787,7 +787,7 @@ static int sur40_probe(struct usb_interf
- 	if (error) {
- 		dev_err(&interface->dev,
- 			"Unable to register video subdevice.");
--		goto err_unreg_video;
-+		goto err_free_ctrl;
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -2772,9 +2772,10 @@ static void get_temp_osds(struct ceph_os
+ 		}
  	}
  
- 	/* register the polled input device */
-@@ -806,6 +806,8 @@ static int sur40_probe(struct usb_interf
+-	/* primary_temp? */
++	/* primary_temp? (shouldn't ever be a nonexistent or down OSD) */
+ 	pg = lookup_pg_mapping(&osdmap->primary_temp, pgid);
+-	if (pg)
++	if (pg && !WARN_ON_ONCE(ceph_osd_is_down(osdmap,
++						 pg->primary_temp.osd)))
+ 		temp->primary = pg->primary_temp.osd;
+ }
  
- err_unreg_video:
- 	video_unregister_device(&sur40->vdev);
-+err_free_ctrl:
-+	v4l2_ctrl_handler_free(&sur40->hdl);
- err_unreg_v4l2:
- 	v4l2_device_unregister(&sur40->v4l2);
- err_free_buffer:
 
 
