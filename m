@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE29236A37A;
-	Thu, 20 Aug 2026 15:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D372B37F8B3;
+	Thu, 20 Aug 2026 15:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238514; cv=none; b=JL0+hlvaTkJ5gzFoizwTVYv8GW9lvqCkyVLiSeV4dSYzlrYa6L/jGrD8XUhha4QKtezjIIIsqHzkTJg+P6hwHb0CzcHU/nMdqnZodY8eyeukCrtHGywbukmUJnMnDeCcl6eWi/39Lqr/C2ttGfJxEmSvBdOYz+V5P3N5+U0jjgA=
+	t=1787238518; cv=none; b=l1LXhYcdyDeLqeutJG0/Ko/E4IvweO8OhNCqBxJae6OveceiY7qOtk6xR7RPO4gHqtpVEZgnT1jAvq8NjLey2oIrleSrfIAoAWDWn/sm7FZsk84hqCEbNfDR7J1xZ5UgfCNkAQ0j5tSWOnwl9Y+l93YG1M2fHbIT2s06ws6VMN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238514; c=relaxed/simple;
-	bh=fpuLcqRdZp0UtcZDAvfBItTxbRpw39lwL9Ay73FJngA=;
+	s=arc-20240116; t=1787238518; c=relaxed/simple;
+	bh=xN58pBCPhOo7YDzF2gj48JFM3vxjhlOLsXy/wm+TCcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/vTts50whEslJX3UIQ8ki553cXlChFk5KYfWLIDYJ7oUYUxmiJCyLkuB0NEnEQaDq4u9JmuXRMxPPapcANutKi6BMQD54kzsx3dIfBV/vGRadsVaNTuZVniMnVuvMJINpPnw9rvYF/cLBsJDqRhJjHDbh0fbXv8OxfLIoWthyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mjdM6aHc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SMnFilfMXVfgMagkI9BAPoS/08VqJZslTXKUMF2jS61nyqOf5SbM6XrCW+YFxyTQMfKampfoDutzN7fPuixQ+pK/FNTQTfMjjOMq6jYy2oPaBHaS+419LMRi2nk/XZyXOI7p95WIT7JoTVY9sHb2MriC8WxvM32Wy2E1KC0nmSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbvl6/r1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mjdM6aHc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252B31F00A3A;
-	Thu, 20 Aug 2026 15:08:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbvl6/r1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC6B51F000E9;
+	Thu, 20 Aug 2026 15:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238513;
-	bh=0aGGkrqMh0Gt+8vK2v0RNF67JVpHWank9cbnC4NyfNY=;
+	s=korg; t=1787238516;
+	bh=NI6iZqSBoh/64HqZj17BJJYuQmfuVa1i4vv05+EVLTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mjdM6aHcs2AefQw426+Hoj8PsV7yO0kY7ZJ50q+bAEIV6L96NgorIJ7dr1+UknWE6
-	 I0ANvVzM6m6UEIkQHMFyQsoWjupkUHyz/rovCSCKSbVA6/O6h7EUv66PmgfJejelg6
-	 VCrsSnd4CmtFnJErhf8ZY0ezTPbmIdHBjJC2rU0Q=
+	b=gbvl6/r1E5Yk9JSZ0RQNbfZXfxaGli1mrrWB3QKLry6kLLagKGlhdrYhUslrl0IrJ
+	 o+SiprcNe8DHI+4pV/n8VL1U3gWEi59i8tOYWn24MMvOZKJmVJUuYRbLARlxF+Dbzo
+	 Lcv0e+a5y23TehKfcn/OsvqPxHtRB5PtGbu6Hc70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ralf Lici <ralf@mandelbit.com>,
 	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 173/228] ovpn: fix NULL dereference when killing missing key
-Date: Thu, 20 Aug 2026 16:55:15 +0200
-Message-ID: <20260820145249.950871428@linuxfoundation.org>
+Subject: [PATCH 7.1 174/228] ovpn: finish crypto callback cleanup before peer release
+Date: Thu, 20 Aug 2026 16:55:16 +0200
+Message-ID: <20260820145249.979709634@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -53,55 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Ralf Lici <ralf@mandelbit.com>
 
-[ Upstream commit 41d44ac7a61e2f74453af40d4fe1b82af9ea0ada ]
+[ Upstream commit 9e163917a86c6adfbe150e13f4c73653a54616de ]
 
-ovpn_crypto_kill_key assumes both crypto slots are populated and
-dereferences each slot before checking it. That is not guaranteed: a
-peer can have only one installed key, and the kill path may be asked to
-remove a key that is not present.
+Crypto completion callbacks hold both key-slot and peer references. The
+peer reference pins the netdev, and dropping the last peer reference can
+let netdev unregistration and module removal make progress.
 
-Read each slot once while holding the crypto state lock, check for NULL
-before looking at key_id, and only replace the slot that actually
-matches.
+Do not release that peer reference before the callback has finished its
+own cleanup. If ovpn_crypto_key_slot_put runs after ovpn_peer_put, it can
+schedule an RCU callback backed by module text after ovpn_cleanup
+rcu_barrier has already run. The TX error path also freed the remaining
+skb after ovpn_peer_put, leaving callback cleanup outside the peer/netdev
+lifetime window.
 
-Fixes: 89d3c0e4612a ("ovpn: kill key and notify userspace in case of IV exhaustion")
+Release the key slot and free any remaining skb first, then drop the peer
+reference as the last callback action.
+
+Fixes: 8534731dbf2d ("ovpn: implement packet processing")
 Signed-off-by: Ralf Lici <ralf@mandelbit.com>
 Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/crypto.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/net/ovpn/io.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ovpn/crypto.c b/drivers/net/ovpn/crypto.c
-index 90580e32052fb..2e95f29514fc4 100644
---- a/drivers/net/ovpn/crypto.c
-+++ b/drivers/net/ovpn/crypto.c
-@@ -58,15 +58,19 @@ void ovpn_crypto_state_release(struct ovpn_crypto_state *cs)
- bool ovpn_crypto_kill_key(struct ovpn_crypto_state *cs, u8 key_id)
- {
- 	struct ovpn_crypto_key_slot *ks = NULL;
-+	struct ovpn_crypto_key_slot *tmp;
-+	int slot = 0;
+diff --git a/drivers/net/ovpn/io.c b/drivers/net/ovpn/io.c
+index 9a66d693039a3..9526f8096da60 100644
+--- a/drivers/net/ovpn/io.c
++++ b/drivers/net/ovpn/io.c
+@@ -204,10 +204,10 @@ void ovpn_decrypt_post(void *data, int ret)
+ 		ovpn_dev_dstats_rx_dropped(peer->ovpn->dev);
+ 	kfree_skb(skb);
+ drop_nocount:
+-	if (likely(peer))
+-		ovpn_peer_put(peer);
+ 	if (likely(ks))
+ 		ovpn_crypto_key_slot_put(ks);
++	if (likely(peer))
++		ovpn_peer_put(peer);
+ }
  
- 	spin_lock_bh(&cs->lock);
--	if (rcu_access_pointer(cs->slots[0])->key_id == key_id) {
--		ks = rcu_replace_pointer(cs->slots[0], NULL,
--					 lockdep_is_held(&cs->lock));
--	} else if (rcu_access_pointer(cs->slots[1])->key_id == key_id) {
--		ks = rcu_replace_pointer(cs->slots[1], NULL,
--					 lockdep_is_held(&cs->lock));
-+	tmp = rcu_access_pointer(cs->slots[slot]);
-+	if (!tmp || tmp->key_id != key_id) {
-+		slot = 1;
-+		tmp = rcu_access_pointer(cs->slots[slot]);
- 	}
-+
-+	if (tmp && tmp->key_id == key_id)
-+		ks = rcu_replace_pointer(cs->slots[slot], NULL,
-+					 lockdep_is_held(&cs->lock));
- 	spin_unlock_bh(&cs->lock);
+ /* RX path entry point: decrypt packet and forward it to the device */
+@@ -302,11 +302,11 @@ void ovpn_encrypt_post(void *data, int ret)
+ err:
+ 	if (unlikely(skb))
+ 		ovpn_dev_dstats_tx_dropped(peer->ovpn->dev);
+-	if (likely(peer))
+-		ovpn_peer_put(peer);
++	kfree_skb(skb);
+ 	if (likely(ks))
+ 		ovpn_crypto_key_slot_put(ks);
+-	kfree_skb(skb);
++	if (likely(peer))
++		ovpn_peer_put(peer);
+ }
  
- 	if (ks)
+ static bool ovpn_encrypt_one(struct ovpn_peer *peer, struct sk_buff *skb)
 -- 
 2.53.0
 
