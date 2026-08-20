@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700E6379EDA;
-	Thu, 20 Aug 2026 15:14:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1EF37F330;
+	Thu, 20 Aug 2026 15:14:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238867; cv=none; b=fkB7w4AlZHlgGyfe3IFPZDWC8eyJqpr3LcTSKfmtMu60vMB6o2F968tfUw+LCiGFbIwMy7e4FN7NcGu2qp1e8vZcLIrlNYMKTqFwqeoJvTcelvpflQ+TpAsLXKkJVWsZ3DWYYEoB9N5Cuin/4w9SzoM655TCIiPKvboHRH9kRTE=
+	t=1787238870; cv=none; b=GI6KnWcn1et3OeB3BDQCHDy77gpfRO23kkOfYGksNsvx96zsoPxoVR3vD0nd4mft6TEVkQneWqAh1FnHIFjDOzbINhWjlfaKa+HCBbi5Iu8d4aPeu7hhWHoh8eDi+p5Tus4OH5sihiqupHNNXOYVwB++zTCyPYY/AjKyB4h5mKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238867; c=relaxed/simple;
-	bh=noPNrox9lrbGouv9u4A3YUemQ+WRJhTrUnZG7CNOxHA=;
+	s=arc-20240116; t=1787238870; c=relaxed/simple;
+	bh=4tYSLfnkMe4bsq4jE/9VjHuuI9CyAi5xlcHhV3uUYUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T469buQ3tzqsReX9esafvjim18tXAIvLYCAUchyWS6I2m6hprcQP9vYFm1eHs2Am7in+2M4s+JIfJqbN5fnfqHVUjFvPN1UxVYneltijKVf6OP+QGPkAObti1iI0B+HdTyCr3sQYhHQc/ppuq3IwHZ7E1chZd+MtM6j8sJ0HIi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXbwQiCZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kVeXKAfZ3409rorXI7aPiuz4wLNT6zWEdCKz02j/375Sqr4iL99nJVEgbcKHIZCnVzxRq+RN0r4wW24SnpgHEm/uuQTGCg4woWMJPgdjicCgwdo61uK9/N6Ql0suWAwp1uO2CQLkmPJ8zOu+2P4OUxes4ZYLdtYfmYa4VAAczuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sv1+Xc3X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXbwQiCZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F041F000E9;
-	Thu, 20 Aug 2026 15:14:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sv1+Xc3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70D11F000E9;
+	Thu, 20 Aug 2026 15:14:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238866;
-	bh=iMOmYA7W3LkmwsuhPo9MeVCMg9P56Y4p71h+lLFtypM=;
+	s=korg; t=1787238869;
+	bh=iZjJ91H16gtiKDsH1mMIiNVdTfC3EZCJ4Ho+b0Hcadk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gXbwQiCZHONl8e1SZsgERV6MMyZugy31RrI+I/SocyxIVbFT15i5gMrXV1yHrV0EX
-	 /bfxTEVOfDWkeGJT2tVDW0Cd8uR/bs9LXW1Qd6/CSsK4viR5Lep6uNe0PeeNi8qo0r
-	 k6kFz3W+0V4sVnn7bSEB1eKqkN/YWaV7YckHpyTI=
+	b=sv1+Xc3XTNF/kX0C4d+qzgG9v3XKdxLcPmqyT+EKE+IZtAEu1rMZ2nCH7AyPFFW/a
+	 ElxJl+TRo0PcuTf6M5KY/qAvz+5piI6nF+3yi0KiURvPcIaA0Nz2J70rmE4dttQ2fS
+	 /esmQ7Nzkpps59Xe3hL7PFOXWpH1t/64y3pxA9mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 067/217] pmdomain: mediatek: fix remaining %pOF after of_node_put()
-Date: Thu, 20 Aug 2026 16:53:55 +0200
-Message-ID: <20260820145239.640410157@linuxfoundation.org>
+Subject: [PATCH 6.18 068/217] mmc: sdhci: make tuning_err a signed int
+Date: Thu, 20 Aug 2026 16:53:56 +0200
+Message-ID: <20260820145239.668277822@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -50,78 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-commit 3e013bc8b941bd52c8e3a99798d0ae8792cb71ca upstream.
+commit ae31bcc92bb42502bb7c9029e6dc7a824cf6cd14 upstream.
 
-scpsys_get_bus_protection_legacy() looks up several legacy bus
-protection regmaps from device-tree nodes.
+Coverity report INTEGER_OVERFLOW for host->tuning_err.
+The tuning_err field in struct sdhci_host is used to store an error
+code for re-tuning, but it was declared as unsigned int. Several call
+sites store negative error codes into it and later compare against
+negative values:
 
-Two error paths put the device node before checking whether the regmap
-lookup failed, but still pass that node to dev_err_probe() with %pOF on
-failure. If of_node_put() drops the last reference, the later %pOF
-formatting can dereference a freed device node.
+  - sdhci.c, sdhci-of-dwcmshc.c and sdhci-pci-gli.c assign it the
+    return value of __sdhci_execute_tuning()/__sdhci_execute_tuning_9750(),
+    both of which return a signed int (possibly a negative errno);
+  - sdhci-of-esdhc.c assigns host->tuning_err = -EAGAIN and later does
+    "ret = host->tuning_err; if (ret == -EAGAIN ...)";
+  - sdhci-of-dwcmshc.c prints it with the %d (signed) conversion.
 
-Keep the node reference until after the error message has been emitted in
-the infracfg and SMI lookup paths. Also drop the SMI node before
-returning when the SMI phandle is missing.
+Storing a negative errno in an unsigned int and reading it back as a
+signed int only happens to work because of two's-complement, same-width
+integer conversions. It is misleading and triggers sign-conversion
+warnings. All users treat the value either as a signed error code or as
+a boolean (zero / non-zero), so changing the type to a signed int is
+safe and makes the intent explicit.
 
-Fixes: c29345fa5f66 ("pmdomain: mediatek: Refactor bus protection regmaps retrieval")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Fixes: 7d8bb1f46e13 ("mmc: sdhci: add tuning error codes")
+Assisted-by: Cline:claude-sonnet [read_file, search_files, git]
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/mediatek/mtk-pm-domains.c |   22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ drivers/mmc/host/sdhci.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pmdomain/mediatek/mtk-pm-domains.c
-+++ b/drivers/pmdomain/mediatek/mtk-pm-domains.c
-@@ -774,12 +774,15 @@ static int scpsys_get_bus_protection_leg
- 	node = of_find_node_with_property(np, "mediatek,infracfg");
- 	if (node) {
- 		regmap[0] = syscon_regmap_lookup_by_phandle(node, "mediatek,infracfg");
--		of_node_put(node);
- 		num_regmaps++;
--		if (IS_ERR(regmap[0]))
--			return dev_err_probe(dev, PTR_ERR(regmap[0]),
-+		if (IS_ERR(regmap[0])) {
-+			ret = dev_err_probe(dev, PTR_ERR(regmap[0]),
- 					     "%pOF: failed to get infracfg regmap\n",
- 					     node);
-+			of_node_put(node);
-+			return ret;
-+		}
-+		of_node_put(node);
- 	} else {
- 		regmap[0] = NULL;
- 	}
-@@ -788,17 +791,22 @@ static int scpsys_get_bus_protection_leg
- 	node = of_find_node_with_property(np, "mediatek,smi");
- 	if (node) {
- 		smi_np = of_parse_phandle(node, "mediatek,smi", 0);
--		of_node_put(node);
--		if (!smi_np)
-+		if (!smi_np) {
-+			of_node_put(node);
- 			return -ENODEV;
-+		}
+--- a/drivers/mmc/host/sdhci.h
++++ b/drivers/mmc/host/sdhci.h
+@@ -659,7 +659,7 @@ struct sdhci_host {
  
- 		regmap[1] = device_node_to_regmap(smi_np);
- 		num_regmaps++;
- 		of_node_put(smi_np);
--		if (IS_ERR(regmap[1]))
--			return dev_err_probe(dev, PTR_ERR(regmap[1]),
-+		if (IS_ERR(regmap[1])) {
-+			ret = dev_err_probe(dev, PTR_ERR(regmap[1]),
- 					     "%pOF: failed to get SMI regmap\n",
- 					     node);
-+			of_node_put(node);
-+			return ret;
-+		}
-+		of_node_put(node);
- 	} else {
- 		regmap[1] = NULL;
- 	}
+ 	unsigned int		tuning_count;	/* Timer count for re-tuning */
+ 	unsigned int		tuning_mode;	/* Re-tuning mode supported by host */
+-	unsigned int		tuning_err;	/* Error code for re-tuning */
++	int			tuning_err;	/* Error code for re-tuning */
+ #define SDHCI_TUNING_MODE_1	0
+ #define SDHCI_TUNING_MODE_2	1
+ #define SDHCI_TUNING_MODE_3	2
 
 
