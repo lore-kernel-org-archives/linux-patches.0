@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49514381AFB;
-	Thu, 20 Aug 2026 15:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B9E380FF6;
+	Thu, 20 Aug 2026 15:22:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239332; cv=none; b=KY7dxBslgogkO8h8n5rylKfTl6NMyGXbzrl79gxOBMVX4GH/dTfOvShJV2PlrEHpyrGFa/TST2/SncC7UjvKAxFLRAP+eem8MwTnq5A41aky8qcpYIOh4IuE2xT2bcGsqKVH30tknB9WVlFJDk91U3FZ0AWZgtbezJHdvA5W+sE=
+	t=1787239335; cv=none; b=rUl0DxyYpYASMPRjU5Jt2fRoQy2WYRTK2dwW28eaAgtgbWykgBdX0I9RdenstZaTSVnVeVenIVYKGcs2E5hyQarDObAumaoS+i1Z4rzoKGcBa9u7pOuBv+h7zUJpXc5ajMZT5frCOWiio1ubNtob+QZ3xno556NY4EzVwKYV4cI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239332; c=relaxed/simple;
-	bh=bWEeAb2bwQtZS+hrBeo/BeKUEDu1GhNEnoBn+u+Q/fo=;
+	s=arc-20240116; t=1787239335; c=relaxed/simple;
+	bh=Ievxe22cl7oGJFNomtZ1cp39LO8leGwJdWjw2UigFf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P+vZDiRASdIupLQAdCrDA4u93vAPFX9iqih2X07/6gQaNGpV3FnuJWFtahWI4B3VKi5MxR6ohKTMlZCaYlBP7eq4Yv8vAxqmX4zvOwXAJpoJiDfGrMl7ehwmFdPmJOzVh5KKs3buK11svBX+ju0YHbB2XfNadYfDit2XsZsmacc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=alOL3CeM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=luuc5S9rDlH8nyqFQhd5munhVkzknUyuK+5i8FTWSsulVeup4hmWCqWEkwW7AUCK/3d3m0prOJoBHsnAIBPEYGCNv7XQ06YEJmaZ1o2y74i6jAlccJQiB7X1Z/ikfUZ3JEDIHRA/kyjNxO3kZ0Gm+5Nz1exQir4+ANaoCYL1RBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NRHFCR2d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="alOL3CeM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FF21F000E9;
-	Thu, 20 Aug 2026 15:22:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NRHFCR2d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F4BC1F000E9;
+	Thu, 20 Aug 2026 15:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239331;
-	bh=zL5V52vMahxBDvaeg1PNl+8fgeVH3alAFY7ep5+Wm2Q=;
+	s=korg; t=1787239334;
+	bh=U3s8njMSNOzFpJzA4mG1O1kEVy0lp3efFzwlkD1JBo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=alOL3CeMmkrOgAJb7VeS33S6S3EoxjNQi+2SBgqEA+8BgsFFSR/40WYfpUOGlZ1ei
-	 4dn5uVuaUOQNjcXOprBp9vy2z05EiEhLlS9HLwKmsDqer4Rxh41MSNzpBVZHQTDbd9
-	 sEUqy3R/Ur/lLDVeTN0TZgsRs+L07ZPdzgpNhsbo=
+	b=NRHFCR2dzagC62QXHl1CoT+ULhTBLDdx4YJiMRHkQEnMzLRwWuTEkyZWtsKmKQylA
+	 p2SPcnq2USjzqHQwQyS3+mxoCfc+CY2Un/gm+edGzv34JwaRrWWiM3gqDEtz0ZUZBT
+	 IqlHUxd8XsUI0oIEmEKpXggVvtcq3qmXWRf0ebn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 002/220] bpf: Fix linked reg delta tracking when src_reg == dst_reg
-Date: Thu, 20 Aug 2026 16:53:12 +0200
-Message-ID: <20260820145223.562434329@linuxfoundation.org>
+Subject: [PATCH 6.12 003/220] bpf: Clear delta when clearing reg id for non-{add,sub} ops
+Date: Thu, 20 Aug 2026 16:53:13 +0200
+Message-ID: <20260820145223.591478080@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -55,46 +55,160 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit d7f14173c0d5866c3cae759dee560ad1bed10d2e upstream.
+commit 1b327732c84640c1e3da487eefe9d00cc9f2dd34 upstream.
 
-Consider the case of rX += rX where src_reg and dst_reg are pointers to
-the same bpf_reg_state in adjust_reg_min_max_vals(). The latter first
-modifies the dst_reg in-place, and later in the delta tracking, the
-subsequent is_reg_const(src_reg)/reg_const_value(src_reg) reads the
-post-{add,sub} value instead of the original source.
+When a non-{add,sub} alu op such as xor is performed on a scalar
+register that previously had a BPF_ADD_CONST delta, the else path
+in adjust_reg_min_max_vals() only clears dst_reg->id but leaves
+dst_reg->delta unchanged.
 
-This is problematic since it sets an incorrect delta, which sync_linked_regs()
-then propagates to linked registers, thus creating a verifier-vs-runtime
-mismatch. Fix it by just skipping this corner case.
+This stale delta can propagate via assign_scalar_id_before_mov()
+when the register is later used in a mov. It gets a fresh id but
+keeps the stale delta from the old (now-cleared) BPF_ADD_CONST.
+This stale delta can later propagate leading to a verifier-vs-
+runtime value mismatch.
+
+The clear_id label already correctly clears both delta and id.
+Make the else path consistent by also zeroing the delta when id
+is cleared. More generally, this introduces a helper clear_scalar_id()
+which internally takes care of zeroing. There are various other
+locations in the verifier where only the id is cleared. By using
+the helper we catch all current and future locations.
 
 Fixes: 98d7ca374ba4 ("bpf: Track delta between "linked" registers.")
 Reported-by: STAR Labs SG <info@starlabs.sg>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260407192421.508817-1-daniel@iogearbox.net
+Link: https://lore.kernel.org/r/20260407192421.508817-2-daniel@iogearbox.net
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-[shung-hsi.yu: contextual difference due to commit 7a433e519364 ("bpf: Support
-negative offsets, BPF_SUB, and alu32 for linked register tracking") not
-backported. ]
+[shung-hsi.yu:
+ - reverse 'off' -> 'delta' renaming done later in commit 3d91c618aca4 ("bpf:
+   rename bpf_reg_state->off to bpf_reg_state->delta")
+ - kept "dst_reg->live |= REG_LIVE_WRITTEN", which got removed in commit
+   107e16979905 ("bpf: disable and remove registers chain based liveness")
+ - dropped hunk in scalar_byte_swap(), which was added later in commit
+   9d2119984224 ("bpf: Add bitwise tracking for BPF_END")
+ - dropped hunk in clear_singular_ids(), which was added later in commit
+   b2a0aa3a8739 ("bpf: Clear singular ids for scalars in is_state_visited()")]
 Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 48 ++++++++++++++++++++++---------------------
+ 1 file changed, 25 insertions(+), 23 deletions(-)
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 275c9fabc955..582be2211ffc 100644
+index 582be2211ffc..99b3f539e431 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -14544,7 +14544,8 @@ static int adjust_reg_min_max_vals(struct bpf_verifier_env *env,
- 	 */
- 	if (env->bpf_capable &&
- 	    BPF_OP(insn->code) == BPF_ADD && !alu32 &&
--	    dst_reg->id && is_reg_const(src_reg, false)) {
-+	    dst_reg->id && is_reg_const(src_reg, false) &&
-+	    !(BPF_SRC(insn->code) == BPF_X && insn->src_reg == insn->dst_reg)) {
- 		u64 val = reg_const_value(src_reg, false);
+@@ -4635,27 +4635,30 @@ static bool __is_pointer_value(bool allow_ptr_leaks,
+ 	return reg->type != SCALAR_VALUE;
+ }
  
- 		if ((dst_reg->id & BPF_ADD_CONST) ||
++static void clear_scalar_id(struct bpf_reg_state *reg)
++{
++	reg->id = 0;
++	reg->off = 0;
++}
++
+ static void assign_scalar_id_before_mov(struct bpf_verifier_env *env,
+ 					struct bpf_reg_state *src_reg)
+ {
+ 	if (src_reg->type != SCALAR_VALUE)
+ 		return;
+-
+-	if (src_reg->id & BPF_ADD_CONST) {
+-		/*
+-		 * The verifier is processing rX = rY insn and
+-		 * rY->id has special linked register already.
+-		 * Cleared it, since multiple rX += const are not supported.
+-		 */
+-		src_reg->id = 0;
+-		src_reg->off = 0;
+-	}
+-
++	/*
++	 * The verifier is processing rX = rY insn and
++	 * rY->id has special linked register already.
++	 * Cleared it, since multiple rX += const are not supported.
++	 */
++	if (src_reg->id & BPF_ADD_CONST)
++		clear_scalar_id(src_reg);
++	/*
++	 * Ensure that src_reg has a valid ID that will be copied to
++	 * dst_reg and then will be used by sync_linked_regs() to
++	 * propagate min/max range.
++	 */
+ 	if (!src_reg->id && !tnum_is_const(src_reg->var_off))
+-		/* Ensure that src_reg has a valid ID that will be copied to
+-		 * dst_reg and then will be used by sync_linked_regs() to
+-		 * propagate min/max range.
+-		 */
+ 		src_reg->id = ++env->id_gen;
+ }
+ 
+@@ -5093,7 +5096,7 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
+ 				 * coerce_reg_to_size will adjust the boundaries.
+ 				 */
+ 				if (get_reg_width(reg) > size * BITS_PER_BYTE)
+-					state->regs[dst_regno].id = 0;
++					clear_scalar_id(&state->regs[dst_regno]);
+ 			} else {
+ 				int spill_cnt = 0, zero_cnt = 0;
+ 
+@@ -14555,8 +14558,7 @@ static int adjust_reg_min_max_vals(struct bpf_verifier_env *env,
+ 			 * If the register already went through rX += val
+ 			 * we cannot accumulate another val into rx->off.
+ 			 */
+-			dst_reg->off = 0;
+-			dst_reg->id = 0;
++			clear_scalar_id(dst_reg);
+ 		} else {
+ 			dst_reg->id |= BPF_ADD_CONST;
+ 			dst_reg->off = val;
+@@ -14566,7 +14568,7 @@ static int adjust_reg_min_max_vals(struct bpf_verifier_env *env,
+ 		 * Make sure ID is cleared otherwise dst_reg min/max could be
+ 		 * incorrectly propagated into other registers by sync_linked_regs()
+ 		 */
+-		dst_reg->id = 0;
++		clear_scalar_id(dst_reg);
+ 	}
+ 	return 0;
+ }
+@@ -14690,7 +14692,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
+ 							assign_scalar_id_before_mov(env, src_reg);
+ 						copy_register_state(dst_reg, src_reg);
+ 						if (!no_sext)
+-							dst_reg->id = 0;
++							clear_scalar_id(dst_reg);
+ 						coerce_reg_to_size_sx(dst_reg, insn->off >> 3);
+ 						dst_reg->live |= REG_LIVE_WRITTEN;
+ 						dst_reg->subreg_def = DEF_NOT_SUBREG;
+@@ -14717,7 +14719,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
+ 						 * propagated into src_reg by sync_linked_regs()
+ 						 */
+ 						if (!is_src_reg_u32)
+-							dst_reg->id = 0;
++							clear_scalar_id(dst_reg);
+ 						dst_reg->live |= REG_LIVE_WRITTEN;
+ 						dst_reg->subreg_def = env->insn_idx + 1;
+ 					} else {
+@@ -14728,7 +14730,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
+ 							assign_scalar_id_before_mov(env, src_reg);
+ 						copy_register_state(dst_reg, src_reg);
+ 						if (!no_sext)
+-							dst_reg->id = 0;
++							clear_scalar_id(dst_reg);
+ 						dst_reg->live |= REG_LIVE_WRITTEN;
+ 						dst_reg->subreg_def = env->insn_idx + 1;
+ 						coerce_subreg_to_size_sx(dst_reg, insn->off >> 3);
+@@ -15559,7 +15561,7 @@ static void __collect_linked_regs(struct linked_regs *reg_set, struct bpf_reg_st
+ 		e->is_reg = is_reg;
+ 		e->regno = spi_or_reg;
+ 	} else {
+-		reg->id = 0;
++		clear_scalar_id(reg);
+ 	}
+ }
+ 
 -- 
 2.53.0
 
