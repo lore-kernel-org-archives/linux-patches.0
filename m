@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E21442B2E;
-	Thu, 20 Aug 2026 16:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8214B47DFBD;
+	Thu, 20 Aug 2026 16:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244359; cv=none; b=jB/AX0ed3xlN8uT6fc/rKKtaqTlVyh97i2I+XtF18UbDhLUvn1YmnRb/w/W3G2NPN0zjxXjz3v5r1lQACiKcQNKLjGNiyy8CHCVZ+kUJ+xq0AN8uaOYjywQrin3ddW1Bzw5lcGNKIItWKTCMIXrpXTDiwnCeLo94H0UBgbS8Okw=
+	t=1787244361; cv=none; b=CGJDCkiP12wZR+uXSRl9qxo75jIYfO4SDa/T0p85ZE4Eh1t4LpXz5QxP/bM4JF50cKkahWAhabtOLvhZbmUn6BiFUsk00v205iBpZHNiFeKn3FEI9JdkajS9Ybntc0EhD/viYKkmn4+DHyBL7PCHH+Qkox6WtfqtFORW0E8y0rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244359; c=relaxed/simple;
-	bh=2LF9F5Wt5VkTh6ZiZ6pAlw7Wjiq/2X/F31rrnUHadXA=;
+	s=arc-20240116; t=1787244361; c=relaxed/simple;
+	bh=Bd1GyxgMPTvZsoudZ57wwimwcuiw9KjyJTPM3OA/HOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KvZDOKoGzPFcH3+4NLgJR8+jJ+Cvkm5UFbMu3sPBj6HcDBIY+VirEoyEFeKMOb4hQKfzVQveXTPpqnp0rt7hG4ayrapWATSzaVsECrl1iKaUblbM8PgkSp3T6phLOo/4LzYk+DUNbljy1j7+jVjgNpyi4fSMCXJISuCgyqLGhfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1krOLTc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ilWhw51hk5KG0v+Tir8uh8d+RxWjNaVetDDW6iNkwJ6idDoCpSSkkr0kLy5pNZ868BDlnh5xDswANPcNqY5O5HSu0HsOCn+1bUiaZvFKvHc/qpCK01hXrzVFa8C5d3z5HFlpS5aP1s91vKg8riRK2A7gqZk/v56z1mE1PtebXCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTSfAXdS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1krOLTc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8ABB1F000E9;
-	Thu, 20 Aug 2026 16:45:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTSfAXdS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EEDC1F00A3A;
+	Thu, 20 Aug 2026 16:45:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244357;
-	bh=GdfRkcYaL1ksom4BUgeD8aLQVo8hOwGGqF15XF/dDao=;
+	s=korg; t=1787244360;
+	bh=Jq5XFwB0KV1rjWqScfKBcHT1jM/nGRBSYmp0m/q2Niw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S1krOLTcCnO3AahTzZOykQI0TR847XWq5rmxUxG4xrF3hQkriia+J5kdShpmFaIl3
-	 hEixplNmYQiXTQ0lFht8bgaMSlTr+UgLApfpHvS98T8rH0urkpGJkflyxpXaKILqv1
-	 swDACfvoHjqsXXnEaRhTOfZF/doQGymU2IP5sES8=
+	b=dTSfAXdSswMMvtKa92ObhnpbIoY4M7CAPdZQVad/emzAs8cqMh+TpvYJVQYYOdkvS
+	 0NVmmJPgs/TzUx+B42tQPsmA7ELoiTPBXvmhsmCU9R0+ptlZ8ihbDIB/kjIibUQxQe
+	 TqpEG448WJ4aH6/Fezd67vECvG+lIphm4FEOh73g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Vincent Jardin <vjardin@free.fr>,
 	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Carlos Song <carlos.song@nxp.com>,
+	Stefan Eichenberger <eichest@gmail.com>,
 	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 102/235] i2c: imx: separate atomic, dma and non-dma use case
-Date: Thu, 20 Aug 2026 16:55:38 +0200
-Message-ID: <20260820145219.548949617@linuxfoundation.org>
+Subject: [PATCH 5.10 103/235] i2c: imx: fix locked bus on SMBus block-read of 0 (atomic)
+Date: Thu, 20 Aug 2026 16:55:39 +0200
+Message-ID: <20260820145219.578394220@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -53,191 +54,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+From: Vincent Jardin <vjardin@free.fr>
 
-[ Upstream commit b460b15b3cc23ef3639cc51043bf8b2a70ca1878 ]
+[ Upstream commit cb2fc37857693b55909fb77dc2c87cfbc1cdc476 ]
 
-Separate the atomic, dma and non-dma use case as a preparation step for
-moving the non-dma use case to the isr to avoid rescheduling while a
-transfer is in progress.
+SMBus 3.1 6.5.7 allows a Block Read byte count of 0, but the atomic
+(polling) path rejects it as -EPROTO. Worse, it returns without a
+NACK+STOP: the next receive cycle has already started, so the target
+keeps holding SDA and the bus stays stuck until a power cycle for
+this i2c controller.
 
-Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reading I2DR to obtain the count likewise arms the next byte on the
+count > I2C_SMBUS_BLOCK_MAX path, which also returned -EPROTO directly
+and left the bus held.
+
+Handle both: NACK the in-flight dummy byte (TXAK) and extend msgs->len so
+the existing last-byte handling emits STOP; the dummy byte is discarded.
+A count of 0 is a valid empty block read; a count above
+I2C_SMBUS_BLOCK_MAX is still reported as -EPROTO, but only after the bus
+has been released.
+
+The interrupt-driven path has the same flaw from a later commit and is
+fixed separately, as it carries a different Fixes: tag and stable range.
+
+Fixes: 8e8782c71595 ("i2c: imx: add SMBus block read support")
+Signed-off-by: Vincent Jardin <vjardin@free.fr>
+Cc: <stable@vger.kernel.org> # v3.16+
 Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Carlos Song <carlos.song@nxp.com>
+Reviewed-by: Stefan Eichenberger <eichest@gmail.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Stable-dep-of: cb2fc3785769 ("i2c: imx: fix locked bus on SMBus block-read of 0 (atomic)")
+Link: https://lore.kernel.org/r/20260713-for-upstream-i2c-lx2160-fix-v1-v3-1-073ac9e103a5@free.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-imx.c |  107 ++++++++++++++++++++++++++++---------------
- 1 file changed, 70 insertions(+), 37 deletions(-)
+ drivers/i2c/busses/i2c-imx.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
 --- a/drivers/i2c/busses/i2c-imx.c
 +++ b/drivers/i2c/busses/i2c-imx.c
-@@ -717,6 +717,43 @@ static int i2c_imx_dma_write(struct imx_
- 	return i2c_imx_acked(i2c_imx);
- }
- 
-+static int i2c_imx_prepare_read(struct imx_i2c_struct *i2c_imx,
-+				struct i2c_msg *msgs, bool atomic,
-+				bool use_dma)
-+{
-+	int result;
-+	unsigned int temp = 0;
-+
-+	/* write slave address */
-+	imx_i2c_write_reg(i2c_8bit_addr_from_msg(msgs), i2c_imx, IMX_I2C_I2DR);
-+	result = i2c_imx_trx_complete(i2c_imx, atomic);
-+	if (result)
-+		return result;
-+	result = i2c_imx_acked(i2c_imx);
-+	if (result)
-+		return result;
-+
-+	dev_dbg(&i2c_imx->adapter.dev, "<%s> setup bus\n", __func__);
-+
-+	/* setup bus to read data */
-+	temp = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2CR);
-+	temp &= ~I2CR_MTX;
-+
-+	/*
-+	 * Reset the I2CR_TXAK flag initially for SMBus block read since the
-+	 * length is unknown
-+	 */
-+	if (msgs->len - 1)
-+		temp &= ~I2CR_TXAK;
-+	if (use_dma)
-+		temp |= I2CR_DMAEN;
-+
-+	imx_i2c_write_reg(temp, i2c_imx, IMX_I2C_I2CR);
-+	imx_i2c_read_reg(i2c_imx, IMX_I2C_I2DR); /* dummy read */
-+
-+	return 0;
-+}
-+
- static int i2c_imx_dma_read(struct imx_i2c_struct *i2c_imx,
- 			struct i2c_msg *msgs, bool is_lastmsg)
- {
-@@ -727,6 +764,11 @@ static int i2c_imx_dma_read(struct imx_i
- 	struct imx_i2c_dma *dma = i2c_imx->dma;
- 	struct device *dev = &i2c_imx->adapter.dev;
- 
-+	result = i2c_imx_prepare_read(i2c_imx, msgs, false, true);
-+	if (result)
-+		return result;
-+
-+	dev_dbg(&i2c_imx->adapter.dev, "<%s> read data\n", __func__);
- 
- 	dma->chan_using = dma->chan_rx;
- 	dma->dma_transfer_dir = DMA_DEV_TO_MEM;
-@@ -837,50 +879,24 @@ static int i2c_imx_write(struct imx_i2c_
- 	return 0;
- }
- 
-+static int i2c_imx_atomic_write(struct imx_i2c_struct *i2c_imx, struct i2c_msg *msgs)
-+{
-+	return i2c_imx_write(i2c_imx, msgs, true);
-+}
-+
- static int i2c_imx_read(struct imx_i2c_struct *i2c_imx, struct i2c_msg *msgs,
- 			bool is_lastmsg, bool atomic)
- {
+@@ -890,6 +890,7 @@ static int i2c_imx_read(struct imx_i2c_s
  	int i, result;
  	unsigned int temp;
  	int block_data = msgs->flags & I2C_M_RECV_LEN;
--	int use_dma = i2c_imx->dma && msgs->flags & I2C_M_DMA_SAFE &&
--		msgs->len >= DMA_THRESHOLD && !block_data;
--
--	dev_dbg(&i2c_imx->adapter.dev,
--		"<%s> write slave address: addr=0x%x\n",
--		__func__, i2c_8bit_addr_from_msg(msgs));
++	int block_err = 0;
  
--	/* write slave address */
--	imx_i2c_write_reg(i2c_8bit_addr_from_msg(msgs), i2c_imx, IMX_I2C_I2DR);
--	result = i2c_imx_trx_complete(i2c_imx, atomic);
--	if (result)
--		return result;
--	result = i2c_imx_acked(i2c_imx);
-+	result = i2c_imx_prepare_read(i2c_imx, msgs, atomic, false);
+ 	result = i2c_imx_prepare_read(i2c_imx, msgs, atomic, false);
  	if (result)
- 		return result;
- 
--	dev_dbg(&i2c_imx->adapter.dev, "<%s> setup bus\n", __func__);
--
--	/* setup bus to read data */
--	temp = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2CR);
--	temp &= ~I2CR_MTX;
--
--	/*
--	 * Reset the I2CR_TXAK flag initially for SMBus block read since the
--	 * length is unknown
--	 */
--	if ((msgs->len - 1) || block_data)
--		temp &= ~I2CR_TXAK;
--	if (use_dma)
--		temp |= I2CR_DMAEN;
--	imx_i2c_write_reg(temp, i2c_imx, IMX_I2C_I2CR);
--	imx_i2c_read_reg(i2c_imx, IMX_I2C_I2DR); /* dummy read */
--
- 	dev_dbg(&i2c_imx->adapter.dev, "<%s> read data\n", __func__);
- 
--	if (use_dma)
--		return i2c_imx_dma_read(i2c_imx, msgs, is_lastmsg);
--
- 	/* read data */
- 	for (i = 0; i < msgs->len; i++) {
- 		u8 len = 0;
-@@ -947,6 +963,12 @@ static int i2c_imx_read(struct imx_i2c_s
- 	return 0;
+@@ -911,8 +912,20 @@ static int i2c_imx_read(struct imx_i2c_s
+ 		 */
+ 		if ((!i) && block_data) {
+ 			len = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2DR);
+-			if ((len == 0) || (len > I2C_SMBUS_BLOCK_MAX))
+-				return -EPROTO;
++			if ((len == 0) || (len > I2C_SMBUS_BLOCK_MAX)) {
++				/*
++				 * SMBus 3.1 6.5.7: support count byte of 0.
++				 * I2C_SMBUS_BLOCK_MAX case should not hold the SDA either.
++				 */
++				if (len > I2C_SMBUS_BLOCK_MAX)
++					block_err = -EPROTO;
++				temp = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2CR);
++				temp |= I2CR_TXAK;
++				imx_i2c_write_reg(temp, i2c_imx, IMX_I2C_I2CR);
++				msgs->buf[0] = 0;
++				msgs->len = 2;
++				continue;
++			}
+ 			dev_dbg(&i2c_imx->adapter.dev,
+ 				"<%s> read length: 0x%X\n",
+ 				__func__, len);
+@@ -960,7 +973,7 @@ static int i2c_imx_read(struct imx_i2c_s
+ 			"<%s> read byte: B%d=0x%X\n",
+ 			__func__, i, msgs->buf[i]);
+ 	}
+-	return 0;
++	return block_err;
  }
  
-+static int i2c_imx_atomic_read(struct imx_i2c_struct *i2c_imx, struct i2c_msg *msgs,
-+			       bool is_lastmsg)
-+{
-+	return i2c_imx_read(i2c_imx, msgs, is_lastmsg, true);
-+}
-+
- static int i2c_imx_xfer_common(struct i2c_adapter *adapter,
- 			       struct i2c_msg *msgs, int num, bool atomic)
- {
-@@ -954,6 +976,7 @@ static int i2c_imx_xfer_common(struct i2
- 	int result;
- 	bool is_lastmsg = false;
- 	struct imx_i2c_struct *i2c_imx = i2c_get_adapdata(adapter);
-+	int use_dma = 0;
- 
- 	dev_dbg(&i2c_imx->adapter.dev, "<%s>\n", __func__);
- 
-@@ -1008,15 +1031,25 @@ static int i2c_imx_xfer_common(struct i2
- 			(temp & I2SR_SRW ? 1 : 0), (temp & I2SR_IIF ? 1 : 0),
- 			(temp & I2SR_RXAK ? 1 : 0));
- #endif
-+
-+		use_dma = i2c_imx->dma && msgs[i].len >= DMA_THRESHOLD &&
-+			msgs[i].flags & I2C_M_DMA_SAFE;
- 		if (msgs[i].flags & I2C_M_RD) {
--			result = i2c_imx_read(i2c_imx, &msgs[i], is_lastmsg, atomic);
-+			int block_data = msgs->flags & I2C_M_RECV_LEN;
-+
-+			if (atomic)
-+				result = i2c_imx_atomic_read(i2c_imx, &msgs[i], is_lastmsg);
-+			else if (use_dma && !block_data)
-+				result = i2c_imx_dma_read(i2c_imx, &msgs[i], is_lastmsg);
-+			else
-+				result = i2c_imx_read(i2c_imx, &msgs[i], is_lastmsg, false);
- 		} else {
--			if (!atomic &&
--			    i2c_imx->dma && msgs[i].len >= DMA_THRESHOLD &&
--				msgs[i].flags & I2C_M_DMA_SAFE)
-+			if (atomic)
-+				result = i2c_imx_atomic_write(i2c_imx, &msgs[i]);
-+			else if (use_dma)
- 				result = i2c_imx_dma_write(i2c_imx, &msgs[i]);
- 			else
--				result = i2c_imx_write(i2c_imx, &msgs[i], atomic);
-+				result = i2c_imx_write(i2c_imx, &msgs[i], false);
- 		}
- 		if (result)
- 			goto fail0;
+ static int i2c_imx_atomic_read(struct imx_i2c_struct *i2c_imx, struct i2c_msg *msgs,
 
 
