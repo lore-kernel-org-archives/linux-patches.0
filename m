@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346F537E2ED;
-	Thu, 20 Aug 2026 15:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2647A37E2E5;
+	Thu, 20 Aug 2026 15:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238397; cv=none; b=jhsU2qsejP6qnELk840qqtGiPQJZNyLc+5bCmmuJxSAlYNSpbpncRrNLli4nAMASPx5Otdg+0w+l4cc0rwm0xyJ0+gdVzy0ydKxk+QnGix0aG/EDcv4q6MvNuxZUqTz+nzUMoTjpzfOXb8NXOWOBwiB0MHI67lcI47ycbBXEkJ4=
+	t=1787238400; cv=none; b=DqOz682AZpgBzR8fE9WzshdY10HLsoc7dzMOwXxShT4vNtCMVY0cgTYssghO6a/kmLcLpApS7DRdv67BY/atuuo058XiRY2tLgaGAnzwvk0YMRYXQKOowC7OpJ+OCImdx8I8wKsp1iz9/nsVo0W9gHRsrNgPauP7dv+3YsDQKO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238397; c=relaxed/simple;
-	bh=MpPsjhlGxSiTxxnnTm7l4C735QWrg+bmGOStszWXVXM=;
+	s=arc-20240116; t=1787238400; c=relaxed/simple;
+	bh=9YMXFn9vxLUQZ1DzZ0NdtNHiTMyLOujWhz3wYGYNpSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CFv+a4ITEVmZlFC3BUcJ2F84oTk7RADr2unZVAiXI5+Rixpoxx7XdMlbjwG/Y50JdJw3VSeb4xYWhDM/GyKneUp9Xvw8XeM3WufrxOrHq4oSKboFbmEEU4KYdKRczZAsihkyKoDRvr5EinqVW1z+6tWdRqSvxF1XVkDOAdYOEig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p3Gjp8EQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WBGPBFa9u0eTE/WOPiGlGct9xmNlErpeBkVFovFaP37dqaxi9nDaTa80/W9z23ii58oMpHDbkH3iWvcdXC8pMzYJIa3imm2TV/O+gNkIjVm4F94h2P+RQj/Q0d22BquCQbaZskSmSsFwSe4sY++qgA48Po5lUbsttKStPkZ3EYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B7CzdJ8b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p3Gjp8EQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB981F000E9;
-	Thu, 20 Aug 2026 15:06:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B7CzdJ8b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5212C1F000E9;
+	Thu, 20 Aug 2026 15:06:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238396;
-	bh=SAuPZqer/sNiXWndo/AT+NjNn3NUhbQsWZwbIeTfCd8=;
+	s=korg; t=1787238398;
+	bh=+o6zd/E9x0L5PRiiTH7oIVkfvsSMzVaAt0e3JoeK2vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p3Gjp8EQ1W7TDKgXBI8q2nAcJ2t8oi7klDsklhFXJDqEGUoxsu8hjsey2ArJDX/e2
-	 WLxHgI8lIs4pLvEv73Jtr9eXMUwh8so7qDafQ6GyKVYqGB6p2RVML0phSF4yDrDLLt
-	 CLdaF1pucPcL9Lrk6owxoYnbDHMzo/JzVah4l7+Q=
+	b=B7CzdJ8b7649AyeRoSsUCnr6dlUuCBdLu3pQscA34ytNV7PGwmFfabKyF0PtKiJok
+	 mW11o5wGhItokI5F6EGe1tM6NP0LHFtPX3E+TDXRODpyeJzSjXYBLR8TkOA+ktP+Na
+	 Xcyn8GZPsyPs3kDSY53RBEtFio3Uct+cYjxJzP5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.1 132/228] xfs: zero i_nlink before repair puts inode on unlinked list
-Date: Thu, 20 Aug 2026 16:54:34 +0200
-Message-ID: <20260820145248.621806115@linuxfoundation.org>
+Subject: [PATCH 7.1 133/228] xfs: only check mergeability of bnobt records
+Date: Thu, 20 Aug 2026 16:54:35 +0200
+Message-ID: <20260820145248.650448944@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -53,41 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 49933254ba8d421ed706cbe6ed0fbc264e572cab upstream.
+commit 97efed1091a50e4dbf31307015138b43a972d2e4 upstream.
 
-LOLLM observes that we don't reset i_nlink if we encounter a file with
-no parent that isn't on the unlinked list.  This causes unnecessary
-assertion trips on debugging kernels and an inconsistent file, so let's
-fix that.
+In the cntbt (free space by block count) btree, records are not supposed
+to be in startblock order.  Hence the mergeability check is pointless.
+Remove it, since it does nothing, as LOLLM points out.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: 669dfe883c8e20 ("xfs: update the unlinked list when repairing link counts")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
+Cc: stable@vger.kernel.org # v6.4
+Fixes: d5784ae82778d9 ("xfs: flag free space btree records that could be merged")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/nlinks_repair.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/alloc.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/xfs/scrub/nlinks_repair.c
-+++ b/fs/xfs/scrub/nlinks_repair.c
-@@ -232,9 +232,14 @@ xrep_nlinks_repair_inode(
- 	 * unlinked list, put it on the unlinked list.
- 	 */
- 	if (total_links == 0 && !xfs_inode_on_unlinked_list(ip)) {
-+		if (actual_nlink)
-+			clear_nlink(VFS_I(ip));
- 		error = xfs_iunlink(sc->tp, ip);
--		if (error)
-+		if (error) {
-+			if (actual_nlink)
-+				set_nlink(VFS_I(ip), actual_nlink);
- 			goto out_trans;
-+		}
- 		dirty = true;
+--- a/fs/xfs/scrub/alloc.c
++++ b/fs/xfs/scrub/alloc.c
+@@ -136,7 +136,7 @@ xchk_allocbt_rec(
+ 	const union xfs_btree_rec	*rec)
+ {
+ 	struct xfs_alloc_rec_incore	irec;
+-	struct xchk_alloc	*ca = bs->private;
++	struct xchk_alloc		*ca = bs->private;
+ 
+ 	xfs_alloc_btrec_to_irec(rec, &irec);
+ 	if (xfs_alloc_check_irec(to_perag(bs->cur->bc_group), &irec) != NULL) {
+@@ -144,7 +144,8 @@ xchk_allocbt_rec(
+ 		return 0;
  	}
  
+-	xchk_allocbt_mergeable(bs, ca, &irec);
++	if (bs->sc->sm->sm_type == XFS_SCRUB_TYPE_BNOBT)
++		xchk_allocbt_mergeable(bs, ca, &irec);
+ 	xchk_allocbt_xref(bs->sc, &irec);
+ 
+ 	return 0;
 
 
