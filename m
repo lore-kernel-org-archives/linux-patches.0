@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51EE37DE9B;
-	Thu, 20 Aug 2026 17:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78EE6381AEC;
+	Thu, 20 Aug 2026 17:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247821; cv=none; b=irUuASAxgpzhj0Pm2pGbI+DNsWZaWJQtj8ujnx0IL7xQzGS23P3vZy6XepRlAmoP99T7m/ipR6Q05xPnNgl/hfRCQ8JPQ5ZlmlJYLBb9WklHyrqdmyxcmV53G9rhdHuOayRmsVPcEL+cHhobMaPybiVjFJFZqFnwWfOkCHjKi1o=
+	t=1787247824; cv=none; b=lzlyZytglLQMl939hcqIYMfNAx1j3NAkydbkoKiH1Pz3661LaIY3cImNMtNJsMIY6n0c2TJQjItVECR1xy4b+g78oR+7rh/Lf9kuwPPAbdf7CiG6/53RyVJj5TjgiJdVBPNmas4tQVxtOV7BPnFiooCSIWZKuvjMUmYTSKPbhhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247821; c=relaxed/simple;
-	bh=RSVBGxavIAJlEC6sjcJVqvWxcBzIQ2Vm8FDw5IJo+ko=;
+	s=arc-20240116; t=1787247824; c=relaxed/simple;
+	bh=t0dNMvL74tKb/5gOXRAX8rI6S/2NiJ+3aUS6eYDNlNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lkGrvClo/Y7LFRXycA8qVXebnlFJcfyoaqR8qoLFL/cNRCyxyiLL0Qmgpv1+ugPpOx1gyJOtHsw/bpYiDKxGwio2ddP6+20CT/a5XFD9oMUQfOWmGyARgEv9oOZaIdUAtdo35ciWpIi+mO5YvAP+uNu1oHzI7sP4SbfRlU2wBmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QEn7YuIy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tg5ktBrblCqWwSPI0fbzBJ2iatBgmFnKOt2kbvnbsXKdh7eobKnqkO1O8nYeuj1mDzshfwzjgaheJiys1k+Vqhr27zr4myntI1llFX4JEm2pGx+PBaj30a4K78dRli5z99R3kuVBFYQhc74eI/zLA9wAJcfBWH01Zfy4nhmK6t0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjYEXsm6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QEn7YuIy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D2FD1F000E9;
-	Thu, 20 Aug 2026 17:43:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjYEXsm6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64781F000E9;
+	Thu, 20 Aug 2026 17:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247820;
-	bh=drDDo4G73hho8i65qGUFZzqEUA77wnIcQ/oEPAQ/z4k=;
+	s=korg; t=1787247823;
+	bh=rHzvZ0o8ewvy3TOwyr1VWcehhegdq2tdBrmcUQoOKDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QEn7YuIyIT3XlH7LgEMMkKLpO9WK5HhflaLpn2D67lRH3Bhmp4OoEWne+P/D9e1tm
-	 Q4+NHlCBQUhv7ASkEMfan8kOigeFGpePxzIOWdNC/GxPcY4IxzHWRE9Gb2KF/JM4fq
-	 dVzHUXvxZGZdfChMqHlkiK+/FEDDGx2TT2aOyI9w=
+	b=TjYEXsm6ifUny1tMHAmNyIYweiBGyq73aubu3y0WxKzDPmStKBxmEEakkE1vRcUBq
+	 70rrK8UgoRfX6djdQu5IrFqHZ5eYTUpaQlbZS5MApDNWYWHuvcnXxMUe8ZuTSLeQaV
+	 +bvrBO21esePEcI/qef+ODclmV8rzEsuSWP7uwDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Hidayath Khan <hidayath@linux.ibm.com>,
+	Joe Damato <joe@dama.to>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 014/303] mptcp: options: reset DSS fields in case of unexpected size
-Date: Thu, 20 Aug 2026 16:52:30 +0200
-Message-ID: <20260820145253.617192870@linuxfoundation.org>
+Subject: [PATCH 6.1 015/303] s390/qeth: validate user buffer length in SNMP and ARP query ioctls
+Date: Thu, 20 Aug 2026 16:52:31 +0200
+Message-ID: <20260820145253.646175958@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -50,46 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Hidayath Khan <hidayath@linux.ibm.com>
 
-commit 35772b4981f38ba8059372cde8753e8e477e98ec upstream.
+commit d141f087b1af656f055d7c5793a3e87817ba0bbe upstream.
 
-A remote peer could send a malformed DSS with a wrong size, followed by
-another DSS or MPC + Data. In this case, the first suboption will be
-ignored, but leaving some fields written, which could lead to
-inconsistency or access uninitialized data.
+qeth_snmp_command() and qeth_l3_arp_query() allocate a buffer sized by
+a user-supplied length (udata_len) without checking a lower bound, then
+set udata_offset to a fixed non-zero value and pass both to a reply
+callback. The callback bounds-checks the copy with
 
-Explicitly reset the fields that could have been modified in case of
-unexpected size.
+        if ((udata_len - udata_offset) < len)
 
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260728-net-mptcp-misc-fixes-7-2-rc6-v1-0-f7e2d229159d%40kernel.org?part=1
-Fixes: 648ef4b88673 ("mptcp: Implement MPTCP receive path")
+Both fields are u32, so a udata_len smaller than udata_offset makes the
+subtraction wrap and the check pass, and the following memcpy() writes
+past the allocation. A udata_len of 0 also yields ZERO_SIZE_PTR from
+kzalloc(), which the existing NULL check does not catch.
+
+Reject buffers smaller than udata_offset before allocating, so the
+callback subtraction can no longer underflow.
+
+Fixes: 4a71df50047f ("qeth: new qeth device driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-1-b8f496d71664@kernel.org
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
+Reviewed-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260730142216.218309-1-hidayath@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/s390/net/qeth_core_main.c |    3 +++
+ drivers/s390/net/qeth_l3_main.c   |    5 +++++
+ 2 files changed, 8 insertions(+)
 
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -183,8 +183,14 @@ static void mptcp_parse_option(const str
- 		 * RFC 8684 Section 3.3.0 checks later in subflow_data_ready
- 		 */
- 		if (opsize != expected_opsize &&
--		    opsize != expected_opsize + TCPOLEN_MPTCP_DSS_CHECKSUM)
-+		    opsize != expected_opsize + TCPOLEN_MPTCP_DSS_CHECKSUM) {
-+			mp_opt->dsn64 = 0;
-+			mp_opt->use_map = 0;
-+			mp_opt->ack64 = 0;
-+			mp_opt->use_ack = 0;
-+			mp_opt->data_fin = 0;
- 			break;
-+		}
+--- a/drivers/s390/net/qeth_core_main.c
++++ b/drivers/s390/net/qeth_core_main.c
+@@ -4708,6 +4708,9 @@ static int qeth_snmp_command(struct qeth
+ 	if (req_len > QETH_BUFSIZE)
+ 		return -EINVAL;
  
- 		mp_opt->suboptions |= OPTION_MPTCP_DSS;
- 		if (mp_opt->use_ack) {
++	if (qinfo.udata_len < sizeof(struct qeth_snmp_ureq_hdr))
++		return -EINVAL;
++
+ 	iob = qeth_get_adapter_cmd(card, IPA_SETADP_SET_SNMP_CONTROL, req_len);
+ 	if (!iob)
+ 		return -ENOMEM;
+--- a/drivers/s390/net/qeth_l3_main.c
++++ b/drivers/s390/net/qeth_l3_main.c
+@@ -1414,6 +1414,11 @@ static int qeth_l3_arp_query(struct qeth
+ 		rc = -EFAULT;
+ 		goto out;
+ 	}
++
++	if (qinfo.udata_len < QETH_QARP_ENTRIES_OFFSET) {
++		rc = -EINVAL;
++		goto out;
++	}
+ 	qinfo.udata = kzalloc(qinfo.udata_len, GFP_KERNEL);
+ 	if (!qinfo.udata) {
+ 		rc = -ENOMEM;
 
 
