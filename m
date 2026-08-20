@@ -1,41 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1AE2272E53;
-	Thu, 20 Aug 2026 16:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9BD446D0BD;
+	Thu, 20 Aug 2026 16:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243967; cv=none; b=QPJD05pGyNxV/FeOKz9w16tA0mjTHh+aQWG0n4eOmOAczXrHe8NwB54Csvl5ilh9TscV2+JkC0WoaoC76vm6vutcOqu3CJ5/AJtZ2gvx5svIrMfi11CtTs2/WDUMmVrwUoDqrDz4fzEHAgxxiR+fav3n0M8Z9WaLvq1bmbQhc28=
+	t=1787243970; cv=none; b=TAwI4Om8b9I0iX1ZofJziE2wVDuzlsAQKTLXBjfCHPjZw+M03j9uUyZ04bcmytIwWhly1LL9hLnT6ImoKg0TUP++eutlfoir2+gxEzNQ8K3nH+MFBa3rwYn/6gMOKVM8qnoeb6YTiRsGlN8hqc3BU/cPx/utIfYZ6LkjQcXIWfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243967; c=relaxed/simple;
-	bh=iE5gufxgIv7mkn4B/K7rPcWS7nJzC8SJrXyGK5bFupk=;
+	s=arc-20240116; t=1787243970; c=relaxed/simple;
+	bh=/77e5BAHJxvHWM8I9N1B6Pkdi8+Tkp0buDjMnwzy6uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PslycT08pbdX3AjEAsRkWidnqGSw5LMVhPco+gdTGKDOW/Jd4wV0Z6pWrvw74F+hvhqsTGp1d1ukgCa3CtBuER2iCExjex43H86hW2PdYfzFZyp5AvOO8r/pi3WgC/6/FtwKa2lkVC1kJtgLWrB27A7Csy6OLbkH0nbafMJNIWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EfI2NlY+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o78E+Sw5poZvEkdig0rEl70nJdPJCW42craAMhv/ZGbVG63eVT8lGYsoDSv7pN5qD3ojrw9guJdMxSOsYR6fpmYNQ3ioT8Ul/8w3VbBR5Cml9tWYO7MWaYQjT98pU/hSx45KHc5ZoFBSlrESlX29e5BuuX9doeifNWfhZznT9uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SF/9/vMP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EfI2NlY+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED621F000E9;
-	Thu, 20 Aug 2026 16:39:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SF/9/vMP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F761F000E9;
+	Thu, 20 Aug 2026 16:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243965;
-	bh=Tp/7q0hjIcn1lwxZhth8h45VQkFsC16rXHAnYLXODIE=;
+	s=korg; t=1787243968;
+	bh=pkbcihj7NiCCj06/iRacMCoPfusUTx/o2jykeYdiCWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EfI2NlY+fSUmNM2sSmhviUvQmN5FxoC4Xjj3Wh91lNffLE2+xVdEH2cxBVeLOv82D
-	 EWvuQA5VxadjBDMeu7SepBbdzGXi/E8pWKckjoCx2QbMjxLZIO+2Nskfl2zLctAd9S
-	 31fsZ0Xf70R9wIINg0MXQGaxUDSKOVS6bNZWedvM=
+	b=SF/9/vMPf/1U1Db25MiV/b7VBMTYPsPuZ4emRmk6RRwUSROvix7fv3he6xXYXia2T
+	 68l/sQlSpJX8XN5Yh9kA9NSlZWpTdUATN738JJzke3+lWd9wKUnKkKcLnyTxivXDFM
+	 pw1K9qZOYvJABdJDIYy9b2M/QqyzOh+BXqVs3xWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI <sashiko-bot@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Matt Fleming <mfleming@cloudflare.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	"Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	David Carlier <devnexen@gmail.com>,
+	Dev Jain <dev.jain@arm.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
 	Suren Baghdasaryan <surenb@google.com>,
+	Toshi Kani <toshi.kani@hpe.com>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 247/272] sched/psi: Shut down rtpoll_timer in psi_cgroup_free()
-Date: Thu, 20 Aug 2026 16:57:11 +0200
-Message-ID: <20260820145239.032589107@linuxfoundation.org>
+Subject: [PATCH 5.15 248/272] mm/ptdump: always stabilise against page table freeing using init_mm
+Date: Thu, 20 Aug 2026 16:57:12 +0200
+Message-ID: <20260820145239.063312950@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -54,72 +73,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
 
-[ Upstream commit 5457025fa8ca3c0d2732109513de839e3e797190 ]
+[ Upstream commit 27c32e5538344b13c1505a08861e04620c125d47 ]
 
-psi_schedule_rtpoll_work() is called locklessly from the scheduler hotpath
-and can race psi_trigger_destroy() taking down the last rtpoll trigger under
-rtpoll_trigger_lock:
+Previous commits have established the invariant that kernel page table
+freeing is performed while an mmap read lock on init_mm is held, which
+fixes races between ptdump and kernel page table freeing over init_mm.
 
-  psi_schedule_rtpoll_work()        psi_trigger_destroy()
+However, x86 and arm64 can perform a ptdump over an mm other than init_mm
+via ptdump_walk_pgd() and since kernel memory ranges are shared across
+non-kernel mm's, this means that the race still exists for these cases.
 
-  rcu_read_lock();
-  task = rcu_dereference(rtpoll_task);
-                                    rcu_assign_pointer(rtpoll_task, NULL);
-                                    timer_delete(&rtpoll_timer);
-  mod_timer(&rtpoll_timer, ...);
-  rcu_read_unlock();
-                                    synchronize_rcu();
-                                    kthread_stop(task_to_destroy);
+Fix this by acquiring a nested mmap write lock for init_mm in
+ptdump_walk_pgd().
 
-The group can then be freed with the re-armed timer still pending, and
-poll_timer_fn() runs on freed memory.
+This is safe as we take this after mmap write locking the mm, and nothing
+acquires the init_mm lock first before locking an arbitrary mm, so no
+deadlock is possible.
 
-461daba06bdc ("psi: eliminate kthread_worker from psi trigger scheduling
-mechanism") deleted the timer synchronously after the synchronize_rcu(),
-which prevented this but raced trigger creation instead: the deletion could
-cancel the timer that a new trigger set armed during the grace period and,
-as creation also reinitialized the timer at the time, corrupt it.
-8f91efd870ea ("psi: Fix race between psi_trigger_create/destroy") moved the
-initialization into group_init() and the deletion into the locked section,
-trading the creation races for the window above.
+Also update walk_page_range_debug() to assert that init_mm is write
+locked, add a comment explaining why and remove some redundant code, and
+eliminate the unnecessary and confusing invocation of
+walk_kernel_page_table_range().
 
-Neither placement in the destruction path works. A pending timer firing
-while the group is alive is harmless though. poll_timer_fn() just wakes the
-rtpoll waitqueue and doesn't re-arm itself. Bind the timer to the group's
-lifetime instead and shut it down in psi_cgroup_free(). Nothing can arm it
-by then. timer_shutdown_sync() because the timer is never armed again.
+We can safely remove the non-NULL check for walk.mm, as the mmap lock
+asserts would NULL pointer deref if it was (and of course no callers do
+this).
 
-Fixes: 8f91efd870ea ("psi: Fix race between psi_trigger_create/destroy")
-Cc: stable@vger.kernel.org # v5.10+
-Reported-by: Sashiko AI <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260711000434.36C4A1F000E9@smtp.kernel.org/
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Tested-by: Matt Fleming <mfleming@cloudflare.com>
-Acked-by: Suren Baghdasaryan <surenb@google.com>
-[ adapted `cgroup->psi->` pointer dereference to embedded `cgroup->psi.` and renamed `rtpoll_*` members back to `poll_*` ]
+The first point at which ptdump can race kernel page table freeing is
+commit b6bdb7517c3d ("mm/vmalloc: add interfaces to free unmapped page
+table"), so we target this in the Fixes tag.
+
+Link: https://lore.kernel.org/20260723-series-vmap-race-fix-v6-4-8cc77dcc0018@kernel.org
+Fixes: b6bdb7517c3d ("mm/vmalloc: add interfaces to free unmapped page table")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Kiryl Shutsemau <kas@kernel.org>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: "Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>
+Cc: "Borislav Petkov (AMD)" <bp@alien8.de>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: David Carlier <devnexen@gmail.com>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Toshi Kani <toshi.kani@hpe.com>
+Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ Adapted the hunk to `walk_page_range_novma()` since 5.15 lacks the `walk_page_range_debug()` rename and the `walk_kernel_page_table_range()` dispatch, keeping the existing `!walk.mm` guard. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/psi.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ mm/pagewalk.c |    8 ++++++++
+ mm/ptdump.c   |    7 +++++++
+ 2 files changed, 15 insertions(+)
 
---- a/kernel/sched/psi.c
-+++ b/kernel/sched/psi.c
-@@ -972,6 +972,12 @@ void psi_cgroup_free(struct cgroup *cgro
- 		return;
+--- a/mm/pagewalk.c
++++ b/mm/pagewalk.c
+@@ -505,6 +505,14 @@ int walk_page_range_novma(struct mm_stru
+ 		return -EINVAL;
  
- 	cancel_delayed_work_sync(&cgroup->psi.avgs_work);
+ 	mmap_assert_write_locked(walk.mm);
 +	/*
-+	 * A psi_schedule_poll_work() call racing the last trigger's
-+	 * destruction may have re-armed the timer after psi_trigger_destroy()
-+	 * deleted it. Spurious firing while the group is alive is harmless.
++	 * x86, arm64 ptdump allow walks of efi mm's and x86 ptdump allows walks
++	 * of arbitrary mm's.
++	 *
++	 * However, they both must also hold the init_mm lock to account for
++	 * concurrent kernel page table freeing.
 +	 */
-+	timer_shutdown_sync(&cgroup->psi.poll_timer);
- 	free_percpu(cgroup->psi.pcpu);
- 	/* All triggers must be removed by now */
- 	WARN_ONCE(cgroup->psi.poll_states, "psi: trigger leak\n");
++	mmap_assert_write_locked(&init_mm);
+ 
+ 	return walk_pgd_range(start, end, &walk);
+ }
+--- a/mm/ptdump.c
++++ b/mm/ptdump.c
+@@ -146,11 +146,18 @@ void ptdump_walk_pgd(struct ptdump_state
+ 
+ 	get_online_mems();
+ 	mmap_write_lock(mm);
++	/* To stabilise kernel page tables we must hold the init_mm lock too. */
++	if (mm != &init_mm)
++		mmap_write_lock_nested(&init_mm, SINGLE_DEPTH_NESTING);
++
+ 	while (range->start != range->end) {
+ 		walk_page_range_novma(mm, range->start, range->end,
+ 				      &ptdump_ops, pgd, st);
+ 		range++;
+ 	}
++
++	if (mm != &init_mm)
++		mmap_write_unlock(&init_mm);
+ 	mmap_write_unlock(mm);
+ 	put_online_mems();
+ 
 
 
