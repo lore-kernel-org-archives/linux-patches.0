@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6101642AF95;
-	Thu, 20 Aug 2026 16:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9B7272E53;
+	Thu, 20 Aug 2026 16:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243978; cv=none; b=batmvF9bEua56v9v93i5QiIk2QzzqeIXA4Mxr5uMFZaaeYJBmSpJVtoyKVRTTHcAKNoMO5Grden5EZcCb6DtuxsVZB41GaR/KtsIG3Kuo3T19HC1VdssevJo2Esc3qGF2Zs/hbvf/iPTkKa/57hPJ6Cz7CzdDHtn/XHKXuLIJ8w=
+	t=1787243981; cv=none; b=jKOHFUyC3QAZT+EVF5l4S8pX+7rRIWJie6LGFAHobxQYmSvSDDpehmjdxqlPaJZMsdoJzJ95Re00/jpDN1pwLLVpz+yuaQebBu/Fg9zcxCc7FMlyNOl3FfYDXdDapExG7vJtHK8YN1DJDCwRT/+YjtYcSA/6aKK3OSFwv0aV2hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243978; c=relaxed/simple;
-	bh=qe/Rxhw2s9eIqhPlH2ZCLl52C/YSPjIjCe3nZcm8jjY=;
+	s=arc-20240116; t=1787243981; c=relaxed/simple;
+	bh=h9I+M2ffv7Qak07SB/qQhaRsH/5NdelvkorX/DkFXZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZPGvNZfor9iFbJR7+gdFzo/xctwBetgKq0LZmcJmak0COyZrHLJACJOwpYeqfP7xk2dUbLdN2nb8YW/WIZg8D3U5KNRrpXV92AQop55FA8a2XnqddbfTXI5tuWqpLgRRRQz7xbRupIaue7JciNGmW4CD1Bq8VQWsOXJxLw5vb84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8fZVqHI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KzfQGLg455g/IY6XH5O3GKk9B9DlkR85IIl/YnUHYpCxRe5Th1ETZH/7ExmsS5r5helrk3DaQXnNKjNjJ5iGebGbkDHlZ2wdlB7ky/h7tjvf/UlXqf2ooH0mIbkcFP/EyPmPlY+O7w/tbkF2mTEVuMI1I3Utgkj/Yc+JCoRiPGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h+iE/Xps; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8fZVqHI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD8F1F000E9;
-	Thu, 20 Aug 2026 16:39:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h+iE/Xps"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EBA91F000E9;
+	Thu, 20 Aug 2026 16:39:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243977;
-	bh=EVZL0JmTP0LgPNGk+IFLhp1U8pLBYtofC2wbKwoTxQo=;
+	s=korg; t=1787243980;
+	bh=+a8hdTBBv0vLE+Bm8fcVxyXsHLs/Yc864PZnxTFpwu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M8fZVqHIpzWlo57kXPogTPK6uspjs/XKr7TjX/jEcZCWToN/307rVTNuj4T6YNhkJ
-	 GJhn2yOc1CiDNxi8Z/uPAx07KT8vQqzRsLIZfQdWTkjFxrE8PNNO5hSlMbfdsGvjwh
-	 qbDKiYFbXXlWTJRlUuVlcDqzMIakGhMtmrvtRako=
+	b=h+iE/XpsnS60UgfuhwGcvKTlwwaC8U9mSIZcg+s//i+vMKjKv46BLlEijWmTVdv36
+	 yL5BW79XbdFK2s5PUOcci8szqFJRpg2BLAUknOUfgbSIOVsnhd2XKS0iKwxbes8weQ
+	 nyhbMmYuUc3F1y9JaOMUW3Um1NZTu+eXO04zAwLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Andrey Troshin <drtrosh@yandex-team.ru>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 002/235] media: mediatek: vcodec: Fix a resource leak related to the scp device in FW initialization
-Date: Thu, 20 Aug 2026 16:53:58 +0200
-Message-ID: <20260820145216.506244835@linuxfoundation.org>
+Subject: [PATCH 5.10 003/235] ipvs: separate destination availability state
+Date: Thu, 20 Aug 2026 16:53:59 +0200
+Message-ID: <20260820145216.538196891@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -52,45 +57,227 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit 4936cd5817af35d23e4d283f48fa59a18ef481e4 ]
+commit cdcc4e46180df8161f4d2f3c6fd6beaf6990133d upstream.
 
-On Mediatek devices with a system companion processor (SCP) the mtk_scp
-structure has to be removed explicitly to avoid a resource leak.
-Free the structure in case the allocation of the firmware structure fails
-during the firmware initialization.
+IPVS configuration paths update destination availability while connection
+accounting updates destination overload state. The two independent states
+share dest->flags, so their read-modify-write updates can race and lose one
+another.
 
-Fixes: 53dbe0850444 ("media: mtk-vcodec: potential null pointer deference in SCP")
+Keep OVERLOAD in flags, where the preceding patch serializes its updates
+with dst_lock, and move AVAILABLE to cflags. This keeps configuration-
+controlled availability out of the scheduler hot cacheline until a
+scheduler needs to check it. It also prevents availability updates from
+clobbering overload state.
+
+The destination status bits are not exposed through the IPVS sockopt or
+netlink interfaces, so keep their definitions in the internal IPVS header.
+
+Readers can still observe stale destination state; this does not provide a
+cross-field snapshot.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-[Andrey Troshin: backport fixs from
- drivers/media/platform/mediatek/vcodec/common/mtk_vcodec_fw_scp.c
- to drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_scp.c]
-Signed-off-by: Andrey Troshin <drtrosh@yandex-team.ru>
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Link: https://lore.kernel.org/all/8913381c-1e02-35c7-0ec4-61de5a12fd35@ssi.bg/
+Assisted-by: Claude-Code:GLM-5.2
+Suggested-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+(cherry picked from commit cdcc4e46180df8161f4d2f3c6fd6beaf6990133d)
+[ Julian: Backport by removing the hunks from ip_vs_xmit.c ]
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_scp.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/net/ip_vs.h              | 7 +++++++
+ include/uapi/linux/ip_vs.h       | 6 ------
+ net/netfilter/ipvs/ip_vs_conn.c  | 4 ++--
+ net/netfilter/ipvs/ip_vs_core.c  | 6 +++---
+ net/netfilter/ipvs/ip_vs_ctl.c   | 4 ++--
+ net/netfilter/ipvs/ip_vs_dh.c    | 4 ++--
+ net/netfilter/ipvs/ip_vs_lblc.c  | 2 +-
+ net/netfilter/ipvs/ip_vs_lblcr.c | 8 ++++----
+ 8 files changed, 21 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_scp.c b/drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_scp.c
-index 27f08b1d34d1..199a64c853bc 100644
---- a/drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_scp.c
-+++ b/drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_scp.c
-@@ -65,8 +65,11 @@ struct mtk_vcodec_fw *mtk_vcodec_fw_scp_init(struct mtk_vcodec_dev *dev)
+diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
+index 9f4224eb18a34..d9a2e1e080fd9 100644
+--- a/include/net/ip_vs.h
++++ b/include/net/ip_vs.h
+@@ -33,6 +33,12 @@
+ #define IP_VS_HDR_INVERSE	1
+ #define IP_VS_HDR_ICMP		2
+ 
++/* Destination Server Flags */
++#define IP_VS_DEST_F_OVERLOAD	0x0002		/* server is overloaded */
++
++/* Destination Server Config Flags */
++#define IP_VS_DEST_CF_AVAILABLE	0x0001		/* server is available */
++
+ /* Generic access of ipvs struct */
+ static inline struct netns_ipvs *net_ipvs(struct net* net)
+ {
+@@ -664,6 +670,7 @@ struct ip_vs_dest {
+ 	volatile unsigned int	flags;		/* dest status flags */
+ 	atomic_t		conn_flags;	/* flags to copy to conn */
+ 	atomic_t		weight;		/* server weight */
++	unsigned long		cflags;		/* config flags */
+ 	atomic_t		last_weight;	/* server latest weight */
+ 	__u16			tun_type;	/* tunnel type */
+ 	__be16			tun_port;	/* tunnel port */
+diff --git a/include/uapi/linux/ip_vs.h b/include/uapi/linux/ip_vs.h
+index 4102ddcb4e14e..9e4a762f31d83 100644
+--- a/include/uapi/linux/ip_vs.h
++++ b/include/uapi/linux/ip_vs.h
+@@ -28,12 +28,6 @@
+ #define IP_VS_SVC_F_SCHED_SH_FALLBACK	IP_VS_SVC_F_SCHED1 /* SH fallback */
+ #define IP_VS_SVC_F_SCHED_SH_PORT	IP_VS_SVC_F_SCHED2 /* SH use port */
+ 
+-/*
+- *      Destination Server Flags
+- */
+-#define IP_VS_DEST_F_AVAILABLE	0x0001		/* server is available */
+-#define IP_VS_DEST_F_OVERLOAD	0x0002		/* server is overloaded */
+-
+ /*
+  *      IPVS sync daemon states
+  */
+diff --git a/net/netfilter/ipvs/ip_vs_conn.c b/net/netfilter/ipvs/ip_vs_conn.c
+index f4506bc166cef..90efb3c3760c8 100644
+--- a/net/netfilter/ipvs/ip_vs_conn.c
++++ b/net/netfilter/ipvs/ip_vs_conn.c
+@@ -759,7 +759,7 @@ int ip_vs_check_template(struct ip_vs_conn *ct, struct ip_vs_dest *cdest)
+ 	 * Checking the dest server status.
+ 	 */
+ 	if ((dest == NULL) ||
+-	    !(dest->flags & IP_VS_DEST_F_AVAILABLE) ||
++	    !(dest->cflags & IP_VS_DEST_CF_AVAILABLE) ||
+ 	    expire_quiescent_template(ipvs, dest) ||
+ 	    (cdest && (dest != cdest))) {
+ 		IP_VS_DBG_BUF(9, "check_template: dest not available for "
+@@ -1402,7 +1402,7 @@ void ip_vs_expire_nodest_conn_flush(struct netns_ipvs *ipvs)
+ 				continue;
+ 
+ 			dest = cp->dest;
+-			if (!dest || (dest->flags & IP_VS_DEST_F_AVAILABLE))
++			if (!dest || (dest->cflags & IP_VS_DEST_CF_AVAILABLE))
+ 				continue;
+ 
+ 			if (atomic_read(&cp->n_control))
+diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
+index ea9b5f434ec06..c3d2e70bb007b 100644
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -136,7 +136,7 @@ ip_vs_in_stats(struct ip_vs_conn *cp, struct sk_buff *skb)
+ 	struct ip_vs_dest *dest = cp->dest;
+ 	struct netns_ipvs *ipvs = cp->ipvs;
+ 
+-	if (dest && (dest->flags & IP_VS_DEST_F_AVAILABLE)) {
++	if (dest && (dest->cflags & IP_VS_DEST_CF_AVAILABLE)) {
+ 		struct ip_vs_cpu_stats *s;
+ 		struct ip_vs_service *svc;
+ 
+@@ -172,7 +172,7 @@ ip_vs_out_stats(struct ip_vs_conn *cp, struct sk_buff *skb)
+ 	struct ip_vs_dest *dest = cp->dest;
+ 	struct netns_ipvs *ipvs = cp->ipvs;
+ 
+-	if (dest && (dest->flags & IP_VS_DEST_F_AVAILABLE)) {
++	if (dest && (dest->cflags & IP_VS_DEST_CF_AVAILABLE)) {
+ 		struct ip_vs_cpu_stats *s;
+ 		struct ip_vs_service *svc;
+ 
+@@ -2096,7 +2096,7 @@ ip_vs_in(struct netns_ipvs *ipvs, unsigned int hooknum, struct sk_buff *skb, int
  	}
  
- 	fw = devm_kzalloc(&dev->plat_dev->dev, sizeof(*fw), GFP_KERNEL);
--	if (!fw)
-+	if (!fw) {
-+		scp_put(scp);
- 		return ERR_PTR(-ENOMEM);
-+	}
-+
- 	fw->type = SCP;
- 	fw->ops = &mtk_vcodec_rproc_msg;
- 	fw->scp = scp;
+ 	/* Check the server status */
+-	if (cp && cp->dest && !(cp->dest->flags & IP_VS_DEST_F_AVAILABLE)) {
++	if (cp && cp->dest && !(cp->dest->cflags & IP_VS_DEST_CF_AVAILABLE)) {
+ 		/* the destination server is not available */
+ 		if (sysctl_expire_nodest_conn(ipvs)) {
+ 			bool old_ct = ip_vs_conn_uses_old_conntrack(cp, skb);
+diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
+index 025512d76db06..2ded17b67819a 100644
+--- a/net/netfilter/ipvs/ip_vs_ctl.c
++++ b/net/netfilter/ipvs/ip_vs_ctl.c
+@@ -961,7 +961,7 @@ __ip_vs_update_dest(struct ip_vs_service *svc, struct ip_vs_dest *dest,
+ 	}
+ 
+ 	/* set the dest status flags */
+-	dest->flags |= IP_VS_DEST_F_AVAILABLE;
++	dest->cflags |= IP_VS_DEST_CF_AVAILABLE;
+ 
+ 	if (READ_ONCE(dest->u_threshold) != udest->u_threshold ||
+ 	    READ_ONCE(dest->l_threshold) != udest->l_threshold) {
+@@ -1240,7 +1240,7 @@ static void __ip_vs_unlink_dest(struct ip_vs_service *svc,
+ 				struct ip_vs_dest *dest,
+ 				int svcupd)
+ {
+-	dest->flags &= ~IP_VS_DEST_F_AVAILABLE;
++	dest->cflags &= ~IP_VS_DEST_CF_AVAILABLE;
+ 
+ 	/*
+ 	 *  Remove it from the d-linked destination list.
+diff --git a/net/netfilter/ipvs/ip_vs_dh.c b/net/netfilter/ipvs/ip_vs_dh.c
+index 5e6ec32aff2b1..6d88bb4bf4ae8 100644
+--- a/net/netfilter/ipvs/ip_vs_dh.c
++++ b/net/netfilter/ipvs/ip_vs_dh.c
+@@ -220,8 +220,8 @@ ip_vs_dh_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
+ 
+ 	s = (struct ip_vs_dh_state *) svc->sched_data;
+ 	dest = ip_vs_dh_get(svc->af, s, &iph->daddr);
+-	if (!dest
+-	    || !(dest->flags & IP_VS_DEST_F_AVAILABLE)
++	if (!dest ||
++	    !(dest->cflags & IP_VS_DEST_CF_AVAILABLE)
+ 	    || atomic_read(&dest->weight) <= 0
+ 	    || is_overloaded(dest)) {
+ 		ip_vs_scheduler_err(svc, "no destination available");
+diff --git a/net/netfilter/ipvs/ip_vs_lblc.c b/net/netfilter/ipvs/ip_vs_lblc.c
+index 7ac7473e3804c..e2480f33a1963 100644
+--- a/net/netfilter/ipvs/ip_vs_lblc.c
++++ b/net/netfilter/ipvs/ip_vs_lblc.c
+@@ -503,7 +503,7 @@ ip_vs_lblc_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
+ 		 */
+ 
+ 		dest = en->dest;
+-		if ((dest->flags & IP_VS_DEST_F_AVAILABLE) &&
++		if ((dest->cflags & IP_VS_DEST_CF_AVAILABLE) &&
+ 		    atomic_read(&dest->weight) > 0 && !is_overloaded(dest, svc))
+ 			goto out;
+ 	}
+diff --git a/net/netfilter/ipvs/ip_vs_lblcr.c b/net/netfilter/ipvs/ip_vs_lblcr.c
+index 77c323c36a889..7469547c8a440 100644
+--- a/net/netfilter/ipvs/ip_vs_lblcr.c
++++ b/net/netfilter/ipvs/ip_vs_lblcr.c
+@@ -170,8 +170,8 @@ static inline struct ip_vs_dest *ip_vs_dest_set_min(struct ip_vs_dest_set *set)
+ 		if (least->flags & IP_VS_DEST_F_OVERLOAD)
+ 			continue;
+ 
+-		if ((atomic_read(&least->weight) > 0)
+-		    && (least->flags & IP_VS_DEST_F_AVAILABLE)) {
++		if ((atomic_read(&least->weight) > 0) &&
++		    (least->cflags & IP_VS_DEST_CF_AVAILABLE)) {
+ 			loh = ip_vs_dest_conn_overhead(least);
+ 			goto nextstage;
+ 		}
+@@ -187,8 +187,8 @@ static inline struct ip_vs_dest *ip_vs_dest_set_min(struct ip_vs_dest_set *set)
+ 
+ 		doh = ip_vs_dest_conn_overhead(dest);
+ 		if (((__s64)loh * atomic_read(&dest->weight) >
+-		     (__s64)doh * atomic_read(&least->weight))
+-		    && (dest->flags & IP_VS_DEST_F_AVAILABLE)) {
++		     (__s64)doh * atomic_read(&least->weight)) &&
++		    (dest->cflags & IP_VS_DEST_CF_AVAILABLE)) {
+ 			least = dest;
+ 			loh = doh;
+ 		}
 -- 
 2.53.0
 
