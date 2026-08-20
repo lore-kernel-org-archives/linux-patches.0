@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959564779BE;
-	Thu, 20 Aug 2026 16:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A578377A89;
+	Thu, 20 Aug 2026 16:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243408; cv=none; b=lGXNdJRajg7vt8LZQaeG1heoh3ynp7J73bpyJOrvTN3CvtfAsypGPj6GfA7alVrSvgTVJNCfWKiL3idYxC3joyjHvQp4WrxWLfG+mA6ix/YtQM+bELiRXG7ckGi2XKYUQiwfEU03s+g8w+nvoV165jLV6XLIgBL149qzghWTjJg=
+	t=1787243411; cv=none; b=or07K0oXEAIGwp0WLaKVMuyI1JzzsiWvSl113gZPsl0o5quuT2R6j9QSC3DOeIfGd6AMUrWnutaK/nDfLw+45bcNTPvGI1vxkLVLNScVWsuzl95qzXgSUZ38CQqaVjB9insVRnImGfEk+ReM1Pj/BD/MlP26srkYt9YhaxutiOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243408; c=relaxed/simple;
-	bh=+h7bEDLGO3A4Uib4t6O/D5BsyMX6IjfodxeDx04pKJk=;
+	s=arc-20240116; t=1787243411; c=relaxed/simple;
+	bh=LP+ZJ1lXf0pIK7riH/R7sibpwERgxhykfDc8c6HKEs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JlF79EjiJCL8VGkDYRP+Q60ihl+hbAcPxj0IYuntMKk+BTgn+cSwYi7ERn+vETSi7CjEApgVKrRbzYAx7lIOtJVI7ooTOTBvV29+lxSADm43tHoxqTTy9/xSeBD7rxKB27SYrfPyP1hSvu5ZNA9SebSeKivxTQByK0h/lExxX2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PhMYvloH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XcRVmaMMvGoVF3nUKo7vZyKZ/NspEggM+Y+PEAQJPuR6CvCb54JIT1a8FaeQ2kwLYPUYOCLOgz3lnN3cGneHoFuenpjQdJ2wC8LBuSsTo7gVQvCfPB2hXuUJCpm5+3acRx35RQQs6p+NTpfKh48meljqmhTq4QFWBcnez1zckDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jj5T5ZHL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PhMYvloH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F20591F000E9;
-	Thu, 20 Aug 2026 16:30:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jj5T5ZHL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D447C1F000E9;
+	Thu, 20 Aug 2026 16:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243407;
-	bh=+iyYGbKoGlig2m2MHZb8elcm8aD1dloVrRQEZezE+Vg=;
+	s=korg; t=1787243410;
+	bh=BYJ7SMOotEXpfDZS0MKtOTmG6dv3hvlVNN+iBaFvKLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PhMYvloHxfN2OXyNUJYhZWcgd0sf7jv8IK5iWj63YtGHPDgQuRXJ7E3mg5gCexflD
-	 yBTJ1+N5uDL17yWDsRgCqSoF6eIUONrKcR3IrckMVmh+SWyeZbMqPbJpBt7VxZz3N5
-	 +SOjCtY+QTK7+Ff6V9dlrF4q0DPbGJoF55r3MxBA=
+	b=jj5T5ZHLfr5VfAqQ9sVZAFCVh5Xq0DshpDH+Db6/E3X1/a7nocmt6+4UUUfM0yQps
+	 TLbgQLGD5kW9rvPptgyIoLZRVBUgQWzIkZZHpd6y9kFM9dhY/2Fuaq0x/xZqjvADPF
+	 6qmo8i6z99z8uK64OLCO4sRZMRpvgWLHlTDwK3Cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chen-Yu Tsai <wenst@chromium.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 085/272] ASoC: mediatek: mt8192-afe-pcm: Convert to devm_pm_runtime_enable()
-Date: Thu, 20 Aug 2026 16:54:29 +0200
-Message-ID: <20260820145233.827194973@linuxfoundation.org>
+Subject: [PATCH 5.15 086/272] ASoC: mediatek: mt8192-afe-pcm: Simplify with dev_err_probe()
+Date: Thu, 20 Aug 2026 16:54:30 +0200
+Message-ID: <20260820145233.853887804@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -54,148 +54,142 @@ Content-Transfer-Encoding: 8bit
 
 From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 7aaaa22de56ce0dae15fd9f42a69a1d1a7a6e078 ]
+[ Upstream commit 324c603a4efca7d1045e0bf3477ca54970eac72c ]
 
-Switch from pm_runtime_enable() to devm_pm_runtime_enable(), allowing
-to remove all gotos from the probe function.
+Simplify the probe function by switching error prints to return
+dev_err_probe(), lowering the lines count; while at it, also
+beautify some messages and change some others' level from warn
+to error.
 
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://msgid.link/r/20240313110147.1267793-2-angelogioacchino.delregno@collabora.com
+Link: https://msgid.link/r/20240313110147.1267793-3-angelogioacchino.delregno@collabora.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: e24d5dde56a5 ("ASoC: mediatek: mt8192: Check runtime resume during probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-afe-pcm.c |   46 ++++++++++-------------------
- 1 file changed, 17 insertions(+), 29 deletions(-)
+ sound/soc/mediatek/mt8192/mt8192-afe-pcm.c |   65 +++++++++--------------------
+ 1 file changed, 22 insertions(+), 43 deletions(-)
 
 --- a/sound/soc/mediatek/mt8192/mt8192-afe-pcm.c
 +++ b/sound/soc/mediatek/mt8192/mt8192-afe-pcm.c
-@@ -2221,21 +2221,20 @@ static int mt8192_afe_pcm_dev_probe(stru
- 		return ret;
- 	}
+@@ -2209,17 +2209,12 @@ static int mt8192_afe_pcm_dev_probe(stru
  
--	pm_runtime_enable(&pdev->dev);
--	if (!pm_runtime_enabled(&pdev->dev))
--		goto err_pm_disable;
-+	ret = devm_pm_runtime_enable(&pdev->dev);
+ 	/* reset controller to reset audio regs before regmap cache */
+ 	rstc = devm_reset_control_get_exclusive(dev, "audiosys");
+-	if (IS_ERR(rstc)) {
+-		ret = PTR_ERR(rstc);
+-		dev_err(dev, "could not get audiosys reset:%d\n", ret);
+-		return ret;
+-	}
++	if (IS_ERR(rstc))
++		return dev_err_probe(dev, PTR_ERR(rstc), "could not get audiosys reset\n");
+ 
+ 	ret = reset_control_reset(rstc);
+-	if (ret) {
+-		dev_err(dev, "failed to trigger audio reset:%d\n", ret);
+-		return ret;
+-	}
 +	if (ret)
-+		return ret;
++		return dev_err_probe(dev, ret, "failed to trigger audio reset\n");
+ 
+ 	ret = devm_pm_runtime_enable(&pdev->dev);
+ 	if (ret)
+@@ -2227,25 +2222,21 @@ static int mt8192_afe_pcm_dev_probe(stru
  
  	/* regmap init */
  	afe->regmap = syscon_node_to_regmap(dev->parent->of_node);
- 	if (IS_ERR(afe->regmap)) {
- 		dev_err(dev, "could not get regmap from parent\n");
--		ret = PTR_ERR(afe->regmap);
--		goto err_pm_disable;
-+		return PTR_ERR(afe->regmap);
- 	}
+-	if (IS_ERR(afe->regmap)) {
+-		dev_err(dev, "could not get regmap from parent\n");
+-		return PTR_ERR(afe->regmap);
+-	}
++	if (IS_ERR(afe->regmap))
++		return dev_err_probe(dev, PTR_ERR(afe->regmap),
++				     "could not get regmap from parent");
++
  	ret = regmap_attach_dev(dev, afe->regmap, &mt8192_afe_regmap_config);
- 	if (ret) {
- 		dev_warn(dev, "regmap_attach_dev fail, ret %d\n", ret);
--		goto err_pm_disable;
-+		return ret;
- 	}
+-	if (ret) {
+-		dev_warn(dev, "regmap_attach_dev fail, ret %d\n", ret);
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret, "regmap_attach_dev fail\n");
  
  	/* enable clock for regcache get default value from hw */
-@@ -2245,7 +2244,7 @@ static int mt8192_afe_pcm_dev_probe(stru
+ 	afe_priv->pm_runtime_bypass_reg_ctl = true;
+ 	pm_runtime_get_sync(&pdev->dev);
+ 
  	ret = regmap_reinit_cache(afe->regmap, &mt8192_afe_regmap_config);
- 	if (ret) {
- 		dev_err(dev, "regmap_reinit_cache fail, ret %d\n", ret);
--		goto err_pm_disable;
-+		return ret;
- 	}
+-	if (ret) {
+-		dev_err(dev, "regmap_reinit_cache fail, ret %d\n", ret);
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret, "regmap_reinit_cache fail\n");
  
  	pm_runtime_put_sync(&pdev->dev);
-@@ -2258,10 +2257,8 @@ static int mt8192_afe_pcm_dev_probe(stru
- 	afe->memif_size = MT8192_MEMIF_NUM;
- 	afe->memif = devm_kcalloc(dev, afe->memif_size, sizeof(*afe->memif),
- 				  GFP_KERNEL);
--	if (!afe->memif) {
--		ret = -ENOMEM;
--		goto err_pm_disable;
--	}
-+	if (!afe->memif)
-+		return -ENOMEM;
- 
- 	for (i = 0; i < afe->memif_size; i++) {
- 		afe->memif[i].data = &memif_data[i];
-@@ -2275,26 +2272,22 @@ static int mt8192_afe_pcm_dev_probe(stru
- 	afe->irqs_size = MT8192_IRQ_NUM;
- 	afe->irqs = devm_kcalloc(dev, afe->irqs_size, sizeof(*afe->irqs),
- 				 GFP_KERNEL);
--	if (!afe->irqs) {
--		ret = -ENOMEM;
--		goto err_pm_disable;
--	}
-+	if (!afe->irqs)
-+		return -ENOMEM;
- 
- 	for (i = 0; i < afe->irqs_size; i++)
- 		afe->irqs[i].irq_data = &irq_data[i];
- 
- 	/* request irq */
- 	irq_id = platform_get_irq(pdev, 0);
--	if (irq_id < 0) {
--		ret = irq_id;
--		goto err_pm_disable;
--	}
-+	if (irq_id < 0)
-+		return irq_id;
+ 	afe_priv->pm_runtime_bypass_reg_ctl = false;
+@@ -2285,30 +2276,22 @@ static int mt8192_afe_pcm_dev_probe(stru
  
  	ret = devm_request_irq(dev, irq_id, mt8192_afe_irq_handler,
  			       IRQF_TRIGGER_NONE, "asys-isr", (void *)afe);
- 	if (ret) {
- 		dev_err(dev, "could not request_irq for Afe_ISR_Handle\n");
--		goto err_pm_disable;
-+		return ret;
- 	}
+-	if (ret) {
+-		dev_err(dev, "could not request_irq for Afe_ISR_Handle\n");
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret, "could not request_irq for Afe_ISR_Handle\n");
  
  	/* init sub_dais */
-@@ -2305,7 +2298,7 @@ static int mt8192_afe_pcm_dev_probe(stru
- 		if (ret) {
- 			dev_warn(afe->dev, "dai register i %d fail, ret %d\n",
- 				 i, ret);
--			goto err_pm_disable;
-+			return ret;
- 		}
+ 	INIT_LIST_HEAD(&afe->sub_dais);
+ 
+ 	for (i = 0; i < ARRAY_SIZE(dai_register_cbs); i++) {
+ 		ret = dai_register_cbs[i](afe);
+-		if (ret) {
+-			dev_warn(afe->dev, "dai register i %d fail, ret %d\n",
+-				 i, ret);
+-			return ret;
+-		}
++		if (ret)
++			return dev_err_probe(afe->dev, ret, "dai %d register fail", i);
  	}
  
-@@ -2314,7 +2307,7 @@ static int mt8192_afe_pcm_dev_probe(stru
- 	if (ret) {
- 		dev_warn(afe->dev, "mtk_afe_combine_sub_dai fail, ret %d\n",
- 			 ret);
--		goto err_pm_disable;
-+		return ret;
- 	}
+ 	/* init dai_driver and component_driver */
+ 	ret = mtk_afe_combine_sub_dai(afe);
+-	if (ret) {
+-		dev_warn(afe->dev, "mtk_afe_combine_sub_dai fail, ret %d\n",
+-			 ret);
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(afe->dev, ret, "mtk_afe_combine_sub_dai fail\n");
  
  	/* others */
-@@ -2333,7 +2326,7 @@ static int mt8192_afe_pcm_dev_probe(stru
+ 	afe->mtk_afe_hardware = &mt8192_afe_hardware;
+@@ -2324,19 +2307,15 @@ static int mt8192_afe_pcm_dev_probe(stru
+ 	/* register platform */
+ 	ret = devm_snd_soc_register_component(&pdev->dev,
  					      &mt8192_afe_component, NULL, 0);
- 	if (ret) {
- 		dev_warn(dev, "err_platform\n");
--		goto err_pm_disable;
-+		return ret;
- 	}
+-	if (ret) {
+-		dev_warn(dev, "err_platform\n");
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret, "Couldn't register AFE component\n");
  
  	ret = devm_snd_soc_register_component(&pdev->dev,
-@@ -2342,15 +2335,10 @@ static int mt8192_afe_pcm_dev_probe(stru
+ 					      &mt8192_afe_pcm_component,
+ 					      afe->dai_drivers,
  					      afe->num_dai_drivers);
- 	if (ret) {
- 		dev_warn(dev, "err_dai_component\n");
--		goto err_pm_disable;
-+		return ret;
- 	}
+-	if (ret) {
+-		dev_warn(dev, "err_dai_component\n");
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret, "Couldn't register AFE-PCM component\n");
  
  	return 0;
--
--err_pm_disable:
--	pm_runtime_disable(&pdev->dev);
--
--	return ret;
  }
- 
- static int mt8192_afe_pcm_dev_remove(struct platform_device *pdev)
 
 
