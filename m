@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FBE381AFB;
-	Thu, 20 Aug 2026 15:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECA7380FF6;
+	Thu, 20 Aug 2026 15:20:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239235; cv=none; b=Zd4o5DpsgrTt6Ce4wZzaENPASM3mNQWCUhWDv2x47EcRrqy73lg+cOQeKAMZw9eFqcoW+6meURbNqoN6GJM9+1ajkYTe49yY6QozieD731Im9rkpUk9Fbe2y1iEqpkwcYb+taqGwXzmPv0J4lVh4c1DBeRr9Otz1CSFqA70bQzI=
+	t=1787239238; cv=none; b=WPjXTQAv358g/EjysBINwhSAt5/fV8cduLe78LMtJDHuvWXigUudqwi2AVy4IqUJWTaBYgGaIfNQy14g9hc4JK17JyPgRQFhkH0bNTTdiBK/3ogyInnqxtFjzIRITzMEA3AeiPPA/i4jYjU6Dtk6yuzvTNCGfOrpdan2Q/0nQds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239235; c=relaxed/simple;
-	bh=KiLxQgmzXQwpmyLd1Ob3tqDzyLQOFCthzPkrlzgWrck=;
+	s=arc-20240116; t=1787239238; c=relaxed/simple;
+	bh=nx2b0vHguV7Z1mQ2sGBAVPEuIivuX4BdsqxID0cfzrg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NBOZm5rVhzGbuXYWTJsw+TURopucp8HVivZzre4xPAPsCRNtoaBvWLVCuCi6ZvrD4gxVwLhZu3Zz8K1fGukh1dTMMb3KErijV4qG5eV3a441Ep1bAVwB0BTs2SjlL9JNe2fgSgb1dj5zKktOZXMwN3v0RW2eHXcF35FMel4IlHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o7g2hM9x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nrQnqXQWyGD0E4yye6t1a3W0k/uFypiwXgCocw1EwS3DcpWjp6rUXX2FfPmMb8Ba1n+gIOIevWq3QbhG6Ko9BNCQ4OeQD5p8NjKLp7AhkxTNDoyB51Jxsoxkr41iWO3lVDR2NSByOokx9/3kXvQnYS3jQEjo28Ln5GaS3TsrEVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5i9BRi4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o7g2hM9x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C791F000E9;
-	Thu, 20 Aug 2026 15:20:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5i9BRi4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB671F000E9;
+	Thu, 20 Aug 2026 15:20:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239234;
-	bh=uY9zIW1NrogQ/iKGO3827a7Mws/L45v8FHfZPjB6IXk=;
+	s=korg; t=1787239237;
+	bh=GInaaXnXjgBVFb9vpFOHvTKi5MUNqfsauISivUCH2WA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o7g2hM9x0KyzVYaVJ+0HuWpAKUBFSRaxZmDTUQtgQrGMeHgnoht3nSGDb+xonQVg2
-	 6KYksZUprvSS4Nvs3Fpr+BkpHivLti5BbPiMEsAGoxEUkugYUsxuOuBlXcEXympEto
-	 vmCVrcUlP5u6QoS9RanHAR7b5g9XF3dphUCbaLjk=
+	b=e5i9BRi4/o3IaLV58QsXGGubquPxAiXcIRCQ2xSGGg/ry+bKWDO2FEjIKbzCfnsS5
+	 TWKTMf0dTtRkotT7gM8Fs63fBFLF6ke8Kzb1HvVCP3cVdW/ZHPhCgRNN00AkJlHIVB
+	 yjxfzW5GJibg0MUlKJxO8HPEz3JcIltR+b7m5TwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ville Saarinen <wiza@saarinenkoti.fi>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+30b93b6845b19cc38581@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 195/217] regmap: sdw-mbq: Fix swap of timeout and retry times
-Date: Thu, 20 Aug 2026 16:56:03 +0200
-Message-ID: <20260820145243.580399795@linuxfoundation.org>
+Subject: [PATCH 6.18 196/217] af_packet: Dont send zero-byte data in tpacket_snd().
+Date: Thu, 20 Aug 2026 16:56:04 +0200
+Message-ID: <20260820145243.611180314@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -52,41 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ae7fd6ff4c6713270d2efe6db87a4a58ccb7cc61 ]
+[ Upstream commit 6bcd76c134c55c697148acb5c0194e9666abdf84 ]
 
-When polling Function Busy using read_poll_timeout() the total timeout
-and retry delay arguments are swapped. This leads to only a single retry
-being processed, it seems the existing users typically do succeed before
-the first retry.
+syzbot reported a WARNING in __dev_queue_xmit() triggered via tpacket_snd():
 
-Swap the arguments over to ensure the correct polling time.
+skb_assert_len
+WARNING: at include/linux/skbuff.h:2753 skb_assert_len
+WARNING: at __dev_queue_xmit+0x21bc/0x4970 net/core/dev.c:4781
 
-Reported-by: Ville Saarinen <wiza@saarinenkoti.fi>
-Link: https://lore.kernel.org/linux-sound/ansTPGgVNoDJlA5r@opensource.cirrus.com/T/#m680731a2f307f1f5176b27ed5aa560ddc94e5d62
-Fixes: 5bc493bf0c37 ("regmap: sdw-mbq: Add support for SDCA deferred controls")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260811131816.332082-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Call Trace:
+ <TASK>
+ dev_queue_xmit include/linux/netdevice.h:3448 [inline]
+ packet_xmit+0x243/0x310 net/packet/af_packet.c:276
+ tpacket_snd net/packet/af_packet.c:2907 [inline]
+ packet_sendmsg+0x28d6/0x4eb0 net/packet/af_packet.c:3134
+
+When sending 0-byte packets via TPACKET ring buffer on devices with no
+hard header (e.g. dev->hard_header_len == 0), tpacket_fill_skb()
+populates an skb with skb->len == 0 and returns 0. tpacket_snd() then
+forwards this empty skb to packet_xmit(), causing __dev_queue_xmit() to
+hit skb_assert_len(skb).
+
+Similar checks exist in packet_snd() via commit dc633700f00f
+("net/af_packet: check len when min_header_len equals to 0") and in
+packet_sendmsg_spkt() via commit 6a341729fb31 ("af_packet: Don't send
+zero-byte data in packet_sendmsg_spkt().").
+
+Return -EINVAL in tpacket_fill_skb() when skb->len is zero to reject
+zero-length packets in tpacket_snd().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+30b93b6845b19cc38581@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a79e807.01d0871a.3a0d52.00ac.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260810150447.1220864-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap-sdw-mbq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/packet/af_packet.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/base/regmap/regmap-sdw-mbq.c b/drivers/base/regmap/regmap-sdw-mbq.c
-index 86644bbd07100..4895f532c806f 100644
---- a/drivers/base/regmap/regmap-sdw-mbq.c
-+++ b/drivers/base/regmap/regmap-sdw-mbq.c
-@@ -57,7 +57,7 @@ static int regmap_sdw_mbq_poll_busy(struct sdw_slave *slave, unsigned int reg,
- 	if (ctx->readable_reg(dev, reg)) {
- 		ret = read_poll_timeout(sdw_read_no_pm, val,
- 					val < 0 || !(val & SDCA_CTL_ENTITY_0_FUNCTION_BUSY),
--					ctx->cfg.timeout_us, ctx->cfg.retry_us,
-+					ctx->cfg.retry_us, ctx->cfg.timeout_us,
- 					false, slave, reg);
- 		if (val < 0)
- 			return val;
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 10b373ab5f35b..99212023b119c 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2659,6 +2659,9 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
+ 		len = ((to_write > len_max) ? len_max : to_write);
+ 	}
+ 
++	if (unlikely(!skb->len))
++		return -EINVAL;
++
+ 	packet_parse_headers(skb, sock);
+ 
+ 	return tp_len;
 -- 
 2.53.0
 
