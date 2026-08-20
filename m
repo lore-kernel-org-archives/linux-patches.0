@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC0A47D94B;
-	Thu, 20 Aug 2026 17:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445F847DD4D;
+	Thu, 20 Aug 2026 17:45:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247901; cv=none; b=LnQo9YklNoQWTO2XzjSUOrPLKMcmFV2rbeApDuMZxLhubXRb0++y4Wncq53Qvrn5JeAG/3LaK3qFbAtJ6s7hH//xEkD62UQE6GxG+wGgOI6EbLqVb16gtQ23C9HBIrKZlIirrDJSIRh+cBzvwXHBXb34tkbK7eXLa4tFV0x12WQ=
+	t=1787247904; cv=none; b=fW2l2ilHuBKSzWF5lzqIgNYh4sdA5tS9+weru7W9cNZvA8hd3lnTYRdP01xEqOcsNJzjTkkehHOow8L69nCeyFKi4oXqjcrVZrVzlrbdF1MCQivzyQjOShHJMvT6DMRVT8Viqf8z/aZr0dwT2GAe2RzAr4G2muha1g1i50ETxyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247901; c=relaxed/simple;
-	bh=o0+S+ZyIQ0vJBBsE0oK5veBQVJCTPwwLSfrncypv/XY=;
+	s=arc-20240116; t=1787247904; c=relaxed/simple;
+	bh=nFON5gyMrOqn4byYYB9SLjMok3BJCIjbx6WsG/6nKSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=geetGmG+W+dvGqdbqpPctqfmVyRKWAFJmDJ6VU7WfoOqHLeLd6wU0U6dyaZ9r+mGp+rFqvpqFyyVCyzh7DtmDEMRithbkIjkm2R+gl/AOVvoOcSusrp1Pxem6gmWIPsQk2/T/MtfZBMoL/B0j/VjjqMUazz7TM9ZifHftBScev4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSzML88w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=auSoKqfbYGnGdOc6ctxh6ODIodEkSjk6KYTkU7oe2xEW3JElxncwSzhe+BSafcMF9L0x4WffMBDw9YcyAPgUqPOlN5uXET77yjag3qqaiALhFRp+J1873Hx9oysRkn7UHGcw26/acCMvlHFA3QFT/k7OWpTJDW5NLSDZisZNp0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hAw2Wioe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSzML88w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C371F00A3A;
-	Thu, 20 Aug 2026 17:44:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAw2Wioe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C170D1F00A3A;
+	Thu, 20 Aug 2026 17:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247900;
-	bh=DkNV6jvoyxkFJbGWcpMU/8MPYOR6GJEGOggnQcq7uns=;
+	s=korg; t=1787247903;
+	bh=kj0DRRjBpqJqO5n+SE/s3pCutIaM/GdYwcnDkoVVFZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OSzML88wFJLMH1ctfR58ZGewJE1e57rzzE9XjmEUe5X4ip2NV29ePul3gepheqIk7
-	 tZmNCaGbNuLiS3l2m80xI706JjPMqoJZ63LN2ThU+DFU6iVYUnepKfkpBb6ATG4Kel
-	 DVVfFni2DqaFiujS1cMAFiXc4uTCz8M20y/ilsf8=
+	b=hAw2WioeIRUmIXV2+At1/m59DFJ7A12Rc0o00gjvX5v37DbT7Cifi11SfQ2ISouaG
+	 7PDGuBexALflkM97rW6ws9Rdf/JHgqS8JQgaBduLiKvH34ULN8jmpkAwirWxKwVxji
+	 9POOSgJMPAc9oztBsnyEL1b07qnZ5bZQyO1+awRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.1 041/303] mmc: sdhci: make tuning_err a signed int
-Date: Thu, 20 Aug 2026 16:52:57 +0200
-Message-ID: <20260820145254.415239251@linuxfoundation.org>
+Subject: [PATCH 6.1 042/303] mmc: atmel-mci: Fix use-after-free in atmci_remove due to race condition
+Date: Thu, 20 Aug 2026 16:52:58 +0200
+Message-ID: <20260820145254.441457502@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -51,51 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-commit ae31bcc92bb42502bb7c9029e6dc7a824cf6cd14 upstream.
+commit c125ee35a49a0518521b52b27631eef061b8719a upstream.
 
-Coverity report INTEGER_OVERFLOW for host->tuning_err.
-The tuning_err field in struct sdhci_host is used to store an error
-code for re-tuning, but it was declared as unsigned int. Several call
-sites store negative error codes into it and later compare against
-negative values:
+In atmci_probe, &host->bh_work is bound with atmci_work_func, and
+atmci_interrupt, atmci_timeout_timer and atmci_dma_complete can all
+queue this work on system_bh_wq.
 
-  - sdhci.c, sdhci-of-dwcmshc.c and sdhci-pci-gli.c assign it the
-    return value of __sdhci_execute_tuning()/__sdhci_execute_tuning_9750(),
-    both of which return a signed int (possibly a negative errno);
-  - sdhci-of-esdhc.c assigns host->tuning_err = -EAGAIN and later does
-    "ret = host->tuning_err; if (ret == -EAGAIN ...)";
-  - sdhci-of-dwcmshc.c prints it with the %d (signed) conversion.
+If we remove the module, atmci_remove makes cleanup and the memory
+allocated for host with devm_kzalloc() is released after the remove
+callback returns, while the work mentioned above may still be pending
+or running. The sequence of operations that may lead to a UAF bug is
+as follows:
 
-Storing a negative errno in an unsigned int and reading it back as a
-signed int only happens to work because of two's-complement, same-width
-integer conversions. It is misleading and triggers sign-conversion
-warnings. All users treat the value either as a signed error code or as
-a boolean (zero / non-zero), so changing the type to a signed int is
-safe and makes the intent explicit.
+CPU0                                      CPU1
 
-Fixes: 7d8bb1f46e13 ("mmc: sdhci: add tuning error codes")
-Assisted-by: Cline:claude-sonnet [read_file, search_files, git]
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+                                          | atmci_interrupt
+                                          | queue_work(system_bh_wq,
+                                          |            &host->bh_work)
+atmci_remove                              |
+atmci_cleanup_slot(...)                   |
+atmci_writel(host, ATMCI_IDR, ~0UL)       |
+timer_delete_sync(&host->timer)           |
+dma_release_channel(host->dma.chan)       |
+free_irq(platform_get_irq(pdev, 0), host) |
+                                          | atmci_work_func
+                                          | // use host
+// devm resources released after          |
+// remove returns, host is freed          |
+                                          | // use host (use-after-free)
+
+Fix it by canceling the work after all the sources that can schedule
+it (IRQ handler, timeout timer and DMA completion callback) have been
+stopped, and before proceeding with the remaining cleanup in
+atmci_remove.
+
+Fixes: 7d2be0749a59 ("atmel-mci: Driver for Atmel on-chip MMC controllers")
+Assisted-by: Codex:deepseek-v4-flash
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
 Cc: stable@vger.kernel.org
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/atmel-mci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mmc/host/sdhci.h
-+++ b/drivers/mmc/host/sdhci.h
-@@ -601,7 +601,7 @@ struct sdhci_host {
+--- a/drivers/mmc/host/atmel-mci.c
++++ b/drivers/mmc/host/atmel-mci.c
+@@ -2628,6 +2628,8 @@ static int atmci_remove(struct platform_
  
- 	unsigned int		tuning_count;	/* Timer count for re-tuning */
- 	unsigned int		tuning_mode;	/* Re-tuning mode supported by host */
--	unsigned int		tuning_err;	/* Error code for re-tuning */
-+	int			tuning_err;	/* Error code for re-tuning */
- #define SDHCI_TUNING_MODE_1	0
- #define SDHCI_TUNING_MODE_2	1
- #define SDHCI_TUNING_MODE_3	2
+ 	free_irq(platform_get_irq(pdev, 0), host);
+ 
++	cancel_work_sync(&host->bh_work);
++
+ 	clk_disable_unprepare(host->mck);
+ 
+ 	pm_runtime_disable(&pdev->dev);
 
 
