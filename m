@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F7D3803E8;
-	Thu, 20 Aug 2026 15:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240143806D8;
+	Thu, 20 Aug 2026 15:18:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239127; cv=none; b=LCLiYA0n1uIXg0H+bkqD8oKECrjviOFVyADl/TYZwfoWMjG+AkRPfJJIlfb3OSded0vQCqUNp/wVGuUnPZzzXD99YUnwGfvJPySdBtkp1QkyER9ks6hXZxtMM8JaP/u97z2bgOU3xBBBFiG2ZQevTUd2NThuSopXvQbIYvJPBl0=
+	t=1787239130; cv=none; b=cO18fJ3QbhCYq7qpnU14vPXFjwIcsKByod+EGwT2fMNvntBeWIzj8Sn4ZH6Qr/y1sm3YxRCT1TMHQEOpGwPiebCFhQyS+ydRi8KSwcOvvQl7fYPfDDEMdhrJSdKyLzBKhKXeOIPkc+eCgrXXMs22w8y95u+mdpHyvBuSNfrQad0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239127; c=relaxed/simple;
-	bh=jj+D5GXYeCHCAKMqfcSBCxApfAcgN6/oMBjLwCXPJ+U=;
+	s=arc-20240116; t=1787239130; c=relaxed/simple;
+	bh=m/FJRelM62Z2UAJUjwBVw2zK00R01+Om3Vu9G4SpbrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lsw8OMfNoarbo3SeO//h34Yk+TPHwMziZybXdj5tStGQJ8kvjRveezsZLKwBZvUnjkOlI54UvFX6N2+52xus2ORNfDVRkOvYLldJipb0xbnH1Nxthkt6E+TL+4kJP9N6oExO1Rh6La/e2wPW5xK5thMhRRgLxQc4bx58G6YL1s8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXW0vcYW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sTA/fvHeVOclECLqsGBQMZilVqsBhAzfU0d2ggk6lPLXBGuO/n2ihFLFYvXRl0VD2gh/wEVPN03A2jwnxCsgg9aHodxVXbPVxTd9/eDNAxkcDQ1JkO8/xKRIJidYivI2o4ZGv15HDs7MxMyVod/rOPNvQiZtxOzvHSKneUgveTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oT2VlVcP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXW0vcYW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8744B1F000E9;
-	Thu, 20 Aug 2026 15:18:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oT2VlVcP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 628601F00A3A;
+	Thu, 20 Aug 2026 15:18:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239124;
-	bh=BZP5oqu2YOf+69fm19wfE/ZYcGaN4wFyhbMqwGrFpfM=;
+	s=korg; t=1787239126;
+	bh=1KazMG10dlSO0xxKg2jnznuNkAQrcK87qhS+1Td/OHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RXW0vcYWTTjtFt6Jqj22OMzO3SiustHJmmt6/q7HaN1LCIwUqnynxFMrpy3D3AzJi
-	 EgdO643pfU/BG87DqHEoNjVouPTXtZTxlla4fRYLBwE6LR/AxzUL6E2okhAJauBE2X
-	 gexJ0+mRhND8AYIXUi/IexQ9m7yPO/sDLnlH8BJU=
+	b=oT2VlVcPkWWrPZ29f1eegzi5OzXAcYXnCmcAd9fPtegKxjh10fcsmGYvlH4jI9zk4
+	 jq+h0n0R5wD4Qid+N/dhvtH0x3DRI0l4p4hy1Yniqiky7TZxirPgzXHGmYGHhIgswe
+	 mdLVqf2LRzFvEZsEtbjigxiP3/WfbIeAsepELr3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 157/217] sched_ext: Update p->scx.disallow warning in scx_init_task()
-Date: Thu, 20 Aug 2026 16:55:25 +0200
-Message-ID: <20260820145242.481371583@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.18 122/217] xfs: dont return EFSCORRUPTED when scrubbing corrupt parent pointers
+Date: Thu, 20 Aug 2026 16:54:50 +0200
+Message-ID: <20260820145241.404882400@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -51,47 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 0454a604b98a9bf301e82860cd216ec4ac563668 ]
+commit 8af9cd79cdf6ee96ec610d707db22244fa21eb40 upstream.
 
-- Always trigger the warning if p->scx.disallow is set for fork inits. There
-  is no reason to set it during forks.
+LOLLM noticed that scrub sets the CORRUPT flag when xfs_parent_from_attr
+thinks it's been given a corrupt parent pointer.  This eliminates the
+potential to repair the filesystem because that error code is bubbled up
+the call stack.  Fix this by collapsing them all to ECANCELED in
+xchk_parent_pptr, which doesn't have that trait.
 
-- Flip the positions of if/else arms to ease adding error conditions.
-
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Stable-dep-of: 5f8b69642d18 ("sched_ext: Take cgroup_lock() first in scx_cgroup_lock()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # v6.10
+Fixes: 0d29a20fbdba89 ("xfs: scrub parent pointers")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/xfs/scrub/parent.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -2841,7 +2841,10 @@ static int scx_init_task(struct task_str
- 	scx_set_task_state(p, SCX_TASK_INIT);
- 
- 	if (p->scx.disallow) {
--		if (!fork) {
-+		if (unlikely(fork)) {
-+			scx_error(sch, "ops.init_task() set task->scx.disallow for %s[%d] during fork",
-+				  p->comm, p->pid);
-+		} else {
- 			struct rq *rq;
- 			struct rq_flags rf;
- 
-@@ -2860,9 +2863,6 @@ static int scx_init_task(struct task_str
- 			}
- 
- 			task_rq_unlock(rq, p, &rf);
--		} else if (p->policy == SCHED_EXT) {
--			scx_error(sch, "ops.init_task() set task->scx.disallow for %s[%d] during fork",
--				  p->comm, p->pid);
- 		}
+--- a/fs/xfs/scrub/parent.c
++++ b/fs/xfs/scrub/parent.c
+@@ -486,7 +486,7 @@ xchk_parent_scan_attr(
+ 			valuelen, &parent_ino, NULL);
+ 	if (error) {
+ 		xchk_fblock_set_corrupt(sc, XFS_ATTR_FORK, 0);
+-		return error;
++		return -ECANCELED;
  	}
  
+ 	/* No self-referential parent pointers. */
 
 
