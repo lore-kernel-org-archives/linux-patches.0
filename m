@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A638737A498;
-	Thu, 20 Aug 2026 15:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FBAD37A498;
+	Thu, 20 Aug 2026 15:13:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238811; cv=none; b=YzTMrkktUSoZiItYg3Yq73ibuU9XLUrkhJyHbjNLi7L+0/9FiYIPnWEoKup6qwTTOIT8vpCBq4lsa48140G68DcUwDK2Mf5n1aP6tA+g6VdBBgc6r6Vl/D8RLgTN3R3L7jLSR21lQa/WKsVnfn0EfBGJm42Qm8+YPwnh2tIOPkQ=
+	t=1787238814; cv=none; b=iafBXCa56VtPh1tKGMlpk4gao80BaIFdCSetbVv8VLxv/xxSLgX14VNAvVtHLR4AgenLOnpGH2H2zzKl/DcDutStPEsGo59kX4hnJzJfZYfppgzp0GApnOjeIlsVZmoTTa5pg1D5cD50ZReda6bV6ioiuMUAoSHt2uw35uJ/usI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238811; c=relaxed/simple;
-	bh=stJpwI/ZcPDHxQYQgt6t40aTCuiBV1cRB6qqky3Pggo=;
+	s=arc-20240116; t=1787238814; c=relaxed/simple;
+	bh=2F5j2UFzbNiwzOXE3KZjn2fHLvhfuSEaJmDtl7epU8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HTIBz2CWAixkGgeH7rVz9Uw9FQdhQjkmLWg5FrGnTZ8KNTvgkdBSy+a01ksdZf6Y3AUVFxmgyXvju+bmhZG3OaCTqWZhDkdvckXtsWLlP745NPaQbuYUX836WiMdSX1niGcQkBcglQZ/RjLA+w067hPTsjvVkhPTkSb5sq6UJlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FjCU9j5/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s3U35ZA8HeoCA1TvAYSSB1y5WjnhQ9LX9ArE0NiAlGhXR20BYpy8yR/8FpJHAMeGxU08Lmq501do5+OrfDvmshcbRwaEqYqN5UQzO2OZ/hm1BAIVa/zKial9cFsgutmxRSjxZhV9jo++CC5G8kfXxmvnqhTc4weQbQGedIW6B+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDPINrNV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FjCU9j5/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E33D1F000E9;
-	Thu, 20 Aug 2026 15:13:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDPINrNV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82531F000E9;
+	Thu, 20 Aug 2026 15:13:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238810;
-	bh=Anh+BbyXjVTPaC8DG+FwTAtb/2Y6RfFyWqVKcuNEtBA=;
+	s=korg; t=1787238813;
+	bh=n6oXB8ZjQZppl+gjTOKVNmg3oSg0m8igEe6TFbkaNs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FjCU9j5/t9fe+Pnf1eBVD7zzYulvwFwY9HQUhjkzmNLT8zgjN0M10GjX3D7NZ1X9z
-	 yjl09Vzr9x2X7fiNEEpoyIRdn8HOw+Da81nfjITmYFIw7sUP5F1xLcpPxsa8GrobDK
-	 DGIly2/vnSfWrjAGhJPDiYTxWsNXTD94nzc11Ong=
+	b=oDPINrNViJmMTQiyHBM4PpDdsJ1Y2qlAHTTlVJUddNDc2a2gMs3DQ/ii9vtbr8XWF
+	 GhOXoqKcjssXNqhevuXWcZh8q+dinT6Yv6KDOT6PGouDM1NethNm6C9etpYb2DAzhV
+	 9LTL4RCuMMf3PfCUiabU2l2GYBv8G19GTfGbklYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan Rhee <jordanrhee@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 050/217] gve: fix NULL dereference due to missing ptp adjfine
-Date: Thu, 20 Aug 2026 16:53:38 +0200
-Message-ID: <20260820145239.127482181@linuxfoundation.org>
+	Cengiz Can <cengiz.can@canonical.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.18 051/217] gpio: sloppy-logic-analyzer: fix use-after-free via debugfs trigger on unbind
+Date: Thu, 20 Aug 2026 16:53:39 +0200
+Message-ID: <20260820145239.155451506@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -52,62 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan Rhee <jordanrhee@google.com>
+From: Cengiz Can <cengiz.can@canonical.com>
 
-commit 3992ced109c70b771efad9e51ae68e5c7a04dea3 upstream.
+commit 44f3468a0aef1aabdad551898ab7cfa2a9d20e99 upstream.
 
-Fix NULL dereference due to missing implementation of adjfine, which can
-be triggered from usermode as follows:
+The "trigger" debugfs file has a hand-rolled ->write handler
+(trigger_write()) that dereferences the per-device gpio_la_poll_priv. The
+file is created with debugfs_create_file_unsafe(), and the handler never
+takes a debugfs reference. Nothing keeps the object alive while the
+handler runs.
 
-sudo ./testptp -d /dev/ptp0 -f 0
-[  551.943697] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[...]
-[  552.061946] Call Trace:
-[  552.064487]  <TASK>
-[  552.066681]  ptp_clock_adjtime+0x1c0/0x2c0
-[  552.070874]  ? get_clock_desc+0x6b/0xb0
-[  552.074825]  pc_clock_adjtime+0x78/0xc0
-[  552.078755]  __do_sys_clock_adjtime+0x85/0x110
-[  552.083293]  do_syscall_64+0xea/0x610
+priv is allocated with devm_kzalloc(). devres frees it when the platform
+device is unbound. debugfs_create_file_unsafe() installs no full_proxy
+wrapper, so debugfs_remove_recursive() in gpio_la_poll_remove() does not
+wait for an in-flight trigger_write(). The blob_lock taken there does not
+help, because trigger_write() never takes it. A write that races an unbind
+therefore writes into freed memory:
 
+  trigger_write()                  gpio_la_poll_remove()
+    priv = m->private
+    buf = memdup_user()  [may sleep]
+                                     mutex_lock(&priv->blob_lock)
+                                     debugfs_remove_recursive()  [no wait]
+                                     mutex_unlock(&priv->blob_lock)
+                                   (remove returns; devres frees priv)
+    priv->trig_data = buf   <-- use-after-free write
+    priv->trig_len  = count
+
+The race is reachable by root via
+/sys/bus/platform/drivers/gpio-sloppy-logic-analyzer/unbind.
+
+Create "trigger" with debugfs_create_file() instead. Its full_proxy
+wrapper makes debugfs_remove_recursive() drain any in-flight ->write
+before it returns.
+
+The use-after-free is confirmed under KASAN with a minimal reproducer of
+the same debugfs_create_file_unsafe() plus devm_kzalloc() pattern
+(available on request); it produces a slab-use-after-free write in the
+handler.
+
+Fixes: 7828b7bbbf20 ("gpio: add sloppy logic analyzer using polling")
 Cc: stable@vger.kernel.org
-Fixes: acd16380523b ("gve: Add initial PTP device support")
-Signed-off-by: Jordan Rhee <jordanrhee@google.com>
-Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20260807224315.234152-3-hramamurthy@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Claude:claude-opus-4.8
+Signed-off-by: Cengiz Can <cengiz.can@canonical.com>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://patch.msgid.link/20260730220258.358169-2-cengiz.can@canonical.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_ptp.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpio/gpio-sloppy-logic-analyzer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_ptp.c b/drivers/net/ethernet/google/gve/gve_ptp.c
-index 06b1cf4a5efc..1d6c59f4ead3 100644
---- a/drivers/net/ethernet/google/gve/gve_ptp.c
-+++ b/drivers/net/ethernet/google/gve/gve_ptp.c
-@@ -26,6 +26,11 @@ int gve_clock_nic_ts_read(struct gve_priv *priv)
+--- a/drivers/gpio/gpio-sloppy-logic-analyzer.c
++++ b/drivers/gpio/gpio-sloppy-logic-analyzer.c
+@@ -301,7 +301,7 @@ static int gpio_la_poll_probe(struct pla
+ 	debugfs_create_ulong("delay_ns_acquisition", 0400, priv->debug_dir, &priv->acq_delay);
+ 	debugfs_create_file_unsafe("buf_size", 0600, priv->debug_dir, priv, &fops_buf_size);
+ 	debugfs_create_file_unsafe("capture", 0200, priv->debug_dir, priv, &fops_capture);
+-	debugfs_create_file_unsafe("trigger", 0200, priv->debug_dir, priv, &fops_trigger);
++	debugfs_create_file("trigger", 0200, priv->debug_dir, priv, &fops_trigger);
+ 
  	return 0;
  }
- 
-+static int gve_ptp_adjfine(struct ptp_clock_info *ptp, long scaled_ppm)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
- static int gve_ptp_gettimex64(struct ptp_clock_info *info,
- 			      struct timespec64 *ts,
- 			      struct ptp_system_timestamp *sts)
-@@ -60,6 +65,7 @@ static long gve_ptp_do_aux_work(struct ptp_clock_info *info)
- static const struct ptp_clock_info gve_ptp_caps = {
- 	.owner          = THIS_MODULE,
- 	.name		= "gve clock",
-+	.adjfine	= gve_ptp_adjfine,
- 	.gettimex64	= gve_ptp_gettimex64,
- 	.settime64	= gve_ptp_settime64,
- 	.do_aux_work	= gve_ptp_do_aux_work,
--- 
-2.55.0
-
 
 
