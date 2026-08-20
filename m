@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B901374E5A;
-	Thu, 20 Aug 2026 16:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29EB425C6EE;
+	Thu, 20 Aug 2026 16:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243321; cv=none; b=euSu2Ea8XA3pty4kLnPZqKkfGT8BZ7mCM6YpPzAU2esRwqDNmXKoIye4F0XS7dq1fUYwhhEVoxM8rkLeXUM1erB726rU0c+8bI7PZUSN1PGynDIblGl0CHZVIfO85CdC8OZB+/ncsacYPiMpXdjPCJAJU4tOxfjCkDsHHdRZDLE=
+	t=1787243324; cv=none; b=WRxDyRLWzFkHweTsaP3W/BSd3/u1ZVLhoG8NdNOulh9UvrUbjrYiRDaFgdKxb2ITMfeWbxJ5yZWYq5VaTinvf3lgoJ9HqbpFv1kwQTcGDrlo+TM/gjfQFyW8LU52C2LdWfx4rzhA5M82t9AvmEbLIyHKjMlM19VHkAZz8Hsbf/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243321; c=relaxed/simple;
-	bh=4JaqX3/pJd+Vjxf63kzj8Dg49RaOR3In33YBe/Go20g=;
+	s=arc-20240116; t=1787243324; c=relaxed/simple;
+	bh=FyPWPL/dH9qVHbJge+adtT6Gh3sSKTLAila6cI/EcdY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FSmji/FU7P78ASF6B+BPcM6mDwsFWhO/uoIMG4oCBfJ7Haocv6YugF/Nf6+YgoKO9MGtixLGjMb0w22eu5LLjjZ1n0eFbBQAF4mkAkfDe/7Rm3uJBhutzBC5iCAgDbZnQ2h9enS5xu91bWizs03GwWoeAv27WTCTsCCO57RAlug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Llni5Zqv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DQIfUcPfVskjq4PUiOf7EH/RQyDov/0dzWXnNLUm5s/c+2UKjY5rmtYk/ev64o9x7OBuO/t2jctPX0Q3lWBVAP+6n5qdk97wBMr8lGF/eklVq7FgeTLOK1uXhOZxuzTqu0II5+K9o3MdjsHP63i2RQoXllcuLesovRnf1y2JaC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JW7RVuL+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Llni5Zqv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A82C21F000E9;
-	Thu, 20 Aug 2026 16:28:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JW7RVuL+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846441F000E9;
+	Thu, 20 Aug 2026 16:28:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243320;
-	bh=t0pj1fS2P6A31uLorrfw4L2mf+xHiY5X/RXqT92/t4I=;
+	s=korg; t=1787243323;
+	bh=4GjWMqTw5+7kixSNySpDXlnt9UW11z3YsVgKU2SjdMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Llni5Zqvmd3F3eV/KdiiYwo34/xR4sImU/cWEHmB9ZkwSz/roKbfrgBl2BUnVjd7y
-	 dzyAeV+YmqwVdmpUkxP/xEeyWPxbuoEVku1H7owTkwI1C1Ys+GLJonNvyaWFair6rI
-	 Hk7AxR4AsUUAcnxLNVrlMKM8ZZN4qOcYmyJoTLHw=
+	b=JW7RVuL+yJ4T+h9QDGAFDK1gBVtbL4EjYSUsDjWeX0P7awl2MVUHywO5GK6YJLAs+
+	 JSQUvzHcVzL4RzUd/1f3A39Icvoq83BRmRoxxM8RZ7r8SqRLIM6Lne7H9aOJGC6IIX
+	 nySomMSA/hqbN+AiwKS6XxbFs5eWI/a6x1LOWLtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 054/272] i2c: davinci: Unregister cpufreq notifier on probe failure
-Date: Thu, 20 Aug 2026 16:53:58 +0200
-Message-ID: <20260820145232.835189788@linuxfoundation.org>
+Subject: [PATCH 5.15 055/272] Input: mms114 - reject an oversized device packet size
+Date: Thu, 20 Aug 2026 16:53:59 +0200
+Message-ID: <20260820145232.943064483@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -52,47 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit e43f32816a1b1fe5a86279411626fe3a9be56d45 ]
+[ Upstream commit 66725039f7090afe14c31bd259e2059a68f04023 ]
 
-davinci_i2c_probe() registers a cpufreq transition notifier before adding
-the I2C adapter.  If i2c_add_numbered_adapter() fails, the probe error path
-releases the device resources without unregistering the notifier.
+mms114_interrupt() reads a packet of touch data from the device into a
+fixed-size on-stack buffer
 
-Add a dedicated error path to unregister the cpufreq notifier after
-i2c_add_numbered_adapter() fails.
+	struct mms114_touch touch[MMS114_MAX_TOUCH];
 
-Fixes: 82c0de11b734 ("i2c: davinci: Add cpufreq support")
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Cc: <stable@vger.kernel.org> # v2.6.36+
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260610030513.2651018-1-haoxiang_li2024@163.com
+which holds MMS114_MAX_TOUCH (10) events of MMS114_EVENT_SIZE (8) bytes,
+i.e. 80 bytes. The length of the I2C read into it is taken verbatim from
+the device:
+
+	packet_size = mms114_read_reg(data, MMS114_PACKET_SIZE);
+	if (packet_size <= 0)
+		goto out;
+	...
+	error = __mms114_read_reg(data, MMS114_INFORMATION, packet_size,
+			(u8 *)touch);
+
+packet_size is a single device register byte (0x0F) and the only check
+is the lower bound packet_size <= 0; it is never bounded against the
+size of touch[]. A malfunctioning, malicious or counterfeit controller
+(or an attacker tampering with the I2C bus) can report a packet_size of
+up to 255, so __mms114_read_reg() writes up to 175 bytes past the end of
+touch[] on the IRQ-thread stack: a stack out-of-bounds write that can
+overwrite the stack canary, saved registers and the return address.
+
+A well-formed device never reports more than the buffer holds, so reject
+an oversized packet and drop the report, consistent with the handler's
+other error paths, rather than reading past the buffer.
+
+Fixes: 07b8481d4aff ("Input: add MELFAS mms114 touchscreen driver")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260612-b4-disp-dc4b8dc4-v1-1-d7cb0a828d92@proton.me
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+[ changed `&client->dev` to `&data->client->dev` since 6.1's interrupt handler lacks the `client` local variable ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-davinci.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/input/touchscreen/mms114.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/i2c/busses/i2c-davinci.c
-+++ b/drivers/i2c/busses/i2c-davinci.c
-@@ -874,13 +874,15 @@ static int davinci_i2c_probe(struct plat
- 	adap->nr = pdev->id;
- 	r = i2c_add_numbered_adapter(adap);
- 	if (r)
--		goto err_unuse_clocks;
-+		goto err_cpufreq;
+--- a/drivers/input/touchscreen/mms114.c
++++ b/drivers/input/touchscreen/mms114.c
+@@ -214,6 +214,12 @@ static irqreturn_t mms114_interrupt(int
+ 	if (packet_size <= 0)
+ 		goto out;
  
- 	pm_runtime_mark_last_busy(dev->dev);
- 	pm_runtime_put_autosuspend(dev->dev);
- 
- 	return 0;
- 
-+err_cpufreq:
-+	i2c_davinci_cpufreq_deregister(dev);
- err_unuse_clocks:
- 	pm_runtime_dont_use_autosuspend(dev->dev);
- 	pm_runtime_put_sync(dev->dev);
++	if (packet_size > sizeof(touch)) {
++		dev_err(&data->client->dev, "Invalid packet size %d (max %zu)\n",
++			packet_size, sizeof(touch));
++		goto out;
++	}
++
+ 	/* MMS136 has slightly different event size */
+ 	if (data->type == TYPE_MMS134S || data->type == TYPE_MMS136)
+ 		event_size = MMS136_EVENT_SIZE;
 
 
