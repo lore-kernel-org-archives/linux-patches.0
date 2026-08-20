@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA883C07A;
-	Thu, 20 Aug 2026 15:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F74936A37A;
+	Thu, 20 Aug 2026 15:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238627; cv=none; b=rFl/TohIfKVTBccP8gqCHMhv1OxU3AQM3NEMT49CeH1jQWqP7o9QakXwAGSkit8GEZhVZKlzS0gfqUTNtCq0qf92Y545yt/+dUvXm2zRbI38wRRplmqDN82ACYY5T1L4ws1k74JzbyMCU3ESQnYEiKWDREZcJ2auJj+gZ5eETdI=
+	t=1787238630; cv=none; b=Au8d4+BitSiPMR0XqTrU+r9kdtzKsklGQcmwenKjIma29KpJhqpCj6rhgq4MtavU0L+AXmSa/69L+Pvz92ypherLv7uMqL78CZmsKcFn8XJhQJRRZRdR0A2qlv2nFKiB5v/Nb+3P/SaoLEoSYcXYNbuFeUEr456A9mzE8hhq8ek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238627; c=relaxed/simple;
-	bh=sbY8r2MRzvZgtkfw3iRl3aDgfSrqyLyIPSvLIlzPC38=;
+	s=arc-20240116; t=1787238630; c=relaxed/simple;
+	bh=WDTaEoYMfDVBUEVIs5APe211kmGQLA8htRHDuSVM77Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rYP7r6WjHnZQM9Pwr6QMwTW00TK+/EkqWTy96lun4rujBjOHDOewhhaMLzNfgFBkj1GkMRTL9m195rcD+WjWayJ4H2HL2pyptWDLpnUmOfYC86KTIT6q9Vtv/0D/GcQZDxhU9NiGKzLn6k7t4RZgYfsITVSzKk2hQDU2UIEuELU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OaUb9bKJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m+V3uVTi2Fed4czbP6hCAOglD9CwHd/ncmPgCT8FgvMe0JTodqSiWLFnPZeLBS6zYxV6EDUKfR4HnQ+GLkfP9MjFU3oFnmQXmDoVC8UvKmInsdk8m8KMzAGkHRjPt/pk+JCOaKzzIxOLTFDOTmHYCkJuZYPH8XxumGIPokm+280=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B7g/D07F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OaUb9bKJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F201F000E9;
-	Thu, 20 Aug 2026 15:10:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B7g/D07F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE0D1F000E9;
+	Thu, 20 Aug 2026 15:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238626;
-	bh=1QcRJs3pmajxGymqNrO5USMhS246bGP7t4b+jL9pxRA=;
+	s=korg; t=1787238629;
+	bh=YPbmcyhds+NBwbwq3SR21aMfg/U92cjy+IExTK6Igis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OaUb9bKJksH034THCMQ+1MCEycpnnL2v/DC9Oonaz+J3EojLaVMTLuciQsw9ujWX7
-	 xPskHmp9G7Lr+EFmui8kcJrX2dntmDGGfUURByq0BlvAyHCZfdt0hwLDf3e/M66/DV
-	 UPBuj3REQoSJCj73FfWsYHer09fR4CP0q/TUU7Mg=
+	b=B7g/D07FQ5UTG4rKNY/ZhEu/19HrXlvsj99RgIs6GM5oBoOL60VzC1niM6ALFqVzk
+	 U7BoFojVDUnmrsBX4aVkIDovPI0d6F35E9cCLdP+4Zid/eEHr6dgYdPiGYbzH+WlPD
+	 S2bGl+mrKH/YOQjiJnOWPSGt8E1BT5n7FVqeTqvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Andrey Golovko <andrey.golovko@gmail.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 186/228] tick: Include ktime.h and jiffies.h in linux/tick.h
-Date: Thu, 20 Aug 2026 16:55:28 +0200
-Message-ID: <20260820145250.353572288@linuxfoundation.org>
+Subject: [PATCH 7.1 213/228] regmap: sdw-mbq: dont call an unset readable_reg callback
+Date: Thu, 20 Aug 2026 16:55:55 +0200
+Message-ID: <20260820145251.509908099@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -51,62 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Andrey Golovko <andrey.golovko@gmail.com>
 
-[ Upstream commit 45f8dffc0714c3ef49c83e5bba4c56a4499bd5fc ]
+[ Upstream commit 00268f9452d2a0d660aa9c1bb0ca07a994af6a4f ]
 
-The !CONFIG_NO_HZ_COMMON stubs use ktime_add(), ktime_get() and TICK_NSEC,
-but tick.h includes neither <linux/ktime.h> nor <linux/jiffies.h>. Most
-configurations build only because those declarations arrive transitively.
+regmap_sdw_mbq_poll_busy() decides whether to poll the Function Busy bit
+by calling ctx->readable_reg(), which is a straight copy of
+config->readable_reg. That callback is optional: regmap_readable() treats
+a NULL ->readable_reg as "every register is readable", and drivers rely on
+that. es9356 and tac5xx2-sdw both build an MBQ regmap without one.
 
-Commit 6440966067dc ("cpuset: Remove cpuset_cpu_is_isolated()") removed
-<linux/cpuset.h> from <linux/sched/isolation.h>. The <linux/cpuset.h>
-include chain had been satisfying these declarations before <linux/tick.h>
-was parsed. Commit 8aa76aa41589 ("ring-buffer: Use a housekeeping CPU to
-wake up waiters") then added <linux/sched/isolation.h> to ring_buffer.c
-ahead of any header which provides them. Neither change is wrong on its
-own: the failure requires both and appeared in v7.0.
+Since commit ca1b11b36d82 ("regmap: sdw-mbq: Allow defers on undeferrable
+controls") the poll runs on every -ENODATA, not only for Controls the
+driver marked deferrable, so any of those devices answering
+COMMAND_IGNORED takes the kernel through a NULL function pointer.
 
-ARM rpc_defconfig + CONFIG_FUNCTION_TRACER fails to build:
+Treat a missing callback the way the rest of regmap does and poll.
 
-  $ make ARCH=arm rpc_defconfig
-  $ ./scripts/config -e FTRACE -e FUNCTION_TRACER
-  $ make ARCH=arm olddefconfig
-  $ make ARCH=arm kernel/trace/ring_buffer.o
-  In file included from include/linux/sched/isolation.h:6,
-                   from kernel/trace/ring_buffer.c:8:
-  include/linux/tick.h: In function 'tick_nohz_get_next_hrtimer':
-  include/linux/tick.h:156:9: error: implicit declaration of function
-      'ktime_add'; did you mean 'size_add'?
-  include/linux/tick.h:156:19: error: implicit declaration of function
-      'ktime_get'; did you mean 'time_init'?
-  include/linux/tick.h:156:32: error: 'TICK_NSEC' undeclared
-
-Include the headers the file actually uses.
-
-Fixes: 8aa76aa41589 ("ring-buffer: Use a housekeeping CPU to wake up waiters")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Assisted-by: Codex:gpt-5.6-sol
-Link: https://patch.msgid.link/20260722062141.19671-1-kmehltretter@gmail.com
+Fixes: 5bc493bf0c37 ("regmap: sdw-mbq: Add support for SDCA deferred controls")
+Signed-off-by: Andrey Golovko <andrey.golovko@gmail.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260811184500.5312-1-andrey.golovko@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/tick.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/base/regmap/regmap-sdw-mbq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/tick.h b/include/linux/tick.h
-index 738007d6f577f..73dc3183e279b 100644
---- a/include/linux/tick.h
-+++ b/include/linux/tick.h
-@@ -7,6 +7,8 @@
+diff --git a/drivers/base/regmap/regmap-sdw-mbq.c b/drivers/base/regmap/regmap-sdw-mbq.c
+index 6d7c760cbef2b..b0312f57c9800 100644
+--- a/drivers/base/regmap/regmap-sdw-mbq.c
++++ b/drivers/base/regmap/regmap-sdw-mbq.c
+@@ -56,7 +56,7 @@ static int regmap_sdw_mbq_poll_busy(struct sdw_slave *slave, unsigned int reg,
+ 	reg = SDW_SDCA_CTL(SDW_SDCA_CTL_FUNC(reg), 0,
+ 			   SDCA_CTL_ENTITY_0_FUNCTION_STATUS, 0);
  
- #include <linux/clockchips.h>
- #include <linux/irqflags.h>
-+#include <linux/jiffies.h>
-+#include <linux/ktime.h>
- #include <linux/percpu.h>
- #include <linux/context_tracking_state.h>
- #include <linux/cpumask.h>
+-	if (ctx->readable_reg(dev, reg)) {
++	if (!ctx->readable_reg || ctx->readable_reg(dev, reg)) {
+ 		ret = read_poll_timeout(sdw_read_no_pm, val,
+ 					val < 0 || !(val & SDCA_CTL_ENTITY_0_FUNCTION_BUSY),
+ 					ctx->cfg.retry_us, ctx->cfg.timeout_us,
 -- 
 2.53.0
 
