@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE7135200C;
-	Thu, 20 Aug 2026 15:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C63352019;
+	Thu, 20 Aug 2026 15:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238232; cv=none; b=DrwdxqJKci7k8H3nBcnrX6CwwxX9h+4HC7sHIYR45gOsPHfUUWWpe6k7BZnwY30KBp0a3ntWgbSH070gbxGgxyjmoM7lLJCYnob6cqKmY50156jcbnHV6e6tAuZegQOZd4JP9P3ydtlkPZj5X4WV+/Yhmzf+NRJqR4ApNKppRkw=
+	t=1787238236; cv=none; b=R5qjD3yyrBoU8u0Mxh9XXMbBkgrNML2XOFVssnxsgCEmYyYir5Uq9GsHene8PssVBeGggmoZFPgpOEgw1TmPMipCxkn5hPfaaGZMuIQIhCTdzDSZl0Ew7BM3RC0NJhP1GB2Tj8TCqvhN8U0wgEvC8I4hOh2Gyzp2mvF4kbqS8yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238232; c=relaxed/simple;
-	bh=++N/vlxe8/sB9DOYF2tOPLvauPwzTOJGx7nfhBQ3iKI=;
+	s=arc-20240116; t=1787238236; c=relaxed/simple;
+	bh=ZMsn5ITY/pwyl2EuEzzLJcr/Mxf8DIqvsQ4Z637IMdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rGTvGterhnVYyBKh2WenlzwOVzOGcKlL32tckd+I/tmxp6a8ujybmwXIbMaaI7URgHlAjBCf3EmhadTWE5QsZ1qtixVYHX1hJ5KipPlxCAcCcX2R2yjfLode9XK0C/Byf8IgqcjZca4oJQwmwH8wgaRJlVCPDzFqbpcDLyxlH+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmACqP76; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l91E+8+TZoIuf305PHM2y62Igj3wHB+CR5g3y1iF4MKuAtdlUaShp9BlSuDk7YIqcpvXeYaPOagn1ccu7wXpeo6SXJx1LUt/jPOwM467K9MJgyWpNGuGw0GjbO0vDsqv/72qRq/udSfpygfpJtwWJ/V2N02Apq3/RPM8FEysWD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZxFMGXXZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmACqP76"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E131F000E9;
-	Thu, 20 Aug 2026 15:03:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZxFMGXXZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12DCD1F000E9;
+	Thu, 20 Aug 2026 15:03:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238231;
-	bh=NGgzcFd86aFPvvcG6GdB13rj8AfKtOv8tAaH9hXNM9k=;
+	s=korg; t=1787238234;
+	bh=FueaOs8UvyZJjxnBPr1HNUBC1yfHibvkcIKxMLuyAFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RmACqP76h4a7d3ZmWJP5CfQBXVqe7SQPRMyNpcx9U8ZTHpaAj1WTqMFTvU58Av+mf
-	 huc00hpXVyaPEvGqJ/5x/FxEa0HTrVA0Q/nYJt9bCXuH/LmmRLkCysYFSU5iWH/YcI
-	 0uHJBr22sUMj16w2fkr5MyElTVzXAOid/4/VbFAw=
+	b=ZxFMGXXZ4RLRoCWXw0aPlDYcQgGCyMW4piZKI3LBSNCeZEiXtw0kIU06RK8Dh3/7G
+	 0Jg05pxECSUttevJ3XR466gK4IBbkPHv4tseWY03bO/tMD+WR2kkPHc+U2voZzcXiS
+	 AyAcmYRC34SoD4EBphwTqLmj35CoiZl2VpEIuOII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan Rhee <jordanrhee@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 059/228] gve: fix NULL dereference due to missing ptp adjfine
-Date: Thu, 20 Aug 2026 16:53:21 +0200
-Message-ID: <20260820145246.267499873@linuxfoundation.org>
+	Pavitra Jha <jhapavitra98@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 7.1 077/228] libceph: fix OOB read in decode_watchers() via missing bounds check
+Date: Thu, 20 Aug 2026 16:53:39 +0200
+Message-ID: <20260820145246.816534900@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -52,57 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan Rhee <jordanrhee@google.com>
+From: Pavitra Jha <jhapavitra98@gmail.com>
 
-commit 3992ced109c70b771efad9e51ae68e5c7a04dea3 upstream.
+commit 00ead17c7de137a692edee59f2772e6af687e8eb upstream.
 
-Fix NULL dereference due to missing implementation of adjfine, which can
-be triggered from usermode as follows:
+ceph_start_decoding() validates that struct_len bytes remain in the
+buffer after the encoding header, but accepts struct_len=0 as valid:
+ceph_decode_need(p, end, 0, bad) always passes. When a malicious or
+compromised OSD sends an obj_list_watch_response_t reply with
+struct_len=0, ceph_start_decoding() returns success with p == end,
+leaving zero bytes guaranteed for subsequent reads.
 
-sudo ./testptp -d /dev/ptp0 -f 0
-[  551.943697] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[...]
-[  552.061946] Call Trace:
-[  552.064487]  <TASK>
-[  552.066681]  ptp_clock_adjtime+0x1c0/0x2c0
-[  552.070874]  ? get_clock_desc+0x6b/0xb0
-[  552.074825]  pc_clock_adjtime+0x78/0xc0
-[  552.078755]  __do_sys_clock_adjtime+0x85/0x110
-[  552.083293]  do_syscall_64+0xea/0x610
+The immediately following ceph_decode_32(p) in decode_watchers() has
+no preceding bounds check. With p == end this is a 4-byte read past
+the validated buffer boundary. The garbage value is then passed
+directly to kzalloc_objs() as the watcher count.
+
+The sibling function decode_watcher() already uses the safe variants
+(ceph_decode_copy_safe, ceph_decode_64_safe, ceph_decode_skip_32)
+after its own ceph_start_decoding() call. decode_watchers() is the
+only site that uses the bare variant, confirming an oversight.
+
+Fix by replacing ceph_decode_32(p) with ceph_decode_32_safe(p, end,
+*num_watchers, bad), consistent with the established pattern.
+
+Attacker model: a malicious or compromised OSD in a multi-tenant Ceph
+deployment (e.g. cloud) can trigger this against any kernel client
+that calls CEPH_OSD_OP_LIST_WATCHERS, without any further privileges
+beyond OSD session establishment.
+
+[ idryomov: trim changelog ]
 
 Cc: stable@vger.kernel.org
-Fixes: acd16380523b ("gve: Add initial PTP device support")
-Signed-off-by: Jordan Rhee <jordanrhee@google.com>
-Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20260807224315.234152-3-hramamurthy@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a4ed38d7a180 ("libceph: support for CEPH_OSD_OP_LIST_WATCHERS")
+Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_ptp.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/ceph/osd_client.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/google/gve/gve_ptp.c
-+++ b/drivers/net/ethernet/google/gve/gve_ptp.c
-@@ -26,6 +26,11 @@ int gve_clock_nic_ts_read(struct gve_pri
+--- a/net/ceph/osd_client.c
++++ b/net/ceph/osd_client.c
+@@ -5030,7 +5030,7 @@ static int decode_watchers(void **p, voi
+ 	if (ret)
+ 		return ret;
+ 
+-	*num_watchers = ceph_decode_32(p);
++	ceph_decode_32_safe(p, end, *num_watchers, bad);
+ 	*watchers = kzalloc_objs(**watchers, *num_watchers, GFP_NOIO);
+ 	if (!*watchers)
+ 		return -ENOMEM;
+@@ -5044,6 +5044,9 @@ static int decode_watchers(void **p, voi
+ 	}
+ 
  	return 0;
++
++bad:
++	return -EINVAL;
  }
  
-+static int gve_ptp_adjfine(struct ptp_clock_info *ptp, long scaled_ppm)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
- static int gve_ptp_gettimex64(struct ptp_clock_info *info,
- 			      struct timespec64 *ts,
- 			      struct ptp_system_timestamp *sts)
-@@ -60,6 +65,7 @@ out:
- static const struct ptp_clock_info gve_ptp_caps = {
- 	.owner          = THIS_MODULE,
- 	.name		= "gve clock",
-+	.adjfine	= gve_ptp_adjfine,
- 	.gettimex64	= gve_ptp_gettimex64,
- 	.settime64	= gve_ptp_settime64,
- 	.do_aux_work	= gve_ptp_do_aux_work,
+ /*
 
 
