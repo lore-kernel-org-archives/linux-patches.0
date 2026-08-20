@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B985447AF75;
-	Thu, 20 Aug 2026 16:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1300469849;
+	Thu, 20 Aug 2026 16:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243622; cv=none; b=fqbWvnHNBNQAVtpy2f7CBqPMmGmO9mMFYekmXWwb9ott1IM4b2dENJnEye0tuI78aviXYA/Pm8DV8nsVZNmCadXRuUq/o3QoOH3/pBn5UopV2VKwaPiUCdjCzElK6TLYT2ShRGsqLDHs27mUBkPDEbFif2WgZdX48P1iNBsnsEs=
+	t=1787243626; cv=none; b=NGZ6U5g63SJfkq75fjMPS0Nv0IUQJQeuoswPzaybqlWB+NK3iDiFHULzBssFZWionf0U9ljitckhC0w3X81vF40KMnPXWbFLH9LjyBCHrgUJPnA8b22Nhi3VIdgao3c925vl0FqqCa9azIdvZZAq6rW1fglDZUZ5z9VZmGB2Q4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243622; c=relaxed/simple;
-	bh=9FwPXkZmt8N5t0MdpTujXHRsVk8dRisuLd2B1H04t9A=;
+	s=arc-20240116; t=1787243626; c=relaxed/simple;
+	bh=aJ0sCOcKK3L+G6j4QYcMOoI52KHc2wr5vHR0kAEnVKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Itat8xfGMeZeh8mJjTm6IhwqjNXUKoCqdp/wlzLdDLt1WblOcCH8Fh4CRFdYefY6fCu+I46TxGbRcn60M3eYJqT66gsK2Q7euIW0NiEwF8zATbMgnPxqFAHK1tXHRp1rZ6tKaAA8r4CXvIo3uYLbuLV3p4MAWVCoj6j5eeniuII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Da2U7gWp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LyjQQO7+jahtLmfF2AsjA50LzLLh5nsrR+J9kp86/kJm5FV+HIcD0TZoAvsHPGz0pEC/b0gqa9qNPWpAZfVtqI2HhEBYD4Rb8fb50MXOk1vRkjCCn58Ip/xmCD2zUHrSrMuNUGA5MMmJKzxIGg5V3dSCMdXFS5pHldFbIWPxPiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQpfRO3l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Da2U7gWp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F33A1F000E9;
-	Thu, 20 Aug 2026 16:33:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQpfRO3l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5AC21F000E9;
+	Thu, 20 Aug 2026 16:33:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243621;
-	bh=rLmj9cGi0TpM9I8wbdThi1xiidInOTzJlB8bU1KKLvU=;
+	s=korg; t=1787243624;
+	bh=jX0iDDrp9KAAO4oalMiK+71eL6d7t5Svlx39s+8FteI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Da2U7gWpvTOGmbba36tB5KC8KdiwD7Rzg6QaylVIH0lsG8gxVuxkpFovzKPzYPCdK
-	 gO14LZqXpxckG4tK38uaBtVQM/d/VbG69epmOUdjqWZu0dJ8BZO/GCcVxgO7lMT6Ko
-	 jWa302Gt//OjvSJ9a9AWbctLBN+26zCWzSfUO3cg=
+	b=ZQpfRO3lvlOll7Tq5bqIhc7/NfNFk0Oe+0jgz0APu5ffeZcXnA7skSENAUq3oDOjr
+	 yVZ/y4SYTAB68kf4LEy0SmB4KpNWHbmxQ2GfeMDVkIbRmAom62LZ/I2HRetDrybEVN
+	 yODrNUqbmxQwVHygk+xgfUrZvFV+6Lic70T7mncg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fredric Cover <fredric.cover.lkernel@gmail.com>,
-	Steve French <stfrench@microsoft.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 120/272] smb: client: use kvzalloc() for megabyte buffer in simple fallocate
-Date: Thu, 20 Aug 2026 16:55:04 +0200
-Message-ID: <20260820145234.864039109@linuxfoundation.org>
+Subject: [PATCH 5.15 121/272] tpm: tpm_tis_spi: Use wait_woken() in wait_for_tmp_stat()
+Date: Thu, 20 Aug 2026 16:55:05 +0200
+Message-ID: <20260820145234.894589786@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -51,76 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fredric Cover <fredric.cover.lkernel@gmail.com>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-[ Upstream commit 806c00c23e3ce8eae397a40ced536ef88ae4e012 ]
+[ Upstream commit c0c9cfb3b75def8bf200a2d4db09015806acfeaf ]
 
-Currently in smb3_simple_fallocate_range(), a 1 MB buffer is allocated
-using kzalloc(). Under heavy memory fragmentation, a contiguous 1 MB block
-of physical memory (an order-8 allocation) may not be available,
-causing the allocation to fail.
+wait_event_interruptible_timeout() evaluates its condition after setting
+the current task state to TASK_INTERRUPTIBLE.
 
-This failure was observed during xfstests generic/013 on a 4GB RAM
-test machine running fsstress:
+With CONFIG_DEBUG_ATOMIC_SLEEP this triggers a warning when the IRQ wait
+path is used:
 
-fsstress: page allocation failure: order:8,
-mode:0x40dc0(GFP_KERNEL|__GFP_ZERO|__GFP_COMP),
-nodemask=(null),cpuset=/,mems_allowed=0
+    tpm_tis_status()
+      tpm_tis_spi_read_bytes()
+        tpm_tis_spi_transfer_full()
+          spi_bus_lock()
+            mutex_lock()
 
-Call Trace:
- <TASK>
- dump_stack_lvl+0x5d/0x80
- warn_alloc+0x163/0x190
- __alloc_pages_slowpath.constprop.0+0x71b/0x12f0
- __alloc_frozen_pages_noprof+0x2f6/0x340
- alloc_pages_mpol+0xb6/0x170
- ___kmalloc_large_node+0xb3/0xd0
- __kmalloc_large_noprof+0x1e/0xc0
- smb3_simple_falloc.isra.0+0x62b/0x960
- cifs_fallocate+0xed/0x180
- vfs_fallocate+0x165/0x3c0
- __x64_sys_fallocate+0x48/0xa0
- do_syscall_64+0xe1/0x640
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
- </TASK>
+Address this with the following measures:
 
-Node 0 Normal: 3375*4kB ... 7*128kB 0*256kB 0*512kB 0*1024kB 0*2048kB 0*4096kB
+1. Call wait_tpm_stat_cond() only while tasking is running.
+2. Use wait_woken() to wait for changes.
 
-Since this scratch buffer does not require physically contiguous memory,
-switch the allocation to kvzalloc(). This retains the performance
-benefits of kmalloc() under normal conditions, while gracefully falling
-back to virtually contiguous memory when physical allocation fails.
-
-Fixes: 966a3cb7c7db ("cifs: improve fallocate emulation")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
-Tested-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: stable@vger.kernel.org # v4.19+
+Cc: Linus Walleij <linusw@kernel.org>
+Reported-by: Stefan Wahren <wahrenst@gmx.net>
+Closes: https://lore.kernel.org/linux-integrity/6964bec7-3dbb-453b-89ef-9b990217a8b9@gmx.net/
+Fixes: 1a339b658d9d ("tpm_tis_spi: Pass the SPI IRQ down to the driver")
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Tested-by: Stefan Wahren <wahrenst@gmx.net>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/smb2ops.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c |   38 ++++++++++++++++++++++++--------------
+ 1 file changed, 24 insertions(+), 14 deletions(-)
 
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -3736,7 +3736,7 @@ static int smb3_simple_fallocate_range(u
- 	if (rc)
- 		goto out;
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -49,10 +49,11 @@ static int wait_for_tpm_stat(struct tpm_
+ 		bool check_cancel)
+ {
+ 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
++	DEFINE_WAIT_FUNC(wait, woken_wake_function);
+ 	unsigned long stop;
+-	long rc;
+ 	u8 status;
+ 	bool canceled = false;
++	int ret;
  
--	buf = kzalloc(1024 * 1024, GFP_KERNEL);
-+	buf = kvzalloc(1024 * 1024, GFP_KERNEL);
- 	if (buf == NULL) {
- 		rc = -ENOMEM;
- 		goto out;
-@@ -3803,7 +3803,7 @@ static int smb3_simple_fallocate_range(u
+ 	/* check current status */
+ 	status = chip->ops->status(chip);
+@@ -62,23 +63,32 @@ static int wait_for_tpm_stat(struct tpm_
+ 	stop = jiffies + timeout;
  
-  out:
- 	kfree(out_data);
--	kfree(buf);
-+	kvfree(buf);
- 	return rc;
- }
- 
+ 	if (chip->flags & TPM_CHIP_FLAG_IRQ) {
++		ret = -ETIME;
++		add_wait_queue(queue, &wait);
+ again:
++		if (wait_for_tpm_stat_cond(chip, mask, check_cancel,
++					   &canceled)) {
++			ret = canceled ? -ECANCELED : 0;
++			goto out;
++		}
++
+ 		timeout = stop - jiffies;
+ 		if ((long)timeout <= 0)
+-			return -ETIME;
+-		rc = wait_event_interruptible_timeout(*queue,
+-			wait_for_tpm_stat_cond(chip, mask, check_cancel,
+-					       &canceled),
+-			timeout);
+-		if (rc > 0) {
+-			if (canceled)
+-				return -ECANCELED;
+-			return 0;
+-		}
+-		if (rc == -ERESTARTSYS && freezing(current)) {
+-			clear_thread_flag(TIF_SIGPENDING);
+-			goto again;
++			goto out;
++
++		if (signal_pending(current)) {
++			if (freezing(current)) {
++				clear_thread_flag(TIF_SIGPENDING);
++				goto again;
++			}
++			goto out;
+ 		}
++
++		wait_woken(&wait, TASK_INTERRUPTIBLE, timeout);
++		goto again;
++out:
++		remove_wait_queue(queue, &wait);
++		return ret;
+ 	} else {
+ 		do {
+ 			usleep_range(priv->timeout_min,
 
 
