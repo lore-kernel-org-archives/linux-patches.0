@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE831272E53;
-	Thu, 20 Aug 2026 16:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A8D4195C0;
+	Thu, 20 Aug 2026 16:40:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244015; cv=none; b=AWYMtsqz4A8l9ENLXZLeW9QNjxpcgQDYRy8vHY7hmkvha/AV93R9EzXiFhzmDFcaH8D0c46uBSz+qxdLPf5Recfa3Q1zyNDLHTBnq7Qt31AdA3PYKg2UQImrsX43Zbx0ughE5Y7XLdg3kr/0ZvDcHTAEK2GczqAAlqBWUdtgY7o=
+	t=1787244018; cv=none; b=VfRqeT5oV8NV3VDjd1rVEPPmsuc4sNhDhbsLlJeLZEfOY4GOYpf43G03hJvoTTGL96M4ZspcjC+mlIm8xcQBVrX1T+oW+SlcYlbJmI+iRKGTSKneURVB6sb5AaDm7XUHY8T/oyIFiHgMMSiR9prZA753nOKZdvvq6wpKSNHOoxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244015; c=relaxed/simple;
-	bh=Qul2O+Lmllk9/nnG8qApvETcBWClvcSTa/FT5Q2yEqs=;
+	s=arc-20240116; t=1787244018; c=relaxed/simple;
+	bh=h51lZDTSR8B0bhwdIzYDExeNB4IaujjcvIjdk2f+Mnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WS35joIOugIgE8YU5B7EWGMmNwLbTf27EWsqNN7V1y029BVeZ6qoM7jz1PtsWgj48s9UNL82PUhJQ/NRr7imtHuga0JJEDtIXICshoI/O1kjxpgwicFvFo3A27RrdHdWlQBEAInLQZJJvKF5Iq3+5HwwY4xLmnX+ChbRpyMdVAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wuiL0NG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HpQehp/IJVwdHhGoNRWixE+UF4wYCVnqNyTuV8P19i62v2xDh/4O/A04mnj3EtBzvgXQ3EmFWzAO5eiRUzNdWvc8KR3Cyp6Mi3A1XIhrwiQ8odvCQnD0G8ZmziF/H1UnESTsR2bn19PRX7ZDbVshm0BSMI7j2etuoXlVXqQ394s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGRc4Z6D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wuiL0NG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA261F000E9;
-	Thu, 20 Aug 2026 16:40:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGRc4Z6D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15A51F000E9;
+	Thu, 20 Aug 2026 16:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244014;
-	bh=xkD3HwLyGIRtItgznmyure291CR4DjF/BB2sZ2/RCo8=;
+	s=korg; t=1787244017;
+	bh=gpUx8qow8b5TxGPY6p+bC7RYEx+CJ61mc0FXNp0Ksu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0wuiL0NGrxvuQwE5kRycBHoE+hxXRwZ6wu0GfA28/JeRvq+2knzwEe1JnuO4Ta5TI
-	 34UzCpE1UNIOhLBvpEW6a0CM6otZEujCXLzYRJEfojLkhdYI86hET5drwiM355izEo
-	 aW5BR5lHkljsdykGwhemWzvBOvZMix449qV1H8gM=
+	b=ZGRc4Z6DkB2XJIvYyA7d9BCGN/1ZR0lrdBIVn4NXFmUM07HnBHR8088YMScXHNrWA
+	 sCo4AuZzhm2ZIZtYYhX/YemBCtiJY5dXdJlSR0Nb/YDXs28wpUeqyGWMpMv7Kk5jv7
+	 u/tGoC1PgmhCLP2ChpbC5Zo2TCKlj/cpfpHbsVxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 5.10 023/235] ftrace: Fix off-by-one fentry site disable in ftrace_free_mem()
-Date: Thu, 20 Aug 2026 16:54:19 +0200
-Message-ID: <20260820145217.144518739@linuxfoundation.org>
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Stafford Horne <shorne@gmail.com>
+Subject: [PATCH 5.10 024/235] openrisc: signal: do not restore privileged SR bits on sigreturn
+Date: Thu, 20 Aug 2026 16:54:20 +0200
+Message-ID: <20260820145217.172869921@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -51,62 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-commit 8b8292d6487c81bd57c2605a9b404b1cf8f1edfb upstream.
+commit 32ef1b30ad736519f7a207bcc2986f3d4129d972 upstream.
 
-When a module's init text is freed, do_init_module() calls
-ftrace_free_mem() with a half-open [start, end) range.  However the
-ftrace_cmp_recs() comparator treats the upper bound as inclusive, as all
-its other users do, passing 'ip + size - 1'.  So ftrace_free_mem() can
-delete a record sitting exactly at 'end', which is outside the freed
-range.
+restore_sigcontext() copies the whole supervision register (SR) from the
+signal frame and only clears SPR_SR_SM before the value is reloaded into
+the hardware SR (through ESR and l.rfe) on the return to user space.  All
+other SR bits are left under user control.
 
-For a kernel without CFI or IBT, the first record of a function is at
-the function start, which for the first function in a module is also the
-base of its text allocation.  As the module allocator packs its regions,
-that address is often the 'end' passed by a neighboring module's
-do_init_module(), causing the first function's ftrace location to get
-disabled, preventing an attempt to livepatch it:
+An unprivileged task can thus return from a signal handler through a
+crafted sigframe that clears SPR_SR_DME.  With the data MMU disabled the
+CPU performs no translation or protection on data accesses, so the task
+gains read and write access to arbitrary physical memory, a local
+privilege escalation.  SPR_SR_IME, SPR_SR_SUMRA, SPR_SR_LEE, SPR_SR_EPH
+and the cache-enable bits are exposed the same way.  The ptrace GPR regset
+already refuses any change to SR for exactly this reason.
 
-  livepatch: failed to find location for function 'pcspkr_probe'
+Restore only the arithmetic flag bits (F, CY, OV) from the signal frame
+and take every privileged control bit from the SR the kernel saved on
+signal entry.
 
-Convert the exclusive end to the inclusive 'end - 1' the comparator
-expects, and return early for an empty range to avoid the subtraction
-from underflowing when the init text size is zero.
+Verified with qemu-system-or1k -M or1k-sim: before this change an
+unprivileged PoC clears SPR_SR_DME in rt_sigreturn and writes a marker to
+physical address 0x03000000 (beyond the kernel's mem=32M); afterwards the
+same PoC receives SIGSEGV and physical memory is unchanged.
 
+Fixes: ac689eb7f9d4 ("OpenRISC: Signal handling")
 Cc: stable@vger.kernel.org
-Fixes: 42c269c88dc1 ("ftrace: Allow for function tracing to record init functions on boot up")
-Link: https://patch.msgid.link/1b5ccfa8095bdb1277f84af1c2c2e2205aca03ae.1785992188.git.jpoimboe@kernel.org
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Signed-off-by: Stafford Horne <shorne@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/openrisc/include/asm/processor.h |    2 ++
+ arch/openrisc/kernel/signal.c         |    5 +++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -6844,7 +6844,8 @@ static void add_to_clear_hash_list(struc
- void ftrace_free_mem(struct module *mod, void *start_ptr, void *end_ptr)
+--- a/arch/openrisc/include/asm/processor.h
++++ b/arch/openrisc/include/asm/processor.h
+@@ -26,6 +26,8 @@
+ 		   | SPR_SR_DCE | SPR_SR_SM)
+ #define USER_SR   (SPR_SR_DME | SPR_SR_IME | SPR_SR_ICE \
+ 		   | SPR_SR_DCE | SPR_SR_IEE | SPR_SR_TEE)
++/* SR bits user space may change via sigreturn, the rest stay kernel owned */
++#define SPR_SR_USER_MASK  (SPR_SR_F | SPR_SR_CY | SPR_SR_OV)
+ 
+ /*
+  * User space process size. This is hardcoded into a few places,
+--- a/arch/openrisc/kernel/signal.c
++++ b/arch/openrisc/kernel/signal.c
+@@ -39,6 +39,7 @@ struct rt_sigframe {
+ static int restore_sigcontext(struct pt_regs *regs,
+ 			      struct sigcontext __user *sc)
  {
- 	unsigned long start = (unsigned long)(start_ptr);
--	unsigned long end = (unsigned long)(end_ptr);
-+	/* end is inclusive and end_ptr is exclusive */
-+	unsigned long end = (unsigned long)(end_ptr) - 1;
- 	struct ftrace_page **last_pg = &ftrace_pages_start;
- 	struct ftrace_page *tmp_page = NULL;
- 	struct ftrace_page *pg;
-@@ -6856,6 +6857,9 @@ void ftrace_free_mem(struct module *mod,
++	unsigned long old_sr = regs->sr;
+ 	int err = 0;
  
- 	INIT_LIST_HEAD(&clear_hash);
+ 	/* Always make any pending restarted system calls return -EINTR */
+@@ -53,8 +54,8 @@ static int restore_sigcontext(struct pt_
+ 	err |= __copy_from_user(&regs->pc, &sc->regs.pc, sizeof(unsigned long));
+ 	err |= __copy_from_user(&regs->sr, &sc->regs.sr, sizeof(unsigned long));
  
-+	if (start_ptr >= end_ptr)
-+		return;
-+
- 	key.ip = start;
- 	key.flags = end;	/* overload flags, as it is unsigned long */
+-	/* make sure the SM-bit is cleared so user-mode cannot fool us */
+-	regs->sr &= ~SPR_SR_SM;
++	/* keep the privileged SR bits kernel owned, restore only user flags */
++	regs->sr = (old_sr & ~SPR_SR_USER_MASK) | (regs->sr & SPR_SR_USER_MASK);
+ 
+ 	regs->orig_gpr11 = -1;	/* Avoid syscall restart checks */
  
 
 
