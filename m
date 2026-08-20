@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CEA3215075;
-	Thu, 20 Aug 2026 17:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2AA646C82A;
+	Thu, 20 Aug 2026 17:53:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248435; cv=none; b=u/YIkK7JpA8K6KA2gcG+KqKottFGHPXhUtbTiHjf/GArdoLmXpUfpvlLfZkvGYCmQGXnsZGcdOSLNkciSlSpDY+s5rU9dHsSXuh1sDuAEZkLyxHduZ3+pTRObDPFtI/1xwQj+6Vgl8MadVVHUpwpO3aZNC8jWbE9+MuP3qAFQKM=
+	t=1787248438; cv=none; b=lxlSevF2G2lZ+zMf7HPl/zpzeT4Y6uIdYC14E4vwMYnJXRff3Zsu+qeBhSE6pcs9uquBmeTjtyw4V2DeCPNjuPmF8jx2P4yP84mDRO6ub6RfLahbeu+v5U9ZgjfW/xLwjiGAzBUzFgUW539Zi7d++Yej903aK/ZENdGahlaMal8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248435; c=relaxed/simple;
-	bh=jiT4Dc0IFrThWAdGsL7Qq418Js4ebZFAD6rkviA7v88=;
+	s=arc-20240116; t=1787248438; c=relaxed/simple;
+	bh=916kGB5watRSV37VoCsneqYwwapq0Hx8N3N6XYsungg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ht9/KvqnVsf9d0zrL1QYlcKV85ZrtTO68Rpnlbo99tcUuJ2pxSYNcwZ1AOcJ7QA5EJYEvvFC9KyLoqzOz5Q1DBq3TEYV2gRB8K+kd6tH1uPcg1AcK948gzobgxUqlIK/NhvQ8xwmm+REL+MvadeV6oX0W7VZB52cbkFRZzG1Ddg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ByXu58xQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VRkN66fugq0Hv8paLPDfBHekgUc1gQ5Jq40KDwUSIaDML33HHF4Zk1RfbPdpmRtq18k3oJ6KS2WWNM4+lwLmsdF8i7QPuJ5zeqy1PgP84uaY2ny5+iSo4VROrOgbPAGD3OeRdJWfaIBCARz24XGuNnDls/WCqTMsSeXQ3P/r6Wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0BQxaKA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ByXu58xQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A611F00A3D;
-	Thu, 20 Aug 2026 17:53:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0BQxaKA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D2551F000E9;
+	Thu, 20 Aug 2026 17:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248434;
-	bh=+QmsuyOYLaxOkLORR4Oo/B1SO98SM9Gx+tX7xo1b8IQ=;
+	s=korg; t=1787248436;
+	bh=DOtXA+84++5MUb+CbRqVMOeH83TgrAbk0tcTNc9cHMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ByXu58xQsW4gxfli9/wZq+ZpIaGox/tWXpJvBnhvubgWvr2zVe8N1LvA2r/+pS8I8
-	 8V1Wh+2vGa/NIc3Bi4RBwbIe2beYVqRW/gjIjtLEcXpG7IsikSiU8tMPRAkcyJWy/l
-	 8VNGC+PiDK75l9TuEQDL9tzIqw2JvVZ7aYoT8Cq0=
+	b=Q0BQxaKAM7N/hOGoW+e4fN928uyyVLw6E2m5mQlZqsNIZdJLbABeGV4u0FTOjslcy
+	 FxHmHCDzEipMXrr4RTKU3CiQqddy/i6MyR5L2b+iaG9CPFRf2bv49q0Ik0CW0YDXZB
+	 QLM2DRFa9NNZlroqhzgveAQhpGbo1X/yb85Tx3LU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 225/303] super: fix emergency thaw deadlock on frozen block devices
-Date: Thu, 20 Aug 2026 16:56:01 +0200
-Message-ID: <20260820145300.173706076@linuxfoundation.org>
+Subject: [PATCH 6.1 190/303] drm/i915/vrr: Check HAS_VRR() first in intel_vrr_is_capable()
+Date: Thu, 20 Aug 2026 16:55:26 +0200
+Message-ID: <20260820145259.023780970@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -44,129 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 749d7aa0377aae32af8c0a4ad43371e7bf830ab5 ]
+[ Upstream commit 4b274b0b61ab2a529e5c22e9aa033f3028e639fc ]
 
-do_thaw_all_callback() calls bdev_thaw() while holding sb->s_umount
-exclusively. If the block device was frozen via bdev_freeze() dropping
-the last block layer freeze reference calls fs_bdev_thaw() which
-reacquires s_umount:
+There's no point in doing all the other checks in
+intel_vrr_is_capable() if the platform doesn't support VRR at all
+Check HAS_VRR() before wasting time on the other checks.
 
-  do_thaw_all_callback(sb)
-    super_lock_excl(sb)                     # holds sb->s_umount
-    bdev_thaw(sb->s_bdev)
-      mutex_lock(&bdev->bd_fsfreeze_mutex)
-      # bd_fsfreeze_count drops 1 -> 0
-      bd_holder_ops->thaw == fs_bdev_thaw
-        get_bdev_super(bdev)
-          bdev_super_lock(bdev, true)
-            super_lock(sb, true)
-              down_write(&sb->s_umount)     # same task: deadlock
-
-The emergency thaw worker deadlocks against itself holding both
-s_umount and bd_fsfreeze_mutex. That fscks any subsequent unmount,
-freeze, or thaw of that filesystem and block device.
-
-  [   81.878470] sysrq: Show Blocked State
-  [   81.880140] task:kworker/0:1     state:D stack:0     pid:11    tgid:11    ppid:2      task_flags:0x4208060 flags:0x00080000
-  [   81.884876] Workqueue: events do_thaw_all
-  [   81.886656] Call Trace:
-  [   81.887759]  <TASK>
-  [   81.888763]  __schedule+0x579/0x1420
-  [   81.890372]  schedule+0x3a/0x100
-  [   81.891794]  schedule_preempt_disabled+0x15/0x30
-  [   81.893848]  rwsem_down_write_slowpath+0x1ea/0x900
-  [   81.895191]  ? __pfx_do_thaw_all_callback+0x10/0x10
-  [   81.896528]  down_write+0xbd/0xc0
-  [   81.897505]  super_lock+0x91/0x180
-  [   81.898457]  ? __mutex_lock+0xa99/0x1140
-  [   81.900748]  ? __mutex_unlock_slowpath+0x1f/0x400
-  [   81.902069]  bdev_super_lock+0x5b/0x150
-  [   81.903132]  get_bdev_super+0x10/0x60
-  [   81.904042]  fs_bdev_thaw+0x23/0xf0
-  [   81.904755]  bdev_thaw+0x82/0x100
-  [   81.905484]  do_thaw_all_callback+0x2c/0x50
-  [   81.906298]  __iterate_supers+0x5d/0x130
-  [   81.907067]  do_thaw_all+0x20/0x40
-  [   81.907739]  process_one_work+0x206/0x5e0
-  [   81.908545]  worker_thread+0x1e2/0x3c0
-  [   81.909339]  ? __pfx_worker_thread+0x10/0x10
-  [   81.910171]  kthread+0xf4/0x130
-  [   81.910799]  ? __pfx_kthread+0x10/0x10
-  [   81.911528]  ret_from_fork+0x2e2/0x3b0
-  [   81.912259]  ? __pfx_kthread+0x10/0x10
-  [   81.913010]  ret_from_fork_asm+0x1a/0x30
-  [   81.913806]  </TASK>
-
-bdev_super_lock() even documents the violated requirement with
-lockdep_assert_not_held(&sb->s_umount).
-
-Acquiring bd_fsfreeze_mutex under s_umount also inverts the
-bd_fsfreeze_mutex vs. s_umount ordering established by
-bdev_{freeze,thaw}() and can thus ABBA against a concurrent block-layer
-freeze even when the recursive path isn't hit.
-
-Fix this by not holding s_umount around the bdev_thaw() loop at all. Pin
-the superblock with an active reference instead as
-filesystems_freeze_callback() does. The active reference keeps the
-superblock from being shut down and so ->s_bdev stays valid without
-holding s_umount. The block-layer-held freeze is dropped by
-fs_bdev_thaw() with FREEZE_MAY_NEST | FREEZE_HOLDER_USERSPACE exactly as
-a regular unfreeze would and thaw_super_locked() handles
-filesystem-level freezes as before.
-
-The emergency thaw path has deadlocked like this in one form or
-another for a long long time but the current exclusively-held
-shape dates back to commit [1] where thaw_bdev() already ended in
-thaw_super() with s_umount held by do_thaw_all_callback().
-
-Fixes: 08fdc8a0138a ("buffer.c: call thaw_super during emergency thaw") [1]
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260723-work-super-emergency_thaw-v1-1-7c315c600245@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20251020185038.4272-23-ville.syrjala@linux.intel.com
+Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Stable-dep-of: f8a9262c7a6f ("drm/i915/vrr: require valid min/max vfreq for VRR")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/super.c |   19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/display/intel_vrr.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -1045,13 +1045,24 @@ void emergency_remount(void)
+--- a/drivers/gpu/drm/i915/display/intel_vrr.c
++++ b/drivers/gpu/drm/i915/display/intel_vrr.c
+@@ -15,6 +15,9 @@ bool intel_vrr_is_capable(struct intel_c
+ 	struct drm_i915_private *i915 = to_i915(connector->base.dev);
+ 	struct intel_dp *intel_dp;
  
- static void do_thaw_all_callback(struct super_block *sb)
- {
-+	bool active = false;
++	if (!HAS_VRR(i915))
++		return false;
 +
-+	down_write(&sb->s_umount);
-+	if (sb->s_root && sb->s_flags & SB_BORN)
-+		active = atomic_inc_not_zero(&sb->s_active);
-+	up_write(&sb->s_umount);
-+	if (!active)
-+		return;
-+
-+	/* thaw_bdev() acquires s_umount so it must not be held here */
-+	emergency_thaw_bdev(sb);
-+
- 	down_write(&sb->s_umount);
--	if (sb->s_root && sb->s_flags & SB_BORN) {
--		emergency_thaw_bdev(sb);
-+	if (sb->s_root && sb->s_flags & SB_BORN)
- 		thaw_super_locked(sb);
--	} else {
-+	else
- 		up_write(&sb->s_umount);
--	}
-+	deactivate_super(sb);
+ 	/*
+ 	 * DP Sink is capable of VRR video timings if
+ 	 * Ignore MSA bit is set in DPCD.
+@@ -37,8 +40,7 @@ bool intel_vrr_is_capable(struct intel_c
+ 		return false;
+ 	}
+ 
+-	return HAS_VRR(i915) &&
+-		info->monitor_range.max_vfreq - info->monitor_range.min_vfreq > 10;
++	return info->monitor_range.max_vfreq - info->monitor_range.min_vfreq > 10;
  }
  
- static void do_thaw_all(struct work_struct *work)
+ void
 
 
