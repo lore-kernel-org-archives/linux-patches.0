@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7AE46C84F;
-	Thu, 20 Aug 2026 16:42:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3F147D94F;
+	Thu, 20 Aug 2026 16:42:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244161; cv=none; b=k/opfWL3YzMM4NVct2Rd42UGkyDDLN8nEr8b8DuqUzdVNA2AgNY+xijjOuVq/RtNb/b88OwX7riJxZCHzx57/+yfGRelkgGedJHjnb7mZDP0vTN/9DO0ugxRWlssGfSlFLSMWQmOodeEy+bePOZIc0QgmXqjK801Vlu4K23mYmA=
+	t=1787244163; cv=none; b=CdoT8PlBzrR/4BlNjg9ZGtCFUKCP853BXw+8xD3VaLuBYnqVKAxfa9U4ElQDmIFGoeddBwSOKe+oK67S5xnM34w/aTlkoNRTtL/2ZxQtXmhLTJwCzSkkeVnXWyvaH9RXUkGXzKNs9po+mzMpS7IcmzJJmXIhzDRKV0lMI7CcwXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244161; c=relaxed/simple;
-	bh=Yxwcle5M0dlm1DppjMQ3ZvE+GuVToIZV60X7JMpXzX8=;
+	s=arc-20240116; t=1787244163; c=relaxed/simple;
+	bh=UTIEIQngMVqwcAEXVARzBvIt8qalMJVKlCfFgDfja0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CSHAHWiQJwWyDZ5W0AYKWnFSjdq/gqi3ikVi1FKtO/EYUc5V0oexydamvpkX9DQFzD1eromuGi4pR+dCoGayxtOCUICKkdO08Blw58JkjQB6Y28HVXobi9tKpepI6bZ5PvSkdqADOkomGOcEMo6/ajU9RqUxRHYRhHxe4b1bXX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5iNKAJC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SzXxGbsl4seXBQa8bzgayON4ZNKCyG9juKnsG3d0ewb8Yotu89mmIdVXvHaG5hHJ0Xd/x4/DtmctnssKHs9h68MUNc7vaWfRZIuq2odOqhx/lKM/g9RDAl3m5p2k4dtuWM5gA2fQoDUax5u5U7OsrnvLAJIUKD43n04M4lQdpeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmGSBblO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5iNKAJC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00FA41F000E9;
-	Thu, 20 Aug 2026 16:42:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmGSBblO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEEF61F000E9;
+	Thu, 20 Aug 2026 16:42:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244159;
-	bh=lnvdWmw9dYn+1uwb/rgUHpgsBoX8+BpHO+8hSSdEKwI=;
+	s=korg; t=1787244162;
+	bh=3YhOv4uBVwTl+do4Rq6pRftTy+b4+8hjjBY/Bs+DM6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J5iNKAJC0kMaBnTOWQWgFjIb+F6B18vDAE4euEHlafSqJ4Yr5/zlgCW2pgQm7hs7z
-	 zU10Q76/8Qy4GPuzwrkru++KGgujV8mQ1h8U2wm9XdegkWElmJtuMe+DJ61UMVHouO
-	 OItAvSQpUcJSZ5C2neg7Jep94GAOIKdjQR1CSG0M=
+	b=RmGSBblOBY37Z+qnsEIVds2LsC17+DKu5UmoBMj1Jrx3kIt5Gu+2YVV7tRA6XdJrv
+	 qkvBno1eFI+/gvDVAasOyLsuudP8a+KD0O5PjS11m97QQxEGX5bbcZQaznSD5RZpou
+	 QYuVJJjYq9XV/wOlddnrtCKVzH0O7fHw8SauymKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Waiman Long <longman@redhat.com>,
-	Richard Guy Briggs <rgb@redhat.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Harshad Shirwadkar <harshadshirwadkar@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 055/235] audit: fix recursive locking deadlock in audit_dupe_exe()
-Date: Thu, 20 Aug 2026 16:54:51 +0200
-Message-ID: <20260820145218.116297442@linuxfoundation.org>
+Subject: [PATCH 5.10 073/235] jbd2: add a helper to find out number of fast commit blocks
+Date: Thu, 20 Aug 2026 16:55:09 +0200
+Message-ID: <20260820145218.659449675@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -55,361 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Robaina <rrobaina@redhat.com>
+From: Harshad Shirwadkar <harshadshirwadkar@gmail.com>
 
-[ Upstream commit 81905b5acbe77284734438df3fbec1158e6429a3 ]
+[ Upstream commit 9bd23c31f392bda88618008f27fd52ee9e0fac38 ]
 
-A deadlock occurs in the audit subsystem when duplicating
-executable-related rules.
+Add a helper to read number of fast commit blocks from jbd2 superblock
+and also rename the JBD2_MIN_FC_BLKS to
+JBD2_DEFAULT_FAST_COMMIT_BLOCKS since this constant is just the
+default number of fast commit blocks to use in case number of fast
+commit blocks isn't set in jbd2 superblock.
 
-When a file is moved (e.g., via do_renameat2()), the VFS layer locks
-the parent directory (I_MUTEX_PARENT), which synchronously triggers an
-fsnotify_move event. If an existing executable audit rule matches the
-file being moved, the audit subsystem catches this event and calls
-audit_dupe_exe() to duplicate the watch and update the rule. Then,
-audit_alloc_mark() would call kern_path_parent() to resolve the path,
-leading to a blind attempt to acquire the exact same I_MUTEX_PARENT lock
-already held by the task, resulting in the following recursive locking
-deadlock:
-
- ============================================
- WARNING: possible recursive locking detected
- 6.12.0-55.27.1.el10_0.x86_64+debug #1 Not tainted
- --------------------------------------------
- mv/5099 is trying to acquire lock:
- ffff888132845358 (&inode->i_sb->s_type->i_mutex_dir_key/1){+.+.}-{3:3},
- at: __kern_path_locked+0x10a/0x2f0
-
- but task is already holding lock:
- ffff888132846b58 (&inode->i_sb->s_type->i_mutex_dir_key/1){+.+.}-{3:3},
- at: lock_two_directories+0x13f/0x2b0
-
- other info that might help us debug this:
-  Possible unsafe locking scenario:
-
-        CPU0
-        ----
-   lock(&inode->i_sb->s_type->i_mutex_dir_key/1);
-   lock(&inode->i_sb->s_type->i_mutex_dir_key/1);
-
-  *** DEADLOCK ***
-
-  May be due to missing lock nesting notation
-
-  6 locks held by mv/5099:
-  #0: ffff888112a9c440 (sb_writers#13)
-  at: do_renameat2+0x34c/0xbc0
-  #1: ffff888112a9c790 (&type->s_vfs_rename_key#3)
-  at: do_renameat2+0x415/0xbc0
-  #2: ffff888132846b58 (&inode->i_sb->s_type->i_mutex_dir_key/1)
-  at: lock_two_directories+0x13f/0x2b0
-  #3: ffff888132845358 (&inode->i_sb->s_type->i_mutex_dir_key/5)
-  at: lock_two_directories+0x175/0x2b0
-  #4: ffffffffb3a1fb10 (&fsnotify_mark_srcu)
-  at: fsnotify+0x454/0x28a0
-  #5: ffffffffaf886230 (audit_filter_mutex)
-  at: audit_update_watch+0x36/0x11e0
-
- stack backtrace:
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x6f/0xb0
-  print_deadlock_bug.cold+0xbd/0xca
-  validate_chain+0x83a/0xf00
-  __lock_acquire+0xcac/0x1d20
-  lock_acquire.part.0+0x11b/0x360
-  down_write_nested+0x9f/0x230
-  __kern_path_locked+0x10a/0x2f0
-  kern_path_locked+0x26/0x40
-  audit_alloc_mark+0xfb/0x4f0
-  audit_dupe_exe+0x6c/0xe0
-  audit_dupe_rule+0x6c2/0xc00
-  audit_update_watch+0x4cc/0x11e0
-  audit_watch_handle_event+0x12c/0x1b0
-  send_to_group+0x5d0/0x8b0
-  fsnotify+0x615/0x28a0
-  fsnotify_move+0x1d8/0x630
-  vfs_rename+0xdcd/0x1df0
-  do_renameat2+0x9d4/0xbc0
-  __x64_sys_renameat+0x192/0x260
-  do_syscall_64+0x92/0x180
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
- RIP: 0033:0x7f0491fe8c4e
- Code: 0f 1f 40 00 48 8b 15 c1 e1 16 00 f7 d8 64 89 02 b8 ff ff ff ff
- c3 66 0f 1f 44 00 00 f3 0f 1e fa 49 89 ca b8 08 01 00 00 0f 05 <48>
- 3d 00 f0 ff ff 77 0a c3 66 0f 1f 84 00 00 00 00 00 48 8b 15 89
- RSP: 002b:00007ffc7210bf38 EFLAGS: 00000246 ORIG_RAX: 0000000000000108
- RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f0491fe8c4e
- RDX: 0000000000000003 RSI: 00007ffc7210e6c8 RDI: 00000000ffffff9c
- RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000001
- R10: 00005575eb2dae2a R11: 0000000000000246 R12: 00005575eb2dae2a
- R13: 00007ffc7210e6c8 R14: 0000000000000003 R15: 00000000ffffff9c
-  </TASK>
-
-The aforementioned deadlock can be consistently reproduced by running
-the script below:
-
- audit-dupe-exe-deadlock.sh
- --------------------------
- #!/bin/bash
- auditctl -D
- mkdir -p /tmp/foo
- touch /tmp/file
- auditctl -a always,exit -F exe=/tmp/file -F path=/tmp/file -S all -k dr
- mv /tmp/file /tmp/foo/file
- rm -Rf /tmp/foo
-
-This patch fixes the issue by introducing struct audit_watch_ctx to pass
-the fsnotify event context down to audit_alloc_mark(). By utilizing the
-already-resolved directory inode provided by the event, we bypass the
-kern_path_parent() path resolution entirely, safely avoiding the
-recursive lock. Furthermore, it explicitly allows duplicate fsnotify
-marks (allow_dups = 1) during the rename update, allowing the new rule's
-mark to safely coexist with the old rule's mark until the old rule is
-freed.
-
-P.S.: This issue was identified and reproduced during a comprehensive
-code coverage analysis of the audit subsystem. The full report is
-available at the link below:
-
-https://people.redhat.com/rrobaina/audit-code-coverage-analysis.pdf
-
-P.P.S: With the permission of both Ricardo and Nathan, I've squashed a
-fixup patch from Nathan that addresses a compile time error when
-CONFIG_AUDITSYSCALL=n.
-
-Cc: stable@kernel.org
-Fixes: 34d99af52ad4 ("audit: implement audit by executable")
-Acked-by: Waiman Long <longman@redhat.com>
-Acked-by: Richard Guy Briggs <rgb@redhat.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Ricardo Robaina <rrobaina@redhat.com>
-[PM: move link metadata into the msg, apply fix from NC]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Harshad Shirwadkar <harshadshirwadkar@gmail.com>
+Link: https://lore.kernel.org/r/20201120202232.2240293-2-harshadshirwadkar@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 289a2ca0c9b7 ("jbd2: fix integer underflow in jbd2_journal_initialize_fast_commit()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/audit.h          |   17 ++++++++++++-----
- kernel/audit_fsnotify.c |   32 +++++++++++++++++++++++---------
- kernel/audit_watch.c    |   25 +++++++++++++++++--------
- kernel/auditfilter.c    |    9 +++++----
- 4 files changed, 57 insertions(+), 26 deletions(-)
+ fs/jbd2/journal.c    |    8 ++------
+ include/linux/jbd2.h |    9 ++++++++-
+ 2 files changed, 10 insertions(+), 7 deletions(-)
 
---- a/kernel/audit.h
-+++ b/kernel/audit.h
-@@ -242,8 +242,13 @@ extern int audit_del_rule(struct audit_e
- extern void audit_free_rule_rcu(struct rcu_head *head);
- extern struct list_head audit_filter_list[];
+--- a/fs/jbd2/journal.c
++++ b/fs/jbd2/journal.c
+@@ -1884,9 +1884,7 @@ static int load_superblock(journal_t *jo
  
--extern struct audit_entry *audit_dupe_rule(struct audit_krule *old);
-+struct audit_watch_ctx {
-+	struct inode *dir;
-+	struct inode *child;
-+};
+ 	if (jbd2_has_feature_fast_commit(journal)) {
+ 		journal->j_fc_last = be32_to_cpu(sb->s_maxlen);
+-		num_fc_blocks = be32_to_cpu(sb->s_num_fc_blks);
+-		if (!num_fc_blocks)
+-			num_fc_blocks = JBD2_MIN_FC_BLOCKS;
++		num_fc_blocks = jbd2_journal_get_num_fc_blks(sb);
+ 		if (journal->j_last - num_fc_blocks >= JBD2_MIN_JOURNAL_BLOCKS)
+ 			journal->j_last = journal->j_fc_last - num_fc_blocks;
+ 		journal->j_fc_first = journal->j_last + 1;
+@@ -2117,9 +2115,7 @@ jbd2_journal_initialize_fast_commit(jour
+ 	journal_superblock_t *sb = journal->j_superblock;
+ 	unsigned long long num_fc_blks;
  
-+extern struct audit_entry *audit_dupe_rule(struct audit_krule *old,
-+					   struct audit_watch_ctx *ctx);
- extern void audit_log_d_path_exe(struct audit_buffer *ab,
- 				 struct mm_struct *mm);
+-	num_fc_blks = be32_to_cpu(sb->s_num_fc_blks);
+-	if (num_fc_blks == 0)
+-		num_fc_blks = JBD2_MIN_FC_BLOCKS;
++	num_fc_blks = jbd2_journal_get_num_fc_blks(sb);
+ 	if (journal->j_last - num_fc_blks < JBD2_MIN_JOURNAL_BLOCKS)
+ 		return -ENOSPC;
  
-@@ -266,13 +271,15 @@ extern char *audit_watch_path(struct aud
- extern int audit_watch_compare(struct audit_watch *watch, u64 ino, dev_t dev);
+--- a/include/linux/jbd2.h
++++ b/include/linux/jbd2.h
+@@ -68,7 +68,7 @@ extern void *jbd2_alloc(size_t size, gfp
+ extern void jbd2_free(void *ptr, size_t size);
  
- extern struct audit_fsnotify_mark *audit_alloc_mark(struct audit_krule *krule,
--						    char *pathname, int len);
-+						    char *pathname, int len,
-+						    struct audit_watch_ctx *ctx);
- extern char *audit_mark_path(struct audit_fsnotify_mark *mark);
- extern void audit_remove_mark(struct audit_fsnotify_mark *audit_mark);
- extern void audit_remove_mark_rule(struct audit_krule *krule);
- extern int audit_mark_compare(struct audit_fsnotify_mark *mark, u64 ino,
- 			      dev_t dev);
--extern int audit_dupe_exe(struct audit_krule *new, struct audit_krule *old);
-+extern int audit_dupe_exe(struct audit_krule *new, struct audit_krule *old,
-+			  struct audit_watch_ctx *ctx);
- extern int audit_exe_compare(struct task_struct *tsk,
- 			     struct audit_fsnotify_mark *mark);
+ #define JBD2_MIN_JOURNAL_BLOCKS 1024
+-#define JBD2_MIN_FC_BLOCKS	256
++#define JBD2_DEFAULT_FAST_COMMIT_BLOCKS 256
  
-@@ -303,13 +310,13 @@ extern struct list_head *audit_killed_tr
- #define audit_watch_path(w) ""
- #define audit_watch_compare(w, i, d) 0
+ #ifdef __KERNEL__
  
--#define audit_alloc_mark(k, p, l) (ERR_PTR(-EINVAL))
-+#define audit_alloc_mark(k, p, l, c) (ERR_PTR(-EINVAL))
- #define audit_mark_path(m) ""
- #define audit_remove_mark(m)
- #define audit_remove_mark_rule(k)
- #define audit_mark_compare(m, i, d) 0
- #define audit_exe_compare(t, m) (-EINVAL)
--#define audit_dupe_exe(n, o) (-EINVAL)
-+#define audit_dupe_exe(n, o, c) (-EINVAL)
- 
- #define audit_remove_tree_rule(rule) BUG()
- #define audit_add_tree_rule(rule) -EINVAL
---- a/kernel/audit_fsnotify.c
-+++ b/kernel/audit_fsnotify.c
-@@ -71,19 +71,30 @@ static void audit_update_mark(struct aud
- 	audit_mark->ino = inode ? inode->i_ino : AUDIT_INO_UNSET;
+@@ -1686,6 +1686,13 @@ static inline int jbd2_journal_has_csum_
+ 	return journal->j_chksum_driver != NULL;
  }
  
--struct audit_fsnotify_mark *audit_alloc_mark(struct audit_krule *krule, char *pathname, int len)
-+struct audit_fsnotify_mark *audit_alloc_mark(struct audit_krule *krule, char *pathname,
-+					     int len, struct audit_watch_ctx *ctx)
- {
- 	struct audit_fsnotify_mark *audit_mark;
- 	struct path path;
- 	struct dentry *dentry;
--	int ret;
-+	struct inode *dir, *child;
-+	int ret, allow_dups;
- 
- 	if (pathname[0] != '/' || pathname[len-1] == '/')
- 		return ERR_PTR(-EINVAL);
- 
--	dentry = kern_path_parent(pathname, &path);
--	if (IS_ERR(dentry))
--		return ERR_CAST(dentry); /* returning an error */
-+	if (!ctx) {
-+		dentry = kern_path_parent(pathname, &path);
-+		if (IS_ERR(dentry))
-+			return ERR_CAST(dentry); /* returning an error */
-+		dir = d_inode(path.dentry);
-+		child = d_inode(dentry);
-+		allow_dups = 0;
-+	} else {
-+		dir = ctx->dir;
-+		child = ctx->child;
-+		allow_dups = 1;
-+	}
- 
- 	audit_mark = kzalloc(sizeof(*audit_mark), GFP_KERNEL);
- 	if (unlikely(!audit_mark)) {
-@@ -94,18 +105,21 @@ struct audit_fsnotify_mark *audit_alloc_
- 	fsnotify_init_mark(&audit_mark->mark, audit_fsnotify_group);
- 	audit_mark->mark.mask = AUDIT_FS_EVENTS;
- 	audit_mark->path = pathname;
--	audit_update_mark(audit_mark, dentry->d_inode);
- 	audit_mark->rule = krule;
- 
--	ret = fsnotify_add_inode_mark(&audit_mark->mark, path.dentry->d_inode, 0);
-+	audit_update_mark(audit_mark, child);
-+	ret = fsnotify_add_inode_mark(&audit_mark->mark, dir, allow_dups);
++static inline int jbd2_journal_get_num_fc_blks(journal_superblock_t *jsb)
++{
++	int num_fc_blocks = be32_to_cpu(jsb->s_num_fc_blks);
 +
- 	if (ret < 0) {
- 		audit_mark->path = NULL;
- 		fsnotify_put_mark(&audit_mark->mark);
- 		audit_mark = ERR_PTR(ret);
- 	}
- out:
--	dput(dentry);
--	path_put(&path);
-+	if (!ctx) {
-+		dput(dentry);
-+		path_put(&path);
-+	}
- 	return audit_mark;
- }
- 
---- a/kernel/audit_watch.c
-+++ b/kernel/audit_watch.c
-@@ -243,7 +243,8 @@ static void audit_watch_log_rule_change(
- /* Update inode info in audit rules based on filesystem event. */
- static void audit_update_watch(struct audit_parent *parent,
- 			       const struct qstr *dname, dev_t dev,
--			       u64 ino, unsigned int invalidating)
-+			       u64 ino, unsigned int invalidating,
-+			       struct audit_watch_ctx *ctx)
- {
- 	struct audit_watch *owatch, *nwatch, *nextw;
- 	struct audit_krule *r, *nextr;
-@@ -279,7 +280,7 @@ static void audit_update_watch(struct au
- 			list_del(&oentry->rule.rlist);
- 			list_del_rcu(&oentry->list);
- 
--			nentry = audit_dupe_rule(&oentry->rule);
-+			nentry = audit_dupe_rule(&oentry->rule, ctx);
- 			if (IS_ERR(nentry)) {
- 				list_del(&oentry->rule.list);
- 				audit_panic("error updating watch, removing");
-@@ -478,10 +479,17 @@ static int audit_watch_handle_event(stru
- 	if (WARN_ON_ONCE(inode_mark->group != audit_watch_group))
- 		return 0;
- 
--	if (mask & (FS_CREATE|FS_MOVED_TO) && inode)
--		audit_update_watch(parent, dname, inode->i_sb->s_dev, inode->i_ino, 0);
--	else if (mask & (FS_DELETE|FS_MOVED_FROM))
--		audit_update_watch(parent, dname, AUDIT_DEV_UNSET, AUDIT_INO_UNSET, 1);
-+	if (mask & (FS_CREATE|FS_MOVED_TO) && inode) {
-+		struct audit_watch_ctx ctx = { .dir = dir, .child = inode };
++	return num_fc_blocks ? num_fc_blocks : JBD2_DEFAULT_FAST_COMMIT_BLOCKS;
++}
 +
-+		audit_update_watch(parent, dname, inode->i_sb->s_dev, inode->i_ino, 0,
-+				   &ctx);
-+	} else if (mask & (FS_DELETE|FS_MOVED_FROM)) {
-+		struct audit_watch_ctx ctx = { .dir = dir, .child = NULL };
-+
-+		audit_update_watch(parent, dname, AUDIT_DEV_UNSET, AUDIT_INO_UNSET, 1,
-+				   &ctx);
-+	}
- 	else if (mask & (FS_DELETE_SELF|FS_UNMOUNT|FS_MOVE_SELF))
- 		audit_remove_parent_watches(parent);
- 
-@@ -504,7 +512,8 @@ static int __init audit_watch_init(void)
- }
- device_initcall(audit_watch_init);
- 
--int audit_dupe_exe(struct audit_krule *new, struct audit_krule *old)
-+int audit_dupe_exe(struct audit_krule *new, struct audit_krule *old,
-+		   struct audit_watch_ctx *ctx)
- {
- 	struct audit_fsnotify_mark *audit_mark;
- 	char *pathname;
-@@ -513,7 +522,7 @@ int audit_dupe_exe(struct audit_krule *n
- 	if (!pathname)
- 		return -ENOMEM;
- 
--	audit_mark = audit_alloc_mark(new, pathname, strlen(pathname));
-+	audit_mark = audit_alloc_mark(new, pathname, strlen(pathname), ctx);
- 	if (IS_ERR(audit_mark)) {
- 		kfree(pathname);
- 		return PTR_ERR(audit_mark);
---- a/kernel/auditfilter.c
-+++ b/kernel/auditfilter.c
-@@ -582,7 +582,7 @@ static struct audit_entry *audit_data_to
- 				err = PTR_ERR(str);
- 				goto exit_free;
- 			}
--			audit_mark = audit_alloc_mark(&entry->rule, str, f_val);
-+			audit_mark = audit_alloc_mark(&entry->rule, str, f_val, NULL);
- 			if (IS_ERR(audit_mark)) {
- 				kfree(str);
- 				err = PTR_ERR(audit_mark);
-@@ -809,7 +809,8 @@ static inline int audit_dupe_lsm_field(s
-  * rule with the new rule in the filterlist, then free the old rule.
-  * The rlist element is undefined; list manipulations are handled apart from
-  * the initial copy. */
--struct audit_entry *audit_dupe_rule(struct audit_krule *old)
-+struct audit_entry *audit_dupe_rule(struct audit_krule *old,
-+				    struct audit_watch_ctx *ctx)
- {
- 	u32 fcount = old->field_count;
- 	struct audit_entry *entry;
-@@ -868,7 +869,7 @@ struct audit_entry *audit_dupe_rule(stru
- 				new->filterkey = fk;
- 			break;
- 		case AUDIT_EXE:
--			err = audit_dupe_exe(new, old);
-+			err = audit_dupe_exe(new, old, ctx);
- 			break;
- 		}
- 		if (err) {
-@@ -1400,7 +1401,7 @@ static int update_lsm_rule(struct audit_
- 	if (!security_audit_rule_known(r))
- 		return 0;
- 
--	nentry = audit_dupe_rule(r);
-+	nentry = audit_dupe_rule(r, NULL);
- 	if (entry->rule.exe)
- 		audit_remove_mark(entry->rule.exe);
- 	if (IS_ERR(nentry)) {
+ /*
+  * Return number of free blocks in the log. Must be called under j_state_lock.
+  */
 
 
