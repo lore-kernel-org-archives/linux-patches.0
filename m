@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB3244062A;
-	Thu, 20 Aug 2026 17:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF0144062A;
+	Thu, 20 Aug 2026 17:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248311; cv=none; b=muXwJCgluE96dmgXakVjOT52yfoiM8yFeQxfwBr6vsGsMO54cDSYztsOSG67TmAH1+KTkwVsPUZ99Dynfd8dY1VbYwoN0UOkGnqSeHDnYwDUaqWt3trhO2wB7INqFzY2a7v9sUVC2PYZAAUGFwIW2iHBeeaVo4aRENdkGhsr9uQ=
+	t=1787248313; cv=none; b=IsWE6zVNkFNxpuOI7baalc+tzAtxRJ7dJNmin/4MFEO77j/vv6/c1MQrPr5wUAuufh/O+707Imsus5GmnHPFq3F9AWLtX8kjykQE9voF3TaVxJJBn57zF8UjXwKFIoqY9A5gqjR0VCYlPpeaNbwAX1WRUG007WnzuxNUa09TVEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248311; c=relaxed/simple;
-	bh=xhjMkBubyj9FmVEJ6dfI+OkDi7G6Xi5KsOgdXm3loo0=;
+	s=arc-20240116; t=1787248313; c=relaxed/simple;
+	bh=HWJDTAvvMRikyldWyn1GT69Lr4zSdjtkzSvqp1E7Obw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Alyuiq/PakOUbPtqMpZF6gntbwyNoOAN9Zt+kLFtbg6/0mZOKwEpQGYEeAAynVGe/63gccCMyTqAk0fdFHd64Y4AFy0LYftRsWmfy1SkR/OJB2sGRsMiNqHMdnGZFUdtl3c5TFdhrpD82z3Stq9bA0mYB71u7z/r+ey0JjhPDFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPJyIIRJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jzz9wJRXWdRYxe39V1z3a+ODJRyaJATn7vPVkNjkmzkZdTJF/VI1/tSbd8WhxfxeD52csrSf+Gmw1Ef3eppdGIEOgkyH59F3XpQ7V2Aulj2ivmBLfCV66twQbMFegG+1DZ1SYPK9OSui+eX8C+DnIHnpdjWNAKzHCzTc16nJ9tE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bedyrumv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPJyIIRJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0FA61F00A3A;
-	Thu, 20 Aug 2026 17:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bedyrumv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7F131F000E9;
+	Thu, 20 Aug 2026 17:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248309;
-	bh=Z9Scu7xY3kWPeAn8EmwYetZNn+7N4bRPZV7HfT8soAU=;
+	s=korg; t=1787248312;
+	bh=jeksvcJaegNXTl2x/3G7owxCr7LVMQz0ll6cyonRCbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rPJyIIRJA+Hqbu8X2uKQeHJj0Z2MxNltA3l57e52gRD9uAnnG8suKyK79fvb1TNzS
-	 YI+4t23jMT2oHuh7mazI6XJdBIwlKI/zXuMEWKOaRyXZcN1Rwk7Jhe+1vatQ8UaoAq
-	 rvQOqLflJ1jXbQjwOemzfVAL0w2gp4hqKQd7eDhc=
+	b=BedyrumvjDHMf8vHwcnoDotJnv1teQBjqZTnTdcp/ZB4PUVUbjgDYLEi90Z+eceoj
+	 Aj78xSNPGQqA58luZRWACFAaGvAsFBaEro4gIE8J8gOKsljVLb4rIfKzZ11Jjc+r1T
+	 HgkStiH9jPjraRyexhmp43zWc+f2rz/qL0aEZ56I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Vitor Soares <vitor.soares@toradex.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	stable <stable@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 182/303] drm/bridge: cdns-dsi: Replace deprecated UNIVERSAL_DEV_PM_OPS()
-Date: Thu, 20 Aug 2026 16:55:18 +0200
-Message-ID: <20260820145258.785096839@linuxfoundation.org>
+Subject: [PATCH 6.1 183/303] usb: gadget: f_tcm: synchronize delayed set_alt with teardown
+Date: Thu, 20 Aug 2026 16:55:19 +0200
+Message-ID: <20260820145258.817246507@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -52,91 +51,385 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitor Soares <vitor.soares@toradex.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 2d8b08844c0ecc6f2002fa68711e779aa18c8585 ]
+[ Upstream commit 79e2d75725c85607f8a9d87ae9cace62a19f767d ]
 
-The deprecated UNIVERSAL_DEV_PM_OPS() macro uses the provided callbacks
-for both runtime PM and system sleep. This causes the DSI clocks to be
-disabled twice: once during runtime suspend and again during system
-suspend, resulting in a WARN message from the clock framework when
-attempting to disable already-disabled clocks.
+The f_tcm set_alt() path defers endpoint setup to a work item and
+completes the delayed status response from process context. The delayed
+work uses f_tcm private state and may complete the setup request after
+disconnect or function teardown has already moved on.
 
-[   84.384540] clk:231:5 already disabled
-[   84.388314] WARNING: CPU: 2 PID: 531 at /drivers/clk/clk.c:1181 clk_core_disable+0xa4/0xac
-...
-[   84.579183] Call trace:
-[   84.581624]  clk_core_disable+0xa4/0xac
-[   84.585457]  clk_disable+0x30/0x4c
-[   84.588857]  cdns_dsi_suspend+0x20/0x58 [cdns_dsi]
-[   84.593651]  pm_generic_suspend+0x2c/0x44
-[   84.597661]  ti_sci_pd_suspend+0xbc/0x15c
-[   84.601670]  dpm_run_callback+0x8c/0x14c
-[   84.605588]  __device_suspend+0x1a0/0x56c
-[   84.609594]  dpm_suspend+0x17c/0x21c
-[   84.613165]  dpm_suspend_start+0xa0/0xa8
-[   84.617083]  suspend_devices_and_enter+0x12c/0x634
-[   84.621872]  pm_suspend+0x1fc/0x368
+Cancel and drain the delayed set_alt work when the function is unbound or
+freed. For disable paths, which are reached under the composite device
+lock, use a small state machine and a non-sleeping cancellation path
+instead of cancel_work_sync(). If the work is already running, mark it
+cancelled and let the worker own the cleanup; otherwise tcm_disable() can
+cancel the queued work and clean up immediately.
 
-To address this issue, replace UNIVERSAL_DEV_PM_OPS() with
-RUNTIME_PM_OPS(). Bridge and panel drivers should only deal with runtime
-PM, as the DRM framework manages system-wide power transitions through
-the bridge enable() and disable() hooks.
+Also serialize the final delayed-status completion with the cancellation
+check while holding the composite device lock. This prevents a disconnect
+from clearing delayed_status while the worker is about to complete the
+control request.
 
-Link: https://lore.kernel.org/all/fbde0659-78f3-46e4-98cf-d832f765a18b@ideasonboard.com/
-Cc: stable@vger.kernel.org # 6.1.x
-Fixes: e19233955d9e ("drm/bridge: Add Cadence DSI driver")
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Vitor Soares <vitor.soares@toradex.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260505134705.188661-2-ivitro@gmail.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Validation reproduced this kernel report:
+BUG: KASAN: slab-use-after-free in tcm_delayed_set_alt+0x6c/0xef0
+
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x66/0xa0
+ print_report+0xce/0x630
+ ? tcm_delayed_set_alt+0x6c/0xef0
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __virt_addr_valid+0x188/0x320
+ ? tcm_delayed_set_alt+0x6c/0xef0
+ kasan_report+0xe0/0x110
+ ? tcm_delayed_set_alt+0x6c/0xef0
+ tcm_delayed_set_alt+0x6c/0xef0
+ ? __pfx_tcm_delayed_set_alt+0x10/0x10
+ ? process_one_work+0x4cb/0xb90
+ ? rcu_is_watching+0x20/0x50
+ ? tcm_delayed_set_alt+0x9/0xef0
+ process_one_work+0x4d7/0xb90
+ ? __pfx_process_one_work+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __list_add_valid_or_report+0x37/0xf0
+ ? __pfx_tcm_delayed_set_alt+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ worker_thread+0x2d8/0x570
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0x1ad/0x1f0
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x3c9/0x540
+ ? __pfx_ret_from_fork+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __switch_to+0x2e9/0x730
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+
+Allocated by task 544:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ __kasan_kmalloc+0x8f/0xa0
+ tcm_alloc+0x68/0x180
+ usb_get_function+0x36/0x60
+ config_usb_cfg_link+0x125/0x1b0
+ configfs_symlink+0x322/0x890
+ vfs_symlink+0xc2/0x270
+ filename_symlinkat+0x295/0x2f0
+ __x64_sys_symlinkat+0x62/0x90
+ do_syscall_64+0x115/0x6a0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Freed by task 661:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ kasan_save_free_info+0x3b/0x60
+ __kasan_slab_free+0x43/0x70
+ kfree+0x2f9/0x530
+ config_usb_cfg_unlink+0x173/0x1e0
+ configfs_unlink+0x1fa/0x340
+ vfs_unlink+0x15c/0x510
+ filename_unlinkat+0x2ba/0x450
+ __x64_sys_unlinkat+0x63/0x90
+ do_syscall_64+0x115/0x6a0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
+Cc: stable <stable@kernel.org>
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/20260627104153.3822495-1-zzzccc427@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ adjusted context for 6.12's scalar `struct usbg_cdb cmd` and missing `stream_hash`, dropping the `hash_init()` context line ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/cdns-dsi.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/usb/gadget/function/f_tcm.c |  192 ++++++++++++++++++++++++++++++------
+ drivers/usb/gadget/function/tcm.h   |   13 ++
+ 2 files changed, 177 insertions(+), 28 deletions(-)
 
---- a/drivers/gpu/drm/bridge/cdns-dsi.c
-+++ b/drivers/gpu/drm/bridge/cdns-dsi.c
-@@ -1189,7 +1189,7 @@ static const struct mipi_dsi_host_ops cd
- 	.transfer = cdns_dsi_transfer,
- };
- 
--static int __maybe_unused cdns_dsi_resume(struct device *dev)
-+static int cdns_dsi_resume(struct device *dev)
- {
- 	struct cdns_dsi *dsi = dev_get_drvdata(dev);
- 
-@@ -1200,7 +1200,7 @@ static int __maybe_unused cdns_dsi_resum
- 	return 0;
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -2042,31 +2042,158 @@ ep_fail:
+ 	return -ENOTSUPP;
  }
  
--static int __maybe_unused cdns_dsi_suspend(struct device *dev)
-+static int cdns_dsi_suspend(struct device *dev)
- {
- 	struct cdns_dsi *dsi = dev_get_drvdata(dev);
+-struct guas_setup_wq {
+-	struct work_struct work;
+-	struct f_uas *fu;
+-	unsigned int alt;
+-};
++static void tcm_cleanup_old_alt(struct f_uas *fu)
++{
++	if (fu->flags & USBG_IS_UAS)
++		uasp_cleanup_old_alt(fu);
++	else if (fu->flags & USBG_IS_BOT)
++		bot_cleanup_old_alt(fu);
++	fu->flags = 0;
++}
++
++static void tcm_delayed_set_alt_done(struct f_uas *fu)
++{
++	unsigned long flags;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
++	fu->delayed_set_alt_cancel = false;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++}
++
++static bool tcm_delayed_set_alt_cancelled(struct f_uas *fu)
++{
++	bool cancelled;
++	unsigned long flags;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	cancelled = fu->delayed_set_alt_cancel;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++
++	return cancelled;
++}
++
++static bool tcm_complete_delayed_status(struct f_uas *fu)
++{
++	struct usb_composite_dev *cdev = fu->function.config->cdev;
++	struct usb_request *req = cdev->req;
++	unsigned long cdev_flags;
++	bool cancelled;
++	int ret;
++
++	spin_lock_irqsave(&cdev->lock, cdev_flags);
++	spin_lock(&fu->delayed_set_alt_lock);
++	cancelled = fu->delayed_set_alt_cancel;
++	if (!cancelled) {
++		fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
++		fu->delayed_set_alt_cancel = false;
++	}
++	spin_unlock(&fu->delayed_set_alt_lock);
++
++	if (cancelled) {
++		spin_unlock_irqrestore(&cdev->lock, cdev_flags);
++		return false;
++	}
++
++	if (cdev->delayed_status == 0) {
++		WARN(cdev, "%s: Unexpected call\n", __func__);
++	} else if (--cdev->delayed_status == 0) {
++		req->length = 0;
++		req->context = cdev;
++		ret = usb_ep_queue(cdev->gadget->ep0, req, GFP_ATOMIC);
++		if (ret == 0) {
++			cdev->setup_pending = true;
++		} else {
++			req->status = 0;
++			req->complete(cdev->gadget->ep0, req);
++		}
++	}
++
++	spin_unlock_irqrestore(&cdev->lock, cdev_flags);
++
++	return true;
++}
++
++static bool tcm_cancel_delayed_set_alt(struct f_uas *fu)
++{
++	bool cleanup = false;
++	bool cancel = false;
++	unsigned long flags;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	switch (fu->delayed_set_alt_state) {
++	case USBG_DELAYED_SET_ALT_IDLE:
++		cleanup = true;
++		break;
++	case USBG_DELAYED_SET_ALT_QUEUED:
++	case USBG_DELAYED_SET_ALT_RUNNING:
++		fu->delayed_set_alt_cancel = true;
++		cancel = true;
++		break;
++	}
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++
++	if (cancel && cancel_work(&fu->delayed_set_alt)) {
++		spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++		if (fu->delayed_set_alt_state == USBG_DELAYED_SET_ALT_QUEUED) {
++			fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
++			fu->delayed_set_alt_cancel = false;
++			cleanup = true;
++		}
++		spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++	}
++
++	return cleanup;
++}
++
++static void tcm_cancel_delayed_set_alt_sync(struct f_uas *fu)
++{
++	unsigned long flags;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	if (fu->delayed_set_alt_state != USBG_DELAYED_SET_ALT_IDLE)
++		fu->delayed_set_alt_cancel = true;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++
++	cancel_work_sync(&fu->delayed_set_alt);
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
++	fu->delayed_set_alt_cancel = false;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++}
  
-@@ -1210,8 +1210,9 @@ static int __maybe_unused cdns_dsi_suspe
- 	return 0;
+ static void tcm_delayed_set_alt(struct work_struct *wq)
+ {
+-	struct guas_setup_wq *work = container_of(wq, struct guas_setup_wq,
+-			work);
+-	struct f_uas *fu = work->fu;
+-	int alt = work->alt;
++	struct f_uas *fu = container_of(wq, struct f_uas, delayed_set_alt);
++	unsigned long flags;
++	unsigned int alt;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	if (fu->delayed_set_alt_state != USBG_DELAYED_SET_ALT_QUEUED) {
++		spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++		return;
++	}
++	fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_RUNNING;
++	alt = fu->delayed_alt;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
+ 
+-	kfree(work);
++	tcm_cleanup_old_alt(fu);
+ 
+-	if (fu->flags & USBG_IS_BOT)
+-		bot_cleanup_old_alt(fu);
+-	if (fu->flags & USBG_IS_UAS)
+-		uasp_cleanup_old_alt(fu);
++	if (tcm_delayed_set_alt_cancelled(fu))
++		goto out_done;
+ 
+ 	if (alt == USB_G_ALT_INT_BBB)
+ 		bot_set_alt(fu);
+ 	else if (alt == USB_G_ALT_INT_UAS)
+ 		uasp_set_alt(fu);
+-	usb_composite_setup_continue(fu->function.config->cdev);
++
++	if (tcm_complete_delayed_status(fu))
++		return;
++
++	tcm_cleanup_old_alt(fu);
++out_done:
++	tcm_delayed_set_alt_done(fu);
  }
  
--static UNIVERSAL_DEV_PM_OPS(cdns_dsi_pm_ops, cdns_dsi_suspend, cdns_dsi_resume,
--			    NULL);
-+static const struct dev_pm_ops cdns_dsi_pm_ops = {
-+	RUNTIME_PM_OPS(cdns_dsi_suspend, cdns_dsi_resume, NULL)
+ static int tcm_get_alt(struct usb_function *f, unsigned intf)
+@@ -2092,15 +2219,20 @@ static int tcm_set_alt(struct usb_functi
+ 		return -EOPNOTSUPP;
+ 
+ 	if ((alt == USB_G_ALT_INT_BBB) || (alt == USB_G_ALT_INT_UAS)) {
+-		struct guas_setup_wq *work;
++		unsigned long flags;
++
++		spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++		if (fu->delayed_set_alt_state != USBG_DELAYED_SET_ALT_IDLE) {
++			spin_unlock_irqrestore(&fu->delayed_set_alt_lock,
++					       flags);
++			return -EBUSY;
++		}
++		fu->delayed_alt = alt;
++		fu->delayed_set_alt_cancel = false;
++		fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_QUEUED;
++		spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
+ 
+-		work = kmalloc(sizeof(*work), GFP_ATOMIC);
+-		if (!work)
+-			return -ENOMEM;
+-		INIT_WORK(&work->work, tcm_delayed_set_alt);
+-		work->fu = fu;
+-		work->alt = alt;
+-		schedule_work(&work->work);
++		schedule_work(&fu->delayed_set_alt);
+ 		return USB_GADGET_DELAYED_STATUS;
+ 	}
+ 	return -EOPNOTSUPP;
+@@ -2110,11 +2242,8 @@ static void tcm_disable(struct usb_funct
+ {
+ 	struct f_uas *fu = to_f_uas(f);
+ 
+-	if (fu->flags & USBG_IS_UAS)
+-		uasp_cleanup_old_alt(fu);
+-	else if (fu->flags & USBG_IS_BOT)
+-		bot_cleanup_old_alt(fu);
+-	fu->flags = 0;
++	if (tcm_cancel_delayed_set_alt(fu))
++		tcm_cleanup_old_alt(fu);
+ }
+ 
+ static int tcm_setup(struct usb_function *f,
+@@ -2262,11 +2391,16 @@ static void tcm_free(struct usb_function
+ {
+ 	struct f_uas *tcm = to_f_uas(f);
+ 
++	tcm_cancel_delayed_set_alt_sync(tcm);
+ 	kfree(tcm);
+ }
+ 
+ static void tcm_unbind(struct usb_configuration *c, struct usb_function *f)
+ {
++	struct f_uas *fu = to_f_uas(f);
++
++	tcm_cancel_delayed_set_alt_sync(fu);
++	tcm_cleanup_old_alt(fu);
+ 	usb_free_all_descriptors(f);
+ }
+ 
+@@ -2299,6 +2433,8 @@ static struct usb_function *tcm_alloc(st
+ 	fu->function.disable = tcm_disable;
+ 	fu->function.free_func = tcm_free;
+ 	fu->tpg = tpg_instances[i].tpg;
++	INIT_WORK(&fu->delayed_set_alt, tcm_delayed_set_alt);
++	spin_lock_init(&fu->delayed_set_alt_lock);
+ 	mutex_unlock(&tpg_instances_lock);
+ 
+ 	return &fu->function;
+--- a/drivers/usb/gadget/function/tcm.h
++++ b/drivers/usb/gadget/function/tcm.h
+@@ -3,6 +3,7 @@
+ #define __TARGET_USB_GADGET_H__
+ 
+ #include <linux/kref.h>
++#include <linux/spinlock.h>
+ /* #include <linux/usb/uas.h> */
+ #include <linux/usb/composite.h>
+ #include <linux/usb/uas.h>
+@@ -26,6 +27,12 @@ enum {
+ 
+ #define USB_G_DEFAULT_SESSION_TAGS	128
+ 
++enum {
++	USBG_DELAYED_SET_ALT_IDLE = 0,
++	USBG_DELAYED_SET_ALT_QUEUED,
++	USBG_DELAYED_SET_ALT_RUNNING,
 +};
- 
- static int cdns_dsi_drm_probe(struct platform_device *pdev)
- {
-@@ -1338,7 +1339,7 @@ static struct platform_driver cdns_dsi_p
- 	.driver = {
- 		.name   = "cdns-dsi",
- 		.of_match_table = cdns_dsi_of_match,
--		.pm = &cdns_dsi_pm_ops,
-+		.pm = pm_ptr(&cdns_dsi_pm_ops),
- 	},
++
+ struct tcm_usbg_nexus {
+ 	struct se_session *tvn_se_sess;
  };
- module_platform_driver(cdns_dsi_platform_driver);
+@@ -117,6 +124,12 @@ struct f_uas {
+ #define USBG_IS_BOT		(1 << 3)
+ #define USBG_BOT_CMD_PEND	(1 << 4)
+ 
++	struct work_struct	delayed_set_alt;
++	spinlock_t		delayed_set_alt_lock; /* protects delayed_set_alt_* */
++	unsigned int		delayed_alt;
++	unsigned int		delayed_set_alt_state;
++	bool			delayed_set_alt_cancel;
++
+ 	struct usbg_cdb		cmd;
+ 	struct usb_ep		*ep_in;
+ 	struct usb_ep		*ep_out;
 
 
