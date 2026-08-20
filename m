@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3825938236C;
-	Thu, 20 Aug 2026 15:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F06337F31A;
+	Thu, 20 Aug 2026 15:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239546; cv=none; b=rsU8xmeG+tf2h8MryGEcicTFxxx3YkS6ou61LkGOv07enFl1R+rgrOHhR3jYh3PoN/MCJNkl2Z0L8IvvDEsQjxle1KWLEn6ABL4fxkemNLs1n7CSvz20NoWmoXUeic130D801dlBB+a5dD6tpWNgZE/S82Gy2MkvHI34A52eQW8=
+	t=1787239549; cv=none; b=nSg9QBMOnwxRr4syw2ZmRdHSvkFs4PGH+/bTV699vTBsUjXRcvocxJj3zpYa9MjYyWk4kjqDhec7yEMElU2ubSeNIcxPCwhR4gNIVSYNL1peXVDT47Q+7t7EdEVSaKP0NE2NNKmzJBJoukoq4Zu3XF/3fhcFq667XvliiZsy69s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239546; c=relaxed/simple;
-	bh=hT5U+aCGggU+SnwPKaNCmCSXIx3C1Kc//ccR9NxPmFQ=;
+	s=arc-20240116; t=1787239549; c=relaxed/simple;
+	bh=nKW8Z3h41/QyxX2AnLQBK3HWt5bsQEpL68pVv66o6h4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CjeryDZwG0VF3lwRBQp7vWoZpQhAqjNqYXfWQ6fwaarpr1q3MJWN6OkYN+s+8OPGstEiitMhVIoWewUP/ecCi4mwXGaYTXJ1sr/dxZ3HQdMMeAsSZfYHFzwCU6vuHQBDFvjt/9nKvARqR+bmOdsaRA3ZrbSTZnDrW7g7mVY5MCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jp3fxuWY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DU7L6fq9tjfjnlG8d1H2aLCHsZVcSTgbcDp48yTweLmlNoWrcPHzahJhChv3q5lfhLfDQyoiCh1mpCPfguzg3ZqtsyMoaaz8O2jrFxMnPrO4iOzqM5tGmpQCvzIX9DBKUZLPVtuJNnFSPgLUbnj6QOLCwIYaOT8RSu+UiqvJiJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sXU1/kfZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jp3fxuWY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A8B1F000E9;
-	Thu, 20 Aug 2026 15:25:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sXU1/kfZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A1C1F000E9;
+	Thu, 20 Aug 2026 15:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239545;
-	bh=soOWY5c28ON6gJTo6DUtT6s0OfY13wtkAoDdkRTCOpg=;
+	s=korg; t=1787239547;
+	bh=mnXP5e0H8IVi+8smDaW38J+a/rHPrXoCmgu10kyuQAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jp3fxuWY7Q839vyOLhp2dogodwlzNQ3RFpcouPq/JXqhxHJifDLfuhwynXZ6VvrxH
-	 xDdtQwCebkZYXHpGkzDCnIIPRcgJYG0qkAPSj/5Ec9xU0uKuwl+vQ8vH5qo/XYPHik
-	 vIZZaP7Tb52pDYjVzgYpLDSJsFwYOZvB+83838vM=
+	b=sXU1/kfZNULSUEGZ0jZv94L5UsufNXVmu6ea9KVdMdmtHZ19SxwmTdh3NqRBrvqEQ
+	 A1e7KGSve7ed+nACKbPLlso/5E18zaP3q//oO4ipcEPfJDlpdw9Q6Nv6ge7hFXw+5D
+	 SCjJNQ3lqMVPJAlLfQOcP0xOqE6QpLE7ivIVoUpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 059/220] Input: sur40 - fix V4L error path cleanup
-Date: Thu, 20 Aug 2026 16:54:09 +0200
-Message-ID: <20260820145225.267524191@linuxfoundation.org>
+	David Rosca <david.rosca@amd.com>,
+	Leo Liu <leo.liu@amd.com>,
+	Ruijing Dong <ruijing.dong@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 086/220] drm/amdgpu: Reject UVD message with dimensions above 4096
+Date: Thu, 20 Aug 2026 16:54:36 +0200
+Message-ID: <20260820145226.066595203@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -50,48 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: David Rosca <david.rosca@amd.com>
 
-commit 062dc4693e2c10d77de06f61e6f3faf37c0a8383 upstream.
+commit 8c9aebcdd9f46f7a14b98d6ab18574b7a48fbb08 upstream.
 
-In sur40_probe(), if video_register_device() fails, the error path jumps to
-err_unreg_video. This incorrectly attempts to unregister a video device
-that was never successfully registered, and fails to free the V4L2 control
-handler (v4l2_ctrl_handler_free) that was initialized immediately prior.
+Fixes potential overflow in DPB size calculations.
 
-Fix this by introducing an err_free_ctrl label to properly free the V4L2
-control handler and bypass video_unregister_device() when video device
-registration fails.
-
-Reported-by: sashiko-bot@kernel.org
+Signed-off-by: David Rosca <david.rosca@amd.com>
+Acked-by: Leo Liu <leo.liu@amd.com>
+Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 05e1387d151f71569fbe122d2c89f9db0c21dc10)
 Cc: stable@vger.kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Link: https://patch.msgid.link/20260616051235.1549517-2-dmitry.torokhov@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/sur40.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/input/touchscreen/sur40.c
-+++ b/drivers/input/touchscreen/sur40.c
-@@ -787,7 +787,7 @@ static int sur40_probe(struct usb_interf
- 	if (error) {
- 		dev_err(&interface->dev,
- 			"Unable to register video subdevice.");
--		goto err_unreg_video;
-+		goto err_free_ctrl;
- 	}
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
+@@ -654,8 +654,8 @@ static int amdgpu_uvd_cs_msg_decode(stru
+ 	unsigned int image_size, tmp, min_dpb_size, num_dpb_buffer;
+ 	unsigned int min_ctx_size = ~0;
  
- 	/* register the polled input device */
-@@ -806,6 +806,8 @@ static int sur40_probe(struct usb_interf
- 
- err_unreg_video:
- 	video_unregister_device(&sur40->vdev);
-+err_free_ctrl:
-+	v4l2_ctrl_handler_free(&sur40->hdl);
- err_unreg_v4l2:
- 	v4l2_device_unregister(&sur40->v4l2);
- err_free_buffer:
+-	/* Reject invalid dimensions to prevent division by zero */
+-	if (width < 16 || height < 16) {
++	/* Reject invalid dimensions */
++	if (width < 16 || height < 16 || width > 4096 || height > 4096) {
+ 		dev_WARN_ONCE(adev->dev, 1,
+ 			      "Invalid UVD decoding dimensions (%dx%d)!\n",
+ 			      width, height);
 
 
