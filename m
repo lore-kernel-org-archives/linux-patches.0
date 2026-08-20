@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7DB8188CC9;
-	Thu, 20 Aug 2026 17:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA9447CA8F;
+	Thu, 20 Aug 2026 17:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247078; cv=none; b=PfV3QAapfRS/f2RlulzqMSr3vyCqsoITfVrZlm3FVydMnPcnpHejaZhgbP2vXs96JxPpoe+OlPbsNLwnfOiZuniI8c34yUEgfnKQPtLOZuUSoC6R0LnleL7y26tvKkmJEGI3UvdvqiGUHlIiJwN1v4r9SvBV1Nk/QTI8Ug91X6o=
+	t=1787247081; cv=none; b=VUPITpbHRfA646JC9JQcDkYwWwJ3LHtK/ipiTVOVY8h+UneiSbkY/a8HOG3BeANPqzcT+tH7wASAWviLH+Zc30r/O3fGwiIHkeLxm/auGq2TBJqfiowo5Qaxscfze5t+l6dz/oUc1FqU2qE2OhqaoA/LiR0NIzQDcjaoPdhxypI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247078; c=relaxed/simple;
-	bh=fzaVtxfwOJDdI6Zeh2s005WKjhaeONN24M1F+JCS/fY=;
+	s=arc-20240116; t=1787247081; c=relaxed/simple;
+	bh=aETHf37sm40DSpi0ak4rSXPBWZqhlu9DdqT3qA3VSkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xbsb98EeuWwgynFAPjhrAXM3h+1y37Vcaz0wRkF2ajxewtE55ngCzlcwA9vqQWA4Y27PrGRO0JBivhsJZkr8qG8SEQayLeTRKzVfg4blwe1/OlE9uh8VjXUu3zDgoK5kYGjQK7BNRztIyVqNseE6NwGmMoCm3fQPEokiDCyE/hQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0iNs8fUf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F3H0jxuL7yssNpBJPz+UGXrBmSJmZCVErwo8kuDPdohcNwGnIHMpYP15rDcPE8PH+2H3+/X57/1HKIEdaQ+vdsXMfZsqTvq8NwR30KqaqsbPhY76hhn9iyjfYwu2cAyH6qDqdC0RIxMM2rXT3rSs0Ny8tauxwQjQ0NV9qsMFzH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXY+JiC9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0iNs8fUf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 124EC1F00A3A;
-	Thu, 20 Aug 2026 17:31:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXY+JiC9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2651F00A3A;
+	Thu, 20 Aug 2026 17:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247077;
-	bh=zpmQfMlxspXClQDuImlhWZgXxv4iFez2nUCv+oVHfhg=;
+	s=korg; t=1787247080;
+	bh=C2PxsT+252djwvUbCR4jBSaPkMbFmjwsUbv1yOEnCdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0iNs8fUfQCRNFwaW/X5gjmET2DzelYu2/0c5q9OeEB3RDJk3UhKzQYTJHLKVPvZdV
-	 vg7a14xqhuzIluCMFrwd/dN0PMdqAiwa746j3bQ7TBoV2dNxuP1a/4St7BEmHBKp8e
-	 LQaw9Zknium5+0wsyrUIpKlPAO8/wv7KUUm8HKFQ=
+	b=CXY+JiC9IAv+fAAoARyn4SNP0X8DD6ti2NSAN98rQOCdglkvNX4aEzfvRIfIEbY5K
+	 Wmv9gRlJN8rjurdFkoh+gsP1DnOixEHntbj1WUfm9+dsmV4dAu84CZlYHlRl0LfaQZ
+	 e1SlLGvo7uepQ70Suw7Nn1eBgYbCBUeS12HbUxPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ij@kernel.org>,
-	Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 139/220] tcp: fast path functions later
-Date: Thu, 20 Aug 2026 16:55:29 +0200
-Message-ID: <20260820145227.647544989@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.12 103/220] xfs: fix allocated inodes that show up in the unlinked list
+Date: Thu, 20 Aug 2026 16:54:53 +0200
+Message-ID: <20260820145226.576534874@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -47,104 +45,140 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ij@kernel.org>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 61b2f7baa9779b12a7bf1b9800a3f2a2549a1315 ]
+commit 68ab37650ce5195b4f4f8466444a36a78207840c upstream.
 
-The following patch will use tcp_ecn_mode_accecn(),
-TCP_ACCECN_CEP_INIT_OFFSET, TCP_ACCECN_CEP_ACE_MASK in
-__tcp_fast_path_on() to make new flag for AccECN.
+If an allocated inode shows up in the unlinked list, we need to get it
+completely off the list.  Set the corrected next/prev pointers such that
+the inode will not look like it should be on an unlinked list at all.
 
-No functional changes.
-
-Signed-off-by: Ilpo Järvinen <ij@kernel.org>
-Signed-off-by: Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250911110642.87529-3-chia-yu.chang@nokia-bell-labs.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: a28c4fcbf774 ("tcp: challenge ACK for non-exact RST in SYN-RECEIVED")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # v6.10
+Fixes: ab97f4b1c03075 ("xfs: repair AGI unlinked inode bucket lists")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/tcp.h |   54 +++++++++++++++++++++++++++---------------------------
- 1 file changed, 27 insertions(+), 27 deletions(-)
+ fs/xfs/scrub/agheader_repair.c |   63 ++++++++++++++++++++++++++++++++++++-----
+ fs/xfs/scrub/trace.h           |    1 
+ 2 files changed, 57 insertions(+), 7 deletions(-)
 
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -768,33 +768,6 @@ static inline u32 __tcp_set_rto(const st
- 	return usecs_to_jiffies((tp->srtt_us >> 3) + tp->rttvar_us);
+--- a/fs/xfs/scrub/agheader_repair.c
++++ b/fs/xfs/scrub/agheader_repair.c
+@@ -980,6 +980,13 @@ err:
  }
  
--static inline void __tcp_fast_path_on(struct tcp_sock *tp, u32 snd_wnd)
--{
--	/* mptcp hooks are only on the slow path */
--	if (sk_is_mptcp((struct sock *)tp))
--		return;
--
--	tp->pred_flags = htonl((tp->tcp_header_len << 26) |
--			       ntohl(TCP_FLAG_ACK) |
--			       snd_wnd);
--}
--
--static inline void tcp_fast_path_on(struct tcp_sock *tp)
--{
--	__tcp_fast_path_on(tp, tp->snd_wnd >> tp->rx_opt.snd_wscale);
--}
--
--static inline void tcp_fast_path_check(struct sock *sk)
--{
--	struct tcp_sock *tp = tcp_sk(sk);
--
--	if (RB_EMPTY_ROOT(&tp->out_of_order_queue) &&
--	    tp->rcv_wnd &&
--	    atomic_read(&sk->sk_rmem_alloc) < sk->sk_rcvbuf &&
--	    !tp->urg_data)
--		tcp_fast_path_on(tp);
--}
--
- u32 tcp_delack_max(const struct sock *sk);
+ /*
++ * Magic value that means "not unlinked" because xfarrays don't support storing
++ * totally zeroed elements.  There can't be a cluster that starts in daddr 0 so
++ * there can't be an inode #1 either.
++ */
++#define LINKED_AGINO	(0x1)
++
++/*
+  * Record a forwards unlinked chain pointer from agino -> next_agino in our
+  * staging information.
+  */
+@@ -1359,6 +1366,35 @@ xrep_iunlink_resolve_bucket(
+ 			break;
+ 		}
  
- /* Compute the actual rto_min value */
-@@ -1743,6 +1716,33 @@ static inline bool tcp_paws_reject(const
- 	return true;
++		if (VFS_I(ip)->i_nlink != 0) {
++			/*
++			 * Inode is linked somewhere!  Blow out both unlinked
++			 * list pointers, advance the list, and pretend we
++			 * didn't see this inode.  Clear it from iunlink_bmp
++			 * because it's linked.
++			 */
++			trace_xrep_iunlink_resolve_allocated(sc->sa.pag,
++					bucket, prev_agino, next_agino);
++
++			error = xrep_iunlink_store_next(ragi, next_agino,
++					NULLAGINO);
++			if (error)
++				return error;
++
++			error = xrep_iunlink_store_prev(ragi, next_agino,
++					LINKED_AGINO);
++			if (error)
++				return error;
++
++			error = xagino_bitmap_clear(&ragi->iunlink_bmp,
++					next_agino, 1);
++			if (error)
++				return error;
++
++			next_agino = ip->i_next_unlinked;
++			continue;
++		}
++
+ 		if (next_agino % XFS_AGI_UNLINKED_BUCKETS != bucket) {
+ 			/*
+ 			 * Inode is in the wrong bucket.  Advance the list,
+@@ -1541,6 +1577,24 @@ xrep_iunlink_rebuild_buckets(
+ 			xrep_iunlink_add_lost_inodes, ragi);
  }
  
-+static inline void __tcp_fast_path_on(struct tcp_sock *tp, u32 snd_wnd)
++static inline void
++set_inode_prev_unlinked(
++	struct xfs_inode	*ip,
++	xfs_agino_t		prev_agino)
 +{
-+	/* mptcp hooks are only on the slow path */
-+	if (sk_is_mptcp((struct sock *)tp))
-+		return;
++	/*
++	 * Magic value that means "not unlinked" because xfarrays don't support
++	 * storing totally zeroed elements.
++	 */
++	if (prev_agino == LINKED_AGINO)
++		prev_agino = 0;
 +
-+	tp->pred_flags = htonl((tp->tcp_header_len << 26) |
-+			       ntohl(TCP_FLAG_ACK) |
-+			       snd_wnd);
++	if (ip->i_prev_unlinked != prev_agino) {
++		trace_xrep_iunlink_relink_prev(ip, prev_agino);
++		ip->i_prev_unlinked = prev_agino;
++	}
 +}
 +
-+static inline void tcp_fast_path_on(struct tcp_sock *tp)
-+{
-+	__tcp_fast_path_on(tp, tp->snd_wnd >> tp->rx_opt.snd_wscale);
-+}
-+
-+static inline void tcp_fast_path_check(struct sock *sk)
-+{
-+	struct tcp_sock *tp = tcp_sk(sk);
-+
-+	if (RB_EMPTY_ROOT(&tp->out_of_order_queue) &&
-+	    tp->rcv_wnd &&
-+	    atomic_read(&sk->sk_rmem_alloc) < sk->sk_rcvbuf &&
-+	    !tp->urg_data)
-+		tcp_fast_path_on(tp);
-+}
-+
- bool tcp_oow_rate_limited(struct net *net, const struct sk_buff *skb,
- 			  int mib_idx, u32 *last_oow_ack_time);
+ /* Update i_next_iunlinked for the inode @agino. */
+ STATIC int
+ xrep_iunlink_relink_next(
+@@ -1576,8 +1630,7 @@ xrep_iunlink_relink_next(
+ 		if (error)
+ 			goto out_rele;
  
+-		trace_xrep_iunlink_relink_prev(ip, prev_agino);
+-		ip->i_prev_unlinked = prev_agino;
++		set_inode_prev_unlinked(ip, prev_agino);
+ 	}
+ 
+ 	/* Update the forward pointer. */
+@@ -1646,11 +1699,7 @@ xrep_iunlink_relink_prev(
+ 		ip->i_next_unlinked = next_agino;
+ 	}
+ 
+-	/* Update the backward pointer. */
+-	if (ip->i_prev_unlinked != prev_agino) {
+-		trace_xrep_iunlink_relink_prev(ip, prev_agino);
+-		ip->i_prev_unlinked = prev_agino;
+-	}
++	set_inode_prev_unlinked(ip, prev_agino);
+ 
+ out_rele:
+ 	/*
+--- a/fs/xfs/scrub/trace.h
++++ b/fs/xfs/scrub/trace.h
+@@ -3460,6 +3460,7 @@ DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep
+ DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_wronglist);
+ DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_nolist);
+ DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_ok);
++DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_allocated);
+ 
+ TRACE_EVENT(xrep_iunlink_relink_next,
+ 	TP_PROTO(struct xfs_inode *ip, xfs_agino_t next_agino),
 
 
