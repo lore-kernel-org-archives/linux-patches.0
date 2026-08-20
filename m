@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A71272E53;
-	Thu, 20 Aug 2026 16:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFE946D0BD;
+	Thu, 20 Aug 2026 16:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243836; cv=none; b=gFeuK5hgYvvTDzY2gS2j9mdZPOylNhjTnczAUL4xkKQVWjWaPZZueqz4GLqmT7YLEz/4b2jYzag/sd8D5f1J9LfBc38b1KNR3KOLMdx9wJJaypxZBzKFBaylmim8rJFMIpeHedHCgMZm+oKxPi9tg60wNLojt31/dx8jg5I9jRg=
+	t=1787243838; cv=none; b=BCMA+I064dLXa3ipnPY0TFvSRf+XikoSJ6rUMjY7Mp4qKgQPsq4sCJ/KrLc0ZBrDwZpOkQhBHAmu7dlLo69tgu8MjWN/oiWOZDhe5nUBwg96J99gf3Zm7Gc57dmbo/f0H03DxyCzTner/bqt/SKtieoxTmL1RGb9Ka4RTugFNc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243836; c=relaxed/simple;
-	bh=Pcz7009PncCdAKXyMevNHSAUuDU6rs7uQM2VIQ/mj/U=;
+	s=arc-20240116; t=1787243838; c=relaxed/simple;
+	bh=NsI0JW7cYBL3GzJe+lL6Ho8qChL9AZtq3eDTCY/zDPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JG31Aw/aJouVMSzsHdzeLbBLTevvAgkoRyGya5RgXilXX08bYt+hBqMLKDMM6IRypigKx8httCNzFdnLWdoArcI8iyuFgkddyDkLpKs6VpwTiReUw2rKxWFR1wkoEhAZPu+AzvEePXz42P69C0QVehJZBCA3i1hMAo7q1Y0rV18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7RO7oiL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SOe5s/IqiE8GsSgrTTb036Jdc1+h4B8iDjONeaKGwxWKqQNCq8UssxAEXBVVWiOTs4yera/IJLFZow+IbzF3gImDakuId/XFpdPxbYkND0khQ64nFx1TGAQj+1b8SXNOBF4WLpvy/3+5zgQn5VOa51ax/vTJXuEY28p0eGtj4PU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f368KCmu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7RO7oiL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DFC01F000E9;
-	Thu, 20 Aug 2026 16:37:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f368KCmu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2881C1F000E9;
+	Thu, 20 Aug 2026 16:37:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243834;
-	bh=GPuMecKMeNpbt7dNNaLwYrXKoyRXjDkJ78MRL25w564=;
+	s=korg; t=1787243837;
+	bh=Y8toczLjzcta9sXY+WIOTwm4PNcg1zliac/E2P/dehI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F7RO7oiLYCF8bNcVRq71rbS7OvzvnnVWz+TeUDIr1Bm3UeYRN8KGAQWa5qxHIcqVV
-	 /xpJaBAmD0ktGJcc6QdWEvXOBUMu9NIbgjK3JCKdfLMWqAtNolFLFCR+TlsQnzR/4I
-	 d47IzkMwbRHBDsfN2UeyHmqEqp1J0h0HI3Nbpfmc=
+	b=f368KCmu38cU2pVqAd84T1edpqUY8c6lZCa9FZBj6jdN99pgX5zWP0vqbFFJDjaB/
+	 cJs/QF6LvlJyqj3RG734MuLA22JxB8MD3PntgZqoNmTIVamrQI8zGv9dtwFGRQoezC
+	 K/vSzGWhI2UnPp2/CtzXiAZXzHekTLfjO+LW09Qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	Douglas Gilbert <dgilbert@interlog.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 231/272] scsi: sd: sd_zbc: Introduce struct zoned_disk_info
-Date: Thu, 20 Aug 2026 16:56:55 +0200
-Message-ID: <20260820145238.538720513@linuxfoundation.org>
+Subject: [PATCH 5.15 232/272] scsi: sd: sd_zbc: Return early in sd_zbc_check_zoned_characteristics()
+Date: Thu, 20 Aug 2026 16:56:56 +0200
+Message-ID: <20260820145238.568615340@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -54,216 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-[ Upstream commit 628617be8968e575ca0a0637fb227f8a990cb2f7 ]
+[ Upstream commit 60caf3758103b8edc90724ba781ff119f739162a ]
 
-Deriving the meaning of the nr_zones, rev_nr_zones, zone_blocks and
-rev_zone_blocks member variables requires careful analysis of the source
-code. Make the meaning of these member variables easier to understand by
-introducing struct zoned_disk_info.
+Return early in sd_zbc_check_zoned_characteristics() for host-aware
+disks. This patch does not change any functionality but makes a later patch
+easier to read.
 
-Link: https://lore.kernel.org/r/20220421183023.3462291-5-bvanassche@acm.org
-Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Link: https://lore.kernel.org/r/20220421183023.3462291-6-bvanassche@acm.org
 Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Acked-by: Douglas Gilbert <dgilbert@interlog.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+[ bvanassche: extracted this change from a larger patch ]
 Signed-off-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: 93dde0bf2f39 ("scsi: scsi_debug: Fix REPORT ZONES alloc_len underflow OOB write")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sd.h     |   22 ++++++++++++++++++----
- drivers/scsi/sd_zbc.c |   49 +++++++++++++++++++++++--------------------------
- 2 files changed, 41 insertions(+), 30 deletions(-)
+ drivers/scsi/sd_zbc.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/scsi/sd.h
-+++ b/drivers/scsi/sd.h
-@@ -67,6 +67,20 @@ enum {
- 	SD_ZERO_WS10_UNMAP,	/* Use WRITE SAME(10) with UNMAP */
- };
- 
-+/**
-+ * struct zoned_disk_info - Specific properties of a ZBC SCSI device.
-+ * @nr_zones: number of zones.
-+ * @zone_blocks: number of logical blocks per zone.
-+ *
-+ * This data structure holds the ZBC SCSI device properties that are retrieved
-+ * twice: a first time before the gendisk capacity is known and a second time
-+ * after the gendisk capacity is known.
-+ */
-+struct zoned_disk_info {
-+	u32		nr_zones;
-+	u32		zone_blocks;
-+};
-+
- struct scsi_disk {
- 	struct scsi_driver *driver;	/* always &sd_template */
- 	struct scsi_device *device;
-@@ -74,10 +88,10 @@ struct scsi_disk {
- 	struct gendisk	*disk;
- 	struct opal_dev *opal_dev;
- #ifdef CONFIG_BLK_DEV_ZONED
--	u32		nr_zones;
--	u32		rev_nr_zones;
--	u32		zone_blocks;
--	u32		rev_zone_blocks;
-+	/* Updated during revalidation before the gendisk capacity is known. */
-+	struct zoned_disk_info	early_zone_info;
-+	/* Updated during revalidation after the gendisk capacity is known. */
-+	struct zoned_disk_info	zone_info;
- 	u32		zones_optimal_open;
- 	u32		zones_optimal_nonseq;
- 	u32		zones_max_open;
 --- a/drivers/scsi/sd_zbc.c
 +++ b/drivers/scsi/sd_zbc.c
-@@ -181,7 +181,7 @@ static void *sd_zbc_alloc_report_buffer(
- 	 * sure that the allocated buffer can always be mapped by limiting the
- 	 * number of pages allocated to the HBA max segments limit.
- 	 */
--	nr_zones = min(nr_zones, sdkp->nr_zones);
-+	nr_zones = min(nr_zones, sdkp->zone_info.nr_zones);
- 	bufsize = roundup((nr_zones + 1) * 64, SECTOR_SIZE);
- 	bufsize = min_t(size_t, bufsize,
- 			queue_max_hw_sectors(q) << SECTOR_SHIFT);
-@@ -205,7 +205,7 @@ static void *sd_zbc_alloc_report_buffer(
-  */
- static inline sector_t sd_zbc_zone_sectors(struct scsi_disk *sdkp)
- {
--	return logical_to_sectors(sdkp->device, sdkp->zone_blocks);
-+	return logical_to_sectors(sdkp->device, sdkp->zone_info.zone_blocks);
- }
- 
- /**
-@@ -261,7 +261,7 @@ int sd_zbc_report_zones(struct gendisk *
- 			zone_idx++;
- 		}
- 
--		lba += sdkp->zone_blocks * i;
-+		lba += sdkp->zone_info.zone_blocks * i;
+@@ -593,14 +593,15 @@ static int sd_zbc_check_zoned_characteri
+ 		sdkp->zones_optimal_open = get_unaligned_be32(&buf[8]);
+ 		sdkp->zones_optimal_nonseq = get_unaligned_be32(&buf[12]);
+ 		sdkp->zones_max_open = 0;
+-	} else {
+-		/* Host-managed */
+-		sdkp->urswrz = buf[4] & 1;
+-		sdkp->zones_optimal_open = 0;
+-		sdkp->zones_optimal_nonseq = 0;
+-		sdkp->zones_max_open = get_unaligned_be32(&buf[16]);
++		return 0;
  	}
  
- 	ret = zone_idx;
-@@ -319,14 +319,14 @@ static void sd_zbc_update_wp_offset_work
- 	sdkp = container_of(work, struct scsi_disk, zone_wp_offset_work);
- 
- 	spin_lock_irqsave(&sdkp->zones_wp_offset_lock, flags);
--	for (zno = 0; zno < sdkp->nr_zones; zno++) {
-+	for (zno = 0; zno < sdkp->zone_info.nr_zones; zno++) {
- 		if (sdkp->zones_wp_offset[zno] != SD_ZBC_UPDATING_WP_OFST)
- 			continue;
- 
- 		spin_unlock_irqrestore(&sdkp->zones_wp_offset_lock, flags);
- 		ret = sd_zbc_do_report_zones(sdkp, sdkp->zone_wp_update_buf,
- 					     SD_BUF_SIZE,
--					     zno * sdkp->zone_blocks, true);
-+					     zno * sdkp->zone_info.zone_blocks, true);
- 		spin_lock_irqsave(&sdkp->zones_wp_offset_lock, flags);
- 		if (!ret)
- 			sd_zbc_parse_report(sdkp, sdkp->zone_wp_update_buf + 64,
-@@ -393,7 +393,7 @@ blk_status_t sd_zbc_prepare_zone_append(
- 		break;
- 	default:
- 		wp_offset = sectors_to_logical(sdkp->device, wp_offset);
--		if (wp_offset + nr_blocks > sdkp->zone_blocks) {
-+		if (wp_offset + nr_blocks > sdkp->zone_info.zone_blocks) {
- 			ret = BLK_STS_IOERR;
- 			break;
- 		}
-@@ -524,7 +524,7 @@ static unsigned int sd_zbc_zone_wp_updat
- 		break;
- 	case REQ_OP_ZONE_RESET_ALL:
- 		memset(sdkp->zones_wp_offset, 0,
--		       sdkp->nr_zones * sizeof(unsigned int));
-+		       sdkp->zone_info.nr_zones * sizeof(unsigned int));
- 		break;
- 	default:
- 		break;
-@@ -674,16 +674,16 @@ static void sd_zbc_print_zones(struct sc
- 	if (!sd_is_zoned(sdkp) || !sdkp->capacity)
- 		return;
- 
--	if (sdkp->capacity & (sdkp->zone_blocks - 1))
-+	if (sdkp->capacity & (sdkp->zone_info.zone_blocks - 1))
- 		sd_printk(KERN_NOTICE, sdkp,
- 			  "%u zones of %u logical blocks + 1 runt zone\n",
--			  sdkp->nr_zones - 1,
--			  sdkp->zone_blocks);
-+			  sdkp->zone_info.nr_zones - 1,
-+			  sdkp->zone_info.zone_blocks);
- 	else
- 		sd_printk(KERN_NOTICE, sdkp,
- 			  "%u zones of %u logical blocks\n",
--			  sdkp->nr_zones,
--			  sdkp->zone_blocks);
-+			  sdkp->zone_info.nr_zones,
-+			  sdkp->zone_info.zone_blocks);
- }
- 
- static int sd_zbc_init_disk(struct scsi_disk *sdkp)
-@@ -710,10 +710,8 @@ static void sd_zbc_clear_zone_info(struc
- 	kfree(sdkp->zone_wp_update_buf);
- 	sdkp->zone_wp_update_buf = NULL;
- 
--	sdkp->nr_zones = 0;
--	sdkp->rev_nr_zones = 0;
--	sdkp->zone_blocks = 0;
--	sdkp->rev_zone_blocks = 0;
-+	sdkp->early_zone_info = (struct zoned_disk_info){ };
-+	sdkp->zone_info = (struct zoned_disk_info){ };
- 
- 	mutex_unlock(&sdkp->rev_mutex);
- }
-@@ -740,8 +738,8 @@ int sd_zbc_revalidate_zones(struct scsi_
- {
- 	struct gendisk *disk = sdkp->disk;
- 	struct request_queue *q = disk->queue;
--	u32 zone_blocks = sdkp->rev_zone_blocks;
--	unsigned int nr_zones = sdkp->rev_nr_zones;
-+	u32 zone_blocks = sdkp->early_zone_info.zone_blocks;
-+	unsigned int nr_zones = sdkp->early_zone_info.nr_zones;
- 	u32 max_append;
- 	int ret = 0;
- 	unsigned int flags;
-@@ -772,14 +770,14 @@ int sd_zbc_revalidate_zones(struct scsi_
- 	 */
- 	mutex_lock(&sdkp->rev_mutex);
- 
--	if (sdkp->zone_blocks == zone_blocks &&
--	    sdkp->nr_zones == nr_zones &&
-+	if (sdkp->zone_info.zone_blocks == zone_blocks &&
-+	    sdkp->zone_info.nr_zones == nr_zones &&
- 	    disk->queue->nr_zones == nr_zones)
- 		goto unlock;
- 
- 	flags = memalloc_noio_save();
--	sdkp->zone_blocks = zone_blocks;
--	sdkp->nr_zones = nr_zones;
-+	sdkp->zone_info.zone_blocks = zone_blocks;
-+	sdkp->zone_info.nr_zones = nr_zones;
- 	sdkp->rev_wp_offset = kvcalloc(nr_zones, sizeof(u32), GFP_KERNEL);
- 	if (!sdkp->rev_wp_offset) {
- 		ret = -ENOMEM;
-@@ -794,8 +792,7 @@ int sd_zbc_revalidate_zones(struct scsi_
- 	sdkp->rev_wp_offset = NULL;
- 
- 	if (ret) {
--		sdkp->zone_blocks = 0;
--		sdkp->nr_zones = 0;
-+		sdkp->zone_info = (struct zoned_disk_info){ };
- 		sdkp->capacity = 0;
- 		goto unlock;
- 	}
-@@ -881,8 +878,8 @@ int sd_zbc_read_zones(struct scsi_disk *
- 	if (blk_queue_zoned_model(q) == BLK_ZONED_HM)
- 		blk_queue_zone_write_granularity(q, sdkp->physical_block_size);
- 
--	sdkp->rev_nr_zones = nr_zones;
--	sdkp->rev_zone_blocks = zone_blocks;
-+	sdkp->early_zone_info.nr_zones = nr_zones;
-+	sdkp->early_zone_info.zone_blocks = zone_blocks;
- 
- 	return 0;
- 
++	/* Host-managed */
++	sdkp->urswrz = buf[4] & 1;
++	sdkp->zones_optimal_open = 0;
++	sdkp->zones_optimal_nonseq = 0;
++	sdkp->zones_max_open = get_unaligned_be32(&buf[16]);
++
+ 	/*
+ 	 * Check for unconstrained reads: host-managed devices with
+ 	 * constrained reads (drives failing read after write pointer)
 
 
