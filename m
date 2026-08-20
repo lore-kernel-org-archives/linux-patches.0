@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B519F47DD48;
-	Thu, 20 Aug 2026 16:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A29437A858;
+	Thu, 20 Aug 2026 16:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244439; cv=none; b=uTlNYiNGAj2SqsZdTLqo2vgC/M+WDq4TfImrt9JfwO/vWLwDNXO3uZOwBKAq8mM+eKrF2ysKDxsRB3a9v/rNa73wmIRHAdhlNPq+JzW3oRDFkMSIxgKzwit8u+E4itfOHAqdiJ/u4rHYDrkYN0E7GWNAZctCQazJVEcAIc4pRuU=
+	t=1787244442; cv=none; b=oHNxeczAEiqYTsIeVqEK01CWEtJEkGE5G5qUWmjJYkooRp0hoidYk4ce/mYwKPygnnkr53Eaj/x+BddgMJkoXug1dv46E3MKzF0KTZFGC+tinwXhatTYnqJHKfZMENi0UiTwzg59mj7WEYbsERLZtBZxFdLWnzChSJY//lMmRLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244439; c=relaxed/simple;
-	bh=RMwjlhR+ASC8hrxdWXFYtwmQwXBKN7vf8wi878JvbpY=;
+	s=arc-20240116; t=1787244442; c=relaxed/simple;
+	bh=u7CMZyKlOED3g2+pDP9A9jEUIYMzbNQnf8Pw7tFyX7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i7SHeXyG49dZIhUbgCxPqtrNeK4eqRqTgk1N4gxrNQvw1zUuea9Cb0VcInoOnB34RSxEJHdIazXpsq707m3MEkqe/SBQ2UPg/A8RfseJl/FD7h0OtcmV2BGJKWnOemZhAVEuYR9f13u4NIR1LIiAdR2nv3KPdcUjbv51DRx4VMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WjBJEcVs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SjRCQ3Kr3hOTBzxid8lNUdda5CDvMxw9naHRtarYxLgR1pJ7jH2OnDmyYgOcOLEUwDZT1l/Xon7vP02cUWU/f30PX6SW4EYTl+BBb6pQIsuH0puvvBUYX0jYqWsgmk8+nlKmD2qVRz/zTrqoy0PbhBGhpGXCUJIGZNxqyWjdNts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yOGgctKk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WjBJEcVs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5F61F000E9;
-	Thu, 20 Aug 2026 16:47:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yOGgctKk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB5E81F000E9;
+	Thu, 20 Aug 2026 16:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244438;
-	bh=1MX54q2O3J6gIlvSnu12mCuJL3yZoYzRv8mSFs2HOH4=;
+	s=korg; t=1787244441;
+	bh=BMV2oiSW7Td96nmq+EkWLHikjC1wcTfkzJbuy8KYdOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WjBJEcVsuo8I8ss3SaAJw1wgH3H6ndVXVUcrm+jXQMF0wuxgBAEznhFm6Uu1DLAxw
-	 PhyWYXL/bg1vuc3ATBA4mhPxcFNSVjfLAMafoKoVZzdzRMc3NLrPOciYuAAOnQ1MqN
-	 /zClUf+APrz7HwoQDncVcjmWsAZ2pEbyPPQqdAuA=
+	b=yOGgctKkQIx8Ff723T5hF6+rm6NItwHue+61spUDv0QaKkilBAoxX/Yt919U33u1O
+	 zL4yjL+i4G6IgCDJXUvGZILdFLBB8z1bB5sF0KxkmUuTFuBi4P/vA9IPq1e0YUHXjr
+	 QwxbTSnatCDM0yx/A/CWNnQPrpGAAnbvTEb59L30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable <stable@kernel.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 168/235] serial: 8250_mid: Remove unneeded test for ->setup() presence
-Date: Thu, 20 Aug 2026 16:56:44 +0200
-Message-ID: <20260820145221.597454918@linuxfoundation.org>
+Subject: [PATCH 5.10 169/235] serial: 8250_mid: Fix NULL function pointer dereference on DNV/ICX-D/SNR platforms
+Date: Thu, 20 Aug 2026 16:56:45 +0200
+Message-ID: <20260820145221.627384481@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -50,39 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-[ Upstream commit 324facd1ccb353a213ea2c2785604f2507f79297 ]
+[ Upstream commit 7fb13fd7e9a59a37cd911efff83abe19e3ee029d ]
 
-All supported platforms by this driver require ->setup() and ->exit().
-Remove unneeded test for ->setup() presence.
+Commit b1b4efea05a5 ("serial: 8250_mid: Disable DMA for selected
+platforms") replaced the dnv_board setup and exit callbacks with
+PTR_IF(false, ...), which evaluates to NULL. However, the three call
+sites in mid8250_probe() and mid8250_remove() unconditionally
+dereference these function pointers without NULL checks, causing a NULL
+pointer dereference (kernel oops) on any Denverton (DNV), Ice Lake Xeon
+D (ICX-D/CDF), or Snowridge (SNR) platform.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20220215101111.47250-1-andriy.shevchenko@linux.intel.com
+Fix this by adding the missing NULL checks before calling the setup and
+exit callbacks.
+
+Fixes: b1b4efea05a5 ("serial: 8250_mid: Disable DMA for selected platforms")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Link: https://patch.msgid.link/20260715073546.1875083-1-yijiangshan@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 7fb13fd7e9a5 ("serial: 8250_mid: Fix NULL function pointer dereference on DNV/ICX-D/SNR platforms")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_mid.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/tty/serial/8250/8250_mid.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
 --- a/drivers/tty/serial/8250/8250_mid.c
 +++ b/drivers/tty/serial/8250/8250_mid.c
-@@ -319,11 +319,9 @@ static int mid8250_probe(struct pci_dev
+@@ -319,9 +319,11 @@ static int mid8250_probe(struct pci_dev
  	if (!uart.port.membase)
  		return -ENOMEM;
  
--	if (mid->board->setup) {
--		ret = mid->board->setup(mid, &uart.port);
--		if (ret)
--			return ret;
--	}
-+	ret = mid->board->setup(mid, &uart.port);
-+	if (ret)
-+		return ret;
+-	ret = mid->board->setup(mid, &uart.port);
+-	if (ret)
+-		return ret;
++	if (mid->board->setup) {
++		ret = mid->board->setup(mid, &uart.port);
++		if (ret)
++			return ret;
++	}
  
  	ret = mid8250_dma_setup(mid, &uart);
  	if (ret)
+@@ -337,7 +339,8 @@ static int mid8250_probe(struct pci_dev
+ 	return 0;
+ 
+ err:
+-	mid->board->exit(mid);
++	if (mid->board->exit)
++		mid->board->exit(mid);
+ 	return ret;
+ }
+ 
+@@ -347,7 +350,8 @@ static void mid8250_remove(struct pci_de
+ 
+ 	serial8250_unregister_port(mid->line);
+ 
+-	mid->board->exit(mid);
++	if (mid->board->exit)
++		mid->board->exit(mid);
+ }
+ 
+ static const struct mid8250_board pnw_board = {
 
 
