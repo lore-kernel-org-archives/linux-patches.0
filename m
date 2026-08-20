@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0463793CE;
-	Thu, 20 Aug 2026 16:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C3D46D544;
+	Thu, 20 Aug 2026 16:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244586; cv=none; b=KkyoXZgJkiSDcAw9//Xs/cGr7itwN7Eh5Po1CRiRruXqnMexAe6/6SlQCl4M9ObNuVqeSXHaMA7Fd7YEaoTybwA46nSzCaGLqI5VjEqB3GCPrnvOlYkFDf5ZkuHt04yM2Fpk8OmWMm0wYz3ttZCpin9tfdJ0mmBMPuYYkd6pK5I=
+	t=1787244589; cv=none; b=I7Nci2SKpLoulKQCmAyC8u1OuCwdw2yhHrj4eVTL63siw7jQkakRu1DnMSSHHgmJ92YO/NWv+Koxl2CQEhFCXRAy26nXiNsDlrR4myBgeejpl3cNtots2ExVvRkMEPEQKHOw4hyLL6t5F89lkDd0FPDi9NeHeyJYgegCflAD7d8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244586; c=relaxed/simple;
-	bh=9ArpY+E/crIZbC/QGXggdBufR7qEZIHR0TP8s4lHTBk=;
+	s=arc-20240116; t=1787244589; c=relaxed/simple;
+	bh=fep2Y8fEGxJ/CIoubZ8mn6gNCPbUBYdiqO2D3OsAtbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b+dnDRpTcXAGhZnuDs4YkeTjBpBnu+Dv6cixx97q6SPY3XU8ONyDaUioPB2IajWpT3WKUQdDf2j2G9IOqMQyG4yefm/h5bsswFOLC1nm2PRuDC6SMmjzC5taN1CKO6RKtPXxXmTaKm6jqFlkdZbgj6irVczHt6++1+y1At4+DNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fzy+hK0i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j9bXltjl8ShDg+DppSDA4N8YrajlgwrVMHpcoGWi2R/PirpcfmyB1mjOSEF3VPlEceIbOXTzln82BEz9znPgb0LrCMDJjKkgiqemnWpuXCRBxdy2ONSaaxmXLKGgT1iAcV4sUxiRe0jbS7yFwQ68bgTS3v++VwAQiX2s/IF/K+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s2zghNrL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fzy+hK0i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E74A71F00A3A;
-	Thu, 20 Aug 2026 16:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2zghNrL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C851F000E9;
+	Thu, 20 Aug 2026 16:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244585;
-	bh=WHKwAvKlyvYuxGeRBqwWimFKdaNSt8B8lUXQ7dGC0+I=;
+	s=korg; t=1787244588;
+	bh=vXx9i1IAgs+gWEpsORTLVaanaq9NXEu3VKrWWBQskIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fzy+hK0i+634FAlvkOaPksQEnyfbd/0x6tCuGOFzzoWSW66P2hjx0mN56T+a2mGbE
-	 K2iQcVI8UJn2xmXtuJYRgg/MtsVpKNbp3vhGqMSKc2h8+EEiQNyvZz7KmNui2rrqkv
-	 lIhUNF6ClpeRsy7R1dbzCBLJdOg4yDca59pqDMGI=
+	b=s2zghNrLdx6POZV5X2DinAvgDFEV+HWKNQUn/75BWLgtzTnzmaYpGHU/5msubmiaM
+	 F4jVxKmHlNJzzPKBrLfL7Uvd9qa6NXQsov1/JPqh4CEUYlVJIpcxXemsMZscnRT/ch
+	 rlCCBZEXANBfct9E6Urhbii7j2Q4xqt+s1HbzN58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Xiubo Li <xiubli@redhat.com>,
+	Patrick Donnelly <pdonnell@redhat.com>,
+	Milind Changire <mchangir@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 218/235] netfilter: ipset: fix refcount race between list:set GC and swap
-Date: Thu, 20 Aug 2026 16:57:34 +0200
-Message-ID: <20260820145223.227758493@linuxfoundation.org>
+Subject: [PATCH 5.10 183/235] libceph: add doutc and *_client debug macros support
+Date: Thu, 20 Aug 2026 16:56:59 +0200
+Message-ID: <20260820145222.077321908@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -53,92 +53,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Xiubo Li <xiubli@redhat.com>
 
-[ Upstream commit 0c88868271653537ed443272dd8e7d13634d214b ]
+[ Upstream commit 5c5f0d2b5f92c47baf82b9b211e27edd7d195158 ]
 
-__ip_set_put_byindex() resolved the index to a set pointer under RCU,
-then took ip_set_ref_lock in __ip_set_put() to decrement set->ref.
-ip_set_swap() holds that same lock while swapping both the ip_set_list
-slots and the two sets' ref counters, so it can interleave between the
-dereference and the lock acquisition, leaving the caller to decrement a
-set whose reference already moved to the other index and hit
-BUG_ON(set->ref == 0). list_set_gc() reaches this from timer softirq,
-which the nfnl mutex does not serialize against swap: an expiring
-list:set member calls list_set_del() -> ip_set_put_byindex() while
-IPSET_CMD_SWAP runs on the referenced sets.
+This will help print the fsid and client's global_id in debug logs,
+and also print the function names.
 
-Resolve the index and decrement under ip_set_ref_lock, as ip_set_swap()
-already does, keeping the refcount tied to the index rather than to a
-stale set pointer.
+[ idryomov: %lld -> %llu, leading space for doutc(), don't include
+  __func__ in pr_*() variants ]
 
-  kernel BUG at net/netfilter/ipset/ip_set_core.c:685!
-  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:ip_set_put_byindex (net/netfilter/ipset/ip_set_core.c:870)
-  Call Trace:
-   <IRQ>
-   list_set_del (net/netfilter/ipset/ip_set_list_set.c:159)
-   set_cleanup_entries (net/netfilter/ipset/ip_set_list_set.c:181)
-   list_set_gc (net/netfilter/ipset/ip_set_list_set.c:578)
-   call_timer_fn (kernel/time/timer.c:1748)
-   __run_timers (kernel/time/timer.c:1799 kernel/time/timer.c:2374)
-   run_timer_softirq (kernel/time/timer.c:2405)
-   </IRQ>
-  Kernel panic - not syncing: Fatal exception in interrupt
-
-Fixes: 9076aea76538 ("netfilter: ipset: Increase the number of maximal sets automatically")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://tracker.ceph.com/issues/61590
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Patrick Donnelly <pdonnell@redhat.com>
+Reviewed-by: Milind Changire <mchangir@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Stable-dep-of: 50958bb928ba ("ceph: fix hanging __ceph_get_caps() with stale mds_wanted")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipset/ip_set_core.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ include/linux/ceph/ceph_debug.h |   38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
-index 11e5536d8b263..dcf23460b6df9 100644
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -679,11 +679,18 @@ __ip_set_get(struct ip_set *set)
- }
+--- a/include/linux/ceph/ceph_debug.h
++++ b/include/linux/ceph/ceph_debug.h
+@@ -19,12 +19,25 @@
+ 	pr_debug("%.*s %12.12s:%-4d : " fmt,				\
+ 		 8 - (int)sizeof(KBUILD_MODNAME), "    ",		\
+ 		 kbasename(__FILE__), __LINE__, ##__VA_ARGS__)
++#  define doutc(client, fmt, ...)					\
++	pr_debug("%.*s %12.12s:%-4d : [%pU %llu] " fmt,			\
++		 8 - (int)sizeof(KBUILD_MODNAME), "    ",		\
++		 kbasename(__FILE__), __LINE__,				\
++		 &client->fsid, client->monc.auth->global_id,		\
++		 ##__VA_ARGS__)
+ # else
+ /* faux printk call just to see any compiler warnings. */
+ #  define dout(fmt, ...)	do {				\
+ 		if (0)						\
+ 			printk(KERN_DEBUG fmt, ##__VA_ARGS__);	\
+ 	} while (0)
++#  define doutc(client, fmt, ...)	do {			\
++		if (0)						\
++			printk(KERN_DEBUG "[%pU %llu] " fmt,	\
++			&client->fsid,				\
++			client->monc.auth->global_id,		\
++			##__VA_ARGS__);				\
++		} while (0)
+ # endif
  
- static void
--__ip_set_put(struct ip_set *set)
-+__ip_set_put_locked(struct ip_set *set)
- {
--	write_lock_bh(&ip_set_ref_lock);
-+	lockdep_assert_held(&ip_set_ref_lock);
- 	BUG_ON(set->ref == 0);
- 	set->ref--;
-+}
+ #else
+@@ -33,7 +46,32 @@
+  * or, just wrap pr_debug
+  */
+ # define dout(fmt, ...)	pr_debug(" " fmt, ##__VA_ARGS__)
++# define doutc(client, fmt, ...)					\
++	pr_debug(" [%pU %llu] %s: " fmt, &client->fsid,			\
++		 client->monc.auth->global_id, __func__, ##__VA_ARGS__)
+ 
+ #endif
+ 
++#define pr_notice_client(client, fmt, ...)				\
++	pr_notice("[%pU %llu]: " fmt, &client->fsid,			\
++		  client->monc.auth->global_id, ##__VA_ARGS__)
++#define pr_info_client(client, fmt, ...)				\
++	pr_info("[%pU %llu]: " fmt, &client->fsid,			\
++		client->monc.auth->global_id, ##__VA_ARGS__)
++#define pr_warn_client(client, fmt, ...)				\
++	pr_warn("[%pU %llu]: " fmt, &client->fsid,			\
++		client->monc.auth->global_id, ##__VA_ARGS__)
++#define pr_warn_once_client(client, fmt, ...)				\
++	pr_warn_once("[%pU %llu]: " fmt, &client->fsid,			\
++		     client->monc.auth->global_id, ##__VA_ARGS__)
++#define pr_err_client(client, fmt, ...)					\
++	pr_err("[%pU %llu]: " fmt, &client->fsid,			\
++	       client->monc.auth->global_id, ##__VA_ARGS__)
++#define pr_warn_ratelimited_client(client, fmt, ...)			\
++	pr_warn_ratelimited("[%pU %llu]: " fmt, &client->fsid,		\
++			    client->monc.auth->global_id, ##__VA_ARGS__)
++#define pr_err_ratelimited_client(client, fmt, ...)			\
++	pr_err_ratelimited("[%pU %llu]: " fmt, &client->fsid,		\
++			   client->monc.auth->global_id, ##__VA_ARGS__)
 +
-+static void
-+__ip_set_put(struct ip_set *set)
-+{
-+	write_lock_bh(&ip_set_ref_lock);
-+	__ip_set_put_locked(set);
- 	write_unlock_bh(&ip_set_ref_lock);
- }
- 
-@@ -856,11 +863,11 @@ __ip_set_put_byindex(struct ip_set_net *inst, ip_set_id_t index)
- {
- 	struct ip_set *set;
- 
--	rcu_read_lock();
--	set = rcu_dereference(inst->ip_set_list)[index];
-+	write_lock_bh(&ip_set_ref_lock);
-+	set = ip_set(inst, index);
- 	if (set)
--		__ip_set_put(set);
--	rcu_read_unlock();
-+		__ip_set_put_locked(set);
-+	write_unlock_bh(&ip_set_ref_lock);
- }
- 
- void
--- 
-2.53.0
-
+ #endif
 
 
