@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6AD47CA8F;
-	Thu, 20 Aug 2026 17:56:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D159D47CA8F;
+	Thu, 20 Aug 2026 17:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248604; cv=none; b=LJdymqO0rcY222264Oif4h0qTgTk/+EGQvZJjRaI6yUtD8NYaNt5sYDyCS6NaQ/YCFSowADKmQ2IvfcU0jLvR00ZxQNo4UKq3DqS5+vV0otalfa3CLAHqZwvhjhUrCQIKNpA5+78i75miitROmAZ1+EBiYOi4VIdrJ3ydjSnQ+g=
+	t=1787248606; cv=none; b=LdCRB3NZWHOkczTZkZBMWV4bNJEi8Wohts4h4K0VuRLPY2aI+OvUn6kCEMhE4oD6c99kS3afnj8HNKEDSPFKhrWE1/ZwesgdGcuZ/YB2d2lcboR0b+LeZgbD5IVg1pg6tWNzM7QD4y/eUAmEBxndtHV/zIlyp8nTkfGnczCWM+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248604; c=relaxed/simple;
-	bh=BF/f1Oxkzwyb0agIDea2QHIJV97TfM8HjeJy1LLPOaY=;
+	s=arc-20240116; t=1787248606; c=relaxed/simple;
+	bh=Ft4nH6MmHSQQ/C2psDzBghp2m4U5754sQLgb2msMXBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tpDBHXcTzanlwCMYMRQhq3+9vWRGHyyDc3J76D45mKO34e6Qw3T5HOprp2nT5yXNGnWBty9ZXbBVad4dTW+eC7OP/73qC+UrcOO08gwl480SErjagX5SHB7yFmIxVsx7OConR2Sap4G4iCKluW9vWUyIPOle376DWEPafHUdo6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUg3FA43; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jCaLXafn8mC86IVIcoyJT5Ycia17rYJIiW8ITIu5dHvhsNeLnAdvIdZjzm/ug8TzF37MXlChexmOq9WHZCeETDgkkGf+NAePDZtH+nAkQdIwbz9B5SA4E0aOLA+KaUSUCPJAblNqxYyTjcCJFH+eIpTZOOKjT11eDV5QAAA6BEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zktYpigJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUg3FA43"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D7531F000E9;
-	Thu, 20 Aug 2026 17:56:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zktYpigJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3708B1F000E9;
+	Thu, 20 Aug 2026 17:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248602;
-	bh=wnagGvKXwgXw+Ewzd1Zay4TKUWLlCIvgO9DtaHz6x5c=;
+	s=korg; t=1787248605;
+	bh=fgEaj9neuPvRuCrAYDNeokSTJzN3KD2c2GuuVqf5u/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SUg3FA434nOocozNqzfVfLY8sSVxs3pvIXA8bD4uQcchaP9GCu2k6TxuWuogPsUqd
-	 qLW2ZsInaWqs8PhhK6RT11UN6CBKvwJ7A8uy85xwDwkvw6U4JeMNPFcU4RfPkvIfnO
-	 HdErONmh+JGrLwPhkqkAobvMu3hJVsaAFWPw9voY=
+	b=zktYpigJNLIZpho13WshmU85UEpWBaZ5w+/d9HlpUAgJDGhfPjsGkbzJq8qZlLyGs
+	 u7hVUD0WEvt9d+CdOeBbH3s7oJbDeL8eY+Udw0Yb5RfEPcwNHjVdaKyi6/FsQmxzUx
+	 Mz1kYxgSMLiLLXjtC1eR0pPA7ucU+z31ts2c50Is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Chuck Lever <cel@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 286/303] net: packet: fix wrong transport_header when sending VLAN-tagged frame
-Date: Thu, 20 Aug 2026 16:57:02 +0200
-Message-ID: <20260820145302.063862292@linuxfoundation.org>
+Subject: [PATCH 6.1 287/303] net/tls: Fail tls_sw_splice_read() after a failed async decrypt
+Date: Thu, 20 Aug 2026 16:57:03 +0200
+Message-ID: <20260820145302.099297953@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -52,64 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit 01fdecc0480d916c799dbee584833a4a37e94d06 ]
+[ Upstream commit 976df67f463db1fddaf2a32fb04f57ad2891a23d ]
 
-In packet_parse_headers(), when processing a VLAN-tagged frame,
-skb_set_network_header() is called to advance network_header past the
-VLAN tag to the inner protocol header. skb_probe_transport_header() is
-then called with skb->protocol still set to the outer VLAN EtherType
-(e.g. ETH_P_8021Q), while nhoff (derived from skb_network_offset())
-already points past the VLAN tag to the inner protocol header.
+When an async decrypt fails, tls_decrypt_done() records the error in
+ctx->async_wait.err and calls tls_err_abort(), which stores it in
+sk_err. tls_sw_recvmsg() and tls_sw_read_sock() each read
+async_wait.err once they hold the reader lock and fail the call: a
+record that did not authenticate breaks the connection.
 
-In __skb_flow_dissect(), proto is initialized to ETH_P_8021Q and nhoff
-points past the VLAN tag. When the dissector hits case ETH_P_8021Q, it
-reads a struct vlan_hdr at nhoff via __skb_header_pointer(), but that
-offset contains the inner protocol header (e.g. an IP header). The bytes
-are misinterpreted as a VLAN header, yielding a garbage encapsulated
-EtherType that matches no known protocol. The dissector returns false,
-so skb_probe_transport_header() never calls skb_set_transport_header(),
-leaving transport_header at its uninitialized sentinel value (~0U).
+tls_sw_splice_read() has no such check, and sk_err does not stand in
+for one. tls_rx_rec_wait() tests sk_err only inside the loop it
+skips whenever a record is already parsed, and the first reader to
+reach sock_error() clears it, while async_wait.err persists. A
+splice therefore keeps delivering records on a connection that
+recvmsg() and read_sock() refuse to read.
 
-Move skb_probe_transport_header() to before skb_set_network_header(). At
-the time skb_probe_transport_header() is called, network_header still
-points to the VLAN header, so nhoff correctly points to the VLAN header.
-The flow dissector can then parse the VLAN header, extract the inner
-EtherType, and advance nhoff to the inner protocol header, allowing
-transport_header to be set correctly.
+Read async_wait.err in tls_sw_splice_read() as the other two readers
+do.
 
-Fixes: dfed913e8b55 ("net/af_packet: add VLAN support for AF_PACKET SOCK_RAW GSO")
-Assisted-by: WChat:claude-opus-4-8
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260807063405.688780-2-wei.fang@oss.nxp.com
+Fixes: f314bfee81b1 ("tls: rx: return the already-copied data on crypto error")
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chuck Lever <cel@kernel.org>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20260806-tls-splice-crypto-fix-v1-1-a2624005a286@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/tls/tls_sw.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 64843368bf10a..a0424dc2927a9 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -1985,13 +1985,13 @@ static void packet_parse_headers(struct sk_buff *skb, struct socket *sock)
- 	    sock->type == SOCK_RAW)
- 		skb->protocol = dev_parse_header_protocol(skb);
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 5eec7c10acc20..1b336522ca67d 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -2350,6 +2350,11 @@ ssize_t tls_sw_splice_read(struct socket *sock,  loff_t *ppos,
+ 	if (err < 0)
+ 		return err;
  
-+	skb_probe_transport_header(skb);
++	/* If crypto failed the connection is broken */
++	err = ctx->async_wait.err;
++	if (err)
++		goto splice_read_end;
 +
- 	/* Move network header to the right position for VLAN tagged packets */
- 	if (likely(skb->dev->type == ARPHRD_ETHER) &&
- 	    eth_type_vlan(skb->protocol) &&
- 	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
- 		skb_set_network_header(skb, depth);
--
--	skb_probe_transport_header(skb);
- }
- 
- /*
+ 	if (!skb_queue_empty(&ctx->rx_list)) {
+ 		skb = __skb_dequeue(&ctx->rx_list);
+ 	} else {
 -- 
 2.53.0
 
