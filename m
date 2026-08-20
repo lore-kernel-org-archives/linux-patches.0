@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711BB360745;
-	Thu, 20 Aug 2026 15:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444AE360745;
+	Thu, 20 Aug 2026 15:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238658; cv=none; b=rKsXkceSZ3LltodtJT7ejY6RTbnnZMbcw9uRD2XyP3f5pNBV5WSiZW/mwJ3Lva68zrVpbD/pKPCoe/Z/R8RJXR3w/YOmcCDU9FgPHOdtK6CpaRfNmDWpfY8/p1x+EtGaw81x0mEoGPcVev2Iw12Gwj+lwugR8R9PRaJRN3dxU9U=
+	t=1787238661; cv=none; b=hWAs1XNxBDxsWEJ6SpecyuXWRvHmeV87Oc1RkD7CN6sy+FYKoTj3LyXYitpkvUYPIPTJSYjcTi3+DGYPxfOCB6kudmwFqU7kT7scPCXjJaqhhtfoPz3DSNUSTIDpiqz8TO4FvZs0kCRaxiN0zY767VNzhbbfwo2HzRSrwsuf6wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238658; c=relaxed/simple;
-	bh=gHEsasjfTmv/zvt0PARbB5C2jsag2Mn5mdSYlmWTBbs=;
+	s=arc-20240116; t=1787238661; c=relaxed/simple;
+	bh=w1eiC/GPaSoBNs8XVeHTj5B3XBR2+PCsf/f0B3VYx1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KZ4XeoV4JMI0td4ZCtz134FOrAR2kYVqLpSAKKgTxPrR6s76RbM7Mze6EcNVqft5pV+rM8ViS+5Piz2v2y5B9nv2WbSIp5pmQZJLd9VLXqOJURvUg8qCyGwp7XU2s6X1XaWtrtAkBrXsHn++sOblwCt66bQkN+kfo9+Y92g6qUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+wVfvLc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=usFbx3NfNJJt9tDBH+P7wdS+06ZQOUiqx6WeZsr1/ZZREs9FN6NZx7/nHiT8ix20HijJKCJf5p00S25wQqMzeVGgDUF0U1LTh3QZ+xLpm6RAZAszcpJb9w2gNYDdY5c4ueZNqdCXiNxbOMWEh9BfDwSTtlounyX1SQnZpmj5m2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rit3hm9S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+wVfvLc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20AD1F000E9;
-	Thu, 20 Aug 2026 15:10:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rit3hm9S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9A11F000E9;
+	Thu, 20 Aug 2026 15:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238657;
-	bh=1dfTohAUXL4MzXLzbSAijEVcABNc7wt1ixYY8F+/H/E=;
+	s=korg; t=1787238660;
+	bh=AqCGBm/Kr59Bp92YtvYecYueCLX6GP19pD5qLXiuI1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x+wVfvLc8So67niQ0QmB2FKREeXxBquXTkoZWM9e7DlRQi2LPinuvqft8lXh9vRoF
-	 XF1RnMn5Qh28lqeR81tjTWwUm75TeTqNEw/Or2hYG9c75stCl/uXHAiTAIUYEJnGji
-	 jcVpKp+kZdhifJtbfUy7ajKxm+b3hDA/2bNxeoSQ=
+	b=Rit3hm9STrBze7ld04pSvF7ziLSWkWcEda4nkpnsLm3Mfmww9E9owUqcddK/m0new
+	 W5xwqXx2IdFVunIQwdurYlU5J4/utcIvokgU+F+TLQ/TnT4TEWQF7WSsZLRCsd6okp
+	 8ySTR+3k185QN+LLH59RvqvdJtqmyn/umZm1ZmBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
+	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
+	Stuart Summers <stuart.summers@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 187/228] netfilter: ipset: fix refcount race between list:set GC and swap
-Date: Thu, 20 Aug 2026 16:55:29 +0200
-Message-ID: <20260820145250.385320381@linuxfoundation.org>
+Subject: [PATCH 7.1 223/228] drm/xe: Fix a bug in pc_adjust_freq_bounds()
+Date: Thu, 20 Aug 2026 16:56:05 +0200
+Message-ID: <20260820145251.850102436@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -47,96 +47,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
 
-[ Upstream commit 0c88868271653537ed443272dd8e7d13634d214b ]
+[ Upstream commit 5cf82c8cec90056511eb881a267aab6101eaf57a ]
 
-__ip_set_put_byindex() resolved the index to a set pointer under RCU,
-then took ip_set_ref_lock in __ip_set_put() to decrement set->ref.
-ip_set_swap() holds that same lock while swapping both the ip_set_list
-slots and the two sets' ref counters, so it can interleave between the
-dereference and the lock acquisition, leaving the caller to decrement a
-set whose reference already moved to the other index and hit
-BUG_ON(set->ref == 0). list_set_gc() reaches this from timer softirq,
-which the nfnl mutex does not serialize against swap: an expiring
-list:set member calls list_set_del() -> ip_set_put_byindex() while
-IPSET_CMD_SWAP runs on the referenced sets.
+In cases where min frequency was actually greater than BMG_MIN_FREQ,
+we were not using the updated min frequency as there was a missing
+call to pc_action_query_task_state() between the two settings of
+min frequency. Since we know what min_freq was last set, use that
+cached value while comparing to BMG_MIN_FREQ to fix this issue.
 
-Resolve the index and decrement under ip_set_ref_lock, as ip_set_swap()
-already does, keeping the refcount tied to the index rather than to a
-stale set pointer.
+v2: pc->freq_ready is not set until after pc_adjust_freq_bounds(). Stay
+with pc_action_query_task_state() instead.
 
-  kernel BUG at net/netfilter/ipset/ip_set_core.c:685!
-  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:ip_set_put_byindex (net/netfilter/ipset/ip_set_core.c:870)
-  Call Trace:
-   <IRQ>
-   list_set_del (net/netfilter/ipset/ip_set_list_set.c:159)
-   set_cleanup_entries (net/netfilter/ipset/ip_set_list_set.c:181)
-   list_set_gc (net/netfilter/ipset/ip_set_list_set.c:578)
-   call_timer_fn (kernel/time/timer.c:1748)
-   __run_timers (kernel/time/timer.c:1799 kernel/time/timer.c:2374)
-   run_timer_softirq (kernel/time/timer.c:2405)
-   </IRQ>
-  Kernel panic - not syncing: Fatal exception in interrupt
+v3: Update commit message (Stuart)
 
-Fixes: 9076aea76538 ("netfilter: ipset: Increase the number of maximal sets automatically")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: bdde16c9ac5c ("drm/xe/bmg: Update Wa_14022085890")
+Signed-off-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+Reviewed-by: Stuart Summers <stuart.summers@intel.com>
+Link: https://patch.msgid.link/20260805234649.2076384-1-vinay.belgaumkar@intel.com
+(cherry picked from commit a2c2d2b13a9ea9494d2d76b46273833111749507)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_core.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/xe/xe_guc_pc.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
-index 822a53a7f502a..5624036daf8c5 100644
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -679,11 +679,18 @@ __ip_set_get(struct ip_set *set)
- }
- 
- static void
--__ip_set_put(struct ip_set *set)
-+__ip_set_put_locked(struct ip_set *set)
+diff --git a/drivers/gpu/drm/xe/xe_guc_pc.c b/drivers/gpu/drm/xe/xe_guc_pc.c
+index 7ecd91ad6192d..e3d080d23b8bf 100644
+--- a/drivers/gpu/drm/xe/xe_guc_pc.c
++++ b/drivers/gpu/drm/xe/xe_guc_pc.c
+@@ -911,6 +911,7 @@ static bool pc_needs_min_freq_change(struct xe_guc_pc *pc)
+ static int pc_adjust_freq_bounds(struct xe_guc_pc *pc)
  {
--	write_lock_bh(&ip_set_ref_lock);
-+	lockdep_assert_held(&ip_set_ref_lock);
- 	BUG_ON(set->ref == 0);
- 	set->ref--;
-+}
+ 	int ret;
++	u32 min_freq;
+ 
+ 	lockdep_assert_held(&pc->freq_lock);
+ 
+@@ -933,8 +934,14 @@ static int pc_adjust_freq_bounds(struct xe_guc_pc *pc)
+ 	 * Same thing happens for Server platforms where min is listed as
+ 	 * RPMax
+ 	 */
+-	if (pc_get_min_freq(pc) > pc->rp0_freq)
++	min_freq = pc_get_min_freq(pc);
++	if (min_freq > pc->rp0_freq) {
+ 		ret = pc_set_min_freq(pc, pc->rp0_freq);
++		if (ret)
++			goto out;
 +
-+static void
-+__ip_set_put(struct ip_set *set)
-+{
-+	write_lock_bh(&ip_set_ref_lock);
-+	__ip_set_put_locked(set);
- 	write_unlock_bh(&ip_set_ref_lock);
- }
++		min_freq = pc->rp0_freq;
++	}
  
-@@ -854,11 +861,11 @@ __ip_set_put_byindex(struct ip_set_net *inst, ip_set_id_t index)
- {
- 	struct ip_set *set;
+ 	/*
+ 	 * Setting GT RP min frequency to 1.2GHz by default for
+@@ -947,8 +954,8 @@ static int pc_adjust_freq_bounds(struct xe_guc_pc *pc)
+ 	 * we aren't expecting high power output across board
+ 	 *
+ 	 */
+-	if (pc_needs_min_freq_change(pc))
+-		ret = pc_set_min_freq(pc, max(BMG_MIN_FREQ, pc_get_min_freq(pc)));
++	if (pc_needs_min_freq_change(pc) && min_freq < BMG_MIN_FREQ)
++		ret = pc_set_min_freq(pc, BMG_MIN_FREQ);
  
--	rcu_read_lock();
--	set = rcu_dereference(inst->ip_set_list)[index];
-+	write_lock_bh(&ip_set_ref_lock);
-+	set = ip_set(inst, index);
- 	if (set)
--		__ip_set_put(set);
--	rcu_read_unlock();
-+		__ip_set_put_locked(set);
-+	write_unlock_bh(&ip_set_ref_lock);
- }
- 
- void
+ out:
+ 	return ret;
 -- 
 2.53.0
 
