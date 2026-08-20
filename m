@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C310480DF5;
-	Thu, 20 Aug 2026 17:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC2248033E;
+	Thu, 20 Aug 2026 17:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787246948; cv=none; b=Xa4hw/8avN2L1EM3bQPCoXUe3ymO2LvXrikwx5DJQNFY8aUS5akNvoQWtXvcvSFSjNLRBXzb1KxY6FiUarVGcGqcCqukxrAsDDlGKhT7/506NmF1TydW2DalxJymdftt6cge/gO6YfnXVvwPSRaLuYVmHvW8NBDdsohAlAOchxc=
+	t=1787246951; cv=none; b=sA/Zx7BW3hS2SFQaIc3Nld+KUiF5/sCxcr1X/o2u/2rPrRKy2TnFOKLVTN9n1CwI+cclhL9ntR2N2pVxucpx8BWuD41xQL9LeDCuBLnYWL0UzIPqzsVtjvkkQQcj8aW58u3k9Ti7kr8hvZcOcwmzhJAV1g1+0IlcQy/6ekMlHkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787246948; c=relaxed/simple;
-	bh=19yEhyoh7Rt73osFcK2GQF66FB0ddhfZs5vAoBrIKGQ=;
+	s=arc-20240116; t=1787246951; c=relaxed/simple;
+	bh=vvMCYd/Ic3/tSFuMUIkO31QNASPHE0He7NTmp7ic0jI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cnhSIp0VC1FKbebsG+/vvn/O3lAlrk5kjIpY0gm9Ft0IR8q8ZU21S6WjDUe/8qOjCKrdsbWfzhiJwVnhy7G7cd1cvuHSLoxqPSDrhzcyceOeH/qg9aaUXaNK3PgIMWLkPXI71BDDuOkBtJ02g/exKtgIi2tc7sAmzVY/cTtcy6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VBIuDGuo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XzNWgZDcISzJb7/V8qt8Htr5TeWGqspNwFMSBqMvxTtk41mN5wh+gUGP4oFXwK/8aYc+BNXUlM7YspZ3bWyOjB7hcNNyTR9ZNi5/qhZJIbctsw7lISs4+r8WI1KeGgZxPZIONAE1wBtZaalX+qeKuz8wppHy3tao/Vd4xBDv9AE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XX8OT1cy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VBIuDGuo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE831F000E9;
-	Thu, 20 Aug 2026 17:29:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XX8OT1cy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB8F1F000E9;
+	Thu, 20 Aug 2026 17:29:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787246947;
-	bh=qUKdgfWWcrEtbU0kPzpyNIzsxb7LNMspxKp2rwLiiWk=;
+	s=korg; t=1787246950;
+	bh=vPb1BAZEbyzNg2e2e35ypZoKhLSTQqtU1tZWl2GmYWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VBIuDGuoahKnpScEtn10Dt9KCX1/b9UQ3HgmhD66zSIaPoM2XGMfDnDuvj1mnbb2B
-	 p6P92Y8TLRt2AAcT9APFlXgTzZHn21r5aG2MU46O3ci70XX6z0g199swI6JehelSGu
-	 //PoNRie4KV2tKQ9Z6jb04BQoIC/gNFfX1w+2dIU=
+	b=XX8OT1cyyM2EX+Bh4Ol39ALkexArGzFrutteZlVM+ZJPgGmB+ReXVi0pOCwJvlFJ6
+	 yNNuVMzpHBehBV4E8rhWwdF71+2zqTw73n5PdL7643qlfrcjCdYaFZw55yzGghNqdx
+	 s/NIl7dtAicXT0ecHudaRI1PtGZBlIpBuYveyWa0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 095/220] xfs: dont double-lock when deleting a self-referential directory
-Date: Thu, 20 Aug 2026 16:54:45 +0200
-Message-ID: <20260820145226.334895890@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.12 060/220] libceph: Avoid using invalid osd indices from primary_temp
+Date: Thu, 20 Aug 2026 16:54:10 +0200
+Message-ID: <20260820145225.296033199@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -51,71 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 5fc643fb86599e29b38e7b2c2680b4b15bf8f772 upstream.
+commit 3660b98d1204b419f6a77e9a295f148dcf38d042 upstream.
 
-LOLLM notices that the dirtree scrubber can detect a directory that
-refers to itself.  In this case, it's not correct for the directory tree
-repair code to try to iolock/ilock both sc->ip and dp, because they're
-the same inode.  Fix this by detecting that corner case and handling it
-appropriately.
+A corrupted osdmap received from a Ceph monitor or OSD may contain osd
+indices in its pg_temp, primary_temp, pg_upmap, and pg_upmap_items parts
+that don't exist, i.e., that are greater than max_osd or smaller than
+CEPH_HOMELESS_OSD (-1). These indices are used to create the up and
+acting set in ceph_pg_to_up_acting_osds(), called from calc_target().
+While most of these osd indices are checked, the one from primary_temp
+is not. Subsequently, this may lead to calc_target() returning this
+(potentially invalid) index as target osd for a (linger) request.
+Because the osd_state, osd_weight, and osd_addr arrays only contain
+max_osd entries (with indices 0 to max_osd -1), this leads to
+out-of-bounds accesses when trying to read values from these arrays.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: 3f31406aef493b ("xfs: fix corruptions in the directory tree")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+This patch fixes the issue by adding a check to get_temp_osds(), so that
+only valid osd indices from primary_temp are used, and it falls back to
+using the primary from pg_temp or the up set if it is invalid.
+
+[ idryomov: changelog ]
+
+Cc: stable@vger.kernel.org
+Fixes: 5e8d4d36bf23 ("libceph: add support for primary_temp mappings")
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/dirtree_repair.c |   22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ net/ceph/osdmap.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/xfs/scrub/dirtree_repair.c
-+++ b/fs/xfs/scrub/dirtree_repair.c
-@@ -349,6 +349,8 @@ xrep_dirtree_unlink_iolock(
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -2811,9 +2811,10 @@ static void get_temp_osds(struct ceph_os
+ 		}
+ 	}
  
- 	ASSERT(sc->ilock_flags & XFS_IOLOCK_EXCL);
- 
-+	if (sc->ip == dp)
-+		return 0;
- 	if (xfs_ilock_nowait(dp, XFS_IOLOCK_EXCL))
- 		return 0;
- 
-@@ -400,8 +402,18 @@ xrep_dirtree_unlink(
- 	 * directory code can handle a reservationless update.
- 	 */
- 	resblks = xfs_remove_space_res(mp, step->name_len);
--	error = xfs_trans_alloc_dir(dp, &M_RES(mp)->tr_remove, sc->ip,
--			&resblks, &sc->tp, &dontcare);
-+	if (sc->ip == dp) {
-+again:
-+		error = xfs_trans_alloc_inode(dp, &M_RES(mp)->tr_remove,
-+				resblks, 0, false, &sc->tp);
-+		if ((error == -ENOSPC || error == -EDQUOT) && resblks > 0) {
-+			resblks = 0;
-+			goto again;
-+		}
-+	} else {
-+		error = xfs_trans_alloc_dir(dp, &M_RES(mp)->tr_remove, sc->ip,
-+				&resblks, &sc->tp, &dontcare);
-+	}
- 	if (error)
- 		goto out_iolock;
- 
-@@ -489,9 +501,11 @@ out_trans_cancel:
- 	xchk_trans_cancel(sc);
- out_ilock:
- 	xfs_iunlock(sc->ip, XFS_ILOCK_EXCL);
--	xfs_iunlock(dp, XFS_ILOCK_EXCL);
-+	if (dp != sc->ip)
-+		xfs_iunlock(dp, XFS_ILOCK_EXCL);
- out_iolock:
--	xfs_iunlock(dp, XFS_IOLOCK_EXCL);
-+	if (dp != sc->ip)
-+		xfs_iunlock(dp, XFS_IOLOCK_EXCL);
- 	return error;
+-	/* primary_temp? */
++	/* primary_temp? (shouldn't ever be a nonexistent or down OSD) */
+ 	pg = lookup_pg_mapping(&osdmap->primary_temp, pgid);
+-	if (pg)
++	if (pg && !WARN_ON_ONCE(ceph_osd_is_down(osdmap,
++						 pg->primary_temp.osd)))
+ 		temp->primary = pg->primary_temp.osd;
  }
  
 
