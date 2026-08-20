@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF2647F77A;
-	Thu, 20 Aug 2026 17:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D2548167D;
+	Thu, 20 Aug 2026 17:56:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248584; cv=none; b=alsiNB3I5uEgloN+i7S+LB+EGi1PYj/STCwx45eFT7vMiXzzreQxtKpPfoyiXxJuQiJm2kp5hO5jEdhfoSRHoKaL+WLw8VyHneVe8xo5sjgJHPxpV3dIi8kh1HghtOsXtntqmVHGIYuStpBwBz77boc5ShpCMY2bzxrImsIOudU=
+	t=1787248587; cv=none; b=dw7u1lVr6u3LFCvlThMqnB0LHlIjq+Ir9tXFL0rlJ/IMDZQyDvSQFggyQyMJoc4+lqpUXLjgvrPe+ZBrZbIpZHfGC+YSNP+amIFZh4+NNU8akGxkClG7RHu+nsqQZvOs4h1iTXaGyzFAtoPErmqnb5irTrbx/wMfl3Px6B7gxsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248584; c=relaxed/simple;
-	bh=J7H7wmXdFliUN/Whhix8kZJR6ivzBvMQnTmrRQj6LZI=;
+	s=arc-20240116; t=1787248587; c=relaxed/simple;
+	bh=uY0mfwRTqVWOEEMtACVDsMYcujV18dyM7BKRafQewO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KvWvdi1Z6T+L2wDRqACAVqg0a0ZaNtCGwqgBzxhtuZwOgXoAx2GpVylKd6txGB246mtCl3vK+ngKnvdJ1tO6wDP2R5Kxa2emfrAvAcF1mIkXL6IgcABNPCoE1Yo8vGAK2R4HBgWLb5NHa7WfhJZF5BDvQaSjt9oHbMl8UtrweCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvkpvpIB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nhd0daJNcRT01zDRtKK6r0OZFVHE1d7aa/GKPXFglstFD8429cgUC3sI2dXVjaBgSnG2TRkRFGvmOfHA5t5lJdtd2nCdMtFJZ2Q4szusVqEB0vW8MK+v/RHDogC8cT4hv63vC5Hd+Jfu6E7Y74X1yUX8zCt9aKZQykBU99Y2AO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKqtXHeb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvkpvpIB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9F31F00A3A;
-	Thu, 20 Aug 2026 17:56:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKqtXHeb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F5C1F000E9;
+	Thu, 20 Aug 2026 17:56:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248583;
-	bh=R/IQHaZ8tBMT5GFJ1fHNnzgZaLfNdTNIDORX2M3oG9E=;
+	s=korg; t=1787248585;
+	bh=uVA5oyznmxq3AeEC5czZHMjduHVYl1EerTzt7wXcYrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LvkpvpIBten0ZWO9H+Cz9MUPX3BuDMDv2lkoTXa++OsaHm2SqPrmZRR1ytcImqPON
-	 5zkxt4bt254dK0YuH9tRLHXxIRnK6nqRmogA6pFYX2n/67je/2nRB1z5wsNBQgMbFo
-	 STu1UfoFeQiQm5QBv8/3pL2n4AsZzor+V0S2Ha94=
+	b=UKqtXHeboSryZekNDyveraiUP5LLC/NhpS5ZH7A8TXd/8SdxVY5xDTS2Ort3trO6N
+	 eWRnAsakirTNEQCztKc3LMouW1EQEgF2GyA9B+TJYVZhM2HSw/F2GQIS7XdgL0gpwJ
+	 3g7vYbEccCP2WJgiL2Q66awuJDBX/AjtgoUqyfr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Aaron Conole <aconole@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexey Velichayshiy <a.velichayshiy@ispras.ru>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 271/303] openvswitch: use skb_ip_totlen in conntrack
-Date: Thu, 20 Aug 2026 16:56:47 +0200
-Message-ID: <20260820145301.605768545@linuxfoundation.org>
+Subject: [PATCH 6.1 280/303] netfilter: nf_tables_offload: suppress WARN_ON_ONCE for ENOMEM in abort path
+Date: Thu, 20 Aug 2026 16:56:56 +0200
+Message-ID: <20260820145301.883074855@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -53,34 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
 
-[ Upstream commit ec84c955a0d06cef31664bae328d94be7a3e2f03 ]
+[ Upstream commit d02f592064347e0c1e0d84f24941ad338838cc48 ]
 
-IPv4 GSO packets may get processed in ovs_skb_network_trim(),
-and we need to use skb_ip_totlen() to get iph totlen.
+In nft_flow_rule_offload_abort(), WARN_ON_ONCE(err) is triggered on every
+error during rollback, including -ENOMEM. Memory allocation failures are
+expected under low-memory conditions and do not indicate a kernel bug.
 
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 8a7ed561671a ("net/sched: act_ct: fix sk_buff leak when the header checks reject a packet")
+Trace for example:
+nft_flow_offload_chain() // FLOW_BLOCK_BIND
+  nft_flow_block_chain()
+    nft_chain_offload_cmd()
+      nft_block_offload_cmd()
+        ->ndo_setup_tc()
+        nsim_setup_tc()
+          flow_block_cb_setup_simple()
+            flow_block_cb_alloc() // fails to -ENOMEM
+
+The warning was reproduced on the 5.10 stable kernel under memory pressure
+via fault injection, but the underlying bug exists in mainline as well,
+as demonstrated by the ENOMEM trace above. The following splat was
+triggered during nf_tables transaction processing:
+
+WARNING: CPU: 0 PID: 8567 at net/netfilter/nf_tables_offload.c:532 nft_flow_rule_offload_abort net/netfilter/nf_tables_offload.c:532 [inline]
+WARNING: CPU: 0 PID: 8567 at net/netfilter/nf_tables_offload.c:532 nft_flow_rule_offload_commit+0x971/0xcd0 net/netfilter/nf_tables_offload.c:591
+Modules linked in:
+CPU: 0 PID: 8567 Comm: syz-executor.0 Not tainted 5.10.260-syzkaller #0
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
+RIP: 0010:nft_flow_rule_offload_abort net/netfilter/nf_tables_offload.c:532 [inline]
+RIP: 0010:nft_flow_rule_offload_commit+0x971/0xcd0 net/netfilter/nf_tables_offload.c:591
+Call Trace:
+ nf_tables_commit+0x3bd/0x4bd0 net/netfilter/nf_tables_api.c:8604
+ nfnetlink_rcv_batch+0xb1e/0x1f20 net/netfilter/nfnetlink.c:509
+ nfnetlink_rcv_skb_batch net/netfilter/nfnetlink.c:579 [inline]
+ nfnetlink_rcv+0x3b3/0x420 net/netfilter/nfnetlink.c:597
+ netlink_unicast_kernel net/netlink/af_netlink.c:1314 [inline]
+ netlink_unicast+0x6cd/0xa00 net/netfilter/af_netlink.c:1340
+ netlink_sendmsg+0x906/0xe10 net/netfilter/af_netlink.c:1919
+ sock_sendmsg_nosec net/socket.c:651 [inline]
+ __sock_sendmsg+0x155/0x190 net/socket.c:663
+ ____sys_sendmsg+0x705/0x870 net/socket.c:2379
+ ___sys_sendmsg+0x100/0x170 net/socket.c:2433
+ __sys_sendmsg+0xe9/0x1c0 net/socket.c:2462
+ do_syscall_64+0x33/0x40 arch/x86/entry/common.c:46
+ entry_SYSCALL_64_after_hwframe+0x67/0xd1
+
+Change the condition to WARN_ON_ONCE(err && err != -ENOMEM) so that
+warnings are only emitted for unexpected errors. This aligns with the
+common kernel practice of not warning on -ENOMEM.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 63b48c73ff56 ("netfilter: nf_tables_offload: undo updates if transaction fails")
+Signed-off-by: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/conntrack.c |    2 +-
+ net/netfilter/nf_tables_offload.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -1282,7 +1282,7 @@ static int ovs_skb_network_trim(struct s
+diff --git a/net/netfilter/nf_tables_offload.c b/net/netfilter/nf_tables_offload.c
+index 910ef881c3b85..27907fa6f1571 100644
+--- a/net/netfilter/nf_tables_offload.c
++++ b/net/netfilter/nf_tables_offload.c
+@@ -550,7 +550,7 @@ static void nft_flow_rule_offload_abort(struct net *net,
+ 			break;
+ 		}
  
- 	switch (skb->protocol) {
- 	case htons(ETH_P_IP):
--		len = ntohs(ip_hdr(skb)->tot_len);
-+		len = skb_ip_totlen(skb);
- 		break;
- 	case htons(ETH_P_IPV6):
- 		len = sizeof(struct ipv6hdr)
+-		if (WARN_ON_ONCE(err))
++		if (WARN_ON_ONCE(err && err != -ENOMEM))
+ 			break;
+ 	}
+ }
+-- 
+2.53.0
+
 
 
