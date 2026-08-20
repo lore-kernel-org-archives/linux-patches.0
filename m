@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B383C07A;
-	Thu, 20 Aug 2026 15:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88E13C07A;
+	Thu, 20 Aug 2026 15:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239526; cv=none; b=Fg0LCw8V6NdpQdwFgQ+gGyOlhpcnRWE8oFiGbfTBorH6iU9HRgkGtZ7AosPpqZ9771epD85ogZAAU0hcaD+zWJh4Hp+ysWlj4xjnyvXji+Yp2t92cwGFELL3qIj7N7fvrp6oCejrNZq1360aA/0D/27Guq/d5InF6vv+YqbWYIo=
+	t=1787239529; cv=none; b=iJOEwljtWXU+J8BvSJLVZCKoda+T26V1/c1mVTs5CvWWlxj/0Gk7w48nyMe5JUxoO71Y9JerkIgfNnag8cXDHzpRxwdFitTa9aazaDQ4NGxICo65udbaTKbcjJmcC+LLG7h6Qfqj4QUSlIkyIF45pnPwKg1ioRDcY2MRu7f9YUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239526; c=relaxed/simple;
-	bh=vA5S3PsHRHiFqeYCdiLVy5p41q23LyUs+8AlxM1GRAg=;
+	s=arc-20240116; t=1787239529; c=relaxed/simple;
+	bh=unMXD86PXQZiVSj6RJQQG4oD9TZQUlNSw+KPgxF+ws4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fNqVrzcksd8MfmEujXZ0YB0CrZhz1ufMJV9HJpXzf2LEq4/rfc2thXDaMhiwGlzPwxeEvh8CHSKqg2ymrTGFMSULAgAXvRo6I8QHx8P6acsleDDaWWWF9fwGH/8WHAPEHpwdF+LpEFzARrDwxqQcqVbVz3ojlHpQY9ZbSil9cAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rd1yILeW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r6r67IckP025CJPgSQR27qeMFTXR/Y4peCRsba9nGGCiVuTwGZnOiOYVrGHUbmgfrRJcGJ+Fh/4WQFLABOGGOv6V3cHDNUfWuAT5aA1EyfU9n3sqDK10jhpi22fxsiwvi2AxFA63w0TcNxa0sHo7mSUvrX6QUUD/or6IHS3eL6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPxOvjoU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rd1yILeW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF591F000E9;
-	Thu, 20 Aug 2026 15:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPxOvjoU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE691F000E9;
+	Thu, 20 Aug 2026 15:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239524;
-	bh=6tX1u8eSVnKdWfkaAJ4jrOihvaSf1jnR1hAZxHDjiyA=;
+	s=korg; t=1787239527;
+	bh=2qr2qz04DSR0SBdgmq4/t0b5n6UesZepmgzLqlLsGw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rd1yILeWXjzduu3ruT7FPljBL98p1e5i2X3kih8ELOzdJGw2pXXv/FUxRwwOy9+dB
-	 pdKasBPaYZ44cfTChW4aoehm4K5fi4EIioE9sNLjHTIdgzR9qc4UBrxwH5Rz6fVutX
-	 0lkGdq1WBF3BBBLMDas8ToedDXs0JIFXF9Va6ryc=
+	b=LPxOvjoUV3+mOiHFybNaP3JRx0uUezeOB0mqAVfRKPhIYv8YkEju9GkOQSac7odRw
+	 ouo2eH+zK0FRhzet759u/a6c9TWZifUAOgPrOnSuBJAujlYS1BtnVgCXye62w1OjUl
+	 MS6rBowtg2/QCYQLaEaKTBt94VhJ3lDIPgwvQoe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Eric Farman <farman@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.12 079/220] s390/vfio_ccw: Implement a crw lock
-Date: Thu, 20 Aug 2026 16:54:29 +0200
-Message-ID: <20260820145225.863109498@linuxfoundation.org>
+	Igor Paunovic <royalnet026@gmail.com>,
+	Satyajit Roy <sroy14@alum.utk.edu>,
+	Nathan Lucas <nlucasgit@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 080/220] drm/amd/display: fix BT.2020 YCbCr limited output CSC matrix
+Date: Thu, 20 Aug 2026 16:54:30 +0200
+Message-ID: <20260820145225.891901427@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -52,176 +52,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Farman <farman@linux.ibm.com>
+From: Nathan Lucas <nlucasgit@gmail.com>
 
-commit 16b0798024c0e9117e395829ddbbe70981c79d9c upstream.
+commit 2f9a5c0f018d4a1586ee892f81f1383219676415 upstream.
 
-Unlike the channel_program struct, which covers synchronous I/O
-submissions and asynchronous interrupts, the CRW region relies
-exclusively on asynchronous events coming from hardware.
+COLOR_SPACE_YCBCR2020_TYPE, which is selected for
+COLOR_SPACE_2020_YCBCR_LIMITED color_space, has coefficients that are
+incorrect for limited-range output. Its luma and chroma scaling is
+full-range so output is too bright and colors are incorrect.
 
-Implement a lock to manage the list of those payloads, to ensure
-they are read cohesively.
+COLOR_SPACE_YCBCR2020_TYPE is closer to a full-range conversion matrix with
+incorrect luma offset, so correct the luma offset for full-range and rename
+it to COLOR_SPACE_YCBCR2020_FULL_TYPE.
 
-Fixes: 3f02cb2fd9d2 ("vfio-ccw: Wire up the CRW irq and CRW region")
+Add COLOR_SPACE_YCBCR2020_LIMITED_TYPE with correct scaling and range for
+limited-range output.
+
+Fix related functions so COLOR_SPACE_YCBCR2020_LIMITED_TYPE and
+COLOR_SPACE_YCBCR2020_FULL_TYPE are correctly selected based on
+dc_color_space.
+
+Derivation of both matrices follows ITU-T H.273:
+
+Table 4, MatrixCoefficients 9, BT.2020-NCL weights:
+KR = 0.2627, KB = 0.0593, KG = 1 - KR - KB = 0.6780.
+
+Equations 45-47 in matrix form:
+            [  KR             KG             KB            0 ]
+M2020_NCL = [ -KR/(2(1-KB))  -KG/(2(1-KB))   1/2           0 ]
+            [  1/2           -KG/(2(1-KR))  -KB/(2(1-KR))  0 ]
+            [  0              0              0             1 ]
+
+Limited and Full transforms based on equations 30-32 and 36-38 with bit
+depth 10, normalized by 1023:
+
+            [ 876/1023   0         0         64/1023  ]
+MLimited  = [ 0          896/1023  0         512/1023 ]
+            [ 0          0         896/1023  512/1023 ]
+            [ 0          0         0         1        ]
+
+            [ 1023/1023  0         0         0        ]
+    MFull = [ 0          1023/1023 0         512/1023 ]
+            [ 0          0         1023/1023 512/1023 ]
+            [ 0          0         0         1        ]
+
+M2020_NCL_Limited = MLimited x M2020_NCL
+M2020_NCL_Full    = MFull x M2020_NCL
+
+The upper three rows of M2020_NCL_* are stored in CR, Y, CB order. Each
+M2020_NCL_* value is stored as Round(value * 8192) in its 16-bit
+two's-complement representation.
+
+Fixes: 973a9c810c78 ("drm/amd/display: Fix COLOR_SPACE_YCBCR2020_TYPE matrix")
+Assisted-by: OpenAI-Codex:GPT-5.6-Sol
+Tested-by: Igor Paunovic <royalnet026@gmail.com>
+Tested-by: Satyajit Roy <sroy14@alum.utk.edu>
+Signed-off-by: Nathan Lucas <nlucasgit@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 3b906e1dc7e3c9ff9f7940f6828b367a6a9ec73c)
 Cc: stable@vger.kernel.org
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/vfio_ccw_chp.c     |   26 ++++++++++++++++----------
- drivers/s390/cio/vfio_ccw_drv.c     |    6 ++++++
- drivers/s390/cio/vfio_ccw_ops.c     |    4 ++++
- drivers/s390/cio/vfio_ccw_private.h |    4 ++++
- 4 files changed, 30 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c |   31 +++++++++++-------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
---- a/drivers/s390/cio/vfio_ccw_chp.c
-+++ b/drivers/s390/cio/vfio_ccw_chp.c
-@@ -93,18 +93,13 @@ static ssize_t vfio_ccw_crw_region_read(
- 	loff_t pos = *ppos & VFIO_CCW_OFFSET_MASK;
- 	struct ccw_crw_region *region;
- 	struct vfio_ccw_crw *crw;
-+	unsigned long flags;
- 	int ret;
- 
- 	if (pos + count > sizeof(*region))
- 		return -EINVAL;
- 
- 	mutex_lock(&private->io_mutex);
--	crw = list_first_entry_or_null(&private->crw,
--				       struct vfio_ccw_crw, next);
--
--	if (crw)
--		list_del(&crw->next);
--
- 	if (i >= private->num_regions) {
- 		ret = -EINVAL;
- 		goto out;
-@@ -113,6 +108,16 @@ static ssize_t vfio_ccw_crw_region_read(
- 	i = array_index_nospec(i, private->num_regions);
- 	region = private->region[i].data;
- 
-+	spin_lock_irqsave(&private->crw_lock, flags);
-+	crw = list_first_entry_or_null(&private->crw,
-+				       struct vfio_ccw_crw, next);
-+
-+	if (crw)
-+		list_del(&crw->next);
-+
-+	/* Drop CRW lock while copying to userspace */
-+	spin_unlock_irqrestore(&private->crw_lock, flags);
-+
- 	if (crw)
- 		memcpy(&region->crw, &crw->crw, sizeof(region->crw));
- 
-@@ -122,15 +127,16 @@ static ssize_t vfio_ccw_crw_region_read(
- 		ret = count;
- 
- 	region->crw = 0;
--
--out:
--	mutex_unlock(&private->io_mutex);
--
- 	kfree(crw);
- 
- 	/* Notify the guest if more CRWs are on our queue */
-+	spin_lock_irqsave(&private->crw_lock, flags);
- 	if (!list_empty(&private->crw) && private->crw_trigger)
- 		eventfd_signal(private->crw_trigger);
-+	spin_unlock_irqrestore(&private->crw_lock, flags);
-+
-+out:
-+	mutex_unlock(&private->io_mutex);
- 
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
+@@ -50,7 +50,8 @@ enum dc_color_space_type {
+ 	COLOR_SPACE_RGB_LIMITED_TYPE,
+ 	COLOR_SPACE_YCBCR601_TYPE,
+ 	COLOR_SPACE_YCBCR709_TYPE,
+-	COLOR_SPACE_YCBCR2020_TYPE,
++	COLOR_SPACE_YCBCR2020_LIMITED_TYPE,
++	COLOR_SPACE_YCBCR2020_FULL_TYPE,
+ 	COLOR_SPACE_YCBCR601_LIMITED_TYPE,
+ 	COLOR_SPACE_YCBCR709_LIMITED_TYPE,
+ 	COLOR_SPACE_YCBCR709_BLACK_TYPE,
+@@ -102,9 +103,15 @@ static const struct out_csc_color_matrix
+ 		{ 0xE00, 0xF349, 0xFEB7, 0x1000,
+ 		  0x6CE, 0x16E3, 0x24F,  0x200,
+ 		  0xFCCB, 0xF535, 0xE00, 0x1000} },
+-	{ COLOR_SPACE_YCBCR2020_TYPE,
++	/* Corrected. Not included in the TODO above. */
++	{ COLOR_SPACE_YCBCR2020_LIMITED_TYPE,
++		{ 0x0E04, 0xF31D, 0xFEDF, 0x1004,
++		  0x0733, 0x1294, 0x01A0, 0x0201,
++		  0xFC16, 0xF5E6, 0x0E04, 0x1004} },
++	/* Corrected. Not included in the TODO above. */
++	{ COLOR_SPACE_YCBCR2020_FULL_TYPE,
+ 		{ 0x1000, 0xF149, 0xFEB7, 0x1004,
+-		  0x0868, 0x15B2, 0x01E6, 0x201,
++		  0x0868, 0x15B2, 0x01E6, 0,
+ 		  0xFB88, 0xF478, 0x1000, 0x1004} },
+ 	{ COLOR_SPACE_YCBCR709_BLACK_TYPE,
+ 		{ 0x0000, 0x0000, 0x0000, 0x1000,
+@@ -171,14 +178,14 @@ static bool is_ycbcr709_type(
  	return ret;
  }
---- a/drivers/s390/cio/vfio_ccw_drv.c
-+++ b/drivers/s390/cio/vfio_ccw_drv.c
-@@ -118,11 +118,14 @@ void vfio_ccw_sch_io_todo(struct work_st
- void vfio_ccw_crw_todo(struct work_struct *work)
+ 
+-static bool is_ycbcr2020_type(
+-	enum dc_color_space color_space)
++static bool is_ycbcr2020_limited_type(enum dc_color_space color_space)
  {
- 	struct vfio_ccw_private *private;
-+	unsigned long flags;
+-	bool ret = false;
++	return color_space == COLOR_SPACE_2020_YCBCR_LIMITED;
++}
  
- 	private = container_of(work, struct vfio_ccw_private, crw_work);
- 
-+	spin_lock_irqsave(&private->crw_lock, flags);
- 	if (!list_empty(&private->crw) && private->crw_trigger)
- 		eventfd_signal(private->crw_trigger);
-+	spin_unlock_irqrestore(&private->crw_lock, flags);
+-	if (color_space == COLOR_SPACE_2020_YCBCR_LIMITED || color_space == COLOR_SPACE_2020_YCBCR_FULL)
+-		ret = true;
+-	return ret;
++static bool is_ycbcr2020_full_type(enum dc_color_space color_space)
++{
++	return color_space == COLOR_SPACE_2020_YCBCR_FULL;
  }
  
- void vfio_ccw_notoper_todo(struct work_struct *work)
-@@ -286,6 +289,7 @@ static void vfio_ccw_queue_crw(struct vf
- 			       unsigned int rsid)
- {
- 	struct vfio_ccw_crw *crw;
-+	unsigned long flags;
- 
- 	/*
- 	 * If unable to allocate a CRW, just drop the event and
-@@ -303,7 +307,9 @@ static void vfio_ccw_queue_crw(struct vf
- 	crw->crw.erc = erc;
- 	crw->crw.rsid = rsid;
- 
-+	spin_lock_irqsave(&private->crw_lock, flags);
- 	list_add_tail(&crw->next, &private->crw);
-+	spin_unlock_irqrestore(&private->crw_lock, flags);
- 	queue_work(vfio_ccw_work_q, &private->crw_work);
- }
- 
---- a/drivers/s390/cio/vfio_ccw_ops.c
-+++ b/drivers/s390/cio/vfio_ccw_ops.c
-@@ -55,6 +55,7 @@ static int vfio_ccw_mdev_init_dev(struct
- 	INIT_WORK(&private->io_work, vfio_ccw_sch_io_todo);
- 	INIT_WORK(&private->crw_work, vfio_ccw_crw_todo);
- 	INIT_WORK(&private->notoper_work, vfio_ccw_notoper_todo);
-+	spin_lock_init(&private->crw_lock);
- 
- 	private->cp.guest_cp = kcalloc(CCWCHAIN_LEN_MAX, sizeof(struct ccw1),
- 				       GFP_KERNEL);
-@@ -132,6 +133,7 @@ static void vfio_ccw_mdev_release_dev(st
- 	struct vfio_ccw_private *private =
- 		container_of(vdev, struct vfio_ccw_private, vdev);
- 	struct vfio_ccw_crw *crw, *temp;
-+	unsigned long flags;
- 
- 	/*
- 	 * Ensure these work items are fully drained, so none can
-@@ -147,10 +149,12 @@ static void vfio_ccw_mdev_release_dev(st
- 	cancel_work_sync(&private->crw_work);
- 	flush_work(&private->notoper_work);
- 
-+	spin_lock_irqsave(&private->crw_lock, flags);
- 	list_for_each_entry_safe(crw, temp, &private->crw, next) {
- 		list_del(&crw->next);
- 		kfree(crw);
- 	}
-+	spin_unlock_irqrestore(&private->crw_lock, flags);
- 
- 	kmem_cache_free(vfio_ccw_crw_region, private->crw_region);
- 	kmem_cache_free(vfio_ccw_schib_region, private->schib_region);
---- a/drivers/s390/cio/vfio_ccw_private.h
-+++ b/drivers/s390/cio/vfio_ccw_private.h
-@@ -98,6 +98,8 @@ struct vfio_ccw_parent {
-  * @cp: channel program for the current I/O operation
-  * @irb: irb info received from interrupt
-  * @scsw: scsw info
-+ * @crw_lock: serialization of CRW list information
-+ * @crw: list of Channel Report Word elements
-  * @io_trigger: eventfd ctx for signaling userspace I/O results
-  * @crw_trigger: eventfd ctx for signaling userspace CRW information
-  * @req_trigger: eventfd ctx for signaling userspace to return device
-@@ -120,6 +122,8 @@ struct vfio_ccw_private {
- 	struct channel_program	cp;
- 	struct irb		irb;
- 	union scsw		scsw;
-+
-+	spinlock_t		crw_lock;
- 	struct list_head	crw;
- 
- 	struct eventfd_ctx	*io_trigger;
+ static bool is_ycbcr709_limited_type(
+@@ -207,8 +214,10 @@ static enum dc_color_space_type get_colo
+ 		type = COLOR_SPACE_YCBCR601_LIMITED_TYPE;
+ 	else if (is_ycbcr709_limited_type(color_space))
+ 		type = COLOR_SPACE_YCBCR709_LIMITED_TYPE;
+-	else if (is_ycbcr2020_type(color_space))
+-		type = COLOR_SPACE_YCBCR2020_TYPE;
++	else if (is_ycbcr2020_limited_type(color_space))
++		type = COLOR_SPACE_YCBCR2020_LIMITED_TYPE;
++	else if (is_ycbcr2020_full_type(color_space))
++		type = COLOR_SPACE_YCBCR2020_FULL_TYPE;
+ 	else if (color_space == COLOR_SPACE_YCBCR709)
+ 		type = COLOR_SPACE_YCBCR709_BLACK_TYPE;
+ 	else if (color_space == COLOR_SPACE_YCBCR709_BLACK)
 
 
