@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772E6442B2E;
-	Thu, 20 Aug 2026 16:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61237477E58;
+	Thu, 20 Aug 2026 16:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243187; cv=none; b=t96Y69S1d4Tywo2kbskZki++usXNIi+DZq6lcnTctr6j3DXvgii++ChRh0C49+jpsvMGB/AFjqvrqx1iILHVz/GYgim/HZIPraukOMAQZzJJrmOG/Qn1daIJAj+SdKdRrr3U1FMDet4lEJXcIJG441SzElA1oOz3UsIAuGwK1jA=
+	t=1787243190; cv=none; b=Z2zzdrie8ssyIbFzqRKqENh8VQpsK+xzUpS2Jm5tcXZhDiPhErxIzeAP8xMBs93NaCabnZdflJERlxMz/lzR46lzhQ9L0oz+tQC9iv230XF6oCjoaX9DellQvUYyy1uSQn660Ghzh++J8Q71Y/Bcf2XYxwdi5ehMafKgWHAhmeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243187; c=relaxed/simple;
-	bh=8j2DzMQZ0GlEu5nv7ChufU1S546HO/6QBFwfY/u8yMg=;
+	s=arc-20240116; t=1787243190; c=relaxed/simple;
+	bh=cDGtwdSO6NBTtZAPgihEJ48cnP3rlTcgi9LEOZ/vkhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Su/0ug+nSRd0MRKPlnNC37hxxGHBlyd4QyDEDATKXE6VMyWNFbAkAWf7TI8xQPLIyxQ1cZton8tK27MsDYLklFpsf+7Hp30EfJ6QxdkM5xcvb1P5+HS9ZqMd8W6U6VpqY567X/HJ6xRujhIV6QUmOOSS30NOmJUNa8Vh5nH7Sro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhX2fSKf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Anh3yYlLMIhhwwIlD4FwSo+XC/IjIncn+sBqR3gKvRb9IQeew3GY4HJEXcUTv3hMOkodOf6fEQkx/sOpWiOl5qOXhKFMsg9NmQ0g25FMjzo9bXIiiBuCY69Ob3vwqpyWXFKmU9OL+xVWG0zzLIGq8dDTkh05Iqbwomx8dDOydyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LbVMboZc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhX2fSKf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC901F000E9;
-	Thu, 20 Aug 2026 16:26:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LbVMboZc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F021F000E9;
+	Thu, 20 Aug 2026 16:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243186;
-	bh=Kcwb/WBRp7OyWMXV9jGwrQu8uVakGPB+JMp8tSscAS8=;
+	s=korg; t=1787243189;
+	bh=F7Cu9GmnnLlwTvBF349MUnvqBCQTEWaAzoWyhKpnfd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zhX2fSKf+5E22mTB3LOLcKiOdMBV57OKV+cNZUzoRUZ3ALt7oLE8vK3Xt8NVvCgHK
-	 xNoR5u7pQQd/b6vjKjYWA9ewj2DRYG/4ToHnKTxoNtr6qdy05m7ggnzEkmgWkag8vx
-	 Gc7Da5Q7FXiWhZVspRd7UfxwyuCt/St1mJlHm+fU=
+	b=LbVMboZcAgCTW4jahVnZ2ozFSTUGiub9d31GInNMdxN3sSdjV/JPBInPh9FBJs61C
+	 mILWuQ2gltNnznpvU7P4J3d5jh6KQGCeLKCAysFp6FiDkXuZeVvITlVWkbQPhuOOlv
+	 DnhNpfMfgEaGsj/z0w1ObGtSKEgHoU/0L7ZtpJkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shen Yongchao <grayhat@foxmail.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	JY <JY.Ho@mediatek.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Jiucheng Xu <jiucheng.xu@amlogic.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 270/303] KVM: SVM: Serialize accesses to the owner and mirror list with separate lock
-Date: Thu, 20 Aug 2026 16:56:46 +0200
-Message-ID: <20260820145301.571742237@linuxfoundation.org>
+Subject: [PATCH 5.15 001/272] f2fs: fix UAF issue in f2fs_merge_page_bio()
+Date: Thu, 20 Aug 2026 16:53:05 +0200
+Message-ID: <20260820145231.279698338@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
-References: <20260820145253.200766705@linuxfoundation.org>
+In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
+References: <20260820145231.229664293@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,153 +49,115 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 1d78d33275ef2a16c6d080910b291d0a97a0e613 ]
+commit edf7e9040fc52c922db947f9c6c36f07377c52ea upstream.
 
-Interaction between KVM_CAP_VM_MOVE_ENC_CONTEXT_FROM and
-KVM_CAP_VM_COPY_ENC_CONTEXT_FROM can cause two separate issues:
+As JY reported in bugzilla [1],
 
-- in sev_migrate_from(), when the destination KVM is a mirror, the mirror
-  entry is moved from the source's list to the owner's mirror_vms list,
-  without holding the owner's lock unlike other writers of the owner's
-  mirror list (sev_vm_copy_enc_context_from(), sev_vm_destroy()).
-  A concurrent COPY or destroy can race with sev_migrate_from() and
-  corrupt the list.
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+pc : [0xffffffe51d249484] f2fs_is_cp_guaranteed+0x70/0x98
+lr : [0xffffffe51d24adbc] f2fs_merge_page_bio+0x520/0x6d4
+CPU: 3 UID: 0 PID: 6790 Comm: kworker/u16:3 Tainted: P    B   W  OE      6.12.30-android16-5-maybe-dirty-4k #1 5f7701c9cbf727d1eebe77c89bbbeb3371e895e5
+Tainted: [P]=PROPRIETARY_MODULE, [B]=BAD_PAGE, [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+Workqueue: writeback wb_workfn (flush-254:49)
+Call trace:
+ f2fs_is_cp_guaranteed+0x70/0x98
+ f2fs_inplace_write_data+0x174/0x2f4
+ f2fs_do_write_data_page+0x214/0x81c
+ f2fs_write_single_data_page+0x28c/0x764
+ f2fs_write_data_pages+0x78c/0xce4
+ do_writepages+0xe8/0x2fc
+ __writeback_single_inode+0x4c/0x4b4
+ writeback_sb_inodes+0x314/0x540
+ __writeback_inodes_wb+0xa4/0xf4
+ wb_writeback+0x160/0x448
+ wb_workfn+0x2f0/0x5dc
+ process_scheduled_works+0x1c8/0x458
+ worker_thread+0x334/0x3f0
+ kthread+0x118/0x1ac
+ ret_from_fork+0x10/0x20
 
-- In sev_vm_destroy(), the *owner* is still active and could receive
-  concurrently a KVM_CAP_VM_MOVE_ENC_CONTEXT_FROM that causes
-  sev->enc_context_owner to change.  In this case the incorrect VM
-  receives kvm_put_kvm().
+[1] https://bugzilla.kernel.org/show_bug.cgi?id=220575
 
-The second issue needs particular care because the owner could disappear
-altogether (even though the race window is impossibly small) between
-reading it and locking it.  There is thus no way to perform the checks
-under the owner lock without putting struct kvm under SLAB_TYPESAFE_BY_RCU
-(which would allow kvm_get_kvm_safe() under RCU critical section).
+The panic was caused by UAF issue w/ below race condition:
 
-It is much simpler to just use a global lock, since the critical
-sections are so small and the new lock is always a leaf lock.
+kworker
+- writepages
+ - f2fs_write_cache_pages
+  - f2fs_write_single_data_page
+   - f2fs_do_write_data_page
+    - f2fs_inplace_write_data
+     - f2fs_merge_page_bio
+      - add_inu_page
+      : cache page #1 into bio & cache bio in
+        io->bio_list
+  - f2fs_write_single_data_page
+   - f2fs_do_write_data_page
+    - f2fs_inplace_write_data
+     - f2fs_merge_page_bio
+      - add_inu_page
+      : cache page #2 into bio which is linked
+        in io->bio_list
+						write
+						- f2fs_write_begin
+						: write page #1
+						 - f2fs_folio_wait_writeback
+						  - f2fs_submit_merged_ipu_write
+						   - f2fs_submit_write_bio
+						   : submit bio which inclues page #1 and #2
 
-Fixes: b2125513dfc0 ("KVM: SEV: Allow SEV intra-host migration of VM with mirrors")
-Cc: stable@vger.kernel.org
-Reported-by: Shen Yongchao <grayhat@foxmail.com>
-Link: https://lore.kernel.org/kvm/tencent_625C0F42824E542C72B34733392AF2C49709@qq.com/
-Link: https://lore.kernel.org/kvm/tencent_DDC4E4352EC91CAC05A9A8F4E55E8C96730A@qq.com/
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-[ Replaced `to_kvm_sev_info(src->enc_context_owner)` with `&to_kvm_svm(src->enc_context_owner)->sev_info` since that helper doesn't exist, and adjusted context for absent `vmsa_features`/`ghcb_version` fields. ]
+						software IRQ
+						- f2fs_write_end_io
+						 - fscrypt_free_bounce_page
+						 : freed bounced page which belongs to page #2
+      - inc_page_count( , WB_DATA_TYPE(data_folio), false)
+      : data_folio points to fio->encrypted_page
+        the bounced page can be freed before
+        accessing it in f2fs_is_cp_guarantee()
+
+It can reproduce w/ below testcase:
+Run below script in shell #1:
+for ((i=1;i>0;i++)) do xfs_io -f /mnt/f2fs/enc/file \
+-c "pwrite 0 32k" -c "fdatasync"
+
+Run below script in shell #2:
+for ((i=1;i>0;i++)) do xfs_io -f /mnt/f2fs/enc/file \
+-c "pwrite 0 32k" -c "fdatasync"
+
+So, in f2fs_merge_page_bio(), let's avoid using fio->encrypted_page after
+commit page into internal ipu cache.
+
+Fixes: 0b20fcec8651 ("f2fs: cache global IPU bio")
+Reported-by: JY <JY.Ho@mediatek.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[Jiucheng Xu: backport to 5.15.y]
+Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |   34 +++++++++++++++++++++++++---------
- arch/x86/kvm/svm/svm.h |    1 +
- 2 files changed, 26 insertions(+), 9 deletions(-)
+ fs/f2fs/data.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -60,6 +60,8 @@ module_param_named(sev_es, sev_es_enable
- static u8 sev_enc_bit;
- static DECLARE_RWSEM(sev_deactivate_lock);
- static DEFINE_MUTEX(sev_bitmap_lock);
-+/* Protects kvm_sev_info's enc_context_owner, mirror_vms and mirror_entry.  */
-+static DEFINE_MUTEX(sev_mirror_lock);
- unsigned int max_sev_asid;
- static unsigned int min_sev_asid;
- static unsigned long sev_me_mask;
-@@ -1686,18 +1688,18 @@ static void sev_migrate_from(struct kvm
- 	dst->asid = src->asid;
- 	dst->handle = src->handle;
- 	dst->pages_locked = src->pages_locked;
--	dst->enc_context_owner = src->enc_context_owner;
- 	dst->es_active = src->es_active;
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index c74b27eba94b..90cb8560af1d 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -926,7 +926,7 @@ int f2fs_merge_page_bio(struct f2fs_io_info *fio)
+ 	if (fio->io_wbc)
+ 		wbc_account_cgroup_owner(fio->io_wbc, fio->page, PAGE_SIZE);
  
- 	src->asid = 0;
- 	src->active = false;
- 	src->handle = 0;
- 	src->pages_locked = 0;
--	src->enc_context_owner = NULL;
- 	src->es_active = false;
+-	inc_page_count(fio->sbi, WB_DATA_TYPE(page));
++	inc_page_count(fio->sbi, WB_DATA_TYPE(fio->page));
  
- 	list_cut_before(&dst->regions_list, &src->regions_list, &src->regions_list);
- 
-+	mutex_lock(&sev_mirror_lock);
-+
- 	/*
- 	 * If this VM has mirrors, "transfer" each mirror's refcount of the
- 	 * source to the destination (this KVM).  The caller holds a reference
-@@ -1714,13 +1716,16 @@ static void sev_migrate_from(struct kvm
- 	 * If this VM is a mirror, remove the old mirror from the owners list
- 	 * and add the new mirror to the list.
- 	 */
--	if (is_mirroring_enc_context(dst_kvm)) {
-+	if (is_mirroring_enc_context(src_kvm)) {
- 		struct kvm_sev_info *owner_sev_info =
--			&to_kvm_svm(dst->enc_context_owner)->sev_info;
-+			&to_kvm_svm(src->enc_context_owner)->sev_info;
- 
-+		dst->enc_context_owner = src->enc_context_owner;
-+		src->enc_context_owner = NULL;
- 		list_del(&src->mirror_entry);
- 		list_add_tail(&dst->mirror_entry, &owner_sev_info->mirror_vms);
- 	}
-+	mutex_unlock(&sev_mirror_lock);
- 
- 	kvm_for_each_vcpu(i, dst_vcpu, dst_kvm) {
- 		dst_svm = to_svm(dst_vcpu);
-@@ -2095,12 +2100,15 @@ int sev_vm_copy_enc_context_from(struct
- 	 * disappear until we're done with it
- 	 */
- 	source_sev = &to_kvm_svm(source_kvm)->sev_info;
--	kvm_get_kvm(source_kvm);
- 	mirror_sev = &to_kvm_svm(kvm)->sev_info;
--	list_add_tail(&mirror_sev->mirror_entry, &source_sev->mirror_vms);
- 
- 	/* Set enc_context_owner and copy its encryption context over */
-+	mutex_lock(&sev_mirror_lock);
-+	kvm_get_kvm(source_kvm);
-+	list_add_tail(&mirror_sev->mirror_entry, &source_sev->mirror_vms);
- 	mirror_sev->enc_context_owner = source_kvm;
-+	mutex_unlock(&sev_mirror_lock);
-+
- 	mirror_sev->active = true;
- 	mirror_sev->asid = source_sev->asid;
- 	mirror_sev->fd = source_sev->fd;
-@@ -2137,11 +2145,19 @@ void sev_vm_destroy(struct kvm *kvm)
- 
- 	/* If this is a mirror_kvm release the enc_context_owner and skip sev cleanup */
- 	if (is_mirroring_enc_context(kvm)) {
--		struct kvm *owner_kvm = sev->enc_context_owner;
-+		struct kvm *owner_kvm;
- 
--		mutex_lock(&owner_kvm->lock);
-+		mutex_lock(&sev_mirror_lock);
-+		owner_kvm = sev->enc_context_owner;
- 		list_del(&sev->mirror_entry);
--		mutex_unlock(&owner_kvm->lock);
-+		sev->enc_context_owner = NULL;
-+
-+		/*
-+		 * The reference to owner_kvm cannot move after sev_mirror_lock is
-+		 * released.  Release it before kvm_put_kvm() so that owner_kvm is
-+		 * never destroyed inside sev_mirror_lock.
-+		 */
-+		mutex_unlock(&sev_mirror_lock);
- 		kvm_put_kvm(owner_kvm);
- 		return;
- 	}
---- a/arch/x86/kvm/svm/svm.h
-+++ b/arch/x86/kvm/svm/svm.h
-@@ -89,6 +89,7 @@ struct kvm_sev_info {
- 	unsigned long pages_locked; /* Number of pages locked */
- 	struct list_head regions_list;  /* List of registered regions */
- 	u64 ap_jump_table;	/* SEV-ES AP Jump Table address */
-+	/* The three fields below are protected by sev_mirror_lock */
- 	struct kvm *enc_context_owner; /* Owner of copied encryption context */
- 	struct list_head mirror_vms; /* List of VMs mirroring */
- 	struct list_head mirror_entry; /* Use as a list entry of mirrors */
+ 	*fio->last_block = fio->new_blkaddr;
+ 	*fio->bio = bio;
+-- 
+2.53.0
+
 
 
