@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CCD337107;
-	Thu, 20 Aug 2026 15:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E2F37A498;
+	Thu, 20 Aug 2026 15:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238544; cv=none; b=JrLInG4GhX1toZnoy3OU9ebpiZZWETLb5EYS/we81XVb3/FL2HFuAcg3ysp0vghWsdhWNYC6ypP8TC6+iaMN8SrxUY66DBL8q6ExI2oBqP5rsSK1x5weGvPaMTHkQPfAzEdvAWgUVh8RAyM99d8f9cEod66+8zOh00xiaTWudeE=
+	t=1787238546; cv=none; b=cBxOiFLlkoxv4SweCOCnWqdF5vhx01RLKgSOfU8+CXhgpMJ72IHedYy0UGtINmoxo37P0bV544AgZovNiGI8iywJjd6CV2QnANdumou1BV/Y8+GTuDnS1Wd1UYGs2mKFFsxBORY8U3MB6ZO6Jz1F9peePUY7/1sXOS2RfftNN8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238544; c=relaxed/simple;
-	bh=rC3D9ofzFwtZ1y6VbTZpTQ6zQzLPlg5yqs9Fb0UQCMw=;
+	s=arc-20240116; t=1787238546; c=relaxed/simple;
+	bh=ds0NQ0n81Eve3gGP8LF99P4INLbT5Vu6mSuhSMl4Ua0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YLLCHvyIdnj46aWz/cjWxsTg5rSyIbM1ekfl3HuYEHGWmanCRkJK9xCttTEmxL7mci1HrR4NFVzGWlwtDHwFxbdVgBUnLp4va9ndCqTqaIaoe0Es4vKC3UGJOchFyAX1vKi5JRniftFNfuff/t/sQKP7MnodmRWXxNCguwUkmc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJBIAEHW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dFmzyo8kGEj2O9+skQuaNEtYmJ9ebhwuk0+0570LzubYtBtq/tGWKxOFvEuhoDpCI1oWz1vqWyX4FIUbRVLflM8qsNEi+/tha7tT8V4GRabrQhMfoasEFcOjpjOfpRBY6Ntj1y4dimhCNXVfmU8UkAC7FAhjh1AkM/aorq24aGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qOi/V0bb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJBIAEHW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED661F00A3A;
-	Thu, 20 Aug 2026 15:09:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qOi/V0bb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C87B1F000E9;
+	Thu, 20 Aug 2026 15:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238542;
-	bh=drP+LPRsnbHz9hbbdEjIkdgQyzL7IuNRnQN1LjplRWo=;
+	s=korg; t=1787238544;
+	bh=B0Hb8MbIPGwYcftVllSWtWzqYxzhuGQSZJWHWvboE4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eJBIAEHWFcq2Y/PFaIlzwiPIBJbGnNlmLDPLt6LrbN8ISyWoflYpeZ4AMBrDGU6or
-	 k+LZRnMcQUd+laIcJ+PF9Qzxqnv5noC5zg11c4MUdtqm7Yz3iNOR4J6+yi806CTnCR
-	 XoHamTkHQYnp67rOYYhfroTTic02duft2aA7ZEYw=
+	b=qOi/V0bbg+9G2/p+WifStD6086Em9BbMBapMoCwkHsmt2ahXB2km7YvXmae4e+4FE
+	 wZmngFjrxCzu+j11RyaMvvVpcpnyE6Am97jERoApbkNeODcS896cd1OI/qjNamfG5Y
+	 ZWWkrI7FXCfvH0tpohd40nyqIeBAtICPbrQ6GFcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralf Lici <ralf@mandelbit.com>,
-	Antonio Quartulli <antonio@openvpn.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 182/228] ovpn: defer key slot crypto freeing to workqueue
-Date: Thu, 20 Aug 2026 16:55:24 +0200
-Message-ID: <20260820145250.219772712@linuxfoundation.org>
+	"Lin Jiapeng (TencentOS Red Team)" <jiapenglin@tencent.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 7.1 146/228] xfs: fix exchange-range reflink flag clearing issue with INO1_WRITTEN
+Date: Thu, 20 Aug 2026 16:54:48 +0200
+Message-ID: <20260820145249.052416488@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -51,153 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralf Lici <ralf@mandelbit.com>
+From: Lin Jiapeng <ljp1205831794@gmail.com>
 
-[ Upstream commit 2da3dfa1ddfe55a065f484750c83660e3bd4ac00 ]
+commit b2d5a81dae385333f9734910277fbf94c78bd17f upstream.
 
-Key slots are released through a kref and the existing release path
-frees the AEAD transforms from an RCU callback. That is not safe for all
-crypto implementations: crypto_free_aead can sleep, for example when an
-async or hardware implementation has teardown work to complete.
+When exchanging two full-file ranges, xmi_can_exchange_reflink_flags()
+can move the reflink inode flag from the file that currently has it to
+the other file, as long as exactly one side is marked.  This assumes
+that the file contents, and therefore all shared extents, are exchanged.
 
-Use queue_rcu_work for key-slot release. This keeps the RCU grace period
-needed by lockless key-slot readers, but runs the actual crypto teardown
-from workqueue context where sleeping is allowed. Once the rcu_work
-callback runs, pre-existing RCU readers are gone, and the final kref put
-already proves that no transform user remains, so the worker can release
-the AEAD transforms and free the slot directly.
+That assumption is not true when XFS_EXCHMAPS_INO1_WRITTEN is set.
+xfs_exchmaps_can_skip_mapping() can skip hole and unwritten mappings
+from file1, so an exchange can complete without moving every mapping
+that the earlier flag-swap decision accounted for.  In that case the
+post-operation cleanup can clear the reflink flag from an inode that
+still owns shared written extents.  Later writes then take the
+non-reflink write path and may update blocks that should still have
+been protected by CoW, which shows up as data corruption between
+reflink-related files.
 
-The previous patch drains ovpn_wq during module exit, so queued key-slot
-teardown work cannot outlive module text.
+Fix this by disabling the reflink flag exchange whenever
+XFS_EXCHMAPS_INO1_WRITTEN is requested.  The contents exchange can still
+proceed; the conservative outcome is that both inodes keep the reflink
+flag.  The regular reflink flag cleanup path can drop the extra flag
+later once the inode no longer has shared extents.
 
-Fixes: 8534731dbf2d ("ovpn: implement packet processing")
-Signed-off-by: Ralf Lici <ralf@mandelbit.com>
-Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Lin Jiapeng (TencentOS Red Team) <jiapenglin@tencent.com>
+Fixes: 966ceafc7a43 ("xfs: create deferred log items for file mapping exchanges")
+Cc: stable@vger.kernel.org # v6.10
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Lin Jiapeng <jiapenglin@tencent.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ovpn/crypto.c      | 10 +---------
- drivers/net/ovpn/crypto.h      |  4 +++-
- drivers/net/ovpn/crypto_aead.c | 19 ++++++++++++++-----
- drivers/net/ovpn/crypto_aead.h |  1 -
- 4 files changed, 18 insertions(+), 16 deletions(-)
+ fs/xfs/libxfs/xfs_exchmaps.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/ovpn/crypto.c b/drivers/net/ovpn/crypto.c
-index 2e95f29514fc4..7e545428900a9 100644
---- a/drivers/net/ovpn/crypto.c
-+++ b/drivers/net/ovpn/crypto.c
-@@ -18,20 +18,12 @@
- #include "crypto_aead.h"
- #include "crypto.h"
- 
--static void ovpn_ks_destroy_rcu(struct rcu_head *head)
--{
--	struct ovpn_crypto_key_slot *ks;
--
--	ks = container_of(head, struct ovpn_crypto_key_slot, rcu);
--	ovpn_aead_crypto_key_slot_destroy(ks);
--}
--
- void ovpn_crypto_key_slot_release(struct kref *kref)
+--- a/fs/xfs/libxfs/xfs_exchmaps.c
++++ b/fs/xfs/libxfs/xfs_exchmaps.c
+@@ -959,6 +959,16 @@ xmi_can_exchange_reflink_flags(
  {
- 	struct ovpn_crypto_key_slot *ks;
+ 	struct xfs_mount		*mp = req->ip1->i_mount;
  
- 	ks = container_of(kref, struct ovpn_crypto_key_slot, refcount);
--	call_rcu(&ks->rcu, ovpn_ks_destroy_rcu);
-+	queue_rcu_work(ovpn_wq, &ks->free_work);
- }
- 
- /* can only be invoked when all peer references have been dropped (i.e. RCU
-diff --git a/drivers/net/ovpn/crypto.h b/drivers/net/ovpn/crypto.h
-index 0e284fec3a75a..e3feb16d54985 100644
---- a/drivers/net/ovpn/crypto.h
-+++ b/drivers/net/ovpn/crypto.h
-@@ -10,6 +10,8 @@
- #ifndef _NET_OVPN_OVPNCRYPTO_H_
- #define _NET_OVPN_OVPNCRYPTO_H_
- 
-+#include <linux/workqueue.h>
++	/*
++	 * The INO1_WRITTEN optimization can skip exchanging hole and
++	 * unwritten mappings, which means we cannot guarantee that all
++	 * shared extents actually moved to the other file.  Clearing the
++	 * reflink flag of an inode that still holds shared extents breaks
++	 * the CoW write path, so refuse to exchange the flags in that case.
++	 */
++	if (req->flags & XFS_EXCHMAPS_INO1_WRITTEN)
++		return false;
 +
- #include "pktid.h"
- #include "proto.h"
- 
-@@ -45,8 +47,8 @@ struct ovpn_crypto_key_slot {
- 
- 	struct ovpn_pktid_recv pid_recv ____cacheline_aligned_in_smp;
- 	struct ovpn_pktid_xmit pid_xmit ____cacheline_aligned_in_smp;
-+	struct rcu_work free_work;
- 	struct kref refcount;
--	struct rcu_head rcu;
- };
- 
- struct ovpn_crypto_state {
-diff --git a/drivers/net/ovpn/crypto_aead.c b/drivers/net/ovpn/crypto_aead.c
-index 8f07c418622b2..74eaf6fac2f52 100644
---- a/drivers/net/ovpn/crypto_aead.c
-+++ b/drivers/net/ovpn/crypto_aead.c
-@@ -9,6 +9,7 @@
- 
- #include <crypto/aead.h>
- #include <linux/skbuff.h>
-+#include <linux/workqueue.h>
- #include <net/ip.h>
- #include <net/ipv6.h>
- #include <net/udp.h>
-@@ -380,13 +381,19 @@ static struct crypto_aead *ovpn_aead_init(const char *title,
- 	return ERR_PTR(ret);
- }
- 
--void ovpn_aead_crypto_key_slot_destroy(struct ovpn_crypto_key_slot *ks)
-+static void ovpn_aead_crypto_key_slot_free(struct ovpn_crypto_key_slot *ks)
- {
--	if (!ks)
--		return;
--
- 	crypto_free_aead(ks->encrypt);
- 	crypto_free_aead(ks->decrypt);
-+}
-+
-+static void ovpn_aead_crypto_key_slot_free_work(struct work_struct *work)
-+{
-+	struct ovpn_crypto_key_slot *ks;
-+
-+	ks = container_of(to_rcu_work(work), struct ovpn_crypto_key_slot,
-+			  free_work);
-+	ovpn_aead_crypto_key_slot_free(ks);
- 	kfree(ks);
- }
- 
-@@ -420,6 +427,7 @@ ovpn_aead_crypto_key_slot_new(const struct ovpn_key_config *kc)
- 
- 	ks->encrypt = NULL;
- 	ks->decrypt = NULL;
-+	INIT_RCU_WORK(&ks->free_work, ovpn_aead_crypto_key_slot_free_work);
- 	kref_init(&ks->refcount);
- 	ks->key_id = kc->key_id;
- 
-@@ -453,7 +461,8 @@ ovpn_aead_crypto_key_slot_new(const struct ovpn_key_config *kc)
- 	return ks;
- 
- destroy_ks:
--	ovpn_aead_crypto_key_slot_destroy(ks);
-+	ovpn_aead_crypto_key_slot_free(ks);
-+	kfree(ks);
- 	return ERR_PTR(ret);
- }
- 
-diff --git a/drivers/net/ovpn/crypto_aead.h b/drivers/net/ovpn/crypto_aead.h
-index 65a2ff3078986..fae3b585a43b3 100644
---- a/drivers/net/ovpn/crypto_aead.h
-+++ b/drivers/net/ovpn/crypto_aead.h
-@@ -22,7 +22,6 @@ int ovpn_aead_decrypt(struct ovpn_peer *peer, struct ovpn_crypto_key_slot *ks,
- 
- struct ovpn_crypto_key_slot *
- ovpn_aead_crypto_key_slot_new(const struct ovpn_key_config *kc);
--void ovpn_aead_crypto_key_slot_destroy(struct ovpn_crypto_key_slot *ks);
- 
- enum ovpn_cipher_alg ovpn_aead_crypto_alg(struct ovpn_crypto_key_slot *ks);
- 
--- 
-2.53.0
-
+ 	if (hweight32(reflink_state) != 1)
+ 		return false;
+ 	if (req->startoff1 != 0 || req->startoff2 != 0)
 
 
