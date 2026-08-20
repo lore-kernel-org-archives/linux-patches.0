@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26D147ECFB;
-	Thu, 20 Aug 2026 17:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1D347ECFB;
+	Thu, 20 Aug 2026 17:57:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248646; cv=none; b=mebMfXUGoU3tCrx4ix/jkHEM6EvkZ39nYvmUwbmeL25BeIqYM2zVlqpZi9RlrUvx4GfU2YFDPjEsOSgAZhzxb71JH6pXUpD3CJ2zQ6XN0U3E9LJioUcaqlXXxkHaSBm4lyyRH8u9AQtqOx7fC2/IxOHLuFGv62dknCFe7aLkE+c=
+	t=1787248649; cv=none; b=mB1RqseTDOOp7yV03TvvBGGc9dgA4zvyCR1yoHAS3WtE/9V7PQT0jCNnkwjqVBrGpX/QiZ9JZUk0V/2ZpAS6YDUr6SSMljhCEEZrerZALEf7xxvDIj5Kks76gHCLumRU4qUfh7w/FJv/Gsih769wU529SE8/lDVv3HzqZ88RVNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248646; c=relaxed/simple;
-	bh=Lwcf3Wd5yyOhEe8+gl6MONyld1siS9BsE2MEzEU02mQ=;
+	s=arc-20240116; t=1787248649; c=relaxed/simple;
+	bh=BA/ocHCa5uO9MdlsI95APa6vWoM34w7p/Ladu3yHf5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HkRavhoGOy+G6R1czA5OP4odysvxqmDBEL7VPmZ34xs4FXBo6xssTc8v4vr/5nwM/73392403PUq+5e1D5cyXYZQYnKwkfL0OEOJjieOJnLsXWw2jGUKU4znWslhJ9CXXFK0KbP3Jmct7KTvB3lhB/rndxcDepnxYLDyJJ1AAOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1c7FkOcW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tfpvGWZ2/8CtENz4BVMIBAlw1hfjeOPwKooBhpTFpn9MDZhQY8d3Ld5pEsLR86CgTgtVMOChDEEQlcUGdfiDk8MTXsaYMHbFilHoAJ2vbf6/MK7DgSEATEsUTE7VqqqtAVQQalBh18L4Lnc0Tz5gzPaI2nEb6EidWVXLGhhaRfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FAmsm1ma; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1c7FkOcW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1102E1F000E9;
-	Thu, 20 Aug 2026 17:57:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FAmsm1ma"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3861F000E9;
+	Thu, 20 Aug 2026 17:57:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248645;
-	bh=rbIc7xWhMH9aR3LO45q5A9JyZFOb9y80aMQHB/VM8Cw=;
+	s=korg; t=1787248648;
+	bh=BCKpje2eninCniNxCGRifqGewu1nphcjGadKqaUP9YI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1c7FkOcWdHOw76gn3OYJXW2ROaGt7LteFzjsfdCijUthYJRvo+bFJ71o93FjjkZDL
-	 k/JJAlxGzIYNfuc5UXOSBImuG5DOxPv/6RJc1opuGgkVpxYzJwSH/Yb5jK6TEY83G5
-	 u9y/gzwVebrSrvEXAvwdvGsJBKfrlW1EkirLug8A=
+	b=FAmsm1maIp7/f9N5mPvYa66/dIFxN0eaz6JtkbyoDnGty3TrNEvS7h2ARy2Y/r/x8
+	 0BMtJ2ong4K0BoiiwJSw1/tia5eNL/clQyriDvVcIBkG5oXCM9n9y3LgM+hXPFyuzH
+	 zcnoCojHTa3nD+JmDBiXxPiOVCD69d82rIFoaovQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Aaron Conole <aconole@redhat.com>,
-	Florian Westphal <fw@strlen.de>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 273/303] openvswitch: move key and ovs_cb update out of handle_fragments
-Date: Thu, 20 Aug 2026 16:56:49 +0200
-Message-ID: <20260820145301.669141101@linuxfoundation.org>
+	syzbot+9aa47cd4633a3cf92a80@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 300/303] Bluetooth: hci_sock: Prevent race in socket write iter and sock bind
+Date: Thu, 20 Aug 2026 16:57:16 +0200
+Message-ID: <20260820145302.485486297@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -54,112 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 1b83bf4489cbc47d88976291cc967a17adb8e118 ]
+commit 89bb613511cc21ed5ba6bddc1c9b9ae9c0dad392 upstream.
 
-This patch has no functional changes and just moves key and ovs_cb update
-out of handle_fragments, and skb_clear_hash() and skb->ignore_df change
-into handle_fragments(), to make it easier to move the duplicate code
-from handle_fragments() into nf_conntrack_ovs later.
+There is a potential race condition between sock bind and socket write
+iter. bind may free the same cmd via mgmt_pending before write iter sends
+the cmd, just as syzbot reported in UAF[1].
 
-Note that it changes to pass info->family to handle_fragments() instead
-of key for the packet type check, as info->family is set according to
-key->eth.type in ovs_ct_copy_action() when creating the action.
+Here we use hci_dev_lock to synchronize the two, thereby avoiding the
+UAF mentioned in [1].
 
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Acked-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 8a7ed561671a ("net/sched: act_ct: fix sk_buff leak when the header checks reject a packet")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[1]
+syzbot reported:
+BUG: KASAN: slab-use-after-free in mgmt_pending_remove+0x3b/0x210 net/bluetooth/mgmt_util.c:316
+Read of size 8 at addr ffff888077164818 by task syz.0.17/5989
+Call Trace:
+ mgmt_pending_remove+0x3b/0x210 net/bluetooth/mgmt_util.c:316
+ set_link_security+0x5c2/0x710 net/bluetooth/mgmt.c:1918
+ hci_mgmt_cmd+0x9c9/0xef0 net/bluetooth/hci_sock.c:1719
+ hci_sock_sendmsg+0x6ca/0xef0 net/bluetooth/hci_sock.c:1839
+ sock_sendmsg_nosec net/socket.c:727 [inline]
+ __sock_sendmsg+0x21c/0x270 net/socket.c:742
+ sock_write_iter+0x279/0x360 net/socket.c:1195
+
+Allocated by task 5989:
+ mgmt_pending_add+0x35/0x140 net/bluetooth/mgmt_util.c:296
+ set_link_security+0x557/0x710 net/bluetooth/mgmt.c:1910
+ hci_mgmt_cmd+0x9c9/0xef0 net/bluetooth/hci_sock.c:1719
+ hci_sock_sendmsg+0x6ca/0xef0 net/bluetooth/hci_sock.c:1839
+ sock_sendmsg_nosec net/socket.c:727 [inline]
+ __sock_sendmsg+0x21c/0x270 net/socket.c:742
+ sock_write_iter+0x279/0x360 net/socket.c:1195
+
+Freed by task 5991:
+ mgmt_pending_free net/bluetooth/mgmt_util.c:311 [inline]
+ mgmt_pending_foreach+0x30d/0x380 net/bluetooth/mgmt_util.c:257
+ mgmt_index_removed+0x112/0x2f0 net/bluetooth/mgmt.c:9477
+ hci_sock_bind+0xbe9/0x1000 net/bluetooth/hci_sock.c:1314
+
+Fixes: 6fe26f694c82 ("Bluetooth: MGMT: Protect mgmt_pending list with its own lock")
+Reported-by: syzbot+9aa47cd4633a3cf92a80@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9aa47cd4633a3cf92a80
+Tested-by: syzbot+9aa47cd4633a3cf92a80@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/conntrack.c |   37 +++++++++++++++++++++++++------------
- 1 file changed, 25 insertions(+), 12 deletions(-)
+ net/bluetooth/hci_sock.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -496,13 +496,12 @@ static int ovs_ct_helper(struct sk_buff
- /* Returns 0 on success, -EINPROGRESS if 'skb' is stolen, or other nonzero
-  * value if 'skb' is freed.
-  */
--static int handle_fragments(struct net *net, struct sw_flow_key *key,
--			    u16 zone, struct sk_buff *skb)
-+static int handle_fragments(struct net *net, struct sk_buff *skb,
-+			    u16 zone, u8 family, u8 *proto, u16 *mru)
- {
--	struct ovs_skb_cb ovs_cb = *OVS_CB(skb);
- 	int err;
- 
--	if (key->eth.type == htons(ETH_P_IP)) {
-+	if (family == NFPROTO_IPV4) {
- 		enum ip_defrag_users user = IP_DEFRAG_CONNTRACK_IN + zone;
- 
- 		memset(IPCB(skb), 0, sizeof(struct inet_skb_parm));
-@@ -510,9 +509,9 @@ static int handle_fragments(struct net *
- 		if (err)
- 			return err;
- 
--		ovs_cb.mru = IPCB(skb)->frag_max_size;
-+		*mru = IPCB(skb)->frag_max_size;
- #if IS_ENABLED(CONFIG_NF_DEFRAG_IPV6)
--	} else if (key->eth.type == htons(ETH_P_IPV6)) {
-+	} else if (family == NFPROTO_IPV6) {
- 		enum ip6_defrag_users user = IP6_DEFRAG_CONNTRACK_IN + zone;
- 
- 		memset(IP6CB(skb), 0, sizeof(struct inet6_skb_parm));
-@@ -523,22 +522,35 @@ static int handle_fragments(struct net *
- 			return err;
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -1247,7 +1247,9 @@ static int hci_sock_bind(struct socket *
+ 			goto done;
  		}
  
--		key->ip.proto = ipv6_hdr(skb)->nexthdr;
--		ovs_cb.mru = IP6CB(skb)->frag_max_size;
-+		*proto = ipv6_hdr(skb)->nexthdr;
-+		*mru = IP6CB(skb)->frag_max_size;
- #endif
- 	} else {
- 		kfree_skb(skb);
- 		return -EPFNOSUPPORT;
- 	}
++		hci_dev_lock(hdev);
+ 		mgmt_index_removed(hdev);
++		hci_dev_unlock(hdev);
  
-+	skb_clear_hash(skb);
-+	skb->ignore_df = 1;
-+
-+	return 0;
-+}
-+
-+static int ovs_ct_handle_fragments(struct net *net, struct sw_flow_key *key,
-+				   u16 zone, int family, struct sk_buff *skb)
-+{
-+	struct ovs_skb_cb ovs_cb = *OVS_CB(skb);
-+	int err;
-+
-+	err = handle_fragments(net, skb, zone, family, &key->ip.proto, &ovs_cb.mru);
-+	if (err)
-+		return err;
-+
- 	/* The key extracted from the fragment that completed this datagram
- 	 * likely didn't have an L4 header, so regenerate it.
- 	 */
- 	ovs_flow_key_update_l3l4(skb, key);
--
- 	key->ip.frag = OVS_FRAG_TYPE_NONE;
--	skb_clear_hash(skb);
--	skb->ignore_df = 1;
- 	*OVS_CB(skb) = ovs_cb;
- 
- 	return 0;
-@@ -1318,7 +1330,8 @@ int ovs_ct_execute(struct net *net, stru
- 		return err;
- 
- 	if (key->ip.frag != OVS_FRAG_TYPE_NONE) {
--		err = handle_fragments(net, key, info->zone.id, skb);
-+		err = ovs_ct_handle_fragments(net, key, info->zone.id,
-+					      info->family, skb);
- 		if (err)
- 			return err;
- 	}
+ 		err = hci_dev_open(hdev->id);
+ 		if (err) {
 
 
