@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF07537A858;
-	Thu, 20 Aug 2026 16:45:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB841E9919;
+	Thu, 20 Aug 2026 16:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244330; cv=none; b=ZX2zltQ4okygKfDpI77zItoy9qjF2zx678WWqWjZQ8ezPJX48I4oPYv8mxLpoxSw8NbtLJjcSU0J20YOR6NXh9SON47dWP3W/VrKPM1JTv7HbGfo//qjAuJ02EEmc7ECxoEJq8Y4I4DoqXwFG4yEOK3Auu9DVidK64LZDc40jU8=
+	t=1787244332; cv=none; b=cMxxnMCoYIbVvFQo3JtvQlK8tEQRPl/MGehPji75As75e+IZvFd5uhZiczaUmOqFnaKANkxx447N2jcpbb2olEZtJ7BdJvL3uddGoQafG/j1llD3Wy1g/8i9AIlC3I83nXyMi2In8kCXl6SVMi3V+oO6v8Uf4sT73wJRhxtIWUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244330; c=relaxed/simple;
-	bh=2EVCZb1UFZhGHRWmmIDeBwsrZ4xcalNr7CRMqRnCFms=;
+	s=arc-20240116; t=1787244332; c=relaxed/simple;
+	bh=dUpQqPeU9geQZKNwL9/+gYdipfCwGxuA1zcLSNQzjN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r+tOQmGqxL5eivTF9dyeP0/Ok0S7vJjaY3kd5MVvjaF6f+W0QqhrjagSm/Q/UgRNSPTZmJbm5FftvATq6mtwq4r3N+UL4hzM+y9hb8ntdie+2ZlbleJL6Pk25Jhrv/cpPrOIwLOKPV8mgUBKpY19wYr+6p+x7BpnMr/Nin9jOMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWPuthQi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CSXbazV/x7XoQCBDCIw3q20bcItfiAhrUX29Cjrf+R7U1z4OCmvwtTBm0ELDm8yMSaj/ATp/deUiGLuyPjgc/tGeyZAJX6hZSNayOOVo0Bbu4UkYqQ9K/bS4SA0nJflUP5OKBYK0bdOlX9Fdiy/fu68MpsaOEZC5tFJPaFPIHAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eIkLTOFO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWPuthQi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204BF1F000E9;
-	Thu, 20 Aug 2026 16:45:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eIkLTOFO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D771F000E9;
+	Thu, 20 Aug 2026 16:45:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244328;
-	bh=+k0VyuZ1Yv5RFgX+vBu5YxMQUMcOKE+/RluJlqDf+Ic=;
+	s=korg; t=1787244331;
+	bh=H95lRthlJu1mjBaqWcRfvAz5nFRKi31okTi8PM9bBUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WWPuthQisgFpTiqPW1mAg07wMgDkKKVzebgsWR4tAVIdrKY71hVqWD0C2evWX7yNW
-	 ZYaNIYI6o0jQKnlpoYkq9R4u8a20oaSzsvOvvxFeEzUFD/4rX9mXV/ePWMg7wvcoPd
-	 Sbme05Zc238QN++z0mJplGJ8rGE28VloJ+goPr6U=
+	b=eIkLTOFOEvh6a7BQoRTUhXXsPlqHNryYFVduJ28svQrm2umhtaJKdhzN5mRYqiYc4
+	 b7V1TTgXVEMcUkBINcblA+dfYqCa/z2Bb22PuPDL+uNnFiCfGPWUUyGJv7TfY7yMyX
+	 FcmZc3fStatPStQDRx32CY2v9StiWt/A9c0kgC9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Esau <aaron1esau@gmail.com>,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Alex Elder <elder@riscstar.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 130/235] espintcp: use sk_msg_free_partial to fix partial send
-Date: Thu, 20 Aug 2026 16:56:06 +0200
-Message-ID: <20260820145220.390730656@linuxfoundation.org>
+Subject: [PATCH 5.10 131/235] net: ipa: fix SMEM state handle leaks in SMP2P init
+Date: Thu, 20 Aug 2026 16:56:07 +0200
+Message-ID: <20260820145220.420945735@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -53,76 +53,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit 007800408002d871f5699bdb944f985896730b8f ]
+[ Upstream commit 96ca1e658ae459276292bd6d971ab5d8c7e0379a ]
 
-sk_msg_free_partial() ensures consistency of the skmsg at every
-iteration, without having to manually handle uncharges and offsets.
-This simplifies the code, and fixes some bugs in skmsg accounting when
-we don't send the full contents.
+ipa_smp2p_init() acquires two Qualcomm SMEM state handles with
+qcom_smem_state_get(). However, neither the init error paths
+nor ipa_smp2p_exit() release them.
 
+Release both handles with qcom_smem_state_put() in the init
+error paths and in ipa_smp2p_exit().
+
+Fixes: 530f9216a953 ("soc: qcom: ipa: AP/modem communications")
 Cc: stable@vger.kernel.org
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
-Reported-by: Aaron Esau <aaron1esau@gmail.com>
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Reviewed-by: Alex Elder <elder@riscstar.com>
+Link: https://patch.msgid.link/20260624065955.2822765-1-haoxiang_li2024@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ kzalloc_obj() context line kept as kzalloc(sizeof(*smp2p), GFP_KERNEL) since ipa_smp2p.c was not yet converted in this tree ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/espintcp.c |   32 ++++++--------------------------
- 1 file changed, 6 insertions(+), 26 deletions(-)
+ drivers/net/ipa/ipa_smp2p.c |   30 ++++++++++++++++++++++--------
+ 1 file changed, 22 insertions(+), 8 deletions(-)
 
---- a/net/xfrm/espintcp.c
-+++ b/net/xfrm/espintcp.c
-@@ -208,41 +208,21 @@ static int espintcp_sendskmsg_locked(str
- {
- 	struct sk_msg *skmsg = &emsg->skmsg;
- 	struct scatterlist *sg;
--	int done = 0;
- 	int ret;
+--- a/drivers/net/ipa/ipa_smp2p.c
++++ b/drivers/net/ipa/ipa_smp2p.c
+@@ -222,19 +222,27 @@ int ipa_smp2p_init(struct ipa *ipa, bool
+ 					  &valid_bit);
+ 	if (IS_ERR(valid_state))
+ 		return PTR_ERR(valid_state);
+-	if (valid_bit >= 32)		/* BITS_PER_U32 */
+-		return -EINVAL;
++	if (valid_bit >= 32) {		/* BITS_PER_U32 */
++		ret = -EINVAL;
++		goto err_valid_state_put;
++	}
  
- 	flags |= MSG_SENDPAGE_NOTLAST;
--	sg = &skmsg->sg.data[skmsg->sg.start];
- 	do {
--		size_t size = sg->length - emsg->offset;
--		int offset = sg->offset + emsg->offset;
--		struct page *p;
--
--		emsg->offset = 0;
--
-+		sg = &skmsg->sg.data[skmsg->sg.start];
- 		if (sg_is_last(sg))
- 			flags &= ~MSG_SENDPAGE_NOTLAST;
+ 	enabled_state = qcom_smem_state_get(dev, "ipa-clock-enabled",
+ 					    &enabled_bit);
+-	if (IS_ERR(enabled_state))
+-		return PTR_ERR(enabled_state);
+-	if (enabled_bit >= 32)		/* BITS_PER_U32 */
+-		return -EINVAL;
++	if (IS_ERR(enabled_state)) {
++		ret = PTR_ERR(enabled_state);
++		goto err_valid_state_put;
++	}
++	if (enabled_bit >= 32) {		/* BITS_PER_U32 */
++		ret = -EINVAL;
++		goto err_enabled_state_put;
++	}
  
--		p = sg_page(sg);
--retry:
--		ret = do_tcp_sendpages(sk, p, offset, size, flags);
--		if (ret < 0) {
--			emsg->offset = offset - sg->offset;
--			skmsg->sg.start += done;
-+		ret = do_tcp_sendpages(sk, sg_page(sg), sg->offset,
-+				       sg->length, flags);
-+		if (ret < 0)
- 			return ret;
--		}
--
--		if (ret != size) {
--			offset += ret;
--			size -= ret;
--			goto retry;
--		}
+ 	smp2p = kzalloc(sizeof(*smp2p), GFP_KERNEL);
+-	if (!smp2p)
+-		return -ENOMEM;
++	if (!smp2p) {
++		ret = -ENOMEM;
++		goto err_enabled_state_put;
++	}
  
--		done++;
--		put_page(p);
--		sk_mem_uncharge(sk, sg->length);
--		sg = sg_next(sg);
--	} while (sg);
-+		sk_msg_free_partial(sk, skmsg, ret);
-+	} while (skmsg->sg.size);
+ 	smp2p->ipa = ipa;
  
- 	memset(emsg, 0, sizeof(*emsg));
+@@ -279,6 +287,10 @@ err_null_smp2p:
+ 	ipa->smp2p = NULL;
+ 	mutex_destroy(&smp2p->mutex);
+ 	kfree(smp2p);
++err_enabled_state_put:
++	qcom_smem_state_put(enabled_state);
++err_valid_state_put:
++	qcom_smem_state_put(valid_state);
+ 
+ 	return ret;
+ }
+@@ -295,6 +307,8 @@ void ipa_smp2p_exit(struct ipa *ipa)
+ 	ipa_smp2p_clock_release(ipa);
+ 	ipa->smp2p = NULL;
+ 	mutex_destroy(&smp2p->mutex);
++	qcom_smem_state_put(smp2p->enabled_state);
++	qcom_smem_state_put(smp2p->valid_state);
+ 	kfree(smp2p);
+ }
  
 
 
