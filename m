@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315CE46D0BD;
-	Thu, 20 Aug 2026 16:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B4A272E53;
+	Thu, 20 Aug 2026 16:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243304; cv=none; b=jDOc+zWbwpdsGMq0nUbnbJ7p3t85zy/vk0fUL832Uaz3XgHGA9yD0tBdKnyn/3Q8twzlpukTqmNlD0RShylYAAsTY7SmyPJ3uTLnK7D02pOmcpHu8O3vk88oOWXaYIw0CZgv6WEqTfK1F83cwjLhssQ2nugl96m7MQHMaQycu6U=
+	t=1787243307; cv=none; b=BV+Y/tG27qkhM2FZIW5JyKPXoaLCXFBn10Z5phTNhwPFmnQPnHq0pG19zsLDSbPdA+BjRn7QTE7o8pC3bpo4wsKJTkL1sWTsuHgkenjLlv3JEMUTWkYx+QuY722uwQ1EkOadcnDTfx1bs2KRmwiHw59brTZBrvdtiYOz3SLvkho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243304; c=relaxed/simple;
-	bh=vwu/PscxGK7dKNVSfMLqy3X51FcELdj67f9JDGs7Qs0=;
+	s=arc-20240116; t=1787243307; c=relaxed/simple;
+	bh=ud2GrKBL3Nm31iWsKvPC3Fz9Iy+v/e054zXGlGERLzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NmavtuyEC/nXJPJCMXCLfE3Y5GfDoE6g7mAF1tK8aqDvFWC4HkfEvHUJKCxQYf98hQBg4sNTkXKlPMlcJZgHYz3UMWkV5OPOMjMF4wBXOuAukMN+Bmt5Vd5JeGtZRYPMpU1zzr7oCLbj11126N41fpQxIErhK3iVU7yAVtGmS5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d7czhjB/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R0ZbkNoyUYh/zDnyEZaYQT0VNQoPTs9cQGLqw8jwkUqqNLfczCYWkLJzqVkfUKNFCcFP/fqN11Igo1cbAeomHa2Hb9RveOlQrvMk8XoL4y9O/cMng18xPvQ/bbQj9XZErqN7/wDWCa+8HZjc/Y41BRt+ItufIWPQNzCRnYWC+lM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPzwefS1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7czhjB/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93BB51F000E9;
-	Thu, 20 Aug 2026 16:28:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPzwefS1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683DB1F000E9;
+	Thu, 20 Aug 2026 16:28:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243303;
-	bh=QLCYyotljJ7cbA6s9wbW7BmI45XujGmqPXTaGYdw50I=;
+	s=korg; t=1787243306;
+	bh=OARAKjIe/+fCQJZnvLqVBg1cYtt2JKNedmjIRHUEIpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d7czhjB/MiKdDbzpP3/odarURO/PXEQqbNavdzTwlKUQuA/rRWR8Xi4r4a697Cpsc
-	 9Dyyickfj0UQu2NN8EKAboM1SdRSJGatJbFCFoUUYt6UCq1pZqRxzpTOXv0WPqt/Ep
-	 FtU3I2TUUMHtTygCtBr2LsgQM0HGpoTGWAy3UyKc=
+	b=QPzwefS1ViuXHyHi0kfRceNQm8/4se69/eGPqSmUMyjezQsWH0LCYuQA2XdCg5xQO
+	 NyHFGYjh/Tq40Qe2Aw6/U37K6AZKVoLvNxG3oQQJfvNXixE32T15kSATDxHPffd6zC
+	 WRvadydzptFW8NlVwIaD0hW3wuCJsMieFInfIYS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	oxsignal <awo@kakao.com>,
-	Matt Bobrowski <mattbobrowski@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Amery Hung <ameryhung@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 049/272] bpf: Reject BPF_MAP_TYPE_INODE_STORAGE creation if BPF LSM is uninitialized
-Date: Thu, 20 Aug 2026 16:53:53 +0200
-Message-ID: <20260820145232.692161010@linuxfoundation.org>
+	Kefu Chai <k.chai@proxmox.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 5.15 032/272] libceph: tolerate addrvecs with multiple entries of the same type
+Date: Thu, 20 Aug 2026 16:53:36 +0200
+Message-ID: <20260820145232.194247328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -54,113 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Bobrowski <mattbobrowski@google.com>
+From: Kefu Chai <k.chai@proxmox.com>
 
-[ Upstream commit a6f0643e4f63cfaa0d5d4a69de4f132eac4b8fe4 ]
+commit 5a87925539acecfe88229bad76ab81bd75a7e3f5 upstream.
 
-When CONFIG_BPF_LSM=y is set, BPF inode storage maps
-(BPF_MAP_TYPE_INODE_STORAGE) are compiled into the kernel. However,
-if the BPF LSM is not explicitly enabled at boot time (e.g. omitted
-from the "lsm=" boot parameter), lsm_prepare() is never executed for
-the BPF LSM.
+ceph_decode_entity_addrvec() rejects any addrvec containing more than
+one entry that matches the requested msgr type (LEGACY or MSGR2),
+logging "another match of type N in addrvec" and returning -EINVAL.
 
-Consequently, the BPF inode security blob offset
-(bpf_lsm_blob_sizes.lbs_inode) is never initialized and remains at
-its default compiled size of 8 bytes instead of being updated to a
-valid offset past the reserved struct rcu_head (typically 16 bytes
-or more).
+Some admin tooling (e.g. pveceph mon create from Proxmox VE) generates
+addrvecs with multiple same-type entries when public_network lists more
+than one CIDR: it picks one local IP per subnet and emits both a v2 and
+a v1 entry for each IP.  Monmaps shaped this way cause:
 
-When a privileged user creates and updates a BPF_MAP_TYPE_INODE_STORAGE
-map, bpf_inode() evaluates inode->i_security + 8. This erroneously
-aliases the struct rcu_head.func callback pointer at the beginning
-of the inode->i_security blob. During subsequent map element cleanup
-or inode destruction, writing NULL to owner_storage clears the queued
-RCU callback pointer. When rcu_do_batch() later executes the queued
-callback, it attempts an instruction fetch at address 0x0, triggering
-an immediate kernel panic.
+  libceph: mon0 (1)10.10.10.15:6789 session established
+  libceph: another match of type 1 in addrvec
+  libceph: problem decoding monmap, -22
 
-Fix this by introducing a global bpf_lsm_initialized boolean flag
-marked with __ro_after_init. Set this flag to true inside bpf_lsm_init()
-when the LSM framework successfully registers the BPF LSM. Gate map
-allocation in inode_storage_map_alloc() on this flag, returning
--EOPNOTSUPP if the BPF LSM is in turn uninitialized.
+No Ceph code uses the extra entries: since Nautilus, the userspace
+messenger (AsyncMessenger) unconditionally picks the first address of
+the requested type and ignores any subsequent matches.
 
-This fail-fast approach prevents userspace from allocating inode
-storage maps when the supporting BPF LSM infrastructure is absent,
-avoiding zombie map states.
+Match that behavior: use the first matching entry and silently skip any
+subsequent ones.  This is a compatibility fix for existing deployments
+and does not enable dual-stack or multi-subnet address selection.
 
-Fixes: 8ea636848aca ("bpf: Implement bpf_local_storage for inodes")
-Reported-by: oxsignal <awo@kakao.com>
-Signed-off-by: Matt Bobrowski <mattbobrowski@google.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: Amery Hung <ameryhung@gmail.com>
-Link: https://lore.kernel.org/bpf/20260628201103.3624525-1-mattbobrowski@google.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[ idryomov: tweak ceph_decode_entity_addrvec() comment ]
+
+Cc: stable@vger.kernel.org
+Fixes: a5cbd5fc22d5 ("libceph, ceph: get and handle cluster maps with addrvecs")
+Link: https://bugzilla.proxmox.com/show_bug.cgi?id=7518
+Signed-off-by: Kefu Chai <k.chai@proxmox.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bpf_lsm.h        |    4 ++++
- kernel/bpf/bpf_inode_storage.c |   10 ++++++++++
- security/bpf/hooks.c           |    3 +++
- 3 files changed, 17 insertions(+)
+ net/ceph/decode.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/include/linux/bpf_lsm.h
-+++ b/include/linux/bpf_lsm.h
-@@ -13,6 +13,8 @@
+--- a/net/ceph/decode.c
++++ b/net/ceph/decode.c
+@@ -87,8 +87,9 @@ bad:
+ EXPORT_SYMBOL(ceph_decode_entity_addr);
  
- #ifdef CONFIG_BPF_LSM
+ /*
+- * Return addr of desired type (MSGR2 or LEGACY) or error.
+- * Make sure there is only one match.
++ * Return addr of desired type (MSGR2 or LEGACY) or error.  In case of
++ * multiple matches, use the first one for compatibility with userspace
++ * messenger.
+  *
+  * Assume encoding with MSG_ADDR2.
+  */
+@@ -121,14 +122,13 @@ int ceph_decode_entity_addrvec(void **p,
  
-+extern bool bpf_lsm_initialized __ro_after_init;
-+
- #define LSM_HOOK(RET, DEFAULT, NAME, ...) \
- 	RET bpf_lsm_##NAME(__VA_ARGS__);
- #include <linux/lsm_hook_defs.h>
-@@ -44,6 +46,8 @@ void bpf_inode_storage_free(struct inode
+ 		dout("%s i %d addr %s\n", __func__, i, ceph_pr_addr(&tmp_addr));
+ 		if (tmp_addr.type == my_type) {
+-			if (found) {
+-				pr_err("another match of type %d in addrvec\n",
+-				       le32_to_cpu(my_type));
+-				return -EINVAL;
++			if (!found) {
++				memcpy(addr, &tmp_addr, sizeof(*addr));
++				found = true;
++			} else {
++				dout("%s skipping extra match of type %d in addrvec\n",
++				     __func__, le32_to_cpu(my_type));
+ 			}
+-
+-			memcpy(addr, &tmp_addr, sizeof(*addr));
+-			found = true;
+ 		}
+ 	}
  
- #else /* !CONFIG_BPF_LSM */
- 
-+#define bpf_lsm_initialized false
-+
- static inline bool bpf_lsm_is_sleepable_hook(u32 btf_id)
- {
- 	return false;
---- a/kernel/bpf/bpf_inode_storage.c
-+++ b/kernel/bpf/bpf_inode_storage.c
-@@ -223,6 +223,16 @@ static struct bpf_map *inode_storage_map
- {
- 	struct bpf_local_storage_map *smap;
- 
-+	/*
-+	 * Do not allow allocation of BPF_MAP_TYPE_INODE_STORAGE if the BPF LSM
-+	 * was not initialized by the LSM framework at boot. Without proper
-+	 * initialization, the BPF inode security blob offset remains unprepared,
-+	 * causing bpf_inode() to calculate an invalid memory offset and corrupt
-+	 * inode->i_security.
-+	 */
-+	if (!bpf_lsm_initialized)
-+		return ERR_PTR(-EOPNOTSUPP);
-+
- 	smap = bpf_local_storage_map_alloc(attr);
- 	if (IS_ERR(smap))
- 		return ERR_CAST(smap);
---- a/security/bpf/hooks.c
-+++ b/security/bpf/hooks.c
-@@ -6,6 +6,8 @@
- #include <linux/lsm_hooks.h>
- #include <linux/bpf_lsm.h>
- 
-+bool bpf_lsm_initialized __ro_after_init;
-+
- static struct security_hook_list bpf_lsm_hooks[] __lsm_ro_after_init = {
- 	#define LSM_HOOK(RET, DEFAULT, NAME, ...) \
- 	LSM_HOOK_INIT(NAME, bpf_lsm_##NAME),
-@@ -18,6 +20,7 @@ static struct security_hook_list bpf_lsm
- static int __init bpf_lsm_init(void)
- {
- 	security_add_hooks(bpf_lsm_hooks, ARRAY_SIZE(bpf_lsm_hooks), "bpf");
-+	bpf_lsm_initialized = true;
- 	pr_info("LSM support for eBPF active\n");
- 	return 0;
- }
 
 
