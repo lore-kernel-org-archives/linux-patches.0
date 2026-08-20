@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C41F54772A7;
-	Thu, 20 Aug 2026 17:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED194481AA6;
+	Thu, 20 Aug 2026 17:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248304; cv=none; b=AxlSk/oX92sQ/aFQAgqQ6jWOaG5mIfZF8yc59V6Nuuy4ekm0U0BmLlQUXVO5fua75mivSTWKg0WdZ9ljHI8jHHoZvX4efqFLdl7p/o4ar2Q+zGY7BzVqzeUMpQ42ALH+bPOVXqdHqiKoyyZXkzmwM8I2JDI+rbstn5c7yHuoEso=
+	t=1787248308; cv=none; b=VSEk8uXtKlSHN4sfiLjMIOTuBW1OxjQS85ubaj+fZ+u9v/T5REjzUjm0b4S4EeHQukEWcExBOxX4FH/cte2YGDKZHMw73cOBGQ66OaywMBjGmORln87ekTF/00LQMspMvcSmrv8YMKhzAX67wcUeltjzPyReo0zRJkctIwSdGrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248304; c=relaxed/simple;
-	bh=TY5qQe4j6/wRQ4gfcTleR0ml4FEDc/yvMoLrsRDY0RY=;
+	s=arc-20240116; t=1787248308; c=relaxed/simple;
+	bh=ZeEU25onrkCQxaLhcia8/WEDPRvGcMh7BBvRJZxpXt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WHxSdHhhKMBSnck0FDRcKVsUC5qN/vj6nxKWlqGdziaSiuumC1NVZst/nJwMVPe/DKdqS+WPLvo4SORUqXdRBiHJNOt/HGae6RewR5eiOHlR19h1AyKPT7UNiB0aiBMNkdP1NAIgpYOTpheyxL80cCXnSg7bWW53HJz0kLdYKF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QP5cLh+T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BcPt3ZqQy0k1XGBRq55bpdfiXCbBdrDQHcxI7vmQNqyPjPcc2p4ciQn1X1ZaaqazVPdyaSdn3CgAeLKjrSe0GRqCAsvQiS5SvWbtiGgMWQK/x8h96fAgsh5+xJ8c5vzOtdNY5cVoyWPY4Jcou891h9HwfvbbiJdcE9ChJOidIVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BOIzIVzt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QP5cLh+T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ADD11F000E9;
-	Thu, 20 Aug 2026 17:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BOIzIVzt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ADD81F000E9;
+	Thu, 20 Aug 2026 17:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248303;
-	bh=6qeMbpiSkreXdMlfTujCDVXZ9c3hZEbTYviRqEFAKog=;
+	s=korg; t=1787248306;
+	bh=b7CBwxrz4gX04ySq3XgEFKxs5gE0sB1+vcTxNUFew6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QP5cLh+TgCZwTEfgBfwqpfifAmUfjSCMV85Ay2OkNkC0FlwkcrBSbkfe69C1oOQNR
-	 4SRbEYlSM1CnbJhwRQcTWzTjJkgYuZ++NvLxzCSjuyD+3zsuc03Ev0GDxt/DkdpZ/B
-	 A4wCjcjyhLN5Cy1CRQUAwa11uqiPBuCbjXuRlI7A=
+	b=BOIzIVztOl3KNweYCkQNuZBdfm0QCNPKU1dNOEi4NpBubpSbvsJxwQP8zPSG38H6j
+	 IwSekhnzwsfVplhL5ZWS7DkFXiG3WVdzdkd3iO9MZDxEqbQY72m+reDPSjoishWtVl
+	 KvtZbVVXo6qQ4p7nmnGWeVgCUGYoYSBVOisGJo3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable <stable@kernel.org>,
 	Johan Hovold <johan@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 180/303] usb: musb: omap2430: clean up probe error handling
-Date: Thu, 20 Aug 2026 16:55:16 +0200
-Message-ID: <20260820145258.725434773@linuxfoundation.org>
+Subject: [PATCH 6.1 181/303] usb: musb: omap2430: Do not put borrowed of_node in probe
+Date: Thu, 20 Aug 2026 16:55:17 +0200
+Message-ID: <20260820145258.755247377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -50,100 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 51d4b0a44c82e5eff056ef76acd2c3c605a8eb74 ]
+[ Upstream commit c947360ae63eee1c9eacc030dd6f5a53f717addf ]
 
-Using numbered error labels is discouraged (e.g. as it requires
-renumbering them when adding a new intermediate error path).
+omap2430_probe() stores pdev->dev.of_node in a local np variable. This is
+a borrowed pointer and the probe function does not take a reference to
+it.
 
-Rename the error labels after what they do.
+The success and error paths nevertheless call of_node_put(np). This drops
+a reference that is owned by the platform device, and can leave
+pdev->dev.of_node with an unbalanced reference count.
 
-While at it, drop the redundant platform allocation failure dev_err()
-as the error would already have been logged by the allocator.
+Do not put the borrowed platform device node from omap2430_probe().
+References taken for the child MUSB device are handled by the device core,
+and the ctrl-module phandle reference is still released separately.
 
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://lore.kernel.org/r/20250724091910.21092-6-johan@kernel.org
+Fixes: ffbe2feac59b ("usb: musb: omap2430: Fix probe regression for missing resources")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260713114711.955253-1-lgs201920130244@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: c947360ae63e ("usb: musb: omap2430: Do not put borrowed of_node in probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/musb/omap2430.c |   23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ drivers/usb/musb/omap2430.c |    2 --
+ 1 file changed, 2 deletions(-)
 
 --- a/drivers/usb/musb/omap2430.c
 +++ b/drivers/usb/musb/omap2430.c
-@@ -318,13 +318,11 @@ static int omap2430_probe(struct platfor
- 
- 	glue = devm_kzalloc(&pdev->dev, sizeof(*glue), GFP_KERNEL);
- 	if (!glue)
--		goto err0;
-+		return -ENOMEM;
- 
- 	musb = platform_device_alloc("musb-hdrc", PLATFORM_DEVID_AUTO);
--	if (!musb) {
--		dev_err(&pdev->dev, "failed to allocate musb device\n");
--		goto err0;
--	}
-+	if (!musb)
-+		return -ENOMEM;
- 
- 	musb->dev.parent		= &pdev->dev;
- 	musb->dev.dma_mask		= &omap2430_dmamask;
-@@ -348,15 +346,15 @@ static int omap2430_probe(struct platfor
- 
- 	pdata = devm_kzalloc(&pdev->dev, sizeof(*pdata), GFP_KERNEL);
- 	if (!pdata)
--		goto err2;
-+		goto err_put_musb;
- 
- 	data = devm_kzalloc(&pdev->dev, sizeof(*data), GFP_KERNEL);
- 	if (!data)
--		goto err2;
-+		goto err_put_musb;
- 
- 	config = devm_kzalloc(&pdev->dev, sizeof(*config), GFP_KERNEL);
- 	if (!config)
--		goto err2;
-+		goto err_put_musb;
- 
- 	of_property_read_u32(np, "mode", (u32 *)&pdata->mode);
- 	of_property_read_u32(np, "interface-type",
-@@ -379,7 +377,7 @@ static int omap2430_probe(struct platfor
- 		if (!control_pdev) {
- 			dev_err(&pdev->dev, "Failed to get control device\n");
- 			ret = -EINVAL;
--			goto err2;
-+			goto err_put_musb;
- 		}
- 		glue->control_otghs = &control_pdev->dev;
- 	}
-@@ -455,22 +453,21 @@ static int omap2430_probe(struct platfor
- 	ret = platform_device_add(musb);
- 	if (ret) {
+@@ -455,7 +455,6 @@ static int omap2430_probe(struct platfor
  		dev_err(&pdev->dev, "failed to register musb device\n");
--		goto err3;
-+		goto err_disable_rpm;
+ 		goto err_disable_rpm;
  	}
- 	of_node_put(np);
+-	of_node_put(np);
  
  	return 0;
  
--err3:
-+err_disable_rpm:
- 	pm_runtime_disable(glue->dev);
- err_put_control_otghs:
+@@ -465,7 +464,6 @@ err_put_control_otghs:
  	if (!IS_ERR(glue->control_otghs))
  		put_device(glue->control_otghs);
--err2:
-+err_put_musb:
- 	of_node_put(np);
+ err_put_musb:
+-	of_node_put(np);
  	platform_device_put(musb);
  
--err0:
  	return ret;
- }
- 
 
 
