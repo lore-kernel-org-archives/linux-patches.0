@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BEC215075;
-	Thu, 20 Aug 2026 17:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9025846C82A;
+	Thu, 20 Aug 2026 17:53:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248424; cv=none; b=m3hEPw5DRh02taayH8KiBYqDy5x44GF6mEazk0O/brAgHJsMPWpQvml8/ZBmisaBgr5IN9j2VcU32XtWRkbK8sXFxfkpmHrNMqXqnl3MqgvG+iaUN3S32KlC2zCkbifZb1PPeUkZ/vVXPigDC9ARgAN9yw2ezOUMiP2t59Ui3l4=
+	t=1787248426; cv=none; b=tPpSsJ7JQVciFJ2U1uykrqm9leSTg5I7RV3dYzsQ8SjwymllA8463niuqvcqsXQag+i/KXS8v/ltTJ6Mn2qlxnSDUbfp1g0zOeM2QQZjbgmpVwIdy6zUmsSUhJpCjg3mtA0cMJOCxwPRx3GmDcMcyVdwCrWOUpMuYa0GPydki5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248424; c=relaxed/simple;
-	bh=cU8m6TujjQQ/r7WTvj02CYBZVguiMowd6HNKEof5OgU=;
+	s=arc-20240116; t=1787248426; c=relaxed/simple;
+	bh=OR1G3MIwXFlQbOWNG6n8oATk5yTW2qPvBVA3PLHJ21I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DHvbGzUIpGzBbX5AfDYO0U81gCfonbGyMpzBHRSTxmbfCjG61FIT1gmbMTPzOS4t0ReO3hBHwTanVNt3I3+9EZrjXjM1lY5f6JrXx6/fdmku7wGDJMHxSc+mLnpisQk/Mr1jiNO+9CLqcywcU1NLFA07Q6gAdt8d6PyLqU1lGfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNxfMZE1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q2Nl7EbMcQs5rEHiacgeGC3gTvNVXod+BlsUlDOyQVeWl2GN7vE2EO5poI9MFyxRFAZ0OmrlTqZzaRSxQigUqMampemSW5nQ49d0RdpiEf3G4kEzQwwPQDZXH6cgYVVSjS1RFx1tnPk8ZBYt8aNy2X9RfqRwHc2+OnRYg+aTFeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z2LbOdtm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNxfMZE1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7061F000E9;
-	Thu, 20 Aug 2026 17:53:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z2LbOdtm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFED11F000E9;
+	Thu, 20 Aug 2026 17:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248422;
-	bh=y/54eqf+qej5T9135vWzcmeaejFfLSlY1O7142PLAjE=;
+	s=korg; t=1787248425;
+	bh=OVEse+eOwUZ9W3s1iTozGUdBLds/+KFhJ7k2yRG0VqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mNxfMZE1AdWxRomo7CUHEU9lpl3rQnZ1sAqu1E5fgu4P1jHWSMDzcLpFzcS40Kpe8
-	 LKSaAk+oS/ua0Lp0zm9XDg3ylZjDNr6jmJtPVhRhTGA3AwiEetQ4pqyiSmh731GQw3
-	 WXG1SD6/WJocZPFZunzevdb8ovqCRtV91O8P0LEk=
+	b=z2LbOdtmpouF/9Enel681uHkMP4iobH8WgTQy29JQFRZcSSYVAkf46G8twbG1ToM4
+	 /wolzOtZHc0QW1LJy/is6cGkP0ua1iwVg+aY0PVIVaeyJnCPrYak86CBN0HsKx2Jot
+	 ESsU1TDjp9lDbfMutlpXn4sSlg6miBXJE9JY++1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ferry Meng <mengferry@linux.alibaba.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 221/303] net/sched: serialize qdisc_rtab_list against concurrent get/put
-Date: Thu, 20 Aug 2026 16:55:57 +0200
-Message-ID: <20260820145300.042915836@linuxfoundation.org>
+Subject: [PATCH 6.1 222/303] ksmbd: fix SID memory leak in set_posix_acl_entries_dacl() on overflow
+Date: Thu, 20 Aug 2026 16:55:58 +0200
+Message-ID: <20260820145300.075585749@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -53,134 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Ferry Meng <mengferry@linux.alibaba.com>
 
-[ Upstream commit f43ee0c0730d6191629b5ee1ceae27b1ebfdc047 ]
+[ Upstream commit af92ee994cc7f7e83a41c2025f32257a2f82a7ef ]
 
-qdisc_get_rtab() and qdisc_put_rtab() mutate the process-global singly
-linked list qdisc_rtab_list and a plain non-atomic 'int refcnt' with no
-lock. This was only safe because every caller historically held the RTNL
-mutex, which serialized all rate-table lookups, inserts and frees.
+Commit 299f962c0b02 ("ksmbd: use check_add_overflow() to prevent u16
+DACL size overflow") added check_add_overflow() guards that break out
+of the ACE-building loops in set_posix_acl_entries_dacl() when the
+accumulated DACL size would wrap past 65535.
 
-That invariant no longer holds. cls_flower sets
-TCF_PROTO_OPS_DOIT_UNLOCKED, so tc_new_tfilter() keeps rtnl_held == false
-for it and sets TCA_ACT_FLAGS_NO_RTNL. That flag propagates through
-tcf_exts_validate_ex() -> tcf_action_init() -> tcf_action_init_1() ->
-tcf_police_init(), which calls qdisc_get_rtab()/qdisc_put_rtab() with the
-RTNL mutex NOT held. Two RTM_NEWTFILTER requests on different CPUs, each
-adding a flower filter with a police action carrying the same rate, then
-race on qdisc_rtab_list and on the non-atomic refcnt, leading to a
-use-after-free / double-free of the kmalloc-2k struct qdisc_rate_table.
-qdisc_rtab_list is a single global (not per-netns), so the corrupted
-object is shared system-wide.
+However, each iteration allocates a struct smb_sid via kmalloc_obj()
+at the top of the loop and relies on the kfree(sid) call at the end
+of the loop body (the 'pass_same_sid' label in the first loop, and
+the explicit kfree at the tail of the second loop) to release it.
+The newly introduced 'break' statements bypass those kfree() calls,
+leaking the sid buffer every time an overflow is detected.
 
-  BUG: KASAN: slab-use-after-free in qdisc_put_rtab+0x12f/0x160
-   qdisc_put_rtab+0x12f/0x160
-   tcf_police_init+0xda9/0x1590
-   tcf_action_init_1+0x460/0x6b0
-   tcf_action_init+0x439/0xa40
-   tcf_exts_validate_ex+0x42d/0x550
-   fl_change+0xddd/0x7da0
-   tc_new_tfilter+0xaa7/0x2420
-   rtnetlink_rcv_msg+0x95e/0xe90
-  which belongs to the cache kmalloc-2k of size 2048
+A malicious or malformed file with enough POSIX ACL entries to trip
+the overflow check will leak one or more struct smb_sid allocations
+on every request that touches the file's DACL, providing a trivial
+kernel memory exhaustion vector.
 
-Protect qdisc_rtab_list and the refcount with a dedicated spinlock. The
-(sleeping, GFP_KERNEL) allocation in qdisc_get_rtab() is performed before
-taking the lock; if a concurrent inserter added an identical table in the
-meantime the freshly allocated one is freed under the lock, so no
-duplicate is leaked. qdisc_put_rtab() now decrements the refcount and
-unlinks under the same lock.
+Free sid before breaking out of the loops to plug the leak.
 
-Fixes: 470502de5bdb ("net: sched: unlock rules update API")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Fixes: 299f962c0b02 ("ksmbd: use check_add_overflow() to prevent u16 DACL size overflow")
 Cc: stable@vger.kernel.org
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260715114114.446841-1-qwe.aldo@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ferry Meng <mengferry@linux.alibaba.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: bbf0a8e93120 ("ksmbd: restore DACL size on check_add_overflow() to avoid malformed ACL")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_api.c |   24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ fs/smb/server/smbacl.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -412,12 +412,13 @@ static __u8 __detect_linklayer(struct tc
- }
- 
- static struct qdisc_rate_table *qdisc_rtab_list;
-+static DEFINE_SPINLOCK(qdisc_rtab_lock);
- 
- struct qdisc_rate_table *qdisc_get_rtab(struct tc_ratespec *r,
- 					struct nlattr *tab,
- 					struct netlink_ext_ack *extack)
- {
--	struct qdisc_rate_table *rtab;
-+	struct qdisc_rate_table *rtab, *new_rtab;
- 
- 	if (tab == NULL || r->rate == 0 ||
- 	    r->cell_log == 0 || r->cell_log >= 32 ||
-@@ -426,15 +427,20 @@ struct qdisc_rate_table *qdisc_get_rtab(
- 		return NULL;
- 	}
- 
-+	new_rtab = kmalloc(sizeof(*new_rtab), GFP_KERNEL);
-+
-+	spin_lock(&qdisc_rtab_lock);
- 	for (rtab = qdisc_rtab_list; rtab; rtab = rtab->next) {
- 		if (!memcmp(&rtab->rate, r, sizeof(struct tc_ratespec)) &&
- 		    !memcmp(&rtab->data, nla_data(tab), 1024)) {
- 			rtab->refcnt++;
-+			spin_unlock(&qdisc_rtab_lock);
-+			kfree(new_rtab);
- 			return rtab;
- 		}
- 	}
- 
--	rtab = kmalloc(sizeof(*rtab), GFP_KERNEL);
-+	rtab = new_rtab;
- 	if (rtab) {
- 		rtab->rate = *r;
- 		rtab->refcnt = 1;
-@@ -446,6 +452,7 @@ struct qdisc_rate_table *qdisc_get_rtab(
- 	} else {
- 		NL_SET_ERR_MSG(extack, "Failed to allocate new qdisc rate table");
- 	}
-+	spin_unlock(&qdisc_rtab_lock);
- 	return rtab;
- }
- EXPORT_SYMBOL(qdisc_get_rtab);
-@@ -454,18 +461,25 @@ void qdisc_put_rtab(struct qdisc_rate_ta
- {
- 	struct qdisc_rate_table *rtab, **rtabp;
- 
--	if (!tab || --tab->refcnt)
-+	if (!tab)
-+		return;
-+
-+	spin_lock(&qdisc_rtab_lock);
-+	if (--tab->refcnt) {
-+		spin_unlock(&qdisc_rtab_lock);
- 		return;
-+	}
- 
- 	for (rtabp = &qdisc_rtab_list;
- 	     (rtab = *rtabp) != NULL;
- 	     rtabp = &rtab->next) {
- 		if (rtab == tab) {
- 			*rtabp = rtab->next;
--			kfree(rtab);
--			return;
-+			break;
- 		}
- 	}
-+	spin_unlock(&qdisc_rtab_lock);
-+	kfree(tab);
- }
- EXPORT_SYMBOL(qdisc_put_rtab);
- 
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -643,8 +643,10 @@ static void set_posix_acl_entries_dacl(s
+ 		ntace = (struct smb_ace *)((char *)pndace + *size);
+ 		ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, flags,
+ 				pace->e_perm, 0777);
+-		if (check_add_overflow(*size, ace_sz, size))
++		if (check_add_overflow(*size, ace_sz, size)) {
++			kfree(sid);
+ 			break;
++		}
+ 		(*num_aces)++;
+ 		if (pace->e_tag == ACL_USER)
+ 			ntace->access_req |=
+@@ -655,8 +657,10 @@ static void set_posix_acl_entries_dacl(s
+ 			ntace = (struct smb_ace *)((char *)pndace + *size);
+ 			ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED,
+ 					0x03, pace->e_perm, 0777);
+-			if (check_add_overflow(*size, ace_sz, size))
++			if (check_add_overflow(*size, ace_sz, size)) {
++				kfree(sid);
+ 				break;
++			}
+ 			(*num_aces)++;
+ 			if (pace->e_tag == ACL_USER)
+ 				ntace->access_req |=
+@@ -698,8 +702,10 @@ posix_default_acl:
+ 		ntace = (struct smb_ace *)((char *)pndace + *size);
+ 		ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, 0x0b,
+ 				pace->e_perm, 0777);
+-		if (check_add_overflow(*size, ace_sz, size))
++		if (check_add_overflow(*size, ace_sz, size)) {
++			kfree(sid);
+ 			break;
++		}
+ 		(*num_aces)++;
+ 		if (pace->e_tag == ACL_USER)
+ 			ntace->access_req |=
 
 
