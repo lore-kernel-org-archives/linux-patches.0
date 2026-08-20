@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA0247D474;
-	Thu, 20 Aug 2026 16:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0996446D091;
+	Thu, 20 Aug 2026 16:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243717; cv=none; b=gwcI8HP/yLR0bbf1pAtoZ3muQfsoQzYoUDJ08v63RtsLyCM3/0wn6rq5NM7zIJ81t3yASm8sluD2TJt2a2VDyh6UQUfpb+CuTDonMKZNMTJNwFL+HV8FFVx3xoM+lCFbK10CbRzTuhXSCr+igOGg9zKJHSotwdRjEgwgip9Eq14=
+	t=1787243720; cv=none; b=u+JSjDT3aySmVVji9LQ6YyqDY0np3ZPYzoMqMulfpcSc+U/LlM0wp4TXMAOzAP+vuvvF28/ES4n44X0rtTXohvKvO+UROU2LDMq4av4MuqobOln3kgvSa89mHxmrUriXmyix82fbjFwNPTTFzz3+cmf6hRjia1tDhKxiyWvrXsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243717; c=relaxed/simple;
-	bh=nKGcIbdCzZV202Fszzmn2tCLXCC/DVNnlMLEYPR3FZk=;
+	s=arc-20240116; t=1787243720; c=relaxed/simple;
+	bh=11IySmMy25ny/kDJ6xxw9I6QHQA2i6T9GJCZhQMWT98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RYIVYZPTZma8PHI8xSVQX3+ssTa8GaEcdrcY1ZDOkLVoFJ4UXBU6HMmehBwNqpKmswDJNTc0i73U1CdQ8H6NjU61N41lzQWBsHfljWf3hK97yUEFQc0O21y4VJvn+KLDVx1lCjGfGJxnOj7ukDIjmpYsxMP/jzv6eTPRvuMu1NE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UOC2Zp2E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FS4VATFfncKH4jwwNtlbYUDXIelb0o24PTW+9Rsw1B7tCR0coXbBJuC6dDFsrLKhbIWiOsRlZ/ILdv7OYBuqNzSh187bh20nIncxZaSL5lXBwMxwhX9zPUk5p0JgZGXJBQ++FKfdxSX3eWVXQbqJaOqm806mUa4t1xsj51GnspM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HmXL/O39; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UOC2Zp2E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349D91F00A3A;
-	Thu, 20 Aug 2026 16:35:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HmXL/O39"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139321F00A3A;
+	Thu, 20 Aug 2026 16:35:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243715;
-	bh=8ILXvjQP8+v8PTuY8D5nICaQ7LyB0QWfrrEk2VZET1A=;
+	s=korg; t=1787243718;
+	bh=BS9QTL0qNkVFlwLZCJIw4OJv3HFHOsX9pnvU7/leUDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UOC2Zp2EWMsKwW4BsTduyDQ7m0h614N8zQ/GN0t1268LkxcpJ00lxsdr5AkVBdAcn
-	 GaRd3FoUPZhmbNcY9TRLUXA0BP91nZlOppzvV0fLsW9o+EiMYdRiA3V3QEnbocA86c
-	 jJWkLJf/WLNZyraf6t2TPNaQnBKdRsmE2eVjf/xQ=
+	b=HmXL/O39rM9JKIPgtRK5U6t/BJXBTklX7Xsw8HthbyCxwKFhdiMoXedojG2NtHSFz
+	 ooQvyfp0Eg6qllnlpPz0wrsY4JOLWFmvrPfxIdYRblYySzVRvKvdab22a4NkfW/y8u
+	 sxchCygpaD8v+791eVcM2OBgZDPc4ra/y8wgRJjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Mirela Rabulea <mirela.rabulea@nxp.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 190/272] media: v4l2-fwnode: Fix subdev owner overwritten in v4l2_async_register_subdev_sensor()
-Date: Thu, 20 Aug 2026 16:56:14 +0200
-Message-ID: <20260820145237.177912957@linuxfoundation.org>
+Subject: [PATCH 5.15 191/272] ALSA: seq: close a re-opened queue timer in the destructor
+Date: Thu, 20 Aug 2026 16:56:15 +0200
+Message-ID: <20260820145237.205903723@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -53,90 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mirela Rabulea <mirela.rabulea@nxp.com>
+From: Norbert Szetei <norbert@doyensec.com>
 
-[ Upstream commit 06cb687a5132fcffe624c0070576ab852ac6b568 ]
+[ Upstream commit 2c4dc0ed50b05cd847a4b34b8cebf0775f19aeb9 ]
 
-The v4l2 helper v4l2_async_register_subdev_sensor() calls
-v4l2_async_register_subdev(), which is a macro that expands to
-__v4l2_async_register_subdev(sd,THIS_MODULE). Since the macro is expanded
-inside v4l2-fwnode.c, THIS_MODULE resolves to the v4l2-fwnode module
-rather than the sensor driver module that originally set sd->owner. When
-v4l2-fwnode is built-in, THIS_MODULE evaluates to NULL, which then
-overwrites the sensor driver's owner with NULL.
+queue_delete() closes the queue timer, then frees it. snd_seq_timer_close()
+clears q->timer->timeri. snd_use_lock_sync() then drains borrowers, and
+snd_seq_timer_delete() frees q->timer.
 
-This causes the problem that the sensor module's reference count is never
-incremented during async registration, so the module can be removed while
-the subdevice is still in use by a notifier (e.g., a CSI-2 receiver
-bridge driver).
+A borrower can re-open the timer inside that window. A SET_QUEUE_CLIENT
+that took a queueptr() use_lock reference before the queue was unlinked
+runs snd_seq_timer_open() after the close. Open refuses re-open only while
+timeri is set, and the close just cleared it, so it re-opens timeri.
 
-Fix this by renaming v4l2_async_register_subdev_sensor() to
-__v4l2_async_register_subdev_sensor() with an added explicit module
-argument and introducing a wrapper macro:
-    #define v4l2_async_register_subdev_sensor(sd) \
-        __v4l2_async_register_subdev_sensor(sd, THIS_MODULE)
+snd_seq_timer_delete() does not close that instance. Its snd_seq_timer_stop()
+is a no-op, because running was cleared first. So it frees q->timer with the
+instance still live. The queue is freed next.
 
-This ensures the sensor driver module is properly referenced even when
-the sensor driver does not init the owner field before calling
-v4l2_async_register_subdev_sensor() and prevents premature module removal.
+The instance stays on the global timer with callback_data pointing at the
+freed queue. A non-owner START on the unlocked queue arms it. The next tick
+derefs the freed queue in snd_seq_timer_interrupt().
 
-Fixes: aef69d54755d ("media: v4l: fwnode: Add a convenience function for registering sensors")
+Reachable by an unprivileged user with access to /dev/snd/seq. No CAP and
+no queue ownership required.
+
+Close any lingering instance in the destructor. There, ->timeri can no
+longer change: the queue is unlinked and all use_lock borrowers have
+drained, so no snd_seq_queue_use() can re-open it. Close it before clearing
+q->timer. snd_timer_close() waits for any in-flight snd_seq_timer_interrupt()
+to finish, and that callback still reads q->timer (via snd_seq_check_queue()),
+so q->timer must stay valid until it drains.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Suggested-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/linux-media/20240315073125.275501-2-sakari.ailus@linux.intel.com/
-Signed-off-by: Mirela Rabulea <mirela.rabulea@nxp.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Link: https://patch.msgid.link/422FDB81-2A68-47C7-A22D-2D3301E2E86D@doyensec.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ replaced scoped_guard(spinlock_irq, &t->lock) with explicit spin_lock_irq()/spin_unlock_irq() pair since gnu89-compiled 5.15 rejects the macro's for-loop declarations ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-fwnode.c |    6 +++---
- include/media/v4l2-async.h            |    4 +++-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ sound/core/seq/seq_timer.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/media/v4l2-core/v4l2-fwnode.c
-+++ b/drivers/media/v4l2-core/v4l2-fwnode.c
-@@ -1318,7 +1318,7 @@ v4l2_async_notifier_parse_fwnode_sensor(
- 	return 0;
- }
- 
--int v4l2_async_register_subdev_sensor(struct v4l2_subdev *sd)
-+int __v4l2_async_register_subdev_sensor(struct v4l2_subdev *sd, struct module *module)
+--- a/sound/core/seq/seq_timer.c
++++ b/sound/core/seq/seq_timer.c
+@@ -58,12 +58,23 @@ struct snd_seq_timer *snd_seq_timer_new(
+ void snd_seq_timer_delete(struct snd_seq_timer **tmr)
  {
- 	struct v4l2_async_notifier *notifier;
- 	int ret;
-@@ -1340,7 +1340,7 @@ int v4l2_async_register_subdev_sensor(st
- 	if (ret < 0)
- 		goto out_cleanup;
+ 	struct snd_seq_timer *t = *tmr;
+-	*tmr = NULL;
++	struct snd_timer_instance *ti;
  
--	ret = v4l2_async_register_subdev(sd);
-+	ret = __v4l2_async_register_subdev(sd, module);
- 	if (ret < 0)
- 		goto out_unregister;
+ 	if (t == NULL) {
+ 		pr_debug("ALSA: seq: snd_seq_timer_delete() called with NULL timer\n");
+ 		return;
+ 	}
++
++	spin_lock_irq(&t->lock);
++	ti = t->timeri;
++	t->timeri = NULL;
++	spin_unlock_irq(&t->lock);
++	if (ti) {
++		snd_timer_close(ti);
++		snd_timer_instance_free(ti);
++	}
++
++	*tmr = NULL;
+ 	t->running = 0;
  
-@@ -1357,7 +1357,7 @@ out_cleanup:
- 
- 	return ret;
- }
--EXPORT_SYMBOL_GPL(v4l2_async_register_subdev_sensor);
-+EXPORT_SYMBOL_GPL(__v4l2_async_register_subdev_sensor);
- 
- MODULE_LICENSE("GPL");
- MODULE_AUTHOR("Sakari Ailus <sakari.ailus@linux.intel.com>");
---- a/include/media/v4l2-async.h
-+++ b/include/media/v4l2-async.h
-@@ -306,8 +306,10 @@ int __v4l2_async_register_subdev(struct
-  * An error is returned if the module is no longer loaded on any attempts
-  * to register it.
-  */
-+#define v4l2_async_register_subdev_sensor(sd) \
-+	__v4l2_async_register_subdev_sensor(sd, THIS_MODULE)
- int __must_check
--v4l2_async_register_subdev_sensor(struct v4l2_subdev *sd);
-+__v4l2_async_register_subdev_sensor(struct v4l2_subdev *sd, struct module *module);
- 
- /**
-  * v4l2_async_unregister_subdev - unregisters a sub-device to the asynchronous
+ 	/* reset time */
 
 
