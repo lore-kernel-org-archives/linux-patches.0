@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585D7246781;
-	Thu, 20 Aug 2026 16:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3164847AF6D;
+	Thu, 20 Aug 2026 16:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244235; cv=none; b=CqxhqVGoNS454aaVYQmz3ZvdA5juHRBSKNCxKLjCDsBAR0xrlr4uJnexr2jixf8pr5tG7ouZSHfc7BbT9G7qojMVVUpgR8TDefMdalsQCm36suGm+6ZZixXaB3jq8G2CeiEHSj7bB3tzJXuvO+aJbOezx/ygRH5ooLRFPkk5W1I=
+	t=1787244238; cv=none; b=Bt4sEGmqDhC35nHNj8WboIPxf+7pd6qqYhAuYKBMPIHpM10NXLTtIhcFHHoXMQBFylXgSFMjnPPH/35G9CUuD+mZ5K1+A+S1AAMRBwnU0iq21a8Oq5IJ98B1477tpNhVw2O3n+YWw8Z2nhCuFVGy80ImfYCcX5jYenN8xMKxWWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244235; c=relaxed/simple;
-	bh=CV9VqYcDOkAHHY91ZNddfZyaVZVe9dXqjXEMJcGOLO8=;
+	s=arc-20240116; t=1787244238; c=relaxed/simple;
+	bh=L3yJq74IvUGksI0naxXSLREqfoG21MtA2uewkBASo38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p8UBoixGcpygmuDyovfHXHjAc/puTfoiJnpHMNsD6fAQK4iN9npCItkHuguOXKB9gnsLKZscN1JuUBQ74Tf5Dz8kHiuT0Ucj1m6JAOkQqx8BYkEhRhUMdVLAktJ7AnlgkeRW7RdOwSsFYODeYT3qWsPFBacci0AOaKyZRWNd+2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0QX4cP8Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jg41skFpkhmj3bpRdWitgOhRR9UZtw7RZd0OyQkM7ph+QvmSDaHliW+JOqcKr8Rbu/VhT3wAWp0ALatU8Tu0IA7lCtbv2BmBonNaqhprTmdHM5WpiMGD09iXNdRBHFgejBLSn7QCpAQlIWN6gUckdFjVbu/m8PgUdzKq0Iymmnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgW6ko33; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0QX4cP8Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1DBA1F000E9;
-	Thu, 20 Aug 2026 16:43:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgW6ko33"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B9E1F000E9;
+	Thu, 20 Aug 2026 16:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244234;
-	bh=ckyMdkmR2aDhH1miotHYfW44MLTmsVobug3X7KTuiSs=;
+	s=korg; t=1787244237;
+	bh=3fGoPBSWDxUKAFTz9lfe7mOfCpYHNQlDFqH+iLa9PcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0QX4cP8YQZCNP1ppbDMrJEsBbZkX/WR8brxxmN3bxqu9llAJj+cdhni+zETsxB4nI
-	 /crK1wqARU/Zpz3d/we3eViUOd7IiohgoKh0iPeI2SBsxD+2E3TibmOy0MElgqZ/8z
-	 GV77guiJmU0Cq3+72kOIrd9GZYqYmqu88c5XEm4o=
+	b=XgW6ko33IhrofGHsrJl7+237wTPvJ0o42YNfg2woqSiozCX2ZLpQrGNHIJJBALcFq
+	 YEUUTacRReZh4xazeCpIvkLMuDKYkHZsvJGSOEfkOBSt6EkzAi2Xv8PYrVHa65Ouxh
+	 62m6+X0aQg6Sl/FBBH7s21wJoMIoeDZ9DErcFiqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Xiasong <lixiasong1@huawei.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	"Junvyyang, Tencent Zhuque Lab" <zhuque@tencent.com>,
+	David Howells <dhowells@redhat.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	LePremierHomme <kwqcheii@proton.me>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 060/235] tipc: restrict socket queue dumps in enqueue tracepoints
-Date: Thu, 20 Aug 2026 16:54:56 +0200
-Message-ID: <20260820145218.266262181@linuxfoundation.org>
+Subject: [PATCH 5.10 061/235] rxrpc: Fix recv-recv race of completed call
+Date: Thu, 20 Aug 2026 16:54:57 +0200
+Message-ID: <20260820145218.295877033@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -52,94 +57,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Xiasong <lixiasong1@huawei.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit acd7df8d955480a6f6e5bb809da67b1500cc3cf4 ]
+[ Upstream commit 962fb1f651c2cf2083e0c3ef53ba69e3b96d3fbc ]
 
-tipc_sk_enqueue() runs with sk->sk_lock.slock held while the socket is
-owned by user context. The spinlock protects the backlog queue in this
-path, but it does not serialize against the socket owner consuming or
-purging sk_receive_queue.
+If a call receives an event (such as incoming data), the call gets placed
+on the socket's queue and a thread in recvmsg can be awakened to go and
+process it.  Once the thread has picked up the call off of the queue,
+further events will cause it to be requeued, and once the socket lock is
+dropped (recvmsg uses call->user_mutex to allow the socket to be used in
+parallel), a second thread can come in and its recvmsg can pop the call off
+the socket queue again.
 
-KASAN reported:
+In such a case, the first thread will be receiving stuff from the call and
+the second thread will be blocked on call->user_mutex.  The first thread
+can, at this point, process both the event that it picked call for and the
+event that the second thread picked the call for and may see the call
+terminate - in which case the call will be "released", decoupling the call
+from the user call ID assigned to it (RXRPC_USER_CALL_ID in the control
+message).
 
-  CPU: 14 UID: 0 PID: 1050 Comm: tipc3 Not tainted 7.1.0-rc6+ #126 PREEMPT(lazy)
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-  Call Trace:
-    <TASK>
-    dump_stack_lvl+0x76/0xa0 lib/dump_stack.c:123
-    print_report+0xce/0x5b0 mm/kasan/report.c:482
-    kasan_report+0xc6/0x100 mm/kasan/report.c:597
-    __asan_report_load4_noabort+0x14/0x30 mm/kasan/report_generic.c:380
-    tipc_skb_dump+0x1327/0x16f0 net/tipc/trace.c:73
-    tipc_list_dump+0x208/0x2e0 net/tipc/trace.c:187
-    tipc_sk_dump+0xaf6/0xd60 net/tipc/socket.c:3996
-    trace_event_raw_event_tipc_sk_class+0x312/0x5a0 net/tipc/trace.h:188
-    tipc_sk_rcv+0xb1d/0x1d50 net/tipc/socket.c:2497
-    tipc_node_xmit+0x1c3/0x1440 net/tipc/node.c:1689
-    __tipc_sendmsg+0x97a/0x1440 net/tipc/socket.c:1512
-    tipc_sendmsg+0x52/0x80 net/tipc/socket.c:1400
-    sock_sendmsg+0x2f6/0x3e0 net/socket.c:825
-    splice_to_socket+0x7f9/0x1010 fs/splice.c:884
-    do_splice+0xe21/0x2330 fs/splice.c:936
-    __do_splice+0x153/0x260 fs/splice.c:1431
-    __x64_sys_splice+0x150/0x230 fs/splice.c:1616
-    x64_sys_call+0xeb5/0x2790 arch/x86/entry/syscall_64.c:41
-    do_syscall_64+0xf3/0x620 arch/x86/entry/syscall_64.c:63
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e arch/x86/entry/entry_64.S:130
-  RIP: 0033:0x71624e8aafe2
-  Code: 08 0f 85 71 3a ff ff 49 89 fb 48 89 f0 48 89 d7 48 89 ce 4c 89 c2 4d 89 ca 4c 8b 44 24 08 4c 8b 4c 24 10 4c 89 5c 24 08 0f 05 <c3> 66 2e 0f 1f 84 00 00 00 00 00 66 2e 0f 1f 84 00 00 00 00 00 66
-  RSP: 002b:0000716157ffed68 EFLAGS: 00000246 ORIG_RAX: 0000000000000113
-  RAX: ffffffffffffffda RBX: 0000716157fff6c0 RCX: 000071624e8aafe2
-  RDX: 000000000000005f RSI: 0000000000000000 RDI: 0000000000000066
-  RBP: 0000716157ffed90 R08: 0000000000008000 R09: 0000000000000001
-  R10: 0000000000000000 R11: 0000000000000246 R12: ffffffffffffff00
-  R13: 0000000000000021 R14: 0000000000000000 R15: 00007fff89799c40
-    </TASK>
+The first thread will return okay, but then the second thread will wake up
+holding the user_mutex and, if it sees that the call has been released by
+the first thread, it will BUG thusly:
 
-The TIPC_DUMP_ALL tracepoints in tipc_sk_enqueue() also dump
-sk_receive_queue and can therefore dereference skbs that the socket
-owner has already dequeued or freed. Restrict these dumps to
-TIPC_DUMP_SK_BKLGQ, which matches the queue protected by the held
-spinlock.
+	kernel BUG at net/rxrpc/recvmsg.c:474!
 
-Keep the change limited to the enqueue path, where the unsafe queue dump
-is reachable while the socket is owned by user context.
+Fix this by just dequeuing the call and ignoring it if it is seen to be
+already released.  We can't tell userspace about it anyway as the user call
+ID has become stale.
 
-Fixes: 01e661ebfbad ("tipc: add trace_events for tipc socket")
-Cc: stable@vger.kernel.org
-Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260611135647.3666727-1-lixiasong1@huawei.com
+Fixes: 248f219cb8bc ("rxrpc: Rewrite the data and ack handling code")
+Reported-by: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
+cc: LePremierHomme <kwqcheii@proton.me>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+Link: https://patch.msgid.link/20250717074350.3767366-3-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e66f8f32f501 ("rxrpc: Fix socket notification race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/socket.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/trace/events/rxrpc.h |    2 ++
+ net/rxrpc/call_accept.c      |    1 +
+ net/rxrpc/recvmsg.c          |   19 +++++++++++++++++--
+ 3 files changed, 20 insertions(+), 2 deletions(-)
 
---- a/net/tipc/socket.c
-+++ b/net/tipc/socket.c
-@@ -2455,17 +2455,17 @@ static void tipc_sk_enqueue(struct sk_bu
- 			atomic_set(dcnt, 0);
- 		lim = rcvbuf_limit(sk, skb) + atomic_read(dcnt);
- 		if (likely(!sk_add_backlog(sk, skb, lim))) {
--			trace_tipc_sk_overlimit1(sk, skb, TIPC_DUMP_ALL,
-+			trace_tipc_sk_overlimit1(sk, skb, TIPC_DUMP_SK_BKLGQ,
- 						 "bklg & rcvq >90% allocated!");
- 			continue;
- 		}
+--- a/include/trace/events/rxrpc.h
++++ b/include/trace/events/rxrpc.h
+@@ -134,6 +134,7 @@ enum rxrpc_recvmsg_trace {
+ 	rxrpc_recvmsg_return,
+ 	rxrpc_recvmsg_terminal,
+ 	rxrpc_recvmsg_to_be_accepted,
++	rxrpc_recvmsg_unqueue,
+ 	rxrpc_recvmsg_wait,
+ };
  
--		trace_tipc_sk_dump(sk, skb, TIPC_DUMP_ALL, "err_overload!");
-+		trace_tipc_sk_dump(sk, skb, TIPC_DUMP_SK_BKLGQ, "err_overload!");
- 		/* Overload => reject message back to sender */
- 		onode = tipc_own_addr(sock_net(sk));
- 		atomic_inc(&sk->sk_drops);
- 		if (tipc_msg_reverse(onode, &skb, TIPC_ERR_OVERLOAD)) {
--			trace_tipc_sk_rej_msg(sk, skb, TIPC_DUMP_ALL,
-+			trace_tipc_sk_rej_msg(sk, skb, TIPC_DUMP_SK_BKLGQ,
- 					      "@sk_enqueue!");
- 			__skb_queue_tail(xmitq, skb);
- 		}
+@@ -333,6 +334,7 @@ enum rxrpc_tx_point {
+ 	EM(rxrpc_recvmsg_return,		"RETN") \
+ 	EM(rxrpc_recvmsg_terminal,		"TERM") \
+ 	EM(rxrpc_recvmsg_to_be_accepted,	"TBAC") \
++	EM(rxrpc_recvmsg_unqueue,		"UNQU") \
+ 	E_(rxrpc_recvmsg_wait,			"WAIT")
+ 
+ #define rxrpc_rtt_tx_traces \
+--- a/net/rxrpc/call_accept.c
++++ b/net/rxrpc/call_accept.c
+@@ -220,6 +220,7 @@ void rxrpc_discard_prealloc(struct rxrpc
+ 	tail = b->call_backlog_tail;
+ 	while (CIRC_CNT(head, tail, size) > 0) {
+ 		struct rxrpc_call *call = b->call_backlog[tail];
++		rxrpc_see_call(call);
+ 		rcu_assign_pointer(call->socket, rx);
+ 		if (rx->discard_new_call) {
+ 			_debug("discard %lx", call->user_call_ID);
+--- a/net/rxrpc/recvmsg.c
++++ b/net/rxrpc/recvmsg.c
+@@ -546,6 +546,16 @@ try_again:
+ 	write_lock_bh(&rx->recvmsg_lock);
+ 	l = rx->recvmsg_q.next;
+ 	call = list_entry(l, struct rxrpc_call, recvmsg_link);
++
++	rxrpc_see_call(call);
++	if (test_bit(RXRPC_CALL_RELEASED, &call->flags)) {
++		list_del_init(&call->recvmsg_link);
++		write_unlock_bh(&rx->recvmsg_lock);
++		release_sock(&rx->sk);
++		trace_rxrpc_recvmsg(call, rxrpc_recvmsg_unqueue, 0, 0, 0, 0);
++		rxrpc_put_call(call, rxrpc_call_put);
++		goto try_again;
++	}
+ 	if (!(flags & MSG_PEEK))
+ 		list_del_init(&call->recvmsg_link);
+ 	else
+@@ -568,8 +578,13 @@ try_again:
+ 
+ 	release_sock(&rx->sk);
+ 
+-	if (test_bit(RXRPC_CALL_RELEASED, &call->flags))
+-		BUG();
++	if (test_bit(RXRPC_CALL_RELEASED, &call->flags)) {
++		rxrpc_see_call(call);
++		mutex_unlock(&call->user_mutex);
++		if (!(flags & MSG_PEEK))
++			rxrpc_put_call(call, rxrpc_call_put);
++		goto try_again;
++	}
+ 
+ 	if (test_bit(RXRPC_CALL_HAS_USERID, &call->flags)) {
+ 		if (flags & MSG_CMSG_COMPAT) {
 
 
