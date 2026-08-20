@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260C035200C;
-	Thu, 20 Aug 2026 15:03:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12AC37DAA6;
+	Thu, 20 Aug 2026 15:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238212; cv=none; b=fqXILfZh+x6bd5uNz5hQG63l5Z0kRb46Zh2hrkwDfIttSBS4a8x7p4RntOGZ/hvhK+ANfJ3fNy+/nr+5VrsUiTKMB4C1Pnfq4n5cpt6auk4mWnQEmqeGJji2u+Nc2t6ZmfwXFB/fvBHULSBRdroZUmwT6pFk2FE1jus7A4shWKE=
+	t=1787238215; cv=none; b=R/N4VqbDtuWSNs9TnxzoZSpmidHnm8qcfsiF6H7kkSghX2B/pl3PxxPuh0WkzUveefB1+ygxAXNnc+HhSV5mvRgk2QOdEXWd5wzw2fMK/VZCjvUbSRL7T7MmU1GOHaMHT2efJmVwo81rHLVfLqmia3xkgeGbw3ecbzCBzvKlHWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238212; c=relaxed/simple;
-	bh=tq379GoNx1BHbHCBcviI8BEP8Xpo2SfG15l/Xd18FuA=;
+	s=arc-20240116; t=1787238215; c=relaxed/simple;
+	bh=wAPt9WWWhbPVXrAgZsQNbSyBKER/WGx4Sp3Njn23sV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rXCyAMEQrFqGggOaTGs6x7LMSfHmOrw5enF2CCJv2xaDGlh42JofoNIPiEEqLArejgeG7WQVW2OOimRugjrQrQQy2yJVA/hVZdxMA5d90JM4bW95goIg5aAaUc+kUp6rhxtPZYWOi/ci9rLPLSa/+BLRaH5PTj9VhPLDlIS26GY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zicTNtz1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HDZl7N800G7L3v4IfkPqzEQ6f/ol6LAeknCMveO2QmQgo1g68MuIQ/JwzNJlgkXOkoWordtKkmkzzPdjag8JW23UdUv1KXcM+agKqHI9543AN7HCUQ2zGC2Vx4Du28kOukQcWaDtQwzib/a8OvMBd760n7wEEj49lWwwvihkbCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vmwttMTz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zicTNtz1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898C21F000E9;
-	Thu, 20 Aug 2026 15:03:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vmwttMTz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F51C1F000E9;
+	Thu, 20 Aug 2026 15:03:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238211;
-	bh=Pmd6buyp4HnN/yjfYrIFnsE2C9apdMgIUxFlO3+H2Xo=;
+	s=korg; t=1787238214;
+	bh=miPTM3V7nHNqAslVtY1et/sBodqTeEfZ0F439UI1yBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zicTNtz1lzp1FQnj7lg5P/TTIkKz5EIeditzitVZy75voEaept2o8xnw+UNCUUDiX
-	 24fGfJsFCoVO2DYAwJ3VVvGg7QxKBxxjGtmHP4RCelZhTc3ElC1FR+gIUPeg0TMb26
-	 uoEQD93Ce+YoSNwMMitasVYUvaERSeO0ylsfCnZs=
+	b=vmwttMTzD6hotNke/fN/RlqWU1LYBE9PSBlbSWMK4jDVbUFDQooXn7lVqw1M22r40
+	 +jBj1iMfcxuWXvCEQnb/U5hNOB5GCdEVhrcPnDEMRvdyWb9wv+xRfkmYg4hhx2aRoS
+	 sXjyWmQ7srpOdVoVh9W8vW+kTq0KGwBAlpaHo4LE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	Leon Hwang <leon.hwang@linux.dev>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.1 070/228] ftrace: Protect direct_functions in update_ftrace_direct_mod
-Date: Thu, 20 Aug 2026 16:53:32 +0200
-Message-ID: <20260820145246.588121244@linuxfoundation.org>
+Subject: [PATCH 7.1 071/228] ftrace: Fix off-by-one fentry site disable in ftrace_free_mem()
+Date: Thu, 20 Aug 2026 16:53:33 +0200
+Message-ID: <20260820145246.616423595@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -51,63 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-commit 092f8ec7dbdc71f5bde9bb0f8dead384d2115a44 upstream.
+commit 8b8292d6487c81bd57c2605a9b404b1cf8f1edfb upstream.
 
-Fix accessing the __rcu pointer direct_functions with RCU protection.
+When a module's init text is freed, do_init_module() calls
+ftrace_free_mem() with a half-open [start, end) range.  However the
+ftrace_cmp_recs() comparator treats the upper bound as inclusive, as all
+its other users do, passing 'ip + size - 1'.  So ftrace_free_mem() can
+delete a record sitting exactly at 'end', which is outside the freed
+range.
+
+For a kernel without CFI or IBT, the first record of a function is at
+the function start, which for the first function in a module is also the
+base of its text allocation.  As the module allocator packs its regions,
+that address is often the 'end' passed by a neighboring module's
+do_init_module(), causing the first function's ftrace location to get
+disabled, preventing an attempt to livepatch it:
+
+  livepatch: failed to find location for function 'pcspkr_probe'
+
+Convert the exclusive end to the inclusive 'end - 1' the comparator
+expects, and return early for an empty range to avoid the subtraction
+from underflowing when the init text size is zero.
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260730150411.88667-4-leon.hwang@linux.dev
-Fixes: e93672f770d7 ("ftrace: Add update_ftrace_direct_mod function")
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
+Fixes: 42c269c88dc1 ("ftrace: Allow for function tracing to record init functions on boot up")
+Link: https://patch.msgid.link/1b5ccfa8095bdb1277f84af1c2c2e2205aca03ae.1785992188.git.jpoimboe@kernel.org
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ kernel/trace/ftrace.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 --- a/kernel/trace/ftrace.c
 +++ b/kernel/trace/ftrace.c
-@@ -6594,6 +6594,7 @@ int update_ftrace_direct_mod(struct ftra
- 		.func		= ftrace_stub,
- 		.flags		= FTRACE_OPS_FL_STUB,
- 	};
-+	struct ftrace_hash *direct_hash;
- 	struct ftrace_hash *orig_hash;
- 	unsigned long size, i;
- 	int err = -EINVAL;
-@@ -6604,8 +6605,6 @@ int update_ftrace_direct_mod(struct ftra
- 		return -EINVAL;
- 	if (!(ops->flags & FTRACE_OPS_FL_ENABLED))
- 		return -EINVAL;
--	if (direct_functions == EMPTY_HASH)
--		return -EINVAL;
+@@ -8282,7 +8282,8 @@ static void add_to_clear_hash_list(struc
+ void ftrace_free_mem(struct module *mod, void *start_ptr, void *end_ptr)
+ {
+ 	unsigned long start = (unsigned long)(start_ptr);
+-	unsigned long end = (unsigned long)(end_ptr);
++	/* end is inclusive and end_ptr is exclusive */
++	unsigned long end = (unsigned long)(end_ptr) - 1;
+ 	struct ftrace_page **last_pg = &ftrace_pages_start;
+ 	struct ftrace_page *tmp_page = NULL;
+ 	struct ftrace_page *pg;
+@@ -8292,6 +8293,9 @@ void ftrace_free_mem(struct module *mod,
+ 	struct ftrace_init_func *func, *func_next;
+ 	LIST_HEAD(clear_hash);
  
- 	/*
- 	 * We can be called from within ops_func callback with direct_mutex
-@@ -6613,6 +6612,12 @@ int update_ftrace_direct_mod(struct ftra
- 	 */
- 	if (do_direct_lock)
- 		mutex_lock(&direct_mutex);
-+	else
-+		lockdep_assert_held_once(&direct_mutex);
++	if (start_ptr >= end_ptr)
++		return;
 +
-+	direct_hash = rcu_dereference_protected(direct_functions, lockdep_is_held(&direct_mutex));
-+	if (direct_hash == EMPTY_HASH)
-+		goto unlock;
+ 	key.ip = start;
+ 	key.flags = end;	/* overload flags, as it is unsigned long */
  
- 	orig_hash = ops->func_hash ? ops->func_hash->filter_hash : NULL;
- 	if (!orig_hash)
-@@ -6644,7 +6649,7 @@ int update_ftrace_direct_mod(struct ftra
- 	size = 1 << hash->size_bits;
- 	for (i = 0; i < size; i++) {
- 		hlist_for_each_entry(entry, &hash->buckets[i], hlist) {
--			tmp = __ftrace_lookup_ip(direct_functions, entry->ip);
-+			tmp = __ftrace_lookup_ip(direct_hash, entry->ip);
- 			if (!tmp)
- 				continue;
- 			tmp->direct = entry->direct;
 
 
