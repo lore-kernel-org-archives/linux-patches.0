@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D346947F774;
-	Thu, 20 Aug 2026 17:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E22947ECC6;
+	Thu, 20 Aug 2026 17:32:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247147; cv=none; b=CO1UESVL8RPa53zvovBu3IE3fGEil5Y9i+o6EYuP/6yfBVbtbc8ucgvw6PjaiOThVRYSf4FrUrukkq8Nft8aFSBQm2PZ66RqASChEb3je0JrQozGd4rGj0/TyoBlGnUeWLCDs5knnf3xPhFSdV0YyaWBnysyNjFK8zzl/IGZ8Xs=
+	t=1787247149; cv=none; b=Y1Z8tOleOxt4yi5NiVY7SrxwlVpqi5KfHBUIJF0Nnt2I6o8MI6AGMMsHxonawY6x61Oug0jWWdvilixihGuD/Vv1v5k7HB4koE7qJ0pkv2Q4YxQr2+7JMv/U9k1zfzQg2g/a2lVKOlnZ7D6PSFbz7JE1de4ANgvsoK7nkKnksCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247147; c=relaxed/simple;
-	bh=9gy4h4fLwf/fUUL6fojkFM6BjD+VY9tBxiSvD4zHwzc=;
+	s=arc-20240116; t=1787247149; c=relaxed/simple;
+	bh=n/6dq9plsJAzyROaxy1c0+xKIxeiptbzNgS386EDQy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C5AKuBC5KOLfWvfiPNO08lSbMQYl6OfticOpfddpSz0YeI3bm1uGBuDTYSEw1sRmy8490/jgPTuY+Q7bbarMpKKcvmB4Wja/4IqTF1vUl4snAIF0RZEwpZRerlOvDO+gT0V/A2o27GGbKDn/jpFJJBgmRAIsXOChawwGvt9KuEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IpAqd1Ey; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fiaZ0kfSW4jpYV1z20mPPHXe+jLiSUqTIhbjnNvCUXd7PkGwFlMzoOhxozNVzY7vKpT0NU4u4mBgdhzxR6DL1MrO7+7DHY6gkN2Z2Kz/DbY2J3Dny35fCg8n0iQ7uAPpfB/5FidIq0gtl740DlpsB8yjOVk41JSapWjoYXW/kKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBIdkW+9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IpAqd1Ey"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B8F1F000E9;
-	Thu, 20 Aug 2026 17:32:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBIdkW+9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5611F000E9;
+	Thu, 20 Aug 2026 17:32:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247145;
-	bh=muV2YotFrVVRO0Z3hxL7x7jITM2JXVnXQB9rTHLJ24A=;
+	s=korg; t=1787247148;
+	bh=iWZKcFFCD4BbMrvO8tV5BYlYeGTEecdngUkq5gVrRTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IpAqd1Ey5q9ygU/GCsEUY3pxy8YyCQni6lUJMtWfdChdjFowlOlfyeGtRLokrIetZ
-	 yTdqEszXoT/3SjnF/0omp7nx8jPjme0sPyJJgTM2760NF5JrKrLFoTl0yJucdHQrFM
-	 +B8+QLZScfczdKw2kG2khaldM5Pdf2STTgHv0Zk0=
+	b=mBIdkW+95KjESMkbxzZ2MRv6Z04Je9XYkfjLFu2Bw1FyCCQHJVmRidipt5+MlKW/0
+	 t9U6zj3W9f17GImoJAYIjnfOtMj2iN8gBKnlJioh+ukOwOxqU92xmGpKp9oIHJIGjA
+	 sGgAa6o4/8FWlNwhgYSfhwUN1H4BwuD2P/gv80dM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
 	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Huiwen He <hehuiwen@kylinos.cn>,
 	Frank Sorenson <sorenson@redhat.com>,
-	linux-cifs@vger.kernel.org,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 165/220] smb: client: fix race with fallocate(2) and AIO+DIO
-Date: Thu, 20 Aug 2026 16:55:55 +0200
-Message-ID: <20260820145228.435544234@linuxfoundation.org>
+Subject: [PATCH 6.12 166/220] cifs: add fscache_resize_cookie() to cifs_setsize()
+Date: Thu, 20 Aug 2026 16:55:56 +0200
+Message-ID: <20260820145228.465691865@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -54,183 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Frank Sorenson <sorenson@redhat.com>
 
-[ Upstream commit dba9f997c9d9a1cade05d006ed0429a63a4eed32 ]
+[ Upstream commit fa724e235cfdb0fb0bb427d0f9dfe864ae27403e ]
 
-AIO+DIO may extend the file size, hence we need to make sure ->i_size
-is stable across the entire fallocate(2) operation, otherwise it would
-become a truncate and then inode size reduced back down when it
-finishes.
+Several code paths update the VFS inode size by calling
+netfs_resize_file() and cifs_setsize(), but omit the corresponding
+fscache_resize_cookie() call, leaving the fscache cookie out of sync
+with the actual file size:
 
-Fix this by calling netfs_wait_for_outstanding_io() right after
-acquiring ->i_rwsem exclusively in cifs_fallocate() and then guarantee
-a stable ->i_size across fallocate(2).
+  - cifs_file_set_size() in inode.c: server-side truncation via setattr
+  - cifs_do_truncate() in file.c: truncates to zero on O_TRUNC open
+  - smb2_duplicate_extents() in smb2ops.c: file clone extending EOF
+  - smb3_simple_falloc() in smb2ops.c: two branches that extend EOF
+    via write-range and SMB2_set_eof respectively
 
-Also call netfs_wait_for_outstanding_io() after truncating pagecache
-to avoid any potential races with writeback.
+Since every caller of cifs_setsize() must resize the fscache cookie,
+add the call to cifs_setsize() itself, consistent with how
+truncate_pagecache() is already consolidated there.
 
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Fixes: 210627b0aca9 ("smb: client: fix missing timestamp updates with O_TRUNC")
-Cc: Frank Sorenson <sorenson@redhat.com>
-Cc: linux-cifs@vger.kernel.org
+Fixes: 70431bfd825d ("cifs: Support fscache indexing rewrite")
+Fixes: 93a43155127f ("cifs: Fix missing set of remote_i_size")
+Fixes: 110fee6b9bb5 ("smb: client: fix missing timestamp updates with O_TRUNC")
+Fixes: 7a06d3b816d7 ("smb/client: emulate small EOF-extending mode 0 fallocate ranges")
+Cc: stable@vger.kernel.org
+Cc: David Howells <dhowells@redhat.com>
+Cc: Paulo Alcantara <pc@manguebit.org>
+Cc: Huiwen He <hehuiwen@kylinos.cn>
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Reviewed-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: fa724e235cfd ("cifs: add fscache_resize_cookie() to cifs_setsize()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsfs.c  |   22 +++++++++++++++++++---
- fs/smb/client/inode.c   |    1 +
- fs/smb/client/smb2ops.c |   18 ++++++------------
- 3 files changed, 26 insertions(+), 15 deletions(-)
+ fs/smb/client/inode.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -359,11 +359,27 @@ static long cifs_fallocate(struct file *
- 	struct cifs_sb_info *cifs_sb = CIFS_FILE_SB(file);
- 	struct cifs_tcon *tcon = cifs_sb_master_tcon(cifs_sb);
- 	struct TCP_Server_Info *server = tcon->ses->server;
-+	struct inode *inode = file_inode(file);
-+	int rc;
- 
--	if (server->ops->fallocate)
--		return server->ops->fallocate(file, tcon, mode, off, len);
-+	if (!server->ops->fallocate)
-+		return -EOPNOTSUPP;
- 
--	return -EOPNOTSUPP;
-+	rc = inode_lock_killable(inode);
-+	if (rc)
-+		return rc;
-+
-+	netfs_wait_for_outstanding_io(inode);
-+
-+	rc = file_modified(file);
-+	if (rc)
-+		goto out_unlock;
-+
-+	rc = server->ops->fallocate(file, tcon, mode, off, len);
-+
-+out_unlock:
-+	inode_unlock(inode);
-+	return rc;
- }
- 
- static int cifs_permission(struct mnt_idmap *idmap,
 --- a/fs/smb/client/inode.c
 +++ b/fs/smb/client/inode.c
-@@ -2965,6 +2965,7 @@ void cifs_setsize(struct inode *inode, l
- 	/* Cached inode must be refreshed on truncate */
+@@ -2966,6 +2966,7 @@ void cifs_setsize(struct inode *inode, l
  	cifs_i->time = 0;
  	truncate_pagecache(inode, offset);
-+	netfs_wait_for_outstanding_io(inode);
+ 	netfs_wait_for_outstanding_io(inode);
++	fscache_resize_cookie(cifs_inode_cookie(inode), offset);
  }
  
  static int
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3315,7 +3315,6 @@ static long smb3_zero_range(struct file
- 	trace_smb3_zero_enter(xid, cfile->fid.persistent_fid, tcon->tid,
- 			      ses->Suid, offset, len);
- 
--	inode_lock(inode);
- 	filemap_invalidate_lock(inode->i_mapping);
- 
- 	i_size = i_size_read(inode);
-@@ -3333,6 +3332,7 @@ static long smb3_zero_range(struct file
- 	 * first, otherwise the data may be inconsistent with the server.
- 	 */
- 	truncate_pagecache_range(inode, offset, offset + len - 1);
-+	netfs_wait_for_outstanding_io(inode);
- 
- 	/* if file not oplocked can't be sure whether asking to extend size */
- 	rc = -EOPNOTSUPP;
-@@ -3361,7 +3361,6 @@ static long smb3_zero_range(struct file
- 
-  zero_range_exit:
- 	filemap_invalidate_unlock(inode->i_mapping);
--	inode_unlock(inode);
- 	free_xid(xid);
- 	if (rc)
- 		trace_smb3_zero_err(xid, cfile->fid.persistent_fid, tcon->tid,
-@@ -3385,7 +3384,6 @@ static long smb3_punch_hole(struct file
- 
- 	xid = get_xid();
- 
--	inode_lock(inode);
- 	/* Need to make file sparse, if not already, before freeing range. */
- 	/* Consider adding equivalent for compressed since it could also work */
- 	rc = smb2_set_sparse(xid, tcon, cfile, inode, set_sparse);
-@@ -3398,6 +3396,7 @@ static long smb3_punch_hole(struct file
- 	 * caches first, otherwise the data may be inconsistent with the server.
- 	 */
- 	truncate_pagecache_range(inode, offset, offset + len - 1);
-+	netfs_wait_for_outstanding_io(inode);
- 
- 	cifs_dbg(FYI, "Offset %lld len %lld\n", offset, len);
- 
-@@ -3432,7 +3431,6 @@ static long smb3_punch_hole(struct file
- unlock:
- 	filemap_invalidate_unlock(inode->i_mapping);
- out:
--	inode_unlock(inode);
- 	free_xid(xid);
- 	return rc;
- }
-@@ -3709,8 +3707,6 @@ static long smb3_collapse_range(struct f
- 
- 	xid = get_xid();
- 
--	inode_lock(inode);
--
- 	old_eof = i_size_read(inode);
- 	if ((off >= old_eof) ||
- 	    off + len >= old_eof) {
-@@ -3725,6 +3721,7 @@ static long smb3_collapse_range(struct f
- 
- 	truncate_pagecache_range(inode, off, old_eof);
- 	ictx->zero_point = old_eof;
-+	netfs_wait_for_outstanding_io(inode);
- 
- 	rc = smb2_copychunk_range(xid, cfile, cfile, off + len,
- 				  old_eof - off - len, off);
-@@ -3745,8 +3742,7 @@ static long smb3_collapse_range(struct f
- 	fscache_resize_cookie(cifs_inode_cookie(inode), new_eof);
- out_2:
- 	filemap_invalidate_unlock(inode->i_mapping);
-- out:
--	inode_unlock(inode);
-+out:
- 	free_xid(xid);
- 	return rc;
- }
-@@ -3763,8 +3759,6 @@ static long smb3_insert_range(struct fil
- 
- 	xid = get_xid();
- 
--	inode_lock(inode);
--
- 	old_eof = i_size_read(inode);
- 	if (off >= old_eof) {
- 		rc = -EINVAL;
-@@ -3779,6 +3773,7 @@ static long smb3_insert_range(struct fil
- 	if (rc < 0)
- 		goto out_2;
- 	truncate_pagecache_range(inode, off, old_eof);
-+	netfs_wait_for_outstanding_io(inode);
- 
- 	rc = SMB2_set_eof(xid, tcon, cfile->fid.persistent_fid,
- 			  cfile->fid.volatile_fid, cfile->pid, new_eof);
-@@ -3801,8 +3796,7 @@ static long smb3_insert_range(struct fil
- 	rc = 0;
- out_2:
- 	filemap_invalidate_unlock(inode->i_mapping);
-- out:
--	inode_unlock(inode);
-+out:
- 	free_xid(xid);
- 	return rc;
- }
 
 
