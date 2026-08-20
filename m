@@ -1,214 +1,112 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93347476CED;
-	Thu, 20 Aug 2026 17:57:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB1E38BF67
+	for <patches@lists.linux.dev>; Thu, 20 Aug 2026 18:01:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248663; cv=none; b=lW+WR1CkqN/kZvEsVrZ+3TMn5OicbGeX04aTUlwAIhLQYMOrsPqvcikmf+hNaHLo3xONKFD2vHHB/pxNjuXekn5WAveQiLf3ewg1zy8bgJtUjnilvwGzGsw3kU9oxD7542wX8VhfKrza2BK/L/7EycZrzo9VK7t71Mp/vjlWIGU=
+	t=1787248900; cv=none; b=moPxX0nDj5d0cvWIclRmVLa7WTDpzrMU/6oocEWY/qtvf8LbydwM60kAJ0DHWHD/Ml+E2aOX4GEBS8+SxRpI/EbOkF+mv1I+cQRFhWeyf1c/1o5rxbwZ8Opk+qIwGwVRF5Yejes1cI1pgjb52ggvIxWFcB0P7qa40r9MKa2xTUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248663; c=relaxed/simple;
-	bh=gguni2ah3YRdcHctW3KJ/oLSO0BoPcrUQvE31LKz59Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ke4igt1oSqmwIaKWC86527X+MBVwBRfd2ITCIzcA+kwuM1k6jviUnT6Kg4eJ5uJSqKuIlTL+iLf5cZ8+N2/0yiVh3C2+L/4U/mSmZb22V0F0ok6tT9P3b4ib0vCSOE0XIgurimMrzp9LjLLpGMgdP1OoQNkmDWEbU9zFaoqr+B0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vFD1T2Pl; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787248900; c=relaxed/simple;
+	bh=KxTpZF2RsrhJWGZKvLp6hljlhcEuDals4RgmZO58QVY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oPDz6U3FWD734lSm5d7QxrjZHTOd2lHKqYyK90nhQYEJvM+iyH7CwQ2tebk8VGtuyCbhTtt1qVwp/N2uO4L4L2xY1Aj211Ke18JId2o174igYS3dm/WHb/IeMjcM2pwLQUSBgwWYcIQncrRQ9WP9KP6Ov3RtPq6IPNXjWKYh/NA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c2eo7uau; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFD1T2Pl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3CDC1F000E9;
-	Thu, 20 Aug 2026 17:57:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248662;
-	bh=HAcziLAlpnghOe+dDlh0JlfD+IQdUY/GYNIVPCtJAvg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vFD1T2PlgTzpoRdoAOQz4yIhToEv+UGn0Q53LVoX+//UWTHxdj30j8+8rwF0G4olC
-	 /JhK2bY3z2674QhrkPAKDlLyMqaKjovatPbzgflR57fe7Tg+qs8S3HU4syln4RVtQD
-	 nxenLfI34gzg0YNCXL3tklkUuo3RbmZ3zuJcVChM=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 275/303] netfilter: conntrack: sctp: use nf log infrastructure for invalid packets
-Date: Thu, 20 Aug 2026 16:56:51 +0200
-Message-ID: <20260820145301.733406612@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
-References: <20260820145253.200766705@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c2eo7uau"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2cacf197759so2285215ad.2
+        for <patches@lists.linux.dev>; Thu, 20 Aug 2026 11:01:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787248899; x=1787853699; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=hlqcwbHmyeOGRtWViVrwh5tgOZkhPcaz2pk+ge5vkPk=;
+        b=c2eo7uauZAaIn/RcwH7Cf5QmLsAbyz/asqBFvnFv6KQNYNCXaR9HfQSrZUca4nMwIZ
+         XJktmKdkdiGLs1p3ZnrCvNuyDKeV8eO2M4EZ3++1smHpLvdkzKNSQsmdCzmr+40iDIfP
+         wvHDeUR6hNh3nbgdSOU17RhOiZT8f/hGEeUh6sEzMrrg4XtvTOdbOMSJOLHRuxgPZ1XL
+         LVmnkyO3xjrd2qc1CxHeFIZqVxRvdQSKS9DxafKkWllFEIlHgYcLPx59XuZEeB2/o0Uw
+         QK07/fF1yPgQVe0jR2Rm19rFyVWV7K9eXGUFJ1VXYo+scKC8GhePTbH1Ts8QcegQHdsB
+         AN1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787248899; x=1787853699;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=hlqcwbHmyeOGRtWViVrwh5tgOZkhPcaz2pk+ge5vkPk=;
+        b=RGAY4fdLNps+Vcy1zVXN6qKViIF8ZJUeClMUHkliQeJ6ztPU8Z3a9wUUiiQOUVKjMg
+         qZzdjv2okd/9d6QxJpPpOGY2lyavKz8l294gAUwbQvgRgTPs0/RO+hk46A/xUaO3sKbz
+         lMfzdusyWotUl2lXf373sGvjdm9stFNNd7q5G2DXvStaO/ugtTQxHzVDzNSWAIdJcbwr
+         Ksx9pSjRPfr76ejZ7h9C2cHsHrGzXqRmdXhGmhk998raleDGbxcfm9+FNB6H7Xfi/IdZ
+         WrPCld4p/i3XiR9L38mqEEVEwHlQcyE4CIX9QIxNmsrZLtb5yXBgGVvKnehuOLbqtP0U
+         tlMQ==
+X-Gm-Message-State: AFuF++ne4llexUkzY2kVfYtxrkeG/F28hBK28Nl4JkHbnT/CISEibcv4
+	NmVCkXlBWvA+tHCwW24NENLtNSonWwBdDRfLcp1AppkcEJ1vv57uJccf/P5E8Q==
+X-Gm-Gg: AR+sD10bl+lEAR5kBnju/l5BWutBGgyo+BtWc/aSK38jFHV74rmR5OsmpVJbDBqIEgj
+	WVMW4+WPb3Phbn3JCdmLnre+XUMfU05qgnR/R3Tz/sua/sb2enrghNrf6ZaQkfhFWpBBqeQRzhE
+	N1EaLVOA97/jX4gExCzv3fg5nAbwV2svPFruBkgjXSst7V5yf4SIp7/lC/fnesbCpuujtmTCINQ
+	A+db/w1ZauZIURMMuIFXt2Ey1kHV75G7iUp8VhS6oqNBgc59YN42nztQB9DSh1P5HkjJPhyqLdq
+	TDHs9VG4Vwr/fPKUDXrO0C4FRb+yrcdtFzV5Jc7Ib2fCfZtyJdKFCIt3VAFEuvBX5F3Lkfah83s
+	B5K+U42tod3UoIvxgMDRh8O4zaCR8bleJpSYyI5pwnBRpcU0miI+CCFGUGxeic7PcP9VR+H00y6
+	U5UtlJ82ciE67fmjvomVoNEk++LST2FrMYuniRJRz4l0Eb7R3suB5pY5mWNLGAKyEQqY1uhflaf
+	uKhsRuL9KXoCMQ=
+X-Received: by 2002:a17:90b:3c84:b0:390:b41a:b92b with SMTP id 98e67ed59e1d1-395c3542369mr616048a91.4.1787248898010;
+        Thu, 20 Aug 2026 11:01:38 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-395a9e16aa1sm1217463a91.1.2026.08.20.11.01.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Aug 2026 11:01:37 -0700 (PDT)
+Message-ID: <52b90ab8-2503-4cf1-a6aa-767b3c2981d3@gmail.com>
+Date: Thu, 20 Aug 2026 11:01:35 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.15 000/272] 5.15.217-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20260820145231.229664293@linuxfoundation.org>
+Content-Language: en-US, fr-FR
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+On 8/20/26 07:53, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.217 release.
+> There are 272 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 22 Aug 2026 14:51:11 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.217-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-------------------
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-From: Florian Westphal <fw@strlen.de>
-
-[ Upstream commit f71cb8f45d092a1805e9ad474b6c6a17219cede5 ]
-
-The conntrack logging facilities include useful info such as in/out
-interface names and packet headers.
-
-Use those in more places instead of pr_debug calls.
-Furthermore, several pr_debug calls can be removed, they are useless
-on production machines due to the sheer volume of log messages.
-
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: 2d19b95c9723 ("netfilter: nf_conntrack: defer invalid log until after unlock")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/netfilter/nf_conntrack_proto_sctp.c |   44 ++++++++++----------------------
- 1 file changed, 15 insertions(+), 29 deletions(-)
-
---- a/net/netfilter/nf_conntrack_proto_sctp.c
-+++ b/net/netfilter/nf_conntrack_proto_sctp.c
-@@ -152,7 +152,8 @@ for ((offset) = (dataoff) + sizeof(struc
- static int do_basic_checks(struct nf_conn *ct,
- 			   const struct sk_buff *skb,
- 			   unsigned int dataoff,
--			   unsigned long *map)
-+			   unsigned long *map,
-+			   const struct nf_hook_state *state)
- {
- 	u_int32_t offset, count;
- 	struct sctp_chunkhdr _sch, *sch;
-@@ -161,8 +162,6 @@ static int do_basic_checks(struct nf_con
- 	flag = 0;
- 
- 	for_each_sctp_chunk (skb, sch, _sch, offset, dataoff, count) {
--		pr_debug("Chunk Num: %d  Type: %d\n", count, sch->type);
--
- 		if (sch->type == SCTP_CID_INIT ||
- 		    sch->type == SCTP_CID_INIT_ACK ||
- 		    sch->type == SCTP_CID_SHUTDOWN_COMPLETE)
-@@ -177,7 +176,9 @@ static int do_basic_checks(struct nf_con
- 		      sch->type == SCTP_CID_COOKIE_ECHO ||
- 		      flag) &&
- 		     count != 0) || !sch->length) {
--			pr_debug("Basic checks failed\n");
-+			nf_ct_l4proto_log_invalid(skb, ct, state,
-+						  "%s failed. chunk num %d, type %d, len %d flag %d\n",
-+						  __func__, count, sch->type, sch->length, flag);
- 			return 1;
- 		}
- 
-@@ -185,7 +186,6 @@ static int do_basic_checks(struct nf_con
- 			set_bit(sch->type, map);
- 	}
- 
--	pr_debug("Basic checks passed\n");
- 	return count == 0;
- }
- 
-@@ -195,64 +195,47 @@ static int sctp_new_state(enum ip_conntr
- {
- 	int i;
- 
--	pr_debug("Chunk type: %d\n", chunk_type);
--
- 	switch (chunk_type) {
- 	case SCTP_CID_INIT:
--		pr_debug("SCTP_CID_INIT\n");
- 		i = 0;
- 		break;
- 	case SCTP_CID_INIT_ACK:
--		pr_debug("SCTP_CID_INIT_ACK\n");
- 		i = 1;
- 		break;
- 	case SCTP_CID_ABORT:
--		pr_debug("SCTP_CID_ABORT\n");
- 		i = 2;
- 		break;
- 	case SCTP_CID_SHUTDOWN:
--		pr_debug("SCTP_CID_SHUTDOWN\n");
- 		i = 3;
- 		break;
- 	case SCTP_CID_SHUTDOWN_ACK:
--		pr_debug("SCTP_CID_SHUTDOWN_ACK\n");
- 		i = 4;
- 		break;
- 	case SCTP_CID_ERROR:
--		pr_debug("SCTP_CID_ERROR\n");
- 		i = 5;
- 		break;
- 	case SCTP_CID_COOKIE_ECHO:
--		pr_debug("SCTP_CID_COOKIE_ECHO\n");
- 		i = 6;
- 		break;
- 	case SCTP_CID_COOKIE_ACK:
--		pr_debug("SCTP_CID_COOKIE_ACK\n");
- 		i = 7;
- 		break;
- 	case SCTP_CID_SHUTDOWN_COMPLETE:
--		pr_debug("SCTP_CID_SHUTDOWN_COMPLETE\n");
- 		i = 8;
- 		break;
- 	case SCTP_CID_HEARTBEAT:
--		pr_debug("SCTP_CID_HEARTBEAT");
- 		i = 9;
- 		break;
- 	case SCTP_CID_HEARTBEAT_ACK:
--		pr_debug("SCTP_CID_HEARTBEAT_ACK");
- 		i = 10;
- 		break;
- 	default:
- 		/* Other chunks like DATA or SACK do not change the state */
--		pr_debug("Unknown chunk type, Will stay in %s\n",
--			 sctp_conntrack_names[cur_state]);
-+		pr_debug("Unknown chunk type %d, Will stay in %s\n",
-+			 chunk_type, sctp_conntrack_names[cur_state]);
- 		return cur_state;
- 	}
- 
--	pr_debug("dir: %d   cur_state: %s  chunk_type: %d  new_state: %s\n",
--		 dir, sctp_conntrack_names[cur_state], chunk_type,
--		 sctp_conntrack_names[sctp_conntracks[dir][i][cur_state]]);
--
- 	return sctp_conntracks[dir][i][cur_state];
- }
- 
-@@ -369,7 +352,7 @@ int nf_conntrack_sctp_packet(struct nf_c
- 	if (sh == NULL)
- 		goto out;
- 
--	if (do_basic_checks(ct, skb, dataoff, map) != 0)
-+	if (do_basic_checks(ct, skb, dataoff, map, state) != 0)
- 		goto out;
- 
- 	if (!nf_ct_is_confirmed(ct)) {
-@@ -392,7 +375,9 @@ int nf_conntrack_sctp_packet(struct nf_c
- 	    !test_bit(SCTP_CID_HEARTBEAT, map) &&
- 	    !test_bit(SCTP_CID_HEARTBEAT_ACK, map) &&
- 	    sh->vtag != ct->proto.sctp.vtag[dir]) {
--		pr_debug("Verification tag check failed\n");
-+		nf_ct_l4proto_log_invalid(skb, ct, state,
-+					  "verification tag check failed %x vs %x for dir %d",
-+					  sh->vtag, ct->proto.sctp.vtag[dir], dir);
- 		goto out;
- 	}
- 
-@@ -470,9 +455,10 @@ int nf_conntrack_sctp_packet(struct nf_c
- 
- 		/* Invalid */
- 		if (new_state == SCTP_CONNTRACK_MAX) {
--			pr_debug("nf_conntrack_sctp: Invalid dir=%i ctype=%u "
--				 "conntrack=%u\n",
--				 dir, sch->type, old_state);
-+			nf_ct_l4proto_log_invalid(skb, ct, state,
-+						  "Invalid, old_state %d, dir %d, type %d",
-+						  old_state, dir, sch->type);
-+
- 			goto out_unlock;
- 		}
- 
-
-
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
