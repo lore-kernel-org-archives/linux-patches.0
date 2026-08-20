@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB00537C925;
-	Thu, 20 Aug 2026 15:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9038379EDA;
+	Thu, 20 Aug 2026 15:12:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238772; cv=none; b=C43VKMA9Eyi0SuYg+YbFBSpVU4XxD19N+32Zzc/F4/Zgd1npBcWVCXdCmylp9ofNiLDQzzWLqje8Xw286EzW9gi06aoxuRivANCnjXyDyTnp3KQ07b8DpHAI0Bkn9ZKchYLYyhRzI7WXyYFy6vywYmNJVzd3qcl+EHDhrLk6ldY=
+	t=1787238775; cv=none; b=oWRHriuv3MQQQOAZBk4vsxFIOSDTw3XjoC2rqFGzNyjroJgVMV5JPHV8Z4PsVynjW3XnAoje7SDg3VwbBf4YodJuDe1K1Lw73H8NC8DCR55T60ICx7X8KY6VJky4eB+N9HZrGQXC89AJ4LNRgl1nPYKG/PVQeVEdnbYzsEJAVbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238772; c=relaxed/simple;
-	bh=+sxbeqKq3hcp3DnvrB0jvJS68/cJrSnq9/Ld7N65+44=;
+	s=arc-20240116; t=1787238775; c=relaxed/simple;
+	bh=DUj2LRB5+nHmynTW9I8fC2X+sL3Nh0t/eCd7RGCyBa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UaBGUWq9sNg7A/hbKFjSU7vgN5w5xSixYqVrd/LTdbhKCDh3iHLzhzT6n7dnHIVO57IhglE7MtkqAR8Ap0NcL9GwGnPLb5ketwvKzTesmpCcXuH9EULoJjfHKU78oSGsTrvNiHFuqQh49/DJE5OzvssdOKB9cpUzoze+WzpW/ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zNsWmb15; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b36IYfWV6cuqNg6pvkH999rhxleDCGVVVfHoVJvrYSsByEStIRpyfiu+Jvmfmg1WEILLmXCi7tO0XWHp/LUuK+abV6ApLMqIZr7gpE8G9CUya7pIwKusWr5mFqCcEXPVdbFrRyIMs31zB4jCELqMtRs57FpuRPUZIalDFiDctfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEJ8QnCb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zNsWmb15"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDE81F000E9;
-	Thu, 20 Aug 2026 15:12:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEJ8QnCb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E051F000E9;
+	Thu, 20 Aug 2026 15:12:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238770;
-	bh=f2xOplbiUp/mxSGcO5sN+khwUL6DksCH06UdOBpWlxo=;
+	s=korg; t=1787238773;
+	bh=LuEzEWOFuj6QRDNfwFIp6YEQ7InVd2YMqdIZDORD4J8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zNsWmb15HnEUikKwtS3niUay/ikoPgxTuqDEri2VcMAI0m8e20AN7Wk9Gx23GNFyo
-	 u1yhbU/MP1w+IMXxy6hNyorbPSGcj20tSVkh1ZEmwikppH3Oo0SxeM6vn7N5nNwrsg
-	 hb47aDPhWruy7LX8/mBT6e2X4XqVesMjVEfCWmpw=
+	b=tEJ8QnCb/TYubg8WRvkI95FSGHY3vIiYFPsRlu6LQjyzy0DsA8pIzMWSnzNo2geLR
+	 hZPzmjPnxmuCnq4JEzUPfilxhFfuQEe4v6P1K6GAB0fwZtL/d5hytLDoHs94oZxTDv
+	 BSjyQSPCo8ywuXeiuWjLs0OwGOCtwj1T63iP7+1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liyuan Pang <pangliyuan1@huawei.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
-	Dominique Martinet <dominique.martinet@atmark-techno.com>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 004/217] ubi: fastmap: fix ubi->fm memory leak
-Date: Thu, 20 Aug 2026 16:52:52 +0200
-Message-ID: <20260820145237.692750245@linuxfoundation.org>
+Subject: [PATCH 6.18 005/217] ipvs: separate destination availability state
+Date: Thu, 20 Aug 2026 16:52:53 +0200
+Message-ID: <20260820145237.725197531@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -53,164 +57,227 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liyuan Pang <pangliyuan1@huawei.com>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit d133e30aabc7c8eb8206827f8fbe0f3679adb911 ]
+commit cdcc4e46180df8161f4d2f3c6fd6beaf6990133d upstream.
 
-The problem is that scan_fast() allocate memory for ubi->fm
-and ubi->fm->e[x], but if the following attach process fails
-in ubi_wl_init or ubi_read_volume_table, the whole attach
-process will fail without executing ubi_wl_close to free the
-memory under ubi->fm.
+IPVS configuration paths update destination availability while connection
+accounting updates destination overload state. The two independent states
+share dest->flags, so their read-modify-write updates can race and lose one
+another.
 
-Fix this by add a new ubi_free_fastmap function in fastmap.c
-to free the memory allocated for fm.
+Keep OVERLOAD in flags, where the preceding patch serializes its updates
+with dst_lock, and move AVAILABLE to cflags. This keeps configuration-
+controlled availability out of the scheduler hot cacheline until a
+scheduler needs to check it. It also prevents availability updates from
+clobbering overload state.
 
-If SLUB_DEBUG and KUNIT are enabled, the following warning messages
-will show:
-ubi0: detaching mtd0
-ubi0: mtd0 is detached
-ubi0: default fastmap pool size: 200
-ubi0: default fastmap WL pool size: 100
-ubi0: attaching mtd0
-ubi0: attached by fastmap
-ubi0: fastmap pool size: 200
-ubi0: fastmap WL pool size: 100
-ubi0 error: ubi_wl_init [ubi]: no enough physical eraseblocks (4, need 203)
-ubi0 error: ubi_attach_mtd_dev [ubi]: failed to attach mtd0, error -28
-UBI error: cannot attach mtd0
-=================================================================
-BUG ubi_wl_entry_slab (Tainted: G    B      O L   ): Objects remaining in ubi_wl_entry_slab on __kmem_cache_shutdown()
------------------------------------------------------------------------------
+The destination status bits are not exposed through the IPVS sockopt or
+netlink interfaces, so keep their definitions in the internal IPVS header.
 
-Slab 0xffff2fd23a40cd00 objects=22 used=1 fp=0xffff2fd1d0334fd8 flags=0x883fffc010200(slab|head|section=34|node=0|zone=1|lastcpupid=0x7fff)
-CPU: 0 PID: 5884 Comm: insmod Tainted: G    B      O L    5.10.0 #1
-Hardware name: LS1043A RDB Board (DT)
-Call trace:
- dump_backtrace+0x0/0x198
- show_stack+0x18/0x28
- dump_stack+0xe8/0x15c
- slab_err+0x94/0xc0
- __kmem_cache_shutdown+0x1fc/0x39c
- kmem_cache_destroy+0x48/0x138
- ubi_init+0x1d4/0xf34 [ubi]
- do_one_initcall+0xb4/0x24c
- do_init_module+0x4c/0x1dc
- load_module+0x212c/0x2260
- __se_sys_finit_module+0xb4/0xd8
- __arm64_sys_finit_module+0x18/0x28
- el0_svc_common.constprop.0+0x78/0x1a0
- do_el0_svc+0x78/0x90
- el0_svc+0x20/0x38
- el0_sync_handler+0xf0/0x140
- normal+0x3d8/0x400
-Object 0xffff2fd1d0334e68 @offset=3688
-Allocated in ubi_scan_fastmap+0xf04/0xf40 [ubi] age=80 cpu=0 pid=5884
-	__slab_alloc.isra.21+0x6c/0xb4
-	kmem_cache_alloc+0x1e4/0x80c
-	ubi_scan_fastmap+0xf04/0xf40 [ubi]
-	ubi_attach+0x1f0/0x3a8 [ubi]
-	ubi_attach_mtd_dev+0x810/0xbc8 [ubi]
-	ubi_init+0x238/0xf34 [ubi]
-	do_one_initcall+0xb4/0x24c
-	do_init_module+0x4c/0x1dc
-	load_module+0x212c/0x2260
-	__se_sys_finit_module+0xb4/0xd8
-	__arm64_sys_finit_module+0x18/0x28
-	el0_svc_common.constprop.0+0x78/0x1a0
-	do_el0_svc+0x78/0x90
-	el0_svc+0x20/0x38
-	el0_sync_handler+0xf0/0x140
-	normal+0x3d8/0x400
+Readers can still observe stale destination state; this does not provide a
+cross-field snapshot.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220744
-
-Signed-off-by: Liyuan Pang <pangliyuan1@huawei.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Link: https://lore.kernel.org/all/8913381c-1e02-35c7-0ec4-61de5a12fd35@ssi.bg/
+Assisted-by: Claude-Code:GLM-5.2
+Suggested-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+(cherry picked from commit cdcc4e46180df8161f4d2f3c6fd6beaf6990133d)
+[ Julian: Backport by removing the hunks from ip_vs_xmit.c ]
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/attach.c     |  4 +++-
- drivers/mtd/ubi/fastmap-wl.c |  8 +-------
- drivers/mtd/ubi/ubi.h        | 12 ++++++++++++
- 3 files changed, 16 insertions(+), 8 deletions(-)
+ include/net/ip_vs.h              | 7 +++++++
+ include/uapi/linux/ip_vs.h       | 6 ------
+ net/netfilter/ipvs/ip_vs_conn.c  | 4 ++--
+ net/netfilter/ipvs/ip_vs_core.c  | 6 +++---
+ net/netfilter/ipvs/ip_vs_ctl.c   | 4 ++--
+ net/netfilter/ipvs/ip_vs_dh.c    | 4 ++--
+ net/netfilter/ipvs/ip_vs_lblc.c  | 2 +-
+ net/netfilter/ipvs/ip_vs_lblcr.c | 8 ++++----
+ 8 files changed, 21 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/mtd/ubi/attach.c b/drivers/mtd/ubi/attach.c
-index adc47b87b38a..884171871d0e 100644
---- a/drivers/mtd/ubi/attach.c
-+++ b/drivers/mtd/ubi/attach.c
-@@ -1600,7 +1600,7 @@ int ubi_attach(struct ubi_device *ubi, int force_scan)
+diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
+index b65009a226e05..94dfc3a265ee5 100644
+--- a/include/net/ip_vs.h
++++ b/include/net/ip_vs.h
+@@ -34,6 +34,12 @@
+ #define IP_VS_HDR_INVERSE	1
+ #define IP_VS_HDR_ICMP		2
  
- 	err = ubi_read_volume_table(ubi, ai);
- 	if (err)
--		goto out_ai;
-+		goto out_fm;
- 
- 	err = ubi_wl_init(ubi, ai);
- 	if (err)
-@@ -1642,6 +1642,8 @@ int ubi_attach(struct ubi_device *ubi, int force_scan)
- out_vtbl:
- 	ubi_free_all_volumes(ubi);
- 	vfree(ubi->vtbl);
-+out_fm:
-+	ubi_free_fastmap(ubi);
- out_ai:
- 	destroy_ai(ai);
- 	return err;
-diff --git a/drivers/mtd/ubi/fastmap-wl.c b/drivers/mtd/ubi/fastmap-wl.c
-index 9bdb6525f128..e2bc1122bfd3 100644
---- a/drivers/mtd/ubi/fastmap-wl.c
-+++ b/drivers/mtd/ubi/fastmap-wl.c
-@@ -530,8 +530,6 @@ int ubi_is_erase_work(struct ubi_work *wrk)
- 
- static void ubi_fastmap_close(struct ubi_device *ubi)
++/* Destination Server Flags */
++#define IP_VS_DEST_F_OVERLOAD	0x0002		/* server is overloaded */
++
++/* Destination Server Config Flags */
++#define IP_VS_DEST_CF_AVAILABLE	0x0001		/* server is available */
++
+ /* Generic access of ipvs struct */
+ static inline struct netns_ipvs *net_ipvs(struct net* net)
  {
--	int i;
--
- 	return_unused_pool_pebs(ubi, &ubi->fm_pool);
- 	return_unused_pool_pebs(ubi, &ubi->fm_wl_pool);
+@@ -725,6 +731,7 @@ struct ip_vs_dest {
+ 	volatile unsigned int	flags;		/* dest status flags */
+ 	atomic_t		conn_flags;	/* flags to copy to conn */
+ 	atomic_t		weight;		/* server weight */
++	unsigned long		cflags;		/* config flags */
+ 	atomic_t		last_weight;	/* server latest weight */
+ 	__u16			tun_type;	/* tunnel type */
+ 	__be16			tun_port;	/* tunnel port */
+diff --git a/include/uapi/linux/ip_vs.h b/include/uapi/linux/ip_vs.h
+index 1ed234e7f2513..2c37c6ac7525a 100644
+--- a/include/uapi/linux/ip_vs.h
++++ b/include/uapi/linux/ip_vs.h
+@@ -28,12 +28,6 @@
+ #define IP_VS_SVC_F_SCHED_SH_FALLBACK	IP_VS_SVC_F_SCHED1 /* SH fallback */
+ #define IP_VS_SVC_F_SCHED_SH_PORT	IP_VS_SVC_F_SCHED2 /* SH use port */
  
-@@ -540,11 +538,7 @@ static void ubi_fastmap_close(struct ubi_device *ubi)
- 		ubi->fm_anchor = NULL;
+-/*
+- *      Destination Server Flags
+- */
+-#define IP_VS_DEST_F_AVAILABLE	0x0001		/* server is available */
+-#define IP_VS_DEST_F_OVERLOAD	0x0002		/* server is overloaded */
+-
+ /*
+  *      IPVS sync daemon states
+  */
+diff --git a/net/netfilter/ipvs/ip_vs_conn.c b/net/netfilter/ipvs/ip_vs_conn.c
+index e42fed876596a..7da11628073b9 100644
+--- a/net/netfilter/ipvs/ip_vs_conn.c
++++ b/net/netfilter/ipvs/ip_vs_conn.c
+@@ -759,7 +759,7 @@ int ip_vs_check_template(struct ip_vs_conn *ct, struct ip_vs_dest *cdest)
+ 	 * Checking the dest server status.
+ 	 */
+ 	if ((dest == NULL) ||
+-	    !(dest->flags & IP_VS_DEST_F_AVAILABLE) ||
++	    !(dest->cflags & IP_VS_DEST_CF_AVAILABLE) ||
+ 	    expire_quiescent_template(ipvs, dest) ||
+ 	    (cdest && (dest != cdest))) {
+ 		IP_VS_DBG_BUF(9, "check_template: dest not available for "
+@@ -1408,7 +1408,7 @@ void ip_vs_expire_nodest_conn_flush(struct netns_ipvs *ipvs)
+ 				continue;
+ 
+ 			dest = cp->dest;
+-			if (!dest || (dest->flags & IP_VS_DEST_F_AVAILABLE))
++			if (!dest || (dest->cflags & IP_VS_DEST_CF_AVAILABLE))
+ 				continue;
+ 
+ 			if (atomic_read(&cp->n_control))
+diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
+index d121ea3d16bc9..1f62ca2f73309 100644
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -124,7 +124,7 @@ ip_vs_in_stats(struct ip_vs_conn *cp, struct sk_buff *skb)
+ 	struct ip_vs_dest *dest = cp->dest;
+ 	struct netns_ipvs *ipvs = cp->ipvs;
+ 
+-	if (dest && (dest->flags & IP_VS_DEST_F_AVAILABLE)) {
++	if (dest && (dest->cflags & IP_VS_DEST_CF_AVAILABLE)) {
+ 		struct ip_vs_cpu_stats *s;
+ 		struct ip_vs_service *svc;
+ 
+@@ -160,7 +160,7 @@ ip_vs_out_stats(struct ip_vs_conn *cp, struct sk_buff *skb)
+ 	struct ip_vs_dest *dest = cp->dest;
+ 	struct netns_ipvs *ipvs = cp->ipvs;
+ 
+-	if (dest && (dest->flags & IP_VS_DEST_F_AVAILABLE)) {
++	if (dest && (dest->cflags & IP_VS_DEST_CF_AVAILABLE)) {
+ 		struct ip_vs_cpu_stats *s;
+ 		struct ip_vs_service *svc;
+ 
+@@ -2030,7 +2030,7 @@ ip_vs_in_hook(void *priv, struct sk_buff *skb, const struct nf_hook_state *state
  	}
  
--	if (ubi->fm) {
--		for (i = 0; i < ubi->fm->used_blocks; i++)
--			kfree(ubi->fm->e[i]);
--	}
--	kfree(ubi->fm);
-+	ubi_free_fastmap(ubi);
- }
+ 	/* Check the server status */
+-	if (cp && cp->dest && !(cp->dest->flags & IP_VS_DEST_F_AVAILABLE)) {
++	if (cp && cp->dest && !(cp->dest->cflags & IP_VS_DEST_CF_AVAILABLE)) {
+ 		/* the destination server is not available */
+ 		if (sysctl_expire_nodest_conn(ipvs)) {
+ 			bool old_ct = ip_vs_conn_uses_old_conntrack(cp, skb);
+diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
+index 5dea5a14e85f9..c0257ef4d8b03 100644
+--- a/net/netfilter/ipvs/ip_vs_ctl.c
++++ b/net/netfilter/ipvs/ip_vs_ctl.c
+@@ -1058,7 +1058,7 @@ __ip_vs_update_dest(struct ip_vs_service *svc, struct ip_vs_dest *dest,
+ 	}
  
- /**
-diff --git a/drivers/mtd/ubi/ubi.h b/drivers/mtd/ubi/ubi.h
-index c792b9bcab9b..44803d3329f4 100644
---- a/drivers/mtd/ubi/ubi.h
-+++ b/drivers/mtd/ubi/ubi.h
-@@ -969,10 +969,22 @@ int ubi_scan_fastmap(struct ubi_device *ubi, struct ubi_attach_info *ai,
- 		     struct ubi_attach_info *scan_ai);
- int ubi_fastmap_init_checkmap(struct ubi_volume *vol, int leb_count);
- void ubi_fastmap_destroy_checkmap(struct ubi_volume *vol);
-+static inline void ubi_free_fastmap(struct ubi_device *ubi)
-+{
-+	if (ubi->fm) {
-+		int i;
-+
-+		for (i = 0; i < ubi->fm->used_blocks; i++)
-+			kmem_cache_free(ubi_wl_entry_slab, ubi->fm->e[i]);
-+		kfree(ubi->fm);
-+		ubi->fm = NULL;
-+	}
-+}
- #else
- static inline int ubi_update_fastmap(struct ubi_device *ubi) { return 0; }
- static inline int ubi_fastmap_init_checkmap(struct ubi_volume *vol, int leb_count) { return 0; }
- static inline void ubi_fastmap_destroy_checkmap(struct ubi_volume *vol) {}
-+static inline void ubi_free_fastmap(struct ubi_device *ubi) { }
- #endif
+ 	/* set the dest status flags */
+-	dest->flags |= IP_VS_DEST_F_AVAILABLE;
++	dest->cflags |= IP_VS_DEST_CF_AVAILABLE;
  
- /* block.c */
+ 	if (READ_ONCE(dest->u_threshold) != udest->u_threshold ||
+ 	    READ_ONCE(dest->l_threshold) != udest->l_threshold) {
+@@ -1325,7 +1325,7 @@ static void __ip_vs_unlink_dest(struct ip_vs_service *svc,
+ 				struct ip_vs_dest *dest,
+ 				int svcupd)
+ {
+-	dest->flags &= ~IP_VS_DEST_F_AVAILABLE;
++	dest->cflags &= ~IP_VS_DEST_CF_AVAILABLE;
+ 
+ 	/*
+ 	 *  Remove it from the d-linked destination list.
+diff --git a/net/netfilter/ipvs/ip_vs_dh.c b/net/netfilter/ipvs/ip_vs_dh.c
+index 75f4c231f4a02..f04d2530a093a 100644
+--- a/net/netfilter/ipvs/ip_vs_dh.c
++++ b/net/netfilter/ipvs/ip_vs_dh.c
+@@ -220,8 +220,8 @@ ip_vs_dh_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
+ 
+ 	s = (struct ip_vs_dh_state *) svc->sched_data;
+ 	dest = ip_vs_dh_get(svc->af, s, &iph->daddr);
+-	if (!dest
+-	    || !(dest->flags & IP_VS_DEST_F_AVAILABLE)
++	if (!dest ||
++	    !(dest->cflags & IP_VS_DEST_CF_AVAILABLE)
+ 	    || atomic_read(&dest->weight) <= 0
+ 	    || is_overloaded(dest)) {
+ 		ip_vs_scheduler_err(svc, "no destination available");
+diff --git a/net/netfilter/ipvs/ip_vs_lblc.c b/net/netfilter/ipvs/ip_vs_lblc.c
+index 156181a3bacd7..9bb1e05063dc4 100644
+--- a/net/netfilter/ipvs/ip_vs_lblc.c
++++ b/net/netfilter/ipvs/ip_vs_lblc.c
+@@ -503,7 +503,7 @@ ip_vs_lblc_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
+ 		 */
+ 
+ 		dest = en->dest;
+-		if ((dest->flags & IP_VS_DEST_F_AVAILABLE) &&
++		if ((dest->cflags & IP_VS_DEST_CF_AVAILABLE) &&
+ 		    atomic_read(&dest->weight) > 0 && !is_overloaded(dest, svc))
+ 			goto out;
+ 	}
+diff --git a/net/netfilter/ipvs/ip_vs_lblcr.c b/net/netfilter/ipvs/ip_vs_lblcr.c
+index a021e6aba3d7b..1a53c1254fe57 100644
+--- a/net/netfilter/ipvs/ip_vs_lblcr.c
++++ b/net/netfilter/ipvs/ip_vs_lblcr.c
+@@ -170,8 +170,8 @@ static inline struct ip_vs_dest *ip_vs_dest_set_min(struct ip_vs_dest_set *set)
+ 		if (least->flags & IP_VS_DEST_F_OVERLOAD)
+ 			continue;
+ 
+-		if ((atomic_read(&least->weight) > 0)
+-		    && (least->flags & IP_VS_DEST_F_AVAILABLE)) {
++		if ((atomic_read(&least->weight) > 0) &&
++		    (least->cflags & IP_VS_DEST_CF_AVAILABLE)) {
+ 			loh = ip_vs_dest_conn_overhead(least);
+ 			goto nextstage;
+ 		}
+@@ -187,8 +187,8 @@ static inline struct ip_vs_dest *ip_vs_dest_set_min(struct ip_vs_dest_set *set)
+ 
+ 		doh = ip_vs_dest_conn_overhead(dest);
+ 		if (((__s64)loh * atomic_read(&dest->weight) >
+-		     (__s64)doh * atomic_read(&least->weight))
+-		    && (dest->flags & IP_VS_DEST_F_AVAILABLE)) {
++		     (__s64)doh * atomic_read(&least->weight)) &&
++		    (dest->cflags & IP_VS_DEST_CF_AVAILABLE)) {
+ 			least = dest;
+ 			loh = doh;
+ 		}
 -- 
 2.53.0
 
