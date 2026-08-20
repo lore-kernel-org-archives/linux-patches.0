@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8162A33263B;
-	Thu, 20 Aug 2026 15:03:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FDB361640;
+	Thu, 20 Aug 2026 15:03:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238218; cv=none; b=QTl4CZ/4ra0/4bNr010QwqemgEJzx/t1kABHXdu2w6Ofbva5AgcbV6yz3hx/PZ9YfY+pCAU4gJxgN4IkZFFTnEkvoEc2fJ59LCNjeyQpich8CWxvNWZo0TlrS/mE9/+UUM2HmsmriaOHThxU/Eii9e0T2Us68bbQ5AVCM8QVsio=
+	t=1787238221; cv=none; b=D7bMH9fE78/GWpx2ECA/Pm97dcnRp4sgRgT761oSopCetpntsw4zJ5R1Z24a5htIU3lSsupjxTVfI3z780kuVG0wAB0MX414f55gC3h7FA5cqt5+b7FL9QFT6uggLDu30vq6s2gAWq+MTQejmCixaD5FhKyrnySGx3PAlkJmegA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238218; c=relaxed/simple;
-	bh=/5iNqc6TWI5s1qxtXpcdGWIo1zk9rRc9QdZwkKRq+f8=;
+	s=arc-20240116; t=1787238221; c=relaxed/simple;
+	bh=O8s1vJ/q4jcHUrCDgj2Rtmdzgzu0U6ODyZITn7fGSDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tls7FQnzu8vp9JwjMOBxgD1p94ZFt9gC2D2Nn0M0ZnG+aDL8D631nD1JZk569BJsrnjuPgEewyzJ3TdqhfSsYcQ1IvxBs5VJynaXkVxl+2JmSYE07035+QcYzDHUZup7zoi5EpGlgqlnsQmG+8pN3XPpuUlKsjxAdnN1e0rokS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=davuk/1x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Un12qJCarARIc5IsScTpZvyazxIvabYmTTHRGVpwfBA7k/V/xK7pXZjWm/Fgxjf2luTkMqDlSTQ7wvazBtNZDc4Nwxr+RfpcbhuGHj29hIi/7Hvdhv65CCBXT2jMNr1QQmkRS/73VNH85oBrcF/9gk8n6WIQOA5jZjEhRk9n7kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d09Efwie; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="davuk/1x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBDA41F000E9;
-	Thu, 20 Aug 2026 15:03:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d09Efwie"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBB941F000E9;
+	Thu, 20 Aug 2026 15:03:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238217;
-	bh=rXz5YEy7zjF+8nZu0iJCZgkQOre1bDbFghU6HqwhAiM=;
+	s=korg; t=1787238220;
+	bh=2zhT+OsUEMtO17bBD1hNtHXtnuMqoi9RCYhcz3cVwxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=davuk/1x+woqS0uUV1U1LedlqwNLG2xVzF8GOCeZ/V8lAzL1zKsOcoSu79rXv36md
-	 Czz7CjivewV3PGBV4iWj0fOurW4uFNs+iWx6HCFnPTgw99Q67G1H938FF15wWf8xSH
-	 Gx4F2p3zTcMKcanQMYS0NbMeqNi0kaOtDsMrBm/I=
+	b=d09EfwieTR8HNU4xTIEmzWm27Txjq4U2K7cfz4r8xPYVDGGWNwRahR6Zd5aFpNoJQ
+	 bjJKfofLO1SAYI9cWwReK94DKjYd6umZo2utOyqCA+2zoxvxbARfSXtmnajL9FkSpf
+	 yhTdMh88f9AEw1rnmmjO37gDL5P0cfAPhQ9YAguo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Stafford Horne <shorne@gmail.com>
-Subject: [PATCH 7.1 072/228] openrisc: signal: do not restore privileged SR bits on sigreturn
-Date: Thu, 20 Aug 2026 16:53:34 +0200
-Message-ID: <20260820145246.654531078@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 7.1 073/228] Input: sur40 - fix input device registration ordering
+Date: Thu, 20 Aug 2026 16:53:35 +0200
+Message-ID: <20260820145246.684486790@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -50,73 +50,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 32ef1b30ad736519f7a207bcc2986f3d4129d972 upstream.
+commit 9da976eb649c9e2f588a4499410e4d8af687925f upstream.
 
-restore_sigcontext() copies the whole supervision register (SR) from the
-signal frame and only clears SPR_SR_SM before the value is reloaded into
-the hardware SR (through ESR and l.rfe) on the return to user space.  All
-other SR bits are left under user control.
+In sur40_probe(), input_register_device() was previously called early before
+the V4L2 video device and vb2_queue components were fully initialized. If
+userspace opened the input device immediately upon registration, sur40_open()
+would trigger and start the sur40_poll() worker thread. This worker thread
+invokes sur40_process_video() and accesses the uninitialized vb2_queue
+structure, leading to a data race and potential system crash.
 
-An unprivileged task can thus return from a signal handler through a
-crafted sigframe that clears SPR_SR_DME.  With the data MMU disabled the
-CPU performs no translation or protection on data accesses, so the task
-gains read and write access to arbitrary physical memory, a local
-privilege escalation.  SPR_SR_IME, SPR_SR_SUMRA, SPR_SR_LEE, SPR_SR_EPH
-and the cache-enable bits are exposed the same way.  The ptrace GPR regset
-already refuses any change to SR for exactly this reason.
+Furthermore, if V4L2 or video registration failed after input_register_device()
+succeeded, the error path fell through to calling input_free_device() on a
+successfully registered device instead of input_unregister_device(), corrupting
+input core state.
 
-Restore only the arithmetic flag bits (F, CY, OV) from the signal frame
-and take every privileged control bit from the SR the kernel saved on
-signal entry.
+Move input_register_device() to the very end of sur40_probe(). This ensures
+the V4L2 and video queue structures are fully initialized before polling can
+start, and naturally resolves the error path bug since input_free_device()
+is now only called when input registration has not yet occurred.
 
-Verified with qemu-system-or1k -M or1k-sim: before this change an
-unprivileged PoC clears SPR_SR_DME in rt_sigreturn and writes a marker to
-physical address 0x03000000 (beyond the kernel's mem=32M); afterwards the
-same PoC receives SIGSEGV and physical memory is unchanged.
+To maintain strict LIFO (Last-In, First-Out) teardown ordering, also move
+input_unregister_device() to the very beginning of sur40_disconnect(). This
+guarantees that the input polling worker thread is stopped before V4L2
+video components or control handlers are unregistered.
 
-Fixes: ac689eb7f9d4 ("OpenRISC: Signal handling")
+Reported-by: sashiko-bot@kernel.org
 Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Signed-off-by: Stafford Horne <shorne@gmail.com>
+Assisted-by: Antigravity:gemini-3.5-flash
+Link: https://patch.msgid.link/20260616051235.1549517-1-dmitry.torokhov@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/openrisc/include/asm/processor.h |    2 ++
- arch/openrisc/kernel/signal.c         |    5 +++--
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ drivers/input/touchscreen/sur40.c |   21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/arch/openrisc/include/asm/processor.h
-+++ b/arch/openrisc/include/asm/processor.h
-@@ -26,6 +26,8 @@
- 		   | SPR_SR_DCE | SPR_SR_SM)
- #define USER_SR   (SPR_SR_DME | SPR_SR_IME | SPR_SR_ICE \
- 		   | SPR_SR_DCE | SPR_SR_IEE | SPR_SR_TEE)
-+/* SR bits user space may change via sigreturn, the rest stay kernel owned */
-+#define SPR_SR_USER_MASK  (SPR_SR_F | SPR_SR_CY | SPR_SR_OV)
+--- a/drivers/input/touchscreen/sur40.c
++++ b/drivers/input/touchscreen/sur40.c
+@@ -725,21 +725,13 @@ static int sur40_probe(struct usb_interf
+ 		goto err_free_input;
+ 	}
  
- /*
-  * User space process size. This is hardcoded into a few places,
---- a/arch/openrisc/kernel/signal.c
-+++ b/arch/openrisc/kernel/signal.c
-@@ -74,6 +74,7 @@ static long save_fp_state(struct sigcont
- static int restore_sigcontext(struct pt_regs *regs,
- 			      struct sigcontext __user *sc)
+-	/* register the polled input device */
+-	error = input_register_device(input);
+-	if (error) {
+-		dev_err(&interface->dev,
+-			"Unable to register polled input device.");
+-		goto err_free_buffer;
+-	}
+-
+ 	/* register the video master device */
+ 	snprintf(sur40->v4l2.name, sizeof(sur40->v4l2.name), "%s", DRIVER_LONG);
+ 	error = v4l2_device_register(sur40->dev, &sur40->v4l2);
+ 	if (error) {
+ 		dev_err(&interface->dev,
+ 			"Unable to register video master device.");
+-		goto err_unreg_v4l2;
++		goto err_free_buffer;
+ 	}
+ 
+ 	/* initialize the lock and subdevice */
+@@ -798,6 +790,14 @@ static int sur40_probe(struct usb_interf
+ 		goto err_unreg_video;
+ 	}
+ 
++	/* register the polled input device */
++	error = input_register_device(input);
++	if (error) {
++		dev_err(&interface->dev,
++			"Unable to register polled input device.");
++		goto err_unreg_video;
++	}
++
+ 	/* we can register the device now, as it is ready */
+ 	usb_set_intfdata(interface, sur40);
+ 	dev_dbg(&interface->dev, "%s is now attached\n", DRIVER_DESC);
+@@ -823,11 +823,12 @@ static void sur40_disconnect(struct usb_
  {
-+	unsigned long old_sr = regs->sr;
- 	int err = 0;
+ 	struct sur40_state *sur40 = usb_get_intfdata(interface);
  
- 	/* Always make any pending restarted system calls return -EINTR */
-@@ -89,8 +90,8 @@ static int restore_sigcontext(struct pt_
- 	err |= __copy_from_user(&regs->sr, &sc->regs.sr, sizeof(unsigned long));
- 	err |= restore_fp_state(sc);
++	input_unregister_device(sur40->input);
++
+ 	v4l2_ctrl_handler_free(&sur40->hdl);
+ 	video_unregister_device(&sur40->vdev);
+ 	v4l2_device_unregister(&sur40->v4l2);
  
--	/* make sure the SM-bit is cleared so user-mode cannot fool us */
--	regs->sr &= ~SPR_SR_SM;
-+	/* keep the privileged SR bits kernel owned, restore only user flags */
-+	regs->sr = (old_sr & ~SPR_SR_USER_MASK) | (regs->sr & SPR_SR_USER_MASK);
- 
- 	regs->orig_gpr11 = -1;	/* Avoid syscall restart checks */
+-	input_unregister_device(sur40->input);
+ 	kfree(sur40->bulk_in_buffer);
+ 	kfree(sur40);
  
 
 
