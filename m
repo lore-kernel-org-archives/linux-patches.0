@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07460476CFA;
-	Thu, 20 Aug 2026 17:47:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45D844062A;
+	Thu, 20 Aug 2026 17:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248060; cv=none; b=htgfALf01k98agSmrnvUs2pW2WfApA5NpzXiMAehEL0IZ2MmhnFZNmAdW0qxXMWP/gVegmc/FJDdgr6jn2Nb/r7f6OiInWT9UUJeOo8GfzLLE9ck9rB4u1FQtdccOXYLjz+66EcoFk3kEBpsVKb2PJcf7jhdDQ65Krts5bajBjM=
+	t=1787248062; cv=none; b=dEDOFP7PUKsciIkAoJXqYhr+PnoMLQdb8SovGtwtt0ZwYPWTCTLqnO27QTlj+wcNwBqkjT6u0xm6EdK8DRfPbVGaRjpoUCXwAquVfUwPxr7R5wdPKdoBdBqUOQjtgLwzMELRx6MaHvpe4AOFf++7QV/fcE7m9ImuvA5kb3IcQfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248060; c=relaxed/simple;
-	bh=bkLt6B7uudWVPuehtw4Urs8ttL6qcSOyWTAS93rSeNE=;
+	s=arc-20240116; t=1787248062; c=relaxed/simple;
+	bh=aE4zcxgIjPPvAfJkfbP61fhyU11jhD3s40NCWLmArVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RnmI+6laCXJsu6ZQ16KYT+S3n5MXCdSzcUsZBLLAIh3nAgl8/Vgro+v5Z+VUUt7KiqomyIYYsrqqf7U9XUVin4f9RDMd3VHpjYjn7SOHeGvNRWO6vFCQJsmNoXX5GeAi66WGxUTzT1N7Mvf/OkwAhNCC9sD34jhynXRAcgH6+Fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4mTiQkd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FXNgblP3w8tRXECZxW9mwWWPRGoaN8In0i2cPWxCInLLxHnrdQ2LMD0wdJxwGn2aS1QCJU22CJYaQo1mJypCOyKi3IPv1V35lNUR4W5LzYeCLEMrwErAaOdEdKfUHqru1VTp6aA/1nDzKkIaXeeMrFQKc1feOW+YSANWBCI3z6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtugcPlV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4mTiQkd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32BE81F000E9;
-	Thu, 20 Aug 2026 17:47:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtugcPlV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BFF11F000E9;
+	Thu, 20 Aug 2026 17:47:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248058;
-	bh=Y3gDEciRqdGx/Q8SQjYhHVQJ1EA2DSOAvIBA/kus/kM=;
+	s=korg; t=1787248061;
+	bh=1UP7aOzw+ezdoJPZiawWxntX7PxzCcKmRx25qwWhfl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C4mTiQkdFGM3IL21/+dnO4TdTzSoZwrIEB5yon1xicZWKHqe/+EueVHoOP4jzPEYY
-	 D+rchHVVDVu9cvsL73Ky+L+x+sGWfuE0Q0/m+VPyyW3DGZr76kAiLgXaC5j6C2s4S+
-	 s8gtFkCJL7tdRh0fc5gtVkWPL76vaILkiXTskNnc=
+	b=RtugcPlVCp+j98b3d1yDCLaHtO+DpQ0cbePod6/ZlvOUWZM4y9pBRJdRL4tj+Pjpl
+	 bR2foi60aEz7tN0wQa7p1W/XqkgKi8s7TXvqLwTW4AnPWt1Vspk4aT4ehVF6ZHwNu4
+	 sRhJR9JFIz3KprpVWbXiTEKSy0mcZ8xkDb8KZhi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Richter <tmricht@linux.ibm.com>,
-	Hendrik Brueckner <brueckner@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 095/303] s390/cpum_cf: move stccm_avail()
-Date: Thu, 20 Aug 2026 16:53:51 +0200
-Message-ID: <20260820145256.149258109@linuxfoundation.org>
+Subject: [PATCH 6.1 096/303] s390/cpum_cf: remove in-kernel counting facility interface
+Date: Thu, 20 Aug 2026 16:53:52 +0200
+Message-ID: <20260820145256.178986174@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -54,34 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Richter <tmricht@linux.ibm.com>
 
-[ Upstream commit 7a8f09ac1850b17ca0cc9e1e4d6621a64661347e ]
+[ Upstream commit ea53e6995f45e857fd34e4fbfbd436b5457da5f7 ]
 
-Function stccm_avail() is defined in a header file and the
-only user is one single source file. Move this function to the source
-file where it is also used and remove it from the header file.
-No functional change.
+Commit 17bebcc68eee ("s390/cpum_cf: Add minimal in-kernel interface for
+counter measurements") introduced a small in-kernel interface for CPU
+Measurement counter facility.
+There are no users of this interface, therefore remove it.
+
+The following functions are removed:
+ kernel_cpumcf_alert(),
+ kernel_cpumcf_begin(),
+ kernel_cpumcf_end(),
+ kernel_cpumcf_avail()
+there is no need for them anymore.
+With the removal of function kernel_cpumcf_alert(), also remove
+member alert in struct cpu_cf_events. Its purpose was to counter
+measurement alert interrupts for the in-kernel interface.
 
 Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
-Acked-by: Hendrik Brueckner <brueckner@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Stable-dep-of: 49145bce5391 ("s390/perf_cpum_cf: Add missing array_index_nospec() to __hw_perf_event_init()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/include/asm/cpu_mcf.h |    6 ------
- arch/s390/kernel/perf_cpum_cf.c |    6 ++++++
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ arch/s390/include/asm/cpu_mcf.h        |   17 -----------------
+ arch/s390/kernel/perf_cpum_cf.c        |    2 +-
+ arch/s390/kernel/perf_cpum_cf_common.c |   24 ------------------------
+ 3 files changed, 1 insertion(+), 42 deletions(-)
 
 --- a/arch/s390/include/asm/cpu_mcf.h
 +++ b/arch/s390/include/asm/cpu_mcf.h
-@@ -99,12 +99,6 @@ static inline void kernel_cpumcf_end(voi
- 	preempt_enable();
- }
+@@ -67,7 +67,6 @@ static inline int ctr_stcctm(enum cpumf_
+ struct cpu_cf_events {
+ 	struct cpumf_ctr_info	info;
+ 	atomic_t		ctr_set[CPUMF_CTR_SET_MAX];
+-	atomic64_t		alert;
+ 	u64			state;		/* For perf_event_open SVC */
+ 	u64			dev_state;	/* For /dev/hwctr */
+ 	unsigned int		flags;
+@@ -80,25 +79,9 @@ struct cpu_cf_events {
+ };
+ DECLARE_PER_CPU(struct cpu_cf_events, cpu_cf_events);
  
--/* Return true if store counter set multiple instruction is available */
--static inline int stccm_avail(void)
+-bool kernel_cpumcf_avail(void);
+ int __kernel_cpumcf_begin(void);
+-unsigned long kernel_cpumcf_alert(int clear);
+ void __kernel_cpumcf_end(void);
+ 
+-static inline int kernel_cpumcf_begin(void)
 -{
--	return test_facility(142);
+-	if (!cpum_cf_avail())
+-		return -ENODEV;
+-
+-	preempt_disable();
+-	return __kernel_cpumcf_begin();
+-}
+-static inline void kernel_cpumcf_end(void)
+-{
+-	__kernel_cpumcf_end();
+-	preempt_enable();
 -}
 -
  int cfset_online_cpu(unsigned int cpu);
@@ -89,18 +119,68 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  #endif /* _ASM_S390_CPU_MCF_H */
 --- a/arch/s390/kernel/perf_cpum_cf.c
 +++ b/arch/s390/kernel/perf_cpum_cf.c
-@@ -821,6 +821,12 @@ static struct pmu cpumf_pmu = {
- 	.read	      = cpumf_pmu_read,
- };
+@@ -832,7 +832,7 @@ static int __init cpumf_pmu_init(void)
+ {
+ 	int rc;
  
-+/* Return true if store counter set multiple instruction is available */
-+static inline int stccm_avail(void)
-+{
-+	return test_facility(142);
-+}
-+
- static int cfset_init(void);
- static int __init cpumf_pmu_init(void)
+-	if (!kernel_cpumcf_avail())
++	if (!cpum_cf_avail())
+ 		return -ENODEV;
+ 
+ 	/* Setup s390dbf facility */
+--- a/arch/s390/kernel/perf_cpum_cf_common.c
++++ b/arch/s390/kernel/perf_cpum_cf_common.c
+@@ -27,7 +27,6 @@ DEFINE_PER_CPU(struct cpu_cf_events, cpu
+ 		[CPUMF_CTR_SET_EXT]	= ATOMIC_INIT(0),
+ 		[CPUMF_CTR_SET_MT_DIAG] = ATOMIC_INIT(0),
+ 	},
+-	.alert = ATOMIC64_INIT(0),
+ 	.state = 0,
+ 	.dev_state = 0,
+ 	.flags = 0,
+@@ -67,9 +66,6 @@ static void cpumf_measurement_alert(stru
+ 	if (alert & CPU_MF_INT_CF_MTDA)
+ 		pr_warn("CPU[%i] MT counter data was lost\n",
+ 			smp_processor_id());
+-
+-	/* store alert for special handling by in-kernel users */
+-	atomic64_or(alert, &cpuhw->alert);
+ }
+ 
+ #define PMC_INIT      0
+@@ -94,12 +90,6 @@ static void cpum_cf_setup_cpu(void *flag
+ 	lcctl(0);
+ }
+ 
+-bool kernel_cpumcf_avail(void)
+-{
+-	return cpum_cf_initalized;
+-}
+-EXPORT_SYMBOL(kernel_cpumcf_avail);
+-
+ /* Initialize the CPU-measurement counter facility */
+ int __kernel_cpumcf_begin(void)
+ {
+@@ -112,20 +102,6 @@ int __kernel_cpumcf_begin(void)
+ }
+ EXPORT_SYMBOL(__kernel_cpumcf_begin);
+ 
+-/* Obtain the CPU-measurement alerts for the counter facility */
+-unsigned long kernel_cpumcf_alert(int clear)
+-{
+-	struct cpu_cf_events *cpuhw = this_cpu_ptr(&cpu_cf_events);
+-	unsigned long alert;
+-
+-	alert = atomic64_read(&cpuhw->alert);
+-	if (clear)
+-		atomic64_set(&cpuhw->alert, 0);
+-
+-	return alert;
+-}
+-EXPORT_SYMBOL(kernel_cpumcf_alert);
+-
+ /* Release the CPU-measurement counter facility */
+ void __kernel_cpumcf_end(void)
  {
 
 
