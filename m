@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9632D360745;
-	Thu, 20 Aug 2026 15:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B797E360745;
+	Thu, 20 Aug 2026 15:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238720; cv=none; b=O4FE+5eXr8FGRjMA5nK3su4P3JZd1sLrv2c7rwXvORiIbh2wbwilqnDK0ppgeLaL4nXStUpWiHaRVpG6yxVwB35hmmtgBLH6E1lU88kROeSxHeYnpWTvmnp7bsulVE/LV9UHaLw0+BNWzV67CGWITVNALCMaFdikwXMz+8sEkmk=
+	t=1787238723; cv=none; b=TI80COycKcAQ2dyAlaGZxauY7a0ZM7w+SDq7sH3Q6W67gOxnO6nVvhnqZnSiB8hpf84WkCht9UQnIUsxVirNPJlmL7ZXJOkMDxBYYmQYnZ0w6h8hQHBIQW9XgrAftYU37kNs3qNcr+EuLawwwH1bpHex5sLXw0lqmAuxk/Q/PUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238720; c=relaxed/simple;
-	bh=s8dFBS4fnlmhHMqX5NGKsw1vHyz20WEQWVZ8Ps3BqJI=;
+	s=arc-20240116; t=1787238723; c=relaxed/simple;
+	bh=wpvswps5GeFxhwAdsH97tAtnngMjPxpzJPnDhpDghAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uXv/Kf6++QEZEWd3E+3WYyX7YfQgO2b9k5hNv3+8OCkgN/lIpoxECPk1Wcevvr0a1baNwiQPvdTnh9lMGcSt625fmfosZLSVrG3fh+oUuOBlpO4UxZ9WZ0Sd9qWoE2tFfvuvt5yUyGo7CbEHiLcXTYGX4kDQ2lXxUk8l3W8Rga0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fRDQMlB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GkoR+wmUQd0DPX9NEkvFIrm1uOdS4Acqw1R8Y6+AR512U3QAB4jXUkwOqEjRRayyDKcqLWjn1wq2PZXEAWCzjcgmX+MrT462bQ9X0kOXQEeQhC1j41rMyrRh1xKn6VRrkoREUCpNe7Hv5LbQ0TAQaKBSiAfR5tFeUKTi39d5agk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1KRmEAg/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fRDQMlB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05711F000E9;
-	Thu, 20 Aug 2026 15:11:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1KRmEAg/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF621F000E9;
+	Thu, 20 Aug 2026 15:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238719;
-	bh=L/JxAs0iBggb9jHqZpUtZuoGzTJ7zVhBcIMIeSACzbI=;
+	s=korg; t=1787238722;
+	bh=/LbfwUCtpNpR4w+FUrHFA4KDryvss0ee4yeJzTt20Ps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0fRDQMlBzJ6UVXr1J6PVCL5BlJ2BPwDK1UAzl7D2ZX+CAppoa8qQ94iu1jtix+iyJ
-	 VJCu2lpNrH3cd6tisJ8uSrOOHkS0wM35UkiJJ2mWHn1MCt4wyYiEicdtta0rDzL4QL
-	 7EmHzyxrZIslrtlEQDaY1SdipO5eJT96sHa5uc/k=
+	b=1KRmEAg/GmVVsXliEQ2zSe4+7XZ8BD7ZPBKJxX9Gj6jaG+nRmA/JiBvp7xs3Xs20N
+	 cb5HTrXIA0Uiwt2iY9A6GhFRWZuSwE/pelltU+Fc8KpRd1u4mhRRirMftFSs2w3suU
+	 wuoSkQeoPOhjxzBWOfQ/BN7f2BbWjgyO9iAuwEsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 018/217] ASoC: SOF: sof-audio: Fix error path in sof_widget_setup_unlocked()
-Date: Thu, 20 Aug 2026 16:53:06 +0200
-Message-ID: <20260820145238.172623977@linuxfoundation.org>
+Subject: [PATCH 6.18 019/217] ASoC: SOF: ipc4-pcm: Continue the pipeline trigger in case of IPC timeout
+Date: Thu, 20 Aug 2026 16:53:07 +0200
+Message-ID: <20260820145238.202910660@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -53,64 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit e780e4917d43683224812400fe3dc4816fceba75 upstream.
+commit 17661c67b206612cb3ba65d5ae726cd2015d0a53 upstream.
 
-If either tplg_ops->dai_config or widget_kcontrol_setup fail during widget
-setup we would double decrement the use_count of the widget because the
-sof_widget_free_unlocked() would be called twice, similarly the core_put
-would be invoked twice as well.
+Ignore IPC errors for pipeline state change if the firmware state is
+crashed or the IPC has timed out.
 
-Since the use_count and core_put() is handled within the widget_free
-function we need to return without falling through the pipe_widget_free
-label.
+If the firmware has crashed the kernel still needs to go through the state
+changes to reset its internal to be able to correctly work the next time
+the DSP is booted up.
 
-The fixes tag is picked to the last change around this part of the code
-which is adequately old enough for backporting purposes.
+The case with IPC timeout is a bit more problematic, but it has been
+rootcaused to be the result of system scheduling blockage and the firmware
+did actually received and handled the message, but the reply handling got
+blocked by issues outside of the SOF stack.
+So far the best way to handle this is to continue with setting the state.
 
-Link: https://github.com/thesofproject/sof/issues/10826
-Fixes: 31ed8da1c8e5 ("ASoC: SOF: sof-audio: Modify logic for enabling/disabling topology cores")
+Fixes: c40aad7c81e5 ("ASoC: SOF: ipc4-pcm: Workaround for crashed firmware on system suspend")
 Cc: stable@vger.kernel.org
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20260730085914.27546-1-peter.ujfalusi@linux.intel.com
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Link: https://patch.msgid.link/20260730112343.26687-1-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/sof-audio.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ sound/soc/sof/ipc4-pcm.c |   25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
---- a/sound/soc/sof/sof-audio.c
-+++ b/sound/soc/sof/sof-audio.c
-@@ -136,7 +136,6 @@ static int sof_widget_setup_unlocked(str
- {
- 	const struct sof_ipc_tplg_ops *tplg_ops = sof_ipc_get_ops(sdev, tplg);
- 	struct snd_sof_pipeline *spipe = swidget->spipe;
--	bool use_count_decremented = false;
- 	int ret;
- 	int i;
- 
-@@ -215,9 +214,10 @@ static int sof_widget_setup_unlocked(str
- 	return 0;
- 
- widget_free:
--	/* widget use_count will be decremented by sof_widget_free() */
-+	/* widget use_count and core_put handled by sof_widget_free() */
- 	sof_widget_free_unlocked(sdev, swidget);
--	use_count_decremented = true;
-+	return ret;
+--- a/sound/soc/sof/ipc4-pcm.c
++++ b/sound/soc/sof/ipc4-pcm.c
+@@ -528,7 +528,19 @@ static int sof_ipc4_trigger_pipelines(st
+ 	ret = sof_ipc4_set_multi_pipeline_state(sdev, SOF_IPC4_PIPE_PAUSED, trigger_list);
+ 	if (ret < 0) {
+ 		spcm_err(spcm, substream->stream, "failed to pause all pipelines\n");
+-		goto free;
++		/*
++		 * workaround: if the firmware is crashed or the IPC timed out
++		 * while setting the pipeline state we must ignore the error
++		 * code and proceed to set adjust the local pipeline states.
++		 *
++		 * If the firmware is crashed we will not send IPC messages
++		 * and we are going to see errors printed, but the state of the
++		 * widgets will be correct for the next boot.
++		 */
++		if (sdev->fw_state != SOF_FW_CRASHED && ret != -ETIMEDOUT)
++			goto free;
 +
- pipe_widget_free:
- 	if (swidget->id != snd_soc_dapm_scheduler) {
- 		sof_widget_free_unlocked(sdev, swidget->spipe->pipe_widget);
-@@ -232,8 +232,7 @@ pipe_widget_free:
- 		}
++		ret = 0;
  	}
- use_count_dec:
--	if (!use_count_decremented)
--		swidget->use_count--;
-+	swidget->use_count--;
  
- 	return ret;
- }
+ 	/* update PAUSED state for all pipelines just triggered */
+@@ -560,14 +572,15 @@ skip_pause_transition:
+ 			 "failed to set final state %d for all pipelines\n",
+ 			 state);
+ 		/*
+-		 * workaround: if the firmware is crashed while setting the
+-		 * pipelines to reset state we must ignore the error code and
+-		 * reset it to 0.
+-		 * Since the firmware is crashed we will not send IPC messages
++		 * workaround: if the firmware is crashed or the IPC timed out
++		 * while setting the pipeline state we must ignore the error
++		 * code and proceed to set adjust the local pipeline states.
++		 *
++		 * If the firmware is crashed we will not send IPC messages
+ 		 * and we are going to see errors printed, but the state of the
+ 		 * widgets will be correct for the next boot.
+ 		 */
+-		if (sdev->fw_state != SOF_FW_CRASHED || state != SOF_IPC4_PIPE_RESET)
++		if (sdev->fw_state != SOF_FW_CRASHED && ret != -ETIMEDOUT)
+ 			goto free;
+ 
+ 		ret = 0;
 
 
