@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60583812E9;
-	Thu, 20 Aug 2026 15:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA65381AE2;
+	Thu, 20 Aug 2026 15:19:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239156; cv=none; b=WOvd3mjQOekMiL+vuEqF4oCWZ29cfREznD7a+0+3IqwRy4mchEwWbi82ppSjMSBDUrWJK8botMf0GNoyH/IfinTdHEb0QkG6/pTraQYBE2/hpPUiHyUnkUIW0RY1uJdQMaYECxldTREgleWKDdi/FF5rVvn8dA/0VoJ8surWavc=
+	t=1787239160; cv=none; b=ILyvS8a2srxmz8VGGtyYDlnAf/pJfKBu6ZKbQXSMqgE53FPuW+4wwsl88mRyMXolQP0Mfz/CmYgrKRkVH4Z+lTU1ea3LnPCk/XuK6wSoLhU047E7TEPaT7HwHzze6kt6huwyIZv7YOFQLQN7yM1VgNw+NlkZOLB/FwR3JborHT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239156; c=relaxed/simple;
-	bh=Idn92CpA9wcBrHIQEBCsUW6/Lcx2LRZm9DotM0HX3rE=;
+	s=arc-20240116; t=1787239160; c=relaxed/simple;
+	bh=lrw1wmGVFehaCJeW7F4/HS+wIhC7Z+K3Vf2Yiszrrms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R39lA3k19DaKLXvsW4TzmeQPzX+89XavRdlUooSv+zaiYoh1B8iEHqPT062NzfdwMj0e1mn9decLFl2WotA0vjChdVlbDdLbbneuPno7a6rjVr5T8SDWNE+hxIj8Yin2BPPhK1AhlU3CGUnuQ9OYTW7575kbBJTZy8WvzSPmj+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hzc/GFK+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FSoa6FhiOtaC1OObTTXbGFXHqKmBdj7qgSjwXOB/T3ipgX1aJp/vwP0ZAtLQosvwk+TI1T5IKG3Vt9OihwrrNe4nlT1LwP5OPFf3idQvmR1ov7VBlQcxEBybo2EEvZmhKcsWZZ1bkxj2sBd1Gp/iiKWRoAqn7aZatZJYxt2tx9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OGNhNaGL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hzc/GFK+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C291F000E9;
-	Thu, 20 Aug 2026 15:19:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OGNhNaGL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4A31F000E9;
+	Thu, 20 Aug 2026 15:19:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239155;
-	bh=1YEjdl4gZJQWu+B4wBLLskj4wZL0hWF7o9qLbrrW6+U=;
+	s=korg; t=1787239158;
+	bh=B2KQazEbjx5Ly/ZCJVqmWziM71BIBE3E+Dr8E8o9xUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hzc/GFK+qOYIfHEU3kQWceYY6+h4YFXkg4s9B/oWy49mKLRjcer42CEIXiQ6KQN7R
-	 N4L2DzyC/YFkp5SUvLbi9FbkcxGkiUgUr85/zyxPJHmv5tOwHC0oVHUL6FBihIPCEZ
-	 fAyvu9AihAaqU2QEN+KPe7HJV8auPznZKH8ZTUTQ=
+	b=OGNhNaGLJhGgJMV4eEtYCMRfx8jF+c4Fm34YuElUBjaByE0F43k5n6NJuLgGCcCvl
+	 VtV+VDlfwgBPekIa5Q2L2eDRAF00CQg676IybyTcoBOnearvGZALaAxdXnGKHudr53
+	 dADwyIJiOUJMapzW+j2aq27d9hqcK7hNdC3bdwIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seohyeon Maeng <bioloidgp@gmail.com>,
+	Vladislav Dronov <vdronov@redhat.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 170/217] crypto: ccm - Set rfc4309 maxauthsize from child
-Date: Thu, 20 Aug 2026 16:55:38 +0200
-Message-ID: <20260820145242.859008947@linuxfoundation.org>
+Subject: [PATCH 6.18 171/217] crypto: tegra - fix rctx->cryptlen calculation in tegra_gcm_do_one_req()
+Date: Thu, 20 Aug 2026 16:55:39 +0200
+Message-ID: <20260820145242.887207172@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -51,33 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Vladislav Dronov <vdronov@redhat.com>
 
-[ Upstream commit 438f4896f78f69ec73d5f32d2c024193f1223569 ]
+[ Upstream commit 360f2974fcea49c61f6d6f81554741a9eeee7168 ]
 
-Set the maxauthsize of rfc4309 using that of the child algorithm.
+Perform rctx->cryptlen calculation in tegra_gcm_do_one_req() the same way
+it is done in tegra_ccm_crypt_init(). The current formulae may lead to a
+crash if a caller does not call tegra_gcm_setauthsize() and so ctx->authsize
+remains zero. Then a decrypt operation with incorrect rctx->cryptlen will
+lead to a write beyound rctx->dst_sg buffer.
 
-Fixes: 4a49b499dfa0 ("[CRYPTO] ccm: Added CCM mode")
-Reported-by: Seohyeon Maeng <bioloidgp@gmail.com>
+As a follow-up cleanup delete struct tegra_aead_ctx->authsize field since
+it appears to be completely unused. Also simplify tegra_ccm_setauthsize()
+and tegra_gcm_setauthsize() functions respectively.
+
+Fixes: 0880bb3b00c8 ("crypto: tegra - Add Tegra Security Engine driver")
+Signed-off-by: Vladislav Dronov <vdronov@redhat.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/ccm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/tegra/tegra-se-aes.c | 22 +++-------------------
+ 1 file changed, 3 insertions(+), 19 deletions(-)
 
-diff --git a/crypto/ccm.c b/crypto/ccm.c
-index 2ae929ffdef8e..916441e4f2b86 100644
---- a/crypto/ccm.c
-+++ b/crypto/ccm.c
-@@ -747,7 +747,7 @@ static int crypto_rfc4309_create(struct crypto_template *tmpl,
+diff --git a/drivers/crypto/tegra/tegra-se-aes.c b/drivers/crypto/tegra/tegra-se-aes.c
+index 9094c03e991f6..0fd1d70358996 100644
+--- a/drivers/crypto/tegra/tegra-se-aes.c
++++ b/drivers/crypto/tegra/tegra-se-aes.c
+@@ -45,7 +45,6 @@ struct tegra_aes_reqctx {
  
- 	inst->alg.ivsize = 8;
- 	inst->alg.chunksize = crypto_aead_alg_chunksize(alg);
--	inst->alg.maxauthsize = 16;
-+	inst->alg.maxauthsize = crypto_aead_alg_maxauthsize(alg);
+ struct tegra_aead_ctx {
+ 	struct tegra_se *se;
+-	unsigned int authsize;
+ 	u32 alg;
+ 	u32 key_id;
+ 	u32 keylen;
+@@ -1290,7 +1289,7 @@ static int tegra_gcm_do_one_req(struct crypto_engine *engine, void *areq)
+ 	if (rctx->encrypt)
+ 		rctx->cryptlen = req->cryptlen;
+ 	else
+-		rctx->cryptlen = req->cryptlen - ctx->authsize;
++		rctx->cryptlen = req->cryptlen - rctx->authsize;
  
- 	inst->alg.base.cra_ctxsize = sizeof(struct crypto_rfc4309_ctx);
+ 	memcpy(rctx->iv, req->iv, GCM_AES_IV_SIZE);
+ 	rctx->iv[3] = (1 << 24);
+@@ -1394,8 +1393,6 @@ static int tegra_aead_cra_init(struct crypto_aead *tfm)
  
+ static int tegra_ccm_setauthsize(struct crypto_aead *tfm,  unsigned int authsize)
+ {
+-	struct tegra_aead_ctx *ctx = crypto_aead_ctx(tfm);
+-
+ 	switch (authsize) {
+ 	case 4:
+ 	case 6:
+@@ -1404,28 +1401,15 @@ static int tegra_ccm_setauthsize(struct crypto_aead *tfm,  unsigned int authsize
+ 	case 12:
+ 	case 14:
+ 	case 16:
+-		break;
++		return 0;
+ 	default:
+ 		return -EINVAL;
+ 	}
+-
+-	ctx->authsize = authsize;
+-
+-	return 0;
+ }
+ 
+ static int tegra_gcm_setauthsize(struct crypto_aead *tfm,  unsigned int authsize)
+ {
+-	struct tegra_aead_ctx *ctx = crypto_aead_ctx(tfm);
+-	int ret;
+-
+-	ret = crypto_gcm_check_authsize(authsize);
+-	if (ret)
+-		return ret;
+-
+-	ctx->authsize = authsize;
+-
+-	return 0;
++	return crypto_gcm_check_authsize(authsize);
+ }
+ 
+ static void tegra_aead_cra_exit(struct crypto_aead *tfm)
 -- 
 2.53.0
 
