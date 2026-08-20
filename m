@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5AC37CD47;
-	Thu, 20 Aug 2026 15:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02360376BD1;
+	Thu, 20 Aug 2026 15:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238907; cv=none; b=u+hDguxaGCwO6/4DguvBlKquKmr1QS6JbiwdKF8t2FT8cC1OFGU4L7FOy2n2j8hHiTaP/928/ad9OtljW/KBXVOCDn79S5WJtqF/nCT/7ypLwW51WOzOkpZ+EOPrA4MZlQU/qUgGxXMDD9EJsSrhaKGHPPz1DqIHCqC3jJXYRTQ=
+	t=1787238910; cv=none; b=i/JxL7qkd+MamSbwzPuNaR/VEiEZk2BRwYAAqBPJ2b0/eswCP+R8sSkrUNnFtqu7wzcehsXEm28A2CUDOhBP/IS/HdrGMlwu1NInVsPOhGk3z8Mwy/jTQ8JV9viro/0TjgOocf5LafVRIMXcBrhOv6JpSCvWbgiKkfB+K//F3KE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238907; c=relaxed/simple;
-	bh=iThAzp1WexPy7yZsifcrxSjHy1oqUIfBCQkZAkCKXaI=;
+	s=arc-20240116; t=1787238910; c=relaxed/simple;
+	bh=CBvaZh63vailaL2e2Z8O1BdcEvaXx0oTueiZ9+PjV/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pnoZJYTPU3skSDvNgfhpOl8eseAFCijlV6tkAnptAE6dpO+5KrgI8f+eeN+rQVIeJX89hsCYNz3RNt9+0qTlUlD8ExxIUEnsGCVK1NgSqJvSyQPVOjHDMlB+3DiJG7u6cieIRuPJU8dw+YiWKgcpqKDU7y30VcjC7ytlHBkdjJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YoBi5AE7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cvj68CwZ7+xEtjKi2JRGrnO53IBJQoJQGdraKDsytNRtaVqAJiMza+hPJCDhXFJyVuSuf+YFiK0subnEYFcDZcXn0+p0R/pXsGoRs1mKbylTwQ3tBqhJlz0j14JYYoVJCo79lfcDbn46mLeQ03Sc0JwkGBjzwQkVOEQqpZnK7Qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbePczip; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YoBi5AE7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D4B1F000E9;
-	Thu, 20 Aug 2026 15:15:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbePczip"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DEAF1F000E9;
+	Thu, 20 Aug 2026 15:15:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238906;
-	bh=EiAzcXQ329WMM50zBLBtyqsLG25qeeUc295D9xjOZJU=;
+	s=korg; t=1787238908;
+	bh=N9Op5yq+w1f8Tp/eWTvUW2j9//9l9iRLrhS6NF29+KI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YoBi5AE7AEVrx4P72/8F+wP7nlHLyp3jKXHjtJw9YLH7U6Iu5AQYrDfgtaQVrG8C1
-	 sftgqnnSZ4/KAlj1wy2j1suR8JU9r1+ihcNRiourPS7C754ysktCRALk57a7rTkwj3
-	 O+caiOiDC8RZD4GHhiYIy8lVpaAG0u3GAReniw1A=
+	b=gbePczipoDNYCHDQURLdipcPz1QUs7R9F7YiJk8iqP1O2Fo1bIE0j67MrHrUq5f70
+	 ZbODdwpH0HPmiRWxq8cS8OxWhdEjYbdlU53hupyAyhetmst7BjY8oXJVPM5LHp0gmA
+	 aktuCwKuL+zLsy6fBDuDDVj5k6hDdk9YZJLDXwLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 043/217] Input: synaptics-rmi4 - zero report size on F54 work error
-Date: Thu, 20 Aug 2026 16:53:31 +0200
-Message-ID: <20260820145238.917968268@linuxfoundation.org>
+	Nayna Jain <nayna@linux.ibm.com>,
+	R Nageswara Sastry <rnsastry@linux.ibm.com>,
+	George Wilson <gcwilson@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.18 034/217] powerpc/pseries: pci - logic bug
+Date: Thu, 20 Aug 2026 16:53:22 +0200
+Message-ID: <20260820145238.643647478@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -50,93 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: George Wilson <gcwilson@linux.ibm.com>
 
-commit dc76c3c8e8ad09362b8c1561f3928288c15cba2e upstream.
+commit 649c10bff5cb7a514bf299094833ec8c9190aac3 upstream.
 
-In rmi_f54_work(), if an error occurs during report request or command
-verification, the code jumped directly to the 'error' label, bypassing
-the 'abort' label where f54->report_size was normally zeroed out.
+The checks on num_vfs in pseries_pci_sriov_enable() are ANDed where OR
+was apparently intended.  Change it to OR.
 
-This left f54->report_size containing its previous successful payload
-size. If a user then altered the V4L2 format to a smaller size, and a
-subsequent run failed, rmi_f54_buffer_queue() would copy the stale,
-larger payload size into the shrunken V4L2 buffer, causing a heap
-buffer overflow.
-
-Fix this by merging the 'abort' and 'error' labels into a single 'out'
-exit path, and ensuring that f54->report_size is always set to 0 on
-failure by checking for error and zeroing the local report_size first.
-
-Fixes: 3a762dbd5347 ("[media] Input: synaptics-rmi4 - add support for F54 diagnostics")
-Cc: stable@vger.kernel.org
-Reported-by: sashiko-bot@kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Link: https://patch.msgid.link/20260626051802.4033172-2-dmitry.torokhov@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 9a7f6b438664 ("powerpc/pseries/pci: Associate PEs to VFs in configure SR-IOV")
+Acked-by: Nayna Jain <nayna@linux.ibm.com>
+Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Cc: stable@vger.kernel.org # 4.16
+Signed-off-by: George Wilson <gcwilson@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/rmi4/rmi_f54.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/powerpc/platforms/pseries/pci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/rmi4/rmi_f54.c
-+++ b/drivers/input/rmi4/rmi_f54.c
-@@ -545,7 +545,7 @@ static void rmi_f54_work(struct work_str
- 		dev_err(&fn->dev, "Bad report size, report type=%d\n",
- 				f54->report_type);
- 		error = -EINVAL;
--		goto error;     /* retry won't help */
-+		goto out;     /* retry won't help */
- 	}
+--- a/arch/powerpc/platforms/pseries/pci.c
++++ b/arch/powerpc/platforms/pseries/pci.c
+@@ -132,7 +132,7 @@ static int pseries_pci_sriov_enable(stru
  
- 	/*
-@@ -556,7 +556,7 @@ static void rmi_f54_work(struct work_str
- 			 &command);
- 	if (error) {
- 		dev_err(&fn->dev, "Failed to read back command\n");
--		goto error;
-+		goto out;
- 	}
- 	if (command & F54_GET_REPORT) {
- 		if (time_after(jiffies, f54->timeout)) {
-@@ -564,7 +564,7 @@ static void rmi_f54_work(struct work_str
- 			error = -ETIMEDOUT;
- 		}
- 		report_size = 0;
--		goto error;
-+		goto out;
- 	}
- 
- 	rmi_dbg(RMI_DEBUG_FN, &fn->dev, "Get report command completed, reading data\n");
-@@ -579,7 +579,7 @@ static void rmi_f54_work(struct work_str
- 					fifo, sizeof(fifo));
- 		if (error) {
- 			dev_err(&fn->dev, "Failed to set fifo start offset\n");
--			goto abort;
-+			goto out;
- 		}
- 
- 		error = rmi_read_block(fn->rmi_dev, fn->fd.data_base_addr +
-@@ -588,16 +588,16 @@ static void rmi_f54_work(struct work_str
- 		if (error) {
- 			dev_err(&fn->dev, "%s: read [%d bytes] returned %d\n",
- 				__func__, size, error);
--			goto abort;
-+			goto out;
- 		}
- 	}
- 
--abort:
--	f54->report_size = error ? 0 : report_size;
--error:
-+out:
- 	if (error)
- 		report_size = 0;
- 
-+	f54->report_size = report_size;
-+
- 	if (report_size == 0 && !error) {
- 		queue_delayed_work(f54->workqueue, &f54->work,
- 				   msecs_to_jiffies(1));
+ 	/* First integer stores max config */
+ 	max_config_vfs = of_read_number(&max_vfs[0], 1);
+-	if (max_config_vfs < num_vfs && num_vfs > MAX_VFS_FOR_MAP_PE) {
++	if (max_config_vfs < num_vfs || num_vfs > MAX_VFS_FOR_MAP_PE) {
+ 		dev_err(&pdev->dev,
+ 			"Num VFs %x > %x Configurable VFs\n",
+ 			num_vfs, (num_vfs > MAX_VFS_FOR_MAP_PE) ?
 
 
