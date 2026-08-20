@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3EF737F31A;
-	Thu, 20 Aug 2026 15:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7901C3368A4;
+	Thu, 20 Aug 2026 15:14:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238881; cv=none; b=VCoO/H/cMZU+FGi3u3cid9q/aCN/E2cKCb6vHNy+3C7KIeQSWqfSmUzqUVMoR5jOjuJIBzqKw7u/TkuMrSxZEv/8ovL+GkhevwFmIqOcMkJoHuh2WwSQ94plomEdzPEfhbqtw/GSHyQbAp0Wqgxtn585oC2JRLRpumLHRnQyGfU=
+	t=1787238884; cv=none; b=C65QqRami0yjUWw81/rMsXRHdHPa4hsQhiukqfzkvTFJzOWW+yqYdy+BGlRUWBWFfywoCsggA5jz7XqmFYWOlb8jth0KTHG9IzwbhoesBkEgZWVzGawb95J3yRRgOMdXBYqDPK8rgd0D3ADsL4mzK8WjBEl6clpyyqfZWj2Cx9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238881; c=relaxed/simple;
-	bh=A40Me3YMKyuadQ2AG7W1R02wqpgNkZxfBSsdXJvJxEM=;
+	s=arc-20240116; t=1787238884; c=relaxed/simple;
+	bh=O7lspJy6Puqg7pfdJe7n9f/7u/8MCPTh7FsDaGexMMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CjH0AehpLU8gt66vdEBUWDQTFrURzhOCJ5RRx43ZLhMvj7sFBkbvrMILR1IpW0ZCEKpYOJ6q0e6wikIrOTd803ufG1bEjcSG8s4DThsY0UxeLsy2MkH4hJ60H/eKDTlCLYCvJ5B1zDuEiLS91PWgPpru0qIp7eq564HSZwLq34k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxLPVX91; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u6pK/nuqoqqoE3I6XpI8u3fgfvf1V79woonmH1OKdXdcVDVTM1rX893XBlVPEs9qt/Yoyuzgo4lZagZbhRIDhb2zvgtp4qrfgQ74DyLDtbv9W6wxj2PJO72+5+EvLxNO32n1JDyea2a4YpahhtIEZaONk6kW5aja3fBwaOZbIq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rw98lDsv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxLPVX91"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB051F000E9;
-	Thu, 20 Aug 2026 15:14:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rw98lDsv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3BA71F000E9;
+	Thu, 20 Aug 2026 15:14:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238880;
-	bh=uWYG2vmKfYZqyqVGW2XuBSaYS2fTT6WgtVx01yLt1+4=;
+	s=korg; t=1787238883;
+	bh=4EgdbgU6CRnPJFAaAzaAN899OmZfREN5xWRtJMkDE2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GxLPVX91aHwYRqZ+hoXnpZ9zDvwuUer538E22A77//vZM6sST1yqpa2GCzKt2ZqS4
-	 GHCfkLvQxwB2UXY9egrtdm1dmR1Gbo1fRMv1lGjTft62XLsawxxWRsNL4MSsjgMpQu
-	 2+Alg8P3V/8JsUM7CB6ZKjTD+rsgcfIw6j5Y5E8Q=
+	b=rw98lDsv+Z50pYLqBSeCzjNXxl8ddx/dzBs1OJIS/y9vSMnaShrcBs6vCqwlWWjr8
+	 N8whNMk0nZnGXAS5o6xZKtQTd3zVP0t2NYGniCp4oqT4N4gHzD+Mcc0hFFVPKNaKYl
+	 iMsyjRUW7qXSNfny1vdNOaKf7zE69ysLouTaZeeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 072/217] mmc: loongson2: Fix sg iteration in data reorder functions
-Date: Thu, 20 Aug 2026 16:54:00 +0200
-Message-ID: <20260820145239.791231382@linuxfoundation.org>
+Subject: [PATCH 6.18 073/217] pmdomain: mediatek: Fix mt8183 hang on boot
+Date: Thu, 20 Aug 2026 16:54:01 +0200
+Message-ID: <20260820145239.820311372@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -50,50 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Binbin Zhou <zhoubinbin@loongson.cn>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-commit 00179ed9fbe07799676e2cb63c4e7f0e7cd80a5c upstream.
+commit 818d56ac1d08b68a4c42d0326786f030cc640722 upstream.
 
-In ls2k0500_mmc_reorder_cmd_data() and ls2k2000_mmc_reorder_cmd_data(),
-the for_each_sg() macro already iterates over the scatterlist entries,
-with 'sg' pointing to the current entry. However, the code incorrectly
-uses '&sg[i]' and 'sg_dma_len(&sg[i])' inside the loop, which treats
-'sg' as an array base and indexes it again, leading to access of
-wrong sg entries (or out-of-bounds if the list is not an array).
+Depending on firmware, part of the MFG domains may be partially left ON
+at boot time with kernel detecting PD as ON, while it's OFF.
 
+Some of MFG cores may be left powered after bootloader, to let the ACP to
+prefetch the GPU region when the display controller is brought up for a
+continuous splash animation performed by downstream stack.
+
+This doesn't play well with an eventual delay in probing upstream Panfrost
+driver when the display controller is fully set up, as that would make
+genpd's sync_state() to power off the domain while ACP tries to prefetch:
+this is causing an AXI stall, effectively freezing the AP indefinitely.
+
+In order to prevent trouble from happening, the sync_state() functionality
+must be obliterated on all of the MFG domains: while this guarantees a
+power leakage if the bootloader boots the kernel with MFG PDs partially
+powered on, this is the only way to ensure stable operation of the SoC
+during boot on devices with such firmware because, of course, those will
+never officially receive a firmware update.
+
+Fixes Kappa Chromebook hanging during system boot.
+
+Fixes: 0e789b491ba0 ("pmdomain: core: Leave powered-on genpds on until sync_state")
+Fixes: 13a4b7fb6260 ("pmdomain: core: Leave powered-on genpds on until late_initcall_sync")
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Cc: stable@vger.kernel.org
-Fixes: d0f8e961deae ("mmc: loongson2: Add Loongson-2K2000 SD/SDIO/eMMC controller driver")
-Fixes: 2115772014bd ("mmc: loongson2: Add Loongson-2K SD/SDIO controller driver")
-Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/loongson2-mmc.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pmdomain/mediatek/mt8183-pm-domains.h | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/loongson2-mmc.c
-+++ b/drivers/mmc/host/loongson2-mmc.c
-@@ -628,8 +628,8 @@ static void ls2k0500_mmc_reorder_cmd_dat
- 		return;
- 
- 	for_each_sg(cmd->data->sg, sg, cmd->data->sg_len, i) {
--		data = sg_virt(&sg[i]);
--		for (j = 0; j < (sg_dma_len(&sg[i]) / 4); j++)
-+		data = sg_virt(sg);
-+		for (j = 0; j < (sg_dma_len(sg) / 4); j++)
- 			if (cmd->opcode == SD_SWITCH)
- 				data[j] = bitrev8x4(data[j]);
- 			else
-@@ -761,8 +761,8 @@ static void ls2k2000_mmc_reorder_cmd_dat
- 		return;
- 
- 	for_each_sg(cmd->data->sg, sg, cmd->data->sg_len, i) {
--		data = sg_virt(&sg[i]);
--		for (j = 0; j < (sg_dma_len(&sg[i]) / 4); j++)
-+		data = sg_virt(sg);
-+		for (j = 0; j < (sg_dma_len(sg) / 4); j++)
- 			data[j] = bitrev8x4(data[j]);
- 	}
- }
+diff --git a/drivers/pmdomain/mediatek/mt8183-pm-domains.h b/drivers/pmdomain/mediatek/mt8183-pm-domains.h
+index 3742782a2702..5e33b8628e85 100644
+--- a/drivers/pmdomain/mediatek/mt8183-pm-domains.h
++++ b/drivers/pmdomain/mediatek/mt8183-pm-domains.h
+@@ -47,7 +47,7 @@ static const struct scpsys_domain_data scpsys_domain_data_mt8183[] = {
+ 		.pwr_sta2nd_offs = 0x0184,
+ 		.sram_pdn_bits = 0,
+ 		.sram_pdn_ack_bits = 0,
+-		.caps = MTK_SCPD_DOMAIN_SUPPLY,
++		.caps = MTK_SCPD_DOMAIN_SUPPLY | MTK_SCPD_KEEP_DEFAULT_OFF,
+ 	},
+ 	[MT8183_POWER_DOMAIN_MFG] = {
+ 		.name = "mfg",
+@@ -57,7 +57,7 @@ static const struct scpsys_domain_data scpsys_domain_data_mt8183[] = {
+ 		.pwr_sta2nd_offs = 0x0184,
+ 		.sram_pdn_bits = GENMASK(8, 8),
+ 		.sram_pdn_ack_bits = GENMASK(12, 12),
+-		.caps = MTK_SCPD_DOMAIN_SUPPLY,
++		.caps = MTK_SCPD_DOMAIN_SUPPLY | MTK_SCPD_KEEP_DEFAULT_OFF,
+ 	},
+ 	[MT8183_POWER_DOMAIN_MFG_CORE0] = {
+ 		.name = "mfg_core0",
+@@ -67,6 +67,7 @@ static const struct scpsys_domain_data scpsys_domain_data_mt8183[] = {
+ 		.pwr_sta2nd_offs = 0x0184,
+ 		.sram_pdn_bits = GENMASK(8, 8),
+ 		.sram_pdn_ack_bits = GENMASK(12, 12),
++		.caps = MTK_SCPD_KEEP_DEFAULT_OFF,
+ 	},
+ 	[MT8183_POWER_DOMAIN_MFG_CORE1] = {
+ 		.name = "mfg_core1",
+@@ -76,6 +77,7 @@ static const struct scpsys_domain_data scpsys_domain_data_mt8183[] = {
+ 		.pwr_sta2nd_offs = 0x0184,
+ 		.sram_pdn_bits = GENMASK(8, 8),
+ 		.sram_pdn_ack_bits = GENMASK(12, 12),
++		.caps = MTK_SCPD_KEEP_DEFAULT_OFF,
+ 	},
+ 	[MT8183_POWER_DOMAIN_MFG_2D] = {
+ 		.name = "mfg_2d",
+@@ -85,6 +87,7 @@ static const struct scpsys_domain_data scpsys_domain_data_mt8183[] = {
+ 		.pwr_sta2nd_offs = 0x0184,
+ 		.sram_pdn_bits = GENMASK(8, 8),
+ 		.sram_pdn_ack_bits = GENMASK(12, 12),
++		.caps = MTK_SCPD_KEEP_DEFAULT_OFF,
+ 		.bp_cfg = {
+ 			BUS_PROT_WR(INFRA,
+ 				    MT8183_TOP_AXI_PROT_EN_1_MFG,
+-- 
+2.55.0
+
 
 
