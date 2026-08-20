@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 992B3485502;
-	Thu, 20 Aug 2026 17:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93133485CCF;
+	Thu, 20 Aug 2026 17:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247365; cv=none; b=P2zyCXzgMBX/lwOsG+npVvB6iB49nAWcygdOVTHamDCKvFINPDSBrKbqOpKp0GEnyiBloqam2PvnBHdaneVOuAw+4+7GHLy5IG+3I8l5NSIscIXtUX+TGh7inlphjo51P7ZUfyTqNCm9hGuPMWzdeKKlE77IGFpn7ZGLrc/EUwo=
+	t=1787247367; cv=none; b=RnqWvBaAazyrKYx8Y8qO9VZm66TblbERl5K0452gGiZxXuyFbGghvx/3UB7uKUWTjQhRa6DmISKtfMv3XEwRifNjMbcAa2C07UcNrffge1mlszuNKOBLT7e782P0y3SeeXNVZRjkpZc5rfVkOZnxG0TmEFIAFxx1L8Fv09/RUBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247365; c=relaxed/simple;
-	bh=r4GpugFJW6goeBiBstIJxFcWKol0rarcydDhS/zrBrU=;
+	s=arc-20240116; t=1787247367; c=relaxed/simple;
+	bh=2cdwz04vHK20S6TLdSrgzQz9OR8wunjDTTHsB25LEys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c8CI50DeoB91QmF+JL1N2/SnPrXjFsBVKlxSsbsOFP+izaewshkVrVsimdCAI9CEgL3rL2pGnNvKijqtZDtlU1mjCUIuCrjT1HULR3h4u0TASjPCA+U20nK2FIpxXDzGKKWRSDDvwnkYDsmFElwM4+kjjzNKBuu8I0IBoxaZuvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R8qU9ZWj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ouZSriFN/m6T0mWdwc5yhBqWKFxoGKWut6xRjBgv0UejXM+qwwB6hV4N5pNgiFZLoRhZfgzpRt0/iguTVBiBOymXNb1IplVf9UiV0/w1KOA+KxmAvuYvBB+Zh/ojQ0BRsSeplmIpc7su6YY9rXCzhdxhDEiKxBvuDBJoaQnR/b8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WpMpltX5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R8qU9ZWj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C8D1F000E9;
-	Thu, 20 Aug 2026 17:36:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WpMpltX5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05291F000E9;
+	Thu, 20 Aug 2026 17:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247363;
-	bh=GOofXCmxsLxzn+4FYUqz6ptn4rL8dwyVf4ViczRgp4U=;
+	s=korg; t=1787247366;
+	bh=Kfveos4Tvk62zIKkS5C4+sjvi2vztMemdZapzq8YuEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R8qU9ZWjwqWh5fZld/7tiUKkIjz+fQN4bkVCJPXUVD6xasqqJOqr3FwFNBU4P5Kb7
-	 YhMjizzqz0XTHzCJDXbDh8xpas1CGmvym0BDPMwk51WzqdVjZlM2WniA2w52zJfQWl
-	 lMJ2vJjXdTGR1096PnYxN2+q2gWswUVRW634oUnQ=
+	b=WpMpltX56OtTYAT9/csCyl5W4lPk5dwU4bmNBcDUlv4sBVsYOCaHu4+PlfeWHCeAx
+	 q+CrMGj62u0MalMjyPlLy3UQnHFY+QiFutZlx7NzaZVWrwxhBQ3sKTxFvX8Iy2wULm
+	 JK2FuIotBueYnFEJe/6CsiaTAeEGX6fxVS45qPBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asad Kamal <asad.kamal@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 020/166] drm/amdgpu: fix aperture iounmap skipped on device removal
-Date: Thu, 20 Aug 2026 16:54:39 +0200
-Message-ID: <20260820145211.797754829@linuxfoundation.org>
+	"KADOTA, Kyohei" <lufia@lufia.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.6 021/166] Input: xpad - add support for ZENAIM LEVERLESS
+Date: Thu, 20 Aug 2026 16:54:40 +0200
+Message-ID: <20260820145211.826033435@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -52,62 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Kyohei Kadota <lufia@lufia.org>
 
-commit f9e5f51549000e2665e3b5e02ff876b9e09cfe95 upstream.
+commit 7d971337ebfad0b173cb46097c709db174ac3557 upstream.
 
-amdgpu_pci_remove() calls drm_dev_unplug() before invoking the fini
-routines. After drm_dev_unplug() the drm_dev_enter() guard in
-amdgpu_ttm_fini() always returns false, so iounmap() for
-aper_base_kaddr is silently skipped. On connected_to_cpu hardware
-ioremap_cache() maps the aperture as WB; when iounmap() is skipped the
-stale WB PAT entry persists. On reload IP discovery's
-memremap(MEMREMAP_WC) on the same aperture range hits a WB/WC conflict,
-producing an ioremap error and failing re-probe.
+Add the VID/PID for the ZENAIM LEVERLESS controller to xpad_device and
+the VID to xpad_table.
 
-Remove the drm_dev_enter() guard and call iounmap() unconditionally.
-The aperture mapping is plain MMIO and does not require device-presence
-protection. Surprise-removal cleanup of aper_base_kaddr is already
-handled unconditionally by amdgpu_device_unmap_mmio().
-
-Fixes: 62d5f9f7110a ("drm/amdgpu: Unmap MMIO mappings when device is not unplugged")
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit fb3f68af9f6fce9343a2bd13b4d68a1c02d283df)
+Signed-off-by: KADOTA, Kyohei <lufia@lufia.org>
+Link: https://patch.msgid.link/CAFMepckDUuOHiDDVVhUYc-UqJMeCqrWSfCuxbJ2x2sGgdDD4nw@mail.gmail.com
 Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |   10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/input/joystick/xpad.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -2044,8 +2044,6 @@ int amdgpu_ttm_init(struct amdgpu_device
-  */
- void amdgpu_ttm_fini(struct amdgpu_device *adev)
- {
--	int idx;
--
- 	if (!adev->mman.initialized)
- 		return;
- 
-@@ -2068,13 +2066,9 @@ void amdgpu_ttm_fini(struct amdgpu_devic
- 	amdgpu_ttm_fw_reserve_vram_fini(adev);
- 	amdgpu_ttm_drv_reserve_vram_fini(adev);
- 
--	if (drm_dev_enter(adev_to_drm(adev), &idx)) {
--
--		if (adev->mman.aper_base_kaddr)
--			iounmap(adev->mman.aper_base_kaddr);
-+	if (adev->mman.aper_base_kaddr) {
-+		iounmap(adev->mman.aper_base_kaddr);
- 		adev->mman.aper_base_kaddr = NULL;
--
--		drm_dev_exit(idx);
- 	}
- 
- 	amdgpu_vram_mgr_fini(adev);
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -417,6 +417,7 @@ static const struct xpad_device {
+ 	{ 0x3285, 0x0646, "Nacon Pro Compact", 0, XTYPE_XBOXONE },
+ 	{ 0x3285, 0x0662, "Nacon Revolution5 Pro", 0, XTYPE_XBOX360 },
+ 	{ 0x3285, 0x0663, "Nacon Evol-X", 0, XTYPE_XBOXONE },
++	{ 0x3507, 0x000b, "ZENAIM LEVERLESS", 0, XTYPE_XBOX360 },
+ 	{ 0x3537, 0x1004, "GameSir T4 Kaleid", 0, XTYPE_XBOX360 },
+ 	{ 0x3537, 0x100f, "GameSir Nova 2 Lite", 0, XTYPE_XBOX360 },
+ 	{ 0x3537, 0x1010, "GameSir G7 SE", 0, XTYPE_XBOXONE },
+@@ -575,6 +576,7 @@ static const struct usb_device_id xpad_t
+ 	XPAD_XBOX360_VENDOR(0x31e3),		/* Wooting Keyboards */
+ 	XPAD_XBOX360_VENDOR(0x3285),		/* Nacon GC-100 */
+ 	XPAD_XBOXONE_VENDOR(0x3285),		/* Nacon Evol-X */
++	XPAD_XBOX360_VENDOR(0x3507),		/* ZENAIM Controllers */
+ 	XPAD_XBOX360_VENDOR(0x3537),		/* GameSir Controllers */
+ 	XPAD_XBOXONE_VENDOR(0x3537),		/* GameSir Controllers */
+ 	XPAD_XBOX360_VENDOR(0x413d),		/* Black Shark Green Ghost Controller */
 
 
