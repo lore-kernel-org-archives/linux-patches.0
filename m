@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B393C07A;
-	Thu, 20 Aug 2026 15:11:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FBE37F31A;
+	Thu, 20 Aug 2026 15:11:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238689; cv=none; b=Z8FMcvA4N+hTSoihyvI3gmUJQ4TvH1cyu9cwUDZ4A+X5+S4btXBb/ameyLxrwauJMlNxQtdYNqcj+07dW958Qxk/HmokK0P7QnWNJZQqO7J33MPpxCqXDj3f9KM/JRJ55CLVqQjGyVhhxz1p3KvFqed5ZgY1ntipdepfU3+xTAY=
+	t=1787238694; cv=none; b=hAFuTuj3965eEBPuCXeI6WmV0eS3pRrgkiUh1/k4q2FlQCOySqyrdK68BjGCFXU82X33RN9NEwcHoLIB/G9Rc13WovqKvFq6l7VWdCckQoNbQUY6/kKtft/lykr9Ep8yVpHK+mliK2ARd62nAa4oqx39D9NnWrQQHQWou1avKgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238689; c=relaxed/simple;
-	bh=qHr7D5H4JvR2fBkUyf4nMZ5Xe07j9tC+dgerDzJ3Pd8=;
+	s=arc-20240116; t=1787238694; c=relaxed/simple;
+	bh=h7I7ZhpoK0lQMIFGtysbLlLsc9UaKmZR2UNdVxrfBYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pYLY3wwhm2O89THvC8kH8EKSh8Cwwi0G3JFhv8m9By0mbKd12Pj3dCD/YXG9W944KvMCRa8Rxg31dyGhsgiIgFDlhlLX46T49YsW49k2RdTPRaL/33hSOwCmiTbgK21Hut+b6QOEvf3zdP3nDF2OhFj/+Y1cD7QI48fIBn3HRc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oZGhg0wG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bFspHdFI8JNHlehLEFQNBLx7xyiS+BTZELkS1oTOl65+1EXocaLfpTysrc7/TPJpY+XVM7/p5Qe7W1KpIR5PAXw8kerPX3aKetdUYRmuKRpoM9feiDeDCj13JG72g7AbyYBYJxtUcGPIYotAWWgtBIYSbFyC3sGpIU6vNxZWoJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNg+UuVK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oZGhg0wG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0FF61F00A3F;
-	Thu, 20 Aug 2026 15:11:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNg+UuVK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11571F000E9;
+	Thu, 20 Aug 2026 15:11:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238688;
-	bh=AmDP2by3JlsfAubkXc7J8AUHvgXXZJIUlU+mF0a7uuo=;
+	s=korg; t=1787238691;
+	bh=3mV8G0hIm1cpFdJme6ipS/avXGFCnY9PP0dcHtL53jg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oZGhg0wGD3yon7+raOi3ycYRABjtKQFlfB3u2r6hMMoyI4G8sA4SguVkhhiM5v1KZ
-	 Ju8cr6wdcNhHAWkBIpHOAoOkXiuMWgKiQ0KJXzeZG2HlnRrw4kJHXynBlkYoWMwOeZ
-	 O4+9ZtQRjlKfzLek7VAlt3B1eGBjWMnvIifRyZAY=
+	b=nNg+UuVKkRZrZ9+LxPSc4U0QukD7ewI0xUY4HkTMeuTmnihSl6imjYJM283U72Asy
+	 DSqOz3/uvACK05rOtwXhs0w/a1Jmn7K7ixG6HRh23UL1Tw+L19LhHKm/ZPTfaXDlB2
+	 gDYl3r4gwHYKQSGJz4fxf2mFsAzxQvr/u1GPLKH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Guenter Roeck <groeck7@gmail.com>,
-	Gao Xiang <xiang@kernel.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Shixiong Ou <oushixiong@kylinos.cn>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 228/228] erofs: fix EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS on some UP platforms
-Date: Thu, 20 Aug 2026 16:56:10 +0200
-Message-ID: <20260820145252.025688386@linuxfoundation.org>
+Subject: [PATCH 7.1 225/228] drm/log: Fix out-of-bounds read on empty message length
+Date: Thu, 20 Aug 2026 16:56:07 +0200
+Message-ID: <20260820145251.919166158@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -54,58 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <xiang@kernel.org>
+From: Shixiong Ou <oushixiong@kylinos.cn>
 
-[ Upstream commit a64d500b0078e16e9abb25baca4dee1dbc9054fc ]
+[ Upstream commit 60baa179ed1333535f6e2da4133511db55278ee4 ]
 
-CONFIG_NR_CPUS doesn't define on some UP platforms (e.g.  arm), so this
-can cause make oldconfig to loop indefinitely when CONFIG_SMP=n:
+drm_log_draw_kmsg_record() accesses s[len - 1] to strip the trailing
+newline, but len is unsigned int. If len is 0, the subtraction wraps
+to UINT_MAX, causing an out-of-bounds read.
 
-  $ make ARCH=arm allmodconfig
-  $ sed -i "/CONFIG_SMP=y/d" .config
-  $ sed -i "/CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS.*/d" .config
+Add an early return when len is 0.
 
-  EROFS LZMA default maximum decompression streams (EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS) [0] (NEW)
-  EROFS LZMA default maximum decompression streams (EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS) [0] (NEW)
-  ...
-
-Let's guard NR_CPUS with SMP instead of using a hardcoded arbitrary CPU
-uplimit here, similar to commit a3344078101c ("mm: make SPLIT_PTE_PTLOCKS
-depend on SMP").
-
-The initial report from SJ Park was for m68k [1] (m68k is the only arch
-without NR_CPUS in Kconfig), and that got fixed in commit 1fd495ef09ee
-("m68k: Define NR_CPUS to 1")
-
-Reported-by: SJ Park <sj@kernel.org>
-Link: https://lore.kernel.org/all/anuyFHLUGDjZWY4K@XiangdeMacBook-Pro.local/T/#u [1]
-Closes: https://lore.kernel.org/r/20260728065447.91511-1-sj@kernel.org
-Reported-by: Guenter Roeck <groeck7@gmail.com>
-Closes: https://lore.kernel.org/r/87853c96-cc8f-49e6-81b1-02bfe409e372@roeck-us.net
-Fixes: c9b47e6b2311 ("erofs: cap LZMA stream pool size")
-Signed-off-by: Gao Xiang <xiang@kernel.org>
-Tested-by: SJ Park <sj@kernel.org>
-Tested-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 25e2c2a3eff5 ("drm/log: Color the timestamp, to improve readability")
+Signed-off-by: Shixiong Ou <oushixiong@kylinos.cn>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Link: https://patch.msgid.link/20260729084520.688087-1-oushixiong1025@163.com
+Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/clients/drm_log.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/erofs/Kconfig b/fs/erofs/Kconfig
-index 8ca1767dafb61..2dfc313588d28 100644
---- a/fs/erofs/Kconfig
-+++ b/fs/erofs/Kconfig
-@@ -134,7 +134,8 @@ config EROFS_FS_ZIP_LZMA
- config EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS
- 	int "EROFS LZMA default maximum decompression streams"
- 	depends on EROFS_FS_ZIP_LZMA
--	range 1 NR_CPUS
-+	range 1 NR_CPUS if SMP
-+	range 1 1 if !SMP
- 	default 16
- 	help
- 	  By default EROFS allocates one LZMA decompression stream per CPU.
+diff --git a/drivers/gpu/drm/clients/drm_log.c b/drivers/gpu/drm/clients/drm_log.c
+index a3259b8f23333..f23a92f826c92 100644
+--- a/drivers/gpu/drm/clients/drm_log.c
++++ b/drivers/gpu/drm/clients/drm_log.c
+@@ -160,6 +160,9 @@ static void drm_log_draw_kmsg_record(struct drm_log_scanout *scanout,
+ {
+ 	u32 prefix_len = 0;
+ 
++	if (!len)
++		return;
++
+ 	if (len > TS_PREFIX_LEN && s[0] == '[' && s[6] == '.' && s[TS_PREFIX_LEN] == ']')
+ 		prefix_len = TS_PREFIX_LEN + 1;
+ 
 -- 
 2.53.0
 
