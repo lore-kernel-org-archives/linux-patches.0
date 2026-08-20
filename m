@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4654E46C82A;
-	Thu, 20 Aug 2026 17:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6295E47F2FA;
+	Thu, 20 Aug 2026 17:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248452; cv=none; b=qqCVOHbKCD5TvLniL7DtCtWmohWNoGj0jNZhbWdcdfHx3pSQLEqEs7wdzo//3ejcwd/YoJXrKF4MwKI6OGLf/j4D0fgySR7igcQfnGskdteVhV+zmmbcLmhoNR05F6IgTTXaB3Lj2kTXhed9AmVCe5eDKekI6sDstz8KfK5Mz78=
+	t=1787248456; cv=none; b=TkjWRVpSqC7uzZ+kvfpOQM8OtzYp8KL3G2T+jwU0CEUaBEeYD07y2LEDClZcF9Lp4fi1cRp+gxTUpJVZYDBmqOm6pgT3owfhuSw3MHqzctwbXsFwBfoRC1jQA1B1Pk1TL9UnWutU6D2YvGVg1TSkFC8GV4LG3CHR4284yCaBYrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248452; c=relaxed/simple;
-	bh=5J8m1FK/79gzAJkQa9FFt9I8ppn7fGOtUlT6b9Ms2o8=;
+	s=arc-20240116; t=1787248456; c=relaxed/simple;
+	bh=3enS90YRkL0a1uOlpXEicLwJ+4aQ1Eobxax5LITYm7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ieCf71mypLeAdngvhD7L16AxbSdpzsap3cwIFj75jsg5YAL61rM68dRrN6Uq9EnVSnEgGJhAbIvhh+e5dFO/ANyrL3+8JhWGdh9j5j108nMq27si93WfXUfIJTW4Pj3GMhYv9RSZVqrQfb/sACS/XL5PxQkMdT9kuK7amZUGimY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6VGf0ee; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NSmLBv3Z/NboeKMPeUca7Wpv4s9ZOT0DVfdVzQnS89XQHCdAT7bngD2b3EV+xe3ZtKAjFXLhigo9J26aw6fJIsIqkjOPPcTNRXTu/P74yKg8rqF6r1TTzxwr9Dvid0uNFACyhv5ObZ3LeaxND7ohNmHbAgDJjRyMbq479Cr4fKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VMqznHm2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6VGf0ee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30601F000E9;
-	Thu, 20 Aug 2026 17:54:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VMqznHm2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F891F00A3A;
+	Thu, 20 Aug 2026 17:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248451;
-	bh=scyDFovWeiQVIxfLtcRbFZwTvMDqe41qH8uvm/UmKoo=;
+	s=korg; t=1787248454;
+	bh=Ikdl4JV6Ie2bPj5XRk+enJU+NfCj2PWdWh6BWdkrYhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g6VGf0eeAf4ntu4RvoUguGia3ymeULAJEFSvogoc6Q4G5DfHgmyyabO5sdI4h7hp1
-	 do/g/UXRbm/krIhlx5SObuTjpvtzKU1WsEsDwyOlqMfYw+m1Q0ExsnldsSLOWK8ERQ
-	 vt1PZNgLngMiX0txh19hkKaYwbG4q/bJ7StJ37Js=
+	b=VMqznHm20qIggW6sOV3FXZ7UZi9x+YuwMVEJynglM27N2XnEPcQGTu4IN8Qu6n3cI
+	 Pc9D9S8khKRfoh3UPySfmvqUyupY/0Y8Bwj2Fs7VCNRyxZ+vNlCYom3yZ/i0dB9En/
+	 bAAqwEPIv/lR7H7/amdwYKQCoqcfqc3MG1fssC/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Martin Hodo <martin.hodo@intel.com>,
+	Anshuman Gupta <anshuman.gupta@intel.com>,
 	Suraj Kandpal <suraj.kandpal@intel.com>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 193/303] drm/i915/hdcp: require monotonically increasing seq_num_v
-Date: Thu, 20 Aug 2026 16:55:29 +0200
-Message-ID: <20260820145259.147040094@linuxfoundation.org>
+Subject: [PATCH 6.1 194/303] drm/i915/hdcp: check streams[] bounds before overflow
+Date: Thu, 20 Aug 2026 16:55:30 +0200
+Message-ID: <20260820145259.213476327@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -55,49 +56,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit db9e64c983dcb07ff256bd455f258c44aa530ff8 ]
+[ Upstream commit bbb15a6b042d02e5508a02b4847e02d2579ee7bc ]
 
-The HDCP 2.2 specification requires the seq_num_v to be monotonically
-increasing, and repeated seq_num_v needs to be treated as an integrity
-failure. Make it so.
+The data->streams[] overflow check is done after the buffer overflow has
+already happened. Move the overflow check before the write.
 
-For the first message, seq_num_v must be zero, and is already
-checked. We can only check for less-than-or-equal for the subsequent
-messages, where hdcp2_encrypted is true.
+Side note, emitting a warning splat with a backtrace might be overkill
+here, but prefer not changing the behaviour other than not doing the
+overrun.
 
 Discovered using AI-assisted static analysis confirmed by Intel Product
 Security.
 
 Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: d849178e2c9e ("drm/i915: Implement HDCP2.2 repeater authentication")
-Cc: stable@vger.kernel.org # v5.2+
+Fixes: e03187e12cae ("drm/i915/hdcp: MST streams support in hdcp port_data")
+Cc: stable@vger.kernel.org # v5.12+
+Cc: Anshuman Gupta <anshuman.gupta@intel.com>
 Cc: Suraj Kandpal <suraj.kandpal@intel.com>
 Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260625104407.1025614-1-jani.nikula@intel.com
+Link: https://patch.msgid.link/20260625170304.1104723-1-jani.nikula@intel.com
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 58a224375c81179b52558c53d8857b93196d2687)
+(cherry picked from commit 9284ab3b6e776c315883ac2611283d263c9460fd)
 Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_hdcp.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/display/intel_hdcp.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 --- a/drivers/gpu/drm/i915/display/intel_hdcp.c
 +++ b/drivers/gpu/drm/i915/display/intel_hdcp.c
-@@ -1677,9 +1677,10 @@ int hdcp2_authenticate_repeater_topology
- 		return -EINVAL;
- 	}
+@@ -98,6 +98,9 @@ intel_hdcp_required_content_stream(struc
+ 		if (!enforce_type0 && !dig_port->hdcp_mst_type1_capable)
+ 			enforce_type0 = true;
  
--	if (seq_num_v < hdcp->seq_num_v) {
--		/* Roll over of the seq_num_v from repeater. Reauthenticate. */
--		drm_dbg_kms(display->drm, "Seq_num_v roll over.\n");
-+	if (hdcp->hdcp2_encrypted && seq_num_v <= hdcp->seq_num_v) {
-+		/* Reauthenticate on Seq_num_v repeat or rollover */
-+		drm_dbg_kms(display->drm, "Seq_num_v %s\n",
-+			    seq_num_v == hdcp->seq_num_v ? "repeat" : "rollover");
- 		return -EINVAL;
- 	}
++		if (drm_WARN_ON(&i915->drm, data->k >= INTEL_NUM_PIPES(i915)))
++			return -EINVAL;
++
+ 		data->streams[data->k].stream_id = intel_conn_to_vcpi(connector);
+ 		data->k++;
  
+@@ -107,7 +110,7 @@ intel_hdcp_required_content_stream(struc
+ 	}
+ 	drm_connector_list_iter_end(&conn_iter);
+ 
+-	if (drm_WARN_ON(&i915->drm, data->k > INTEL_NUM_PIPES(i915) || data->k == 0))
++	if (drm_WARN_ON(&i915->drm, !data->k))
+ 		return -EINVAL;
+ 
+ 	/*
 
 
