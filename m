@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFB9272E53;
-	Thu, 20 Aug 2026 16:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DFF4195C0;
+	Thu, 20 Aug 2026 16:39:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243972; cv=none; b=KlNeA3TykZ4MdoOfQbF/B8zJu/dMyrPJ0Untt4ty/qLGgpudcLlImxcKMtZS285S7U3wwc0qavVMBhOG/hPrJ2YyAuy5AC64ptuauVL7+uxuHJg/iL4ECW58RLB7+p3R3UlcT/BmZ20mA/YoZucyfASzPuavO5NvDuQFnWTUmYw=
+	t=1787243975; cv=none; b=k3+E0ahy414B61cyikaETCs8tU0JPSYwXAg4PqeohertQB9jdwDo5NMV7x60aDe5WY+VfY6zKOV+h49dBDnfeIe72eJdh0LptnnZn4pwwxp6Vw07Uk6TLvGIoRDKbZsiJhpdHiZmGZTU3H/hKllbHbtdu885HQ/eG6XZApmJBfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243972; c=relaxed/simple;
-	bh=RVQt0AjSLiGBwlWqz0txi1JYuJ1UsO6U7r1iAu+gzys=;
+	s=arc-20240116; t=1787243975; c=relaxed/simple;
+	bh=jnnknXjz51lF9TCm4Q/EeasudGeVk/2J+WQ3+aHfGUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bnksn3HUqPdV7TBJsBlNS5S9hpnag2KQUWUShXQJJg3hGi2l7HgPuh0PBTr6u5asEyvMUHTJKvqjrOEl5otfyh8mrXZxzy7STbKtGLKXrLrqFwfx3navKsnTcuII3Ag5Vn3AtYa+5cHoTOm2aHbJthTOOdKRrHZqUxYqjTNmauA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=apcacb4V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MvUuQpFppppv1NY/OWPKcN8E6k3f41921R1X439396Dhs9wtOPHuy/rroAoS3oP/xpMeB9rgsAn5s3i6ksIM+vuRotDi24+Ip+EUTF7PVQgKBxPXkfISBhoOBGLJgprVcLcgsyzctMrLOqo3oj4h0tPphY28+nttPAfFDFAPDXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pY/NMRF2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="apcacb4V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E41D91F000E9;
-	Thu, 20 Aug 2026 16:39:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pY/NMRF2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD2861F000E9;
+	Thu, 20 Aug 2026 16:39:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243971;
-	bh=xU6V91x4fomImutFVuNzTZgb6sxOJ8EtUHc+jsKfNqo=;
+	s=korg; t=1787243974;
+	bh=V8TeL623RFGh/oSk+Ktzg4dMOx9jzW/pPQMzkzF4v/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=apcacb4VRJYevG/YWgz6cSrjvXNSKKeoiGNEJES1FIKP6GL1F1khMPiMHPvN6h86e
-	 sPehsPErflUPjvaL1ACqxoR1Tvw3SrsT1iQl2M2w1mTQgYUWQge12AistE18yZ63cQ
-	 7jD62SKi/rdV9Wxm2sd4hSWEN3tGKMKJMFL+GkiA=
+	b=pY/NMRF2358KfISwXYw1lY6zpZ+Fm+HtbsqD4ZzqmBTRpQM/ItftiPNhVFqJ4c2od
+	 w9GkEfRCB80RnDrSk9wB9j9jJtkBNxrIrCrVN9gLkL8scg0J909bWPp8Vn3t2gRwGe
+	 Gvl31p+kREZkUHkpn0teHt78NguGbIwgexskSLec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Fullway Wang <fullwaywang@outlook.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Andrey Troshin <drtrosh@yandex-team.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 239/272] binfmt_misc: restore write access when removing an entry
-Date: Thu, 20 Aug 2026 16:57:03 +0200
-Message-ID: <20260820145238.788082203@linuxfoundation.org>
+Subject: [PATCH 5.10 001/235] media: mtk-vcodec: potential null pointer deference in SCP
+Date: Thu, 20 Aug 2026 16:53:57 +0200
+Message-ID: <20260820145216.474915385@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
-References: <20260820145231.229664293@linuxfoundation.org>
+In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
+References: <20260820145216.426568665@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,53 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Fullway Wang <fullwaywang@outlook.com>
 
-[ Upstream commit db1856ea9196cf6e015d12199a34c0b9313c7bfa ]
+[ Upstream commit 53dbe08504442dc7ba4865c09b3bbf5fe849681b ]
 
-Registering an entry with the MISC_FMT_OPEN_FILE flag opens the
-interpreter via open_exec() which denies write access to it for as
-long as the entry exists. Removing the entry closes the interpreter
-file via filp_close() but never restores write access, leaving the
-inode's i_writecount permanently negative. Opening the interpreter
-for writing keeps failing with ETXTBSY long after the entry is gone
-until the inode is evicted from the inode cache.
+The return value of devm_kzalloc() needs to be checked to avoid
+NULL pointer deference. This is similar to CVE-2022-3113.
 
-Commit 90f601b497d7 ("binfmt_misc: restore write access before
-closing files opened by open_exec()") fixed the same imbalance in the
-error path of bm_register_write() but the actual removal path has
-been leaking the write denial since the introduction of the flag.
-
-Restore write access in put_binfmt_handler() before closing the
-interpreter file.
-
-Link: https://patch.msgid.link/20260710-work-binfmt_misc-locking-v3-1-a162f7cb58d6@kernel.org
-Fixes: 948b701a607f ("binfmt_misc: add persistent opened binary handler for containers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Link: https://lore.kernel.org/linux-media/PH7PR20MB5925094DAE3FD750C7E39E01BF712@PH7PR20MB5925.namprd20.prod.outlook.com
+Signed-off-by: Fullway Wang <fullwaywang@outlook.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+[Andrey Troshin: backport fixs from
+ drivers/media/platform/mediatek/vcodec/common/mtk_vcodec_fw_scp.c
+ to drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_scp.c]
+Signed-off-by: Andrey Troshin <drtrosh@yandex-team.ru>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_misc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_scp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/binfmt_misc.c
-+++ b/fs/binfmt_misc.c
-@@ -163,8 +163,10 @@ static Node *get_binfmt_handler(struct l
- static void put_binfmt_handler(Node *e)
- {
- 	if (refcount_dec_and_test(&e->users)) {
--		if (e->flags & MISC_FMT_OPEN_FILE)
-+		if (e->flags & MISC_FMT_OPEN_FILE) {
-+			exe_file_allow_write_access(e->interp_file);
- 			filp_close(e->interp_file, NULL);
-+		}
- 		kfree(e);
+diff --git a/drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_scp.c b/drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_scp.c
+index d8e66b645bd8..27f08b1d34d1 100644
+--- a/drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_scp.c
++++ b/drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_scp.c
+@@ -65,6 +65,8 @@ struct mtk_vcodec_fw *mtk_vcodec_fw_scp_init(struct mtk_vcodec_dev *dev)
  	}
- }
+ 
+ 	fw = devm_kzalloc(&dev->plat_dev->dev, sizeof(*fw), GFP_KERNEL);
++	if (!fw)
++		return ERR_PTR(-ENOMEM);
+ 	fw->type = SCP;
+ 	fw->ops = &mtk_vcodec_rproc_msg;
+ 	fw->scp = scp;
+-- 
+2.53.0
+
 
 
