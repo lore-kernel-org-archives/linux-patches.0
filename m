@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE00247A0D4;
-	Thu, 20 Aug 2026 16:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919AF468C0C;
+	Thu, 20 Aug 2026 16:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244306; cv=none; b=HwzkdMK65mOXXvrjLiu7z8My7fQ3UV9FcZNZEHxjiLpXHF0AQ8ljW8RGdS+TdmycMmVSk7z0wROC+7e9TEnRcm+pxcHAojMhltLMJLd3MHX0JI0rfEMHOqi2jh2msqo/GDZnjsdG4g0ZCVT00Vi0W5LePo4/w4LJ0afqSH6Sylk=
+	t=1787244309; cv=none; b=P4/O2TAZgevPIX3+xMhy+7yZ6IIaFPx4tbDWSC2Mk1qC6hEjmcVCQxMm4vxsDhrkgm8lUlPBFajWuHZeWPsypSVC0sjn2G/c4eOY2YnMelRL+TRy83DwIwGbPQ7z2NXXrPsDwH711YwgW43pKdKVjfG94ohG81QYUmpkMH2GvRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244306; c=relaxed/simple;
-	bh=/AoVpz27Jo/RCzqjlvvBQ3H/lYWi09Vbhpr2T+yhuzg=;
+	s=arc-20240116; t=1787244309; c=relaxed/simple;
+	bh=DYfhhxEf/t3+/a/pnxuTiUvf2CuDosjIYFDphQcL2sA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HBbJJ+/Zkxg+NxwO85wm+LSFlPYV3qXuEO777HbxAVYQYH2GKG0M/QgZTMMfTJWhHBuaE8ch6Hzy9BAJYZOPZYUFLYPO/mHgxgjK1n1UvkKO0IqoX9qJvOxmGVZ1VxnDQy6eC6XiYmSvHer7eW1DZKQyXlP9QjKYBppE+Gqcw14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3BRBwz2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ey7vvU6Nikv/wdEz3oskGF20p9kW21B0FqGkZeB3y6+S4BRH13hwSNMVtbvk/KCWa4FOImWGAjXMKkU4K08EXI7TwGApBKWvJFDAuv+QHEO5wuMYq8BhWCoSxCP0QbfUUK8BIPaIHVvh9vN47EkxZau8G5hjuI6WvNPMXpLkOG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hThpQKO6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3BRBwz2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180BC1F000E9;
-	Thu, 20 Aug 2026 16:45:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hThpQKO6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5AC1F000E9;
+	Thu, 20 Aug 2026 16:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244305;
-	bh=oT8B6T8UohcXaD3B8P46+gE9P/IulNj3Zq0ZLxwSvqc=;
+	s=korg; t=1787244308;
+	bh=l4tkmK57w7DNGSOL8h4Cn9bUtE7fUgQH9FG1RTfpJkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K3BRBwz24cvfW2YFuB8Qn8dNrxNTCWqwOPPecCA463+4WoBum6/BzoyeTbjVcGYBi
-	 rw7MK6E/8slcHWFPemG32oSzjTyq4jO/C9EVny1qi/ohW5y94DernyNxNAmV8Yuxwy
-	 8724Yh+qg6bzeDO/Qb6mwm8VHZ9sdrszzvd8Od4E=
+	b=hThpQKO64nFj5h8ziqtWL7XcjfN8oytAQkW9KWL/b7c/fwaXwzMHTFkQiiCPjABld
+	 Fdig9syn2Bqn52Hgp2pBsgSRe09ruc2yvZgrKnVDjx+VTOf3ZADpTDYa8M4ZaO7VU8
+	 l2clOA8xCXwzd2hBu+y1EmXS7fDnseHguXOFGWII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Liang <shaw.leon@gmail.com>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 123/235] net: ip6_tunnel: require CAP_NET_ADMIN in the device netns for changelink
-Date: Thu, 20 Aug 2026 16:55:59 +0200
-Message-ID: <20260820145220.170095552@linuxfoundation.org>
+Subject: [PATCH 5.10 097/235] tpm: tpm_tis_spi: Use wait_woken() in wait_for_tmp_stat()
+Date: Thu, 20 Aug 2026 16:55:33 +0200
+Message-ID: <20260820145219.401299580@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -53,45 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-[ Upstream commit 2496fa0b7d180b3ad356b514e7ff93bb14e6140a ]
+[ Upstream commit c0c9cfb3b75def8bf200a2d4db09015806acfeaf ]
 
-ip6_tnl_changelink() operates on at most two netns, dev_net(dev) and the
-tunnel link netns t->net. They differ once the device is created in or
-moved to a netns other than the one the request runs in. The rtnl
-changelink path checks CAP_NET_ADMIN only against dev_net(dev), so a
-caller privileged there but not in t->net can rewrite a tunnel that
-lives in t->net.
+wait_event_interruptible_timeout() evaluates its condition after setting
+the current task state to TASK_INTERRUPTIBLE.
 
-Gate ip6_tnl_changelink() on rtnl_dev_link_net_capable() at its top,
-before any attribute is parsed.
+With CONFIG_DEBUG_ATOMIC_SLEEP this triggers a warning when the IRQ wait
+path is used:
 
-Reported-by: Xiao Liang <shaw.leon@gmail.com>
-Closes: https://lore.kernel.org/netdev/CABAhCOSzP1vaThGV35_VnsRCb=87_CPjPVsTHbq905k8A+BuUg@mail.gmail.com/
-Fixes: 0bd8762824e7 ("ip6tnl: add x-netns support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260612085941.3158249-5-maoyixie.tju@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+    tpm_tis_status()
+      tpm_tis_spi_read_bytes()
+        tpm_tis_spi_transfer_full()
+          spi_bus_lock()
+            mutex_lock()
+
+Address this with the following measures:
+
+1. Call wait_tpm_stat_cond() only while tasking is running.
+2. Use wait_woken() to wait for changes.
+
+Cc: stable@vger.kernel.org # v4.19+
+Cc: Linus Walleij <linusw@kernel.org>
+Reported-by: Stefan Wahren <wahrenst@gmx.net>
+Closes: https://lore.kernel.org/linux-integrity/6964bec7-3dbb-453b-89ef-9b990217a8b9@gmx.net/
+Fixes: 1a339b658d9d ("tpm_tis_spi: Pass the SPI IRQ down to the driver")
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Tested-by: Stefan Wahren <wahrenst@gmx.net>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_tunnel.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/char/tpm/tpm_tis_core.c |   38 ++++++++++++++++++++++++--------------
+ 1 file changed, 24 insertions(+), 14 deletions(-)
 
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -2083,6 +2083,9 @@ static int ip6_tnl_changelink(struct net
- 	struct ip6_tnl_net *ip6n = net_generic(net, ip6_tnl_net_id);
- 	struct ip_tunnel_encap ipencap;
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -49,10 +49,11 @@ static int wait_for_tpm_stat(struct tpm_
+ 		bool check_cancel)
+ {
+ 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
++	DEFINE_WAIT_FUNC(wait, woken_wake_function);
+ 	unsigned long stop;
+-	long rc;
+ 	u8 status;
+ 	bool canceled = false;
++	int ret;
  
-+	if (!rtnl_dev_link_net_capable(dev, net))
-+		return -EPERM;
+ 	/* check current status */
+ 	status = chip->ops->status(chip);
+@@ -62,23 +63,32 @@ static int wait_for_tpm_stat(struct tpm_
+ 	stop = jiffies + timeout;
+ 
+ 	if (chip->flags & TPM_CHIP_FLAG_IRQ) {
++		ret = -ETIME;
++		add_wait_queue(queue, &wait);
+ again:
++		if (wait_for_tpm_stat_cond(chip, mask, check_cancel,
++					   &canceled)) {
++			ret = canceled ? -ECANCELED : 0;
++			goto out;
++		}
 +
- 	if (dev == ip6n->fb_tnl_dev)
- 		return -EINVAL;
- 
+ 		timeout = stop - jiffies;
+ 		if ((long)timeout <= 0)
+-			return -ETIME;
+-		rc = wait_event_interruptible_timeout(*queue,
+-			wait_for_tpm_stat_cond(chip, mask, check_cancel,
+-					       &canceled),
+-			timeout);
+-		if (rc > 0) {
+-			if (canceled)
+-				return -ECANCELED;
+-			return 0;
+-		}
+-		if (rc == -ERESTARTSYS && freezing(current)) {
+-			clear_thread_flag(TIF_SIGPENDING);
+-			goto again;
++			goto out;
++
++		if (signal_pending(current)) {
++			if (freezing(current)) {
++				clear_thread_flag(TIF_SIGPENDING);
++				goto again;
++			}
++			goto out;
+ 		}
++
++		wait_woken(&wait, TASK_INTERRUPTIBLE, timeout);
++		goto again;
++out:
++		remove_wait_queue(queue, &wait);
++		return ret;
+ 	} else {
+ 		do {
+ 			usleep_range(priv->timeout_min,
 
 
