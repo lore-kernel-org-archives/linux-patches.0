@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89BF73806DC;
-	Thu, 20 Aug 2026 15:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDFC361972;
+	Thu, 20 Aug 2026 15:24:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239492; cv=none; b=I7i3EiLZLZNovRFZaFmXrrmGG+EOahJ4RhN3OAqS+PeN0pXxuoDPdijoEQLHxQKTpqu2/i03VlCRbuJlqAJ5hnehIHpJaTe4MrjQB6mQukGof5inWmj/EZDtBnffS+ofLWSvfjJO5KsH6y0tIj0wEpTSFiarOOmpiP2g/EcSkYc=
+	t=1787239494; cv=none; b=GgrNhtEQM1kUl175izppHqDHwxsaZE30ukRtF2NAGNeMXGeSTjMWll5D+eypEeypUSvbuUiC5lT9hIcYOq5ZgDpTPlkQ79PgAhrm0dePZqsuX3Nij+jFJtZHocBhnvFdX0IbrbUawpktGXXZLA1Clb8Vo1sq91UFiSl+ZJ7PVZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239492; c=relaxed/simple;
-	bh=X4JrbhsgPMBVoW05Nc9XwkyXzX8ZS8D3BSNHgBbhAy4=;
+	s=arc-20240116; t=1787239494; c=relaxed/simple;
+	bh=YSf1g2aPvNO/ZWelpCNC/+wVVInYNaU/+x8OpaqoQ4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EkFU0fgKSwyFW4Fy/DqCcJJAOXiC+4ziGTBMO8RVINwz/Y0XEyudFJbzVoNQMujRYUytBZBOtCkVddZChBZwqlzwvJ21OBPpAZobvqzIO2ZqCqc2KH/Noh/KatzeYft59iAZhEELOD8pNgxPJiPSrLCqvyjO0DRRM8ScsEeX+n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVBH30Kv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s7NGzcpGp7xIFYthbkIyHyZpnvFspP5Y82vqhqqRlANSTgaMoC18FtJdfRVGSrka+N5eos7m0bzKfrGXgYNMrfxn328ks8hNN4O5mcEuvutXAwzLTwi8Cz+3yHfAb1PRg5JxxWLqG/GE0rHIZXZslIVt7HID1v35QfNZhiXes6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J+DNroDT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVBH30Kv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E334A1F000E9;
-	Thu, 20 Aug 2026 15:24:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+DNroDT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4FE91F000E9;
+	Thu, 20 Aug 2026 15:24:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239490;
-	bh=mjyEj0YBbrUn+LjS5yIRXe9Q3YErzlNBqwqzkB/2M34=;
+	s=korg; t=1787239493;
+	bh=OwimmpUgB3xYYcSsVCarL3iDp+5hU9irJ7GSTqKN1GY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HVBH30KvzOjBVta3lkSfLx0tWss0n11B++FVwWv/jpoCt3hDiBPiFnOhjuzQftyGB
-	 WYW7cCAPItGE1clORihHQW/ydQc5ndLUfON0KLcXiX5ZoihWj/yqxfTUdvYQuoALrz
-	 BH1/OZVUZXwUjI2mhX3u2KGLh57SR8+ew+GAOUDI=
+	b=J+DNroDT6FCzCt+6wYnGN1DGed9arjDhQJkD8S+ZGfaWpX4XS57Woon/wezSRgR4G
+	 ucdGgidKodkiTE1tEoTSzbiAtjZ1C9JhGKMcCu3WZAd1kA2PDVv14/UCyVRMoiixGe
+	 bDTJ5iXifSXDnPX3WSDnXsowKiNyKihkCksyjIi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Stuart Summers <stuart.summers@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
-Subject: [PATCH 6.12 068/220] drm/xe: Order ring writes before ring tail updates
-Date: Thu, 20 Aug 2026 16:54:18 +0200
-Message-ID: <20260820145225.534178329@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 069/220] drm/radeon: fix autosuspend cleanup during teardown
+Date: Thu, 20 Aug 2026 16:54:19 +0200
+Message-ID: <20260820145225.565097248@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -45,89 +44,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 9f83c94469ff0fa37274b873ba24922e02531fa7 upstream.
+commit 587be7a17358ef8c0106775fcedae5a7bef50735 upstream.
 
-The ring buffer and the LRC context image are both mapped WC, so the ring
-tail update can become visible to the device before the ring contents it
-is meant to publish.
+radeon_driver_load_kms() calls pm_runtime_use_autosuspend() for PX
+devices, but radeon_driver_unload_kms() does not call the matching
+pm_runtime_dont_use_autosuspend() during teardown.
 
-The GuC CT send does contain an xe_device_wmb(), so sending the H2G would
-flush the ring contents. The problem is that it comes too late:
-xe_lrc_set_ring_tail() publishes the tail before the H2G is sent, and the
-device samples the tail from the context image independently of it, either
-at context switch-in or while the context is already resident. A submitter
-which is interrupted between updating the tail and sending its H2G
-therefore leaves the device free to observe the new tail while the ring
-contents behind it are not yet visible:
+If the autosuspend delay is set to a negative value while autosuspend
+is enabled, the runtime PM core increments usage_count to prevent
+runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
+during teardown, this reference is not dropped.
 
-  1. Thread A emits a job into the ring, sets the tail to T_A and sends
-     the H2G, which flushes A's ring contents. The GuC starts scheduling
-     the context in, but it is not executing yet.
-  2. Thread B emits a job into ring[T_A..T_B]. Those writes are not yet
-     visible to the device.
-  3. Thread B updates the ring tail to T_B. That write targets a
-     different page and becomes visible first.
-  4. Thread B is interrupted before it sends its H2G, so the flush which
-     would have published ring[T_A..T_B] has not happened yet.
-  5. The context is switched in and samples the ring tail from the
-     context image, picking up T_B rather than T_A.
-  6. The GPU executes A's job, advances HEAD to T_A, and continues on to
-     ring[T_A..T_B], which still holds the previous wrap's contents, so
-     the CS parses stale commands.
+The documentation for pm_runtime_use_autosuspend() also notes that it
+is important to undo it with pm_runtime_dont_use_autosuspend() at
+driver exit time, unless runtime PM was initially enabled with
+devm_pm_runtime_enable().
 
-The result is command stream corruption, which typically manifests as a
-hang or a spurious pagefault rather than anything that points back at the
-submission path.
+Add the missing pm_runtime_dont_use_autosuspend() call to the driver
+unload path.
 
-Kernel jobs are by far the most likely to hit this. Kernel queues such as
-the migration queue are shared and can be driven by many threads
-concurrently, producing back-to-back submissions on an LRC which is
-already executing. User queues are typically tied to a single submitting
-thread, so the same interleaving is much harder to produce.
+This issue was found by manual code inspection.
 
-Add an xe_device_wmb() at the end of xe_lrc_write_ring() so that it covers
-every ring tail publication site, and so the invariant is local: once
-xe_lrc_write_ring() returns, the ring contents are visible to the device.
-
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/8651
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/7810
+Fixes: 10ebc0bc0934 ("drm/radeon: add runtime PM support (v2)")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 0fdc1ff82ea14844c22795e9e0813c3ca03235e1)
 Cc: stable@vger.kernel.org
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Assisted-by: GitHub_Copilot:claude-opus-5
-Reviewed-by: Stuart Summers <stuart.summers@intel.com>
-Link: https://patch.msgid.link/20260807171716.140475-1-matthew.brost@intel.com
-(cherry picked from commit 136360290f314890428a3fbf31aaa8e4f1d43567)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_lrc.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/radeon/radeon_kms.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/xe/xe_lrc.c
-+++ b/drivers/gpu/drm/xe/xe_lrc.c
-@@ -1139,6 +1139,13 @@ void xe_lrc_write_ring(struct xe_lrc *lr
- 
- 		__xe_lrc_write_ring(lrc, ring, &noop, sizeof(noop));
+--- a/drivers/gpu/drm/radeon/radeon_kms.c
++++ b/drivers/gpu/drm/radeon/radeon_kms.c
+@@ -71,6 +71,7 @@ void radeon_driver_unload_kms(struct drm
+ 	if (radeon_is_px(dev)) {
+ 		pm_runtime_get_sync(dev->dev);
+ 		pm_runtime_forbid(dev->dev);
++		pm_runtime_dont_use_autosuspend(dev->dev);
  	}
-+
-+	/*
-+	 * The ring and the LRC context image are both WC, so the ring tail
-+	 * update which publishes these writes can become visible to the device
-+	 * first. Ensure the ring contents are visible before returning.
-+	 */
-+	xe_device_wmb(xe);
- }
  
- u64 xe_lrc_descriptor(struct xe_lrc *lrc)
+ 	radeon_acpi_fini(rdev);
 
 
