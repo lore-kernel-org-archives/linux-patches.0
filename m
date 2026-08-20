@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AB837DE83;
-	Thu, 20 Aug 2026 15:04:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10EDB32B110;
+	Thu, 20 Aug 2026 15:05:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238300; cv=none; b=hUnVAZeUnUKfPHa/ojBTdDBZUOsx/4lWKosNAZirRpvCB44JtPTP3l6/6FwD5WKU+yaQyE27JBHsk15Iq7thVQHvzOIBGe9wWfawEX6kcOVhIv5fcTeWNFM/6XQEiN7DDCL4BeC3PnCf+7Wfml4Wj4OO7/Rg4pWbE/MH1BWOxoM=
+	t=1787238303; cv=none; b=beUoQ2r4K2ijiorgyth2wKtb+ur2YlE3TMZ7Uc1HsF16aMviP8SXbKJY+HEXsMtBYwEXgl+KT5DDFcmAqmnL0l5+KWEDpCIMhEQ6oTrc+YJ5mTmS1IPR2SJ0AFdhvIKUENKuQ11+xCfAu4rGF+cSTboO6uu9IQjkau/pD7GEbZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238300; c=relaxed/simple;
-	bh=kF6FWVpg2xJhSg45h2asr93GhVngRgeEfGlOtJOGCWY=;
+	s=arc-20240116; t=1787238303; c=relaxed/simple;
+	bh=MBAMO3Car9Xnq8N54CQBp7/iMqie0M/YHBCXTlk699E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=smIoAVWSu6SQSE3XdQHbmG3Q3HsyKy2v6pTzNE+CrkQ3RQkwWhKah0VS0jz0WGp3u5nJGuiZA/IDLAqSEra7b56BArZU+w9Pkl6ssOqO1eH/TNUJzf9HNB/M2IoxxZCK4yyfLswehFEEMqhxXH1f67s0nnrfOTYexahL13t0ghE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wryexfgA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fEA3E+QPNx3keVicfvNJf3Bf2NmA6EZsxK5qfSXIWQGhPUgfhBHvMt2+x1jL0MUSFVmsKtQVmPagoMUJU9Gyru3r7Gbzl9xOIJ6ZnfBQckVzgFMTfJOpTZROpqC3t3AjwuM4STBCAmXXVMmY7+sH/3CN+depAOcC6USvZG8h8rQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtNQCNlL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wryexfgA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ED951F000E9;
-	Thu, 20 Aug 2026 15:04:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtNQCNlL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944821F000E9;
+	Thu, 20 Aug 2026 15:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238299;
-	bh=NO/dGLhIsw3xpwsFY+U7jcxxh3MSq1m810gtVtty5hU=;
+	s=korg; t=1787238302;
+	bh=D04ZXYXO6TOyWXjHT3O4DdLWBiW5rXe05yac4Tfi5o8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wryexfgAvggrMjOyEK6GcZeWXVsdc7QUOjA5HQjwd4aH2gOZJKcqKgyjceyH22hCV
-	 +/hLVDUjIkveaTsPQqcCWcjkLY2lqRjeE8pIYfxWXJWCGkB8KHoUCORjUr+z6g3pq7
-	 oy2fqI4DqjfxDVq66ul/FYA6dATMOJbHoIocfizM=
+	b=QtNQCNlL+D+m4Sp/EMHH28ic0z94CQnGtsApJ48pV5xH28ENxs5aURH3sf6DiiFyW
+	 OAV/Bkf/2DLqPxJ6exSQIMk7k5WCvj6+7rh2qkwYC9D6HAm1yFvifQwM+Gzu0cYwSw
+	 PLvfCatHdNUnKodiaNXkxbboHUDx02waBglfbtuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Cornelia Huck <cohuck@redhat.com>,
 	Matthew Rosato <mjrosato@linux.ibm.com>,
 	Eric Farman <farman@linux.ibm.com>,
 	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 7.1 097/228] s390/vfio_ccw: Cancel existing workqueues
-Date: Thu, 20 Aug 2026 16:53:59 +0200
-Message-ID: <20260820145247.601314004@linuxfoundation.org>
+Subject: [PATCH 7.1 098/228] s390/vfio_ccw: Ensure index for read/write regions are within range
+Date: Thu, 20 Aug 2026 16:54:00 +0200
+Message-ID: <20260820145247.630563070@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -53,55 +54,145 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Farman <farman@linux.ibm.com>
 
-commit 79c60b2c61105368dcc8444eb45847e21734f7c4 upstream.
+commit 9f5f9a78fedc45bc29d6a0a64e3a3472361afae5 upstream.
 
-The initialization of the io_work and crw_work workqueues begs the
-question of whether they should be un-initialized. Add the corresponding
-cleanup tags in _release_dev to ensure work isn't dispatched after
-the private struct is free'd.
+The introduction of the capability chain rightly clamped the
+region indexes to the range of the capabilities itself, but
+neglected to do so for the existing read/write regions which
+should also be enforced.
 
-Suggested-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Fixes: e5f84dbaea59 ("vfio: ccw: return I/O results asynchronously")
-Fixes: 3f02cb2fd9d2 ("vfio-ccw: Wire up the CRW irq and CRW region")
+Fixes: db8e5d17ac03 ("vfio-ccw: add capabilities chain")
 Cc: stable@vger.kernel.org
+Cc: Cornelia Huck <cohuck@redhat.com>
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/vfio_ccw_ops.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/s390/cio/vfio_ccw_async.c |   16 ++++++++++++++++
+ drivers/s390/cio/vfio_ccw_chp.c   |   15 +++++++++++++++
+ drivers/s390/cio/vfio_ccw_ops.c   |    7 +++----
+ 3 files changed, 34 insertions(+), 4 deletions(-)
 
+--- a/drivers/s390/cio/vfio_ccw_async.c
++++ b/drivers/s390/cio/vfio_ccw_async.c
+@@ -8,6 +8,7 @@
+  */
+ 
+ #include <linux/vfio.h>
++#include <linux/nospec.h>
+ 
+ #include "vfio_ccw_private.h"
+ 
+@@ -24,11 +25,20 @@ static ssize_t vfio_ccw_async_region_rea
+ 		return -EINVAL;
+ 
+ 	mutex_lock(&private->io_mutex);
++
++	if (i >= private->num_regions) {
++		ret = -EINVAL;
++		goto out_unlock;
++	}
++
++	i = array_index_nospec(i, private->num_regions);
+ 	region = private->region[i].data;
+ 	if (copy_to_user(buf, (void *)region + pos, count))
+ 		ret = -EFAULT;
+ 	else
+ 		ret = count;
++
++out_unlock:
+ 	mutex_unlock(&private->io_mutex);
+ 	return ret;
+ }
+@@ -48,6 +58,12 @@ static ssize_t vfio_ccw_async_region_wri
+ 	if (!mutex_trylock(&private->io_mutex))
+ 		return -EAGAIN;
+ 
++	if (i >= private->num_regions) {
++		ret = -EINVAL;
++		goto out_unlock;
++	}
++
++	i = array_index_nospec(i, private->num_regions);
+ 	region = private->region[i].data;
+ 	if (copy_from_user((void *)region + pos, buf, count)) {
+ 		ret = -EFAULT;
+--- a/drivers/s390/cio/vfio_ccw_chp.c
++++ b/drivers/s390/cio/vfio_ccw_chp.c
+@@ -9,6 +9,7 @@
+  */
+ 
+ #include <linux/slab.h>
++#include <linux/nospec.h>
+ #include <linux/vfio.h>
+ #include "vfio_ccw_private.h"
+ 
+@@ -26,6 +27,13 @@ static ssize_t vfio_ccw_schib_region_rea
+ 		return -EINVAL;
+ 
+ 	mutex_lock(&private->io_mutex);
++
++	if (i >= private->num_regions) {
++		ret = -EINVAL;
++		goto out;
++	}
++
++	i = array_index_nospec(i, private->num_regions);
+ 	region = private->region[i].data;
+ 
+ 	if (cio_update_schib(sch)) {
+@@ -97,6 +105,12 @@ static ssize_t vfio_ccw_crw_region_read(
+ 		list_del(&crw->next);
+ 
+ 	mutex_lock(&private->io_mutex);
++	if (i >= private->num_regions) {
++		ret = -EINVAL;
++		goto out;
++	}
++
++	i = array_index_nospec(i, private->num_regions);
+ 	region = private->region[i].data;
+ 
+ 	if (crw)
+@@ -109,6 +123,7 @@ static ssize_t vfio_ccw_crw_region_read(
+ 
+ 	region->crw = 0;
+ 
++out:
+ 	mutex_unlock(&private->io_mutex);
+ 
+ 	kfree(crw);
 --- a/drivers/s390/cio/vfio_ccw_ops.c
 +++ b/drivers/s390/cio/vfio_ccw_ops.c
-@@ -131,6 +131,13 @@ static void vfio_ccw_mdev_release_dev(st
- 		container_of(vdev, struct vfio_ccw_private, vdev);
- 	struct vfio_ccw_crw *crw, *temp;
+@@ -258,6 +258,7 @@ static ssize_t vfio_ccw_mdev_read(struct
+ 		return vfio_ccw_mdev_read_io_region(private, buf, count, ppos);
+ 	default:
+ 		index -= VFIO_CCW_NUM_REGIONS;
++		index = array_index_nospec(index, private->num_regions);
+ 		return private->region[index].ops->read(private, buf, count,
+ 							ppos);
+ 	}
+@@ -310,6 +311,7 @@ static ssize_t vfio_ccw_mdev_write(struc
+ 		return vfio_ccw_mdev_write_io_region(private, buf, count, ppos);
+ 	default:
+ 		index -= VFIO_CCW_NUM_REGIONS;
++		index = array_index_nospec(index, private->num_regions);
+ 		return private->region[index].ops->write(private, buf, count,
+ 							 ppos);
+ 	}
+@@ -353,11 +355,8 @@ static int vfio_ccw_mdev_ioctl_get_regio
+ 		    VFIO_CCW_NUM_REGIONS + private->num_regions)
+ 			return -EINVAL;
  
-+	/*
-+	 * Ensure these work items are fully drained, so none can
-+	 * fire after being released.
-+	 */
-+	cancel_work_sync(&private->io_work);
-+	cancel_work_sync(&private->crw_work);
-+
- 	list_for_each_entry_safe(crw, temp, &private->crw, next) {
- 		list_del(&crw->next);
- 		kfree(crw);
-@@ -202,6 +209,14 @@ static void vfio_ccw_mdev_close_device(s
- 		container_of(vdev, struct vfio_ccw_private, vdev);
+-		info->index = array_index_nospec(info->index,
+-						 VFIO_CCW_NUM_REGIONS +
+-						 private->num_regions);
+-
+ 		i = info->index - VFIO_CCW_NUM_REGIONS;
++		i = array_index_nospec(i, private->num_regions);
  
- 	vfio_ccw_fsm_event(private, VFIO_CCW_EVENT_CLOSE);
-+
-+	/*
-+	 * Ensure these work items are drained, in the event the
-+	 * device is re-opened instead of released.
-+	 */
-+	cancel_work_sync(&private->io_work);
-+	cancel_work_sync(&private->crw_work);
-+
- 	vfio_ccw_unregister_dev_regions(private);
- }
- 
+ 		info->offset = VFIO_CCW_INDEX_TO_OFFSET(info->index);
+ 		info->size = private->region[i].size;
 
 
