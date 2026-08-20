@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18081469843;
-	Thu, 20 Aug 2026 17:39:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF4047142E;
+	Thu, 20 Aug 2026 17:38:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247543; cv=none; b=dZZnOUEvHQSvZSupS3gv1INhRRP9AHH6i5E8WlZIlZy+2Bf6Qm6ZTnqcZCV06IIvahq9vk+zJ3x5yblX2fTZ9Va6s6bbxCil6eXo7U/kgu1qv0c1gU2L3aDpACyyqonJhgU+MGmdNDaUq7kw2pIJpV00VTxg/kGH9ec1uH1uoXE=
+	t=1787247543; cv=none; b=ECfr0n7udmHA/3HIvNxag4USvEuBcs/aveklaU0qWPGN2hXSlQmB5OdNYTUh2s+RH//pQUHwd5STphMjbzPVKswVyMKhvI1mh/ZuY10L0BdDsx8c8Ke5nqKJcSJI/HMr0dJQ0xxwC+Amy4ud6hXLCYVGmRxQ6hujZqIp2BrDdik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1787247543; c=relaxed/simple;
-	bh=c9oDIzFQi5qOrUZKOR0iXTdLT2Ds0eL+n7K4Lv7JzU8=;
+	bh=gk0mYvCrwTPCQCvezM5CEeENAa0B2fx9iFPclePIe4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dA9zvCH7+AIE3dVSbqRcHWsapLer++EGy8fRkATQcqqF/teE/dAd+B1Pet3zPJqLznduTAw1rqU8NF1wt7wL1zFB7/UeDJw9g2toARM350FEbeXvQwzp9p7KoFngyhWYcanDFrZKRS86UrAat91w0VonmSEiBPNfDzF9+HrvUtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KEQafnli; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SNwQjCS2HmunQydXKZNhZZBFqDqfoYtowY3e4biWhq0hllny2Cu5y/qlTLN6VnCXAWFis0vPanIp250jVUSqVVDGsmDZJ5Liwh7fhSJt7kf+jUTq1qGtmNiBEpJTq0iMT5T6coif66L10mB0k+rkwLwhxAy9XZhyyCqp8WHvlis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1wuVAO1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KEQafnli"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4931F00A3A;
-	Thu, 20 Aug 2026 17:39:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1wuVAO1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A5C1F000E9;
+	Thu, 20 Aug 2026 17:38:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247541;
-	bh=6XYz4t/xI+XefasOYxEKOdwZkngxL1sE6424EkGxJVU=;
+	s=korg; t=1787247539;
+	bh=L4cegBfEOUAym/jSGQPxfoHA7AvcK0JgT4gIkmFHA44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KEQafnliEgUQoAbg818U1bpCQDSmOxWo+2DT+9oVK8QwehecdUqFneSdwYovzSm+a
-	 EgG7XnQpHoJ548SHuPR6N6C9dde1YEkU1EdU9ED7fTlRODGCd91Khpqu9S+dwDaZJ4
-	 1tefF5Zhj1c93CqJOhwEY8fR6ZBVCgWkkJbZ567o=
+	b=I1wuVAO1jZYmG5E1CYR6IYkfpHrnrIvCMxHWUH7VqA4HcNuL0Vw4DDIPi6r/nP8Op
+	 KClvsLBuF6fPrNtzAYT1PxkB4TqpQS9CyJot3MgR/uU3PQKkGsZshN+82F4nbvlgxe
+	 OdTGj4Z3YB+smzPRFWItH53A5LzADSJG5bAlv/Qg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Felix Fietkau <nbd@nbd.name>,
-	David Ahern <dsahern@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 083/166] net: move skb_gro_receive_list from udp to core
-Date: Thu, 20 Aug 2026 16:55:42 +0200
-Message-ID: <20260820145213.649435901@linuxfoundation.org>
+Subject: [PATCH 6.6 074/166] libceph: Amend checking to fix `make W=1` build breakage
+Date: Thu, 20 Aug 2026 16:55:33 +0200
+Message-ID: <20260820145213.370278970@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -54,112 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 8928756d53d5b99dcd18073dc7738b8ebdbe7d96 ]
+[ Upstream commit 04d8712b079327409b09dee628378f9583e2e035 ]
 
-This helper function will be used for TCP fraglist GRO support
+In a few cases the code compares 32-bit value to a SIZE_MAX derived
+constant which is much higher than that value on 64-bit platforms,
+Clang, in particular, is not happy about this
 
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: e751256486d0 ("net: gro: fix double aggregation of flush-marked skbs")
+net/ceph/osdmap.c:1441:10: error: result of comparison of constant 4611686018427387891 with expression of type 'u32' (aka 'unsigned int') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
+ 1441 |         if (len > (SIZE_MAX - sizeof(*pg)) / sizeof(u32))
+      |             ~~~ ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+net/ceph/osdmap.c:1624:10: error: result of comparison of constant 2305843009213693945 with expression of type 'u32' (aka 'unsigned int') is always false [-Werror,-Wtautological-constant-out-of-range-compare]
+ 1624 |         if (len > (SIZE_MAX - sizeof(*pg)) / (2 * sizeof(u32)))
+      |             ~~~ ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Fix this by casting to size_t. Note, that possible replacement of SIZE_MAX
+by U32_MAX may lead to the behaviour changes on the corner cases.
+
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Stable-dep-of: 9f00f9cf2be2 ("libceph: bound pg_{temp,upmap,upmap_items} length to CEPH_PG_MAX_SIZE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/gro.h      |    1 +
- net/core/gro.c         |   29 +++++++++++++++++++++++++++++
- net/ipv4/udp_offload.c |   29 -----------------------------
- 3 files changed, 30 insertions(+), 29 deletions(-)
+ net/ceph/osdmap.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/net/gro.h
-+++ b/include/net/gro.h
-@@ -442,6 +442,7 @@ static inline __wsum ip6_gro_compute_pse
- }
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -1440,7 +1440,7 @@ static struct ceph_pg_mapping *__decode_
+ 	ceph_decode_32_safe(p, end, len, e_inval);
+ 	if (len == 0 && incremental)
+ 		return NULL;	/* new_pg_temp: [] to remove */
+-	if (len > (SIZE_MAX - sizeof(*pg)) / sizeof(u32))
++	if ((size_t)len > (SIZE_MAX - sizeof(*pg)) / sizeof(u32))
+ 		return ERR_PTR(-EINVAL);
  
- int skb_gro_receive(struct sk_buff *p, struct sk_buff *skb);
-+int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb);
+ 	ceph_decode_need(p, end, len * sizeof(u32), e_inval);
+@@ -1621,7 +1621,7 @@ static struct ceph_pg_mapping *__decode_
+ 	u32 len, i;
  
- /* Pass the currently batched GRO_NORMAL SKBs up to the stack. */
- static inline void gro_normal_list(struct napi_struct *napi)
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -230,6 +230,35 @@ done:
- 	return 0;
- }
+ 	ceph_decode_32_safe(p, end, len, e_inval);
+-	if (len > (SIZE_MAX - sizeof(*pg)) / (2 * sizeof(u32)))
++	if ((size_t)len > (SIZE_MAX - sizeof(*pg)) / (2 * sizeof(u32)))
+ 		return ERR_PTR(-EINVAL);
  
-+int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb)
-+{
-+	if (unlikely(p->len + skb->len >= 65536))
-+		return -E2BIG;
-+
-+	if (NAPI_GRO_CB(p)->last == p)
-+		skb_shinfo(p)->frag_list = skb;
-+	else
-+		NAPI_GRO_CB(p)->last->next = skb;
-+
-+	skb_pull(skb, skb_gro_offset(skb));
-+
-+	NAPI_GRO_CB(p)->last = skb;
-+	NAPI_GRO_CB(p)->count++;
-+	p->data_len += skb->len;
-+
-+	/* sk ownership - if any - completely transferred to the aggregated packet */
-+	skb->destructor = NULL;
-+	skb->sk = NULL;
-+	p->truesize += skb->truesize;
-+	p->len += skb->len;
-+
-+	skb_shinfo(p)->flags |= skb_shinfo(skb)->flags & SKBFL_SHARED_FRAG;
-+
-+	NAPI_GRO_CB(skb)->same_flow = 1;
-+
-+	return 0;
-+}
-+
- 
- static void napi_gro_complete(struct napi_struct *napi, struct sk_buff *skb)
- {
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -527,35 +527,6 @@ out:
- 	return segs;
- }
- 
--static int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb)
--{
--	if (unlikely(p->len + skb->len >= 65536))
--		return -E2BIG;
--
--	if (NAPI_GRO_CB(p)->last == p)
--		skb_shinfo(p)->frag_list = skb;
--	else
--		NAPI_GRO_CB(p)->last->next = skb;
--
--	skb_pull(skb, skb_gro_offset(skb));
--
--	NAPI_GRO_CB(p)->last = skb;
--	NAPI_GRO_CB(p)->count++;
--	p->data_len += skb->len;
--
--	/* sk ownership - if any - completely transferred to the aggregated packet */
--	skb->destructor = NULL;
--	skb->sk = NULL;
--	p->truesize += skb->truesize;
--	p->len += skb->len;
--
--	skb_shinfo(p)->flags |= skb_shinfo(skb)->flags & SKBFL_SHARED_FRAG;
--
--	NAPI_GRO_CB(skb)->same_flow = 1;
--
--	return 0;
--}
--
- 
- #define UDP_GRO_CNT_MAX 64
- static struct sk_buff *udp_gro_receive_segment(struct list_head *head,
+ 	ceph_decode_need(p, end, 2 * len * sizeof(u32), e_inval);
 
 
