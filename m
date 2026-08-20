@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F23737C90A;
-	Thu, 20 Aug 2026 15:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8AE937C902;
+	Thu, 20 Aug 2026 15:02:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238122; cv=none; b=QXyBKQw3o7riMiG55mT58ktK62jRDcLjcCLcGNFgC64qlLENzsuZCVMgYtarPzqTC5fmZPY576SHZQY1fxnbJc3wHT50jfsvS3tJOCqyggSvGFE7dFQpiD6+bhfsS81m1cGjIkpMYIZg3IlhwOzg9y+OTD9Fr0yYlQCIjzLZTEc=
+	t=1787238125; cv=none; b=oQZSL0Dp0/ay6Vl8NejysExeIkiPNiq4OLI+AR1MpqI8ubISsUeuBE7w/6ado6O29PoAk1S95yTzsm0tMqEada2g5kmzEUx5e4/I9WO/JwsF72v++RBRIeY0/skj64Mu9oQ5I3s3S2FxDPVb2XyG/Wg3FA6WAoZtBOQ//jvXb1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238122; c=relaxed/simple;
-	bh=Lz5O4I+mp7/z6lLbQ3WgwLMOXFmEuNoaIOt4pQ4nlvM=;
+	s=arc-20240116; t=1787238125; c=relaxed/simple;
+	bh=nEg76aj7j/A/BYmyHWkcIKgSjOw0MPRSJswcOvoEG8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RE4vq6PpvJjnjONCMio3PcoQ0U+5Z8nwdCWI4R/d8Vl+FjoTBQhe6imlzkulzgPHi+QvYHaoKfK9UYzwDC9q/YS2SuXV+UA6GqvV7UZoCza4HhfDqpWCevCl5P11BeZVRSeWff0BpYIBO0s/Xi6kh8wHrAcq4lAtUbDiSnCbG/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsMUt7HJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mXdhgMgPPr9p/5JHvZH1sCVsADTY5e/gU4+LVFcQu/fmaNOsm2o0tP2oBRmW3xdZEJDjMfDLz0Jx0CftKbegZX6YQ4DAn/A9rVxo1rNRnYzLxflyQMnjn00PkHt1daM6qm3c60ErrLoVcpL8QSOOv63BZ4lTWyhEQBLRD7K/lOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqtzbjP5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsMUt7HJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C925C1F000E9;
-	Thu, 20 Aug 2026 15:02:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqtzbjP5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62201F000E9;
+	Thu, 20 Aug 2026 15:02:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238121;
-	bh=Le97d1Fl0aNdxa4SH1FvK9XKJlm0PbgAPQb3J37W80I=;
+	s=korg; t=1787238124;
+	bh=WMD8fIu4le5Ayw5cfYHfaJ1Idmtqji+OduRRV1vAZM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nsMUt7HJIf3+M6DTAn2MPHAWQ42IYgqvjK6cR5OZK/2LWSJDR25279hijpFr9vgVH
-	 EF2Tqj/yjxCZmIbK26YNZ7xdcBhcKaKjqCIaKAEcQVaQdMtkOJkDcoFkT6tB0GtZka
-	 rzjpBxraSF+J3QV+9FrcDzY81xD8uL0QZpEtLKtA=
+	b=kqtzbjP5uuropFy1y1ngBGHuEs0c2y02F7NQnBvrCxYc1NGczrj0hqEYbnKlTsM5X
+	 BJyDhCfkBHkpfQMZuutuWwafWlQQXTQ8dTUCp2G2Rb2YB+qVCCkY7vYPm59DlGSXm5
+	 l3A1cMxYZqT2+FPah+ULClb9wUYqTAtztbwuHi7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.1 039/228] ASoC: SOF: topology: Use acpi mach from the machine driver
-Date: Thu, 20 Aug 2026 16:53:01 +0200
-Message-ID: <20260820145245.655777124@linuxfoundation.org>
+	"KADOTA, Kyohei" <lufia@lufia.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 7.1 040/228] Input: xpad - add support for ZENAIM LEVERLESS
+Date: Thu, 20 Aug 2026 16:53:02 +0200
+Message-ID: <20260820145245.685882957@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -46,50 +44,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Kyohei Kadota <lufia@lufia.org>
 
-commit ae63720dd7c3647d64f7a85e5e1870f90eb569d6 upstream.
+commit 7d971337ebfad0b173cb46097c709db174ac3557 upstream.
 
-The parameters may be changed by the sof_sdw machine driver is the
-SOC_SDW_PCH_DMIC quirk is set. Use the mach_params from the machine
-driver to ensure the sof_sdw_get_tplg_files() function select the right
-function topologies.
+Add the VID/PID for the ZENAIM LEVERLESS controller to xpad_device and
+the VID to xpad_table.
 
-Fixes: 2fbeff33381c ("ASoC: Intel: add sof_sdw_get_tplg_files ops")
+Signed-off-by: KADOTA, Kyohei <lufia@lufia.org>
+Link: https://patch.msgid.link/CAFMepckDUuOHiDDVVhUYc-UqJMeCqrWSfCuxbJ2x2sGgdDD4nw@mail.gmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260730071724.22296-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/intel/common/sof-function-topology-lib.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/input/joystick/xpad.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/soc/intel/common/sof-function-topology-lib.c
-+++ b/sound/soc/intel/common/sof-function-topology-lib.c
-@@ -30,7 +30,12 @@ enum tplg_device_id {
- int sof_sdw_get_tplg_files(struct snd_soc_card *card, const struct snd_soc_acpi_mach *mach,
- 			   const char *prefix, const char ***tplg_files, bool best_effort)
- {
--	struct snd_soc_acpi_mach_params mach_params = mach->mach_params;
-+	struct snd_soc_acpi_mach *card_mach = dev_get_platdata(card->dev);
-+	/*
-+	 * Use the acpi mach from the machine driver because the machine driver
-+	 * may change the dmic_num based on the machine driver quirk.
-+	 */
-+	struct snd_soc_acpi_mach_params mach_params = card_mach->mach_params;
- 	struct snd_soc_dai_link *dai_link;
- 	const struct firmware *fw;
- 	char platform[SOF_INTEL_PLATFORM_NAME_MAX];
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -394,6 +394,7 @@ static const struct xpad_device {
+ 	{ 0x3285, 0x0646, "Nacon Pro Compact", 0, XTYPE_XBOXONE },
+ 	{ 0x3285, 0x0662, "Nacon Revolution5 Pro", 0, XTYPE_XBOX360 },
+ 	{ 0x3285, 0x0663, "Nacon Evol-X", 0, XTYPE_XBOXONE },
++	{ 0x3507, 0x000b, "ZENAIM LEVERLESS", 0, XTYPE_XBOX360 },
+ 	{ 0x3537, 0x1004, "GameSir T4 Kaleid", 0, XTYPE_XBOX360 },
+ 	{ 0x3537, 0x100f, "GameSir Nova 2 Lite", 0, XTYPE_XBOX360 },
+ 	{ 0x3537, 0x1010, "GameSir G7 SE", 0, XTYPE_XBOXONE },
+@@ -557,6 +558,7 @@ static const struct usb_device_id xpad_t
+ 	XPAD_XBOX360_VENDOR(0x31e3),		/* Wooting Keyboards */
+ 	XPAD_XBOX360_VENDOR(0x3285),		/* Nacon GC-100 */
+ 	XPAD_XBOXONE_VENDOR(0x3285),		/* Nacon Evol-X */
++	XPAD_XBOX360_VENDOR(0x3507),		/* ZENAIM Controllers */
+ 	XPAD_XBOX360_VENDOR(0x3537),		/* GameSir Controllers */
+ 	XPAD_XBOXONE_VENDOR(0x3537),		/* GameSir Controllers */
+ 	XPAD_XBOX360_VENDOR(0x3651),		/* CRKD Controllers */
 
 
