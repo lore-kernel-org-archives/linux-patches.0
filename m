@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3971E477E58;
-	Thu, 20 Aug 2026 16:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA5A47D47F;
+	Thu, 20 Aug 2026 16:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243177; cv=none; b=G5vBMnUur7UU2akbf+4Fb3//OFXawvX5Hhdn5sBDrZ/16tSnf1JZxdUr049MxRYnCU7Olqf6SX825FMqnXIgAzp06ii1xWGme6SBNXJB36qdp/BVz3TOwR832s6px0/EwpclPeQV/OcfO68LnYieJQ+DyJgC0fTJo/JG2WBhKBQ=
+	t=1787243180; cv=none; b=CWqJt8QDEFFDFaryIICNCVL8uanbL6XrnfpRN76y2t2EooLIk7JVwNXLs1crEJy45q9H61YXdpYTBZuTnv0zacjGtIMYnnwZNunmg9GFgkKLs4PoDZxbqIkrQ2r1sZljY0tam8NMyikZgNkji5yMgjZE+70+cKGjtZpx9QCq6VE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243177; c=relaxed/simple;
-	bh=poqJimMhFAJo+TXbOKDw8ej+yLbO5Q+GyPURW4oXyxA=;
+	s=arc-20240116; t=1787243180; c=relaxed/simple;
+	bh=QbWlpFIGQMkfi901EZ1NBy/YCwOFypRHskjvdd58TYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pDx6NN3RiaWlwKNFVKUWO0XOsmyfUVJvskNk865dNz3Cp75ODZqr9N81kwk6FuxYXJp91yb8xu4und1EdzSIjpH90FT6I+wi9z+9GUOXdluHKlEh3eX51Yz+Kv/0Bhs/VxP5KLZdZ0AWLZoy17CZnMYu5hVH1BEEBXRBsykOCl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bG0NmpIz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ncdaK92ANarr24trQeK8QauddtOmxjenVuRBNo1TmoEj6ryP4J3Cd2aAfr0tK/JxpL6GfWmepuk09Yv1U0vTpz6SAEmrERMW9JbYAY0p8HZgO9+Pb/vEMhtjCcbNoqqjeNTz+bVdi5zlyNRLLaegJl+SE085Ulq/rdUnQCM1nYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxLZYOnd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bG0NmpIz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E1611F000E9;
-	Thu, 20 Aug 2026 16:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxLZYOnd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 190911F00A3A;
+	Thu, 20 Aug 2026 16:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243174;
-	bh=gYGb+zRq7EQ1eIGx0RFm9idqcbR+F+IIqjWpqm2OO7w=;
+	s=korg; t=1787243177;
+	bh=88ZEocSux1Dl2iyiNu/74G8Vj33BeTjAUgKa4vsWgaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bG0NmpIzLXiSrIvZp2JcAjW5Pf4UhipsOHWVNxccFl7f1joGu3OKRjIrkY2rQLHS7
-	 bd/Z+2zp8kbANmCFu44RsqvPfJTzj08f6GZKZS6orTuSwYLPD7+5h1Qqv/dU7IIZru
-	 /LCefA2uj+A+ED03ms958oxBY2XpyVvRMgWA4pME=
+	b=sxLZYOndwABJwmIgjeJEIXCZHOLN1dNgs2QZCfqN9MPvyp2te4XJmrEou3gM1tWjb
+	 SrSyRv+gGLaR4FYna54VdE5mqSy57jlbC4TBiIzsFoQ1N/r3owvRPQe77Iv9Z7V5W0
+	 3YWQX8EEVLSQBcl86mMXpL22o4n0uQUnlC4WQDGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 276/303] netfilter: nf_conntrack: defer invalid log until after unlock
-Date: Thu, 20 Aug 2026 16:56:52 +0200
-Message-ID: <20260820145301.763799745@linuxfoundation.org>
+Subject: [PATCH 6.1 277/303] arm64: tegra: Add EL2 virtual timer interrupt for Tegra194
+Date: Thu, 20 Aug 2026 16:56:53 +0200
+Message-ID: <20260820145301.793468769@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -53,336 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit 2d19b95c9723001f214f7a47d67b09f46238f200 ]
+[ Upstream commit a7c28483fd57dd0e1487024af70622315320774b ]
 
-TCP and SCTP conntrack paths can emit invalid-packet logs while ct->lock
-is still held.
+Commit d87773de9efe ("clocksource/drivers/arm_arch_timer: Default to EL2
+virtual timer when running VHE") updated the ARM arch timer driver to
+use the virtual timer by default if the CPU is running at EL2 with VHE
+enabled. If the CPU is running at EL2 with VHE enabled but there is no
+interrupt provided for the virtual timer, then the following warning is
+displayed:
 
-When invalid logging is routed to nfnetlink_log and conntrack export is
-enabled, the log path can re-enter conntrack netlink glue and dump the
-same conntrack again. Protocol attribute dumping may take ct->lock, so
-logging while holding that lock can deadlock.
+ arch_timer: [Firmware Bug]: VHE-capable CPU without EL2 virtual timer
+  interrupt
 
-Defer the TCP invalid logs by storing only the minimal log context while
-ct->lock is held and emitting the log after unlocking. Also make the TCP
-timeout-lowering invalid path return whether a log is needed, then emit
-that log after unlocking.
+This warning is observed on Tegra194 platforms. Tegra194 SoC includes
+NVIDIA Carmel ARM v8.2 CPUs and support an EL2 virtual timer. Fix the
+above warning by adding the PPI for the EL2 virtual timer interrupt for
+Tegra194.
 
-Do the same for the SCTP invalid state-transition log that can be reached
-while ct->lock is held.
-
-Add a lockdep assertion to nf_ct_l4proto_log_invalid() so future callers
-that log invalid conntracks while holding ct->lock are caught outside TCP
-and SCTP as well.
-
-Fixes: 628d694344a0 ("netfilter: conntrack: reduce timeout when receiving out-of-window fin or rst")
-Fixes: d9a6f0d0df18 ("netfilter: conntrack: prepare tcp_in_window for ternary return value")
-Fixes: f71cb8f45d09 ("netfilter: conntrack: sctp: use nf log infrastructure for invalid packets")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 5425fb15d8ee ("arm64: tegra: Add Tegra194 chip device tree")
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_proto.c      |    6 +
- net/netfilter/nf_conntrack_proto_sctp.c |   12 +-
- net/netfilter/nf_conntrack_proto_tcp.c  |  132 +++++++++++++++++++++-----------
- 3 files changed, 102 insertions(+), 48 deletions(-)
+ arch/arm64/boot/dts/nvidia/tegra194.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/netfilter/nf_conntrack_proto.c
-+++ b/net/netfilter/nf_conntrack_proto.c
-@@ -79,6 +79,12 @@ void nf_ct_l4proto_log_invalid(const str
- 	struct net *net;
- 	va_list args;
- 
-+	/* nfnetlink_log may re-enter conntrack attribute dumping and try to
-+	 * take ct->lock again via helpers such as tcp_to_nlattr(), so invalid
-+	 * conntrack logs must only be emitted after dropping ct->lock.
-+	 */
-+	lockdep_assert_not_held(&ct->lock);
-+
- 	net = nf_ct_net(ct);
- 	if (likely(net->ct.sysctl_log_invalid == 0))
- 		return;
---- a/net/netfilter/nf_conntrack_proto_sctp.c
-+++ b/net/netfilter/nf_conntrack_proto_sctp.c
-@@ -340,10 +340,12 @@ int nf_conntrack_sctp_packet(struct nf_c
- 	struct sctphdr _sctph;
- 	const struct sctp_chunkhdr *sch;
- 	struct sctp_chunkhdr _sch;
-+	bool log_invalid = false;
- 	u_int32_t offset, count;
- 	unsigned int *timeouts;
- 	unsigned long map[256 / sizeof(unsigned long)] = { 0 };
- 	bool ignore = false;
-+	u8 invalid_type = 0;
- 
- 	if (sctp_error(skb, dataoff, state))
- 		return -NF_ACCEPT;
-@@ -455,10 +457,8 @@ int nf_conntrack_sctp_packet(struct nf_c
- 
- 		/* Invalid */
- 		if (new_state == SCTP_CONNTRACK_MAX) {
--			nf_ct_l4proto_log_invalid(skb, ct, state,
--						  "Invalid, old_state %d, dir %d, type %d",
--						  old_state, dir, sch->type);
--
-+			log_invalid = true;
-+			invalid_type = sch->type;
- 			goto out_unlock;
- 		}
- 
-@@ -533,6 +533,10 @@ int nf_conntrack_sctp_packet(struct nf_c
- 
- out_unlock:
- 	spin_unlock_bh(&ct->lock);
-+	if (log_invalid)
-+		nf_ct_l4proto_log_invalid(skb, ct, state,
-+					  "Invalid, old_state %d, dir %d, type %d",
-+					  old_state, dir, invalid_type);
- out:
- 	return -NF_ACCEPT;
- }
---- a/net/netfilter/nf_conntrack_proto_tcp.c
-+++ b/net/netfilter/nf_conntrack_proto_tcp.c
-@@ -480,37 +480,81 @@ static void tcp_init_sender(struct ip_ct
- 	}
- }
- 
--__printf(6, 7)
--static enum nf_ct_tcp_action nf_tcp_log_invalid(const struct sk_buff *skb,
--						const struct nf_conn *ct,
--						const struct nf_hook_state *state,
--						const struct ip_ct_tcp_state *sender,
--						enum nf_ct_tcp_action ret,
--						const char *fmt, ...)
-+enum nf_tcp_invalid_log_type {
-+	NF_TCP_LOG_NONE,
-+	NF_TCP_LOG_OVERSHOT,
-+	NF_TCP_LOG_SEQ_OVER,
-+	NF_TCP_LOG_ACK_OVER,
-+	NF_TCP_LOG_SEQ_UNDER,
-+	NF_TCP_LOG_ACK_UNDER,
-+};
-+
-+struct nf_tcp_invalid_log {
-+	enum nf_tcp_invalid_log_type type;
-+	u32 value;
-+};
-+
-+static enum nf_ct_tcp_action
-+nf_tcp_store_invalid(const struct nf_conn *ct,
-+		     const struct ip_ct_tcp_state *sender,
-+		     struct nf_tcp_invalid_log *log,
-+		     enum nf_ct_tcp_action ret,
-+		     enum nf_tcp_invalid_log_type type,
-+		     u32 value)
- {
- 	const struct nf_tcp_net *tn = nf_tcp_pernet(nf_ct_net(ct));
--	struct va_format vaf;
--	va_list args;
- 	bool be_liberal;
- 
- 	be_liberal = sender->flags & IP_CT_TCP_FLAG_BE_LIBERAL || tn->tcp_be_liberal;
- 	if (be_liberal)
- 		return NFCT_TCP_ACCEPT;
- 
--	va_start(args, fmt);
--	vaf.fmt = fmt;
--	vaf.va = &args;
--	nf_ct_l4proto_log_invalid(skb, ct, state, "%pV", &vaf);
--	va_end(args);
--
-+	log->type = type;
-+	log->value = value;
- 	return ret;
- }
- 
-+static void nf_tcp_log_invalid(const struct sk_buff *skb,
-+			       const struct nf_conn *ct,
-+			       const struct nf_hook_state *state,
-+			       const struct nf_tcp_invalid_log *log)
-+{
-+	switch (log->type) {
-+	case NF_TCP_LOG_OVERSHOT:
-+		nf_ct_l4proto_log_invalid(skb, ct, state,
-+					  "%u bytes more than expected",
-+					  log->value);
-+		break;
-+	case NF_TCP_LOG_SEQ_OVER:
-+		nf_ct_l4proto_log_invalid(skb, ct, state,
-+					  "SEQ is over upper bound %u (over the window of the receiver)",
-+					  log->value);
-+		break;
-+	case NF_TCP_LOG_ACK_OVER:
-+		nf_ct_l4proto_log_invalid(skb, ct, state,
-+					  "ACK is over upper bound %u (ACKed data not seen yet)",
-+					  log->value);
-+		break;
-+	case NF_TCP_LOG_SEQ_UNDER:
-+		nf_ct_l4proto_log_invalid(skb, ct, state,
-+					  "SEQ is under lower bound %u (already ACKed data retransmitted)",
-+					  log->value);
-+		break;
-+	case NF_TCP_LOG_ACK_UNDER:
-+		nf_ct_l4proto_log_invalid(skb, ct, state,
-+					  "ignored ACK under lower bound %u (possible overly delayed)",
-+					  log->value);
-+		break;
-+	case NF_TCP_LOG_NONE:
-+		break;
-+	}
-+}
-+
- static enum nf_ct_tcp_action
- tcp_in_window(struct nf_conn *ct, enum ip_conntrack_dir dir,
- 	      unsigned int index, const struct sk_buff *skb,
- 	      unsigned int dataoff, const struct tcphdr *tcph,
--	      const struct nf_hook_state *hook_state)
-+	      struct nf_tcp_invalid_log *log)
- {
- 	struct ip_ct_tcp *state = &ct->proto.tcp;
- 	struct ip_ct_tcp_state *sender = &state->seen[dir];
-@@ -640,31 +684,29 @@ tcp_in_window(struct nf_conn *ct, enum i
- 			sender->td_end = end;
- 			sender->flags |= IP_CT_TCP_FLAG_DATA_UNACKNOWLEDGED;
- 
--			return nf_tcp_log_invalid(skb, ct, hook_state, sender, NFCT_TCP_IGNORE,
--						  "%u bytes more than expected", overshot);
-+			return nf_tcp_store_invalid(ct, sender, log, NFCT_TCP_IGNORE,
-+				   NF_TCP_LOG_OVERSHOT, overshot);
- 		}
- 
--		return nf_tcp_log_invalid(skb, ct, hook_state, sender, NFCT_TCP_INVALID,
--					  "SEQ is over upper bound %u (over the window of the receiver)",
--					  sender->td_maxend + 1);
-+		return nf_tcp_store_invalid(ct, sender, log, NFCT_TCP_INVALID,
-+				   NF_TCP_LOG_SEQ_OVER, sender->td_maxend + 1);
- 	}
- 
- 	if (!before(sack, receiver->td_end + 1))
--		return nf_tcp_log_invalid(skb, ct, hook_state, sender, NFCT_TCP_INVALID,
--					  "ACK is over upper bound %u (ACKed data not seen yet)",
--					  receiver->td_end + 1);
-+		return nf_tcp_store_invalid(ct, sender, log, NFCT_TCP_INVALID,
-+					   NF_TCP_LOG_ACK_OVER, receiver->td_end + 1);
- 
- 	/* Is the ending sequence in the receive window (if available)? */
- 	in_recv_win = !receiver->td_maxwin ||
- 		      after(end, sender->td_end - receiver->td_maxwin - 1);
- 	if (!in_recv_win)
--		return nf_tcp_log_invalid(skb, ct, hook_state, sender, NFCT_TCP_IGNORE,
--					  "SEQ is under lower bound %u (already ACKed data retransmitted)",
--					  sender->td_end - receiver->td_maxwin - 1);
-+		return nf_tcp_store_invalid(ct, sender, log, NFCT_TCP_IGNORE,
-+					   NF_TCP_LOG_SEQ_UNDER,
-+					   sender->td_end - receiver->td_maxwin - 1);
- 	if (!after(sack, receiver->td_end - MAXACKWINDOW(sender) - 1))
--		return nf_tcp_log_invalid(skb, ct, hook_state, sender, NFCT_TCP_IGNORE,
--					  "ignored ACK under lower bound %u (possible overly delayed)",
--					  receiver->td_end - MAXACKWINDOW(sender) - 1);
-+		return nf_tcp_store_invalid(ct, sender, log, NFCT_TCP_IGNORE,
-+					   NF_TCP_LOG_ACK_UNDER,
-+					   receiver->td_end - MAXACKWINDOW(sender) - 1);
- 
- 	/* Take into account window scaling (RFC 1323). */
- 	if (!tcph->syn)
-@@ -719,11 +761,8 @@ tcp_in_window(struct nf_conn *ct, enum i
- 	return NFCT_TCP_ACCEPT;
- }
- 
--static void __cold nf_tcp_handle_invalid(struct nf_conn *ct,
--					 enum ip_conntrack_dir dir,
--					 int index,
--					 const struct sk_buff *skb,
--					 const struct nf_hook_state *hook_state)
-+static bool __cold
-+nf_tcp_handle_invalid(struct nf_conn *ct, enum ip_conntrack_dir dir, int index)
- {
- 	const unsigned int *timeouts;
- 	const struct nf_tcp_net *tn;
-@@ -732,7 +771,7 @@ static void __cold nf_tcp_handle_invalid
- 
- 	if (!test_bit(IPS_ASSURED_BIT, &ct->status) ||
- 	    test_bit(IPS_FIXED_TIMEOUT_BIT, &ct->status))
--		return;
-+		return false;
- 
- 	/* We don't want to have connections hanging around in ESTABLISHED
- 	 * state for long time 'just because' conntrack deemed a FIN/RST
-@@ -747,7 +786,7 @@ static void __cold nf_tcp_handle_invalid
- 	case TCP_FIN_SET:
- 		break;
- 	default:
--		return;
-+		return false;
- 	}
- 
- 	if (ct->proto.tcp.last_dir != dir &&
-@@ -755,7 +794,7 @@ static void __cold nf_tcp_handle_invalid
- 	     ct->proto.tcp.last_index == TCP_RST_SET)) {
- 		expires = nf_ct_expires(ct);
- 		if (expires < 120 * HZ)
--			return;
-+			return false;
- 
- 		tn = nf_tcp_pernet(nf_ct_net(ct));
- 		timeouts = nf_ct_timeout_lookup(ct);
-@@ -764,16 +803,15 @@ static void __cold nf_tcp_handle_invalid
- 
- 		timeout = READ_ONCE(timeouts[TCP_CONNTRACK_UNACK]);
- 		if (expires > timeout) {
--			nf_ct_l4proto_log_invalid(skb, ct, hook_state,
--					  "packet (index %d, dir %d) response for index %d lower timeout to %u",
--					  index, dir, ct->proto.tcp.last_index, timeout);
--
- 			WRITE_ONCE(ct->timeout, timeout + nfct_time_stamp);
-+			return true;
- 		}
- 	} else {
- 		ct->proto.tcp.last_index = index;
- 		ct->proto.tcp.last_dir = dir;
- 	}
-+
-+	return false;
- }
- 
- /* table of valid flag combinations - PUSH, ECE and CWR are always valid */
-@@ -969,7 +1007,9 @@ int nf_conntrack_tcp_packet(struct nf_co
- 	struct nf_tcp_net *tn = nf_tcp_pernet(net);
- 	struct nf_conntrack_tuple *tuple;
- 	enum tcp_conntrack new_state, old_state;
-+	struct nf_tcp_invalid_log log = {};
- 	unsigned int index, *timeouts;
-+	bool lowered_timeout = false;
- 	enum nf_ct_tcp_action res;
- 	enum ip_conntrack_dir dir;
- 	const struct tcphdr *th;
-@@ -1253,14 +1293,18 @@ int nf_conntrack_tcp_packet(struct nf_co
- 	}
- 
- 	res = tcp_in_window(ct, dir, index,
--			    skb, dataoff, th, state);
-+			    skb, dataoff, th, &log);
- 	switch (res) {
- 	case NFCT_TCP_IGNORE:
- 		spin_unlock_bh(&ct->lock);
-+		nf_tcp_log_invalid(skb, ct, state, &log);
- 		return NF_ACCEPT;
- 	case NFCT_TCP_INVALID:
--		nf_tcp_handle_invalid(ct, dir, index, skb, state);
-+		lowered_timeout = nf_tcp_handle_invalid(ct, dir, index);
- 		spin_unlock_bh(&ct->lock);
-+		nf_tcp_log_invalid(skb, ct, state, &log);
-+		if (lowered_timeout)
-+			nf_ct_l4proto_log_invalid(skb, ct, state, "lowered timeout to UNACK");
- 		return -NF_ACCEPT;
- 	case NFCT_TCP_ACCEPT:
- 		break;
+diff --git a/arch/arm64/boot/dts/nvidia/tegra194.dtsi b/arch/arm64/boot/dts/nvidia/tegra194.dtsi
+index ed2a534dcfd62..5cd552c0c6df9 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra194.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra194.dtsi
+@@ -3166,6 +3166,8 @@ timer {
+ 			     <GIC_PPI 11
+ 				(GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+ 			     <GIC_PPI 10
++				(GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
++			     <GIC_PPI 15
+ 				(GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
+ 		interrupt-parent = <&gic>;
+ 		always-on;
+-- 
+2.53.0
+
 
 
