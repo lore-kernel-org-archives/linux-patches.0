@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F0447F78D;
-	Thu, 20 Aug 2026 17:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B5C37BE6F;
+	Thu, 20 Aug 2026 17:42:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247746; cv=none; b=q1rOfSmj0tAWRC58Y6gDmwJZrR2KxPBrJNAqdPk+lpydMl7dPuJjHBwFE5wYLAuEgbMOKB20oXLcjvrqh9gbDfUtOt6Ao9nB6QSHu+IufmJcgvf3+4aarmjQGvO271RqR5SlV8qOENyfY3FEXdfwQ38Ji18kaG69YmdRgJ9pdps=
+	t=1787247749; cv=none; b=K+nJCwhBHUF8/YW42HLDkXW4YMST8ktLQMhbCO8hn/CKZk2Bvsd8UDq4A6u7+RhwWM1BjNhfKm95Y9t7KEOTivADFIL03dGMO0oOms+JblwTLt+RN0vsQtKUwCDwLph4m8C358BxSJNZJZ2pShOnr9nQLgjvLoM3EYQiukWSg3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247746; c=relaxed/simple;
-	bh=qm6u2iH0QO3Rn+eDeT2W59Bn6Mhgml0sNg/pMWi87ac=;
+	s=arc-20240116; t=1787247749; c=relaxed/simple;
+	bh=S08f/CDpdx4SljqZcXtWu2Tvmud8JH0MGvZ7mbVNeLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/MGIlhcomCN7uIHr+iP4azPcFN7gS7isijvZAyXIGoJ7TwDM/VbcnKf4+u14mEfK4QJM65x9D5QrqBtM1HoqycMaWn0l00HFvESadr3qctRn4cOOEQxtszmBntdu5MJyWly3UbI+LdxmIj4/Wp2hMcaljSARsYHM0OF2DxeXek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2n0p/BU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c1M5Jbyk4PwvnW51RS9o4dlZwVsvOcEiAhmIy9K/eWeUPvWHQ78tp9ezPcf5KzFdSyaI/UcpXGHQZ0dH6Fx8/wYfpmCD4Wl7GeMHf5TCAKSmh+UKcHqBNxu5Q/J5QXSJMx0tMxZP4LzMp/cGetXNg6dLX9kSJtQSIyUrhBU50Sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yhEn4cYG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2n0p/BU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BDC01F000E9;
-	Thu, 20 Aug 2026 17:42:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yhEn4cYG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CB61F000E9;
+	Thu, 20 Aug 2026 17:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247745;
-	bh=s3+Oc+EgP3wZbb+CZOVriHS+CS8GIzsqMQunMSzR+hU=;
+	s=korg; t=1787247747;
+	bh=3zmjRwv5TuKoRvl6kHhlKwnt8CLrrKcudA+68u1sPt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m2n0p/BU8I79RAi4RmnftUNdFqvq2+32a0n0ULueVxYqX+gBgbWnNWvbRTUJ4jMuz
-	 DIw2+uMmZPIWRrlRc80gmH03cfpIah36ilYpKO3ut0n4QJEwvUGoFGihASr7bl7cGu
-	 +/EusEPzYSn2pAFFsqYK5YqBPZ8vtOSCQmJu1Ytk=
+	b=yhEn4cYGjh/WVL7Sfdf/ewdtKlDal1JePf+vntYzsOrvo8FcqE8obgSPQzIfD5F6Y
+	 WlWngbcL4zwL7Y/eqUyaX3wQz+kziGgbgDsD1ZTEjrHqY5X2T9EKdTmqjL1sAoMPuf
+	 FKAnXMVZLzPdTsC4eFTrQD8UCIRw0bL/cOlBDIjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	Yan Zhai <yan@cloudflare.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 153/166] packet: add a generic drop reason for receive
-Date: Thu, 20 Aug 2026 16:56:52 +0200
-Message-ID: <20260820145215.769498021@linuxfoundation.org>
+Subject: [PATCH 6.6 154/166] net: sched: Move drop_reason to struct tc_skb_cb
+Date: Thu, 20 Aug 2026 16:56:53 +0200
+Message-ID: <20260820145215.800679823@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -54,137 +53,206 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yan Zhai <yan@cloudflare.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 2f57dd94bdef083855366138646b26b05f410d99 ]
+[ Upstream commit fb2780721ca5e9f78bbe4544b819b929a982df9c ]
 
-Commit da37845fdce2 ("packet: uses kfree_skb() for errors.") switches
-from consume_skb to kfree_skb to improve error handling. However, this
-could bring a lot of noises when we monitor real packet drops in
-kfree_skb[1], because in tpacket_rcv or packet_rcv only packet clones
-can be freed, not actual packets.
+Move drop_reason from struct tcf_result to skb cb - more specifically to
+struct tc_skb_cb. With that, we'll be able to also set the drop reason for
+the remaining qdiscs (aside from clsact) that do not have access to
+tcf_result when time comes to set the skb drop reason.
 
-Adding a generic drop reason to allow distinguish these "clone drops".
-
-[1]: https://lore.kernel.org/netdev/CABWYdi00L+O30Q=Zah28QwZ_5RU-xcxLFUK2Zj08A8MrLk9jzg@mail.gmail.com/
-Fixes: da37845fdce2 ("packet: uses kfree_skb() for errors.")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-Signed-off-by: Yan Zhai <yan@cloudflare.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/ZW4piNbx3IenYnuw@debian.debian
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: f60b396ee174 ("net/sched: act_api: fix TOCTOU NULL deref on a->goto_chain")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/dropreason-core.h |  6 ++++++
- net/packet/af_packet.c        | 20 +++++++-------------
- 2 files changed, 13 insertions(+), 13 deletions(-)
+ include/net/pkt_cls.h     | 14 ++++++++++++--
+ include/net/pkt_sched.h   |  3 ++-
+ include/net/sch_generic.h |  1 -
+ net/core/dev.c            |  4 ++--
+ net/sched/act_api.c       |  2 +-
+ net/sched/cls_api.c       | 23 ++++++++---------------
+ 6 files changed, 25 insertions(+), 22 deletions(-)
 
-diff --git a/include/net/dropreason-core.h b/include/net/dropreason-core.h
-index 845dce805de7f..6ff543fe8a8b5 100644
---- a/include/net/dropreason-core.h
-+++ b/include/net/dropreason-core.h
-@@ -81,6 +81,7 @@
- 	FN(IPV6_NDISC_NS_OTHERHOST)	\
- 	FN(QUEUE_PURGE)			\
- 	FN(TC_ERROR)			\
-+	FN(PACKET_SOCK_ERROR)		\
- 	FNe(MAX)
- 
- /**
-@@ -348,6 +349,11 @@ enum skb_drop_reason {
- 	SKB_DROP_REASON_QUEUE_PURGE,
- 	/** @SKB_DROP_REASON_TC_ERROR: generic internal tc error. */
- 	SKB_DROP_REASON_TC_ERROR,
-+	/**
-+	 * @SKB_DROP_REASON_PACKET_SOCK_ERROR: generic packet socket errors
-+	 * after its filter matches an incoming packet.
-+	 */
-+	SKB_DROP_REASON_PACKET_SOCK_ERROR,
- 	/**
- 	 * @SKB_DROP_REASON_MAX: the maximum of core drop reasons, which
- 	 * shouldn't be used as a real 'reason' - only for tracing code gen
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 455a70aa9a9e9..116578fbd9a1c 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2186,13 +2186,13 @@ static int packet_rcv_vnet(struct msghdr *msg, const struct sk_buff *skb,
- static int packet_rcv(struct sk_buff *skb, struct net_device *dev,
- 		      struct packet_type *pt, struct net_device *orig_dev)
- {
-+	enum skb_drop_reason drop_reason = SKB_CONSUMED;
- 	struct sock *sk;
- 	struct sockaddr_ll *sll;
- 	struct packet_sock *po;
- 	u8 *skb_head = skb->data;
- 	int skb_len = skb->len;
- 	unsigned int snaplen, res;
--	bool is_drop_n_account = false;
- 
- 	if (skb->pkt_type == PACKET_LOOPBACK)
- 		goto drop;
-@@ -2282,9 +2282,9 @@ static int packet_rcv(struct sk_buff *skb, struct net_device *dev,
- 	return 0;
- 
- drop_n_acct:
--	is_drop_n_account = true;
- 	atomic_inc(&po->tp_drops);
- 	atomic_inc(&sk->sk_drops);
-+	drop_reason = SKB_DROP_REASON_PACKET_SOCK_ERROR;
- 
- drop_n_restore:
- 	if (skb_head != skb->data && skb_shared(skb)) {
-@@ -2292,16 +2292,14 @@ static int packet_rcv(struct sk_buff *skb, struct net_device *dev,
- 		skb->len = skb_len;
- 	}
- drop:
--	if (!is_drop_n_account)
--		consume_skb(skb);
--	else
--		kfree_skb(skb);
-+	kfree_skb_reason(skb, drop_reason);
- 	return 0;
+diff --git a/include/net/pkt_cls.h b/include/net/pkt_cls.h
+index 253bd199d8648..325a8553853df 100644
+--- a/include/net/pkt_cls.h
++++ b/include/net/pkt_cls.h
+@@ -163,10 +163,20 @@ __cls_set_class(unsigned long *clp, unsigned long cl)
+ 	return xchg(clp, cl);
  }
  
- static int tpacket_rcv(struct sk_buff *skb, struct net_device *dev,
- 		       struct packet_type *pt, struct net_device *orig_dev)
+-static inline void tcf_set_drop_reason(struct tcf_result *res,
++struct tc_skb_cb;
++
++static inline struct tc_skb_cb *tc_skb_cb(const struct sk_buff *skb);
++
++static inline enum skb_drop_reason
++tcf_get_drop_reason(const struct sk_buff *skb)
++{
++	return tc_skb_cb(skb)->drop_reason;
++}
++
++static inline void tcf_set_drop_reason(const struct sk_buff *skb,
+ 				       enum skb_drop_reason reason)
  {
-+	enum skb_drop_reason drop_reason = SKB_CONSUMED;
- 	struct sock *sk;
- 	struct packet_sock *po;
- 	struct sockaddr_ll *sll;
-@@ -2315,7 +2313,6 @@ static int tpacket_rcv(struct sk_buff *skb, struct net_device *dev,
- 	struct sk_buff *copy_skb = NULL;
- 	struct timespec64 ts;
- 	__u32 ts_status;
--	bool is_drop_n_account = false;
- 	unsigned int slot_id = 0;
- 	int vnet_hdr_sz = 0;
- 
-@@ -2568,19 +2565,16 @@ static int tpacket_rcv(struct sk_buff *skb, struct net_device *dev,
- 		skb->len = skb_len;
- 	}
- drop:
--	if (!is_drop_n_account)
--		consume_skb(skb);
--	else
--		kfree_skb(skb);
-+	kfree_skb_reason(skb, drop_reason);
- 	return 0;
- 
- drop_n_account:
- 	spin_unlock(&sk->sk_receive_queue.lock);
- 	atomic_inc(&po->tp_drops);
--	is_drop_n_account = true;
-+	drop_reason = SKB_DROP_REASON_PACKET_SOCK_ERROR;
- 
- 	sk->sk_data_ready(sk);
--	kfree_skb(copy_skb);
-+	kfree_skb_reason(copy_skb, drop_reason);
- 	goto drop_n_restore;
+-	res->drop_reason = reason;
++	tc_skb_cb(skb)->drop_reason = reason;
  }
+ 
+ static inline void
+diff --git a/include/net/pkt_sched.h b/include/net/pkt_sched.h
+index 4d72d24b1f33e..9b5698b86986c 100644
+--- a/include/net/pkt_sched.h
++++ b/include/net/pkt_sched.h
+@@ -276,12 +276,13 @@ static inline void skb_txtime_consumed(struct sk_buff *skb)
+ 
+ struct tc_skb_cb {
+ 	struct qdisc_skb_cb qdisc_cb;
++	u32 drop_reason;
+ 
++	u16 zone; /* Only valid if post_ct = true */
+ 	u16 mru;
+ 	u8 post_ct:1;
+ 	u8 post_ct_snat:1;
+ 	u8 post_ct_dnat:1;
+-	u16 zone; /* Only valid if post_ct = true */
+ };
+ 
+ static inline struct tc_skb_cb *tc_skb_cb(const struct sk_buff *skb)
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index ac09063bcd92a..4a157ab9a724f 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -334,7 +334,6 @@ struct tcf_result {
+ 		};
+ 		const struct tcf_proto *goto_tp;
+ 	};
+-	enum skb_drop_reason		drop_reason;
+ };
+ 
+ struct tcf_chain;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 3fe9e6b60d4f5..5c1c5644d9041 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -4046,14 +4046,14 @@ static int tc_run(struct tcx_entry *entry, struct sk_buff *skb,
+ 
+ 	tc_skb_cb(skb)->mru = 0;
+ 	tc_skb_cb(skb)->post_ct = false;
+-	res.drop_reason = *drop_reason;
++	tcf_set_drop_reason(skb, *drop_reason);
+ 
+ 	mini_qdisc_bstats_cpu_update(miniq, skb);
+ 	ret = tcf_classify(skb, miniq->block, miniq->filter_list, &res, false);
+ 	/* Only tcf related quirks below. */
+ 	switch (ret) {
+ 	case TC_ACT_SHOT:
+-		*drop_reason = res.drop_reason;
++		*drop_reason = tcf_get_drop_reason(skb);
+ 		mini_qdisc_qstats_cpu_drop(miniq);
+ 		break;
+ 	case TC_ACT_OK:
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index 4bf82e6d9d422..c5a3f316d0de4 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -1118,7 +1118,7 @@ int tcf_action_exec(struct sk_buff *skb, struct tc_action **actions,
+ 			}
+ 		} else if (TC_ACT_EXT_CMP(ret, TC_ACT_GOTO_CHAIN)) {
+ 			if (unlikely(!rcu_access_pointer(a->goto_chain))) {
+-				tcf_set_drop_reason(res, SKB_DROP_REASON_TC_ERROR);
++				tcf_set_drop_reason(skb, SKB_DROP_REASON_TC_ERROR);
+ 				return TC_ACT_SHOT;
+ 			}
+ 			tcf_action_goto_chain_exec(a, res);
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 3b545296d4482..841360e07d7aa 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -1708,7 +1708,6 @@ static inline int __tcf_classify(struct sk_buff *skb,
+ 				 int act_index,
+ 				 u32 *last_executed_chain)
+ {
+-	u32 orig_reason = res->drop_reason;
+ #ifdef CONFIG_NET_CLS_ACT
+ 	const int max_reclassify_loop = 16;
+ 	const struct tcf_proto *first_tp;
+@@ -1733,13 +1732,13 @@ static inline int __tcf_classify(struct sk_buff *skb,
+ 			 */
+ 			if (unlikely(n->tp != tp || n->tp->chain != n->chain ||
+ 				     !tp->ops->get_exts)) {
+-				tcf_set_drop_reason(res, SKB_DROP_REASON_TC_ERROR);
++				tcf_set_drop_reason(skb, SKB_DROP_REASON_TC_ERROR);
+ 				return TC_ACT_SHOT;
+ 			}
+ 
+ 			exts = tp->ops->get_exts(tp, n->handle);
+ 			if (unlikely(!exts || n->exts != exts)) {
+-				tcf_set_drop_reason(res, SKB_DROP_REASON_TC_ERROR);
++				tcf_set_drop_reason(skb, SKB_DROP_REASON_TC_ERROR);
+ 				return TC_ACT_SHOT;
+ 			}
+ 
+@@ -1763,18 +1762,12 @@ static inline int __tcf_classify(struct sk_buff *skb,
+ 			goto reset;
+ 		}
+ #endif
+-		if (err >= 0) {
+-			/* Policy drop or drop reason is over-written by
+-			 * classifiers with a bogus value(0) */
+-			if (err == TC_ACT_SHOT &&
+-			    res->drop_reason == SKB_NOT_DROPPED_YET)
+-				tcf_set_drop_reason(res, orig_reason);
++		if (err >= 0)
+ 			return err;
+-		}
+ 	}
+ 
+ 	if (unlikely(n)) {
+-		tcf_set_drop_reason(res, SKB_DROP_REASON_TC_ERROR);
++		tcf_set_drop_reason(skb, SKB_DROP_REASON_TC_ERROR);
+ 		return TC_ACT_SHOT;
+ 	}
+ 
+@@ -1786,7 +1779,7 @@ static inline int __tcf_classify(struct sk_buff *skb,
+ 				       tp->chain->block->index,
+ 				       tp->prio & 0xffff,
+ 				       ntohs(tp->protocol));
+-		tcf_set_drop_reason(res, SKB_DROP_REASON_TC_ERROR);
++		tcf_set_drop_reason(skb, SKB_DROP_REASON_TC_ERROR);
+ 		return TC_ACT_SHOT;
+ 	}
+ 
+@@ -1824,7 +1817,7 @@ int tcf_classify(struct sk_buff *skb,
+ 				n = tcf_exts_miss_cookie_lookup(ext->act_miss_cookie,
+ 								&act_index);
+ 				if (!n) {
+-					tcf_set_drop_reason(res, SKB_DROP_REASON_TC_ERROR);
++					tcf_set_drop_reason(skb, SKB_DROP_REASON_TC_ERROR);
+ 					return TC_ACT_SHOT;
+ 				}
+ 
+@@ -1835,7 +1828,7 @@ int tcf_classify(struct sk_buff *skb,
+ 
+ 			fchain = tcf_chain_lookup_rcu(block, chain);
+ 			if (!fchain) {
+-				tcf_set_drop_reason(res, SKB_DROP_REASON_TC_ERROR);
++				tcf_set_drop_reason(skb, SKB_DROP_REASON_TC_ERROR);
+ 				return TC_ACT_SHOT;
+ 			}
+ 
+@@ -1857,7 +1850,7 @@ int tcf_classify(struct sk_buff *skb,
+ 
+ 			ext = tc_skb_ext_alloc(skb);
+ 			if (WARN_ON_ONCE(!ext)) {
+-				tcf_set_drop_reason(res, SKB_DROP_REASON_TC_ERROR);
++				tcf_set_drop_reason(skb, SKB_DROP_REASON_TC_ERROR);
+ 				return TC_ACT_SHOT;
+ 			}
  
 -- 
 2.53.0
