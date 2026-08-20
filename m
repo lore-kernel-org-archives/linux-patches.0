@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D496247A0DC;
-	Thu, 20 Aug 2026 16:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3FFA468C0C;
+	Thu, 20 Aug 2026 16:49:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244564; cv=none; b=u0uPQjxQQoe97qKwpwM7t9LGOJN+P1+BvBT9EkMREldqwpHt7oXAsjplGZB/X4euxOqucOJFtkPmO7PbcxO9JMa08C62Zg+4K1tKiQMF2KKGc82g8wcz9SBH+7qer9sUhJ7l2MgIzM05rugCNQpXx2VOnR6SD0Y4QmxsMFlFy9M=
+	t=1787244567; cv=none; b=PJD61lNe8PEbEOnRlkjXhqWWAu8eYzK8bE6FnVm+Qh9EKuosSWhxEMCGkGjxb354xjDIhQdXVLOVvkA5rec1p7wziKgsNWcThihZzDf4ps6zy7E7Iu/QbEvyLXsaiGRrT6gNaaRiWzfLd2atrb3fOS20WOfjNNzUrQJN1PdAOw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244564; c=relaxed/simple;
-	bh=VkglvK6CIPbeOeh8/d/y9954tMTzuE3uOrfQX4LuyHM=;
+	s=arc-20240116; t=1787244567; c=relaxed/simple;
+	bh=HqQpLVhHGAsBYle5UFxisBL4ecJ/MsPwxX45PtsTLko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oMGEStJzZbukjfpQ3g10N95CRB6ChhwAo56n/p1b975V6GaqhhTfSSFYxNftmgU8Mwjn0XgsDfc1m+7x+9eM6+WDIoOYVHzAGDAhwi1B6I9uzO3N8Ahyk2h52g1xcy49RH3lV/HFRkwrl1xyrcchVN2bDSbFBzegPaaqzDPpnGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3qwjhBY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BnTJ7xYg++1Xzrc6bBaZWNlXGxV6Sz1+F0eYsT+yzJ5yyi1ZqDSilhmkNnWtDeHFFIZ9Wj7/S24yiQJ76vVRUm/yJF5y0DgxSJYsFxPrO73xY28XHdasyCqZZ/7Uong8AwOjeVDc8O21oNc/u1fW18lea4WPUe2rvrR2VW0OiEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RLpwLvpH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3qwjhBY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA191F000E9;
-	Thu, 20 Aug 2026 16:49:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLpwLvpH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15EC31F000E9;
+	Thu, 20 Aug 2026 16:49:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244562;
-	bh=e/MYJflgLABjMPIcWN0b4pPpISTyXuCy8UO9gQ1n0gA=;
+	s=korg; t=1787244565;
+	bh=H3g2XN9Nr2I7gaz0jaftNqVVnerjGR0W/dMCFzBkSEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h3qwjhBY2lwptcOCoJhUIvrfIXjRkZWodGfqFfhnFLGKgERQhATs4ihsUweVwkdFc
-	 8pq9w7HHrRrQQK/KUMhFpcAD46qZo1R5NpRARBezGvuw1BlrLKfHiuz16ccpXuzFH5
-	 1M4G2HjAqoB+uVkPVMs3wTgC9W2xR4Mt1s1Uo5o0=
+	b=RLpwLvpHRLkCzvKN3NxGzLHngquNFanrMXmJ7mWj9z3hsIZs1jJU2fgxUTXUK5lip
+	 tGCb+bSekprFXs7s7w2dud/yUwg6vfLjIbhIdt2wqjWXDsgGqGAL4bV539BiJBpQZx
+	 Yt2huZbn6RTzR/yJcLaMJDsSEgKZ+TIR0IVG+QNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Sashiko AI <sashiko-bot@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Matt Fleming <mfleming@cloudflare.com>,
+	Suren Baghdasaryan <surenb@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 211/235] ALSA: usx2y: bound the hwdep mmap fault offset
-Date: Thu, 20 Aug 2026 16:57:27 +0200
-Message-ID: <20260820145222.987116740@linuxfoundation.org>
+Subject: [PATCH 5.10 212/235] sched/psi: Shut down rtpoll_timer in psi_cgroup_free()
+Date: Thu, 20 Aug 2026 16:57:28 +0200
+Message-ID: <20260820145223.020975684@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -52,89 +54,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit 2ca1eea3cd17930daffe9e429a7c89232036ec24 ]
+[ Upstream commit 5457025fa8ca3c0d2732109513de839e3e797190 ]
 
-snd_us428ctls_vm_fault() turns the faulting page offset into a kernel
-address with no bound of any kind:
+psi_schedule_rtpoll_work() is called locklessly from the scheduler hotpath
+and can race psi_trigger_destroy() taking down the last rtpoll trigger under
+rtpoll_trigger_lock:
 
-	offset = vmf->pgoff << PAGE_SHIFT;
-	vaddr = (char *)(...)->us428ctls_sharedmem + offset;
-	page = virt_to_page(vaddr);
-	get_page(page);
-	vmf->page = page;
+  psi_schedule_rtpoll_work()        psi_trigger_destroy()
 
-	return 0;
+  rcu_read_lock();
+  task = rcu_dereference(rtpoll_task);
+                                    rcu_assign_pointer(rtpoll_task, NULL);
+                                    timer_delete(&rtpoll_timer);
+  mod_timer(&rtpoll_timer, ...);
+  rcu_read_unlock();
+                                    synchronize_rcu();
+                                    kthread_stop(task_to_destroy);
 
-snd_us428ctls_mmap() checks only the length of the mapping, never the
-offset, and us428ctls_sharedmem is a single page from
-alloc_pages_exact().  For a character device file_mmap_size_max()
-returns ULONG_MAX, so the mm layer imposes no ceiling either.  Every page
-offset above zero resolves to a struct page outside the object, and the
-handler installs it into the caller's address space read-write; the vma
-is not marked read-only.
+The group can then be freed with the re-armed timer still pending, and
+poll_timer_fn() runs on freed memory.
 
-The caller picks the page frame with a single mmap() argument and gets
-read-write access to a page of kernel memory it does not own; an offset
-that lands in an unpopulated vmemmap region oopses instead.
+461daba06bdc ("psi: eliminate kthread_worker from psi trigger scheduling
+mechanism") deleted the timer synchronously after the synchronize_rcu(),
+which prevented this but raced trigger creation instead: the deletion could
+cancel the timer that a new trigger set armed during the grace period and,
+as creation also reinitialized the timer at the time, corrupt it.
+8f91efd870ea ("psi: Fix race between psi_trigger_create/destroy") moved the
+initialization into group_init() and the deletion into the locked section,
+trading the creation races for the window above.
 
-A process that can open the hwdep node of an attached US-X2Y reaches
-this after loading the FPGA image through the same node; no capability
-check is involved.
+Neither placement in the destruction path works. A pending timer firing
+while the group is alive is harmless though. poll_timer_fn() just wakes the
+rtpoll waitqueue and doesn't re-arm itself. Bind the timer to the group's
+lifetime instead and shut it down in psi_cgroup_free(). Nothing can arm it
+by then. timer_shutdown_sync() because the timer is never armed again.
 
-On 7.2.0-rc5 (arm64), mmap() with a large offset:
-
-  Unable to handle kernel paging request at virtual address fffffdffc45d5ac8
-  pc : snd_us428ctls_vm_fault+0x68/0x140 [snd_usb_usx2y]
-  Call trace:
-   snd_us428ctls_vm_fault+0x68/0x140 [snd_usb_usx2y]
-   __do_fault
-   __handle_mm_fault
-   handle_mm_fault
-   el0_da
-
-Reject any offset outside the shared region.  The pcm hwdep handler in
-usx2yhwdeppcm.c computes its address the same way and needs the same
-bound.
-
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260805013445.38283-1-baul.lee@xbow.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 8f91efd870ea ("psi: Fix race between psi_trigger_create/destroy")
+Cc: stable@vger.kernel.org # v5.10+
+Reported-by: Sashiko AI <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260711000434.36C4A1F000E9@smtp.kernel.org/
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Tested-by: Matt Fleming <mfleming@cloudflare.com>
+Acked-by: Suren Baghdasaryan <surenb@google.com>
+[ Adapted `cgroup->psi->` to embedded `cgroup->psi.`, `rtpoll_timer` to `poll_timer`, and `timer_shutdown_sync()` to `timer_delete_sync()`. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/usx2y/usX2Yhwdep.c    |    2 ++
- sound/usb/usx2y/usx2yhwdeppcm.c |    2 ++
- 2 files changed, 4 insertions(+)
+ kernel/sched/psi.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/sound/usb/usx2y/usX2Yhwdep.c
-+++ b/sound/usb/usx2y/usX2Yhwdep.c
-@@ -29,6 +29,8 @@ static vm_fault_t snd_us428ctls_vm_fault
- 		   vmf->pgoff);
+--- a/kernel/sched/psi.c
++++ b/kernel/sched/psi.c
+@@ -950,6 +950,12 @@ void psi_cgroup_free(struct cgroup *cgro
+ 		return;
  
- 	offset = vmf->pgoff << PAGE_SHIFT;
-+	if (offset >= US428_SHAREDMEM_PAGES)
-+		return VM_FAULT_SIGBUS;
- 	vaddr = (char *)((struct usx2ydev *)vmf->vma->vm_private_data)->us428ctls_sharedmem + offset;
- 	page = virt_to_page(vaddr);
- 	get_page(page);
---- a/sound/usb/usx2y/usx2yhwdeppcm.c
-+++ b/sound/usb/usx2y/usx2yhwdeppcm.c
-@@ -674,6 +674,8 @@ static vm_fault_t snd_usx2y_hwdep_pcm_vm
- 	void *vaddr;
- 
- 	offset = vmf->pgoff << PAGE_SHIFT;
-+	if (offset >= USX2Y_HWDEP_PCM_PAGES)
-+		return VM_FAULT_SIGBUS;
- 	vaddr = (char *)((struct usx2ydev *)vmf->vma->vm_private_data)->hwdep_pcm_shm + offset;
- 	vmf->page = virt_to_page(vaddr);
- 	get_page(vmf->page);
+ 	cancel_delayed_work_sync(&cgroup->psi.avgs_work);
++	/*
++	 * A psi_schedule_poll_work() call racing the last trigger's
++	 * destruction may have re-armed the timer after psi_trigger_destroy()
++	 * deleted it. Spurious firing while the group is alive is harmless.
++	 */
++	timer_delete_sync(&cgroup->psi.poll_timer);
+ 	free_percpu(cgroup->psi.pcpu);
+ 	/* All triggers must be removed by now */
+ 	WARN_ONCE(cgroup->psi.poll_states, "psi: trigger leak\n");
 
 
