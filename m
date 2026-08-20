@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34FD484257;
-	Thu, 20 Aug 2026 17:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80958486B95;
+	Thu, 20 Aug 2026 17:46:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248001; cv=none; b=AVg/y1nKIgpWAUJwWhSzhTfWseAEbyioXpSragvw5QsK5HwnlLbQXiaWCXerfilZbHkXXJPpktRdFeCp5kCIbZwN4MHOxetSF/h3XZ3GixQchr5asPDXKEVC+LXwTnvgZr3vnz20c5LD8MdrxRunYp4pqwU4567+6f5yJ2muGUQ=
+	t=1787248002; cv=none; b=kuG7l6Y1cgMc+arrZdcPzdvuwgyKg8JzX7H9MQyFgc127cvCSfSbynfp2Ktk1tm+Z6flKW7sfQkBkFVomMetcNlMy4Hk37vMhxidPLhthoivlDo8KNL5WeD+JCScW7ApBHQ0iRxgE2fBsCYfAFXYbG6Y0K2R6zPa8u15gKyohuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248001; c=relaxed/simple;
-	bh=w3F+Wq/uyu8Zq8wuiU5dQdxRJHB34gihiZaxs9gd4BA=;
+	s=arc-20240116; t=1787248002; c=relaxed/simple;
+	bh=NLTK15S/tIN0iKcXG4ZhlJ6OuXgUp062m+HPoh+cPx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RDIp0PXeCjPv1fjKWcgkxDZIjqAtT3XnVPX7cA71DFrBupUSqIFnze+hnS+nJKvfdL/8YXvLg8/wMSyogekc/NM/bLJOM0qYCODsBBPKKe5NUptfltc36Y/GbogunAx/sqDBGuOiGztRjEM5KRJjHcndl7o+O3+x2ffiGMRmoXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMhxBYEs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VF63JeyiFcyR0y8emDAddM8EEE2cc/fCDg/jY0dLBxOdJ2n8Rse9Pb0h7zmlz1RcSw08QV6DGutxSnMM8Ucsk7U6xriC2WVhE/bClEWfg1OoN1Pq5bAZOik6LD8al6P7frc7bOISwsI4SXmdHy7w0TRQAYaCzzEHbqajU9yLUw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbGl+OeS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMhxBYEs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E7431F00A3D;
-	Thu, 20 Aug 2026 17:46:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbGl+OeS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7EE1F000E9;
+	Thu, 20 Aug 2026 17:46:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247998;
-	bh=wGAA1hlVEiqopSRZtE7SVUzGOwHX1rf98ChVf/7WtmA=;
+	s=korg; t=1787248001;
+	bh=NRMCetDhGrCwNWLxqSFn/hQ53gJvHIsWEjwQPmhQqPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UMhxBYEsAjT2rwBfo/K4Bmbw1YEmGSsSopf6FX6s9UdAMX671th2SuHo0rqtBU3u0
-	 Xzd5OnYBPkzka12lQ45p3PVJZQpNBFzE/0D3LxvLubFQlAvRhu/Hpc0dX5B+4Ty6Ah
-	 XWG5SzY5+V21TZ1n3Ajz0xdXpj2gcmQ8Yl18b/Y8=
+	b=AbGl+OeSG1S8jndFBAWKhneaaU8SxZO4JpRzqxWPVkBTTUQ8jENrYW4Dt5DM9QYnZ
+	 8GQ1ddPeGixYQxtBvyCXm3MMGNCCJrAOki+qHsJKLR+QbA2Lq0tjX3iYdbsxlzBUpd
+	 GnsrN3idMwM8XWeWV8YmncK0FR9Vg5WDwLD26ELw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiacheng Yu <yujiacheng3@huawei.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Helge Deller <deller@gmx.de>,
+	Li Xiasong <lixiasong1@huawei.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 076/303] fbcon: Use correct type for vc_resize() return value
-Date: Thu, 20 Aug 2026 16:53:32 +0200
-Message-ID: <20260820145255.445789811@linuxfoundation.org>
+Subject: [PATCH 6.1 077/303] tipc: restrict socket queue dumps in enqueue tracepoints
+Date: Thu, 20 Aug 2026 16:53:33 +0200
+Message-ID: <20260820145255.474533780@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -52,42 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiacheng Yu <yujiacheng3@huawei.com>
+From: Li Xiasong <lixiasong1@huawei.com>
 
-[ Upstream commit 84202754fb1727dc3ee87f47104e4162ecc8ba3a ]
+[ Upstream commit acd7df8d955480a6f6e5bb809da67b1500cc3cf4 ]
 
-The return value of vc_resize() is int, but fbcon_set_disp() stores it
-in an unsigned long variable. While the !ret check happens to work
-correctly by coincidence (negative values become large positive values),
-the types should match. Use int instead.
+tipc_sk_enqueue() runs with sk->sk_lock.slock held while the socket is
+owned by user context. The spinlock protects the backlog queue in this
+path, but it does not serialize against the socket owner consuming or
+purging sk_receive_queue.
 
-Eliminates the following W=3 warning:
+KASAN reported:
 
-  drivers/video/fbdev/core/fbcon.c: In function 'fbcon_set_disp':
-  drivers/video/fbdev/core/fbcon.c:1494:14: warning: implicit conversion from 'int' to 'unsigned long' [-Wconversion]
+  CPU: 14 UID: 0 PID: 1050 Comm: tipc3 Not tainted 7.1.0-rc6+ #126 PREEMPT(lazy)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  Call Trace:
+    <TASK>
+    dump_stack_lvl+0x76/0xa0 lib/dump_stack.c:123
+    print_report+0xce/0x5b0 mm/kasan/report.c:482
+    kasan_report+0xc6/0x100 mm/kasan/report.c:597
+    __asan_report_load4_noabort+0x14/0x30 mm/kasan/report_generic.c:380
+    tipc_skb_dump+0x1327/0x16f0 net/tipc/trace.c:73
+    tipc_list_dump+0x208/0x2e0 net/tipc/trace.c:187
+    tipc_sk_dump+0xaf6/0xd60 net/tipc/socket.c:3996
+    trace_event_raw_event_tipc_sk_class+0x312/0x5a0 net/tipc/trace.h:188
+    tipc_sk_rcv+0xb1d/0x1d50 net/tipc/socket.c:2497
+    tipc_node_xmit+0x1c3/0x1440 net/tipc/node.c:1689
+    __tipc_sendmsg+0x97a/0x1440 net/tipc/socket.c:1512
+    tipc_sendmsg+0x52/0x80 net/tipc/socket.c:1400
+    sock_sendmsg+0x2f6/0x3e0 net/socket.c:825
+    splice_to_socket+0x7f9/0x1010 fs/splice.c:884
+    do_splice+0xe21/0x2330 fs/splice.c:936
+    __do_splice+0x153/0x260 fs/splice.c:1431
+    __x64_sys_splice+0x150/0x230 fs/splice.c:1616
+    x64_sys_call+0xeb5/0x2790 arch/x86/entry/syscall_64.c:41
+    do_syscall_64+0xf3/0x620 arch/x86/entry/syscall_64.c:63
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e arch/x86/entry/entry_64.S:130
+  RIP: 0033:0x71624e8aafe2
+  Code: 08 0f 85 71 3a ff ff 49 89 fb 48 89 f0 48 89 d7 48 89 ce 4c 89 c2 4d 89 ca 4c 8b 44 24 08 4c 8b 4c 24 10 4c 89 5c 24 08 0f 05 <c3> 66 2e 0f 1f 84 00 00 00 00 00 66 2e 0f 1f 84 00 00 00 00 00 66
+  RSP: 002b:0000716157ffed68 EFLAGS: 00000246 ORIG_RAX: 0000000000000113
+  RAX: ffffffffffffffda RBX: 0000716157fff6c0 RCX: 000071624e8aafe2
+  RDX: 000000000000005f RSI: 0000000000000000 RDI: 0000000000000066
+  RBP: 0000716157ffed90 R08: 0000000000008000 R09: 0000000000000001
+  R10: 0000000000000000 R11: 0000000000000246 R12: ffffffffffffff00
+  R13: 0000000000000021 R14: 0000000000000000 R15: 00007fff89799c40
+    </TASK>
 
-Fixes: af0db3c1f898 ("fbdev: Fix vmalloc out-of-bounds write in fast_imageblit")
-Cc: stable@vger.kernel.org # v6.17+
-Signed-off-by: Jiacheng Yu <yujiacheng3@huawei.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
+The TIPC_DUMP_ALL tracepoints in tipc_sk_enqueue() also dump
+sk_receive_queue and can therefore dereference skbs that the socket
+owner has already dequeued or freed. Restrict these dumps to
+TIPC_DUMP_SK_BKLGQ, which matches the queue protected by the held
+spinlock.
+
+Keep the change limited to the enqueue path, where the unsafe queue dump
+is reachable while the socket is owned by user context.
+
+Fixes: 01e661ebfbad ("tipc: add trace_events for tipc socket")
+Cc: stable@vger.kernel.org
+Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260611135647.3666727-1-lixiasong1@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbcon.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/tipc/socket.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -1354,8 +1354,7 @@ static void fbcon_set_disp(struct fb_inf
- 	struct vc_data **default_mode, *vc;
- 	struct vc_data *svc;
- 	struct fbcon_par *par = info->fbcon_par;
--	int rows, cols;
--	unsigned long ret = 0;
-+	int rows, cols, ret;
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -2458,17 +2458,17 @@ static void tipc_sk_enqueue(struct sk_bu
+ 			atomic_set(dcnt, 0);
+ 		lim = rcvbuf_limit(sk, skb) + atomic_read(dcnt);
+ 		if (likely(!sk_add_backlog(sk, skb, lim))) {
+-			trace_tipc_sk_overlimit1(sk, skb, TIPC_DUMP_ALL,
++			trace_tipc_sk_overlimit1(sk, skb, TIPC_DUMP_SK_BKLGQ,
+ 						 "bklg & rcvq >90% allocated!");
+ 			continue;
+ 		}
  
- 	p = &fb_display[unit];
- 
+-		trace_tipc_sk_dump(sk, skb, TIPC_DUMP_ALL, "err_overload!");
++		trace_tipc_sk_dump(sk, skb, TIPC_DUMP_SK_BKLGQ, "err_overload!");
+ 		/* Overload => reject message back to sender */
+ 		onode = tipc_own_addr(sock_net(sk));
+ 		atomic_inc(&sk->sk_drops);
+ 		if (tipc_msg_reverse(onode, &skb, TIPC_ERR_OVERLOAD)) {
+-			trace_tipc_sk_rej_msg(sk, skb, TIPC_DUMP_ALL,
++			trace_tipc_sk_rej_msg(sk, skb, TIPC_DUMP_SK_BKLGQ,
+ 					      "@sk_enqueue!");
+ 			__skb_queue_tail(xmitq, skb);
+ 		}
 
 
