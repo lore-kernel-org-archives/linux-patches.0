@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B3838A70B;
-	Thu, 20 Aug 2026 15:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE923822B5;
+	Thu, 20 Aug 2026 15:22:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239344; cv=none; b=Re2ElTGrNoWf8iIWh8ZqTBiIQf9QiCUwCr0cTvIU1QDVhj5iXH0efn8+kLnWSWG8M164zWjrxLs5u57U/IzAUpX1pide7KORAREjFCOSuYtwSf0bhpzBPQtmQus/2e3+pUt5MU5Z32jvUMbdXr0oQesYviHi+dhngEgHEihab0s=
+	t=1787239346; cv=none; b=tWSlYkXYn38fZzmF9oyccAnQrwnGB2oBgYupJ1tp4IqOw07+CS2XGYkFE9fWAmhQvFm+ScrFDcPWAuN9mrYa6qkPafWlVcES7/7tCfZVD/lBWzwlNXCOGcd9ezSIzhjpsfsBl/MkMCmD4i2MAX97B1Xs/bkn9dKH680O00VM3Jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239344; c=relaxed/simple;
-	bh=lxRpInDovrhNMwjU8MNpHekk6B4rkKjQoVUCibsmv64=;
+	s=arc-20240116; t=1787239346; c=relaxed/simple;
+	bh=HrkgNDIrfkekOTgxocrNiWg5M6o0rbxn+28/4SnDk7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t7PEgzBE9IKLujA+cZzwV5MPbayw77NAb8g+6UeK2OrIXV51vTlj92YTldXsXqfSjuBrBpFmGNSEU4+ca5biaRUL27cvQfAoIXvwGZSdGHWNA3BN/GFjF9BcP1rXCRZhrrdh3h5NTzQ7285E3A0UADaigZHJZ6zmQaUQzoOBmm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m1x9GawD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f4KfTvmQGiW9E2jguMPhstq5WeULO3gGFFuJfHYHUCbZeEtZIqyHIwFRj31UO5ixLCIHtCXBT2PC3p0ZRcd0Qdu9Y5r9gtDGmE6MppKWxKAIYLs8IaT3gkVjx/VVO6/loMA53VbDRaRxjEWbGuVtNgeH3t4G8IGq8rpHWRvpFlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nyMJIRRJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1x9GawD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C3CD1F00A3A;
-	Thu, 20 Aug 2026 15:22:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nyMJIRRJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC19F1F000E9;
+	Thu, 20 Aug 2026 15:22:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239342;
-	bh=t8x6qIoFRdW5IFq/AJ6Ot1KqNlN+qqSnlUjjBz6hJ7w=;
+	s=korg; t=1787239345;
+	bh=JSIPAJBGfprO/NIzFb73MErE6qfcLKCHxwDql+2u2xs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m1x9GawDAa5H4zcZ1ZAf9h5bsbR7QhIGRlWd/uUrmVJyvmzUsOb61S04XTfvknZBx
-	 8S0HwYGrRjg3FZPjm/BQwV9BHcirz89GKBipR7obQs5EmVYzczxYBMR+xR8vS60zsj
-	 I+b0kHaS1Z3qRDjfQQ98m3Brm2ahjCPMS5oyNXY0=
+	b=nyMJIRRJiz/2xrQQ91d/qAPBKhwIYI/s1TRxFbJzVRuLS3dTpA+Xkg8w3310ZNred
+	 oSPBdlRyGg3PBBbGfVG6ap2l45XyEoNEVuKV4VFOI51UHwa+mcSA7NOwA2ryY5WMZy
+	 BU65BQOkAEz8qkmMZsJgX9RypW8By5Zz8+1O4DR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	JY <JY.Ho@mediatek.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Jiucheng Xu <jiucheng.xu@amlogic.com>,
+	Cheng Ming Lin <chengminglin@mxic.com.tw>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
+	Dominique Martinet <dominique.martinet@atmark-techno.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 006/220] f2fs: fix UAF issue in f2fs_merge_page_bio()
-Date: Thu, 20 Aug 2026 16:53:16 +0200
-Message-ID: <20260820145223.676931396@linuxfoundation.org>
+Subject: [PATCH 6.12 007/220] mtd: ubi: skip programming unused bits in ubi headers
+Date: Thu, 20 Aug 2026 16:53:17 +0200
+Message-ID: <20260820145223.707124103@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -53,109 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Cheng Ming Lin <chengminglin@mxic.com.tw>
 
-commit edf7e9040fc52c922db947f9c6c36f07377c52ea upstream.
+[ Upstream commit 77530d1a78ca5c274e37d6494a965223672630b2 ]
 
-As JY reported in bugzilla [1],
+This patch prevents unnecessary programming of bits in ec_hdr and
+vid_hdr that are not used or read during normal UBI operation. These
+unused bits are typcially already set to 1 in erased flash and do not
+need to be explicitly programmed to 0 if they are not used.
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-pc : [0xffffffe51d249484] f2fs_is_cp_guaranteed+0x70/0x98
-lr : [0xffffffe51d24adbc] f2fs_merge_page_bio+0x520/0x6d4
-CPU: 3 UID: 0 PID: 6790 Comm: kworker/u16:3 Tainted: P    B   W  OE      6.12.30-android16-5-maybe-dirty-4k #1 5f7701c9cbf727d1eebe77c89bbbeb3371e895e5
-Tainted: [P]=PROPRIETARY_MODULE, [B]=BAD_PAGE, [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-Workqueue: writeback wb_workfn (flush-254:49)
-Call trace:
- f2fs_is_cp_guaranteed+0x70/0x98
- f2fs_inplace_write_data+0x174/0x2f4
- f2fs_do_write_data_page+0x214/0x81c
- f2fs_write_single_data_page+0x28c/0x764
- f2fs_write_data_pages+0x78c/0xce4
- do_writepages+0xe8/0x2fc
- __writeback_single_inode+0x4c/0x4b4
- writeback_sb_inodes+0x314/0x540
- __writeback_inodes_wb+0xa4/0xf4
- wb_writeback+0x160/0x448
- wb_workfn+0x2f0/0x5dc
- process_scheduled_works+0x1c8/0x458
- worker_thread+0x334/0x3f0
- kthread+0x118/0x1ac
- ret_from_fork+0x10/0x20
+Programming such unused areas offers no functional benefit and may
+result in unnecessary flash wear, reducing the overall lifetime of the
+device. By skipping these writes, we preserve the flash state as much as
+possible and minimize wear caused by redundant operations.
 
-[1] https://bugzilla.kernel.org/show_bug.cgi?id=220575
+This change ensures that only necessary fields are written when preparing
+UBI headers, improving flash efficiency without affecting functionality.
 
-The panic was caused by UAF issue w/ below race condition:
+Additionally, the Kioxia TC58NVG1S3HTA00 datasheet (page 63) also notes
+that continuous program/erase cycling with a high percentage of '0' bits
+in the data pattern can accelerate block endurance degradation.
+This further supports avoiding large 0x00 patterns.
 
-kworker
-- writepages
- - f2fs_write_cache_pages
-  - f2fs_write_single_data_page
-   - f2fs_do_write_data_page
-    - f2fs_inplace_write_data
-     - f2fs_merge_page_bio
-      - add_inu_page
-      : cache page #1 into bio & cache bio in
-        io->bio_list
-  - f2fs_write_single_data_page
-   - f2fs_do_write_data_page
-    - f2fs_inplace_write_data
-     - f2fs_merge_page_bio
-      - add_inu_page
-      : cache page #2 into bio which is linked
-        in io->bio_list
-						write
-						- f2fs_write_begin
-						: write page #1
-						 - f2fs_folio_wait_writeback
-						  - f2fs_submit_merged_ipu_write
-						   - f2fs_submit_write_bio
-						   : submit bio which inclues page #1 and #2
+Link: https://europe.kioxia.com/content/dam/kioxia/newidr/productinfo/datasheet/201910/DST_TC58NVG1S3HTA00-TDE_EN_31442.pdf
 
-						software IRQ
-						- f2fs_write_end_io
-						 - fscrypt_free_bounce_page
-						 : freed bounced page which belongs to page #2
-      - inc_page_count( , WB_DATA_TYPE(data_folio), false)
-      : data_folio points to fio->encrypted_page
-        the bounced page can be freed before
-        accessing it in f2fs_is_cp_guarantee()
-
-It can reproduce w/ below testcase:
-Run below script in shell #1:
-for ((i=1;i>0;i++)) do xfs_io -f /mnt/f2fs/enc/file \
--c "pwrite 0 32k" -c "fdatasync"
-
-Run below script in shell #2:
-for ((i=1;i>0;i++)) do xfs_io -f /mnt/f2fs/enc/file \
--c "pwrite 0 32k" -c "fdatasync"
-
-So, in f2fs_merge_page_bio(), let's avoid using fio->encrypted_page after
-commit page into internal ipu cache.
-
-Fixes: 0b20fcec8651 ("f2fs: cache global IPU bio")
-Reported-by: JY <JY.Ho@mediatek.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[Jiucheng Xu: backport to 6.12.y]
-Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
+Signed-off-by: Cheng Ming Lin <chengminglin@mxic.com.tw>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/ubi/io.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 68891c086b38..16c15360605b 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -950,7 +950,7 @@ int f2fs_merge_page_bio(struct f2fs_io_info *fio)
- 		wbc_account_cgroup_owner(fio->io_wbc, page_folio(fio->page),
- 					 PAGE_SIZE);
+diff --git a/drivers/mtd/ubi/io.c b/drivers/mtd/ubi/io.c
+index a4999bce435f..915eb64cb001 100644
+--- a/drivers/mtd/ubi/io.c
++++ b/drivers/mtd/ubi/io.c
+@@ -868,6 +868,8 @@ int ubi_io_write_ec_hdr(struct ubi_device *ubi, int pnum,
+ 		return -EROFS;
+ 	}
  
--	inc_page_count(fio->sbi, WB_DATA_TYPE(page, false));
-+	inc_page_count(fio->sbi, WB_DATA_TYPE(fio->page, false));
++	memset((char *)ec_hdr + UBI_EC_HDR_SIZE, 0xFF, ubi->ec_hdr_alsize - UBI_EC_HDR_SIZE);
++
+ 	err = ubi_io_write(ubi, ec_hdr, pnum, 0, ubi->ec_hdr_alsize);
+ 	return err;
+ }
+@@ -1150,6 +1152,14 @@ int ubi_io_write_vid_hdr(struct ubi_device *ubi, int pnum,
+ 		return -EROFS;
+ 	}
  
- 	*fio->last_block = fio->new_blkaddr;
- 	*fio->bio = bio;
++	if (ubi->vid_hdr_shift) {
++		memset((char *)p, 0xFF, ubi->vid_hdr_shift);
++		memset((char *)p + ubi->vid_hdr_shift + UBI_VID_HDR_SIZE, 0xFF,
++		       ubi->vid_hdr_alsize - (ubi->vid_hdr_shift + UBI_VID_HDR_SIZE));
++	} else {
++		memset((char *)p + UBI_VID_HDR_SIZE, 0xFF, ubi->vid_hdr_alsize - UBI_VID_HDR_SIZE);
++	}
++
+ 	err = ubi_io_write(ubi, p, pnum, ubi->vid_hdr_aloffset,
+ 			   ubi->vid_hdr_alsize);
+ 	return err;
 -- 
 2.53.0
 
