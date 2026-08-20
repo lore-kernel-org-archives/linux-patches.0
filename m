@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009F437C90E;
-	Thu, 20 Aug 2026 15:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212F537C925;
+	Thu, 20 Aug 2026 15:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238366; cv=none; b=KzzQY70jyun3ZgcqQGcH/0OgtMycWNUy5Ydz5kB14sbTNADPX0e1Qa8VmjkVQDfGdfVh120aqCSr+jsTos2gCxuQCQoqvPt/oWVVzto7giTqzjR45GULeCB3Eaj2yrJ0isyS/I/OGflYrnxXHFFnZiOoMVHrMM8g2dTiYJ7Bcjg=
+	t=1787238369; cv=none; b=ur4tyPqpIoFySnCqbOpfQDXQwNUkyNbuvabWPdpILcmXPs5yjECKtZIsRcTWLa7ieXfSrZJOF0A24VL8KsqnxPV/eBcs6zO71t7mmHmfUtCG/euz0P0sub94dWitTqN2RkE2RsXRpSgwcibyoiWcosuWrhwd4cZV9oCQvqg5tT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238366; c=relaxed/simple;
-	bh=OpUc6CQkA0CxZ01Bgsq8w3rJHfTZYUt6jKZDZaR07V8=;
+	s=arc-20240116; t=1787238369; c=relaxed/simple;
+	bh=Loswl7QxSbY6r8plB7UckjNUZK4Sk8pD4rtDwY+JllU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rS2D1bz9oq8T45x1GKcKFfGW6htiTeNq4QgL51Mmuqc5eUjAmYKRgJW5IPPfU8OVPIw/n76Gqld2iglYaDKU97Pg5m7MlBlWN9EUvhZoZzEt4P627gIVdcsoCFLiC34Uz3eQxlfhP6iwp3Wfasb+AOZ5UnZV7liiDX0+ZBVqrQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TwaF3WMg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lsf9ZiiGxhV7NFciDfoX5Q8VDvLaEWpq9ubhN+PFdvHdVIY2TtlHEcNrMOCmMAK/A9FN34PhjWg/ePudmifdkWRxn/YGvfZgR/Qwy51nYAnaCltI66k2NggXMsQxroVnNHQORJwZki9JKSCHiI/VWwk2P7TZHLbGn4Fq5HvBrGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IuNMIY7A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TwaF3WMg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 507781F00A3A;
-	Thu, 20 Aug 2026 15:06:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IuNMIY7A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B5A1F000E9;
+	Thu, 20 Aug 2026 15:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238364;
-	bh=s9ju31FINqWcO/ocBu+vKDp/Wf36vb8ukgViyUNtjpY=;
+	s=korg; t=1787238367;
+	bh=rp2dgduQt62ty1RKj/d5QZ9XLCSqueXSIjRF7C8qtTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TwaF3WMgzepWzOu8adPb28ZKXa28/Wsz8J5qrzpsg4RHUDg3ZcmdUyOzPJwULedjC
-	 a+4vxDdOTEzjVTF7IOHV7vheJmlThBlzNsUqxk0evcR2yMGnkOVEu9RnT/sAm4Bwkt
-	 A9X+VyrM9CWkWt5hebcaC+JN0z9zLSzXcdTSkqyU=
+	b=IuNMIY7Akbo6L+e/bZ2D0qaJkskSJa6jLHmT+ubzvhRYFumgnnujMUy6/aM80r/x2
+	 0FhsuvZhYodoGQjUvP78Zos6yGjLp6TdP7miwP6+NY+Y2CfEeRrg3W5cx8X21LgA8O
+	 9jINXakQOUqxbEQB+5uyxroSVTYFVPAnrm2IPOt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Leo Liu <leo.liu@amd.com>,
 	Ruijing Dong <ruijing.dong@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 122/228] drm/amdgpu: Fix UVD dpb min size calculation for H264
-Date: Thu, 20 Aug 2026 16:54:24 +0200
-Message-ID: <20260820145248.334253645@linuxfoundation.org>
+Subject: [PATCH 7.1 123/228] drm/amdgpu: Fix UVD decode image min size calculation
+Date: Thu, 20 Aug 2026 16:54:25 +0200
+Message-ID: <20260820145248.362422154@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -54,111 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 From: David Rosca <david.rosca@amd.com>
 
-commit 21a8084cd76223a13493237e04d45f5226d7cee6 upstream.
+commit b8bb9ba3f101a1b0011f785a577a4a0a38371174 upstream.
 
-This should use actual number of references from the decode
-message, instead of maximum derived from level.
+This needs to use pitch instead of width. Also reject pitch
+over 4096 to avoid overflow.
 
 Signed-off-by: David Rosca <david.rosca@amd.com>
 Acked-by: Leo Liu <leo.liu@amd.com>
 Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 64b525edb7e7bdfcdc77883c5e413804e2396856)
+(cherry picked from commit b41c8cb12e202b220353332ab87dc01a11f69304)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |   62 ++------------------------------
- 1 file changed, 4 insertions(+), 58 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-@@ -646,11 +646,9 @@ static int amdgpu_uvd_cs_msg_decode(stru
- 	unsigned int height = msg[7];
- 	unsigned int dpb_size = msg[9];
- 	unsigned int pitch = msg[28];
--	unsigned int level = msg[57];
+@@ -762,7 +762,7 @@ static int amdgpu_uvd_cs_msg_decode(stru
+ 		return -EINVAL;
+ 	}
  
- 	unsigned int width_in_mb = width / 16;
- 	unsigned int height_in_mb = ALIGN(height / 16, 2);
--	unsigned int fs_in_mb = width_in_mb * height_in_mb;
+-	if (width > pitch) {
++	if (width > pitch || pitch > 4096) {
+ 		DRM_ERROR("Invalid UVD decoding target pitch!\n");
+ 		return -EINVAL;
+ 	}
+@@ -774,7 +774,7 @@ static int amdgpu_uvd_cs_msg_decode(stru
+ 	}
  
- 	unsigned int image_size, tmp, min_dpb_size, num_dpb_buffer;
- 	unsigned int min_ctx_size = ~0;
-@@ -669,35 +667,9 @@ static int amdgpu_uvd_cs_msg_decode(stru
- 
- 	switch (stream_type) {
- 	case 0: /* H264 */
--		switch (level) {
--		case 30:
--			num_dpb_buffer = 8100 / fs_in_mb;
--			break;
--		case 31:
--			num_dpb_buffer = 18000 / fs_in_mb;
--			break;
--		case 32:
--			num_dpb_buffer = 20480 / fs_in_mb;
--			break;
--		case 41:
--			num_dpb_buffer = 32768 / fs_in_mb;
--			break;
--		case 42:
--			num_dpb_buffer = 34816 / fs_in_mb;
--			break;
--		case 50:
--			num_dpb_buffer = 110400 / fs_in_mb;
--			break;
--		case 51:
--			num_dpb_buffer = 184320 / fs_in_mb;
--			break;
--		default:
--			num_dpb_buffer = 184320 / fs_in_mb;
--			break;
--		}
--		num_dpb_buffer++;
-+		num_dpb_buffer = ((msg[61] >> 16) & 0xff) + 1;
- 		if (num_dpb_buffer > 17)
--			num_dpb_buffer = 17;
-+			return -EINVAL;
- 
- 		/* reference picture buffer */
- 		min_dpb_size = image_size * num_dpb_buffer;
-@@ -747,35 +719,9 @@ static int amdgpu_uvd_cs_msg_decode(stru
- 		break;
- 
- 	case 7: /* H264 Perf */
--		switch (level) {
--		case 30:
--			num_dpb_buffer = 8100 / fs_in_mb;
--			break;
--		case 31:
--			num_dpb_buffer = 18000 / fs_in_mb;
--			break;
--		case 32:
--			num_dpb_buffer = 20480 / fs_in_mb;
--			break;
--		case 41:
--			num_dpb_buffer = 32768 / fs_in_mb;
--			break;
--		case 42:
--			num_dpb_buffer = 34816 / fs_in_mb;
--			break;
--		case 50:
--			num_dpb_buffer = 110400 / fs_in_mb;
--			break;
--		case 51:
--			num_dpb_buffer = 184320 / fs_in_mb;
--			break;
--		default:
--			num_dpb_buffer = 184320 / fs_in_mb;
--			break;
--		}
--		num_dpb_buffer++;
-+		num_dpb_buffer = ((msg[61] >> 16) & 0xff) + 1;
- 		if (num_dpb_buffer > 17)
--			num_dpb_buffer = 17;
-+			return -EINVAL;
- 
- 		/* reference picture buffer */
- 		min_dpb_size = image_size * num_dpb_buffer;
+ 	buf_sizes[0x1] = dpb_size;
+-	buf_sizes[0x2] = image_size;
++	buf_sizes[0x2] = (pitch * height) * 3 / 2;
+ 	buf_sizes[0x4] = min_ctx_size;
+ 	/* store image width to adjust nb memory pstate */
+ 	adev->uvd.decode_image_width = width;
 
 
