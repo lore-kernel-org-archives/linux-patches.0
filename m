@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B1F37BE7A;
-	Thu, 20 Aug 2026 15:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA5235200C;
+	Thu, 20 Aug 2026 15:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238194; cv=none; b=UcEgIWnRW9ojK7lHki8UiMglxzqlEW1FbkxZUnkFNb6LuvhdJsl9Zo9pNQWt8ONIkF/0CQGYHCj8y8XWiglWdOZ5z4PjGCY3epTRGTGJOBBMzXjO+nY5WpX1WyXsj9dbZHXS9zEQlAIk1WbGgPWC3PpRj2TRiA3vN/4KYc7JVSo=
+	t=1787238197; cv=none; b=aDcLNgb/zkP8Upm5Q/HeaxwQmP0kQoRDDViemQArRD0S8T6Re1WSq6FZcreu5A4khEPIbN6z4X6LaGz6o4uwAjC1Y4Ehb3nmkWIlFNyaZS2nE1hOzGS6Q8LCQ1CJuoQe8H+PG4ZP3VTe8QQXxQxjgmWlw3PNXyKiqxBc6K40bqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238194; c=relaxed/simple;
-	bh=J81FEn1BbNMyPG33diJX3lFvwgLyJD0T1av/EtSa5/U=;
+	s=arc-20240116; t=1787238197; c=relaxed/simple;
+	bh=NGUxmFJpgu0bJ0cwU+anszUFIx9rfXrVv1znn15SubY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s9XoH8oJuFRfdzM+Ys3/3PbtgWAvJQEJ4ROmoTqp1GD+nnR5+e2g7VQhaDwL6IQQd8TwqZTtmZK96gcWt2h7B7/+KjbRjtBJ80GOFWzwg2IYdg/dXjW8YVqvz4/gzlDDqVghon/NuGkZSE8LFf97L8C4f9PXSraEo604iJMmZ/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/Z61H05; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=a3MdN+lXuRyjX/iHtPK8+XPq5dyPCjwOWti0vUi8s+dPGURMXTubHtHksJWKevQLW5bQaaVaDEtWl7aeB9GbMQ+gLfJqdoLT/HRLyEo2QY2OVeDyzfU7IOCcthPDIp+2pzPLvsBqtaSb+eukZ5ZFLTPlVSCP7A9seCf2x4Rmk+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVbAmxpM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/Z61H05"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A4C41F000E9;
-	Thu, 20 Aug 2026 15:03:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVbAmxpM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF711F00A3A;
+	Thu, 20 Aug 2026 15:03:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238193;
-	bh=8D6maMpGkmIMOmzYGFcrjV5GJlD+birCBIrYxV1Tyg0=;
+	s=korg; t=1787238196;
+	bh=+JyAb3x3aPfFuQT3g0qmyWtUXalSCQkbSWFna6V35vQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W/Z61H05lcNnHvjdQycedRjK/Ml4aI13OfnrrdHtt9+egHRTpZEr8kW/QD/Zt5sIF
-	 JRcJmN27qnADkfYCqMwHcSEhj/8CxEDzrf2TC4nHIi+XdYqaH9gn+QDnV2yJXjRaRX
-	 WfzTDn5Uh6dEO1bkrPixsl7nNEvjdlp0j7g52UT0=
+	b=uVbAmxpMVr1qL1JJZo4/xx298P9NQc/342ilI779vdc2hCeXaYgJFfC63CJ5tfI0J
+	 y6XRKve5eyE4VJmQ/ME4PapAa8UuQ+MuMRaJqsBJaZlA2JGxyy4O68dKTecb/Uk0Cu
+	 ncuzngDkfO4OeD7SP32aO/VCE2zlvcS3PBvxwsEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Melbin K Mathew <mlbnkm1@gmail.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 7.1 024/228] fbdev: clear fb_info->mode before deleting a videomode
-Date: Thu, 20 Aug 2026 16:52:46 +0200
-Message-ID: <20260820145245.195014871@linuxfoundation.org>
+	=?UTF-8?q?Dawid=20Wro=CC=81bel?= <me@dawidwrobel.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.1 015/228] ASoC: codecs: lpass-tx-macro: Fix enum kcontrol accesses
+Date: Thu, 20 Aug 2026 16:52:37 +0200
+Message-ID: <20260820145244.929058452@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -44,55 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Melbin K Mathew <mlbnkm1@gmail.com>
+From: Dawid Wróbel <me@dawidwrobel.com>
 
-commit 95e647d2a5304a8fd11f1ba3c8502de700650131 upstream.
+commit 1ba381759e45d5d0442452cfa5c42e836191a568 upstream.
 
-fb_set_var() can delete a mode from info->modelist when userspace
-passes FB_ACTIVATE_INV_MODE through FBIOPUT_VSCREENINFO. The code
-checks that the mode being deleted is not the current info->var and
-that fbcon is not using it, but it does not check fb_info->mode.
+The "DEC0 MODE" to "DEC7 MODE" controls are enumerated, but
+tx_macro_dec_mode_get() and tx_macro_dec_mode_put() access their
+value through ucontrol->value.integer.value[0] (a long) instead of
+ucontrol->value.enumerated.item[0] (an unsigned int).
 
-fb_info->mode may still point into the modelist entry being deleted.
-If the entry is freed, later mode sysfs reads through show_mode() can
-dereference a stale pointer.
+This same pattern was fixed in the sibling drivers by
+commit bcfe5f76cc40 ("ASoC: codecs: rx-macro: fix accessing array
+out of bounds for enum type") and
+commit 0ea5eff7c606 ("ASoC: codecs: va-macro: fix accessing array
+out of bounds for enum type"), but tx-macro was missed.
 
-Clear fb_info->mode before calling fb_delete_videomode() when it
-matches the mode being removed.
+On 64-bit kernels built with CONFIG_SND_CTL_DEBUG, the elem value
+sanity check catches the 4 bytes written past the enumerated item
+and every read of these controls fails with -EINVAL:
 
-Cc: stable@vger.kernel.org # v7.1+
-Signed-off-by: Melbin K Mathew <mlbnkm1@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+  snd-sm8250 sound: control 2:0:0:DEC0 MODE:0: access overflow
+
+Fixes: c39667ddcfc5 ("ASoC: codecs: lpass-tx-macro: add support for lpass tx macro")
+Assisted-by: Claude:claude-fable-5
+Cc: stable@vger.kernel.org
+Signed-off-by: Dawid Wróbel <me@dawidwrobel.com>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260730-worktree-lpass-tx-macro-enum-fix-v2-1-6d091c736116@dawidwrobel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbmem.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/soc/codecs/lpass-tx-macro.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
-index 2f1c56e5a7a2..c8aa163b0ecf 100644
---- a/drivers/video/fbdev/core/fbmem.c
-+++ b/drivers/video/fbdev/core/fbmem.c
-@@ -246,8 +246,11 @@ fb_set_var(struct fb_info *info, struct fb_var_screeninfo *var)
- 		ret = fb_mode_is_equal(&mode1, &mode2);
- 		if (!ret) {
- 			ret = fbcon_mode_deleted(info, &mode1);
--			if (!ret)
-+			if (!ret) {
-+				if (info->mode && fb_mode_is_equal(info->mode, &mode1))
-+					info->mode = NULL;
- 				fb_delete_videomode(&mode1, &info->modelist);
-+			}
- 		}
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -1075,7 +1075,7 @@ static int tx_macro_dec_mode_get(struct
+ 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
+ 	int path = e->shift_l;
  
- 		return ret ? -EINVAL : 0;
--- 
-2.55.0
-
+-	ucontrol->value.integer.value[0] = tx->dec_mode[path];
++	ucontrol->value.enumerated.item[0] = tx->dec_mode[path];
+ 
+ 	return 0;
+ }
+@@ -1084,7 +1084,7 @@ static int tx_macro_dec_mode_put(struct
+ 				 struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
+-	int value = ucontrol->value.integer.value[0];
++	int value = ucontrol->value.enumerated.item[0];
+ 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
+ 	int path = e->shift_l;
+ 	struct tx_macro *tx = snd_soc_component_get_drvdata(component);
 
 
