@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3529A44062A;
-	Thu, 20 Aug 2026 17:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D86483BF0;
+	Thu, 20 Aug 2026 17:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248316; cv=none; b=CpjCI2XBR0e36akDAwyRn/7fpl5tbmama3502OpGBN9P5d3WQMLss3CJX8PS+pJ87jjJzI4yH6SW23lLRVhW0mb2NxY36hAvxtmq2lhoYqHi4uAqDvxiDmhaV+fTv2vZOyvQRCzZJMXAgoH8OnE38I8B4JCeZLNpXtyQ3oe0U/0=
+	t=1787248320; cv=none; b=X+bAiBw/4TgcVQUFlpS/nFaIOB6vBZKkJ9QBAxwEDvbILwOnKQQa/aWSizWBOl8cHg76Z7zqD6up4CedAzAC5/KlP12DE4yl9Ak+XNjGy/MIDU+sbjvhysybpOhgcL7L8SawZGadkNFFnS7iRxgLDISjl9kYuzgFYxvXBUGLBKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248316; c=relaxed/simple;
-	bh=I207R0A0dt3odOsHuypI9m7WLkwFEoDSAuBdCHPGM5U=;
+	s=arc-20240116; t=1787248320; c=relaxed/simple;
+	bh=os+YThasDPov4qQUzJGIM57nO6Dpsdrm+JLIwueENz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cQpwNBuPSuVR5VgYCIZaMAZO/5VjSJjIrE5cUqLXedRnHt27YIqV+pVo/7j8hK6ueU6iSaer+jwlCO42f3Ta4DocAa5Cwd6i9K63Fn9pNMkvtusnccvvBsWsWbDbTHbCx4+jgYGKRV1g4gdYn3r5eQ6rE7NR2xe9d/hcQywEveM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9cdb7Xo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kF3Dy6jg+IvvurSNHB4aU80AqPVN5oDRVoLbkmOp/TimFk4Hc36NNe5AasxBgEnNwVekTmZnMFxGP9je0kXA9pZOYY+zMYv2k8jaVcZ8qqm6K/88Sm6xRwDx69q7sajsxKZ9IM84bbH/spebvjhqpTX96CODfXD6L9Y2XORaLnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2UKLOB3x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9cdb7Xo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96F021F000E9;
-	Thu, 20 Aug 2026 17:51:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2UKLOB3x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706791F000E9;
+	Thu, 20 Aug 2026 17:51:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248315;
-	bh=uLST/Tm0qvIxE02/qR0hrmO6jzNmRT2sG/z26nuKnb0=;
+	s=korg; t=1787248318;
+	bh=DjIsPVUgfTQjmOCTxbChD4pllUQyPJAXA9X5Hwek8Po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M9cdb7XoQua5bN/Ly2s/bvxRJ5YRy1+lWXeJ+foG6dmhchIQsltX6/7z0s+xeacFP
-	 fcfcwke9yawtZ68nerpZwlicw4ZB0bB1RAVX9wDNU+XOxcEp4KVRJ+tQy2ezdRM89R
-	 sW8RgEzs/VJxDGRjyVRetdBk9b05Zsn4iCgjErT8=
+	b=2UKLOB3xRB0p5h8h8frEEmQfw2shnHpiTOWJqEDX6J97Qd/+ZaRP3X/ts8N6C5dDO
+	 Gqtvdgu0HtmOjk5dO49LoLbS5i+R4l0JOwoxqUAaop8zpWjK8RBUiY67b517CGBRZO
+	 dqs3dczpVu3thA+a9jKgWvtu1/kIKumtygovOB6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+000c800a02097aaa10ed@syzkaller.appspotmail.com,
-	Thomas Gleixner <tglx@kernel.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Sasha Levin <sashal@kernel.org>,
-	Jann Horn <jannh@google.com>
-Subject: [PATCH 6.1 148/303] locking/rt: Fix the incorrect RCU protection in rt_spin_unlock()
-Date: Thu, 20 Aug 2026 16:54:44 +0200
-Message-ID: <20260820145257.735057221@linuxfoundation.org>
+	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 184/303] usb: typec: ucsi: Only enable supported notifications
+Date: Thu, 20 Aug 2026 16:55:20 +0200
+Message-ID: <20260820145258.846446160@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -54,107 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@kernel.org>
+From: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
 
-[ Upstream commit 89038cc87d80c77e7aa6f42a64b2573b74af339f ]
+[ Upstream commit 27ffe4ff0b33b3dcc97fd448fd1e38d31ade575b ]
 
-rt_spin_unlock() releases the RCU protection before unlocking the
-lock. That opens the door for the following UAF scenario:
+The UCSI specification defines some notifications to be optional for the
+PPM to support. From these only enable the ones the PPM informs us are
+actually supported.
 
- T1					T2
- spin_lock(&p->lock);		rcu_read_lock();
- invalidate(p);			p = rcu_dereference(ptr);
- rcu_assign_pointer(ptr, NULL);	if (!p) return;
- spin_unlock(&p->lock);		spin_lock(&p->lock)
- 				   lock(&lock->lock);
-				   rcu_read_lock();
- kfree_rcu(p);			rcu_read_unlock();
-				....
-				spin_unlock(&p->lock)
-				  rcu_read_unlock(); // Ends grace period
- rcu_do_batch()
-   kfree(p);
-			    UAF ->	  rt_mutex_cmpxchg_release(&lock->lock...)
-
-Regular spinlocks keep preemption disabled accross the unlock operation,
-which provides full RCU protection, but the RT substitution fails to
-resemble that. Same applies for the rwlock substitution.
-
-Move the rcu_read_unlock() invocation past the unlock operations to match
-the non-RT semantics. This makes it asymmetric vs. rt_xxx_lock(), but
-that's harmless as the caller needs to hold RCU read lock across the lock
-operation. The migrate_enable() call stays before the unlock operation
-because there is no per CPU operation in the unlock path which would
-require migration to be kept disabled.
-
-Fixes: 0f383b6dc96e ("locking/spinlock: Provide RT variant")
-Reported-by: syzbot+000c800a02097aaa10ed@syzkaller.appspotmail.com
-Decoded-by: Jann Horn <jannh@google.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Acked-by: Al Viro <viro@zeniv.linux.org.uk>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/87jyrud75z.ffs@fw13
+Signed-off-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/yhz7nq622mbg3rqsyvqz632pc756niagpfbnzayfswhzo7esho@vrdtx5c3hjgx
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 7aa7d4bf9d3f ("usb: typec: ucsi: Fix race condition and ordering in port unregistration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/locking/spinlock_rt.c |   27 ++++++++++++++++++++++++---
- 1 file changed, 24 insertions(+), 3 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c |   25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
---- a/kernel/locking/spinlock_rt.c
-+++ b/kernel/locking/spinlock_rt.c
-@@ -77,10 +77,27 @@ void __sched rt_spin_unlock(spinlock_t *
- {
- 	spin_release(&lock->dep_map, _RET_IP_);
- 	migrate_enable();
--	rcu_read_unlock();
- 
- 	if (unlikely(!rt_mutex_cmpxchg_release(&lock->lock, current, NULL)))
- 		rt_mutex_slowunlock(&lock->lock);
-+
-+	/*
-+	 * This must be last to prevent the following UAF:
-+	 *
-+	 * T1					T2
-+	 * spin_lock(&p->lock);			rcu_read_lock();
-+	 * invalidate(p);			p = rcu_dereference(ptr);
-+	 * rcu_assign_pointer(ptr, NULL);	if (!p) return;
-+	 * spin_unlock(&p->lock);		spin_lock(&p->lock);
-+	 * kfree_rcu(p);			rcu_read_unlock();
-+	 *					....
-+	 *					spin_unlock(&p->lock)
-+	 *					  rcu_read_unlock(); // Ends grace period
-+	 * rcu_do_batch()
-+	 *   kfree(p);
-+	 *			    UAF ->	  rt_mutex_cmpxchg_release(&p->lock.lock...)
-+	 */
-+	rcu_read_unlock();
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1254,6 +1254,27 @@ out_unlock:
+ 	return ret;
  }
- EXPORT_SYMBOL(rt_spin_unlock);
  
-@@ -255,17 +272,21 @@ void __sched rt_read_unlock(rwlock_t *rw
- {
- 	rwlock_release(&rwlock->dep_map, _RET_IP_);
- 	migrate_enable();
--	rcu_read_unlock();
- 	rwbase_read_unlock(&rwlock->rwbase, TASK_RTLOCK_WAIT);
++static u64 ucsi_get_supported_notifications(struct ucsi *ucsi)
++{
++	u8 features = ucsi->cap.features;
++	u64 ntfy = UCSI_ENABLE_NTFY_ALL;
 +
-+	/* This must be last. See comment in rt_spin_unlock() */
-+	rcu_read_unlock();
- }
- EXPORT_SYMBOL(rt_read_unlock);
- 
- void __sched rt_write_unlock(rwlock_t *rwlock)
- {
- 	rwlock_release(&rwlock->dep_map, _RET_IP_);
--	rcu_read_unlock();
- 	migrate_enable();
- 	rwbase_write_unlock(&rwlock->rwbase);
++	if (!(features & UCSI_CAP_ALT_MODE_DETAILS))
++		ntfy &= ~UCSI_ENABLE_NTFY_CAM_CHANGE;
 +
-+	/* This must be last. See comment in rt_spin_unlock() */
-+	rcu_read_unlock();
- }
- EXPORT_SYMBOL(rt_write_unlock);
++	if (!(features & UCSI_CAP_PDO_DETAILS))
++		ntfy &= ~(UCSI_ENABLE_NTFY_PWR_LEVEL_CHANGE |
++			  UCSI_ENABLE_NTFY_CAP_CHANGE);
++
++	if (!(features & UCSI_CAP_EXT_SUPPLY_NOTIFICATIONS))
++		ntfy &= ~UCSI_ENABLE_NTFY_EXT_PWR_SRC_CHANGE;
++
++	if (!(features & UCSI_CAP_PD_RESET))
++		ntfy &= ~UCSI_ENABLE_NTFY_PD_RESET_COMPLETE;
++
++	return ntfy;
++}
++
+ /**
+  * ucsi_init - Initialize UCSI interface
+  * @ucsi: UCSI to be initialized
+@@ -1314,8 +1335,8 @@ static int ucsi_init(struct ucsi *ucsi)
+ 			goto err_unregister;
+ 	}
  
+-	/* Enable all notifications */
+-	ntfy = UCSI_ENABLE_NTFY_ALL;
++	/* Enable all supported notifications */
++	ntfy = ucsi_get_supported_notifications(ucsi);
+ 	command = UCSI_SET_NOTIFICATION_ENABLE | ntfy;
+ 	ret = ucsi_send_command(ucsi, command, NULL, 0);
+ 	if (ret < 0)
 
 
