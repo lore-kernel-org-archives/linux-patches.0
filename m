@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D7F47D46A;
-	Thu, 20 Aug 2026 16:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4590C272E53;
+	Thu, 20 Aug 2026 16:40:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244044; cv=none; b=HLROa+EHk+krsI6bXi+ZVQCBolC4icJy2mhtxwJcHLuW3PDBTyQhN9dWxqKMqP12axmm/Lf5M5mfBCkMLnVXGTW0h6R2v0+gnqvtR9dOGcsu+W+Wo0XfsDmXg64tcUMA2AC9/PAoCD2fE9z7mDCkr+r8i+ozwMk/0xfz0xRxDyI=
+	t=1787244047; cv=none; b=A7eivw7l/zNOzUwaRHwm+/kYFkTTLy/NJpdJkp/YFxIinwlEBTJ49hHdhUQobUHuio3nZS7AA0QQc9AUp5n3w82kqJLDEStr7yW2VyD4pCntC0jALiYrLvpYjOrxHSGOHYJ/YdgEGbnKTd4lpQZtOQ+Zfeo9N7d2pMh/w1U8Fjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244044; c=relaxed/simple;
-	bh=d36LuzScmqEfiXvt21BnoODWsjKK60WHGm+M1YDPFQw=;
+	s=arc-20240116; t=1787244047; c=relaxed/simple;
+	bh=UG35otk6Fizb3CMJbwQGcqz/xfoKIRovPnz3Y5Dhj3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HW/yEFf8ntQj4flPza20TAgz4GrhhBtEc+G6Y3yhSPpo8g2bQdD9INfdgxa1Injyz069FBqlqRWYzCf+5Vz3i1X2SayzKf03T7255IbPwwDGmono5SCBhDzuYKGuc5Tmr3Ohwb6tSWlBlPsaa/QluC5AdsL/4x/16zvm/TRZVao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tyq4Dalu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uJrgvr8ts4C3NGFk5TzfdyzRlP5Mu560KG/SVTV8ppbr6pYyCqjoYPVsbzshXi638664A8IrBB9kxXMxSYl2PgitnhKifYaiazZOwK4kdJ0Xw+ihHDexWwJz+b8FmaxTX2OUwQXjWxyJbIhF5u2AChMD8GbRAYILVi36Lxa0whM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GMuH9E6e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tyq4Dalu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41CF1F000E9;
-	Thu, 20 Aug 2026 16:40:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GMuH9E6e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F4B1F000E9;
+	Thu, 20 Aug 2026 16:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244043;
-	bh=yQoi3X3ggXwoLLIXuaWB/+FlpwUwcUkzWxv4kAJw9hY=;
+	s=korg; t=1787244046;
+	bh=UGm82opAdwsidLnQLARq4wfy5U4vI+89j2S/uhCoQi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tyq4DaluhBJwrSE3m8MTHfB7g1zskbTSUWtgpzS9amyNa9A5urOBJXGARWHfU9ks9
-	 LprYQQpR+y0X+AqN6R6YRf1mZYr9KWNozg9xQ2kejhIKBGaV7y2m+spowR3TWAQvAb
-	 vjgtiXq1PXf0PDbHOmGi3KGS6s3i6Yz3UtzhxBks=
+	b=GMuH9E6eoLf7rKxrpVF/2yIHzWwo1Ss9PfxzWUwAKWmTmaPW7ldyUJ7JQ1+xE0FVV
+	 VceK9yPngP79h3eNP8bBEMNWt4CKZlMRik7saC/yhkxriX02Tjhj98QwBqV0D61+s0
+	 xZlS/i83o6DNIwlPyspHqZkTS7huG8kHdFlhPTtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 5.10 032/235] mmc: atmel-mci: Fix use-after-free in atmci_remove due to race condition
-Date: Thu, 20 Aug 2026 16:54:28 +0200
-Message-ID: <20260820145217.409503756@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.10 033/235] drm/radeon: fix autosuspend cleanup during teardown
+Date: Thu, 20 Aug 2026 16:54:29 +0200
+Message-ID: <20260820145217.437350502@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -50,62 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit c125ee35a49a0518521b52b27631eef061b8719a upstream.
+commit 587be7a17358ef8c0106775fcedae5a7bef50735 upstream.
 
-In atmci_probe, &host->bh_work is bound with atmci_work_func, and
-atmci_interrupt, atmci_timeout_timer and atmci_dma_complete can all
-queue this work on system_bh_wq.
+radeon_driver_load_kms() calls pm_runtime_use_autosuspend() for PX
+devices, but radeon_driver_unload_kms() does not call the matching
+pm_runtime_dont_use_autosuspend() during teardown.
 
-If we remove the module, atmci_remove makes cleanup and the memory
-allocated for host with devm_kzalloc() is released after the remove
-callback returns, while the work mentioned above may still be pending
-or running. The sequence of operations that may lead to a UAF bug is
-as follows:
+If the autosuspend delay is set to a negative value while autosuspend
+is enabled, the runtime PM core increments usage_count to prevent
+runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
+during teardown, this reference is not dropped.
 
-CPU0                                      CPU1
+The documentation for pm_runtime_use_autosuspend() also notes that it
+is important to undo it with pm_runtime_dont_use_autosuspend() at
+driver exit time, unless runtime PM was initially enabled with
+devm_pm_runtime_enable().
 
-                                          | atmci_interrupt
-                                          | queue_work(system_bh_wq,
-                                          |            &host->bh_work)
-atmci_remove                              |
-atmci_cleanup_slot(...)                   |
-atmci_writel(host, ATMCI_IDR, ~0UL)       |
-timer_delete_sync(&host->timer)           |
-dma_release_channel(host->dma.chan)       |
-free_irq(platform_get_irq(pdev, 0), host) |
-                                          | atmci_work_func
-                                          | // use host
-// devm resources released after          |
-// remove returns, host is freed          |
-                                          | // use host (use-after-free)
+Add the missing pm_runtime_dont_use_autosuspend() call to the driver
+unload path.
 
-Fix it by canceling the work after all the sources that can schedule
-it (IRQ handler, timeout timer and DMA completion callback) have been
-stopped, and before proceeding with the remaining cleanup in
-atmci_remove.
+This issue was found by manual code inspection.
 
-Fixes: 7d2be0749a59 ("atmel-mci: Driver for Atmel on-chip MMC controllers")
-Assisted-by: Codex:deepseek-v4-flash
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Fixes: 10ebc0bc0934 ("drm/radeon: add runtime PM support (v2)")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 0fdc1ff82ea14844c22795e9e0813c3ca03235e1)
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/atmel-mci.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/radeon/radeon_kms.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mmc/host/atmel-mci.c
-+++ b/drivers/mmc/host/atmel-mci.c
-@@ -2629,6 +2629,8 @@ static int atmci_remove(struct platform_
+--- a/drivers/gpu/drm/radeon/radeon_kms.c
++++ b/drivers/gpu/drm/radeon/radeon_kms.c
+@@ -71,6 +71,7 @@ void radeon_driver_unload_kms(struct drm
+ 	if (radeon_is_px(dev)) {
+ 		pm_runtime_get_sync(dev->dev);
+ 		pm_runtime_forbid(dev->dev);
++		pm_runtime_dont_use_autosuspend(dev->dev);
+ 	}
  
- 	free_irq(platform_get_irq(pdev, 0), host);
- 
-+	cancel_work_sync(&host->bh_work);
-+
- 	clk_disable_unprepare(host->mck);
- 
- 	pm_runtime_disable(&pdev->dev);
+ 	radeon_acpi_fini(rdev);
 
 
