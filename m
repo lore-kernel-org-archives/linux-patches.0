@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE85A367B9F;
-	Thu, 20 Aug 2026 15:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA53F360745;
+	Thu, 20 Aug 2026 15:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238715; cv=none; b=JLdBLXglEyO5X2aO1CMvgiYoD1lEvlq7hqNtPRzOyDCJZ1MR/AoznsBulwUbGgfuA6UJNM6wqPk5f7x4KP2BBhfTiEv1b+uRG5ty3mga22o0mr/LcxNU0NPomxYetJeyUtc8U/OPzoZELyKguCkV27qnXvSyFe/yqO6N2Ig6dVY=
+	t=1787238717; cv=none; b=BY9FKSZjmfDKH0comdKvsvya69NGEXAyRZc4zqc9qzWhtACwvw2qqKgnBNV1SrstpnxBBkNxYW22dsGa5nwjt4Qoslzaok8JZz0fps1iSt8fl80RoERYeL/runr28FyF5UmdCfgF2q2v7hO7ZnG+W6ZLnFTuBKXLsQOXi6k66Os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238715; c=relaxed/simple;
-	bh=qUaj1O3akqlnBKcp/AOFtbWTuA3xzYLMC++D2fgvBt0=;
+	s=arc-20240116; t=1787238717; c=relaxed/simple;
+	bh=esdX+Tj6mDWg2WBR3g7QHo0tcS8ypGjgg47m4e0IkK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EOiEMipr0s/ON/NXig9oJWPlgKjnJlZyOQ8q4heqrJIrbWM1KX9P/N3iekHLHdZypmk4xMSEpx1eihqY2jXRZsLQX8HGlOipKx/xeAB/0BRYkkt0sd7ws4uojjmR6VG03wU6XMYll31baAGJW/sX+sRjAGnnHWyXH5LYJJt9uA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mUgAg5JF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ulSGn4NVFae0U7DBh5Kkcv8YJ6rv3PYngNt68YU9jqaNms381a3oHB4FZu5gw1LEM+Ip7Z+kAVmwEt1I3/Lrrmu6LN8SDyMDGhiZyxKuaUL11dKUiAfFpQj1ftcg7ZV55zSVpldQS7/ij+gknbRQ9qzD8mWMUkW9OSPNY4qVKMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vv4cK907; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mUgAg5JF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2671F000E9;
-	Thu, 20 Aug 2026 15:11:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vv4cK907"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205071F000E9;
+	Thu, 20 Aug 2026 15:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238713;
-	bh=tP7bTrFcjSEn1s+dgRMAVnMInHUlAfqVbLLp/0v7kEY=;
+	s=korg; t=1787238716;
+	bh=HnsMKlKrRMDEG7Zx/DqBI8sIDVBWQqi7eZ/5wbW/vhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mUgAg5JFQNvyB3ElRLCCDO53rKcrkrDiDuqozXlYGdduOuBTIF+diiYXEgawCpgpz
-	 DVYjA8dKGDUUdWQZ1gDZvq/Ph+ADyDXd9oIP3WSLM0UrKOQubVmeZHIOGoDLzkgfGA
-	 W28R0ZBcgpuFTPtEreUf230H1iUgiRdoiTqXuBaI=
+	b=vv4cK907RuhlHPhAVOcoBQoSrnlAI0gEZLzhgAh/D35Ltq0czR1aH4aXAgPndtchP
+	 DsdlrKrV+E92Xb8hdhRdWuYxAsr3ixXsu1doKVVEz0RRjpFl/h3kxmCJ9sD5mpW4GW
+	 KvbRojQcMXEHuQas1/4RTUVP/+V4tloGZcgP9TMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Wyatt Feng <bronzed_45_vested@icloud.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Hidayath Khan <hidayath@linux.ibm.com>,
+	Joe Damato <joe@dama.to>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 016/217] mptcp: fastopen: only mark MPTFO subflows with SYN data
-Date: Thu, 20 Aug 2026 16:53:04 +0200
-Message-ID: <20260820145238.117504242@linuxfoundation.org>
+Subject: [PATCH 6.18 017/217] s390/qeth: validate user buffer length in SNMP and ARP query ioctls
+Date: Thu, 20 Aug 2026 16:53:05 +0200
+Message-ID: <20260820145238.145013414@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -57,64 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wyatt Feng <bronzed_45_vested@icloud.com>
+From: Hidayath Khan <hidayath@linux.ibm.com>
 
-commit e00b63056fb4f261455b3e5df5268a1f8ce47a87 upstream.
+commit d141f087b1af656f055d7c5793a3e87817ba0bbe upstream.
 
-Passive TCP Fast Open accepts a valid-cookie SYN even when it carries
-no data. In that case the child socket's receive queue is intentionally
-left empty.
+qeth_snmp_command() and qeth_l3_arp_query() allocate a buffer sized by
+a user-supplied length (udata_len) without checking a lower bound, then
+set udata_offset to a fixed non-zero value and pass both to a reply
+callback. The callback bounds-checks the copy with
 
-mptcp_fastopen_subflow_synack_set_params() set is_mptfo before checking
-for queued SYN data. That made data-less TFO SYNs hit a WARN and, if
-the warning was non-fatal, left stale MPTFO state behind. The stale
-flag could later trigger a state-confusion bug in
-check_fully_established().
+        if ((udata_len - udata_offset) < len)
 
-Only mark the subflow as MPTFO after confirming that an SKB was queued.
-Return quietly when the receive queue is empty.
+Both fields are u32, so a udata_len smaller than udata_offset makes the
+subtraction wrap and the check pass, and the following memcpy() writes
+past the allocation. A udata_len of 0 also yields ZERO_SIZE_PTR from
+kzalloc(), which the existing NULL check does not catch.
 
-Note that mptcp_subflow_context's is_mptfo field is now not just about
-subflows where the TFO was present, but about MPTFO subflow that
-consumed SYN data. Only having a valid cookie but not carrying data is
-not really "doing TFO".
+Reject buffers smaller than udata_offset before allocating, so the
+callback subtraction can no longer underflow.
 
-Fixes: 36b122baf6a8 ("mptcp: add subflow_v(4,6)_send_synack()")
+Fixes: 4a71df50047f ("qeth: new qeth device driver")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-7-b8f496d71664@kernel.org
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
+Reviewed-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260730142216.218309-1-hidayath@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/fastopen.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/s390/net/qeth_core_main.c |    3 +++
+ drivers/s390/net/qeth_l3_main.c   |    5 +++++
+ 2 files changed, 8 insertions(+)
 
---- a/net/mptcp/fastopen.c
-+++ b/net/mptcp/fastopen.c
-@@ -24,12 +24,13 @@ void mptcp_fastopen_subflow_synack_set_p
- 	sk = subflow->conn;
- 	tp = tcp_sk(ssk);
+--- a/drivers/s390/net/qeth_core_main.c
++++ b/drivers/s390/net/qeth_core_main.c
+@@ -4712,6 +4712,9 @@ static int qeth_snmp_command(struct qeth
+ 	if (req_len > QETH_BUFSIZE)
+ 		return -EINVAL;
  
--	subflow->is_mptfo = 1;
--
-+	/* A valid TFO cookie does not guarantee SYN data. */
- 	skb = skb_peek(&ssk->sk_receive_queue);
--	if (WARN_ON_ONCE(!skb))
-+	if (!skb)
- 		return;
- 
-+	subflow->is_mptfo = 1;
++	if (qinfo.udata_len < sizeof(struct qeth_snmp_ureq_hdr))
++		return -EINVAL;
 +
- 	/* dequeue the skb from sk receive queue */
- 	__skb_unlink(skb, &ssk->sk_receive_queue);
- 	skb_ext_reset(skb);
+ 	iob = qeth_get_adapter_cmd(card, IPA_SETADP_SET_SNMP_CONTROL, req_len);
+ 	if (!iob)
+ 		return -ENOMEM;
+--- a/drivers/s390/net/qeth_l3_main.c
++++ b/drivers/s390/net/qeth_l3_main.c
+@@ -1416,6 +1416,11 @@ static int qeth_l3_arp_query(struct qeth
+ 		rc = -EFAULT;
+ 		goto out;
+ 	}
++
++	if (qinfo.udata_len < QETH_QARP_ENTRIES_OFFSET) {
++		rc = -EINVAL;
++		goto out;
++	}
+ 	qinfo.udata = kzalloc(qinfo.udata_len, GFP_KERNEL);
+ 	if (!qinfo.udata) {
+ 		rc = -ENOMEM;
 
 
