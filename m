@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE4E381AEC;
-	Thu, 20 Aug 2026 17:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B9A471412;
+	Thu, 20 Aug 2026 17:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247856; cv=none; b=luE1CwtDSG0GrhQ1JWZaFO6vF0cTyYyzFuyNXWcqJDMMnJ85tLFjJUdU7b4BY8NMMjJhJ3dM79B/5q1IrW6WCw6oCjYwNF7iA8GuKVoXQpxQiZJkGxi0aiOPpWZ422xH1KuqqNf8U85dpc3Wc7Qzb9W33NEgEJQKQXm++haHiV0=
+	t=1787247859; cv=none; b=l9PgKvLqphFdvCJMDrkA08WK99ZgvBs66Wd1x9R5OJ/C5ZHkhNH6y0q1zEh1AQsovL0O3l00j+LSVaCkr4NNXsvHE1/PS4Yfm73b2RTsn+UBVCyRZY+LA0DtgntrZWZsGd8CGZF2/WXCp2Bn4A/KDajx1J9/WrscKl3JQqnXrhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247856; c=relaxed/simple;
-	bh=VKNVXx5Sfh4zlYCR+4ByBxuxZtzMdhVRvWkxevYCDXA=;
+	s=arc-20240116; t=1787247859; c=relaxed/simple;
+	bh=KUgalUE/aMo12R3C4LvumGzxL574T8O5aG8iNUWz0Io=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NDUXwEliUJdfzupVAqEZBHUuXSpZwAmRCh5YK7R4azoo6EWBE4WX2pNLTFf0ed14cFUE9YSyMsUvRIvSwyLq+XVExZlhRFtkm7r6p5ubFCCr9zJ3uofNoxuQV4UZ6YGpb1Xlodo58dud1KVwEPcw6XwOJh7ezA3CrHkIAHhphCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFKa8rvV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cGgXnD4QVe5/3p3Ts2JFuSza/u3sGKlwH29wAR7tDfMhRS2BOWwIrEskXJd+d+roXKw2xK1QKkzZjfPC+rZO4l9vpnN4Zgv/WKnlkzVwv/1yksw7Rqx0JaaShVcUXJGMWrw8uLLMjuS0ukIHrPYmDChMECk+RQ8Nm5CDSGNvmv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFLlNjrj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFKa8rvV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42BD31F00A3A;
-	Thu, 20 Aug 2026 17:44:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFLlNjrj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD601F000E9;
+	Thu, 20 Aug 2026 17:44:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247854;
-	bh=VjPjAsbJ52VbUZLkq/NkeQWGf7CXl9lMLdR+KpNhvXY=;
+	s=korg; t=1787247857;
+	bh=o8AGVqEtcVK4te1l3v2XPTcDkGSeiy5nY1yDTUQdjN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nFKa8rvV+CqMotnkU4FGd46+iaNlieD4DWpHxkkL3fWB9/cerWXtO3anOeBMqGitf
-	 pRNoex6E1kXjF0Lac0BsW8fTvBatF/BoxqQqGnDt6/CIdodYeR22Sxn5oE/+PpQw+W
-	 XN+vdpaaVeb00Npa/XBex1Qpf13ihaTiWzW0TYFk=
+	b=GFLlNjrjR5S6QzjfEz3x6zYU0QVK0I06KJUwYDhbDwDVI8zzOOwFE9FKfVkXAgWm5
+	 WvHwrOdh9gfSmKtOUC6u+s10SN4h/dX0r+qXAcapune5Mk91qcbXHfzLigrh692vqt
+	 PJIj3L15/5WgSrUYnUbFQF2id45GalluXqLQPxWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Dawid=20Wro=CC=81bel?= <me@dawidwrobel.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 018/303] ASoC: codecs: lpass-wsa-macro: Fix enum kcontrol accesses
-Date: Thu, 20 Aug 2026 16:52:34 +0200
-Message-ID: <20260820145253.730959768@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 027/303] Input: synaptics-rmi4 - bound the F54 report size to the allocated buffer
+Date: Thu, 20 Aug 2026 16:52:43 +0200
+Message-ID: <20260820145253.998425008@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -45,81 +44,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dawid Wróbel <me@dawidwrobel.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 56f24311fd5607588a47e44675195a9efb200f29 upstream.
+commit 49c5adc2b7d6e43c5cf033e1c86fdb9c16ababb1 upstream.
 
-EAR SPKR PA Gain" and the four "WSA RX* Mux" controls are enumerated,
-but their get and put callbacks access the value through
-ucontrol->value.integer.value[0] (a long) instead of
-ucontrol->value.enumerated.item[0] (an unsigned int).
+rmi_f54_work() reads a diagnostics report from the device into
+f54->report_data, sizing the transfer with rmi_f54_get_report_size():
 
-This same pattern was fixed in the sibling drivers by
-commit bcfe5f76cc40 ("ASoC: codecs: rx-macro: fix accessing array
-out of bounds for enum type") and
-commit 0ea5eff7c606 ("ASoC: codecs: va-macro: fix accessing array
-out of bounds for enum type"), but wsa-macro was missed.
+	report_size = rmi_f54_get_report_size(f54);
+	...
+	for (i = 0; i < report_size; i += F54_REPORT_DATA_SIZE) {
+		int size = min(F54_REPORT_DATA_SIZE, report_size - i);
+		...
+		rmi_read_block(.., f54->report_data + i, size);
+	}
 
-On 64-bit kernels with CONFIG_SND_CTL_DEBUG this trips the elem value
-sanity check and every read of these controls fails with -EINVAL.
+report_data is allocated once at probe from F54's own electrode counts
+(array3_size(f54->num_tx_electrodes, f54->num_rx_electrodes, sizeof(u16))),
+but rmi_f54_get_report_size() computes the size from
+drv_data->num_*_electrodes when those are set, i.e. from the F55
+function's electrode counts. Both counts come straight from device
+queries (F54 and F55 each report up to 255 electrodes) and nothing
+constrains the F55 counts to the F54 ones.
 
-Fixes: 809bcbcecebf ("ASoC: codecs: lpass-wsa-macro: Add support to WSA Macro")
-Fixes: 2c4066e5d428 ("ASoC: codecs: lpass-wsa-macro: add dapm widgets and route")
-Assisted-by: Claude:claude-fable-5
+A malicious or malfunctioning RMI4 device that reports larger F55
+electrode counts than its F54 counts makes report_size exceed the
+allocation, so the read loop writes past report_data (and the V4L2
+dequeue memcpy() then reads past it). On conforming hardware the F55
+configured electrodes are a subset of the F54 physical electrodes, so
+report_size never exceeds the buffer and well-behaved devices are
+unaffected.
+
+Record the allocation size and reject a report that does not fit,
+mirroring the existing zero-size check.
+
+Fixes: c762cc68b6a1 ("Input: synaptics-rmi4 - propagate correct number of rx and tx electrodes to F54")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dawid Wróbel <me@dawidwrobel.com>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260730-worktree-lpass-tx-macro-enum-fix-v2-2-6d091c736116@dawidwrobel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Assisted-by: Antigravity:gemini-3.5-flash
+Link: https://patch.msgid.link/20260626051802.4033172-3-dmitry.torokhov@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/lpass-wsa-macro.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/input/rmi4/rmi_f54.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/sound/soc/codecs/lpass-wsa-macro.c
-+++ b/sound/soc/codecs/lpass-wsa-macro.c
-@@ -1856,7 +1856,7 @@ static int wsa_macro_ear_spkr_pa_gain_ge
- 	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
- 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
+--- a/drivers/input/rmi4/rmi_f54.c
++++ b/drivers/input/rmi4/rmi_f54.c
+@@ -104,6 +104,7 @@ struct f54_data {
  
--	ucontrol->value.integer.value[0] = wsa->ear_spkr_gain;
-+	ucontrol->value.enumerated.item[0] = wsa->ear_spkr_gain;
+ 	enum rmi_f54_report_type report_type;
+ 	u8 *report_data;
++	size_t max_report_size;
+ 	int report_size;
  
- 	return 0;
- }
-@@ -1867,7 +1867,7 @@ static int wsa_macro_ear_spkr_pa_gain_pu
- 	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
- 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
+ 	bool is_busy;
+@@ -550,6 +551,13 @@ static void rmi_f54_work(struct work_str
+ 		goto out;     /* retry won't help */
+ 	}
  
--	wsa->ear_spkr_gain =  ucontrol->value.integer.value[0];
-+	wsa->ear_spkr_gain =  ucontrol->value.enumerated.item[0];
++	if (report_size > f54->max_report_size) {
++		dev_err(&fn->dev, "Report size %d exceeds buffer size %zu\n",
++			report_size, f54->max_report_size);
++		error = -EINVAL;
++		goto out;
++	}
++
+ 	/*
+ 	 * Need to check if command has completed.
+ 	 * If not try again later.
+@@ -680,8 +688,8 @@ static int rmi_f54_probe(struct rmi_func
  
- 	return 0;
- }
-@@ -1881,7 +1881,7 @@ static int wsa_macro_rx_mux_get(struct s
- 				snd_soc_dapm_to_component(widget->dapm);
- 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
- 
--	ucontrol->value.integer.value[0] =
-+	ucontrol->value.enumerated.item[0] =
- 			wsa->rx_port_value[widget->shift];
- 	return 0;
- }
-@@ -1895,7 +1895,7 @@ static int wsa_macro_rx_mux_put(struct s
- 				snd_soc_dapm_to_component(widget->dapm);
- 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
- 	struct snd_soc_dapm_update *update = NULL;
--	u32 rx_port_value = ucontrol->value.integer.value[0];
-+	u32 rx_port_value = ucontrol->value.enumerated.item[0];
- 	u32 bit_input;
- 	u32 aif_rst;
- 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
+ 	rx = f54->num_rx_electrodes;
+ 	tx = f54->num_tx_electrodes;
+-	f54->report_data = devm_kzalloc(&fn->dev,
+-					array3_size(tx, rx, sizeof(u16)),
++	f54->max_report_size = array3_size(tx, rx, sizeof(u16));
++	f54->report_data = devm_kzalloc(&fn->dev, f54->max_report_size,
+ 					GFP_KERNEL);
+ 	if (f54->report_data == NULL)
+ 		return -ENOMEM;
 
 
