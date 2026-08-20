@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AAF13803D7;
-	Thu, 20 Aug 2026 17:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F81046C82A;
+	Thu, 20 Aug 2026 17:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247804; cv=none; b=r3K8p4F9184Uj/O1R7JgkflF6ZygBtGvDGni5iIJFitfR+98rN4meFveTyu0ozT5M71QJH4v1o41FjNjLpnABwKaogYQfhZEx+TQ/sZEaWtCe9jPtd+crGg6Tj1fTGvSPr9F1iX+ekMjVbzxWXalliq9ZE2qAVn7LXWWbJ1TqTM=
+	t=1787247807; cv=none; b=J0yjNZ5XHR6COnj9WOYhW5ir6ke9tQfBF68/48n6jnn1IVcQ7naXCP3EUz3Ouh7lElseC5CAKaniOE1nKz1GxRlr/wZz3Y11pKHpYHJYjiEkUi+qnjskzxJJNOjMoGh7vNvSf0PTes3lx8LKPgPBevfjRBv6A6Y+t18J0CRCPDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247804; c=relaxed/simple;
-	bh=mypNwgJzcg/ZhJFqiiJ5U4YubdfecrySimHaXspNaeI=;
+	s=arc-20240116; t=1787247807; c=relaxed/simple;
+	bh=KAMnyeXGQ1KHwFUJ4SVWTNZQqvg/JovzXM4NI+iPSBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CGwQEBY1oflVzYxGSiW+Xbg5g9bRDRFwgv1D5V4GJaAwlsSFrEl2NYQL/Vz4M6stYLFMTysQdGvl0tPABOm4GoQgUKLppMmUsj5XN7IpGvxPaBAacRuIZGPoWw9pseY15PWvDbtf8l318uAN9YV35ieBy6EJo9a/be4/atHZBHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yv1ymccC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sG7iOxyMvB1ofaYI/fL99ibO5S5R33YkWbVe8bkMUnh4pRZfoZE3ddrWcoYchOC1Ddjdr2jMu4k03Rz406urF/x+YXku18DC6sN/Hp66bT3Dr507bexSzKr8T7iNLRVi04iMjmt/9uYt2AD+XTv95FuvK6vEFBQRzn1QFdAT+mE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKhk6rUW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yv1ymccC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7D01F000E9;
-	Thu, 20 Aug 2026 17:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKhk6rUW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAE051F000E9;
+	Thu, 20 Aug 2026 17:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247803;
-	bh=VsyMhxI+NOxqZZprQRJZU/jMw/JqycrTD2L0fK9wdUo=;
+	s=korg; t=1787247806;
+	bh=sZlRZIS2OVIjAm65qXiHmS7nWQpbezlrnNcPfb84Lqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yv1ymccCuDyBZyCjeNalgmYzqdqQtwcpNbtvzh/JxjatJB2jBVfKQKgliTYzPOWZR
-	 Zh7DBI8a7M+qKwyzDmIoCcqn1U+okvJksTQzC9TKF+Y0WKT2yweVhn/0fK8/ovZlvD
-	 xGfD4HG6pLulOd8wmY2aj3CNgUpxwlg8xyAaOwh0=
+	b=SKhk6rUWmmxsiHN6bcMktXg8k1a1IJBDMRdaPAb0NF6R6s7icSP5tJtclkxgrt9nl
+	 zemqLan276gNU/C44YKaEUo93rhbFAuEBS1pTyKuJYbeYDX4tmhOLJgwCJmAm0TmRt
+	 nM1wNwF+R7RzL5uCS45G8jLhqWVszLVe0zdmCkOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Weidong Zhu <weizhu@fiu.edu>,
+	Chao Shi <coshi036@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 157/166] net/sched: cls_u32: skip hash tables in u32_bind_class()
-Date: Thu, 20 Aug 2026 16:56:56 +0200
-Message-ID: <20260820145215.888961645@linuxfoundation.org>
+Subject: [PATCH 6.1 001/303] block: stop the timeout timer when releasing a never added disk
+Date: Thu, 20 Aug 2026 16:52:17 +0200
+Message-ID: <20260820145253.243988712@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
-References: <20260820145211.194104353@linuxfoundation.org>
+In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
+References: <20260820145253.200766705@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,52 +49,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Chao Shi <coshi036@gmail.com>
 
-[ Upstream commit 6d3724e616faf952c3adcf8414fc21a828ef3709 ]
+[ Upstream commit 26cb8ebbfaf713c82e142d08828d4d765057633b ]
 
-u32_walk() enumerates both struct tc_u_hnode and struct tc_u_knode
-through the walker callback. u32_bind_class() unconditionally casts the
-passed fh to tc_u_knode and accesses &n->res, so when fh is actually a
-tc_u_hnode, which has no tcf_result member, this results in a
-slab-out-of-bounds read of res->classid in tc_cls_bind_class().
+disk_release() undoes blk_mq_init_allocated_queue() for a disk whose
+probe failed before add_disk(), but it only calls blk_mq_exit_queue().
+Nothing there stops q->timeout, and that timer rolls forward: it stays
+pending until it next expires, not until the last request completes.
+So if the driver issued any I/O before adding the disk, the
+request_queue is freed while still linked into a timer wheel bucket.
 
-The issue can be reproduced with the following commands:
+Commit 6f8191fdf41d ("block: simplify disk shutdown") dropped the
+blk_cleanup_queue() call that used to stop it.  __del_gendisk() and
+blk_mq_destroy_queue() still do; only the probe failure path lost it.
 
-    tc qdisc add dev lo root handle 1: hfsc
-    tc class add dev lo parent 1: classid 1:1 hfsc sc rate 1000kbit
-    tc filter add dev lo parent 1:1 protocol ip prio 1 u32 match u32 0 0 flowid 1:1
-    tc class add dev lo parent 1: classid 1:2 hfsc sc rate 2000kbit
+nvme gets there because nvme_update_ns_info() submits Report Zones or
+FDP io-mgmt-recv on ns->queue before the disk is added, so a later
+failure - a concurrent reset setting NVME_CTRL_FROZEN, or
+device_add_disk() failing - lands in put_disk() with the timer armed:
 
-Fix this by skipping hash tables via the TC_U32_KEY(handle) check.
+  BUG: KASAN: slab-use-after-free in detach_if_pending+0x30c/0x340
+  Write of size 8 at addr ffff888004d71310 by task kworker/u8:2/37
+   __timer_delete_sync+0x156/0x240 kernel/time/timer.c:1621
+   blk_sync_queue+0x22/0x40 block/blk-core.c:222
+   nvme_sync_queues+0x100/0x150 drivers/nvme/host/core.c:5362
+   nvme_reset_work+0x138/0x930 drivers/nvme/host/pci.c:3264
 
-Fixes: 07d79fc7d94e ("net_sched: add reverse binding for tc class")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/1786089038-36366-1-git-send-email-zhangchangzhong@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  Allocated by task 34:
+   __blk_mq_alloc_disk+0x33/0x100 block/blk-mq.c:4462
+   nvme_alloc_ns+0x290/0x3870 drivers/nvme/host/core.c:4146
+
+  Freed by task 0:
+   blk_free_queue_rcu+0x3a/0x50 block/blk-core.c:254
+   rcu_core+0xc10/0x1730 kernel/rcu/tree.c:2857
+
+The queue being synced there is ctrl->admin_q, only a victim sharing a
+timer wheel bucket with the freed queue's dangling entry; other runs
+tripped in enqueue_timer(), __run_timers() or blk_mq_timeout_work().
+Failing nvme_alloc_ns() with a debug patch makes it deterministic: one
+leaked timer trips KASAN within seconds, while 1987 patched releases
+produced no splat.
+
+Stop the timer and the queue work items before blk_mq_exit_queue(), like
+blk_mq_destroy_queue() does.
+
+Found by FuzzNvme.
+
+Fixes: 6f8191fdf41d ("block: simplify disk shutdown")
+Acked-by: Weidong Zhu <weizhu@fiu.edu>
+Signed-off-by: Chao Shi <coshi036@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260727201257.211635-1-coshi036@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_u32.c | 3 +++
- 1 file changed, 3 insertions(+)
+ block/genhd.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index 9829df127d054..e0805fa99e647 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -1336,6 +1336,9 @@ static void u32_bind_class(void *fh, u32 classid, unsigned long cl, void *q,
- {
- 	struct tc_u_knode *n = fh;
+diff --git a/block/genhd.c b/block/genhd.c
+index c2b5ee8effd8..c058a01c1b3a 100644
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -1195,14 +1195,18 @@ static void disk_release(struct device *dev)
+ 	/*
+ 	 * To undo the all initialization from blk_mq_init_allocated_queue in
+ 	 * case of a probe failure where add_disk is never called we have to
+-	 * call blk_mq_exit_queue here. We can't do this for the more common
+-	 * teardown case (yet) as the tagset can be gone by the time the disk
+-	 * is released once it was added.
++	 * call blk_mq_exit_queue here, after stopping the timer and work items
++	 * that I/O issued before add_disk may have left pending.  We can't do
++	 * this for the more common teardown case (yet) as the tagset can be
++	 * gone by the time the disk is released once it was added.
+ 	 */
+ 	if (queue_is_mq(disk->queue) &&
+ 	    test_bit(GD_OWNS_QUEUE, &disk->state) &&
+-	    !test_bit(GD_ADDED, &disk->state))
++	    !test_bit(GD_ADDED, &disk->state)) {
++		blk_sync_queue(disk->queue);
++		blk_mq_cancel_work_sync(disk->queue);
+ 		blk_mq_exit_queue(disk->queue);
++	}
  
-+	if (TC_U32_KEY(n->handle) == 0)
-+		return;
-+
- 	tc_cls_bind_class(classid, cl, q, &n->res, base);
- }
+ 	blkcg_exit_disk(disk);
  
 -- 
 2.53.0
