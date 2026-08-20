@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8555347F79B;
-	Thu, 20 Aug 2026 17:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55302476CFA;
+	Thu, 20 Aug 2026 17:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248066; cv=none; b=rOn3BnZT+ZwYiAaDlqXaejsJt37PqRvlWyOjILotLFDnyw5+PmhYND7fa+rMPKX1EBArUhdX1PeznQCpZwZ/SdSJRsScr1wrM+PxVVFVM5wZUFKUukCEjg1YMRiXvWMAQQ04e1wYXviuQUlceYFi2x7TrztqMMTJvP/I/kvvdoY=
+	t=1787248068; cv=none; b=GMNr/306eEvdRvnbx6KDGs9GDXwmBNY6NxXALjapL+NlhfyCORcptv5XAM0j7H/Cyny8vvvX5oCIPGnz7oaw+iO5UhtV7Bu7TkoNbJ+RjQQSp0uRA/caYiZNKZBJYYMHNHkyL9HJclR90CvDkIdNqXtQtjXQIv6g9imNDwCYmE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248066; c=relaxed/simple;
-	bh=sPJY4XPgmdbJUFG5P/FYtbkObpewtx0qftu+B0KkZ+0=;
+	s=arc-20240116; t=1787248068; c=relaxed/simple;
+	bh=33HfgPqv5wv8Js0YokV2NnFSSE0rstJEySwP+6KrJfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lJsnrZEyGFt8AcCo4hLj6UWKHUmT8fESZXmY5osEUPCkspeZRfyVNn/gWDqppGZIUIZllLRqqWqXIirTWlVXTMMT6nCnI+bI5UHFEncfcThU5v30pdvqdGJSWfdGeww8C629opcFbTKnKQ4mFR5fL9F6XKORMcJPn4byqKJzivI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jzeX4DUe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H2xHqzIRUTyVjEaO7w6GinyD8vUuGgbGNnWGa9CNAO7PtWC7Y8p3WhCxSxuP6Yvx3hqdj+5PwVbMe4u7oL1UID0jwHIooE+gsjY6w+PFrc5EE/vL3PavEnCZtb3dexAjXDHLSAqiQ2L25UlG412fr101ivYtJQ1mIn4Qtuj+MXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HYMsO7r8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzeX4DUe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF6E1F000E9;
-	Thu, 20 Aug 2026 17:47:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HYMsO7r8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25851F00A3E;
+	Thu, 20 Aug 2026 17:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248064;
-	bh=qNQ/86ZjGoktARBqCtqye9qJooVTeo6XJM5rs5qm9/o=;
+	s=korg; t=1787248067;
+	bh=BP2ulOs6zOhq9YarNj6qJZUpM6smwca8bQGSDjr+PO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jzeX4DUeFcb+Ivv5To0qfsSZLarJ3WZTmEwkLQKXM8TeNo6hLWBHK0+qu7GHqPzu/
-	 WOYV0Pu2HT5drkiARAG68AWje16Xxoba+7g1KVdUsBYG66jQj1pqNpiPlxZSS81HnP
-	 5ruxhkuF3cCDEfjOtkSNzqUDQr5lZ8TkIxFck7aQ=
+	b=HYMsO7r8goM+3auIlnWneOLOdzjuIv70gar1AsHPPxCHRB6SL2nr0/nPfFkr//BXH
+	 jTcY3Q1hxNIfTdUZ3KKmhkVKN4QDG3t/Fnl1RlEaB3oIShrR2EGFfXGavZkQz1fgEi
+	 BFmGhT/7mUn3f39zHIrfOKANXRzMojGuwU85l4vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
 	Thomas Richter <tmricht@linux.ibm.com>,
-	Hendrik Brueckner <brueckner@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 097/303] s390/cpum_cf: merge source files for CPU Measurement counter facility
-Date: Thu, 20 Aug 2026 16:53:53 +0200
-Message-ID: <20260820145256.206654585@linuxfoundation.org>
+Subject: [PATCH 6.1 098/303] s390/perf_cpum_cf: Add missing array_index_nospec() to __hw_perf_event_init()
+Date: Thu, 20 Aug 2026 16:53:54 +0200
+Message-ID: <20260820145256.237281306@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -52,608 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Richter <tmricht@linux.ibm.com>
+From: Sumanth Korikkar <sumanthk@linux.ibm.com>
 
-[ Upstream commit 1e99c242acb2fc211aa9f57cd1060622e66bbf63 ]
+[ Upstream commit 49145bce539117db4b6e9e83c0e5ef528e361050 ]
 
-With no in-kernel user, the source files can be merged.
+ev variable is userspace controlled via event->attr.config and used
+as an array index after bounds checking, but without speculation
+barriers.
 
-Move all functions and the variable definitions to file perf_cpum_cf.c
-This file now contains all the necessary functions and definitions
-for the CPU Measurement counter facility device driver.
+Add the missing array_index_nospec() call to prevent speculative
+execution.
 
-The files cpu_mcf.h and perf_cpum_cf_common.c are deleted.
-
-Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
-Acked-by: Hendrik Brueckner <brueckner@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Stable-dep-of: 49145bce5391 ("s390/perf_cpum_cf: Add missing array_index_nospec() to __hw_perf_event_init()")
+Cc: stable@vger.kernel.org
+Fixes: 212188a596d1 ("[S390] perf: add support for s390x CPU counters")
+Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Acked-by: Thomas Richter <tmricht@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/include/asm/cpu_mcf.h        |   87 -------------
- arch/s390/kernel/Makefile              |    2 
- arch/s390/kernel/perf_cpum_cf.c        |  214 +++++++++++++++++++++++++++++++--
- arch/s390/kernel/perf_cpum_cf_common.c |  163 -------------------------
- arch/s390/kernel/perf_pai_ext.c        |    2 
- 5 files changed, 208 insertions(+), 260 deletions(-)
- delete mode 100644 arch/s390/include/asm/cpu_mcf.h
- delete mode 100644 arch/s390/kernel/perf_cpum_cf_common.c
+ arch/s390/kernel/perf_cpum_cf.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/s390/include/asm/cpu_mcf.h
-+++ /dev/null
-@@ -1,87 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0 */
--/*
-- * Counter facility support definitions for the Linux perf
-- *
-- * Copyright IBM Corp. 2019
-- * Author(s): Hendrik Brueckner <brueckner@linux.ibm.com>
-- */
--#ifndef _ASM_S390_CPU_MCF_H
--#define _ASM_S390_CPU_MCF_H
--
--#include <linux/perf_event.h>
--#include <asm/cpu_mf.h>
--
--enum cpumf_ctr_set {
--	CPUMF_CTR_SET_BASIC   = 0,    /* Basic Counter Set */
--	CPUMF_CTR_SET_USER    = 1,    /* Problem-State Counter Set */
--	CPUMF_CTR_SET_CRYPTO  = 2,    /* Crypto-Activity Counter Set */
--	CPUMF_CTR_SET_EXT     = 3,    /* Extended Counter Set */
--	CPUMF_CTR_SET_MT_DIAG = 4,    /* MT-diagnostic Counter Set */
--
--	/* Maximum number of counter sets */
--	CPUMF_CTR_SET_MAX,
--};
--
--#define CPUMF_LCCTL_ENABLE_SHIFT    16
--#define CPUMF_LCCTL_ACTCTL_SHIFT     0
--
--static inline void ctr_set_enable(u64 *state, u64 ctrsets)
--{
--	*state |= ctrsets << CPUMF_LCCTL_ENABLE_SHIFT;
--}
--
--static inline void ctr_set_disable(u64 *state, u64 ctrsets)
--{
--	*state &= ~(ctrsets << CPUMF_LCCTL_ENABLE_SHIFT);
--}
--
--static inline void ctr_set_start(u64 *state, u64 ctrsets)
--{
--	*state |= ctrsets << CPUMF_LCCTL_ACTCTL_SHIFT;
--}
--
--static inline void ctr_set_stop(u64 *state, u64 ctrsets)
--{
--	*state &= ~(ctrsets << CPUMF_LCCTL_ACTCTL_SHIFT);
--}
--
--static inline int ctr_stcctm(enum cpumf_ctr_set set, u64 range, u64 *dest)
--{
--	switch (set) {
--	case CPUMF_CTR_SET_BASIC:
--		return stcctm(BASIC, range, dest);
--	case CPUMF_CTR_SET_USER:
--		return stcctm(PROBLEM_STATE, range, dest);
--	case CPUMF_CTR_SET_CRYPTO:
--		return stcctm(CRYPTO_ACTIVITY, range, dest);
--	case CPUMF_CTR_SET_EXT:
--		return stcctm(EXTENDED, range, dest);
--	case CPUMF_CTR_SET_MT_DIAG:
--		return stcctm(MT_DIAG_CLEARING, range, dest);
--	case CPUMF_CTR_SET_MAX:
--		return 3;
--	}
--	return 3;
--}
--
--struct cpu_cf_events {
--	struct cpumf_ctr_info	info;
--	atomic_t		ctr_set[CPUMF_CTR_SET_MAX];
--	u64			state;		/* For perf_event_open SVC */
--	u64			dev_state;	/* For /dev/hwctr */
--	unsigned int		flags;
--	size_t used;			/* Bytes used in data */
--	size_t usedss;			/* Bytes used in start/stop */
--	unsigned char start[PAGE_SIZE];	/* Counter set at event add */
--	unsigned char stop[PAGE_SIZE];	/* Counter set at event delete */
--	unsigned char data[PAGE_SIZE];	/* Counter set at /dev/hwctr */
--	unsigned int sets;		/* # Counter set saved in memory */
--};
--DECLARE_PER_CPU(struct cpu_cf_events, cpu_cf_events);
--
--int __kernel_cpumcf_begin(void);
--void __kernel_cpumcf_end(void);
--
--int cfset_online_cpu(unsigned int cpu);
--int cfset_offline_cpu(unsigned int cpu);
--#endif /* _ASM_S390_CPU_MCF_H */
---- a/arch/s390/kernel/Makefile
-+++ b/arch/s390/kernel/Makefile
-@@ -70,7 +70,7 @@ obj-$(CONFIG_KEXEC_FILE)	+= kexec_elf.o
- 
- obj-$(CONFIG_IMA_SECURE_AND_OR_TRUSTED_BOOT)	+= ima_arch.o
- 
--obj-$(CONFIG_PERF_EVENTS)	+= perf_event.o perf_cpum_cf_common.o
-+obj-$(CONFIG_PERF_EVENTS)	+= perf_event.o
- obj-$(CONFIG_PERF_EVENTS)	+= perf_cpum_cf.o perf_cpum_sf.o
- obj-$(CONFIG_PERF_EVENTS)	+= perf_cpum_cf_events.o perf_regs.o
- obj-$(CONFIG_PERF_EVENTS)	+= perf_pai_crypto.o perf_pai_ext.o
 --- a/arch/s390/kernel/perf_cpum_cf.c
 +++ b/arch/s390/kernel/perf_cpum_cf.c
-@@ -2,7 +2,7 @@
- /*
-  * Performance event support for s390x - CPU-measurement Counter Facility
-  *
-- *  Copyright IBM Corp. 2012, 2022
-+ *  Copyright IBM Corp. 2012, 2023
-  *  Author(s): Hendrik Brueckner <brueckner@linux.ibm.com>
-  *	       Thomas Richter <tmricht@linux.ibm.com>
-  */
-@@ -16,11 +16,82 @@
- #include <linux/init.h>
+@@ -17,6 +17,7 @@
  #include <linux/export.h>
  #include <linux/miscdevice.h>
-+#include <linux/perf_event.h>
+ #include <linux/perf_event.h>
++#include <linux/nospec.h>
  
--#include <asm/cpu_mcf.h>
-+#include <asm/cpu_mf.h>
+ #include <asm/cpu_mf.h>
  #include <asm/hwctrset.h>
- #include <asm/debug.h>
- 
-+enum cpumf_ctr_set {
-+	CPUMF_CTR_SET_BASIC   = 0,    /* Basic Counter Set */
-+	CPUMF_CTR_SET_USER    = 1,    /* Problem-State Counter Set */
-+	CPUMF_CTR_SET_CRYPTO  = 2,    /* Crypto-Activity Counter Set */
-+	CPUMF_CTR_SET_EXT     = 3,    /* Extended Counter Set */
-+	CPUMF_CTR_SET_MT_DIAG = 4,    /* MT-diagnostic Counter Set */
-+
-+	/* Maximum number of counter sets */
-+	CPUMF_CTR_SET_MAX,
-+};
-+
-+#define CPUMF_LCCTL_ENABLE_SHIFT    16
-+#define CPUMF_LCCTL_ACTCTL_SHIFT     0
-+
-+static inline void ctr_set_enable(u64 *state, u64 ctrsets)
-+{
-+	*state |= ctrsets << CPUMF_LCCTL_ENABLE_SHIFT;
-+}
-+
-+static inline void ctr_set_disable(u64 *state, u64 ctrsets)
-+{
-+	*state &= ~(ctrsets << CPUMF_LCCTL_ENABLE_SHIFT);
-+}
-+
-+static inline void ctr_set_start(u64 *state, u64 ctrsets)
-+{
-+	*state |= ctrsets << CPUMF_LCCTL_ACTCTL_SHIFT;
-+}
-+
-+static inline void ctr_set_stop(u64 *state, u64 ctrsets)
-+{
-+	*state &= ~(ctrsets << CPUMF_LCCTL_ACTCTL_SHIFT);
-+}
-+
-+static inline int ctr_stcctm(enum cpumf_ctr_set set, u64 range, u64 *dest)
-+{
-+	switch (set) {
-+	case CPUMF_CTR_SET_BASIC:
-+		return stcctm(BASIC, range, dest);
-+	case CPUMF_CTR_SET_USER:
-+		return stcctm(PROBLEM_STATE, range, dest);
-+	case CPUMF_CTR_SET_CRYPTO:
-+		return stcctm(CRYPTO_ACTIVITY, range, dest);
-+	case CPUMF_CTR_SET_EXT:
-+		return stcctm(EXTENDED, range, dest);
-+	case CPUMF_CTR_SET_MT_DIAG:
-+		return stcctm(MT_DIAG_CLEARING, range, dest);
-+	case CPUMF_CTR_SET_MAX:
-+		return 3;
-+	}
-+	return 3;
-+}
-+
-+struct cpu_cf_events {
-+	struct cpumf_ctr_info	info;
-+	atomic_t		ctr_set[CPUMF_CTR_SET_MAX];
-+	u64			state;		/* For perf_event_open SVC */
-+	u64			dev_state;	/* For /dev/hwctr */
-+	unsigned int		flags;
-+	size_t used;			/* Bytes used in data */
-+	size_t usedss;			/* Bytes used in start/stop */
-+	unsigned char start[PAGE_SIZE];	/* Counter set at event add */
-+	unsigned char stop[PAGE_SIZE];	/* Counter set at event delete */
-+	unsigned char data[PAGE_SIZE];	/* Counter set at /dev/hwctr */
-+	unsigned int sets;		/* # Counter set saved in memory */
-+};
-+
-+/* Per-CPU event structure for the counter facility */
-+static DEFINE_PER_CPU(struct cpu_cf_events, cpu_cf_events);
-+
- static unsigned int cfdiag_cpu_speed;	/* CPU speed for CF_DIAG trailer */
- static debug_info_t *cf_dbg;
- 
-@@ -435,6 +506,51 @@ static void cpumf_pmu_disable(struct pmu
- 	cpuhw->flags &= ~PMU_F_ENABLED;
- }
- 
-+#define PMC_INIT      0
-+#define PMC_RELEASE   1
-+
-+static void cpum_cf_setup_cpu(void *flags)
-+{
-+	struct cpu_cf_events *cpuhw = this_cpu_ptr(&cpu_cf_events);
-+
-+	switch (*((int *)flags)) {
-+	case PMC_INIT:
-+		memset(&cpuhw->info, 0, sizeof(cpuhw->info));
-+		qctri(&cpuhw->info);
-+		cpuhw->flags |= PMU_F_RESERVED;
-+		break;
-+
-+	case PMC_RELEASE:
-+		cpuhw->flags &= ~PMU_F_RESERVED;
-+		break;
-+	}
-+
-+	/* Disable CPU counter sets */
-+	lcctl(0);
-+	debug_sprintf_event(cf_dbg, 5, "%s flags %#x flags %#x state %#llx\n",
-+			    __func__, *(int *)flags, cpuhw->flags,
-+			    cpuhw->state);
-+}
-+
-+/* Initialize the CPU-measurement counter facility */
-+static int __kernel_cpumcf_begin(void)
-+{
-+	int flags = PMC_INIT;
-+
-+	on_each_cpu(cpum_cf_setup_cpu, &flags, 1);
-+	irq_subclass_register(IRQ_SUBCLASS_MEASUREMENT_ALERT);
-+
-+	return 0;
-+}
-+
-+/* Release the CPU-measurement counter facility */
-+static void __kernel_cpumcf_end(void)
-+{
-+	int flags = PMC_RELEASE;
-+
-+	on_each_cpu(cpum_cf_setup_cpu, &flags, 1);
-+	irq_subclass_unregister(IRQ_SUBCLASS_MEASUREMENT_ALERT);
-+}
- 
- /* Number of perf events counting hardware events */
- static atomic_t num_events = ATOMIC_INIT(0);
-@@ -821,12 +937,70 @@ static struct pmu cpumf_pmu = {
- 	.read	      = cpumf_pmu_read,
- };
- 
-+static int cpum_cf_setup(unsigned int cpu, int flags)
-+{
-+	local_irq_disable();
-+	cpum_cf_setup_cpu(&flags);
-+	local_irq_enable();
-+	return 0;
-+}
-+
-+static int cfset_online_cpu(unsigned int cpu);
-+static int cpum_cf_online_cpu(unsigned int cpu)
-+{
-+	debug_sprintf_event(cf_dbg, 4, "%s cpu %d in_irq %ld\n", __func__,
-+			    cpu, in_interrupt());
-+	cpum_cf_setup(cpu, PMC_INIT);
-+	return cfset_online_cpu(cpu);
-+}
-+
-+static int cfset_offline_cpu(unsigned int cpu);
-+static int cpum_cf_offline_cpu(unsigned int cpu)
-+{
-+	debug_sprintf_event(cf_dbg, 4, "%s cpu %d\n", __func__, cpu);
-+	cfset_offline_cpu(cpu);
-+	return cpum_cf_setup(cpu, PMC_RELEASE);
-+}
-+
- /* Return true if store counter set multiple instruction is available */
- static inline int stccm_avail(void)
- {
- 	return test_facility(142);
- }
- 
-+/* CPU-measurement alerts for the counter facility */
-+static void cpumf_measurement_alert(struct ext_code ext_code,
-+				    unsigned int alert, unsigned long unused)
-+{
-+	struct cpu_cf_events *cpuhw;
-+
-+	if (!(alert & CPU_MF_INT_CF_MASK))
-+		return;
-+
-+	inc_irq_stat(IRQEXT_CMC);
-+	cpuhw = this_cpu_ptr(&cpu_cf_events);
-+
-+	/*
-+	 * Measurement alerts are shared and might happen when the PMU
-+	 * is not reserved.  Ignore these alerts in this case.
-+	 */
-+	if (!(cpuhw->flags & PMU_F_RESERVED))
-+		return;
-+
-+	/* counter authorization change alert */
-+	if (alert & CPU_MF_INT_CF_CACA)
-+		qctri(&cpuhw->info);
-+
-+	/* loss of counter data alert */
-+	if (alert & CPU_MF_INT_CF_LCDA)
-+		pr_err("CPU[%i] Counter data was lost\n", smp_processor_id());
-+
-+	/* loss of MT counter data alert */
-+	if (alert & CPU_MF_INT_CF_MTDA)
-+		pr_warn("CPU[%i] MT counter data was lost\n",
-+			smp_processor_id());
-+}
-+
- static int cfset_init(void);
- static int __init cpumf_pmu_init(void)
- {
-@@ -835,23 +1009,48 @@ static int __init cpumf_pmu_init(void)
- 	if (!cpum_cf_avail())
- 		return -ENODEV;
- 
-+	/*
-+	 * Clear bit 15 of cr0 to unauthorize problem-state to
-+	 * extract measurement counters
-+	 */
-+	ctl_clear_bit(0, 48);
-+
-+	/* register handler for measurement-alert interruptions */
-+	rc = register_external_irq(EXT_IRQ_MEASURE_ALERT,
-+				   cpumf_measurement_alert);
-+	if (rc) {
-+		pr_err("Registering for CPU-measurement alerts failed with rc=%i\n", rc);
-+		return rc;
-+	}
-+
- 	/* Setup s390dbf facility */
- 	cf_dbg = debug_register(KMSG_COMPONENT, 2, 1, 128);
- 	if (!cf_dbg) {
- 		pr_err("Registration of s390dbf(cpum_cf) failed\n");
--		return -ENOMEM;
-+		rc = -ENOMEM;
-+		goto out1;
- 	}
- 	debug_register_view(cf_dbg, &debug_sprintf_view);
- 
- 	cpumf_pmu.attr_groups = cpumf_cf_event_group();
- 	rc = perf_pmu_register(&cpumf_pmu, "cpum_cf", -1);
- 	if (rc) {
--		debug_unregister_view(cf_dbg, &debug_sprintf_view);
--		debug_unregister(cf_dbg);
- 		pr_err("Registering the cpum_cf PMU failed with rc=%i\n", rc);
-+		goto out2;
- 	} else if (stccm_avail()) {	/* Setup counter set device */
- 		cfset_init();
- 	}
-+
-+	rc = cpuhp_setup_state(CPUHP_AP_PERF_S390_CF_ONLINE,
-+			       "perf/s390/cf:online",
-+			       cpum_cf_online_cpu, cpum_cf_offline_cpu);
-+	return rc;
-+
-+out2:
-+	debug_unregister_view(cf_dbg, &debug_sprintf_view);
-+	debug_unregister(cf_dbg);
-+out1:
-+	unregister_external_irq(EXT_IRQ_MEASURE_ALERT, cpumf_measurement_alert);
- 	return rc;
- }
- 
-@@ -1069,7 +1268,6 @@ static int cfset_all_start(struct cfset_
- 	return rc;
- }
- 
--
- /* Return the maximum required space for all possible CPUs in case one
-  * CPU will be onlined during the START, READ, STOP cycles.
-  * To find out the size of the counter sets, any one CPU will do. They
-@@ -1332,7 +1530,7 @@ static struct miscdevice cfset_dev = {
- /* Hotplug add of a CPU. Scan through all active processes and add
-  * that CPU to the list of CPUs supplied with ioctl(..., START, ...).
-  */
--int cfset_online_cpu(unsigned int cpu)
-+static int cfset_online_cpu(unsigned int cpu)
- {
- 	struct cfset_call_on_cpu_parm p;
- 	struct cfset_request *rp;
-@@ -1352,7 +1550,7 @@ int cfset_online_cpu(unsigned int cpu)
- /* Hotplug remove of a CPU. Scan through all active processes and clear
-  * that CPU from the list of CPUs supplied with ioctl(..., START, ...).
-  */
--int cfset_offline_cpu(unsigned int cpu)
-+static int cfset_offline_cpu(unsigned int cpu)
- {
- 	struct cfset_call_on_cpu_parm p;
- 	struct cfset_request *rp;
---- a/arch/s390/kernel/perf_cpum_cf_common.c
-+++ /dev/null
-@@ -1,163 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--/*
-- * CPU-Measurement Counter Facility Support - Common Layer
-- *
-- *  Copyright IBM Corp. 2019
-- *  Author(s): Hendrik Brueckner <brueckner@linux.ibm.com>
-- */
--#define KMSG_COMPONENT	"cpum_cf_common"
--#define pr_fmt(fmt)	KMSG_COMPONENT ": " fmt
--
--#include <linux/kernel.h>
--#include <linux/kernel_stat.h>
--#include <linux/percpu.h>
--#include <linux/notifier.h>
--#include <linux/init.h>
--#include <linux/export.h>
--#include <asm/ctl_reg.h>
--#include <asm/irq.h>
--#include <asm/cpu_mcf.h>
--
--/* Per-CPU event structure for the counter facility */
--DEFINE_PER_CPU(struct cpu_cf_events, cpu_cf_events) = {
--	.ctr_set = {
--		[CPUMF_CTR_SET_BASIC]	= ATOMIC_INIT(0),
--		[CPUMF_CTR_SET_USER]	= ATOMIC_INIT(0),
--		[CPUMF_CTR_SET_CRYPTO]	= ATOMIC_INIT(0),
--		[CPUMF_CTR_SET_EXT]	= ATOMIC_INIT(0),
--		[CPUMF_CTR_SET_MT_DIAG] = ATOMIC_INIT(0),
--	},
--	.state = 0,
--	.dev_state = 0,
--	.flags = 0,
--	.used = 0,
--	.usedss = 0,
--	.sets = 0
--};
--/* Indicator whether the CPU-Measurement Counter Facility Support is ready */
--static bool cpum_cf_initalized;
--
--/* CPU-measurement alerts for the counter facility */
--static void cpumf_measurement_alert(struct ext_code ext_code,
--				    unsigned int alert, unsigned long unused)
--{
--	struct cpu_cf_events *cpuhw;
--
--	if (!(alert & CPU_MF_INT_CF_MASK))
--		return;
--
--	inc_irq_stat(IRQEXT_CMC);
--	cpuhw = this_cpu_ptr(&cpu_cf_events);
--
--	/* Measurement alerts are shared and might happen when the PMU
--	 * is not reserved.  Ignore these alerts in this case. */
--	if (!(cpuhw->flags & PMU_F_RESERVED))
--		return;
--
--	/* counter authorization change alert */
--	if (alert & CPU_MF_INT_CF_CACA)
--		qctri(&cpuhw->info);
--
--	/* loss of counter data alert */
--	if (alert & CPU_MF_INT_CF_LCDA)
--		pr_err("CPU[%i] Counter data was lost\n", smp_processor_id());
--
--	/* loss of MT counter data alert */
--	if (alert & CPU_MF_INT_CF_MTDA)
--		pr_warn("CPU[%i] MT counter data was lost\n",
--			smp_processor_id());
--}
--
--#define PMC_INIT      0
--#define PMC_RELEASE   1
--static void cpum_cf_setup_cpu(void *flags)
--{
--	struct cpu_cf_events *cpuhw = this_cpu_ptr(&cpu_cf_events);
--
--	switch (*((int *) flags)) {
--	case PMC_INIT:
--		memset(&cpuhw->info, 0, sizeof(cpuhw->info));
--		qctri(&cpuhw->info);
--		cpuhw->flags |= PMU_F_RESERVED;
--		break;
--
--	case PMC_RELEASE:
--		cpuhw->flags &= ~PMU_F_RESERVED;
--		break;
--	}
--
--	/* Disable CPU counter sets */
--	lcctl(0);
--}
--
--/* Initialize the CPU-measurement counter facility */
--int __kernel_cpumcf_begin(void)
--{
--	int flags = PMC_INIT;
--
--	on_each_cpu(cpum_cf_setup_cpu, &flags, 1);
--	irq_subclass_register(IRQ_SUBCLASS_MEASUREMENT_ALERT);
--
--	return 0;
--}
--EXPORT_SYMBOL(__kernel_cpumcf_begin);
--
--/* Release the CPU-measurement counter facility */
--void __kernel_cpumcf_end(void)
--{
--	int flags = PMC_RELEASE;
--
--	on_each_cpu(cpum_cf_setup_cpu, &flags, 1);
--	irq_subclass_unregister(IRQ_SUBCLASS_MEASUREMENT_ALERT);
--}
--EXPORT_SYMBOL(__kernel_cpumcf_end);
--
--static int cpum_cf_setup(unsigned int cpu, int flags)
--{
--	local_irq_disable();
--	cpum_cf_setup_cpu(&flags);
--	local_irq_enable();
--	return 0;
--}
--
--static int cpum_cf_online_cpu(unsigned int cpu)
--{
--	cpum_cf_setup(cpu, PMC_INIT);
--	return cfset_online_cpu(cpu);
--}
--
--static int cpum_cf_offline_cpu(unsigned int cpu)
--{
--	cfset_offline_cpu(cpu);
--	return cpum_cf_setup(cpu, PMC_RELEASE);
--}
--
--static int __init cpum_cf_init(void)
--{
--	int rc;
--
--	if (!cpum_cf_avail())
--		return -ENODEV;
--
--	/* clear bit 15 of cr0 to unauthorize problem-state to
--	 * extract measurement counters */
--	ctl_clear_bit(0, 48);
--
--	/* register handler for measurement-alert interruptions */
--	rc = register_external_irq(EXT_IRQ_MEASURE_ALERT,
--				   cpumf_measurement_alert);
--	if (rc) {
--		pr_err("Registering for CPU-measurement alerts "
--		       "failed with rc=%i\n", rc);
--		return rc;
--	}
--
--	rc = cpuhp_setup_state(CPUHP_AP_PERF_S390_CF_ONLINE,
--				"perf/s390/cf:online",
--				cpum_cf_online_cpu, cpum_cf_offline_cpu);
--	if (!rc)
--		cpum_cf_initalized = true;
--
--	return rc;
--}
--early_initcall(cpum_cf_init);
---- a/arch/s390/kernel/perf_pai_ext.c
-+++ b/arch/s390/kernel/perf_pai_ext.c
-@@ -16,8 +16,8 @@
- #include <linux/init.h>
- #include <linux/export.h>
- #include <linux/io.h>
-+#include <linux/perf_event.h>
- 
--#include <asm/cpu_mcf.h>
- #include <asm/ctl_reg.h>
- #include <asm/pai.h>
- #include <asm/debug.h>
+@@ -633,6 +634,7 @@ static int __hw_perf_event_init(struct p
+ 			if (!is_userspace_event(ev)) {
+ 				if (ev >= ARRAY_SIZE(cpumf_generic_events_user))
+ 					return -EOPNOTSUPP;
++				ev = array_index_nospec(ev, ARRAY_SIZE(cpumf_generic_events_user));
+ 				ev = cpumf_generic_events_user[ev];
+ 			}
+ 		} else if (!attr->exclude_kernel && attr->exclude_user) {
+@@ -643,6 +645,7 @@ static int __hw_perf_event_init(struct p
+ 			if (!is_userspace_event(ev)) {
+ 				if (ev >= ARRAY_SIZE(cpumf_generic_events_basic))
+ 					return -EOPNOTSUPP;
++				ev = array_index_nospec(ev, ARRAY_SIZE(cpumf_generic_events_basic));
+ 				ev = cpumf_generic_events_basic[ev];
+ 			}
+ 		}
 
 
