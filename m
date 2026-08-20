@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3FFA468C0C;
-	Thu, 20 Aug 2026 16:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CD147A0DC;
+	Thu, 20 Aug 2026 16:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244567; cv=none; b=PJD61lNe8PEbEOnRlkjXhqWWAu8eYzK8bE6FnVm+Qh9EKuosSWhxEMCGkGjxb354xjDIhQdXVLOVvkA5rec1p7wziKgsNWcThihZzDf4ps6zy7E7Iu/QbEvyLXsaiGRrT6gNaaRiWzfLd2atrb3fOS20WOfjNNzUrQJN1PdAOw4=
+	t=1787244569; cv=none; b=hQ2vLdQ39fz+Z4trAxZiiTceMjR5wN0LJqm3KXgwlxS7n+N9nTxTxgrYntzwZGYcwxoi0BCqXfJ5R6FZVZg3TT/IsKHVp5RMXOLf3ksLcNsM5u2CJOltXNXxjrbugZvBEWUdeCUT/k0KY0MTdZpoS4ItzrnwrmJojl+7hgiaTfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244567; c=relaxed/simple;
-	bh=HqQpLVhHGAsBYle5UFxisBL4ecJ/MsPwxX45PtsTLko=;
+	s=arc-20240116; t=1787244569; c=relaxed/simple;
+	bh=vIXmo0JGlsDwUvMMyxtr/DYWftWMZcozBsT+4fcVYt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BnTJ7xYg++1Xzrc6bBaZWNlXGxV6Sz1+F0eYsT+yzJ5yyi1ZqDSilhmkNnWtDeHFFIZ9Wj7/S24yiQJ76vVRUm/yJF5y0DgxSJYsFxPrO73xY28XHdasyCqZZ/7Uong8AwOjeVDc8O21oNc/u1fW18lea4WPUe2rvrR2VW0OiEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RLpwLvpH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eJpm00BQ1Ks6aSqHC8Q//hWtUyO+5N6KoOuZWIR+nrq5J0kc5wUlgVNReGVGVZ5MxcPyrxxDluVoS9+sI+Gldwbjb1kX2pr97kzxQiM/LVinKOVGdpVljIMaSz478QM0wTTN53DvON2urWNdXezr9QqyD59yDrDyw8tM+KWzjVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxlCgfFq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLpwLvpH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15EC31F000E9;
-	Thu, 20 Aug 2026 16:49:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxlCgfFq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBAFE1F000E9;
+	Thu, 20 Aug 2026 16:49:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244565;
-	bh=H3g2XN9Nr2I7gaz0jaftNqVVnerjGR0W/dMCFzBkSEI=;
+	s=korg; t=1787244568;
+	bh=t+KDxHPHKW0AQh2R0wFzgsujoQFSQA1a/xvJQQk7+RA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RLpwLvpHRLkCzvKN3NxGzLHngquNFanrMXmJ7mWj9z3hsIZs1jJU2fgxUTXUK5lip
-	 tGCb+bSekprFXs7s7w2dud/yUwg6vfLjIbhIdt2wqjWXDsgGqGAL4bV539BiJBpQZx
-	 Yt2huZbn6RTzR/yJcLaMJDsSEgKZ+TIR0IVG+QNI=
+	b=gxlCgfFqVZthwF8u8InHnyNuTN4olqcFMYFX8CLLmJGoSFYosYzaabjgHR9wPpKas
+	 7GKKIqCE46Ld3WJdT1oEjdxfe2OVaFarbGQtQpDT8cWcrQItEpioFXKBWF1NdGsuvw
+	 6GUBao06iOHsNiJqQlrYQ7h5PFI3lHPZkXoBtSwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI <sashiko-bot@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Matt Fleming <mfleming@cloudflare.com>,
-	Suren Baghdasaryan <surenb@google.com>,
+	Hyunjung Ko <hj351016@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 212/235] sched/psi: Shut down rtpoll_timer in psi_cgroup_free()
-Date: Thu, 20 Aug 2026 16:57:28 +0200
-Message-ID: <20260820145223.020975684@linuxfoundation.org>
+Subject: [PATCH 5.10 213/235] net/sched: act_gact, act_police: range check the fallback control action
+Date: Thu, 20 Aug 2026 16:57:29 +0200
+Message-ID: <20260820145223.057004928@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -54,72 +53,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Hyunjung Ko <hj351016@gmail.com>
 
-[ Upstream commit 5457025fa8ca3c0d2732109513de839e3e797190 ]
+[ Upstream commit 883b56ae58fe657d8497806c7059646e9ba6dbd0 ]
 
-psi_schedule_rtpoll_work() is called locklessly from the scheduler hotpath
-and can race psi_trigger_destroy() taking down the last rtpoll trigger under
-rtpoll_trigger_lock:
+tcf_action_check_ctrlact() range checks the primary control action:
 
-  psi_schedule_rtpoll_work()        psi_trigger_destroy()
+	if (!opcode)
+		ret = action > TC_ACT_VALUE_MAX ? -EINVAL : 0;
 
-  rcu_read_lock();
-  task = rcu_dereference(rtpoll_task);
-                                    rcu_assign_pointer(rtpoll_task, NULL);
-                                    timer_delete(&rtpoll_timer);
-  mod_timer(&rtpoll_timer, ...);
-  rcu_read_unlock();
-                                    synchronize_rcu();
-                                    kthread_stop(task_to_destroy);
+TC_ACT_VALUE_MAX is TC_ACT_TRAP, so kernel-internal verdicts above it
+cannot be set that way. But act_gact and act_police each carry a second,
+independent control action supplied by user space that never reaches that
+helper - TCA_GACT_PROB.paction and TCA_POLICE_RESULT. Both only reject
+TC_ACT_GOTO_CHAIN, so any other value is stored verbatim and returned
+verbatim from the action.
 
-The group can then be freed with the re-armed timer still pending, and
-poll_timer_fn() runs on freed memory.
+In particular user space can store TC_ACT_CONSUMED, which is
+TC_ACT_VALUE_MAX + 1 and is deliberately not part of the UAPI value
+range. That verdict tells every caller the action took ownership of the
+skb, so nobody frees it: sch_handle_ingress(), sch_handle_egress() and
+tcf_qevent_handle() all deliberately skip the free for it. The result is
+one leaked sk_buff plus its data buffer per packet traversing the filter,
+unbounded, for all traffic on the chain including kernel-generated
+packets.
 
-461daba06bdc ("psi: eliminate kthread_worker from psi trigger scheduling
-mechanism") deleted the timer synchronously after the synchronize_rcu(),
-which prevented this but raced trigger creation instead: the deletion could
-cancel the timer that a new trigger set armed during the grace period and,
-as creation also reinitialized the timer at the time, corrupt it.
-8f91efd870ea ("psi: Fix race between psi_trigger_create/destroy") moved the
-initialization into group_init() and the deletion into the locked section,
-trading the creation races for the window above.
+Both are trivially deterministic. act_gact clamps tcfg_pval to >= 1, so
+with pval = 1 gact_determ() returns the fallback for every packet.
+act_police has no mandatory rate, so rate = 0 leaves tcfp_mtu = ~0 and
+tcf_police_mtu_check() always passes.
 
-Neither placement in the destruction path works. A pending timer firing
-while the group is alive is harmless though. poll_timer_fn() just wakes the
-rtpoll waitqueue and doesn't re-arm itself. Bind the timer to the group's
-lifetime instead and shut it down in psi_cgroup_free(). Nothing can arm it
-by then. timer_shutdown_sync() because the timer is never armed again.
+TC_ACT_CONSUMED was added by commit 720f22fed81b ("net: sched: refactor
+reinsert action"), after both goto-chain guards were written:
+commit 9469f375ab09 ("net/sched: act_gact: disallow 'goto chain' on
+fallback control action") and
+commit c08f5ed5d625 ("net/sched: act_police: disallow 'goto chain' on
+fallback control action"). Neither guard was widened when the new
+verdict appeared.
 
-Fixes: 8f91efd870ea ("psi: Fix race between psi_trigger_create/destroy")
-Cc: stable@vger.kernel.org # v5.10+
-Reported-by: Sashiko AI <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260711000434.36C4A1F000E9@smtp.kernel.org/
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Tested-by: Matt Fleming <mfleming@cloudflare.com>
-Acked-by: Suren Baghdasaryan <surenb@google.com>
-[ Adapted `cgroup->psi->` to embedded `cgroup->psi.`, `rtpoll_timer` to `poll_timer`, and `timer_shutdown_sync()` to `timer_delete_sync()`. ]
+Factor the existing range test out of tcf_action_check_ctrlact() as
+tcf_action_valid() and apply it to both fallbacks. The helper cannot call
+tcf_action_check_ctrlact() directly because that also allocates a
+goto_chain, which is exactly what these two sites must not do.
+
+Reproduced on v7.2-rc6: kmemleak reports one leaked 232-byte
+skbuff_head_cache object plus its 704-byte data buffer per packet. With
+this patch both configurations are rejected with -EINVAL and kmemleak
+reports none.
+
+Fixes: 720f22fed81b ("net: sched: refactor reinsert action")
+Cc: stable@vger.kernel.org # v5.3+
+Signed-off-by: Hyunjung Ko <hj351016@gmail.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20260806101252.809593-1-hj351016@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Kept only the new helper lines and dropped the surrounding upstream-only context (CONFIG_INET/tcf_frag_xmit_count block) absent in 5.10. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/psi.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ include/net/act_api.h  |   20 ++++++++++++++++++++
+ net/sched/act_gact.c   |    5 +++++
+ net/sched/act_police.c |    6 ++++++
+ 3 files changed, 31 insertions(+)
 
---- a/kernel/sched/psi.c
-+++ b/kernel/sched/psi.c
-@@ -950,6 +950,12 @@ void psi_cgroup_free(struct cgroup *cgro
- 		return;
+--- a/include/net/act_api.h
++++ b/include/net/act_api.h
+@@ -240,6 +240,26 @@ int tcf_action_check_ctrlact(int action,
+ 			     struct netlink_ext_ack *newchain);
+ struct tcf_chain *tcf_action_set_ctrlact(struct tc_action *a, int action,
+ 					 struct tcf_chain *newchain);
++
++/* Range check for a control action supplied by user space.
++ *
++ * This is the same test tcf_action_check_ctrlact() applies to the primary
++ * control action, factored out for the *fallback* control actions
++ * (act_gact's TCA_GACT_PROB.paction and act_police's TCA_POLICE_RESULT),
++ * which must not reach tcf_action_check_ctrlact() because they have no
++ * goto_chain to allocate.  Without it, user space can store kernel-internal
++ * verdicts such as TC_ACT_CONSUMED, which is TC_ACT_VALUE_MAX + 1 and is
++ * deliberately not part of the UAPI value range.
++ */
++static inline bool tcf_action_valid(int action)
++{
++	int opcode = TC_ACT_EXT_OPCODE(action);
++
++	if (!opcode)
++		return action <= TC_ACT_VALUE_MAX;
++	return opcode <= TC_ACT_EXT_OPCODE_MAX || action == TC_ACT_UNSPEC;
++}
++
+ #endif /* CONFIG_NET_CLS_ACT */
  
- 	cancel_delayed_work_sync(&cgroup->psi.avgs_work);
-+	/*
-+	 * A psi_schedule_poll_work() call racing the last trigger's
-+	 * destruction may have re-armed the timer after psi_trigger_destroy()
-+	 * deleted it. Spurious firing while the group is alive is harmless.
-+	 */
-+	timer_delete_sync(&cgroup->psi.poll_timer);
- 	free_percpu(cgroup->psi.pcpu);
- 	/* All triggers must be removed by now */
- 	WARN_ONCE(cgroup->psi.poll_states, "psi: trigger leak\n");
+ static inline void tcf_action_stats_update(struct tc_action *a, u64 bytes,
+--- a/net/sched/act_gact.c
++++ b/net/sched/act_gact.c
+@@ -89,6 +89,11 @@ static int tcf_gact_init(struct net *net
+ 		p_parm = nla_data(tb[TCA_GACT_PROB]);
+ 		if (p_parm->ptype >= MAX_RAND)
+ 			return -EINVAL;
++		if (!tcf_action_valid(p_parm->paction)) {
++			NL_SET_ERR_MSG(extack,
++				       "invalid fallback control action");
++			return -EINVAL;
++		}
+ 		if (TC_ACT_EXT_CMP(p_parm->paction, TC_ACT_GOTO_CHAIN)) {
+ 			NL_SET_ERR_MSG(extack,
+ 				       "goto chain not allowed on fallback");
+--- a/net/sched/act_police.c
++++ b/net/sched/act_police.c
+@@ -134,6 +134,12 @@ static int tcf_police_init(struct net *n
+ 
+ 	if (tb[TCA_POLICE_RESULT]) {
+ 		tcfp_result = nla_get_u32(tb[TCA_POLICE_RESULT]);
++		if (!tcf_action_valid(tcfp_result)) {
++			NL_SET_ERR_MSG(extack,
++				       "invalid fallback control action");
++			err = -EINVAL;
++			goto failure;
++		}
+ 		if (TC_ACT_EXT_CMP(tcfp_result, TC_ACT_GOTO_CHAIN)) {
+ 			NL_SET_ERR_MSG(extack,
+ 				       "goto chain not allowed on fallback");
 
 
