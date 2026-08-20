@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E3E215075;
-	Thu, 20 Aug 2026 17:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC7B332638;
+	Thu, 20 Aug 2026 17:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248284; cv=none; b=HLEGgzHKh762+IjL8StBkY4ffAVEhy+Xy0dE1rMoZ0y50oo5SIoGgZyl2lCdxJp7CURKMlbEosdzELDRPXvrC5gCJ0eCS3HeVimPPsyKC7j4V0juL/dDltgSuLgXGY99VB574ozaU7SN3kUQUSHDzrOxPYJ/401MJr6RxMCEcgk=
+	t=1787248287; cv=none; b=muVZdT6TiWHvOorddWy/oOkOhNM2jwHznnuGdcNb3as50/JsYAryJ87THzQcOI2USgS2s3+BHwtYqq4+4Pe5bTMINdVdmL+BECb+vDIYcZTlReNdiQDB9ILrZxRpKIXkDMC6ResYgQpdMp7NDoaWFHeUZ1yPGTIfxAiR/d81DvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248284; c=relaxed/simple;
-	bh=eLsl/tkQKKY5jU6udujkVzSrpv9UIlJiPnXwwxG/bzk=;
+	s=arc-20240116; t=1787248287; c=relaxed/simple;
+	bh=P3jR/hTn9vnvAPuPpaeQFRqoOSTtJpJkNzvwRaXfEfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fo9T+zWH56m3ai1lAD0mHShoI9TZ1YAJlsdchex6Xr3jHAnLWR46QN8lXlrC7Mgty3DhI4RePrL0sPoeS8Axvpcn5vVrWjpgGfqOkhKQ33toBWMLgBSsVyuk/9GH3ZzwB9Wm8lUAzjx1BQqp6pcZr4M3siVz7LmscqeKR5a1cBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZUjALNA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VjOcKfqutO3/TWuefe83UviRy5B3KE8agTLMligm+LOdhGUtDWDibZAC0yLnYI8bwt2DHORhynQ1N0hCbGtsDwC7DEvdlNfgREuqLos/2T3lk5SfnW9MyUhG6MLDdN8qK2JPhw+DCdyQomwM0KlBx/WjpAvaB2SzxG9EJR5yk20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3n/dGfl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZUjALNA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD791F000E9;
-	Thu, 20 Aug 2026 17:51:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3n/dGfl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DC41F000E9;
+	Thu, 20 Aug 2026 17:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248283;
-	bh=38jnc4+lUwHucS4d5LPY8ZMcoML99PihcUCARs/zR2k=;
+	s=korg; t=1787248286;
+	bh=GkyN98EWx+FllFn4spmbN3o5qS5rR2lVByGcBHzpHvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sZUjALNA2WZFo2OStK2uHJyr1I6CFl41qWIWTL3iyhfaddBqMYkp7WRx31RLh+rli
-	 i/UMs1GQctX1maSQb+4XUbCIsF63EkXquugtZNTM4FpcNcdHLqnKHJQU6HCbDvyNDG
-	 E5AJ+Y3QFXZfs10zgfgmn8UXbdMAdoxLqNwXi1hI=
+	b=B3n/dGflbUoyXSq/y1nIWnBPnIAjH37yuC3BrPZpKjG+cc99Lh3F7e9AzJ1XAc7fP
+	 IgFNdltZw1+ca2Xr6xV/TE5JLxtOmNGJ5DY1xMRJfmv/QPmKgVUtzZdQOXChA1fu0b
+	 GaIaS0PKZhdWAPUYlsAnHxLFyDBFNNRyQIdHWl0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.1 147/303] mmc: vub300: fix use-after-free on probe failure
-Date: Thu, 20 Aug 2026 16:54:43 +0200
-Message-ID: <20260820145257.704865226@linuxfoundation.org>
+	Reinette Chatre <reinette.chatre@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 174/303] fs/resctrl: Fix double-add of pseudo-locked regions RMID to free list
+Date: Thu, 20 Aug 2026 16:55:10 +0200
+Message-ID: <20260820145258.535942668@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -51,84 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Reinette Chatre <reinette.chatre@intel.com>
 
-The vub300 driver lifetime-manages its controller state using
-vub300->kref, with vub300_delete() freeing the mmc host when the last
-reference is dropped. The probe error path after the inactivity timer has
-been armed still bypasses that lifetime rule, however, and falls through
-to mmc_free_host() directly if mmc_add_host() fails.
+[ Upstream commit b9f089723aee892efc77c349ae47a6b452b293c4 ]
 
-The race window is between arming the inactivity timer and reaching the
-probe error unwind after mmc_add_host() fails:
+A pseudo-locked group's RMID is freed when it is created. On unmount
+rmdir_all_sub() unconditionally frees all RMID of all groups, resulting
+in a double-free of the pseudo-locked group's RMID. The consequence of this
+is that the original free results in the pseudo-locked group's RMID being
+added to the rmid_free_lru linked list and the second free then attempts
+to add the same RMID entry to the rmid_free_lru again.
 
-        probe thread                     timer/workqueue
-        ------------                     ---------------
-        kref_init(&vub300->kref)         ref = 1
-        kref_get(&vub300->kref)          ref = 2, timer ref
-        add_timer(inactivity_timer)      fires after one second
-        |
-        |   race window
-        |<---------------------------------------------------->
-        |
-        mmc_add_host(mmc)
-                                         inactivity timer fires
-                                         vub300_queue_dead_work()
-                                           kref_get()          ref = 3
-                                           queue_work(deadwork)
-        mmc_add_host() fails
-        timer_delete_sync()
-        mmc_free_host(mmc)
-          frees vub300
-                                         deadwork runs
-                                           use-after-free
+Do not double-free a pseudo-locked group's RMID.
 
-The inactivity timeout is one second, so this would require
-mmc_add_host() to both fail and take more than one second to do so. This
-is unlikely to happen in practice, but the error path is still wrong.
-
-timer_delete_sync() only waits for the timer callback itself. It does
-not flush deadwork that the callback may already have queued. As a
-result, queued deadwork can still hold a kref while the probe error path
-directly frees the backing mmc host, including the vub300 storage.
-
-Fix this by using the same lifetime mechanism as disconnect. Clear
-vub300->interface so that the timer callback and any queued deadwork
-return early and drop their references, then drop the initial probe
-reference and return without falling through to err_free_host.
-
-Fixes: 0613ad2401f8 ("mmc: vub300: fix return value check of mmc_add_host()")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
-(cherry picked from commit a3b5f242997a3be7404112fd48784881560aea57)
+Fixes: e0bdfe8e36f3 ("x86/intel_rdt: Support creation/removal of pseudo-locked region")
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/551432dd7e624a862b8e58314c38aaba0afff3e9.1783377598.git.reinette.chatre@intel.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/vub300.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/mmc/host/vub300.c
-+++ b/drivers/mmc/host/vub300.c
-@@ -2345,12 +2345,16 @@ static int vub300_probe(struct usb_inter
- 			 interface_to_InterfaceNumber(interface));
- 	retval = mmc_add_host(mmc);
- 	if (retval)
--		goto err_delete_timer;
-+		goto err_stop_io;
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -2477,10 +2477,6 @@ static void rmdir_all_sub(void)
+ 		if (rdtgrp == &rdtgroup_default)
+ 			continue;
  
- 	return 0;
+-		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
+-		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
+-			rdtgroup_pseudo_lock_remove(rdtgrp);
+-
+ 		/*
+ 		 * Give any CPUs back to the default group. We cannot copy
+ 		 * cpu_online_mask because a CPU might have executed the
+@@ -2489,7 +2485,13 @@ static void rmdir_all_sub(void)
+ 		cpumask_or(&rdtgroup_default.cpu_mask,
+ 			   &rdtgroup_default.cpu_mask, &rdtgrp->cpu_mask);
  
--err_delete_timer:
--	timer_delete_sync(&vub300->inactivity_timer);
-+err_stop_io:
-+	vub300->interface = NULL;
-+	kref_put(&vub300->kref, vub300_delete);
-+
-+	return retval;
-+
- err_free_host:
- 	mmc_free_host(mmc);
- 	/*
+-		free_rmid(rdtgrp->mon.rmid);
++		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
++		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
++			rdtgroup_pseudo_lock_remove(rdtgrp);
++		} else {
++			/* Pseudo-locked group's RMID is freed during setup. */
++			free_rmid(rdtgrp->mon.rmid);
++		}
+ 
+ 		kernfs_remove(rdtgrp->kn);
+ 		list_del(&rdtgrp->rdtgroup_list);
 
 
