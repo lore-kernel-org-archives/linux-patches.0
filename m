@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1685740F754;
-	Thu, 20 Aug 2026 16:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85E947CC97;
+	Thu, 20 Aug 2026 16:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244278; cv=none; b=RJVplGMh9HCED5lZRPcOY32s+De0HkIKx224fO9yTX7j+wj/uaPEfZyo6gCLhsQSIlG7XqC+kTmljGbmZW2BGiHdoBiBNZOibiergrwJePBjVwWKeXIiI9ACmwvmRFLoM14cC+wXMc09WcoBn9BMLXinCCvm5v7VEjtpuO/Kze8=
+	t=1787244281; cv=none; b=VFcjo8hsZh0hjfMwfjS7pa9eflTfrUeVau5NiVw+1Ackgt7gcFysgBlxEogNHpN196n/jlHMOeBxj1T1OTMHCyLuAs/w3PbMTo4N+1kydvXjbYstgA1UglLFnT//5qxr1Vyw/t/ZM+puWEaAM6DTphMYZlUfyn0xtoo/dtVC4dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244278; c=relaxed/simple;
-	bh=S120dAYugaTvfvfKS9qkJYqPP7NWyBftmFkw4LzprAE=;
+	s=arc-20240116; t=1787244281; c=relaxed/simple;
+	bh=P4JpehKUdF7XLKYE+6DQz2heTGX9Orfo/sPk30HZO3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e+pF06NFksDBIL91usQxkzcgiXsnfr0UYAAkyIfPF8se/ejhKB4KQBBr0UEGMRU5o0EWy9EQikY4ocCTLvlzPFIGcDyIUTwU6TfSaiFNietexjhBm06KU7MDduczdaRiKSbdJNMF05k47Z4pRGZL0PM1a3flGxZSw0jwklBrBkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ef0x7Rv4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D1Y+IIxtPQwAUkKkdRfKTTwfE9OiIVV+M/8o48ZJqN9RFIUL1ve3HLlvjTafyKDtwsYFaq0Zl3YMr8iHDmjwO05YJnftCzR11/NkKyrB1SEeNzo3amTQ7mTuZihLgf939NQRr8KsHaKKUFQHgOvi5cL7rJhyWZwxrvWj+/aIsjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJgYmlBW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ef0x7Rv4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 708C81F00A3A;
-	Thu, 20 Aug 2026 16:44:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJgYmlBW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403291F000E9;
+	Thu, 20 Aug 2026 16:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244277;
-	bh=eugPAXSGQATWEkaJLjSRWQTfih85Aqg5mzf/rYA2fVc=;
+	s=korg; t=1787244279;
+	bh=NTXcnsu3iS+Q40pn5q10Yl6pck8hXYLWwB3LB3VeQTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ef0x7Rv44MixQxk94VCe66Sn5uuUgTRZsX9rM6CNRT3yCPptwV9l/YasdTLn7DCwe
-	 w+V7BfUI1uZaSoVdSTry7oKxLLbkhIZL7DgoyYD23xAhCs8gUujZSZZCBF3eiQoL65
-	 y3y/iWArksxiixAvcZz7xeMh9p+QoGT5DM32rsU8=
+	b=JJgYmlBWbf2PZ4GlD4v1DqJkpQPF7hPt9c7R8dZ6JnQSs072O0Bs4WoGNYfxBwCNT
+	 3iwwbcy7cfhpu78M1RZOKy2a631dgKx32NtPeIfoMWpX6e5fuL3ephq6f/avOh30in
+	 hR4QvUiITj8cAr5ISkWKqrTD4OuZZxLxBj/p4yRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fredric Cover <fredric.cover.lkernel@gmail.com>,
-	Steve French <stfrench@microsoft.com>,
+	Sashiko bot <sashiko-bot@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 096/235] smb: client: use kvzalloc() for megabyte buffer in simple fallocate
-Date: Thu, 20 Aug 2026 16:55:32 +0200
-Message-ID: <20260820145219.370288859@linuxfoundation.org>
+Subject: [PATCH 5.10 114/235] Input: ims-pcu - fix race condition in reset_device sysfs callback
+Date: Thu, 20 Aug 2026 16:55:50 +0200
+Message-ID: <20260820145219.911130868@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -51,76 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fredric Cover <fredric.cover.lkernel@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 806c00c23e3ce8eae397a40ced536ef88ae4e012 ]
+[ Upstream commit 411b8c4b274737c3bf08e1e025801161603cfffc ]
 
-Currently in smb3_simple_fallocate_range(), a 1 MB buffer is allocated
-using kzalloc(). Under heavy memory fragmentation, a contiguous 1 MB block
-of physical memory (an order-8 allocation) may not be available,
-causing the allocation to fail.
+The ims_pcu_reset_device() sysfs callback calls ims_pcu_execute_command()
+without acquiring pcu->cmd_mutex. This can lead to data races and
+corruption of the shared command buffer if triggered concurrently with
+other commands.
 
-This failure was observed during xfstests generic/013 on a 4GB RAM
-test machine running fsstress:
+Acquire pcu->cmd_mutex before calling ims_pcu_execute_command().
 
-fsstress: page allocation failure: order:8,
-mode:0x40dc0(GFP_KERNEL|__GFP_ZERO|__GFP_COMP),
-nodemask=(null),cpuset=/,mems_allowed=0
-
-Call Trace:
- <TASK>
- dump_stack_lvl+0x5d/0x80
- warn_alloc+0x163/0x190
- __alloc_pages_slowpath.constprop.0+0x71b/0x12f0
- __alloc_frozen_pages_noprof+0x2f6/0x340
- alloc_pages_mpol+0xb6/0x170
- ___kmalloc_large_node+0xb3/0xd0
- __kmalloc_large_noprof+0x1e/0xc0
- smb3_simple_falloc.isra.0+0x62b/0x960
- cifs_fallocate+0xed/0x180
- vfs_fallocate+0x165/0x3c0
- __x64_sys_fallocate+0x48/0xa0
- do_syscall_64+0xe1/0x640
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
- </TASK>
-
-Node 0 Normal: 3375*4kB ... 7*128kB 0*256kB 0*512kB 0*1024kB 0*2048kB 0*4096kB
-
-Since this scratch buffer does not require physically contiguous memory,
-switch the allocation to kvzalloc(). This retains the performance
-benefits of kmalloc() under normal conditions, while gracefully falling
-back to virtually contiguous memory when physical allocation fails.
-
-Fixes: 966a3cb7c7db ("cifs: improve fallocate emulation")
+Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
-Tested-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: Sashiko bot <sashiko-bot@kernel.org>
+Assisted-by: Gemini:gemini-3.1-pro
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/smb2ops.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/input/misc/ims-pcu.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -3568,7 +3568,7 @@ static int smb3_simple_fallocate_range(u
- 	if (rc)
- 		goto out;
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -1193,6 +1193,8 @@ static ssize_t ims_pcu_reset_device(stru
  
--	buf = kzalloc(1024 * 1024, GFP_KERNEL);
-+	buf = kvzalloc(1024 * 1024, GFP_KERNEL);
- 	if (buf == NULL) {
- 		rc = -ENOMEM;
- 		goto out;
-@@ -3635,7 +3635,7 @@ static int smb3_simple_fallocate_range(u
+ 	dev_info(pcu->dev, "Attempting to reset device\n");
  
-  out:
- 	kfree(out_data);
--	kfree(buf);
-+	kvfree(buf);
- 	return rc;
- }
- 
++	guard(mutex)(&pcu->cmd_mutex);
++
+ 	error = ims_pcu_execute_command(pcu, PCU_RESET, &reset_byte, 1);
+ 	if (error) {
+ 		dev_info(pcu->dev,
 
 
