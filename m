@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCEF735C681;
-	Thu, 20 Aug 2026 17:38:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97329307492;
+	Thu, 20 Aug 2026 17:38:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247508; cv=none; b=EHBUdsgdDnGdwOvDCwttypJCBTySFtm8zSejPCryLtRYt4Ktd9hpUHV/balcqUQh6INIPTeUYgKI9d6OzZLb4NlKWQokgetxBY7RdeO4v0MdV2y4+VjUakWXNlzY99rME7fvWIykf8WRTRzbKCx3nXE/s0tct3UXrNxWYizpa5M=
+	t=1787247511; cv=none; b=Y20ROG7I320d05jpT6XZRE6O8ZlT8ao0p3MoGzZVbv8nirmVc5qd1eVPu/h710EodZe31q4cSHrRVMksA450YiwVhrl5Dlt9Zqd73rp28BArZeA6DOOzwyeZEkZmY75bq/jw9f4zl+l1tQKCxAz5quoB0oYN6bn/+X1HHoFoQME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247508; c=relaxed/simple;
-	bh=OBT/eGbC77+lQXwLgtMykB3laRBlvPTXve/1VhCnFx8=;
+	s=arc-20240116; t=1787247511; c=relaxed/simple;
+	bh=T9wBPtlMoOZGDjI1kKclxYNpDMr1Th07xgGfg+BTBVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fK4g4lijCCc77wEVllAZ4mqdtdjuQ68VuT0xPCz3BwPqVx4g2/QgHG9qNO+47pAK2nVFjV6LmWuzHbSXJbHPXqDrFg9dYGdWveNDM9w4xZE6zKGOH9bNBvCSIHj1qBtGvxqzeqVZiHz5rqiPEPszhhTbxF5dKyOgwsnly78HRXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLsMmENC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cYTZQvTTtIgUKbcxR1WK7lXzCwo8ecKyYFrTNDTQs8E3CRjxlVuGET41FCZzAxp29LAvjYPCgVvICkaDMc8X3v0eXnjc+vOpwamlohAAvMA+uiZ8OZJCeptukCzNMOexPFZGpqvklFLcYwpZS+aJU6215Hgw2s9jqR9I5CTP9n4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uA2g8Ww3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLsMmENC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3061F000E9;
-	Thu, 20 Aug 2026 17:38:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uA2g8Ww3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F33841F000E9;
+	Thu, 20 Aug 2026 17:38:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247507;
-	bh=hi6fPKBPKv1QpLfVODg+PdC5CtBrW+yZvsMMzrcCvOc=;
+	s=korg; t=1787247510;
+	bh=snV0ES/6e+LN8E/ERCUZYUc2Ftyd+XI/ZnbGvwEpYgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WLsMmENCtDv90NADXGCEWrKHH8CzJ3I6pkaZkta+xvdRGHqye/1EH6OkQV0bYyAHN
-	 Z9flWrKGmo8QH3lz8bo3HQiMH4DXbnua1oCq620sha5rIKpZOSeTZ2EuI5Vfpqhsl4
-	 Eav+CZfvSoziYhlnkGBHlr7JON6wMMOTYJEmOzPM=
+	b=uA2g8Ww36UCPV0VsbHLVSUE+3hgENUpWSn9mkYmujBp9q7kEMKEsHBetGISrDB/fi
+	 BCUY1B5Zme0+io/+t5M2H8UKLem+d7pOLmcO8wZq/oU0ID5s5suU3tXGeFAbsWQDyG
+	 zMCFduPWc1kcefVyBbqczcfV32pzVfFC21ou5Y4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Xiubo Li <xiubo.li@clyso.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 069/166] selftests: tls: add test with a partially invalid iov
-Date: Thu, 20 Aug 2026 16:55:28 +0200
-Message-ID: <20260820145213.220157156@linuxfoundation.org>
+Subject: [PATCH 6.6 070/166] ceph: avoid fs reclaim while using current->journal_info
+Date: Thu, 20 Aug 2026 16:55:29 +0200
+Message-ID: <20260820145213.247969287@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -52,68 +53,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit dc54b813df63020e946ccdef35b64d4fa99fd622 ]
+[ Upstream commit 5b602344a49e039e792ce5a8923bcc61412ee134 ]
 
-Make sure that we don't return more bytes than we actually received if
-the userspace buffer was bogus. We expect to receive at least the rest
-of rec1, and possibly some of rec2 (currently, we don't, but that
-would be ok).
+handle_reply() stores a `ceph_mds_request` pointer in
+`current->journal_info` while filling the inode and dentry cache from
+an MDS reply.
 
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/720e61b3d3eab40af198a58ce2cd1ee019f0ceb1.1711120964.git.sd@queasysnail.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 1c8629651cb5 ("tls: rx: restore msg_iter before TLS 1.3 optimistic retry")
+An allocation in this section can enter direct reclaim and prune
+dentries from another filesystem.  If this dirties an ext4 inode, ext4
+starts a JBD2 transaction.  JBD2 interprets the Ceph request in
+`current->journal_info` as a journal handle and dereferences the
+request's `r_tid` as `h_transaction`, causing a kernel crash, e.g.:
+
+ Unable to handle kernel paging request at virtual address 00000000077b4818
+ [...]
+ Internal error: Oops: 0000000096000004 [#1]  SMP
+ Modules linked in:
+ CPU: 6 UID: 0 PID: 2699135 Comm: kworker/6:3 Tainted: G        W           6.18.38-i3 #1113 NONE
+ [...]
+ Workqueue: ceph-msgr ceph_con_workfn
+ pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : jbd2__journal_start+0x2c/0x208
+ lr : __ext4_journal_start_sb+0x100/0x178
+ [...]
+ Call trace:
+  jbd2__journal_start+0x2c/0x208 (P)
+  __ext4_journal_start_sb+0x100/0x178
+  ext4_dirty_inode+0x3c/0x90
+  __mark_inode_dirty+0x58/0x400
+  iput.part.0+0x2b0/0x370
+  iput+0x18/0x30
+  dentry_unlink_inode+0xc0/0x158
+  __dentry_kill+0x80/0x250
+  shrink_dentry_list+0x90/0x130
+  prune_dcache_sb+0x60/0x98
+  super_cache_scan+0xe8/0x190
+  do_shrink_slab+0x174/0x388
+  shrink_slab+0xd8/0x4c0
+  shrink_node+0x31c/0x908
+  do_try_to_free_pages+0xd0/0x508
+  try_to_free_pages+0x11c/0x238
+  __alloc_frozen_pages_noprof+0x4d0/0xdd0
+  __folio_alloc_noprof+0x18/0x70
+  __filemap_get_folio+0x248/0x440
+  ceph_readdir_prepopulate+0x570/0x9e8
+  mds_dispatch+0x1424/0x1ba0
+  ceph_con_process_message+0x74/0xa0
+  ceph_con_v1_try_read+0x3a0/0x1510
+  ceph_con_workfn+0x260/0x460
+
+Enter a scoped NOFS allocation context and leave it after clearing
+`journal_info`.  This prevents filesystem reclaim from recursing into
+another filesystem while the field contains Ceph-private data.
+
+Cc: stable@vger.kernel.org
+Fixes: 315f24088048 ("ceph: fix security xattr deadlock")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/tls.c |   34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ fs/ceph/mds_client.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/tools/testing/selftests/net/tls.c
-+++ b/tools/testing/selftests/net/tls.c
-@@ -1570,6 +1570,40 @@ TEST_F(tls, getsockopt)
- 	EXPECT_EQ(errno, EINVAL);
- }
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -6,6 +6,7 @@
+ #include <linux/slab.h>
+ #include <linux/gfp.h>
+ #include <linux/sched.h>
++#include <linux/sched/mm.h>
+ #include <linux/debugfs.h>
+ #include <linux/seq_file.h>
+ #include <linux/ratelimit.h>
+@@ -3675,6 +3676,7 @@ static void handle_reply(struct ceph_mds
+ 	struct ceph_mds_reply_head *head = msg->front.iov_base;
+ 	struct ceph_mds_reply_info_parsed *rinfo;  /* parsed reply info */
+ 	struct ceph_snap_realm *realm;
++	unsigned int nofs_flags;
+ 	u64 tid;
+ 	int err, result;
+ 	int mds = session->s_mds;
+@@ -3817,6 +3819,14 @@ static void handle_reply(struct ceph_mds
  
-+TEST_F(tls, recv_efault)
-+{
-+	char *rec1 = "1111111111";
-+	char *rec2 = "2222222222";
-+	struct msghdr hdr = {};
-+	struct iovec iov[2];
-+	char recv_mem[12];
-+	int ret;
+ 	/* insert trace into our cache */
+ 	mutex_lock(&req->r_fill_mutex);
 +
-+	if (self->notls)
-+		SKIP(return, "no TLS support");
++	/* disable fs reclaim while we are using current->journal_info
++	 * for our own purposes, or else shrinkers of other
++	 * filesystems might dereference this pointer as a different
++	 * type
++	 */
++	nofs_flags = memalloc_nofs_save();
 +
-+	EXPECT_EQ(send(self->fd, rec1, 10, 0), 10);
-+	EXPECT_EQ(send(self->fd, rec2, 10, 0), 10);
-+
-+	iov[0].iov_base = recv_mem;
-+	iov[0].iov_len = sizeof(recv_mem);
-+	iov[1].iov_base = NULL; /* broken iov to make process_rx_list fail */
-+	iov[1].iov_len = 1;
-+
-+	hdr.msg_iovlen = 2;
-+	hdr.msg_iov = iov;
-+
-+	EXPECT_EQ(recv(self->cfd, recv_mem, 1, 0), 1);
-+	EXPECT_EQ(recv_mem[0], rec1[0]);
-+
-+	ret = recvmsg(self->cfd, &hdr, 0);
-+	EXPECT_LE(ret, sizeof(recv_mem));
-+	EXPECT_GE(ret, 9);
-+	EXPECT_EQ(memcmp(rec1, recv_mem, 9), 0);
-+	if (ret > 9)
-+		EXPECT_EQ(memcmp(rec2, recv_mem + 9, ret - 9), 0);
-+}
-+
- FIXTURE(tls_err)
- {
- 	int fd, cfd;
+ 	current->journal_info = req;
+ 	err = ceph_fill_trace(mdsc->fsc->sb, req);
+ 	if (err == 0) {
+@@ -3825,6 +3835,7 @@ static void handle_reply(struct ceph_mds
+ 			err = ceph_readdir_prepopulate(req, req->r_session);
+ 	}
+ 	current->journal_info = NULL;
++	memalloc_nofs_restore(nofs_flags);
+ 	mutex_unlock(&req->r_fill_mutex);
+ 
+ 	up_read(&mdsc->snap_rwsem);
 
 
