@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF11486BBC;
-	Thu, 20 Aug 2026 17:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C41F54772A7;
+	Thu, 20 Aug 2026 17:51:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248302; cv=none; b=YqXN3exZh6u2QlPvfdACQ9N0T1m52i56apHjqaTFBh640qJQrfON5ZGv+nckpjG4rMVkjdzQ+WnoQzpu++bpkYKev1Dyr7FV2yI9U5ATGIUW8wSutysEIrUFDcWpEzdkjjKMVQbLwbBqO9+xiJaTCJBFNK0HdQvSki3K1wJUaK8=
+	t=1787248304; cv=none; b=AxlSk/oX92sQ/aFQAgqQ6jWOaG5mIfZF8yc59V6Nuuy4ekm0U0BmLlQUXVO5fua75mivSTWKg0WdZ9ljHI8jHHoZvX4efqFLdl7p/o4ar2Q+zGY7BzVqzeUMpQ42ALH+bPOVXqdHqiKoyyZXkzmwM8I2JDI+rbstn5c7yHuoEso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248302; c=relaxed/simple;
-	bh=KM9kYF0tcL005H8K0W3H4uqQsq3QsaCfmqMpveIv07U=;
+	s=arc-20240116; t=1787248304; c=relaxed/simple;
+	bh=TY5qQe4j6/wRQ4gfcTleR0ml4FEDc/yvMoLrsRDY0RY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I+8pH3MaeUFHv/VBx9PvcRtyP6Xl52eQF/szRIVReO6wLf5pezrTrtzZf5wsT7mqWxgcAGW270vj05KtQy58cKeLbzH48HHO/c0yQpVVJACx1haao2s5dpTCl2CAjbtUh/FroDmObiZBohzK1oAn1UQv3jbrBKUHv5s3duklxCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ln3JZUIE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WHxSdHhhKMBSnck0FDRcKVsUC5qN/vj6nxKWlqGdziaSiuumC1NVZst/nJwMVPe/DKdqS+WPLvo4SORUqXdRBiHJNOt/HGae6RewR5eiOHlR19h1AyKPT7UNiB0aiBMNkdP1NAIgpYOTpheyxL80cCXnSg7bWW53HJz0kLdYKF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QP5cLh+T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ln3JZUIE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A46D1F000E9;
-	Thu, 20 Aug 2026 17:51:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QP5cLh+T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ADD11F000E9;
+	Thu, 20 Aug 2026 17:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248300;
-	bh=mR8VsNiwjcb4SCAU0csC2ZXWk1hOftFEBUAbY0Pehv4=;
+	s=korg; t=1787248303;
+	bh=6qeMbpiSkreXdMlfTujCDVXZ9c3hZEbTYviRqEFAKog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ln3JZUIEECzUDUYk6Kt6Q2/IvtFPALzCFk94b3WrsKgIALWsdWaUTNX1+yA6Id1sf
-	 /EBr5xd99LoplqKMVkDrZk7NnyUJDL89vJ6s3xItPSgunc19IZZGHNgWU68fA+S9AM
-	 zffvxYp8T3Y/Di99qi0p/thwHWu93Y7jrmQzGFFI=
+	b=QP5cLh+TgCZwTEfgBfwqpfifAmUfjSCMV85Ay2OkNkC0FlwkcrBSbkfe69C1oOQNR
+	 4SRbEYlSM1CnbJhwRQcTWzTjJkgYuZ++NvLxzCSjuyD+3zsuc03Ev0GDxt/DkdpZ/B
+	 A4wCjcjyhLN5Cy1CRQUAwa11uqiPBuCbjXuRlI7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkatesh Srinivas <venkateshs@chromium.org>,
-	James Houghton <jthoughton@google.com>,
-	Chao Gao <chao.gao@intel.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	David Matlack <dmatlack@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Jim Mattson <jmattson@google.com>
-Subject: [PATCH 6.1 179/303] KVM: x86: Only reset TSC Deadline Timer in apic_timer_expired on KVM_RUN
-Date: Thu, 20 Aug 2026 16:55:15 +0200
-Message-ID: <20260820145258.690483250@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 180/303] usb: musb: omap2430: clean up probe error handling
+Date: Thu, 20 Aug 2026 16:55:16 +0200
+Message-ID: <20260820145258.725434773@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -56,65 +50,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Venkatesh Srinivas <venkateshs@chromium.org>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit e800decd9c0ac4349bcd8f8f9b29fd21fe93165e ]
+[ Upstream commit 51d4b0a44c82e5eff056ef76acd2c3c605a8eb74 ]
 
-On Intel platforms with a VMX preemption timer and APICv, if a VMM
-calls KVM_GET_LAPIC before KVM_GET_MSRS to save the vCPU state, it is
-possible to lose a pending timer interrupt.
+Using numbered error labels is discouraged (e.g. as it requires
+renumbering them when adding a new intermediate error path).
 
-If the thread running these ioctls is migrated to another core after
-calling KVM_GET_LAPIC but before KVM_GET_MSRS and the guest is using
-their LAPIC timer in TSC-deadline mode, not only does the save LAPIC
-state not carry the pending interrupt, the TSCDEADLINE MSR will be
-zeroed.
+Rename the error labels after what they do.
 
-After migration across CPUs, KVM_GET_MSRS calls vcpu_load, posting the
-interrupt and clearing the MSR:
-vcpu_load() ->
-  kvm_arch_vcpu_load() ->
-    kvm_lapic_restart_hv_timer() ->
-      start_hv_timer() ->
-        apic_timer_expired() ->
-          kvm_apic_inject_pending_timer_irqs()
-            . post interrupt into the LAPIC state
-            . clear IA32_TSCDEADLINE
+While at it, drop the redundant platform allocation failure dev_err()
+as the error would already have been logged by the allocator.
 
-The saved LAPIC state will be missing the pending interrupt and the saved
-MSR will be zero. Oops.
-
-Fix by only posting an interrupt when we're attempting to enter the guest
-(vcpu->wants_to_run == true), not for vcpu_load from other paths.
-
-Assisted-by: gemini:gemini-3.1-pro-preview
-Debugged-by: David Matlack <dmatlack@google.com>
-Debugged-by: Sean Christopherson <seanjc@google.com>
-Debugged-by: Jim Mattson <jmattson@google.com>
-Debugged-by: James Houghton <jthoughton@google.com>
-Signed-off-by: Venkatesh Srinivas <venkateshs@chromium.org>
-Message-ID: <20260715234234.15382-2-venkateshs@chromium.org>
-Reviewed-by: James Houghton <jthoughton@google.com>
-Reviewed-by: Chao Gao <chao.gao@intel.com>
-Cc: stable@vger.kernel.org
-Fixes: ae95f566b3d2 ("KVM: X86: TSCDEADLINE MSR emulation fastpath", 2020-05-15)
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20250724091910.21092-6-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: c947360ae63e ("usb: musb: omap2430: Do not put borrowed of_node in probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/lapic.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/musb/omap2430.c |   23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -1745,7 +1745,7 @@ static void apic_timer_expired(struct kv
- 	if (apic_lvtt_tscdeadline(apic) || ktimer->hv_timer_in_use)
- 		ktimer->expired_tscdeadline = ktimer->tscdeadline;
+--- a/drivers/usb/musb/omap2430.c
++++ b/drivers/usb/musb/omap2430.c
+@@ -318,13 +318,11 @@ static int omap2430_probe(struct platfor
  
--	if (!from_timer_fn && apic->apicv_active) {
-+	if (!from_timer_fn && apic->apicv_active && vcpu->wants_to_run) {
- 		WARN_ON(kvm_get_running_vcpu() != vcpu);
- 		kvm_apic_inject_pending_timer_irqs(apic);
- 		return;
+ 	glue = devm_kzalloc(&pdev->dev, sizeof(*glue), GFP_KERNEL);
+ 	if (!glue)
+-		goto err0;
++		return -ENOMEM;
+ 
+ 	musb = platform_device_alloc("musb-hdrc", PLATFORM_DEVID_AUTO);
+-	if (!musb) {
+-		dev_err(&pdev->dev, "failed to allocate musb device\n");
+-		goto err0;
+-	}
++	if (!musb)
++		return -ENOMEM;
+ 
+ 	musb->dev.parent		= &pdev->dev;
+ 	musb->dev.dma_mask		= &omap2430_dmamask;
+@@ -348,15 +346,15 @@ static int omap2430_probe(struct platfor
+ 
+ 	pdata = devm_kzalloc(&pdev->dev, sizeof(*pdata), GFP_KERNEL);
+ 	if (!pdata)
+-		goto err2;
++		goto err_put_musb;
+ 
+ 	data = devm_kzalloc(&pdev->dev, sizeof(*data), GFP_KERNEL);
+ 	if (!data)
+-		goto err2;
++		goto err_put_musb;
+ 
+ 	config = devm_kzalloc(&pdev->dev, sizeof(*config), GFP_KERNEL);
+ 	if (!config)
+-		goto err2;
++		goto err_put_musb;
+ 
+ 	of_property_read_u32(np, "mode", (u32 *)&pdata->mode);
+ 	of_property_read_u32(np, "interface-type",
+@@ -379,7 +377,7 @@ static int omap2430_probe(struct platfor
+ 		if (!control_pdev) {
+ 			dev_err(&pdev->dev, "Failed to get control device\n");
+ 			ret = -EINVAL;
+-			goto err2;
++			goto err_put_musb;
+ 		}
+ 		glue->control_otghs = &control_pdev->dev;
+ 	}
+@@ -455,22 +453,21 @@ static int omap2430_probe(struct platfor
+ 	ret = platform_device_add(musb);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to register musb device\n");
+-		goto err3;
++		goto err_disable_rpm;
+ 	}
+ 	of_node_put(np);
+ 
+ 	return 0;
+ 
+-err3:
++err_disable_rpm:
+ 	pm_runtime_disable(glue->dev);
+ err_put_control_otghs:
+ 	if (!IS_ERR(glue->control_otghs))
+ 		put_device(glue->control_otghs);
+-err2:
++err_put_musb:
+ 	of_node_put(np);
+ 	platform_device_put(musb);
+ 
+-err0:
+ 	return ret;
+ }
+ 
 
 
