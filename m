@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800E4380FD6;
-	Thu, 20 Aug 2026 15:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43315380FD6;
+	Thu, 20 Aug 2026 15:20:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239249; cv=none; b=g0WfIy5SF19L76xzjDEAU05WXF739BolfJQ4vS+sKhTQuErckV60pZKjXb/+W7KleSsBQtom/8pUMzQrjgPrtcpK/GAQResmleJlK3tdVhSzXl9Ww1CnDZIVaUaxHZaqBbZsBakLnPFpcpWW1HRh4GgwdJBmKtUV1N7btjJWCQY=
+	t=1787239252; cv=none; b=Yncagom/HaeOhM3zPvrWdVetw6h/zBPxZBiXY0mzVCy6kPIA2aRNHAdCrTlZl9xABM4LsqHt7r9HXOjXrEilT/hyhJb8R7zLUp8g8Vofp2318hSW2mel7rKIGwrlkFNWEzKvIKigvyxrWxObi6bfLB/XyzeOjs1rpm6QJj84VeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239249; c=relaxed/simple;
-	bh=6UgzbltIsgdsN+p+WHXQ5hVVhNVRlXEd2Z4vTjs1Nt0=;
+	s=arc-20240116; t=1787239252; c=relaxed/simple;
+	bh=Iplmo2O1VyzzGOD0OWq7o3DPRuN0AUP0od5GckEnEyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kJXwghrJvB6E3crb8xUDEDhIDbfxKJg72Ee0MFVe7+rBQte7LHmTavKE/u9lagmYePVC7k3n+1KOrjh69vTgUHIKt9oQ+hSW+Zlle+ef3fQpaPQwmcTAKTd1n6R8oWojF3FTOI+4xGDkegSXuf4FYy7+Wd4f6M4vlN6lkDsOTXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=itr3LrlB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Blp9+bLljy5f5NmaOJI28y1MXJn3Iox5uPrcMPdfLeuaBrLvqBoYRhCJK4HpiWX2gblDbl+7NT72U1yxNsUKCt3oSBpxcNHKw4ja2phEZYXFeiN85fdnMih42HIvaARp7pSp+cPxjPpguu9tFxydygxDNbSCcsinNpl9LY/W8yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYwjNCAp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="itr3LrlB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8EC41F000E9;
-	Thu, 20 Aug 2026 15:20:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYwjNCAp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D891F000E9;
+	Thu, 20 Aug 2026 15:20:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239248;
-	bh=er25GdFjDQZhxOQ1flY8NAnSIyd9iDo91I36EIKwNao=;
+	s=korg; t=1787239251;
+	bh=lNYIqRZBSmkpw1JehB9LRRbKXgvpgvHo79iwLOkNBg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=itr3LrlB40bV0Uqam9G3IJQEBgPix2F8sra6urq4EgsuFXkzjWPTh0tbimv5ZSDCL
-	 JcHSlcGolRRNC0X1JbcvF1eXQNiZWL6Q0+dfX/sEjo2Ub3yuC6S35Xskny7oOCPzKt
-	 mSkUbKd1sBMMNKU/XPtTa+QIC1oSXdbR3qn2gRys=
+	b=UYwjNCApuXfpH2JAbArRkyofAKxX5Ht9gkAZcUYr6kdB6A8QdHVpMlRjit8kPegfM
+	 Mnlr0jx8tI0oHANWtAYJkGZESP5liePSn0us3oVYVvw93i2awJRV3/6QDiWTxvtE3m
+	 HnvWsJdZjQHEOKqalqLqe/SX5fPNVdrjX/qAfrfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Andrey Golovko <andrey.golovko@gmail.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 164/217] drm/amd/pm: adjust the visibility of pp_table sysfs node
-Date: Thu, 20 Aug 2026 16:55:32 +0200
-Message-ID: <20260820145242.686285577@linuxfoundation.org>
+Subject: [PATCH 6.18 200/217] regmap: sdw-mbq: dont call an unset readable_reg callback
+Date: Thu, 20 Aug 2026 16:56:08 +0200
+Message-ID: <20260820145243.730022191@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -52,115 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Andrey Golovko <andrey.golovko@gmail.com>
 
-[ Upstream commit 5de8ce0f3709ad93ca5a579aa45cf1b52d72bc90 ]
+[ Upstream commit 00268f9452d2a0d660aa9c1bb0ca07a994af6a4f ]
 
-v1:
-- make pp_table invisible on VF mode (only valid on BM)
-- make pp_table invisible on Mi* chips (Not supported)
-- make pp_table invisible if scpm feature is enabled.
+regmap_sdw_mbq_poll_busy() decides whether to poll the Function Busy bit
+by calling ctx->readable_reg(), which is a straight copy of
+config->readable_reg. That callback is optional: regmap_readable() treats
+a NULL ->readable_reg as "every register is readable", and drivers rely on
+that. es9356 and tac5xx2-sdw both build an MBQ regmap without one.
 
-v2:
-move pp_table invisible code logic into amdgpu_dpm_get_pp_table() function.
+Since commit ca1b11b36d82 ("regmap: sdw-mbq: Allow defers on undeferrable
+controls") the poll runs on every -ENODATA, not only for Controls the
+driver marked deferrable, so any of those devices answering
+COMMAND_IGNORED takes the kernel through a NULL function pointer.
 
-v3:
-add table buffer pointer check both on powerplay & swsmu.
+Treat a missing callback the way the rest of regmap does and poll.
 
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: bb493058c35c ("drm/amd/pm: fix pptable use-after-free")
+Fixes: 5bc493bf0c37 ("regmap: sdw-mbq: Add support for SDCA deferred controls")
+Signed-off-by: Andrey Golovko <andrey.golovko@gmail.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260811184500.5312-1-andrey.golovko@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/amdgpu_dpm.c              |   12 +++++++++---
- drivers/gpu/drm/amd/pm/amdgpu_pm.c               |   11 ++++++++++-
- drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c |    5 ++++-
- drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c        |    2 +-
- 4 files changed, 24 insertions(+), 6 deletions(-)
+ drivers/base/regmap/regmap-sdw-mbq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-@@ -1188,8 +1188,11 @@ int amdgpu_dpm_get_pp_table(struct amdgp
- 	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
- 	int ret = 0;
+diff --git a/drivers/base/regmap/regmap-sdw-mbq.c b/drivers/base/regmap/regmap-sdw-mbq.c
+index 4895f532c806f..fe1a8c442034a 100644
+--- a/drivers/base/regmap/regmap-sdw-mbq.c
++++ b/drivers/base/regmap/regmap-sdw-mbq.c
+@@ -54,7 +54,7 @@ static int regmap_sdw_mbq_poll_busy(struct sdw_slave *slave, unsigned int reg,
+ 	reg = SDW_SDCA_CTL(SDW_SDCA_CTL_FUNC(reg), 0,
+ 			   SDCA_CTL_ENTITY_0_FUNCTION_STATUS, 0);
  
--	if (!pp_funcs->get_pp_table)
--		return 0;
-+	if (!table)
-+		return -EINVAL;
-+
-+	if (amdgpu_sriov_vf(adev) || !pp_funcs->get_pp_table || adev->scpm_enabled)
-+		return -EOPNOTSUPP;
- 
- 	mutex_lock(&adev->pm.mutex);
- 	ret = pp_funcs->get_pp_table(adev->powerplay.pp_handle,
-@@ -1721,7 +1724,10 @@ int amdgpu_dpm_set_pp_table(struct amdgp
- 	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
- 	int ret = 0;
- 
--	if (!pp_funcs->set_pp_table)
-+	if (!buf || !size)
-+		return -EINVAL;
-+
-+	if (amdgpu_sriov_vf(adev) || !pp_funcs->set_pp_table || adev->scpm_enabled)
- 		return -EOPNOTSUPP;
- 
- 	mutex_lock(&adev->pm.mutex);
---- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-@@ -2502,7 +2502,7 @@ static struct amdgpu_device_attr amdgpu_
- 	AMDGPU_DEVICE_ATTR_RO(pp_num_states,				ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF),
- 	AMDGPU_DEVICE_ATTR_RO(pp_cur_state,				ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF),
- 	AMDGPU_DEVICE_ATTR_RW(pp_force_state,				ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF),
--	AMDGPU_DEVICE_ATTR_RW(pp_table,					ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF),
-+	AMDGPU_DEVICE_ATTR_RW(pp_table,					ATTR_FLAG_BASIC),
- 	AMDGPU_DEVICE_ATTR_RW(pp_dpm_sclk,				ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF,
- 			      .attr_update = pp_dpm_clk_default_attr_update),
- 	AMDGPU_DEVICE_ATTR_RW(pp_dpm_mclk,				ATTR_FLAG_BASIC|ATTR_FLAG_ONEVF,
-@@ -2639,6 +2639,15 @@ static int default_attr_update(struct am
- 		if (amdgpu_dpm_get_apu_thermal_limit(adev, &limit) ==
- 		    -EOPNOTSUPP)
- 			*states = ATTR_STATE_UNSUPPORTED;
-+	} else if (DEVICE_ATTR_IS(pp_table)) {
-+		int ret;
-+		char *tmp = NULL;
-+
-+		ret = amdgpu_dpm_get_pp_table(adev, &tmp);
-+		if (ret == -EOPNOTSUPP || !tmp)
-+			*states = ATTR_STATE_UNSUPPORTED;
-+		else
-+			*states = ATTR_STATE_SUPPORTED;
- 	}
- 
- 	switch (gc_ver) {
---- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-@@ -634,9 +634,12 @@ static int pp_dpm_get_pp_table(void *han
- {
- 	struct pp_hwmgr *hwmgr = handle;
- 
--	if (!hwmgr || !hwmgr->pm_en || !hwmgr->soft_pp_table)
-+	if (!hwmgr || !hwmgr->pm_en || !table)
- 		return -EINVAL;
- 
-+	if (!hwmgr->soft_pp_table)
-+		return -EOPNOTSUPP;
-+
- 	*table = (char *)hwmgr->soft_pp_table;
- 	return hwmgr->soft_pp_table_size;
- }
---- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-@@ -620,7 +620,7 @@ static int smu_sys_get_pp_table(void *ha
- 		return -EOPNOTSUPP;
- 
- 	if (!smu_table->power_play_table && !smu_table->hardcode_pptable)
--		return -EINVAL;
-+		return -EOPNOTSUPP;
- 
- 	if (smu_table->hardcode_pptable)
- 		*table = smu_table->hardcode_pptable;
+-	if (ctx->readable_reg(dev, reg)) {
++	if (!ctx->readable_reg || ctx->readable_reg(dev, reg)) {
+ 		ret = read_poll_timeout(sdw_read_no_pm, val,
+ 					val < 0 || !(val & SDCA_CTL_ENTITY_0_FUNCTION_BUSY),
+ 					ctx->cfg.retry_us, ctx->cfg.timeout_us,
+-- 
+2.53.0
+
 
 
