@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E41360745;
-	Thu, 20 Aug 2026 15:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E7137A498;
+	Thu, 20 Aug 2026 15:11:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238672; cv=none; b=cKK+kzG1YPxK/JXMSsQgYcnOHxVB1IgTA2AMw71oMd7zb734Ed/p5CAxUS7aDgJYnIf7BBXtaPt/+Fu5r6oBPcRLUMc1VugCrRDE9iVs0XbP78X30thniPW1p50Q5R41s3YtffjOWt5LNd6TxZooJ/dBzCinRq6GkLM2S3vONQE=
+	t=1787238675; cv=none; b=cLQVhEs0W81idUkUUqa4LFcyeeMmsjollLHhi8KwJjZI8LwPbOAzgVIzUP0xAJ+m9dnrIMo2j1HIkiatsTVbrpXyIhjLk1cqD16yyXmH3pRALPuBWxFV1ZgvPnP1xvPoxEvCgF36Pk4yeuTTL5PvcfoX7RnduDb3MCf5UpQPTeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238672; c=relaxed/simple;
-	bh=/+R7YMGmGJspNPlxRypFsfFSxlNzHb/PJN9U7qFxcVM=;
+	s=arc-20240116; t=1787238675; c=relaxed/simple;
+	bh=4ELMtVUpiIPga9EeSxe4uk1NDx/u5JqDq00vRa20BIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JAv+AkBpC57To4Rh9oKbW8+ImOAMbo+fbjlXWgerMaeZUrK8mWQ6O6o/cL/7yABdEinKkGJrgVefuGIyHoR6cBqfz548xqk4gsemq5sw/UjE0jHJjyqAlWjhoUD/i52zQytmA2TRnDwOdFULAoNIROViSWnqFXXde+xN6qX9MI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=na72YcMr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BPdVD/jZXXe6zfnGvb/4MuE1mQtW4F5S3U/NxCLKFBFLFsd1m3K7GUoS+G9CtEWGv3T+/ZQ2bkFxbF29pH2+/lzRNS688OqPuYlGV92rCER/x0HCNJpvlW2qn//UEAwEXRoH/vVMdkDKL3S1tDBWmKU6ZpOUb4eEhy8C1qEZ1CM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Da6ueD3K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="na72YcMr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA71E1F000E9;
-	Thu, 20 Aug 2026 15:11:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Da6ueD3K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51FC1F000E9;
+	Thu, 20 Aug 2026 15:11:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238671;
-	bh=SGr8AireZam1qLNlBYCk0QEOBz3TZejBlkn8rZSO5Qw=;
+	s=korg; t=1787238674;
+	bh=jRTcKMGT1AJL+V2brY5PP4hPj6dONHdhtAgcofj9E6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=na72YcMrywD2kVIHFztpJ9RV3CTDYLloI3umjB8siM86biET9PGDzVJdnKlr6459y
-	 2A0qrC+XjcUSK0LYjyfge+xlq5ceZGuJzhGYGHkHuL3w6qPwKHE1PNZjY7N/AuFp4j
-	 i0HXOkWvWJhxOmELzXpsjdoo7ZjY9uvcIlTiiRow=
+	b=Da6ueD3Kk9H5Czyb22z2HsjNrEG33bCpEbg7ZqJ6xMh4FLzAj9PL9Lcz5OBci37WQ
+	 w5aSh0Nal66KJ661cYDTVE95vfZqGuMhN1L7voPbBdLGktBOjsZyM+1eTjePVUrZzx
+	 7XJZ8dAPFtp1tsqjpiF1tTaNZWEPTrxSWu+HZeLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Florian Westphal <fw@strlen.de>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 190/228] netfilter: flowtable: publish GC-visible tuple last
-Date: Thu, 20 Aug 2026 16:55:32 +0200
-Message-ID: <20260820145250.486345648@linuxfoundation.org>
+Subject: [PATCH 7.1 191/228] netfilter: ipset: fix list type element drift bug
+Date: Thu, 20 Aug 2026 16:55:33 +0200
+Message-ID: <20260820145250.519843043@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -45,62 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 2014ac62df9d45bb9a004a043e85df7be09ed780 ]
+[ Upstream commit 4cbd69766b35a089664cadb1f613bb85f7ef77a9 ]
 
-nf_flow_table_iterate() only treats original-direction tuple nodes as
-owning entries. Publishing the original node first lets GC observe and
-free a flow while flow_offload_add() is still inserting the reply node.
-Publish the reply node first and the original node last so GC never
-sees a partially installed flow.
+If list_set_uadd() calls list_set_replace() to swap an expired entry,
+the element count remains the same, therefore the increment must be elided.
 
-KASAN can trigger slab-use-after-free read and write reports in the
-flowtable/rhashtable path (rht_deferred_worker, jhash, flow_offload_del,
-flow_offload_lookup, etc.).
-
-Fixes: ac2a66665e23 ("netfilter: add generic flow table infrastructure")
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Assisted-by: Codex:gpt-5
+Fixes: 702b71e7c666 ("netfilter: ipset: Add element count to all set types header")
+Link: https://sashiko.dev/#/patchset/20260806101947.2802-1-fw%40strlen.de
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_flow_table_core.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/netfilter/ipset/ip_set_list_set.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_flow_table_core.c b/net/netfilter/nf_flow_table_core.c
-index b66e654393411..8b1165f2b5a49 100644
---- a/net/netfilter/nf_flow_table_core.c
-+++ b/net/netfilter/nf_flow_table_core.c
-@@ -332,17 +332,18 @@ int flow_offload_add(struct nf_flowtable *flow_table, struct flow_offload *flow)
- 	flow->timeout = nf_flowtable_time_stamp + flow_offload_get_timeout(flow);
- 
- 	err = rhashtable_insert_fast(&flow_table->rhashtable,
--				     &flow->tuplehash[0].node,
-+				     &flow->tuplehash[FLOW_OFFLOAD_DIR_REPLY].node,
- 				     nf_flow_offload_rhash_params);
- 	if (err < 0)
- 		return err;
- 
-+	/* GC only iterates original-direction entries; publish original last. */
- 	err = rhashtable_insert_fast(&flow_table->rhashtable,
--				     &flow->tuplehash[1].node,
-+				     &flow->tuplehash[FLOW_OFFLOAD_DIR_ORIGINAL].node,
- 				     nf_flow_offload_rhash_params);
- 	if (err < 0) {
- 		rhashtable_remove_fast(&flow_table->rhashtable,
--				       &flow->tuplehash[0].node,
-+				       &flow->tuplehash[FLOW_OFFLOAD_DIR_REPLY].node,
- 				       nf_flow_offload_rhash_params);
- 		return err;
- 	}
+diff --git a/net/netfilter/ipset/ip_set_list_set.c b/net/netfilter/ipset/ip_set_list_set.c
+index ca3ef9479e838..0bc2370773af3 100644
+--- a/net/netfilter/ipset/ip_set_list_set.c
++++ b/net/netfilter/ipset/ip_set_list_set.c
+@@ -301,9 +301,12 @@ list_set_uadd(struct ip_set *set, void *value, const struct ip_set_ext *ext,
+ 	e->set = set;
+ 	INIT_LIST_HEAD(&e->list);
+ 	list_set_init_extensions(set, ext, e);
+-	if (n)
++	if (n) {
+ 		list_set_replace(set, e, n);
+-	else if (next)
++		return 0;
++	}
++
++	if (next)
+ 		list_add_tail_rcu(&e->list, &next->list);
+ 	else if (prev)
+ 		list_add_rcu(&e->list, &prev->list);
 -- 
 2.53.0
 
