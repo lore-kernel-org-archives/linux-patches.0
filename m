@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE38367B6D;
-	Thu, 20 Aug 2026 15:18:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9E937E5E5;
+	Thu, 20 Aug 2026 15:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239102; cv=none; b=lmJIHrWjBROZDFMxutYufyt2rurHzs776pS7L0DBI/SJkavUp6RMIP2lmnO3UwZEqif/EKJ6DTYACCs5wUhkEwfPz+rpRTkO5Bz1FJHARNunzLwuGcbHm6bqiJgSrcztSX4nNS9NAtF7kUEu39XIE/S5fYE/HZcpg8StLUqyWkg=
+	t=1787239106; cv=none; b=q/FKcKlBXclBt50lq3hRv8ftnIdn4J3Z2enUj5Hs4cDuNr8WyDubqG9BB80+W2PPtmg5jXAMOUaZhwpYe2e6f1HQCnMAeWp6XO3NJAPsIS9jl9f6+0J3qu6H+uqnXztubTltlZ6npaugFLurFgVxTENWCHu6SkVIDiT6HvMbKSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239102; c=relaxed/simple;
-	bh=yfZx4HMIrQh4IHi7QwyCN8vIh8hMVYyUM8KJjIFX26Q=;
+	s=arc-20240116; t=1787239106; c=relaxed/simple;
+	bh=gh3z39rwY5wKgho5Z+H+qbV7IXB17CGGwSaGXdH7cRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mM6DaFpSQLW11m7iEttOYBqUcSsIGnHsLrbHCk7iiGkcxYpU1Eh3XBr1yzc4iYPpYGJXJyq/4Dg7yBSgj0irzFiz9sKf0rOaxqoVHMUlE8LE2AXqdoBO01q11iw54QEVTtxClBaW+O+IZ4/hsRZIdifdhX4AybpZ9KlzqCdYtPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Th39kWsd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mt1IKve02B9q8If6md6fIVlgtycFuzXBkFQu24e8tNUoJYYuovjeFCx6FEMwEONwtyZ12xHcZy7Hef7P/tApRaOP2U18XNufbhs6bdIPuYGi1W0PflFiQVzSd+2NfBKz9WqG9n2AkTc8Bu48QCAE3Tmu1T9y6v8prbAWbg9OwDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eHAcyyuo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Th39kWsd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4DC61F000E9;
-	Thu, 20 Aug 2026 15:18:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eHAcyyuo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A55D21F000E9;
+	Thu, 20 Aug 2026 15:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239101;
-	bh=btgwU2RFGDgmVz50HqgClhq7ih/RYhNo6T3th0SDJUA=;
+	s=korg; t=1787239104;
+	bh=iGyccwHSQiPnxi/Z8ERffswOH++mfKLbwZX3g4HMmzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Th39kWsdx22YFKxI92c2PN4xattYfxH1yM0zFmcySgyGcPJh8GgSvYeh7LJLddkyt
-	 cCh0fcUq5VZHLkbbIwbF4051DGnMfoX0ZMYzqA2QbV7zQNsVM8hFnVO9z5ykGuGoVw
-	 dChzYTAe/rtpgQV+GIOxyqQe68O4YOv2D77OzaKA=
+	b=eHAcyyuoXSo4xl9vOaDZXP/tWOIPhuf0LLbVRsqi+BPjmJXyQKdO3URZrgui1xrAv
+	 tXWn++xkkMIm4AcOCgrrI3ZgL/Y12oDvJXbU7vTbkkfTHR5g9CxOnrDOLKU0KB7m+k
+	 nFQF1GuRSuUZ2pUNodTR+NnoO99kG2cG3e4wbMLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Igor Pylypiv <ipylypiv@google.com>,
-	Niklas Cassel <cassel@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 149/217] ata: libata-scsi: terminate deferred commands on time out
-Date: Thu, 20 Aug 2026 16:55:17 +0200
-Message-ID: <20260820145242.238481412@linuxfoundation.org>
+Subject: [PATCH 6.18 150/217] binfmt_misc: dont leak the user namespace when the mount fails
+Date: Thu, 20 Aug 2026 16:55:18 +0200
+Message-ID: <20260820145242.267574095@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -53,302 +50,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 2e1d2e65e773d67dab163127f11a47dab0fbca9f ]
+[ Upstream commit b8206f516fe7cbe785cf44bf09c17c438d7c3cad ]
 
-If a command times out while we have deferred non-NCQ commands waiting to
-be issued, the SCSI EH task is not immediately woken up as the waiting
-deferred commands are never issued nor completed, thus leaving the SCSI
-host in a busy state (shost->host_failed != scsi_host_busy(shost)) which
-prevents the SCSI EH task from being woken up. Eventually, when the
-deferred commands also time out, the SCSI EH task is woken up and the
-timeout processing occurs.
+bm_get_tree() takes a reference to the user namespace and hands it to
+get_tree_keyed() as the sget key. sget_fc() moves that reference into
+sb->s_fs_info and clears fc->s_fs_info, so from that point on the
+superblock owns it and bm_free() doesn't see it anymore.
 
-Avoid this unnecessary SCSI EH task wake-up additional time by scheduling
-a retry of all waiting deferred QCs, using the eh_timed_out SCSI host
-template operation. The function ata_scsi_eh_timed_out() is introduced to
-implement this operation.
+The superblock drops it in ->put_super(). But generic_shutdown_super()
+only calls ->put_super() from inside the if (sb->s_root) branch, so
+nothing releases it when bm_fill_super() fails:
 
-However, terminating deferred commands with DID_REQUEUE to force a retry
-by calling the function ata_scsi_requeue_deferred_qc() may still keep the
-SCSI host in a busy state because the block layer may immediately re-issue
-these commands. The solution to this is to schedule libata EH for the
-port which suffered the command timeout to prevent accepting any new
-command. ata_scsi_requeue_deferred_qc() is modified to add a call to
-ata_port_schedule_eh() for this purpose.
+- The kzalloc_obj() failure leaves s_root NULL and the whole branch is
+  skipped.
 
-In addition to this change, ata_scsi_requeue_deferred_qc() is also
-modified to take a new timedout_scmd scsi command argument which indicates
-the SCSI command that timed out. With this additional argument,
-ata_scsi_requeue_deferred_qc() can now also terminate with DID_TIME_OUT
-any timed out deferred qc, which simplifies ata_scsi_cmd_error_handler().
-In this case, ata_scsi_requeue_deferred_qc() returns SCSI_EH_DONE, with
-this return value propagated back to the ata_scsi_eh_timed_out() operation
-to indicate to scsi_timeout() that the timed out command was handled and
-no further processing is needed.
+- A simple_fill_super() failure in the file loop leaves s_root set, but
+  s_op still points at simple_super_operations, which has no
+  ->put_super(). bm_fill_super() installs s_ops only once
+  simple_fill_super() returned success, and installing it earlier
+  wouldn't help either because simple_fill_super() overwrites s_op.
 
-For non-timed out deferred qc that need to be retried,
-ata_scsi_requeue_deferred_qc() returns SCSI_EH_NOT_HANDLED, thus
-indicating to scsi_timeout() that the timed out command needs to go
-through the SCSI EH (and libata EH) processing by adding it to the EH work
-queue with scsi_eh_scmd_add().
+Either way vfs_get_super() calls deactivate_locked_super() and the
+reference is gone for good. binfmt_misc mounts are available in a user
+namespace and both the inode and the dentry cache are SLAB_ACCOUNT, so
+an unprivileged caller under a tight memory cgroup can fail
+simple_fill_super() on demand and leak one user namespace per attempt.
 
-One side effect of these changes is that the function atapi_qc_complete()
-needs to be modified to ensure that a deferred ATAPI command that needs
-to be retried is completed with DID_REQUEUE instead of the default
-SAM_STAT_GOOD status, and a command that timed out is completed with
-DID_TIME_OUT instead of SAM_STAT_CHECK_CONDITION.
+Drop the reference in ->kill_sb() instead, which runs unconditionally,
+the same way nfsd and rpc_pipefs release their keyed s_fs_info.
 
-Fixes: 0ea84089dbf6 ("ata: libata-scsi: avoid Non-NCQ command starvation")
+That also stops ->put_super() from clearing s_fs_info while the
+superblock is still on @fs_supers. generic_shutdown_super() leaves it
+there on purpose so that sget_fc() keeps finding it until kill_sb() has
+run, but a NULL s_fs_info makes test_keyed_super() miss it, so a
+concurrent mount for the same user namespace skips the grab_super()
+wait and creates a second superblock for a namespace that is still
+being torn down.
+
+Link: https://patch.msgid.link/20260728-work-binfmt_misc-usernsleak-v1-1-dbd8d5e626e7@kernel.org
+Fixes: 21ca59b365c0 ("binfmt_misc: enable sandboxed mounts")
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Igor Pylypiv <ipylypiv@google.com>
-Tested-by: Igor Pylypiv <ipylypiv@google.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-eh.c   |   29 ++---------
- drivers/ata/libata-scsi.c |  115 ++++++++++++++++++++++++++++++++++++++++------
- drivers/ata/libata.h      |    3 -
- include/linux/libata.h    |    2 
- 4 files changed, 110 insertions(+), 39 deletions(-)
+ fs/binfmt_misc.c |   32 +++++++++++++++-----------------
+ 1 file changed, 15 insertions(+), 17 deletions(-)
 
---- a/drivers/ata/libata-eh.c
-+++ b/drivers/ata/libata-eh.c
-@@ -648,29 +648,12 @@ void ata_scsi_cmd_error_handler(struct S
- 		set_host_byte(scmd, DID_OK);
+--- a/fs/binfmt_misc.c
++++ b/fs/binfmt_misc.c
+@@ -928,18 +928,9 @@ static const struct file_operations bm_s
  
- 		ata_qc_for_each_raw(ap, qc, i) {
--			if (qc->scsicmd != scmd)
--				continue;
--			if ((qc->flags & ATA_QCFLAG_ACTIVE) ||
--			    qc == qc->dev->link->deferred_qc)
-+			if (qc->scsicmd == scmd &&
-+			    qc->flags & ATA_QCFLAG_ACTIVE)
- 				break;
- 		}
+ /* Superblock handling */
  
--		if (i < ATA_MAX_QUEUE && qc == qc->dev->link->deferred_qc) {
--			/*
--			 * This is a deferred command that timed out while
--			 * waiting for the command queue to drain. Since the qc
--			 * is not active yet (deferred_qc is still set, so the
--			 * deferred qc work has not issued the command yet),
--			 * simply signal the timeout by finishing the SCSI
--			 * command and clear the deferred qc to prevent the
--			 * deferred qc work from issuing this qc.
--			 */
--			WARN_ON_ONCE(qc->flags & ATA_QCFLAG_ACTIVE);
--			qc->dev->link->deferred_qc = NULL;
--			cancel_work(&qc->dev->link->deferred_qc_work);
--			set_host_byte(scmd, DID_TIME_OUT);
--			scsi_eh_finish_cmd(scmd, &ap->eh_done_q);
--		} else if (i < ATA_MAX_QUEUE) {
-+		if (i < ATA_MAX_QUEUE) {
- 			/* the scmd has an associated qc */
- 			if (!(qc->flags & ATA_QCFLAG_EH)) {
- 				/* which hasn't failed yet, timeout */
-@@ -944,10 +927,10 @@ static void ata_eh_set_pending(struct at
- 	ap->pflags |= ATA_PFLAG_EH_PENDING;
+-static void bm_put_super(struct super_block *sb)
+-{
+-	struct user_namespace *user_ns = sb->s_fs_info;
+-
+-	sb->s_fs_info = NULL;
+-	put_user_ns(user_ns);
+-}
+-
+ static const struct super_operations s_ops = {
+ 	.statfs		= simple_statfs,
+ 	.evict_inode	= bm_evict_inode,
+-	.put_super	= bm_put_super,
+ };
  
+ static int bm_fill_super(struct super_block *sb, struct fs_context *fc)
+@@ -998,13 +989,12 @@ static int bm_fill_super(struct super_bl
  	/*
--	 * If we have a deferred qc, requeue it so that it is retried once EH
--	 * completes.
-+	 * If we have deferred QCs, requeue them so that the SCSI EH task can
-+	 * run.
+ 	 * When the binfmt_misc superblock for this userns is shutdown
+ 	 * ->enabled might have been set to false and we don't reinitialize
+-	 * ->enabled again in put_super() as someone might already be mounting
+-	 * binfmt_misc again. It also would be pointless since by the time
+-	 * ->put_super() is called we know that the binary type list for this
+-	 * bintfmt_misc mount is empty making load_misc_binary() return
+-	 * -ENOEXEC independent of whether ->enabled is true. Instead, if
+-	 * someone mounts binfmt_misc for the first time or again we simply
+-	 * reset ->enabled to true.
++	 * ->enabled again during shutdown as someone might already be mounting
++	 * binfmt_misc again. It also would be pointless since by then we know
++	 * that the binary type list for this binfmt_misc mount is empty making
++	 * load_misc_binary() return -ENOEXEC independent of whether ->enabled
++	 * is true. Instead, if someone mounts binfmt_misc for the first time or
++	 * again we simply reset ->enabled to true.
  	 */
--	ata_scsi_requeue_deferred_qc(ap);
-+	ata_scsi_requeue_deferred_qc(ap, NULL);
+ 	misc->enabled = true;
  
- 	if (!fastdrain)
- 		return;
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -1680,30 +1680,81 @@ void ata_scsi_deferred_qc_work(struct wo
- 	spin_unlock_irqrestore(ap->lock, flags);
- }
+@@ -1030,6 +1020,14 @@ static const struct fs_context_operation
+ 	.get_tree	= bm_get_tree,
+ };
  
--void ata_scsi_requeue_deferred_qc(struct ata_port *ap)
-+enum scsi_timeout_action ata_scsi_requeue_deferred_qc(struct ata_port *ap,
-+					struct scsi_cmnd *timedout_scmd)
- {
-+	enum scsi_timeout_action action = SCSI_EH_NOT_HANDLED;
-+	struct ata_queued_cmd *qc;
- 	struct ata_link *link;
-+	u32 host_byte;
- 
- 	lockdep_assert_held(ap->lock);
- 
- 	/*
--	 * If we have a deferred qc when a reset occurs or NCQ commands fail,
--	 * do not try to be smart about what to do with this deferred command
--	 * and simply requeue it by completing it with DID_REQUEUE.
-+	 * If we have deferred QCs when a reset, a timeout or an NCQ command
-+	 * fails, do not try to be smart about what to do with the deferred
-+	 * commands and simply terminate them and let the SCSI layer decide
-+	 * what to do.
- 	 */
- 	ata_for_each_link(link, ap, PMP_FIRST) {
--		struct ata_queued_cmd *qc = link->deferred_qc;
--		struct scsi_cmnd *scmd;
-+		qc = link->deferred_qc;
-+		if (!qc)
-+			continue;
-+
-+		/*
-+		 * Clear the deferred QC so that the deferred work does not try
-+		 * to issue it.
-+		 */
-+		link->deferred_qc = NULL;
-+		cancel_work(&link->deferred_qc_work);
- 
--		if (qc) {
--			scmd = qc->scsicmd;
--			link->deferred_qc = NULL;
--			cancel_work(&link->deferred_qc_work);
--			ata_qc_free(qc);
--			scmd->result = (DID_REQUEUE << 16);
--			scsi_done(scmd);
-+		/*
-+		 * We are going to complete some scsi command, either with
-+		 * DID_TIME_OUT if the command timed out while waiting for being
-+		 * issued, or with DID_REQUEUE if another command timed out or
-+		 * we had a failed command. However, the block layer may re-issue
-+		 * these commands immediately, keeping the scsi host busy and
-+		 * thus preventing the SCSI EH task from running.
-+		 * So schedule EH on the port to prevent accepting new commands
-+		 * until everything is sorted out with the error or timeout that
-+		 * got us here in the first place. Note that we set EH pending
-+		 * on the port before calling ata_port_schedule_eh() so that we
-+		 * do not reenter this function from ata_eh_set_pending() with
-+		 * timedout_scmd being NULL and erroneously retry deferred QCs
-+		 * that have timed out on other links.
-+		 */
-+		if (!ata_port_eh_scheduled(ap)) {
-+			ap->pflags |= ATA_PFLAG_EH_PENDING;
-+			ata_port_schedule_eh(ap);
- 		}
-+
-+		/*
-+		 * If we are being called from scsi_timeout(), then we have a
-+		 * non-NULL timedout_scmd. If the timed out command is for a
-+		 * deferred QC, terminate that deferred QC with DID_TIME_OUT and
-+		 * requeue all other deferred QCs. In this case we need to
-+		 * return SCSI_EH_DONE, because the timed out command was
-+		 * handled.
-+		 * If the timed out command is not for a deferred QC, we need to
-+		 * requeue all deferred QCs, and return SCSI_EH_NOT_HANDLED so
-+		 * that the timed out command gets added to the EH work queue
-+		 * with scsi_eh_scmd_add(), for later handling with libata EH
-+		 * ata_scsi_cmd_error_handler().
-+		 * If timedout_scmd is NULL, we simply need to requeue all
-+		 * deferred QCs and the return value does not matter as we were
-+		 * not called from scsi_timeout().
-+		 */
-+		if (timedout_scmd && qc->scsicmd == timedout_scmd) {
-+			host_byte = DID_TIME_OUT;
-+			action = SCSI_EH_DONE;
-+		} else {
-+			host_byte = DID_REQUEUE;
-+		}
-+		qc->scsicmd->result = host_byte << 16;
-+		ata_qc_done(qc);
- 	}
-+
-+	return action;
- }
- 
- static void ata_scsi_schedule_deferred_qc(struct ata_link *link)
-@@ -1722,13 +1773,41 @@ static void ata_scsi_schedule_deferred_q
- 		return;
- 
- 	if (ata_port_eh_scheduled(ap)) {
--		ata_scsi_requeue_deferred_qc(ap);
-+		ata_scsi_requeue_deferred_qc(ap, NULL);
- 		return;
- 	}
- 	if (!ap->ops->qc_defer(qc))
- 		queue_work(system_highpri_wq, &link->deferred_qc_work);
- }
- 
-+static enum scsi_timeout_action
-+ata_scsi_retry_deferred_qc(struct ata_port *ap, struct scsi_cmnd *scmd)
++static void bm_kill_sb(struct super_block *sb)
 +{
-+	enum scsi_timeout_action action;
-+	unsigned long flags;
++	struct user_namespace *user_ns = sb->s_fs_info;
 +
-+	spin_lock_irqsave(ap->lock, flags);
-+	action = ata_scsi_requeue_deferred_qc(ap, scmd);
-+	spin_unlock_irqrestore(ap->lock, flags);
-+
-+	return action;
++	kill_litter_super(sb);
++	put_user_ns(user_ns);
 +}
 +
-+enum scsi_timeout_action ata_scsi_eh_timed_out(struct scsi_cmnd *scmd)
-+{
-+	struct ata_port *ap = ata_shost_to_port(scmd->device->host);
-+
-+	/*
-+	 * ata_scsi_cmd_error_handler() takes care of commands that timed out
-+	 * while executing. However, if we have deferred QCs while a timeout
-+	 * triggers, we must requeue these commands for retry so that we do not
-+	 * unnecessarily delay starting the SCSI EH task until these deferred
-+	 * commands also time out.
-+	 */
-+	return ata_scsi_retry_deferred_qc(ap, scmd);
-+}
-+EXPORT_SYMBOL_GPL(ata_scsi_eh_timed_out);
-+
- static void ata_scsi_qc_complete(struct ata_queued_cmd *qc)
+ static int bm_init_fs_context(struct fs_context *fc)
  {
- 	struct ata_link *link = qc->dev->link;
-@@ -2933,7 +3012,13 @@ static void atapi_qc_complete(struct ata
- 		if (qc->cdb[0] == ALLOW_MEDIUM_REMOVAL && qc->dev->sdev)
- 			qc->dev->sdev->locked = 0;
+ 	fc->ops = &bm_context_ops;
+@@ -1046,7 +1044,7 @@ static struct file_system_type bm_fs_typ
+ 	.name		= "binfmt_misc",
+ 	.init_fs_context = bm_init_fs_context,
+ 	.fs_flags	= FS_USERNS_MOUNT,
+-	.kill_sb	= kill_litter_super,
++	.kill_sb	= bm_kill_sb,
+ };
+ MODULE_ALIAS_FS("binfmt_misc");
  
--		qc->scsicmd->result = SAM_STAT_CHECK_CONDITION;
-+		if (!cmd->result)
-+			cmd->result = SAM_STAT_CHECK_CONDITION;
-+		ata_qc_done(qc);
-+		return;
-+	}
-+
-+	if (cmd->result) {
- 		ata_qc_done(qc);
- 		return;
- 	}
---- a/drivers/ata/libata.h
-+++ b/drivers/ata/libata.h
-@@ -172,7 +172,8 @@ int ata_scsi_dev_config(struct scsi_devi
- 		struct ata_device *dev);
- int __ata_scsi_queuecmd(struct scsi_cmnd *scmd, struct ata_device *dev);
- void ata_scsi_deferred_qc_work(struct work_struct *work);
--void ata_scsi_requeue_deferred_qc(struct ata_port *ap);
-+enum scsi_timeout_action ata_scsi_requeue_deferred_qc(struct ata_port *ap,
-+						      struct scsi_cmnd *scmd);
- 
- /* libata-eh.c */
- extern unsigned int ata_internal_cmd_timeout(struct ata_device *dev, u8 cmd);
---- a/include/linux/libata.h
-+++ b/include/linux/libata.h
-@@ -1151,6 +1151,7 @@ extern int ata_scsi_ioctl(struct scsi_de
- #define ATA_SCSI_COMPAT_IOCTL /* empty */
- #endif
- extern int ata_scsi_queuecmd(struct Scsi_Host *h, struct scsi_cmnd *cmd);
-+enum scsi_timeout_action ata_scsi_eh_timed_out(struct scsi_cmnd *cmd);
- #if IS_REACHABLE(CONFIG_ATA)
- bool ata_scsi_dma_need_drain(struct request *rq);
- #else
-@@ -1460,6 +1461,7 @@ extern const struct attribute_group *ata
- 	.ioctl			= ata_scsi_ioctl,		\
- 	ATA_SCSI_COMPAT_IOCTL					\
- 	.queuecommand		= ata_scsi_queuecmd,		\
-+	.eh_timed_out		= ata_scsi_eh_timed_out,	\
- 	.dma_need_drain		= ata_scsi_dma_need_drain,	\
- 	.this_id		= ATA_SHT_THIS_ID,		\
- 	.emulated		= ATA_SHT_EMULATED,		\
 
 
