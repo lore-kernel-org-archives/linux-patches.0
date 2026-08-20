@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEFF47D46A;
-	Thu, 20 Aug 2026 16:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FB825C6EE;
+	Thu, 20 Aug 2026 16:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244497; cv=none; b=BauYRj0dtHrfc4rZ+tCRWU2D0XZlzrZBkA2IbuGKcKhP5R32iOpBUOZb5OGGxL6WzrDabhnp8tbhdesCl0a43e9J/y805egCMP0nUF/xzvK0YCRhg6g06R8F1JZXjIlracWPr90gqWNGe8p53oXn2BOwSzAF5fsKzwHSo0uPcTE=
+	t=1787244501; cv=none; b=cX3N3ztyvhDevawtRbZZ1Rag8q/KOaHe7EPcAcjYDB7s64koIeqTRlnbYip5gR/wNkQ85YpUAPwlP9CXa2rDYounSlSppFIR+FcLosI5z6qS+gsUBKOlzM9xHCROSb035B0EG4slnObR2C/to9jkWkNNZ5d7LnVfUoWbJSLvnMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244497; c=relaxed/simple;
-	bh=S58GJmzfuvJZnuX/sRn0Mly3Bck4BPcAXX/w5A5rlgs=;
+	s=arc-20240116; t=1787244501; c=relaxed/simple;
+	bh=wLmK2o2SvxdcGRksPVitFMivS7ZbtukqQaIDNs/EdeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bka9mOnVwuuu4t7owtkMOhjRDYFYBTfNij87zKP7sKBdS1Ng+oPOMNDoIZZP88DHhk1LQJW/MKIRvgbYukaG3Tq21oPeBr//L1ImPkp0xU6S97d/jMmTMm4XTVa30ByF7+n9Eq1c2+1fpq8TCcngJU+5CaqIlykFVM+6ResVrT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rhCDv6M0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LBzrRwXnNuLOXMSobc98Bn73ML3C/yi5tauavtht0ro8whJX44Oqw+tCgQK3aHghjGlVoEOHK6gysGg/azf0XAJzjmzWhf2AITCqijw4Rn8RiWNMzOQTW1f+zJGlAcrWA3dZm59AXFc/9J6pSg7C9Z1bHdyZCrJaVqCZuuTLfDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZigqSVa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rhCDv6M0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4762D1F000E9;
-	Thu, 20 Aug 2026 16:48:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZigqSVa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254391F000E9;
+	Thu, 20 Aug 2026 16:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244496;
-	bh=2WZ9VvQTpe3FmwQxwQo6AW7XYDqDnMpUAdeaAiJFuVo=;
+	s=korg; t=1787244499;
+	bh=5DBBuOg2cD4pv/16sHwy80fefceSELYP+Ymi94+aU+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rhCDv6M0p4wXGQ9S6J7rveoUQ1Kxqir87pqKs7ctwpRhqcXIDiw8zUMQr8Gulym2g
-	 kiMAi9ysLs+h7CpY5Q4l/pJ0av2hF0IaNcud8JVL+dWhGcaMMf0og+KoMon3I2DG/Y
-	 T++jEQYVJzmgadnA5pQfC8yUQ24Sop94dHuxCT9M=
+	b=FZigqSVaoe9F36bsNuSjvKmrpFktOrBDouAX4qwQAGbfK3WrRh7wqcMoLvKVQzr+c
+	 0WEZ/WxQgOd0cI1Itgo0MFLKOqHykwFJJjoCf47e4PvnGR/azuzTd9rNHNkj3ZnvWY
+	 g6ri1hLshT7rR8Vi6uZwPCVLdSl7mGCNw0B8ANaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sangho Lee <kudo3228@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Marcel Holtmann <marcel@holtmann.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 190/235] skbuff: introduce skb_pull_data
-Date: Thu, 20 Aug 2026 16:57:06 +0200
-Message-ID: <20260820145222.301158638@linuxfoundation.org>
+Subject: [PATCH 5.10 191/235] Bluetooth: HIDP: reject frames without a transaction header
+Date: Thu, 20 Aug 2026 16:57:07 +0200
+Message-ID: <20260820145222.333261427@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -53,77 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Sangho Lee <kudo3228@gmail.com>
 
-[ Upstream commit 13244cccc2b61ec715f0ac583d3037497004d4a5 ]
+[ Upstream commit 47778d2c2087b5d192398f6fddf692d16a5431cf ]
 
-Like skb_pull but returns the original data pointer before pulling the
-data after performing a check against sbk->len.
+hidp_recv_ctrl_frame() and hidp_recv_intr_frame() read skb->data[0]
+before checking that the L2CAP SDU contains a transaction header. A
+connected HIDP peer can send an empty basic-mode SDU and make both paths
+use an uninitialized byte from skb tailroom.
 
-This allows to change code that does "struct foo *p = (void *)skb->data;"
-which is hard to audit and error prone, to:
+KMSAN reports the use in hidp_session_run(), with the uninitialized value
+originating in __alloc_skb() through vhci_write(). The control path
+produces two reports and the interrupt path produces one.
 
-        p = skb_pull_data(skb, sizeof(*p));
-        if (!p)
-                return;
+The byte can also be controlled by a malformed lower-layer packet. If an
+HCI ACL packet contains an L2CAP PDU with a declared zero-length payload
+followed by an extra 0x15 byte, l2cap_recv_acldata() reduces skb->len to
+the declared PDU length before dispatch. The current HIDP path nevertheless
+consumes the extra byte as HIDP_TRANS_HID_CONTROL |
+HIDP_CTRL_VIRTUAL_CABLE_UNPLUG and terminates the HIDP session. With this
+change, the same packet is discarded and a subsequent feature report
+request succeeds.
 
-Which is both safer and cleaner.
+Pull the transaction header with skb_pull_data() and discard frames that
+do not contain it.
 
-Acked-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sangho Lee <kudo3228@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-Stable-dep-of: 47778d2c2087 ("Bluetooth: HIDP: reject frames without a transaction header")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/skbuff.h |    2 ++
- net/core/skbuff.c      |   24 ++++++++++++++++++++++++
- 2 files changed, 26 insertions(+)
+ net/bluetooth/hidp/core.c |   25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -2317,6 +2317,8 @@ static inline void *skb_pull_inline(stru
- 	return unlikely(len > skb->len) ? NULL : __skb_pull(skb, len);
+--- a/net/bluetooth/hidp/core.c
++++ b/net/bluetooth/hidp/core.c
+@@ -551,16 +551,18 @@ static int hidp_process_data(struct hidp
+ static void hidp_recv_ctrl_frame(struct hidp_session *session,
+ 					struct sk_buff *skb)
+ {
+-	unsigned char hdr, type, param;
++	unsigned char type, param;
++	u8 *hdr;
+ 	int free_skb = 1;
+ 
+ 	BT_DBG("session %p skb %p len %d", session, skb, skb->len);
+ 
+-	hdr = skb->data[0];
+-	skb_pull(skb, 1);
++	hdr = skb_pull_data(skb, 1);
++	if (!hdr)
++		goto free;
+ 
+-	type = hdr & HIDP_HEADER_TRANS_MASK;
+-	param = hdr & HIDP_HEADER_PARAM_MASK;
++	type = *hdr & HIDP_HEADER_TRANS_MASK;
++	param = *hdr & HIDP_HEADER_PARAM_MASK;
+ 
+ 	switch (type) {
+ 	case HIDP_TRANS_HANDSHAKE:
+@@ -581,6 +583,7 @@ static void hidp_recv_ctrl_frame(struct
+ 		break;
+ 	}
+ 
++free:
+ 	if (free_skb)
+ 		kfree_skb(skb);
+ }
+@@ -588,14 +591,15 @@ static void hidp_recv_ctrl_frame(struct
+ static void hidp_recv_intr_frame(struct hidp_session *session,
+ 				struct sk_buff *skb)
+ {
+-	unsigned char hdr;
++	u8 *hdr;
+ 
+ 	BT_DBG("session %p skb %p len %d", session, skb, skb->len);
+ 
+-	hdr = skb->data[0];
+-	skb_pull(skb, 1);
++	hdr = skb_pull_data(skb, 1);
++	if (!hdr)
++		goto free;
+ 
+-	if (hdr == (HIDP_TRANS_DATA | HIDP_DATA_RTYPE_INPUT)) {
++	if (*hdr == (HIDP_TRANS_DATA | HIDP_DATA_RTYPE_INPUT)) {
+ 		hidp_set_timer(session);
+ 
+ 		if (session->input)
+@@ -607,9 +611,10 @@ static void hidp_recv_intr_frame(struct
+ 			BT_DBG("report len %d", skb->len);
+ 		}
+ 	} else {
+-		BT_DBG("Unsupported protocol header 0x%02x", hdr);
++		BT_DBG("Unsupported protocol header 0x%02x", *hdr);
+ 	}
+ 
++free:
+ 	kfree_skb(skb);
  }
  
-+void *skb_pull_data(struct sk_buff *skb, size_t len);
-+
- void *__pskb_pull_tail(struct sk_buff *skb, int delta);
- 
- static inline void *__pskb_pull(struct sk_buff *skb, unsigned int len)
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -1977,6 +1977,30 @@ void *skb_pull(struct sk_buff *skb, unsi
- EXPORT_SYMBOL(skb_pull);
- 
- /**
-+ *	skb_pull_data - remove data from the start of a buffer returning its
-+ *	original position.
-+ *	@skb: buffer to use
-+ *	@len: amount of data to remove
-+ *
-+ *	This function removes data from the start of a buffer, returning
-+ *	the memory to the headroom. A pointer to the original data in the buffer
-+ *	is returned after checking if there is enough data to pull. Once the
-+ *	data has been pulled future pushes will overwrite the old data.
-+ */
-+void *skb_pull_data(struct sk_buff *skb, size_t len)
-+{
-+	void *data = skb->data;
-+
-+	if (skb->len < len)
-+		return NULL;
-+
-+	skb_pull(skb, len);
-+
-+	return data;
-+}
-+EXPORT_SYMBOL(skb_pull_data);
-+
-+/**
-  *	skb_trim - remove end from a buffer
-  *	@skb: buffer to alter
-  *	@len: new length
 
 
