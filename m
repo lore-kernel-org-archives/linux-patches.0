@@ -1,49 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3B647D46A;
-	Thu, 20 Aug 2026 16:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585D7246781;
+	Thu, 20 Aug 2026 16:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244232; cv=none; b=ijfmu9D+ua/AhVcbx2kodl/fbWZJ5cMdf9GhZhuJfI33kEZ6P/HAwG6hrtj/D/wgHt2kH8KeehsYwBZoW8FxmhacO7ZjCBSGgmq77alJCfvzlpMhjMJxMVe1MVYCEGMMuFdJ9pEVr7qIPu/ei7zde4u5RZaMdaAjAtWeAva0Lyw=
+	t=1787244235; cv=none; b=CqxhqVGoNS454aaVYQmz3ZvdA5juHRBSKNCxKLjCDsBAR0xrlr4uJnexr2jixf8pr5tG7ouZSHfc7BbT9G7qojMVVUpgR8TDefMdalsQCm36suGm+6ZZixXaB3jq8G2CeiEHSj7bB3tzJXuvO+aJbOezx/ygRH5ooLRFPkk5W1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244232; c=relaxed/simple;
-	bh=WS1ODlWY50x/kBJvF2z5GFT6nvVZdjGyeReQKG4P758=;
+	s=arc-20240116; t=1787244235; c=relaxed/simple;
+	bh=CV9VqYcDOkAHHY91ZNddfZyaVZVe9dXqjXEMJcGOLO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lDJ84mcf4ACEb2QP0+RZQETd8wWUeKCcDC7DmMELfWh+gU/WlBocP1vUhcNksC08lrPXUsRk9apuk5IyL8zDGwKXnAU1/kDtYkkTo+KHB+DZxyYNDSFWes9+B3ALeWRq9PP5hYe+RsqsFE9eE6CdVw8J1cI+cH47KIvpXEpYgSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azHvfNmz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p8UBoixGcpygmuDyovfHXHjAc/puTfoiJnpHMNsD6fAQK4iN9npCItkHuguOXKB9gnsLKZscN1JuUBQ74Tf5Dz8kHiuT0Ucj1m6JAOkQqx8BYkEhRhUMdVLAktJ7AnlgkeRW7RdOwSsFYODeYT3qWsPFBacci0AOaKyZRWNd+2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0QX4cP8Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azHvfNmz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38291F000E9;
-	Thu, 20 Aug 2026 16:43:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0QX4cP8Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1DBA1F000E9;
+	Thu, 20 Aug 2026 16:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244231;
-	bh=HrLJ91RkUTdubwSH/CkY7wUV8PZ9kF4ldwrGWuhADHM=;
+	s=korg; t=1787244234;
+	bh=ckyMdkmR2aDhH1miotHYfW44MLTmsVobug3X7KTuiSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=azHvfNmz3PEDn5w17jmznfSpN13QKot7o2OR3ofIEvKS3InA/vTppCZSEehr+una5
-	 LrSUZM+GnHeSp6r8taCxctX/4pToTwjloyH1hJGufAE7ZGSZCEYOJ5vUkvSjQLy8l9
-	 f1ZdV1e0m2cQPFHgar063cAKcKgrp/W6bKtVl39g=
+	b=0QX4cP8YQZCNP1ppbDMrJEsBbZkX/WR8brxxmN3bxqu9llAJj+cdhni+zETsxB4nI
+	 /crK1wqARU/Zpz3d/we3eViUOd7IiohgoKh0iPeI2SBsxD+2E3TibmOy0MElgqZ/8z
+	 GV77guiJmU0Cq3+72kOIrd9GZYqYmqu88c5XEm4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Li Daming <d4n.for.sec@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
+	Li Xiasong <lixiasong1@huawei.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 059/235] rxrpc: serialize kernel accept preallocation with socket teardown
-Date: Thu, 20 Aug 2026 16:54:55 +0200
-Message-ID: <20260820145218.236509229@linuxfoundation.org>
+Subject: [PATCH 5.10 060/235] tipc: restrict socket queue dumps in enqueue tracepoints
+Date: Thu, 20 Aug 2026 16:54:56 +0200
+Message-ID: <20260820145218.266262181@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -62,79 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Daming <d4n.for.sec@gmail.com>
+From: Li Xiasong <lixiasong1@huawei.com>
 
-[ Upstream commit dc175389b18c29a5303ee83169ec653adfae3e17 ]
+[ Upstream commit acd7df8d955480a6f6e5bb809da67b1500cc3cf4 ]
 
-rxrpc_kernel_charge_accept() reads rx->backlog without any
-socket/backlog synchronization and passes that raw pointer into
-rxrpc_service_prealloc_one(). A concurrent rxrpc_discard_prealloc()
-sets rx->backlog = NULL and frees the backlog rings, so a kernel
-preallocation worker can keep using a freed struct rxrpc_backlog
-while updating *_backlog_head/tail and array slots.
+tipc_sk_enqueue() runs with sk->sk_lock.slock held while the socket is
+owned by user context. The spinlock protects the backlog queue in this
+path, but it does not serialize against the socket owner consuming or
+purging sk_receive_queue.
 
-Serialize the state check and backlog lookup with the socket lock,
-and reject kernel preallocation once teardown has disabled
-listening or discarded the service backlog.
+KASAN reported:
 
-Fixes: 00e907127e6f ("rxrpc: Preallocate peers, conns and calls for incoming service requests")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Li Daming <d4n.for.sec@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260609140911.838677-6-dhowells@redhat.com
+  CPU: 14 UID: 0 PID: 1050 Comm: tipc3 Not tainted 7.1.0-rc6+ #126 PREEMPT(lazy)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  Call Trace:
+    <TASK>
+    dump_stack_lvl+0x76/0xa0 lib/dump_stack.c:123
+    print_report+0xce/0x5b0 mm/kasan/report.c:482
+    kasan_report+0xc6/0x100 mm/kasan/report.c:597
+    __asan_report_load4_noabort+0x14/0x30 mm/kasan/report_generic.c:380
+    tipc_skb_dump+0x1327/0x16f0 net/tipc/trace.c:73
+    tipc_list_dump+0x208/0x2e0 net/tipc/trace.c:187
+    tipc_sk_dump+0xaf6/0xd60 net/tipc/socket.c:3996
+    trace_event_raw_event_tipc_sk_class+0x312/0x5a0 net/tipc/trace.h:188
+    tipc_sk_rcv+0xb1d/0x1d50 net/tipc/socket.c:2497
+    tipc_node_xmit+0x1c3/0x1440 net/tipc/node.c:1689
+    __tipc_sendmsg+0x97a/0x1440 net/tipc/socket.c:1512
+    tipc_sendmsg+0x52/0x80 net/tipc/socket.c:1400
+    sock_sendmsg+0x2f6/0x3e0 net/socket.c:825
+    splice_to_socket+0x7f9/0x1010 fs/splice.c:884
+    do_splice+0xe21/0x2330 fs/splice.c:936
+    __do_splice+0x153/0x260 fs/splice.c:1431
+    __x64_sys_splice+0x150/0x230 fs/splice.c:1616
+    x64_sys_call+0xeb5/0x2790 arch/x86/entry/syscall_64.c:41
+    do_syscall_64+0xf3/0x620 arch/x86/entry/syscall_64.c:63
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e arch/x86/entry/entry_64.S:130
+  RIP: 0033:0x71624e8aafe2
+  Code: 08 0f 85 71 3a ff ff 49 89 fb 48 89 f0 48 89 d7 48 89 ce 4c 89 c2 4d 89 ca 4c 8b 44 24 08 4c 8b 4c 24 10 4c 89 5c 24 08 0f 05 <c3> 66 2e 0f 1f 84 00 00 00 00 00 66 2e 0f 1f 84 00 00 00 00 00 66
+  RSP: 002b:0000716157ffed68 EFLAGS: 00000246 ORIG_RAX: 0000000000000113
+  RAX: ffffffffffffffda RBX: 0000716157fff6c0 RCX: 000071624e8aafe2
+  RDX: 000000000000005f RSI: 0000000000000000 RDI: 0000000000000066
+  RBP: 0000716157ffed90 R08: 0000000000008000 R09: 0000000000000001
+  R10: 0000000000000000 R11: 0000000000000246 R12: ffffffffffffff00
+  R13: 0000000000000021 R14: 0000000000000000 R15: 00007fff89799c40
+    </TASK>
+
+The TIPC_DUMP_ALL tracepoints in tipc_sk_enqueue() also dump
+sk_receive_queue and can therefore dereference skbs that the socket
+owner has already dequeued or freed. Restrict these dumps to
+TIPC_DUMP_SK_BKLGQ, which matches the queue protected by the held
+spinlock.
+
+Keep the change limited to the enqueue path, where the unsafe queue dump
+is reachable while the socket is owned by user context.
+
+Fixes: 01e661ebfbad ("tipc: add trace_events for tipc socket")
+Cc: stable@vger.kernel.org
+Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260611135647.3666727-1-lixiasong1@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ kept 6.1's extra user_attach_call argument in the rxrpc_service_prealloc_one() call ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/call_accept.c |   27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+ net/tipc/socket.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/rxrpc/call_accept.c
-+++ b/net/rxrpc/call_accept.c
-@@ -481,14 +481,27 @@ int rxrpc_kernel_charge_accept(struct so
- 			       unsigned long user_call_ID, gfp_t gfp,
- 			       unsigned int debug_id)
- {
--	struct rxrpc_sock *rx = rxrpc_sk(sock->sk);
--	struct rxrpc_backlog *b = rx->backlog;
-+	struct rxrpc_backlog *b;
-+	struct rxrpc_sock *rx;
-+	struct sock *sk;
-+	int ret;
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -2455,17 +2455,17 @@ static void tipc_sk_enqueue(struct sk_bu
+ 			atomic_set(dcnt, 0);
+ 		lim = rcvbuf_limit(sk, skb) + atomic_read(dcnt);
+ 		if (likely(!sk_add_backlog(sk, skb, lim))) {
+-			trace_tipc_sk_overlimit1(sk, skb, TIPC_DUMP_ALL,
++			trace_tipc_sk_overlimit1(sk, skb, TIPC_DUMP_SK_BKLGQ,
+ 						 "bklg & rcvq >90% allocated!");
+ 			continue;
+ 		}
  
--	if (sock->sk->sk_state == RXRPC_CLOSE)
--		return -ESHUTDOWN;
-+	sk = sock->sk;
-+	rx = rxrpc_sk(sk);
- 
--	return rxrpc_service_prealloc_one(rx, b, notify_rx,
--					  user_attach_call, user_call_ID,
--					  gfp, debug_id);
-+	lock_sock(sk);
-+	if (sk->sk_state != RXRPC_SERVER_LISTENING || !rx->backlog) {
-+		ret = -ESHUTDOWN;
-+		goto out;
-+	}
-+
-+	b = rx->backlog;
-+	ret = rxrpc_service_prealloc_one(rx, b, notify_rx,
-+					 user_attach_call, user_call_ID,
-+					 gfp, debug_id);
-+
-+out:
-+	release_sock(sk);
-+	return ret;
- }
- EXPORT_SYMBOL(rxrpc_kernel_charge_accept);
+-		trace_tipc_sk_dump(sk, skb, TIPC_DUMP_ALL, "err_overload!");
++		trace_tipc_sk_dump(sk, skb, TIPC_DUMP_SK_BKLGQ, "err_overload!");
+ 		/* Overload => reject message back to sender */
+ 		onode = tipc_own_addr(sock_net(sk));
+ 		atomic_inc(&sk->sk_drops);
+ 		if (tipc_msg_reverse(onode, &skb, TIPC_ERR_OVERLOAD)) {
+-			trace_tipc_sk_rej_msg(sk, skb, TIPC_DUMP_ALL,
++			trace_tipc_sk_rej_msg(sk, skb, TIPC_DUMP_SK_BKLGQ,
+ 					      "@sk_enqueue!");
+ 			__skb_queue_tail(xmitq, skb);
+ 		}
 
 
