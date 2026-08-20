@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A7236A37A;
-	Thu, 20 Aug 2026 15:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10B6360745;
+	Thu, 20 Aug 2026 15:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238698; cv=none; b=I/1AmAJrS1RP8WXbzM3KkyPHEDLikYIdW10heKOplBQ/p2zO7ngbT9EXxvY9snNT0co+qKYN+ZWH235whwCz4xdVqS8l4uIXX5qE445CmkcDkj0XOmlMA+9g/lwjl0Vg/YQDK3u/4S9iVMhBhj4o9nifo3pTcKM/No2VBYb/ggs=
+	t=1787238700; cv=none; b=iBPDRzlbZ+u3lZ5/gePy0hSBmfoO4VSsNGRwtW9NOLw7ujXx6G0YyUm2tusZXkKeJxKiv5jwp6jHzXtQp3zfgtER1yXfScgGQhmBNDpoIljqj40dyb+a2NsWvXg0eS7ib6GLzWFV6YLuFO4eTh4tDgCmud4OaVTzohC4oJZHLzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238698; c=relaxed/simple;
-	bh=ch1S2NraGyDohQzxL+CeQwm/PVzHD1Sg0H7+72g7T0I=;
+	s=arc-20240116; t=1787238700; c=relaxed/simple;
+	bh=OiRfXO7atxlUSXb+4awWc/ZU7eX5udI+C1P2dnglsWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HqQ0xTjP0d1443XBcEn9NFoLHlZicpSQirw0yRxZBRUSp28fSxJE1C22DB/zZP040gi8c34JaYpb/bMfZe1aB/RT2ySqPm+QN1F9YqiIC9xa8MAm0zX8xZKvtyalJcTQ8VDjSJmzjhosdFuj/vqGTFPswfyDf8wE5fVpmzSALoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BScl5TxQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mqTcaqTPRpHIlfjMLNHQoXCOOl1yF103VgYeZ1twpsf/Y5um7Dakm5AdAlSiGfMiu8LsSYrRyBD0mSugTaVVXfQoG8DVgxZRrmYQqDOTqy8qBQ06jQEfkt5iYhMIqklbN+yi+Oj9VKnXOsfFyoMA9g0QWDx1YIB/lYddUMY1HCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xx94KJMR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BScl5TxQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 571A51F000E9;
-	Thu, 20 Aug 2026 15:11:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xx94KJMR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3603D1F000E9;
+	Thu, 20 Aug 2026 15:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238696;
-	bh=4OFm24nFLNvZ6NXQCk9/CEGkWM2udFrXJxdkUxtGbRQ=;
+	s=korg; t=1787238699;
+	bh=kDgndPcnYek9iS/YdWylOGtQBlzBOLsfhDZNCSMaSPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BScl5TxQyrbAJFz1KlGecE+bdEeviTDL0Qh2yQSkEYbXsbNOGnAeEnrpB+uFaB3w2
-	 ZwvOf5pI5CckTR+1srIY4b3Zf0waTvqgthafLdO27M/7QoMF2qJwY70lDbKhuHeiho
-	 KLn6MJx9SYmKocdJRJJVhX6/SU6W5Qpa0sHpZmGE=
+	b=Xx94KJMRcSNf/J7dwZ2ei5sug5QoaPmbOlXPor05vL5EB+psngVskuA22vjz6kA3m
+	 xn1+9cyHdIIK6qycvZZyPKzab2I2calkH1mjgis2U/8wuNqASjByHJwLkCa29yg/k5
+	 e0teJUqN2yZz1tEcaDS47d3XgwMVoIPu1Etzn04U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.18 010/217] selinux: reject a permission value exceeding the class permission count
-Date: Thu, 20 Aug 2026 16:52:58 +0200
-Message-ID: <20260820145237.883346982@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 011/217] mptcp: reclaim forward-allocated memory on RX path errors
+Date: Thu, 20 Aug 2026 16:52:59 +0200
+Message-ID: <20260820145237.941567033@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -51,43 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit d14b5d0e97fccd27974fedc03b903408872907fd upstream.
+commit 41b49a8b914ec7dcb03eae93fb27f3c464078644 upstream.
 
-perm_read() bounds a permission value by SEL_VEC_MAX but never by the
-nprim of the owning class or common, which is taken verbatim from the
-policy image.  security_get_permissions() then writes perms[value - 1]
-into an nprim-sized kcalloc() array, so a class declaring fewer
-permissions than its largest permission value drives an out-of-bounds
-heap write.  The top-level symbol tables are validated this way; the
-nested per-class permission table is not.
+After commit 9db5b3cec4ec ("mptcp: borrow forward memory from subflow"),
+errors in the receive path prior to queueing skbs into the receive
+queue do not trigger forward-allocated memory reclaiming.
 
-Reject a permission whose value exceeds nprim, which is already set when
-perm_read() runs.  Well-formed policies are unaffected.
+Prevent forward memory from growing unboundedly in pathological drop
+scenarios by explicitly reclaiming memory when skbs are dropped.
 
+Fixes: 9db5b3cec4ec ("mptcp: borrow forward memory from subflow")
 Cc: stable@vger.kernel.org
-Fixes: 55fcf09b3fe4 ("selinux: add support for querying object classes and permissions from the running policy")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-[PM: tweak comment for line length]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-8-b8f496d71664@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/ss/policydb.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/mptcp/protocol.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/security/selinux/ss/policydb.c
-+++ b/security/selinux/ss/policydb.c
-@@ -1168,6 +1168,9 @@ static int perm_read(struct policydb *p,
- 	rc = symtab_insert(s, key, perdatum);
- 	if (rc)
- 		goto bad;
-+	/* indexes an nprim-sized array in security_get_permissions() */
-+	if (perdatum->value > s->nprim)
-+		goto bad;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -147,6 +147,12 @@ struct sock *__mptcp_nmpc_sk(struct mptc
  
- 	return 0;
- bad:
+ static void mptcp_drop(struct sock *sk, struct sk_buff *skb)
+ {
++	/* The skb forward memory was already transferred to sk by
++	 * mptcp_borrow_fwdmem(), even before setting the destructor.
++	 */
++	if (!skb->destructor)
++		sk_mem_reclaim(sk);
++
+ 	sk_drops_skbadd(sk, skb);
+ 	__kfree_skb(skb);
+ }
 
 
