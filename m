@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29EB425C6EE;
-	Thu, 20 Aug 2026 16:28:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BFB725C6EE;
+	Thu, 20 Aug 2026 16:28:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243324; cv=none; b=WRxDyRLWzFkHweTsaP3W/BSd3/u1ZVLhoG8NdNOulh9UvrUbjrYiRDaFgdKxb2ITMfeWbxJ5yZWYq5VaTinvf3lgoJ9HqbpFv1kwQTcGDrlo+TM/gjfQFyW8LU52C2LdWfx4rzhA5M82t9AvmEbLIyHKjMlM19VHkAZz8Hsbf/w=
+	t=1787243327; cv=none; b=pmcP1F7Y7SkjEySf0q4qSUGlpJQbPP9pdcTBc69BfDr+yY0rQWiSHa5BSHVDqwHn170Nq3AvmwZatTqCvlHTt1onGbIUd7dvuw4mVabjK5ZFYVBZk17Ix2vqptMAP+VCT3/guBrJqcY3puUO06zUnxl9uEktFP20qrbzfCZOIfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243324; c=relaxed/simple;
-	bh=FyPWPL/dH9qVHbJge+adtT6Gh3sSKTLAila6cI/EcdY=;
+	s=arc-20240116; t=1787243327; c=relaxed/simple;
+	bh=jdtyYDk/UFL4v4vBXM8LyXGhF94OEkfBkXV5ajrYQ1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DQIfUcPfVskjq4PUiOf7EH/RQyDov/0dzWXnNLUm5s/c+2UKjY5rmtYk/ev64o9x7OBuO/t2jctPX0Q3lWBVAP+6n5qdk97wBMr8lGF/eklVq7FgeTLOK1uXhOZxuzTqu0II5+K9o3MdjsHP63i2RQoXllcuLesovRnf1y2JaC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JW7RVuL+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OvLpwF98GtpISvQcpFYaOj3MQsHQo8Cd1Y5rDUSvASZUrz0B5a9eGKqezeQLkVUSdbLaV/oKOwAwhzs6pT0tSrXWPq7lv828K/Grdy2IiiMbFQx9J05av1Nc+2WROWf4iH88uFYwsdlaWzShnJYRRSwqI6d5bF9iiJw/QVKcw30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ue81tfM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JW7RVuL+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846441F000E9;
-	Thu, 20 Aug 2026 16:28:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ue81tfM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FD51F000E9;
+	Thu, 20 Aug 2026 16:28:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243323;
-	bh=4GjWMqTw5+7kixSNySpDXlnt9UW11z3YsVgKU2SjdMc=;
+	s=korg; t=1787243325;
+	bh=vnALP6+1fcjtMU4Xc2VhKiGhqW5H+ecRnt5403pslt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JW7RVuL+yJ4T+h9QDGAFDK1gBVtbL4EjYSUsDjWeX0P7awl2MVUHywO5GK6YJLAs+
-	 JSQUvzHcVzL4RzUd/1f3A39Icvoq83BRmRoxxM8RZ7r8SqRLIM6Lne7H9aOJGC6IIX
-	 nySomMSA/hqbN+AiwKS6XxbFs5eWI/a6x1LOWLtk=
+	b=1ue81tfMA83/zMZ9oFAe0ZChrk11KB6sY9EOd7plYjDzi0n0W4H3B5A6EfIgp8jBT
+	 aqwaj6BL00XFBVhLc9g1mInRQ58Le9km+w1ByuAnKo9YEgGg3ryyKhuOn9FAFKxC9a
+	 jCu9AUbHKid9fHQ4NnVw9Y1TugSAQ8GdpJlQE2q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 055/272] Input: mms114 - reject an oversized device packet size
-Date: Thu, 20 Aug 2026 16:53:59 +0200
-Message-ID: <20260820145232.943064483@linuxfoundation.org>
+Subject: [PATCH 5.15 056/272] ALSA: hda: conexant: Remove mic bias threshold override
+Date: Thu, 20 Aug 2026 16:54:00 +0200
+Message-ID: <20260820145232.972394031@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -51,64 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit 66725039f7090afe14c31bd259e2059a68f04023 ]
+[ Upstream commit f52524da7084c1a54683ae9fbc73e93fff19dd64 ]
 
-mms114_interrupt() reads a packet of touch data from the device into a
-fixed-size on-stack buffer
+Remove the mic bias current comparator threshold override (NID 0x1c,
+verb 0x320, value 0x010) from Conexant codec driver.
 
-	struct mms114_touch touch[MMS114_MAX_TOUCH];
+This override was originally intended to support volume up/down controls on
+headsets with inline remote controls, but it causes microphone detection
+failures on some headsets with impedance less than 1k ohm.
 
-which holds MMS114_MAX_TOUCH (10) events of MMS114_EVENT_SIZE (8) bytes,
-i.e. 80 bytes. The length of the I2C read into it is taken verbatim from
-the device:
+After consulting with the vendor's engineers, it was confirmed that this
+setting is board-specific and should be handled by BIOS/firmware rather
+than the generic codec driver, especially since inline remote support
+is not currently implemented.
 
-	packet_size = mms114_read_reg(data, MMS114_PACKET_SIZE);
-	if (packet_size <= 0)
-		goto out;
-	...
-	error = __mms114_read_reg(data, MMS114_INFORMATION, packet_size,
-			(u8 *)touch);
-
-packet_size is a single device register byte (0x0F) and the only check
-is the lower bound packet_size <= 0; it is never bounded against the
-size of touch[]. A malfunctioning, malicious or counterfeit controller
-(or an attacker tampering with the I2C bus) can report a packet_size of
-up to 255, so __mms114_read_reg() writes up to 175 bytes past the end of
-touch[] on the IRQ-thread stack: a stack out-of-bounds write that can
-overwrite the stack canary, saved registers and the return address.
-
-A well-formed device never reports more than the buffer holds, so reject
-an oversized packet and drop the report, consistent with the handler's
-other error paths, rather than reading past the buffer.
-
-Fixes: 07b8481d4aff ("Input: add MELFAS mms114 touchscreen driver")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Fixes: 7aeb25908648 ("ALSA: hda/conexant: Fix headset auto detect fail in cx8070 and SN6140")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260612-b4-disp-dc4b8dc4-v1-1-d7cb0a828d92@proton.me
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-[ changed `&client->dev` to `&data->client->dev` since 6.1's interrupt handler lacks the `client` local variable ]
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260713100329.306892-1-zhangheng@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/mms114.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/pci/hda/patch_conexant.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/input/touchscreen/mms114.c
-+++ b/drivers/input/touchscreen/mms114.c
-@@ -214,6 +214,12 @@ static irqreturn_t mms114_interrupt(int
- 	if (packet_size <= 0)
- 		goto out;
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -168,9 +168,6 @@ static void cx_fixup_headset_recog(struc
+ {
+ 	unsigned int mic_present;
  
-+	if (packet_size > sizeof(touch)) {
-+		dev_err(&data->client->dev, "Invalid packet size %d (max %zu)\n",
-+			packet_size, sizeof(touch));
-+		goto out;
-+	}
-+
- 	/* MMS136 has slightly different event size */
- 	if (data->type == TYPE_MMS134S || data->type == TYPE_MMS136)
- 		event_size = MMS136_EVENT_SIZE;
+-	/* fix some headset type recognize fail issue, such as EDIFIER headset */
+-	/* set micbias output current comparator threshold from 66% to 55%. */
+-	snd_hda_codec_write(codec, 0x1c, 0, 0x320, 0x010);
+ 	/* set OFF voltage for DFET from -1.2V to -0.8V, set headset micbias register
+ 	 * value adjustment trim from 2.2K ohms to 2.0K ohms.
+ 	 */
 
 
