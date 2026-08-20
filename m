@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A54B36212F;
-	Thu, 20 Aug 2026 15:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE39325B0AA;
+	Thu, 20 Aug 2026 15:24:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239461; cv=none; b=cFMaFbbELqRM0th5C4PjuE6FVu6Euu9z68RyUzbX/dyveJvSUTA+4h6gtj5v8wzwnc9vKS9o/NxCTMx1BCPMGsV4rVG6MrFrvG3GiEeBG6sxp6UoGzVE97w6TxabWNXhjWSNfAP4YQu4nXdwVRXd+/bodGDJW9hcCEoIXrTJx3o=
+	t=1787239464; cv=none; b=sPF2tulsBhv03g4nBZ/DT5yWJBqMegs9Ow8HKe4M4RzD99MJ2eBZwe/XRLnt2PqBsx241Dtt7Kc6OrK5Wem52p/3m2OvIllhGCknXhNa48ujk/c2I+Wa4uA/10QT9UVFn58GgL1x97AdnsGMUgIMRc8jXREfOIlJ3NnyKwKuVeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239461; c=relaxed/simple;
-	bh=3ncN4PEpthc4+Ejz7SJhnXa6Jj/ge/2UK33urlHYIuE=;
+	s=arc-20240116; t=1787239464; c=relaxed/simple;
+	bh=dW+5MH0NtzlZTGGBOcq670utUYHFLwFSEod1creyYCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YSwkfLbigTTRLt5JQ6ybFwlApezubfGzXO/mF3ddUkkKG4GiSxULC9Gz9CXZ9uaJM1pkvSXmjXIMGFm1GoN8nNclB329vbcXX5ITPMTG5yNZ782ooA7mb9BQ6V8hLUsXgkstLX+fiwyh/PeMa/vfuhEJdj66bfgliO3BhaqYhuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQdo0jNs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pV9P6Ua6oFnIBrEEu3dmTBqWOyVuWJvKhGFb6EDfoQBlXyEn5Uv1u5v9QuymO3hE9EW3U+92BZVB9OaTsKEAzDU7u1+AUnD2/zTMydJdy4wdKXShhJbyebDFd0YhLpEDtGHuRx/aKcLAzlBrxvyE8S6l76Yr9bdRx7in6V4vh4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCqnWVmv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQdo0jNs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74CB81F000E9;
-	Thu, 20 Aug 2026 15:24:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCqnWVmv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52AAB1F000E9;
+	Thu, 20 Aug 2026 15:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239460;
-	bh=oD0IUQFPQX6nBfdhOHQPsm0WRFoHMmsSf+lGEHPg57Q=;
+	s=korg; t=1787239462;
+	bh=zuPj2jPRMxm9YTHCXYrflE5wTVMxoF+MyBuHHomaD1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uQdo0jNswT72kx3muSfxiseKDQpxQn7TV9VL1MkWumHw7+FmKOw8QnIVoPch+xEml
-	 ITIyKkCtySsPwkDxYToAxshdaMy/KZbv5NogKsBxdL9SMxNz3eCQlIPhYhms2FseOr
-	 dkd0aJzGIVjDdu4AUHQOn5GqPZPFfggsv/JDyLcI=
+	b=GCqnWVmvAZczCHsxie/FepHFy5wjn2FPeFrnNX2URX6bcvDfdIPnws1VvtKCnh/x1
+	 b+8hi9Ii/EeSyPdeDyIe6lWj7PY6sIF2HHYhGeWbtuq0snTijIueIji0top5zb7oDB
+	 bqO4v9olioPKZog5k9t7uQ0ri6ufe9bCCQp0kLOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Leon Hwang <leon.hwang@linux.dev>
-Subject: [PATCH 6.12 055/220] ftrace: Protect direct_functions in ftrace_find_rec_direct
-Date: Thu, 20 Aug 2026 16:54:05 +0200
-Message-ID: <20260820145225.149633968@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.12 018/220] selinux: do not cancel a policy conversion that never started
+Date: Thu, 20 Aug 2026 16:53:28 +0200
+Message-ID: <20260820145224.051198148@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -51,35 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 63444b7617c09aeed36282e061c3f80818f2b600 upstream.
+commit e5c0235a3c4e9eb047a16cd02323fe4ecf2f570e upstream.
 
-Fix accessing the __rcu pointer direct_functions with RCU protection.
+sel_write_load() calls selinux_policy_cancel() when sel_make_policy_nodes()
+fails, and that helper dereferences the outgoing policy to cancel its
+sidtab conversion. On the first policy load there is no outgoing policy:
+security_load_policy() returns early for that case, before it converts
+anything, and state->policy is still NULL. A first load that fails while
+building the selinuxfs tree therefore takes a NULL dereference in
+selinux_policy_cancel(), reached from a write(2) to /sys/fs/selinux/load.
+
+Skip the cancel when there is no old policy, mirroring the check
+security_load_policy() already makes before it converts.
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260730150411.88667-2-leon.hwang@linux.dev
-Fixes: d05cb470663a ("ftrace: Fix modification of direct_function hash while in use")
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 02a52c5c8c3b ("selinux: move policy commit after updating selinuxfs")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ security/selinux/ss/services.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -2593,7 +2593,8 @@ unsigned long ftrace_find_rec_direct(uns
- {
- 	struct ftrace_func_entry *entry;
+--- a/security/selinux/ss/services.c
++++ b/security/selinux/ss/services.c
+@@ -2175,7 +2175,9 @@ void selinux_policy_cancel(struct selinu
+ 	oldpolicy = rcu_dereference_protected(state->policy,
+ 					lockdep_is_held(&state->policy_mutex));
  
--	entry = __ftrace_lookup_ip(direct_functions, ip);
-+	guard(preempt_notrace)();
-+	entry = __ftrace_lookup_ip(rcu_dereference_sched(direct_functions), ip);
- 	if (!entry)
- 		return 0;
- 
+-	sidtab_cancel_convert(oldpolicy->sidtab);
++	/* a first load has no outgoing policy and converted nothing */
++	if (oldpolicy)
++		sidtab_cancel_convert(oldpolicy->sidtab);
+ 	selinux_policy_free(load_state->policy);
+ 	kfree(load_state->convert_data);
+ }
 
 
