@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE39325B0AA;
-	Thu, 20 Aug 2026 15:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C3B380FC7;
+	Thu, 20 Aug 2026 15:24:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239464; cv=none; b=sPF2tulsBhv03g4nBZ/DT5yWJBqMegs9Ow8HKe4M4RzD99MJ2eBZwe/XRLnt2PqBsx241Dtt7Kc6OrK5Wem52p/3m2OvIllhGCknXhNa48ujk/c2I+Wa4uA/10QT9UVFn58GgL1x97AdnsGMUgIMRc8jXREfOIlJ3NnyKwKuVeg=
+	t=1787239467; cv=none; b=C+sD0supIxMyQbZKlqXrmruA6KPFKZkVoVgN6ggoSG0TZ2C7FuPEgmqEk0Be6EqX7TbUaEa5PW0W4y0SXiVEK8xTJwW3cybVZDqaX5PySacPSI5L4Yi9t+qV5VVssRmT81lOPRXLaMj8rrRFdRNr3IY/LOn6Do7uiqtAdfpmMiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239464; c=relaxed/simple;
-	bh=dW+5MH0NtzlZTGGBOcq670utUYHFLwFSEod1creyYCk=;
+	s=arc-20240116; t=1787239467; c=relaxed/simple;
+	bh=4XVq4zzr6s4rC4JfZlbjsdfD/Jf6awb6kzgPNT8l8VM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pV9P6Ua6oFnIBrEEu3dmTBqWOyVuWJvKhGFb6EDfoQBlXyEn5Uv1u5v9QuymO3hE9EW3U+92BZVB9OaTsKEAzDU7u1+AUnD2/zTMydJdy4wdKXShhJbyebDFd0YhLpEDtGHuRx/aKcLAzlBrxvyE8S6l76Yr9bdRx7in6V4vh4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCqnWVmv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=txPR0nImLuE3cN4ZsP1Nh/Nq1Iih/Mplp5D3rJhnAwMA51e368QMK23w8GQlRsVa8TP5JZ0shfljk/gayKdcg0nP4QwOWRbD0LM0vQDH5MBtnhnzuzhiHGJ2TWPSsO4gvztRFky+z9bHHx0Y/ba+8qxubnXf6L7dhOEWnPCDA6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JAUqb8SL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCqnWVmv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52AAB1F000E9;
-	Thu, 20 Aug 2026 15:24:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JAUqb8SL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34BB61F000E9;
+	Thu, 20 Aug 2026 15:24:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239462;
-	bh=zuPj2jPRMxm9YTHCXYrflE5wTVMxoF+MyBuHHomaD1w=;
+	s=korg; t=1787239465;
+	bh=EjwlgpaffHm7BXvf8IeefahH/ZOFJoe/9gcjGJgJOK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GCqnWVmvAZczCHsxie/FepHFy5wjn2FPeFrnNX2URX6bcvDfdIPnws1VvtKCnh/x1
-	 b+8hi9Ii/EeSyPdeDyIe6lWj7PY6sIF2HHYhGeWbtuq0snTijIueIji0top5zb7oDB
-	 bqO4v9olioPKZog5k9t7uQ0ri6ufe9bCCQp0kLOQ=
+	b=JAUqb8SLCELsLIKI1pccdOeuGR3TczaFYIIklg1K4/mqihttVyLBmDO+Ti10e5bHt
+	 YzWeUswQNxRcKx0whOJEAeZPmsfPkQSsO2YtjGbfSMYzxpfNzA2gq4q3A23CiN9nRB
+	 0kM02CbxSVO+sp1vvdmc6KyUhOpFIo9waxCuEeck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bryam Vargas <hexlabsecurity@proton.me>,
 	Stephen Smalley <stephen.smalley.work@gmail.com>,
 	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.12 018/220] selinux: do not cancel a policy conversion that never started
-Date: Thu, 20 Aug 2026 16:53:28 +0200
-Message-ID: <20260820145224.051198148@linuxfoundation.org>
+Subject: [PATCH 6.12 019/220] selinux: reject an unclaimed class value in security_get_classes()
+Date: Thu, 20 Aug 2026 16:53:29 +0200
+Message-ID: <20260820145224.081554571@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -53,41 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit e5c0235a3c4e9eb047a16cd02323fe4ecf2f570e upstream.
+commit 22b05fec62c0fe9864cfceb52f7d0f3a34d9b1dd upstream.
 
-sel_write_load() calls selinux_policy_cancel() when sel_make_policy_nodes()
-fails, and that helper dereferences the outgoing policy to cancel its
-sidtab conversion. On the first policy load there is no outgoing policy:
-security_load_policy() returns early for that case, before it converts
-anything, and state->policy is still NULL. A first load that fails while
-building the selinuxfs tree therefore takes a NULL dereference in
-selinux_policy_cancel(), reached from a write(2) to /sys/fs/selinux/load.
+security_get_classes() sizes an array by p_classes.nprim and fills it at
+value - 1, so a class value the policy never defines leaves a NULL.
+sel_make_classes() passes every entry to sel_make_dir(), reaching the same
+d_alloc_name() dereference as the permission array. The class symbol table
+is allowed to be sparse (policydb_class_isvalid() exists to absorb that),
+but this getter builds its own array straight from the hash table and has
+no such predicate.
 
-Skip the cancel when there is no old policy, mirroring the check
-security_load_policy() already makes before it converts.
+Fail the lookup when a value went unclaimed instead of handing out the
+NULL. Conforming policies define every class they declare and are
+unaffected.
 
 Cc: stable@vger.kernel.org
-Fixes: 02a52c5c8c3b ("selinux: move policy commit after updating selinuxfs")
+Fixes: 55fcf09b3fe4 ("selinux: add support for querying object classes and permissions from the running policy")
 Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
 Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
 Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/ss/services.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ security/selinux/ss/services.c |   24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
 --- a/security/selinux/ss/services.c
 +++ b/security/selinux/ss/services.c
-@@ -2175,7 +2175,9 @@ void selinux_policy_cancel(struct selinu
- 	oldpolicy = rcu_dereference_protected(state->policy,
- 					lockdep_is_held(&state->policy_mutex));
+@@ -3367,6 +3367,7 @@ int security_get_classes(struct selinux_
+ 			 char ***classes, u32 *nclasses)
+ {
+ 	struct policydb *policydb;
++	u32 i;
+ 	int rc;
  
--	sidtab_cancel_convert(oldpolicy->sidtab);
-+	/* a first load has no outgoing policy and converted nothing */
-+	if (oldpolicy)
-+		sidtab_cancel_convert(oldpolicy->sidtab);
- 	selinux_policy_free(load_state->policy);
- 	kfree(load_state->convert_data);
+ 	policydb = &policy->policydb;
+@@ -3379,16 +3380,29 @@ int security_get_classes(struct selinux_
+ 
+ 	rc = hashtab_map(&policydb->p_classes.table, get_classes_callback,
+ 			 *classes);
+-	if (rc) {
+-		u32 i;
++	if (rc)
++		goto err;
+ 
+-		for (i = 0; i < *nclasses; i++)
+-			kfree((*classes)[i]);
+-		kfree(*classes);
++	/*
++	 * The class symtab may be sparse, which policydb_class_isvalid() exists
++	 * to absorb; the callback fills this array by value, so an unclaimed
++	 * one leaves a NULL that sel_make_classes() hands to sel_make_dir().
++	 */
++	for (i = 0; i < *nclasses; i++) {
++		if (!(*classes)[i]) {
++			rc = -EINVAL;
++			goto err;
++		}
+ 	}
+ 
+ out:
+ 	return rc;
++
++err:
++	for (i = 0; i < *nclasses; i++)
++		kfree((*classes)[i]);
++	kfree(*classes);
++	return rc;
  }
+ 
+ static int get_permissions_callback(void *k, void *d, void *args)
 
 
