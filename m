@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F22477E58;
-	Thu, 20 Aug 2026 16:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE11519049B;
+	Thu, 20 Aug 2026 16:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243196; cv=none; b=UxP2j/LRtt6R5Sv8eCe6+BUpn/CJkilnB94OYJ1JJ4YumWvvairtxxSY+FIbqKmpMNtjvtTOp07bBhvijl2vD9j4Pry+tOjnlV2beedljWL8qW654NUg9jrtfWfuA0yJ1jxXdDMmESCYQ7FWe4fMlSBaC9vByg8fZxM/rZ3WPg0=
+	t=1787243199; cv=none; b=PKv7quWhbn1aPcTLBnNDRA65xR075ZTxKjR21YqxJ7iNvb6lcq3WPlgD2XtVr6xX9mF76w0Tx+jgve6Xjb7xQlJsLCDCsAduJsC9j1NOrMvGAXmn1t+XBUJyBCqFzJVp719UjrRdYyPP3ur8zFDyf7DIhZXVWtqYlKvZxGuHicU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243196; c=relaxed/simple;
-	bh=8Jb8sSKELu1KoAeJ8sstyTuWcgmjlrbDg7jYACW8HRw=;
+	s=arc-20240116; t=1787243199; c=relaxed/simple;
+	bh=x6NzmmAO5bqoCiKV6fC2YmdPuFEJJd++JdvbnSPLF3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K2csfcjAy7iyJaQXbYObG5QF0tzuZlKBKs3d3yQ5oHAQm5vzuMsyZietPaBZEApogtb+nJmNvcGNf0W39S4n8yCdkHq6TrnlkQWTkYgVLE1znULylibWbx2ZWyr/rQseTakfakI9WofvLigez9RSDvWmXHjylVE6T6gaOqKRQFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fArLQU7f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=SRwXYZpBv6H3CFgHHrhJj/VFGfEmYI27JGTNEpPdl5tLd+w1dJ5HSJPQ9VzACejilQ78t6UQIBfvh+amLp9FGFymzhh2GXsQeXIMOJeQPlCCZdkIqfVBjWwl5U/TMuyMAbmto18WCj9G1TRGx/hugVx/5NmFZVBJrztKkV6MfUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W7kaYlRA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fArLQU7f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255C01F000E9;
-	Thu, 20 Aug 2026 16:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W7kaYlRA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 028E91F000E9;
+	Thu, 20 Aug 2026 16:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243194;
-	bh=2MADi4H1Q4XEa+7vtn8f269lTJZKLBbwzWs2bOBKdMA=;
+	s=korg; t=1787243197;
+	bh=Wdte3vPpWWQoipqMKMJHQ5xjKtvt8Oam6H+X2gO2I8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fArLQU7fv7FCsVU53Ihc5VL5i2jrfrvmwwno1n2IQwbmhOFrfsV6feAz/Te1a6/Zb
-	 69u/KT7Rc8O/JnhUDwltoJhqn/rMHY7R0TBWRilLBrNGmBNF3mkzNl08Jzz3Ohlca0
-	 AFuQFDugH6NV+0Y6KPl71NkAXd+UxJOI921RkWL4=
+	b=W7kaYlRAWe8gYNOyxeGLEncyIIcpQU6tGo1Jjaob8Jr0IvBBu2Cd6c+OGNWMGyfCd
+	 urQMuR5SuoLoP7l2V1kAYtYFYSHCQJnEVh3smAG+nBKapUg6wyS60c9NJbiTI1i9Ul
+	 nGWzyz6nCat+PwBkuHxrdfi8ZfWuGsP++Z3DfoJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	=?UTF-8?q?Dawid=20Wro=CC=81bel?= <me@dawidwrobel.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 011/272] ASoC: cs4265: sort the register default table
-Date: Thu, 20 Aug 2026 16:53:15 +0200
-Message-ID: <20260820145231.577364289@linuxfoundation.org>
+Subject: [PATCH 5.15 012/272] ASoC: codecs: lpass-wsa-macro: Fix enum kcontrol accesses
+Date: Thu, 20 Aug 2026 16:53:16 +0200
+Message-ID: <20260820145231.605890480@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -46,57 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Dawid Wróbel <me@dawidwrobel.com>
 
-commit e4fe3e046524e5de3c04c6eef3743780cbdc231c upstream.
+commit 56f24311fd5607588a47e44675195a9efb200f29 upstream.
 
-reg_defaults must be sorted by ascending register address, as
-regcache_lookup_reg() locates entries in it with bsearch().  See commit
-fd80df352ba1 ("regcache: Add support for sorting defaults arrays").
+EAR SPKR PA Gain" and the four "WSA RX* Mux" controls are enumerated,
+but their get and put callbacks access the value through
+ucontrol->value.integer.value[0] (a long) instead of
+ucontrol->value.enumerated.item[0] (an unsigned int).
 
-cs4265_reg_defaults[] lists CS4265_INT_MASK (0x0e),
-CS4265_STATUS_MODE_MSB (0x0f) and CS4265_STATUS_MODE_LSB (0x10) after
-CS4265_SPDIF_CTL1 (0x11) and CS4265_SPDIF_CTL2 (0x12), so the binary search
-does not find those three entries.  regcache_reg_needs_sync() then cannot
-compare them against their default and reports that a sync is needed, so
-they are written to the device on every regcache_sync() even when they were
-never touched.
+This same pattern was fixed in the sibling drivers by
+commit bcfe5f76cc40 ("ASoC: codecs: rx-macro: fix accessing array
+out of bounds for enum type") and
+commit 0ea5eff7c606 ("ASoC: codecs: va-macro: fix accessing array
+out of bounds for enum type"), but wsa-macro was missed.
 
-Sort the table by register address.
+On 64-bit kernels with CONFIG_SND_CTL_DEBUG this trips the elem value
+sanity check and every read of these controls fails with -EINVAL.
 
-Fixes: fb6f806967f6 ("ASoC: Add support for the CS4265 CODEC")
+Fixes: 809bcbcecebf ("ASoC: codecs: lpass-wsa-macro: Add support to WSA Macro")
+Fixes: 2c4066e5d428 ("ASoC: codecs: lpass-wsa-macro: add dapm widgets and route")
+Assisted-by: Claude:claude-fable-5
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260805082413.26174-4-peter.ujfalusi@linux.intel.com
+Signed-off-by: Dawid Wróbel <me@dawidwrobel.com>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260730-worktree-lpass-tx-macro-enum-fix-v2-2-6d091c736116@dawidwrobel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/cs4265.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/lpass-wsa-macro.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/sound/soc/codecs/cs4265.c
-+++ b/sound/soc/codecs/cs4265.c
-@@ -46,11 +46,11 @@ static const struct reg_default cs4265_r
- 	{ CS4265_DAC_CHA_VOL, 0x00 },
- 	{ CS4265_DAC_CHB_VOL, 0x00 },
- 	{ CS4265_DAC_CTL2, 0xC0 },
--	{ CS4265_SPDIF_CTL1, 0x00 },
--	{ CS4265_SPDIF_CTL2, 0x00 },
- 	{ CS4265_INT_MASK, 0x00 },
- 	{ CS4265_STATUS_MODE_MSB, 0x00 },
- 	{ CS4265_STATUS_MODE_LSB, 0x00 },
-+	{ CS4265_SPDIF_CTL1, 0x00 },
-+	{ CS4265_SPDIF_CTL2, 0x00 },
- };
+--- a/sound/soc/codecs/lpass-wsa-macro.c
++++ b/sound/soc/codecs/lpass-wsa-macro.c
+@@ -1852,7 +1852,7 @@ static int wsa_macro_ear_spkr_pa_gain_ge
+ 	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+ 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
  
- static bool cs4265_readable_register(struct device *dev, unsigned int reg)
+-	ucontrol->value.integer.value[0] = wsa->ear_spkr_gain;
++	ucontrol->value.enumerated.item[0] = wsa->ear_spkr_gain;
+ 
+ 	return 0;
+ }
+@@ -1863,7 +1863,7 @@ static int wsa_macro_ear_spkr_pa_gain_pu
+ 	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+ 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
+ 
+-	wsa->ear_spkr_gain =  ucontrol->value.integer.value[0];
++	wsa->ear_spkr_gain =  ucontrol->value.enumerated.item[0];
+ 
+ 	return 0;
+ }
+@@ -1877,7 +1877,7 @@ static int wsa_macro_rx_mux_get(struct s
+ 				snd_soc_dapm_to_component(widget->dapm);
+ 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
+ 
+-	ucontrol->value.integer.value[0] =
++	ucontrol->value.enumerated.item[0] =
+ 			wsa->rx_port_value[widget->shift];
+ 	return 0;
+ }
+@@ -1891,7 +1891,7 @@ static int wsa_macro_rx_mux_put(struct s
+ 				snd_soc_dapm_to_component(widget->dapm);
+ 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
+ 	struct snd_soc_dapm_update *update = NULL;
+-	u32 rx_port_value = ucontrol->value.integer.value[0];
++	u32 rx_port_value = ucontrol->value.enumerated.item[0];
+ 	u32 bit_input;
+ 	u32 aif_rst;
+ 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
 
 
