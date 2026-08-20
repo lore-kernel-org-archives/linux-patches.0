@@ -1,142 +1,145 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D018F346777;
-	Thu, 20 Aug 2026 14:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00198635D;
+	Thu, 20 Aug 2026 15:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787235616; cv=none; b=X3hby4HAWGMSE1cHGGdQrfjvuT1Dt0tbe6fH8yWDvPDRCRF6yqWExmQPABjQEYskF2HMPT+wiCwuM/QRnLs6FWpCf3E4Iy5xQDo55X0PfoJjTI3zWLRvL7ZVindzv1ucx7ZhRFljmqXjZxwYbclmMsgzXS3qwXwZOJCatv+v5LE=
+	t=1787238032; cv=none; b=jrGicZsu1v8p4pwPdr5VOp0+VazuaVy8OmvClse3Y7wMBlSNQAnUYpJoxXESx+hMUlElovSlDi2bp35MwvX2vYf0xE6J9rLds8uuGOSZXawd4iMdHNMiHQaS8mwMRLa7uvVFFpe+o39c/fDOswPzLp5w7raAJ/0v0a3wLo06hMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787235616; c=relaxed/simple;
-	bh=ttQTpzZAHRByY/t+FbmsUaAy+7jV/JB4hdf9b9yjKBE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BgZGnL6o+ROvAeGNOPgkfDBq3/KOjf04oiMe2SA8+70U/oj/Gur0JCz4oqMp/QuK4tmw7mb/ujzdOU1gE8q2X6YXN6s9jrbXMH8mdIKZhCriBoAVfRwVPvy5TC1ZvyYoltUgpksXPMiHcvzAgj5e3kBkkrxDteTX2SprbpqVjWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QYo7FXS4; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787238032; c=relaxed/simple;
+	bh=l3rCUGlwlwKVYtKbD7LkdxWALpTamJwyt262u8kMa7w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=fUrUf3s6X70xEoo8rUXyfzLFYEVROSo2BfLFclmcJ99mS1PcbIzKtt2DrGqk5HJZoVEHAl89ha2vKDOvwxqaf7Y5JGFwOnX/mjPN7HqaBireQnUo9ECGYR4hkeFiZ6zhKKly30Q03fKjD/Tokuil3TrJhtCXB06Du2SkJ40cON8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mLKndA6G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QYo7FXS4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E43A1F000E9;
-	Thu, 20 Aug 2026 14:20:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787235612;
-	bh=OSLaxYy3hudfhxv760+VsoZk4Gq0ilDbTTIwLyTXmQo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=QYo7FXS4bK93nAEXvIq+4c7TFmq33NKRD4j4Ur2KByTzMqut1xI3N2Q08sFKX191H
-	 HllyQWDL7B4c7JurUQnJO+JwycFUb2qw/JjBA4h9/3UOyQZSqYjlZMAnBepENgz4Z+
-	 nFBskF2wRckgYTjlComjcrRb52CyR6zWm97tRw0XVsdWdQf20M9PR0q3jMSm7W1hrG
-	 jwuXT9zqTTAcv26UAlMfAMjxTC8lEgRorNe4BIV5oU6CTTLq/ZCP7s9PQYnO3s9Tq7
-	 XVMEfOiAyN1GynfumHmH6IqjTSUuiqC0OyaRj+azr5BAlweEm1XJUHJJ0w+u1mG0Wa
-	 Hq8fhP/KQEc+A==
-Date: Thu, 20 Aug 2026 10:20:11 -0400
-From: Sasha Levin <sashal@kernel.org>
-To: Jens Axboe <axboe@kernel.dk>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Maoyi Xie <maoyi.xie@ntu.edu.sg>, io-uring@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 7.0] io_uring/wait: honour caller's time
- namespace for IORING_ENTER_ABS_TIMER
-Message-ID: <aocNG_tGBAwo51MY@laps>
-References: <20260520111944.3424570-1-sashal@kernel.org>
- <20260520111944.3424570-26-sashal@kernel.org>
- <5a50c3f5-a5ef-4b2b-821c-5858d8b1ac13@kernel.dk>
- <8e853555-604e-46e5-8e25-a5f80b88e51c@kernel.dk>
- <ahG9meYUQ-YLDwHN@laps>
- <afe1ad86-3454-4092-88d0-bd9753a1b2c8@kernel.dk>
- <aoXlt3pcqsqfp52s@laps>
- <8671f4fb-e9fd-4f1a-bb2d-bfba7bf1bceb@kernel.dk>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mLKndA6G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93BB81F00A3A;
+	Thu, 20 Aug 2026 15:00:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1787238029;
+	bh=DquPuLJW3OyWkq3KY8Ty2Eb3Mu8KEmj9Y2kzMG3QfkI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=mLKndA6Gqi9FQK49pYc9mh0CvNOKWXAoMkcXrqj3WftqW+SjY5u6Ady6dBFAYW4GE
+	 8wIQZotgtxhIGsV0Ec4qeO2Wcp5YFahZsSs/3cB+dRyL2rBZBvD+Kfliz0HvWpixTc
+	 PYrb2qg2H9Gn7d6qEUj4z5gKJYiSInBTBZQN+5R0=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Weidong Zhu <weizhu@fiu.edu>,
+	Chao Shi <coshi036@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 001/228] block: stop the timeout timer when releasing a never added disk
+Date: Thu, 20 Aug 2026 16:52:23 +0200
+Message-ID: <20260820145244.509531861@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
+References: <20260820145244.450574346@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <8671f4fb-e9fd-4f1a-bb2d-bfba7bf1bceb@kernel.dk>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Aug 19, 2026 at 02:53:52PM -0600, Jens Axboe wrote:
->On 8/19/26 11:19 AM, Sasha Levin wrote:
->> On Sat, May 23, 2026 at 08:55:43AM -0600, Jens Axboe wrote:
->>> On 5/23/26 8:45 AM, Sasha Levin wrote:
->>>> On Sat, May 23, 2026 at 08:23:13AM -0600, Jens Axboe wrote:
->>>>> On 5/20/26 5:40 AM, Jens Axboe wrote:
->>>>>> On 5/20/26 5:18 AM, Sasha Levin wrote:
->>>>>>> From: Maoyi Xie <maoyixie.tju@gmail.com>
->>>>>>>
->>>>>>> [ Upstream commit 45d2b37a37ab98484693533496395c610a2cab96 ]
->>>>>>>
->>>>>>> io_uring_enter() with IORING_ENTER_ABS_TIMER takes an absolute
->>>>>>> timespec from the caller via ext_arg->ts. It arms an ABS mode
->>>>>>> hrtimer in __io_cqring_wait_schedule(). The conversion path in
->>>>>>> io_uring/wait.c parses ext_arg->ts inline rather than going
->>>>>>> through io_parse_user_time(). It therefore does not pick up the
->>>>>>> time namespace conversion added by the previous patch.
->>>>>>
->>>>>> Once again - If you auto-pick this one, please also do the other one in
->>>>>> the series, 9cc6bac1bebf8310d2950d1411a91479e86d69a1. Makes no sense to
->>>>>> do just one of them.
->>>>>
->>>>> And once again, no reply. What is going on with stable these days?
->>>>
->>>> Jens, as I've mentioned in the previous mail, I handle the AUTOSEL
->>>> mails weeks after I originally sent them out for reviews.
->>>
->>> And you think that's working fine? I would suggest that's a terrible
->>> process. How are maintainers supposed to deal with that? Patches x and y
->>> are autoselected and an email is sent out. Maintainers react to that,
->>> either saying "no don't pick X" or "if you pick Y, please also do Z".
->>> The expectation would then be a reply that says "ok, doing that" or
->>> whatever might be appropriate there. Instead, it's just silence. And now
->>> I have to follow-up MULTIPLE times to ensure the right thing is being
->>> done. We're about 2 weeks into this particular incidence, and
->>> hilariously, I still have no idea what the state is on your end. Did it
->>> get dropped? Did the other one I asked for get picked up? Nobody knows!
->>
->> Hey Jens,
->>
->> So I took some time to figure it out, and I want to try out a slightly
->> different process to address the concerns you've raised.
->
->Appreciate it!
->
->> Instead of weekly AUTOSEL dumps, I'm just going to do them for a given
->> release after Linus tags it (so I'm going to do all of 7.2 in one go),
->> about a week after the release, and targetting just the LTS trees to
->> reduce the number of commits we backport.
->>
->> This will make it easier for me to handle the volume of mails, and
->> also reduce the number of reviews folks do since we can skip the most
->> recent stable (not LTS) tree.
->>
->> What are your thoughts on this change?
->
->I think that sounds like a great move in the right direction. As you
->probably recall, one of my big objections was lack of response when
->issues were flagged. If one per cycle makes that easier for you to deal
->with, then I'm all for it.
->
->Ideally I'd want AUTOSEL to work _exactly_ like the other patches that
->were grabbed for that stable release. Sent out the same way, at the same
->time, and responsive when issues are raised. If you only want to do one
->AUTOSEL per cycle, then IMHO it should be timed with the regular sending
->out of patches picked for the next stable release. If we have 2 separate
->things going on still, then that's annoying for maintainers to deal
->with. If I was doing this, I'd have AUTOSEL be EXACTLY the same thing as
->normal stable picks, work the same way, with the only difference being
->that they would have the AUTOSEL marker in the subject line.
+7.1-stable review patch.  If anyone has any objections, please let me know.
 
-AUTOSEL mostly works within our existing process. The only other extra it gets
-are those AUTOSEL tagged mails that give folks additional few weeks to review
-those commits vs those commits just going in our queue directly.
+------------------
 
-I'm not sure we want to reduce the review period here: folks argued in the past
-to make it longer (it used to be a week, and about a year or two ago became ~3
-weeks).
+From: Chao Shi <coshi036@gmail.com>
 
-Otherwise, you'd get the same emails and these AUTOSEL picks would follow
-exactly the same process as any other stable pick.
+[ Upstream commit 26cb8ebbfaf713c82e142d08828d4d765057633b ]
 
+disk_release() undoes blk_mq_init_allocated_queue() for a disk whose
+probe failed before add_disk(), but it only calls blk_mq_exit_queue().
+Nothing there stops q->timeout, and that timer rolls forward: it stays
+pending until it next expires, not until the last request completes.
+So if the driver issued any I/O before adding the disk, the
+request_queue is freed while still linked into a timer wheel bucket.
+
+Commit 6f8191fdf41d ("block: simplify disk shutdown") dropped the
+blk_cleanup_queue() call that used to stop it.  __del_gendisk() and
+blk_mq_destroy_queue() still do; only the probe failure path lost it.
+
+nvme gets there because nvme_update_ns_info() submits Report Zones or
+FDP io-mgmt-recv on ns->queue before the disk is added, so a later
+failure - a concurrent reset setting NVME_CTRL_FROZEN, or
+device_add_disk() failing - lands in put_disk() with the timer armed:
+
+  BUG: KASAN: slab-use-after-free in detach_if_pending+0x30c/0x340
+  Write of size 8 at addr ffff888004d71310 by task kworker/u8:2/37
+   __timer_delete_sync+0x156/0x240 kernel/time/timer.c:1621
+   blk_sync_queue+0x22/0x40 block/blk-core.c:222
+   nvme_sync_queues+0x100/0x150 drivers/nvme/host/core.c:5362
+   nvme_reset_work+0x138/0x930 drivers/nvme/host/pci.c:3264
+
+  Allocated by task 34:
+   __blk_mq_alloc_disk+0x33/0x100 block/blk-mq.c:4462
+   nvme_alloc_ns+0x290/0x3870 drivers/nvme/host/core.c:4146
+
+  Freed by task 0:
+   blk_free_queue_rcu+0x3a/0x50 block/blk-core.c:254
+   rcu_core+0xc10/0x1730 kernel/rcu/tree.c:2857
+
+The queue being synced there is ctrl->admin_q, only a victim sharing a
+timer wheel bucket with the freed queue's dangling entry; other runs
+tripped in enqueue_timer(), __run_timers() or blk_mq_timeout_work().
+Failing nvme_alloc_ns() with a debug patch makes it deterministic: one
+leaked timer trips KASAN within seconds, while 1987 patched releases
+produced no splat.
+
+Stop the timer and the queue work items before blk_mq_exit_queue(), like
+blk_mq_destroy_queue() does.
+
+Found by FuzzNvme.
+
+Fixes: 6f8191fdf41d ("block: simplify disk shutdown")
+Acked-by: Weidong Zhu <weizhu@fiu.edu>
+Signed-off-by: Chao Shi <coshi036@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260727201257.211635-1-coshi036@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ block/genhd.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/block/genhd.c b/block/genhd.c
+index 0da6cdf3d5fb..cb8184c14a4b 100644
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -1281,14 +1281,18 @@ static void disk_release(struct device *dev)
+ 	/*
+ 	 * To undo the all initialization from blk_mq_init_allocated_queue in
+ 	 * case of a probe failure where add_disk is never called we have to
+-	 * call blk_mq_exit_queue here. We can't do this for the more common
+-	 * teardown case (yet) as the tagset can be gone by the time the disk
+-	 * is released once it was added.
++	 * call blk_mq_exit_queue here, after stopping the timer and work items
++	 * that I/O issued before add_disk may have left pending.  We can't do
++	 * this for the more common teardown case (yet) as the tagset can be
++	 * gone by the time the disk is released once it was added.
+ 	 */
+ 	if (queue_is_mq(disk->queue) &&
+ 	    test_bit(GD_OWNS_QUEUE, &disk->state) &&
+-	    !test_bit(GD_ADDED, &disk->state))
++	    !test_bit(GD_ADDED, &disk->state)) {
++		blk_sync_queue(disk->queue);
++		blk_mq_cancel_work_sync(disk->queue);
+ 		blk_mq_exit_queue(disk->queue);
++	}
+ 
+ 	blkcg_exit_disk(disk);
+ 
 -- 
-Thanks,
-Sasha
+2.53.0
+
+
+
