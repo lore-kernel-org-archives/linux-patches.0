@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC94747DFBE;
-	Thu, 20 Aug 2026 17:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CD419E992;
+	Thu, 20 Aug 2026 17:29:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787246980; cv=none; b=fXcZUOo8WL472X5NhdYqK1R0RiskoCZiESRaIW8Sp0pcWGTId1VkKJHUaZrAvZC8NMkq/z7RrixHLBH9VqiNIyVfGE02l8NU43FP7ntVDa4c+M0jaXhUsYLCR27xFGptocGpfCAfuhj22H5d7KqCDVaOVNtZrQoaT1JoD3zZ8cQ=
+	t=1787246982; cv=none; b=Oqo5BuJsxQqCFziIDWQ4qCXJ8aWWACIFiKccP2QTf1y3hOktqlE0QsijwUc4nWSD6yj6iZc820Hl9LntStOs7em/ALjE4M05maR86SWGK9ioqYEPwguh5HLOrciF0GftVc5NhT1YCh+ZVifaIS1hR4DofNcPyWhc8wZpB6ookkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787246980; c=relaxed/simple;
-	bh=m7IJRCi+Nl3LbNeeqpCTiR5D++UwkPr0vRk0x3Ag8fo=;
+	s=arc-20240116; t=1787246982; c=relaxed/simple;
+	bh=gfZtqRUuE8a1VSNJQATkdY3N+6QYpQYjFwS5IkaWEcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lfDA76e/h9jqNup0Ezq79HE8rnyttHSxGeSUtUJcgUvdHfv/MVKt5r1la/UTY6ET6howq7ocwmMTAm6GUTtZ/VoO+3EjWSYm8+ndXnDk1VoJ7i6bEMuezMkD/GeY2MQn2fbWca8ti08xQJ4vWEoW/pvqc/F/Toa+Ef4SWCBCTw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/4dir1q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g94yFz3904kTjhjQj7o8e0md0EAsTnMGzv6vczh7QG2GPubXwA+gAlQ0kqVAko/BEMt7gYvnoTzSdaJ0kpc4uBhYk7BZmgOXRESt6IKfHvFZ68qFtdtQ0lhF+eDbEIqtlYmYzewAIG9GiN4gXN31BnUVpa5RlbtfXBeRTOEuC+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tv65b6Lh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/4dir1q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5671F000E9;
-	Thu, 20 Aug 2026 17:29:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tv65b6Lh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB45E1F000E9;
+	Thu, 20 Aug 2026 17:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787246978;
-	bh=gaiesHFGJ+pWpTA/1ZsJmXmZLSGN7eaQyC53MGtq4Ok=;
+	s=korg; t=1787246981;
+	bh=5TCFe3kPEJT1WJOuL9qUw+vKR2/5TfxBTvA6euE1RKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f/4dir1qpGlb1SnUH4CyGetC40Wu8EL22Gj33yLkRz6+wOHYbplffavEFYBA1uQXZ
-	 UQmGTG6TFrg7W9wikZ2fy4PL5Hyc9slBm4iaRtKkjYlZ6x0k0EXMZocF61HqX/wrAB
-	 t/hH57ijDCMEWfSP6DkVQ16OJ0wj6ObfxiCqPyJY=
+	b=tv65b6Lh5JC0MaNXzCEu+thEJ6mIvGYYJLz3FwkV4N5RG0MbnNKFNFfgokZVE7UtQ
+	 +wc6arzCi8vwcpsPkj30JDbDk9GOPYSVjzeA8uk8rGcEC8+vP7luvbx8PjlJeYwaCr
+	 L2kKpcGA7gzCfHzmuxYpfzOqTQfxXu2Uol1J+078=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <leo.lilong@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 108/220] xfs: dont swallow dquot recovery verification errors
-Date: Thu, 20 Aug 2026 16:54:58 +0200
-Message-ID: <20260820145226.723173785@linuxfoundation.org>
+Subject: [PATCH 6.12 109/220] xfs: check xfarray iteration errors when committing unlinked inode lists
+Date: Thu, 20 Aug 2026 16:54:59 +0200
+Message-ID: <20260820145226.753796507@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -52,38 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <leo.lilong@huawei.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit e2b4a856085e9bd939bde2dee0d08b1d41babde9 upstream.
+commit 2daf3ed5d059dec79c123aec42eb8d28e0c016d4 upstream.
 
-xlog_recover_dquot_commit_pass2() validates the recovered dquot with
-xfs_dqblk_verify() and, on failure, sets error = -EFSCORRUPTED and jumps
-to out_release.  But out_release unconditionally returns 0, so the
-corruption error is discarded: the caller xlog_recover_items_pass2()
-sees success, log recovery proceeds as if the dquot were valid, and the
-corrupt quota buffer can be written back to disk.
+LOLLM noticed that we neglect to check for xfarray_iter itself returning
+errors when writing a new AGI.  Fix that.
 
-Fixes: 9c235dfc3d3f ("xfs: dquot recovery does not validate the recovered dquot")
-Cc: stable@vger.kernel.org # v6.8
-Signed-off-by: Long Li <leo.lilong@huawei.com>
+Cc: stable@vger.kernel.org # v6.10
+Fixes: ab97f4b1c03075 ("xfs: repair AGI unlinked inode bucket lists")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_dquot_item_recover.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/scrub/agheader_repair.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/xfs/xfs_dquot_item_recover.c
-+++ b/fs/xfs/xfs_dquot_item_recover.c
-@@ -173,7 +173,7 @@ xlog_recover_dquot_commit_pass2(
+--- a/fs/xfs/scrub/agheader_repair.c
++++ b/fs/xfs/scrub/agheader_repair.c
+@@ -1748,6 +1748,8 @@ xrep_iunlink_commit(
+ 		if (error)
+ 			return error;
+ 	}
++	if (error < 0)
++		return error;
  
- out_release:
- 	xfs_buf_relse(bp);
--	return 0;
-+	return error;
- }
+ 	/* Fix all the back links */
+ 	idx = XFARRAY_CURSOR_INIT;
+@@ -1756,6 +1758,8 @@ xrep_iunlink_commit(
+ 		if (error)
+ 			return error;
+ 	}
++	if (error < 0)
++		return error;
  
- const struct xlog_recover_item_ops xlog_dquot_item_ops = {
+ 	/* Copy the staged iunlink buckets to the new AGI. */
+ 	for (i = 0; i < XFS_AGI_UNLINKED_BUCKETS; i++) {
 
 
