@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598D237C923;
-	Thu, 20 Aug 2026 15:00:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996A537C92A;
+	Thu, 20 Aug 2026 15:00:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238051; cv=none; b=YgW55hJDXhMrEkF0z4fs0j9MULqzwwipft7XwmREDBMTdNAX/BwPVNfwhzjmFKJH30XcTJXJA3TXt7oc5LbwkI7dyPNPPZlL5SonYQvKEbybloqvPiqPjJD4kp58Qx5t+P+qNHJ8suNeIfp4UDiyndqmsSOmu+vqTS1AaGqrsp4=
+	t=1787238057; cv=none; b=ubv5IYFEhi3l8cskey0uqgcCa4SZVshJP1KjQnORSbzlg0Wva0wM20GcK4WWd/pXR+gZ+nbAM6B7Z6orGbW7SibFC/BEeX9swnbxfjfTO6P0ywaZA8smRH3YH0ea55jEkUWkex+sWLaAZVsuVuKeT4HRazb6sCYEersR8H++T10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238051; c=relaxed/simple;
-	bh=/H3mfHh+qovx4TUZOi1lBjZW+lqFQuFFBijmCRn534c=;
+	s=arc-20240116; t=1787238057; c=relaxed/simple;
+	bh=5qOhcCDdZR4Wbwk6t4tOkPha3DapInYWDGatwfH2WL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OQDD6s6WYq0dlbE8nLyVHWkifzmlMqr4sDSNHHR1Sm4EEalrQmPRh/4IV0r+zG2Dd/SQJAQo7WxdJu5A8kGzImbD2SykGMLcbNP3beRlI/Kz7H4Hi1Lply6QAEtXCNFeVFbWyxaJfdZG8HzF+0n/pNgS3AA5Vg8fnf9j5c7WLo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QAhQAAny; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T6xxhpNA3V1xYLa+VOSOpxbw6BRe3GbznNuozohTX9AmsT0jiBfubRd8B6WpHZMi9XkzJAhtWExtREsyaDbZt67veoZrJItTPDRzdqpUNRekV2WDXDsGUSLlUew6bstbeOhNlonBm2/T8le3P9nqJEs03oI7szcKOWzv2QdslTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVukFHt5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QAhQAAny"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2BEB1F000E9;
-	Thu, 20 Aug 2026 15:00:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVukFHt5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EBF01F00A3A;
+	Thu, 20 Aug 2026 15:00:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238049;
-	bh=plNLJkHlMmtk6HtUgy23p36zjiOQ5s5/KBPeP2iIrgo=;
+	s=korg; t=1787238052;
+	bh=hQZgKFhzEwq4mWum1dBvvrqyw+xLXrlKLf8Bv2Fo+gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QAhQAAnyQON9ENcXWNGedKh6BZXS4xvZr6okP6ciIvgdlVkxeTXe3DH+svp1c9ye/
-	 arzT9FXRHUEjyN9qlGXm2wjEeRqIIL1p8R+c+4GBhjsEbI7aXNqi2UqvNou7D9ozFn
-	 C89vkBMaD94w+0AEh4FgrPzZIR/pMVc7rsxV6Hvo=
+	b=XVukFHt5RWF1JTGdbEy/ZAcP2r7S/mCA9Kf55StjDmS6YnuPrQYNESJw2Mx1Tmywy
+	 8A4MP5FLMN+7YTUoRD8+r62xjxiTW8r+ZJAcf3RyyNcm4ls3qegC9SBgLIxkrJ9QU1
+	 KBCWo3R4cSUc4wVQrZOgp0kmK3Oqt3ajMLig84+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bryam Vargas <hexlabsecurity@proton.me>,
 	Stephen Smalley <stephen.smalley.work@gmail.com>,
 	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 7.1 003/228] selinux: reject a class permission count below its inherited common
-Date: Thu, 20 Aug 2026 16:52:25 +0200
-Message-ID: <20260820145244.570347681@linuxfoundation.org>
+Subject: [PATCH 7.1 004/228] selinux: do not cancel a policy conversion that never started
+Date: Thu, 20 Aug 2026 16:52:26 +0200
+Message-ID: <20260820145244.599276817@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -53,50 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 9a82dcd98b6e6e11cfd162410967951f12152528 upstream.
+commit e5c0235a3c4e9eb047a16cd02323fe4ecf2f570e upstream.
 
-security_get_permissions() maps an inherited common's permissions into
-an array sized by the class's own permissions.nprim, but class_read()
-takes that nprim verbatim from the policy image and never checks that it
-covers the common.  A class that inherits a common of N permissions while
-declaring a smaller nprim is accepted, and on load the common's
-permissions are written past the class-sized array -- an out-of-bounds
-heap write.
+sel_write_load() calls selinux_policy_cancel() when sel_make_policy_nodes()
+fails, and that helper dereferences the outgoing policy to cancel its
+sidtab conversion. On the first policy load there is no outgoing policy:
+security_load_policy() returns early for that case, before it converts
+anything, and state->policy is still NULL. A first load that fails while
+building the selinuxfs tree therefore takes a NULL dereference in
+selinux_policy_cancel(), reached from a write(2) to /sys/fs/selinux/load.
 
-Reject a class whose permission count is below its inherited common's.
-Well-formed policies, where the class count already includes the
-inherited permissions, are unaffected.
+Skip the cancel when there is no old policy, mirroring the check
+security_load_policy() already makes before it converts.
 
 Cc: stable@vger.kernel.org
-Fixes: 55fcf09b3fe4 ("selinux: add support for querying object classes and permissions from the running policy")
+Fixes: 02a52c5c8c3b ("selinux: move policy commit after updating selinuxfs")
 Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
 Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
 Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/ss/policydb.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ security/selinux/ss/services.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/security/selinux/ss/policydb.c
-+++ b/security/selinux/ss/policydb.c
-@@ -1382,6 +1382,18 @@ static int class_read(struct policydb *p
- 			       cladatum->comkey);
- 			goto bad;
- 		}
-+
-+		/*
-+		 * security_get_permissions() maps the common's permissions
-+		 * into an array sized by this class's nprim, so a class must
-+		 * declare at least as many as the common it inherits.
-+		 */
-+		if (cladatum->permissions.nprim <
-+		    cladatum->comdatum->permissions.nprim) {
-+			pr_err("SELinux:  class %s has fewer permissions than common %s\n",
-+			       key, cladatum->comkey);
-+			goto bad;
-+		}
- 	}
- 	for (i = 0; i < nel; i++) {
- 		rc = perm_read(p, &cladatum->permissions, fp);
+--- a/security/selinux/ss/services.c
++++ b/security/selinux/ss/services.c
+@@ -2220,7 +2220,9 @@ void selinux_policy_cancel(struct selinu
+ 	oldpolicy = rcu_dereference_protected(state->policy,
+ 					lockdep_is_held(&state->policy_mutex));
+ 
+-	sidtab_cancel_convert(oldpolicy->sidtab);
++	/* a first load has no outgoing policy and converted nothing */
++	if (oldpolicy)
++		sidtab_cancel_convert(oldpolicy->sidtab);
+ 	selinux_policy_free(load_state->policy);
+ 	kfree(load_state->convert_data);
+ }
 
 
