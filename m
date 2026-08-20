@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A57361963;
-	Thu, 20 Aug 2026 15:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08CE037E5FF;
+	Thu, 20 Aug 2026 15:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238326; cv=none; b=mQ46V8XmuxBJfLUHMrWMBSAD9YVFFp/NQ61ZWz2OV7bell4vCl/INsZll3WkRj+L6acPWbv/NcZ+hRkaK/RtRBdchlb2p3RTxIRxy+g7uRu9ci4fNG95gfaCwID/xX+feo/plJOaeZsAd/PsMfe1wuiVB8IAW4tJ5TZlJCl0lus=
+	t=1787238329; cv=none; b=oyRdZsvt2LXzVqGee6HE9yrXqyFiyipimzKAk7QxD5nPsyp8lSDSW6qeTKc0V521oDgY2IzAfttL/XPTkjjKQ66b3pCqUZJpxpNK4NaEFmdjkWu9SMHagg5EH4vYZg5gosdEXbfQ7ofIBS7kEf/YjPGXOjLzzMt4RJHWgeMd05U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238326; c=relaxed/simple;
-	bh=Hpl/IKHzZBoj9TXGKCLVKT98JRgeylftLEFT9yGPRGE=;
+	s=arc-20240116; t=1787238329; c=relaxed/simple;
+	bh=zvH0isDZ1FFHGPHs5z/aAiLrKDF3oU8MymyZvN8Es1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fk8wWK0Zwqli7cvtGtuBhqoRsO8scMg3PtFnXwdFUupj0HSyLSf/nw2iEg+ENOB4tBy29JpXLCsqdn/nk3vItSiRVmPC6BBEWQRSOs3z0lO06as7LEra6Ie5+nLS1YuS1yItJp0PrfcDRpDtKrLwh/rMdAI3t60/LDY2tTHWSwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m1qFD+Sk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SZZNHgOwpdjj/BJdkUYP80hoplQ7ZADcPwihGn9ulsBkCNIvJzQHRWlirBpUAxJt24RzmeIC4TxnBPX9YcErt52Gl6Clm67Yoeg1L1RMEweKvgLl05q6XZ/A6wqc8u3k1j4AqbQPeSRy+1V8TJ56NMKM96O8jA8kgH7yB9O7MTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C8aBhC2D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1qFD+Sk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 468321F00A3A;
-	Thu, 20 Aug 2026 15:05:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8aBhC2D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1490A1F000E9;
+	Thu, 20 Aug 2026 15:05:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238324;
-	bh=uYgJC6IKTNm7DVFmn0ymMe/L0GarTVL5dmsA9tMg2Ms=;
+	s=korg; t=1787238327;
+	bh=4jA20jHXZNn5l+VuJLfy8xEWMINZD303050ueuu/3zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m1qFD+SkIJEybnrpWnIF/OEmPbsSDlORmb57KsGJHlR50TfDY++mv4oecaU2JC89t
-	 Wl3b+ll704bf5k6HMEbTa/07wMt9r207ldcifiI2CH+/pI4Q+igqZ03ORbBdizZmVl
-	 sJnnmFJzdX4d9ZNYzVd3llOQ5z2FmD6jLxxTYWLg=
+	b=C8aBhC2DzUNr7Wj5T1HE63HMl4LGP3kI+Xs7cFnhXM2OLJZaco35MVYxnFEh0Ab7J
+	 qSFmKXZNXAu9n59te3nTHeRgKj6cQVKS5hXVzruXPUIsVu7Dw6jKHE0o1/tM8plNrl
+	 WGBeckizZKtJLttyrMaUF3TP/dBbKsMINHO9RSoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 7.1 109/228] s390/zcrypt: Pad trailing CCA or EP11 message with zeros
-Date: Thu, 20 Aug 2026 16:54:11 +0200
-Message-ID: <20260820145247.951193979@linuxfoundation.org>
+	Melissa Wen <mwen@igalia.com>,
+	Samuel Pitoiset <samuel.pitoiset@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.1 110/228] drm/amd/display: Fix NULL pointer dereference in amdgpu_dm_crtc_set_vblank()
+Date: Thu, 20 Aug 2026 16:54:12 +0200
+Message-ID: <20260820145247.979865473@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -51,60 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Samuel Pitoiset <samuel.pitoiset@gmail.com>
 
-commit eb363254472493e3458156fc11fd56dca92f4333 upstream.
+commit f2a1c4c6fe0a6fcde02e59dde546dba28d283635 upstream.
 
-The both functions xcrb_msg_to_type6cprb_msgx() and
-xcrb_msg_to_type6_ep11cprb_msgx() copy the user space message into a
-kernel buffer based on the message length. But on further processing
-the message is supposed to be 4 byte length adjusted. Thus up to 3
-bytes of uninitialized kernel memory are forwarded to further
-processing steps and may unwanted expose kernel memory to the crypto
-card firmware.
+amdgpu_dm_crtc_set_vblank() dereferences acrtc_state->stream when
+vblank is enabled/queried from DRM_IOCTL_MODE_CRTC_GET_SEQUENCE before
+a stream is attached to it.
 
-This patch contains code to pad the gap between user space copied
-message and message buffer length sent down to further processing of
-the CCA or EP11 message to zeros.
+BUG: kernel NULL pointer dereference, address: 0000000000000008
+RIP: amdgpu_dm_crtc_set_vblank+0x6b/0x4d0 [amdgpu]
+Call Trace:
+ drm_vblank_enable
+ drm_vblank_get
+ drm_crtc_get_sequence_ioctl
+ drm_ioctl_kernel
+ drm_ioctl
 
-Fixes: e2c6d91eb8b1 ("s390/zcrypt: Rework domain processing within zcrypt device driver")
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Cc: stable@vger.kernel.org # 7.1+
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Reproduced by running VKCTS with WSI tests enabled on RADV.
+
+Guard the enable path on acrtc_state->stream being non-NULL, matching
+the existing checks in this function.
+
+Fixes: 34d66bc7ff10 ("drm/amd/display: Fix Xorg desktop unresponsive on Replay panel")
+Reviewed-by: Melissa Wen <mwen@igalia.com>
+Signed-off-by: Samuel Pitoiset <samuel.pitoiset@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 7b1b31bf6942e6f43509b48da23f8e27269aac39)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/zcrypt_msgtype6.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/s390/crypto/zcrypt_msgtype6.c b/drivers/s390/crypto/zcrypt_msgtype6.c
-index e79e68b4dd41..3df1d676de5d 100644
---- a/drivers/s390/crypto/zcrypt_msgtype6.c
-+++ b/drivers/s390/crypto/zcrypt_msgtype6.c
-@@ -398,6 +398,10 @@ static int xcrb_msg_to_type6cprb_msgx(bool userspace, struct ap_message *ap_msg,
- 			     xcrb->request_control_blk_addr,
- 			     xcrb->request_control_blk_length))
- 		return -EFAULT;
-+	/* pad tail with 0 up to req_cblen */
-+	if (xcrb->request_control_blk_length < req_cblen)
-+		memset(msg->userdata + xcrb->request_control_blk_length,
-+		       0, req_cblen - xcrb->request_control_blk_length);
- 	/* copy subfunction code into AP msg type 6 function code field */
- 	if (msg->cprbx.cprb_len > req_cblen - sizeof(msg->hdr.function_code))
- 		return -EINVAL;
-@@ -542,6 +546,10 @@ static int xcrb_msg_to_type6_ep11cprb_msgx(bool userspace, struct ap_message *ap
- 	if (z_copy_from_user(userspace, msg->userdata,
- 			     (char __force __user *)xcrb->req, xcrb->req_len))
- 		return -EFAULT;
-+	/* pad tail with 0 up to req_len */
-+	if (xcrb->req_len < req_len)
-+		memset(msg->userdata + xcrb->req_len, 0,
-+		       req_len - xcrb->req_len);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
+@@ -287,7 +287,7 @@ static inline int amdgpu_dm_crtc_set_vbl
  
- 	pld = msg->userdata + sizeof(struct ep11_cprb);
- 	pld_len = msg->cprbx.payload_len;
--- 
-2.55.0
-
+ 	irq_type = amdgpu_display_crtc_idx_to_irq_type(adev, acrtc->crtc_id);
+ 
+-	if (enable) {
++	if (enable && acrtc_state->stream) {
+ 		struct dc *dc = adev->dm.dc;
+ 		struct drm_vblank_crtc *vblank = drm_crtc_vblank_crtc(crtc);
+ 		struct psr_settings *psr = &acrtc_state->stream->link->psr_settings;
 
 
