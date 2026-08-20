@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6273815D5;
-	Thu, 20 Aug 2026 15:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D6B25228D;
+	Thu, 20 Aug 2026 15:18:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239094; cv=none; b=JEnDY0Wlw5xcL1p3OoH8hdUdWY0B8cbgG5GC0dMWr4gZjrnjG2CmZCdhB8ch2IECy4OBexyClVnQjs3y8bw+vM6s6SHMd2Kw1bAmzzDnsm7qVJGagxEE0m3L0cJk678bS8VD96QxuBaR8qafMV5FR5AwsFlUDVxy5buWSk6+fkw=
+	t=1787239097; cv=none; b=hu+rsh6p15YCLZCWZN0oMpSk7rXruDvmCxDkvmgcJ9UqZGhFSaBBo5qYrqVjweD5wYtjP/Tzcb8UqRhI+ujTPJ8m//MWGkZ1gGJ6WdjNys7BkmJY6mvM85j7dDKvBXq0fvNq7B7SLhgoVtFAP4+tb9353p/TzeELnnLd41xacls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239094; c=relaxed/simple;
-	bh=AmqLaUe359zLLXxQdZ62fZoIjiYs16ZpOH/e91ExuN8=;
+	s=arc-20240116; t=1787239097; c=relaxed/simple;
+	bh=8bRq7zXkc+IJPzuOb0KfE6qrojcKdiyvIKfTpstc+7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VAZFVVypBVaVf3C6QWcPS9HkWcKMJLTfzVE5VNOaUNM+fGxBu39iDhFMLjrX0OBLcWPBjC4OyhFagoXswgivoFf7esEhQ7nb5tMHrjdcrrFqulnaWyorRz9u48By9wWJg+P9lcr8ApUVaGblMDhTtuUom4enXV2+pqD0XAUUmXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0VHhsS5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JRwM9bBzeZ+pYv8JCqCUe46Bsa3tdsZuxBEKkdjiw3PMLcX+d06qYzIA7id2/+nAw5o1tWhZu2YP8gIJ7ndqf/RdciHRY5pgK2+qYLQgrjOGK5fhLrVhfUC0nxrxMjGp8ejWblahotaUEvnRaHmfxx2ciavVbhOaxVRyBR2Ai+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpj8vt53; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0VHhsS5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41EBF1F00A3A;
-	Thu, 20 Aug 2026 15:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpj8vt53"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 151991F000E9;
+	Thu, 20 Aug 2026 15:18:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239092;
-	bh=402lCbjfoFpuMuVL19IwZVVrQsPoapy0WQjUnQtZaGU=;
+	s=korg; t=1787239095;
+	bh=OK1UCEvM3IOG7AoWa5CrwBkOX3XmyCKfr/+0qJVt/xU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B0VHhsS5E1HPBCmeQM9tvRcWPg1NhYp2ZwrV8EtcZZcLXFP2XNs0IUrP9kVejPtYT
-	 nUPksh4eSo48mk+IDMNzGdmWMzjQa5YbpmOzdyqSG4WAhVxy2e+38UCE6IQWCq3eRn
-	 F55Sq1JugG5NaiM6WFrYGcpb2NLe8H9KhklML83k=
+	b=cpj8vt53ZMZQ76jOaeEn/nGR4WSfcFIaY71OO2HeXU42vDakmX3h/gVikNCeWcAoW
+	 7Z5Dt8/H9CtLbb3rzOHOBoISDk9Rdh87B+iaIEULYfLZ3Fs+fgXR6bS/P1O8TXCX2v
+	 0vd7fmOmpzQ+Mr0CzsYZE276vtHj5Vg5qSJqsR6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zdi-disclosures@trendmicro.com,
-	Zhong Wang <wangzhong.c0ss4ck@bytedance.com>,
-	Xuanqing Shi <shixuanqing.11@bytedance.com>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 147/217] KVM: x86: Cancel delayed I/O APIC EOI handling before destroying vCPUs
-Date: Thu, 20 Aug 2026 16:55:15 +0200
-Message-ID: <20260820145242.178576691@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.18 121/217] xfs: fix another iunlink infinite loop bug in online fsck
+Date: Thu, 20 Aug 2026 16:54:49 +0200
+Message-ID: <20260820145241.373811005@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -55,91 +51,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 9910e835580fef3bef53b70241dd00c4bffad693 ]
+commit 6d67c6b99f1fc07c64b97fcbc974c6f1ada7f622 upstream.
 
-Cancel (and flush) the I/O APIC's delayed EOI handling work during the
-"pre VM destroy" phase, before vCPUs are destroyed, as processing the EOI
-broadcast will inject another IRQ if the line is asserted, i.e. will try
-to deliver an IRQ to the target vCPU(s).  Canceling the work after vCPUs
-are destroyed leads to UAF if the delayed work is processed after vCPUs are
-destroyed.
+xrep_iunlink_resolve_bucket is supposed to reconstruct as much of the
+incore prev and next unlinked list pointers based on what it finds on
+disk and in memory before we move on to relinking the truly lost inodes
+back into the unlinked list.  However, it's still vulnerable to infinite
+loops that come in via the next_unlinked pointers.
 
-  BUG: KASAN: slab-use-after-free in __kvm_irq_delivery_to_apic_fast+0x9bf/0xa20 arch/x86/kvm/lapic.c:1250
-  Read of size 8 at addr ffff8880499abea0 by task kworker/1:2/1218
+Fix this problem by remembering which inodes we've already seen and
+checking new agino pointers against that.  If a bit is already set,
+either this is a loop or the inode has nonzero link count.  We'll deal
+with the second case in a subsequent patch.
 
-  CPU: 1 UID: 0 PID: 1218 Comm: kworker/1:2 Not tainted 7.1.0-rc7 #5 PREEMPT(lazy)
-  Hardware name: QEMU Ubuntu 25.10 PC v2 (i440FX + PIIX, + 10.1 machine, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-  Workqueue: events kvm_ioapic_eoi_inject_work
-  Call Trace:
-   <TASK>
-   __dump_stack lib/dump_stack.c:94
-   dump_stack_lvl+0x100/0x190 lib/dump_stack.c:120
-   print_address_description mm/kasan/report.c:378
-   print_report+0x139/0x4ad mm/kasan/report.c:482
-   kasan_report+0xe4/0x1d0 mm/kasan/report.c:595
-   __kvm_irq_delivery_to_apic_fast+0x9bf/0xa20 arch/x86/kvm/lapic.c:1250
-   __kvm_irq_delivery_to_apic+0xd8/0xbf0 arch/x86/kvm/lapic.c:1345
-   kvm_irq_delivery_to_apic arch/x86/kvm/lapic.h:129
-   ioapic_service+0x308/0x590 arch/x86/kvm/ioapic.c:492
-   kvm_ioapic_eoi_inject_work+0x13c/0x190 arch/x86/kvm/ioapic.c:532
-   process_one_work+0xa59/0x19a0 kernel/workqueue.c:3314
-   process_scheduled_works kernel/workqueue.c:3397
-   worker_thread+0x5eb/0xe50 kernel/workqueue.c:3478
-   kthread+0x370/0x450 kernel/kthread.c:436
-   ret_from_fork+0x72b/0xd30 arch/x86/kernel/process.c:158
-   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-   </TASK>
-
-Note, the VM is unreachable once kvm_destroy_vm() starts, and scheduling
-new work via kvm_ioapic_send_eoi() can only be done via KVM_RUN, i.e.
-requires a live vCPU.
-
-Alternatively, KVM could simply destroy the I/O APIC during the "pre" phase
-of VM destruction, but that gets more than a bit sketchy as KVM expects the
-I/O APIC to exist if ioapic_in_kernel() is true, and nested virtualization
-in particular has a bad habit of touching VM-scope state during vCPU
-destruction.  E.g. attempting to free the PIC during the pre phase would
-lead to a NULL pointer dereference in kvm_cpu_has_extint(), and it's not
-hard to imagine the I/O APIC having a similar flaw.
-
-Fixes: 17bcd7144263 ("KVM: x86: Free vCPUs before freeing VM state")
-Reported-by: <zdi-disclosures@trendmicro.com>
-Reported-by: Zhong Wang <wangzhong.c0ss4ck@bytedance.com>
-Reported-by: Xuanqing Shi <shixuanqing.11@bytedance.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Co-developed-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260727171718.543491-1-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # v6.10
+Fixes: ab97f4b1c03075 ("xfs: repair AGI unlinked inode bucket lists")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/xfs/scrub/agheader_repair.c |   37 ++++++++++++++++++++++++++++---------
+ fs/xfs/scrub/trace.h           |    1 +
+ 2 files changed, 29 insertions(+), 9 deletions(-)
 
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -13320,12 +13320,18 @@ void kvm_arch_pre_destroy_vm(struct kvm
- 	 * iterating over vCPUs in a different task while vCPUs are being freed
- 	 * is unsafe, i.e. will lead to use-after-free.  The PIT also needs to
- 	 * be stopped before IRQ routing is freed.
-+	 *
-+	 * Do NOT free the in-kernel PIC or I/O APIC here (but as above, make
-+	 * sure to flush any background work), as KVM expects interrupt routing
-+	 * structures to be valid until vCPUs are destroyed.
- 	 */
- 	cancel_delayed_work_sync(&kvm->arch.kvmclock_sync_work);
- 	cancel_delayed_work_sync(&kvm->arch.kvmclock_update_work);
+--- a/fs/xfs/scrub/agheader_repair.c
++++ b/fs/xfs/scrub/agheader_repair.c
+@@ -1341,15 +1341,32 @@ xrep_iunlink_resolve_bucket(
+ 	struct xrep_agi		*ragi,
+ 	unsigned int		bucket)
+ {
++	struct xagino_bitmap	seen;
+ 	struct xfs_scrub	*sc = ragi->sc;
+ 	struct xfs_inode	*ip;
+ 	xfs_agino_t		prev_agino = NULLAGINO;
+ 	xfs_agino_t		next_agino = ragi->iunlink_heads[bucket];
+ 	int			error = 0;
  
- #ifdef CONFIG_KVM_IOAPIC
- 	kvm_free_pit(kvm);
-+	if (kvm->arch.vioapic)
-+		cancel_delayed_work_sync(&kvm->arch.vioapic->eoi_inject);
- #endif
++	xagino_bitmap_init(&seen);
++
+ 	while (next_agino != NULLAGINO) {
++		unsigned int len = 1;
++
+ 		if (xchk_should_terminate(ragi->sc, &error))
+-			return error;
++			goto out_bitmap;
++
++		/* Inode already seen?  We're stuck in a loop */
++		if (xagino_bitmap_test(&seen, next_agino, &len)) {
++			trace_xrep_iunlink_resolve_infinite_loop(sc->sa.pag,
++					bucket, prev_agino, next_agino);
++			next_agino = NULLAGINO;
++			break;
++		}
++
++		error = xagino_bitmap_set(&seen, next_agino, 1);
++		if (error)
++			goto out_bitmap;
  
- 	kvm_mmu_pre_destroy_vm(kvm);
+ 		/* Find the next inode in the chain. */
+ 		ip = xfs_iunlink_lookup(sc->sa.pag, next_agino);
+@@ -1375,17 +1392,17 @@ xrep_iunlink_resolve_bucket(
+ 			error = xrep_iunlink_store_next(ragi, next_agino,
+ 					NULLAGINO);
+ 			if (error)
+-				return error;
++				goto out_bitmap;
+ 
+ 			error = xrep_iunlink_store_prev(ragi, next_agino,
+ 					LINKED_AGINO);
+ 			if (error)
+-				return error;
++				goto out_bitmap;
+ 
+ 			error = xagino_bitmap_clear(&ragi->iunlink_bmp,
+ 					next_agino, 1);
+ 			if (error)
+-				return error;
++				goto out_bitmap;
+ 
+ 			next_agino = ip->i_next_unlinked;
+ 			continue;
+@@ -1426,20 +1443,20 @@ xrep_iunlink_resolve_bucket(
+ 		 */
+ 		error = xagino_bitmap_clear(&ragi->iunlink_bmp, next_agino, 1);
+ 		if (error)
+-			return error;
++			goto out_bitmap;
+ 
+ 		/* Remember the previous inode's next pointer. */
+ 		if (prev_agino != NULLAGINO) {
+ 			error = xrep_iunlink_store_next(ragi, prev_agino,
+ 					next_agino);
+ 			if (error)
+-				return error;
++				goto out_bitmap;
+ 		}
+ 
+ 		/* Remember this inode's previous pointer. */
+ 		error = xrep_iunlink_store_prev(ragi, next_agino, prev_agino);
+ 		if (error)
+-			return error;
++			goto out_bitmap;
+ 
+ 		/* Advance the list and remember this inode. */
+ 		prev_agino = next_agino;
+@@ -1450,10 +1467,12 @@ xrep_iunlink_resolve_bucket(
+ 	if (prev_agino != NULLAGINO) {
+ 		error = xrep_iunlink_store_next(ragi, prev_agino, next_agino);
+ 		if (error)
+-			return error;
++			goto out_bitmap;
+ 	}
+ 
+-	return 0;
++out_bitmap:
++	xagino_bitmap_destroy(&seen);
++	return error;
+ }
+ 
+ /* Reinsert this unlinked inode into the head of the staged bucket list. */
+--- a/fs/xfs/scrub/trace.h
++++ b/fs/xfs/scrub/trace.h
+@@ -3579,6 +3579,7 @@ DEFINE_EVENT(xrep_iunlink_resolve_class,
+ 	TP_PROTO(const struct xfs_perag *pag, unsigned int bucket, \
+ 		 xfs_agino_t prev_agino, xfs_agino_t next_agino), \
+ 	TP_ARGS(pag, bucket, prev_agino, next_agino))
++DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_infinite_loop);
+ DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_uncached);
+ DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_wronglist);
+ DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_nolist);
 
 
