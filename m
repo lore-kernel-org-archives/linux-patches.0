@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFB53644C1;
-	Thu, 20 Aug 2026 15:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE09B36A37A;
+	Thu, 20 Aug 2026 15:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238472; cv=none; b=lSzgQsxqS+6tH5NkISTtAWuM7xnRi825O3g+3eHe6M3bCVboM1q0kvsRgy04yawNkIPHIyiOu2AmjRCWJLaEK8btwPDl8NGWSdHjlMPNarm8x+jg/Hzzo7NxV5qDW6DnjNXPftKXNK/kL9ls7qUCcsZ5gGWy9eBHqzHsQtY5NO0=
+	t=1787238475; cv=none; b=RFtrAaisceZugI6wYKiMZESy1i/IHRGTDEwxK0s4xIkn9KQCRQxUS+MiiXF1aFMcD95qg4Y1aYfyws6XDw2RdQSQDRBJUztCQ8zzDO48O9nrOQ8JPrNfO0/idK4n5PucJMKy9DMNlXr+JQGVtuvU9q5HuSHtTGFekoKPx7Qvdx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238472; c=relaxed/simple;
-	bh=9x9w+t8SSI+KNtpGbiJmP17XPGNdVzdiEoW/HxZmNDs=;
+	s=arc-20240116; t=1787238475; c=relaxed/simple;
+	bh=EL4w7f5EdZ+SjhNrzz8C+gT18Hcr7W0jS6RcLSvmhhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=amgklNUb36elI1ZgPtfSeJryQb2tmSOuCJerTnlxGYj4PHyEfcnPB+lVGjTwRKslB6hHKiIT5BuP1i2EJ9OlQw465tvXhKQWnN2i6r0DFDcWEPCu42GN8aWAsqqXQHGTvIw3Umdv3hX8nW8sqCtfdprjtM2GPPwxLhbSv4KnLBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IXRtM1aW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SYwDX0vX+2r8FvCLy7ZJUTpj8acegPkw9nmTMgXvc/G6qAmMh5cf3oIPG6QdJ9TAYlJ39wDyFBhGKZDr+r+ufjmtXu5VbrVCP3GNOsSRSjAEmRax53c7ywn6Tc0bHamqI+55VBE3EtSnQDLaalhc9zWplhmYRlnRqJUiZWzNa2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdCZO61o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IXRtM1aW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770531F000E9;
-	Thu, 20 Aug 2026 15:07:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdCZO61o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52DAE1F000E9;
+	Thu, 20 Aug 2026 15:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238471;
-	bh=aakuKoiFNdQ+T7CPm0AJV7xotlNrS+Bd2cIj28TC8XM=;
+	s=korg; t=1787238473;
+	bh=zqvdIUhsTd+VKgXth6yadMRRLBWY32LU/Tuf8sAFMb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IXRtM1aWZHvzh7Xl7i8h3vksKYDBjRkT/INu0bA2juyJVMw35ehkluxL9P1mZxEn9
-	 EzMQ/3UKSYEY03rLTw5mU5oAbw6QARZkygktNE8ovFKNjAm1n7rrYf75jlu4jRj1wT
-	 GzQwJdhVknYg6HOivp0TbXqyVL3iBMuLdAk3P72Y=
+	b=jdCZO61oI7K8A48/W7cr2Lbu0BcvsV73npDf3vDX6ktTBc5mrMK/HLr2BmmttkYQ3
+	 73EmvWs4qq+x9eo1dLHGGRT5+7/2Fg1HO8AqverSC9KlAl/amB+F+XoAcl+CJHs+1H
+	 znIs9JZYAwgj1R8Y72/NQYevvkZCwMC9qP+fx8BU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a78926bdac2adb52dc0e@syzkaller.appspotmail.com,
-	Simon Horman <horms@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 160/228] net: expect instance lock in netdev_queue_get_dma_dev()
-Date: Thu, 20 Aug 2026 16:55:02 +0200
-Message-ID: <20260820145249.534723695@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 7.1 143/228] xfs: fix another iunlink infinite loop bug in online fsck
+Date: Thu, 20 Aug 2026 16:54:45 +0200
+Message-ID: <20260820145248.950095421@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -53,45 +51,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 92465f46f3c3a92e4758af20d2363b7adc43e1f5 ]
+commit 6d67c6b99f1fc07c64b97fcbc974c6f1ada7f622 upstream.
 
-netdev_queue_get_dma_dev() uses "compat" locking assert which wants
-either the rtnl_lock or netdev instance lock. This is not right,
-the callers are taking the instance lock unconditionally. All entry
-points for queue config are purely instance locked.
+xrep_iunlink_resolve_bucket is supposed to reconstruct as much of the
+incore prev and next unlinked list pointers based on what it finds on
+disk and in memory before we move on to relinking the truly lost inodes
+back into the unlinked list.  However, it's still vulnerable to infinite
+loops that come in via the next_unlinked pointers.
 
-In other words the callers use netdev_get_by_index_lock(), not
-netdev_get_by_index_lock_ops_compat(). All the state we will
-access is effectively instance lock protected (it's const for
-devices which are not ops-locked).
+Fix this problem by remembering which inodes we've already seen and
+checking new agino pointers against that.  If a bit is already set,
+either this is a loop or the inode has nonzero link count.  We'll deal
+with the second case in a subsequent patch.
 
-Update the assert to avoid false positive warnings.
-
-Cc: stable@vger.kernel.org
-Fixes: b6c5f9454ef34 ("io_uring/zcrx: call netdev_queue_get_dma_dev() under instance lock")
-Reported-by: syzbot+a78926bdac2adb52dc0e@syzkaller.appspotmail.com
-Reviewed-by: Simon Horman <horms@kernel.org>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://patch.msgid.link/20260806225627.3998672-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # v6.10
+Fixes: ab97f4b1c03075 ("xfs: repair AGI unlinked inode bucket lists")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/netdev_queues.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/scrub/agheader_repair.c |   37 ++++++++++++++++++++++++++++---------
+ fs/xfs/scrub/trace.h           |    1 +
+ 2 files changed, 29 insertions(+), 9 deletions(-)
 
---- a/net/core/netdev_queues.c
-+++ b/net/core/netdev_queues.c
-@@ -40,7 +40,7 @@ struct device *netdev_queue_get_dma_dev(
- 	struct netdev_rx_queue *hw_rxq;
- 	struct device *dma_dev;
+--- a/fs/xfs/scrub/agheader_repair.c
++++ b/fs/xfs/scrub/agheader_repair.c
+@@ -1341,15 +1341,32 @@ xrep_iunlink_resolve_bucket(
+ 	struct xrep_agi		*ragi,
+ 	unsigned int		bucket)
+ {
++	struct xagino_bitmap	seen;
+ 	struct xfs_scrub	*sc = ragi->sc;
+ 	struct xfs_inode	*ip;
+ 	xfs_agino_t		prev_agino = NULLAGINO;
+ 	xfs_agino_t		next_agino = ragi->iunlink_heads[bucket];
+ 	int			error = 0;
  
--	netdev_assert_locked_ops_compat(dev);
-+	netdev_assert_locked(dev);
++	xagino_bitmap_init(&seen);
++
+ 	while (next_agino != NULLAGINO) {
++		unsigned int len = 1;
++
+ 		if (xchk_should_terminate(ragi->sc, &error))
+-			return error;
++			goto out_bitmap;
++
++		/* Inode already seen?  We're stuck in a loop */
++		if (xagino_bitmap_test(&seen, next_agino, &len)) {
++			trace_xrep_iunlink_resolve_infinite_loop(sc->sa.pag,
++					bucket, prev_agino, next_agino);
++			next_agino = NULLAGINO;
++			break;
++		}
++
++		error = xagino_bitmap_set(&seen, next_agino, 1);
++		if (error)
++			goto out_bitmap;
  
- 	/* Only RX side supports queue leasing today. */
- 	if (type != NETDEV_QUEUE_TYPE_RX || !netif_rxq_is_leased(dev, idx))
+ 		/* Find the next inode in the chain. */
+ 		ip = xfs_iunlink_lookup(sc->sa.pag, next_agino);
+@@ -1375,17 +1392,17 @@ xrep_iunlink_resolve_bucket(
+ 			error = xrep_iunlink_store_next(ragi, next_agino,
+ 					NULLAGINO);
+ 			if (error)
+-				return error;
++				goto out_bitmap;
+ 
+ 			error = xrep_iunlink_store_prev(ragi, next_agino,
+ 					LINKED_AGINO);
+ 			if (error)
+-				return error;
++				goto out_bitmap;
+ 
+ 			error = xagino_bitmap_clear(&ragi->iunlink_bmp,
+ 					next_agino, 1);
+ 			if (error)
+-				return error;
++				goto out_bitmap;
+ 
+ 			next_agino = ip->i_next_unlinked;
+ 			continue;
+@@ -1426,20 +1443,20 @@ xrep_iunlink_resolve_bucket(
+ 		 */
+ 		error = xagino_bitmap_clear(&ragi->iunlink_bmp, next_agino, 1);
+ 		if (error)
+-			return error;
++			goto out_bitmap;
+ 
+ 		/* Remember the previous inode's next pointer. */
+ 		if (prev_agino != NULLAGINO) {
+ 			error = xrep_iunlink_store_next(ragi, prev_agino,
+ 					next_agino);
+ 			if (error)
+-				return error;
++				goto out_bitmap;
+ 		}
+ 
+ 		/* Remember this inode's previous pointer. */
+ 		error = xrep_iunlink_store_prev(ragi, next_agino, prev_agino);
+ 		if (error)
+-			return error;
++			goto out_bitmap;
+ 
+ 		/* Advance the list and remember this inode. */
+ 		prev_agino = next_agino;
+@@ -1450,10 +1467,12 @@ xrep_iunlink_resolve_bucket(
+ 	if (prev_agino != NULLAGINO) {
+ 		error = xrep_iunlink_store_next(ragi, prev_agino, next_agino);
+ 		if (error)
+-			return error;
++			goto out_bitmap;
+ 	}
+ 
+-	return 0;
++out_bitmap:
++	xagino_bitmap_destroy(&seen);
++	return error;
+ }
+ 
+ /* Reinsert this unlinked inode into the head of the staged bucket list. */
+--- a/fs/xfs/scrub/trace.h
++++ b/fs/xfs/scrub/trace.h
+@@ -3579,6 +3579,7 @@ DEFINE_EVENT(xrep_iunlink_resolve_class,
+ 	TP_PROTO(const struct xfs_perag *pag, unsigned int bucket, \
+ 		 xfs_agino_t prev_agino, xfs_agino_t next_agino), \
+ 	TP_ARGS(pag, bucket, prev_agino, next_agino))
++DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_infinite_loop);
+ DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_uncached);
+ DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_wronglist);
+ DEFINE_REPAIR_IUNLINK_RESOLVE_EVENT(xrep_iunlink_resolve_nolist);
 
 
