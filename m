@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F66374E5A;
-	Thu, 20 Aug 2026 16:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F228647CA61;
+	Thu, 20 Aug 2026 16:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243344; cv=none; b=nkcnzfdXYi5C2eWTpVnw1CWtP67hUAuPjwrdFBUwLJN1orkfER3BdqGeVeEUMWvLZ4//hvIWBz6AbcLvq2ZDZtKlUzeN8IW+7JtqJ7BmrvI7VDMSTo3ZGsP2MQ0kXF4EkUTsVaOgWa+WFpALof5505dTDQjV6Mqpopu+Plg/bMo=
+	t=1787243347; cv=none; b=ooSTgtCGqyi1eMZYII0Y1Vm3mmfgLzv84OJnOH9bDoRdXAKSZzL0D1n3qCzfM8fDeSTOvskvnbLRBzyERCA+Roo53hWi5FXJc4yfKPukfJxFSX44+omjZIg3+XAntklSYxQEBGtPBURghF/cVAKkLwaG8MyTPkzXD1yo9ptlBu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243344; c=relaxed/simple;
-	bh=BgEFw1xNczDPgCXiaV/2iz0bnoPrWn+X6VCQuEoTjiY=;
+	s=arc-20240116; t=1787243347; c=relaxed/simple;
+	bh=hrgHStkMR2fjEXNXS2D7a5mBRLTJRn8Y6O7juIglrdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YoNf22we9QwxUmIqt6Z7rE6/08AAGhS1Fe8a4WQjd/gIlev6fig93byKsA7GdBDq2cn5ClSBoDPyTkFDWegwPmTyXDrcpCX+7c+vAyY/92td5BEG3T5Bg8zLNZLhkumCbvCOKQI3oM+vABDpfLrIPgOQNEq7h4bFErgHrjrpP4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ktvy4TIz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k+aFhL2HpfuzCToeH94DrGJ+OXcur3O83THNZfQLyId+h6qaFLspOdLPvRcAmlO/CKU7qLhGUnC1dZfFm6fapBZMsxxiP5qAFJB70Mol8ba08hp2Io6ArZBfiu/9tD3Nbe90DZHwwWdoCDrqxqhfy5SMGuMHjLbS1UPaDPn7voY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGoyqseA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ktvy4TIz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4831F000E9;
-	Thu, 20 Aug 2026 16:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGoyqseA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5955F1F00A3A;
+	Thu, 20 Aug 2026 16:29:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243343;
-	bh=49SQTz+/XVZKSW31lvEiG4Iwkdbu0wW7C1uuvm6qWiY=;
+	s=korg; t=1787243345;
+	bh=0KfLOCzmcHZwK4Y6I6Wzmbs8svCwf6a2ovyGAnU7rm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ktvy4TIzeJAIZACPv+SNwN+zJgk1tJVWfueHbNfYNWq8SXHvad1I+g3m37PBw4cWb
-	 6ikx1eYPVW2czWYYPPKqfRVU8/CjRcmvEZj5SH/UOmWZKlRL/qWY27iIJWtdr346vp
-	 voJJ+NwxoX8qxXMUeQ0VXu6AFvLeJglt214/VowE=
+	b=MGoyqseA4OldC9oUMMU3HmFya6G8qKiug2c/qg3K6plk0lW2B1ERSgwCEnQjk1u8u
+	 7d+vdYGdGd3/CRT32N7at30ClzLdygjMjGS/GJBlWDj5FmpsOgkED+ZrQxZ+4uUtpD
+	 TNsyDwwCwQTENUmBMSy3Ei0EcvwoknQ9OzP7h8Rc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 061/272] ALSA: hda: Fix cached processing coefficient verbs
-Date: Thu, 20 Aug 2026 16:54:05 +0200
-Message-ID: <20260820145233.124846696@linuxfoundation.org>
+Subject: [PATCH 5.15 062/272] serial: max310x: replace bare use of unsigned with unsigned int (checkpatch)
+Date: Thu, 20 Aug 2026 16:54:06 +0200
+Message-ID: <20260820145233.153951532@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -51,59 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit f67be28fdf8b5d31ac1cc1152bb17250f9f8f513 ]
+[ Upstream commit 79b69eb09cf5b6a77e621b2838b7e0d38113debb ]
 
-Intel HD Audio defines Coefficient Index and Processing Coefficient as
-separate audio widget controls in the Audio Widget Verb Definitions:
-Coefficient Index selects the coefficient slot, while Processing
-Coefficient accesses the value at the selected slot.
+Fixes the following checkpatch warnings:
 
-hda_reg_read_coef() selects the slot with AC_VERB_SET_COEF_INDEX, but
-then uses AC_VERB_GET_COEF_INDEX for the value read.  That reads back the
-selected index instead of the coefficient value.  hda_reg_write_coef()
-has the same issue and builds the value write from AC_VERB_GET_COEF_INDEX
-instead of AC_VERB_SET_PROC_COEF.
+    WARNING: Prefer 'unsigned int' to bare use of 'unsigned'
 
-This only affects the regmap coefficient cache path used by codecs that
-set codec->cache_coef.  Direct coefficient helpers already use the normal
-SET_COEF_INDEX followed by GET_PROC_COEF or SET_PROC_COEF sequence, which
-is likely why this has not been noticed widely.
+With this change, the affected functions now match the prototypes in
+struct gpio_chip.
 
-Use AC_VERB_GET_PROC_COEF for cached coefficient reads and
-AC_VERB_SET_PROC_COEF for cached coefficient writes.
-
-Fixes: 40ba66a702b8 ("ALSA: hda - Add cache support for COEF read/write")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/DB9023BF2920BA99+20260707132419.1731342-1-raoxu@uniontech.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20240118152213.2644269-16-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: a483b1a91b33 ("serial: max310x: implement gpio_chip::get_direction()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/hdac_regmap.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/serial/max310x.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/sound/hda/hdac_regmap.c
-+++ b/sound/hda/hdac_regmap.c
-@@ -215,7 +215,7 @@ static int hda_reg_read_coef(struct hdac
- 	err = snd_hdac_exec_verb(codec, verb, 0, NULL);
- 	if (err < 0)
- 		return err;
--	verb = (reg & ~0xfffff) | (AC_VERB_GET_COEF_INDEX << 8);
-+	verb = (reg & ~0xfffff) | (AC_VERB_GET_PROC_COEF << 8);
- 	return snd_hdac_exec_verb(codec, verb, 0, val);
+--- a/drivers/tty/serial/max310x.c
++++ b/drivers/tty/serial/max310x.c
+@@ -1193,7 +1193,7 @@ static int __maybe_unused max310x_resume
+ static SIMPLE_DEV_PM_OPS(max310x_pm_ops, max310x_suspend, max310x_resume);
+ 
+ #ifdef CONFIG_GPIOLIB
+-static int max310x_gpio_get(struct gpio_chip *chip, unsigned offset)
++static int max310x_gpio_get(struct gpio_chip *chip, unsigned int offset)
+ {
+ 	unsigned int val;
+ 	struct max310x_port *s = gpiochip_get_data(chip);
+@@ -1204,7 +1204,7 @@ static int max310x_gpio_get(struct gpio_
+ 	return !!((val >> 4) & (1 << (offset % 4)));
  }
  
-@@ -233,7 +233,7 @@ static int hda_reg_write_coef(struct hda
- 	err = snd_hdac_exec_verb(codec, verb, 0, NULL);
- 	if (err < 0)
- 		return err;
--	verb = (reg & ~0xfffff) | (AC_VERB_GET_COEF_INDEX << 8) |
-+	verb = (reg & ~0xfffff) | (AC_VERB_SET_PROC_COEF << 8) |
- 		(val & 0xffff);
- 	return snd_hdac_exec_verb(codec, verb, 0, NULL);
+-static void max310x_gpio_set(struct gpio_chip *chip, unsigned offset, int value)
++static void max310x_gpio_set(struct gpio_chip *chip, unsigned int offset, int value)
+ {
+ 	struct max310x_port *s = gpiochip_get_data(chip);
+ 	struct uart_port *port = &s->p[offset / 4].port;
+@@ -1213,7 +1213,7 @@ static void max310x_gpio_set(struct gpio
+ 			    value ? 1 << (offset % 4) : 0);
  }
+ 
+-static int max310x_gpio_direction_input(struct gpio_chip *chip, unsigned offset)
++static int max310x_gpio_direction_input(struct gpio_chip *chip, unsigned int offset)
+ {
+ 	struct max310x_port *s = gpiochip_get_data(chip);
+ 	struct uart_port *port = &s->p[offset / 4].port;
+@@ -1224,7 +1224,7 @@ static int max310x_gpio_direction_input(
+ }
+ 
+ static int max310x_gpio_direction_output(struct gpio_chip *chip,
+-					 unsigned offset, int value)
++					 unsigned int offset, int value)
+ {
+ 	struct max310x_port *s = gpiochip_get_data(chip);
+ 	struct uart_port *port = &s->p[offset / 4].port;
 
 
