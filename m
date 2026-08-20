@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D64537AA7D;
-	Thu, 20 Aug 2026 17:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7677A47DFAA;
+	Thu, 20 Aug 2026 17:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247687; cv=none; b=Z8JKGCzkfTJLEJwmCPTpvUZcxrzS4JNqrg1Es2yXOR36AdgrPBxuQo40baMh96Bsui3mxfgFIACgqmkNVnhfOiHR7IoNGoNdFEXQf8jJxHK8T3E5KX27vnbvTX0iUOLm4uUfp7Z+5Qi7e5fCJfu08WLOGKLclpCIrQnR0Oene8E=
+	t=1787247689; cv=none; b=aAWIf/WDhVSjYy/vxaksQUfttYYBvN3ugdeO3teX0NGAtnvzcPuz2OYuoZUNrwr6QdlH7/CpY97VVoXF3HIYpE0X2fGq1NlpZSl9XhtvA9c46HdtSoTJL8QjtP+N58p54rBp/ZihQ0HbLnNyt7HtQLlXsFCzUJmkmcKjDKrYy1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247687; c=relaxed/simple;
-	bh=cx+elY1rGx9DcezY6VaIunLTBNAm50ETc0coU9dNcIc=;
+	s=arc-20240116; t=1787247689; c=relaxed/simple;
+	bh=Vt3Q8y7kYX/ZtrJlZJ+C9MG7iA52c6PF26HURpyNd8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dzR279U0Znz9vNFldaEkJLn3bV80HorsRE517y1LhsJJg7qSMva03xQScCOQQ0vYGLTL2qxeDxxvNm+2hp/2LBZ5f0FMzZOZtT+lBPmZc5AGZZ0Vq0SOwoo2Jf+FSHsad996MQm2OXE9D5R2+IpcKOwYuASS5ZGslAeDnX7uO3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvQVBxL4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BcI3m31FaBWyQgvKt6rTAx/1sdtaqVWw/RSgbEqhgAc6oJw9Qs3q/d/A/RLAKQB0EJAUDR5cpcWTY/QgqwWnM+gX8+9dYgKt07fFeGvbU7zXVcRZ87JuOBbFTw/IqOHeg59KRyys2bH7bBaouSYxz1UUoJsQzu6iFav6QGscFhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=roOZOnP8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvQVBxL4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C8F1F000E9;
-	Thu, 20 Aug 2026 17:41:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="roOZOnP8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D31421F000E9;
+	Thu, 20 Aug 2026 17:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247685;
-	bh=x5dFU8wZju4WTzIoF3h62BaVkmQyatfG3485++Wfwus=;
+	s=korg; t=1787247688;
+	bh=Bu2CnpBqwQwgaH4LaUbYk7tizmkWHt1J2zhC9EW8Lnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cvQVBxL4YSK3cvvBPwUJML4aXAeOQgRqhpc35RDVNBKyzGJBv/ri6htU3qHgQJjn4
-	 uCY18FklwfSdJIzLhrJ3q2uHbsZv0CoelYbaaryGjoTjEWrFk1pgCv4uvBh4E2Qw7X
-	 nEhiI9YlM2oAVD8hiY9HBd/JsG0d9rPlHzvVtYrc=
+	b=roOZOnP8CyZQtzUXWuBAlqCBsYqJlKEUW60kwx82rWhfe37lhQlzgpP+Ii+wbfA5n
+	 WnuahacGLGljhuSSA4Dy40NYvL1bGvNBqb+lWb4R4blPwUFJUw8lOXeHCqrnliJhoN
+	 PW9TUv3yP2i2e0pSgO6L/1QsZwRBiXnHhPC5bcdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	"David S. Miller" <davem@davemloft.net>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 134/166] selftests: tls: add rekey tests
-Date: Thu, 20 Aug 2026 16:56:33 +0200
-Message-ID: <20260820145215.199048123@linuxfoundation.org>
+Subject: [PATCH 6.6 117/166] binfmt_misc: restore write access when removing an entry
+Date: Thu, 20 Aug 2026 16:56:16 +0200
+Message-ID: <20260820145214.684507522@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -51,491 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 555f0edb9ff043196655a5b7cc65f67dfd05b530 ]
+[ Upstream commit db1856ea9196cf6e015d12199a34c0b9313c7bfa ]
 
-Test the kernel's ability to:
- - update the key (but not the version or cipher), only for TLS1.3
- - pause decryption after receiving a KeyUpdate message, until a new
-   RX key has been provided
- - reflect the pause/non-readable socket in poll()
+Registering an entry with the MISC_FMT_OPEN_FILE flag opens the
+interpreter via open_exec() which denies write access to it for as
+long as the entry exists. Removing the entry closes the interpreter
+file via filp_close() but never restores write access, leaving the
+inode's i_writecount permanently negative. Opening the interpreter
+for writing keeps failing with ETXTBSY long after the entry is gone
+until the inode is evicted from the inode cache.
 
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 1c8629651cb5 ("tls: rx: restore msg_iter before TLS 1.3 optimistic retry")
+Commit 90f601b497d7 ("binfmt_misc: restore write access before
+closing files opened by open_exec()") fixed the same imbalance in the
+error path of bm_register_write() but the actual removal path has
+been leaking the write denial since the introduction of the flag.
+
+Restore write access in put_binfmt_handler() before closing the
+interpreter file.
+
+Link: https://patch.msgid.link/20260710-work-binfmt_misc-locking-v3-1-a162f7cb58d6@kernel.org
+Fixes: 948b701a607f ("binfmt_misc: add persistent opened binary handler for containers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/tls.c |  458 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 458 insertions(+)
+ fs/binfmt_misc.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/tls.c
-+++ b/tools/testing/selftests/net/tls.c
-@@ -1604,6 +1604,464 @@ TEST_F(tls, recv_efault)
- 		EXPECT_EQ(memcmp(rec2, recv_mem + 9, ret - 9), 0);
- }
- 
-+#define TLS_RECORD_TYPE_HANDSHAKE      0x16
-+/* key_update, length 1, update_not_requested */
-+static const char key_update_msg[] = "\x18\x00\x00\x01\x00";
-+static void tls_send_keyupdate(struct __test_metadata *_metadata, int fd)
-+{
-+	size_t len = sizeof(key_update_msg);
-+
-+	EXPECT_EQ(tls_send_cmsg(fd, TLS_RECORD_TYPE_HANDSHAKE,
-+				(char *)key_update_msg, len, 0),
-+		  len);
-+}
-+
-+static void tls_recv_keyupdate(struct __test_metadata *_metadata, int fd, int flags)
-+{
-+	char buf[100];
-+
-+	EXPECT_EQ(tls_recv_cmsg(_metadata, fd, TLS_RECORD_TYPE_HANDSHAKE, buf, sizeof(buf), flags),
-+		  sizeof(key_update_msg));
-+	EXPECT_EQ(memcmp(buf, key_update_msg, sizeof(key_update_msg)), 0);
-+}
-+
-+/* set the key to 0 then 1 for RX, immediately to 1 for TX */
-+TEST_F(tls_basic, rekey_rx)
-+{
-+	struct tls_crypto_info_keys tls12_0, tls12_1;
-+	char const *test_str = "test_message";
-+	int send_len = strlen(test_str) + 1;
-+	char buf[20];
-+	int ret;
-+
-+	if (self->notls)
-+		return;
-+
-+	tls_crypto_info_init(TLS_1_3_VERSION, TLS_CIPHER_AES_GCM_128,
-+			     &tls12_0, 0);
-+	tls_crypto_info_init(TLS_1_3_VERSION, TLS_CIPHER_AES_GCM_128,
-+			     &tls12_1, 1);
-+
-+	ret = setsockopt(self->fd, SOL_TLS, TLS_TX, &tls12_1, tls12_1.len);
-+	ASSERT_EQ(ret, 0);
-+
-+	ret = setsockopt(self->cfd, SOL_TLS, TLS_RX, &tls12_0, tls12_0.len);
-+	ASSERT_EQ(ret, 0);
-+
-+	ret = setsockopt(self->cfd, SOL_TLS, TLS_RX, &tls12_1, tls12_1.len);
-+	EXPECT_EQ(ret, 0);
-+
-+	EXPECT_EQ(send(self->fd, test_str, send_len, 0), send_len);
-+	EXPECT_EQ(recv(self->cfd, buf, send_len, 0), send_len);
-+	EXPECT_EQ(memcmp(buf, test_str, send_len), 0);
-+}
-+
-+/* set the key to 0 then 1 for TX, immediately to 1 for RX */
-+TEST_F(tls_basic, rekey_tx)
-+{
-+	struct tls_crypto_info_keys tls12_0, tls12_1;
-+	char const *test_str = "test_message";
-+	int send_len = strlen(test_str) + 1;
-+	char buf[20];
-+	int ret;
-+
-+	if (self->notls)
-+		return;
-+
-+	tls_crypto_info_init(TLS_1_3_VERSION, TLS_CIPHER_AES_GCM_128,
-+			     &tls12_0, 0);
-+	tls_crypto_info_init(TLS_1_3_VERSION, TLS_CIPHER_AES_GCM_128,
-+			     &tls12_1, 1);
-+
-+	ret = setsockopt(self->fd, SOL_TLS, TLS_TX, &tls12_0, tls12_0.len);
-+	ASSERT_EQ(ret, 0);
-+
-+	ret = setsockopt(self->cfd, SOL_TLS, TLS_RX, &tls12_1, tls12_1.len);
-+	ASSERT_EQ(ret, 0);
-+
-+	ret = setsockopt(self->fd, SOL_TLS, TLS_TX, &tls12_1, tls12_1.len);
-+	EXPECT_EQ(ret, 0);
-+
-+	EXPECT_EQ(send(self->fd, test_str, send_len, 0), send_len);
-+	EXPECT_EQ(recv(self->cfd, buf, send_len, 0), send_len);
-+	EXPECT_EQ(memcmp(buf, test_str, send_len), 0);
-+}
-+
-+TEST_F(tls, rekey)
-+{
-+	char const *test_str_1 = "test_message_before_rekey";
-+	char const *test_str_2 = "test_message_after_rekey";
-+	struct tls_crypto_info_keys tls12;
-+	int send_len;
-+	char buf[100];
-+
-+	if (variant->tls_version != TLS_1_3_VERSION)
-+		return;
-+
-+	/* initial send/recv */
-+	send_len = strlen(test_str_1) + 1;
-+	EXPECT_EQ(send(self->fd, test_str_1, send_len, 0), send_len);
-+	EXPECT_EQ(recv(self->cfd, buf, send_len, 0), send_len);
-+	EXPECT_EQ(memcmp(buf, test_str_1, send_len), 0);
-+
-+	/* update TX key */
-+	tls_send_keyupdate(_metadata, self->fd);
-+	tls_crypto_info_init(variant->tls_version, variant->cipher_type, &tls12, 1);
-+	EXPECT_EQ(setsockopt(self->fd, SOL_TLS, TLS_TX, &tls12, tls12.len), 0);
-+
-+	/* send after rekey */
-+	send_len = strlen(test_str_2) + 1;
-+	EXPECT_EQ(send(self->fd, test_str_2, send_len, 0), send_len);
-+
-+	/* can't receive the KeyUpdate without a control message */
-+	EXPECT_EQ(recv(self->cfd, buf, send_len, 0), -1);
-+
-+	/* get KeyUpdate */
-+	tls_recv_keyupdate(_metadata, self->cfd, 0);
-+
-+	/* recv blocking -> -EKEYEXPIRED */
-+	EXPECT_EQ(recv(self->cfd, buf, sizeof(buf), 0), -1);
-+	EXPECT_EQ(errno, EKEYEXPIRED);
-+
-+	/* recv non-blocking -> -EKEYEXPIRED */
-+	EXPECT_EQ(recv(self->cfd, buf, sizeof(buf), MSG_DONTWAIT), -1);
-+	EXPECT_EQ(errno, EKEYEXPIRED);
-+
-+	/* update RX key */
-+	EXPECT_EQ(setsockopt(self->cfd, SOL_TLS, TLS_RX, &tls12, tls12.len), 0);
-+
-+	/* recv after rekey */
-+	EXPECT_NE(recv(self->cfd, buf, send_len, 0), -1);
-+	EXPECT_EQ(memcmp(buf, test_str_2, send_len), 0);
-+}
-+
-+TEST_F(tls, rekey_fail)
-+{
-+	char const *test_str_1 = "test_message_before_rekey";
-+	char const *test_str_2 = "test_message_after_rekey";
-+	struct tls_crypto_info_keys tls12;
-+	int send_len;
-+	char buf[100];
-+
-+	/* initial send/recv */
-+	send_len = strlen(test_str_1) + 1;
-+	EXPECT_EQ(send(self->fd, test_str_1, send_len, 0), send_len);
-+	EXPECT_EQ(recv(self->cfd, buf, send_len, 0), send_len);
-+	EXPECT_EQ(memcmp(buf, test_str_1, send_len), 0);
-+
-+	/* update TX key */
-+	tls_send_keyupdate(_metadata, self->fd);
-+
-+	if (variant->tls_version != TLS_1_3_VERSION) {
-+		/* just check that rekey is not supported and return */
-+		tls_crypto_info_init(variant->tls_version, variant->cipher_type, &tls12, 1);
-+		EXPECT_EQ(setsockopt(self->fd, SOL_TLS, TLS_TX, &tls12, tls12.len), -1);
-+		EXPECT_EQ(errno, EBUSY);
-+		return;
-+	}
-+
-+	/* successful update */
-+	tls_crypto_info_init(variant->tls_version, variant->cipher_type, &tls12, 1);
-+	EXPECT_EQ(setsockopt(self->fd, SOL_TLS, TLS_TX, &tls12, tls12.len), 0);
-+
-+	/* invalid update: change of version */
-+	tls_crypto_info_init(TLS_1_2_VERSION, variant->cipher_type, &tls12, 1);
-+	EXPECT_EQ(setsockopt(self->fd, SOL_TLS, TLS_TX, &tls12, tls12.len), -1);
-+	EXPECT_EQ(errno, EINVAL);
-+
-+	/* invalid update (RX socket): change of version */
-+	tls_crypto_info_init(TLS_1_2_VERSION, variant->cipher_type, &tls12, 1);
-+	EXPECT_EQ(setsockopt(self->cfd, SOL_TLS, TLS_RX, &tls12, tls12.len), -1);
-+	EXPECT_EQ(errno, EINVAL);
-+
-+	/* invalid update: change of cipher */
-+	if (variant->cipher_type == TLS_CIPHER_AES_GCM_256)
-+		tls_crypto_info_init(variant->tls_version, TLS_CIPHER_CHACHA20_POLY1305, &tls12, 1);
-+	else
-+		tls_crypto_info_init(variant->tls_version, TLS_CIPHER_AES_GCM_256, &tls12, 1);
-+	EXPECT_EQ(setsockopt(self->fd, SOL_TLS, TLS_TX, &tls12, tls12.len), -1);
-+	EXPECT_EQ(errno, EINVAL);
-+
-+	/* send after rekey, the invalid updates shouldn't have an effect */
-+	send_len = strlen(test_str_2) + 1;
-+	EXPECT_EQ(send(self->fd, test_str_2, send_len, 0), send_len);
-+
-+	/* can't receive the KeyUpdate without a control message */
-+	EXPECT_EQ(recv(self->cfd, buf, send_len, 0), -1);
-+
-+	/* get KeyUpdate */
-+	tls_recv_keyupdate(_metadata, self->cfd, 0);
-+
-+	/* recv blocking -> -EKEYEXPIRED */
-+	EXPECT_EQ(recv(self->cfd, buf, sizeof(buf), 0), -1);
-+	EXPECT_EQ(errno, EKEYEXPIRED);
-+
-+	/* recv non-blocking -> -EKEYEXPIRED */
-+	EXPECT_EQ(recv(self->cfd, buf, sizeof(buf), MSG_DONTWAIT), -1);
-+	EXPECT_EQ(errno, EKEYEXPIRED);
-+
-+	/* update RX key */
-+	tls_crypto_info_init(variant->tls_version, variant->cipher_type, &tls12, 1);
-+	EXPECT_EQ(setsockopt(self->cfd, SOL_TLS, TLS_RX, &tls12, tls12.len), 0);
-+
-+	/* recv after rekey */
-+	EXPECT_NE(recv(self->cfd, buf, send_len, 0), -1);
-+	EXPECT_EQ(memcmp(buf, test_str_2, send_len), 0);
-+}
-+
-+TEST_F(tls, rekey_peek)
-+{
-+	char const *test_str_1 = "test_message_before_rekey";
-+	struct tls_crypto_info_keys tls12;
-+	int send_len;
-+	char buf[100];
-+
-+	if (variant->tls_version != TLS_1_3_VERSION)
-+		return;
-+
-+	send_len = strlen(test_str_1) + 1;
-+	EXPECT_EQ(send(self->fd, test_str_1, send_len, 0), send_len);
-+
-+	/* update TX key */
-+	tls_send_keyupdate(_metadata, self->fd);
-+	tls_crypto_info_init(variant->tls_version, variant->cipher_type, &tls12, 1);
-+	EXPECT_EQ(setsockopt(self->fd, SOL_TLS, TLS_TX, &tls12, tls12.len), 0);
-+
-+	EXPECT_EQ(recv(self->cfd, buf, sizeof(buf), MSG_PEEK), send_len);
-+	EXPECT_EQ(memcmp(buf, test_str_1, send_len), 0);
-+
-+	EXPECT_EQ(recv(self->cfd, buf, send_len, 0), send_len);
-+	EXPECT_EQ(memcmp(buf, test_str_1, send_len), 0);
-+
-+	/* can't receive the KeyUpdate without a control message */
-+	EXPECT_EQ(recv(self->cfd, buf, send_len, MSG_PEEK), -1);
-+
-+	/* peek KeyUpdate */
-+	tls_recv_keyupdate(_metadata, self->cfd, MSG_PEEK);
-+
-+	/* get KeyUpdate */
-+	tls_recv_keyupdate(_metadata, self->cfd, 0);
-+
-+	/* update RX key */
-+	EXPECT_EQ(setsockopt(self->cfd, SOL_TLS, TLS_RX, &tls12, tls12.len), 0);
-+}
-+
-+TEST_F(tls, splice_rekey)
-+{
-+	int send_len = TLS_PAYLOAD_MAX_LEN / 2;
-+	char mem_send[TLS_PAYLOAD_MAX_LEN];
-+	char mem_recv[TLS_PAYLOAD_MAX_LEN];
-+	struct tls_crypto_info_keys tls12;
-+	int p[2];
-+
-+	if (variant->tls_version != TLS_1_3_VERSION)
-+		return;
-+
-+	memrnd(mem_send, sizeof(mem_send));
-+
-+	ASSERT_GE(pipe(p), 0);
-+	EXPECT_EQ(send(self->fd, mem_send, send_len, 0), send_len);
-+
-+	/* update TX key */
-+	tls_send_keyupdate(_metadata, self->fd);
-+	tls_crypto_info_init(variant->tls_version, variant->cipher_type, &tls12, 1);
-+	EXPECT_EQ(setsockopt(self->fd, SOL_TLS, TLS_TX, &tls12, tls12.len), 0);
-+
-+	EXPECT_EQ(send(self->fd, mem_send, send_len, 0), send_len);
-+
-+	EXPECT_EQ(splice(self->cfd, NULL, p[1], NULL, TLS_PAYLOAD_MAX_LEN, 0), send_len);
-+	EXPECT_EQ(read(p[0], mem_recv, send_len), send_len);
-+	EXPECT_EQ(memcmp(mem_send, mem_recv, send_len), 0);
-+
-+	/* can't splice the KeyUpdate */
-+	EXPECT_EQ(splice(self->cfd, NULL, p[1], NULL, TLS_PAYLOAD_MAX_LEN, 0), -1);
-+	EXPECT_EQ(errno, EINVAL);
-+
-+	/* peek KeyUpdate */
-+	tls_recv_keyupdate(_metadata, self->cfd, MSG_PEEK);
-+
-+	/* get KeyUpdate */
-+	tls_recv_keyupdate(_metadata, self->cfd, 0);
-+
-+	/* can't splice before updating the key */
-+	EXPECT_EQ(splice(self->cfd, NULL, p[1], NULL, TLS_PAYLOAD_MAX_LEN, 0), -1);
-+	EXPECT_EQ(errno, EKEYEXPIRED);
-+
-+	/* update RX key */
-+	EXPECT_EQ(setsockopt(self->cfd, SOL_TLS, TLS_RX, &tls12, tls12.len), 0);
-+
-+	EXPECT_EQ(splice(self->cfd, NULL, p[1], NULL, TLS_PAYLOAD_MAX_LEN, 0), send_len);
-+	EXPECT_EQ(read(p[0], mem_recv, send_len), send_len);
-+	EXPECT_EQ(memcmp(mem_send, mem_recv, send_len), 0);
-+}
-+
-+TEST_F(tls, rekey_peek_splice)
-+{
-+	char const *test_str_1 = "test_message_before_rekey";
-+	struct tls_crypto_info_keys tls12;
-+	int send_len;
-+	char buf[100];
-+	char mem_recv[TLS_PAYLOAD_MAX_LEN];
-+	int p[2];
-+
-+	if (variant->tls_version != TLS_1_3_VERSION)
-+		return;
-+
-+	ASSERT_GE(pipe(p), 0);
-+
-+	send_len = strlen(test_str_1) + 1;
-+	EXPECT_EQ(send(self->fd, test_str_1, send_len, 0), send_len);
-+
-+	/* update TX key */
-+	tls_send_keyupdate(_metadata, self->fd);
-+	tls_crypto_info_init(variant->tls_version, variant->cipher_type, &tls12, 1);
-+	EXPECT_EQ(setsockopt(self->fd, SOL_TLS, TLS_TX, &tls12, tls12.len), 0);
-+
-+	EXPECT_EQ(recv(self->cfd, buf, sizeof(buf), MSG_PEEK), send_len);
-+	EXPECT_EQ(memcmp(buf, test_str_1, send_len), 0);
-+
-+	EXPECT_EQ(splice(self->cfd, NULL, p[1], NULL, TLS_PAYLOAD_MAX_LEN, 0), send_len);
-+	EXPECT_EQ(read(p[0], mem_recv, send_len), send_len);
-+	EXPECT_EQ(memcmp(mem_recv, test_str_1, send_len), 0);
-+}
-+
-+TEST_F(tls, rekey_getsockopt)
-+{
-+	struct tls_crypto_info_keys tls12;
-+	struct tls_crypto_info_keys tls12_get;
-+	socklen_t len;
-+
-+	tls_crypto_info_init(variant->tls_version, variant->cipher_type, &tls12, 0);
-+
-+	len = tls12.len;
-+	EXPECT_EQ(getsockopt(self->fd, SOL_TLS, TLS_TX, &tls12_get, &len), 0);
-+	EXPECT_EQ(len, tls12.len);
-+	EXPECT_EQ(memcmp(&tls12_get, &tls12, tls12.len), 0);
-+
-+	len = tls12.len;
-+	EXPECT_EQ(getsockopt(self->cfd, SOL_TLS, TLS_RX, &tls12_get, &len), 0);
-+	EXPECT_EQ(len, tls12.len);
-+	EXPECT_EQ(memcmp(&tls12_get, &tls12, tls12.len), 0);
-+
-+	if (variant->tls_version != TLS_1_3_VERSION)
-+		return;
-+
-+	tls_send_keyupdate(_metadata, self->fd);
-+	tls_crypto_info_init(variant->tls_version, variant->cipher_type, &tls12, 1);
-+	EXPECT_EQ(setsockopt(self->fd, SOL_TLS, TLS_TX, &tls12, tls12.len), 0);
-+
-+	tls_recv_keyupdate(_metadata, self->cfd, 0);
-+	EXPECT_EQ(setsockopt(self->cfd, SOL_TLS, TLS_RX, &tls12, tls12.len), 0);
-+
-+	len = tls12.len;
-+	EXPECT_EQ(getsockopt(self->fd, SOL_TLS, TLS_TX, &tls12_get, &len), 0);
-+	EXPECT_EQ(len, tls12.len);
-+	EXPECT_EQ(memcmp(&tls12_get, &tls12, tls12.len), 0);
-+
-+	len = tls12.len;
-+	EXPECT_EQ(getsockopt(self->cfd, SOL_TLS, TLS_RX, &tls12_get, &len), 0);
-+	EXPECT_EQ(len, tls12.len);
-+	EXPECT_EQ(memcmp(&tls12_get, &tls12, tls12.len), 0);
-+}
-+
-+TEST_F(tls, rekey_poll_pending)
-+{
-+	char const *test_str = "test_message_after_rekey";
-+	struct tls_crypto_info_keys tls12;
-+	struct pollfd pfd = { };
-+	int send_len;
-+	int ret;
-+
-+	if (variant->tls_version != TLS_1_3_VERSION)
-+		return;
-+
-+	/* update TX key */
-+	tls_send_keyupdate(_metadata, self->fd);
-+	tls_crypto_info_init(variant->tls_version, variant->cipher_type, &tls12, 1);
-+	EXPECT_EQ(setsockopt(self->fd, SOL_TLS, TLS_TX, &tls12, tls12.len), 0);
-+
-+	/* get KeyUpdate */
-+	tls_recv_keyupdate(_metadata, self->cfd, 0);
-+
-+	/* send immediately after rekey */
-+	send_len = strlen(test_str) + 1;
-+	EXPECT_EQ(send(self->fd, test_str, send_len, 0), send_len);
-+
-+	/* key hasn't been updated, expect cfd to be non-readable */
-+	pfd.fd = self->cfd;
-+	pfd.events = POLLIN;
-+	EXPECT_EQ(poll(&pfd, 1, 0), 0);
-+
-+	ret = fork();
-+	ASSERT_GE(ret, 0);
-+
-+	if (ret) {
-+		int pid2, status;
-+
-+		/* wait before installing the new key */
-+		sleep(1);
-+
-+		/* update RX key while poll() is sleeping */
-+		EXPECT_EQ(setsockopt(self->cfd, SOL_TLS, TLS_RX, &tls12, tls12.len), 0);
-+
-+		pid2 = wait(&status);
-+		EXPECT_EQ(pid2, ret);
-+		EXPECT_EQ(status, 0);
-+	} else {
-+		pfd.fd = self->cfd;
-+		pfd.events = POLLIN;
-+		EXPECT_EQ(poll(&pfd, 1, 5000), 1);
-+
-+		exit(!__test_passed(_metadata));
-+	}
-+}
-+
-+TEST_F(tls, rekey_poll_delay)
-+{
-+	char const *test_str = "test_message_after_rekey";
-+	struct tls_crypto_info_keys tls12;
-+	struct pollfd pfd = { };
-+	int send_len;
-+	int ret;
-+
-+	if (variant->tls_version != TLS_1_3_VERSION)
-+		return;
-+
-+	/* update TX key */
-+	tls_send_keyupdate(_metadata, self->fd);
-+	tls_crypto_info_init(variant->tls_version, variant->cipher_type, &tls12, 1);
-+	EXPECT_EQ(setsockopt(self->fd, SOL_TLS, TLS_TX, &tls12, tls12.len), 0);
-+
-+	/* get KeyUpdate */
-+	tls_recv_keyupdate(_metadata, self->cfd, 0);
-+
-+	ret = fork();
-+	ASSERT_GE(ret, 0);
-+
-+	if (ret) {
-+		int pid2, status;
-+
-+		/* wait before installing the new key */
-+		sleep(1);
-+
-+		/* update RX key while poll() is sleeping */
-+		EXPECT_EQ(setsockopt(self->cfd, SOL_TLS, TLS_RX, &tls12, tls12.len), 0);
-+
-+		sleep(1);
-+		send_len = strlen(test_str) + 1;
-+		EXPECT_EQ(send(self->fd, test_str, send_len, 0), send_len);
-+
-+		pid2 = wait(&status);
-+		EXPECT_EQ(pid2, ret);
-+		EXPECT_EQ(status, 0);
-+	} else {
-+		pfd.fd = self->cfd;
-+		pfd.events = POLLIN;
-+		EXPECT_EQ(poll(&pfd, 1, 5000), 1);
-+		exit(!__test_passed(_metadata));
-+	}
-+}
-+
- FIXTURE(tls_err)
+--- a/fs/binfmt_misc.c
++++ b/fs/binfmt_misc.c
+@@ -163,8 +163,10 @@ static Node *get_binfmt_handler(struct l
+ static void put_binfmt_handler(Node *e)
  {
- 	int fd, cfd;
+ 	if (refcount_dec_and_test(&e->users)) {
+-		if (e->flags & MISC_FMT_OPEN_FILE)
++		if (e->flags & MISC_FMT_OPEN_FILE) {
++			exe_file_allow_write_access(e->interp_file);
+ 			filp_close(e->interp_file, NULL);
++		}
+ 		kfree(e);
+ 	}
+ }
 
 
