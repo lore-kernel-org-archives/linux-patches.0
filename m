@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1678E307492;
-	Thu, 20 Aug 2026 17:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCEF735C681;
+	Thu, 20 Aug 2026 17:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247506; cv=none; b=GWTbOdh56eEr0GZB6G3I4eZ0x9YlsDFiM0tU68OtLWPt6CX2JBfaYNVs5pU23uoyq0NpeHHiIpDge++qjxJs/mpyMeQRfpaNgGTgLKQtO3AsVCo7lPGT+LhwDpM9H6r8pxGyGjTuyxJEeHz5Ra/9wug3kEAVqMFzQ2xL1V31XOE=
+	t=1787247508; cv=none; b=EHBUdsgdDnGdwOvDCwttypJCBTySFtm8zSejPCryLtRYt4Ktd9hpUHV/balcqUQh6INIPTeUYgKI9d6OzZLb4NlKWQokgetxBY7RdeO4v0MdV2y4+VjUakWXNlzY99rME7fvWIykf8WRTRzbKCx3nXE/s0tct3UXrNxWYizpa5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247506; c=relaxed/simple;
-	bh=QN3dNLH68ATFOn2BunhvMrSbTAEgaaVG9LT9Q7N5wFw=;
+	s=arc-20240116; t=1787247508; c=relaxed/simple;
+	bh=OBT/eGbC77+lQXwLgtMykB3laRBlvPTXve/1VhCnFx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Et/jsT3gWerQPFbGGQp+C2gCg1lE4yHD5Hdr0L7ugjTn/6nF5E2bbj+ZRyUmzMxInhZNLoLxpN8/6lwDXshlDgPtVjyITTihA1yAIO9ZdlYUYiO1aAmcVoXPTgmdMxKdVb/ym/StnD6ohPJ1D4N15h27603ldPrAiqzkT5bfLlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iA2Sbr0K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fK4g4lijCCc77wEVllAZ4mqdtdjuQ68VuT0xPCz3BwPqVx4g2/QgHG9qNO+47pAK2nVFjV6LmWuzHbSXJbHPXqDrFg9dYGdWveNDM9w4xZE6zKGOH9bNBvCSIHj1qBtGvxqzeqVZiHz5rqiPEPszhhTbxF5dKyOgwsnly78HRXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLsMmENC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iA2Sbr0K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68EF31F000E9;
-	Thu, 20 Aug 2026 17:38:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLsMmENC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3061F000E9;
+	Thu, 20 Aug 2026 17:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247504;
-	bh=APEcegKdDXVYIlS4ASkQ0J4YiM+j9FSomPJi79glixQ=;
+	s=korg; t=1787247507;
+	bh=hi6fPKBPKv1QpLfVODg+PdC5CtBrW+yZvsMMzrcCvOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iA2Sbr0KZlhtRcDzfJFnjUQZbJun+Rba9JFiE6tEHcVpMjTj4soPFgymfindCs+Da
-	 2cr/oms9atdFDBTuLhrBNYNhD1rYcRPmKTdirTPIMVRF4632UwxUBdIG4vG7flDZwQ
-	 7OmeuojU9b7X2IbXjn8PPjYBHr4vYc3k4Jgtt6eI=
+	b=WLsMmENCtDv90NADXGCEWrKHH8CzJ3I6pkaZkta+xvdRGHqye/1EH6OkQV0bYyAHN
+	 Z9flWrKGmo8QH3lz8bo3HQiMH4DXbnua1oCq620sha5rIKpZOSeTZ2EuI5Vfpqhsl4
+	 Eav+CZfvSoziYhlnkGBHlr7JON6wMMOTYJEmOzPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Ben Zong-You Xie <ben717@andestech.com>
-Subject: [PATCH 6.6 068/166] RISC-V: Provide pgtable_l5_enabled on rv32
-Date: Thu, 20 Aug 2026 16:55:27 +0200
-Message-ID: <20260820145213.190731619@linuxfoundation.org>
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 069/166] selftests: tls: add test with a partially invalid iov
+Date: Thu, 20 Aug 2026 16:55:28 +0200
+Message-ID: <20260820145213.220157156@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -50,74 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Palmer Dabbelt <palmer@rivosinc.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-commit 10128f8b1663a8bce27df051c750d116bb8cd737 upstream.
+[ Upstream commit dc54b813df63020e946ccdef35b64d4fa99fd622 ]
 
-A few of the other page table level helpers are defined on rv32, but not
-pgtable_l5_enabled.  This adds the definition as a constant and converts
-pgtable_l4_enabled to a constant as well.
+Make sure that we don't return more bytes than we actually received if
+the userspace buffer was bogus. We expect to receive at least the rest
+of rec1, and possibly some of rec2 (currently, we don't, but that
+would be ok).
 
-Link: https://lore.kernel.org/r/20230830044129.11481-2-palmer@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-[ Ben: Applies unchanged; needed by both 6.1.y and 6.6.y. Both trees took
-  commit e59e5e2754bf ("riscv: correct pt_level name via
-  pgtable_l5/4_enabled") -- 6.1.y as of v6.1.64 -- without this
-  prerequisite from the same series, so arch/riscv/mm/ptdump.c fails to
-  build on rv32 whenever CONFIG_PTDUMP_CORE is enabled:
-
-    arch/riscv/mm/ptdump.c: In function 'ptdump_init':
-    arch/riscv/mm/ptdump.c:387:28: error: 'pgtable_l5_enabled' undeclared
-    (first use in this function); did you mean 'pgtable_l4_enabled'?
-
-  Only pgtable_l5_enabled fails because pgtable_l4_enabled still has an
-  unconditional extern in asm/pgtable.h; this patch removes that and
-  provides both as constants for rv32. The only assignments to them, in
-  disable_pgtable_l4/l5(), are already inside
-  #if defined(CONFIG_64BIT) && !defined(CONFIG_XIP_KERNEL), so making them
-  const on rv32 is safe. v6.12 and later are unaffected. ]
-Signed-off-by: Ben Zong-You Xie <ben717@andestech.com>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/720e61b3d3eab40af198a58ce2cd1ee019f0ceb1.1711120964.git.sd@queasysnail.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 1c8629651cb5 ("tls: rx: restore msg_iter before TLS 1.3 optimistic retry")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/pgtable-32.h |    3 +++
- arch/riscv/include/asm/pgtable.h    |    1 -
- arch/riscv/mm/init.c                |    2 ++
- 3 files changed, 5 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/tls.c |   34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
---- a/arch/riscv/include/asm/pgtable-32.h
-+++ b/arch/riscv/include/asm/pgtable-32.h
-@@ -33,4 +33,7 @@
- 					  _PAGE_WRITE | _PAGE_EXEC |	\
- 					  _PAGE_USER | _PAGE_GLOBAL))
+--- a/tools/testing/selftests/net/tls.c
++++ b/tools/testing/selftests/net/tls.c
+@@ -1570,6 +1570,40 @@ TEST_F(tls, getsockopt)
+ 	EXPECT_EQ(errno, EINVAL);
+ }
  
-+static const __maybe_unused int pgtable_l4_enabled;
-+static const __maybe_unused int pgtable_l5_enabled;
++TEST_F(tls, recv_efault)
++{
++	char *rec1 = "1111111111";
++	char *rec2 = "2222222222";
++	struct msghdr hdr = {};
++	struct iovec iov[2];
++	char recv_mem[12];
++	int ret;
 +
- #endif /* _ASM_RISCV_PGTABLE_32_H */
---- a/arch/riscv/include/asm/pgtable.h
-+++ b/arch/riscv/include/asm/pgtable.h
-@@ -905,7 +905,6 @@ extern uintptr_t _dtb_early_pa;
- #define dtb_early_pa	_dtb_early_pa
- #endif /* CONFIG_XIP_KERNEL */
- extern u64 satp_mode;
--extern bool pgtable_l4_enabled;
- 
- void paging_init(void);
- void misc_mem_init(void);
---- a/arch/riscv/mm/init.c
-+++ b/arch/riscv/mm/init.c
-@@ -50,10 +50,12 @@ u64 satp_mode __ro_after_init = SATP_MOD
- #endif
- EXPORT_SYMBOL(satp_mode);
- 
-+#ifdef CONFIG_64BIT
- bool pgtable_l4_enabled = IS_ENABLED(CONFIG_64BIT) && !IS_ENABLED(CONFIG_XIP_KERNEL);
- bool pgtable_l5_enabled = IS_ENABLED(CONFIG_64BIT) && !IS_ENABLED(CONFIG_XIP_KERNEL);
- EXPORT_SYMBOL(pgtable_l4_enabled);
- EXPORT_SYMBOL(pgtable_l5_enabled);
-+#endif
- 
- phys_addr_t phys_ram_base __ro_after_init;
- EXPORT_SYMBOL(phys_ram_base);
++	if (self->notls)
++		SKIP(return, "no TLS support");
++
++	EXPECT_EQ(send(self->fd, rec1, 10, 0), 10);
++	EXPECT_EQ(send(self->fd, rec2, 10, 0), 10);
++
++	iov[0].iov_base = recv_mem;
++	iov[0].iov_len = sizeof(recv_mem);
++	iov[1].iov_base = NULL; /* broken iov to make process_rx_list fail */
++	iov[1].iov_len = 1;
++
++	hdr.msg_iovlen = 2;
++	hdr.msg_iov = iov;
++
++	EXPECT_EQ(recv(self->cfd, recv_mem, 1, 0), 1);
++	EXPECT_EQ(recv_mem[0], rec1[0]);
++
++	ret = recvmsg(self->cfd, &hdr, 0);
++	EXPECT_LE(ret, sizeof(recv_mem));
++	EXPECT_GE(ret, 9);
++	EXPECT_EQ(memcmp(rec1, recv_mem, 9), 0);
++	if (ret > 9)
++		EXPECT_EQ(memcmp(rec2, recv_mem + 9, ret - 9), 0);
++}
++
+ FIXTURE(tls_err)
+ {
+ 	int fd, cfd;
 
 
