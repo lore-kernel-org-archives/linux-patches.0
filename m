@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8272B47F779;
-	Thu, 20 Aug 2026 17:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6651247F77A;
+	Thu, 20 Aug 2026 17:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248612; cv=none; b=bu5kpgRn0d9gSSp7lUDT4yZLoJmyScUzCLWyC0uPEzVyZ9q89FBvep3BLlBCNNWLNaW1cpDvR0hofT7HBQvyaburv4HYbU++GpDdQqGdtVOCuYE52J8B9g+1uDWkVV5TCpuP+d1DCP9jSqsJGS3RX7zM/44fA03KhXiaHvczxeQ=
+	t=1787248615; cv=none; b=E7+Zv892WA1hzzilhWmCRjiCgDC+jHfWOpxIg1eEbZ8BqCyO8BU8o0WN2ePnroIHoOLzvVkUDh/ZMwGG0seN1YI5O9aZTBhcF+DyvtbJNhpSz6w0vYgMuVpDkttWDggQ9CjLbEjL1TNDz2IpP7KllOZxKR4P+CNtaIiyt1hfsxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248612; c=relaxed/simple;
-	bh=E4zHa7U0K4CJbCWz7G5yuA0vevew+YYxUK4mapsZWRQ=;
+	s=arc-20240116; t=1787248615; c=relaxed/simple;
+	bh=RUFaWcpUItrY/mImYJjNC15skunkEjUN39CbPRSfQXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m/OOn0LSOXbfaTDoU4UOLkW/UsFCGqxcGM07KvfNL/ZrQhmdS8WJ29IrGO+oOThQvzbSz73KGrW0zIJ6quM7K4IYys3r+CW+VCfg1kwCblu+sUrMChbsLkeywl3uYcGcjgZ/BJ3afwI7Fh9UC8shT71FVImn84OzUuZlxcHJHvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ub2V5CRM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gk4MhSUPlQ0MxRkOZxvAJOs3JktldUVUwrLXCKPyy4L4k2eDsTNp6JtJ42Hj0Zc8tJ6B97V4fphmRzdcTKZH/gJ0mflTl4c8z8Xrzq7QVMZQ2xnztk7Hyo8mpUh9H66m0j/lQVRE7yOGqnj41e0UK6dLQgahfCWpGAvWCelBGCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1fH3dpv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ub2V5CRM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5121F00A3A;
-	Thu, 20 Aug 2026 17:56:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1fH3dpv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54BC1F000E9;
+	Thu, 20 Aug 2026 17:56:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248611;
-	bh=S7kfAQPSZoXQBQuvd8JjvXo/pUg+v3aWFe5dieENnJI=;
+	s=korg; t=1787248614;
+	bh=xLQwGQWYhmzmQZAfKiHllPDo2oTMgnwETVgsLeJxoMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ub2V5CRMvWON7C6pwKjwU7VGIXu+amVZZubQcGCBDovHALOSpF3w4QiCH7/66ysVr
-	 f8v0K7WcR0HURNC6F0R2VxLM95j09tiPWXn0OhgpSR/jY1pD7UH5avOnMn8aodlFoy
-	 UOYbqcwUH1vjzBgpX8HtIvPcva2pKQxVy6BsMKY8=
+	b=U1fH3dpvk6/rpTIujKTBKNb/PzIp7zH96odbmDkVo+cQfys8m+rmse/BTiNQnsdTd
+	 hR5OQSA2rrpnga74ODDMsRXkbS2WYjbqhkPbrFfzCTmi65/o44EE8prRQsrux10OL4
+	 t6h4tESBKMPXj+W9DYZ8Hhdu60x80g9GoWksRWDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+30b93b6845b19cc38581@syzkaller.appspotmail.com,
+	Xin Long <lucien.xin@gmail.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 289/303] af_packet: Dont send zero-byte data in tpacket_snd().
-Date: Thu, 20 Aug 2026 16:57:05 +0200
-Message-ID: <20260820145302.159685640@linuxfoundation.org>
+Subject: [PATCH 6.1 272/303] net: sched: use skb_ip_totlen and iph_totlen
+Date: Thu, 20 Aug 2026 16:56:48 +0200
+Message-ID: <20260820145301.638659423@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -54,66 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 6bcd76c134c55c697148acb5c0194e9666abdf84 ]
+[ Upstream commit 043e397e48c58b4442ea5124dc1bdc95367a0a33 ]
 
-syzbot reported a WARNING in __dev_queue_xmit() triggered via tpacket_snd():
+There are 1 action and 1 qdisc that may process IPv4 TCP GSO packets
+and access iph->tot_len, replace them with skb_ip_totlen() and
+iph_totlen() accordingly.
 
-skb_assert_len
-WARNING: at include/linux/skbuff.h:2753 skb_assert_len
-WARNING: at __dev_queue_xmit+0x21bc/0x4970 net/core/dev.c:4781
+Note that we don't need to replace the one in tcf_csum_ipv4(), as it
+will return for TCP GSO packets in tcf_csum_ipv4_tcp().
 
-Call Trace:
- <TASK>
- dev_queue_xmit include/linux/netdevice.h:3448 [inline]
- packet_xmit+0x243/0x310 net/packet/af_packet.c:276
- tpacket_snd net/packet/af_packet.c:2907 [inline]
- packet_sendmsg+0x28d6/0x4eb0 net/packet/af_packet.c:3134
-
-When sending 0-byte packets via TPACKET ring buffer on devices with no
-hard header (e.g. dev->hard_header_len == 0), tpacket_fill_skb()
-populates an skb with skb->len == 0 and returns 0. tpacket_snd() then
-forwards this empty skb to packet_xmit(), causing __dev_queue_xmit() to
-hit skb_assert_len(skb).
-
-Similar checks exist in packet_snd() via commit dc633700f00f
-("net/af_packet: check len when min_header_len equals to 0") and in
-packet_sendmsg_spkt() via commit 6a341729fb31 ("af_packet: Don't send
-zero-byte data in packet_sendmsg_spkt().").
-
-Return -EINVAL in tpacket_fill_skb() when skb->len is zero to reject
-zero-length packets in tpacket_snd().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+30b93b6845b19cc38581@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a79e807.01d0871a.3a0d52.00ac.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260810150447.1220864-1-edumazet@google.com
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 8a7ed561671a ("net/sched: act_ct: fix sk_buff leak when the header checks reject a packet")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/sched/act_ct.c   |    2 +-
+ net/sched/sch_cake.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index a0424dc2927a9..b3d7518c47e36 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2691,6 +2691,9 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
- 		len = ((to_write > len_max) ? len_max : to_write);
- 	}
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -789,7 +789,7 @@ static int tcf_ct_skb_network_trim(struc
  
-+	if (unlikely(!skb->len))
-+		return -EINVAL;
-+
- 	packet_parse_headers(skb, sock);
+ 	switch (family) {
+ 	case NFPROTO_IPV4:
+-		len = ntohs(ip_hdr(skb)->tot_len);
++		len = skb_ip_totlen(skb);
+ 		break;
+ 	case NFPROTO_IPV6:
+ 		len = sizeof(struct ipv6hdr)
+--- a/net/sched/sch_cake.c
++++ b/net/sched/sch_cake.c
+@@ -1269,7 +1269,7 @@ static struct sk_buff *cake_ack_filter(s
+ 			    iph_check->daddr != iph->daddr)
+ 				continue;
  
- 	return tp_len;
--- 
-2.53.0
-
+-			seglen = ntohs(iph_check->tot_len) -
++			seglen = iph_totlen(skb, iph_check) -
+ 				       (4 * iph_check->ihl);
+ 		} else if (iph_check->version == 6) {
+ 			ipv6h = (struct ipv6hdr *)iph;
 
 
