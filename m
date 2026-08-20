@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78AD925B0AA;
-	Thu, 20 Aug 2026 15:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5729525B0AA;
+	Thu, 20 Aug 2026 15:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239429; cv=none; b=qj9mSkmIZpvRwuqu8549Vcxm8FMdrfTrPHzZCNEFkKmuCMMm/DGrsUczzvn0sw4mJQWRh7fxVK+OpECh7mqrB9tW31LNdipxc3wAVR6MgwJV5UaEGf7CT2FLPhrAmYACzh4BnyBH6e8ENPAR3K00LOHlE7CeGXOIEdevkm9E5Y4=
+	t=1787239432; cv=none; b=ekDkScrKKgbm7bZe4QbpcnWpzAv0dG/neCA51Fapd4/YE0X8fLFI/UK5BXwo2V8orAOLQpMgD3smmMyZFt6P2dy/AQZxWRLHOnRTgfHhkn0iqBXOn6pea6c0H2qZpWwB692ZW6qZ0Y7eBCb1ejQ7Pt9zsQr4YtHT0Xb11aV8tqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239429; c=relaxed/simple;
-	bh=3qiomO//92PmMlg/HJKeLBAHMmqRCZmSRURxW7nAIQA=;
+	s=arc-20240116; t=1787239432; c=relaxed/simple;
+	bh=0wwR123JlXBxjUPjO+N9kLy9iqHNwC0/IenoF0+8PS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SKifCJhDd480++9JIss/ww4zdcRk8gf4TruBbZ/zEiJ8C576jM69Olt/eYqlGOt79X9oTo3cPWyMNM7D1id3vfod8Ebl2s5xRPJbD0ASQcFlR+TFiB3MCDxgtn0TQR/mzFLOQgwQVjY7Po6UeVSEOMTxZJ2mKvqS9nIokqPPaWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eaSVoUjR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T5Z77YLkhfe+hTGNHCXjKvj99VzrBWRcXqF9WzQ+5y7HJdBG4KePrsw1fiR+5scPPJ7ilDBh9eMtFvK+o/S5aqN8nPq3BvWJ7kY8nVBv2SwC+1oSzi/pltvHuS4y2iXYD+wF4cBKzln67QxI1KsPmUk9G9+/+0BzIRheuQxmvkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JWNuYfJF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eaSVoUjR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34B81F000E9;
-	Thu, 20 Aug 2026 15:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JWNuYfJF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EAB1F000E9;
+	Thu, 20 Aug 2026 15:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239428;
-	bh=GgG4geCfbDYXeFNW5J4eQvg9CG0Cxo8iyaODVhv0GHQ=;
+	s=korg; t=1787239431;
+	bh=UJI5SNU7KR27mWZj+C83RecikSSGebAiuZ96hBiGSHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eaSVoUjRJgBjaUGeW9EoM8S7Z0cEFbwEprda2isSlWl2pu90CEoHKCVD6yz1HrGVG
-	 EjE9xPtUZzktSK3cXWEWsb2Uq16noKu02fLsGjJCivYUzmSNP+ohg5aPKtbqkqEWRy
-	 ezbtQuadd3eg06bm46ELAzup/rcdIh/5tiXNHtSA=
+	b=JWNuYfJFgnhmIOoGyjSMbe+7a5ZYQfBo7wXxlPfX7F4+mQXP3bJFOq7yiJ0i0XOKR
+	 Adww/PjVC8uOhgnFjpMOBV4fhs4lyoXe7/TL0ZOYsohCQ0iYuqk+4zmnPuHj0pGT/S
+	 MtUFmW+6KsQvHOBkL6N15HWk9Pf+YwzYI78/5H2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 045/220] Input: synaptics-rmi4 - zero report size on F54 work error
-Date: Thu, 20 Aug 2026 16:53:55 +0200
-Message-ID: <20260820145224.845996215@linuxfoundation.org>
+Subject: [PATCH 6.12 046/220] Input: synaptics-rmi4 - bound the F54 report size to the allocated buffer
+Date: Thu, 20 Aug 2026 16:53:56 +0200
+Message-ID: <20260820145224.875155543@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -50,93 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit dc76c3c8e8ad09362b8c1561f3928288c15cba2e upstream.
+commit 49c5adc2b7d6e43c5cf033e1c86fdb9c16ababb1 upstream.
 
-In rmi_f54_work(), if an error occurs during report request or command
-verification, the code jumped directly to the 'error' label, bypassing
-the 'abort' label where f54->report_size was normally zeroed out.
+rmi_f54_work() reads a diagnostics report from the device into
+f54->report_data, sizing the transfer with rmi_f54_get_report_size():
 
-This left f54->report_size containing its previous successful payload
-size. If a user then altered the V4L2 format to a smaller size, and a
-subsequent run failed, rmi_f54_buffer_queue() would copy the stale,
-larger payload size into the shrunken V4L2 buffer, causing a heap
-buffer overflow.
+	report_size = rmi_f54_get_report_size(f54);
+	...
+	for (i = 0; i < report_size; i += F54_REPORT_DATA_SIZE) {
+		int size = min(F54_REPORT_DATA_SIZE, report_size - i);
+		...
+		rmi_read_block(.., f54->report_data + i, size);
+	}
 
-Fix this by merging the 'abort' and 'error' labels into a single 'out'
-exit path, and ensuring that f54->report_size is always set to 0 on
-failure by checking for error and zeroing the local report_size first.
+report_data is allocated once at probe from F54's own electrode counts
+(array3_size(f54->num_tx_electrodes, f54->num_rx_electrodes, sizeof(u16))),
+but rmi_f54_get_report_size() computes the size from
+drv_data->num_*_electrodes when those are set, i.e. from the F55
+function's electrode counts. Both counts come straight from device
+queries (F54 and F55 each report up to 255 electrodes) and nothing
+constrains the F55 counts to the F54 ones.
 
-Fixes: 3a762dbd5347 ("[media] Input: synaptics-rmi4 - add support for F54 diagnostics")
+A malicious or malfunctioning RMI4 device that reports larger F55
+electrode counts than its F54 counts makes report_size exceed the
+allocation, so the read loop writes past report_data (and the V4L2
+dequeue memcpy() then reads past it). On conforming hardware the F55
+configured electrodes are a subset of the F54 physical electrodes, so
+report_size never exceeds the buffer and well-behaved devices are
+unaffected.
+
+Record the allocation size and reject a report that does not fit,
+mirroring the existing zero-size check.
+
+Fixes: c762cc68b6a1 ("Input: synaptics-rmi4 - propagate correct number of rx and tx electrodes to F54")
 Cc: stable@vger.kernel.org
-Reported-by: sashiko-bot@kernel.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
 Assisted-by: Antigravity:gemini-3.5-flash
-Link: https://patch.msgid.link/20260626051802.4033172-2-dmitry.torokhov@gmail.com
+Link: https://patch.msgid.link/20260626051802.4033172-3-dmitry.torokhov@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/rmi4/rmi_f54.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/input/rmi4/rmi_f54.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
 --- a/drivers/input/rmi4/rmi_f54.c
 +++ b/drivers/input/rmi4/rmi_f54.c
-@@ -547,7 +547,7 @@ static void rmi_f54_work(struct work_str
- 		dev_err(&fn->dev, "Bad report size, report type=%d\n",
- 				f54->report_type);
- 		error = -EINVAL;
--		goto error;     /* retry won't help */
-+		goto out;     /* retry won't help */
+@@ -104,6 +104,7 @@ struct f54_data {
+ 
+ 	enum rmi_f54_report_type report_type;
+ 	u8 *report_data;
++	size_t max_report_size;
+ 	int report_size;
+ 
+ 	bool is_busy;
+@@ -550,6 +551,13 @@ static void rmi_f54_work(struct work_str
+ 		goto out;     /* retry won't help */
  	}
  
- 	/*
-@@ -558,7 +558,7 @@ static void rmi_f54_work(struct work_str
- 			 &command);
- 	if (error) {
- 		dev_err(&fn->dev, "Failed to read back command\n");
--		goto error;
++	if (report_size > f54->max_report_size) {
++		dev_err(&fn->dev, "Report size %d exceeds buffer size %zu\n",
++			report_size, f54->max_report_size);
++		error = -EINVAL;
 +		goto out;
- 	}
- 	if (command & F54_GET_REPORT) {
- 		if (time_after(jiffies, f54->timeout)) {
-@@ -566,7 +566,7 @@ static void rmi_f54_work(struct work_str
- 			error = -ETIMEDOUT;
- 		}
- 		report_size = 0;
--		goto error;
-+		goto out;
- 	}
- 
- 	rmi_dbg(RMI_DEBUG_FN, &fn->dev, "Get report command completed, reading data\n");
-@@ -581,7 +581,7 @@ static void rmi_f54_work(struct work_str
- 					fifo, sizeof(fifo));
- 		if (error) {
- 			dev_err(&fn->dev, "Failed to set fifo start offset\n");
--			goto abort;
-+			goto out;
- 		}
- 
- 		error = rmi_read_block(fn->rmi_dev, fn->fd.data_base_addr +
-@@ -590,16 +590,16 @@ static void rmi_f54_work(struct work_str
- 		if (error) {
- 			dev_err(&fn->dev, "%s: read [%d bytes] returned %d\n",
- 				__func__, size, error);
--			goto abort;
-+			goto out;
- 		}
- 	}
- 
--abort:
--	f54->report_size = error ? 0 : report_size;
--error:
-+out:
- 	if (error)
- 		report_size = 0;
- 
-+	f54->report_size = report_size;
++	}
 +
- 	if (report_size == 0 && !error) {
- 		queue_delayed_work(f54->workqueue, &f54->work,
- 				   msecs_to_jiffies(1));
+ 	/*
+ 	 * Need to check if command has completed.
+ 	 * If not try again later.
+@@ -680,8 +688,8 @@ static int rmi_f54_probe(struct rmi_func
+ 
+ 	rx = f54->num_rx_electrodes;
+ 	tx = f54->num_tx_electrodes;
+-	f54->report_data = devm_kzalloc(&fn->dev,
+-					array3_size(tx, rx, sizeof(u16)),
++	f54->max_report_size = array3_size(tx, rx, sizeof(u16));
++	f54->report_data = devm_kzalloc(&fn->dev, f54->max_report_size,
+ 					GFP_KERNEL);
+ 	if (f54->report_data == NULL)
+ 		return -ENOMEM;
 
 
