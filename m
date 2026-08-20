@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB26C360745;
-	Thu, 20 Aug 2026 15:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B671E3C07A;
+	Thu, 20 Aug 2026 15:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238650; cv=none; b=DsulVlKvH+iwK6wwkJYfgwf6cGbABqoAjE8b7Lw4bHD2A9i3cxERf+7Mw/yliZtQMDOGc088YePVwZZCWcVQtjup4nYz3qFdD96ZgpyVPiST3dM/LWHlky5iOLvx4KfwWM2uYjCRs2/xrb/ghRqFr6iz5uKPwezMJdPJwzD5Yb4=
+	t=1787238652; cv=none; b=PfrE90G6UwbuZluTyYmmgRsosAfa5MLDeCQVaV4H3Yw+dnIWW1axHNizufI2ICCqL02WqsSImnMp8jqdug72bfO3jSoIiBv1fhFi3Wy3lB3087YazB75DI6lbgBsLPriIiY7Oh20Qh5C1tfwbfvzbKBe+V0B6vh4a9Fl8Xwh6p8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238650; c=relaxed/simple;
-	bh=ix0lKegvd5U0hPb0ibYDM2Mt0h3KnOWl2eGYhrZ/L4E=;
+	s=arc-20240116; t=1787238652; c=relaxed/simple;
+	bh=J+flLuKgwJm6ao60qNtJNYodH9aXi5a0jvaWiSEpAxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K4dwaAFua13JDcISqXkSaLl7pkmsluyXwupa9ULaj6zha9eGIYWxqh12Wq1BkJ62W+G7u5EsFIr7rEVcfPAEF5XV6aj6ha4psaBfeADFwaWx5L0Mo/WrVqL0b8Kh0tX9EPsvjQwp12JSTE3qbkw8+p8axWbqRsc0RnoDG4fMzIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2DuUl19/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VUcbdbg0VrawbFWKwPY0ufuiTCJPm5xs7QUkiGXUzRkkPFSCdQ37JGOLYC1DMbydRdf77qHd4z9b5lgQ8IGvgE4OsEO1McEkvFtHtVm9+KDQgQNYwDkKSad3AuPFy38Z8hR35YEc9zQuH/iNmEl929JgtaNL1u5AvxGoYJS8nVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAQL6FY4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2DuUl19/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D971F000E9;
-	Thu, 20 Aug 2026 15:10:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAQL6FY4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15EFC1F000E9;
+	Thu, 20 Aug 2026 15:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238648;
-	bh=Fpf6tXvscBxhzNWAlo3+YIAI7c9KqN8F3uZWBY/H2CY=;
+	s=korg; t=1787238651;
+	bh=b4LKtKC5+5jdfTmsBWvbSpdlsK+A77rUfjkR6V/Jmwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2DuUl19/hEXlkXuoeIq4OIa+nSImkc9FsDSljzQMjfSRXC+2tNj3F8TyoKozjkSJK
-	 5IMfJXJnN8fsZlclXXTBGnI3hS3kMsFS8TJmq12kOfDJPav38VpDeq8CPhxCzNv2ox
-	 ybxvqnf+eBJg0niqV+cHpOeMAifw5I6FGQ1+mmWE=
+	b=PAQL6FY4OMJctUgLrndVt7LSI+GBmk9Jr0C6G1Ln+a6fQQ4lrTs93G7BAYXTF9pfu
+	 jk9xVFRoYTBTwIg7x+v54kUuNqkerxs3oM7/Pt6K1ZJfMDvjE2f4/FVjVLLoTlpqPk
+	 wkT2SaRMhKIkAfompJNoh5i27MiPBweJbF0sB3m4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Linmao Li <lilinmao@kylinos.cn>,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
+	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
 	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 220/228] drm/xe/oa: Fix sync entry leak on OA config emit failure
-Date: Thu, 20 Aug 2026 16:56:02 +0200
-Message-ID: <20260820145251.749307482@linuxfoundation.org>
+Subject: [PATCH 7.1 221/228] drm/xe/oa: Check managed mutex initialization errors
+Date: Thu, 20 Aug 2026 16:56:03 +0200
+Message-ID: <20260820145251.785410355@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -55,49 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit 8d33c4987cd162527375a3905017ae129ba7c3fe ]
+[ Upstream commit f110dbbfa2a94c91704bf19806907a98fd73ca14 ]
 
-xe_oa_emit_oa_config() releases the sync entries and the syncs array
-only on its success path. When it fails before the point of no return
-(fence allocation, config buffer allocation or batch submission), it
-returns without touching stream->syncs.
+drmm_mutex_init() can fail while registering its managed cleanup action.
+On failure, the reset path destroys the mutex, so continuing OA setup
+leaves an unusable lock that later paths may acquire.
 
-The stream open path handles such failures in the caller, but
-xe_oa_config_locked() propagates the error without any cleanup, so the
-syncs array and the fence references held by the parsed entries are
-leaked. The next config ioctl overwrites stream->syncs, making the
-memory unreachable for good.
+Return the error from per-GT OA initialization and abort device-wide OA
+initialization if the metrics lock cannot be initialized.
 
-Clean up the parsed syncs when xe_oa_emit_oa_config() fails, matching
-the cleanup done by the stream open error path.
-
-Fixes: 9920c8b88c5c ("drm/xe/oa: Add syncs support to OA config ioctl")
+Fixes: a9f905ae7b6f ("drm/xe/oa/uapi: Initialize OA units")
+Fixes: cdf02fe1a94a ("drm/xe/oa/uapi: Add/remove OA config perf ops")
 Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Reviewed-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Link: https://patch.msgid.link/20260731011932.3426219-1-lilinmao@kylinos.cn
-(cherry picked from commit 8af97b3da2cfce04e6b457c6eb17ed3c1daf912b)
+Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+Signed-off-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+Link: https://patch.msgid.link/20260713083053.321091-1-lilinmao@kylinos.cn
+(cherry picked from commit 360b293de27bfdd0d07047f8efd5ba8e91fa90b7)
 Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_oa.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/xe/xe_oa.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/xe/xe_oa.c b/drivers/gpu/drm/xe/xe_oa.c
-index 5111c6519c6db..3ecf4df868eb6 100644
+index 3ecf4df868eb6..cd23a020be20f 100644
 --- a/drivers/gpu/drm/xe/xe_oa.c
 +++ b/drivers/gpu/drm/xe/xe_oa.c
-@@ -1568,6 +1568,10 @@ static long xe_oa_config_locked(struct xe_oa_stream *stream, u64 arg)
- 		config = xchg(&stream->oa_config, config);
- 		drm_dbg(&stream->oa->xe->drm, "changed to oa config uuid=%s\n",
- 			stream->oa_config->uuid);
-+	} else {
-+		while (param.num_syncs--)
-+			xe_sync_entry_cleanup(&param.syncs[param.num_syncs]);
-+		kfree(param.syncs);
- 	}
+@@ -2695,9 +2695,7 @@ static int xe_oa_init_gt(struct xe_gt *gt)
  
- err_config_put:
+ 	__xe_oa_init_oa_units(gt);
+ 
+-	drmm_mutex_init(&gt_to_xe(gt)->drm, &gt->oa.gt_lock);
+-
+-	return 0;
++	return drmm_mutex_init(&gt_to_xe(gt)->drm, &gt->oa.gt_lock);
+ }
+ 
+ static void xe_oa_print_gt_oa_units(struct xe_gt *gt)
+@@ -2837,7 +2835,10 @@ int xe_oa_init(struct xe_device *xe)
+ 	oa->xe = xe;
+ 	oa->oa_formats = oa_formats;
+ 
+-	drmm_mutex_init(&oa->xe->drm, &oa->metrics_lock);
++	ret = drmm_mutex_init(&oa->xe->drm, &oa->metrics_lock);
++	if (ret)
++		goto exit;
++
+ 	idr_init_base(&oa->metrics_idr, 1);
+ 
+ 	ret = xe_oa_init_oa_units(oa);
 -- 
 2.53.0
 
