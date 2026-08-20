@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F44A47CA9D;
-	Thu, 20 Aug 2026 17:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1AD381AEC;
+	Thu, 20 Aug 2026 17:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247791; cv=none; b=g5oFd1I8Asht1FjU1j6r69AEGsWk2Gw/JjhaWdXxoU+YJXD3S92D+Zg+xnNitqFKiTsMaez7dTj2C6HPfJRxfFcznM+KjojWAHjwbjjQ9Pjz9c/9gqPI9Za58u2twpkBMndY0UoAhvCihPKK5DnpXtOteqg3kGc4B+RVrkinuyM=
+	t=1787247794; cv=none; b=d5RCH/uB26yIwFBYA2FY+frTZyZqR8WsuMAbnUD8ZnQ27QM70CUSAcKgfpxrAYDrJSoo9DuHG4tqazP04Ylm3viHwnhNY9GCc28nqGEZMREuBEdqjzgwsdpANGm1FcQz+WF9cEfp9JK6HL7FNU811FDHShhFtJoxmy6kUAHdarY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247791; c=relaxed/simple;
-	bh=JALqjgSp1bzJjGg3IKjal1dvLkrrKPSfMxqui5V4cN0=;
+	s=arc-20240116; t=1787247794; c=relaxed/simple;
+	bh=yUTodhozd7LZYCTHM61eEg7NkdOoxpN7x5HjyxM33Mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I3w2W28A70lS9bbmgxc4CzRTGNmUP8tRVaNhA0rFZFa5u1H7OYZxPBEWedzsY0CFM8KWqidZVzj89NIBQGoTvfh3jvr0/0ftFuOGjtX8tasyQWZ3SA3RlSlkjxH0hT+l43B8o4lbwMTzU+kv3V/ifExXp2U4oG/EXaTjPqL2dMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hOGc6Dxh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mL7wGeakoBczVqt6JPRO2pdGQhltzG86eCmGy/CBegSE7mSxmT8biy38h0FcvPGBWToCi0QF5hgYLRupbm6/ZmKRIMi3OV54RpykQBWLCDqKkOrAG0lTakE9g9q26hJS2tpAdjrJ/kuowLoAVSYi+Y8xxteGyn2Ose3R3YvtHz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YdtoQx4N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hOGc6Dxh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C095E1F000E9;
-	Thu, 20 Aug 2026 17:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdtoQx4N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3251F00A3A;
+	Thu, 20 Aug 2026 17:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247790;
-	bh=Y8jRR3VJMGEGyGr7+qag/0mw5vAz/F7QHdT1B8lJacw=;
+	s=korg; t=1787247793;
+	bh=/gxDFqwxUf+vL8DZc/C75DTn+0p4brSOWQ8/jwj4vP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hOGc6Dxh+qWVgnOk0SkzCC8V9GfL9H1BOrev/lCiXptRjMvbKm57pPy0pBupNko67
-	 BaZVhax3lKvPcKEpUWRtpMI9spnPlFcN6UoAl3z8cjrJEMSDO1h5fMK65/dmCZ6EWd
-	 b+EIHGSGLJbEw6F4HKLJOKsMXVwGaYkyLyjob2ok=
+	b=YdtoQx4NHefYNx1pWuymzYGnKkFotRuEReg+erewVO40L3aStz2zsc7mRA4Ox3IzM
+	 VyPEjctgE4Pxpa8LSE9QGekSaEUWcHhWhIF0kqi0ahGSufi/s6RV+KojJk2dZTo4L/
+	 XIJSWAVmig8y3dpjg2sAksQiTkL1TLZHZS6Rp3h8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Guenter Roeck <groeck7@gmail.com>,
-	Gao Xiang <xiang@kernel.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Baul Lee <baul.lee@xbow.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 163/166] erofs: fix EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS on some UP platforms
-Date: Thu, 20 Aug 2026 16:57:02 +0200
-Message-ID: <20260820145216.065867290@linuxfoundation.org>
+Subject: [PATCH 6.6 164/166] net/x25: fix use-after-free of the socket by its timers
+Date: Thu, 20 Aug 2026 16:57:03 +0200
+Message-ID: <20260820145216.096214647@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -54,60 +51,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <xiang@kernel.org>
+From: Baul Lee <baul.lee@xbow.com>
 
-[ Upstream commit a64d500b0078e16e9abb25baca4dee1dbc9054fc ]
+commit 2195424c3da2ef1829a63b807e3a900a90e57d85 upstream.
 
-CONFIG_NR_CPUS doesn't define on some UP platforms (e.g.  arm), so this
-can cause make oldconfig to loop indefinitely when CONFIG_SMP=n:
+The x25 timers are armed with mod_timer() and cancelled with
+timer_delete(), so a pending timer holds no reference on the socket and a
+cancel does not wait for a callback already running on another CPU.
 
-  $ make ARCH=arm allmodconfig
-  $ sed -i "/CONFIG_SMP=y/d" .config
-  $ sed -i "/CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS.*/d" .config
+x25_heartbeat_expiry() also rearms unconditionally, so it can reinstall
+sk->sk_timer after __x25_destroy_socket() has passed its cancel point.
+The following __sock_put() frees the socket while the timer is still
+queued, and the next expiry uses freed memory.  KASAN reports a
+slab-use-after-free on the kmalloc-2k object freed by close().
 
-  EROFS LZMA default maximum decompression streams (EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS) [0] (NEW)
-  EROFS LZMA default maximum decompression streams (EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS) [0] (NEW)
-  ...
+timer_delete_sync() cannot be used here: x25_heartbeat_expiry() and
+x25_timer_expiry() both reach the cancels from inside the timer they
+would wait on, through __x25_destroy_socket() and x25_disconnect().
 
-Let's guard NR_CPUS with SMP instead of using a hardcoded arbitrary CPU
-uplimit here, similar to commit a3344078101c ("mm: make SPLIT_PTE_PTLOCKS
-depend on SMP").
+Arm the timers with sk_reset_timer() and cancel them with sk_stop_timer()
+so that an armed timer owns a reference, and release it in both expiry
+handlers.  Rearm the heartbeat only while sk_hashed(sk) is still true,
+since __x25_destroy_socket() unlinks the socket before dropping it.  Arm
+the deferred destroy timer the same way and drop its reference in
+x25_destroy_timer().
 
-The initial report from SJ Park was for m68k [1] (m68k is the only arch
-without NR_CPUS in Kconfig), and that got fixed in commit 1fd495ef09ee
-("m68k: Define NR_CPUS to 1")
+Reproduced on net with KASAN, with the heartbeat period shortened so the
+window recurs.  With this patch the reproducer no longer triggers a
+report and /proc/net/x25 drains.
 
-Reported-by: SJ Park <sj@kernel.org>
-Link: https://lore.kernel.org/all/anuyFHLUGDjZWY4K@XiangdeMacBook-Pro.local/T/#u [1]
-Closes: https://lore.kernel.org/r/20260728065447.91511-1-sj@kernel.org
-Reported-by: Guenter Roeck <groeck7@gmail.com>
-Closes: https://lore.kernel.org/r/87853c96-cc8f-49e6-81b1-02bfe409e372@roeck-us.net
-Fixes: c9b47e6b2311 ("erofs: cap LZMA stream pool size")
-Signed-off-by: Gao Xiang <xiang@kernel.org>
-Tested-by: SJ Park <sj@kernel.org>
-Tested-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260726220342.47245-1-baul.lee@xbow.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adjusted context due to `del_timer()` not yet renamed to `timer_delete()` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/x25/af_x25.c    |    4 ++--
+ net/x25/x25_timer.c |   25 ++++++++++++++++---------
+ 2 files changed, 18 insertions(+), 11 deletions(-)
 
-diff --git a/fs/erofs/Kconfig b/fs/erofs/Kconfig
-index 2f0ae58b31eb5..baabc37c71b31 100644
---- a/fs/erofs/Kconfig
-+++ b/fs/erofs/Kconfig
-@@ -103,7 +103,8 @@ config EROFS_FS_ZIP_LZMA
- config EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS
- 	int "EROFS LZMA default maximum decompression streams"
- 	depends on EROFS_FS_ZIP_LZMA
--	range 1 NR_CPUS
-+	range 1 NR_CPUS if SMP
-+	range 1 1 if !SMP
- 	default 16
- 	help
- 	  By default EROFS allocates one LZMA decompression stream per CPU.
--- 
-2.53.0
-
+--- a/net/x25/af_x25.c
++++ b/net/x25/af_x25.c
+@@ -362,6 +362,7 @@ static void x25_destroy_timer(struct tim
+ 	struct sock *sk = from_timer(sk, t, sk_timer);
+ 
+ 	x25_destroy_socket_from_timer(sk);
++	sock_put(sk);
+ }
+ 
+ /*
+@@ -397,9 +398,8 @@ static void __x25_destroy_socket(struct
+ 
+ 	if (sk_has_allocations(sk)) {
+ 		/* Defer: outstanding buffers */
+-		sk->sk_timer.expires  = jiffies + 10 * HZ;
+ 		sk->sk_timer.function = x25_destroy_timer;
+-		add_timer(&sk->sk_timer);
++		sk_reset_timer(sk, &sk->sk_timer, jiffies + 10 * HZ);
+ 	} else {
+ 		/* drop last reference so sock_put will free */
+ 		__sock_put(sk);
+--- a/net/x25/x25_timer.c
++++ b/net/x25/x25_timer.c
+@@ -36,45 +36,45 @@ void x25_init_timers(struct sock *sk)
+ 
+ void x25_start_heartbeat(struct sock *sk)
+ {
+-	mod_timer(&sk->sk_timer, jiffies + 5 * HZ);
++	sk_reset_timer(sk, &sk->sk_timer, jiffies + 5 * HZ);
+ }
+ 
+ void x25_stop_heartbeat(struct sock *sk)
+ {
+-	del_timer(&sk->sk_timer);
++	sk_stop_timer(sk, &sk->sk_timer);
+ }
+ 
+ void x25_start_t2timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t2);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t2);
+ }
+ 
+ void x25_start_t21timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t21);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t21);
+ }
+ 
+ void x25_start_t22timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t22);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t22);
+ }
+ 
+ void x25_start_t23timer(struct sock *sk)
+ {
+ 	struct x25_sock *x25 = x25_sk(sk);
+ 
+-	mod_timer(&x25->timer, jiffies + x25->t23);
++	sk_reset_timer(sk, &x25->timer, jiffies + x25->t23);
+ }
+ 
+ void x25_stop_timer(struct sock *sk)
+ {
+-	del_timer(&x25_sk(sk)->timer);
++	sk_stop_timer(sk, &x25_sk(sk)->timer);
+ }
+ 
+ unsigned long x25_display_timer(struct sock *sk)
+@@ -108,7 +108,7 @@ static void x25_heartbeat_expiry(struct
+ 			     sock_flag(sk, SOCK_DEAD))) {
+ 				bh_unlock_sock(sk);
+ 				x25_destroy_socket_from_timer(sk);
+-				return;
++				goto out;
+ 			}
+ 			break;
+ 
+@@ -120,8 +120,14 @@ static void x25_heartbeat_expiry(struct
+ 			break;
+ 	}
+ restart_heartbeat:
+-	x25_start_heartbeat(sk);
++	/* Do not rearm once __x25_destroy_socket() has unlinked the socket:
++	 * it is past its cancel point and owns the teardown from there on.
++	 */
++	if (sk_hashed(sk))
++		x25_start_heartbeat(sk);
+ 	bh_unlock_sock(sk);
++out:
++	sock_put(sk);
+ }
+ 
+ /*
+@@ -166,4 +172,5 @@ static void x25_timer_expiry(struct time
+ 	} else
+ 		x25_do_timer_expiry(sk);
+ 	bh_unlock_sock(sk);
++	sock_put(sk);
+ }
 
 
