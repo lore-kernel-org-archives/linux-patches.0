@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68582389473;
-	Thu, 20 Aug 2026 17:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C91356742;
+	Thu, 20 Aug 2026 17:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247927; cv=none; b=YF+XK09GTMQ6pyXkXE5CrhmJI9MS8VdLUxZqHhkpTwuIXEjUrN7dWE5HgOB3C08KKRSpto6Tl4L929Vs1AI06mtVlXQDzFAMGOmBLfRWnbtOkw+AUvNfKu9XRS14MHwFQgJZwa9CwYbG8+KaTtCQxDknJoSIDM99TgYzl5X29Cg=
+	t=1787247930; cv=none; b=fVShOas0qoKZpR9IhAo+lQt2PuMFtVsoTZ2T90/pe+GDydgxOxjp+FkSjbJnHZpdu/+nl93cpFHSLabDTyIQSnPmZfN6GXXYixlU7Khj5MQ38azQ1pa9KJ1UrVKwmNpOElvXjUIhfvS8IulA9Y/Ge6qTZxWSk4eV2j9Ml6Skgfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247927; c=relaxed/simple;
-	bh=rbLJ3o9l66wKnAv6ikXN6Jypg2wUxiDCRO5Wj1OfkOU=;
+	s=arc-20240116; t=1787247930; c=relaxed/simple;
+	bh=5EWgVLIoeBmM4dfBO3Jgj6pZ9QhHw8GKJNPrq0yIDhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FsJG/RsE+K+CiWayCiY77MGNUVaYtyZuyEIKnJxpi+EkwhMoHcEIs2IoYeva5MfSVAkg/ndjADMW9qJugcIvxOrvZdGkdx0FrTFvVciMIjvaHLJ6nyV6liL+888KcYJzKCxyIec1bYb3NQaiA4UzSKbbF5qcCB0k3qi7lpKG1TQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZV99FQkW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UQ2NSsCB97uaCWainjVvcOt9D2N9o3J4cZgX3rCWY6EJhV0SBmf/HiN0mWy9Vhap71qPUl8KYmWcHAZ/OJT8joj1NV4ljZCLD0JdG8+o9fqErTqj7v6zK/4FveUdAV/4J88U5X2LLZxezpC586+Fy795nfkIX9KkloGwra6YwRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ib6SBqpU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZV99FQkW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835491F000E9;
-	Thu, 20 Aug 2026 17:45:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ib6SBqpU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C2BD1F000E9;
+	Thu, 20 Aug 2026 17:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247926;
-	bh=i8KRdaDfOxM+gS8U3EBbyEqoi+1Q1qJryy9Tn3nFBVg=;
+	s=korg; t=1787247928;
+	bh=nFMmvoU6bGR8IrUztEr7A4YGm0WGtpLXg/IIYAGJW4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZV99FQkWCiMxVEfSa6hhBIc809qGNiZ3UaeVEbZdDmpNHZ4GrmMg74r5J2lmx7J0l
-	 ybLPqeGtuhky9v3sqwD28qytuEGrlcjZjGPwFKt5xdJHe7JVUdMMh1wos8BP22537G
-	 aCMPZ7wq19453YslHsofhx6V10o9nT0sPFt6/wcA=
+	b=ib6SBqpU4fz/Fbg2YLrO8xW9COYV2tE/MtkS9Uv7icGiRadx4wx3mVphGq3YMvAw9
+	 ghtZTksu6VWBRgCwbKOtvTlCvIVrah5+/RY/oA3b/pZ0AvuSN7TW/4q9q4rEwrzwND
+	 Rmp6sO3pj/pB8RAWbsUblF9zEcQgZWsCvWtqYNNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Rosca <david.rosca@amd.com>,
+	Leo Liu <leo.liu@amd.com>,
+	Ruijing Dong <ruijing.dong@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 049/303] drm/amdgpu: Implement insert_end for VCE 3
-Date: Thu, 20 Aug 2026 16:53:05 +0200
-Message-ID: <20260820145254.646762170@linuxfoundation.org>
+Subject: [PATCH 6.1 050/303] drm/amdgpu: Fix UVD decode image min size calculation
+Date: Thu, 20 Aug 2026 16:53:06 +0200
+Message-ID: <20260820145254.677334247@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -52,79 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 From: David Rosca <david.rosca@amd.com>
 
-commit d5ab4c6a64efef2d143a96df5357f59703cd703d upstream.
+commit b8bb9ba3f101a1b0011f785a577a4a0a38371174 upstream.
 
-After a recent change VCE now hangs when VCE_CMD_END is emitted
-after a pipeline sync without VM flush.
-Implement insert_end to correctly insert only one VCE_CMD_END per job.
+This needs to use pitch instead of width. Also reject pitch
+over 4096 to avoid overflow.
 
-Fixes: bc639a9eadc7 ("drm/amdgpu: always emit the job vm fence")
 Signed-off-by: David Rosca <david.rosca@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Acked-by: Leo Liu <leo.liu@amd.com>
+Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 8897ea8c761b856f02061848a7908040a1fe5e68)
+(cherry picked from commit b41c8cb12e202b220353332ab87dc01a11f69304)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vce_v3_0.c |   26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vce_v3_0.c
-@@ -873,6 +873,23 @@ static void vce_v3_0_ring_emit_ib(struct
- 	amdgpu_ring_write(ring, ib->length_dw);
- }
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
+@@ -791,7 +791,7 @@ static int amdgpu_uvd_cs_msg_decode(stru
+ 		return -EINVAL;
+ 	}
  
-+static void vce_v3_0_ring_emit_fence(struct amdgpu_ring *ring, u64 addr,
-+			u64 seq, unsigned flags)
-+{
-+	WARN_ON(flags & AMDGPU_FENCE_FLAG_64BIT);
-+
-+	amdgpu_ring_write(ring, VCE_CMD_FENCE);
-+	amdgpu_ring_write(ring, addr);
-+	amdgpu_ring_write(ring, upper_32_bits(addr));
-+	amdgpu_ring_write(ring, seq);
-+	amdgpu_ring_write(ring, VCE_CMD_TRAP);
-+}
-+
-+static void vce_v3_0_ring_insert_end(struct amdgpu_ring *ring)
-+{
-+	amdgpu_ring_write(ring, VCE_CMD_END);
-+}
-+
- static void vce_v3_0_emit_vm_flush(struct amdgpu_ring *ring,
- 				   unsigned int vmid, uint64_t pd_addr)
- {
-@@ -882,7 +899,6 @@ static void vce_v3_0_emit_vm_flush(struc
+-	if (width > pitch) {
++	if (width > pitch || pitch > 4096) {
+ 		DRM_ERROR("Invalid UVD decoding target pitch!\n");
+ 		return -EINVAL;
+ 	}
+@@ -803,7 +803,7 @@ static int amdgpu_uvd_cs_msg_decode(stru
+ 	}
  
- 	amdgpu_ring_write(ring, VCE_CMD_FLUSH_TLB);
- 	amdgpu_ring_write(ring, vmid);
--	amdgpu_ring_write(ring, VCE_CMD_END);
- }
- 
- static void vce_v3_0_emit_pipeline_sync(struct amdgpu_ring *ring)
-@@ -952,17 +968,19 @@ static const struct amdgpu_ring_funcs vc
- 	.set_wptr = vce_v3_0_ring_set_wptr,
- 	.parse_cs = amdgpu_vce_ring_parse_cs_vm,
- 	.emit_frame_size =
--		6 + /* vce_v3_0_emit_vm_flush */
-+		5 + /* vce_v3_0_emit_vm_flush */
- 		4 + /* vce_v3_0_emit_pipeline_sync */
--		6 + 6, /* amdgpu_vce_ring_emit_fence x2 vm fence */
-+		5 + 5 + /* vce_v3_0_ring_emit_fence x2 vm fence */
-+		1, /* vce_v3_0_ring_insert_end */
- 	.emit_ib_size = 5, /* vce_v3_0_ring_emit_ib */
- 	.emit_ib = vce_v3_0_ring_emit_ib,
- 	.emit_vm_flush = vce_v3_0_emit_vm_flush,
- 	.emit_pipeline_sync = vce_v3_0_emit_pipeline_sync,
--	.emit_fence = amdgpu_vce_ring_emit_fence,
-+	.emit_fence = vce_v3_0_ring_emit_fence,
- 	.test_ring = amdgpu_vce_ring_test_ring,
- 	.test_ib = amdgpu_vce_ring_test_ib,
- 	.insert_nop = amdgpu_ring_insert_nop,
-+	.insert_end = vce_v3_0_ring_insert_end,
- 	.pad_ib = amdgpu_ring_generic_pad_ib,
- 	.begin_use = amdgpu_vce_ring_begin_use,
- 	.end_use = amdgpu_vce_ring_end_use,
+ 	buf_sizes[0x1] = dpb_size;
+-	buf_sizes[0x2] = image_size;
++	buf_sizes[0x2] = (pitch * height) * 3 / 2;
+ 	buf_sizes[0x4] = min_ctx_size;
+ 	/* store image width to adjust nb memory pstate */
+ 	adev->uvd.decode_image_width = width;
 
 
