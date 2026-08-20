@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E27A237A827;
-	Thu, 20 Aug 2026 15:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13B1380FD6;
+	Thu, 20 Aug 2026 15:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239241; cv=none; b=WPckv9LmoPklWk2IIzFG7MaU6vyhz/YimUZul7D2cXi3Zq/9lJc8ZCMwLlCH7oQdIluaUjoh8bqeMLbtSBQ5ateb/+rpJQ23J5+vOQPh1yLR5CPJdbrcvcfehPGhf9x5BcyIi6BQl1SjO3W5UbCsIyMwXHXGL9jCOjO6dIaq2z4=
+	t=1787239243; cv=none; b=JAOMUAvkXfW6tVzqAb5bCukO717r10a9UmFniefAmvBs4880FMdKx9BaMktzImTFc+MEj2O/O1hiF6lpCGlS48lbJ463CVM4KlUWbPSD1mgSAuikxSxFfXT60hwwV2kx5G6wkOur0supSrj5QS/bXvy9jwjWRtopGrYm9bVf3Mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239241; c=relaxed/simple;
-	bh=96wLXPpCY3gTIbrQxpQmdEQBtdnONz9gtCtjXCoN1t4=;
+	s=arc-20240116; t=1787239243; c=relaxed/simple;
+	bh=0d+gOdoWPjFTsWl9LC2R8XXIHptJG1a5xJpCwiDR7kc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GofJzodHALnbQwTo9pQfWRsJUI3fe4VvThkVxo6bqcb1phUFNjdXOClsL90PJooWG74xQ6hvln7FevKKiSz9Z7OPybYLSoyT81eBvZVFdtecZGHdHWD8FB+KlbOZ86F8KzBqvwj+mg5yJ6vmD62OhC86Y74ITkVaybHLlzHWdUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gm64AxBp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bpv1p+t0ibJ3438khFLqQW8C2fC/B/jbwls9YH95/RQWU2NUn6qGp5JCjUJ6w1ID/RgDUBHCy37Dg6ivZWal5G+iuax1PljeUg7x2+VLaOA5OtTKzwBFg+awsdhk4wRykdOnhLnBt8NftlZPQBVbHokjZ7BwDtNRFyz69PRL6Yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCobXE3s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gm64AxBp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE171F000E9;
-	Thu, 20 Aug 2026 15:20:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCobXE3s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26FF41F00A3D;
+	Thu, 20 Aug 2026 15:20:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239239;
-	bh=C9GX42zRU5gs0BgFlh71Re4gzKxtdWP5tcUvaArffEQ=;
+	s=korg; t=1787239242;
+	bh=sXjJ44cl6iQv8GbgNE0jsYdJwxLAgtVsJg/oMjsb7mI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gm64AxBpuVNh8iWsQWoiLA6YWdRkGYT6TZfLsLRXn8k3QHnvHWkUoJeT6zuZ6PcYZ
-	 xuVXEU9+5/TKQvZRj6q8djafDadAxPw31EJFFg2xyJWkVMieEX40NBqe3jZqc/j8c5
-	 9PD0LxkAdo9dAVRcSvRZLLm5UQvz/aDOfOXF7NWM=
+	b=uCobXE3sUn88X/XEzAMKd/cZQlnwZCIl6RsuSRDpjNMkj/5heDqDF6aMMEUBo839n
+	 wMou+nN3FtdDanpnzTl5bx4INp+C+V3hFguEhF/gYY2xXoR3sWou/XkT78IF6byLq2
+	 f5K5pIrMlGbY5QhSI5l8aLYqgUUqOi6I5fs1zU8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	vega@nebusec.ai,
-	Victor Nogueira <victor@mojatatu.com>,
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Davide Caratti <dcaratti@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 197/217] net/sched: act_api: fix TOCTOU NULL deref on a->goto_chain
-Date: Thu, 20 Aug 2026 16:56:05 +0200
-Message-ID: <20260820145243.638723270@linuxfoundation.org>
+Subject: [PATCH 6.18 198/217] net/sched: cls_u32: skip hash tables in u32_bind_class()
+Date: Thu, 20 Aug 2026 16:56:06 +0200
+Message-ID: <20260820145243.668497532@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -54,69 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-[ Upstream commit f60b396ee174206fe08ebf997d16cd3801b77b22 ]
+[ Upstream commit 6d3724e616faf952c3adcf8414fc21a828ef3709 ]
 
-tcf_action_exec() handles TC_ACT_GOTO_CHAIN by first checking
-rcu_access_pointer(a->goto_chain) and then calling
-tcf_action_goto_chain_exec(), which does a second, independent
-rcu_dereference_bh(a->goto_chain) read and immediately dereferences
-chain->filter_chain. A concurrent tcf_action_set_ctrlact() (e.g. the gact
-replace path) can clear a->goto_chain between the two reads, so the second
-read returns NULL and tcf_action_goto_chain_exec() dereferences NULL.
+u32_walk() enumerates both struct tc_u_hnode and struct tc_u_knode
+through the walker callback. u32_bind_class() unconditionally casts the
+passed fh to tc_u_knode and accesses &n->res, so when fh is actually a
+tc_u_hnode, which has no tcf_result member, this results in a
+slab-out-of-bounds read of res->classid in tc_cls_bind_class().
 
-Fix the race by doing a single rcu_dereference_bh() read of a->goto_chain
-in tcf_action_exec(), checking it once for NULL, and passing the resulting
-chain pointer into tcf_action_goto_chain_exec(). This turns the split
-check/use into a single check/use on one value.
+The issue can be reproduced with the following commands:
 
-Fixes: ee3bbfe806cd ("net/sched: let actions use RCU to access 'goto_chain'")
-Reported-by: vega@nebusec.ai
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Davide Caratti <dcaratti@redhat.com>
-Link: https://patch.msgid.link/20260809090928.868186-1-jhs@mojatatu.com
+    tc qdisc add dev lo root handle 1: hfsc
+    tc class add dev lo parent 1: classid 1:1 hfsc sc rate 1000kbit
+    tc filter add dev lo parent 1:1 protocol ip prio 1 u32 match u32 0 0 flowid 1:1
+    tc class add dev lo parent 1: classid 1:2 hfsc sc rate 2000kbit
+
+Fix this by skipping hash tables via the TC_U32_KEY(handle) check.
+
+Fixes: 07d79fc7d94e ("net_sched: add reverse binding for tc class")
+Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/1786089038-36366-1-git-send-email-zhangchangzhong@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_api.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/sched/cls_u32.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/sched/act_api.c b/net/sched/act_api.c
-index f948646985dde..3578fd5ac4fbd 100644
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -41,11 +41,9 @@ int tcf_dev_queue_xmit(struct sk_buff *skb, int (*xmit)(struct sk_buff *skb))
- }
- EXPORT_SYMBOL_GPL(tcf_dev_queue_xmit);
- 
--static void tcf_action_goto_chain_exec(const struct tc_action *a,
-+static void tcf_action_goto_chain_exec(const struct tcf_chain *chain,
- 				       struct tcf_result *res)
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index 58e849c0acf41..a90de52e1ac8d 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -1336,6 +1336,9 @@ static void u32_bind_class(void *fh, u32 classid, unsigned long cl, void *q,
  {
--	const struct tcf_chain *chain = rcu_dereference_bh(a->goto_chain);
--
- 	res->goto_tp = rcu_dereference_bh(chain->filter_chain);
+ 	struct tc_u_knode *n = fh;
+ 
++	if (TC_U32_KEY(n->handle) == 0)
++		return;
++
+ 	tc_cls_bind_class(classid, cl, q, &n->res, base);
  }
  
-@@ -1170,12 +1168,14 @@ int tcf_action_exec(struct sk_buff *skb, struct tc_action **actions,
- 					return TC_ACT_OK;
- 			}
- 		} else if (TC_ACT_EXT_CMP(ret, TC_ACT_GOTO_CHAIN)) {
--			if (unlikely(!rcu_access_pointer(a->goto_chain))) {
-+			struct tcf_chain *chain = rcu_dereference_bh(a->goto_chain);
-+
-+			if (unlikely(!chain)) {
- 				tcf_set_drop_reason(skb,
- 						    SKB_DROP_REASON_TC_CHAIN_NOTFOUND);
- 				return TC_ACT_SHOT;
- 			}
--			tcf_action_goto_chain_exec(a, res);
-+			tcf_action_goto_chain_exec(chain, res);
- 		}
- 
- 		if (ret != TC_ACT_PIPE)
 -- 
 2.53.0
 
