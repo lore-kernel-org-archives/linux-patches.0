@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56BE735DA68;
-	Thu, 20 Aug 2026 17:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B4D3815E3;
+	Thu, 20 Aug 2026 17:37:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247470; cv=none; b=mXM5jNIRbdymHThEtURCCVomANPM3uIwzKpNVwjjbTulRNJP30I2nwIyGV/WAbwxYQ6m86FFMkBCUPoI/aEDtJ6og02eY/v2xOzWbDssPtfdO0uelHsJxFgJYWQErUqYbOcZvhqbpSkAsnZh8T/IVmAU6o5V1DuGKooCkBItNcM=
+	t=1787247473; cv=none; b=T3LsxE+MT6TrQkjLDnYtdS27cKuZg++6b+LF1M6/JcNdEodYV/0OgWcgYr/xXyJFqQraDw7Z/1g76AaeGUQJBmB7Cpsq7hYcHGGOfJP4lGAEH4WY/Y/rsXjX/lLWRNyKpSp6bDqMrxfk64zMNtqhefWCZbTKySyzKGewcTStii4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247470; c=relaxed/simple;
-	bh=XGU7eRqyNXPUGavJQ15famD1h6arG30r7tKtLzy/Ip0=;
+	s=arc-20240116; t=1787247473; c=relaxed/simple;
+	bh=HNKGPMVAKF07NuzIf+6bvc1EHQd6z/bcliPShfdit6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tcp4NGtHeR+FptK+4QN/JerQ9eUQlvT7LKKO/M58msXdTp+yD58dGfrFxDUlkDoH3A4N3ISRU3Ge4Q1jyyDtoMHioyyzvFZoexK0Cn9e9Nz5xmCqEqo/Xt4buGHQyEFVF8F2v9w3fCuQmS7uyapJDHQYKzmgK/9YsqXGBp74ccY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSyjRnZm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PzfA2VJ1/RoMJhEaWOH9OBaNaPFO3TKlxLsgXFAOa6hnnZq6QgXvjjNfYtY1QbgMoZgi1hHWeng2CxKQuAxxYnq7COsvvJ/a87CCHHymWMF8Ts3Kc8OA8zO0dgpl+v0LvHtGHL8PUNYSvgQD3kG1uIiRWjgltc5mxCgeem4PwM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0vfX7v0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSyjRnZm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0501F000E9;
-	Thu, 20 Aug 2026 17:37:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0vfX7v0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51E0C1F00A3A;
+	Thu, 20 Aug 2026 17:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247469;
-	bh=agD2IaZ2P6kFlzliVh7su2OSK4PrVLYpLEaQfGQBYvA=;
+	s=korg; t=1787247471;
+	bh=Kwrn2qTruVTEfgO3tDt2u+Alrx4HT0bbPFgFL2FpVsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mSyjRnZmipe+/dkWX3Kbu1Oad3r7iSKHRf2+kPViEqaUjgZkihJPAugjkhTcyOPS7
-	 rkbekhHfy49CDe9QZtzc/fwPM2b10CJjVL7OIau5Ui8vT8Yb1gROlNe3UdJiOMG+XP
-	 qntoe/cnx5qOQP5NbjjIlQimzDSc1G/nQb2kIbdQ=
+	b=S0vfX7v02qk5u23fFcfILgqr65dAzlTM9J4TLOUAb218wNVNmEgCaad/QKvTwawwY
+	 F4l1aPoTdZB06JpfUNVxoyH8IWei0No15TG4oM0KmLxdsDsvR4cPcD42P8CksN/csn
+	 LkF8T7BTAKnbQJ6yyc64T/wFHHDT3o2NgRXzYY2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Candice Li <candice.li@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	David Rosca <david.rosca@amd.com>,
+	Leo Liu <leo.liu@amd.com>,
+	Ruijing Dong <ruijing.dong@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 057/166] drm/amdgpu: validate GEM_CREATE domain combinations
-Date: Thu, 20 Aug 2026 16:55:16 +0200
-Message-ID: <20260820145212.869181054@linuxfoundation.org>
+Subject: [PATCH 6.6 058/166] drm/amdgpu: Reject UVD message with dimensions above 4096
+Date: Thu, 20 Aug 2026 16:55:17 +0200
+Message-ID: <20260820145212.898344029@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -45,76 +46,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Candice Li <candice.li@amd.com>
+From: David Rosca <david.rosca@amd.com>
 
-commit 5e9d136ad74df4edec67e502ce267597064d8f86 upstream.
+commit 8c9aebcdd9f46f7a14b98d6ab18574b7a48fbb08 upstream.
 
-AMDGPU_GEM_CREATE checked domain bits against AMDGPU_GEM_DOMAIN_MASK,
-but did not validate domain combinations. Userspace could combine
-CPU|GTT|VRAM with DOORBELL, GDS, GWS, or OA, making
-amdgpu_bo_placement_from_domain() exceed AMDGPU_BO_MAX_PLACEMENTS and
-hit BUG_ON().
+Fixes potential overflow in DPB size calculations.
 
-Allow combinations only within CPU/GTT/VRAM, and require non-CPU/GTT/
-VRAM domains to be specified one at a time. Return -EINVAL for invalid
-combinations in amdgpu_gem_create_ioctl().
-
-v2: Rename helper from amdgpu_gem_domain_valid() to
-    amdgpu_gem_are_domains_valid() (Christian)
-
-Signed-off-by: Candice Li <candice.li@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: David Rosca <david.rosca@amd.com>
+Acked-by: Leo Liu <leo.liu@amd.com>
+Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit db39852d0c39843cb02048dfb47e4b8c703e9080)
+(cherry picked from commit 05e1387d151f71569fbe122d2c89f9db0c21dc10)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c |   21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-@@ -273,6 +273,25 @@ static const struct drm_gem_object_funcs
- 	.vm_ops = &amdgpu_gem_vm_ops,
- };
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
+@@ -647,8 +647,8 @@ static int amdgpu_uvd_cs_msg_decode(stru
+ 	unsigned int image_size, tmp, min_dpb_size, num_dpb_buffer;
+ 	unsigned int min_ctx_size = ~0;
  
-+static bool amdgpu_gem_are_domains_valid(u32 domains)
-+{
-+	u32 normal = AMDGPU_GEM_DOMAIN_CPU |
-+		     AMDGPU_GEM_DOMAIN_GTT |
-+		     AMDGPU_GEM_DOMAIN_VRAM;
-+	/* Treat all non CPU/GTT/VRAM domains as special domains. */
-+	u32 special = AMDGPU_GEM_DOMAIN_MASK & ~normal;
-+	u32 normal_mask = domains & normal;
-+	u32 special_mask = domains & special;
-+
-+	if (!special_mask)
-+		return true;
-+
-+	if (normal_mask)
-+		return false;
-+
-+	return !(special_mask & (special_mask - 1));
-+}
-+
- /*
-  * GEM ioctls.
-  */
-@@ -308,6 +327,8 @@ int amdgpu_gem_create_ioctl(struct drm_d
- 	/* reject invalid gem domains */
- 	if (args->in.domains & ~AMDGPU_GEM_DOMAIN_MASK)
- 		return -EINVAL;
-+	if (!amdgpu_gem_are_domains_valid(args->in.domains))
-+		return -EINVAL;
- 
- 	if (!amdgpu_is_tmz(adev) && (flags & AMDGPU_GEM_CREATE_ENCRYPTED)) {
- 		DRM_NOTE_ONCE("Cannot allocate secure buffer since TMZ is disabled\n");
+-	/* Reject invalid dimensions to prevent division by zero */
+-	if (width < 16 || height < 16) {
++	/* Reject invalid dimensions */
++	if (width < 16 || height < 16 || width > 4096 || height > 4096) {
+ 		dev_WARN_ONCE(adev->dev, 1,
+ 			      "Invalid UVD decoding dimensions (%dx%d)!\n",
+ 			      width, height);
 
 
