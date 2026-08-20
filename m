@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CC638236C;
-	Thu, 20 Aug 2026 15:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D27382371;
+	Thu, 20 Aug 2026 15:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239315; cv=none; b=tnR+1sDRQWZnIm0USnoGneT7hV6uFBggqg6YCWu6Pe7dDw+kgHMopfK21iZL4xdhYE9LW0e41pOw9BuipIHu7lDtuz1F6THDYYQbjgUtazXpkGZz/KcGtXr2rTDE1WO5w1XXBfXppFq0mbIGlp0LpQnCGCra8muoHQjxRzhARbk=
+	t=1787239318; cv=none; b=ksREbh4/+GhrBmrOet1dh3Uz/PNdPANsqiib+i2yfaJiBYhMsEQtvk7Tt1r1le97JEBK+euN66h70EKJjYlXrPEwdAAMKP++dLMmfclQCC99lut4sohdbrQGIgLNfiKSFWjgdUNPOVXxKVo1NDn2tBTme5VCmyrI6mUojkf5niI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239315; c=relaxed/simple;
-	bh=Oo16a2swjo/+WjsbBbStF/BPJS6HAd/rwI6CQ6g4R2o=;
+	s=arc-20240116; t=1787239318; c=relaxed/simple;
+	bh=ohzW86/v8Pk9oz7sh79dI8BAxnjE7OR6KK5UKBPdhvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FbCMastCJyqRPmJ1sVoWeb5UE3vwAyxfiASGzJW4EWEx1HavJYkXSC5DAUtYNkvaW4MmVOuDzSeh9wMZjdq0TZY5sfAunWlyLR4Cyhpup00RQHzFMmBEcWKy78M0nWEpWay5h9D5zPBXenp6xVBr6QdlFrI7e0O8t4tSbkI4Thw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fcafpRF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fduF427LHH8MDPCWg8c9MmKQ65Rv8z0E9Yeztmp8CUYHniwl+zG8cxKIa9uXYU3zAaShUOyQGWBx9Kb3DmeeMMS6hT8Rm8tfrqfN7x3XKw6LdQ3aF5q5EYPgYVCB81Z5AUMV5W7+i99oYYeJPQYKSxp9RQvZhyyTEpyPvrMyPPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEiXqguV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fcafpRF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA1D1F00A3F;
-	Thu, 20 Aug 2026 15:21:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEiXqguV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D9101F000E9;
+	Thu, 20 Aug 2026 15:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239314;
-	bh=DFPPiwPysk07x0Lcq+HLQEAJmLHpEjf66PtqBASY5VM=;
+	s=korg; t=1787239317;
+	bh=7/86BHe9GzwT1EFSVXZy/IY8fcNyrSEJpJvh9aUlzHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0fcafpRFehZWDpKtEgiCSpW87HIjOFwaN5zjNl5PxIA1XDS5nP+pMS+8liKNul1X/
-	 KZxMbr2ObYbsgj+nXSBGL3900N1h3dfrw1dS8yMb8WZdAXdqNPckwXRdTSCbFFkNnN
-	 RYTDm7kOscFEnvVaZYvXEHiTH0xnnTbKmb+0M+eM=
+	b=vEiXqguVF3BG8qO8Bhl59WQibRha45y/KstDzZMZ4CCXUeTOml4/yUUaPoeh2P0DK
+	 7dZCkXk0geE2h2jJEz6O+D3nBzIrS9hndbTyfg6Y/kEYH4TXRn19Rpl+c/YS6AmK8w
+	 CWMV7uQ59QArrr+AZ4jb/IO69Fq1TIm2XOWCk+kw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Francesco Valla <francesco@valla.it>,
+	Max Zhen <max.zhen@amd.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 211/217] drm/client: Deprecate struct drm_client_buffer.gem
-Date: Thu, 20 Aug 2026 16:56:19 +0200
-Message-ID: <20260820145244.041270461@linuxfoundation.org>
+Subject: [PATCH 6.18 202/217] accel/amdxdna: Skip unmapped range in aie2_populate_range()
+Date: Thu, 20 Aug 2026 16:56:10 +0200
+Message-ID: <20260820145243.789077329@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -52,128 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit ea39f2e66e61035e203530977a3df428345d03e2 ]
+[ Upstream commit 6c916e301fa10de9158b922474ade7b43d726cda ]
 
-The client buffer's framebuffer holds a reference and pointer on
-each of its GEM buffer objects. Thus the field gem in the client-
-buffer struct is not necessary. Deprecated the field and convert
-the client-buffer helpers to use the framebuffer's objects.
+aie2_populate_range() incorrectly failed jobs for BOs with multiple
+mmaps: if the unmapped entry appeared first in umap_list, the loop would
+pick it up, call hmm_range_fault() on a gone VMA, and return -EFAULT
+without ever trying the remaining valid mapps.
 
-In drm_client_buffer_delete(), do a possible vunmap before releasing
-the framebuffer. Otherwise we'd eventually release the framebuffer
-before unmaping its buffer objects.
+Fix it by skipping unmapped entries. After the loop, if the map list is
+empty or all maps are valid, map_invalid can be cleared normally.
 
-v2:
-- avoid dependency on CONFIG_DRM_KMS_HELPER
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Tested-by: Francesco Valla <francesco@valla.it>
-Link: https://patch.msgid.link/20251027121042.143588-5-tzimmermann@suse.de
-Stable-dep-of: f4f2bba28df9 ("drm/log: Fix infinite loop when scale is too large for display")
+Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
+Reviewed-by: Max Zhen <max.zhen@amd.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260812205628.810816-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_client.c | 20 ++++++++++++--------
- include/drm/drm_client.h     |  9 +++------
- 2 files changed, 15 insertions(+), 14 deletions(-)
+ drivers/accel/amdxdna/aie2_ctx.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_client.c b/drivers/gpu/drm/drm_client.c
-index 73ae63f856a09..9bb49d3771cb7 100644
---- a/drivers/gpu/drm/drm_client.c
-+++ b/drivers/gpu/drm/drm_client.c
-@@ -17,6 +17,7 @@
- #include <drm/drm_fourcc.h>
- #include <drm/drm_framebuffer.h>
- #include <drm/drm_gem.h>
-+#include <drm/drm_gem_framebuffer_helper.h>
- #include <drm/drm_mode.h>
- #include <drm/drm_print.h>
- 
-@@ -174,17 +175,17 @@ EXPORT_SYMBOL(drm_client_release);
- 
- static void drm_client_buffer_delete(struct drm_client_buffer *buffer)
- {
-+	struct drm_gem_object *gem = buffer->fb->obj[0];
- 	int ret;
- 
-+	drm_gem_vunmap(gem, &buffer->map);
+diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
+index 612ad6302622a..9ec3d90c2d200 100644
+--- a/drivers/accel/amdxdna/aie2_ctx.c
++++ b/drivers/accel/amdxdna/aie2_ctx.c
+@@ -794,6 +794,16 @@ static int aie2_populate_range(struct amdxdna_gem_obj *abo)
+ 	found = false;
+ 	down_write(&xdna->notifier_lock);
+ 	list_for_each_entry(mapp, &abo->mem.umap_list, node) {
++		/*
++		 * Skip entries that have already been unmapped.
++		 *
++		 * If userspace unmaps the address and later submits I/O using
++		 * it, the IOMMU will reject the access and report a fault.
++		 * Ignore such entries here.
++		 */
++		if (mapp->unmapped)
++			continue;
 +
- 	ret = drm_mode_rmfb(buffer->client->dev, buffer->fb->base.id, buffer->client->file);
- 	if (ret)
- 		drm_err(buffer->client->dev,
- 			"Error removing FB:%u (%d)\n", buffer->fb->base.id, ret);
+ 		if (mapp->invalid && kref_get_unless_zero(&mapp->refcnt)) {
+ 			found = true;
+ 			break;
+@@ -801,6 +811,12 @@ static int aie2_populate_range(struct amdxdna_gem_obj *abo)
+ 	}
  
--	if (buffer->gem) {
--		drm_gem_vunmap(buffer->gem, &buffer->map);
--		drm_gem_object_put(buffer->gem);
--	}
-+	drm_gem_object_put(buffer->gem);
- 
- 	kfree(buffer);
- }
-@@ -274,7 +275,7 @@ drm_client_buffer_create(struct drm_client_dev *client, u32 width, u32 height,
- int drm_client_buffer_vmap_local(struct drm_client_buffer *buffer,
- 				 struct iosys_map *map_copy)
- {
--	struct drm_gem_object *gem = buffer->gem;
-+	struct drm_gem_object *gem = buffer->fb->obj[0];
- 	struct iosys_map *map = &buffer->map;
- 	int ret;
- 
-@@ -303,7 +304,7 @@ EXPORT_SYMBOL(drm_client_buffer_vmap_local);
-  */
- void drm_client_buffer_vunmap_local(struct drm_client_buffer *buffer)
- {
--	struct drm_gem_object *gem = buffer->gem;
-+	struct drm_gem_object *gem = buffer->fb->obj[0];
- 	struct iosys_map *map = &buffer->map;
- 
- 	drm_gem_vunmap_locked(gem, map);
-@@ -334,9 +335,10 @@ EXPORT_SYMBOL(drm_client_buffer_vunmap_local);
- int drm_client_buffer_vmap(struct drm_client_buffer *buffer,
- 			   struct iosys_map *map_copy)
- {
-+	struct drm_gem_object *gem = buffer->fb->obj[0];
- 	int ret;
- 
--	ret = drm_gem_vmap(buffer->gem, &buffer->map);
-+	ret = drm_gem_vmap(gem, &buffer->map);
- 	if (ret)
- 		return ret;
- 	*map_copy = buffer->map;
-@@ -355,7 +357,9 @@ EXPORT_SYMBOL(drm_client_buffer_vmap);
-  */
- void drm_client_buffer_vunmap(struct drm_client_buffer *buffer)
- {
--	drm_gem_vunmap(buffer->gem, &buffer->map);
-+	struct drm_gem_object *gem = buffer->fb->obj[0];
-+
-+	drm_gem_vunmap(gem, &buffer->map);
- }
- EXPORT_SYMBOL(drm_client_buffer_vunmap);
- 
-diff --git a/include/drm/drm_client.h b/include/drm/drm_client.h
-index 23a8420816224..78db5f03b80e6 100644
---- a/include/drm/drm_client.h
-+++ b/include/drm/drm_client.h
-@@ -176,12 +176,9 @@ struct drm_client_buffer {
- 	/**
- 	 * @gem: GEM object backing this buffer
- 	 *
--	 * FIXME: The dependency on GEM here isn't required, we could
--	 * convert the driver handle to a dma-buf instead and use the
--	 * backend-agnostic dma-buf vmap support instead. This would
--	 * require that the handle2fd prime ioctl is reworked to pull the
--	 * fd_install step out of the driver backend hooks, to make that
--	 * final step optional for internal users.
-+	 * FIXME: The DRM framebuffer holds a reference on its GEM
-+	 * buffer objects. Do not use this field in new code and
-+	 * update existing users.
- 	 */
- 	struct drm_gem_object *gem;
- 
+ 	if (!found) {
++		/*
++		 * This also covers the case where all mappings have been
++		 * removed. There are no invalid mappings left to process.
++		 * Any subsequent I/O using the unmapped address will be
++		 * rejected by the IOMMU.
++		 */
+ 		abo->mem.map_invalid = false;
+ 		up_write(&xdna->notifier_lock);
+ 		return 0;
 -- 
 2.53.0
 
