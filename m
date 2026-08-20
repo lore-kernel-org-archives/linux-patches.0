@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFCF7381AFF;
-	Thu, 20 Aug 2026 15:20:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED3C3812E9;
+	Thu, 20 Aug 2026 15:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239226; cv=none; b=GK8McvOAitW85dpBjdDo/VBE2h0zGJhsz6g7BO1ak6pnn4Fy4/loAsdbZ43yE5BMxqPlVNEnFGLkooxxd9KvbF4Tr0M+LvHY93ZkFvX+1+SvldP91XPNDPS+5gpEn/y3KWilcBWocC5HQrv0HugSm2VfY134cXyxCb3e42WYt6E=
+	t=1787239229; cv=none; b=l3ixaHwjQPHk6xYvstkW8i+H6Agf/iRxxnM0OShBN8U/K4JfGbPTCKAoVcLhWuJ/DxHx4LxaUfyIvr/iUs+joZNRUGfeRj0iJFwMJ+bE9foFF6dMg6o/zyccFmsF5fiCXsEsLJz+Cw7SkdjQTfude2t6lY3qpHQwfXxhbmeNTrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239226; c=relaxed/simple;
-	bh=lyGHAdJ10iJzZ1VaSJDiSiYCSWmTTOM49/ksJvSuUmY=;
+	s=arc-20240116; t=1787239229; c=relaxed/simple;
+	bh=NsfLZeu5HEFzr+KCDpcQeoJdkG72VYgiDga5iIgutlc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ti8M2dBRNLP8BSLM1DOK4Su+i/JomFbEkvzIU8c7Z+MDTqIx+xQyFSVRgxJwxq7wfx3rGY6U80WWdHpDCI7czvkf0rOtuRyCIZjVf+Ec89oRe8zgHxy8TkPZHoc008sB6L8S5mQc2j7TZGuEuDnwZVrrYMaX5+tdBp3FeFWz1Ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSVzIgJG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ssX1fJQWCX0HZnkLpTUNFbMYopFMgfwbLhBPNQKeHgvFQEb/6T4bapKIHJAoAJVvHfgxHwOBg94AHGJ5P21XRJ0Fmrn9ofr44bmGKl/P3QBaJLN4SmpFgyoBvdlBHh5DzDjv/9PFzBSZ6wK2QoDiuXRFXKuhZD9O0pcfWQxdYLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OL1iTnSJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSVzIgJG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1536B1F00A3D;
-	Thu, 20 Aug 2026 15:20:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OL1iTnSJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E915F1F00A3A;
+	Thu, 20 Aug 2026 15:20:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239225;
-	bh=ZeuTuXqrPPu6BFvXcl+uhjJeqFHmx5t8Ru8Qc14f9FA=;
+	s=korg; t=1787239228;
+	bh=4IgLR84RznWvwB0pcjbeXI1VtU8SyIguXkPM1qR2wMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CSVzIgJGbEMZqjp0TClI5FeAuK4Sr58hq6GtTUCZ2kcuy5wi+/1oVOpAkgBMD8JEp
-	 sjTGRns3lc/TcUMB0itaTjaAvuut4grZfrJY0KzHtg3d1cT+Ei3ScxYtLdZAY+eR5z
-	 AnuIByEe1RV/bV+xpz0hM689k1sUiI7CpSmJXF/U=
+	b=OL1iTnSJ64ZXJ9XKzBvYXS4T4e9VNxG0yaMpHOT6CLrSUCZrOq+14rND1fp864AFx
+	 oKpdGjL/heBXSHd03mfyMBxL6g/GYqlmMIEY/XF4pdaRaHgAiTVLpu+YZduspJqexR
+	 no3NireAqTcVjhKsU3hT9Tyr8rPCc2Nn1YIz1lKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Breno Leitao <leitao@debian.org>,
-	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Chuck Lever <cel@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 192/217] net: ngbe: fix NULL pointer dereference in non-MSI-X interrupt enabling
-Date: Thu, 20 Aug 2026 16:56:00 +0200
-Message-ID: <20260820145243.494853715@linuxfoundation.org>
+Subject: [PATCH 6.18 193/217] net/tls: Fail tls_sw_splice_read() after a failed async decrypt
+Date: Thu, 20 Aug 2026 16:56:01 +0200
+Message-ID: <20260820145243.522776063@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -53,51 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit 5f3a13e0bb5ebcc1ca2dfda42ea40b9f3c2be6ea ]
+[ Upstream commit 976df67f463db1fddaf2a32fb04f57ad2891a23d ]
 
-In non-MSI-X mode (such as legacy INTx or single MSI), wx->msix_entry is
-not allocated or initialized. Calling NGBE_INTR_MISC(wx) dereferences
-wx->msix_entry->entry, leading to a NULL pointer dereference crash.
+When an async decrypt fails, tls_decrypt_done() records the error in
+ctx->async_wait.err and calls tls_err_abort(), which stores it in
+sk_err. tls_sw_recvmsg() and tls_sw_read_sock() each read
+async_wait.err once they hold the reader lock and fail the call: a
+record that did not authenticate breaks the connection.
 
-This issue was introduced by fixing the IRQ vector when the number of
-VFs is 7. Fix the issue by explicitly checking `pdev->msix_enabled` to
-determine the correct vector index.
+tls_sw_splice_read() has no such check, and sk_err does not stand in
+for one. tls_rx_rec_wait() tests sk_err only inside the loop it
+skips whenever a record is already parsed, and the first reader to
+reach sock_error() clears it, while async_wait.err persists. A
+splice therefore keeps delivering records on a connection that
+recvmsg() and read_sock() refuse to read.
 
-Additionally, as a side fix, set the interrupt mask to BIT(0) for the
-non-MSI-X fallback. In MSI/INTx mode, the MISC and queue interrupts
-share vector 0, and the WX_PX_MISC_IVAR register is only valid in the
-MSI-X case. Thus, BIT(0) is the correct mask for the miscellaneous cause
-when MSI-X is disabled.
+Read async_wait.err in tls_sw_splice_read() as the other two readers
+do.
 
-Fixes: 4174c0c331a2 ("net: ngbe: specify IRQ vector when the number of VFs is 7")
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/B2693E9A8BFAD110+20260807062214.410838-1-jiawenwu@trustnetic.com
+Fixes: f314bfee81b1 ("tls: rx: return the already-copied data on crypto error")
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chuck Lever <cel@kernel.org>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20260806-tls-splice-crypto-fix-v1-1-a2624005a286@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/wangxun/ngbe/ngbe_main.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/tls/tls_sw.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/wangxun/ngbe/ngbe_main.c b/drivers/net/ethernet/wangxun/ngbe/ngbe_main.c
-index 58488e138beb4..e80962d40f7ed 100644
---- a/drivers/net/ethernet/wangxun/ngbe/ngbe_main.c
-+++ b/drivers/net/ethernet/wangxun/ngbe/ngbe_main.c
-@@ -160,8 +160,10 @@ static void ngbe_irq_enable(struct wx *wx, bool queues)
- 	/* mask interrupt */
- 	if (queues)
- 		wx_intr_enable(wx, NGBE_INTR_ALL);
--	else
-+	else if (wx->pdev->msix_enabled)
- 		wx_intr_enable(wx, NGBE_INTR_MISC(wx));
-+	else
-+		wx_intr_enable(wx, BIT(0));
- }
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 7c3582b3eea9c..4c77036da0711 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -2319,6 +2319,11 @@ ssize_t tls_sw_splice_read(struct socket *sock,  loff_t *ppos,
+ 	if (err < 0)
+ 		return err;
  
- /**
++	/* If crypto failed the connection is broken */
++	err = ctx->async_wait.err;
++	if (err)
++		goto splice_read_end;
++
+ 	if (!skb_queue_empty(&ctx->rx_list)) {
+ 		skb = __skb_dequeue(&ctx->rx_list);
+ 	} else {
 -- 
 2.53.0
 
