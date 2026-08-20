@@ -1,37 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC4F352019;
-	Thu, 20 Aug 2026 15:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A2A37D13D;
+	Thu, 20 Aug 2026 15:04:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238257; cv=none; b=csAEi+mzp+g7YoZ23kDuU1DX2P8yputt13je9I0uol0k6XAgUBe/tpOoVPpJ5QdtFpIvHPntEyMa4UYnhnGgbpj9mdMGrphsYpisec4w+/hKTgc8taTOKpf+d4m5LmpOf7XLKvYSTgSmFWq/4SFZXb5qU4wnxXqBXUs83mwuhyU=
+	t=1787238261; cv=none; b=EHDSI8eyZ4VLODbahayCTWWkrRuP3hP8qfwBL11f9ZgCorlDENjSFyGG+Apio3EQ/cvY8ku7bbtV9+x51C2ngZlAC1R4JMbiH/QUpDrY9YqPREjxYfDgRWus92SWfvXVAU0OnalJwaiEqQui6vvruvLBW2k8XwCMs8dqwo2Pnjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238257; c=relaxed/simple;
-	bh=a96NDKCMWodOGIuF2yCwgkvBi2S1LDYGtoDx1g/3l4I=;
+	s=arc-20240116; t=1787238261; c=relaxed/simple;
+	bh=iLNx+yfYbwIVesAW3xhqcCVCynNqZSAL0DX4+88f3kg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t8zJTHdjhSscYL38sYAHiTXttgwnVv8a0rJkRb3QjVc/JzKzKeReGdY5SB6ZhfW+7pe90Ge7VtPnvtOGHNR9GRCBqF8WhMYRko+SwrbsxDFE4Oe32GxyZtwfZplo9Mk+6KGEVFbGqwN9HSG9a6hdid4Gfp+J9TeV/X6ysJ9+OVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNoOaVCb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NghyQFggv2icDHbAQlrxqMmoEWzA2WaCoO1jCQOuzi97cqdjgmBS3YXYiZhjIpD/9+YnCvOPH0gS54nv3VKObI7NnfDqcn20GDgbAGkOSXpOqB9Q0dyrAKOALd7QvWVQGsbzGVCVS8WjNt0++MEvYfbYnXg1Hn1XV/aZ0tsj7J4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJkB6KRG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNoOaVCb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D534D1F000E9;
-	Thu, 20 Aug 2026 15:04:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJkB6KRG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3001F000E9;
+	Thu, 20 Aug 2026 15:04:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238256;
-	bh=Yl59gZc9aAbVy25iKbuJXjLuTgSXu/3Pb1wSiIftVB0=;
+	s=korg; t=1787238259;
+	bh=akka8woKS88sANqszu1zUt/hvb6dCy079oxnsHDeMFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fNoOaVCb6uGhxtXSS4AJ1GjxiX7v/B2tLGmJtqB86X1kEAlEz0hBHKf34Bmf6OMfe
-	 8p81IEO1G5UbYDjSX/Ai9b83f1N9eVyw5RCyzYtcVMqkg47Rl6lLJcdPJOXGFfPQpA
-	 8hoKqgFAUm+R3v+RwoXEeGno8Ag58mKvhxvDhvDw=
+	b=uJkB6KRGzs0B428N3RFuQXWvLOqxHHuCNFPrdXBFuh00ifHEICRIOrr0+Iu0ZQ+R+
+	 g31bXwUNeX828VbEFmC/pRZ/FUzSRiOH1qPW8eo6whs5yG2fh294nBIx9sx6S7B2Un
+	 MOLH8vQfhgEvZTPfgC3KWxvwHjujFumNrMtBUgkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 7.1 084/228] mmc: atmel-mci: Fix use-after-free in atmci_remove due to race condition
-Date: Thu, 20 Aug 2026 16:53:46 +0200
-Message-ID: <20260820145247.199507663@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Daniel Stone <daniel@fooishbar.org>,
+	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	dri-devel@lists.freedesktop.org,
+	John Harrison <John.Harrison@Igalia.com>
+Subject: [PATCH 7.1 085/228] drm/connector/hdmi: Fix out of bounds memory read
+Date: Thu, 20 Aug 2026 16:53:47 +0200
+Message-ID: <20260820145247.228797105@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -44,68 +57,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: John Harrison <John.Harrison@Igalia.com>
 
-commit c125ee35a49a0518521b52b27631eef061b8719a upstream.
+commit 9ecf8ba763d0ffe0673538eb4bf7806f20455d19 upstream.
 
-In atmci_probe, &host->bh_work is bound with atmci_work_func, and
-atmci_interrupt, atmci_timeout_timer and atmci_dma_complete can all
-queue this work on system_bh_wq.
+A helper function was copying a given audio infoframe into the
+connector's copy but using the size of the destination (a generic
+target, sized to accept many different data blocks) not the source (a
+very specific type of data block). Thus, it was copying 60 bytes of
+data from a 28 byte allocation.
 
-If we remove the module, atmci_remove makes cleanup and the memory
-allocated for host with devm_kzalloc() is released after the remove
-callback returns, while the work mentioned above may still be pending
-or running. The sequence of operations that may lead to a UAF bug is
-as follows:
+Fix that by using the source size instead, together with a build bug
+on the source size actually being smaller than the destination.
 
-CPU0                                      CPU1
+I hit this running KUnit tests under KASAN (while debugging something
+else entirely). In the real world, it seems unlikely to cause an
+actual problem. It is a read not a write so it can't corrupt any
+memory. However, it could potentially fall off the end of a page and
+cause an accvio bug.
 
-                                          | atmci_interrupt
-                                          | queue_work(system_bh_wq,
-                                          |            &host->bh_work)
-atmci_remove                              |
-atmci_cleanup_slot(...)                   |
-atmci_writel(host, ATMCI_IDR, ~0UL)       |
-timer_delete_sync(&host->timer)           |
-dma_release_channel(host->dma.chan)       |
-free_irq(platform_get_irq(pdev, 0), host) |
-                                          | atmci_work_func
-                                          | // use host
-// devm resources released after          |
-// remove returns, host is freed          |
-                                          | // use host (use-after-free)
-
-Fix it by canceling the work after all the sources that can schedule
-it (IRQ handler, timeout timer and DMA completion callback) have been
-stopped, and before proceeding with the remaining cleanup in
-atmci_remove.
-
-Fixes: 7d2be0749a59 ("atmel-mci: Driver for Atmel on-chip MMC controllers")
-Assisted-by: Codex:deepseek-v4-flash
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Fixes: f378b77227bc ("drm/connector: hdmi: Add Infoframes generation")
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Daniel Stone <daniel@fooishbar.org>
+Cc: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+Cc: Jani Nikula <jani.nikula@intel.com>
+Cc: José Expósito <jose.exposito89@gmail.com>
+Cc: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: stable@vger.kernel.org # v6.11+
+Signed-off-by: John Harrison <John.Harrison@Igalia.com>
+Link: https://patch.msgid.link/20260723220652.533345-1-John.Harrison@Igalia.com
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/atmel-mci.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/display/drm_hdmi_state_helper.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/atmel-mci.c
-+++ b/drivers/mmc/host/atmel-mci.c
-@@ -2610,6 +2610,8 @@ static void atmci_remove(struct platform
+--- a/drivers/gpu/drm/display/drm_hdmi_state_helper.c
++++ b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
+@@ -1096,7 +1096,8 @@ drm_atomic_helper_connector_hdmi_update_
  
- 	free_irq(platform_get_irq(pdev, 0), host);
+ 	mutex_lock(&connector->hdmi.infoframes.lock);
  
-+	cancel_work_sync(&host->bh_work);
-+
- 	clk_disable_unprepare(host->mck);
+-	memcpy(&infoframe->data, frame, sizeof(infoframe->data));
++	BUILD_BUG_ON(sizeof(*frame) > sizeof(infoframe->data));
++	memcpy(&infoframe->data, frame, sizeof(*frame));
+ 	infoframe->set = true;
  
- 	pm_runtime_disable(dev);
+ 	ret = write_infoframe(connector, &funcs->audio, "Audio", infoframe);
 
 
