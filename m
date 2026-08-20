@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0313C37F738;
-	Thu, 20 Aug 2026 15:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F083BCD3B;
+	Thu, 20 Aug 2026 15:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239483; cv=none; b=SWYzg/ax1xfCe0oQAb8BqfeoEFVc7d0ilgj2iE9wOu6xh+9HiGdBKKprPistOQH8/sKD8z9ywD51EGMa2RoN2w3aL7LFOoClmoKmq861zh3gmdBIVew15mgGxu7N1naTFUxJR2CAiEvwesLUPcAGQYpm2YS2x+n3bizcD+2d+Sw=
+	t=1787239486; cv=none; b=WHcrwD/5AsHa5VXebUZlY98tQtm30C+UDlOvPPnJ/uiY8o8rq65elG4NMu3S2fRxb0hQKtCEPIU5ePNi2RV4dvIx4O2wvPMQZfKbr4Ddw/Xdthnab3c0D8QkF4W5zebiEKYeSugpONcTTmltgTs6ccJUdcqAo2iIj2WBCraxYrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239483; c=relaxed/simple;
-	bh=sE3blfDPSf7v8RIFsPSyNa/UapOYnoV+fn2QdhiT9LE=;
+	s=arc-20240116; t=1787239486; c=relaxed/simple;
+	bh=/0EB3VXHUl2aj2jggK10pJKY8HIWdEJ+/ASVbi66Zww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cMIZmnEs5fUWWyO7HholRwt8P/0dxTQKOB5kySEtMWZUs/y0xbMEI7wOqZUcQKy3EKHaFZ0lQB87rRSIGLzsGWZy8LCkro8wOiiBjNYLq4yqsH16m2jcmIKFh529qJODDE3FIVmb5mI3+iDUtZxiBdTXN50C6345Nx9HKgxYPZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kr4nOBMM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JvZc2ZnuxySFqHTIs4TkoHpapFLsMNJwDv00mJ3JpagpNGxqIGmpJ2n9uNc+M7EXl9cXiInui+prsV56cvZHbUgn6a6AHtzjgg0rq0+Tykp+/NkPiLr6nEWIRjhOgtKhn3des0FbtOl+xkEV+6sAihdQP72RvB2vS+y9JiJZ5wY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BgpPTnFB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kr4nOBMM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E6741F00A3A;
-	Thu, 20 Aug 2026 15:24:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BgpPTnFB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7FB1F000E9;
+	Thu, 20 Aug 2026 15:24:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787239481;
-	bh=uzdBBeLs9yD7VtQFohw4kxTOJ4Ntmulv50b4PLESyxw=;
+	s=korg; t=1787239484;
+	bh=iIyVJ6Jshd8LePbYN1udaI9V9fenC/8POTVYryTP61A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kr4nOBMM3bWu8TgHveyZCmZCxp892Wo0thFFLfXPgc+2wFm9k7vMbLFjaRkEixhyk
-	 xmimJSB63ogSI95r5nz9zCJa0kP9EeoLYanYXf/Nh3VUMdwbUb61KoN+lnlpco01AP
-	 PFJpl4LQxM8j6W+1EX14DPelA9Et9H5UI/Ft0urs=
+	b=BgpPTnFBG/rMH4fKHQIj8zKi20+s0vUOWtfWeqPKjxiIjMLUm0QqF99a318rz1Wka
+	 tNt5TVDw6s+LCK4r05nIGBoy08HYqyTxvV3E5Zjn4pNJqxRQ2GWL6C5lvjkUVCw1OX
+	 8MTCb+VomxrhEGtQ1cQbBWee8tm9dYve1HGEwXfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Stafford Horne <shorne@gmail.com>
-Subject: [PATCH 6.12 057/220] openrisc: signal: do not restore privileged SR bits on sigreturn
-Date: Thu, 20 Aug 2026 16:54:07 +0200
-Message-ID: <20260820145225.208245323@linuxfoundation.org>
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.12 066/220] mmc: atmel-mci: Fix use-after-free in atmci_remove due to race condition
+Date: Thu, 20 Aug 2026 16:54:16 +0200
+Message-ID: <20260820145225.472218262@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145223.480031205@linuxfoundation.org>
 References: <20260820145223.480031205@linuxfoundation.org>
@@ -50,73 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-commit 32ef1b30ad736519f7a207bcc2986f3d4129d972 upstream.
+commit c125ee35a49a0518521b52b27631eef061b8719a upstream.
 
-restore_sigcontext() copies the whole supervision register (SR) from the
-signal frame and only clears SPR_SR_SM before the value is reloaded into
-the hardware SR (through ESR and l.rfe) on the return to user space.  All
-other SR bits are left under user control.
+In atmci_probe, &host->bh_work is bound with atmci_work_func, and
+atmci_interrupt, atmci_timeout_timer and atmci_dma_complete can all
+queue this work on system_bh_wq.
 
-An unprivileged task can thus return from a signal handler through a
-crafted sigframe that clears SPR_SR_DME.  With the data MMU disabled the
-CPU performs no translation or protection on data accesses, so the task
-gains read and write access to arbitrary physical memory, a local
-privilege escalation.  SPR_SR_IME, SPR_SR_SUMRA, SPR_SR_LEE, SPR_SR_EPH
-and the cache-enable bits are exposed the same way.  The ptrace GPR regset
-already refuses any change to SR for exactly this reason.
+If we remove the module, atmci_remove makes cleanup and the memory
+allocated for host with devm_kzalloc() is released after the remove
+callback returns, while the work mentioned above may still be pending
+or running. The sequence of operations that may lead to a UAF bug is
+as follows:
 
-Restore only the arithmetic flag bits (F, CY, OV) from the signal frame
-and take every privileged control bit from the SR the kernel saved on
-signal entry.
+CPU0                                      CPU1
 
-Verified with qemu-system-or1k -M or1k-sim: before this change an
-unprivileged PoC clears SPR_SR_DME in rt_sigreturn and writes a marker to
-physical address 0x03000000 (beyond the kernel's mem=32M); afterwards the
-same PoC receives SIGSEGV and physical memory is unchanged.
+                                          | atmci_interrupt
+                                          | queue_work(system_bh_wq,
+                                          |            &host->bh_work)
+atmci_remove                              |
+atmci_cleanup_slot(...)                   |
+atmci_writel(host, ATMCI_IDR, ~0UL)       |
+timer_delete_sync(&host->timer)           |
+dma_release_channel(host->dma.chan)       |
+free_irq(platform_get_irq(pdev, 0), host) |
+                                          | atmci_work_func
+                                          | // use host
+// devm resources released after          |
+// remove returns, host is freed          |
+                                          | // use host (use-after-free)
 
-Fixes: ac689eb7f9d4 ("OpenRISC: Signal handling")
+Fix it by canceling the work after all the sources that can schedule
+it (IRQ handler, timeout timer and DMA completion callback) have been
+stopped, and before proceeding with the remaining cleanup in
+atmci_remove.
+
+Fixes: 7d2be0749a59 ("atmel-mci: Driver for Atmel on-chip MMC controllers")
+Assisted-by: Codex:deepseek-v4-flash
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Signed-off-by: Stafford Horne <shorne@gmail.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/openrisc/include/asm/processor.h |    2 ++
- arch/openrisc/kernel/signal.c         |    5 +++--
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ drivers/mmc/host/atmel-mci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/openrisc/include/asm/processor.h
-+++ b/arch/openrisc/include/asm/processor.h
-@@ -26,6 +26,8 @@
- 		   | SPR_SR_DCE | SPR_SR_SM)
- #define USER_SR   (SPR_SR_DME | SPR_SR_IME | SPR_SR_ICE \
- 		   | SPR_SR_DCE | SPR_SR_IEE | SPR_SR_TEE)
-+/* SR bits user space may change via sigreturn, the rest stay kernel owned */
-+#define SPR_SR_USER_MASK  (SPR_SR_F | SPR_SR_CY | SPR_SR_OV)
+--- a/drivers/mmc/host/atmel-mci.c
++++ b/drivers/mmc/host/atmel-mci.c
+@@ -2619,6 +2619,8 @@ static void atmci_remove(struct platform
  
- /*
-  * User space process size. This is hardcoded into a few places,
---- a/arch/openrisc/kernel/signal.c
-+++ b/arch/openrisc/kernel/signal.c
-@@ -74,6 +74,7 @@ static long save_fp_state(struct sigcont
- static int restore_sigcontext(struct pt_regs *regs,
- 			      struct sigcontext __user *sc)
- {
-+	unsigned long old_sr = regs->sr;
- 	int err = 0;
+ 	free_irq(platform_get_irq(pdev, 0), host);
  
- 	/* Always make any pending restarted system calls return -EINTR */
-@@ -89,8 +90,8 @@ static int restore_sigcontext(struct pt_
- 	err |= __copy_from_user(&regs->sr, &sc->regs.sr, sizeof(unsigned long));
- 	err |= restore_fp_state(sc);
++	cancel_work_sync(&host->bh_work);
++
+ 	clk_disable_unprepare(host->mck);
  
--	/* make sure the SM-bit is cleared so user-mode cannot fool us */
--	regs->sr &= ~SPR_SR_SM;
-+	/* keep the privileged SR bits kernel owned, restore only user flags */
-+	regs->sr = (old_sr & ~SPR_SR_USER_MASK) | (regs->sr & SPR_SR_USER_MASK);
- 
- 	regs->orig_gpr11 = -1;	/* Avoid syscall restart checks */
- 
+ 	pm_runtime_disable(dev);
 
 
