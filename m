@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28CAD47CC89;
-	Thu, 20 Aug 2026 16:34:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D094947D478;
+	Thu, 20 Aug 2026 16:34:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243680; cv=none; b=YwX+tJOJeWAZUXjZfZJ0UrPlr+UkTVx2ynWePDJpyAlsUJRa5xP/498VyUDgt1TEZGl9rK6ZHj+3OKLzT/+qsMNShdz7BJhG9IDPAXhdjBvaOtI8N94u4VtsMPFVHikNF0x/cvTxsQNPFDxfjY72spas6wqFlZyTPXrcxtEOXSc=
+	t=1787243683; cv=none; b=Vop1ibJAX0/Cgrqxl8Pef9Qb0Yobkmu9hkThEmefdT+Py5xPTHc/HnsaTvwVDFbOCzc1gSMbRlwRhDsL58dp/eXVKUhMejuRwjio68D1FYJJSdARx68le1aym+jXGPFcV/N50sPCb6pdtz4DowT7wiyxpnKdoajQ8WkzZ7fd4nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243680; c=relaxed/simple;
-	bh=HbVSyisQvvVKhXGyVbDgYAnB4gWkekS+6Nu3E2EIWlk=;
+	s=arc-20240116; t=1787243683; c=relaxed/simple;
+	bh=ucFTfzzGd8abfaZ4FecKQlfsCtNVjZEsoBmfqKhrg0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oBDxMol+oFPwTru3Rm8tQTLYSTmm9m/8H4ZgPEWcXhp9xOUdgCaX49aKqdZ1DFnws7vk52ojAM8DQ+h3s30NujN1q2Rp9RqhQVXA5CAGi9y6DBhShDby/lown4Tu7kNzESJM0UXF20TcvF537oixNxuztvrjBHv59OzzUx3wOsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yctvkNGS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tyCAuORvfSfIuHLQsZXbdJLBAsDmXqegzkr0DJ4Bl1bPWzp/rUDkaMRnOZyvUsp9+7gnW2QWTUTIhC0U7AawPUwQVldt8j06qwsIWEbSNqoE6xMy75P0Fk5mXvWInDF+7+DmO+8hCD/TxBc5UOOk364NOMteE3DfZg3dS1m/qhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHhNVc+4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yctvkNGS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D531F000E9;
-	Thu, 20 Aug 2026 16:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHhNVc+4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15CAC1F000E9;
+	Thu, 20 Aug 2026 16:34:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243678;
-	bh=Qkxs950g22sZB27+6buB42AJJOeIVACrAAeuxKPljig=;
+	s=korg; t=1787243681;
+	bh=qsddNVTNzQkJXadSuVmaG4wtz6xlsoHsNfU3emvrONA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yctvkNGSLaFONGK7rss0gpgKOOWphCB8u3UdHITGDzSnvoefp1z8kv09UTySNll0Q
-	 BK9iIbj08/lAeee2D/MbEsEaTE2eqv1WK3UU3aq7wNCkwW7jNZEZ3jOcMIMjZtZnY3
-	 Ox8EoyrqvDbX7OrW38y5Lqy3fnPpOJNGE1f5jJmo=
+	b=JHhNVc+4367oVlfa0lTq6VQVhz7za5xNrkGb0ohKbWdAGKQjZCFlBxnpW20yXUy5r
+	 aa6IsnLga1P5KEwedSBGSqTnmtDgOflX80EORoqpVAzIFlvdEPUxFlbxIEtLN2QWeQ
+	 bY41kMl5Qut1fsXwzpXQXrLC6qENIkCvWDsTRUz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	David Carlier <devnexen@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 178/272] drm/virtio: bound EDID block reads to the response buffer
-Date: Thu, 20 Aug 2026 16:56:02 +0200
-Message-ID: <20260820145236.799892684@linuxfoundation.org>
+Subject: [PATCH 5.15 179/272] media: aspeed: fix missing of_reserved_mem_device_release() on probe failure
+Date: Thu, 20 Aug 2026 16:56:03 +0200
+Message-ID: <20260820145236.833388888@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -51,43 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit 4e1a53892ba7f8a3e1da6bfc53c83ae7c812dccd ]
+[ Upstream commit 253c8ef7d57da0c74db251f385324faaa5ae2257 ]
 
-virtio_get_edid_block() validates the read offset only against the
-device-supplied resp->size field, never against the fixed-size resp->edid
-array. The EDID block index is driven by the device-supplied extension
-count, so a malicious virtio-gpu backend can advertise a large size
-together with a high block count and read far past the array into adjacent
-kernel memory, which is then surfaced in the parsed EDID (an out-of-bounds
-read / info leak).
+aspeed_video_init() calls of_reserved_mem_device_init() to associate
+reserved memory regions with the device. When aspeed_video_setup_video()
+subsequently fails in aspeed_video_probe(), the error path frees the
+JPEG buffer and unprepares the clocks but does not release the reserved
+memory association, leaking the rmem_assigned_device entry on the global
+list.
 
-Also reject any read whose end exceeds the size of the edid array.
-Conforming EDID responses stay within the array and are unaffected.
+The normal remove path already calls of_reserved_mem_device_release()
+correctly; only the probe error path was missing it.
 
-Fixes: b4b01b4995fb ("drm/virtio: add edid support")
+Add the missing of_reserved_mem_device_release() call to the
+aspeed_video_setup_video() failure cleanup.
+
+Fixes: d2b4387f3bdf ("media: platform: Add Aspeed Video Engine driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patch.msgid.link/20260620-b4-disp-22bba7bf-v1-1-b95924cee742@proton.me
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_vq.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/aspeed-video.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/virtio/virtgpu_vq.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_vq.c
-@@ -727,7 +727,8 @@ static int virtio_get_edid_block(void *d
- 	struct virtio_gpu_resp_edid *resp = data;
- 	size_t start = block * EDID_LENGTH;
- 
--	if (start + len > le32_to_cpu(resp->size))
-+	if (start + len > le32_to_cpu(resp->size) ||
-+	    start + len > sizeof(resp->edid))
- 		return -EINVAL;
- 	memcpy(buf, resp->edid + start, len);
- 	return 0;
+--- a/drivers/media/platform/aspeed-video.c
++++ b/drivers/media/platform/aspeed-video.c
+@@ -1724,6 +1724,7 @@ static int aspeed_video_probe(struct pla
+ 	rc = aspeed_video_setup_video(video);
+ 	if (rc) {
+ 		aspeed_video_free_buf(video, &video->jpeg);
++		of_reserved_mem_device_release(&pdev->dev);
+ 		clk_unprepare(video->vclk);
+ 		clk_unprepare(video->eclk);
+ 		return rc;
 
 
