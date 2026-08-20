@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2098C379EDA;
-	Thu, 20 Aug 2026 15:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED24037F73D;
+	Thu, 20 Aug 2026 15:14:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238890; cv=none; b=h/G8OygejZ/MrscMZcwbH/TXBeS115VX1RyrjTd3QJD9o4RAguTmymGDpmcnzpCSRRtZA2WSXzwHmxyV54cmOJmN5QP1q/9YFS3e/bipk1RbmvyDSeR+ee9gi/PMHbV6OFNX27Kiix4kvNxfmsWkmmkrZqQ8KZSCOA0Xqxbv4yI=
+	t=1787238893; cv=none; b=WMouF94Nq14+FcIUTwJQPdBfZs3jMH3NYIaJr2vbWeL1JaAExgPpBBaBtWQB4dtuAO3sVW5zaSao0AZv4wTZsetqrfdcMmci7zyQykrhkC9FlzKX3UqHINKBZbfBTdkvvPOmJh04987PRiuai5CS/BUJVpSWm6mi0/wvo2pZyeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238890; c=relaxed/simple;
-	bh=1mS+9A4aSmZs2W1Nq5kORhUWPir2iJo99dKvZs+GZUk=;
+	s=arc-20240116; t=1787238893; c=relaxed/simple;
+	bh=tJBbxNNIS7V5EYcYX6UwisbXe5ftaT3w+xHQeWN2TNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XDNpFwKPWiqI62t+h5gkS0SbAnSkZ4Pg/KHhgoR6pPIewWpw+MB0AEbA5mjsWd9kKMlu/Yyfl//ZLmTntnQPOyugsZY2adDIsl3oAVXXQ3aUy17fa9UvS/ZpEkbcde/Ju/NdujatFEszB9gNMicug6/Qm+7q8wUAr2L7cpAUIsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HpNOR1Xg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uqqgtNG1VPrCVgFLSsVPb9lykdZWianAUGJp3FVLKQ6ypeAEFuuf6tVGh22fEZgkUEUPelQ5lcwizdL4ZleG8QvZYZPKmCN5V+73XJXYILV6NLwIZZGafpOwRSVzPSLsk4oIEc/aXGsdm4yCbRGl9dq+dMtT6dKMhDC07sWB7Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0AIhkbfh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HpNOR1Xg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4521F000E9;
-	Thu, 20 Aug 2026 15:14:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0AIhkbfh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541961F000E9;
+	Thu, 20 Aug 2026 15:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238889;
-	bh=kOLMTJXouQlrf7fGAKyllj2ql1ToINMlybktTZy7T0I=;
+	s=korg; t=1787238891;
+	bh=LbWDJaaPoqwjydlfIK4AJWRvrwzF/2Y6F1SvQxMEtzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HpNOR1XgEK+tsEZxAtQDVezB3ZOMHngkiEfwLYo2mZiSpiXGHiDbSCa8HT2iGx1CM
-	 UylOjpjenJQLcajlx8tjbvy9izhaDfKm8XbyfyupjNpzh+yK0XbsFTJj37g4KXrRtL
-	 kkpRCQJ3Tsp04ahu8MnPtk8Al8pJjw6QuZHNAykI=
+	b=0AIhkbfhSdFOqAeVClG1eQBDKCOZr0JWvztTN6uvVPlMHL1DFhZva8iUlmdHDDShe
+	 3btGkmNkqI7wq8cPQBZ3Uvmw16ilzZzQZcsbUdIoA7Zi1Bq5Ed9VlvVT1ZqkJ745LH
+	 v/SEJCHUIudp2/PUIE7NqqBVfLkX01JywOR3jPGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Stuart Summers <stuart.summers@intel.com>,
+	Raag Jadav <raag.jadav@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
 	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
-Subject: [PATCH 6.18 074/217] drm/xe: Order ring writes before ring tail updates
-Date: Thu, 20 Aug 2026 16:54:02 +0200
-Message-ID: <20260820145239.848418586@linuxfoundation.org>
+Subject: [PATCH 6.18 075/217] drm/xe: Fix xe_device_probe() failure
+Date: Thu, 20 Aug 2026 16:54:03 +0200
+Message-ID: <20260820145239.878412550@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145237.531699751@linuxfoundation.org>
 References: <20260820145237.531699751@linuxfoundation.org>
@@ -52,82 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Raag Jadav <raag.jadav@intel.com>
 
-commit 9f83c94469ff0fa37274b873ba24922e02531fa7 upstream.
+commit ef526d122b62af5afa437f095aa6661a953676c4 upstream.
 
-The ring buffer and the LRC context image are both mapped WC, so the ring
-tail update can become visible to the device before the ring contents it
-is meant to publish.
+Currently, xe_device_probe() jumps to err_unregister_display label in case
+of failure except for its last call, which directly returns the error
+without required cleanup handling. This results in stale drm device that
+isn't cleaned up on unwind. Fix it.
 
-The GuC CT send does contain an xe_device_wmb(), so sending the H2G would
-flush the ring contents. The problem is that it comes too late:
-xe_lrc_set_ring_tail() publishes the tail before the H2G is sent, and the
-device samples the tail from the context image independently of it, either
-at context switch-in or while the context is already resident. A submitter
-which is interrupted between updating the tail and sending its H2G
-therefore leaves the device free to observe the new tail while the ring
-contents behind it are not yet visible:
+[  810.194180] sysfs: cannot create duplicate filename '/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:01.0/0000:03:00.0/drm/renderD128'
+[  810.194183] CPU: 9 UID: 0 PID: 5616 Comm: modprobe Kdump: loaded Tainted: G S   U      E       7.2.0-rc2-xe #382 PREEMPT(full)
+[  810.194185] Tainted: [S]=CPU_OUT_OF_SPEC, [U]=USER, [E]=UNSIGNED_MODULE
+[  810.194186] Hardware name: ASUS System Product Name/PRIME Z790-P WIFI, BIOS 1805 10/30/2024
+[  810.194186] Call Trace:
+[  810.194187]  <TASK>
+[  810.194188]  dump_stack_lvl+0xe0/0x100
+[  810.194195]  dump_stack+0x14/0x20
+[  810.194197]  sysfs_warn_dup+0x5f/0x80
+[  810.194204]  sysfs_create_dir_ns+0xbe/0xd0
+[  810.194210]  kobject_add_internal+0xbc/0x2b0
+[  810.194215]  kobject_add+0x7c/0xe0
+[  810.194220]  ? get_device_parent+0xcf/0x1e0
+[  810.194227]  device_add+0xe3/0x870
+[  810.194231]  ? __pfx_drm_gem_name_info+0x10/0x10 [drm]
+[  810.194280]  drm_minor_register+0x73/0x130 [drm]
+[  810.194322]  drm_dev_register+0x76/0x2a0 [drm]
 
-  1. Thread A emits a job into the ring, sets the tail to T_A and sends
-     the H2G, which flushes A's ring contents. The GuC starts scheduling
-     the context in, but it is not executing yet.
-  2. Thread B emits a job into ring[T_A..T_B]. Those writes are not yet
-     visible to the device.
-  3. Thread B updates the ring tail to T_B. That write targets a
-     different page and becomes visible first.
-  4. Thread B is interrupted before it sends its H2G, so the flush which
-     would have published ring[T_A..T_B] has not happened yet.
-  5. The context is switched in and samples the ring tail from the
-     context image, picking up T_B rather than T_A.
-  6. The GPU executes A's job, advances HEAD to T_A, and continues on to
-     ring[T_A..T_B], which still holds the previous wrap's contents, so
-     the CS parses stale commands.
-
-The result is command stream corruption, which typically manifests as a
-hang or a spurious pagefault rather than anything that points back at the
-submission path.
-
-Kernel jobs are by far the most likely to hit this. Kernel queues such as
-the migration queue are shared and can be driven by many threads
-concurrently, producing back-to-back submissions on an LRC which is
-already executing. User queues are typically tied to a single submitting
-thread, so the same interleaving is much harder to produce.
-
-Add an xe_device_wmb() at the end of xe_lrc_write_ring() so that it covers
-every ring tail publication site, and so the invariant is local: once
-xe_lrc_write_ring() returns, the ring contents are visible to the device.
-
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/8651
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/7810
 Cc: stable@vger.kernel.org
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Assisted-by: GitHub_Copilot:claude-opus-5
-Reviewed-by: Stuart Summers <stuart.summers@intel.com>
-Link: https://patch.msgid.link/20260807171716.140475-1-matthew.brost@intel.com
-(cherry picked from commit 136360290f314890428a3fbf31aaa8e4f1d43567)
+Fixes: da3799c97572 ("drm/xe: Use GuC to do GGTT invalidations for the GuC firmware")
+Signed-off-by: Raag Jadav <raag.jadav@intel.com>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://patch.msgid.link/20260810123821.105605-1-raag.jadav@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit 5ce3042c67c539480882567137ff8d56118885d6)
 Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_lrc.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/xe/xe_device.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/xe_lrc.c
-+++ b/drivers/gpu/drm/xe/xe_lrc.c
-@@ -1692,6 +1692,13 @@ void xe_lrc_write_ring(struct xe_lrc *lr
+--- a/drivers/gpu/drm/xe/xe_device.c
++++ b/drivers/gpu/drm/xe/xe_device.c
+@@ -962,7 +962,11 @@ int xe_device_probe(struct xe_device *xe
+ 	if (err)
+ 		goto err_unregister_display;
  
- 		__xe_lrc_write_ring(lrc, ring, &noop, sizeof(noop));
- 	}
+-	return devm_add_action_or_reset(xe->drm.dev, xe_device_sanitize, xe);
++	err = devm_add_action_or_reset(xe->drm.dev, xe_device_sanitize, xe);
++	if (err)
++		goto err_unregister_display;
 +
-+	/*
-+	 * The ring and the LRC context image are both WC, so the ring tail
-+	 * update which publishes these writes can become visible to the device
-+	 * first. Ensure the ring contents are visible before returning.
-+	 */
-+	xe_device_wmb(xe);
- }
++	return 0;
  
- u64 xe_lrc_descriptor(struct xe_lrc *lrc)
+ err_unregister_display:
+ 	xe_display_unregister(xe);
 
 
