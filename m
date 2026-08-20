@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF58837E5CD;
-	Thu, 20 Aug 2026 17:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB55307492;
+	Thu, 20 Aug 2026 17:37:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247430; cv=none; b=I4FRNE7XYCUNLUZR9c+gB4hpZc1sa9czMf422j3n/81kGo5E5hSZvFfC68djPGVS30KURKy6+yj0iB2jA7wL4DBe5GPNEp/BJctXJGB5hc2x3YtRGew2svzvgRVyt5M8L8Jy2TS49SZABXVBc9FyJ/eyq5yr9ndxiGv4BmFwZ7Y=
+	t=1787247433; cv=none; b=L1b4Blu2whtVF6n2MT7wW4Uxm4Tsd1+OmIwthLsjUajQ8Slousgfy9qr3SIOXF2McY5q+VBMhgMJvDcjlUifxiKXi6qh5sdLLx0Dci4Bj4ylY3FI0VYTI6U4MjDIYGE3RNMqjckDDZNdmoxTzBs3RJrJ08d8Il0Eia9Em9wq3P0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247430; c=relaxed/simple;
-	bh=jJ+ZWiCtC96qw8xFMI0IMrN7RYUjjbh1vKEbJgvdYG8=;
+	s=arc-20240116; t=1787247433; c=relaxed/simple;
+	bh=PWzXHq7yNTrozOd8qiQYCMrunPxjCJxlRhoGRq7S0j0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cn7rJAolVRdqy3aICj/wTncH3WFzgSpiJzEH+6rPRlVzaArM2oEOhsWK2SHA7+fVCvme51p1J6tJKkZ3mDYMmtltaZDVf/AXRubcKS8UNhxvzfAr3oATJHoEPGEKR0KSbyaOin+ocZjrBfeRDSqyDQMQnAF6V7ne8c97c62zu2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uknppFKo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QJp+MBTV5tVzBN6eBXm3OMIg3b3rdaK7kR16tUjFdUPBXVcGpeBm3fmjzlsHo3BWQOZtKC2SvCZWQPssxGnspqCkV7a7Yh2E7T1qWK85hHJ09OFaXvKDAJnbk0Wj1H4/KOhqqx2EIzAzHCAunbtU7s1H/Jq7ZhaA0MJgFrQOX1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvsPr2pN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uknppFKo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6B01F000E9;
-	Thu, 20 Aug 2026 17:37:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvsPr2pN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 939B01F000E9;
+	Thu, 20 Aug 2026 17:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247429;
-	bh=MnRdM77MwTsAl4lqXiVd241bGIOqFbuvXa9pG8p9Lgs=;
+	s=korg; t=1787247432;
+	bh=IdnT9IGeBMKpXZBmaKc0a3vjsK0m48TaY/puEooeKlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uknppFKoTHRq/tX/KbpnZyvU4a0WDV/2p5goAQVBC99wF377go1NzTZXQEgzfu89r
-	 zmB4S/RNHtIJ9ltkHJl99pzS9vulTQR9bNL90uLkhNXmHHEzWbLR+g2XwfGZGXo/Zt
-	 m8FD3j2V3YK4QHCRwZvwY79G+5SgAH0t+yRF9CEc=
+	b=xvsPr2pNzOrinmNo37z5WGbXEV88Io7Yw8gVerPhEXqf1u8SVQaZjHzD85KGIhl9l
+	 i6eEzS3ACvzReRNwo4AkJUKPmC2fRwn3OzFX+d9pliG+oGKbWHbOduFWAnmwcLDlsK
+	 scCrJ5NNwT6zFquD2ZrPd9qoctLqmXpqIh7y/t9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.6 044/166] mmc: omap_hsmmc: fix busy_timeout overflow in ns conversion on 32-bit
-Date: Thu, 20 Aug 2026 16:55:03 +0200
-Message-ID: <20260820145212.495103718@linuxfoundation.org>
+Subject: [PATCH 6.6 045/166] mmc: sdhci: unmap the bounce buffer before device release
+Date: Thu, 20 Aug 2026 16:55:04 +0200
+Message-ID: <20260820145212.523164175@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -50,48 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit f64ea900e4bda3055ef24a2c906f8d049cf1c3bd upstream.
+commit 9e9f561269dff35e6f84ed21776ec37fd6360b03 upstream.
 
-omap_hsmmc_prepare_data() converts the command busy timeout to nanoseconds
-with:
+sdhci_allocate_bounce_buffer() allocates its buffer with devm_kmalloc()
+but maps it with dma_map_single(). The buffer is therefore released by
+devres without the streaming DMA mapping being unmapped.
 
-	timeout = req->cmd->busy_timeout * NSEC_PER_MSEC;
+Register a managed action after dma_map_single() succeeds so the mapping
+is removed before devres releases the buffer. The action is registered
+only for buffers allocated and mapped by the SDHCI core, leaving buffers
+provided by host drivers under their existing ownership.
 
-busy_timeout is an unsigned int (milliseconds) and timeout is a u64, but
-NSEC_PER_MSEC is 1000000L.  On 32-bit builds the multiplication is
-performed in 32-bit arithmetic and wraps for busy_timeout values above
-~4294 ms, before the result is assigned to the u64.
-
-The driver does not set mmc->max_busy_timeout, so the core does not cap the
-busy timeout, and commands such as erase or SANITIZE (MMC_SANITIZE_TIMEOUT_MS
-is 240000 ms) can pass a busy_timeout far larger than 4294 ms.  The wrapped,
-much smaller ns value is then programmed via set_data_timeout(), so the data
-timeout is set too short and the operation can time out prematurely.
-
-Cast busy_timeout to u64 before the multiplication so the conversion is done
-in 64-bit arithmetic.
-
-Fixes: 8cc9a3e73de1 ("mmc: host: omap_hsmmc: use generic_cmd6_time to program timeout value for CMD6")
+Fixes: bd9b902798ab ("mmc: sdhci: Implement an SDHCI-specific bounce buffer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/omap_hsmmc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/sdhci.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/mmc/host/omap_hsmmc.c
-+++ b/drivers/mmc/host/omap_hsmmc.c
-@@ -1358,7 +1358,7 @@ omap_hsmmc_prepare_data(struct omap_hsmm
- 	if (req->data == NULL) {
- 		OMAP_HSMMC_WRITE(host->base, BLK, 0);
- 		if (req->cmd->flags & MMC_RSP_BUSY) {
--			timeout = req->cmd->busy_timeout * NSEC_PER_MSEC;
-+			timeout = (u64)req->cmd->busy_timeout * NSEC_PER_MSEC;
+--- a/drivers/mmc/host/sdhci.c
++++ b/drivers/mmc/host/sdhci.c
+@@ -4152,6 +4152,14 @@ void __sdhci_read_caps(struct sdhci_host
+ }
+ EXPORT_SYMBOL_GPL(__sdhci_read_caps);
  
- 			/*
- 			 * Set an arbitrary 100ms data timeout for commands with
++static void sdhci_unmap_bounce_buffer(void *data)
++{
++	struct sdhci_host *host = data;
++
++	dma_unmap_single(mmc_dev(host->mmc), host->bounce_addr,
++			 host->bounce_buffer_size, DMA_BIDIRECTIONAL);
++}
++
+ static void sdhci_allocate_bounce_buffer(struct sdhci_host *host)
+ {
+ 	struct mmc_host *mmc = host->mmc;
+@@ -4206,6 +4214,14 @@ static void sdhci_allocate_bounce_buffer
+ 	}
+ 
+ 	host->bounce_buffer_size = bounce_size;
++	ret = devm_add_action_or_reset(mmc_dev(mmc),
++				       sdhci_unmap_bounce_buffer, host);
++	if (ret) {
++		devm_kfree(mmc_dev(mmc), host->bounce_buffer);
++		host->bounce_buffer = NULL;
++		host->bounce_buffer_size = 0;
++		return;
++	}
+ 
+ 	/* Lie about this since we're bouncing */
+ 	mmc->max_segs = max_blocks;
 
 
