@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA1B1E9919;
-	Thu, 20 Aug 2026 16:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7F833D4E8;
+	Thu, 20 Aug 2026 16:34:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243694; cv=none; b=fyuRMBzpvxjOhY2AVt+IJfZTBw0icyT1hJwLna8zGG1XbNuz4r8xdzrU1A4P922UbYuFMv6KHNep4D+KIlrWEkMZqQ+vVUZjJKHViWQddEk6lgOdkSVmSX6XrUf5RH5nRPjalbF1ckZAfd917qT/GOHXjVhzEofSuVin8S/2tBQ=
+	t=1787243697; cv=none; b=RM3XijnMNRkS59G45xmxWS3GzKBHbLN8Cw/SbJndpMcm7KGCh82nXMdX6YIS7wdtumeQYyBfVP6nQJIsl4FnlBnQjNCIoGhjyjCUmD/p4P48wCMS9ZmOceC9pXyUqwJeFTp205A68/fMHupyljHEYUj/dhUJz75De0w0ojPJQz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243694; c=relaxed/simple;
-	bh=RERr08YhW/v49D6KOnd7YxeckykjXkM2SGIr0PYz9Bs=;
+	s=arc-20240116; t=1787243697; c=relaxed/simple;
+	bh=RpmfStJpfzonHajllEDXPT70sMraERIow/SWiut1txo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nwT3bFLEow79azxeBcIE/ATrph39aHFz0lY+e6zu8axUSnDyCAuKq5jq5WV0uXxf07MgqB9GZLc5psALTQeQgbNgJ3aAbFUQySC7gAR3Gzu52m9BBOfDxuITg2DVfANe8jl2Uo9Z59fZ6ILTom+So3x7Ap/oxUKzR311Pc0fGIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cHQkCZSC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oTophmoU334xiTNuIcWoawng+C5Hv/wZZ9HVNltz/CdurIlgaUSgmwEuG5ytD2hvs9nb20Uz5UhjneMsjAwegSQ2l1NpUkfALH3hq8wJQ31kNqDWDum5mN5LpcKk95yvhrcWdpEFbh5esuOq93YilHW162nXddGWd1fXhriy1P4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1DFBGj4W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cHQkCZSC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672791F00A3A;
-	Thu, 20 Aug 2026 16:34:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1DFBGj4W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4843D1F000E9;
+	Thu, 20 Aug 2026 16:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243693;
-	bh=41Fy7g7A+pwknnkuzidXvH45ixs+p5PW3898MrNPUwg=;
+	s=korg; t=1787243695;
+	bh=IuPg3hqIkZjA4WwOC6XJENZH9KPv9GsDM0jkOHwbTI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cHQkCZSCLZk0/XY9g4hTbXBuswxPrRMj46l40MGa5T4yVZhcanpx7aw48EUOh8tKu
-	 ZHYFCVxOohWHfB8MIhp7YP0tU9eQmgacz8Xc/rTwtZKfWrOs0O/cipYaZIdG9lQDuU
-	 Ni/X/pCsf2SSmL7qYIikVGepwLevkIVkKj1aNO6Q=
+	b=1DFBGj4W06bOB8C1xdqZgDZ0gusP8OOOHjo4biBOqtg/zODOsCOaHlR3nt20MB9tY
+	 Cw8IP+nUWL8O/BSCngLvicmCqNHA/aZrdKa6l3AjhEkqARgcaMj7E7FpqZ3VBC3S1o
+	 THRuHWYnEV+uf5Aav1YCOzUCYJySi4zHyakrz40M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 183/272] media: marvell-cam: fix missing pci_disable_device() on remove
-Date: Thu, 20 Aug 2026 16:56:07 +0200
-Message-ID: <20260820145236.956663500@linuxfoundation.org>
+Subject: [PATCH 5.15 184/272] media: i2c: imx219: Drop IMX219_VTS_* macros
+Date: Thu, 20 Aug 2026 16:56:08 +0200
+Message-ID: <20260820145236.987603999@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -51,39 +54,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit 033ff0420e4c9c240ae5523fff39770298efa964 ]
+[ Upstream commit 5ebbdd7aab3321e60a8be23aac1fee4f16644021 ]
 
-During manual code audit, we found that cafe_pci_probe() enables the
-PCI device with pci_enable_device(), and its probe error path properly
-calls pci_disable_device() on failure.
+The IMX219_VTS_* macros define default VTS values for the modes
+supported by the driver. They are used in a single place, and hinder
+readability compared to using the value directly as a decimal number.
+Drop them.
 
-However, cafe_pci_remove() tears down the controller and frees the
-driver data without disabling the PCI device, leaving the remove path
-inconsistent with probe cleanup.
-
-Add the missing pci_disable_device() call to cafe_pci_remove().
-
-Fixes: abfa3df36c01 ("[media] marvell-cam: Separate out the Marvell camera core")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: 2c4f1ba73543 ("media: imx219: Fix maximum frame length in lines")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/marvell-ccic/cafe-driver.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/i2c/imx219.c |   24 +++++++-----------------
+ 1 file changed, 7 insertions(+), 17 deletions(-)
 
---- a/drivers/media/platform/marvell-ccic/cafe-driver.c
-+++ b/drivers/media/platform/marvell-ccic/cafe-driver.c
-@@ -610,6 +610,7 @@ static void cafe_pci_remove(struct pci_d
- 		return;
- 	}
- 	cafe_shutdown(cam);
-+	pci_disable_device(pdev);
- 	kfree(cam);
- }
+--- a/drivers/media/i2c/imx219.c
++++ b/drivers/media/i2c/imx219.c
+@@ -49,20 +49,10 @@
  
+ /* V_TIMING internal */
+ #define IMX219_REG_VTS			0x0160
+-#define IMX219_VTS_15FPS		0x0dc6
+-#define IMX219_VTS_30FPS_1080P		0x06e3
+-#define IMX219_VTS_30FPS_BINNED		0x06e3
+-#define IMX219_VTS_30FPS_640x480	0x06e3
+-#define IMX219_VTS_MAX			0xffff
++#define IMX219_FLL_MAX			0xffff
+ 
+ #define IMX219_VBLANK_MIN		4
+ 
+-/*Frame Length Line*/
+-#define IMX219_FLL_MIN			0x08a6
+-#define IMX219_FLL_MAX			0xffff
+-#define IMX219_FLL_STEP			1
+-#define IMX219_FLL_DEFAULT		0x0c98
+-
+ /* HBLANK control - read only */
+ #define IMX219_PPL_DEFAULT		3448
+ 
+@@ -386,7 +376,7 @@ static const struct imx219_mode supporte
+ 			.width = 3280,
+ 			.height = 2464
+ 		},
+-		.vts_def = IMX219_VTS_15FPS,
++		.vts_def = 3526,
+ 		.reg_list = {
+ 			.num_of_regs = ARRAY_SIZE(mode_3280x2464_regs),
+ 			.regs = mode_3280x2464_regs,
+@@ -403,7 +393,7 @@ static const struct imx219_mode supporte
+ 			.width = 1920,
+ 			.height = 1080
+ 		},
+-		.vts_def = IMX219_VTS_30FPS_1080P,
++		.vts_def = 1763,
+ 		.reg_list = {
+ 			.num_of_regs = ARRAY_SIZE(mode_1920_1080_regs),
+ 			.regs = mode_1920_1080_regs,
+@@ -420,7 +410,7 @@ static const struct imx219_mode supporte
+ 			.width = 3280,
+ 			.height = 2464
+ 		},
+-		.vts_def = IMX219_VTS_30FPS_BINNED,
++		.vts_def = 1763,
+ 		.reg_list = {
+ 			.num_of_regs = ARRAY_SIZE(mode_1640_1232_regs),
+ 			.regs = mode_1640_1232_regs,
+@@ -437,7 +427,7 @@ static const struct imx219_mode supporte
+ 			.width = 1280,
+ 			.height = 960
+ 		},
+-		.vts_def = IMX219_VTS_30FPS_640x480,
++		.vts_def = 1763,
+ 		.reg_list = {
+ 			.num_of_regs = ARRAY_SIZE(mode_640_480_regs),
+ 			.regs = mode_640_480_regs,
+@@ -841,7 +831,7 @@ static int imx219_set_pad_format(struct
+ 		imx219->mode = mode;
+ 		/* Update limits and set FPS to default */
+ 		__v4l2_ctrl_modify_range(imx219->vblank, IMX219_VBLANK_MIN,
+-					 IMX219_VTS_MAX - mode->height, 1,
++					 IMX219_FLL_MAX - mode->height, 1,
+ 					 mode->vts_def - mode->height);
+ 		__v4l2_ctrl_s_ctrl(imx219->vblank,
+ 				   mode->vts_def - mode->height);
+@@ -1261,7 +1251,7 @@ static int imx219_init_controls(struct i
+ 	/* Initial vblank/hblank/exposure parameters based on current mode */
+ 	imx219->vblank = v4l2_ctrl_new_std(ctrl_hdlr, &imx219_ctrl_ops,
+ 					   V4L2_CID_VBLANK, IMX219_VBLANK_MIN,
+-					   IMX219_VTS_MAX - height, 1,
++					   IMX219_FLL_MAX - height, 1,
+ 					   imx219->mode->vts_def - height);
+ 	hblank = IMX219_PPL_DEFAULT - imx219->mode->width;
+ 	imx219->hblank = v4l2_ctrl_new_std(ctrl_hdlr, &imx219_ctrl_ops,
 
 
