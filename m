@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFAE377A89;
-	Thu, 20 Aug 2026 15:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B933644C1;
+	Thu, 20 Aug 2026 15:02:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238134; cv=none; b=SeLc72xnh/AObFg+CL9JwBLdEtNLPZrFyV4cP4oXcq5q06cHq2k1kqjUTPYT4f33hN74NMMMcqfGSZPQablDRuNw+LELv72uxlSnPyp6vTeaG8nDml4q6kQdliTBLb0mRXUPcl4ep28fpg3wkKMZlbYkLEM72WNaNv9vwvA7vb4=
+	t=1787238137; cv=none; b=O8CH05jjzyUa1qFrZeQlTEMPwpi1cxAXa37/ZobLGthByUFYsERK77Xkm9X5GOLOAtQ6eCpJXAdoCurIGd5rZwfeoefaI501YMrkrabdMmiN0JrN3Bh0JX/jM1l01sN0rCNJolXQSKjofPhLWN1B6r2lquOZHbfKaLDQ7Sch7hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238134; c=relaxed/simple;
-	bh=JtuJRvvpR3OfRPJppLCOronSZHyw1m73abrIEUYwGmA=;
+	s=arc-20240116; t=1787238137; c=relaxed/simple;
+	bh=/IZtdeCUoCcMHzuHfDGrK/DPgKaA8ZU4FO+UvLKtt5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rzstomtovvvsyBv88D1AKeyOR7pj0T45LNzztwijV/f+ezMUzospkm9yZ/xRcTCaFAgr8GPBfJRnFxOpf5zx/MUl3v/nuWswX1h2Ozs6XdWQMfJoj0l+KYMbEg8crYqjimbhJmtRbs3iKb+edOdTpVv8YiFQIsW1JvK3Rf9wlfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pvRZXPrL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aGRVsJ2ihPrBu7x/OTW+nvljS+hdT7h2MPp6VRtErbHWfB/tONI7O/rIkSmp8mXP7F2V/C5+pCvSDHbL5d7JG0Pvhc/oUN5hDHTxyAeJ4ptTEdx1imMzrE6mQiBwhjmKiScUZx+Z0g5MkLVZbyNfegvInngPiM2sf+w5LQlwO5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nzwnfhtd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pvRZXPrL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 386171F000E9;
-	Thu, 20 Aug 2026 15:02:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nzwnfhtd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F6E1F000E9;
+	Thu, 20 Aug 2026 15:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238132;
-	bh=7VcfS8ACISpjflgzGov+ivK0Wo8OY9P+Yhh4en7kUs8=;
+	s=korg; t=1787238136;
+	bh=4bokesH9KyuXL8b/fDXas3EHFia0/hpSilglb7pFflg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pvRZXPrLXhx6cnSf4zOVl1rCsTGhQfp4ON7eAyoSr4zGu5BPAEnonloYDMS43Ssjo
-	 7DYdgtM5GgJS2f4A7BJS/0NFcB32qYjudtYhS/6oZKc9zwNR7Oasgh9sUfbn2DGjNr
-	 +Tl+pDzrvab9nwnpqcfhCHSgLLBH30MPgUoDO9rc=
+	b=Nzwnfhtdk+7UgThd77hW2QQujk9bbFe1BT8CJKpOpnElADk+Ynhw93jLLufQoZlCN
+	 PtbkSkQxoN8y0ulyjdWcgZTenCaH5msnP+rGhb/XpvZ2mOgLC96s0Uao2lY5VF/5+c
+	 Ik0EBykom8FE14VeNpZlb7GLUDUYcubyIipCNjW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
+	Richard Davies <richard@arachsys.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 7.1 043/228] Input: synaptics-rmi4 - fix F55 transmitter electrode count typo
-Date: Thu, 20 Aug 2026 16:53:05 +0200
-Message-ID: <20260820145245.780767906@linuxfoundation.org>
+Subject: [PATCH 7.1 044/228] Input: focaltech - fix array out-of-bounds in focaltech_process_rel_packet
+Date: Thu, 20 Aug 2026 16:53:06 +0200
+Message-ID: <20260820145245.810625924@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -50,48 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Richard Davies <richard@arachsys.com>
 
-commit 6058f0fea10f3caf63a435677358d1b8e9325114 upstream.
+commit 296736076b3fd078742651c719555a488624023a upstream.
 
-During F55 sensor detection, the transmitter (TX) electrode count was
-incorrectly assigned the value of the receiver (RX) electrode count
-due to copy-paste typos.
+Make finger2 (and also finger1) unsigned, so that if the finger index in
+the packet is 0 then subtracting 1 creates an array index which overflows
+above the existing check for FOC_MAX_FINGERS, as the existing comment says
+it should, instead of writing to state->fingers[-1].
 
-This incorrect value was then propagated to the driver data and used
-by F54 to determine the diagnostics report size. On devices with more
-RX than TX electrodes, this inflated the perceived TX count, leading
-to incorrect report size calculations and potential out-of-bounds
-buffer accesses.
-
-Fix the typos by correctly assigning the TX electrode counts.
-
-Fixes: 6adba43fd222 ("Input: synaptics-rmi4 - add support for F55 sensor tuning")
-Fixes: c762cc68b6a1 ("Input: synaptics-rmi4 - propagate correct number of rx and tx electrodes to F54")
-Reported-by: sashiko-bot@kernel.org
+Fixes: 05be1d079ec0 ("Input: psmouse - support for the FocalTech PS/2 protocol extensions")
+Signed-off-by: Richard Davies <richard@arachsys.com>
+Link: https://patch.msgid.link/20260701190932.14960-1-richard@arachsys.com
 Cc: stable@vger.kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Link: https://patch.msgid.link/20260626051802.4033172-1-dmitry.torokhov@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/rmi4/rmi_f55.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/input/mouse/focaltech.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/rmi4/rmi_f55.c
-+++ b/drivers/input/rmi4/rmi_f55.c
-@@ -54,10 +54,10 @@ static int rmi_f55_detect(struct rmi_fun
- 	f55->num_tx_electrodes = f55->qry[F55_NUM_TX_OFFSET];
+--- a/drivers/input/mouse/focaltech.c
++++ b/drivers/input/mouse/focaltech.c
+@@ -197,7 +197,7 @@ static void focaltech_process_rel_packet
+ {
+ 	struct focaltech_data *priv = psmouse->private;
+ 	struct focaltech_hw_state *state = &priv->state;
+-	int finger1, finger2;
++	unsigned int finger1, finger2;
  
- 	f55->cfg_num_rx_electrodes = f55->num_rx_electrodes;
--	f55->cfg_num_tx_electrodes = f55->num_rx_electrodes;
-+	f55->cfg_num_tx_electrodes = f55->num_tx_electrodes;
- 
- 	drv_data->num_rx_electrodes = f55->cfg_num_rx_electrodes;
--	drv_data->num_tx_electrodes = f55->cfg_num_rx_electrodes;
-+	drv_data->num_tx_electrodes = f55->cfg_num_tx_electrodes;
- 
- 	if (f55->qry[F55_PHYS_CHAR_OFFSET] & F55_CAP_SENSOR_ASSIGN) {
- 		int i, total;
+ 	state->pressed = packet[0] >> 7;
+ 	finger1 = ((packet[0] >> 4) & 0x7) - 1;
 
 
