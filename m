@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CF847B403;
-	Thu, 20 Aug 2026 16:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B64247D925;
+	Thu, 20 Aug 2026 16:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243731; cv=none; b=ogEJe8ncN+BL0e+iOEfRStnSqv6zEOIN/SLr2PK6FR2Qi+Ji8xvyOh8LQcphS5FjRzSMCgAiT6C0lGCAnNWci/ykM8RVorwCMPUe7CwYfKEFruDJsK0rHsmG0Oy2cZ6XjKog2tBZhwgXeode9KwnU5Y9TuPCpWPoKA4Cq/dyS1o=
+	t=1787243734; cv=none; b=czHaFIzk8jvKnhYY2p/7kZ7d+MegaQuh5wA1rHwXPSFcglzTR3T3Cyyd/Bz/5lOimCBpTU5+mo6f0uf8C5pdO9L3+mSzXq+9SwnHqDsycPAoqVhD4CVjtIQ7ekGABcJH5M3qf3EHy8htawGGgvwzVMPaYiILT/sDscilTA+/knk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243731; c=relaxed/simple;
-	bh=7sQNHfmgWxMOz2WZcllG/cMpjPr+zrDwBVT/RES7faw=;
+	s=arc-20240116; t=1787243734; c=relaxed/simple;
+	bh=V/NJb35MGtzMh6U9i2g9DYD1zkak5ikh7a/gD03P3MA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WMhkVCna+Za78dAT7ZAQGRC17AfHAyiLcnuAubQkTkxIDyq6zaUUzWHrvvBvSNN6YUPnumTE2z1GWFklcFFbB+m8/bOmb6aVQ9OYZmQngygZAlJ7IZrV2GaiCeSC91gfNghy2bqTUbTKDjDG8nZr5aeRktxCff0vFJm2sJDzLl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aYsFgg3f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=orL0/KkpI8Z4M24iu7P8HoIYLyJHXqSIfMwx+8/kJvSuup7/wht0J9YayhvQbY7luTQXj6AlR3p4KUyEbrwSUhvKXI4rdq9j9IMsp54FtcuIgj6zewTM89gbG06eN+D+kIMrSejuhflemRs1ws6Y+KXwhMGF3T0dxId0n/G8rhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6AwTblx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYsFgg3f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0111F000E9;
-	Thu, 20 Aug 2026 16:35:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6AwTblx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599481F000E9;
+	Thu, 20 Aug 2026 16:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243730;
-	bh=NHzfHnP6872Wb+c/bDEzqbXznEdEzk3FKsQgWOscZ64=;
+	s=korg; t=1787243732;
+	bh=kDnF14K+xPcjeXJ+GWcueqIGGdAMJYuleO0YsTGK1/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aYsFgg3fM2wYSpEAFqUFUbXrJm/XwAj1EzPWmIWJG2FYrG96YNduZ/krblsvpYVGE
-	 DQp/CIiFgACkE/IKLlutzvYosKwApT+VFUTPWAzqgF8WtDQffA44QATRSuT3MpKEjC
-	 1i5dz+CMWNxB4s8emmXiPhjwlCD06o0cFRXV6Qtw=
+	b=J6AwTblxnyS/RZIQ+Z7nj2H8on+/Za+r2+fhlmNB+P2XhYQvY02N4o0Z0LJocGeY0
+	 ncCI0YruuR+Xh0CywaNKo6OgiW1xdEbt/Zj7XD4necb93iFMdSGZW+IdX+tfIeiULr
+	 PI/B5eNODb4daklJeVGbv+8ZdY0ubYT9JB3JFadg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Alex Elder <elder@riscstar.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 159/272] net: ipa: fix SMEM state handle leaks in SMP2P init
-Date: Thu, 20 Aug 2026 16:55:43 +0200
-Message-ID: <20260820145236.089990247@linuxfoundation.org>
+Subject: [PATCH 5.15 195/272] wifi: brcmfmac: fix 43752 SDIO FWVID incorrectly labelled as Cypress (CYW)
+Date: Thu, 20 Aug 2026 16:56:19 +0200
+Message-ID: <20260820145237.320607558@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -53,88 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
 
-[ Upstream commit 96ca1e658ae459276292bd6d971ab5d8c7e0379a ]
+[ Upstream commit 74e2ef72bd4b25ce21c8f309d4f5b91b5df9ff5b ]
 
-ipa_smp2p_init() acquires two Qualcomm SMEM state handles with
-qcom_smem_state_get(). However, neither the init error paths
-nor ipa_smp2p_exit() release them.
+Cypress(Infineon) is not the vendor for this 43752 SDIO WLAN chip, and so
+has not officially released any firmware binary for it. It is incorrect to
+maintain this WLAN chip with firmware vendor ID as "CYW". So relabel the
+chip's firmware Vendor ID as "WCC" as suggested by the maintainer.
 
-Release both handles with qcom_smem_state_put() in the init
-error paths and in ipa_smp2p_exit().
-
-Fixes: 530f9216a953 ("soc: qcom: ipa: AP/modem communications")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Reviewed-by: Alex Elder <elder@riscstar.com>
-Link: https://patch.msgid.link/20260624065955.2822765-1-haoxiang_li2024@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ kzalloc_obj() context line kept as kzalloc(sizeof(*smp2p), GFP_KERNEL) since ipa_smp2p.c was not yet converted in this tree ]
+Fixes: d2587c57ffd8 ("brcmfmac: add 43752 SDIO ids and initialization")
+Fixes: f74f1ec22dc2 ("wifi: brcmfmac: add support for Cypress firmware api")
+Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20250724101136.6691-1-gokulkumar.sivakumar@infineon.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: 29ab31f3f271 ("wifi: brcmfmac: set F2 blocksize to 256 for BCM43752")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ipa/ipa_smp2p.c |   30 ++++++++++++++++++++++--------
- 1 file changed, 22 insertions(+), 8 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c |    2 +-
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c   |    2 +-
+ include/linux/mmc/sdio_ids.h                              |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ipa/ipa_smp2p.c
-+++ b/drivers/net/ipa/ipa_smp2p.c
-@@ -233,19 +233,27 @@ int ipa_smp2p_init(struct ipa *ipa, bool
- 					  &valid_bit);
- 	if (IS_ERR(valid_state))
- 		return PTR_ERR(valid_state);
--	if (valid_bit >= 32)		/* BITS_PER_U32 */
--		return -EINVAL;
-+	if (valid_bit >= 32) {		/* BITS_PER_U32 */
-+		ret = -EINVAL;
-+		goto err_valid_state_put;
-+	}
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+@@ -989,9 +989,9 @@ static const struct sdio_device_id brcmf
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4354),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4356),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4359),
++	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_43752),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_4373),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43012),
+-	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752),
+ 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_89359),
+ 	{ /* end: all zeroes */ }
+ };
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+@@ -4270,8 +4270,8 @@ static void brcmf_sdio_firmware_callback
+ 				   bus->hostintmask, NULL);
  
- 	enabled_state = qcom_smem_state_get(dev, "ipa-clock-enabled",
- 					    &enabled_bit);
--	if (IS_ERR(enabled_state))
--		return PTR_ERR(enabled_state);
--	if (enabled_bit >= 32)		/* BITS_PER_U32 */
--		return -EINVAL;
-+	if (IS_ERR(enabled_state)) {
-+		ret = PTR_ERR(enabled_state);
-+		goto err_valid_state_put;
-+	}
-+	if (enabled_bit >= 32) {		/* BITS_PER_U32 */
-+		ret = -EINVAL;
-+		goto err_enabled_state_put;
-+	}
+ 		switch (sdiod->func1->device) {
++		case SDIO_DEVICE_ID_BROADCOM_43752:
+ 		case SDIO_DEVICE_ID_BROADCOM_CYPRESS_4373:
+-		case SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752:
+ 			brcmf_dbg(INFO, "set F2 watermark to 0x%x*4 bytes\n",
+ 				  CY_4373_F2_WATERMARK);
+ 			brcmf_sdiod_writeb(sdiod, SBSDIO_WATERMARK,
+--- a/include/linux/mmc/sdio_ids.h
++++ b/include/linux/mmc/sdio_ids.h
+@@ -75,7 +75,7 @@
+ #define SDIO_DEVICE_ID_BROADCOM_43364		0xa9a4
+ #define SDIO_DEVICE_ID_BROADCOM_43430		0xa9a6
+ #define SDIO_DEVICE_ID_BROADCOM_43455		0xa9bf
+-#define SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752	0xaae8
++#define SDIO_DEVICE_ID_BROADCOM_43752		0xaae8
  
- 	smp2p = kzalloc(sizeof(*smp2p), GFP_KERNEL);
--	if (!smp2p)
--		return -ENOMEM;
-+	if (!smp2p) {
-+		ret = -ENOMEM;
-+		goto err_enabled_state_put;
-+	}
- 
- 	smp2p->ipa = ipa;
- 
-@@ -290,6 +298,10 @@ err_null_smp2p:
- 	ipa->smp2p = NULL;
- 	mutex_destroy(&smp2p->mutex);
- 	kfree(smp2p);
-+err_enabled_state_put:
-+	qcom_smem_state_put(enabled_state);
-+err_valid_state_put:
-+	qcom_smem_state_put(valid_state);
- 
- 	return ret;
- }
-@@ -306,6 +318,8 @@ void ipa_smp2p_exit(struct ipa *ipa)
- 	ipa_smp2p_power_release(ipa);
- 	ipa->smp2p = NULL;
- 	mutex_destroy(&smp2p->mutex);
-+	qcom_smem_state_put(smp2p->enabled_state);
-+	qcom_smem_state_put(smp2p->valid_state);
- 	kfree(smp2p);
- }
- 
+ #define SDIO_VENDOR_ID_MARVELL			0x02df
+ #define SDIO_DEVICE_ID_MARVELL_LIBERTAS		0x9103
 
 
