@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191DB46C82A;
-	Thu, 20 Aug 2026 17:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82E4481245;
+	Thu, 20 Aug 2026 17:57:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248638; cv=none; b=WbuFDtypN0RuQh04eNAt8j5eVTW2wz7UAWFJ3L2oBIN+/Gwxe40N5Brvm8p+nvVoy6rT63LqkpW+K6AcndfpQza9p+83dMBPz4jdt8XFQD4VfIMOKHIukIGEh4x9s83ogx4SjdtA8HOeyulCy3d7auLCwVIqi/utEwVHEqjk9yM=
+	t=1787248641; cv=none; b=amNJTgl4Z+/xcnS6OeYMUEmw4aBanhmHXYPuA4xevGOkVQJOHQM40xdrmNAk0Sj6lXAQKb7fITDVGu/UkUTAI4nYI01+rVykcZMnUGBvbYQVQzbNl4S2AJmlaxK5D6Xn2YHMYsrZkPZs0i2o2ZBYOF+gjcNbETKDFQlJA7Tz01k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248638; c=relaxed/simple;
-	bh=RxJms990st+vKpgVfgh8NvWVfbR9KoeisIbdyeiyoF8=;
+	s=arc-20240116; t=1787248641; c=relaxed/simple;
+	bh=nwdxPU7ex45OAawCO7pw0F2UHjxcsJP7IrJIG/sSzpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZPzWzomTnF+GlRei0ZWbbcik6Aleg0kYiCX8yrPtDEqrCgYNztu/2vjiCcI+fyfedhroI6GF6Mdh0wO9bIAWSw+jVo+kJns48/F6gEB9u4cziVNxlej9ryjttNuyhr7mAThU5cbmev+rUxkNeuMRmgtsC/gI+NjWCNb7yO0Vo4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+mmG6T4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HJYFlP1wQQmjwxM0+iVM3A72rPBJaYFeCuguA7UUzaJftSQoygm0VX2u7hMMGFhAj/hd8aOiDViyrwJCeLuxwwLbftq9QaYskopIPHbTqCMEffqB0ORF/33L8nxu97Q6bn1c4vMOYuUOfL02BaztcgeHdovlKtrBPWvRPeUWSIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Di+oR+nI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+mmG6T4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0E51F000E9;
-	Thu, 20 Aug 2026 17:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Di+oR+nI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F5931F000E9;
+	Thu, 20 Aug 2026 17:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248637;
-	bh=eNQPntIt/zwB38ZIMd/iJ/3Eskrb+oLWKKGIz04bOvE=;
+	s=korg; t=1787248639;
+	bh=QHtl8DmN8qUOzGnQrpR66uAoAHgTBEr5PoGEA/bOLkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O+mmG6T4o0FuEpirTOm7wo6zI4eqAjP1vG3tZaWjIPsJpV57eYmdde5AdDH2mkXEu
-	 cBxfhzgj44zWsSrTjfRsv3a1fTInd/UPUAz5EnGfCbwS30UiFgVmvoGgEZEngmx35A
-	 LMFTEv5fLXFjM8E0S7rvsXdnZ6xs3WgwuSIw7kmQ=
+	b=Di+oR+nID4LH1uWaGuYGVscJRyl/Tfod2pl4y36nC+bEkkG4hcGSWcnSnW0b+nJMb
+	 1RneZKJzUx7oayVSXiO+BvflMkNPrc0r7l31pFh1Nsj7+7qRmyG3uGIH6UcGVJUx5g
+	 L8p0JP69roQC+Spa0IhQkND+Q6aAKniD60vs2zzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.1 297/303] usb: typec: ucsi: Correct teardown ordering in ucsi_init() error path
-Date: Thu, 20 Aug 2026 16:57:13 +0200
-Message-ID: <20260820145302.400452077@linuxfoundation.org>
+	SJ Park <sj@kernel.org>,
+	Guenter Roeck <groeck7@gmail.com>,
+	Gao Xiang <xiang@kernel.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.1 298/303] erofs: fix EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS on some UP platforms
+Date: Thu, 20 Aug 2026 16:57:14 +0200
+Message-ID: <20260820145302.427993220@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -51,47 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Kuchynski <akuchynski@chromium.org>
+From: Gao Xiang <xiang@kernel.org>
 
-commit fb0bf289f5d529336ef490c8273e88a8a8b29f69 upstream.
+commit a64d500b0078e16e9abb25baca4dee1dbc9054fc upstream.
 
-The commit 7aa7d4bf9d3f ("usb: typec: ucsi: Fix race condition and
-ordering in port unregistration") consolidated port teardown into the
-ucsi_unregister_port() helper. However, it introduced an ordering problem
-in the ucsi_init() error path.
+CONFIG_NR_CPUS doesn't define on some UP platforms (e.g.  arm), so this
+can cause make oldconfig to loop indefinitely when CONFIG_SMP=n:
 
-Fix this by ensuring ucsi_unregister_port() is called before we unregister
-their corresponding lockdep keys.
+  $ make ARCH=arm allmodconfig
+  $ sed -i "/CONFIG_SMP=y/d" .config
+  $ sed -i "/CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS.*/d" .config
 
-Cc: stable@vger.kernel.org
-Fixes: 7aa7d4bf9d3f ("usb: typec: ucsi: Fix race condition and ordering in port unregistration")
-Reported-by: "Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>
-Closes: https://lore.kernel.org/all/22064276-6c56-411a-9f20-6917ceeb865f@intel.com/
-Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
-Tested-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260717104614.325250-1-akuchynski@chromium.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  EROFS LZMA default maximum decompression streams (EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS) [0] (NEW)
+  EROFS LZMA default maximum decompression streams (EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS) [0] (NEW)
+  ...
+
+Let's guard NR_CPUS with SMP instead of using a hardcoded arbitrary CPU
+uplimit here, similar to commit a3344078101c ("mm: make SPLIT_PTE_PTLOCKS
+depend on SMP").
+
+The initial report from SJ Park was for m68k [1] (m68k is the only arch
+without NR_CPUS in Kconfig), and that got fixed in commit 1fd495ef09ee
+("m68k: Define NR_CPUS to 1")
+
+Reported-by: SJ Park <sj@kernel.org>
+Link: https://lore.kernel.org/all/anuyFHLUGDjZWY4K@XiangdeMacBook-Pro.local/T/#u [1]
+Closes: https://lore.kernel.org/r/20260728065447.91511-1-sj@kernel.org
+Reported-by: Guenter Roeck <groeck7@gmail.com>
+Closes: https://lore.kernel.org/r/87853c96-cc8f-49e6-81b1-02bfe409e372@roeck-us.net
+Fixes: c9b47e6b2311 ("erofs: cap LZMA stream pool size")
+Signed-off-by: Gao Xiang <xiang@kernel.org>
+Tested-by: SJ Park <sj@kernel.org>
+Tested-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/erofs/Kconfig |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1390,11 +1390,11 @@ static int ucsi_init(struct ucsi *ucsi)
- 	return 0;
- 
- err_unregister:
-+	for (con = connector; con->port; con++)
-+		ucsi_unregister_port(con);
- 	for (i = 0; i < ucsi->cap.num_connectors; i++)
- 		lockdep_unregister_key(&connector[i].lock_key);
- 
--	for (con = connector; con->port; con++)
--		ucsi_unregister_port(con);
- 	kfree(connector);
- err_reset:
- 	memset(&ucsi->cap, 0, sizeof(ucsi->cap));
+--- a/fs/erofs/Kconfig
++++ b/fs/erofs/Kconfig
+@@ -102,7 +102,8 @@ config EROFS_FS_ZIP_LZMA
+ config EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS
+ 	int "EROFS LZMA default maximum decompression streams"
+ 	depends on EROFS_FS_ZIP_LZMA
+-	range 1 NR_CPUS
++	range 1 NR_CPUS if SMP
++	range 1 1 if !SMP
+ 	default 16
+ 	help
+ 	  By default EROFS allocates one LZMA decompression stream per CPU.
 
 
