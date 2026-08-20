@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E611835C681;
-	Thu, 20 Aug 2026 17:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898F335DA68;
+	Thu, 20 Aug 2026 17:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247459; cv=none; b=rOljJXSNhIOUbFgT6ZBCL664GznApvTRQtAtfpkFoqQFTs0gO6Mi76pGgDIUrnqWwU2sv4nKKFsQFdqZGvyTh/NRilj4/MC19H33itEcy+hK/qv2a9tdPr9jYSfKYEBKbyTDiV8e+k20opIxBJlrR6K3SiVUS+p8NwQmUX1Scow=
+	t=1787247461; cv=none; b=CUX/5aWqOcxWxnl/r/4uNf8CIOWulV7Uc2mk3JHwFqtibNZ8XDU4PHY9jBZAHrAVy5EN+KiTODSP+9c7hOUSJxio43171iF2Tl2w7G6Gw3/rQ9uflyIsr8OSmJCtH63ATe47ABFLVUzSj9obJ6TjztJ6XMIXMYbAbGikNNikwGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247459; c=relaxed/simple;
-	bh=7vEEFlbhmTlw9Jl8Z67fz5Y0lKBfUxYEbSbcoiDnL4o=;
+	s=arc-20240116; t=1787247461; c=relaxed/simple;
+	bh=AMU1eINwkoqTrC1x88JysxX90xMRuhAcWOfexOrLzSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KnzwBh8i3KT0Fsl0lMmhGQ8AVW3CmZgKnH24zDJrWFOMUqqT1i118XVMzALhUaq4ZKwtYfHaowrM2OcxwdYZPFSUrWLuBVhV70oAk9BM+Je1Tn2vkB7SFBfmeP1ElLLMsSWvJWaJsHESOKoACQY4+YKxLb9JIvsa56/rxSgXJds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrQUsg5D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k7YfNeE5tuVkdpgrTYYw2oZ9BBGErAIMEKWRlT9x5Rs6ZMtRyWxaADWqyE1FWT5z4yrRioUqHGznEqdjjZnc45RnWWQSG46x0e3pgRND+r8R/S4T4exhWTIfv0IkioP3s1JDpqOb91OKAnnwPINfuAWhvfdg5hcjqd7O77NGn/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2p0R6K2r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrQUsg5D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 259FD1F000E9;
-	Thu, 20 Aug 2026 17:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2p0R6K2r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E900B1F000E9;
+	Thu, 20 Aug 2026 17:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247457;
-	bh=T77vH0rNfuS1W8cC8zP4j1skJlhPn0N7P/kL5dCcnsw=;
+	s=korg; t=1787247460;
+	bh=kqRRr9sjiS4c4ugKRIdXNA6HJzLe1S/fiG0lXczleFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lrQUsg5DluSi4PupbB43ILYDzD+S/VxqwxUts3SpS2QVnPOCmSwnmg16tIjWg/F/T
-	 lSr4aGAGim/NedyVu57DQ6eLy62wDnghXNOwjm4mmL8PgzLIGs3Dkp67VYUuYaXA6L
-	 wwcpALx/VsOnHL41sC0tmTuUPKPIw6J7pmHr2GRc=
+	b=2p0R6K2r+eg5/5LSzXSaaztbIzTV/fkBNtOdkalFV+ZJ9XTJDIo+yqdBR84KgN6QG
+	 UDdgpefrNet3GNG97fOQ9IB6uVjADk+BhnBsE/OD5DeO1ojGGeTmUuHX5TTIO4edlh
+	 ZthcNscfiZAT3F2ZXrx+NxTsrwUzYuAus6zsKHEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
 	Eric Farman <farman@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
 	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.6 053/166] s390/vfio_ccw: Fix out of bounds check on CCW array
-Date: Thu, 20 Aug 2026 16:55:12 +0200
-Message-ID: <20260820145212.751247441@linuxfoundation.org>
+Subject: [PATCH 6.6 054/166] s390/vfio_ccw: Move cp cleanup out of not operational
+Date: Thu, 20 Aug 2026 16:55:13 +0200
+Message-ID: <20260820145212.780426596@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -53,66 +53,126 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Farman <farman@linux.ibm.com>
 
-commit a005b7f1a491ffda61bff0fd0f6548f8986fb977 upstream.
+commit 0c11f61a876ed6fcca53d442ed3f33ea8362a0f9 upstream.
 
-The routine ccwchain_calc_length() counts the number of channel
-command words (CCWs) that are chained together in a single channel
-program, and rejects anything larger than CCWCHAIN_LEN_MAX (256) CCWs.
+The fsm_notoper() routine is called when the device has been
+lost, and is (by definition) no longer operational. Since this
+can happen asynchronously from the normal behavior of the
+driver, the cleanup may happen when holding other locks
+in the calling sequence (notably, the cio subchannel lock).
 
-The loop itself is "do..while (count < 257)", and while the logic in
-is_cpa_within_range() correctly adjusts between the 0-index array of
-CCWs and the count of CCWs starting at 1, this means it would look
-at a possible 257th CCW before ending the loop and (correctly)
-returning an error.
+Push the cleanup of the private->cp resources to a workqueue,
+where it can be done out from under that lock sequence and
+a future patch can safely manage the locking requirements.
 
-Fix this by restructuring the loop to break as soon as 256 CCWs
-(thus indexes 0-255) are examined, without looking at memory
-outside the range.
-
-Fixes: 0a19e61e6d4c ("vfio: ccw: introduce channel program interfaces")
+Fixes: 204b394a23ad ("vfio/ccw: Move FSM open/close to MDEV open/close")
 Cc: stable@vger.kernel.org
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/vfio_ccw_cp.c |   17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ drivers/s390/cio/vfio_ccw_drv.c     |    9 +++++++++
+ drivers/s390/cio/vfio_ccw_fsm.c     |    3 +--
+ drivers/s390/cio/vfio_ccw_ops.c     |   13 +++++++++++++
+ drivers/s390/cio/vfio_ccw_private.h |    3 +++
+ 4 files changed, 26 insertions(+), 2 deletions(-)
 
---- a/drivers/s390/cio/vfio_ccw_cp.c
-+++ b/drivers/s390/cio/vfio_ccw_cp.c
-@@ -376,11 +376,9 @@ static void ccwchain_cda_free(struct ccw
- static int ccwchain_calc_length(u64 iova, struct channel_program *cp)
- {
- 	struct ccw1 *ccw = cp->guest_cp;
--	int cnt = 0;
--
--	do {
--		cnt++;
-+	int cnt;
- 
-+	for (cnt = 1; cnt <= CCWCHAIN_LEN_MAX; cnt++, ccw++) {
- 		/*
- 		 * We want to keep counting if the current CCW has the
- 		 * command-chaining flag enabled, or if it is a TIC CCW
-@@ -390,15 +388,10 @@ static int ccwchain_calc_length(u64 iova
- 		 * after the TIC, depending on the results of its operation.
- 		 */
- 		if (!ccw_is_chain(ccw) && !is_tic_within_range(ccw, iova, cnt))
--			break;
--
--		ccw++;
--	} while (cnt < CCWCHAIN_LEN_MAX + 1);
--
--	if (cnt == CCWCHAIN_LEN_MAX + 1)
--		cnt = -EINVAL;
-+			return cnt;
-+	}
- 
--	return cnt;
-+	return -EINVAL;
+--- a/drivers/s390/cio/vfio_ccw_drv.c
++++ b/drivers/s390/cio/vfio_ccw_drv.c
+@@ -125,6 +125,15 @@ void vfio_ccw_crw_todo(struct work_struc
+ 		eventfd_signal(private->crw_trigger, 1);
  }
  
- static int tic_target_chain_exists(struct ccw1 *tic, struct channel_program *cp)
++void vfio_ccw_notoper_todo(struct work_struct *work)
++{
++	struct vfio_ccw_private *private;
++
++	private = container_of(work, struct vfio_ccw_private, notoper_work);
++
++	cp_free(&private->cp);
++}
++
+ /*
+  * Css driver callbacks
+  */
+--- a/drivers/s390/cio/vfio_ccw_fsm.c
++++ b/drivers/s390/cio/vfio_ccw_fsm.c
+@@ -170,8 +170,7 @@ static void fsm_notoper(struct vfio_ccw_
+ 	css_sched_sch_todo(sch, SCH_TODO_UNREG);
+ 	private->state = VFIO_CCW_STATE_NOT_OPER;
+ 
+-	/* This is usually handled during CLOSE event */
+-	cp_free(&private->cp);
++	queue_work(vfio_ccw_work_q, &private->notoper_work);
+ }
+ 
+ /*
+--- a/drivers/s390/cio/vfio_ccw_ops.c
++++ b/drivers/s390/cio/vfio_ccw_ops.c
+@@ -54,6 +54,7 @@ static int vfio_ccw_mdev_init_dev(struct
+ 	INIT_LIST_HEAD(&private->crw);
+ 	INIT_WORK(&private->io_work, vfio_ccw_sch_io_todo);
+ 	INIT_WORK(&private->crw_work, vfio_ccw_crw_todo);
++	INIT_WORK(&private->notoper_work, vfio_ccw_notoper_todo);
+ 
+ 	private->cp.guest_cp = kcalloc(CCWCHAIN_LEN_MAX, sizeof(struct ccw1),
+ 				       GFP_KERNEL);
+@@ -135,9 +136,16 @@ static void vfio_ccw_mdev_release_dev(st
+ 	/*
+ 	 * Ensure these work items are fully drained, so none can
+ 	 * fire after being released.
++	 *
++	 * notoper_work should have nothing to do here, because only
++	 * open devices could have channel_program resources in use
++	 * and those would be released during close. Nevertheless,
++	 * call flush here as well to be certain anything that was
++	 * allocated is freed.
+ 	 */
+ 	cancel_work_sync(&private->io_work);
+ 	cancel_work_sync(&private->crw_work);
++	flush_work(&private->notoper_work);
+ 
+ 	list_for_each_entry_safe(crw, temp, &private->crw, next) {
+ 		list_del(&crw->next);
+@@ -214,9 +222,14 @@ static void vfio_ccw_mdev_close_device(s
+ 	/*
+ 	 * Ensure these work items are drained, in the event the
+ 	 * device is re-opened instead of released.
++	 *
++	 * notoper_work needs to be given a chance to run if it
++	 * is queued, so any memory associated with the channel
++	 * program can be returned.
+ 	 */
+ 	cancel_work_sync(&private->io_work);
+ 	cancel_work_sync(&private->crw_work);
++	flush_work(&private->notoper_work);
+ 
+ 	vfio_ccw_unregister_dev_regions(private);
+ }
+--- a/drivers/s390/cio/vfio_ccw_private.h
++++ b/drivers/s390/cio/vfio_ccw_private.h
+@@ -102,6 +102,7 @@ struct vfio_ccw_parent {
+  * @req_trigger: eventfd ctx for signaling userspace to return device
+  * @io_work: work for deferral process of I/O handling
+  * @crw_work: work for deferral process of CRW handling
++ * @notoper_work: work for deferred processing in not-operational state
+  */
+ struct vfio_ccw_private {
+ 	struct vfio_device vdev;
+@@ -125,11 +126,13 @@ struct vfio_ccw_private {
+ 	struct eventfd_ctx	*req_trigger;
+ 	struct work_struct	io_work;
+ 	struct work_struct	crw_work;
++	struct work_struct	notoper_work;
+ } __aligned(8);
+ 
+ int vfio_ccw_sch_quiesce(struct subchannel *sch);
+ void vfio_ccw_sch_io_todo(struct work_struct *work);
+ void vfio_ccw_crw_todo(struct work_struct *work);
++void vfio_ccw_notoper_todo(struct work_struct *work);
+ 
+ extern struct mdev_driver vfio_ccw_mdev_driver;
+ 
 
 
