@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2114547ECF2;
-	Thu, 20 Aug 2026 17:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BAC44062A;
+	Thu, 20 Aug 2026 17:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248279; cv=none; b=SjmrmP9uoVq1y5DUXgJQLmEoXvFGtZxNUeP61oSnhLNw598+SR+NIO+OfxYnSsdjKZREsBLRPDjWdhBdc6rSlpwkkCgYreGDpFmjxvf40cSxBd/mbJCVakG87vm8/39+ztryfXWplval3KttuJOzQRhGF8/zNO8prkEEaqDNWCk=
+	t=1787248282; cv=none; b=LBl/TF08hSWWUgBUYtnpyHNyWr4QJhX7mY80zFkaMWNIrIOoTrSL47mwGPfOVU+lozHpfV0iETI8AMbDAnlltnIeEl1EU0btJM0PZYTUN2wFa+etVLZae6aj5LlOErxuTBxAPhKrADgazayB0alZm+xiQYmUtN6LUjF7WRkUeYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248279; c=relaxed/simple;
-	bh=HXUndwuYXSro1XbB8xdLxsChF2pE9wiBhWwRsnUCjAo=;
+	s=arc-20240116; t=1787248282; c=relaxed/simple;
+	bh=MN+YySnook7y6mcVHTzW9nOpmQnGbLxAm6JrWxu19PA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NXTaoXOOAFZdzJta6+SIRS9GPWuxlg3+UKWF4p0qeZNc2XkIicWoSMalCOup/E3s40k8IF0Mnw1NJz7jScx99tML2Lfh//c7XIUi/MEjKxrFNYYWKZBBAWxywgV3sb9Nr+OycpUxOSyXsRA5WC41wWHmYDtBNdj9QGq38zN1tfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0WtdPrzU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YTeEOtmvx8RXLtqAGswFpPzRgGUsEx6wCvyg3KTE9Xkx8w/Wz+C2GyGA7QDyKc0ygxqJCND+7plI8nKNaWE3fFPjJhbekT9JHKmdVnmWKXpF/pROlnnWRUvFbOxYjPy1wzGfGouQHW1KNvw2i49Q5XSSpj48gTKb4Y92bXDov2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18be57By; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0WtdPrzU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 745421F000E9;
-	Thu, 20 Aug 2026 17:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18be57By"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534F41F000E9;
+	Thu, 20 Aug 2026 17:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248278;
-	bh=dFVAexLq8lt28yX6+lLbtw+P6HNMgpOf5NCk9bliZ18=;
+	s=korg; t=1787248280;
+	bh=KewhGEdRxxMXkhnHnCc9lmN44cxBhQlN4b1Mu9MwlMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0WtdPrzUQf5Z9F9mDqb65AvI964Sfnjx6V/G4a7UrasA9g38jMg5PQb4gtFFYGFSB
-	 2vyBkB7dpO4ODXoBJodUXccKPlN00AJOFn8dGpN1wcF1lxiOr1Aul0vLsHs4g6dSbv
-	 FLhovIiE6tnZbTJ9OH4uM4Dqiis5KKF+1id0DdDI=
+	b=18be57By2wGlLh/IhvELuwyhf2ifDXhLR5Gc1ZQMx5ob/9RkUjFcYwPcb6vCStp6P
+	 kJc9FePIBI/Kus1luAOtXuzRde+FXpQ6TbKYGDGWiWCHndO8k1RRlkeH+JgTweK72r
+	 MVmo99ret7V078fp/35z+dCVaZjc2K96Sl2koURc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Niklas Cassel <cassel@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 172/303] ata: libata-core: Reject an invalid concurrent positioning ranges count
-Date: Thu, 20 Aug 2026 16:55:08 +0200
-Message-ID: <20260820145258.476963002@linuxfoundation.org>
+Subject: [PATCH 6.1 173/303] pmdomain: imx: Fix i.MX8MP power notifier
+Date: Thu, 20 Aug 2026 16:55:09 +0200
+Message-ID: <20260820145258.507895035@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -52,96 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 533a0b940f901c15e5cbbd4b5d66e871c209e8ce ]
+[ Upstream commit 72422525f641f68bed6ca3389d29ee3f41fdea33 ]
 
-ata_dev_config_cpr() takes the number of range descriptors from buf[0]
-of the concurrent positioning ranges log (up to 255), which the device
-reports independently of the log size in the GPL directory. The count is
-then walked at a fixed 32-byte stride in two places with no bound: the
-log read here, and the INQUIRY VPD page B9h emitter, which writes one
-descriptor per range into the fixed 2048-byte ata_scsi_rbuf. A device
-reporting a count larger than its own log overflows the read buffer (up
-to 7704 bytes past a 512-byte slab), and a count above 62 overflows the
-response buffer on the emit side.
+Using imx8mm_vpu_power_notifier() for i.MX8MP is wrong, as it ungates
+the VPU clocks to provide the ADB clock, which is necessary on i.MX8MM,
+but on i.MX8MP there is a separate gate (bit 3) for the NoC. So add
+imx8mp_vpu_power_notifier() for i.MX8MP.
 
-Bound the count once, on probe, against both the log the device returned
-and the number of descriptors the VPD B9h response buffer can hold
-(ATA_DEV_MAX_CPR, derived from the rbuf size). Reject an out-of-range
-count with a warning; this keeps the emitter in bounds with no separate
-change there.
-
-Suggested-by: Damien Le Moal <dlemoal@kernel.org>
-Fixes: fe22e1c2f705 ("libata: support concurrent positioning ranges log")
-Fixes: c745dfc541e7 ("libata: fix reading concurrent positioning ranges log")
+Fixes: a1a5f15f7f6cb ("soc: imx: imx8m-blk-ctrl: add i.MX8MP VPU blk ctrl")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c |   18 ++++++++++++++++++
- drivers/ata/libata-scsi.c |    2 --
- drivers/ata/libata.h      |    9 +++++++++
- 3 files changed, 27 insertions(+), 2 deletions(-)
+ drivers/soc/imx/imx8m-blk-ctrl.c |   27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
 
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -2598,6 +2598,24 @@ static void ata_dev_config_cpr(struct at
- 	if (!nr_cpr)
- 		goto out;
+--- a/drivers/soc/imx/imx8m-blk-ctrl.c
++++ b/drivers/soc/imx/imx8m-blk-ctrl.c
+@@ -502,9 +502,34 @@ static const struct imx8m_blk_ctrl_domai
+ 	},
+ };
  
-+	/*
-+	 * The device reports the number of CPR descriptors independently of the
-+	 * log size, and that count is also used to emit VPD page B9h into the
-+	 * fixed-size rbuf. Reject a count larger than what that buffer can hold
-+	 * (ATA_DEV_MAX_CPR) or larger than the log the device actually returned.
-+	 */
-+	if (nr_cpr > ATA_DEV_MAX_CPR) {
-+		ata_dev_warn(dev,
-+			     "Too many concurrent positioning ranges\n");
-+		goto out;
++static int imx8mp_vpu_power_notifier(struct notifier_block *nb,
++				     unsigned long action, void *data)
++{
++	struct imx8m_blk_ctrl *bc = container_of(nb, struct imx8m_blk_ctrl,
++						 power_nb);
++
++	if (action == GENPD_NOTIFY_ON) {
++		/*
++		 * On power up we have no software backchannel to the GPC to
++		 * wait for the ADB handshake to happen, so we just delay for a
++		 * bit. On power down the GPC driver waits for the handshake.
++		 */
++
++		udelay(5);
++
++		/* set "fuse" bits to enable the VPUs */
++		regmap_set_bits(bc->regmap, 0x8, 0xffffffff);
++		regmap_set_bits(bc->regmap, 0xc, 0xffffffff);
++		regmap_set_bits(bc->regmap, 0x10, 0xffffffff);
++		regmap_set_bits(bc->regmap, 0x14, 0xffffffff);
 +	}
 +
-+	if (buf_len < 64 + (size_t)nr_cpr * 32) {
-+		ata_dev_warn(dev,
-+			     "Invalid number of concurrent positioning ranges\n");
-+		goto out;
-+	}
++	return NOTIFY_OK;
++}
 +
- 	cpr_log = kzalloc(struct_size(cpr_log, cpr, nr_cpr), GFP_KERNEL);
- 	if (!cpr_log)
- 		goto out;
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -37,8 +37,6 @@
- #include "libata.h"
- #include "libata-transport.h"
- 
--#define ATA_SCSI_RBUF_SIZE	576
--
- static DEFINE_SPINLOCK(ata_scsi_rbuf_lock);
- static u8 ata_scsi_rbuf[ATA_SCSI_RBUF_SIZE];
- 
---- a/drivers/ata/libata.h
-+++ b/drivers/ata/libata.h
-@@ -112,6 +112,15 @@ static inline void ata_acpi_bind_dev(str
- #endif
- 
- /* libata-scsi.c */
-+#define ATA_SCSI_RBUF_SIZE	576
-+
-+/*
-+ * Maximum number of concurrent positioning ranges (CPR) supported. The ACS
-+ * specifications allow up to 255, but we limit this to the number of CPR
-+ * descriptors that fit in the rbuf buffer used to emit VPD page B9h.
-+ */
-+#define ATA_DEV_MAX_CPR		min(255, ((ATA_SCSI_RBUF_SIZE - 64) / 32))
-+
- extern struct ata_device *ata_scsi_find_dev(struct ata_port *ap,
- 					    const struct scsi_device *scsidev);
- extern int ata_scsi_add_hosts(struct ata_host *host,
+ static const struct imx8m_blk_ctrl_data imx8mp_vpu_blk_ctl_dev_data = {
+ 	.max_reg = 0x18,
+-	.power_notifier_fn = imx8mm_vpu_power_notifier,
++	.power_notifier_fn = imx8mp_vpu_power_notifier,
+ 	.domains = imx8mp_vpu_blk_ctl_domain_data,
+ 	.num_domains = ARRAY_SIZE(imx8mp_vpu_blk_ctl_domain_data),
+ };
 
 
