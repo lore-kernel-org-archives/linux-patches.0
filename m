@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B1037C90E;
-	Thu, 20 Aug 2026 15:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F23737C90A;
+	Thu, 20 Aug 2026 15:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787238119; cv=none; b=YRHP9xi0nU1TLreWu8sXHtVREK5BzhV87uzucL4oY3C+AeC2V2Z623tKq4BHRUXsCH6NifxHd/FIzXEzv2fDBD9EmJVFHJJ8PK7WF2TdOKKP7JG4rsuj5msbLVNibMXfIt0qDtw/nRT48F1/UIGJZEhybNJtyFAmSj7tctZUXcg=
+	t=1787238122; cv=none; b=QXyBKQw3o7riMiG55mT58ktK62jRDcLjcCLcGNFgC64qlLENzsuZCVMgYtarPzqTC5fmZPY576SHZQY1fxnbJc3wHT50jfsvS3tJOCqyggSvGFE7dFQpiD6+bhfsS81m1cGjIkpMYIZg3IlhwOzg9y+OTD9Fr0yYlQCIjzLZTEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787238119; c=relaxed/simple;
-	bh=oqCBK1bxL/TrtbdKUkFXf/PA7ugRnHp/lJWpCldodiA=;
+	s=arc-20240116; t=1787238122; c=relaxed/simple;
+	bh=Lz5O4I+mp7/z6lLbQ3WgwLMOXFmEuNoaIOt4pQ4nlvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tqMAc6xRNS8bN8BM2IHO2qo52rGYdlkcUAIaCh6fsTY7Y9T2M0Pe90u3w2TksPibRASCyww3J1D9H8bQDMyqHK6Bzl4O2BScVB5stF1Mc+wVS/SYSOeHks/ffbvl/vSvOJGgGPvHk0B2Hfca0ir7O/MvMp4glv2zEYYA7qTxTl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHMNBjOf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RE4vq6PpvJjnjONCMio3PcoQ0U+5Z8nwdCWI4R/d8Vl+FjoTBQhe6imlzkulzgPHi+QvYHaoKfK9UYzwDC9q/YS2SuXV+UA6GqvV7UZoCza4HhfDqpWCevCl5P11BeZVRSeWff0BpYIBO0s/Xi6kh8wHrAcq4lAtUbDiSnCbG/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsMUt7HJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHMNBjOf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE8D1F000E9;
-	Thu, 20 Aug 2026 15:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsMUt7HJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C925C1F000E9;
+	Thu, 20 Aug 2026 15:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787238118;
-	bh=U+Tu7DQ+65A4ytPf5c+0x444vXwJNUhyRvki64dd610=;
+	s=korg; t=1787238121;
+	bh=Le97d1Fl0aNdxa4SH1FvK9XKJlm0PbgAPQb3J37W80I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tHMNBjOffZFw4n2vrmN3eaT8nzZ+BD/ys6gmfnRxKyjM+EhEcpzpU0oY5Pox8g/uq
-	 PA6yzlCat/w72K+mvdN7SJ2+A214pIwUhkA1LYxSoFU3XxxwilCsnm6Ju5goSsqahb
-	 OmjGfZFRpU03jMNtkYvRebGrIcwzw/i9pgsbZ8rE=
+	b=nsMUt7HJIf3+M6DTAn2MPHAWQ42IYgqvjK6cR5OZK/2LWSJDR25279hijpFr9vgVH
+	 EF2Tqj/yjxCZmIbK26YNZ7xdcBhcKaKjqCIaKAEcQVaQdMtkOJkDcoFkT6tB0GtZka
+	 rzjpBxraSF+J3QV+9FrcDzY81xD8uL0QZpEtLKtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shaoyun Liu <shaoyun.liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 038/228] drm/amdgpu/gmc12.1: fix MMHUB0 check in pasid tlb flush
-Date: Thu, 20 Aug 2026 16:53:00 +0200
-Message-ID: <20260820145245.624042936@linuxfoundation.org>
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.1 039/228] ASoC: SOF: topology: Use acpi mach from the machine driver
+Date: Thu, 20 Aug 2026 16:53:01 +0200
+Message-ID: <20260820145245.655777124@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145244.450574346@linuxfoundation.org>
 References: <20260820145244.450574346@linuxfoundation.org>
@@ -44,40 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-commit 5227c2c77c3869cbbc680d5a61cb5d4574fd8e38 upstream.
+commit ae63720dd7c3647d64f7a85e5e1870f90eb569d6 upstream.
 
-Check for mmhub0 rather than mmhub1.  Looks like a copy
-paste typo.
+The parameters may be changed by the sof_sdw machine driver is the
+SOC_SDW_PCH_DMIC quirk is set. Use the mach_params from the machine
+driver to ensure the sof_sdw_get_tplg_files() function select the right
+function topologies.
 
-Fixes: d0c989a0aad3 ("drm/amd/amdgpu : Use the MES INV_TLBS API for tlb invalidation on gfx12_1")
-Cc: Shaoyun Liu <shaoyun.liu@amd.com>
-Reviewed-by: Shaoyun Liu <shaoyun.liu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 0e8faef0aaa4d08f3f4f67ee7bb74e1babc8efc4)
+Fixes: 2fbeff33381c ("ASoC: Intel: add sof_sdw_get_tplg_files ops")
 Cc: stable@vger.kernel.org
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20260730071724.22296-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gmc_v12_1.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/intel/common/sof-function-topology-lib.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gmc_v12_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gmc_v12_1.c
-@@ -414,7 +414,7 @@ static void gmc_v12_1_flush_gpu_tlb_pasi
- 
- 		if (all_hub) {
- 			/* invalidate mm_hub */
--			if (test_bit(AMDGPU_MMHUB1(0), adev->vmhubs_mask)) {
-+			if (test_bit(AMDGPU_MMHUB0(0), adev->vmhubs_mask)) {
- 				input.hub_id = AMDGPU_MMHUB0(0);
- 				adev->mes.funcs->invalidate_tlbs_pasid(&adev->mes, &input);
- 			}
+--- a/sound/soc/intel/common/sof-function-topology-lib.c
++++ b/sound/soc/intel/common/sof-function-topology-lib.c
+@@ -30,7 +30,12 @@ enum tplg_device_id {
+ int sof_sdw_get_tplg_files(struct snd_soc_card *card, const struct snd_soc_acpi_mach *mach,
+ 			   const char *prefix, const char ***tplg_files, bool best_effort)
+ {
+-	struct snd_soc_acpi_mach_params mach_params = mach->mach_params;
++	struct snd_soc_acpi_mach *card_mach = dev_get_platdata(card->dev);
++	/*
++	 * Use the acpi mach from the machine driver because the machine driver
++	 * may change the dmic_num based on the machine driver quirk.
++	 */
++	struct snd_soc_acpi_mach_params mach_params = card_mach->mach_params;
+ 	struct snd_soc_dai_link *dai_link;
+ 	const struct firmware *fw;
+ 	char platform[SOF_INTEL_PLATFORM_NAME_MAX];
 
 
