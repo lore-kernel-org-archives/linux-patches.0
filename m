@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70A146F483;
-	Thu, 20 Aug 2026 17:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C043746D57D;
+	Thu, 20 Aug 2026 17:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247769; cv=none; b=UY2gabGE2Ibm5HAVoqWXDkpWffszpIaxpl09mV+Hy2FuNA/erwucPqPpW3rFUsFdaTboHqxquSwVdSkmea5bItX5lYT1qUT+kJCxfyFRsORnON6QANwwMA8q6D43Fk3hOTNwwmm2+NAO11WD67dUwc5AjA5JI7AVmEXJKi2jZI4=
+	t=1787247771; cv=none; b=OZYlP0qFiruDskmaN00PSnwF6IN2I/hd6O/Kfpgk/klTcjpM5pTJ68IPErWBP7F1ROk213RUwO1/eomHoWRqkV/q23rgRu5yOdkpE8xYlbsylvNQk/RXIrgj5DAsQKC6ucmaJOUErB6eTZ+zhirHEL37JUD5cTTeOpdUXAlNfuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247769; c=relaxed/simple;
-	bh=dvOWlktlKKpXcm1vgXkSvaWDQYnucMDCZrKrvN4jQDQ=;
+	s=arc-20240116; t=1787247771; c=relaxed/simple;
+	bh=gFUB2Lrikj6KEOCnTjceKuF/SNUjRVG/Ua9T0OJli2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SlpDkXW0K5n/WpSkpcZ8t2MO0087LYUCUfbrDBsFmQhdbY6Lb2gskrTsPAKBm31xrUYXjdOK0CdlD2t5GLc3i2NPLrMu6Bv/dw2n31Wxlqjhf8DjVWBM/KoHhNAR9KoREcK9JIrwbf6i/Y58uktsy+g+UzcE5YvdQi7WNaVETf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VmkfVgaG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kvB3PVUZRhIZmLWKOQx1MriKLLdxasKp5AOQgreB47PNi06fRfr6p1Ih1n9a3W/mlwNyr5g4xyzns9rje24nkvg3bR48QEhuRQplAl53hNXKL4h0UnpMOGEwo8bBhkxk7CR7cq9Hc27s1+1BlMXGoV0DYKo3Z6ZOH7uNNIJhVU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TKguk5uS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VmkfVgaG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31B101F000E9;
-	Thu, 20 Aug 2026 17:42:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKguk5uS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34701F000E9;
+	Thu, 20 Aug 2026 17:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247767;
-	bh=EaqXLxlq9BI9nZ+h1BqCz4rpQSERxh7PxfGVyAi0Ih0=;
+	s=korg; t=1787247770;
+	bh=qTRYY9MGGaNKZpYMkd2wxRFLY/yNAVAQw7KYs0LDknA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VmkfVgaG/q/wMT1AtblnlkdQCV8oiosbYYWNGPBaMDFLQmZ6q+VTSitHrYqxAo93R
-	 soxfUogV0n8oFI25aUNYBOT8UcpPpYccKWNYiK9AWMGvJVyh3bktvJwOp3vmyQcM3S
-	 GzcfhTYx7v54KhDHdx71CBX7JrmnEm16P4Q6Ijl0=
+	b=TKguk5uSC5Kj0qHiOnrm/4+NtXVIXoixw++aUcqfNOS1KPgLnuhjWBorl+ywCShpr
+	 kYiFCPfaYsnx15YNyz2JxvTHcb68AYRptneSL57au5vEjG6pvOl64cgj7Nzyh8llQf
+	 S49CH3y8les5zmx9Ahfd4u6MeR4GL5mlWgyEQdRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 123/166] vxlan: use pskb_network_may_pull() for transmit path header pulls
-Date: Thu, 20 Aug 2026 16:56:22 +0200
-Message-ID: <20260820145214.864804488@linuxfoundation.org>
+Subject: [PATCH 6.6 124/166] i2c: bcm-iproc: remove printout on handled timeouts
+Date: Thu, 20 Aug 2026 16:56:23 +0200
+Message-ID: <20260820145214.894414612@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -53,79 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit b9553558b48db54ac9273e6b98d7263ef5c1a329 ]
+[ Upstream commit 796e2c260187e32530cf343546ba1cdf2e2f5491 ]
 
-In vxlan_xmit(), arp_reduce(), and vxlan_mdb_entry_skb_get(), pskb_may_pull() was
-being called to verify the availability of network layer headers (ARP, IPv6/ND,
-IP/IPv6 MDB keys).
+I2C and SMBus timeouts are not something the user needs to be informed
+about on controller level. The client driver may know if that really is
+a problem and give more detailed information to the user. The controller
+should just pass this information upwards. Remove the printout.
 
-However, during transmit skb->data points to the MAC header, so skb_network_offset(skb)
-is ETH_HLEN (14 bytes). Using pskb_may_pull(skb, len) only checks len bytes from skb->data
-rather than skb_network_offset(skb) + len, which can leave part of the network header
-in non-linear frags.
-
-Replace these remaining pskb_may_pull() calls with pskb_network_may_pull() to properly
-account for the MAC header offset.
-
-Fixes: e4f67addf158 ("add DOVE extensions for VXLAN")
-Fixes: f564f45c4518 ("vxlan: add ipv6 proxy support")
-Fixes: 0f83e69f44bf ("vxlan: Add MDB data path support")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260723144249.759100-6-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Stable-dep-of: 98f2e9e6d6f9 ("i2c: iproc: reset bus after timeout if START_BUSY is stuck")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vxlan/vxlan_core.c |    6 +++---
- drivers/net/vxlan/vxlan_mdb.c  |    4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/i2c/busses/i2c-bcm-iproc.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -1857,7 +1857,7 @@ static int arp_reduce(struct net_device
- 	if (dev->flags & IFF_NOARP)
- 		goto out;
+--- a/drivers/i2c/busses/i2c-bcm-iproc.c
++++ b/drivers/i2c/busses/i2c-bcm-iproc.c
+@@ -811,8 +811,6 @@ static int bcm_iproc_i2c_xfer_wait(struc
+ 	}
  
--	if (!pskb_may_pull(skb, arp_hdr_len(dev))) {
-+	if (!pskb_network_may_pull(skb, arp_hdr_len(dev))) {
- 		dev_dstats_tx_dropped(dev);
- 		vxlan_vnifilter_count(vxlan, vni, NULL,
- 				      VXLAN_VNI_STATS_TX_DROPS, 0);
-@@ -2831,8 +2831,8 @@ static netdev_tx_t vxlan_xmit(struct sk_
- 			return arp_reduce(dev, skb, vni);
- #if IS_ENABLED(CONFIG_IPV6)
- 		else if (ntohs(eth->h_proto) == ETH_P_IPV6 &&
--			 pskb_may_pull(skb, sizeof(struct ipv6hdr) +
--					    sizeof(struct nd_msg)) &&
-+			 pskb_network_may_pull(skb, sizeof(struct ipv6hdr) +
-+						    sizeof(struct nd_msg)) &&
- 			 ipv6_hdr(skb)->nexthdr == IPPROTO_ICMPV6) {
- 			struct nd_msg *m = (struct nd_msg *)(ipv6_hdr(skb) + 1);
- 
---- a/drivers/net/vxlan/vxlan_mdb.c
-+++ b/drivers/net/vxlan/vxlan_mdb.c
-@@ -1326,7 +1326,7 @@ struct vxlan_mdb_entry *vxlan_mdb_entry_
- 
- 	switch (skb->protocol) {
- 	case htons(ETH_P_IP):
--		if (!pskb_may_pull(skb, sizeof(struct iphdr)))
-+		if (!pskb_network_may_pull(skb, sizeof(struct iphdr)))
- 			return NULL;
- 		group.dst.sa.sa_family = AF_INET;
- 		group.dst.sin.sin_addr.s_addr = ip_hdr(skb)->daddr;
-@@ -1335,7 +1335,7 @@ struct vxlan_mdb_entry *vxlan_mdb_entry_
- 		break;
- #if IS_ENABLED(CONFIG_IPV6)
- 	case htons(ETH_P_IPV6):
--		if (!pskb_may_pull(skb, sizeof(struct ipv6hdr)))
-+		if (!pskb_network_may_pull(skb, sizeof(struct ipv6hdr)))
- 			return NULL;
- 		group.dst.sa.sa_family = AF_INET6;
- 		group.dst.sin6.sin6_addr = ipv6_hdr(skb)->daddr;
+ 	if (!time_left && !iproc_i2c->xfer_is_done) {
+-		dev_err(iproc_i2c->device, "transaction timed out\n");
+-
+ 		/* flush both TX/RX FIFOs */
+ 		val = BIT(M_FIFO_RX_FLUSH_SHIFT) | BIT(M_FIFO_TX_FLUSH_SHIFT);
+ 		iproc_i2c_wr_reg(iproc_i2c, M_FIFO_CTRL_OFFSET, val);
 
 
