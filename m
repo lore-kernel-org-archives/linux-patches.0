@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D879272E53;
-	Thu, 20 Aug 2026 16:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2503B47D449;
+	Thu, 20 Aug 2026 16:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787243505; cv=none; b=DvxbunMNunU5WuT+DMKa/4rtdk5/crRaGqeCiDdZt2kmGQDHyNKVBh8DnpC/oHhKrhq1RwHn1hsnBw6j4qeNjuWahV5NuE/Atz1YJ9Y05LYSOnnHuJdAxTbQi5oRYMAvj7QoIip4n9tGo7ogsGS306bPevniBXwl+m431JTpfTo=
+	t=1787243508; cv=none; b=eZ/zKPV29DxURxQRSyAV3tiQyky4lrMLSQ4z5+eHKA63YN87ry07wQ4g0HI7avHT9wxR5GPP8afpi9IRWw6C6DUM+UD4dE7amxt8/dqJuYh16ZtghT0FrKxhMH5OVqb6xWUOuUhgoIKdBinUah+jrgb2QsgzhEm0pgV3FD7Y6PQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787243505; c=relaxed/simple;
-	bh=JpxZMzBvn5DdMYc1IqHPSp74UJttcv1E02P81jqIqsI=;
+	s=arc-20240116; t=1787243508; c=relaxed/simple;
+	bh=tG+NYGL2WQbqp5SpSAYRTFc2+83wZ19HlB07d4lDhnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B0jSvkaX3Bp33du0wpeEDs9xdFeKUUHlaS+ZMdTNBfTqRmvMaaWqEMF7L5hhMK67Dg+CNE5rANeArxK/4hvy79v5ahSYQRyREWb8sFduNGKdo2uyqNZXPYYYxamFgMy3NLxqpNcmsmdo4rCVwYWpBxJrTHxqtx7r6pFG1phu4QA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N8x/r/CV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TRl1OrBrUgQz629WXo76uvX1i7DQ13mQO1LnsZ2275mhAWzxylckhS72H/76pT4Y2QRiLu7aj7Hx2s3NcMUUIQqZzxZ3y2znBV0K5pF9SOv916V9scGoPRxit8pa613ef6dr0XvLauZo+7cxxH/xS650cEQMseP2P2hnrsqVQ9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNXB7gCj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N8x/r/CV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997DC1F000E9;
-	Thu, 20 Aug 2026 16:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNXB7gCj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 800C81F000E9;
+	Thu, 20 Aug 2026 16:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787243504;
-	bh=4+7fixRqzSTBGWPxob4kVYRwR9LfOEqxt4dtHEZjDEM=;
+	s=korg; t=1787243507;
+	bh=BJ4mcC8f6SXjWCCpKcq1aLdMx+JKVvaHpo2hxiEUxyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N8x/r/CVV3T/YdQZd95OapK18Chuxegnv/oyi5MtmvEqoDbh6waGacX1uKyym0ulD
-	 2z4WmsgKAkPhP6Nzm/Jir9ZYYwCCgkcjyB6q28HlLXoMkqkofNS6nTq9qPWUrPfA6t
-	 C6fm1UpoR5TsN3OiAvYYhaW6vVm0C+IuC6vv8G0Y=
+	b=XNXB7gCjMzT4frbsho2d+q4rOkca127pJLOpJ3l3hRDqlae7mYx0zYgpqqAgVUPto
+	 DoyC63Fy6jJuTPuL6c5MU7ijsQ9LtAybs3N5MrBh0IutBP3BqLPK54KTx4ZJYIiA6+
+	 jyLYU6BZnDDBe6RZ42gJK63vMqW1y82l+FGBDWos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 078/272] ASoC: mediatek: mt8183: Check runtime resume during probe
-Date: Thu, 20 Aug 2026 16:54:22 +0200
-Message-ID: <20260820145233.619175043@linuxfoundation.org>
+Subject: [PATCH 5.15 079/272] tcp: convert to dev_net_rcu()
+Date: Thu, 20 Aug 2026 16:54:23 +0200
+Message-ID: <20260820145233.649541676@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145231.229664293@linuxfoundation.org>
 References: <20260820145231.229664293@linuxfoundation.org>
@@ -45,64 +46,169 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f0334fbfd107682d0c95f3f71e25f6127038e2b9 ]
+[ Upstream commit e7b9ecce562ca6a1de32c56c597fa45e08c44ec0 ]
 
-The MT8183 AFE probe uses pm_runtime_get_sync() before reading hardware
-defaults into the regmap cache, but does not check whether runtime resume
-failed. If regmap_reinit_cache() then fails, the temporary runtime PM
-usage count is also not released.
+TCP uses of dev_net() are under RCU protection, change them
+to dev_net_rcu() to get LOCKDEP support.
 
-Use pm_runtime_resume_and_get() so resume failures abort probe without
-leaking a usage count, and release the temporary reference before
-handling the regmap cache result.
-
-Fixes: a94aec035a12 ("ASoC: mediatek: mt8183: add platform driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260527-asoc-mt8183-probe-cleanup-v1-2-4f4f5593c8d1@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250301201424.2046477-4-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: c9c9b37f8c55 ("netfilter: nf_queue: pin bridge device while NFQUEUE holds fake dst")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/mediatek/mt8183/mt8183-afe-pcm.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ include/net/inet6_hashtables.h |    2 +-
+ include/net/inet_hashtables.h  |    2 +-
+ net/ipv4/tcp_ipv4.c            |    8 ++++----
+ net/ipv4/tcp_metrics.c         |    6 +++---
+ net/ipv6/tcp_ipv6.c            |   10 +++++-----
+ 5 files changed, 14 insertions(+), 14 deletions(-)
 
---- a/sound/soc/mediatek/mt8183/mt8183-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8183/mt8183-afe-pcm.c
-@@ -1143,17 +1143,21 @@ static int mt8183_afe_pcm_dev_probe(stru
+--- a/include/net/inet6_hashtables.h
++++ b/include/net/inet6_hashtables.h
+@@ -106,7 +106,7 @@ static inline struct sock *__inet6_looku
+ 	if (sk)
+ 		return sk;
  
- 	/* enable clock for regcache get default value from hw */
- 	afe_priv->pm_runtime_bypass_reg_ctl = true;
--	pm_runtime_get_sync(&pdev->dev);
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret) {
-+		afe_priv->pm_runtime_bypass_reg_ctl = false;
-+		goto err_pm_disable;
-+	}
+-	return __inet6_lookup(dev_net(skb_dst(skb)->dev), hashinfo, skb,
++	return __inet6_lookup(dev_net_rcu(skb_dst(skb)->dev), hashinfo, skb,
+ 			      doff, &ipv6_hdr(skb)->saddr, sport,
+ 			      &ipv6_hdr(skb)->daddr, ntohs(dport),
+ 			      iif, sdif, refcounted);
+--- a/include/net/inet_hashtables.h
++++ b/include/net/inet_hashtables.h
+@@ -356,7 +356,7 @@ static inline struct sock *__inet_lookup
+ 	if (sk)
+ 		return sk;
  
- 	ret = regmap_reinit_cache(afe->regmap, &mt8183_afe_regmap_config);
-+	pm_runtime_put_sync(dev);
-+	afe_priv->pm_runtime_bypass_reg_ctl = false;
-+
- 	if (ret) {
- 		dev_err(dev, "regmap_reinit_cache fail, ret %d\n", ret);
- 		goto err_pm_disable;
+-	return __inet_lookup(dev_net(skb_dst(skb)->dev), hashinfo, skb,
++	return __inet_lookup(dev_net_rcu(skb_dst(skb)->dev), hashinfo, skb,
+ 			     doff, iph->saddr, sport,
+ 			     iph->daddr, dport, inet_iif(skb), sdif,
+ 			     refcounted);
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -486,7 +486,7 @@ int tcp_v4_err(struct sk_buff *skb, u32
+ 	struct request_sock *fastopen;
+ 	u32 seq, snd_una;
+ 	int err;
+-	struct net *net = dev_net(skb->dev);
++	struct net *net = dev_net_rcu(skb->dev);
+ 
+ 	sk = __inet_lookup_established(net, &tcp_hashinfo, iph->daddr,
+ 				       th->dest, iph->saddr, ntohs(th->source),
+@@ -718,7 +718,7 @@ static void tcp_v4_send_reset(const stru
+ 	arg.iov[0].iov_base = (unsigned char *)&rep;
+ 	arg.iov[0].iov_len  = sizeof(rep.th);
+ 
+-	net = sk ? sock_net(sk) : dev_net(skb_dst(skb)->dev);
++	net = sk ? sock_net(sk) : dev_net_rcu(skb_dst(skb)->dev);
+ #ifdef CONFIG_TCP_MD5SIG
+ 	rcu_read_lock();
+ 	hash_location = tcp_parse_md5sig_option(th);
+@@ -1794,7 +1794,7 @@ int tcp_v4_early_demux(struct sk_buff *s
+ 	if (th->doff < sizeof(struct tcphdr) / 4)
+ 		return 0;
+ 
+-	sk = __inet_lookup_established(dev_net(skb->dev), &tcp_hashinfo,
++	sk = __inet_lookup_established(dev_net_rcu(skb->dev), &tcp_hashinfo,
+ 				       iph->saddr, th->source,
+ 				       iph->daddr, ntohs(th->dest),
+ 				       skb->skb_iif, inet_sdif(skb));
+@@ -1989,7 +1989,7 @@ static void tcp_v4_fill_cb(struct sk_buf
+ 
+ int tcp_v4_rcv(struct sk_buff *skb)
+ {
+-	struct net *net = dev_net(skb->dev);
++	struct net *net = dev_net_rcu(skb->dev);
+ 	struct sk_buff *skb_to_free;
+ 	int sdif = inet_sdif(skb);
+ 	int dif = inet_iif(skb);
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -170,7 +170,7 @@ static struct tcp_metrics_block *tcpm_ne
+ 	bool reclaim = false;
+ 
+ 	spin_lock_bh(&tcp_metrics_lock);
+-	net = dev_net(dst->dev);
++	net = dev_net_rcu(dst->dev);
+ 
+ 	/* While waiting for the spin-lock the cache might have been populated
+ 	 * with this entry and so we have to check again.
+@@ -273,7 +273,7 @@ static struct tcp_metrics_block *__tcp_g
+ 		return NULL;
  	}
  
--	pm_runtime_put_sync(&pdev->dev);
--	afe_priv->pm_runtime_bypass_reg_ctl = false;
--
- 	regcache_cache_only(afe->regmap, true);
- 	regcache_mark_dirty(afe->regmap);
+-	net = dev_net(dst->dev);
++	net = dev_net_rcu(dst->dev);
+ 	hash ^= net_hash_mix(net);
+ 	hash = hash_32(hash, tcp_metrics_hash_log);
  
+@@ -318,7 +318,7 @@ static struct tcp_metrics_block *tcp_get
+ 	else
+ 		return NULL;
+ 
+-	net = dev_net(dst->dev);
++	net = dev_net_rcu(dst->dev);
+ 	hash ^= net_hash_mix(net);
+ 	hash = hash_32(hash, tcp_metrics_hash_log);
+ 
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -382,7 +382,7 @@ static int tcp_v6_err(struct sk_buff *sk
+ {
+ 	const struct ipv6hdr *hdr = (const struct ipv6hdr *)skb->data;
+ 	const struct tcphdr *th = (struct tcphdr *)(skb->data+offset);
+-	struct net *net = dev_net(skb->dev);
++	struct net *net = dev_net_rcu(skb->dev);
+ 	struct request_sock *fastopen;
+ 	struct ipv6_pinfo *np;
+ 	struct tcp_sock *tp;
+@@ -897,7 +897,7 @@ static void tcp_v6_send_response(const s
+ 	struct tcphdr *t1;
+ 	struct sk_buff *buff;
+ 	struct flowi6 fl6;
+-	struct net *net = sk ? sock_net(sk) : dev_net(skb_dst(skb)->dev);
++	struct net *net = sk ? sock_net(sk) : dev_net_rcu(skb_dst(skb)->dev);
+ 	struct sock *ctl_sk = net->ipv6.tcp_sk;
+ 	unsigned int tot_len = sizeof(struct tcphdr);
+ 	__be32 mrst = 0, *topt;
+@@ -1047,7 +1047,7 @@ static void tcp_v6_send_reset(const stru
+ 	if (!sk && !ipv6_unicast_destination(skb))
+ 		return;
+ 
+-	net = sk ? sock_net(sk) : dev_net(skb_dst(skb)->dev);
++	net = sk ? sock_net(sk) : dev_net_rcu(skb_dst(skb)->dev);
+ #ifdef CONFIG_TCP_MD5SIG
+ 	rcu_read_lock();
+ 	hash_location = tcp_parse_md5sig_option(th);
+@@ -1633,7 +1633,7 @@ INDIRECT_CALLABLE_SCOPE int tcp_v6_rcv(s
+ 	bool refcounted;
+ 	struct sock *sk;
+ 	int ret;
+-	struct net *net = dev_net(skb->dev);
++	struct net *net = dev_net_rcu(skb->dev);
+ 
+ 	if (skb->pkt_type != PACKET_HOST)
+ 		goto discard_it;
+@@ -1871,7 +1871,7 @@ void tcp_v6_early_demux(struct sk_buff *
+ 		return;
+ 
+ 	/* Note : We use inet6_iif() here, not tcp_v6_iif() */
+-	sk = __inet6_lookup_established(dev_net(skb->dev), &tcp_hashinfo,
++	sk = __inet6_lookup_established(dev_net_rcu(skb->dev), &tcp_hashinfo,
+ 					&hdr->saddr, th->source,
+ 					&hdr->daddr, ntohs(th->dest),
+ 					inet6_iif(skb), inet6_sdif(skb));
 
 
