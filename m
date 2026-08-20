@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E5F481AB3;
-	Thu, 20 Aug 2026 17:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26DB447ECFB;
+	Thu, 20 Aug 2026 17:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787248259; cv=none; b=U0s07Q0zZY+lt+HkHK0y0iOCSqqkgDPxlAokTnnGcvzDx5MktDSM2m6QvtXR1UsC8ssRJL02/tic7iMNdddXR/min81IujH1XcO5CdA7IliXWEESIsVKZMHXa38U6YZxixmISUidRxAt9CAK8wNsWapdgqoGPVJVjrkRIWCvTMU=
+	t=1787248262; cv=none; b=S40RrqsEmbxrx3uHNqXd2ct5cMSFbtBExO5GGGNRbVfS5GwYpQkeukbnUhuW7a+AwTLM5fbCiItpftRVAlEe6/+kO2Cpe4gSwyoKil6D20bIVC2jyObazJH2eNILCszXB+geXHKgrv5BpOBTiKkNrBN6tHgXYI7QuOlPrr8ZDKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787248259; c=relaxed/simple;
-	bh=HKLxrdz8iMc7o7rRvJ2rX3+OSx2JE+ebRnlQq6PPOSo=;
+	s=arc-20240116; t=1787248262; c=relaxed/simple;
+	bh=dcpa+6LnVslzpnXJxwNOv3qwnVKagDIqEBnlEUgpcGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iQzFJLa2DSzCRFibtPdv/QukVr3lyjiH0y4O6XJTOlILu/PPdHgxzTcw70vBsweziPHcWgXpCCqKko7HPMCl580zYAmr8oZw392ESBZNFYZdByk5zM1l15+Iv4j94DyZ5lnn1929S83ebB5WLY/pvAtuVtDyewNZi8Dvv84Wd3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NtMljf8Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t31XbZItxNDJUonp3fwJYVIQXexCsM/spZ9zk4eDZj6D/jnx3a/4t2DPhE6uHkx1UPUNO6G+FA24Y/PzksZHTK5LVjzhHsQb2VfBenSH8AfUzHwoFEXrRuGDRSQ6lvJIWxTrCVLY3XnwTIsAzIoyYMApziC1vIx38RqD7XS5uCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pk0LBV/2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NtMljf8Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14251F00A3A;
-	Thu, 20 Aug 2026 17:50:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pk0LBV/2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CBB21F000E9;
+	Thu, 20 Aug 2026 17:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787248258;
-	bh=8Mo/G1Skwx6emcZ2QbNwtTFl/U76iIgT7WjPAUm1WEE=;
+	s=korg; t=1787248261;
+	bh=Q5d1X9b+1e3WR/VfmYvLG/OPnyqI5nEg5BaGxMWAlPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NtMljf8QnPU2QkgwVDG384Os/Zmjf+tzJJuOmZEb6GvXGtCefkejV64O0pegGwtkZ
-	 aR9IS0IMWaA444f/Ql/s6XU9SL+gRj0xRqXrc/WlokpK/h4NqFTrRwiH0352kh42Yp
-	 EN8+CxhbMTn19dCCbNT1hHMcf4HUzjEaaDlcvbI8=
+	b=pk0LBV/2rgJeyRdD1ltiK1Okzz+jUFasAU3ZREwPDJ37L5p+Zv9G7pcM6XqP2FC4n
+	 EjGmXQUe/wLJeeXhXx4bgYky4ryB7LP89E9BOTQUA5iZytcrbBYxtoixpzcZPoNKEP
+	 K0YkQBZ+N8x9nUvYf7zbDCnGsD7teD+r7ilOt9r8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Corey Minyard <corey@minyard.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 165/303] bootconfig: fix NULL-pointer arithmetic in xbc_snprint_cmdline()
-Date: Thu, 20 Aug 2026 16:55:01 +0200
-Message-ID: <20260820145258.264786955@linuxfoundation.org>
+Subject: [PATCH 6.1 166/303] ipmi: fix refcount leak in i_ipmi_request()
+Date: Thu, 20 Aug 2026 16:55:02 +0200
+Message-ID: <20260820145258.293533800@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145253.200766705@linuxfoundation.org>
 References: <20260820145253.200766705@linuxfoundation.org>
@@ -51,94 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit dec4d8118c179b3d12bca7e609054c6011c4f2ce ]
+[ Upstream commit a3f3859cecacb64f18fd446271ece9a3b3f2d4de ]
 
-xbc_snprint_cmdline() is meant to be called twice: first with
-buf=NULL, size=0 to probe the rendered length, then with a real
-buffer to fill it (the standard snprintf() two-pass pattern). The
-probe call makes the function compute "buf + size" (NULL + 0) and,
-on every iteration, advance "buf += ret" from that NULL base and
-pass the result back into snprintf().
+When a caller provides a `supplied_recv` message to i_ipmi_request(),
+the function increments the user's `nr_msgs` reference count. If an
+error occurs later, the out_err cleanup path only frees the recv_msg
+if the function allocated it itself (i.e., !supplied_recv). In the
+supplied_recv case the cleanup is skipped, leaving the reference count
+elevated. The caller ipmi_request_supply_msgs() does not release the
+supplied_recv on error, so the reference is permanently leaked.
 
-Pointer arithmetic on a NULL pointer is undefined behavior. It is
-harmless in the in-kernel callers today, but the follow-up patches
-run this same code in the userspace tools/bootconfig parser at kernel
-build time, where host UBSan / FORTIFY_SOURCE abort the build.
+Fix this by explicitly reverting the reference count operations when a
+supplied recv_msg with a valid user pointer is present in the error
+path: decrement nr_msgs and drop the user's kref.
 
-Track a running written length (size_t) instead of mutating @buf, and
-only form "buf + len" when @buf is non-NULL. snprintf(NULL, 0, ...)
-is itself well defined and returns the would-be length, so the
-two-pass "probe then fill" usage returns identical byte counts.
-
-Link: https://lore.kernel.org/all/20260626-bootconfig_using_tools-v7-1-24ab72139c29@debian.org/
-
-Fixes: 51887d03aca1 ("bootconfig: init: Allow admin to use bootconfig for kernel command line")
 Cc: stable@vger.kernel.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: b52da4054ee0 ("ipmi: Rework user message limit handling")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Message-ID: <20260603120634.3758747-1-vulab@iscas.ac.cn>
+Signed-off-by: Corey Minyard <corey@minyard.net>
+[ changed `free_ipmi_user` to `free_user` in the two added `kref_put()` calls ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/bootconfig.c |   23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ drivers/char/ipmi/ipmi_msghandler.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/lib/bootconfig.c
-+++ b/lib/bootconfig.c
-@@ -426,10 +426,18 @@ static char xbc_namebuf[XBC_KEYLEN_MAX]
- int __init xbc_snprint_cmdline(char *buf, size_t size, struct xbc_node *root)
- {
- 	struct xbc_node *knode, *vnode;
--	char *end = buf + size;
- 	const char *val, *q;
-+	size_t len = 0;
- 	int ret;
- 
-+	/*
-+	 * Track the running written length rather than advancing @buf, so we
-+	 * never form "buf + size" or "buf += ret" while @buf is NULL (the
-+	 * size-probe call passes buf=NULL, size=0). NULL pointer arithmetic
-+	 * is undefined behavior and trips host UBSan / FORTIFY_SOURCE when
-+	 * this renderer runs at kernel build time. snprintf(NULL, 0, ...)
-+	 * itself is well defined and returns the would-be length.
-+	 */
- 	xbc_node_for_each_key_value(root, knode, val) {
- 		ret = xbc_node_compose_key_after(root, knode,
- 					xbc_namebuf, XBC_KEYLEN_MAX);
-@@ -438,10 +446,11 @@ int __init xbc_snprint_cmdline(char *buf
- 
- 		vnode = xbc_node_get_child(knode);
- 		if (!vnode) {
--			ret = snprintf(buf, rest(buf, end), "%s ", xbc_namebuf);
-+			ret = snprintf(buf ? buf + len : NULL, rest(len, size),
-+				       "%s ", xbc_namebuf);
- 			if (ret < 0)
- 				return ret;
--			buf += ret;
-+			len += ret;
- 			continue;
- 		}
- 		xbc_array_for_each_value(vnode, val) {
-@@ -451,15 +460,15 @@ int __init xbc_snprint_cmdline(char *buf
- 			 * whitespace.
- 			 */
- 			q = strpbrk(val, " \t\r\n") ? "\"" : "";
--			ret = snprintf(buf, rest(buf, end), "%s=%s%s%s ",
--				       xbc_namebuf, q, val, q);
-+			ret = snprintf(buf ? buf + len : NULL, rest(len, size),
-+				       "%s=%s%s%s ", xbc_namebuf, q, val, q);
- 			if (ret < 0)
- 				return ret;
--			buf += ret;
-+			len += ret;
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -2331,6 +2331,10 @@ static int i_ipmi_request(struct ipmi_us
+ 		if (smi_msg == NULL) {
+ 			if (!supplied_recv)
+ 				ipmi_free_recv_msg(recv_msg);
++			else if (recv_msg->user) {
++				atomic_dec(&recv_msg->user->nr_msgs);
++				kref_put(&recv_msg->user->refcount, free_user);
++			}
+ 			return -ENOMEM;
  		}
  	}
- 
--	return buf - (end - size);
-+	return len;
- }
- #undef rest
- 
+@@ -2373,6 +2377,10 @@ out_err:
+ 			ipmi_free_smi_msg(smi_msg);
+ 		if (!supplied_recv)
+ 			ipmi_free_recv_msg(recv_msg);
++		else if (recv_msg->user) {
++			atomic_dec(&recv_msg->user->nr_msgs);
++			kref_put(&recv_msg->user->refcount, free_user);
++		}
+ 	} else {
+ 		dev_dbg(intf->si_dev, "Send: %*ph\n",
+ 			smi_msg->data_size, smi_msg->data);
 
 
