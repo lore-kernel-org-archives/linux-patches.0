@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3643A35C681;
-	Thu, 20 Aug 2026 17:38:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBDB45518E;
+	Thu, 20 Aug 2026 17:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787247494; cv=none; b=phqxtghvG0Dfx2/R5SxZm9hbajU5Bb60MGCwLkUvxkSedri//Go47+Yet824YfVVbaaFb4t3VfxlqsT/p4cXDOsJnjdVgIri+D4wpG7McXNdkdKFcRDklPISdbPK8BB6BUPKfvs50Ie+qaKDvmgsEv05IRJM8MxB8TGPL+ZqlCE=
+	t=1787247497; cv=none; b=qD19HdvtRFwKPuxumci5umF6DIGKV9kFy21QHyJccsCzP1fTGfOs8QN2SSLWr5hC4in4D3doZKXrEPuqyITeA6MLgBK5inQ5FbeTE9oyKN+oJLu+tsFv2y1gCO21x8tp/gj3aHBtH+huICTva6hbZUeCvsZRbImEqooQMeMTKY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787247494; c=relaxed/simple;
-	bh=3ItIg4ChSUSUsLQCRwBOsgjPK2VRYzUV4jv6dyOjI1I=;
+	s=arc-20240116; t=1787247497; c=relaxed/simple;
+	bh=YOiBaCqdVieWg+7fQOYXavAdDFhhaB7e/30RfYCtz4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eXVJbct3OBbY12S7ejrXu5SircyJ2GXrpiGfwXfiDX3GNbriA2y1cO2HFwhBOikFFzOgBxCHUWc+1TvKOXfurejOm4Io3d9iMYzjkH+nxrICrBkbYuu3XGFA29qLojaHQe+XFz8ZZQltlQxLet0BAOBMGjJl1SrTfifyu4xF35k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ypQhlKLj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MlDOBBtlgoPa/9fYuabtiqH6wGTgnFuTD+H9vMWhluXUV7aPyAjCgHSg4w6sDwADyZurtrOow5T7wJ5GGKtYkkn4c0dtjGuvHJt17XsrfS8ud2TYv8Xr/0x9kn3HeIOE9Tbr58QIxumLAlakMHJWB4OdHKBfva9xbx3uj93tPbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7+ZwtL2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ypQhlKLj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D47C1F000E9;
-	Thu, 20 Aug 2026 17:38:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7+ZwtL2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E25301F00A3A;
+	Thu, 20 Aug 2026 17:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787247492;
-	bh=gOiRomVD9zdylc8NCNIkLpimtj7APtny1Q2ghzf11Rw=;
+	s=korg; t=1787247496;
+	bh=EbaEerV/kGx59kBXIuWY081cELMEzSU6L46F79VIeA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ypQhlKLjJ6FPKR95jjzAGgBpAitLVpxJMLJXr6sKl7GkcTnl29v8mEp9QGKU8zRMC
-	 On9I+OtIw/w3xTKQ0RuOVxB+I8gSpF1DrRCcEeBkqTRWJ1mE0eN33OxCJsC/mnwPkV
-	 qFHb5gue+25iYX+cVP9Xo2evWzGY8h5A90bT3giA=
+	b=r7+ZwtL2jQAuHl22w+U7P5biWR1Kvu4GINdINpa0q2cVNZptzB0fH2X3gy7oqJXbm
+	 qoBNqwNEPT69oVF+JmLEHRojwvW9/E4mond963TBYDMV2xoJIDjbfXd3CU4hzKF/F7
+	 GhVkOs4wYYu7NZ/HkTj0JSxtEJ1epqO24bO6ZD04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
+	Long Li <leo.lilong@huawei.com>,
 	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.6 064/166] xfs: only check mergeability of bnobt records
-Date: Thu, 20 Aug 2026 16:55:23 +0200
-Message-ID: <20260820145213.071662776@linuxfoundation.org>
+Subject: [PATCH 6.6 065/166] xfs: fix ilock leak on error in xfs_dq_get_next_id
+Date: Thu, 20 Aug 2026 16:55:24 +0200
+Message-ID: <20260820145213.101200895@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
 References: <20260820145211.194104353@linuxfoundation.org>
@@ -51,45 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Long Li <leo.lilong@huawei.com>
 
-commit 97efed1091a50e4dbf31307015138b43a972d2e4 upstream.
+commit 63320a0f70f66f311f4bccff3af0719c2119f46c upstream.
 
-In the cntbt (free space by block count) btree, records are not supposed
-to be in startblock order.  Hence the mergeability check is pointless.
-Remove it, since it does nothing, as LOLLM points out.
+xfs_dq_get_next_id() takes the quota inode ILOCK before calling
+xfs_iread_extents().  If xfs_iread_extents() fails, the function returns
+immediately without releasing the lock, leaking the quota inode ILOCK.
+This can leave the quota inode locked and cause subsequent quota
+operations to hang.
 
-Cc: stable@vger.kernel.org # v6.4
-Fixes: d5784ae82778d9 ("xfs: flag free space btree records that could be merged")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
+Fix this by jumping to a common unlock path on error instead of returning
+directly.
+
+Fixes: bda250dbaf39f ("xfs: rewrite xfs_dq_get_next_id using xfs_iext_lookup_extent")
+Cc: stable@vger.kernel.org # v4.12
+Signed-off-by: Long Li <leo.lilong@huawei.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/alloc.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_dquot.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/alloc.c
-+++ b/fs/xfs/scrub/alloc.c
-@@ -124,7 +124,7 @@ xchk_allocbt_rec(
- 	const union xfs_btree_rec	*rec)
- {
- 	struct xfs_alloc_rec_incore	irec;
--	struct xchk_alloc	*ca = bs->private;
-+	struct xchk_alloc		*ca = bs->private;
+--- a/fs/xfs/xfs_dquot.c
++++ b/fs/xfs/xfs_dquot.c
+@@ -723,7 +723,7 @@ xfs_dq_get_next_id(
+ 	lock_flags = xfs_ilock_data_map_shared(quotip);
+ 	error = xfs_iread_extents(NULL, quotip, XFS_DATA_FORK);
+ 	if (error)
+-		return error;
++		goto out_unlock;
  
- 	xfs_alloc_btrec_to_irec(rec, &irec);
- 	if (xfs_alloc_check_irec(bs->cur, &irec) != NULL) {
-@@ -132,7 +132,8 @@ xchk_allocbt_rec(
- 		return 0;
+ 	if (xfs_iext_lookup_extent(quotip, &quotip->i_df, start, &cur, &got)) {
+ 		/* contiguous chunk, bump startoff for the id calculation */
+@@ -734,6 +734,7 @@ xfs_dq_get_next_id(
+ 		error = -ENOENT;
  	}
  
--	xchk_allocbt_mergeable(bs, ca, &irec);
-+	if (bs->sc->sm->sm_type == XFS_SCRUB_TYPE_BNOBT)
-+		xchk_allocbt_mergeable(bs, ca, &irec);
- 	xchk_allocbt_xref(bs->sc, &irec);
++out_unlock:
+ 	xfs_iunlock(quotip, lock_flags);
  
- 	return 0;
+ 	return error;
 
 
