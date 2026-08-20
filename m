@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2438F272E53;
-	Thu, 20 Aug 2026 16:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04AA547D46A;
+	Thu, 20 Aug 2026 16:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787244007; cv=none; b=IRMpKytWKeSsS2HmWQWpQdAmKbVJsA17gTZzeEMvFLlxGRCpmYgYVkJtgfjud1pmboIzs4rUSxcLERAL5u2mBmTkHHBGmHRzcOGAXB1wPagNkT0NydY/XIM48/+8cVNm/yzdo8Eq3JTPNw/cGXqGqgQs8h35XT2lPXAUtDjP2No=
+	t=1787244010; cv=none; b=fCIZ0XCVQ9WPLKxTMPaQfcvIiJkDNeIrEQtIO74wMEMJUmNxQrmkqYpIHW2bokBEH5wb1faVaoNWNHExUVl8+jpX8ZZwXO7xj151AEVwuwUgqapGv8g1ZXqkETxS6ipx39jZwPu15AMZd9DoI9kyK0xFTtYfxwsZOJKMrtaR6yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787244007; c=relaxed/simple;
-	bh=t314vxrqKjVj/khsECsqmdr5x8RKVDScVitYxKIhxfc=;
+	s=arc-20240116; t=1787244010; c=relaxed/simple;
+	bh=K3e3vd6OrzUH0RfwJ6oe3k6LHHmMsOLVHDGHi6/JGRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QgPcJnLMpaGh9a13wZYBXAtDwQopcU87w4WN/OgAPrh75aFmg+L8xCRTLd5itDePRFI94qIklUjwDNvfEm0rntM96Bx6SkmVB3ouOAkgl9lmpFQzAzjd059vv4EMvpkYzOgUvjyGxum1h4yWOzTiBleNAN+gomnOCXGRwPv6p8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOELxjxr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mIZ+Yo5ToHsNo8U4ZzdHwdQvUQRcoIzsrKJ/e89oRxJhejal7EZfxXARAJfAafyMXcSTVlPxP+VTbdz2mpT3aif9cm8+d02PW/Cbkav/RgpHV4MJtKW1CFVJqrUz6aMMrDOE2tZeMv+uIOrkLClBhEfqInXnz/e3swp8Z5DX1xA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iEaTKaA0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOELxjxr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 800BC1F000E9;
-	Thu, 20 Aug 2026 16:40:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iEaTKaA0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8C51F000E9;
+	Thu, 20 Aug 2026 16:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787244006;
-	bh=xLifJRvb384rX4B1Fxs9d4OW1FsAmiTArbT/mAhdNE4=;
+	s=korg; t=1787244008;
+	bh=s0GtySlMgGQ3h4adxFZaBpgkZrjseQMZWrbLxGc9fJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IOELxjxriQzBVWpz01vClRwx4il49/Xd2v4oVzVJR/loCCZGYqA4uNII8XBngzo9Q
-	 YLMw/T/aMdwDKFEKU7Xr4+dSX0v0LdsmyLZpiGffPn+97s88fZp4qy7MJ48lUefjKh
-	 Xb7fAKLCfV3Lf5ZErr06ocA6sMG6O6FIAJD7w6yA=
+	b=iEaTKaA0vLEephm9pYYslRPhpnNOztK3txYSHPWsjtmNgI6cHPNw1resC12IqbUZ9
+	 if1h/psYm734w2Vix/NM9hcSf85CjPCkBvje4mt69xkQ4lHw9Mj26W67xzYY48Sovi
+	 /porHbcRrBw/HYPjnZURXpJX3FFLweEM2F4hHSnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 020/235] Input: synaptics-rmi4 - propagate F54 worker errors to V4L2 queue
-Date: Thu, 20 Aug 2026 16:54:16 +0200
-Message-ID: <20260820145217.055685934@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.10 021/235] crypto: qce - fix error path in devm_qce_register_algs
+Date: Thu, 20 Aug 2026 16:54:17 +0200
+Message-ID: <20260820145217.083771437@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
 References: <20260820145216.426568665@linuxfoundation.org>
@@ -50,62 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 8786d74bf50e6797b6f655eb381ef6b25451161f upstream.
+commit 9c75402286409f5e1a75e4a445555c84066f89db upstream.
 
-Previously, rmi_f54_buffer_queue() waited for the worker thread to
-finish but ignored whether it succeeded. If the worker failed (e.g.,
-due to a timeout or register read failure), the queue thread would
-silently return success, delivering stale or uninitialized memory to
-userspace.
+If ops->register_algs() fails, the error path repeatedly calls the same
+ops->unregister_algs() from the failed registration. Use the loop index
+to unregister the previously registered algorithms instead.
 
-Add a 'report_error' field to struct f54_data to store the worker's exit
-status. Check this field in rmi_f54_buffer_queue() after the worker
-finishes, and mark the buffer as VB2_BUF_STATE_ERROR if an error
-occurred.
-
-Fixes: 3a762dbd5347 ("[media] Input: synaptics-rmi4 - add support for F54 diagnostics")
-Reported-by: sashiko-bot@kernel.org
+Fixes: e80cf84b6087 ("crypto: qce - unregister previously registered algos in error path")
 Cc: stable@vger.kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Link: https://patch.msgid.link/20260626051802.4033172-6-dmitry.torokhov@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/rmi4/rmi_f54.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/crypto/qce/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/rmi4/rmi_f54.c
-+++ b/drivers/input/rmi4/rmi_f54.c
-@@ -100,6 +100,7 @@ struct f54_data {
- 	u8 *report_data;
- 	size_t max_report_size;
- 	int report_size;
-+	int report_error;
- 
- 	bool is_busy;
- 	struct mutex status_mutex;
-@@ -334,6 +335,12 @@ static void rmi_f54_buffer_queue(struct
- 		mutex_lock(&f54->data_mutex);
+--- a/drivers/crypto/qce/core.c
++++ b/drivers/crypto/qce/core.c
+@@ -52,7 +52,7 @@ static int qce_register_algs(struct qce_
+ 		ret = ops->register_algs(qce);
+ 		if (ret) {
+ 			for (j = i - 1; j >= 0; j--)
+-				ops->unregister_algs(qce);
++				qce_ops[j]->unregister_algs(qce);
+ 			return ret;
+ 		}
  	}
- 
-+	if (f54->report_error) {
-+		dev_err(&f54->fn->dev, "Error acquiring report: %d\n", f54->report_error);
-+		state = VB2_BUF_STATE_ERROR;
-+		goto data_done;
-+	}
-+
- 	ptr = vb2_plane_vaddr(vb, 0);
- 	if (!ptr) {
- 		dev_err(&f54->fn->dev, "Error acquiring frame ptr\n");
-@@ -606,6 +613,7 @@ out:
- 		report_size = 0;
- 
- 	f54->report_size = report_size;
-+	f54->report_error = error;
- 
- 	if (report_size == 0 && !error) {
- 		queue_delayed_work(f54->workqueue, &f54->work,
 
 
