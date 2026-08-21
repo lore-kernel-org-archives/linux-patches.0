@@ -1,140 +1,245 @@
-Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4629928641E
-	for <patches@lists.linux.dev>; Fri, 21 Aug 2026 18:57:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.92
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787338633; cv=none; b=gCBJH3zkJzQVz4q9K7f7/DFOgr5bh9CDg9TYIvtcLw+VlaZnnVLh4J98gyMAw6WQwxa6LhkUD5/YNw/jaQLbfoaSZFGuiAFvD2c4WVplL6+0H/xCGDnAlW1xz7PG+TY0kkVDTIujKi2ep8lIGE3LGJAlyJsKISGcCgV2Tjl24FE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787338633; c=relaxed/simple;
-	bh=vi1uZjue0uyZHjCEutf1Bu3+T14eZwAUOFQt47DDIWY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rKv9vy8WVCopoS8xirxDAzhpcDRFrvl02pR6kwjWY3fDT4dyE6T2WqpEv8wWpURAb2i0iq0Px9X8bMoEV6XlEeAzgNITVBBGUvh5GzC0Mm+sYN5D3aZ6yTYE+WYQo2HCDpfgd1iiUrKjevL8H5nxWXpABAINisEOrK2bFOqlfHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=EpKaJ6hy; arc=none smtp.client-ip=54.254.200.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F21E3769FF
+	for <patches@lists.linux.dev>; Fri, 21 Aug 2026 19:44:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.16
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787341461; cv=fail; b=VzcJ77uoquUnUkJEIOPr5YxdtafX76960p6jj07R2imLMLrbVJOMQfj2PELi+bvS3dqouwufu4zk/Aonzf9Ue9AOqliVyfcVq1jSV/EnHveXd8Lm9+3xt9f4tvZCDDFKHmA44rVYppT5uuGFqTAVQ79QKwUMYVs6jepbnuYbW14=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787341461; c=relaxed/simple;
+	bh=g1L4V45MaA3jkuDKBmso8w2nk9gCZxb2g8nK3acMCoU=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=iZfV01NTzvHMmdnxEwvDgodEFKuf4+j/WfPYh6BusNsZfAkP6s4mhKk62omqPAuAyc4vqA2TmKV+Wy4hDI0XTmf3YZRVrnn4mYNTYhQdldecdM0B8hH2s2ddSXdUlnOcdaijnkoLPzS1q2XmsT6H7UXYxJzPziL7uwT3RorsjVE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Q4hoY44A; arc=fail smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="EpKaJ6hy"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1787338600;
-	bh=gfp426rClgrRARODXDTZsXb3WsMN4S0MxVUsFp+3eso=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version;
-	b=EpKaJ6hywEIWqyAaKWv6OKVOkHGTYE1w54DFbo2DvysQJtU8HS0VM7IZ0wISn0C3v
-	 f0E/v2Jfl5iPS8A9ykVnxMviHOQ06whCDU4NkOfiHR+KyalAwKLTvcIFxGAxFPhYB0
-	 hFtfOO1/Ubtisa8X9o56MWG32h9rx59vpSVzWYaY=
-X-QQ-mid: zesmtpsz6t1787338594tb3b9d28b
-X-QQ-Originating-IP: qWPptjxjFrzvRafst1u8kYT73qeCR6cKQmBnsisQjRY=
-Received: from localhost.localdomain ( [113.57.152.160])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Sat, 22 Aug 2026 02:56:30 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 11226042413714028733
-EX-QQ-RecipientCnt: 21
-From: Wentao Guan <guanwentao@uniontech.com>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Wentao Guan <guanwentao@uniontech.com>
-Subject: Re: [PATCH 6.6 000/166] 6.6.153-rc1 review
-Date: Sat, 22 Aug 2026 02:56:27 +0800
-Message-Id: <20260821185627.3499541-1-guanwentao@uniontech.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20260820145211.194104353@linuxfoundation.org>
-References: <20260820145211.194104353@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Q4hoY44A"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1787341459; x=1818877459;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=g1L4V45MaA3jkuDKBmso8w2nk9gCZxb2g8nK3acMCoU=;
+  b=Q4hoY44AnRl+m6G03fPZmKuOclAlVDi8dx7GglXfL4dyMACoV6jJxjNg
+   rTOxmrKoyx2Yffak1/MorKMK1/0fx4lWKsP7v2tkiclasl2fZuCyxXNMk
+   64dBNKIFaCJXhukZpV0p3/dOQwK9/jp85q9/8WmTBKmoBzXssrxlrbaGv
+   rsniEi4c+Y72BM63bANGTHmxh2qcGM4D7TvWX9fu/J0brGzy7LL1GALbJ
+   dCfiF6HgoFJec81tiHzH/3WW5PqNhVpRp0DIOQffQCl26TJy2CVdsHxlU
+   Yr2WQlMVpSG6XVAD3/suU8UZ7p/6yZCLkWOxO6/+9s7IU4WrOqEawt7N2
+   Q==;
+X-CSE-ConnectionGUID: sR2nRJlEQJSERKYbbR8J+Q==
+X-CSE-MsgGUID: qS3duEtNT86kqnkdT3e6+w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11882"; a="75434161"
+X-IronPort-AV: E=Sophos;i="6.25,235,1779174000"; 
+   d="scan'208";a="75434161"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Aug 2026 12:44:19 -0700
+X-CSE-ConnectionGUID: DsUS4fVdRdG4nsynvtG9dw==
+X-CSE-MsgGUID: BA15zSvlTZqiV0VBRrFEWw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,235,1779174000"; 
+   d="scan'208";a="264664235"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+  by orviesa006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Aug 2026 12:44:16 -0700
+Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Fri, 21 Aug 2026 12:44:13 -0700
+Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
+ FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45 via Frontend Transport; Fri, 21 Aug 2026 12:44:13 -0700
+Received: from SJ2PR03CU001.outbound.protection.outlook.com (52.101.43.52) by
+ edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Fri, 21 Aug 2026 12:44:12 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pavu2+lX4KCHERsgsmsDS6MsTMl0omwzgck3UorIIe50PjB7I9alV5AHYcF7OzI1i53ZzZvG9ugKLfuwZDOPghITlP2Fla8R1LJqrz/x76AUmAUZ347A1v4mvevMVSjzNCmRbU2+e/dGilIIezHr/XMyxBSKedi0LEyod7DfizbKG7whqwMvPEkH6pL66x4DvAviPte7E9/j2sJagdDZN5+ieknj6/OU3YzDxb8nFy0Ulz9+f+5LqVMf3eWQ81d1vX1+TnaAvTxdROO8dsPwk9ALL8QenRGfg51vmwlr1JeNwOqZBrAEsVtXEqXKqCAppq8dUmOILkLB6Peo2DUUAw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=xsWNiNrNxR15rJgFPon5AQhRX5omBIH/VdM/CsmfeiA=;
+ b=JXAWDysaeOVT2uEvdI73Mu1CZUeIQD5r2STK6m0oYyDcq1i0iKpmx3eVPaIF2AZrvUg1vaSWPeGMD/TMaFUZlpuc9K192MuCVG0Fc4hS72cvBCrdIUA3zr4lJ+zKut4ah6PPVMeufLCwF6D7jV9BDaHIHFbQjZcy8ek2IND2e1fE79e/kzuz0lkWOs7rxkLY+C6SJ9IPCpDi6zj1hlvRw7PNC9DWd+90MXmLJrAKiCjAxcpp26RlWanINFmAZIpz3bHUVPIPSeELc81i1N+WNqRQ2Oawp2hNmHAWouhLrDjVFhQgz7PRqNBLncprEFwrdvGzZF5E3Yn1kI/368cMOg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
+ by LV8PR11MB8723.namprd11.prod.outlook.com (2603:10b6:408:1f8::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.11; Fri, 21 Aug
+ 2026 19:44:10 +0000
+Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
+ ([fe80::3454:2577:75f2:60a6]) by SJ1PR11MB6083.namprd11.prod.outlook.com
+ ([fe80::3454:2577:75f2:60a6%4]) with mapi id 15.21.0339.010; Fri, 21 Aug 2026
+ 19:44:10 +0000
+Date: Fri, 21 Aug 2026 12:44:08 -0700
+From: "Luck, Tony" <tony.luck@intel.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+CC: Fenghua Yu <fenghuay@nvidia.com>, Maciej Wieczor-Retman
+	<maciej.wieczor-retman@intel.com>, Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
+ Fustini" <dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>, Chen Yu
+	<yu.c.chen@intel.com>, <x86@kernel.org>, <linux-kernel@vger.kernel.org>,
+	<patches@lists.linux.dev>
+Subject: Re: [RFC PATCH 1/4] x86/resctrl: Check if monitoring features are
+ enabled
+Message-ID: <aoiqiAEFJfCxhLVk@agluck-desk3>
+References: <20260819161323.11587-1-tony.luck@intel.com>
+ <20260819161323.11587-2-tony.luck@intel.com>
+ <9787f9de-c72d-4c0d-b9a9-867b0f4377f5@intel.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9787f9de-c72d-4c0d-b9a9-867b0f4377f5@intel.com>
+X-ClientProxiedBy: BY3PR04CA0017.namprd04.prod.outlook.com
+ (2603:10b6:a03:217::22) To SJ1PR11MB6083.namprd11.prod.outlook.com
+ (2603:10b6:a03:48a::9)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MX+1SEN3H+wApG6KIYG0gxZYJpI3rtMnSC+ZOJ9kCZMvRogRXPQSwmC0
-	0x0Q31WI7pHPXLkM/ofnF5uFISuL2VBQP5I9kQPBdaJT/Qr+ewISJhllri5WLDEySdeozhz
-	7w2vP5gmqpSvBBAXezz0tzpuesumFWNssKg2DdRVM+k5eq89rBeH/EU0rumuUOqkU7wlQHZ
-	J5fNRdLzGimBM/HPCI/fiGnGgL3JKDYGOu4ihRrBffKt2bmL0IwE8rhkULADWu4QPXJJhhB
-	m8ZNEvGGrSo4IZA3gaxCTSqOx07S+4DogecEYgtbvRQG+MCdKOzJ+G4AgJOjvTOaY8Eopo0
-	oFeyds+LwcGXKl6Ahw+O0X/vIjyU0NCfU9WiY3a5gEr61si03ck8wyC/BCvqrW+NNryJdcS
-	m5fRInV1E51V2uq0m7UOhjpkTmowFO3i7GiRYN1ESHt49NrpBpWzPpCGgLihbqtIpHlN9Ib
-	ngbAm0AugHpBetUiI2LhkxA6k4FF6i8/V318kCoeaHWydlu5OparEP2RUQBuMD84aYZDv8c
-	lOopm1NSfpBfouhOg3G+ebf3BCAFEs8n4KfhaY8bSkiqjiR767MH+ZVSbYTJDEecBQIz8ha
-	MiTjGiWRzHMLBAycmBo8nOkzH+KaU9oSA8DwK8lVffpdDdcoTy40qluM4OHujqSTQAj/FhL
-	fP0/yGfIvXldjZjNXgC6e+cjPP1196bzkZMNobfx3MfeKo+RzabSyYvC+/jOWHxbjpN+N2F
-	Hw92sWy3bJZoaSWaI9NnthnSeoSZ0EW7VfGRc6nRBeZ6ZNcQIVWb6I0Svde1Xtv8wbnWKZL
-	S07E7b8cAfmG04ij86yLVUZ4RNpAYi9iVoCCfLlbj93ldgqntHd0uucgKDkQe/c630xsxhd
-	ODab5I/3u3AIZ5QadnAzQc4UGQw+A9u28TpMh4wRCOURPPQ4rEt5D8EquYIlLePpp73WNvy
-	X/izJf5JXsnr8KvjLoqzu4KbIuxTiYrvrjS701HRGit8mea86MgUxWxrFBGFQumxkdygRyg
-	05NqQ+5q6+/Ks0fwTaL6wCguxsa59abICfZq+fWJYaiRbEYWLXegc5TBfkPJ7e1i5zTmy0Y
-	w==
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-X-QQ-RECHKSPAM: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PR11MB6083:EE_|LV8PR11MB8723:EE_
+X-MS-Office365-Filtering-Correlation-Id: ee8e38e9-2e23-4796-0c68-08deffbc9223
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|23010399003|1800799024|6133799003|22082099003|18002099003|3023799007|56012099006|4143699003|10067099003|11063799006;
+X-Microsoft-Antispam-Message-Info: B5EFnvfZncsB0/Atsy4X1G6i8Cv8t1P1W4kRNdBRGXqLt1JzeENZmUlgxHNjXNcE21vuHU6rso75fW7SRlOYVBwcVDD9pvI9DtZHQCT31OknkQeyUyCIpfofonX3yp4auGoEP6MWTHc8ULaCXNxzLcJ6zmwG+omgZSlk+Oj06Ialuh0V9miVU0VNwNYzpm/xUcP4aKpYel26pkK+gEqWmW0zMQeZAOXApcwYuJevfoFRQ2np2vU9CajpnzhV2rSY7MSN3rgxI/TATg2Or+jEi4VW3UV3tBtU7dMjETA8QGhx3UddvK64TwC1PzW2eEEnylYKF+dfQfhUtNO7jQL5HbK8F5eb1nx5YKRYBlIn/8TkcUBW3TR+USF3uhalFJ39gOLQqQTc3rXReioHmmmTVgkPyl4T3L5FEJTTu8z9/t8AR8e4PNbELS5KxEZCAnZ9ca4MPUJtSAuqbjdBrIG6zUo+eoORFTeLVjB3sxlX2r2mI/s9U9OmXZniqTMhQMS5r7RtWRSS5ofwfEFG3v+Xc6syV8ityukx9HaiCDJIMURXmek4U40XqYrWDdccDVkkytAyDcjJbgFvjVaDnFLqYIsABTAsioaEiB8i8Vzkq6iTdO7IoRRVvmi0U7Q88x9214j6sMuwCM0WjSCDdpWuYX/XIawKwnBzHKLUFGkBQsc=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(6133799003)(22082099003)(18002099003)(3023799007)(56012099006)(4143699003)(10067099003)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bDZ2a05YNE0vSTdacHdxYlJ0SFAwS2hHdkJYTGdKclRDZ3AycHo2czM0d2FQ?=
+ =?utf-8?B?OGsxNFo3NGZRNEJRdFRCQ2FCRUE0bk82U1U3QTJGL0ZkMXpkM2JGRGMrOUls?=
+ =?utf-8?B?bHpHZEQzY1hZL1VxYmpycStqRGRnK3pUS2lObWFrSHdqUHVSakVOZWwwcjNv?=
+ =?utf-8?B?aVVScmMrUEhQdm1NZjVlUjViaFZiQXdDM2o0cms2Z1MzM1ovUEdVYjgxWDNP?=
+ =?utf-8?B?VGdoUTNVY0FjQXRTeEx4YkFNbExEVmRrb2U0a0JqMFlPLzZaejh0TVFNbjk0?=
+ =?utf-8?B?MGpUZUhsSFl3ZW14d2dpYVhjcUI4LzI3cmFaQW1JU3FOUmkzWGx0bnFucEZE?=
+ =?utf-8?B?dWc3MXpzNFlvcnByRlhKOE1jenNyL0ttU0RmQ2pUalRBRzJvRkZJczg1dVNT?=
+ =?utf-8?B?VFM4SmptLzdzeDUrbDdvZUxndGJjOUVTakJlRmhMUTcyVTdYbTFiNzhuSGxq?=
+ =?utf-8?B?M3Rxb2c5S3FwakVOa1Z3cVVqamlmUHNDd2NOU3hqRnIvSFlpYWZTbHVwSGw4?=
+ =?utf-8?B?MzN1RmZtM3J0ZXFEQ1YwSHRQeTU2ZHROOWlQdFFEQ1JzV0twYlIvdHl1NDVO?=
+ =?utf-8?B?WnF6TURtUFpSaEdtd2pPVWRjUDFCZ2doUWpXemx2KzQzN3Y5S1p1Mi83N3JI?=
+ =?utf-8?B?ZHU2U2pBWXNlT1dabnBKY0Zubi9ORXNKWVJSaFdubXhMTkFsZnFtbm5hZHBP?=
+ =?utf-8?B?VUJ1bm5HUkp3WjJYUE0yQ2lBY0RXYk51R28vR2RDYmovZldQOW9ZVlRpSUN4?=
+ =?utf-8?B?L0k2by9mSXIxWlpJRzhScUxSNXlMSk9HZE9CbXk5Z2k0Ynh1NXgrRnI1VVU2?=
+ =?utf-8?B?Q09rWCtyTC9QbTlZS1BnVm9icDFEUzZXU2tLTit3dzRlUUtaOVFxWlpIbnlO?=
+ =?utf-8?B?bEppWEdYeWNPME41eTM3TnU3OTlGdEJPcjRBYmQzaEFVbUd5UUhwakk3L1pj?=
+ =?utf-8?B?SjZoaTkreTdYWE9QdUpBL1M4Vnh1VSs2QTAzUXpwUExjanMyVWhGa1p5aTNa?=
+ =?utf-8?B?azJEWE1tZjAxLzhxNVhMdExjNDFSb2txQUpIdzNrZVVyTXdvZGVQQlcydDdW?=
+ =?utf-8?B?TGxOeDhFdnNJdlBXd1JDVkFKdTlINjRGK2J4b0F4RTZGME16MlVFWDdvd0pC?=
+ =?utf-8?B?STA2OVNlNFdJNW85NEFRMjN3TVF5Y2Fmb0FoY3hxZFp4UE9KSWlzbGZXTWt3?=
+ =?utf-8?B?WUdSaVZFMm52QTRIL0NlY09YNGpTSDdKRjFjQXNsNFdubFp1dXhUTWFQYzNu?=
+ =?utf-8?B?M0NEdmZNbjBiNUFKNERJZVBSSDRWVGtScUFEY1U1VVR4QnVzc3BwNWZoZmRC?=
+ =?utf-8?B?a01rb01obm9kL0JPVE1USEhTN2tGV1ErWExzV3BVT1lyckpmcGFKMVRIZldG?=
+ =?utf-8?B?OEwzaXFGNFRRNnZsdTErNDlnMkR4N090RDdLRlN0YTBhUXVtNE5WOXl2Vk1F?=
+ =?utf-8?B?dkFwbEJoS29rbm45VkdGNmRxNzAxdCtySDdSM08yaGdPVUVQenNLdm0xcEgy?=
+ =?utf-8?B?SVRNSkJWaVd6ZkZ6K1V1ZnJHamJQSnNHdTVhNGxTMFBsZVo5bjB2ZEhDNjQw?=
+ =?utf-8?B?ak9xNG5jYXFselM0WVV2MVUwb3g0cndvYVdVRWdYU1VVOXhUYlN2NG9RNy9O?=
+ =?utf-8?B?MUlMR01MSWNZb1JQQm5OR3hhdnpnMk9hV2lHcG8vZFpsRDFUTUtZWUFsa0Ft?=
+ =?utf-8?B?ZnNjeG40b0hkdWZZa1VTRWRrb09IVlFNWnZRRFZ1d3JzZEJ4M3V6NTM3b29z?=
+ =?utf-8?B?a2tnRG5aeGNnY2c2K0NBZHEzT0VHMHBNdjd0MEdCTWEzRysyWHdjenhEdGg2?=
+ =?utf-8?B?OVZxTFNieVY4UFJzL2J6M2FuQXlhN1BkYnFZNHRVWGZrbkRVUk9PcU90aFdY?=
+ =?utf-8?B?U1ZZZXVBTVFrWFJPYUhVWlBURkkxOHJJMnc5OWsyZVJBVFp0L05nNVltaUd3?=
+ =?utf-8?B?S0tIMWgrekdRUzZZMllEWW9ieGllTUo4S29uUXZwazZZK2kvZTdEcitUZDlr?=
+ =?utf-8?B?WCsxTTVwek1TbitlaUxJa3ZZMDVmVzBiSVlKajZUcTZjN04xTmR6ck5HbzFP?=
+ =?utf-8?B?VTZlN3lUNlBNcHRIcXJJRVFndktKa1VXVVFEc0N4RlVNSkZrSGtqSnBLYVBo?=
+ =?utf-8?B?MmRyV0J4dVN2RXJLckRhZzlmYktxSWdYaE5WNDR2NnJQejhYYUFvYkxoYk01?=
+ =?utf-8?B?MkNtVE5pcU15czNNWmFWSDFOMlNLMjdNQnZoVkcrYUxONUhiMWJiNFhNbEhy?=
+ =?utf-8?B?UUMvNGNUNUN0WHE2b3ZERWtUeWtOUkh1Y0Z3RjA3SytSSXFnM1d3TTZWTERw?=
+ =?utf-8?B?RDBMRDR0N3NUMDMxTGc5bDVSZWw0eHdSSVEvaVBKME5uMHlJcnBYZz09?=
+X-Exchange-RoutingPolicyChecked: CsxCKWf4c4yz71x+w0yYRZqJ4ubjXQbMy7mU5g/JwnuGjFmWwAHigDqO3uWkmEKcYfLUuI+mVrl7RFQbr+VBU+BIvk2LWv6EcPqB7/yNkaZuFJNLjQvEUO7BkEAjkIxTnA5FNmedTbBAyLtuwifTpbUiE+ovtgog4DDdisrYJLOqfMaG7cJ6k0tXd3gmhcqMyOiYiwilwbd+wUSyejb8lCj5Wd1mi8TTuSNmrPgDxc7mZT5pdSZZPrlU43EWYhucKcHaTOKlwlAT20VsQDcEAG2W1KcsrhVZFqvIm3TbFjfIHZ1G21bFPKnPayNWtyDvbgn7PMPjQqdg7tltYZ+bAQ==
+X-MS-Exchange-CrossTenant-Network-Message-Id: ee8e38e9-2e23-4796-0c68-08deffbc9223
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Aug 2026 19:44:10.5896
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: XqK3SCie84j1wX8sZboviSOVO8IsFjGaBqjzYXTo2O/2DMVCf7mNWuazV3CY0Ny0X0yLvVcyBBw74Y/qrh7T4A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR11MB8723
+X-OriginatorOrg: intel.com
 
-Hi,
+On Fri, Aug 21, 2026 at 11:18:51AM -0700, Reinette Chatre wrote:
+> Hi Tony,
+> 
+> Thank you for doing this.
+> 
+> On 8/19/26 9:13 AM, Tony Luck wrote:
+> > Both Intel and AMD manuals say that software must first check
+> > CPUID(0x7,0x0).EBX[12] to see if any monitoring features are enabled
+> > before checking for specific features enabled in subleaves.
+> > 
+> > Add the check for X86_FEATURE_CQM.
+> > 
+> > Fixes: cbc82b172638 ("x86: Add support for Intel Cache QoS Monitoring (CQM) detection")
+> > Signed-off-by: Tony Luck <tony.luck@intel.com>
+> > ---
+> >  arch/x86/kernel/cpu/resctrl/core.c | 3 +++
+> >  1 file changed, 3 insertions(+)
+> > 
+> > diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+> > index 55214d6fdc49..2677b8a6c15b 100644
+> > --- a/arch/x86/kernel/cpu/resctrl/core.c
+> > +++ b/arch/x86/kernel/cpu/resctrl/core.c
+> > @@ -968,6 +968,9 @@ static __init bool get_rdt_mon_resources(void)
+> >  	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
+> >  	bool ret = false;
+> >  
+> > +	if (!cpu_feature_enabled(X86_FEATURE_CQM))
+> > +		return false;
+> 
+> Is this missing a check of X86_FEATURE_CQM_LLC also?
+> 
+> As I understand resctrl learns from X86_FEATURE_CQM whether the system supports
+> resource monitoring in general. Contrary to what the feature name suggests, there is
+> another step needed to determine which resource(s) support monitoring via
+> CPUID(0xF,0x0).EDX where bit 1 indicates LLC monitoring that needs to be set before
+> the LLC resource-specific monitoring properties can/should be determined.
 
-Same build error:
-  CC      drivers/net/ethernet/stmicro/stmmac/stmmac_tc.o
-drivers/net/ethernet/intel/ice/ice_switch.c: In function ‘ice_aq_alloc_free_vsi_list’:
-drivers/net/ethernet/intel/ice/ice_switch.c:1816:23: error: implicit declaration of function ‘__struct_size’; did you mean ‘struct_size’? [-Werror=implicit-function-declaration]
- 1816 |         u16 buf_len = __struct_size(sw_buf);
-      |                       ^~~~~~~~~~~~~
-      |                       struct_size
-  CC [M]  drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.o
+Yes. Missing that check. I agree that the feature define names are bad.
 
-As Ron Economos wrote:
-> This can be fixed by reverting commits:
->
-> "overflow: Change DEFINE_FLEX to take __counted_by member" a5c50a3af39c74eef1a15c39924b0e1f4c6a43a6
->
-> "ice: make use of DEFINE_FLEX() in ice_switch.c" 858a287aeaf8a690fd3c769e0ee2247f40e44b62
->
-> Unfortunately, the Bluetooth commits have to be reverted also (because they
-> depend on "overflow: Change DEFINE_FLEX to take __counted_by member").
->
-> "Bluetooth: hci_sync: Fix advertising data UAFs" 50d4431fab38c15c9ef405b6c7e13c0491f29928
->
-> "Bluetooth: eir: Fix possible crashes on eir_create_adv_data" c4fedbbb5b925228321a359b8a3949b207cc0a62
->
-> "Bluetooth: hci_core: Fix not handling hdev->le_num_of_adv_sets=1" cf931b0c0a6a5b8b70da339101c0df17cc068488
->
-> "Bluetooth: hci_conn, hci_sync: Use __counted_by() to avoid -Wfamnae warnings" 88dd9093e398c68467d8e9c8b7fb630aab05be05
+To avoid continued confusion I should rename the #defines to match the
+bit names in the Intel SDM (but leaving the /proc/cpuinfo visible
+strings at "cqm" and "cqm_llc" as those are user ABI now).
 
-After reverted,
+X86_FEATURE_CQM -> X86_FEATURE_RDT_M
+X86_FEATURE_CQM_LLC -> X86_FEATURE_L3_MON
 
-Build tested in our x86,arm64,loongarch,riscv config successfully without error.
+> 
+> Apart from the checks here I see that cpuid_deps[] accurately reflects the relationship
+> between X86_FEATURE_CQM_LLC and the different LLC monitoring features checked for below.
+> I do not see cpuid_deps[] capturing the relationship between X86_FEATURE_CQM and
+> X86_FEATURE_CQM_LLC though. Could adding it complete the handling of relationships between
+> these leaves?
 
-Tested-by: Wentao Guan <guanwentao@uniontech.com>
+Yes.
+> 
+> Similarly I think cpuid_deps[] may be missing X86_FEATURE_ABMC's dependency on 
+> X86_FEATURE_CQM_LLC. 
 
-Best Regards
-Wentao Guan
+Maybe no? X86_FEATURE_ABMC isn't enumerated in CPUID(0xF,*). It comes
+from the AMD CPUID(0x80000020,0)EBX{5}
 
-Log:
-Linux version 6.6.153-rc1-arm64-desktop-hwe-g0ce9d61969cf-dirty (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT
-Linux version 6.6.153-rc1-arm64-desktop-hwe-g0ce9d61969cf-dirty (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #4 SMP PREEMPT Sat Aug 22 02:08:37 CST 2026
-Linux version 6.6.153-rc1-loong64-desktop-hwe-g0ce9d61969cf-dirty (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT
-Linux version 6.6.153-rc1-loong64-desktop-hwe-g0ce9d61969cf-dirty (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #5 SMP PREEMPT Sat Aug 22 02:26:01 CST 2026
-Linux version 6.6.153-rc1-riscv64-desktop-hwe+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP
-Linux version 6.6.153-rc1-riscv64-desktop-hwe+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #6 SMP Sat Aug 22 02:41:52 CST 2026
-Linux version 6.6.153-rc1-amd64-desktop-hwe-g0ce9d61969cf-dirty (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin15) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC
-Linux version 6.6.153-rc1-amd64-desktop-hwe-g0ce9d61969cf-dirty (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin15) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #3 SMP PREEMPT_DYNAMIC Sat Aug 22 01:47:48 CST 2026
+Babu: The AMD architecture programmer's manual just says:
 
+  "Support for ABMC is identified by CPUID Fn8000_0020_EBX_x0[ABMC] (bit 5)
+   being set. If ABMC is supported, the feature’s attributes and capabilities
+   are enumerated by CPUID Fn8000_0020_x5 as detailed in Appendix E of APM volume 3"
+
+It isn't explicitly stated whether this depends on CPUID Fn0000_000F_x0
+EDX{1}, which AMD names: "L3CacheMon - L3 monitoring capability"
+
+> > +
+> >  	if (rdt_cpu_has(X86_FEATURE_CQM_OCCUP_LLC)) {
+> >  		resctrl_enable_mon_event(QOS_L3_OCCUP_EVENT_ID, false, 0, NULL);
+> >  		ret = true;
+> 
+> Reinette
+
+-Tony
