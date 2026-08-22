@@ -1,84 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5156F2EEE80;
-	Sat, 22 Aug 2026 13:30:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F363385A1
+	for <patches@lists.linux.dev>; Sat, 22 Aug 2026 17:05:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787405443; cv=none; b=UgKXoHPaWviQJlbmze8v6+YpQRBPG0utxOPGehbjpUutBjoyU4dPB90NbB79Zp2djJsaaWj3Qp2QQ6aeQ6zoOMiVJJ9ZQqsNNsfjcJ3EfuGADpt7cac1C2Htlxhd6ISjZS2hmm3q+ejVhsPwkCuE3HN8QQplKRGWJOpphKca9qI=
+	t=1787418337; cv=none; b=hSkr1hrFgWKboQVPz60atQg+gixdvK2zWFzaCoZtKOyNho8BXHTz22NB8PUiIgdWL0euunCPd/cxFs/i0sjo+4op2umBnmp7kKuQ82Yv07e5g4qLDEBGhny3eQ7BNe6dTaYuFDOXhaT9wD6+tU21f0H6aTHv4Z22zB5tkRXMZt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787405443; c=relaxed/simple;
-	bh=Cxx2VzvBBfnipA0DmAXQx067lp99v9u1P+yXwV3cuPU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jp06SI/ZxrVVQHdK4jqBxNskyR6Q8E+fyLYA97HXSQglZWiAviw79JB9DipKEd9mfYAq2koOcK6IQny1BNfd+hYBgJZvdYzgiHltIKSMDY7JEGJ8izZ6Yu3ehaqB6LBYNdtqEFaOXIiu51mm16qIiUJ4eRBmRW51PQxSWqR0yxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AEWybGBk; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787418337; c=relaxed/simple;
+	bh=QPLlNMMbjesKQsWEfI/phjjPWXr60vHoWmwqRuUuxs0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rLCGcmY/uZ+tqD8Pwg8nX51tH+WCtvJXDRp3vhs9GVmTcICro2ruh73OqtkeY3VHTth6NUBxu/mz2R+M7i/cR+/31jsq3Bn31QJiWcaX93w8K332OhbxeXtrCg/wdb3CmSnEWKNrBIh+Sfnebl0yhx1fNMXJjdlCNSpD7qFqCGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pWzJAzF1; arc=none smtp.client-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AEWybGBk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 106401F000E9;
-	Sat, 22 Aug 2026 13:30:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787405442;
-	bh=m0N3Tnk0ZrVZOZuOd4yc3ecMw/kbCadIn9BaU7bfgFM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=AEWybGBkq6PxLS9oWlj/8IZtFglT7bvxXPMvXKGF+i4YelvT0iR3iXxNvoi8p5U0f
-	 3IOqrCeSY+3EY12HO7xqar3P9ADpeQUuwCdnrbr6ptHaqvT0TBwOL2C8QoYD5UldLV
-	 aA/dMzc/g4ImGSMBk0ReHDY4Rg3bQAuE4no6TcvtGlgPF5bkvJh6vg4mbcjbtbd7MM
-	 X/KqKm9reAEHUxvRlLcD+4UvNz04Q4lBUiSxm4mQ9z+d/Pk7JhP/LugngpvfZYD06k
-	 0mEwZ4jC6xVw657WLayKKlWXrk7Jx4y/bvgOwcZy2smaQ5Erl18igye+q4pXvpDr4G
-	 bqUTqk/ZLhfJw==
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-	id D7A131AC527F; Sat, 22 Aug 2026 14:30:39 +0100 (BST)
-Date: Sat, 22 Aug 2026 14:30:39 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
-Subject: Re: [PATCH 5.10 000/235] 5.10.266-rc1 review
-Message-ID: <aomkf71pGkpHoOOE@sirena.co.uk>
-References: <20260820145216.426568665@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pWzJAzF1"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-395cf2535acso1607104a91.1
+        for <patches@lists.linux.dev>; Sat, 22 Aug 2026 10:05:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787418335; x=1788023135; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=94g4E3XXKB5hk3Ok+4/woZgjePfy9NT9YGo5t3pERx8=;
+        b=pWzJAzF13yJxpvVcS79dJVgD7d9IdqOCwRe55nsrVRsgK8qnFMNJLEaHp8rwW+DeO2
+         j1CuIZns4pUb1GGr5RZWsO/r+mD//9lvnH1odrzKHvBiTUxaSmZaZQjf1ozgdRj008yX
+         nV7eoZhND1D5XdDMjOsMZMDZndrqjVjUX18YfZufKH8bB9AzLL9hoOfu00Donro6S4Tg
+         XubQ8inGmlDS3SxulnjKHVGFdzx13FZPcXuP8ovU8oIebriesbEA7YYpnqsJ2PR4R9C6
+         WE7jcoIrHW57KClioYmyiVxX7K4KGzC+E0bPUu2Hf1G+OXb4Jrp+c3fwGT4Wkn0f8Wzh
+         ORSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787418335; x=1788023135;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=94g4E3XXKB5hk3Ok+4/woZgjePfy9NT9YGo5t3pERx8=;
+        b=HOdVhI5RYqo5wBuFFsYJtk+AO0mMB/kO6wPiEmcNcjUnMOrhZDOPLcJhzieVGHGXs0
+         pzokJKvrBfuHeESoWlflYpiK/wflzaWfTvVXgHvijSRHjru2OTGiQDy9ZFLrWrtm89wj
+         eP5gIlGc3EJYcNIAbKmqUTO3LPSMkA6+axy6dErcflWXX/ePi75d7ijh/LBZKyMyteEs
+         UwXBzgFREL8JyAXYpjb+M1odLbD+PhMdn9jSC3a6au3xIt0827dihAOYBvqnPpP4b3cI
+         FwiC9qdtbojiuJizV3HNIWePrFm2Os+hj+eilOP1dzeLyCBOA3fOCF06kKUiu6L5lP4J
+         AidA==
+X-Gm-Message-State: AFuF++mHNjK7d5VtMEft0mnMuDuVD8B846vym9xlV6AGCXwOdfs5aEdx
+	fDRKdJxsYTygXbSht/pTEyB/CJlXjJIvTqMpzF7HvsT3TBWRR36V6UGL
+X-Gm-Gg: AR+sD10On/8tKKLFpHLDpR635THTpaepxiIUxRTff7o7v1LQNso3U1jlCIYnC4Dv0Yk
+	1Q/8qT4vsvwUggBURQgE0+MIc8V4r1+Y3ElD8cKle+VXw2R9gpPdMR7+XC4zaF3KxNHgYfSO74k
+	/pKnQanQ4dCtI7BgjirTUx+IdjKQ8NwF/Ms7ameBAPNcmlHTb4u9If6S4gvt+vIif/y8urZn8Hx
+	4eRMdWz5c/JTsaqHAH8XB3x2zDZyBkMeuzIQVv1B2X7DD639mycMtXAMbEK7ySdmzrAUTIrUvP8
+	pWy88XU5Tmr+JRwZsIrbrX23AQir8yf90tSEcPLJbxkyafLV7SmDUmvfSMTos+EZdZ1HLVo74Vc
+	cjndvXlmOLo9ZkDTdDms9JLms6YRkpQcYfyskkoY6I7aJs/4P138xBW28tyBcodaWoYBcSLxiAb
+	gDFzXXSZ7c5h3qfNjN9K6ms59ze3ZfdfnrtWZ05l0qpfIYqwL4CRnBz2VqRMPmNSBtsk40rq40Z
+	MIAZ2wggGhBtCJXSVHEBSp6VVk4bg==
+X-Received: by 2002:a17:90b:3bcc:b0:37f:a913:1554 with SMTP id 98e67ed59e1d1-395a06bc47amr26496228a91.16.1787418335043;
+        Sat, 22 Aug 2026 10:05:35 -0700 (PDT)
+Received: from [192.168.1.3] (ip68-4-215-93.oc.oc.cox.net. [68.4.215.93])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1418617378bsm8669683c88.11.2026.08.22.10.05.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 22 Aug 2026 10:05:33 -0700 (PDT)
+Message-ID: <aaf725f0-c618-4b01-9233-4547fb1ece84@gmail.com>
+Date: Sat, 22 Aug 2026 10:05:31 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="icXLkxAbb/rTBEwG"
-Content-Disposition: inline
-In-Reply-To: <20260820145216.426568665@linuxfoundation.org>
-X-Cookie: My vaseline is RUNNING...
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.6 000/160] 6.6.153-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20260821142844.249995408@linuxfoundation.org>
+Content-Language: en-US
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20260821142844.249995408@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
---icXLkxAbb/rTBEwG
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-On Thu, Aug 20, 2026 at 04:53:56PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.266 release.
-> There are 235 patches in this series, all will be posted as a response
+On 8/21/2026 7:30 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.153 release.
+> There are 160 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+> 
+> Responses should be made by Sun, 23 Aug 2026 14:28:27 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.153-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Tested-by: Mark Brown <broonie@kernel.org>
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
---icXLkxAbb/rTBEwG
-Content-Type: application/pgp-signature; name="signature.asc"
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmqJpH8ACgkQJNaLcl1U
-h9DERQf/YudxIQcW1KecwqcGYOXSdMQbyVHYYP8kqP22R2KraE5xC4bJOe5Jn4ND
-U5L+I+ksnelj+AHSCCc3J4SiCt1hjf//APIhrAoQZ91ML1hZljeH8kkbq++YkftE
-ua5uUZ093RJYYqfLJqThSMsivq3v6XSlK3rdV8/T2mf3vQak8lXNVScMEW1qtcAM
-JxJCOIPh6zVLF5d8HaNI8tcsQ9NNkLI0MkJYZ+T83z1aqCmN80K81KF21HrmFcQU
-332GdLBP7bI8GW64KyoSLkFoQ6JUK39CkKNcyZOcrqcJEwQKYC067oTd6T1+q4Vo
-SWJghT3uE4XYnRBqNGy8iJJFaCdNKg==
-=iy2d
------END PGP SIGNATURE-----
-
---icXLkxAbb/rTBEwG--
