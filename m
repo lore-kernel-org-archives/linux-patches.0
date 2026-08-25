@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A075423EAD;
-	Tue, 25 Aug 2026 13:32:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65FA63FF8BA;
+	Tue, 25 Aug 2026 13:32:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664739; cv=none; b=qSltfcBN8UMVOeHq8WOFQyjrIvBcRGWzET2jNfMXWosyCd5rRP1UEcvuJ3GzG+d3xSbxMqXTq3c3zeA3oj6DsHg74V9qfLcS+jKzFc63OWg41ykb7VRTgsR410kfuJpswyy8PXe8DyhwnCuHoc3+nxtbJZbHOQaATYBBKWLs2CQ=
+	t=1787664741; cv=none; b=WpVu4NIUcUo/cplL2O6f/NUPzPPY6FwLyEI9WgoA519MjDEJxhwHwKlJVsnxr6V3cx+G0du8/qXcn1Y44I8VCgRnENjbWo263+329gDXgSWhJQkOjVfjFz8M0TuWHzsjgNsZx1VwFEVuU6v91j3/LES97RWWNqvbOS/ZXpU/M70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664739; c=relaxed/simple;
-	bh=664t5dDqO7lGnGN/X0hwNkeTMOedLa3/qIIjoojCSpM=;
+	s=arc-20240116; t=1787664741; c=relaxed/simple;
+	bh=yX3QcestyasPlsA8/G+/8SUKeYCNugM1arJBXH5Fak0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D4mm8lQIPkbaCI9u9lGt8iEMrEcfahMRD0z4s1UfhUMolV9nNWWcANQYVW6ZJa8r6Nap2U6QvfXJBj0HRwEPGt2ESFmv4AzxacnzSqK2K4vynUHsgH03pv4vKjBUVQwLdgWWBS3KgHVXAPhr1B4lztxUHCy24y3DteymP7+m0r8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kc8JJLni; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aSt6tZRknBqqiWByw8RLmY6pKmAYkb9ohmyA5T5d5rNgBhwhFqcMJubolNGDtn+ja64L5OqOOlEoeCOoxXQkxokjJhr1jjvVU9m6z9jVLYypyI/cFyyinR5DJztyPqzzkdKsYILXccIB2nPQxIYNGD2znXLi+9tYJtcNVOOWwN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kuoMfW/p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kc8JJLni"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCF621F000E9;
-	Tue, 25 Aug 2026 13:32:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kuoMfW/p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C016B1F000E9;
+	Tue, 25 Aug 2026 13:32:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664737;
-	bh=jPAAJ9SRBcL6Yu33ZeboRqlNvUtXfeGGQKFdP198M8A=;
+	s=korg; t=1787664740;
+	bh=la0X9WRWryFmSIZg0xbkdXUj099Q71FLbxa9rqrGfYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kc8JJLnizXneYFi2uT7dnXb3VFSfP8lyNOLFZzw0csWvIzzgV6XotmWbZfSVpIT+J
-	 WCyqdwwbHBJQPI8I4vVNdzVGmbKDRmrQ4+NIFRiVwlWd7Sa3lm5XnE9ehKKAe635tT
-	 28rB+gcshuyqai1j8FZWQDcCqhegB4ZiK6BxEBGg=
+	b=kuoMfW/pFmrFufphko+zmt7swTw7ZGxXjph9jbZxP1+e+/Wyp75ZfbXgbDgLD4zEc
+	 S+2owtN8G448APuMf2SVekJZh6z8EoDru5f+RTSn/L/ZKM8ASnem4YqcGo11IpMFAC
+	 nm7BLxTBobEJhJuFwwgTzbyum9BfejA1xJDKe+MQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
+	Raman Varabets <kernel-linux-20260610-80b7ab08@raman.v1.sg>,
+	Michael Zaidman <michael.zaidman@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.2 69/82] HID: core: fix number/pointer type confusion on long items
-Date: Tue, 25 Aug 2026 15:25:56 +0200
-Message-ID: <20260825132544.198396018@linuxfoundation.org>
+Subject: [PATCH 7.2 70/82] HID: ft260: fix stack-use-after-return write in I2C read race
+Date: Tue, 25 Aug 2026 15:25:57 +0200
+Message-ID: <20260825132544.236748680@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -50,66 +51,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Raman Varabets <kernel-linux-20260610-80b7ab08@raman.v1.sg>
 
-commit 28abce951343fcec26e397610868efa4e1395c3f upstream.
+commit bf3e39df3a397fd82967a31d17c4e02c7feab221 upstream.
 
-When fetch_item() is called by hid_scan_report() on an item with
-HID_ITEM_TAG_LONG, it stores a pointer to the item data in
-item->data.longdata instead of storing a value directly in
-item->data.{u8/u16/u32}.
+ft260_i2c_read() points dev->read_buf at a caller-supplied buffer
+(often an on-stack variable), arms a completion and waits up to five
+seconds for the device to return the data. The HID input callback
+ft260_raw_event() runs in the input/IRQ path, independent of the
+dev->lock mutex held by the read path, and copies the device-supplied
+payload into dev->read_buf after a plain NULL check.
 
-When item_udata() or item_sdata() encounters such an item, it incorrectly
-assumes that the item is in short format, and therefore returns the lower
-part of a kernel pointer reinterpreted as a number.
+These two paths share read_buf, read_idx and read_len with no
+serialization. If the device delays its response until the read
+times out, ft260_i2c_read() resets the controller, clears read_buf
+and returns, unwinding the stack frame the buffer lived in. A
+response that arrives at that moment lets ft260_raw_event() pass the
+NULL check and then memcpy() the device-controlled payload into the
+now-freed stack location, a bounded but attacker-influenced
+stack-use-after-return write triggerable by malicious or
+malfunctioning hardware.
 
-When a HID device is connected whose descriptor contains a
-HID_GLOBAL_ITEM_TAG_REPORT_SIZE encoded in long format with size=4, this
-causes the lower half of a kernel pointer to be printed into dmesg as a
-number, like this:
+Add a dedicated spinlock that serializes every access to read_buf,
+read_idx and read_len. ft260_raw_event() now holds it across the
+NULL check, the memcpy and the index update, while the read path
+takes it when arming and when clearing the buffer, so the teardown
+can no longer slip between the check and the copy.
 
-    hid (null): invalid report_size 107953555
-
-To fix it, let item_udata() and item_sdata() verify that the item is in
-short format.
-
-Note that this bug only affects hid_scan_report(), while the main parsing
-pass hid_parse_collections() will always bail out when encountering a long
-item.
-
-Sidenote: There are currently no users of data.longdata; maybe we should
-just remove any parsing of long-format descriptors as a follow-up.
-
-Fixes: 3dc8fc083dbf ("HID: Use hid_parser for pre-scanning the report descriptors")
+Fixes: 6a82582d9fa4 ("HID: ft260: add usb hid to i2c host bridge driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Raman Varabets <kernel-linux-20260610-80b7ab08@raman.v1.sg>
+Reviewed-by: Michael Zaidman <michael.zaidman@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-core.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/hid/hid-ft260.c |   25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -379,6 +379,9 @@ static int hid_add_field(struct hid_pars
+--- a/drivers/hid/hid-ft260.c
++++ b/drivers/hid/hid-ft260.c
+@@ -240,6 +240,8 @@ struct ft260_device {
+ 	struct mutex lock;
+ 	u8 write_buf[FT260_REPORT_MAX_LENGTH];
+ 	unsigned long need_wakeup_at;
++	/* Protects read_buf, read_idx and read_len against ft260_raw_event() */
++	spinlock_t read_lock;
+ 	u8 *read_buf;
+ 	u16 read_idx;
+ 	u16 read_len;
+@@ -501,6 +503,7 @@ static int ft260_i2c_read(struct ft260_d
+ 	int timeout, ret = 0;
+ 	struct ft260_i2c_read_request_report rep;
+ 	struct hid_device *hdev = dev->hdev;
++	unsigned long irqflags;
+ 	u8 bus_busy = 0;
  
- static u32 item_udata(struct hid_item *item)
- {
-+	if (item->format != HID_ITEM_FORMAT_SHORT)
-+		return 0;
-+
- 	switch (item->size) {
- 	case 1: return item->data.u8;
- 	case 2: return item->data.u16;
-@@ -389,6 +392,9 @@ static u32 item_udata(struct hid_item *i
+ 	if ((flag & FT260_FLAG_START_REPEATED) == FT260_FLAG_START_REPEATED)
+@@ -526,9 +529,11 @@ static int ft260_i2c_read(struct ft260_d
  
- static s32 item_sdata(struct hid_item *item)
+ 		reinit_completion(&dev->wait);
+ 
++		spin_lock_irqsave(&dev->read_lock, irqflags);
+ 		dev->read_idx = 0;
+ 		dev->read_buf = data;
+ 		dev->read_len = rd_len;
++		spin_unlock_irqrestore(&dev->read_lock, irqflags);
+ 
+ 		ret = ft260_hid_output_report(hdev, (u8 *)&rep, sizeof(rep));
+ 		if (ret < 0) {
+@@ -543,7 +548,9 @@ static int ft260_i2c_read(struct ft260_d
+ 			goto ft260_i2c_read_exit;
+ 		}
+ 
++		spin_lock_irqsave(&dev->read_lock, irqflags);
+ 		dev->read_buf = NULL;
++		spin_unlock_irqrestore(&dev->read_lock, irqflags);
+ 
+ 		if (flag & FT260_FLAG_STOP)
+ 			bus_busy = FT260_I2C_STATUS_BUS_BUSY;
+@@ -562,7 +569,9 @@ static int ft260_i2c_read(struct ft260_d
+ 	} while (len > 0);
+ 
+ ft260_i2c_read_exit:
++	spin_lock_irqsave(&dev->read_lock, irqflags);
+ 	dev->read_buf = NULL;
++	spin_unlock_irqrestore(&dev->read_lock, irqflags);
+ 	return ret;
+ }
+ 
+@@ -1018,6 +1027,7 @@ static int ft260_probe(struct hid_device
+ 		 "FT260 usb-i2c bridge");
+ 
+ 	mutex_init(&dev->lock);
++	spin_lock_init(&dev->read_lock);
+ 	init_completion(&dev->wait);
+ 
+ 	ret = ft260_xfer_status(dev, FT260_I2C_STATUS_BUS_BUSY);
+@@ -1067,6 +1077,7 @@ static int ft260_raw_event(struct hid_de
  {
-+	if (item->format != HID_ITEM_FORMAT_SHORT)
-+		return 0;
+ 	struct ft260_device *dev = hid_get_drvdata(hdev);
+ 	struct ft260_i2c_input_report *xfer = (void *)data;
++	unsigned long irqflags;
+ 
+ 	if (size < offsetof(struct ft260_i2c_input_report, data)) {
+ 		hid_err(hdev, "short report %d\n", size);
+@@ -1075,6 +1086,8 @@ static int ft260_raw_event(struct hid_de
+ 
+ 	if (xfer->report >= FT260_I2C_REPORT_MIN &&
+ 	    xfer->report <= FT260_I2C_REPORT_MAX) {
++		bool complete_read;
 +
- 	switch (item->size) {
- 	case 1: return item->data.s8;
- 	case 2: return item->data.s16;
+ 		ft260_dbg("i2c resp: rep %#02x len %d size %d\n",
+ 			  xfer->report, xfer->length, size);
+ 
+@@ -1085,8 +1098,15 @@ static int ft260_raw_event(struct hid_de
+ 			return -1;
+ 		}
+ 
++		/*
++		 * Hold read_lock so a timed-out ft260_i2c_read() cannot
++		 * clear read_buf between the NULL check and the memcpy.
++		 */
++		spin_lock_irqsave(&dev->read_lock, irqflags);
++
+ 		if ((dev->read_buf == NULL) ||
+ 		    (xfer->length > dev->read_len - dev->read_idx)) {
++			spin_unlock_irqrestore(&dev->read_lock, irqflags);
+ 			hid_err(hdev, "unexpected report %#02x, length %d\n",
+ 				xfer->report, xfer->length);
+ 			return -1;
+@@ -1095,8 +1115,11 @@ static int ft260_raw_event(struct hid_de
+ 		memcpy(&dev->read_buf[dev->read_idx], &xfer->data,
+ 		       xfer->length);
+ 		dev->read_idx += xfer->length;
++		complete_read = dev->read_idx == dev->read_len;
++
++		spin_unlock_irqrestore(&dev->read_lock, irqflags);
+ 
+-		if (dev->read_idx == dev->read_len)
++		if (complete_read)
+ 			complete(&dev->wait);
+ 
+ 	} else {
 
 
