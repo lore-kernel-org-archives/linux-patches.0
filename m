@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED8D479864;
-	Tue, 25 Aug 2026 13:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C88481AA4;
+	Tue, 25 Aug 2026 13:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665614; cv=none; b=f42sEjRJt3N1asIw5pC8xocs3a7KsWrpwwMAkB/y4620b1+ng8c2QpoLmwfXp4rCceBeUCTve4Wu5Q1zq0G38snmDYdBIk2hNb5UjjDHgDSiwyaHiR7vL3cKWd7KLgxKIZjhc/kFGAMWzLMSkUtSlH1OcM8qE25yGuwHm3BmyE0=
+	t=1787665617; cv=none; b=k3G44AUKSxuvAPgOkhbgzgWR4WxCSPBa9zEluTNfNm81k54XcF9XoYIV3m/rhHskkM3ljcgmQaUAkbKaydMeGhV+wbLuKxKLrLOrBnkLdN/TbQ3RZb7Gz4/KN/E1HJ7FV9UIrP92SNiLwVTzqw6h0QuLUDDUkTeiYbner1z5Tl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665614; c=relaxed/simple;
-	bh=me6wIIacuzgXihzYvGzquGBjqyp+C9SRlE3zd2KVP0A=;
+	s=arc-20240116; t=1787665617; c=relaxed/simple;
+	bh=D/OmeVSm9N+Ylm2xs7qQ0YzMCrUNypIzL6WVMYbCpLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J9rMxxV7RaJlQXL1ELThPsEkL941hrYhy/piN0oEsSUdX5OcXZlMBKuorcvwISrGn8J5P6qFp8Ti61hdSKxMMgzZ5342rco1XJxiuskFG5o5UYyxFqBJZ9rZAjoQC28vaUcphg7rq+AgcMf4R8zjipvvbvhBSh/PLYNaniSCvLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4HXia5Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u6VyPmjo34ySLNKcpvyp7J2qGrwProEoyqi6YMJcBjjc7TFLmmMSLtItmQXqt6WyaN7WrbUiuC+HI3gd87UbRINPcSpen6v7DMQQ8uKZcKUgqRpDPvFp2xnFgh8GAt7j7dvK4C72MdQbWsw6NvHX0Ldl6t0hzbgiyjhDZVXG9gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=box+O6gf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4HXia5Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E571F00A3E;
-	Tue, 25 Aug 2026 13:46:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="box+O6gf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E93CC1F000E9;
+	Tue, 25 Aug 2026 13:46:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665610;
-	bh=g/2PN0EU8tYfl7I9eAbOUlHDyJ5o55lGhLDL+HIZu04=;
+	s=korg; t=1787665613;
+	bh=UfuFZzJMSCr1U67WlPVQjjBsU2UKqQenbJWtHrh6Trs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v4HXia5Qjrol2gEj+8Roh2VUfIQELlguqLHK3g3Qu1Xq7emtJJlVGBXRQx69DQCKc
-	 eqLq+C7V/lMR4XOIUS00f2zVofKypYQqRAKWOdKJoUTqaBoWjzFTnDjfhVDerMXT7o
-	 Fgg06KSgj5V1DcfE1GKDP/9vclz7/D2kOLjTlbLc=
+	b=box+O6gft7wYBiM0+8ik7m2lbNyRM+f/XQx3AiBiZEWfLzXelrLsQTdrVH3S4ugVT
+	 2K1j7xdga0z1jNywcoKtCECLH3MUS7odue4O5m5F4dWlBHP1R4wNR9x+XH5ElxgJoD
+	 jW+FR45iRPE01INLDR5P2lRJWALu200NEJo+df5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Si-Wei Liu <si-wei.liu@oracle.com>,
-	Shannon Nelson <sln@onemain.com>,
-	Anand Khoje <anand.a.khoje@oracle.com>,
-	Simon Horman <horms@kernel.org>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 62/77] net/ionic: avoid OOB TX partner lookup for hwstamp RXQ
-Date: Tue, 25 Aug 2026 15:26:24 +0200
-Message-ID: <20260825132543.976725241@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 53/77] selinux: require a classs permission values to cover its permission count
+Date: Tue, 25 Aug 2026 15:26:15 +0200
+Message-ID: <20260825132543.640796184@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.580275153@linuxfoundation.org>
 References: <20260825132541.580275153@linuxfoundation.org>
@@ -54,81 +52,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anand Khoje <anand.a.khoje@oracle.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit d92255b405fb6f5acca408239ccd742e0a42c9cb upstream.
+[ Upstream commit b98a8ac50775540f3804397ed08f61ef9910bcab ]
 
-The dedicated hardware timestamp RX queue is allocated with q->index
-equal to lif->ionic->nrxqs_per_lif. The normal txqcqs array only
-contains the regular queue pairs, so using that index to set rxq->partner
-can read one entry past txqcqs[] and then write through the derived
-pointer.
-Only link RX/TX partners for normal queue-pair indexes. Leave the hwstamp
-RX queue unpaired, and make the XDP_TX path abort cleanly if an RX queue
-has no TX partner.
+security_get_permissions() sizes an array by the class's permissions.nprim
+and fills it at value - 1, from the inherited common's permission table and
+then the class's own. A value no permission defines leaves a NULL that
+sel_make_perm_files() passes to d_alloc_name(), an oops inside
+sel_write_load() that strands selinux_state.policy_mutex and leaves every
+later load in uninterruptible sleep; two permissions sharing a value
+overwrite the first kstrdup(). Bounding each value by nprim catches
+neither, and neither would a count: the symbol table is keyed on the
+permission name, so duplicates pass.
 
-Fixes: 8eeed8373e1c ("ionic: Add XDP_TX support")
-Reviewed-by: Si-Wei Liu <si-wei.liu@oracle.com>
-Reviewed-by: Shannon Nelson <sln@onemain.com>
+Track the values each permission table claims and require them to cover
+exactly what its count declares, rejecting a count no value can reach.
+Conforming policies are unaffected.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Anand Khoje <anand.a.khoje@oracle.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Link: https://patch.msgid.link/20260813083705.454897-1-anand.a.khoje@oracle.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 55fcf09b3fe4 ("selinux: add support for querying object classes and permissions from the running policy")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+[ folded in the missing perdatum->value guards and used `void *fp` instead of `struct policy_file *fp` in perm_read() ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_lif.c  |   17 +++++++++++++++--
- drivers/net/ethernet/pensando/ionic/ionic_txrx.c |    7 ++++++-
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ security/selinux/ss/policydb.c |   57 +++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 52 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-@@ -917,8 +917,21 @@ static int ionic_lif_rxq_init(struct ion
- 	};
- 	int err;
+--- a/security/selinux/ss/policydb.c
++++ b/security/selinux/ss/policydb.c
+@@ -1132,7 +1132,18 @@ static int str_read(char **strp, gfp_t f
+ 	return 0;
+ }
  
--	q->partner = &lif->txqcqs[q->index]->q;
--	q->partner->partner = q;
-+	q->partner = NULL;
+-static int perm_read(struct policydb *p, struct symtab *s, void *fp)
++/*
++ * Bitmap of the permission values a symtab has claimed.  Values are 1-based
++ * and bounded by SEL_VEC_MAX, the width of an access vector, so the whole set
++ * fits in a u32 and the callers reject an nprim past that width.
++ */
++static u32 perm_claimed_mask(u32 nprim)
++{
++	return nprim ? U32_MAX >> (SEL_VEC_MAX - nprim) : 0;
++}
 +
-+	/* Only normal RX queues have matching TX queue partners. */
-+	if (q->index < lif->nxqs) {
-+		if (!lif->txqcqs ||
-+		    q->index >= lif->ionic->ntxqs_per_lif ||
-+		    !lif->txqcqs[q->index]) {
-+			dev_err(dev, "missing TX queue partner for RX queue %u\n",
-+				q->index);
-+			return -ENXIO;
-+		}
-+
-+		q->partner = &lif->txqcqs[q->index]->q;
-+		q->partner->partner = q;
++static int perm_read(struct policydb *p, struct symtab *s, void *fp,
++		     u32 *claimed)
+ {
+ 	char *key = NULL;
+ 	struct perm_datum *perdatum;
+@@ -1150,6 +1161,16 @@ static int perm_read(struct policydb *p,
+ 
+ 	len = le32_to_cpu(buf[0]);
+ 	perdatum->value = le32_to_cpu(buf[1]);
++	rc = -EINVAL;
++	if (perdatum->value < 1 || perdatum->value > SEL_VEC_MAX)
++		goto bad;
++	/* indexes an nprim-sized array in security_get_permissions() */
++	if (perdatum->value > s->nprim)
++		goto bad;
++	/* two permissions cannot share one slot of that array */
++	if (*claimed & (1U << (perdatum->value - 1)))
++		goto bad;
++	*claimed |= 1U << (perdatum->value - 1);
+ 
+ 	rc = str_read(&key, GFP_KERNEL, fp, len);
+ 	if (rc)
+@@ -1170,7 +1191,7 @@ static int common_read(struct policydb *
+ 	char *key = NULL;
+ 	struct common_datum *comdatum;
+ 	__le32 buf[4];
+-	u32 i, len, nel;
++	u32 i, len, nel, claimed = 0;
+ 	int rc;
+ 
+ 	comdatum = kzalloc(sizeof(*comdatum), GFP_KERNEL);
+@@ -1189,17 +1210,28 @@ static int common_read(struct policydb *
+ 	if (rc)
+ 		goto bad;
+ 	comdatum->permissions.nprim = le32_to_cpu(buf[2]);
++	/* no permission value can reach a slot past SEL_VEC_MAX */
++	rc = -EINVAL;
++	if (comdatum->permissions.nprim > SEL_VEC_MAX)
++		goto bad;
+ 
+ 	rc = str_read(&key, GFP_KERNEL, fp, len);
+ 	if (rc)
+ 		goto bad;
+ 
+ 	for (i = 0; i < nel; i++) {
+-		rc = perm_read(p, &comdatum->permissions, fp);
++		rc = perm_read(p, &comdatum->permissions, fp, &claimed);
+ 		if (rc)
+ 			goto bad;
+ 	}
+ 
++	rc = -EINVAL;
++	if (claimed != perm_claimed_mask(comdatum->permissions.nprim)) {
++		pr_err("SELinux:  common %s does not define every permission it declares\n",
++		       key);
++		goto bad;
 +	}
- 
- 	if (!lif->xdp_prog ||
- 	    (lif->xdp_prog->aux && lif->xdp_prog->aux->xdp_has_frags))
---- a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-@@ -545,13 +545,18 @@ static bool ionic_run_xdp(struct ionic_r
- 		break;
- 
- 	case XDP_TX:
-+		txq = rxq->partner;
-+		if (unlikely(!txq)) {
-+			err = -EIO;
-+			break;
-+		}
 +
- 		xdpf = xdp_convert_buff_to_frame(&xdp_buf);
- 		if (!xdpf) {
- 			err = -ENOSPC;
- 			break;
- 		}
+ 	hash_eval(&comdatum->permissions.table, "common_permissions", key);
  
--		txq = rxq->partner;
- 		nq = netdev_get_tx_queue(netdev, txq->index);
- 		__netif_tx_lock(nq, smp_processor_id());
- 		txq_trans_cond_update(nq);
+ 	rc = symtab_insert(s, key, comdatum);
+@@ -1335,7 +1367,7 @@ static int class_read(struct policydb *p
+ 	char *key = NULL;
+ 	struct class_datum *cladatum;
+ 	__le32 buf[6];
+-	u32 i, len, len2, ncons, nel;
++	u32 i, len, len2, ncons, nel, claimed = 0, inherited = 0;
+ 	int rc;
+ 
+ 	cladatum = kzalloc(sizeof(*cladatum), GFP_KERNEL);
+@@ -1355,6 +1387,10 @@ static int class_read(struct policydb *p
+ 	if (rc)
+ 		goto bad;
+ 	cladatum->permissions.nprim = le32_to_cpu(buf[3]);
++	/* no permission value can reach a slot past SEL_VEC_MAX */
++	rc = -EINVAL;
++	if (cladatum->permissions.nprim > SEL_VEC_MAX)
++		goto bad;
+ 
+ 	ncons = le32_to_cpu(buf[5]);
+ 
+@@ -1389,11 +1425,22 @@ static int class_read(struct policydb *p
+ 		}
+ 	}
+ 	for (i = 0; i < nel; i++) {
+-		rc = perm_read(p, &cladatum->permissions, fp);
++		rc = perm_read(p, &cladatum->permissions, fp, &claimed);
+ 		if (rc)
+ 			goto bad;
+ 	}
+ 
++	/* the class's own permissions must claim the slots the common leaves */
++	if (cladatum->comdatum)
++		inherited = cladatum->comdatum->permissions.nprim;
++	rc = -EINVAL;
++	if (claimed != (perm_claimed_mask(cladatum->permissions.nprim) &
++			~perm_claimed_mask(inherited))) {
++		pr_err("SELinux:  class %s does not define every permission it declares\n",
++		       key);
++		goto bad;
++	}
++
+ 	hash_eval(&cladatum->permissions.table, "class_permissions", key);
+ 
+ 	rc = read_cons_helper(p, &cladatum->constraints, ncons, 0, fp);
 
 
