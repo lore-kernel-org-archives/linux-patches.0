@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BC8392C21;
-	Tue, 25 Aug 2026 13:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5277D400994;
+	Tue, 25 Aug 2026 13:49:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665771; cv=none; b=ZxaNUOZfp124OtyoMmeJfc3z8MHxsWwSTyDwFAgimbBpZCH7Q3CNT5Rjd6ndOIoxHEwEX1WtkYPd6DeXNKqZfXoQd1rxmFclGwup0OtGYRuL6QXyyV8ui1bYQmnxs+FyUpCx2j7g/Rj9yWcfCdDzSd+k2upy0B0pVzROvARPp+Y=
+	t=1787665773; cv=none; b=NBfqzaQ80RSYVmpwDMoFPCRUYpeDa4x859hEoq63mi6+Z06djiQKi9F08dlV6IceS0Q4UKxI/dfqtArmYsZRkix9GmfeHjfi5f0QLc25gi5JieRGjP2+z8/jy3PuYSO4/d5J4glaJFkFH8VuZDTGwX6dL+kjaZbxJJQ6o8/No5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665771; c=relaxed/simple;
-	bh=rwOuXY3lEjUW4AfPhE3dD1ao3C8VZA+vp0KAjmOOu98=;
+	s=arc-20240116; t=1787665773; c=relaxed/simple;
+	bh=Z5WvbPzWlxAXBWNOW3vYmuDsu4yN5jFr+MquY0TM0/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PVQAE8T0JFdv7h47geCp/goX0V5xfm7KZDeXn4rO5nrsEw3Ms84ZiMmdBNE2++OTsg3gOEch763WV0IOIjYTS7DNWkFJBUbck571kaJ9LSeM7J4MxadjLx8L2QUntJ9xwc0d+r3lSkG+NrONJOa3areqae5Mpd7Mio6kN1zdpq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RPuI2OxA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mcg1VgyTxPgolhE8AN97abzQJ8lbG5VQkYxCaLfpJzv9Pp74cE3ExT+sgPTuax2nexsvtXc/2HvxFPDXx6KqpH7JQgRX77QdnMDAd1stGjgBG18DiLvH/n/QuTDVeRQkJdLiAmIHcJbAjXr+4J9fuSS1IQfF4ictpqsDMs2kMW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxyuWlkU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPuI2OxA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31361F000E9;
-	Tue, 25 Aug 2026 13:49:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxyuWlkU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903EE1F000E9;
+	Tue, 25 Aug 2026 13:49:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665769;
-	bh=Kh90AJEF79hgClqGUIzJNsOaMnJjEBBe6Z7+pyvZBOU=;
+	s=korg; t=1787665772;
+	bh=fwuieYzOp+zkykrPAY5tokGn0PoXIN6kFIURansbxjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RPuI2OxAgKchiDuHqyNXS7VSPL8RFTEvDnpMa2vZ2pLElRXK4fIf5yO4hVIJ47sD+
-	 c64LvO2cNJ6n+WVe8gsVxlROjF7J8JU4/iS+clb44lJ4s4EXqSWKHBPsENgogSJ0kA
-	 AEkErhZwl5O4uEBGD78X54k6FpjIu3hhz7BYnuvI=
+	b=BxyuWlkUsLkbpuz3Dj9aFqsw+sSYoHqeZwUYURrXJKuB54Z0rBiIHBG1j18v9s4ZQ
+	 yPBw78it665XVIg94V190MNS8eh6vdgasUVUo0bDN+NuaolFX4avi1qf300Nv82zzj
+	 ztyNU9zR4KkmZ5tNeH3sEm2K8+4DYeuCyLx8LbnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 58/87] ASoC: SOF: Relocate and rework functionality for PCM stream freeing
-Date: Tue, 25 Aug 2026 15:26:21 +0200
-Message-ID: <20260825132544.108411432@linuxfoundation.org>
+	Ian Bridges <icb@fastmail.org>,
+	syzbot+e538032956b1157914a3@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 23/87] ocfs2: fix missing metadata reservation for large xattrs
+Date: Tue, 25 Aug 2026 15:25:46 +0200
+Message-ID: <20260825132542.746739394@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -54,234 +58,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Ian Bridges <icb@fastmail.org>
 
-[ Upstream commit 169ec0a541aac8afb215ab591b0fd53276686014 ]
+commit 0cdc7dde00ec63ac714271fa8b2918d630b8da1a upstream.
 
-Move the sof_pcm_stream_free() from sof-audio.c to pcm.c as static function
-and add wrapper to free all active stream, which is going to be used in
-ipc3/4 topology code (removes duplicated code).
+[BUG]
+lsetxattr() panics the kernel when setting a large xattr value on a
+fragmented filesystem where the file already has an external xattr
+block.
 
-With this change most of the PCM stream related code is located in one
-source file for easier lookup and simplified flow.
+[CAUSE]
+ocfs2_calc_xattr_set_need() never reserves metadata blocks for a new
+xattr value's extent tree when the file already has an external xattr
+block. The not_found path leaves meta_add at zero, so meta_ac is NULL
+when ocfs2_xattr_extend_allocation() runs.
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Link: https://patch.msgid.link/20250206092828.7569-2-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 17661c67b206 ("ASoC: SOF: ipc4-pcm: Continue the pipeline trigger in case of IPC timeout")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+A new value root has room for a single extent record. On a fragmented
+filesystem, the allocator cannot satisfy the xattr value in one
+contiguous run, so each non-contiguous run requires its own extent
+record. When the value root's extent list is full and meta_ac is NULL,
+ocfs2_add_clusters_in_btree() returns RESTART_META, and
+ocfs2_xattr_extend_allocation() hits BUG_ON(why == RESTART_META).
+
+[FIX]
+The case where no xattr block exists yet already calls
+ocfs2_extend_meta_needed(&def_xv.xv.xr_list) to reserve value tree
+metadata. Add the same reservation to the case where an xattr block
+already exists, making the two cases consistent.
+
+Replace the BUG_ON with a -ENOSPC return so that if RESTART_META is
+returned despite the reservation, the error propagates to userspace
+instead of panicking the kernel.
+
+Link: https://lore.kernel.org/amLwn3i9tET8yhG7@dev
+Fixes: a78f9f466894 ("ocfs2: make xattr extension work with new local alloc reservation.")
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Reported-by: syzbot+e538032956b1157914a3@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e538032956b1157914a3
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc3-topology.c |   20 ++----------
- sound/soc/sof/ipc4-topology.c |   18 -----------
- sound/soc/sof/pcm.c           |   65 ++++++++++++++++++++++++++++++++++++++++++
- sound/soc/sof/sof-audio.c     |   36 -----------------------
- sound/soc/sof/sof-audio.h     |    3 -
- 5 files changed, 71 insertions(+), 71 deletions(-)
+ fs/ocfs2/xattr.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/sound/soc/sof/ipc3-topology.c
-+++ b/sound/soc/sof/ipc3-topology.c
-@@ -2295,28 +2295,16 @@ static int sof_ipc3_set_up_all_pipelines
- static int sof_tear_down_left_over_pipelines(struct snd_sof_dev *sdev)
- {
- 	struct snd_sof_widget *swidget;
--	struct snd_sof_pcm *spcm;
--	int dir, ret;
-+	int ret;
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -736,12 +736,10 @@ static int ocfs2_xattr_extend_allocation
+ 					 prev_clusters;
  
- 	/*
- 	 * free all PCMs and their associated DAPM widgets if their connected DAPM widget
- 	 * list is not NULL. This should only be true for paused streams at this point.
- 	 * This is equivalent to the handling of FE DAI suspend trigger for running streams.
- 	 */
--	list_for_each_entry(spcm, &sdev->pcm_list, list) {
--		for_each_pcm_streams(dir) {
--			struct snd_pcm_substream *substream = spcm->stream[dir].substream;
+ 		if (why != RESTART_NONE && clusters_to_add) {
+-			/*
+-			 * We can only fail in case the alloc file doesn't give
+-			 * up enough clusters.
+-			 */
+-			BUG_ON(why == RESTART_META);
 -
--			if (!substream || !substream->runtime || spcm->stream[dir].suspend_ignored)
--				continue;
--
--			if (spcm->stream[dir].list) {
--				ret = sof_pcm_stream_free(sdev, substream, spcm, dir, true);
--				if (ret < 0)
--					return ret;
--			}
--		}
--	}
-+	ret = sof_pcm_free_all_streams(sdev);
-+	if (ret)
-+		return ret;
- 
- 	/*
- 	 * free any left over DAI widgets. This is equivalent to the handling of suspend trigger
---- a/sound/soc/sof/ipc4-topology.c
-+++ b/sound/soc/sof/ipc4-topology.c
-@@ -2951,9 +2951,6 @@ static int sof_ipc4_dai_get_clk(struct s
- 
- static int sof_ipc4_tear_down_all_pipelines(struct snd_sof_dev *sdev, bool verify)
- {
--	struct snd_sof_pcm *spcm;
--	int dir, ret;
--
- 	/*
- 	 * This function is called during system suspend, we need to make sure
- 	 * that all streams have been freed up.
-@@ -2965,21 +2962,8 @@ static int sof_ipc4_tear_down_all_pipeli
- 	 *
- 	 * This will also make sure that paused streams handled correctly.
- 	 */
--	list_for_each_entry(spcm, &sdev->pcm_list, list) {
--		for_each_pcm_streams(dir) {
--			struct snd_pcm_substream *substream = spcm->stream[dir].substream;
--
--			if (!substream || !substream->runtime || spcm->stream[dir].suspend_ignored)
--				continue;
- 
--			if (spcm->stream[dir].list) {
--				ret = sof_pcm_stream_free(sdev, substream, spcm, dir, true);
--				if (ret < 0)
--					return ret;
--			}
--		}
--	}
--	return 0;
-+	return sof_pcm_free_all_streams(sdev);
- }
- 
- static int sof_ipc4_link_setup(struct snd_sof_dev *sdev, struct snd_soc_dai_link *link)
---- a/sound/soc/sof/pcm.c
-+++ b/sound/soc/sof/pcm.c
-@@ -191,6 +191,71 @@ static int sof_pcm_hw_params(struct snd_
- 	return 0;
- }
- 
-+static int sof_pcm_stream_free(struct snd_sof_dev *sdev,
-+			       struct snd_pcm_substream *substream,
-+			       struct snd_sof_pcm *spcm, int dir,
-+			       bool free_widget_list)
-+{
-+	const struct sof_ipc_pcm_ops *pcm_ops = sof_ipc_get_ops(sdev, pcm);
-+	int ret;
-+
-+	if (spcm->prepared[substream->stream]) {
-+		/* stop DMA first if needed */
-+		if (pcm_ops && pcm_ops->platform_stop_during_hw_free)
-+			snd_sof_pcm_platform_trigger(sdev, substream,
-+						     SNDRV_PCM_TRIGGER_STOP);
-+
-+		/* Send PCM_FREE IPC to reset pipeline */
-+		if (pcm_ops && pcm_ops->hw_free) {
-+			ret = pcm_ops->hw_free(sdev->component, substream);
-+			if (ret < 0)
-+				return ret;
-+		}
-+
-+		spcm->prepared[substream->stream] = false;
-+	}
-+
-+	/* reset the DMA */
-+	ret = snd_sof_pcm_platform_hw_free(sdev, substream);
-+	if (ret < 0)
-+		return ret;
-+
-+	/* free widget list */
-+	if (free_widget_list) {
-+		ret = sof_widget_list_free(sdev, spcm, dir);
-+		if (ret < 0)
-+			dev_err(sdev->dev, "failed to free widgets during suspend\n");
-+	}
-+
-+	return ret;
-+}
-+
-+int sof_pcm_free_all_streams(struct snd_sof_dev *sdev)
-+{
-+	struct snd_pcm_substream *substream;
-+	struct snd_sof_pcm *spcm;
-+	int dir, ret;
-+
-+	list_for_each_entry(spcm, &sdev->pcm_list, list) {
-+		for_each_pcm_streams(dir) {
-+			substream = spcm->stream[dir].substream;
-+
-+			if (!substream || !substream->runtime ||
-+			    spcm->stream[dir].suspend_ignored)
-+				continue;
-+
-+			if (spcm->stream[dir].list) {
-+				ret = sof_pcm_stream_free(sdev, substream, spcm,
-+							  dir, true);
-+				if (ret < 0)
-+					return ret;
++			if (why == RESTART_META) {
++				status = -ENOSPC;
++				break;
 +			}
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static int sof_pcm_hw_free(struct snd_soc_component *component,
- 			   struct snd_pcm_substream *substream)
- {
---- a/sound/soc/sof/sof-audio.c
-+++ b/sound/soc/sof/sof-audio.c
-@@ -831,42 +831,6 @@ bool snd_sof_stream_suspend_ignored(stru
- 	return false;
- }
+ 			credits = ocfs2_calc_extend_credits(inode->i_sb,
+ 							    &vb->vb_xv->xr_list);
+ 			status = ocfs2_extend_trans(handle, credits);
+@@ -3211,6 +3209,14 @@ meta_guess:
+ 			credits += OCFS2_SUBALLOC_ALLOC + 1;
  
--int sof_pcm_stream_free(struct snd_sof_dev *sdev, struct snd_pcm_substream *substream,
--			struct snd_sof_pcm *spcm, int dir, bool free_widget_list)
--{
--	const struct sof_ipc_pcm_ops *pcm_ops = sof_ipc_get_ops(sdev, pcm);
--	int ret;
--
--	if (spcm->prepared[substream->stream]) {
--		/* stop DMA first if needed */
--		if (pcm_ops && pcm_ops->platform_stop_during_hw_free)
--			snd_sof_pcm_platform_trigger(sdev, substream, SNDRV_PCM_TRIGGER_STOP);
--
--		/* Send PCM_FREE IPC to reset pipeline */
--		if (pcm_ops && pcm_ops->hw_free) {
--			ret = pcm_ops->hw_free(sdev->component, substream);
--			if (ret < 0)
--				return ret;
--		}
--
--		spcm->prepared[substream->stream] = false;
--	}
--
--	/* reset the DMA */
--	ret = snd_sof_pcm_platform_hw_free(sdev, substream);
--	if (ret < 0)
--		return ret;
--
--	/* free widget list */
--	if (free_widget_list) {
--		ret = sof_widget_list_free(sdev, spcm, dir);
--		if (ret < 0)
--			dev_err(sdev->dev, "failed to free widgets during suspend\n");
--	}
--
--	return ret;
--}
--
- /*
-  * Generic object lookup APIs.
-  */
---- a/sound/soc/sof/sof-audio.h
-+++ b/sound/soc/sof/sof-audio.h
-@@ -633,8 +633,7 @@ int sof_widget_list_setup(struct snd_sof
- int sof_widget_list_free(struct snd_sof_dev *sdev, struct snd_sof_pcm *spcm, int dir);
- int sof_pcm_dsp_pcm_free(struct snd_pcm_substream *substream, struct snd_sof_dev *sdev,
- 			 struct snd_sof_pcm *spcm);
--int sof_pcm_stream_free(struct snd_sof_dev *sdev, struct snd_pcm_substream *substream,
--			struct snd_sof_pcm *spcm, int dir, bool free_widget_list);
-+int sof_pcm_free_all_streams(struct snd_sof_dev *sdev);
- int get_token_u32(void *elem, void *object, u32 offset);
- int get_token_u16(void *elem, void *object, u32 offset);
- int get_token_comp_format(void *elem, void *object, u32 offset);
+ 		/*
++		 * Reserve metadata for the new xattr's value extent tree.
++		 * The not_found path above adds credits for this tree but
++		 * omits meta_add, leaving meta_ac NULL for large values.
++		 */
++		if (xi->xi_value_len > OCFS2_XATTR_INLINE_SIZE)
++			meta_add += ocfs2_extend_meta_needed(&def_xv.xv.xr_list);
++
++		/*
+ 		 * This cluster will be used either for new bucket or for
+ 		 * new xattr block.
+ 		 * If the cluster size is the same as the bucket size, one
 
 
