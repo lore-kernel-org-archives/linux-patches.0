@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CB447FAFE;
-	Tue, 25 Aug 2026 13:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5854E392C21;
+	Tue, 25 Aug 2026 13:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665704; cv=none; b=VcPrUxiM7earwqEVZGooeRSCYkdB6JYp0o/xnxNJlSBx2Iysy1ATmhFmP15HOt7eOgQXAK+TXQR5By66xxh4trLH179oLWiz+tXz28CcpE2ZUkrFIuut474eOBzgRRZqp6ycSmkifeE6pa9odEZZxxWIe5QB8DVwZBHxSAjSLE8=
+	t=1787665707; cv=none; b=UthOZNWM7yS8aor5f3VOnmtni4z+U3mlkBc0+uMK/fMOllIeyptuddGSH89Jckko2Q/quaiG8nP92eqXQI1GgTYhEyNQ0y94s+EJjoUe+sxMhkwDspr/ll3/TwoYW6sBIY3vmDXU6wDzFBYx7DqXlTRc119R/FmC6Njr/qR1FLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665704; c=relaxed/simple;
-	bh=Qxokkq0oB3eAl+dVTm39Le+DOWQ5rQBfJdUyKmgtM4M=;
+	s=arc-20240116; t=1787665707; c=relaxed/simple;
+	bh=auyODuSEu1tvDxsecLj7Fv7CTP0x+h92RgpAdDAmH0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M4IsgI3RWIXaZtbAE+wMK3AYBhM38RfsOAHCtONqiDFaezivreOv0q7NClB/B5SXP+0BlPyyYT5C6z4KttNTgebN9jYbFWsjhJSFKQESfQTItkRPLPE3aQ6GBDlwT8wBB/t6f1Mggd/dq9vRyW73wx55nzwQi/hRxZ+egv2YgGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eUsNSmIR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UDVKT9b5e5CZ3jG+N0y6xia6xNt7bX0eHXW9nWHHzkK6xM/tRBIYNHokg5U4RbUSDFzWItKaDEB521T9MGMarWjsHipnE+hWOzPaLcDm8USt2Hbhk/eHyaVnkdpBa4YI+vwh2Ua9FljmYukyzaee2qNRMh4UQblU8jAsrqmCIKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pWTl6KDs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eUsNSmIR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0BE61F000E9;
-	Tue, 25 Aug 2026 13:48:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pWTl6KDs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4B71F000E9;
+	Tue, 25 Aug 2026 13:48:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665703;
-	bh=LNRopsVZA/0XV5O61GqJESurWqhIs4NAjtiCfSjl1Gg=;
+	s=korg; t=1787665705;
+	bh=qj4r/XBuDDdFU4+xY6RXjElVYibovedYAaKavSfdJq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eUsNSmIRxYvoPe9DqzItrcPrTt90gUkWXjvPi27L3GOR3xJZBsbBbr8YlUybaoWhk
-	 qnJA4CcGWyqfTlbGNsxofVXSnS7Dn866HY4Xk2p9LQZSbDjnO3RYnuaZYysE9XKlje
-	 /Y1IPky1IXNbD7vmQGPv9rcKEpJ/AZSl29F96ucw=
+	b=pWTl6KDsHJGkEvF7RDhgniOj7BWu4L3+F0TO7ggkns11XegLhZtKqVXob/pAgokDY
+	 ZW2s3dgxcpx91CzXG+aMmLVLk3z9rLXOJ8BJ4xIHIEHcpky87hIfxdqKSpEETJJSJA
+	 XqzFcB9ls+VHt/MZNLwgrk/ndJzRwCebhoAAtzs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 6.6 38/87] nfc: digital: clamp SENSF_RES length to the destination buffer
-Date: Tue, 25 Aug 2026 15:26:01 +0200
-Message-ID: <20260825132543.347564811@linuxfoundation.org>
+	Ibrahim Hashimov <security@auditcode.ai>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Brian Foster <bfoster@redhat.com>,
+	Carlos Maiolino <cem@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 21/87] xfs: bounds-check buffer log items dirty bitmap
+Date: Tue, 25 Aug 2026 15:25:44 +0200
+Message-ID: <20260825132542.668377791@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -51,41 +53,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-commit 344a56d7c8e0f3cbaff0bcb1bcd95a1a1db24b16 upstream.
+[ Upstream commit 813f8136a2ce1fee266d02a7df73db6e8a541604 ]
 
-digital_in_recv_sensf_res() memcpy()s resp->len bytes from a remote
-NFC-F device response into the NFC_SENSF_RES_MAXSIZE-byte target.sensf_res
-field without an upper-bound check. A nearby malicious NFC-F device can
-send an oversized SENSF_RES response to overflow the stack-local struct
-nfc_target.
+xlog_recover_do_reg_buffer() replays each dirty region described by a
+buffer log item's bitmap into the buffer read for that item:
 
-Clamp resp->len to NFC_SENSF_RES_MAXSIZE before the copy.
+	memcpy(xfs_buf_offset(bp, (uint)bit << XFS_BLF_SHIFT),
+		item->ri_buf[i].iov_base,
+		nbits << XFS_BLF_SHIFT);
 
-Found by 0sec automated security-research tooling (https://0sec.ai).
+The destination offset (bit/nbits, from the logged dirty bitmap) and the
+buffer size (from the logged blf_len) are both attacker-controlled and
+otherwise unrelated, yet the only thing bounding the copy is an ASSERT(),
+which compiles away on production kernels. A crafted image logging a
+small blf_len together with a bitmap bit past the end of that buffer
+drives the memcpy() past the buffer's allocation, corrupting adjacent
+kernel heap during mount-time log recovery. This is reachable by anyone
+who can get a crafted image mounted -- the malicious-filesystem threat
+model XFS already guards against elsewhere.
 
-Fixes: 8c0695e4998d ("NFC Digital: Add NFC-F technology support")
+Turn the ASSERT() into a real XFS_IS_CORRUPT() check that aborts recovery
+of the buffer with -EFSCORRUPTED, consistent with the validate-and-fail
+idiom already used in xlog_recover_do_inode_buffer() and
+xfs_dquot_item_recover.c. xlog_recover_do_reg_buffer() therefore becomes
+STATIC int and its three callers propagate the error.
+
+Found and confirmed with KASAN on a CONFIG_XFS_DEBUG=n build: the crafted
+image trips a slab-out-of-bounds write before this change and fails
+recovery cleanly with -EFSCORRUPTED after it.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Link: https://patch.msgid.link/20260603141355.68156-1-doruk@0sec.ai
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Reviewed-by: Brian Foster <bfoster@redhat.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/digital_technology.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/xfs/xfs_buf_item_recover.c |   57 ++++++++++++++++++++++++++++++------------
+ 1 file changed, 41 insertions(+), 16 deletions(-)
 
---- a/net/nfc/digital_technology.c
-+++ b/net/nfc/digital_technology.c
-@@ -778,6 +778,8 @@ static void digital_in_recv_sensf_res(st
+--- a/fs/xfs/xfs_buf_item_recover.c
++++ b/fs/xfs/xfs_buf_item_recover.c
+@@ -444,7 +444,7 @@ xlog_recover_validate_buf_type(
+  * given buffer.  The bitmap in the buf log format structure indicates
+  * where to place the logged data.
+  */
+-STATIC void
++STATIC int
+ xlog_recover_do_reg_buffer(
+ 	struct xfs_mount		*mp,
+ 	struct xlog_recover_item	*item,
+@@ -472,8 +472,24 @@ xlog_recover_do_reg_buffer(
+ 		ASSERT(nbits > 0);
+ 		ASSERT(item->ri_buf[i].iov_base != NULL);
+ 		ASSERT(item->ri_buf[i].iov_len % XFS_BLF_CHUNK == 0);
+-		ASSERT(BBTOB(bp->b_length) >=
+-		       ((uint)bit << XFS_BLF_SHIFT) + (nbits << XFS_BLF_SHIFT));
++		/*
++		 * The bitmap is only trustworthy to the extent that it
++		 * describes a region that actually fits inside the buffer we
++		 * read in based on the (attacker-controlled) blf_len.  Do not
++		 * rely on an ASSERT() for this -- it compiles away entirely on
++		 * non-DEBUG kernels, which is exactly where this matters, so
++		 * validate it for real and abort recovery of this buffer rather
++		 * than copying past the end of it.
++		 */
++		if (XFS_IS_CORRUPT(mp, BBTOB(bp->b_length) <
++				((uint)bit << XFS_BLF_SHIFT) +
++				(nbits << XFS_BLF_SHIFT))) {
++			xfs_alert(mp,
++	"Bad buffer log item dirty bitmap (bit %d, nbits %d) for %d-byte buffer at daddr 0x%llx.",
++				bit, nbits, BBTOB(bp->b_length),
++				xfs_buf_daddr(bp));
++			return -EFSCORRUPTED;
++		}
  
- 	sensf_res = (struct digital_sensf_res *)resp->data;
+ 		/*
+ 		 * The dirty regions logged in the buffer, even though
+@@ -527,6 +543,7 @@ xlog_recover_do_reg_buffer(
+ 	ASSERT(i == item->ri_total);
  
-+	resp->len = min_t(unsigned int, resp->len, NFC_SENSF_RES_MAXSIZE);
-+
- 	memcpy(target.sensf_res, sensf_res, resp->len);
- 	target.sensf_res_len = resp->len;
+ 	xlog_recover_validate_buf_type(mp, bp, buf_f, current_lsn);
++	return 0;
+ }
  
+ /*
+@@ -535,10 +552,10 @@ xlog_recover_do_reg_buffer(
+  * (ie. USR or GRP), then just toss this buffer away; don't recover it.
+  * Else, treat it as a regular buffer and do recovery.
+  *
+- * Return false if the buffer was tossed and true if we recovered the buffer to
+- * indicate to the caller if the buffer needs writing.
++ * Return 0 if the buffer was not recovered (tossed), 1 if it was recovered and
++ * needs writing, or a negative errno if recovery of the buffer failed.
+  */
+-STATIC bool
++STATIC int
+ xlog_recover_do_dquot_buffer(
+ 	struct xfs_mount		*mp,
+ 	struct xlog			*log,
+@@ -547,6 +564,7 @@ xlog_recover_do_dquot_buffer(
+ 	struct xfs_buf_log_format	*buf_f)
+ {
+ 	uint			type;
++	int			error;
+ 
+ 	trace_xfs_log_recover_buf_dquot_buf(log, buf_f);
+ 
+@@ -554,7 +572,7 @@ xlog_recover_do_dquot_buffer(
+ 	 * Filesystems are required to send in quota flags at mount time.
+ 	 */
+ 	if (!mp->m_qflags)
+-		return false;
++		return 0;
+ 
+ 	type = 0;
+ 	if (buf_f->blf_flags & XFS_BLF_UDQUOT_BUF)
+@@ -567,10 +585,12 @@ xlog_recover_do_dquot_buffer(
+ 	 * This type of quotas was turned off, so ignore this buffer
+ 	 */
+ 	if (log->l_quotaoffs_flag & type)
+-		return false;
++		return 0;
+ 
+-	xlog_recover_do_reg_buffer(mp, item, bp, buf_f, NULLCOMMITLSN);
+-	return true;
++	error = xlog_recover_do_reg_buffer(mp, item, bp, buf_f, NULLCOMMITLSN);
++	if (error)
++		return error;
++	return 1;
+ }
+ 
+ /*
+@@ -706,7 +726,9 @@ xlog_recover_do_primary_sb_buffer(
+ 	xfs_agnumber_t			orig_agcount = mp->m_sb.sb_agcount;
+ 	int				error;
+ 
+-	xlog_recover_do_reg_buffer(mp, item, bp, buf_f, current_lsn);
++	error = xlog_recover_do_reg_buffer(mp, item, bp, buf_f, current_lsn);
++	if (error)
++		return error;
+ 
+ 	if (orig_agcount == 0) {
+ 		xfs_alert(mp, "Trying to grow file system without AGs");
+@@ -1026,11 +1048,11 @@ xlog_recover_buf_commit_pass2(
+ 			goto out_release;
+ 	} else if (buf_f->blf_flags &
+ 		  (XFS_BLF_UDQUOT_BUF|XFS_BLF_PDQUOT_BUF|XFS_BLF_GDQUOT_BUF)) {
+-		bool	dirty;
+-
+-		dirty = xlog_recover_do_dquot_buffer(mp, log, item, bp, buf_f);
+-		if (!dirty)
++		error = xlog_recover_do_dquot_buffer(mp, log, item, bp, buf_f);
++		if (error <= 0)
+ 			goto out_release;
++		/* write dirty buffer */
++		error = 0;
+ 	} else if ((xfs_blft_from_flags(buf_f) & XFS_BLFT_SB_BUF) &&
+ 			xfs_buf_daddr(bp) == 0) {
+ 		error = xlog_recover_do_primary_sb_buffer(mp, item, bp, buf_f,
+@@ -1038,7 +1060,10 @@ xlog_recover_buf_commit_pass2(
+ 		if (error)
+ 			goto out_release;
+ 	} else {
+-		xlog_recover_do_reg_buffer(mp, item, bp, buf_f, current_lsn);
++		error = xlog_recover_do_reg_buffer(mp, item, bp, buf_f,
++						   current_lsn);
++		if (error)
++			goto out_release;
+ 	}
+ 
+ 	/*
 
 
