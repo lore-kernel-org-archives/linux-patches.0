@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4323D7A07;
-	Tue, 25 Aug 2026 13:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDDDF380FC3;
+	Tue, 25 Aug 2026 13:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664589; cv=none; b=FQYRnF/hd5DURxxuFb9WfOxGs5pCt1jjUCEUkIE8zQ6RnuiwRW79YGKlx3ZjP4Bo4H1E79jeGvJyZLkwXKvmFrdagCGhqkWnYAoqcP8LDRGPI0FGQNGkiWK9P+3nAnOafsP/e9Yj+JVAJfPjb0M2GQp7evc0pamXgg+sAiKtNms=
+	t=1787664592; cv=none; b=K2Mn/IA41MDXfs2s3vCr69pJHiqt+6etbUNbWqaQY04m5rx8tcA7rzslDPxFS9aUxy1umfyjdCoF5BP5Q7WaKy5wsL92GjoHY9EuUlc1ceQzBm0E71GH9SIuNT6g5/kJxUx9epN2zdNN8BMlpqCU+qiGbzLzZmLDG2McJkWESpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664589; c=relaxed/simple;
-	bh=vwhvvtq3FCZicfAkLjeM671LHFunCH5S/t73FjAXbNI=;
+	s=arc-20240116; t=1787664592; c=relaxed/simple;
+	bh=d1yFNbTXA4tWC/SiVQkELElyoFAQwXARNgar2VDXYCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A1R8quhBFb+cYZSw8bfn9WRziGGacDLd54Cbt3g+PM8kX3i7uEXcNqS1Sp+iR0njoNbOlwcCH+a3Yq247TvJ51I17TZhqojqmbxyyIH88d6QDfK9JnN2sZ6iKEvRENEIKs0AaWqPo9h8He3YXNi9a2AW4fWZEVF+rhOWWui8ghc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mveyUOkk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O0UOKP/LZ0d9ZYdH/rjeoJGZiT0NA4OPH3BZQJEUlQ4+/STH+wCCd+wLXzxhT/KywdKcrk96vRnedepnPZgQ0STHcd+YWbk4/obFgsYv/nIIRSclycPUy9rLGyRj95JQhdH6Av63b/yMuKiFpBEjQoa4WIVKVXTQR6xJuJQWj3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znen8wAA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mveyUOkk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 406531F000E9;
-	Tue, 25 Aug 2026 13:29:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znen8wAA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB891F000E9;
+	Tue, 25 Aug 2026 13:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664587;
-	bh=163gS9EhefCTFljA0DQ/O5U3VmISqgyX+8lcWDBv4oM=;
+	s=korg; t=1787664590;
+	bh=cEO3M9TF+CJhic+vfli6OkOStPCy70AQ3yYz0Qbi9F8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mveyUOkkJShBv57jHYJki6c21rTrS6ubUOPESIYRNl9TkBp9sd75dJ0y0mB1eXerm
-	 ld5TD1+TrRUdih44/fA0HtRVXYzTF89QSYFiRxxxHxtIkoXCmdgEKccSYkmVrCHwiH
-	 Nf6JvDLzPgqXfpB/wECDWw9ygq9+hxnauNeh0tCY=
+	b=znen8wAA5aZtopONlq2fxh57w+O+WZ+6F5WlQFxXpE+M2wJ7jEb8L1zp6fAE0tmOp
+	 D+wkXQbencNT5gmmaw65IW1nADHEhD8X8ysXtOtwR4rc0tzXebH4CVMIneQ24lHjS7
+	 hou+N2R3f+DLTQ88yCO1KBUP0Z62lGWteBgG4uk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a4ccdd7ebf452e4d4701@syzkaller.appspotmail.com,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.2 20/82] io_uring/uring_cmd: dont skip completion for a synchronous multishot cmd
-Date: Tue, 25 Aug 2026 15:25:07 +0200
-Message-ID: <20260825132542.312057574@linuxfoundation.org>
+Subject: [PATCH 7.2 21/82] io_uring: defer eventfd signaling when queued from a wakeup handler
+Date: Tue, 25 Aug 2026 15:25:08 +0200
+Message-ID: <20260825132542.350842247@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -52,45 +51,234 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-commit 360941242f09437a1e07cbed9b5a96663ffeabb6 upstream.
+commit cd305ee3633a45fcf5f3a5d83f99f3cb77d87b6e upstream.
 
-If IORING_URING_CMD_MULTISHOT is set, io_uring_cmd() treats any
-non-negative return from ->uring_cmd() as the driver having taken
-ownership of the request and returns IOU_ISSUE_SKIP_COMPLETE. But
-nothing guarantees that the driver did so, and any handler that just
-completes the command inline and returns 0 or a positive result then
-leaves the request orphaned, leaking the io_kiocb, the async data,
-and the file reference.
+io_req_local_work_add() signals the CQ ring eventfd inline when it is the
+one to push the first entry onto ->work_list. For DEFER_TASKRUN rings that
+add is frequently done from a waitqueue wakeup handler, where an
+arbitrary waitqueue lock is held.
 
-The special case isn't needed. ublk returns -EIOCBQUEUED for the
-multishot fetch command, which is passed through as-is, and the poll
-driven socket timestamp command returns -EAGAIN. Kill it, a multishot
-handler that wants to hang on to the request must return -EIOCBQUEUED
-or -EAGAIN like any other command.
+eventfd_signal_mask() only refuses to recurse when current->in_eventfd
+is set, but that bit is set by eventfd_signal_mask() itself. If the wake
+chain starts somewhere else, signal goes out inline and can feed back
+into epoll.
 
-Fixes: 620a50c92700 ("io_uring: uring_cmd: add multishot support")
+Add IOU_F_TWQ_IN_WAKE, set it on the task_work add done from the three
+waitqueue callbacks, and use it to force io_eventfd_signal() down the
+existing call_rcu_hurry() deferral instead of signaling inline.
+
+Fixes: 21a091b970cd ("io_uring: signal registered eventfd to process deferred task work")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+a4ccdd7ebf452e4d4701@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6a7a0194.b50370da.49fe0.0056.GAE@google.com/
-Link: https://lore.kernel.org/all/20260811115125.1831170-1-vasilisalmpanis@gmail.com/
+Link: https://lore.kernel.org/all/20260813133843.2933127-1-4ncienth@gmail.com/
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/uring_cmd.c |    4 ----
- 1 file changed, 4 deletions(-)
+ include/linux/io_uring_types.h |    8 ++++++++
+ io_uring/eventfd.c             |    8 ++++----
+ io_uring/eventfd.h             |    2 +-
+ io_uring/futex.c               |    4 ++--
+ io_uring/io_uring.c            |    2 +-
+ io_uring/poll.c                |   23 ++++++++++++-----------
+ io_uring/tw.c                  |    2 +-
+ io_uring/waitid.c              |    2 +-
+ 8 files changed, 30 insertions(+), 21 deletions(-)
 
---- a/io_uring/uring_cmd.c
-+++ b/io_uring/uring_cmd.c
-@@ -273,10 +273,6 @@ int io_uring_cmd(struct io_kiocb *req, u
+--- a/include/linux/io_uring_types.h
++++ b/include/linux/io_uring_types.h
+@@ -20,6 +20,14 @@ enum {
+ 	 * It's also ignored unless IORING_SETUP_DEFER_TASKRUN is set.
+ 	 */
+ 	IOU_F_TWQ_LAZY_WAKE			= 1,
++
++	/*
++	 * Set when task_work is queued from a waitqueue wakeup handler, where
++	 * an arbitrary provider waitqueue lock is held. Signaling the CQ ring
++	 * eventfd inline from there can recurse back into that lock through
++	 * epoll, so the eventfd signal must be deferred.
++	 */
++	IOU_F_TWQ_IN_WAKE			= 2,
+ };
+ 
+ enum io_uring_cmd_flags {
+--- a/io_uring/eventfd.c
++++ b/io_uring/eventfd.c
+@@ -51,9 +51,9 @@ static void io_eventfd_do_signal(struct
+ /*
+  * Returns true if the caller should put the ev_fd reference, false if not.
+  */
+-static bool __io_eventfd_signal(struct io_ev_fd *ev_fd)
++static bool __io_eventfd_signal(struct io_ev_fd *ev_fd, bool defer)
+ {
+-	if (eventfd_signal_allowed()) {
++	if (!defer && eventfd_signal_allowed()) {
+ 		eventfd_signal_mask(ev_fd->cq_ev_fd, EPOLL_URING_WAKE);
+ 		return true;
+ 	}
+@@ -73,7 +73,7 @@ static bool io_eventfd_trigger(struct io
+ 	return !ev_fd->eventfd_async || io_wq_current_is_worker();
+ }
+ 
+-void io_eventfd_signal(struct io_ring_ctx *ctx, bool cqe_event)
++void io_eventfd_signal(struct io_ring_ctx *ctx, bool cqe_event, bool defer)
+ {
+ 	bool skip = false;
+ 	struct io_ev_fd *ev_fd;
+@@ -113,7 +113,7 @@ void io_eventfd_signal(struct io_ring_ct
+ 		spin_unlock(&ctx->completion_lock);
  	}
  
- 	ret = file->f_op->uring_cmd(ioucmd, issue_flags);
--	if (ioucmd->flags & IORING_URING_CMD_MULTISHOT) {
--		if (ret >= 0)
--			return IOU_ISSUE_SKIP_COMPLETE;
--	}
- 	if (ret == -EAGAIN) {
- 		ioucmd->flags |= IORING_URING_CMD_REISSUE;
- 		return ret;
+-	if (skip || __io_eventfd_signal(ev_fd))
++	if (skip || __io_eventfd_signal(ev_fd, defer))
+ 		io_eventfd_put(ev_fd);
+ }
+ 
+--- a/io_uring/eventfd.h
++++ b/io_uring/eventfd.h
+@@ -5,4 +5,4 @@ int io_eventfd_register(struct io_ring_c
+ 			unsigned int eventfd_async);
+ int io_eventfd_unregister(struct io_ring_ctx *ctx);
+ 
+-void io_eventfd_signal(struct io_ring_ctx *ctx, bool cqe_event);
++void io_eventfd_signal(struct io_ring_ctx *ctx, bool cqe_event, bool defer);
+--- a/io_uring/futex.c
++++ b/io_uring/futex.c
+@@ -181,7 +181,7 @@ static void io_futex_wakev_fn(struct wak
+ 
+ 	io_req_set_res(req, 0, 0);
+ 	req->io_task_work.func = io_futexv_complete;
+-	io_req_task_work_add(req);
++	__io_req_task_work_add(req, IOU_F_TWQ_IN_WAKE);
+ }
+ 
+ int io_futexv_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+@@ -237,7 +237,7 @@ static void io_futex_wake_fn(struct wake
+ 
+ 	io_req_set_res(req, 0, 0);
+ 	req->io_task_work.func = io_futex_complete;
+-	io_req_task_work_add(req);
++	__io_req_task_work_add(req, IOU_F_TWQ_IN_WAKE);
+ }
+ 
+ int io_futexv_wait(struct io_kiocb *req, unsigned int issue_flags)
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -484,7 +484,7 @@ void __io_commit_cqring_flush(struct io_
+ 	if (ctx->int_flags & IO_RING_F_OFF_TIMEOUT_USED)
+ 		io_flush_timeouts(ctx);
+ 	if (ctx->int_flags & IO_RING_F_HAS_EVFD)
+-		io_eventfd_signal(ctx, true);
++		io_eventfd_signal(ctx, true, false);
+ }
+ 
+ static inline void __io_cq_lock(struct io_ring_ctx *ctx)
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -208,9 +208,9 @@ enum {
+ 	IOU_POLL_REQUEUE = 4,
+ };
+ 
+-static void __io_poll_execute(struct io_kiocb *req, int mask)
++static void __io_poll_execute(struct io_kiocb *req, int mask, unsigned tw_flags)
+ {
+-	unsigned flags = 0;
++	unsigned flags = tw_flags;
+ 
+ 	io_req_set_res(req, mask, 0);
+ 	req->io_task_work.func = io_poll_task_func;
+@@ -218,14 +218,15 @@ static void __io_poll_execute(struct io_
+ 	trace_io_uring_task_add(req, mask);
+ 
+ 	if (!(req->flags & REQ_F_POLL_NO_LAZY))
+-		flags = IOU_F_TWQ_LAZY_WAKE;
++		flags |= IOU_F_TWQ_LAZY_WAKE;
+ 	__io_req_task_work_add(req, flags);
+ }
+ 
+-static inline void io_poll_execute(struct io_kiocb *req, int res)
++static inline void io_poll_execute(struct io_kiocb *req, int res,
++				   unsigned tw_flags)
+ {
+ 	if (io_poll_get_ownership(req))
+-		__io_poll_execute(req, res);
++		__io_poll_execute(req, res, tw_flags);
+ }
+ 
+ /*
+@@ -344,7 +345,7 @@ void io_poll_task_func(struct io_tw_req
+ 	if (ret == IOU_POLL_NO_ACTION) {
+ 		return;
+ 	} else if (ret == IOU_POLL_REQUEUE) {
+-		__io_poll_execute(req, 0);
++		__io_poll_execute(req, 0, 0);
+ 		return;
+ 	}
+ 	io_poll_remove_entries(req);
+@@ -383,7 +384,7 @@ static void io_poll_cancel_req(struct io
+ {
+ 	io_poll_mark_cancelled(req);
+ 	/* kick tw, which should complete the request */
+-	io_poll_execute(req, 0);
++	io_poll_execute(req, 0, 0);
+ }
+ 
+ #define IO_ASYNC_POLL_COMMON	(EPOLLONESHOT | EPOLLPRI)
+@@ -392,7 +393,7 @@ static __cold int io_pollfree_wake(struc
+ {
+ 	io_poll_mark_cancelled(req);
+ 	/* we have to kick tw in case it's not already */
+-	io_poll_execute(req, 0);
++	io_poll_execute(req, 0, IOU_F_TWQ_IN_WAKE);
+ 	io_poll_remove_waitq(poll);
+ 	return 1;
+ }
+@@ -430,7 +431,7 @@ static int io_poll_wake(struct wait_queu
+ 			else
+ 				req->flags &= ~REQ_F_SINGLE_POLL;
+ 		}
+-		__io_poll_execute(req, mask);
++		__io_poll_execute(req, mask, IOU_F_TWQ_IN_WAKE);
+ 	}
+ 	return 1;
+ }
+@@ -618,7 +619,7 @@ static int __io_arm_poll_handler(struct
+ 
+ 	if (mask && (poll->events & EPOLLET) &&
+ 	    io_poll_can_finish_inline(req, ipt)) {
+-		__io_poll_execute(req, mask);
++		__io_poll_execute(req, mask, 0);
+ 		return 0;
+ 	}
+ 	io_napi_add(req);
+@@ -629,7 +630,7 @@ static int __io_arm_poll_handler(struct
+ 		 * poll was waken up, queue up a tw, it'll deal with it.
+ 		 */
+ 		if (atomic_cmpxchg(&req->poll_refs, 1, 0) != 1)
+-			__io_poll_execute(req, 0);
++			__io_poll_execute(req, 0, 0);
+ 	}
+ 	return 0;
+ }
+--- a/io_uring/tw.c
++++ b/io_uring/tw.c
+@@ -173,7 +173,7 @@ void io_req_local_work_add(struct io_kio
+ 	if (mpscq_push(&ctx->work_list, &req->io_task_work.node)) {
+ 		io_ctx_mark_taskrun(ctx);
+ 		if (data_race(ctx->int_flags) & IO_RING_F_HAS_EVFD)
+-			io_eventfd_signal(ctx, false);
++			io_eventfd_signal(ctx, false, flags & IOU_F_TWQ_IN_WAKE);
+ 	}
+ 
+ 	/*
+--- a/io_uring/waitid.c
++++ b/io_uring/waitid.c
+@@ -253,7 +253,7 @@ static int io_waitid_wait(struct wait_qu
+ 		return 1;
+ 
+ 	req->io_task_work.func = io_waitid_cb;
+-	io_req_task_work_add(req);
++	__io_req_task_work_add(req, IOU_F_TWQ_IN_WAKE);
+ 	return 1;
+ }
+ 
 
 
