@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 969C4481FC8;
-	Tue, 25 Aug 2026 13:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC0E481AA4;
+	Tue, 25 Aug 2026 13:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666346; cv=none; b=f658cfdSSfk0K+6NFuIfFXQ7H8rG3mUPb16kXBmrMkHw/B4jdYtGpLe31fzcgF/S6VE7FHSKC30Aej/a2w4+qMHWiuBbT7UJGvCw+OGL9/S3zCZAC6hj6aAENOy/bnn7bd0hm6DHFea5kHZfrS/wmHYHhbQYdqPUljtSab+ihMQ=
+	t=1787666350; cv=none; b=sJ00vYLiXV59e3/EOz7IOtzoEHRzM8N/1d6gDVkmDIMwiyJEevZS2PvMp1kWpOg17cBlFWXUirt+1m3OMWY/5FInvFsZ1u0KTmMKaBbwRb0RUra+QKPKXYgSl7yLDj2Z9ogHMhQJ0zeCuX7QQrQbH14EW7ADriwBQoeZnWDZ/O8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666346; c=relaxed/simple;
-	bh=EKgoL6MSb+UG0gHpWdh3pFTRSPMgFm7m7o3ULxAFNuc=;
+	s=arc-20240116; t=1787666350; c=relaxed/simple;
+	bh=ZudYhkqtOxajUz0gAUuZBtTveWbT2TbzEyzCWq7Ju7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YWI7G3PYDUE+81y5lOeMbs7cMeMq8uiH4XhlMCBbcWn9ztDluaRuUg9uRadAyJN+EkazwRVANV+5IyYnRYMGQsVoXBb47kXFyFDm6MqyvNwKTj7t7LpIQIkcMkDgW17jI/FInkioqviYqDLRbZ3BKCldhaQTiI1rFX7tGFM4sq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eIEIinfd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c5umL74AmUj0s9nHg01Dk5WFY5thyDrIRxVLZ2bfGu0CcKfa6TFPKihbcPx/yznOt3t2mdVGOFahu7xCUsvRLQNfpgZxQVt7MwREn2VckUQK3XPNW5p2aeOHdg2ExlnaBG6fJo6CGUUWAQEYMWJv70dW41h7zFWQUj3XXeQmOs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y1fsP2qo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eIEIinfd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E711F000E9;
-	Tue, 25 Aug 2026 13:59:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y1fsP2qo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C29F31F000E9;
+	Tue, 25 Aug 2026 13:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666345;
-	bh=raNxIDHk4NB+Z7SslA4hKZR21/ZjTU089ERSwYfTqVI=;
+	s=korg; t=1787666348;
+	bh=CqyvRaCmu4lScP1kH4XEe0XWP6/+P/dwAOmRlgBnVLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eIEIinfdH53Wc+niPBQlgXSa3181Of045scr+WkUBxT9eWb2n85TU18VIAfjOaU43
-	 hXWRajaBUgeqEHvEN/gRbQ6IZBkSpreQGRx68QvxB/e+lE8HLOo6+jsWMeg/7QVJfw
-	 L+tO/7IoXxjFzFBORxKDvbIPNHN85MkNY4YorS8M=
+	b=y1fsP2qoQ/6sqSKoSWjOT3KPtGS43+1898CxbeAG+rhvHwio55Ili7c9mtDFD1wXn
+	 i7y/uu//JCPYqsW4aCMqzBrO2VUlXX2dOFtYuYguD6LvuMwlUrmwrH10iy388F+FUT
+	 SRukQFIhMfsVjsZ63HORfU2Sb5hbFIbUnhSDW2AY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
-	Jianping Li <jianping.li@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>,
+	Amit Cohen <amcohen@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 12/57] misc: fastrpc: Remove buffer from list prior to unmap operation
-Date: Tue, 25 Aug 2026 15:26:34 +0200
-Message-ID: <20260825132541.775406988@linuxfoundation.org>
+Subject: [PATCH 5.10 13/57] net: ipv4: Publish fib_nlmsg_size()
+Date: Tue, 25 Aug 2026 15:26:35 +0200
+Message-ID: <20260825132541.810445975@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
 References: <20260825132541.342390421@linuxfoundation.org>
@@ -54,80 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+From: Amit Cohen <amcohen@nvidia.com>
 
-[ Upstream commit 6102ceb4eab845743ee57acd3863fbd06e93c927 ]
+[ Upstream commit 1e7bdec6bbc7816cdc6a093374f4bf4e732c3d44 ]
 
-fastrpc_req_munmap_impl() is called to unmap any buffer. The buffer is
-getting removed from the list after it is unmapped from DSP. This can
-create potential race conditions if multiple threads invoke unmap
-concurrently, where one thread may remove the entry from the list while
-another thread's unmap operation is still ongoing.
+Publish fib_nlmsg_size() to allow it to be used later on from
+fib_alias_hw_flags_set().
 
-Fix this by removing the buffer entry from the list before calling the
-unmap operation. If the unmap fails, the entry is re-added to the list
-so that userspace can retry the unmap, or alternatively, the buffer
-will be cleaned up during device release when the DSP process is torn
-down and all DSP-side mappings are freed along with remaining buffers
-in the list.
+Remove the inline keyword since it shouldn't be used inside C files.
 
-Fixes: 2419e55e532de ("misc: fastrpc: add mmap/unmap support")
-Cc: stable@kernel.org
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Signed-off-by: Jianping Li <jianping.li@oss.qualcomm.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260724223342.629168-3-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Amit Cohen <amcohen@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 4ff9548d8494 ("ipv4: Fix fib_nlmsg_size() for RTA_VIA nexthops")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ net/ipv4/fib_lookup.h    |    1 +
+ net/ipv4/fib_semantics.c |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1407,9 +1407,6 @@ static int fastrpc_req_munmap_impl(struc
- 				      &args[0]);
- 	if (!err) {
- 		dev_dbg(dev, "unmmap\tpt 0x%09lx OK\n", buf->raddr);
--		spin_lock(&fl->lock);
--		list_del(&buf->node);
--		spin_unlock(&fl->lock);
- 		fastrpc_buf_free(buf);
- 	} else {
- 		dev_err(dev, "unmmap\tpt 0x%09lx ERROR\n", buf->raddr);
-@@ -1423,6 +1420,7 @@ static int fastrpc_req_munmap(struct fas
- 	struct fastrpc_buf *buf = NULL, *iter, *b;
- 	struct fastrpc_req_munmap req;
- 	struct device *dev = fl->sctx->dev;
-+	int err;
+--- a/net/ipv4/fib_lookup.h
++++ b/net/ipv4/fib_lookup.h
+@@ -44,6 +44,7 @@ int fib_dump_info(struct sk_buff *skb, u
+ 		  struct fib_rt_info *fri, unsigned int flags);
+ void rtmsg_fib(int event, __be32 key, struct fib_alias *fa, int dst_len,
+ 	       u32 tb_id, const struct nl_info *info, unsigned int nlm_flags);
++size_t fib_nlmsg_size(struct fib_info *fi);
  
- 	if (copy_from_user(&req, argp, sizeof(req)))
- 		return -EFAULT;
-@@ -1430,6 +1428,7 @@ static int fastrpc_req_munmap(struct fas
- 	spin_lock(&fl->lock);
- 	list_for_each_entry_safe(iter, b, &fl->mmaps, node) {
- 		if ((iter->raddr == req.vaddrout) && (iter->size == req.size)) {
-+			list_del(&iter->node);
- 			buf = iter;
- 			break;
- 		}
-@@ -1442,7 +1441,14 @@ static int fastrpc_req_munmap(struct fas
- 		return -EINVAL;
- 	}
- 
--	return fastrpc_req_munmap_impl(fl, buf);
-+	err = fastrpc_req_munmap_impl(fl, buf);
-+	if (err) {
-+		spin_lock(&fl->lock);
-+		list_add_tail(&buf->node, &fl->mmaps);
-+		spin_unlock(&fl->lock);
-+	}
-+
-+	return err;
+ static inline void fib_result_assign(struct fib_result *res,
+ 				     struct fib_info *fi)
+--- a/net/ipv4/fib_semantics.c
++++ b/net/ipv4/fib_semantics.c
+@@ -460,7 +460,7 @@ int ip_fib_check_default(__be32 gw, stru
+ 	return -1;
  }
  
- static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+-static inline size_t fib_nlmsg_size(struct fib_info *fi)
++size_t fib_nlmsg_size(struct fib_info *fi)
+ {
+ 	size_t payload = NLMSG_ALIGN(sizeof(struct rtmsg))
+ 			 + nla_total_size(4) /* RTA_TABLE */
 
 
