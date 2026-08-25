@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6902E06E4;
-	Tue, 25 Aug 2026 13:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C036942E01B;
+	Tue, 25 Aug 2026 13:41:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665301; cv=none; b=goGXgj23XJPUvd+3rl0HjxwWh0i+sKj2A+55TQqsZjguDmRaQOPxx026mbIEX8ApP1eanMsCnSwcjGfC3dvS7GYY15CFXo0OBbImjI5NTFsVhxhi2+ue+/bMyeulhvxJnchiVWw57bh5yM+BqGECN2VFtjuyAfqMuhUb8y+PqnI=
+	t=1787665304; cv=none; b=pd2YJEKhOHIgF/3I2yIE+gdDbyfWEsXT3nW3dhiUMari1hRsi1G3+jTiEnjN7PKtz00PfUvh5J1N+L45HIMeipe7JWMwAHxr+LP84cLhQ0L4YUZTCUyRtQOuGDL9yWaYHDFRVga1wwtDkRcqquEfjOqUxw/UFHDAgsNYcmgA/4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665301; c=relaxed/simple;
-	bh=8LLu36s5+/iHWAnzP8v5E/2kcMnLoQIzL+RiBOTA8mo=;
+	s=arc-20240116; t=1787665304; c=relaxed/simple;
+	bh=hfHcHM8ICK2xAoWULZdbEdvu4VKHizmCY/40/QvtQHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s3gdl7LxjSiF0tkP+E3tilTchWoGFzM5EIrkTsNawTGY/OXwbfxj2bY39zysrqsovCA21r5/dkmf3eyhX7wqlo+HflwQupsuU5NVjsRFDK5Rwx032tbC/zHN+9ZcNDZ/p+f78efHwawsRCmbOIgMRWtALP1tyepFJsMPiMR8A44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rqFCdosX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X3GNF5yrpnvLSOwrUq4JoFJ/F9MIO7MmUG/WN8CDxXVuMGU1HdL1k6gAOyp1Mc6VK0oXw7LNKno/C/yJsK80jiIEPRx4re2DcvKpGOfjYAeI7zoaPx2NDQVAVWev7++ZhV5cfNCHC39d3oWClc5JWYl2FKWWoVBF5c4NhtqB8WE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnr0h82k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rqFCdosX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 414EC1F000E9;
-	Tue, 25 Aug 2026 13:41:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnr0h82k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 223EC1F000E9;
+	Tue, 25 Aug 2026 13:41:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665299;
-	bh=42WzsbScSo31p2UG+VwltdeJ1O+VsniKRWzgsPUkQ8g=;
+	s=korg; t=1787665302;
+	bh=i50g+mZYpsOd20/mdlEhSoQLBg1mG9SPZvPzMTXr6Yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rqFCdosXQXCEs0xKFsWieRoPDnhIgAEy3fIk8Mzx3eE9l2EZbD8tgxXNW2+af4svX
-	 5vfhHFOfVH06d1PSr2YSyDYsGQbKUlGl2LHYg4GsQXbfPDPgxsBA6MIm/9VVb/i2Do
-	 atnF/FZd4nGMOjWY6MbPXI/HyOoqMuudNAGemv2M=
+	b=hnr0h82kxA0g6tHGUvVbLycuTQFWEXVKKWMDtQPrs40+qwO4V0w+QqmgytVQCdpP9
+	 sRpG2UG7y6uNvK0CzYn7xOsqPGlPfdfaufv3e5Jx7xYRsh2rfAPy/G/fs65Bb3x4Vi
+	 c87dsJ10QnGn8edDi0tFhf7VZ1f0YvBDYeaefV7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Simon Horman <horms@kernel.org>,
 	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 6.18 36/94] nfc: microread: validate target discovery payload lengths
-Date: Tue, 25 Aug 2026 15:25:32 +0200
-Message-ID: <20260825132543.324973163@linuxfoundation.org>
+Subject: [PATCH 6.18 37/94] nfc: llcp: bound the connect_sn TLV walk to the skb
+Date: Tue, 25 Aug 2026 15:25:33 +0200
+Message-ID: <20260825132543.362721803@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -50,105 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit 25519469972ef57c3edb1805dabd6c5612b90211 upstream.
+commit 55c68ac93e7dacc0f5f608b9c39dd4ff48cf28e8 upstream.
 
-microread_target_discovered() parses target discovery payloads from
-skb->data according to the HCI gate. The fixed field offsets and UID
-copies were checked only against the destination nfc_target buffers, not
-against the actual skb length.
+Commit 27256cdb290e ("nfc: llcp: bound SNL TLV parsing to the skb and
+add length checks") fixed the unbounded TLV walk in nfc_llcp_recv_snl(),
+and commit d8bd2dedbde5 ("nfc: llcp: fix OOB read and u8 offset wrap in
+TLV parsers") subsequently bounded nfc_llcp_parse_gb_tlv() and
+nfc_llcp_parse_connection_tlv(). One sibling parser sharing the same
+pattern remains unbounded: nfc_llcp_connect_sn().
 
-Validate that each gate-specific payload contains the fixed fields and
-UID bytes before reading or copying them.
+nfc_llcp_connect_sn() walks a TLV list, reading a two-byte header
+(type, length) followed by length bytes of value, without checking that
+the two header bytes or the declared length stay within the buffer. It
+returns a pointer to a service name of up to 255 bytes that may point
+past the end of the skb; it is subsequently consumed by memcmp() in
+nfc_llcp_sock_from_sn(). In addition tlv_array_len was computed as
+"skb->len - LLCP_HEADER_SIZE" in size_t, so a CONNECT/CC frame shorter
+than the LLCP header underflows to a huge length and the walk runs far
+past the buffer.
 
-Fixes: cfad1ba87150 ("NFC: Initial support for Inside Secure microread")
+nfc_llcp_connect_sn() is reachable from nfc_llcp_recv_connect() and
+nfc_llcp_recv_cc(), i.e. from received CONNECT and CC PDUs. A nearby
+NFC device can reach this without authentication; LLCP link activation
+happens automatically after NFC-DEP, and the nfc_llcp_rx_skb()
+dispatcher applies no minimum-length guard.
+
+Walk the TLV list by pointer, bounded by skb_tail_pointer(skb), and
+validate each declared length before use, matching the approach already
+used for nfc_llcp_recv_snl(). Starting the walk at
+&skb->data[LLCP_HEADER_SIZE] against the tail pointer also removes the
+size_t underflow for short frames.
+
+Found by 0sec automated security-research tooling (https://0sec.ai).
+
+Fixes: d646960f7986 ("NFC: Initial LLCP support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260723103508.1-microread-v2-pengpeng@iscas.ac.cn
+Assisted-by: 0sec:claude-opus-4-8
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260709131229.44477-1-doruk@0sec.ai
 Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nfc/microread/microread.c |   31 +++++++++++++++++++++++++++++--
- 1 file changed, 29 insertions(+), 2 deletions(-)
+ net/nfc/llcp_core.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/nfc/microread/microread.c
-+++ b/drivers/nfc/microread/microread.c
-@@ -483,13 +483,19 @@ static void microread_target_discovered(
+--- a/net/nfc/llcp_core.c
++++ b/net/nfc/llcp_core.c
+@@ -849,13 +849,16 @@ static struct nfc_llcp_sock *nfc_llcp_so
+ static const u8 *nfc_llcp_connect_sn(const struct sk_buff *skb, size_t *sn_len)
+ {
+ 	u8 type, length;
+-	const u8 *tlv = &skb->data[2];
+-	size_t tlv_array_len = skb->len - LLCP_HEADER_SIZE, offset = 0;
++	const u8 *tlv = &skb->data[LLCP_HEADER_SIZE];
++	const u8 *tlv_end = skb_tail_pointer(skb);
  
- 	switch (gate) {
- 	case MICROREAD_GATE_ID_MREAD_ISO_A:
-+		if (skb->len <= MICROREAD_EMCF_A_LEN) {
-+			r = -EINVAL;
-+			goto exit_free;
-+		}
+-	while (offset < tlv_array_len) {
++	while (tlv + 2 < tlv_end) {
+ 		type = tlv[0];
+ 		length = tlv[1];
+ 
++		if (tlv + 2 + length > tlv_end)
++			break;
 +
- 		targets->supported_protocols =
- 		      nfc_hci_sak_to_protocol(skb->data[MICROREAD_EMCF_A_SAK]);
- 		targets->sens_res =
- 			 be16_to_cpu(*(u16 *)&skb->data[MICROREAD_EMCF_A_ATQA]);
- 		targets->sel_res = skb->data[MICROREAD_EMCF_A_SAK];
- 		targets->nfcid1_len = skb->data[MICROREAD_EMCF_A_LEN];
--		if (targets->nfcid1_len > sizeof(targets->nfcid1)) {
-+		if (targets->nfcid1_len > sizeof(targets->nfcid1) ||
-+		    targets->nfcid1_len > skb->len - MICROREAD_EMCF_A_UID) {
- 			r = -EINVAL;
- 			goto exit_free;
+ 		pr_debug("type 0x%x length %d\n", type, length);
+ 
+ 		if (type == LLCP_TLV_SN) {
+@@ -863,7 +866,6 @@ static const u8 *nfc_llcp_connect_sn(con
+ 			return &tlv[2];
  		}
-@@ -497,13 +503,19 @@ static void microread_target_discovered(
- 		       targets->nfcid1_len);
- 		break;
- 	case MICROREAD_GATE_ID_MREAD_ISO_A_3:
-+		if (skb->len <= MICROREAD_EMCF_A3_LEN) {
-+			r = -EINVAL;
-+			goto exit_free;
-+		}
-+
- 		targets->supported_protocols =
- 		      nfc_hci_sak_to_protocol(skb->data[MICROREAD_EMCF_A3_SAK]);
- 		targets->sens_res =
- 			 be16_to_cpu(*(u16 *)&skb->data[MICROREAD_EMCF_A3_ATQA]);
- 		targets->sel_res = skb->data[MICROREAD_EMCF_A3_SAK];
- 		targets->nfcid1_len = skb->data[MICROREAD_EMCF_A3_LEN];
--		if (targets->nfcid1_len > sizeof(targets->nfcid1)) {
-+		if (targets->nfcid1_len > sizeof(targets->nfcid1) ||
-+		    targets->nfcid1_len > skb->len - MICROREAD_EMCF_A3_UID) {
- 			r = -EINVAL;
- 			goto exit_free;
- 		}
-@@ -511,11 +523,21 @@ static void microread_target_discovered(
- 		       targets->nfcid1_len);
- 		break;
- 	case MICROREAD_GATE_ID_MREAD_ISO_B:
-+		if (skb->len < MICROREAD_EMCF_B_UID + 4) {
-+			r = -EINVAL;
-+			goto exit_free;
-+		}
-+
- 		targets->supported_protocols = NFC_PROTO_ISO14443_B_MASK;
- 		memcpy(targets->nfcid1, &skb->data[MICROREAD_EMCF_B_UID], 4);
- 		targets->nfcid1_len = 4;
- 		break;
- 	case MICROREAD_GATE_ID_MREAD_NFC_T1:
-+		if (skb->len < MICROREAD_EMCF_T1_UID + 4) {
-+			r = -EINVAL;
-+			goto exit_free;
-+		}
-+
- 		targets->supported_protocols = NFC_PROTO_JEWEL_MASK;
- 		targets->sens_res =
- 			le16_to_cpu(*(u16 *)&skb->data[MICROREAD_EMCF_T1_ATQA]);
-@@ -523,6 +545,11 @@ static void microread_target_discovered(
- 		targets->nfcid1_len = 4;
- 		break;
- 	case MICROREAD_GATE_ID_MREAD_NFC_T3:
-+		if (skb->len < MICROREAD_EMCF_T3_UID + 8) {
-+			r = -EINVAL;
-+			goto exit_free;
-+		}
-+
- 		targets->supported_protocols = NFC_PROTO_FELICA_MASK;
- 		memcpy(targets->nfcid1, &skb->data[MICROREAD_EMCF_T3_UID], 8);
- 		targets->nfcid1_len = 8;
+ 
+-		offset += length + 2;
+ 		tlv += length + 2;
+ 	}
+ 
 
 
