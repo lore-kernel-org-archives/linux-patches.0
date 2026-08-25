@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E31303A35;
-	Tue, 25 Aug 2026 14:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2504A481FBF;
+	Tue, 25 Aug 2026 14:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666436; cv=none; b=KnVs6o3bG5V0Ou05xiYFCtNEDp5hGslK2jl+x9AHdIGGdcEht5b/eEGaWTpMwU7uBqRICvqpo4CKOC5iU2QLAmOFM8JOoPArhtc/Rlj6bXiU//C3+xSbMEniJToFAAJPvrP0Q+upEAMKKfNGGiUcpUzs9Ki6WnQVfr/JCIl+MIg=
+	t=1787666439; cv=none; b=lwCbXloLCDu7zoj9nliU5Bpsi9pO1Al08oYqfbN8DfdoHUpbkFizsLNJqAWM1Wt2tMnFU2+sAAB9IzccrtdH/riXej1SGgNSWsfFVz5s/NNN8fbJpHiaxl91D51iFtd/pCZJPsXxezXd/JTl+8boRWIShzcirDV+/me67mWezs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666436; c=relaxed/simple;
-	bh=44ALqPzoA6473dHT+h6PAZG/pD2RTdODe77AbdDmv5Y=;
+	s=arc-20240116; t=1787666439; c=relaxed/simple;
+	bh=YUXkEYv7P/b/4zXYKwyV4fwo84qyjHTkyTa55TFK2iA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I3Mhjwxf26+KQAIMf3zjDJ0w2XcxNkRh8LQ9ccw+I4qKZEVtALdB7SRGb8vb7qMF3KTXEikCjZ/EIpXRHEZe3UYlBHWFYuAksdzo26rYNlBuI/CuLg6P8GzdsC++9urHVK/C4v27Mz1m3bMZViop7OKzEdX3bWRWkCCjHeGs3ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BnIAGaTN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OwIJCuJCZVrCulgUi9pLCiJjMzjQoqjDCSs/YLScSReQwEJbiM6hTvcK2xn9JF4Oz6LdF5+qlFG6zrFt0olZ1caOb3aIfL/Jy0BuKxi4AxyP45gVwyi+k9updVPl9quqLXNvW+9krDSPN8xks457YHEmVXLamtrVgtoiG3/h1rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9XAQjog; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BnIAGaTN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5BE1F00A3D;
-	Tue, 25 Aug 2026 14:00:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9XAQjog"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7923B1F000E9;
+	Tue, 25 Aug 2026 14:00:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666435;
-	bh=reEieKJP8VPrrnnl9Wm0/k818YWSWWNG4N2ycosMEyE=;
+	s=korg; t=1787666438;
+	bh=UNusZ6tOQM6Z/oFKmlM0wPk6aw7G4Vox6tP9S47e+3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BnIAGaTNRnh/0h3NIGYOAENeLTCOB4kwdHg+ShvBkYc4fRpp57uRiEq8emnS7vdxY
-	 F7NMDWAspIbcRwP5log/hv1GFXx2iJleNXTVIGK1K98gIk3XYQ0wNxOkUhYVP0GMfd
-	 0vmKHCY0zpSV3KBUoYSpgbZBt5K/zwPpxitLcZ5k=
+	b=G9XAQjog4UcSnXVeVe0WhHSnbSXgAQz64njNxwGW9cCu4gVhpmMC/ozrukGgDeISy
+	 KtjjEq60KNhKba6QzC3Y3bTMmyFM7Wo18U4nlqyHcWsup9pn0NHzrVvtgkapLP+xlp
+	 7a0f8+KM3Dk6+GZQXKyD9zUytnq+qsomaTTAlwzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 41/57] ipv6: fix use-after-free in ip6_finish_output2()
-Date: Tue, 25 Aug 2026 15:27:03 +0200
-Message-ID: <20260825132542.934320865@linuxfoundation.org>
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Jiang HongHui <jiang_hh2019@163.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 5.10 42/57] nvmet-fc: fix invalid free in LS IOD error path
+Date: Tue, 25 Aug 2026 15:27:04 +0200
+Message-ID: <20260825132542.976446175@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
 References: <20260825132541.342390421@linuxfoundation.org>
@@ -54,50 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luxiao Xu <rakukuip@gmail.com>
+From: Jiang HongHui <jiang_hh2019@163.com>
 
-commit d0d48d999b0eee6bb176ef4e39d9be868fa80f7e upstream.
+commit ba98d6796d12258e837ece065d2ecb59d76ce4ff upstream.
 
-ip6_finish_output2() caches a pointer to the IPv6 destination
-address (daddr) before invoking lwtunnel_xmit().  The LWT-BPF
-transmit path or other encapsulation operations within
-lwtunnel_xmit() can reallocate the skb head, freeing the memory
-that daddr points to.  When lwtunnel_xmit() returns
-LWTUNNEL_XMIT_CONTINUE, the function continues to use the stale
-daddr pointer to compute the nexthop and to look up or create the
-neighbour entry.  This results in a use-after-free read, which can
-leak sensitive kernel data, pollute the neighbour table with
-arbitrary values, misdirect traffic, or crash the system.
+nvmet_fc_alloc_ls_iodlist() advances iod while initializing the LS IOD
+array. If an rqstbuf allocation or response buffer DMA mapping fails,
+the unwind loop decrements iod past the start of the array. The final
+kfree(iod) therefore frees an address before the allocated object.
 
-Fix this by re-fetching the IPv6 header and the destination
-address pointer after lwtunnel_xmit() returns
-LWTUNNEL_XMIT_CONTINUE, ensuring that the subsequent nexthop
-computation and neighbour lookup operate on valid memory.
+This can be reproduced with nvme-fcloop and failslab by setting
+fail-nth to 6 before creating a target port. KASAN reports:
 
-Fixes: e415ed3a4b8b ("ipv6: use skb_expand_head in ip6_finish_output2")
+  BUG: KASAN: invalid-free in nvmet_fc_register_targetport
+  Free of addr ffff88816cf8ff48 by task nvmet_fail_nth/9552
+
+Free the original allocation base stored in tgtport->iod instead. With
+this fix applied, the same sysfs write with fail-nth=6 returns -ENOMEM
+without any KASAN report.
+
+Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/4aa3f53bc44e79572c6dd2340ec7b68ef1a3d87d.1786516730.git.rakukuip@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jiang HongHui <jiang_hh2019@163.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_output.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/nvme/target/fc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -118,6 +118,8 @@ static int ip6_finish_output2(struct net
- 
- 		if (res != LWTUNNEL_XMIT_CONTINUE)
- 			return res;
-+		hdr = ipv6_hdr(skb);
-+		daddr = &hdr->daddr;
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -560,7 +560,7 @@ out_fail:
+ 		list_del(&iod->ls_rcv_list);
  	}
  
- 	rcu_read_lock_bh();
+-	kfree(iod);
++	kfree(tgtport->iod);
+ 
+ 	return -EFAULT;
+ }
 
 
