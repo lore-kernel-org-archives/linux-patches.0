@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5193841A92C;
-	Tue, 25 Aug 2026 13:50:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0AB3FAE19;
+	Tue, 25 Aug 2026 13:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665817; cv=none; b=HbMvQFPj4JsNf8D8ZbH3/2GVhwI++qOz0DLAgMegVnT1muvwqIVXTZPIAh0GXGY1n1HXJx97X2hTjCeHHpQkMuRK0qkPWaLiB0oQJ9P0msp5cXdOYfauO7il8RQQpuH7pQ+6ub+H52NzKNPt/NBUtgv2ysnoPQTSlYaoDuuflOc=
+	t=1787665820; cv=none; b=n/P3++voBitMS9z/wffBHF2iFJsQotkgOvjdiF6L/xfrFw4rB9jve9jz5i740BEodESfF7TnPYDbBK+mGltCFJuHrmwfY2llcdMyjGhnHVMMWVS/mXxSJkgmPUzW8EVhkLoA8RB6eq3c2AZbv3+LoWsDmnlo+5yXnHxQR0nZOLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665817; c=relaxed/simple;
-	bh=pglGF4beGXttMp0mZ6F/gQEBikpRUlE75z2mQYln19w=;
+	s=arc-20240116; t=1787665820; c=relaxed/simple;
+	bh=4/zTQzC/4bslbcWt7DqQ1LIdSkQzE50vbZa69bnfT28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mikbnoOBX7F/Wtkj9jMIoKmxuan8TPbuAq07Gp5hhlWfsQeeiPzuZCIoEDtecbB8ttwDtOsnb4r7xGVPhyNkwMiy8v5aPLJD5b8Cjj+OjjduqtqsGGsq41vOJUG8DznIkSl87IafeSKOQW74CBpCSPoeByqRdv9dFq4BBIp9iAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kkbm1kBL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IvcOwdr6n3GXRCjrrSwzNiTGiNYKX1PRrNl6IWHl7hUe2vCU5Fz47jdtU/7yW8KU+bDDn7izwKFLxZfDG+0sSz3qKlwK9vjsO0ZfsnC4pYVRKyPE+VCSukspVr84juwlRA2jX9ZrPw4buekKAbMpKxzVJoMGAo3CVctYZfGP6rY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=STu0RNDB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kkbm1kBL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C0B1F000E9;
-	Tue, 25 Aug 2026 13:50:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STu0RNDB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D7BA1F00A3F;
+	Tue, 25 Aug 2026 13:50:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665816;
-	bh=If7MmMDXHOJzX5AAdPcOhb4Fq+zirbuhEd1S7POFYoA=;
+	s=korg; t=1787665819;
+	bh=UnYnNQ25ocaYAianSt0hVBOSHt6eCy76MH092tiyafM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kkbm1kBL26VnaxXnponYSaVVMeGeNdlP06Kd+bLMiRTANpzxurtVS0IBxVbQZFC/M
-	 knCwVJHpsGDQRixlLuCfu8Xu8rSlNthwudbrlTGUcMr/jJbhWNKQmObAyOpqHLB1YW
-	 qx9VhUh+0oygDAI/ev3aBQexMWGQr7dcllfzLSp0=
+	b=STu0RNDBWElaX5D+iAEAaKt+Hsst11AjFuY9zGyk6PhMVeFfTEbFwy1dB8ky6gD+H
+	 sQ8NEMaYgq62IEqsFR3YJHiqzVfioqjyotwn2qHlWi9WQm/8QXJwoVsq19emKpxdDu
+	 fN7bzembPUmld3DWgjtbZBK4Y53nJ8oOyTMzfeuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
 	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 76/87] selinux: avoid unnecessary indirection in struct level_datum
-Date: Tue, 25 Aug 2026 15:26:39 +0200
-Message-ID: <20260825132544.814585856@linuxfoundation.org>
+Subject: [PATCH 6.6 77/87] selinux: make more use of str_read() when loading the policy
+Date: Tue, 25 Aug 2026 15:26:40 +0200
+Message-ID: <20260825132544.851834238@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -54,112 +54,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Göttsche <cgzones@googlemail.com>
 
-[ Upstream commit 749153636643aaa793f14e84e864fdaf5ed0620d ]
+[ Upstream commit 01c2253a0fbdccb58cd79d4ff9ab39964bfb4474 ]
 
-Store the owned member of type struct mls_level directly in the parent
-struct instead of an extra heap allocation.
+Simplify the call sites, and enable future string validation in a single
+place.
 
 Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
+[PM: subject tweak]
 Signed-off-by: Paul Moore <paul@paul-moore.com>
 Stable-dep-of: b98a8ac50775 ("selinux: require a class's permission values to cover its permission count")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/ss/mls.c      |    6 +++---
- security/selinux/ss/policydb.c |   19 ++++++-------------
- security/selinux/ss/policydb.h |    2 +-
- 3 files changed, 10 insertions(+), 17 deletions(-)
+ security/selinux/ss/conditional.c |   10 ++--------
+ security/selinux/ss/policydb.c    |   22 ++++++++--------------
+ security/selinux/ss/policydb.h    |    2 ++
+ 3 files changed, 12 insertions(+), 22 deletions(-)
 
---- a/security/selinux/ss/mls.c
-+++ b/security/selinux/ss/mls.c
-@@ -174,7 +174,7 @@ int mls_level_isvalid(struct policydb *p
- 	 * levdatum->level->cat and no bit in l->cat is larger than
- 	 * p->p_cats.nprim.
- 	 */
--	return ebitmap_contains(&levdatum->level->cat, &l->cat,
-+	return ebitmap_contains(&levdatum->level.cat, &l->cat,
- 				p->p_cats.nprim);
- }
+--- a/security/selinux/ss/conditional.c
++++ b/security/selinux/ss/conditional.c
+@@ -229,17 +229,11 @@ int cond_read_bool(struct policydb *p, s
+ 		goto err;
  
-@@ -296,7 +296,7 @@ int mls_context_to_sid(struct policydb *
- 		levdatum = symtab_search(&pol->p_levels, sensitivity);
- 		if (!levdatum)
- 			return -EINVAL;
--		context->range.level[l].sens = levdatum->level->sens;
-+		context->range.level[l].sens = levdatum->level.sens;
- 
- 		/* Extract category set. */
- 		while (next_cat != NULL) {
-@@ -466,7 +466,7 @@ int mls_convert_context(struct policydb
- 
- 		if (!levdatum)
- 			return -EINVAL;
--		newc->range.level[l].sens = levdatum->level->sens;
-+		newc->range.level[l].sens = levdatum->level.sens;
- 
- 		ebitmap_for_each_positive_bit(&oldc->range.level[l].cat,
- 					      node, i) {
---- a/security/selinux/ss/policydb.c
-+++ b/security/selinux/ss/policydb.c
-@@ -296,9 +296,7 @@ static int sens_destroy(void *key, void
- 	kfree(key);
- 	if (datum) {
- 		levdatum = datum;
--		if (levdatum->level)
--			ebitmap_destroy(&levdatum->level->cat);
--		kfree(levdatum->level);
-+		ebitmap_destroy(&levdatum->level.cat);
- 	}
- 	kfree(datum);
- 	return 0;
-@@ -636,11 +634,11 @@ static int sens_index(void *key, void *d
- 	p = datap;
- 
- 	if (!levdatum->isalias) {
--		if (!levdatum->level->sens ||
--		    levdatum->level->sens > p->p_levels.nprim)
-+		if (!levdatum->level.sens ||
-+		    levdatum->level.sens > p->p_levels.nprim)
- 			return -EINVAL;
- 
--		p->sym_val_to_name[SYM_LEVELS][levdatum->level->sens - 1] = key;
-+		p->sym_val_to_name[SYM_LEVELS][levdatum->level.sens - 1] = key;
- 	}
- 
- 	return 0;
-@@ -1612,12 +1610,7 @@ static int sens_read(struct policydb *p,
- 	if (rc)
- 		goto bad;
+ 	len = le32_to_cpu(buf[2]);
+-	if (((len == 0) || (len == (u32)-1)))
+-		goto err;
  
 -	rc = -ENOMEM;
--	levdatum->level = kmalloc(sizeof(*levdatum->level), GFP_KERNEL);
--	if (!levdatum->level)
--		goto bad;
--
--	rc = mls_read_level(levdatum->level, fp);
-+	rc = mls_read_level(&levdatum->level, fp);
+-	key = kmalloc(len + 1, GFP_KERNEL);
+-	if (!key)
+-		goto err;
+-	rc = next_entry(key, fp, len);
++	rc = str_read(&key, GFP_KERNEL, fp, len);
  	if (rc)
+ 		goto err;
+-	key[len] = '\0';
++
+ 	rc = symtab_insert(s, key, booldatum);
+ 	if (rc)
+ 		goto err;
+--- a/security/selinux/ss/policydb.c
++++ b/security/selinux/ss/policydb.c
+@@ -1079,7 +1079,7 @@ out:
+  * binary representation file.
+  */
+ 
+-static int str_read(char **strp, gfp_t flags, struct policy_file *fp, u32 len)
++int str_read(char **strp, gfp_t flags, struct policy_file *fp, u32 len)
+ {
+ 	int rc;
+ 	char *str;
+@@ -2466,24 +2466,18 @@ int policydb_read(struct policydb *p, st
  		goto bad;
+ 	}
  
-@@ -2835,7 +2828,7 @@ static int sens_write(void *vkey, void *
- 	if (rc)
- 		return rc;
+-	rc = -ENOMEM;
+-	policydb_str = kmalloc(len + 1, GFP_KERNEL);
+-	if (!policydb_str) {
+-		pr_err("SELinux:  unable to allocate memory for policydb "
+-		       "string of length %d\n",
+-		       len);
+-		goto bad;
+-	}
+-
+-	rc = next_entry(policydb_str, fp, len);
++	rc = str_read(&policydb_str, GFP_KERNEL, fp, len);
+ 	if (rc) {
+-		pr_err("SELinux:  truncated policydb string identifier\n");
+-		kfree(policydb_str);
++		if (rc == -ENOMEM) {
++			pr_err("SELinux:  unable to allocate memory for policydb string of length %d\n",
++			       len);
++		} else {
++			pr_err("SELinux:  truncated policydb string identifier\n");
++		}
+ 		goto bad;
+ 	}
  
--	rc = mls_write_level(levdatum->level, fp);
-+	rc = mls_write_level(&levdatum->level, fp);
- 	if (rc)
- 		return rc;
- 
+ 	rc = -EINVAL;
+-	policydb_str[len] = '\0';
+ 	if (strcmp(policydb_str, POLICYDB_STRING)) {
+ 		pr_err("SELinux:  policydb string %s does not match "
+ 		       "my string %s\n",
 --- a/security/selinux/ss/policydb.h
 +++ b/security/selinux/ss/policydb.h
-@@ -126,7 +126,7 @@ struct user_datum {
+@@ -386,6 +386,8 @@ static inline char *sym_name(struct poli
+ 	return p->sym_val_to_name[sym_num][element_nr];
+ }
  
- /* Sensitivity attributes */
- struct level_datum {
--	struct mls_level *level; /* sensitivity and associated categories */
-+	struct mls_level level; /* sensitivity and associated categories */
- 	unsigned char isalias; /* is this sensitivity an alias for another? */
- };
++extern int str_read(char **strp, gfp_t flags, struct policy_file *fp, u32 len);
++
+ extern u16 string_to_security_class(struct policydb *p, const char *name);
+ extern u32 string_to_av_perm(struct policydb *p, u16 tclass, const char *name);
  
 
 
