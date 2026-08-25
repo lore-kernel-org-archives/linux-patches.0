@@ -1,39 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8360E446C18;
-	Tue, 25 Aug 2026 13:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1F12E06E4;
+	Tue, 25 Aug 2026 13:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665997; cv=none; b=SnApgAPPZxR4h949LS4dk+uA0Z/A5TNeORGwx8JA6N2gvsWH5EttHSB1v9cCd9A3KWHOIZUTjdvld4Zp2S4HQfca/hBwjrHMZgYTCHqvKAveixT85jCEnCmuUxfe8zwEyl/06DvoOWs5cGeCOWrzq2dKQsX3JtO+XrTQWCZDMUI=
+	t=1787666000; cv=none; b=PVDOMfxwBqc3bDfAxagCjEoYkHyIGGGj8Kwu5++yX3+Wga1hzpohUI/RqpJrmr8f8c1dbh3zADZ1vQps9YpWxd9M5S2GaTgC/OTlIUypIm6xKSRUt5LSmm2XpZPQ7degY806cb+jF2Tp0kFDpiNjtDJ/5DUdMBdKr2+AaKav2VM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665997; c=relaxed/simple;
-	bh=efUgfJBNohD4uVxx5yw+iICuZxQ2MoQzOvRehc9PD6w=;
+	s=arc-20240116; t=1787666000; c=relaxed/simple;
+	bh=O/u6ebR9t1gonoHBsVM7/fPfynGbnsIWxPKGUj8sTbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IMYA7yi0bkjDiigWjQncWmCeAWzQSS9j3LKSfZoH6WtKbuqr/8FoQITiVJVtgeKXZm2BY6j/5MN+QjgEwQDKx7HEMvZeJZFpqnnQUZvaQ5zDU4NZQofRXBaQ0BeNSucLG2ufaGA3NKjbyoQY9zI1A+VynKq68Wtzb4GgMZYbLyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2oi/ccFG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fl0DD4knFVMjKa0pvoAFhhapK4oqSzW6XniD1BgQ9w6thuhQVy/U1ebb/PFGrefvs8WACbOvfcGkKdusJch/a1OLMMXgqbDZ3/CjP7hEOC7sNceU2j0BKshK/UC3JngRkBv293+TZh3VtQ9VTcG7AZlWJYYTcukBwXJf2bE07nE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FrOsKpJ0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2oi/ccFG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09F61F000E9;
-	Tue, 25 Aug 2026 13:53:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FrOsKpJ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 875501F000E9;
+	Tue, 25 Aug 2026 13:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665996;
-	bh=0MqRP51yKCgG6QlMbL1noXQXyCuG5Q5Z8DpPwsar4Oc=;
+	s=korg; t=1787665999;
+	bh=rxyBNmwNpM2T7fKiNVzI8dWJsU2YnnGWqKFlW4XxFgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2oi/ccFGUEalonOl8nhYD6XUgHIeowA/CdoRkFo4bqlXN6iXshFp/dxTuOKNqGEVe
-	 vyGbbM2wUFHZbC1GmkKMyrlh18nz73tcdp4VaIXSZQ6QYI9IpqPkv2Bht3KAMfHTED
-	 B8ZPR//yabAbuLXC4YsFARhEhS7JKY7ufD3pTDbw=
+	b=FrOsKpJ0QKZ1nMuRfC7At5OTqRPnYiTW0dMkLDJx1QRpBDsh2HUuGqhhw4Og50Yzj
+	 B8Z2qTW3jRqKG5DK8fgy1YePtNVpEA4eQALveJrujyCnlgGeo1QVgXBnf2FMBgecSX
+	 7AXTwpYvW5Cf6hf4mCpqBK6xBJ/eXT+TFYf1GWRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+abd6a8dca0f2b7726060@syzkaller.appspotmail.com,
-	Rik van Riel <riel@surriel.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 06/79] null_blk: fix UBSAN shift-out-of-bounds when zone_size is 0 or overflows
-Date: Tue, 25 Aug 2026 15:25:46 +0200
-Message-ID: <20260825132541.908653305@linuxfoundation.org>
+	syzbot+3f51ad7ac3ae57a6fdcc@syzkaller.appspotmail.com,
+	syzbot+47cf95ca1f9dcca872c8@syzkaller.appspotmail.com,
+	syzbot+8a173e13208949931dc7@syzkaller.appspotmail.com,
+	syzbot+90984d3713722683112e@syzkaller.appspotmail.com,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Alexander Potapenko <glider@google.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Christoph Hellwig <hch@infradead.org>,
+	Clark Williams <williams@redhat.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Marco Elver <elver@google.com>,
+	Mark Brown <broonie@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 07/79] kcov: fix data corruption and race conditions on PREEMPT_RT
+Date: Tue, 25 Aug 2026 15:25:47 +0200
+Message-ID: <20260825132541.946067829@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -52,123 +64,292 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit 95491fb05105b61050cb623a5e0227eb26aa3525 upstream.
+commit 2eed77fdcb0cc48e8eccb2bcd4b7f2c6d650e84c upstream.
 
-null_zone_no() does sect >> ilog2(dev->zone_size_sects). When
-zone_size_sects is 0, ilog2(0) returns -1, producing shift exponent -1
-which UBSAN reports as shift-out-of-bounds.
+syzbot is reporting KCOV state corruption on PREEMPT_RT kernels, for the
+temporary storage used for saving/restoring remote KCOV state is currently
+allocated as the per-CPU area.
 
-  UBSAN: shift-out-of-bounds in drivers/block/null_blk/zoned.c:21:14
-  shift exponent -1 is negative
-  Call Trace:
-   null_zone_no drivers/block/null_blk/zoned.c:21 [inline]
-   null_process_zoned_cmd+0xf76/0xf80 drivers/block/null_blk/zoned.c:728
-   null_handle_cmd drivers/block/null_blk/main.c:1455 [inline]
-   null_queue_rq+0x8bc/0xe70 drivers/block/null_blk/main.c:1703
-   __blk_mq_issue_directly block/blk-mq.c:2694 [inline]
-   blk_mq_try_issue_directly+0x3f4/0x880 block/blk-mq.c:2754
-   blk_mq_submit_bio+0x20c0/0x2a40 block/blk-mq.c:3208
-   submit_bio_noacct_nocheck+0x2f4/0xa40 block/blk-core.c:790
-   block_read_full_folio+0x7a6/0x810 fs/buffer.c:2463
-   filemap_read_folio+0x12c/0x3a0 mm/filemap.c:2510
-   read_part_sector+0xb6/0x2b0 block/partitions/core.c:724
-   adfspart_check_ICS+0xb1/0x960 block/partitions/acorn.c:357
-   check_partition block/partitions/core.c:143 [inline]
-   blk_add_partitions block/partitions/core.c:591 [inline]
-   bdev_disk_changed+0x851/0x17a0 block/partitions/core.c:695
-   blkdev_get_whole+0x372/0x510 block/bdev.c:751
-   add_disk_final block/genhd.c:412 [inline]
-   add_disk_fwnode+0x24b/0x3a0 block/genhd.c:606
-   null_add_dev+0x130b/0x1d70 drivers/block/null_blk/main.c:2052
-   nullb_device_power_store+0x240/0x380 drivers/block/null_blk/main.c:501
-   configfs_write_iter+0x337/0x430 fs/configfs/file.c:229
+On PREEMPT_RT kernels, softirq handlers run as preemptible task threads
+(e.g., ksoftirqd). If a softirq context preempts a task running a remote
+KCOV session, it safely saves the task's state into the per-CPU area.
+However, if that softirq thread is subsequently preempted by a higher-
+priority softirq thread on the same CPU, the second softirq will overwrite
+the same per-CPU area, permanently destroying the original task's KCOV
+state.
 
-Syzkaller triggers this by creating a zoned null_blk device via
-configfs. The Call Trace shows configfs_write_iter in configfs/file.c
-handling a write to power file, which calls nullb_device_power_store in
-main.c, which calls null_add_dev in main.c, which calls add_disk in
-genhd.c, which triggers partition scan via bdev_disk_changed in
-partitions/core.c.
+Fix this data corruption by moving the temporary storage from the per-CPU
+area to the per-thread area. Since each softirq thread now owns its own
+task context, nested softirq preemption no longer causes data overwrites.
 
-A zoned null_blk device with zone_size 0 should not be legal. Existing
-code tries to reject it via is_power_of_2() check in zoned.c and
-!zone_size check in main.c, but syzkaller can still reach
-null_zone_no() with zone_size_sects 0 via two paths:
+Note that while the temporary storage is now on a per-thread basis, the
+per-CPU kcov_percpu_data.lock must be retained, for we need to ensure that
+kcov_remote_start() and kcov_remote_stop() operate atomically without
+racing against asynchronous interrupts that manipulate the current task's
+KCOV state.
 
-1. Direct 0 via configfs: zone_size attribute store in main.c has
-NULLB_DEVICE_ATTR(zone_size, ulong, NULL) with no validation callback,
-so echo 0 > zone_size succeeds before power store. If zoned is false
-at power store time, the !zone_size check in main.c is skipped, and
-later zoned set true leaves zone_size 0.
+It is likely that GFP_KERNEL allocation by vmalloc_node() in kcov_init()
+has already called panic() before returning NULL, for there will be no
+OOM-killable userspace processes when __init function of built-in module
+runs. But this patch also fixes crashing the kernel when vmalloc_node()
+in kcov_init() returned NULL, for kcov_init() left per-CPU irq_area == NULL
+but kcov_remote_start() depends on per-CPU irq_area != NULL, resulting in
 
-2. Large value overflow: mb_to_sects() in zoned.c does
-(sector_t)mb * SZ_1M >> SECTOR_SHIFT which is mb * 2048. If mb is
-1UL << 53 (9PB), mb * 2048 overflows 64-bit to 0. The value is
-power-of-two so is_power_of_2() passes, but mb_to_sects() returns 0.
+  (1) doing vmalloc() in kcov_remote_start() despite !in_task() context
 
-Check for zero zone_size explicitly in null_init_zoned_dev() in
-zoned.c, returning -EINVAL with "must be non-zero power-of-two".
-Check for zero zone_size_sects after mb_to_sects() conversion,
-returning -EINVAL for overflow case. Keep defensive check in
-null_zone_no() returning 0 for zero sectors to avoid shift out-of-bounds
-even if  zero slips through.
+  (2) out-of-array-bounds access if (1) succeeded but
+      kcov->remote_size < CONFIG_KCOV_IRQ_AREA_SIZE
 
-This change should be safe because zone_size is set once in
-null_init_zoned_dev() under device lock and never changes after, and 0
-is never valid for a zoned device. Returning -EINVAL at init time fails
-device creation early with clear error, while defensive return 0 in
-null_zone_no() makes zoned command fail via offline zone check.
-No new locking is introduced.
+  (3) always leak memory allocated by (1), eventually killing all
+      OOM-killable userspace processes
 
-Reported-by: syzbot+abd6a8dca0f2b7726060@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=abd6a8dca0f2b7726060
-Link: https://lore.kernel.org/all/6a75205c.01d0871a.3a0d52.0033.GAE@google.com/
-Fixes: 8a3cf049af68 ("null_blk: add zoned block device emulation")
-Cc: stable@vger.kernel.org
-Assisted-by: Hermes:muse-spark-1.2 syzkaller
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://patch.msgid.link/20260808114239.69167f68@fangorn
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+problems.
+
+Link: https://lore.kernel.org/43552d09-2ce2-4b19-b0d3-a2d1ab952145@I-love.SAKURA.ne.jp
+Reported-by: syzbot+3f51ad7ac3ae57a6fdcc@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=3f51ad7ac3ae57a6fdcc
+Reported-by: syzbot+47cf95ca1f9dcca872c8@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=47cf95ca1f9dcca872c8
+Reported-by: syzbot+8a173e13208949931dc7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=8a173e13208949931dc7
+Reported-by: syzbot+90984d3713722683112e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=90984d3713722683112e
+Analyzed-by: AI Mode in Google Search (no mail address)
+Fixes: 5ff3b30ab57d ("kcov: collect coverage from interrupts")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: Clark Williams <williams@redhat.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Marco Elver <elver@google.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/null_blk/zoned.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ include/linux/sched.h |    8 ++++
+ kernel/kcov.c         |   90 ++++++++++++++++++++++++++------------------------
+ lib/Kconfig.debug     |    5 +-
+ 3 files changed, 58 insertions(+), 45 deletions(-)
 
---- a/drivers/block/null_blk/zoned.c
-+++ b/drivers/block/null_blk/zoned.c
-@@ -16,6 +16,8 @@ static inline sector_t mb_to_sects(unsig
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -1428,6 +1428,14 @@ struct task_struct {
  
- static inline unsigned int null_zone_no(struct nullb_device *dev, sector_t sect)
- {
-+	if (WARN_ON_ONCE(!dev->zone_size_sects))
-+		return 0;
- 	return sect >> ilog2(dev->zone_size_sects);
+ 	/* Collect coverage from softirq context: */
+ 	unsigned int			kcov_softirq;
++
++	/* Temporary storage for preempting remote coverage collection: */
++	unsigned int			kcov_saved_mode;
++	unsigned int			kcov_saved_size;
++	void				*kcov_saved_area;
++	struct kcov			*kcov_saved_kcov;
++	int				kcov_saved_sequence;
++
+ #endif
+ 
+ #ifdef CONFIG_MEMCG
+--- a/kernel/kcov.c
++++ b/kernel/kcov.c
+@@ -85,17 +85,12 @@ struct kcov_remote {
+ 
+ static DEFINE_SPINLOCK(kcov_remote_lock);
+ static DEFINE_HASHTABLE(kcov_remote_map, 4);
+-static struct list_head kcov_remote_areas = LIST_HEAD_INIT(kcov_remote_areas);
++static struct list_head kcov_remote_areas[2] = {
++	LIST_HEAD_INIT(kcov_remote_areas[0]), LIST_HEAD_INIT(kcov_remote_areas[1])
++};
+ 
+ struct kcov_percpu_data {
+-	void			*irq_area;
+ 	local_lock_t		lock;
+-
+-	unsigned int		saved_mode;
+-	unsigned int		saved_size;
+-	void			*saved_area;
+-	struct kcov		*saved_kcov;
+-	int			saved_sequence;
+ };
+ 
+ static DEFINE_PER_CPU(struct kcov_percpu_data, kcov_percpu_data) = {
+@@ -131,12 +126,13 @@ static struct kcov_remote *kcov_remote_a
  }
  
-@@ -65,8 +67,8 @@ int null_init_zoned_dev(struct nullb_dev
- 	sector_t sector = 0;
- 	unsigned int i;
+ /* Must be called with kcov_remote_lock locked. */
+-static struct kcov_remote_area *kcov_remote_area_get(unsigned int size)
++static struct kcov_remote_area *kcov_remote_area_get(unsigned int size, bool irq)
+ {
+ 	struct kcov_remote_area *area;
+ 	struct list_head *pos;
++	struct list_head *list = &kcov_remote_areas[irq];
  
--	if (!is_power_of_2(dev->zone_size)) {
--		pr_err("zone_size must be power-of-two\n");
-+	if (!dev->zone_size || !is_power_of_2(dev->zone_size)) {
-+		pr_err("zone_size must be non-zero power-of-two\n");
- 		return -EINVAL;
+-	list_for_each(pos, &kcov_remote_areas) {
++	list_for_each(pos, list) {
+ 		area = list_entry(pos, struct kcov_remote_area, list);
+ 		if (area->size == size) {
+ 			list_del(&area->list);
+@@ -148,11 +144,11 @@ static struct kcov_remote_area *kcov_rem
+ 
+ /* Must be called with kcov_remote_lock locked. */
+ static void kcov_remote_area_put(struct kcov_remote_area *area,
+-					unsigned int size)
++				 unsigned int size, bool irq)
+ {
+ 	INIT_LIST_HEAD(&area->list);
+ 	area->size = size;
+-	list_add(&area->list, &kcov_remote_areas);
++	list_add(&area->list, &kcov_remote_areas[irq]);
+ 	/*
+ 	 * KMSAN doesn't instrument this file, so it may not know area->list
+ 	 * is initialized. Unpoison it explicitly to avoid reports in
+@@ -386,6 +382,12 @@ void kcov_task_init(struct task_struct *
+ {
+ 	kcov_task_reset(t);
+ 	t->kcov_handle = current->kcov_handle;
++	t->kcov_softirq = 0;
++	t->kcov_saved_mode = 0;
++	t->kcov_saved_size = 0;
++	t->kcov_saved_area = NULL;
++	t->kcov_saved_kcov = NULL;
++	t->kcov_saved_sequence = 0;
+ }
+ 
+ static void kcov_reset(struct kcov *kcov)
+@@ -812,34 +814,31 @@ static inline bool kcov_mode_enabled(uns
+ 
+ static void kcov_remote_softirq_start(struct task_struct *t)
+ {
+-	struct kcov_percpu_data *data = this_cpu_ptr(&kcov_percpu_data);
+ 	unsigned int mode;
+ 
+ 	mode = READ_ONCE(t->kcov_mode);
+ 	barrier();
+ 	if (kcov_mode_enabled(mode)) {
+-		data->saved_mode = mode;
+-		data->saved_size = t->kcov_size;
+-		data->saved_area = t->kcov_area;
+-		data->saved_sequence = t->kcov_sequence;
+-		data->saved_kcov = t->kcov;
++		t->kcov_saved_mode = mode;
++		t->kcov_saved_size = t->kcov_size;
++		t->kcov_saved_area = t->kcov_area;
++		t->kcov_saved_sequence = t->kcov_sequence;
++		t->kcov_saved_kcov = t->kcov;
+ 		kcov_stop(t);
  	}
- 	if (dev->zone_size > dev->size) {
-@@ -97,6 +99,10 @@ int null_init_zoned_dev(struct nullb_dev
- 	zone_capacity_sects = mb_to_sects(dev->zone_capacity);
- 	dev_capacity_sects = mb_to_sects(dev->size);
- 	dev->zone_size_sects = mb_to_sects(dev->zone_size);
-+	if (!dev->zone_size_sects) {
-+		pr_err("zone_size too large or too small, leads to zero sectors\n");
-+		return -EINVAL;
-+	}
- 	dev->nr_zones = round_up(dev_capacity_sects, dev->zone_size_sects)
- 		>> ilog2(dev->zone_size_sects);
+ }
  
+ static void kcov_remote_softirq_stop(struct task_struct *t)
+ {
+-	struct kcov_percpu_data *data = this_cpu_ptr(&kcov_percpu_data);
+-
+-	if (data->saved_kcov) {
+-		kcov_start(t, data->saved_kcov, data->saved_size,
+-				data->saved_area, data->saved_mode,
+-				data->saved_sequence);
+-		data->saved_mode = 0;
+-		data->saved_size = 0;
+-		data->saved_area = NULL;
+-		data->saved_sequence = 0;
+-		data->saved_kcov = NULL;
++	if (t->kcov_saved_kcov) {
++		kcov_start(t, t->kcov_saved_kcov, t->kcov_saved_size,
++			   t->kcov_saved_area, t->kcov_saved_mode,
++			   t->kcov_saved_sequence);
++		t->kcov_saved_mode = 0;
++		t->kcov_saved_size = 0;
++		t->kcov_saved_area = NULL;
++		t->kcov_saved_sequence = 0;
++		t->kcov_saved_kcov = NULL;
+ 	}
+ }
+ 
+@@ -900,17 +899,17 @@ void kcov_remote_start(u64 handle)
+ 	sequence = kcov->sequence;
+ 	if (in_task()) {
+ 		size = kcov->remote_size;
+-		area = kcov_remote_area_get(size);
++		area = kcov_remote_area_get(size, false);
+ 	} else {
+ 		size = CONFIG_KCOV_IRQ_AREA_SIZE;
+-		area = this_cpu_ptr(&kcov_percpu_data)->irq_area;
++		area = kcov_remote_area_get(size, true);
+ 	}
+ 	spin_unlock(&kcov_remote_lock);
+ 
+-	/* Can only happen when in_task(). */
++	/* Allocate new buffer if we can sleep. */
+ 	if (!area) {
+ 		local_unlock_irqrestore(&kcov_percpu_data.lock, flags);
+-		area = vmalloc(size * sizeof(unsigned long));
++		area = in_task() ? vmalloc(size * sizeof(unsigned long)) : NULL;
+ 		if (!area) {
+ 			kcov_put(kcov);
+ 			return;
+@@ -1043,11 +1042,9 @@ void kcov_remote_stop(void)
+ 		kcov_move_area(kcov->mode, kcov->area, kcov->size, area);
+ 	spin_unlock(&kcov->lock);
+ 
+-	if (in_task()) {
+-		spin_lock(&kcov_remote_lock);
+-		kcov_remote_area_put(area, size);
+-		spin_unlock(&kcov_remote_lock);
+-	}
++	spin_lock(&kcov_remote_lock);
++	kcov_remote_area_put(area, size, !in_task());
++	spin_unlock(&kcov_remote_lock);
+ 
+ 	local_unlock_irqrestore(&kcov_percpu_data.lock, flags);
+ 
+@@ -1067,14 +1064,21 @@ EXPORT_SYMBOL(kcov_common_handle);
+ 
+ static int __init kcov_init(void)
+ {
+-	int cpu;
++	int cpu = num_possible_cpus();
++
++#ifdef CONFIG_PREEMPT_RT
++	/* Allocate some extra buffers in order to prepare for softirq preemption. */
++	cpu = cpu >= 4 ? cpu * 2 : cpu + 4;
++#endif
++	while (cpu--) {
++		void *area = vmalloc(CONFIG_KCOV_IRQ_AREA_SIZE * sizeof(unsigned long));
++		unsigned long flags;
+ 
+-	for_each_possible_cpu(cpu) {
+-		void *area = vmalloc_node(CONFIG_KCOV_IRQ_AREA_SIZE *
+-				sizeof(unsigned long), cpu_to_node(cpu));
+ 		if (!area)
+ 			return -ENOMEM;
+-		per_cpu_ptr(&kcov_percpu_data, cpu)->irq_area = area;
++		spin_lock_irqsave(&kcov_remote_lock, flags);
++		kcov_remote_area_put(area, CONFIG_KCOV_IRQ_AREA_SIZE, true);
++		spin_unlock_irqrestore(&kcov_remote_lock, flags);
+ 	}
+ 
+ 	/*
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -2044,10 +2044,11 @@ config KCOV_INSTRUMENT_ALL
+ config KCOV_IRQ_AREA_SIZE
+ 	hex "Size of interrupt coverage collection area in words"
+ 	depends on KCOV
++	range 0x80 0x1000000
+ 	default 0x40000
+ 	help
+-	  KCOV uses preallocated per-cpu areas to collect coverage from
+-	  soft interrupts. This specifies the size of those areas in the
++	  KCOV uses preallocated areas to collect coverage from soft
++	  interrupts. This specifies the size of those areas in the
+ 	  number of unsigned long words.
+ 
+ menuconfig RUNTIME_TESTING_MENU
 
 
