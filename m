@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC2F481FC7;
-	Tue, 25 Aug 2026 13:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1AC6484227;
+	Tue, 25 Aug 2026 13:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665618; cv=none; b=oDTidHQlz/LoQbeNmT1Q9TbS9SkhdhLE+p4A7hJz5iHBQJx9dCe5IPR/TEbdPuYfrnGAvYoLmsfOMSQdTgYvuyaR1bGlqL6fI8PuyNSx/l0+CDClwirhYVLGgE+wBc4ErnhG3Hvk4gfQ60DgS/dtEimqb8TpOIAuzDKAJVu01vg=
+	t=1787665621; cv=none; b=lSYEvbBlpBu9LIjQsHpFVsphBaXR5vpOwYP+DpBbflLXMd2svcw8QmSTTJNh4r1sE+ONBBD0BMyrrIL6LrrfDZ6EoxdrbRw20krQtRpQi6l4PttEVYFaXFVHU4nTok+7kQkNN9E6kr6Q854da106Pf9gyeHHw3b2ZcdhO2xQ1SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665618; c=relaxed/simple;
-	bh=aeHivqkL3NUBdMnCILsWYBGTo0NeGskJPemOz/DPOiY=;
+	s=arc-20240116; t=1787665621; c=relaxed/simple;
+	bh=VGqOHnaqpvyVHx5kIoYqK0x7GkD1HrN54+uQmsWkjtk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AjCussEfB3++1neCd8JX4ql5p5BX1APqpqxfWSej8bprYxGmqHpAizNXp7qa3pdRxrt7rhXgHTfexjDDJU7/6gy4djIzjv/XRSmhMCJsop/aKbs2HEe8vyVYZeOUI/QYWD/6MH1wvbhaYD1RPL1ay5zLjFDOZGLTCKvKvf0xTmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p6hohH8w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YCTXSku9pD/s4xHQBt4XG8VZHLkacFnQBLapI9QzC+Rhp6a5ki+ipdmQV8vuEvfyyN05gJPEgh54rjF8rq6gfDdVxiQuD0ISxn7hJ9BbTpASA1cNrNZDAQY6Nhh+/RvA+HbwSkTHmsmNryTq7fCBaMKV4KSfR+O76XseP1aeINQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSkDtIdq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p6hohH8w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDDF91F00ACA;
-	Tue, 25 Aug 2026 13:46:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSkDtIdq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD9731F000E9;
+	Tue, 25 Aug 2026 13:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665616;
-	bh=jPa1yU91cbon7qQ2rKZZJtsQzN3u0F3PCFGRpuNgcNk=;
+	s=korg; t=1787665619;
+	bh=KrmyubuB1bZC3u2e0CZkY1AxayFgtxXVRi8IV1Ho8yU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p6hohH8w7zAYa6tnsKs0CZJ/FkYbdjdRRZRrglP1rq7HFkDIp7ebTuLyUaki3rCZc
-	 q6I0n+wgkEn1PcuY2VxxOI84HBS6XKqtWSLO9O+y9DDPXDfGbsuV2LqliYXZU9f6+2
-	 j/3P0xyXtNMOTj+7NJh+Q4mtMBNSSkmXmgK5xAcs=
+	b=jSkDtIdqhsyCY0ff1CGxRnLZ6CU7DR92EDNGrUT0sJ/RzQiMEzihqIJVs2tZIkl/c
+	 GZShv28UKTLirowPgNMjcwXY9T62kQ3cuI4QGQcKBu1sdy3w0jEd5xf+cDB2RAaxef
+	 +LQcsXFqGqgVc/WnyTwCN3kNXKfc9TjsQo+V+9AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steffen Persvold <spersvold@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH 6.6 01/87] PCI: host-generic: Fix NULL pointer dereference on 32-bit CAM systems
-Date: Tue, 25 Aug 2026 15:25:24 +0200
-Message-ID: <20260825132541.870805349@linuxfoundation.org>
+	Lech Perczak <lech.perczak@camlingroup.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 10/87] serial: sc16is7xx: convert bitmask definitions to use BIT() macro
+Date: Tue, 25 Aug 2026 15:25:33 +0200
+Message-ID: <20260825132542.228435403@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -50,116 +51,314 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steffen Persvold <spersvold@gmail.com>
+From: Lech Perczak <lech.perczak@camlingroup.com>
 
-commit 008cb88edb41f3c7c8e0ed763ff9f26719830984 upstream.
+[ Upstream commit d2e8590fd1048c5c0dba160edc6a48ee8305a1f0 ]
 
-On 32-bit systems the config space is too large to ioremap in one go, so
-pci_ecam_create() maps each bus segment separately and relies on the
-->add_bus callback (pci_ecam_add_bus) to populate the per-bus mapping in
-cfg->winp[]. pci_ecam_map_bus() then uses that mapping as the base for
-every config access.
+Now that bit definition comments were cleaned up, convert bitmask
+definitions to use BIT() macro for clarity.
+Convert SC16IS7XX_IIR_ID_MASK to use GENMASK() macro -
+- while at that, realign comments.
+Compose SC16IS7XX_LSR_BRK_ERROR_MASK using aforementioned constants,
+instead of open-coding it, and remove now unneeded comments.
 
-The generic ECAM ops (pci_generic_ecam_ops) already provide the ->add_bus
-and ->remove_bus callbacks, but the CAM (legacy) ops in pci-host-generic.c
-do not. As a result, on a 32-bit host using "pci-host-cam-generic" the
-per-bus mapping is never set up and the first config read dereferences a
-NULL base, crashing during bus enumeration:
-
- Unable to handle kernel NULL pointer dereference at virtual address 00000800
- Oops [#1]
- CPU: 0 PID: 1 Comm: swapper Not tainted 6.9.7+ #43
- Hardware name: Digilent Nexys-Video-A7 RV32 (DT)
- epc : pci_generic_config_read+0x40/0xb0
-  ra : pci_generic_config_read+0x2c/0xb0
- [<c038db9c>] pci_generic_config_read+0x40/0xb0
- [<c038da04>] pci_bus_read_config_dword+0x50/0xb0
- [<c0391e94>] pci_bus_generic_read_dev_vendor_id+0x3c/0x1ec
- [<c039245c>] pci_scan_single_device+0xa4/0x11c
- [<c0392570>] pci_scan_slot+0x9c/0x23c
- [<c039388c>] pci_scan_child_bus_extend+0x58/0x2f4
- [<c0393db0>] pci_scan_root_bus_bridge+0x64/0xe8
- [<c0393e54>] pci_host_probe+0x20/0xc8
- [<c03bc6f4>] pci_host_common_probe+0x144/0x1e4
-
-Fix this by giving the CAM ops the same ->add_bus/->remove_bus callbacks.
-Since pci_ecam_add_bus() and pci_ecam_remove_bus() are static to ecam.c,
-move the CAM ops definition there as pci_generic_cam_ops (mirroring
-pci_generic_ecam_ops) and export it for pci-host-generic.c to reference.
-
-Fixes: 8fe55ef23387 ("PCI: Dynamically map ECAM regions")
-Signed-off-by: Steffen Persvold <spersvold@gmail.com>
-[mani: removed timestamp from log]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260709122446.3151899-1-spersvold@gmail.com
+Signed-off-by: Lech Perczak <lech.perczak@camlingroup.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Link: https://lore.kernel.org/r/8b45a01e-7cc5-4d53-b467-c6680bc51ef4@camlingroup.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 246ac114f485 ("serial: sc16is7xx: enable THRI before filling TX FIFO")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-host-generic.c |   11 +----------
- drivers/pci/ecam.c                        |   13 +++++++++++++
- include/linux/pci-ecam.h                  |    3 +++
- 3 files changed, 17 insertions(+), 10 deletions(-)
+ drivers/tty/serial/sc16is7xx.c |  176 +++++++++++++++++++++--------------------
+ 1 file changed, 91 insertions(+), 85 deletions(-)
 
---- a/drivers/pci/controller/pci-host-generic.c
-+++ b/drivers/pci/controller/pci-host-generic.c
-@@ -14,15 +14,6 @@
- #include <linux/pci-ecam.h>
- #include <linux/platform_device.h>
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -9,6 +9,7 @@
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
--static const struct pci_ecam_ops gen_pci_cfg_cam_bus_ops = {
--	.bus_shift	= 16,
--	.pci_ops	= {
--		.map_bus	= pci_ecam_map_bus,
--		.read		= pci_generic_config_read,
--		.write		= pci_generic_config_write,
--	}
--};
--
- static bool pci_dw_valid_device(struct pci_bus *bus, unsigned int devfn)
- {
- 	struct pci_config_window *cfg = bus->sysdata;
-@@ -58,7 +49,7 @@ static const struct pci_ecam_ops pci_dw_
+ #include <linux/bitops.h>
++#include <linux/bits.h>
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/device.h>
+@@ -73,52 +74,52 @@
+ #define SC16IS7XX_XOFF2_REG		(0x07) /* Xoff2 word */
  
- static const struct of_device_id gen_pci_of_match[] = {
- 	{ .compatible = "pci-host-cam-generic",
--	  .data = &gen_pci_cfg_cam_bus_ops },
-+	  .data = &pci_generic_cam_ops },
+ /* IER register bits */
+-#define SC16IS7XX_IER_RDI_BIT		(1 << 0) /* Enable RX data interrupt */
+-#define SC16IS7XX_IER_THRI_BIT		(1 << 1) /* Enable TX holding register
++#define SC16IS7XX_IER_RDI_BIT		BIT(0)   /* Enable RX data interrupt */
++#define SC16IS7XX_IER_THRI_BIT		BIT(1)   /* Enable TX holding register
+ 						  * interrupt */
+-#define SC16IS7XX_IER_RLSI_BIT		(1 << 2) /* Enable RX line status
++#define SC16IS7XX_IER_RLSI_BIT		BIT(2)   /* Enable RX line status
+ 						  * interrupt */
+-#define SC16IS7XX_IER_MSI_BIT		(1 << 3) /* Enable Modem status
++#define SC16IS7XX_IER_MSI_BIT		BIT(3)   /* Enable Modem status
+ 						  * interrupt */
  
- 	{ .compatible = "pci-host-ecam-generic",
- 	  .data = &pci_generic_ecam_ops },
---- a/drivers/pci/ecam.c
-+++ b/drivers/pci/ecam.c
-@@ -208,6 +208,19 @@ const struct pci_ecam_ops pci_generic_ec
+ /* IER register bits - write only if (EFR[4] == 1) */
+-#define SC16IS7XX_IER_SLEEP_BIT		(1 << 4) /* Enable Sleep mode */
+-#define SC16IS7XX_IER_XOFFI_BIT		(1 << 5) /* Enable Xoff interrupt */
+-#define SC16IS7XX_IER_RTSI_BIT		(1 << 6) /* Enable nRTS interrupt */
+-#define SC16IS7XX_IER_CTSI_BIT		(1 << 7) /* Enable nCTS interrupt */
++#define SC16IS7XX_IER_SLEEP_BIT		BIT(4)   /* Enable Sleep mode */
++#define SC16IS7XX_IER_XOFFI_BIT		BIT(5)   /* Enable Xoff interrupt */
++#define SC16IS7XX_IER_RTSI_BIT		BIT(6)   /* Enable nRTS interrupt */
++#define SC16IS7XX_IER_CTSI_BIT		BIT(7)   /* Enable nCTS interrupt */
+ 
+ /* FCR register bits */
+-#define SC16IS7XX_FCR_FIFO_BIT		(1 << 0) /* Enable FIFO */
+-#define SC16IS7XX_FCR_RXRESET_BIT	(1 << 1) /* Reset RX FIFO */
+-#define SC16IS7XX_FCR_TXRESET_BIT	(1 << 2) /* Reset TX FIFO */
+-#define SC16IS7XX_FCR_RXLVLL_BIT	(1 << 6) /* RX Trigger level LSB */
+-#define SC16IS7XX_FCR_RXLVLH_BIT	(1 << 7) /* RX Trigger level MSB */
++#define SC16IS7XX_FCR_FIFO_BIT		BIT(0)   /* Enable FIFO */
++#define SC16IS7XX_FCR_RXRESET_BIT	BIT(1)   /* Reset RX FIFO */
++#define SC16IS7XX_FCR_TXRESET_BIT	BIT(2)   /* Reset TX FIFO */
++#define SC16IS7XX_FCR_RXLVLL_BIT	BIT(6)   /* RX Trigger level LSB */
++#define SC16IS7XX_FCR_RXLVLH_BIT	BIT(7)   /* RX Trigger level MSB */
+ 
+ /* FCR register bits - write only if (EFR[4] == 1) */
+-#define SC16IS7XX_FCR_TXLVLL_BIT	(1 << 4) /* TX Trigger level LSB */
+-#define SC16IS7XX_FCR_TXLVLH_BIT	(1 << 5) /* TX Trigger level MSB */
++#define SC16IS7XX_FCR_TXLVLL_BIT	BIT(4)   /* TX Trigger level LSB */
++#define SC16IS7XX_FCR_TXLVLH_BIT	BIT(5)   /* TX Trigger level MSB */
+ 
+ /* IIR register bits */
+-#define SC16IS7XX_IIR_NO_INT_BIT	(1 << 0) /* No interrupts pending */
+-#define SC16IS7XX_IIR_ID_MASK		0x3e     /* Mask for the interrupt ID */
+-#define SC16IS7XX_IIR_THRI_SRC		0x02     /* TX holding register empty */
+-#define SC16IS7XX_IIR_RDI_SRC		0x04     /* RX data interrupt */
+-#define SC16IS7XX_IIR_RLSE_SRC		0x06     /* RX line status error */
+-#define SC16IS7XX_IIR_RTOI_SRC		0x0c     /* RX time-out interrupt */
+-#define SC16IS7XX_IIR_MSI_SRC		0x00     /* Modem status interrupt
+-						  * - only on 75x/76x
+-						  */
+-#define SC16IS7XX_IIR_INPIN_SRC		0x30     /* Input pin change of state
+-						  * - only on 75x/76x
+-						  */
+-#define SC16IS7XX_IIR_XOFFI_SRC		0x10     /* Received Xoff */
+-#define SC16IS7XX_IIR_CTSRTS_SRC	0x20     /* nCTS,nRTS change of state
+-						  * from active (LOW)
+-						  * to inactive (HIGH)
+-						  */
++#define SC16IS7XX_IIR_NO_INT_BIT	0x01		/* No interrupts pending */
++#define SC16IS7XX_IIR_ID_MASK		GENMASK(5, 1)	/* Mask for the interrupt ID */
++#define SC16IS7XX_IIR_THRI_SRC		0x02		/* TX holding register empty */
++#define SC16IS7XX_IIR_RDI_SRC		0x04		/* RX data interrupt */
++#define SC16IS7XX_IIR_RLSE_SRC		0x06		/* RX line status error */
++#define SC16IS7XX_IIR_RTOI_SRC		0x0c		/* RX time-out interrupt */
++#define SC16IS7XX_IIR_MSI_SRC		0x00		/* Modem status interrupt
++							 * - only on 75x/76x
++							 */
++#define SC16IS7XX_IIR_INPIN_SRC		0x30		/* Input pin change of state
++							 * - only on 75x/76x
++							 */
++#define SC16IS7XX_IIR_XOFFI_SRC		0x10		/* Received Xoff */
++#define SC16IS7XX_IIR_CTSRTS_SRC	0x20		/* nCTS,nRTS change of state
++							 * from active (LOW)
++							 * to inactive (HIGH)
++							 */
+ /* LCR register bits */
+-#define SC16IS7XX_LCR_LENGTH0_BIT	(1 << 0) /* Word length bit 0 */
+-#define SC16IS7XX_LCR_LENGTH1_BIT	(1 << 1) /* Word length bit 1
++#define SC16IS7XX_LCR_LENGTH0_BIT	BIT(0)   /* Word length bit 0 */
++#define SC16IS7XX_LCR_LENGTH1_BIT	BIT(1)   /* Word length bit 1
+ 						  *
+ 						  * Word length bits table:
+ 						  * 00 -> 5 bit words
+@@ -126,7 +127,7 @@
+ 						  * 10 -> 7 bit words
+ 						  * 11 -> 8 bit words
+ 						  */
+-#define SC16IS7XX_LCR_STOPLEN_BIT	(1 << 2) /* STOP length bit
++#define SC16IS7XX_LCR_STOPLEN_BIT	BIT(2)   /* STOP length bit
+ 						  *
+ 						  * STOP length bit table:
+ 						  * 0 -> 1 stop bit
+@@ -134,11 +135,11 @@
+ 						  *      word length is 5,
+ 						  *      2 stop bits otherwise
+ 						  */
+-#define SC16IS7XX_LCR_PARITY_BIT	(1 << 3) /* Parity bit enable */
+-#define SC16IS7XX_LCR_EVENPARITY_BIT	(1 << 4) /* Even parity bit enable */
+-#define SC16IS7XX_LCR_FORCEPARITY_BIT	(1 << 5) /* 9-bit multidrop parity */
+-#define SC16IS7XX_LCR_TXBREAK_BIT	(1 << 6) /* TX break enable */
+-#define SC16IS7XX_LCR_DLAB_BIT		(1 << 7) /* Divisor Latch enable */
++#define SC16IS7XX_LCR_PARITY_BIT	BIT(3)   /* Parity bit enable */
++#define SC16IS7XX_LCR_EVENPARITY_BIT	BIT(4)   /* Even parity bit enable */
++#define SC16IS7XX_LCR_FORCEPARITY_BIT	BIT(5)   /* 9-bit multidrop parity */
++#define SC16IS7XX_LCR_TXBREAK_BIT	BIT(6)   /* TX break enable */
++#define SC16IS7XX_LCR_DLAB_BIT		BIT(7)   /* Divisor Latch enable */
+ #define SC16IS7XX_LCR_WORD_LEN_5	(0x00)
+ #define SC16IS7XX_LCR_WORD_LEN_6	(0x01)
+ #define SC16IS7XX_LCR_WORD_LEN_7	(0x02)
+@@ -149,58 +150,63 @@
+ 								* reg set */
+ 
+ /* MCR register bits */
+-#define SC16IS7XX_MCR_DTR_BIT		(1 << 0) /* DTR complement
++#define SC16IS7XX_MCR_DTR_BIT		BIT(0)   /* DTR complement
+ 						  * - only on 75x/76x
+ 						  */
+-#define SC16IS7XX_MCR_RTS_BIT		(1 << 1) /* RTS complement */
+-#define SC16IS7XX_MCR_TCRTLR_BIT	(1 << 2) /* TCR/TLR register enable */
+-#define SC16IS7XX_MCR_LOOP_BIT		(1 << 4) /* Enable loopback test mode */
+-#define SC16IS7XX_MCR_XONANY_BIT	(1 << 5) /* Enable Xon Any
++#define SC16IS7XX_MCR_RTS_BIT		BIT(1)   /* RTS complement */
++#define SC16IS7XX_MCR_TCRTLR_BIT	BIT(2)   /* TCR/TLR register enable */
++#define SC16IS7XX_MCR_LOOP_BIT		BIT(4)   /* Enable loopback test mode */
++#define SC16IS7XX_MCR_XONANY_BIT	BIT(5)   /* Enable Xon Any
+ 						  * - write enabled
+ 						  * if (EFR[4] == 1)
+ 						  */
+-#define SC16IS7XX_MCR_IRDA_BIT		(1 << 6) /* Enable IrDA mode
++#define SC16IS7XX_MCR_IRDA_BIT		BIT(6)   /* Enable IrDA mode
+ 						  * - write enabled
+ 						  * if (EFR[4] == 1)
+ 						  */
+-#define SC16IS7XX_MCR_CLKSEL_BIT	(1 << 7) /* Divide clock by 4
++#define SC16IS7XX_MCR_CLKSEL_BIT	BIT(7)   /* Divide clock by 4
+ 						  * - write enabled
+ 						  * if (EFR[4] == 1)
+ 						  */
+ 
+ /* LSR register bits */
+-#define SC16IS7XX_LSR_DR_BIT		(1 << 0) /* Receiver data ready */
+-#define SC16IS7XX_LSR_OE_BIT		(1 << 1) /* Overrun Error */
+-#define SC16IS7XX_LSR_PE_BIT		(1 << 2) /* Parity Error */
+-#define SC16IS7XX_LSR_FE_BIT		(1 << 3) /* Frame Error */
+-#define SC16IS7XX_LSR_BI_BIT		(1 << 4) /* Break Interrupt */
+-#define SC16IS7XX_LSR_BRK_ERROR_MASK	0x1E     /* BI, FE, PE, OE bits */
+-#define SC16IS7XX_LSR_THRE_BIT		(1 << 5) /* TX holding register empty */
+-#define SC16IS7XX_LSR_TEMT_BIT		(1 << 6) /* Transmitter empty */
+-#define SC16IS7XX_LSR_FIFOE_BIT		(1 << 7) /* Fifo Error */
++#define SC16IS7XX_LSR_DR_BIT		BIT(0)   /* Receiver data ready */
++#define SC16IS7XX_LSR_OE_BIT		BIT(1)   /* Overrun Error */
++#define SC16IS7XX_LSR_PE_BIT		BIT(2)   /* Parity Error */
++#define SC16IS7XX_LSR_FE_BIT		BIT(3)   /* Frame Error */
++#define SC16IS7XX_LSR_BI_BIT		BIT(4)   /* Break Interrupt */
++#define SC16IS7XX_LSR_BRK_ERROR_MASK \
++	(SC16IS7XX_LSR_OE_BIT | \
++	 SC16IS7XX_LSR_PE_BIT | \
++	 SC16IS7XX_LSR_FE_BIT | \
++	 SC16IS7XX_LSR_BI_BIT)
++
++#define SC16IS7XX_LSR_THRE_BIT		BIT(5)   /* TX holding register empty */
++#define SC16IS7XX_LSR_TEMT_BIT		BIT(6)   /* Transmitter empty */
++#define SC16IS7XX_LSR_FIFOE_BIT		BIT(7)   /* Fifo Error */
+ 
+ /* MSR register bits */
+-#define SC16IS7XX_MSR_DCTS_BIT		(1 << 0) /* Delta CTS Clear To Send */
+-#define SC16IS7XX_MSR_DDSR_BIT		(1 << 1) /* Delta DSR Data Set Ready
++#define SC16IS7XX_MSR_DCTS_BIT		BIT(0)   /* Delta CTS Clear To Send */
++#define SC16IS7XX_MSR_DDSR_BIT		BIT(1)   /* Delta DSR Data Set Ready
+ 						  * or (IO4)
+ 						  * - only on 75x/76x
+ 						  */
+-#define SC16IS7XX_MSR_DRI_BIT		(1 << 2) /* Delta RI Ring Indicator
++#define SC16IS7XX_MSR_DRI_BIT		BIT(2)   /* Delta RI Ring Indicator
+ 						  * or (IO7)
+ 						  * - only on 75x/76x
+ 						  */
+-#define SC16IS7XX_MSR_DCD_BIT		(1 << 3) /* Delta CD Carrier Detect
++#define SC16IS7XX_MSR_DCD_BIT		BIT(3)   /* Delta CD Carrier Detect
+ 						  * or (IO6)
+ 						  * - only on 75x/76x
+ 						  */
+-#define SC16IS7XX_MSR_CTS_BIT		(1 << 4) /* CTS */
+-#define SC16IS7XX_MSR_DSR_BIT		(1 << 5) /* DSR (IO4)
++#define SC16IS7XX_MSR_CTS_BIT		BIT(4)   /* CTS */
++#define SC16IS7XX_MSR_DSR_BIT		BIT(5)   /* DSR (IO4)
+ 						  * - only on 75x/76x
+ 						  */
+-#define SC16IS7XX_MSR_RI_BIT		(1 << 6) /* RI (IO7)
++#define SC16IS7XX_MSR_RI_BIT		BIT(6)   /* RI (IO7)
+ 						  * - only on 75x/76x
+ 						  */
+-#define SC16IS7XX_MSR_CD_BIT		(1 << 7) /* CD (IO6)
++#define SC16IS7XX_MSR_CD_BIT		BIT(7)   /* CD (IO6)
+ 						  * - only on 75x/76x
+ 						  */
+ #define SC16IS7XX_MSR_DELTA_MASK	0x0F     /* Any of the delta bits! */
+@@ -236,19 +242,19 @@
+ #define SC16IS7XX_TLR_RX_TRIGGER(words)	((((words) / 4) & 0x0f) << 4)
+ 
+ /* IOControl register bits (Only 750/760) */
+-#define SC16IS7XX_IOCONTROL_LATCH_BIT	(1 << 0) /* Enable input latching */
+-#define SC16IS7XX_IOCONTROL_MODEM_A_BIT	(1 << 1) /* Enable GPIO[7:4] as modem A pins */
+-#define SC16IS7XX_IOCONTROL_MODEM_B_BIT	(1 << 2) /* Enable GPIO[3:0] as modem B pins */
+-#define SC16IS7XX_IOCONTROL_SRESET_BIT	(1 << 3) /* Software Reset */
++#define SC16IS7XX_IOCONTROL_LATCH_BIT	BIT(0)   /* Enable input latching */
++#define SC16IS7XX_IOCONTROL_MODEM_A_BIT	BIT(1)   /* Enable GPIO[7:4] as modem A pins */
++#define SC16IS7XX_IOCONTROL_MODEM_B_BIT	BIT(2)   /* Enable GPIO[3:0] as modem B pins */
++#define SC16IS7XX_IOCONTROL_SRESET_BIT	BIT(3)   /* Software Reset */
+ 
+ /* EFCR register bits */
+-#define SC16IS7XX_EFCR_9BIT_MODE_BIT	(1 << 0) /* Enable 9-bit or Multidrop
++#define SC16IS7XX_EFCR_9BIT_MODE_BIT	BIT(0)   /* Enable 9-bit or Multidrop
+ 						  * mode (RS485) */
+-#define SC16IS7XX_EFCR_RXDISABLE_BIT	(1 << 1) /* Disable receiver */
+-#define SC16IS7XX_EFCR_TXDISABLE_BIT	(1 << 2) /* Disable transmitter */
+-#define SC16IS7XX_EFCR_AUTO_RS485_BIT	(1 << 4) /* Auto RS485 RTS direction */
+-#define SC16IS7XX_EFCR_RTS_INVERT_BIT	(1 << 5) /* RTS output inversion */
+-#define SC16IS7XX_EFCR_IRDA_MODE_BIT	(1 << 7) /* IrDA mode
++#define SC16IS7XX_EFCR_RXDISABLE_BIT	BIT(1)   /* Disable receiver */
++#define SC16IS7XX_EFCR_TXDISABLE_BIT	BIT(2)   /* Disable transmitter */
++#define SC16IS7XX_EFCR_AUTO_RS485_BIT	BIT(4)   /* Auto RS485 RTS direction */
++#define SC16IS7XX_EFCR_RTS_INVERT_BIT	BIT(5)   /* RTS output inversion */
++#define SC16IS7XX_EFCR_IRDA_MODE_BIT	BIT(7)   /* IrDA mode
+ 						  * 0 = rate upto 115.2 kbit/s
+ 						  *   - Only 750/760
+ 						  * 1 = rate upto 1.152 Mbit/s
+@@ -256,15 +262,15 @@
+ 						  */
+ 
+ /* EFR register bits */
+-#define SC16IS7XX_EFR_AUTORTS_BIT	(1 << 6) /* Auto RTS flow ctrl enable */
+-#define SC16IS7XX_EFR_AUTOCTS_BIT	(1 << 7) /* Auto CTS flow ctrl enable */
+-#define SC16IS7XX_EFR_XOFF2_DETECT_BIT	(1 << 5) /* Enable Xoff2 detection */
+-#define SC16IS7XX_EFR_ENABLE_BIT	(1 << 4) /* Enable enhanced functions
++#define SC16IS7XX_EFR_AUTORTS_BIT	BIT(6)   /* Auto RTS flow ctrl enable */
++#define SC16IS7XX_EFR_AUTOCTS_BIT	BIT(7)   /* Auto CTS flow ctrl enable */
++#define SC16IS7XX_EFR_XOFF2_DETECT_BIT	BIT(5)   /* Enable Xoff2 detection */
++#define SC16IS7XX_EFR_ENABLE_BIT	BIT(4)   /* Enable enhanced functions
+ 						  * and writing to IER[7:4],
+ 						  * FCR[5:4], MCR[7:5]
+ 						  */
+-#define SC16IS7XX_EFR_SWFLOW3_BIT	(1 << 3)
+-#define SC16IS7XX_EFR_SWFLOW2_BIT	(1 << 2)
++#define SC16IS7XX_EFR_SWFLOW3_BIT	BIT(3)
++#define SC16IS7XX_EFR_SWFLOW2_BIT	BIT(2)
+ 						 /*
+ 						  * SWFLOW bits 3 & 2 table:
+ 						  * 00 -> no transmitter flow
+@@ -277,8 +283,8 @@
+ 						  *       XON1, XON2, XOFF1 and
+ 						  *       XOFF2
+ 						  */
+-#define SC16IS7XX_EFR_SWFLOW1_BIT	(1 << 1)
+-#define SC16IS7XX_EFR_SWFLOW0_BIT	(1 << 0)
++#define SC16IS7XX_EFR_SWFLOW1_BIT	BIT(1)
++#define SC16IS7XX_EFR_SWFLOW0_BIT	BIT(0)
+ 						 /*
+ 						  * SWFLOW bits 1 & 0 table:
+ 						  * 00 -> no received flow
+@@ -311,9 +317,9 @@ struct sc16is7xx_devtype {
+ 	int	nr_uart;
  };
- EXPORT_SYMBOL_GPL(pci_generic_ecam_ops);
  
-+/* CAM ops */
-+const struct pci_ecam_ops pci_generic_cam_ops = {
-+	.bus_shift	= 16,
-+	.pci_ops	= {
-+		.add_bus	= pci_ecam_add_bus,
-+		.remove_bus	= pci_ecam_remove_bus,
-+		.map_bus	= pci_ecam_map_bus,
-+		.read		= pci_generic_config_read,
-+		.write		= pci_generic_config_write,
-+	}
-+};
-+EXPORT_SYMBOL_GPL(pci_generic_cam_ops);
-+
- #if defined(CONFIG_ACPI) && defined(CONFIG_PCI_QUIRKS)
- /* ECAM ops for 32-bit access only (non-compliant) */
- const struct pci_ecam_ops pci_32b_ops = {
---- a/include/linux/pci-ecam.h
-+++ b/include/linux/pci-ecam.h
-@@ -77,6 +77,9 @@ void __iomem *pci_ecam_map_bus(struct pc
- /* default ECAM ops */
- extern const struct pci_ecam_ops pci_generic_ecam_ops;
+-#define SC16IS7XX_RECONF_MD		(1 << 0)
+-#define SC16IS7XX_RECONF_IER		(1 << 1)
+-#define SC16IS7XX_RECONF_RS485		(1 << 2)
++#define SC16IS7XX_RECONF_MD		BIT(0)
++#define SC16IS7XX_RECONF_IER		BIT(1)
++#define SC16IS7XX_RECONF_RS485		BIT(2)
  
-+/* default CAM ops */
-+extern const struct pci_ecam_ops pci_generic_cam_ops;
-+
- #if defined(CONFIG_ACPI) && defined(CONFIG_PCI_QUIRKS)
- extern const struct pci_ecam_ops pci_32b_ops;	/* 32-bit accesses only */
- extern const struct pci_ecam_ops pci_32b_read_ops; /* 32-bit read only */
+ struct sc16is7xx_one_config {
+ 	unsigned int			flags;
 
 
