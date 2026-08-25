@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F039C386C3B;
-	Tue, 25 Aug 2026 13:37:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5AF47FB0E;
+	Tue, 25 Aug 2026 13:37:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665023; cv=none; b=WRFN3cPlTEK9OT6VUMwStJJO0b47EI9dUFJMpDJr/jGAar42NqinwiDCJ4dnfRmTwr3Y6btUVJxaTA/QfNNg/1uSaeoTlSBlvXwgN9Kcs/0avwAM+YQuuIKlFZARyNEUFrJWqkcRhJ9mWBqBRJx1SOWGp0M8WovI0H5aioZ5iAo=
+	t=1787665026; cv=none; b=gkt7ZG4SkWyRLOxFVZqKy9DKWhrWtQr2ZuRXZK3Xw1UryiCOK3+PrnQCi/jHKenU2BFsGLxznwxj1K24o+JXAxxPVvszz6R0zn7R3uijJDDvOLzUAr8ctx5q+xo+2Al1vvnEKSXPzpYBKoGaEYhr1bCkL7MM3bHBv+5tuKxLoFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665023; c=relaxed/simple;
-	bh=4ljEcVk43FJIB6Ic3+lHGRUuihq5dZXcVi6T8V+Wh+s=;
+	s=arc-20240116; t=1787665026; c=relaxed/simple;
+	bh=XmNcoSIGkvtk+lfCPtB1n9tOEvRlDtDvhFzK2pWfwMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t7A0NhwKMmXnZe/xvBbkhjvAYx2ZbZvxfCjA4hTgxRmUpUvnK1ABRYcmzM1F7s3b0pOmODC+3ezbxX4d1Qu5dPAulL1CNtKrO7CvIxvMJAPXc+XzD8qofoXy+CxUYpHh6eETQipTaRe4v/Bs9OFmnclwqxHRb0Z5UWm0I4sGvuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1GzZyDyj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RSgdTgBjP1rtMP52lADwvCcEw6iTXPq5leJB45KAB73NxF24J7YbCB5/b8ppHQ0TGJccBnS7mFPT+Fu5ZUdchktPuh4GFxtQfdk/b2Eq+Uv8xABAzIFSiDE1CTYzKOgIA3SLS6eOyGbZ8ZH4uXMsXb6F1Eo6Vd6SozYLqPTxZyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vv+UpMc9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GzZyDyj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5067F1F000E9;
-	Tue, 25 Aug 2026 13:37:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vv+UpMc9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EAE11F000E9;
+	Tue, 25 Aug 2026 13:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665021;
-	bh=MrU3PiR+vBdw/W8BWZZH6UIgRR1v3V57NT18+RaOjCQ=;
+	s=korg; t=1787665024;
+	bh=0KnwWd3FaFAw4KDlp5UeA38W3PIIr05s/Zc7yMf5EL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1GzZyDyj3c+L3qhCEW9cuGrs+hiyLVuKn03y1RUzT1qgKZwB4rEFEli9zZd40MOsM
-	 exdBih1flql5MObTUk5rzImq5ZzEF4ECEqryQAs7pN0INP/QvkpquUz2s+zUGH2k91
-	 dNxwR+9xWkLsuNzJ9mNOVCy3aTFdpEoXS3eGsxS8=
+	b=Vv+UpMc9CwTg2JAn6xYoV0UxtPqvucxFdKwd7BUB4lQCTTVxPR/cOUZbcJtCDRYji
+	 DejrfivPzkNZG7e5uIic5QWpSh1Ovj8z94tKZWiq4qbjFdo2CAzERVtqo+352G+X95
+	 RUWb1PJzOve8DIDIqBHhnoRBy+90eBLc4h+70fAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jann Horn <jannh@google.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.1 082/101] HID: asus: fix missing hid_is_usb() check
-Date: Tue, 25 Aug 2026 15:26:00 +0200
-Message-ID: <20260825132545.158964653@linuxfoundation.org>
+Subject: [PATCH 7.1 083/101] HID: huawei: fix missing hid_is_usb() check
+Date: Tue, 25 Aug 2026 15:26:01 +0200
+Message-ID: <20260825132545.183710281@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -52,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Jann Horn <jannh@google.com>
 
-commit 02bf61dfb44f17ec187d1da1a82495951bbd12df upstream.
+commit 4cdb6b4b34d7823254f6e1b22faf56c96ac57fb9 upstream.
 
 to_usb_interface() can only be used on a hid_device whose parent is really
 USB; uhid can create devices that identify as being on BUS_USB, but don't
@@ -62,25 +62,36 @@ Fix the use of to_usb_interface() without a hid_is_usb() check.
 I have verified that it is currently possible to trigger a kernel splat due
 to this bug in an ASAN build, and that this commit fixes the issue.
 
-Fixes: 00e005c952f7 ("hid-asus: check ROG Ally MCU version and warn")
+Fixes: e93faaca84b7 ("HID: huawei: fix CD30 keyboard report descriptor issue")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jann Horn <jannh@google.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-asus.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-huawei.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/hid-asus.c
-+++ b/drivers/hid/hid-asus.c
-@@ -753,7 +753,7 @@ static int asus_kbd_register_leds(struct
- 			return ret;
- 	}
+diff --git a/drivers/hid/hid-huawei.c b/drivers/hid/hid-huawei.c
+index 6a616bf21b38..ee3fc6f68475 100644
+--- a/drivers/hid/hid-huawei.c
++++ b/drivers/hid/hid-huawei.c
+@@ -44,11 +44,12 @@ static const __u8 huawei_cd30_kbd_rdesc_fixed[] = {
+ static const __u8 *huawei_report_fixup(struct hid_device *hdev, __u8 *rdesc,
+ 				  unsigned int *rsize)
+ {
+-	struct usb_interface *intf = to_usb_interface(hdev->dev.parent);
++	struct usb_interface *intf = hid_is_usb(hdev) ?
++			to_usb_interface(hdev->dev.parent) : NULL;
  
--	if (drvdata->quirks & QUIRK_ROG_ALLY_XPAD) {
-+	if ((drvdata->quirks & QUIRK_ROG_ALLY_XPAD) && hid_is_usb(hdev)) {
- 		intf = to_usb_interface(hdev->dev.parent);
- 		udev = interface_to_usbdev(intf);
- 		validate_mcu_fw_version(hdev,
+ 	switch (hdev->product) {
+ 	case USB_DEVICE_ID_HUAWEI_CD30KBD:
+-		if (intf->cur_altsetting->desc.bInterfaceNumber == 1) {
++		if (!intf || intf->cur_altsetting->desc.bInterfaceNumber == 1) {
+ 			if (*rsize != sizeof(huawei_cd30_kbd_rdesc_fixed) ||
+ 				memcmp(huawei_cd30_kbd_rdesc_fixed, rdesc,
+ 					sizeof(huawei_cd30_kbd_rdesc_fixed)) != 0) {
+-- 
+2.55.0
+
 
 
