@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD75042E43D;
-	Tue, 25 Aug 2026 13:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E94480320;
+	Tue, 25 Aug 2026 13:42:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665322; cv=none; b=BVx1h5WNkPcooKcWR8Af+XqcyrZsQFViEqx00BoWd5JN8fK/FKjUu87boia/UmUb0gKijM6dFJ1o5BSge5NSB/IgLqrnmiAIzYTH2opeHbTY9TaT1rjTHEkqf9yZe7NYI1Qkp8CSItZ4v36lpoPoouJ9e5c/QWuQqESbsTcA5Go=
+	t=1787665324; cv=none; b=lEeALm8hMejx2xCsWhOzvC8UORZGshjNT/fD7gSw1UaqU1IFWyVu7JBxgPF5uNBYg7o8pGIcifngNiYbUFATxJDgHpAiyzKp/jTv5aECVynzyWqNcjj5Rg/QvUmDXGoaRrhgvH2wdXczd0Bj7UikE6NmMhzDWoyEEijUPie2zoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665322; c=relaxed/simple;
-	bh=OFew9ZeHxPa6enfHHMNnVSJFmj3m7Mh0OJ6VbaSU8Y4=;
+	s=arc-20240116; t=1787665324; c=relaxed/simple;
+	bh=EwwdiDU/X/wqSfbIpu4kNZDxyGt2YSLlhGxu6naLqYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D95sy5SnF6My9tl+u1fqypPKzM9w8gbmvSXm3xPs+0To6RLNdskL9zpGc0vZawAzUJtwwS5iL7RTD6Ga7gSk+Fc6TlEb1tJZTLtodQUkIQRx7QQUTY5zGYTbVPUOsSb6VbeBupzSkXcYloGHTfFYKE/WoF/65BhuJllPmjui3qM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCgXxgFc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OjujDZd8ETb/Sz2ZHxYh8r8B56PvBq70CRGJR/pg4UmV2CjIdCzid3Oed7qBUBlQnjK1zEKjPrPuAmIkYGhnUOeLbKai4j4ThCWVUvqlcdp42ZRBf0KJ+Pd32+DYQNcaWMO+tgyziQgYo0GZg561TlE5J43INx3nXVWak9x33vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s994kwmW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCgXxgFc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA6481F000E9;
-	Tue, 25 Aug 2026 13:41:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s994kwmW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30321F000E9;
+	Tue, 25 Aug 2026 13:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665320;
-	bh=8Y60YzCl3YO+0qhRUDQoI6eIxXEI0xnVIQQ5UXBqLsE=;
+	s=korg; t=1787665323;
+	bh=ayTwxUSEfPmYxjEXc/qFI2CkedSBUdNQq+HNwfxs4SY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CCgXxgFc+Rdf8e8TzcH3dP8Lmk2vxgISMbsLcWM3UI/8/hghrs2bGtW3zibxhLHYw
-	 kwJ9ne7i/t81SOv66gpV+7oSiUocdAfcbr8VP4vRMCts/UoC/nHAMOKMjeVXevcb5V
-	 oM0NBQoDU/sPZXlCnSaBKNxBhgP3u1+/k+CYvW/s=
+	b=s994kwmW1O90XHq/EtbNpR9+PhA7SDejaUC/q92SC8PFgp6oxPnW7ZaYuzwFlK7qU
+	 KgFKC0HFTmYhhyGfgruR0+SY1fRYXnjWKVNQrfxzM/07Fii00cQeQvmc72ydgDvBeH
+	 R/cQyeZ93NzOcJWCAxWuhv2sRUH/NoWgtE/EbfSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Jann Horn <jannh@google.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.18 82/94] HID: nintendo: stop device IO before hid_hw_stop on probe failure
-Date: Tue, 25 Aug 2026 15:26:18 +0200
-Message-ID: <20260825132545.061543717@linuxfoundation.org>
+Subject: [PATCH 6.18 83/94] HID: core: fix number/pointer type confusion on long items
+Date: Tue, 25 Aug 2026 15:26:19 +0200
+Message-ID: <20260825132545.088697704@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -50,59 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Jann Horn <jannh@google.com>
 
-commit 1f74d3bff6fe04a64e02ab3661d2e0d554565aa6 upstream.
+commit 28abce951343fcec26e397610868efa4e1395c3f upstream.
 
-nintendo_hid_probe() calls hid_device_io_start() before joycon_init()
-and joycon_leds_create().  If either fails, the error path jumps to
-err_close which calls hid_hw_close()/hid_hw_stop() without first calling
-hid_device_io_stop().
+When fetch_item() is called by hid_scan_report() on an item with
+HID_ITEM_TAG_LONG, it stores a pointer to the item data in
+item->data.longdata instead of storing a value directly in
+item->data.{u8/u16/u32}.
 
-hid_hw_stop() does not stop device IO, so hid_input_report() may still
-run and access driver data that is being torn down, resulting in a
-use-after-free.
+When item_udata() or item_sdata() encounters such an item, it incorrectly
+assumes that the item is in short format, and therefore returns the lower
+part of a kernel pointer reinterpreted as a number.
 
-Add an err_io_stop label that calls hid_device_io_stop() before
-hid_hw_close(), and point the two post-io_start error paths at it.
+When a HID device is connected whose descriptor contains a
+HID_GLOBAL_ITEM_TAG_REPORT_SIZE encoded in long format with size=4, this
+causes the lower half of a kernel pointer to be printed into dmesg as a
+number, like this:
 
-Fixes: 2af16c1f846b ("HID: nintendo: add nintendo switch controller driver")
+    hid (null): invalid report_size 107953555
+
+To fix it, let item_udata() and item_sdata() verify that the item is in
+short format.
+
+Note that this bug only affects hid_scan_report(), while the main parsing
+pass hid_parse_collections() will always bail out when encountering a long
+item.
+
+Sidenote: There are currently no users of data.longdata; maybe we should
+just remove any parsing of long-format descriptors as a follow-up.
+
+Fixes: 3dc8fc083dbf ("HID: Use hid_parser for pre-scanning the report descriptors")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Signed-off-by: Jann Horn <jannh@google.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-nintendo.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/hid/hid-core.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/hid/hid-nintendo.c
-+++ b/drivers/hid/hid-nintendo.c
-@@ -2692,14 +2692,14 @@ static int nintendo_hid_probe(struct hid
- 	ret = joycon_init(hdev);
- 	if (ret) {
- 		hid_err(hdev, "Failed to initialize controller; ret=%d\n", ret);
--		goto err_close;
-+		goto err_io_stop;
- 	}
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -379,6 +379,9 @@ static int hid_add_field(struct hid_pars
  
- 	/* Initialize the leds */
- 	ret = joycon_leds_create(ctlr);
- 	if (ret) {
- 		hid_err(hdev, "Failed to create leds; ret=%d\n", ret);
--		goto err_close;
-+		goto err_io_stop;
- 	}
+ static u32 item_udata(struct hid_item *item)
+ {
++	if (item->format != HID_ITEM_FORMAT_SHORT)
++		return 0;
++
+ 	switch (item->size) {
+ 	case 1: return item->data.u8;
+ 	case 2: return item->data.u16;
+@@ -389,6 +392,9 @@ static u32 item_udata(struct hid_item *i
  
- 	/* Initialize the battery power supply */
-@@ -2722,7 +2722,8 @@ static int nintendo_hid_probe(struct hid
- 
- err_ida:
- 	ida_free(&nintendo_player_id_allocator, ctlr->player_id);
--err_close:
-+err_io_stop:
-+	hid_device_io_stop(hdev);
- 	hid_hw_close(hdev);
- err_stop:
- 	hid_hw_stop(hdev);
+ static s32 item_sdata(struct hid_item *item)
+ {
++	if (item->format != HID_ITEM_FORMAT_SHORT)
++		return 0;
++
+ 	switch (item->size) {
+ 	case 1: return item->data.s8;
+ 	case 2: return item->data.s16;
 
 
