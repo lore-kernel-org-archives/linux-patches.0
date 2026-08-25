@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E03B480968;
-	Tue, 25 Aug 2026 13:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97B747F2CB;
+	Tue, 25 Aug 2026 13:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664680; cv=none; b=kurhRbC0oPTdflPJeMg0lBFl+DF9YMJ82lQGrTdV3ScMVouYhzVXJWzY1bK56dBteccpbRo6VIvceQ6zQbo/4EG2UXQocOGZM5ejvhAfFUCun/8VNoy3bawN0cTMgSPqD6ePH2qExmSn7VrmmbZwIysqzPRdhe3J8yrvVSs3Kx0=
+	t=1787664687; cv=none; b=IbxWMLTtBRoJKEz2Ct0/abVN7nCGTj1Xw2PgeIeaD4rscoCnn8gPfO6f0H5NDGDhPvjgANAqlz18PQSPbKEehlEZiXAoSLDqcbPBAD+qhb/vynnZ0tKR54tEab/674nsswfazAbyrJqafbTxTOwb88lwvwrJiibgRmJAJZjzCMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664680; c=relaxed/simple;
-	bh=w0gX7ai1rvgZbit1q3EdRA0HgfODRDy9BlfcLEPiebw=;
+	s=arc-20240116; t=1787664687; c=relaxed/simple;
+	bh=yLdiMg5EMLtRLSGnMkSen69dpRiyUCEzt4VSL3YDL1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t0paRNFN2ffRJNemBD7zWnMEXB7ZD2GkAReyQSzZCMzMfXJd2Gt5SUXGSvzU4Nhwh+kxx3njxagh2/owAnjT4O0LZB/FTmXCO1HHHIZIJgdtpLI0uI/a46ZjvseSFw3F4kh7wue++TAzyFtuQG5u8cfSyko/WOm6jbJDPE3MJ1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uaz4Q5dU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=As6OVrSh17S/JcpR+tlf8C155rshPBydWjQyDyh/QAM0cCsKVB3rh0Bnd7OVZvAmFu7ZozN5SjRuLGX/Y9RRvx2AF2HU2dTlDbGF18MFIpGYx/AH8NCIn5r1Xc3mUE2WcgCBA8Vwd8HfkYYNjuVymAK4N+ueg3xvQwpNLS3bdO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cMQu5wnV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uaz4Q5dU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A37B1F000E9;
-	Tue, 25 Aug 2026 13:31:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cMQu5wnV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3343E1F000E9;
+	Tue, 25 Aug 2026 13:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664678;
-	bh=GTEnBTvqUdl514HkTGvvIAZ/9esK0Zo8a51YYxdzAh8=;
+	s=korg; t=1787664681;
+	bh=oO73LpnuDHg/SIxMtwPQEeXiRhrTT9Ri5Tqv5yOFjrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uaz4Q5dU4UBk1yX2BlaenLpttj2igESXhWCnDy11xY+Y+oG4HfqpTs0eKKW+4PPZX
-	 3zE2jJ2s4IZCYOiDd22T+yGkxf/ihOrNsKyY08SSaVrvZ3IEsaiMJysedwyOuhK+Nl
-	 FQMMdv0YLMF2Y0n6LfSAblj1CKVAEAAsvZQs6vwc=
+	b=cMQu5wnVS7ZKBPA1DYGKvnox5Jl9jIWvn6Gv4ByrH3SvpEw+7euc7fe5yXVFdeTin
+	 qbP4+C/CUhW66go+Q7RnYlBe3uZ3sqT29VFjHkHER+p/qj4Ltz0YkURlKcWvPvSln5
+	 SZ/+wDpK+0yhOE7m/gJgo7hPvkJXX7XB0BiUlCJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Jiang HongHui <jiang_hh2019@163.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Ibrahim Hashimov <security@auditcode.ai>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 7.2 51/82] nvmet-fc: fix invalid free in LS IOD error path
-Date: Tue, 25 Aug 2026 15:25:38 +0200
-Message-ID: <20260825132543.523089616@linuxfoundation.org>
+Subject: [PATCH 7.2 52/82] nvmet-tcp: bound SGL data length before allocating command buffers
+Date: Tue, 25 Aug 2026 15:25:39 +0200
+Message-ID: <20260825132543.560924057@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -51,46 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiang HongHui <jiang_hh2019@163.com>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-commit ba98d6796d12258e837ece065d2ecb59d76ce4ff upstream.
+commit 4a3f00262a044e8e15064b1a6860968bf0500bf4 upstream.
 
-nvmet_fc_alloc_ls_iodlist() advances iod while initializing the LS IOD
-array. If an rqstbuf allocation or response buffer DMA mapping fails,
-the unwind loop decrements iod past the start of the array. The final
-kfree(iod) therefore frees an address before the allocated object.
+nvmet_tcp_map_data() reads the host-controlled 32-bit sgl->length
+and, for the in-capsule offset descriptor (type 0x01), checks it
+against port->inline_data_size before use. Any other SGL descriptor
+type -- including the non-inline transport SGL data-block descriptor
+(type (NVME_TRANSPORT_SGL_DATA_DESC << 4) | NVME_SGL_FMT_TRANSPORT_A,
+the type a real host uses for out-of-capsule writes) skips that check
+entirely and falls straight through to:
 
-This can be reproduced with nvme-fcloop and failslab by setting
-fail-nth to 6 before creating a target port. KASAN reports:
+	cmd->req.sg = sgl_alloc(len, GFP_KERNEL, &cmd->req.sg_cnt);
 
-  BUG: KASAN: invalid-free in nvmet_fc_register_targetport
-  Free of addr ffff88816cf8ff48 by task nvmet_fail_nth/9552
+with len taken directly from the wire, unbounded up to 4 GiB.
 
-Free the original allocation base stored in tgtport->iod instead. With
-this fix applied, the same sysfs write with fail-nth=6 returns -ENOMEM
-without any KASAN report.
+nvmet_req_init() only parses the command and never inspects
+sgl->length, and nvmet_check_transfer_len() -- the only other place
+transfer_len is validated -- runs later, from req->execute(), after
+the allocation has already happened. For a write command the target
+responds with an R2T and parks the command waiting for the host to
+send the data; if the host (or an unauthenticated peer that simply
+never follows up) never does, the sgl_alloc() buffer stays resident
+for the life of the command. NVMe/TCP has no mandatory authentication
+in the default configuration, so any peer able to reach the target
+portal and complete a Fabrics connect can drive this with a single
+crafted command, repeatable across queues and connections for
+amplification. This is unbounded kernel memory allocation
+triggered by a remote, effectively unauthenticated peer.
 
-Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
+Validate len against the same NVMET_TCP_MAXH2CDATA ceiling this file
+already uses to bound per-PDU H2C data, for every SGL descriptor type,
+before doing any allocation. This closes the gap for the non-inline
+descriptor while leaving the existing, tighter inline_data_size check
+in place for the in-capsule case.
+
+Runtime-verified on a v6.19 KASAN stand: with this bound in place, a
+crafted write command carrying an oversized non-inline SGL length is
+rejected before sgl_alloc() runs, where the same request previously
+drove an unbounded ~256 MiB kernel allocation (up to 4 GiB) that
+stayed resident pending an R2T the host never satisfies.
+
+Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jiang HongHui <jiang_hh2019@163.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Assisted-by: AuditCode-AI:2026.07
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/target/tcp.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -566,7 +566,7 @@ out_fail:
- 		list_del(&iod->ls_rcv_list);
- 	}
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -422,6 +422,19 @@ static int nvmet_tcp_map_data(struct nvm
+ 	if (!len)
+ 		return 0;
  
--	kfree(iod);
-+	kfree(tgtport->iod);
- 
- 	return -EFAULT;
- }
++	/*
++	 * inline_data_size only bounds the in-capsule (type 0x01) SGL
++	 * descriptor below. A non-inline transport SGL data-block
++	 * descriptor skips that check entirely and would otherwise reach
++	 * sgl_alloc() with an attacker-controlled len of up to 4 GiB,
++	 * pinning that much kernel memory for a command that may never
++	 * complete. Bound every descriptor type here, before allocating
++	 * anything, using the same ceiling this file already applies to
++	 * per-PDU H2C data.
++	 */
++	if (len > NVMET_TCP_MAXH2CDATA)
++		return NVME_SC_SGL_INVALID_DATA | NVME_STATUS_DNR;
++
+ 	if (sgl->type == ((NVME_SGL_FMT_DATA_DESC << 4) |
+ 			  NVME_SGL_FMT_OFFSET)) {
+ 		if (!nvme_is_write(cmd->req.cmd))
 
 
