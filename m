@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5703B19B4;
-	Tue, 25 Aug 2026 13:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB4847FB19;
+	Tue, 25 Aug 2026 13:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664716; cv=none; b=Rm6EFPwHlFw13B4JXEhx+Gx7UplcJ2Yd3GoMoqUV5mJMbfaQeS/uFeVKRCNjEqHJvpxlLnKdY2Z7G3LQ6WU0K8DR8n8GEckKHb0USMUMapkXbuC2OBQhwPR5CgvArv46/mgrWlimj0rzYoDDFaLgfKOu3M+CzUN42OqeGJXljxY=
+	t=1787664719; cv=none; b=ctfADqo+B68E5k7jv9NEUv8DzXGAmJ0dq9MT08Jsok6zQ4kbgSLoSKEGHqfl+UIU9JXkvpvjKJtpBZ/Yk2xV7WF3LYSnt5BjGQVlVe2kqSZsrTSQOhVeN0ja2LZz+xasQ7u7Zt5hvKpj+EyUWPcdUR4at5zzhc8v7NLtkEEL6To=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664716; c=relaxed/simple;
-	bh=PWZp9kybkBGZEWwI/jLAlYBV6TzG0n1t9hR5qgUQ7O0=;
+	s=arc-20240116; t=1787664719; c=relaxed/simple;
+	bh=C9jxMwze5K7N3pqXVOucp22vIVMEj1TNqCsu01/VaEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RuUOZ1fz9OcbFNEgo6+xb3bZ0sRJqiUGX5IO61Rbi1uwcRrdR/pmwRSX6T69gZdwg6nom+eV1pSF533a/Rg3UJuV11eTe0szYQvrRqaqZC2e5xUFrYh4dhcsZT5zasqLGipDwdAAwulkiv/zdlMqD9OL0D6RfNBM/YZE6CRrGJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vjLpwc1o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XaL+TtViu+c9kD4T+Reqm2XzgKAZ9cVbpb9aKRUyD0/L5nPeGkI4BkpiGuupxQeokWv/41G0K8yHSpapOxHYhy3yDqkaJ9tHkOXmBRJ0X/bKvxV8WbdK/IZoekjJVIITPyi7hDhCkriAiPUYOY71FOSLYV8liVfH1wr7qCC66cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSzWCsa+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vjLpwc1o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA5A1F000E9;
-	Tue, 25 Aug 2026 13:31:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSzWCsa+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4483F1F00A3A;
+	Tue, 25 Aug 2026 13:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664713;
-	bh=Yv1bgSP9YrmWwbaZrmMxSfNd8iQ9/z3On5clY9ac1MY=;
+	s=korg; t=1787664716;
+	bh=w1KifF1AquXk6JD51ieuUc4x9JA8s1qRLYo1ZT7baZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vjLpwc1oCpAvls0kKslExIK5SK8qgCcuKHrs1azOJ/H8VwXVLMi9p4f38B7ppzLvf
-	 YWrATajlhJfR+Wn7ojw7GyMp03sI7el4QvgiYeWuUy7IsgCeGNhSKZ0yPUQSt33uv4
-	 yUMd6XSg1jtsGFAAnMd+sl6OaaoEVQdc3Cw4tOGY=
+	b=pSzWCsa+l8I58YLEGY0c/JuNokHkNwbw/ZvMKN348TCgV6GE9gb2OVPB20DIh6kzm
+	 j24Os3D2cAyj2xYpA2Cmp6dkN+oJC8yBpFop/BHD1wo9uAyxjsReJDZInsdFGK8whW
+	 UCwEBPj8JE45AWCs3ylsJQj2b9pZa/TV95GEBmBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Si-Wei Liu <si-wei.liu@oracle.com>,
-	Shannon Nelson <sln@onemain.com>,
-	Anand Khoje <anand.a.khoje@oracle.com>,
-	Simon Horman <horms@kernel.org>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.2 62/82] net/ionic: avoid OOB TX partner lookup for hwstamp RXQ
-Date: Tue, 25 Aug 2026 15:25:49 +0200
-Message-ID: <20260825132543.952353483@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 7.2 63/82] HID: asus: fix missing hid_is_usb() check
+Date: Tue, 25 Aug 2026 15:25:50 +0200
+Message-ID: <20260825132543.988797616@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -54,81 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anand Khoje <anand.a.khoje@oracle.com>
+From: Jann Horn <jannh@google.com>
 
-commit d92255b405fb6f5acca408239ccd742e0a42c9cb upstream.
+commit 02bf61dfb44f17ec187d1da1a82495951bbd12df upstream.
 
-The dedicated hardware timestamp RX queue is allocated with q->index
-equal to lif->ionic->nrxqs_per_lif. The normal txqcqs array only
-contains the regular queue pairs, so using that index to set rxq->partner
-can read one entry past txqcqs[] and then write through the derived
-pointer.
-Only link RX/TX partners for normal queue-pair indexes. Leave the hwstamp
-RX queue unpaired, and make the XDP_TX path abort cleanly if an RX queue
-has no TX partner.
+to_usb_interface() can only be used on a hid_device whose parent is really
+USB; uhid can create devices that identify as being on BUS_USB, but don't
+actually have a USB parent.
+Fix the use of to_usb_interface() without a hid_is_usb() check.
 
-Fixes: 8eeed8373e1c ("ionic: Add XDP_TX support")
-Reviewed-by: Si-Wei Liu <si-wei.liu@oracle.com>
-Reviewed-by: Shannon Nelson <sln@onemain.com>
+I have verified that it is currently possible to trigger a kernel splat due
+to this bug in an ASAN build, and that this commit fixes the issue.
+
+Fixes: 00e005c952f7 ("hid-asus: check ROG Ally MCU version and warn")
 Cc: stable@vger.kernel.org
-Signed-off-by: Anand Khoje <anand.a.khoje@oracle.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Link: https://patch.msgid.link/20260813083705.454897-1-anand.a.khoje@oracle.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_lif.c  |   17 +++++++++++++++--
- drivers/net/ethernet/pensando/ionic/ionic_txrx.c |    7 ++++++-
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ drivers/hid/hid-asus.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-@@ -920,8 +920,21 @@ static int ionic_lif_rxq_init(struct ion
- 	};
- 	int err;
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -753,7 +753,7 @@ static int asus_kbd_register_leds(struct
+ 			return ret;
+ 	}
  
--	q->partner = &lif->txqcqs[q->index]->q;
--	q->partner->partner = q;
-+	q->partner = NULL;
-+
-+	/* Only normal RX queues have matching TX queue partners. */
-+	if (q->index < lif->nxqs) {
-+		if (!lif->txqcqs ||
-+		    q->index >= lif->ionic->ntxqs_per_lif ||
-+		    !lif->txqcqs[q->index]) {
-+			dev_err(dev, "missing TX queue partner for RX queue %u\n",
-+				q->index);
-+			return -ENXIO;
-+		}
-+
-+		q->partner = &lif->txqcqs[q->index]->q;
-+		q->partner->partner = q;
-+	}
- 
- 	if (!lif->xdp_prog ||
- 	    (lif->xdp_prog->aux && lif->xdp_prog->aux->xdp_has_frags))
---- a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-@@ -545,13 +545,18 @@ static bool ionic_run_xdp(struct ionic_r
- 		break;
- 
- 	case XDP_TX:
-+		txq = rxq->partner;
-+		if (unlikely(!txq)) {
-+			err = -EIO;
-+			break;
-+		}
-+
- 		xdpf = xdp_convert_buff_to_frame(&xdp_buf);
- 		if (!xdpf) {
- 			err = -ENOSPC;
- 			break;
- 		}
- 
--		txq = rxq->partner;
- 		nq = netdev_get_tx_queue(netdev, txq->index);
- 		__netif_tx_lock(nq, smp_processor_id());
- 		txq_trans_cond_update(nq);
+-	if (drvdata->quirks & QUIRK_ROG_ALLY_XPAD) {
++	if ((drvdata->quirks & QUIRK_ROG_ALLY_XPAD) && hid_is_usb(hdev)) {
+ 		intf = to_usb_interface(hdev->dev.parent);
+ 		udev = interface_to_usbdev(intf);
+ 		validate_mcu_fw_version(hdev,
 
 
