@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2F7448BA9;
-	Tue, 25 Aug 2026 13:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27FF47143A;
+	Tue, 25 Aug 2026 13:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665462; cv=none; b=sqTYxCjX9WykkNssIaT1ljE0GUTh+tDKla/vKRApGirD1sQ9+Np0i2nW2R16lw8M5N/xsONB21BlVIO6NVzBI9cA07U6hkJGzym1H8HYD3THLYZPkD5L22uYvMBZN3rJe34exa6gFCnqsTIsSdzbuDqZnhytMbWBFDOSDfrE8d4=
+	t=1787665464; cv=none; b=jnMHoQSBZey85GCps67+IATHNydbaHYNpd3eNhJkNlOy8ccytC3DYB0DzJUddAVjqjdH6fNwx6ksEXtrir1P8pd1bwF/kZ6ckTACXSyFkc5eMGqIbzBYqWg8dcVWZNpn7smkiInpMNhWh9xqP6/rgVz0dYp9lugOyKrgV3BjfeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665462; c=relaxed/simple;
-	bh=2JXUGIGQHFWYMdgsUeLQp7k0choa73RzDW5x+Dxtvcc=;
+	s=arc-20240116; t=1787665464; c=relaxed/simple;
+	bh=hKXS/VynehjzLhpRpCRUzgRUsUbJVy7Jn0MqWakhJeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q56GHUTv5OTi9y1SGwhJ0HGX0zE+b1WP5A0zaDHrsPQfaXyyMo2iHxXzqn6HBeA3r7eq2RXegQTdighZ/1Gq1Wtg07fXLvHlvnLRGRQCLcxU1+ibKXd2mVVxF1DAOkkD55mlpRWHDplhDdC+ogIkPkAy6wEmXu7L9gPb2vgsqEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XkdazdCO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=azHG+jaHbOY3I7Rx+H78y7HuSYmdpZvpzVJHkgBXyvCHSa06beJcp3ethQheU/LygKjc7AxCrs7z3CeGQiunAN8+mqvZR5GbAV2Ij8DeDSM/mNuGtS3eSJEBo6C2o+BQ4kCo629ynI94A4LLlmMzTzahPip0jNpeKB6/OtwOSF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rfLdEh4K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XkdazdCO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5E61F000E9;
-	Tue, 25 Aug 2026 13:44:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rfLdEh4K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154901F00A3A;
+	Tue, 25 Aug 2026 13:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665460;
-	bh=suamwxzqfTs+EhhHbvfKj4WzzSIZCaeMSnRiyj8M/SA=;
+	s=korg; t=1787665463;
+	bh=Iz0vQtoQyOClMKd5i6SkGRhJD8tTn3I+2dwgNI7i9QQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XkdazdCO1dqc7d6GO/c5OhUWcNU0161L7lMTCeVr9nPj8JjOtCw0UyEuSgb0oinFb
-	 qAIwbIqpr6IgV15SZGF0e4uKixBef+bqCAKO7nNxOq4a9Q9gOWLQMoPl4M2xwl5Gl6
-	 Bo/82/Ne2Gu7dFQ6c4dGw5OBGbamcmSZ1gnA0VAs=
+	b=rfLdEh4KAG3uv7p2NUsiBCpLLkd6BYBRK5ZzOadRrmlwCcLCWkAAgBsH5U1aGOK1O
+	 gkdIZ30CnJj2kpvTY6iVj6MkP8exJgDs/F2djYyLK9lqtmYI6b+/pzoz6bZbQXBPGV
+	 sJs1znIATPurG0W0uMZRaXBusjXsxgwHCqBoFuNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavitra Jha <jhapavitra98@gmail.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 33/77] libceph: fix OOB read in decode_watchers() via missing bounds check
-Date: Tue, 25 Aug 2026 15:25:55 +0200
-Message-ID: <20260825132542.860256212@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	David Heidelberg <david@ixit.cz>
+Subject: [PATCH 6.12 34/77] nfc: digital: clamp SENSF_RES length to the destination buffer
+Date: Tue, 25 Aug 2026 15:25:56 +0200
+Message-ID: <20260825132542.897007602@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.580275153@linuxfoundation.org>
 References: <20260825132541.580275153@linuxfoundation.org>
@@ -52,69 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavitra Jha <jhapavitra98@gmail.com>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-[ Upstream commit 00ead17c7de137a692edee59f2772e6af687e8eb ]
+commit 344a56d7c8e0f3cbaff0bcb1bcd95a1a1db24b16 upstream.
 
-ceph_start_decoding() validates that struct_len bytes remain in the
-buffer after the encoding header, but accepts struct_len=0 as valid:
-ceph_decode_need(p, end, 0, bad) always passes. When a malicious or
-compromised OSD sends an obj_list_watch_response_t reply with
-struct_len=0, ceph_start_decoding() returns success with p == end,
-leaving zero bytes guaranteed for subsequent reads.
+digital_in_recv_sensf_res() memcpy()s resp->len bytes from a remote
+NFC-F device response into the NFC_SENSF_RES_MAXSIZE-byte target.sensf_res
+field without an upper-bound check. A nearby malicious NFC-F device can
+send an oversized SENSF_RES response to overflow the stack-local struct
+nfc_target.
 
-The immediately following ceph_decode_32(p) in decode_watchers() has
-no preceding bounds check. With p == end this is a 4-byte read past
-the validated buffer boundary. The garbage value is then passed
-directly to kzalloc_objs() as the watcher count.
+Clamp resp->len to NFC_SENSF_RES_MAXSIZE before the copy.
 
-The sibling function decode_watcher() already uses the safe variants
-(ceph_decode_copy_safe, ceph_decode_64_safe, ceph_decode_skip_32)
-after its own ceph_start_decoding() call. decode_watchers() is the
-only site that uses the bare variant, confirming an oversight.
+Found by 0sec automated security-research tooling (https://0sec.ai).
 
-Fix by replacing ceph_decode_32(p) with ceph_decode_32_safe(p, end,
-*num_watchers, bad), consistent with the established pattern.
-
-Attacker model: a malicious or compromised OSD in a multi-tenant Ceph
-deployment (e.g. cloud) can trigger this against any kernel client
-that calls CEPH_OSD_OP_LIST_WATCHERS, without any further privileges
-beyond OSD session establishment.
-
-[ idryomov: trim changelog ]
-
+Fixes: 8c0695e4998d ("NFC Digital: Add NFC-F technology support")
 Cc: stable@vger.kernel.org
-Fixes: a4ed38d7a180 ("libceph: support for CEPH_OSD_OP_LIST_WATCHERS")
-Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-[ kept the tree's `kcalloc()` context line instead of upstream's `kzalloc_objs()` ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Link: https://patch.msgid.link/20260603141355.68156-1-doruk@0sec.ai
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osd_client.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/nfc/digital_technology.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/ceph/osd_client.c
-+++ b/net/ceph/osd_client.c
-@@ -5090,7 +5090,7 @@ static int decode_watchers(void **p, voi
- 	if (ret)
- 		return ret;
+--- a/net/nfc/digital_technology.c
++++ b/net/nfc/digital_technology.c
+@@ -778,6 +778,8 @@ static void digital_in_recv_sensf_res(st
  
--	*num_watchers = ceph_decode_32(p);
-+	ceph_decode_32_safe(p, end, *num_watchers, bad);
- 	*watchers = kcalloc(*num_watchers, sizeof(**watchers), GFP_NOIO);
- 	if (!*watchers)
- 		return -ENOMEM;
-@@ -5104,6 +5104,9 @@ static int decode_watchers(void **p, voi
- 	}
+ 	sensf_res = (struct digital_sensf_res *)resp->data;
  
- 	return 0;
++	resp->len = min_t(unsigned int, resp->len, NFC_SENSF_RES_MAXSIZE);
 +
-+bad:
-+	return -EINVAL;
- }
+ 	memcpy(target.sensf_res, sensf_res, resp->len);
+ 	target.sensf_res_len = resp->len;
  
- /*
 
 
