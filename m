@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CD837F337;
-	Tue, 25 Aug 2026 13:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7CA2BCF7F;
+	Tue, 25 Aug 2026 13:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664706; cv=none; b=dnXg0m2kIakUbI0HlDD+mfmIeK0JT/YBcKQhvpOwmGdRmU2PWNtoCcTvtF2hmemErFd+hGYGQXaBR7rUvHLJyTNvJQwmosR4lS+YZGVZLvfm3NaBu4WZoFuSL6LuZZbqOiK2MxQBT2ydClUsg4r9dHtq/HCJehvH2A/0VCE9mNU=
+	t=1787664709; cv=none; b=E9vydQsVOe2KhhPr+PV+Vq83+6me29YbAQFwFJCGee7HK7mhX5oAOkVau8GvCV3Zd+/GM9K5URvXRibgM6WDSq8NepejaD+3Yl3oYhI04pHFyKaAHPW5uccqJExQ2PCvYjjQB5Ft4nnIYjXhj+uA7dTE5KsljLi0SHTjTIT3lS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664706; c=relaxed/simple;
-	bh=FaNIMhfi+FJOn9RlXJHKMrbJgqujmGDs0m8rCXeMGSo=;
+	s=arc-20240116; t=1787664709; c=relaxed/simple;
+	bh=U2JPnZQNnuVvkqBvObZKxeu3vpfTPHgcwiF6OlAuFYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sz8I1c+7qgpiuaRPk/agD2q9XkLA2JgjS0YMhPGHPzvsrZfrEAybGMgNDBwM/dqVubmo23GJAAnjSZrS0Xv6VgYjomueC21yMuU5G7JOgX+cNBK3T74gB/wC48zdzlGLag/RPevbCn9pJ1IESRx9d33nlFyaHSIHoXfrgIGg7WU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lf/ViZyp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VontfmNgUUO3E2g2VvBVJzNIuBPnJ4tp/dDHGtsqu0rJY31oIdTiHOZ7m7nGb6lluYH5djRGTfjM4G1wEpGFPpLDrwz+DBBo+u7Xz8ftF4/7DMhxPVFGk6lQyMcv3S83M/GIqorB0+FSt6CLIImDOU5LSs26L2T2JMBuchDwkQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IYijkxM/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lf/ViZyp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A039D1F000E9;
-	Tue, 25 Aug 2026 13:31:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYijkxM/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 757D61F000E9;
+	Tue, 25 Aug 2026 13:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664705;
-	bh=pNNWJ/Jrjwaf6gs2LljHvRHn3t6OxN7apq0Qj3JBrAE=;
+	s=korg; t=1787664708;
+	bh=3cpewrsCEkukRQ5PqDS5NiDQXKrU4eDiIXSgHiAbd5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lf/ViZypGF5Q1e+O6nqA5Zdut0EpGumijOUar74n/jvf67uC+s4gJjYyA+DjbJ5aP
-	 OxNxwlgmMpCYUXIHbezFV6XtiXOnFml0ee8CaLheNh5l4ToEJtnVehBmidXG0xwpjw
-	 kVaDoYoEdAeHA3hOEzMAZcyzJGNm2/vHJ/RJcevM=
+	b=IYijkxM/sjtsXKnnRF+24r/5EdQ1sizHg3LuiTmoKRhGG+x9GH8X10YlSW4HBwHgH
+	 Uq0zMnrM4ScYNCjRwluOZn3jKIvXoDDetBcQHX/hibfh8nkV7LAmjb5m8otWQgyce6
+	 OJWeJPhPwOyML+Cmiz40ZNjUnXhwtz0e/f9Tw7aI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jose=20Villase=C3=B1or=20Montfort?= <pepemontfort@gmail.com>,
-	Alec Hall <signshop.alec@gmail.com>,
+	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
+	Baul Lee <baul.lee@xbow.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.2 59/82] HID: magicmouse: do not keep a stale msc->input if no input is claimed
-Date: Tue, 25 Aug 2026 15:25:46 +0200
-Message-ID: <20260825132543.841280399@linuxfoundation.org>
+Subject: [PATCH 7.2 60/82] HID: core: fix OOB read of field->usage in hid_set_field()
+Date: Tue, 25 Aug 2026 15:25:47 +0200
+Message-ID: <20260825132543.878609001@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -45,74 +45,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jose Villaseñor Montfort <pepemontfort@gmail.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit 0af3b89705688af01aa06025b84fa7a1e06ba6cc upstream.
+commit a13cdb19fcb223ed41bdab3bab42b98dba87e90b upstream.
 
-magicmouse_input_mapping() caches the first hid_input's input_dev in
-msc->input while the report descriptor is parsed, and the rest of the
-driver treats a non-NULL msc->input as proof that an input device was
-registered.
+hid_set_field() hands field->usage + offset to hid_dump_input() before
+the guard that bounds offset:
 
-That does not hold on the hid-input error path. If hidinput_connect()
-fails -- for instance because input_register_device() returns an error --
-it unwinds through hidinput_disconnect(), which frees every input_dev it
-created, including the one cached in msc->input.
+	hid_dump_input(field->report->device, field->usage + offset, value);
 
-The failure does not abort the probe. hid_connect() only skips the claim:
+	if (offset >= field->report_count) {
+		hid_err(...);
+		return -1;
+	}
 
-	if ((connect_mask & HID_CONNECT_HIDINPUT) && !hidinput_connect(hdev,
-				connect_mask & HID_CONNECT_HIDINPUT_FORCE))
-		hdev->claimed |= HID_CLAIMED_INPUT;
+Under CONFIG_DEBUG_FS hid_dump_input() dereferences that pointer, with
+buf = hid_resolv_usage(usage->hid, NULL).  The usage[] array is
+allocated inline with the hid_field in hid_register_field() and holds
+field->maxusage entries, so an offset past it reads off the end of the
+kvzalloc()ed allocation and into a neighbouring object.  Had the guard
+run first, offset < report_count <= maxusage would already have confined
+the pointer to the array.
 
-and the "device has no listeners" bailout below it does not fire for this
-driver, which sets ->raw_event; on the USB Magic Mouse 2 / Magic Trackpad
-2 paths hidraw and hiddev are claimed as well. hid_hw_start() therefore
-returns 0 and magicmouse_probe() continues with msc->input pointing at
-freed memory. Being non-NULL, it passes the "input not registered" check
-in probe and the NULL checks in ->raw_event and ->event, so the next
-input report dereferences freed memory.
+A caller supplies such an offset today.  picolcd_fb_send_tile()
+validates only report->maxfield before issuing
+hid_set_field(report->field[0], 11 + i, ...) for i = 0..31, so its
+offsets are fixed at 11..42 and are never checked against the bound
+field.  When the device registers that field with fewer usages, the
+framebuffer deferred-io work drives the read on every tile.  KASAN
+reports a 4-byte slab-out-of-bounds read in hid_dump_input() below
+hid_set_field(), and the same boot logs "offset (1) exceeds
+report_count (1)" from the guard that runs only afterwards.
 
-Clear msc->input when the HID core did not claim an input device, so the
-existing NULL checks cover this case as well.
+Move the hid_dump_input() call below the guard.  Because
+field->maxusage >= field->report_count, the guard then establishes that
+field->usage + offset lies inside the array before it is dereferenced,
+for every caller and without changing behaviour on the valid path.
 
-Fixes: f1a9a149abc8 ("HID: magicmouse: fix race between input_register() and probe()")
-Link: https://lore.kernel.org/linux-input/20260728185542.65F091F000E9@smtp.kernel.org/
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
+Reported-by: Baul Lee <baul.lee@xbow.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jose Villaseñor Montfort <pepemontfort@gmail.com>
-Reviewed-by: Alec Hall <signshop.alec@gmail.com>
-Tested-by: Alec Hall <signshop.alec@gmail.com>
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-magicmouse.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/hid/hid-core.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/hid-magicmouse.c
-+++ b/drivers/hid/hid-magicmouse.c
-@@ -922,6 +922,16 @@ static int magicmouse_probe(struct hid_d
- 		return ret;
- 	}
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -1933,13 +1933,14 @@ int hid_set_field(struct hid_field *fiel
  
-+	/*
-+	 * When hidinput_connect() fails it frees every input device it
-+	 * created, but that does not fail hid_hw_start(): the core simply
-+	 * does not claim an input. msc->input, cached in ->input_mapping
-+	 * while the report descriptor was parsed, would then be a dangling
-+	 * pointer that passes every NULL check. Trust the core's claim.
-+	 */
-+	if (!(hdev->claimed & HID_CLAIMED_INPUT))
-+		msc->input = NULL;
+ 	size = field->report_size;
+ 
+-	hid_dump_input(field->report->device, field->usage + offset, value);
+-
+ 	if (offset >= field->report_count) {
+ 		hid_err(field->report->device, "offset (%d) exceeds report_count (%d)\n",
+ 				offset, field->report_count);
+ 		return -1;
+ 	}
 +
- 	if (is_usb_magicmouse2(id->vendor, id->product) ||
- 	    is_usb_magictrackpad2(id->vendor, id->product)) {
- 		timer_setup(&msc->battery_timer, magicmouse_battery_timer_tick, 0);
++	hid_dump_input(field->report->device, field->usage + offset, value);
++
+ 	if (field->logical_minimum < 0) {
+ 		if (value != snto32(s32ton(value, size), size)) {
+ 			hid_err(field->report->device, "value %d is out of range\n", value);
 
 
