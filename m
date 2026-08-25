@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ECD325393E;
-	Tue, 25 Aug 2026 13:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F032ED843;
+	Tue, 25 Aug 2026 13:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666274; cv=none; b=f02EF3SrUJqv9GJ3L1uobFOeuBOwSJ2zkckxDnrXqoSp7gEVthCxY04jCVlWhB11rBylMgsPPY05HAqIpCsCtuwLvjtmeykpk8++GllXt702HyLKiKHUVKX4VIUN/mZI82Unoed48R6GVCoZSNOPqJ71J+XOLJyCjq//SSHjREQ=
+	t=1787666277; cv=none; b=Vt30an7GKYOSxRDXb/T5Mce6J4ntSN9rcL8Ij5CmCJ6dSA/MhEcyqlAovinpnQWRyARBkhw2g8/eiRcpEYePboKtPvxMEr8VpXKzjrlfdfKoQiUmnziNSR0ibzu7uKGIIB7pnkjyD7H4F+OQKvxTLfqaV+s6DpNC71LdtiY07wc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666274; c=relaxed/simple;
-	bh=UVX2EV+CFXVaYpjPBS6XRdCxujVkZ9tlq4s4DoYfxqg=;
+	s=arc-20240116; t=1787666277; c=relaxed/simple;
+	bh=PsIWC4iouxs6ys8yAt4f3qAKfaPexdvh0tuv71kbmVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kvmys0EtELrk/UEdua6j7MGToYB0rR4LGY6igN/w47t7uQFGQc4hyT4CQn2zFl+C1187g1qnB2e/hRkeCNyjMl48zIaIsuG8pCpbms+QTGW2M46qxuOdzB9i2xbfoUqkeQpi0yXLa26Wkhq3vB8S+NYTS7it+dDevHWxhJo2lMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C41h0EvD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kyykfSfWb7o4LrSvGIHpnziPVUDq5aF8BYQd7JOlNTCzJgBGLZA4BnVvdZl1Ww7LubcbCYCPzzN1wskYhzREXaZk3hPR7Ra7jqNDXgJqSa6JohfVGOZmT4lWmKJuuVr2hNQYr+ts0Vto+gE1UL2+N2gfaTeAwNwjTYIvus9/TKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rVR7RdM/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C41h0EvD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947361F000E9;
-	Tue, 25 Aug 2026 13:57:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rVR7RdM/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70BA11F000E9;
+	Tue, 25 Aug 2026 13:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666273;
-	bh=AX2y1QDj8f52wOQLXpK1lYMAmguktYv9rf+pbB2Zt7c=;
+	s=korg; t=1787666276;
+	bh=PIgVLr0eSZBc4zr1iAlmQ3G7LrzXrJLoDnnrmRvcRD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C41h0EvDHWNpWY9PYNhex5oc3o/G4bDgSw3Xn79Ja1VCKAC26ToQGDtRgHYvXMCze
-	 Q29iEsg5LtdpAp7DSGcNN2usVJZ52WQNKtIKIVeWsM33nfTv9Qpi34Fsdz8C8TADrq
-	 FKKRezS6eybwbLYMpqR2MAvFFkA0YmxbVAIIIsmQ=
+	b=rVR7RdM/VJ7Zw58bWFnGpz2O1QQZDNcwulmfHjg5H5IMdF06d91XL7YQUQIJJxw7s
+	 N38v1gxCosUtPSs5geZpaBZSwhNJYfTj64ZRZD3/WeaKZoW3tm3C2tRJjWLkqyV9Z7
+	 BhW1R4PWUHrMKRqEewGZbh4X5sr9FPg32BpJgMOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 63/76] KVM: x86: Retry page fault if MMU reload is pending and root has no sp
-Date: Tue, 25 Aug 2026 15:26:56 +0200
-Message-ID: <20260825132544.041374311@linuxfoundation.org>
+	Joanne Koong <joannelkoong@gmail.com>,
+	syzbot@syzkaller.appspotmail.com,
+	Brian Foster <bfoster@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	"Miguel Gazquez (Schneider Electric)" <miguel.gazquez@bootlin.com>
+Subject: [PATCH 5.15 64/76] iomap: adjust read range correctly for non-block-aligned positions
+Date: Tue, 25 Aug 2026 15:26:57 +0200
+Message-ID: <20260825132544.078364078@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
 References: <20260825132541.568214149@linuxfoundation.org>
@@ -52,67 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-[ Upstream commit 18c841e1f4112d3fb742aca3429e84117fcb1e1c ]
+[ Upstream commit 7aa6bc3e8766990824f66ca76c19596ce10daf3e ]
 
-Play nice with a NULL shadow page when checking for an obsolete root in
-the page fault handler by flagging the page fault as stale if there's no
-shadow page associated with the root and KVM_REQ_MMU_RELOAD is pending.
-Invalidating memslots, which is the only case where _all_ roots need to
-be reloaded, requests all vCPUs to reload their MMUs while holding
-mmu_lock for lock.
+iomap_adjust_read_range() assumes that the position and length passed in
+are block-aligned. This is not always the case however, as shown in the
+syzbot generated case for erofs. This causes too many bytes to be
+skipped for uptodate blocks, which results in returning the incorrect
+position and length to read in. If all the blocks are uptodate, this
+underflows length and returns a position beyond the folio.
 
-The "special" roots, e.g. pae_root when KVM uses PAE paging, are not
-backed by a shadow page.  Running with TDP disabled or with nested NPT
-explodes spectaculary due to dereferencing a NULL shadow page pointer.
+Fix the calculation to also take into account the block offset when
+calculating how many bytes can be skipped for uptodate blocks.
 
-Skip the KVM_REQ_MMU_RELOAD check if there is a valid shadow page for the
-root.  Zapping shadow pages in response to guest activity, e.g. when the
-guest frees a PGD, can trigger KVM_REQ_MMU_RELOAD even if the current
-vCPU isn't using the affected root.  I.e. KVM_REQ_MMU_RELOAD can be seen
-with a completely valid root shadow page.  This is a bit of a moot point
-as KVM currently unloads all roots on KVM_REQ_MMU_RELOAD, but that will
-be cleaned up in the future.
-
-Fixes: a955cad84cda ("KVM: x86/mmu: Retry page fault if root is invalidated by memslot update")
-Cc: stable@vger.kernel.org
-Cc: Maxim Levitsky <mlevitsk@redhat.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20211209060552.2956723-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Tested-by: syzbot@syzkaller.appspotmail.com
+Reviewed-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Miguel Gazquez (Schneider Electric) <miguel.gazquez@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu/mmu.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ fs/iomap/buffered-io.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 8c381cf61e219..c0257bbb25c39 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -4005,7 +4005,21 @@ static bool kvm_faultin_pfn(struct kvm_vcpu *vcpu, bool prefault, gfn_t gfn,
- static bool is_page_fault_stale(struct kvm_vcpu *vcpu,
- 				kvm_pfn_t pfn, unsigned long mmu_seq, hva_t hva)
- {
--	if (is_obsolete_sp(vcpu->kvm, to_shadow_page(vcpu->arch.mmu->root_hpa)))
-+	struct kvm_mmu_page *sp = to_shadow_page(vcpu->arch.mmu->root_hpa);
-+
-+	/* Special roots, e.g. pae_root, are not backed by shadow pages. */
-+	if (sp && is_obsolete_sp(vcpu->kvm, sp))
-+		return true;
-+
-+	/*
-+	 * Roots without an associated shadow page are considered invalid if
-+	 * there is a pending request to free obsolete roots.  The request is
-+	 * only a hint that the current root _may_ be obsolete and needs to be
-+	 * reloaded, e.g. if the guest frees a PGD that KVM is tracking as a
-+	 * previous root, then __kvm_mmu_prepare_zap_page() signals all vCPUs
-+	 * to reload even if no vCPU is actively using the root.
-+	 */
-+	if (!sp && kvm_test_request(KVM_REQ_MMU_RELOAD, vcpu))
- 		return true;
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index 87a4f5a2ded0e..6c76dba0a61c9 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -103,17 +103,24 @@ iomap_adjust_read_range(struct inode *inode, struct iomap_page *iop,
+ 	 * to avoid reading in already uptodate ranges.
+ 	 */
+ 	if (iop) {
+-		unsigned int i;
++		unsigned int i, blocks_skipped;
  
- 	return !is_noslot_pfn(pfn) &&
+ 		/* move forward for each leading block marked uptodate */
+-		for (i = first; i <= last; i++) {
++		for (i = first; i <= last; i++)
+ 			if (!test_bit(i, iop->uptodate))
+ 				break;
+-			*pos += block_size;
+-			poff += block_size;
+-			plen -= block_size;
+-			first++;
++
++		blocks_skipped = i - first;
++		if (blocks_skipped) {
++			unsigned long block_offset = *pos & (block_size - 1);
++			unsigned bytes_skipped =
++				(blocks_skipped << block_bits) - block_offset;
++
++			*pos += bytes_skipped;
++			poff += bytes_skipped;
++			plen -= bytes_skipped;
+ 		}
++		first = i;
+ 
+ 		/* truncate len if we find any trailing uptodate block(s) */
+ 		for ( ; i <= last; i++) {
 -- 
 2.53.0
 
