@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E40481649;
-	Tue, 25 Aug 2026 13:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7A348123A;
+	Tue, 25 Aug 2026 13:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664943; cv=none; b=HACVDhJU25SAqf/1GjrhtN/fVrssMCzAuWTxBNMSyy7ObrsiwsJSP2JR/xlVlp1UBepr0pESx3ZKDFraTLDS61nK9LTdo9jHYrZpcIMYB1QWCwEbAlS8rxOrbx4baO152gGKJBhV/bdMuyiqDyxH66gjFouayt8G/+OnR5PjMbs=
+	t=1787664946; cv=none; b=r2rQQs88S6ddBnqdGAtiYYjoKLZHZzmtIlhVbHXK1YDKYbnx4OekI4Glsfc5ClKmJSztDriLZkxyRLrxQH77h+/1CzdvmtD5Uw9YytzQowloscA/OZWPgYH4FV2ymNp6QeD1ekfiHSKsJzHcdHv32q9bk19SoCjvxmCn6c1+o7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664943; c=relaxed/simple;
-	bh=NbJT+MyO4qeHXHj5vpINS/EkiHfu1G8Le6SBDFIH/pc=;
+	s=arc-20240116; t=1787664946; c=relaxed/simple;
+	bh=2OKv3zdSQOVDjTCvpqe8+NmySObzyIIzJAc4xeaQUks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WdpxURXnNtWm2zEiSmpmZyAmIl2yj0KMBV4eU3M05ewruy6Q7IymkES3RmUpXl+lShbAfpAKfjvJzpXgPwFmBjUY3EEY+kALhTXT2ESack3oZQa6HIHbIN6LT65E7y5+BMbnmQQ5bQzX5+gxwnNwci2gMnAQpTX6tC5XrgF1yXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uoCpiO8N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PCZ9Wk3sxflPuR9g3u1SKoLUAxEExAQk6ew4yjRa4fpE/Yz8x2IyzmW5LDj9ccw1yHfePVJWMSB2ubcq3XklKLup6ICJVfogHLEAQfwnsbWgfYxEuVHjnGciu4u8vpOwt2lXnU6gf29HH+VWkudiENX6Y08NQcUPrEr0mhZxwQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rby82I+p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uoCpiO8N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD8A1F000E9;
-	Tue, 25 Aug 2026 13:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rby82I+p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1EB71F000E9;
+	Tue, 25 Aug 2026 13:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664942;
-	bh=c+Wvq0VuXGq6CY7oGPtSASRq645pMCxvPrOhTL48qM0=;
+	s=korg; t=1787664945;
+	bh=J5e/DkqpeiAtcZJuaMRBHrPyQjmQZkPcKWkyYK0DzUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uoCpiO8NE80+JoHqQ3scPLoZxsbaS9EHlNzZq4s4LuqOd68/f5xlPlImB/3XI/exQ
-	 awCFu69fK4fnnnMtrwV2MkNYwSAOWnCx6jth6peXazptIK6SO11gKTwqftoYufvYtX
-	 FH5byD7FAA3jh0YgpZR2aHsgzcVCFb/VuLINutec=
+	b=Rby82I+pC5TZcciiRXw7L8KHJ8X3jMiN697PLOu7jZOvz/MCAhhQYc2OuWONsZ20O
+	 GmXip9mO5XBePGEUF6yx1Y0S2MO8UeW0l75PwZstN2UN/NyMMW9yip7+fGMOF5dpgB
+	 CunEC1kwOpURSgBIj2Arb1ffAfrZ1xT86YXfYd2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Yifei Gao <gyf161023@gmail.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 7.1 058/101] nvmet: pci-epf: put CQ ref on create_cq mapping failure
-Date: Tue, 25 Aug 2026 15:25:36 +0200
-Message-ID: <20260825132544.267155809@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 059/101] fbdev: Wrap user-invoked calls to fb_set_var() in helper
+Date: Tue, 25 Aug 2026 15:25:37 +0200
+Message-ID: <20260825132544.303573413@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -51,44 +51,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifei Gao <gyf161023@gmail.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 659ae9d02cb5d72c76f74fff7441eb8fb64d8f5c upstream.
+[ Upstream commit 6f611e5e5f3327cf2e2daabe6ee5acac58cc784e ]
 
-nvmet_pci_epf_create_cq() calls nvmet_cq_create(), which takes a
-reference on the controller and installs the completion queue. If the
-subsequent PCI address-space mapping fails or returns a too-small partial
-mapping, the function jumps to err_internal / err_unmap_queue without
-calling nvmet_cq_put(). The matching put in nvmet_pci_epf_delete_cq() is
-gated on NVMET_PCI_EPF_Q_LIVE, which is only set after the mapping
-succeeds, so teardown never releases these references. A remote PCI host
-that drives Create IO CQ commands with a failing PRP1/pci_addr therefore
-leaks the CQ and a controller reference on each attempt.
+Handle fbcon during display updates in fb_set_var_from_user(). Check
+with fbcon if the mode change is possible, update hardware state and
+finally update fbcon. Update all callers.
 
-Drop the CQ reference on the mapping-failure paths. The err_internal and
-err_unmap_queue labels are only reachable after nvmet_cq_create() has
-succeeded, so this pairs the create/put correctly.
+Only the FBIOPUT_VSCREENINFO ioctl currently does all steps. Other
+mode-changes callers in sysfs and driver code are missing fbcon-related
+steps.
 
-Fixes: 0faa0fe6f90e ("nvmet: New NVMe PCI endpoint function target driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Yifei Gao <gyf161023@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+With the new helper, ps3fb and sh_mobile_lcdcfb no longer maintain
+fbcon state themselves.
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Stable-dep-of: 061db6b7a910 ("fbdev: serialize mode sysfs access with lock_fb_info()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/pci-epf.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/video/fbdev/core/fb_chrdev.c   |    6 +-----
+ drivers/video/fbdev/core/fbcon.c       |    2 --
+ drivers/video/fbdev/core/fbmem.c       |   13 +++++++++++++
+ drivers/video/fbdev/core/fbsysfs.c     |    4 +---
+ drivers/video/fbdev/ps3fb.c            |    5 +----
+ drivers/video/fbdev/sh_mobile_lcdcfb.c |    5 +----
+ include/linux/fb.h                     |    2 ++
+ 7 files changed, 19 insertions(+), 18 deletions(-)
 
---- a/drivers/nvme/target/pci-epf.c
-+++ b/drivers/nvme/target/pci-epf.c
-@@ -1339,6 +1339,7 @@ err_unmap_queue:
- 	nvmet_pci_epf_mem_unmap(ctrl->nvme_epf, &cq->pci_map);
- err_internal:
- 	status = NVME_SC_INTERNAL | NVME_STATUS_DNR;
-+	nvmet_cq_put(&cq->nvme_cq);
- err:
- 	if (test_and_clear_bit(NVMET_PCI_EPF_Q_IRQ_ENABLED, &cq->flags))
- 		nvmet_pci_epf_remove_irq_vector(ctrl, cq->vector);
+--- a/drivers/video/fbdev/core/fb_chrdev.c
++++ b/drivers/video/fbdev/core/fb_chrdev.c
+@@ -85,11 +85,7 @@ static long do_fb_ioctl(struct fb_info *
+ 		var.activate &= ~FB_ACTIVATE_KD_TEXT;
+ 		console_lock();
+ 		lock_fb_info(info);
+-		ret = fbcon_modechange_possible(info, &var);
+-		if (!ret)
+-			ret = fb_set_var(info, &var);
+-		if (!ret)
+-			fbcon_update_vcs(info, var.activate & FB_ACTIVATE_ALL);
++		ret = fb_set_var_from_user(info, &var);
+ 		unlock_fb_info(info);
+ 		console_unlock();
+ 		if (!ret && copy_to_user(argp, &var, sizeof(var)))
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -2706,7 +2706,6 @@ void fbcon_update_vcs(struct fb_info *in
+ 	else
+ 		fbcon_modechanged(info);
+ }
+-EXPORT_SYMBOL(fbcon_update_vcs);
+ 
+ /* let fbcon check if it supports a new screen resolution */
+ int fbcon_modechange_possible(struct fb_info *info, struct fb_var_screeninfo *var)
+@@ -2734,7 +2733,6 @@ int fbcon_modechange_possible(struct fb_
+ 
+ 	return 0;
+ }
+-EXPORT_SYMBOL_GPL(fbcon_modechange_possible);
+ 
+ int fbcon_mode_deleted(struct fb_info *info,
+ 		       struct fb_videomode *mode)
+--- a/drivers/video/fbdev/core/fbmem.c
++++ b/drivers/video/fbdev/core/fbmem.c
+@@ -349,6 +349,19 @@ fb_set_var(struct fb_info *info, struct
+ }
+ EXPORT_SYMBOL(fb_set_var);
+ 
++int fb_set_var_from_user(struct fb_info *info, struct fb_var_screeninfo *var)
++{
++	int ret = fbcon_modechange_possible(info, var);
++
++	if (!ret)
++		ret = fb_set_var(info, var);
++	if (!ret)
++		fbcon_update_vcs(info, var->activate & FB_ACTIVATE_ALL);
++
++	return ret;
++}
++EXPORT_SYMBOL(fb_set_var_from_user);
++
+ static void fb_lcd_notify_blank(struct fb_info *info)
+ {
+ 	int power;
+--- a/drivers/video/fbdev/core/fbsysfs.c
++++ b/drivers/video/fbdev/core/fbsysfs.c
+@@ -20,9 +20,7 @@ static int activate(struct fb_info *fb_i
+ 	var->activate |= FB_ACTIVATE_FORCE;
+ 	console_lock();
+ 	lock_fb_info(fb_info);
+-	err = fb_set_var(fb_info, var);
+-	if (!err)
+-		fbcon_update_vcs(fb_info, var->activate & FB_ACTIVATE_ALL);
++	err = fb_set_var_from_user(fb_info, var);
+ 	unlock_fb_info(fb_info);
+ 	console_unlock();
+ 	if (err)
+--- a/drivers/video/fbdev/ps3fb.c
++++ b/drivers/video/fbdev/ps3fb.c
+@@ -29,7 +29,6 @@
+ #include <linux/freezer.h>
+ #include <linux/uaccess.h>
+ #include <linux/fb.h>
+-#include <linux/fbcon.h>
+ #include <linux/init.h>
+ 
+ #include <asm/cell-regs.h>
+@@ -830,9 +829,7 @@ static int ps3fb_ioctl(struct fb_info *i
+ 				/* Force, in case only special bits changed */
+ 				var.activate |= FB_ACTIVATE_FORCE;
+ 				par->new_mode_id = val;
+-				retval = fb_set_var(info, &var);
+-				if (!retval)
+-					fbcon_update_vcs(info, var.activate & FB_ACTIVATE_ALL);
++				retval = fb_set_var_from_user(info, &var);
+ 				console_unlock();
+ 			}
+ 			break;
+--- a/drivers/video/fbdev/sh_mobile_lcdcfb.c
++++ b/drivers/video/fbdev/sh_mobile_lcdcfb.c
+@@ -15,7 +15,6 @@
+ #include <linux/ctype.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/delay.h>
+-#include <linux/fbcon.h>
+ #include <linux/init.h>
+ #include <linux/interrupt.h>
+ #include <linux/ioctl.h>
+@@ -1768,11 +1767,9 @@ static void sh_mobile_fb_reconfig(struct
+ 	var.height = ch->display.height;
+ 	var.activate = FB_ACTIVATE_NOW;
+ 
+-	if (fb_set_var(info, &var) < 0)
++	if (fb_set_var_from_user(info, &var) < 0)
+ 		/* Couldn't reconfigure, hopefully, can continue as before */
+ 		return;
+-
+-	fbcon_update_vcs(info, true);
+ }
+ 
+ /*
+--- a/include/linux/fb.h
++++ b/include/linux/fb.h
+@@ -533,6 +533,8 @@ extern int fb_set_var(struct fb_info *in
+ extern int fb_pan_display(struct fb_info *info, struct fb_var_screeninfo *var);
+ extern int fb_blank(struct fb_info *info, int blank);
+ 
++int fb_set_var_from_user(struct fb_info *info, struct fb_var_screeninfo *var);
++
+ /*
+  * Helpers for framebuffers in I/O memory
+  */
 
 
