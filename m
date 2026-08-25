@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F7147FB19;
-	Tue, 25 Aug 2026 13:39:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F140470421;
+	Tue, 25 Aug 2026 13:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665155; cv=none; b=mxF5+zIEib8HJFZNAhge3TVZ0Xcwie1PkQRwp3a5cKB2Uno2zORmydkeuDMepLUhsQGikDdeWHUVL+RTLNC+riumiV2slFBv+bgYIslUECoKEgF+TTOW+vTmfWROpZSdzJrYu0qNgBJyHmv8uASdjAXvDtRyL2C/MeLaKNs3ffA=
+	t=1787665158; cv=none; b=LBFJsKc1LNLcCNcQ07YZljtAF6zE1eWrr8LsHIKKLJAs+g/cx5wzCYJ4TBJlp+dtbGh/a8dApL3D5KMuPle+mFPkV+aLrEBt4tg5hD7m+NtG2x5xF+sx2AjoYfUFoep3ROIqInnYfDfFskNWx4Pd4XcrucNHLvF2Q4nLS2n//fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665155; c=relaxed/simple;
-	bh=MU/BTTOQJGkyg/TCFRgxm3jRuv7rj2BKkA3teXTluXU=;
+	s=arc-20240116; t=1787665158; c=relaxed/simple;
+	bh=0C1l3pde/nOA/Cl4G+WdIs+9KoHEKr/DznIrBecTYnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lN413qojSCLJCn1TPlCYz89JtFxgAjiXPn9oKEYiXRjyE5AMKayXbjt3mzYHTBdUlPpP2rbou2uUi4s8HwoXbO9t+frL8CrKsds5pMRgrzkR9xLNHN07qASXhrdKu2g/JvZ6T1B7zfUo/PPVFmWFwrpu3zOPFKcdtkbD49rtp3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybHx9Dzx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tSvVFIqQWrXJz4xDeMESZGAzpxQp/zB2Bi5UKRt5CBP4ui709ulw6XjtyMyJaoJb7gOwZq7SQSwUQ3BGwBZ8wy8P3Jjf/jXvrohml0xsVPY+GxG93SrQJKIRWozts2WKwnmcl2SuSCVR0nOPUVtq3w4BBm2a2vnXiW9MJlMad/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uRdPbV4E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybHx9Dzx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0225A1F000E9;
-	Tue, 25 Aug 2026 13:39:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRdPbV4E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16FF1F000E9;
+	Tue, 25 Aug 2026 13:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665153;
-	bh=bSki75B6aljrM93uXnhsOh/eRPtmaECjwJNoHq29ZGk=;
+	s=korg; t=1787665157;
+	bh=1Q3R3InSWKydDtrTDe4C+5uKNIv6R4rD3t1Ps3gueP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ybHx9Dzxo8deMenL/d+kF8eLUYNiAPukdhhEaq4NxqHdRcardZM+aZ5Si13VSV6nZ
-	 vcKUnUmwwMa7KUs8qt9JUq5QoMsKy/3keZvhjbigBYBXD0jh+zGmDOH+mCML5CvV7y
-	 19CURdv80mDaeUjiVZmMUDN8XKo7sxCVVlASVYqs=
+	b=uRdPbV4EkHSYawqe3zIThJcDDAzpm2xHtztihxisKxWFPvz9ygpu7HgB70iIRYTWp
+	 J2T++Ylo8q3Nq9JVjOWLsMZHlPysY4yctYIAszWxSbbHD48drWaHzFmln/nZQNrJOa
+	 tyof4zQ1OJ5qcXIfn1bb9O/IHcUgd5N8aTbRsL50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Goergens <matthias.goergens@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	syzbot+e68dbebd9617a9250e8d@syzkaller.appspotmail.com,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.18 25/94] ext4: stop retrying saturated xattr cache entries
-Date: Tue, 25 Aug 2026 15:25:21 +0200
-Message-ID: <20260825132542.891016173@linuxfoundation.org>
+	syzbot+c37bed40868932d790e9@syzkaller.appspotmail.com,
+	wuyankun <wuyankun@uniontech.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>
+Subject: [PATCH 6.18 26/94] nilfs2: reject invalid block index in GC ioctl
+Date: Tue, 25 Aug 2026 15:25:22 +0200
+Message-ID: <20260825132542.932839616@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -52,78 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Goergens <matthias.goergens@gmail.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 54b6bd40898de7906acb2bccc9a96d1b8e6b4323 upstream.
+commit a1735eae55448bc79c2da6593455791e886f6ed8 upstream.
 
-ext4_xattr_block_set() retries when a cache entry selected for reuse
-has a saturated reference count after taking the buffer lock. The retry
-returns to the mbcache lookup without making that entry ineligible, so
-it can select the same unusable entry indefinitely. A task spinning
-there can hold the parent directory's i_rwsem and leave concurrent
-rmdir callers blocked.
+Syzbot reported list corruption caused by a double list_add_tail() call on
+bh->b_assoc_buffers within nilfs_lookup_dirty_data_buffers().
 
-Normally a reusable entry has a reference count below
-EXT4_XATTR_REFCOUNT_MAX because the count and MBE_REUSABLE_B are
-updated under the same buffer lock. A corrupted filesystem can violate
-that invariant. The syzbot reproducer reports allocator and xattr
-corruption before triggering this retry loop.
+Analysis revealed that the root cause was the insertion of a page/folio
+with a page index of ULONG_MAX into the page cache via the GC ioctl.
+filemap_get_folios_tag(), called by nilfs_lookup_dirty_data_buffers(),
+repeatedly detects a dirty folio with a page index of ULONG_MAX due to
+index wrap-around, leading to duplicate processing of dirty buffers.
 
-Check the untrusted on-disk count before incrementing it, avoiding
-overflow, and clear MBE_REUSABLE_B when it is already saturated. The
-next lookup then skips the entry that was just proven unusable. This
-mirrors the normal transition at EXT4_XATTR_REFCOUNT_MAX; the release
-path marks the entry reusable again on the exact 1024-to-1023
-transition.
+As a preparatory step, the GC ioctl loads the page/folio of the block to
+be moved during GC and inserts it into the page cache based on information
+in the nilfs_vdesc structure passed as an argument.  Normally, this does
+not cause issues because the user-space GC library configures the
+nilfs_vdesc structure properly.  However, since there is no range check on
+the parameters determining the page index, a request with artificially
+crafted parameters -- such as those generated by Syzbot -- can result in a
+page/folio being inserted with a page index of ULONG_MAX, triggering the
+above problem.
 
-Using the same QEMU harness and guest parameters, current unpatched
-Linux hung in 6 of 8 420-second trials with the do_rmdir signature;
-representative NMI backtraces caught the owner spinning in
-ext4_xattr_block_set(). The patched kernel completed 28 of 28 trials
-without a hung-task report; the final twelve trials exercised the
-reviewed overflow-safe form of the change. syzbot's patch testing also
-completed without reproducing the hang.
+This resolves the issue by checking the ranges of 'vd_offset' and
+'vd_vblocknr' in the nilfs_vdesc structure that determine the page index,
+thereby preventing the invalid page/folio insertions.
 
-Reported-and-tested-by: syzbot+e68dbebd9617a9250e8d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e68dbebd9617a9250e8d
-Fixes: 65f8b80053a1 ("ext4: fix race when reusing xattr blocks")
+Reported-by: syzbot+c37bed40868932d790e9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c37bed40868932d790e9
+Fixes: 7942b919f732 ("nilfs2: ioctl operations")
+Cc: wuyankun <wuyankun@uniontech.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reported-by: syzbot+e68dbebd9617a9250e8d@syzkaller.appspotmail.com
-Tested-by: syzbot+e68dbebd9617a9250e8d@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/20260802065941.1726052-1-matthias.goergens@gmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/nilfs2/ioctl.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -2075,12 +2075,13 @@ inserted:
- 				 * stable so we can check the additional
- 				 * reference fits.
- 				 */
--				ref = le32_to_cpu(BHDR(new_bh)->h_refcount) + 1;
--				if (ref > EXT4_XATTR_REFCOUNT_MAX) {
-+				ref = le32_to_cpu(BHDR(new_bh)->h_refcount);
-+				if (ref >= EXT4_XATTR_REFCOUNT_MAX) {
- 					/*
- 					 * Undo everything and check mbcache
- 					 * again.
- 					 */
-+					clear_bit(MBE_REUSABLE_B, &ce->e_flags);
- 					unlock_buffer(new_bh);
- 					dquot_free_block(inode,
- 							 EXT4_C2B(EXT4_SB(sb),
-@@ -2091,6 +2092,7 @@ inserted:
- 					new_bh = NULL;
- 					goto inserted;
- 				}
-+				ref++;
- 				BHDR(new_bh)->h_refcount = cpu_to_le32(ref);
- 				if (ref == EXT4_XATTR_REFCOUNT_MAX)
- 					clear_bit(MBE_REUSABLE_B, &ce->e_flags);
+--- a/fs/nilfs2/ioctl.c
++++ b/fs/nilfs2/ioctl.c
+@@ -527,6 +527,7 @@ static int nilfs_ioctl_get_bdescs(struct
+  * Return: 0 on success, or one of the following negative error codes on
+  * failure:
+  * * %-EEXIST	- Block conflict detected.
++ * * %-EINVAL	- Invalid virtual block descriptor.
+  * * %-EIO	- I/O error.
+  * * %-ENOENT	- Requested block doesn't exist.
+  * * %-ENOMEM	- Insufficient memory available.
+@@ -536,15 +537,30 @@ static int nilfs_ioctl_move_inode_block(
+ 					struct list_head *buffers)
+ {
+ 	struct buffer_head *bh;
++	__u64 limit_blkidx = (__u64)inode->i_sb->s_maxbytes >> inode->i_blkbits;
+ 	int ret;
+ 
+-	if (vdesc->vd_flags == 0)
++	/*
++	 * vblocknr 0 is reserved as an invalid pointer.  Also, limit_blkidx
++	 * ensures that the page index converted from vd_vblocknr never
++	 * overflows the page cache limit and respects the architecture's bmap
++	 * key width.
++	 */
++	if (unlikely(vdesc->vd_vblocknr == 0 ||
++			vdesc->vd_vblocknr >= limit_blkidx))
++		return -EINVAL;
++
++	if (vdesc->vd_flags == 0) {
++		if (unlikely(vdesc->vd_offset >= limit_blkidx))
++			return -EINVAL;
++
+ 		ret = nilfs_gccache_submit_read_data(
+ 			inode, vdesc->vd_offset, vdesc->vd_blocknr,
+ 			vdesc->vd_vblocknr, &bh);
+-	else
++	} else {
+ 		ret = nilfs_gccache_submit_read_node(
+ 			inode, vdesc->vd_blocknr, vdesc->vd_vblocknr, &bh);
++	}
+ 
+ 	if (unlikely(ret < 0)) {
+ 		if (ret == -ENOENT)
 
 
