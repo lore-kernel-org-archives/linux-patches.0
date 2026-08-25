@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E0345C70B;
-	Tue, 25 Aug 2026 13:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C884400994;
+	Tue, 25 Aug 2026 13:51:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665869; cv=none; b=JcpLdh+ZZH2s2WwQEmUGWjzEGY/OC/E5xmhc7GjjH+82GLUUh64ah2fyABGpIMR1/nu1Vf6UBfsW+rOkbALpyqfjiCifgNoPtb6mgwrBAIeF3oqivz8u/SkoSeJF25F7mvy8jwYMfv8AFzR1i0jZWtOe0qvsmXdQw0j7D2bn9kc=
+	t=1787665872; cv=none; b=cemKoqroJmpMoQS/SGVmmuMFi37P1e/CYPZ23NkyaeQ+8fvkCe9sGAXsWWQ4MyyZ+jmhsabiOPsJyYkPjranW7CJlS2RsplQR947euKOvRGdIY6+V6kXSrSmjTOVbDPzZiXoqh2m0yhPlMAlBCxpF5XnMbl8slzL4vK9WSUgl7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665869; c=relaxed/simple;
-	bh=5crZGkPazn+uQ+EnI4crzcaAXlZEohHJyJGT4bw0WBM=;
+	s=arc-20240116; t=1787665872; c=relaxed/simple;
+	bh=xvUKpQwZl+FNJzfK6CaVl8QRX44l1e/4IktHxqvAuRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=edVs6twq+QYgSlrwQnSFYKnFxNzBcv+xAo0N099gRizyeEha9GCPJGXwEJkiLxZyPBIhsaPYYfIxI83tMS4CTnGuJprOp9E+Uzo6QIMFw2z2dGUfw+//jiPt5FwG81ilWi1fKPiaimN6VmXXmdEeK2hM+xlKROdPA3PBgQpyJ40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rfNXQ6q9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AcqhWszz2GNpTxLvwGhewV4fMkHhYqFqwwuuxPRzjRF4HL5GKfsIxlkfJ/ibQjUFBZPzmXnRRYaKyz6hkifPT1wYz5CHZlj4ESmxgnDP2lx+zq88cXnk5nMgJI19TwIBgO4u0lsgJPFeaGa+BV7j9Ze1fwfrfIfyPU2S7MtBhe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ILoSThL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rfNXQ6q9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52761F000E9;
-	Tue, 25 Aug 2026 13:51:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ILoSThL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A061F000E9;
+	Tue, 25 Aug 2026 13:51:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665868;
-	bh=rRmUUJEUe8cfnZ7VkYnYvA5xHQp2yaCtW9gcavsA1CM=;
+	s=korg; t=1787665871;
+	bh=emQaDetcjq4okv2aF3u4istv9wOR5xZDGv8BwcSi2xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rfNXQ6q9mlJWikuA0PV04oWCX4o5G8Y9sb/Lu2tK7pzv6yri0SpfprqieYDd/os/T
-	 z0/XH+X1+wkjd0V8FZSTIwcqic3qWjiClrLeJ8NOiUSf2Y/2IX3YSiNyXwGU/atq1H
-	 dGi20/P4OHowrkYE7fOHPHl47AqUNeKhnBVrP/zg=
+	b=2ILoSThLvM/bvLkod6/IBcqcDCbLEvZ4aeoxwYD+vV9JdJru9wZFAQ0CupGeyczqX
+	 YyNhxcW2B+xF/iI8ieoGV+Cs062iGYPy8aBGsBDeIqk+eor7iS52BFUQWX1CqX1yCM
+	 FJ2mLkTD+yBbMdOPUoXZW3f3d2XYOjw/K7hWBmiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Mikura Kyouka <mikurakyouka@aosc.io>,
+	"foad.elkhattabi" <foad.elkhattabi@gmail.com>,
+	Cryolitia PukNgae <cryolitia.pukngae@linux.dev>,
+	Hans de Goede <hansg@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 69/87] Bluetooth: hci_sync: Fix advertising data UAFs
-Date: Tue, 25 Aug 2026 15:26:32 +0200
-Message-ID: <20260825132544.521628277@linuxfoundation.org>
+Subject: [PATCH 6.6 70/87] Input: atkbd - skip deactivate for HONOR FMB-Ps internal keyboard
+Date: Tue, 25 Aug 2026 15:26:33 +0200
+Message-ID: <20260825132544.561770517@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -52,352 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
 
-[ Upstream commit cdc36db204ffd97b947d64374cf23a210dc74777 ]
+[ Upstream commit 2aaf33c6e1e82561d7dce2345298a985a2483266 ]
 
-hci_find_adv_instance() returns an adv_info pointer that is valid only
-while hdev->lock is held.  The advertising command-sync paths perform
-instance lookups without that lock and, in some cases, retain the pointer
-while waiting for a controller response.
+After commit 9cf6e24c9fbf17e52de9fff07f12be7565ea6d61 ("Input: atkbd -
+do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID"), HONOR
+FMB-P, aka HONOR MagicBook Pro 14 2025's internal keyboard stops
+working. Adding the atkbd_deactivate_fixup quirk fixes it.
 
-An advertising termination event can therefore interleave as follows:
+DMI: HONOR FMB-P/FMB-P-PCB, BIOS 1.13 05/08/2025
 
-  hci_cmd_sync_work                 hci_rx_work
-  hci_find_adv_instance()
-  __hci_cmd_sync_status()
-    wait for controller reply       hci_dev_lock()
-                                    hci_remove_adv_instance()
-                                      kfree(adv)
-  adv->scan_rsp_changed = false
-
-KASAN reported:
-
-  BUG: KASAN: slab-use-after-free in hci_set_ext_scan_rsp_data_sync+0x2e1/0x300
-  Write of size 1 at addr ffff88810a45d21d by task kworker/u17:0/88
-  Workqueue: hci0 hci_cmd_sync_work
-  Call Trace:
-   hci_set_ext_scan_rsp_data_sync+0x2e1/0x300
-   hci_schedule_adv_instance_sync+0x390/0x4c0
-   hci_cmd_sync_work+0x173/0x300
-  Allocated by task 87:
-   hci_add_adv_instance+0x538/0xac0
-   add_advertising+0x885/0x1160
-  Freed by task 89:
-   kfree+0x131/0x3c0
-   hci_remove_adv_instance+0x1d8/0x3b0
-   hci_le_ext_adv_term_evt+0x17b/0x730
-
-Protect the instance lookup and payload construction in the extended
-advertising, scan response, and periodic advertising data paths.  Snapshot
-the advertising parameters under hdev->lock, but release the lock before
-waiting for the controller.
-
-Clear advertising-data dirty bits before issuing their commands and
-restore them after a failure using a fresh lookup.  Likewise, update the
-reported transmit power through a fresh lookup after the parameter command
-completes.  No adv_info pointer then survives an HCI command wait.
-
-Fixes: cba6b758711c ("Bluetooth: hci_sync: Make use of hci_cmd_sync_queue set 2")
-Cc: stable@vger.kernel.org
-Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 9cf6e24c9fbf17e52de9fff07f12be7565ea6d61 ("Input: atkbd - do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID")
+Reported-by: Mikura Kyouka <mikurakyouka@aosc.io>
+Reported-by: foad.elkhattabi <foad.elkhattabi@gmail.com>
+Signed-off-by: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
+Reviewed-by: Hans de Goede <hansg@kernel.org>
+Link: https://patch.msgid.link/20251022-honor-v1-1-ff894ed271a9@linux.dev
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Stable-dep-of: 410c44b10967 ("Input: atkbd - skip deactivate for HONOR ZQC-P")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sync.c | 133 ++++++++++++++++++++++++++++-----------
- 1 file changed, 98 insertions(+), 35 deletions(-)
+ drivers/input/keyboard/atkbd.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 6a5ec74eaf25a..55fc529cc306d 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -1253,10 +1253,11 @@ static int hci_set_adv_set_random_addr_sync(struct hci_dev *hdev, u8 instance,
- }
- 
- static int
--hci_set_ext_adv_params_sync(struct hci_dev *hdev, struct adv_info *adv,
-+hci_set_ext_adv_params_sync(struct hci_dev *hdev, u8 instance,
- 			    const struct hci_cp_le_set_ext_adv_params *cp,
- 			    struct hci_rp_le_set_ext_adv_params *rp)
- {
-+	struct adv_info *adv;
- 	struct sk_buff *skb;
- 
- 	skb = __hci_cmd_sync(hdev, HCI_OP_LE_SET_EXT_ADV_PARAMS, sizeof(*cp),
-@@ -1284,11 +1285,15 @@ hci_set_ext_adv_params_sync(struct hci_dev *hdev, struct adv_info *adv,
- 
- 	if (!rp->status) {
- 		hdev->adv_addr_type = cp->own_addr_type;
--		if (!cp->handle) {
-+		if (!instance) {
- 			/* Store in hdev for instance 0 */
- 			hdev->adv_tx_power = rp->tx_power;
--		} else if (adv) {
--			adv->tx_power = rp->tx_power;
-+		} else {
-+			hci_dev_lock(hdev);
-+			adv = hci_find_adv_instance(hdev, instance);
-+			if (adv)
-+				adv->tx_power = rp->tx_power;
-+			hci_dev_unlock(hdev);
- 		}
- 	}
- 
-@@ -1308,9 +1313,13 @@ static int hci_set_ext_adv_data_sync(struct hci_dev *hdev, u8 instance)
- 	memset(&pdu, 0, sizeof(pdu));
- 
- 	if (instance) {
-+		hci_dev_lock(hdev);
-+
- 		adv = hci_find_adv_instance(hdev, instance);
--		if (!adv || !adv->adv_data_changed)
-+		if (!adv || !adv->adv_data_changed) {
-+			hci_dev_unlock(hdev);
- 			return 0;
-+		}
- 	}
- 
- 	len = eir_create_adv_data(hdev, instance, pdu.data);
-@@ -1320,16 +1329,27 @@ static int hci_set_ext_adv_data_sync(struct hci_dev *hdev, u8 instance)
- 	pdu.cp.operation = LE_SET_ADV_DATA_OP_COMPLETE;
- 	pdu.cp.frag_pref = LE_SET_ADV_DATA_NO_FRAG;
- 
-+	if (adv) {
-+		adv->adv_data_changed = false;
-+		hci_dev_unlock(hdev);
-+	}
-+
- 	err = __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_EXT_ADV_DATA,
- 				    sizeof(pdu.cp) + len, &pdu.cp,
- 				    HCI_CMD_TIMEOUT);
--	if (err)
-+	if (err) {
-+		if (instance) {
-+			hci_dev_lock(hdev);
-+			adv = hci_find_adv_instance(hdev, instance);
-+			if (adv)
-+				adv->adv_data_changed = true;
-+			hci_dev_unlock(hdev);
-+		}
-+
- 		return err;
-+	}
- 
--	/* Update data if the command succeed */
--	if (adv) {
--		adv->adv_data_changed = false;
--	} else {
-+	if (!instance) {
- 		memcpy(hdev->adv_data, pdu.data, len);
- 		hdev->adv_data_len = len;
- 	}
-@@ -1383,22 +1403,22 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
- 	struct adv_info *adv;
- 	bool secondary_adv;
- 
--	if (instance > 0) {
--		adv = hci_find_adv_instance(hdev, instance);
--		if (!adv)
--			return -EINVAL;
--	} else {
--		adv = NULL;
--	}
--
- 	/* Updating parameters of an active instance will return a
--	 * Command Disallowed error, so we must first disable the
--	 * instance if it is active.
-+	 * Command Disallowed error, so disable it before taking a snapshot.
- 	 */
--	if (adv) {
-+	if (instance > 0) {
- 		err = hci_disable_ext_adv_instance_sync(hdev, instance);
- 		if (err)
- 			return err;
-+
-+		hci_dev_lock(hdev);
-+		adv = hci_find_adv_instance(hdev, instance);
-+		if (!adv) {
-+			hci_dev_unlock(hdev);
-+			return -EINVAL;
-+		}
-+	} else {
-+		adv = NULL;
- 	}
- 
- 	flags = hci_adv_instance_flags(hdev, instance);
-@@ -1409,8 +1429,11 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
- 	connectable = (flags & MGMT_ADV_FLAG_CONNECTABLE) ||
- 		      mgmt_get_connectable(hdev);
- 
--	if (!is_advertising_allowed(hdev, connectable))
-+	if (!is_advertising_allowed(hdev, connectable)) {
-+		if (instance)
-+			hci_dev_unlock(hdev);
- 		return -EPERM;
-+	}
- 
- 	/* Set require_privacy to true only when non-connectable
- 	 * advertising is used and it is not periodic.
-@@ -1421,8 +1444,11 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
- 	err = hci_get_random_address(hdev, require_privacy,
- 				     adv_use_rpa(hdev, flags), adv,
- 				     &own_addr_type, &random_addr);
--	if (err < 0)
-+	if (err < 0) {
-+		if (instance)
-+			hci_dev_unlock(hdev);
- 		return err;
-+	}
- 
- 	memset(&cp, 0, sizeof(cp));
- 
-@@ -1471,6 +1497,9 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
- 	cp.channel_map = hdev->le_adv_channel_map;
- 	cp.handle = instance;
- 
-+	if (instance)
-+		hci_dev_unlock(hdev);
-+
- 	if (flags & MGMT_ADV_FLAG_SEC_2M) {
- 		cp.primary_phy = HCI_ADV_PHY_1M;
- 		cp.secondary_phy = HCI_ADV_PHY_2M;
-@@ -1483,12 +1512,12 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
- 		cp.secondary_phy = HCI_ADV_PHY_1M;
- 	}
- 
--	err = hci_set_ext_adv_params_sync(hdev, adv, &cp, &rp);
-+	err = hci_set_ext_adv_params_sync(hdev, instance, &cp, &rp);
- 	if (err)
- 		return err;
- 
- 	/* Update adv data as tx power is known now */
--	err = hci_set_ext_adv_data_sync(hdev, cp.handle);
-+	err = hci_set_ext_adv_data_sync(hdev, instance);
- 	if (err)
- 		return err;
- 
-@@ -1496,9 +1525,14 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
- 	     own_addr_type == ADDR_LE_DEV_RANDOM_RESOLVED) &&
- 	    bacmp(&random_addr, BDADDR_ANY)) {
- 		/* Check if random address need to be updated */
--		if (adv) {
--			if (!bacmp(&random_addr, &adv->random_addr))
-+		if (instance) {
-+			hci_dev_lock(hdev);
-+			adv = hci_find_adv_instance(hdev, instance);
-+			if (!adv || !bacmp(&random_addr, &adv->random_addr)) {
-+				hci_dev_unlock(hdev);
- 				return 0;
-+			}
-+			hci_dev_unlock(hdev);
- 		} else {
- 			if (!bacmp(&random_addr, &hdev->random_addr))
- 				return 0;
-@@ -1524,9 +1558,13 @@ static int hci_set_ext_scan_rsp_data_sync(struct hci_dev *hdev, u8 instance)
- 	memset(&pdu, 0, sizeof(pdu));
- 
- 	if (instance) {
-+		hci_dev_lock(hdev);
-+
- 		adv = hci_find_adv_instance(hdev, instance);
--		if (!adv || !adv->scan_rsp_changed)
-+		if (!adv || !adv->scan_rsp_changed) {
-+			hci_dev_unlock(hdev);
- 			return 0;
-+		}
- 	}
- 
- 	len = eir_create_scan_rsp(hdev, instance, pdu.data);
-@@ -1536,15 +1574,27 @@ static int hci_set_ext_scan_rsp_data_sync(struct hci_dev *hdev, u8 instance)
- 	pdu.cp.operation = LE_SET_ADV_DATA_OP_COMPLETE;
- 	pdu.cp.frag_pref = LE_SET_ADV_DATA_NO_FRAG;
- 
-+	if (adv) {
-+		adv->scan_rsp_changed = false;
-+		hci_dev_unlock(hdev);
-+	}
-+
- 	err = __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_EXT_SCAN_RSP_DATA,
- 				    sizeof(pdu.cp) + len, &pdu.cp,
- 				    HCI_CMD_TIMEOUT);
--	if (err)
-+	if (err) {
-+		if (instance) {
-+			hci_dev_lock(hdev);
-+			adv = hci_find_adv_instance(hdev, instance);
-+			if (adv)
-+				adv->scan_rsp_changed = true;
-+			hci_dev_unlock(hdev);
-+		}
-+
- 		return err;
-+	}
- 
--	if (adv) {
--		adv->scan_rsp_changed = false;
--	} else {
-+	if (!instance) {
- 		memcpy(hdev->scan_rsp_data, pdu.data, len);
- 		hdev->scan_rsp_data_len = len;
- 	}
-@@ -1559,8 +1609,14 @@ static int __hci_set_scan_rsp_data_sync(struct hci_dev *hdev, u8 instance)
- 
- 	memset(&cp, 0, sizeof(cp));
- 
-+	if (instance)
-+		hci_dev_lock(hdev);
-+
- 	len = eir_create_scan_rsp(hdev, instance, cp.data);
- 
-+	if (instance)
-+		hci_dev_unlock(hdev);
-+
- 	if (hdev->scan_rsp_data_len == len &&
- 	    !memcmp(cp.data, hdev->scan_rsp_data, len))
- 		return 0;
-@@ -1694,14 +1750,18 @@ static int hci_set_per_adv_data_sync(struct hci_dev *hdev, u8 instance)
- 		u8 data[HCI_MAX_PER_AD_LENGTH];
- 	} pdu;
- 	u8 len;
-+	struct adv_info *adv = NULL;
- 
- 	memset(&pdu, 0, sizeof(pdu));
- 
- 	if (instance) {
--		struct adv_info *adv = hci_find_adv_instance(hdev, instance);
-+		hci_dev_lock(hdev);
- 
--		if (!adv || !adv->periodic)
-+		adv = hci_find_adv_instance(hdev, instance);
-+		if (!adv || !adv->periodic) {
-+			hci_dev_unlock(hdev);
- 			return 0;
-+		}
- 	}
- 
- 	len = eir_create_per_adv_data(hdev, instance, pdu.data);
-@@ -1710,6 +1770,9 @@ static int hci_set_per_adv_data_sync(struct hci_dev *hdev, u8 instance)
- 	pdu.cp.handle = instance;
- 	pdu.cp.operation = LE_SET_ADV_DATA_OP_COMPLETE;
- 
-+	if (adv)
-+		hci_dev_unlock(hdev);
-+
- 	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_PER_ADV_DATA,
- 				     sizeof(pdu.cp) + len, &pdu,
- 				     HCI_CMD_TIMEOUT);
-@@ -6414,7 +6477,7 @@ static int hci_le_ext_directed_advertising_sync(struct hci_dev *hdev,
- 	if (err)
- 		return err;
- 
--	err = hci_set_ext_adv_params_sync(hdev, NULL, &cp, &rp);
-+	err = hci_set_ext_adv_params_sync(hdev, 0, &cp, &rp);
- 	if (err)
- 		return err;
- 
--- 
-2.53.0
-
+--- a/drivers/input/keyboard/atkbd.c
++++ b/drivers/input/keyboard/atkbd.c
+@@ -1945,6 +1945,13 @@ static const struct dmi_system_id atkbd_
+ 		.callback = atkbd_deactivate_fixup,
+ 	},
+ 	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "HONOR"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "FMB-P"),
++		},
++		.callback = atkbd_deactivate_fixup,
++	},
++	{
+ 		/* Lenovo Yoga Air 14 (83QK) */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
 
 
