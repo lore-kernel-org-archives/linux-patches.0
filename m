@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5464D3DA5B3;
-	Tue, 25 Aug 2026 13:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559413CF660;
+	Tue, 25 Aug 2026 13:46:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665576; cv=none; b=Wy9EB7Hd3IYKRpT5D2yd5Z/nDisBIpMeifMWdNqgUqtLJkQnRiSt9rbIGEbp5QIEyvGbbhahUHpSaYzv5pdGpiN8/dFxuoQdslCg5lUAA6M/yTRZGYGNu0JUDHtNdtE09elJikvouZnOEuN6IW2fNXG5fu9jRLWQf977hgohTFs=
+	t=1787665579; cv=none; b=X5SjkVa0GT5lScgmKfnI9SoNQLlp8lkqIpmvuC65fZ2dSUB0TC+eQT41oWQfA3S7uHSMVW7iv1UFAFfjGgwhahY8L7wnrpeql8YCeEHhVmy87vuWDgbQO8GpQlmjoaUJFMCPqQc3EIwOT4EdJQr4qDMhndufIrnOSH2vQ2m50+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665576; c=relaxed/simple;
-	bh=BrU/6MfuW+BJa2yDW/wORZ53kPskrfNmzzyroIm1j6c=;
+	s=arc-20240116; t=1787665579; c=relaxed/simple;
+	bh=3l/fiHkSkFOjTQ5ZlfvqceF3mLPfis7EOZ74f6OdWfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p1gpW/S1VMXGY93qOJiLj+vwj4FsF8L3JV3nSKsFxuSL02Z3WfMuwcdV02vwljDQnxoDBqoSTMRdQFl8ctCbpDSZq9wUpqsmASyc5y6brwitYtkwYoLJZ+TyzujF7L2d5SpIKY9NzKAvZrS7idN9Uj4Tag+JuRzTuv08RDAO9Vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7Y8c9ld; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eLSbe6QcBsMV87d3+0u0B7OXta+RfvtAMmwojUjb7hkUJFksDLYvaBvqvTdOuLZc64402HczYsZXDLpFd/t0pVia8o/6kkwkRFV27EVsFcJ1JYq2XIFq9rIcRPWSrE/WGgGHE9b4yrg1rvD7ESpUJR0Lr6RwSd9nkvKygvzGmj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DblEhpCn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7Y8c9ld"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A662F1F000E9;
-	Tue, 25 Aug 2026 13:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DblEhpCn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A02221F000E9;
+	Tue, 25 Aug 2026 13:46:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665575;
-	bh=O797JOzn1vga1HSdQ/VlXSmLOYZNDaDrBin2ZEmX8kw=;
+	s=korg; t=1787665578;
+	bh=KkuFiH4+eTov8NAoyU75mM3vzjXiDwASirIM8uCPOFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w7Y8c9ldLUcCuqBxxJqrGKV7n3HS8XmjpS0F+PJQIxtkSkU6kK8hhYzHKUsLfiA9I
-	 yq1rEuYTqwRxpzV3cvrgvgq3Pt7dIH0mDxeKZz1mnCjwTXDew1B++UL5ueE/TSeOgW
-	 pkrJoUH2xb3KB3Je/vpYuhkFi/WF1hPKe1l/4tnw=
+	b=DblEhpCnjO6t63xVTKILs8XzJjIho2VKF9CeSs5MTs2E0L9tyViz7TGRBB0DGZVDi
+	 2RkLD8K3Hn9BAT8m+nCP7Xtk1obWkD7ei79744p1VAVX/niYwxVmnaKNxzKh8qKRXk
+	 CU4ap7NJuD0YXUROocQb7nWPSXIGYs2EyKbw6+H4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Dawid=20Wro=CC=81bel?= <me@dawidwrobel.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 55/77] ASoC: codecs: lpass-tx-macro: Fix enum kcontrol accesses
-Date: Tue, 25 Aug 2026 15:26:17 +0200
-Message-ID: <20260825132543.720901949@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.12 73/77] HID: hyperv: validate initial device info bounds
+Date: Tue, 25 Aug 2026 15:26:35 +0200
+Message-ID: <20260825132544.380246799@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.580275153@linuxfoundation.org>
 References: <20260825132541.580275153@linuxfoundation.org>
@@ -46,67 +44,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dawid Wróbel <me@dawidwrobel.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 1ba381759e45d5d0442452cfa5c42e836191a568 ]
+commit 934b7778aa7b7c8f6bb073d2a73ba3674885bae0 upstream.
 
-The "DEC0 MODE" to "DEC7 MODE" controls are enumerated, but
-tx_macro_dec_mode_get() and tx_macro_dec_mode_put() access their
-value through ucontrol->value.integer.value[0] (a long) instead of
-ucontrol->value.enumerated.item[0] (an unsigned int).
+The Hyper-V synthetic HID host supplies SYNTH_HID_INITIAL_DEVICE_INFO
+messages that contain a HID descriptor followed by the report descriptor
+bytes. mousevsc_on_receive_device_info() trusts bLength and
+wDescriptorLength without checking that the received packet contains both
+byte ranges.
 
-This same pattern was fixed in the sibling drivers by
-commit bcfe5f76cc40 ("ASoC: codecs: rx-macro: fix accessing array
-out of bounds for enum type") and
-commit 0ea5eff7c606 ("ASoC: codecs: va-macro: fix accessing array
-out of bounds for enum type"), but tx-macro was missed.
+A malformed host or backend message can therefore make the guest read
+past the received VMBus packet while copying the report descriptor. Pass
+the received initial-device-info size into the parser and reject
+descriptor lengths that exceed the packet.
 
-On 64-bit kernels built with CONFIG_SND_CTL_DEBUG, the elem value
-sanity check catches the 4 bytes written past the enumerated item
-and every read of these controls fails with -EINVAL:
+Impact: A malicious Hyper-V host or backend can crash a guest by sending
+a short initial device-info message with an oversized HID report
+descriptor length.
 
-  snd-sm8250 sound: control 2:0:0:DEC0 MODE:0: access overflow
-
-Fixes: c39667ddcfc5 ("ASoC: codecs: lpass-tx-macro: add support for lpass tx macro")
-Assisted-by: Claude:claude-fable-5
+Fixes: b95f5bcb811e ("HID: Move the hid-hyperv driver out of staging")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dawid Wróbel <me@dawidwrobel.com>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260730-worktree-lpass-tx-macro-enum-fix-v2-1-6d091c736116@dawidwrobel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ kept `snd_soc_kcontrol_component()` context line instead of upstream's renamed `snd_kcontrol_chip()` ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Assisted-by: Codex:gpt-5-5-xhigh
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/lpass-tx-macro.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/hid-hyperv.c |   27 ++++++++++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
 
---- a/sound/soc/codecs/lpass-tx-macro.c
-+++ b/sound/soc/codecs/lpass-tx-macro.c
-@@ -1076,7 +1076,7 @@ static int tx_macro_dec_mode_get(struct
- 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
- 	int path = e->shift_l;
- 
--	ucontrol->value.integer.value[0] = tx->dec_mode[path];
-+	ucontrol->value.enumerated.item[0] = tx->dec_mode[path];
- 
- 	return 0;
+--- a/drivers/hid/hid-hyperv.c
++++ b/drivers/hid/hid-hyperv.c
+@@ -171,18 +171,32 @@ static void mousevsc_free_device(struct
  }
-@@ -1085,7 +1085,7 @@ static int tx_macro_dec_mode_put(struct
- 				 struct snd_ctl_elem_value *ucontrol)
+ 
+ static void mousevsc_on_receive_device_info(struct mousevsc_dev *input_device,
+-				struct synthhid_device_info *device_info)
++					    struct synthhid_device_info *device_info,
++					    u32 device_info_size)
  {
- 	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
--	int value = ucontrol->value.integer.value[0];
-+	int value = ucontrol->value.enumerated.item[0];
- 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
- 	int path = e->shift_l;
- 	struct tx_macro *tx = snd_soc_component_get_drvdata(component);
+ 	int ret = 0;
+ 	struct hid_descriptor *desc;
+ 	struct mousevsc_prt_msg ack;
++	size_t desc_offset;
++	size_t desc_size;
+ 
+ 	input_device->dev_info_status = -ENOMEM;
+ 
++	if (device_info_size < sizeof(*device_info)) {
++		input_device->dev_info_status = -EINVAL;
++		goto cleanup;
++	}
++
+ 	input_device->hid_dev_info = device_info->hid_dev_info;
+ 	desc = &device_info->hid_descriptor;
++	desc_offset = offsetof(struct synthhid_device_info, hid_descriptor);
++	desc_size = device_info_size - desc_offset;
+ 	if (desc->bLength == 0)
+ 		goto cleanup;
++	if (desc->bLength < sizeof(*desc) || desc->bLength > desc_size) {
++		input_device->dev_info_status = -EINVAL;
++		goto cleanup;
++	}
+ 
+ 	/* The pointer is not NULL when we resume from hibernation */
+ 	kfree(input_device->hid_desc);
+@@ -197,6 +211,10 @@ static void mousevsc_on_receive_device_i
+ 		input_device->dev_info_status = -EINVAL;
+ 		goto cleanup;
+ 	}
++	if (input_device->report_desc_size > desc_size - desc->bLength) {
++		input_device->dev_info_status = -EINVAL;
++		goto cleanup;
++	}
+ 
+ 	/* The pointer is not NULL when we resume from hibernation */
+ 	kfree(input_device->report_desc);
+@@ -273,14 +291,17 @@ static void mousevsc_on_receive(struct h
+ 		break;
+ 
+ 	case SYNTH_HID_INITIAL_DEVICE_INFO:
+-		WARN_ON(pipe_msg->size < sizeof(struct hv_input_dev_info));
++		if (WARN_ON_ONCE(pipe_msg->size <
++				 sizeof(struct synthhid_device_info)))
++			break;
+ 
+ 		/*
+ 		 * Parse out the device info into device attr,
+ 		 * hid desc and report desc
+ 		 */
+ 		mousevsc_on_receive_device_info(input_dev,
+-			(struct synthhid_device_info *)pipe_msg->data);
++						(struct synthhid_device_info *)pipe_msg->data,
++						pipe_msg->size);
+ 		break;
+ 	case SYNTH_HID_INPUT_REPORT:
+ 		input_report =
 
 
