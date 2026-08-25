@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5333C276D;
-	Tue, 25 Aug 2026 13:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B6B3C276D;
+	Tue, 25 Aug 2026 13:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665910; cv=none; b=eD1f5QuR+2tyQqbpf5mH203p1+Y9NnI6TlKST/pppAKbOm7/OWBwPSyOO9k1t1tENP06fzkF35Lmcxd/wTKmmrdhQVBekncD2p+bevYVSdiAP6Ega9ylMUfRa4cX0btpNpEyW2Xd1TL7VAvZ5riT17ADEwguswOlCKNNcM8y/x8=
+	t=1787665913; cv=none; b=u3YmxBqloU6dxNEJJn0KaF0D3YUjlIowUX4iHVAvX4v9N2uWVvIdKMK/wMcyfoAfnOlY/xvqPORci/G5OZI6uXr1Zt9xqFXl6eOdOedjV65Dqvkn45z0PcLDqjMgo1vYhvVzq4ibqXqA6CCs5H/4eWFmHvOj4nmVUGzaBkt8pv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665910; c=relaxed/simple;
-	bh=04yrgIOdye3o0BSpuBKjW73PQCJV3WvGfYsBbEqURGA=;
+	s=arc-20240116; t=1787665913; c=relaxed/simple;
+	bh=TCwCnz8D6wiKpfn51u/aS8s5tou8yoJC1Bv9TViiI94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fWkHo8EfN9il9DDF2RRAOdWzzqTyUIaEIQknU3BNSgmzG9alQk02ljnRcCRCGXmYOhrWIIuSFJ3vYUciZ/GzgqXSJusQn5zy53MTNNEGO5/3ECnrFP+4ITLfljpB5m4B6/8YOid+L2d90hBmOj06qpaTQGZV/9yYjvoYpbcegYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ct8DPNUG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uZS3Ofp/4ZXjN3NmB4SiAQGpQdELwllOfWqAI0QyhZTZxwFFEwxxM9K+wRhesJLpAJviAi7b2pz6HGfbKQFXK9yviGvkxkFPIvUc/CSLAUQyemry75ZW6z+wHRUbrUHoQd8x1UjtaE/o85QKMnoqp/1Vx6IVVJgV59qf5+ltG80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vB10JL2D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ct8DPNUG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45F51F000E9;
-	Tue, 25 Aug 2026 13:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vB10JL2D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE5D11F000E9;
+	Tue, 25 Aug 2026 13:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665909;
-	bh=YNobPhhoR9iQefWOT7AnZgGALxEC1KCWTsJQaTpdrSU=;
+	s=korg; t=1787665912;
+	bh=mVUzTmRCTnvuVsUvg9h3f/LyDI6jpHkFsLoXt+NVM7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ct8DPNUGPFz83ASji4ZUO4UsGE+jZqdm42xZ5UNGBjXTcOmWDHaffCS+bPvfXg7ji
-	 UXA4q//CVBHHm1ItO81ZEKebG0nsPykI0NkBmi6elzb31jKTVDbLHorDcEgOx4G3tn
-	 gstWg7mT4YnPETxSQ/9U1gr6bBs46KC/mW1mxRAA=
+	b=vB10JL2D67kiL2isUu1f+vEr6OLGX2Uxu71i/2nnLBGDCxFf7IeZaHkq+VTjB+Sw5
+	 6GpcXaSVAwkc8S7grIeX1jB7+ZT9dxuCNDBH/Jd6DtYnRJ3I1Biw3hQC4YEyaUQQRZ
+	 G117rAQt/zJFZ0bEcKKePg/KW9GGPiR9fzI/SH90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 02/79] Bluetooth: RFCOMM: take rfcomm_mutex for the deferred setup accept
-Date: Tue, 25 Aug 2026 15:25:42 +0200
-Message-ID: <20260825132541.766415201@linuxfoundation.org>
+	Qihang Tang <q.h.hack.winter@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 20/79] packet: use consistent hard_header_len in TX_RING send path
+Date: Tue, 25 Aug 2026 15:26:00 +0200
+Message-ID: <20260825132542.469804360@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -50,133 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Qihang Tang <q.h.hack.winter@gmail.com>
 
-commit 43a556b2fd43f2df6dded59c2e26560a27874c24 upstream.
+[ Upstream commit 21b5953e7494c16a42e6cd8cf110e18d13ae4a6b ]
 
-rfcomm_sock_recvmsg() completes a deferred setup by calling
-rfcomm_dlc_accept() without holding any RFCOMM lock:
+tpacket_snd() reads dev->hard_header_len independently for skb
+allocation and header construction in tpacket_fill_skb(). Concurrent
+netdevice reconfiguration can therefore make the reserved headroom
+smaller than the amount later pushed, or make copylen - hard_header_len
+negative.
 
-	if (test_and_clear_bit(RFCOMM_DEFER_SETUP, &d->flags)) {
-		rfcomm_dlc_accept(d);
-		return 0;
-	}
+Snapshot hard_header_len once before processing ring frames and use it
+for the frame limit, headroom allocation, copy length, and skb
+construction. Pass the snapshot to tpacket_fill_skb().
 
-and rfcomm_dlc_accept() dereferences the session on its first line:
+The separate SOCK_DGRAM consistency problem between hard_header_len and
+header_ops->create is not addressed here.
 
-	struct sock *sk = d->session->sock->sk;
-
-Every other path that touches d->session runs under rfcomm_mutex:
-rfcomm_dlc_open(), rfcomm_dlc_close(), rfcomm_dlc_exists(),
-rfcomm_dlc_send_rpn(), and the RFCOMM thread through
-rfcomm_process_sessions(). rfcomm_connect_ind() is even documented as
-"called under rfcomm_lock()". This call site is the only one that skips
-it.
-
-The RFCOMM_DEFER_SETUP bit looks like it serialises the accept against
-teardown, since __rfcomm_dlc_close() returns early when it wins the
-test_and_clear. But rfcomm_recv_disc() forces the state first:
-
-	d->state = BT_CLOSED;
-	__rfcomm_dlc_close(d, err);
-
-and the early return only covers BT_CONNECT, BT_CONFIG, BT_OPEN and
-BT_CONNECT2. With the state already BT_CLOSED that switch does not
-match, the bit is never consulted, and __rfcomm_dlc_close() falls
-through to rfcomm_dlc_unlink(), which sets d->session = NULL.
-
-So a remote DISC on a deferred dlc clears the session while leaving
-RFCOMM_DEFER_SETUP set. The next recvmsg() then passes the
-test_and_clear and dereferences a NULL session. No timing window is
-needed: once the DISC has been processed, the dereference is
-unconditional.
-
-Give rfcomm_dlc_accept() the same shape as rfcomm_dlc_open() and
-rfcomm_dlc_close(): an exported wrapper that takes rfcomm_mutex and
-re-checks the session, around a __rfcomm_dlc_accept() that the two
-in-core callers, which already hold the mutex, keep using.
-
-Reproduced on a KASAN + PROVE_LOCKING kernel with a BR/EDR peer emulated
-over /dev/vhci: the peer brings up an ACL link, opens L2CAP on the
-RFCOMM PSM, starts a session, opens a dlc on a channel bound with
-BT_DEFER_SETUP, and sends DISC after the socket is accepted. recv() on
-the accepted socket then hits:
-
-  Oops: general protection fault
-  KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
-  RIP: 0010:rfcomm_dlc_accept+0x54/0x350
-  Call Trace:
-    rfcomm_sock_recvmsg+0x1cd/0x230
-    sock_recvmsg+0x166/0x1c0
-    __sys_recvfrom+0x20d/0x300
-
-0x10 is the offset of sock in struct rfcomm_session. With this patch the
-same run completes with recv() returning 0 and no report, and lockdep
-stays quiet, confirming rfcomm_mutex is still taken before lock_sock on
-this path as it is on the thread side.
-
-Fixes: bb23c0ab8246 ("Bluetooth: Add support for deferring RFCOMM connection setup")
+Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Qihang Tang <q.h.hack.winter@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260805125729.19220-4-q.h.hack.winter@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/rfcomm/core.c |   24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ net/packet/af_packet.c |   19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
---- a/net/bluetooth/rfcomm/core.c
-+++ b/net/bluetooth/rfcomm/core.c
-@@ -1330,7 +1330,10 @@ static struct rfcomm_session *rfcomm_rec
- 	return s;
- }
- 
--void rfcomm_dlc_accept(struct rfcomm_dlc *d)
-+/* Must be called with rfcomm_mutex held, so that the session cannot be
-+ * unlinked from under us.
-+ */
-+static void __rfcomm_dlc_accept(struct rfcomm_dlc *d)
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2624,6 +2624,7 @@ static int packet_snd_vnet_parse(struct
+ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
+ 		void *frame, struct net_device *dev, void *data, int tp_len,
+ 		__be16 proto, unsigned char *addr, int hlen, int copylen,
++		int hard_header_len,
+ 		const struct sockcm_cookie *sockc)
  {
- 	struct sock *sk = d->session->sock->sk;
- 	struct l2cap_conn *conn = l2cap_pi(sk)->chan->conn;
-@@ -1352,6 +1355,21 @@ void rfcomm_dlc_accept(struct rfcomm_dlc
- 	rfcomm_send_msc(d->session, 1, d->dlci, d->v24_sig);
- }
+ 	union tpacket_uhdr ph;
+@@ -2655,8 +2656,8 @@ static int tpacket_fill_skb(struct packe
+ 	} else if (copylen) {
+ 		int hdrlen = min_t(int, copylen, tp_len);
  
-+void rfcomm_dlc_accept(struct rfcomm_dlc *d)
-+{
-+	rfcomm_lock();
-+
-+	/* rfcomm_recv_disc() sets the dlc state to BT_CLOSED before calling
-+	 * __rfcomm_dlc_close(), so the RFCOMM_DEFER_SETUP handshake there is
-+	 * skipped and the session can already be unlinked by the time the
-+	 * deferred accept runs from rfcomm_sock_recvmsg().
-+	 */
-+	if (d->session)
-+		__rfcomm_dlc_accept(d);
-+
-+	rfcomm_unlock();
-+}
-+
- static void rfcomm_check_accept(struct rfcomm_dlc *d)
- {
- 	if (rfcomm_check_security(d)) {
-@@ -1364,7 +1382,7 @@ static void rfcomm_check_accept(struct r
- 			d->state_change(d, 0);
- 			rfcomm_dlc_unlock(d);
- 		} else
--			rfcomm_dlc_accept(d);
-+			__rfcomm_dlc_accept(d);
- 	} else {
- 		set_bit(RFCOMM_AUTH_PENDING, &d->flags);
- 		rfcomm_dlc_set_timer(d, RFCOMM_AUTH_TIMEOUT);
-@@ -1949,7 +1967,7 @@ static void rfcomm_process_dlcs(struct r
- 					d->state_change(d, 0);
- 					rfcomm_dlc_unlock(d);
- 				} else
--					rfcomm_dlc_accept(d);
-+					__rfcomm_dlc_accept(d);
- 			}
- 			continue;
- 		} else if (test_and_clear_bit(RFCOMM_AUTH_REJECT, &d->flags)) {
+-		skb_push(skb, dev->hard_header_len);
+-		skb_put(skb, copylen - dev->hard_header_len);
++		skb_push(skb, hard_header_len);
++		skb_put(skb, copylen - hard_header_len);
+ 		err = skb_store_bits(skb, 0, data, hdrlen);
+ 		if (unlikely(err))
+ 			return err;
+@@ -2789,7 +2790,7 @@ static int tpacket_snd(struct packet_soc
+ 	void *data;
+ 	int len_sum = 0;
+ 	int status = TP_STATUS_AVAILABLE;
+-	int hlen, tlen, copylen = 0;
++	int hard_header_len, hlen, tlen, copylen = 0;
+ 	long timeo;
+ 
+ 	mutex_lock(&po->pg_vec_lock);
+@@ -2836,8 +2837,9 @@ static int tpacket_snd(struct packet_soc
+ 			goto out_put;
+ 	}
+ 
++	hard_header_len = READ_ONCE(dev->hard_header_len);
+ 	if (po->sk.sk_socket->type == SOCK_RAW)
+-		reserve = dev->hard_header_len;
++		reserve = hard_header_len;
+ 	size_max = po->tx_ring.frame_size
+ 		- (po->tp_hdrlen - sizeof(struct sockaddr_ll));
+ 
+@@ -2875,7 +2877,7 @@ static int tpacket_snd(struct packet_soc
+ 			goto tpacket_error;
+ 
+ 		status = TP_STATUS_SEND_REQUEST;
+-		hlen = LL_RESERVED_SPACE(dev);
++		hlen = LL_RESERVED_SPACE_EX(dev, hard_header_len);
+ 		tlen = dev->needed_tailroom;
+ 		if (packet_sock_flag(po, PACKET_SOCK_HAS_VNET_HDR)) {
+ 			data += sizeof(vnet_hdr);
+@@ -2893,10 +2895,10 @@ static int tpacket_snd(struct packet_soc
+ 						    vnet_hdr.hdr_len);
+ 			has_vnet_hdr = true;
+ 		}
+-		copylen = max_t(int, copylen, dev->hard_header_len);
++		copylen = max_t(int, copylen, hard_header_len);
+ 		skb = sock_alloc_send_skb(&po->sk,
+ 				hlen + tlen + sizeof(struct sockaddr_ll) +
+-				(copylen - dev->hard_header_len),
++				(copylen - hard_header_len),
+ 				!need_wait, &err);
+ 
+ 		if (unlikely(skb == NULL)) {
+@@ -2906,7 +2908,8 @@ static int tpacket_snd(struct packet_soc
+ 			goto out_status;
+ 		}
+ 		tp_len = tpacket_fill_skb(po, skb, ph, dev, data, tp_len, proto,
+-					  addr, hlen, copylen, &sockc);
++					  addr, hlen, copylen, hard_header_len,
++					  &sockc);
+ 		if (likely(tp_len >= 0) &&
+ 		    tp_len > dev->mtu + reserve &&
+ 		    !packet_sock_flag(po, PACKET_SOCK_HAS_VNET_HDR) &&
 
 
