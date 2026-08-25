@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A163A47143A;
-	Tue, 25 Aug 2026 13:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0AA483BC5;
+	Tue, 25 Aug 2026 13:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664858; cv=none; b=d8JzIjH089wNr3R96GTH4oEMHaXy35v62asc05FWULABZOl/WpEZwjnQXVlJz2aQYt2HuKdKpk+Cxb/6K/zqnPhZ9pS/JopN45njKKy3mNAIjI3Kd1Ld+plGE+7rg86FdKdlofFOU7juGDgYJRNQmE/Dx8+hrCIQvAdZFYD7224=
+	t=1787664861; cv=none; b=eJtOKJIDoLtO7buuEoWoy5nN0LbX8B/wcNyvN6rAEmmXRXQD7mSoa38J/AfAMHP1ehsJC5Htq252st/vTqZUv19niRdlZ2J701T3UpBW1z3Hc0IS2igykrHDV7n3XsPBcnQZTuiUL73odb4buTqWcbRtuy/NPsFBej23AcoDnlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664858; c=relaxed/simple;
-	bh=rcC1KLAqQoWlXOvoDkv8gn06/iJFjUTzETCMumV/AnQ=;
+	s=arc-20240116; t=1787664861; c=relaxed/simple;
+	bh=BRTO0XTM+awK+Gz1alIkpiE2a+TlTYqJXCOY2ekgA+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T7vgBT7KMQBe/EXUncn/Ja61Gifcw8Zhq0I5INREwMb6QHPfy18NAorohT5rJUXoleMQxLr6Q5Uo1/68TSsQJrDwgerD0vLYvWC708bDKlCY1xAIQWaXqCPR8bhMMPwnCXaBQiywTeIfMpe6SnAltQGTpIowX8/4NV8SsFLymNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/vJPJ2Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=muOChdRSt6VXrqX/7ffSHoj9StRNN7kvb/90vi6AokClrDD9rDfg3XtvlaBq379jPQ5fWcu5thNZn1OzfNdptztZ9sTh9vt/PqndlupsUnTx2iuJ4H4TxsMev1cRQtaCqA7v7Ax9VReGczaieEYICVrRDQdVRC7sEUjfCoVe+qI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jPfjw/rp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/vJPJ2Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A4B1F00A3D;
-	Tue, 25 Aug 2026 13:34:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jPfjw/rp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9F21F000E9;
+	Tue, 25 Aug 2026 13:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664857;
-	bh=qA/+N4PACYod8Jc+zuKoCXbEWzLJ0iJPOApqmC7LCos=;
+	s=korg; t=1787664860;
+	bh=EdAqzDfNIH6v/OR/+ofSIRZNo1astOQFqKTkFUdimfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m/vJPJ2Q0Usf9h7Cclg4uXFSP3Lw8BMZkv5FZUJDlqBzpQnD3lNhvgrooAL9+EWIO
-	 iIctR2ZvdewgdIPS6NUE7czTuG8YkEH6yeIw97Yd62MejykIU3TOHz9BVaayNnWY6Q
-	 72aISyiuNFb3FJhzTm+dkY9hXMeYwmcdXMnLXK9w=
+	b=jPfjw/rpDasfqS1/Ouwb5OB9ibKYtqQh7Tno2lZ+p6ZL4PeE+3tvsdoB+7AoGWkfy
+	 Xc1b2GBWG9S/lWElTS7qXHHt//MvZWU7YK3sVRWW/FnrNAjwDaQUAjPYrC+VE7V+xy
+	 KnQd/VMOsK+5NQQevECR7yKfoBQrH+wSVCB4p4kE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Yang <3497809730@qq.com>,
+	Disha Goel <disgoel@linux.ibm.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 7.1 028/101] ext4: propagate errors from fast commit range replay
-Date: Tue, 25 Aug 2026 15:25:06 +0200
-Message-ID: <20260825132543.118986006@linuxfoundation.org>
+Subject: [PATCH 7.1 029/101] ext4: dont enable DAX on new encrypted files
+Date: Tue, 25 Aug 2026 15:25:07 +0200
+Message-ID: <20260825132543.159462934@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -51,92 +53,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Yang <3497809730@qq.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit d8b8dd3530bf41e14b118702cdaf9de64bb96885 upstream.
+commit da32af420d6d466e247c43ac0b829edeac7ae0ad upstream.
 
-ext4_fc_replay() stops replaying fast commit tags only when a tag
-handler returns a negative error. However, ext4_fc_replay_add_range()
-and ext4_fc_replay_del_range() currently return 0 from their common
-exit paths even after internal failures.
+Currently, when a new encrypted regular file is created, the call to
+ext4_set_inode_flags(inode, init=true) in __ext4_new_inode() is made
+before EXT4_INODE_ENCRYPT is set.  As a result, it can set S_DAX if the
+filesystem is mounted with "-o dax=always".
 
-This hides errors from ext4_fc_record_modified_inode(),
-ext4_map_blocks(), ext4_find_extent(), ext4_ext_insert_extent(),
-ext4_ext_replay_update_ex(), and ext4_ext_remove_space(). As a result,
-a failed ADD_RANGE or DEL_RANGE replay can be treated as successful and
-the replay code may continue with subsequent fast commit tags.
+EXT4_INODE_ENCRYPT then actually gets set a bit later in
+__ext4_new_inode(), when it calls fscrypt_set_context() which calls
+ext4_set_context().  ext4_set_context() sets EXT4_INODE_ENCRYPT and
+calls ext4_set_inode_flags(inode, init=false) to set S_ENCRYPTED too.
 
-This is particularly problematic for DEL_RANGE because it may already
-have marked blocks as free before ext4_ext_remove_space() fails. If the
-error is swallowed, replay may continue from a partially applied range
-operation.
+This was intended to clear S_DAX as well.  However, this was broken by
+commit 043546e46dc7 ("fs/ext4: Only change S_DAX on inode load").  This
+causes data written to the file to bypass encryption, also causing
+xfstests failures such as generic/548 (when "-o dax=always" is used).
 
-Return the saved error from the common exit paths and make the
-ERR_PTR() cases in ADD_RANGE store PTR_ERR() before jumping to out.
+Fix this by simplifying the flow by making __ext4_new_inode() set
+EXT4_INODE_ENCRYPT earlier.  This makes it take effect in
+ext4_set_inode_flags(inode, init=true), making S_DAX never be set.
 
-Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
+Similarly, make EXT4_STATE_MAY_INLINE_DATA never be set in the first
+place on new encrypted inodes.  Then it doesn't need to be cleared.
+
+As a result of these simplifications, ext4_set_context() no longer needs
+to change inode flags or state when 'handle != NULL'.  Remove that too.
+
+Reported-by: Disha Goel <disgoel@linux.ibm.com>
+Reported-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Closes: https://lore.kernel.org/r/20260723085648.1500357-1-ojaswin@linux.ibm.com
+Fixes: 043546e46dc7 ("fs/ext4: Only change S_DAX on inode load")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guanghui Yang <3497809730@qq.com>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Tested-by: Disha Goel <disgoel@linux.ibm.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/tencent_E3622146846A84C75C31C7D32AC4D5AD0605@qq.com
+Link: https://patch.msgid.link/20260730175212.36923-1-ebiggers@kernel.org
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ fs/ext4/crypto.c |   40 ++++++++++++++++++++--------------------
+ fs/ext4/ialloc.c |    4 ++++
+ 2 files changed, 24 insertions(+), 20 deletions(-)
 
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -1757,8 +1757,11 @@ static int ext4_fc_replay_add_range(stru
- 		if (ret == 0) {
- 			/* Range is not mapped */
- 			path = ext4_find_extent(inode, cur, path, 0);
--			if (IS_ERR(path))
-+			if (IS_ERR(path)) {
-+				ret = PTR_ERR(path);
-+				path = NULL;
- 				goto out;
-+			}
- 			memset(&newex, 0, sizeof(newex));
- 			newex.ee_block = cpu_to_le32(cur);
- 			ext4_ext_store_pblock(
-@@ -1770,8 +1773,11 @@ static int ext4_fc_replay_add_range(stru
- 			path = ext4_ext_insert_extent(NULL, inode,
- 						      path, &newex, 0);
- 			up_write((&EXT4_I(inode)->i_data_sem));
--			if (IS_ERR(path))
-+			if (IS_ERR(path)) {
-+				ret = PTR_ERR(path);
-+				path = NULL;
- 				goto out;
-+			}
- 			goto next;
- 		}
+--- a/fs/ext4/crypto.c
++++ b/fs/ext4/crypto.c
+@@ -144,7 +144,13 @@ static int ext4_set_context(struct inode
+ 	if (inode->i_ino == EXT4_ROOT_INO)
+ 		return -EPERM;
  
-@@ -1818,10 +1824,11 @@ next:
+-	if (WARN_ON_ONCE(IS_DAX(inode) && i_size_read(inode)))
++	/*
++	 * For new encrypted inodes, S_DAX is never set in the first place.
++	 *
++	 * For existing inodes, this is called only on empty directories.  ext4
++	 * never sets S_DAX on directories.
++	 */
++	if (WARN_ON_ONCE(IS_DAX(inode)))
+ 		return -EINVAL;
+ 
+ 	if (ext4_test_inode_flag(inode, EXT4_INODE_DAX))
+@@ -164,27 +170,24 @@ static int ext4_set_context(struct inode
+ 
+ 	if (handle) {
+ 		/*
++		 * __ext4_new_inode() should have already set the encrypt flag
++		 * on the inode and avoided enabling inline data.
++		 */
++		if (WARN_ON_ONCE(!IS_ENCRYPTED(inode)))
++			return -EINVAL;
++		if (WARN_ON_ONCE(ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA)))
++			return -EINVAL;
++		/*
+ 		 * Since the inode is new it is ok to pass the
+ 		 * XATTR_CREATE flag. This is necessary to match the
+ 		 * remaining journal credits check in the set_handle
+ 		 * function with the credits allocated for the new
+ 		 * inode.
+ 		 */
+-		res = ext4_xattr_set_handle(handle, inode,
+-					    EXT4_XATTR_INDEX_ENCRYPTION,
+-					    EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
+-					    ctx, len, XATTR_CREATE);
+-		if (!res) {
+-			ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
+-			ext4_clear_inode_state(inode,
+-					EXT4_STATE_MAY_INLINE_DATA);
+-			/*
+-			 * Update inode->i_flags - S_ENCRYPTED will be enabled,
+-			 * S_DAX may be disabled
+-			 */
+-			ext4_set_inode_flags(inode, false);
+-		}
+-		return res;
++		return ext4_xattr_set_handle(handle, inode,
++					     EXT4_XATTR_INDEX_ENCRYPTION,
++					     EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
++					     ctx, len, XATTR_CREATE);
  	}
- 	ext4_ext_replay_shrink_inode(inode, i_size_read(inode) >>
- 					sb->s_blocksize_bits);
-+	ret = 0;
- out:
- 	ext4_free_ext_path(path);
- 	iput(inode);
--	return 0;
-+	return ret;
- }
  
- /* Replay DEL_RANGE tag */
-@@ -1881,9 +1888,10 @@ ext4_fc_replay_del_range(struct super_bl
- 	ext4_ext_replay_shrink_inode(inode,
- 		i_size_read(inode) >> sb->s_blocksize_bits);
- 	ext4_mark_inode_dirty(NULL, inode);
-+	ret = 0;
- out:
- 	iput(inode);
--	return 0;
-+	return ret;
- }
+ 	res = dquot_initialize(inode);
+@@ -205,10 +208,7 @@ retry:
+ 				    ctx, len, 0);
+ 	if (!res) {
+ 		ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
+-		/*
+-		 * Update inode->i_flags - S_ENCRYPTED will be enabled,
+-		 * S_DAX may be disabled
+-		 */
++		/* Update inode->i_flags to set S_ENCRYPTED. */
+ 		ext4_set_inode_flags(inode, false);
+ 		res = ext4_mark_inode_dirty(handle, inode);
+ 		if (res)
+--- a/fs/ext4/ialloc.c
++++ b/fs/ext4/ialloc.c
+@@ -995,6 +995,8 @@ struct inode *__ext4_new_inode(struct mn
+ 		err = fscrypt_prepare_new_inode(dir, inode, &encrypt);
+ 		if (err)
+ 			goto out;
++		if (encrypt)
++			i_flags |= EXT4_ENCRYPT_FL;
+ 	}
  
- static void ext4_fc_set_bitmaps_and_counters(struct super_block *sb)
+ 	err = dquot_initialize(inode);
+@@ -1304,6 +1306,8 @@ got:
+ 	ei->i_extra_isize = sbi->s_want_extra_isize;
+ 	ei->i_inline_off = 0;
+ 	if (ext4_has_feature_inline_data(sb) &&
++	    /* Encrypted inodes cannot have inline data */
++	    !(ei->i_flags & EXT4_ENCRYPT_FL) &&
+ 	    (!(ei->i_flags & (EXT4_DAX_FL|EXT4_EA_INODE_FL)) || S_ISDIR(mode)))
+ 		ext4_set_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
+ 	ret = inode;
 
 
