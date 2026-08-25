@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63318481257;
-	Tue, 25 Aug 2026 13:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B98F48094F;
+	Tue, 25 Aug 2026 13:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664965; cv=none; b=GuUlgieC98WWJC0rM8xG3TMI3wymLq3P1/C0sw4Mbwyq4PntI4j7Roj1qR27m+0UG4y1tylOxeGuIzJkCP1bDg9iJKSw7bQ6cXjnelP+rYkgT7ypq9yaPiFOHH7oli05GEEmzS4gznUI28CK1blCZtU+Kc8zZpnnk7yekadiN3w=
+	t=1787664968; cv=none; b=heYuswQkeBZu1eVLc1SlO7RcwV3YQkX194Ey/ZqArgb2bmcsfvjzqLj47ZtVGNTgrMFe0p+l8+TiRGVzlCDeQQ/OABpO2SJgF+BgSRaYLUt59GYRzJ3ZPd1yde04M18ioUqxs9dSw7fHyHXtgEJgvWLg8jIUfPvLtYc8T2powgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664965; c=relaxed/simple;
-	bh=EIeRv8WSBo7snTKqZ8QMLOzGvHMSo1eKDDV4oy3ljQg=;
+	s=arc-20240116; t=1787664968; c=relaxed/simple;
+	bh=s8ghLt1Vqit6UMctoYZxvZLdI043qmYaSZ1bISspwCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EJkhSY3TTYAdbEkw583nysWLyPec79b3RrxdB4LVbQTQFgy9wPgDFu6R9kl4/dVXDV8o+x93YYTYTiaNDwH5+KD6ZrJlsk4VbeKRzmGGublNV/W/4Tu5voTU6eN06sfbGufEGNyXC1klx42MvcCwjnT0gaDxDBImaz2qqCIoI2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F3L0DKva; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RrfksxXbfIQxzJVN/3w9pI0Q7X92yl/xOSnKzQFeUCASY3cFIrJR2PFmMAvBew5Aanl+e5u1iJKcDoMtRs4oQeayv5BchZpbrav/BlNTV1zSLwyLGYExXXuwflVzAAp9jL9THHvXe7zgAMSSWKh9Fs3SmFdXfNwK9UExyfnhW4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQbJlcUP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F3L0DKva"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B90A31F00A3A;
-	Tue, 25 Aug 2026 13:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQbJlcUP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4591F000E9;
+	Tue, 25 Aug 2026 13:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664964;
-	bh=E/Pu9Lh9JECAe5g8gLAl9SVuYMlztlgej5WxunAzSFQ=;
+	s=korg; t=1787664967;
+	bh=OZoLAZIXtgnSdW2sv+QFC6pWSXmO+ciRcF4YfkEhuc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F3L0DKvaHJuBEcgV0GMxgpag2b6CqmhH7U1NnN2AuqA+K2Zhwoa4GUQp9dCMERrVE
-	 tk4CK3mJIYdRhGroEryQDK4UYB0uDc4tW4RHX2UC5mWlhq3orZzqrcWFKiwFsEkNtf
-	 7+tb5A7+1neezM9/KTON6OSGkj74mG+p5x80AVVU=
+	b=VQbJlcUPv9K9vFfX5ZHcTKQDBp67VAXw05N6I2DCsa0JWPAiTCya2OLPF5KMbPV8l
+	 AgVYY0RDMLmXd8IRh0hgoqfksheNY2WTcZH0TpPXPj8WH/Elgh/1IlvJaNxQ1jGo2+
+	 bdLR9tnOJOr1boQEHHGC6xs03mKBM5bAGxNpn5bE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Page <sam@bynar.io>,
-	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 7.1 047/101] nfc: nci: fix uninit-value in the RF discover/activated NTF handlers
-Date: Tue, 25 Aug 2026 15:25:25 +0200
-Message-ID: <20260825132543.859762979@linuxfoundation.org>
+	Shardul Bankar <shardul.b@mpiricsoftware.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 065/101] mptcp: pm: fix memory leak from alloc-during-teardown race
+Date: Tue, 25 Aug 2026 15:25:43 +0200
+Message-ID: <20260825132544.547674986@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -50,70 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Page <sam@bynar.io>
+From: Shardul Bankar <shardul.b@mpiricsoftware.com>
 
-commit 8cbe06c1e699c0a165dae5093a2550e65f914818 upstream.
+[ Upstream commit efc33b5102ff859bacd390a5f30112d8e0c084c0 ]
 
-nci_rf_discover_ntf_packet() and nci_rf_intf_activated_ntf_packet() each
-parse a notification into an on-stack struct (nci_rf_discover_ntf /
-nci_rf_intf_activated_ntf) that is not initialised. The RF
-technology-specific parameters are only extracted when
-rf_tech_specific_params_len is non-zero, so a notification that reports a
-zero length leaves the rf_tech_specific_params union uninitialised - and
-both handlers then pass it to nci_add_new_protocol(), which reads it:
+mptcp_pm_destroy() empties msk->pm.anno_list and
+msk->pm.userspace_pm_local_addr_list under msk->pm.lock during socket
+teardown, dropping the lock between the two.
 
- - discover:  nci_add_new_target() -> nci_add_new_protocol();
- - activated: nci_target_auto_activated() -> nci_add_new_protocol().
+A concurrent userspace PM genl ANNOUNCE on the same msk holds a sock
+reference via mptcp_token_get_sock() and, in
+mptcp_pm_nl_announce_doit(), calls
+mptcp_userspace_pm_append_new_local_addr() and
+mptcp_pm_announced_alloc(). Both take msk->pm.lock briefly to add to
+their respective lists. Because the genl handler holds a sock reference,
+mptcp_pm_destroy() may run on the same msk via mptcp_disconnect(), which
+invokes mptcp_destroy_common() without dropping the sock refcount,
+before the handler completes.
 
-nci_add_new_protocol() uses nfca_poll->nfcid1_len as both a branch
-condition and a memcpy() length and copies nfcid1/sens_res/sel_res into
-ndev->targets, which is later exposed to user space via NFC_CMD_GET_TARGET.
+If the lock acquisitions interleave such that mptcp_pm_destroy() empties
+a list first, the later alloc adds its entry to a list head that nothing
+else iterates for this msk, and the entry leaks. kmemleak reports both
+mptcp_pm_add_addr objects (from mptcp_pm_announced_alloc()) and
+mptcp_pm_addr_entry objects (from
+mptcp_userspace_pm_append_new_local_addr()) under sustained concurrent
+ANNOUNCE + close load against the userspace PM.
 
-  BUG: KMSAN: uninit-value in nci_add_new_protocol+0x624/0x6c0
-   nci_add_new_protocol+0x624/0x6c0
-   nci_ntf_packet+0x25b2/0x3c30
-   nci_rx_work+0x318/0x5d0
-   process_scheduled_works+0x84b/0x17a0
-   worker_thread+0xc10/0x11b0
-   kthread+0x376/0x500
-  Local variable ntf.i created at:
-   nci_ntf_packet+0xbc2/0x3c30
+Add an MPTCP_PM_DESTROYING bit in msk->pm.status, set by
+mptcp_pm_destroy() under pm.lock before the lists are emptied and
+checked under pm.lock by the alloc paths. Either the alloc takes pm.lock
+first, in which case its entry is on the list when mptcp_pm_destroy()
+frees it; or mptcp_pm_destroy() takes pm.lock first, in which case the
+later alloc observes the bit and refuses.
 
-Zero-initialise both on-stack notifications so the union reads back as
-zero when no technology-specific parameters are present.
+Found by an MPTCP protocol-flow harness extending BRF (arXiv:2305.08782).
 
-Fixes: 019c4fbaa790 ("NFC: Add NCI multiple targets support")
-Fixes: e8c0dacd9836 ("NFC: Update names and structs to NCI spec 1.0 d18")
-Link: https://lore.kernel.org/netdev/20260623172109.1105965-2-horms@kernel.org/
+Fixes: 9ab4807c84a4 ("mptcp: netlink: Add MPTCP_PM_CMD_ANNOUNCE")
 Cc: stable@vger.kernel.org
-Assisted-by: Bynario AI
-Signed-off-by: Samuel Page <sam@bynar.io>
-Link: https://patch.msgid.link/20260626090301.2139500-1-sam@bynar.io
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-6-b8f496d71664@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/nci/ntf.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/mptcp/pm.c           |   13 +++++++++++--
+ net/mptcp/pm_userspace.c |    4 ++++
+ net/mptcp/protocol.h     |    7 ++++---
+ 3 files changed, 19 insertions(+), 5 deletions(-)
 
---- a/net/nfc/nci/ntf.c
-+++ b/net/nfc/nci/ntf.c
-@@ -440,7 +440,7 @@ void nci_clear_target_list(struct nci_de
- static int nci_rf_discover_ntf_packet(struct nci_dev *ndev,
- 				      const struct sk_buff *skb)
- {
--	struct nci_rf_discover_ntf ntf;
-+	struct nci_rf_discover_ntf ntf = {};
- 	const __u8 *data;
- 	bool add_target = true;
+--- a/net/mptcp/pm.c
++++ b/net/mptcp/pm.c
+@@ -442,6 +442,9 @@ bool mptcp_pm_announced_alloc(struct mpt
  
-@@ -710,7 +710,7 @@ static int nci_rf_intf_activated_ntf_pac
- 					    const struct sk_buff *skb)
- {
- 	struct nci_conn_info *conn_info;
--	struct nci_rf_intf_activated_ntf ntf;
-+	struct nci_rf_intf_activated_ntf ntf = {};
- 	const __u8 *data;
- 	int err = NCI_STATUS_OK;
+ 	lockdep_assert_held(&msk->pm.lock);
  
++	if (msk->pm.status & BIT(MPTCP_PM_DESTROYING))
++		return false;
++
+ 	add_entry = mptcp_pm_announced_lookup(msk, addr);
+ 	if (add_entry) {
+ 		if (WARN_ON_ONCE(mptcp_pm_is_kernel(msk)))
+@@ -1103,10 +1106,16 @@ void mptcp_pm_worker(struct mptcp_sock *
+ 
+ void mptcp_pm_destroy(struct mptcp_sock *msk)
+ {
++	spin_lock_bh(&msk->pm.lock);
++	msk->pm.status |= BIT(MPTCP_PM_DESTROYING);
++	spin_unlock_bh(&msk->pm.lock);
++
+ 	mptcp_pm_free_announced_list(msk);
+ 
+-	if (mptcp_pm_is_userspace(msk))
+-		mptcp_userspace_pm_free_local_addr_list(msk);
++	/* Free the userspace local address list unconditionally: the socket
++	 * can be reused (mptcp_disconnect()) and re-selected to a different PM
++	 */
++	mptcp_userspace_pm_free_local_addr_list(msk);
+ }
+ 
+ void mptcp_pm_data_reset(struct mptcp_sock *msk)
+--- a/net/mptcp/pm_userspace.c
++++ b/net/mptcp/pm_userspace.c
+@@ -54,6 +54,10 @@ static int mptcp_userspace_pm_append_new
+ 	bitmap_zero(id_bitmap, MPTCP_PM_MAX_ADDR_ID + 1);
+ 
+ 	spin_lock_bh(&msk->pm.lock);
++	if (msk->pm.status & BIT(MPTCP_PM_DESTROYING)) {
++		ret = -EINVAL;
++		goto append_err;
++	}
+ 	mptcp_for_each_userspace_pm_addr(msk, e) {
+ 		addr_match = mptcp_addresses_equal(&e->addr, &entry->addr, true);
+ 		if (addr_match && entry->addr.id == 0 && needs_id)
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -190,9 +190,10 @@ enum mptcp_pm_status {
+ 	MPTCP_PM_ESTABLISHED,
+ 	MPTCP_PM_SUBFLOW_ESTABLISHED,
+ 	MPTCP_PM_ALREADY_ESTABLISHED,	/* persistent status, set after ESTABLISHED event */
+-	MPTCP_PM_MPC_ENDPOINT_ACCOUNTED /* persistent status, set after MPC local address is
+-					 * accounted int id_avail_bitmap
+-					 */
++	MPTCP_PM_MPC_ENDPOINT_ACCOUNTED, /* persistent status, set after MPC local address is
++					  * accounted int id_avail_bitmap
++					  */
++	MPTCP_PM_DESTROYING,		/* To fence out PM list allocs */
+ };
+ 
+ enum mptcp_pm_type {
 
 
