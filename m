@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433D22E06E4;
-	Tue, 25 Aug 2026 14:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CBC847D949;
+	Tue, 25 Aug 2026 14:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666447; cv=none; b=Zy/BmVS0dR7b5tRk8bp978jvd+YQq9A7PjiHE7s7BIWWmoiA98I83ep0Y2cGDBfZDBqOjTlEYWoVOuRUETGhDXSjCegwgc29fZfNQx9RyWn8sUJ4ugxKFknbzD9KsAQTPA3bXJgCGM2wnPGximQe3DzcQfGTXw6DSPPQHEWigx8=
+	t=1787666448; cv=none; b=gITsg9nai3cD2LWu4LfplMb7qGMU67cvfnDRdmej+30jt2ks7Wg+qB8pcpBkpq4VRKGplb1W8HRc/Epql+eJTY3dd8wrUyinGRwBConlWMvJqrmbVZk7TzJqO7fjBnWEFXA9gbPe1KKOnHS0r7m7C9pOKM8t2cOg74xiS7cDeM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666447; c=relaxed/simple;
-	bh=N3jGijwyHSnJszNpm2eIcQ1oE36UqjVeiNKn4ZrJEbg=;
+	s=arc-20240116; t=1787666448; c=relaxed/simple;
+	bh=rgEOUiGLakZuNyvlLi+u6iOhzdaUAft4aqYmBmrxy04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sCKWsxEInUhYAox75llbgv6cgloB4FyWayIDJACLmyDwcgqKfLHsySMqxy8RGp6n9nYf4F3W1pi+RFVUoPlFBDaqp26/rFmeRvV7qEox9Z7txOdIb/33JsgUyH1rPXsGuO0dKLo2WjdpMpajuknNzRtg/ayYBEnYdZ3Y3Wn5N+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YW/YIDxG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PfOlsbET2jUpCoadOhjMqMAsNNGozXVhxZSle2T9YtUgk9LA0hIVjGn3gTLhkCIFwhrokRh5Xeo1GxiLd/MGBhJSZgQSIsg1tAqLJ2BHsWi+VoIRjrxtS7U8ZKE5/TIQZGlkfs8VZRdU2j+TTBULZ8hKOMVPMH6/35Rn6nx+Mmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L6bp5ROO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YW/YIDxG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660B41F000E9;
-	Tue, 25 Aug 2026 14:00:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L6bp5ROO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8481F00A3A;
+	Tue, 25 Aug 2026 14:00:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666441;
-	bh=u6qw4ucP6KccLU/16FNFz8S5ujek0Yatfs3dhqyTJB0=;
+	s=korg; t=1787666446;
+	bh=rQ6wuTq1yFBKUA2YdA8yK0qYs3nXYynOX/2jCZZSdMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YW/YIDxGQEI5xpaGrT/20Fg1Bjfww6sWNA0E4hdhYm0fhQDNuHnvBYxOlsQNYlVmY
-	 whL1fEoPfSWwhhrt9vPAeub4UrRb3YU3elQJLrg3YNZ31fO/g1HimXW6ILDZ6O8Vua
-	 c7DZu/DcqO+C2T9NZ+DEjFEJZgVLAbCAb0MGKH9s=
+	b=L6bp5ROOoxoueYDdXw9wTWqhMb4UBS5G65fDzyF9PBFqrzjgMboX+kO0AgbF+EDyn
+	 ZpGr1QtJ/uwRbMjITBReVoDhvNZwez6CyxWyPRer9jwIiOmrRArRcMYSmXeGuWU0kU
+	 P4zkOg++lrbLXLUXWb5ColdPAxC83APe5e/bBEy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 5.10 43/57] nvmet-tcp: Do not WARN on remotely-controlled oversized SGL allocations
-Date: Tue, 25 Aug 2026 15:27:05 +0200
-Message-ID: <20260825132543.017881872@linuxfoundation.org>
+	Pavitra Jha <jhapavitra98@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 45/57] libceph: fix OOB read in decode_watchers() via missing bounds check
+Date: Tue, 25 Aug 2026 15:27:07 +0200
+Message-ID: <20260825132543.099548855@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
 References: <20260825132541.342390421@linuxfoundation.org>
@@ -50,58 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Pavitra Jha <jhapavitra98@gmail.com>
 
-commit 737a3b535247226f6e1a7988fd9d6e63e7d6fc71 upstream.
+[ Upstream commit 00ead17c7de137a692edee59f2772e6af687e8eb ]
 
-When fuzzing the nvme target code, I tripped a kernel warning in
-nvmet_tcp_map_data() because the length passed into the allocator is
-controlled by the remote initiator.
+ceph_start_decoding() validates that struct_len bytes remain in the
+buffer after the encoding header, but accepts struct_len=0 as valid:
+ceph_decode_need(p, end, 0, bad) always passes. When a malicious or
+compromised OSD sends an obj_list_watch_response_t reply with
+struct_len=0, ceph_start_decoding() returns success with p == end,
+leaving zero bytes guaranteed for subsequent reads.
 
-A remote initiator that sends a command with an SGL claiming a huge
-number, can create a scatterlist and iovec allocation of over 1 million
-entries, which causes the backing kmalloc call to exceed MAX_PAGE_ORDER
-and then the page allocator will trip on a WARN_ON_ONCE_GFP() message:
+The immediately following ceph_decode_32(p) in decode_watchers() has
+no preceding bounds check. With p == end this is a 4-byte read past
+the validated buffer boundary. The garbage value is then passed
+directly to kzalloc_objs() as the watcher count.
 
-  WARNING: mm/page_alloc.c:5280 __alloc_frozen_pages_noprof
-  Workqueue: nvmet_tcp_wq nvmet_tcp_io_work
-  ...
-  sgl_alloc_order
-  nvmet_tcp_map_data
-  nvmet_tcp_try_recv_pdu
+The sibling function decode_watcher() already uses the safe variants
+(ceph_decode_copy_safe, ceph_decode_64_safe, ceph_decode_skip_32)
+after its own ceph_start_decoding() call. decode_watchers() is the
+only site that uses the bare variant, confirming an oversight.
 
-As it's never good to trip a kernel warning remotely due to many systems
-having panic-on-warn enabled, let's silence it by just add GFP_NOWARN to
-the allocation flags.
+Fix by replacing ceph_decode_32(p) with ceph_decode_32_safe(p, end,
+*num_watchers, bad), consistent with the established pattern.
 
-Assisted-by: gkh_clanker_2000
-Cc: stable <stable@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Attacker model: a malicious or compromised OSD in a multi-tenant Ceph
+deployment (e.g. cloud) can trigger this against any kernel client
+that calls CEPH_OSD_OP_LIST_WATCHERS, without any further privileges
+beyond OSD session establishment.
+
+[ idryomov: trim changelog ]
+
+Cc: stable@vger.kernel.org
+Fixes: a4ed38d7a180 ("libceph: support for CEPH_OSD_OP_LIST_WATCHERS")
+Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/tcp.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/ceph/osd_client.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -393,14 +393,15 @@ static int nvmet_tcp_map_data(struct nvm
- 	}
- 	cmd->req.transfer_len += len;
+--- a/net/ceph/osd_client.c
++++ b/net/ceph/osd_client.c
+@@ -4993,7 +4993,7 @@ static int decode_watchers(void **p, voi
+ 	if (ret)
+ 		return ret;
  
--	cmd->req.sg = sgl_alloc(len, GFP_KERNEL, &cmd->req.sg_cnt);
-+	cmd->req.sg = sgl_alloc(len, GFP_KERNEL | __GFP_NOWARN,
-+				&cmd->req.sg_cnt);
- 	if (!cmd->req.sg)
- 		return NVME_SC_INTERNAL;
- 	cmd->cur_sg = cmd->req.sg;
- 
- 	if (nvmet_tcp_has_data_in(cmd)) {
- 		cmd->iov = kmalloc_array(cmd->req.sg_cnt,
--				sizeof(*cmd->iov), GFP_KERNEL);
-+				sizeof(*cmd->iov), GFP_KERNEL | __GFP_NOWARN);
- 		if (!cmd->iov)
- 			goto err;
+-	*num_watchers = ceph_decode_32(p);
++	ceph_decode_32_safe(p, end, *num_watchers, bad);
+ 	*watchers = kcalloc(*num_watchers, sizeof(**watchers), GFP_NOIO);
+ 	if (!*watchers)
+ 		return -ENOMEM;
+@@ -5007,6 +5007,9 @@ static int decode_watchers(void **p, voi
  	}
+ 
+ 	return 0;
++
++bad:
++	return -EINVAL;
+ }
+ 
+ /*
 
 
