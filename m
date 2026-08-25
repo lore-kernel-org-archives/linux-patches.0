@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AAF5446C18;
-	Tue, 25 Aug 2026 13:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC3345C70B;
+	Tue, 25 Aug 2026 13:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666128; cv=none; b=V2Qi1+lsxEuNY+2PNhdLSm5sUlatWOd5UbUKd1Ke0lnS9pIL0TZE159Eu6Si8KsnS62NRctA2s6yADKq1fNsK1nWWkkwgXIGarjSrrzrzwr8stHpFWbzA/xsso8pDNcMDImetz6E0bgOi6wdGvc5F7MOamVIuKRzkEG8Likhwv8=
+	t=1787666131; cv=none; b=kdFAFl7pg0Sn1rDJ8g6qe5FtFmUUNNr1h13pLTOa05MErKoFmns1KgNRlDxaKledjtjOp11OZbKmWtciiKRX/unqkeUBWZ3OB+UQTw62Pwm74ts+6g/wuHH4/ggjpILjsG4zZeB48s7bA4xvPQzh/mmxsa83SBLHKEz7pGnEqJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666128; c=relaxed/simple;
-	bh=/YC9gFRhhAy9GuZFoLI2UoPIbJZLwsVrXBEqpBuNUJQ=;
+	s=arc-20240116; t=1787666131; c=relaxed/simple;
+	bh=F2WmvNMjAulmF9pOUtAJDx8gkTCvwSHcpP/6caEqMpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sosEhw1WVFQZGdyQZnZoF2NzSeF/KnX3obcGWjSpOuQB0sHWFjsXCNh9JZqjrsGePNT5m5sp+Xzpg3HK9gRmUpu8Whr6BkY2XU/r4HrAym8QbylpwjyFckAmPytdn27kxxWYRohNyNGMxv5Z7zanz0/xrJxb2gTmZK7fV5Rc7Rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xX1iIG4U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WsIKhWD/Ry94LD6MyE0jAnhY6Plq545ET/DU8XOY5Td1YoQF6ebqHCrOmb+k2vNHfsecOHrA0M0h12WoLpqTE0frAqXEIU2OGKoLZmIkqsDjl4LnDJwIoBcXxujaZ/4ZzVHKqtYSdvCcY435cUpcbkn5y3OTTq8WCPAmSEK0pV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HfiKHNSL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xX1iIG4U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73341F000E9;
-	Tue, 25 Aug 2026 13:55:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HfiKHNSL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A720E1F000E9;
+	Tue, 25 Aug 2026 13:55:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666127;
-	bh=5n2p9sAum1SPkoGI4SdYdrc6gqezdPRVvszNkYy1Ny4=;
+	s=korg; t=1787666130;
+	bh=5j43KkbuvMZFMwDBwivfApmylU770j7FldXKSNCVeSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xX1iIG4U20//CnitA8yE4VOS7bXXeLxG88rfsZRKTJtetkv653C3itxiYnY6Id5Vo
-	 CwglUQ62PYbiwcowmSJmSE6KnqItM/AgX5fxDSl9u2Slk1utdPzsxD0TDYlVnFm3wp
-	 vDi++LSQlo0YjNmu62TsP/LehlJobUs0S7ZOQqD0=
+	b=HfiKHNSLWV279cRUmnxEffrhyPS1LCsv+igKE2u+pHm3YQ9oK/n+dcX5D2Mu+C6/4
+	 xM/DAsBn1pk1Ct/7EtBXEfPu4K221x5Or2ILVj/81+Y7KNtZtlZuXtW8J87DgtfNL5
+	 diJUHrU5t+5621ibAE9u1QQtHB3NsyWyZUIAtJzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
-	Jianping Li <jianping.li@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Leo Yan <leo.yan@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 14/76] misc: fastrpc: Remove buffer from list prior to unmap operation
-Date: Tue, 25 Aug 2026 15:26:07 +0200
-Message-ID: <20260825132542.089908319@linuxfoundation.org>
+Subject: [PATCH 5.15 15/76] perf/core: Fix child_total_time_enabled accounting bug at task exit
+Date: Tue, 25 Aug 2026 15:26:08 +0200
+Message-ID: <20260825132542.128516652@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
 References: <20260825132541.568214149@linuxfoundation.org>
@@ -54,80 +53,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit 6102ceb4eab845743ee57acd3863fbd06e93c927 ]
+[ Upstream commit a3c3c66670cee11eb13aa43905904bf29cb92d32 ]
 
-fastrpc_req_munmap_impl() is called to unmap any buffer. The buffer is
-getting removed from the list after it is unmapped from DSP. This can
-create potential race conditions if multiple threads invoke unmap
-concurrently, where one thread may remove the entry from the list while
-another thread's unmap operation is still ongoing.
+The perf events code fails to account for total_time_enabled of
+inactive events.
 
-Fix this by removing the buffer entry from the list before calling the
-unmap operation. If the unmap fails, the entry is re-added to the list
-so that userspace can retry the unmap, or alternatively, the buffer
-will be cleaned up during device release when the DSP process is torn
-down and all DSP-side mappings are freed along with remaining buffers
-in the list.
+Here is a failure case for accounting total_time_enabled for
+CPU PMU events:
 
-Fixes: 2419e55e532de ("misc: fastrpc: add mmap/unmap support")
-Cc: stable@kernel.org
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Signed-off-by: Jianping Li <jianping.li@oss.qualcomm.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260724223342.629168-3-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  sudo ./perf stat -vvv -e armv8_pmuv3_0/event=0x08/ -e armv8_pmuv3_1/event=0x08/ -- stress-ng --pthread=2 -t 2s
+  ...
+
+  armv8_pmuv3_0/event=0x08/: 1138698008 2289429840 2174835740
+  armv8_pmuv3_1/event=0x08/: 1826791390 1950025700 847648440
+                             `          `          `
+                             `          `          > total_time_running with child
+                             `          > total_time_enabled with child
+                             > count with child
+
+  Performance counter stats for 'stress-ng --pthread=2 -t 2s':
+
+       1,138,698,008      armv8_pmuv3_0/event=0x08/                                               (94.99%)
+       1,826,791,390      armv8_pmuv3_1/event=0x08/                                               (43.47%)
+
+The two events above are opened on two different CPU PMUs, for example,
+each event is opened for a cluster in an Arm big.LITTLE system, they
+will never run on the same CPU.  In theory, the total enabled time should
+be same for both events, as two events are opened and closed together.
+
+As the result show, the two events' total enabled time including
+child event is different (2289429840 vs 1950025700).
+
+This is because child events are not accounted properly
+if a event is INACTIVE state when the task exits:
+
+  perf_event_exit_event()
+   `> perf_remove_from_context()
+     `> __perf_remove_from_context()
+       `> perf_child_detach()   -> Accumulate child_total_time_enabled
+         `> list_del_event()    -> Update child event's time
+
+The problem is the time accumulation happens prior to child event's
+time updating. Thus, it misses to account the last period's time when
+the event exits.
+
+The perf core layer follows the rule that timekeeping is tied to state
+change. To address the issue, make __perf_remove_from_context()
+handle the task exit case by passing 'DETACH_EXIT' to it and
+invoke perf_event_state() for state alongside with accounting the time.
+
+Then, perf_child_detach() populates the time into the parent's time metrics.
+
+After this patch, the bug is fixed:
+
+  sudo ./perf stat -vvv -e armv8_pmuv3_0/event=0x08/ -e armv8_pmuv3_1/event=0x08/ -- stress-ng --pthread=2 -t 10s
+  ...
+  armv8_pmuv3_0/event=0x08/: 15396770398 32157963940 21898169000
+  armv8_pmuv3_1/event=0x08/: 22428964974 32157963940 10259794940
+
+   Performance counter stats for 'stress-ng --pthread=2 -t 10s':
+
+      15,396,770,398      armv8_pmuv3_0/event=0x08/                                               (68.10%)
+      22,428,964,974      armv8_pmuv3_1/event=0x08/                                               (31.90%)
+
+[ mingo: Clarified the changelog. ]
+
+Fixes: ef54c1a476aef ("perf: Rework perf_event_exit_event()")
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Leo Yan <leo.yan@arm.com>
+Link: https://lore.kernel.org/r/20250326082003.1630986-1-yeoreum.yun@arm.com
+Stable-dep-of: 42c5ca1f0a28 ("perf/core: Fix group leader use-after-free after sibling detach")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ kernel/events/core.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1409,9 +1409,6 @@ static int fastrpc_req_munmap_impl(struc
- 				      &args[0]);
- 	if (!err) {
- 		dev_dbg(dev, "unmmap\tpt 0x%09lx OK\n", buf->raddr);
--		spin_lock(&fl->lock);
--		list_del(&buf->node);
--		spin_unlock(&fl->lock);
- 		fastrpc_buf_free(buf);
- 	} else {
- 		dev_err(dev, "unmmap\tpt 0x%09lx ERROR\n", buf->raddr);
-@@ -1425,6 +1422,7 @@ static int fastrpc_req_munmap(struct fas
- 	struct fastrpc_buf *buf = NULL, *iter, *b;
- 	struct fastrpc_req_munmap req;
- 	struct device *dev = fl->sctx->dev;
-+	int err;
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -2446,6 +2446,7 @@ group_sched_out(struct perf_event *group
+ #define DETACH_GROUP	0x01UL
+ #define DETACH_CHILD	0x02UL
+ #define DETACH_DEAD	0x04UL
++#define DETACH_EXIT	0x08UL
  
- 	if (copy_from_user(&req, argp, sizeof(req)))
- 		return -EFAULT;
-@@ -1432,6 +1430,7 @@ static int fastrpc_req_munmap(struct fas
- 	spin_lock(&fl->lock);
- 	list_for_each_entry_safe(iter, b, &fl->mmaps, node) {
- 		if ((iter->raddr == req.vaddrout) && (iter->size == req.size)) {
-+			list_del(&iter->node);
- 			buf = iter;
- 			break;
- 		}
-@@ -1444,7 +1443,14 @@ static int fastrpc_req_munmap(struct fas
- 		return -EINVAL;
+ /*
+  * Cross CPU call to remove a performance event
+@@ -2459,6 +2460,7 @@ __perf_remove_from_context(struct perf_e
+ 			   struct perf_event_context *ctx,
+ 			   void *info)
+ {
++	enum perf_event_state state = PERF_EVENT_STATE_OFF;
+ 	unsigned long flags = (unsigned long)info;
+ 
+ 	if (ctx->is_active & EVENT_TIME) {
+@@ -2470,16 +2472,19 @@ __perf_remove_from_context(struct perf_e
+ 	 * Ensure event_sched_out() switches to OFF, at the very least
+ 	 * this avoids raising perf_pending_task() at this time.
+ 	 */
+-	if (flags & DETACH_DEAD)
++	if (flags & DETACH_EXIT)
++		state = PERF_EVENT_STATE_EXIT;
++	if (flags & DETACH_DEAD) {
+ 		event->pending_disable = 1;
++		state = PERF_EVENT_STATE_DEAD;
++	}
+ 	event_sched_out(event, cpuctx, ctx);
++	perf_event_set_state(event, min(event->state, state));
+ 	if (flags & DETACH_GROUP)
+ 		perf_group_detach(event);
+ 	if (flags & DETACH_CHILD)
+ 		perf_child_detach(event);
+ 	list_del_event(event, ctx);
+-	if (flags & DETACH_DEAD)
+-		event->state = PERF_EVENT_STATE_DEAD;
+ 
+ 	if (!ctx->nr_events && ctx->is_active) {
+ 		if (ctx == &cpuctx->ctx)
+@@ -13046,12 +13051,7 @@ perf_event_exit_event(struct perf_event
+ 		mutex_lock(&parent_event->child_mutex);
  	}
  
--	return fastrpc_req_munmap_impl(fl, buf);
-+	err = fastrpc_req_munmap_impl(fl, buf);
-+	if (err) {
-+		spin_lock(&fl->lock);
-+		list_add_tail(&buf->node, &fl->mmaps);
-+		spin_unlock(&fl->lock);
-+	}
-+
-+	return err;
- }
+-	perf_remove_from_context(event, detach_flags);
+-
+-	raw_spin_lock_irq(&ctx->lock);
+-	if (event->state > PERF_EVENT_STATE_EXIT)
+-		perf_event_set_state(event, PERF_EVENT_STATE_EXIT);
+-	raw_spin_unlock_irq(&ctx->lock);
++	perf_remove_from_context(event, detach_flags | DETACH_EXIT);
  
- static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+ 	/*
+ 	 * Child events can be freed.
 
 
