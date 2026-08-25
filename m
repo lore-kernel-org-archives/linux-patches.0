@@ -1,475 +1,808 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AB840680F;
-	Tue, 25 Aug 2026 13:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89354481AB0;
+	Tue, 25 Aug 2026 13:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665671; cv=none; b=fMS45n/3K9XM8+nnEa2YrKPYbDX5MibJQ15n+r/Rtu4pr7dCPya53yknDp4Ylo2E08OUriHj54oUoqG7EGyq8Th8kMY8IePflv3nf26WQ4fIOy1ci4G1oYAtw+GiSyT601G1LWyF3nudNO10jmhef+7DUxuGG23uAeJFyXL47VA=
+	t=1787665674; cv=none; b=RdfwqsgGweDJpfM6PVWkRvzmyyWHwENVhYk4Tn5kcN3ucMsuIjKzff1tToXZ40Llg9I5gtaEKPYCHWt6PuJaNl8xiOtHwYzMQkgpCf8hpYP0NNBN95esqs8/+ES0KGjzLtz3vAp2tFSTHHNRs7EjDZSpxeTPplMpWKacJmlCR+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665671; c=relaxed/simple;
-	bh=Dlz+IanbePfkco+znc79yAMDUmRmoVHmNThhnGCJMsM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=js5GnsxVyb9Fs9KqInehTA9RVjFvUXO6/ggr82DNqAgVpC4Ta0EkjVPVbrXnWW/2TaAAXcd+ayqaBI1zuLjgTLH4PNEN8iF+EV/2yrGkEp9y9f7vM0bXWKqh4QqOorALr6EyDG6EYn9fLwxc+R7IcCEeYebLqQbZqcPVDJCfYNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRMcq/lc; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787665674; c=relaxed/simple;
+	bh=Sq9BH5jlq5ttwJIcDLCbyUUXdHDP0UyT4aFbo8NLOG8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=sCNSMSH7mtSKBULKrNF1xSoJ1GTlgow/9Y+gL9W5aSVzLXjJ6hSSUUCWrIc/E9jDhVCXc0Ui5OIOq71ZUZycsDsxu5MzR9Tzfen8Cu4TmSn0mAGxzHOJXj27PFCxlvatkbJqFIMvrfW+Z9hKZHZx9b6bHUii6UvMFdqZs16SM8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qKsmNMPt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRMcq/lc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2011F000E9;
-	Tue, 25 Aug 2026 13:47:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKsmNMPt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC5C1F000E9;
+	Tue, 25 Aug 2026 13:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665669;
-	bh=37e66emiQFyS8SwKQMxsvXYU+pwVL7sfXP2ZMUuOuhU=;
-	h=From:To:Cc:Subject:Date;
-	b=jRMcq/lc6o1UA8m+04JllaXGr62x/SrBlh0aP6oDh00TR+J3mdzEv7Ll/FuqkCya6
-	 Tk5EL7hd6tNg44RR2d136iIRRa1tcAdhmgyyvwZmZ5sNixOryKFJnWBrVOLXnzYjxu
-	 TCwMw8cB2wdfWxLalRhjN43QC5Wr/sopkWq8hC+E=
+	s=korg; t=1787665672;
+	bh=Mtrl07Lvm62NDzU3ECVB+S2IrVteyrX5epL5TtXGKR0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=qKsmNMPtv6Bq5H2xZ5GgEQ/V6k5SrgG8jFJ3VebozVgnP5HiHhv2Ob5GWVVV6LaNK
+	 O4Yr8DPMYvbOu5ceJiieZKLVrCjQ4fm3zP0eEBikn/RF9j7lych2+FhXvxgdQMyEvw
+	 POdxJmmLsHd/wsuNFK9UwWxfEXggfnm1jKn/FE9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com
-Subject: [PATCH 6.6 00/87] 6.6.154-rc1 review
-Date: Tue, 25 Aug 2026 15:25:23 +0200
-Message-ID: <20260825132541.813800447@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Carlos Maiolino <cem@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 20/87] xfs: dont use a xfs_log_iovec for ri_buf in log recovery
+Date: Tue, 25 Aug 2026 15:25:43 +0200
+Message-ID: <20260825132542.629714194@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
+References: <20260825132541.813800447@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.154-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.6.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.6.154-rc1
-X-KernelTest-Deadline: 2026-08-27T13:25+00:00
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.6.154 release.
-There are 87 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
-
-Responses should be made by Thu, 27 Aug 2026 13:25:02 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.154-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.6.154-rc1
-
-Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-    Bluetooth: hci_event: validate LE Set CIG Parameters response
-
-Chengfeng Ye <nicoyip.dev@gmail.com>
-    Bluetooth: hci_event: fix LE list UAF on reset
-
-Michael Bommarito <michael.bommarito@gmail.com>
-    HID: hyperv: validate initial device info bounds
-
-Haoxiang Li <haoxiang_li2024@163.com>
-    HID: sensor: custom: Fix use-after-free in enable_sensor
-
-Jann Horn <jannh@google.com>
-    HID: core: fix number/pointer type confusion on long items
-
-Ibrahim Hashimov <security@auditcode.ai>
-    HID: nintendo: fix out-of-bounds read in joycon_ctlr_read_handler()
-
-Bryam Vargas <hexlabsecurity@proton.me>
-    selinux: require a class's permission values to cover its permission count
-
-Bryam Vargas <hexlabsecurity@proton.me>
-    selinux: reject a permission value exceeding the class permission count
-
-Christian Göttsche <cgzones@googlemail.com>
-    selinux: more strict policy parsing
-
-Christian Göttsche <cgzones@googlemail.com>
-    selinux: use u16 for security classes
-
-Christian Göttsche <cgzones@googlemail.com>
-    selinux: make more use of str_read() when loading the policy
-
-Christian Göttsche <cgzones@googlemail.com>
-    selinux: avoid unnecessary indirection in struct level_datum
-
-Christian Göttsche <cgzones@googlemail.com>
-    selinux: use known type instead of void pointer
-
-Paul Moore <paul@paul-moore.com>
-    selinux: fix style issues in security/selinux/ss/policydb.c
-
-Paul Moore <paul@paul-moore.com>
-    selinux: fix style issues in security/selinux/ss/policydb.h
-
-Shardul Bankar <shardul.b@mpiricsoftware.com>
-    mptcp: pm: fix memory leak from alloc-during-teardown race
-
-Donglin Lyu <DongLin_Lyu@outlook.com>
-    Input: atkbd - skip deactivate for HONOR ZQC-P
-
-Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
-    Input: atkbd - skip deactivate for HONOR FMB-P's internal keyboard
-
-Chengfeng Ye <nicoyip.dev@gmail.com>
-    Bluetooth: hci_sync: Fix advertising data UAFs
-
-Xiang Mei (Microsoft) <xmei5@asu.edu>
-    xfrm: fix sk_dst_cache double-free in xfrm_user_policy()
-
-Baul Lee <baul.lee@xbow.com>
-    HID: core: fix OOB read of field->usage in hid_set_field()
-
-Lee Jones <lee@kernel.org>
-    HID: magicmouse: Prevent out-of-bounds (OOB) read during DOUBLE_REPORT_ID
-
-Jose Villaseñor Montfort <pepemontfort@gmail.com>
-    HID: magicmouse: do not keep a stale msc->input if no input is claimed
-
-Andrei Fed <andfed.net@gmail.com>
-    HID: magicmouse: fix battery reporting for Bluetooth Magic Trackpad USB-C
-
-Qing Luo <luoqing@kylinos.cn>
-    mptcp: pm: fix data race in add_addr timer callback
-
-Dawid Wróbel <me@dawidwrobel.com>
-    ASoC: codecs: lpass-tx-macro: Fix enum kcontrol accesses
-
-Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-    ASoC: SOF: ipc4-pcm: Continue the pipeline trigger in case of IPC timeout
-
-Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-    ASoC: SOF: pcm: Add snd_sof_pcm specific wrappers for dev_dbg() and dev_err()
-
-Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-    ASoC: SOF: pcm: Move period/buffer configuration print after platform open
-
-Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-    ASoC: SOF: Relocate and rework functionality for PCM stream freeing
-
-Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-    ASoC: sof: pcm: use snd_pcm_direction_name()
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    nvmet-tcp: Do not WARN on remotely-controlled oversized SGL allocations
-
-Jiang HongHui <jiang_hh2019@163.com>
-    nvmet-fc: fix invalid free in LS IOD error path
-
-Bryam Vargas <hexlabsecurity@proton.me>
-    nvmet-auth: zero the AUTH_RECEIVE response buffer
-
-Luxiao Xu <rakukuip@gmail.com>
-    ipv6: fix use-after-free in ip6_finish_output2()
-
-Yong Wang <edragain@163.com>
-    ipv4: reject undersized MTUs in ip_do_fragment()
-
-Pavitra Jha <jhapavitra98@gmail.com>
-    libceph: fix OOB read in decode_watchers() via missing bounds check
-
-Linmao Li <lilinmao@kylinos.cn>
-    Input: byd - synchronize timer deletion before freeing private data
-
-Eric Dumazet <edumazet@google.com>
-    ndisc: ndisc_send_redirect() cleanup
-
-Linmao Li <lilinmao@kylinos.cn>
-    nfc: nci: free destination parameters when closing a connection
-
-Samuel Page <sam@bynar.io>
-    nfc: nci: fix uninit-value in the RF discover/activated NTF handlers
-
-Samuel Page <sam@bynar.io>
-    nfc: nci: fix out-of-bounds write in nci_target_auto_activated()
-
-Doruk Tan Ozturk <doruk@0sec.ai>
-    nfc: st21nfca: validate ATR_REQ length against the received frame
-
-Xu Rao <raoxu@uniontech.com>
-    nfc: pn533: purge fragmented skbs during cleanup
-
-Doruk Tan Ozturk <doruk@0sec.ai>
-    nfc: llcp: reject PDUs shorter than the LLCP header
-
-Muhammad Bilal <meatuni001@gmail.com>
-    nfc: llcp: fix OOB read and u8 offset wrap in TLV parsers
-
-Doruk Tan Ozturk <doruk@0sec.ai>
-    nfc: llcp: bound the connect_sn TLV walk to the skb
-
-Pengpeng Hou <pengpeng@iscas.ac.cn>
-    nfc: microread: validate target discovery payload lengths
-
-Bryam Vargas <hexlabsecurity@proton.me>
-    nfc: fdp: bound the device-reported read length and fix an skb leak
-
-Doruk Tan Ozturk <doruk@0sec.ai>
-    nfc: digital: clamp SENSF_RES length to the destination buffer
-
-Yang Wang <kevinyang.wang@amd.com>
-    drm/amdgpu: check ASPM on the dGPU host link
-
-Nathan Lucas <nlucasgit@gmail.com>
-    drm/amd/display: fix BT.2020 YCbCr limited output CSC matrix
-
-Ilya Bakoulin <Ilya.Bakoulin@amd.com>
-    drm/amd/display: Fix BT2020 YCbCr limited/full range input
-
-Kenneth Feng <kenneth.feng@amd.com>
-    drm/amd/amdgpu: disable ASPM in some situations
-
-Eric Farman <farman@linux.ibm.com>
-    s390/vfio_ccw: Implement a crw lock
-
-Eric Farman <farman@linux.ibm.com>
-    s390/vfio_ccw: Calculate idal length based on idaw type
-
-Eric Farman <farman@linux.ibm.com>
-    s390/vfio_ccw: Ensure first IDAW remains constant
-
-Eric Farman <farman@linux.ibm.com>
-    s390/vfio_ccw: Free all memory if cp_init() fails
-
-Junjie Cao <junjie.cao@intel.com>
-    gpio: ml-ioh: use raw_spinlock_t for the register lock
-
-Hongling Zeng <zenghongling@kylinos.cn>
-    xfs: validate attr entry pointer before field access
-
-Guanghui Yang <3497809730@qq.com>
-    ext4: clear error before retrying inode xattr space fallback
-
-Matthias Goergens <matthias.goergens@gmail.com>
-    ext4: stop retrying saturated xattr cache entries
-
-Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-    kcov: fix data corruption and race conditions on PREEMPT_RT
-
-Rik van Riel <riel@surriel.com>
-    null_blk: fix UBSAN shift-out-of-bounds when zone_size is 0 or overflows
-
-Ian Bridges <icb@fastmail.org>
-    ocfs2: fix missing metadata reservation for large xattrs
-
-Takashi Iwai <tiwai@suse.de>
-    ALSA: dummy: Check card index validity at probe
-
-Ibrahim Hashimov <security@auditcode.ai>
-    xfs: bounds-check buffer log item's dirty bitmap
-
-Christoph Hellwig <hch@lst.de>
-    xfs: don't use a xfs_log_iovec for ri_buf in log recovery
-
-Pei Xiao <xiaopei01@kylinos.cn>
-    mmc: atmel-mci: Fix use-after-free in atmci_remove due to race condition
-
-Zhiling Zou <zhilinz@nebusec.ai>
-    inet: frags: publish queues before arming timer
-
-Eric Dumazet <edumazet@google.com>
-    inet: frags: save a pair of atomic operations in reassembly
-
-Eric Dumazet <edumazet@google.com>
-    inet: frags: change inet_frag_kill() to defer refcount updates
-
-Eric Dumazet <edumazet@google.com>
-    ipv4: frags: remove ipq_put()
-
-Eric Dumazet <edumazet@google.com>
-    inet: frags: add inet_frag_putn() helper
-
-Luca Fresi <luca.fresi@bithiatec.com>
-    serial: sc16is7xx: enable THRI before filling TX FIFO
-
-Hugo Villeneuve <hvilleneuve@dimonoff.com>
-    serial: sc16is7xx: use guards for simple mutex locks
-
-Hugo Villeneuve <hvilleneuve@dimonoff.com>
-    serial: sc16is7xx: rename EFR mutex with generic name
-
-Lech Perczak <lech.perczak@camlingroup.com>
-    serial: sc16is7xx: convert bitmask definitions to use BIT() macro
-
-Lech Perczak <lech.perczak@camlingroup.com>
-    serial: sc16is7xx: fix copy-paste errors in EFR_SWFLOWx_BIT constants
-
-Jan Sebastian Götte <linux@jaseg.de>
-    serial: qcom-geni: fix TX DMA buffer flush
-
-Aditya Chillara <aditya.chillara@oss.qualcomm.com>
-    perf/core: Fix group leader use-after-free after sibling detach
-
-Peter Zijlstra <peterz@infradead.org>
-    perf: Unify perf_event_free_task() / perf_event_exit_task_context()
-
-Fan Wu <fanwu01@zju.edu.cn>
-    serial: amba-pl011: synchronize DMA teardown
-
-Koichiro Den <den@valinux.co.jp>
-    NTB: ntb_netdev: Preserve RX queue depth on allocation failure
-
-Griffin Kroah-Hartman <griffin@kroah.com>
-    rndis_host: add overflow check in rndis_rx_fixup()
-
-Ali Ahmet Memis <ali@iusegentoo.com>
-    Bluetooth: RFCOMM: take rfcomm_mutex for the deferred setup accept
-
-Steffen Persvold <spersvold@gmail.com>
-    PCI: host-generic: Fix NULL pointer dereference on 32-bit CAM systems
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |   4 +-
- drivers/block/null_blk/zoned.c                     |  10 +-
- drivers/gpio/gpio-ml-ioh.c                         |  36 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu.h                |   2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c         | 100 ++-
- drivers/gpu/drm/amd/amdgpu/nv.c                    |   2 +-
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c  |   6 +-
- .../drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c  |   2 +-
- drivers/gpu/drm/amd/display/dc/basics/dc_common.c  |   3 +-
- .../gpu/drm/amd/display/dc/core/dc_hw_sequencer.c  |  34 +-
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c  |   4 +-
- drivers/gpu/drm/amd/display/dc/dc_hw_types.h       |   4 +-
- .../drm/amd/display/dc/dce/dce_stream_encoder.c    |   3 +-
- .../amd/display/dc/dcn10/dcn10_stream_encoder.c    |   3 +-
- .../display/dc/dcn31/dcn31_hpo_dp_stream_encoder.c |   3 +-
- drivers/gpu/drm/amd/display/dc/inc/hw/dpp.h        |   6 +-
- .../amd/display/modules/info_packet/info_packet.c  |   4 +-
- drivers/hid/hid-core.c                             |  11 +-
- drivers/hid/hid-hyperv.c                           |  27 +-
- drivers/hid/hid-input.c                            |   3 +
- drivers/hid/hid-magicmouse.c                       |  45 +-
- drivers/hid/hid-nintendo.c                         |   7 +-
- drivers/hid/hid-sensor-custom.c                    |  21 +-
- drivers/input/keyboard/atkbd.c                     |  23 +-
- drivers/input/mouse/byd.c                          |   2 +-
- drivers/mmc/host/atmel-mci.c                       |   2 +
- drivers/net/ntb_netdev.c                           |  15 +-
- drivers/net/usb/rndis_host.c                       |   6 +-
- drivers/nfc/fdp/i2c.c                              |  27 +
- drivers/nfc/microread/microread.c                  |  31 +-
- drivers/nfc/pn533/pn533.c                          |   1 +
- drivers/nfc/st21nfca/dep.c                         |   3 +
- drivers/nvme/target/fabrics-cmd-auth.c             |   2 +-
- drivers/nvme/target/fc.c                           |   2 +-
- drivers/nvme/target/tcp.c                          |   5 +-
- drivers/pci/controller/pci-host-generic.c          |  11 +-
- drivers/pci/ecam.c                                 |  13 +
- drivers/s390/cio/vfio_ccw_chp.c                    |  26 +-
- drivers/s390/cio/vfio_ccw_cp.c                     |  43 +-
- drivers/s390/cio/vfio_ccw_cp.h                     |   2 +
- drivers/s390/cio/vfio_ccw_drv.c                    |   6 +
- drivers/s390/cio/vfio_ccw_ops.c                    |   4 +
- drivers/s390/cio/vfio_ccw_private.h                |   4 +
- drivers/tty/serial/amba-pl011.c                    |   8 +-
- drivers/tty/serial/qcom_geni_serial.c              |  51 +-
- drivers/tty/serial/sc16is7xx.c                     | 222 +++---
- fs/ext4/xattr.c                                    |   7 +-
- fs/ocfs2/xattr.c                                   |  18 +-
- fs/xfs/libxfs/xfs_attr_leaf.c                      |  14 +
- fs/xfs/libxfs/xfs_log_recover.h                    |   4 +-
- fs/xfs/xfs_attr_item.c                             |  24 +-
- fs/xfs/xfs_bmap_item.c                             |  18 +-
- fs/xfs/xfs_buf_item.c                              |   8 +-
- fs/xfs/xfs_buf_item.h                              |   2 +-
- fs/xfs/xfs_buf_item_recover.c                      |  95 ++-
- fs/xfs/xfs_dquot_item_recover.c                    |  20 +-
- fs/xfs/xfs_extfree_item.c                          |  43 +-
- fs/xfs/xfs_icreate_item.c                          |   2 +-
- fs/xfs/xfs_inode_item.c                            |   6 +-
- fs/xfs/xfs_inode_item.h                            |   4 +-
- fs/xfs/xfs_inode_item_recover.c                    |  26 +-
- fs/xfs/xfs_log_recover.c                           |  16 +-
- fs/xfs/xfs_refcount_item.c                         |  16 +-
- fs/xfs/xfs_rmap_item.c                             |  16 +-
- fs/xfs/xfs_trans.h                                 |   1 -
- include/linux/pci-ecam.h                           |   3 +
- include/linux/sched.h                              |   8 +
- include/net/inet_frag.h                            |   6 +-
- include/net/ipv6_frag.h                            |   5 +-
- kernel/events/core.c                               | 161 ++---
- kernel/kcov.c                                      |  90 +--
- lib/Kconfig.debug                                  |   5 +-
- net/bluetooth/hci_event.c                          |   8 +-
- net/bluetooth/hci_sync.c                           | 137 +++-
- net/bluetooth/rfcomm/core.c                        |  24 +-
- net/ceph/osd_client.c                              |   5 +-
- net/ieee802154/6lowpan/reassembly.c                |  27 +-
- net/ipv4/inet_fragment.c                           |  33 +-
- net/ipv4/ip_fragment.c                             |  48 +-
- net/ipv4/ip_output.c                               |   4 +
- net/ipv6/ip6_output.c                              |   2 +
- net/ipv6/ndisc.c                                   |   8 +-
- net/ipv6/netfilter/nf_conntrack_reasm.c            |  27 +-
- net/ipv6/reassembly.c                              |  29 +-
- net/mptcp/pm_netlink.c                             |   9 +-
- net/mptcp/pm_userspace.c                           |   7 +-
- net/mptcp/protocol.c                               |   9 +
- net/mptcp/protocol.h                               |   7 +-
- net/nfc/digital_technology.c                       |   2 +
- net/nfc/llcp_commands.c                            |  18 +-
- net/nfc/llcp_core.c                                |  15 +-
- net/nfc/nci/ntf.c                                  |  10 +-
- net/nfc/nci/rsp.c                                  |   1 +
- net/xfrm/xfrm_state.c                              |   4 +-
- security/selinux/include/security.h                |   1 +
- security/selinux/ss/avtab.c                        |  45 +-
- security/selinux/ss/avtab.h                        |  23 +-
- security/selinux/ss/conditional.c                  |  40 +-
- security/selinux/ss/conditional.h                  |   6 +-
- security/selinux/ss/constraint.h                   |   1 +
- security/selinux/ss/ebitmap.c                      |   4 +-
- security/selinux/ss/ebitmap.h                      |   5 +-
- security/selinux/ss/mls.c                          |   6 +-
- security/selinux/ss/policydb.c                     | 743 +++++++++++++--------
- security/selinux/ss/policydb.h                     | 249 +++----
- security/selinux/ss/services.c                     |   8 +-
- sound/drivers/dummy.c                              |   6 +
- sound/soc/codecs/lpass-tx-macro.c                  |   4 +-
- sound/soc/sof/ipc3-pcm.c                           |  13 +-
- sound/soc/sof/ipc3-topology.c                      |  20 +-
- sound/soc/sof/ipc4-pcm.c                           |  35 +-
- sound/soc/sof/ipc4-topology.c                      |  18 +-
- sound/soc/sof/pcm.c                                | 157 +++--
- sound/soc/sof/sof-audio.c                          |  36 -
- sound/soc/sof/sof-audio.h                          |  17 +-
- 115 files changed, 2047 insertions(+), 1291 deletions(-)
+6.6-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Christoph Hellwig <hch@lst.de>
+
+[ Upstream commit ded74fddcaf685a9440c5612f7831d0c4c1473ca ]
+
+ri_buf just holds a pointer/len pair and is not a log iovec used for
+writing to the log.  Switch to use a kvec instead.
+
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Stable-dep-of: 813f8136a2ce ("xfs: bounds-check buffer log item's dirty bitmap")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ fs/xfs/libxfs/xfs_log_recover.h |    4 +--
+ fs/xfs/xfs_attr_item.c          |   24 ++++++++++-----------
+ fs/xfs/xfs_bmap_item.c          |   18 ++++++++--------
+ fs/xfs/xfs_buf_item.c           |    8 +++----
+ fs/xfs/xfs_buf_item.h           |    2 -
+ fs/xfs/xfs_buf_item_recover.c   |   38 ++++++++++++++++-----------------
+ fs/xfs/xfs_dquot_item_recover.c |   20 ++++++++---------
+ fs/xfs/xfs_extfree_item.c       |   45 +++++++++++++++++++++-------------------
+ fs/xfs/xfs_icreate_item.c       |    2 -
+ fs/xfs/xfs_inode_item.c         |    6 ++---
+ fs/xfs/xfs_inode_item.h         |    4 +--
+ fs/xfs/xfs_inode_item_recover.c |   26 +++++++++++------------
+ fs/xfs/xfs_log_recover.c        |   16 +++++++-------
+ fs/xfs/xfs_refcount_item.c      |   16 +++++++-------
+ fs/xfs/xfs_rmap_item.c          |   16 +++++++-------
+ fs/xfs/xfs_trans.h              |    1 
+ 16 files changed, 124 insertions(+), 122 deletions(-)
+
+--- a/fs/xfs/libxfs/xfs_log_recover.h
++++ b/fs/xfs/libxfs/xfs_log_recover.h
+@@ -95,7 +95,7 @@ struct xlog_recover_item {
+ 	struct list_head	ri_list;
+ 	int			ri_cnt;	/* count of regions found */
+ 	int			ri_total;	/* total regions */
+-	struct xfs_log_iovec	*ri_buf;	/* ptr to regions buffer */
++	struct kvec		*ri_buf;	/* ptr to regions buffer */
+ 	const struct xlog_recover_item_ops *ri_ops;
+ };
+ 
+@@ -108,7 +108,7 @@ struct xlog_recover {
+ 	struct list_head	r_itemq;	/* q for items */
+ };
+ 
+-#define ITEM_TYPE(i)	(*(unsigned short *)(i)->ri_buf[0].i_addr)
++#define ITEM_TYPE(i)	(*(unsigned short *)(i)->ri_buf[0].iov_base)
+ 
+ #define	XLOG_RECOVER_CRCPASS	0
+ #define	XLOG_RECOVER_PASS1	1
+--- a/fs/xfs/xfs_attr_item.c
++++ b/fs/xfs/xfs_attr_item.c
+@@ -729,13 +729,13 @@ xlog_recover_attri_commit_pass2(
+ 
+ 	/* Validate xfs_attri_log_format before the large memory allocation */
+ 	len = sizeof(struct xfs_attri_log_format);
+-	if (item->ri_buf[i].i_len != len) {
++	if (item->ri_buf[i].iov_len != len) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+-				item->ri_buf[0].i_addr, item->ri_buf[0].i_len);
++				item->ri_buf[0].iov_base, item->ri_buf[0].iov_len);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+-	attri_formatp = item->ri_buf[i].i_addr;
++	attri_formatp = item->ri_buf[i].iov_base;
+ 	if (!xfs_attri_validate(mp, attri_formatp)) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+ 				attri_formatp, len);
+@@ -770,14 +770,14 @@ xlog_recover_attri_commit_pass2(
+ 	i++;
+ 
+ 	/* Validate the attr name */
+-	if (item->ri_buf[i].i_len !=
++	if (item->ri_buf[i].iov_len !=
+ 			xlog_calc_iovec_len(attri_formatp->alfi_name_len)) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+ 				attri_formatp, len);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+-	attr_name = item->ri_buf[i].i_addr;
++	attr_name = item->ri_buf[i].iov_base;
+ 	if (!xfs_attr_namecheck(attri_formatp->alfi_attr_filter, attr_name,
+ 				attri_formatp->alfi_name_len)) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+@@ -788,14 +788,14 @@ xlog_recover_attri_commit_pass2(
+ 
+ 	/* Validate the attr value, if present */
+ 	if (attri_formatp->alfi_value_len != 0) {
+-		if (item->ri_buf[i].i_len != xlog_calc_iovec_len(attri_formatp->alfi_value_len)) {
++		if (item->ri_buf[i].iov_len != xlog_calc_iovec_len(attri_formatp->alfi_value_len)) {
+ 			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+-					item->ri_buf[0].i_addr,
+-					item->ri_buf[0].i_len);
++					item->ri_buf[0].iov_base,
++					item->ri_buf[0].iov_len);
+ 			return -EFSCORRUPTED;
+ 		}
+ 
+-		attr_value = item->ri_buf[i].i_addr;
++		attr_value = item->ri_buf[i].iov_base;
+ 		i++;
+ 	}
+ 
+@@ -912,10 +912,10 @@ xlog_recover_attrd_commit_pass2(
+ {
+ 	struct xfs_attrd_log_format	*attrd_formatp;
+ 
+-	attrd_formatp = item->ri_buf[0].i_addr;
+-	if (item->ri_buf[0].i_len != sizeof(struct xfs_attrd_log_format)) {
++	attrd_formatp = item->ri_buf[0].iov_base;
++	if (item->ri_buf[0].iov_len != sizeof(struct xfs_attrd_log_format)) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, log->l_mp,
+-				item->ri_buf[0].i_addr, item->ri_buf[0].i_len);
++				item->ri_buf[0].iov_base, item->ri_buf[0].iov_len);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+--- a/fs/xfs/xfs_bmap_item.c
++++ b/fs/xfs/xfs_bmap_item.c
+@@ -669,24 +669,24 @@ xlog_recover_bui_commit_pass2(
+ 	struct xfs_bui_log_format	*bui_formatp;
+ 	size_t				len;
+ 
+-	bui_formatp = item->ri_buf[0].i_addr;
++	bui_formatp = item->ri_buf[0].iov_base;
+ 
+-	if (item->ri_buf[0].i_len < xfs_bui_log_format_sizeof(0)) {
++	if (item->ri_buf[0].iov_len < xfs_bui_log_format_sizeof(0)) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+-				item->ri_buf[0].i_addr, item->ri_buf[0].i_len);
++				item->ri_buf[0].iov_base, item->ri_buf[0].iov_len);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+ 	if (bui_formatp->bui_nextents != XFS_BUI_MAX_FAST_EXTENTS) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+-				item->ri_buf[0].i_addr, item->ri_buf[0].i_len);
++				item->ri_buf[0].iov_base, item->ri_buf[0].iov_len);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+ 	len = xfs_bui_log_format_sizeof(bui_formatp->bui_nextents);
+-	if (item->ri_buf[0].i_len != len) {
++	if (item->ri_buf[0].iov_len != len) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+-				item->ri_buf[0].i_addr, item->ri_buf[0].i_len);
++				item->ri_buf[0].iov_base, item->ri_buf[0].iov_len);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+@@ -720,10 +720,10 @@ xlog_recover_bud_commit_pass2(
+ {
+ 	struct xfs_bud_log_format	*bud_formatp;
+ 
+-	bud_formatp = item->ri_buf[0].i_addr;
+-	if (item->ri_buf[0].i_len != sizeof(struct xfs_bud_log_format)) {
++	bud_formatp = item->ri_buf[0].iov_base;
++	if (item->ri_buf[0].iov_len != sizeof(struct xfs_bud_log_format)) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, log->l_mp,
+-				item->ri_buf[0].i_addr, item->ri_buf[0].i_len);
++				item->ri_buf[0].iov_base, item->ri_buf[0].iov_len);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+--- a/fs/xfs/xfs_buf_item.c
++++ b/fs/xfs/xfs_buf_item.c
+@@ -35,16 +35,16 @@ static inline struct xfs_buf_log_item *B
+ /* Is this log iovec plausibly large enough to contain the buffer log format? */
+ bool
+ xfs_buf_log_check_iovec(
+-	struct xfs_log_iovec		*iovec)
++	struct kvec			*iovec)
+ {
+-	struct xfs_buf_log_format	*blfp = iovec->i_addr;
++	struct xfs_buf_log_format	*blfp = iovec->iov_base;
+ 	char				*bmp_end;
+ 	char				*item_end;
+ 
+-	if (offsetof(struct xfs_buf_log_format, blf_data_map) > iovec->i_len)
++	if (offsetof(struct xfs_buf_log_format, blf_data_map) > iovec->iov_len)
+ 		return false;
+ 
+-	item_end = (char *)iovec->i_addr + iovec->i_len;
++	item_end = (char *)iovec->iov_base + iovec->iov_len;
+ 	bmp_end = (char *)&blfp->blf_data_map[blfp->blf_map_size];
+ 	return bmp_end <= item_end;
+ }
+--- a/fs/xfs/xfs_buf_item.h
++++ b/fs/xfs/xfs_buf_item.h
+@@ -67,7 +67,7 @@ static inline void xfs_buf_dquot_io_fail
+ }
+ #endif /* CONFIG_XFS_QUOTA */
+ void	xfs_buf_iodone(struct xfs_buf *);
+-bool	xfs_buf_log_check_iovec(struct xfs_log_iovec *iovec);
++bool	xfs_buf_log_check_iovec(struct kvec *iovec);
+ 
+ extern struct kmem_cache	*xfs_buf_item_cache;
+ 
+--- a/fs/xfs/xfs_buf_item_recover.c
++++ b/fs/xfs/xfs_buf_item_recover.c
+@@ -157,7 +157,7 @@ STATIC enum xlog_recover_reorder
+ xlog_recover_buf_reorder(
+ 	struct xlog_recover_item	*item)
+ {
+-	struct xfs_buf_log_format	*buf_f = item->ri_buf[0].i_addr;
++	struct xfs_buf_log_format	*buf_f = item->ri_buf[0].iov_base;
+ 
+ 	if (buf_f->blf_flags & XFS_BLF_CANCEL)
+ 		return XLOG_REORDER_CANCEL_LIST;
+@@ -171,7 +171,7 @@ xlog_recover_buf_ra_pass2(
+ 	struct xlog                     *log,
+ 	struct xlog_recover_item        *item)
+ {
+-	struct xfs_buf_log_format	*buf_f = item->ri_buf[0].i_addr;
++	struct xfs_buf_log_format	*buf_f = item->ri_buf[0].iov_base;
+ 
+ 	xlog_buf_readahead(log, buf_f->blf_blkno, buf_f->blf_len, NULL);
+ }
+@@ -185,11 +185,11 @@ xlog_recover_buf_commit_pass1(
+ 	struct xlog			*log,
+ 	struct xlog_recover_item	*item)
+ {
+-	struct xfs_buf_log_format	*bf = item->ri_buf[0].i_addr;
++	struct xfs_buf_log_format	*bf = item->ri_buf[0].iov_base;
+ 
+ 	if (!xfs_buf_log_check_iovec(&item->ri_buf[0])) {
+-		xfs_err(log->l_mp, "bad buffer log item size (%d)",
+-				item->ri_buf[0].i_len);
++		xfs_err(log->l_mp, "bad buffer log item size (%zd)",
++				item->ri_buf[0].iov_len);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+@@ -470,8 +470,8 @@ xlog_recover_do_reg_buffer(
+ 		nbits = xfs_contig_bits(buf_f->blf_data_map,
+ 					buf_f->blf_map_size, bit);
+ 		ASSERT(nbits > 0);
+-		ASSERT(item->ri_buf[i].i_addr != NULL);
+-		ASSERT(item->ri_buf[i].i_len % XFS_BLF_CHUNK == 0);
++		ASSERT(item->ri_buf[i].iov_base != NULL);
++		ASSERT(item->ri_buf[i].iov_len % XFS_BLF_CHUNK == 0);
+ 		ASSERT(BBTOB(bp->b_length) >=
+ 		       ((uint)bit << XFS_BLF_SHIFT) + (nbits << XFS_BLF_SHIFT));
+ 
+@@ -483,8 +483,8 @@ xlog_recover_do_reg_buffer(
+ 		 * the log. Hence we need to trim nbits back to the length of
+ 		 * the current region being copied out of the log.
+ 		 */
+-		if (item->ri_buf[i].i_len < (nbits << XFS_BLF_SHIFT))
+-			nbits = item->ri_buf[i].i_len >> XFS_BLF_SHIFT;
++		if (item->ri_buf[i].iov_len < (nbits << XFS_BLF_SHIFT))
++			nbits = item->ri_buf[i].iov_len >> XFS_BLF_SHIFT;
+ 
+ 		/*
+ 		 * Do a sanity check if this is a dquot buffer. Just checking
+@@ -494,18 +494,18 @@ xlog_recover_do_reg_buffer(
+ 		fa = NULL;
+ 		if (buf_f->blf_flags &
+ 		   (XFS_BLF_UDQUOT_BUF|XFS_BLF_PDQUOT_BUF|XFS_BLF_GDQUOT_BUF)) {
+-			if (item->ri_buf[i].i_addr == NULL) {
++			if (item->ri_buf[i].iov_base == NULL) {
+ 				xfs_alert(mp,
+ 					"XFS: NULL dquot in %s.", __func__);
+ 				goto next;
+ 			}
+-			if (item->ri_buf[i].i_len < size_disk_dquot) {
++			if (item->ri_buf[i].iov_len < size_disk_dquot) {
+ 				xfs_alert(mp,
+-					"XFS: dquot too small (%d) in %s.",
+-					item->ri_buf[i].i_len, __func__);
++					"XFS: dquot too small (%zd) in %s.",
++					item->ri_buf[i].iov_len, __func__);
+ 				goto next;
+ 			}
+-			fa = xfs_dquot_verify(mp, item->ri_buf[i].i_addr, -1);
++			fa = xfs_dquot_verify(mp, item->ri_buf[i].iov_base, -1);
+ 			if (fa) {
+ 				xfs_alert(mp,
+ 	"dquot corrupt at %pS trying to replay into block 0x%llx",
+@@ -516,7 +516,7 @@ xlog_recover_do_reg_buffer(
+ 
+ 		memcpy(xfs_buf_offset(bp,
+ 			(uint)bit << XFS_BLF_SHIFT),	/* dest */
+-			item->ri_buf[i].i_addr,		/* source */
++			item->ri_buf[i].iov_base,		/* source */
+ 			nbits<<XFS_BLF_SHIFT);		/* length */
+  next:
+ 		i++;
+@@ -652,8 +652,8 @@ xlog_recover_do_inode_buffer(
+ 		if (next_unlinked_offset < reg_buf_offset)
+ 			continue;
+ 
+-		ASSERT(item->ri_buf[item_index].i_addr != NULL);
+-		ASSERT((item->ri_buf[item_index].i_len % XFS_BLF_CHUNK) == 0);
++		ASSERT(item->ri_buf[item_index].iov_base != NULL);
++		ASSERT((item->ri_buf[item_index].iov_len % XFS_BLF_CHUNK) == 0);
+ 		ASSERT((reg_buf_offset + reg_buf_bytes) <= BBTOB(bp->b_length));
+ 
+ 		/*
+@@ -661,7 +661,7 @@ xlog_recover_do_inode_buffer(
+ 		 * current di_next_unlinked field.  Extract its value
+ 		 * and copy it to the buffer copy.
+ 		 */
+-		logged_nextp = item->ri_buf[item_index].i_addr +
++		logged_nextp = item->ri_buf[item_index].iov_base +
+ 				next_unlinked_offset - reg_buf_offset;
+ 		if (XFS_IS_CORRUPT(mp, *logged_nextp == 0)) {
+ 			xfs_alert(mp,
+@@ -951,7 +951,7 @@ xlog_recover_buf_commit_pass2(
+ 	struct xlog_recover_item	*item,
+ 	xfs_lsn_t			current_lsn)
+ {
+-	struct xfs_buf_log_format	*buf_f = item->ri_buf[0].i_addr;
++	struct xfs_buf_log_format	*buf_f = item->ri_buf[0].iov_base;
+ 	struct xfs_mount		*mp = log->l_mp;
+ 	struct xfs_buf			*bp;
+ 	int				error;
+--- a/fs/xfs/xfs_dquot_item_recover.c
++++ b/fs/xfs/xfs_dquot_item_recover.c
+@@ -34,10 +34,10 @@ xlog_recover_dquot_ra_pass2(
+ 	if (mp->m_qflags == 0)
+ 		return;
+ 
+-	recddq = item->ri_buf[1].i_addr;
++	recddq = item->ri_buf[1].iov_base;
+ 	if (recddq == NULL)
+ 		return;
+-	if (item->ri_buf[1].i_len < sizeof(struct xfs_disk_dquot))
++	if (item->ri_buf[1].iov_len < sizeof(struct xfs_disk_dquot))
+ 		return;
+ 
+ 	type = recddq->d_type & XFS_DQTYPE_REC_MASK;
+@@ -45,7 +45,7 @@ xlog_recover_dquot_ra_pass2(
+ 	if (log->l_quotaoffs_flag & type)
+ 		return;
+ 
+-	dq_f = item->ri_buf[0].i_addr;
++	dq_f = item->ri_buf[0].iov_base;
+ 	ASSERT(dq_f);
+ 	ASSERT(dq_f->qlf_len == 1);
+ 
+@@ -79,14 +79,14 @@ xlog_recover_dquot_commit_pass2(
+ 	if (mp->m_qflags == 0)
+ 		return 0;
+ 
+-	recddq = item->ri_buf[1].i_addr;
++	recddq = item->ri_buf[1].iov_base;
+ 	if (recddq == NULL) {
+ 		xfs_alert(log->l_mp, "NULL dquot in %s.", __func__);
+ 		return -EFSCORRUPTED;
+ 	}
+-	if (item->ri_buf[1].i_len < sizeof(struct xfs_disk_dquot)) {
+-		xfs_alert(log->l_mp, "dquot too small (%d) in %s.",
+-			item->ri_buf[1].i_len, __func__);
++	if (item->ri_buf[1].iov_len < sizeof(struct xfs_disk_dquot)) {
++		xfs_alert(log->l_mp, "dquot too small (%zd) in %s.",
++			item->ri_buf[1].iov_len, __func__);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+@@ -108,7 +108,7 @@ xlog_recover_dquot_commit_pass2(
+ 	 * The other possibility, of course, is that the quota subsystem was
+ 	 * removed since the last mount - ENOSYS.
+ 	 */
+-	dq_f = item->ri_buf[0].i_addr;
++	dq_f = item->ri_buf[0].iov_base;
+ 	ASSERT(dq_f);
+ 	fa = xfs_dquot_verify(mp, recddq, dq_f->qlf_id);
+ 	if (fa) {
+@@ -147,7 +147,7 @@ xlog_recover_dquot_commit_pass2(
+ 		}
+ 	}
+ 
+-	memcpy(ddq, recddq, item->ri_buf[1].i_len);
++	memcpy(ddq, recddq, item->ri_buf[1].iov_len);
+ 	if (xfs_has_crc(mp)) {
+ 		xfs_update_cksum((char *)dqb, sizeof(struct xfs_dqblk),
+ 				 XFS_DQUOT_CRC_OFF);
+@@ -192,7 +192,7 @@ xlog_recover_quotaoff_commit_pass1(
+ 	struct xlog			*log,
+ 	struct xlog_recover_item	*item)
+ {
+-	struct xfs_qoff_logformat	*qoff_f = item->ri_buf[0].i_addr;
++	struct xfs_qoff_logformat	*qoff_f = item->ri_buf[0].iov_base;
+ 	ASSERT(qoff_f);
+ 
+ 	/*
+--- a/fs/xfs/xfs_extfree_item.c
++++ b/fs/xfs/xfs_extfree_item.c
+@@ -171,15 +171,18 @@ xfs_efi_init(
+  * It will handle the conversion of formats if necessary.
+  */
+ STATIC int
+-xfs_efi_copy_format(xfs_log_iovec_t *buf, xfs_efi_log_format_t *dst_efi_fmt)
+-{
+-	xfs_efi_log_format_t *src_efi_fmt = buf->i_addr;
+-	uint i;
+-	uint len = xfs_efi_log_format_sizeof(src_efi_fmt->efi_nextents);
+-	uint len32 = xfs_efi_log_format32_sizeof(src_efi_fmt->efi_nextents);
+-	uint len64 = xfs_efi_log_format64_sizeof(src_efi_fmt->efi_nextents);
++xfs_efi_copy_format(
++	struct kvec			*buf,
++	struct xfs_efi_log_format	*dst_efi_fmt)
++{
++	struct xfs_efi_log_format	*src_efi_fmt = buf->iov_base;
++	uint				len, len32, len64, i;
++
++	len = xfs_efi_log_format_sizeof(src_efi_fmt->efi_nextents);
++	len32 = xfs_efi_log_format32_sizeof(src_efi_fmt->efi_nextents);
++	len64 = xfs_efi_log_format64_sizeof(src_efi_fmt->efi_nextents);
+ 
+-	if (buf->i_len == len) {
++	if (buf->iov_len == len) {
+ 		memcpy(dst_efi_fmt, src_efi_fmt,
+ 		       offsetof(struct xfs_efi_log_format, efi_extents));
+ 		for (i = 0; i < src_efi_fmt->efi_nextents; i++)
+@@ -187,8 +190,8 @@ xfs_efi_copy_format(xfs_log_iovec_t *buf
+ 			       &src_efi_fmt->efi_extents[i],
+ 			       sizeof(struct xfs_extent));
+ 		return 0;
+-	} else if (buf->i_len == len32) {
+-		xfs_efi_log_format_32_t *src_efi_fmt_32 = buf->i_addr;
++	} else if (buf->iov_len == len32) {
++		xfs_efi_log_format_32_t *src_efi_fmt_32 = buf->iov_base;
+ 
+ 		dst_efi_fmt->efi_type     = src_efi_fmt_32->efi_type;
+ 		dst_efi_fmt->efi_size     = src_efi_fmt_32->efi_size;
+@@ -201,8 +204,8 @@ xfs_efi_copy_format(xfs_log_iovec_t *buf
+ 				src_efi_fmt_32->efi_extents[i].ext_len;
+ 		}
+ 		return 0;
+-	} else if (buf->i_len == len64) {
+-		xfs_efi_log_format_64_t *src_efi_fmt_64 = buf->i_addr;
++	} else if (buf->iov_len == len64) {
++		xfs_efi_log_format_64_t *src_efi_fmt_64 = buf->iov_base;
+ 
+ 		dst_efi_fmt->efi_type     = src_efi_fmt_64->efi_type;
+ 		dst_efi_fmt->efi_size     = src_efi_fmt_64->efi_size;
+@@ -216,8 +219,8 @@ xfs_efi_copy_format(xfs_log_iovec_t *buf
+ 		}
+ 		return 0;
+ 	}
+-	XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, NULL, buf->i_addr,
+-			buf->i_len);
++	XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, NULL, buf->iov_base,
++			buf->iov_len);
+ 	return -EFSCORRUPTED;
+ }
+ 
+@@ -791,11 +794,11 @@ xlog_recover_efi_commit_pass2(
+ 	struct xfs_efi_log_format	*efi_formatp;
+ 	int				error;
+ 
+-	efi_formatp = item->ri_buf[0].i_addr;
++	efi_formatp = item->ri_buf[0].iov_base;
+ 
+-	if (item->ri_buf[0].i_len < xfs_efi_log_format_sizeof(0)) {
++	if (item->ri_buf[0].iov_len < xfs_efi_log_format_sizeof(0)) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+-				item->ri_buf[0].i_addr, item->ri_buf[0].i_len);
++				item->ri_buf[0].iov_base, item->ri_buf[0].iov_len);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+@@ -832,9 +835,9 @@ xlog_recover_efd_commit_pass2(
+ 	xfs_lsn_t			lsn)
+ {
+ 	struct xfs_efd_log_format	*efd_formatp;
+-	int				buflen = item->ri_buf[0].i_len;
++	int				buflen = item->ri_buf[0].iov_len;
+ 
+-	efd_formatp = item->ri_buf[0].i_addr;
++	efd_formatp = item->ri_buf[0].iov_base;
+ 
+ 	if (buflen < sizeof(struct xfs_efd_log_format)) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, log->l_mp,
+@@ -842,9 +845,9 @@ xlog_recover_efd_commit_pass2(
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+-	if (item->ri_buf[0].i_len != xfs_efd_log_format32_sizeof(
++	if (item->ri_buf[0].iov_len != xfs_efd_log_format32_sizeof(
+ 						efd_formatp->efd_nextents) &&
+-	    item->ri_buf[0].i_len != xfs_efd_log_format64_sizeof(
++	    item->ri_buf[0].iov_len != xfs_efd_log_format64_sizeof(
+ 						efd_formatp->efd_nextents)) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, log->l_mp,
+ 				efd_formatp, buflen);
+--- a/fs/xfs/xfs_icreate_item.c
++++ b/fs/xfs/xfs_icreate_item.c
+@@ -158,7 +158,7 @@ xlog_recover_icreate_commit_pass2(
+ 	int				nbufs;
+ 	int				i;
+ 
+-	icl = (struct xfs_icreate_log *)item->ri_buf[0].i_addr;
++	icl = (struct xfs_icreate_log *)item->ri_buf[0].iov_base;
+ 	if (icl->icl_type != XFS_LI_ICREATE) {
+ 		xfs_warn(log->l_mp, "xlog_recover_do_icreate_trans: bad type");
+ 		return -EINVAL;
+--- a/fs/xfs/xfs_inode_item.c
++++ b/fs/xfs/xfs_inode_item.c
+@@ -1177,12 +1177,12 @@ xfs_iflush_shutdown_abort(
+  */
+ int
+ xfs_inode_item_format_convert(
+-	struct xfs_log_iovec		*buf,
++	struct kvec			*buf,
+ 	struct xfs_inode_log_format	*in_f)
+ {
+-	struct xfs_inode_log_format_32	*in_f32 = buf->i_addr;
++	struct xfs_inode_log_format_32	*in_f32 = buf->iov_base;
+ 
+-	if (buf->i_len != sizeof(*in_f32)) {
++	if (buf->iov_len != sizeof(*in_f32)) {
+ 		XFS_ERROR_REPORT(__func__, XFS_ERRLEVEL_LOW, NULL);
+ 		return -EFSCORRUPTED;
+ 	}
+--- a/fs/xfs/xfs_inode_item.h
++++ b/fs/xfs/xfs_inode_item.h
+@@ -46,8 +46,8 @@ extern void xfs_inode_item_init(struct x
+ extern void xfs_inode_item_destroy(struct xfs_inode *);
+ extern void xfs_iflush_abort(struct xfs_inode *);
+ extern void xfs_iflush_shutdown_abort(struct xfs_inode *);
+-extern int xfs_inode_item_format_convert(xfs_log_iovec_t *,
+-					 struct xfs_inode_log_format *);
++int xfs_inode_item_format_convert(struct kvec *buf,
++		struct xfs_inode_log_format *in_f);
+ 
+ extern struct kmem_cache	*xfs_ili_cache;
+ 
+--- a/fs/xfs/xfs_inode_item_recover.c
++++ b/fs/xfs/xfs_inode_item_recover.c
+@@ -28,13 +28,13 @@ xlog_recover_inode_ra_pass2(
+ 	struct xlog                     *log,
+ 	struct xlog_recover_item        *item)
+ {
+-	if (item->ri_buf[0].i_len == sizeof(struct xfs_inode_log_format)) {
+-		struct xfs_inode_log_format	*ilfp = item->ri_buf[0].i_addr;
++	if (item->ri_buf[0].iov_len == sizeof(struct xfs_inode_log_format)) {
++		struct xfs_inode_log_format	*ilfp = item->ri_buf[0].iov_base;
+ 
+ 		xlog_buf_readahead(log, ilfp->ilf_blkno, ilfp->ilf_len,
+ 				   &xfs_inode_buf_ra_ops);
+ 	} else {
+-		struct xfs_inode_log_format_32	*ilfp = item->ri_buf[0].i_addr;
++		struct xfs_inode_log_format_32	*ilfp = item->ri_buf[0].iov_base;
+ 
+ 		xlog_buf_readahead(log, ilfp->ilf_blkno, ilfp->ilf_len,
+ 				   &xfs_inode_buf_ra_ops);
+@@ -288,8 +288,8 @@ xlog_recover_inode_commit_pass2(
+ 	int				need_free = 0;
+ 	xfs_failaddr_t			fa;
+ 
+-	if (item->ri_buf[0].i_len == sizeof(struct xfs_inode_log_format)) {
+-		in_f = item->ri_buf[0].i_addr;
++	if (item->ri_buf[0].iov_len == sizeof(struct xfs_inode_log_format)) {
++		in_f = item->ri_buf[0].iov_base;
+ 	} else {
+ 		in_f = kmem_alloc(sizeof(struct xfs_inode_log_format), 0);
+ 		need_free = 1;
+@@ -327,7 +327,7 @@ xlog_recover_inode_commit_pass2(
+ 		error = -EFSCORRUPTED;
+ 		goto out_release;
+ 	}
+-	ldip = item->ri_buf[1].i_addr;
++	ldip = item->ri_buf[1].iov_base;
+ 	if (XFS_IS_CORRUPT(mp, ldip->di_magic != XFS_DINODE_MAGIC)) {
+ 		xfs_alert(mp,
+ 			"%s: Bad inode log record, rec ptr "PTR_FMT", ino %lld",
+@@ -432,12 +432,12 @@ xlog_recover_inode_commit_pass2(
+ 		goto out_release;
+ 	}
+ 	isize = xfs_log_dinode_size(mp);
+-	if (unlikely(item->ri_buf[1].i_len > isize)) {
++	if (unlikely(item->ri_buf[1].iov_len > isize)) {
+ 		XFS_CORRUPTION_ERROR("Bad log dinode size", XFS_ERRLEVEL_LOW,
+ 				     mp, ldip, sizeof(*ldip));
+ 		xfs_alert(mp,
+-			"Bad inode 0x%llx log dinode size 0x%x",
+-			in_f->ilf_ino, item->ri_buf[1].i_len);
++			"Bad inode 0x%llx log dinode size 0x%zx",
++			in_f->ilf_ino, item->ri_buf[1].iov_len);
+ 		error = -EFSCORRUPTED;
+ 		goto out_release;
+ 	}
+@@ -460,8 +460,8 @@ xlog_recover_inode_commit_pass2(
+ 
+ 	if (in_f->ilf_size == 2)
+ 		goto out_owner_change;
+-	len = item->ri_buf[2].i_len;
+-	src = item->ri_buf[2].i_addr;
++	len = item->ri_buf[2].iov_len;
++	src = item->ri_buf[2].iov_base;
+ 	ASSERT(in_f->ilf_size <= 4);
+ 	ASSERT((in_f->ilf_size == 3) || (fields & XFS_ILOG_AFORK));
+ 	ASSERT(!(fields & XFS_ILOG_DFORK) ||
+@@ -498,8 +498,8 @@ xlog_recover_inode_commit_pass2(
+ 		} else {
+ 			attr_index = 2;
+ 		}
+-		len = item->ri_buf[attr_index].i_len;
+-		src = item->ri_buf[attr_index].i_addr;
++		len = item->ri_buf[attr_index].iov_len;
++		src = item->ri_buf[attr_index].iov_base;
+ 		ASSERT(len == xlog_calc_iovec_len(in_f->ilf_asize));
+ 
+ 		switch (in_f->ilf_fields & XFS_ILOG_AFORK) {
+--- a/fs/xfs/xfs_log_recover.c
++++ b/fs/xfs/xfs_log_recover.c
+@@ -2105,15 +2105,15 @@ xlog_recover_add_to_cont_trans(
+ 	item = list_entry(trans->r_itemq.prev, struct xlog_recover_item,
+ 			  ri_list);
+ 
+-	old_ptr = item->ri_buf[item->ri_cnt-1].i_addr;
+-	old_len = item->ri_buf[item->ri_cnt-1].i_len;
++	old_ptr = item->ri_buf[item->ri_cnt-1].iov_base;
++	old_len = item->ri_buf[item->ri_cnt-1].iov_len;
+ 
+ 	ptr = kvrealloc(old_ptr, old_len, len + old_len, GFP_KERNEL);
+ 	if (!ptr)
+ 		return -ENOMEM;
+ 	memcpy(&ptr[old_len], dp, len);
+-	item->ri_buf[item->ri_cnt-1].i_len += len;
+-	item->ri_buf[item->ri_cnt-1].i_addr = ptr;
++	item->ri_buf[item->ri_cnt-1].iov_len += len;
++	item->ri_buf[item->ri_cnt-1].iov_base = ptr;
+ 	trace_xfs_log_recover_item_add_cont(log, trans, item, 0);
+ 	return 0;
+ }
+@@ -2198,7 +2198,7 @@ xlog_recover_add_to_trans(
+ 
+ 		item->ri_total = in_f->ilf_size;
+ 		item->ri_buf =
+-			kmem_zalloc(item->ri_total * sizeof(xfs_log_iovec_t),
++			kmem_zalloc(item->ri_total * sizeof(*item->ri_buf),
+ 				    0);
+ 	}
+ 
+@@ -2212,8 +2212,8 @@ xlog_recover_add_to_trans(
+ 	}
+ 
+ 	/* Description region is ri_buf[0] */
+-	item->ri_buf[item->ri_cnt].i_addr = ptr;
+-	item->ri_buf[item->ri_cnt].i_len  = len;
++	item->ri_buf[item->ri_cnt].iov_base = ptr;
++	item->ri_buf[item->ri_cnt].iov_len  = len;
+ 	item->ri_cnt++;
+ 	trace_xfs_log_recover_item_add(log, trans, item, 0);
+ 	return 0;
+@@ -2237,7 +2237,7 @@ xlog_recover_free_trans(
+ 		/* Free the regions in the item. */
+ 		list_del(&item->ri_list);
+ 		for (i = 0; i < item->ri_cnt; i++)
+-			kmem_free(item->ri_buf[i].i_addr);
++			kmem_free(item->ri_buf[i].iov_base);
+ 		/* Free the item itself */
+ 		kmem_free(item->ri_buf);
+ 		kmem_free(item);
+--- a/fs/xfs/xfs_refcount_item.c
++++ b/fs/xfs/xfs_refcount_item.c
+@@ -631,18 +631,18 @@ xlog_recover_cui_commit_pass2(
+ 	struct xfs_cui_log_format	*cui_formatp;
+ 	size_t				len;
+ 
+-	cui_formatp = item->ri_buf[0].i_addr;
++	cui_formatp = item->ri_buf[0].iov_base;
+ 
+-	if (item->ri_buf[0].i_len < xfs_cui_log_format_sizeof(0)) {
++	if (item->ri_buf[0].iov_len < xfs_cui_log_format_sizeof(0)) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+-				item->ri_buf[0].i_addr, item->ri_buf[0].i_len);
++				item->ri_buf[0].iov_base, item->ri_buf[0].iov_len);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+ 	len = xfs_cui_log_format_sizeof(cui_formatp->cui_nextents);
+-	if (item->ri_buf[0].i_len != len) {
++	if (item->ri_buf[0].iov_len != len) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+-				item->ri_buf[0].i_addr, item->ri_buf[0].i_len);
++				item->ri_buf[0].iov_base, item->ri_buf[0].iov_len);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+@@ -676,10 +676,10 @@ xlog_recover_cud_commit_pass2(
+ {
+ 	struct xfs_cud_log_format	*cud_formatp;
+ 
+-	cud_formatp = item->ri_buf[0].i_addr;
+-	if (item->ri_buf[0].i_len != sizeof(struct xfs_cud_log_format)) {
++	cud_formatp = item->ri_buf[0].iov_base;
++	if (item->ri_buf[0].iov_len != sizeof(struct xfs_cud_log_format)) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, log->l_mp,
+-				item->ri_buf[0].i_addr, item->ri_buf[0].i_len);
++				item->ri_buf[0].iov_base, item->ri_buf[0].iov_len);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+--- a/fs/xfs/xfs_rmap_item.c
++++ b/fs/xfs/xfs_rmap_item.c
+@@ -684,18 +684,18 @@ xlog_recover_rui_commit_pass2(
+ 	struct xfs_rui_log_format	*rui_formatp;
+ 	size_t				len;
+ 
+-	rui_formatp = item->ri_buf[0].i_addr;
++	rui_formatp = item->ri_buf[0].iov_base;
+ 
+-	if (item->ri_buf[0].i_len < xfs_rui_log_format_sizeof(0)) {
++	if (item->ri_buf[0].iov_len < xfs_rui_log_format_sizeof(0)) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+-				item->ri_buf[0].i_addr, item->ri_buf[0].i_len);
++				item->ri_buf[0].iov_base, item->ri_buf[0].iov_len);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+ 	len = xfs_rui_log_format_sizeof(rui_formatp->rui_nextents);
+-	if (item->ri_buf[0].i_len != len) {
++	if (item->ri_buf[0].iov_len != len) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+-				item->ri_buf[0].i_addr, item->ri_buf[0].i_len);
++				item->ri_buf[0].iov_base, item->ri_buf[0].iov_len);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+@@ -729,10 +729,10 @@ xlog_recover_rud_commit_pass2(
+ {
+ 	struct xfs_rud_log_format	*rud_formatp;
+ 
+-	rud_formatp = item->ri_buf[0].i_addr;
+-	if (item->ri_buf[0].i_len != sizeof(struct xfs_rud_log_format)) {
++	rud_formatp = item->ri_buf[0].iov_base;
++	if (item->ri_buf[0].iov_len != sizeof(struct xfs_rud_log_format)) {
+ 		XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, log->l_mp,
+-				rud_formatp, item->ri_buf[0].i_len);
++				rud_formatp, item->ri_buf[0].iov_len);
+ 		return -EFSCORRUPTED;
+ 	}
+ 
+--- a/fs/xfs/xfs_trans.h
++++ b/fs/xfs/xfs_trans.h
+@@ -15,7 +15,6 @@ struct xfs_efd_log_item;
+ struct xfs_efi_log_item;
+ struct xfs_inode;
+ struct xfs_item_ops;
+-struct xfs_log_iovec;
+ struct xfs_mount;
+ struct xfs_trans;
+ struct xfs_trans_res;
 
 
