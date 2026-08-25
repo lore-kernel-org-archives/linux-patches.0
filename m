@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC343470421;
-	Tue, 25 Aug 2026 13:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC97D2E06E4;
+	Tue, 25 Aug 2026 13:38:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665135; cv=none; b=jbMCZyc+x++49/QtIpvz6X8ewvqDCbAUNl5p/Ap7DrG/l1RQam5pkRGRjDXxDq9VNo2lXwPr/6prbjfbyMihsjE+BpBoQjqW2sNpCskUlkGZj5US6mlxqFg3LaGGvkFQnQYGBji3AIal6FZaYcPvE9W7Ji17Am2jYqHbsz8VgsM=
+	t=1787665137; cv=none; b=ubxayP17sypWdYWHA9POmZE95Zb2Pmup25BeGk5ugOlTbikJe/fA1HtzQj+Rb6xqnZcQW+T/DgYLAM2gh4m9W3oKu28AKTibnRsMdE8O3Qy9KRYbDS0LMGMcQmqE3kuvAE7wyM1QWSNrKgyyH860/Vpr22HDr42Agm58sJvfQhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665135; c=relaxed/simple;
-	bh=LaScYqOqHKXZ7yW+VTehEMFyX8H6bEEihJLC2Qbjcy0=;
+	s=arc-20240116; t=1787665137; c=relaxed/simple;
+	bh=nSCgxD9E54abWTZ2hY1dOyRLUiG1UF5LzWfvo+pdUy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cSZ4g9GaLm8X5RR0vsYascJb0I+yibwQlfXpIdDXzCYBmiVvkVH3SvKErPgoogoVv0yRw+VFnH/EoD1vm7sfAjgp/Tqegu4k4CGzpP05KyFWj6j8kMr36Dh8vksM+s0fTTVVX9XtmwYx/QzudWCpbkLlOMD+fqtRxNn1H5EZ1QI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GUCeDq/G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tZQADifWX7L0ioRA6JKUZ4YtmHIrfLM13lxANBXrYnHJ+K2JYP/kvLFzqHcISYZUSFSZZu2INpwvgTuqHeFnQqhf5kqIKbAu1WZXJjB1qnLQU8VOTFMIWAIjc3gJE1FyWosfmIPq/IZxE++ygcJhbA4tsB4YdHPvcqg39+2d6a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuI9VlcL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GUCeDq/G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8B71F000E9;
-	Tue, 25 Aug 2026 13:38:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuI9VlcL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDCD1F000E9;
+	Tue, 25 Aug 2026 13:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665133;
-	bh=aODAbr8eiItrvqPpzqKeJCkRMnTXUvefwvoUo2wYTP0=;
+	s=korg; t=1787665136;
+	bh=tnQ1wCVI/5g87V4uibs58V3t9bzeqXFKVsSw5UlxGWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GUCeDq/GUQVRLphvPSUgjeqVbEgpA5WfdGbkNypMKvBnZ2BKgV3e2eyiqfgGz3R/i
-	 tx6DsB8rhXV3DeTkSD6K/XydZxsWDCI7U/+/wFgoraliEJozhICRV0N7grwE0Oes3g
-	 AeIGQQLV3qggScoXyppLM5C1PDO3MvFo2W9CiCT8=
+	b=xuI9VlcLcTKQInf9ZHHprkW68l2Xwe7YdXYAFmzaYyiaDpRtdPWIuSBjiBfLxk1X7
+	 faj42eLRulyTQh/lby9T+7jfI8lEQKn0aNIRLQcvMvSNIgSer2GFPyMaltwzKtRuwQ
+	 37Shv/Zo6Fug/J2g6kbqAoe5FxdeDxMsnQAOMZ2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vishnu Razdan <vrazdan@openai.com>,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 19/94] io_uring/io-wq: fix worker accounting when canceling creation callbacks
-Date: Tue, 25 Aug 2026 15:25:15 +0200
-Message-ID: <20260825132542.647231774@linuxfoundation.org>
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 02/94] serial: sc16is7xx: use guards for simple mutex locks
+Date: Tue, 25 Aug 2026 15:24:58 +0200
+Message-ID: <20260825132541.977839487@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -51,56 +50,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishnu Razdan <vrazdan@openai.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit 297b5ccea4acacaa47c150f043bce695202afbf1 upstream.
+[ Upstream commit 0f4f88bfd7e7bf3f3293045fffdc63586b0a889f ]
 
-create_worker_cb() reserves an io-wq worker slot only after its
-task-work callback runs. If the callback is canceled before then,
-io_worker_cancel_cb() still decrements acct->nr_workers. When an
-existing worker retires with its creation callback pending, that
-worker has already decremented the same account's worker count.
+Guards can help to make the code more readable, so use them wherever they
+do so.
 
-The resulting undercount permits worker creation beyond the account's
-configured limit. On an AST2600 OpenBMC system, an unchanged sensor
-daemon reached 4,291 threads with the original kernel. With an
-equivalent downstream fix, 25 passive samples under its normal
-workload showed 6-9 threads.
+In sc16is7xx_port_irq(), labels and 'rc' locals are eliminated completely.
 
-Decrement nr_workers only when the canceled callback is not
-create_worker_cb(). Continuation callbacks still release their reserved
-slot, and both callback types retain the existing running-count,
-reference-count, and create-state cleanup.
-
-Fixes: 1d5f5ea7cb7d ("io-wq: remove worker to owner tw dependency")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Vishnu Razdan <vrazdan@openai.com>
-Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Link: https://patch.msgid.link/20260811-vrazdan-io-wq-b4-submit-v1-1-719ced16c921@openai.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://patch.msgid.link/20251027142957.1032073-6-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 246ac114f485 ("serial: sc16is7xx: enable THRI before filling TX FIFO")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/tty/serial/sc16is7xx.c |   23 ++++++++---------------
+ 1 file changed, 8 insertions(+), 15 deletions(-)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -210,9 +210,12 @@ static void io_worker_cancel_cb(struct i
- 	struct io_wq *wq = worker->wq;
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -11,6 +11,7 @@
+ #define DEFAULT_SYMBOL_NAMESPACE "SERIAL_NXP_SC16IS7XX"
  
- 	atomic_dec(&acct->nr_running);
--	raw_spin_lock(&acct->workers_lock);
--	acct->nr_workers--;
--	raw_spin_unlock(&acct->workers_lock);
-+	/* create_worker_cb() has not reserved a worker slot yet. */
-+	if (worker->create_work.func != create_worker_cb) {
-+		raw_spin_lock(&acct->workers_lock);
-+		acct->nr_workers--;
-+		raw_spin_unlock(&acct->workers_lock);
-+	}
- 	io_worker_ref_put(wq);
- 	clear_bit_unlock(0, &worker->create_state);
- 	io_worker_release(worker);
+ #include <linux/bits.h>
++#include <linux/cleanup.h>
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/device.h>
+@@ -782,18 +783,15 @@ static void sc16is7xx_update_mlines(stru
+ 
+ static bool sc16is7xx_port_irq(struct sc16is7xx_port *s, int portno)
+ {
+-	bool rc = true;
+ 	unsigned int iir, rxlen;
+ 	struct uart_port *port = &s->p[portno].port;
+ 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+ 
+-	mutex_lock(&one->lock);
++	guard(mutex)(&one->lock);
+ 
+ 	iir = sc16is7xx_port_read(port, SC16IS7XX_IIR_REG);
+-	if (iir & SC16IS7XX_IIR_NO_INT_BIT) {
+-		rc = false;
+-		goto out_port_irq;
+-	}
++	if (iir & SC16IS7XX_IIR_NO_INT_BIT)
++		return false;
+ 
+ 	iir &= SC16IS7XX_IIR_ID_MASK;
+ 
+@@ -833,10 +831,7 @@ static bool sc16is7xx_port_irq(struct sc
+ 		break;
+ 	}
+ 
+-out_port_irq:
+-	mutex_unlock(&one->lock);
+-
+-	return rc;
++	return true;
+ }
+ 
+ static irqreturn_t sc16is7xx_irq(int irq, void *dev_id)
+@@ -878,9 +873,8 @@ static void sc16is7xx_tx_proc(struct kth
+ 	    (port->rs485.delay_rts_before_send > 0))
+ 		msleep(port->rs485.delay_rts_before_send);
+ 
+-	mutex_lock(&one->lock);
++	guard(mutex)(&one->lock);
+ 	sc16is7xx_handle_tx(port);
+-	mutex_unlock(&one->lock);
+ }
+ 
+ static void sc16is7xx_reconf_rs485(struct uart_port *port)
+@@ -947,9 +941,8 @@ static void sc16is7xx_ms_proc(struct kth
+ 	struct sc16is7xx_port *s = dev_get_drvdata(one->port.dev);
+ 
+ 	if (one->port.state) {
+-		mutex_lock(&one->lock);
+-		sc16is7xx_update_mlines(one);
+-		mutex_unlock(&one->lock);
++		scoped_guard(mutex, &one->lock)
++			sc16is7xx_update_mlines(one);
+ 
+ 		kthread_queue_delayed_work(&s->kworker, &one->ms_work, HZ);
+ 	}
 
 
