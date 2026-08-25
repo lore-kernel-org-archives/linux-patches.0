@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B2D45FFCB;
-	Tue, 25 Aug 2026 13:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE0145FFCB;
+	Tue, 25 Aug 2026 13:38:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665122; cv=none; b=AIkhs4hAz9XZIANvI+9U+0vq9eU56btJU26eoiQLnDBaJAWIEMSk2Xh3PT6wFSJPi4pNLMxfElhGT4hJ8DvDV8xE1IIOC/CMZRD23GSsIGT5jmm716WoCFMBtiA3Uc7aiA0SA3ZP6ybdZhAbBk+OShek6CjfDW5ny3UIRGVSNzc=
+	t=1787665126; cv=none; b=Ch2aZ4P1G6VVg14HWsi2UeOke9/9O3DzD7atFsUughaJTjhrsJwdV93/zIgmWw9Qbaqj5YtlW7TKLflYGPn6oIhAZOEHq9dfPOOjJSKmDj8nOHs9EttpUMTyMxSlPIFFn4f6x5oCKr6AuCdPwaXO2Zohmbw0AG9z06snQuWJcao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665122; c=relaxed/simple;
-	bh=AJYI6Apf1PnZxkn81NPwL8SxRhjjBq7ke2MwcaMq714=;
+	s=arc-20240116; t=1787665126; c=relaxed/simple;
+	bh=oZIqLfFghJH4l6Z7yzcFNed6x+eEcEEptwOuTaUMVRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=irG3Svw86/GiBILs6pYQadh1C5x6ZFJwehvmj3v0NIWHM7ziaonfjHgKp1yDMOTHnc/WBC9eQ/EmWGBDyAzvdqOzB8Ojg49VEwgj3DkdgvdUnIln1wGXJeRatNPfdSx15yrJZKLRhDowfb0yymUTuLmnBhQRUUx5DNAs/lhB5FY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0DhGTskj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j+vDegDmaucDVsK4/dUjkm+RGPGGwsUJ2H0CeF11Vsh+hUzuDuH9/CJXOa69INfmwuSchi+BXqsMr8kz99mgW0S6th4Q+OFYgi99kxLralj5Maetp2nRUoS8exFdWKqC+dZLhk5TGHa/BA7tyqE0D5JoUtvScwoIgJtUfrLYoRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WON/bd5X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0DhGTskj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7C51F000E9;
-	Tue, 25 Aug 2026 13:38:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WON/bd5X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D2D91F000E9;
+	Tue, 25 Aug 2026 13:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665121;
-	bh=OO6ICqQOYRAOxEOpJL+LFMuourH28ZU8SsEwJwTnv1M=;
+	s=korg; t=1787665124;
+	bh=Xss6k7QQ3iTSfRzSPaUKOCMI7cmmw80jESUQj1zzncc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0DhGTskjG+4BdKq31IWOlScTVUYaZjq4/cnpWASWtxY+KwW5Mj9kRhpBELjvlHFki
-	 m7wkxyW5DvvJ+ao42QzXRshasY2SDabVgtkntJZRdQWzWGaYyGVUK5zcKyQE8PPf+E
-	 zYFUGg8DUAVqyGuQ3ZQu/Jd9dmFc63BIdjg/lBe0=
+	b=WON/bd5XZGlejTIbdp3pz6VI0t0jgBDQsVHskT/sj59m4zpwO75Jv0EWUSfn0fPuo
+	 QcV7qqC0tV3gC4XZhQxOWM04kiV3J3SxGFfYRshN8kjqzxsmFWHQIvcUVeZJSxas15
+	 FFM3wmwz/ZFjckj73lDphy3cbtLf4RmSRpNONobM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Hannes Reinecke <hare@suse.de>,
-	Christoph Hellwig <hch@lst.de>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.18 15/94] nvmet: fix NULL pointer dereference in nvmet_execute_identify_nslist()
-Date: Tue, 25 Aug 2026 15:25:11 +0200
-Message-ID: <20260825132542.489754724@linuxfoundation.org>
+	Chengfeng Lin <lin2530632123@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 16/94] io_uring/futex: dont mark futex wake requests as inflight
+Date: Tue, 25 Aug 2026 15:25:12 +0200
+Message-ID: <20260825132542.529543671@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -53,43 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 79aba4c9403419d822972d2851f2a96a2c0531cf upstream.
+commit 73e7019097473fc9f83a334ef2c6ab3343709fef upstream.
 
-When a host issues an Identify command with CNS 07h (Active Namespace ID
-List for a specific I/O Command Set), nvmet_execute_identify_nslist() is
-called with match_css set. The command-set filter dereferences req->ns,
-but this handler never calls nvmet_req_find_ns(), so req->ns is always
-NULL (nvmet_req_init() resets it to NULL). As soon as an enabled
-namespace with an NSID greater than the requested value exists,
-req->ns->csi dereferences a NULL pointer and oopses.
+Commit 079afb081c42 ("io_uring/futex: mark wait requests as inflight")
+added inflight tracking to ensure that do_exit() ->
+io_uring_files_cancel() finds and cancels pending futex waits before the
+mm goes away, as a private futex wait depends on the mm private futex
+hash staying alive for the duration of the request. However, as
+io_futex_prep() is shared between FUTEX_WAIT and FUTEX_WAKE, wake
+requests got marked as inflight as well.
 
-Besides the crash, the comparison is logically wrong: to filter the list
-by command set it must test the command set of the namespace being
-iterated, not a single fixed value. Use the loop variable ns->csi.
+A futex wake executes fully inline at issue time and never depends on
+the mm staying alive after completion, hence there's no need to track
+it. Kill it.
 
-Fixes: 61c9967cd634 ("nvmet: implement active command set ns list")
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 079afb081c42 ("io_uring/futex: mark wait requests as inflight")
+Reported-by: Chengfeng Lin <lin2530632123@gmail.com>
+Link: https://lore.kernel.org/io-uring/CANGjgdn=R_qyUdE=j9za+vkmqcxacbP-84OHXF4nZ4ho9qRyVg@mail.gmail.com/
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/admin-cmd.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/futex.c |   11 +++++++++++
+ io_uring/futex.h |    1 +
+ io_uring/opdef.c |    2 +-
+ 3 files changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/target/admin-cmd.c
-+++ b/drivers/nvme/target/admin-cmd.c
-@@ -963,7 +963,7 @@ static void nvmet_execute_identify_nslis
- 	nvmet_for_each_enabled_ns(&ctrl->subsys->namespaces, idx, ns) {
- 		if (ns->nsid <= min_nsid)
- 			continue;
--		if (match_css && req->ns->csi != req->cmd->identify.csi)
-+		if (match_css && ns->csi != req->cmd->identify.csi)
- 			continue;
- 		list[i++] = cpu_to_le32(ns->nsid);
- 		if (i == buf_size / sizeof(__le32))
+--- a/io_uring/futex.c
++++ b/io_uring/futex.c
+@@ -144,6 +144,17 @@ int io_futex_prep(struct io_kiocb *req,
+ 	    !futex_validate_input(iof->futex_flags, iof->futex_mask))
+ 		return -EINVAL;
+ 
++	return 0;
++}
++
++int io_futex_wait_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
++{
++	int ret;
++
++	ret = io_futex_prep(req, sqe);
++	if (unlikely(ret))
++		return ret;
++
+ 	/* Mark as inflight, so file exit cancelation will find it */
+ 	io_req_track_inflight(req);
+ 	return 0;
+--- a/io_uring/futex.h
++++ b/io_uring/futex.h
+@@ -3,6 +3,7 @@
+ #include "cancel.h"
+ 
+ int io_futex_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe);
++int io_futex_wait_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe);
+ int io_futexv_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe);
+ int io_futex_wait(struct io_kiocb *req, unsigned int issue_flags);
+ int io_futexv_wait(struct io_kiocb *req, unsigned int issue_flags);
+--- a/io_uring/opdef.c
++++ b/io_uring/opdef.c
+@@ -466,7 +466,7 @@ const struct io_issue_def io_issue_defs[
+ 	},
+ 	[IORING_OP_FUTEX_WAIT] = {
+ #if defined(CONFIG_FUTEX)
+-		.prep			= io_futex_prep,
++		.prep			= io_futex_wait_prep,
+ 		.issue			= io_futex_wait,
+ #else
+ 		.prep			= io_eopnotsupp_prep,
 
 
