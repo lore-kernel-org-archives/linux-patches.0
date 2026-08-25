@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F140470421;
-	Tue, 25 Aug 2026 13:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C53E2E06E4;
+	Tue, 25 Aug 2026 13:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665158; cv=none; b=LBFJsKc1LNLcCNcQ07YZljtAF6zE1eWrr8LsHIKKLJAs+g/cx5wzCYJ4TBJlp+dtbGh/a8dApL3D5KMuPle+mFPkV+aLrEBt4tg5hD7m+NtG2x5xF+sx2AjoYfUFoep3ROIqInnYfDfFskNWx4Pd4XcrucNHLvF2Q4nLS2n//fI=
+	t=1787665162; cv=none; b=DU3atH6KDMmVP7wMhOvA2vHpgE/q8RRw2nx8Zz+ezIjpyA/pd4ys5tl56fDHdDCqb29tFOQOXxm9idwTqqxNco9dR++YaAamEIYNnW92XBDjc5Ti2BJ806oJLGKUGT0wLIO0K5Q2sy+nBjWv2Ni8zy5eiPAGFHDob+53vS2WLHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665158; c=relaxed/simple;
-	bh=0C1l3pde/nOA/Cl4G+WdIs+9KoHEKr/DznIrBecTYnI=;
+	s=arc-20240116; t=1787665162; c=relaxed/simple;
+	bh=fiMTXG4wvjWx1suJYYuOlNTDJpqobLJvA0xaKc5DQp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tSvVFIqQWrXJz4xDeMESZGAzpxQp/zB2Bi5UKRt5CBP4ui709ulw6XjtyMyJaoJb7gOwZq7SQSwUQ3BGwBZ8wy8P3Jjf/jXvrohml0xsVPY+GxG93SrQJKIRWozts2WKwnmcl2SuSCVR0nOPUVtq3w4BBm2a2vnXiW9MJlMad/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uRdPbV4E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cJ0tg+lyhlFQQispzpXiDgPks0lGR+XVccLSlxxxchHIvM15lJxsEMtDyZONq2C20ZI7z5sjo1w2Myk0cPb5thcIsCkI1F1Z8mxn7xe4g65YNP9Jt8HzlMhwar5sVQK/vrv/ejAzA0wIWTlc01UGoTNU0MdsCJ1iYhaBQByh2PI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0yejnc4/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRdPbV4E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16FF1F000E9;
-	Tue, 25 Aug 2026 13:39:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0yejnc4/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0A51F000E9;
+	Tue, 25 Aug 2026 13:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665157;
-	bh=1Q3R3InSWKydDtrTDe4C+5uKNIv6R4rD3t1Ps3gueP0=;
+	s=korg; t=1787665161;
+	bh=XgGifl1Si/1oBQBC7y7QiGxze9+xXhKKxOUF7OQN+wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uRdPbV4EkHSYawqe3zIThJcDDAzpm2xHtztihxisKxWFPvz9ygpu7HgB70iIRYTWp
-	 J2T++Ylo8q3Nq9JVjOWLsMZHlPysY4yctYIAszWxSbbHD48drWaHzFmln/nZQNrJOa
-	 tyof4zQ1OJ5qcXIfn1bb9O/IHcUgd5N8aTbRsL50=
+	b=0yejnc4/yzSc3wSxRCpGPiF4MNj5dbaiuFgPdaSz5ef+a3qyrBs2t4QUJ3kfQosEU
+	 Ljhf7JKbEx5htOtizT8NbzxMdXX2AWMa4x/LJzsLkgVtbY8SFyaOx/ZaCY4OcdVGpT
+	 Nhbzru2YuhakEDRqGOtr+u0dSqXOYyhYEp2wP8cQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c37bed40868932d790e9@syzkaller.appspotmail.com,
-	wuyankun <wuyankun@uniontech.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>
-Subject: [PATCH 6.18 26/94] nilfs2: reject invalid block index in GC ioctl
-Date: Tue, 25 Aug 2026 15:25:22 +0200
-Message-ID: <20260825132542.932839616@linuxfoundation.org>
+	Guanghui Yang <3497809730@qq.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.18 27/94] ext4: clear error before retrying inode xattr space fallback
+Date: Tue, 25 Aug 2026 15:25:23 +0200
+Message-ID: <20260825132542.971009326@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -52,87 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Guanghui Yang <3497809730@qq.com>
 
-commit a1735eae55448bc79c2da6593455791e886f6ed8 upstream.
+commit 409a7f12a0933ff2c617fa814c76cef0bd1d457a upstream.
 
-Syzbot reported list corruption caused by a double list_add_tail() call on
-bh->b_assoc_buffers within nilfs_lookup_dirty_data_buffers().
+When ext4_xattr_make_inode_space() returns -ENOSPC,
+ext4_expand_extra_isize_ea() can retry the expansion with
+s_min_extra_isize.  If that retry succeeds by finding enough ibody free
+space, control jumps directly to the shift label.
 
-Analysis revealed that the root cause was the insertion of a page/folio
-with a page index of ULONG_MAX into the page cache via the GC ioctl.
-filemap_get_folios_tag(), called by nilfs_lookup_dirty_data_buffers(),
-repeatedly detects a dirty folio with a page index of ULONG_MAX due to
-index wrap-around, leading to duplicate processing of dirty buffers.
+The previous -ENOSPC is still stored in error in that path, so the
+function can update i_extra_isize but still return -ENOSPC to the
+caller.  Clear error before retrying so a successful fallback expansion
+returns success.
 
-As a preparatory step, the GC ioctl loads the page/folio of the block to
-be moved during GC and inserts it into the page cache based on information
-in the nilfs_vdesc structure passed as an argument.  Normally, this does
-not cause issues because the user-space GC library configures the
-nilfs_vdesc structure properly.  However, since there is no range check on
-the parameters determining the page index, a request with artificially
-crafted parameters -- such as those generated by Syzbot -- can result in a
-page/folio being inserted with a page index of ULONG_MAX, triggering the
-above problem.
+Reproduced with an ext4 image using 1 KiB blocks, project quota support,
+256-byte inodes, and min_extra_isize/want_extra_isize set to 32.
+FS_IOC_FSSETXATTR failures dropped from 802 to 86 after the fix.
 
-This resolves the issue by checking the ranges of 'vd_offset' and
-'vd_vblocknr' in the nilfs_vdesc structure that determine the page index,
-thereby preventing the invalid page/folio insertions.
-
-Reported-by: syzbot+c37bed40868932d790e9@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c37bed40868932d790e9
-Fixes: 7942b919f732 ("nilfs2: ioctl operations")
-Cc: wuyankun <wuyankun@uniontech.com>
+Fixes: 69f3a3039b0d ("ext4: introduce ITAIL helper")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Guanghui Yang <3497809730@qq.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/tencent_192F8A699EFD21126E02101131C9546F3C08@qq.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/ioctl.c |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ fs/ext4/xattr.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/nilfs2/ioctl.c
-+++ b/fs/nilfs2/ioctl.c
-@@ -527,6 +527,7 @@ static int nilfs_ioctl_get_bdescs(struct
-  * Return: 0 on success, or one of the following negative error codes on
-  * failure:
-  * * %-EEXIST	- Block conflict detected.
-+ * * %-EINVAL	- Invalid virtual block descriptor.
-  * * %-EIO	- I/O error.
-  * * %-ENOENT	- Requested block doesn't exist.
-  * * %-ENOMEM	- Insufficient memory available.
-@@ -536,15 +537,30 @@ static int nilfs_ioctl_move_inode_block(
- 					struct list_head *buffers)
- {
- 	struct buffer_head *bh;
-+	__u64 limit_blkidx = (__u64)inode->i_sb->s_maxbytes >> inode->i_blkbits;
- 	int ret;
- 
--	if (vdesc->vd_flags == 0)
-+	/*
-+	 * vblocknr 0 is reserved as an invalid pointer.  Also, limit_blkidx
-+	 * ensures that the page index converted from vd_vblocknr never
-+	 * overflows the page cache limit and respects the architecture's bmap
-+	 * key width.
-+	 */
-+	if (unlikely(vdesc->vd_vblocknr == 0 ||
-+			vdesc->vd_vblocknr >= limit_blkidx))
-+		return -EINVAL;
-+
-+	if (vdesc->vd_flags == 0) {
-+		if (unlikely(vdesc->vd_offset >= limit_blkidx))
-+			return -EINVAL;
-+
- 		ret = nilfs_gccache_submit_read_data(
- 			inode, vdesc->vd_offset, vdesc->vd_blocknr,
- 			vdesc->vd_vblocknr, &bh);
--	else
-+	} else {
- 		ret = nilfs_gccache_submit_read_node(
- 			inode, vdesc->vd_blocknr, vdesc->vd_vblocknr, &bh);
-+	}
- 
- 	if (unlikely(ret < 0)) {
- 		if (ret == -ENOENT)
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -2841,6 +2841,7 @@ retry:
+ 		    s_min_extra_isize) {
+ 			tried_min_extra_isize++;
+ 			new_extra_isize = s_min_extra_isize;
++			error = 0;
+ 			goto retry;
+ 		}
+ 		goto cleanup;
 
 
