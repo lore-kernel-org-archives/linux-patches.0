@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D42848123A;
-	Tue, 25 Aug 2026 13:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98723481252;
+	Tue, 25 Aug 2026 13:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665248; cv=none; b=sk0RWZTwuPMByG5QXovO2iCaeZRo91pj2ZbF7IU465kcYvFs/t7eBgi7YVDSiclzxgNkWjrpXZrCSV145ktwl1do7atErrbG/zjiFH6wm5eM1BcRLMzSaWyf3DMHf361OHvxRHxnr39WMwF7KSyR/EJH+jWs13Dr/uqHy9u0G0I=
+	t=1787665251; cv=none; b=V+8kyc6AuEcPQUojGvrCOj4F4j8RaufJFrVOM8NYlIpaSF8rMxmjxUS7b9P5Ww3yNwNcpQi3ge/lCDvknn7LEk1cvhapMBwfU8mHY0ZF5IM5MS1aFCNzTCYojc5aQDB9o3ixAtGbwEmt3aGwhnVA/VyiZYmSpxS/ryIAZMhQ9ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665248; c=relaxed/simple;
-	bh=NqAMKJhwOZcBVaUshZpYMy+tn5P1YLKn5ZcCZ/mZapI=;
+	s=arc-20240116; t=1787665251; c=relaxed/simple;
+	bh=vFVDVadC53VsEfvVhOXZAccM8bIzf8mqSi2zuHRFkIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRlODjJSuyKAKHoj8m4fnhTEfstYfxYMG+tYRcx6KNJYKttQRlbvsOuz6CxoddNXvHgzmxojV0u0zinb6zM7csChDLvxE/+YEuM4too31uIL8cqORPhymNgxvwUX9dNRoqbdGeVJV+zUSzvXE8/JKfLvoE6T/h0HiJgP1rU18VQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zHy/g8s4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bjfVmjxyl5EKKODVYib8Sb0/K0NqGGvYKD+DUd8LAgFA9r86ou1yJcZxbNLtZ6oVIzuHACFm48QnieBiW+dBCUbpVQdiaDgv9iZcfRkhfqdukxnCHmfImENEcI463acuD1LWz4+Z5VnPmS9C8f5SadN++UxKNvrk//j1e0OM8vM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VXiO8P0z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zHy/g8s4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E110E1F000E9;
-	Tue, 25 Aug 2026 13:40:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VXiO8P0z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C372D1F000E9;
+	Tue, 25 Aug 2026 13:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665247;
-	bh=qSqWoiFPyWogUSnkx05V6kdRM7gJX4Gq/DEYQprhhMA=;
+	s=korg; t=1787665250;
+	bh=2zjrz3zeQ3e4LSF2uBTEqrdTGSN2L5XpEl6YgpYS/9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zHy/g8s4GPOTD+f2Z3AYI4+uzVUS4pPO3Evn1gpB1i0tzXdXipeoC5sLn7uZVua/K
-	 esFbKWlxD2Nl8+nYh7r4fkw+GP930YfP7rRkxSkgbj7wOt9FxUcpIBXQa0aKrX02nf
-	 W4jvos0f0LGi4mQwS24oYjrbtDD7/56kBD5eCidg=
+	b=VXiO8P0ziZ6ksvoNPYcbgjJe4yXvhuvenlIS5vVKrh9ZepYJp/S4wqwdKU+Gzlg2Y
+	 9eXwMb96QiWnMs9Db0uT13HN2bse0HIzGN1ZXaLXA6+hv0kVMS+xhqPwtftchSzCCq
+	 jhBHor+kgta75StYI8egcMEPc68pmQeed8OuJ/as=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Yifei Gao <gyf161023@gmail.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.18 56/94] nvmet: pci-epf: put CQ ref on create_cq mapping failure
-Date: Tue, 25 Aug 2026 15:25:52 +0200
-Message-ID: <20260825132544.091426200@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 57/94] mptcp: pm: use for_each_subflow helper
+Date: Tue, 25 Aug 2026 15:25:53 +0200
+Message-ID: <20260825132544.132279524@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -51,44 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifei Gao <gyf161023@gmail.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit 659ae9d02cb5d72c76f74fff7441eb8fb64d8f5c upstream.
+[ Upstream commit f81689172429885d6c2c7c3dd4926ec626e794bb ]
 
-nvmet_pci_epf_create_cq() calls nvmet_cq_create(), which takes a
-reference on the controller and installs the completion queue. If the
-subsequent PCI address-space mapping fails or returns a too-small partial
-mapping, the function jumps to err_internal / err_unmap_queue without
-calling nvmet_cq_put(). The matching put in nvmet_pci_epf_delete_cq() is
-gated on NVMET_PCI_EPF_Q_LIVE, which is only set after the mapping
-succeeds, so teardown never releases these references. A remote PCI host
-that drives Create IO CQ commands with a failing PRP1/pci_addr therefore
-leaks the CQ and a controller reference on each attempt.
+Similar to most places in the MPTCP code. So instead of passing the
+subflow list and use list_for_each_entry(subflow, list, node), pass the
+msk and use mptcp_for_each_subflow(msk, subflow).
 
-Drop the CQ reference on the mapping-failure paths. The err_internal and
-err_unmap_queue labels are only reachable after nvmet_cq_create() has
-succeeded, so this pairs the create/put correctly.
+That's clearer and more uniform with the rest.
 
-Fixes: 0faa0fe6f90e ("nvmet: New NVMe PCI endpoint function target driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Yifei Gao <gyf161023@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+While at it, add 'pm_' prefix for the exported one to easily identify
+the origin. Plus replace 'lookup' by 'has', because a bool is returned.
+
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260605-net-next-mptcp-add-addr6-port-ts-v2-9-758e7ca73f4d@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: efc33b5102ff ("mptcp: pm: fix memory leak from alloc-during-teardown race")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/pci-epf.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/mptcp/pm.c           |    6 +++---
+ net/mptcp/pm_kernel.c    |   12 ++++++------
+ net/mptcp/pm_userspace.c |    2 +-
+ net/mptcp/protocol.h     |    4 ++--
+ 4 files changed, 12 insertions(+), 12 deletions(-)
 
---- a/drivers/nvme/target/pci-epf.c
-+++ b/drivers/nvme/target/pci-epf.c
-@@ -1338,6 +1338,7 @@ err_unmap_queue:
- 	nvmet_pci_epf_mem_unmap(ctrl->nvme_epf, &cq->pci_map);
- err_internal:
- 	status = NVME_SC_INTERNAL | NVME_STATUS_DNR;
-+	nvmet_cq_put(&cq->nvme_cq);
- err:
- 	if (test_and_clear_bit(NVMET_PCI_EPF_Q_IRQ_ENABLED, &cq->flags))
- 		nvmet_pci_epf_remove_irq_vector(ctrl, cq->vector);
+--- a/net/mptcp/pm.c
++++ b/net/mptcp/pm.c
+@@ -115,14 +115,14 @@ static bool mptcp_pm_is_init_remote_addr
+ 	return mptcp_addresses_equal(&mpc_remote, remote, remote->port);
+ }
+ 
+-bool mptcp_lookup_subflow_by_saddr(const struct list_head *list,
+-				   const struct mptcp_addr_info *saddr)
++bool mptcp_pm_has_subflow_saddr(const struct mptcp_sock *msk,
++				const struct mptcp_addr_info *saddr)
+ {
+ 	struct mptcp_subflow_context *subflow;
+ 	struct mptcp_addr_info cur;
+ 	struct sock_common *skc;
+ 
+-	list_for_each_entry(subflow, list, node) {
++	mptcp_for_each_subflow(msk, subflow) {
+ 		skc = (struct sock_common *)mptcp_subflow_tcp_sock(subflow);
+ 
+ 		mptcp_local_address(skc, &cur);
+--- a/net/mptcp/pm_kernel.c
++++ b/net/mptcp/pm_kernel.c
+@@ -86,13 +86,13 @@ u8 mptcp_pm_get_limit_extra_subflows(con
+ }
+ EXPORT_SYMBOL_GPL(mptcp_pm_get_limit_extra_subflows);
+ 
+-static bool lookup_subflow_by_daddr(const struct list_head *list,
+-				    const struct mptcp_addr_info *daddr)
++static bool has_subflow_daddr(const struct mptcp_sock *msk,
++			      const struct mptcp_addr_info *daddr)
+ {
+ 	struct mptcp_subflow_context *subflow;
+ 	struct mptcp_addr_info cur;
+ 
+-	list_for_each_entry(subflow, list, node) {
++	mptcp_for_each_subflow(msk, subflow) {
+ 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+ 
+ 		if (!((1 << inet_sk_state_load(ssk)) &
+@@ -652,7 +652,7 @@ static void mptcp_pm_nl_add_addr_receive
+ 	mptcp_pm_addr_send_ack(msk);
+ 	mptcp_mpc_endpoint_setup(msk);
+ 
+-	if (lookup_subflow_by_daddr(&msk->conn_list, &remote))
++	if (has_subflow_daddr(msk, &remote))
+ 		return;
+ 
+ 	/* pick id 0 port, if none is provided the remote address */
+@@ -1074,7 +1074,7 @@ static int mptcp_nl_remove_subflow_and_s
+ 			goto next;
+ 
+ 		lock_sock(sk);
+-		remove_subflow = mptcp_lookup_subflow_by_saddr(&msk->conn_list, addr);
++		remove_subflow = mptcp_pm_has_subflow_saddr(msk, addr);
+ 		mptcp_pm_remove_anno_addr(msk, addr, remove_subflow &&
+ 					  !(entry->flags & MPTCP_PM_ADDR_FLAG_IMPLICIT));
+ 
+@@ -1202,7 +1202,7 @@ static void mptcp_pm_flush_addrs_and_sub
+ 
+ 	list_for_each_entry(entry, rm_list, list) {
+ 		if (slist.nr < MPTCP_RM_IDS_MAX &&
+-		    mptcp_lookup_subflow_by_saddr(&msk->conn_list, &entry->addr))
++		    mptcp_pm_has_subflow_saddr(msk, &entry->addr))
+ 			slist.ids[slist.nr++] = mptcp_endp_get_local_id(msk, &entry->addr);
+ 
+ 		if (alist.nr < MPTCP_RM_IDS_MAX &&
+--- a/net/mptcp/pm_userspace.c
++++ b/net/mptcp/pm_userspace.c
+@@ -286,7 +286,7 @@ void mptcp_pm_remove_addr_entry(struct m
+ 	/* only delete if either announced or matching a subflow */
+ 	if (mptcp_remove_anno_list_by_saddr(msk, &entry->addr))
+ 		anno_nr++;
+-	else if (!mptcp_lookup_subflow_by_saddr(&msk->conn_list, &entry->addr))
++	else if (!mptcp_pm_has_subflow_saddr(msk, &entry->addr))
+ 		return;
+ 
+ 	alist.ids[alist.nr++] = entry->addr.id;
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -1087,8 +1087,8 @@ bool mptcp_pm_sport_in_anno_list(struct
+ struct mptcp_pm_add_entry *
+ mptcp_pm_del_add_timer(struct mptcp_sock *msk,
+ 		       const struct mptcp_addr_info *addr, bool check_id);
+-bool mptcp_lookup_subflow_by_saddr(const struct list_head *list,
+-				   const struct mptcp_addr_info *saddr);
++bool mptcp_pm_has_subflow_saddr(const struct mptcp_sock *msk,
++				const struct mptcp_addr_info *saddr);
+ bool mptcp_remove_anno_list_by_saddr(struct mptcp_sock *msk,
+ 				     const struct mptcp_addr_info *addr);
+ int mptcp_pm_nl_set_flags(struct mptcp_pm_addr_entry *local,
 
 
