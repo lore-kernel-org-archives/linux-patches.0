@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9DA633A6F7;
-	Tue, 25 Aug 2026 13:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BADF635F185;
+	Tue, 25 Aug 2026 13:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665395; cv=none; b=SDD4FBpe1XBOtaj/DsHLCB+g7vU/BGdpojf4J70Wk/5iZgVNApwjTJOjGZ6lUVQws1GzydiuArq4fngkYAP0AOxU4DOd6Kqnb0+iPYeIdo6fo3F/6mX+p43pVGbsqoMdQIqdf6Ed+borPi1e5FY4u7m8SHmpL90T1uzKZsABg2g=
+	t=1787665398; cv=none; b=pRRBMX6e+G9JSe7Ref/En7w//4dkkXD0O8qJj677vlZLoZKgLKR95BKJ1x0s4zrSrH94defnKa7KeozR0PytpeOOt2qMAMwlOAZl7aAQaf/NrwG6sxPCBpqLCELEISROA5Bepqi/I2jMsOv2MHewjkYC2Oi3Yls2GAe9aQq2EGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665395; c=relaxed/simple;
-	bh=IqPR9VADvL1lCin6vv2/CBjqeSI+D08YeYqN2Iu5D1g=;
+	s=arc-20240116; t=1787665398; c=relaxed/simple;
+	bh=yJ0XK2HnSWYh9cRLw2rEsBe8UE67ttIg+aMNi3yk00o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iD/MMP2l1hxsi6pHL6NL8j2LW+dPnSRoel9BPCDkTAENle9pUpqyl3dqFNqoLrbHvyNit/xeG3n28LYHYDAwQ5awynlyIWyYij9gOoFM+yCie3aisazcRWwNiLqBfCYBKraRVMelVccvJZ0hF6hCnQWlabcFLyeVkU9Y4LO2gx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9twxCEj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m4jsBPqEu96swKL0pZanSqp9EfmSgUv+wVs6IhINHZemyReJKsF6qJlv5ItJ2vRwUXDClzZuSBq2Ea2xAeEgF6w+nQB/2EF7oSY6p4BIsDEGSuk9juo84kZvVE1fy7Ft4jFojVzfd5WYqLxMdgJJ6dq/4Q0P4/ojGFnOXGoW0c4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zNS/p/t6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9twxCEj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCC21F00A3A;
-	Tue, 25 Aug 2026 13:43:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zNS/p/t6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2781F000E9;
+	Tue, 25 Aug 2026 13:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665393;
-	bh=tVH37HtrTn1MMONNYnbGnBiuYNDbELiRm6swBG+Jo9s=;
+	s=korg; t=1787665396;
+	bh=oYZTqfnc3omz8BfRv+u/uKrP9aXqGMplSFm9n0xicSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y9twxCEjbsIWNL0Xwqjyr3jXMiDnQDpC/apr26tS9bZ4PXeDL97zPOcuMjwr1thJ6
-	 ZSqhaHBY2Rkh/dw6a3AA6kVcv8rs8xFGQCKhSb09E692ExLpevg4WzaTbMtywq2nOe
-	 1MZGr5fEfJ1map4sfamBchk+xTex/bqh6SEF0ce8=
+	b=zNS/p/t60jVqzQxPvGuYCUil8/sxfxeeu2cYrtIubG0saqzQIGeHuIFR/PRiCtIGR
+	 FSRVK0HLAVur/BbtajJjAZbouFq1OM0h8ZO20aRwnaq2rtVEg7bUdXOtlsLQMA3RFH
+	 PEVxpEL0l2yw4QAfIzozu7OVTv0qZ43O0HLhRj3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 02/77] Bluetooth: RFCOMM: take rfcomm_mutex for the deferred setup accept
-Date: Tue, 25 Aug 2026 15:25:24 +0200
-Message-ID: <20260825132541.667797881@linuxfoundation.org>
+	"Geoffrey D. Bennett" <g@b4.vu>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 03/77] ALSA: scarlett2: Use a private URB for the notification endpoint
+Date: Tue, 25 Aug 2026 15:25:25 +0200
+Message-ID: <20260825132541.703837425@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.580275153@linuxfoundation.org>
 References: <20260825132541.580275153@linuxfoundation.org>
@@ -50,133 +50,227 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Geoffrey D. Bennett <g@b4.vu>
 
-commit 43a556b2fd43f2df6dded59c2e26560a27874c24 upstream.
+commit cd17d6ff7b7d2b1dd9bcc80ae7b4a83773f918c6 upstream.
 
-rfcomm_sock_recvmsg() completes a deferred setup by calling
-rfcomm_dlc_accept() without holding any RFCOMM lock:
+scarlett2_init_notify() used mixer->urb, which
+snd_usb_mixer_status_create() allocates for the UAC2 status interrupt
+endpoint and mixer.c manages. On a device with that endpoint, the
+"already in use" check fires on the status URB and returns 0 for
+success without doing anything. No notification URB is submitted, and
+cmd_done is left zeroed because it is initialised past that check and
+nowhere else. scarlett2_usb_init() then issues SCARLETT2_USB_INIT_1
+and wait_for_completion_timeout() would crash adding to the zeroed
+wait.head.
 
-	if (test_and_clear_bit(RFCOMM_DEFER_SETUP, &d->flags)) {
-		rfcomm_dlc_accept(d);
-		return 0;
-	}
+Use a separate URB in scarlett2_data, as done for FCP, and initialise
+cmd_done in scarlett2_init_private(). mixer.c was also freeing the URB
+in snd_usb_mixer_free() and resubmitting it in
+snd_usb_mixer_activate(), so scarlett2 must now do both: add
+scarlett2_cleanup_urb(), called from private_free and private_suspend,
+and a private_resume callback to re-establish the URB after resume.
+scarlett2_init_notify() is reached from there, and the URB kill path
+in scarlett2_notify() completes cmd_done, leaving a stale count that
+would satisfy the next command's wait before the device ACKs. Use
+reinit_completion() to clear it.
 
-and rfcomm_dlc_accept() dereferences the session on its first line:
+Also free the URB if the transfer buffer allocation fails, and both if
+usb_submit_urb() fails. Move scarlett2_init_notify() up next to
+scarlett2_cleanup_urb() so scarlett2_init_private() can reference it
+without a forward declaration.
 
-	struct sock *sk = d->session->sock->sk;
-
-Every other path that touches d->session runs under rfcomm_mutex:
-rfcomm_dlc_open(), rfcomm_dlc_close(), rfcomm_dlc_exists(),
-rfcomm_dlc_send_rpn(), and the RFCOMM thread through
-rfcomm_process_sessions(). rfcomm_connect_ind() is even documented as
-"called under rfcomm_lock()". This call site is the only one that skips
-it.
-
-The RFCOMM_DEFER_SETUP bit looks like it serialises the accept against
-teardown, since __rfcomm_dlc_close() returns early when it wins the
-test_and_clear. But rfcomm_recv_disc() forces the state first:
-
-	d->state = BT_CLOSED;
-	__rfcomm_dlc_close(d, err);
-
-and the early return only covers BT_CONNECT, BT_CONFIG, BT_OPEN and
-BT_CONNECT2. With the state already BT_CLOSED that switch does not
-match, the bit is never consulted, and __rfcomm_dlc_close() falls
-through to rfcomm_dlc_unlink(), which sets d->session = NULL.
-
-So a remote DISC on a deferred dlc clears the session while leaving
-RFCOMM_DEFER_SETUP set. The next recvmsg() then passes the
-test_and_clear and dereferences a NULL session. No timing window is
-needed: once the DISC has been processed, the dereference is
-unconditional.
-
-Give rfcomm_dlc_accept() the same shape as rfcomm_dlc_open() and
-rfcomm_dlc_close(): an exported wrapper that takes rfcomm_mutex and
-re-checks the session, around a __rfcomm_dlc_accept() that the two
-in-core callers, which already hold the mutex, keep using.
-
-Reproduced on a KASAN + PROVE_LOCKING kernel with a BR/EDR peer emulated
-over /dev/vhci: the peer brings up an ACL link, opens L2CAP on the
-RFCOMM PSM, starts a session, opens a dlc on a channel bound with
-BT_DEFER_SETUP, and sends DISC after the socket is accepted. recv() on
-the accepted socket then hits:
-
-  Oops: general protection fault
-  KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
-  RIP: 0010:rfcomm_dlc_accept+0x54/0x350
-  Call Trace:
-    rfcomm_sock_recvmsg+0x1cd/0x230
-    sock_recvmsg+0x166/0x1c0
-    __sys_recvfrom+0x20d/0x300
-
-0x10 is the offset of sock in struct rfcomm_session. With this patch the
-same run completes with recv() returning 0 and no report, and lockdep
-stays quiet, confirming rfcomm_mutex is still taken before lock_sock on
-this path as it is on the thread side.
-
-Fixes: bb23c0ab8246 ("Bluetooth: Add support for deferring RFCOMM connection setup")
+Fixes: 1b65088958ca ("ALSA: scarlett2: Implement handling of the ACK notification")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/ffb8ba37d5d605dfdfd8576949d67098651f9349.1786290885.git.g@b4.vu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/rfcomm/core.c |   24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ sound/usb/mixer.c           |    6 ++
+ sound/usb/mixer.h           |    2 
+ sound/usb/mixer_scarlett2.c |   98 ++++++++++++++++++++++++++++----------------
+ 3 files changed, 71 insertions(+), 35 deletions(-)
 
---- a/net/bluetooth/rfcomm/core.c
-+++ b/net/bluetooth/rfcomm/core.c
-@@ -1334,7 +1334,10 @@ static struct rfcomm_session *rfcomm_rec
- 	return s;
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -3736,6 +3736,12 @@ int snd_usb_mixer_resume(struct usb_mixe
+ 	struct usb_mixer_elem_list *list;
+ 	int id, err;
+ 
++	if (mixer->private_resume) {
++		err = mixer->private_resume(mixer);
++		if (err < 0)
++			return err;
++	}
++
+ 	/* restore cached mixer values */
+ 	for (id = 0; id < MAX_ID_ELEMS; id++) {
+ 		for_each_mixer_elem(list, mixer, id) {
+--- a/sound/usb/mixer.h
++++ b/sound/usb/mixer.h
+@@ -18,6 +18,7 @@ struct usb_mixer_interface {
+ 	struct usb_host_interface *hostif;
+ 	struct list_head list;
+ 	unsigned int ignore_ctl_error;
++	/* UAC2 status interrupt endpoint; owned by mixer.c */
+ 	struct urb *urb;
+ 	/* array[MAX_ID_ELEMS], indexed by unit id */
+ 	struct usb_mixer_elem_list **id_elems;
+@@ -42,6 +43,7 @@ struct usb_mixer_interface {
+ 	void *private_data;
+ 	void (*private_free)(struct usb_mixer_interface *mixer);
+ 	void (*private_suspend)(struct usb_mixer_interface *mixer);
++	int (*private_resume)(struct usb_mixer_interface *mixer);
+ };
+ 
+ #define MAX_CHANNELS	16	/* max logical channels */
+--- a/sound/usb/mixer_scarlett2.c
++++ b/sound/usb/mixer_scarlett2.c
+@@ -1259,6 +1259,7 @@ struct scarlett2_data {
+ 	struct usb_mixer_interface *mixer;
+ 	struct mutex usb_mutex; /* prevent sending concurrent USB requests */
+ 	struct completion cmd_done;
++	struct urb *urb;        /* notification endpoint */
+ 	struct mutex data_mutex; /* lock access to this data */
+ 	u8 running;
+ 	u8 hwdep_in_use;
+@@ -8641,13 +8642,70 @@ requeue:
+ 	}
  }
  
--void rfcomm_dlc_accept(struct rfcomm_dlc *d)
-+/* Must be called with rfcomm_mutex held, so that the session cannot be
-+ * unlinked from under us.
-+ */
-+static void __rfcomm_dlc_accept(struct rfcomm_dlc *d)
- {
- 	struct sock *sk = d->session->sock->sk;
- 	struct l2cap_conn *conn = l2cap_pi(sk)->chan->conn;
-@@ -1356,6 +1359,21 @@ void rfcomm_dlc_accept(struct rfcomm_dlc
- 	rfcomm_send_msc(d->session, 1, d->dlci, d->v24_sig);
- }
- 
-+void rfcomm_dlc_accept(struct rfcomm_dlc *d)
+-/*** Cleanup/Suspend Callbacks ***/
++/*** Notification URB and Cleanup/Suspend Callbacks ***/
++
++/* Submit a URB to receive notifications from the device */
++static int scarlett2_init_notify(struct usb_mixer_interface *mixer)
 +{
-+	rfcomm_lock();
++	struct usb_device *dev = mixer->chip->dev;
++	struct scarlett2_data *private = mixer->private_data;
++	unsigned int pipe = usb_rcvintpipe(dev, private->bEndpointAddress);
++	void *transfer_buffer;
++	int err;
 +
-+	/* rfcomm_recv_disc() sets the dlc state to BT_CLOSED before calling
-+	 * __rfcomm_dlc_close(), so the RFCOMM_DEFER_SETUP handshake there is
-+	 * skipped and the session can already be unlinked by the time the
-+	 * deferred accept runs from rfcomm_sock_recvmsg().
-+	 */
-+	if (d->session)
-+		__rfcomm_dlc_accept(d);
++	/* Already set up */
++	if (private->urb)
++		return 0;
 +
-+	rfcomm_unlock();
++	if (usb_pipe_type_check(dev, pipe))
++		return -EINVAL;
++
++	private->urb = usb_alloc_urb(0, GFP_KERNEL);
++	if (!private->urb)
++		return -ENOMEM;
++
++	transfer_buffer = kmalloc(private->wMaxPacketSize, GFP_KERNEL);
++	if (!transfer_buffer) {
++		usb_free_urb(private->urb);
++		private->urb = NULL;
++		return -ENOMEM;
++	}
++
++	usb_fill_int_urb(private->urb, dev, pipe,
++			 transfer_buffer, private->wMaxPacketSize,
++			 scarlett2_notify, mixer, private->bInterval);
++
++	reinit_completion(&private->cmd_done);
++
++	err = usb_submit_urb(private->urb, GFP_KERNEL);
++	if (err) {
++		kfree(transfer_buffer);
++		usb_free_urb(private->urb);
++		private->urb = NULL;
++	}
++
++	return err;
 +}
 +
- static void rfcomm_check_accept(struct rfcomm_dlc *d)
++static void scarlett2_cleanup_urb(struct usb_mixer_interface *mixer)
++{
++	struct scarlett2_data *private = mixer->private_data;
++
++	if (!private->urb)
++		return;
++
++	usb_kill_urb(private->urb);
++	kfree(private->urb->transfer_buffer);
++	usb_free_urb(private->urb);
++	private->urb = NULL;
++}
+ 
+ static void scarlett2_private_free(struct usb_mixer_interface *mixer)
  {
- 	if (rfcomm_check_security(d)) {
-@@ -1368,7 +1386,7 @@ static void rfcomm_check_accept(struct r
- 			d->state_change(d, 0);
- 			rfcomm_dlc_unlock(d);
- 		} else
--			rfcomm_dlc_accept(d);
-+			__rfcomm_dlc_accept(d);
- 	} else {
- 		set_bit(RFCOMM_AUTH_PENDING, &d->flags);
- 		rfcomm_dlc_set_timer(d, RFCOMM_AUTH_TIMEOUT);
-@@ -1953,7 +1971,7 @@ static void rfcomm_process_dlcs(struct r
- 					d->state_change(d, 0);
- 					rfcomm_dlc_unlock(d);
- 				} else
--					rfcomm_dlc_accept(d);
-+					__rfcomm_dlc_accept(d);
- 			}
- 			continue;
- 		} else if (test_and_clear_bit(RFCOMM_AUTH_REJECT, &d->flags)) {
+ 	struct scarlett2_data *private = mixer->private_data;
+ 
+ 	cancel_delayed_work_sync(&private->work);
++	scarlett2_cleanup_urb(mixer);
+ 	kfree(private);
+ 	mixer->private_data = NULL;
+ }
+@@ -8658,6 +8716,8 @@ static void scarlett2_private_suspend(st
+ 
+ 	if (cancel_delayed_work_sync(&private->work))
+ 		scarlett2_config_save(private->mixer);
++
++	scarlett2_cleanup_urb(mixer);
+ }
+ 
+ /*** Initialisation ***/
+@@ -8778,11 +8838,13 @@ static int scarlett2_init_private(struct
+ 
+ 	mutex_init(&private->usb_mutex);
+ 	mutex_init(&private->data_mutex);
++	init_completion(&private->cmd_done);
+ 	INIT_DELAYED_WORK(&private->work, scarlett2_config_save_work);
+ 
+ 	mixer->private_data = private;
+ 	mixer->private_free = scarlett2_private_free;
+ 	mixer->private_suspend = scarlett2_private_suspend;
++	mixer->private_resume = scarlett2_init_notify;
+ 
+ 	private->info = entry->info;
+ 
+@@ -8799,40 +8861,6 @@ static int scarlett2_init_private(struct
+ 	return scarlett2_find_fc_interface(mixer->chip->dev, private);
+ }
+ 
+-/* Submit a URB to receive notifications from the device */
+-static int scarlett2_init_notify(struct usb_mixer_interface *mixer)
+-{
+-	struct usb_device *dev = mixer->chip->dev;
+-	struct scarlett2_data *private = mixer->private_data;
+-	unsigned int pipe = usb_rcvintpipe(dev, private->bEndpointAddress);
+-	void *transfer_buffer;
+-
+-	if (mixer->urb) {
+-		usb_audio_err(mixer->chip,
+-			      "%s: mixer urb already in use!\n", __func__);
+-		return 0;
+-	}
+-
+-	if (usb_pipe_type_check(dev, pipe))
+-		return -EINVAL;
+-
+-	mixer->urb = usb_alloc_urb(0, GFP_KERNEL);
+-	if (!mixer->urb)
+-		return -ENOMEM;
+-
+-	transfer_buffer = kmalloc(private->wMaxPacketSize, GFP_KERNEL);
+-	if (!transfer_buffer)
+-		return -ENOMEM;
+-
+-	usb_fill_int_urb(mixer->urb, dev, pipe,
+-			 transfer_buffer, private->wMaxPacketSize,
+-			 scarlett2_notify, mixer, private->bInterval);
+-
+-	init_completion(&private->cmd_done);
+-
+-	return usb_submit_urb(mixer->urb, GFP_KERNEL);
+-}
+-
+ /* Cargo cult proprietary initialisation sequence */
+ static int scarlett2_usb_init(struct usb_mixer_interface *mixer)
+ {
 
 
