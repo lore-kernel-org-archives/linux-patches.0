@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CF2481AB5;
-	Tue, 25 Aug 2026 13:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018F3468C08;
+	Tue, 25 Aug 2026 13:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664876; cv=none; b=CBOMvTEBbo54BP16p12JJMpcNyoUCxge9eipJCZsNMWZ4hCHhnaILhznPZePv0GomMXk1AKw+aegt/IJqc0Hblcq+0WIPhrB3Sfjt39aZD+AyBpHkUZCxKl0dVQK8oUNCoQpnto4PtF9lL6H/mvuDatErUMjnfTtvNfgMJf339M=
+	t=1787664879; cv=none; b=PwwYoT4KPgcrlnkYZYm8VnJ/RbwjRubI+LuRumvPzJHv5r6pAAGrEk3KuwLS38TbmZ/bcVw22nS6ZAuVLqzi6Y6YcDwbbT6ofK+gYDiT/4gRAirz4EKGxgUm25dzD6uzdJ55UM45HAE/j0mDGJQwc8hFrvA2/GchwT8Zhiozbxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664876; c=relaxed/simple;
-	bh=Szirko0OctIW3mo+RSn6Df8TMCF4VyuMSw40fJFQklo=;
+	s=arc-20240116; t=1787664879; c=relaxed/simple;
+	bh=Ek6tHbpNV7tfuDqnf0ruPV8wcky19CHLOuuThqJpNzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lb1DsmrZxkNnXCl+IGIWzpsdU/XMts7vfxQAl+MHF5tIFxQXZuIxsOINHllYHiyxHCyEDWrx4GOGt6IWd5BEGcSIdKvTqYFEuHkOQNIN1TI8eRnLlgEordFB9WW8T+jm1HdCelnEDPjhjvX4xDlUxfa95eCsmjgUEuEvSrAqA94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HfFo1IFW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NAJZg+YGDBWH/4mE7bvdCgZJnPWGrN7qXQQBE4EE/QA8vcIpCR/Q6AQU6u4pQN4Hlnp2xiaWLibthiQI+TsNVCl3Gx8PUFhmgglSeUz720xcdA1AD/P09P4PHcSZ9rFR2A52G7bVLt9wdyNFXkST/bjEQXqoXPne4IZdRaauLS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JqIpqLxG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HfFo1IFW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59DCA1F000E9;
-	Tue, 25 Aug 2026 13:34:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JqIpqLxG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465CA1F000E9;
+	Tue, 25 Aug 2026 13:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664874;
-	bh=L12Az+p48EvwsGNHZFJVYKcdBxO3KmcBXjmYKnqWbCE=;
+	s=korg; t=1787664877;
+	bh=A8YWiPCz3fopu77bUNa9uSvidTS9PZzCXRsBiHUXnf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HfFo1IFWJ4wTz39fC++m1dF5OseEPyKRxBL+hXZh9ocoSsm8tbGucwaKeFaIBXKZm
-	 kOodH26be/UR0oqb8PhrqXV3XT4x1dphYVZqalhSUNtB0zO1hzakIvdH7pMo/jy9mZ
-	 wx0dDvwaMz1H6EjOTsfb7NFwSr7mLBcRDPvJX608=
+	b=JqIpqLxGfhWVQnqBbqAyqQuPadmx4jdo42spLUJf+xwykCNGLvvFra5NZTxKZmJG+
+	 mePh/7r9mIbO6rniNORFf3863B3FqefFk7t9LAxKU/40uSo5HdAeI3jLZbtvNtLkN7
+	 cuF6WU53WjMndfhmbCrgd9qBXfodZroMh5cmEgDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Shameer Kolothum <skolothumtho@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 7.1 007/101] iommu/tegra241-cmdqv: Fix CMD_SYNC use-after-free on teardown
-Date: Tue, 25 Aug 2026 15:24:45 +0200
-Message-ID: <20260825132542.288692234@linuxfoundation.org>
+	Jani Nikula <jani.nikula@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 034/101] drm/i915: Track fence region ID in plane state
+Date: Tue, 25 Aug 2026 15:25:12 +0200
+Message-ID: <20260825132543.347540656@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -46,133 +45,323 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 9ff145a25c5c8a26b06ef7cf558fb536b18bba6d upstream.
+[ Upstream commit eb3dd9640731ae3ace871190f80474a8e7bae121 ]
 
-arm_smmu_impl_remove() is registered as a devres action in
-arm_smmu_impl_probe(), before arm_smmu_init_queues() allocates
-smmu->cmdq.q.base. On a devres unwind, whether a failed probe or an
-unbind, the queue is freed first and arm_smmu_impl_remove() then runs
-tegra241_cmdqv_remove_vintf(), whose VINTF deinit issues a CMD_SYNC on
-the freed memory.
+Get rid of the needlessly complicated PLANE_HAS_FENCE +
+intel_parent_vma_fence_id() dance by simply tracking the
+fence_id directly in the plane state.
 
-Observed during testing with a QEMU hack that makes the VCMDQ fail to
-enable, so the impl reset fails and probe aborts into the devres unwind:
+v2: Don't request the redundant fence for fbdev (Jani)
+    Assign *out_fence_id with '=' instead of '|=' (Sashiko,Jani)
 
- platform NVDA200C:00: tegra241_cmdqv: VINTF0: VCMDQ0/LVCMDQ0: failed to enable, STATUS=0x00000000
- platform NVDA200C:00: tegra241_cmdqv: VINTF0: VCMDQ0/LVCMDQ0: GERRORN=0x0, GERROR=0x4, CONS=0x0
- platform NVDA200C:00: tegra241_cmdqv: VINTF0: VCMDQ0/LVCMDQ0: uncleared error detected, resetting
- arm-smmu-v3 arm-smmu-v3.0.auto: failed to reset impl
- arm-smmu-v3 arm-smmu-v3.0.auto: probe with driver arm-smmu-v3 failed with error -110
- Unable to handle kernel paging request at virtual address ffff8000891e0098
- ...
- Internal error: Oops: 0000000096000047 [#1] SMP
- ...
- Call trace:
-  arm_smmu_cmdq_issue_cmdlist+0x320/0x6fc (P)
-  tegra241_vcmdq_hw_deinit+0x98/0x168
-  tegra241_vintf_hw_deinit+0x5c/0x1b0
-  tegra241_cmdqv_remove_vintf+0x34/0xec
-  tegra241_cmdqv_remove+0x40/0x9c
-  arm_smmu_impl_remove+0x20/0x30
-  devm_action_release+0x14/0x20
-  devres_release_all+0xa8/0x110
-  device_unbind_cleanup+0x18/0x84
-  really_probe+0x1f0/0x29c
-
-Drop the VINTF deinit from tegra241_cmdqv_remove_vintf() so the unwind no
-longer touches the freed queue. Quiesce the VINTFs earlier instead. Add a
-device_disable() impl op and run it from arm_smmu_disable_action() while
-the CMDQ is still up. That handles a live unbind. A failed reset is already
-handled because tegra241_vintf_hw_init() deinits the VINTF on its own error
-path. tegra241_cmdqv_remove_vintf() is also used by the iommufd viommu
-destroy path, so quiesce there too.
-
-Fixes: 4dc0d12474f9 ("iommu/tegra241-cmdqv: Add user-space use support")
-Cc: stable@vger.kernel.org
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patch.msgid.link/20260407170942.16515-1-ville.syrjala@linux.intel.com
+Stable-dep-of: fc6487579083 ("drm/xe: Fix DPT allocation paths.")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c    |    2 ++
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h    |    1 +
- drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c |   15 +++++++++++++--
- 3 files changed, 16 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display_types.h |    5 +--
+ drivers/gpu/drm/i915/display/intel_fb_pin.c        |   33 +++++++++++----------
+ drivers/gpu/drm/i915/display/intel_fb_pin.h        |    5 +--
+ drivers/gpu/drm/i915/display/intel_fbc.c           |   11 +------
+ drivers/gpu/drm/i915/display/intel_fbdev.c         |    9 +----
+ drivers/gpu/drm/i915/display/intel_plane.c         |    3 +
+ drivers/gpu/drm/i915/i915_initial_plane.c          |    2 -
+ drivers/gpu/drm/xe/display/xe_fb_pin.c             |    8 ++---
+ drivers/gpu/drm/xe/display/xe_initial_plane.c      |    2 -
+ 9 files changed, 37 insertions(+), 41 deletions(-)
 
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -5591,6 +5591,8 @@ static void arm_smmu_device_shutdown(str
+--- a/drivers/gpu/drm/i915/display/intel_display_types.h
++++ b/drivers/gpu/drm/i915/display/intel_display_types.h
+@@ -684,14 +684,15 @@ struct intel_plane_state {
+ 
+ 	struct i915_vma *ggtt_vma;
+ 	struct i915_vma *dpt_vma;
+-	unsigned long flags;
+-#define PLANE_HAS_FENCE BIT(0)
+ 
+ 	struct intel_fb_view view;
+ 
+ 	/* for legacy cursor fb unpin */
+ 	struct drm_vblank_work unpin_work;
+ 
++	/* fenced region ID (-1 if none) */
++	s8 fence_id;
++
+ 	/* Plane pxp decryption state */
+ 	bool decrypt;
+ 
+--- a/drivers/gpu/drm/i915/display/intel_fb_pin.c
++++ b/drivers/gpu/drm/i915/display/intel_fb_pin.c
+@@ -26,7 +26,6 @@ static struct i915_vma *
+ intel_fb_pin_to_dpt(const struct drm_framebuffer *fb,
+ 		    const struct i915_gtt_view *view,
+ 		    unsigned int alignment,
+-		    unsigned long *out_flags,
+ 		    struct intel_dpt *dpt)
  {
- 	struct arm_smmu_device *smmu = platform_get_drvdata(pdev);
- 
-+	if (smmu->impl_ops && smmu->impl_ops->device_disable)
-+		smmu->impl_ops->device_disable(smmu);
- 	arm_smmu_device_disable(smmu);
- }
- 
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -804,6 +804,7 @@ struct arm_smmu_strtab_cfg {
- 
- struct arm_smmu_impl_ops {
- 	int (*device_reset)(struct arm_smmu_device *smmu);
-+	void (*device_disable)(struct arm_smmu_device *smmu);
- 	void (*device_remove)(struct arm_smmu_device *smmu);
- 	int (*init_structures)(struct arm_smmu_device *smmu);
- 	struct arm_smmu_cmdq *(*get_secondary_cmdq)(
---- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-@@ -761,8 +761,6 @@ static void tegra241_cmdqv_remove_vintf(
- 	struct tegra241_vintf *vintf = cmdqv->vintfs[idx];
- 	u16 lidx;
- 
--	tegra241_vintf_hw_deinit(vintf);
--
- 	/* Remove LVCMDQ resources */
- 	for (lidx = 0; lidx < vintf->cmdqv->num_lvcmdqs_per_vintf; lidx++)
- 		if (vintf->lvcmdqs[lidx])
-@@ -779,6 +777,17 @@ static void tegra241_cmdqv_remove_vintf(
+ 	struct intel_display *display = to_intel_display(fb->dev);
+@@ -114,8 +113,7 @@ intel_fb_pin_to_ggtt(const struct drm_fr
+ 		     unsigned int alignment,
+ 		     unsigned int phys_alignment,
+ 		     unsigned int vtd_guard,
+-		     bool uses_fence,
+-		     unsigned long *out_flags)
++		     int *out_fence_id)
+ {
+ 	struct intel_display *display = to_intel_display(fb->dev);
+ 	struct drm_i915_private *i915 = to_i915(fb->dev);
+@@ -175,7 +173,10 @@ retry:
+ 		goto err_unpin;
  	}
+ 
+-	if (uses_fence && i915_vma_is_map_and_fenceable(vma)) {
++	if (out_fence_id)
++		*out_fence_id = -1;
++
++	if (out_fence_id && i915_vma_is_map_and_fenceable(vma)) {
+ 		/*
+ 		 * Install a fence for tiled scan-out. Pre-i965 always needs a
+ 		 * fence, whereas 965+ only requires a fence if using
+@@ -201,7 +202,7 @@ retry:
+ 		ret = 0;
+ 
+ 		if (vma->fence)
+-			*out_flags |= PLANE_HAS_FENCE;
++			*out_fence_id = vma->fence->id;
+ 	}
+ 
+ 	i915_vma_get(vma);
+@@ -223,9 +224,9 @@ err:
+ 	return vma;
  }
  
-+static void tegra241_cmdqv_hw_disable(struct arm_smmu_device *smmu)
-+{
-+	struct tegra241_cmdqv *cmdqv =
-+		container_of(smmu, struct tegra241_cmdqv, smmu);
-+	u16 idx;
-+
-+	for (idx = 0; idx < cmdqv->num_vintfs; idx++)
-+		if (cmdqv->vintfs[idx])
-+			tegra241_vintf_hw_deinit(cmdqv->vintfs[idx]);
-+}
-+
- static void tegra241_cmdqv_remove(struct arm_smmu_device *smmu)
+-void intel_fb_unpin_vma(struct i915_vma *vma, unsigned long flags)
++void intel_fb_unpin_vma(struct i915_vma *vma, int fence_id)
  {
- 	struct tegra241_cmdqv *cmdqv =
-@@ -844,6 +853,7 @@ static struct arm_smmu_impl_ops tegra241
- 	/* For in-kernel use */
- 	.get_secondary_cmdq = tegra241_cmdqv_get_cmdq,
- 	.device_reset = tegra241_cmdqv_hw_reset,
-+	.device_disable = tegra241_cmdqv_hw_disable,
- 	.device_remove = tegra241_cmdqv_remove,
- 	/* For user-space use */
- 	.hw_info = tegra241_cmdqv_hw_info,
-@@ -1152,6 +1162,7 @@ static void tegra241_cmdqv_destroy_vintf
- 	if (vintf->mmap_offset)
- 		iommufd_viommu_destroy_mmap(&vintf->vsmmu.core,
- 					    vintf->mmap_offset);
-+	tegra241_vintf_hw_deinit(vintf);
- 	tegra241_cmdqv_remove_vintf(vintf->cmdqv, vintf->idx);
+-	if (flags & PLANE_HAS_FENCE)
++	if (fence_id >= 0)
+ 		i915_vma_unpin_fence(vma);
+ 	i915_vma_unpin(vma);
+ 	i915_vma_put(vma);
+@@ -269,17 +270,18 @@ int intel_plane_pin_fb(struct intel_plan
+ 	struct i915_vma *vma;
+ 
+ 	if (!intel_fb_uses_dpt(&fb->base)) {
++		int fence_id = -1;
++
+ 		vma = intel_fb_pin_to_ggtt(&fb->base, &plane_state->view.gtt,
+ 					   intel_plane_fb_min_alignment(plane_state),
+ 					   intel_plane_fb_min_phys_alignment(plane_state),
+ 					   intel_plane_fb_vtd_guard(plane_state),
+-					   intel_plane_uses_fence(plane_state),
+-					   &plane_state->flags);
++					   intel_plane_uses_fence(plane_state) ? &fence_id : NULL);
+ 		if (IS_ERR(vma))
+ 			return PTR_ERR(vma);
+ 
+ 		plane_state->ggtt_vma = vma;
+-
++		plane_state->fence_id = fence_id;
+ 	} else {
+ 		unsigned int alignment = intel_plane_fb_min_alignment(plane_state);
+ 
+@@ -290,8 +292,7 @@ int intel_plane_pin_fb(struct intel_plan
+ 		plane_state->ggtt_vma = vma;
+ 
+ 		vma = intel_fb_pin_to_dpt(&fb->base, &plane_state->view.gtt,
+-					  alignment, &plane_state->flags,
+-					  fb->dpt);
++					  alignment, fb->dpt);
+ 		if (IS_ERR(vma)) {
+ 			i915_dpt_unpin_from_ggtt(fb->dpt);
+ 			plane_state->ggtt_vma = NULL;
+@@ -336,12 +337,14 @@ void intel_plane_unpin_fb(struct intel_p
+ 
+ 	if (!intel_fb_uses_dpt(&fb->base)) {
+ 		vma = fetch_and_zero(&old_plane_state->ggtt_vma);
+-		if (vma)
+-			intel_fb_unpin_vma(vma, old_plane_state->flags);
++		if (vma) {
++			intel_fb_unpin_vma(vma, old_plane_state->fence_id);
++			old_plane_state->fence_id = -1;
++		}
+ 	} else {
+ 		vma = fetch_and_zero(&old_plane_state->dpt_vma);
+ 		if (vma)
+-			intel_fb_unpin_vma(vma, old_plane_state->flags);
++			intel_fb_unpin_vma(vma, -1);
+ 
+ 		vma = fetch_and_zero(&old_plane_state->ggtt_vma);
+ 		if (vma)
+--- a/drivers/gpu/drm/i915/display/intel_fb_pin.h
++++ b/drivers/gpu/drm/i915/display/intel_fb_pin.h
+@@ -20,10 +20,9 @@ intel_fb_pin_to_ggtt(const struct drm_fr
+ 		     unsigned int alignment,
+ 		     unsigned int phys_alignment,
+ 		     unsigned int vtd_guard,
+-		     bool uses_fence,
+-		     unsigned long *out_flags);
++		     int *out_fence_id);
+ 
+-void intel_fb_unpin_vma(struct i915_vma *vma, unsigned long flags);
++void intel_fb_unpin_vma(struct i915_vma *vma, int fence_id);
+ 
+ int intel_plane_pin_fb(struct intel_plane_state *new_plane_state,
+ 		       const struct intel_plane_state *old_plane_state);
+--- a/drivers/gpu/drm/i915/display/intel_fbc.c
++++ b/drivers/gpu/drm/i915/display/intel_fbc.c
+@@ -1458,13 +1458,10 @@ static void intel_fbc_update_state(struc
+ 
+ 	fbc_state->fence_y_offset = intel_plane_fence_y_offset(plane_state);
+ 
+-	drm_WARN_ON(display->drm, plane_state->flags & PLANE_HAS_FENCE &&
++	drm_WARN_ON(display->drm, plane_state->fence_id >= 0 &&
+ 		    !intel_fbc_has_fences(display));
+ 
+-	if (plane_state->flags & PLANE_HAS_FENCE)
+-		fbc_state->fence_id = intel_parent_vma_fence_id(display, plane_state->ggtt_vma);
+-	else
+-		fbc_state->fence_id = -1;
++	fbc_state->fence_id = plane_state->fence_id;
+ 
+ 	fbc_state->cfb_stride = intel_fbc_cfb_stride(plane_state);
+ 	fbc_state->cfb_size = intel_fbc_cfb_size(plane_state);
+@@ -1487,9 +1484,7 @@ static bool intel_fbc_is_fence_ok(const
+ 	 * so have no fence associated with it) due to aperture constraints
+ 	 * at the time of pinning.
+ 	 */
+-	return DISPLAY_VER(display) >= 9 ||
+-		(plane_state->flags & PLANE_HAS_FENCE &&
+-		 intel_parent_vma_fence_id(display, plane_state->ggtt_vma) != -1);
++	return DISPLAY_VER(display) >= 9 || plane_state->fence_id >= 0;
  }
+ 
+ static bool intel_fbc_is_cfb_ok(const struct intel_plane_state *plane_state)
+--- a/drivers/gpu/drm/i915/display/intel_fbdev.c
++++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
+@@ -60,7 +60,6 @@
+ struct intel_fbdev {
+ 	struct intel_framebuffer *fb;
+ 	struct i915_vma *vma;
+-	unsigned long vma_flags;
+ };
+ 
+ static struct intel_fbdev *to_intel_fbdev(struct drm_fb_helper *fb_helper)
+@@ -141,7 +140,7 @@ static void intel_fbdev_fb_destroy(struc
+ 	 * the info->screen_base mmaping. Leaking the VMA is simpler than
+ 	 * trying to rectify all the possible error paths leading here.
+ 	 */
+-	intel_fb_unpin_vma(ifbdev->vma, ifbdev->vma_flags);
++	intel_fb_unpin_vma(ifbdev->vma, -1);
+ 	drm_framebuffer_remove(fb_helper->fb);
+ 
+ 	drm_client_release(&fb_helper->client);
+@@ -269,7 +268,6 @@ int intel_fbdev_driver_fbdev_probe(struc
+ 	struct fb_info *info = helper->info;
+ 	struct ref_tracker *wakeref;
+ 	struct i915_vma *vma;
+-	unsigned long flags = 0;
+ 	bool prealloc = false;
+ 	struct drm_gem_object *obj;
+ 	int ret;
+@@ -314,7 +312,7 @@ int intel_fbdev_driver_fbdev_probe(struc
+ 				   fb->min_alignment, 0,
+ 				   intel_fb_view_vtd_guard(&fb->base, &fb->normal_view,
+ 							   DRM_MODE_ROTATE_0),
+-				   false, &flags);
++				   NULL);
+ 	if (IS_ERR(vma)) {
+ 		ret = PTR_ERR(vma);
+ 		goto out_unlock;
+@@ -345,14 +343,13 @@ int intel_fbdev_driver_fbdev_probe(struc
+ 	drm_dbg_kms(display->drm, "allocated %dx%d fb\n", fb->base.width, fb->base.height);
+ 	ifbdev->fb = fb;
+ 	ifbdev->vma = vma;
+-	ifbdev->vma_flags = flags;
+ 
+ 	intel_display_rpm_put(display, wakeref);
+ 
+ 	return 0;
+ 
+ out_unpin:
+-	intel_fb_unpin_vma(vma, flags);
++	intel_fb_unpin_vma(vma, -1);
+ out_unlock:
+ 	intel_display_rpm_put(display, wakeref);
+ 
+--- a/drivers/gpu/drm/i915/display/intel_plane.c
++++ b/drivers/gpu/drm/i915/display/intel_plane.c
+@@ -70,6 +70,7 @@ static void intel_plane_state_reset(stru
+ 	__drm_atomic_helper_plane_state_reset(&plane_state->uapi, &plane->base);
+ 
+ 	plane_state->scaler_id = -1;
++	plane_state->fence_id = -1;
+ }
+ 
+ struct intel_plane *intel_plane_alloc(void)
+@@ -137,7 +138,7 @@ intel_plane_duplicate_state(struct drm_p
+ 
+ 	intel_state->ggtt_vma = NULL;
+ 	intel_state->dpt_vma = NULL;
+-	intel_state->flags = 0;
++	intel_state->fence_id = -1;
+ 	intel_state->damage = DRM_RECT_INIT(0, 0, 0, 0);
+ 
+ 	/* add reference to fb */
+--- a/drivers/gpu/drm/i915/i915_initial_plane.c
++++ b/drivers/gpu/drm/i915/i915_initial_plane.c
+@@ -268,7 +268,7 @@ i915_initial_plane_setup(struct drm_plan
+ 	plane_state->ggtt_vma = i915_vma_get(vma);
+ 	if (intel_plane_uses_fence(plane_state) &&
+ 	    i915_vma_pin_fence(vma) == 0 && vma->fence)
+-		plane_state->flags |= PLANE_HAS_FENCE;
++		plane_state->fence_id = vma->fence->id;
+ 
+ 	plane_state->surf = i915_ggtt_offset(plane_state->ggtt_vma);
+ 
+--- a/drivers/gpu/drm/xe/display/xe_fb_pin.c
++++ b/drivers/gpu/drm/xe/display/xe_fb_pin.c
+@@ -418,15 +418,15 @@ intel_fb_pin_to_ggtt(const struct drm_fr
+ 		     unsigned int alignment,
+ 		     unsigned int phys_alignment,
+ 		     unsigned int vtd_guard,
+-		     bool uses_fence,
+-		     unsigned long *out_flags)
++		     int *out_fence_id)
+ {
+-	*out_flags = 0;
++	if (out_fence_id)
++		*out_fence_id = -1;
+ 
+ 	return __xe_pin_fb_vma(to_intel_framebuffer(fb), view, alignment);
+ }
+ 
+-void intel_fb_unpin_vma(struct i915_vma *vma, unsigned long flags)
++void intel_fb_unpin_vma(struct i915_vma *vma, int fence_id)
+ {
+ 	__xe_unpin_fb_vma(vma);
+ }
+--- a/drivers/gpu/drm/xe/display/xe_initial_plane.c
++++ b/drivers/gpu/drm/xe/display/xe_initial_plane.c
+@@ -153,7 +153,7 @@ xe_initial_plane_setup(struct drm_plane_
+ 	struct i915_vma *vma;
+ 
+ 	vma = intel_fb_pin_to_ggtt(fb, &plane_state->view.gtt,
+-				   0, 0, 0, false, &plane_state->flags);
++				   0, 0, 0, NULL);
+ 	if (IS_ERR(vma))
+ 		return PTR_ERR(vma);
  
 
 
