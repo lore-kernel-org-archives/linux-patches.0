@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBA53C276D;
-	Tue, 25 Aug 2026 13:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D1A390613;
+	Tue, 25 Aug 2026 13:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665805; cv=none; b=OlaLx9oVBcbIz+TLyMQUKrJ0JA4FSURlcfMq7i7Nudci9LeAMwW8WlAHy+7kPMMkW4RUW2JeGzp14d+kuA8hPZc2UpuPqCGZX4vA2MY9gZwETN5zV2+/ndXGspUpqK1tU41nXPkukf1LDrNqeWShI0rkterb7aW7SPhSzsdpeMM=
+	t=1787665809; cv=none; b=LlFzqeNwP4bheIRb160UeL+JQq3W7cAknXT7W9V0D05wT9e0NSULEJAUymwRINaJCEABAqgQhiKfx7T5Mp3QP0wBqgMHcpnjFMyll4Mvsa34n8CwYBqwIxTxGeje2mX2MUSVSc6ckEST0JfInf1xNpgWfH3sDRJKIj1qtP23Moc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665805; c=relaxed/simple;
-	bh=ZUI5T4aRSUde1xlr7FhIf4mwlqD76GXDR8NJJhmlcMg=;
+	s=arc-20240116; t=1787665809; c=relaxed/simple;
+	bh=yDWEV4FQa7+au/KuZ6I/GB00PqmvdpEaYf/UK2z1I/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iom2xKDJTRM6x0TiDHU4X2SEB6C2c5IDQVJnRG9TyVOgOrLnBfXiqJ0v80LBUvmMeuRpF4c5kyX+9pcRuS0jhXXrnv0MaQd9aCK+bj/kvrMeKg5QLLuNF6lNckjqSxiQYneqaRKYKlDlrxEyNYN51H+jFgupgbeQ6/Mfg7X0z6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yoeLs51r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o1moUA/mljSL6lhUPyXxC20r9k1JJ+024R3J341TkuNiE2xi1CZufQ7bc88hIneG1KSaJi846+55fvHH/gnEeOUwCOyk1UA8SZu7nVnR5Mn3QPYfZkri9ZlIZpFukWGQafIK7LVxgvmECDUGp1lflqAxETEHCeYV7D9MEeRxfyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ssn7ry8/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yoeLs51r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3CA21F000E9;
-	Tue, 25 Aug 2026 13:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ssn7ry8/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01571F000E9;
+	Tue, 25 Aug 2026 13:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665804;
-	bh=1k5IkBLLZKp6foMhjts7xWFM942mARcvE65iO+zw9JA=;
+	s=korg; t=1787665807;
+	bh=ZWSELwH5vYBt/H40l+XxV3JojNksrpDtKO8DkcXFGEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yoeLs51rDiEOthXK3KKfxjHAv71jUYqb8X4giXA3sk1DJ+FDBLKU+t+XK683Yip3e
-	 XSgnl5OrS5tOo/MFSKEW9e67QlFFdILb0c8hc1FC8E+1tOJ+mqZ2afBKeHyL0yrscl
-	 wMiz48QLic1MpTktgN5Bv0g8a/b+rlwz2XasuQGk=
+	b=Ssn7ry8/lKJ2ymbkzj2X5ZHZrAu5nedZmECfBbQZpY75H9uMRD/BBmPIIJbWjwFhQ
+	 /2ORRhS0khYUaDulXvEqXi35d7NGO4UPkXm47VEX+8icAK+/PatZP/nJ0LVi3AIHOj
+	 a7+VwVs+4RW+88y6BtDLAmA54zgSPOAfh8PR99cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shardul Bankar <shardul.b@mpiricsoftware.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 72/87] mptcp: pm: fix memory leak from alloc-during-teardown race
-Date: Tue, 25 Aug 2026 15:26:35 +0200
-Message-ID: <20260825132544.645924486@linuxfoundation.org>
+Subject: [PATCH 6.6 73/87] selinux: fix style issues in security/selinux/ss/policydb.h
+Date: Tue, 25 Aug 2026 15:26:36 +0200
+Message-ID: <20260825132544.684557735@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -52,127 +50,368 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shardul Bankar <shardul.b@mpiricsoftware.com>
+From: Paul Moore <paul@paul-moore.com>
 
-[ Upstream commit efc33b5102ff859bacd390a5f30112d8e0c084c0 ]
+[ Upstream commit a32582db36dcf3b23f860e092485e5e06b1b966c ]
 
-mptcp_pm_destroy() empties msk->pm.anno_list and
-msk->pm.userspace_pm_local_addr_list under msk->pm.lock during socket
-teardown, dropping the lock between the two.
+As part of on ongoing effort to perform more automated testing and
+provide more tools for individual developers to validate their
+patches before submitting, we are trying to make our code
+"clang-format clean".  My hope is that once we have fixed all of our
+style "quirks", developers will be able to run clang-format on their
+patches to help avoid silly formatting problems and ensure their
+changes fit in well with the rest of the SELinux kernel code.
 
-A concurrent userspace PM genl ANNOUNCE on the same msk holds a sock
-reference via mptcp_token_get_sock() and, in
-mptcp_pm_nl_announce_doit(), calls
-mptcp_userspace_pm_append_new_local_addr() and
-mptcp_pm_announced_alloc(). Both take msk->pm.lock briefly to add to
-their respective lists. Because the genl handler holds a sock reference,
-mptcp_pm_destroy() may run on the same msk via mptcp_disconnect(), which
-invokes mptcp_destroy_common() without dropping the sock refcount,
-before the handler completes.
-
-If the lock acquisitions interleave such that mptcp_pm_destroy() empties
-a list first, the later alloc adds its entry to a list head that nothing
-else iterates for this msk, and the entry leaks. kmemleak reports both
-mptcp_pm_add_addr objects (from mptcp_pm_announced_alloc()) and
-mptcp_pm_addr_entry objects (from
-mptcp_userspace_pm_append_new_local_addr()) under sustained concurrent
-ANNOUNCE + close load against the userspace PM.
-
-Add an MPTCP_PM_DESTROYING bit in msk->pm.status, set by
-mptcp_pm_destroy() under pm.lock before the lists are emptied and
-checked under pm.lock by the alloc paths. Either the alloc takes pm.lock
-first, in which case its entry is on the list when mptcp_pm_destroy()
-frees it; or mptcp_pm_destroy() takes pm.lock first, in which case the
-later alloc observes the bit and refuses.
-
-Found by an MPTCP protocol-flow harness extending BRF (arXiv:2305.08782).
-
-Fixes: 9ab4807c84a4 ("mptcp: netlink: Add MPTCP_PM_CMD_ANNOUNCE")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-6-b8f496d71664@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Inlined `mptcp_pm_destroy()` at its call site in `mptcp_destroy_common()` and moved the fences into the pre-rename `mptcp_pm_alloc_anno_list()`/`mptcp_free_local_addr_list()` equivalents, deleting the `mptcp_pm_is_userspace()` guard from inside the callee instead of the call site. ]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Stable-dep-of: b98a8ac50775 ("selinux: require a class's permission values to cover its permission count")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c   |    3 +++
- net/mptcp/pm_userspace.c |    7 ++++---
- net/mptcp/protocol.c     |    9 +++++++++
- net/mptcp/protocol.h     |    7 ++++---
- 4 files changed, 20 insertions(+), 6 deletions(-)
+ security/selinux/ss/policydb.h |  192 ++++++++++++++++++++---------------------
+ 1 file changed, 95 insertions(+), 97 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -398,6 +398,9 @@ bool mptcp_pm_alloc_anno_list(struct mpt
+--- a/security/selinux/ss/policydb.h
++++ b/security/selinux/ss/policydb.h
+@@ -8,15 +8,13 @@
  
- 	lockdep_assert_held(&msk->pm.lock);
+ /*
+  * Updated: Trusted Computer Solutions, Inc. <dgoeddel@trustedcs.com>
++ *          Support for enhanced MLS infrastructure.
++ *          Copyright (C) 2004-2005 Trusted Computer Solutions, Inc.
+  *
+- *	Support for enhanced MLS infrastructure.
+- *
+- * Updated: Frank Mayer <mayerf@tresys.com> and Karl MacMillan <kmacmillan@tresys.com>
+- *
+- *	Added conditional policy language extensions
+- *
+- * Copyright (C) 2004-2005 Trusted Computer Solutions, Inc.
+- * Copyright (C) 2003 - 2004 Tresys Technology, LLC
++ * Updated: Frank Mayer <mayerf@tresys.com> and
++ *          Karl MacMillan <kmacmillan@tresys.com>
++ *          Added conditional policy language extensions
++ *          Copyright (C) 2003-2004 Tresys Technology, LLC
+  */
  
-+	if (msk->pm.status & BIT(MPTCP_PM_DESTROYING))
-+		return false;
-+
- 	add_entry = mptcp_lookup_anno_list_by_saddr(msk, addr);
+ #ifndef _SS_POLICYDB_H_
+@@ -39,104 +37,103 @@
  
- 	if (add_entry) {
---- a/net/mptcp/pm_userspace.c
-+++ b/net/mptcp/pm_userspace.c
-@@ -13,9 +13,6 @@ void mptcp_free_local_addr_list(struct m
- 	struct sock *sk = (struct sock *)msk;
- 	LIST_HEAD(free_list);
- 
--	if (!mptcp_pm_is_userspace(msk))
--		return;
--
- 	spin_lock_bh(&msk->pm.lock);
- 	list_splice_init(&msk->pm.userspace_pm_local_addr_list, &free_list);
- 	spin_unlock_bh(&msk->pm.lock);
-@@ -53,6 +50,10 @@ static int mptcp_userspace_pm_append_new
- 	bitmap_zero(id_bitmap, MPTCP_PM_MAX_ADDR_ID + 1);
- 
- 	spin_lock_bh(&msk->pm.lock);
-+	if (msk->pm.status & BIT(MPTCP_PM_DESTROYING)) {
-+		ret = -EINVAL;
-+		goto append_err;
-+	}
- 	list_for_each_entry(e, &msk->pm.userspace_pm_local_addr_list, list) {
- 		addr_match = mptcp_addresses_equal(&e->addr, &entry->addr, true);
- 		if (addr_match && entry->addr.id == 0 && needs_id)
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3536,7 +3536,16 @@ void mptcp_destroy_common(struct mptcp_s
- 	sk_forward_alloc_add(sk, msk->rmem_fwd_alloc);
- 	WRITE_ONCE(msk->rmem_fwd_alloc, 0);
- 	mptcp_token_destroy(msk);
-+
-+	spin_lock_bh(&msk->pm.lock);
-+	msk->pm.status |= BIT(MPTCP_PM_DESTROYING);
-+	spin_unlock_bh(&msk->pm.lock);
-+
- 	mptcp_pm_free_anno_list(msk);
-+
-+	/* Free the userspace local address list unconditionally: the socket
-+	 * can be reused (mptcp_disconnect()) and re-selected to a different PM
-+	 */
- 	mptcp_free_local_addr_list(msk);
- }
- 
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -190,9 +190,10 @@ enum mptcp_pm_status {
- 	MPTCP_PM_ESTABLISHED,
- 	MPTCP_PM_SUBFLOW_ESTABLISHED,
- 	MPTCP_PM_ALREADY_ESTABLISHED,	/* persistent status, set after ESTABLISHED event */
--	MPTCP_PM_MPC_ENDPOINT_ACCOUNTED /* persistent status, set after MPC local address is
--					 * accounted int id_avail_bitmap
--					 */
-+	MPTCP_PM_MPC_ENDPOINT_ACCOUNTED, /* persistent status, set after MPC local address is
-+					  * accounted int id_avail_bitmap
-+					  */
-+	MPTCP_PM_DESTROYING,		/* To fence out PM list allocs */
+ /* Permission attributes */
+ struct perm_datum {
+-	u32 value;		/* permission bit + 1 */
++	u32 value; /* permission bit + 1 */
  };
  
- enum mptcp_pm_type {
+ /* Attributes of a common prefix for access vectors */
+ struct common_datum {
+-	u32 value;			/* internal common value */
+-	struct symtab permissions;	/* common permissions */
++	u32 value; /* internal common value */
++	struct symtab permissions; /* common permissions */
+ };
+ 
+ /* Class attributes */
+ struct class_datum {
+-	u32 value;			/* class value */
+-	char *comkey;			/* common name */
+-	struct common_datum *comdatum;	/* common datum */
+-	struct symtab permissions;	/* class-specific permission symbol table */
+-	struct constraint_node *constraints;	/* constraints on class permissions */
+-	struct constraint_node *validatetrans;	/* special transition rules */
++	u32 value; /* class value */
++	char *comkey; /* common name */
++	struct common_datum *comdatum; /* common datum */
++	struct symtab permissions; /* class-specific permission symbol table */
++	struct constraint_node *constraints; /* constraints on class perms */
++	struct constraint_node *validatetrans; /* special transition rules */
+ /* Options how a new object user, role, and type should be decided */
+-#define DEFAULT_SOURCE         1
+-#define DEFAULT_TARGET         2
++#define DEFAULT_SOURCE 1
++#define DEFAULT_TARGET 2
+ 	char default_user;
+ 	char default_role;
+ 	char default_type;
+ /* Options how a new object range should be decided */
+-#define DEFAULT_SOURCE_LOW     1
+-#define DEFAULT_SOURCE_HIGH    2
+-#define DEFAULT_SOURCE_LOW_HIGH        3
+-#define DEFAULT_TARGET_LOW     4
+-#define DEFAULT_TARGET_HIGH    5
+-#define DEFAULT_TARGET_LOW_HIGH        6
++#define DEFAULT_SOURCE_LOW	1
++#define DEFAULT_SOURCE_HIGH	2
++#define DEFAULT_SOURCE_LOW_HIGH 3
++#define DEFAULT_TARGET_LOW	4
++#define DEFAULT_TARGET_HIGH	5
++#define DEFAULT_TARGET_LOW_HIGH 6
+ #define DEFAULT_GLBLUB		7
+ 	char default_range;
+ };
+ 
+ /* Role attributes */
+ struct role_datum {
+-	u32 value;			/* internal role value */
+-	u32 bounds;			/* boundary of role */
+-	struct ebitmap dominates;	/* set of roles dominated by this role */
+-	struct ebitmap types;		/* set of authorized types for role */
++	u32 value; /* internal role value */
++	u32 bounds; /* boundary of role */
++	struct ebitmap dominates; /* set of roles dominated by this role */
++	struct ebitmap types; /* set of authorized types for role */
+ };
+ 
+ struct role_trans_key {
+-	u32 role;		/* current role */
+-	u32 type;		/* program executable type, or new object type */
+-	u32 tclass;		/* process class, or new object class */
++	u32 role; /* current role */
++	u32 type; /* program executable type, or new object type */
++	u32 tclass; /* process class, or new object class */
+ };
+ 
+ struct role_trans_datum {
+-	u32 new_role;		/* new role */
++	u32 new_role; /* new role */
+ };
+ 
+ struct filename_trans_key {
+-	u32 ttype;		/* parent dir context */
+-	u16 tclass;		/* class of new object */
+-	const char *name;	/* last path component */
++	u32 ttype; /* parent dir context */
++	u16 tclass; /* class of new object */
++	const char *name; /* last path component */
+ };
+ 
+ struct filename_trans_datum {
+-	struct ebitmap stypes;	/* bitmap of source types for this otype */
+-	u32 otype;		/* resulting type of new object */
+-	struct filename_trans_datum *next;	/* record for next otype*/
++	struct ebitmap stypes; /* bitmap of source types for this otype */
++	u32 otype; /* resulting type of new object */
++	struct filename_trans_datum *next; /* record for next otype*/
+ };
+ 
+ struct role_allow {
+-	u32 role;		/* current role */
+-	u32 new_role;		/* new role */
++	u32 role; /* current role */
++	u32 new_role; /* new role */
+ 	struct role_allow *next;
+ };
+ 
+ /* Type attributes */
+ struct type_datum {
+-	u32 value;		/* internal type value */
+-	u32 bounds;		/* boundary of type */
+-	unsigned char primary;	/* primary name? */
+-	unsigned char attribute;/* attribute ?*/
++	u32 value; /* internal type value */
++	u32 bounds; /* boundary of type */
++	unsigned char primary; /* primary name? */
++	unsigned char attribute; /* attribute ?*/
+ };
+ 
+ /* User attributes */
+ struct user_datum {
+-	u32 value;			/* internal user value */
+-	u32 bounds;			/* bounds of user */
+-	struct ebitmap roles;		/* set of authorized roles for user */
+-	struct mls_range range;		/* MLS range (min - max) for user */
+-	struct mls_level dfltlevel;	/* default login MLS level for user */
++	u32 value; /* internal user value */
++	u32 bounds; /* bounds of user */
++	struct ebitmap roles; /* set of authorized roles for user */
++	struct mls_range range; /* MLS range (min - max) for user */
++	struct mls_level dfltlevel; /* default login MLS level for user */
+ };
+ 
+-
+ /* Sensitivity attributes */
+ struct level_datum {
+-	struct mls_level *level;	/* sensitivity and associated categories */
+-	unsigned char isalias;	/* is this sensitivity an alias for another? */
++	struct mls_level *level; /* sensitivity and associated categories */
++	unsigned char isalias; /* is this sensitivity an alias for another? */
+ };
+ 
+ /* Category attributes */
+ struct cat_datum {
+-	u32 value;		/* internal category bit + 1 */
+-	unsigned char isalias;  /* is this category an alias for another? */
++	u32 value; /* internal category bit + 1 */
++	unsigned char isalias; /* is this category an alias for another? */
+ };
+ 
+ struct range_trans {
+@@ -147,7 +144,7 @@ struct range_trans {
+ 
+ /* Boolean data type */
+ struct cond_bool_datum {
+-	__u32 value;		/* internal type value */
++	__u32 value; /* internal type value */
+ 	int state;
+ };
+ 
+@@ -173,20 +170,20 @@ struct type_set {
+  */
+ struct ocontext {
+ 	union {
+-		char *name;	/* name of initial SID, fs, netif, fstype, path */
++		char *name; /* name of initial SID, fs, netif, fstype, path */
+ 		struct {
+ 			u8 protocol;
+ 			u16 low_port;
+ 			u16 high_port;
+-		} port;		/* TCP or UDP port information */
++		} port; /* TCP or UDP port information */
+ 		struct {
+ 			u32 addr;
+ 			u32 mask;
+-		} node;		/* node information */
++		} node; /* node information */
+ 		struct {
+ 			u32 addr[4];
+ 			u32 mask[4];
+-		} node6;        /* IPv6 node information */
++		} node6; /* IPv6 node information */
+ 		struct {
+ 			u64 subnet_prefix;
+ 			u16 low_pkey;
+@@ -198,11 +195,11 @@ struct ocontext {
+ 		} ibendport;
+ 	} u;
+ 	union {
+-		u32 sclass;  /* security class for genfs */
+-		u32 behavior;  /* labeling behavior for fs_use */
++		u32 sclass; /* security class for genfs */
++		u32 behavior; /* labeling behavior for fs_use */
+ 	} v;
+-	struct context context[2];	/* security context(s) */
+-	u32 sid[2];	/* SID(s) */
++	struct context context[2]; /* security context(s) */
++	u32 sid[2]; /* SID(s) */
+ 	struct ocontext *next;
+ };
+ 
+@@ -221,19 +218,19 @@ struct genfs {
+ #define SYM_BOOLS   5
+ #define SYM_LEVELS  6
+ #define SYM_CATS    7
+-#define SYM_NUM     8
++#define SYM_NUM	    8
+ 
+ /* object context array indices */
+-#define OCON_ISID	0 /* initial SIDs */
+-#define OCON_FS		1 /* unlabeled file systems (deprecated) */
+-#define OCON_PORT	2 /* TCP and UDP port numbers */
+-#define OCON_NETIF	3 /* network interfaces */
+-#define OCON_NODE	4 /* nodes */
+-#define OCON_FSUSE	5 /* fs_use */
+-#define OCON_NODE6	6 /* IPv6 nodes */
+-#define OCON_IBPKEY	7 /* Infiniband PKeys */
+-#define OCON_IBENDPORT	8 /* Infiniband end ports */
+-#define OCON_NUM	9
++#define OCON_ISID      0 /* initial SIDs */
++#define OCON_FS	       1 /* unlabeled file systems (deprecated) */
++#define OCON_PORT      2 /* TCP and UDP port numbers */
++#define OCON_NETIF     3 /* network interfaces */
++#define OCON_NODE      4 /* nodes */
++#define OCON_FSUSE     5 /* fs_use */
++#define OCON_NODE6     6 /* IPv6 nodes */
++#define OCON_IBPKEY    7 /* Infiniband PKeys */
++#define OCON_IBENDPORT 8 /* Infiniband end ports */
++#define OCON_NUM       9
+ 
+ /* The policy database */
+ struct policydb {
+@@ -243,15 +240,15 @@ struct policydb {
+ 	struct symtab symtab[SYM_NUM];
+ #define p_commons symtab[SYM_COMMONS]
+ #define p_classes symtab[SYM_CLASSES]
+-#define p_roles symtab[SYM_ROLES]
+-#define p_types symtab[SYM_TYPES]
+-#define p_users symtab[SYM_USERS]
+-#define p_bools symtab[SYM_BOOLS]
+-#define p_levels symtab[SYM_LEVELS]
+-#define p_cats symtab[SYM_CATS]
++#define p_roles	  symtab[SYM_ROLES]
++#define p_types	  symtab[SYM_TYPES]
++#define p_users	  symtab[SYM_USERS]
++#define p_bools	  symtab[SYM_BOOLS]
++#define p_levels  symtab[SYM_LEVELS]
++#define p_cats	  symtab[SYM_CATS]
+ 
+ 	/* symbol names indexed by (value - 1) */
+-	char		**sym_val_to_name[SYM_NUM];
++	char **sym_val_to_name[SYM_NUM];
+ 
+ 	/* class, role, and user attributes indexed by (value - 1) */
+ 	struct class_datum **class_val_to_struct;
+@@ -324,25 +321,25 @@ extern int policydb_role_isvalid(struct
+ extern int policydb_read(struct policydb *p, void *fp);
+ extern int policydb_write(struct policydb *p, void *fp);
+ 
+-extern struct filename_trans_datum *policydb_filenametr_search(
+-	struct policydb *p, struct filename_trans_key *key);
++extern struct filename_trans_datum *
++policydb_filenametr_search(struct policydb *p, struct filename_trans_key *key);
+ 
+-extern struct mls_range *policydb_rangetr_search(
+-	struct policydb *p, struct range_trans *key);
++extern struct mls_range *policydb_rangetr_search(struct policydb *p,
++						 struct range_trans *key);
+ 
+-extern struct role_trans_datum *policydb_roletr_search(
+-	struct policydb *p, struct role_trans_key *key);
++extern struct role_trans_datum *
++policydb_roletr_search(struct policydb *p, struct role_trans_key *key);
+ 
+-#define POLICYDB_CONFIG_MLS    1
++#define POLICYDB_CONFIG_MLS 1
+ 
+ /* the config flags related to unknown classes/perms are bits 2 and 3 */
+-#define REJECT_UNKNOWN	0x00000002
+-#define ALLOW_UNKNOWN	0x00000004
++#define REJECT_UNKNOWN 0x00000002
++#define ALLOW_UNKNOWN  0x00000004
+ 
+-#define OBJECT_R "object_r"
++#define OBJECT_R     "object_r"
+ #define OBJECT_R_VAL 1
+ 
+-#define POLICYDB_MAGIC SELINUX_MAGIC
++#define POLICYDB_MAGIC	SELINUX_MAGIC
+ #define POLICYDB_STRING "SE Linux"
+ 
+ struct policy_file {
+@@ -366,7 +363,8 @@ static inline int next_entry(void *buf,
+ 	return 0;
+ }
+ 
+-static inline int put_entry(const void *buf, size_t bytes, size_t num, struct policy_file *fp)
++static inline int put_entry(const void *buf, size_t bytes, size_t num,
++			    struct policy_file *fp)
+ {
+ 	size_t len;
+ 
+@@ -382,7 +380,8 @@ static inline int put_entry(const void *
+ 	return 0;
+ }
+ 
+-static inline char *sym_name(struct policydb *p, unsigned int sym_num, unsigned int element_nr)
++static inline char *sym_name(struct policydb *p, unsigned int sym_num,
++			     unsigned int element_nr)
+ {
+ 	return p->sym_val_to_name[sym_num][element_nr];
+ }
+@@ -390,5 +389,4 @@ static inline char *sym_name(struct poli
+ extern u16 string_to_security_class(struct policydb *p, const char *name);
+ extern u32 string_to_av_perm(struct policydb *p, u16 tclass, const char *name);
+ 
+-#endif	/* _SS_POLICYDB_H_ */
+-
++#endif /* _SS_POLICYDB_H_ */
 
 
