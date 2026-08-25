@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89BD841A92C;
-	Tue, 25 Aug 2026 13:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784D141A92C;
+	Tue, 25 Aug 2026 13:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665761; cv=none; b=sF6wjatVDXjfsHxUcTgyB3oQ3g6q1E8sYQ7V5GtY3xHwI60IDuwxm7TLYUpCc/eDqVeJGrJTo4NmvJThpBYg1WUcvznn3eXkUqIERf6edFFJROFocn9TPWKY596m7YmtadJdu4n1u64bAxsyTR/w0ALi52DN4gScCf2hijEVWJM=
+	t=1787665767; cv=none; b=U9vlxDOr5kF8Cx0VVIsvB0PRf5jdfYDPlYUvUfMZXsJst9FWiJzgdlBX/0+y2Fukt9lTpnZQVSBwoqHQqWdLj90Ep+hpewy8MEB9WvwiZwYBsMZbWqmti3LsF1QaTyWS1lwDZm7l8cvs/1ddueJr0Xc/3FV5LzC0loNHfoG6DCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665761; c=relaxed/simple;
-	bh=A104N7UW/6ePbO13Vnvy/Bxe3j22u6ylSM6RuT6r7Ng=;
+	s=arc-20240116; t=1787665767; c=relaxed/simple;
+	bh=rvD0vA9s8ZuOtquuOLZVk1B1q1YYaM5aj9z6vKI2WUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t7ylsoAMJrv7LRv2QQbgfoYwPIoS0vdSxd8Sa2ECu4Sbnv9oFW8biYJxm+DVwV8PGy0I+P/70kvy3kE9U4DgKIUneem4PbRj+ZpCkY9NjbSrj8uYYm/6b8sDETZct3759L+VD8YZWXf3tAI7HHa7rFTk0ZXSEBEqOSwl7z1ORYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PI9IENni; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tptjCF9GFmphYzYP3goZmKY8OZah0PXIiLoAxzyq8C7kA8ffxXMaFZuTMzdM46wYOyT1i1A90NJpBiGRdpib5+ipsl8X32bMNQqphd1XNFB5ftYL8MmSNzj6/pVaN709nhLJeXMDo5Y4lubB3nca1fqzG5HYH4BwctotLMbwmDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnL6otdQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PI9IENni"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46F71F000E9;
-	Tue, 25 Aug 2026 13:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnL6otdQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C952C1F00A3A;
+	Tue, 25 Aug 2026 13:49:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665760;
-	bh=gJZ2zWoWYL3+eKOoB+NhDWoE06UaxtHMDPG1FZl1Nbs=;
+	s=korg; t=1787665766;
+	bh=xjLf+v3L6sMBVZUIV7aCMFVockodSrmBb5RskCvhqmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PI9IENnirgeAzw4/H7Ez2kzM0H3P3fprmVvVNzFkeyj2OC9XYWIlcpB8DhsePwoh/
-	 TS5CP+vbqo76VwRwCfeC5Iwcf990EM4fla9oetLQidWUA1juk9WBYKU0h5Mz21jslY
-	 Is4X+mq66KXmwp4H90x2fLqiNXymCS48ZKg6HLGs=
+	b=AnL6otdQ1TjVv4qOX02J4Lt0moT1I0ha1Lv8qqrjvEoPGCVELjDHGYca7ME5iUxES
+	 Ct75bheShkwnKTCxPOHFxfe+peXU+WakEhHOHSK2rWtyTBihJbv38lhXiULSmfXl0+
+	 ymB6YLk/QYIUvA1xL0ESAREJjJkc0hicwTqp5Ix4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Jiang HongHui <jiang_hh2019@163.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.6 55/87] nvmet-fc: fix invalid free in LS IOD error path
-Date: Tue, 25 Aug 2026 15:26:18 +0200
-Message-ID: <20260825132543.999771932@linuxfoundation.org>
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 57/87] ASoC: sof: pcm: use snd_pcm_direction_name()
+Date: Tue, 25 Aug 2026 15:26:20 +0200
+Message-ID: <20260825132544.068445162@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -51,46 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiang HongHui <jiang_hh2019@163.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-commit ba98d6796d12258e837ece065d2ecb59d76ce4ff upstream.
+[ Upstream commit cda4aa0069b73e3404ee61864b4814ccc7b7a6ad ]
 
-nvmet_fc_alloc_ls_iodlist() advances iod while initializing the LS IOD
-array. If an rqstbuf allocation or response buffer DMA mapping fails,
-the unwind loop decrements iod past the start of the array. The final
-kfree(iod) therefore frees an address before the allocated object.
+We already have snd_pcm_direction_name(). Let's use it.
 
-This can be reproduced with nvme-fcloop and failslab by setting
-fail-nth to 6 before creating a target port. KASAN reports:
-
-  BUG: KASAN: invalid-free in nvmet_fc_register_targetport
-  Free of addr ffff88816cf8ff48 by task nvmet_fail_nth/9552
-
-Free the original allocation base stored in tgtport->iod instead. With
-this fix applied, the same sysfs write with fail-nth=6 returns -ENOMEM
-without any KASAN report.
-
-Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
-Cc: stable@vger.kernel.org
-Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jiang HongHui <jiang_hh2019@163.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/87mslzk51h.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 17661c67b206 ("ASoC: SOF: ipc4-pcm: Continue the pipeline trigger in case of IPC timeout")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fc.c |    2 +-
+ sound/soc/sof/pcm.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -571,7 +571,7 @@ out_fail:
- 		list_del(&iod->ls_rcv_list);
- 	}
+--- a/sound/soc/sof/pcm.c
++++ b/sound/soc/sof/pcm.c
+@@ -100,7 +100,7 @@ sof_pcm_setup_connected_widgets(struct s
+ 							     dpcm_end_walk_at_be);
+ 		if (ret < 0) {
+ 			dev_err(sdev->dev, "error: dai %s has no valid %s path\n", dai->name,
+-				dir == SNDRV_PCM_STREAM_PLAYBACK ? "playback" : "capture");
++				snd_pcm_direction_name(dir));
+ 			return ret;
+ 		}
  
--	kfree(iod);
-+	kfree(tgtport->iod);
- 
- 	return -EFAULT;
- }
 
 
