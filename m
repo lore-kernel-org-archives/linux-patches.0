@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6923D9547;
-	Tue, 25 Aug 2026 13:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2631F2B88;
+	Tue, 25 Aug 2026 13:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666216; cv=none; b=qLTuBPmpqeqtTRAJ2aM1Tjmg+klQCbhCU+iGE/uj3j68waEdAqyPEBtsbsyxB3a3kxBFniStGHAyqJ2GCc4M7Lcf58iD0pQbaXq8WDDFd2z4uPUEqb/ao/ApabHNnJScOQdBJ/svoKXnMvR7zxfhdkQ/k/3MHtQT5zz3D+YmKHo=
+	t=1787666219; cv=none; b=EFuRcJ0gM7MFoz0QrSFw8lm49RPVC+DNY9AQUimmDV1RdPVFcbfv4NYI4CPJj0u4VsvLyBhNP/akLgLF2FZiDv2CqI6Qk91ZAntoO3Ib2V2CbEpkgu/A7L/aicwW67RXBTHhWBUwTEqhpSxd751hRWB8SrxEnKgtnay6TOkV0ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666216; c=relaxed/simple;
-	bh=+JjIBk5C0WfGeEpr57hJjIA4sSiPnubO3/kJae0ed2w=;
+	s=arc-20240116; t=1787666219; c=relaxed/simple;
+	bh=2BL/ER8d5jUDQJHVsXMypTPca4l+hAjikZSPzWjiakA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SkgwEW3mpzewYVcHACepLVqmx7oqFpA0IIYhEArKEzUR6Fiusc1NTfwx4435GwmaF8xTiZU0I4w1X7G7PnLzbPAis9RGLmMe/R6SwwWJKf2lztpiRcZuutPQV/jB9r5q6y7o2LsCPL/U8jnr3Yvo4BhcxaNvHNUDYIWx1p1idlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VScnZLk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pmri+gckHq27qhPxNFtABdYcIY/UZW2TbhXEakzTVq0y80qfUzWDrGDncj5inWHiEzkX9Vln78hNLKhhBzUx4d+CQsm9ItGW1HbOZIk1rlNLC11KmsPoC1HnQEAfPrc6SbizX0zj0LovrWstyN+Ug8LqIlhYmjCPtKQXq4ft1BU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zdPQ1urA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VScnZLk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63CA11F00A3A;
-	Tue, 25 Aug 2026 13:56:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zdPQ1urA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF7D1F000E9;
+	Tue, 25 Aug 2026 13:56:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666214;
-	bh=+bZHThReeMmM0X2MSiVSreo+beSzLrBy0lTrK96C1CA=;
+	s=korg; t=1787666217;
+	bh=oM0Cdw47pw2tintkHP02UxYxs7U/lzp+h4RMA+HafDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1VScnZLkk8UG4DlWUmUYBHdVGrBBM5+QxNEpRgu/tsWswI8lFggry+RqSGbyKsqHF
-	 SYuGbv/f21ocXD3MGofShx97P7pynBni4pYDN7leAi2LbqGg+f3Juhzf40+UNGpKj7
-	 BUC6OHzfwBi4W3D8X4k5WZrFKisvbCTjs++pC1e0=
+	b=zdPQ1urARkDImNNFC80XYQZQOa8XIDDvJLV/wkl4WS8c0DoHSOWRnFkL5LRdaVr8L
+	 sSQCL3q4kBmYfTBfVraUZaTx/kxxyc3RSpTkpIJQSpT4Sgbg66WZSXhgwCzjojKPVT
+	 qegQuZ+2QdSOnRnWajyjolCvpMQjzbEVVUxBkMJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Bridges <icb@fastmail.org>,
-	syzbot+e538032956b1157914a3@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 05/76] ocfs2: fix missing metadata reservation for large xattrs
-Date: Tue, 25 Aug 2026 15:25:58 +0200
-Message-ID: <20260825132541.758320506@linuxfoundation.org>
+	syzbot+abd6a8dca0f2b7726060@syzkaller.appspotmail.com,
+	Rik van Riel <riel@surriel.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 06/76] null_blk: fix UBSAN shift-out-of-bounds when zone_size is 0 or overflows
+Date: Tue, 25 Aug 2026 15:25:59 +0200
+Message-ID: <20260825132541.793754935@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
 References: <20260825132541.568214149@linuxfoundation.org>
@@ -58,90 +52,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Rik van Riel <riel@surriel.com>
 
-commit 0cdc7dde00ec63ac714271fa8b2918d630b8da1a upstream.
+commit 95491fb05105b61050cb623a5e0227eb26aa3525 upstream.
 
-[BUG]
-lsetxattr() panics the kernel when setting a large xattr value on a
-fragmented filesystem where the file already has an external xattr
-block.
+null_zone_no() does sect >> ilog2(dev->zone_size_sects). When
+zone_size_sects is 0, ilog2(0) returns -1, producing shift exponent -1
+which UBSAN reports as shift-out-of-bounds.
 
-[CAUSE]
-ocfs2_calc_xattr_set_need() never reserves metadata blocks for a new
-xattr value's extent tree when the file already has an external xattr
-block. The not_found path leaves meta_add at zero, so meta_ac is NULL
-when ocfs2_xattr_extend_allocation() runs.
+  UBSAN: shift-out-of-bounds in drivers/block/null_blk/zoned.c:21:14
+  shift exponent -1 is negative
+  Call Trace:
+   null_zone_no drivers/block/null_blk/zoned.c:21 [inline]
+   null_process_zoned_cmd+0xf76/0xf80 drivers/block/null_blk/zoned.c:728
+   null_handle_cmd drivers/block/null_blk/main.c:1455 [inline]
+   null_queue_rq+0x8bc/0xe70 drivers/block/null_blk/main.c:1703
+   __blk_mq_issue_directly block/blk-mq.c:2694 [inline]
+   blk_mq_try_issue_directly+0x3f4/0x880 block/blk-mq.c:2754
+   blk_mq_submit_bio+0x20c0/0x2a40 block/blk-mq.c:3208
+   submit_bio_noacct_nocheck+0x2f4/0xa40 block/blk-core.c:790
+   block_read_full_folio+0x7a6/0x810 fs/buffer.c:2463
+   filemap_read_folio+0x12c/0x3a0 mm/filemap.c:2510
+   read_part_sector+0xb6/0x2b0 block/partitions/core.c:724
+   adfspart_check_ICS+0xb1/0x960 block/partitions/acorn.c:357
+   check_partition block/partitions/core.c:143 [inline]
+   blk_add_partitions block/partitions/core.c:591 [inline]
+   bdev_disk_changed+0x851/0x17a0 block/partitions/core.c:695
+   blkdev_get_whole+0x372/0x510 block/bdev.c:751
+   add_disk_final block/genhd.c:412 [inline]
+   add_disk_fwnode+0x24b/0x3a0 block/genhd.c:606
+   null_add_dev+0x130b/0x1d70 drivers/block/null_blk/main.c:2052
+   nullb_device_power_store+0x240/0x380 drivers/block/null_blk/main.c:501
+   configfs_write_iter+0x337/0x430 fs/configfs/file.c:229
 
-A new value root has room for a single extent record. On a fragmented
-filesystem, the allocator cannot satisfy the xattr value in one
-contiguous run, so each non-contiguous run requires its own extent
-record. When the value root's extent list is full and meta_ac is NULL,
-ocfs2_add_clusters_in_btree() returns RESTART_META, and
-ocfs2_xattr_extend_allocation() hits BUG_ON(why == RESTART_META).
+Syzkaller triggers this by creating a zoned null_blk device via
+configfs. The Call Trace shows configfs_write_iter in configfs/file.c
+handling a write to power file, which calls nullb_device_power_store in
+main.c, which calls null_add_dev in main.c, which calls add_disk in
+genhd.c, which triggers partition scan via bdev_disk_changed in
+partitions/core.c.
 
-[FIX]
-The case where no xattr block exists yet already calls
-ocfs2_extend_meta_needed(&def_xv.xv.xr_list) to reserve value tree
-metadata. Add the same reservation to the case where an xattr block
-already exists, making the two cases consistent.
+A zoned null_blk device with zone_size 0 should not be legal. Existing
+code tries to reject it via is_power_of_2() check in zoned.c and
+!zone_size check in main.c, but syzkaller can still reach
+null_zone_no() with zone_size_sects 0 via two paths:
 
-Replace the BUG_ON with a -ENOSPC return so that if RESTART_META is
-returned despite the reservation, the error propagates to userspace
-instead of panicking the kernel.
+1. Direct 0 via configfs: zone_size attribute store in main.c has
+NULLB_DEVICE_ATTR(zone_size, ulong, NULL) with no validation callback,
+so echo 0 > zone_size succeeds before power store. If zoned is false
+at power store time, the !zone_size check in main.c is skipped, and
+later zoned set true leaves zone_size 0.
 
-Link: https://lore.kernel.org/amLwn3i9tET8yhG7@dev
-Fixes: a78f9f466894 ("ocfs2: make xattr extension work with new local alloc reservation.")
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Reported-by: syzbot+e538032956b1157914a3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e538032956b1157914a3
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+2. Large value overflow: mb_to_sects() in zoned.c does
+(sector_t)mb * SZ_1M >> SECTOR_SHIFT which is mb * 2048. If mb is
+1UL << 53 (9PB), mb * 2048 overflows 64-bit to 0. The value is
+power-of-two so is_power_of_2() passes, but mb_to_sects() returns 0.
+
+Check for zero zone_size explicitly in null_init_zoned_dev() in
+zoned.c, returning -EINVAL with "must be non-zero power-of-two".
+Check for zero zone_size_sects after mb_to_sects() conversion,
+returning -EINVAL for overflow case. Keep defensive check in
+null_zone_no() returning 0 for zero sectors to avoid shift out-of-bounds
+even if  zero slips through.
+
+This change should be safe because zone_size is set once in
+null_init_zoned_dev() under device lock and never changes after, and 0
+is never valid for a zoned device. Returning -EINVAL at init time fails
+device creation early with clear error, while defensive return 0 in
+null_zone_no() makes zoned command fail via offline zone check.
+No new locking is introduced.
+
+Reported-by: syzbot+abd6a8dca0f2b7726060@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=abd6a8dca0f2b7726060
+Link: https://lore.kernel.org/all/6a75205c.01d0871a.3a0d52.0033.GAE@google.com/
+Fixes: 8a3cf049af68 ("null_blk: add zoned block device emulation")
+Cc: stable@vger.kernel.org
+Assisted-by: Hermes:muse-spark-1.2 syzkaller
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://patch.msgid.link/20260808114239.69167f68@fangorn
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/xattr.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/block/null_blk/zoned.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -740,12 +740,10 @@ static int ocfs2_xattr_extend_allocation
- 					 prev_clusters;
+--- a/drivers/block/null_blk/zoned.c
++++ b/drivers/block/null_blk/zoned.c
+@@ -13,6 +13,8 @@ static inline sector_t mb_to_sects(unsig
  
- 		if (why != RESTART_NONE && clusters_to_add) {
--			/*
--			 * We can only fail in case the alloc file doesn't give
--			 * up enough clusters.
--			 */
--			BUG_ON(why == RESTART_META);
--
-+			if (why == RESTART_META) {
-+				status = -ENOSPC;
-+				break;
-+			}
- 			credits = ocfs2_calc_extend_credits(inode->i_sb,
- 							    &vb->vb_xv->xr_list);
- 			status = ocfs2_extend_trans(handle, credits);
-@@ -3215,6 +3213,14 @@ meta_guess:
- 			credits += OCFS2_SUBALLOC_ALLOC + 1;
+ static inline unsigned int null_zone_no(struct nullb_device *dev, sector_t sect)
+ {
++	if (WARN_ON_ONCE(!dev->zone_size_sects))
++		return 0;
+ 	return sect >> ilog2(dev->zone_size_sects);
+ }
  
- 		/*
-+		 * Reserve metadata for the new xattr's value extent tree.
-+		 * The not_found path above adds credits for this tree but
-+		 * omits meta_add, leaving meta_ac NULL for large values.
-+		 */
-+		if (xi->xi_value_len > OCFS2_XATTR_INLINE_SIZE)
-+			meta_add += ocfs2_extend_meta_needed(&def_xv.xv.xr_list);
-+
-+		/*
- 		 * This cluster will be used either for new bucket or for
- 		 * new xattr block.
- 		 * If the cluster size is the same as the bucket size, one
+@@ -62,8 +64,8 @@ int null_init_zoned_dev(struct nullb_dev
+ 	sector_t sector = 0;
+ 	unsigned int i;
+ 
+-	if (!is_power_of_2(dev->zone_size)) {
+-		pr_err("zone_size must be power-of-two\n");
++	if (!dev->zone_size || !is_power_of_2(dev->zone_size)) {
++		pr_err("zone_size must be non-zero power-of-two\n");
+ 		return -EINVAL;
+ 	}
+ 	if (dev->zone_size > dev->size) {
+@@ -94,6 +96,10 @@ int null_init_zoned_dev(struct nullb_dev
+ 	zone_capacity_sects = mb_to_sects(dev->zone_capacity);
+ 	dev_capacity_sects = mb_to_sects(dev->size);
+ 	dev->zone_size_sects = mb_to_sects(dev->zone_size);
++	if (!dev->zone_size_sects) {
++		pr_err("zone_size too large or too small, leads to zero sectors\n");
++		return -EINVAL;
++	}
+ 	dev->nr_zones = round_up(dev_capacity_sects, dev->zone_size_sects)
+ 		>> ilog2(dev->zone_size_sects);
+ 
 
 
