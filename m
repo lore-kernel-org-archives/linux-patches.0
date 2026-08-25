@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B96481AA4;
-	Tue, 25 Aug 2026 13:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E589D481AA4;
+	Tue, 25 Aug 2026 13:55:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666102; cv=none; b=HdxjUok3Qz6dQ7EozsrxJqfcUc+Y2xY7wH2APDGB6On8sxx8Gftf6KrytJwDfEH5sjP8AGx7chwsit4TyCSZszPTpeSibcq8OoncqNlpCl8OI+HqrN70mD7sfizUiIQes4P/CK5VGJVw5PX4fh+Wf1DCG7cq9+G9zcpQR9US6y0=
+	t=1787666105; cv=none; b=tb9eZ1P1bxek7jZ0cAqa7jUvy6FiojnSSQNbYsipVJirrc5SKuyJ7084PxtEhnE9FiKn/1X96F2jGl/yPOfU+r1AdZ4mdBpA51FTJ/Et23pdmMQjbrOCjOx6ZmuCnDoz/hP8jm1PPm6TgRlmGWzQ4Anv0Z0esvonbvv03Pjnn5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666102; c=relaxed/simple;
-	bh=Bv1BWB38dX/LdaoYgDjR3eYqAbyRaErLuUtj4QWCK/I=;
+	s=arc-20240116; t=1787666105; c=relaxed/simple;
+	bh=OyIgvOaY2MbxVgCKgS9awByMO5KamCkSJrP3k7faSKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gj6V5ztIY9WPncNYexYUKGAduO0lhprKvhh8thdc79uxpQ/iH3ffqjJ2sPbqJEuu6NPXNuVNvV9JdaTcfYCPO/kxoaMP8/Mno4y15Ccm6OdP+kNGERJCPEeUzazlNC3p4YbhnpcX73E55330D1I2qh/MT257xkhN/K9DM470ti4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ayqmQ3Ut; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U4hoQr+1KrjQVKZ6JlLgdapBYwTKBjDsFdtI+oHwYM98Q3nlq7/K9UZbp1zYIWF2vG4IMJTVS5X/UlCvXTTj0y8J9CoWh0twLgU9lgWDYVU94zgAUOpXm0Id34W4VHZ8ET/51uiUV7JoTM1e4tjxmClDZq9ocofFMgjkJY3+t5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dzZmo6B8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ayqmQ3Ut"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4709C1F000E9;
-	Tue, 25 Aug 2026 13:55:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzZmo6B8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456011F000E9;
+	Tue, 25 Aug 2026 13:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666100;
-	bh=vGNGTsjHYYldfmafxjjAnL3DFzCyXYBuFi8u21Yia88=;
+	s=korg; t=1787666103;
+	bh=JsF2Rczf8j3RTKmRMzYxnK+DUuXC/M9Lprm0RS5FVuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ayqmQ3Uth03BT/3w7xcEw9BrMfUepYCVyx5OMkts23ApUV2unsvbsArgtsFdkKGp9
-	 AFHtmXqY391gJ3ZRwqRP85TmaZjg2Zyz77TbjKhav/XBbRWBDdzqpcbuzQW+4P86Ei
-	 Q7QrLRKZ+A5s36L5yI0Xi64eDVEpsUg9p9Qxp1fY=
+	b=dzZmo6B83cTObjPhFBHfTfdOKAa777s47SpU14EsAY6mKqO3PJbd7TyaOzv6Jr0Oz
+	 2qbXz84IyffdNNq/+RLs+juoh+7+PourohdKKY1viZDUKUrJMqztgWDBrxoFXwfHQI
+	 jKB8rgQ4lknzeOpTOvQEAjHIqbhKXmLtJ/kGuSSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Li Xiasong <lixiasong1@huawei.com>
-Subject: [PATCH 6.1 53/79] ndisc: ndisc_send_redirect() cleanup
-Date: Tue, 25 Aug 2026 15:26:33 +0200
-Message-ID: <20260825132543.780023511@linuxfoundation.org>
+	Pavitra Jha <jhapavitra98@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 54/79] libceph: fix OOB read in decode_watchers() via missing bounds check
+Date: Tue, 25 Aug 2026 15:26:34 +0200
+Message-ID: <20260825132543.817568619@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -52,59 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Pavitra Jha <jhapavitra98@gmail.com>
 
-commit 0784d83df3bfc977c13252a0599be924f0afa68d upstream.
+commit 00ead17c7de137a692edee59f2772e6af687e8eb upstream.
 
-ndisc_send_redirect() is always called under rcu_read_lock().
+ceph_start_decoding() validates that struct_len bytes remain in the
+buffer after the encoding header, but accepts struct_len=0 as valid:
+ceph_decode_need(p, end, 0, bad) always passes. When a malicious or
+compromised OSD sends an obj_list_watch_response_t reply with
+struct_len=0, ceph_start_decoding() returns success with p == end,
+leaving zero bytes guaranteed for subsequent reads.
 
-It can use dev_net_rcu() and avoid one redundant
-rcu_read_lock()/rcu_read_unlock() pair.
+The immediately following ceph_decode_32(p) in decode_watchers() has
+no preceding bounds check. With p == end this is a 4-byte read past
+the validated buffer boundary. The garbage value is then passed
+directly to kzalloc_objs() as the watcher count.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250214140705.2105890-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
+The sibling function decode_watcher() already uses the safe variants
+(ceph_decode_copy_safe, ceph_decode_64_safe, ceph_decode_skip_32)
+after its own ceph_start_decoding() call. decode_watchers() is the
+only site that uses the bare variant, confirming an oversight.
+
+Fix by replacing ceph_decode_32(p) with ceph_decode_32_safe(p, end,
+*num_watchers, bad), consistent with the established pattern.
+
+Attacker model: a malicious or compromised OSD in a multi-tenant Ceph
+deployment (e.g. cloud) can trigger this against any kernel client
+that calls CEPH_OSD_OP_LIST_WATCHERS, without any further privileges
+beyond OSD session establishment.
+
+[ idryomov: trim changelog ]
+
+Cc: stable@vger.kernel.org
+Fixes: a4ed38d7a180 ("libceph: support for CEPH_OSD_OP_LIST_WATCHERS")
+Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+[ kept the tree's `kcalloc()` context line instead of upstream's `kzalloc_objs()` ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ndisc.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ net/ceph/osd_client.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -1671,7 +1671,7 @@ static void ndisc_fill_redirect_hdr_opti
- void ndisc_send_redirect(struct sk_buff *skb, const struct in6_addr *target)
- {
- 	struct net_device *dev = skb->dev;
--	struct net *net = dev_net(dev);
-+	struct net *net = dev_net_rcu(dev);
- 	struct sock *sk = net->ipv6.ndisc_sk;
- 	int optlen = 0;
- 	struct inet_peer *peer;
-@@ -1686,8 +1686,8 @@ void ndisc_send_redirect(struct sk_buff
- 	   ops_data_buf[NDISC_OPS_REDIRECT_DATA_SPACE], *ops_data = NULL;
- 	bool ret;
+--- a/net/ceph/osd_client.c
++++ b/net/ceph/osd_client.c
+@@ -5001,7 +5001,7 @@ static int decode_watchers(void **p, voi
+ 	if (ret)
+ 		return ret;
  
--	if (netif_is_l3_master(skb->dev)) {
--		dev = dev_get_by_index_rcu(dev_net(skb->dev), IPCB(skb)->iif);
-+	if (netif_is_l3_master(dev)) {
-+		dev = dev_get_by_index_rcu(net, IPCB(skb)->iif);
- 		if (!dev)
- 			return;
- 	}
-@@ -1725,12 +1725,10 @@ void ndisc_send_redirect(struct sk_buff
- 		goto release;
+-	*num_watchers = ceph_decode_32(p);
++	ceph_decode_32_safe(p, end, *num_watchers, bad);
+ 	*watchers = kcalloc(*num_watchers, sizeof(**watchers), GFP_NOIO);
+ 	if (!*watchers)
+ 		return -ENOMEM;
+@@ -5015,6 +5015,9 @@ static int decode_watchers(void **p, voi
  	}
  
--	rcu_read_lock();
- 	peer = inet_getpeer_v6(net->ipv6.peers, &ipv6_hdr(skb)->saddr);
- 	if (!peer)
- 		goto release;
- 	ret = inet_peer_xrlim_allow(peer, 1*HZ);
--	rcu_read_unlock();
+ 	return 0;
++
++bad:
++	return -EINVAL;
+ }
  
- 	if (!ret)
- 		goto release;
+ /*
 
 
