@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97B747F2CB;
-	Tue, 25 Aug 2026 13:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A521A47F766;
+	Tue, 25 Aug 2026 13:31:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664687; cv=none; b=IbxWMLTtBRoJKEz2Ct0/abVN7nCGTj1Xw2PgeIeaD4rscoCnn8gPfO6f0H5NDGDhPvjgANAqlz18PQSPbKEehlEZiXAoSLDqcbPBAD+qhb/vynnZ0tKR54tEab/674nsswfazAbyrJqafbTxTOwb88lwvwrJiibgRmJAJZjzCMk=
+	t=1787664688; cv=none; b=Puksg5sn6CQAuNsdWXMHT1M69mnIWDd5tt+3GwwSEBy259IlHWOO6GQhtZ9gvvCaFO8j38uEoJGEJZLDzu2Lql6hIArdCNGyk+A5xMhDkM3L86od8Syk3J62uxxn5nfPmKZIMXhkMZCDTThZ5cIjhOPgHVUdasnMnUuFvEOIhjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664687; c=relaxed/simple;
-	bh=yLdiMg5EMLtRLSGnMkSen69dpRiyUCEzt4VSL3YDL1s=;
+	s=arc-20240116; t=1787664688; c=relaxed/simple;
+	bh=B3ux2Oje9jDLogQNYjgNYggIREpwR4HhyWEcKi8OzSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=As6OVrSh17S/JcpR+tlf8C155rshPBydWjQyDyh/QAM0cCsKVB3rh0Bnd7OVZvAmFu7ZozN5SjRuLGX/Y9RRvx2AF2HU2dTlDbGF18MFIpGYx/AH8NCIn5r1Xc3mUE2WcgCBA8Vwd8HfkYYNjuVymAK4N+ueg3xvQwpNLS3bdO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cMQu5wnV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Er90anVMI9uhwXMJziwrU2QtBykn1n8YAdg7qjLPWAPGI+tzzpr8giqJ1ZhSKB9eyYHU73ZwhgY232S+7sd7/ao1A88p6mQxWTyJee5yg+xOjwtyADcC6WpsUiEbN51EN7AJKpo3RkjSE9TibnG7PUTYIdE9F4YMa237BdjZ8tg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxBoiA9B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cMQu5wnV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3343E1F000E9;
-	Tue, 25 Aug 2026 13:31:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxBoiA9B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040A71F00A3D;
+	Tue, 25 Aug 2026 13:31:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664681;
-	bh=oO73LpnuDHg/SIxMtwPQEeXiRhrTT9Ri5Tqv5yOFjrk=;
+	s=korg; t=1787664687;
+	bh=FJ5U33pffFhVdyE69R9fw2I6sCFuMEvc0hDJU92YvKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cMQu5wnVS7ZKBPA1DYGKvnox5Jl9jIWvn6Gv4ByrH3SvpEw+7euc7fe5yXVFdeTin
-	 qbP4+C/CUhW66go+Q7RnYlBe3uZ3sqT29VFjHkHER+p/qj4Ltz0YkURlKcWvPvSln5
-	 SZ/+wDpK+0yhOE7m/gJgo7hPvkJXX7XB0BiUlCJw=
+	b=uxBoiA9B7jo5HDfZ2OrtE9/ZmRyWGr5kwHN8k3V5hAcFPx1ogdE6QQIEMJJC+txQS
+	 eiuC3LayXUZvjxPfPXuwoCzwHeP9KvZ/jVirl8SG1Q61aN5CLSswJ/ncxuoqhbIGYY
+	 S6mjZ1cZRQlydoS4C909wpouI5eADK4SJD6mn/yM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
-	Ibrahim Hashimov <security@auditcode.ai>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 7.2 52/82] nvmet-tcp: bound SGL data length before allocating command buffers
-Date: Tue, 25 Aug 2026 15:25:39 +0200
-Message-ID: <20260825132543.560924057@linuxfoundation.org>
+Subject: [PATCH 7.2 54/82] nvmet: pci-epf: fix use-after-free in nvmet_pci_epf_exec_iod_work()
+Date: Tue, 25 Aug 2026 15:25:41 +0200
+Message-ID: <20260825132543.636799156@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.560541185@linuxfoundation.org>
 References: <20260825132541.560541185@linuxfoundation.org>
@@ -51,80 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-commit 4a3f00262a044e8e15064b1a6860968bf0500bf4 upstream.
+commit c9e9bb757971485b4e8414b1744507af186d72c9 upstream.
 
-nvmet_tcp_map_data() reads the host-controlled 32-bit sgl->length
-and, for the in-capsule offset descriptor (type 0x01), checks it
-against port->inline_data_size before use. Any other SGL descriptor
-type -- including the non-inline transport SGL data-block descriptor
-(type (NVME_TRANSPORT_SGL_DATA_DESC << 4) | NVME_SGL_FMT_TRANSPORT_A,
-the type a real host uses for out-of-capsule writes) skips that check
-entirely and falls straight through to:
+nvmet_pci_epf_exec_iod_work() submits an I/O command with req->execute()
+and then waits for the command to complete and transfers the data back
+to the host. This wait is not needed for commands that do not transfer
+data from the device to the host. To decide whether that wait is needed,
+it reads iod->data_len and iod->dma_dir after calling req->execute().
 
-	cmd->req.sg = sgl_alloc(len, GFP_KERNEL, &cmd->req.sg_cnt);
+However, once req->execute() is called, the command may complete
+asynchronously on another CPU. For commands that do not require a
+device-to-host data transfer, nvmet_pci_epf_queue_response() calls
+nvmet_pci_epf_complete_iod() directly, which can free the iod before it
+reads iod->data_len and iod->dma_dir, resulting in the KFENCE use-after-
+free:
 
-with len taken directly from the wire, unbounded up to 4 GiB.
+ BUG: KFENCE: use-after-free read in nvmet_pci_epf_exec_iod_work+0x288/0x798 [nvmet_pci_epf]
 
-nvmet_req_init() only parses the command and never inspects
-sgl->length, and nvmet_check_transfer_len() -- the only other place
-transfer_len is validated -- runs later, from req->execute(), after
-the allocation has already happened. For a write command the target
-responds with an R2T and parks the command waiting for the host to
-send the data; if the host (or an unauthenticated peer that simply
-never follows up) never does, the sgl_alloc() buffer stays resident
-for the life of the command. NVMe/TCP has no mandatory authentication
-in the default configuration, so any peer able to reach the target
-portal and complete a Fabrics connect can drive this with a single
-crafted command, repeatable across queues and connections for
-amplification. This is unbounded kernel memory allocation
-triggered by a remote, effectively unauthenticated peer.
+ Use-after-free read at 0x00000000fdfa6d03 (in kfence-#63):
+  nvmet_pci_epf_exec_iod_work+0x288/0x798 [nvmet_pci_epf]
+  process_one_work+0x15c/0x4f0
+  worker_thread+0x18c/0x30c
+  kthread+0x130/0x140
+  ret_from_fork+0x10/0x20
 
-Validate len against the same NVMET_TCP_MAXH2CDATA ceiling this file
-already uses to bound per-PDU H2C data, for every SGL descriptor type,
-before doing any allocation. This closes the gap for the non-inline
-descriptor while leaving the existing, tighter inline_data_size check
-in place for the in-capsule case.
+ kfence-#63: 0x00000000e3de0e71-0x00000000c938ad62, size=712, cache=kmalloc-1k
 
-Runtime-verified on a v6.19 KASAN stand: with this bound in place, a
-crafted write command carrying an oversized non-inline SGL length is
-rejected before sgl_alloc() runs, where the same request previously
-drove an unbounded ~256 MiB kernel allocation (up to 4 GiB) that
-stayed resident pending an R2T the host never satisfies.
+ allocated by task 10 on cpu 0 at 73.995480s (0.005122s ago):
+  mempool_kmalloc+0x1c/0x28
+  mempool_alloc_noprof+0x40/0x9c
+  nvmet_pci_epf_poll_sqs_work+0xd4/0x344 [nvmet_pci_epf]
+  process_one_work+0x15c/0x4f0
+  worker_thread+0x18c/0x30c
+  kthread+0x130/0x140
+  ret_from_fork+0x10/0x20
 
-Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
+ freed by task 131 on cpu 3 at 73.995521s (0.008385s ago):
+  mempool_kfree+0x10/0x20
+  mempool_free+0x44/0x64
+  nvmet_pci_epf_free_iod+0x88/0x98 [nvmet_pci_epf]
+  nvmet_pci_epf_cq_work+0xfc/0x280 [nvmet_pci_epf]
+  process_one_work+0x15c/0x4f0
+  worker_thread+0x18c/0x30c
+  kthread+0x130/0x140
+  ret_from_fork+0x10/0x20
+
+Fix this by referring to iod->data_len and iod->dma_dir before calling
+req->execute(). The remaining iod accesses such as iod->status are only
+reached on the device-to-host read path. In this case,
+nvmet_pci_epf_queue_response() signals iod->done instead of freeing the
+iod, so the iod stays valid.
+
+Fixes: 0faa0fe6f90e ("nvmet: New NVMe PCI endpoint function target driver")
 Cc: stable@vger.kernel.org
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Assisted-by: AuditCode-AI:2026.07
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/tcp.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/nvme/target/pci-epf.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -422,6 +422,19 @@ static int nvmet_tcp_map_data(struct nvm
- 	if (!len)
- 		return 0;
+--- a/drivers/nvme/target/pci-epf.c
++++ b/drivers/nvme/target/pci-epf.c
+@@ -1594,6 +1594,7 @@ static void nvmet_pci_epf_exec_iod_work(
+ 	struct nvmet_pci_epf_iod *iod =
+ 		container_of(work, struct nvmet_pci_epf_iod, work);
+ 	struct nvmet_req *req = &iod->req;
++	bool no_wait;
+ 	int ret;
  
-+	/*
-+	 * inline_data_size only bounds the in-capsule (type 0x01) SGL
-+	 * descriptor below. A non-inline transport SGL data-block
-+	 * descriptor skips that check entirely and would otherwise reach
-+	 * sgl_alloc() with an attacker-controlled len of up to 4 GiB,
-+	 * pinning that much kernel memory for a command that may never
-+	 * complete. Bound every descriptor type here, before allocating
-+	 * anything, using the same ceiling this file already applies to
-+	 * per-PDU H2C data.
-+	 */
-+	if (len > NVMET_TCP_MAXH2CDATA)
-+		return NVME_SC_SGL_INVALID_DATA | NVME_STATUS_DNR;
+ 	if (!iod->ctrl->link_up) {
+@@ -1638,14 +1639,16 @@ static void nvmet_pci_epf_exec_iod_work(
+ 		}
+ 	}
+ 
+-	req->execute(req);
+-
+ 	/*
+ 	 * If we do not have data to transfer after the command execution
+ 	 * finishes, nvmet_pci_epf_queue_response() will complete the command
+ 	 * directly. No need to wait for the completion in this case.
+ 	 */
+-	if (!iod->data_len || iod->dma_dir != DMA_TO_DEVICE)
++	no_wait = !iod->data_len || iod->dma_dir != DMA_TO_DEVICE;
 +
- 	if (sgl->type == ((NVME_SGL_FMT_DATA_DESC << 4) |
- 			  NVME_SGL_FMT_OFFSET)) {
- 		if (!nvme_is_write(cmd->req.cmd))
++	req->execute(req);
++
++	if (no_wait)
+ 		return;
+ 
+ 	wait_for_completion(&iod->done);
 
 
