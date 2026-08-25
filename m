@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BC2286415;
-	Tue, 25 Aug 2026 14:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9C72ED843;
+	Tue, 25 Aug 2026 14:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666468; cv=none; b=m03QWbvXJCQMuMy/1VKVO6bftcKZlI+KNyqo3MXfF9eegmy7P//m0vZtQvfqMNeIjiss/qw5i8iRUwla1HqcWavAWMYtwnPrUvDXV9ZBFU4X8xXEX1Y2eA38FhEXnZ7t4qQUwKJ2W6iYpLvRSn4W5Y8g0sG8bqrHyoYtIYGDYPc=
+	t=1787666471; cv=none; b=ACKemumSleluAsn8LEj6EhzP1Dg4r+lKtVu89ERRu4Hf3gQcRG4/eTIE+ovBWaGuGSVDCDDxjUeMjVrgLCPsZifHFHKs2Zv8uSxgpwm4e6RV3l5J5YM+2lCLhvdWPOnP1FhFjTofxWKqvtAHdyRBnCyLHw6sGfDgQXo7raBtrAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666468; c=relaxed/simple;
-	bh=+ilYHHNn5cc5KTWgSBl+3/CE7s2pl15ygKof8ejGyP8=;
+	s=arc-20240116; t=1787666471; c=relaxed/simple;
+	bh=cIhaELCkW8cfVRnh4uvQ4oBWDPA31Z/vgU8z2GBGoIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uhmEKhQuDqHOCLurhJhqEITQ+6WfuHk8okbTD76eKDYrZGWIzh5L1H5fTK4TjlcH7dR5+vz9Wfu9sPNmGf3QIKa53Iia8P2J2zmK0mj4AQZZiiAPdmLw3llkkwaeLTQNlzd5eulGTd1WeENpRfxcbPcYDp4P9OBqHswym6pzE3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUKTwgJm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nDa8Nfk3IAPKDIQV39cC9gRU1yuYMhiemSjHq4biU5Yk+QhdBAxz1KLyNnSJt6aXK00s6HMJ3/s2N/kCerE5oEfbPDaVeL0Xh9i+fh9Xf84fyeBqJwz6jqxDejX6/HXEdRfqYkbo/FYzieRV+iZNaEk1z5i81Fagq8iuQxbyG+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=je+xljRl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUKTwgJm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE8F1F000E9;
-	Tue, 25 Aug 2026 14:01:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="je+xljRl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6BF1F000E9;
+	Tue, 25 Aug 2026 14:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666467;
-	bh=owFqV/IWN1rD6htezfVyw8MipKp4QGez51Khdz0hSaI=;
+	s=korg; t=1787666470;
+	bh=ldUPWWzOaci0axnN7L2QLpmUmzGtlXrL9RUc/AIU0M8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aUKTwgJm5lksgcjjkegmXW7rEUgnzNrfTx3C/Q2hFGOeLy2xHAsuapNEj9a+9jEvs
-	 7rvHF/B30J0P6ythwLB8kvcEnxRjqvDlWiPj3VmuOoYwA2342nlVZ7xYp17FhD28H0
-	 hZn1VXqqmAceJqOASwn7Sh8Pq/LvHaSpw9s/9aoE=
+	b=je+xljRlWxpsHtKAHR2kCwNbVf2YHe16ppt+DNsSAJ4sc5FyX5DBuYkiXBdx/Ekoo
+	 Iy4EAMjahpFg1x2+yUEWpY5UNRyuvIWNm6+6bvJahsOE4EugxKURGNHm6+KF7S7Fwg
+	 F0EQtr5wx4MvTHP+2vp2a9YTFw+qNzPFuaZ+lJUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Eric Farman <farman@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 51/57] s390/vfio_ccw: Free all memory if cp_init() fails
-Date: Tue, 25 Aug 2026 15:27:13 +0200
-Message-ID: <20260825132543.339474535@linuxfoundation.org>
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrey Troshin <drtrosh@yandex-team.ru>
+Subject: [PATCH 5.10 52/57] bpf: reject negative CO-RE accessor indices in bpf_core_parse_spec()
+Date: Tue, 25 Aug 2026 15:27:14 +0200
+Message-ID: <20260825132543.378695177@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
 References: <20260825132541.342390421@linuxfoundation.org>
@@ -53,84 +54,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Farman <farman@linux.ibm.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 74186c2968f8f756ac3226b545b598457c910c75 ]
+commit 1c22483a2c4bbf747787f328392ca3e68619c4dc upstream.
 
-The routine cp_free() is called to unpin/free any memory once an I/O
-is completed successfully, or if cp_prefetch() fails. But if cp_init()
-fails, and cp->initialized is not enabled, the same routine cannot be
-used to free all the memory.
+CO-RE accessor strings are colon-separated indices that describe a path
+from a root BTF type to a target field, e.g. "0:1:2" walks through
+nested struct members. bpf_core_parse_spec() parses each component with
+sscanf("%d"), so negative values like -1 are silently accepted.  The
+subsequent bounds checks (access_idx >= btf_vlen(t)) only guard the
+upper bound and always pass for negative values because C integer
+promotion converts the __u16 btf_vlen result to int, making the
+comparison (int)(-1) >= (int)(N) false for any positive N.
 
-An attempt to address this exists in ccwchain_handle_ccw(), where a
-single call to ccwchain_free() is made for the currently-processed
-CCW segment. But this will leak other segments (created as a result
-of a Transfer in Channel) that had been allocated as part of the same
-channel program.
+When -1 reaches btf_member_bit_offset() it gets cast to u32 0xffffffff,
+producing an out-of-bounds read far past the members array.  A crafted
+BPF program with a negative CO-RE accessor on any struct that exists in
+vmlinux BTF (e.g. task_struct) crashes the kernel deterministically
+during BPF_PROG_LOAD on any system with CONFIG_DEBUG_INFO_BTF=y
+(default on major distributions).  The bug is reachable with CAP_BPF:
 
-Address this by performing the cleanup outside of the recursive
-ccwchain_handle_ccw()/ccwchain_loop_tic() logic.
+ BUG: unable to handle page fault for address: ffffed11818b6626
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+ CPU: 0 UID: 0 PID: 85 Comm: poc Not tainted 7.0.0-rc6 #18 PREEMPT(full)
+ RIP: 0010:bpf_core_parse_spec (tools/lib/bpf/relo_core.c:354)
+ RAX: 00000000ffffffff
+ Call Trace:
+  <TASK>
+  bpf_core_calc_relo_insn (tools/lib/bpf/relo_core.c:1321)
+  bpf_core_apply (kernel/bpf/btf.c:9507)
+  check_core_relo (kernel/bpf/verifier.c:19475)
+  bpf_check (kernel/bpf/verifier.c:26031)
+  bpf_prog_load (kernel/bpf/syscall.c:3089)
+  __sys_bpf (kernel/bpf/syscall.c:6228)
+  </TASK>
 
-Fixes: 8b515be512a2 ("vfio-ccw: Fix memory leak and don't call cp_free in cp_init")
-Cc: stable@vger.kernel.org
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CO-RE accessor indices are inherently non-negative (struct member index,
+array element index, or enumerator index), so reject them immediately
+after parsing.
+
+Fixes: ddc7c3042614 ("libbpf: implement BPF CO-RE offset relocation algorithm")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Acked-by: Paul Chaignon <paul.chaignon@gmail.com>
+Link: https://lore.kernel.org/r/20260404161221.961828-2-bestswngs@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+[Andrey Troshin: backport fixs from tools/lib/bpf/relo_core.c to
+  tools/lib/bpf/libbpf.c]
+Signed-off-by: Andrey Troshin <drtrosh@yandex-team.ru>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/vfio_ccw_cp.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ tools/lib/bpf/libbpf.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/s390/cio/vfio_ccw_cp.c b/drivers/s390/cio/vfio_ccw_cp.c
-index 4da85df9f7816..1b6d0be12a7ae 100644
---- a/drivers/s390/cio/vfio_ccw_cp.c
-+++ b/drivers/s390/cio/vfio_ccw_cp.c
-@@ -446,9 +446,6 @@ static int ccwchain_handle_ccw(u32 cda, struct channel_program *cp)
- 	/* Loop for tics on this new chain. */
- 	ret = ccwchain_loop_tic(chain, cp);
- 
--	if (ret)
--		ccwchain_free(chain);
--
- 	return ret;
- }
- 
-@@ -477,6 +474,23 @@ static int ccwchain_loop_tic(struct ccwchain *chain, struct channel_program *cp)
- 	return 0;
- }
- 
-+static int ccwchain_build_ccws(u32 cda, struct channel_program *cp)
-+{
-+	struct ccwchain *chain, *temp;
-+	int ret;
-+
-+	ret = ccwchain_handle_ccw(cda, cp);
-+
-+	if (ret) {
-+		/* Cleanup if an error occurred */
-+		list_for_each_entry_safe(chain, temp, &cp->ccwchain_list, next) {
-+			ccwchain_free(chain);
-+		}
-+	}
-+
-+	return ret;
-+}
-+
- static int ccwchain_fetch_tic(struct ccwchain *chain,
- 			      int idx,
- 			      struct channel_program *cp)
-@@ -650,7 +664,7 @@ int cp_init(struct channel_program *cp, struct device *mdev, union orb *orb)
- 	cp->mdev = mdev;
- 
- 	/* Build a ccwchain for the first CCW segment */
--	ret = ccwchain_handle_ccw(orb->cmd.cpa, cp);
-+	ret = ccwchain_build_ccws(orb->cmd.cpa, cp);
- 
- 	if (!ret) {
- 		cp->initialized = true;
--- 
-2.53.0
-
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -4554,6 +4554,8 @@ static int bpf_core_parse_spec(const str
+ 			++spec_str;
+ 		if (sscanf(spec_str, "%d%n", &access_idx, &parsed_len) != 1)
+ 			return -EINVAL;
++		if (access_idx < 0)
++			return -EINVAL;
+ 		if (spec->raw_len == BPF_CORE_SPEC_MAX_LEN)
+ 			return -E2BIG;
+ 		spec_str += parsed_len;
 
 
