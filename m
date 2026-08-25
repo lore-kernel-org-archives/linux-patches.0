@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D78471433;
-	Tue, 25 Aug 2026 13:48:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CB447FAFE;
+	Tue, 25 Aug 2026 13:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665701; cv=none; b=AH2ojTiPpaFRZFMK98+xiv047abo2fu2axMlGxNEgCA//xfAJ90Js2QgxjqKmEKzresi0pzrstohLv2sXylsdb1hOsvlY9VApv20eh3CQCsWyYuuHR+2WD2s3bSREOVPiDbgV22oTYU+hGRSTgunYX4kDeZ48MGsdEJOrTK6N0g=
+	t=1787665704; cv=none; b=VcPrUxiM7earwqEVZGooeRSCYkdB6JYp0o/xnxNJlSBx2Iysy1ATmhFmP15HOt7eOgQXAK+TXQR5By66xxh4trLH179oLWiz+tXz28CcpE2ZUkrFIuut474eOBzgRRZqp6ycSmkifeE6pa9odEZZxxWIe5QB8DVwZBHxSAjSLE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665701; c=relaxed/simple;
-	bh=tuH4BJWCndz9lSo788kR4iOW0PQgBj1hXpUYNZnNnq0=;
+	s=arc-20240116; t=1787665704; c=relaxed/simple;
+	bh=Qxokkq0oB3eAl+dVTm39Le+DOWQ5rQBfJdUyKmgtM4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WKhzxVShVIY05Rm1MnVt6/u9u62LpSFoiqbqmYKeQ4JozE3/cfManibnyDdr/zHhurWRluJyF4UUilrwDwR7n51dt4W185JBqnDfB+FSV2Qjyy7AI2xbt/RrLDrvinEs5/vyARAmK2MTAwSREq1okwHoukLkU9L/XoV4M4pIti0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2WVNayZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M4IsgI3RWIXaZtbAE+wMK3AYBhM38RfsOAHCtONqiDFaezivreOv0q7NClB/B5SXP+0BlPyyYT5C6z4KttNTgebN9jYbFWsjhJSFKQESfQTItkRPLPE3aQ6GBDlwT8wBB/t6f1Mggd/dq9vRyW73wx55nzwQi/hRxZ+egv2YgGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eUsNSmIR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2WVNayZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A60B1F000E9;
-	Tue, 25 Aug 2026 13:48:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eUsNSmIR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0BE61F000E9;
+	Tue, 25 Aug 2026 13:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665700;
-	bh=FQCrmbYGOq1/9bEaAnXX7XPUJi7oSRJGWidjjv5JNA4=;
+	s=korg; t=1787665703;
+	bh=LNRopsVZA/0XV5O61GqJESurWqhIs4NAjtiCfSjl1Gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J2WVNayZo799qH+gYFzpu/nFEGN0WzXwhYGG+afnT/4ZA0Y28wEEVmqDdPDMv0biV
-	 B0czE3C+dDsyxNWL+eXQ9eLxm676PkAFSFCAosn70owRK0Mf8jqdKZmhF1X3OpcP6L
-	 OTYdk7ONuRCulKYRQVX2md32okNjMIVvbqKdZQHw=
+	b=eUsNSmIRxYvoPe9DqzItrcPrTt90gUkWXjvPi27L3GOR3xJZBsbBbr8YlUybaoWhk
+	 qnJA4CcGWyqfTlbGNsxofVXSnS7Dn866HY4Xk2p9LQZSbDjnO3RYnuaZYysE9XKlje
+	 /Y1IPky1IXNbD7vmQGPv9rcKEpJ/AZSl29F96ucw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 37/87] drm/amdgpu: check ASPM on the dGPU host link
-Date: Tue, 25 Aug 2026 15:26:00 +0200
-Message-ID: <20260825132543.307460402@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	David Heidelberg <david@ixit.cz>
+Subject: [PATCH 6.6 38/87] nfc: digital: clamp SENSF_RES length to the destination buffer
+Date: Tue, 25 Aug 2026 15:26:01 +0200
+Message-ID: <20260825132543.347564811@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -53,102 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-[ Upstream commit 2a9c5154a5650c09ad44ff5e1dff74754e15a3c6 ]
+commit 344a56d7c8e0f3cbaff0bcb1bcd95a1a1db24b16 upstream.
 
-dGPUs with an internal PCIe switch expose graphics functions below the
-switch downstream port. The automatic ASPM check uses the display
-endpoint and evaluates the internal link instead of the host link.
+digital_in_recv_sensf_res() memcpy()s resp->len bytes from a remote
+NFC-F device response into the NFC_SENSF_RES_MAXSIZE-byte target.sensf_res
+field without an upper-bound check. A nearby malicious NFC-F device can
+send an oversized SENSF_RES response to overflow the stack-local struct
+nfc_target.
 
-Use the switch upstream port for the check and report the selected
-link.
+Clamp resp->len to NFC_SENSF_RES_MAXSIZE before the copy.
 
-Fixes: 0ab5d711ec74 ("drm/amd: Refactor `amdgpu_aspm` to be evaluated per device")
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4e0d6f2876e704fff707b18c40dbd383aea4a1c9)
+Found by 0sec automated security-research tooling (https://0sec.ai).
+
+Fixes: 8c0695e4998d ("NFC Digital: Add NFC-F technology support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Link: https://patch.msgid.link/20260603141355.68156-1-doruk@0sec.ai
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   50 ++++++++++++++++++++++++++++-
- 1 file changed, 49 insertions(+), 1 deletion(-)
+ net/nfc/digital_technology.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -1324,6 +1324,31 @@ static bool amdgpu_device_aspm_support_q
- #endif
- }
+--- a/net/nfc/digital_technology.c
++++ b/net/nfc/digital_technology.c
+@@ -778,6 +778,8 @@ static void digital_in_recv_sensf_res(st
  
-+/*
-+ * Some dGPUs expose their display endpoint below an internal PCIe switch.
-+ * Use the switch upstream port to query the host-facing link.
-+ */
-+static struct pci_dev *amdgpu_device_get_aspm_pdev(struct amdgpu_device *adev)
-+{
-+	struct pci_dev *swds, *swus;
-+
-+	swds = pci_upstream_bridge(adev->pdev);
-+	if (!swds ||
-+	    (swds->vendor != PCI_VENDOR_ID_ATI &&
-+	     swds->vendor != PCI_VENDOR_ID_AMD) ||
-+	    pci_pcie_type(swds) != PCI_EXP_TYPE_DOWNSTREAM)
-+		return adev->pdev;
-+
-+	swus = pci_upstream_bridge(swds);
-+	if (!swus ||
-+	    (swus->vendor != PCI_VENDOR_ID_ATI &&
-+	     swus->vendor != PCI_VENDOR_ID_AMD) ||
-+	    pci_pcie_type(swus) != PCI_EXP_TYPE_UPSTREAM)
-+		return adev->pdev;
-+
-+	return swus;
-+}
-+
- /**
-  * amdgpu_device_should_use_aspm - check if the device should program ASPM
-  *
-@@ -1336,6 +1361,9 @@ static bool amdgpu_device_aspm_support_q
-  */
- bool amdgpu_device_should_use_aspm(struct amdgpu_device *adev)
- {
-+	struct pci_dev *aspm_pdev, *parent;
-+	bool enabled;
-+
- 	switch (amdgpu_aspm) {
- 	case -1:
- 		break;
-@@ -1348,7 +1376,27 @@ bool amdgpu_device_should_use_aspm(struc
- 	}
- 	if (amdgpu_device_aspm_support_quirk(adev))
- 		return false;
--	return pcie_aspm_enabled(adev->pdev);
-+
-+	/*
-+	 * pcie_aspm_enabled() checks the link between its argument and
-+	 * the immediate upstream bridge. Use SWUS for dGPUs with an
-+	 * internal switch so that this is the host-facing link.
-+	 */
-+	aspm_pdev = amdgpu_device_get_aspm_pdev(adev);
-+	parent = pci_upstream_bridge(aspm_pdev);
-+	if (!parent) {
-+		dev_dbg(adev->dev, "ASPM: no upstream PCIe link for %s\n",
-+			pci_name(aspm_pdev));
-+		return false;
-+	}
-+
-+	enabled = pcie_aspm_enabled(aspm_pdev);
-+	/* Report the exact link used for the automatic ASPM decision. */
-+	dev_dbg(adev->dev, "ASPM: link %s <-> %s is %s\n",
-+		pci_name(parent), pci_name(aspm_pdev),
-+		enabled ? "enabled" : "disabled");
-+
-+	return enabled;
- }
+ 	sensf_res = (struct digital_sensf_res *)resp->data;
  
- /* if we get transitioned to only one device, take VGA back */
++	resp->len = min_t(unsigned int, resp->len, NFC_SENSF_RES_MAXSIZE);
++
+ 	memcpy(target.sensf_res, sensf_res, resp->len);
+ 	target.sensf_res_len = resp->len;
+ 
 
 
