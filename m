@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AC62ED154;
-	Tue, 25 Aug 2026 13:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C8A448BA9;
+	Tue, 25 Aug 2026 13:41:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665275; cv=none; b=PGRD7l/fBHobSEXox5tntPodpSTuOqNE2O2cyn9Rpt//BJkry0o2Zol+cszJ6czI4cTqWZDx26lWIrJOrS0IwTjNpQHR1E1sj08xfRfkcygJkA0wyySLkaeMDTz/HmP5ee2cn9L7kAbtMFI4QkQaPj5RJ2oqYnasgla2dTGTIQw=
+	t=1787665277; cv=none; b=E4uWzMXKNAOAJPnHV+utTrt4PpwIcrLrE/d84Ye3SyOBIXPjpQb8asKYnLNOvwsqVQOv952Uqs4xVwCPyzW8tbyg5dCbkHbr4BqPm4qd/1PoyYx77HcDKeCSDMHI71cQLVnF/f4WKWhL3/1wVc5s+j/sH9lWZ2GKlUfqV3OTAvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665275; c=relaxed/simple;
-	bh=yD31dKvIfhQ2WPSOXVEM4AXfOa7kNAhgQcoBgSR0+gc=;
+	s=arc-20240116; t=1787665277; c=relaxed/simple;
+	bh=Uyywbdi58NGNQiL24IZZeUXvZ8E9lxFmnRqGgvbI35s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IRW9adsA2X+7tltTaD5MklmD3PNx7IonfCzz+g8MXh5TZvxPXy799TkkqhWP472LsmeXg2DcdadUHKL+d+ReFywBmFMlgpIiiFQI0kH7YIMef9RmBE/uRQGlul+FYs5E4ZKUqnSMMiMdJP55qG95FML40vk1RrDaPQfCAnVu1/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m3VdRSZu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UGsEpiCJrWlOmGowrs5Anr+jPLMi3HdIgdmqBGnJdqp107E9ooOhlq5CqQh73XHuExB1PPjiPwmNI2WY2jSIRgQINobyQFsXxNC8ehlVOCvRiKXEo9rwsa/eBa/VXQLNhkkyC/pQcCPq0gH8bqueiq19XFyhAnaGPQaPAyAZ8jM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDMmzvCM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3VdRSZu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187FF1F000E9;
-	Tue, 25 Aug 2026 13:41:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDMmzvCM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36051F000E9;
+	Tue, 25 Aug 2026 13:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665273;
-	bh=TJlrWUn3Fn1PL/KyvAjAjwiuEiyTVAQoOPqMhYT9pBc=;
+	s=korg; t=1787665276;
+	bh=3274d/sSd44LjD1O5Ozr13qpSFLq4YIBCFvontVk9nU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m3VdRSZuSsqk9ja6bHX5VfD2sb+2hfA22UePSk3V4RfhtVEHVvfO5X3g1HrGILxHm
-	 VotCW+5D+WpzM3qbJXsqsNYyAvBiodthYOCbM/4ErGxK0k9uewo0KLZ7GDhp+wpwge
-	 2j9pdl1uD23NVF94wAr/lk6nCnMxnt0pCajhndVc=
+	b=CDMmzvCMjkHHDLLyG4UB7RQjfCcr8xILLUcQfDafn1mu8edDEOrB8oXXBXXkkfF6F
+	 BZusRfcohzP1u2VJfc6OEq1/FPbD4/JnnJTwaRJCQV7xSAhCqMXXrzw93cw6ZEgm5A
+	 Bl9FGJvK4zhd5QjWKHXu4+W/fUNfqgOPT27Yhi2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Dawid=20Wro=CC=81bel?= <me@dawidwrobel.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 64/94] ASoC: codecs: lpass-tx-macro: Fix enum kcontrol accesses
-Date: Tue, 25 Aug 2026 15:26:00 +0200
-Message-ID: <20260825132544.406380231@linuxfoundation.org>
+	Andrei Fed <andfed.net@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.18 65/94] HID: magicmouse: fix battery reporting for Bluetooth Magic Trackpad USB-C
+Date: Tue, 25 Aug 2026 15:26:01 +0200
+Message-ID: <20260825132544.448030179@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -46,67 +44,118 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dawid Wróbel <me@dawidwrobel.com>
+From: Andrei Fed <andfed.net@gmail.com>
 
-[ Upstream commit 1ba381759e45d5d0442452cfa5c42e836191a568 ]
+commit a1556b48efc157fdda07b52ecc56c7bd1e1786f0 upstream.
 
-The "DEC0 MODE" to "DEC7 MODE" controls are enumerated, but
-tx_macro_dec_mode_get() and tx_macro_dec_mode_put() access their
-value through ucontrol->value.integer.value[0] (a long) instead of
-ucontrol->value.enumerated.item[0] (an unsigned int).
+The Apple Magic Trackpad 2 (USB-C) reports a wildly wrong battery
+capacity over Bluetooth, for example a constant 4% for a pack that is
+actually at 74%.
 
-This same pattern was fixed in the sibling drivers by
-commit bcfe5f76cc40 ("ASoC: codecs: rx-macro: fix accessing array
-out of bounds for enum type") and
-commit 0ea5eff7c606 ("ASoC: codecs: va-macro: fix accessing array
-out of bounds for enum type"), but tx-macro was missed.
+The device's battery input report (0x90) is laid out as
+[report-id][status][charge]. hid-input's synchronous capacity query,
+hidinput_query_battery_capacity(), assumes the common
+[report-id][capacity] layout and returns buf[1], which for this device
+is the status byte rather than the charge (buf[2]).
 
-On 64-bit kernels built with CONFIG_SND_CTL_DEBUG, the elem value
-sanity check catches the 4 bytes written past the enumerated item
-and every read of these controls fails with -EINVAL:
+magicmouse_fetch_battery(), which requests the battery report through
+hid_hw_request() so the reply is decoded via the report descriptor at
+the correct field offset, is gated to the USB models and never runs
+over Bluetooth. The device does not push battery reports on its own
+either, except a single one at connect time, which is delivered while
+probe holds driver_input_lock and is silently dropped. All userspace
+reads therefore go through the misparsing query, and the device is
+stuck reporting its status byte as the capacity.
 
-  snd-sm8250 sound: control 2:0:0:DEC0 MODE:0: access overflow
+Enabling the fetch for Bluetooth is not sufficient on its own: user
+space reacts to the power_supply registration immediately, so a query
+is typically already in flight when the fetch reply is parsed.
+hidinput_get_battery_property() stores the query result and marks the
+battery as queried without rechecking whether a report arrived while
+it was waiting, clobbering the just-reported correct value with the
+misparsed one.
 
-Fixes: c39667ddcfc5 ("ASoC: codecs: lpass-tx-macro: add support for lpass tx macro")
-Assisted-by: Claude:claude-fable-5
+Fix this by adding HID_BATTERY_QUIRK_AVOID_QUERY for the Bluetooth
+Magic Trackpad USB-C so the misparsing query path is never used, and
+by fetching the battery at the end of probe for this device. hidp has
+no asynchronous request() callback, so the fetch is serviced
+synchronously via __hid_request() while probe still holds
+driver_input_lock; call hid_device_io_start() first so the reply is
+processed instead of being discarded.
+
+Tested with a Magic Trackpad USB-C (004c:0324) over Bluetooth on
+6.18.37: the reported capacity now matches the device (verified against
+a raw GET_REPORT of report 0x90) and updates on reconnect.
+
+Fixes: 87a2f10395c8 ("HID: magicmouse: Apple Magic Trackpad 2 USB-C driver support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dawid Wróbel <me@dawidwrobel.com>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260730-worktree-lpass-tx-macro-enum-fix-v2-1-6d091c736116@dawidwrobel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ kept `snd_soc_kcontrol_component()` context line instead of upstream's renamed `snd_kcontrol_chip()` ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Andrei Fed <andfed.net@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/lpass-tx-macro.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/hid-input.c      |    3 +++
+ drivers/hid/hid-magicmouse.c |   19 ++++++++++++++++++-
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
---- a/sound/soc/codecs/lpass-tx-macro.c
-+++ b/sound/soc/codecs/lpass-tx-macro.c
-@@ -1075,7 +1075,7 @@ static int tx_macro_dec_mode_get(struct
- 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
- 	int path = e->shift_l;
- 
--	ucontrol->value.integer.value[0] = tx->dec_mode[path];
-+	ucontrol->value.enumerated.item[0] = tx->dec_mode[path];
- 
- 	return 0;
+--- a/drivers/hid/hid-input.c
++++ b/drivers/hid/hid-input.c
+@@ -374,6 +374,9 @@ static const struct hid_device_id hid_ba
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE,
+ 		USB_DEVICE_ID_APPLE_MAGICTRACKPAD),
+ 	  HID_BATTERY_QUIRK_IGNORE },
++	{ HID_BLUETOOTH_DEVICE(BT_VENDOR_ID_APPLE,
++		USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC),
++	  HID_BATTERY_QUIRK_AVOID_QUERY },
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_ELECOM,
+ 		USB_DEVICE_ID_ELECOM_BM084),
+ 	  HID_BATTERY_QUIRK_IGNORE },
+--- a/drivers/hid/hid-magicmouse.c
++++ b/drivers/hid/hid-magicmouse.c
+@@ -812,6 +812,12 @@ static bool is_usb_magictrackpad2(__u32
+ 	       product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC;
  }
-@@ -1084,7 +1084,7 @@ static int tx_macro_dec_mode_put(struct
- 				 struct snd_ctl_elem_value *ucontrol)
+ 
++static bool is_bt_magictrackpad2(__u32 vendor, __u32 product)
++{
++	return vendor == BT_VENDOR_ID_APPLE &&
++	       product == USB_DEVICE_ID_APPLE_MAGICTRACKPAD2_USBC;
++}
++
+ static int magicmouse_fetch_battery(struct hid_device *hdev)
  {
- 	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
--	int value = ucontrol->value.integer.value[0];
-+	int value = ucontrol->value.enumerated.item[0];
- 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
- 	int path = e->shift_l;
- 	struct tx_macro *tx = snd_soc_component_get_drvdata(component);
+ #ifdef CONFIG_HID_BATTERY_STRENGTH
+@@ -820,7 +826,8 @@ static int magicmouse_fetch_battery(stru
+ 
+ 	if (!hdev->battery ||
+ 	    (!is_usb_magicmouse2(hdev->vendor, hdev->product) &&
+-	     !is_usb_magictrackpad2(hdev->vendor, hdev->product)))
++	     !is_usb_magictrackpad2(hdev->vendor, hdev->product) &&
++	     !is_bt_magictrackpad2(hdev->vendor, hdev->product)))
+ 		return -1;
+ 
+ 	report_enum = &hdev->report_enum[hdev->battery_report_type];
+@@ -953,6 +960,16 @@ static int magicmouse_probe(struct hid_d
+ 		schedule_delayed_work(&msc->work, msecs_to_jiffies(500));
+ 	}
+ 
++	/*
++	 * Query the Bluetooth Magic Trackpad USB-C battery as done for USB.
++	 * Start io first: probe holds driver_input_lock and the synchronous
++	 * GET_REPORT reply would otherwise be dropped.
++	 */
++	if (is_bt_magictrackpad2(id->vendor, id->product)) {
++		hid_device_io_start(hdev);
++		magicmouse_fetch_battery(hdev);
++	}
++
+ 	return 0;
+ err_stop_hw:
+ 	if (is_usb_magicmouse2(id->vendor, id->product) ||
 
 
