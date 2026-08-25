@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA07481A98;
-	Tue, 25 Aug 2026 13:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CE148095A;
+	Tue, 25 Aug 2026 13:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664844; cv=none; b=DISK8DLKhKA7VYDjfnQjw2Iib7qvjb2idjfbzwIZGCiMT6l4FndHmUYdWGeBv5uxewFM+eEYyVRxG8JH7Y1aDoifV6ekTMon0hrnEjzik7guFmMciE70+ubWd3CioCkNe56wZTmcp8ptDiq9tC+NN+OlP1c88RHYJe3tIHYoU10=
+	t=1787664847; cv=none; b=nzf7sECR7Kl08bgxfAh1tBfw3hTw7SW+tGDhqkoTT6tCEUiiaHlXHQNglZGZ8sWt2QJh7JM/I+Be6sb0ipkzpoLBxdtT+Ymw9ENrFOVotAYEOjqDIiuvQjFKA8Oth37NE2OkpGPNX7AIBUo+gmdoVsCJ6LIZIOJgP+xon9D48ek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664844; c=relaxed/simple;
-	bh=K+FqjnThRT+gGNGf4vxFW0LuUjnKz0Mnmfl5iJjJzcU=;
+	s=arc-20240116; t=1787664847; c=relaxed/simple;
+	bh=3bPnSfCBciVfRhy5Q7u7cUh2TwfrdbG3hloUsMS+34U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ozxHsuId8TaUyWFi1l02WlYLfBJe9EBZpULOnyWJOPIVe35o65LzDAZo9sKwGx11r9hGFSfRU6VvbAZQXSZLBgJsxM7s5VL2ciWKyxqA7dFojy8G2rDNKC9Fsw68XSxTW93puD9ycNoOm6kqZm0PeRwscSoutk3N2G/nmnfTwEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=btS/KSgy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lOsA906YR5eisL+JGtFsUkMjPiAvhxN4EzOx+dBbCn5rwSMXZ6lBMZEtB0SXEgIxlH6f8craT5tZKWODCxUWF2h1dJcUWs2508GD/00qR74jYC8pqTml7URkBkT5VNwnekd2U67MazVBU9BbPxVOeuupoYSSDfIW4tFlsYUo31M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8s1WzOu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="btS/KSgy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437201F000E9;
-	Tue, 25 Aug 2026 13:34:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8s1WzOu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DBDF1F000E9;
+	Tue, 25 Aug 2026 13:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664842;
-	bh=1kGnBUYciakySS5i/a03jAdZl6GLYTIum47zpPoJqt4=;
+	s=korg; t=1787664845;
+	bh=wBcXqlBCVMImx5CahbVPrJ9SUOkeSYKuXbnFXBZgwxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=btS/KSgyqunkzVVBklrzZE/nxELUlqnXBShUjKXpHe26Lacl7BHQp6fYY43MSQg44
-	 trbgQBdsRUGSyYbg6XdyKVheeCQv8/JfnjdGSxGt6/rCTQkVLJO1a10aHXV1eUWlfw
-	 E8Vdf2qsuLEyvNu4UUbNVlRTNXcAa1g/2SoroIMU=
+	b=b8s1WzOu62Ci4hUxeOlmhbS5M4lr0KkiRDWHPHTBwR9x4SNHC/2W8QpTENSG8t2DS
+	 zIwGENTyF1nnwF2UWwwkX80WGjISLnfO+9vIqvNatCvQXwwnTvArpINZLWmhMpJ+HX
+	 /y9BDHuGbZxbbgS82ENyj25ScYXkU1ttzAICv5fM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.1 006/101] Bluetooth: RFCOMM: take rfcomm_mutex for the deferred setup accept
-Date: Tue, 25 Aug 2026 15:24:44 +0200
-Message-ID: <20260825132542.250461760@linuxfoundation.org>
+	Matthias Goergens <matthias.goergens@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	syzbot+e68dbebd9617a9250e8d@syzkaller.appspotmail.com,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 7.1 024/101] ext4: stop retrying saturated xattr cache entries
+Date: Tue, 25 Aug 2026 15:25:02 +0200
+Message-ID: <20260825132542.960182617@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -50,133 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Matthias Goergens <matthias.goergens@gmail.com>
 
-commit 43a556b2fd43f2df6dded59c2e26560a27874c24 upstream.
+commit 54b6bd40898de7906acb2bccc9a96d1b8e6b4323 upstream.
 
-rfcomm_sock_recvmsg() completes a deferred setup by calling
-rfcomm_dlc_accept() without holding any RFCOMM lock:
+ext4_xattr_block_set() retries when a cache entry selected for reuse
+has a saturated reference count after taking the buffer lock. The retry
+returns to the mbcache lookup without making that entry ineligible, so
+it can select the same unusable entry indefinitely. A task spinning
+there can hold the parent directory's i_rwsem and leave concurrent
+rmdir callers blocked.
 
-	if (test_and_clear_bit(RFCOMM_DEFER_SETUP, &d->flags)) {
-		rfcomm_dlc_accept(d);
-		return 0;
-	}
+Normally a reusable entry has a reference count below
+EXT4_XATTR_REFCOUNT_MAX because the count and MBE_REUSABLE_B are
+updated under the same buffer lock. A corrupted filesystem can violate
+that invariant. The syzbot reproducer reports allocator and xattr
+corruption before triggering this retry loop.
 
-and rfcomm_dlc_accept() dereferences the session on its first line:
+Check the untrusted on-disk count before incrementing it, avoiding
+overflow, and clear MBE_REUSABLE_B when it is already saturated. The
+next lookup then skips the entry that was just proven unusable. This
+mirrors the normal transition at EXT4_XATTR_REFCOUNT_MAX; the release
+path marks the entry reusable again on the exact 1024-to-1023
+transition.
 
-	struct sock *sk = d->session->sock->sk;
+Using the same QEMU harness and guest parameters, current unpatched
+Linux hung in 6 of 8 420-second trials with the do_rmdir signature;
+representative NMI backtraces caught the owner spinning in
+ext4_xattr_block_set(). The patched kernel completed 28 of 28 trials
+without a hung-task report; the final twelve trials exercised the
+reviewed overflow-safe form of the change. syzbot's patch testing also
+completed without reproducing the hang.
 
-Every other path that touches d->session runs under rfcomm_mutex:
-rfcomm_dlc_open(), rfcomm_dlc_close(), rfcomm_dlc_exists(),
-rfcomm_dlc_send_rpn(), and the RFCOMM thread through
-rfcomm_process_sessions(). rfcomm_connect_ind() is even documented as
-"called under rfcomm_lock()". This call site is the only one that skips
-it.
-
-The RFCOMM_DEFER_SETUP bit looks like it serialises the accept against
-teardown, since __rfcomm_dlc_close() returns early when it wins the
-test_and_clear. But rfcomm_recv_disc() forces the state first:
-
-	d->state = BT_CLOSED;
-	__rfcomm_dlc_close(d, err);
-
-and the early return only covers BT_CONNECT, BT_CONFIG, BT_OPEN and
-BT_CONNECT2. With the state already BT_CLOSED that switch does not
-match, the bit is never consulted, and __rfcomm_dlc_close() falls
-through to rfcomm_dlc_unlink(), which sets d->session = NULL.
-
-So a remote DISC on a deferred dlc clears the session while leaving
-RFCOMM_DEFER_SETUP set. The next recvmsg() then passes the
-test_and_clear and dereferences a NULL session. No timing window is
-needed: once the DISC has been processed, the dereference is
-unconditional.
-
-Give rfcomm_dlc_accept() the same shape as rfcomm_dlc_open() and
-rfcomm_dlc_close(): an exported wrapper that takes rfcomm_mutex and
-re-checks the session, around a __rfcomm_dlc_accept() that the two
-in-core callers, which already hold the mutex, keep using.
-
-Reproduced on a KASAN + PROVE_LOCKING kernel with a BR/EDR peer emulated
-over /dev/vhci: the peer brings up an ACL link, opens L2CAP on the
-RFCOMM PSM, starts a session, opens a dlc on a channel bound with
-BT_DEFER_SETUP, and sends DISC after the socket is accepted. recv() on
-the accepted socket then hits:
-
-  Oops: general protection fault
-  KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
-  RIP: 0010:rfcomm_dlc_accept+0x54/0x350
-  Call Trace:
-    rfcomm_sock_recvmsg+0x1cd/0x230
-    sock_recvmsg+0x166/0x1c0
-    __sys_recvfrom+0x20d/0x300
-
-0x10 is the offset of sock in struct rfcomm_session. With this patch the
-same run completes with recv() returning 0 and no report, and lockdep
-stays quiet, confirming rfcomm_mutex is still taken before lock_sock on
-this path as it is on the thread side.
-
-Fixes: bb23c0ab8246 ("Bluetooth: Add support for deferring RFCOMM connection setup")
+Reported-and-tested-by: syzbot+e68dbebd9617a9250e8d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e68dbebd9617a9250e8d
+Fixes: 65f8b80053a1 ("ext4: fix race when reusing xattr blocks")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reported-by: syzbot+e68dbebd9617a9250e8d@syzkaller.appspotmail.com
+Tested-by: syzbot+e68dbebd9617a9250e8d@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/20260802065941.1726052-1-matthias.goergens@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/rfcomm/core.c |   24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ fs/ext4/xattr.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/bluetooth/rfcomm/core.c
-+++ b/net/bluetooth/rfcomm/core.c
-@@ -1334,7 +1334,10 @@ static struct rfcomm_session *rfcomm_rec
- 	return s;
- }
- 
--void rfcomm_dlc_accept(struct rfcomm_dlc *d)
-+/* Must be called with rfcomm_mutex held, so that the session cannot be
-+ * unlinked from under us.
-+ */
-+static void __rfcomm_dlc_accept(struct rfcomm_dlc *d)
- {
- 	struct sock *sk = d->session->sock->sk;
- 	struct l2cap_conn *conn = l2cap_pi(sk)->chan->conn;
-@@ -1356,6 +1359,21 @@ void rfcomm_dlc_accept(struct rfcomm_dlc
- 	rfcomm_send_msc(d->session, 1, d->dlci, d->v24_sig);
- }
- 
-+void rfcomm_dlc_accept(struct rfcomm_dlc *d)
-+{
-+	rfcomm_lock();
-+
-+	/* rfcomm_recv_disc() sets the dlc state to BT_CLOSED before calling
-+	 * __rfcomm_dlc_close(), so the RFCOMM_DEFER_SETUP handshake there is
-+	 * skipped and the session can already be unlinked by the time the
-+	 * deferred accept runs from rfcomm_sock_recvmsg().
-+	 */
-+	if (d->session)
-+		__rfcomm_dlc_accept(d);
-+
-+	rfcomm_unlock();
-+}
-+
- static void rfcomm_check_accept(struct rfcomm_dlc *d)
- {
- 	if (rfcomm_check_security(d)) {
-@@ -1368,7 +1386,7 @@ static void rfcomm_check_accept(struct r
- 			d->state_change(d, 0);
- 			rfcomm_dlc_unlock(d);
- 		} else
--			rfcomm_dlc_accept(d);
-+			__rfcomm_dlc_accept(d);
- 	} else {
- 		set_bit(RFCOMM_AUTH_PENDING, &d->flags);
- 		rfcomm_dlc_set_timer(d, RFCOMM_AUTH_TIMEOUT);
-@@ -1956,7 +1974,7 @@ static void rfcomm_process_dlcs(struct r
- 					d->state_change(d, 0);
- 					rfcomm_dlc_unlock(d);
- 				} else
--					rfcomm_dlc_accept(d);
-+					__rfcomm_dlc_accept(d);
- 			}
- 			continue;
- 		} else if (test_and_clear_bit(RFCOMM_AUTH_REJECT, &d->flags)) {
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -2075,12 +2075,13 @@ inserted:
+ 				 * stable so we can check the additional
+ 				 * reference fits.
+ 				 */
+-				ref = le32_to_cpu(BHDR(new_bh)->h_refcount) + 1;
+-				if (ref > EXT4_XATTR_REFCOUNT_MAX) {
++				ref = le32_to_cpu(BHDR(new_bh)->h_refcount);
++				if (ref >= EXT4_XATTR_REFCOUNT_MAX) {
+ 					/*
+ 					 * Undo everything and check mbcache
+ 					 * again.
+ 					 */
++					clear_bit(MBE_REUSABLE_B, &ce->e_flags);
+ 					unlock_buffer(new_bh);
+ 					dquot_free_block(inode,
+ 							 EXT4_C2B(EXT4_SB(sb),
+@@ -2091,6 +2092,7 @@ inserted:
+ 					new_bh = NULL;
+ 					goto inserted;
+ 				}
++				ref++;
+ 				BHDR(new_bh)->h_refcount = cpu_to_le32(ref);
+ 				if (ref == EXT4_XATTR_REFCOUNT_MAX)
+ 					clear_bit(MBE_REUSABLE_B, &ce->e_flags);
 
 
