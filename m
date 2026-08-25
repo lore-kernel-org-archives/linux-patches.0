@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B773C303A35;
-	Tue, 25 Aug 2026 14:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED9E33F5B3;
+	Tue, 25 Aug 2026 14:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666428; cv=none; b=LoSqjuKOgUSGicC/BBUvi/E2lToXi09P9Rxvwa/bRn9nH/NptoOodzkGTgWJyA3sqPqu7y8vke7gunt+71JBcg0Qu3Ifny7wDTK6mmpklKoLUE9Ou0hj+jnABhycmwevmckW0X8l4ZsNj3dPVgq/gm+aqzterRIIT3pkFAFCGpU=
+	t=1787666430; cv=none; b=hnrUhyoVZeEl6nsYnu/uJRCImE9kmI+sHkPgFgNkUpDCxRGSzJrsQHAcu9yTbFwFczcz45WDjBJz7lhd15iOLB2mDOqn7ruE+JKN4W/DtJplqVx5WBEsOP5ld+EYgGd63E4XYLq8nTwIwMQf0OXYac2RpUFdk2Zqt+WnzavtuXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666428; c=relaxed/simple;
-	bh=SBRoAD1u1LyYOyZSIIp/govzvVcyHLqa/B/mqk3HS9g=;
+	s=arc-20240116; t=1787666430; c=relaxed/simple;
+	bh=mlIoQlIsjzRPYoSmPka73yb82Pzv8iksuCACSIzOYrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g5scHN+ZNkRMkQ9pcwEKWv3XtBPjc+dEanp7pYpISuBn6gpGwoWxqBxpYcwBoBrhfc0i8c+iA1B+CXPDD2I0kntfYg4x9E3pepYalYpWq/G33OnuX0o9TBI+314NyqVI/05O1TV8tGCCRVtBAVa0coHbu3P3U4Nq4PRkqgK9HSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R4hQxyh6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EHMcdAISAjTLgDyxBDBmHxzXyibV9eBJEN7ygB+XkaAybxaI8alAP1YJwc31ijz2KiQc4YeNhjBcNEZ/LPJhEONpWcDaI7mHHkF5njKe5iaVAKO3Xvmdw6hWtvXut5kRD/Va8JC0bvMP4DueUSg6IYDxozKn07Wf2YUi+MjdoFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmUXypiU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R4hQxyh6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFDF81F000E9;
-	Tue, 25 Aug 2026 14:00:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmUXypiU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE8AD1F00A3D;
+	Tue, 25 Aug 2026 14:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666426;
-	bh=wSc0dFYOyuxjiujeGcSsgG52iMBHCu0MXClVT8rXsa0=;
+	s=korg; t=1787666429;
+	bh=nw24sNafeQpIrGj3PDTcHBS9smAkd5wAGSH4lJHrRj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R4hQxyh6/cIMc1BcMg0Iz+5r/Ztk82XrzD7YNj1JuzueuTVoSSxzq4Ok51LsQiLnJ
-	 UDvLNzALXQOAhnSlMJ2knZDrZetwbQ/8Tg8dkfitf/8IE68fbpt3p3+C21vYD1LZiK
-	 p4aHWdAdZU5b8rlmv6KTvzY+gC0RlPtBhDpbBHC4=
+	b=EmUXypiUt0qp1/igvs8f3XhMtPbZITu2+9Tdqi9pOk5bphiGq45M8i4WKHWIxNuT5
+	 /Blt0tsJJCIkjdw9kGIuIFvAR+SaxiA7sQnXvYj99FgDgjFxVZke3MB9TLbruKcZxW
+	 WuuMMR3ykTPF3Zo7zhDCJOsv5uJhjoEMNClE0kXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Hashimov <security@auditcode.ai>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Brian Foster <bfoster@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Vega <vega@nebusec.ai>,
+	Zijie Huang <milkory@outlook.com>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 39/57] xfs: bounds-check buffer log items dirty bitmap
-Date: Tue, 25 Aug 2026 15:27:01 +0200
-Message-ID: <20260825132542.855611239@linuxfoundation.org>
+Subject: [PATCH 5.10 22/57] net/sched: reject overly deep qdisc hierarchies
+Date: Tue, 25 Aug 2026 15:26:44 +0200
+Message-ID: <20260825132542.162192553@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.342390421@linuxfoundation.org>
 References: <20260825132541.342390421@linuxfoundation.org>
@@ -53,163 +55,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Zijie Huang <milkory@outlook.com>
 
-commit 813f8136a2ce1fee266d02a7df73db6e8a541604 upstream.
+[ Upstream commit dedd34b0f2310e28c5f6d4875cfbf4b7ed821c01 ]
 
-xlog_recover_do_reg_buffer() replays each dirty region described by a
-buffer log item's bitmap into the buffer read for that item:
+Deep qdisc hierarchies can lead to excessive recursion in qdisc tree
+walkers and exhaust the kernel stack. The existing loop check does not
+cover the create-and-graft path, so a hierarchy can still be extended by
+creating a new child qdisc below an already deep parent.
 
-	memcpy(xfs_buf_offset(bp, (uint)bit << XFS_BLF_SHIFT),
-		item->ri_buf[i].iov_base,
-		nbits << XFS_BLF_SHIFT);
-
-The destination offset (bit/nbits, from the logged dirty bitmap) and the
-buffer size (from the logged blf_len) are both attacker-controlled and
-otherwise unrelated, yet the only thing bounding the copy is an ASSERT(),
-which compiles away on production kernels. A crafted image logging a
-small blf_len together with a bitmap bit past the end of that buffer
-drives the memcpy() past the buffer's allocation, corrupting adjacent
-kernel heap during mount-time log recovery. This is reachable by anyone
-who can get a crafted image mounted -- the malicious-filesystem threat
-model XFS already guards against elsewhere.
-
-Turn the ASSERT() into a real XFS_IS_CORRUPT() check that aborts recovery
-of the buffer with -EFSCORRUPTED, consistent with the validate-and-fail
-idiom already used in xlog_recover_do_inode_buffer() and
-xfs_dquot_item_recover.c. xlog_recover_do_reg_buffer() therefore becomes
-STATIC int and its three callers propagate the error.
-
-Found and confirmed with KASAN on a CONFIG_XFS_DEBUG=n build: the crafted
-image trips a slab-out-of-bounds write before this change and fails
-recovery cleanly with -EFSCORRUPTED after it.
+Store the hierarchy depth in struct Qdisc and update it when qdiscs are
+grafted. Reject new child qdiscs once the parent is already at the maximum
+allowed depth.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Brian Foster <bfoster@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Suggested-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Zijie Huang <milkory@outlook.com>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/1e9ab39597423fd5d13cfaaf52279b8ee3d9fc3c.1785434373.git.milkory@outlook.com
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ Dropped the `extack` argument from the `notify_and_destroy()` context line to match 5.15's 6-parameter version. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_buf_item_recover.c |   53 ++++++++++++++++++++++++++++++------------
- 1 file changed, 38 insertions(+), 15 deletions(-)
+ include/net/sch_generic.h |    1 +
+ net/sched/sch_api.c       |    9 +++++++++
+ 2 files changed, 10 insertions(+)
 
---- a/fs/xfs/xfs_buf_item_recover.c
-+++ b/fs/xfs/xfs_buf_item_recover.c
-@@ -432,7 +432,7 @@ xlog_recover_validate_buf_type(
-  * given buffer.  The bitmap in the buf log format structure indicates
-  * where to place the logged data.
-  */
--STATIC void
-+STATIC int
- xlog_recover_do_reg_buffer(
- 	struct xfs_mount		*mp,
- 	struct xlog_recover_item	*item,
-@@ -460,8 +460,24 @@ xlog_recover_do_reg_buffer(
- 		ASSERT(nbits > 0);
- 		ASSERT(item->ri_buf[i].i_addr != NULL);
- 		ASSERT(item->ri_buf[i].i_len % XFS_BLF_CHUNK == 0);
--		ASSERT(BBTOB(bp->b_length) >=
--		       ((uint)bit << XFS_BLF_SHIFT) + (nbits << XFS_BLF_SHIFT));
-+		/*
-+		 * The bitmap is only trustworthy to the extent that it
-+		 * describes a region that actually fits inside the buffer we
-+		 * read in based on the (attacker-controlled) blf_len.  Do not
-+		 * rely on an ASSERT() for this -- it compiles away entirely on
-+		 * non-DEBUG kernels, which is exactly where this matters, so
-+		 * validate it for real and abort recovery of this buffer rather
-+		 * than copying past the end of it.
-+		 */
-+		if (XFS_IS_CORRUPT(mp, BBTOB(bp->b_length) <
-+				((uint)bit << XFS_BLF_SHIFT) +
-+				(nbits << XFS_BLF_SHIFT))) {
-+			xfs_alert(mp,
-+	"Bad buffer log item dirty bitmap (bit %d, nbits %d) for %d-byte buffer at daddr 0x%llx.",
-+				bit, nbits, BBTOB(bp->b_length),
-+				bp->b_bn);
-+			return -EFSCORRUPTED;
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -86,6 +86,7 @@ struct Qdisc {
+ 	struct hlist_node       hash;
+ 	u32			handle;
+ 	u32			parent;
++	int			depth;
+ 
+ 	struct netdev_queue	*dev_queue;
+ 
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -1045,6 +1045,9 @@ static int qdisc_graft(struct net_device
+ 		unsigned int i, num_q, ingress;
+ 		struct netdev_queue *dev_queue;
+ 
++		if (new)
++			new->depth = 0;
++
+ 		ingress = 0;
+ 		num_q = dev->num_tx_queues;
+ 		if ((q && q->flags & TCQ_F_INGRESS) ||
+@@ -1124,9 +1127,15 @@ skip:
+ 			NL_SET_ERR_MSG(extack, "STAB not supported on a non root");
+ 			return -EINVAL;
+ 		}
++		if (new && parent->depth >= 7) {
++			NL_SET_ERR_MSG(extack, "Qdisc hierarchy is too deep");
++			return -E2BIG;
 +		}
- 
- 		/*
- 		 * The dirty regions logged in the buffer, even though
-@@ -515,6 +531,7 @@ xlog_recover_do_reg_buffer(
- 	ASSERT(i == item->ri_total);
- 
- 	xlog_recover_validate_buf_type(mp, bp, buf_f, current_lsn);
-+	return 0;
- }
- 
- /*
-@@ -523,10 +540,10 @@ xlog_recover_do_reg_buffer(
-  * (ie. USR or GRP), then just toss this buffer away; don't recover it.
-  * Else, treat it as a regular buffer and do recovery.
-  *
-- * Return false if the buffer was tossed and true if we recovered the buffer to
-- * indicate to the caller if the buffer needs writing.
-+ * Return 0 if the buffer was not recovered (tossed), 1 if it was recovered and
-+ * needs writing, or a negative errno if recovery of the buffer failed.
-  */
--STATIC bool
-+STATIC int
- xlog_recover_do_dquot_buffer(
- 	struct xfs_mount		*mp,
- 	struct xlog			*log,
-@@ -535,6 +552,7 @@ xlog_recover_do_dquot_buffer(
- 	struct xfs_buf_log_format	*buf_f)
- {
- 	uint			type;
-+	int			error;
- 
- 	trace_xfs_log_recover_buf_dquot_buf(log, buf_f);
- 
-@@ -542,7 +560,7 @@ xlog_recover_do_dquot_buffer(
- 	 * Filesystems are required to send in quota flags at mount time.
- 	 */
- 	if (!mp->m_qflags)
--		return false;
-+		return 0;
- 
- 	type = 0;
- 	if (buf_f->blf_flags & XFS_BLF_UDQUOT_BUF)
-@@ -555,10 +573,12 @@ xlog_recover_do_dquot_buffer(
- 	 * This type of quotas was turned off, so ignore this buffer
- 	 */
- 	if (log->l_quotaoffs_flag & type)
--		return false;
-+		return 0;
- 
--	xlog_recover_do_reg_buffer(mp, item, bp, buf_f, NULLCOMMITLSN);
--	return true;
-+	error = xlog_recover_do_reg_buffer(mp, item, bp, buf_f, NULLCOMMITLSN);
-+	if (error)
-+		return error;
-+	return 1;
- }
- 
- /*
-@@ -943,13 +963,16 @@ xlog_recover_buf_commit_pass2(
- 			goto out_release;
- 	} else if (buf_f->blf_flags &
- 		  (XFS_BLF_UDQUOT_BUF|XFS_BLF_PDQUOT_BUF|XFS_BLF_GDQUOT_BUF)) {
--		bool	dirty;
--
--		dirty = xlog_recover_do_dquot_buffer(mp, log, item, bp, buf_f);
--		if (!dirty)
-+		error = xlog_recover_do_dquot_buffer(mp, log, item, bp, buf_f);
-+		if (error <= 0)
- 			goto out_release;
-+		/* write dirty buffer */
-+		error = 0;
- 	} else {
--		xlog_recover_do_reg_buffer(mp, item, bp, buf_f, current_lsn);
-+		error = xlog_recover_do_reg_buffer(mp, item, bp, buf_f,
-+						   current_lsn);
-+		if (error)
-+			goto out_release;
+ 		err = cops->graft(parent, cl, new, &old, extack);
+ 		if (err)
+ 			return err;
++		if (new)
++			new->depth = parent->depth + 1;
+ 		notify_and_destroy(net, skb, n, classid, old, new);
  	}
- 
- 	/*
+ 	return 0;
 
 
