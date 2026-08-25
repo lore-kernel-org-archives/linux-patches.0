@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C737468C08;
-	Tue, 25 Aug 2026 13:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4762248095A;
+	Tue, 25 Aug 2026 13:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665083; cv=none; b=BpXIDK5G8TYtbUy7SfGlbqjSyVJ8wa1oCdMv11cDc0Bey9B/ri2dJvlG4x5cU0zRtDMpWbwVEH6QKaL1CrHbKpFyWetTeqvPbd2gb8PzgTzu+GJb3WtcGqXTrSmGjarvtSIlldTr5ASQJm43s8FxLRbeUgdjgVQ4T7g++GOaox4=
+	t=1787665086; cv=none; b=RuYEqVQkoAphVWgsJZX+FUal+vy8GCFCU3kcfzweJXnp/e787z51T9i6FliFgL5vpfd5KzuVL88dWMp9VL5pZeJJPsu/dK/CJzC2iffJzBnxLR7v651LcWf3bk2reoD2/hinwDqO9pBHgQGfSPndpVgLQo6MMD/eaKaAwEDnNK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665083; c=relaxed/simple;
-	bh=HnikZCuaAcHrvCxLgsScoM6XnAZy2ge4cDnOTvyuxEU=;
+	s=arc-20240116; t=1787665086; c=relaxed/simple;
+	bh=F4F5+pJwaRlZvGCEzx0xHN1LAFTaOU1LFzI+bauOUS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MkOaLCLn56vbhEB+IolWx81itRIzbZAuOwlDj4MDlGLTN9QgBwNxrVA01tI5m86MkxdSEyP/9JOkWI/QFlUI3XMRpcL5Q4Irm0rDyNjX7XG7ywY5zk6TKpiCd8wO9cDPIUS4NLwkPt0ecrJRAlSbwq5FfQrPWAk4X/EbPRUdTFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lu5oxNt8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=plsQi1TC5X5ppCbjRxPqAepzId8VXYVvYHPaKI21PXgaxNmCa6qcgavqEYMQFP6mue2MFmpAnbiXz7bJyMSXG4vRlgrz/SguD4u4Tk9Z6DYSMPpaS0LjsvHNvpacjWo9+MfQvH7JTlYVuD2Oou6aoIXBVpx8edEjKT7rj8tDN+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=plUEeJDe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lu5oxNt8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF761F000E9;
-	Tue, 25 Aug 2026 13:38:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plUEeJDe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A691F000E9;
+	Tue, 25 Aug 2026 13:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665082;
-	bh=tM98pJMZAwCnfKdbb72/azBIa71f9AJRjKFyQVHZ5p0=;
+	s=korg; t=1787665085;
+	bh=M4TlgoXvhS+pPpewdsINTldvfj51Tn4N2y0wQwSzxTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lu5oxNt8k4fv4kALTgYmEkKmKjd9sC6CaBF2b163+i1gAWoWKvGZCYiQtgV8lhqRz
-	 nIqYeh7bZglE7Jn9AKKEPzWAKMBnUDWJ5dYEkwIV1b5xJLj6J2d5kSYCQZU5QjvXAD
-	 CvFepzcnPRO/M/f9x0Ly5+jcuC2oCP9IKqHVfLME=
+	b=plUEeJDeRn+F+CGdvxswQttU5faENT376sid/cdiF7zBo8KpMux1IQGfNvitcAGEh
+	 OHCvKoTADTCJNV0nD/AqayMKh3vB0hE2x7iy2ut5QcAOxUJyu60VC5dnF8/ECOOmgf
+	 vzLly1+mBvqjINWMcxNOhlrBjiLLp06V39LUhyIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI Review <sashiko-bot@kernel.org>,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Ibrahim Hashimov <security@auditcode.ai>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.1 090/101] HID: sensor: custom: Fix use-after-free in enable_sensor
-Date: Tue, 25 Aug 2026 15:26:08 +0200
-Message-ID: <20260825132545.378129589@linuxfoundation.org>
+Subject: [PATCH 7.1 091/101] HID: uclogic: fix use-after-free of inrange_timer on remove
+Date: Tue, 25 Aug 2026 15:26:09 +0200
+Message-ID: <20260825132545.405778714@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -52,81 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-commit ad8fb82b04422f49530d2aa2753cc81d1c60102c upstream.
+commit 506fd50a9027340f0e9dcc587d10ccb03312dba6 upstream.
 
-enable_sensor_store() can call set_power_report_state(), which
-dereferences sensor_inst->power_state and sensor_inst->report_state.
-These pointers refer to entries in sensor_inst->fields.
+uclogic_remove() cancels the pen in-range timer and then stops the
+device:
 
-Create the field attributes before exposing the enable_sensor sysfs
-attribute, so enable_sensor cannot be accessed before the state it
-depends on has been initialized.
+	timer_delete_sync(&drvdata->inrange_timer);
+	hid_hw_stop(hdev);
 
-On remove, delete enable_sensor before freeing the field attributes,
-so a concurrent sysfs write cannot dereference freed memory through
-power_state or report_state.
+timer_delete_sync() only guarantees the timer is idle at that instant.
+uclogic_raw_event_pen() keeps delivering pen reports until hid_hw_stop()
+stops the transport several lines later, and every report with
+pen->inrange == UCLOGIC_PARAMS_PEN_INRANGE_NONE re-arms the timer:
 
-Reported-by: Sashiko AI Review <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260623021950.1736413-1-haoxiang_li2024@163.com?part=1
-Fixes: 4a7de0519df5 ("HID: sensor: Custom and Generic sensor support")
+	mod_timer(&drvdata->inrange_timer, jiffies + msecs_to_jiffies(100));
+
+A report landing between the timer_delete_sync() call and the transport
+teardown in hid_hw_stop() re-arms inrange_timer after it was cancelled.
+uclogic_remove() then returns and the devm drvdata is freed, while
+hid_hw_stop() has already freed the input device drvdata->pen_input
+points at, so when the timer fires ~100 ms later
+uclogic_inrange_timeout() dereferences freed memory -- a use-after-free
+in timer-softirq context.
+
+Swapping the two calls is not a fix: stopping the device first frees
+drvdata->pen_input via hidinput_disconnect() while the timer may still
+be pending, so a timer already armed before removal fires on the freed
+input device in the window before timer_delete_sync() runs.
+
+Use timer_shutdown_sync() before hid_hw_stop() instead. It cancels the
+timer, waits for a running callback while pen_input is still valid, and
+prevents any further re-arming -- a later mod_timer() from an in-flight
+report is silently ignored -- so the timer is provably dead before
+hid_hw_stop() frees the inputs. This is the ordering the timer core
+documents for this "timer re-armed from another path" teardown case.
+
+Fixes: 01309e29eb95 ("HID: uclogic: Support in-range reporting emulation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Assisted-by: AuditCode-AI:2026.07
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-sensor-custom.c |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/hid/hid-uclogic-core.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/hid-sensor-custom.c
-+++ b/drivers/hid/hid-sensor-custom.c
-@@ -1005,26 +1005,26 @@ static int hid_sensor_custom_probe(struc
- 		return ret;
- 	}
+--- a/drivers/hid/hid-uclogic-core.c
++++ b/drivers/hid/hid-uclogic-core.c
+@@ -548,7 +548,17 @@ static void uclogic_remove(struct hid_de
+ {
+ 	struct uclogic_drvdata *drvdata = hid_get_drvdata(hdev);
  
--	ret = sysfs_create_group(&sensor_inst->pdev->dev.kobj,
--				 &enable_sensor_attr_group);
-+	ret = hid_sensor_custom_add_attributes(sensor_inst);
- 	if (ret)
- 		goto err_remove_callback;
- 
--	ret = hid_sensor_custom_add_attributes(sensor_inst);
-+	ret = sysfs_create_group(&sensor_inst->pdev->dev.kobj,
-+				 &enable_sensor_attr_group);
- 	if (ret)
--		goto err_remove_group;
-+		goto err_remove_attributes;
- 
- 	ret = hid_sensor_custom_dev_if_add(sensor_inst);
- 	if (ret)
--		goto err_remove_attributes;
-+		goto err_remove_group;
- 
- 	return 0;
- 
--err_remove_attributes:
--	hid_sensor_custom_remove_attributes(sensor_inst);
- err_remove_group:
- 	sysfs_remove_group(&sensor_inst->pdev->dev.kobj,
- 			   &enable_sensor_attr_group);
-+err_remove_attributes:
-+	hid_sensor_custom_remove_attributes(sensor_inst);
- err_remove_callback:
- 	sensor_hub_remove_callback(hsdev, hsdev->usage);
- 
-@@ -1042,9 +1042,10 @@ static void hid_sensor_custom_remove(str
- 	}
- 
- 	hid_sensor_custom_dev_if_remove(sensor_inst);
--	hid_sensor_custom_remove_attributes(sensor_inst);
-+	/* Remove enable_sensor first as it uses fields via power_state/report_state. */
- 	sysfs_remove_group(&sensor_inst->pdev->dev.kobj,
- 			   &enable_sensor_attr_group);
-+	hid_sensor_custom_remove_attributes(sensor_inst);
- 	sensor_hub_remove_callback(hsdev, hsdev->usage);
- }
- 
+-	timer_delete_sync(&drvdata->inrange_timer);
++	/*
++	 * Shut the in-range timer down before stopping the device.
++	 * uclogic_raw_event_pen() re-arms inrange_timer on every pen report
++	 * and keeps running until hid_hw_stop() stops the transport, so a
++	 * plain timer_delete_sync() here can be undone by a report landing in
++	 * the window before hid_hw_stop().  timer_shutdown_sync() cancels the
++	 * timer and makes any later re-arm a no-op, so it is provably dead
++	 * before hid_hw_stop() frees the input device drvdata->pen_input
++	 * points at.
++	 */
++	timer_shutdown_sync(&drvdata->inrange_timer);
+ 	hid_hw_stop(hdev);
+ 	kfree(drvdata->desc_ptr);
+ 	uclogic_params_cleanup(&drvdata->params);
 
 
