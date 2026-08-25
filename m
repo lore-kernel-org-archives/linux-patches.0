@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9333480320;
-	Tue, 25 Aug 2026 13:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AF2480DCF;
+	Tue, 25 Aug 2026 13:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664932; cv=none; b=dHOL9ab48ig3dEfWSEcpOalIQ0LIqFGW2cojbWDNJ1tGvUgWno8RsQdbzUMYJWZa9MhToqBqA1RfHFi1g6jqriI+PMcb/0rpYL3u7Pd+5vgbVZgzGYkkas47VoAJM2MxEHgy6azb/Od4EaLvQTkH4pxFOA0jZevc46pDIQ5Rwu4=
+	t=1787664938; cv=none; b=NO3WDw4CXgZfoM/rqfeqECm9KkSJRQ+gVF+0viv5uCftFxn2bRuzq9Bf+rFrftUBM2JJDYFKuInMICEz89UvYjkm/h3iqHB6RHKbyEl3sBTheToobIAB9WYXcX2IaKJ6ri0mlW8ltzMW6+HZFN3Rz5t7xwkxvC9HZ94quDT0iI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664932; c=relaxed/simple;
-	bh=WFQTQ/fu8G9i///1dZw3berpAke+mSPBem/0/cRqznA=;
+	s=arc-20240116; t=1787664938; c=relaxed/simple;
+	bh=wJRA2NQzvpo1UzXOUXeJv36StzFer0WN+FQIe3tBYa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oBW14z50hWLa8NV6+iPBUqLhZfajw1uhe5TGk63qwSjloSf5gSJNJudkEbo5sA84XYIb8LeQBvjE4NTJd0AKKIh264QjKl+0Gzpw0dALRwK0O5HG23hGHTbBjDO9Yo3227bHXK2rq0rKvRXqEhPdiAZnDO2WvguRxcoPWYhuJuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RyiKDwUv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fOxK9y8JrM31T1BOySeXMsJxkRSxZAm1ZZfnp+Fv3Huu32QbG6uzWz77Qi/GehlTWscOQYCERHtVhrHEAnbbWm3s0SkB26ChBCSeAcBFuoUxdgcNoLVvOrZIrQIY02vh5u4p6h6qBMtEzjcMnCfs+8NXL/3BNFGRaLO3r+SxuHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DPa8yUfN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RyiKDwUv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0051F000E9;
-	Tue, 25 Aug 2026 13:35:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPa8yUfN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4574E1F000E9;
+	Tue, 25 Aug 2026 13:35:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664930;
-	bh=qkQdyztRw0yuJLW5X9vhxGQEl3hzeQ2Z62DAHSgftSE=;
+	s=korg; t=1787664933;
+	bh=5l3Irf/R/v5YjadcdcZbQl1MUIPuxYDgZ3t2X/VJ5bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RyiKDwUvW+2/AF0ZVNxhava7u8iWmD8l6F7zGgZRYWK5kSdFxSaLx75hcds7/upeT
-	 DLmsQ6hQ2wQFtJQ8hpiCyzgK04AGmoaGM7rlhR7CYh6JDLTqsJxkKe92FPa3A2cbVU
-	 Q52NdotAp03de3k6u5bvsq3AW5cXZ4fOWl/zB20s=
+	b=DPa8yUfNTCPx1FFu2DTITz1ocbvaDNMGhl71YFPmtOTbjL2zQ3iInuh/FkSxSb1zl
+	 Y+w8wS60hWjJbQ+IRVSI2B/zOTiWZnJqKPwcgSQTSWjKGG2nOqkYnkHC+Ukx6sE8IP
+	 B0vDs4UNVlcaeuRM7FfSka+Ydn1Ew2fTMyRVghBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Page <sam@bynar.io>,
-	Simon Horman <horms@kernel.org>,
-	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 7.1 046/101] nfc: nci: fix out-of-bounds write in nci_target_auto_activated()
-Date: Tue, 25 Aug 2026 15:25:24 +0200
-Message-ID: <20260825132543.823660917@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Ibrahim Hashimov <security@auditcode.ai>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 7.1 055/101] nvmet-tcp: bound SGL data length before allocating command buffers
+Date: Tue, 25 Aug 2026 15:25:33 +0200
+Message-ID: <20260825132544.157727110@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -51,69 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Page <sam@bynar.io>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-commit ac200079db50af81e6b04d058b33ec92901d8edd upstream.
+commit 4a3f00262a044e8e15064b1a6860968bf0500bf4 upstream.
 
-nci_target_auto_activated() appends a target to the fixed-size array
-ndev->targets[NCI_MAX_DISCOVERED_TARGETS] and increments ndev->n_targets
-without first checking the array is full; unlike its sibling
-nci_add_new_target(), which bails out when n_targets already equals
-NCI_MAX_DISCOVERED_TARGETS.
+nvmet_tcp_map_data() reads the host-controlled 32-bit sgl->length
+and, for the in-capsule offset descriptor (type 0x01), checks it
+against port->inline_data_size before use. Any other SGL descriptor
+type -- including the non-inline transport SGL data-block descriptor
+(type (NVME_TRANSPORT_SGL_DATA_DESC << 4) | NVME_SGL_FMT_TRANSPORT_A,
+the type a real host uses for out-of-capsule writes) skips that check
+entirely and falls straight through to:
 
-ndev->n_targets is only cleared by nci_clear_target_list(), so an NFCC
-that repeatedly re-runs discovery (RF_DISCOVER_RSP, which re-enters
-NCI_DISCOVERY without clearing the target list) and reports an
-auto-activated target (RF_INTF_ACTIVATED_NTF) drives n_targets past the
-limit. The append then writes a struct nfc_target past the end of the
-array (a slab out-of-bounds write), and nfc_targets_found() goes on to
-walk the array with the inflated count:
+	cmd->req.sg = sgl_alloc(len, GFP_KERNEL, &cmd->req.sg_cnt);
 
-  BUG: KASAN: slab-out-of-bounds in nci_add_new_protocol+0x94/0x2ac [nci]
-  Write of size 2 at addr ffff0000c7299a18 by task kworker/u8:0/12
-  Workqueue: nfc0_nci_rx_wq nci_rx_work [nci]
-  Call trace:
-   nci_add_new_protocol+0x94/0x2ac [nci]
-   nci_ntf_packet+0xddc/0x11a0 [nci]
-   nci_rx_work+0x15c/0x1e0 [nci]
-   process_one_work+0x2dc/0x500
-   worker_thread+0x240/0x460
-   kthread+0x1c0/0x1d0
-   ret_from_fork+0x10/0x20
+with len taken directly from the wire, unbounded up to 4 GiB.
 
-  The buggy address belongs to the cache kmalloc-2k of size 2048
-  The buggy address is located 1024 bytes to the right of
-  allocated 1560-byte region [ffff0000c7299000, ffff0000c7299618)
+nvmet_req_init() only parses the command and never inspects
+sgl->length, and nvmet_check_transfer_len() -- the only other place
+transfer_len is validated -- runs later, from req->execute(), after
+the allocation has already happened. For a write command the target
+responds with an R2T and parks the command waiting for the host to
+send the data; if the host (or an unauthenticated peer that simply
+never follows up) never does, the sgl_alloc() buffer stays resident
+for the life of the command. NVMe/TCP has no mandatory authentication
+in the default configuration, so any peer able to reach the target
+portal and complete a Fabrics connect can drive this with a single
+crafted command, repeatable across queues and connections for
+amplification. This is unbounded kernel memory allocation
+triggered by a remote, effectively unauthenticated peer.
 
-Guard nci_target_auto_activated() with the same check used by
-nci_add_new_target().
+Validate len against the same NVMET_TCP_MAXH2CDATA ceiling this file
+already uses to bound per-PDU H2C data, for every SGL descriptor type,
+before doing any allocation. This closes the gap for the non-inline
+descriptor while leaving the existing, tighter inline_data_size check
+in place for the in-capsule case.
 
-Fixes: 019c4fbaa790 ("NFC: Add NCI multiple targets support")
+Runtime-verified on a v6.19 KASAN stand: with this bound in place, a
+crafted write command carrying an oversized non-inline SGL length is
+rejected before sgl_alloc() runs, where the same request previously
+drove an unbounded ~256 MiB kernel allocation (up to 4 GiB) that
+stayed resident pending an R2T the host never satisfies.
+
+Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
 Cc: stable@vger.kernel.org
-Assisted-by: Bynario AI
-Signed-off-by: Samuel Page <sam@bynar.io>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260622145243.3167276-1-sam@bynar.io
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Assisted-by: AuditCode-AI:2026.07
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/nci/ntf.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/nvme/target/tcp.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/net/nfc/nci/ntf.c
-+++ b/net/nfc/nci/ntf.c
-@@ -619,6 +619,12 @@ static void nci_target_auto_activated(st
- 	struct nfc_target *target;
- 	int rc;
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -422,6 +422,19 @@ static int nvmet_tcp_map_data(struct nvm
+ 	if (!len)
+ 		return 0;
  
-+	/* This is a new target, check if we've enough room */
-+	if (ndev->n_targets == NCI_MAX_DISCOVERED_TARGETS) {
-+		pr_debug("not enough room, ignoring new target...\n");
-+		return;
-+	}
++	/*
++	 * inline_data_size only bounds the in-capsule (type 0x01) SGL
++	 * descriptor below. A non-inline transport SGL data-block
++	 * descriptor skips that check entirely and would otherwise reach
++	 * sgl_alloc() with an attacker-controlled len of up to 4 GiB,
++	 * pinning that much kernel memory for a command that may never
++	 * complete. Bound every descriptor type here, before allocating
++	 * anything, using the same ceiling this file already applies to
++	 * per-PDU H2C data.
++	 */
++	if (len > NVMET_TCP_MAXH2CDATA)
++		return NVME_SC_SGL_INVALID_DATA | NVME_STATUS_DNR;
 +
- 	target = &ndev->targets[ndev->n_targets];
- 
- 	rc = nci_add_new_protocol(ndev, target, ntf->rf_protocol,
+ 	if (sgl->type == ((NVME_SGL_FMT_DATA_DESC << 4) |
+ 			  NVME_SGL_FMT_OFFSET)) {
+ 		if (!nvme_is_write(cmd->req.cmd))
 
 
