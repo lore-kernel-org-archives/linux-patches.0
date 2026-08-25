@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78BF2E06E4;
-	Tue, 25 Aug 2026 13:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51243C276D;
+	Tue, 25 Aug 2026 13:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665834; cv=none; b=lpeWsHOIb7OgVsirbE4N8elku6wuciNc92V3nFtxw9I/hGM9jHCko/u8UzSdRfYic7phI3dcVfUkrvJ/CW7OkTPxwqLhDEiVO/sHyyPhJu3AzpgIv0DkA6MfhGUPSCiK6bWd2UI6PAd8fGpZB9Wo10eNshpaQz1uc4qNkc55Yus=
+	t=1787665837; cv=none; b=bauONpbKUCE/nycuHVZDa9BOvWQUuXoQVBj87Xq87TNR6LoHqUuQFI3q6X2BYw+/sZGBUosWB2gJ5aWpSJkkBl3BETHQE3cr8/zypTcV+8mCkx/ZlGU80H30mfdOFHePRXPcLaFO42GTu9/Me7+yvMettSgnzZnDgqOMTbw0CYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665834; c=relaxed/simple;
-	bh=RFmrDSYoKvC1TabWkReIWibpRVK7M5agaNU9teC/DJA=;
+	s=arc-20240116; t=1787665837; c=relaxed/simple;
+	bh=lv4TfOuhNIJcvNVB5Unodk6Diw2neHJrwUVTRrZtRzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KAf88PQJUEFl5OZzsXj6+7vGgETlFya7EC//ovxXeFpirkc2DyDc6ndoDfA5K7lhlW91R7h9cvTyOjzJgExmVssd7DRfeixJjyovVyYnimuZAdHIwHvPl1850Yv1zQbtjOJweZYTod5LLs3ShsC0arQbfBj2IyIObzfHZowDuyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=haCgUBEq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RdDpPL6eQJXnKIzwIBvkr7tv5c9Qv3TjIyVg6PfCkfm7DwKPxK44hkU2k0GfQ+kjpbVogIR9jR5VrQfxSXRB2kYd9qvG9opsr5BsuFf/b18ogs6aDOF2+iZ6EvlgQEyWHCZaE8xOlNjlwve/w3L86gsh72qUMdcKkcMGSq8NoVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZckjfTrt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="haCgUBEq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D7EB1F000E9;
-	Tue, 25 Aug 2026 13:50:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZckjfTrt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F092E1F000E9;
+	Tue, 25 Aug 2026 13:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665833;
-	bh=vFhwa4RR6sq+A5LOEz60uyHwdQQ+EoVuRU4RvZLCJfI=;
+	s=korg; t=1787665836;
+	bh=oDvxny5l0lgqCg1jz4FBnFGjfce8Nk5cWyIuMddmoGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=haCgUBEqVlgrbVAteEVK7qaZmvzmaSRmAuoQPnRrdQGViOJwrlNMz43RMBJf4BjBB
-	 WvbFZv9y2GSwSGpOfqODIcIxwah0hBO7d7ZtKxhfL7KLYJIXzCORIjYZaHMcHYIuIL
-	 rBPNNySFpWsDHFDQ5SND1MQ+cra2KEzkedjDfjuU=
+	b=ZckjfTrt1IsYSww2WPsYL0JkgcTEiTmYzn/ijLBoNMHV0zZsKdiNJkk5xBOO767mB
+	 eiJ+vDLwyTLs5GK4GghJHboWqct0f2qUVsrKL6adfWJaUBfxBunD1x+eWy8zlFSV8Z
+	 uCvYk/+zCjAOmJ2+nA6aZWwTJbteb0FHr6wMgTEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 81/87] selinux: require a classs permission values to cover its permission count
-Date: Tue, 25 Aug 2026 15:26:44 +0200
-Message-ID: <20260825132544.994095266@linuxfoundation.org>
+	Ibrahim Hashimov <security@auditcode.ai>,
+	Silvan Jegen <s.jegen@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.6 82/87] HID: nintendo: fix out-of-bounds read in joycon_ctlr_read_handler()
+Date: Tue, 25 Aug 2026 15:26:45 +0200
+Message-ID: <20260825132545.026197283@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.813800447@linuxfoundation.org>
 References: <20260825132541.813800447@linuxfoundation.org>
@@ -52,150 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-[ Upstream commit b98a8ac50775540f3804397ed08f61ef9910bcab ]
+commit 27b376b945c0aac46fcdfcc950b14a85b874b557 upstream.
 
-security_get_permissions() sizes an array by the class's permissions.nprim
-and fills it at value - 1, from the inherited common's permission table and
-then the class's own. A value no permission defines leaves a NULL that
-sel_make_perm_files() passes to d_alloc_name(), an oops inside
-sel_write_load() that strands selinux_state.policy_mutex and leaves every
-later load in uninterruptible sleep; two permissions sharing a value
-overwrite the first kstrdup(). Bounding each value by nprim catches
-neither, and neither would a count: the symbol table is keyed on the
-permission name, so duplicates pass.
+joycon_ctlr_read_handler() casts an incoming HID input report to
+struct joycon_input_report and parses it, guarding the cast only with a
+12-byte length check:
 
-Track the values each permission table claims and require them to cover
-exactly what its count declares, rejecting a count no value can reach.
-Conforming policies are unaffected.
+	if (size >= 12) /* make sure it contains the input report */
+		joycon_parse_report(ctlr, (struct joycon_input_report *)data);
 
+struct joycon_input_report is 49 bytes: a 13-byte header followed by a
+union whose IMU arm is 36 bytes. For an IMU report joycon_parse_report()
+-> joycon_parse_imu_report() walks that union (struct offsets 13..48),
+so a report of exactly 12 bytes with data[0] == JC_INPUT_IMU_DATA passes
+the guard yet is read up to 37 bytes past its declared length. The
+over-read bytes are decoded into accelerometer/gyroscope values and
+forwarded to userspace through the "(IMU)" input device, leaking
+driver-internal memory. data[0] and size are fully controlled by a
+malicious or spoofed Joy-Con/Pro Controller.
+
+Receive buffers are sized to the maximum report length, so this is an
+over-read within the allocation rather than a slab OOB, but the decoded
+bytes still reach userspace.
+
+The sibling subcmd path in joycon_ctlr_handle_event() already bounds the
+same cast correctly:
+
+	if (size < sizeof(struct joycon_input_report) ||
+	    data[0] != JC_INPUT_SUBCMD_REPLY)
+		break;
+
+Use the same sizeof(struct joycon_input_report) bound here.
+
+Fixes: 2af16c1f846b ("HID: nintendo: add nintendo switch controller driver")
 Cc: stable@vger.kernel.org
-Fixes: 55fcf09b3fe4 ("selinux: add support for querying object classes and permissions from the running policy")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Assisted-by: AuditCode-AI:2026.07
+Reviewed-by: Silvan Jegen <s.jegen@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/ss/policydb.c |   51 ++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 46 insertions(+), 5 deletions(-)
+ drivers/hid/hid-nintendo.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/security/selinux/ss/policydb.c
-+++ b/security/selinux/ss/policydb.c
-@@ -1099,7 +1099,18 @@ int str_read(char **strp, gfp_t flags, s
- 	return 0;
- }
- 
--static int perm_read(struct policydb *p, struct symtab *s, struct policy_file *fp)
-+/*
-+ * Bitmap of the permission values a symtab has claimed.  Values are 1-based
-+ * and bounded by SEL_VEC_MAX, the width of an access vector, so the whole set
-+ * fits in a u32 and the callers reject an nprim past that width.
-+ */
-+static u32 perm_claimed_mask(u32 nprim)
-+{
-+	return nprim ? U32_MAX >> (SEL_VEC_MAX - nprim) : 0;
-+}
-+
-+static int perm_read(struct policydb *p, struct symtab *s,
-+		     struct policy_file *fp, u32 *claimed)
+--- a/drivers/hid/hid-nintendo.c
++++ b/drivers/hid/hid-nintendo.c
+@@ -2217,7 +2217,12 @@ static int joycon_ctlr_read_handler(stru
  {
- 	char *key = NULL;
- 	struct perm_datum *perdatum;
-@@ -1123,6 +1134,10 @@ static int perm_read(struct policydb *p,
- 	/* indexes an nprim-sized array in security_get_permissions() */
- 	if (perdatum->value > s->nprim)
- 		goto bad;
-+	/* two permissions cannot share one slot of that array */
-+	if (*claimed & (1U << (perdatum->value - 1)))
-+		goto bad;
-+	*claimed |= 1U << (perdatum->value - 1);
- 
- 	rc = str_read(&key, GFP_KERNEL, fp, len);
- 	if (rc)
-@@ -1143,7 +1158,7 @@ static int common_read(struct policydb *
- 	char *key = NULL;
- 	struct common_datum *comdatum;
- 	__le32 buf[4];
--	u32 i, len, nel;
-+	u32 i, len, nel, claimed = 0;
- 	int rc;
- 
- 	comdatum = kzalloc(sizeof(*comdatum), GFP_KERNEL);
-@@ -1165,17 +1180,28 @@ static int common_read(struct policydb *
- 	if (rc)
- 		goto bad;
- 	comdatum->permissions.nprim = le32_to_cpu(buf[2]);
-+	/* no permission value can reach a slot past SEL_VEC_MAX */
-+	rc = -EINVAL;
-+	if (comdatum->permissions.nprim > SEL_VEC_MAX)
-+		goto bad;
- 
- 	rc = str_read(&key, GFP_KERNEL, fp, len);
- 	if (rc)
- 		goto bad;
- 
- 	for (i = 0; i < nel; i++) {
--		rc = perm_read(p, &comdatum->permissions, fp);
-+		rc = perm_read(p, &comdatum->permissions, fp, &claimed);
- 		if (rc)
- 			goto bad;
+ 	if (data[0] == JC_INPUT_SUBCMD_REPLY || data[0] == JC_INPUT_IMU_DATA ||
+ 	    data[0] == JC_INPUT_MCU_DATA) {
+-		if (size >= 12) /* make sure it contains the input report */
++		/*
++		 * The whole struct is cast and parsed below, including the
++		 * IMU/subcmd union, not just the 12-byte partial header this
++		 * used to check for.
++		 */
++		if (size >= sizeof(struct joycon_input_report))
+ 			joycon_parse_report(ctlr,
+ 					    (struct joycon_input_report *)data);
  	}
- 
-+	rc = -EINVAL;
-+	if (claimed != perm_claimed_mask(comdatum->permissions.nprim)) {
-+		pr_err("SELinux:  common %s does not define every permission it declares\n",
-+		       key);
-+		goto bad;
-+	}
-+
- 	rc = symtab_insert(s, key, comdatum);
- 	if (rc)
- 		goto bad;
-@@ -1309,7 +1335,7 @@ static int class_read(struct policydb *p
- 	char *key = NULL;
- 	struct class_datum *cladatum;
- 	__le32 buf[6];
--	u32 i, len, len2, ncons, nel, val;
-+	u32 i, len, len2, ncons, nel, val, claimed = 0, inherited = 0;
- 	int rc;
- 
- 	cladatum = kzalloc(sizeof(*cladatum), GFP_KERNEL);
-@@ -1337,6 +1363,10 @@ static int class_read(struct policydb *p
- 	if (rc)
- 		goto bad;
- 	cladatum->permissions.nprim = le32_to_cpu(buf[3]);
-+	/* no permission value can reach a slot past SEL_VEC_MAX */
-+	rc = -EINVAL;
-+	if (cladatum->permissions.nprim > SEL_VEC_MAX)
-+		goto bad;
- 
- 	ncons = le32_to_cpu(buf[5]);
- 
-@@ -1371,11 +1401,22 @@ static int class_read(struct policydb *p
- 		}
- 	}
- 	for (i = 0; i < nel; i++) {
--		rc = perm_read(p, &cladatum->permissions, fp);
-+		rc = perm_read(p, &cladatum->permissions, fp, &claimed);
- 		if (rc)
- 			goto bad;
- 	}
- 
-+	/* the class's own permissions must claim the slots the common leaves */
-+	if (cladatum->comdatum)
-+		inherited = cladatum->comdatum->permissions.nprim;
-+	rc = -EINVAL;
-+	if (claimed != (perm_claimed_mask(cladatum->permissions.nprim) &
-+			~perm_claimed_mask(inherited))) {
-+		pr_err("SELinux:  class %s does not define every permission it declares\n",
-+		       key);
-+		goto bad;
-+	}
-+
- 	rc = read_cons_helper(p, &cladatum->constraints, ncons, 0, fp);
- 	if (rc)
- 		goto bad;
 
 
