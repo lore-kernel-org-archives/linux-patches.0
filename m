@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB9B423A85;
-	Tue, 25 Aug 2026 13:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6923D9547;
+	Tue, 25 Aug 2026 13:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666213; cv=none; b=bBPezLMP3mWYg1I6KRbqbs9cUKnDQAX9SZzmaDv03LKPV9Nyj4wTlmu6hX/ux1dR56mm5gsANv9Wdm/9AdN8EysWVCRI9uCKcWCdARIGYSsXIyCqlkC+vPDNmcX3v00S7fa+8Yfl158QSoLJUTfCQvw1ul4flfib+q7f4Hwe8pI=
+	t=1787666216; cv=none; b=qLTuBPmpqeqtTRAJ2aM1Tjmg+klQCbhCU+iGE/uj3j68waEdAqyPEBtsbsyxB3a3kxBFniStGHAyqJ2GCc4M7Lcf58iD0pQbaXq8WDDFd2z4uPUEqb/ao/ApabHNnJScOQdBJ/svoKXnMvR7zxfhdkQ/k/3MHtQT5zz3D+YmKHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666213; c=relaxed/simple;
-	bh=k1jdPY2cSoqVSMi/DsM4bd0/1Yc2Gg4tidGpmFG5upg=;
+	s=arc-20240116; t=1787666216; c=relaxed/simple;
+	bh=+JjIBk5C0WfGeEpr57hJjIA4sSiPnubO3/kJae0ed2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ng3HrWm+XzmQDLvbucoR+SD6/OuFrks9IZVJftfeEuyJP2gnd2vLRHxkT3JzrkVNjdHWRVcTcJKzJTtLtUL2X0Cjqm7AvdS0opJjpjaVSH16COE4uH8fDj2cSyuNJxgc4AewXhyfMUmMBHQJcoWbQb8LhvagaYqjw8aA7+PZcXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WmWqARUk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SkgwEW3mpzewYVcHACepLVqmx7oqFpA0IIYhEArKEzUR6Fiusc1NTfwx4435GwmaF8xTiZU0I4w1X7G7PnLzbPAis9RGLmMe/R6SwwWJKf2lztpiRcZuutPQV/jB9r5q6y7o2LsCPL/U8jnr3Yvo4BhcxaNvHNUDYIWx1p1idlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VScnZLk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WmWqARUk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF921F000E9;
-	Tue, 25 Aug 2026 13:56:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VScnZLk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63CA11F00A3A;
+	Tue, 25 Aug 2026 13:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666212;
-	bh=va/L/IzCFldMALw+enGhExa0nmLSl9TgnYOpXvGK+3g=;
+	s=korg; t=1787666214;
+	bh=+bZHThReeMmM0X2MSiVSreo+beSzLrBy0lTrK96C1CA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WmWqARUkVrynzXMqLqENaDJnRd1jpj4OT1lD6lsm510WCj7fJ0v/qxE9b00mPZcU7
-	 9ogdrGIUPTT40izOu/0R8IY/Y3XjOeIRm4CnhkzNuRrjgLl0PKvV/loT8X99G9wBZr
-	 XA6H01+Ml374v3Z+DtwrEMI9Cdr+YSQK/bvbc0Qk=
+	b=1VScnZLkk8UG4DlWUmUYBHdVGrBBM5+QxNEpRgu/tsWswI8lFggry+RqSGbyKsqHF
+	 SYuGbv/f21ocXD3MGofShx97P7pynBni4pYDN7leAi2LbqGg+f3Juhzf40+UNGpKj7
+	 BUC6OHzfwBi4W3D8X4k5WZrFKisvbCTjs++pC1e0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavitra Jha <jhapavitra98@gmail.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 40/76] libceph: fix OOB read in decode_watchers() via missing bounds check
-Date: Tue, 25 Aug 2026 15:26:33 +0200
-Message-ID: <20260825132543.138211971@linuxfoundation.org>
+	Ian Bridges <icb@fastmail.org>,
+	syzbot+e538032956b1157914a3@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 05/76] ocfs2: fix missing metadata reservation for large xattrs
+Date: Tue, 25 Aug 2026 15:25:58 +0200
+Message-ID: <20260825132541.758320506@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.568214149@linuxfoundation.org>
 References: <20260825132541.568214149@linuxfoundation.org>
@@ -52,69 +58,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavitra Jha <jhapavitra98@gmail.com>
+From: Ian Bridges <icb@fastmail.org>
 
-commit 00ead17c7de137a692edee59f2772e6af687e8eb upstream.
+commit 0cdc7dde00ec63ac714271fa8b2918d630b8da1a upstream.
 
-ceph_start_decoding() validates that struct_len bytes remain in the
-buffer after the encoding header, but accepts struct_len=0 as valid:
-ceph_decode_need(p, end, 0, bad) always passes. When a malicious or
-compromised OSD sends an obj_list_watch_response_t reply with
-struct_len=0, ceph_start_decoding() returns success with p == end,
-leaving zero bytes guaranteed for subsequent reads.
+[BUG]
+lsetxattr() panics the kernel when setting a large xattr value on a
+fragmented filesystem where the file already has an external xattr
+block.
 
-The immediately following ceph_decode_32(p) in decode_watchers() has
-no preceding bounds check. With p == end this is a 4-byte read past
-the validated buffer boundary. The garbage value is then passed
-directly to kzalloc_objs() as the watcher count.
+[CAUSE]
+ocfs2_calc_xattr_set_need() never reserves metadata blocks for a new
+xattr value's extent tree when the file already has an external xattr
+block. The not_found path leaves meta_add at zero, so meta_ac is NULL
+when ocfs2_xattr_extend_allocation() runs.
 
-The sibling function decode_watcher() already uses the safe variants
-(ceph_decode_copy_safe, ceph_decode_64_safe, ceph_decode_skip_32)
-after its own ceph_start_decoding() call. decode_watchers() is the
-only site that uses the bare variant, confirming an oversight.
+A new value root has room for a single extent record. On a fragmented
+filesystem, the allocator cannot satisfy the xattr value in one
+contiguous run, so each non-contiguous run requires its own extent
+record. When the value root's extent list is full and meta_ac is NULL,
+ocfs2_add_clusters_in_btree() returns RESTART_META, and
+ocfs2_xattr_extend_allocation() hits BUG_ON(why == RESTART_META).
 
-Fix by replacing ceph_decode_32(p) with ceph_decode_32_safe(p, end,
-*num_watchers, bad), consistent with the established pattern.
+[FIX]
+The case where no xattr block exists yet already calls
+ocfs2_extend_meta_needed(&def_xv.xv.xr_list) to reserve value tree
+metadata. Add the same reservation to the case where an xattr block
+already exists, making the two cases consistent.
 
-Attacker model: a malicious or compromised OSD in a multi-tenant Ceph
-deployment (e.g. cloud) can trigger this against any kernel client
-that calls CEPH_OSD_OP_LIST_WATCHERS, without any further privileges
-beyond OSD session establishment.
+Replace the BUG_ON with a -ENOSPC return so that if RESTART_META is
+returned despite the reservation, the error propagates to userspace
+instead of panicking the kernel.
 
-[ idryomov: trim changelog ]
-
-Cc: stable@vger.kernel.org
-Fixes: a4ed38d7a180 ("libceph: support for CEPH_OSD_OP_LIST_WATCHERS")
-Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-[ kept the tree's `kcalloc()` context line instead of upstream's `kzalloc_objs()` ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/amLwn3i9tET8yhG7@dev
+Fixes: a78f9f466894 ("ocfs2: make xattr extension work with new local alloc reservation.")
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Reported-by: syzbot+e538032956b1157914a3@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e538032956b1157914a3
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osd_client.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/ocfs2/xattr.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/net/ceph/osd_client.c
-+++ b/net/ceph/osd_client.c
-@@ -4995,7 +4995,7 @@ static int decode_watchers(void **p, voi
- 	if (ret)
- 		return ret;
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -740,12 +740,10 @@ static int ocfs2_xattr_extend_allocation
+ 					 prev_clusters;
  
--	*num_watchers = ceph_decode_32(p);
-+	ceph_decode_32_safe(p, end, *num_watchers, bad);
- 	*watchers = kcalloc(*num_watchers, sizeof(**watchers), GFP_NOIO);
- 	if (!*watchers)
- 		return -ENOMEM;
-@@ -5009,6 +5009,9 @@ static int decode_watchers(void **p, voi
- 	}
+ 		if (why != RESTART_NONE && clusters_to_add) {
+-			/*
+-			 * We can only fail in case the alloc file doesn't give
+-			 * up enough clusters.
+-			 */
+-			BUG_ON(why == RESTART_META);
+-
++			if (why == RESTART_META) {
++				status = -ENOSPC;
++				break;
++			}
+ 			credits = ocfs2_calc_extend_credits(inode->i_sb,
+ 							    &vb->vb_xv->xr_list);
+ 			status = ocfs2_extend_trans(handle, credits);
+@@ -3215,6 +3213,14 @@ meta_guess:
+ 			credits += OCFS2_SUBALLOC_ALLOC + 1;
  
- 	return 0;
+ 		/*
++		 * Reserve metadata for the new xattr's value extent tree.
++		 * The not_found path above adds credits for this tree but
++		 * omits meta_add, leaving meta_ac NULL for large values.
++		 */
++		if (xi->xi_value_len > OCFS2_XATTR_INLINE_SIZE)
++			meta_add += ocfs2_extend_meta_needed(&def_xv.xv.xr_list);
 +
-+bad:
-+	return -EINVAL;
- }
- 
- /*
++		/*
+ 		 * This cluster will be used either for new bucket or for
+ 		 * new xattr block.
+ 		 * If the cluster size is the same as the bucket size, one
 
 
