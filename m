@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018F3468C08;
-	Tue, 25 Aug 2026 13:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B90847FB0E;
+	Tue, 25 Aug 2026 13:34:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664879; cv=none; b=PwwYoT4KPgcrlnkYZYm8VnJ/RbwjRubI+LuRumvPzJHv5r6pAAGrEk3KuwLS38TbmZ/bcVw22nS6ZAuVLqzi6Y6YcDwbbT6ofK+gYDiT/4gRAirz4EKGxgUm25dzD6uzdJ55UM45HAE/j0mDGJQwc8hFrvA2/GchwT8Zhiozbxc=
+	t=1787664882; cv=none; b=NqnGcqXzU3hZ6c+Z9yYuaUuY8AEwsAGvjF/N7d315urfpiuxP+cepR9kkJfkTVfPEB1k/LPO9yQc9/bqipkGSJ+6STujLoeiQ66ZtdFXAFqLiKSTG0ey3HzM8CxSFyMW6HCqyaIh1hkfd2bKLkQtBba56g4qAXMmk5zJ3ezUYMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664879; c=relaxed/simple;
-	bh=Ek6tHbpNV7tfuDqnf0ruPV8wcky19CHLOuuThqJpNzs=;
+	s=arc-20240116; t=1787664882; c=relaxed/simple;
+	bh=f1oY6gxGaRLl3NbU5oNaqVjTKKY2bUliOAWx87aysqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NAJZg+YGDBWH/4mE7bvdCgZJnPWGrN7qXQQBE4EE/QA8vcIpCR/Q6AQU6u4pQN4Hlnp2xiaWLibthiQI+TsNVCl3Gx8PUFhmgglSeUz720xcdA1AD/P09P4PHcSZ9rFR2A52G7bVLt9wdyNFXkST/bjEQXqoXPne4IZdRaauLS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JqIpqLxG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=D1ywy8FQ/vnXMf7fIpsM/kG4QE976Kld32jfvWmyZ3Uld1zbRFosZIb5hZGzbn5AKoqET4LHjgfFC2CaDJuNx9ArzHhxtT3Y8R57y42xhCiX4Lpv8uYzNamZbNECVU5ZKDpA7qlgmsuF2JwZUb6XLjVd9frzi3WYANGPu/Flc7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RMT2uMJL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JqIpqLxG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465CA1F000E9;
-	Tue, 25 Aug 2026 13:34:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RMT2uMJL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4263C1F000E9;
+	Tue, 25 Aug 2026 13:34:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664877;
-	bh=A8YWiPCz3fopu77bUNa9uSvidTS9PZzCXRsBiHUXnf0=;
+	s=korg; t=1787664880;
+	bh=7wWrmg+WwSid213syZJry/UuPJjIngUTV39A+7lIv/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JqIpqLxGfhWVQnqBbqAyqQuPadmx4jdo42spLUJf+xwykCNGLvvFra5NZTxKZmJG+
-	 mePh/7r9mIbO6rniNORFf3863B3FqefFk7t9LAxKU/40uSo5HdAeI3jLZbtvNtLkN7
-	 cuF6WU53WjMndfhmbCrgd9qBXfodZroMh5cmEgDY=
+	b=RMT2uMJLv5/wtDqUC5LWtzPDcMd+TQ3jCl7uSRZHvhn5AoUuT+5AzQD6Ib7cIStsG
+	 4VZ7EvxMtLfPIYDbQHcGui2AH2UYi6Wqx9u4vgax6nUKznlGsG/nMQ+coUdoeyu7S1
+	 RJDW8MTATeVzYlgPb8+FUb2TCOUStDzOYBFDltWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jani Nikula <jani.nikula@intel.com>,
 	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 034/101] drm/i915: Track fence region ID in plane state
-Date: Tue, 25 Aug 2026 15:25:12 +0200
-Message-ID: <20260825132543.347540656@linuxfoundation.org>
+Subject: [PATCH 7.1 035/101] drm/i915: Introduce struct intel_fb_pin_params
+Date: Tue, 25 Aug 2026 15:25:13 +0200
+Message-ID: <20260825132543.387523788@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -54,312 +54,358 @@ Content-Transfer-Encoding: 8bit
 
 From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit eb3dd9640731ae3ace871190f80474a8e7bae121 ]
+[ Upstream commit a89b7f72f20db1ae1a65e97881e785639db4480a ]
 
-Get rid of the needlessly complicated PLANE_HAS_FENCE +
-intel_parent_vma_fence_id() dance by simply tracking the
-fence_id directly in the plane state.
+We need to pass a lot of information between the display driver
+and the core driver to get framebuffers mapped into GGTT/DPT
+correctly. Rather than passing around a swarm of integers and
+boolean as function arguments, let's collect it all into a
+structure (struct intel_fb_pin_params).
 
-v2: Don't request the redundant fence for fbdev (Jani)
-    Assign *out_fence_id with '=' instead of '|=' (Sashiko,Jani)
+Start by moving the gtt view, alignment, phys_alignment,
+and vtd_guard there. Going forward additional things need
+to added as well (mainly various boolean flags).
 
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patch.msgid.link/20260407170942.16515-1-ville.syrjala@linux.intel.com
+Link: https://patch.msgid.link/20260416174448.28264-3-ville.syrjala@linux.intel.com
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
 Stable-dep-of: fc6487579083 ("drm/xe: Fix DPT allocation paths.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_display_types.h |    5 +--
- drivers/gpu/drm/i915/display/intel_fb_pin.c        |   33 +++++++++++----------
- drivers/gpu/drm/i915/display/intel_fb_pin.h        |    5 +--
- drivers/gpu/drm/i915/display/intel_fbc.c           |   11 +------
- drivers/gpu/drm/i915/display/intel_fbdev.c         |    9 +----
- drivers/gpu/drm/i915/display/intel_plane.c         |    3 +
- drivers/gpu/drm/i915/i915_initial_plane.c          |    2 -
- drivers/gpu/drm/xe/display/xe_fb_pin.c             |    8 ++---
- drivers/gpu/drm/xe/display/xe_initial_plane.c      |    2 -
- 9 files changed, 37 insertions(+), 41 deletions(-)
+ drivers/gpu/drm/i915/display/intel_fb_pin.c   |   54 ++++++++++++++------------
+ drivers/gpu/drm/i915/display/intel_fb_pin.h   |   12 +++--
+ drivers/gpu/drm/i915/display/intel_fbdev.c    |   13 +++---
+ drivers/gpu/drm/xe/display/xe_fb_pin.c        |   39 +++++++++---------
+ drivers/gpu/drm/xe/display/xe_initial_plane.c |    6 +-
+ 5 files changed, 69 insertions(+), 55 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_display_types.h
-+++ b/drivers/gpu/drm/i915/display/intel_display_types.h
-@@ -684,14 +684,15 @@ struct intel_plane_state {
- 
- 	struct i915_vma *ggtt_vma;
- 	struct i915_vma *dpt_vma;
--	unsigned long flags;
--#define PLANE_HAS_FENCE BIT(0)
- 
- 	struct intel_fb_view view;
- 
- 	/* for legacy cursor fb unpin */
- 	struct drm_vblank_work unpin_work;
- 
-+	/* fenced region ID (-1 if none) */
-+	s8 fence_id;
-+
- 	/* Plane pxp decryption state */
- 	bool decrypt;
- 
 --- a/drivers/gpu/drm/i915/display/intel_fb_pin.c
 +++ b/drivers/gpu/drm/i915/display/intel_fb_pin.c
-@@ -26,7 +26,6 @@ static struct i915_vma *
+@@ -24,9 +24,8 @@
+ 
+ static struct i915_vma *
  intel_fb_pin_to_dpt(const struct drm_framebuffer *fb,
- 		    const struct i915_gtt_view *view,
- 		    unsigned int alignment,
--		    unsigned long *out_flags,
- 		    struct intel_dpt *dpt)
- {
- 	struct intel_display *display = to_intel_display(fb->dev);
-@@ -114,8 +113,7 @@ intel_fb_pin_to_ggtt(const struct drm_fr
- 		     unsigned int alignment,
- 		     unsigned int phys_alignment,
- 		     unsigned int vtd_guard,
--		     bool uses_fence,
--		     unsigned long *out_flags)
-+		     int *out_fence_id)
+-		    const struct i915_gtt_view *view,
+-		    unsigned int alignment,
+-		    struct intel_dpt *dpt)
++		    struct intel_dpt *dpt,
++		    const struct intel_fb_pin_params *pin_params)
  {
  	struct intel_display *display = to_intel_display(fb->dev);
  	struct drm_i915_private *i915 = to_i915(fb->dev);
-@@ -175,7 +173,10 @@ retry:
- 		goto err_unpin;
+@@ -75,19 +74,20 @@ intel_fb_pin_to_dpt(const struct drm_fra
+ 		if (ret)
+ 			continue;
+ 
+-		vma = i915_vma_instance(obj, vm, view);
++		vma = i915_vma_instance(obj, vm, pin_params->view);
+ 		if (IS_ERR(vma)) {
+ 			ret = PTR_ERR(vma);
+ 			continue;
+ 		}
+ 
+-		if (i915_vma_misplaced(vma, 0, alignment, 0)) {
++		if (i915_vma_misplaced(vma, 0, pin_params->alignment, 0)) {
+ 			ret = i915_vma_unbind(vma);
+ 			if (ret)
+ 				continue;
+ 		}
+ 
+-		ret = i915_vma_pin_ww(vma, &ww, 0, alignment, PIN_GLOBAL);
++		ret = i915_vma_pin_ww(vma, &ww, 0, pin_params->alignment,
++				      PIN_GLOBAL);
+ 		if (ret)
+ 			continue;
+ 	}
+@@ -96,7 +96,8 @@ intel_fb_pin_to_dpt(const struct drm_fra
+ 		goto err;
  	}
  
--	if (uses_fence && i915_vma_is_map_and_fenceable(vma)) {
-+	if (out_fence_id)
-+		*out_fence_id = -1;
-+
-+	if (out_fence_id && i915_vma_is_map_and_fenceable(vma)) {
- 		/*
- 		 * Install a fence for tiled scan-out. Pre-i965 always needs a
- 		 * fence, whereas 965+ only requires a fence if using
-@@ -201,7 +202,7 @@ retry:
- 		ret = 0;
+-	vma->display_alignment = max(vma->display_alignment, alignment);
++	vma->display_alignment = max(vma->display_alignment,
++				     pin_params->alignment);
  
- 		if (vma->fence)
--			*out_flags |= PLANE_HAS_FENCE;
-+			*out_fence_id = vma->fence->id;
- 	}
+ 	i915_gem_object_flush_if_display(obj);
  
- 	i915_vma_get(vma);
-@@ -223,9 +224,9 @@ err:
- 	return vma;
- }
+@@ -109,10 +110,7 @@ err:
  
--void intel_fb_unpin_vma(struct i915_vma *vma, unsigned long flags)
-+void intel_fb_unpin_vma(struct i915_vma *vma, int fence_id)
+ struct i915_vma *
+ intel_fb_pin_to_ggtt(const struct drm_framebuffer *fb,
+-		     const struct i915_gtt_view *view,
+-		     unsigned int alignment,
+-		     unsigned int phys_alignment,
+-		     unsigned int vtd_guard,
++		     const struct intel_fb_pin_params *pin_params,
+ 		     int *out_fence_id)
  {
--	if (flags & PLANE_HAS_FENCE)
-+	if (fence_id >= 0)
- 		i915_vma_unpin_fence(vma);
- 	i915_vma_unpin(vma);
- 	i915_vma_put(vma);
-@@ -269,17 +270,18 @@ int intel_plane_pin_fb(struct intel_plan
+ 	struct intel_display *display = to_intel_display(fb->dev);
+@@ -128,7 +126,8 @@ intel_fb_pin_to_ggtt(const struct drm_fr
+ 	if (drm_WARN_ON(&i915->drm, !i915_gem_object_is_framebuffer(obj)))
+ 		return ERR_PTR(-EINVAL);
+ 
+-	if (drm_WARN_ON(&i915->drm, alignment && !is_power_of_2(alignment)))
++	if (drm_WARN_ON(&i915->drm, pin_params->alignment &&
++			!is_power_of_2(pin_params->alignment)))
+ 		return ERR_PTR(-EINVAL);
+ 
+ 	/*
+@@ -157,8 +156,8 @@ intel_fb_pin_to_ggtt(const struct drm_fr
+ 	i915_gem_ww_ctx_init(&ww, true);
+ retry:
+ 	ret = i915_gem_object_lock(obj, &ww);
+-	if (!ret && phys_alignment)
+-		ret = i915_gem_object_attach_phys(obj, phys_alignment);
++	if (!ret && pin_params->phys_alignment)
++		ret = i915_gem_object_attach_phys(obj, pin_params->phys_alignment);
+ 	else if (!ret && HAS_LMEM(i915))
+ 		ret = i915_gem_object_migrate(obj, &ww, INTEL_REGION_LMEM_0);
+ 	if (!ret)
+@@ -166,8 +165,10 @@ retry:
+ 	if (ret)
+ 		goto err;
+ 
+-	vma = i915_gem_object_pin_to_display_plane(obj, &ww, alignment,
+-						   vtd_guard, view, pinctl);
++	vma = i915_gem_object_pin_to_display_plane(obj, &ww,
++						   pin_params->alignment,
++						   pin_params->vtd_guard,
++						   pin_params->view, pinctl);
+ 	if (IS_ERR(vma)) {
+ 		ret = PTR_ERR(vma);
+ 		goto err_unpin;
+@@ -270,12 +271,15 @@ int intel_plane_pin_fb(struct intel_plan
  	struct i915_vma *vma;
  
  	if (!intel_fb_uses_dpt(&fb->base)) {
-+		int fence_id = -1;
-+
- 		vma = intel_fb_pin_to_ggtt(&fb->base, &plane_state->view.gtt,
- 					   intel_plane_fb_min_alignment(plane_state),
- 					   intel_plane_fb_min_phys_alignment(plane_state),
- 					   intel_plane_fb_vtd_guard(plane_state),
--					   intel_plane_uses_fence(plane_state),
--					   &plane_state->flags);
-+					   intel_plane_uses_fence(plane_state) ? &fence_id : NULL);
++		struct intel_fb_pin_params pin_params = {
++			.view = &plane_state->view.gtt,
++			.alignment = intel_plane_fb_min_alignment(plane_state),
++			.phys_alignment = intel_plane_fb_min_phys_alignment(plane_state),
++			.vtd_guard = intel_plane_fb_vtd_guard(plane_state),
++		};
+ 		int fence_id = -1;
+ 
+-		vma = intel_fb_pin_to_ggtt(&fb->base, &plane_state->view.gtt,
+-					   intel_plane_fb_min_alignment(plane_state),
+-					   intel_plane_fb_min_phys_alignment(plane_state),
+-					   intel_plane_fb_vtd_guard(plane_state),
++		vma = intel_fb_pin_to_ggtt(&fb->base, &pin_params,
+ 					   intel_plane_uses_fence(plane_state) ? &fence_id : NULL);
+ 		if (IS_ERR(vma))
+ 			return PTR_ERR(vma);
+@@ -283,16 +287,18 @@ int intel_plane_pin_fb(struct intel_plan
+ 		plane_state->ggtt_vma = vma;
+ 		plane_state->fence_id = fence_id;
+ 	} else {
+-		unsigned int alignment = intel_plane_fb_min_alignment(plane_state);
++		struct intel_fb_pin_params pin_params = {
++			.view = &plane_state->view.gtt,
++			.alignment = intel_plane_fb_min_alignment(plane_state),
++		};
+ 
+-		vma = i915_dpt_pin_to_ggtt(fb->dpt, alignment / 512);
++		vma = i915_dpt_pin_to_ggtt(fb->dpt, pin_params.alignment / 512);
  		if (IS_ERR(vma))
  			return PTR_ERR(vma);
  
  		plane_state->ggtt_vma = vma;
--
-+		plane_state->fence_id = fence_id;
- 	} else {
- 		unsigned int alignment = intel_plane_fb_min_alignment(plane_state);
  
-@@ -290,8 +292,7 @@ int intel_plane_pin_fb(struct intel_plan
- 		plane_state->ggtt_vma = vma;
- 
- 		vma = intel_fb_pin_to_dpt(&fb->base, &plane_state->view.gtt,
--					  alignment, &plane_state->flags,
--					  fb->dpt);
-+					  alignment, fb->dpt);
+-		vma = intel_fb_pin_to_dpt(&fb->base, &plane_state->view.gtt,
+-					  alignment, fb->dpt);
++		vma = intel_fb_pin_to_dpt(&fb->base, fb->dpt, &pin_params);
  		if (IS_ERR(vma)) {
  			i915_dpt_unpin_from_ggtt(fb->dpt);
  			plane_state->ggtt_vma = NULL;
-@@ -336,12 +337,14 @@ void intel_plane_unpin_fb(struct intel_p
- 
- 	if (!intel_fb_uses_dpt(&fb->base)) {
- 		vma = fetch_and_zero(&old_plane_state->ggtt_vma);
--		if (vma)
--			intel_fb_unpin_vma(vma, old_plane_state->flags);
-+		if (vma) {
-+			intel_fb_unpin_vma(vma, old_plane_state->fence_id);
-+			old_plane_state->fence_id = -1;
-+		}
- 	} else {
- 		vma = fetch_and_zero(&old_plane_state->dpt_vma);
- 		if (vma)
--			intel_fb_unpin_vma(vma, old_plane_state->flags);
-+			intel_fb_unpin_vma(vma, -1);
- 
- 		vma = fetch_and_zero(&old_plane_state->ggtt_vma);
- 		if (vma)
 --- a/drivers/gpu/drm/i915/display/intel_fb_pin.h
 +++ b/drivers/gpu/drm/i915/display/intel_fb_pin.h
-@@ -20,10 +20,9 @@ intel_fb_pin_to_ggtt(const struct drm_fr
- 		     unsigned int alignment,
- 		     unsigned int phys_alignment,
- 		     unsigned int vtd_guard,
--		     bool uses_fence,
--		     unsigned long *out_flags);
-+		     int *out_fence_id);
+@@ -14,12 +14,16 @@ struct intel_plane_state;
+ struct i915_gtt_view;
+ struct iosys_map;
  
--void intel_fb_unpin_vma(struct i915_vma *vma, unsigned long flags);
-+void intel_fb_unpin_vma(struct i915_vma *vma, int fence_id);
++struct intel_fb_pin_params {
++	const struct i915_gtt_view *view;
++	unsigned int alignment;
++	unsigned int phys_alignment;
++	unsigned int vtd_guard;
++};
++
+ struct i915_vma *
+ intel_fb_pin_to_ggtt(const struct drm_framebuffer *fb,
+-		     const struct i915_gtt_view *view,
+-		     unsigned int alignment,
+-		     unsigned int phys_alignment,
+-		     unsigned int vtd_guard,
++		     const struct intel_fb_pin_params *pin_params,
+ 		     int *out_fence_id);
  
- int intel_plane_pin_fb(struct intel_plane_state *new_plane_state,
- 		       const struct intel_plane_state *old_plane_state);
---- a/drivers/gpu/drm/i915/display/intel_fbc.c
-+++ b/drivers/gpu/drm/i915/display/intel_fbc.c
-@@ -1458,13 +1458,10 @@ static void intel_fbc_update_state(struc
- 
- 	fbc_state->fence_y_offset = intel_plane_fence_y_offset(plane_state);
- 
--	drm_WARN_ON(display->drm, plane_state->flags & PLANE_HAS_FENCE &&
-+	drm_WARN_ON(display->drm, plane_state->fence_id >= 0 &&
- 		    !intel_fbc_has_fences(display));
- 
--	if (plane_state->flags & PLANE_HAS_FENCE)
--		fbc_state->fence_id = intel_parent_vma_fence_id(display, plane_state->ggtt_vma);
--	else
--		fbc_state->fence_id = -1;
-+	fbc_state->fence_id = plane_state->fence_id;
- 
- 	fbc_state->cfb_stride = intel_fbc_cfb_stride(plane_state);
- 	fbc_state->cfb_size = intel_fbc_cfb_size(plane_state);
-@@ -1487,9 +1484,7 @@ static bool intel_fbc_is_fence_ok(const
- 	 * so have no fence associated with it) due to aperture constraints
- 	 * at the time of pinning.
- 	 */
--	return DISPLAY_VER(display) >= 9 ||
--		(plane_state->flags & PLANE_HAS_FENCE &&
--		 intel_parent_vma_fence_id(display, plane_state->ggtt_vma) != -1);
-+	return DISPLAY_VER(display) >= 9 || plane_state->fence_id >= 0;
- }
- 
- static bool intel_fbc_is_cfb_ok(const struct intel_plane_state *plane_state)
+ void intel_fb_unpin_vma(struct i915_vma *vma, int fence_id);
 --- a/drivers/gpu/drm/i915/display/intel_fbdev.c
 +++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
-@@ -60,7 +60,6 @@
- struct intel_fbdev {
- 	struct intel_framebuffer *fb;
- 	struct i915_vma *vma;
--	unsigned long vma_flags;
- };
- 
- static struct intel_fbdev *to_intel_fbdev(struct drm_fb_helper *fb_helper)
-@@ -141,7 +140,7 @@ static void intel_fbdev_fb_destroy(struc
- 	 * the info->screen_base mmaping. Leaking the VMA is simpler than
- 	 * trying to rectify all the possible error paths leading here.
- 	 */
--	intel_fb_unpin_vma(ifbdev->vma, ifbdev->vma_flags);
-+	intel_fb_unpin_vma(ifbdev->vma, -1);
- 	drm_framebuffer_remove(fb_helper->fb);
- 
- 	drm_client_release(&fb_helper->client);
-@@ -269,7 +268,6 @@ int intel_fbdev_driver_fbdev_probe(struc
+@@ -264,6 +264,7 @@ int intel_fbdev_driver_fbdev_probe(struc
+ {
+ 	struct intel_display *display = to_intel_display(helper->dev);
+ 	struct intel_fbdev *ifbdev = to_intel_fbdev(helper);
++	struct intel_fb_pin_params pin_params = {};
+ 	struct intel_framebuffer *fb = ifbdev->fb;
  	struct fb_info *info = helper->info;
  	struct ref_tracker *wakeref;
- 	struct i915_vma *vma;
--	unsigned long flags = 0;
- 	bool prealloc = false;
- 	struct drm_gem_object *obj;
- 	int ret;
-@@ -314,7 +312,7 @@ int intel_fbdev_driver_fbdev_probe(struc
- 				   fb->min_alignment, 0,
- 				   intel_fb_view_vtd_guard(&fb->base, &fb->normal_view,
- 							   DRM_MODE_ROTATE_0),
--				   false, &flags);
-+				   NULL);
+@@ -308,11 +309,13 @@ int intel_fbdev_driver_fbdev_probe(struc
+ 	 * This also validates that any existing fb inherited from the
+ 	 * BIOS is suitable for own access.
+ 	 */
+-	vma = intel_fb_pin_to_ggtt(&fb->base, &fb->normal_view.gtt,
+-				   fb->min_alignment, 0,
+-				   intel_fb_view_vtd_guard(&fb->base, &fb->normal_view,
+-							   DRM_MODE_ROTATE_0),
+-				   NULL);
++	pin_params.view = &fb->normal_view.gtt;
++	pin_params.alignment = fb->min_alignment;
++	pin_params.vtd_guard = intel_fb_view_vtd_guard(&fb->base,
++						       &fb->normal_view,
++						       DRM_MODE_ROTATE_0);
++
++	vma = intel_fb_pin_to_ggtt(&fb->base, &pin_params, NULL);
  	if (IS_ERR(vma)) {
  		ret = PTR_ERR(vma);
  		goto out_unlock;
-@@ -345,14 +343,13 @@ int intel_fbdev_driver_fbdev_probe(struc
- 	drm_dbg_kms(display->drm, "allocated %dx%d fb\n", fb->base.width, fb->base.height);
- 	ifbdev->fb = fb;
- 	ifbdev->vma = vma;
--	ifbdev->vma_flags = flags;
- 
- 	intel_display_rpm_put(display, wakeref);
- 
- 	return 0;
- 
- out_unpin:
--	intel_fb_unpin_vma(vma, flags);
-+	intel_fb_unpin_vma(vma, -1);
- out_unlock:
- 	intel_display_rpm_put(display, wakeref);
- 
---- a/drivers/gpu/drm/i915/display/intel_plane.c
-+++ b/drivers/gpu/drm/i915/display/intel_plane.c
-@@ -70,6 +70,7 @@ static void intel_plane_state_reset(stru
- 	__drm_atomic_helper_plane_state_reset(&plane_state->uapi, &plane->base);
- 
- 	plane_state->scaler_id = -1;
-+	plane_state->fence_id = -1;
- }
- 
- struct intel_plane *intel_plane_alloc(void)
-@@ -137,7 +138,7 @@ intel_plane_duplicate_state(struct drm_p
- 
- 	intel_state->ggtt_vma = NULL;
- 	intel_state->dpt_vma = NULL;
--	intel_state->flags = 0;
-+	intel_state->fence_id = -1;
- 	intel_state->damage = DRM_RECT_INIT(0, 0, 0, 0);
- 
- 	/* add reference to fb */
---- a/drivers/gpu/drm/i915/i915_initial_plane.c
-+++ b/drivers/gpu/drm/i915/i915_initial_plane.c
-@@ -268,7 +268,7 @@ i915_initial_plane_setup(struct drm_plan
- 	plane_state->ggtt_vma = i915_vma_get(vma);
- 	if (intel_plane_uses_fence(plane_state) &&
- 	    i915_vma_pin_fence(vma) == 0 && vma->fence)
--		plane_state->flags |= PLANE_HAS_FENCE;
-+		plane_state->fence_id = vma->fence->id;
- 
- 	plane_state->surf = i915_ggtt_offset(plane_state->ggtt_vma);
- 
 --- a/drivers/gpu/drm/xe/display/xe_fb_pin.c
 +++ b/drivers/gpu/drm/xe/display/xe_fb_pin.c
-@@ -418,15 +418,15 @@ intel_fb_pin_to_ggtt(const struct drm_fr
- 		     unsigned int alignment,
- 		     unsigned int phys_alignment,
- 		     unsigned int vtd_guard,
--		     bool uses_fence,
--		     unsigned long *out_flags)
-+		     int *out_fence_id)
- {
--	*out_flags = 0;
-+	if (out_fence_id)
-+		*out_fence_id = -1;
- 
- 	return __xe_pin_fb_vma(to_intel_framebuffer(fb), view, alignment);
+@@ -140,14 +140,14 @@ write_dpt_remapped(struct xe_bo *bo,
  }
  
--void intel_fb_unpin_vma(struct i915_vma *vma, unsigned long flags)
-+void intel_fb_unpin_vma(struct i915_vma *vma, int fence_id)
+ static int __xe_pin_fb_vma_dpt(const struct intel_framebuffer *fb,
+-			       const struct i915_gtt_view *view,
+-			       struct i915_vma *vma,
+-			       unsigned int alignment)
++			       const struct intel_fb_pin_params *pin_params,
++			       struct i915_vma *vma)
  {
- 	__xe_unpin_fb_vma(vma);
+ 	struct xe_device *xe = to_xe_device(fb->base.dev);
+ 	struct xe_tile *tile0 = xe_device_get_root_tile(xe);
+ 	struct xe_ggtt *ggtt = tile0->mem.ggtt;
+ 	struct drm_gem_object *obj = intel_fb_bo(&fb->base);
++	const struct i915_gtt_view *view = pin_params->view;
+ 	struct xe_bo *bo = gem_to_xe_bo(obj), *dpt;
+ 	u32 dpt_size, size = bo->ttm.base.size;
+ 
+@@ -168,7 +168,7 @@ static int __xe_pin_fb_vma_dpt(const str
+ 						   XE_BO_FLAG_VRAM0 |
+ 						   XE_BO_FLAG_GGTT |
+ 						   XE_BO_FLAG_PAGETABLE,
+-						   alignment, false);
++						   pin_params->alignment, false);
+ 	else
+ 		dpt = xe_bo_create_pin_map_at_novm(xe, tile0,
+ 						   dpt_size,  ~0ull,
+@@ -176,7 +176,7 @@ static int __xe_pin_fb_vma_dpt(const str
+ 						   XE_BO_FLAG_STOLEN |
+ 						   XE_BO_FLAG_GGTT |
+ 						   XE_BO_FLAG_PAGETABLE,
+-						   alignment, false);
++						   pin_params->alignment, false);
+ 	if (IS_ERR(dpt))
+ 		dpt = xe_bo_create_pin_map_at_novm(xe, tile0,
+ 						   dpt_size,  ~0ull,
+@@ -185,7 +185,7 @@ static int __xe_pin_fb_vma_dpt(const str
+ 						   XE_BO_FLAG_GGTT |
+ 						   XE_BO_FLAG_PAGETABLE |
+ 						   XE_BO_FLAG_FORCE_WC,
+-						   alignment, false);
++						   pin_params->alignment, false);
+ 	if (IS_ERR(dpt))
+ 		return PTR_ERR(dpt);
+ 
+@@ -269,11 +269,11 @@ static void write_ggtt_rotated_node(stru
  }
+ 
+ static int __xe_pin_fb_vma_ggtt(const struct intel_framebuffer *fb,
+-				const struct i915_gtt_view *view,
+-				struct i915_vma *vma,
+-				unsigned int alignment)
++				const struct intel_fb_pin_params *pin_params,
++				struct i915_vma *vma)
+ {
+ 	struct drm_gem_object *obj = intel_fb_bo(&fb->base);
++	const struct i915_gtt_view *view = pin_params->view;
+ 	struct xe_bo *bo = gem_to_xe_bo(obj);
+ 	struct xe_device *xe = to_xe_device(fb->base.dev);
+ 	struct xe_tile *tile0 = xe_device_get_root_tile(xe);
+@@ -319,8 +319,7 @@ static int __xe_pin_fb_vma_ggtt(const st
+ }
+ 
+ static struct i915_vma *__xe_pin_fb_vma(const struct intel_framebuffer *fb,
+-					const struct i915_gtt_view *view,
+-					unsigned int alignment)
++					const struct intel_fb_pin_params *pin_params)
+ {
+ 	struct drm_device *dev = fb->base.dev;
+ 	struct xe_device *xe = to_xe_device(dev);
+@@ -377,9 +376,9 @@ static struct i915_vma *__xe_pin_fb_vma(
+ 
+ 	vma->bo = bo;
+ 	if (intel_fb_uses_dpt(&fb->base))
+-		ret = __xe_pin_fb_vma_dpt(fb, view, vma, alignment);
++		ret = __xe_pin_fb_vma_dpt(fb, pin_params, vma);
+ 	else
+-		ret = __xe_pin_fb_vma_ggtt(fb, view, vma,  alignment);
++		ret = __xe_pin_fb_vma_ggtt(fb, pin_params, vma);
+ 	if (ret)
+ 		goto err_unpin;
+ 
+@@ -414,16 +413,13 @@ static void __xe_unpin_fb_vma(struct i91
+ 
+ struct i915_vma *
+ intel_fb_pin_to_ggtt(const struct drm_framebuffer *fb,
+-		     const struct i915_gtt_view *view,
+-		     unsigned int alignment,
+-		     unsigned int phys_alignment,
+-		     unsigned int vtd_guard,
++		     const struct intel_fb_pin_params *pin_params,
+ 		     int *out_fence_id)
+ {
+ 	if (out_fence_id)
+ 		*out_fence_id = -1;
+ 
+-	return __xe_pin_fb_vma(to_intel_framebuffer(fb), view, alignment);
++	return __xe_pin_fb_vma(to_intel_framebuffer(fb), pin_params);
+ }
+ 
+ void intel_fb_unpin_vma(struct i915_vma *vma, int fence_id)
+@@ -475,7 +471,10 @@ int intel_plane_pin_fb(struct intel_plan
+ 	struct i915_vma *vma;
+ 	struct intel_framebuffer *intel_fb = to_intel_framebuffer(fb);
+ 	struct intel_plane *plane = to_intel_plane(new_plane_state->uapi.plane);
+-	unsigned int alignment = plane->min_alignment(plane, fb, 0);
++	struct intel_fb_pin_params pin_params = {
++		.view = &new_plane_state->view.gtt,
++		.alignment = plane->min_alignment(plane, fb, 0),
++	};
+ 
+ 	if (reuse_vma(new_plane_state, old_plane_state))
+ 		return 0;
+@@ -484,7 +483,7 @@ int intel_plane_pin_fb(struct intel_plan
+ 	drm_WARN_ON(bo->ttm.base.dev, !(bo->flags & XE_BO_FLAG_FORCE_WC) &&
+ 		    bo->ttm.type != ttm_bo_type_sg);
+ 
+-	vma = __xe_pin_fb_vma(intel_fb, &new_plane_state->view.gtt, alignment);
++	vma = __xe_pin_fb_vma(intel_fb, &pin_params);
+ 
+ 	if (IS_ERR(vma))
+ 		return PTR_ERR(vma);
 --- a/drivers/gpu/drm/xe/display/xe_initial_plane.c
 +++ b/drivers/gpu/drm/xe/display/xe_initial_plane.c
-@@ -153,7 +153,7 @@ xe_initial_plane_setup(struct drm_plane_
+@@ -151,9 +151,11 @@ xe_initial_plane_setup(struct drm_plane_
+ {
+ 	struct intel_plane_state *plane_state = to_intel_plane_state(_plane_state);
  	struct i915_vma *vma;
++	struct intel_fb_pin_params pin_params = {
++		.view = &plane_state->view.gtt,
++	};
  
- 	vma = intel_fb_pin_to_ggtt(fb, &plane_state->view.gtt,
--				   0, 0, 0, false, &plane_state->flags);
-+				   0, 0, 0, NULL);
+-	vma = intel_fb_pin_to_ggtt(fb, &plane_state->view.gtt,
+-				   0, 0, 0, NULL);
++	vma = intel_fb_pin_to_ggtt(fb, &pin_params, NULL);
  	if (IS_ERR(vma))
  		return PTR_ERR(vma);
  
