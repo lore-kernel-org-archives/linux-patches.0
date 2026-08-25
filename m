@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EEA481AB0;
-	Tue, 25 Aug 2026 13:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01691481FCC;
+	Tue, 25 Aug 2026 13:54:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787666087; cv=none; b=G/rx8oy1aPPqO1JF31cxyoyZZuBAA2BHGJmMtiOalLDdXx7ceq3aOwgbJWet7yzP7SW2JmxjcwRCbEx0L+1ONe819nq/K2UatdFDpmLO9wcL4SShrlZ57XUm+8sVHfpfBMTZwtbIVnL/NX6p+avfPKzvHLEiZeGNNxyxXCV5EXE=
+	t=1787666090; cv=none; b=l9aQg3ll3QpGl1X+UqvaptBePQDAEylAvXv68FV//9Gh2dMbi54HAknqMEA2+x4IhEd4HYS43+dpIPSvJkSbyUMt3w3iBXf5XgxwsAqOnx2fqBXxjXl50VfAhGYTUxJp29DloVAHK5iHdAYspThKS77Ezp4eangVVI3BzNlPTU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787666087; c=relaxed/simple;
-	bh=aNfp5ZX2fptgrSkflgyg5bO3bE46EBtvlAI17ZlnQzw=;
+	s=arc-20240116; t=1787666090; c=relaxed/simple;
+	bh=6HvIiTB2xad0A6SW4a/9gK4HrEq2uCbAN5+f3JBAdIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O1PBl7JkxVwsYlK24ooGhnqch5OlNWzPp0SbV352zRSETr+Q56A7LsSjzd0eydV2t0KPn5TX7axl6MR8VWZHMa5BJr6GgJ4rniQwU1xArhQ8J5MMLZhPeqLqrkjtG8P6y78rusSdZG8BZ8YMol8c+HWRiK2EUMjW4EFhrFvbus8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEGEUYxd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b2RuyTbfoNW4FVScDlIoNWE0U+2AUR6acMBmGZm2JxSPg1+JilM4R8ZszBVgQytXEtOz51bdhKQSqb9vjjuiNiYik9AIYo1RC8XGLOrQMzTtp1cd+Wsn4DvpuhSW7tUR/sFo7NPqjfgcq978itlaNVGpSZeFSvU6cB7c6BK3boo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SaSt5+xX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEGEUYxd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 384A51F00A3A;
-	Tue, 25 Aug 2026 13:54:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SaSt5+xX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F331F000E9;
+	Tue, 25 Aug 2026 13:54:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787666085;
-	bh=q+oiV7IkIkUjm0FwUk2g2Uw6EaPiU7tzR0Q3H4hzb4c=;
+	s=korg; t=1787666088;
+	bh=RThzXYvODT46bT9V2zxdANDWqDVJRYOkB9ZkJqvheP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wEGEUYxdvN8LCWgr66luVaMUMZy/1dud5rLV/bb3xi4fj36WF5RzNSTheuX6Dl9aA
-	 fK+qFnJT6gbv09oaykBG11DtLvtG5/TfLcEToHd2TmOG+vQfqdLiIAmaQh1rq8gxdy
-	 Y9zLT1HYoe7cotGbSL4+AQoEfNW7A18JB7FQMQxc=
+	b=SaSt5+xXhfffUWBcvH8pT9JCIJIlc3bIieQc5XBHtctsjo0uAXMnpw+hH+nboeN5M
+	 9NooCzFysMLdpKLM5g+9khLPnLM3D9yGYu3xgscrGOfwM1ztsGom41LR22SaCYHJB/
+	 rKm4mAA9dvCcG3SWhlRVt+0iovenMeZzKIV7XXH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.1 78/79] HID: hyperv: validate initial device info bounds
-Date: Tue, 25 Aug 2026 15:26:58 +0200
-Message-ID: <20260825132544.728221361@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 79/79] Bluetooth: hci_event: fix LE list UAF on reset
+Date: Tue, 25 Aug 2026 15:26:59 +0200
+Message-ID: <20260825132544.765134333@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.677185791@linuxfoundation.org>
 References: <20260825132541.677185791@linuxfoundation.org>
@@ -50,101 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 934b7778aa7b7c8f6bb073d2a73ba3674885bae0 upstream.
+commit 33af47e847fe4a28b109673affb5874015d54f5a upstream.
 
-The Hyper-V synthetic HID host supplies SYNTH_HID_INITIAL_DEVICE_INFO
-messages that contain a HID descriptor followed by the report descriptor
-bytes. mousevsc_on_receive_device_info() trusts bLength and
-wDescriptorLength without checking that the received packet contains both
-byte ranges.
+hci_cc_reset() clears the LE accept and resolving lists without taking
+hdev->lock. Other command-complete handlers serialize updates to these
+lists with that lock, and the debugfs readers hold it while walking them.
 
-A malformed host or backend message can therefore make the guest read
-past the received VMBus packet while copying the report descriptor. Pass
-the received initial-device-info size into the parser and reject
-descriptor lengths that exceed the packet.
+This permits the reset completion and a debugfs read to interleave as
+follows:
 
-Impact: A malicious Hyper-V host or backend can crash a guest by sending
-a short initial device-info message with an oversized HID report
-descriptor length.
+  hci_rx_work                 debugfs reader
+  -----------                 --------------
+                              lock hdev->lock
+                              fetch current entry
+  list_del(entry)
+  kfree(entry)
+                              read entry fields
 
-Fixes: b95f5bcb811e ("HID: Move the hid-hyperv driver out of staging")
+The reader then dereferences a freed list entry and may follow its stale
+next pointer.
+
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in white_list_show+0x15f/0x180
+  Read of size 1 at addr ffff8881015dab16 by task poc/95
+
+  Call Trace:
+   white_list_show+0x15f/0x180
+   seq_read_iter+0x3ff/0x1190
+   seq_read+0x267/0x3d0
+   vfs_read+0x177/0xa20
+   ksys_read+0xf7/0x1c0
+
+  Allocated by task 91:
+   hci_bdaddr_list_add+0x1a6/0x3a0
+   hci_cc_le_add_to_accept_list+0xab/0x140
+   hci_cmd_complete_evt+0x26c/0x9a0
+   hci_event_packet+0x454/0xb20
+   hci_rx_work+0x293/0x730
+
+  Freed by task 90:
+   kfree+0x131/0x3c0
+   hci_bdaddr_list_clear+0xd8/0x160
+   hci_cc_reset+0x28a/0x370
+   hci_cmd_complete_evt+0x26c/0x9a0
+   hci_event_packet+0x454/0xb20
+   hci_rx_work+0x293/0x730
+
+Take hdev->lock around both list clears. This matches the existing
+mutation and traversal locking convention.
+
+Fixes: a4d5504d5c39 ("Bluetooth: Clear LE white list when resetting controller")
+Fixes: cfdb0c2d095a ("Bluetooth: Store Resolv list size")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5-5-xhigh
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-hyperv.c |   27 ++++++++++++++++++++++++---
- 1 file changed, 24 insertions(+), 3 deletions(-)
+ net/bluetooth/hci_event.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/hid/hid-hyperv.c
-+++ b/drivers/hid/hid-hyperv.c
-@@ -179,18 +179,32 @@ static void mousevsc_free_device(struct
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -297,8 +297,10 @@ static u8 hci_cc_reset(struct hci_dev *h
+ 
+ 	hdev->ssp_debug_mode = 0;
+ 
++	hci_dev_lock(hdev);
+ 	hci_bdaddr_list_clear(&hdev->le_accept_list);
+ 	hci_bdaddr_list_clear(&hdev->le_resolv_list);
++	hci_dev_unlock(hdev);
+ 
+ 	return rp->status;
  }
- 
- static void mousevsc_on_receive_device_info(struct mousevsc_dev *input_device,
--				struct synthhid_device_info *device_info)
-+					    struct synthhid_device_info *device_info,
-+					    u32 device_info_size)
- {
- 	int ret = 0;
- 	struct hid_descriptor *desc;
- 	struct mousevsc_prt_msg ack;
-+	size_t desc_offset;
-+	size_t desc_size;
- 
- 	input_device->dev_info_status = -ENOMEM;
- 
-+	if (device_info_size < sizeof(*device_info)) {
-+		input_device->dev_info_status = -EINVAL;
-+		goto cleanup;
-+	}
-+
- 	input_device->hid_dev_info = device_info->hid_dev_info;
- 	desc = &device_info->hid_descriptor;
-+	desc_offset = offsetof(struct synthhid_device_info, hid_descriptor);
-+	desc_size = device_info_size - desc_offset;
- 	if (desc->bLength == 0)
- 		goto cleanup;
-+	if (desc->bLength < sizeof(*desc) || desc->bLength > desc_size) {
-+		input_device->dev_info_status = -EINVAL;
-+		goto cleanup;
-+	}
- 
- 	/* The pointer is not NULL when we resume from hibernation */
- 	kfree(input_device->hid_desc);
-@@ -205,6 +219,10 @@ static void mousevsc_on_receive_device_i
- 		input_device->dev_info_status = -EINVAL;
- 		goto cleanup;
- 	}
-+	if (input_device->report_desc_size > desc_size - desc->bLength) {
-+		input_device->dev_info_status = -EINVAL;
-+		goto cleanup;
-+	}
- 
- 	/* The pointer is not NULL when we resume from hibernation */
- 	kfree(input_device->report_desc);
-@@ -285,14 +303,17 @@ static void mousevsc_on_receive(struct h
- 		break;
- 
- 	case SYNTH_HID_INITIAL_DEVICE_INFO:
--		WARN_ON(pipe_msg->size < sizeof(struct hv_input_dev_info));
-+		if (WARN_ON_ONCE(pipe_msg->size <
-+				 sizeof(struct synthhid_device_info)))
-+			break;
- 
- 		/*
- 		 * Parse out the device info into device attr,
- 		 * hid desc and report desc
- 		 */
- 		mousevsc_on_receive_device_info(input_dev,
--			(struct synthhid_device_info *)pipe_msg->data);
-+						(struct synthhid_device_info *)pipe_msg->data,
-+						pipe_msg->size);
- 		break;
- 	case SYNTH_HID_INPUT_REPORT:
- 		input_report =
 
 
