@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEE5386C3B;
-	Tue, 25 Aug 2026 13:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4B52ED154;
+	Tue, 25 Aug 2026 13:38:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787665107; cv=none; b=o2tF0URhzbgkHGmjr7+QOJ5pcHVBuXqH6krwN93uJadyacAhMsDkK7ZS8F3AZZI2rdvB1VNCwFO376mqyQ7vSQrIwdnGDK+82jbSpuzmgONzTkrtOGTyy1XfTjqH44NhY270qmy3dgzua390vTVFmNJ+FwkiCSR+JfPswWGL9yQ=
+	t=1787665110; cv=none; b=N8CerlG7zN9dOKu0uKUzMcTQevkz53UIUBHRYvhegTbgw3YIzpkQ08JQhQqcAfRD/sN0ahvF9Lx6TXg7x4KZL+Q73pkZUxb3Ucg+s2SG1oKWM9pKkbfdik29KqcJDwlT/6CilmugriKaSAUh1/mjY+9sS7JguBXWaFs7F4P57EU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787665107; c=relaxed/simple;
-	bh=7cu9rZkZKdnQjt22n82/N6Y9zdyX4CNPtBz39Wjd38o=;
+	s=arc-20240116; t=1787665110; c=relaxed/simple;
+	bh=dnUErF2KbCWgSqIiEA7VboWP4wkd1N0QoiEeraL7w9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fUyglec4AqY7ydREnvkYBK5oVfIViLn5TbODxns2i2iQ/peMGqmP7poGIJBm7ZNGepnGCL0JU++/bc4FHORqpMKzDWBS6Kgt8iZHD/qg9TBg095PXoPfraFufNj7LSwAOgEPSN9FHj3J8k6U7C9moRrw4o6pyZhxr0ZgaXg8mzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDC1ZF8M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hA39bwA9xNOVNZjkTe3f4p/d5Q8vC7hMao4EbawMANuBAI0PWl/Kf91ouqXZSo1IpnMd48xgsrb95ZM9ZcV2TsuWuQ1KkxydOtpU049E6Mh62SGwsQ/C1SH0WnCq+RZBp11dBOQwV2vEQjoNO9OAzU32tsaGxAMSpbPBaXi0GkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0vmBa4gZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDC1ZF8M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA761F000E9;
-	Tue, 25 Aug 2026 13:38:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0vmBa4gZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C38C1F000E9;
+	Tue, 25 Aug 2026 13:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787665105;
-	bh=hjUVhm1apbKDpgCoJwxgkkfTMaqdw09ZFkBQ58mTTB0=;
+	s=korg; t=1787665108;
+	bh=K+N3E0puxeCzbCNoNsRAatzNualc/YoWub60zpZVgyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lDC1ZF8MkzXwRJ40f4tOC/flF2XaLYzy0+vAX+S4zhPj2+IC/5tBL0WMY2bpYTPlA
-	 Vol/cc03pg+IZzWsiF9mkjdBqFwpf8m3Ks3PCZnn8iK6JMsHvKGfYO23/Wfy6Mq2Zr
-	 VP2DD+JV5Fo/6XzY5abJoezcoHI/QkCYAhIK4IFU=
+	b=0vmBa4gZHbx/3Afp/XtSqSR0sbSqK/7C76kZBdRJlheyi19FZnAmd2LHZkLgMtxkM
+	 mmF3KwlFveuewQsXTxbkzvDOBDueJwR4hOLC8RMylpZKbBr4yC302ZXLtdOknLn+K4
+	 9quMFAiwYlSqkmRBteERfB3R9EJThxbf2mVGbSg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Shameer Kolothum <skolothumtho@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.18 10/94] iommu/tegra241-cmdqv: Fix CMD_SYNC use-after-free on teardown
-Date: Tue, 25 Aug 2026 15:25:06 +0200
-Message-ID: <20260825132542.284177065@linuxfoundation.org>
+	Peiyang He <peiyang_he@smail.nju.edu.cn>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.18 11/94] iommu/iommufd: Fix NULL pointer deref in iommufd_ioas_change_process when racing with iopt_map_file_pages
+Date: Tue, 25 Aug 2026 15:25:07 +0200
+Message-ID: <20260825132542.321910436@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.887883084@linuxfoundation.org>
 References: <20260825132541.887883084@linuxfoundation.org>
@@ -52,127 +50,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+From: Peiyang He <peiyang_he@smail.nju.edu.cn>
 
-commit 9ff145a25c5c8a26b06ef7cf558fb536b18bba6d upstream.
+commit d616de490ec0242dcf78f02f1adf7baa035c4d0d upstream.
 
-arm_smmu_impl_remove() is registered as a devres action in
-arm_smmu_impl_probe(), before arm_smmu_init_queues() allocates
-smmu->cmdq.q.base. On a devres unwind, whether a failed probe or an
-unbind, the queue is freed first and arm_smmu_impl_remove() then runs
-tegra241_cmdqv_remove_vintf(), whose VINTF deinit issues a CMD_SYNC on
-the freed memory.
+iommufd_ioas_change_process() iterates every IOAS area while only
+holding every IOAS iova_rwsem, so it assumes every area has a non-NULL
+pages pointer. That assumption can be false when it runs concurrently
+with iopt_map_file_pages().
 
-Observed during testing with a QEMU hack that makes the VCMDQ fail to
-enable, so the impl reset fails and probe aborts into the devres unwind:
+iopt_map_pages() executes in two phases. It first creates the area and
+inserts it into the interval tree under iova_rwsem, with area->pages
+still NULL. It then drops iova_rwsem and later fills area->pages
+under domains_rwsem. This leaves a window between area creation and
+area->pages fill where a concurrent iommufd_ioas_change_process()
+can observe the area and dereference a NULL area->pages pointer,
+leading to a NULL pointer dereference:
 
- platform NVDA200C:00: tegra241_cmdqv: VINTF0: VCMDQ0/LVCMDQ0: failed to enable, STATUS=0x00000000
- platform NVDA200C:00: tegra241_cmdqv: VINTF0: VCMDQ0/LVCMDQ0: GERRORN=0x0, GERROR=0x4, CONS=0x0
- platform NVDA200C:00: tegra241_cmdqv: VINTF0: VCMDQ0/LVCMDQ0: uncleared error detected, resetting
- arm-smmu-v3 arm-smmu-v3.0.auto: failed to reset impl
- arm-smmu-v3 arm-smmu-v3.0.auto: probe with driver arm-smmu-v3 failed with error -110
- Unable to handle kernel paging request at virtual address ffff8000891e0098
- ...
- Internal error: Oops: 0000000096000047 [#1] SMP
- ...
- Call trace:
-  arm_smmu_cmdq_issue_cmdlist+0x320/0x6fc (P)
-  tegra241_vcmdq_hw_deinit+0x98/0x168
-  tegra241_vintf_hw_deinit+0x5c/0x1b0
-  tegra241_cmdqv_remove_vintf+0x34/0xec
-  tegra241_cmdqv_remove+0x40/0x9c
-  arm_smmu_impl_remove+0x20/0x30
-  devm_action_release+0x14/0x20
-  devres_release_all+0xa8/0x110
-  device_unbind_cleanup+0x18/0x84
-  really_probe+0x1f0/0x29c
+BUG: kernel NULL pointer dereference, address: 00000000000000c0
+#PF: supervisor read access in kernel mode
+#PF: error_code(0x0000) - not-present page
+PGD 4b655067 P4D 4b655067 PUD 0
+Oops: Oops: 0000 [#1] SMP NOPTI
+CPU: 0 UID: 0 PID: 11841 Comm: syz.1.628 Not tainted 7.1.0 #3 PREEMPT(full)
+Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:iommufd_ioas_change_process+0x419/0xd50 drivers/iommu/iommufd/ioas.c:538
+Code: 48 89 c3 48 85 c0 0f 84 cc 00 00 00 e8 10 f5 cb fd 48 8d 7b 68 e8 a7 b5 eb fd 48 8b 6b 68 48 8d bd c0 00 00 00 e8 17 b2 eb fd <8b> ad c0 00 00 00 bf 01 00 00 00 89 ee e8 85 ef cb fd 83 fd 01 74
+RSP: 0018:ffffc90015c17d28 EFLAGS: 00010246
+RAX: ffff8880186d5328 RBX: ffff88801d25e240 RCX: 0000000080000000
+RDX: 00000000000002d7 RSI: ffffffff83ba9e10 RDI: 00000000000000c0
+RBP: 0000000000000000 R08: ffffffff8e781eb8 R09: 0000000000000000
+R10: 00000000000000c0 R11: ffffffff83ba9e29 R12: ffff88802e216008
+R13: ffff88802e216000 R14: 0000000000000001 R15: 0000000000000000
+FS:  00007f4aea3f66c0(0000) GS:ffff8880b1fa1000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000000000c0 CR3: 000000004b75c000 CR4: 0000000000350ef0
+Call Trace:
+ <TASK>
+ iommufd_fops_ioctl+0x287/0x400 drivers/iommu/iommufd/main.c:533
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:597 [inline]
+ __se_sys_ioctl fs/ioctl.c:583 [inline]
+ __x64_sys_ioctl+0x120/0x170 fs/ioctl.c:583
+ x64_sys_call+0x1092/0x1fb0 arch/x86/include/generated/asm/syscalls_64.h:17
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0x10a/0x680 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f4aec1a82bd
+Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f4aea3f6018 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 00007f4aec436090 RCX: 00007f4aec1a82bd
+RDX: 0000200000000180 RSI: 0000000000003b92 RDI: 0000000000000003
+RBP: 00007f4aec250295 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007f4aec436128 R14: 00007f4aec436090 R15: 00007ffd04ef23e0
+ </TASK>
+Modules linked in:
+CR2: 00000000000000c0
+---[ end trace 0000000000000000 ]---
+RIP: 0010:iommufd_ioas_change_process+0x419/0xd50 drivers/iommu/iommufd/ioas.c:538
+Code: 48 89 c3 48 85 c0 0f 84 cc 00 00 00 e8 10 f5 cb fd 48 8d 7b 68 e8 a7 b5 eb fd 48 8b 6b 68 48 8d bd c0 00 00 00 e8 17 b2 eb fd <8b> ad c0 00 00 00 bf 01 00 00 00 89 ee e8 85 ef cb fd 83 fd 01 74
+RSP: 0018:ffffc90015c17d28 EFLAGS: 00010246
+RAX: ffff8880186d5328 RBX: ffff88801d25e240 RCX: 0000000080000000
+RDX: 00000000000002d7 RSI: ffffffff83ba9e10 RDI: 00000000000000c0
+RBP: 0000000000000000 R08: ffffffff8e781eb8 R09: 0000000000000000
+R10: 00000000000000c0 R11: ffffffff83ba9e29 R12: ffff88802e216008
+R13: ffff88802e216000 R14: 0000000000000001 R15: 0000000000000000
+FS:  00007f4aea3f66c0(0000) GS:ffff8880b1fa1000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000000000c0 CR3: 000000004b75c000 CR4: 0000000000350ef0
+----------------
+Code disassembly (best guess):
+   0:	48 89 c3             	mov    %rax,%rbx
+   3:	48 85 c0             	test   %rax,%rax
+   6:	0f 84 cc 00 00 00    	je     0xd8
+   c:	e8 10 f5 cb fd       	call   0xfdcbf521
+  11:	48 8d 7b 68          	lea    0x68(%rbx),%rdi
+  15:	e8 a7 b5 eb fd       	call   0xfdebb5c1
+  1a:	48 8b 6b 68          	mov    0x68(%rbx),%rbp
+  1e:	48 8d bd c0 00 00 00 	lea    0xc0(%rbp),%rdi
+  25:	e8 17 b2 eb fd       	call   0xfdebb241
+* 2a:	8b ad c0 00 00 00    	mov    0xc0(%rbp),%ebp <-- trapping instruction
+  30:	bf 01 00 00 00       	mov    $0x1,%edi
+  35:	89 ee                	mov    %ebp,%esi
+  37:	e8 85 ef cb fd       	call   0xfdcbefc1
+  3c:	83 fd 01             	cmp    $0x1,%ebp
+  3f:	74                   	.byte 0x74
 
-Drop the VINTF deinit from tegra241_cmdqv_remove_vintf() so the unwind no
-longer touches the freed queue. Quiesce the VINTFs earlier instead. Add a
-device_disable() impl op and run it from arm_smmu_disable_action() while
-the CMDQ is still up. That handles a live unbind. A failed reset is already
-handled because tegra241_vintf_hw_init() deinits the VINTF on its own error
-path. tegra241_cmdqv_remove_vintf() is also used by the iommufd viommu
-destroy path, so quiesce there too.
+Fix by mirroring the handling logic in iopt_unmap_iova_range(),
+i.e. return -EBUSY if area->pages is NULL.
 
-Fixes: 4dc0d12474f9 ("iommu/tegra241-cmdqv: Add user-space use support")
+Fixes: 829ed626499c ("iommufd: Add IOMMU_IOAS_CHANGE_PROCESS")
+Link: https://patch.msgid.link/r/7344B7A7B9957A65+20260806045059.1884737-1-peiyang_he@smail.nju.edu.cn
 Cc: stable@vger.kernel.org
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c    |    2 ++
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h    |    1 +
- drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c |   15 +++++++++++++--
- 3 files changed, 16 insertions(+), 2 deletions(-)
+ drivers/iommu/iommufd/ioas.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -4929,6 +4929,8 @@ static void arm_smmu_device_shutdown(str
- {
- 	struct arm_smmu_device *smmu = platform_get_drvdata(pdev);
+--- a/drivers/iommu/iommufd/ioas.c
++++ b/drivers/iommu/iommufd/ioas.c
+@@ -541,6 +541,10 @@ int iommufd_ioas_change_process(struct i
+ 		return rc;
  
-+	if (smmu->impl_ops && smmu->impl_ops->device_disable)
-+		smmu->impl_ops->device_disable(smmu);
- 	arm_smmu_device_disable(smmu);
- }
- 
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -718,6 +718,7 @@ struct arm_smmu_strtab_cfg {
- 
- struct arm_smmu_impl_ops {
- 	int (*device_reset)(struct arm_smmu_device *smmu);
-+	void (*device_disable)(struct arm_smmu_device *smmu);
- 	void (*device_remove)(struct arm_smmu_device *smmu);
- 	int (*init_structures)(struct arm_smmu_device *smmu);
- 	struct arm_smmu_cmdq *(*get_secondary_cmdq)(
---- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-@@ -763,8 +763,6 @@ static void tegra241_cmdqv_remove_vintf(
- 	struct tegra241_vintf *vintf = cmdqv->vintfs[idx];
- 	u16 lidx;
- 
--	tegra241_vintf_hw_deinit(vintf);
--
- 	/* Remove LVCMDQ resources */
- 	for (lidx = 0; lidx < vintf->cmdqv->num_lvcmdqs_per_vintf; lidx++)
- 		if (vintf->lvcmdqs[lidx])
-@@ -781,6 +779,17 @@ static void tegra241_cmdqv_remove_vintf(
- 	}
- }
- 
-+static void tegra241_cmdqv_hw_disable(struct arm_smmu_device *smmu)
-+{
-+	struct tegra241_cmdqv *cmdqv =
-+		container_of(smmu, struct tegra241_cmdqv, smmu);
-+	u16 idx;
-+
-+	for (idx = 0; idx < cmdqv->num_vintfs; idx++)
-+		if (cmdqv->vintfs[idx])
-+			tegra241_vintf_hw_deinit(cmdqv->vintfs[idx]);
-+}
-+
- static void tegra241_cmdqv_remove(struct arm_smmu_device *smmu)
- {
- 	struct tegra241_cmdqv *cmdqv =
-@@ -846,6 +855,7 @@ static struct arm_smmu_impl_ops tegra241
- 	/* For in-kernel use */
- 	.get_secondary_cmdq = tegra241_cmdqv_get_cmdq,
- 	.device_reset = tegra241_cmdqv_hw_reset,
-+	.device_disable = tegra241_cmdqv_hw_disable,
- 	.device_remove = tegra241_cmdqv_remove,
- 	/* For user-space use */
- 	.hw_info = tegra241_cmdqv_hw_info,
-@@ -1212,6 +1222,7 @@ static void tegra241_cmdqv_destroy_vintf
- 	if (vintf->mmap_offset)
- 		iommufd_viommu_destroy_mmap(&vintf->vsmmu.core,
- 					    vintf->mmap_offset);
-+	tegra241_vintf_hw_deinit(vintf);
- 	tegra241_cmdqv_remove_vintf(vintf->cmdqv, vintf->idx);
- }
- 
+ 	for_each_ioas_area(&ioas_list, index, ioas, area)  {
++		if (!area->pages) {
++			rc = -EBUSY;
++			goto out;
++		}
+ 		if (area->pages->type != IOPT_ADDRESS_FILE) {
+ 			rc = -EINVAL;
+ 			goto out;
 
 
