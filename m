@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B9145FFCB;
-	Tue, 25 Aug 2026 13:33:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5333FF8BA;
+	Tue, 25 Aug 2026 13:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787664812; cv=none; b=ASjKER7ayLaKo1idhbVNUzwUv4APKCFpxOnQwuSpLm44/6moVWK7p5s0vifhjO5I4YMqmfNboUbIaY0NyNxQ6UHeTqZq4t/wdNiDIaMEFYkkRqmc8Hp2klpD0hRsfOoV5eFkMV7gcu9gDluAhwckgKnnoErKBk7Jq8ZvbnP19yc=
+	t=1787664814; cv=none; b=lGGzctvKGi8Hl0Y/RHGv/WjThXZ1RoBj3SgTgVUFfshEeZKMXnb5MERalygJOR4IAoqaY+W8ZY8TxpiBwcE+0mO7RYefQtVnCXcKmq66Re15bEKwCIDNHps8EfatUfU8or/KrZpnz83mjbIxxGi0JeCdPqjJe5/0SifryaU5dwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787664812; c=relaxed/simple;
-	bh=WnAq3iVc/kbL3NhDxZ2Rt1a8Tqzw3YchRFzTNVuNsww=;
+	s=arc-20240116; t=1787664814; c=relaxed/simple;
+	bh=IKN5eiA41Q9/fc6ROZhTpu6Jc2LAlFLKHCcZGpasEyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EhmkhVW9YzgGVNOF8Eud1bhhcvT8T43gHb5kPmbqHv/t4sbfHy4S/gmUr9RHI9FO/Rl8VsupcmMoK8CWFLq+I0McoqMmwYzWtmrMlG0CTmRRjyXB3pMXcIcweBf8S9vJ6jVUmSNiOTMTFKpCuwskTbDbNtRtSXphrZzCkF51fX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INNLS4gW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=peN/6EtF2s88a6xA+j00A8TwG4ssox45VtU1bxzrhEO0BN9fu4iHL1g3idWpdh93gerr5TbXW6Wmr/oJGfbzvzsVqavQpqiCK4co1EpCpomSCt17XJWHuLMm80YW044QOSdLtb+7FZayx8GlibGbQ4IvDTytjbV+Ekb7ArTcRY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T0LpBfRF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INNLS4gW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DADF31F00A3A;
-	Tue, 25 Aug 2026 13:33:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T0LpBfRF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDFDC1F000E9;
+	Tue, 25 Aug 2026 13:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1787664810;
-	bh=N3Wt8he+24HkEOrIuVIyxgKGrZuCtOLHoH4I9anpBeQ=;
+	s=korg; t=1787664813;
+	bh=xMPI8ti5HbbksGu1QlJVpPEgG5aJ5ydP6Oh2r2xiQgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=INNLS4gWXUz4KykS9btdgGqpNWIkf3vPL6dR9gQQ1qE/EpQ/0Dz1+gUnB7ellaBp+
-	 1XtUSyqXuMCyY/M0J0vKLoW8KDZrESOge/1mwIUfRzvJs00Xk6Ka7wslIiJiqT6RXW
-	 lVcKiUyR83bE2xmbETAsRwK9z12emSmdhjbUNlqI=
+	b=T0LpBfRFWz62azazvLJ5JKthZxISxft1Rmc5D+R0q6oUjzxGQag/J3lXwkBowYC1n
+	 JHGUOq/64P5rn8Wb2FlC8+fMwVnU9kpXo/cd6OIRPZr4RgvvVAlZQWylHyp16IzMeT
+	 bVqj4yqHY/SMH7errGc2/pjy8IMhoF0o1qrGjIWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steffen Persvold <spersvold@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH 7.1 005/101] PCI: host-generic: Fix NULL pointer dereference on 32-bit CAM systems
-Date: Tue, 25 Aug 2026 15:24:43 +0200
-Message-ID: <20260825132542.212354798@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.1 014/101] io_uring/futex: only mark private futex waits as inflight
+Date: Tue, 25 Aug 2026 15:24:52 +0200
+Message-ID: <20260825132542.559308164@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825132541.986300899@linuxfoundation.org>
 References: <20260825132541.986300899@linuxfoundation.org>
@@ -50,116 +49,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steffen Persvold <spersvold@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 008cb88edb41f3c7c8e0ed763ff9f26719830984 upstream.
+commit 4d327bbd1cd2485783553b6b2b401aa475f90dd0 upstream.
 
-On 32-bit systems the config space is too large to ioremap in one go, so
-pci_ecam_create() maps each bus segment separately and relies on the
-->add_bus callback (pci_ecam_add_bus) to populate the per-bus mapping in
-cfg->winp[]. pci_ecam_map_bus() then uses that mapping as the base for
-every config access.
+Inflight tracking of futex wait requests exists to ensure that do_exit()
+-> io_uring_files_cancel() cancels them before the mm goes away, as a
+private futex wait depends on the mm private futex hash staying alive
+for the duration of the request.
 
-The generic ECAM ops (pci_generic_ecam_ops) already provide the ->add_bus
-and ->remove_bus callbacks, but the CAM (legacy) ops in pci-host-generic.c
-do not. As a result, on a 32-bit host using "pci-host-cam-generic" the
-per-bus mapping is never set up and the first config read dereferences a
-NULL base, crashing during bus enumeration:
+Shared futexes have no such dependency. A FLAGS_SHARED request always
+resolves to either an inode based key or an mm-shared key, both of which
+fail futex_key_is_private() and hence always hash into the global futex
+hash, whose lifetime isn't tied to the mm.
 
- Unable to handle kernel NULL pointer dereference at virtual address 00000800
- Oops [#1]
- CPU: 0 PID: 1 Comm: swapper Not tainted 6.9.7+ #43
- Hardware name: Digilent Nexys-Video-A7 RV32 (DT)
- epc : pci_generic_config_read+0x40/0xb0
-  ra : pci_generic_config_read+0x2c/0xb0
- [<c038db9c>] pci_generic_config_read+0x40/0xb0
- [<c038da04>] pci_bus_read_config_dword+0x50/0xb0
- [<c0391e94>] pci_bus_generic_read_dev_vendor_id+0x3c/0x1ec
- [<c039245c>] pci_scan_single_device+0xa4/0x11c
- [<c0392570>] pci_scan_slot+0x9c/0x23c
- [<c039388c>] pci_scan_child_bus_extend+0x58/0x2f4
- [<c0393db0>] pci_scan_root_bus_bridge+0x64/0xe8
- [<c0393e54>] pci_host_probe+0x20/0xc8
- [<c03bc6f4>] pci_host_common_probe+0x144/0x1e4
+Only mark vectored futex waits as inflight if the futex is private.
 
-Fix this by giving the CAM ops the same ->add_bus/->remove_bus callbacks.
-Since pci_ecam_add_bus() and pci_ecam_remove_bus() are static to ecam.c,
-move the CAM ops definition there as pci_generic_cam_ops (mirroring
-pci_generic_ecam_ops) and export it for pci-host-generic.c to reference.
-
-Fixes: 8fe55ef23387 ("PCI: Dynamically map ECAM regions")
-Signed-off-by: Steffen Persvold <spersvold@gmail.com>
-[mani: removed timestamp from log]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260709122446.3151899-1-spersvold@gmail.com
+Fixes: 079afb081c42 ("io_uring/futex: mark wait requests as inflight")
+Link: https://lore.kernel.org/io-uring/CANGjgdn=R_qyUdE=j9za+vkmqcxacbP-84OHXF4nZ4ho9qRyVg@mail.gmail.com/
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-host-generic.c |   11 +----------
- drivers/pci/ecam.c                        |   13 +++++++++++++
- include/linux/pci-ecam.h                  |    3 +++
- 3 files changed, 17 insertions(+), 10 deletions(-)
+ io_uring/futex.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/drivers/pci/controller/pci-host-generic.c
-+++ b/drivers/pci/controller/pci-host-generic.c
-@@ -16,15 +16,6 @@
+--- a/io_uring/futex.c
++++ b/io_uring/futex.c
+@@ -154,14 +154,16 @@ int io_futex_prep(struct io_kiocb *req,
  
- #include "pci-host-common.h"
- 
--static const struct pci_ecam_ops gen_pci_cfg_cam_bus_ops = {
--	.bus_shift	= 16,
--	.pci_ops	= {
--		.map_bus	= pci_ecam_map_bus,
--		.read		= pci_generic_config_read,
--		.write		= pci_generic_config_write,
--	}
--};
--
- static bool pci_dw_valid_device(struct pci_bus *bus, unsigned int devfn)
+ int io_futex_wait_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
  {
- 	struct pci_config_window *cfg = bus->sysdata;
-@@ -60,7 +51,7 @@ static const struct pci_ecam_ops pci_dw_
++	struct io_futex *iof = io_kiocb_to_cmd(req, struct io_futex);
+ 	int ret;
  
- static const struct of_device_id gen_pci_of_match[] = {
- 	{ .compatible = "pci-host-cam-generic",
--	  .data = &gen_pci_cfg_cam_bus_ops },
-+	  .data = &pci_generic_cam_ops },
+ 	ret = io_futex_prep(req, sqe);
+ 	if (unlikely(ret))
+ 		return ret;
  
- 	{ .compatible = "pci-host-ecam-generic",
- 	  .data = &pci_generic_ecam_ops },
---- a/drivers/pci/ecam.c
-+++ b/drivers/pci/ecam.c
-@@ -208,6 +208,19 @@ const struct pci_ecam_ops pci_generic_ec
- };
- EXPORT_SYMBOL_GPL(pci_generic_ecam_ops);
+-	/* Mark as inflight, so file exit cancelation will find it */
+-	io_req_track_inflight(req);
++	/* inflight tracking only needed for mm private hash */
++	if (!(iof->futex_flags & FLAGS_SHARED))
++		io_req_track_inflight(req);
+ 	return 0;
+ }
  
-+/* CAM ops */
-+const struct pci_ecam_ops pci_generic_cam_ops = {
-+	.bus_shift	= 16,
-+	.pci_ops	= {
-+		.add_bus	= pci_ecam_add_bus,
-+		.remove_bus	= pci_ecam_remove_bus,
-+		.map_bus	= pci_ecam_map_bus,
-+		.read		= pci_generic_config_read,
-+		.write		= pci_generic_config_write,
+@@ -186,6 +188,7 @@ int io_futexv_prep(struct io_kiocb *req,
+ {
+ 	struct io_futex *iof = io_kiocb_to_cmd(req, struct io_futex);
+ 	struct io_futexv_data *ifd;
++	unsigned int i;
+ 	int ret;
+ 
+ 	/* No flags or mask supported for waitv */
+@@ -210,8 +213,14 @@ int io_futexv_prep(struct io_kiocb *req,
+ 		return ret;
+ 	}
+ 
+-	/* Mark as inflight, so file exit cancelation will find it */
+-	io_req_track_inflight(req);
++	/* inflight tracking only needed for mm private hash */
++	for (i = 0; i < iof->futex_nr; i++) {
++		if (!(ifd->futexv[i].w.flags & FLAGS_SHARED)) {
++			io_req_track_inflight(req);
++			break;
++		}
 +	}
-+};
-+EXPORT_SYMBOL_GPL(pci_generic_cam_ops);
 +
- #if defined(CONFIG_ACPI) && defined(CONFIG_PCI_QUIRKS)
- /* ECAM ops for 32-bit access only (non-compliant) */
- const struct pci_ecam_ops pci_32b_ops = {
---- a/include/linux/pci-ecam.h
-+++ b/include/linux/pci-ecam.h
-@@ -81,6 +81,9 @@ void __iomem *pci_ecam_map_bus(struct pc
- /* default ECAM ops */
- extern const struct pci_ecam_ops pci_generic_ecam_ops;
- 
-+/* default CAM ops */
-+extern const struct pci_ecam_ops pci_generic_cam_ops;
-+
- #if defined(CONFIG_ACPI) && defined(CONFIG_PCI_QUIRKS)
- extern const struct pci_ecam_ops pci_32b_ops;	/* 32-bit accesses only */
- extern const struct pci_ecam_ops pci_32b_read_ops; /* 32-bit read only */
+ 	iof->futexv_unqueued = 0;
+ 	req->flags |= REQ_F_ASYNC_DATA;
+ 	req->async_data = ifd;
 
 
